@@ -759,9 +759,9 @@
    *  타이밍을 보는 이유는 손맛 자체(연타/콤보)를 재려는 것이지 "하루에 몇
    *  번"을 재려는 게 아니라서다(그건 §5.1 일과가 이미 한다). */
   var GATHER_GAP = 8000;
-  function bumpGatherStreak() {
+  function bumpGatherStreak(tm) {
     var s = st(), now = Date.now();
-    s.gatherStreak = (s.gatherStreakAt && now - s.gatherStreakAt <= GATHER_GAP)
+    s.gatherStreak = (s.gatherStreakAt && now - s.gatherStreakAt <= GATHER_GAP / (tm || 1))
       ? (s.gatherStreak || 0) + 1 : 1;
     s.gatherStreakAt = now;
     return s.gatherStreak;
@@ -830,7 +830,7 @@
     if (prop.kind === 'weed') { return pullWeed(prop); }
     if (prop.kind === 'home') { return enterHome(); }
     if (prop.kind === 'cave') { return enterCave(); }
-    if (prop.kind === 'courierPost') { return pickupParcel(); }
+    if (prop.kind === 'courierPost') { return pickupParcel(); } if (prop.kind === 'bench') { return global.DG.craft ? global.DG.craft.openBench() : { kind: 'no', text: '제작대' }; }   // W-0103
     if (prop.kind === 'oldpost') {
       var PCO = global.DG.parcel, s0 = st().delivery;
       if (!PCO || !s0 || !s0.carrying) {
@@ -871,11 +871,11 @@
       return { kind: 'no', text: td.emoji + ' ' + td.name + ' 이(가) 없습니다 — 전방에서 살 수 있습니다' };
     }
     /* 교배로 핀 꽃은 드문 것을 낸다 */
-    var got = (prop.hybrid && def.gather === 'flower') ? VD.pickHybrid() : VD.pick(def.gather);
+    var got = (prop.hybrid && def.gather === 'flower') ? VD.pickHybrid() : VD.pick(def.gather, null, null, def.tool);   // def.tool — 도구 승급 '희귀' 축(craft.js)
     if (!got) { return null; }
-    var streak = bumpGatherStreak();
+    var streak = bumpGatherStreak(def.tool && global.DG.craft ? global.DG.craft.perk(def.tool).timeMul : 1), CRg = def.tool && global.DG.craft;   // '속도' 축 — 리듬 틈 ÷timeMul
     var bonus = streak > 0 && streak % 3 === 0;         // 리듬 보너스 — 3연속마다
-    var n = 1 + (Math.random() < 0.25 ? 1 : 0) + (bonus ? 1 : 0) +
+    var n = 1 + (Math.random() < 0.25 ? 1 : 0) + (bonus ? 1 : 0) + (CRg ? CRg.bonusN(def.tool) : 0) +   // '수확' 축
             (global.DG.festival && global.DG.festival.gatherBoost() && Math.random() < 0.5 ? 1 : 0);   // 칠석 소원의 답례(PLAN §5.6)
     bagAdd(got, n);
     if (def.reset) { st().used[prop.id] = st().day; }

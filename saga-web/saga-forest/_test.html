@@ -113,6 +113,7 @@ window.DG_NO_TUNE = true;
 <script src="js/turnip.js"></script>
 <script src="js/wear.js"></script>
 <script src="js/terrain.js"></script>
+<script src="js/craft.js"></script>
 <script src="js/village-view.js"></script>
 <script src="js/village-view3d.js"></script>
 <script src="js/net.js"></script>
@@ -6803,6 +6804,69 @@ window.DG_NO_TUNE = true;
       var none = M.sheet8('vroid:__없는_인물__') === null && M.sheet8('villager_a') === null;
       return dirs === '0,1,2,3,4,3m,2m,1m,2m,4' && roles === 'attack2/attack,heavy/attack,knockdown/death,idle/idle' && none &&
         ('8쪽 행 표 · 역할 8/3행 폴백 · 표 밖은 3행') || '실패 ' + dirs + ' | ' + roles + ' | ' + none;
+    });
+
+    /* ── W-0103 제작대·도구 승급 3택 (`craft.js`, PLAN §5.21 · 재미표준 D) ── */
+    function crKeep() { var s = V.state(); return JSON.stringify({ tools: s.tools || {}, craft: s.craft || null, bag: s.bag || {}, gold: C.save.player.gold }); }
+    function crBack(k) { var o = JSON.parse(k), s = V.state(); s.tools = o.tools; if (o.craft) { s.craft = o.craft; } else { delete s.craft; } s.bag = o.bag; C.save.player.gold = o.gold; }
+
+    t('fs.craft: 제작대 ① 레시피 12 — 재료는 전부 채집 품목(무게 > 0, 계절 안 탐), 도구 6·가구 4·공사 자재 2', function () {
+      var R = VD.RECIPES, bad = [], kinds = {};
+      R.forEach(function (r) {
+        kinds[r.kind] = (kinds[r.kind] || 0) + 1;
+        Object.keys(r.need).forEach(function (k) { var it = VD.item(k); if (!it || !(it.w > 0) || it.season) { bad.push(r.key + ':' + k); } });
+        if (r.kind === 'furn' && !VD.furn(r.furn)) { bad.push(r.key + ':furn'); }
+      });
+      return R.length === 12 && kinds.tool === 6 && kinds.furn === 4 && kinds.pave === 2 && bad.length === 0 &&
+        ('레시피 ' + R.length + ' · 도구 ' + kinds.tool + ' · 가구 ' + kinds.furn + ' · 자재 ' + kinds.pave + ' · 재료 이상 0');
+    });
+
+    t('재미표준 D 성장 선택(측정) — 도구 승급 3택 100회: 후보 셋·같은 축 중복 0·거절 보상', function () {
+      var CR = DG.craft, dup = 0, three = 0, i;
+      for (i = 0; i < 100; i++) {
+        var o = CR.offer3(i % 2 ? 'net' : 'spade'), seen = {};
+        if (o.length === 3) { three++; }
+        o.forEach(function (x) { if (seen[x.axis]) { dup++; } seen[x.axis] = 1; });
+      }
+      return (three === 100 && dup === 0 ? '○' : '×') + ' — 100회: 후보 셋 ' + three + ' · 같은 축 중복 ' + dup + ' · 축 ' + CR.AXIS_KEYS.join('·') + ' · 거절 🪙 ' + CR.DECLINE_GOLD;
+    });
+
+    t('fs.craft: 제작대 ③ 승급 → 3택이 서고, 거절하면 벨 +100·다음 승급 때 다시 · 고르면 그 축이 도구에 남는다', function () {
+      var CR = DG.craft, k = crKeep(), s = V.state();
+      try {
+        s.tools.net = true; s.craft = null;
+        s.bag.iron = 3; s.bag.pine = 4; s.bag.copper = 3; s.bag.orchid = 2; s.bag.apple = 6;
+        var r1 = CR.make('net2'), g0 = C.save.player.gold, blocked = !CR.can('net3').ok;   // 3택을 안 고르면 다음 승급이 막힌다
+        var got = CR.decline(), dg = C.save.player.gold - g0;
+        var r2 = CR.make('net3'), opts = CR.pending().opts, idx = opts.map(function (o) { return o.axis; }).indexOf('yield');
+        CR.pick(idx);
+        var t = CR.rec('net');
+        return r1.ok && r1.pending && blocked && got === 100 && dg === 100 && r2.ok && t.lv === 3 && t.perks.join() === 'yield' && !CR.pending() &&
+          s.bag.iron === 0 && ('Lv2 승급 → 거절 🪙+' + dg + ' · Lv3 승급 → 수확 고름 · perks ' + t.perks.join());
+      } finally { crBack(k); }
+    });
+
+    t('fs.craft: 제작대 ④ 옛 세이브 tools.net=true → {lv:1, perks:[]} 로 열리고 hasTool 참', function () {
+      var CR = DG.craft, k = crKeep(), s = V.state();
+      try {
+        s.tools.net = true;
+        var before = V.hasTool('net'), r = CR.rec('net'), after = V.hasTool('net');
+        return before && after && r.lv === 1 && r.perks.length === 0 && typeof s.tools.net === 'object' && DG.bug.hasNet() &&
+          ('true → ' + JSON.stringify(s.tools.net) + ' · hasTool ' + after);
+      } finally { crBack(k); }
+    });
+
+    t('fs.craft: 제작대 ⑤ 속도 축 → timeMul 0.8(잠자리채 휘두르는 거리 ÷0.8) · 희귀 축 → 드문 것 무게 ×1.5 · 공사 자재 → 삯 0', function () {
+      var CR = DG.craft, k = crKeep(), s = V.state();
+      try {
+        s.tools.net = { lv: 2, perks: ['speed'] }; s.tools.spade = { lv: 2, perks: ['rare'] };
+        var pn = CR.perk('net'), ps = CR.perk('spade');
+        var rare = CR.weight({ w: 9 }, 'spade'), common = CR.weight({ w: 40 }, 'spade');
+        s.craft = { pending: null, pave: { stone: 1 } };
+        var free = CR.paveLeft('stone') === 1 && CR.usePave('stone') && CR.paveLeft('stone') === 0;
+        return Math.abs(pn.timeMul - 0.8) < 1e-9 && pn.extraP === 0 && ps.rareMul === 1.5 && rare === 13.5 && common === 40 && free &&
+          ('잠자리채 timeMul ' + pn.timeMul + ' · 삽 드문 무게 9→' + rare + '·흔한 40→' + common + ' · 자재 한 칸 씀');
+      } finally { crBack(k); }
     });
 
     t('런타임 에러 없음', function () {

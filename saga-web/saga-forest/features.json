@@ -692,5 +692,34 @@
   "ticket": null,
   "since": "2026-09-30",
   "note": "D2: saga-web/tools/playcheck/pw-fs-close2.mjs 10/10 — results/pw-fs-close2.json(W-0096)."
+ },
+ {
+  "id": "fs.craft",
+  "name": "제작대 — 도구 승급(잠자리채·삽 Lv2~4) 3택(속도·수확·희귀)·가구 넷·공사 자재 둘, 레시피 12",
+  "files": [
+   "js/craft.js",
+   "js/data-village.js",
+   "src/village/01.js",
+   "src/village/02.js",
+   "js/bug.js",
+   "js/terrain.js",
+   "src/village-view3d/01.js",
+   "js/asset3d.js"
+  ],
+  "tests": [
+   "fs.craft: 제작대 ① 레시피 12 — 재료는 전부 채집 품목(무게 > 0, 계절 안 탐), 도구 6·가구 4·공사 자재 2",
+   "재미표준 D 성장 선택(측정) — 도구 승급 3택 100회: 후보 셋·같은 축 중복 0·거절 보상",
+   "fs.craft: 제작대 ③ 승급 → 3택이 서고, 거절하면 벨 +100·다음 승급 때 다시 · 고르면 그 축이 도구에 남는다",
+   "fs.craft: 제작대 ④ 옛 세이브 tools.net=true → {lv:1, perks:[]} 로 열리고 hasTool 참",
+   "fs.craft: 제작대 ⑤ 속도 축 → timeMul 0.8(잠자리채 휘두르는 거리 ÷0.8) · 희귀 축 → 드문 것 무게 ×1.5 · 공사 자재 → 삯 0"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {
+   "D": "도구 승급 3택 ○(같은 축 중복 0)"
+  },
+  "ticket": "W-0103",
+  "since": "2026-10-08",
+  "note": "D2: saga-web/tools/playcheck/pw-fs-craft.mjs 4/4 — results/pw-fs-craft.json(W-0103). 제작대 곁 실제 ␣ → 창 → 「짓기」 실제 클릭 → 3택 실제 클릭. Claude 눈: 제작대 창 ○·3택 창 ○·3D 제작대(Bench_1) 보임 ○."
  }
 ]

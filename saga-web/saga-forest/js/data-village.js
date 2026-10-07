@@ -160,6 +160,8 @@
     spaceDome: { name: '측지돔', emoji: '⛺', gather: null, reset: 0, hint: '들여다본다' },
     solarPanel: { name: '태양광판', emoji: '🔋', gather: null, reset: 0, hint: '살펴본다' },
     rover: { name: '탐사차', emoji: '🚙', gather: null, reset: 0, hint: '살펴본다' },
+    /* 제작대(W-0103) — 집 앞 고정 소품 하나. 곁에서 손을 쓰면 craft.js 제작대 화면 */
+    bench: { name: '제작대', emoji: '🔨', gather: null, reset: 0, hint: '짓는다' },
     mech: { name: '메카', emoji: '🤖', gather: null, reset: 0, hint: '올려다본다' }
   };
 
@@ -570,9 +572,9 @@
    * 원작이 잠자리채 없이는 벌레를 못 잡게 해 둔 그 자리다.
    */
   var TOOLS = {
-    net:   { key: 'net', name: '잠자리채', emoji: '🥅', price: 800,
+    net:   { key: 'net', name: '잠자리채', emoji: '🥅', price: 800, lvMax: 4,      // lvMax — 제작대 승급(W-0103, craft.js)
              desc: '곤충을 잡을 수 있게 됩니다' },
-    spade: { key: 'spade', name: '삽', emoji: '🪏', price: 700,
+    spade: { key: 'spade', name: '삽', emoji: '🪏', price: 700, lvMax: 4,
              desc: '갈라진 자리를 파낼 수 있게 됩니다' },
     /* 개토패(開土牌) — 원작의 공사 면허. 이걸 사야 독에 🪧 공사 단추가 선다.
        값이 셋 중 가장 비싼 것은 일부러다 — 땅을 고치는 일은 마을을 어지간히
@@ -580,6 +582,25 @@
     deed:  { key: 'deed', name: '개토패(開土牌)', emoji: '🪧', price: 4800,
              desc: '땅을 고쳐 길과 물길을 낼 수 있게 됩니다' }
   };
+
+  /**
+   * 제작대 레시피(W-0103) — 재료는 전부 지금 채집되는 품목(계절 안 타는 것)만.
+   *   tool  도구 승급(lv 는 승급 뒤 단계 — 그 전 단계를 가져야 한다) · furn 가구(사는 길은 그대로) · pave 공사 자재(삯 면제 n 칸)
+   */
+  var RECIPES = [
+    { key: 'net2',   kind: 'tool', tool: 'net',   lv: 2, need: { iron: 3, pine: 4 } },
+    { key: 'net3',   kind: 'tool', tool: 'net',   lv: 3, need: { copper: 3, orchid: 2, apple: 6 } },
+    { key: 'net4',   kind: 'tool', tool: 'net',   lv: 4, need: { silver: 2, bellroot: 4, fern: 2 } },
+    { key: 'spade2', kind: 'tool', tool: 'spade', lv: 2, need: { iron: 4, shard: 3 } },
+    { key: 'spade3', kind: 'tool', tool: 'spade', lv: 3, need: { copper: 4, oldcoin: 3 } },
+    { key: 'spade4', kind: 'tool', tool: 'spade', lv: 4, need: { silver: 3, fishf: 2, pine: 6 } },
+    { key: 'f_soban',    kind: 'furn', furn: 'soban',    need: { pine: 6, iron: 1 } },
+    { key: 'f_hwabun',   kind: 'furn', furn: 'hwabun',   need: { orchid: 1, bellroot: 2, shard: 1 } },
+    { key: 'f_deungjan', kind: 'furn', furn: 'deungjan', need: { iron: 2, apple: 4 } },
+    { key: 'f_mungab',   kind: 'furn', furn: 'mungab',   need: { copper: 3, pine: 8 } },
+    { key: 'p_stone', kind: 'pave', pave: 'stone', n: 3, name: '징검돌(돌길 자재)', emoji: '⬜', need: { iron: 3, sora: 2 } },
+    { key: 'p_path',  kind: 'pave', pave: 'path',  n: 5, name: '흙다짐(흙길 자재)', emoji: '🟫', need: { shard: 3, godung: 2 } }
+  ];
 
   /**
    * 가구 — 집 안에 놓는 것. 채집물과 **다른 칸(homeStock)** 에 쌓인다.
@@ -938,7 +959,7 @@
   }
 
   /** 무게로 하나 고르기 — **지금 계절과 지금 하늘**에 나는 것만 고른다 */
-  function pick(cat, seasonKey, weatherKey) {
+  function pick(cat, seasonKey, weatherKey, tool) {   // tool — 그 도구 승급 '희귀' 축이 드문 것 무게를 올린다(craft.js weight)
     var all = ITEMS[cat];
     if (!all) { return null; }
     var key = seasonKey || season().key;
@@ -947,11 +968,11 @@
       return inSeason(it, key) && inWeather(it, wk);
     });
     if (!list.length) { list = all; }
-    var total = 0, i;
-    for (i = 0; i < list.length; i++) { total += list[i].w; }
+    var total = 0, i, CR = tool && global.DG.craft, wt = function (it) { return CR ? CR.weight(it, tool) : it.w; };
+    for (i = 0; i < list.length; i++) { total += wt(list[i]); }
     var r = Math.random() * total;
     for (i = 0; i < list.length; i++) {
-      r -= list[i].w;
+      r -= wt(list[i]);
       if (r <= 0) { return list[i]; }
     }
     return list[0];
@@ -1196,7 +1217,7 @@
     gradeOf: gradeOf,
     TILES: TILES, PROPS: PROPS, ITEMS: ITEMS, PHASES: PHASES, REQUEST_N: REQUEST_N,
     ANIMALS: ANIMALS, MONSTER_BIOME: MONSTER_BIOME, NPCS: NPCS, QUESTS: QUESTS,
-    SEASONS: SEASONS, TOOLS: TOOLS,
+    SEASONS: SEASONS, TOOLS: TOOLS, RECIPES: RECIPES,
     FURNITURE: FURNITURE, FURN_SETS: FURN_SETS, furn: furn,
     WALLS: WALLS, FLOORS: FLOORS, wall: wall, floor: floor,
     MUSEUM_GRADES: MUSEUM_GRADES, MUSEUM_CATS: MUSEUM_CATS, BUNDLES: BUNDLES,

@@ -392,6 +392,7 @@
     'building:board': PROP + 'signpost.glb',
     'building:mail': PROP + 'box_small.gltf.glb',
     'building:pole': PROP + 'banner_thin_red.gltf.glb',
+    'building:bench': PROP + 'Bench_1.glb',          // 제작대(W-0103) — 있는 GLB(새 에셋 없음)
     /* 캠프 오두막(2026-09-09) — House_1~4.glb 는 마을당 건물이 하나뿐이라
        그동안 되돌림 자리로만 받아 뒀던 것(ASSET_LICENSES.md "다음에 위성
        마을·다양화용")을 숲 고리의 캠프(hamletSpot)에서 처음 쓴다.

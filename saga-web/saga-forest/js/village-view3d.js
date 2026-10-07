@@ -396,7 +396,7 @@
        하나뿐인 고정 건물이라 나무처럼 변종을 섞지 않는다 */
     shop: 'building:shop', board: 'building:board', home: 'building:home',
     mail: 'building:mail', tailor: 'building:tailor', pole: 'building:pole',
-    museum: 'building:museum',
+    museum: 'building:museum', bench: 'building:bench',   // 제작대(W-0103) — 기존 Bench_1.glb
     /* 캠프 오두막(2026-09-09) — village.js buildProps() 의 hamletHouse kind 를
        그대로 타고 선다. 마을 건물과 같은 결(변종 없음, 자리 하나뿐).
        hamletHut(House_1)·hamletShed(House_3)는 같은 날 이어 얹은 두 번째·세
@@ -459,7 +459,7 @@
        킷배싱, 이전엔 PolyScan 실사 house_wooden 등)은 셋 다 비슷한 단층
        초가 비례라 키를 맞춰 나란히 서도 안 어색하다. signpost·
        banner_thin_red·box_small(KayKit)은 훨씬 작은 소품이라 낮게 잡는다 */
-    shop: 3.0, home: 3.2, tailor: 2.8, museum: 3.4, board: 1.3, mail: 0.9, pole: 2.4,
+    shop: 3.0, home: 3.2, tailor: 2.8, museum: 3.4, board: 1.3, mail: 0.9, pole: 2.4, bench: 0.9,
     /* House_2·House_1·House_3(Quaternius) — 마을 건물(home 등,
        3.0~3.4m)보다 한 단 작게 잡아 "캠프의 소박한 오두막" 느낌을 준다.
        셋 다 정규화로 키 1 에서 시작하므로(build() 가 늘 그렇게 눕힌다) 실제

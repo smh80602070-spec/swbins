@@ -660,7 +660,7 @@
     props.push({ id: 'mail', kind: 'mail', x: (cx + 3) * TILE + 20, y: (cy + 1) * TILE + 6 });
     props.push({ id: 'tailor', kind: 'tailor',
                  x: (cx - 3) * TILE + 20, y: (cy + 2) * TILE + 20 });
-    props.push({ id: 'pole', kind: 'pole', x: (cx + 1) * TILE + 20, y: (cy + 1) * TILE + 14 });
+    props.push({ id: 'pole', kind: 'pole', x: (cx + 1) * TILE + 20, y: (cy + 1) * TILE + 14 }); var bx = (cx + 2) * TILE + 20, by = (cy + 1) * TILE + 14; props = props.filter(function (q) { return Math.hypot(q.x - bx, q.y - by) > TILE * 0.8; }); props.push({ id: 'bench', kind: 'bench', x: bx, y: by });   // 제작대(W-0103) — 집 앞 우편함 곁, 둘레 잔 소품은 비운다
     /* 잡초 — 세이브에 자리가 남는다. 안 뽑으면 날마다 는다 */
     var wd = s.weeds || [];
     for (var wi = 0; wi < wd.length; wi++) {

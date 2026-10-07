@@ -1,0 +1,29 @@
+{
+ "script": "pw-fs-craft.mjs",
+ "game": "saga-forest",
+ "pass": 4,
+ "total": 4,
+ "pageErrors": [],
+ "checks": [
+  {
+   "name": "제작대 — 집 앞 제작대 곁에서 실제 ␣ 로 창이 열리고 레시피 12 줄, 재료가 있는 것만 「짓기」 가 켜진다",
+   "ok": true,
+   "detail": "{\"at\":{\"bench\":true,\"x\":700,\"y\":454},\"op\":{\"open\":true,\"rows\":12,\"ready\":5}}"
+  },
+  {
+   "name": "「짓기」 잠자리채 Lv2 → 3택(길 셋 + 고르지 않기)이 서고, 하나를 실제로 누르면 그 축이 남고 재료가 빠진다",
+   "ok": true,
+   "detail": "{\"p3\":{\"pend\":true,\"opts\":3,\"decline\":true},\"done\":{\"lv\":2,\"perks\":[\"yield\"],\"pend\":false,\"iron\":2,\"has\":true}}"
+  },
+  {
+   "name": "닫기 — 창이 닫힌다",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}

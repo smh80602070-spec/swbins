@@ -135,7 +135,7 @@
   function can(tx, ty, kind) {
     var p = paveOf(kind);
     if (!p) { return { ok: false, why: '없는 공사입니다' }; }
-    var cost = costOf(kind);
+    var cost = (global.DG.craft && global.DG.craft.paveLeft(kind) > 0) ? 0 : costOf(kind);   // 제작대 공사 자재(W-0103) — 삯 면제
     if (!has()) {
       return { ok: false, cost: cost, why: '🪧 개토패가 없습니다 — 전방에서 삽니다' };
     }
@@ -196,6 +196,7 @@
     var p = paveOf(kind), m = map(), k = keyOf(tx, ty);
 
     core.save.player.gold -= chk.cost;
+    if (chk.cost === 0 && global.DG.craft) { global.DG.craft.usePave(kind); }
     if (kind === 'revert') { delete m[k]; }
     else { m[k] = kind; }
 

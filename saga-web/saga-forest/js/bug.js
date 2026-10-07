@@ -86,11 +86,11 @@
   function pickKind() {
     var list = poolNow();
     if (!list.length) { return null; }
-    var total = 0, i;
-    for (i = 0; i < list.length; i++) { total += list[i].w; }
+    var total = 0, i, CR = global.DG.craft, wt = function (it) { return CR ? CR.weight(it, 'net') : it.w; };   // 잠자리채 '희귀' 축(W-0103)
+    for (i = 0; i < list.length; i++) { total += wt(list[i]); }
     var r = rnd() * total;
     for (i = 0; i < list.length; i++) {
-      r -= list[i].w;
+      r -= wt(list[i]);
       if (r <= 0) { return list[i]; }
     }
     return list[0];
@@ -252,7 +252,7 @@
 
   /** 채가 닿는 가장 가까운 벌레 (달아나는 중인 것은 못 잡는다) */
   function nearest(x, y) {
-    var best = null, bd = REACH;
+    var best = null, bd = REACH / (global.DG.craft ? global.DG.craft.perk('net').timeMul : 1);   // 잠자리채 '속도' 축 — 더 멀리서
     for (var i = 0; i < bugs.length; i++) {
       var b = bugs[i];
       if (b.state === 'flee') { continue; }
@@ -272,14 +272,15 @@
     if (idx < 0) { return null; }
     bugs.splice(idx, 1);
     var it = VD().item(b.key);
-    V().bagAdd(it, 1);
+    var nb = 1 + (global.DG.craft ? global.DG.craft.bonusN('net') : 0);   // 잠자리채 '수확' 축
+    V().bagAdd(it, nb);
     core.gainFeat(2, '곤충');
     core.gainExp(10);
     core.log(it.emoji + ' ' + it.name + ' 을(를) 잡았다', 'good');
     core.emit('village:bug', { state: 'catch', ref: it });
     core.emit('changed');
     core.persist();
-    return { kind: 'gather', text: it.emoji + ' ' + it.name + ' ×1', item: it };
+    return { kind: 'gather', text: it.emoji + ' ' + it.name + ' ×' + nb, item: it, n: nb };
   }
 
   /* ── 바깥에서 보는 것 ─────────────────────────────────── */
