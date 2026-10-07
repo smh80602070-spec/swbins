@@ -1,5 +1,5 @@
 extends SceneTree
-## R-3(gd.st.background) 사가스토리 배경 점검 — godot --headless --path saga-godot --script res://tools/probe_story_background.gd → "PROBE story_background OK" / "FAIL n"
+## R-3(gd.st.background) 사가종횡 배경 점검 — godot --headless --path saga-godot --script res://tools/probe_story_background.gd → "PROBE story_background OK" / "FAIL n"
 ## ① 배경 나무 14·언덕 5 MultiMesh 가 만들어진다(메시 있음) ② 단색 실루엣 재질(비조명)과 재질 감사 예외 메타 ③ 두 번 지어도 개수가 같다
 ## (헤드리스 더미 렌더러는 MultiMesh 인스턴스 변환을 항등으로 돌려줘 자리는 못 본다 — 자리는 창 모드 촬영으로)
 

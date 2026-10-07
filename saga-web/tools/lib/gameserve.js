@@ -48,14 +48,14 @@ const SW_STUB = [
      put(c, A)   목표 자리로 옮긴다
    함수는 **브라우저에서** 돈다(toString 으로 붙인다) — 바깥 변수를 쓰지 말 것. */
 const START = {
-  /* 사가고 — 월드 미터(맵 편집기 3D 배치 좌표 그대로) */
+  /* 사가만리 — 월드 미터(맵 편집기 3D 배치 좌표 그대로) */
   'saga-go': {
     need: ['at'],
     ready: function () { var s = DG.core && DG.core.save; return s && s.player && s.player.pos ? s.player.pos : null; },
     off: function (p, A) { return Math.hypot(p.x - A.x, p.y - A.y) > 30; },
     put: function (p, A) { p.x = A.x; p.y = A.y; if (DG.world && DG.world.resize) { DG.world.resize(); } },
   },
-  /* 사가스토리 — 사냥터 key + 그 사냥터 픽셀(x, 발 y). 레벨이 모자란 곳은 기록 없이 들여보낸다
+  /* 사가종횡 — 사냥터 key + 그 사냥터 픽셀(x, 발 y). 레벨이 모자란 곳은 기록 없이 들여보낸다
      (연습용 세이브의 st().stage 를 안 바꾼다 — 게임의 비경 방 넣기와 같은 길) */
   'saga-story': {
     need: ['at', 'in'],
@@ -80,7 +80,7 @@ const START = {
       p.vx = 0; p.vy = 0; p.climb = null; p.onGround = false;
     },
   },
-  /* 사가블로 — 손 마을 id + 그 마을 BASE 좌표(560×380 기준). 세계 좌표 = 앵커 + BASE × (방 크기 / BASE).
+  /* 사가나락 — 손 마을 id + 그 마을 BASE 좌표(560×380 기준). 세계 좌표 = 앵커 + BASE × (방 크기 / BASE).
      방 크기는 창 폭 따라 달라(데스크톱 배율) 게임 안에서 잰다. 들판·던전에 있으면 마을로 나올 때까지 기다린다 */
   'saga-dungeon': {
     need: ['at', 'in'],
@@ -97,7 +97,7 @@ const START = {
       p.dash = null;
     },
   },
-  /* 사가국지 — 성 id. 판이 선 뒤(새 세이브면 세력을 고른 뒤) 그 성 시트를 열고 3D 지도를 그리로 돌린다.
+  /* 사가천하 — 성 id. 판이 선 뒤(새 세이브면 세력을 고른 뒤) 그 성 시트를 열고 3D 지도를 그리로 돌린다.
      2D 지도 가운데는 게임이 밖에 안 내놓아 못 옮긴다. 세 번 돌려 두고 끝(3D 가 늦게 켜져도 따라가게) */
   'saga-realm': {
     need: ['in'],
@@ -113,7 +113,7 @@ const START = {
   },
 };
 
-/* 판 파일에서 상수를 읽어 A 에 얹는다(사가블로 BASE 크기) — 못 읽으면 기본값 */
+/* 판 파일에서 상수를 읽어 A 에 얹는다(사가나락 BASE 크기) — 못 읽으면 기본값 */
 function startConsts(game, root) {
   const c = START[game] && START[game].consts, out = {};
   if (!c) return out;

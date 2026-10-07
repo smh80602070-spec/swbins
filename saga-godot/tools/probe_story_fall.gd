@@ -1,6 +1,6 @@
 extends SceneTree
 
-## G-0036 사가스토리 사냥터 쓰러짐(재미 표준 F — data/story_combat.gd fall_gold_lost·data/story_save_state.gd apply_fall·world/story_field.gd 관찰자) 자동 점검. 씨앗 고정(20260824).
+## G-0036 사가종횡 사냥터 쓰러짐(재미 표준 F — data/story_combat.gd fall_gold_lost·data/story_save_state.gd apply_fall·world/story_field.gd 관찰자) 자동 점검. 씨앗 고정(20260824).
 ##   godot --headless --path saga-godot --script res://tools/probe_story_fall.gd
 ## ① 규칙: 남기는 몫 0.5(side.js die() goldKept = round(run.gold*0.5)) · 0·음수 → 0 · 7 → 3 · 100 → 50
 ## ② apply_fall: 금 1000·들어온 때 800 → 100 잃음 · 상점에서 써서 들어온 때보다 적으면 0

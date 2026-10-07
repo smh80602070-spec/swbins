@@ -11,7 +11,7 @@
  *       사내 http 주소로 폰에서 열면 홈 화면 추가는 되지만 이 캐시는 동작하지 않는다.
  */
 
-var VERSION = 'village-v0.136.45';
+var VERSION = 'village-v0.136.46';
 var APP_CACHE = 'yv-app-' + VERSION;
 var TILE_CACHE = 'yv-tiles-v1';
 var TILE_MAX = 500;
@@ -103,7 +103,7 @@ self.addEventListener('fetch', function (e) {
    * **2026-09-02 — `{ cache: 'no-store' }` 를 더했다.** "네트워크 먼저" 라고 적어
    * 놓고도 평범한 fetch() 는 브라우저 자체의 HTTP 캐시(Pages 의 Cache-Control:
    * max-age)를 그대로 타 넘긴다 — 그래서 몇 분 안에 잇달아 손보고 배포해도 폰이
-   * 옛 파일을 계속 물고 있었다(사가의숲 3D 쿼터뷰 조정 때 실제로 여러 판을
+   * 옛 파일을 계속 물고 있었다(사가마을 3D 쿼터뷰 조정 때 실제로 여러 판을
    * 헛돌았다). no-store 로 그 층까지 확실히 건너뛴다 */
   if (url.origin === location.origin) {
     e.respondWith(

@@ -1,6 +1,6 @@
 extends Node
 
-## G-0054 — "화질/성능" 고르기 창. 네 판 HUD 단추(graphics_button.gd)와 사가고 메뉴 항목(그룹 go_graphics)이 open_screen 으로 연다.
+## G-0054 — "화질/성능" 고르기 창. 네 판 HUD 단추(graphics_button.gd)와 사가만리 메뉴 항목(그룹 go_graphics)이 open_screen 으로 연다.
 ## 공용 선택 창 세 줄 — 화질·성능(지금 고른 쪽엔 "(지금)")·오류 기록 보기(G-0068).
 
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")

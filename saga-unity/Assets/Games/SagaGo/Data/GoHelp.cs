@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace Saga.Go.Data
 {
     /// <summary>
-    /// tasks U-0043 도움말 표(saga-godot `data/help.gd`) — 유니티 사가고의 **실제 키**만 갈래 셋(이동·싸움·화면)으로 적는다.
+    /// tasks U-0043 도움말 표(saga-godot `data/help.gd`) — 유니티 사가만리의 **실제 키**만 갈래 셋(이동·싸움·화면)으로 적는다.
     /// 고돗 표를 베끼지 않는다: 알 I·마당 T·회차 N·사진 P·주간 Z 는 이 트랙에 없고 쉼터 마당은 J·사냥 기록은 K·탈것은 H.
     /// 줄 하나 = 현지화 키 하나(`help.&lt;갈래&gt;.&lt;번호&gt;`, 값은 "키 | 설명"). <see cref="Line.Code"/> 는 그 줄이 코드에서 읽는
     /// Input System 키 속성 이름(`jKey` 등) — 진단이 소스에서 정말 읽는지 확인한다(빈 배열 = 액션 맵·마우스라 코드 키 없음).

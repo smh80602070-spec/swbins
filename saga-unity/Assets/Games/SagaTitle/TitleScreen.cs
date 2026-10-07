@@ -32,19 +32,19 @@ namespace Saga.Title
 
         public static readonly Game[] Games =
         {
-            new Game { Key = "go", Name = "사가고", Tagline = "들판을 누비며 인물을 모으는 수집 모험", NameEn = "Saga GO", TaglineEn = "Roam the fields and gather heroes", Scene = "TestVillage",
+            new Game { Key = "go", Name = "사가만리", Tagline = "들판을 누비며 인물을 모으는 수집 모험", NameEn = "Saga GO", TaglineEn = "Roam the fields and gather heroes", Scene = "TestVillage",
                 HasSave = () => Saga.Go.Data.SaveState.HasSave, DeleteSave = Saga.Go.Data.SaveState.DeleteSave,
                 ToJson = Saga.Go.Data.SaveState.ToJson, ApplyJson = Saga.Go.Data.SaveState.ApplyJson },
-            new Game { Key = "dungeon", Name = "사가블로", Tagline = "층을 내려가며 베어 넘기는 핵앤슬래시 던전", NameEn = "Sagablo", TaglineEn = "Hack and slash down floor after floor", Scene = "TestDungeon",
+            new Game { Key = "dungeon", Name = "사가나락", Tagline = "층을 내려가며 베어 넘기는 핵앤슬래시 던전", NameEn = "Sagablo", TaglineEn = "Hack and slash down floor after floor", Scene = "TestDungeon",
                 HasSave = () => Saga.Dungeon.Data.SaveState.HasSave, DeleteSave = Saga.Dungeon.Data.SaveState.DeleteSave,
                 ToJson = Saga.Dungeon.Data.SaveState.ToJson, ApplyJson = Saga.Dungeon.Data.SaveState.ApplyJson },
-            new Game { Key = "forest", Name = "사가의숲", Tagline = "숲속 마을을 가꾸는 느긋한 하루", NameEn = "Saga Forest", TaglineEn = "Slow days tending a village in the woods", Scene = "TestVillageForest",
+            new Game { Key = "forest", Name = "사가마을", Tagline = "숲속 마을을 가꾸는 느긋한 하루", NameEn = "Saga Forest", TaglineEn = "Slow days tending a village in the woods", Scene = "TestVillageForest",
                 HasSave = () => Saga.Forest.Data.ForestSaveState.HasSave, DeleteSave = Saga.Forest.Data.ForestSaveState.DeleteSave,
                 ToJson = Saga.Forest.Data.ForestSaveState.ToJson, ApplyJson = Saga.Forest.Data.ForestSaveState.ApplyJson },
-            new Game { Key = "story", Name = "사가스토리", Tagline = "옆으로 달리며 무예를 키우는 성장 액션", NameEn = "Saga Story", TaglineEn = "Side-scrolling action, growing your arts", Scene = "TestField",
+            new Game { Key = "story", Name = "사가종횡", Tagline = "옆으로 달리며 무예를 키우는 성장 액션", NameEn = "Saga Story", TaglineEn = "Side-scrolling action, growing your arts", Scene = "TestField",
                 HasSave = () => Saga.Story.Data.StorySaveState.HasSave, DeleteSave = Saga.Story.Data.StorySaveState.DeleteSave,
                 ToJson = Saga.Story.Data.StorySaveState.ToJson, ApplyJson = Saga.Story.Data.StorySaveState.ApplyJson },
-            new Game { Key = "realm", Name = "사가국지", Tagline = "성을 다스려 천하를 겨루는 경영 전략", NameEn = "Saga Realm", TaglineEn = "Rule castles and contend for the realm", Scene = "TestCity",
+            new Game { Key = "realm", Name = "사가천하", Tagline = "성을 다스려 천하를 겨루는 경영 전략", NameEn = "Saga Realm", TaglineEn = "Rule castles and contend for the realm", Scene = "TestCity",
                 HasSave = () => Saga.Realm.Data.RealmSaveState.HasSave, DeleteSave = Saga.Realm.Data.RealmSaveState.DeleteSave,
                 ToJson = Saga.Realm.Data.RealmSaveState.ToJson, ApplyJson = Saga.Realm.Data.RealmSaveState.ApplyJson },
         };
@@ -165,7 +165,7 @@ namespace Saga.Title
         /// <summary>"새로 시작" 기본값 복원이 안 맞았을 때 처음 달라진 자리(진단).</summary>
         public static readonly Dictionary<string, string> LastResetDiff = new Dictionary<string, string>();
 
-        /// <summary>복원 비교에서 시간에 따라 저절로 변하는 필드(사가고 원석 충전 시각 `resinT` — 앱을 켠 뒤 지난 초)는 뺀다.</summary>
+        /// <summary>복원 비교에서 시간에 따라 저절로 변하는 필드(사가만리 원석 충전 시각 `resinT` — 앱을 켠 뒤 지난 초)는 뺀다.</summary>
         private static string StableJson(string json) =>
             json == null ? null : System.Text.RegularExpressions.Regex.Replace(json, @"""resinT"":-?\d+", @"""resinT"":0");
 

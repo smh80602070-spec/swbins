@@ -1,5 +1,5 @@
 /**
- * 화면 — 사가국지 (삼국지)
+ * 화면 — 사가천하 (삼국지)
  * ---------------------------------------------------------------
  * 가운데는 **지도**다. 이 판에는 원래 지도가 없었다(강역이 목록이었다) —
  * 삼국지로 옮기면서 성 서른 곳과 그 사이의 길이 판 그 자체가 되었다.
@@ -1213,7 +1213,7 @@
   function renderTop() {
     var st = R().state();
     if (!st.started) {
-      els.profile.innerHTML = '<div class="p-meta"><div class="p-title">사가국지 — 다스리고 꾀고 친다</div>' +
+      els.profile.innerHTML = '<div class="p-meta"><div class="p-title">사가천하 — 다스리고 꾀고 친다</div>' +
         '<div class="p-sub">세력을 고르십시오</div></div>';
       els.wallet.innerHTML = '';
       return;

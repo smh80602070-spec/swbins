@@ -6,7 +6,7 @@ using Saga.Core;
 namespace Saga.Dungeon.World
 {
     /// <summary>
-    /// PLAN.md 109-2 마을의 시대 손님(웹 사가블로 §5.20 `ERA_FOLK`) — 현대·미래에서 넘어온 사람 하나. 싸우지 않고 볼일도 없다:
+    /// PLAN.md 109-2 마을의 시대 손님(웹 사가나락 §5.20 `ERA_FOLK`) — 현대·미래에서 넘어온 사람 하나. 싸우지 않고 볼일도 없다:
     /// 가까이 다가설 때마다 제 대사 넷을 하나씩 돌려 말한다. 편집기 빌드가 자리·몸을 넣고 씬에 굽는다(`NpcIdle` 로 선다).
     /// </summary>
     public class EraFolk : MonoBehaviour

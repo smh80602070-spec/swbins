@@ -3,7 +3,7 @@ extends Node
 ##
 ##   SAGA_PHOTO_PROBE=1 "$GODOT" --headless --path saga-godot res://games/saga_go/world/TestVillage.tscn
 ##
-## ① 환경 SAGA_PHOTO_DIR 가 저장 폴더를 이긴다(없으면 PC 는 사진 폴더/사가고) ② 워터마크 글: 마을 한가운데면 "사가고 · 청하 마을 · 날짜"
+## ① 환경 SAGA_PHOTO_DIR 가 저장 폴더를 이긴다(없으면 PC 는 사진 폴더/사가만리) ② 워터마크 글: 마을 한가운데면 "사가만리 · 청하 마을 · 날짜"
 ## ③ 숨기기 → 되돌리기 뒤 CanvasLayer 보임이 처음 그대로(원래 숨은 층은 숨은 채), 숨긴 동안엔 워터마크 층 말고 다 숨음 ④ 워터마크 층은 평소 숨김.
 ## 파일은 안 쓴다(헤드리스는 화면을 못 읽는다). 끝에 "PHOTO_PROBE_DONE fails=N".
 
@@ -44,14 +44,14 @@ func _physics_process(_delta: float) -> void:
 	_check("env_dir", String(Btn.call("photo_dir")) == "C:/tmp/saga_photo_probe")
 	OS.unset_environment("SAGA_PHOTO_DIR")
 	var d := String(Btn.call("photo_dir"))
-	_check("default_dir", (d.ends_with("사가고") if OS.has_feature("pc") else d == "user://photos"), d)
+	_check("default_dir", (d.ends_with("사가만리") if OS.has_feature("pc") else d == "user://photos"), d)
 	if old != "":
 		OS.set_environment("SAGA_PHOTO_DIR", old)
 
 	# ②
 	var wm := String(Btn.call("watermark_text", Vector3.ZERO))
-	_check("watermark", wm.begins_with("사가고 · 청하 마을 · ") and wm.ends_with(Time.get_date_string_from_system()), wm)
-	_check("watermark_outside", String(Btn.call("watermark_text", Vector3(99999, 0, 99999))) == "사가고 · " + Time.get_date_string_from_system())
+	_check("watermark", wm.begins_with("사가만리 · 청하 마을 · ") and wm.ends_with(Time.get_date_string_from_system()), wm)
+	_check("watermark_outside", String(Btn.call("watermark_text", Vector3(99999, 0, 99999))) == "사가만리 · " + Time.get_date_string_from_system())
 
 	# ④
 	var mark := btn.get("_mark_layer") as CanvasLayer

@@ -1,6 +1,6 @@
 """K-0006 — 옷 무늬 타일 +32종 (기존 32종과 합쳐 64종: 과거 20 · 현대 20 · 미래 20 · 문장 4).
 
-py tools/ai-art/make_pattern_batch64.py   →  batches/web_patterns_new32.json (모델 sd_xl_base_1.0, 출력 폴더 web_patterns_64)
+py tools/ai-art/make_pattern_batch64.py   →  batches/web_patterns_new32.json (모델 z-image-turbo, 출력 폴더 web_patterns_64)
 기존 32종은 make_pattern_batch.py(Animagine) 그대로. ERA 표는 64종 전체의 시대 분류(patterns.json 의 era 가 된다).
 이름·원작·작가 없이 천·무늬 묘사만. 애니풍 모델은 바닥/무늬에 사람 몸을 그리는 일이 있어 SDXL 기본 모델 + 사람 금지어.
 """
@@ -83,7 +83,7 @@ for e in era_table.values():
     cnt[e] = cnt.get(e, 0) + 1
 assert cnt == {'past': 20, 'modern': 20, 'future': 20, 'crest': 4}, cnt
 
-b = {'model': 'sd_xl_base_1.0', 'out': 'web_patterns_64',
+b = {'model': 'z-image-turbo', 'out': 'web_patterns_64',
      'defaults': {'prompt_prefix': 'seamless tileable fabric swatch', 'width': 640, 'height': 640, 'steps': 30, 'cfg': 6.5, 'sampler': 'Euler a', 'negative': NEG},
      'items': items}
 json.dump(b, open(os.path.join(HERE, 'batches', 'web_patterns_new32.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

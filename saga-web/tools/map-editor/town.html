@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>saga-web 맵 편집기 — 사가블로 마을</title>
+<title>saga-web 맵 편집기 — 사가나락 마을</title>
 <link rel="stylesheet" href="common.css">
 <style>
   #center { justify-content: flex-start; }
@@ -14,7 +14,7 @@
 <body>
 <div id="top">
   <h1>맵 편집기</h1>
-  <nav><a href="map.html">글자 지도</a><a href="city.html">성 지도</a><a href="side.html">사냥터</a><a href="/scene.html">3D 배치</a><a class="cur" href="town.html">사가블로 마을</a></nav>
+  <nav><a href="map.html">글자 지도</a><a href="city.html">성 지도</a><a href="side.html">사냥터</a><a href="/scene.html">3D 배치</a><a class="cur" href="town.html">사가나락 마을</a></nav>
   <select id="townSel"></select>
   <span class="muted" id="meta"></span>
   <span class="sp"></span>
@@ -86,7 +86,7 @@ const clone = (x) => JSON.parse(JSON.stringify(x));
 async function load() {
   const r = await fetch('/api/town/list'); items = (await r.json()).items || [];
   $('#townSel').innerHTML = items.map((m, i) => '<option value="' + i + '">' + esc(m.game + ' · ' + m.name + ' (' + m.id + ')') + '</option>').join('');
-  if (!items.length) { $('#meta').textContent = '사가블로 js/town.js 를 못 읽었다'; return; }
+  if (!items.length) { $('#meta').textContent = '사가나락 js/town.js 를 못 읽었다'; return; }
   $('#decorType').innerHTML = items[0].types.map((t) => '<option value="' + t + '">' + esc((DT[t] ? DT[t].emoji + ' ' + DT[t].label : t)) + '</option>').join('');
   $('#npcKey').innerHTML = Object.entries(items[0].npcDefs).map(([k, v]) => '<option value="' + k + '">' + esc(v.emoji + ' ' + v.name) + '</option>').join('');
   pick(0);

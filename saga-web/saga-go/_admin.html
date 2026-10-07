@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>사가고 어드민 — QA 운영판</title>
+<title>사가만리 어드민 — QA 운영판</title>
 <style>
   :root {
     --bg: #0d1117; --panel: #161b26; --panel2: #1c2331; --line: #2a3345;
@@ -90,7 +90,7 @@
 <body>
 
 <header>
-  <h1>🎛️ 사가고 어드민</h1>
+  <h1>🎛️ 사가만리 어드민</h1>
   <label style="font-size:11.5px;color:var(--dim)">프로필</label>
   <select id="prof"></select>
   <span id="tunepill" class="pill clean">손잡이 없음</span>
@@ -1159,7 +1159,7 @@ window.DG_NO_ACCOUNT = true;
       '\n\n/* 2) js/sprite.js 의 BEAST_FORM · BEAST_COLOR 에 */\n' +
       "    " + g('id') + ": '" + g('form') + "',\n" +
       "    " + g('id') + ": '" + g('color') + "',\n" +
-      '\n/* 3) 승화 사슬을 이으려면 js/growth.js 의 CHAIN 에 (사가고만) */\n' +
+      '\n/* 3) 승화 사슬을 이으려면 js/growth.js 의 CHAIN 에 (사가만리만) */\n' +
       "    " + g('id') + ": { to: '상위종id', herb: 50, why: '까닭' },\n" +
       '\n/* 4) _test.html 의 펫 수 기대치, 5) 다섯 판 전부에 같은 조각을 붙인다 */\n';
     say('조각을 만들었습니다');
@@ -1216,7 +1216,7 @@ window.DG_NO_ACCOUNT = true;
     if (!raw) { say('붙여넣은 것이 없습니다'); return; }
     var o;
     try { o = JSON.parse(raw); } catch (e) { say('JSON 이 아닙니다'); return; }
-    if (!o || !o.player || !o.dex) { say('사가고 세이브가 아닌 것 같습니다'); return; }
+    if (!o || !o.player || !o.dex) { say('사가만리 세이브가 아닌 것 같습니다'); return; }
     if (!confirm('지금 프로필의 진행을 덮어씁니다. 계속할까요?')) { return; }
     try { localStorage.setItem(C.SAVE_KEY, JSON.stringify(o)); } catch (e) { say('저장하지 못했습니다'); return; }
     C.load();

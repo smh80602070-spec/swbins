@@ -63,7 +63,7 @@
     return isNaN(n) ? def : n;
   }
 
-  /** asset3d — 사가고와 같은 것을 쓴다(사가블로 4단계, `assets/ASSET_LICENSES.md`) */
+  /** asset3d — 사가만리와 같은 것을 쓴다(사가나락 4단계, `assets/ASSET_LICENSES.md`) */
   function AS() { return global.DG.asset3d; }
   /** 몸짓(§5.16, `gesture.js`) — 손잡이 dungeon.gesture 가 0 이면 plan 이 늘 base 를 돌려준다 */
   function GS() { return global.DG.gesture; }
@@ -605,7 +605,7 @@
     var g = new T.Group();
     var AS3 = AS();
     if (kind === 'npc') {
-      /* 마을 사람 — 사가고와 같은 GLB(사람 창고)를 쓴다. 진영색 대신
+      /* 마을 사람 — 사가만리와 같은 GLB(사람 창고)를 쓴다. 진영색 대신
          **이 사람 고유의 옷 빛깔**로 물들인다(town.js 의 뜻 그대로) */
       var nc = hexOf(ref && ref.color, 0x8a6f4e);
       /* 세 시대 손님(§5.20)은 제 몸(`folk:*`, 제 클립·제 옷) — 물들이지 않는다 */

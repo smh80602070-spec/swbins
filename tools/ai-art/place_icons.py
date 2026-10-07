@@ -6,7 +6,7 @@
   content/<키>.png           알맹이만(투명) — 등급이 바뀌는 곳(무기 희귀도)에서 틀을 따로 얹을 때
   frames/grade0~4.png        등급 틀 128px
   license/<키>.license.json  항목마다 출처(AI = gen.py 기록, 코드 생성 = icon_pack.py CC0)
-  map.json                   "<판>:<종류>:<id>" → {key, grade, mode, name} (판·종류 이름은 인벤토리와 같다 — 사가고 특산물·성유물처럼 id 가 겹쳐서 종류까지 넣는다)
+  map.json                   "<판>:<종류>:<id>" → {key, grade, mode, name} (판·종류 이름은 인벤토리와 같다 — 사가만리 특산물·성유물처럼 id 가 겹쳐서 종류까지 넣는다)
 이름 정책: 표시 글자(name)는 각 판 데이터의 가명 그대로 읽어 온다 — 여기서 새로 짓지 않는다.
 """
 import datetime
@@ -77,7 +77,7 @@ for e in plan['entries']:
     if not e['name']:
         e['name'] = WN.get(e['id'], e['id'])
     k = '%s:%s:%s' % (e['game'], e['kind'], e['id'])
-    while k in mp:      # 같은 종류 안에서도 id 가 겹치는 것(사가의숲 옷 'none' 둘 — 머리·염색)은 #2 를 붙인다
+    while k in mp:      # 같은 종류 안에서도 id 가 겹치는 것(사가마을 옷 'none' 둘 — 머리·염색)은 #2 를 붙인다
         k += '#2'
     if e['mode'] == 'skip':
         mp[k] = {'mode': 'skip', 'name': e['name']}

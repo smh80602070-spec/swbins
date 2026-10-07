@@ -1,4 +1,4 @@
-// 사가국지 2D 국토 지도 꾸밈(W-0023)이 실제 주소로 받아지는지 본다 — map2d.terrain·castle 이 돌려주는 SVG 조각과 그 안의 이미지 주소
+// 사가천하 2D 국토 지도 꾸밈(W-0023)이 실제 주소로 받아지는지 본다 — map2d.terrain·castle 이 돌려주는 SVG 조각과 그 안의 이미지 주소
 //   node pw-map2d.mjs
 // 땅 종류 넷(plain·hill·mount·river)이 든 가짜 성 목록으로 terrain 을, 병력 단계 셋(1.6·2.8·3.6)으로 castle 을 불러 문자열을 만들고,
 // 그 안의 href 를 전부 fetch 해 200 인지 본다. 3D 가 안 서 있는(2D) 상태에서만 문자열이 나온다. 스크린샷 없음.

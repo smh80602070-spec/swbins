@@ -2,7 +2,7 @@
  * 편집기 공용 "▶ 실행" 창 — 편집기 화면 오른쪽에 게임을 띄운다(편집기 서버의 `/play/<판>/`, gameserve.js).
  *
  *   SagaPlay.open(판, at?)       창을 열고 그 판을 띄운다. 자리를 주면 거기서 시작(받는 판만 — gameserve.js START)
- *                                at = {x, y}(사가고 미터) · {in, x, y, name}(사가스토리 사냥터·사가블로 마을) · {in, name}(사가국지 성)
+ *                                at = {x, y}(사가만리 미터) · {in, x, y, name}(사가종횡 사냥터·사가나락 마을) · {in, name}(사가천하 성)
  *   SagaPlay.reloadIfOpen()      저장한 뒤 부른다 — 열려 있으면 새로 띄워 고친 것을 곧바로 본다
  *   SagaPlay.mount(el, getGame)  el 안에 [판 고르기][▶ 실행] 단추를 붙인다(판이 정해지지 않은 화면용)
  *
@@ -13,11 +13,11 @@
   'use strict';
 
   var GAMES = [
-    { id: 'saga-go', name: '사가고', save: 'deungyong-go/' },
-    { id: 'saga-dungeon', name: '사가블로', save: 'yeoksa-dungeon/' },
-    { id: 'saga-forest', name: '사가의숲', save: 'yeoksa-village/' },
-    { id: 'saga-story', name: '사가스토리', save: 'yeoksa-side/' },
-    { id: 'saga-realm', name: '사가국지', save: 'saga-realm/' }
+    { id: 'saga-go', name: '사가만리', save: 'deungyong-go/' },
+    { id: 'saga-dungeon', name: '사가나락', save: 'yeoksa-dungeon/' },
+    { id: 'saga-forest', name: '사가마을', save: 'yeoksa-village/' },
+    { id: 'saga-story', name: '사가종횡', save: 'yeoksa-side/' },
+    { id: 'saga-realm', name: '사가천하', save: 'saga-realm/' }
   ];
   var panel = null, frame = null, cur = null, phone = false;
 

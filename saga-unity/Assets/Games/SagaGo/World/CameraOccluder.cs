@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Saga.Go.World
 {
     /// <summary>
-    /// PLAN.md 109-9 "건물 가림 카메라"(웹 사가고 ⑯ 뒷부분) — 사람이 밟지 않는 부분(지붕)에 다는 트리거 충돌체 표식.
+    /// PLAN.md 109-9 "건물 가림 카메라"(웹 사가만리 ⑯ 뒷부분) — 사람이 밟지 않는 부분(지붕)에 다는 트리거 충돌체 표식.
     /// 걷기·등반·다른 판정은 트리거를 안 보고, 카메라(`CameraRig`)만 이 표식이 붙은 트리거에 닿으면 그 앞까지 당긴다.
     /// </summary>
     public class CameraOccluder : MonoBehaviour

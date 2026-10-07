@@ -1,4 +1,4 @@
-"""사가블로 — CDP(devtools 프로토콜)로 실제 벽시계 시간을 기다렸다 찍는 스크린샷.
+"""사가나락 — CDP(devtools 프로토콜)로 실제 벽시계 시간을 기다렸다 찍는 스크린샷.
 
 `chrome --headless=new --screenshot`은 `load` 이벤트 직후 바로 찍는다. 이 판의
 3D 인물(`asset3d.js`의 `buildHero`)은 몸·옷·머리·애니메이션 GLB 넷을 `load` 뒤에

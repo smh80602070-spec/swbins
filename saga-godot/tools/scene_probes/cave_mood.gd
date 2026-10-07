@@ -1,5 +1,5 @@
 extends Node
-## R-3(gd.dg.cave-mood) 사가블로 굴혈 mood 3종(흙·석회·용암) + 문 아치 — scene_probe_host 로 돈다(오토로드 필요).
+## R-3(gd.dg.cave-mood) 사가나락 굴혈 mood 3종(흙·석회·용암) + 문 아치 — scene_probe_host 로 돈다(오토로드 필요).
 ## ① mood 셋이 서로 다르고 방·문·복도 표가 셋 다 갖는다 ② 표의 GLB 가 전부 열린다 ③ 방 번호 → mood 가 순환(0,1,2,0,…)
 ## ④ 문 아치(ExitGate·EntranceGate)에 메시가 실제로 있고(09-23 빠뜨렸던 버그) 방 남북 끝에 놓인다
 

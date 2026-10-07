@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">사가고</string>
-    <string name="title_activity_main">사가고</string>
+    <string name="app_name">사가만리</string>
+    <string name="title_activity_main">사가만리</string>
     <string name="package_name">com.swbin.deungyonggo</string>
     <string name="custom_url_scheme">com.swbin.deungyonggo</string>
 </resources>

@@ -46,7 +46,7 @@
   /**
    * 카메라를 어디에 두나 — **키 1 로 눕힌 모델** 기준의 순수 계산이다.
    * 펫(네발짐승)은 몸통이 옆으로 길어 더 물러나 낮은 곳을 옆모습에 가깝게
-   * 본다(사가블로·사가고 `portrait3d.js` camPlan 과 같은 판단, 2026-09-05 이식).
+   * 본다(사가나락·사가만리 `portrait3d.js` camPlan 과 같은 판단, 2026-09-05 이식).
    */
   /** 2026-09-23 "고품질 셀 셰이딩급" — 사람 초상은 **흉상**(가슴 위). 예전 구도(머리~허벅지)는 카드에서 얼굴이 작았다.
    *  손잡이 `portrait3d.bust`(0 이면 예전 구도). 키 1 모델에서 0.65~1.07 쯤이 카드 세로에 들어온다 */
@@ -266,7 +266,7 @@
 
     camera.fov = plan.fov;
     camera.aspect = plan.aspect;
-    camera.far = Math.max(40, plan.dist * 3);   // 긴 몸(공룡·고래)은 petFrame 이 멀리 물러나 고정 far 를 넘어 빈 카드가 된다(사가블로에서 겪음)
+    camera.far = Math.max(40, plan.dist * 3);   // 긴 몸(공룡·고래)은 petFrame 이 멀리 물러나 고정 far 를 넘어 빈 카드가 된다(사가나락에서 겪음)
     var cx = plan.cx || 0, cz = plan.cz || 0;
     camera.position.set(cx, plan.look + plan.dist * Math.sin(plan.pitch), cz + plan.dist);
     camera.lookAt(cx, plan.look, cz);

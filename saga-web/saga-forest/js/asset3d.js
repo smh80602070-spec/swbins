@@ -49,8 +49,8 @@
      HANDOFF.md 2026-09-19 절) */
   var BLD_GEN = 'assets/generated/buildings/';
   var ANI = 'assets/models/animals/';
-  var ANI_EXTRA = 'assets/models/animals_extra/', ANI_EXTRA2 = 'assets/models/animals_extra2/';   // 2026-09-24 사가블로에서 복사(펫 초상)
-  var STANDIN = 'assets/models/standin/';   // 신수·오마주 대역 — 사가고에서 복사
+  var ANI_EXTRA = 'assets/models/animals_extra/', ANI_EXTRA2 = 'assets/models/animals_extra2/';   // 2026-09-24 사가나락에서 복사(펫 초상)
+  var STANDIN = 'assets/models/standin/';   // 신수·오마주 대역 — 사가만리에서 복사
   var MON = 'assets/models/monsters/';
   var PEOPLE = 'assets/models/people/regular/';
   /* 2026-09-19 — VRoid Studio 공식 CC0 샘플 아바타(AvatarSample_A/B/C,
@@ -162,7 +162,7 @@
    * 실제로 걸린다(바로 아래 `.concat`). 이 파일 머리말대로 이 표를 실제로
    * 세우는 3D 화면(PLAN PHASE 2, world3d)이 아직 없어 지금은 화면에 아무
    * 영향이 없다 — 그 화면이 생기면 이 20종이 뒤틀리지 않고 걷는 인물로
-   * 선다(사가스토리 `asset3d.js`에 같은 이식을 했으니 거기서 먼저 실기
+   * 선다(사가종횡 `asset3d.js`에 같은 이식을 했으니 거기서 먼저 실기
    * 확인이 될 수도 있다). */
   var PEOPLE_MPFB = 'assets/models/people/mpfb_real/';
   var HERO_RECIPES_MPFB = ['female', 'male', 'v3', 'v7', 'v8', 'v9', 'v10', 'v11', 'v12',
@@ -456,11 +456,11 @@
        다 대신하긴 안 맞다(사족 셋도 마찬가지 근사이긴 하나, 그때 이미 확정된
        결정이라 이번엔 건드리지 않는다). `assets/ASSET_LICENSES.md` 참고 */
     /* 2026-09-24 — **펫 105종 전부 제 모델(또는 대역).** 여태 이 판은 늑대·사슴·여우 셋을 105종이 id 해시로 돌려 입어
-       고래도 범도 여우였다. 사가블로의 Quaternius CC0(실제 동물 78종)와 사가고의 신수·오마주 대역(같은 모델, 사용자 결정
-       "사가고처럼 대역 입히기")을 복사해 사가스토리와 같은 짝으로 못 박는다. 형태 표(아래 두 줄)는 되돌림 자리로 남긴다.
+       고래도 범도 여우였다. 사가나락의 Quaternius CC0(실제 동물 78종)와 사가만리의 신수·오마주 대역(같은 모델, 사용자 결정
+       "사가만리처럼 대역 입히기")을 복사해 사가종횡와 같은 짝으로 못 박는다. 형태 표(아래 두 줄)는 되돌림 자리로 남긴다.
        2026-09-25 — **대역도 종마다 한 벌**(tools/asset-audit/CHARACTER_UNIQUENESS.md ④): 신수·오마주·까치 28종이 서로 안 겹친다 —
        Quaternius "Ultimate Monsters"(CC0) 열여덟 벌(용·유령·예티·버섯이…) + 코끼리(불가사리) · 범·여우·말·흰말은 같은 종이라 그 모델.
-       다섯 판 같은 배정(사가고 asset3d.js 주석). */
+       다섯 판 같은 배정(사가만리 asset3d.js 주석). */
     'pet:pk_alakazam': STANDIN + 'Wizard.glb',
     'pet:pk_bulbasaur': STANDIN + 'Mushnub.glb',
     'pet:pk_charizard': STANDIN + 'Dragon.glb',
@@ -710,7 +710,7 @@
 
   var loaderInst = null;
   /** 2026-09-09 — `build/three/entry.js`가 `MeshoptDecoder`를 내보내게 바뀌면서
-   *  (사가블로가 2026-09-07에 이미 확인한 요령을 옮겼다) 여기서 GLTFLoader에
+   *  (사가나락가 2026-09-07에 이미 확인한 요령을 옮겼다) 여기서 GLTFLoader에
    *  한 번만 물려 둔다. 압축 안 된 옛 GLB는 이 디코더가 있어도 그냥 무시되니
    *  (`EXT_meshopt_compression` 확장이 없으면 안 탄다) 회귀 걱정 없다 —
    *  반대로 이걸 안 물리면 `extensionsRequired`로 박힌 압축 GLB(이 판이
@@ -789,9 +789,9 @@
     var toon = !!(TN && TN.TOON_ON());
     root.traverse(function (o) {
       if (!o.isMesh || !o.material) { return; }
-      /* 법선이 아예 없는 GLB(2026-09-23 예방 — 사가국지 킷배싱 탑이 이것으로 새까맸다): GLTFLoader 는 이때 flatShading 을 켜
+      /* 법선이 아예 없는 GLB(2026-09-23 예방 — 사가천하 킷배싱 탑이 이것으로 새까맸다): GLTFLoader 는 이때 flatShading 을 켜
          주지만 toonify 가 만드는 MeshToonMaterial 은 flatShading 을 안 받아(r169) 법선 0 → 통째로 새까맣다.
-         사가블로 delam 이 2026-09-04 에 먼저 밟은 함정과 같은 처방 — 지오메트리에서 계산해 채운다 */
+         사가나락 delam 이 2026-09-04 에 먼저 밟은 함정과 같은 처방 — 지오메트리에서 계산해 채운다 */
       if (o.geometry && o.geometry.attributes.position && !o.geometry.attributes.normal) { o.geometry.computeVertexNormals(); }
       var one = Array.isArray(o.material) ? o.material : [o.material];
       var out = one.map(function (m) {

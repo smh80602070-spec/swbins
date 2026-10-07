@@ -36,7 +36,7 @@
   /** 이 게임의 표시 이름 — 가입 화면 제목에 쓴다 (게임마다 다르다) */
   var GAME_NAME = CFG.name || '게임';
 
-  /** 진행 한 조각("Lv.3" 식) — 판이 `CFG.bit(세이브)` 를 주면 그걸로(사가국지: 몇 년 몇 월·성 수) */
+  /** 진행 한 조각("Lv.3" 식) — 판이 `CFG.bit(세이브)` 를 주면 그걸로(사가천하: 몇 년 몇 월·성 수) */
   function bit(s) {
     if (CFG.bit) { return CFG.bit(s); }
     return 'Lv.' + (((s && s.player) || {}).level || 1);

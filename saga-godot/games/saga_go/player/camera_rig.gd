@@ -2,7 +2,7 @@ extends Node3D
 
 ## VERTICAL_SLICE.md Phase 5 — 55~57절. Player의 자식으로 붙어 위치는
 ## 저절로 따라오고(Camera Follow), 회전·줌만 이 스크립트가 다룬다.
-## 웹판 사가고 README "끌면 카메라가 돈다"와 같은 조작 감각 —
+## 웹판 사가만리 README "끌면 카메라가 돈다"와 같은 조작 감각 —
 ## 10px을 넘게 끌어야 돌기 시작한다(탭과 구분).
 
 @onready var spring_arm: SpringArm3D = $SpringArm3D

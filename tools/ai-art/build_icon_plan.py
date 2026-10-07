@@ -14,7 +14,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 inv = json.load(open(os.path.join(HERE, 'data', 'icon_inventory.json'), encoding='utf-8'))
 trial = {i['id']: i for i in json.load(open(os.path.join(HERE, 'data', 'icon_trial30.json'), encoding='utf-8'))['items']}
 
-# 룬 글자·등급(사가블로 data-gem.js) · 염색 색(사가의숲 data-village.js) — 코드 생성이라 게임 데이터를 그대로 읽는다
+# 룬 글자·등급(사가나락 data-gem.js) · 염색 색(사가마을 data-village.js) — 코드 생성이라 게임 데이터를 그대로 읽는다
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
 RUNE_SRC = {m.group(1): (m.group(2), int(m.group(3))) for m in re.finditer(
     r"key: '(\w+)', glyph: '(.)', name: '[^']*', tier: (\d)", open(os.path.join(ROOT, 'saga-web', 'saga-dungeon', 'js', 'data-gem.js'), encoding='utf-8').read())}
@@ -32,7 +32,7 @@ T['spade'] = 'single shovel, one spade, iron shovel head, wooden handle'
 
 # ── 쪽(서랍)별 추가 태그 ──────────────────────────────────────────────────────────────────────
 T.update({
-    # 사가블로 기본 장비
+    # 사가나락 기본 장비
     'w_cheoltae': 'bow (weapon), iron bow, heavy bow, metal limbs, bowstring',
     'w_bugae': 'axe, battle axe, single blade, wooden handle, steel axe head',
     'w_geukchang': 'halberd, polearm, axe blade, spear tip, long pole',
@@ -56,7 +56,7 @@ T.update({
     'c_dokkaebi': 'bell, small bronze bell, ringing bell, red cord, charm',
     'c_gyeong': 'bronze mirror, round hand mirror, ancient mirror, ornate back',
     'r_geumji': 'ring, gold ring, jewelry, thick band',
-    # 사가블로 유니크
+    # 사가나락 유니크
     'u_byeoksan': 'flail, ornate chain flail, spiked ball, glowing, gold ornament',
     'u_cheonjigang': 'spear, ornate spear, long gold-trimmed polearm, glowing tip, red tassel',
     'u_cheongryong': 'glaive, polearm, green blade, crescent blade, dragon engraving, ornate',
@@ -101,7 +101,7 @@ T.update({
     'amber': 'amber, orange gemstone, translucent, faceted gem, insect inside',
     'onyx': 'onyx, black gemstone, polished, glossy, faceted gem',
     'voidstone': 'magnetic crystal, sci-fi gem, glowing purple crystal, blue sparks, metal cage',
-    # 사가스토리 일반 장비(1~4 = 낮은→높은 등급)
+    # 사가종횡 일반 장비(1~4 = 낮은→높은 등급)
     'st_sword1': 'wooden sword, practice sword, plain wood, training',
     'st_sword2': 'sword, curved sword, iron blade, ring pommel, plain hilt',
     'st_sword3': 'sword, blue steel blade, straight sword, fine hilt, blue tassel',
@@ -142,7 +142,7 @@ T.update({
     'st_ear2': 'earring, silver earring, drop, jewelry',
     'st_ear3': 'earring, jade earring, green stone, jewelry',
     'st_ear4': 'earring, golden earring, gold, jewel',
-    # 사가스토리 주문서·유니크
+    # 사가종횡 주문서·유니크
     'st_scroll_atk': 'scroll, rolled paper, red wax seal, red ribbon, magic scroll',
     'st_scroll_def': 'scroll, rolled paper, blue wax seal, blue ribbon, magic scroll',
     'st_scroll_hp': 'scroll, rolled paper, green wax seal, green ribbon, magic scroll',
@@ -156,7 +156,7 @@ T.update({
     'st_u_ring': 'ring, nine dragon ring, gold, jewels, glowing',
     'st_u_necklace': 'necklace, glowing pearl pendant, ornate, gold chain, shiny',
     'st_u_earring': 'earring, crescent moon, silver, glowing, ornate',
-    # 사가국지 보물
+    # 사가천하 보물
     'rl_itm_ironblade': 'sword, iron sword, plain steel blade, simple',
     'rl_itm_warhorse': 'horse head statue, saddle, bridle, brown horse figurine',
     'rl_itm_armor': 'armor, treasure armor, ornate chest armor, gold trim',
@@ -168,12 +168,12 @@ T.update({
     'rl_itm_timeshard': 'crystal shard, glowing broken clock, blue time crystal, sparks, sci-fi',
     'rl_itm_purifier': 'sci-fi device, purifier machine, glowing green core, metal canister',
     'rl_itm_boneseal': 'bone seal, skull stamp, bone token, dark purple glow, ornate',
-    # 사가고 가방 물건
+    # 사가만리 가방 물건
     'go_scroll': 'scroll, recruitment letter, rolled paper, red ribbon, seal',
     'feed': 'pet food, small sack, grain bag, wooden bowl, seeds',
     'shard': 'crystal shard, seal fragment, broken stone tablet, glowing',
     'seal': 'shrine seal, stamp, wooden seal, carved, red ink',
-    # 사가고 재료
+    # 사가만리 재료
     'go_apple': 'hawthorn berries, red berries, small fruit, green leaves',
     'clam': 'clam, shellfish, shell, ribbed shell, seafood',
     'go_orchid': 'orchid, blue orchid, flower, elegant petals, stem',
@@ -182,13 +182,13 @@ T.update({
     'snow_bloom': 'flower, white snowflower, frost, ice petals, bloom',
     'meat': 'meat, raw meat, bone, steak on bone, red meat',
     'mint': 'mint leaves, green herb, sprig, leaves',
-    # 사가고 성유물 세트(세트 대표 — 조각은 게임이 5부위 틀로 처리)
+    # 사가만리 성유물 세트(세트 대표 — 조각은 게임이 5부위 틀로 처리)
     'af_gladiator': 'trophy, gladiator crest, bronze cup, laurel, shield badge',
     'af_crimson': 'crimson flower, red petals, red crystal, ornate feather, gem',
     'af_viridescent': 'green feather, wind charm, green crystal, leaf ornament',
     'af_emblem': 'emblem, golden crest, ornate badge, shield, gold trim',
     'af_depth': 'blue crystal, deep sea pearl, ocean charm, coral, shell',
-    # 사가의숲 열매·견과·광물·꽃·약초
+    # 사가마을 열매·견과·광물·꽃·약초
     'fo_peach': 'peach, pink fruit, green leaf',
     'fo_persim': 'persimmon, orange fruit, soft fruit, calyx',
     'fo_plum': 'plum, small plum fruit, green and red, plum blossom twig',
@@ -314,7 +314,7 @@ T.update({
     'wear_gat': 'gat hat, black horsehair hat, wide brim, high crown, tied cord',
     'wear_hairpin': 'bridal crown, jeweled headpiece, ornate coronet, beads, tassels',
     'wear_helmet': 'war hat, felt hat with plume, red tassel, officer hat',
-    # 사가블로·godot·unity 공용 도감 무기 16 (키 = id)
+    # 사가나락·godot·unity 공용 도감 무기 16 (키 = id)
     'gw_sword_0': 'wooden sword, practice sword, plain wood, training',
     'gw_claymore_0': 'wooden greatsword, practice big blade, plain wood, wide plank sword',
     'gw_polearm_0': 'wooden pole, plain long stick, training spear, no blade',
@@ -360,7 +360,7 @@ REROLL = {k: 1 for k in (
     'st_top2 st_scroll_hp fo_seoan st_neck1 st_neck3 st_ring1 st_glv1 wear_braid wear_coat wear_leather wear_robe wear_scholar wear_spacesuit '
     'wear_topknot u_hopae u_unmun u_yusu w_gakgung w_wolto fo_jokja fo_firefly fo_bignail fo_geomungo gw_polearm_0 gw_bow_0 st_u_cape c_hopae'.split())}
 
-# 사가의숲 옷·머리 11 은 make_wear_batch.py 로 후보 3장씩 뽑아 골랐다(10-03) — 아래 태그가 실제로 쓰인 것
+# 사가마을 옷·머리 11 은 make_wear_batch.py 로 후보 3장씩 뽑아 골랐다(10-03) — 아래 태그가 실제로 쓰인 것
 T.update({
     'wear_leather': 'tunic, brown leather jerkin, laced front, short sleeves, clothing laid flat, torso garment',
     'wear_robe': 'hanbok, long white robe, blue collar, wide sleeves, clothing laid flat, garment',
@@ -390,11 +390,11 @@ ALIAS = {
     ('saga-story', 'def100'): 'st_scroll_def', ('saga-story', 'def60'): 'st_scroll_def',
     ('saga-story', 'hp60'): 'st_scroll_hp', ('saga-story', 'hp10'): 'st_scroll_hp',
 }
-# 사가블로의 사다리 용 접두사: 키 = id(이미 w_·a_·u_ 로 갈린다). 아닌 판은 접두사를 붙인다.
+# 사가나락의 사다리 용 접두사: 키 = id(이미 w_·a_·u_ 로 갈린다). 아닌 판은 접두사를 붙인다.
 PREFIX = {'saga-story': 'st_', 'saga-realm': 'rl_', 'saga-forest': 'fo_'}
 SKIP = {('saga-forest', 'none'), ('saga-forest', 'off'), ('saga-forest', 'on')}
 DYE = {'white', 'ink', 'forest', 'indigo', 'crimson', 'gold', 'plum'}   # 숲 염색 일곱 → color 모드(코드 색 견본)
-RUNES = {'cheon', 'ji', 'in', 'mu', 'mun', 'chung', 'ui', 'yong', 'ji2', 'sin', 'ryong', 'wang'}   # 사가블로 룬 12 → glyph
+RUNES = {'cheon', 'ji', 'in', 'mu', 'mun', 'chung', 'ui', 'yong', 'ji2', 'sin', 'ryong', 'wang'}   # 사가나락 룬 12 → glyph
 SETS = {'chungmu', 'waryong', 'horang', 'cheongnang', 'cheolong', 'eunha', 'maenghon', 'biyeong', 'paewang', 'hyeonhak'}
 GO_ART = {'0': 'af_gladiator', '1': 'af_crimson', '2': 'af_viridescent', '3': 'af_emblem', '4': 'af_depth'}
 GO_SPECIAL = {'0': 'go_orchid', '1': 'conch', '2': 'ash_flower'}
@@ -459,7 +459,7 @@ def key_of(game, iid, kind):
 def main():
     entries, keys = [], {}
     problems = []
-    # 같은 id 의 서로 다른 항목끼리 부딪히면 안 된다(예: 사가블로 gem 'pearl' ↔ 숲 'pearl' 은 일부러 합침)
+    # 같은 id 의 서로 다른 항목끼리 부딪히면 안 된다(예: 사가나락 gem 'pearl' ↔ 숲 'pearl' 은 일부러 합침)
     for r in inv['rows']:
         game, kind = r['game'], r['kind']
         items = r['items']

@@ -122,7 +122,7 @@ Idle·Walk 등 클립이 열둘 넘게 있는데(직접 GLB 를 열어 확인), 
 
 ### 넣은 파일 — saga-go 에서 그대로 옮긴 것 (**md5 동일**, 새로 받지 않았다)
 
-이미 사가고에서 CC0 로 확인된 파일을 그대로 복사했다 — 세 벌째(사가블로) 복사와
+이미 사가만리에서 CC0 로 확인된 파일을 그대로 복사했다 — 세 벌째(사가나락) 복사와
 같은 요령이다. 자세한 출처·이식 경위는 `../../saga-go/assets/ASSET_LICENSES.md` 참고.
 
 | 파일 | 원본 위치 |
@@ -192,7 +192,7 @@ Idle·Walk 등 클립이 열둘 넘게 있는데(직접 GLB 를 열어 확인), 
 마루)는 3D 마을 바닥에 안 나와 빠졌다.
 
 **2026-09-10 — 3D 쪽만 다른 CC0 사진으로 교체.** 사용자가 "바닥 그래픽이
-왜 이래, 사가고·사가블로처럼 바꿔 달라" 고 신고해 실제 파일을 열어 보니
+왜 이래, 사가만리·사가나락처럼 바꿔 달라" 고 신고해 실제 파일을 열어 보니
 위 `tile_grass.png`·`tile_dirt.png`·`tile_stone.png` 가 16x16 에 색이
 **둘뿐인** 거의 단색 조각이었다 — 위 문단이 "시트에서 오려 낸 그림"이라
 적어 둔 것과 실물이 안 맞았다(자르는 과정이 그때 깨졌던 것으로 보인다).
@@ -329,7 +329,7 @@ IBL(환경광)을 얹었다. **하늘 색은 안 바꾼다** — `scene.backgrou
 반사·거칠기만 사실적으로 만든다(자세한 사정은 `village-view3d.js` 의
 `loadEnvironment()` 주석 참고). 못 받아도 조용히 넘어가고 옛 조명만으로 돈다.
 
-파싱에 필요한 `RGBELoader` 는 번들(`js/vendor/three.iife.js`, 사가고·사가블로와
+파싱에 필요한 `RGBELoader` 는 번들(`js/vendor/three.iife.js`, 사가만리·사가나락와
 md5 까지 같은 그 파일)엔 없어서, three.js r169 예제 소스를 esbuild 로 따로
 번들해 `js/vendor/RGBELoader.js` 로 얹었다(전역 `THREE.RGBELoader`) — three
 본체 파일은 안 건드렸다.
@@ -1008,34 +1008,34 @@ PLAN.md 양쪽에 "캠프 소품이 미착수"로 적힌 옛 기록이 있었는
 캐릭터당 드로우콜 90~135 → 14~19). 다섯 판 복사본은 같은 파일(md5 동일)이다.
 
 
-## 도감 펫 초상 105종 — 사가블로·사가고에서 복사 (2026-09-24)
+## 도감 펫 초상 105종 — 사가나락·사가만리에서 복사 (2026-09-24)
 
 여태 펫 105종이 늑대·사슴·여우 셋을 돌려 입던 것을 고치려고 **그대로 복사**했다(재가공 없음). `js/asset3d.js` `pet:pt_*` 로 등록.
-실제 동물은 사가블로(출처 `saga-web/saga-dungeon/assets/ASSET_LICENSES.md` "도감(펫) 초상"·"펫 — poly.pizza 동물 번들 셋"·"펫 2차분"),
-신수·포켓몬 오마주 대역은 사가고(출처 `saga-web/saga-go/assets/ASSET_LICENSES.md`, 사용자 결정 "사가고처럼 대역 입히기"). 전부 Quaternius 계열 CC0.
+실제 동물은 사가나락(출처 `saga-web/saga-dungeon/assets/ASSET_LICENSES.md` "도감(펫) 초상"·"펫 — poly.pizza 동물 번들 셋"·"펫 2차분"),
+신수·포켓몬 오마주 대역은 사가만리(출처 `saga-web/saga-go/assets/ASSET_LICENSES.md`, 사용자 결정 "사가만리처럼 대역 입히기"). 전부 Quaternius 계열 CC0.
 
 | 폴더 | 파일 |
 |---|---|
 | `models/animals/` | `Tiger.glb`·`Bear.glb`·`Panda.glb`·`Monkey.glb`·`Boar.glb`·`Owl.glb`·`Cat.glb`·`Crane.glb`·`Koi.glb`·`Husky.glb`·`ShibaInu.glb`·`Mesh_Crow.gltf`·`Mesh_Crow.bin`·`Tex_Crow.webp` |
 | `models/animals_extra/` | `Alpaca.glb`·`Bull.glb`·`Cow.glb`·`Cow_Farm.glb`·`Dolphin.glb`·`Donkey.glb`·`Fish1.glb`·`Fish2.glb`·`Fish3.glb`·`Fox.glb`·`Horse.glb`·`Horse_Farm.glb`·`Llama.glb`·`MantaRay.glb`·`Pig.glb`·`Pug.glb`·`Shark.glb`·`Sheep.glb`·`Stag.glb`·`Whale.glb`·`White_Horse.glb`·`Zebra.glb` |
 | `models/animals_extra2/` | `Anglerfish.glb`·`Apatosaurus.glb`·`Armored_Catfish.glb`·`Betta.glb`·`Black_Lion_Fish.glb`·`Blobfish.glb`·`Blue_Goldfish.glb`·`Blue_Tang.glb`·`Butterfly_Fish.glb`·`Cardinal_Fish.glb`·`Clownfish.glb`·`Coral_Grouper.glb`·`Cowfish.glb`·`Flatfish.glb`·`Flower_Horn.glb`·`Goblin_Shark.glb`·`Goldfish.glb`·`Humphead.glb`·`Koi.glb`·`Lionfish.glb`·`Mandarin_Fish.glb`·`Moorish_Idol.glb`·`Parasaurolophus.glb`·`Parrot_Fish.glb`·`Piranha.glb`·`Puffer.glb`·`Red_Snapper.glb`·`Royal_Gramma.glb`·`Shark.glb`·`Stegosaurus.glb`·`Sunfish.glb`·`Swordfish.glb`·`T_Rex.glb`·`Tang.glb`·`Tetra.glb`·`Triceratops.glb`·`Tuna.glb`·`Turbot.glb`·`Velociraptor.glb`·`Worm.glb`·`Yellow_Tang.glb`·`Zebra_Clown_Fish.glb` |
-| `models/standin/` | `Birb.glb`·`Demon.gltf`·`Orc.gltf`·`Pigeon.glb`·`Snake_angry.glb` (사가고에서) |
+| `models/standin/` | `Birb.glb`·`Demon.gltf`·`Orc.gltf`·`Pigeon.glb`·`Snake_angry.glb` (사가만리에서) |
 
-## 세 시대 손님 몸 (2026-09-24, PLAN §5.13) — 사가고·사가블로에서 복사
+## 세 시대 손님 몸 (2026-09-24, PLAN §5.13) — 사가만리·사가나락에서 복사
 
 | 자리 | 파일 | 원본 |
 |---|---|---|
-| `models/foes/` | `Robot_Walker.glb` | 사가고(quaternius-showcase 미러 `cyberpunk_pack/Enemy_2Legs`, Meshopt) |
-| `models/people/folk/` | `m_Worker.glb`·`m_Hoodie.glb` | 사가고(원래 사가블로 poly.pizza "Ultimate Modular Men Pack") |
-| `models/monsters/` | `Ghost.glb` | 사가블로 `monsters/quaternius/Ghost_810f60a2.glb`(Ultimate Monsters) |
+| `models/foes/` | `Robot_Walker.glb` | 사가만리(quaternius-showcase 미러 `cyberpunk_pack/Enemy_2Legs`, Meshopt) |
+| `models/people/folk/` | `m_Worker.glb`·`m_Hoodie.glb` | 사가만리(원래 사가나락 poly.pizza "Ultimate Modular Men Pack") |
+| `models/monsters/` | `Ghost.glb` | 사가나락 `monsters/quaternius/Ghost_810f60a2.glb`(Ultimate Monsters) |
 
-전부 © Quaternius, CC0 1.0. 제 클립 내장. 경위는 사가고 `assets/ASSET_LICENSES.md` "Quaternius — 세 시대 사람·적" 절.
+전부 © Quaternius, CC0 1.0. 제 클립 내장. 경위는 사가만리 `assets/ASSET_LICENSES.md` "Quaternius — 세 시대 사람·적" 절.
 
 ## 신수·오마주·까치 대역 28종 — 종마다 한 벌 (2026-09-25, CHARACTER_UNIQUENESS ④)
 
-Quaternius "Ultimate Monsters"(CC0, 사가블로 `assets/models/monsters/quaternius/` 에서 md5 그대로 복사 — 출처는 그쪽 `assets/ASSET_LICENSES.md` "Ultimate Monsters 45종" 절) 열여덟 벌을 `models/standin/<이름>.glb` 로(해시 꼬리만 뗌).
+Quaternius "Ultimate Monsters"(CC0, 사가나락 `assets/models/monsters/quaternius/` 에서 md5 그대로 복사 — 출처는 그쪽 `assets/ASSET_LICENSES.md` "Ultimate Monsters 45종" 절) 열여덟 벌을 `models/standin/<이름>.glb` 로(해시 꼬리만 뗌).
 
-> **Elephant** (`models/standin/Elephant.glb`) — © **Poly by Google**, [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/). poly.pizza `/m/a27MA0rXyyj`, 사가블로 `models/animals/Elephant.glb` 복사. **저작자 표시 필요** — 이 문구가 그 표시다.
+> **Elephant** (`models/standin/Elephant.glb`) — © **Poly by Google**, [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/). poly.pizza `/m/a27MA0rXyyj`, 사가나락 `models/animals/Elephant.glb` 복사. **저작자 표시 필요** — 이 문구가 그 표시다.
 
 | 펫 | 모델 |
 |---|---|
@@ -1049,7 +1049,7 @@ Quaternius "Ultimate Monsters"(CC0, 사가블로 `assets/models/monsters/quatern
 | 불가사리 | **Elephant**(쇠를 먹는 코끼리 코 짐승) |
 | 삿갓동이·뿔도롱·뿔낙지·날주머니·방아토끼·이끼잔나비 | Mushnub·Dino·Squidle·Glub·Bunny·Monkroose |
 | 묵방울·어둑귀·눈머리·겹날주머니·고깔도사 | Pink_Slime·Ghost·Yeti·Glub_Evolved·Wizard |
-| 누렁날개·노을용·물이무기·별손님·복고양이 | Alpaking·Dragon·Snake_angry·Alien_2(두발 외계인 — 방울형 Alien 은 사가고 들판 적과 같은 파일이라 피함)·Cat(괴물 고양이) |
+| 누렁날개·노을용·물이무기·별손님·복고양이 | Alpaking·Dragon·Snake_angry·Alien_2(두발 외계인 — 방울형 Alien 은 사가만리 들판 적과 같은 파일이라 피함)·Cat(괴물 고양이) |
 
 ## 들짐승 2D 시트 여섯 — 3D 모델을 옆에서 구운 것 (2026-09-25, `assets/sprites2d/animals/`)
 

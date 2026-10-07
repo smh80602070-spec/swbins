@@ -1,7 +1,7 @@
 class_name RealmRules
 extends RealmState
 
-## 사가국지 경영 규칙 1층 — 무장 성장·승진·명령 7종과 설전·문답.
+## 사가천하 경영 규칙 1층 — 무장 성장·승진·명령 7종과 설전·문답.
 ## 상태 변수(`var`)는 아래 층 `RealmState` 에 있고, 저장·불러오기는 맨 위 `RealmSaveState`(autoload)가 한다.
 ## 상속 사슬: SagaSaveBase ← RealmState ← RealmRules ← RealmRulesWar ← RealmRulesMonth ← RealmSaveState (G-0006, 부모는 자식 함수를 못 부르니 피호출 쪽이 아래).
 

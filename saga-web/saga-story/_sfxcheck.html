@@ -18,7 +18,7 @@
 /* 소리가 **실제로 나는지**는 자가진단(`_test.html`)으로 못 본다 — 진단은 아무것도
    누르지 않아 브라우저가 소리를 늘 잠가 두기 때문이다(그 규칙이 맞다).
    그래서 여기서 `unlock()` 을 스스로 부르고 소리표를 하나씩 내 본다.
-   사가블로의 같은 이름 파일과 같은 결이다.
+   사가나락의 같은 이름 파일과 같은 결이다.
      chrome --headless=new --disable-gpu --dump-dom …/_sfxcheck.html  →  SFX unlock=true · 낸 소리 n/n */
 (function () {
   var S = DG.sfx, errs = [], keys = Object.keys(S.CUES), i = 0, played = 0;

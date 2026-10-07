@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_rockgiant_01",
- "_note": "단계 3 괴물 비교용 — saga-unity Hulk(Mixamo Pumpkinhulk) 자리 후보(사가의숲 바위도깨비). 게임 인물 아님(이름 없음). 땅딸막한 거구·무거운 눈두덩·넓은 턱·작은 눈·주름진 잿빛 돌 피부·어깨·팔·등·정강이에 박힌 모난 바위 판·이끼빛 허리 천. 뿔 없음(두목·무쇠도깨비와 안 겹치게).",
+ "_note": "단계 3 괴물 비교용 — saga-unity Hulk(Mixamo Pumpkinhulk) 자리 후보(사가마을 바위도깨비). 게임 인물 아님(이름 없음). 땅딸막한 거구·무거운 눈두덩·넓은 턱·작은 눈·주름진 잿빛 돌 피부·어깨·팔·등·정강이에 박힌 모난 바위 판·이끼빛 허리 천. 뿔 없음(두목·무쇠도깨비와 안 겹치게).",
  "macro": {"gender": 1.0, "age": 0.75, "muscle": 1.0, "weight": 1.0, "height": 0.8, "proportions": 0.0,
            "race": {"asian": 0.2, "caucasian": 0.5, "african": 0.3}},
  "targets": {"forehead-nubian-incr": 1.0, "eyebrows-trans-down": 1.0, "eyebrows-angle-down": 0.4, "eye-scale-decr": 0.7,

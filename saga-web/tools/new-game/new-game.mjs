@@ -287,7 +287,7 @@ files['js/game.js'] = `/**
 files['sw.js'] = `/**
  * 서비스 워커 — ${title} 오프라인 뼈대
  * 파일을 늘렸으면 SHELL 에 넣고 **VERSION 도 같이 올린다** — 안 올리면 옛 캐시가 계속 나온다.
- * 같은 출처는 네트워크 먼저(no-store), 실패하면 캐시(사가의숲 sw.js 가 밟은 함정을 그대로 피한다).
+ * 같은 출처는 네트워크 먼저(no-store), 실패하면 캐시(사가마을 sw.js 가 밟은 함정을 그대로 피한다).
  */
 var VERSION = '${verPrefix}-v0.1.0';
 var APP_CACHE = '${verPrefix}-app-' + VERSION;
@@ -424,7 +424,7 @@ const checklist = [
   `  · tools/asset-audit/audit.py 의 WEB_GAMES 에 ${folder}`,
   `  · saga-web/tools/content-editor/server.js 의 GAMES 에 ${folder}(도감을 여섯 벌 함께 고치려면)`,
   `C:\\swbins2\\services.json 허브 카드(별개 저장소, register.mjs 안 건드림)`,
-  `icons/ 는 사가의숲 것을 임시로 복사했다 — 이 판 아이콘으로 바꿀 것(register.mjs 안 건드림)`,
+  `icons/ 는 사가마을 것을 임시로 복사했다 — 이 판 아이콘으로 바꿀 것(register.mjs 안 건드림)`,
 ];
 
 files['CLAUDE.md'] = `# ${folder} (${title})
@@ -504,7 +504,7 @@ files['assets/ASSET_LICENSES.md'] = `# 에셋 출처와 라이선스 (${folder})
 (새 판은 audit 의 WEB_GAMES 에 먼저 넣어야 잡힌다).
 
 ## 임시 아이콘
-\`icons/\` 는 사가의숲 아이콘을 복사해 둔 것이다(이 저장소 자체 제작물) — 이 판 아이콘으로 바꿀 것.
+\`icons/\` 는 사가마을 아이콘을 복사해 둔 것이다(이 저장소 자체 제작물) — 이 판 아이콘으로 바꿀 것.
 `;
 
 // ── 복사해 오는 것 ─────────────────────────────────────────────────────────

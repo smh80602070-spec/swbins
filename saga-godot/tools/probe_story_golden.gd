@@ -1,6 +1,6 @@
 extends SceneTree
 
-## 사가스토리 무예 "골든" 점검 — story_player.gd 를 상속 층으로 쪼갤 때(G-0007) 동작이 한 글자도 안 바뀌었는지 본다.
+## 사가종횡 무예 "골든" 점검 — story_player.gd 를 상속 층으로 쪼갤 때(G-0007) 동작이 한 글자도 안 바뀌었는지 본다.
 ##   godot --headless --path saga-godot --script res://tools/probe_story_golden.gd
 ## 플레이어를 매번 새로 띄워(스킬 전부 3렙·MP 가득·쿨다운 0) `_cast_*` 를 하나씩 직접 부르고, 부른 뒤 스크립트 var 값·
 ## 새로 생긴 노드(종류·스크립트)·더미 적 체력을 모아 한 줄 md5 로 낸다. 끝에 "PROBE story_golden OK md5=…".

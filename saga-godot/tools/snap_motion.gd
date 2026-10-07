@@ -1,5 +1,5 @@
 extends SceneTree
-## 사가고 마을에서 가장 가까운 적 곁에 서서 공격 단추를 눌러 가며 몇 프레임 간격으로 화면을 PNG 로 — 움직임(휘두르기·타격 연출)을 눈으로 볼 때(평소엔 안 쓴다).
+## 사가만리 마을에서 가장 가까운 적 곁에 서서 공격 단추를 눌러 가며 몇 프레임 간격으로 화면을 PNG 로 — 움직임(휘두르기·타격 연출)을 눈으로 볼 때(평소엔 안 쓴다).
 ##
 ##   SAGA_MOTION_OUT=<절대 경로 폴더> "$GODOT_CONSOLE" --path saga-godot --rendering-method mobile --position -4000,0 --resolution 1280x720 --script res://tools/snap_motion.gd </dev/null
 ##

@@ -135,7 +135,7 @@
     return out;
   }
 
-  /** url 하나당 부위·정규화 값을 한 번만 계산해 캐시한다(사가고류 acquire() 와 같은 요령) */
+  /** url 하나당 부위·정규화 값을 한 번만 계산해 캐시한다(사가만리류 acquire() 와 같은 요령) */
   function ensureParts(url, done) {
     var c = partsCache[url];
     if (c) {

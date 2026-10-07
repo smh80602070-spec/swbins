@@ -1,7 +1,7 @@
 extends RefCounted
 
 ## 도움말·첫 걸음 안내 (2026-09-30 새 시스템) — 키가 많아졌는데(알 I·마당 T·회차 N·탈것 V·업적 Y…) 게임 안에 알려 주는 곳이 없었다.
-## 표(글)는 여기, 화면·안내 띄우기는 world/help_guide.gd, 본 안내 목록은 PartyState.tips(저장). docs/HOW_TO_PLAYTEST.md 의 사가고 표를 옮긴 것이라
+## 표(글)는 여기, 화면·안내 띄우기는 world/help_guide.gd, 본 안내 목록은 PartyState.tips(저장). docs/HOW_TO_PLAYTEST.md 의 사가만리 표를 옮긴 것이라
 ## 새 키·시스템이 생기면 여기도 한 줄 더한다.
 
 ## [이름, [[키, 설명]…]] — 도움말 화면(F1)의 갈래.

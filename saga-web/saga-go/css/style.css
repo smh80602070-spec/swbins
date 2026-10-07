@@ -1,4 +1,4 @@
-/* 사가고 — UI
+/* 사가만리 — UI
    지도를 전체화면에 깔고, 그 위에 유리(glass) 패널을 띄우는 구성. */
 
 :root {
@@ -196,7 +196,7 @@ body.mapfocus #top, body.mapfocus #autobar, body.mapfocus #near, body.mapfocus #
   width: 40px; height: 40px; border-radius: 50%; font-size: 17px; background: none; border: 0;
 }
 /* ── 가상 조이스틱·PC 방향버튼 — 2026-09-09 ────────────────────
- * "움직이는 게 너무 힘들다"(사가블로 등과 같은 재신고) — 이 판은 실제
+ * "움직이는 게 너무 힘들다"(사가나락 등과 같은 재신고) — 이 판은 실제
  * GPS 로 걷는 게 원작 컨셉이라 오버월드 이동에는 안 맞지만, PC 프로토타입
  * 용 "키보드(모의 이동)" 모드(world.js mode==='keyboard')에는 그대로
  * 맞는다 — world.js 에 이미 있던 setStick(dx,dy) 채널(그때까지 아무 화면도
@@ -516,7 +516,7 @@ small.muted { display: block; margin-top: 7px; font-size: 11px; }
 #encounter.show { display: flex; animation: fade .18s ease-out; }
 @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 
-/* ── 도적전(사가블로식 실시간) HUD ─────────────────────────
+/* ── 도적전(사가나락식 실시간) HUD ─────────────────────────
  * `#encounter`와 달리 **화면을 안 막는다** — 지도를 계속 드래그·탭으로
  * 움직일 수 있어야 사거리 안으로 걸어 들어갈 수 있다. 그래서 컨테이너는
  * pointer-events:none 이고, 실제 버튼만 auto 로 되돌린다. */
@@ -1180,7 +1180,7 @@ body.dungeon-open { overflow: hidden; }
   .modeswitch { flex-direction: column; }
 }
 
-/* ══ 사가고 v1.0 — 고딕 던전 · 오브 HUD · 서당 · 3D ═══════════════ */
+/* ══ 사가만리 v1.0 — 고딕 던전 · 오브 HUD · 서당 · 3D ═══════════════ */
 
 /* ── 3D 모드 — 지평선 안개를 더 깊게 (포켓몬GO식 카메라) ──
    **`.r3d` 가 없을 때만 켠다.** 이 안개는 2D 캔버스가 3D 지평선인 척 눈속임하는
@@ -2044,5 +2044,5 @@ body.fs-on #dock, body.fs-on #near { display: none !important; }
 /* 지도 출처 표기(W-0059, OSM 타일 조건) — 맨 아래 가운데, 눌리는 단추 밑에 깔릴 만큼 작게 */
 #map-attrib { position: fixed; left: 50%; bottom: calc(2px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 3; font-size: 11px; line-height: 1.2; color: rgba(255, 255, 255, .72); text-shadow: 0 1px 2px rgba(0, 0, 0, .8); text-decoration: none; white-space: nowrap; padding: 1px 6px; }
 #map-attrib:hover { color: #fff; text-decoration: underline; }
-/* 프로필 카드 안 <small>(튜토리얼 "(1/5)")이 브라우저 기본 0.8배로 9px 대로 떨어졌다 — 바닥 11px(W-0093, 사가국지 strategy.css 와 같은 줄) */
+/* 프로필 카드 안 <small>(튜토리얼 "(1/5)")이 브라우저 기본 0.8배로 9px 대로 떨어졌다 — 바닥 11px(W-0093, 사가천하 strategy.css 와 같은 줄) */
 :where(#profile) small { font-size: max(11px, .8em); }

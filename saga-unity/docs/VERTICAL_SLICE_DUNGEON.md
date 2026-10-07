@@ -2,7 +2,7 @@
 
 PLAN.md 51~65장 확장 순서의 두 번째 게임(GO 다음 DUNGEON) 착수 —
 `docs/VERTICAL_SLICE.md`(GO)가 웹판 `saga-go`를 그대로 옮긴 것과 같은
-원칙으로, 이 문서는 웹판 `saga-dungeon`(사가블로, `C:\swbins\saga-dungeon`)
+원칙으로, 이 문서는 웹판 `saga-dungeon`(사가나락, `C:\swbins\saga-dungeon`)
 의 실제 수치를 옮긴다. **다만 GO와 달리 saga-dungeon 웹판은 이미 아주
 깊다** — 오픈월드 필드·바이옴 5종·POI·엘리트/보스·세공·행상·도감까지
 여러 세션에 걸쳐 쌓인 큰 시스템이다(`saga-dungeon/PLAN.md` 참고, 이

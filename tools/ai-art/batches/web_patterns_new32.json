@@ -1,5 +1,5 @@
 {
- "model": "sd_xl_base_1.0",
+ "model": "z-image-turbo",
  "out": "web_patterns_64",
  "defaults": {
   "prompt_prefix": "seamless tileable fabric swatch",

@@ -30,7 +30,7 @@ node saga-web/tools/mobile-layout/probe.js saga-go --only=landscape --scene=main
 
 ## 장면 (`games.js`)
 
-- `intro` — 첫 고르기 창(사가블로 출사표 · 사가스토리 첫 장면 · 사가국지 시나리오). 잰 뒤 넘긴다
+- `intro` — 첫 고르기 창(사가나락 출사표 · 사가종횡 첫 장면 · 사가천하 시나리오). 잰 뒤 넘긴다
 - `main` — 첫 화면(판이 스스로 연 시트는 닫는다)
 - `시트:<id>` — 독의 `[data-sheet]` 단추마다 하나. 시트 안쪽만 잰다
 
@@ -44,4 +44,4 @@ node saga-web/tools/mobile-layout/probe.js saga-go --only=landscape --scene=main
 - 폰 가로(844×390)는 **폭 규칙으론 데스크톱**이다. 세로로 선 독·목표판·초상이 키 390 을 넘친다 —
   `@media (max-height: 500px) and (min-width: 781px)` 로 따로 잡는다.
 - jsdom 은 레이아웃이 없어(모든 rect 0) 이 점검을 못 한다.
-- `--perf` 의 삼각형·호출은 헤드리스 등급 기준이다(실기 AUTO 등급과 다를 수 있다). 비교는 같은 명령 전후로. 흩어진 `InstancedMesh` 는 덩이째 컬링이 안 먹는다 — 세 판(사가고 `world3d.instCull`·사가국지 `statCull`·사가블로 `fieldInstance.cull`)은 자리마다 자른다.
+- `--perf` 의 삼각형·호출은 헤드리스 등급 기준이다(실기 AUTO 등급과 다를 수 있다). 비교는 같은 명령 전후로. 흩어진 `InstancedMesh` 는 덩이째 컬링이 안 먹는다 — 세 판(사가만리 `world3d.instCull`·사가천하 `statCull`·사가나락 `fieldInstance.cull`)은 자리마다 자른다.

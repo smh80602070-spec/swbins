@@ -1,5 +1,5 @@
 extends Node
-## G-0033 사가고 게임패드(player/gamepad.gd·camera_rig 오른쪽 스틱) 자동 점검 — 평소엔 안 붙는다. test_village.gd 가 SAGA_GAMEPAD_PROBE 가 있을 때만 단다.
+## G-0033 사가만리 게임패드(player/gamepad.gd·camera_rig 오른쪽 스틱) 자동 점검 — 평소엔 안 붙는다. test_village.gd 가 SAGA_GAMEPAD_PROBE 가 있을 때만 단다.
 ##
 ##   SAGA_GAMEPAD_PROBE=1 "$GODOT" --headless --path saga-godot res://games/saga_go/world/TestVillage.tscn
 ##

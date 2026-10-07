@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Saga.Realm.Data
 {
     /// <summary>
-    /// PLAN.md 109-16 시나리오 「천하와 균열」 진행(웹 사가국지 `js/scenario.js` · 정본 `scenario/saga-realm.md`) — 표(<see cref="RealmScenarioData"/>)의 열아홉 카드를
+    /// PLAN.md 109-16 시나리오 「천하와 균열」 진행(웹 사가천하 `js/scenario.js` · 정본 `scenario/saga-realm.md`) — 표(<see cref="RealmScenarioData"/>)의 열아홉 카드를
     /// **사람 세력에게 정해진 때에 표 순서대로 하나씩** 사건 카드(`RealmEventState`, 세 갈래 고르기)로 낸다. 앞 카드에 답해야 다음이 온다. 월간 무작위 사건보다 먼저 뜬다.
     /// 열림: 시작 뒤 `MinTurn` 달이 지났거나(또는 `OrCities` 성 이상을 쥐었거나) — 6막은 승리를 하나 이룬 뒤, 7막 첫 카드는 시간 틈 사람 아홉이 다 우리 사람이 된 뒤.
     /// 효과는 이미 있는 손잡이(금·수도 군량/치안/훈련/기술·시간 틈 사람 등용)만 만진다 — 새 판정 없음. 금이 모자라 못 내면 카드를 안 끝내고 다음 달에 다시 묻는다.

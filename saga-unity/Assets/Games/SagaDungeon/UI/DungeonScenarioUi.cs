@@ -9,7 +9,7 @@ using Saga.Dungeon.Data;
 namespace Saga.Dungeon.UI
 {
     /// <summary>
-    /// PLAN.md 109-16 시나리오 장면 상자(웹 사가블로 `scenario.js` #scnbox) — 칸(마을·갈림길)에서만 뜬다. 누르면(또는 Space·Enter) 다음 줄, 마지막에서 누르면 닫힌다.
+    /// PLAN.md 109-16 시나리오 장면 상자(웹 사가나락 `scenario.js` #scnbox) — 칸(마을·갈림길)에서만 뜬다. 누르면(또는 Space·Enter) 다음 줄, 마지막에서 누르면 닫힌다.
     /// 고르기 장면(망루성 성주의 이름)은 마지막 줄 뒤에 답 단추 둘이 나온다(1·2 키). 건너뛰기(Esc)는 고르기 앞까지만 간다.
     /// 씬 빌더가 아니라 `DungeonScenarioRunner` 가 Play 때 지어 리스너가 런타임 리스너다 — 씬 재빌드 없이 붙는다.
     /// </summary>

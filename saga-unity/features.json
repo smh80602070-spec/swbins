@@ -1525,7 +1525,7 @@
  },
  {
   "id": "un.go.sky-weather",
-  "name": "하늘 구름 3겹·계절·날씨(비·눈·안개 입자·안개 농도) — 사가고 마을·사가의숲·사가스토리 하늘 씬(U-0047, 고돗 weather.gd·season.gd 이식)",
+  "name": "하늘 구름 3겹·계절·날씨(비·눈·안개 입자·안개 농도) — 사가만리 마을·사가마을·사가종횡 하늘 씬(U-0047, 고돗 weather.gd·season.gd 이식)",
   "files": [
    "saga-unity/Assets/SagaCore/SkyWeather.cs",
    "saga-unity/Assets/SagaCore/SkyPass.cs"
@@ -1577,7 +1577,7 @@
  },
  {
   "id": "un.go.weapon-models",
-  "name": "사가고 무기 모델 — 인물 무기를 wpn_* GLB 로 쥐고 편성 교체로 몸이 바뀌면 새 손으로 따라옴(U-0049, U-0038 GO 후속)",
+  "name": "사가만리 무기 모델 — 인물 무기를 wpn_* GLB 로 쥐고 편성 교체로 몸이 바뀌면 새 손으로 따라옴(U-0049, U-0038 GO 후속)",
   "files": [
    "saga-unity/Assets/Games/SagaGo/Data/GoWeaponModels.cs",
    "saga-unity/Assets/Games/SagaGo/Player/WeaponVisual.cs"

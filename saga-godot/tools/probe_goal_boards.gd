@@ -3,8 +3,8 @@ extends SceneTree
 ## 다섯 판 목표판(saga_core/ui/goal_board.gd 라벨 + 판별 피드: dungeon world/test_room.gd·forest world/forest_village.gd·story ui/goal_board_feed.gd·realm world/realm_city.gd 의 `_refresh_goal_board`) 자동 점검 — 라벨 하나와 각 판 상태만으로 세 줄(지금·이번 세션·이번 주)이 맞게 조립되는지 본다. 씬 전체는 안 세운다(함수만 붙인 노드).
 ##   godot --headless --path saga-godot --script res://tools/probe_goal_boards.gd
 ## ① 라벨: 처음엔 빈 글 · "goal_board" 그룹 · set_goals 가 "🎯 지금 / ⏱ 세션 / 📅 주" 세 줄
-## ② 사가블로: 난입 중 > 부적 던전 > 방 클리어 k/7 순으로 "지금" · 세션 = 금 증가 + 새로 연 방 수 · 주 "—"
-## ③ 사가의숲: 주민 부탁 완수/6 · 세션 = 금·채집 증가 ④ 사가스토리: 사명 완수/13 · 세션 = 처치·금 증가 ⑤ 사가국지: 성 n/107 편입 · 세션 = 금·편입 증가 · 셋째 줄 = 가장 가까운 승리 조건 진척 %(통일·문화·외교, 결과가 있으면 "승리 달성").
+## ② 사가나락: 난입 중 > 부적 던전 > 방 클리어 k/7 순으로 "지금" · 세션 = 금 증가 + 새로 연 방 수 · 주 "—"
+## ③ 사가마을: 주민 부탁 완수/6 · 세션 = 금·채집 증가 ④ 사가종횡: 사명 완수/13 · 세션 = 처치·금 증가 ⑤ 사가천하: 성 n/107 편입 · 세션 = 금·편입 증가 · 셋째 줄 = 가장 가까운 승리 조건 진척 %(통일·문화·외교, 결과가 있으면 "승리 달성").
 ## 상태는 끝에 되돌린다. 끝에 "PROBE goal_boards OK" 또는 "PROBE goal_boards FAIL n".
 
 var fails := 0
@@ -38,7 +38,7 @@ func _initialize() -> void:
 	board.set_goals("지금 할 일", "이번 세션", "이번 주")
 	check(board.text == "🎯 지금 할 일\n⏱ 이번 세션\n📅 이번 주" and board.text.count("\n") == 2, "set_goals: 세 줄(🎯 지금 · ⏱ 세션 · 📅 주)")
 
-	# ② 사가블로
+	# ② 사가나락
 	var DH: Node = root.get_node("DungeonHordeState")
 	var DS: Node = root.get_node("DungeonSigilState")
 	var DSave: Node = root.get_node("DungeonSaveState")
@@ -55,7 +55,7 @@ func _initialize() -> void:
 	DG.gold = 740
 	board.text = ""
 	room._refresh_goal_board()
-	check(board.text == "🎯 방 클리어 2/%d\n⏱ 금 +240 · 새로 연 방 +1\n📅 —" % rc, "사가블로: 방 클리어 2/7 · 금 +240 · 새로 연 방 +1 · 주 —")
+	check(board.text == "🎯 방 클리어 2/%d\n⏱ 금 +240 · 새로 연 방 +1\n📅 —" % rc, "사가나락: 방 클리어 2/7 · 금 +240 · 새로 연 방 +1 · 주 —")
 	DS.add_sigil(4)
 	DS.activate(0)
 	room._refresh_goal_board()
@@ -72,7 +72,7 @@ func _initialize() -> void:
 	DG.gold = saved_d.gold
 	room.queue_free()
 
-	# ③ 사가의숲
+	# ③ 사가마을
 	var F: Node = root.get_node("ForestSaveState")
 	var saved_f := {"q": F.quests_done.duplicate(), "gold": F.gold, "items": F.items.duplicate()}
 	var village: Node = _host("res://games/saga_forest/world/forest_village.gd", true)
@@ -83,13 +83,13 @@ func _initialize() -> void:
 	F.gold = 160
 	F.items = {"꽃": 4, "물고기": 3}
 	village._refresh_goal_board()
-	check(board.text == "🎯 주민 부탁 2/6\n⏱ 골드 +60 · 채집 +3\n📅 —", "사가의숲: 주민 부탁 2/6 · 골드 +60 · 채집 +3 · 주 —")
+	check(board.text == "🎯 주민 부탁 2/6\n⏱ 골드 +60 · 채집 +3\n📅 —", "사가마을: 주민 부탁 2/6 · 골드 +60 · 채집 +3 · 주 —")
 	F.quests_done = saved_f.q
 	F.gold = saved_f.gold
 	F.items = saved_f.items
 	village.queue_free()
 
-	# ④ 사가스토리
+	# ④ 사가종횡
 	var S: Node = root.get_node("StorySaveState")
 	var Combat: GDScript = load("res://games/saga_story/data/story_combat.gd")
 	var saved_s := {"q": S.quests_done.duplicate(), "kills": S.kills, "gold": S.gold}
@@ -101,13 +101,13 @@ func _initialize() -> void:
 	S.kills = 17
 	S.gold = 350
 	feed._process(0.0)
-	check(board.text == "🎯 사명 완수 3/%d\n⏱ 처치 +7 · 골드 +350\n📅 —" % Combat.QUESTS.size(), "사가스토리: 사명 완수 3/13 · 처치 +7 · 골드 +350 · 주 —")
+	check(board.text == "🎯 사명 완수 3/%d\n⏱ 처치 +7 · 골드 +350\n📅 —" % Combat.QUESTS.size(), "사가종횡: 사명 완수 3/13 · 처치 +7 · 골드 +350 · 주 —")
 	S.quests_done = saved_s.q
 	S.kills = saved_s.kills
 	S.gold = saved_s.gold
 	feed.queue_free()
 
-	# ⑤ 사가국지
+	# ⑤ 사가천하
 	var R: Node = root.get_node("RealmSaveState")
 	var Cities: GDScript = load("res://games/saga_realm/data/realm_cities.gd")
 	var saved_r := {"cities": R.cities.duplicate(true), "gold": R.gold, "result": R.result, "correct": R.quiz.get("correct", 0), "streak": R.diplomacy_peace_streak}
@@ -121,7 +121,7 @@ func _initialize() -> void:
 	R.diplomacy_peace_streak = 0
 	R.result = ""
 	city._refresh_goal_board()
-	check(board.text == "🎯 성 4/%d 편입\n⏱ 골드 +600 · 편입 +1\n📅 천하통일 진척 3%%" % total, "사가국지: 성 4/107 편입 · 골드 +600 · 편입 +1 · 통일 3%%(4/107)")
+	check(board.text == "🎯 성 4/%d 편입\n⏱ 골드 +600 · 편입 +1\n📅 천하통일 진척 3%%" % total, "사가천하: 성 4/107 편입 · 골드 +600 · 편입 +1 · 통일 3%%(4/107)")
 	R.quiz.correct = 100
 	city._refresh_goal_board()
 	check(board.text.split("\n")[2] == "📅 문화 진척 50%", "문화 진척이 더 크면 그쪽(정답 100/200 = 50%)")

@@ -1,4 +1,4 @@
-// 사가국지 시나리오 단계(PLAN §5-13)·회차(§5-14): 실제 화면에서 설전·일기토·성 차지 카드 흐름과 회차 단추가 서나 · 예외 없나
+// 사가천하 시나리오 단계(PLAN §5-13)·회차(§5-14): 실제 화면에서 설전·일기토·성 차지 카드 흐름과 회차 단추가 서나 · 예외 없나
 // 사진은 `shot` 을 줄 때만(shots/rk_stage_*). PC_PROF=tmp/… 새 프로필로 돌릴 것. 서버: node serve.mjs C:/swbins/saga-web 8871
 import { launch, sleep } from './cdp.mjs';
 const shot = process.argv.includes('shot');

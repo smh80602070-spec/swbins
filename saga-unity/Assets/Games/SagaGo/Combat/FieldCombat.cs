@@ -40,7 +40,7 @@ namespace Saga.Go.Combat
         public const float SwapCooldownSec = 1f;
         public const float RegenDelaySec = 8f;
         public const float RegenPerSec = 0.04f; // 최대 체력 비율
-        // PLAN.md 109-14-2 강공격·낙하 공격(웹 사가고 ⑲-2 · Godot 106 ⑧ 칸, 거리 × 1.85)
+        // PLAN.md 109-14-2 강공격·낙하 공격(웹 사가만리 ⑲-2 · Godot 106 ⑧ 칸, 거리 × 1.85)
         public const float ChargeHoldSec = 0.4f;
         public const float ChargeStamina = 20f;
         public const float ChargeReach = 5.9f;       // 3.2m
@@ -1118,9 +1118,9 @@ namespace Saga.Go.Combat
             ApplyLook();
         }
 
-        // ---- 109-14-11 고유·갈래 스킬·해방(웹 사가고 ⑲-11 `kitSkill`·`kitBurst`) ----
+        // ---- 109-14-11 고유·갈래 스킬·해방(웹 사가만리 ⑲-11 `kitSkill`·`kitBurst`) ----
 
-        // ---- PLAN.md 109-14-22 활 조준 사격(웹 사가고 ⑲-22) — 활 인물만 R(🎯): 제자리·어깨 너머, 방향 입력이 겨눈 쪽을 돌린다(초당 2.4 라디안).
+        // ---- PLAN.md 109-14-22 활 조준 사격(웹 사가만리 ⑲-22) — 활 인물만 R(🎯): 제자리·어깨 너머, 방향 입력이 겨눈 쪽을 돌린다(초당 2.4 라디안).
         // 겨눈 쪽 ±0.16 라디안·74m(웹 40m × 1.85) 안의 적·상자 과녁·상자 석등·이야기 석등·제단에 저절로 잠김. 누르는 동안 충전, 떼면 쏜다.
         // 화살 초속 111m·사거리 83m(웹 60·45 × 1.85), 1.4초 다 차면 인물 원소 ×1.25, 덜 차면 물리 ×0.45(원소 부여면 그 원소). 다 찬 화살이
         // 아직 나를 모르는 적(쫓기·예고·숨 고르기가 아님)에 박히면 반드시 치명(급소 — 세로 조준이 없는 판이라 머리 대신 기습 저격).

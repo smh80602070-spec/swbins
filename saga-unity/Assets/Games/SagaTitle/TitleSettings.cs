@@ -8,7 +8,7 @@ namespace Saga.Title
     /// PLAN.md 110 ⑤c 타이틀 설정 — 언어·전체 음량·배경음·효과음·진동을 **다섯 판에 한꺼번에** 적는다.
     /// 판 설정(판 안의 "설정")은 PlayerPrefs 키가 판마다 따로라(`saga_go_language` 등) 그대로 두고, 여기선 다섯 판의
     /// 공개 설정 API 를 차례로 부른다 — 판 안에서 한 판만 바꾼 값은 다음에 타이틀에서 바꿀 때까지 그 판에만 남는다.
-    /// 다섯 판 값이 서로 다르면 "판마다 다름"으로 보이고, 누르면 사가고 값의 다음 칸으로 다섯을 맞춘다.
+    /// 다섯 판 값이 서로 다르면 "판마다 다름"으로 보이고, 누르면 사가만리 값의 다음 칸으로 다섯을 맞춘다.
     /// UI 크기·그래픽 품질은 판마다 HUD·장면이 달라 판 설정에만 둔다.
     /// </summary>
     public static class TitleSettings
@@ -22,7 +22,7 @@ namespace Saga.Title
             public Func<bool> GetVib; public Action<bool> SetVib;
         }
 
-        // TitleScreen.Games 순서(사가고가 첫째 — 섞였을 때의 기준).
+        // TitleScreen.Games 순서(사가만리가 첫째 — 섞였을 때의 기준).
         private static readonly Game[] Games =
         {
             new Game
@@ -79,7 +79,7 @@ namespace Saga.Title
         /// <summary>진동은 폰에서만 줄을 보인다(PC 는 진동이 없다).</summary>
         public static bool ShowVibration => Application.isMobilePlatform;
 
-        /// <summary>타이틀·일시정지 메뉴의 언어 = 사가고 판 언어(다섯이 섞였을 때도 첫째).</summary>
+        /// <summary>타이틀·일시정지 메뉴의 언어 = 사가만리 판 언어(다섯이 섞였을 때도 첫째).</summary>
         public static string Language => Games[0].GetLang();
 
         /// <summary>공통 UI 언어를 판 설정에서 다시 읽어 SagaCore 에 적는다(타이틀이 켜질 때·언어를 바꿀 때).</summary>

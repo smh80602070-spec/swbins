@@ -1,5 +1,5 @@
 extends Node
-## G-0031 — 사가고 도감 화면. X(터치 "도감")로 연다. 탭 셋:
+## G-0031 — 사가만리 도감 화면. X(터치 "도감")로 연다. 탭 셋:
 ##   인물 — 도감 인물 105(HEROES 중 시대가 삼국지·한국사·일본사·세계사이고 국지 전용 rf_ 가 아닌 것). 영입(PartyState.members)·
 ##          만남(CodexState "record")·모름("???"). 고른 칸은 오른쪽에 새 인물 몸(characters_dex, 같은 이름)이 돈다.
 ##   신수 — PETS 11. 잡음(CodexState "pet")이면 CreatureBuilder 몸·설명, 아니면 검은 실루엣.

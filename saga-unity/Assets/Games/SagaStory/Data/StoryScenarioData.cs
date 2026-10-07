@@ -3,7 +3,7 @@ using Saga.Core;
 namespace Saga.Story.Data
 {
     /// <summary>
-    /// PLAN.md 109-16 사가스토리 시나리오 「이름 없는 떠돌이」 표(웹 사가스토리 `js/data-scenario.js` · 정본 `scenario/saga-story.md`) — 이 트랙엔 사냥터가 들판 하나와 비경뿐이라
+    /// PLAN.md 109-16 사가종횡 시나리오 「이름 없는 떠돌이」 표(웹 사가종횡 `js/data-scenario.js` · 정본 `scenario/saga-story.md`) — 이 트랙엔 사냥터가 들판 하나와 비경뿐이라
     /// 트랙 메모대로 **들판(p1_field)·첫 전직(p1_job)·비경(p3_labyrinth) 셋**만 넣는다(표 원본은 웹 파일에서 스크립트로 옮김). 웹 `stage` 단계는 뺐고(이미 들판),
     /// 돈·두루마리 보상은 이 트랙에 없어 뺐다. 나머지 장은 사냥터가 생긴 뒤 같은 생성기에 장 id 를 더한다.
     /// 표 본문은 `Resources/scenario_story.json`(tasks U-0009) — 고치려면 웹 표를 고치고 다시 내보낸다(`ScenarioJsonExport`). 글은 `story_*.json` 의 `sscen.*` 키.

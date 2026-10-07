@@ -6,14 +6,14 @@
 try{if(location.protocol!=='file:'&&/\/index\.html$/.test(location.pathname))history.replaceState(null,'',location.pathname.replace(/index\.html$/,'')+location.search+location.hash);}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <meta name="theme-color" content="#12141a">
-<title>사가스토리 — 뛰고 썬다</title>
+<title>사가종횡 — 뛰고 썬다</title>
 <link rel="stylesheet" href="css/style.css">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icons/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="사가스토리">
+<meta name="apple-mobile-web-app-title" content="사가종횡">
 <meta name="mobile-web-app-capable" content="yes">
 </head>
 <body>
@@ -29,10 +29,10 @@ try{if(location.protocol!=='file:'&&/\/index\.html$/.test(location.pathname))his
 <div id="vignette"></div>
 
 <!-- 사냥 화면을 크게 보기 — #top 밖에 따로 둔다. 도구줄을 감췄을 때도 이 단추만은
-     남아 있어야 다시 불러올 수 있다(사가고 UI와 같은 결) -->
+     남아 있어야 다시 불러올 수 있다(사가만리 UI와 같은 결) -->
 <button class="icon-btn" id="btn-focus" title="사냥 화면을 크게 봅니다 (도구줄 감추기)"><span data-icon="expand">⛶</span></button>
 
-<!-- 상단: 프로필 · 재화 · 도구 (사가고 UI와 같은 결 — 넓은 화면에서는 다 펼치고,
+<!-- 상단: 프로필 · 재화 · 도구 (사가만리 UI와 같은 결 — 넓은 화면에서는 다 펼치고,
      좁은 화면에서만 ⋯ 뒤로 접는다) -->
 <div id="top">
   <div class="glass profile" id="profile"></div>
@@ -40,7 +40,7 @@ try{if(location.protocol!=='file:'&&/\/index\.html$/.test(location.pathname))his
     <button class="icon-btn" id="btn-map" title="오버월드 전체 지도 (M)"><span data-icon="map">🗺️</span></button>
     <button class="icon-btn" id="btn-auto" title="자동 사냥 (대신 뛰고 벤다)"><span data-icon="bot">🤖</span></button>
     <!-- 좁은 화면에서만 접힌다. 넓은 화면에서는 서랍이 `display:contents` 로
-         풀려 아래 단추들이 이 줄에 그대로 늘어선다(사가고 UI와 같은 결) -->
+         풀려 아래 단추들이 이 줄에 그대로 늘어선다(사가만리 UI와 같은 결) -->
     <div class="tools-drawer" id="tools-drawer">
       <button class="icon-btn" id="btn-3d" title="3D 바탕 (실험)"><span data-icon="box">🧊</span></button>
       <button class="icon-btn" id="btn-sound" title="소리 (첫 눌림에서 깨어납니다)">🔊</button>
@@ -70,7 +70,7 @@ try{if(location.protocol!=='file:'&&/\/index\.html$/.test(location.pathname))his
 <div id="talkbox"></div>
 
 <!-- 손가락 조작판 — 손가락뿐인 기기(hover:none · pointer:coarse)에서만 css 로 보인다.
-     화면 전체를 숨은 넷으로 나눠 짚던 것 대신, 사가고 UI처럼 실제로 보이는 유리(glass)
+     화면 전체를 숨은 넷으로 나눠 짚던 것 대신, 사가만리 UI처럼 실제로 보이는 유리(glass)
      단추를 준다. 왼쪽 좌우 이동 · 오른쪽 위(점프·오르기·문)·아래(내려가기·앉기) -->
 <div id="touchpad">
   <div class="pad-side pad-l">
@@ -83,7 +83,7 @@ try{if(location.protocol!=='file:'&&/\/index\.html$/.test(location.pathname))his
   </div>
 </div>
 
-<!-- 우하단: 액션 독 (사가고 UI와 같은 결 — 접지 않고 다 펼친다) -->
+<!-- 우하단: 액션 독 (사가만리 UI와 같은 결 — 접지 않고 다 펼친다) -->
 <nav id="dock">
   <button data-sheet="field"><span data-icon="footprints">🏃</span><small>사냥터</small></button>
   <button data-sheet="bag"><span data-icon="backpack">🎒</span><small>가방</small></button>

@@ -214,7 +214,7 @@
     }
   }
 
-  /** 들판 조각 하나를 도형으로 세운다 — 나무·바위는 사가고와 같은 GLB, 나머지는
+  /** 들판 조각 하나를 도형으로 세운다 — 나무·바위는 사가만리와 같은 GLB, 나머지는
    *  여전히 도형이다(PLAN 4절의 우선순위 ⑤나무 ⑥바위까지만 이번에 옮겼다) */
   function piece(p, seed, W, H, stone) {
     var F = global.DG.field3d;
@@ -259,7 +259,7 @@
       g.add(rnode);
     } else if (p.t === 'pillar') {
       /* 폐허의 부러진 기둥 — 꼭 맞는 낱개 기둥 에셋이 없어 무너진 아치(Arch)로
-         대신한다(사가고가 이미 "사당·폐허의 다른 후보"로 적어 둔 것) */
+         대신한다(사가만리가 이미 "사당·폐허의 다른 후보"로 적어 둔 것) */
       var pillarShape = function () {
         var sg = new T.Group();
         box(sg, 0, p.h / 2, 0, 16, p.h, 16, mix(stone, 0xffffff, 0.12), 'flat', true);
@@ -328,7 +328,7 @@
       /* 갈대는 이 판에 GLB 가 없다(위 §6.4) — 도형 그대로, 그래서 늘 흔들린다 */
       box(g, p.x, y + p.h / 2, p.z, 3, p.h, 3, 0x3f5a34, 'sway', false);
     } else if (p.t === 'cavemouth') {
-      /* 동굴 입구 — 사가고가 이미 "광산 어귀"로 적어 둔 그 Mine 을 세운다 */
+      /* 동굴 입구 — 사가만리가 이미 "광산 어귀"로 적어 둔 그 Mine 을 세운다 */
       var caveShape = function () {
         var sg = new T.Group();
         box(sg, 0, p.h * 0.45, 0, p.h * 1.5, p.h, p.h * 1.2, mix(stone, 0x000000, 0.5), 'flat', true);
@@ -343,7 +343,7 @@
       box(g, p.x, y + p.h * 0.3, p.z + p.h * 0.6, p.h * 0.5, p.h * 0.55, 6,
         0x000000, '', false).rotation.y = p.rot;
     } else if (p.t === 'altar') {
-      /* 제단 — 사가고가 "사당" 후보로 적어 둔 Temple 을 세운다. 도형이 얹던
+      /* 제단 — 사가만리가 "사당" 후보로 적어 둔 Temple 을 세운다. 도형이 얹던
          떠 있는 보랏빛 구슬은 **표식이라 그대로 남긴다**(멀리서도 제단인 줄 안다) */
       var altarShape = function () {
         var sg = new T.Group();

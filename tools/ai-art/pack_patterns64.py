@@ -1,7 +1,7 @@
 """K-0006 — 옷 무늬 64종을 이음매 없는 256px webp 타일로 포장하고 patterns.json 을 쓴다.
 
 py tools/ai-art/pack_patterns64.py <기존32폴더> <새32폴더> <출력폴더> [--px 256]
-  입력: 기존 32종 `pat_*.png`(Animagine, web_patterns_32) + 새 32종 `pat_*.png`(sd_xl_base_1.0, web_patterns_64)
+  입력: 기존 32종 `pat_*.png`(Animagine, web_patterns_32) + 새 32종 `pat_*.png`(z-image-turbo, web_patterns_64)
   출력: <출력>/<id>.webp (각 ≤ 60KB, 이음매 처리) · patterns.json({id, era, name, file, model}) · 실패 목록은 stdout
   이음매: make_seamless.seamless() 의 오프셋 크로스페이드. 검사 = 가장자리 두 줄 차이 ÷ 안쪽 인접 줄 차이 ≤ 1.6(비율, 줄무늬 오탐 방지).
 """
@@ -59,7 +59,7 @@ def main():
     era = json.load(open(os.path.join(HERE, 'batches', 'web_patterns_64_era.json'), encoding='utf-8'))
     os.makedirs(out_dir, exist_ok=True)
     table, bad = [], []
-    for model, d in (('animagine-xl-4.0-opt', old_dir), ('sd_xl_base_1.0', new_dir)):
+    for model, d in (('animagine-xl-4.0-opt', old_dir), ('z-image-turbo', new_dir)):
         for f in sorted(os.listdir(d)):
             if not (f.startswith('pat_') and f.endswith('.png')):
                 continue

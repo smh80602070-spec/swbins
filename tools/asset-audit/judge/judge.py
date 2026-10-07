@@ -221,7 +221,7 @@ class Clip:
         self.device = device or ('cuda' if torch.cuda.is_available() else 'cpu')
         dtype = torch.float16 if self.device == 'cuda' else torch.float32
         self.model = CLIPModel.from_pretrained(CLIP_ID, local_files_only=True, torch_dtype=dtype).to(self.device).eval()
-        # HF 캐시에 preprocessor_config.json 이 없을 수 있다(sd-webui 가 모델만 받음) → ViT-L/14 전처리 상수를 직접 적는다
+        # HF 캐시에 preprocessor_config.json 이 없을 수 있다(A1111 시절 모델만 받아 둠) → ViT-L/14 전처리 상수를 직접 적는다
         tok = CLIPTokenizer.from_pretrained(CLIP_ID, local_files_only=True)
         imp = CLIPImageProcessor(do_resize=True, size={'shortest_edge': 224}, resample=3, do_center_crop=True, crop_size={'height': 224, 'width': 224},
                                  do_rescale=True, do_normalize=True, image_mean=[0.48145466, 0.4578275, 0.40821073],

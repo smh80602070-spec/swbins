@@ -7,7 +7,7 @@ using Saga.Dungeon.Data;
 namespace Saga.Dungeon.World
 {
     /// <summary>
-    /// PLAN.md 109-10-4 "고정 세계 지역 아홉"(웹 사가블로 §5.12) — 플레이어가 선 칸의 지역(<see cref="DungeonWorldMap"/>)을 매 프레임 재고,
+    /// PLAN.md 109-10-4 "고정 세계 지역 아홉"(웹 사가나락 §5.12) — 플레이어가 선 칸의 지역(<see cref="DungeonWorldMap"/>)을 매 프레임 재고,
     /// 새 지역에 <see cref="DungeonWorldMap.DwellSeconds"/>(1.2초) 머물면 화면 위쪽에 들어섬 배너 두 줄(이름 한자 / 자리 · 시대 · 사연).
     /// 지역 없는 곳(던전 층·능묘 속·난입/시련 방)에 들어갔다 같은 지역으로 돌아오면 다시 안 띄운다(마지막으로 알린 지역을 붙든다).
     /// 배너는 대사 줄(`DialogueLabel`)과 따로 제 캔버스 — 다른 알림을 덮지 않는다.

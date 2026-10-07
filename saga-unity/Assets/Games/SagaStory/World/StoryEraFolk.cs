@@ -6,7 +6,7 @@ using Saga.Core;
 namespace Saga.Story.World
 {
     /// <summary>
-    /// PLAN.md 109-3 들판의 시대 손님(웹 사가스토리 §5-12 `NPC_TALK`) — 현대·미래에서 넘어온 사람 하나. 싸우지 않고 볼일도 없다:
+    /// PLAN.md 109-3 들판의 시대 손님(웹 사가종횡 §5-12 `NPC_TALK`) — 현대·미래에서 넘어온 사람 하나. 싸우지 않고 볼일도 없다:
     /// 싸움길 뒤쪽(z = `StoryEras.FolkLaneZ`)에 서 있다가 플레이어가 X 로 가까이 지나갈 때마다 제 대사 넷을 하나씩 돌려 말한다.
     /// 편집기 빌드가 자리·몸을 넣고 씬에 굽는다(`NpcIdle` 로 선다).
     /// </summary>

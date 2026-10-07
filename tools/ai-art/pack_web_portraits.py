@@ -70,7 +70,7 @@ def main():
         pj = os.path.join(d, '_ai_provenance.json')
         items = json.load(open(pj, encoding='utf-8')).get('items', {}) if os.path.exists(pj) else {}
         items.update({k: v for k, v in prov.items() if os.path.exists(os.path.join(d, k + '_s.webp'))})
-        json.dump({'note': 'AI 생성 초상 — tools/ai-art (swbins3 sd-webui, 상업 허용 모델). 프롬프트는 tools/ai-art/batches/web_heroes_105.json',
+        json.dump({'note': 'AI 생성 초상 — tools/ai-art (swbins3 ComfyUI, 상업 허용 모델). 프롬프트는 tools/ai-art/batches/web_heroes_105.json',
                    'items': items}, open(pj, 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
     print('packed', len(prov), 'heroes ->', games)
 

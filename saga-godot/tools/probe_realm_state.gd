@@ -1,6 +1,6 @@
 extends SceneTree
 
-## 사가국지 상태 규칙(RealmSaveState = realm_rules·realm_rules_war·realm_rules_month 상속 사슬) 자동 점검 — 화면 없이 명령·문답·전쟁·외교·계략·편입·월 진행·승리·야망·이벤트·계승을 돌려 본다. 씨앗 고정(20260824).
+## 사가천하 상태 규칙(RealmSaveState = realm_rules·realm_rules_war·realm_rules_month 상속 사슬) 자동 점검 — 화면 없이 명령·문답·전쟁·외교·계략·편입·월 진행·승리·야망·이벤트·계승을 돌려 본다. 씨앗 고정(20260824).
 ##   godot --headless --path saga-godot --script res://tools/probe_realm_state.gd
 ## ① 시나리오 셋(194·200·208): 성 3·8·19 · 적 성 수 · 군웅 덮어쓰기 · 금 2000+성×400 · 모르는 시나리오는 무시
 ## ② 명령: 금 차감·한 달 한 번(같은 무장)·상한·징병은 인구↔병력 보존·조선은 강가만·수색→등용 · 성장(경험치·승급 비용·탐욕 보상) · 전임(인접·한 달 한 번)

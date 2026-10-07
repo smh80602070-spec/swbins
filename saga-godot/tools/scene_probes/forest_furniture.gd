@@ -1,5 +1,5 @@
 extends Node
-## G-0062 사가의숲 가구 GLB 고르기(forest_house.gd KEY_GLB → FURNITURE_GLB) — scene_probe_host 로 돈다(오토로드 필요).
+## G-0062 사가마을 가구 GLB 고르기(forest_house.gd KEY_GLB → FURNITURE_GLB) — scene_probe_host 로 돈다(오토로드 필요).
 ## ① 키 덮어쓰기 넷(서안·문갑·도자기·등잔)이 새 GLB ② 가구 14종 중 GLB 가 있는 것은 메시가 열리고 목표 높이 > 0 ③ 덮어쓰기 없는 키는 모양 공용 GLB 그대로.
 
 const ForestHouse := preload("res://games/saga_forest/world/forest_house.gd")

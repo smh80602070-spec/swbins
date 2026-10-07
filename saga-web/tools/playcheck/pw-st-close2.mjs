@@ -1,4 +1,4 @@
-// 사가스토리 확인 닫기 ②(W-0097) — 계정 이어받기·적 표/유형·UI 설정·어드민을 실제 판에서 한 번씩 해 본다.
+// 사가종횡 확인 닫기 ②(W-0097) — 계정 이어받기·적 표/유형·UI 설정·어드민을 실제 판에서 한 번씩 해 본다.
 //   node pw-st-close2.mjs        (서버: node serve.mjs C:/swbins/saga-web 8871 — 돌리는 쪽이 띄우고 끈다)
 // 화면: ⚙️ 설정 시트 `snd-toggle`·`vib-toggle`·`snd-vol` · ⛶ #btn-focus · 어드민 `_admin.html?selftest`·프리셋 단추.
 // Math.random 은 진단과 같은 씨앗 mulberry32(20260824). **기계가 한 확인**(D2 기록)이다 — 결과는 콘솔 + results/pw-st-close2.json

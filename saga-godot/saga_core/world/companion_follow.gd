@@ -21,7 +21,7 @@ func _ready() -> void:
 	add_to_group("companion_follow")
 	set_process(false)
 
-## G-0071 협공 — i 번째 실루엣의 가슴 자리(없으면 null). 사가고 field_assist.gd 가 빛줄기 시작점으로 쓴다.
+## G-0071 협공 — i 번째 실루엣의 가슴 자리(없으면 null). 사가만리 field_assist.gd 가 빛줄기 시작점으로 쓴다.
 func follower_pos(i: int) -> Variant:
 	if i < 0 or i >= _followers.size():
 		return null

@@ -1,5 +1,5 @@
 /**
- * 사가블로 2D(아이소) 그림의 사람형 적을 2D 시트(shared/js/mode2d.js)로 그린다 — W-0019.
+ * 사가나락 2D(아이소) 그림의 사람형 적을 2D 시트(shared/js/mode2d.js)로 그린다 — W-0019.
  * dungeon-view.js 의 drawFoe 가 스탬프 대신 먼저 부른다. 풀이 없거나 아직 안 받았으면 false → 부른 쪽이 기존 스탬프를 그린다.
  * 짐승형은 cfg.mode2d.beast 이름 표(K-0056 짐승 몸, W-0051)에 든 어울리는 적만 그리고 나머지는 false.
  * 관문 구간(tier)으로 풀을 고르고(`DG.cfg.mode2d.pools.t1~t4`), 이름으로 같은 적은 같은 몸을 받는다.

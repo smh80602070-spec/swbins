@@ -1,6 +1,6 @@
 extends SceneTree
 
-## 사가국지 경영 규칙 "골든" 점검 — realm_save_state.gd 를 층으로 쪼갤 때(G-0006) 동작이 한 글자도 안 바뀌었는지 본다.
+## 사가천하 경영 규칙 "골든" 점검 — realm_save_state.gd 를 층으로 쪼갤 때(G-0006) 동작이 한 글자도 안 바뀌었는지 본다.
 ##   godot --headless --path saga-godot --script res://tools/probe_realm_golden.gd
 ## 고정 시드로 명령·전쟁·외교·계략·문답·설전·승진·인물 이동·다음 달 ×36 을 스크립트대로 돌리고, 돌려받은 값과 마지막 상태를
 ## 한 줄 md5 로 낸다. 끝에 "PROBE realm_golden OK md5=…". 기대값(GOLDEN)이 비어 있으면 값만 찍고 OK, 채워져 있으면 다르면 FAIL.

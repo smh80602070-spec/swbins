@@ -1,7 +1,7 @@
 class_name StorySkillsMage
 extends StorySkillsRogue
 
-## 사가스토리 무예 — 술사 갈래(술사·현자·선인·초월) `_cast_*`. 상속 사슬은 story_skills_warrior.gd 머리 참고.
+## 사가종횡 무예 — 술사 갈래(술사·현자·선인·초월) `_cast_*`. 상속 사슬은 story_skills_warrior.gd 머리 참고.
 
 ## 화구(m_fire) — bolt. 기탄·관통시와 같은 재해석(사거리 2배).
 func _cast_mage_fire() -> void:

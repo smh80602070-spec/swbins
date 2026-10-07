@@ -4,7 +4,7 @@ using Saga.Go.Combat;
 namespace Saga.Go.Data
 {
     /// <summary>
-    /// PLAN.md 109-14-21 세계 임무(곁가지) 셋 — 표만(웹 사가고 ⑲-21 `worldquest.js`, saga-godot 106 ㊴). 진행은 이야기와 같은 단계 엔진(`StoryState`)의
+    /// PLAN.md 109-14-21 세계 임무(곁가지) 셋 — 표만(웹 사가만리 ⑲-21 `worldquest.js`, saga-godot 106 ㊴). 진행은 이야기와 같은 단계 엔진(`StoryState`)의
     /// "따라가는 줄"(`StoryState.Track`) — 따라가는 것 하나만 목표·추적 줄·임무 적·금빛 기둥이 선다. 상태는 `WorldQuestState`, 인물은 `GoStory.Npcs`(wq_*).
     /// 전체 퓨전 — 임무마다 과거·현대·미래 인물이 한 사건에. 대사는 웹 그대로, 땅 이름만 이 판 이름. 보상은 웹 값(부대 경험은 이 트랙에 없어 뺀다).
     /// 괴물은 이 판 몸 다섯에 원소를 입혀 대신한다(14-1b 전까지 — 회오리매 = 풍 번개귀, 멧돼지 = 산적, 외계인 = 뇌 해골, 두꺼비 = 물귀신, 눈여우 = 빙 물귀신,

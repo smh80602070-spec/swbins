@@ -20,7 +20,7 @@ TILES = [
     ('shallow_water', 'calm turquoise water surface texture, soft ripples and light caustics, seen from above'),
 ]
 items = [{'id': f'tile_{k}', 'seed': 20261002 + 31 * i + (7 if k in ('dirt_road', 'snow', 'shallow_water') else 0), 'prompt': desc} for i, (k, desc) in enumerate(TILES)]
-out = {'model': 'sd_xl_base_1.0', 'out': 'web_tiles_test',
+out = {'model': 'Illustrious-XL-v2.0', 'out': 'web_tiles_test',
        'defaults': {'prompt_prefix': PREFIX, 'width': 640, 'height': 640, 'steps': 30, 'cfg': 6.5, 'sampler': 'Euler a', 'negative': NEG},
        'items': items}
 path = os.path.join(HERE, 'batches', 'web_tiles_test.json')

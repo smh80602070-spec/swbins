@@ -1,4 +1,4 @@
-// 사가고 — 새 계정으로 들어가 인자로 준 자바스크립트를 게임 안에서 돌려 결과를 찍는다(진단용). PC_PROF=tmp/… 새 프로필로
+// 사가만리 — 새 계정으로 들어가 인자로 준 자바스크립트를 게임 안에서 돌려 결과를 찍는다(진단용). PC_PROF=tmp/… 새 프로필로
 // 예: node go-probe-eval.mjs "JSON.stringify(DG.story.npcPos('ferryman'))"
 import { launch, sleep } from './cdp.mjs';
 const B = 'http://127.0.0.1:8871/saga-go/';

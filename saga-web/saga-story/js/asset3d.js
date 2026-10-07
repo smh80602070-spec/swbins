@@ -6,7 +6,7 @@
  * **한 줄도 판정에 닿지 않는다**, side.js 는 이 파일을 모른다.
  *
  * 인물(주인공·사람 형 적)은 몸+옷+머리 넷을 한 뼈대에 묶는 조합형이다
- * (`buildHero`, 사가블로의 `asset3d.js`에서 그대로 옮겼다) — 셋이 뼈 이름·순서까지
+ * (`buildHero`, 사가나락의 `asset3d.js`에서 그대로 옮겼다) — 셋이 뼈 이름·순서까지
  * 완전히 같아 옮겨 입히기(retarget)가 필요 없다. 짐승 형 적(들개·코끼리병)은
  * 조합 없이 홑 GLB 하나로 선다(늑대·소로 대신한다 — 몸집 큰 짐승의 CC0 대역).
  *
@@ -27,15 +27,15 @@
   var NAT = 'assets/models/nature/';
   var PEOPLE = 'assets/models/people/regular/';
   var ANIMALS = 'assets/models/animals/';
-  var ANIMALS_EXTRA = 'assets/models/animals_extra/';   // 2026-09-23 사가블로에서 복사(펫 초상)
+  var ANIMALS_EXTRA = 'assets/models/animals_extra/';   // 2026-09-23 사가나락에서 복사(펫 초상)
   var ANIMALS_EXTRA2 = 'assets/models/animals_extra2/';
-  var STANDIN = 'assets/models/standin/';   // 신수·오마주 대역 — 사가고에서 복사(2026-09-23)
+  var STANDIN = 'assets/models/standin/';   // 신수·오마주 대역 — 사가만리에서 복사(2026-09-23)
   var BUILDINGS = 'assets/models/buildings/';
   var PROPS = 'assets/models/props/';
   var FOES = 'assets/models/foes/', FOLK = 'assets/models/people/folk/';
   var ANIM_SRC = 'assets/models/anim/UAL1_Standard.glb';
 
-  /* 2026-09-03 — 사가의숲·사가고와 같은 이유로 사람 기본을 갈아 끼운다. Quaternius
+  /* 2026-09-03 — 사가마을·사가만리와 같은 이유로 사람 기본을 갈아 끼운다. Quaternius
      "RPG Character Pack"(CC0, 전사·궁수·도적·성직자·마법사·수도승 6종)은 몸 파일
      하나에 걷기·공격·사망 클립이 다 들어 있어 옷·머리·ANIM_SRC 몸짓이 필요 없다 —
      `anim` 을 `body` 와 같은 파일로 준다. 자세한 사정은
@@ -117,8 +117,8 @@
        그래서 여기 'critter:wolf' 는 따로 안 둔다(portrait3d.js 참고) */
     'critter:shiba': ANIMALS + 'ShibaInu.glb',
     'critter:husky': ANIMALS + 'Husky.glb',
-    /* 도감 초상 3D화 — **실제 동물 펫 전부**(2026-09-23). 사가블로가 받아 둔 Quaternius CC0(범·곰·물고기·공룡 등)를
-       `animals/`·`animals_extra/`·`animals_extra2/` 에 그대로 복사하고 키만 붙였다(출처는 사가블로 `ASSET_LICENSES.md`). 위 다섯 키
+    /* 도감 초상 3D화 — **실제 동물 펫 전부**(2026-09-23). 사가나락가 받아 둔 Quaternius CC0(범·곰·물고기·공룡 등)를
+       `animals/`·`animals_extra/`·`animals_extra2/` 에 그대로 복사하고 키만 붙였다(출처는 사가나락 `ASSET_LICENSES.md`). 위 다섯 키
        (사슴·여우·소·시바·허스키)는 옆면 뷰가 부르므로 그대로 두고, 큰사슴·황소·젖소는 이제 제 모델이 있어 옮겼다(portrait3d PET_MAP).
        발바리도 이제 Pug 가 있다(예전 "소형견 CC0 없음" 판단은 이걸로 풀림). 신수·창작 짐승(옛 오마주)는 여전히 뺀다 */
     'critter:tiger': ANIMALS + 'Tiger.glb',
@@ -197,10 +197,10 @@
     'critter:zebra_clown_fish': ANIMALS_EXTRA2 + 'Zebra_Clown_Fish.glb',
     /* 2026-09-25 — **대역도 종마다 한 벌**(tools/asset-audit/CHARACTER_UNIQUENESS.md ④): 신수·오마주·까치 28종이 서로 안 겹친다 —
        Quaternius "Ultimate Monsters"(CC0) 열여덟 벌(용·유령·예티·버섯이…) + 코끼리(불가사리) · 범·여우·말·흰말은 같은 종이라 그 모델.
-       다섯 판 같은 배정(사가고 asset3d.js 주석). 아래는 옛 경위.
-       신수·창작 짐승(옛 오마주) 대역(2026-09-23, 사용자 "사가고처럼 대역 입히기") — CC0 로 있을 리 없는 창작물이라 예전엔 뺐다.
-       사가고가 형태별 풀에서 id 해시로 고른 것과 **같은 모델**을 입힌다(해태=당나귀·청룡=스테고사우루스 등, 세 판이 같은 대역).
-       이 판에 없던 여섯(Birb·Pigeon·Snake 둘·Orc·Demon)만 사가고에서 `standin/` 으로 복사, 나머지는 이미 있는 같은 종 모델 */
+       다섯 판 같은 배정(사가만리 asset3d.js 주석). 아래는 옛 경위.
+       신수·창작 짐승(옛 오마주) 대역(2026-09-23, 사용자 "사가만리처럼 대역 입히기") — CC0 로 있을 리 없는 창작물이라 예전엔 뺐다.
+       사가만리가 형태별 풀에서 id 해시로 고른 것과 **같은 모델**을 입힌다(해태=당나귀·청룡=스테고사우루스 등, 세 판이 같은 대역).
+       이 판에 없던 여섯(Birb·Pigeon·Snake 둘·Orc·Demon)만 사가만리에서 `standin/` 으로 복사, 나머지는 이미 있는 같은 종 모델 */
     'critter:samjogo': STANDIN + 'Birb.glb',
     'critter:haetae': STANDIN + 'Goleling.glb',
     'critter:cheongryong': STANDIN + 'Dragon_Evolved.glb',
@@ -230,7 +230,7 @@
     /* 랜덤 이벤트(PLAN 11절, 2026-09-09) — saga-dungeon 이 이미 받아 둔 KayKit
        상자를 그대로 재사용한다 */
     'chest': PROPS + 'Chest.glb',
-    /* 세 시대 사람·적(PLAN §5-12 · SAGA-DESIGN §13) — 사가고 ⑱ 과 같은 Quaternius CC0 파일을 복사해 왔다.
+    /* 세 시대 사람·적(PLAN §5-12 · SAGA-DESIGN §13) — 사가만리 ⑱ 과 같은 Quaternius CC0 파일을 복사해 왔다.
        전부 제 클립(걷기·대기·공격·죽음) 내장이라 `buildModel()` 이 몸과 몸짓을 같은 파일로 세운다.
        현대·미래 적(`data-side.js` ERA_ENEMIES)·마을 사람(NPC_TALK 의 model) 만 이 키를 쓴다 */
     'foe:rat': FOES + 'Rat.glb',
@@ -280,7 +280,7 @@
   /* ── 여기서부터 three 가 필요하다 ─────────────────────── */
 
   var loaderInst = null;
-  /* 압축(EXT_meshopt_compression) GLB 는 디코더 없이 조용히 실패한다 — 사가의숲 asset3d.js 와 같은 요령(2026-09-23 tools/asset-audit 가 찾음) */
+  /* 압축(EXT_meshopt_compression) GLB 는 디코더 없이 조용히 실패한다 — 사가마을 asset3d.js 와 같은 요령(2026-09-23 tools/asset-audit 가 찾음) */
   function gltfLoader() {
     var t = three();
     if (!t || !t.GLTFLoader) { return null; }
@@ -296,8 +296,8 @@
    * 거의 새까맣게 보인다. 빛깔만 남기고 Lambert 로 바꾼다(다른 판에서 실제로
    * 겪은 문제, 같은 고침).
    */
-  /* 외곽선(2026-09-23) — 배우 GLB(사람·짐승)만. 사가블로 `isActorAsset()` 과 같은 판별 */
-  /* 2026-09-23 — animals_extra·animals_extra2(사가블로 "펫 100개" 모델)·standin(신수·오마주 대역)도 배우. 전엔 `animals/` 만 맞아 그 펫들이 외곽선·림 없이 구워졌다 */
+  /* 외곽선(2026-09-23) — 배우 GLB(사람·짐승)만. 사가나락 `isActorAsset()` 과 같은 판별 */
+  /* 2026-09-23 — animals_extra·animals_extra2(사가나락 "펫 100개" 모델)·standin(신수·오마주 대역)도 배우. 전엔 `animals/` 만 맞아 그 펫들이 외곽선·림 없이 구워졌다 */
   function isActorAsset(url) {
     return typeof url === 'string' && /\/models\/(people|animals|animals_extra2?|standin|monsters)\//.test(url);
   }
@@ -309,9 +309,9 @@
     var wantOutline = toon && !!(TN.OUTLINE_ON && TN.OUTLINE_ON()) && isActorAsset(url);
     root.traverse(function (o) {
       if (!o.isMesh || !o.material) { return; }
-      /* 법선이 아예 없는 GLB(2026-09-23 예방 — 사가국지 킷배싱 탑이 이것으로 새까맸다): GLTFLoader 는 이때 flatShading 을 켜
+      /* 법선이 아예 없는 GLB(2026-09-23 예방 — 사가천하 킷배싱 탑이 이것으로 새까맸다): GLTFLoader 는 이때 flatShading 을 켜
          주지만 toonify 가 만드는 MeshToonMaterial 은 flatShading 을 안 받아(r169) 법선 0 → 통째로 새까맣다.
-         사가블로 delam 이 2026-09-04 에 먼저 밟은 함정과 같은 처방 — 지오메트리에서 계산해 채운다 */
+         사가나락 delam 이 2026-09-04 에 먼저 밟은 함정과 같은 처방 — 지오메트리에서 계산해 채운다 */
       if (o.geometry && o.geometry.attributes.position && !o.geometry.attributes.normal) { o.geometry.computeVertexNormals(); }
       var one = Array.isArray(o.material) ? o.material : [o.material];
       var out = one.map(function (m) {
@@ -396,10 +396,10 @@
     return gltf.scene.clone(true);
   }
 
-  /* 2026-09-20 — "고품질 셀 셰이딩급" VRM 애니메 아바타(사가의숲 asset3d.js에서 먼저 만든 것,
+  /* 2026-09-20 — "고품질 셀 셰이딩급" VRM 애니메 아바타(사가마을 asset3d.js에서 먼저 만든 것,
      경위는 saga-forest HANDOFF.md 2026-09-19 절)를 이 판에도 옮긴다. VRoid Studio
      공식 CC0 샘플 AvatarSample_A/B/C(github.com/madjin/vrm-samples) + 이 저장소가
-     GUI 자동화로 새로 빚은 avatar_custom_01 — 넷 다 사가의숲과 같은 파일(md5 동일,
+     GUI 자동화로 새로 빚은 avatar_custom_01 — 넷 다 사가마을과 같은 파일(md5 동일,
      assets/ASSET_LICENSES.md 참고). **기본은 꺼짐**(0) — 손잡이를 켜기 전엔
      기존 QRPG/MPFB 배정에 전혀 안 끼어든다. */
   var PEOPLE_ANIME = 'assets/models/people/anime/';
@@ -419,8 +419,8 @@
   }
 
   /* 2026-09-25 — "캐릭터 모두 다르게" ②(tools/asset-audit/CHARACTER_UNIQUENESS.md): 사람 적·보스·마을 사람은 VRoid 네 벌
-     해시 대신 **이름마다 제 몸** — 모두 다른 한 벌을 역할에 맞게 손으로 짝지었다(사가블로 `asset3d.js` FIXED_HERO 와 같은
-     이름은 같은 몸). 파일은 사가블로 hero_light 창고(Quaternius·poly.pizza·KayKit CC0)에서 `people/fixed/` 로 복사, 전부
+     해시 대신 **이름마다 제 몸** — 모두 다른 한 벌을 역할에 맞게 손으로 짝지었다(사가나락 `asset3d.js` FIXED_HERO 와 같은
+     이름은 같은 몸). 파일은 사가나락 hero_light 창고(Quaternius·poly.pizza·KayKit CC0)에서 `people/fixed/` 로 복사, 전부
      제 클립 내장이라 body = anim. 도감 인물·주인공·파티는 VRoid 그대로. 키는 buildHero 씨앗 — 적은 표시 이름, 마을 사람은
      'npc:'+역할. 손잡이 `asset3d.fixedBody`(0 = 옛 해시) */
   var FIXED_HERO = {
@@ -632,7 +632,7 @@
     return found;
   }
 
-  /** VRM Humanoid(VRoid, `J_Bip_C/L/R_*`) → 이 판 뼈 이름 표(2026-09-20, 사가의숲
+  /** VRM Humanoid(VRoid, `J_Bip_C/L/R_*`) → 이 판 뼈 이름 표(2026-09-20, 사가마을
    *  asset3d.js에서 옮김). 손가락은 뺐다 — 이 판 로코모션 클립이 손가락을 안
    *  건드려 굳이 안 옮겨도 무방하다. 항등 매칭이 하나도 안 걸리는 VRM 몸에만
    *  덧붙는 보충표라, 기존 QRPG·MPFB(이미 이름이 같아 항등만으로 되던 몸)는 이

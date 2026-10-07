@@ -1,9 +1,9 @@
 extends SceneTree
 
-## G-0039 목표판이 읽히게(saga_core/ui/goal_board.gd 글자·자리 · 사가스토리 사냥터 world/story_field.gd 가로 UI 배율) 자동 점검. 화면 없이 설정값만.
+## G-0039 목표판이 읽히게(saga_core/ui/goal_board.gd 글자·자리 · 사가종횡 사냥터 world/story_field.gd 가로 UI 배율) 자동 점검. 화면 없이 설정값만.
 ##   godot --headless --path saga-godot --script res://tools/probe_goal_readable.gd
 ## ① 라벨: 22px·흰색 불투명·외곽선 6·폭 ≥ 420·위 ≥ 110(맨 위 알림 띠 아래)·세 줄 높이·줄바꿈 켬 ② 다섯 판 HUD 씬의 GoalBoard 가 이 스크립트
-## ③ 사가스토리 사냥터 씬 넷의 루트(story_field.gd)와 마을(story_town.gd)이 orientation_scale 을 단다 ④ 사가블로 기술 단추 줄 위 여백 ≥ 목표판 아래.
+## ③ 사가종횡 사냥터 씬 넷의 루트(story_field.gd)와 마을(story_town.gd)이 orientation_scale 을 단다 ④ 사가나락 기술 단추 줄 위 여백 ≥ 목표판 아래.
 ## 끝에 "PROBE goal_readable OK" 또는 "PROBE goal_readable FAIL n".
 
 const GOAL := "res://saga_core/ui/goal_board.gd"
@@ -53,16 +53,16 @@ func _initialize() -> void:
 		if not (t.contains(GOAL) and t.contains("[node name=\"GoalBoard\"")):
 			miss.append(String(h).get_file())
 	check(miss.is_empty(), "다섯 판 HUD 의 GoalBoard 가 공용 라벨%s" % ("" if miss.is_empty() else " — 빠짐 %s" % [miss]))
-	# ③ 사가스토리 가로 UI 배율
+	# ③ 사가종횡 가로 UI 배율
 	var bad := []
 	for s in HUNT:
 		if not FileAccess.get_file_as_string(String(s)).contains("story_field.gd"):
 			bad.append(String(s).get_file())
 	var field_ok := FileAccess.get_file_as_string("res://games/saga_story/world/story_field.gd").contains("orientation_scale.gd")
 	var town_ok := FileAccess.get_file_as_string("res://games/saga_story/world/story_town.gd").contains("orientation_scale.gd")
-	check(bad.is_empty() and field_ok and town_ok, "사가스토리 사냥터 넷(story_field)·마을(story_town) 이 가로 UI 배율을 단다%s" % ("" if bad.is_empty() else " — 루트가 다름 %s" % [bad]))
-	# ④ 사가블로 단추 줄
+	check(bad.is_empty() and field_ok and town_ok, "사가종횡 사냥터 넷(story_field)·마을(story_town) 이 가로 UI 배율을 단다%s" % ("" if bad.is_empty() else " — 루트가 다름 %s" % [bad]))
+	# ④ 사가나락 단추 줄
 	var Col: GDScript = load("res://games/saga_dungeon/ui/hud_column_layout.gd")
-	check(float(Col.TOP_MARGIN) >= goal_bottom, "사가블로 기술 단추 줄 위 여백 %.0f ≥ 목표판 아래 %.0f" % [Col.TOP_MARGIN, goal_bottom])
+	check(float(Col.TOP_MARGIN) >= goal_bottom, "사가나락 기술 단추 줄 위 여백 %.0f ≥ 목표판 아래 %.0f" % [Col.TOP_MARGIN, goal_bottom])
 	print("PROBE goal_readable ", "OK" if fails == 0 else "FAIL %d" % fails)
 	quit(1 if fails > 0 else 0)

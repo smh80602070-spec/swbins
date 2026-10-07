@@ -1,4 +1,4 @@
-// 사가의숲 "구면 투영" — 웹판 saga-forest/js/village-view.js의
+// 사가마을 "구면 투영" — 웹판 saga-forest/js/village-view.js의
 // project()/unproject()(2D 캔버스 화면 왜곡, SAGA-HANDOFF.md가 "되돌리지
 // 말라"고 못박은 이 판의 정체성)를 3D 정점 셰이더로 재설계한 것.
 // 2026-09-12 결정: 정점 셰이더 쪽으로 간다(진짜로 휜 지형/구가 아니라

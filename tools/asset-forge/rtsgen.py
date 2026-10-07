@@ -1,4 +1,4 @@
-"""K-0061 사가국지 RTS 화면 에셋 — 코드로 되는 것: UI 아이콘 10 · 흙길 autotile 6 · 물 타일 2프레임 · 이펙트 5.
+"""K-0061 사가천하 RTS 화면 에셋 — 코드로 되는 것: UI 아이콘 10 · 흙길 autotile 6 · 물 타일 2프레임 · 이펙트 5.
 
   py tools/asset-forge/rtsgen.py icons     # rts_icon_*.png (64px 알파)
   py tools/asset-forge/rtsgen.py roads     # rts_road_*.webp (64×64 알파, 직선·모서리·T·십자·끝·점)

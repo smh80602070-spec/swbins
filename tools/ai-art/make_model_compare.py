@@ -1,4 +1,4 @@
-"""K-0013 — 같은 프롬프트·씨앗으로 모델 셋을 비교하는 배치 세 개를 쓴다.
+"""K-0013 — 같은 프롬프트·씨앗으로 모델 셋(Animagine·Illustrious·Z-Image)을 비교하는 배치 세 개를 쓴다.
 
 py tools/ai-art/make_model_compare.py
 → batches/model_compare_<모델>.json (장당 id = cmp_<인물>, 출력 폴더 = model_compare_<모델>)
@@ -14,7 +14,7 @@ PICK = ['hero_eu_eleanor', 'hero_kr_heojun', 'hero_sg_zhugeliang', 'hero_jp_tomo
 MODELS = {
     'animagine-xl-4.0-opt': 'masterpiece, high score, great score, absurdres',
     'Illustrious-XL-v2.0': 'masterpiece, best quality, amazing quality, absurdres',
-    'NoobAI-XL-v1.1': 'masterpiece, best quality, newest, absurdres, highres',
+    'z-image-turbo': '',   # 문장형 프롬프트, 꼬리표 없음(gen.py 가 8단계·CFG 1 고정)
 }
 items = [i for i in SRC['items'] if i['id'] in PICK]
 assert len(items) == len(PICK)

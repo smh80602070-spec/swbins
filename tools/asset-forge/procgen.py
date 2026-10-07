@@ -6,7 +6,7 @@
 
 지금 찍는 것: rock(노이즈 구체 바위) · stele(비석) · fence(울타리 한 칸) ·
 wall(돌담 한 칸) · tree(나무, 몸통+수관) — 여기까지 정점색 —, 그리고 마을 소품
-house·tower·lamp·well·market·scare·grass·reed(부품마다 재질 색, 사가고 deco 종류).
+house·tower·lamp·well·market·scare·grass·reed(부품마다 재질 색, 사가만리 deco 종류).
 전부 저폴리·flat shaded — 트라이앵글
 몇십 개로 128px 실루엣에서 구별되면 충분하다(103-5 판정 절차, 3단계).
 
@@ -197,7 +197,7 @@ def make_tree(seed, trunk_height=3.0, trunk_radius=0.35, canopy_radius=1.6):
 
 
 # ── 마을 소품(재질 색) ─────────────────────────────────────────────
-# 사가고 3D 배치(`land.js` deco) 종류 중 두 트랙에 모델이 없던 것 — 집·탑·등롱·우물·장터·허수아비·풀·갈대.
+# 사가만리 3D 배치(`land.js` deco) 종류 중 두 트랙에 모델이 없던 것 — 집·탑·등롱·우물·장터·허수아비·풀·갈대.
 # 위 바위·나무처럼 정점색으로 칠하면 게임 코드의 전용 셰이더(Unity `Saga/VertexColorTriplanarLit`)가 있어야 색이 난다.
 # 이것들은 배치표 씬(tools/scene-layout)에 **그대로** 서므로, 부품마다 glTF 기본 재질(baseColorFactor)을 붙인다 —
 # Godot·Unity(glTFast)·three.js 모두 기본 임포트만으로 색이 나온다. 같은 색 부품은 한 덩이로 합쳐 그리기 호출을 줄인다.

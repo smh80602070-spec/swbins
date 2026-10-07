@@ -1,6 +1,6 @@
 extends SceneTree
 
-## 사가스토리 규칙 층(games/saga_story/data — story_combat.gd 표·공식, story_save_state.gd 거래·사명·업적·전직·무예 점수, *_map.gd 지도 아홉) 자동 점검 — 화면 없는 순수 규칙. 씨앗 고정(20260824).
+## 사가종횡 규칙 층(games/saga_story/data — story_combat.gd 표·공식, story_save_state.gd 거래·사명·업적·전직·무예 점수, *_map.gd 지도 아홉) 자동 점검 — 화면 없는 순수 규칙. 씨앗 고정(20260824).
 ##   godot --headless --path saga-godot --script res://tools/probe_story_rules.gd
 ## ① 지도 9(사냥터 넷+마을 다섯): 발판·밧줄/사다리가 폭 안·문 자리가 폭 안·월드 치수 = px×0.02 · 사냥터마다 stage_key 유일·잡졸 자리·레벨이 오름(1·6·14·26)·보스 체력 배율·재등장 시간이 오름 · 원거리 잡졸
 ## ② 장비: 밑감 40(부위 10 × 등급 4)·요구 레벨 1·5·12·20·등급이 오를수록 수치·값 오름·고유 10 은 밑감 위·gear_pool_for·gear_totals · 주문서 7(성공률↓ 수치↑)

@@ -1,5 +1,5 @@
 extends Node
-## G-0031 사가고 도감 화면(ui/codex_screen.gd) 자동 점검 — 평소엔 안 붙는다. test_village.gd 가 SAGA_CODEXUI_PROBE 가 있을 때만 단다.
+## G-0031 사가만리 도감 화면(ui/codex_screen.gd) 자동 점검 — 평소엔 안 붙는다. test_village.gd 가 SAGA_CODEXUI_PROBE 가 있을 때만 단다.
 ##
 ##   SAGA_CODEXUI_PROBE=1 "$GODOT" --headless --path saga-godot res://games/saga_go/world/TestVillage.tscn
 ##

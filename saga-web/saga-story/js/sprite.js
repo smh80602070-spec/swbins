@@ -5,7 +5,7 @@
  * 있어 generic 'beast' 한 장으로 덮인다)을 쓴다 — 절차적 human()/beast() 는
  * 2026-09-22 Phase 4 에서 지도·초상 두 경로 다 걷어 냈다.
  *
- * 펫 초상도 2026-09-23 에 끝났다 — 사가블로 모델을 복사해 실제 동물 79종, 신수·오마주 26종은 사가고와
+ * 펫 초상도 2026-09-23 에 끝났다 — 사가나락 모델을 복사해 실제 동물 79종, 신수·오마주 26종은 사가만리와
  * 같은 대역 모델(사용자 결정)로 **디스크 초상 105종 전부**가 구워졌다. 그래서 펫 초상용으로 남겨 두던
  * `human()`/`beast()`·전용 헬퍼(약 1100줄)도 지웠다 — 펫 갈래는 작은 자리표시(`loadingMark`, 디스크·3D 를
  * 못 쓰는 드문 경우)뿐이다.
@@ -276,7 +276,7 @@
   }
 
   /** 옆면 뷰의 사람 그림 — Kenney Roguelike Characters(CC0)에서 오려 낸 열넷 중 인물 id 로
-   *  하나를 정해 고른다(같은 인물은 늘 같은 얼굴). 사가고·사가의숲과 같은 그림이다.
+   *  하나를 정해 고른다(같은 인물은 늘 같은 얼굴). 사가만리·사가마을과 같은 그림이다.
    *  걷기 다리 애니메이션·개인별 색은 이 그림 하나로는 못 낸다 — 걸음 통통거림(stamp() 의 bounce)과
    *  좌우 뒤집기는 그대로 산다. SAGA-DESIGN §11 Phase 2(2026-09-20) */
   var HUMAN_SPRITE_N = 14;
@@ -296,12 +296,12 @@
     return (h % HUMAN_SPRITE_N) + 1;
   }
 
-  /** 옆면 뷰의 적 짐승 — 사가블로가 3D 몸으로 미리 구운 옆모습 걷기 시트(5컷 가로: 걷기 4 + 서기 1, 컷 128px, 앞이 오른쪽)를
-   *  그대로 쓴다(`assets/sprites2d/mon_<몸>.webp` 셋, `mon-manifest.js` 에 적힌 것만 — 사가블로 `tools/bake-portraits --sprites=monsters` 산출).
+  /** 옆면 뷰의 적 짐승 — 사가나락가 3D 몸으로 미리 구운 옆모습 걷기 시트(5컷 가로: 걷기 4 + 서기 1, 컷 128px, 앞이 오른쪽)를
+   *  그대로 쓴다(`assets/sprites2d/mon_<몸>.webp` 셋, `mon-manifest.js` 에 적힌 것만 — 사가나락 `tools/bake-portraits --sprites=monsters` 산출).
    *  몸 고르기: 코끼리병 → beast_big(코끼리), 산짐승 무리 → beast_boar(멧돼지), 나머지 → beast(늑대). 못 쓰면 자리표시(`loadingMark`, 코드 그림은 2026-09-23 삭제).
    *  SAGA-DESIGN §11 Phase 3(2026-09-20). 도감 펫은 `tier` 가 없어 여기 안 탄다. */
   var monSet = null, monFrom = null, monImgCache = {};
-  /* 세 시대 적(§5-12)은 제 몸(model)의 시트 — 사가블로에서 같은 GLB(md5 같음)로 구운 것을 복사했다(2026-09-25).
+  /* 세 시대 적(§5-12)은 제 몸(model)의 시트 — 사가나락에서 같은 GLB(md5 같음)로 구운 것을 복사했다(2026-09-25).
      사람 모양(보행기·망자·특공대)도 Kenney 사람 대신 이 시트로 선다 */
   var MODEL_SHEET = { 'foe:rat': 'rat', 'foe:wasp': 'wasp', 'foe:zombie': 'zombie', 'foe:alien': 'alien',
     'foe:drone': 'era_drone', 'foe:walker': 'era_walker', 'foe:hulk': 'era_hulk', 'foe:swat': 'era_swat' };

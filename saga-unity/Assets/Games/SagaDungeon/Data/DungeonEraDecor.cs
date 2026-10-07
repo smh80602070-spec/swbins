@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Saga.Dungeon.Data
 {
     /// <summary>
-    /// PLAN.md 109-2b "명소 층·마을 꾸밈에 시대 층"(SAGA-DESIGN §13 전체 퓨전 · 웹 사가블로 §5.20 뒤 후보 "명소 층 전용 3D 소품") —
+    /// PLAN.md 109-2b "명소 층·마을 꾸밈에 시대 층"(SAGA-DESIGN §13 전체 퓨전 · 웹 사가나락 §5.20 뒤 후보 "명소 층 전용 3D 소품") —
     /// 명소 층 여섯(`DungeonLandmarkData`)과 마을 셋·갈림길 둘에 과거·현대·미래 소품을 한 자리에 세운다. 자리는 전부 손으로 박았다(난수 없음).
     /// 모델은 GO 108 ①·109-1b 와 같은 Poly Haven 스캔(CC0, `Assets/Art/Props/PolyHaven/`) — 에셋만 같이 쓰고 코드는 이 판 것.
     /// 이 판 사람 키는 실제와 같은 약 1.8m 라 실측 그대로(× 1). 미래 조각은 "시간 틈 잔해"(청록 발광·공중에 떠 세로축으로 돈다, `EraRiftSpin`).

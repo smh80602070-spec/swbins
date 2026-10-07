@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Saga.Go.Data
 {
     /// <summary>
-    /// U-0049 사가고 무기 모양 → 자체툴(K-0030) 무기 GLB(`Resources/World/wpn_&lt;종류&gt;_&lt;등급&gt;`). 사가고 무기는 인물마다 종류가 정해져 있다(`GoWeapons.TypeOf`) —
+    /// U-0049 사가만리 무기 모양 → 자체툴(K-0030) 무기 GLB(`Resources/World/wpn_&lt;종류&gt;_&lt;등급&gt;`). 사가만리 무기는 인물마다 종류가 정해져 있다(`GoWeapons.TypeOf`) —
     /// 검 → 검(sword)·대검(큰도끼) → 도끼(axe)·장대 → 창(spear)·서책 → 지팡이(staff)·활 → 활(bow). 등급은 무기 희귀도로: 1~2 = common · 3 = rare · 4~5 = legend.
     /// 소켓 규약(K-0030): `grip`(손바닥 중심 = 원점)·`tip`(조준축 끝) 빈 노드 — <see cref="Fit"/> 이 grip→tip 을 소켓 +Y 로 돌려 맞춘다. 모델이 없으면 호출한 쪽이 코드 칼날을 쓴다.
     /// DUNGEON `WeaponModels` 와 같은 로직(다섯 판은 각자 복사본 — 이 asmdef 는 SagaDungeon 을 참조하지 않는다).

@@ -1,4 +1,4 @@
-/* 사가국지 RTS 입구 (W-0029) — 캔버스 지도 위에 얹는 HUD. 색은 strategy.css 의 먹칠·금 테두리 결을 따른다. */
+/* 사가천하 RTS 입구 (W-0029) — 캔버스 지도 위에 얹는 HUD. 색은 strategy.css 의 먹칠·금 테두리 결을 따른다. */
 :root {
   --rt-lacquer: linear-gradient(180deg, rgba(38, 29, 20, .93), rgba(17, 13, 10, .93));
   --rt-trim: rgba(216, 181, 106, .55); --rt-ink: #eef1f6; --rt-dim: #9aa3b2; --rt-gold: #e8c46a;

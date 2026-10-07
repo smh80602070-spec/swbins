@@ -12,7 +12,7 @@ py tools/ai-art/gen.py <배치.json> --variants 4 --judge                       
 ```
 
 - 끝 줄 `JUDGE_OK 통과/전체`(종료 0) · 통과 0 이면 `JUDGE_FAIL`(종료 1). 보고는 `<폴더>/_judge/report.csv`·`report.json`·`sheet_accept.jpg`·`sheet_reject.jpg`.
-- 실행 파이썬은 `C:\swbins3\sd-webui\venv`(토치·CLIP·GPU). 없는 PC 에선 `--no-clip` 으로 기술 결함만 본다(판정 품질 낮음, 보고에 `clip:false`).
+- 실행 파이썬은 `C:\swbins3\comfyui\venv`(토치·CLIP·GPU, 2026-10-07 A1111 → ComfyUI). 없는 PC 에선 `--no-clip` 으로 기술 결함만 본다(판정 품질 낮음, 보고에 `clip:false`).
 - 속도: RX 7600 에서 아이콘 306장 32초.
 
 ## 점수 다섯 축

@@ -1,4 +1,4 @@
-// 사가의숲 Q12 — 3D 에서 키보드(시점 돌린 뒤 W)·마우스 왼쪽 클릭 이동·목표 고리를 잰다 + shots/fs_*
+// 사가마을 Q12 — 3D 에서 키보드(시점 돌린 뒤 W)·마우스 왼쪽 클릭 이동·목표 고리를 잰다 + shots/fs_*
 import { launch, sleep } from './cdp.mjs';
 const B = 'http://127.0.0.1:8871/saga-forest/';
 const c = await launch(1280, 720);

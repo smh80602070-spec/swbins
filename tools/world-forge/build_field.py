@@ -1,4 +1,4 @@
-"""world-forge 고돗 빈 자리 — 밭 작물·갈대·허수아비·디딤돌·폐허(field 13) · 사가블로 굴혈 방 키트(dkit 5×3) · 바닥 노획물(loot 20) (K-0057). 재질만 Poly Haven CC0 사진.
+"""world-forge 고돗 빈 자리 — 밭 작물·갈대·허수아비·디딤돌·폐허(field 13) · 사가나락 굴혈 방 키트(dkit 5×3) · 바닥 노획물(loot 20) (K-0057). 재질만 Poly Haven CC0 사진.
 
   blender -b --factory-startup -P tools/world-forge/build_field.py -- --id wheat_ripe_01 --out <절대>/wheat_ripe_01.glb [--style toon]
   blender -b --factory-startup -P tools/world-forge/build_field.py -- --all --out-dir <절대 폴더> [--style toon]

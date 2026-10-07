@@ -1,7 +1,7 @@
 class_name RealmRulesMonth
 extends RealmRulesWar
 
-## 사가국지 경영 규칙 3층 — 다음 달 진행·재해·이탈·야망·이벤트 체인·계승. 상속 사슬은 realm_rules.gd 머리 참고.
+## 사가천하 경영 규칙 3층 — 다음 달 진행·재해·이탈·야망·이벤트 체인·계승. 상속 사슬은 realm_rules.gd 머리 참고.
 
 ## rtk.js settleMonth()+endMonth()의 축약 — 세력 금고는 **성 전부의 소득
 ## 합**(rtk.js settleMonth() "세력 금고" 루프 그대로)에서 정산하고, 군량·

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Saga.Realm.Data
 {
     /// <summary>
-    /// PLAN.md 109-15 명마·비행 — 사가국지판(웹 사가국지 `js/mount.js` · SAGA-DESIGN §15, 코에이식 경영 = 명마는 장수에 장착, 비행은 국토 지도 둘러보기 카메라만).
+    /// PLAN.md 109-15 명마·비행 — 사가천하판(웹 사가천하 `js/mount.js` · SAGA-DESIGN §15, 코에이식 경영 = 명마는 장수에 장착, 비행은 국토 지도 둘러보기 카메라만).
     /// 열림은 **다스리는 성 수**(<see cref="RealmCityState.ActiveCityIds"/>): 농마 2 · 갈색 말 4 · 학 5 · 흰 말 7 · 푸른 용 9.
     /// **명마**(지상 셋)는 장수 카드에 **장착**한다 — 한 필은 한 사람만, 한 사람은 한 필만. 그 장수가 든 출진군은 **땅 위 싸움**(강가 = 수전 ✕)에서 부대의 힘이
     /// ×1.03·1.06·1.10 (<see cref="RealmWar.ArmyPower"/> 가 곱한다), 싸움터 컷에선 그 군이 <see cref="ChargeOf"/> = 1 + (mul−1)×3 배 빨리 달려 붙는다.

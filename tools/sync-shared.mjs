@@ -7,7 +7,7 @@
  *
  * 정본을 고쳤으면: 이 명령으로 퍼뜨리고, 다섯 판 `sw.js` VERSION 을 올린다(saga-web/RULES.md).
  * 판별 사본을 직접 고치면 다음 복사에서 덮인다 — 고치는 곳은 shared/ 하나다.
- * 표에 없는 파일(data.js·core.js·ui.js·sprite.js·사가고 perf.js …)은 여기 안 넣는다.
+ * 표에 없는 파일(data.js·core.js·ui.js·sprite.js·사가만리 perf.js …)은 여기 안 넣는다.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -27,11 +27,11 @@ const FILES = [
   ['js/bgm.js', 'js/bgm.js'],
   ['js/assets3d-ids.js', 'js/assets3d-ids.js'],   // W-0021 — 통일 3D 에셋 조회(판을 배선하며 판 목록에 추가). ids 는 tools/gen-assets3d-ids.mjs 생성물
   ['js/assets3d.js', 'js/assets3d.js'],
-  ['js/ai.js', 'js/ai.js', ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story']],   // R-4 — 네 판이 글자까지 같다(사가국지는 따로 갈라짐)
-  ['js/mode2d.js', 'js/mode2d.js', ['saga-story', 'saga-dungeon', 'saga-go', 'saga-forest', 'saga-realm']],   // W-0019 — 2D 시트 부품(사가스토리부터, 다른 판은 배선하며 판 목록에 추가)
+  ['js/ai.js', 'js/ai.js', ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story']],   // R-4 — 네 판이 글자까지 같다(사가천하는 따로 갈라짐)
+  ['js/mode2d.js', 'js/mode2d.js', ['saga-story', 'saga-dungeon', 'saga-go', 'saga-forest', 'saga-realm']],   // W-0019 — 2D 시트 부품(사가종횡부터, 다른 판은 배선하며 판 목록에 추가)
   ['js/vfx2d.js', 'js/vfx2d.js', ['saga-story', 'saga-dungeon']],   // W-0052 — 전투 이펙트 시트(K-0039), 다른 판은 그 판 전투 화면을 잇는 티켓에서 판 목록에 추가
   ['js/cutscene.js', 'js/cutscene.js', ['saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm']],   // W-0048 — 이야기 장면 컷신 배경(K-0044), 다른 판은 장면 상자를 잇는 티켓에서 판 목록에 추가
-  ['js/perf-hud.js', 'js/perf.js', ['saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm']],   // 재기 표시(?perf) — 네 벌이 글자까지 같다(사가고 perf.js 는 품질 자동조절이 든 다른 파일)
+  ['js/perf-hud.js', 'js/perf.js', ['saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm']],   // 재기 표시(?perf) — 네 벌이 글자까지 같다(사가만리 perf.js 는 품질 자동조절이 든 다른 파일)
   ['js/ssao3d.js', 'js/ssao3d.js', ['saga-go', 'saga-dungeon', 'saga-story']],
   ['js/post3d.js', 'js/post3d.js', ['saga-go', 'saga-dungeon', 'saga-story']],
   ['js/toon3d-core.js', 'js/toon3d-core.js'],
@@ -44,7 +44,7 @@ const check = process.argv.includes('--check');
 /** 판 폴더 단독 서버(run.bat)는 `../shared` 를 못 읽는다 — 2D 모드 배경·타일(K-0020)은 그 판 접두어 파일만 판 폴더로 복사한다(W-0019).
  *  정본 shared/assets/web2d/{bg,tile}/ · 접두어 = 판 이름(go_·dungeon_·forest_·story_·realm_) · 출처 .license.json 은 정본에만 둔다 */
 const PREFIX = { 'saga-go': 'go_', 'saga-dungeon': 'dungeon_', 'saga-forest': 'forest_', 'saga-story': 'story_', 'saga-realm': 'realm_' };
-const ASSET_GAMES = { 'saga-story': ['assets/web2d/bg', 'assets/web2d/tile'], 'saga-go': ['assets/web2d/tile'], 'saga-dungeon': ['assets/web2d/tile'], 'saga-forest': ['assets/web2d/tile'], 'saga-realm': ['assets/web2d/tile'] };   // 판 → 그 판이 쓰는 폴더만(사가고는 위에서 본 지도라 층 배경 없음)   // 배선이 끝난 판만(안 쓰는 판에 용량을 안 싣는다) — 판을 배선할 때마다 추가
+const ASSET_GAMES = { 'saga-story': ['assets/web2d/bg', 'assets/web2d/tile'], 'saga-go': ['assets/web2d/tile'], 'saga-dungeon': ['assets/web2d/tile'], 'saga-forest': ['assets/web2d/tile'], 'saga-realm': ['assets/web2d/tile'] };   // 판 → 그 판이 쓰는 폴더만(사가만리는 위에서 본 지도라 층 배경 없음)   // 배선이 끝난 판만(안 쓰는 판에 용량을 안 싣는다) — 판을 배선할 때마다 추가
 /** 아이템 아이콘(W-0025) — 이름 표 `itemicon-ids.js` 에 오른 그림 중 **그 판 것만** `<판>/assets/icons/icon64/` 로 복사한다(판 폴더 단독 서버가 `../shared` 를 못 읽는다).
  *  정본 shared/assets/icons/icon64/ · 출처(license/)는 정본에만 둔다. 표는 gen-itemicon-ids.mjs 가 만든다 */
 function iconNames(g) {
@@ -72,7 +72,7 @@ for (const [src, dst, only] of FILES) {
     console.log(`복사 shared/${src} → ${g}/${dst}`);
   }
 }
-/** 다른 판 접두어의 타일을 이 판이 빌려 쓴다(RTS 격자는 위에서 본 풀·흙이 필요한데 사가국지 `realm_*` 풀·흙은 옆보기 줄무늬) — 판 → 타일 이름(webp) */
+/** 다른 판 접두어의 타일을 이 판이 빌려 쓴다(RTS 격자는 위에서 본 풀·흙이 필요한데 사가천하 `realm_*` 풀·흙은 옆보기 줄무늬) — 판 → 타일 이름(webp) */
 const EXTRA_TILES = { 'saga-realm': ['forest_grass', 'forest_dirt', 'go_water'] };
 /** 판이 쓰는 K-0061 폴더 통째(출처 .license.json 은 정본에만) — 판 → 폴더(shared/ 아래) */
 const EXTRA_DIRS = { 'saga-realm': ['assets/web2d/rts'] };

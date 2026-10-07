@@ -8,7 +8,7 @@ using Saga.Go.UI;
 namespace Saga.Go.World
 {
     /// <summary>
-    /// PLAN.md 109-14-24 낚시(웹 사가고 ⑲-24) — 낚시터 넷(서는 자리 푸른 빛)·물고기 그림자(원반)·찌·줄·고리·게시판(상자 셋)을 도형만으로 세우고,
+    /// PLAN.md 109-14-24 낚시(웹 사가만리 ⑲-24) — 낚시터 넷(서는 자리 푸른 빛)·물고기 그림자(원반)·찌·줄·고리·게시판(상자 셋)을 도형만으로 세우고,
     /// 매 프레임 `FishingFlow` 를 돌린다(발 자리·싸움 중 여부 넘김). 겨누는 동안은 걸음을 잠그고(`PlayerController.MoveLocked`) 방향 입력이 고리를 옮긴다 —
     /// 점프하면 풀림(낚시 끝). `WorldMapBuilder` 가 Play 때 붙인다(씬 재빌드 없음). 물 높이는 강 칸 수면 하나(`TestMapData.WaterSurfaceHeight`).
     /// </summary>

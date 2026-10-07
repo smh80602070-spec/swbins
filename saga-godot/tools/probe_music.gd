@@ -1,5 +1,5 @@
 extends Node
-## G-0034 사가고 보스·엔딩 곡·짧은 음악(world/go_bgm.gd · saga_core/audio/bgm.gd 스팅어) 자동 점검 — 평소엔 안 붙는다.
+## G-0034 사가만리 보스·엔딩 곡·짧은 음악(world/go_bgm.gd · saga_core/audio/bgm.gd 스팅어) 자동 점검 — 평소엔 안 붙는다.
 ## test_village.gd 가 SAGA_MUSIC_PROBE 가 있을 때만 단다.
 ##
 ##   SAGA_MUSIC_PROBE=1 "$GODOT" --headless --path saga-godot res://games/saga_go/world/TestVillage.tscn

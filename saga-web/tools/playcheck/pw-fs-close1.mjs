@@ -1,4 +1,4 @@
-// 사가의숲 확인 닫기 ①(W-0090) — 곤충·땅 공사·택배·마을(이름·깃발·평가)·행사·날씨·주민을 실제 판에서 한 번씩 해 본다.
+// 사가마을 확인 닫기 ①(W-0090) — 곤충·땅 공사·택배·마을(이름·깃발·평가)·행사·날씨·주민을 실제 판에서 한 번씩 해 본다.
 //   node pw-fs-close1.mjs        (서버: node serve.mjs C:/swbins/saga-web 8871 — 돌리는 쪽이 띄우고 끈다)
 // 준비는 pw-fs-sheet 와 같다(새 계정 → title-continue → 마을). 계절·때·날씨·행사는 손잡이 time.season·time.phase·time.weather·time.event 로 붙든다.
 // 화면 단추(data-act — saga-forest/js/ui.js 에서 찾음): 가방 시트의 전방 `v-buytool`(잠자리채·개토패) · 택배 시트 `v-parcel`

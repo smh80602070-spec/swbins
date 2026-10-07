@@ -5,7 +5,7 @@
  *   node saga-web/shared/build/bundle.mjs <판>          예: saga-go  → saga-web/saga-go/dist/app.js
  *   node saga-web/shared/build/bundle.mjs <판> --check  쓰지 않고 dist 번들이 지금 원본들과 맞는지만(낡으면 종료 1)
  *
- * manifest 의 `bundle` 은 문자열 하나(index 가 한 묶음) 또는 묶음 수만큼의 배열(사이에 async 태그가 낀 사가스토리).
+ * manifest 의 `bundle` 은 문자열 하나(index 가 한 묶음) 또는 묶음 수만큼의 배열(사이에 async 태그가 낀 사가종횡).
  * 규칙: 코드는 전역(DG·THREE) 스크립트라 **파일마다 따로 압축(esbuild transform, 이름·구조 보존)한 걸 순서대로 이어 붙이기**만 한다.
  *   vendor/ 는 이미 압축본이라 그대로 넣는다. 원본이 하나라도 바뀌면 첫 줄 해시가 달라져 `--check`(precheck·gen-index)가 낡음을 알린다.
  *   sourcemap 은 없다(이어 붙인 지도는 파일 경계 계산이 필요해 뺐다) — 디버깅은 원본 js/ 와 `_test.html` 로.

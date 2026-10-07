@@ -9,7 +9,7 @@ using Saga.Story.Data;
 namespace Saga.Story.UI
 {
     /// <summary>
-    /// PLAN.md 109-16 시나리오 장면 상자(웹 사가스토리 `scenario.js` #scnbox) — 들판에 서 있을 때만 뜬다. 누르면(또는 Space·Enter) 다음 줄, 마지막에서 누르면 닫힌다(Esc·건너뛰기 = 바로 닫음).
+    /// PLAN.md 109-16 시나리오 장면 상자(웹 사가종횡 `scenario.js` #scnbox) — 들판에 서 있을 때만 뜬다. 누르면(또는 Space·Enter) 다음 줄, 마지막에서 누르면 닫힌다(Esc·건너뛰기 = 바로 닫음).
     /// `StoryScenarioRunner` 가 Play 때 지어 씬 재빌드 없이 붙는다. 판 눌림은 `IPointerClickHandler` — `Button` 이면 배치 점검이 판 전체를 단추 하나로 센다.
     /// </summary>
     public class StoryScenarioUi : MonoBehaviour

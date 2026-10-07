@@ -22,7 +22,7 @@ extends Node3D
 const CLOTH_KEY := "CLOTH" # 대문자로 견준다 — VRoid "…_CLOTH…" · 공방 몸(09-29) "cloth_a"
 const BASE_TINT_META := &"dye_base_tint"
 
-## G-0063 — 머리·덧옷·겉옷 갑옷을 자체툴 GLB 로 몸 뼈에 붙인다(saga_core/world/bone_gear.gd, 사가고 갑옷과 같은 길).
+## G-0063 — 머리·덧옷·겉옷 갑옷을 자체툴 GLB 로 몸 뼈에 붙인다(saga_core/world/bone_gear.gd, 사가만리 갑옷과 같은 길).
 ## 판 도형 덧옷(_build_cape)은 걷어냈다. 그림이 없는 것(맨머리·상투·평상복·도포·두루마기)은 아무것도 안 붙인다.
 const BoneGear := preload("res://saga_core/world/bone_gear.gd")
 const TAG := "forest_gear"

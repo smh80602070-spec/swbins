@@ -7,7 +7,7 @@ using Saga.Go.UI;
 namespace Saga.Go.World
 {
     /// <summary>
-    /// PLAN.md 109-14-56b 밤의 잔불 런타임(웹 사가고 ⑲-56 `nightecho.js`) — 밤에만 켜지는 보랏빛 불(도형) + 14m 안에 들면 잔당 셋 + 60m 밖·낮·이미 끈 자리면 거둠 + 다 쓰러뜨리면 보상.
+    /// PLAN.md 109-14-56b 밤의 잔불 런타임(웹 사가만리 ⑲-56 `nightecho.js`) — 밤에만 켜지는 보랏빛 불(도형) + 14m 안에 들면 잔당 셋 + 60m 밖·낮·이미 끈 자리면 거둠 + 다 쓰러뜨리면 보상.
     /// 그날 이미 끈 자리는 안 탄다(`NightEchoState`). `WorldMapBuilder` 가 Play 때 붙인다. 진단은 `Tick` 을 직접 부른다.
     /// </summary>
     public class NightEchoField : MonoBehaviour

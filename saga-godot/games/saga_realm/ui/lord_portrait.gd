@@ -5,7 +5,7 @@ extends Control
 
 @onready var name_label: Label = $NameLabel
 
-## 2026-09-30 탈것 — 사가국지엔 조작하는 몸이 없어(전략 판) 이동식 탈것 대신 군주 초상에 탈것을 태워 보인다.
+## 2026-09-30 탈것 — 사가천하엔 조작하는 몸이 없어(전략 판) 이동식 탈것 대신 군주 초상에 탈것을 태워 보인다.
 ## 즉위하는 군주마다 이름 해시로 신수 탈것 하나(data/mounts.gd 여섯 중) — 카메라를 물려 말·호랑이·새·용 위의 전신이 보이게.
 const Mounts := preload("res://saga_core/data/mounts.gd")
 const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")

@@ -1,4 +1,4 @@
-// 사가고 확인 시트(tasks/sheets/saga-go-*.md) 다섯 기능을 Playwright 로 직접 해 본다.
+// 사가만리 확인 시트(tasks/sheets/saga-go-*.md) 다섯 기능을 Playwright 로 직접 해 본다.
 //   node pw-go-sheet.mjs        (서버: node serve.mjs C:/swbins/saga-web 8871 — 돌리는 쪽이 띄우고 끈다)
 // 새 계정으로 들어가 들판 무리 곁에서 실제 키(J·E·␣·1~4·M)와 자동 전투·지역 발견을 본다.
 // **기계가 한 확인**(D2 기록)이다 — 때리는 손맛·그림은 사람 눈(D3)이 본다. 결과는 콘솔 + results/pw-go-sheet.json

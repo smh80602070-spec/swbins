@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Saga.Forest.Data
 {
     /// <summary>
-    /// PLAN.md 109-16 사가의숲 시나리오 「하늘 금 우체통」 진행 — 웹 사가의숲 `js/scenario.js` 엔진 결(코드 공유 없음). 표는 <see cref="ForestScenarioData"/>.
+    /// PLAN.md 109-16 사가마을 시나리오 「하늘 금 우체통」 진행 — 웹 사가마을 `js/scenario.js` 엔진 결(코드 공유 없음). 표는 <see cref="ForestScenarioData"/>.
     /// 지금 어느 장 몇째 단계인지를 적고 그 단계가 채워졌는지 물어보며 하나씩 넘긴다. 새 판정을 만들지 않는다 — talk = 대사 장면(<see cref="ScenePlay"/> → UI, 마을 어디서나) ·
     /// place = 집 가구 수 · deliver = 택배 배달(이 단계가 시작된 뒤) · forest = 그 구역에 들어선 적 있음 · go = 그 구역 명소 곁에 섬(<see cref="OnLandmark"/>) ·
     /// gather = 채집 갈래별 횟수(<see cref="OnGather"/>) · fest = 행사 놀이(그날이 아니어도 그 단계 동안 <see cref="ForestFestivalState.MemorialKind"/> 로 열린다) ·

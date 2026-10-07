@@ -3,7 +3,7 @@
   "version": "0.9.0",
   "private": true,
   "type": "module",
-  "description": "사가고 온라인 모드 서버 — 정적 파일 + Claude 프록시(API 키는 서버에만)",
+  "description": "사가만리 온라인 모드 서버 — 정적 파일 + Claude 프록시(API 키는 서버에만)",
   "main": "dg-server.mjs",
   "scripts": {
     "start": "node dg-server.mjs"

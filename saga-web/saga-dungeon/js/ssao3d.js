@@ -2,8 +2,8 @@
  * SSAO — 맞닿은 자리에 그늘이 앉는다 (그래픽 보강 17절 6번)
  *
  * **정본은 saga-web/shared/js/ssao3d.js** — 판별 복사본은 tools/sync-shared.mjs 가 만든다(직접 고치지 않는다).
- * 판마다 다른 것은 MEDIUM 등급을 켜느냐뿐이다 — 기본은 끈다(사가블로·사가스토리: LOW→MEDIUM 문턱 비용),
- * 켜는 판은 `core.js` 끝에서 `DG.cfg.ssao = { medium: { on: true, samples: 8, scale: 0.5 } }` 로 준다(사가고).
+ * 판마다 다른 것은 MEDIUM 등급을 켜느냐뿐이다 — 기본은 끈다(사가나락·사가종횡: LOW→MEDIUM 문턱 비용),
+ * 켜는 판은 `core.js` 끝에서 `DG.cfg.ssao = { medium: { on: true, samples: 8, scale: 0.5 } }` 로 준다(사가만리).
  * ---------------------------------------------------------------
  * 후처리 여섯 가지 중 마지막으로 남은 것이다. 앞의 다섯은 `post3d.js` 가 한다.
  *
@@ -55,7 +55,7 @@
     MEDIUM: { on: false, samples: 0,  scale: 0 },
     LOW:    { on: false, samples: 0,  scale: 0 }
   };
-  if (CFG.medium) { TIER_AO.MEDIUM = CFG.medium; }   // 판별 설정(사가고 — MEDIUM 도 켠다)
+  if (CFG.medium) { TIER_AO.MEDIUM = CFG.medium; }   // 판별 설정(사가만리 — MEDIUM 도 켠다)
 
   function ON() { return core.tuned('ssao3d.on', 1) ? true : false; }
   function RADIUS() { return core.tuned('ssao3d.radius', 2.4); }

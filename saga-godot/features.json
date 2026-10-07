@@ -2377,7 +2377,7 @@
  },
  {
   "id": "gd.fs.nature_unified",
-  "name": "사가의숲 자연 소품을 통일 툰 GLB 로(곡률 재질에 표면별 텍스처)",
+  "name": "사가마을 자연 소품을 통일 툰 GLB 로(곡률 재질에 표면별 텍스처)",
   "files": [
    "saga_core/world/world_curve_material.gd",
    "games/saga_forest/world/forest_vegetation_builder.gd",
@@ -2558,7 +2558,7 @@
  },
  {
   "id": "gd.go.save_transfer",
-  "name": "세이브 옮기기 — 문자열 내보내기(클립보드)/붙여넣고 불러오기, 거절·직전본 남김(다섯 판 공용 부모 + 사가고 메뉴 화면)",
+  "name": "세이브 옮기기 — 문자열 내보내기(클립보드)/붙여넣고 불러오기, 거절·직전본 남김(다섯 판 공용 부모 + 사가만리 메뉴 화면)",
   "files": [
    "saga_core/data/save_base.gd",
    "games/saga_go/ui/save_transfer.gd",
@@ -2751,7 +2751,7 @@
  },
  {
   "id": "gd.go.graphics",
-  "name": "설정 화질/성능 2단 — 성능이면 30fps·3D 해상도 0.75·MSAA·SSAO/SSIL/SDFGI 끔, user://graphics.cfg(다섯 판 공용 — 사가고 메뉴, 네 판 HUD \"화질\" 단추)",
+  "name": "설정 화질/성능 2단 — 성능이면 30fps·3D 해상도 0.75·MSAA·SSAO/SSIL/SDFGI 끔, user://graphics.cfg(다섯 판 공용 — 사가만리 메뉴, 네 판 HUD \"화질\" 단추)",
   "files": [],
   "tests": [
    "graphics"
@@ -2790,7 +2790,7 @@
  },
  {
   "id": "gd.go.photo_share",
-  "name": "사진 공유용 — 찍을 때 HUD 전부 숨김·워터마크(사가고·지역·날짜)·PC 사진 폴더/사가고 저장",
+  "name": "사진 공유용 — 찍을 때 HUD 전부 숨김·워터마크(사가만리·지역·날짜)·PC 사진 폴더/사가만리 저장",
   "files": [],
   "tests": [
    "photo"
@@ -2816,7 +2816,7 @@
  },
  {
   "id": "gd.go.dressing_more",
-  "name": "지역 꾸밈 더하기 — 갈무리 벌 곳간·짐수레·밀·모닥불·이정표, 세갈래 고을 일본 민가·비단길 집·중국 전각·대숲·깃대·횃대·천막, 굳은 거리 주막·둥근 지붕·홀로 지구본 + 사가의숲 가구 넷(서안·문갑·도자기·등잔) 전용 GLB",
+  "name": "지역 꾸밈 더하기 — 갈무리 벌 곳간·짐수레·밀·모닥불·이정표, 세갈래 고을 일본 민가·비단길 집·중국 전각·대숲·깃대·횃대·천막, 굳은 거리 주막·둥근 지붕·홀로 지구본 + 사가마을 가구 넷(서안·문갑·도자기·등잔) 전용 GLB",
   "files": [],
   "tests": [
    "dressing",
@@ -2830,7 +2830,7 @@
  },
  {
   "id": "gd.st.fall",
-  "name": "사가스토리 사냥터 쓰러짐 — 체력 0 이면 주운 금 절반 잃고 허도로(표준 F, 웹 die())",
+  "name": "사가종횡 사냥터 쓰러짐 — 체력 0 이면 주운 금 절반 잃고 허도로(표준 F, 웹 die())",
   "files": [
    "games/saga_story/world/story_field.gd",
    "games/saga_story/data/story_save_state.gd",
@@ -2847,7 +2847,7 @@
  },
  {
   "id": "gd.dg.save_transfer",
-  "name": "사가블로 세이브 옮기기 — HUD \"옮기기\" 단추 → 공용 화면(내보내기·붙여넣기·불러오기, 다른 판 거절)",
+  "name": "사가나락 세이브 옮기기 — HUD \"옮기기\" 단추 → 공용 화면(내보내기·붙여넣기·불러오기, 다른 판 거절)",
   "files": [
    "saga_core/ui/save_transfer_screen.gd",
    "saga_core/ui/save_transfer_button.gd",
@@ -2865,7 +2865,7 @@
  },
  {
   "id": "gd.fs.save_transfer",
-  "name": "사가의숲 세이브 옮기기 — HUD \"옮기기\" 단추 → 공용 화면(내보내기·붙여넣기·불러오기, 다른 판 거절)",
+  "name": "사가마을 세이브 옮기기 — HUD \"옮기기\" 단추 → 공용 화면(내보내기·붙여넣기·불러오기, 다른 판 거절)",
   "files": [
    "saga_core/ui/save_transfer_screen.gd",
    "saga_core/ui/save_transfer_button.gd",
@@ -2883,7 +2883,7 @@
  },
  {
   "id": "gd.st.save_transfer",
-  "name": "사가스토리 세이브 옮기기 — HUD \"옮기기\" 단추 → 공용 화면(내보내기·붙여넣기·불러오기, 다른 판 거절)",
+  "name": "사가종횡 세이브 옮기기 — HUD \"옮기기\" 단추 → 공용 화면(내보내기·붙여넣기·불러오기, 다른 판 거절)",
   "files": [
    "saga_core/ui/save_transfer_screen.gd",
    "saga_core/ui/save_transfer_button.gd",
@@ -2901,7 +2901,7 @@
  },
  {
   "id": "gd.rk.save_transfer",
-  "name": "사가국지 세이브 옮기기 — HUD \"옮기기\" 단추 → 공용 화면(내보내기·붙여넣기·불러오기, 다른 판 거절)",
+  "name": "사가천하 세이브 옮기기 — HUD \"옮기기\" 단추 → 공용 화면(내보내기·붙여넣기·불러오기, 다른 판 거절)",
   "files": [
    "saga_core/ui/save_transfer_screen.gd",
    "saga_core/ui/save_transfer_button.gd",

@@ -3,7 +3,7 @@
  *
  * 다섯 판의 퀘스트·대사 표(`var NAME = [ … ]`·`{ … }`)를 **값으로** 읽어 칸마다 고치게 하고,
  * 저장은 jslit.patchTop 으로 **바뀐 값의 글자 자리만** 바꾼다(주석·줄 맞춤·다른 값 그대로).
- * 함수·식이 섞인 자리(사가고 사건의 결과 등)는 코드는 못 고치고 그 안의 `text:`·`label:` 문자열만 고친다.
+ * 함수·식이 섞인 자리(사가만리 사건의 결과 등)는 코드는 못 고치고 그 안의 `text:`·`label:` 문자열만 고친다.
  *
  * 저장 전에 막는 것:
  *   그새 파일이 바뀜(md5) · 고친 파일 구문 오류 · **되읽기 불일치**(고친 파일을 다시 읽은 값이 화면 값과 다르면)
@@ -59,7 +59,7 @@ const need = (cond, msg, out) => { if (!cond) out.push(msg); };
 function adapters(root) {
   const R = (g, f, v) => readVar(root, g, f, v);
   return [
-    /* ── 사가스토리 ── */
+    /* ── 사가종횡 ── */
     { id: 'story.quests', game: 'saga-story', file: 'data-quest.js', v: 'QUESTS', group: 'quest', label: '사명(퀘스트)', idKey: 'key', add: true,
       lock: ['key'], preview: 'quest',
       enums: () => ({
@@ -126,7 +126,7 @@ function adapters(root) {
         });
       } },
 
-    /* ── 사가블로 ── */
+    /* ── 사가나락 ── */
     ...['MAIN', 'EVENT'].map((V) => ({
       id: 'dungeon.' + V.toLowerCase(), game: 'saga-dungeon', file: 'data-quest.js', v: V, group: 'quest',
       label: V === 'MAIN' ? '메인 퀘스트(차례대로)' : '구출 이벤트 단계', idKey: 'key', add: true, lock: ['key'], preview: 'quest', ordered: V === 'MAIN' ? 'mainIdx' : 'eventIdx',
@@ -153,7 +153,7 @@ function adapters(root) {
         }
       } },
 
-    /* ── 사가고 ── */
+    /* ── 사가만리 ── */
     { id: 'go.quests', game: 'saga-go', file: 'quest.js', v: 'KINDS', group: 'quest', label: '사명(날마다 셋)', idKey: 'key', add: true, lock: ['key', 'kind'], preview: 'quest',
       enums: () => ({ kind: ['catch', 'recruit', 'station', 'walk', 'letter', 'fort', 'rare', 'rogue'] }),
       opt: { 'reward.gold': 50, 'reward.exp': 100, 'reward.feed': 1, 'reward.scroll': 1, 'reward.treat': 1, 'reward.incense': 1, 'reward.prayer': 1 },
@@ -190,7 +190,7 @@ function adapters(root) {
         });
       } },
 
-    /* ── 사가의숲 ── */
+    /* ── 사가마을 ── */
     { id: 'forest.topics', game: 'saga-forest', file: 'folk.js', v: 'TOPICS', group: 'talk', label: '주민끼리 대화(번갈아)', add: true, del: true, preview: 'alternate',
       tokens: ['{season}', '{phase}', '{town}', '{other}'], template: ['{season}이 좋구려.', '그렇소.', '허허.'],
       check(v, ctx, E, W) {
@@ -206,7 +206,7 @@ function adapters(root) {
         v.forEach((s, i) => tokenWarn((i + 1) + '줄', s, this.tokens, W));
       } },
 
-    /* ── 사가국지 — 문답은 이 판 몫이다(CLAUDE.md) ── */
+    /* ── 사가천하 — 문답은 이 판 몫이다(CLAUDE.md) ── */
     { id: 'realm.quiz', game: 'saga-realm', file: 'data-quiz.js', v: 'BANK', group: 'quiz', label: '문답(역사 퀴즈)', idKey: 'id', add: true, lock: ['id'], preview: 'quiz',
       enums: () => ({ cat: keysOf(R('saga-realm', 'data-quiz.js', 'CATS'), 'key'), lv: [1, 2, 3] }),
       template: { id: 'x01', cat: 'hist', lv: 1, q: '', c: ['', '', '', ''], a: 0, why: '' },

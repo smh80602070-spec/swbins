@@ -1,4 +1,4 @@
-"""char-forge 단계 4-b — 사가국지 장수 194(도감 밖) → 사실 몸 레시피 194(recipes/realm/hero_<id>.json).
+"""char-forge 단계 4-b — 사가천하 장수 194(도감 밖) → 사실 몸 레시피 194(recipes/realm/hero_<id>.json).
 
     py tools/char-forge/gen_realm_recipes.py            # 레시피를 새로 쓴다(키 값은 calib_height.py 가 맞춘다)
     py tools/char-forge/gen_realm_recipes.py --check    # 쓴 레시피를 다시 읽어 실루엣 네 축 검사만(도감 105 와도)
@@ -115,7 +115,7 @@ def load_realm():
         heroes.append(dict(id=pid, name=o['name'], era=era, faction=fac, rarity=o.get('rarity') or 3, trait=o.get('trait'),
                            might=(o['stats'] or {}).get('might', 60), wisdom=(o['stats'] or {}).get('wisdom', 60),
                            command=(o['stats'] or {}).get('command', 60), female=female, reg=reg,
-                           note=f"단계 4-b 사가국지 장수 몸 — saga-web/saga-realm 장수 id {pid}(가명 {o['name']}). 역할 {role}·{pre}·★{o.get('rarity')}. "
+                           note=f"단계 4-b 사가천하 장수 몸 — saga-web/saga-realm 장수 id {pid}(가명 {o['name']}). 역할 {role}·{pre}·★{o.get('rarity')}. "
                                 f"gen_realm_recipes.py 가 쓴다(손으로 고치지 말 것 — 생성기를 고친다)."))
     return heroes
 

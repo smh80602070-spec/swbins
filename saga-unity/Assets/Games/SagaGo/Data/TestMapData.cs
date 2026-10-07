@@ -60,7 +60,7 @@ namespace Saga.Go.Data
         }
 
         /// <summary>
-        /// height — "물은 12cm 낮춘다"는 사가의숲 웹판 원칙과 같은 결. 산은
+        /// height — "물은 12cm 낮춘다"는 사가마을 웹판 원칙과 같은 결. 산은
         /// 두드러지고 강은 패어 보이게, 나머지는 거의 평면에 가깝게.
         /// saga-godot의 terrain_builder.gd LEGEND와 같은 수치.
         /// </summary>
@@ -169,7 +169,7 @@ namespace Saga.Go.Data
             top = edge + dir * RampTopOverlap + Vector3.up * high;
         }
 
-        // ---- PLAN.md 109-9 발원지 폭포 둘(웹 사가고 ⑰) — 산 고원에서 강으로 떨어진다 -----------------------------
+        // ---- PLAN.md 109-9 발원지 폭포 둘(웹 사가만리 ⑰) — 산 고원에서 강으로 떨어진다 -----------------------------
 
         public struct Waterfall
         {

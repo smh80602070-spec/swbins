@@ -1,4 +1,4 @@
-// 사가의숲 탈것(mount.js): 말을 타면 더 멀리 가나 · 학을 타고 떠서 물 칸을 넘나 · 물 위에서 내리면 뭍으로 옮겨지나 · 3D 예외 없나
+// 사가마을 탈것(mount.js): 말을 타면 더 멀리 가나 · 학을 타고 떠서 물 칸을 넘나 · 물 위에서 내리면 뭍으로 옮겨지나 · 3D 예외 없나
 // 사진은 `shot` 을 줄 때만(shots/fs_mount_*). PC_PROF=tmp/… 새 프로필로 돌릴 것
 import { launch, sleep } from './cdp.mjs';
 const shot = process.argv.includes('shot');

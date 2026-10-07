@@ -67,7 +67,7 @@
     /* 2026-09-09 — PLAN §60 "GLB 자산 확장" 후속. 이미 받아 asset3d.js REG에
        등록만 돼 있던 몬스터 GLB(Quaternius Ultimate Monsters·KayKit
        Skeletons)를 처음으로 실제 적 표에 건다 — "새로 받을 것"보다 "이미
-       있는데 안 불리던 것"이 훨씬 많았다(사가의숲 InstancedMesh 사례와
+       있는데 안 불리던 것"이 훨씬 많았다(사가마을 InstancedMesh 사례와
        같은 갈래). `kind:'beast'`는 생물학적 분류가 아니라 렌더링 분기용
        표시다(dungeon3d.js가 kind==='beast'일 때만 `body` 키의 홑짜리
        GLB를 그린다, 그 밖은 사람 몸에 옷을 입힌다) — 코끼리병도 같은 이유로

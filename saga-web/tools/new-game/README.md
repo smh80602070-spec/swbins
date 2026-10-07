@@ -14,7 +14,7 @@ node saga-web/tools/new-game/new-game.mjs --folder saga-arena --title 사가아�
   (들판을 걸으며 도감 인물을 만나 등용하는 최소 놀이, 방향키/WASD·터치 끌기)·`sw.js`(네트워크 먼저+no-store)·`manifest.json`·
   `run.bat`/`start_server.bat`·`_test.html`(8항목, `RESULT n/n`, 씨앗 20260824, 진짜 세이브·프로필 목록을 건드리지 않고 되돌림)·
   `CLAUDE.md`·`PLAN.md`(SAGA-DESIGN §9.3 틀)·`HANDOFF.md`·`README.md`·`assets/ASSET_LICENSES.md`.
-- **복사해 오는 것**: `js/data.js`(도감, saga-go 정본) · `js/errlog.js`(오류 기록 키만 새 판 것으로) · `icons/`(사가의숲 것, 임시) ·
+- **복사해 오는 것**: `js/data.js`(도감, saga-go 정본) · `js/errlog.js`(오류 기록 키만 새 판 것으로) · `icons/`(사가마을 것, 임시) ·
   `--three` 면 `js/vendor/three.iife.js`(MeshoptDecoder 든 번들).
 - 다섯 판의 `core.js`·`account.js` 는 복사하지 않는다 — 판마다 얽힌 곳이 많아 떼어 오면 깨진다. 새 판은 자기 core 로 시작한다.
 - **다른 파일은 건드리지 않는다.** 끝에 "손으로 등록할 곳"(루트 CLAUDE.md 표·precheck·asset-audit·콘텐츠 편집기 GAMES·허브·아이콘)을

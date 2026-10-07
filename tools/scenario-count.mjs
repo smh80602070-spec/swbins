@@ -7,13 +7,13 @@
  *   node tools/scenario-count.mjs --write    scenario/README.md 의 <!-- scenario:begin/end --> 블록을 덮어쓴다
  *
  * 세는 규칙(트랙·판마다 장 표의 모양이 달라 규칙이 따로다)
- *   웹   사가고      js/story.js 의 `id: 'chN'` 줄 수
+ *   웹   사가만리      js/story.js 의 `id: 'chN'` 줄 수
  *        블로·숲·스토리  js/data-scenario.js 를 vm 에 돌려 DG.scenarioData.CHAPTERS.length
- *        사가국지    같은 방식, CARDS + LORD + SIDE 길이(사연 카드 사슬 + 열전 + 곁가지)
- *   고돗 사가고      games/saga_go/data/story_chapters_*.gd 의 줄 머리 `\t{"id": "ch` 줄 수 (나머지 넷은 장 표 없음 = 0)
- *   유니티 사가고    Assets/Games/SagaGo/Data/GoStory.cs 의 `Id = "chN"` 줄 수
+ *        사가천하    같은 방식, CARDS + LORD + SIDE 길이(사연 카드 사슬 + 열전 + 곁가지)
+ *   고돗 사가만리      games/saga_go/data/story_chapters_*.gd 의 줄 머리 `\t{"id": "ch` 줄 수 (나머지 넷은 장 표 없음 = 0)
+ *   유니티 사가만리    Assets/Games/SagaGo/Data/GoStory.cs 의 `Id = "chN"` 줄 수
  *        블로·숲·스토리  Resources/scenario_*.json 의 chapters 길이
- *        사가국지    Resources/scenario_realm.json 의 cards + side 길이
+ *        사가천하    Resources/scenario_realm.json 의 cards + side 길이
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -22,7 +22,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const argv = process.argv.slice(2);
-const GAMES = [['go', '사가고', 'saga-go'], ['dungeon', '사가블로', 'saga-dungeon'], ['forest', '사가의숲', 'saga-forest'], ['story', '사가스토리', 'saga-story'], ['realm', '사가국지', 'saga-realm']];
+const GAMES = [['go', '사가만리', 'saga-go'], ['dungeon', '사가나락', 'saga-dungeon'], ['forest', '사가마을', 'saga-forest'], ['story', '사가종횡', 'saga-story'], ['realm', '사가천하', 'saga-realm']];
 
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 const exists = (p) => fs.existsSync(path.join(ROOT, p));

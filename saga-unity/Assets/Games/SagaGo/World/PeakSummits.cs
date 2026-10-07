@@ -6,7 +6,7 @@ using Saga.Go.UI;
 namespace Saga.Go.World
 {
     /// <summary>
-    /// PLAN.md 109-9 "정상"(웹 사가고 ⑰) — 봉우리(107-3) 윗면에 처음 서면 발견: 금 80 + 정상 높이(m) · 경험 70(웹 경험 50 + 단사 2 → 이 판 비율로 20),
+    /// PLAN.md 109-9 "정상"(웹 사가만리 ⑰) — 봉우리(107-3) 윗면에 처음 서면 발견: 금 80 + 정상 높이(m) · 경험 70(웹 경험 50 + 단사 2 → 이 판 비율로 20),
     /// 기록은 `WorldMapState`(세이브 v18 `peaksFound`), 오른 정상은 M 지도에서 ▲ 를 눌러 순간이동한다(`WorldMapUi.TeleportToPeak`).
     /// `WorldMapBuilder` 가 Play 때 붙이고 0.2초마다 플레이어 자리를 본다.
     /// </summary>

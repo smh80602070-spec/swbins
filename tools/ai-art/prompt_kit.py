@@ -30,11 +30,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from gen import BLOCK, MODELS, MAX_PIXELS  # noqa: E402  (금지어·허용 모델·픽셀 한도는 gen.py 가 정본)
 
-QUALITY = {  # 모델별 품질 꼬리표(모델 카드 권장값)
+QUALITY = {  # 모델별 품질 꼬리표(모델 카드 권장값). z-image-turbo 는 꼬리표·부정 프롬프트가 없다(문장형 프롬프트, gen.py 가 8단계·CFG 1 로 고정)
     'animagine-xl-4.0-opt': 'masterpiece, high score, great score, absurdres',
     'Illustrious-XL-v2.0': 'masterpiece, best quality, very aesthetic, absurdres',
-    'sd_xl_base_1.0': 'highly detailed, sharp focus, professional game art',
-    'v1-5-pruned-emaonly': 'masterpiece, best quality, highly detailed',
+    'z-image-turbo': '',
 }
 
 DEFAULT_STYLE = 'C'   # 10-05 판정기는 P 를 추천했으나(K-0070 단계 5) 사용자가 거부권 "C" 를 씀 — K-0068 이 C 로 재생성

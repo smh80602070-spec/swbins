@@ -20,7 +20,7 @@ func _ready() -> void:
 	for _i in 30:
 		await get_tree().physics_frame
 	if String(args[0]).contains("saga_realm"):
-		## 사가국지는 조작하는 몸이 없다 — 군주 초상에 탈것이 앉는지만 본다.
+		## 사가천하는 조작하는 몸이 없다 — 군주 초상에 탈것이 앉는지만 본다.
 		var lp := get_tree().get_first_node_in_group("lord_portrait")
 		_check("portrait", lp != null, "")
 		if lp != null:
@@ -81,7 +81,7 @@ func _ready() -> void:
 	_check("fly_rise", peak > 6.0 and bool(_p.call("is_flying_now")), "peak=%.1f" % peak)
 	Input.action_press("run")
 	if InputMap.has_action("story_dash"):
-		Input.action_press("story_dash") # 사가스토리는 내려가기가 story_dash
+		Input.action_press("story_dash") # 사가종횡는 내려가기가 story_dash
 	for _i in 260:
 		await get_tree().physics_frame
 		if OS.get_environment("SAGA_HOST_DEBUG") != "" and _i % 40 == 0:

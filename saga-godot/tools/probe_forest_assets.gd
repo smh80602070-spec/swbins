@@ -1,5 +1,5 @@
 extends SceneTree
-## G-0019 사가의숲 자연 소품 교체 점검 — godot --headless --path saga-godot --script res://tools/probe_forest_assets.gd → "PROBE forest_assets OK" / "FAIL n"
+## G-0019 사가마을 자연 소품 교체 점검 — godot --headless --path saga-godot --script res://tools/probe_forest_assets.gd → "PROBE forest_assets OK" / "FAIL n"
 ## ① 숲 나무·바위·버섯·꽃·풀 GLB 가 열리고 높이×배율이 옛 목표(5.52·0.115·0.32·0.28·0.4m) ±10% ② textured_surfaces 가 모든 표면을 곡률 텍스처 재질로 바꾸고
 ## 원본 메시는 안 건드린다 ③ 곡률 텍스처 셰이더의 tint 기본이 흰색(기존 사용처 불변)
 

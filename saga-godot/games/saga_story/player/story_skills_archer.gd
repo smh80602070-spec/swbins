@@ -1,7 +1,7 @@
 class_name StorySkillsArcher
 extends StorySkillsWarrior
 
-## 사가스토리 무예 — 궁수 갈래(궁수·저격수·비천·매) `_cast_*`. 상속 사슬은 story_skills_warrior.gd 머리 참고.
+## 사가종횡 무예 — 궁수 갈래(궁수·저격수·비천·매) `_cast_*`. 상속 사슬은 story_skills_warrior.gd 머리 참고.
 
 ## 사격(a_shot) — arrow. 참격(w_cut)과 같은 정면 판정·사거리(원문에 별도
 ## 사거리가 없다, story_combat.gd 머리말) — mul만 다르다.

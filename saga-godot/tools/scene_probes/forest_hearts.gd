@@ -1,5 +1,5 @@
 extends Node
-## G-0064 사가의숲 관계 하트 줄(villager_builder.gd _add_heart_row) — scene_probe_host 로 돈다(오토로드 필요).
+## G-0064 사가마을 관계 하트 줄(villager_builder.gd _add_heart_row) — scene_probe_host 로 돈다(오토로드 필요).
 ## ① 하트 10칸 ② 친밀도 3 → 채움 3·빔 7 ③ 줄 아래 끝 ≤ 선택 창 패널 위 끝(겹치지 않음, G-0052 뒤 회귀) ④ 0·10 끝값 ⑤ 하트 40px.
 
 const Villager := preload("res://games/saga_forest/world/villager_builder.gd")

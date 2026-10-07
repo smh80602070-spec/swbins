@@ -2,7 +2,7 @@
 
 py tools/ai-art/make_web2d_batches.py
   → batches/web2d_bg.json    (Illustrious-XL-v2.0, 지역 20 × 후보 2, id = bg_<판>_<지역>_<k>)
-  → batches/web2d_tiles.json (sd_xl_base_1.0, 판 5 × 6, id = tile_<판>_<종류>)
+  → batches/web2d_tiles.json (Illustrious-XL-v2.0, 판 5 × 6, id = tile_<판>_<종류>)
 이어서 돌리기: bash tools/ai-art/run_all.sh tools/ai-art/batches/web2d_bg.json <상태파일> (이미 만든 그림은 건너뛴다).
 씨앗은 순서로 정해져 같은 계획표면 같은 배치가 나온다.
 """

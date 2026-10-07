@@ -2,8 +2,8 @@
  * 후처리 — 톤매핑 · 블룸 · 색보정 (그래픽 보강 16~18절)
  *
  * **정본은 saga-web/shared/js/post3d.js** — 판별 복사본은 tools/sync-shared.mjs 가 만든다(직접 고치지 않는다).
- * 판마다 다른 것은 MEDIUM 등급의 몫뿐이다 — 기본은 사가고 값이고, 더 낮게 잡은 판(사가블로·사가스토리)은
- * `core.js` 끝에서 `DG.cfg.post = { medium: { post, mips, msaa, scale } }` 로 준다. 판마다 달랐던 머리 설명(사가블로·사가스토리 판의
+ * 판마다 다른 것은 MEDIUM 등급의 몫뿐이다 — 기본은 사가만리 값이고, 더 낮게 잡은 판(사가나락·사가종횡)은
+ * `core.js` 끝에서 `DG.cfg.post = { medium: { post, mips, msaa, scale } }` 로 준다. 판마다 달랐던 머리 설명(사가나락·사가종횡 판의
  * 이식 사정·카메라 사정)은 git 이력의 옛 판별 post3d.js 에 있다.
  * ---------------------------------------------------------------
  * 3D 는 PHASE 1~13 으로 다 섰는데, 화면에 **마지막 한 겹**이 없었다. 그린 그림을
@@ -160,7 +160,7 @@
     MEDIUM: { post: 1, mips: 3, msaa: 2, scale: 0.85 },
     LOW: { post: 0, mips: 0, msaa: 0, scale: 1 }
   };
-  if (CFG.medium) { TIER_POST.MEDIUM = CFG.medium; }   // 판별 설정(사가블로·사가스토리 — MEDIUM 을 LOW 쪽으로 낮춘다)
+  if (CFG.medium) { TIER_POST.MEDIUM = CFG.medium; }   // 판별 설정(사가나락·사가종횡 — MEDIUM 을 LOW 쪽으로 낮춘다)
 
   function clamp01(v) { return v < 0 ? 0 : (v > 1 ? 1 : v); }
 

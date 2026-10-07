@@ -25,7 +25,7 @@ const out = await page.evaluate(async (game) => {
       const model = await Promise.race([new Promise((ok) => mk(ok)), new Promise((ok) => setTimeout(() => ok(null), 30000))]);
       shell = model; st = model ? 'glb' : 'fail';
     } else {
-      shell = game === 'saga-dungeon' ? A3.buildHero('hero:' + h.id, 42, null, null) : A3.build('hero', h, null);   // 사가블로는 'hero:<id>' 씨앗
+      shell = game === 'saga-dungeon' ? A3.buildHero('hero:' + h.id, 42, null, null) : A3.build('hero', h, null);   // 사가나락는 'hero:<id>' 씨앗
       for (let i = 0; i < 120 && st !== 'glb' && st !== 'fail'; i++) { await new Promise((ok) => setTimeout(ok, 250)); if (A3.tick) { A3.tick(); } st = shell && shell.userData && shell.userData.assetState; }
     }
     res.heroes.push({ id: h.id, state: st, own: !!(shell && shell.userData.ownAnim), clips: shell && shell.userData.actions ? Object.keys(shell.userData.actions).length : 0 });

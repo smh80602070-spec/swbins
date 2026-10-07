@@ -263,7 +263,7 @@
   }
 
   /**
-   * HDRI 환경광(IBL) — Poly Haven CC0 "Alps Field"(사가의숲이 이미 쓰는 파일을
+   * HDRI 환경광(IBL) — Poly Haven CC0 "Alps Field"(사가마을이 이미 쓰는 파일을
    * 그대로 재사용, `assets/ASSET_LICENSES.md` 참고). 2026-09-04, 사용자가
    * "재질을 실사처럼" 요청해 얹는다. **하늘 색은 안 바꾼다** — `scene.background`
    * 는 그대로 `lightingAt()` 의 시각별 색에 맡기고, `scene.environment` 에만

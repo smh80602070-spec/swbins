@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace Saga.Dungeon.Data
 {
     /// <summary>
-    /// 지워진 이름의 비석(웹 사가블로 `town.js` NAME_STONE_*, 정본 side_names_*, tasks U-0028) — 마을마다 하나. 밟으면 굴혈이 삼킨 이름 하나가 보이고
+    /// 지워진 이름의 비석(웹 사가나락 `town.js` NAME_STONE_*, 정본 side_names_*, tasks U-0028) — 마을마다 하나. 밟으면 굴혈이 삼킨 이름 하나가 보이고
     /// 사관 묵향의 기록에 적힌다(마을마다 한 번 금). 이름은 가상 음절(실명 없음)이고 마을 id 해시로 정해 늘 같다 — 해시는 웹과 같은 식(h = h×33 ^ 글자, 32비트).
     /// 웹은 금 600 + 공적 8 을 따로 주지만 이 트랙엔 공적 칸이 없고 시나리오가 공적을 금으로 바꿔 주니(<see cref="DungeonRegionFoes.GoldPerMerit"/>) 같은 환산으로 한 번에 준다.
     /// 세이브: 마을 id → 이름(<c>nameStoneTowns/nameStoneNames</c>, 없는 세이브는 아직 못 찾은 것).

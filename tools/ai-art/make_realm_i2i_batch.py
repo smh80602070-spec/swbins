@@ -1,4 +1,4 @@
-"""사가국지 장수 194 → 공방 몸 밑그림 이미지→이미지 배치(web_realm_194_i2i.json).
+"""사가천하 장수 194 → 공방 몸 밑그림 이미지→이미지 배치(web_realm_194_i2i.json).
 
   py tools/ai-art/make_realm_i2i_batch.py
 글만으로 만든 옛 배치(web_realm_194.json)의 문화·역할 묘사는 두고, 머리색·눈색·나이만 **레시피(=몸)** 에서 다시 읽어 바꾼다 —

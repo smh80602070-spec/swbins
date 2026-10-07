@@ -6,7 +6,7 @@ using Saga.Go.Player;
 namespace Saga.Go.World
 {
     /// <summary>
-    /// PLAN.md 109-14-48 구름 위 항로(웹 사가고 ⑲-48 `skyroute.js`) — 잠긴 도읍 옛 등대 서쪽 하늘에 뜬 섬 셋(하늘 사당·비행선 잔해·궤도 정거장 조각)과 바람 기둥 셋.
+    /// PLAN.md 109-14-48 구름 위 항로(웹 사가만리 ⑲-48 `skyroute.js`) — 잠긴 도읍 옛 등대 서쪽 하늘에 뜬 섬 셋(하늘 사당·비행선 잔해·궤도 정거장 조각)과 바람 기둥 셋.
     /// 23장 등롱 불(`GoStory.LighthouseLit`) 뒤에만 서고, 기둥은 24장(등대→사당·사당→잔해)·25장(잔해→정거장)을 마친 뒤 열린다. 그림은 코드 도형(SAGA-DESIGN §7).
     /// </summary>
     public partial class AreaField

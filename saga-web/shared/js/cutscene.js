@@ -51,7 +51,7 @@
     return u ? 'linear-gradient(rgba(6,8,14,.30), rgba(6,8,14,.62)), url(' + u + ') center / cover no-repeat' : '';
   }
 
-  /** 카드 머리용 가로 그림 <img> 한 조각(사가국지 사연 카드처럼 전체 화면 배경이 아닌 곳). 없으면 '' — 못 받으면 그림만 숨는다 */
+  /** 카드 머리용 가로 그림 <img> 한 조각(사가천하 사연 카드처럼 전체 화면 배경이 아닌 곳). 없으면 '' — 못 받으면 그림만 숨는다 */
   function banner(game, chapterId) {
     var u = url(game, chapterId);
     return u ? '<img alt="" src="' + u + '" onerror="this.hidden=true" style="display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;margin:0 0 8px">' : '';

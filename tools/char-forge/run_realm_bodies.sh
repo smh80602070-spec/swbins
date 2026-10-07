@@ -1,5 +1,5 @@
 #!/bin/bash
-# 사가국지 장수 194 몸 만들기 — 공방 옷 → 키 보정 → 빌드 루프(있는 glb 는 건너뜀). 낮은 우선순위·순차. 멈추려면 tools/char-forge/_out/STOP_REALM 을 만든다.
+# 사가천하 장수 194 몸 만들기 — 공방 옷 → 키 보정 → 빌드 루프(있는 glb 는 건너뜀). 낮은 우선순위·순차. 멈추려면 tools/char-forge/_out/STOP_REALM 을 만든다.
 # 사용: nohup bash tools/char-forge/run_realm_bodies.sh /tmp/realm_bodies.status > /dev/null 2>&1 &
 cd /c/swbins
 S="${1:-/tmp/realm_bodies.status}"; : > "$S"

@@ -1,4 +1,4 @@
-// 사가스토리 확인 닫기 ①(W-0091) — 장비·직업/무예·사명/업적·사냥터 사건(채집·보물상자)·보스·소리를 실제 판에서 한 번씩 해 본다.
+// 사가종횡 확인 닫기 ①(W-0091) — 장비·직업/무예·사명/업적·사냥터 사건(채집·보물상자)·보스·소리를 실제 판에서 한 번씩 해 본다.
 //   node pw-st-close1.mjs        (서버: node serve.mjs C:/swbins/saga-web 8871 — 돌리는 쪽이 띄우고 끈다)
 // 준비는 pw-st-sheet 와 같다(새 계정 → title-continue → 이야기 장면 Esc → DG.side.enter). 레벨은 세이브 값을 바로 올린다(판 맞추기).
 // 화면 단추(data-act — saga-story/js/ui.js 에서 찾음): 가방 시트 `g-equip` · 직업 시트 `j-join`·`j-raise` · 사명 `q-take`.

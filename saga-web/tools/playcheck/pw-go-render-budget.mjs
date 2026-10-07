@@ -1,4 +1,4 @@
-// 사가고 3D 렌더 예산 측정(W-0067) — 품질 등급(LOW·MEDIUM·HIGH)마다 draw calls·삼각형·프레임 ms·그림자 여부를 잰다.
+// 사가만리 3D 렌더 예산 측정(W-0067) — 품질 등급(LOW·MEDIUM·HIGH)마다 draw calls·삼각형·프레임 ms·그림자 여부를 잰다.
 //   node pw-go-render-budget.mjs        (서버: node serve.mjs C:/swbins/saga-web 8871 — 돌리는 쪽이 띄우고 끈다)
 // 헤드리스 소프트웨어 렌더(SwiftShader)라 ms 절대값은 높다 — 등급 사이 비교용. 결과 results/pw-go-render-budget.json
 import fs from 'node:fs';

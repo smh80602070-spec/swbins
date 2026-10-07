@@ -515,11 +515,11 @@ Art Type=Music, License=CC0) 찾고, 제목·태그만으로 판마다 어울리
 
 | 게임 | 파일 | 원제 · 작곡가 | 출처 |
 |---|---|---|---|
-| 사가고 | `Assets/Art/Audio/CC0_BGM/go_town_theme.mp3` | "Town Theme (RPG)" · cynicmusic | <https://opengameart.org/content/town-theme-rpg> |
-| 사가블로 | `Assets/Art/Audio/CC0_BGM/dungeon_ambience.ogg` | "Dungeon Ambience" · yd | <https://opengameart.org/content/dungeon-ambience> |
-| 사가의숲 | `Assets/Art/Audio/CC0_BGM/forest_peaceful_town.ogg` | "Peaceful Town" · aroachifoundonmypillow | <https://opengameart.org/content/peaceful-town> |
-| 사가스토리 | `Assets/Art/Audio/CC0_BGM/story_fight_run_breath_deeply.mp3` | "…Fight, run, breath deeply" · Komiku | <https://opengameart.org/content/fight-run-breath-deeply> |
-| 사가국지 | `Assets/Art/Audio/CC0_BGM/realm_war_theme.ogg` | "War Theme" · spring-spring | <https://opengameart.org/content/war-theme> |
+| 사가만리 | `Assets/Art/Audio/CC0_BGM/go_town_theme.mp3` | "Town Theme (RPG)" · cynicmusic | <https://opengameart.org/content/town-theme-rpg> |
+| 사가나락 | `Assets/Art/Audio/CC0_BGM/dungeon_ambience.ogg` | "Dungeon Ambience" · yd | <https://opengameart.org/content/dungeon-ambience> |
+| 사가마을 | `Assets/Art/Audio/CC0_BGM/forest_peaceful_town.ogg` | "Peaceful Town" · aroachifoundonmypillow | <https://opengameart.org/content/peaceful-town> |
+| 사가종횡 | `Assets/Art/Audio/CC0_BGM/story_fight_run_breath_deeply.mp3` | "…Fight, run, breath deeply" · Komiku | <https://opengameart.org/content/fight-run-breath-deeply> |
+| 사가천하 | `Assets/Art/Audio/CC0_BGM/realm_war_theme.ogg` | "War Theme" · spring-spring | <https://opengameart.org/content/war-theme> |
 
 라이선스: 다섯 곡 전부 CC0 — 다섯 명 서로 다른 작곡가라 Kenney 킷처럼
 팩 전체에 딸린 `LICENSE.txt` 한 장이 없어서, 이번엔

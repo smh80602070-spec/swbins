@@ -300,7 +300,7 @@
     return { back: b + id + '.webp', front: b + id + '_front.webp' };
   }
 
-  /** 땅 종류 → 타일 주소(cfg.tile 표). 2D 모드가 아니거나 표에 없으면 null — 자기 텍스처 로더가 있는 판(사가고)이 주소만 빌린다 */
+  /** 땅 종류 → 타일 주소(cfg.tile 표). 2D 모드가 아니거나 표에 없으면 null — 자기 텍스처 로더가 있는 판(사가만리)이 주소만 빌린다 */
   function tileUrl(kind) { var c = C(); return c.tile && c.tile[kind] && isOn() ? tileBase() + c.tile[kind] + '.webp' : null; }
 
   /** 바닥 타일 한 장(256px) — 아직 못 받았으면 null */
@@ -332,7 +332,7 @@
   }
 
   /**
-   * 아이소 바닥(마름모)을 타일로 채운다 — 사가블로. o = { id, a,b,c,d,e,f(방 좌표 → 화면 변환 행렬), W, H(방 크기), unit(타일 한 장이 덮는 방 좌표 폭, 기본 160), tint, tintAlpha }.
+   * 아이소 바닥(마름모)을 타일로 채운다 — 사가나락. o = { id, a,b,c,d,e,f(방 좌표 → 화면 변환 행렬), W, H(방 크기), unit(타일 한 장이 덮는 방 좌표 폭, 기본 160), tint, tintAlpha }.
    * 타일 위에 tint(테마 바닥색)를 얹어 층 분위기를 남긴다. 그렸으면 true — 부른 쪽은 칸 색칠을 건너뛴다. 못 받았으면 false.
    */
   function fillIso(ctx, o) {

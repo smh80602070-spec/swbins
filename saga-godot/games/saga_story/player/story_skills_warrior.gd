@@ -1,7 +1,7 @@
 class_name StorySkillsWarrior
 extends StoryPlayerBase
 
-## 사가스토리 무예 — 무사 갈래(무사·장군·원수·패왕) `_cast_*`. 상속 사슬: StoryPlayerBase ← StorySkillsWarrior ← StorySkillsArcher ← StorySkillsRogue ← StorySkillsMage ← StoryPlayer (G-0007: 부모는 자식 함수를 못 부르니 피호출 헬퍼가 아래).
+## 사가종횡 무예 — 무사 갈래(무사·장군·원수·패왕) `_cast_*`. 상속 사슬: StoryPlayerBase ← StorySkillsWarrior ← StorySkillsArcher ← StorySkillsRogue ← StorySkillsMage ← StoryPlayer (G-0007: 부모는 자식 함수를 못 부르니 피호출 헬퍼가 아래).
 
 ## 참격(w_cut) — 연참과 같은 정면 판정, 사거리도 같다(원문에 별도
 ## 사거리가 없다). mul은 투자 레벨을 따른다(**2026-09-13 추가 — SP

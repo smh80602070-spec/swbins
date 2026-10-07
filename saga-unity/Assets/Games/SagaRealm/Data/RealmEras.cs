@@ -5,7 +5,7 @@ namespace Saga.Realm.Data
     public enum RealmEra { Past, Modern, Future, Otherworld }
 
     /// <summary>
-    /// PLAN.md 109-5 "REALM 세 시대"(SAGA-DESIGN §13 전체 퓨전) — 웹 사가국지 5-12 "시간 틈 사람 아홉"·5-9 "퓨전 시나리오·사연"을
+    /// PLAN.md 109-5 "REALM 세 시대"(SAGA-DESIGN §13 전체 퓨전) — 웹 사가천하 5-12 "시간 틈 사람 아홉"·5-9 "퓨전 시나리오·사연"을
     /// 이 트랙 구조로 재해석한다.
     ///
     /// ① 시간 틈 사람 아홉(현대 다섯·미래 넷) — 웹은 어느 시나리오 표에도 안 실어 이름 해시로 재야에 흩는다.

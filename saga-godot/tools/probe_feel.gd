@@ -1,5 +1,5 @@
 extends Node
-## G-0018 단계 1 — 사가고 전투·이동 "손맛" 기준선 측정(밸런스 검사가 아니다). 평소엔 안 붙는다. test_village.gd 가 SAGA_FEEL_PROBE 가 있을 때만 단다.
+## G-0018 단계 1 — 사가만리 전투·이동 "손맛" 기준선 측정(밸런스 검사가 아니다). 평소엔 안 붙는다. test_village.gd 가 SAGA_FEEL_PROBE 가 있을 때만 단다.
 ##
 ##   SAGA_FEEL_PROBE=1 "$GODOT" --headless --path saga-godot res://games/saga_go/world/TestVillage.tscn   → "FEEL name=값 …" 줄들 + "FEEL_PROBE_DONE fails=N"
 ##
@@ -191,7 +191,7 @@ func _physics_process(delta: float) -> void:
 					_sig[k] = 0
 				_fc.call("_deal", _target, 20.0, "", Vector3.FORWARD)
 			elif _frame == 3:
-				_m("enemy_hit_feel_signals", JSON.stringify(_sig)) # 0 이면 사가고는 적 타격에 손맛 5요소를 안 쓴다
+				_m("enemy_hit_feel_signals", JSON.stringify(_sig)) # 0 이면 사가만리는 적 타격에 손맛 5요소를 안 쓴다
 				_m("time_scale_after_hit", "%.2f" % Engine.time_scale)
 				_next()
 		3: # ④b 공격 종류별 타격감 — 표(FeelTuning.KINDS)대로 히트스톱·흔들림이 나가는지

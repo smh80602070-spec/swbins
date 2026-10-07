@@ -1,6 +1,6 @@
 extends SceneTree
 
-## 사가블로 연단·행상·투전(data/dungeon_materials_state.gd 룬·보석 합치기, dungeon_equipment_state.gd 수리·감정·소켓·닳기, dungeon_potion_state.gd 허리띠, dungeon_gold_state.gd 값 치르기) 자동 점검 — 화면 없는 순수 규칙. 씨앗 고정(20260824).
+## 사가나락 연단·행상·투전(data/dungeon_materials_state.gd 룬·보석 합치기, dungeon_equipment_state.gd 수리·감정·소켓·닳기, dungeon_potion_state.gd 허리띠, dungeon_gold_state.gd 값 치르기) 자동 점검 — 화면 없는 순수 규칙. 씨앗 고정(20260824).
 ##   godot --headless --path saga-godot --script res://tools/probe_dungeon_shop.gd
 ## ① 연단: 룬 3개 → 다음 글자 1개(모자라면 mat·마지막 王 은 top)·보석 3개 → 한 등급 위(완(完)은 top)·take 가 0 이 되면 키를 지움·주옥 주머니 JEWEL_MAX·restore 가 일련번호를 이음·감정서
 ## ② 행상: 금이 모자라면 spend 거절(불변)·수리값 = 장비 수리값 합·수리하면 내구가 가득·부적은 안 닳음·감정은 미확인에만·허리띠 쌓기(STACK 4)·가득이면 full·약값이 수준에 늘어남

@@ -8,7 +8,7 @@ namespace Saga.Go.Player
     /// <summary>
     /// VERTICAL_SLICE.md Phase 4 — Player의 자식으로 붙어 위치는 저절로
     /// 따라온다(부모-자식 관계). 회전·줌만 이 스크립트가 다룬다. 웹판
-    /// 사가고 README "끌면 카메라가 돈다"와 같은 조작 감각 — 수치는
+    /// 사가만리 README "끌면 카메라가 돈다"와 같은 조작 감각 — 수치는
     /// saga-godot의 camera_rig.gd(ROTATE_SPEED·줌·피치 범위)를 그대로
     /// 가져왔다(새로 설계하지 않는다, PLAN.md 2장).
     ///
@@ -40,7 +40,7 @@ namespace Saga.Go.Player
         // 새로 짠다).
         private const float CameraSkin = 0.6f;
         private const float CameraCollisionBuffer = 0.2f;
-        // PLAN.md 109-9 건물 가림(웹 사가고 ⑯ 뒷부분) — 가는 광선 대신 구로 쓸어 벽 모서리를 스치며 파고들지 않게,
+        // PLAN.md 109-9 건물 가림(웹 사가만리 ⑯ 뒷부분) — 가는 광선 대신 구로 쓸어 벽 모서리를 스치며 파고들지 않게,
         // 사람·짐승·나무 줄기(캡슐·구·CharacterController)는 지나가고(곁을 지날 때 카메라가 들썩이지 않게),
         // 밟지 않는 지붕은 `CameraOccluder` 트리거로 막는다(지붕 너머로 가서 캐릭터가 가려지던 문제).
         public const float CastRadius = 0.35f;
@@ -81,7 +81,7 @@ namespace Saga.Go.Player
             ApplyZoom();
         }
 
-        // PLAN.md 109-14-13 대화 카메라(웹 사가고 ⑲-13 `talkface.js` 카메라 결) — 말하는 이를 내 어깨 너머로 가깝게.
+        // PLAN.md 109-14-13 대화 카메라(웹 사가만리 ⑲-13 `talkface.js` 카메라 결) — 말하는 이를 내 어깨 너머로 가깝게.
         // 끄는 동안 드래그는 멎고, 끝나면 원래 각도·거리로 돌아간다.
         public const float TalkZoom = 5.5f, TalkPitch = 15f, TalkYawOffset = 25f;
 

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Saga.Dungeon.Data
 {
     /// <summary>
-    /// PLAN.md 109-10-9 명소 층 주인 고유 수(웹 사가블로 §5.18 `guard.sig`·`guardZones`) — 여섯 주인이 저마다 다른 한 수.
+    /// PLAN.md 109-10-9 명소 층 주인 고유 수(웹 사가나락 §5.18 `guard.sig`·`guardZones`) — 여섯 주인이 저마다 다른 한 수.
     /// 이 판 주인은 빌린 몸 하나에 강타 하나라 여섯이 같은 싸움이었다 → 층 키(<see cref="DungeonLandmarkData"/> 와 같은 여섯)마다 수 하나:
     /// tomb 순장 호령(체력 ⅔·⅓ 에 졸개 둘) · fort 망루 화살비(내 자리+양옆 원 셋, 시전마다 방향이 돈다) · bandit 흑풍 삼연돌(내 자리로 세 번) ·
     /// palace 심연 소용돌이(예고 동안 끌어당기고 둘레 폭발, 구르면 안 끌림) · hellgate 업화 장판(터진 자리에 불바닥 6초, 0.5초마다, 넷까지) ·

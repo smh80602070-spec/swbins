@@ -532,7 +532,7 @@
       room.captive = { x: ROOM_W * 0.72, y: ROOM_H * 0.5, freed: false };
     } else if (kind === 'forage') {
       /* 채집·낚시방(POI: Forage, PLAN 12절 "채집"·"낚시 가능한 지역") —
-         사용자가 2026-08-30에 직접 요청해 넣었다. 사가의숲(생활 시뮬 모방)
+         사용자가 2026-08-30에 직접 요청해 넣었다. 사가마을(생활 시뮬 모방)
          이 이미 낚시·채집을 담당하고 있어 처음엔 이 판(원작 모방)엔
          안 맞다고 봤는데, 뜻이 분명해 넣었다 — 대신 **이 판의 결로**
          옮긴다: 밭을 갈지 않고 낚싯대를 들지 않는다. 약초 셋은 **항아리와
@@ -2059,7 +2059,7 @@
    */
   /**
    * @param ctx.anchor {x,y} — 이 방의 로컬 원점(0,0)이 실제로 서 있는 세계
-   *        좌표(PLAN §28-8, 사가블로 오픈월드). 없으면(0,0) — 예전과 완전히
+   *        좌표(PLAN §28-8, 사가나락 오픈월드). 없으면(0,0) — 예전과 완전히
    *        같다(던전 방은 늘 이 필드가 없다, 회귀 없음).
    */
   function inRoomRect(x, y, ctx) {
@@ -2164,7 +2164,7 @@
   /**
    * 사각형 벽(방 안)은 그대로 지키고, 방 밖은 들판 반경까지 넓힌다.
    * 축을 나눠 시도해 **한쪽이 막혀도 다른 쪽은 미끄러진다**(대각선으로 나무에
-   * 부딪혀도 그대로 안 멎는다 — 사가고 벽 충돌이 밟아 둔 요령과 같다).
+   * 부딪혀도 그대로 안 멎는다 — 사가만리 벽 충돌이 밟아 둔 요령과 같다).
    */
   /**
    * 통로(PLAN §28-2 Phase 2) — `ctx.corridors`의 `{dir,extra,lane,laneAt}` 항목
@@ -2531,7 +2531,7 @@
    * 갑주·머리) HP 문턱 (3) 75초 제한 도주 (4) 참가 보상 넷뿐이다.
    *
    * `wbNow()` — Date.now() 를 직접 안 쓰고 이 함수를 거친다. 진단이
-   * `_forceNow(v)`로 고정해 슬롯·창구를 결정적으로 재현한다(사가고
+   * `_forceNow(v)`로 고정해 슬롯·창구를 결정적으로 재현한다(사가만리
    * `weather.force()`와 같은 결, PLAN §9).
    */
   var WB_SLOT_MS = 900000, WB_NOTICE_MS = 180000, WB_FIGHT_MS = 75000;
@@ -4861,7 +4861,7 @@
     ROOM_W: ROOM_W, ROOM_H: ROOM_H, WALL: WALL, P_R: P_R,
     SKILL_SLOTS: SKILL_SLOTS,
     /** 던전 밖(마을 등)이 같은 필드 메커니즘을 빌려 쓸 때 쓰는 자리 —
-     *  각 함수의 ctx 인자는 그 함수 정의 옆 주석을 볼 것 (사가블로 마을 필드전투). */
+     *  각 함수의 ctx 인자는 그 함수 정의 옆 주석을 볼 것 (사가나락 마을 필드전투). */
     FIELD_ENEMY_CAP: FIELD_ENEMY_CAP, FIELD_CAP: FIELD_CAP, PACK_N: PACK_N,
     fieldOn: fieldOn, fieldRadiusUnits: fieldRadiusUnits,
     fieldBoundPlayer: boundPlayer, _corridorReach: corridorReach,
@@ -4940,7 +4940,7 @@
     _grantWorldBossReward: grantWorldBossReward,
     /** 진단 전용 — 보스 패턴 하나를 직접 굴려 본다(무기 부위 봉인 확인용) */
     _bossPattern: bossPattern,
-    /** 진단 전용(§9, "Date.now 를 고정") — 사가고 weather.force() 와 같은 결 */
+    /** 진단 전용(§9, "Date.now 를 고정") — 사가만리 weather.force() 와 같은 결 */
     _forceNow: function (v) { forcedNow = v; }
   };
 })(window);

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * 인물 명단 뼈대 — 도감 105(saga-go/js/data.js) + 사가국지 장수(saga-realm/js/data-force.js, 초상이 있는 것)를
+ * 인물 명단 뼈대 — 도감 105(saga-go/js/data.js) + 사가천하 장수(saga-realm/js/data-force.js, 초상이 있는 것)를
  * 한 표로 모아 tools/char-forge/data/roster.json 을 만든다(K-0021 단계 1). 읽기만 한다(게임 코드는 안 건드린다).
  *
  *   node tools/char-forge/make_roster.mjs          표를 찍고 roster.json 을 쓴다(없으면 만든다)
@@ -59,7 +59,7 @@ const body = JSON.stringify({
   heroes: roster,
 }, null, 1) + '\n';
 
-console.log(`인물 ${roster.length}명 (도감 ${codex.length} + 사가국지 장수 ${roster.length - codex.length}) · 초상 있는 id ${hasPortrait.size} · 명단에 못 든 초상 ${missing.length} · 초상 없는 도감 ${noPortrait}`);
+console.log(`인물 ${roster.length}명 (도감 ${codex.length} + 사가천하 장수 ${roster.length - codex.length}) · 초상 있는 id ${hasPortrait.size} · 명단에 못 든 초상 ${missing.length} · 초상 없는 도감 ${noPortrait}`);
 if (missing.length) console.log('명단에 없는 초상 id:', missing.slice(0, 10).join(', '));
 
 if (check) {

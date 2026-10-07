@@ -1,6 +1,6 @@
 extends RefCounted
-## G-0063 — 자체툴 장비·꾸밈 GLB(eq_·acc_)를 인물 몸(VRoid/공방 몸) 뼈에 붙이는 공용 길. 사가고 갑옷(armor_visual.gd, G-0060)·
-## 사가의숲 옷(forest_wear_visual.gd)이 같이 쓴다(네 판은 saga_go 를 부르지 않는다 — 참조 방향).
+## G-0063 — 자체툴 장비·꾸밈 GLB(eq_·acc_)를 인물 몸(VRoid/공방 몸) 뼈에 붙이는 공용 길. 사가만리 갑옷(armor_visual.gd, G-0060)·
+## 사가마을 옷(forest_wear_visual.gd)이 같이 쓴다(네 판은 saga_go 를 부르지 않는다 — 참조 방향).
 ## 규약(tools/world-forge/data/equip_slots.json): 조각 원점 = 붙일 뼈의 머리(T-자세), 인물 앞 = 고돗 +Z, 왼쪽 조각은 오른쪽 뼈에 X -1 배율 사본,
 ## 몸마다 균등 배율 = 머리 뼈 높이 / 1.5m. 붙이는 자리는 뼈 축을 몸 축으로 되돌린 앵커(VroidBody.bone_anchor) — 손 무기(G-0029)와 같다.
 ## tag 로 앵커 이름을 갈라(예 "armor"·"forest_gear") 한 몸에 둘이 붙어도 서로 안 지운다.
@@ -8,7 +8,7 @@ extends RefCounted
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 
 const REF_HEAD_H := 1.5 # equip_slots.json ref_head_bone_height_m
-## 뼈 이름 후보 — VRoid 이름 먼저, 공방 몸(UE 식) 이름 다음. 갑옷(armor_visual)·사가의숲 옷이 같이 쓴다(G-0067: 세 곳에 복사돼 있던 것).
+## 뼈 이름 후보 — VRoid 이름 먼저, 공방 몸(UE 식) 이름 다음. 갑옷(armor_visual)·사가마을 옷이 같이 쓴다(G-0067: 세 곳에 복사돼 있던 것).
 const HEAD_BONES := ["J_Bip_C_Head", "head"]
 const NECK_BONES := ["J_Bip_C_Neck", "neck_01"]
 const CHEST_BONES := ["J_Bip_C_Chest", "spine_03", "spine_02"]

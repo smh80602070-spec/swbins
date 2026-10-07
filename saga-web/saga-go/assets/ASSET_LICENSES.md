@@ -85,7 +85,7 @@ Quaternius 원 사이트(`quaternius.com`)는 이 망에서 안 열린다. 그�
 | **넣은 파일** | `Orc.gltf`·`Demon.gltf`·`BlueDemon.gltf` — 셋 다 같은 뼈대(Idle·Walk·Run·Punch·Death·HitReact 등 14클립), 사람 모양이라 도깨비·어둑귀 같은 오우거 형태 펫에 사슴보다 훨씬 잘 맞는다 |
 
 이 환경엔 Blender 가 없어 원본(FBX)을 직접 구울 수 없었다 — 이미 glTF 로
-구워 올려 둔 미러를 썼다(사가고 8절 "Photoshop/Blender 없이" 원칙과 같은 결).
+구워 올려 둔 미러를 썼다(사가만리 8절 "Photoshop/Blender 없이" 원칙과 같은 결).
 
 **같은 날 조금 더 뒤 — 거북 형태(`pet:form:turtle`)까지 채워 일곱 형태
 전부(quad·bird·fish·horse·toad·dragon·ogre) 실제 모델이 섰다.** 처음엔
@@ -554,8 +554,8 @@ dependency 를 설치하지 않는다"와 같은 결로, 저장소에 도구를 
 
 ## Poly Haven — 나무·바위·수풀 사진측량 스캔 (`models/nature/realistic/`)
 
-2026-09-04, 사용자가 "사가블로는 했는데"(사가블로가 같은 것을 먼저 넣었다)로
-형평을 요청 — 사가의숲이 검증해 둔 것을 사가블로가 그대로 옮겼던 것과 같은
+2026-09-04, 사용자가 "사가나락는 했는데"(사가나락가 같은 것을 먼저 넣었다)로
+형평을 요청 — 사가마을이 검증해 둔 것을 사가나락가 그대로 옮겼던 것과 같은
 길로, 이 판에도 옮긴다. 사람 캐릭터 실사화는 다섯 판 어디서도 막힌 벽이었지만
 (Mixamo 재배포 금지, 대안 CC0 팩은 애니메이션 0개 — 이 문서 위 절과
 `HANDOFF.md` 참고) 자연물은 다르다.
@@ -576,8 +576,8 @@ dependency 를 설치하지 않는다"와 같은 결로, 저장소에 도구를 
 2026-09-28 — `Shrub_04.glb` 를 이 판에서 한 번 더 줄였다(meshoptimizer simplify 0.1: 삼각형 27,327 → 2,601, 942KB → 337KB, 텍스처 그대로). `?perf` 로 재 보니 높음 등급 한 화면에 이 수풀 118그루가 **삼각형 322만 개**(그 프레임 전체의 96%)였다(SAGA-DESIGN §6.1-B). 원본은 `saga-forest` 의 같은 파일.
 
 **가을·눈은 그대로 저다각형이다** — Poly Haven 전체를 뒤져도 가을 단풍·눈 덮인
-나무 CC0 모델이 없다는 것은 사가의숲이 이미 확인한 자리라 다시 찾지 않는다.
-사가의숲엔 있는 `log`(통나무)·`tree:dead`(고목)는 이 판의 소품 표(`prop3d.js`
+나무 CC0 모델이 없다는 것은 사가마을이 이미 확인한 자리라 다시 찾지 않는다.
+사가마을엔 있는 `log`(통나무)·`tree:dead`(고목)는 이 판의 소품 표(`prop3d.js`
 `REG`)에 애초에 그 자리가 없어 옮기지 않았다 — 안 쓰는 파일을 공개 저장소에
 얹을 까닭이 없다.
 
@@ -587,10 +587,10 @@ dependency 를 설치하지 않는다"와 같은 결로, 저장소에 도구를 
 
 ## 집·탑 — PolyScan · Poly Haven (`models/buildings/realistic/`)
 
-2026-09-04, **사가블로가 같은 날 먼저 찾아 검증해 둔 것을 그대로 옮겼다**
+2026-09-04, **사가나락가 같은 날 먼저 찾아 검증해 둔 것을 그대로 옮겼다**
 (md5 동일 확인) — 아래 "안 가져온 것" 절의 옛 결론("동양풍만 없을 뿐 건물
 자체는 CC0 로 있다")과 달리, 그때까지는 **집·탑도 사진측량/PBR 급 CC0 를
-못 찾은 상태**였다. 사가블로가 rar 해제·OBJ 재질 분리·trimesh 로 새로
+못 찾은 상태**였다. 사가나락가 rar 해제·OBJ 재질 분리·trimesh 로 새로
 구해 냈다 — 자세한 변환 과정은 `saga-dungeon/assets/ASSET_LICENSES.md`
 의 같은 절 참고(다섯 판 공용 소재라 그쪽에 한 번만 적혀 있다).
 
@@ -1267,7 +1267,7 @@ QRPG와 같은 결로 `anim`을 `body`와 같은 파일로 줘(제 클립을 그
 새 파일은 하나도 안 받았다 — **표(`asset3d.js` `DEFAULTS`) 등록만 늘렸다.**
 
 `portrait3d.js`(초상을 실제 모델로 굽는 자리)는 `hero`만 가리고 `pet`은 아예
-막고 있었다 — 사가블로·사가스토리는 진작 pet도 굽는데 이 판만 빠져 있었다
+막고 있었다 — 사가나락·사가종횡는 진작 pet도 굽는데 이 판만 빠져 있었다
 (코드 감사로 드러남). 막힌 문은 열었지만, **정작 도감 펫(`pt_*`·`pk_*`)을
 가리키는 GLB가 표에 하나도 없었다** — 위 `pet:an_deer` 등 다섯 줄은
 `animal.js`의 **배경 들짐승**(잡는 대상이 아니다) 전용이라 도감 펫과 id가
@@ -1354,13 +1354,13 @@ VRoid Studio 공식 CC0 샘플 AvatarSample_A/B/C(github.com/madjin/vrm-samples,
 2026-09-23 `tools/asset-audit` 이 "출처 문서에 이름이 없다"로 잡아 채웠다(그림은 09-06~07 에 들어왔다).
 
 
-## 도감 펫 종마다 제 모델 — 사가블로에서 옮김 (2026-09-23)
+## 도감 펫 종마다 제 모델 — 사가나락에서 옮김 (2026-09-23)
 
-도감 펫 64종이 형태 표에 없어 네발 모델 열 벌 중 하나를 id 해시로 입던 것(고래가 사슴 등)을 고치려고, 사가블로가 받아 둔 모델을 **그대로 복사**했다(재가공 없음, 파일은 사가블로와 같다). 출처·경위는 `saga-web/saga-dungeon/assets/ASSET_LICENSES.md` "도감(펫) 초상"·"펫 — poly.pizza 동물 번들 셋"·"펫 2차분" 절. `js/asset3d.js` `DEFAULTS` 에 `pet:pt_*` 로 등록.
+도감 펫 64종이 형태 표에 없어 네발 모델 열 벌 중 하나를 id 해시로 입던 것(고래가 사슴 등)을 고치려고, 사가나락가 받아 둔 모델을 **그대로 복사**했다(재가공 없음, 파일은 사가나락와 같다). 출처·경위는 `saga-web/saga-dungeon/assets/ASSET_LICENSES.md` "도감(펫) 초상"·"펫 — poly.pizza 동물 번들 셋"·"펫 2차분" 절. `js/asset3d.js` `DEFAULTS` 에 `pet:pt_*` 로 등록.
 
 | 폴더 | 파일 | 원출처 |
 |---|---|---|
-| `models/animals/` | `Tiger.glb`·`Bear.glb`·`Panda.glb`·`Monkey.glb`·`Boar.glb`·`Owl.glb`·`Cat.glb`·`Crane.glb` | Quaternius 계열 CC0(사가블로 "도감(펫) 초상" 절) |
+| `models/animals/` | `Tiger.glb`·`Bear.glb`·`Panda.glb`·`Monkey.glb`·`Boar.glb`·`Owl.glb`·`Cat.glb`·`Crane.glb` | Quaternius 계열 CC0(사가나락 "도감(펫) 초상" 절) |
 | `models/animals_extra/` | `Cow_Farm.glb`·`Fish1.glb`·`Fish2.glb`·`Fish3.glb`·`Horse_Farm.glb`·`Llama.glb`·`Pig.glb`·`Pug.glb`·`Sheep.glb`·`Whale.glb`·`Zebra.glb` | poly.pizza Farm Animal Pack·Animated Fish Bundle(Quaternius, CC0) |
 | `models/animals_extra2/` | `Anglerfish.glb`·`Apatosaurus.glb`·`Armored_Catfish.glb`·`Betta.glb`·`Black_Lion_Fish.glb`·`Blobfish.glb`·`Blue_Goldfish.glb`·`Blue_Tang.glb`·`Butterfly_Fish.glb`·`Cardinal_Fish.glb`·`Clownfish.glb`·`Coral_Grouper.glb`·`Cowfish.glb`·`Flatfish.glb`·`Flower_Horn.glb`·`Goblin_Shark.glb`·`Goldfish.glb`·`Humphead.glb`·`Koi.glb`·`Lionfish.glb`·`Mandarin_Fish.glb`·`Moorish_Idol.glb`·`Parasaurolophus.glb`·`Parrot_Fish.glb`·`Piranha.glb`·`Puffer.glb`·`Red_Snapper.glb`·`Royal_Gramma.glb`·`Shark.glb`·`Sunfish.glb`·`Swordfish.glb`·`Tang.glb`·`Tetra.glb`·`Tuna.glb`·`Turbot.glb`·`Worm.glb`·`Yellow_Tang.glb`·`Zebra_Clown_Fish.glb` | poly.pizza Animated Fish Bundle(대형)·Animated Dinosaur Bundle(Quaternius, CC0) |
 
@@ -1397,7 +1397,7 @@ VRoid Studio 공식 CC0 샘플 AvatarSample_A/B/C(github.com/madjin/vrm-samples,
 | 항목 | |
 |---|---|
 | **만든 이** | Quaternius — CC0 1.0(재배포 허용, 저작자 표시 불필요) |
-| **받은 곳** | 사람 11·쥐·말벌·망자·외계 손님은 **사가블로가 이미 받아 둔 파일을 복사**(`saga-dungeon/assets/models/people/polypizza_men·women·space/`, `monsters/quaternius2/`·`monsters/quaternius/Alien_0bb74be9.glb` — 출처 poly.pizza "Ultimate Modular Men/Women Pack"·"Ultimate Space Kit"·Quaternius 몬스터, 사가블로 `assets/ASSET_LICENSES.md` 해당 절) · 로봇 셋은 미러 <https://github.com/trebeljahr/quaternius-showcase> `public/glb/cyberpunk_pack/`(`Enemy_Flying`·`Enemy_2Legs`·`Enemy_Large`) |
+| **받은 곳** | 사람 11·쥐·말벌·망자·외계 손님은 **사가나락가 이미 받아 둔 파일을 복사**(`saga-dungeon/assets/models/people/polypizza_men·women·space/`, `monsters/quaternius2/`·`monsters/quaternius/Alien_0bb74be9.glb` — 출처 poly.pizza "Ultimate Modular Men/Women Pack"·"Ultimate Space Kit"·Quaternius 몬스터, 사가나락 `assets/ASSET_LICENSES.md` 해당 절) · 로봇 셋은 미러 <https://github.com/trebeljahr/quaternius-showcase> `public/glb/cyberpunk_pack/`(`Enemy_Flying`·`Enemy_2Legs`·`Enemy_Large`) |
 | **가공** | 복사본은 이미 Meshopt. 로봇 셋만 `tools/glb-compress` 로 Meshopt(1.2MB → 0.26MB). 파일 이름: 사람은 `m_`(남)·`w_`(여)·`s_`(우주), 로봇은 `Robot_Drone`·`Robot_Walker`·`Robot_Large`. 전부 제 클립(걷기·대기·공격·죽음) 내장이라 리타깃 없음 |
 | **쓰이는 곳** | `js/asset3d.js` `hero:era:folk_*`(땅 사람 `folk.js`) · `pet:fc_*`(들판 적 `field-combat.js` FOES) |
 
@@ -1409,18 +1409,18 @@ VRoid Studio 공식 CC0 샘플 AvatarSample_A/B/C(github.com/madjin/vrm-samples,
 | 적 — 현대 | Rat · Wasp · Zombie |
 | 적 — 미래 | Robot_Drone · Robot_Walker · Robot_Large · Alien |
 
-## 사람 적·마을 사람 제 몸 — 사가블로에서 복사 (2026-09-25)
+## 사람 적·마을 사람 제 몸 — 사가나락에서 복사 (2026-09-25)
 
-`models/people/fixed/` — 사가블로 `assets/models/people/` 의 hero_light 창고 파일을 **그대로 복사**했다(파일 이름 = 원래 폴더_파일).
-출처·라이선스는 전부 사가블로 `assets/ASSET_LICENSES.md` 의 해당 절: `oga_ultimate_*`(Quaternius Ultimate Animated Character Pack, CC0 —
+`models/people/fixed/` — 사가나락 `assets/models/people/` 의 hero_light 창고 파일을 **그대로 복사**했다(파일 이름 = 원래 폴더_파일).
+출처·라이선스는 전부 사가나락 `assets/ASSET_LICENSES.md` 의 해당 절: `oga_ultimate_*`(Quaternius Ultimate Animated Character Pack, CC0 —
 OpenGameArt), `polypizza_*`(Quaternius Ultimate Modular Men/Women·Pirate·Apocalypse·Wide 묶음, CC0 — poly.pizza), `kaykit_adventurers_*`
 (KayKit Adventurers, CC0), `oga_knight_*`(Lowpoly Animated Knight, CC0). 전부 제 클립 내장. 쓰는 곳: `js/asset3d.js` FIXED_HERO.
 
 ## 신수·오마주·까치 대역 28종 — 종마다 한 벌 (2026-09-25, CHARACTER_UNIQUENESS ④)
 
-Quaternius "Ultimate Monsters"(CC0, 사가블로 `assets/models/monsters/quaternius/` 에서 md5 그대로 복사 — 출처는 그쪽 `assets/ASSET_LICENSES.md` "Ultimate Monsters 45종" 절) 열여덟 벌을 `models/standin/<이름>.glb` 로(해시 꼬리만 뗌).
+Quaternius "Ultimate Monsters"(CC0, 사가나락 `assets/models/monsters/quaternius/` 에서 md5 그대로 복사 — 출처는 그쪽 `assets/ASSET_LICENSES.md` "Ultimate Monsters 45종" 절) 열여덟 벌을 `models/standin/<이름>.glb` 로(해시 꼬리만 뗌).
 
-> **Elephant** (`models/standin/Elephant.glb`) — © **Poly by Google**, [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/). poly.pizza `/m/a27MA0rXyyj`, 사가블로 `models/animals/Elephant.glb` 복사. **저작자 표시 필요** — 이 문구가 그 표시다.
+> **Elephant** (`models/standin/Elephant.glb`) — © **Poly by Google**, [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/). poly.pizza `/m/a27MA0rXyyj`, 사가나락 `models/animals/Elephant.glb` 복사. **저작자 표시 필요** — 이 문구가 그 표시다.
 
 | 펫 | 모델 |
 |---|---|
@@ -1434,7 +1434,7 @@ Quaternius "Ultimate Monsters"(CC0, 사가블로 `assets/models/monsters/quatern
 | 불가사리 | **Elephant**(쇠를 먹는 코끼리 코 짐승) |
 | 삿갓동이·뿔도롱·뿔낙지·날주머니·방아토끼·이끼잔나비 | Mushnub·Dino·Squidle·Glub·Bunny·Monkroose |
 | 묵방울·어둑귀·눈머리·겹날주머니·고깔도사 | Pink_Slime·Ghost·Yeti·Glub_Evolved·Wizard |
-| 누렁날개·노을용·물이무기·별손님·복고양이 | Alpaking·Dragon·Snake_angry·Alien_2(두발 외계인 — 방울형 Alien 은 사가고 들판 적과 같은 파일이라 피함)·Cat(괴물 고양이) |
+| 누렁날개·노을용·물이무기·별손님·복고양이 | Alpaking·Dragon·Snake_angry·Alien_2(두발 외계인 — 방울형 Alien 은 사가만리 들판 적과 같은 파일이라 피함)·Cat(괴물 고양이) |
 
 ## 지도 스탬프 추가 — 들판 적·별손님 (2026-09-25, `assets/sprites2d/beast_*.png`)
 

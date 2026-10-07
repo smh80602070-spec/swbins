@@ -1,4 +1,4 @@
-// 사가국지 탈것(mount.js): 장수 카드에 명마 단추가 서나·얹으면 부대 힘이 오르나 · 학을 타면 3D 지도 카메라가 낮게 기울고 이동이 빨라지나 · 예외 없나
+// 사가천하 탈것(mount.js): 장수 카드에 명마 단추가 서나·얹으면 부대 힘이 오르나 · 학을 타면 3D 지도 카메라가 낮게 기울고 이동이 빨라지나 · 예외 없나
 // 사진은 `shot` 을 줄 때만(shots/rk_mount_*). PC_PROF=tmp/… 새 프로필로 돌릴 것
 import { launch, sleep } from './cdp.mjs';
 const shot = process.argv.includes('shot');

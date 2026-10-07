@@ -1,6 +1,6 @@
 extends SceneTree
 
-## 사가블로 방·정예·보스층·등용·결사(world/test_room.gd 방 표, world/dungeon_enemy.gd 정예·체력·공격 공식, data/dungeon_party_state.gd 부대, data/dungeon_hardcore_state.gd·dungeon_grave_state.gd 결사·무덤) 자동 점검 — 화면·씬 없이 표와 규칙만. 씨앗 고정(20260824).
+## 사가나락 방·정예·보스층·등용·결사(world/test_room.gd 방 표, world/dungeon_enemy.gd 정예·체력·공격 공식, data/dungeon_party_state.gd 부대, data/dungeon_hardcore_state.gd·dungeon_grave_state.gd 결사·무덤) 자동 점검 — 화면·씬 없이 표와 규칙만. 씨앗 고정(20260824).
 ##   godot --headless --path saga-godot --script res://tools/probe_dungeon_world.gd
 ## ① 방: ROOM_COUNT 7 = ROOM_KINDS 7 · 종류가 표 안 · 정예 소굴·상자·우물·미니보스·채광이 하나씩 · 보스층(3·6층)은 fight · 방 분위기 3종이 순환하고 방·문·복도 모델이 다 있음 · 등용 인물 둘이 도감에 있음
 ## ② 정예: 8종(키 유일·색·배율) · 확률 = min(0.30, 0.06+0.012×층) · 강제 정예는 항상 8종 중 하나 · 체력 1.35배·공격 1.15배(없는 배율의 기본값) 또는 그 종의 배율 · 저항 둘(철갑 물리 35·호신 기 45)

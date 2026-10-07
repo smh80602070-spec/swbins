@@ -4,7 +4,22 @@
  "pass": 18,
  "total": 18,
  "pageErrors": [],
- "notFound": [],
+ "notFound": [
+  "saga-forest/_shared/assets/world3d/altar_01.license.json",
+  "saga-forest/_shared/assets/world3d/altar_01.license.json",
+  "saga-forest/_shared/assets/world3d/altar_01.license.json",
+  "saga-forest/_shared/assets/world3d/altar_01.license.json",
+  "saga-forest/_shared/assets/world3d/altar_01.license.json",
+  "saga-forest/_shared/assets/world3d/altar_01.license.json",
+  "saga-forest/_shared/assets/world3d/altar_01.license.json",
+  "saga-forest/_shared/assets/world3d/altar_01.license.json",
+  "saga-forest/_shared/assets/world3d/altar_01.license.json",
+  "saga-forest/_shared/assets/world3d/altar_01.license.json",
+  "saga-forest/_shared/assets/world3d/altar_01.license.json",
+  "saga-forest/_shared/assets/world3d/altar_01.license.json",
+  "saga-forest/_shared/assets/world3d/altar_01.license.json",
+  "saga-forest/_shared/assets/world3d/altar_01.license.json"
+ ],
  "checks": [
   {
    "name": "채집 — 풀·열매 앞에서 ␣ 를 누르면 가방에 쌓인다",
@@ -14,12 +29,12 @@
   {
    "name": "낚시 — 낚시터에서 ␣ 로 줄을 던진다",
    "ok": true,
-   "detail": "focus prop:spot · {\"wait\":1568.155029296875,\"win\":700}"
+   "detail": "focus prop:spot · {\"wait\":2433.253173828125,\"win\":700}"
   },
   {
    "name": "낚시 — 입질 창은 0.7초(1.2~3.5초 기다린 뒤)",
    "ok": true,
-   "detail": "창 700ms · 남은 대기 1568ms"
+   "detail": "창 700ms · 남은 대기 2433ms"
   },
   {
    "name": "낚시 — 입질 창 안에 ␣ 를 다시 누르면 물고기가 가방에 든다",
@@ -29,7 +44,7 @@
   {
    "name": "순무 장 — 프리셋 뒤 금 20만, 장이 열리면 열 개를 살 수 있다",
    "ok": true,
-   "detail": "ok:{\"kind\":\"buy\",\"text\":\"🥬 순무 10개 — 개당 🪙 108\"} 금 200000→198920 순무 10 값 108"
+   "detail": "ok:{\"kind\":\"buy\",\"text\":\"🥬 순무 10개 — 개당 🪙 90\"} 금 200000→199100 순무 10 값 90"
   },
   {
    "name": "순무 장 — 일요일엔 전방이 순무를 받지 않는다(규칙)",
@@ -39,12 +54,12 @@
   {
    "name": "순무 장 — 월요일에 팔면 금이 오르고 순무가 사라진다",
    "ok": true,
-   "detail": "요일 1 · {\"kind\":\"sell\",\"profit\":-150,\"text\":\"🥬 개당 🪙 93 — 밑짐 -150\"} 금 198920→199850"
+   "detail": "요일 1 · {\"kind\":\"sell\",\"profit\":-280,\"text\":\"🥬 개당 🪙 62 — 밑짐 -280\"} 금 199100→199720"
   },
   {
    "name": "편지 — 📮 시트가 열리고 여섯 통이 보인다",
    "ok": true,
-   "detail": "편지 6 안 읽음 6 선물 4 시트 글자 568"
+   "detail": "편지 6 안 읽음 6 선물 4 시트 글자 561"
   },
   {
    "name": "편지 — 선물이 든 편지를 받으면 선물이 비워진다",
@@ -59,7 +74,7 @@
   {
    "name": "집 — 🏠 시트가 열리고 벽지·장판이 보인다",
    "ok": true,
-   "detail": "시트 글자 2026"
+   "detail": "시트 글자 1962"
   },
   {
    "name": "집 — 집 문 앞에서 ␣ 를 누르면 집 안으로 들어간다",
@@ -92,9 +107,9 @@
    "detail": "{\"part\":\"coat\",\"from\":\"leather\",\"to\":\"robe\",\"r\":{\"kind\":\"wear\",\"text\":\"🧵 도포 으로 갈아입었다\"}}"
   },
   {
-   "name": "2D 모드 시트 — 3D 마을을 끄면 주민·나가 시트로 그려진다(풀 이미지를 받아 둠, 실패 0)",
+   "name": "2D 모드 시트 — 3D 마을을 끄면 주민·나가 시트로 그려진다(인물 2D 시트를 받아 옴, 실패 0)",
    "ok": true,
-   "detail": "{\"on\":true,\"w3\":false,\"residents\":5,\"pools\":3,\"loaded\":3,\"failed\":0}"
+   "detail": "{\"on\":true,\"w3\":false,\"residents\":5,\"ok\":14,\"bad\":0,\"sample\":\"characters2d8/jp_masamune/idle.webp\"}"
   }
  ]
 }

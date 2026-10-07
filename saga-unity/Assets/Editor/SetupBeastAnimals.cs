@@ -8,7 +8,7 @@ namespace Saga.EditorTools
 {
     /// <summary>
     /// PLAN.md 109-14-1b 임시 짐승 몸 — 새 원소 괴물 눈여우·회오리매·덩굴뱀에 쓰는 Quaternius CC0 저폴리 동물(`Assets/Art/Creatures/`,
-    /// 웹 사가블로 `assets/models` 에서 옮겨 옴). glTFast Mecanim 모드로 들어온 클립으로 `Speed`·`Attack`·`Hit`·`Death` 컨트롤러와
+    /// 웹 사가나락 `assets/models` 에서 옮겨 옴). glTFast Mecanim 모드로 들어온 클립으로 `Speed`·`Attack`·`Hit`·`Death` 컨트롤러와
     /// 프리팹(`CreaturesXxxAnimated.prefab`)을 굽는다. 걷기·달리기·대기는 반복 사본을 따로 만든다(임포트 클립은 반복 표시가 없다).
     /// 없는 클립은 상태를 뺀다(뱀은 피격·쓰러짐 클립이 없다). 프리팹이 없으면 `BuildTestVillageScene` 이 사람형 몸으로 둔다.
     /// 배치: `-executeMethod Saga.EditorTools.SetupBeastAnimals.SetupAll`.

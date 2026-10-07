@@ -11,11 +11,11 @@
  *   toonify(m)      이미 만든 재질(Standard/Physical 등)을 툰으로 바꿔 낸다
  *
  *   outline(mesh)   뒤집힌 헐 외곽선 메시를 원본과 **같은 부모**에 얹는다(SkinnedMesh 는
- *                   뼈대를 같이 쓴다). 사가블로 `toon3d.js` 에서 그대로 옮겼다.
+ *                   뼈대를 같이 쓴다). 사가나락 `toon3d.js` 에서 그대로 옮겼다.
  *   recolorOutlines 주인공 외곽선을 장비 세트 등급 색으로(`gear.setGrade`, 손잡이 world3d.gearOutline)
  *
  * **외곽선은 배우(사람·짐승 GLB)만 받는다**(2026-09-23) — `side-view3d.js`의 하늘·바닥·
- * 소품은 낱개 `new Mesh(...)` 라 태그할 자리가 없어, 사가블로처럼 `asset3d.js` `delam()`
+ * 소품은 낱개 `new Mesh(...)` 라 태그할 자리가 없어, 사가나락처럼 `asset3d.js` `delam()`
  * 이 **GLB 폴더(people/animals)로 걸러** 부른다(`isActorAsset()`). 나무·바위·건물 GLB 는
  * 호출 자체가 안 온다. `world3d.outline`(기본 1) 손잡이로 끈다.
  *
@@ -53,7 +53,7 @@
 
   /**
    * 하늘 그라디언트 배경("고품질 셀 셰이딩급" 요청 2단계, 2026-09-23) — 단색 `scene.background` 를 화면 세로 그라디언트 텍스처로 바꾼다.
-   * 사가의숲은 카메라를 따라다니는 구(`makeSkyDome`)를 쓰지만, 여기선 배경 텍스처 한 장이라 드로우콜·카메라 추적이 없다.
+   * 사가마을은 카메라를 따라다니는 구(`makeSkyDome`)를 쓰지만, 여기선 배경 텍스처 한 장이라 드로우콜·카메라 추적이 없다.
    * 아래 35% 는 지평선색(= 이 판이 안개색으로 쓰는 그 색) 그대로라 안개와 이음매가 안 생기고, 위로 갈수록 짙어진다 —
    * 밝은 하늘은 깊은 파랑 쪽으로, 어두운 하늘(굴·불 골짜기)은 같은 색을 반쯤 어둡게. 색마다 한 장만 만들어 캐싱한다.
    * 손잡이가 꺼져 있거나 three 가 없으면 예전과 같은 `Color` 를 돌려준다. 렌더 결과는 실기 확인 몫.
@@ -123,7 +123,7 @@
     return core && core.tuned ? (core.tuned('world3d.outline', 1) ? true : false) : true;
   }
 
-  var OUTLINE_COLOR = 0x14120f;   // 사가블로와 같은 색
+  var OUTLINE_COLOR = 0x14120f;   // 사가나락와 같은 색
   /* 외곽선 재질 — 폭별로 캐싱, 스키닝 유무로 셰이더가 갈린다(법선 방향으로 밀어 자세와 무관하게 같은 두께) */
   var matPool = {};
   function outlineMaterial(width, skinned, color) {
@@ -191,7 +191,7 @@
    *  `width` 를 주면 그 폭(기하 단위)으로 — 한 모델의 부품끼리 같은 두께로 맞출 때
    *  (`asset3d.js` delam 이 가장 큰 부품 반지름 × OUTLINE_K 를 넘긴다).
    *  **절대 최소폭을 두지 않는다** — 짐승 GLB 는 기하가 반지름 0.03 으로 작고 뼈대가 900~2000배
-   *  키워, 사가블로식 최소 0.006 이 반지름의 20% 가 되어 새까맣게 두꺼웠다(2026-09-23 CDP 실측) */
+   *  키워, 사가나락식 최소 0.006 이 반지름의 20% 가 되어 새까맣게 두꺼웠다(2026-09-23 CDP 실측) */
   function outline(mesh, width) {
     var t = three();
     if (!t || !mesh || !mesh.isMesh || !mesh.geometry || !mesh.parent) { return null; }
@@ -282,7 +282,7 @@
     return n;
   }
 
-  var OUTLINE_K = 0.015;    // 바운딩구 반지름의 1.5% — 사가블로(3%)의 절반. 이 판 배우는 화면 키 40px 안팎이라 3% 면 몸이 검게 묻힌다(스크린샷 확인)
+  var OUTLINE_K = 0.015;    // 바운딩구 반지름의 1.5% — 사가나락(3%)의 절반. 이 판 배우는 화면 키 40px 안팎이라 3% 면 몸이 검게 묻힌다(스크린샷 확인)
 
   global.DG = global.DG || {};
   global.DG.toon3d = {

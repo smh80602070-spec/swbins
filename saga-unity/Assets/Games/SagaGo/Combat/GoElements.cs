@@ -8,13 +8,13 @@ namespace Saga.Go.Combat
     public enum GoReaction
     {
         None, Vaporize, Overload, ElectroCharged,
-        // 109-14-1a(웹 사가고 ⑲-1)
+        // 109-14-1a(웹 사가만리 ⑲-1)
         Melt, Frozen, Superconduct, Swirl, Crystallize, Bloom, Burning, Quicken,
         Aggravate, Spread, Shatter,
     }
 
     /// <summary>
-    /// PLAN.md 107-1 "원소 3·반응 3" → **109-14-1a "원소 7·반응 13"**(웹 사가고 ⑲-1 · saga-godot 106 ⑭⑮) — 규칙표만 모은 순수 정적 클래스(코드는 따로).
+    /// PLAN.md 107-1 "원소 3·반응 3" → **109-14-1a "원소 7·반응 13"**(웹 사가만리 ⑲-1 · saga-godot 106 ⑭⑮) — 규칙표만 모은 순수 정적 클래스(코드는 따로).
     /// 물리(기본 공격)는 부착도 반응도 없다. 풍·암은 붙지 않고 받는 원소(화·수·뇌·빙)에만 반응한다(회오리·굳힘). 반응은 붙은 원소를 지운다(싹틈 상태는 남는다).
     /// 옛 반응 셋(물안개·터짐·물벼락)의 수치는 107 에서 이 트랙 축척으로 맞춘 값 그대로, 새 반응은 Godot 칸 배수 그대로·반지름만 × 1.85(GO 사람 키 3.4m).
     /// 이름은 웹 표시 이름(원작 용어를 안 쓴다 — 웹 ⑳).

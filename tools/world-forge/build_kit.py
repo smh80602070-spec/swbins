@@ -1,4 +1,4 @@
-"""world-forge 치수 맞춤 키트 — 고돗 G-0020 이 Kenney 원본을 걷어내며 요청한 다리 널판 + 사가블로 방 키트 (K-0063). 재질만 Poly Haven CC0 사진.
+"""world-forge 치수 맞춤 키트 — 고돗 G-0020 이 Kenney 원본을 걷어내며 요청한 다리 널판 + 사가나락 방 키트 (K-0063). 재질만 Poly Haven CC0 사진.
 
   blender -b --factory-startup -P tools/world-forge/build_kit.py -- --id dungeon_room_12_dirt --out <절대>/dungeon_room_12_dirt.glb [--style toon]
   blender -b --factory-startup -P tools/world-forge/build_kit.py -- --all --out-dir <절대 폴더> [--style toon]

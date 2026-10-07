@@ -1,5 +1,5 @@
 {
- "model": "sd_xl_base_1.0",
+ "model": "Illustrious-XL-v2.0",
  "out": "rts_tiles",
  "defaults": {
   "prompt_prefix": "seamless tileable ground texture swatch, flat orthographic material, hand painted game texture, even lighting, no objects",

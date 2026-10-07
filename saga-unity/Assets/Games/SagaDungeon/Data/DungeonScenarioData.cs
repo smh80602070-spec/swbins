@@ -3,7 +3,7 @@ using Saga.Core;
 namespace Saga.Dungeon.Data
 {
     /// <summary>
-    /// PLAN.md 109-16 사가블로 시나리오 「이름이 지워지는 나라」 표(웹 사가블로 `js/data-scenario.js` · 정본 `scenario/saga-dungeon.md`) — 1막 중원의 난 셋 · 2막 잿빛과 소금 셋 ·
+    /// PLAN.md 109-16 사가나락 시나리오 「이름이 지워지는 나라」 표(웹 사가나락 `js/data-scenario.js` · 정본 `scenario/saga-dungeon.md`) — 1막 중원의 난 셋 · 2막 잿빛과 소금 셋 ·
     /// 3막 불타는 남쪽 넷 · 4막 모래와 눈과 고철 넷 · 5막 이름 없는 곳 둘 · 6막 비석 너머 셋 = 열아홉 장, 장면 41. **표 원본은 웹 파일에서 스크립트로 옮겼다**(한 자도 손으로 안 옮김).
     /// 이 트랙 다름: 층 주인 이름을 이 트랙 것으로(옥관 수릉장·잿빛 성주·비늘 수문장·구름 천장), 웹 명소 키 `heaven` 은 이 트랙 `cloud`.
     /// 표 본문은 `Resources/scenario_dungeon.json`(tasks U-0009) — 고치려면 웹 표를 고치고 다시 내보낸다(`ScenarioJsonExport`). 영어·한국어 글은 `dungeon_*.json` 의 `dscen.*` 키.

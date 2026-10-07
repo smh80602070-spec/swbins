@@ -1,5 +1,5 @@
 /**
- * saga-web 맵 편집기 — 3D 배치 화면(scene.html). 사가고 `land.js` 의 `deco`(손으로 놓은 소품)를 고친다.
+ * saga-web 맵 편집기 — 3D 배치 화면(scene.html). 사가만리 `land.js` 의 `deco`(손으로 놓은 소품)를 고친다.
  *
  * 이 화면은 `/g/<판>/__scene.html` 에 얹혀 있어 **게임 js 를 게임과 같은 상대 경로로 그대로 부른다**
  * (land·world3d·prop3d·relief3d …). 그래서 그리는 계산이 게임과 같다:

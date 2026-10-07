@@ -1,6 +1,6 @@
 extends SceneTree
 
-## G-0045 — 네 판(사가블로·사가의숲·사가스토리·사가국지) 화면 촬영. tools/probe_shots.gd 는 사가고 마을 씬에 붙는 노드라 다른 판을 못 찍는다.
+## G-0045 — 네 판(사가나락·사가마을·사가종횡·사가천하) 화면 촬영. tools/probe_shots.gd 는 사가만리 마을 씬에 붙는 노드라 다른 판을 못 찍는다.
 ## 컷마다 씬을 새로 띄워 노드 경로로 플레이어를 옮기고 함수를 불러 찍는다. 저장은 안 한다(각 판 자동 저장은 60초라 컷 안에 안 돈다).
 ## 헤드리스에선 그림이 비니 창 모드로(화면 밖):
 ##
@@ -13,7 +13,7 @@ extends SceneTree
 ##   ["call", <노드 경로>, <함수>, [인자…]]   부른다(인자 배열은 없어도 됨, 예: 메뉴 열기)
 ##   ["set", <노드 경로>, <속성>, 값]   속성을 바꾼다(autoload 는 "/root/이름" — 메모리만, 저장 안 함)
 ##   ["static", <스크립트 경로>, <함수>, [인자…]]   정적 함수 — 인자 낱말 "@scene"(지금 씬)·"@near:dx:dz"(플레이어 자리 + 차이) (G-0048)
-##   ["free_modal"]   떠 있는 선택 창(그룹 ui_modal 의 CanvasLayer)을 닫는다 — 예: 사가국지 시나리오 고르기
+##   ["free_modal"]   떠 있는 선택 창(그룹 ui_modal 의 CanvasLayer)을 닫는다 — 예: 사가천하 시나리오 고르기
 ## near 의 노드 경로를 못 찾으면 그 이름의 첫 노드를 씬 전체에서 찾는다(지형 빌더가 만드는 LadderArea 등).
 ## SETTLE 프레임에 뷰포트를 <이름>_<가로>x<세로>.png 로. 끝에 "SHOT_SCENE_DONE shots=N".
 
@@ -49,7 +49,7 @@ const CUTS := [
 	["fs_wear_plain", FOREST, [["set", "/root/ForestSaveState", "wear_on", {"coat": "leather", "head": "topknot", "dye": "none", "cape": "off"}], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 3.5]]],
 	["fs_wear_menu", FOREST, [["set", "/root/ForestSaveState", "wear_on", {"coat": "leather", "head": "topknot", "dye": "crimson", "cape": "on"}], ["call", "Villager", "_open_wear_menu", [{}, "@box"]]]],
 	["fs_fishing_near", FOREST, [["near", "Fishing", 0.0, 2.6]]],   # G-0046 — 못 가까이
-	## G-0048 — 사가블로 노획물 여섯(보스 노획·전설 배율 40 — 등급색 외곽선·전설 잔광) · 사가스토리 동굴 사다리 · 사가국지 일기토 1합째
+	## G-0048 — 사가나락 노획물 여섯(보스 노획·전설 배율 40 — 등급색 외곽선·전설 잔광) · 사가종횡 동굴 사다리 · 사가천하 일기토 1합째
 	# G-0049 — 출사표 창 먼저 닫고, 줍기 반경(1.4m)+몸 밖 3m 에 떨군다(1.6m 는 찍기 전에 주워졌다)
 	# 화면 앞(+z)은 카메라 밑이라 안 보인다 — 전부 옆·뒤(-z)에. 앞 셋은 전설 배율 1000(전설 확정), 뒤 셋은 보통.
 	["dg_loot", DUNGEON, [["free_modal"], ["static", LOOT, "spawn_at", ["@scene", "@near:3.2:0", 30, true, false, 1000.0]], ["static", LOOT, "spawn_at", ["@scene", "@near:-3.2:0", 30, true, false, 1000.0]],
@@ -58,7 +58,7 @@ const CUTS := [
 	["st_ladder", STORY_CAVE, [["near", "LadderArea", -1.4, 0.0]]],
 	# G-0050 — 시나리오를 시작해야 장수 명단이 생겨 등용 설전 문제가 뽑힌다
 	["rk_debate", REALM, [["free_modal"], ["call", "/root/RealmSaveState", "start_scenario", ["194"]], ["call", "RealmHUD/OrderButton", "_start_order", ["hire", "등용", "@box"]]]],
-	# G-0054 — 화질/성능. 사가고 둘은 설정 파일을 안 쓰고(save=false) 메모리에서만 바꾼다 — forward_plus 로 찍어야 SSAO 차이가 보인다.
+	# G-0054 — 화질/성능. 사가만리 둘은 설정 파일을 안 쓰고(save=false) 메모리에서만 바꾼다 — forward_plus 로 찍어야 SSAO 차이가 보인다.
 	["rk_errlog", REALM, [["free_modal"], ["call", "RealmHUD/GraphicsButton/GraphicsMenu", "_open_errors", ["@box"]]]],   # G-0068 오류 기록 창
 	["rk_autosave_flash", REALM, [["free_modal"], ["call", "AutosaveTimer", "flash", [30.0]]]],   # G-0069 자동 저장 표시
 	["rk_slots", REALM, [["free_modal"], ["call", "SaveTransfer", "open_screen", []]]],   # G-0070 슬롯 줄

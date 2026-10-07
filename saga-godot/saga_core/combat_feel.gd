@@ -90,7 +90,7 @@ var _ui_sound_idx := 0
 
 
 ## tune(선택, G-0018): {stop_ms 히트스톱 길이(치명이면 +50), shake_mul 흔들림 배율(0=없음), pop_mul 숫자 크기 배율, quiet 타격음 끔}.
-## 비우면 위 기본 상수 그대로 — 사가블로·스토리·다른 호출은 동작이 안 바뀐다.
+## 비우면 위 기본 상수 그대로 — 사가나락·스토리·다른 호출은 동작이 안 바뀐다.
 func hit(target: Node3D, amount: float, crit: bool, tune: Dictionary = {}) -> void:
 	_do_hitstop(crit, int(tune.get("stop_ms", -1)))
 	_do_shake(float(tune.get("shake_mul", 1.0)))

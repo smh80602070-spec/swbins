@@ -1,6 +1,6 @@
 extends SceneTree
 
-## 사가국지 데이터·공식 층(games/saga_realm/data — realm_cities·realm_orders·realm_war·realm_diplo·realm_growth·realm_traits·realm_events·realm_officer_pool) 자동 점검 — 화면·상태 없이 표와 순수 공식만. 씨앗 고정(20260824).
+## 사가천하 데이터·공식 층(games/saga_realm/data — realm_cities·realm_orders·realm_war·realm_diplo·realm_growth·realm_traits·realm_events·realm_officer_pool) 자동 점검 — 화면·상태 없이 표와 순수 공식만. 씨앗 고정(20260824).
 ##   godot --headless --path saga-godot --script res://tools/probe_realm_data.gd
 ## ① 성 107(우리 3 + 적 104): id 유일·땅·좌표·시작값·군웅/군주 일치·무장이 도감에 있음·출진 성(from_city) 사슬이 우리 3성에 닿고 순환 없음·인접 대칭·월드맵 좌표(중심 평균)·땅별 상한(개간·상업·성벽·조선)·시나리오 3(성 3·8·19, 덮어쓰기 표)·성향 14와 군웅 표
 ## ② 명령 10: 키 유일·능력치·값·상한 표 · 공식(군량 유지·통치 배율·치안 배율·금/군량 수입·인구 증감·저치안 패널티) · 재해 5(풍년만 좋음)

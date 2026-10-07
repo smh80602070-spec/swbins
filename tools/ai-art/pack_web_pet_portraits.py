@@ -59,7 +59,7 @@ def main():
     for g in games:
         d = os.path.join(WEB, g, 'assets', 'portraits', 'pet')
         if os.path.isdir(d):
-            json.dump({'note': 'AI 생성 초상 — tools/ai-art (swbins3 sd-webui, 상업 허용 모델). 프롬프트는 tools/ai-art/batches/web_pets_105.json',
+            json.dump({'note': 'AI 생성 초상 — tools/ai-art (swbins3 ComfyUI, 상업 허용 모델). 프롬프트는 tools/ai-art/batches/web_pets_105.json',
                        'items': prov}, open(os.path.join(d, '_ai_provenance.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
     print('packed', len(prov), 'pets ->', games)
 

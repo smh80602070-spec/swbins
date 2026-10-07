@@ -868,7 +868,7 @@
   /* ── 시간 틈 사람 아홉 (PLAN §5-12 · SAGA-DESIGN §13 전체 퓨전, 2026-09-24) — 이계(균열·폐허·묘역)는 괴물이
      지키지만 본토엔 옛사람뿐이었다. 시간의 틈으로 떨어진 **현대 다섯·미래 넷**을 어느 표에도 안 싣는다 —
      그래서 어느 시나리오에서든 재야로 흩어지고(`scatterFree`), 수색으로 찾아 등용한다. `body` 는 사람 몸 CC0
-     GLB(Quaternius — 사가고 ⑱ 에서 복사, 제 클립 내장)라 `asset3d.heroRecipe()` 가 몸이자 몸짓으로 쓴다.
+     GLB(Quaternius — 사가만리 ⑱ 에서 복사, 제 클립 내장)라 `asset3d.heroRecipe()` 가 몸이자 몸짓으로 쓴다.
      `monster` 가 아니라서 괴물 딱지·후계 뒷순위는 안 붙는다. 이름·한자는 전부 지어낸 것 */
   var FOLK = 'assets/models/people/folk/';
   var TIME_OFFICERS = [

@@ -1,6 +1,6 @@
 {
  "id": "hero_tz_sanri",
- "_note": "단계 4-b 사가국지 장수 몸 — saga-web/saga-realm 장수 id tz_sanri(가명 산리). 역할 scholar·tz·★3. gen_realm_recipes.py 가 쓴다(손으로 고치지 말 것 — 생성기를 고친다).",
+ "_note": "단계 4-b 사가천하 장수 몸 — saga-web/saga-realm 장수 id tz_sanri(가명 산리). 역할 scholar·tz·★3. gen_realm_recipes.py 가 쓴다(손으로 고치지 말 것 — 생성기를 고친다).",
  "axes": {
   "height": 1,
   "build": 2,

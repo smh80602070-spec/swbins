@@ -1,6 +1,6 @@
 extends SceneTree
 
-## 사가블로 은사(games/saga_dungeon/data/dungeon_boons.gd 표·굴림, dungeon_run_state.gd 얹기·합산) 자동 점검 — 화면 없는 순수 규칙. 씨앗 고정(20260824).
+## 사가나락 은사(games/saga_dungeon/data/dungeon_boons.gd 표·굴림, dungeon_run_state.gd 얹기·합산) 자동 점검 — 화면 없는 순수 규칙. 씨앗 고정(20260824).
 ##   godot --headless --path saga-godot --script res://tools/probe_dungeon_boons.gd
 ## ① 표: 키 유일·축 skill/hero/world·희귀도 3단·상한≥1·설명·원소 시너지 셋이 표에 있고 6결을 하나씩 짝지음·시너지 상수
 ## ② roll_choice: 600번 — 카드 셋·겹침 없음·세 축에서 하나씩·상한 찬 은사는 안 나옴·exclude_keys 지킴·축 하나가 다 차면 나머지에서 채움·전부 차면 빈 손·희귀도 문턱(common 이 legendary 보다 훨씬 흔함)

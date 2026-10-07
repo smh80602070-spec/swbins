@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
-<title>사가의숲 자가진단</title>
+<title>사가마을 자가진단</title>
 <link rel="stylesheet" href="css/style.css">
 <style>
   body { overflow: auto; }
@@ -188,7 +188,7 @@ window.DG_NO_TUNE = true;
       return '들짐승·희귀 괴물 ' + plain.length + '종 모두 시트 · 여섯은 44×36(3D 모델에서 구움)';
     });
 
-    t('asset3d — 펫 105종 전부 제 모델(또는 사가고와 같은 대역), 늑대·사슴·여우 돌려 입기 아님', function () {
+    t('asset3d — 펫 105종 전부 제 모델(또는 사가만리와 같은 대역), 늑대·사슴·여우 돌려 입기 아님', function () {
       /* 2026-09-24 — 여태 105종이 늑대·사슴·여우 셋을 id 해시로 돌려 입어 고래도 범도 여우였다(펫 초상 모음) */
       var A3 = DG.asset3d, D = DG.data;
       A3.restore();
@@ -364,7 +364,7 @@ window.DG_NO_TUNE = true;
     });
 
     t('vroid-variant — shade: VRM 의 빛 안 받는 재질을 툰으로(이름 유지 → 색 변형이 먹는다), 얼굴에만 머리뼈 기준 얼굴 그림자', function () {
-      /* 2026-09-23 "고품질 셀 셰이딩급" — VRM(unlit → MeshBasic)이 네 판에서 명암 없이 평면으로 떴고, 사가의숲은 툰 재질에
+      /* 2026-09-23 "고품질 셀 셰이딩급" — VRM(unlit → MeshBasic)이 네 판에서 명암 없이 평면으로 떴고, 사가마을은 툰 재질에
          이름이 안 옮겨져 색 변형이 한 칸도 안 먹었다. 실제 GLB 처럼 MeshBasic + 뼈대로 조립해 잰다 */
       var V = DG.vroidVariant, TH = window.THREE, TN = DG.toon3d, C = DG.core;
       function avatar() {
@@ -446,7 +446,7 @@ window.DG_NO_TUNE = true;
       V.faceFront(b, 'assets/models/people/quaternius_rpg/Ranger.glb');
       V.faceFront(c, null);
       V.faceFront(d, 'assets/models/people/anime/avatar_custom_01.glb');
-      /* 게임이 걸음각을 모델의 rotation.y 에 대입해도(사가의숲 player.group) 보정이 안 지워져야 한다 — 걸음각 1.2 를 준 뒤 정면이 (sin, cos) 를 보는가 */
+      /* 게임이 걸음각을 모델의 rotation.y 에 대입해도(사가마을 player.group) 보정이 안 지워져야 한다 — 걸음각 1.2 를 준 뒤 정면이 (sin, cos) 를 보는가 */
       a.rotation.y = 1.2; a.updateMatrixWorld(true);
       var front = mark.getWorldPosition(new TH.Vector3());
       var ok = Math.abs(front.x - Math.sin(1.2)) < 1e-6 && Math.abs(front.z - Math.cos(1.2)) < 1e-6 &&
@@ -739,7 +739,7 @@ window.DG_NO_TUNE = true;
 
     t('village-view3d — three 는 실려 있으니 available, init 을 안 불렀으니 active 는 아니다', function () {
       var VV3 = DG.villageView3d;
-      /* 2026-09-09 — 기본이 켜짐(1)으로 바뀌었다(사가블로와 시점을 맞춤).
+      /* 2026-09-09 — 기본이 켜짐(1)으로 바뀌었다(사가나락와 시점을 맞춤).
          손잡이(on)는 true 지만 init() 을 안 불렀으니 화면(active)은 여전히 안 켜진다 */
       return VV3.available() === true && VV3.active() === false &&
         VV3.on() === true && '기본값(3D 켬) 그대로 · init 전엔 화면은 안 켜짐';
@@ -1079,7 +1079,7 @@ window.DG_NO_TUNE = true;
 
     /* ── PLAN 40절 PHASE 6: Mobile 품질 프리셋 (3D) ──────────────
      * PLAN 38절 "기기 성능을 감지해서 기본값을 자동 설정한다" — 프레임
-     * 실측 왕복(사가블로 dungeon3d.js)까지는 안 만들고, 켤 때 한 번
+     * 실측 왕복(사가나락 dungeon3d.js)까지는 안 만들고, 켤 때 한 번
      * 기기를 보는 정도만. scene 없이도 순수 함수로 확인된다.
      */
 
@@ -6331,7 +6331,7 @@ window.DG_NO_TUNE = true;
       } finally { TW.starNow = orig; }
     });
 
-    /* ── 배경음악(BGM) — 사가스토리에서 forest.mp3 그대로 옮김 (2026-09-10) ── */
+    /* ── 배경음악(BGM) — 사가종횡에서 forest.mp3 그대로 옮김 (2026-09-10) ── */
 
     t('BGM 모듈이 있고 기본은 켜짐·볼륨 35%다', function () {
       var B = DG.bgm;
@@ -6811,7 +6811,7 @@ window.DG_NO_TUNE = true;
 
     var failCount = out.filter(function (s) { return s.indexOf('FAIL') >= 0; }).length;
     document.getElementById('report').innerHTML =
-      '<h3>사가의숲 자가진단 — ' + (out.length - failCount) + '/' + out.length + ' 통과</h3>' +
+      '<h3>사가마을 자가진단 — ' + (out.length - failCount) + '/' + out.length + ' 통과</h3>' +
       out.join('<br>') +
       (errors.length ? '<br><br><b class="fail">런타임 에러</b><br>' + errors.join('<br>') : '');
     document.title = 'RESULT ' + (out.length - failCount) + '/' + out.length;

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
-<title>사가국지 자가진단</title>
+<title>사가천하 자가진단</title>
 <link rel="stylesheet" href="css/style.css">
 <style>
   body { overflow: auto; }
@@ -5168,7 +5168,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
     });
 
     t('vroid-variant — shade: VRM 의 빛 안 받는 재질을 툰으로(이름 유지 → 색 변형이 먹는다), 얼굴에만 머리뼈 기준 얼굴 그림자', function () {
-      /* 2026-09-23 "고품질 셀 셰이딩급" — VRM(unlit → MeshBasic)이 네 판에서 명암 없이 평면으로 떴고, 사가의숲은 툰 재질에
+      /* 2026-09-23 "고품질 셀 셰이딩급" — VRM(unlit → MeshBasic)이 네 판에서 명암 없이 평면으로 떴고, 사가마을은 툰 재질에
          이름이 안 옮겨져 색 변형이 한 칸도 안 먹었다. 실제 GLB 처럼 MeshBasic + 뼈대로 조립해 잰다 */
       var V = DG.vroidVariant, TH = window.THREE, TN = DG.toon3d, C = DG.core;
       function avatar() {
@@ -5310,7 +5310,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       V.faceFront(b, 'assets/models/people/quaternius_rpg/Ranger.glb');
       V.faceFront(c, null);
       V.faceFront(d, 'assets/models/people/anime/avatar_custom_01.glb');
-      /* 게임이 걸음각을 모델의 rotation.y 에 대입해도(사가의숲 player.group) 보정이 안 지워져야 한다 — 걸음각 1.2 를 준 뒤 정면이 (sin, cos) 를 보는가 */
+      /* 게임이 걸음각을 모델의 rotation.y 에 대입해도(사가마을 player.group) 보정이 안 지워져야 한다 — 걸음각 1.2 를 준 뒤 정면이 (sin, cos) 를 보는가 */
       a.rotation.y = 1.2; a.updateMatrixWorld(true);
       var front = mark.getWorldPosition(new TH.Vector3());
       var ok = Math.abs(front.x - Math.sin(1.2)) < 1e-6 && Math.abs(front.z - Math.cos(1.2)) < 1e-6 &&
@@ -5996,7 +5996,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 
     var failCount = out.filter(function (s) { return s.indexOf('FAIL') >= 0; }).length;
     document.getElementById('report').innerHTML =
-      '<h3>사가국지(삼국지) 자가진단 — ' + (out.length - failCount) + '/' + out.length + ' 통과</h3>' +
+      '<h3>사가천하(삼국지) 자가진단 — ' + (out.length - failCount) + '/' + out.length + ' 통과</h3>' +
       out.join('<br>') +
       (errors.length ? '<br><br><b class="fail">런타임 에러</b><br>' + errors.join('<br>') : '');
     document.title = 'RESULT ' + (out.length - failCount) + '/' + out.length;

@@ -54,7 +54,7 @@ editFile('CLAUDE.md', (s) => {
   const eol = s.includes('\r\n') ? '\r\n' : '\n';
   const lastRow = /\|[^\n]*\| `saga-web\/saga-realm` \|[^\n]*\|\r?\n/;
   const m = lastRow.exec(s);
-  if (!m) die('CLAUDE.md 표에서 사가국지 줄을 못 찾았다 — 손으로 넣을 것');
+  if (!m) die('CLAUDE.md 표에서 사가천하 줄을 못 찾았다 — 손으로 넣을 것');
   const row = `| ${title} | \`saga-web/${folder}\` | ${port} | ${origin} | \`${saveBase}/<프로필>\` |${eol}`;
   return s.slice(0, m.index + m[0].length) + row + s.slice(m.index + m[0].length);
 });
@@ -95,5 +95,5 @@ console.log(`${dry ? '[dry] ' : ''}${folder} 등록:`);
 for (const c of changes) console.log(`  ${c.done ? '✓' : '·'} ${c.file} — ${c.note}`);
 console.log('\n이 스크립트가 안 건드리는 것(README·HANDOFF 체크리스트에 남아 있다):');
 console.log('  - C:\\swbins2\\services.json 허브 카드(별개 저장소)');
-console.log('  - icons/ 를 사가의숲에서 복사해 온 임시본 → 이 판 것으로');
+console.log('  - icons/ 를 사가마을에서 복사해 온 임시본 → 이 판 것으로');
 console.log('  - PLAN.md §1 정체성·원작 오마주 채우기');

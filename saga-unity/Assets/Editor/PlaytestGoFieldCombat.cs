@@ -164,7 +164,7 @@ namespace Saga.EditorTools
             Park(e2, origin, 0f);
         }
 
-        /// <summary>PLAN.md 109-14-1a 원소 일곱·반응 열셋(웹 사가고 ⑲-1 진단 항목) — 표 · 방패 상성 일곱 · 녹임 · 풍/암 안 붙음 · 얼어붙음 → 3타·암 깨뜨림 · 서리번개 ·
+        /// <summary>PLAN.md 109-14-1a 원소 일곱·반응 열셋(웹 사가만리 ⑲-1 진단 항목) — 표 · 방패 상성 일곱 · 녹임 · 풍/암 안 붙음 · 얼어붙음 → 3타·암 깨뜨림 · 서리번개 ·
         /// 회오리가 옆 적에 원소를 옮김 · 굳힘 보호막이 피해를 막음 · 꽃피움 씨앗 · 들불 · 싹틈 → 번개싹·덩굴뻗음 · 새 원소 적 상태 넷.</summary>
         private static void CheckReactions7(FieldCombat fc, FieldEnemy e1, FieldEnemy e2, Vector3 origin)
         {
@@ -321,7 +321,7 @@ namespace Saga.EditorTools
             Park(e2, origin, 0f);
         }
 
-        /// <summary>PLAN.md 109-14-2 강공격·낙하 공격(웹 사가고 ⑲-2 진단 항목) — 강공격 스태미나·배수·앞쪽만·모자라면 안 됨·0.4초 누르기 한 번 ·
+        /// <summary>PLAN.md 109-14-2 강공격·낙하 공격(웹 사가만리 ⑲-2 진단 항목) — 강공격 스태미나·배수·앞쪽만·모자라면 안 됨·0.4초 누르기 한 번 ·
         /// 3타째는 얼음을 못 깨고 강공격은 깬다 · 낙하 배수(18.5m ×2.2 · 100m 는 27.75m 로 막힘) · 활공 중 공격 → 내리꽂아 착지 둘레 · 낮으면 안 됨.</summary>
         private static void CheckChargeAndPlunge(FieldCombat fc, PlayerController pc, FieldEnemy e1, FieldEnemy e2, Vector3 origin)
         {

@@ -5,7 +5,7 @@
 
 한 장 = 768x896(펫 초상 배치와 같은 크기), 전신을 가운데에 맞추고 앞에서 약간 비스듬히(3/4). 이미 있는 그림은 건너뛴다.
 `render_busts.py` 와 같은 조명·배경·재질 처리를 쓴다. 이 그림은 `gen.py` 이미지→이미지의 밑그림일 뿐 — 게임에 안 들어가고 저장소에도 안 넣는다(_out 은 gitignore).
-Unity·다른 Blender 배치·sd-webui 와 동시에 돌리지 않는다(PC 가 멈추지 않게). 100장 넘으면 나눠서(Blender 가 메모리를 물고 늘어난다).
+Unity·다른 Blender 배치·ComfyUI 와 동시에 돌리지 않는다(PC 가 멈추지 않게). 100장 넘으면 나눠서(Blender 가 메모리를 물고 늘어난다).
 """
 import bpy, sys, os, math
 from mathutils import Vector

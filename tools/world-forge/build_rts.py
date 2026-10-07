@@ -1,4 +1,4 @@
-"""world-forge 사가국지 RTS 건물 — 공방·밭·성벽 모서리·거점 성·적 기지 3단계 (K-0061 단계 ③④의 3D 밑그림). 재질만 Poly Haven CC0 사진.
+"""world-forge 사가천하 RTS 건물 — 공방·밭·성벽 모서리·거점 성·적 기지 3단계 (K-0061 단계 ③④의 3D 밑그림). 재질만 Poly Haven CC0 사진.
 
   blender -b --factory-startup -P tools/world-forge/build_rts.py -- --all --out-dir <절대 폴더> [--style toon]
   blender -b --factory-startup -P tools/world-forge/build_rts.py -- --id rts_fortress_01 --out <절대>/x.glb

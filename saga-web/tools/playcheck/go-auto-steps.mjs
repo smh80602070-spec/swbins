@@ -1,4 +1,4 @@
-// 사가고 Q5 — 단계 종류마다 그 첫 자리로 이야기를 옮겨 놓고 🤖📖 자동이 풀어내는지(단계가 넘어가는지) 따로 잰다
+// 사가만리 Q5 — 단계 종류마다 그 첫 자리로 이야기를 옮겨 놓고 🤖📖 자동이 풀어내는지(단계가 넘어가는지) 따로 잰다
 // 인자: 종류 목록(기본 follow seal climb defend chase sail sky) · 초(한 종류당, 기본 150) · all(그 종류의 모든 자리)
 import { launch, sleep } from './cdp.mjs';
 const B = 'http://127.0.0.1:8871/saga-go/';

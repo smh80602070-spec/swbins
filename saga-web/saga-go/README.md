@@ -1,4 +1,4 @@
-# 사가고 (saga-go)
+# 사가만리 (saga-go)
 
 > 시리즈 전체 인계(다섯 게임 표·지시 이력·함정·다음 할 일)는 **`../../SAGA-HANDOFF.md`** 다.
 
@@ -104,7 +104,7 @@ PHASE 6·7 에서 사람 열과 짐승 다섯 종을 들였는데 **눌러서 �
 - 멀면 창을 안 열고 그쪽으로 걸어간다(주민 18m · **짐승은 26m** — 다가가면
   도망가는 것이 있어 코앞까지 가야 열리면 영영 못 본다)
 - 조사를 **받침을 보고 붙인다** — 자리가 열한 가지고 받침이 제각각이라
-  손으로 적으면 하나만 늘려도 어긋난다(사가국지에서 밟았던 그 함정)
+  손으로 적으면 하나만 늘려도 어긋난다(사가천하에서 밟았던 그 함정)
 - 손잡이 `talk.on` · `talk.npcRange` · `talk.beastRange` · 데모 `#talk`·`#talkbeast`
 
 ### 모바일 (PHASE 13)
@@ -892,15 +892,15 @@ mp3(모노 96kbps)로 옮겼다 — 출처는 `assets/ASSET_LICENSES.md`.
 
 | 게임 | 폴더 | 포트 | 원작 | 세이브 키 |
 |---|---|---|---|---|
-| **사가고** | `saga-go` | 8791 | 포켓몬GO | `deungyong-go/save/v1` |
-| **사가블로** | `saga-dungeon` | 8792 | 디아블로 | `yeoksa-dungeon/save/v1` |
-| **사가의숲** | `saga-forest` | 8793 | 동물의숲 | `yeoksa-village/save/v1` |
-| **사가스토리** | `saga-story` | 8794 | 메이플스토리 | `yeoksa-side/save/v1` |
-| **사가국지** | `saga-realm` | 8795 | 삼국지(코에이) | `saga-realm/save/v1` |
+| **사가만리** | `saga-go` | 8791 | 포켓몬GO | `deungyong-go/save/v1` |
+| **사가나락** | `saga-dungeon` | 8792 | 디아블로 | `yeoksa-dungeon/save/v1` |
+| **사가마을** | `saga-forest` | 8793 | 동물의숲 | `yeoksa-village/save/v1` |
+| **사가종횡** | `saga-story` | 8794 | 메이플스토리 | `yeoksa-side/save/v1` |
+| **사가천하** | `saga-realm` | 8795 | 삼국지(코에이) | `saga-realm/save/v1` |
 
 다섯 게임이 다 **원작 장르를 그대로 모방**한다.
 그래서 원작에 없는 축은 각 게임에서 뺐다 — 이 게임(포켓몬고)에는 던전도 장비도
-문답도 없다. 던전은 사가블로, 문답과 삼국지는 사가국지가 맡는다.
+문답도 없다. 던전은 사가나락, 문답과 삼국지는 사가천하가 맡는다.
 
 **공용 파일은 복사본이다** — `data.js`(인물 105·펫 41)·`sprite.js`·`core.js`·`hero.js` 가
 다섯 프로젝트에 각각 한 벌씩 있다. 인물을 하나 추가하면 다섯 곳을 고쳐야 한다
@@ -921,7 +921,7 @@ mp3(모노 96kbps)로 옮겼다 — 출처는 `assets/ASSET_LICENSES.md`.
 run.bat          오프라인 모드 — 파이썬 정적 서버 (http://127.0.0.1:8791)
 run-online.bat   온라인 모드   — 노드 서버 + AI 사관 (http://127.0.0.1:8790)
 run-phone.bat    폰에서 하기   — 같은 서버를 https·0.0.0.0 으로 (인증서 자동 생성)
-build-pc.bat     집 PC 용 단독 실행판 만들기 → dist/사가고.html (+ play.bat · 사용법.txt)
+build-pc.bat     집 PC 용 단독 실행판 만들기 → dist/사가만리.html (+ play.bat · 사용법.txt)
 ```
 
 **집 PC 에서 하려면** `build-pc.bat` 을 한 번 돌려 `dist/` 를 통째로 옮긴 뒤
@@ -1007,7 +1007,7 @@ js/
   ui.js           프로필 · 재화 · 근처 대상 · 시트(천거/도감/사관/기록) · 상세
   game.js         부트 · 메인 루프 · 걷기 보급
   _expansion/     분리 보관 — 방치 전투·환생·방치 강화 (→ _expansion/README.md)
-build/            build-single.mjs — PC 단독 실행판(dist/사가고.html) 빌더
+build/            build-single.mjs — PC 단독 실행판(dist/사가만리.html) 빌더
 dist/             단독 실행판 산출물 (build-pc.bat 이 만든다)
 _test.html        자가진단 178항목 (브라우저로 열면 바로 결과가 나온다)
                   손잡이(어드민)를 읽지 않는다 — DG_NO_TUNE
@@ -1279,7 +1279,7 @@ mobile/           Capacitor 껍데기 — 안드로이드 APK · iOS Xcode 프�
   → 스탬프는 `inner:false` 로 실루엣만, 그것도 어두운 지도에 묻히지 않게 **밝은 테**로 두른다
 
 ### PC 단독 실행판 (구현됨)
-`build-pc.bat` → `build/build-single.mjs` → `dist/사가고.html`.
+`build-pc.bat` → `build/build-single.mjs` → `dist/사가만리.html`.
 `index.html` 이 부르는 순서를 그대로 읽어 css·js 를 인라인한다(순서를 두 곳에 적지 않는다).
 
 - `String.replace` 의 치환값은 **반드시 함수로** 넘긴다. 문자열로 넘기면 코드 안의 `$'`
@@ -1508,7 +1508,7 @@ chrome --headless=new --virtual-time-budget=25000 --dump-dom http://127.0.0.1:87
 트리거된다 — `chrome --dump-dom "…/_admin.html#selftest"` → `RESULT 9/9`.
 
 다섯 판 어드민을 폰 폭(390×844) iframe 뷰포트에 띄워 탭·손잡이·QA 프리셋을 실제로
-눌러 보는 자동 점검을 이때 처음 돌렸다. 사가고는 탭 6개(세이브·도감·손잡이·프리셋·
+눌러 보는 자동 점검을 이때 처음 돌렸다. 사가만리는 탭 6개(세이브·도감·손잡이·프리셋·
 데이터·점검) 전환, 손잡이 반영(값이 배열도 되므로 입력칸이 `type="text"` 다 — 다른
 판의 `type="number"` 와 다르다), **프리셋 10개 전부**를 클릭해 예외가 없는지 확인했다.
 콘솔 에러 0. 기존 `_test.html` 자가진단은 **RESULT 410/410**(두 번 돌려 완전히 동일,
@@ -1517,7 +1517,7 @@ chrome --headless=new --virtual-time-budget=25000 --dump-dom http://127.0.0.1:87
 
 ## ⚙️ 설정 시트 (2026-09-10)
 
-시리즈 다음 갈래 표(`../../SAGA-HANDOFF.md`)의 "⚙️ 설정 화면을 사가고·사가의숲·사가국지로
+시리즈 다음 갈래 표(`../../SAGA-HANDOFF.md`)의 "⚙️ 설정 화면을 사가만리·사가마을·사가천하로
 확장" — 착수하려고 훑어보니 **"이 판만 소리·그래픽 품질이 없다"는 그때까지의 기록이
 틀렸다**는 게 드러났다. 실제로는 둘 다 이미 있었다, 다만 사람이 손댈 자리가 없었을
 뿐이다:
@@ -1560,7 +1560,7 @@ chrome --headless=new --virtual-time-budget=25000 --dump-dom http://127.0.0.1:87
 
 대신 **인물·펫이 이미 1~5 등급(`rarity`, 별 개수 + 색)을 갖고 있었는데
 말로 된 등급 이름이 없었다**는 걸 확인했다 — `js/data.js`의 `RARITY` 표에
-`name` 한 필드만 보탰다(사가블로 `data-item.js`의 상품→전설 다섯 단과 같은
+`name` 한 필드만 보탰다(사가나락 `data-item.js`의 상품→전설 다섯 단과 같은
 결로 **기본(1)→상급(2)→희귀(3)→영웅(4)→전설(5)**). 숫자·색·별 개수는
 그대로라 세이브·정렬·전투 계산 어디에도 영향이 없다 — **표시만** 늘었다.
 

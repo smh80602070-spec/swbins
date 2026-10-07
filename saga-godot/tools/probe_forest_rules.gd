@@ -1,6 +1,6 @@
 extends SceneTree
 
-## 사가의숲 규칙 층(games/saga_forest/data — forest_turnip·forest_festival·forest_wear·forest_home·forest_biome·village_map·forest_save_state) 자동 점검 — 화면 없는 순수 표·계산·거래 규칙. 날짜·시각은 ForestDay.force·ForestTurnip.force_morning 으로 붙든다.
+## 사가마을 규칙 층(games/saga_forest/data — forest_turnip·forest_festival·forest_wear·forest_home·forest_biome·village_map·forest_save_state) 자동 점검 — 화면 없는 순수 표·계산·거래 규칙. 날짜·시각은 ForestDay.force·ForestTurnip.force_morning 으로 붙든다.
 ##   godot --headless --path saga-godot --script res://tools/probe_forest_rules.gd
 ## ① 순무: 요일·주 계산(1970-01-04=일요일)·장은 일요일 오전만·살 값 90~110 결정적·시세 패턴 넷이 다 나옴·파는 값 하한 15·일요일 0·패턴별 모양(내림은 떨어짐·폭등은 서너 배) · 사기(열 개 단위·장 닫힘·한 주 900개·금 모자람·평균 값) · 팔기(일요일 거절·썩으면 10)
 ## ② 계절행사: 8일(날짜 표·가격 배율)·교배꽃도 꽃 값을 따름·설날 표지·행사 없는 날은 1.0

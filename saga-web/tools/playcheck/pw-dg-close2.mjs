@@ -1,4 +1,4 @@
-// 사가블로 확인 닫기 ②(W-0095) — 출사표·승급·던전 회차·적 도감·퀘스트·소리/진동·계정을 실제 판에서 한 번씩 해 본다.
+// 사가나락 확인 닫기 ②(W-0095) — 출사표·승급·던전 회차·적 도감·퀘스트·소리/진동·계정을 실제 판에서 한 번씩 해 본다.
 //   node pw-dg-close2.mjs        (서버: node serve.mjs C:/swbins/saga-web 8871 — 돌리는 쪽이 띄우고 끈다)
 // 화면 단추: 출사표 `.stc-cell`·`.stc-btn`(starter.js) · 인물 상세 `[data-act="rankup"]`(ui.js). 프리셋 없이 새 세이브로 출사표부터 본다.
 // 헤드리스엔 진동이 없어 navigator.vibrate 를 시작 전에 기록기로 갈아 둔다. Math.random 은 진단과 같은 씨앗 mulberry32(20260824).

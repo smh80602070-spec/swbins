@@ -1,5 +1,5 @@
 /**
- * 3D 에셋 창고 — 사가국지 (PLAN 40절 PHASE 1~2)
+ * 3D 에셋 창고 — 사가천하 (PLAN 40절 PHASE 1~2)
  * ---------------------------------------------------------------
  * 지금 지도(`#realm`)는 svg 원·선으로 그린 평면 지도다. 언젠가 성 서른 곳을
  * 실제 3D 지형 위에 세우고 싶은데, saga-go·saga-dungeon·saga-forest 가 이미
@@ -84,7 +84,7 @@
   ];
   var ANIM_SRC = ANIM_DIR + 'UAL1_Standard.glb';
 
-  /* 2026-09-20 — "고품질 셀 셰이딩급" VRM 애니메 아바타(사가의숲 asset3d.js에서 먼저 만든 것,
+  /* 2026-09-20 — "고품질 셀 셰이딩급" VRM 애니메 아바타(사가마을 asset3d.js에서 먼저 만든 것,
      경위는 saga-forest HANDOFF.md 2026-09-19 절)를 이 판에도 옮긴다. VRoid Studio
      공식 CC0 샘플 AvatarSample_A/B/C(github.com/madjin/vrm-samples) + 이 저장소가
      GUI 자동화로 새로 빚은 avatar_custom_01. **위 MPFB와 같은 이유로 리타깃을
@@ -98,7 +98,7 @@
   var HERO_RECIPES_ANIME = ['a', 'b', 'c'].map(function (n) {
     var f = PEOPLE_ANIME + 'avatar_sample_' + n + '.glb';
     /* 2026-09-23 — anim 을 몸 파일 자신으로 두면 자체 몸짓(anim-own) 길을 건너뛰고 클립 없는 몸 파일에서 몸짓을 찾아
-       mixer 가 안 생겼다 → 초상·일기토의 VRoid 장수가 전부 T자세(스크린샷). 사가고처럼 anim 을 뺀다 */
+       mixer 가 안 생겼다 → 초상·일기토의 VRoid 장수가 전부 T자세(스크린샷). 사가만리처럼 anim 을 뺀다 */
     return { key: 'anime_avatar_' + n, body: f };
   }).concat([
     (function () {
@@ -113,10 +113,10 @@
   }
   function wantsAnimeAvatar() { return core.tuned('world3d.animeAvatar', 1) ? true : false; }
 
-  /* ── 클립 이름 → 표준 슬롯(2026-09-10, 사가블로 asset3d.js 에서 그대로 옮김) ──
+  /* ── 클립 이름 → 표준 슬롯(2026-09-10, 사가나락 asset3d.js 에서 그대로 옮김) ──
    * GLB 마다 클립 이름이 다 다르다("Attack1_swordShield" 같은 식) — 실제 이름을
    * 하나하나 맞추는 대신 낱말로 어림잡아 `idle`·`attack`·`hit` 같은 표준 슬롯에
-   * 잇는다. 순수 함수라 사가블로에서 이미 검증된 로직을 한 글자도 안 고치고
+   * 잇는다. 순수 함수라 사가나락에서 이미 검증된 로직을 한 글자도 안 고치고
    * 그대로 옮겼다 — 이 판 QRPG 몸도 같은 팩(Quaternius)이라 클립 이름 결이 같다 */
   var SLOTS = ['idle', 'walk', 'run', 'sprint', 'attack', 'hit', 'dodge', 'death', 'interaction', 'jump', 'land'];
   var WORDS = {
@@ -214,10 +214,10 @@
        QRPG 몸(전사·궁수·도적·성직자·마법사·수도승 6종 중 하나) 맨몸뿐이라,
        손으로 그린 캔버스 초상(`sprite.js`의 `LOOK`·`ruleLook()`—장수마다
        무기·투구·수염을 갖춘 표)보다 오히려 밋밋했다. **새로 받지 않고
-       사가블로가 이미 갖춘 CC0/CC-BY 무기·장구를 그대로 복사해 왔다**
+       사가나락가 이미 갖춘 CC0/CC-BY 무기·장구를 그대로 복사해 왔다**
        (`saga-dungeon/assets/models/{weapons,gear}/`, 출처는 그쪽
        `ASSET_LICENSES.md`). `sprite.lookOf()`가 매기는 무기 열 가지 중
-       실물이 있는 여덟만 걸고(halberd→spear, fan→brush 재사용은 사가블로와
+       실물이 있는 여덟만 걸고(halberd→spear, fan→brush 재사용은 사가나락와
        같은 판단), 투구는 helmet·crown·gapju(→바이킹 투구 대역, 역시 같은
        판단) 셋만 건다 — scholar·gat·hairpin·monk·braid 는 대응 CC0가 없어
        맨머리로 남는다(도형보다는 실제 무기를 든 실제 몸이 우선이라는 사용자
@@ -328,7 +328,7 @@
   /* ── 여기서부터 three 가 필요하다 ─────────────────────── */
 
   var loaderInst = null;
-  /* 압축(EXT_meshopt_compression) GLB 는 디코더 없이 조용히 실패한다 — 사가의숲 asset3d.js 와 같은 요령(2026-09-23 tools/asset-audit 가 찾음) */
+  /* 압축(EXT_meshopt_compression) GLB 는 디코더 없이 조용히 실패한다 — 사가마을 asset3d.js 와 같은 요령(2026-09-23 tools/asset-audit 가 찾음) */
   function gltfLoader() {
     var t = three();
     if (!t || !t.GLTFLoader) { return null; }
@@ -355,7 +355,7 @@
       if (!o.isMesh || !o.material) { return; }
       /* 법선이 아예 없는 GLB(2026-09-23 — 킷배싱 탑 city_t2·t3_asian, 스크린샷으로 확인): GLTFLoader 는 이때 flatShading 을 켜
          주지만 toonify 가 만드는 MeshToonMaterial 은 flatShading 을 안 받아(r169) 법선 0 → 통째로 새까맣다.
-         사가블로 delam 이 2026-09-04 에 먼저 밟은 함정과 같은 처방 — 지오메트리에서 계산해 채운다 */
+         사가나락 delam 이 2026-09-04 에 먼저 밟은 함정과 같은 처방 — 지오메트리에서 계산해 채운다 */
       if (o.geometry && o.geometry.attributes.position && !o.geometry.attributes.normal) { o.geometry.computeVertexNormals(); }
       var one = Array.isArray(o.material) ? o.material : [o.material];
       var out = one.map(function (m) {
@@ -381,7 +381,7 @@
     });
     /* 2026-09-23 — 외곽선: 스킨 메시가 있는 GLB(사람·짐승)만. 모델 안에서는 가장 큰 부품 반지름 기준 한 폭,
        그 12% 보다 작은 부품(눈·이빨)은 안 두른다(검은 점). VRoid 는 vroid-variant 가 이미 둘러 `_toonOutline` 로 건너뛴다.
-       traverse 도중 자식을 더하지 않으려고 모아서 붙인다(사가스토리 delam 과 같다) */
+       traverse 도중 자식을 더하지 않으려고 모아서 붙인다(사가종횡 delam 과 같다) */
     if (toon && TN.OUTLINE_ON && TN.OUTLINE_ON() && TN.outline) {
       var ms = [], maxR = 0, skinned = false;
       root.traverse(function (o) {
@@ -423,7 +423,7 @@
       /* 2026-09-10 — `c.clips`가 여태 안 채워져 있었다. QRPG 장수 몸 파일은
          걷기·공격·사망 클립을 제 안에 이미 담고 있는데(위 HERO_RECIPES 주석),
          이 줄이 없으면 `buildHero()`의 `animC.clips.length` 검사가 늘 undefined
-         라 실패해 mixer 를 한 번도 못 만들었다 — 사가블로 asset3d.js 의
+         라 실패해 mixer 를 한 번도 못 만들었다 — 사가나락 asset3d.js 의
          `acquire()`와 같은 줄을 그대로 가져왔다(그쪽은 이미 실전 검증됨) */
       c.clips = gltf.animations || [];
       /* 2026-09-23 — VRoid(unlit → MeshBasic)는 delam 이 안 보는 재질이라 명암 없이 평면으로 떴다.
@@ -591,10 +591,10 @@
   }
 
   /** 무기 look → REG 키. 실물이 없는 것은 가까운 것으로 재사용한다
-   *  (사가블로 `dungeon3d.js` `attachWeapon()`과 같은 판단: halberd·guandao
+   *  (사가나락 `dungeon3d.js` `attachWeapon()`과 같은 판단: halberd·guandao
    *  는 spear, fan 은 brush) */
   var WPN_ALIAS = { halberd: 'spear', guandao: 'spear', fan: 'brush' };
-  /** 무기 길이 — 몸 키 1 기준 배율(사가블로 `WPN_MUL`을 이 판 단위계로 옮김) */
+  /** 무기 길이 — 몸 키 1 기준 배율(사가나락 `WPN_MUL`을 이 판 단위계로 옮김) */
   var WPN_MUL = { club: 0.35, axe: 0.42, sword: 0.46, spear: 0.85, halberd: 0.85,
     guandao: 0.85, staff: 0.62, bow: 0.42, scroll: 0.28, fan: 0.28, brush: 0.28 };
   /** 투구 look → REG 키. plume(장식 깃)은 대응 CC0가 없어 helmet으로 대신한다 */
@@ -604,7 +604,7 @@
   /**
    * 장수 3D 초상(`portrait3d.js`)에 무기·투구를 얹는다 — `sprite.lookOf()`가
    * 매기는 것과 같은 표를 쓴다. 2026-09-05, 사용자 지시("초상화를 더 가져올
-   * 수 있나, 맞출 필요 없이 있으면 교체")에 따라 새로 받지 않고 사가블로가
+   * 수 있나, 맞출 필요 없이 있으면 교체")에 따라 새로 받지 않고 사가나락가
    * 이미 갖춘 CC0/CC-BY 무기·장구(`assets/models/{weapons,gear}/`, 복사해
    * 왔다 — 출처는 `assets/ASSET_LICENSES.md`)를 그대로 붙인다.
    *
@@ -733,7 +733,7 @@
 
   /* ── 병사(2026-09-25, `tools/asset-audit/CHARACTER_UNIQUENESS.md` ⑤ 빈칸) ────────────────────────
    * 지도 원정군(`realm3d.js`)·전투 무리(`battle3d.js`)의 병사가 원기둥·구·상자 도형이었다. Quaternius CC0 두 벌을
-   * 사가블로에서 md5 그대로 복사해 쓴다 — 보병 = Ultimate Animated Character Pack `Knight_Male`(걷기·대기·치기·
+   * 사가나락에서 md5 그대로 복사해 쓴다 — 보병 = Ultimate Animated Character Pack `Knight_Male`(걷기·대기·치기·
    * 쓰러짐 클립 내장), 기병 = 같은 기사가 Farm Animal Pack `Horse_Farm`(걷기·대기) 위에 `SitDown` 끝 자세로 앉는다.
    * 세력 색은 기사 장식 천(`Red` 재질)에만 — 갑옷·피부는 제 빛깔. 창은 장수와 같은 `wpn:spear` 를 오른편에 세운다.
    * 병사는 이름 없는 무리라 한 벌을 나눠 입는다(인물이 아니다). 몸을 못 받으면 cb(null) — 부르는 쪽이 옛 도형을 둔다 */
@@ -884,7 +884,7 @@
   }
 
   /** 한 프레임 재생 — `model`은 `buildHero()`가 돌려준 그 그룹(`userData.mixer`
-   *  등을 직접 지고 있다, 사가블로처럼 따로 감싼 shell이 없다). mixer 가 없는
+   *  등을 직접 지고 있다, 사가나락처럼 따로 감싼 shell이 없다). mixer 가 없는
    *  모델(클립 0개, 또는 애초에 GLB 가 아니라 도형으로 떨어진 것)이면 아무
    *  것도 안 하고 false — 부르는 쪽이 실패를 몰라도 되게 한다 */
   /* 한 번만 재생하고 마지막 자세에서 멈추는 슬롯 — 기본 LoopRepeat 이면

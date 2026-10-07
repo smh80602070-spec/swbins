@@ -20,7 +20,7 @@ extends Button
 ## 저장, Toast로 파일 경로를 보여준다.
 ##
 ## G-0057 — 공유용으로: 찍는 한 프레임 동안 **모든** CanvasLayer(목표판·미니맵·위쪽 단추·메뉴 등 MobileHUD 밖 층까지)를 숨기고,
-## 오른쪽 아래 워터마크("사가고 · 지역 · 날짜")만 얹어 찍는다. 저장은 사용자가 찾을 수 있는 곳 — PC 는 OS 사진 폴더/사가고,
+## 오른쪽 아래 워터마크("사가만리 · 지역 · 날짜")만 얹어 찍는다. 저장은 사용자가 찾을 수 있는 곳 — PC 는 OS 사진 폴더/사가만리,
 ## 폰은 그대로 user://photos(안드로이드 공용 폴더는 권한이 따로 든다). 환경 SAGA_PHOTO_DIR 가 있으면 그쪽(점검·촬영용).
 
 const Toast := preload("res://saga_core/ui/toast.gd")
@@ -44,7 +44,7 @@ func _ready() -> void:
 	_build_watermark()
 
 
-## 저장 폴더 — SAGA_PHOTO_DIR → PC 면 사진 폴더/사가고 → user://photos.
+## 저장 폴더 — SAGA_PHOTO_DIR → PC 면 사진 폴더/사가만리 → user://photos.
 static func photo_dir() -> String:
 	var env := OS.get_environment("SAGA_PHOTO_DIR")
 	if env != "":
@@ -52,15 +52,15 @@ static func photo_dir() -> String:
 	if OS.has_feature("pc"):
 		var pics := OS.get_system_dir(OS.SYSTEM_DIR_PICTURES)
 		if pics != "":
-			return pics.path_join("사가고")
+			return pics.path_join("사가만리")
 	return "user://photos"
 
 
-## "사가고 · 청하 마을 · 2026-10-07" — 지역 밖(경계)이면 지역 칸을 뺀다.
+## "사가만리 · 청하 마을 · 2026-10-07" — 지역 밖(경계)이면 지역 칸을 뺀다.
 static func watermark_text(pos: Vector3) -> String:
 	var region := String(WorldMap.REGION_NAMES.get(TestMap.region_at(pos), ""))
 	var date := Time.get_date_string_from_system()
-	return "사가고 · %s · %s" % [region, date] if region != "" else "사가고 · %s" % date
+	return "사가만리 · %s · %s" % [region, date] if region != "" else "사가만리 · %s" % date
 
 
 func _build_watermark() -> void:

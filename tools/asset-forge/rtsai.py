@@ -1,4 +1,4 @@
-"""K-0061 사가국지 RTS 화면 에셋 — AI 로 그리는 것: 지형 바닥 타일 · 건물·거점·적 기지 · 유닛 3종 × 아군/적 (K-0056 그림체 B).
+"""K-0061 사가천하 RTS 화면 에셋 — AI 로 그리는 것: 지형 바닥 타일 · 건물·거점·적 기지 · 유닛 3종 × 아군/적 (K-0056 그림체 B).
 
   py tools/asset-forge/rtsai.py batches        # tools/ai-art/batches/rts_tiles.json · rts_bld.json · rts_units.json 을 쓴다(gen.py 로 생성)
   py tools/asset-forge/rtsai.py pack-tiles     # 생성 타일(_out/rts_tiles) → 이음새 없는 64px webp (_out/rts/rts_<이름>.webp)

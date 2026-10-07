@@ -7,7 +7,7 @@ using Saga.Dungeon.UI;
 namespace Saga.Dungeon.World
 {
     /// <summary>
-    /// PLAN.md 109-10-6 지역 사연 사슬 — 웹 사가블로 §5.14 `quest.js`(chainOpen·stepField·onKill·regionboss:kill) 결(글·수치는 <see cref="DungeonRegionSagas"/>, 기록은 <see cref="RegionSagaState"/>).
+    /// PLAN.md 109-10-6 지역 사연 사슬 — 웹 사가나락 §5.14 `quest.js`(chainOpen·stepField·onKill·regionboss:kill) 결(글·수치는 <see cref="DungeonRegionSagas"/>, 기록은 <see cref="RegionSagaState"/>).
     /// 들어섬 배너가 뜨면(`DungeonRegionTracker.RegionEntered`) 그 지역 사슬이 열린다(의뢰인·한 줄 사연). 걸음은 순서대로만 — 처치 한 번은 지금 걸음 하나에만 센다:
     /// ① 토벌 = 그 지역에서 쓰러진 적 누구든(처치 자리로 지역 판정, 우두머리는 제 지역) · ② 흔적 = 그 걸음일 때만 빛나는 흔적 1.6m 안 ·
     /// ③ 정예 = 정예 표시 적(사냥터 정예·우두머리 호위)·우두머리 · ④ 우두머리 = 그 지역 우두머리 — ④에 닿으면 우두머리 쉼을 지운다.

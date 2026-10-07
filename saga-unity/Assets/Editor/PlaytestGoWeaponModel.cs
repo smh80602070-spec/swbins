@@ -11,7 +11,7 @@ using Saga.Go.World;
 namespace Saga.EditorTools
 {
     /// <summary>
-    /// U-0049 사가고 무기 모델 진단. 두 길 —
+    /// U-0049 사가만리 무기 모델 진단. 두 길 —
     /// ① <see cref="RunBatch"/>(`-executeMethod …PlaytestGoWeaponModel.RunBatch`, 장면 없이): 이름 표(종류 5 → sword·axe·spear·staff·bow · 희귀도 1~2 common·3 rare·4~5 legend) ·
     ///    15벌(5×3)이 `Resources/World` 에서 읽히고 `grip`·`tip` 노드로 `Fit` 이 선다 · 인물의 장착 무기에서 모델 이름이 나온다(수련용 → common · 장착한 3성 → rare).
     /// ② <see cref="Run"/>(`PlaytestHeadless` 가 편성 몸 진단 뒤에 부른다, 장면 안): 지금 손에 그 인물의 무기 모델이 쥐어져 있고(코드 칼날은 렌더러만 꺼짐) ·

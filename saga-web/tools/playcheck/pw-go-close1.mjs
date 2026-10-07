@@ -1,4 +1,4 @@
-// 사가고 확인 닫기 ①(W-0087) — 사명·연성/승화·천후/계절·사건·토벌/성채/역참·적도·첫 10분을 실제 판에서 한 번씩 해 본다.
+// 사가만리 확인 닫기 ①(W-0087) — 사명·연성/승화·천후/계절·사건·토벌/성채/역참·적도·첫 10분을 실제 판에서 한 번씩 해 본다.
 //   node pw-go-close1.mjs        (서버: node serve.mjs C:/swbins/saga-web 8871 — 돌리는 쪽이 띄우고 끈다)
 // 화면 단추(data-act — saga-go/js/ui.js·rogue.js·event.js 에서 찾음):
 //   독 `data-sheet="quest"`(사명 창) · 사명 `quest-claim` · 카드 상세(#detail) `refine`·`ascend` · 사건 카드 `data-pick`

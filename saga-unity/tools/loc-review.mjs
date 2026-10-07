@@ -70,7 +70,7 @@ const TAG = /<\/?[a-z]+(?:=[^>]*)?>/gi;
 const edge = s => [s.match(/^\s*/)[0], s.match(/\s*$/)[0]];
 const lead = s => { const c = [...s.trimStart()][0] || ''; return /[\p{L}\p{N}{("'“‘\[—–-]/u.test(c) ? '' : c; };
 
-// 실명 — 사가고 도감 id 의 이름 조각(sg_guanyu → guan yu / Guanyu …)과 손 목록. 표시 글자에 나오면 오류.
+// 실명 — 사가만리 도감 id 의 이름 조각(sg_guanyu → guan yu / Guanyu …)과 손 목록. 표시 글자에 나오면 오류.
 const REAL_EN = new Set(['Liu Bei', 'Zhuge Liang', 'Xiang Yu', 'Aristotle', 'Plato', 'Socrates', 'Pythagoras', 'Columbus',
   'Martin Luther', 'Luther', 'Calvin', 'Zwingli', 'Aquinas', 'Qin Shi Huang', 'Zhu Yuanzhang', 'Alexander the Great',
   'Eulji Mundeok', 'Yeon Gaesomun', 'Yang Manchun', 'On Dal', 'Seo Hui', 'Yun Gwan', 'Choe Yeong', 'Gung-ye', 'Gyeon Hwon',
@@ -87,7 +87,7 @@ for (const r of rows.filter(r => r.game === 'go' && /^hero\.[a-z]{2}_[a-z]+$/.te
   if (name.length >= 5) realRes.push([name, new RegExp('\\b' + [...name].join("[\\s'’-]?") + '\\b', 'i')]);
 }
 
-// 원작 게임 고유 용어 — 웹 사가고 PLAN §5 ⑳ 에서 이 판 이름으로 바꾼 것. 표시 글자에 나오면 오류.
+// 원작 게임 고유 용어 — 웹 사가만리 PLAN §5 ⑳ 에서 이 판 이름으로 바꾼 것. 표시 글자에 나오면 오류.
 const ORIGINAL = [
   /\b(Pyro|Hydro|Electro|Anemo|Cryo|Dendro)\b/, /Electro-Charged|Vaporize|Elemental Burst/i,
   /\b(Exquisite|Precious|Luxurious) Chest/i, /\bArtifacts?\b|\bLey Line/i,

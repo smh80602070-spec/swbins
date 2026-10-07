@@ -19,11 +19,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, '_out')
 FINAL = os.path.join(OUT, 'store')
 GAMES = {
-    'go': ('사가고', 'epic key art, a luminous portal gate standing in a mixed-era town square at golden hour, old timber houses beside glass towers, floating lanterns, a winding road leading to distant mountains, warm hopeful light'),
-    'dungeon': ('사가블로', 'epic dark fantasy key art, a colossal ancient gate carved into a cliff glowing red, stone stairs descending into darkness, torches, floating embers, ruined arches, ominous cinematic light'),
-    'forest': ('사가의숲', 'cozy storybook key art, a tiny cottage village glowing with warm lanterns among giant trees and fireflies at dusk, mushrooms, winding stream, magical gentle light'),
-    'story': ('사가스토리', 'adventurous side-scrolling world key art, floating rock islands linked with rope bridges, waterfalls into clouds, a distant castle, a golden sunset sky with portals to different eras'),
-    'realm': ('사가국지', 'grand strategy key art, a vast walled fortress city on a river plain at dawn, banners without markings, mist, mountains and ranks of tents in the distance, majestic sweeping composition'),
+    'go': ('사가만리', 'epic key art, a luminous portal gate standing in a mixed-era town square at golden hour, old timber houses beside glass towers, floating lanterns, a winding road leading to distant mountains, warm hopeful light'),
+    'dungeon': ('사가나락', 'epic dark fantasy key art, a colossal ancient gate carved into a cliff glowing red, stone stairs descending into darkness, torches, floating embers, ruined arches, ominous cinematic light'),
+    'forest': ('사가마을', 'cozy storybook key art, a tiny cottage village glowing with warm lanterns among giant trees and fireflies at dusk, mushrooms, winding stream, magical gentle light'),
+    'story': ('사가종횡', 'adventurous side-scrolling world key art, floating rock islands linked with rope bridges, waterfalls into clouds, a distant castle, a golden sunset sky with portals to different eras'),
+    'realm': ('사가천하', 'grand strategy key art, a vast walled fortress city on a river plain at dawn, banners without markings, mist, mountains and ranks of tents in the distance, majestic sweeping composition'),
 }
 LOAD = {
     'go': ['quiet riverside village at sunrise with floating lanterns', 'misty bamboo valley with a glowing shrine', 'neon-lit future harbor beside old wooden ships at dusk'],

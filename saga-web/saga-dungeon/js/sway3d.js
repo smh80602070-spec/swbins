@@ -2,12 +2,12 @@
  * 잎·풀 흔들림 — PLAN §6.1 항목 5가 남긴 나머지 절반("풀 바람 셰이더")
  * ---------------------------------------------------------------
  * 잡초 층(`field3d.js` clutterAt() 의 grass·flower·bush, `dungeon3d.js`의
- * `reed`)에 `onBeforeCompile`로 정점 셰이더 한 줄을 보탠다 — 사가고
+ * `reed`)에 `onBeforeCompile`로 정점 셰이더 한 줄을 보탠다 — 사가만리
  * `world3d.js`의 `swayify()`와 같은 요령을 그대로 옮겼다(셰이더 문자열은
  * 한 글자도 안 바꿈). 조명·안개·톤매핑 조각은 손 안 대고 `#include
  * <begin_vertex>` **뒤**에서 자리만 민다.
  *
- * 이 판은 두 갈래 모두에 건다(사가고엔 없던 사정, `PLAN.md` §6.4 참고):
+ * 이 판은 두 갈래 모두에 건다(사가만리엔 없던 사정, `PLAN.md` §6.4 참고):
  *   1. `dungeon3d.js`의 `mat(hex,'sway')` — GLB 가 아직 안 왔거나 못 받은
  *      자리에 서는 도형 fallback(그룹·잎포기 상자). 이 판의 `box()`는
  *      낱개 Mesh 라 인스턴스 위상 해시가 없다 — 위상 0으로 통일해 흔든다
@@ -15,7 +15,7 @@
  *   2. `asset3d.js`의 `delam()` — 잡초 GLB(`assets/models/nature/` 밑
  *      Grass·Flowers·Bush·Shrub, `isSwayAsset()` 참고)가 실제로 도착했을
  *      때. 나무·바위·통나무는 이 판별에서 자동으로 빠진다(뿌리까지
- *      통째로 흔들리면 어색하다 — 사가고가 GLB 나무를 애초에 뺀 이유와
+ *      통째로 흔들리면 어색하다 — 사가만리가 GLB 나무를 애초에 뺀 이유와
  *      같다, `world3d.js` 주석 참고).
  *
  * three 가 없으면(자가진단) 아무 것도 안 한다.
@@ -26,7 +26,7 @@
   var T = null;
   function three() { if (!T) { T = global.THREE || null; } return T; }
 
-  /** 흔들림 손잡이 — 사가고와 같은 키(`world3d.sway`)를 그대로 쓴다. 툰·외곽선
+  /** 흔들림 손잡이 — 사가만리와 같은 키(`world3d.sway`)를 그대로 쓴다. 툰·외곽선
    *  (`toon3d.js`)이 그랬듯 어드민 UI(`dg3d.*`)엔 안 올리고 콘솔
    *  `DG.core.setTune('world3d.sway', 0)`으로만 잡는다 — 이 판 관례. */
   function SWAY_ON() {
@@ -72,7 +72,7 @@
   }
 
   /** 매 프레임 부른다(`dungeon3d.js`의 `render()` 안, `AS().tick()` 옆) — 이
-   *  파일은 `render()`가 dt 를 안 넘겨줘서(사가고 `world3d.js`의 `syncSway
+   *  파일은 `render()`가 dt 를 안 넘겨줘서(사가만리 `world3d.js`의 `syncSway
    *  (dt)`와 다른 자리) 시계를 스스로 잰다. 꺼져 있으면 마지막 자세로 멎는다
    *  (`world3d.js`의 `syncSway` 주석과 같은 뜻). */
   var lastTickT = null;

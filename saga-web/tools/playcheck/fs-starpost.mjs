@@ -1,4 +1,4 @@
-// 사가의숲 별 우체통: 대보름 장을 마친 세이브에서 광장 곁에 서나 · 다른 소품과 겹치지 않나 · 걸을 수 있는 칸인가 · 3D 예외 없나
+// 사가마을 별 우체통: 대보름 장을 마친 세이브에서 광장 곁에 서나 · 다른 소품과 겹치지 않나 · 걸을 수 있는 칸인가 · 3D 예외 없나
 // 사진은 `shot` 을 줄 때만(shots/fs_starpost). PC_PROF=tmp/… 새 프로필로 돌릴 것
 import { launch, sleep } from './cdp.mjs';
 const shot = process.argv.includes('shot');

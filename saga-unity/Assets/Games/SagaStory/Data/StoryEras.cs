@@ -5,7 +5,7 @@ namespace Saga.Story.Data
     public enum StoryEra { Past, Modern, Future }
 
     /// <summary>
-    /// PLAN.md 109-3 "STORY 세 시대 사람·적"(웹 사가스토리 §5-12 · SAGA-DESIGN §13 전체 퓨전) — 웹 판은 관문대 넷마다 현대·미래 적 하나씩,
+    /// PLAN.md 109-3 "STORY 세 시대 사람·적"(웹 사가종횡 §5-12 · SAGA-DESIGN §13 전체 퓨전) — 웹 판은 관문대 넷마다 현대·미래 적 하나씩,
     /// 사냥터 잡졸의 40% 를 그 관문대 시대 적으로, 마을마다 현대·미래 사람 하나씩을 더 세운다.
     /// 이 트랙 STORY 는 들판 하나(잡졸 열·두목)와 비경(5-3) 아레나뿐이라 "관문대" 넷을 들판 · 비경 1~2층 · 3~4층 · 5층으로 읽는다.
     /// 들판은 손으로 짠 고정 자리라 열 자리 중 넷(40%)을 표로 박고, 비경 전투 잡졸은 해시(층:전투 순번:자리)로 40%.
@@ -138,7 +138,7 @@ namespace Saga.Story.Data
                 } },
         };
 
-        // ---- 곁가지 side_guests(웹 사가스토리 data-side.js NPC_TALK story) — 들판 시대 손님의 사연 ----
+        // ---- 곁가지 side_guests(웹 사가종횡 data-side.js NPC_TALK story) — 들판 시대 손님의 사연 ----
         /// <summary>손님이 X 로 가까워질 때마다 사연 네 토막을 차례로, 끝 토막에 경험치 한 번(웹 금 4000 · 공적 20 → 이 판엔 돈이 없어 경험치). 다 들었으면 예전 대사로.</summary>
         public const float StoryExp = 400f;
         private static readonly System.Collections.Generic.Dictionary<string, string[]> StoryKo = new System.Collections.Generic.Dictionary<string, string[]>

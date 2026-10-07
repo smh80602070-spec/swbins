@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_skeleton_01",
- "_note": "단계 3 괴물 비교용 — saga-unity Skeleton(Mixamo) 자리 후보(사가고 들판 해골·던전·마을 무리). 게임 인물 아님(이름 없음). 사람 몸 비틀기가 아니라 뼈대 자리·살 단면을 재서 뼈를 코드로 짓는다(skeleton.py): 긴뼈·손발뼈·척추·갈비 열둘 짝·골반·어깨뼈·두개골(눈구멍·코구멍·드러난 이). 바랜 뼈빛.",
+ "_note": "단계 3 괴물 비교용 — saga-unity Skeleton(Mixamo) 자리 후보(사가만리 들판 해골·던전·마을 무리). 게임 인물 아님(이름 없음). 사람 몸 비틀기가 아니라 뼈대 자리·살 단면을 재서 뼈를 코드로 짓는다(skeleton.py): 긴뼈·손발뼈·척추·갈비 열둘 짝·골반·어깨뼈·두개골(눈구멍·코구멍·드러난 이). 바랜 뼈빛.",
  "macro": {"gender": 1.0, "age": 0.5, "muscle": 0.2, "weight": 0.0, "height": 0.6, "proportions": 0.6,
            "race": {"asian": 0.34, "caucasian": 0.33, "african": 0.33}},
  "targets": {"cheek-volume-decr": 1.0, "cheek-bones-incr": 1.0, "head-fat-decr": 1.0, "chin-prognathism-incr": 0.2},

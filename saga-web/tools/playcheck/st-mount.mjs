@@ -1,4 +1,4 @@
-// 사가스토리 탈것(mount.js): 말을 타면 같은 시간에 더 멀리 가나 · 학을 타고 날갯짓으로 떠오르나 · 3D 예외 없나 · 무예를 쓰면 내리나
+// 사가종횡 탈것(mount.js): 말을 타면 같은 시간에 더 멀리 가나 · 학을 타고 날갯짓으로 떠오르나 · 3D 예외 없나 · 무예를 쓰면 내리나
 // 사진은 `shot` 을 줄 때만(shots/st_mount_*). PC_PROF=tmp/… 새 프로필로 돌릴 것
 import { launch, sleep } from './cdp.mjs';
 const shot = process.argv.includes('shot');

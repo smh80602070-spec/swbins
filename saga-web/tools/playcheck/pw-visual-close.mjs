@@ -1,4 +1,4 @@
-// 웹 3D 그림 확인 닫기(W-0099) — 사가고·사가블로·사가의숲·사가스토리의 3D 그림·연출 기능을 장면마다 실제로 띄워 한 장씩 찍는다.
+// 웹 3D 그림 확인 닫기(W-0099) — 사가만리·사가나락·사가마을·사가종횡의 3D 그림·연출 기능을 장면마다 실제로 띄워 한 장씩 찍는다.
 //   node pw-visual-close.mjs [판 …]      (서버: node serve.mjs C:/swbins/saga-web 8871 — 돌리는 쪽이 띄우고 끈다)
 // 장면마다 1280×720 PNG(shots/visual-20261007/, 커밋 안 함) + 그림 지표(그리기 호출·삼각형 등 판이 내주는 것) + 화소 지표
 // (축소본 밝기 표준편차·색 칸 수 — 단색/빈 화면이면 실패). 판정(○△×)은 Claude 가 PNG 를 직접 보고 시트(tasks/sheets/web-visual-*.md)에 적는다.
@@ -74,7 +74,7 @@ async function portraitBoard(r) {
 }
 const clearBoard = (r) => r.page.evaluate(() => { const b = document.getElementById('pw-portrait-board'); if (b) { b.remove(); } });
 
-/* ───────────── 사가고 ───────────── */
+/* ───────────── 사가만리 ───────────── */
 async function runGo() {
   const r = await open('saga-go'); const ev = (fn, arg) => r.page.evaluate(fn, arg);
   await r.page.addInitScript(SEED);
@@ -104,13 +104,13 @@ async function runGo() {
     await ev(() => { DG.core.setTune('world.render3d', 0); }); await sleep(2500);
     await shoot(r, 'saga-go', '5-2d', '3D 끔(2D 캔버스로 되돌림)', ['go.world3d'], await gl());
     await ev(() => { DG.core.setTune('world.render3d', 1); });
-  } catch (e) { check('사가고 예외 — ' + String((e && e.message) || e).slice(0, 200), false); }
+  } catch (e) { check('사가만리 예외 — ' + String((e && e.message) || e).slice(0, 200), false); }
   const real = realErrors(r.errors);
-  check('사가고 페이지 예외·console.error 없음', real.length === 0, real.slice(0, 2).join(' | '));
+  check('사가만리 페이지 예외·console.error 없음', real.length === 0, real.slice(0, 2).join(' | '));
   await r.close();
 }
 
-/* ───────────── 사가블로 ───────────── */
+/* ───────────── 사가나락 ───────────── */
 async function runDungeon() {
   const r = await open('saga-dungeon'); const ev = (fn, arg) => r.page.evaluate(fn, arg);
   await r.page.addInitScript(SEED);
@@ -132,7 +132,7 @@ async function runDungeon() {
     await ev(() => { if (DG.ui.closeSheet) { DG.ui.closeSheet(); } });
     await sleep(2500);
     await shoot(r, 'saga-dungeon', '1-town', '오픈월드 마을·들판 3D', ['dg.dungeon3d'], await st());
-    check('사가블로 굴혈에 들어간다', await enter());
+    check('사가나락 굴혈에 들어간다', await enter());
     await settle();
     const before = await st();
     await shoot(r, 'saga-dungeon', '2-room', '던전 첫 방 3D(장비 없음)', ['dg.dungeon3d', 'dg.dungeon3d-2'], before);
@@ -149,7 +149,7 @@ async function runDungeon() {
     await r.page.goto(r.url('index.html')); await sleep(2500);
     await ev(() => { var b = document.getElementById('title-continue'); if (b) { b.click(); } }); await sleep(3000);
     await skipScenes(r, isOpen);
-    check('사가블로 프리셋 뒤 굴혈에 들어간다', await enter());
+    check('사가나락 프리셋 뒤 굴혈에 들어간다', await enter());
     await ev(() => { DG.dungeon3d.refreshMe(); }); await sleep(1000);
     /* 다시 지은 몸이 GLB 로 설 때까지(최대 30초) — 그동안은 도형 몸(shape)이 자리를 지킨다 */
     for (let i = 0; i < 60 && await ev(() => { var b = DG.dungeon3d.meBody(); return !(b && b.state === 'glb'); }); i++) { await sleep(500); }
@@ -158,15 +158,15 @@ async function runDungeon() {
     await settle();
     const after = await st();
     await shoot(r, 'saga-dungeon', '5-gear', '명품 한 벌 입은 몸(휠로 당김)', ['dg.dungeon3d-2'], after);
-    check('사가블로 몸 GLB 실패 0 — 장면마다 assetState fail 이 없다', scenes.filter((s) => s.game === 'saga-dungeon').every((s) => !s.metrics.bodies || s.metrics.bodies.fail === 0), JSON.stringify(scenes.filter((s) => s.game === 'saga-dungeon').map((s) => s.metrics.bodies)));
-    check('사가블로 장비를 입으면 겉모습 값(look 데이터)이 바뀐다 — 그림은 5-gear 를 눈으로(W-0100: 사람 GLB 몸엔 갑주·투구 안 그림)', JSON.stringify(before.look) !== JSON.stringify(after.look), JSON.stringify({ before: before.look, after: after.look }));
-  } catch (e) { check('사가블로 예외 — ' + String((e && e.message) || e).slice(0, 200), false); }
+    check('사가나락 몸 GLB 실패 0 — 장면마다 assetState fail 이 없다', scenes.filter((s) => s.game === 'saga-dungeon').every((s) => !s.metrics.bodies || s.metrics.bodies.fail === 0), JSON.stringify(scenes.filter((s) => s.game === 'saga-dungeon').map((s) => s.metrics.bodies)));
+    check('사가나락 장비를 입으면 겉모습 값(look 데이터)이 바뀐다 — 그림은 5-gear 를 눈으로(W-0100: 사람 GLB 몸엔 갑주·투구 안 그림)', JSON.stringify(before.look) !== JSON.stringify(after.look), JSON.stringify({ before: before.look, after: after.look }));
+  } catch (e) { check('사가나락 예외 — ' + String((e && e.message) || e).slice(0, 200), false); }
   const real = realErrors(r.errors);
-  check('사가블로 페이지 예외·console.error 없음', real.length === 0, real.slice(0, 2).join(' | '));
+  check('사가나락 페이지 예외·console.error 없음', real.length === 0, real.slice(0, 2).join(' | '));
   await r.close();
 }
 
-/* ───────────── 사가의숲 ───────────── */
+/* ───────────── 사가마을 ───────────── */
 async function runForest() {
   const r = await open('saga-forest'); const ev = (fn, arg) => r.page.evaluate(fn, arg);
   await r.page.addInitScript(SEED);
@@ -185,7 +185,7 @@ async function runForest() {
     await ev(() => { DG.core.setTune('village3d.on', 1); }); await sleep(1500);
     const pb = await portraitBoard(r);
     await shoot(r, 'saga-forest', '4-portrait', '3D 초상 판(영웅·펫)', ['fs.portrait3d', 'fs.asset3d'], pb);
-    check('사가의숲 초상 — 굽기를 청한 것 중 반 넘게 그림이 나온다', pb.got > 0 && pb.got * 2 >= pb.asked, JSON.stringify(pb));
+    check('사가마을 초상 — 굽기를 청한 것 중 반 넘게 그림이 나온다', pb.got > 0 && pb.got * 2 >= pb.asked, JSON.stringify(pb));
     await clearBoard(r);
     /* fs.auto — 🤖 단추로 켜면 스스로 할 일을 잡고, 다시 누르면 꺼진다 */
     const a0 = await ev(() => DG.auto.status().on);
@@ -194,9 +194,9 @@ async function runForest() {
     await ev(() => document.getElementById('btn-auto').click()); await sleep(300);
     const a2 = await ev(() => DG.auto.status().on);
     check('fs.auto 자동 순행 — 🤖 단추로 켜면 스스로 할 일을 잡고(doing), 다시 누르면 꺼진다', !a0 && a1.on && !!a1.doing && !a2, JSON.stringify({ a0, a1, a2 }));
-  } catch (e) { check('사가의숲 예외 — ' + String((e && e.message) || e).slice(0, 200), false); }
+  } catch (e) { check('사가마을 예외 — ' + String((e && e.message) || e).slice(0, 200), false); }
   const real = realErrors(r.errors);
-  check('사가의숲 페이지 예외·console.error 없음', real.length === 0, real.slice(0, 2).join(' | '));
+  check('사가마을 페이지 예외·console.error 없음', real.length === 0, real.slice(0, 2).join(' | '));
   await r.close();
 
   /* fs.admin — 🔍 점검이 "모두 통과", 프리셋 단추로 세이브가 바뀐다 */
@@ -215,12 +215,12 @@ async function runForest() {
     const after = await aev((k) => localStorage.getItem(k) || '', k0);
     check('fs.admin 어드민 — 🔍 점검이 모두 통과, 프리셋 단추를 누르면 세이브가 바뀐다', /모두 통과/.test(out) && np > 0 && after.length > 0 && after !== before, JSON.stringify({ out: out.slice(0, 60), presets: np, changed: after !== before }));
     const real2 = realErrors(a.errors);
-    check('사가의숲 어드민 페이지 예외 없음', real2.length === 0, real2.slice(0, 2).join(' | '));
-  } catch (e) { check('사가의숲 어드민 예외 — ' + String((e && e.message) || e).slice(0, 200), false); }
+    check('사가마을 어드민 페이지 예외 없음', real2.length === 0, real2.slice(0, 2).join(' | '));
+  } catch (e) { check('사가마을 어드민 예외 — ' + String((e && e.message) || e).slice(0, 200), false); }
   await a.close();
 }
 
-/* ───────────── 사가스토리 ───────────── */
+/* ───────────── 사가종횡 ───────────── */
 async function runStory() {
   const r = await open('saga-story'); const ev = (fn, arg) => r.page.evaluate(fn, arg);
   await r.page.addInitScript(SEED);
@@ -239,11 +239,11 @@ async function runStory() {
     await ev(() => { DG.sideView3d.setQuality('auto'); });
     const pb = await portraitBoard(r);
     await shoot(r, 'saga-story', '4-portrait', '3D 초상 판(영웅·사슴·구미호)', ['st.portrait3d'], pb);
-    check('사가스토리 초상 — 굽기를 청한 것 중 반 넘게 그림이 나온다', pb.got > 0 && pb.got * 2 >= pb.asked, JSON.stringify(pb));
+    check('사가종횡 초상 — 굽기를 청한 것 중 반 넘게 그림이 나온다', pb.got > 0 && pb.got * 2 >= pb.asked, JSON.stringify(pb));
     await clearBoard(r);
-  } catch (e) { check('사가스토리 예외 — ' + String((e && e.message) || e).slice(0, 200), false); }
+  } catch (e) { check('사가종횡 예외 — ' + String((e && e.message) || e).slice(0, 200), false); }
   const real = realErrors(r.errors);
-  check('사가스토리 페이지 예외·console.error 없음', real.length === 0, real.slice(0, 2).join(' | '));
+  check('사가종횡 페이지 예외·console.error 없음', real.length === 0, real.slice(0, 2).join(' | '));
   await r.close();
 }
 

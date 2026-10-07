@@ -712,7 +712,7 @@ namespace Saga.EditorTools
 
         private static void ForestStates(List<UiState> list)
         {
-            // 109-16 사가의숲 시나리오 장면 상자 — 가장 긴 줄이 든 장면과 고르기 장면(마을 이름·금)을 각각 띄운다.
+            // 109-16 사가마을 시나리오 장면 상자 — 가장 긴 줄이 든 장면과 고르기 장면(마을 이름·금)을 각각 띄운다.
             foreach (bool choiceMode in new[] { false, true })
             {
                 list.Add(new UiState

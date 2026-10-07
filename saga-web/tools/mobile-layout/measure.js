@@ -17,7 +17,7 @@ function __sagaMeasure(opt) {
   var MIN_FONT = opt.minFont || 11, MIN_TAP = opt.minTap || 40;
   var vw = innerWidth, vh = innerHeight;
   var ignore = opt.ignore ? new RegExp(opt.ignore) : null;
-  var modalSel = opt.modal || null;   /* 판이 창으로 쓰는 투명 덮개(사가스토리 #storybox 처럼 배경 없이 화면을 덮는 것) */
+  var modalSel = opt.modal || null;   /* 판이 창으로 쓰는 투명 덮개(사가종횡 #storybox 처럼 배경 없이 화면을 덮는 것) */
 
   function name(el) {
     if (!el || el.nodeType !== 1) { return '?'; }

@@ -1,4 +1,4 @@
-/* 사가의숲 — UI
+/* 사가마을 — UI
    지도를 전체화면에 깔고, 그 위에 유리(glass) 패널을 띄우는 구성. */
 
 :root {
@@ -117,7 +117,7 @@ body.tilted #vignette {
 .p-goal.ready { color: #7ee787; }
 
 /* 자동·손쓰기만 붙박이, 나머지(살금살금·3D·시점·도움말·어드민·리셋)는
-   "더보기" 뒤로 접는다 — #dock-more 와 같은 결(사가스토리·사가국지에서 먼저 밟았다) */
+   "더보기" 뒤로 접는다 — #dock-more 와 같은 결(사가종횡·사가천하에서 먼저 밟았다) */
 .tools { grid-area: tools; display: flex; gap: 7px; position: relative; }
 #top-more {
   position: absolute; right: 0; top: calc(100% + 8px);
@@ -171,7 +171,7 @@ a.icon-btn { display: flex; align-items: center; justify-content: center; text-d
 .w-foot { margin-top: 5px; font-size: 11px; color: var(--ink-faint); }
 .w-foot b { color: var(--ink-dim); }
 
-/* ── 미니맵 (minimap.js) — 사가고와 같은 좌하단 원형 ──────────── */
+/* ── 미니맵 (minimap.js) — 사가만리와 같은 좌하단 원형 ──────────── */
 /* #widgets 는 이 판에서 안 쓴다(dead) — 좌하단이 비어 있어 그대로 물린다 */
 #minimap {
   position: fixed; left: 12px; bottom: calc(14px + var(--safe-b)); z-index: 10;
@@ -271,7 +271,7 @@ a.icon-btn { display: flex; align-items: center; justify-content: center; text-d
 
 /* ── 액션 독 ──────────────────────────────────────────── */
 /* 가방·지도만 붙박이, 나머지 넷(주민·집·편지·도감·기록, 공사는 열렸을 때만)은
-   "더보기" 뒤로 접는다 — 화면을 넓게 안 먹는다(사가스토리·사가국지와 같은 결).
+   "더보기" 뒤로 접는다 — 화면을 넓게 안 먹는다(사가종횡·사가천하와 같은 결).
    #dock-more 는 #dock(position:fixed 라 포함 블록이 된다) 기준 절대배치로
    독 바로 위에 뜨는 팝오버다. */
 #dock {
@@ -491,7 +491,7 @@ small.muted { display: block; margin-top: 7px; font-size: 11px; }
   animation: pop .22s cubic-bezier(.22,1,.36,1);
   /* 도움말·등용 카드처럼 내용이 길면 #encounter가 안 막고 그대로 넘쳐
      확인/닫기 버튼이 화면 밖으로 밀려 눌리지 않았다(다섯 판 공통 결함,
-     2026-08-31 사가고·사가블로에서 발견). 세로 스크롤을 열어 준다 */
+     2026-08-31 사가만리·사가나락에서 발견). 세로 스크롤을 열어 준다 */
   max-height: calc(100vh - 36px); overflow-y: auto;
 }
 @keyframes pop { from { transform: translateY(14px) scale(.97); opacity: 0; } to { transform: none; opacity: 1; } }
@@ -974,7 +974,7 @@ body.dungeon-open { overflow: hidden; }
   .modeswitch { flex-direction: column; }
 }
 
-/* ══ 사가의숲 v1.0 — 고딕 던전 · 오브 HUD · 서당 · 3D ═══════════════ */
+/* ══ 사가마을 v1.0 — 고딕 던전 · 오브 HUD · 서당 · 3D ═══════════════ */
 
 /* ── 3D 모드 — 지평선 안개를 더 깊게 (포켓몬GO식 카메라) ── */
 body.tilted3 #vignette {
@@ -1324,7 +1324,7 @@ body.tilted3 #vignette {
   #top { gap: 6px; padding: calc(6px + var(--safe-t)) 8px 0; }
 
   /* 프로필 — 자동·손쓰기·더보기 셋뿐이라 도구가 먹는 폭이 줄었다. 그래도
-     위쪽을 가린다는 지적(사가스토리)에 맞춰 카드 자체도 낮춘다 */
+     위쪽을 가린다는 지적(사가종횡)에 맞춰 카드 자체도 낮춘다 */
   .profile { min-width: 0; max-width: calc(100vw - 130px); padding: 4px 9px 4px 5px; gap: 6px; }
   .avatar { width: 28px; height: 28px; }
   .avatar i { font-size: 12px; }

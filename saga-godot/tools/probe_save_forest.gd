@@ -1,6 +1,6 @@
 extends SceneTree
 
-## 사가의숲 세이브 왕복·마이그레이션 점검 — 몸통은 probe_save_base.gd.
+## 사가마을 세이브 왕복·마이그레이션 점검 — 몸통은 probe_save_base.gd.
 ##   godot --headless --path saga-godot --script res://tools/probe_save_forest.gd
 ## 끝에 "PROBE save_forest OK" 또는 "PROBE save_forest FAIL n". 진짜 세이브는 안 건드린다.
 

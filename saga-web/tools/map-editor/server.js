@@ -3,11 +3,11 @@
  * 게임 서버가 아니다. `run-map-editor.bat` 으로 켤 때만 뜬다(포트 8800).
  *
  * 지도 모양은 판마다 달라서 **어댑터**(adapters/*.js) 하나가 한 가지 데이터 파일을 맡는다:
- *   land  글자 지도 — `js/land.js` map·places(사가고)                         → map.html
- *   city  성 지도   — `js/data-city.js` 성 x·y·land + LINKS(사가국지)         → city.html
- *   side  사냥터    — `js/data-side.js` STAGES 발판·줄·문·사람·채집(사가스토리) → side.html
- *   deco  3D 배치   — `js/land.js` 땅의 deco(손으로 놓은 소품, 사가고)          → scene.html
- *   town  마을      — `js/town.js` 손으로 지은 마을 넷의 장식·사람·표식(사가블로)  → town.html
+ *   land  글자 지도 — `js/land.js` map·places(사가만리)                         → map.html
+ *   city  성 지도   — `js/data-city.js` 성 x·y·land + LINKS(사가천하)         → city.html
+ *   side  사냥터    — `js/data-side.js` STAGES 발판·줄·문·사람·채집(사가종횡) → side.html
+ *   deco  3D 배치   — `js/land.js` 땅의 deco(손으로 놓은 소품, 사가만리)          → scene.html
+ *   town  마을      — `js/town.js` 손으로 지은 마을 넷의 장식·사람·표식(사가나락)  → town.html
  * 판 폴더에 그 파일이 있으면 저절로 목록에 뜬다.
  *
  * 어느 어댑터든 원칙은 같다: 검사는 고친 파일을 vm 에서 실행한 **게임 데이터 그대로** 로 하고,
@@ -129,7 +129,7 @@ if (require.main === module) {
     } catch (e) { fail(e); }
   }).listen(PORT, '127.0.0.1', () => {
     console.log('saga-web 맵 편집기: http://127.0.0.1:' + PORT + '/');
-    console.log('판 js 지도 데이터(land.js · data-city.js · data-side.js · 사가블로 town.js)를 직접 고칩니다. 게임 서버가 아닙니다. 끝나면 Ctrl+C.');
+    console.log('판 js 지도 데이터(land.js · data-city.js · data-side.js · 사가나락 town.js)를 직접 고칩니다. 게임 서버가 아닙니다. 끝나면 Ctrl+C.');
   });
 }
 

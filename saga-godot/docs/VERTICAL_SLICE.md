@@ -2,7 +2,7 @@
 
 master.md 3.1절·35장(01~35단계)의 Vertical Slice 설계. **어느 게임부터 만드는가**를
 먼저 정한다 — master.md 39장이 "SAGA Core → Vertical Slice → GO → DUNGEON → FOREST
-→ STORY → REALM" 순서를 이미 못박아 뒀으므로, 첫 Vertical Slice는 **사가고(GO)**
+→ STORY → REALM" 순서를 이미 못박아 뒀으므로, 첫 Vertical Slice는 **사가만리(GO)**
 기준이다.
 
 GO를 고른 다른 이유: LEGACY_FEATURE_AUDIT.md 2장에서 본 대로 GO의 웹판(saga-go)은

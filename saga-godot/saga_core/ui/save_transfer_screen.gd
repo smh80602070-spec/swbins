@@ -1,11 +1,11 @@
 extends Node
-## 세이브 옮기기 화면 — 다섯 판 공용(G-0035 사가고 화면을 G-0037 에서 옮김). SAGA-BACKLOG P0 #6 최소안: 서버 없이 문자열 하나로 다른 PC·기기로.
+## 세이브 옮기기 화면 — 다섯 판 공용(G-0035 사가만리 화면을 G-0037 에서 옮김). SAGA-BACKLOG P0 #6 최소안: 서버 없이 문자열 하나로 다른 PC·기기로.
 ##   내보내기 — 지금을 저장(save_call)하고 state.export_string(game_id) 를 칸에 띄우고 클립보드에 복사.
 ##   불러오기 — 칸(또는 "붙여넣기"로 클립보드)의 문자열을 state.import_string 으로 쓴다. 두 번 눌러야 한다(지금 세이브를 바꾸므로).
 ##     성공하면 자동 저장을 치우고(옛 상태로 덮지 않게) 장면을 다시 띄운다 — load_before_reload 면 autoload 에 먼저 try_load.
 ##     지금 세이브는 <세이브 경로>.before_import 로 남는다(save_base.gd).
-## 판마다 설정: game_id · state(세이브 autoload, SagaSaveBase) · save_call · group_name. 사가고는 games/saga_go/ui/save_transfer.gd 가 상속해 채운다,
-## 네 판은 saga_core/ui/save_transfer_button.gd 가 만든다. 화면·열기/닫기·ui_modal 은 사가고 world/achievements.gd 와 같은 결.
+## 판마다 설정: game_id · state(세이브 autoload, SagaSaveBase) · save_call · group_name. 사가만리는 games/saga_go/ui/save_transfer.gd 가 상속해 채운다,
+## 네 판은 saga_core/ui/save_transfer_button.gd 가 만든다. 화면·열기/닫기·ui_modal 은 사가만리 world/achievements.gd 와 같은 결.
 
 const AUTOSAVE_GROUPS := ["go_autosave", "autosave_timer"]
 const SaveSlots := preload("res://saga_core/data/save_slots.gd")
@@ -240,7 +240,7 @@ func close_screen() -> void:
 	if is_instance_valid(_player):
 		_set_frozen(_player, _frozen_before)
 
-## `frozen` 이 있는 플레이어(사가고·숲·블로 공용 player.gd)는 그것, 없으면(스토리) 물리 처리를 끈다.
+## `frozen` 이 있는 플레이어(사가만리·숲·블로 공용 player.gd)는 그것, 없으면(스토리) 물리 처리를 끈다.
 static func _is_frozen(p: Node) -> bool:
 	if "frozen" in p:
 		return bool(p.get("frozen"))

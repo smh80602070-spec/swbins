@@ -1,5 +1,5 @@
 extends Node
-## G-0065 [R-3] 사가고 툰 물·손그림 하늘(features gd.go.g1-toon) 자동 점검 — 평소엔 안 붙는다. test_village.gd 가 SAGA_TOON_LOOK_PROBE 가 있을 때만 단다.
+## G-0065 [R-3] 사가만리 툰 물·손그림 하늘(features gd.go.g1-toon) 자동 점검 — 평소엔 안 붙는다. test_village.gd 가 SAGA_TOON_LOOK_PROBE 가 있을 때만 단다.
 ##   SAGA_TOON_LOOK_PROBE=1 "$GODOT" --headless --path saga-godot res://games/saga_go/world/TestVillage.tscn
 ## ① WorldEnvironment 하늘 재질 셰이더가 sky_toon ② 물 메시 하나 이상이 water_toon 재질. 끝에 "TOON_LOOK_PROBE_DONE fails=N".
 

@@ -1,5 +1,5 @@
 extends Node
-## G-0063 사가의숲 옷 머리·덧옷·겉옷 갑옷(forest_wear_visual.gd · saga_core/world/bone_gear.gd) — scene_probe_host 로 돈다(오토로드 필요).
+## G-0063 사가마을 옷 머리·덧옷·겉옷 갑옷(forest_wear_visual.gd · saga_core/world/bone_gear.gd) — scene_probe_host 로 돈다(오토로드 필요).
 ## ① 머리 다섯마다 그 acc 하나, 맨머리·상투는 0 ② 덧옷 on → acc_cape_long, off → 없음 ③ 겉옷 갑옷 → 조각 3(가슴 + 어깨 좌우)
 ## ④ 옷 빛은 그대로 물듦(G-0051) ⑤ 바꾸면 옛 것이 사라짐 ⑥ 조각 배율 = 머리 뼈 높이/1.5. 옷(wear_on)은 끝에 처음대로 되돌린다. 저장 안 함.
 

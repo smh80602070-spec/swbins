@@ -1,5 +1,5 @@
 /**
- * 화면 — 사가국지 (삼국지)
+ * 화면 — 사가천하 (삼국지)
  * ---------------------------------------------------------------
  * 가운데는 **지도**다. 이 판에는 원래 지도가 없었다(강역이 목록이었다) —
  * 삼국지로 옮기면서 성 서른 곳과 그 사이의 길이 판 그 자체가 되었다.
@@ -1213,7 +1213,7 @@
   function renderTop() {
     var st = R().state();
     if (!st.started) {
-      els.profile.innerHTML = '<div class="p-meta"><div class="p-title">사가국지 — 다스리고 꾀고 친다</div>' +
+      els.profile.innerHTML = '<div class="p-meta"><div class="p-title">사가천하 — 다스리고 꾀고 친다</div>' +
         '<div class="p-sub">세력을 고르십시오</div></div>';
       els.wallet.innerHTML = '';
       return;
@@ -1395,7 +1395,7 @@
   var SHEET_TITLE = { city: '🏯 성', officers: '👤 무장', camp: '🏕️ 진·원정',
                       diplo: '🤝 외교', school: '📚 학당', log: '📜 기록', settings: '⚙️ 설정' };
 
-  /** 2026-09-10 — 효과음(사가블로·사가스토리·사가의숲 설정 시트와 같은 결).
+  /** 2026-09-10 — 효과음(사가나락·사가종횡·사가마을 설정 시트와 같은 결).
    *  진·BGM·진동은 없어(sfx.js 에 그 손잡이 자체가 없다) 효과음만 둔다.
    *  상단 더보기(⋯)의 🔊 는 그대로 둔다(빠른 켬/끔 — 이 시트로 대체하지 않는다).
    *  2026-09-17 — 그래픽 품질 3단(SAGA-DESIGN §8 성능 상한, PLAN §7-2) 추가.

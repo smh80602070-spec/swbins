@@ -73,8 +73,8 @@
   var REGULAR = PEOPLE + 'regular/';
   var ANIM_DIR = 'assets/models/anim/';
 
-  /* 2026-09-03 — 사가의숲과 같은 이유로 사람 기본을 갈아 끼운다: 위 조합형(몸+옷+머리)
-     은 그림체가 밋밋하다는 지적("2D도 허접해서" 조사 끝에 그림체 우선으로 결정, 사가의숲
+  /* 2026-09-03 — 사가마을과 같은 이유로 사람 기본을 갈아 끼운다: 위 조합형(몸+옷+머리)
+     은 그림체가 밋밋하다는 지적("2D도 허접해서" 조사 끝에 그림체 우선으로 결정, 사가마을
      참고)에 Quaternius "RPG Character Pack"(CC0, 전사·궁수·도적·성직자·마법사·수도승
      6종)으로 바꾼다. 몸 파일 하나에 걷기·공격·사망 등 클립이 다 들어 있어 옷·머리도,
      ANIM_DIR 몸짓도 필요 없다 — `anim` 을 `body` 와 같은 파일로 주면 그 클립을 그대로 쓴다.
@@ -176,10 +176,10 @@
     { key: 'mpfb_v23', body: PEOPLE_MPFB + 'v23.glb', realistic: true }   // young_caucasian_male2 + long01 + male_casualsuit01
   ]);
 
-  /* 2026-09-20 — "고품질 셀 셰이딩급" VRM 애니메 아바타(사가의숲 asset3d.js에서 먼저 만든 것,
+  /* 2026-09-20 — "고품질 셀 셰이딩급" VRM 애니메 아바타(사가마을 asset3d.js에서 먼저 만든 것,
      경위는 saga-forest HANDOFF.md 2026-09-19 절)를 이 판에도 옮긴다. VRoid Studio
      공식 CC0 샘플 AvatarSample_A/B/C(github.com/madjin/vrm-samples) + 이 저장소가
-     GUI 자동화로 새로 빚은 avatar_custom_01 — 넷 다 사가의숲과 같은 파일(md5 동일,
+     GUI 자동화로 새로 빚은 avatar_custom_01 — 넷 다 사가마을과 같은 파일(md5 동일,
      assets/ASSET_LICENSES.md 참고). VRM 뼈 이름(`J_Bip_*`)은 이 판의 QRPG/MPFB
      뼈와 안 맞아 아래 `boneNameMap()`에 VRM_TO_UAL1_BONES 보충표를 얹는다.
      **기본은 꺼짐**(0, 위 `realistic` 계열과 같은 결) — 손잡이를 켜기 전엔
@@ -269,7 +269,7 @@
        바꿔 이 파일에 정지 모델이 하나도 안 남았다. */
     /* 2026-09-23 — **종마다 제 모델.** 여태 도감 펫 105종 중 64종이 형태 표(`sprite.js` BEAST_FORM)에 없어
        `quad` 로 떨어져 네발 열 벌 중 id 해시로 하나를 입었다(고래가 사슴·흰동가리가 소·호랑이가 사슴 — 펫 초상
-       다시 굽다 발견). 사가블로가 2026-09-07 "펫 100개" 로 받아 둔 Quaternius CC0 모델(범·곰·판다 등 8 +
+       다시 굽다 발견). 사가나락가 2026-09-07 "펫 100개" 로 받아 둔 Quaternius CC0 모델(범·곰·판다 등 8 +
        `animals_extra/` 11 + `animals_extra2/` 38, 출처 `assets/ASSET_LICENSES.md`)을 옮겨 오고, 이미 있던 모델은
        그대로 이어 붙였다. 신수·창작 짐승(옛 오마주)·까치(사용자가 정한 비둘기)는 여전히 아래 형태 표로 간다 */
     'pet:pt_fox': 'assets/models/animals/Fox.glb',
@@ -350,9 +350,9 @@
     'pet:pt_yellow_tang': 'assets/models/animals_extra2/Yellow_Tang.glb',
     'pet:pt_zebra_clown_fish': 'assets/models/animals_extra2/Zebra_Clown_Fish.glb',
     /* 2026-09-25 — **신수·오마주·까치도 종마다 제 모델**(tools/asset-audit/CHARACTER_UNIQUENESS.md ④). 여태 아래 형태 표로
-       떨어져 id 해시로 공룡·뱀·오크를 나눠 입었다. 사가블로가 받아 둔 Quaternius "Ultimate Monsters"(CC0) 열여덟 벌 +
+       떨어져 id 해시로 공룡·뱀·오크를 나눠 입었다. 사가나락가 받아 둔 Quaternius "Ultimate Monsters"(CC0) 열여덟 벌 +
        코끼리(Poly by Google, CC-BY 3.0)를 `standin/` 으로 복사해 28종이 서로 안 겹친다. 범·여우·말·흰말은 같은 종이라
-       그 모델(백호·구미호·홍염마·섬영마). 까치는 사용자가 정한 비둘기. 사가블로·사가의숲·사가스토리와 같은 배정 */
+       그 모델(백호·구미호·홍염마·섬영마). 까치는 사용자가 정한 비둘기. 사가나락·사가마을·사가종횡와 같은 배정 */
     'pet:pt_samjogo': 'assets/models/animals/Birb.glb',
     'pet:pt_haetae': 'assets/models/standin/Goleling.glb',
     'pet:pt_cheongryong': 'assets/models/standin/Dragon_Evolved.glb',
@@ -468,10 +468,10 @@
     'landmark:canyon': BLD + 'LargeTower.glb',
     'landmark:marsh': BLD + 'Tower.glb',
     'landmark:ruins': BLD + 'LargeSquareTowerBricks.glb',
-    /* §5 ⑲-3 보물 상자(KayKit Dungeon Remastered CC0, 사가스토리와 같은 파일)·석등(Poly Haven 등롱 CC0, prop3d `lamp` 와 같은 파일) */
+    /* §5 ⑲-3 보물 상자(KayKit Dungeon Remastered CC0, 사가종횡와 같은 파일)·석등(Poly Haven 등롱 CC0, prop3d `lamp` 와 같은 파일) */
     'chest': 'assets/models/props/Chest.glb',
     'lantern': 'assets/models/props/realistic/wooden_lantern.glb',
-    /* §5 ⑲-6 채집물(Quaternius CC0, 사가의숲과 같은 파일)·솥(퓨전 소품 가마솥·모닥불) */
+    /* §5 ⑲-6 채집물(Quaternius CC0, 사가마을과 같은 파일)·솥(퓨전 소품 가마솥·모닥불) */
     'gather:mushroom': 'assets/models/nature/Mushroom_1.glb',
     'gather:flower': 'assets/models/nature/Flowers.glb',
     'gather:plant': 'assets/models/nature/Plant_1.glb',
@@ -485,7 +485,7 @@
     'domain:tree': 'assets/models/fusion/Tree_Light_1.glb',
     'landmark': BLD + 'LargeTower.glb',
 
-    /* 세 시대 사람·적(PLAN §5 ⑱ · SAGA-DESIGN §13 전체 퓨전). 전부 Quaternius CC0 — 사가블로가 받아 둔 poly.pizza
+    /* 세 시대 사람·적(PLAN §5 ⑱ · SAGA-DESIGN §13 전체 퓨전). 전부 Quaternius CC0 — 사가나락가 받아 둔 poly.pizza
        사람·몬스터를 옮겨 오고, 사이버펑크 로봇 셋은 미러에서 받아 Meshopt 로 쌌다(`assets/ASSET_LICENSES.md`).
        땅 사람(`folk.js`)은 ref.era 가 `folk_past`·`folk_modern`·`folk_future` 라 `hero:era:*` 에 걸린다 —
        도감 인물의 era('삼국지' 등)와는 겹치지 않는다. 과거는 이미 받는 인물 여섯 벌에 농부·무녀를 보탠다 */
@@ -586,7 +586,7 @@
   /** 인물의 몸·옷·머리 조합 — 표에 적힌 것이 조합 객체일 때만 준다(테스트가
    *  `register('hero', 'a.glb')` 처럼 문자열 하나로 덮어써도 안 깨지게) */
   /* 2026-09-25 — "캐릭터 모두 다르게" ②: 주민 열(`npc.js`)은 VRoid 네 벌 해시 대신 **사람마다 제 몸** — 역할에 맞게 손으로
-     짝지은 서로 다른 한 벌(사가블로 hero_light 창고의 Quaternius·poly.pizza CC0 를 `people/fixed/` 로 복사, 제 클립 내장).
+     짝지은 서로 다른 한 벌(사가나락 hero_light 창고의 Quaternius·poly.pizza CC0 를 `people/fixed/` 로 복사, 제 클립 내장).
      ⑱ 땅 사람이 쓰는 파일(회사원·농부·후드·특공대·작업복·마녀·우주복)은 피했다. 도감 인물·절차 인물은 VRoid 그대로.
      손잡이 `asset3d.fixedBody`(0 = 옛 해시) */
   var FIXED_HERO = {
@@ -805,7 +805,7 @@
   /* 몇 벌을 세웠고 몇 벌이 GLB 로 갈아 끼워졌나 — 진단·데모가 값으로 본다 */
   var built = 0, swapped = 0, broke = '';
 
-  /* 압축(EXT_meshopt_compression) GLB 는 디코더 없이 조용히 실패한다 — 사가의숲 asset3d.js 와 같은 요령(2026-09-23 tools/asset-audit 가 찾음) */
+  /* 압축(EXT_meshopt_compression) GLB 는 디코더 없이 조용히 실패한다 — 사가마을 asset3d.js 와 같은 요령(2026-09-23 tools/asset-audit 가 찾음) */
   function loader() {
     var t = three();
     if (!t || !t.GLTFLoader) { return null; }
@@ -868,7 +868,7 @@
    * 원본의 클립들을 이 몸에 맞게 다시 굽는다. 못 하면 빈 배열 — 그러면
    * 이 몸은 **가만히 선다**(뒤틀리는 것보다는 낫다).
    */
-  /** VRM Humanoid(VRoid, `J_Bip_C/L/R_*`) → 이 판 뼈 이름 표(2026-09-20, 사가의숲
+  /** VRM Humanoid(VRoid, `J_Bip_C/L/R_*`) → 이 판 뼈 이름 표(2026-09-20, 사가마을
    *  asset3d.js에서 옮김). 손가락은 뺐다 — 이 판 로코모션 클립이 손가락을 안
    *  건드려 굳이 안 옮겨도 무방하다. 항등 매칭이 하나도 안 걸리는 VRM 몸에만
    *  덧붙는 보충표라, 기존 QRPG·MPFB(이미 이름이 같아 항등만으로 되던 몸)는 이
@@ -1014,9 +1014,9 @@
     var wantOutline = !!(TN && TN.OUTLINE_ON());
     root.traverse(function (o) {
       if (!o.isMesh || !o.material) { return; }
-      /* 법선이 아예 없는 GLB(2026-09-23 예방 — 사가국지 킷배싱 탑이 이것으로 새까맸다): GLTFLoader 는 이때 flatShading 을 켜
+      /* 법선이 아예 없는 GLB(2026-09-23 예방 — 사가천하 킷배싱 탑이 이것으로 새까맸다): GLTFLoader 는 이때 flatShading 을 켜
          주지만 toonify 가 만드는 MeshToonMaterial 은 flatShading 을 안 받아(r169) 법선 0 → 통째로 새까맣다.
-         사가블로 delam 이 2026-09-04 에 먼저 밟은 함정과 같은 처방 — 지오메트리에서 계산해 채운다 */
+         사가나락 delam 이 2026-09-04 에 먼저 밟은 함정과 같은 처방 — 지오메트리에서 계산해 채운다 */
       if (o.geometry && o.geometry.attributes.position && !o.geometry.attributes.normal) { o.geometry.computeVertexNormals(); }
       var one = Array.isArray(o.material) ? o.material : [o.material];
       var out = one.map(function (m) {
@@ -1024,7 +1024,7 @@
         if (toon) { return TN.toonify(m); }
         /* vertexColors 를 안 옮기면(정점빛깔로 색을 주고 baseColorFactor 는
            검게 비워 둔 옷감이 있다) 그 자리가 조명과 무관하게 통째로 새까맣게
-           뜬다 — 2026-09-03, 사가국지 무장 초상에서 처음 잡은 버그다 */
+           뜬다 — 2026-09-03, 사가천하 무장 초상에서 처음 잡은 버그다 */
         return new t.MeshLambertMaterial({
           color: m.color ? m.color.clone() : new t.Color(0xffffff),
           map: m.map || null, vertexColors: !!m.vertexColors,
@@ -1034,7 +1034,7 @@
       });
       o.material = Array.isArray(o.material) ? out : out[0];
     });
-    /* 외곽선 — 모델 안에서는 **가장 큰 부품 반지름 × 2% 한 폭**, 그 12% 보다 작은 부품(눈·이빨·발굽)은 안 두른다(사가스토리 delam 과 같다).
+    /* 외곽선 — 모델 안에서는 **가장 큰 부품 반지름 × 2% 한 폭**, 그 12% 보다 작은 부품(눈·이빨·발굽)은 안 두른다(사가종횡 delam 과 같다).
        예전엔 부품마다 제 반지름 × 3%(최소 0.006)라 반지름 0.002~0.03 인 동물 GLB 에서 외곽선이 부품보다 두꺼워 검은 파편이 번졌다(2026-09-23).
        VRoid 는 vroid-variant 가 이미 둘러 `_toonOutline` 로 건너뛴다. traverse 도중 자식을 더하지 않으려고 모아서 붙인다 */
     if (toon && wantOutline) {

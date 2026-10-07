@@ -8,11 +8,11 @@ Blender 헤드리스 — 사람 클릭 0회. 결과는 `tools/world-forge/_out/`
 
 | 판 | 건물 성격 |
 |---|---|
-| 사가고 | 시대 혼합 마을(과거·현대·미래 한 자리) |
-| 사가블로 | 성채·신전·던전 입구 |
-| 사가의숲 | 마을 집·가게·오두막 |
-| 사가스토리 | 횡스크롤 배경 건물 |
-| 사가국지 | 성벽·성문·궁·서역 도시 |
+| 사가만리 | 시대 혼합 마을(과거·현대·미래 한 자리) |
+| 사가나락 | 성채·신전·던전 입구 |
+| 사가마을 | 마을 집·가게·오두막 |
+| 사가종횡 | 횡스크롤 배경 건물 |
+| 사가천하 | 성벽·성문·궁·서역 도시 |
 
 ## 지금 있는 것 (첫 조각, 2026-09-29)
 - `fetch_sources.py` — 재질 24종 받기(md5 검사). `py tools/world-forge/fetch_sources.py`
@@ -27,7 +27,7 @@ Blender 헤드리스 — 사람 클릭 0회. 결과는 `tools/world-forge/_out/`
 - 판별 세트 전체: `build_*.py --all --out-dir <절대경로> --style toon` 네 번 + 건물 레시피별 `build_building.py` → `check_plan.py --out <그 폴더> --strict` 가 42/42 를 센다
 - `build_set.sh <절대 출력 폴더>`(K-0017) — 판별 세트 한 벌을 한 번에: 툰 GLB 42 → 웹 압축본(`glb-compress`) → 웹 2D 스프라이트 → `check_plan.py` 대조 → `set_sheet.py` 판정 시트(그림 한 장 + 표). 약 5분
   (미리보기 주의: `preview.py` 의 출력 경로는 **절대 경로**로 — 상대 경로는 드라이브 루트 `C:	ools\…` 로 샌다)
-- `build_kit.py`(K-0063) — 치수 맞춤 키트 10종: 다리 널판 `plank_deck_01`(6×1×0.12, 길이 이음) · 사가블로 방 `dungeon_room_12_<mood>`(12×4.4×12, 남북 개구부 4.4) · 문틀 `dungeon_gate_44_<mood>` · 복도 `dungeon_corridor_4_<mood>`(mood dirt·limestone·lava). 고돗 G-0020 이 Kenney 원본을 걷어내며 요청
+- `build_kit.py`(K-0063) — 치수 맞춤 키트 10종: 다리 널판 `plank_deck_01`(6×1×0.12, 길이 이음) · 사가나락 방 `dungeon_room_12_<mood>`(12×4.4×12, 남북 개구부 4.4) · 문틀 `dungeon_gate_44_<mood>` · 복도 `dungeon_corridor_4_<mood>`(mood dirt·limestone·lava). 고돗 G-0020 이 Kenney 원본을 걷어내며 요청
 - `build_monster.py`(K-0043 재작업) — 몬스터·보스 몸 32종: 계통 5(네발·날개·뱀형·기계·정령) × 변형 4(번호마다 다른 몸: 늑대·멧돼지·고양이·황소 / 새·박쥐·올빼미·비룡 / 독사·코브라·뿔 지렁이·방울뱀 / 골렘·거미·궤도 포대·떠 있는 구 / 불꽃·유령·결정·해파리) + 보스 12(×1.8~2, 왕관·등판·룬 띠). 유기체 = Skin 모디파이어(뼈대 그래프→이어진 매끈한 몸, 삼각형 2.3k 예산) + 면 법선·위치로 무늬 칸 배정, 기계 = 모따기 상자. 동작은 뼈 없이 `tools/glb-compress/creature_fill.mjs --forward-z` 로 7칸
 - `recipes/eu_house_01.json` — 서유럽 2층 집(삼각형 약 1900)
 - 종류 늘림(09-29): `chinese_hall_01`(전각·붉은 기둥·큰 처마) · `jp_minka_01`(초가 모임지붕) · `stone_tower_01`(4층 성탑) · `forest_cottage_01`(초가 오두막) · `barn_01`(헛간) · `inn_01`(3층 여관) — 재질 칸 `{mat, tile_m, tint, gain, sat}`: **원본 사진 재질은 어둡다**(회반죽 #72593b·초가 #544f49) — `tint`(곱하기)로는 못 밝히니 `gain`·`sat` 를 그림 픽셀에 구워 쓴다(glTF 는 1 보다 큰 배율을 못 싣는다).
@@ -42,7 +42,7 @@ B="/c/Program Files/Blender Foundation/Blender 5.2/blender.exe"
 ## 순서 (건물 → 지물 → 지형 → 탈것)
 1. 건물: 서유럽 ✅(첫 집) → 한옥·일본식·중국식 → 현대 블록 → 미래 → 성벽·성문·탑·궁 → 판별 레시피 묶음
 2. 지물: 우물·시장·다리·비석·등롱·울타리·수레(기존 `tools/asset-forge/procgen.py` 를 사실 재질로 확장)
-3. 지형: 높이맵 + 침식 노이즈 + CC0 지면 재질 → 판별 지역(사가고 강·산맥·바이옴 등은 기존 설계 그대로)
+3. 지형: 높이맵 + 침식 노이즈 + CC0 지면 재질 → 판별 지역(사가만리 강·산맥·바이옴 등은 기존 설계 그대로)
 4. 탈것: 수레·배·뗏목(코드) → 탑승 생물(char-forge 몸 파이프라인 재사용, 마지막)
 
 ## 알려진 한계 / 다음

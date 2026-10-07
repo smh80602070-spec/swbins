@@ -19,9 +19,9 @@
     fire_proj: [8, 12, 1], water_proj: [8, 12, 1], lightning_proj: [8, 12, 1], ice_proj: [8, 12, 1], wind_proj: [8, 12, 1], earth_proj: [8, 12, 1], light_proj: [8, 12, 1],
     fire_hit: [10, 12, 0], water_hit: [10, 12, 0], lightning_hit: [10, 12, 0], ice_hit: [10, 12, 0], wind_hit: [10, 12, 0], earth_hit: [10, 12, 0], light_hit: [10, 12, 0]
   };
-  /** 사가블로 원소(`elem` fx 의 el) → 원소 타격 시트 — 화=불 · 빙=얼음 · 뇌=번개 · 독=바람(초록 호) · 기=빛 · 전자=물(푸른 고리). 물리는 없다(불꽃이 이미 있다) */
+  /** 사가나락 원소(`elem` fx 의 el) → 원소 타격 시트 — 화=불 · 빙=얼음 · 뇌=번개 · 독=바람(초록 호) · 기=빛 · 전자=물(푸른 고리). 물리는 없다(불꽃이 이미 있다) */
   var ELEM_HIT = { fire: 'fire_hit', cold: 'ice_hit', lit: 'lightning_hit', pois: 'wind_hit', chi: 'light_hit', emp: 'water_hit' };
-  /** 사가블로 원소 → 투사체 시트(날아가는 모양 — 오른쪽으로 난다고 보고 방향으로 돌려 그린다). 물리·기 = 지금의 하늘색 기공파 구슬(물), 독 = 바람, 전자 = 빛 */
+  /** 사가나락 원소 → 투사체 시트(날아가는 모양 — 오른쪽으로 난다고 보고 방향으로 돌려 그린다). 물리·기 = 지금의 하늘색 기공파 구슬(물), 독 = 바람, 전자 = 빛 */
   var PROJ = { phys: 'water_proj', chi: 'water_proj', fire: 'fire_proj', cold: 'ice_proj', lit: 'lightning_proj', pois: 'wind_proj', emp: 'light_proj' };
   var imgs = {};
 
@@ -113,7 +113,7 @@
     return true;
   }
 
-  /** 사가블로 장비 등급(0 상품~4 전설) → 등급 시트 번호 — 이름표 색과 색상이 가까운 것: 명품(노랑)·전설(금)=5 주황금, 보물(초록)=2 초록. 상품·양품은 연출 없음(0) */
+  /** 사가나락 장비 등급(0 상품~4 전설) → 등급 시트 번호 — 이름표 색과 색상이 가까운 것: 명품(노랑)·전설(금)=5 주황금, 보물(초록)=2 초록. 상품·양품은 연출 없음(0) */
   function rarOfTier(key) { return key === 3 ? 2 : (key >= 2 ? 5 : 0); }
 
   /** 바닥에 놓인 등급 물건의 후광 — rar = 등급 1~5, now ms. 못 받았으면 false */

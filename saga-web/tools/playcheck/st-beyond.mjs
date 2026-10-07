@@ -1,4 +1,4 @@
-// 사가스토리 5부 문 너머: 사냥터 셋(beyond_past·now·future)에 들어가 3D 가 예외 없이 그려지나 · 적·보스가 서나 · 문 사슬(암굴 → 셋) · 보스가 제 몸을 받나
+// 사가종횡 5부 문 너머: 사냥터 셋(beyond_past·now·future)에 들어가 3D 가 예외 없이 그려지나 · 적·보스가 서나 · 문 사슬(암굴 → 셋) · 보스가 제 몸을 받나
 // 사진은 `shot` 을 줄 때만(shots/st_beyond_*). PC_PROF=tmp/… 새 프로필로 돌릴 것
 import { launch, sleep } from './cdp.mjs';
 const shot = process.argv.includes('shot');

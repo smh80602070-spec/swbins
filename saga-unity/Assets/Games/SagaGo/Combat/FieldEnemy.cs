@@ -118,7 +118,7 @@ namespace Saga.Go.Combat
         private bool BossStanding => FrostKing ? FrostBossState.Standing : GuardianState.Standing;
         private bool BossDefeated => FrostKing ? FrostBossState.Defeated : GuardianState.Defeated;
 
-        // ---- PLAN.md 109-6 들판 인물(웹 사가고 ⑯ 싸워서 등용) — `FieldHeroes` 가 겨루기를 열 때만 세운다 ----
+        // ---- PLAN.md 109-6 들판 인물(웹 사가만리 ⑯ 싸워서 등용) — `FieldHeroes` 가 겨루기를 열 때만 세운다 ----
         public bool IsHero => kind == Kind.Hero;
         public string HeroId { get; private set; }
         public int HeroRarity { get; private set; }
@@ -150,7 +150,7 @@ namespace Saga.Go.Combat
         private float RecoverTime => (_recoverOverride > 0f ? _recoverOverride : Quick ? HeroVirtueRecover : RecoverSec) * CdMul;
         private float EngageReach => _rot != null ? RotEngage : _reachOverride > 0f ? _reachOverride * 0.8f : Ranged ? HeroWisdomRange : EngageRange;
 
-        // ---- 109-14-14 이야기 보스 공격 차례(웹 사가고 ⑲-14 `rot`) — 수마다 다가서는 거리·예고·원·배율이 다르다 ----
+        // ---- 109-14-14 이야기 보스 공격 차례(웹 사가만리 ⑲-14 `rot`) — 수마다 다가서는 거리·예고·원·배율이 다르다 ----
         public enum BossMove { Melee, Shadow, Spit, Slam, Tide, Halo, Rift }
         /// <summary>웹 ROT 표 × 1.85(이 판 거리) — 다가서기 · 예고 초 · 원 반지름 · 피해 배율.</summary>
         public static (float reach, float wind, float r, float mul) MoveSpec(BossMove m) => m switch

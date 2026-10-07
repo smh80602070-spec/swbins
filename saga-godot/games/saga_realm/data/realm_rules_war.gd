@@ -1,7 +1,7 @@
 class_name RealmRulesWar
 extends RealmRules
 
-## 사가국지 경영 규칙 2층 — 적 AI·전쟁·외교(화친·조공)·계략·승패 판정·정복 편입. 상속 사슬은 realm_rules.gd 머리 참고.
+## 사가천하 경영 규칙 2층 — 적 AI·전쟁·외교(화친·조공)·계략·승패 판정·정복 편입. 상속 사슬은 realm_rules.gd 머리 참고.
 
 const AI_MARCH_CHANCE := 0.20  # 재해석 — 아래 _run_enemy_ai() 머리말 참고
 const AI_TROOPS_FLOOR := 500   # attack()의 "오백은 넘겨야 군대라 하지요"와 같은 문턱

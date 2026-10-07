@@ -22,7 +22,7 @@ PREFIX = 'masterpiece, best quality, amazing quality, absurdres, scenery, no hum
 NEG = 'lowres, bad anatomy, text, letters, logo, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, frame, border'
 
 PLAN = {
-    'go': [  # 사가고 시나리오 1~9부
+    'go': [  # 사가만리 시나리오 1~9부
         ('storm_sky', '1부 먹구름', 'ominous black storm clouds gathering over a peaceful mixed-era village, shafts of light breaking through'),
         ('frost_plateau', '2부 서리봉 고원', 'frozen highland plateau with a lone stone shrine, aurora over snowy peaks, cold blue light'),
         ('scattered_wings', '3부 흩어진 날개', 'old post road across golden plains, torn feathers drifting in the wind, a distant relay station'),
@@ -36,7 +36,7 @@ PLAN = {
         ('portal_gate', '개요 · 문', 'a glowing portal gate between old timber houses and glass towers at dusk'),
         ('epilogue_dawn', '결말', 'peaceful dawn over a restored land, clear sky, birds, soft golden light'),
     ],
-    'dungeon': [  # 사가블로 1~5막 + 결말
+    'dungeon': [  # 사가나락 1~5막 + 결말
         ('act1_plain', '1막 중원의 난', 'burning plain with broken war chariots and torn banners under a smoky sunset, distant fortress'),
         ('act1_pit', '1막 굴혈 입구', 'a dark cave entrance at the foot of a cliff with iron gates and torches, ominous mist'),
         ('act2_ruincity', '2막 잿빛 폐도시', 'ruined gray modern city with collapsed towers, rusted cars and drifting ash'),
@@ -50,7 +50,7 @@ PLAN = {
         ('boss_hall', '결전', 'a vast stone throne hall with a huge glowing sigil on the floor and burning braziers'),
         ('epilogue_gate', '결말', 'the great gate opening to a calm sunrise, light pouring over the stone stairs'),
     ],
-    'forest': [  # 사가의숲 사계
+    'forest': [  # 사가마을 사계
         ('spring_postbox', '봄 옛 우체통', 'an old mossy mailbox at a forest path in spring, cherry blossoms falling, soft morning light'),
         ('spring_village', '봄 마을', 'a cozy village of thatched houses among blooming trees with a stream and a wooden bridge'),
         ('summer_guests', '여름 금으로 온 손님들', 'a summer village square with colorful stalls and golden lanterns, warm evening glow, fireflies'),
@@ -64,7 +64,7 @@ PLAN = {
         ('giant_boulders', '거인 바위 고개', 'a mountain pass blocked with enormous mossy boulders under morning mist'),
         ('year_after', '결말 · 다음 해', 'the village at dawn after the first snow melts, new green shoots everywhere'),
     ],
-    'story': [  # 사가스토리 1~4부
+    'story': [  # 사가종횡 1~4부
         ('part1_town', '1부 무명', 'a small walled town at dusk with lanterns and a road leading into dark hills'),
         ('part1_forest', '1부 숲길', 'a deep forest road with ancient trees and shafts of light'),
         ('part2_river', '2부 갈래 · 강나루', 'a river port with docked boats and lanterns at night under a full moon'),
@@ -78,7 +78,7 @@ PLAN = {
         ('ruin_capital', '옛터', 'ruins of a vast ancient capital overgrown with vines at golden hour'),
         ('epilogue_road', '결말 · 다음 부', 'a long open road toward a sunrise horizon with three trails branching'),
     ],
-    'realm': [  # 사가국지 1~6막
+    'realm': [  # 사가천하 1~6막
         ('act1_warlords', '1막 군웅', 'many camp fires of rival armies across a dusk plain with distant walled towns'),
         ('act1_palace', '1막 궁성', 'an empty palace hall with red pillars and a throne at dawn, dust in the light'),
         ('act2_great_battle', '2막 대전', 'a vast river plain with two armies\' camps facing each other under a gray sky, smoke'),

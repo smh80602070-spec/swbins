@@ -1,4 +1,4 @@
-// 사가블로 회귀(회차, PLAN §5.21): 퀘스트 시트 이야기 아래 🔁 카드·단추 → 2회차, 적 체력·공격 배율, 예외 없나
+// 사가나락 회귀(회차, PLAN §5.21): 퀘스트 시트 이야기 아래 🔁 카드·단추 → 2회차, 적 체력·공격 배율, 예외 없나
 // 사진은 `shot` 을 줄 때만(shots/dg_round_*). PC_PROF=tmp/… 새 프로필로 돌릴 것
 import { launch, sleep } from './cdp.mjs';
 const shot = process.argv.includes('shot');

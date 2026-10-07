@@ -1,4 +1,4 @@
-// 사가블로 탈것(mount.js): 마을·들판에서 말을 타면 같은 시간에 더 멀리 가나 · 학·용을 타면 소품을 떠서 넘나 · 던전에 들어가면 내리나 · 3D 예외 없나
+// 사가나락 탈것(mount.js): 마을·들판에서 말을 타면 같은 시간에 더 멀리 가나 · 학·용을 타면 소품을 떠서 넘나 · 던전에 들어가면 내리나 · 3D 예외 없나
 // 사진은 `shot` 을 줄 때만(shots/dg_mount_*). PC_PROF=tmp/… 새 프로필로 돌릴 것
 import { launch, sleep } from './cdp.mjs';
 const shot = process.argv.includes('shot');

@@ -1,6 +1,6 @@
-// 사가고 렌더 루프 측정(W-0066) — 다섯 상태에서 1초당 rAF 콜백 수·이름과 렌더 패스 수(gl.clear)를 잰다.
+// 사가만리 렌더 루프 측정(W-0066) — 다섯 상태에서 1초당 rAF 콜백 수·이름과 렌더 패스 수(gl.clear)를 잰다.
 //   node pw-go-loops.mjs        (서버: node serve.mjs C:/swbins/saga-web 8871 — 돌리는 쪽이 띄우고 끈다)
-//   사가고 전용(시트·결투·2D 끄기 훅이 사가고 것). 번들 상태라 루프 이름이 줄어 보인다(예: p).
+//   사가만리 전용(시트·결투·2D 끄기 훅이 사가만리 것). 번들 상태라 루프 이름이 줄어 보인다(예: p).
 // **기계가 한 확인**(D2 기록) — 결과는 콘솔 + results/pw-<판>-loops.json
 import fs from 'node:fs';
 import { open, sleep } from './pw.mjs';

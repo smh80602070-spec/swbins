@@ -110,7 +110,7 @@ try {
 
   /* 페이지 쪽 굽는 함수 — 한 개 굽고 webp dataURL 을 돌려준다(못 구우면 null) */
   await evalJs(`(function () {
-    /* 사가블로처럼 무거운 조립을 게임 루프의 asset3d.tick() 이 한 프레임에 하나씩 비우는 판이 있다 — 굽기 페이지엔 루프가 없으니 대신 돌린다 */
+    /* 사가나락처럼 무거운 조립을 게임 루프의 asset3d.tick() 이 한 프레임에 하나씩 비우는 판이 있다 — 굽기 페이지엔 루프가 없으니 대신 돌린다 */
     if (DG.asset3d && DG.asset3d.tick) { setInterval(function () { try { DG.asset3d.tick(); } catch (e) { /* 조립 실패는 게임 쪽 기록 */ } }, 40); }
     window.__bake = function (kind, id, w, h, quality) {
       return new Promise(function (resolve) {
@@ -256,7 +256,7 @@ try {
     await new Promise(() => {});
   }
 
-  /* ── --sprites=animals : 사가의숲 들짐승(VD.ANIMALS)의 3D 몸을 2D 지도 시트로 굽는다(2026-09-25, CHARACTER_UNIQUENESS ⑤) ──
+  /* ── --sprites=animals : 사가마을 들짐승(VD.ANIMALS)의 3D 몸을 2D 지도 시트로 굽는다(2026-09-25, CHARACTER_UNIQUENESS ⑤) ──
    * `village-view.js` `ANIMAL_SPRITE` 과 같은 모양 — 4줄(0 서기·왼쪽 / 1 서기·오른쪽 / 2 달리기·왼쪽 / 3 달리기·오른쪽) × 4컷,
    * 컷 CW×CH px. 앞(+Z)이 오른쪽(카메라가 -X 에서 +X 를 본다), 왼쪽 줄은 좌우를 뒤집는다. 발이 아래, 여덟 자세를 다 담는 한 배율.
    * 클립이 없는 정지 모델(토끼·오리)은 달리기 줄을 깡충 뛰는 높이 차로 가른다. 결과 `assets/sprites2d/animals/<종류>.png` */

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
-<title>사가블로 자가진단</title>
+<title>사가나락 자가진단</title>
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/diablo.css">
 <style>
@@ -4570,8 +4570,8 @@ window.requestAnimationFrame = function () { return 0; };
         ('방 대각선 ' + Math.round(span) + ' · 카메라 거리 ' + Math.round(a.dist));
     });
 
-    t('3D — 마을(close)에서는 같은 방 크기라도 훨씬 당겨 본다 (사가의숲 쿼터뷰만큼)', function () {
-      /* 2026-09-02 — "사가블로도 쿼터뷰가 너무 멀다"는 요청. 던전 방(close 없음)은
+    t('3D — 마을(close)에서는 같은 방 크기라도 훨씬 당겨 본다 (사가마을 쿼터뷰만큼)', function () {
+      /* 2026-09-02 — "사가나락도 쿼터뷰가 너무 멀다"는 요청. 던전 방(close 없음)은
          벽 밖이 어둠뿐이라 멀리서 담아야 하지만, 마을은 담이 없는 열린 땅이라
          가까이 당겨도 화면 밖은 그냥 덜 보일 뿐이다 — 그래서 마을에서만 훨씬
          가깝다. 던전 쪽 거리는 이 손잡이 이전과 완전히 같아야 한다(회귀 없음) */
@@ -4883,7 +4883,7 @@ window.requestAnimationFrame = function () { return 0; };
 
     t('들판 — 이웃한 조각이 같은 성격으로 뭉치지 않는다', function () {
       /* 격자 좌표용 해시를 쓰면 이웃한 입력이 이웃한 답을 준다 —
-         그러면 온 세상이 숲 한 판이 된다(사가고에서 밟은 그 함정) */
+         그러면 온 세상이 숲 한 판이 된다(사가만리에서 밟은 그 함정) */
       var s = F3.seedOf(3, 1, 'q'), same = 0, n = 0, cx, cz;
       for (cz = -5; cz <= 5; cz++) {
         for (cx = -5; cx < 5; cx++) {
@@ -5874,7 +5874,7 @@ window.requestAnimationFrame = function () { return 0; };
 
     /* ── 그래픽 통일 Phase 6 — 외곽선은 배우만 (PLAN §6.1-3, 2026-09-18) ── */
 
-    t('초상 — 펫 105종 전부 3D 로 굽힌다(신수·오마주는 사가고와 같은 대역), 펫용 코드 그림 함수는 지웠다', function () {
+    t('초상 — 펫 105종 전부 3D 로 굽힌다(신수·오마주는 사가만리와 같은 대역), 펫용 코드 그림 함수는 지웠다', function () {
       /* 2026-09-23 — PET_ASSET 표가 14종에서 안 늘어 나머지가 굽히지 않던 것을 autoPetKey 로 풀고, 신수·오마주는 대역을 입혔다 */
       /* _test.html 은 디스크 초상 목록(manifest.js)을 안 싣는다 — 굽기가 되는 조건(모든 펫에 모델 키)을 본다. 실제 굽기 210/210 은 bake-portraits 로 확인 */
       var D = DG.data, S = DG.sprite, A3 = DG.asset3d, R = A3.DEFAULTS;
@@ -6276,7 +6276,7 @@ window.requestAnimationFrame = function () { return 0; };
     });
 
     t('vroid-variant — shade: VRM 의 빛 안 받는 재질을 툰으로(이름 유지 → 색 변형이 먹는다), 얼굴에만 머리뼈 기준 얼굴 그림자', function () {
-      /* 2026-09-23 "고품질 셀 셰이딩급" — VRM(unlit → MeshBasic)이 네 판에서 명암 없이 평면으로 떴고, 사가의숲은 툰 재질에
+      /* 2026-09-23 "고품질 셀 셰이딩급" — VRM(unlit → MeshBasic)이 네 판에서 명암 없이 평면으로 떴고, 사가마을은 툰 재질에
          이름이 안 옮겨져 색 변형이 한 칸도 안 먹었다. 실제 GLB 처럼 MeshBasic + 뼈대로 조립해 잰다 */
       var V = DG.vroidVariant, TH = window.THREE, TN = DG.toon3d, C = DG.core;
       function avatar() {
@@ -6378,7 +6378,7 @@ window.requestAnimationFrame = function () { return 0; };
       V.faceFront(b, 'assets/models/people/quaternius_rpg/Ranger.glb');
       V.faceFront(c, null);
       V.faceFront(d, 'assets/models/people/anime/avatar_custom_01.glb');
-      /* 게임이 걸음각을 모델의 rotation.y 에 대입해도(사가의숲 player.group) 보정이 안 지워져야 한다 — 걸음각 1.2 를 준 뒤 정면이 (sin, cos) 를 보는가 */
+      /* 게임이 걸음각을 모델의 rotation.y 에 대입해도(사가마을 player.group) 보정이 안 지워져야 한다 — 걸음각 1.2 를 준 뒤 정면이 (sin, cos) 를 보는가 */
       a.rotation.y = 1.2; a.updateMatrixWorld(true);
       var front = mark.getWorldPosition(new TH.Vector3());
       var ok = Math.abs(front.x - Math.sin(1.2)) < 1e-6 && Math.abs(front.z - Math.cos(1.2)) < 1e-6 &&
@@ -7616,7 +7616,7 @@ window.requestAnimationFrame = function () { return 0; };
     });
 
     t('자동 📜 퀘스트 — 메인 퀘스트 쪽 문을 먼저(찾을 방 150 · 층 내려가기면 계단 120) · 끄면 옛 점수', function () {
-      /* 2026-09-28 실기 Q7 "사가블로 자동 퀘스트" */
+      /* 2026-09-28 실기 Q7 "사가나락 자동 퀘스트" */
       var A = DG.auto, q = C.save.quest || (C.save.quest = {}), keep = q.mainIdx, QD = DG.questData, i, di = -1, fi = -1;
       for (i = 0; i < QD.MAIN.length; i++) { if (di < 0 && QD.MAIN[i].req.t === 'discover') { di = i; } if (fi < 0 && QD.MAIN[i].req.t === 'floor') { fi = i; } }
       if (di < 0 || fi < 0) { return false; }
@@ -7988,7 +7988,7 @@ window.requestAnimationFrame = function () { return 0; };
         V.fxLayer(c, { t: 'ring', life: 0.5 }, 0, 0) === false && V.fxLayer(c, null, 0, 0) === false && (V.fxLayer(c, fx, 10, 10), fx.l0 === 0.6) && ('프레임 · 타격/처치만');
     });
 
-    t('원소 타격 이펙트(W-0054) — 사가블로 원소 키마다 시트가 짝지어지고(물리 제외) 그 시트는 표에 있다, 독 지속피해(dot)·물리·모르는 원소는 안 터뜨린다', function () {
+    t('원소 타격 이펙트(W-0054) — 사가나락 원소 키마다 시트가 짝지어지고(물리 제외) 그 시트는 표에 있다, 독 지속피해(dot)·물리·모르는 원소는 안 터뜨린다', function () {
       var V = DG.vfx2d, c = document.createElement('canvas').getContext('2d'), keys = DG.elemData ? DG.elemData.ELEMENTS.map(function (e) { return e.key; }) : [], bad = [];
       keys.forEach(function (k) { if (k !== 'phys' && !V.ELEM_HIT[k]) { bad.push('빠짐 ' + k); } });
       Object.keys(V.ELEM_HIT).forEach(function (k) { if (keys.indexOf(k) < 0) { bad.push('없는 원소 ' + k); } if (!V.SHEETS[V.ELEM_HIT[k]]) { bad.push('시트 ' + k); } });
@@ -8063,7 +8063,7 @@ window.requestAnimationFrame = function () { return 0; };
 
     var failCount = out.filter(function (s) { return s.indexOf('FAIL') >= 0; }).length;
     document.getElementById('report').innerHTML =
-      '<h3>사가블로 자가진단 — ' + (out.length - failCount) + '/' + out.length + ' 통과</h3>' +
+      '<h3>사가나락 자가진단 — ' + (out.length - failCount) + '/' + out.length + ' 통과</h3>' +
       out.join('<br>') +
       (errors.length ? '<br><br><b class="fail">런타임 에러</b><br>' + errors.join('<br>') : '');
     document.title = 'RESULT ' + (out.length - failCount) + '/' + out.length;

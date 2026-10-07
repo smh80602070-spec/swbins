@@ -35,7 +35,7 @@
   function VD() { return global.DG.villageData; }
 
   /* 세 시대 손님(§5.13 · SAGA-DESIGN §13) — era 는 표시·진단용(past·modern·future·myth), body 는 3D 몸
-     (제 클립 든 CC0 GLB — 없으면 사람 기본 몸). 사가고 ⑱·사가블로에서 복사해 온 Quaternius 파일 */
+     (제 클립 든 CC0 GLB — 없으면 사람 기본 몸). 사가만리 ⑱·사가나락에서 복사해 온 Quaternius 파일 */
   var M = 'assets/models/';
   var VISITORS = [
     { key: 'fox', name: '여우 화상 호연', emoji: '🦊', type: 'shop', era: 'myth',

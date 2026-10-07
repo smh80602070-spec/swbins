@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_warrok_01",
- "_note": "단계 3 괴물 비교용 — saga-unity Warrok(Mixamo) 자리 후보(사가의숲 무쇠도깨비·사가스토리 소환 거구). 게임 인물 아님(이름 없음). 두목 Brute(두 굽은 뿔·돼지 코·붉은 피부)와 안 겹치게: 정수리 외뿔·엄니·긴 팔·짧은 다리·구부정한 목·넓은 턱·잿빛 푸른 피부.",
+ "_note": "단계 3 괴물 비교용 — saga-unity Warrok(Mixamo) 자리 후보(사가마을 무쇠도깨비·사가종횡 소환 거구). 게임 인물 아님(이름 없음). 두목 Brute(두 굽은 뿔·돼지 코·붉은 피부)와 안 겹치게: 정수리 외뿔·엄니·긴 팔·짧은 다리·구부정한 목·넓은 턱·잿빛 푸른 피부.",
  "macro": {"gender": 1.0, "age": 0.55, "muscle": 1.0, "weight": 1.0, "height": 0.6, "proportions": 0.3,
            "race": {"asian": 0.4, "caucasian": 0.2, "african": 0.4}},
  "targets": {"measure-upperarm-length-incr": 1.0, "measure-lowerarm-length-incr": 1.0, "hand-scale-incr": 0.8,

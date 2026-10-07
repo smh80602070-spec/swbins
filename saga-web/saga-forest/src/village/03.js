@@ -139,7 +139,7 @@
                animals: animals, npcs: npcs, fishing: fishing,
                visitors: global.DG.visitor ? global.DG.visitor.list() : [] };
     },
-    /** 2026-09-09 — "클릭한 곳이 안 보인다"(사가블로와 같은 재신고). 화면이
+    /** 2026-09-09 — "클릭한 곳이 안 보인다"(사가나락와 같은 재신고). 화면이
      *  target 을 그릴 수 있게 읽기 전용으로 내준다. */
     moveTarget: function () { return target; }
   };

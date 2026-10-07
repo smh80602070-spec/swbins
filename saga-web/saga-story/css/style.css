@@ -1,4 +1,4 @@
-/* 사가스토리 — UI
+/* 사가종횡 — UI
    지도를 전체화면에 깔고, 그 위에 유리(glass) 패널을 띄우는 구성. */
 
 :root {
@@ -103,7 +103,7 @@ body.tilted #vignette {
 
 .tools { grid-area: tools; display: flex; gap: 7px; position: relative; }
 /* 도구 서랍 — 넓은 화면에서는 **없는 셈** 치고(display:contents) 안의 단추가
-   도구줄에 그대로 늘어선다. 좁은 화면에서만 ⋯ 뒤로 접힌다(사가고 UI와 같은 결) */
+   도구줄에 그대로 늘어선다. 좁은 화면에서만 ⋯ 뒤로 접힌다(사가만리 UI와 같은 결) */
 .tools-drawer { display: contents; }
 #btn-more { display: none; font-size: 19px; line-height: 1; padding-bottom: 4px; }
 .icon-btn {
@@ -121,7 +121,7 @@ body.tilted #vignette {
 /* <a class="icon-btn"> 도 있다(어드민 링크) — button과 달리 안 가운데로 안 몰리고 밑줄이 생긴다 */
 a.icon-btn { display: flex; align-items: center; justify-content: center; text-decoration: none; }
 
-/* 사냥 화면을 크게 보기 — #top 밖의 독립 단추라 도구줄을 감춰도 남는다(사가고 UI와
+/* 사냥 화면을 크게 보기 — #top 밖의 독립 단추라 도구줄을 감춰도 남는다(사가만리 UI와
    같은 결). 켜면 body 에 .focus 가 붙어 도구줄·독·자동 상태 띠를 지운다 —
    실제 조작(#touchpad·#hud)과 대화창(#talkbox)·쉬는 판(#camp)은 그대로 둔다 */
 #btn-focus { position: fixed; top: calc(12px + var(--safe-t)); right: 12px; z-index: 14; }
@@ -192,7 +192,7 @@ body.focus #top, body.focus #autobar, body.focus #dock { display: none !importan
 .near-meta small { display: block; font-size: 11px; color: var(--ink-dim); }
 
 /* ── 액션 독 ──────────────────────────────────────────── */
-/* 접지 않고 다 펼친다(사가고 UI와 같은 결) — 아홉 칸이라 사가고(여덟 칸)보다
+/* 접지 않고 다 펼친다(사가만리 UI와 같은 결) — 아홉 칸이라 사가만리(여덟 칸)보다
    세로로 더 길다. **사냥 화면을 가리면 안 된다** — 세로 폭이 짧아 위쪽 도구줄과
    부딪힐 자리가 생기면 넘치는 만큼 안에서 스크롤하고(잘려도 화면 위를 덮지
    않는다), 좁은 화면에서는 가로 한 줄로 눕고 옆으로 스크롤한다(아래 780px 규칙) */
@@ -441,7 +441,7 @@ small.muted { display: block; margin-top: 7px; font-size: 11px; }
   animation: pop .22s cubic-bezier(.22,1,.36,1);
   /* 도움말·등용 카드처럼 내용이 길면 #encounter가 안 막고 그대로 넘쳐
      확인/닫기 버튼이 화면 밖으로 밀려 눌리지 않았다(다섯 판 공통 결함,
-     2026-08-31 사가고·사가블로에서 발견). 세로 스크롤을 열어 준다 */
+     2026-08-31 사가만리·사가나락에서 발견). 세로 스크롤을 열어 준다 */
   max-height: calc(100vh - 36px); overflow-y: auto;
 }
 @keyframes pop { from { transform: translateY(14px) scale(.97); opacity: 0; } to { transform: none; opacity: 1; } }
@@ -531,8 +531,8 @@ small.muted { display: block; margin-top: 7px; font-size: 11px; }
   .wallet { flex-wrap: wrap; }
 }
 
-/* 독을 접지 않고 다 펼치면(사가고 UI와 같은 결) 아홉 칸이 된다 — 좁은 화면에서는
-   가로로 다 못 앉으니 옆으로 스크롤한다(사가고에서 먼저 밟은 자리).
+/* 독을 접지 않고 다 펼치면(사가만리 UI와 같은 결) 아홉 칸이 된다 — 좁은 화면에서는
+   가로로 다 못 앉으니 옆으로 스크롤한다(사가만리에서 먼저 밟은 자리).
    **가운데 조작 띠(#hud, 사냥 중 스킬 줄)를 덮으면 안 된다** — #hud 는
    `min(560px, 100vw-96px)` 로 가운데 앉으므로, 독의 너비를 그 양옆 남는
    자리(= (100vw - hud폭)/2)로 못 박아 아무리 가로로 늘어도 hud 쪽으로
@@ -559,7 +559,7 @@ small.muted { display: block; margin-top: 7px; font-size: 11px; }
   #dock button { width: 46px; height: 46px; border-radius: 15px; }
 }
 
-/* ── 폰 폭: 상단 도구를 ⋯ 뒤로 접는다 (사가고 UI와 같은 결) ───────── */
+/* ── 폰 폭: 상단 도구를 ⋯ 뒤로 접는다 (사가만리 UI와 같은 결) ───────── */
 @media (max-width: 600px) {
   #btn-more { display: inline-block; }
   .tools-drawer {
@@ -842,7 +842,7 @@ button.pc-emoji { cursor: pointer; padding: 0; }
  * CSS였다(PLAN 28절 "UI 리뉴얼" 감사 중 찾음) — saga-dungeon 템플릿에서
  * 복사해 온 뒤 이 판(메이플風 옆으로 걷기)에 맞춰 JS 쪽만 걷어내고(`ui.js`
  * 머리말 "던전 전용을 걷어낸 자리에" 참고) CSS는 안 지웠던 것. 어느 kind
- * 도 `#dg-*`·`.qcard`류 클래스를 실제로 안 쓴다(문답은 사가국지만 갖는다 —
+ * 도 `#dg-*`·`.qcard`류 클래스를 실제로 안 쓴다(문답은 사가천하만 갖는다 —
  * 루트 CLAUDE.md). 지웠다 — 이 안개 효과만 실제로 쓰인다. */
 body.tilted3 #vignette {
   background:
@@ -1006,7 +1006,7 @@ body.tilted3 #vignette {
  * 2026-09-09 — "피시에서는 마우스 클릭 버튼으로"(사용자 요청). 원래는
  * 손가락뿐인 기기에서만(hover:none · pointer:coarse) 보이게 미디어쿼리로
  * 막아 뒀는데, 그 담을 뗀다 — PC 마우스로도 그대로 눌러 걸을 수 있다
- * (숨은 존 탭 이동은 그대로 살아 있어 둘 다 쓸 수 있다, 사가블로 #dg-pad와
+ * (숨은 존 탭 이동은 그대로 살아 있어 둘 다 쓸 수 있다, 사가나락 #dg-pad와
  * 같은 결). */
 #touchpad { position: fixed; inset: 0; z-index: 11; pointer-events: none; display: none; }
 .pad-side { position: absolute; display: none; gap: 10px; pointer-events: auto; }
@@ -1043,7 +1043,7 @@ body.tilted3 #vignette {
  * 하단으로 내려 주지만 상단과 조작 띠는 손대지 않아, 폰(390px)에서 무너졌다 —
  * 프로필 이름이 한 글자씩 줄바꿈되고, 도구 여섯 중 둘이 화면 밖으로 나가고,
  * **조작 띠 여덟 칸이 독에 덮여** 아예 누를 수 없었다.
- * (사가의숲에서 같은 자리를 먼저 밟았다 — 그 커밋과 같은 결로 짰다)
+ * (사가마을에서 같은 자리를 먼저 밟았다 — 그 커밋과 같은 결로 짰다)
  */
 @media (max-width: 560px) {
   /* ── 상단 ─────────────────────────────────────────────────── */
@@ -1215,7 +1215,7 @@ body.cine::after { bottom: 0; }
 }
 
 /* ── 폰 배치 점검(tools/mobile-layout) 으로 잰 자리 ─────────────────────
-   ⛶(#btn-focus)는 #top 밖에서 오른쪽 위에 고정이라 도구줄 맨 끝(⋯·↺)을 덮어 눌리지 않았다 — 사가고처럼 자리를 비운다 */
+   ⛶(#btn-focus)는 #top 밖에서 오른쪽 위에 고정이라 도구줄 맨 끝(⋯·↺)을 덮어 눌리지 않았다 — 사가만리처럼 자리를 비운다 */
 .tools { margin-right: 50px; }
 @media (max-width: 560px) {
   .icon-btn { width: 40px; height: 40px; font-size: 15px; }

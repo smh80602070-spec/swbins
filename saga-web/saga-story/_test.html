@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
-<title>사가스토리 자가진단</title>
+<title>사가종횡 자가진단</title>
 <link rel="stylesheet" href="css/style.css">
 <!-- 원작풍 외피 — 이 한 줄을 빼면 예전 모습으로 돌아온다 (css/maple.css 머리말 참조) -->
 <link rel="stylesheet" href="css/maple.css">
@@ -2233,7 +2233,7 @@ window.DG_NO_TUNE = true;
     });
 
     t('원작풍 외피는 CSS 한 장이다', function () {
-      /* 사가블로의 css/diablo.css 와 같은 방식 — <link> 한 줄을 빼면 되돌아온다.
+      /* 사가나락의 css/diablo.css 와 같은 방식 — <link> 한 줄을 빼면 되돌아온다.
          그림 양식 토글(전통/그림책/만화)은 2026-09-11에 제거해 maple 하나로 고정했다. */
       var links = [], ls = document.querySelectorAll('link[rel="stylesheet"]'), i;
       for (i = 0; i < ls.length; i++) { links.push(ls[i].getAttribute('href')); }
@@ -2243,7 +2243,7 @@ window.DG_NO_TUNE = true;
 
     t('미니맵은 사냥터 전체를 원 안에 다 담는다', function () {
       /* 자리·축척은 **그리기와 떼어 둔** 값이라 헤드리스에서도 잴 수 있다.
-         2026-09-08 — 좌상단 사각(사가고 스타일 이전)에서 좌하단 원형(내접
+         2026-09-08 — 좌상단 사각(사가만리 스타일 이전)에서 좌하단 원형(내접
          사각형 축척)으로 바뀌어, "칸에 꽉 채운다"가 아니라 "네 귀퉁이가
          반지름 안에 다 들어온다"로 검증 방식이 같이 바뀌었다. */
       var wide = DG.sideView.miniBox(SD.stage('cave'));    // 폭 3000
@@ -2690,7 +2690,7 @@ window.DG_NO_TUNE = true;
     });
 
     t('흔들림의 세기는 화면 층이 정한다 (판정은 한 줄만 남긴다)', function () {
-      /* 사가고의 duel.js 가 판정 층과 화면 층을 가른 그 자리다. side.js 는
+      /* 사가만리의 duel.js 가 판정 층과 화면 층을 가른 그 자리다. side.js 는
          "흔들려야 한다" 만 남기고 얼마나·어떤 위상으로는 side-view.js 가 정한다.
          그래서 흔들림을 통째로 걷어도 판정은 한 자도 안 바뀐다. */
       var V = DG.sideView;
@@ -2969,7 +2969,7 @@ window.DG_NO_TUNE = true;
     t('조작 띠는 4차에서도 여덟을 넘지 않는다', function () {
       /* 4차를 더해 한 갈래가 열다섯(1차4+2차3+3차4+4차4)이 됐다 — bar() 가 윗자리부터
          채우므로 4차 넷 + 3차 넷이 이미 여덟을 정확히 채운다. 조작 띠를 더 늘리지
-         않아도 된다는 뜻이다(사가고 UI에 맞추며 화면을 안 가리기로 잡아 둔 원칙과
+         않아도 된다는 뜻이다(사가만리 UI에 맞추며 화면을 안 가리기로 잡아 둔 원칙과
          같은 결 — job.js BAR 주석 참고) */
       unlearn();
       C.save.player.level = 90;
@@ -5032,7 +5032,7 @@ window.DG_NO_TUNE = true;
     });
 
     t('vroid-variant — shade: VRM 의 빛 안 받는 재질을 툰으로(이름 유지 → 색 변형이 먹는다), 얼굴에만 머리뼈 기준 얼굴 그림자', function () {
-      /* 2026-09-23 "고품질 셀 셰이딩급" — VRM(unlit → MeshBasic)이 네 판에서 명암 없이 평면으로 떴고, 사가의숲은 툰 재질에
+      /* 2026-09-23 "고품질 셀 셰이딩급" — VRM(unlit → MeshBasic)이 네 판에서 명암 없이 평면으로 떴고, 사가마을은 툰 재질에
          이름이 안 옮겨져 색 변형이 한 칸도 안 먹었다. 실제 GLB 처럼 MeshBasic + 뼈대로 조립해 잰다 */
       var V = DG.vroidVariant, TH = window.THREE, TN = DG.toon3d, C = DG.core;
       function avatar() {
@@ -5147,7 +5147,7 @@ window.DG_NO_TUNE = true;
       V.faceFront(b, 'assets/models/people/quaternius_rpg/Ranger.glb');
       V.faceFront(c, null);
       V.faceFront(d, 'assets/models/people/anime/avatar_custom_01.glb');
-      /* 게임이 걸음각을 모델의 rotation.y 에 대입해도(사가의숲 player.group) 보정이 안 지워져야 한다 — 걸음각 1.2 를 준 뒤 정면이 (sin, cos) 를 보는가 */
+      /* 게임이 걸음각을 모델의 rotation.y 에 대입해도(사가마을 player.group) 보정이 안 지워져야 한다 — 걸음각 1.2 를 준 뒤 정면이 (sin, cos) 를 보는가 */
       a.rotation.y = 1.2; a.updateMatrixWorld(true);
       var front = mark.getWorldPosition(new TH.Vector3());
       var ok = Math.abs(front.x - Math.sin(1.2)) < 1e-6 && Math.abs(front.z - Math.cos(1.2)) < 1e-6 &&
@@ -5312,7 +5312,7 @@ window.DG_NO_TUNE = true;
       return on && others && 'anime 경로만 켜짐';
     });
 
-    t('초상 — 펫 105종 전부 3D 로 굽는다: 실제 동물은 제 모델, 신수·창작 짐승(옛 오마주)는 사가고와 같은 대역', function () {
+    t('초상 — 펫 105종 전부 3D 로 굽는다: 실제 동물은 제 모델, 신수·창작 짐승(옛 오마주)는 사가만리와 같은 대역', function () {
       /* 2026-09-23 — 예전엔 PET_MAP 9종뿐이라 나머지는 코드 그림 초상이었고, 그래서 human()/beast() 를 펫용으로 남겨 뒀다(이제 삭제) */
       var P3 = DG.portrait3d, D = DG.data, REG = DG.asset3d.REG(), S = DG.sprite;   // 이 판은 REG 가 함수
       var no = D.pets.filter(function (p) { return !P3.supports('pet', p); });
@@ -5469,7 +5469,7 @@ window.DG_NO_TUNE = true;
       return heroAnime && off && ('사람 적·보스·마을 사람 ' + seeds.length + ' · 몸 ' + Object.keys(used).length + ' 모두 다름 · 도감 인물은 VRoid');
     });
 
-    t('세 시대 적(§5-12) — 2D 도 제 몸 시트(사가블로에서 구운 같은 GLB) · 옛 적은 늑대·코끼리·멧돼지 그대로', function () {
+    t('세 시대 적(§5-12) — 2D 도 제 몸 시트(사가나락에서 구운 같은 GLB) · 옛 적은 늑대·코끼리·멧돼지 그대로', function () {
       var SD = DG.sideData, SP = DG.sprite, ED = DG.enemyData, miss = [], keys = {};
       SD.ERA_ENEMIES.forEach(function (e) { var k = SP.monKeyOf(e); if (!k || k.indexOf('beast') === 0) { miss.push(e.name); } else { keys[k] = 1; } });
       var oldOk = ED.enemies.every(function (e) { var k = SP.monKeyOf(e); return !k || k.indexOf('beast') === 0; });
@@ -5915,7 +5915,7 @@ window.DG_NO_TUNE = true;
 
     var failCount = out.filter(function (s) { return s.indexOf('FAIL') >= 0; }).length;
     document.getElementById('report').innerHTML =
-      '<h3>사가스토리 자가진단 — ' + (out.length - failCount) + '/' + out.length + ' 통과</h3>' +
+      '<h3>사가종횡 자가진단 — ' + (out.length - failCount) + '/' + out.length + ' 통과</h3>' +
       out.join('<br>') +
       (errors.length ? '<br><br><b class="fail">런타임 에러</b><br>' + errors.join('<br>') : '');
     document.title = 'RESULT ' + (out.length - failCount) + '/' + out.length;

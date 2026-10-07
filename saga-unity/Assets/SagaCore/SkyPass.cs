@@ -8,8 +8,8 @@ namespace Saga.Core
     /// <summary>
     /// U-0041 — 야외 씬이 켜지면 컴퓨터 시계 시각에 맞춰 K-0034 하늘 파노라마를 입히고(카메라 배경이 단색이던 것을 하늘로),
     /// 씬의 주 조명(방향성·그림자 있는 "Sun"/"Light")을 하늘 속 해(밤엔 달) 자리(`sky_markers.json`, K-0067)로 돌린다. 씬 파일은 안 고친다(메모리만).
-    /// 씬마다 방식(<see cref="ModeFor"/>): 사가고 마을(`TestVillage`)·사가의숲(`TestVillageForest`)·사가스토리(`TestField`) = 하늘+조명 /
-    /// 사가국지 도시(`TestCity`, 위에서 내려다보는 전략 화면이라 하늘이 안 보임) = 조명만 / 던전(실내)·그 밖 = 안 건드림.
+    /// 씬마다 방식(<see cref="ModeFor"/>): 사가만리 마을(`TestVillage`)·사가마을(`TestVillageForest`)·사가종횡(`TestField`) = 하늘+조명 /
+    /// 사가천하 도시(`TestCity`, 위에서 내려다보는 전략 화면이라 하늘이 안 보임) = 조명만 / 던전(실내)·그 밖 = 안 건드림.
     /// 끄기: 환경변수 `SAGA_NO_SKY=1`(전부) · `SAGA_NO_SKYLIGHT=1`(조명만). 배치 모드(헤드리스 진단)는 기본 꺼짐(켜려면 `SAGA_SKY=1`).
     /// 시각이 바뀌면(다음 시간대) 한 번 더 바꾼다. 시대는 현재(`present`) 고정 — 지역별 시대 연결은 후속.
     /// 해가 지평선에 너무 낮으면 조명 고도를 <see cref="MinPitch"/>° 로 끌어올린다(그림자가 끝없이 길어지지 않게). 방위·`RimLight`·앰비언트는 안 건드린다.
@@ -29,11 +29,11 @@ namespace Saga.Core
         {
             switch (sceneName)
             {
-                case "TestVillage":        // 사가고
-                case "TestVillageForest":  // 사가의숲
-                case "TestField":          // 사가스토리
+                case "TestVillage":        // 사가만리
+                case "TestVillageForest":  // 사가마을
+                case "TestField":          // 사가종횡
                     return Mode.SkyAndLight;
-                case "TestCity":           // 사가국지(전략 화면 — 하늘 안 보임)
+                case "TestCity":           // 사가천하(전략 화면 — 하늘 안 보임)
                     return Mode.LightOnly;
                 default:
                     return Mode.None;

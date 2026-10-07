@@ -5,7 +5,7 @@ namespace Saga.Forest.Data
     public enum ForestEra { Past, Modern, Future }
 
     /// <summary>
-    /// PLAN.md 109-4 "FOREST 세 시대"(SAGA-DESIGN §13 전체 퓨전 · 웹 사가의숲 §5.13 세 시대 손님 재해석) —
+    /// PLAN.md 109-4 "FOREST 세 시대"(SAGA-DESIGN §13 전체 퓨전 · 웹 사가마을 §5.13 세 시대 손님 재해석) —
     /// ① 존 소품·명소 곁에 현대·미래 조각(표는 `ForestZoneProps` — 조각마다 <see cref="ForestEra"/>),
     /// ② 마을에 시대 섞인 사람 여섯(과거·현대·미래 둘씩, 이 표).
     /// 웹 판 손님은 날짜 해시로 하루 한 명·부탁·단골까지 있지만(§5.9·5.10) 그건 PLAN 109 C 줄 12 몫이라,

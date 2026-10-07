@@ -4,8 +4,8 @@
 import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
 
-const SCENES = [['saga-go', 'map', 'W-0019·0022 사가고 2D 캔버스 판(역참·집·인물)'], ['saga-forest', 'village', 'W-0019 사가의숲 2D 마을'], ['saga-dungeon', 'town', 'W-0024·0045 사가블로 2D 마을(건물)'],
-  ['saga-story', 'field', 'W-0019 사가스토리 2D 사냥터'], ['saga-realm', 'map', 'W-0023 사가국지 2D 지도(지형 바닥·성 그림)']];
+const SCENES = [['saga-go', 'map', 'W-0019·0022 사가만리 2D 캔버스 판(역참·집·인물)'], ['saga-forest', 'village', 'W-0019 사가마을 2D 마을'], ['saga-dungeon', 'town', 'W-0024·0045 사가나락 2D 마을(건물)'],
+  ['saga-story', 'field', 'W-0019 사가종횡 2D 사냥터'], ['saga-realm', 'map', 'W-0023 사가천하 2D 지도(지형 바닥·성 그림)']];
 fs.mkdirSync('shots', { recursive: true });
 const rows = [];
 for (const [game, scene, label] of SCENES) {

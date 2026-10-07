@@ -199,7 +199,7 @@
   function settle(node) {
     if (!node || !node.userData || !node.userData.mixer) { return; }
     /* 2026-09-23 — VRoid 자체 몸짓(`anim-own`) 길은 `clips` 없이 `actions`·`clipMap` 만 싣는다. 여기가 `clips` 만 봐서
-       초상이 전부 **T자세**로 구워졌다(스크린샷). 사가스토리·사가의숲 settle 과 같은 길을 먼저 탄다 */
+       초상이 전부 **T자세**로 구워졌다(스크린샷). 사가종횡·사가마을 settle 과 같은 길을 먼저 탄다 */
     var U = node.userData;
     if (U.actions) {
       var cm = U.clipMap || {}, nm = cm.idle || cm.walk || Object.keys(U.actions)[0], act = nm && U.actions[nm];
@@ -268,7 +268,7 @@
 
   /**
    * 굽는 줄 — **한 번에 하나씩만** 굽는다. 여러 인물을 한꺼번에 부르면
-   * WebGL 렌더 여러 개가 겹친다 — 2026-09-02, 다른 판(사가블로·사가의숲)에서
+   * WebGL 렌더 여러 개가 겹친다 — 2026-09-02, 다른 판(사가나락·사가마을)에서
    * 필드를 걷거나 전투할 때 끊긴다는 신고를 받고 줄을 세웠다. 실패도
    * `cache[key] = false` 로 **한 번만** 적어 두고 다시 시도하지 않는다 —
    * 안 그러면 실패하는 인물 하나가 화면이 떠 있는 내내 계속 다시 구우려

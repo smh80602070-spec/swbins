@@ -8,7 +8,7 @@
  * 이 판의 `asset3d.buildHero(seed, heightPx, tintHex, cb)` 는 **콜백 방식**
  * 이다 — GLB 가 오면 한 번 `cb(model|null)` 을 부르고 끝이라 폴링이
  * 필요 없다. `heightPx` 에 1 을 줘 **키 1 로 눕힌 모델**을 받는다(지도 위
- * 배우는 픽셀 키를 쓰지만, 초상은 saga-go·사가블로·사가의숲과 같은 카메라
+ * 배우는 픽셀 키를 쓰지만, 초상은 saga-go·사가나락·사가마을과 같은 카메라
  * 계산을 쓰려고 여기서만 단위를 맞춘다).
  *
  *   of(kind, ref, w, h)    다 구웠으면 dataURL, 아니면 null (동기)
@@ -67,7 +67,7 @@
    *  CC0 모델이 없다(다섯 판 통틀어 있는 개는 셰퍼드형 셋(늑대·시바·허스키)
    *  뿐, 소형견 없음) — 억지로 셋 중 하나를 물리면 오히려 "발바리인데
    *  중형견 몸"으로 더 어긋나 보이므로, 2D 그림 그대로 둔다. */
-  /* 2026-09-23 — 실제 동물 펫 전부로 넓힘(asset3d `critter:*`, 사가블로 모델 복사). 신수·창작 짐승(옛 오마주)는 여전히 없다 */
+  /* 2026-09-23 — 실제 동물 펫 전부로 넓힘(asset3d `critter:*`, 사가나락 모델 복사). 신수·창작 짐승(옛 오마주)는 여전히 없다 */
   var PET_MAP = {
     pt_alpaca: 'critter:alpaca', pt_anglerfish: 'critter:anglerfish', pt_apatosaurus: 'critter:apatosaurus',
     pt_armored_catfish: 'critter:armored_catfish', pt_bear: 'critter:bear', pt_betta: 'critter:betta',
@@ -124,7 +124,7 @@
     var c = global.DG && global.DG.core;
     return c && c.tuned ? (c.tuned('portrait3d.bust', 1) ? true : false) : true;
   }
-  /* 펫(네발짐승)은 몸통이 옆으로 길어 더 물러나 낮은 곳을 옆모습에 가깝게 본다 — 사가고·사가블로·사가의숲 camPlan 과 같은 값(폭만 조금 넓게).
+  /* 펫(네발짐승)은 몸통이 옆으로 길어 더 물러나 낮은 곳을 옆모습에 가깝게 본다 — 사가만리·사가나락·사가마을 camPlan 과 같은 값(폭만 조금 넓게).
      2026-09-23 전엔 이 판만 펫 구도가 없어 사람 구도로 구워 소 초상 여섯 장이 몸통 한가운데만 크게 찍혀 있었다(스크린샷) */
   function camPlan(w, h, kind) {
     var isPet = kind === 'pet';
@@ -338,7 +338,7 @@
 
     camera.fov = plan.fov;
     camera.aspect = plan.aspect;
-    camera.far = Math.max(40, plan.dist * 3);   // 긴 몸(공룡·고래)은 petFrame 이 멀리 물러나 고정 far 를 넘어 빈 카드가 된다(사가블로에서 겪음)
+    camera.far = Math.max(40, plan.dist * 3);   // 긴 몸(공룡·고래)은 petFrame 이 멀리 물러나 고정 far 를 넘어 빈 카드가 된다(사가나락에서 겪음)
     var cx = plan.cx || 0, cz = plan.cz || 0;
     camera.position.set(cx, plan.look + plan.dist * Math.sin(plan.pitch), cz + plan.dist);
     camera.lookAt(cx, plan.look, cz);

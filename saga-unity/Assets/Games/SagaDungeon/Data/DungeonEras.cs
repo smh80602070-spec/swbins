@@ -5,7 +5,7 @@ namespace Saga.Dungeon.Data
     public enum DungeonEra { Past, Modern, Future }
 
     /// <summary>
-    /// PLAN.md 109-2 "DUNGEON 세 시대"(웹 사가블로 §5.20 · SAGA-DESIGN §13 전체 퓨전) — 5.7 기계화 정찰병(정예 한 종)을 넓힌다.
+    /// PLAN.md 109-2 "DUNGEON 세 시대"(웹 사가나락 §5.20 · SAGA-DESIGN §13 전체 퓨전) — 5.7 기계화 정찰병(정예 한 종)을 넓힌다.
     /// 잡졸: 절차 층 전투 방 잡졸 넷 중 약 40% 를 층 단계의 현대·미래 적으로(해시 — 층 난수 `_rng` 수열은 안 민다).
     /// 정예·살수·두목·층 주인·호위·명소 층 잡졸은 그대로. 몸은 저마다 다르고 이 판의 다른 적·보스 몸과 안 겹친다.
     /// 마을 손님: 마을 셋·갈림길에 현대·미래 사람 한 명씩(대사 넷 돌림, 볼일 없음). 행상: 같은 해시로 몸만 현대·미래.
@@ -132,7 +132,7 @@ namespace Saga.Dungeon.Data
                 } },
         };
 
-        // ---- 곁가지 side_visitors(웹 사가블로 town.js ERA_FOLK story) — 손님 셋의 사연 ----
+        // ---- 곁가지 side_visitors(웹 사가나락 town.js ERA_FOLK story) — 손님 셋의 사연 ----
         /// <summary>마을 시대 손님이 다가설 때마다 사연 네 토막을 차례로, 끝 토막에 금 한 번(웹 FOLK_STORY_GOLD). 다 들었으면 예전 대사로.</summary>
         public const int StoryGold = 5000;
         public const int StoryLength = 4;

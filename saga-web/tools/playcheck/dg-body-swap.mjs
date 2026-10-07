@@ -1,4 +1,4 @@
-// 사가블로 Q8 — "던전에 들어가면 캐릭터가 바뀜": 본영(마을)과 던전에서 내 캐릭터 몸(GLB)·크기를 재고 찍는다
+// 사가나락 Q8 — "던전에 들어가면 캐릭터가 바뀜": 본영(마을)과 던전에서 내 캐릭터 몸(GLB)·크기를 재고 찍는다
 import { launch, sleep } from './cdp.mjs';
 const B = 'http://127.0.0.1:8871/saga-dungeon/';
 const c = await launch(1280, 720);

@@ -1,4 +1,4 @@
-// 사가의숲 확인 시트(tasks/sheets/saga-forest-*.md) 여섯 항목을 Playwright 로 직접 해 본다.
+// 사가마을 확인 시트(tasks/sheets/saga-forest-*.md) 여섯 항목을 Playwright 로 직접 해 본다.
 //   node pw-fs-sheet.mjs [shot]        (서버: node serve.mjs C:/swbins/saga-web 8871 — 돌리는 쪽이 띄우고 끈다)
 // 어드민 프리셋은 시트와 같이 _admin.html 에서 단추를 눌러 적용하고 index.html 을 다시 연다. 새 컨텍스트 = 새 프로필.
 // 이건 **기계가 한 확인**(D2 기록)이다 — 사람 눈으로 보는 D3(○/×)를 대신하지 않는다. 결과는 콘솔에만.
@@ -164,7 +164,7 @@ try {
   check('침선방 — 다른 옷을 입으면 입은 옷이 바뀐다', !!sw && sw.to !== sw.from, JSON.stringify(sw).slice(0, 110));
 
   /* 7) 2D 모드 시트(W-0019) — 3D 마을을 끄면 구면 투영 2D 그림에서 주민·방문객·나가 새 시트로 그려진다 */
-  /* W-0090: 사람은 이제 VRoid 풀(characters2d·characters2d8)이고 옛 풀은 한 장 모드라 mode2d.loaded 캐시를 안 거친다 — 3D 를 끈 뒤 받는 인물 시트 응답을 센다(사가고 W-0087 과 같은 고침) */
+  /* W-0090: 사람은 이제 VRoid 풀(characters2d·characters2d8)이고 옛 풀은 한 장 모드라 mode2d.loaded 캐시를 안 거친다 — 3D 를 끈 뒤 받는 인물 시트 응답을 센다(사가만리 W-0087 과 같은 고침) */
   const sheets2d = { ok: 0, bad: 0, sample: '' };
   page.on('response', (res) => { const u = res.url(); if (/\/characters2d8?\//.test(u)) { if (res.status() < 400) { sheets2d.ok++; sheets2d.sample = sheets2d.sample || u.split('/').slice(-3).join('/'); } else { sheets2d.bad++; } } });
   await boot(true);

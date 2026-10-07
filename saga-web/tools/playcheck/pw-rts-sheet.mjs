@@ -1,4 +1,4 @@
-// 사가국지 RTS 기계 확인(W-0069) — 건설·생산·콘솔 배치·우클릭 이동·A+클릭·안개·적 AI 출정을 실제 화면·입력으로 해 본다.
+// 사가천하 RTS 기계 확인(W-0069) — 건설·생산·콘솔 배치·우클릭 이동·A+클릭·안개·적 AI 출정을 실제 화면·입력으로 해 본다.
 //   node pw-rts-sheet.mjs        (서버: node serve.mjs C:/swbins/saga-web 8871 — 돌리는 쪽이 띄우고 끈다)
 // **기계가 한 확인**(D2 기록)이다 — "스타크래프트 같은가·재미있나"는 사람 눈(D3). 결과는 콘솔 + results/pw-rts-sheet.json
 import fs from 'node:fs';

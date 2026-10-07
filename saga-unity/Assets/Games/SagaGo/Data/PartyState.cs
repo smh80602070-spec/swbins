@@ -55,7 +55,7 @@ namespace Saga.Go.Data
             PowerChanged?.Invoke(Atk, Def);
         }
 
-        // ---- PLAN.md 109-14-15 편성(웹 사가고 ⑲-15 `formation.js`) — 들판 명단 = 주인공 + 동행 순서의 뒤 셋(가장 뒤 = 둘째 자리).
+        // ---- PLAN.md 109-14-15 편성(웹 사가만리 ⑲-15 `formation.js`) — 들판 명단 = 주인공 + 동행 순서의 뒤 셋(가장 뒤 = 둘째 자리).
         // 순서가 곧 편성이라 세이브 칸이 새로 없다(`partyMembers` 순서 그대로). 등용하면 맨 뒤 = 들판에 바로 선다(예전과 같다).
         public const int FieldSlots = 3;
 
@@ -100,7 +100,7 @@ namespace Saga.Go.Data
 
         public static bool Has(string id) => Members.Contains(id);
 
-        // ---- PLAN.md 109-14-18 편성 여러 벌(웹 사가고 ⑲-18 `formation.js` presets) — 칸 넷, 칸마다 들판 셋 순서.
+        // ---- PLAN.md 109-14-18 편성 여러 벌(웹 사가만리 ⑲-18 `formation.js` presets) — 칸 넷, 칸마다 들판 셋 순서.
         // 지금 들판(FieldIds)이 늘 정본 — 지금 칸은 읽을 때마다 지금 들판으로 적힌다(넣기·빼기·앞 자리로·합류 어디서 바뀌든).
         // 이 트랙은 동행 전부가 명단이라 "비운 들판"이 없다 — 빈 칸을 고르면 지금 들판을 그대로 베껴 시작한다(웹은 나 혼자).
         public const int Presets = 4;

@@ -1,4 +1,4 @@
-// 사가블로 확인 닫기 ①(W-0089) — 장비·세공/주옥·단약/행상·투장·무예 트리·원소 저항·던전 층·설정을 실제 판에서 한 번씩 해 본다.
+// 사가나락 확인 닫기 ①(W-0089) — 장비·세공/주옥·단약/행상·투장·무예 트리·원소 저항·던전 층·설정을 실제 판에서 한 번씩 해 본다.
 //   node pw-dg-close1.mjs        (서버: node serve.mjs C:/swbins/saga-web 8871 — 돌리는 쪽이 띄우고 끈다)
 // 준비는 pw-dg-sheet 와 같다(새 계정 → 어드민 프리셋 「⚔️ 명품 한 벌 갖춘 판」 → 다시 들어감, 마을에서 시작).
 // 화면 단추(data-act — saga-dungeon/js/ui.js 에서 찾음): 장비 시트 `gear-sel`·`gear-equip` · 행상 `vendor-potion` · 무예 `skill-hero`·`skill-learn`

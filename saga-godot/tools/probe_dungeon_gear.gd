@@ -1,6 +1,6 @@
 extends SceneTree
 
-## 사가블로 장비 데이터 층(games/saga_dungeon/data/dungeon_items.gd — 등급·접사·소켓·룬·부문어·세트·내구·값·원소) 자동 점검 — 화면 없는 순수 표·굴림 규칙. 씨앗 고정(20260824).
+## 사가나락 장비 데이터 층(games/saga_dungeon/data/dungeon_items.gd — 등급·접사·소켓·룬·부문어·세트·내구·값·원소) 자동 점검 — 화면 없는 순수 표·굴림 규칙. 씨앗 고정(20260824).
 ##   godot --headless --path saga-godot --script res://tools/probe_dungeon_gear.gd
 ## ① 표: 등급 5(가중치 내림·배수 오름·접사 수=번호)·접사 14(키 유일·lo<hi)·밑감(키 유일·부위별 개수 무기 12·갑주 5·투구 3·장갑 2·신발 2·반지 2·목걸이 2·부적 5)
 ## ② roll: 3000번 굴려 접사 수=등급·접사 겹침 없음·소켓 수≤부위 최대·내구=dur_max_of·미확인=등급 1 이상·세트는 보물만·부위 지정 존중·forced_tier

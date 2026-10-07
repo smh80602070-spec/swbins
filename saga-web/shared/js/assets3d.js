@@ -38,7 +38,7 @@
   function probe() {
     if (state !== 'init') { return; }
     /* W-0074 — 동기 한 번으로 정한다. 비동기로 두면 시험이 끝나기 전에 세운 사람(부팅 직후 주민·주인공)이 url() null 을 받아
-       옛 몸(VRoid 샘플·QRPG·mpfb)으로 서 버리고 다시 안 바뀌었다(사가의숲 주민·주인공에서 확인). 작은 출처 파일 하나·부팅 때 한 번뿐 */
+       옛 몸(VRoid 샘플·QRPG·mpfb)으로 서 버리고 다시 안 바뀌었다(사가마을 주민·주인공에서 확인). 작은 출처 파일 하나·부팅 때 한 번뿐 */
     if (global.XMLHttpRequest) {
       var sl = bases(), si;
       for (si = 0; si < sl.length; si++) {
@@ -67,14 +67,14 @@
   }
 
   /**
-   * 판별 소품 표(`DG.cfg.assets3d.prop` = { 소품이름: [world3d id…] })를 사가고 `prop3d` 의 등록 표에 얹는다 — 있는 자리만 바꾼다
+   * 판별 소품 표(`DG.cfg.assets3d.prop` = { 소품이름: [world3d id…] })를 사가만리 `prop3d` 의 등록 표에 얹는다 — 있는 자리만 바꾼다
    * (집·등롱·우물…). 시험이 ok 일 때만, 표에 있는 id 가 실제 GLB 일 때만. 안 되면 옛 표 그대로. 얹은 뒤 미리 받기를 한 번 더 부른다.
    */
   function applyProps() {
     return applyProp3d() + applyReg();
   }
 
-  /** 판별 배우·소품 표(`DG.cfg.assets3d.reg` = { asset3d 키: [world3d id…] })를 `asset3d.register` 로 얹는다(사가블로 — 키마다 한 줄 표). 같은 규칙: 되는 id 만 */
+  /** 판별 배우·소품 표(`DG.cfg.assets3d.reg` = { asset3d 키: [world3d id…] })를 `asset3d.register` 로 얹는다(사가나락 — 키마다 한 줄 표). 같은 규칙: 되는 id 만 */
   function applyReg() {
     var A3 = global.DG && global.DG.asset3d, t = cfg().reg, key, list, i, urls, n = 0;
     if (!A3 || !A3.register || !t || !tunedOn()) { return 0; }
@@ -125,7 +125,7 @@
     var id = refId(ref), u = url('hero', id);
     return u ? { key: 'uni:' + id, body: u } : null;
   }
-  /** 씨앗 → 인물 id. 사가블로는 'hero:<id>'·동료는 'ally:<id>' 문자열 씨앗을 준다(동료도 제 몸을 입게 — W-0074) */
+  /** 씨앗 → 인물 id. 사가나락는 'hero:<id>'·동료는 'ally:<id>' 문자열 씨앗을 준다(동료도 제 몸을 입게 — W-0074) */
   function refId(ref) { return ref && typeof ref === 'object' ? ref.id : String(ref || '').replace(/^(hero|ally):/, ''); }
 
   /**
@@ -133,10 +133,10 @@
    * 옛 몸(VRoid 샘플 넷·Quaternius·OGA·poly.pizza)을 대신한다. 설정 `DG.cfg.assets3d.borrow` 가 있는 판만 켜진다:
    *   named: [씨앗…]  이름 있는 사람 — 이 순서대로 서로 다른 몸을 하나씩(겹치지 않는다)
    *   skip:  [씨앗…]  빌리지 않는다(현대·미래 옷이 곧 그 사람인 경우 — 맞는 새 몸이 아직 없다)
-   *   skipEra: [ref.era…]  같은 뜻을 시대로(사가고 땅 사람 folk_modern·folk_future)
+   *   skipEra: [ref.era…]  같은 뜻을 시대로(사가만리 땅 사람 folk_modern·folk_future)
    *   same:  {씨앗: 씨앗}  같은 사람(가면 벗은 참이름 등)은 같은 몸
    *   exclude: [id…]  풀에서 더 뺄 몸(도감 105 는 늘 빠진다)
-   *   pool: 'all'  도감 몸도 빌린다(사가국지 — 판 인물이 299 전부라 안 겹치는 몸이 없다. 얼굴이 장수와 겹친다)
+   *   pool: 'all'  도감 몸도 빌린다(사가천하 — 판 인물이 299 전부라 안 겹치는 몸이 없다. 얼굴이 장수와 겹친다)
    * 나머지(절차 인물·이름 없는 적)는 named 가 안 쓴 몸에서 씨앗 해시로 고른다. 손잡이 `assets3d.borrow` 0 이면 늘 null.
    */
   var borrowed = null;   // { named: {씨앗: 몸id}, rest: [몸id…] }

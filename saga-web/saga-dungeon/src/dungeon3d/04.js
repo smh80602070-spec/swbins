@@ -521,7 +521,7 @@
     }
     lastFxMs = nowMs() - fxT0;
 
-    /* 후처리를 거치거나(있고 켜져 있을 때) 곧바로 그린다 — 사가고 `world3d.js`
+    /* 후처리를 거치거나(있고 켜져 있을 때) 곧바로 그린다 — 사가만리 `world3d.js`
        의 `present()` 와 같은 꼴이다. **두 길 다 톤매핑은 한 번 걸린다**
        (`post3d.js` 머리 참고) */
     var presentT0 = nowMs();
@@ -627,7 +627,7 @@
      *  체크하고(sweep()) 다시 안 지어지므로(장비 갈아입어도 같다, 알려진
      *  한계), 스타일/색을 고른 직후에만 이걸로 명시적으로 다시 짓는다. */
     refreshMe: function () { delete actors['me']; },
-    /** 재기 — 지금 내 배우의 몸 파일·상태(사가블로 Q8 "던전에 들어가면 캐릭터가 바뀜") */
+    /** 재기 — 지금 내 배우의 몸 파일·상태(사가나락 Q8 "던전에 들어가면 캐릭터가 바뀜") */
     meBody: function () { var a = actors['me'], m = a && a.node && a.node.userData.mixerNode; return m ? { body: m.userData.body, state: m.userData.assetState, seed: meRenderParams().seed } : null; },
     /** §56 가림 페이드 — 실측용(init() 뒤에만 의미 있다) */
     _occCounts: function () { return { fade: Object.keys(occFade).length, inst: Object.keys(occInst).length }; }

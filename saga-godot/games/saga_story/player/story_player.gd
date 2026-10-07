@@ -2,7 +2,7 @@ extends StorySkillsMage
 
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 
-## 사가스토리 플레이어 코어 — 이동·피해·상태·_physics_process. 상태 변수는 story_player_base.gd, 무예 `_cast_*` 는 story_skills_*.gd (상속 사슬, G-0007).
+## 사가종횡 플레이어 코어 — 이동·피해·상태·_physics_process. 상태 변수는 story_player_base.gd, 무예 `_cast_*` 는 story_skills_*.gd (상속 사슬, G-0007).
 
 ## side.js hurtMe()의 gear.cut(power().def) 그대로 — 방어구 def 합으로
 ## 받는 피해를 줄인다(story_combat.gd damage_cut() 참고). 철갑(iron)이

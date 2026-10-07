@@ -104,7 +104,7 @@ Outfits - Fantasy)·몸짓(Universal Animation Library)이 뼈 이름·순서까
 
 장수 3D 초상(`js/portrait3d.js`)은 QRPG 맨몸(전사·궁수·도적·성직자·마법사·수도승
 6종)뿐이었다 — 캔버스 초상(`js/sprite.js`의 `LOOK`·`ruleLook()`)은 장수마다
-무기·투구를 갖춰 그리는데 3D 는 오히려 밋밋했다. **새로 받지 않고 사가블로가
+무기·투구를 갖춰 그리는데 3D 는 오히려 밋밋했다. **새로 받지 않고 사가나락가
 이미 갖춘 CC0/CC-BY 무기·장구를 그대로 복사해 왔다** — 출처·라이선스는
 `saga-dungeon/assets/ASSET_LICENSES.md`(무기·"몬스터 장구를 실사화" 절)가
 원본이고, 여기는 파일만 옮겼다.
@@ -122,7 +122,7 @@ Outfits - Fantasy)·몸짓(Universal Animation Library)이 뼈 이름·순서까
 
 `js/asset3d.js`의 `attachAccessories()`가 `sprite.lookOf()`의 무기·투구 값을
 그대로 읽어 붙인다 — halberd·guandao 는 spear, fan 은 brush, plume 투구는
-helmet 을 대신 쓴다(사가블로 `dungeon3d.js`의 재사용 판단을 그대로 옮김).
+helmet 을 대신 쓴다(사가나락 `dungeon3d.js`의 재사용 판단을 그대로 옮김).
 scholar·gat·hairpin·monk·braid 투구는 대응 CC0가 없어 맨머리로 남는다 —
 "안 맞아도 실제 모델이 도형(빈 자리)보다 낫다"는 사용자 지시에 따라, 무기
 여덟 종은 걸고 나머지 다섯 투구 종만 열린 자리로 둔다.
@@ -289,20 +289,20 @@ VRoid Studio 공식 CC0 샘플 AvatarSample_A/B/C(github.com/madjin/vrm-samples,
 표정 모프 타깃(54~57개)을 떼고 같은 재질 프리미티브를 합쳤다(정점·뼈·재질·텍스처는 그대로, 용량 25MB → 11MB,
 캐릭터당 드로우콜 90~135 → 14~19). 다섯 판 복사본은 같은 파일(md5 동일)이다.
 
-## 시간 틈 사람 아홉 — 사가고에서 복사 + 사이버펑크 주인공 (2026-09-24, `models/people/folk/`, PLAN §5-12)
+## 시간 틈 사람 아홉 — 사가만리에서 복사 + 사이버펑크 주인공 (2026-09-24, `models/people/folk/`, PLAN §5-12)
 
-Quaternius CC0 1.0. 여덟(m_SWAT·m_Worker·m_BusinessMan·w_Suit·m_Hoodie·w_SciFi·s_Astronaut1·s_Astronaut2)은 사가고
-`assets/models/people/folk/` 복사(원래 사가블로가 poly.pizza "Ultimate Modular Men/Women Pack"·"Ultimate Space Kit" 에서 받은 것,
-이미 Meshopt) — 경위는 사가고 `assets/ASSET_LICENSES.md` "Quaternius — 세 시대 사람·적" 절. `f_Cyber.glb` 는 미러
+Quaternius CC0 1.0. 여덟(m_SWAT·m_Worker·m_BusinessMan·w_Suit·m_Hoodie·w_SciFi·s_Astronaut1·s_Astronaut2)은 사가만리
+`assets/models/people/folk/` 복사(원래 사가나락가 poly.pizza "Ultimate Modular Men/Women Pack"·"Ultimate Space Kit" 에서 받은 것,
+이미 Meshopt) — 경위는 사가만리 `assets/ASSET_LICENSES.md` "Quaternius — 세 시대 사람·적" 절. `f_Cyber.glb` 는 미러
 <https://github.com/trebeljahr/quaternius-showcase> `public/glb/cyberpunk_pack/Character.glb` 를 `tools/glb-compress` 로 Meshopt(850KB → 247KB).
 전부 제 클립(걷기·대기·공격·죽음) 내장. `data-force.js` `TIME_OFFICERS` 의 `body` 가 가리킨다.
 
 ## 병사 두 벌 — 원정군·전투 무리 (2026-09-25, `models/troops/`, CHARACTER_UNIQUENESS ⑤)
 
-Quaternius CC0 1.0, 사가블로에서 md5 그대로 복사(이미 Meshopt). `Knight_Male.glb` = "Ultimate Animated Character Pack"
-(opengameart.org/content/animated-characters-pack, 경위는 사가블로 `assets/ASSET_LICENSES.md` "캐릭터 13차분") —
+Quaternius CC0 1.0, 사가나락에서 md5 그대로 복사(이미 Meshopt). `Knight_Male.glb` = "Ultimate Animated Character Pack"
+(opengameart.org/content/animated-characters-pack, 경위는 사가나락 `assets/ASSET_LICENSES.md` "캐릭터 13차분") —
 클립 11개(`CharacterArmature|Idle·Walk·Punch·RecieveHit·Defeat·SitDown`…). `Horse_Farm.glb` = poly.pizza "Farm Animal Pack"
-(사가블로 `animals_extra/`, 같은 파일 절) — 클립 `Armature|Idle·Walk·Run·Death`. `js/asset3d.js` `buildTrooper` 가 부른다
+(사가나락 `animals_extra/`, 같은 파일 절) — 클립 `Armature|Idle·Walk·Run·Death`. `js/asset3d.js` `buildTrooper` 가 부른다
 (보병 = 기사, 기병 = 짐말 위 기사). 창은 이미 있던 `weapons/spear.glb`.
 
 ## AI 생성 도감 초상 (2026-09-29)
@@ -311,7 +311,7 @@ Quaternius CC0 1.0, 사가블로에서 md5 그대로 복사(이미 Meshopt). `Kn
 | **파일** | `assets/portraits/hero/<id>_s.webp`(192×192)·`<id>_c.webp`(300×344) — 도감 105 인물 |
 | **만든 법** | swbins3 로컬 sd-webui + **Animagine XL 4.0 Opt**(CreativeML OpenRAIL++-M, 상업 사용 허용) — `tools/ai-art/gen.py` → `pack_web_portraits.py` |
 | **프롬프트** | 인물 이름 없이 문화·역할·성별·나이·머리·눈 묘사만 — `tools/ai-art/batches/web_heroes_105.json` |
-| **장수 194 초상** | 사가국지에만 있는 장수 194 명의 초상(`assets/portraits/hero/<id>_s.webp`·`_c.webp`)도 같은 모델·같은 방식 — 공방 몸(`tools/char-forge/recipes/realm`, 입력 전부 CC0) 렌더를 밑그림으로 한 이미지→이미지(`tools/ai-art/batches/web_realm_194_i2i.json`, denoise 0.55), 굽기는 `pack_web_portraits.py --src web_realm_194_i2i --games saga-realm`, 출처(모델·라이선스·씨앗·밑그림 몸)는 같은 `_ai_provenance.json`. 처음 글만으로 만든 판(`web_realm_194.json`)은 이 판으로 대체됨 |
+| **장수 194 초상** | 사가천하에만 있는 장수 194 명의 초상(`assets/portraits/hero/<id>_s.webp`·`_c.webp`)도 같은 모델·같은 방식 — 공방 몸(`tools/char-forge/recipes/realm`, 입력 전부 CC0) 렌더를 밑그림으로 한 이미지→이미지(`tools/ai-art/batches/web_realm_194_i2i.json`, denoise 0.55), 굽기는 `pack_web_portraits.py --src web_realm_194_i2i --games saga-realm`, 출처(모델·라이선스·씨앗·밑그림 몸)는 같은 `_ai_provenance.json`. 처음 글만으로 만든 판(`web_realm_194.json`)은 이 판으로 대체됨 |
 | **밑그림** | 도감 105 인물은 자체 공방 몸(`tools/char-forge`, CC0 재료+레시피) 가슴 위 렌더를 밑그림으로 한 이미지→이미지 생성(`render_busts.py`, `batches/web_heroes_105_i2i.json`, denoise 0.55) — 밑그림 = 공방 몸 렌더 |
 | **출처 기록** | `assets/portraits/hero/_ai_provenance.json`(모델·라이선스·씨앗) |
 | **주의** | AI 생성물은 저작권 보호가 약하다. 되돌리려면 git 에서 이전 webp 복구 |

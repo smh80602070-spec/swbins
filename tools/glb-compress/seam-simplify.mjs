@@ -5,7 +5,7 @@
  * 왜 따로 있나: 사진측량 모델은 UV 섬마다 정점이 갈라져 있어(정점 수가 삼각형의
  * 1.5~2배) meshoptimizer simplify 가 그 경계(seam)를 지키느라 거의 못 줄인다.
  * `gltf-transform simplify --error 0.01 --lock-border false` 로도 184만→120만이 바닥
- * (사가고 chengde_temple.glb, 2026-09-23 실측).
+ * (사가만리 chengde_temple.glb, 2026-09-23 실측).
  *
  * 어떻게: ① 같은 위치의 정점을 하나로 본 색인으로 simplify(경계가 사라진다)
  *         ② 남은 삼각형 꼭짓점마다, 그 위치에 있던 원래 정점들 중 세 꼭짓점의 UV

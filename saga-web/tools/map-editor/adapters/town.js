@@ -1,5 +1,5 @@
 /**
- * 어댑터 — 사가블로 손으로 지은 마을 넷(`saga-dungeon/js/town.js`)의 배치. 화면은 town.html(위에서 본 2D 방).
+ * 어댑터 — 사가나락 손으로 지은 마을 넷(`saga-dungeon/js/town.js`)의 배치. 화면은 town.html(위에서 본 2D 방).
  *   장식   모루골 `var DECOR_MORU = [...]`, 갈대나루·자작재·소금벌 `TOWNS[id].decor`
  *   사람   `TOWNS[id].npcs` [{ key, x, y }]
  *   표식   모루골 `var MARKS = [...]`(역참·결사비·난입 — 굴혈은 방에 안 선다) — 자리만, 더하고 빼지 않는다
@@ -204,8 +204,8 @@ function check(text, id, root) {
 const isInt = (v) => Number.isInteger(v);
 const isNum = (v) => typeof v === 'number' && Number.isFinite(v);
 module.exports = {
-  kind: 'town', label: '마을(사가블로)', page: 'town.html', FILE, file, readTowns, check, rebuild, TYPES,
-  /** 이 판에 손으로 지은 마을이 있나 — 다른 판에도 town.js 가 있어(사가의숲) 파일만으론 못 가른다 */
+  kind: 'town', label: '마을(사가나락)', page: 'town.html', FILE, file, readTowns, check, rebuild, TYPES,
+  /** 이 판에 손으로 지은 마을이 있나 — 다른 판에도 town.js 가 있어(사가마을) 파일만으론 못 가른다 */
   has(root, g) {
     if (g !== GAME) return false;
     try { const t = fs.readFileSync(file(root, g), 'utf8'); return !!(J.parseVar(t, 'TOWNS') && J.parseVar(t, 'DECOR_MORU')); } catch (e) { return false; }

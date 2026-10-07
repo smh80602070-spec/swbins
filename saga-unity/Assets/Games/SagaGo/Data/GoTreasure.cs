@@ -5,7 +5,7 @@ namespace Saga.Go.Data
 {
     /// <summary>
     /// PLAN.md 107-4 "보물 상자" — 상자 열여섯의 표(등급 4 × 잠금 3)와 보상 규칙만 모은 순수 정적 클래스.
-    /// Godot 사가고(⑥)와 비율만 같고(등급 경험치 5·15·30·60, 평범 7·정교 4·진귀 3·화려 2) 코드는 따로다.
+    /// Godot 사가만리(⑥)와 비율만 같고(등급 경험치 5·15·30·60, 평범 7·정교 4·진귀 3·화려 2) 코드는 따로다.
     /// 연 상자는 `WorldEventState` 의 `chest_<id>` — 세이브 스키마(v14)는 그대로.
     /// 거리는 GO 사람 키 배율(약 1.85)로 늘렸다: 석등 둘레 6m → 11m, 여는 거리 2m → 4m.
     /// </summary>
@@ -32,7 +32,7 @@ namespace Saga.Go.Data
             public float TargetDeg;         // Lock.Targets — 첫 과녁 방향(도, 북 0 시계 방향)
         }
 
-        // ---- PLAN.md 109-14-22 과녁 잠금(웹 사가고 ⑲-22 treasure 과녁) — 상자에서 12·16·20m(웹 9·12·15m × 1.35), 2.1 라디안씩.
+        // ---- PLAN.md 109-14-22 과녁 잠금(웹 사가만리 ⑲-22 treasure 과녁) — 상자에서 12·16·20m(웹 9·12·15m × 1.35), 2.1 라디안씩.
         // 화살(충전 무관)·서책·활 기본 공격(둘레에 적이 없으면 사거리 안 가장 가까운 과녁)이 맞히면 10초 금빛, 셋이 함께 빛나면 풀린다.
         public static readonly float[] TargetDist = { 12f, 16f, 20f };
         public const float TargetStepRad = 2.1f, TargetLitSec = 10f, TargetHeight = 2.4f;

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Saga.Realm.Data
 {
     /// <summary>
-    /// PLAN.md 109-13 ① "싸움터 땅" — 웹 사가국지 §5-11 `battleLook(cityId)` 를 이 트랙으로(코드 공유 없음, 표·수치 그대로).
+    /// PLAN.md 109-13 ① "싸움터 땅" — 웹 사가천하 §5-11 `battleLook(cityId)` 를 이 트랙으로(코드 공유 없음, 표·수치 그대로).
     /// 성마다 고정 싸움터: 땅(`land`) 넷 — 평야(풀)·구릉(둔덕)·강가(갈대 + 앞쪽 물줄기)·산성(봉우리) — 을 주(`prov`)가
     /// 덮어쓰는 곳은 사막·초원·밀림·해안·균열·폐허·묘역. 바닥빛·하늘·소품 자리(가장자리 반지름 8.4~9.8, 순번 — 무작위 없음).
     /// 판정(`RealmLand` Plain/River — 성벽·전술 배율)은 그대로고 이 표는 **그리기만** 쓴다(`RealmBattlefield`).

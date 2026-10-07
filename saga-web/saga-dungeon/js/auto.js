@@ -14,7 +14,7 @@
   var core = global.DG.core;
 
   var FLAGS = [
-    /* 2026-09-28 실기 Q7 "사가블로 자동 퀘스트"(전체 테스트용) — 사가고 📖 이야기와 같은 결: 목표만 고르고 원래 조작(town.moveTo·dungeon.enter/goRoom)으로 */
+    /* 2026-09-28 실기 Q7 "사가나락 자동 퀘스트"(전체 테스트용) — 사가만리 📖 이야기와 같은 결: 목표만 고르고 원래 조작(town.moveTo·dungeon.enter/goRoom)으로 */
     { key: 'quest', name: '퀘스트', emoji: '📜',
       desc: '지역 사연(토벌·흔적·정예·우두머리)을 따라 들판을 걷고, 없으면 메인 퀘스트에 맞춰 던전 층·방을 고른다' },
     { key: 'grow', name: '승급 · 장비', emoji: '✨',

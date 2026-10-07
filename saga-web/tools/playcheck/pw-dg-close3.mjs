@@ -1,4 +1,4 @@
-// 사가블로 확인 닫기 ③(W-0098) — 오픈월드 마을·유적/도감 완성·자동 순회·자동지도·목표판을 실제 판에서 한 번씩 해 본다.
+// 사가나락 확인 닫기 ③(W-0098) — 오픈월드 마을·유적/도감 완성·자동 순회·자동지도·목표판을 실제 판에서 한 번씩 해 본다.
 //   node pw-dg-close3.mjs        (서버: node serve.mjs C:/swbins/saga-web 8871 — 돌리는 쪽이 띄우고 끈다)
 // 화면: 출사표 `.stc-cell`·`.stc-btn` · 🤖 `[data-act="auto-on"]` · 실제 M 키(큰 지도). 유적은 그 자리로 몸을 옮겨 밟는다(town update → town:mark).
 // Math.random 은 진단과 같은 씨앗 mulberry32(20260824). **기계가 한 확인**(D2 기록)이다 — 결과는 콘솔 + results/pw-dg-close3.json

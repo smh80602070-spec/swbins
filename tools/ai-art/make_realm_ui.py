@@ -1,4 +1,4 @@
-"""K-0060 — 사가국지 전략 화면 에셋: UI 틀 9-slice·배너·버튼·구분선(코드 그림) · 깃발(코드) · 지방 이름 붓글씨 28장(OFL 글꼴 굽기) · 서체 서브셋 woff2 · 성 아이콘 3등급(AI).
+"""K-0060 — 사가천하 전략 화면 에셋: UI 틀 9-slice·배너·버튼·구분선(코드 그림) · 깃발(코드) · 지방 이름 붓글씨 28장(OFL 글꼴 굽기) · 서체 서브셋 woff2 · 성 아이콘 3등급(AI).
 
   py tools/ai-art/make_realm_ui.py fonts            글꼴 받기(OFL: Nanum Brush Script·Noto Serif KR) → _out/fonts/
   py tools/ai-art/make_realm_ui.py ui               UI 틀·깃발·지방 글씨 → _out/realm_ui/

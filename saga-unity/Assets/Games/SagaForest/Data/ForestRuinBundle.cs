@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Saga.Forest.Data
 {
     /// <summary>
-    /// tasks U-0029 — 웹 사가의숲(`js/data-village.js` `ruin` 표)이 09-30 에 더한 다섯째 번들 갈래
+    /// tasks U-0029 — 웹 사가마을(`js/data-village.js` `ruin` 표)이 09-30 에 더한 다섯째 번들 갈래
     /// "탑성 조각". 폐허 곁 돌무더기 여섯(`World/ForestRubbleSpot.cs`)에서 조각 여섯을 하나씩
     /// 모으면 마을에 다시 쌓은 정자가 선다. 웹의 `bonus: true` 와 같게 **보너스 갈래**라
     /// 네 갈래(곤충·버섯·화석·꽃)의 "다 채움"·마을 평가·꽃놀이·방문객·시나리오 집계에 안 낀다.

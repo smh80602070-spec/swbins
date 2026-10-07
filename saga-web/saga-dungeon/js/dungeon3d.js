@@ -74,7 +74,7 @@
   function isTown() { var T2 = global.DG.town; return !!(T2 && T2.active()); }
 
   /* ── 손잡이 ───────────────────────────────────────────
-   * **이 판의 `core.js` 에는 손잡이(`tuned`)가 없다** — 사가고에만 있는 기능이다.
+   * **이 판의 `core.js` 에는 손잡이(`tuned`)가 없다** — 사가만리에만 있는 기능이다.
    * 그래서 있으면 쓰고 없으면 기본값으로 간다. 값을 바꿔 보려면 콘솔에서
    * `DG.dungeon3d.set('dg3d.dark', 0.5)` 를 두드리면 된다.
    */
@@ -136,7 +136,7 @@
   var QUALITY_PRESET = {
     /* 2026-09-01 — "너무 오픈월드 같지 않다"(사용자). 반경을 배로 넉넉히 늘렸다 —
        buildField()는 방에 들어올 때 한 번만 세우고(1090행) AS3.build()가 조각을
-       인스턴스로 재활용해(사가고에서 검증된 패턴) 반경을 키워도 프레임 비용은
+       인스턴스로 재활용해(사가만리에서 검증된 패턴) 반경을 키워도 프레임 비용은
        거의 그대로다. low/medium/high 순서(자가진단이 보는 것)만 지켰다. */
     /* 2026-09-08 — "장애물이 너무 많다"(사용자). 세 등급 다 밀도를 절반으로
        낮췄다(순서 자체는 그대로 low<medium<high — 자가진단이 그 순서만 본다) */
@@ -224,7 +224,7 @@
      예산 없이 한 프레임에 몰아 짓는 자리) 각각의 실측 ms를 따로 잰다. */
   var lastRoomBuildMs = 0, lastFieldSetupMs = 0, lastFieldFinalizeMs = 0;
   /* 2026-09-08 — room/field/finalize가 다 0인데도(build=false) 튐이 계속
-     실측됐다("사가블로 끊김 추적" 2차) — 그렇다면 무게는 buildRoom/buildField
+     실측됐다("사가나락 끊김 추적" 2차) — 그렇다면 무게는 buildRoom/buildField
      가 아니라 **매 프레임** 도는 다른 구간(배우 갱신·오클루전·후처리)에 있다는
      뜻이다. 이 넷은 (build 여부와 무관하게) **매 프레임 새로 잰다** — build류와
      달리 sticky(옛 값 그대로 echo)로 안 남게, 다음 튐 로그가 그 직전 프레임의
@@ -311,7 +311,7 @@
   }
 
   /**
-   * `post3d.js`·`ssao3d.js`(사가고에서 그대로 옮겨 옴, 그래픽 보강)는
+   * `post3d.js`·`ssao3d.js`(사가만리에서 그대로 옮겨 옴, 그래픽 보강)는
    * `global.DG.perf.tier().key` 를 읽어 등급을 고른다. 이 판은 프레임을
    * 스스로 재는 손잡이(`updatePerf`·`effectiveLevel`)가 이미 따로 있어
    * `perf.js` 파일 자체는 안 옮기고, 그 결과를 같은 모양으로만 내주는
@@ -402,7 +402,7 @@
        **계수를 눈으로 맞췄다**: 화면에 담기는 세로는 대략 2·dist·tan(fov/2) 인데
        fov 46° 면 0.85·dist 다. 방 대각선(666)을 담으려면 dist 는 그만큼 커야 한다 —
        0.62 로 두었더니 방이 화면 밖으로 나가 어둠만 찍혔다.
-       **`close`(마을 전용, 2026-09-02) — 사가의숲 쿼터뷰만큼 가깝게 해 달라는
+       **`close`(마을 전용, 2026-09-02) — 사가마을 쿼터뷰만큼 가깝게 해 달라는
        요청.** 던전 방은 벽 밖이 어둠뿐이라 위 0.62 실패가 그대로 재현되지만,
        마을·필드는 담이 없는 열린 땅이라 화면 밖으로 나가도 그냥 덜 보일 뿐이다
        — 그래서 마을에서만 훨씬 당겨 본다. 던전 쪽 1.05 는 그대로 둔다(연출·조작
@@ -513,7 +513,7 @@
   }
 
   /**
-   * `post3d.js`(사가고에서 옮겨 옴)의 색보정·블룸은 **해 고도**(alt, -1~1)로
+   * `post3d.js`(사가만리에서 옮겨 옴)의 색보정·블룸은 **해 고도**(alt, -1~1)로
    * 결을 잡는다 — 이 판(지하)에는 해가 없으니 `lightPlan()`이 이미 낸 깊이·
    * 마을 여부로 흉내 낸 값을 준다. **순수 함수다.**
    *   마을(횃불 켜 둔 밝은 자리) → 노을에 가까운 값(따뜻하게, 블룸은 약하게)
@@ -527,9 +527,9 @@
     return Math.max(-1, Math.min(1, a));
   }
 
-  /** HDRI 환경광(IBL) — 사가고·사가의숲이 쓰는 것과 **같은 파일**(Poly Haven
-   *  CC0 "Alps Field", md5 까지 같다)을 재사용한다. 사용자가 "사가고처럼
-   *  실사화" 를 요청해 얹었다(2026-09-04) — 사가고도 사람 리그 자체는
+  /** HDRI 환경광(IBL) — 사가만리·사가마을이 쓰는 것과 **같은 파일**(Poly Haven
+   *  CC0 "Alps Field", md5 까지 같다)을 재사용한다. 사용자가 "사가만리처럼
+   *  실사화" 를 요청해 얹었다(2026-09-04) — 사가만리도 사람 리그 자체는
    *  막다른 길이라 포기하고 **재질 반사만** 이걸로 개선했다, 여기도 같은
    *  선택. `scene.background`·톤매핑(`post3d.js`, `NeutralToneMapping`으로
    *  이미 손으로 맞춘 값)은 **안 건드린다** — `scene.environment` 에만
@@ -629,7 +629,7 @@
     /* 전투 연출 (3단계) — 글리프판과 풀을 세운다 */
     if (global.DG.fx3d) { global.DG.fx3d.init(T, fxGroup); }
 
-    /* 후처리 — 톤매핑·블룸·색보정·SSAO(사가고에서 그대로 옮겨 옴). ssao3d 는
+    /* 후처리 — 톤매핑·블룸·색보정·SSAO(사가만리에서 그대로 옮겨 옴). ssao3d 는
        post3d 가 제 렌더러로 알아서 켠다(post3d.js 의 init() 끝자락 참고) */
     if (global.DG.post3d) { global.DG.post3d.init(T, renderer); }
 
@@ -789,7 +789,7 @@
 
   /** 들판·마을 땅 — 여태 민무늬 단색 상자였다(`mix(stone,...)` 한 색을 그대로
    *  칠했다). 마을 조명이 밝을 때(위 `lightPlan` 'town' 참고) 단색은 노출에
-   *  밀려 "흰 판"으로 보인다는 제보(2026-09-11) — 사가고(`world3d.js`의
+   *  밀려 "흰 판"으로 보인다는 제보(2026-09-11) — 사가만리(`world3d.js`의
    *  `terrainTexture`)처럼 캔버스에 얼룩무늬를 구워 반복해 깐다.
    *  2026-09-11(같은 날, 실기기 재신고) — 처음엔 이 텍스처를 **테마 색(hex)
    *  마다 따로** 구웠다. 마을·통로마다 테마가 달라(`themeHex`) 처음 보는
@@ -1470,7 +1470,7 @@
     }
   }
 
-  /** 들판 조각 하나를 도형으로 세운다 — 나무·바위는 사가고와 같은 GLB, 나머지는
+  /** 들판 조각 하나를 도형으로 세운다 — 나무·바위는 사가만리와 같은 GLB, 나머지는
    *  여전히 도형이다(PLAN 4절의 우선순위 ⑤나무 ⑥바위까지만 이번에 옮겼다) */
   function piece(p, seed, W, H, stone) {
     var F = global.DG.field3d;
@@ -1515,7 +1515,7 @@
       g.add(rnode);
     } else if (p.t === 'pillar') {
       /* 폐허의 부러진 기둥 — 꼭 맞는 낱개 기둥 에셋이 없어 무너진 아치(Arch)로
-         대신한다(사가고가 이미 "사당·폐허의 다른 후보"로 적어 둔 것) */
+         대신한다(사가만리가 이미 "사당·폐허의 다른 후보"로 적어 둔 것) */
       var pillarShape = function () {
         var sg = new T.Group();
         box(sg, 0, p.h / 2, 0, 16, p.h, 16, mix(stone, 0xffffff, 0.12), 'flat', true);
@@ -1584,7 +1584,7 @@
       /* 갈대는 이 판에 GLB 가 없다(위 §6.4) — 도형 그대로, 그래서 늘 흔들린다 */
       box(g, p.x, y + p.h / 2, p.z, 3, p.h, 3, 0x3f5a34, 'sway', false);
     } else if (p.t === 'cavemouth') {
-      /* 동굴 입구 — 사가고가 이미 "광산 어귀"로 적어 둔 그 Mine 을 세운다 */
+      /* 동굴 입구 — 사가만리가 이미 "광산 어귀"로 적어 둔 그 Mine 을 세운다 */
       var caveShape = function () {
         var sg = new T.Group();
         box(sg, 0, p.h * 0.45, 0, p.h * 1.5, p.h, p.h * 1.2, mix(stone, 0x000000, 0.5), 'flat', true);
@@ -1599,7 +1599,7 @@
       box(g, p.x, y + p.h * 0.3, p.z + p.h * 0.6, p.h * 0.5, p.h * 0.55, 6,
         0x000000, '', false).rotation.y = p.rot;
     } else if (p.t === 'altar') {
-      /* 제단 — 사가고가 "사당" 후보로 적어 둔 Temple 을 세운다. 도형이 얹던
+      /* 제단 — 사가만리가 "사당" 후보로 적어 둔 Temple 을 세운다. 도형이 얹던
          떠 있는 보랏빛 구슬은 **표식이라 그대로 남긴다**(멀리서도 제단인 줄 안다) */
       var altarShape = function () {
         var sg = new T.Group();
@@ -1788,7 +1788,7 @@
     return isNaN(n) ? def : n;
   }
 
-  /** asset3d — 사가고와 같은 것을 쓴다(사가블로 4단계, `assets/ASSET_LICENSES.md`) */
+  /** asset3d — 사가만리와 같은 것을 쓴다(사가나락 4단계, `assets/ASSET_LICENSES.md`) */
   function AS() { return global.DG.asset3d; }
   /** 몸짓(§5.16, `gesture.js`) — 손잡이 dungeon.gesture 가 0 이면 plan 이 늘 base 를 돌려준다 */
   function GS() { return global.DG.gesture; }
@@ -2330,7 +2330,7 @@
     var g = new T.Group();
     var AS3 = AS();
     if (kind === 'npc') {
-      /* 마을 사람 — 사가고와 같은 GLB(사람 창고)를 쓴다. 진영색 대신
+      /* 마을 사람 — 사가만리와 같은 GLB(사람 창고)를 쓴다. 진영색 대신
          **이 사람 고유의 옷 빛깔**로 물들인다(town.js 의 뜻 그대로) */
       var nc = hexOf(ref && ref.color, 0x8a6f4e);
       /* 세 시대 손님(§5.20)은 제 몸(`folk:*`, 제 클립·제 옷) — 물들이지 않는다 */
@@ -3088,7 +3088,7 @@
     }
     lastFxMs = nowMs() - fxT0;
 
-    /* 후처리를 거치거나(있고 켜져 있을 때) 곧바로 그린다 — 사가고 `world3d.js`
+    /* 후처리를 거치거나(있고 켜져 있을 때) 곧바로 그린다 — 사가만리 `world3d.js`
        의 `present()` 와 같은 꼴이다. **두 길 다 톤매핑은 한 번 걸린다**
        (`post3d.js` 머리 참고) */
     var presentT0 = nowMs();
@@ -3194,7 +3194,7 @@
      *  체크하고(sweep()) 다시 안 지어지므로(장비 갈아입어도 같다, 알려진
      *  한계), 스타일/색을 고른 직후에만 이걸로 명시적으로 다시 짓는다. */
     refreshMe: function () { delete actors['me']; },
-    /** 재기 — 지금 내 배우의 몸 파일·상태(사가블로 Q8 "던전에 들어가면 캐릭터가 바뀜") */
+    /** 재기 — 지금 내 배우의 몸 파일·상태(사가나락 Q8 "던전에 들어가면 캐릭터가 바뀜") */
     meBody: function () { var a = actors['me'], m = a && a.node && a.node.userData.mixerNode; return m ? { body: m.userData.body, state: m.userData.assetState, seed: meRenderParams().seed } : null; },
     /** §56 가림 페이드 — 실측용(init() 뒤에만 의미 있다) */
     _occCounts: function () { return { fade: Object.keys(occFade).length, inst: Object.keys(occInst).length }; }

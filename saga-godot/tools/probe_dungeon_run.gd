@@ -1,6 +1,6 @@
 extends SceneTree
 
-## 사가블로 회차 구조 — 부적 던전(dungeon_sigil_state.gd)·난입(dungeon_horde_state.gd)·월드 보스(dungeon_worldboss_state.gd)·유품 비율 자동 점검 — 화면 없는 순수 규칙. 씨앗 고정(20260824).
+## 사가나락 회차 구조 — 부적 던전(dungeon_sigil_state.gd)·난입(dungeon_horde_state.gd)·월드 보스(dungeon_worldboss_state.gd)·유품 비율 자동 점검 — 화면 없는 순수 규칙. 씨앗 고정(20260824).
 ##   godot --headless --path saga-godot --script res://tools/probe_dungeon_run.gd
 ## ① 부적: 티어 1~10 으로 끼움·id 가 이어짐·모드 2~3개가 풀 안에서 겹치지 않고 id 로 결정적·저항 강화일 때만 저항 원소·최대 20개(넘으면 가장 옛것 버림·활성 번호도 한 칸 당김)·activate 규칙·배율(적 1+0.35×T · 금 1+0.25×T, 보물 ×1.5)·유리대포 공격 +50/받는 피해 -50·클리어하면 최고 티어 기록+다음 티어 60% 드랍·restore
 ## ② 난입: start/tick(30초마다 파도·900초에 끝)·파도 적 수 6+2w(상한 40)·티어 w/8·티어 배율·킬 경험치 곡선 lv²×10·즉석 3택이 비급을 빼고 난입 한정 카운트에만 쌓임·합산은 켜졌을 때만·finish 가 금(초당 15)·600초 이상이면 부적 1·기록·restore

@@ -5,41 +5,41 @@
 ```
 node serve.mjs C:/swbins/saga-web 8871        # 정적 서버(백그라운드로)
 npm install                                    # Playwright 쓰는 pw-*.mjs 용(playwright-core 만 — 브라우저 내려받기 없음, 이 PC 크롬을 쓴다). node_modules 는 git 이 무시
-node pw-fs-sheet.mjs [shot]                     # 사가의숲 확인 시트 여섯 기능(채집·낚시·순무 장·편지·집·사고·침선방)을 어드민 프리셋부터 실제 키·시트로 돌려 PASS/FAIL 17개 + results/pw-fs-sheet.json(D2 기록 — 사람 ○ 은 아님). pw.mjs = 공용(open(판) → page·errors·notFound)
-node pw-dg-sheet.mjs                            # 사가블로 확인 시트 다섯 기능(강공격·회피·손맛·어그로·동행·서명 무예) — 프리셋 부대로 굴혈에 들어가 Shift·␣·G 와 전투 상태 10개 + results/pw-dg-sheet.json
-node pw-go-sheet.mjs                            # 사가고 확인 시트(들판 전투 J·E·␣·🤖·자동 순행·지역 발견·M 전체지도) 10개(+동행 교체 SKIP) + results/pw-go-sheet.json
-node pw-rk-sheet.mjs                            # 사가국지 확인 시트: 실제 단추로 시나리오·세력 고르고 ▶ 다음 달 + 명령·외교 조공·출진·개입형 전투(합마다 돌격·수비 명령)·승진 7개 + results/pw-rk-sheet.json
-node pw-st-sheet.mjs                            # 사가스토리 확인 시트: ←→·␣·↑↓·↓+␣·1·M 과 레벨 문턱·무적·자동 사냥 13개 + results/pw-st-sheet.json (첫 발 장면은 DG.story 라 Esc 로 넘김. 헤드리스 포커스는 pw.mjs 가 켬 — 사가스토리는 포커스 없으면 루프가 쉰다)
-node pw-admin-selftest.mjs [판…]                # 어드민 화면 자가진단(_admin.html?selftest → 제목 ADMIN n/m)을 돌려 results/pw-admin-selftest.json 에 남긴다 — 사가블로 12/12·사가국지 12/12·사가스토리 10/10(사가고·사가의숲 어드민은 selftest 가 없어 NONE)
+node pw-fs-sheet.mjs [shot]                     # 사가마을 확인 시트 여섯 기능(채집·낚시·순무 장·편지·집·사고·침선방)을 어드민 프리셋부터 실제 키·시트로 돌려 PASS/FAIL 17개 + results/pw-fs-sheet.json(D2 기록 — 사람 ○ 은 아님). pw.mjs = 공용(open(판) → page·errors·notFound)
+node pw-dg-sheet.mjs                            # 사가나락 확인 시트 다섯 기능(강공격·회피·손맛·어그로·동행·서명 무예) — 프리셋 부대로 굴혈에 들어가 Shift·␣·G 와 전투 상태 10개 + results/pw-dg-sheet.json
+node pw-go-sheet.mjs                            # 사가만리 확인 시트(들판 전투 J·E·␣·🤖·자동 순행·지역 발견·M 전체지도) 10개(+동행 교체 SKIP) + results/pw-go-sheet.json
+node pw-rk-sheet.mjs                            # 사가천하 확인 시트: 실제 단추로 시나리오·세력 고르고 ▶ 다음 달 + 명령·외교 조공·출진·개입형 전투(합마다 돌격·수비 명령)·승진 7개 + results/pw-rk-sheet.json
+node pw-st-sheet.mjs                            # 사가종횡 확인 시트: ←→·␣·↑↓·↓+␣·1·M 과 레벨 문턱·무적·자동 사냥 13개 + results/pw-st-sheet.json (첫 발 장면은 DG.story 라 Esc 로 넘김. 헤드리스 포커스는 pw.mjs 가 켬 — 사가종횡는 포커스 없으면 루프가 쉰다)
+node pw-admin-selftest.mjs [판…]                # 어드민 화면 자가진단(_admin.html?selftest → 제목 ADMIN n/m)을 돌려 results/pw-admin-selftest.json 에 남긴다 — 사가나락 12/12·사가천하 12/12·사가종횡 10/10(사가만리·사가마을 어드민은 selftest 가 없어 NONE)
 # pw-*.mjs 요령(겪은 것): ① 새 계정은 오프닝 장면(DG.scenario/DG.story)이 키를 먹는다 → Esc 로 넘긴 뒤 시작. ② 소프트웨어 렌더링이라 Playwright 왕복이 수백 ms — 입질 창(0.7초)·쿨다운처럼 짧은 타이밍은 페이지 안에서 keydown 을 보내고 같은 틱에 읽는다. ③ 프레임이 느리면 게임 시간이 실제보다 느리게 흘러(dt 상한) 속도·오르기는 DG.side.update(1/60) 을 직접 돌려 센다. ④ 시험용으로 적 체력을 키울 땐 객체에 표시를 달아 따라간다(죽은 적이 빠지면 배열 인덱스가 밀린다). 각 스크립트는 3~5회 반복해 안정을 확인했다.
-node rk-stage.mjs [shot]                        # 사가국지 §5-13·5-14: 설전·성 차지·일기토 단계 카드 흐름(도입→문답/손 싸움→결과)·회차 카드 단추→2회차·예외 없나(shot 을 줄 때만 shots/rk_stage_*, 새 프로필로)
-node fs-ruin.mjs [shot]                         # 사가의숲 탑성 조각 번들: 돌무더기 여섯 자리·뒤지기(하루 한 번)·정자 서기·3D 예외 없나(shot 을 줄 때만 shots/fs_ruin_*)
-node st-tier5.mjs [shot]                        # 사가스토리 5차 전직·회귀: 무예창 5차·띠 첫 자리·천멸격 실전·이야기 시트 회귀 단추(마을에서만)·적 체력 ×1.25(shot 을 줄 때만 shots/st_tier5_*)
-node dg-round.mjs [shot]                        # 사가블로 회귀: 퀘스트 시트 🔁 카드·단추→2회차·적 체력·공격·보스 ×1.25(shot 을 줄 때만 shots/dg_round_*)
-node st-beyond.mjs [shot]                       # 사가스토리 5부: 문 너머 사냥터 셋 3D 예외 없나·적·보스·문 사슬·보스 몸(shot 을 줄 때만 shots/st_beyond_*, 새 프로필로)
-node fs-starpost.mjs [shot]                     # 사가의숲 별 우체통: 대보름 장을 마친 세이브에서 서는 자리·겹침·걸을 수 있나·3D 예외(shot 을 줄 때만 shots/fs_starpost, 새 프로필로)
-node st-mount.mjs [shot]                        # 사가스토리 탈것: 말 ×배율·학 날갯짓·무예를 쓰면 내림·3D 예외 없나(shot 을 줄 때만 shots/st_mount_*, 새 프로필로)
-node fs-mount.mjs [shot]                        # 사가의숲 탈것: 말 ×배율·학이 물 칸을 떠서 넘나·물 위에서 내리면 뭍으로·3D 예외 없나(shot 을 줄 때만 shots/fs_mount_*, 새 프로필로)
-node dg-mount.mjs [shot]                        # 사가블로 탈것: 흰 말 ×배율·학 이동·던전에 들어가면 내림·3D 예외 없나(shot 을 줄 때만 shots/dg_mount_*, 새 프로필로)
-node rk-mount.mjs [shot]                        # 사가국지 탈것: 장수 카드 명마 단추·부대 힘 ×배율·학을 타면 3D 지도 카메라·이동 배율·예외 없나(shot 을 줄 때만 shots/rk_mount_*, 새 프로필로)
-node go-move-click.mjs                         # 사가고: 새 계정 → 이어하기 → W·시점 돌린 W·클릭 이동·조명 값 + shots/
-node go-house-walls.mjs                        # 사가고: 가까운 집 넷에 네 방향으로 걸어 들어가 멈춘 거리 / 벽 끝 거리
-node go-house-perf.mjs                         # 사가고: 성능 등급을 내려도 보이는 집의 벽이 그대로인가(멀리 갔다 오면 새 밀도)
-node go-story-walls.mjs                        # 사가고: 이야기 인물 자리가 집 벽 안에 들어 말을 못 거는 곳이 없나
-node go-combat.mjs auto [short] [prof]         # 사가고: 가까운 무리와 싸워 적 거리·몸 반지름·체력·GL 수·프레임 + shots/go_combat_* (prof = CPU 자기 시간 상위)
-node go-combat-time.mjs [plain elite boss] [tune=field.x:v]  # 사가고: 판정만 1/30초씩 — 무리별 처치 시간(게임 초)·피해/초·휘두름·체력
-node fs-move-click.mjs                         # 사가의숲: 3D 켜고 W(시점 0°·90°)·왼쪽 클릭 이동·목표 고리 + shots/fs_*
-node go-ch-auto.mjs <장> [초] [nofield] [trace] [defend] [members] [step=N]  # 사가고: 그 장 첫 단계(defend 면 첫 지키기 단계, members 면 이야기 동료 다 지급)부터 🤖📖 자동 — 단계마다 걸린 초·doing·사진(shots/go_ch<N>_s<i>), trace 면 곁 적 체력·층
-node go-probe-eval.mjs "<js>"                      # 사가고: 새 계정으로 들어가 그 자바스크립트를 게임 안에서 돌려 결과를 찍는다(진단용, 새 프로필로)
-node go-aftermath.mjs [shot]                    # 사가고 ⑲-56: 결말 뒤 밤의 잔불(3D·14m 잔당 셋)·메아리 입구 넷이 예외 없이 서나(shot 을 줄 때만 shots/go_after_*, 새 프로필로)
-node go-vault.mjs [shot]                        # 사가고 ⑲-61: 갈무리 벌(vault.js)이 3D 로 예외 없이 서나·명소 자리(지형 칸)·기록 기둥(shot 을 줄 때만 shots/go_vault_*, 새 프로필로)
-node go-fork.mjs [shot]                         # 사가고 ⑲-65: 세갈래 고을(fork.js)이 3D 로 예외 없이 서나·명소 자리(지형 칸)·종루 기둥(shot 을 줄 때만 shots/go_fork_*, 새 프로필로)
-node go-amber.mjs [shot]                        # 사가고 ⑲-57: 굳은 거리(amber.js)가 3D 로 예외 없이 서나·명소 자리(지형 칸)·부양탑 기둥(shot 을 줄 때만 shots/go_amber_*, 새 프로필로)
-node go-mount.mjs [shot]                        # 사가고 T1: 말을 타면 같은 시간에 더 멀리 가나(속도 배율)·3D 예외 없나(shot 을 줄 때만 shots/go_mount_*, 새 프로필로)
-node go-stormeye.mjs [shot]                     # 사가고 ⑲-52: 8부 매듭 여섯·먹구름 눈이 3D 로 예외 없이 서나 + 눈 곁 발판·기둥 목록(shot 을 줄 때만 shots/go_eye_*, 새 프로필로)
-node go-skyroute.mjs                           # 사가고 ⑲-48: 구름 위 항로 섬 셋 — 땅에서·사당 섬 위에서 + shots/go_sky_* (새 프로필로)
-node go-ch23.mjs [초] [field]                  # 사가고 ⑲-47: 🤖📖 가 등대를 타고 올라 난간 판에서 등롱을 켜나 + shots/go_ch23_* (PC_PROF=tmp/… 새 프로필로)
-node rk-battle.mjs [초] [press] [phone] [nosim]  # 사가국지: 새 판 → 이웃 적 성 출진 → 실시간 전장이 저절로 흐르나·병사 붙음/쓰러짐(armyView) + shots/rk_live_*
+node rk-stage.mjs [shot]                        # 사가천하 §5-13·5-14: 설전·성 차지·일기토 단계 카드 흐름(도입→문답/손 싸움→결과)·회차 카드 단추→2회차·예외 없나(shot 을 줄 때만 shots/rk_stage_*, 새 프로필로)
+node fs-ruin.mjs [shot]                         # 사가마을 탑성 조각 번들: 돌무더기 여섯 자리·뒤지기(하루 한 번)·정자 서기·3D 예외 없나(shot 을 줄 때만 shots/fs_ruin_*)
+node st-tier5.mjs [shot]                        # 사가종횡 5차 전직·회귀: 무예창 5차·띠 첫 자리·천멸격 실전·이야기 시트 회귀 단추(마을에서만)·적 체력 ×1.25(shot 을 줄 때만 shots/st_tier5_*)
+node dg-round.mjs [shot]                        # 사가나락 회귀: 퀘스트 시트 🔁 카드·단추→2회차·적 체력·공격·보스 ×1.25(shot 을 줄 때만 shots/dg_round_*)
+node st-beyond.mjs [shot]                       # 사가종횡 5부: 문 너머 사냥터 셋 3D 예외 없나·적·보스·문 사슬·보스 몸(shot 을 줄 때만 shots/st_beyond_*, 새 프로필로)
+node fs-starpost.mjs [shot]                     # 사가마을 별 우체통: 대보름 장을 마친 세이브에서 서는 자리·겹침·걸을 수 있나·3D 예외(shot 을 줄 때만 shots/fs_starpost, 새 프로필로)
+node st-mount.mjs [shot]                        # 사가종횡 탈것: 말 ×배율·학 날갯짓·무예를 쓰면 내림·3D 예외 없나(shot 을 줄 때만 shots/st_mount_*, 새 프로필로)
+node fs-mount.mjs [shot]                        # 사가마을 탈것: 말 ×배율·학이 물 칸을 떠서 넘나·물 위에서 내리면 뭍으로·3D 예외 없나(shot 을 줄 때만 shots/fs_mount_*, 새 프로필로)
+node dg-mount.mjs [shot]                        # 사가나락 탈것: 흰 말 ×배율·학 이동·던전에 들어가면 내림·3D 예외 없나(shot 을 줄 때만 shots/dg_mount_*, 새 프로필로)
+node rk-mount.mjs [shot]                        # 사가천하 탈것: 장수 카드 명마 단추·부대 힘 ×배율·학을 타면 3D 지도 카메라·이동 배율·예외 없나(shot 을 줄 때만 shots/rk_mount_*, 새 프로필로)
+node go-move-click.mjs                         # 사가만리: 새 계정 → 이어하기 → W·시점 돌린 W·클릭 이동·조명 값 + shots/
+node go-house-walls.mjs                        # 사가만리: 가까운 집 넷에 네 방향으로 걸어 들어가 멈춘 거리 / 벽 끝 거리
+node go-house-perf.mjs                         # 사가만리: 성능 등급을 내려도 보이는 집의 벽이 그대로인가(멀리 갔다 오면 새 밀도)
+node go-story-walls.mjs                        # 사가만리: 이야기 인물 자리가 집 벽 안에 들어 말을 못 거는 곳이 없나
+node go-combat.mjs auto [short] [prof]         # 사가만리: 가까운 무리와 싸워 적 거리·몸 반지름·체력·GL 수·프레임 + shots/go_combat_* (prof = CPU 자기 시간 상위)
+node go-combat-time.mjs [plain elite boss] [tune=field.x:v]  # 사가만리: 판정만 1/30초씩 — 무리별 처치 시간(게임 초)·피해/초·휘두름·체력
+node fs-move-click.mjs                         # 사가마을: 3D 켜고 W(시점 0°·90°)·왼쪽 클릭 이동·목표 고리 + shots/fs_*
+node go-ch-auto.mjs <장> [초] [nofield] [trace] [defend] [members] [step=N]  # 사가만리: 그 장 첫 단계(defend 면 첫 지키기 단계, members 면 이야기 동료 다 지급)부터 🤖📖 자동 — 단계마다 걸린 초·doing·사진(shots/go_ch<N>_s<i>), trace 면 곁 적 체력·층
+node go-probe-eval.mjs "<js>"                      # 사가만리: 새 계정으로 들어가 그 자바스크립트를 게임 안에서 돌려 결과를 찍는다(진단용, 새 프로필로)
+node go-aftermath.mjs [shot]                    # 사가만리 ⑲-56: 결말 뒤 밤의 잔불(3D·14m 잔당 셋)·메아리 입구 넷이 예외 없이 서나(shot 을 줄 때만 shots/go_after_*, 새 프로필로)
+node go-vault.mjs [shot]                        # 사가만리 ⑲-61: 갈무리 벌(vault.js)이 3D 로 예외 없이 서나·명소 자리(지형 칸)·기록 기둥(shot 을 줄 때만 shots/go_vault_*, 새 프로필로)
+node go-fork.mjs [shot]                         # 사가만리 ⑲-65: 세갈래 고을(fork.js)이 3D 로 예외 없이 서나·명소 자리(지형 칸)·종루 기둥(shot 을 줄 때만 shots/go_fork_*, 새 프로필로)
+node go-amber.mjs [shot]                        # 사가만리 ⑲-57: 굳은 거리(amber.js)가 3D 로 예외 없이 서나·명소 자리(지형 칸)·부양탑 기둥(shot 을 줄 때만 shots/go_amber_*, 새 프로필로)
+node go-mount.mjs [shot]                        # 사가만리 T1: 말을 타면 같은 시간에 더 멀리 가나(속도 배율)·3D 예외 없나(shot 을 줄 때만 shots/go_mount_*, 새 프로필로)
+node go-stormeye.mjs [shot]                     # 사가만리 ⑲-52: 8부 매듭 여섯·먹구름 눈이 3D 로 예외 없이 서나 + 눈 곁 발판·기둥 목록(shot 을 줄 때만 shots/go_eye_*, 새 프로필로)
+node go-skyroute.mjs                           # 사가만리 ⑲-48: 구름 위 항로 섬 셋 — 땅에서·사당 섬 위에서 + shots/go_sky_* (새 프로필로)
+node go-ch23.mjs [초] [field]                  # 사가만리 ⑲-47: 🤖📖 가 등대를 타고 올라 난간 판에서 등롱을 켜나 + shots/go_ch23_* (PC_PROF=tmp/… 새 프로필로)
+node rk-battle.mjs [초] [press] [phone] [nosim]  # 사가천하: 새 판 → 이웃 적 성 출진 → 실시간 전장이 저절로 흐르나·병사 붙음/쓰러짐(armyView) + shots/rk_live_*
 ```
 
 - 헤드리스 크롬은 이 폴더 `chrome-prof/` 전용 프로필·포트 9351. 끝나면 스크립트가 닫는다 — 남으면 그 프로필이 든 PID 만 끈다.

@@ -1,5 +1,5 @@
 extends Node
-## 사가고 이야기 1부 점검(tools/probe_story.gd)의 공용 — 상수·상태·도우미(R-4 로 나눔).
+## 사가만리 이야기 1부 점검(tools/probe_story.gd)의 공용 — 상수·상태·도우미(R-4 로 나눔).
 ## 사슬: story_probe/base.gd → story_probe/ch1_5.gd(1~5장, 단계 0~39) → probe_story.gd(6~9장·몸짓, 단계 40~88).
 
 const Story := preload("res://games/saga_go/data/story.gd")

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Saga.Go.Data
 {
     /// <summary>
-    /// tasks U-0032 쉼터 마당(saga-godot 사가고 2026-09-30 새 시스템 `data/homestead.gd`·`world/homestead.gd`) — 원신 동천·동물의숲 집 꾸미기를 이 판 문법으로.
+    /// tasks U-0032 쉼터 마당(saga-godot 사가만리 2026-09-30 새 시스템 `data/homestead.gd`·`world/homestead.gd`) — 원신 동천·동물의숲 집 꾸미기를 이 판 문법으로.
     /// 금으로 소품을 사 마당(반지름 <see cref="Radius"/>m)에 놓으면 안락도가 오르고, 안락도 등급이 오를수록 마당이 **실제 시간**으로 금을 쌓아 준다
     /// (상한 <see cref="CapHours"/>시간치, 가서 "수확"). 규칙·수치는 고돗 그대로, 소품 모델은 이 트랙에 있는 것에 맞췄다(<see cref="Item.Model"/>).
     /// 세이브 `homeItems`·`homeT`·`homeAcc`·`homeSpent`(버전 그대로 — 옛 세이브는 빈 마당). 업적·사냥 기록·일일 의뢰 셈과 섞지 않는다.

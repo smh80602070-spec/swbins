@@ -1,6 +1,6 @@
 extends RealmRulesMonth
 
-## 사가국지 세이브 상태(autoload) — 저장·불러오기·마이그레이션만. 상태 변수는 realm_state.gd, 규칙은 realm_rules*.gd (상속 사슬, G-0006).
+## 사가천하 세이브 상태(autoload) — 저장·불러오기·마이그레이션만. 상태 변수는 realm_state.gd, 규칙은 realm_rules*.gd (상속 사슬, G-0006).
 
 const SAVE_PATH := "user://save_realm.json"
 const SaveSlots := preload("res://saga_core/data/save_slots.gd")   # G-0070 슬롯(1 = 이 파일 그대로)

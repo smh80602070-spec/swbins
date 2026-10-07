@@ -1,5 +1,5 @@
 extends "res://tools/story_probe/base.gd"
-## 사가고 이야기 1부 점검 — 1~5장(단계 0~39). 도는 법·단계 설명은 tools/probe_story.gd 머리말.
+## 사가만리 이야기 1부 점검 — 1~5장(단계 0~39). 도는 법·단계 설명은 tools/probe_story.gd 머리말.
 
 func _steps_ch1_5() -> void:
 	match _step:

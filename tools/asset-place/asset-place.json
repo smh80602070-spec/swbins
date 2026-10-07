@@ -232,7 +232,7 @@
     "*.license.json",
     "*.layers.json"
    ],
-   "note": "K-0020 웹 2D 모드 배경 20지역 + K-0055 사가스토리 6지역(26) × 층 3겹(far·mid·near, 좌우 왕복 이음)",
+   "note": "K-0020 웹 2D 모드 배경 20지역 + K-0055 사가종횡 6지역(26) × 층 3겹(far·mid·near, 좌우 왕복 이음)",
    "targets": [
     {
      "track": "web",
@@ -464,7 +464,7 @@
     "*.license.json",
     "OFL-*.txt"
    ],
-   "note": "K-0060 사가국지 전략 화면 에셋 — UI 틀 9-slice·배너·버튼·구분선·깃발·성 아이콘 3등급·지방 이름 붓글씨 28·서체 서브셋 woff2(OFL). 사가국지 폴더 전용",
+   "note": "K-0060 사가천하 전략 화면 에셋 — UI 틀 9-slice·배너·버튼·구분선·깃발·성 아이콘 3등급·지방 이름 붓글씨 28·서체 서브셋 woff2(OFL). 사가천하 폴더 전용",
    "targets": [
     {
      "track": "web",
@@ -695,7 +695,7 @@
     "*.webp",
     "*.json"
    ],
-   "note": "K-0061 사가국지 RTS 화면 에셋 — rts_* (UI 아이콘·흙길 autotile·물·이펙트·지형·건물·유닛). 웹 shared/assets/web2d/rts",
+   "note": "K-0061 사가천하 RTS 화면 에셋 — rts_* (UI 아이콘·흙길 autotile·물·이펙트·지형·건물·유닛). 웹 shared/assets/web2d/rts",
    "targets": [
     {
      "track": "web",

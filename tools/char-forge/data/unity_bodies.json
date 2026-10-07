@@ -272,7 +272,7 @@
   {
    "recipe": "_cmp_real_fairy_01",
    "mixamo": "Jolleen",
-   "role": "사가의숲 정령 셋 버섯·꽃·나비 = 한 몸을 작게 줄여 빛깔·꾸밈으로 가름 · 사가스토리 전직관",
+   "role": "사가마을 정령 셋 버섯·꽃·나비 = 한 몸을 작게 줄여 빛깔·꾸밈으로 가름 · 사가종횡 전직관",
    "gender": "F",
    "kind": "spirit",
    "replace": {
@@ -490,7 +490,7 @@
   {
    "recipe": "_cmp_real_nightshade_01",
    "mixamo": "Nightshade",
-   "role": "사가의숲 안개유령, 게임은 반투명·떠 있음",
+   "role": "사가마을 안개유령, 게임은 반투명·떠 있음",
    "gender": "F",
    "kind": "spirit",
    "replace": {
@@ -530,7 +530,7 @@
   {
    "recipe": "_cmp_real_parasite_01",
    "mixamo": "Parasite",
-   "role": "사가의숲 포자괴물",
+   "role": "사가마을 포자괴물",
    "gender": "M",
    "kind": "creature",
    "replace": {
@@ -666,7 +666,7 @@
   {
    "recipe": "_cmp_real_rockgiant_01",
    "mixamo": "Hulk",
-   "role": "사가의숲 바위도깨비",
+   "role": "사가마을 바위도깨비",
    "gender": "M",
    "kind": "creature",
    "replace": {
@@ -706,7 +706,7 @@
   {
    "recipe": "_cmp_real_skeleton_01",
    "mixamo": "Skeleton",
-   "role": "사가고 들판 해골·던전·마을 무리",
+   "role": "사가만리 들판 해골·던전·마을 무리",
    "gender": "M",
    "kind": "undead",
    "replace": {
@@ -836,7 +836,7 @@
   {
    "recipe": "_cmp_real_warrok_01",
    "mixamo": "Warrok",
-   "role": "사가의숲 무쇠도깨비·사가스토리 소환 거구",
+   "role": "사가마을 무쇠도깨비·사가종횡 소환 거구",
    "gender": "M",
    "kind": "creature",
    "replace": {

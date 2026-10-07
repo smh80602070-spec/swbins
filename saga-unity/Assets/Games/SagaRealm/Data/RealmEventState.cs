@@ -34,9 +34,9 @@ namespace Saga.Realm.Data
         public enum Kind
         {
             BraveChallenge, BraveReward, CunningIntel, WiseInvite, WealthChance, RivalTip, ScholarLecture,
-            // PLAN.md 109-5 퓨전 사연 셋(웹 사가국지 5-9) — 여는 카드 → 이어지는 카드. 관문 성(`RealmEras.Gateways`)을 쥐고 있을 때만.
+            // PLAN.md 109-5 퓨전 사연 셋(웹 사가천하 5-9) — 여는 카드 → 이어지는 카드. 관문 성(`RealmEras.Gateways`)을 쥐고 있을 때만.
             RiftEcho, RiftGate, PlagueMist, PlagueCure, TombBell, TombOath,
-            // PLAN.md 109-16 시나리오 카드(웹 사가국지 「천하와 균열」) — `Card.OfficerId` 가 카드 id(`RealmScenario`).
+            // PLAN.md 109-16 시나리오 카드(웹 사가천하 「천하와 균열」) — `Card.OfficerId` 가 카드 id(`RealmScenario`).
             Scenario,
         }
         public enum Choice { A, B, C }

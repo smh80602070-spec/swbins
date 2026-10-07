@@ -252,7 +252,7 @@
    * ty 에 어떤 제한도 안 두고 늘 값을 낸다. `terrain.js`(공사)도 "마을 밖은
    * 못 한다"고 막혀 있어 사용자가 직접 다리를 놓을 수도 없었다. 그 결과
    * **호수(와 그 서쪽 바이옴 전부)가 걸어서는 아예 못 가는 자리**였다 —
-   * `asset3d.js`에 `'bridge': Bridge.glb`가 진작에(2026-08-30, 사가고에서
+   * `asset3d.js`에 `'bridge': Bridge.glb`가 진작에(2026-08-30, 사가만리에서
    * 그대로 옮겨 옴) 등록만 되고 한 번도 안 쓰인 게 그 증거다.
    *
    * 마을 자체의 동서 도로(`tileAt()`의 "가운데 가로로 흙길", `ty === H*0.5`
@@ -1594,7 +1594,7 @@
 
   /* ── 걷기 ─────────────────────────────────────────────── */
 
-  /* 2026-09-09 — "키세팅이 있어야겠지"(사가블로와 같은 요청). WASD·방향키는
+  /* 2026-09-09 — "키세팅이 있어야겠지"(사가나락와 같은 요청). WASD·방향키는
      그대로 두고(실수로 못 쓰게 되면 안 된다), 방향별로 하나 더 쓸 키만
      고르게 한다. */
   var KEYMAP_DEFAULT = { up: 'arrowup', down: 'arrowdown', left: 'arrowleft', right: 'arrowright' };
@@ -1675,7 +1675,7 @@
     if (!(dx || dy) && (joy.x || joy.y)) { dx = joy.x; dy = joy.y; }
     if (dx || dy) {
       target = null;
-      /* 3D 가 켜져 있으면 키·조이스틱을 카메라 방위만큼 돌린다(2026-09-28, 실기 보고 Q12 — 사가고 Q1 과 같은 처방).
+      /* 3D 가 켜져 있으면 키·조이스틱을 카메라 방위만큼 돌린다(2026-09-28, 실기 보고 Q12 — 사가만리 Q1 과 같은 처방).
          오른쪽 끌기로 시점을 돌린 뒤에도 W 는 화면 안쪽, D 는 화면 오른쪽이다. az 0 이면 예전 그대로 */
       var VV3 = global.DG.villageView3d;
       if (VV3 && VV3.camAz && VV3.active && VV3.active()) {
@@ -2597,7 +2597,7 @@
                animals: animals, npcs: npcs, fishing: fishing,
                visitors: global.DG.visitor ? global.DG.visitor.list() : [] };
     },
-    /** 2026-09-09 — "클릭한 곳이 안 보인다"(사가블로와 같은 재신고). 화면이
+    /** 2026-09-09 — "클릭한 곳이 안 보인다"(사가나락와 같은 재신고). 화면이
      *  target 을 그릴 수 있게 읽기 전용으로 내준다. */
     moveTarget: function () { return target; }
   };

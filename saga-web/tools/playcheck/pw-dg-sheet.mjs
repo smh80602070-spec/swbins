@@ -1,4 +1,4 @@
-// 사가블로 확인 시트(tasks/sheets/saga-dungeon-*.md) 다섯 기능을 Playwright 로 직접 해 본다.
+// 사가나락 확인 시트(tasks/sheets/saga-dungeon-*.md) 다섯 기능을 Playwright 로 직접 해 본다.
 //   node pw-dg-sheet.mjs        (서버: node serve.mjs C:/swbins/saga-web 8871 — 돌리는 쪽이 띄우고 끈다)
 // 어드민 "⚔️ 명품 한 벌 갖춘 판" 프리셋(시트와 같음)부터 굴혈에 들어가 실제 키(Shift·␣·G)와 전투 상태를 본다.
 // **기계가 한 확인**(D2 기록)이다 — 손맛·화면은 사람 눈(D3)이 본다. 결과는 콘솔 + results/pw-dg-sheet.json

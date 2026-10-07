@@ -24,7 +24,7 @@ func _ready() -> void:
 		offset_left = offset_right - MIN_WIDTH
 	offset_top = maxf(offset_top, MIN_TOP)
 	offset_bottom = maxf(offset_bottom, offset_top + FONT_SIZE * 3 * 1.45)
-	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART   # 긴 목표(사가고 첫걸음 안내)가 화면 밖으로 안 나가게
+	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART   # 긴 목표(사가만리 첫걸음 안내)가 화면 밖으로 안 나가게
 	text = ""
 
 

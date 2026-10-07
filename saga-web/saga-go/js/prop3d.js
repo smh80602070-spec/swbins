@@ -101,14 +101,14 @@
   var BLD_REAL = BLD + 'realistic/';
   var PRP_REAL = PRP + 'realistic/';
 
-  /* 2026-09-04 — 사가의숲이 검증해 두고 사가블로가 그대로 옮겨 쓴 Poly Haven CC0
-     사진측량 자연물을 이 판에도 옮긴다("사가블로는 했는데" — 사용자가 형평을
+  /* 2026-09-04 — 사가마을이 검증해 두고 사가나락가 그대로 옮겨 쓴 Poly Haven CC0
+     사진측량 자연물을 이 판에도 옮긴다("사가나락는 했는데" — 사용자가 형평을
      요청). md5 동일로 확인한 원본 그대로 복사했다(새 코드 없이 이 표만 갈아
      끼운다). 옛 Quaternius 저다각형 셋은 지우지 않고 아래 *_STYLIZED 에
      되돌림 자리로 남긴다 — 라이선스·출처는 `assets/ASSET_LICENSES.md` 참고.
-     **가을·눈은 그대로 저다각형이다** — 사가의숲도 "Poly Haven 전체를 뒤져도
+     **가을·눈은 그대로 저다각형이다** — 사가마을도 "Poly Haven 전체를 뒤져도
      가을 단풍·눈 덮인 나무 CC0 모델이 없다"고 결론 낸 자리라 다시 찾지 않는다.
-     사가의숲엔 있는 log·tree:dead 는 이 판엔 그 자리(REG 키)가 아예 없어서
+     사가마을엔 있는 log·tree:dead 는 이 판엔 그 자리(REG 키)가 아예 없어서
      뺐다 — 안 쓰는 파일을 공개 저장소에 얹을 까닭이 없다. */
   var TREE_STYLIZED = [BASE + 'CommonTree_1.glb', BASE + 'CommonTree_2.glb', BASE + 'CommonTree_3.glb'];
   var PINE_STYLIZED = [BASE + 'PineTree_1.glb', BASE + 'PineTree_2.glb'];
@@ -120,7 +120,7 @@
    *  대신 아래 `tintedOf()` 로 **같은 실사 나무를 색만 계절에 맞게 덧입힌다** */
   var TREE_AUTUMN_STYLIZED = [BASE + 'CommonTree_Autumn_1.glb', BASE + 'CommonTree_Autumn_2.glb'];
   var TREE_WINTER_STYLIZED = [BASE + 'CommonTree_Snow_1.glb', BASE + 'CommonTree_Snow_2.glb'];
-  /** 2026-09-04 — 마을 집·탑도 실사로. 사가블로가 오늘 PolyScan(집 둘)·Poly Haven
+  /** 2026-09-04 — 마을 집·탑도 실사로. 사가나락가 오늘 PolyScan(집 둘)·Poly Haven
    *  `modular_fort_01`(탑 하나)에서 CC0 사진측량/PBR 모델을 새로 구해 검증해
    *  뒀길래(사람 팩과 달리 이번엔 **막힌 길이 아니었다** — `assets/ASSET_LICENSES.md`
    *  참고) 그대로 옮겼다(md5 동일 확인). 옛 Kenney류 다섯 채·다섯 탑은 지우지
@@ -173,7 +173,7 @@
             NAT_REAL + 'MossRock_a.glb', NAT_REAL + 'MossRock_b.glb', NAT_REAL + 'MossRock_c.glb']
     },
     grass: {
-      /* 수풀만 실사로 바꾼다(사가의숲과 같은 이유 — 풀잎 카드형은 세로로
+      /* 수풀만 실사로 바꾼다(사가마을과 같은 이유 — 풀잎 카드형은 세로로
          정규화하면 옆으로 부풀어 나가는 실사 후보뿐이었다). 풀은 그대로 둔다 */
       all: [BASE + 'Grass_2.glb', NAT_REAL + 'Shrub_04.glb']
     },
@@ -378,7 +378,7 @@
   var cache = {};        // { url: {state, parts:[{geometry, material}]} }
   var pending = 0, arrived = 0, refreshTimer = null;
 
-  /* 압축(EXT_meshopt_compression) GLB 는 디코더 없이 조용히 실패한다 — 사가의숲 asset3d.js 와 같은 요령(2026-09-23 tools/asset-audit 가 찾음) */
+  /* 압축(EXT_meshopt_compression) GLB 는 디코더 없이 조용히 실패한다 — 사가마을 asset3d.js 와 같은 요령(2026-09-23 tools/asset-audit 가 찾음) */
   function loader() {
     var t = three();
     if (!t || !t.GLTFLoader) { return null; }
@@ -399,7 +399,7 @@
    *     곱하면 되게. `asset3d.fit` 이 배우에게 하는 것과 같은 규칙이다
    *   3 재질은 GLB 것을 그대로 쓴다. 다만 **그림자를 지게** 켠다
    */
-  /** 2026-09-04 — 사가의숲과 같은 고침: `/realistic/` 경로 밑은 Lambert 로 안 벗긴다.
+  /** 2026-09-04 — 사가마을과 같은 고침: `/realistic/` 경로 밑은 Lambert 로 안 벗긴다.
    *  `lambertOf` 는 빛깔 하나만 남기고 텍스처·거칠기 맵을 통째로 버리는데, 옛
    *  Quaternius 계열은 애초에 면마다 한 색이라 잃을 게 없었지만(아래 `lambertOf`
    *  주석) Poly Haven 사진측량 모델은 **그 텍스처가 실사화의 전부**라 벗기면
@@ -476,7 +476,7 @@
    * 그림이 눈에 띄게 나빠지지 않는다. 이 모델들은 텍스처가 없고 **면마다 한 색**이라
    * PBR 로 얻는 것이 거의 없다.
    */
-  /* SAGA-DESIGN §6.1/§7.2 — 사가고 팔레트 24색(PLAN §6 "하북 들판·마을·강" 초안).
+  /* SAGA-DESIGN §6.1/§7.2 — 사가만리 팔레트 24색(PLAN §6 "하북 들판·마을·강" 초안).
    * 소품은 배우와 달리 툰 재질·외곽선을 안 받는다(면색 하나짜리라 얻을 게 적다) —
    * 대신 이 24색으로 **색만 스냅**해 서로 다른 CC0 팩이 섞여도 한 그림으로 보이게 한다. */
   var PALETTE = [

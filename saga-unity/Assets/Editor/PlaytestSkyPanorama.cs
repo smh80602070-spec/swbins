@@ -31,7 +31,7 @@ namespace Saga.EditorTools
             PlaytestKit.Check(!SkyPanorama.TryMarker("sky_no_such", out _), "없는 하늘에 표식이 있다");
 
             PlaytestKit.Check(!SkyPass.ApplyLight("sky_noon_present", out _) || SkyPass.FindSun() != null, "Sun 이 없는데 적용됨");
-            // 씬별 방식 — 마을·숲·스토리 = 하늘+조명, 사가국지 도시 = 조명만, 던전·그 밖 = 안 건드림
+            // 씬별 방식 — 마을·숲·스토리 = 하늘+조명, 사가천하 도시 = 조명만, 던전·그 밖 = 안 건드림
             PlaytestKit.Check(SkyPass.ModeFor("TestVillage") == SkyPass.Mode.SkyAndLight && SkyPass.ModeFor("TestVillageForest") == SkyPass.Mode.SkyAndLight
                 && SkyPass.ModeFor("TestField") == SkyPass.Mode.SkyAndLight && SkyPass.ModeFor("TestCity") == SkyPass.Mode.LightOnly
                 && SkyPass.ModeFor("TestDungeon") == SkyPass.Mode.None && SkyPass.ModeFor("Title") == SkyPass.Mode.None, "씬별 하늘·조명 방식 표가 다름");

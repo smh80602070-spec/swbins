@@ -1,4 +1,4 @@
-// 사가국지 확인 시트(tasks/sheets/saga-realm-*.md) 다섯 기능을 Playwright 로 직접 해 본다.
+// 사가천하 확인 시트(tasks/sheets/saga-realm-*.md) 다섯 기능을 Playwright 로 직접 해 본다.
 //   node pw-rk-sheet.mjs        (서버: node serve.mjs C:/swbins/saga-web 8871 — 돌리는 쪽이 띄우고 끈다)
 // 시나리오·세력은 실제 단추(pick-scen·pick-force)로 고르고, ▶ 다음 달도 실제 단추를 누른다.
 // 명령·외교·출진·개입형 전투·승진은 화면이 부르는 같은 함수(rtk.order·diplo.envoy·war.march/marchInteractive·off.promote)로 한다.

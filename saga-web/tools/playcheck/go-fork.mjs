@@ -1,4 +1,4 @@
-// 사가고 ⑲-65 — 세갈래 고을(fork.js)이 3D 로 예외 없이 서나 · 명소 자리(억지 여부)·종루 기둥 · 사진은 `shot` 을 줄 때만(shots/go_fork_*)
+// 사가만리 ⑲-65 — 세갈래 고을(fork.js)이 3D 로 예외 없이 서나 · 명소 자리(억지 여부)·종루 기둥 · 사진은 `shot` 을 줄 때만(shots/go_fork_*)
 // PC_PROF=tmp/… 새 프로필로 돌릴 것(저장된 자동·이야기 자리가 남으면 헛결과)
 import { launch, sleep } from './cdp.mjs';
 const B = 'http://127.0.0.1:8871/saga-go/';

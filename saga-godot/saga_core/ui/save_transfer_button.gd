@@ -1,6 +1,6 @@
 extends Button
-## G-0037 — 네 판(사가블로·사가의숲·사가스토리·사가국지) HUD 의 "옮기기" 단추. 누르면 세이브 옮기기 화면(save_transfer_screen.gd)을 연다.
-## HUD 씬에서 game_id 만 정한다. 판 이름 → 세이브 autoload·저장 함수는 아래 표(사가블로만 저장에 플레이어가 든다).
+## G-0037 — 네 판(사가나락·사가마을·사가종횡·사가천하) HUD 의 "옮기기" 단추. 누르면 세이브 옮기기 화면(save_transfer_screen.gd)을 연다.
+## HUD 씬에서 game_id 만 정한다. 판 이름 → 세이브 autoload·저장 함수는 아래 표(사가나락만 저장에 플레이어가 든다).
 
 const Screen := preload("res://saga_core/ui/save_transfer_screen.gd")
 const STATES := {"dungeon": "DungeonSaveState", "forest": "ForestSaveState", "story": "StorySaveState", "realm": "RealmSaveState"}

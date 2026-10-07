@@ -1,4 +1,4 @@
-/* 사가국지 — UI
+/* 사가천하 — UI
    지도를 전체화면에 깔고, 그 위에 유리(glass) 패널을 띄우는 구성. */
 
 :root {
@@ -258,7 +258,7 @@ a.icon-btn { display: flex; align-items: center; justify-content: center; text-d
 .hint { font-size: 11.5px; color: var(--ink-dim); background: rgba(255,255,255,.04);
         border-radius: var(--r-sm); padding: 10px 12px; line-height: 1.6; }
 .hint b { color: var(--gold); }
-/* ⚙️ 설정 시트(2026-09-10) — 다른 네 판(사가블로·사가의숲·사가스토리·사가고)과 같은 이름 */
+/* ⚙️ 설정 시트(2026-09-10) — 다른 네 판(사가나락·사가마을·사가종횡·사가만리)과 같은 이름 */
 .key-row {
   display: flex; align-items: center; gap: 10px;
   padding: 10px 12px; margin-top: 6px;
@@ -416,7 +416,7 @@ small.muted { display: block; margin-top: 7px; font-size: 11px; }
   animation: pop .22s cubic-bezier(.22,1,.36,1);
   /* 도움말·등용 카드처럼 내용이 길면 #encounter가 안 막고 그대로 넘쳐
      확인/닫기 버튼이 화면 밖으로 밀려 눌리지 않았다(다섯 판 공통 결함,
-     2026-08-31 사가고·사가블로에서 발견). 세로 스크롤을 열어 준다 */
+     2026-08-31 사가만리·사가나락에서 발견). 세로 스크롤을 열어 준다 */
   max-height: calc(100vh - 36px); overflow-y: auto;
 }
 @keyframes pop { from { transform: translateY(14px) scale(.97); opacity: 0; } to { transform: none; opacity: 1; } }
@@ -505,7 +505,7 @@ small.muted { display: block; margin-top: 7px; font-size: 11px; }
   #near { bottom: calc(84px + var(--safe-b)); }
   .wallet { flex-wrap: wrap; }
 
-  /* ── 사가국지: 폰에서 손이 닿게 ─────────────────────────
+  /* ── 사가천하: 폰에서 손이 닿게 ─────────────────────────
      상단이 프로필·살림 두 줄로 접히므로 지도를 그만큼 내린다.
      안 내리면 지도의 북쪽 성들이 상단 유리판 밑으로 들어가 못 눌린다 */
   #realm { top: 176px; bottom: calc(80px + var(--safe-b)); }
@@ -917,7 +917,7 @@ body.dungeon-open { overflow: hidden; }
   .modeswitch { flex-direction: column; }
 }
 
-/* ══ 사가국지 v1.0 — 고딕 던전 · 오브 HUD · 서당 · 3D ═══════════════ */
+/* ══ 사가천하 v1.0 — 고딕 던전 · 오브 HUD · 서당 · 3D ═══════════════ */
 
 /* ── 3D 모드 — 지평선 안개를 더 깊게 (포켓몬GO식 카메라) ── */
 body.tilted3 #vignette {
@@ -1168,7 +1168,7 @@ body.tilted3 #vignette {
 .camp-acts { display: flex; gap: 6px; margin-top: 8px; }
 .camp-acts .btn { flex: 1; }
 
-/* ── 사가국지 ─────────────────────────────────────────────── */
+/* ── 사가천하 ─────────────────────────────────────────────── */
 #camp-bg {
   position: fixed; inset: 0; z-index: 0;
   background:

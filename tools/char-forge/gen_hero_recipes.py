@@ -519,7 +519,7 @@ def shape_diff(a, b):
     return sum(x != y for x, y in zip(a, b))
 
 
-def assign(heroes, chosen0=()):      # chosen0 = 이미 정해진 다른 명단의 축(사가국지 장수가 도감 105 와도 둘 이상 달라지게)
+def assign(heroes, chosen0=()):      # chosen0 = 이미 정해진 다른 명단의 축(사가천하 장수가 도감 105 와도 둘 이상 달라지게)
     chosen, used_o, used_h, used_k, used_b = list(chosen0), {}, {}, {}, {}
     for h in heroes:
         role = ROLE[h['id']]
@@ -531,7 +531,7 @@ def assign(heroes, chosen0=()):      # chosen0 = 이미 정해진 다른 명단�
         if h['might'] >= 92 and role not in ('king', 'sultan', 'khan'):
             bs = [2, 3] + [b for b in bs if b not in (2, 3)]
         best = None
-        # 선호로 조합이 안 나오면(사가국지 194 를 도감 105 옆에 놓을 때) 키·체격 → 머리 → 옷 순으로 칸을 넓힌다. 도감 105 단독은 첫 단계에서 끝난다.
+        # 선호로 조합이 안 나오면(사가천하 194 를 도감 105 옆에 놓을 때) 키·체격 → 머리 → 옷 순으로 칸을 넓힌다. 도감 105 단독은 첫 단계에서 끝난다.
         ALLH = [x for x in dict.fromkeys(y for r in ROLES.values() for y in r[1]) if x not in ('crown', 'crown_long', 'turban', 'furhat', 'hood', 'afro01', 'bald')]
         FEM_ONLY = ('dress', 'court', 'skirt', 'dancer', 'royal_f')
         ALLO = [x for x in dict.fromkeys(y for r in ROLES.values() for y in r[0])
@@ -595,7 +595,7 @@ def make(h):
     else:
         mh = []
     hair, hparts = head_parts(h['axes']['head'], c3, mt, gold, fur)
-    reg, specs = h.get('reg', h['id'][:2]), []      # 사가국지 장수(gen_realm_recipes.py)는 id 접두가 세력이라 reg 를 따로 준다
+    reg, specs = h.get('reg', h['id'][:2]), []      # 사가천하 장수(gen_realm_recipes.py)는 id 접두가 세력이라 reg 를 따로 준다
     ro = real_outfit(reg, role, h['axes']['outfit'], female, c1, c2, c3, hs)
     if ro:                     # 진짜 옷이 있는 틀 — 껍데기 옷을 빼고 옷 메시로
         parts, mh = [], list(ro[0])

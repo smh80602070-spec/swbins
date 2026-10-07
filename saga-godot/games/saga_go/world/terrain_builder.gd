@@ -2,7 +2,7 @@ extends Node3D
 
 ## VERTICAL_SLICE.md 27절 — TestMap의 글자 지도를 읽어 색칠한 바닥을 세운다.
 ## 칸마다 MeshInstance3D를 만들지 않는다 — 지역 전체를 메시 한 장으로 합친다
-## (사가의숲 웹판 village-view3d.js의 InstancedMesh 원칙과 같다).
+## (사가마을 웹판 village-view3d.js의 InstancedMesh 원칙과 같다).
 ##
 ## 2026-09-16, GO "진짜 두 번째 지역" — `region_id`(export, 기본 "village")로
 ## test_map.gd REGIONS 어떤 지역이든 그린다.
@@ -29,7 +29,7 @@ const WATER_SHADER := preload("res://saga_core/shaders/water_toon.gdshader")
 
 @export var region_id := "village"
 
-## height — 사가의숲 웹판 village-view3d.js가 "물은 12cm 낮춘다"고 한 것과
+## height — 사가마을 웹판 village-view3d.js가 "물은 12cm 낮춘다"고 한 것과
 ## 같은 원칙. 산(^)의 height 는 이제 "안쪽 산 최저값"이고 실제 높이는
 ## tile_base_height() 가 칸마다 정한다.
 const LEGEND := {

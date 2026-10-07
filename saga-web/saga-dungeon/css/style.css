@@ -1,4 +1,4 @@
-/* 사가블로 — UI
+/* 사가나락 — UI
    지도를 전체화면에 깔고, 그 위에 유리(glass) 패널을 띄우는 구성. */
 
 :root {
@@ -103,10 +103,10 @@ body.tilted #vignette {
 .p-sub { font-size: 11px; color: var(--ink-dim); font-variant-numeric: tabular-nums; }
 .p-sub b { color: var(--gold); font-weight: 600; }
 
-/* 2026-09-10 — 사가고와 UI를 맞춘다: 넓은 화면에서는 도구가 줄에 그대로
+/* 2026-09-10 — 사가만리와 UI를 맞춘다: 넓은 화면에서는 도구가 줄에 그대로
    늘어서고(.tools-drawer 가 display:contents), 폰 폭(600px 이하)에서만
    ⋯ 뒤로 접힌다(아래 @media 참고). 2026-09-08엔 "붙박이 자동순회 + 나머지는
-   늘 접기"로 갔었는데, 그건 사가고의 실제 동작과 달랐다 — 사가고는 넓은
+   늘 접기"로 갔었는데, 그건 사가만리의 실제 동작과 달랐다 — 사가만리는 넓은
    화면에서 도구를 다 펼쳐 보여준다. */
 .tools { grid-area: tools; display: flex; gap: 7px; position: relative; }
 .tools-drawer { display: contents; }
@@ -498,7 +498,7 @@ small.muted { display: block; margin-top: 7px; font-size: 11px; }
   box-shadow: 0 24px 70px rgba(0,0,0,.6);
   animation: pop .22s cubic-bezier(.22,1,.36,1);
   /* 도움말(19항목)·등용 카드처럼 내용이 길면 #encounter가 안 막고 그대로
-     넘쳐 확인/닫기 버튼이 화면 밖으로 밀려 눌리지 않았다(사가고와 같은
+     넘쳐 확인/닫기 버튼이 화면 밖으로 밀려 눌리지 않았다(사가만리와 같은
      결함, 2026-08-31). 세로 스크롤을 열어 준다 */
   max-height: calc(100vh - 36px); overflow-y: auto;
 }
@@ -626,7 +626,7 @@ small.muted { display: block; margin-top: 7px; font-size: 11px; }
   .wallet { flex-wrap: wrap; }
 }
 
-/* ── 폰 폭: 상단 도구를 ⋯ 뒤로 접는다 (사가고와 같은 문턱) ────── */
+/* ── 폰 폭: 상단 도구를 ⋯ 뒤로 접는다 (사가만리와 같은 문턱) ────── */
 @media (max-width: 600px) {
   #btn-more { display: inline-block; }
   .tools-drawer {
@@ -1063,7 +1063,7 @@ body.dg3d #dg-canvas { background: transparent !important; border-color: transpa
   .modeswitch { flex-direction: column; }
 }
 
-/* ══ 사가블로 v1.0 — 고딕 던전 · 오브 HUD · 서당 · 3D ═══════════════ */
+/* ══ 사가나락 v1.0 — 고딕 던전 · 오브 HUD · 서당 · 3D ═══════════════ */
 
 /* ── 3D 모드 — 지평선 안개를 더 깊게 (포켓몬GO식 카메라) ── */
 body.tilted3 #vignette {

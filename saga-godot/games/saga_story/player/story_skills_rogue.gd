@@ -1,7 +1,7 @@
 class_name StorySkillsRogue
 extends StorySkillsArcher
 
-## 사가스토리 무예 — 도적 갈래(도적·자객·환영·사신) `_cast_*`. 상속 사슬은 story_skills_warrior.gd 머리 참고.
+## 사가종횡 무예 — 도적 갈래(도적·자객·환영·사신) `_cast_*`. 상속 사슬은 story_skills_warrior.gd 머리 참고.
 
 ## 쌍참(r_twin) — melee, hits:2. 연사(a_double)와 같은 재해석(정면 판정을
 ## 그 횟수만큼 잇달아 적용).

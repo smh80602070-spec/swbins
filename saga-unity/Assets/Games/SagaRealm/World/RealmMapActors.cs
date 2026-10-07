@@ -5,7 +5,7 @@ using Saga.Realm.Data;
 namespace Saga.Realm.World
 {
     /// <summary>
-    /// PLAN.md 109-13-2 "지도 위 실제 인물·모션" — 월드맵에 `RealmActorPlan` 배우를 세운다(웹 사가국지 §5-10 ②·④).
+    /// PLAN.md 109-13-2 "지도 위 실제 인물·모션" — 월드맵에 `RealmActorPlan` 배우를 세운다(웹 사가천하 §5-10 ②·④).
     /// 태수는 성 표지 앞(성문 자리)에서 이 달 명령 몸짓, 재야는 제 성 둘레를 느리게 걷는다. 몸은 `RealmBodies`(사실 몸), 표가 없으면 대역 도형(`RealmFigure`).
     /// 지도 축척(카메라 120~420m)에 맞춰 말 크기로 4m. `RealmWorldMap.Rebuild()` 가 끝에 부른다(표지와 같이 다시 짓는다 —
     /// 동작은 시각으로만 정해 다시 지어도 끊기지 않는다). 월드맵이 꺼지면(디오라마 보기) 이 물체도 꺼져 Update 가 안 돈다.

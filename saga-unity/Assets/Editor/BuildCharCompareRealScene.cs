@@ -72,7 +72,7 @@ namespace Saga.EditorTools
                     { "hit", ("HitReaction", "hit") }, { "death", ("Dying", "death") },
                 },
             },
-            // 사가의숲 괴물 셋 — 키는 SetupForestCreatureModels 표(무쇠도깨비·포자괴물·안개유령)와 같다
+            // 사가마을 괴물 셋 — 키는 SetupForestCreatureModels 표(무쇠도깨비·포자괴물·안개유령)와 같다
             new Pair
             {
                 Key = "Warrok", NowBody = NowRoot + "Warrok/Warrok.fbx", ForgeId = "_cmp_real_warrok_01", Height = 1.75f,

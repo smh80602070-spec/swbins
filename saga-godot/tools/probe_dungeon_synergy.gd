@@ -1,6 +1,6 @@
 extends SceneTree
 
-## 사가블로 원소 시너지(player/melee_attack.gd `_check_elem_synergy` — 처치 시 반경 안 적에게 확산 피해, dungeon_boons.gd SYNERGIES)와 유품·은사가 합산에 얹히는 길 자동 점검 — 적 노드를 직접 세워 규칙 함수만 부른다(그림은 안 봄). 씨앗 고정(20260824).
+## 사가나락 원소 시너지(player/melee_attack.gd `_check_elem_synergy` — 처치 시 반경 안 적에게 확산 피해, dungeon_boons.gd SYNERGIES)와 유품·은사가 합산에 얹히는 길 자동 점검 — 적 노드를 직접 세워 규칙 함수만 부른다(그림은 안 봄). 씨앗 고정(20260824).
 ##   godot --headless --path saga-godot --script res://tools/probe_dungeon_synergy.gd
 ## ① 쌍 셋(화+뇌·빙+기·독+전자)마다: 그 시너지 은사를 골랐고 · 이번 타격에 두 결이 다 박혔고 · 그 적이 죽었을 때만 — 반경(2.35m) 안 다른 적이 14 피해, 반경 밖·죽은 적 자신은 그대로
 ## ② 안 뜨는 경우: 은사 없음·한 결만·적이 아직 살아 있음·다른 쌍의 결·모르는 은사 ③ 시너지는 은사 합산(atk_mult 등)에 안 섞임.

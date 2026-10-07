@@ -5,7 +5,7 @@ extends RefCounted
 ##   시대(인물 era): 삼국지·한국사·일본사 → past · 세계사 → present · 균열(가상)·폐허(가상) → future · 나머지 → past.
 ##   GLB 규약(license.json·tools/world-forge/data/equip_slots.json): 원점 = 붙일 뼈의 머리, 인물 앞 = Blender -Y(= 고돗 +Z, 몸 앞과 같다).
 ##   왼쪽 부위(J_Bip_L_*)는 오른쪽에 X 뒤집은 사본. 몸마다 균등 배율 = 머리 뼈 높이 / 1.5m(기준 몸).
-## 붙이는 길(앵커·배율·거울)은 G-0063 에서 다섯 판 공용 saga_core/world/bone_gear.gd 로 옮겼다(사가의숲 옷도 쓴다).
+## 붙이는 길(앵커·배율·거울)은 G-0063 에서 다섯 판 공용 saga_core/world/bone_gear.gd 로 옮겼다(사가마을 옷도 쓴다).
 
 const BoneGear := preload("res://saga_core/world/bone_gear.gd")
 const TAG := "armor"

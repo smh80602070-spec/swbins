@@ -104,8 +104,8 @@ func is_flying_mount() -> bool:
 func owned() -> Array:
 	return Mounts.unlocked(int(_player.call("mount_chapter")) if _player.has_method("mount_chapter") else game_progress())
 
-## 판마다 진행을 이야기 장(mounts.gd req_ch 2·5·8·10·16·26)에 맞춘 값으로 — 사가블로: 클리어한 방 수 ×4(7방이면 28),
-## 사가의숲: 끝낸 주민 부탁 ×5(6이면 30), 사가스토리: 끝낸 본편 사명 ×2(13이면 26). 그 밖의 곳은 전부 열림.
+## 판마다 진행을 이야기 장(mounts.gd req_ch 2·5·8·10·16·26)에 맞춘 값으로 — 사가나락: 클리어한 방 수 ×4(7방이면 28),
+## 사가마을: 끝낸 주민 부탁 ×5(6이면 30), 사가종횡: 끝낸 본편 사명 ×2(13이면 26). 그 밖의 곳은 전부 열림.
 func game_progress() -> int:
 	## 어느 판인지는 조상 가운데 씬 파일 경로가 games/saga_* 인 첫 노드(플레이어 씬 자신 또는 판 씬)로 — 점검 호스트처럼 current_scene 이 다른 씬이어도 맞는다.
 	var sp := ""

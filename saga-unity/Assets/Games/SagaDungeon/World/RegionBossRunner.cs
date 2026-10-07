@@ -7,7 +7,7 @@ using Saga.Dungeon.UI;
 namespace Saga.Dungeon.World
 {
     /// <summary>
-    /// PLAN.md 109-10-5 지역 우두머리 아홉 — 웹 사가블로 §5.13 `stepRegionBoss`·`grantRegionBossReward` 결(수치·규칙은 <see cref="DungeonRegionFoes"/>).
+    /// PLAN.md 109-10-5 지역 우두머리 아홉 — 웹 사가나락 §5.13 `stepRegionBoss`·`grantRegionBossReward` 결(수치·규칙은 <see cref="DungeonRegionFoes"/>).
     /// 칸마다 고정 표식(검은 돌기둥 + 우두머리 빛 구슬) 하나. 4m 안에 들면 한 번 알림(위험도·밟으면 선다 / 쉬는 중이면 남은 분),
     /// 표식을 밟으면 우두머리(빌린 몸·키 2.8m)가 호위 정예 셋(지역 시대대로)과 선다 — 등장 컷은 두목급 결대로(세션에 이름마다 한 번, 부제 = 웹 사연).
     /// 플레이어가 표식에서 18m 멀어지면 무리가 제자리로 물러난다(쓰러뜨린 게 아니라 쉼 없음 — 이 판 적 이동은 벽을 안 봐 끝없이 쫓는다).

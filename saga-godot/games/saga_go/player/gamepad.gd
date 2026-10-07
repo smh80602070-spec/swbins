@@ -1,5 +1,5 @@
 extends Node
-## G-0033 — 사가고 게임패드(엑스박스식 배치, 0번 패드). 동작마다 고치지 않고, 시작 직후(모든 기능이 동작을 만든 뒤) InputMap 을 훑어
+## G-0033 — 사가만리 게임패드(엑스박스식 배치, 0번 패드). 동작마다 고치지 않고, 시작 직후(모든 기능이 동작을 만든 뒤) InputMap 을 훑어
 ## 대응표의 키에 묶인 동작에 패드 입력을 덧붙인다(키보드·마우스 묶음은 그대로). 같은 키를 쓰는 동작 여럿(F 상호작용 등)에 한 번에 붙는다.
 ##   왼쪽 스틱 이동 · 오른쪽 스틱 카메라(camera_rig.gd) · A 점프 · X 공격 · B 대시·달리기 · Y 상호작용 · RB 원소 스킬 · RT 원소 폭발
 ##   LT 활 조준 · LB 원소 시야 · 십자키 편성 1~4 · L3 탈것 · Back 지도 · Start 인물 화면.
@@ -57,7 +57,7 @@ func map_all() -> void:
 	for action in InputMap.get_actions():
 		var a := String(action)
 		if a.begins_with("ui_") or a.begins_with("dungeon_") or a.begins_with("story_") or a.begins_with("forest_") or a.begins_with("realm_"):
-			continue   # 다른 판 동작(project.godot 에 같이 있다)은 사가고에서 안 쓴다
+			continue   # 다른 판 동작(project.godot 에 같이 있다)은 사가만리에서 안 쓴다
 		var spec: Variant = BY_ACTION.get(a, null)
 		if spec != null:
 			_add(a, spec)

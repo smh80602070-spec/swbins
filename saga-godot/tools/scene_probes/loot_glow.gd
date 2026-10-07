@@ -1,5 +1,5 @@
 extends Node
-## R-3(gd.dg.loot-glow) 사가블로 노획물 등급 외곽선·전설 잔광 — scene_probe_host 로 돈다(오토로드 필요).
+## R-3(gd.dg.loot-glow) 사가나락 노획물 등급 외곽선·전설 잔광 — scene_probe_host 로 돈다(오토로드 필요).
 ## ① 모든 노획물에 등급색 외곽선(next_pass cel_outline, outline_color = 그 등급 색) ② 전설(색이 TIERS[4])만 잔광 파티클(LegendaryGlow, 10개)이 붙고 다른 등급엔 없다
 ## ③ 전설·비전설 둘 다 실제로 표본에 나온다(전설 확률 배수 1000·1)
 ## G-0049 ④ 모든 장비 노획물 밑에 등급색 고리(TierRing) ⑤ 전설만 빛기둥(LegendaryBeam) ⑥ 외곽선 세계 두께(thickness × 메시 배율) ≥ 4cm

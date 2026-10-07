@@ -1,4 +1,4 @@
-// 사가의숲 확인 닫기 ②(W-0096) — 마을 생성·고정 자리·짐승·숲 NPC·전체지도·설정·소리·계정·세이브를 실제 판에서 한 번씩 해 본다.
+// 사가마을 확인 닫기 ②(W-0096) — 마을 생성·고정 자리·짐승·숲 NPC·전체지도·설정·소리·계정·세이브를 실제 판에서 한 번씩 해 본다.
 //   node pw-fs-close2.mjs        (서버: node serve.mjs C:/swbins/saga-web 8871 — 돌리는 쪽이 띄우고 끈다)
 // 화면: 실제 M 키(전체지도) · ⚙️ 설정 시트 `snd-toggle`·`music-toggle`·`fog-toggle`·`gq-set` · NPC 곁 ␣ 말 걸기(village.interact).
 // Math.random 은 진단과 같은 씨앗 mulberry32(20260824). **기계가 한 확인**(D2 기록)이다 — 결과는 콘솔 + results/pw-fs-close2.json

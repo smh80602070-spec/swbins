@@ -2,7 +2,7 @@
  * 어드민 — QA 운영판 (`_admin.html` 이 부른다)
  * ---------------------------------------------------------------
  * 게임을 켜지 않고 **세이브와 손잡이만** 다룬다. 그림도 루프도 없다.
- * 사가고·사가의숲의 어드민과 같은 결이고, 손잡이 층(`core.tuned`)도 같은 이름이다.
+ * 사가만리·사가마을의 어드민과 같은 결이고, 손잡이 층(`core.tuned`)도 같은 이름이다.
  *
  *   세이브   재화·성장·선두 인물·진행 비우기
  *   사냥터   열린 곳 · 보스 리젠 시계 · 적 세기 미리보기
@@ -1067,7 +1067,7 @@
 
   /* `_admin.html?selftest` 로 열면 스스로 점검하고 **제목에 결과를 적는다.**
      어드민은 눌러야 도는 화면이라 진단(`_test.html`)이 붙지 못한다 — 헤드리스로
-     확인할 수 있는 유일한 자리다(사가블로의 `_sfxcheck.html` 과 같은 결):
+     확인할 수 있는 유일한 자리다(사가나락의 `_sfxcheck.html` 과 같은 결):
        chrome --headless=new --dump-dom "…/_admin.html?selftest"  →  ADMIN n/n */
   if (global.location && global.location.search.indexOf('selftest') >= 0) {
     setTimeout(function () {

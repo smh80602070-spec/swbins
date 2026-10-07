@@ -1,4 +1,4 @@
-"""사가의숲 옷·머리 11개 후보 뽑기(K-0035 재뽑기) — 키마다 3장(_a·_b·_c), 눈으로 골라 icons_all/<키>.png 로 바꾼다.
+"""사가마을 옷·머리 11개 후보 뽑기(K-0035 재뽑기) — 키마다 3장(_a·_b·_c), 눈으로 골라 icons_all/<키>.png 로 바꾼다.
   py tools/ai-art/make_wear_batch.py  → batches/icons_wear11.json (out icons_wear11)
 """
 import hashlib

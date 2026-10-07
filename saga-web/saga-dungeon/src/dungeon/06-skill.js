@@ -788,7 +788,7 @@
     ROOM_W: ROOM_W, ROOM_H: ROOM_H, WALL: WALL, P_R: P_R,
     SKILL_SLOTS: SKILL_SLOTS,
     /** 던전 밖(마을 등)이 같은 필드 메커니즘을 빌려 쓸 때 쓰는 자리 —
-     *  각 함수의 ctx 인자는 그 함수 정의 옆 주석을 볼 것 (사가블로 마을 필드전투). */
+     *  각 함수의 ctx 인자는 그 함수 정의 옆 주석을 볼 것 (사가나락 마을 필드전투). */
     FIELD_ENEMY_CAP: FIELD_ENEMY_CAP, FIELD_CAP: FIELD_CAP, PACK_N: PACK_N,
     fieldOn: fieldOn, fieldRadiusUnits: fieldRadiusUnits,
     fieldBoundPlayer: boundPlayer, _corridorReach: corridorReach,
@@ -867,7 +867,7 @@
     _grantWorldBossReward: grantWorldBossReward,
     /** 진단 전용 — 보스 패턴 하나를 직접 굴려 본다(무기 부위 봉인 확인용) */
     _bossPattern: bossPattern,
-    /** 진단 전용(§9, "Date.now 를 고정") — 사가고 weather.force() 와 같은 결 */
+    /** 진단 전용(§9, "Date.now 를 고정") — 사가만리 weather.force() 와 같은 결 */
     _forceNow: function (v) { forcedNow = v; }
   };
 })(window);

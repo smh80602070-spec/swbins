@@ -46,7 +46,7 @@
     return isNaN(n) ? 0 : n;
   }
 
-  /** 바닥·발판 그림 — 사가의숲 `village-view3d.js` 와 같은 요령(Kenney
+  /** 바닥·발판 그림 — 사가마을 `village-view3d.js` 와 같은 요령(Kenney
    *  Roguelike/RPG Pack, CC0)이다. 색 한 장(`MeshLambertMaterial({color})`)이던
    *  것에 도트그림을 얹는다 — mood 별로 잔디·흙·돌을 고르고, `stg.ground` 색으로
    *  그대로 물들여 사냥터마다 색은 갈리게 둔다(부록 "코드로 그리지 말고
@@ -154,10 +154,10 @@
   }
 
   /** 시작 등급을 기기 스펙으로 어림잡는다(코어 수·메모리·화면 픽셀·터치 여부) —
-   *  사가블로의 deviceScore()와 같은 채점, 첫 프레임이 무거워 실측이 늦게
+   *  사가나락의 deviceScore()와 같은 채점, 첫 프레임이 무거워 실측이 늦게
    *  시작되는 기기에서 처음부터 HIGH로 시작해 버벅이는 것을 막는다 */
   /** 채점만 하는 순수 함수 — 자가진단이 실제 기기 없이 이 값으로 바로 잰다
-   *  (사가블로 dungeon3d.js 의 deviceScore(o) 와 같은 모양) */
+   *  (사가나락 dungeon3d.js 의 deviceScore(o) 와 같은 모양) */
   function deviceScore(o) {
     var cores = o.cores || 0, mem = o.mem || 0, px = o.px || 0;
     var s = 0;

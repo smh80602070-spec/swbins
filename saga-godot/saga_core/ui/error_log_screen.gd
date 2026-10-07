@@ -1,6 +1,6 @@
 extends Node
 ## G-0068 — 오류 기록 창(다섯 판 공용). 화질 설정 창(graphics_menu.gd) 셋째 줄이 연다.
-## 글 칸(읽기 전용, error_log.gd report()) · "복사"(클립보드) · "닫기". 열려 있는 동안 ui_modal 그룹(사가고 마우스 시점이 커서를 풀어 준다).
+## 글 칸(읽기 전용, error_log.gd report()) · "복사"(클립보드) · "닫기". 열려 있는 동안 ui_modal 그룹(사가만리 마우스 시점이 커서를 풀어 준다).
 
 const ErrorLog := preload("res://saga_core/data/error_log.gd")
 

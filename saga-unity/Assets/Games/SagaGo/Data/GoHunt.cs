@@ -5,7 +5,7 @@ using Saga.Go.Combat;
 namespace Saga.Go.Data
 {
     /// <summary>
-    /// tasks U-0031 사냥 기록(saga-godot 사가고 2026-09-30 새 시스템 `data/hunt.gd`·`world/hunt_log.gd`) — 몬스터헌터식 "종마다 쌓는 기록".
+    /// tasks U-0031 사냥 기록(saga-godot 사가만리 2026-09-30 새 시스템 `data/hunt.gd`·`world/hunt_log.gd`) — 몬스터헌터식 "종마다 쌓는 기록".
     /// 업적(<see cref="GoAchieve"/>)은 들판 처치를 통틀어 세지만 여기는 종마다 따로 센다: 처음 쓰러뜨리면 이름이 적히고(그 전엔 "???"),
     /// 마릿수 단계마다 보상을 받는다. 일반 종은 10·40·120마리, 우두머리(수호장·영웅)는 1·3·10마리 단계(고돗 체력 2500 이상 = 우두머리).
     /// 종 목록은 <see cref="FieldEnemy.Kind"/> 열한 값(일반 먼저, 우두머리 나중). 보상 이름을 이 트랙 길로 옮겼다 —

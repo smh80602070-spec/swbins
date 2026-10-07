@@ -1,5 +1,5 @@
 /**
- * 어댑터 — 사냥터(사가스토리 `js/data-side.js` `STAGES`). 옆으로 걷는 한 판의 폭(`width`)과
+ * 어댑터 — 사냥터(사가종횡 `js/data-side.js` `STAGES`). 옆으로 걷는 한 판의 폭(`width`)과
  * 발판 `plats [x,y,w]` · 줄 `ropes [x,top,bottom,kind]` · 문 `portals [x,toKey]` · 마을 사람 `npcs [x,key]` ·
  * 채집 `gathers [x,kind]` 를 고친다. 이름·하늘색·적 수준·보스는 안 고친다(콘텐츠 편집기 판별 표 몫).
  *

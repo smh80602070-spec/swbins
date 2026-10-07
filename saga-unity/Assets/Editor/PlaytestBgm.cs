@@ -103,7 +103,7 @@ namespace Saga.EditorTools
         private static void ChecksDriver()
         {
             Bgm.ResetForTest();
-            // 판별 장면 판정 — 월드가 없을 때의 기본값(사가고·사가스토리는 플레이어가 없어 판정 보류 = null)
+            // 판별 장면 판정 — 월드가 없을 때의 기본값(사가만리·사가종횡는 플레이어가 없어 판정 보류 = null)
             PlaytestKit.Check(Saga.Go.World.GoBgmScene.Pick() == null, "GO: 플레이어 없는데 장면이 나옴");
             PlaytestKit.Check(Saga.Dungeon.World.DungeonBgmScene.Pick() == "field", "DUNGEON: 지역 추적기 없으면 field");
             PlaytestKit.Check(Saga.Forest.World.ForestBgmScene.Pick() == "town", "FOREST: 존 추적기 없으면 town");

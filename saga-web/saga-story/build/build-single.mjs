@@ -26,7 +26,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const SRC = path.resolve(HERE, '..');
 const DIST = path.join(SRC, 'dist');
 /** 결과 파일 이름 — 게임마다 다르다 (다섯 판을 한 폴더에 모아도 안 겹친다) */
-const NAMES = { 'saga-go': '사가고', 'saga-dungeon': '사가블로', 'saga-forest': '사가의숲', 'saga-story': '사가스토리', 'saga-realm': '사가국지' };
+const NAMES = { 'saga-go': '사가만리', 'saga-dungeon': '사가나락', 'saga-forest': '사가마을', 'saga-story': '사가종횡', 'saga-realm': '사가천하' };
 const GAME = NAMES[path.basename(SRC)];
 if (!GAME) { throw new Error('모르는 판 폴더: ' + path.basename(SRC) + ' (shared/build/build-single.mjs 의 NAMES 에 넣을 것)'); }
 const OUT_NAME = GAME + '.html';

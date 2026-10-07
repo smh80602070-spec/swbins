@@ -1,6 +1,6 @@
 extends SceneTree
 
-## 사가의숲 월드 규칙(world/villager_builder.gd 주민·부탁·하트·세배·판매가, world/forest_planting.gd 꽃 교배·심기, world/fishing_spot.gd 낚시 입질, world/forest_landmarks.gd 발견 표지) 자동 점검 — 노드를 만들어 규칙 함수만 부른다(그림은 안 봄). 날짜는 ForestDay.force·force_epoch_day 로 붙든다.
+## 사가마을 월드 규칙(world/villager_builder.gd 주민·부탁·하트·세배·판매가, world/forest_planting.gd 꽃 교배·심기, world/fishing_spot.gd 낚시 입질, world/forest_landmarks.gd 발견 표지) 자동 점검 — 노드를 만들어 규칙 함수만 부른다(그림은 안 봄). 날짜는 ForestDay.force·force_epoch_day 로 붙든다.
 ##   godot --headless --path saga-godot --script res://tools/probe_forest_world.gd
 ## ① 주민 6: 키 유일·자리가 풀밭·모델 파일·부탁 종류(bagcat/meetnpc)·선물 갈래·탐험가 만남 수 = 주민-1·상인 삽 700·판매 기준가 · 대화: 하루 한 번 하트 +1·세배(500+하트×150, 사람마다 하루 한 번, +2)·부탁(가방 속 개수 되면 소비하고 보상 + 하트 +2, 한 번만)·10♥ 기념 사례금 2000 한 번
 ## ② 교배: 풀밭에만·꽃이 있어야·너무 붙으면 거절(2.7m)·곁에 꽃이 없으면 1단 아님·곁에 있으면 자리 해시 0.45 넘을 때 교배꽃·교배 곁이면 0.7 넘을 때 진교배꽃 · 3일 뒤 하루 한 번 꺾음(등급 이름으로 얻음)·옛 세이브 호환(_tier_of)

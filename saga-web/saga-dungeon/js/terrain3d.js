@@ -21,7 +21,7 @@
  *
  * `MeshToonMaterial.onBeforeCompile`로 `map_fragment` 청크 하나만 갈아
  * 끼운다 — 조명·톤매핑·안개·그림자 조각은 옛 청크 그대로 손 안 댄다
- * (사가고 `world3d.js`의 `swayify()`와 같은 요령, 그 파일 참고). 방(room)
+ * (사가만리 `world3d.js`의 `swayify()`와 같은 요령, 그 파일 참고). 방(room)
  * 바닥의 `dungeon3d.js` `groundMat()`(노이즈 반점)은 이 파일과 무관하게
  * 그대로 남는다 — PLAN §6.1-5가 가리키는 자리는 `buildField()`(들판)뿐이다.
  *
@@ -139,7 +139,7 @@
     var m = new t.MeshToonMaterial({ color: new t.Color(hex), gradientMap: TN ? TN.ramp() : null });
     m.onBeforeCompile = function (shader) { patchShader(shader, grass, dirt, stone); };
     /* onBeforeCompile 이 셰이더 구조 자체를 바꾸므로 캐시 키를 갈라야 한다
-       (사가고 `world3d.js` swayify() 와 같은 이유) — 텍스처는 유니폼 값일
+       (사가만리 `world3d.js` swayify() 와 같은 이유) — 텍스처는 유니폼 값일
        뿐이라 재질끼리(테마 색이 달라도) 프로그램은 그대로 나눠 쓴다. */
     m.customProgramCacheKey = function () { return 'terrain3d'; };
     matCache[key] = m;

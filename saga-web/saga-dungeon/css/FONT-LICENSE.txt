@@ -1,4 +1,4 @@
-사가블로(saga-dungeon) 가 css/diablo.css 안에 심어 쓰는 글꼴의 라이선스다.
+사가나락(saga-dungeon) 가 css/diablo.css 안에 심어 쓰는 글꼴의 라이선스다.
 지우지 말 것 — OFL 은 재배포할 때 이 표시를 같이 실을 것을 요구한다.
 
 Cinzel            https://github.com/NDISCOVER/Cinzel

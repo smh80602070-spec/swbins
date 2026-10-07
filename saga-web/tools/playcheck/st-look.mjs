@@ -1,4 +1,4 @@
-// 사가스토리 — 첫 사냥터 사람 적을 내 곁에 세워 가까이 찍는다(모델·재질 확인용)
+// 사가종횡 — 첫 사냥터 사람 적을 내 곁에 세워 가까이 찍는다(모델·재질 확인용)
 // 인자: tune=키:값,...(예: tune=world3d.outline:0) · 이름(사진 파일 뒤꼬리)
 import { launch, sleep } from './cdp.mjs';
 const TUNE = (process.argv.find((a) => a.startsWith('tune=')) || '').slice(5);

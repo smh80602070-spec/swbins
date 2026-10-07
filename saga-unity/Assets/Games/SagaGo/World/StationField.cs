@@ -5,7 +5,7 @@ using Saga.Go.Data;
 namespace Saga.Go.World
 {
     /// <summary>
-    /// PLAN.md 109-14-36 옛 역참 터(웹 사가고 ⑲-36 `era-sites.js`) — 남쪽 공터와 논밭 사이 길 칸에 동쪽이 트인 돌담 세 변 · 초가 마구간 · 구유 · 깃대 · 돌장승 둘.
+    /// PLAN.md 109-14-36 옛 역참 터(웹 사가만리 ⑲-36 `era-sites.js`) — 남쪽 공터와 논밭 사이 길 칸에 동쪽이 트인 돌담 세 변 · 초가 마구간 · 구유 · 깃대 · 돌장승 둘.
     /// 충돌이 없다(이야기 무리·쫓기 길을 안 막게). 도형만. `WorldMapBuilder` 가 Play 때 붙인다.
     /// </summary>
     public class StationField : MonoBehaviour

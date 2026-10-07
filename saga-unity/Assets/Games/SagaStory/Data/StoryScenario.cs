@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Saga.Story.Data
 {
     /// <summary>
-    /// PLAN.md 109-16 사가스토리 시나리오 「이름 없는 떠돌이」 진행 — 웹 사가스토리 `js/scenario.js` 엔진 결(코드 공유 없음). 표는 <see cref="StoryScenarioData"/>.
+    /// PLAN.md 109-16 사가종횡 시나리오 「이름 없는 떠돌이」 진행 — 웹 사가종횡 `js/scenario.js` 엔진 결(코드 공유 없음). 표는 <see cref="StoryScenarioData"/>.
     /// 지금 어느 장 몇째 단계인지를 적고 그 단계가 채워졌는지 물어보며 하나씩 넘긴다. 새 판정을 만들지 않는다 — talk = 대사 장면(<see cref="ScenePlay"/> → UI, **들판에 서 있을 때만**) ·
     /// mission = 이미 있는 사명 둘(`q_field` 첫 사냥 = <see cref="StoryQuestState.QuestDone"/> · `q_boss1` 두목의 목 = <see cref="StoryQuestState.QuestBossDone"/>) ·
     /// job = 전직(<see cref="StoryJobState.HasJob"/>) · rift = 비경을 이 단계가 시작된 뒤 한 번 끝까지(<see cref="OnRiftCleared"/>).

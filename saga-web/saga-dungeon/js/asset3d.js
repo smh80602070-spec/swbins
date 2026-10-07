@@ -1,15 +1,15 @@
 /**
- * 3D 에셋 창고 — 사가고와 같은 것을 쓴다 (사가블로 4단계, PLAN 4·5·6절)
+ * 3D 에셋 창고 — 사가만리와 같은 것을 쓴다 (사가나락 4단계, PLAN 4·5·6절)
  * ---------------------------------------------------------------
  * 여태 이 판의 사람·짐승·나무·바위는 `dungeon3d.js`가 상자를 쌓아 조립했다.
  * 손으로 빚은 것이라 가볍고 늘 도는 대신, 아무리 다듬어도 손으로 빚은 티가 난다.
  *
- * 사가고가 몸이 갈라지는 문제를 근본에서 없앤 그 창고(Quaternius의 뼈대가
+ * 사가만리가 몸이 갈라지는 문제를 근본에서 없앤 그 창고(Quaternius의 뼈대가
  * 완전히 같은 몸+옷+머리)를 **그대로** 옮겨 쓴다 — `assets/ASSET_LICENSES.md`
  * 에 적어 두었듯 `saga-go/assets/models/…`를 그대로 복사했다. 리타기팅도
  * `pickPieces`(부위 변형 고르기)도 필요 없는 것까지 그대로다.
  *
- * 이 판에는 사가고의 `world3d.js`가 없으므로 **여기서 직접 세운다** — GLB 가
+ * 이 판에는 사가만리의 `world3d.js`가 없으므로 **여기서 직접 세운다** — GLB 가
  * 없거나 실패하면 `dungeon3d.js`가 원래 그리던 상자로 조용히 남는다
  * (`build()`가 돌려주는 shell 은 처음부터 그 상자를 담고 있다가 GLB 가
  * 오면 그 자리에서 갈아 끼운다).
@@ -47,7 +47,7 @@
   var ANIMALS = 'assets/models/animals/';
   var ANIMALS_EXTRA = 'assets/models/animals_extra/';
   var ANIMALS_EXTRA2 = 'assets/models/animals_extra2/';
-  var STANDIN = 'assets/models/standin/';   // 신수·오마주 대역 — 사가고에서 복사(2026-09-23)
+  var STANDIN = 'assets/models/standin/';   // 신수·오마주 대역 — 사가만리에서 복사(2026-09-23)
   var PROPS = 'assets/models/props/';
   var BLD = 'assets/models/buildings/';
   var BLD_REAL = 'assets/models/buildings/realistic/';
@@ -92,10 +92,10 @@
     })
   );
 
-  /* 2026-09-20 — "고품질 셀 셰이딩급" VRM 애니메 아바타(사가의숲 asset3d.js에서 먼저 만든 것,
+  /* 2026-09-20 — "고품질 셀 셰이딩급" VRM 애니메 아바타(사가마을 asset3d.js에서 먼저 만든 것,
      경위는 saga-forest HANDOFF.md 2026-09-19 절)를 이 판에도 옮긴다. VRoid Studio
      공식 CC0 샘플 AvatarSample_A/B/C(github.com/madjin/vrm-samples) + 이 저장소가
-     GUI 자동화로 새로 빚은 avatar_custom_01 — 넷 다 사가의숲과 같은 파일(md5 동일,
+     GUI 자동화로 새로 빚은 avatar_custom_01 — 넷 다 사가마을과 같은 파일(md5 동일,
      assets/ASSET_LICENSES.md 참고). **`HERO_RECIPES`/`HERO_RECIPES_LIGHT`에는
      안 얹는다** — 위 §"캐릭터 100개" 주석대로 그 두 표 길이가 늘면
      `dungeon3d.js`의 `QRPG_SEEDS`(손으로 확인해 둔 해시 자리)가 다른 자리로
@@ -502,7 +502,7 @@
     /* 2026-09-07(이어서) — Quaternius "Ultimate Monsters Bundle"(CC0, poly.pizza
        미러로 받음 — 개별 몬스터 45종, 클립 이름이 `CharacterArmature|Idle`처럼
        `|` 로 묶여 있는데 `mapClips()`의 `normName()`이 이미 그 구분자를
-       걷어내게 돼 있어(사가고에서부터 있던 처리) 그대로 받는다). 표시 이름은
+       걷어내게 돼 있어(사가만리에서부터 있던 처리) 그대로 받는다). 표시 이름은
        수집 몬스터류를 연상시키는 것(Alpaking·Armabee 등)이 섞여 있으니
        실제 게임에 노출할 때 이름 정책(CLAUDE.md, 가명)을 지킨다 — 여기 키는
        내부 식별자일 뿐 화면에 그대로 안 띄운다. */
@@ -564,7 +564,7 @@
     'monster:wasp': 'assets/models/monsters/quaternius2/Wasp.glb',
     'monster:rat': 'assets/models/monsters/quaternius2/Rat.glb',
     /* 세 시대 적(PLAN §5.20, 2026-09-25) — 사람 셋은 이미 받아 둔 poly.pizza 묶음(영웅 창고 hero_light 에도 있다),
-       로봇 셋은 사가고 `assets/models/foes/`(Quaternius CC0 cyberpunk pack)에서 복사. 전부 제 클립 내장 */
+       로봇 셋은 사가만리 `assets/models/foes/`(Quaternius CC0 cyberpunk pack)에서 복사. 전부 제 클립 내장 */
     'monster:era_punk': 'assets/models/people/polypizza_men/Punk.glb',
     'monster:era_hazmat': 'assets/models/people/polypizza_hazmat/HazmatMan.glb',
     'monster:era_swat': 'assets/models/people/polypizza_men/SWAT.glb',
@@ -714,10 +714,10 @@
     'pet:zebra_clown_fish': ANIMALS_EXTRA2 + 'Zebra_Clown_Fish.glb',
     /* 2026-09-25 — **대역도 종마다 한 벌**(tools/asset-audit/CHARACTER_UNIQUENESS.md ④): 신수·오마주·까치 28종이 서로 안 겹친다 —
        Quaternius "Ultimate Monsters"(CC0) 열여덟 벌(용·유령·예티·버섯이…) + 코끼리(불가사리) · 범·여우·말·흰말은 같은 종이라 그 모델.
-       다섯 판 같은 배정(사가고 asset3d.js 주석). 아래는 옛 경위.
-       신수·창작 짐승(옛 오마주) 대역(2026-09-23, 사용자 "사가고처럼 대역 입히기") — CC0 로 있을 리 없는 창작물이라 예전엔 뺐다.
-       사가고가 형태별 풀에서 id 해시로 고른 것과 **같은 모델**을 입힌다(해태=당나귀·청룡=스테고사우루스 등, 세 판이 같은 대역).
-       이 판에 없던 여섯(Birb·Pigeon·Snake 둘·Orc·Demon)만 사가고에서 `standin/` 으로 복사, 나머지는 이미 있는 같은 종 모델 */
+       다섯 판 같은 배정(사가만리 asset3d.js 주석). 아래는 옛 경위.
+       신수·창작 짐승(옛 오마주) 대역(2026-09-23, 사용자 "사가만리처럼 대역 입히기") — CC0 로 있을 리 없는 창작물이라 예전엔 뺐다.
+       사가만리가 형태별 풀에서 id 해시로 고른 것과 **같은 모델**을 입힌다(해태=당나귀·청룡=스테고사우루스 등, 세 판이 같은 대역).
+       이 판에 없던 여섯(Birb·Pigeon·Snake 둘·Orc·Demon)만 사가만리에서 `standin/` 으로 복사, 나머지는 이미 있는 같은 종 모델 */
     'pet:samjogo': STANDIN + 'Birb.glb',
     'pet:haetae': PEOPLE_MONSTERS_Q + 'Goleling_51bf31d7.glb',
     'pet:cheongryong': PEOPLE_MONSTERS_Q + 'Dragon_Evolved_90ed3740.glb',
@@ -745,7 +745,7 @@
     'pet:pk_gyarados': STANDIN + 'Snake_angry.glb',
     'pet:pk_mewtwo': PEOPLE_MONSTERS_Q + 'Alien_b048d82a.glb',
     'pet:pk_mew': PEOPLE_MONSTERS_Q + 'Cat_7ccb71fe.glb',
-    /* 2026-09-04(이어서) — 사용자가 "사가고처럼 실사화"를 요청 → 사람은
+    /* 2026-09-04(이어서) — 사용자가 "사가만리처럼 실사화"를 요청 → 사람은
        막다른 길(Mixamo 재배포 금지, 위 delam 주석 참고)이라 자연물만
        Poly Haven CC0 사진측량 스캔으로 갈아 끼웠다(`island_tree_02`,
        `saga-forest`가 이미 88% 심플리파이해 둔 4.86MB 짜리를 그대로 복사).
@@ -761,13 +761,13 @@
     'rock': [NATURE_REAL + 'Rock_07.glb', NATURE_REAL + 'Stone_01.glb',
       NATURE_REAL + 'MossRock_a.glb', NATURE_REAL + 'MossRock_b.glb', NATURE_REAL + 'MossRock_c.glb'],
     /* 폐허의 기둥·무너진 벽 — 딱 맞는 "부러진 돌기둥" 낱개는 못 찾아
-       `Arch.glb`(무너진 아치)로 대신한다. 사가고가 이미 같은 후보를 적어 뒀다
+       `Arch.glb`(무너진 아치)로 대신한다. 사가만리가 이미 같은 후보를 적어 뒀다
        (`saga-go/assets/ASSET_LICENSES.md` "사당·폐허의 다른 후보") */
     'pillar': PROPS + 'Arch.glb',
     'wall': PROPS + 'Wall.glb',
-    /* 제단 — 사가고가 "사당" 후보로 적어 둔 그 Temple 을 그대로 쓴다 */
+    /* 제단 — 사가만리가 "사당" 후보로 적어 둔 그 Temple 을 그대로 쓴다 */
     'altar': PROPS + 'Temple.glb',
-    /* 동굴 입구 — 사가고가 이미 "광산 어귀"로 적어 둔 그 Mine 을 그대로 쓴다 */
+    /* 동굴 입구 — 사가만리가 이미 "광산 어귀"로 적어 둔 그 Mine 을 그대로 쓴다 */
     'cavemouth': PROPS + 'Mine.glb',
     /* 천막 — 2026-09-04, saga-forest 가 이미 받아 둔 진짜 텐트(survival_pack,
        CC0)를 그대로 옮겨 왔다. 여태 대역으로 쓰던 장터 좌판(MarketStand)은
@@ -926,7 +926,7 @@
     'gear:armor:plate': GEAR + 'armor_metal.glb',
     /* 방 안 장식(PLAN 6절) — KayKit Dungeon Remastered(CC0). 여태 상자를 쌓아
        흉내 내던 자리를 실물로 갈아 끼운다. `dg:` 로 묶은 것은 **들판(field)의
-       'pillar'·'wall' 과는 다른 자리**라는 뜻이다 — 저 둘은 사가고에서 물려받은
+       'pillar'·'wall' 과는 다른 자리**라는 뜻이다 — 저 둘은 사가만리에서 물려받은
        Arch.glb·Wall.glb 를 그대로 쓰므로 여기서 안 건드린다.
        출처는 `assets/ASSET_LICENSES.md` 참고 */
     'dg:chest': DUN + 'chest.glb',
@@ -1107,7 +1107,7 @@
     return GLB_ON() && !!urlOf(k, seed);
   }
 
-  /* ── 애니메이션 이름 맞추기 — 사가고와 같은 요령 ─────── */
+  /* ── 애니메이션 이름 맞추기 — 사가만리와 같은 요령 ─────── */
   var SLOTS = ['idle', 'walk', 'run', 'sprint', 'attack', 'hit', 'dodge', 'death', 'interaction', 'jump', 'land'];
   /* 2026-09-07 — Wasp(poly.pizza Animated Enemies)는 걷기 없이 Attack·Death·
      Flying 셋뿐이라 idle 에 'fly' 낱말을 더해야 가만있을 때도 날갯짓이 돈다 */
@@ -1195,7 +1195,7 @@
 
   /* 2026-09-18 — PLAN §6.1-3 후속 과제. 외곽선은 **배우**(사람·짐승·몬스터
      GLB)만 받는다 — 이 asset3d.js 는 그것들과 나무·바위·건물·무기·갑주까지
-     같은 `build()`/`delam()` 경로를 태우므로(사가고처럼 소품 전용 파일이
+     같은 `build()`/`delam()` 경로를 태우므로(사가만리처럼 소품 전용 파일이
      따로 없다), kind 문자열이 아니라 **최종 GLB 폴더**로 가른다. 폴더 셋은
      위 표(PEOPLE·PEOPLE_QRPG·PEOPLE_MONSTERS_Q·ANIMALS·ANIMALS_EXTRA*·
      `monsters/quaternius_dino`·`monsters/quaternius_cute`)가 전부
@@ -1203,7 +1203,7 @@
      NATURE·PROPS·BLD·DUN·WPN·GEAR 는 전부 빠진다(의도, 방 경계·무기에
      테두리가 생기는 위험을 피한다 — 화면 확인 없이 짠 이번 손질에서도
      그 위험만은 여전히 안 무릅쓴다). */
-  /* 2026-09-23 — animals_extra·animals_extra2(사가블로 "펫 100개" 모델)·standin(신수·오마주 대역)도 배우. 전엔 `animals/` 만 맞아 그 펫들이 외곽선·림 없이 구워졌다 */
+  /* 2026-09-23 — animals_extra·animals_extra2(사가나락 "펫 100개" 모델)·standin(신수·오마주 대역)도 배우. 전엔 `animals/` 만 맞아 그 펫들이 외곽선·림 없이 구워졌다 */
   function isActorAsset(url) {
     return typeof url === 'string' && /\/models\/(people|animals|animals_extra2?|standin|monsters)\//.test(url);
   }
@@ -1212,7 +1212,7 @@
      잡초 GLB(`assets/models/nature/` 밑 Grass·Flowers·Bush·Shrub, 위
      `NATURE_STYLIZED`·`DEFAULTS` 표 참고)만 흔든다 — 나무·바위·통나무·
      표지판은 파일 이름으로 자동으로 빠진다(뿌리까지 통째로 흔들리면
-     어색하다, 사가고가 GLB 나무를 sway 밖에 둔 이유와 같다). `models/
+     어색하다, 사가만리가 GLB 나무를 sway 밖에 둔 이유와 같다). `models/
      animals/` 밑 물고기 펫 `Flower_Horn.glb` 처럼 이름만 겹치는 것은
      폴더 접두(`/models/nature/`)로 먼저 걸러 안 걸린다. */
   function isSwayAsset(url) {
@@ -1220,7 +1220,7 @@
   }
 
   /* ── PBR 을 벗긴다 — 환경맵 없는 이 판의 조명에 그대로 쓰면 새까맣게
-   *  선다(사가고가 2026-08-29 에 먼저 밟은 함정, `SAGA-HANDOFF.md` 참고) */
+   *  선다(사가만리가 2026-08-29 에 먼저 밟은 함정, `SAGA-HANDOFF.md` 참고) */
   function delam(root, url) {
     var t = three();
     var TN = global.DG.toon3d;
@@ -1276,7 +1276,7 @@
       });
       o.material = Array.isArray(o.material) ? out : out[0];
     });
-    /* 외곽선 — 모델 안에서는 **가장 큰 부품 반지름 × 2% 한 폭**, 그 12% 보다 작은 부품(눈·이빨·발굽)은 안 두른다(사가스토리 delam 과 같다).
+    /* 외곽선 — 모델 안에서는 **가장 큰 부품 반지름 × 2% 한 폭**, 그 12% 보다 작은 부품(눈·이빨·발굽)은 안 두른다(사가종횡 delam 과 같다).
        예전엔 부품마다 제 반지름 × 3%(최소 0.006)라 반지름 0.002~0.03 인 동물 GLB 에서 외곽선이 부품보다 두꺼워 검은 파편이 번졌다(2026-09-23).
        VRoid 는 vroid-variant 가 이미 둘러 `_toonOutline` 로 건너뛴다. traverse 도중 자식을 더하지 않으려고 모아서 붙인다 */
     if (toon && wantOutline) {
@@ -1338,7 +1338,7 @@
       inflight++;
       (function (url, c) {
         ld.load(url, function (gltf) {
-          /* 2026-09-08 — "사가블로 끊김" 추적. dungeon3d.js의 render()·
+          /* 2026-09-08 — "사가나락 끊김" 추적. dungeon3d.js의 render()·
              game.js의 loop() 다섯 구간을 다 재도 여전히 dt=150~450ms대
              튐이 그 안 어디에도 안 잡혔다(합쳐도 몇~수십 ms) — GLTFLoader의
              `onLoad` 콜백(디코드 뒤 지오메트리 조립+여기 delam/flush)은
@@ -1420,7 +1420,7 @@
     var b = new t.Box3().setFromObject(obj);
     return Math.max(1e-4, b.max.y - b.min.y);
   }
-  /** VRM Humanoid(VRoid, `J_Bip_C/L/R_*`) → 이 판 뼈 이름 표(2026-09-20, 사가의숲
+  /** VRM Humanoid(VRoid, `J_Bip_C/L/R_*`) → 이 판 뼈 이름 표(2026-09-20, 사가마을
    *  asset3d.js에서 옮김). 손가락은 뺐다 — 이 판 로코모션 클립이 손가락을 안
    *  건드려 굳이 안 옮겨도 무방하다. 항등 매칭이 하나도 안 걸리는 VRM 몸에만
    *  덧붙는 보충표라, 기존 QRPG·MPFB(이미 이름이 같아 항등만으로 되던 몸)는 이
@@ -1491,7 +1491,7 @@
     return out;
   }
 
-  /** 몸 하나 — 몸 위에 옷·머리를 얹어 한 뼈대에 묶는다(사가고와 같은 요령,
+  /** 몸 하나 — 몸 위에 옷·머리를 얹어 한 뼈대에 묶는다(사가만리와 같은 요령,
    *  세 파일이 뼈 이름·순서까지 완전히 같아 그냥 bind() 하면 된다) */
   function assembleHero(parts, mul, tintHex, rec) {
     var bodyScene = cloneScene(parts.body.gltf);
@@ -1521,7 +1521,7 @@
    * @param tintHex   물들일 색(없으면 원래 옷 빛깔 그대로)
    * @param makeShape 도형을 만드는 함수 — GLB 오기 전까지, 실패하면 계속 이것
    */
-  /* 2026-09-08 — "사가블로 끊김" 추적 최종 확정: 실기기 로그 `[던전 GLB
+  /* 2026-09-08 — "사가나락 끊김" 추적 최종 확정: 실기기 로그 `[던전 GLB
      도착후처리] ms=465.1 waiting=2 url=.../UAL2_Standard.glb` 직후 프레임이
      그대로 `dt=507ms`로 튀었다(그 프레임의 render()/loop() 실측은 다
      몇 ms뿐). `retargetInto()`(cloneScene 두 번 + 클립마다 retargetClip,
@@ -1547,7 +1547,7 @@
     var shape = makeShape ? makeShape() : null;
     if (shape) { shell.add(shape); }
     shell.userData.assetState = 'shape';
-    shell.userData.body = rec ? rec.body : null;          // 재기(어느 몸 파일인가 — 사가블로 Q8 마을·던전 몸 비교)
+    shell.userData.body = rec ? rec.body : null;          // 재기(어느 몸 파일인가 — 사가나락 Q8 마을·던전 몸 비교)
     if (!GLB_ON() || !rec) { return shell; }
 
     var parts = {}, pending = 4;

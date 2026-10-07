@@ -228,7 +228,7 @@ GLB로 먼저 정한 짝(진돗개=시바견 체형, 삽살개="북슬북슬한 
 ## Lucide — UI 아이콘 (2026-09-08, `js/icon.js`)
 
 `saga-go`의 `js/icon.js`를 그대로 옮겨 도구줄·독·지갑 이모지를 실제 아이콘으로
-갈아 끼웠다("사가스토리 UI가 사가고랑 완전히 같지 않다" 제보). SVG 자체가
+갈아 끼웠다("사가종횡 UI가 사가만리랑 완전히 같지 않다" 제보). SVG 자체가
 파일이 아니라 `icon.js` 안에 문자열로 박혀 있다 — 출처·라이선스는
 `../saga-go/assets/ASSET_LICENSES.md`의 Lucide 항목을 그대로 따른다
 (Lucide, <https://lucide.dev>, **ISC**).
@@ -290,50 +290,50 @@ VRoid Studio 공식 CC0 샘플 AvatarSample_A/B/C(github.com/madjin/vrm-samples,
 ## 몬스터 2D 시트 셋 (`assets/sprites2d/mon_beast*.webp`, 2026-09-20, saga-dungeon 에서 옮김)
 
 옆면 뷰의 2D 폴백이 짐승 형 적(들개·승냥이 → 늑대, 코끼리병 → 코끼리, 산짐승 무리 → 멧돼지)을 그리는 그림이다.
-`saga-dungeon/assets/sprites2d/mon_beast.webp`·`mon_beast_big.webp`·`mon_beast_boar.webp` 와 같은 파일(md5 동일)이며, 사가블로 `bake-portraits
+`saga-dungeon/assets/sprites2d/mon_beast.webp`·`mon_beast_big.webp`·`mon_beast_boar.webp` 와 같은 파일(md5 동일)이며, 사가나락 `bake-portraits
 --sprites=monsters` 가 3D 동물 모델(`Wolf.glb` **Quaternius CC0**, `Elephant.glb`·`Boar.glb` **Poly by Google CC-BY 3.0 — 저작자 표시 필요**)을
 옆모습 걷기 시트로 구운 파생물이다. **원본 모델의 라이선스가 그대로 따른다** — 출처·표시 문구는
 `saga-dungeon/assets/ASSET_LICENSES.md` 의 "몬스터 2D 시트"·"짐승 형 몬스터 다양화"·"도감(펫) 초상 실사화" 절과 같다.
 이 판 3D 뷰가 쓰는 `Wolf.glb`·`Cow.glb` 와는 별개로, 코끼리·멧돼지는 이 판에 GLB 가 없고 그림만 들어온다.
 
 
-## 도감 펫 초상 — 실제 동물 전부, 사가블로에서 복사 (2026-09-23)
+## 도감 펫 초상 — 실제 동물 전부, 사가나락에서 복사 (2026-09-23)
 
-사가블로가 받아 둔 모델을 **그대로 복사**했다(재가공 없음). 출처·경위는 `saga-web/saga-dungeon/assets/ASSET_LICENSES.md`
+사가나락가 받아 둔 모델을 **그대로 복사**했다(재가공 없음). 출처·경위는 `saga-web/saga-dungeon/assets/ASSET_LICENSES.md`
 "도감(펫) 초상"·"펫 — poly.pizza 동물 번들 셋"·"펫 2차분" 절. `js/asset3d.js` `critter:*` 로 등록, `js/portrait3d.js` `PET_MAP` 이 고른다.
 
 | 폴더 | 파일 | 원출처 |
 |---|---|---|
-| `models/animals/` | `Tiger.glb`·`Bear.glb`·`Panda.glb`·`Monkey.glb`·`Boar.glb`·`Owl.glb`·`Cat.glb`·`Crane.glb`·`Koi.glb`·`Frog.glb`·`Mesh_Crow.gltf`·`Mesh_Crow.bin`·`Tex_Crow.webp` | Quaternius 계열 CC0 · 까마귀(`Mesh_Crow`)는 사가블로 문서의 표기를 따른다 |
+| `models/animals/` | `Tiger.glb`·`Bear.glb`·`Panda.glb`·`Monkey.glb`·`Boar.glb`·`Owl.glb`·`Cat.glb`·`Crane.glb`·`Koi.glb`·`Frog.glb`·`Mesh_Crow.gltf`·`Mesh_Crow.bin`·`Tex_Crow.webp` | Quaternius 계열 CC0 · 까마귀(`Mesh_Crow`)는 사가나락 문서의 표기를 따른다 |
 | `models/animals_extra/` | `Alpaca.glb`·`Bull.glb`·`Cow.glb`·`Cow_Farm.glb`·`Dolphin.glb`·`Donkey.glb`·`Fish1.glb`·`Fish2.glb`·`Fish3.glb`·`Fox.glb`·`Horse.glb`·`Horse_Farm.glb`·`Llama.glb`·`MantaRay.glb`·`Pig.glb`·`Pug.glb`·`Shark.glb`·`Sheep.glb`·`Stag.glb`·`Whale.glb`·`White_Horse.glb`·`Zebra.glb` | poly.pizza 동물 번들 셋(Quaternius, CC0) |
 | `models/animals_extra2/` | `Anglerfish.glb`·`Apatosaurus.glb`·`Armored_Catfish.glb`·`Betta.glb`·`Black_Lion_Fish.glb`·`Blobfish.glb`·`Blue_Goldfish.glb`·`Blue_Tang.glb`·`Butterfly_Fish.glb`·`Cardinal_Fish.glb`·`Clownfish.glb`·`Coral_Grouper.glb`·`Cowfish.glb`·`Flatfish.glb`·`Flower_Horn.glb`·`Goblin_Shark.glb`·`Goldfish.glb`·`Humphead.glb`·`Koi.glb`·`Lionfish.glb`·`Mandarin_Fish.glb`·`Moorish_Idol.glb`·`Parasaurolophus.glb`·`Parrot_Fish.glb`·`Piranha.glb`·`Puffer.glb`·`Red_Snapper.glb`·`Royal_Gramma.glb`·`Shark.glb`·`Stegosaurus.glb`·`Sunfish.glb`·`Swordfish.glb`·`T_Rex.glb`·`Tang.glb`·`Tetra.glb`·`Triceratops.glb`·`Tuna.glb`·`Turbot.glb`·`Velociraptor.glb`·`Worm.glb`·`Yellow_Tang.glb`·`Zebra_Clown_Fish.glb` | poly.pizza 물고기 대형·공룡 번들(Quaternius, CC0) |
 
 
-## 신수·포켓몬 오마주 대역 모델 — 사가고에서 복사 (2026-09-23)
+## 신수·포켓몬 오마주 대역 모델 — 사가만리에서 복사 (2026-09-23)
 
-`models/standin/` — `Birb.glb`·`Pigeon.glb`·`Snake.glb`·`Snake_angry.glb`·`Orc.gltf`·`Demon.gltf`. 사가고 `assets/models/animals/` 의 같은 파일을
+`models/standin/` — `Birb.glb`·`Pigeon.glb`·`Snake.glb`·`Snake_angry.glb`·`Orc.gltf`·`Demon.gltf`. 사가만리 `assets/models/animals/` 의 같은 파일을
 **그대로 복사**했다(출처·경위는 `saga-web/saga-go/assets/ASSET_LICENSES.md` — Quaternius CC0: 새 둘은 animals pack, 뱀 둘은 easy_enemies_pack,
-Orc·Demon 은 Ultimate Monsters). 사용자 결정("사가고처럼 대역 입히기")으로 신수·오마주 도감 초상에 사가고와 같은 대역을 입히는 데만 쓴다.
+Orc·Demon 은 Ultimate Monsters). 사용자 결정("사가만리처럼 대역 입히기")으로 신수·오마주 도감 초상에 사가만리와 같은 대역을 입히는 데만 쓴다.
 
-## 세 시대 사람·적 — 사가고에서 복사 (2026-09-24, `models/foes/`·`models/people/folk/`, PLAN §5-12)
+## 세 시대 사람·적 — 사가만리에서 복사 (2026-09-24, `models/foes/`·`models/people/folk/`, PLAN §5-12)
 
-Quaternius CC0 1.0. 사가고 `assets/models/foes/`(7: Rat·Wasp·Zombie·Alien·Robot_Drone·Robot_Walker·Robot_Large)·
+Quaternius CC0 1.0. 사가만리 `assets/models/foes/`(7: Rat·Wasp·Zombie·Alien·Robot_Drone·Robot_Walker·Robot_Large)·
 `assets/models/people/folk/`(5: m_Worker·m_Hoodie·m_SWAT·w_SciFi·s_Astronaut1)를 그대로 복사(이미 Meshopt, 제 클립 내장).
-받은 곳·가공 경위는 사가고 `assets/ASSET_LICENSES.md` "Quaternius — 세 시대 사람·적" 절(사람·쥐·말벌·망자·외계는
-원래 사가블로가 poly.pizza 에서 받은 것, 로봇 셋은 quaternius-showcase 미러 `cyberpunk_pack`).
+받은 곳·가공 경위는 사가만리 `assets/ASSET_LICENSES.md` "Quaternius — 세 시대 사람·적" 절(사람·쥐·말벌·망자·외계는
+원래 사가나락가 poly.pizza 에서 받은 것, 로봇 셋은 quaternius-showcase 미러 `cyberpunk_pack`).
 
-## 사람 적·마을 사람 제 몸 — 사가블로에서 복사 (2026-09-25)
+## 사람 적·마을 사람 제 몸 — 사가나락에서 복사 (2026-09-25)
 
-`models/people/fixed/` — 사가블로 `assets/models/people/` 의 hero_light 창고 파일을 **그대로 복사**했다(파일 이름 = 원래 폴더_파일).
-출처·라이선스는 전부 사가블로 `assets/ASSET_LICENSES.md` 의 해당 절: `oga_ultimate_*`(Quaternius Ultimate Animated Character Pack, CC0 —
+`models/people/fixed/` — 사가나락 `assets/models/people/` 의 hero_light 창고 파일을 **그대로 복사**했다(파일 이름 = 원래 폴더_파일).
+출처·라이선스는 전부 사가나락 `assets/ASSET_LICENSES.md` 의 해당 절: `oga_ultimate_*`(Quaternius Ultimate Animated Character Pack, CC0 —
 OpenGameArt), `polypizza_*`(Quaternius Ultimate Modular Men/Women·Pirate·Apocalypse·Wide 묶음, CC0 — poly.pizza), `kaykit_adventurers_*`
 (KayKit Adventurers, CC0), `oga_knight_*`(Lowpoly Animated Knight, CC0). 전부 제 클립 내장. 쓰는 곳: `js/asset3d.js` FIXED_HERO.
 
 ## 신수·오마주·까치 대역 28종 — 종마다 한 벌 (2026-09-25, CHARACTER_UNIQUENESS ④)
 
-Quaternius "Ultimate Monsters"(CC0, 사가블로 `assets/models/monsters/quaternius/` 에서 md5 그대로 복사 — 출처는 그쪽 `assets/ASSET_LICENSES.md` "Ultimate Monsters 45종" 절) 열여덟 벌을 `models/standin/<이름>.glb` 로(해시 꼬리만 뗌).
+Quaternius "Ultimate Monsters"(CC0, 사가나락 `assets/models/monsters/quaternius/` 에서 md5 그대로 복사 — 출처는 그쪽 `assets/ASSET_LICENSES.md` "Ultimate Monsters 45종" 절) 열여덟 벌을 `models/standin/<이름>.glb` 로(해시 꼬리만 뗌).
 
-> **Elephant** (`models/standin/Elephant.glb`) — © **Poly by Google**, [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/). poly.pizza `/m/a27MA0rXyyj`, 사가블로 `models/animals/Elephant.glb` 복사. **저작자 표시 필요** — 이 문구가 그 표시다.
+> **Elephant** (`models/standin/Elephant.glb`) — © **Poly by Google**, [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/). poly.pizza `/m/a27MA0rXyyj`, 사가나락 `models/animals/Elephant.glb` 복사. **저작자 표시 필요** — 이 문구가 그 표시다.
 
 | 펫 | 모델 |
 |---|---|
@@ -347,7 +347,7 @@ Quaternius "Ultimate Monsters"(CC0, 사가블로 `assets/models/monsters/quatern
 | 불가사리 | **Elephant**(쇠를 먹는 코끼리 코 짐승) |
 | 삿갓동이·뿔도롱·뿔낙지·날주머니·방아토끼·이끼잔나비 | Mushnub·Dino·Squidle·Glub·Bunny·Monkroose |
 | 묵방울·어둑귀·눈머리·겹날주머니·고깔도사 | Pink_Slime·Ghost·Yeti·Glub_Evolved·Wizard |
-| 누렁날개·노을용·물이무기·별손님·복고양이 | Alpaking·Dragon·Snake_angry·Alien_2(두발 외계인 — 방울형 Alien 은 사가고 들판 적과 같은 파일이라 피함)·Cat(괴물 고양이) |
+| 누렁날개·노을용·물이무기·별손님·복고양이 | Alpaking·Dragon·Snake_angry·Alien_2(두발 외계인 — 방울형 Alien 은 사가만리 들판 적과 같은 파일이라 피함)·Cat(괴물 고양이) |
 
 ## AI 생성 도감 초상 (2026-09-29)
 | 항목 | 내용 |
@@ -375,7 +375,7 @@ Quaternius "Ultimate Monsters"(CC0, 사가블로 `assets/models/monsters/quatern
 ## 몬스터 2D 시트 나머지 여덟 (`assets/sprites2d/mon_alien.webp`·`mon_era_drone.webp`·`mon_era_hulk.webp`·`mon_era_swat.webp`·`mon_era_walker.webp`·`mon_rat.webp`·`mon_wasp.webp`·`mon_zombie.webp`, K-0016 2026-10-02 보강)
 
 옆면 뷰의 2D 폴백이 쓰는 그림이다. `saga-dungeon/assets/sprites2d/` 의 같은 이름 파일과 **바이트가 같다**(여덟 장 모두 `cmp` 로 확인).
-사가블로 `tools/bake-portraits/bake.mjs --sprites=monsters` 가 3D 몸을 옆모습 걷기 시트로 구운 **파생물**이라 **원본 모델의 라이선스가 그대로 따른다** —
+사가나락 `tools/bake-portraits/bake.mjs --sprites=monsters` 가 3D 몸을 옆모습 걷기 시트로 구운 **파생물**이라 **원본 모델의 라이선스가 그대로 따른다** —
 `mon_rat`·`mon_wasp`·`mon_zombie` 는 Quaternius 의 CC0(poly.pizza 로 받음 — `saga-dungeon/assets/ASSET_LICENSES.md` "몬스터 2차분" 절 표), `mon_era_*`·`mon_alien` 은
-같은 문서의 "세 시대 적 로봇 셋"·"몬스터 2D 시트" 절과 사가고 문서 "세 시대 사람·적" 절이 정본이다(poly.pizza 몸이 섞여 있어 **표시 의무가 있는 항목은 그쪽 문구를 그대로 이행**).
-이 판에는 GLB 가 없고 그림만 들어와 있다. 그림을 다시 뽑거나 몸을 바꾸면 사가블로 문서의 해당 절을 같이 본다.
+같은 문서의 "세 시대 적 로봇 셋"·"몬스터 2D 시트" 절과 사가만리 문서 "세 시대 사람·적" 절이 정본이다(poly.pizza 몸이 섞여 있어 **표시 의무가 있는 항목은 그쪽 문구를 그대로 이행**).
+이 판에는 GLB 가 없고 그림만 들어와 있다. 그림을 다시 뽑거나 몸을 바꾸면 사가나락 문서의 해당 절을 같이 본다.

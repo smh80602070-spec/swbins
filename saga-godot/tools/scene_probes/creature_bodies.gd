@@ -1,7 +1,7 @@
 extends Node
 ## G-0066 [R-3] 코드로 그린 몸 셋 — scene_probe_host 로 돈다(오토로드 필요). features gd.go.g1-pet-model · gd.fs.fusion-monsters · gd.rk.monster-sil.
-## ① 사가고 신수: PETS 의 모든 신수가 PET_LOOKS 에 모양이 있고 build_pet 이 메시를 가진 몸·키가 목표의 0.6~2배(장식 포함)
-## ② 사가의숲 괴물: 굴 표(CREATURES)의 종마다 몸에 메시·종 12 이상 ③ 사가국지 몬스터 실루엣: 보스가 일반보다 크고 메시가 더 많다.
+## ① 사가만리 신수: PETS 의 모든 신수가 PET_LOOKS 에 모양이 있고 build_pet 이 메시를 가진 몸·키가 목표의 0.6~2배(장식 포함)
+## ② 사가마을 괴물: 굴 표(CREATURES)의 종마다 몸에 메시·종 12 이상 ③ 사가천하 몬스터 실루엣: 보스가 일반보다 크고 메시가 더 많다.
 
 const Pets := preload("res://saga_core/data/pets.gd")
 const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
@@ -55,7 +55,7 @@ func run() -> int:
 	if not bad.is_empty():
 		_fail("신수 몸 이상 %s" % [bad])
 
-	# ② 사가의숲 괴물
+	# ② 사가마을 괴물
 	var kinds := {}
 	for c: Dictionary in ForestCreatureBuilder.CREATURES:
 		kinds[String(c.kind)] = true
@@ -69,7 +69,7 @@ func run() -> int:
 	if kinds.size() < 12:
 		_fail("숲 괴물 종 %d (12 이상)" % kinds.size())
 
-	# ③ 사가국지 실루엣
+	# ③ 사가천하 실루엣
 	var wm: Node3D = RealmWorldmap.new()
 	var small: Node3D = wm.call("_build_monster_body", Color(0.6, 0.2, 0.2), false)
 	var big: Node3D = wm.call("_build_monster_body", Color(0.4, 0.1, 0.4), true)

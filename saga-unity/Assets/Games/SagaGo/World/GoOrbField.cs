@@ -7,7 +7,7 @@ using Saga.Go.UI;
 namespace Saga.Go.World
 {
     /// <summary>
-    /// PLAN.md 109-14-3a 수집 구슬·봉헌(웹 사가고 ⑲-3) — 안 주운 구슬(`GoOrbs.All`)을 떠서 도는 하늘빛 구슬로 세우고,
+    /// PLAN.md 109-14-3a 수집 구슬·봉헌(웹 사가만리 ⑲-3) — 안 주운 구슬(`GoOrbs.All`)을 떠서 도는 하늘빛 구슬로 세우고,
     /// 0.1초마다 플레이어 발 자리로 줍기(`GoOrbs.CanReach`)·봉헌(불 올린 봉수대 14m 안)을 본다. 모델 없이 빛만(웹 "효과 층").
     /// `WorldMapBuilder` 가 Play 때 붙인다(씬 재빌드 없음). 땅 높이는 표 값 대신 실제 땅에 레이를 쏴 앉힌다(강 구슬은 수면 기준 그대로).
     /// </summary>

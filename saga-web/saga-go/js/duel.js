@@ -486,7 +486,7 @@
     TIME_SEC: TIME_SEC, KI_MAX: KI_MAX, QUICK_CD: QUICK_CD, QUICK_KI: QUICK_KI,
     QUICK_MUL: QUICK_MUL, ULT_MUL: ULT_MUL, HEAVY_MUL: HEAVY_MUL,
     DODGE_CUT: DODGE_CUT, TELL_SEC: TELL_SEC, FOE_GAP: FOE_GAP,
-    /* rogue-action.js(사가블로식 위치 기반 도적전)가 재사용한다 — 이 둘만
+    /* rogue-action.js(사가나락식 위치 기반 도적전)가 재사용한다 — 이 둘만
        여태 export가 안 돼 있었다. 계산·기본값은 그대로, export만 추가 */
     FOE_HEAVY: FOE_HEAVY, MORALE_MUL: MORALE_MUL,
     /* 판정 층 — 화면 없이 굴린다 (자가진단이 쓰는 문) */

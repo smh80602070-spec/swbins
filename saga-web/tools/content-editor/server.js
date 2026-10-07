@@ -4,7 +4,7 @@
  * 않고, `run-editor.bat` 으로 사용자가 직접 켤 때만 뜬다.
  *
  * 다섯 판의 data.js 는 HEROES/PETS/BIOS 구간이 전부 바이트 단위로 동일하다
- * (사가고만 그 뒤에 자기 전용 코드가 더 붙어 있을 뿐). 그래서 한 판(캐노니컬
+ * (사가만리만 그 뒤에 자기 전용 코드가 더 붙어 있을 뿐). 그래서 한 판(캐노니컬
  * = saga-go)에서 만든 "옛 엔트리 텍스트"를 다섯 판 파일에서 그대로
  * indexOf 로 찾아 정확히 한 번만 일치할 때만 교체한다 — 못 찾거나 두 번 이상
  * 걸리면 그 판은 실패로 보고하고 건드리지 않는다(이미 어긋나 있었다는 뜻).
@@ -102,7 +102,7 @@ function parseFile(text) {
 }
 
 /** 세 구간(HEROES 배열+PETS 배열+BIOS 객체) 텍스트만 뽑아 붙인 것의 md5 —
- *  판마다 달라도 되는 뒤쪽 코드(사가고 전용 genchar-jp/cn 등)는 영향 없다. */
+ *  판마다 달라도 되는 뒤쪽 코드(사가만리 전용 genchar-jp/cn 등)는 영향 없다. */
 function contentHash(text) {
   const p = parseFile(text);
   const region =

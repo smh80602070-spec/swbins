@@ -5,7 +5,7 @@ using Saga.Go.Data;
 namespace Saga.Go.World
 {
     /// <summary>
-    /// PLAN.md 109-14-34 갈대 나루 물가 녹슨 조선소(웹 사가고 ⑲-34 `era-sites.js`) — 마을 강 서쪽 둑에 창고·녹슨 배 뼈대·나루 널판·용접대·통 몇 개와
+    /// PLAN.md 109-14-34 갈대 나루 물가 녹슨 조선소(웹 사가만리 ⑲-34 `era-sites.js`) — 마을 강 서쪽 둑에 창고·녹슨 배 뼈대·나루 널판·용접대·통 몇 개와
     /// 기중기(노란 다리 둘 + 들보). 기중기 다리는 곧은 벽이라 그대로 기어오르고(`PlayerController` 벽 잡기 — 충돌이 있는 것만), 들보 윗면(`GoStory.CraneTop`)이 꼭대기다.
     /// 나머지 건물은 충돌이 없다(이야기 무리·지키기 물결이 걷는 땅을 안 막게). 도형만. `WorldMapBuilder` 가 Play 때 붙인다.
     /// </summary>

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Saga.Realm.Data
 {
     /// <summary>
-    /// PLAN.md 109-16b 회차 — 이긴 판에서 같은 깃발로 다시(웹 사가국지 §5-14, SAGA-DESIGN §16 공통 뼈대: 회차 카운터 · 이긴 판에서만 열림 ·
+    /// PLAN.md 109-16b 회차 — 이긴 판에서 같은 깃발로 다시(웹 사가천하 §5-14, SAGA-DESIGN §16 공통 뼈대: 회차 카운터 · 이긴 판에서만 열림 ·
     /// 난도 한 갈래 · 작은 이월). 웹은 결과 카드 단추, 이 트랙은 판이 끝난 뒤 "다음 달" 단추(=`RealmCommandUi.ExecuteNextMonth`)를 회차 시작으로
     /// 바꿨다(카드 자리·배치 점검을 안 건드리려고) — 한 번 누르면 조건을 미리 보이고 6초 안에 한 번 더 누르면 시작.
     ///

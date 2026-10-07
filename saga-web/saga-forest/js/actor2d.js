@@ -1,5 +1,5 @@
 /**
- * 사가의숲 2D(구면 투영) 마을 그림의 **사람**(주민·방문객·나)을 2D 시트(shared/js/mode2d.js)로 그린다 — W-0019.
+ * 사가마을 2D(구면 투영) 마을 그림의 **사람**(주민·방문객·나)을 2D 시트(shared/js/mode2d.js)로 그린다 — W-0019.
  * village-view.js 의 drawResident·drawNpc·drawMe·drawMeIn 이 스탬프 대신 먼저 부른다. 풀이 없거나 아직 안 받았으면 false → 부른 쪽이 기존 스탬프를 그린다.
  * 역할(role)로 풀 표를 고른다: adult(어른 주민·방문객)·kid(아이)·me(나). 같은 사람은 늘 같은 몸을 받는다(id 해시).
  * village-view.js 는 큰 파일 상한이라 이 코드를 따로 뒀다(조각에는 stamp 앞 한 줄씩만 붙인다).

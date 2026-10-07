@@ -239,7 +239,7 @@ namespace Saga.Go.Data
                                world.z / TestMapData.TileSize + TestMapData.RowCount * 0.5f);
         }
 
-        // ---- PLAN.md 109-9 정상 — 웹 사가고 ⑰ "정상 발견 · 오른 정상 순간이동" ----------------------------
+        // ---- PLAN.md 109-9 정상 — 웹 사가만리 ⑰ "정상 발견 · 오른 정상 순간이동" ----------------------------
 
         public struct Peak
         {

@@ -35,7 +35,7 @@ namespace Saga.Go.Player
         private const float Gravity = 20f;
         private const float TurnRate = 12f; // Godot lerp_angle(from,to,weight)의 weight와 같은 순수 보간 계수(각도 단위 아님)
 
-        // PLAN.md 107 ② — GO 사람 키 3.4m(실측 약 1.85배) 기준. Godot 사가고 점프 1.4m → 2.4m.
+        // PLAN.md 107 ② — GO 사람 키 3.4m(실측 약 1.85배) 기준. Godot 사가만리 점프 1.4m → 2.4m.
         public const float JumpVelocity = 9.8f;          // v²/2g = 2.4m
         public const float ClimbSpeed = 3.2f;
         public const float ClimbSideSpeed = 2.6f;
@@ -54,7 +54,7 @@ namespace Saga.Go.Player
         public const float GlideFallSpeed = 3f;
         public const float GlideStaminaPerSec = 5f;
 
-        // ---- PLAN.md 109-14-20 바람 기둥(웹 사가고 ⑲-20 landform) — 켜져 있으면 기둥 안 공중(점프)에서 저절로 활공하고 초당 Rise m 로
+        // ---- PLAN.md 109-14-20 바람 기둥(웹 사가만리 ⑲-20 landform) — 켜져 있으면 기둥 안 공중(점프)에서 저절로 활공하고 초당 Rise m 로
         // 솟다가 Top 에서 멎는다(기력 안 씀). 땅에 선 채로는 안 뜬다. 기둥 안에서 접으면(점프) 기둥을 나갈 때까지 안 편다. `StoryField` 가 켠다.
         // ---- PLAN.md 109-14-22 활 조준 — 켜져 있으면 걷지 않고(방향 입력은 `AimInput` 으로 넘겨 겨눈 쪽을 돌린다), 점프하면 풀린다(`AimCancelled`).
         public bool MoveLocked { get; set; }

@@ -6,7 +6,7 @@ using Saga.Go.Data;
 namespace Saga.Go.World
 {
     /// <summary>
-    /// PLAN.md 109-14-26 탐사 게시판(웹 사가고 ⑲-26) — 역참 다섯 곁 가마솥 반대편(서쪽 6.5m)에 판자 게시판(기둥 둘·판·지도 종이)을 도형으로 세운다.
+    /// PLAN.md 109-14-26 탐사 게시판(웹 사가만리 ⑲-26) — 역참 다섯 곁 가마솥 반대편(서쪽 6.5m)에 판자 게시판(기둥 둘·판·지도 종이)을 도형으로 세운다.
     /// 반경 7.4m 안이 "게시판 곁"(`PlayerAtBoard`). `WorldMapBuilder` 가 Play 때 붙인다(씬 재빌드 없음). 땅 높이는 레이로 앉힌다.
     /// </summary>
     public class DispatchField : MonoBehaviour

@@ -1,4 +1,4 @@
-// 사가의숲 탑성 조각 번들(PLAN §5.3 다섯째 갈래): 폐허 곁 돌무더기 여섯이 걸을 수 있는 자리에 서나 · 뒤지면 조각이 나오나 · 다 들이면 정자가 서나 · 3D 예외 없나
+// 사가마을 탑성 조각 번들(PLAN §5.3 다섯째 갈래): 폐허 곁 돌무더기 여섯이 걸을 수 있는 자리에 서나 · 뒤지면 조각이 나오나 · 다 들이면 정자가 서나 · 3D 예외 없나
 // 사진은 `shot` 을 줄 때만(shots/fs_ruin_*). PC_PROF=tmp/… 새 프로필로 돌릴 것
 import { launch, sleep } from './cdp.mjs';
 const shot = process.argv.includes('shot');

@@ -1,6 +1,6 @@
 {
  "id": "hero_jp_kazenari",
- "_note": "단계 4-b 사가국지 장수 몸 — saga-web/saga-realm 장수 id jp_kazenari(가명 가제나리). 역할 strategist·jp·★3. gen_realm_recipes.py 가 쓴다(손으로 고치지 말 것 — 생성기를 고친다).",
+ "_note": "단계 4-b 사가천하 장수 몸 — saga-web/saga-realm 장수 id jp_kazenari(가명 가제나리). 역할 strategist·jp·★3. gen_realm_recipes.py 가 쓴다(손으로 고치지 말 것 — 생성기를 고친다).",
  "axes": {
   "height": 4,
   "build": 2,

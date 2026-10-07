@@ -1,4 +1,4 @@
-// 사가스토리 확인 시트(tasks/sheets/saga-story-*.md) 네 기능을 Playwright 로 직접 해 본다.
+// 사가종횡 확인 시트(tasks/sheets/saga-story-*.md) 네 기능을 Playwright 로 직접 해 본다.
 //   node pw-st-sheet.mjs        (서버: node serve.mjs C:/swbins/saga-web 8871 — 돌리는 쪽이 띄우고 끈다)
 // (첫 발 장면은 DG.story — Esc 로 넘긴다. 헤드리스 포커스는 pw.mjs 가 켠다)
 // 사냥터(허창 들판)에 들어가 실제 키(←→·␣·↑↓·1·M)와 자동 사냥을 본다.

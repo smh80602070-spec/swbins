@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_parasite_01",
- "_note": "단계 3 괴물 비교용 — saga-unity Parasite(Mixamo) 자리 후보(사가의숲 포자괴물). 게임 인물 아님(이름 없음). 마른 몸·긴 팔다리와 손가락·꺼진 배·앞으로 뺀 목·민머리·누런 초록 피부·등과 어깨에 포자 혹 무리·해진 허리 천.",
+ "_note": "단계 3 괴물 비교용 — saga-unity Parasite(Mixamo) 자리 후보(사가마을 포자괴물). 게임 인물 아님(이름 없음). 마른 몸·긴 팔다리와 손가락·꺼진 배·앞으로 뺀 목·민머리·누런 초록 피부·등과 어깨에 포자 혹 무리·해진 허리 천.",
  "macro": {"gender": 1.0, "age": 0.5, "muscle": 0.25, "weight": 0.0, "height": 0.8, "proportions": 0.2,
            "race": {"asian": 0.3, "caucasian": 0.5, "african": 0.2}},
  "targets": {"measure-upperarm-length-incr": 0.8, "measure-lowerarm-length-incr": 0.8, "hand-fingers-length-incr": 1.0,

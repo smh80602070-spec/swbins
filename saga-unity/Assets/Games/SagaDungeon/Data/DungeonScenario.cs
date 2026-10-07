@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Saga.Dungeon.Data
 {
     /// <summary>
-    /// PLAN.md 109-16 사가블로 시나리오 「이름이 지워지는 나라」 진행 — 웹 사가블로 `js/scenario.js` 엔진 결(코드 공유 없음). 표는 <see cref="DungeonScenarioData"/>.
+    /// PLAN.md 109-16 사가나락 시나리오 「이름이 지워지는 나라」 진행 — 웹 사가나락 `js/scenario.js` 엔진 결(코드 공유 없음). 표는 <see cref="DungeonScenarioData"/>.
     /// **지금 어느 장 몇째 단계인지**를 적고, 그 단계가 채워졌는지 물어보며 하나씩 넘긴다. 새 판정을 만들지 않는다 — 단계는 이미 나가는 사건만 듣는다:
     /// talk = 대사 장면(<see cref="ScenePlay"/> — UI 가 받는다, **칸(마을·갈림길) 안일 때만**) · kill = 적이 쓰러질 때(이 단계가 시작된 뒤 n 마리) ·
     /// floor = 굴혈에서 닿은 최고 층 · chain = 그 지역 사연 사슬 평정(<see cref="RegionSagaState"/>) · region = 그 지역에 처음 들어섬(사슬이 열림) ·

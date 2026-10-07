@@ -1,4 +1,4 @@
-// 사가고 Q3 확인 — 집 셋에 네 방향으로 걸어 들어가 멈춘 자리 + 위에서 찍기
+// 사가만리 Q3 확인 — 집 셋에 네 방향으로 걸어 들어가 멈춘 자리 + 위에서 찍기
 import { launch, sleep } from './cdp.mjs';
 const B = 'http://127.0.0.1:8871/saga-go/';
 const c = await launch(1280, 720);

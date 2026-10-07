@@ -26,7 +26,7 @@ namespace Saga.Dungeon.Data
         public readonly int Grade;
         public readonly WeaponShape Shape;
 
-        // PLAN.md 109-10-2 비전(웹 사가블로 §5.10) — 웹은 전설(4) 한 점에 비전 하나인데 이 트랙엔 전설 등급이
+        // PLAN.md 109-10-2 비전(웹 사가나락 §5.10) — 웹은 전설(4) 한 점에 비전 하나인데 이 트랙엔 전설 등급이
         // 없어 맨 위(빛기둥 "고유") = 명소 층 첫 토벌 무기 여섯이 맡는다. 웹 "고유는 늘 같은 비전"대로 굴리지
         // 않고 여기 박는다(층 이름에 맞춰, 다섯 다 나오게 — 분노만 둘). 없음 = 비전 없는 무기.
         public readonly Secret Lore;

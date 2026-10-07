@@ -63,7 +63,7 @@
    "building": [
     {"id": "hanok_01", "era": "past", "state": "exists"},
     {"id": "jp_minka_01", "era": "past", "state": "exists"},
-    {"id": "modern_block_01", "era": "present", "state": "exists", "hint": "사가고와 같은 파일"}
+    {"id": "modern_block_01", "era": "present", "state": "exists", "hint": "사가만리와 같은 파일"}
    ],
    "prop": [
     {"id": "bamboo_clump_01", "era": "past", "state": "new", "hint": "대나무 무리"},
@@ -79,8 +79,8 @@
   "realm": {
    "theme": "성벽·성문·궁·서역 도시",
    "building": [
-    {"id": "chinese_hall_01", "era": "past", "state": "exists", "hint": "궁 전각, 사가블로와 같은 파일"},
-    {"id": "stone_tower_01", "era": "past", "state": "exists", "hint": "성문 망루, 사가블로와 같은 파일"},
+    {"id": "chinese_hall_01", "era": "past", "state": "exists", "hint": "궁 전각, 사가나락와 같은 파일"},
+    {"id": "stone_tower_01", "era": "past", "state": "exists", "hint": "성문 망루, 사가나락와 같은 파일"},
     {"id": "silkroad_house_01", "era": "past", "state": "exists", "hint": "서역 흙벽 평지붕 집"}
    ],
    "prop": [
@@ -111,7 +111,7 @@
   "items": ["wheat_sprout_01", "wheat_growing_01", "wheat_ripe_01", "vegetable_row_01", "reed_clump_01", "scarecrow_01", "stepping_stone_01", "stepping_stone_02", "rubble_pillar_01", "rubble_wall_01", "wall_block_01", "plank_bridge_01", "temple_roof_01"]
  },
  "dkit": {
-  "note": "K-0057 — 사가블로 굴혈 방 키트 5모듈 × 재질 3. 한 변 4m·문 폭 2m·벽 3m. 3D 전용. 삼각형 ≤2500.",
+  "note": "K-0057 — 사가나락 굴혈 방 키트 5모듈 × 재질 3. 한 변 4m·문 폭 2m·벽 3m. 3D 전용. 삼각형 ≤2500.",
   "tris_max": 2500, "no_sprite": true,
   "items": ["cave_room_01_dirt", "cave_room_01_limestone", "cave_room_01_lava", "cave_gate_01_dirt", "cave_gate_01_limestone", "cave_gate_01_lava", "cave_corridor_01_dirt", "cave_corridor_01_limestone", "cave_corridor_01_lava", "cave_corner_01_dirt", "cave_corner_01_limestone", "cave_corner_01_lava", "cave_stairs_01_dirt", "cave_stairs_01_limestone", "cave_stairs_01_lava"]
  },

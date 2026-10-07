@@ -8,7 +8,7 @@ using Saga.Go.World;
 namespace Saga.Go.Combat
 {
     /// <summary>
-    /// PLAN.md 109-6 "싸워서 등용"(웹 사가고 ⑯) — 지역마다 한 자리(`GoHeroes.Stands`)에 도감 인물이 하나씩 서 있다
+    /// PLAN.md 109-6 "싸워서 등용"(웹 사가만리 ⑯) — 지역마다 한 자리(`GoHeroes.Stands`)에 도감 인물이 하나씩 서 있다
     /// (그 지역 명단에서 아직 동행이 아닌 첫 사람). 평소엔 들판 적이 아니라 그냥 서 있는 사람이고(들판 적 목록·진단을 안 건드린다),
     /// 곁 <see cref="GoHeroes.ChallengeRadius"/> 안에 들면 그 자리에서 겨루기가 열린다 — 인물이 들판 적(`FieldEnemy.Kind.Hero`)으로 바뀌고
     /// 졸개(★3 하나·★4~5 둘, 제 원소 — 둘째는 다른 시대 몸)가 붙는다. 체력이 0 이면 쓰러지지 않고 굴복 → <see cref="GoHeroes.YieldSec"/> 뒤

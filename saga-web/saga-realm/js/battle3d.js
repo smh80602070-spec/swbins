@@ -86,7 +86,7 @@
      슬롯이다"로 보고 두 번째 합을 그냥 건너뛴다 — 첫 합의 정지 자세
      그대로 멈춰 있는 것처럼 보인다) */
   var duelGen = 0, tickDuelGen = -1;
-  /* 맞았을 때 붉게 번쩍(2026-09-10, 사가블로 asset3d.js 의 ownAllMat·flashAllMat
+  /* 맞았을 때 붉게 번쩍(2026-09-10, 사가나락 asset3d.js 의 ownAllMat·flashAllMat
      과 같은 요령) — 'hit' 를 재생하기 시작한 그 프레임에 1로 켜고 tick()마다
      0.82배씩 죽인다. 재질을 복제해 두는 건(setupDuel() 이 짓는 순간, `place()`)
      성끼리 서로 다른 세력색을 입은 재질을 공유해 버리면 한쪽이 번쩍일 때
@@ -654,7 +654,7 @@
           if (!face || flee) { s.obj.rotation.y = Math.atan2(dx, dz); }
         } else if (want === 'run') { want = 'idle'; }
         if (face) { s.obj.rotation.y = Math.atan2(face.x - s.x, face.z - s.z); }
-        /* 제 편끼리 겹치지 않게 살짝 민다(한 점에 몰려 한 덩이가 되지 않게 — 사가고 Q6 ③ 과 같은 요령) */
+        /* 제 편끼리 겹치지 않게 살짝 민다(한 점에 몰려 한 덩이가 되지 않게 — 사가만리 Q6 ③ 과 같은 요령) */
         for (var j = 0; j < mine.length; j++) {
           var o = mine[j];
           if (o === s || !o.alive) { continue; }
@@ -831,7 +831,7 @@
    * `updateDuel()` 참고) 공격·피격 동작은 절대 안 걸린다. **새 판정이
    * 아니다** — 이미 `armyPower`가 골라 둔 값을 그대로 세워 보여줄 뿐이다.
    */
-  /** 재질을 복제해 떼어 온다(사가블로 asset3d.js `ownAllMat`과 같은 요령) —
+  /** 재질을 복제해 떼어 온다(사가나락 asset3d.js `ownAllMat`과 같은 요령) —
    *  안 그러면 캐시된 재질을 여러 모델이 같이 쓰다 한쪽만 번쩍이려 해도
    *  같은 재질을 쓰는 다른 데까지 같이 번쩍인다. emissive 있는 것만 돌려준다 */
   function ownAllMat(root) {

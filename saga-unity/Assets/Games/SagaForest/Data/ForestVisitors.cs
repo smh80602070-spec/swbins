@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Saga.Forest.Data
 {
     /// <summary>
-    /// PLAN.md 109-12-1 "떠돌이 방문객"(웹 사가의숲 §5.9 `js/visitor.js`, 2026-09-27 이식) — 날짜 해시로 하루 한 명이 광장에 들른다.
+    /// PLAN.md 109-12-1 "떠돌이 방문객"(웹 사가마을 §5.9 `js/visitor.js`, 2026-09-27 이식) — 날짜 해시로 하루 한 명이 광장에 들른다.
     /// 퓨전 방향대로 사람만 오지 않는다(과거·현대·미래·신화):
     ///
     ///   🦊 여우 화상 호연    오늘만 귀한 가구 하나를 1.5배 값에 판다(물러났다 다시 다가서면 산다)
@@ -125,7 +125,7 @@ namespace Saga.Forest.Data
             ["dokkaebi"] = "크하하, 그 정도는 장난도 아니지", ["alien"] = "제 별에선 그걸 \"우정\" 이라고 불러요",
         };
 
-        // ── 곁가지 side_guest_*(웹 사가의숲 visitor.js STORY) — 눌러앉은 손님이 눌러앉은 뒤 처음 말에 각자 사연을 한 번 들려준다 ──
+        // ── 곁가지 side_guest_*(웹 사가마을 visitor.js STORY) — 눌러앉은 손님이 눌러앉은 뒤 처음 말에 각자 사연을 한 번 들려준다 ──
         /// <summary>사연 보상 — 웹 금 1500 ÷ 50 + 공적 10 = 과일 40(이 트랙 규칙: 금 ÷ 50, 공적 그대로).</summary>
         public const int StoryFruit = 40;
         private static readonly Dictionary<string, string> StoryKo = new Dictionary<string, string>

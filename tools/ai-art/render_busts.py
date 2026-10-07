@@ -5,7 +5,7 @@
 
 한 장 = 768x1024, 키 1.7m 로 맞춘 몸의 가슴 위, 정면, 가운데. 이미 있는 그림은 건너뛴다. 몸마다 20초 안팎.
 이 그림은 `gen.py` 이미지→이미지의 밑그림일 뿐 — 게임에 안 들어가고 저장소에도 안 넣는다(_out 은 gitignore).
-Unity·다른 Blender 배치·sd-webui 와 동시에 돌리지 않는다(PC 가 멈추지 않게).
+Unity·다른 Blender 배치·ComfyUI 와 동시에 돌리지 않는다(PC 가 멈추지 않게).
 """
 import bpy, sys, os, math
 from mathutils import Vector

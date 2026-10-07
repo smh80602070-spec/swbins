@@ -22,8 +22,8 @@
 | **파일** | `textures/dungeon/floor_stone.webp`(92KB)·`floor_stone_2.webp`(114KB, `stone_tiles_02`)·`floor_stone_3.webp`(95KB, `mixed_rock_tiles`) — 방 바닥. `wall_stone.webp`(174KB)·`wall_stone_2.webp`(152KB, `stone_wall_04`)·`wall_stone_3.webp`(150KB, `medieval_blocks_05`) — 방 경계 벽 넷 |
 
 사용자가 "바닥·벽 텍스처부터 받아와서 적용해 달라"고 요청 — 다섯 판 어디에도
-재사용할 만한 돌바닥/돌벽 텍스처가 없어서(사가고 텍스처는 야외 지형용,
-사가의숲·사가스토리의 `tile_stone.png`는 16×16 픽셀아트) 새로 받았다.
+재사용할 만한 돌바닥/돌벽 텍스처가 없어서(사가만리 텍스처는 야외 지형용,
+사가마을·사가종횡의 `tile_stone.png`는 16×16 픽셀아트) 새로 받았다.
 `js/dungeon3d.js`의 `texMat()`이 `THREE.RepeatWrapping`으로 타일링한다 —
 diffuse 한 장만 쓰고(노멀·러프니스 맵 없음), 재질은 여전히
 `MeshLambertMaterial`이라 다른 소품과 재질 종류가 갈리지 않는다. 색은
@@ -127,9 +127,9 @@ UAL1 몸짓이 필요 없다. 아래 조합형은 `HERO_RECIPES_FALLBACK` 으로
 | **라이선스** | CC0 1.0 — 재배포 자유, 표시 의무 없음 |
 | **받은 곳** | `saga-forest`가 2026-09-03에 이미 받아 심플리파이·리사이즈·jpeg 압축까지 끝내 둔 파일을 그대로 복사(md5 동일로 확인). 변환 경위(정점 수·감량률 등 실측)는 `../saga-forest/assets/ASSET_LICENSES.md`의 같은 제목 절 참고 |
 
-사용자가 "사가고처럼 실사화" 요청 → 조사해 보니 **사람은 막다른 길**이었다
+사용자가 "사가만리처럼 실사화" 요청 → 조사해 보니 **사람은 막다른 길**이었다
 (Mixamo 재배포 금지, 대안 CC0 팩은 애니메이션 0개 — `saga-go/HANDOFF.md`
-2026-09-04 절 참고). 대신 사가의숲이 이미 검증한 자연물 실사화만 옮겼다.
+2026-09-04 절 참고). 대신 사가마을이 이미 검증한 자연물 실사화만 옮겼다.
 
 | 파일 | 이 판에서 쓰는 곳 |
 |---|---|
@@ -1244,7 +1244,7 @@ PLAN 4절의 우선순위를 따라 나무·바위·폐허(기둥·벽)·절벽�
 ## Lucide — UI 아이콘 (2026-09-08, `js/icon.js`)
 
 `saga-go`의 `js/icon.js`를 그대로 옮겨 도구줄·독·지갑 이모지를 실제 아이콘으로
-갈아 끼웠다("사가블로 UI가 사가고랑 완전히 같지 않다" 제보). SVG 자체가
+갈아 끼웠다("사가나락 UI가 사가만리랑 완전히 같지 않다" 제보). SVG 자체가
 파일이 아니라 `icon.js` 안에 문자열로 박혀 있다 — 출처·라이선스는
 `../saga-go/assets/ASSET_LICENSES.md`의 Lucide 항목을 그대로 따른다
 (Lucide, <https://lucide.dev>, **ISC**).
@@ -1817,7 +1817,7 @@ VRoid Studio 공식 CC0 샘플 AvatarSample_A/B/C(github.com/madjin/vrm-samples,
 
 2D 던전 뷰(`dungeon-view.js` 의 `stamp()` 넷)가 부르는 `sprite.js` 의 `bake()`(`kind==='human'`)가 여태 원·선으로 절차적으로
 그리던 **사람**(NPC·동행·주인공·인간형 적)을 이 시트에서 오려 낸 정지 그림 열넷으로 바꿨다(SAGA-DESIGN §11 Phase 2, 사용자가
-"사가블로 2D 살려서" 로 Q-2D-2 결정). 파일은 `saga-forest/assets/sprites2d/human_01~14.png` 와 같은 것(md5 동일)이고 자르는 좌표·표도
+"사가나락 2D 살려서" 로 Q-2D-2 결정). 파일은 `saga-forest/assets/sprites2d/human_01~14.png` 와 같은 것(md5 동일)이고 자르는 좌표·표도
 그쪽 `ASSET_LICENSES.md` 의 같은 절과 같다. **트레이드오프** — 인물별 색·등신·걷기 다리 애니메이션은 못 낸다(고정 그림 한 장).
 인물 id 를 해시해 열넷 중 하나를 **늘 같은 얼굴로** 고르고, 좌우 뒤집기와 걸음 통통거림은 그림과 무관하게 산다. 이 판의 양식인
 디아블로풍 후처리(`diabloize`, 어둡고 채도 낮게)는 그림에도 그대로 건다. 그림이 아직 안 실린 첫 프레임만 옛 코드 그림으로
@@ -1840,14 +1840,14 @@ VRoid Studio 공식 CC0 샘플 AvatarSample_A/B/C(github.com/madjin/vrm-samples,
 것이 없고**, 이 그림은 파생물이므로 각 모델의 라이선스가 그대로 따른다: VRoid 몸(`people/anime/`)·Quaternius·KayKit·OGA 사람은 위 해당 절,
 poly.pizza 의 CC-BY 몸은 **위 절의 저작자 표시를 그대로 이행**한다. 모델을 바꾸면 이 절과 위 절을 같이 본다.
 
-## 도감(펫) 초상 — 3D 굽기가 안 되는 91종을 사가고 `beast_*.png` 16장으로 일부 채움 (2026-09-22)
+## 도감(펫) 초상 — 3D 굽기가 안 되는 91종을 사가만리 `beast_*.png` 16장으로 일부 채움 (2026-09-22)
 
 `assets/portraits/pet/`(14종, 위 "도감(펫) 초상 실사화" 절)와 `asset3d.js` REG 에 없어 3D 굽기 자체가 안 되는 나머지
 91종(SAGA-HANDOFF·이 판 `HANDOFF.md` 2026-09-22 절 — `bake-portraits --kind=pet` 210회 재시도 중 신규분 0회 성공)은
 여태 절차적 `beast()` 그림뿐이었다. 그중 **종이 실제로 겹치는 16종**만 `saga-go/assets/sprites2d/beast_*.png`(CC0, 원본
 출처는 `../saga-go/assets/ASSET_LICENSES.md` "짐승 도감(펫) 지도 스탬프" 절의 Quaternius GLB 들 — 재배포 조건 없음)을
 **그대로 md5 동일 복사**해 썼다: `beast_Fox`·`Dolphin`·`Shark`·`Manta_ray`·`Stag`·`Horse_White`·`Horse`·`Donkey`·`Cow`·
-`Bull`·`Stegosaurus`·`Trex`·`Triceratops`·`Velociraptor`·`Koi`·`Alpaca`. 사가고는 형태(form)별 여럿 중 해시로 아무거나
+`Bull`·`Stegosaurus`·`Trex`·`Triceratops`·`Velociraptor`·`Koi`·`Alpaca`. 사가만리는 형태(form)별 여럿 중 해시로 아무거나
 고르지만(배경 채움용), 이 판 펫은 이름이 있는 특정 종이라 **종 이름이 실제로 맞는 자리에만** 못 박아 썼다(`PET_IMG`,
 `js/sprite.js`) — 예: `pt_shark_2`(백상아리)·`pt_horse_farm`(짐말)처럼 정확히 겹치는 파일이 없는 근연종은 같은 계열
 그림을 재사용(상어·말)하고, 안 맞는 종(물고기 대다수·신수·포켓몬 오마주)은 그대로 절차적 그림에 남겼다. 96×96 PNG라
@@ -1863,21 +1863,21 @@ poly.pizza 의 CC-BY 몸은 **위 절의 저작자 표시를 그대로 이행**�
 | **라이선스** | **CC0 1.0 Universal** (퍼블릭 도메인 헌정) |
 | **저작자 표시** | 필요 없다. 그래도 적어 둔다 |
 | **재배포** | 허용된다 |
-| **받은 곳** | 사가의숲·사가고와 같은 파일(다섯 판 공용 CC0 자산 — 원본 <https://polyhaven.com/a/alps_field>, 1k `.hdr`) |
+| **받은 곳** | 사가마을·사가만리와 같은 파일(다섯 판 공용 CC0 자산 — 원본 <https://polyhaven.com/a/alps_field>, 1k `.hdr`) |
 
 `js/dungeon3d.js` 의 `HDRI_SRC` 가 PBR 재질 반사·거칠기용 `scene.environment` 로만 쓴다(배경 하늘은 안 바꾼다).
 2026-09-23 `tools/asset-audit` 이 이 판 문서에만 빠진 것을 잡아 채웠다.
 
 
-## 신수·포켓몬 오마주 대역 모델 — 사가고에서 복사 (2026-09-23)
+## 신수·포켓몬 오마주 대역 모델 — 사가만리에서 복사 (2026-09-23)
 
-`models/standin/` — `Birb.glb`·`Pigeon.glb`·`Snake.glb`·`Snake_angry.glb`·`Orc.gltf`·`Demon.gltf`. 사가고 `assets/models/animals/` 의 같은 파일을
+`models/standin/` — `Birb.glb`·`Pigeon.glb`·`Snake.glb`·`Snake_angry.glb`·`Orc.gltf`·`Demon.gltf`. 사가만리 `assets/models/animals/` 의 같은 파일을
 **그대로 복사**했다(출처·경위는 `saga-web/saga-go/assets/ASSET_LICENSES.md` — Quaternius CC0: 새 둘은 animals pack, 뱀 둘은 easy_enemies_pack,
-Orc·Demon 은 Ultimate Monsters). 사용자 결정("사가고처럼 대역 입히기")으로 신수·오마주 도감 초상에 사가고와 같은 대역을 입히는 데만 쓴다.
+Orc·Demon 은 Ultimate Monsters). 사용자 결정("사가만리처럼 대역 입히기")으로 신수·오마주 도감 초상에 사가만리와 같은 대역을 입히는 데만 쓴다.
 
-## 세 시대 적 로봇 셋 — 사가고에서 복사 (2026-09-25, PLAN §5.20)
+## 세 시대 적 로봇 셋 — 사가만리에서 복사 (2026-09-25, PLAN §5.20)
 
-`models/monsters/robots/` — `Robot_Drone.glb`·`Robot_Walker.glb`·`Robot_Large.glb`. 사가고 `assets/models/foes/` 의 같은 파일을
+`models/monsters/robots/` — `Robot_Drone.glb`·`Robot_Walker.glb`·`Robot_Large.glb`. 사가만리 `assets/models/foes/` 의 같은 파일을
 **그대로 복사**했다(Quaternius CC0 1.0, 원 출처 cyberpunk pack `Enemy_Flying`·`Enemy_2Legs`·`Enemy_Large` — 경위는
 `saga-web/saga-go/assets/ASSET_LICENSES.md` "세 시대 사람·적" 절, Meshopt 압축본). 제 클립(걷기·대기·공격·죽음) 내장.
 같은 절의 나머지 몸(폭주 청년 `polypizza_men/Punk`·방역복 `polypizza_hazmat/HazmatMan`·특공대 `polypizza_men/SWAT`·외계 `Alien_0bb74be9`·
@@ -1900,12 +1900,12 @@ Orc·Demon 은 Ultimate Monsters). 사용자 결정("사가고처럼 대역 입�
 | 불가사리 | **Elephant**(쇠를 먹는 코끼리 코 짐승) |
 | 삿갓동이·뿔도롱·뿔낙지·날주머니·방아토끼·이끼잔나비 | Mushnub·Dino·Squidle·Glub·Bunny·Monkroose |
 | 묵방울·어둑귀·눈머리·겹날주머니·고깔도사 | Pink_Slime·Ghost·Yeti·Glub_Evolved·Wizard |
-| 누렁날개·노을용·물이무기·별손님·복고양이 | Alpaking·Dragon·Snake_angry·Alien_2(두발 외계인 — 방울형 Alien 은 사가고 들판 적과 같은 파일이라 피함)·Cat(괴물 고양이) |
+| 누렁날개·노을용·물이무기·별손님·복고양이 | Alpaking·Dragon·Snake_angry·Alien_2(두발 외계인 — 방울형 Alien 은 사가만리 들판 적과 같은 파일이라 피함)·Cat(괴물 고양이) |
 
 ## AI 생성 도감 초상 (2026-09-29)
 | 항목 | 내용 |
 |---|---|
-| **파일** | `assets/portraits/hero/<id>_s.webp`(192×192)·`<id>_c.webp`(300×344) — 도감 105 인물 + 사가블로 미래·현대 인물 30(`--src web_dungeon_30`, 프롬프트 `batches/web_dungeon_30.json`) |
+| **파일** | `assets/portraits/hero/<id>_s.webp`(192×192)·`<id>_c.webp`(300×344) — 도감 105 인물 + 사가나락 미래·현대 인물 30(`--src web_dungeon_30`, 프롬프트 `batches/web_dungeon_30.json`) |
 | **만든 법** | swbins3 로컬 sd-webui + **Animagine XL 4.0 Opt**(CreativeML OpenRAIL++-M, 상업 사용 허용) — `tools/ai-art/gen.py` → `pack_web_portraits.py` |
 | **프롬프트** | 인물 이름 없이 문화·역할·성별·나이·머리·눈 묘사만 — `tools/ai-art/batches/web_heroes_105.json` |
 | **밑그림** | 도감 105 인물은 자체 공방 몸(`tools/char-forge`, CC0 재료+레시피) 가슴 위 렌더를 밑그림으로 한 이미지→이미지 생성(`render_busts.py`, `batches/web_heroes_105_i2i.json`, denoise 0.55) — 밑그림 = 공방 몸 렌더 |

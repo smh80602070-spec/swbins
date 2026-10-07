@@ -9,7 +9,7 @@ using Saga.Dungeon.World;
 namespace Saga.EditorTools
 {
     /// <summary>
-    /// PLAN.md 109-10-5 지역 몬스터·위험도·우두머리(웹 사가블로 §5.13) 진단 — `PlaytestDungeonHeadless` 가 지역 아홉 진단 뒤에 부른다(한 프레임 안, 시각은 `RegionBossState.NowOverride`).
+    /// PLAN.md 109-10-5 지역 몬스터·위험도·우두머리(웹 사가나락 §5.13) 진단 — `PlaytestDungeonHeadless` 가 지역 아홉 진단 뒤에 부른다(한 프레임 안, 시각은 `RegionBossState.NowOverride`).
     /// 웹 진단(명단 이름·1단계·몸 / 위험도 중원 0·멀수록·상한·모루골 floor 0 / 명단·단계 밖 0 / 자리·호위·전설·10분)을 이 트랙에 맞춰:
     /// 표(위험 웹 값·중원 1층·우두머리 층 = 위험 + 4·체력 ×3·아홉 이름·빌린 몸 서로 다르고 이 판 몸과 안 겹침·자리가 제 지역 방 안·층 진행기 몸 목록·도감 이름 키) ·
     /// 표식 아홉 · 알림(4m·한 번) · 밟기(우두머리 + 호위 셋·시대대로 몸 이름·엘리트 수치·방 안쪽) · 두 번 안 섬 · 끈(18m 밖 물러남·쉼 없음) ·

@@ -1,6 +1,6 @@
 extends SceneTree
 
-## 사가스토리 비경(games/saga_story/data/story_labyrinth.gd 축복 9·노드·주간 보정·기억 조각 비용, story_labyrinth_state.gd 회차 상태, story_save_state.gd 기억 조각·단·주문서 보상) 자동 점검 — 화면 없는 순수 규칙. 씨앗 고정(20260824).
+## 사가종횡 비경(games/saga_story/data/story_labyrinth.gd 축복 9·노드·주간 보정·기억 조각 비용, story_labyrinth_state.gd 회차 상태, story_save_state.gd 기억 조각·단·주문서 보상) 자동 점검 — 화면 없는 순수 규칙. 씨앗 고정(20260824).
 ##   godot --headless --path saga-godot --script res://tools/probe_story_labyrinth.gd
 ## ① 축복 9: 키 유일·세 축(atk·def·util) 셋씩·희귀도·상한·설명·효과 ② roll_choice 600번: 카드 셋·겹침 없음·세 축에서 하나씩·상한 찬 것 제외·축이 다 차면 나머지에서 채움·전부 차면 빈 손·희귀도(common > rare)
 ## ③ 노드: 종류 5·아이콘/이름·한 층에 2~3개(겹침 없음)·5층(노드 4 + 보스) ④ 주간 보정: 짝수 주만 적 체력 ×1.3·보상 ×1.5 ⑤ 기억 조각: 단 비용 3·6·9…·10단 상한·단마다 체력 +2%%

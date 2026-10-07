@@ -1,4 +1,4 @@
-# 사가고 시나리오 — 17부~ (정본 이어서)
+# 사가만리 시나리오 — 17부~ (정본 이어서)
 
 13~16부와 공통 틀은 [saga-go-part10.md](saga-go-part10.md) · [saga-go.md](saga-go.md). README §0 "30KB 넘으면 부마다 나눈다"에 따라 17부부터 따로 둔다.
 구현된 장은 saga-godot `games/saga_go/data/story_chapters_5.gd` 가 대사·단계의 정본이다.

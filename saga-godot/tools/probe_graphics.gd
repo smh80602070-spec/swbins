@@ -3,7 +3,7 @@ extends SceneTree
 ## G-0054 설정 "화질/성능" 점검 — graphics_settings.gd 를 화면 없이 부른다.
 ##   godot --headless --path saga-godot --script res://tools/probe_graphics.gd
 ## ① 파일 없으면 화질, 화질 적용은 기본값(fps 0·배율 1·MSAA 프로젝트 값) ② 성능 → fps 30·배율 0.75·MSAA 끔·환경 SSAO/SSIL/SDFGI 끔
-## ③ 파일 왕복(다시 읽어도 성능) ④ 화질로 → 환경 처음 값 되살림 ⑤ 메뉴 창 세 줄·고르면 모드 바뀜 ⑥ 사가고 메뉴 항목 go_graphics
+## ③ 파일 왕복(다시 읽어도 성능) ④ 화질로 → 환경 처음 값 되살림 ⑤ 메뉴 창 세 줄·고르면 모드 바뀜 ⑥ 사가만리 메뉴 항목 go_graphics
 ## 설정 파일은 임시 폴더에 쓰고 지운다(user:// 의 graphics.cfg 는 안 만든다). 끝에 "PROBE graphics OK" 또는 실패 줄.
 
 const Gfx := preload("res://saga_core/data/graphics_settings.gd")
@@ -65,7 +65,7 @@ func _initialize() -> void:
 		Gfx.set_mode(Gfx.QUALITY, self)
 
 	var has_entry := FileAccess.get_file_as_string(HUD_MENU).contains("[\"go_graphics\",")
-	check(has_entry, "⑥ 사가고 메뉴 항목 go_graphics")
+	check(has_entry, "⑥ 사가만리 메뉴 항목 go_graphics")
 
 	DirAccess.remove_absolute(tmp)
 	Engine.max_fps = 0

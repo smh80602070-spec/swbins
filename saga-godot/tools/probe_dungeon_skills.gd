@@ -1,6 +1,6 @@
 extends SceneTree
 
-## 사가블로 직업·무예(games/saga_dungeon/data/dungeon_skills.gd 표 90개, dungeon_items.gd 무기→직업, dungeon_skill_state.gd 점수·단) 자동 점검 — 화면 없는 순수 표·규칙.
+## 사가나락 직업·무예(games/saga_dungeon/data/dungeon_skills.gd 표 90개, dungeon_items.gd 무기→직업, dungeon_skill_state.gd 점수·단) 자동 점검 — 화면 없는 순수 표·규칙.
 ##   godot --headless --path saga-godot --script res://tools/probe_dungeon_skills.gd
 ## ① 직업 5(무장·궁장·책사·도독·방사): 무기 밑감 12개의 모양이 다 직업에 닿고 직업마다 무기가 있음·장착 무기로 직업이 갈림(빈 손·모르는 밑감은 무장)
 ## ② 무예 표: 90개·키 유일·직업 5×갈래 6×단 3 이 빠짐없이 한 칸씩·직업마다 18 · 모양 9(bolt·buff·chain·curse·dash·heal·nova·summon·swing)이 다 쓰임

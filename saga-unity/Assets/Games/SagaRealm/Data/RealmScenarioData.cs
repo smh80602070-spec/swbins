@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Saga.Realm.Data
 {
     /// <summary>
-    /// PLAN.md 109-16 시나리오 「천하와 균열」 표(웹 사가국지 `js/data-scenario.js` · 정본 `scenario/saga-realm.md`) — 1막 중원의 난 셋 · 2막 대전 셋 · 3막 강 위 셋 · 4막 삼계 균열 셋 · 5막 먼 길 셋 · 6막 천하 하나 +
+    /// PLAN.md 109-16 시나리오 「천하와 균열」 표(웹 사가천하 `js/data-scenario.js` · 정본 `scenario/saga-realm.md`) — 1막 중원의 난 셋 · 2막 대전 셋 · 3막 강 위 셋 · 4막 삼계 균열 셋 · 5막 먼 길 셋 · 6막 천하 하나 +
     /// 결말 뒤 곁가지 7막 틈의 끝 셋 = 열아홉 카드. **표 원본은 웹 파일에서 스크립트로 옮겼다**(한 자도 손으로 안 옮김). 이 트랙 다름: 웹 효과 `loyal`(책사 충성)은 이 트랙에 충성 축이 없어
     /// **수도 기술 +2n** 으로, `rel`(이웃 우호)는 외교 축이 없어 **화친(+n)은 수도 치안 +0.4n**·**선전(−n)은 뺐다**. 힌트 글은 효과에서 만든다(`RealmScenario.Hint`).
     /// 표 본문은 `Resources/scenario_realm.json`(tasks U-0009) — 고치려면 웹 표를 고치고 다시 내보낸다(`ScenarioJsonExport`).

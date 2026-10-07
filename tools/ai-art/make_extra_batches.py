@@ -1,7 +1,7 @@
-"""사가국지 장수 194 · 사가블로 미래·현대 인물 30 → 초상 배치(JSON). 이름은 프롬프트에 안 쓴다(세력 문화·자질·직업 묘사만), 씨앗 = id 해시.
+"""사가천하 장수 194 · 사가나락 미래·현대 인물 30 → 초상 배치(JSON). 이름은 프롬프트에 안 쓴다(세력 문화·자질·직업 묘사만), 씨앗 = id 해시.
 
   py tools/ai-art/make_extra_batches.py    # batches/web_realm_194.json · web_dungeon_30.json
-사가국지 데이터는 saga-web/saga-realm/js/data.js + data-force.js 를 노드로 실행해 읽는다(브라우저 전역 IIFE).
+사가천하 데이터는 saga-web/saga-realm/js/data.js + data-force.js 를 노드로 실행해 읽는다(브라우저 전역 IIFE).
 """
 import json
 import os

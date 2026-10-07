@@ -9,7 +9,7 @@
   function M() { return global.DG && global.DG.mode2d; }
 
   /** 땅 종류 → 타일(0 풀·1 숲·2 언덕·3 물). 숲은 풀 위에 어두운 초록을 얹는다 */
-  var TERRAIN = { 0: 'forest_grass', 1: 'forest_grass', 2: 'forest_dirt', 3: 'go_water' };   // 풀은 위에서 본 사가의숲 풀(realm_grass 는 옆보기 줄무늬)
+  var TERRAIN = { 0: 'forest_grass', 1: 'forest_grass', 2: 'forest_dirt', 3: 'go_water' };   // 풀은 위에서 본 사가마을 풀(realm_grass 는 옆보기 줄무늬)
   var ROAD = 'forest_dirt';
   var PER = { forest_grass: 1.6, forest_dirt: 2.2, go_water: 3, water: 4 };   // 타일 이미지(64px) 한 장이 덮는 칸 수 — 작을수록 또렷하다(돌은 판처럼 보여 크게 늘린다)
 
