@@ -1,0 +1,49 @@
+{
+ "script": "pw-go-close1.mjs",
+ "game": "saga-go",
+ "pass": 8,
+ "total": 8,
+ "pageErrors": [],
+ "checks": [
+  {
+   "name": "go.quest 사명 — 셋까지만 들고 같은 사명 두 번은 거부, 채운 뒤 사명 창 「거둔다」 단추로 금이 들어온다 · 주간 사다리 5단",
+   "ok": true,
+   "detail": "{\"q0\":{\"max\":3,\"a\":true,\"b\":null,\"n1\":1,\"n\":3,\"rungs\":5},\"qi\":{\"i\":0,\"done\":true,\"gold\":474},\"hasClaim\":1,\"q1\":{\"gold\":1364,\"n\":2,\"step\":5}}"
+  },
+  {
+   "name": "go.tutorial 첫 10분 — 새 세이브는 1/5(목표판 첫 줄), 실제 ↑ 키로 50m 걸으면 2단계, 사명 창까지 열면 5/5 끝·줄이 빠진다",
+   "ok": true,
+   "detail": "{\"t0\":{\"step\":0,\"goal\":\"🧭 🚶 걸어 보세요 — 50m (1/5)\"},\"t1\":{\"step\":1,\"dist\":54},\"partyStep\":4,\"t2\":{\"step\":5,\"done\":true,\"line\":\"\",\"total\":5}}"
+  },
+  {
+   "name": "go.letter 연성·승화 — 카드 🌿 연성 단추로 한 단 오르고(한 단은 반올림에 묻힐 만큼 작다) 끝까지 올리면 보너스가 커지며, 끝까지 오르면 거부 · ✨ 승화 단추로 상위 종이 도감에 들고 연성 단이 이어진다",
+   "ok": true,
+   "detail": "{\"g0\":{\"lv\":0,\"bonus\":6},\"g1\":{\"lv1\":1,\"b1\":6,\"bMax\":13,\"max\":20,\"lvMax\":20,\"chk\":{\"ok\":false,\"why\":\"최대 연성\"},\"to\":\"pt_bulgasari\",\"asc\":true},\"rbOk\":true,\"abOk\":true,\"g2\":{\"has\":true,\"lv\":20}}"
+  },
+  {
+   "name": "go.weather 천후·계절 — 같은 시각은 같은 천후(6종), 비를 붙들면 효과가 맑음과 다르고 상단에 🌧️, 1·4·7·10월이 계절 넷을 가른다",
+   "ok": true,
+   "detail": "{\"kinds\":6,\"same\":true,\"clear\":\"{\\\"expPct\\\":10}\",\"rain\":\"{\\\"catchPct\\\":8}\",\"cur\":\"rain\",\"seasons\":[\"겨울\",\"봄\",\"여름\",\"가을\"],\"distinct\":4,\"top\":\"🧭유사(有司) · 모험 4 · 세계 1🎛️ 손잡이 1개🌧️ 비 · 📍 익주 · 53m 이동🧭 🐾 \"}"
+  },
+  {
+   "name": "go.event 사건 — 같은 자리·시각은 같은 후보, 사건 카드 첫 선택지를 단추로 누르면 결과가 뜨고 닫힌다 · 밤엔 도적 몫이 낮보다 크다",
+   "ok": true,
+   "detail": "{\"e0\":{\"n\":13,\"same\":true,\"day\":0.3225806451612903,\"night\":0.5405405405405406,\"nightKinds\":[\"bandit_ambush\"],\"calm\":\"road_merchant\"},\"opened\":true,\"card\":{\"show\":true,\"picks\":2},\"resTxt\":\"🧺 길 위의 상인 상인이 등용서와 사료를 얹어 주었다. 🪙 금 -40 · 📜 등용서 +2 · 🍖 사료 +3 · 🎖️ 명성 +8 닫는다\",\"closed\":true}"
+  },
+  {
+   "name": "go.raid 역참·토벌 — 같은 역참은 같은 자리, 첫 방문은 보급·바로 다시는 쉼(5분) · 토벌은 정시 10분엔 있고 46분엔 없으며 격문 한 장으로 한 판 한 번만",
+   "ok": true,
+   "detail": "{\"st\":\"-1,-1#0\",\"samePos\":true,\"v1\":true,\"gotGold\":true,\"gotExp\":true,\"v2\":\"cooldown\",\"fort\":\"F-12,-6\",\"in10\":true,\"in46\":false,\"f1\":true,\"f2\":\"tried\"}"
+  },
+  {
+   "name": "go.rogue 적도 — 같은 역참·같은 칸은 같은 판, 점거된 역참은 보급 거부, 물리치면 암영 +1, 도감 🌕 정화 단추로 −1 되고 도감에 든다",
+   "ok": true,
+   "detail": "{\"rg\":{\"key\":\"-12,-8#1@995190\",\"rank\":\"졸개(卒)\",\"same\":true,\"visit\":\"rogue\",\"d0\":0,\"win\":true,\"d1\":1,\"pet\":\"pk_gengar\",\"hadPet\":false},\"rg2\":{\"d\":0,\"inDex\":true,\"button\":1}}"
+  },
+  {
+   "name": "페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}

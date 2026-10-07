@@ -131,13 +131,15 @@ try {
   }
 
   /* 5) 2D 모드 시트(W-0019) — 3D 장면을 끄면(world.render3d=0) 평면·2.5D 캔버스에서 인물(나·마을 사람·찾아온 인물)이 새 시트로 그려진다(짐승은 기존 스탬프) */
+  /* W-0087: 인물은 이제 VRoid 풀(characters2d·characters2d8)이고 옛 마을 사람 풀은 한 장 모드(W-0032)라 mode2d.loaded 캐시를 안 거친다 —
+     3D 를 끈 뒤 받는 인물 시트 응답을 센다 */
+  const sheets2d = { ok: 0, bad: 0, sample: '' };
+  page.on('response', (res) => { const u = res.url(); if (/\/characters2d8?\//.test(u)) { if (res.status() < 400) { sheets2d.ok++; sheets2d.sample = sheets2d.sample || u.split('/').slice(-3).join('/'); } else { sheets2d.bad++; } } });
   await ev(() => { DG.core.setTune('world.render3d', 0); });
-  await sleep(4000);
-  const m2 = await ev(() => {
-    var pools = DG.cfg.mode2d.pools.human, ok = pools.filter((p) => DG.mode2d.loaded(p, 'idle') === true || DG.mode2d.loaded(p, 'walk') === true).length, bad = pools.filter((p) => DG.mode2d.failed(p, 'idle') === true || DG.mode2d.failed(p, 'walk') === true).length;
-    return { on: DG.mode2d.isOn(), w3: !!(DG.world3d && DG.world3d.active && DG.world3d.active()), humanPools: pools.length, loaded: ok, failed: bad };
-  });
-  check('2D 모드 시트 — 3D 장면을 끄면 인물이 시트로 그려진다(사람 풀 이미지를 받아 둠, 실패 0)', m2.on && !m2.w3 && m2.loaded > 0 && m2.failed === 0, JSON.stringify(m2));
+  await sleep(6000);
+  const m2 = await ev(() => ({ on: DG.mode2d.isOn(), w3: !!(DG.world3d && DG.world3d.active && DG.world3d.active()) }));
+  Object.assign(m2, sheets2d);
+  check('2D 모드 시트 — 3D 장면을 끄면 인물이 시트로 그려진다(인물 2D 시트를 받아 옴, 실패 0)', m2.on && !m2.w3 && m2.ok > 0 && m2.bad === 0, JSON.stringify(m2));
 } catch (e) { console.log('ERR', e.message); results.push(false); }
 
 const ext = r.errors.filter((e) => /ERR_CONNECTION_TIMED_OUT|ERR_NAME_NOT_RESOLVED|ERR_INTERNET_DISCONNECTED/.test(e)).length;
