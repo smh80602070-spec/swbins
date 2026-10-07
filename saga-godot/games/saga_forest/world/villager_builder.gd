@@ -345,7 +345,7 @@ func _open_interact_menu(v: Dictionary) -> void:
 	_add_heart_row(layer, ForestSaveState.heart(v.id))
 
 
-## choice_prompt.gd 패널(anchor 0.5×0.5, offset_top -120)의 바로 위 한 줄에
+## choice_prompt.gd 패널(가운데 정렬, 위 끝 = 패널 offset_top)의 바로 위 한 줄에
 ## 하트 10개(채움/빔)를 그린다 — 패널 내부에 끼워 넣지 않는 건 그 스크립트가
 ## 5판 39곳에서 같은 모양(제목+버튼 목록)만 가정하고 있어, 새 줄 하나 때문에
 ## 공유 코드를 건드리고 싶지 않아서다.
