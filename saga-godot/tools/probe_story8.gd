@@ -332,7 +332,11 @@ func _physics_process(_delta: float) -> void:
 				bad.append("party/climb/defend flags")
 			var ec := StormEye.center()
 			## 눈 위 자리 — 지키기·대결·임금·해솔
-			var spots: Array = [steps[4], steps[5], Story.windows(Story.NPCS.gamyeon.appear).back(), Story.windows(Story.NPCS.haesol_free.appear).back()]
+			## 임금·해솔은 29장(ch CH29) 창 — 맨 끝 창이 아니다(G-0074 13부가 해솔 43장 창을 뒤에 더함, G-0112)
+			var in29 := func(appear: Array) -> Dictionary:
+				var w: Array = Story.windows(appear).filter(func(x: Dictionary) -> bool: return int(x.get("ch", -1)) == CH29)
+				return w.back() if not w.is_empty() else {}
+			var spots: Array = [steps[4], steps[5], in29.call(Story.NPCS.gamyeon.appear), in29.call(Story.NPCS.haesol_free.appear)]
 			for d in spots:
 				var sp := TestMap.world_pos(d.cell.x, d.cell.y, String(d.region))
 				if not bool(d.get("eye", false)) or _flat(sp, ec) > StormEye.EYE_R - 2.0:
