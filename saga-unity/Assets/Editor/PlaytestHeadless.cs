@@ -548,7 +548,7 @@ namespace Saga.EditorTools
             var playerCollider = GameObject.FindWithTag("Player")?.GetComponent<Collider>();
             var onTriggerEnter = typeof(BeaconTower).GetMethod("OnTriggerEnter", BindingFlags.NonPublic | BindingFlags.Instance);
 
-            int expBefore = PlayerStats.Exp;
+            long expBefore = PlayerStats.Exp;
             int goldBefore = GoldState.Gold;
             onTriggerEnter.Invoke(beacon, new object[] { playerCollider });
 
@@ -1244,7 +1244,7 @@ namespace Saga.EditorTools
 
             // ---- 진입 1: 파도 3 전부 클리어 → 시간 이월·최종 보상 ----
             startTrial.Invoke(encounter, null);
-            int expBefore = PlayerStats.Exp;
+            long expBefore = PlayerStats.Exp;
             int levelBefore = PlayerStats.Level;
             int goldBefore = GoldState.Gold;
 
@@ -1361,7 +1361,7 @@ namespace Saga.EditorTools
             doneField.SetValue(null, done);
 
             int goldBefore = GoldState.Gold;
-            int expBefore = PlayerStats.Exp;
+            long expBefore = PlayerStats.Exp;
 
             for (int i = 0; i < n; i++) done[i] = true;
             checkAllDone.Invoke(null, null);

@@ -127,7 +127,7 @@ namespace Saga.EditorTools
             int gold = GoldState.Gold; var mats = TalentState.SnapshotMats(); var talent = TalentState.Snapshot();
             var arts = ArtifactState.Snapshot(); int seq = ArtifactState.Seq, polish = ArtifactState.Polish;
             int ore = WeaponState.Ore; var winv = WeaponState.SnapshotInv(); var weq = WeaponState.SnapshotEquip();
-            int lv = PlayerStats.Level, exp = PlayerStats.Exp; bool lowered = AdventureState.Lowered; int paid = AdventureState.Paid;
+            int lv = PlayerStats.Level; long exp = PlayerStats.Exp; bool lowered = AdventureState.Lowered; int paid = AdventureState.Paid;
             var events = new List<string>(WorldEventState.TriggeredIds);
             var eggs = (EggState.SnapshotBag(), EggState.SnapshotInc(), EggState.Hatched, EggState.WalkTotal, EggState.Buddy, EggState.SnapshotBuddyM(), EggState.SnapshotFriend(), EggState.SnapshotOwned());
             var parts = new List<string>();

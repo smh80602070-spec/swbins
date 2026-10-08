@@ -26,7 +26,7 @@ namespace Saga.EditorTools
 
         private sealed class Saved
         {
-            public int Gold, Lv, Exp, Hatched;
+            public int Gold, Lv, Hatched; public long Exp;
             public float Walk, BuddyM;
             public string Buddy;
             public List<string> Bag, Owned;
@@ -138,7 +138,7 @@ namespace Saga.EditorTools
             }
             PlaytestKit.Check(seen.Count == 4, $"작은 알 풀 넷이 다 안 나옴({seen.Count})");
             // 다 가진 뒤엔 겹침 — 금·경험치
-            int gold = GoldState.Gold, exp = PlayerStats.Exp;
+            int gold = GoldState.Gold; long exp = PlayerStats.Exp;
             EggState.AddEgg("e_small"); EggState.Start(0);
             var d = EggState.Walk(300f);
             PlaytestKit.Check(d.Count == 1 && d[0].Dup, "다 가졌는데 새 신수로 나옴");
@@ -327,7 +327,7 @@ namespace Saga.EditorTools
             int gold = GoldState.Gold; var mats = TalentState.SnapshotMats(); var talent = TalentState.Snapshot();
             var arts = ArtifactState.Snapshot(); int seq = ArtifactState.Seq, polish = ArtifactState.Polish;
             int ore = WeaponState.Ore; var winv = WeaponState.SnapshotInv(); var weq = WeaponState.SnapshotEquip();
-            int lv = PlayerStats.Level, exp = PlayerStats.Exp;
+            int lv = PlayerStats.Level; long exp = PlayerStats.Exp;
             var events = new List<string>(WorldEventState.TriggeredIds);
             try
             {

@@ -28,7 +28,7 @@ namespace Saga.EditorTools
             if (builder == null || pc == null) { Fail("WorldMapBuilder/PlayerController 없음(씬 재빌드?)"); return false; }
 
             var startFlags = new List<string>(WorldEventState.TriggeredIds);
-            int startGold = GoldState.Gold, startLevel = PlayerStats.Level, startExp = PlayerStats.Exp;
+            int startGold = GoldState.Gold, startLevel = PlayerStats.Level; long startExp = PlayerStats.Exp;
             var startOwned = new List<string>(Inventory.OwnedIds);
             string startWeapon = Inventory.EquippedWeaponId, startArmor = Inventory.EquippedArmorId;
             string savePath = System.IO.Path.Combine(Application.persistentDataPath, "save.json");
@@ -168,7 +168,7 @@ namespace Saga.EditorTools
         {
             var ch = Find(b, "village_e");
             if (ch == null) return;
-            int gold = GoldState.Gold, lv = PlayerStats.Level, exp = PlayerStats.Exp;
+            int gold = GoldState.Gold, lv = PlayerStats.Level; long exp = PlayerStats.Exp;
             Vector3 p = ch.transform.position;
             if (ch.TryApproach(p + new Vector3(12f, 0f, 0f))) Fail("12m 밖에서 상자가 열림");
             if (!ch.TryApproach(p + new Vector3(3f, 0f, 0f))) { Fail("3m 까지 다가갔는데 안 열림"); return; }

@@ -46,7 +46,7 @@ namespace Saga.EditorTools
             int ch0 = StoryState.Ch, st0 = StoryState.StepIndex;
             bool d0 = GuardianState.Defeated, b0 = GuardianState.Bloom;
             long p0 = GuardianState.PaidAt;
-            int gold0 = GoldState.Gold, lv0 = PlayerStats.Level, exp0 = PlayerStats.Exp;
+            int gold0 = GoldState.Gold, lv0 = PlayerStats.Level; long exp0 = PlayerStats.Exp;
             var tal0 = TalentState.Snapshot();
             var mats0 = TalentState.SnapshotMats();
             var bag0 = CookState.SnapshotBag();
@@ -399,7 +399,7 @@ namespace Saga.EditorTools
             Talk(pc, ui, "ferryman", "1장 버들");
             Expect(0, 4, "버들 뒤");                                                            // → 4 kill
 
-            int lv = PlayerStats.Level, exp = PlayerStats.Exp;
+            int lv = PlayerStats.Level; long exp = PlayerStats.Exp;
             Vector3 sq = GoStory.GridPos(GoStory.SquadGx, GoStory.SquadGy);
             pc.Teleport(sq + new Vector3(0f, 0.4f, GoStory.KillNear - 15f));
             field.Check(pc.transform.position);

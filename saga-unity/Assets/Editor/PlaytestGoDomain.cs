@@ -33,7 +33,7 @@ namespace Saga.EditorTools
             if (fc == null || pc == null || df == null || ui == null) { Fail("FieldCombat/PlayerController/DomainField/DomainUi 없음"); return false; }
 
             var dom0 = DomainState.Snapshot();
-            int gold0 = GoldState.Gold, lv0 = PlayerStats.Level, exp0 = PlayerStats.Exp;
+            int gold0 = GoldState.Gold, lv0 = PlayerStats.Level; long exp0 = PlayerStats.Exp;
             var arts0 = ArtifactState.Snapshot();
             int seq0 = ArtifactState.Seq, pol0 = ArtifactState.Polish;
             var inv0 = WeaponState.SnapshotInv();
@@ -141,7 +141,7 @@ namespace Saga.EditorTools
             if (!ghost.DomainFoe || ghost.WorldLevel != 0 || !Near(ghost.MaxHp, 300f * GoWorldMap.DangerMul(2)) || ghost.CurrentState != FieldEnemy.State.Chase) Fail($"물귀신 체력 {ghost.MaxHp}·쫓기 {ghost.CurrentState}");
             df.Step(GoDomain.LeyWaterSec + 0.1f);
             if (ghost.Aura != GoElement.Hydro) Fail($"무덤 물 기운 {ghost.Aura}");
-            int lv = PlayerStats.Level, exp = PlayerStats.Exp;
+            int lv = PlayerStats.Level; long exp = PlayerStats.Exp;
             KillAll(df);
             if (PlayerStats.Exp != exp || PlayerStats.Level != lv) Fail("숨은 터 적이 경험을 줌");
             df.Step(0.1f);

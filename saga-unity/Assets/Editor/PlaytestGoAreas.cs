@@ -33,7 +33,7 @@ namespace Saga.EditorTools
             int gold = GoldState.Gold, polish = ArtifactState.Polish;
             var arts = ArtifactState.Snapshot();
             int aseq = ArtifactState.Seq;
-            int lv = PlayerStats.Level, exp = PlayerStats.Exp;
+            int lv = PlayerStats.Level; long exp = PlayerStats.Exp;
             int ch0 = StoryState.Ch, st0 = StoryState.StepIndex;
             bool off0 = StoryState.OffForTest;
             string savePath = System.IO.Path.Combine(Application.persistentDataPath, "save.json");

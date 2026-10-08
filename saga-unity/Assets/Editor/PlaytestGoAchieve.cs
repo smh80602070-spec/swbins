@@ -40,7 +40,7 @@ namespace Saga.EditorTools
             var talent = TalentState.Snapshot();
             var mats = TalentState.SnapshotMats();
             int gold = GoldState.Gold;
-            int lv = PlayerStats.Level, exp = PlayerStats.Exp;
+            int lv = PlayerStats.Level; long exp = PlayerStats.Exp;
             var orbs = OrbState.Snapshot();
             int given = OrbState.Given;
             int ch = StoryState.Ch, step = StoryState.StepIndex;

@@ -37,7 +37,7 @@ namespace Saga.EditorTools
                 return false;
             }
             Vector3 origin = fc.SafePoint;
-            int gold = GoldState.Gold, level = PlayerStats.Level, exp = PlayerStats.Exp;
+            int gold = GoldState.Gold, level = PlayerStats.Level; long exp = PlayerStats.Exp;
             string savePath = System.IO.Path.Combine(Application.persistentDataPath, "save.json");
             string savedJson = System.IO.File.Exists(savePath) ? System.IO.File.ReadAllText(savePath) : null;
             string metrics = "";
@@ -185,7 +185,7 @@ namespace Saga.EditorTools
         {
             g.WarpForTest(origin + new Vector3(60f, 0f, 0f));
             int planned = FieldSpawner.PlannedCount;
-            int expBefore = PlayerStats.Exp, levelBefore = PlayerStats.Level;
+            int levelBefore = PlayerStats.Level; long expBefore = PlayerStats.Exp;
             GoldState.Restore(goldBefore);
             g.SetShieldForTest(0f);
             g.TakeHit(99999f, GoElement.Physical, 50f, out _);

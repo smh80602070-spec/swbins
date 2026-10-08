@@ -30,7 +30,7 @@ namespace Saga.EditorTools
             var map = WorldMapUi.Instance;
             if (fc == null || pc == null || map == null) { Fail("FieldCombat/PlayerController/WorldMapUi 없음"); return false; }
 
-            int startLevel = PlayerStats.Level, startExp = PlayerStats.Exp, startGold = GoldState.Gold;
+            int startLevel = PlayerStats.Level, startGold = GoldState.Gold; long startExp = PlayerStats.Exp;
             bool startLowered = AdventureState.Lowered;
             int startPaid = AdventureState.Paid;
             var startInv = WeaponState.SnapshotInv();

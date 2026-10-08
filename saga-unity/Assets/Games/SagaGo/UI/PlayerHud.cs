@@ -1,3 +1,4 @@
+using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,7 +39,7 @@ namespace Saga.Go.UI
             if (label == null) return;
             string weapon = ItemData.Get(Inventory.EquippedWeaponId)?.Name ?? GoLocalization.T("item.bare_hands");
             string armor = ItemData.Get(Inventory.EquippedArmorId)?.Name ?? GoLocalization.T("item.plain_clothes");
-            string exp = string.Format(GoLocalization.T("hud.exp"), PlayerStats.Exp, PlayerStats.ExpToNext);
+            string exp = string.Format(GoLocalization.T("hud.exp"), PlayerStats.Exp.ToString("N0", CultureInfo.InvariantCulture), PlayerStats.ExpToNext.ToString("N0", CultureInfo.InvariantCulture));
             string gold = string.Format(GoLocalization.T("hud.gold"), GoldState.Gold);
             label.text = $"Lv.{PlayerStats.Level}  ({exp})  {gold}\n" +
                          $"{weapon} · {armor}";

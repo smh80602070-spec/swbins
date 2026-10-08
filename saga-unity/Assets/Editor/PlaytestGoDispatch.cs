@@ -45,7 +45,7 @@ namespace Saga.EditorTools
             var arts = ArtifactState.Snapshot();
             int aseq = ArtifactState.Seq, apol = ArtifactState.Polish;
             int gold = GoldState.Gold;
-            int lv = PlayerStats.Level, exp = PlayerStats.Exp;
+            int lv = PlayerStats.Level; long exp = PlayerStats.Exp;
             var wp0 = WorldMapState.SnapshotWaypoints();
             var rg0 = WorldMapState.SnapshotRegions();
             bool rev0 = WorldMapState.Revealed;

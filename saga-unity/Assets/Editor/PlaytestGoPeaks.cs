@@ -36,7 +36,7 @@ namespace Saga.EditorTools
             var startWp = WorldMapState.SnapshotWaypoints();
             var startRegions = WorldMapState.SnapshotRegions();
             bool startRevealed = WorldMapState.Revealed;
-            int startGold = GoldState.Gold, startLevel = PlayerStats.Level, startExp = PlayerStats.Exp;
+            int startGold = GoldState.Gold, startLevel = PlayerStats.Level; long startExp = PlayerStats.Exp;
             string savePath = System.IO.Path.Combine(Application.persistentDataPath, "save.json");
             string originalSave = System.IO.File.Exists(savePath) ? System.IO.File.ReadAllText(savePath) : null;
             string table = "", found = "", cam = "", falls = "";
@@ -110,7 +110,7 @@ namespace Saga.EditorTools
 
             PlayerStats.Restore(PlayerStats.Level, 0);
             bool noLevelUp = PlayerStats.ExpToNext > GoWorldMap.PeakExp;
-            int gold = GoldState.Gold, exp = PlayerStats.Exp;
+            int gold = GoldState.Gold; long exp = PlayerStats.Exp;
             if (summits.Check(p.Top + new Vector3(GoWorldMap.PeakStandRadius + 2f, 0.1f, 0f)) >= 0) Fail("윗면 밖인데 발견됨");
             if (summits.Check(p.Top - Vector3.up * 3f) >= 0) Fail("윗면 아래(옆면)인데 발견됨");
             if (summits.Check(p.Top + Vector3.up * 0.1f) != 0) { Fail("윗면에 섰는데 발견 안 됨"); return ""; }

@@ -31,7 +31,7 @@ namespace Saga.EditorTools
             PlaytestKit.Begin("[PlaytestGoWeekly]");
             int gold = GoldState.Gold; var mats = TalentState.SnapshotMats(); var talent = TalentState.Snapshot();
             var arts = ArtifactState.Snapshot(); int seq = ArtifactState.Seq, polish = ArtifactState.Polish;
-            int lv = PlayerStats.Level, exp = PlayerStats.Exp;
+            int lv = PlayerStats.Level; long exp = PlayerStats.Exp;
             using (PlaytestKit.ErrorCounter())
             {
                 WeeklyState.ResetForTest();
@@ -151,7 +151,7 @@ namespace Saga.EditorTools
             var last = GoWeekly.Get(picks[4]); stats[last.Stat] += last.Target;
             PlaytestKit.Check(WeeklyState.Claim(picks[4]).Length > 0 && WeeklyState.AllClaimed && WeeklyState.BonusReady, "다섯을 다 받았는데 완주 준비가 안 됨");
             int knot = TalentState.Count(GoTalent.Mat.Knot), guide = TalentState.Count(GoTalent.Mat.Guide), polish = ArtifactState.Polish;
-            int lv = PlayerStats.Level, exp = PlayerStats.Exp;
+            int lv = PlayerStats.Level; long exp = PlayerStats.Exp;
             EggState.ResetForTest();
             string t = WeeklyState.ClaimBonus();
             PlaytestKit.Check(t.Length > 0 && TalentState.Count(GoTalent.Mat.Knot) == knot + GoWeekly.BonusKnot && TalentState.Count(GoTalent.Mat.Guide) == guide + GoWeekly.BonusGuide && ArtifactState.Polish == polish + GoWeekly.BonusPolish, "완주 지급(매듭·교본·연마석)이 다름");

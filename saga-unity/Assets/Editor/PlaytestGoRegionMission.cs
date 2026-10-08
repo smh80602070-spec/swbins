@@ -34,7 +34,7 @@ namespace Saga.EditorTools
             bool startRevealed = WorldMapState.Revealed;
             bool startGuardian = GuardianState.Defeated;
             var startEvents = new List<string>(WorldEventState.TriggeredIds);
-            int gold = GoldState.Gold, level = PlayerStats.Level, exp = PlayerStats.Exp;
+            int gold = GoldState.Gold, level = PlayerStats.Level; long exp = PlayerStats.Exp;
             Vector3 playerPos = fc.transform.position;
             string savePath = System.IO.Path.Combine(Application.persistentDataPath, "save.json");
             string savedJson = System.IO.File.Exists(savePath) ? System.IO.File.ReadAllText(savePath) : null;
@@ -148,7 +148,7 @@ namespace Saga.EditorTools
 
             // 역참을 켜는 순간 둘째 단까지
             WorldMapState.Activate("wp_east");
-            int expBefore = PlayerStats.Exp, levelBefore = PlayerStats.Level;
+            int levelBefore = PlayerStats.Level; long expBefore = PlayerStats.Exp;
             hud.Tick(at, RegionMissionHud.RefreshSec + 0.01f);
             int want = GoRegionMission.Stage2GoldPerGrade * 1;
             if (GoldState.Gold != g0 + want) Fail($"둘째 단 금 {GoldState.Gold - g0} ≠ {want}");

@@ -24,7 +24,7 @@ namespace Saga.EditorTools
 
         private sealed class Saved
         {
-            public int Gold, Lv, Exp, Cycle, Paid, Ch, Step;
+            public int Gold, Lv, Cycle, Paid, Ch, Step; public long Exp;
             public bool Lowered;
             public int[] Mats; public List<TalentState.Entry> Talent;
             public List<string> Events; public List<CookState.Entry> Bag, Prof; public List<CookState.TimeEntry> Gather;
@@ -111,7 +111,7 @@ namespace Saga.EditorTools
             CookState.Restore(CookState.SnapshotBag(), CookState.SnapshotProf(), new List<CookState.TimeEntry> { new CookState.TimeEntry { id = "herb_1", t = CookState.Now } });
             DomainState.ResetForTest(); DomainState.MarkClaim(GoDomain.Kind.Weekly);
             NightEchoState.Restore(NightEchoState.Day, new List<string>());
-            PlayerStats.Restore(30, 0); // 레벨 58 부터는 ExpToNext 가 int 를 넘어 AddExp 가 끝나지 않는다 — 진단은 30
+            PlayerStats.Restore(85, 0); // U-0052 이야기 마지막 장 문턱 — 곡선이 long·완만해져 Lv.58 넘어도 AddExp 가 끝난다
             AdventureState.RestoreSave(true, AdventureState.Paid);
             PlaytestKit.Check(AdventureState.Lowered && DomainState.WeeklyUsed == 1 && CookState.SnapshotGather().Count == 1, "준비 실패");
             int gold = GoldState.Gold, guide = TalentState.Count(GoTalent.Mat.Guide), knot = TalentState.Count(GoTalent.Mat.Knot);
@@ -126,7 +126,7 @@ namespace Saga.EditorTools
             PlaytestKit.Check(GoldState.Gold == gold + GoCycle.RewardGold && TalentState.Count(GoTalent.Mat.Guide) == guide + GoCycle.RewardGuide && TalentState.Count(GoTalent.Mat.Knot) == knot + GoCycle.RewardKnot, "보상(금·교본·매듭)이 다름");
             // 이야기·레벨 불변
             PlaytestKit.Check(StoryState.Done, "재출항이 이야기를 건드림");
-            PlaytestKit.Check(PlayerStats.Level >= 30, "재출항이 레벨을 낮춤");
+            PlaytestKit.Check(PlayerStats.Level >= 85, "재출항이 레벨을 낮춤");
             // 연속 재출항 — 5번째까지만
             for (int i = 2; i <= GoCycle.MaxCycle; i++) PlaytestKit.Check(CycleState.Advance().Ok && CycleState.Cycle == i, $"{i}회차 재출항 실패");
             PlaytestKit.Check(!CycleState.Advance().Ok && CycleState.Cycle == GoCycle.MaxCycle, "6회차가 열림");

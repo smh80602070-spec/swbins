@@ -31,7 +31,7 @@ namespace Saga.EditorTools
             bool d0 = GuardianState.Defeated, b0 = GuardianState.Bloom;
             long p0 = GuardianState.PaidAt;
             var dom0 = DomainState.Snapshot();
-            int gold0 = GoldState.Gold, lv0 = PlayerStats.Level, exp0 = PlayerStats.Exp;
+            int gold0 = GoldState.Gold, lv0 = PlayerStats.Level; long exp0 = PlayerStats.Exp;
             var arts0 = ArtifactState.Snapshot();
             int seq0 = ArtifactState.Seq, pol0 = ArtifactState.Polish;
             string savePath = System.IO.Path.Combine(Application.persistentDataPath, "save.json");
@@ -113,7 +113,7 @@ namespace Saga.EditorTools
             if (!g.Alive || !g.gameObject.activeSelf) Fail("150초에 안 섬");
 
             gold = GoldState.Gold;
-            int lv = PlayerStats.Level, exp = PlayerStats.Exp;
+            int lv = PlayerStats.Level; long exp = PlayerStats.Exp;
             Kill(g);
             if (GoldState.Gold != gold || PlayerStats.Level != lv || PlayerStats.Exp != exp || !GuardianState.Bloom) Fail("다시 잡았는데 금·경험이 나옴(꽃만이어야)");
             pc.Teleport(fc.SafePoint);

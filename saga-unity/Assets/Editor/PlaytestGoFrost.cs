@@ -36,7 +36,7 @@ namespace Saga.EditorTools
             int gold = GoldState.Gold, polish = ArtifactState.Polish;
             var arts = ArtifactState.Snapshot();
             int aseq = ArtifactState.Seq;
-            int lv = PlayerStats.Level, exp = PlayerStats.Exp;
+            int lv = PlayerStats.Level; long exp = PlayerStats.Exp;
             string savePath = System.IO.Path.Combine(Application.persistentDataPath, "save.json");
             string originalSave = System.IO.File.Exists(savePath) ? System.IO.File.ReadAllText(savePath) : null;
             var parts = new List<string>();
@@ -161,7 +161,7 @@ namespace Saga.EditorTools
         {
             FrostState.ResetForTest();
             GoldState.Restore(0);
-            int pol0 = ArtifactState.Polish, exp0 = PlayerStats.Exp, lv0 = PlayerStats.Level;
+            int pol0 = ArtifactState.Polish, lv0 = PlayerStats.Level; long exp0 = PlayerStats.Exp;
             PlayerStats.Restore(1, 0);
             if (field.Check(TestMapData.WorldPos(3, 3)) != 0 || FrostState.Count != 0) Fail("고원 밖에서 찾음");
             var stele = Site("stele");
@@ -290,7 +290,7 @@ namespace Saga.EditorTools
             bool d0 = FrostBossState.Defeated, b0 = FrostBossState.Bloom;
             long p0 = FrostBossState.PaidAt;
             var dom0 = DomainState.Snapshot();
-            int gold0 = GoldState.Gold, lv0 = PlayerStats.Level, exp0 = PlayerStats.Exp;
+            int gold0 = GoldState.Gold, lv0 = PlayerStats.Level; long exp0 = PlayerStats.Exp;
             var arts0 = ArtifactState.Snapshot();
             int seq0 = ArtifactState.Seq, pol0 = ArtifactState.Polish;
             try
@@ -350,7 +350,7 @@ namespace Saga.EditorTools
                 if (!k.Alive || !k.gameObject.activeSelf) Fail("150초에 곰왕이 안 섬");
                 // 다시 잡으면 금·경험 없이 꽃만
                 gold = GoldState.Gold;
-                int lv = PlayerStats.Level, exp = PlayerStats.Exp;
+                int lv = PlayerStats.Level; long exp = PlayerStats.Exp;
                 KillKing(k);
                 if (GoldState.Gold != gold || PlayerStats.Level != lv || PlayerStats.Exp != exp || !FrostBossState.Bloom) Fail("곰왕을 다시 잡았는데 금·경험이 나옴(꽃만이어야)");
                 // 서 있는 곰왕은 고원을 나서면 꺼 둔다

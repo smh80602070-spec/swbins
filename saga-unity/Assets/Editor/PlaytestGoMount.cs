@@ -29,7 +29,7 @@ namespace Saga.EditorTools
             var pc = fc != null ? fc.GetComponent<PlayerController>() : null;
             var mf = MountField.Instance;
             if (fc == null || pc == null || mf == null) { Fail("FieldCombat/PlayerController/MountField 없음"); return false; }
-            int lv0 = PlayerStats.Level, exp0 = PlayerStats.Exp;
+            int lv0 = PlayerStats.Level; long exp0 = PlayerStats.Exp;
             int ch0 = StoryState.Ch, st0 = StoryState.StepIndex;
             bool off0 = StoryState.OffForTest;
             string sel0 = GoMounts.Snapshot();

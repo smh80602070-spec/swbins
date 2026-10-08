@@ -118,7 +118,7 @@ namespace Saga.EditorTools
             int killed = 0;
             System.Action<FieldEnemy> onKill = e => { if (e == e1) killed++; };
             FieldEnemy.Killed += onKill;
-            int lv0 = PlayerStats.Level, exp0 = PlayerStats.Exp;
+            int lv0 = PlayerStats.Level; long exp0 = PlayerStats.Exp;
             for (int i = 0; i < 60 && e1.Alive; i++) { fc.TickTimers(0.4f); fc.Attack(); }
             FieldEnemy.Killed -= onKill;
             if (e1.Alive) Fail("기본 공격으로 적이 안 쓰러짐");

@@ -34,7 +34,7 @@ namespace Saga.EditorTools
             if (fc == null || pc == null || field == null || ui == null) { Fail("FieldCombat/PlayerController/StoryField/StoryUi 없음"); return false; }
             bool off0 = StoryState.OffForTest;
             float cps0 = StoryUi.RevealCps;
-            int ch0 = StoryState.Ch, st0 = StoryState.StepIndex, gold0 = GoldState.Gold, lv0 = PlayerStats.Level, exp0 = PlayerStats.Exp;
+            int ch0 = StoryState.Ch, st0 = StoryState.StepIndex, gold0 = GoldState.Gold, lv0 = PlayerStats.Level; long exp0 = PlayerStats.Exp;
             var wqs0 = WorldQuestState.SnapshotSteps();
             var wqd0 = WorldQuestState.SnapshotDone();
             string track0 = StoryState.TrackId;

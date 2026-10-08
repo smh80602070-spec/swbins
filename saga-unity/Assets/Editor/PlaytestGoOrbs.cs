@@ -28,7 +28,7 @@ namespace Saga.EditorTools
             var startGot = OrbState.Snapshot();
             int startGiven = OrbState.Given;
             var startEvents = new List<string>(WorldEventState.TriggeredIds);
-            int startGold = GoldState.Gold, startLevel = PlayerStats.Level, startExp = PlayerStats.Exp;
+            int startGold = GoldState.Gold, startLevel = PlayerStats.Level; long startExp = PlayerStats.Exp;
             string savePath = System.IO.Path.Combine(Application.persistentDataPath, "save.json");
             string originalSave = System.IO.File.Exists(savePath) ? System.IO.File.ReadAllText(savePath) : null;
             string table = "", pick = "", offer = "";

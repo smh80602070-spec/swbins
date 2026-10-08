@@ -31,7 +31,7 @@ namespace Saga.EditorTools
             if (fc == null || pc == null || b == null) { Fail("FieldCombat/PlayerController/WorldMapBuilder 없음"); return false; }
             var start = new List<string>(PartyState.MemberIds);
             bool off0 = StoryState.OffForTest;
-            int ch0 = StoryState.Ch, st0 = StoryState.StepIndex, lv0 = PlayerStats.Level, exp0 = PlayerStats.Exp;
+            int ch0 = StoryState.Ch, st0 = StoryState.StepIndex, lv0 = PlayerStats.Level; long exp0 = PlayerStats.Exp;
             var chest = b.Chests.FirstOrDefault(c => c != null && c.Data.Lock == GoTreasure.Lock.Targets);
             var parts = new List<string>();
             try

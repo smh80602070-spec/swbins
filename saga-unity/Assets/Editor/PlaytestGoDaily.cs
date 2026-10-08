@@ -36,7 +36,7 @@ namespace Saga.EditorTools
             var dn0 = DailyTaskState.SnapshotDone();
             bool sg0 = DailyTaskState.SnapshotDayStampGranted(), b0 = DailyTaskState.BonusClaimed;
             int st0 = DailyTaskState.Stamps;
-            int gold0 = GoldState.Gold, lv0 = PlayerStats.Level, exp0 = PlayerStats.Exp;
+            int gold0 = GoldState.Gold, lv0 = PlayerStats.Level; long exp0 = PlayerStats.Exp;
             var inv0 = WeaponState.SnapshotInv();
             var eq0 = WeaponState.SnapshotEquip();
             int ore0 = WeaponState.Ore;

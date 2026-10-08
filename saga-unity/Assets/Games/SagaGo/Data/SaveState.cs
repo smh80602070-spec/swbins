@@ -36,7 +36,7 @@ namespace Saga.Go.Data
             public List<string> partyMembers;
             // v2(PLAN.md 59~65장 Stats/Item/Inventory/Equipment 추가) — v1엔 없던 필드.
             public int level;
-            public int exp;
+            public long exp; // U-0052 long — 옛 int 세이브도 그대로 읽힌다
             public List<string> ownedItems;
             public string equippedWeapon;
             public string equippedArmor;

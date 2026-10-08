@@ -32,7 +32,7 @@ namespace Saga.EditorTools
             var pc = fc != null ? fc.GetComponent<PlayerController>() : null;
             if (fc == null || pc == null) { Fail("FieldCombat/PlayerController 없음"); return false; }
             var start = new List<string>(PartyState.MemberIds);
-            int ch0 = StoryState.Ch, st0 = StoryState.StepIndex, gold0 = GoldState.Gold, lv0 = PlayerStats.Level, exp0 = PlayerStats.Exp;
+            int ch0 = StoryState.Ch, st0 = StoryState.StepIndex, gold0 = GoldState.Gold, lv0 = PlayerStats.Level; long exp0 = PlayerStats.Exp;
             var tal0 = TalentState.Snapshot();
             var mats0 = TalentState.SnapshotMats();
             string parts = "";

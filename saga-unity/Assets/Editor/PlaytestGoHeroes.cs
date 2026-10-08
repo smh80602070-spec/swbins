@@ -39,7 +39,7 @@ namespace Saga.EditorTools
             var startMembers = new List<string>(PartyState.MemberIds);
             var startWalked = BondState.SnapshotWalked(PartyState.MemberIds);
             var startWins = BondState.SnapshotWins(PartyState.MemberIds);
-            int startLevel = PlayerStats.Level, startExp = PlayerStats.Exp;
+            int startLevel = PlayerStats.Level; long startExp = PlayerStats.Exp;
             var pc = fc.GetComponent<PlayerController>();
             Vector3 startPos = fc.transform.position;
             int enemies = FieldEnemy.All.Count;

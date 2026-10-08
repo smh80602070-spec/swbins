@@ -33,7 +33,7 @@ namespace Saga.EditorTools
             var startSeen = HeroDexState.Snapshot();
             var startTalent = TalentState.Snapshot();
             var startMats = TalentState.SnapshotMats();
-            int startGold = GoldState.Gold, startLevel = PlayerStats.Level, startExp = PlayerStats.Exp;
+            int startGold = GoldState.Gold, startLevel = PlayerStats.Level; long startExp = PlayerStats.Exp;
             string savePath = System.IO.Path.Combine(Application.persistentDataPath, "save.json");
             string originalSave = System.IO.File.Exists(savePath) ? System.IO.File.ReadAllText(savePath) : null;
             GoHeroes.Hero h = default;

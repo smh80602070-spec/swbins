@@ -29,7 +29,7 @@ namespace Saga.EditorTools
             var ui = WorldMapUi.Instance;
             if (fc == null || pc == null || ui == null) { Fail("FieldCombat/PlayerController/WorldMapUi 없음"); return false; }
             bool off0 = StoryState.OffForTest;
-            int ch0 = StoryState.Ch, st0 = StoryState.StepIndex, lv0 = PlayerStats.Level, exp0 = PlayerStats.Exp;
+            int ch0 = StoryState.Ch, st0 = StoryState.StepIndex, lv0 = PlayerStats.Level; long exp0 = PlayerStats.Exp;
             var wqs0 = WorldQuestState.SnapshotSteps();
             var wqd0 = WorldQuestState.SnapshotDone();
             string track0 = StoryState.TrackId;
