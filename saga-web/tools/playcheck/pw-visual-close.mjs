@@ -176,7 +176,7 @@ async function runForest() {
     await boot(r);
     await skipScenes(r, () => !!(DG.scenario && DG.scenario.isOpen()));
     await ev(() => { var h = document.getElementById('help-ok'); if (h && h.offsetParent) { h.click(); } });
-    await ev(() => { DG.core.setTune('village3d.on', 1); }); await sleep(3500);
+    await ev(() => { DG.core.setTune('village3d.on', 1); }); await sleep(12000);   // W-0112 — 소품·몸 GLB 가 다 설 때까지(3.5초면 도형 대역이 찍힌다)
     await shoot(r, 'saga-forest', '1-village3d', '3D 마을', ['fs.village-view3d', 'fs.asset3d'], await st());
     await ev(() => { DG.core.setTune('village3d.on', 0); }); await sleep(2000);
     await shoot(r, 'saga-forest', '2-sphere2d', '2D 구면 투영 마을', ['fs.village-view'], await st());

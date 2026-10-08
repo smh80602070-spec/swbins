@@ -691,10 +691,10 @@
     even:  { color: 0xff8a4a, intensity: 0.6 },
     night: { color: 0x8fa8ff, intensity: 0.12 }
   };
-  var PHASE_HEMI = { dawn: 0.55, day: 0.9, even: 0.6, night: 0.3 };
+  var PHASE_HEMI = { dawn: 0.55, day: 0.9, even: 0.7, night: 0.3 };   // W-0112 저녁 0.6→0.7
   /** 날씨(PLAN 21절)도 하늘을 더 어둡히고 안개를 짙힌다(fog near/far 를 좁힌다) —
    *  clear 는 기준값(1) 그대로, cloud/rain/snow 순으로 점점 짙어진다 */
-  var WEATHER_DARK = { clear: 1, cloud: 0.85, rain: 0.6, snow: 0.82 };
+  var WEATHER_DARK = { clear: 1, cloud: 0.85, rain: 0.75, snow: 0.82 };   // W-0112 비 0.6→0.75 — 저녁×비가 0.36 까지 곱해져 마을이 안 읽혔다
   var WEATHER_FOG = { clear: 1, cloud: 0.85, rain: 0.5, snow: 0.68 };
   /* 2026-09-10 — "NPC가 여전히 안 보인다"는 재신고로 다시 보니, 2026-09-09
      카메라 거리 확대는 진짜 원인이 아니었다. 숲 NPC 여섯은 마을 중심에서

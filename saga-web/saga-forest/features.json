@@ -500,13 +500,13 @@
    "village-view3d — 땅 색은 villageData.TILES 와 완전히 같다 (2D 와 같은 색)",
    "village-view3d — init 전에는 색칠한 타일도 0개다"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-08 qc+claude",
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
   "human": true,
-  "note": "qc+claude 2026-10-08: △ 저녁·비라 어둡고 길가 빨간 판·검은 덩어리가 튐(visual-20261007/saga-forest-1-village3d.png) → W-0112 · D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). △ 저녁·비라 어둡다."
+  "note": "D3(qc+claude, W-0112): 가을 저녁·흐림 3D 마을 visual-20261007/saga-forest-1-village3d.png ○ — 집·단풍·길·표지판·주민 읽힘(저녁 반구 0.6→0.7·비 0.6→0.75). 빨간 판 = 깃대 소품 banner_thin_red 를 위에서 본 것, 왼쪽 검은 덩어리는 어두운 면 소품(정체 미확인 — 바꾸려면 K) · D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). △ 저녁·비라 어둡다."
  },
  {
   "id": "fs.asset3d",
