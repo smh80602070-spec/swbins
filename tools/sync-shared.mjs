@@ -37,7 +37,8 @@ const FILES = [
   ['js/toon3d-core.js', 'js/toon3d-core.js'],
   ['js/itemicon-ids.js', 'js/itemicon-ids.js'],   // W-0025 — 아이템 아이콘 이름 표(생성물: tools/gen-itemicon-ids.mjs)
   ['js/itemicon.js', 'js/itemicon.js'],
-  ['js/toon3d.js', 'js/toon3d.js', ['saga-go', 'saga-dungeon']],   // 3째 칸 = 이 판들에만(없으면 다섯 판 전부)
+  ['js/toon3d.js', 'js/toon3d.js', ['saga-go', 'saga-dungeon']],
+  ['js/icon.js', 'js/icon.js', ['saga-go', 'saga-dungeon', 'saga-story']],   // R-4 — UI 아이콘(Lucide) 세 벌이 코드 같고 표만 추려 있던 것 → 합집합 표   // 3째 칸 = 이 판들에만(없으면 다섯 판 전부)
 ];
 const check = process.argv.includes('--check');
 
