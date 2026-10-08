@@ -483,11 +483,12 @@
    "몰이 사냥 §5.19 2차 — 원뿔 무예(arc)는 앞 부채꼴만 멀리, 뒤·옆은 안 맞는다 · 끄면 옛 회전참 · 넷에 달림",
    "몰이 사냥 §5.19 2차 — 끌어당기기(pull)는 반경 안 잡졸을 발밑으로 모은다 · 보스는 안 끌림 · 끄면 그대로"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-dg-close4.mjs 4/4 — results/pw-dg-close4.json(2026-10-08). 들판(마을 안전 반경 1300 밖)에서 보물 지킴이 정예 하나·방랑 상인 하나가 서고, 이미 있으면 또 안 선다 · "
  },
  {
   "id": "dg.quest",
@@ -727,11 +728,12 @@
    "세이브 버전이 안 맞아도 안 버려진다 (SAGA-DESIGN §8-3)",
    "오류 링버퍼 상한 (SAGA-DESIGN §8-2)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: pw-dg-close4.mjs — 루프가 한 번 던지면 ⚠️ 토스트·다음 프레임 계속 · core.load 가 던지는 판에서 \"⚠️ 시작 실패\" 상자(2026-10-08) · "
  },
  {
   "id": "dg.x",

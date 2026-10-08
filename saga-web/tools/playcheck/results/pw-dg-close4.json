@@ -1,0 +1,28 @@
+{
+ "script": "pw-dg-close4.mjs",
+ "game": "saga-dungeon",
+ "pass": 4,
+ "total": 4,
+ "checks": [
+  {
+   "name": "dg.dungeon-8 들판 이벤트 — 보물 지킴이(정예) 하나와 방랑 상인 하나가 들판에 서고, 이미 서 있으면 또 안 선다",
+   "ok": true,
+   "detail": "{\"townActive\":true,\"foes0\":0,\"foes1\":1,\"guard\":{\"elite\":true,\"field\":true},\"npc0\":0,\"merch\":1,\"mname\":\"방물장수(方物匠手)\",\"mx\":276,\"guards2\":1,\"merch2\":1}"
+  },
+  {
+   "name": "dg.game-2 프레임 예외 — 루프가 한 번 던져도 ⚠️ 토스트로 알리고 다음 프레임이 계속 돈다",
+   "ok": true,
+   "detail": "{\"thrown\":true,\"calls\":14,\"toast\":\"⚠️ 확인용 프레임 예외\"}"
+  },
+  {
+   "name": "페이지 예외·console.error 없음(일부러 던진 것 빼고)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "dg.game-2 부팅 예외 — 시작이 던지면 \"⚠️ 시작 실패\" 상자가 오류문과 함께 뜬다(빈 화면으로 안 멈춘다)",
+   "ok": true,
+   "detail": "{\"banner\":true,\"text\":\"⚠️ 시작 실패 — 이 화면을 스크린샷으로 남겨 주세요\\n\\nError: 확인용 부팅 예외\\n    at v.lo\"}"
+  }
+ ]
+}

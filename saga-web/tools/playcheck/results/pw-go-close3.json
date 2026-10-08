@@ -1,0 +1,24 @@
+{
+ "script": "pw-go-close3.mjs",
+ "game": "saga-go",
+ "pass": 3,
+ "total": 3,
+ "pageErrors": [],
+ "checks": [
+  {
+   "name": "go.track 흔적 — 고향 밖에선 둘레에 흔적 표식이 서고, 흔적 위로 가면 저절로 읽혀 읽은 수가 는다",
+   "ok": true,
+   "detail": "{\"t0\":{\"on\":true,\"read0\":0,\"home\":300},\"t1\":{\"marks\":41,\"near\":{\"kind\":\"foot\",\"x\":972,\"y\":79}},\"t3\":{\"read\":1}}"
+  },
+  {
+   "name": "go.rogue-action 결투 — 창이 열리고 실제 Space(속공)를 누르면 기세(적 체력)가 줄며, D(회피)에도 창이 산다",
+   "ok": true,
+   "detail": "{\"h0\":3000,\"h1\":2903,\"d1\":{\"active\":true}}"
+  },
+  {
+   "name": "페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}
