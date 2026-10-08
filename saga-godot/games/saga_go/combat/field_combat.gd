@@ -33,6 +33,7 @@ const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
 const AimedShot := preload("res://games/saga_go/combat/aimed_shot.gd")
 const FeelTuning := preload("res://games/saga_go/combat/feel_tuning.gd")
 const FieldAssist := preload("res://games/saga_go/combat/field_assist.gd")
+const Voice := preload("res://saga_core/audio/voice.gd")   # G-0111 대사 음성
 
 const COMBO_MUL := [0.35, 0.4, 0.6]
 const COMBO_SEC := [0.32, 0.32, 0.45]
@@ -224,6 +225,7 @@ func _ready() -> void:
 	assist = FieldAssist.new()
 	assist.name = "FieldAssist"
 	add_child(assist)
+	Voice.speaker = active_id()   # G-0111 — 줍기 말은 싸우는 인물 목소리로
 	_refresh_hud()
 
 ## 새 입력 액션·키는 project.godot 를 고치지 않고 여기서 등록한다(GO 만 — 다른 판엔 안 샌다).
@@ -361,6 +363,7 @@ func switch_to(index: int, forced := false) -> bool:
 	if _player != null and _player.has_method("set_hero_body"):
 		_player.call("set_hero_body", r[index])   # G-0024 — 편성원 몸으로 교체(dex 설치 시)
 	_switch_cd = SWITCH_CD
+	Voice.speaker = r[index]
 	_ring_fx(_player.global_position, 1.6, Elements.color_of(active_element()), 0.35)
 	CombatFeel.ui()
 	_refresh_hud()
@@ -554,6 +557,7 @@ func attack() -> bool:
 	FeelTuning.kind = "finisher" if step > 0 and step == (kit.mul as Array).size() - 1 else "normal"
 	_aim_at_nearest()
 	_player.call("play_action", "attack", kit.sec[step], 0.25)
+	Voice.say("shout", active_id())   # G-0111 — 가끔(확률·간격은 voice.gd)
 	var amount: float = _normal_atk() * float(kit.mul[step])
 	var hits := 0
 	_crit_id = active_id()
@@ -659,6 +663,7 @@ func skill() -> bool:
 	_skill_cd[id] = skill_cd_of(id)
 	var el := active_element()
 	var atk := char_atk(id) * PartyState.talent_mul(id, "skill") * PartyState.passive_mul(id, "skill")
+	Voice.say("shout", id)
 	_player.call("play_action", "skill", 0.4, 0.0)   # G-0025 — 시전 클립(없는 몸은 attack 으로)
 	var hits := 0
 	_crit_id = id
@@ -719,6 +724,7 @@ func burst() -> bool:
 	if energy < ENERGY_MAX or not _grounded_ok():
 		return false
 	energy = 0.0
+	Voice.say("shout", active_id(), true)   # 필살은 늘 외친다
 	var el := active_element()
 	var atk := char_atk(active_id()) * PartyState.talent_mul(active_id(), "burst") * PartyState.passive_mul(active_id(), "burst")
 	if PartyState.constellation(active_id()) >= 6:

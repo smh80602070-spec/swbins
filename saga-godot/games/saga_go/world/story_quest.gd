@@ -10,6 +10,7 @@ extends "res://games/saga_go/world/story_quest_base.gd"
 
 
 ## 106장 ㉙ 대화 글자 흘리기 속도(초당 글자 수) — 점검 probe_gestures 가 이 파일 글자에서 직접 읽는다.
+const Voice := preload("res://saga_core/audio/voice.gd")   # G-0111 대사 음성
 const REVEAL_CPS := 30.0
 
 # ---------------------------------------------------------------- 입력·대화
@@ -77,6 +78,8 @@ func open_dialogue(lines: Array, on_done: Callable, npc_id := "") -> void:
 	add_to_group("ui_modal")
 	_frozen_before = bool(_player.get("frozen"))
 	_player.set("frozen", true)
+	if _dlg_npc != "":
+		Voice.say("greet", _dlg_npc)   # G-0111 — 말을 건 인물이 인사 한 마디
 	if _dlg_npc != "" and _player.has_method("face_toward"):
 		_player.call("face_toward", _npc_pos[_dlg_npc])
 	_show_line()

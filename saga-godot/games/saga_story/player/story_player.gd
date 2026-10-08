@@ -1,6 +1,7 @@
 extends StorySkillsMage
 
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
+const Voice := preload("res://saga_core/audio/voice.gd")   # G-0111 대사 음성
 
 ## 사가종횡 플레이어 코어 — 이동·피해·상태·_physics_process. 상태 변수는 story_player_base.gd, 무예 `_cast_*` 는 story_skills_*.gd (상속 사슬, G-0007).
 
@@ -634,5 +635,6 @@ func _attack() -> void:
 	_attack_cd_left = ATTACK_COOLDOWN / StoryLabyrinthState.atk_speed_mult()
 	_play_anim("sprint")  # 전용 공격 애니메이션이 없어 임시로 빌림(재해석, 실기 확인 때 다시 볼 것)
 	_melee_hit(ATTACK_RANGE, 1.0)
+	Voice.say("shout")   # G-0111 — 가끔 외침
 
 

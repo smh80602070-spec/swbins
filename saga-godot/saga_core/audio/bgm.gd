@@ -9,6 +9,8 @@ extends Node
 ##   Bgm.stinger(self, "levelup")  # G-0034 짧은 음악 `stinger-<키>` 한 번 — 배경음을 잠깐 낮췄다(덕킹) 끝나면 되돌린다. 같은 키 STINGER_GAP 초 안은 무시
 ## 전용 버스 "BGM" 을 런타임에 만들어 효과음(CombatFeel)과 섞이지 않는다. 시험용으로 dir·cfg_path·fade 를 덮어쓸 수 있다.
 
+const Voice := preload("res://saga_core/audio/voice.gd")
+
 const NODE_NAME := "SagaBgm"
 const BUS := "BGM"
 const BASE_DB := -10.0
@@ -90,6 +92,7 @@ static func set_volume(v: float) -> void:
 
 
 static func stinger(_ctx: Node, key: String) -> void:
+	Voice.system(key)   # G-0111 — 짧은 음악과 함께 해설 안내 한 줄(키가 Voice.SYSTEM 에 있을 때만)
 	var n := _inst()
 	if n != null:
 		n._stinger(key)
@@ -267,6 +270,7 @@ func _load_cfg() -> void:
 
 func _save_cfg() -> void:
 	var c := ConfigFile.new()
+	c.load(cfg_path)   # G-0111 — 같은 파일의 [voice] 절을 지우지 않게
 	c.set_value("bgm", "enabled", enabled)
 	c.set_value("bgm", "volume", volume)
 	c.save(cfg_path)

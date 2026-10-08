@@ -3037,5 +3037,21 @@
   "fun": {},
   "ticket": "G-0061",
   "since": "2026-10-08"
+ },
+ {
+  "id": "gd.go.voice_lines",
+  "name": "대사 음성(K-0036 589줄) — 외침(공격 가끔·필살 늘)·획득·인사(사가만리 대화·사가마을 주민)·안내(짧은 음악 키 → 해설), 다섯 판 공용 voice.gd, 빠진 줄 건너뜀",
+  "files": [
+   "saga_core/audio/voice.gd",
+   "tools/probe_voice.gd"
+  ],
+  "tests": [
+   "voice"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0111",
+  "since": "2026-10-08"
  }
 ]

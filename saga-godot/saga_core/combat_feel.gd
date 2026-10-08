@@ -63,6 +63,7 @@ const POPUP_SEC := 0.6
 const POPUP_RISE_M := 0.8
 const POPUP_CRIT_SCALE := 1.4
 const SOUND_CUE_COUNT := 3
+const Voice := preload("res://saga_core/audio/voice.gd")   # G-0111 대사 음성
 const CEL_SHADER := preload("res://saga_core/shaders/cel_toon.gdshader")
 ## 2026-09-29 — GO 코드 짐승(creature_builder.gd)은 정점색 셀 셰이더에 같은 hit_flash 를 둔다.
 const CEL_VC_SHADER := preload("res://saga_core/shaders/cel_vertex_color.gdshader")
@@ -114,6 +115,7 @@ func pickup(target: Node3D, label: String) -> void:
 	if is_instance_valid(target):
 		_do_pickup_popup(target, label)
 	_do_sound("pick")
+	Voice.say("pickup")   # G-0111 — 말하는 이 = Voice.speaker
 	pickup_triggered.emit(label)
 
 

@@ -30,6 +30,7 @@ const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
+const Voice := preload("res://saga_core/audio/voice.gd")   # G-0111 대사 음성
 ## PLAN 103-1 spritegen.py 산출물(09-20, 그동안 어디서도 안 쓰였다) — 관계
 ## 메뉴 제목의 "(♥%d)" 숫자 대신 실제 하트 한 줄로 보여준다. ChoicePrompt
 ## 자체(5판 39곳 공유)는 안 건드리고, 그 패널 바로 위에 별도 줄을 하나
@@ -199,6 +200,7 @@ func _on_body_exited(body: Node3D, v: Dictionary) -> void:
 ## 매긴다(어느 분기로 빠지든 하루에 한 번). 세배·부탁 완수 분기는 §5.4가
 ## 딸린 값(+2 각각)을 그대로 더한다.
 func _talk(v: Dictionary) -> void:
+	Voice.say("greet", String(v.id))   # G-0111 — 주민 인사 한 마디
 	if not ForestSaveState.talked_today(v.id):
 		ForestSaveState.mark_talked(v.id)
 		_gain_heart(v, 1)

@@ -32,6 +32,7 @@ extends Node
 ## "타격 한 곳"이라 `saga_core/combat_feel.gd`의 5요소(hitstop·흔들림·
 ## 플래시·숫자 팝·타격음)를 여기서 잇는다(`CombatFeel.hit()`).
 
+const Voice := preload("res://saga_core/audio/voice.gd")   # G-0111 대사 음성
 const ATK_COOLDOWN := 0.55 # 웹판 BASE_ATK_CD 그대로
 const ATK_DAMAGE := 9.0
 const ATK_RANGE := 2.4
@@ -87,6 +88,7 @@ func _strike(enemy: Node) -> void:
 	## — 무예 스크립트 80여 개는 범위 밖(다음 세션).
 	if enemy is Node3D:
 		CombatFeel.hit(enemy, dmg, is_crit)
+		Voice.say("shout")   # G-0111 — 가끔 외침(말하는 이 = Voice.speaker)
 	if is_instance_valid(enemy) and enemy.hp > 0.0:
 		_apply_elemental(enemy)
 		## dungeon.js strike()의 "가시 돋친" 반사 — 죽이지 못했을 때만 되받는다
