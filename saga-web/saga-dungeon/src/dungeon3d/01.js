@@ -483,8 +483,8 @@
          입혀(아래 `groundTex`) 노출이 밀려도 "흰 판"이 아니라 "밝은 땅"으로
          읽히게 같이 손봤다. */
       return {
-        ambient: 1.05, ambientHex: 0xe7eaed,
-        keyIntensity: 0.95, keyHex: 0xecf0f3,
+        ambient: 1.45, ambientHex: 0xe7eaed,   // W-0111 — 1.05/0.95 는 물리 조명 기준 마을 평균 밝기 15/255
+        keyIntensity: 1.25, keyHex: 0xecf0f3,
         torchIntensity: 0, torchHex: 0xffc070, torchRange: 420,
         fog: { near: 1400, far: 3200 },
         bgHex: 0xaeb4ba, boss: false, deep: 0, town: true
@@ -932,7 +932,7 @@
     var wallTex = pickTex(WALL_TEX, run, 'walltex');
     floorMesh.position.set(W / 2, 0, H / 2);
     floorMesh.scale.set(W, H, 1);
-    floorMesh.material = texMat(mix(stone, 0x1a1a20, 0.25), floorTex, W / TILE, H / TILE);
+    floorMesh.material = texMat(run.town ? mix(stone, 0xffffff, 0.4) : mix(stone, 0x1a1a20, 0.25), floorTex, W / TILE, H / TILE);   // W-0111 마을 바닥은 흰 쪽
 
     /* 벽 넷 — 뒤쪽 둘은 높고 앞쪽 둘은 낮다. 안 낮추면 방 안이 안 보인다.
        마을(run.town)은 사방으로 필드에 걸어 나갈 수 있는데(town.js 의

@@ -131,6 +131,7 @@ async function runDungeon() {
     await skipScenes(r, isOpen);
     await ev(() => { if (DG.ui.closeSheet) { DG.ui.closeSheet(); } });
     await sleep(2500);
+    await settle();   // W-0111 — 마을도 몸(GLB)이 다 설 때까지 기다린다(안 기다리면 건물 자리가 도형 상자로 찍힌다)
     await shoot(r, 'saga-dungeon', '1-town', '오픈월드 마을·들판 3D', ['dg.dungeon3d'], await st());
     check('사가나락 굴혈에 들어간다', await enter());
     await settle();

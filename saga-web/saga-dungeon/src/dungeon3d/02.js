@@ -76,7 +76,7 @@
        뚜렷이 갈색이 남는다). 마을만 옅게 — 던전 안(지하) 특유의 어두운
        분위기는 그대로 둔다(그쪽은 제보가 없었다, `lightPlan`도 원래 어둡게
        짠 자리라 손 안 댐). */
-    var groundK = run.town ? 0.15 : 0.62;
+    var groundK = run.town ? -0.4 : 0.62;   // W-0111 — 마을은 음수 = 흰 쪽으로 섞는다(0.15 로 검정 쪽에 섞으니 3D 마을 평균 밝기 15/255)
     var FI = global.DG.fieldInstance;
 
     /* 2026-09-08 — "맵이 없는 데는 낭떨어지 같다" 제보. 세운 반경(R칸) 밖은
@@ -87,7 +87,7 @@
        draw call 1개뿐)를 깔아 "끊긴 낭떨어지" 대신 "저 멀리 낮은 벌판"으로
        보이게 한다 — 칸별 비용은 그대로다(buildField 한 번에 하나뿐). */
     var skirt = groundBox(fieldTarget, cx0 * F.CHUNK, -260, cz0 * F.CHUNK, 6000, 40, 6000,
-      mix(stone, 0x141018, groundK), false);
+      groundK < 0 ? mix(stone, 0xffffff, -groundK) : mix(stone, 0x141018, groundK), false);
     skirt.receiveShadow = false;
 
     var coords = [];
@@ -113,7 +113,7 @@
     var inf = WM.info(cx, cz, J.W, J.H);
     if (!inf) { return; }
     var tile = fieldTileBox(J.g, cx * C + C / 2, inf.ring === 0 ? -7 : -6, cz * C + C / 2,
-      C + 2, 12, C + 2, mix(inf.region.ground, 0x141018, J.groundK), false);
+      C + 2, 12, C + 2, J.groundK < 0 ? mix(inf.region.ground, 0xffffff, -J.groundK) : mix(inf.region.ground, 0x141018, J.groundK), false);
     tile.receiveShadow = true;
     if (inf.ring === 0) { return; }
     var list = WM.pieces(cx, cz, J.W, J.H);
@@ -138,7 +138,7 @@
     var gx = cx * F.CHUNK, gz = cz * F.CHUNK;
     var hh = F.heightAt(gx + F.CHUNK / 2, gz + F.CHUNK / 2, seed, W, H);
     var tile = fieldTileBox(J.g, gx + F.CHUNK / 2, hh - 6, gz + F.CHUNK / 2,
-      F.CHUNK + 2, 12, F.CHUNK + 2, mix(stone, 0x141018, groundK), false);
+      F.CHUNK + 2, 12, F.CHUNK + 2, groundK < 0 ? mix(stone, 0xffffff, -groundK) : mix(stone, 0x141018, groundK), false);
     tile.receiveShadow = true;
 
     /* 통로(PLAN §28-2 Phase 3, §28-4 Phase 2·3) — 이 조각이 마을 사이

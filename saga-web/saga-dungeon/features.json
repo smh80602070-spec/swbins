@@ -612,7 +612,7 @@
   "ticket": null,
   "since": "2026-09-30",
   "human": true,
-  "note": "qc+claude 2026-10-08: △ 마을이 어둡고 건물 자리가 큰 갈색·하늘색 상자, 방에 흰 네모 조각(visual-20261007/saga-dungeon-1-town·2-room) → W-0111 · D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). △ 마을이 어둡다."
+  "note": "qc+claude 2026-10-08 W-0111: 상자·흰 네모는 GLB 조립 전 도형 대역이었다(촬영이 마을만 안 기다림 → settle) — 방 ○. 마을 밝기 15→26.5/255(바닥·들판 물감 흰 쪽 0.4·빛 1.45/1.25)로 돌결·건물·사람은 읽히나 아직 어두움 △ — 마을 바닥 돌 사진 자체가 짙어 더는 밝은 바닥 텍스처(K) 몫 · D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). △ 마을이 어둡다."
  },
  {
   "id": "dg.dungeon3d-2",
