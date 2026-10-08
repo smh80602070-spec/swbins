@@ -1258,7 +1258,8 @@
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D1(U-0062 10-09): PlaytestRealmSlice 판 FAIL — actors 사실 몸 대역(U-0065). 고친 뒤 다시."
  },
  {
   "id": "un.rk.orders",
@@ -1267,11 +1268,12 @@
   "tests": [
    "PlaytestRealmSlice"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0062-20261009.json PlaytestRealmSlice(줄) OK."
  },
  {
   "id": "un.rk.quiz",
@@ -1280,11 +1282,12 @@
   "tests": [
    "PlaytestRealmQuiz"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0062-20261009.json PlaytestRealmQuiz OK."
  },
  {
   "id": "un.rk.library",
@@ -1293,11 +1296,12 @@
   "tests": [
    "PlaytestRealmLibrary"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0062-20261009.json PlaytestRealmLibrary OK."
  },
  {
   "id": "un.rk.war-capture",
@@ -1306,11 +1310,12 @@
   "tests": [
    "PlaytestRealmSlice"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0062-20261009.json PlaytestRealmSlice(줄) OK."
  },
  {
   "id": "un.rk.enemy-castles",
@@ -1319,11 +1324,12 @@
   "tests": [
    "PlaytestRealmEnemyCastles"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0062-20261009.json PlaytestRealmEnemyCastles OK."
  },
  {
   "id": "un.rk.r101-2",
@@ -1333,11 +1339,12 @@
    "PlaytestRealmSlice",
    "PlaytestRealmTraitsVictory"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0062-20261009.json PlaytestRealmTraitsVictory · PlaytestRealmSlice(줄) OK."
  },
  {
   "id": "un.rk.eras",
@@ -1359,11 +1366,12 @@
   "tests": [
    "PlaytestRealmBattlefield"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0062-20261009.json PlaytestRealmSlice → PlaytestRealmBattlefield(줄) OK."
  },
  {
   "id": "un.rk.actors",
@@ -1409,11 +1417,12 @@
   "tests": [
    "PlaytestCommonSettingsLoc"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0062-20261009.json PlaytestCommonSettingsLoc · PlaytestRealmSlice(줄) OK."
  },
  {
   "id": "un.go.vroid-bodies",

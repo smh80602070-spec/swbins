@@ -1,0 +1,77 @@
+{
+  "date": "2026-10-09",
+  "tickets": [
+    "U-0062 사가천하 확인 닫기 ①"
+  ],
+  "how": "장면 판 = PlaytestRealmSlice(save_realm.json 치움·세이브 다섯 백업 후 복원·cmp 같음, .utmp/u0062-PlaytestRealmSlice.log) — 판 전체는 FAIL(아래), 실패와 무관한 하위 검사 줄로 판정 · 단독 = bash tools/unity-batch.sh -- Unity.exe ... -executeMethod Saga.EditorTools.<진단>.Run — Quiz·Library·EnemyCastles·TraitsVictory·CommonSettingsLoc 전부 OK · Battlefield 는 하위 검사라 장면 판 줄 · 진단 코드 무변경",
+  "scene": "[PlaytestRealmSlice] FAIL - error=True phase=Eras frames=86",
+  "runtime_errors": 2,
+  "failure": {
+    "lines": "[PlaytestRealmSlice] runtime error: [PlaytestRealmSlice] actors FAIL - 무장 몸이 있는데 대역으로 섬 / [PlaytestRealmSlice] runtime error: [PlaytestRealmSlice] actors FAIL - 재야 몸이 있는데 대역으로 섬",
+    "cause": "U-0034(10-04) VRoid 재굽기 뒤 Assets/Art/CharactersRealistic/*Animated.prefab 39벌 바깥 Animator 의 m_Avatar 가 비어 isHuman=false → RealmFigure.BuildBody 가 사실 몸을 버리고 대역을 세움(지도·싸움터 인물). 버그 초안 tasks/unity/U-0065.md",
+    "held_d1": [
+      "un.rk.slice(판 FAIL)",
+      "un.rk.actors(실패 자리·그림 판정)"
+    ]
+  },
+  "results": [
+    {
+      "id": "un.rk.orders",
+      "playtest": "PlaytestRealmSlice(줄)",
+      "result": "OK",
+      "lines": "[PlaytestRealmSlice] agri OK - 현책 — 개간 +13 (대성공!) (게이트 실패 둘은 명령 소진 안 시킴 확인됨) / [PlaytestRealmSlice] comm OK - 현책 — 상업 +8 / [PlaytestRealmSlice] sec OK - 현책 — 치안 +11 (대성공!) / [PlaytestRealmSlice] tech OK - 현책 — 기술 +6 / [PlaytestRealmSlice] train OK - 현책 — 훈련 +5 / [PlaytestRealmSlice] wall OK - 현책 — 축성 +354 / [PlaytestRealmSlice] draft OK - 현책 — 징병 +1028 (troops=1028, pop=260000->258972) / [PlaytestRealmSlice] search OK - 현책 — 이도인을(를) 찾아냈다! / [PlaytestRealmSlice] hire OK (attempt 5) - 이도인이(가) 세력에 합류했다(진류 배치)! / [PlaytestRealmSlice] plot fire OK (success, attempt 2) - 🔥 화계 성공 — 소패 병력 800 → 538 (262 소실)",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.rk.war-capture",
+      "playtest": "PlaytestRealmSlice(줄)",
+      "result": "OK",
+      "lines": "[PlaytestRealmSlice] overwhelm attack + city absorb OK - 소패을(를) 함락했다! (아군 손실 18, 적 손실 601) — 이제 우리 성입니다 (agri=220, sec=30, wall=0, troops=0) / [PlaytestRealmSlice] weak attack OK - 물러났다 — 생존 473, 적 손실 199, 치중 6 귀환 (troops back=473, xiaopei troops=601) / [PlaytestRealmSlice] re-attack blocked OK - 이미 함락한 성입니다 / [PlaytestRealmSlice] captured-city develop OK - 현책 — 개간 +8 / [PlaytestRealmSlice] too-few-troops attack gate OK - 오백은 넘겨야 군대라 하지요",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.rk.r101-2",
+      "playtest": "PlaytestRealmTraitsVictory · PlaytestRealmSlice(줄)",
+      "result": "OK",
+      "lines": "[PlaytestRealmTraitsVictory] OK / [PlaytestRealmSlice] officer traits/ambition OK - 결정성·계략 배율·야망 달성+중복 방지 확인 / [PlaytestRealmSlice] debate OK - 난도 문턱·3문 추첨·정답수→배율 매핑·HireChance() debateMul 반영·상한 클램프 전부 확인 / [PlaytestRealmSlice] duel OK - 순환·배율·평균 산술 확인, duelPowerMul이 Fight() 결과에 반영됨(적 손실 1463→2402) / [PlaytestRealmSlice] tactic OK - 평야 기병 돌격/강 화공 배율 문턱 확인, 힌트=\"평야: 기병 돌격(무력 80+)\" / [PlaytestRealmSlice] event chain OK - 카드 7종 서술·결투 승리 체인 예약·월간 확률·응답 뒤 카드 해제 확인 / [PlaytestRealmSlice] succession OK - 허창 배치 계승·치안 절반 하락·안내 문구 확인, 이후 phase용으로 배치·치안·토글 원복(\"현책이(가) 연로하여 허창을 이도인에게 물려주었다. 정권 이양으로 치안이 흔들렸다.\")",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.rk.quiz",
+      "playtest": "PlaytestRealmQuiz",
+      "result": "OK",
+      "lines": "[PlaytestRealmQuiz] OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.rk.library",
+      "playtest": "PlaytestRealmLibrary",
+      "result": "OK",
+      "lines": "[PlaytestRealmLibrary] OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.rk.enemy-castles",
+      "playtest": "PlaytestRealmEnemyCastles",
+      "result": "OK",
+      "lines": "[PlaytestRealmEnemyCastles] OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.rk.battlefield",
+      "playtest": "PlaytestRealmSlice → PlaytestRealmBattlefield(줄)",
+      "result": "OK",
+      "lines": "[PlaytestRealmSlice] battlefield OK - 성 58 · 결 6 · 가장자리 · 늘 같음 · 머릿수 · 이김 9/12·0/8 · 짐 물러남 x -6.0→-3.8 · '소패 평야'",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.rk.common",
+      "playtest": "PlaytestCommonSettingsLoc · PlaytestRealmSlice(줄)",
+      "result": "OK",
+      "lines": "[PlaytestCommonSettingsLoc] OK / [PlaytestRealmSlice] settings panel OK - sfx/vibration/ui-scale/graphics-quality/language all verified / [PlaytestRealmSlice] realm hud localization OK / [PlaytestRealmSlice] command UI panels OK - settings panel actually toggles, orders/save labels follow language, save button actually writes a file",
+      "date": "2026-10-09"
+    }
+  ],
+  "fails": 1,
+  "not_covered": "un.rk.slice 는 판 FAIL 이라 D1 유지 · 그림 판정 eras·actors·wall-tiers(GUI) 는 U-0063 몫 · D0 assets 밖"
+}
