@@ -53,7 +53,8 @@
     "file": "avatar_sample_t.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_t.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": false
   },
   {
    "recipe": "_cmp_real_archer_f_01",
@@ -67,7 +68,8 @@
     "file": "avatar_sample_k.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_k.glb"
    },
-   "variant": false
+   "variant": false,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_blackknight_01",
@@ -81,7 +83,8 @@
     "file": "avatar_sample_r.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_r.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_brawler_01",
@@ -95,7 +98,8 @@
     "file": "avatar_sample_c.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_c.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_brute_01",
@@ -121,7 +125,8 @@
     "file": "avatar_sample_y.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_y.glb"
    },
-   "variant": false
+   "variant": false,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_castleguard_02",
@@ -135,7 +140,8 @@
     "file": "avatar_sample_t.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_t.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": false
   },
   {
    "recipe": "_cmp_real_chrononaut_02",
@@ -149,7 +155,8 @@
     "file": "avatar_sample_l.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_l.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_chrononaut_f_01",
@@ -163,7 +170,8 @@
     "file": "avatar_sample_s.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_s.glb"
    },
-   "variant": false
+   "variant": false,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_colossus_01",
@@ -201,7 +209,8 @@
     "file": "avatar_sample_g.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_g.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_courier_f_01",
@@ -215,7 +224,8 @@
     "file": "avatar_sample_m.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_m.glb"
    },
-   "variant": false
+   "variant": false,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_crashdummy_01",
@@ -253,7 +263,8 @@
     "file": "avatar_sample_p.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_p.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_exored_01",
@@ -267,7 +278,8 @@
     "file": "avatar_sample_t.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_t.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": false
   },
   {
    "recipe": "_cmp_real_fairy_01",
@@ -293,7 +305,8 @@
     "file": "avatar_sample_x.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_x.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_ganfaul_01",
@@ -307,7 +320,8 @@
     "file": "avatar_sample_v.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_v.glb"
    },
-   "variant": false
+   "variant": false,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_gasmask_01",
@@ -321,7 +335,8 @@
     "file": "avatar_sample_c.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_c.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_goblin_01",
@@ -347,7 +362,8 @@
     "file": "avatar_sample_q.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_q.glb"
    },
-   "variant": false
+   "variant": false,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_hero_f_01",
@@ -361,7 +377,8 @@
     "file": "avatar_sample_b.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_b.glb"
    },
-   "variant": false
+   "variant": false,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_hoodedcloak_f_01",
@@ -375,7 +392,8 @@
     "file": "avatar_sample_j.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_j.glb"
    },
-   "variant": false
+   "variant": false,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_junkpeddler_01",
@@ -389,7 +407,8 @@
     "file": "avatar_sample_n.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_n.glb"
    },
-   "variant": false
+   "variant": false,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_leatherknight_f_01",
@@ -403,7 +422,8 @@
     "file": "avatar_sample_d.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_d.glb"
    },
-   "variant": false
+   "variant": false,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_mage_f_01",
@@ -417,7 +437,8 @@
     "file": "avatar_sample_o.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_o.glb"
    },
-   "variant": false
+   "variant": false,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_martialist_01",
@@ -431,7 +452,8 @@
     "file": "avatar_sample_x.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_x.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_maw_01",
@@ -457,7 +479,8 @@
     "file": "avatar_sample_g.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_g.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_merc_01",
@@ -471,7 +494,8 @@
     "file": "avatar_sample_t.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_t.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": false
   },
   {
    "recipe": "_cmp_real_morak_01",
@@ -485,7 +509,8 @@
     "file": "avatar_sample_x.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_x.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_nightshade_01",
@@ -511,7 +536,8 @@
     "file": "avatar_sample_c.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_c.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_paladin_01",
@@ -525,7 +551,8 @@
     "file": "avatar_sample_r.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_r.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_parasite_01",
@@ -551,7 +578,8 @@
     "file": "avatar_sample_t.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_t.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": false
   },
   {
    "recipe": "_cmp_real_photographer_f_02",
@@ -565,7 +593,8 @@
     "file": "AvatarSample_A.glb",
     "unity": "Assets/Art/CharactersVroid/AvatarSample_A.glb"
    },
-   "variant": false
+   "variant": false,
+   "modify_ok": false
   },
   {
    "recipe": "_cmp_real_phototourist_f_01",
@@ -579,7 +608,8 @@
     "file": "avatar_sample_w.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_w.glb"
    },
-   "variant": false
+   "variant": false,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_pilgrim_01",
@@ -593,7 +623,8 @@
     "file": "avatar_sample_p.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_p.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_plasma_01",
@@ -619,7 +650,8 @@
     "file": "avatar_sample_u.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_u.glb"
    },
-   "variant": false
+   "variant": false,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_rider_01",
@@ -633,7 +665,8 @@
     "file": "avatar_sample_c.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_c.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_rioter_01",
@@ -647,7 +680,8 @@
     "file": "avatar_sample_g.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_g.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_riotswat_01",
@@ -661,7 +695,8 @@
     "file": "avatar_sample_t.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_t.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": false
   },
   {
    "recipe": "_cmp_real_rockgiant_01",
@@ -687,7 +722,8 @@
     "file": "avatar_sample_x.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_x.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_sentry_01",
@@ -701,7 +737,8 @@
     "file": "avatar_sample_p.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_p.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_skeleton_01",
@@ -751,7 +788,8 @@
     "file": "avatar_sample_p.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_p.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_surveyor_01",
@@ -765,7 +803,8 @@
     "file": "avatar_sample_l.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_l.glb"
    },
-   "variant": true
+   "variant": true,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_swordmaiden_f_01",
@@ -779,7 +818,8 @@
     "file": "avatar_sample_i.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_i.glb"
    },
-   "variant": false
+   "variant": false,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_testbot_01",
@@ -805,7 +845,8 @@
     "file": "avatar_sample_f.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_f.glb"
    },
-   "variant": false
+   "variant": false,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_tourist_01",
@@ -819,7 +860,8 @@
     "file": "avatar_sample_z.glb",
     "unity": "Assets/Art/CharactersVroid/avatar_sample_z.glb"
    },
-   "variant": false
+   "variant": false,
+   "modify_ok": true
   },
   {
    "recipe": "_cmp_real_visitor_01",

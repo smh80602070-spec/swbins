@@ -7,15 +7,19 @@
 
   py tools/char-forge/unity_bodies_plan.py            # data/unity_bodies.json 을 다시 쓴다
 VRoid 몸이 26명이라 같은 몸이 여러 자리에 겹친다 → 겹침은 "variant" 로 표시(옷 조각·색 변주는 K-0022 쪽).
+배치된 VRM 메타가 개작본 재배포를 허용하지 않는 몸(예: sample_t `allowModification`)은 `modify_ok: false` — 원본 그대로만,
+variant 라도 옷·색 변주 재료로 쓰지 않는다(K-0088).
 """
 import glob
 import json
 import os
 import re
+import struct
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, 'data', 'unity_bodies.json')
+PLACED = os.path.join(HERE, '..', '..', 'saga-assets', 'characters', 'vroid')
 
 # VRoid 풀 — 2026-10-02 렌더를 눈으로 보고 가른 성별(여 16·남 10)
 FEMALE = 'abdefhijkmoqsuwy'
@@ -42,6 +46,18 @@ CREATURE = {
 
 def vroid_file(letter):
     return 'AvatarSample_A.glb' if letter == 'a' else f'avatar_sample_{letter}.glb'
+
+
+def modify_ok(fname):
+    """배치된 VRM 메타(GLB 머리 JSON)가 개작본 재배포를 허용하나."""
+    try:
+        with open(os.path.join(PLACED, fname), 'rb') as f:
+            n = struct.unpack('<I', f.read(20)[12:16])[0]
+            e = json.loads(f.read(n)).get('extensions', {})
+    except (OSError, ValueError):
+        return None
+    m = (e.get('VRMC_vrm') or {}).get('meta') or (e.get('VRM') or {}).get('meta') or {}
+    return m.get('modification') == 'allowModificationRedistribution'
 
 
 def main():
@@ -73,6 +89,7 @@ def main():
     for r in rows:
         if r['replace']['type'] == 'vroid':
             r['variant'] = len(used[r['replace']['id'][-1]]) > 1
+            r['modify_ok'] = modify_ok(r['replace']['file'])
     out = {
         'version': 1,
         'decision': '2026-10-02 사용자: Unity 사람 몸은 VRoid 로 바꾸고 Mixamo 는 제거한다(K-0018). 사람 아닌 몸은 공방 몸 유지.',
@@ -88,6 +105,9 @@ def main():
     print('UNITY_BODIES', json.dumps(out['counts'], ensure_ascii=False))
     over = {k: v for k, v in used.items() if len(v) > 1}
     print('겹침(변주 필요):', {k: len(v) for k, v in over.items()})
+    no = sorted({r['replace']['id'] for r in rows if r.get('modify_ok') is False})
+    if no:
+        print('개작 금지 몸(원본 그대로만):', no)
 
 
 if __name__ == '__main__':

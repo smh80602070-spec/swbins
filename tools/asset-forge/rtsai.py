@@ -224,6 +224,9 @@ def transitions():
             print('없음', bname)
             continue
         B = np.asarray(Image.open(bp).convert('RGB').resize((64, 64))).astype(np.float32)
+        bl = os.path.splitext(bp)[0] + '.license.json'      # 재료 AI 타일의 모델 라이선스를 이어받는다(K-0088)
+        bm = json.load(open(bl, encoding='utf-8')) if os.path.exists(bl) else {}
+        base_lic = '%s — 코드 합성(경계 마스크) + 고른 AI 타일 %s (%s)' % (bm.get('model_license') or bm.get('license') or '재료 라이선스 확인 필요', bname, bm.get('model') or '-')
         for kind in EDGE_KINDS:
             a = edge_mask(kind)
             rgb = B.copy()
@@ -232,7 +235,7 @@ def transitions():
             im = Image.fromarray(np.dstack([np.clip(rgb, 0, 255), a * 255]).astype(np.uint8), 'RGBA')
             dst = os.path.join(OUT, f'rts_tr_{pair}_{kind}.webp')
             im.save(dst, 'WEBP', quality=90, method=6)
-            json.dump({'id': f'rts_tr_{pair}_{kind}', 'generator': 'tools/asset-forge/rtsai.py transitions', 'license': 'CC0-1.0 (코드 생성 + 고른 AI 타일 ' + bname + ')', 'pair': pair,
+            json.dump({'id': f'rts_tr_{pair}_{kind}', 'generator': 'tools/asset-forge/rtsai.py transitions', 'license': base_lic, 'pair': pair,
                        'kind': kind, 'size': [64, 64], 'draw': '아래 땅(풀) 위에 이 조각(위 땅 B)을 얹는다. 변 N·E·S·W = 그 쪽에 B, o* = 바깥 모서리(B 가 귀퉁이), i* = 안쪽 모서리(B 가 귀퉁이만 빼고)'},
                       open(os.path.splitext(dst)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
             n += 1

@@ -56,6 +56,8 @@ def save(im, name, fmt='PNG', lic=None):
         im.save(p, 'PNG', optimize=True)
     d = dict(LIC_MADE)
     d.update(lic or {})
+    if d.get('model_license'):          # AI 그림은 코드 CC0 가 아니라 모델 라이선스(K-0088)
+        d['license'] = d['model_license']
     d['id'] = os.path.splitext(name)[0]
     json.dump(d, open(os.path.splitext(p)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     return p

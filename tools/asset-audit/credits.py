@@ -11,12 +11,17 @@
      `> © **이름**, [CC-BY 3.0](…)` 꼴 표기 줄은 그대로 "필수 표기" 로 뽑는다. 낱말을 못 찾은 절은 숨기지 않고 "미상" 으로 올린다.
 
 --check 가 FAIL 하는 것: 라이선스 칸이 비었거나 비상업(NC)·`commercial_use:false` 인 .license.json ·
-  표기 필수 출처(VRoid 샘플·CC-BY 표기 줄)가 있는데 필수 표기가 하나도 안 뽑힘. 미상 절은 경고만(폐기·설명 절이 섞여 있다).
+  AI 모델(`model` 칸)로 만든 그림인데 라이선스가 "CC0 코드로 그림" · 표기 필수 출처(VRoid 샘플·CC-BY 표기 줄)가 있는데
+  필수 표기가 하나도 안 뽑힘 · **저장된 credits.json 이 지금 계산과 어긋남**(묶음·필수 표기·VRoid 가 하나라도 빠짐 — K-0088,
+  개수만 다르면 경고). 미상 절은 경고만(폐기·설명 절이 섞여 있다).
+VRoid 는 표(`vroid_licenses.json`)가 아니라 **배치된 실제 VRM 메타**(`saga-assets/characters/vroid/*.glb`)로 표기 필수·개작 조건을 본다(K-0088).
 게임 안 크레딧 화면은 각 갈래가 credits.json 을 읽어 그린다 — 여기선 데이터만.
 """
+import glob
 import json
 import os
 import re
+import struct
 import subprocess
 import sys
 from collections import OrderedDict
@@ -25,6 +30,8 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 OUT_JSON = os.path.join(ROOT, 'saga-assets', 'credits.json')
 OUT_MD = os.path.join(ROOT, 'saga-assets', 'CREDITS.md')
 VROID = os.path.join(ROOT, 'tools', 'char-forge', 'data', 'vroid_licenses.json')
+VROID_PLACED = os.path.join(ROOT, 'saga-assets', 'characters', 'vroid')
+OWN_AUTHOR = re.compile(r'saga', re.I)      # 이 저장소에서 직접 만든 VRoid(작가 칸 saga-godot 등) — 표기 대상 아님
 DOCS = ['saga-web/saga-%s/assets/ASSET_LICENSES.md' % g for g in ('go', 'dungeon', 'forest', 'story', 'realm')] + \
        ['saga-godot/docs/ASSET_GUIDE.md', 'saga-unity/docs/ASSET_GUIDE.md']
 
@@ -70,6 +77,8 @@ def collect_json():
             continue
         if NC.search(lic) or d.get('commercial_use') is False:
             problems.append((rel, '비상업 라이선스: %s' % lic[:60]))
+        if model not in ('', 'none', '-') and re.search(r'CC0', lic) and re.search(r'코드', lic):
+            problems.append((rel, 'AI 모델(%s) 그림인데 라이선스가 "CC0 코드로 그림"' % model[:30]))
         key = (tool, model, lic)
         g = groups.setdefault(key, {'tool': tool, 'model': model, 'license': lic, 'count': 0, 'where': set()})
         g['count'] += 1
@@ -93,8 +102,35 @@ def collect_vroid():
             used.append(k)
             if m.get('creditNotation') == 'required':
                 req.append({'model': m.get('name') or k, 'authors': m.get('authors')})
-    return {'models': sorted(used), 'credit_required': req,
-            'note': 'VRM 이용 조건상 상업·개작본 재배포 허용인 샘플(대부분 pixiv VRoid Project). 직접 만든 모델은 표에 있어도 만든 이 본인 것.'}
+    restricted = []
+    for p in sorted(glob.glob(os.path.join(VROID_PLACED, '*.glb'))):
+        m = vrm_meta(p)
+        if not m:
+            continue
+        name = m.get('name') or os.path.splitext(os.path.basename(p))[0]
+        authors = m.get('authors') or ([m['author']] if m.get('author') else [])
+        if any(OWN_AUTHOR.search(a or '') for a in authors):
+            continue
+        if m.get('creditNotation') == 'required' and not any(r['model'] == name for r in req):
+            req.append({'model': name, 'authors': authors})
+        if m.get('modification') != 'allowModificationRedistribution':
+            restricted.append({'model': name, 'file': os.path.basename(p), 'modification': m.get('modification')})
+    return {'models': sorted(used), 'credit_required': req, 'restricted': restricted,
+            'note': 'VRM 이용 조건상 상업·개작본 재배포 허용인 샘플(대부분 pixiv VRoid Project). 직접 만든 모델은 표에 있어도 만든 이 본인 것. '
+                    'restricted = 배치된 VRM 메타가 개작본 재배포를 허용하지 않음 — 원본 그대로만 쓴다(조합·변주 재료 금지).'}
+
+
+def vrm_meta(path):
+    """GLB 머리 JSON 만 읽어 VRM 메타(1.0 VRMC_vrm.meta 또는 0.x VRM.meta)."""
+    try:
+        with open(path, 'rb') as f:
+            h = f.read(20)
+            n = struct.unpack('<I', h[12:16])[0]
+            j = json.loads(f.read(n))
+    except Exception:  # noqa: BLE001
+        return None
+    e = j.get('extensions', {})
+    return (e.get('VRMC_vrm') or {}).get('meta') or (e.get('VRM') or {}).get('meta')
 
 
 def collect_docs():
@@ -180,6 +216,32 @@ def build():
     return data, fails
 
 
+def stale(data):
+    """저장된 credits.json 과 지금 계산 비교 — 빠진 것은 FAIL, 개수만 다르면 경고."""
+    if not os.path.exists(OUT_JSON):
+        return ['credits.json 없음'], []
+    old = json.load(open(OUT_JSON, encoding='utf-8'))
+    fails, warns = [], []
+    og = {(g['tool'], g['model'], g['license']): g['count'] for g in old.get('groups', [])}
+    for g in data['groups']:
+        k = (g['tool'], g['model'], g['license'])
+        if k not in og:
+            fails.append('credits.json 에 묶음 없음: %s · %s · %s (%d개)' % (k[0], k[1] or '-', k[2][:50], g['count']))
+        elif og[k] != g['count']:
+            warns.append('개수 다름 %s %s: %d → %d' % (k[0], k[1] or '-', og[k], g['count']))
+    oa = {(a['author'], a['license']) for a in old.get('attributions', [])}
+    for a in data['attributions']:
+        if (a['author'], a['license']) not in oa:
+            fails.append('credits.json 에 필수 표기 없음: © %s, %s' % (a['author'], a['license']))
+    ov = {r['model'] for r in (old.get('vroid') or {}).get('credit_required', [])}
+    for r in (data['vroid'] or {}).get('credit_required', []):
+        if r['model'] not in ov:
+            fails.append('credits.json 에 VRoid 표기 없음: %s' % r['model'])
+    if fails:
+        fails.append('→ py tools/asset-audit/credits.py 로 다시 만든다')
+    return fails, warns
+
+
 def to_md(d):
     L = ['# 크레딧·라이선스', '', '> `tools/asset-audit/credits.py` 가 자동 생성한다. 손으로 고치지 않는다.', '']
     L += ['## 필수 표기 (저작자 표시)', '']
@@ -199,6 +261,8 @@ def to_md(d):
         L.append('| %s | %s | %s | %d |' % (g['tool'], g['model'] or '-', g['license'].replace('|', '/')[:90], g['count']))
     if d['vroid']:
         L += ['', '## VRoid 샘플', '', '%d벌 사용(개작본 재배포 허용·상업 허용). %s' % (len(d['vroid']['models']), d['vroid']['note'])]
+        for r in d['vroid'].get('restricted', []):
+            L.append('- 원본 그대로만: %s (`%s`, modification `%s`)' % (r['model'], r['file'], r['modification']))
     s = d['doc_sections']
     L += ['', '## 출처 문서(ASSET_LICENSES·ASSET_GUIDE) 요약', '', '절 %d개 — 라이선스 낱말별: %s' % (
         s['total'], ', '.join('%s %d' % kv for kv in sorted(s['by_license'].items(), key=lambda x: -x[1]))),
@@ -219,6 +283,11 @@ def main():
     s = data['doc_sections']
     print('필수 표기 %d줄 · 묶음 %d · VRoid %s벌 · 문서 절 %d(미상 %d)' % (
         len(data['attributions']), len(data['groups']), len(data['vroid']['models']) if data['vroid'] else '-', s['total'], len(s['unknown'])))
+    if check:
+        sf, sw = stale(data)
+        fails += sf
+        if sw:
+            print('경고 credits.json 개수 다름 %d묶음(다시 만들면 맞음) — 예: %s' % (len(sw), sw[0]))
     for x in fails:
         print('FAIL', x)
     if check and not fails:

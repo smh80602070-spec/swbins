@@ -19,8 +19,8 @@
  "mode": "img2img",
  "init_image": "tools/ai-art/_out/busts/mon_serp_03.png",
  "denoise": 0.62,
- "base_body": "tools/char-forge/_out/hero/mon_serp_03.glb",
- "base_license": "(공방 몸 license.json 없음 — 확인 필요)",
+ "base_body": "saga-assets/world/toon/mon_serp_03.glb",
+ "base_license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
  "picked_candidate": "monster_dex_C3/mon_serp_03_v03.png",
  "sizes": {
   "s": [
@@ -32,5 +32,10 @@
    344
   ]
  },
- "packed_by": "tools/ai-art/make_monster_dex.py pack"
+ "packed_by": "tools/ai-art/make_monster_dex.py pack",
+ "base_inputs": [
+  "polyhaven: cliff_side",
+  "polyhaven: coast_sand_rocks_02",
+  "polyhaven: white_stucco"
+ ]
 }

@@ -1,7 +1,7 @@
 {
  "id": "rts_tr_grass_hill_N",
  "generator": "tools/asset-forge/rtsai.py transitions",
- "license": "CC0-1.0 (코드 생성 + 고른 AI 타일 rts_hill_1)",
+ "license": "CreativeML OpenRAIL++-M — 코드 합성(경계 마스크) + 고른 AI 타일 rts_hill_1 (sd_xl_base_1.0)",
  "pair": "grass_hill",
  "kind": "N",
  "size": [

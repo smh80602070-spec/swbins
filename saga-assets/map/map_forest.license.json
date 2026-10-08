@@ -2,7 +2,7 @@
  "id": "map_forest",
  "generator": "tools/ai-art/gen.py",
  "model": "Illustrious-XL-v2.0",
- "model_license": "CreativeML OpenRAIL-M (HF 태그, 버전별 재확인 필요)",
+ "model_license": "CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-07 확인), 폐쇄 파생 모델 수익화만 금지",
  "prompt": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, world map, top-down map view, painterly game map, cozy storybook map illustration of a village surrounded by 8 themed forests: silver grass plain, glowing mushroom valley, blue pine forest, mossy boulder slope, dead tree twilight woods, flower petal hill, giant boulder pass, firefly oak forest, painted parchment map seen from above",
  "negative_prompt": "lowres, bad anatomy, text, letters, writing, labels, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, frame, border, compass, legend",
  "seed": 20271643,

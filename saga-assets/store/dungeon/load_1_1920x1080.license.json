@@ -2,7 +2,7 @@
  "generator": "tools/ai-art/gen.py",
  "id": "load_1_1920x1080",
  "model": "Illustrious-XL-v2.0",
- "model_license": "CreativeML OpenRAIL-M (HF 태그, 버전별 재확인 필요)",
+ "model_license": "CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-07 확인), 폐쇄 파생 모델 수익화만 금지",
  "prompt": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game key art, cinematic composition, torchlit stone corridor with iron doors, game loading screen scenery",
  "negative_prompt": "lowres, bad anatomy, text, letters, logo, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, frame, border",
  "seed": 20272000,

@@ -1,13 +1,13 @@
 {
  "id": "arena_forest",
  "generator": "tools/ai-art/gen.py",
- "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+ "license": "CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-07 확인), 폐쇄 파생 모델 수익화만 금지",
  "size": [
   1216,
   608
  ],
  "model": "Illustrious-XL-v2.0",
- "model_license": "CreativeML OpenRAIL-M (HF 태그, 버전별 재확인 필요)",
+ "model_license": "CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-07 확인), 폐쇄 파생 모델 수익화만 금지",
  "prompt": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game background, arena, cozy village festival duel ring on a meadow, paper lanterns, wooden fence, bunting, soft sunset light",
  "negative_prompt": "lowres, bad anatomy, text, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, close-up",
  "seed": 20271309,

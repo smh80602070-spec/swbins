@@ -1,7 +1,7 @@
 {
  "id": "rts_tr_grass_water_oNE",
  "generator": "tools/asset-forge/rtsai.py transitions",
- "license": "CC0-1.0 (코드 생성 + 고른 AI 타일 rts_water_1)",
+ "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) — 코드 합성(경계 마스크) + 고른 AI 타일 rts_water_1 (-)",
  "pair": "grass_water",
  "kind": "oNE",
  "size": [

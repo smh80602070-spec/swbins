@@ -238,6 +238,8 @@ def save(im, name, extra=None, fmt='PNG'):
     im.save(p, 'WEBP', quality=88, method=6) if fmt == 'WEBP' else im.save(p, optimize=True)
     d = {'id': os.path.splitext(name)[0], 'generator': 'tools/asset-forge/competitiongen.py', 'license': 'CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)', 'size': list(im.size)}
     d.update(extra or {})
+    if d.get('model_license'):          # AI 그림(gen.py) 은 코드 CC0 가 아니라 모델 라이선스(K-0088)
+        d['license'] = d['model_license']
     json.dump(d, open(os.path.splitext(p)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 
 

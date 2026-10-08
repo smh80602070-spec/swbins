@@ -1,6 +1,6 @@
 {
  "generator": "tools/ai-art/gen.py",
- "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+ "license": "CreativeML OpenRAIL++-M",
  "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
  "id": "castle_l",
  "model": "animagine-xl-4.0-opt",

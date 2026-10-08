@@ -2,7 +2,7 @@
  "id": "modern_block_flat",
  "generator": "tools/ai-art/gen.py",
  "model": "Illustrious-XL-v2.0",
- "model_license": "CreativeML OpenRAIL-M (HF 태그, 버전별 재확인 필요)",
+ "model_license": "CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-07 확인), 폐쇄 파생 모델 수익화만 금지",
  "prompt": "masterpiece, best quality, amazing quality, absurdres, interior scenery, no humans, wide shot, painterly game background, room interior, side view, modern apartment living room, large window with city skyline, sofa, bookshelves, plants, an old bronze sword hung on the wall, soft evening light",
  "negative_prompt": "lowres, bad anatomy, text, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, close-up, outdoors, exterior",
  "seed": 20271127,
