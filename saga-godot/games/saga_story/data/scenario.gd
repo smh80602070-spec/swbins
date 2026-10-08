@@ -1,5 +1,5 @@
 extends RefCounted
-## G-0087 — 사가종횡 이야기 표(정본 `scenario/saga-story.md` "이름 없는 떠돌이"). 1부 · 무명 네 장 + G-0091 2부 · 갈래 네 장 + G-0095 3부 · 불길 네 장.
+## G-0087 — 사가종횡 이야기 표(정본 `scenario/saga-story.md` "이름 없는 떠돌이"). 1부 · 무명 네 장 + G-0091 2부 · 갈래 네 장 + G-0095 3부 · 불길 네 장 + G-0100 4부 · 이름 네 장(문 고르기·칭호 고르기).
 ## 대사는 웹 구현(saga-web/saga-story/js/data-scenario.js SCENES)과 같다(감정 칸만 뺌). 단계는 웹과 거의 같다 — 고돗에도 신야성·허도·
 ## 허창 들판 장면과 사명 q_first·q_gear1·q_field·q_boss1, 1차 전직이 그대로 있다.
 ## 엔진은 world/scenario_runner.gd(장면마다 새로 뜬다), 진행은 StorySaveState.scenario(fresh() 모양). 인물은 가상, {스승}은 도감 가명.
@@ -15,6 +15,8 @@ extends RefCounted
 ##     {"t": "boss", "n": n}                       이 단계가 시작된 뒤 보스 n(StorySaveState.bosses 차이)
 ##     {"t": "rift", "n": n}                       이 단계가 시작된 뒤 비경을 n 번 끝까지 깸(story_labyrinth 가 st.rifts 를 올림)
 ##     {"t": "bond", "n": n}                       지금 스승과 사제 유대(mentor_bond) n 이상 — 전직하면 0 부터
+##   talk 의 "by": 고르기 id — 장면 id 는 scene + "_" + 그 답(G-0100 이름 장 끝, 답 없으면 그 고르기의 첫 답)
+##   장면 끝 고르기는 CHOICES(장면 id → {id, prompt, options[{key, label}]}) — 답은 st.choices[id](G-0100 문·칭호)
 ## 장 보상 "frags": n = 기억 조각 n(add_memory_fragments). 말한 이 "mentor+" = 다음 전직 단의 스승.
 ## 장마다 "part"(부)·"legacy"{level, tier}(옛 세이브 — 그만큼 왔으면 보상 없이 지나온 길).
 ## 장면 한 줄 = [누가, 말] — 누가 = "me"(나) · "mentor"(지금 갈래 스승) · CAST 키.
@@ -30,12 +32,76 @@ const CAST := {
 	"guard": {"name": "산채 아래 경비병", "emoji": "🛡️"},
 	"ashen": {"name": "잿빛 사자", "emoji": "🌫️"},
 	"yakson": {"name": "의원 약손", "emoji": "⚕️"},
+	"gwijang": {"name": "암굴 귀장", "emoji": "👹"},
 }
 
 ## 장면 루트 이름 → 장면 키(웹 사냥터·마을 key).
 const SCENE_KEYS := {"SinyaField": "sinya", "HeodoField": "heodo", "TestField": "field", "GangneungjinField": "port",
 	"ForestHuntGround": "forest", "NamjeongseongField": "namjeong", "CaveHuntGround": "cave", "GisanchaeField": "gisan", "GorgeHuntGround": "gorge"}
 const STAGE_NAMES := {"sinya": "신야성", "heodo": "허도", "field": "허창 들판", "port": "강릉진", "forest": "오림 숲", "namjeong": "남정성", "cave": "한중 굴혈", "gisan": "기산채", "gorge": "호로곡"}
+
+## G-0100 4부 — 웹 대사 그대로(감정 칸만 뺌). 첫 발 장면 luoyang1·depth1 은 웹 data-side.js STORY.ruin·deepcave(입장 대사)를 장면으로,
+## luoyang1 첫 줄만 "잿더미가 된 산채" 로(고돗엔 낙양 옛터가 없어 기산채 잿더미로), name1 끝 줄 "무예창에서" → "허도의 수련장에서"(3부와 같다).
+const SCENES_P4 := {
+	"luoyang1": [
+		["me", "한때 도읍을 지키던 산채가 잿더미가 되었구나."],
+		["wanderer", "잿더미에도 주인은 있소. 흉장이 이곳을 쥐고 있다오."],
+		["me", "그 주인부터 바꾸겠소."],
+	],
+	"luoyang2": [
+		["ashen", "…도포가 걸리적거리는군. 어차피 이 땅에서 오래 못 입을 옷이었다."],
+		["me", "당신이 폐도 흉장이었습니까! 무너진 궁궐 한복판에서 전철 소리가 났던 까닭이군요."],
+		["ashen", "병기를 대 준 것은 나요. 문이 열려 있는 한 어느 시대 물건이든 흘러오지. 잿더미 위 기계 갑주는 덤이었소."],
+		["me", "그럼 문 앞에서 다시 만납시다. 문을 닫으려는 사람이 여기 있으니까요."],
+	],
+	"depth1": [
+		["me", "빛이 닿지 않는 깊이다…"],
+		["me", "여기까지 왔다. 끝을 보고 나가겠다."],
+	],
+	"depth2": [
+		["ieum", "여기부터는 빛이 안 닿습니다. 제 탐사 등을 앞세울게요."],
+		["hankeot", "조명은 제가 맡을게요! 암굴 석벽에 이 땅 것이 아닌 색이 번져 있어요. 사진 한 장만!"],
+		["me", "석벽이 점점 따뜻해집니다. 문이 가까운가 봅니다."],
+		["ieum", "문 앞엔 귀장이 서 있을 거예요. 전쟁이 끝나지 않게 문을 연 자입니다."],
+	],
+	"gate1": [
+		["gwijang", "전쟁이 끝나면 문도 닫히지… 그러니 끝나지 않게 했다. 옛 갑옷 속에 든 것은 사람이 아니다."],
+		["me", "그 때문에 수많은 시대가 이 땅에 새어 들었습니다. 이제 끝입니다."],
+		["gwijang", "문이 흔들린다…! 문 둘레의 전선이 무너진다. 이제 문은 네가 정해라."],
+	],
+	"gate2": [
+		["ieum", "문이 흔들리며 빛 소용돌이가 일어요. 닫으면 새어 드는 시대도 멎지만 저는 제 시대로 돌아가야 해요."],
+		["ieum", "지키면 당신이 문지기가 됩니다. 문은 열린 채, 새어 드는 것을 막는 쪽이에요."],
+		["me", "이름 없는 제가, 이 문 앞에서 정합니다."],
+	],
+	"name1": [
+		["mentor+", "이름 없이 여기까지 왔구나. 마지막 자리다. 한컷의 사진 속 너는 이 땅의 사람이 아니더구나."],
+		["mentor+", "이음이 돌아갈 빛이 문 앞에서 기다린다. 서둘러 마지막 전직을 마쳐라."],
+		["mentor+", "🥋 허도의 수련장에서 4차 전직을 하여라."],
+	],
+	"name2": [
+		["mentor", "넷째 자리에 올랐다. 이제 이름을 붙일 때다. 남이 붙여 준 것 말고, 네가 붙이는 이름."],
+		["me", "문 너머에 두고 온 이름은 잃었지만, 이 땅에서 걸어온 길이 이름이 되겠습니다."],
+	],
+	"name3_close": [
+		["ieum", "문이 닫혔으니 저는 제 시대로 돌아갑니다. 이 시대에 새어 든 것들은 남겠지만, 더는 늘지 않을 거예요."],
+		["hankeot", "마지막 사진이에요. 이름 없던 분이 웃고 있네요."],
+		["me", "이름은 얻었으니 남은 길은 제 발로 걷겠습니다. 고맙습니다, 두 분."],
+	],
+	"name3_keep": [
+		["ieum", "문지기가 되신다니… 저는 이 시대 소식을 문 너머에 전하겠습니다. 문은 열린 채, 당신이 지켜 주세요."],
+		["hankeot", "문 너머엔 다른 하늘이 있대요. 다음에 오면 사진 한 장만 부탁해요!"],
+		["me", "이름은 얻었습니다. 문 너머 층이 열리는 날까지 이 자리를 지키겠습니다."],
+	],
+}
+
+## 장면 끝 고르기(웹 SCENES.choice) — 답은 st.choices[id]. 칭호는 고돗에 칭호 칸이 없어 답만 적고 알림으로 보인다.
+const CHOICES := {
+	"gate2": {"id": "gate", "prompt": "난세의 문을 어떻게 할 것인가", "options": [
+		{"key": "close", "label": "문을 닫는다"}, {"key": "keep", "label": "문을 지킨다"}]},
+	"name2": {"id": "name", "prompt": "스스로 붙일 칭호", "options": [
+		{"key": "found", "label": "이름을 되찾은 자"}, {"key": "wander", "label": "문 너머의 나그네"}, {"key": "none", "label": "이름 없이 걷는 자"}]},
+}
 
 const SCENES := {
 	"sinya1": [
@@ -226,6 +292,29 @@ const CHAPTERS := [
 		"mix": {"past": "스승", "now": "스승의 오래된 사진", "future": "스승의 칼에 비친 문"},
 		"steps": [{"t": "talk", "scene": "job31", "at": "heodo"}, {"t": "job", "tier": 3}, {"t": "bond", "n": 20}, {"t": "talk", "scene": "job32"}],
 		"exp": 40000, "gold": 30000},
+	## G-0100 4부 · 이름 — 고돗엔 낙양 옛터·검각 암굴(21~25층 급 사냥터)이 없어: 낙양 = 잿더미가 된 기산채(그곳 처치 150 + 단계 뒤 보스 1),
+	## 검각 깊이 = 한중 굴혈에 들어선 뒤 허도 비경을 끝까지 한 번 더(빛이 안 닿는 깊이), 귀장 = 단계 뒤 보스 둘, 사명 q_ruin·q_deep 은 고돗에 없어 뺌.
+	{"id": "p4_luoyang", "no": 13, "part": 4, "title": "옛 도읍의 잿더미", "stage": "기산채 잿더미", "need": 45, "legacy": {"level": 70, "tier": 4},
+		"blurb": "잿더미 위 흉장 — 잿빛 사자가 정체를 드러낸다: 병기를 댄 자.",
+		"mix": {"past": "무너진 궁궐", "now": "잿더미 속 전철", "future": "흉장의 기계 갑주"},
+		"steps": [{"t": "stage", "stage": "gisan"}, {"t": "talk", "scene": "luoyang1", "at": "gisan"}, {"t": "stagekill", "stage": "gisan", "n": 150},
+			{"t": "boss", "n": 1}, {"t": "talk", "scene": "luoyang2"}],
+		"exp": 40000, "gold": 30000},
+	{"id": "p4_depth", "no": 14, "part": 4, "title": "검각 깊이", "stage": "한중 굴혈 · 비경", "need": 70, "legacy": {"level": 70, "tier": 4},
+		"blurb": "빛이 안 닿는 깊이 — 이음의 탐사 등과 한컷의 조명을 앞세운다.",
+		"mix": {"past": "암굴 석벽", "now": "한컷의 조명", "future": "이음의 탐사 등"},
+		"steps": [{"t": "stage", "stage": "cave"}, {"t": "talk", "scene": "depth1", "at": "cave"}, {"t": "rift", "n": 1}, {"t": "talk", "scene": "depth2"}],
+		"exp": 70000, "gold": 50000},
+	{"id": "p4_gate", "no": 15, "part": 4, "title": "난세의 문", "stage": "어느 사냥터든 · 보스 둘", "need": 70, "legacy": {"level": 70, "tier": 4},
+		"blurb": "전쟁이 끝나지 않게 문을 연 귀장 — 문을 닫을지 지킬지 고른다.",
+		"mix": {"past": "귀장의 옛 갑옷", "now": "문 둘레 전선", "future": "문의 빛 소용돌이"},
+		"steps": [{"t": "boss", "n": 2}, {"t": "talk", "scene": "gate1"}, {"t": "talk", "scene": "gate2"}],
+		"exp": 120000, "gold": 100000},
+	{"id": "p4_name", "no": 16, "part": 4, "title": "이름", "stage": "허도", "need": 70, "legacy": {"level": 70, "tier": 4},
+		"blurb": "{스승}과 마지막 전직, 스스로 붙이는 이름 — 문 고르기에 따라 이음이 돌아가거나 남는다.",
+		"mix": {"past": "스승", "now": "한컷의 마지막 사진", "future": "이음이 돌아가는 빛"},
+		"steps": [{"t": "talk", "scene": "name1", "at": "heodo"}, {"t": "job", "tier": 4}, {"t": "talk", "scene": "name2"}, {"t": "talk", "scene": "name3", "by": "gate"}],
+		"exp": 200000, "gold": 150000},
 ]
 
 ## 옛 세이브(웹 legacy {level 10, tier 1}) — 이만큼 왔으면 1부는 지나온 길.
@@ -234,7 +323,7 @@ const LEGACY_TIER := 1
 
 
 static func fresh() -> Dictionary:
-	return {"ch": 0, "step": 0, "done": [], "legacy": false, "base": 0, "base_set": false, "rifts": 0}
+	return {"ch": 0, "step": 0, "done": [], "legacy": false, "base": 0, "base_set": false, "rifts": 0, "choices": {}}
 
 
 static func normalize(st: Variant) -> Dictionary:
@@ -244,7 +333,21 @@ static func normalize(st: Variant) -> Dictionary:
 			if (st as Dictionary).has(k):
 				out[k] = (st as Dictionary)[k]
 	out.done = (out.done as Array).duplicate()
+	out.choices = (out.choices as Dictionary).duplicate() if out.choices is Dictionary else {}
 	return out
+
+
+## 장면 줄(1~3부 SCENES + 4부 SCENES_P4).
+static func lines_of(scene: String) -> Array:
+	return SCENES.get(scene, SCENES_P4.get(scene, []))
+
+
+## 고르기 id 의 첫 답(답이 없는 옛 세이브).
+static func first_answer(choice_id: String) -> String:
+	for k in CHOICES:
+		if String(CHOICES[k].id) == choice_id:
+			return String(CHOICES[k].options[0].key)
+	return ""
 
 
 ## 옛 세이브 — 빈 칸(scenario 없는 세이브)이거나 이미 legacy 로 건너뛴 진행이면, 지금 장부터 차례로 그 장의 legacy 문턱
@@ -298,6 +401,9 @@ static func pending_scene(st: Dictionary, ctx: Dictionary) -> String:
 		return ""
 	if s.has("at") and String(s.at) != String(ctx.get("stage", "")):
 		return ""
+	if s.has("by"):
+		var ans := String((st.get("choices", {}) as Dictionary).get(String(s.by), ""))
+		return "%s_%s" % [String(s.scene), ans if ans != "" else first_answer(String(s.by))]
 	return String(s.scene)
 
 
@@ -362,9 +468,15 @@ static func check(st: Dictionary, ctx: Dictionary) -> Array:
 	return out
 
 
-static func finish_talk(st: Dictionary, ctx: Dictionary) -> Array:
+## 대화를 다 읽었다(answer = 그 장면 고르기 답, 없으면 "") → 다음 단계.
+static func finish_talk(st: Dictionary, ctx: Dictionary, answer := "") -> Array:
 	if String(step(st).get("t", "")) != "talk":
 		return []
+	var scene := String(step(st).scene)
+	if CHOICES.has(scene) and answer != "":
+		if not (st.get("choices") is Dictionary):
+			st.choices = {}
+		(st.choices as Dictionary)[String(CHOICES[scene].id)] = answer
 	return [advance(st)] + check(st, ctx)
 
 
@@ -391,7 +503,7 @@ static func objective(st: Dictionary, ctx: Dictionary, quest_names: Dictionary =
 			"stagekill":
 				what = "%s 처치 %d/%d" % [STAGE_NAMES.get(String(s.stage), String(s.stage)), mini(int((ctx.get("stage_kills", {}) as Dictionary).get(String(s.stage), 0)), int(s.n)), int(s.n)]
 			"boss":
-				what = "보스 처치(%s)" % String(chapter(st).get("stage", ""))
+				what = "보스 처치 %d/%d(%s)" % [mini(maxi(counter(st, ctx, "boss") - int(st.get("base", 0)), 0), int(s.n)), int(s.n), String(chapter(st).get("stage", ""))]
 			"rift":
 				what = "허도 비경을 끝까지 깨기"
 			"bond":

@@ -15,6 +15,7 @@ const CHECK_SEC := 0.3
 
 var st: Dictionary = {}
 var _layer: CanvasLayer
+var _talk_scene := ""   # 열린 창의 장면 id(G-0100 고르기 알림)
 var _t := 0.0
 
 
@@ -101,10 +102,17 @@ func open_talk() -> void:
 	var nxt := StoryCombat.job_next(StorySaveState.job)
 	var mentor_next := String(StoryCombat.mentor_of(nxt).get("name", "")) if nxt != "" else mentor
 	var lines: Array = []
-	for l: Array in Scenario.SCENES.get(scene, []):
+	for l: Array in Scenario.lines_of(scene):
 		lines.append([Scenario.speaker(String(l[0]), mentor_next if String(l[0]) == "mentor+" else mentor), String(l[1])])
 	var ch := Scenario.chapter(st)
-	_layer = TalkBox.open(get_parent(), "📜 %d부 %d장 · %s" % [Scenario.part(ch), int(ch.get("no", 0)), String(ch.get("title", ""))], lines, _on_talk_done)
+	_talk_scene = scene
+	_layer = TalkBox.open(get_parent(), "📜 %d부 %d장 · %s" % [Scenario.part(ch), int(ch.get("no", 0)), String(ch.get("title", ""))], lines, _on_talk_done,
+		Scenario.CHOICES.get(scene, {}))
+
+
+func pick(key: String) -> void:
+	if _layer != null and is_instance_valid(_layer):
+		_layer.call("pick", key)
 
 
 func next_line() -> void:
@@ -112,7 +120,11 @@ func next_line() -> void:
 		_layer.call("next_line")
 
 
-func _on_talk_done(_answer: String) -> void:
+func _on_talk_done(answer: String) -> void:
 	_layer = null
-	_apply(Scenario.finish_talk(st, context()))
+	if answer != "" and Scenario.CHOICES.has(_talk_scene):   # G-0100 문·칭호 고르기 — 답을 알림으로
+		for o: Dictionary in Scenario.CHOICES[_talk_scene].options:
+			if String(o.key) == answer:
+				Toast.show(get_parent(), ("🏷️ 칭호 「%s」" if _talk_scene == "name2" else "📜 %s") % String(o.label), 3.5)
+	_apply(Scenario.finish_talk(st, context(), answer))
 	_save()
