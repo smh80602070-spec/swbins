@@ -1,5 +1,5 @@
 extends RefCounted
-## G-0085 — 사가나락 이야기 표(정본 `scenario/saga-dungeon.md` "이름 없는 구덩이"). 1막 · 중원의 난 세 장 + G-0089 2막 · 잿빛과 소금 세 장.
+## G-0085 — 사가나락 이야기 표(정본 `scenario/saga-dungeon.md` "이름 없는 구덩이"). 1막 · 중원의 난 세 장 + G-0089 2막 · 잿빛과 소금 세 장 + G-0093 3막 · 불타는 남쪽 네 장.
 ## 대사는 웹 구현(saga-web/saga-dungeon/js/data-scenario.js SCENES)과 같다. 단계는 고돗 굴혈(방 일곱 = 1~7층, 3·6층 보스,
 ## 5층 미니보스 = 순장 왕릉, 마을·들판 없음)에 맞춰 바꿨다 — 바꾼 까닭은 티켓 G-0085 "단계 바꿈".
 ## 엔진은 world/scenario_runner.gd, 진행은 DungeonSaveState.scenario(이 파일의 fresh() 모양). 인물은 전부 가상(이름 정책).
@@ -13,6 +13,9 @@ extends RefCounted
 ##     {"t": "rescue", "n": n, "room": i}  방 i 에 선 표지에 닿아 구한다(이 단계 동안만 선다)
 ##     {"t": "wboss", "n": n}            이 단계가 시작된 뒤 월드 보스 n 마리(G-0089 — 2막 폐도시 폭주룡)
 ##     {"t": "horde", "n": n}            이 단계가 시작된 뒤 난입에서 파도 HORDE_WAVE 에 n 번 닿는다(2막 개펄 촉수왕 — 난입은 15분 생존이라 파도로)
+##     {"t": "elite", "n": n}            이 단계가 시작된 뒤 정예(elite_key 있는 적) n 마리(G-0093 — 3막 균열 문지기 무리)
+##     {"t": "sigil", "n": n}            부적 던전 n 단 이상을 깬 적(st.sigil_best ← DungeonSigilState.best_tier_cleared — 3막 굴혈 11~20층 = 부적 던전 더 깊은 단)
+##     장의 "sigil": n 이면 장 보상으로 n 단 부적 하나(DungeonSigilState.add_sigil)
 ##     talk 의 "by": 고르기 id — 장면 id 는 scene + "_" + 그 답(CHOICES 의 고르기가 앞 장면 끝에 뜬다)
 ## 장면 한 줄 = [누가, 말] — 누가 = "me"(부대장) 또는 CAST 키.
 ## 장을 더하려면 CHAPTERS 끝에 붙인다(id 는 안 바꾼다 — 세이브는 차례 번호와 끝낸 id 를 함께 둔다).
@@ -25,6 +28,9 @@ const CAST := {
 	"danchu": {"name": "고물 줍는 아이 단추", "emoji": "🧒"},
 	"boatman": {"name": "염전 늙은 뱃사공", "emoji": "🚣"},
 	"lord": {"name": "망루성 성주의 망령", "emoji": "👑"},
+	"soyeon": {"name": "떠돌이 퇴마사 소연", "emoji": "🔮"},
+	"mechanic": {"name": "개척지 정비공", "emoji": "🔧"},
+	"mumyeong": {"name": "이름을 삼키는 목소리", "emoji": "🌑"},
 }
 
 const SCENES := {
@@ -92,6 +98,40 @@ const SCENES := {
 		["lord", "이제 기억난다. 그 이름을 내 것이라 부르니 가슴이 가볍다. 성을 떠나마. 네게 가호를 남긴다."],
 		["mukhyang", "이름 하나가 돌아왔습니다. 굴혈이 삼킨 이름들 중 하나를 되찾은 셈이지요."],
 	],
+	"rg1": [
+		["soyeon", "떠돌이 퇴마사 소연이오. 균열은 무명혈의 곁가지요. 문지기 겁옥이 그 문을 지키며 이름을 걸러 내고 있소."],
+		["me", "균열에 버스 한 대가 떨어져 있었습니다. 안에는 아무도 없고 창문마다 별바다 손님들이 매달려 있더군요."],
+		["soyeon", "시대 손님이오. 문이 열리는 대로 다른 시대의 것이 끼어들지. 굴혈의 정예 문지기들부터 상대해 주시오."],
+	],
+	"rg2": [
+		["soyeon", "봉인비에 새 글자가 새겨졌소. 균열이 멈췄고 부적 던전도 열 수 있게 되었소. 이 부적을 받으시오."],
+		["mukhyang", "문지기의 창끝에도 이름이 없었습니다. 겁옥이라는 이름조차 누군가에게서 빌린 듯했지요."],
+	],
+	"sf1": [
+		["mechanic", "태양로 온도가 계속 올라요. 발전 설비도 미쳐 날뛰고, 거신 하나가 로 한복판에 선 채 움직이지 않아요. 개척지 우물 곁에 천막을 쳤는데 밤마다 뜨겁습니다."],
+		["me", "균열의 열을 먹고 폭주하는군요. 부적을 써서 깊은 굴혈로 내려가 제어반 근처까지 무리를 몰아내겠습니다."],
+	],
+	"sf2": [
+		["mechanic", "태양판 위로 다시 새가 앉았어요! 개척지에 불이 들어왔습니다."],
+		["me", "거신의 등에서 굴혈로 이어지는 관을 보았습니다. 이 열도 굴혈에서 온 것이더군요."],
+	],
+	"bw1": [
+		["mukhyang", "부적 둘째 단의 굴혈에 흑풍 산채가 있습니다. 채주는 이름을 팔아 힘을 샀다고 합니다. 무전기와 총포까지 갖췄다는 소문이에요."],
+		["me", "경비 보행기가 산채 앞에 서 있는 것도 보았습니다. 도적들이 다른 시대의 것을 산 셈이군요."],
+	],
+	"bw2": [
+		["mukhyang", "채주가 쓰러졌습니다. 그의 이름은 채주가 되기 전에 지워졌더군요. 굴혈이 이름을 사 간 것입니다."],
+		["me", "한 사람의 이름이 아니라, 이름이 팔리는 장사가 있었던 것입니다."],
+	],
+	"pal1": [
+		["mukhyang", "부적 셋째 단의 굴혈은 물에 잠긴 용궁입니다. 용궁 기와 아래로 잠수 장비의 잔해가 흩어져 있고, 수압 돔이 반쯤 남아 있다고 합니다."],
+		["me", "용궁지기를 상대해야 아래로 갈 수 있겠지요. 내려가 보겠습니다."],
+	],
+	"pal2": [
+		["mumyeong", "…이름을 다오. 너도 이름이 있지 않으냐. 나는 그것을 먹으며 자랐다. 이름을 다오."],
+		["me", "누구냐! 바닥에서 목소리가 들립니다. 이름을 먹는다고?"],
+		["mukhyang", "무명혈의 주인입니다. 이 굴혈 전체가 그의 몸이었어요. 기록을 서둘러야 합니다."],
+	],
 	"fort2_seal": [
 		["lord", "이름을 빼앗겼지만… 성을 지킬 갑주는 남는군. 가져가라, 이 조각을."],
 		["mukhyang", "봉인된 이름은 제 기록에 따로 적어 두겠습니다. 어떤 결정이든 기록은 남습니다."],
@@ -139,14 +179,36 @@ const CHAPTERS := [
 		"mix": {"past": "망루성·성주", "now": "성 안 비상등·철문", "future": "성주 투구에 박힌 기계 눈"},
 		"steps": [{"t": "floor", "n": 7}, {"t": "talk", "scene": "fort1"}, {"t": "talk", "scene": "fort2", "by": "fort"}],
 		"gold": 5000},
+	## G-0093 3막 · 불타는 남쪽 — 고돗엔 지옥 균열·태양 신도시 지역과 11~20층이 없어: 균열 문지기 무리 = 정예 셋, 태양로 = 부적 던전 한 판,
+	## 흑풍 산채(11~15층) = 부적 2단, 가라앉은 용궁(16~20층) = 부적 3단(같은 방 일곱을 더 깊은 단으로 다시 도는 부적 던전).
+	{"id": "a3_riftgate", "no": 7, "title": "갈라진 땅의 문지기", "stage": "굴혈 · 정예",
+		"blurb": "퇴마사 소연이 쫓던 문지기 겁옥 — 균열은 무명혈의 곁가지.",
+		"mix": {"past": "퇴마사·부적", "now": "균열에 떨어진 버스", "future": "균열 속 별바다 손님"},
+		"steps": [{"t": "talk", "scene": "rg1"}, {"t": "elite", "n": 3}, {"t": "talk", "scene": "rg2"}],
+		"gold": 8000, "sigil": 1},
+	{"id": "a3_sunfurnace", "no": 8, "title": "과열된 태양로", "stage": "부적 던전",
+		"blurb": "개척지 정비공 — 태양로가 균열의 열을 먹고 폭주한다.",
+		"mix": {"past": "개척지 우물·천막", "now": "발전 설비", "future": "태양로 거신"},
+		"steps": [{"t": "talk", "scene": "sf1"}, {"t": "sigil", "n": 1}, {"t": "talk", "scene": "sf2"}],
+		"gold": 9000},
+	{"id": "a3_blackwind", "no": 9, "title": "흑풍 산채", "stage": "부적 던전 2단",
+		"blurb": "깊은 굴혈의 흑풍 채주 — 도적 떼가 이름을 팔아 힘을 샀다.",
+		"mix": {"past": "산채 도적", "now": "채주의 무전기·총포", "future": "경비 보행기"},
+		"steps": [{"t": "talk", "scene": "bw1"}, {"t": "sigil", "n": 2}, {"t": "talk", "scene": "bw2"}],
+		"gold": 10000},
+	{"id": "a3_palace", "no": 10, "title": "가라앉은 용궁", "stage": "부적 던전 3단",
+		"blurb": "더 깊은 굴혈의 용궁지기를 치자 바닥에서 처음으로 목소리가 들린다 — \"이름을 다오\"",
+		"mix": {"past": "용궁 기와", "now": "잠수 장비 잔해", "future": "수압 돔"},
+		"steps": [{"t": "talk", "scene": "pal1"}, {"t": "sigil", "n": 3}, {"t": "talk", "scene": "pal2"}],
+		"gold": 12000},
 ]
 
 ## 셈 칸 — 단계 종류 → 합계 칸 이름.
-const COUNTER := {"kill": "kills", "boss": "boss_kills", "rescue": "rescues", "wboss": "wbosses", "horde": "hordes"}
+const COUNTER := {"kill": "kills", "boss": "boss_kills", "rescue": "rescues", "wboss": "wbosses", "horde": "hordes", "elite": "elites"}
 
 
 static func fresh() -> Dictionary:
-	return {"ch": 0, "step": 0, "base": 0, "kills": 0, "boss_kills": 0, "rescues": 0, "wbosses": 0, "hordes": 0, "done": [], "choices": {}}
+	return {"ch": 0, "step": 0, "base": 0, "kills": 0, "boss_kills": 0, "rescues": 0, "wbosses": 0, "hordes": 0, "elites": 0, "done": [], "choices": {}}
 
 
 ## 옛 세이브·빈 칸·모자란 칸을 채운 새 사전(원본은 안 건드린다).
@@ -199,7 +261,9 @@ static func step_met(st: Dictionary, rooms_cleared: Array) -> bool:
 	var s := step(st)
 	var t := String(s.get("t", ""))
 	match t:
-		"kill", "boss", "rescue", "wboss", "horde":
+		"sigil":
+			return int(st.get("sigil_best", 0)) >= int(s.n)   # 엔진이 DungeonSigilState.best_tier_cleared 를 적어 둔다
+		"kill", "boss", "rescue", "wboss", "horde", "elite":
 			return int(st.get(COUNTER[t], 0)) - int(st.get("base", 0)) >= int(s.n)
 		"floor":
 			var i := int(s.n) - 1
@@ -276,6 +340,10 @@ static func objective(st: Dictionary) -> String:
 			what = "월드 보스(폐도시 폭주룡) 처치 %d/%d" % [mini(have, int(s.n)), int(s.n)]
 		"horde":
 			what = "난입에서 파도 %d 버티기" % HORDE_WAVE
+		"elite":
+			what = "정예 처치 %d/%d" % [mini(have, int(s.n)), int(s.n)]
+		"sigil":
+			what = "부적 던전 %d단 깨기" % int(s.n)
 	return "📜 %d장 %s — %s" % [int(ch.no), String(ch.title), what]
 
 

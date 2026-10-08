@@ -6,6 +6,7 @@ extends Node
 ##   · 구출 — rescue 단계 동안만 그 방 북쪽에 "⌛ 갇힌 열두시" 표지(코드 도형)를 세운다. 닿으면 구출.
 ##   · G-0089 2막: 월드 보스 처치(DungeonWorldBossState.boss_defeated)·난입 파도 HORDE_WAVE 닿음(난입 한 판에 한 번)을 센다.
 ##     장면 끝 고르기(Scenario.CHOICES)는 창의 단추로, 답의 보상(금·축복)을 곧바로 준다.
+##   · G-0093 3막: 정예(elite_key 있는 적) 처치를 세고, 부적 던전 깬 단(best_tier_cleared)을 st.sigil_best 에 적는다. 장의 sigil 보상 = 그 단 부적.
 ##   · 장이 끝나면 금 보상·알림, 단계가 바뀔 때마다 저장(DungeonSaveState.save) · 목표판 다시 그림(부모 _refresh_goal_board).
 
 const Scenario := preload("res://games/saga_dungeon/data/scenario.gd")
@@ -28,6 +29,7 @@ var _horde_marked := false   # 이번 난입에서 파도 목표를 이미 셌�
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS   # 대화 중(멈춤)에도 창 입력을 받는다
 	st = Scenario.normalize(DungeonSaveState.scenario)
+	st.sigil_best = DungeonSigilState.best_tier_cleared
 	DungeonSaveState.scenario = st
 	get_tree().node_added.connect(_on_node_added)
 	DungeonWorldBossState.boss_defeated.connect(_on_world_boss_defeated)
@@ -46,6 +48,7 @@ func _process(delta: float) -> void:
 	if get_tree().paused:
 		return
 	_watch_horde()
+	st.sigil_best = DungeonSigilState.best_tier_cleared
 	var done := Scenario.check(st, DungeonSaveState.rooms_cleared)
 	if not done.is_empty():
 		_apply(done)
@@ -80,6 +83,8 @@ func _on_enemy_died(n: Node) -> void:
 	st.kills = int(st.kills) + 1
 	if is_instance_valid(n) and n.is_in_group("dungeon_boss"):
 		st.boss_kills = int(st.boss_kills) + 1
+	if is_instance_valid(n) and String(n.get("elite_key")) != "":
+		st.elites = int(st.get("elites", 0)) + 1
 	_after_count()
 
 
@@ -95,7 +100,11 @@ func _apply(done_chapters: Array) -> void:
 		var gold := int(ch.get("gold", 0))
 		if gold > 0:
 			DungeonGoldState.add(gold)
-		Toast.show(get_parent(), "📜 제%d장 「%s」 끝 — 금 +%d" % [int(ch.no), String(ch.title), gold], 4.0)
+		var sig_txt := ""
+		if int(ch.get("sigil", 0)) > 0:
+			DungeonSigilState.add_sigil(int(ch.sigil))
+			sig_txt = " · 퇴마 부적(%d단)" % int(ch.sigil)
+		Toast.show(get_parent(), "📜 제%d장 「%s」 끝 — 금 +%d%s" % [int(ch.no), String(ch.title), gold, sig_txt], 4.0)
 	if not done_chapters.is_empty():
 		_save()
 	_refresh_board()

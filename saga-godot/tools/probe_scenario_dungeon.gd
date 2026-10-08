@@ -5,6 +5,7 @@ extends SceneTree
 ## ① 표: 장 셋 id 가 정본(a1_moru·a1_blackflag·a1_tomb) · 시대 섞기 셋 다 · talk 장면이 SCENES 에 있고 말한 이가 CAST 또는 me · 단계 종류가 엔진이 아는 것 · 금 보상 · 구출 방이 일곱 안
 ## ② 흐름 흉내: 새 판 → moru1 → 처치 5(4 로는 안 넘어감) → moru2 → 1층 출구 → moru3(1장 끝·금 300) → flag1 → 보스 1 → flag2(2장 끝) → tomb1 → 5층 → 구출 → tomb2(1막 끝), 끝낸 id 셋·금 합 2600
 ## ②-2 G-0089 2막: tomb2 → fac1 → 월드 보스 1 → fac2 → tide1 → 난입 파도 → tide2 → 7층 출구 → fort1 고르기(seal) → fort2_seal(2막 끝, 금 합 13600·choices.fort)
+## ②-3 G-0093 3막: fort2 → rg1 → 정예 3(보통 처치로 안 됨) → rg2(장 보상 sigil 1) → sf1 → 부적 1단 → sf2 → bw1 → 부적 2단 → bw2 → pal1 → 부적 3단 → pal2(3막 끝, 금 합 52600)
 ## ③ 옛 세이브: 빈 칸 → 1장 처음 · JSON 이 돌려준 실수(1.0) 칸도 그대로 읽힘 ④ 이미 지난 층: 방을 다 비운 세이브는 floor 단계가 바로 넘어감
 ## ⑤ 엔진 스크립트가 컴파일되고 objective·rescue·next_line 이 있음 · 목표판 글(처치 n/5·구출)
 ## 끝에 "PROBE scenario_dungeon OK" 또는 "PROBE scenario_dungeon FAIL n".
@@ -30,9 +31,9 @@ func _initialize() -> void:
 
 	# ① 표
 	var ids: Array = S.CHAPTERS.map(func(c): return String(c.id))
-	check(ids == ["a1_moru", "a1_blackflag", "a1_tomb", "a2_factory", "a2_tideflat", "a2_watchtower"], "장 여섯 id 정본 %s" % [ids])
+	check(ids == ["a1_moru", "a1_blackflag", "a1_tomb", "a2_factory", "a2_tideflat", "a2_watchtower", "a3_riftgate", "a3_sunfurnace", "a3_blackwind", "a3_palace"], "장 열 id 정본 %s" % [ids])
 	var bad: Array = []
-	var known := ["talk", "kill", "boss", "floor", "rescue", "wboss", "horde"]
+	var known := ["talk", "kill", "boss", "floor", "rescue", "wboss", "horde", "elite", "sigil"]
 	for c: Dictionary in S.CHAPTERS:
 		for era in ["past", "now", "future"]:
 			if String((c.mix as Dictionary).get(era, "")) == "":
@@ -136,7 +137,40 @@ func _initialize() -> void:
 	take.call(S.finish_talk(st, rooms, "seal"))
 	check(S.pending_scene(st) == "fort2_seal" and String(st.choices.get("fort", "")) == "seal", "봉인 → fort2_seal")
 	take.call(S.finish_talk(st, rooms))
-	check(S.finished(st) and (st.done as Array).size() == 6 and int(acc.gold) == 13600 and S.objective(st) == "", "2막 끝 — 금 합 %d" % int(acc.gold))
+	check((st.done as Array).size() == 6 and int(acc.gold) == 13600 and S.pending_scene(st) == "rg1", "2막 끝 — 금 합 %d → 3막 rg1" % int(acc.gold))
+
+	# ②-3 3막
+	take.call(S.finish_talk(st, rooms))
+	check(String(S.step(st).t) == "elite" and S.objective(st).contains("정예 처치 0/3"), "rg1 → 정예 \"%s\"" % S.objective(st))
+	st.kills = int(st.kills) + 10
+	take.call(S.check(st, rooms))
+	check(String(S.step(st).t) == "elite", "보통 처치로는 안 넘어감")
+	st.elites = int(st.get("elites", 0)) + 3
+	take.call(S.check(st, rooms))
+	check(S.pending_scene(st) == "rg2", "정예 3 → rg2")
+	var got_sigil := []
+	for c in S.finish_talk(st, rooms):
+		got_sigil.append(int(c.get("sigil", 0)))
+		acc.gold = int(acc.gold) + int(c.gold)
+		done_ids.append(String(c.id))
+	check(got_sigil == [1] and S.pending_scene(st) == "sf1", "7장 끝 — 장 보상 부적 1단 → sf1")
+	take.call(S.finish_talk(st, rooms))
+	check(String(S.step(st).t) == "sigil" and S.objective(st).contains("부적 던전 1단"), "부적 1단 단계")
+	st.sigil_best = 1
+	take.call(S.check(st, rooms))
+	take.call(S.finish_talk(st, rooms))   # sf2
+	take.call(S.finish_talk(st, rooms))   # bw1
+	check(String(S.step(st).t) == "sigil" and int(S.step(st).n) == 2, "흑풍 산채 = 부적 2단")
+	take.call(S.check(st, rooms))
+	check(String(S.step(st).t) == "sigil", "1단으로는 머묾")
+	st.sigil_best = 3   # 한 번에 3단까지 깬 사람은 용궁 단계도 바로 넘어간다
+	take.call(S.check(st, rooms))
+	take.call(S.finish_talk(st, rooms))   # bw2
+	take.call(S.finish_talk(st, rooms))   # pal1
+	take.call(S.check(st, rooms))
+	check(S.pending_scene(st) == "pal2", "부적 3단 → pal2")
+	take.call(S.finish_talk(st, rooms))
+	check(S.finished(st) and (st.done as Array).size() == 10 and int(acc.gold) == 52600 and S.objective(st) == "", "3막 끝 — 금 합 %d" % int(acc.gold))
 	var r2: Dictionary = S.normalize({"ch": 5, "step": 2, "done": [], "choices": {}})
 	check(S.pending_scene(r2) == "fort2_restore", "답이 없으면 첫 갈래(restore)")
 
