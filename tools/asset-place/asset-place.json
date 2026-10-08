@@ -718,6 +718,35 @@
    ]
   },
   {
+   "id": "voice",
+   "src": "saga-assets/voice",
+   "include": [
+    "*.ogg",
+    "*.json"
+   ],
+   "note": "K-0036 짧은 대사 음성 — 목소리 10(남 5·여 5) × 외침·획득·인사 + 해설 안내, Qwen3-TTS(Apache-2.0). 인물 → 목소리 배정은 voice_list.json",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/audio/voice"
+    },
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/audio/voice",
+     "sidecar": [
+      ".import"
+     ]
+    },
+    {
+     "track": "unity",
+     "dir": "saga-unity/Assets/SagaCore/Resources/Audio/Voice",
+     "sidecar": [
+      ".meta"
+     ]
+    }
+   ]
+  },
+  {
    "id": "web2d-rts",
    "src": "saga-assets/web2d/rts",
    "recursive": true,

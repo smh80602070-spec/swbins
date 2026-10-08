@@ -1,0 +1,13 @@
+{
+ "id": "voice_M2_shout_05",
+ "generator": "C:/swbins3/voice-gen/saga_voice_batch.py (Qwen3-TTS VoiceDesign 견본 → Base 복제) + tools/asset-forge/voiceplan.py",
+ "model": "Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign · Qwen/Qwen3-TTS-12Hz-1.7B-Base",
+ "license": "Apache-2.0 (모델·코드) — 목소리는 글 설명으로 만든 것, 실존 인물·배우 목소리 모사 없음",
+ "voice": "M2",
+ "voice_desc": "A calm Korean man in his forties, low soft voice, measured and thoughtful, scholar tone.",
+ "text": "조심해!",
+ "kind": "shout",
+ "asr_cer": 0.0,
+ "duration_s": 0.72,
+ "rms_db": -20.0
+}
