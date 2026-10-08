@@ -4,6 +4,8 @@ extends Node
 ##     창은 공용 saga_core/ui/talk_box.gd(G-0086) — "다음 ▶"(Space·Enter·누르기)로 한 줄씩, 끝 줄 뒤 닫히면 다음 단계.
 ##   · 셈 — 나오는 적(dungeon_enemy.gd, 난입·월드 보스 포함)의 died 를 이어 처치·보스 합계를 올린다. 층 단계는 rooms_cleared 를 본다.
 ##   · 구출 — rescue 단계 동안만 그 방 북쪽에 "⌛ 갇힌 열두시" 표지(코드 도형)를 세운다. 닿으면 구출.
+##   · G-0089 2막: 월드 보스 처치(DungeonWorldBossState.boss_defeated)·난입 파도 HORDE_WAVE 닿음(난입 한 판에 한 번)을 센다.
+##     장면 끝 고르기(Scenario.CHOICES)는 창의 단추로, 답의 보상(금·축복)을 곧바로 준다.
 ##   · 장이 끝나면 금 보상·알림, 단계가 바뀔 때마다 저장(DungeonSaveState.save) · 목표판 다시 그림(부모 _refresh_goal_board).
 
 const Scenario := preload("res://games/saga_dungeon/data/scenario.gd")
@@ -19,6 +21,8 @@ var _layer: CanvasLayer   # 열린 대화 창(TalkBox)
 var _marker: Node3D
 var _marker_room := -1
 var _t := 0.0
+var _talk_scene := ""
+var _horde_marked := false   # 이번 난입에서 파도 목표를 이미 셌나
 
 
 func _ready() -> void:
@@ -26,6 +30,7 @@ func _ready() -> void:
 	st = Scenario.normalize(DungeonSaveState.scenario)
 	DungeonSaveState.scenario = st
 	get_tree().node_added.connect(_on_node_added)
+	DungeonWorldBossState.boss_defeated.connect(_on_world_boss_defeated)
 	for e in get_tree().get_nodes_in_group("dungeon_enemy"):
 		_hook_enemy(e)
 	_apply(Scenario.check(st, DungeonSaveState.rooms_cleared))
@@ -40,6 +45,7 @@ func _process(delta: float) -> void:
 	_t = 0.0
 	if get_tree().paused:
 		return
+	_watch_horde()
 	var done := Scenario.check(st, DungeonSaveState.rooms_cleared)
 	if not done.is_empty():
 		_apply(done)
@@ -193,6 +199,27 @@ func rescue() -> void:
 	_save()
 
 
+func _exit_tree() -> void:
+	if DungeonWorldBossState.boss_defeated.is_connected(_on_world_boss_defeated):
+		DungeonWorldBossState.boss_defeated.disconnect(_on_world_boss_defeated)
+
+
+func _on_world_boss_defeated(_slot: int, _floor_num: int) -> void:
+	st.wbosses = int(st.get("wbosses", 0)) + 1
+	_after_count()
+
+
+## 난입 한 판에서 파도 HORDE_WAVE 에 닿으면 한 번 센다(끝나면 다시 셀 수 있게 푼다).
+func _watch_horde() -> void:
+	if not DungeonHordeState.active:
+		_horde_marked = false
+		return
+	if not _horde_marked and DungeonHordeState.wave >= Scenario.HORDE_WAVE:
+		_horde_marked = true
+		st.hordes = int(st.get("hordes", 0)) + 1
+		_after_count()
+
+
 # ---------------------------------------------------------------- 대화 창
 
 func open_talk() -> void:
@@ -203,7 +230,12 @@ func open_talk() -> void:
 	for l: Array in Scenario.SCENES.get(scene, []):
 		lines.append([Scenario.speaker(String(l[0])), String(l[1])])
 	var ch := Scenario.chapter(st)
-	_layer = TalkBox.open(get_parent(), "📜 제%d장 · %s" % [int(ch.get("no", 0)), String(ch.get("title", ""))], lines, _on_talk_done)
+	var choice := {}
+	if Scenario.CHOICES.has(scene):
+		var c: Dictionary = Scenario.CHOICES[scene]
+		choice = {"prompt": String(c.prompt), "options": (c.options as Array).map(func(o): return {"key": String(o.key), "label": String(o.label)})}
+	_talk_scene = scene
+	_layer = TalkBox.open(get_parent(), "📜 제%d장 · %s" % [int(ch.get("no", 0)), String(ch.get("title", ""))], lines, _on_talk_done, choice)
 
 
 ## 지금 창의 다음 줄(점검·흉내용 — 창 단추와 같다).
@@ -212,8 +244,28 @@ func next_line() -> void:
 		_layer.call("next_line")
 
 
-func _on_talk_done(_answer: String) -> void:
+## 고르기 답 보상(Scenario.CHOICES 의 reward — gold·boon).
+func _choice_reward(scene: String, answer: String) -> void:
+	for o: Dictionary in (Scenario.CHOICES.get(scene, {}) as Dictionary).get("options", []):
+		if String(o.key) != answer:
+			continue
+		var rw: Dictionary = o.get("reward", {})
+		if rw.has("gold"):
+			DungeonGoldState.add(int(rw.gold))
+		if rw.has("boon"):
+			DungeonRunState.apply_boon(String(rw.boon))
+		Toast.show(get_parent(), "📜 " + String(o.label), 3.0)
+
+
+func pick(key: String) -> void:
+	if _layer != null and is_instance_valid(_layer):
+		_layer.call("pick", key)
+
+
+func _on_talk_done(answer: String) -> void:
 	_layer = null
-	_apply(Scenario.finish_talk(st, DungeonSaveState.rooms_cleared))
+	if answer != "":
+		_choice_reward(_talk_scene, answer)
+	_apply(Scenario.finish_talk(st, DungeonSaveState.rooms_cleared, answer))
 	_sync_marker()
 	_save()
