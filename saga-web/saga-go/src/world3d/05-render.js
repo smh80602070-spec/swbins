@@ -130,7 +130,7 @@
       var c = Math.cos(r.rot || 0), sn = Math.sin(r.rot || 0);
       function loc(x, z) { var dx = x - r.x, dz = z - r.z; return [dx * c + dz * sn, -dx * sn + dz * c]; }
       var a = loc(P.x, P.z), b = loc(C.x, C.z);
-      var hx = Math.max(r.w / 2, r.h * 0.45), hz = Math.max(r.d / 2, r.h * 0.45);
+      var hx = r.exact ? r.w / 2 : Math.max(r.w / 2, r.h * 0.45), hz = r.exact ? r.d / 2 : Math.max(r.d / 2, r.h * 0.45);   // exact = 산봉우리 원뿔(W-0113) — 폭 그대로
       var t0 = 0, t1 = 1, k, lo = [-hx, -hz], hi = [hx, hz], ok = true;
       for (k = 0; k < 2 && ok; k++) {
         var d = b[k] - a[k];
@@ -152,7 +152,7 @@
     var gx0 = Math.floor(x / GRID), gy0 = Math.floor(y / GRID), gx, gy, rs, i, out = [];
     for (gy = gy0 - 1; gy <= gy0 + 1; gy++) {
       for (gx = gx0 - 1; gx <= gx0 + 1; gx++) {
-        rs = houseRects(gx, gy);
+        rs = houseRects(gx, gy); if (global.DG.world.terrainAt(gx, gy) === 'mount') { rs = rs.concat([{ x: gx * GRID + GRID / 2, z: gy * GRID + GRID / 2, w: GRID * 0.5, d: GRID * 0.5, rot: 0, h: (14 + h1(gx * 3 + 1, gy * 5 + 2) * 22) * 0.75, exact: true }]); }   // W-0113 산봉우리도 가린다
         for (i = 0; i < rs.length; i++) { if (rs[i].h) { rs[i].base = groundY(rs[i].x, rs[i].z); out.push(rs[i]); } }
       }
     }

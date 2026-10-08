@@ -13,7 +13,7 @@
   {
    "name": "go.rogue-action 결투 — 창이 열리고 실제 Space(속공)를 누르면 기세(적 체력)가 줄며, D(회피)에도 창이 산다",
    "ok": true,
-   "detail": "{\"h0\":3000,\"h1\":2903,\"d1\":{\"active\":true}}"
+   "detail": "{\"h0\":3000,\"h1\":2902,\"d1\":{\"active\":true}}"
   },
   {
    "name": "페이지 예외·console.error 없음",

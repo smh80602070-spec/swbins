@@ -669,6 +669,6 @@
   },
   "ticket": "W-0101",
   "since": "2026-10-08",
-  "note": "D2: saga-web/tools/playcheck/pw-go-close3.mjs 3/3 — results/pw-go-close3.json(2026-10-08). 고향 밖 900m: 둘레 흔적 표식 41·흔적 위로 가면 저절로 읽힘. 눈 shots/qc/saga-go-track.png △ — 노란 원뿔 표식은 서나 바로 옆 천막이 카메라를 가려 화면 반이 짙은 삼각형(W-0113) · D1: 진단 6 PASS · QC 2D/3D 장면 PASS(2026-10-08). D2 는 흔적이 보이는 장면 눈 판정 뒤 — QC 장면은 고향 300m 안이라 흔적이 안 찍힌다(고향 밖 장면 필요)."
+  "note": "D2: saga-web/tools/playcheck/pw-go-close3.mjs 3/3 — results/pw-go-close3.json(2026-10-08). 고향 밖 900m: 둘레 흔적 표식 41·흔적 위로 가면 저절로 읽힘. 눈 shots/qc/saga-go-track.png ○(W-0113 뒤 — 산봉우리 가림을 카메라가 당겨 사람·흔적 표식이 보인다) · D1: 진단 6 PASS · QC 2D/3D 장면 PASS(2026-10-08). D2 는 흔적이 보이는 장면 눈 판정 뒤 — QC 장면은 고향 300m 안이라 흔적이 안 찍힌다(고향 밖 장면 필요)."
  }
 ]
