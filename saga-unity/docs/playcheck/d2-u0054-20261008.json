@@ -1,0 +1,83 @@
+{
+  "date": "2026-10-08",
+  "tickets": [
+    "U-0054 사가만리 확인 닫기 ② — 규칙 층 D1 열 개"
+  ],
+  "how": "bash saga-unity/tools/unity-batch.sh -- Unity.exe -batchmode -nographics -projectPath . -executeMethod Saga.EditorTools.PlaytestHeadless.Run (6000.3.24f1, -quit 없이), GO save.json 은 치웠다 되돌림. 열 진단 모두 단독 RunBatch 가 없어 이 장면 판 한 번의 줄로 판정(진단 코드 무변경)",
+  "scene": "PlaytestHeadless OK - 10 frames, no errors (런타임 오류 0)",
+  "runtime_errors": 0,
+  "results": [
+    {
+      "id": "un.go.field-combat",
+      "playtest": "PlaytestGoFieldCombat",
+      "result": "OK",
+      "lines": "field combat OK - enemies 24, party 2, reactions·원소 일곱 반응 열셋·강공격·낙하 공격·3타·스킬·폭발·피격·회피·교체·전멸 복귀·결투 경계·버튼 · elemental foe OK - 원소 적 8(무리 3)·상성 표·방패 면역/물리/상성/깨짐→비틀 2초·깨진 뒤 부착·부활 복구·진짜 스킬(면역·상성 깨기)·화상 3틱/안 죽음·젖음·감전 | 불도깨비 Pyro 방패 173 물귀신 Hydro 방패 207 벼락 방독면 약탈자 Electro 방패 150",
+      "date": "2026-10-08"
+    },
+    {
+      "id": "un.go.elements",
+      "playtest": "PlaytestGoElementalFoe",
+      "result": "OK",
+      "lines": "elemental foe OK - 원소 적 8(무리 3)·상성 표·방패 면역/물리/상성/깨짐→비틀 2초·깨진 뒤 부착·부활 복구·진짜 스킬(면역·상성 깨기)·화상 3틱/안 죽음·젖음·감전 | 불도깨비 Pyro 방패 173 물귀신 Hydro 방패 207 벼락 방독면 약탈자 Electro 방패 150",
+      "date": "2026-10-08"
+    },
+    {
+      "id": "un.go.guardian",
+      "playtest": "PlaytestGoGuardian",
+      "result": "OK",
+      "lines": "guardian OK - 표·겉(뇌) 상성 깨짐·0.8초·속(화) 면역/물리/수 상성·3초 드러눕기·귀가 복구·등장 컷(브레인·18m·멈춤·HUD·이름표·포효·가까운 샷·넘김·한 번)·토벌(금·경험·안 섬)·세이브 v18/v14 | 가까운 샷 7.1m(키 5.4m)",
+      "date": "2026-10-08"
+    },
+    {
+      "id": "un.go.region-mission",
+      "playtest": "PlaytestGoRegionMission",
+      "result": "OK",
+      "lines": "region mission OK - 순수 단 계산·표 4·일부 처치 안 셈·무리 먼저→역참 2/3 한꺼번에·마을 안 셈·한 줄/보상 글/숨김·v18 왕복 다시 안 줌·상자 평정·지도 표시·망루→무리→수호장 평정·v15 로드",
+      "date": "2026-10-08"
+    },
+    {
+      "id": "un.go.peaks",
+      "playtest": "PlaytestGoPeaks",
+      "result": "OK",
+      "lines": "peaks OK - 정상 28 높이 28~55m 금 108~135 | 발견 북쪽 산기슭 봉우리 1 금 +126 · 순간이동 윗면 +0.08m · 거절 둘(안 오름 북쪽 산기슭 봉우리 2·결투) | 세이브 v18/v17 | 폭포 fall_east 36m · fall_west 15m | 지붕 · traversal OK - 점프·등반/넘어오르기·활공·수영/강둑·익사 복귀·경계벽·적 칸 제한 | 점프 2.30m · 등반 12.5m 3.9s 기력 20 · 전용 클립 있음 · 활공 낙하 3.06/s 전진 10.20/s(Glide) · 수영 y -3.05(목표 -3.05) 기력 97",
+      "date": "2026-10-08"
+    },
+    {
+      "id": "un.go.aim",
+      "playtest": "PlaytestGoAim",
+      "result": "OK",
+      "lines": "aim OK - 칼 못 함·걸음 막힘·카메라·잠김/풀림·덜 참 물리 59·다 참 급소 244·쫓는 적 급소 아님·빈 곳 신호·점프/칼 인물 풀림·길게 눌러 쏘고 나옴 · 과녁 셋·거리 12/16/20·화살·10초 꺼짐·서책 기본 공격·셋 → 풀림 · 옛 제단 잠김·충전 화살 불",
+      "date": "2026-10-08"
+    },
+    {
+      "id": "un.go.map-marks",
+      "playtest": "PlaytestGoMapMarks",
+      "result": "OK",
+      "lines": "map marks OK - 표식 판(이야기 ◆·! 등급·못 가 본 땅 숨김·◇·◆ 옮김·끝남·꺼짐) · 가까운 지점(켠 역참·오른 정상 중 가장 가까운 것·없으면 없음) · 지도 화면(단추 4·범례·고르기 카드·따라가기 ◇ 만·순간이동 마을 역참 46m)",
+      "date": "2026-10-08"
+    },
+    {
+      "id": "un.go.achieve",
+      "playtest": "PlaytestGoAchieve",
+      "result": "OK",
+      "lines": "achieve OK - 표(스물둘·단계 63·오름차순·어려운 셋·글·이 트랙 최대치 안) · 보상(300 / 600·쪽지 2 / 교본 2·강화석 3 · 어려운 셋 매듭) · 신호(반응 수·가짓수·없음 뺌 · 들판 처치·채집·요리·맛있는 요리·반응 실제로) · 상태에서 읽는 값(구슬·여정 등급",
+      "date": "2026-10-08"
+    },
+    {
+      "id": "un.go.world-quests",
+      "playtest": "PlaytestGoWorldQuests",
+      "result": "OK",
+      "lines": "world quests OK - 표 셋·인물 일곱 · 자리(걷는 칸·무리 35m·숨은 터 20m·둥실이 평균 7.9m/초) · 등급 전 ! 없음·밝은 !·시대 글자·맡아 🔷·이야기로 넘어감·흐린 !·이어 감·둥실이 잡음·목록 단추로 바꾸면 무리 치움·편지 보상 600 · 등대 도착·한빛·무리·봉수 불",
+      "date": "2026-10-08"
+    },
+    {
+      "id": "un.go.story-ch",
+      "playtest": "PlaytestGoStory",
+      "result": "OK",
+      "lines": "story OK - 8장 도둑 평균 8.0m/초·걸어선 놓침·달려서 잡음·배 섬/나루·섬 무리 넷(섬 안만)·별·달·해·해솔 금 간 가면·보상 · 9장 땅에선 안 뜸·저절로 활공·기둥 끝·기력 그대로·접으면 안 폄·섬에 내림·난간·층·구름섬 무리 난간 안·해솔·가면 벗음·임금 ×2 왕관· · story allies OK - 표·도감 105 그대로 · 합류·옛 세이브·안 끝낸 장 · 편성 다섯 · 도감 탭·단추 · 탁본 기력·풀이 반응 12초 ×1.4 · 그림자 걸음 등 뒤·표식 ×1.25·메아리 셋이 따라감 · 부채 바람 부채꼴·밀림 10.8m·명단 +6%·수호장 그대로 · 순풍 첫 틱 ",
+      "date": "2026-10-08"
+    }
+  ],
+  "fails": 0,
+  "not_covered": "손맛(조준 감·전투 박자)·그림(컷·표식 모양)은 사람/QC 몫. 그림 판정 항목(hero-looks·skill-shapes·weapon-models·eras-*·party-swap·common 등)은 이 묶음 밖"
+}
