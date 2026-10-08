@@ -4066,4 +4066,4 @@ static func find(id: String) -> Variant:
 	for h in HEROES:
 		if h.id == id:
 			return h
-	return null
+	return load("res://saga_core/data/time_folk.gd").find(id)   # G-0117 사가천하 시간 틈 사람(따로 표, 파일 줄 상한)

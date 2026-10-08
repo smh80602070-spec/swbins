@@ -208,12 +208,16 @@ func _initialize() -> void:
 			any_pick += 1
 			pick_ok = pick_ok and Traits.has_trait(String(c.id), String(Events.EVENTS[k].trait))
 	check(pick_ok and any_pick > 40 and Events.pick_for("sg_caocao", "rival", rng2) != "" and Events.by_key("rival_chance").ambition == "rival" and Events.by_key("zzz").is_empty(), "이벤트 고르기: 그 인물의 특성에 맞는 것만(%d/200명) · 야망 숙적이면 숙적 이벤트도 후보" % any_pick)
-	var pool_ok: bool = Characters.find(String(Pool.STARTING_OFFICER)) != null and Pool.HIDDEN_POOL_BY_CITY.size() == 3
+	var pool_ok: bool = Characters.find(String(Pool.STARTING_OFFICER)) != null and Pool.HIDDEN_POOL_BY_CITY.size() == 10
 	for cid in Pool.HIDDEN_POOL_BY_CITY:
-		pool_ok = pool_ok and Cities.by_id(String(cid)).size() > 0
+		pool_ok = pool_ok and Cities.any_by_id(String(cid)).size() > 0
 		for oid in Pool.HIDDEN_POOL_BY_CITY[cid]:
 			pool_ok = pool_ok and Characters.find(String(oid)) != null
-	check(pool_ok, "재야 무장 풀: 시작 무장·성마다 숨은 인재가 도감에 있음")
+	var tm_n := 0
+	for cid in Pool.HIDDEN_POOL_BY_CITY:
+		for oid in Pool.HIDDEN_POOL_BY_CITY[cid]:
+			tm_n += 1 if String(oid) in Pool.TIME_FOLK else 0
+	check(pool_ok and tm_n == 9 and Pool.TIME_FOLK.size() == 9, "재야 무장 풀: 시작 무장·성마다 숨은 인재가 인물 표에 있음 · 시간 틈 아홉이 다 묻힘(G-0117)")
 
 	print("PROBE realm_data ", "OK" if fails == 0 else "FAIL %d" % fails)
 	quit(1 if fails > 0 else 0)

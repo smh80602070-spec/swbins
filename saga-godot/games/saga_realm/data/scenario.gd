@@ -11,12 +11,13 @@ extends RefCounted
 ##   kind debate — 설전 세 문답, 둘 이상 맞히면 이김 · kind own — months 달 안에 성을 하나 더 편입하면 이김(웹 "목표 성 차지"를 고돗은 성 수로)
 ##   kind duel — {맹장}(무력 으뜸) 대 foe 이름, 베기·찌르기·막기 한 수씩(RealmWar.duel_round_result) 승부가 날 때까지(DUEL_MAX 수, 다 비기면 짐)
 ## when.victory = true 카드(G-0110 6막)는 달·성이 아니라 승리(RealmSaveState.result 가 "win…")로 뜬다. textBy[승리 종류] 가 있으면 그 글.
+## when.allTime = true(G-0117 7막)는 승리 + 시간 틈 사람 아홉이 다 우리 사람일 때. textByK = {from: 앞 카드 id, 고른 k: 글} — 그 답의 글.
 ##   on 은 k 하나·"*"·k 배열(예 ["atk", "def"] — 3막 일기토는 예물을 고르면 안 열림)
 ##   단계가 열려 있는 동안 다음 카드는 쉰다(웹과 같음).
 ## G-0092 — 고돗엔 시간 틈 사람(강서·도하·명변…)이 인물 표에 없다(정본 트랙 메모 "인물 표를 더한 뒤") — 그 사람을 등용하는 고르기는
 ##   "그 사람이 데려온 재야 인재 합류"(recruitFree)로, 그 사람 충성(loyalId)은 {책사} 충성으로 바꿨다.
 
-const ACT_NAMES := {1: "1막 · 군웅", 2: "2막 · 대전", 3: "3막 · 강 위", 4: "4막 · 삼계 균열", 5: "5막 · 먼 길", 6: "6막 · 천하"}
+const ACT_NAMES := {1: "1막 · 군웅", 2: "2막 · 대전", 3: "3막 · 강 위", 4: "4막 · 삼계 균열", 5: "5막 · 먼 길", 6: "6막 · 천하", 7: "7막 · 틈의 끝"}
 
 const CARDS := [
 	{"id": "r1_start", "no": 1, "act": 1, "title": "첫 성의 밤", "emoji": "🗺️", "when": {"minTurn": 0},
@@ -158,6 +159,44 @@ const CARDS := [
 			{"k": "def", "label": "남는 이와 함께 지낸다", "hint": "수도 치안 +15 · 책사 충성 +5", "fx": [{"t": "sec", "n": 15}, {"t": "loyal", "n": 5}], "text": "남은 이들이 성 안에 눌러앉아 이 시대의 이웃이 되었다"},
 			{"k": "util", "label": "기록 영상을 서고에 남긴다", "hint": "금 +1000 · 군량 +3000", "fx": [{"t": "gold", "n": 1000}, {"t": "food", "n": 3000}], "text": "기록 영상은 서고에서 세 시대를 잇는 책이 되었다"},
 		]},
+	## G-0117 7막 · 틈의 끝 — 웹 r7_gather·r7_after·r7_end. 결말 뒤, 시간 틈 사람 아홉(realm_officer_pool TIME_FOLK)이 모두 roster 에 있어야 첫 카드가 뜬다(when.allTime).
+	## 뒤 두 카드 글은 r7_gather 에서 고른 답(textByK.from)으로 갈린다.
+	{"id": "r7_gather", "no": 17, "act": 7, "title": "틈 아래 모인 아홉", "emoji": "🌀", "when": {"minTurn": 0, "victory": true, "allTime": true},
+		"mix": {"past": "{책사}·옛 성터의 시간 기둥", "now": "도하의 관측 기록", "future": "성연의 귀환 항로"},
+		"text": "결말의 잔치가 끝난 뒤, 시간 틈 사람 아홉이 성 앞 옛 성터에 모였다. 하늘의 금은 아직 아물지 않았다. {책사} 이(가) 시간 기둥의 그림자를 재고, 도하는 관측 기록을 펼치고, 성연은 귀환 항로의 마지막 눈금을 짚는다. 틈을 닫을지, 그대로 둘지, 길로 쓸지 — 이 성의 주인이 정할 차례다.",
+		"choices": [
+			{"k": "atk", "label": "틈을 닫는다", "hint": "수도 치안 +10 · 책사 충성 +5", "fx": [{"t": "sec", "n": 10}, {"t": "loyal", "n": 5}], "text": "시간 기둥에 마지막 쐐기를 박았다 — 하늘의 금이 소리 없이 아물기 시작한다"},
+			{"k": "def", "label": "틈을 그대로 둔다", "hint": "금 +800 · 수도 군량 +2000", "fx": [{"t": "gold", "n": 800}, {"t": "food", "n": 2000}], "text": "틈은 그대로 두기로 했다 — 아홉이 번갈아 지켜보기로 약속했다"},
+			{"k": "util", "label": "틈을 길로 쓴다", "hint": "금 +1500 · 수도 훈련 +5", "fx": [{"t": "gold", "n": 1500}, {"t": "train", "n": 5}], "text": "성연이 항로에 첫 등불을 걸었다 — 틈이 세 시대를 잇는 길이 되었다"},
+		]},
+	{"id": "r7_after", "no": 18, "act": 7, "title": "틈이 남긴 것", "emoji": "🌠", "when": {"minTurn": 0, "victory": true},
+		"mix": {"past": "성터의 비석·{책사}", "now": "도하의 새 관측 기록", "future": "성연이 그은 새 항로"},
+		"text": "틈이 남긴 것을 살필 때가 왔다. {책사} 이(가) 성터에서 소식을 모아 왔다.",
+		"textByK": {
+			"from": "r7_gather",
+			"atk": "틈이 닫히고 열두 달이 지났다. 하늘의 금은 흔적도 없고 귀환 항로는 사라졌다. 아홉은 이 시대에 남기로 했고, 도하는 새 관측 기록에 \"이곳의 하늘\" 이라 적었다. 성연은 항로 대신 성벽 위 별자리를 그린다. {책사} 이(가) 성터에 비석을 세우자고 한다.",
+			"def": "틈을 두고 열두 달이 지났다. 하늘의 금은 조금 넓어졌다 줄었다를 되풀이한다. 아홉은 번갈아 성터를 지키고, 도하의 관측 기록은 벌써 한 권을 채웠다. 성연은 흔들리는 항로를 손보며 \"이대로 두어도 좋겠다\" 고 웃는다.",
+			"util": "틈을 길로 쓰고 열두 달이 지났다. 세 시대의 물자와 소식이 성터를 오간다. 도하는 새 관측 기록에 오가는 이를 세고, 성연은 항로에 등불을 하나씩 더 건다. {책사} 이(가) 오가는 것들을 어떻게 다스릴지 묻는다.",
+		},
+		"choices": [
+			{"k": "atk", "label": "아홉을 장수로 세워 나아간다", "hint": "수도 훈련 +10 · 책사 충성 +5", "fx": [{"t": "train", "n": 10}, {"t": "loyal", "n": 5}], "text": "아홉이 각자 제 시대의 솜씨로 군사를 가르쳤다"},
+			{"k": "def", "label": "성터를 성벽으로 둘러 지킨다", "hint": "수도 치안 +12 · 군량 +2000", "fx": [{"t": "sec", "n": 12}, {"t": "food", "n": 2000}], "text": "성터 둘레에 낮은 성벽이 올라 백성이 마음을 놓았다"},
+			{"k": "util", "label": "틈에서 나온 것을 거둔다", "hint": "금 +1200", "fx": [{"t": "gold", "n": 1200}], "text": "성터에서 세 시대의 쓸 만한 것들이 나왔다"},
+		]},
+	{"id": "r7_end", "no": 19, "act": 7, "title": "틈의 끝", "emoji": "🌅", "when": {"minTurn": 0, "victory": true},
+		"mix": {"past": "{책사}의 붓·성터 잔치", "now": "도하가 찍은 마지막 영상", "future": "성연의 마지막 항로 기록"},
+		"text": "틈의 이야기가 매듭지어질 때가 왔다. 성터에 잔치가 차려진다.",
+		"textByK": {
+			"from": "r7_gather",
+			"atk": "닫힌 하늘 아래 마지막 잔치가 열렸다. 성터 비석 옆에서 아홉이 잔을 든다. 도하가 마지막 영상을 찍고, 성연이 항로 대신 별자리를 새겼다. 돌아갈 길은 없어도 갈 곳은 이곳이라고, {책사} 이(가) 비문에 적었다. 틈의 이야기는 여기서 끝난다.",
+			"def": "틈이 흔들리는 하늘 아래 마지막 잔치가 열렸다. 번갈아 지키던 아홉이 오랜만에 한자리에 앉았다. 도하가 마지막 영상을 찍고, 성연이 흔들리는 항로를 잔에 비춘다. 열린 채로 두는 것도 하나의 끝이라고, {책사} 이(가) 붓을 든다. 틈의 이야기는 여기서 끝난다.",
+			"util": "길이 된 하늘 아래 마지막 잔치가 열렸다. 세 시대의 손님이 성터에 모였다. 도하가 마지막 영상을 찍고, 성연이 항로 끝에 마지막 등불을 걸었다. 오가는 길이 곧 이 성의 이름이라고, {책사} 이(가) 붓을 든다. 틈의 이야기는 여기서 끝난다.",
+		},
+		"choices": [
+			{"k": "atk", "label": "아홉과 함께 잔을 든다", "hint": "금 +2500 · 책사 충성 +8", "fx": [{"t": "gold", "n": 2500}, {"t": "loyal", "n": 8}], "text": "아홉과 이 성의 사람들이 함께 잔을 들었다 — 웃음이 성터를 채웠다"},
+			{"k": "def", "label": "이 성을 모두의 고향으로 삼는다", "hint": "수도 치안 +20 · 책사 충성 +8", "fx": [{"t": "sec", "n": 20}, {"t": "loyal", "n": 8}], "text": "아홉이 이 성을 고향이라 불렀다 — 성 안 골목마다 등불이 켜졌다"},
+			{"k": "util", "label": "틈의 기록을 서고에 남긴다", "hint": "금 +1200 · 군량 +4000", "fx": [{"t": "gold", "n": 1200}, {"t": "food", "n": 4000}], "text": "마지막 기록이 서고에 꽂혔다 — 세 시대가 한 책장에서 만난다"},
+		]},
 ]
 
 const STAGES := {
@@ -248,18 +287,24 @@ static func finished(st: Dictionary) -> bool:
 
 
 ## 다음 카드가 지금 뜰 때인가(성 차지 단계가 열려 있으면 쉰다).
-static func due(st: Dictionary, months: int, cities: int, result := "") -> bool:
+static func due(st: Dictionary, months: int, cities: int, result := "", all_time := false) -> bool:
 	var c := next_card(st)
 	if c.is_empty() or not (st.get("stage", {}) as Dictionary).is_empty():
 		return false
 	var w: Dictionary = c.when
+	if bool(w.get("allTime", false)) and not all_time:   # G-0117 7막 — 아홉이 다 모여야
+		return false
 	if bool(w.get("victory", false)):   # G-0110 결말 카드 — 이겼을 때만
 		return result.begins_with("win")
 	return months >= int(w.get("minTurn", 0)) or (w.has("orCities") and cities >= int(w.orCities))
 
 
-## 카드 글 — textBy 에 그 승리 종류가 있으면 그 글(G-0110), 아니면 text.
-static func card_text(c: Dictionary, result := "") -> String:
+## 카드 글 — textByK 면 앞 카드에서 고른 답의 글(G-0117), textBy 에 그 승리 종류가 있으면 그 글(G-0110), 아니면 text.
+static func card_text(c: Dictionary, result := "", picks := {}) -> String:
+	if c.has("textByK"):
+		var tk: Dictionary = c.textByK
+		var pk := String(picks.get(String(tk.get("from", "")), ""))
+		return String(tk.get(pk, c.get("text", ""))) if pk != "" and pk != "from" else String(c.get("text", ""))
 	return String((c.get("textBy", {}) as Dictionary).get(result, c.get("text", "")))
 
 

@@ -22,8 +22,18 @@ extends RefCounted
 ## 한국사·일본사 쪽에서 골랐다(해장=이순신 가명, rarity 5 · 이도인=미야모토
 ## 무사시 가명, rarity 4).
 const STARTING_OFFICER := "sg_zhugeliang"
+## G-0117 — 시간 틈 사람 아홉(time_folk.gd)을 성 아홉에 하나씩 묻었다(웹은 scatterFree 로 아무 성 재야).
+## 아홉이 다 우리 사람이면 7막(scenario.gd r7_*)이 열린다. 시작 성 둘엔 귀하지 않은 이(rarity 3)만 — 원래 재야 둘이 먼저 나오게.
 const HIDDEN_POOL_BY_CITY := {
-	"chenliu": ["jp_musashi"],
-	"puyang": ["kr_yisunsin"],
+	"chenliu": ["jp_musashi", "tm_doha"],
+	"puyang": ["kr_yisunsin", "tm_gongseok"],
 	"xuchang": [],
+	"xiaopei": ["tm_gangseo"],
+	"xiapi": ["tm_myeongbyeon"],
+	"luoyang": ["tm_geumdam"],
+	"ye": ["tm_yeongjeom"],
+	"changan": ["tm_eunha"],
+	"jianye": ["tm_seongyeon"],
+	"chaisang": ["tm_gwedo"],
 }
+const TIME_FOLK := ["tm_gangseo", "tm_gongseok", "tm_geumdam", "tm_myeongbyeon", "tm_doha", "tm_seongyeon", "tm_gwedo", "tm_eunha", "tm_yeongjeom"]

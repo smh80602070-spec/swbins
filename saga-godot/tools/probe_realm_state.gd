@@ -139,7 +139,11 @@ func _initialize() -> void:
 	S.current_city = "chenliu"
 	S.officer_city.sg_zhugeliang = "chenliu"
 	var se: Dictionary = S.execute_order("search")
-	check(se.ok and se.found == "jp_musashi" and S.found == ["jp_musashi"], "수색: 그 성의 재야를 찾아냄(진류 → 숨은 인재)")
+	## G-0117 — 진류엔 재야가 둘(jp_musashi·시간 틈 tm_doha), 지력 100 이면 둘 다 손이 닿아 어느 쪽이든 나온다.
+	var chen: Array = ["jp_musashi", "tm_doha"]
+	var who := String(se.found)
+	var other := String(chen[1] if who == chen[0] else chen[0])
+	check(se.ok and who in chen and S.found == [who], "수색: 그 성의 재야를 찾아냄(진류 → 숨은 인재 %s)" % who)
 	var hired := false
 	var tries := 0
 	while not hired and tries < 300:
@@ -148,11 +152,14 @@ func _initialize() -> void:
 		S.gold = 9000
 		var hr: Dictionary = S.execute_order("hire", 1.3)
 		hired = String(hr.get("hired", "")) != ""
-	check(hired and S.roster.has("jp_musashi") and S.found.is_empty() and S.officer_city.jp_musashi == "chenliu" and S.officer_loyal.jp_musashi == Diplo.base_loyal("jp_musashi", S.current_lord_id) and S._done_this_month.jp_musashi, "등용: 영입되면 로스터·그 성 배치·충성 기본값·그 달은 일 안 함(%d번째 시도)" % tries)
+	check(hired and S.roster.has(who) and S.found.is_empty() and S.officer_city.get(who, "") == "chenliu" and S.officer_loyal.get(who, -1) == Diplo.base_loyal(who, S.current_lord_id) and S._done_this_month.get(who, false), "등용: 영입되면 로스터·그 성 배치·충성 기본값·그 달은 일 안 함(%d번째 시도)" % tries)
 	S._done_this_month.clear()
 	S.gold = 9000
 	var se2: Dictionary = S.execute_order("search")
-	check(se2.ok and se2.found == "" and S.found.is_empty(), "찾을 재야가 없으면 아무 일 없음")
+	check(se2.ok and se2.found == other, "남은 재야 %s 를 찾음(G-0117)" % other)
+	S._done_this_month.clear()
+	var se3: Dictionary = S.execute_order("search")
+	check(se3.ok and se3.found == "" and S.found == [other], "찾을 재야가 없으면 아무 일 없음")
 	# 성장
 	_reset()
 	S._growth("sg_zhugeliang")

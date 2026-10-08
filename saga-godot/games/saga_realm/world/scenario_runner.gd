@@ -15,6 +15,7 @@ const Toast := preload("res://saga_core/ui/toast.gd")
 const TalkBox := preload("res://saga_core/ui/talk_box.gd")
 const RealmCities := preload("res://games/saga_realm/data/realm_cities.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
+const RealmOfficerPool := preload("res://games/saga_realm/data/realm_officer_pool.gd")
 const RealmDiplo := preload("res://games/saga_realm/data/realm_diplo.gd")
 const RealmWar := preload("res://games/saga_realm/data/realm_war.gd")
 
@@ -58,7 +59,7 @@ func tick() -> void:
 		_end_own(own, own_id)
 	if not get_tree().get_nodes_in_group("ui_modal").is_empty():
 		return
-	if Scenario.due(st, months(), RealmSaveState.cities.size(), RealmSaveState.result):
+	if Scenario.due(st, months(), RealmSaveState.cities.size(), RealmSaveState.result, all_time()):
 		open_card()
 
 
@@ -109,6 +110,14 @@ func neighbor_city() -> String:
 			if RealmCities.is_adjacent(String(eid), String(cid)):
 				return String(eid)
 	return fallback
+
+
+## G-0117 — 시간 틈 사람 아홉(realm_officer_pool TIME_FOLK)이 모두 roster 에 있나(7막 when.allTime).
+static func all_time() -> bool:
+	for id: String in RealmOfficerPool.TIME_FOLK:
+		if not (id in RealmSaveState.roster):
+			return false
+	return true
 
 
 ## {맹장} — roster 와 군주 중 무력 으뜸.
@@ -207,7 +216,7 @@ func open_card() -> void:
 	var opts: Array = []
 	for o: Dictionary in c.choices:
 		opts.append({"key": String(o.k), "label": "%s — %s" % [String(o.label), String(o.hint)]})
-	TalkBox.open(get_parent(), "📖 %s" % Scenario.ACT_NAMES.get(int(c.act), ""), [[head, Scenario.fill(Scenario.card_text(c, RealmSaveState.result), nm)]], _on_card_pick,
+	TalkBox.open(get_parent(), "📖 %s" % Scenario.ACT_NAMES.get(int(c.act), ""), [[head, Scenario.fill(Scenario.card_text(c, RealmSaveState.result, st.get("picks", {})), nm)]], _on_card_pick,
 		{"prompt": "어떻게 할 것인가", "options": opts})
 
 
