@@ -33,7 +33,7 @@ from build_prop import tube, obox, A, arg  # noqa: E402
 
 BP.TRIS_MAX = 4500
 BP.GENERATOR = 'tools/world-forge/build_monster.py'
-SHAPE = {}          # K-0075 종 표 shape — quad 수치 덮어쓰기(bl·lh·sn·tail·ear…)·mane·nospikes·tails(꼬리 수) / wing tail(배)·plume·crest·legs3
+SHAPE = {}          # K-0075 종 표 shape — quad 수치 덮어쓰기(bl·lh·sn·tail·ear…)·mane·nospikes·tails(꼬리 수) / wing tail(배)·plume·crest·legs3 / serp segs(마디 수)·rmul(굵기 배)·amp(굽이 배)·nospikes(K-0084)
 PAL = None          # K-0080 종 색 (몸, 둘째, 빛) 헥스 — None 이면 계통 기본 색
 BASE = 0.6          # 레시피는 크게(늑대 길이 ~3m) 짓고 마지막에 이 배율로 줄인다
 SKIN_TRIS = 2300      # Skin 몸에 주는 삼각형 예산(Decimate 비율을 여기에 맞춘다) — 나머지는 뿔·눈·가시
@@ -458,11 +458,11 @@ def serp(C, rnd, v, boss=False, deco=None, skin=None):
     M = C.M
     body, dark, belly, eye, horn_m, glow = mats(C, rnd, skin, boss, deco)
     g = Rig()
-    n = 15
-    amp = rnd.uniform(0.2, 0.32)
+    n = int(SHAPE.get('segs', 15))
+    amp = rnd.uniform(0.2, 0.32) * SHAPE.get('amp', 1.0)
     fr = rnd.uniform(1.8, 2.5)
     ph = rnd.uniform(0, 6.28)
-    rmax = (0.17, 0.15, 0.2, 0.16)[v] * rnd.uniform(0.92, 1.1)
+    rmax = (0.17, 0.15, 0.2, 0.16)[v] * rnd.uniform(0.92, 1.1) * SHAPE.get('rmul', 1.0)
     lift = (0.35, 0.65, 0.3, 0.4)[v]
     names = []
     seg = 0.145
@@ -508,7 +508,7 @@ def serp(C, rnd, v, boss=False, deco=None, skin=None):
         tp = g.p(f'b{n - 1}')
         for k in range(3):
             blob(M, (tp.x, tp.y + 0.1 + k * 0.1, tp.z + 0.04), (0.06 - k * 0.012, 0.07, 0.06 - k * 0.012), dark, 7, 4)
-    if v == 0 and (rnd.random() < 0.5 or boss):
+    if v == 0 and (rnd.random() < 0.5 or boss) and not SHAPE.get('nospikes'):
         for i in range(2, n - 3, 2):
             p = g.p(f'b{i}')
             cone(M, tuple(p + Vector((0, 0, g.R[g.nm[f'b{i}']][1] * 0.8))), tuple(p + Vector((0, 0.03, g.R[g.nm[f'b{i}']][1] + 0.1))), 0.035, horn_m, 4)
@@ -760,8 +760,12 @@ def build(pid, out, style):
     W._mat_cache.clear()
     W.set_style(style)
     C, k = build_species(pid) if pid.startswith(SP_PREFIX) else build_one(pid)
+    sq = SPECIES[pid[len(SP_PREFIX):]].get('squash') if pid.startswith(SP_PREFIX) else None   # K-0084 종 표 squash [가로, 앞뒤] — 키 대비 너무 넓은 몸
     for v in C.M.bm.verts:
         v.co *= k
+        if sq:
+            v.co.x *= sq[0]
+            v.co.y *= sq[1]
     ob = C.M.build()
     ns = getattr(C, 'skin_faces', 0)
     for p in ob.data.polygons:

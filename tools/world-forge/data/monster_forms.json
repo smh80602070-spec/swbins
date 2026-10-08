@@ -83,8 +83,8 @@
   }
  },
  "extra_forms": {
-  "quad_4": "곰(종별 몸 전용)",
-  "quad_5": "거북(종별 몸 전용)"
+  "quad_4": "곰(종별 몸 전용) · 앞 +z",
+  "quad_5": "거북(종별 몸 전용) · 앞 +z"
  },
  "bosses": {
   "boss_01": "황소",
@@ -99,5 +99,6 @@
   "boss_10": "뿔 유령",
   "boss_11": "결정 무리",
   "boss_12": "고양이"
- }
+ },
+ "front_check_1008": "K-0084: G-0082 \"옆을 봄\" 넷(water_turtle·amber_turtle·snow_bear_king·moss_serpent)+신수 현무·불가사리·청룡 위·옆 렌더 — 머리가 ice_fox 와 같은 +z. 같은 꼴 tide_turtle·rock_bear·storm_serpent 는 같은 촬영에서 ○ → 몸 결함 아님(찍힌 순간 걷던 방향). 고돗 촬영이 카메라 쪽으로 돌려 찍을 것."
 }

@@ -1,5 +1,5 @@
 {
- "note": "K-0080 — 고돗 들판 종(id) → 몬스터 몸 꼴(계통·변형 0~5, 4 곰·5 거북)·보스 배율·장식. 색 3개(몸·둘째·빛)는 saga-godot/games/saga_go/combat/field_enemy.gd KINDS colors 를 옮겨 적음(종 색이 바뀌면 이 표도). 굽기: blender -b --factory-startup -P tools/world-forge/build_monster.py -- --species <이 파일> --out-dir <절대> --style toon → mon_sp_<id>.glb",
+ "note": "K-0080 — 고돗 들판 종(id) → 몬스터 몸 꼴(계통·변형 0~5, 4 곰·5 거북)·보스 배율·장식. 색 3개(몸·둘째·빛)는 saga-godot/games/saga_go/combat/field_enemy.gd KINDS colors 를 옮겨 적음(종 색이 바뀌면 이 표도). 굽기: blender -b --factory-startup -P tools/world-forge/build_monster.py -- --species <이 파일> --out-dir <절대> --style toon → mon_sp_<id>.glb · K-0084(10-08): shape(뱀 segs·rmul·amp·nospikes)·squash[가로,앞뒤]·tex·deco 로 번개살쾡이·덩굴뱀·드론 여왕(새 shape → wing 3)·갈무리 손질.",
  "species": {
   "abyss_angler": {
    "form": [
@@ -116,7 +116,11 @@
    ],
    "boss": true,
    "scale": 3.3,
-   "deco": "runes"
+   "deco": "runes",
+   "squash": [
+    0.66,
+    0.8
+   ]
   },
   "grass_snake": {
    "form": [
@@ -128,7 +132,13 @@
     "#4c9938",
     "#b2d959",
     "#f28cbf"
-   ]
+   ],
+   "shape": {
+    "segs": 22,
+    "rmul": 0.72,
+    "amp": 1.35,
+    "nospikes": true
+   }
   },
   "ice_fox": {
    "form": [
@@ -273,7 +283,12 @@
     "#6b4c99",
     "#c7a6ff",
     "#fff273"
-   ]
+   ],
+   "tex": [
+    "grey_plaster",
+    1.2
+   ],
+   "deco": "runes"
   },
   "tide_turtle": {
    "form": [
@@ -292,8 +307,8 @@
   },
   "vault_queen": {
    "form": [
-    "cons",
-    1
+    "wing",
+    3
    ],
    "element": "wind",
    "colors": [
@@ -303,7 +318,11 @@
    ],
    "boss": true,
    "scale": 3.2,
-   "deco": "runes"
+   "deco": "plates",
+   "tex": [
+    "grey_plaster",
+    1.2
+   ]
   },
   "water_turtle": {
    "form": [
