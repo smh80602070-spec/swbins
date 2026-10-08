@@ -141,6 +141,50 @@ try {
   });
   check('rk.war-8 탐험 — landmark 성을 처음 떨어뜨리면 "처음 밟는 땅" 금 +1000·유물', !l8.none && l8.won && l8.disc && l8.gold >= 1000 && /발견/.test(l8.line), JSON.stringify(l8));
 
+  /* rk.tactics — 격자 전술판(W-0108): 성 창 ⚔️ 출진 → 실시간 전장 「♟️ 전술판」 → 6×8 판에서 장수를 움직이고 3턴을 넘기면 결과 카드 → 전황으로 */
+  await clearCards(); await ev(() => { DG.ui.closeSheet(); });
+  const g0 = await ev(() => {
+    var R = DG.rtk, CD = DG.cityData, me = R.me(), mine = R.citiesOf(me).map((c) => c.id || c), i, j;
+    for (i = 0; i < mine.length; i++) {
+      var adj = CD.find(mine[i]).adj || [];
+      for (j = 0; j < adj.length; j++) {
+        var tc = R.city(adj[j]);
+        if (!tc || !tc.force || tc.force === me || DG.diplo.blocked(me, tc.force) || CD.isWater(mine[i], adj[j])) { continue; }
+        __own(mine[i], 20000); __officerTo(mine[i], []); __officerTo(mine[i], []); tc.troops = Math.max(tc.troops, 9000); tc.wall = Math.max(tc.wall || 0, 3000);
+        DG.ui.openCity(mine[i]);
+        if (document.querySelector('#sheet [data-act="march"][data-to="' + adj[j] + '"]')) { return { from: mine[i], to: adj[j] }; }
+      }
+    }
+    return { none: true };
+  });
+  let g1 = null, g2 = null, g3 = null;
+  if (!g0.none) {
+    const mb = page.locator('#sheet [data-act="march"][data-to="' + g0.to + '"]').first();
+    await mb.scrollIntoViewIfNeeded(); await mb.click(); await sleep(400);
+    await page.locator('[data-act="ask-ok"]').first().click();
+    const gb = page.locator('[data-act="bat-cmd"][data-cmd="grid"]').first();
+    await gb.waitFor({ state: 'visible', timeout: 20000 }); await gb.click(); await sleep(600);
+    g1 = await ev(() => { var h = document.getElementById('tacview'); return { show: !!(h && h.classList.contains('show')), cells: h ? h.querySelectorAll('.tv-cell').length : 0, mine: h ? h.querySelectorAll('[data-uid^="me:"]').length : 0, foe: h ? h.querySelectorAll('[data-uid^="foe:"]').length : 0 }; });
+    /* 손으로 한 수 — 첫 장수를 눌러 갈 칸을 밝히고 한 칸 앞으로 */
+    await page.locator('#tacview [data-uid^="me:"]').first().click(); await sleep(300);
+    const lit = await ev(() => { var v = DG.tacticsView.cur(), u = DG.tactics.unit(v.b, v.sel); return u ? DG.tactics.moves(v.b, u.uid).length : 0; });
+    await ev(() => { var v = DG.tacticsView.cur(), u = DG.tactics.unit(v.b, v.sel), m = DG.tactics.moves(v.b, u.uid).filter((c) => c.x > u.x).sort((a, b) => b.x - a.x)[0]; if (m) { DG.tacticsView.tap(m.x, m.y); } });
+    await sleep(300);
+    await page.screenshot({ path: 'shots/qc/saga-realm-tactics.png' });
+    for (let i = 0; i < 4 && !(await page.locator('#tacview .tv-res').count()); i++) { await page.locator('#tacview [data-tv="end"]').click(); await sleep(400); }
+    g2 = await ev(() => { var v = DG.tacticsView.cur(); return { res: !!document.querySelector('#tacview .tv-res'), kind: v && v.out && v.out.kind, turn: v && v.b.turn, moved: v && v.b.units.some((u) => u.side === 'me' && u.x > 2) }; });
+    await page.screenshot({ path: 'shots/qc/saga-realm-tactics-result.png' });
+    g2.lit = lit;
+    await page.locator('#tacview [data-tv="go"]').click(); await sleep(800);
+    g3 = await ev(() => { var h = document.getElementById('tacview'), log = (document.getElementById('livelog') || {}).textContent || ''; return { closed: !(h && h.classList.contains('show')), line: /♟️ 전술판/.test(log), again: !!document.querySelector('[data-act="bat-cmd"][data-cmd="grid"]') }; });
+    const rb = page.locator('[data-act="bat-cmd"][data-cmd="retreat"]').first();
+    if (await rb.isVisible().catch(() => false)) { await rb.click().catch(() => {}); await sleep(1500); }
+  }
+  check('rk.tactics 전술판 — 출진 「♟️ 전술판」 → 48칸 판·양편 유닛, 장수를 눌러 움직이고 턴을 넘기면 결과 카드, 전황으로 돌아가면 판이 닫히고 다시 못 연다',
+    !g0.none && g1 && g1.show && g1.cells === 48 && g1.mine >= 1 && g1.foe >= 3 && g2 && g2.res && !!g2.kind && g2.lit > 1 && g2.moved && g3 && g3.closed && g3.line && !g3.again,
+    JSON.stringify({ g0, g1, g2, g3 }));
+  await clearCards();
+
   /* rk.rtk-ai — 다른 세력 AI 가 한 달에 명령을 둔다 */
   const ai = await ev(() => { var out = DG.rtkAI.runAll(); return { forces: out.length, acted: out.filter((x) => x.did && (Array.isArray(x.did) ? x.did.length : Object.keys(x.did).length)).length, sample: JSON.stringify(out[0] && out[0].did).slice(0, 120) }; });
   await nextMonth();

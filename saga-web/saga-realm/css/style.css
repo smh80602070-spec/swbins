@@ -1492,3 +1492,20 @@ body.sheet-open #realm3d { right: calc(min(420px, 92vw) + 20px); }
 /* 가로(높이 ~390): 조이스틱 위 52px 단추가 상단 프로필 카드와 맞물린다 — 44px 로 줄여 조이스틱 바로 위에 붙인다 */
 @media (max-height: 500px) { #mt-ride { width: 44px; height: 44px; bottom: calc(206px + var(--safe-b)); } }
 #mt-ride:active { transform: scale(.94); }
+/* ── 격자 전술판(W-0108) — 전장 위에 뜨는 6×8 판. 칸 ≥ 44px(폰 세로는 눕혀 6열) ── */
+.tacview { display: none; position: absolute; inset: 0; z-index: 5; overflow: auto; background: rgba(10,12,16,.92); padding: calc(10px + env(safe-area-inset-top)) 10px 12px; }
+.tacview.show { display: block; }
+.tv { max-width: 520px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+.tv-head { font-size: 15px; }
+.tv-board { display: flex; justify-content: center; }
+.tv-svg { display: block; min-width: 264px; border-radius: 8px; touch-action: manipulation; }
+.tv-svg .tv-cell, .tv-svg .tv-unit { cursor: pointer; }
+.tv-svg .tv-unit.spent { opacity: .55; }
+.tv-info, .tv-log { font-size: 12px; line-height: 1.5; padding: 6px 8px; border-radius: 8px; background: rgba(255,255,255,.06); }
+.tv-log:empty { display: none; }
+.tv-acts { display: flex; gap: 8px; }
+.tv-acts .btn.tiny { flex: 1 1 0; min-width: 0; min-height: 44px; white-space: nowrap; }
+.tv-res { padding: 8px 10px; border-radius: 10px; background: rgba(255,255,255,.08); font-size: 13px; line-height: 1.55; }
+.tv-res.good { border: 1px solid #5bd16a88; } .tv-res.bad { border: 1px solid #e2553f88; }
+.annals .stat-row { gap: 8px; align-items: center; }
+.annals .pt { width: 28px; height: 28px; border-radius: 50%; }

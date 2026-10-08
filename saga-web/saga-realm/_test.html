@@ -96,6 +96,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/data-news.js"></script>
 <script src="js/event.js"></script>
 <script src="js/tactics.js"></script>
+<script src="js/tactics-view.js"></script>
 <script src="js/data-scenario.js"></script>
 <script src="js/scenario.js"></script>
 <script src="js/cutscene.js"></script>
@@ -4012,7 +4013,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
     function isStageEnd(k) { return /_end$/.test(k) && !!DG.scenarioData && !!DG.scenarioData.STAGES[k.slice(0, -4)]; }
 
     t('사연 표 — 열다섯 사연 + 체인 일곱(퓨전 셋·둘째 단 셋 포함), 모두 세 갈래(공세·신중·수단, 중복 0)이고 신중은 값이 안 든다', function () {
-      var chains = Object.keys(E.DEFS).filter(function (k) { return E.DEFS[k].chain && !E.DEFS[k].news && !(DG.scenarioData && (DG.scenarioData.card(k) || isStageEnd(k))); });   // 시나리오 카드·단계 결과 카드는 따로(시나리오 표·단계 진단)
+      var chains = Object.keys(E.DEFS).filter(function (k) { return E.DEFS[k].chain && !E.DEFS[k].news && !E.DEFS[k].annal && !(DG.scenarioData && (DG.scenarioData.card(k) || isStageEnd(k))); });   // 시나리오 카드·단계 결과 카드는 따로(시나리오 표·단계 진단)
       var bad = [];
       Object.keys(E.DEFS).forEach(function (k) {
         if (isStageEnd(k)) { return; }         // 결과 카드는 단추 하나(확인)
@@ -6047,6 +6048,102 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var msg = '60판 · ' + JSON.stringify(kinds) + ' · 승률 ' + rate + '% · 오류 ' + err + ' · 실제 판 유닛 ' + rb.units.length + '(내 ' + mine.length + '·적 ' + foes.length + ')';
       if (!(err === 0 && rate >= 40 && rate <= 60 && !!ro && rb.units.length >= 4)) { throw new Error(msg); }
       return ('60판 · ' + JSON.stringify(kinds) + ' · 승률 ' + rate + '% · 실제 판(' + rb.land + ') ' + ro.name);
+    });
+
+    /* ── 격자 전술 화면·배선(W-0108, `tactics-view.js` + war.js 「♟️ 전술판」) ── */
+    function tvMarch() {
+      var me = R.me(), i, j;
+      for (i = 0; i < CD.CITIES.length; i++) {
+        var c = CD.CITIES[i], rc = R.city(c.id);
+        if (!rc || rc.force !== me || rc.troops < 1500) { continue; }
+        for (j = 0; j < c.adj.length; j++) {
+          var a = R.city(c.adj[j]);
+          if (a && a.force && a.force !== me && !CD.isWater(c.id, c.adj[j]) && !DG.diplo.blocked(me, a.force)) {
+            var lead = freeUp(c.id).map(function (h) { return h.id; }).filter(function (id) { return off.lordOf(me) !== id; }).slice(0, 2);
+            if (lead.length) { return { from: c.id, to: c.adj[j], lead: lead }; }
+          }
+        }
+      }
+      return null;
+    }
+
+    t('rk.tactics: 화면 ① 개입형 출진 프롬프트엔 「전술판」 이 서고(한 번 쓰면 닫힘), AI 출진(march)은 판을 안 연다', function () {
+      fresh('cao');
+      var fm = tvMarch();
+      if (!fm) { return '(이 씨앗에는 붙을 국경이 없다 — 생략)'; }
+      var prompts = [], ctxs = [];
+      withRand(0.5, function () {
+        W.marchInteractive(fm.from, fm.to, fm.lead, 1000, {
+          onTactics: function (ctx, done) { ctxs.push(ctx); var b = TC.makeBoard(ctx.seed, ctx.land, ctx.siege); TC.unitsOf(b, ctx.mine, ctx.foes, ctx.foeTroops); done(TC.autoPlay(b)); },
+          onPrompt: function (state, step) { prompts.push({ r: state.r, grid: state.grid }); step(prompts.length === 1 ? 'grid' : (prompts.length === 2 ? 'grid' : 'retreat')); }
+        });
+      });
+      fresh('cao');
+      var fm2 = tvMarch(), made = 0, keep = TC.makeBoard, noHook = null;
+      TC.makeBoard = function () { made++; return keep.apply(TC, arguments); };
+      try {
+        withRand(0.5, function () { W.march(fm2.from, fm2.to, fm2.lead, 1000); });
+        fresh('cao');
+        var fm3 = tvMarch();
+        withRand(0.5, function () { W.marchInteractive(fm3.from, fm3.to, fm3.lead, 1000, { onPrompt: function (state, step) { if (noHook === null) { noHook = state.grid; step('grid'); } else { step('retreat'); } } }); });
+      } finally { TC.makeBoard = keep; }
+      var ok = prompts.length === 3 && prompts[0].grid === true && prompts[1].r === 0 && prompts[1].grid === false && ctxs.length === 1 &&
+        ctxs[0].mine.length >= 1 && ctxs[0].foeTroops.length >= 1 && made === 0 && noHook === false;
+      if (!ok) { throw new Error(JSON.stringify({ prompts: prompts, n: ctxs.length, made: made, noHook: noHook })); }
+      return '프롬프트 ' + prompts.map(function (p) { return p.r + (p.grid ? '♟️' : '·'); }).join(' ') + ' · 판 1번(두 번째 「전술판」 은 무시) · march 판 0 · 훅 없음 grid=false';
+    });
+
+    t('rk.tactics: 화면 ② 전술판에서 쓰러진 장수 → 전사(dead)·열전 annals 기록·사연 카드 1장(가명)', function () {
+      fresh('cao');
+      var fm = tvMarch();
+      if (!fm) { return '(이 씨앗에는 붙을 국경이 없다 — 생략)'; }
+      var st = R.state(), id = fm.lead[0], nm = off.find(id).name;
+      DG.event.view();
+      st.events.pending = null;
+      var lines = [];
+      withRand(0.5, function () {
+        W.marchInteractive(fm.from, fm.to, fm.lead, 1000, {
+          onLog: function (l) { lines.push(l); },
+          onTactics: function (ctx, done) {
+            done({ kind: 'lose', name: '패', winPct: -25, lossMul: 1, turn: 2, hpMe: 0, hpFoe: 60, fallen: [id], wounded: [], foeDown: [], by: { } });
+          },
+          onPrompt: function (state, step) { step(state.grid ? 'grid' : 'retreat'); }
+        });
+      });
+      var an = (st.annals || {})[id], v = DG.event.view();
+      var ok = off.rec(id).dead === true && !!an && an.where === fm.to && /군$/.test(an.by) && v && v.id === 'tac_fallen' &&
+        v.text.indexOf(nm) === 0 && /쓰러지다/.test(v.text) && v.choices.length === 3 &&
+        lines.some(function (l) { return /⚰️/.test(l) && l.indexOf(nm) >= 0; }) && lines.some(function (l) { return /전술판 패/.test(l); });
+      if (!ok) { throw new Error(JSON.stringify({ dead: off.rec(id).dead, an: an, v: v && v.id, lines: lines.slice(-4) })); }
+      var r = DG.event.choose('def');
+      return nm + ' 전사 · 열전 ' + CD.find(an.where).name + ' · ' + an.by + ' · 카드 "' + v.text.slice(0, 24) + '…" → 고르면 ' + (r.ok ? '닫힘' : r.why);
+    });
+
+    t('rk.tactics: 화면 ③ 「물러나기」 = 무승부 — 보정 0(공 +0%·피해 ×1), 판 화면이 닫히고 같은 합으로 돌아간다', function () {
+      fresh('cao');
+      var fm = tvMarch();
+      if (!fm) { return '(이 씨앗에는 붙을 국경이 없다 — 생략)'; }
+      var TV = DG.tacticsView, host = document.createElement('div'), lines = [], prompts = [], svg = 0, out = null;
+      document.body.appendChild(host);
+      try {
+        withRand(0.5, function () {
+          W.marchInteractive(fm.from, fm.to, fm.lead, 1000, {
+            onLog: function (l) { lines.push(l); },
+            onTactics: function (ctx, done) {
+              TV.open(host, ctx, function (o) { out = o; done(o); });
+              svg = host.querySelectorAll('.tv-cell').length;
+              TV.quit();
+              TV.go();
+            },
+            onPrompt: function (state, step) { prompts.push(state.r); step(prompts.length === 1 ? 'grid' : 'retreat'); }
+          });
+        });
+      } finally { host.parentNode.removeChild(host); }
+      var A = out && TC.apply(out, {});
+      var ok = svg === TC.COLS * TC.ROWS && out && out.kind === 'draw' && A.winPct === 0 && A.lossMul === 1 && TV.cur() === null && host.innerHTML === '' &&
+        prompts.length === 2 && prompts[1] === 0 && lines.some(function (l) { return /전술판 무승부 — 남은 합 공 위력 \+0%$/.test(l); });
+      if (!ok) { throw new Error(JSON.stringify({ svg: svg, out: out && out.kind, prompts: prompts, lines: lines.slice(-3) })); }
+      return '칸 ' + svg + ' · ' + out.name + ' · 보정 +' + A.winPct + '% ×' + A.lossMul + ' · 같은 합(' + prompts[1] + ')으로 복귀';
     });
 
     t('오류 기록 저장 키는 이 판 것 그대로다 (saga-realm/errlog) · core 없을 땐 메모리에 담았다 합친다', function () {

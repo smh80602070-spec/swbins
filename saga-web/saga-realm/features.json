@@ -871,9 +871,10 @@
  },
  {
   "id": "rk.tactics",
-  "name": "격자 전술 규칙 층 — 8×6 판·엄폐·명중률·3턴·영구 전사, 결과는 공략 보정값(화면은 W-0108)",
+  "name": "격자 전술 — 8×6 판·엄폐·명중률·3턴·영구 전사, 개입형 전투 「♟️ 전술판」 화면·공략 보정·열전",
   "files": [
-   "js/tactics.js"
+   "js/tactics.js",
+   "js/tactics-view.js"
   ],
   "tests": [
    "rk.tactics: 전술 ① 같은 씨앗 = 같은 판·같은 수순·같은 결과 (Math.random 안 씀)",
@@ -883,13 +884,16 @@
    "rk.tactics: 전술 ⑤ 적 전멸 → 대승(rout) · 보정 승률 +25%p·사상 ×0.7 (apply 는 값만)",
    "rk.tactics: 전술 ⑥ 내 편 전멸 → 패(−25%p) · 쓰러진 내 장수 셋이 fallen(영구 전사) · 열전 기록",
    "rk.tactics: 전술 ⑦ 손잡이 rtk.permadeath 0 → 영구 전사 대신 중상(wounded, 3달)",
-   "rk.tactics: 전술 ⑧ 60판 자동 대국 — 오류 0·승률 40~60%(균형) · 실제 장수·성 땅으로도 판이 선다"
+   "rk.tactics: 전술 ⑧ 60판 자동 대국 — 오류 0·승률 40~60%(균형) · 실제 장수·성 땅으로도 판이 선다",
+   "rk.tactics: 화면 ① 개입형 출진 프롬프트엔 「전술판」 이 서고(한 번 쓰면 닫힘), AI 출진(march)은 판을 안 연다",
+   "rk.tactics: 화면 ② 전술판에서 쓰러진 장수 → 전사(dead)·열전 annals 기록·사연 카드 1장(가명)",
+   "rk.tactics: 화면 ③ 「물러나기」 = 무승부 — 보정 0(공 +0%·피해 ×1), 판 화면이 닫히고 같은 합으로 돌아간다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": "W-0107",
+  "ticket": "W-0108",
   "since": "2026-10-08",
-  "note": "D1: 규칙 층만(화면 없음) — 진단 8 PASS. 60판 승률 57%. 화면·war.js 배선은 W-0108."
+  "note": "D2: saga-web/tools/playcheck/pw-rk-war.mjs 9/9(rk.tactics 전술판 장면) — results/pw-rk-war.json · Claude 눈 shots/qc/saga-realm-tactics*.png ○(격자·초상·hp 띠·결과 카드 읽힘) · 폰 배치 tactics 장면 0건(W-0108). 규칙 층 W-0107(60판 승률 57%)."
  }
 ]

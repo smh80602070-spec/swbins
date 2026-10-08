@@ -605,7 +605,7 @@
       }
       html += '</div>';
     }
-    return html;
+    return html + (global.DG.tacticsView ? global.DG.tacticsView.annalsHtml(pt) : '');   // 열전(W-0108)
   }
 
   /** 지니고 있는 보물 한 줄 — 없으면 빈 문자열(2026-09-09, data-item.js) */
@@ -932,6 +932,7 @@
   }
 
   function closeEnc() {
+    if (liveOn && global.DG.tacticsView && global.DG.tacticsView.cur()) { global.DG.tacticsView.quit(); global.DG.tacticsView.go(); }   // 전술판이 열린 채 닫으면 무승부로 접고 남은 합을 굴린다
     if (liveStep && liveOn) { finishLiveNow(); return; }   // 결과가 새 카드로 뜬다
     stopLiveClock();
     liveOn = false; liveStep = null;

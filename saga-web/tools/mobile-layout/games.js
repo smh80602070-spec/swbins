@@ -31,6 +31,15 @@ var GATE_GONE = "!(document.getElementById('acc-host') && document.getElementByI
 /* 첫 화면 — 열린 시트를 닫아 둔다(첫 창 뒤에 판이 스스로 여는 퀘스트 시트 등) */
 var MAIN = { open: "var x = document.getElementById('sheet-close'); if (x && x.offsetParent) { x.click(); }", repeat: 4, wait: 700 };
 
+/* 사가천하 격자 전술판(W-0108) — 전장(#encounter.battle) 자리에 판을 띄우고 첫 장수를 골라 둔다(갈 칸·명중 % 가 보이게) */
+var TACTICS = {
+  open: "var e = document.getElementById('encounter'); e.innerHTML = '<div class=\"enc-card battle\"><div class=\"tacview\" id=\"tacview\"></div></div>'; e.classList.add('show', 'battle');" +
+    "var me = DG.rtk.me(), mine = DG.off.ofForce(me).slice(0, 3).map(function (h) { return h.id; });" +
+    "var v = DG.tacticsView.open(document.getElementById('tacview'), { seed: 'mlayout', land: 'plain', siege: true, mine: mine, foes: [], foeTroops: [3000, 3000, 3000], where: '', name: function (id) { return DG.off.find(id).name; } }, function () {});" +
+    "var u = v.b.units[0]; DG.tacticsView.tap(u.x, u.y);",
+  close: "DG.tacticsView.quit(); DG.tacticsView.go(); DG.ui.closeEnc();", wait: 600
+};
+
 module.exports = {
   /* 지도 출처 표기(#map-attrib, W-0059 OSM 조건) — 누르는 단추가 아니라 의무 표기라 터치 40px 를 안 잰다. 키우면 지도 아래 가운데 끌기를 먹는다(W-0093) */
   'saga-go': { base: 'deungyong-go/save', pass: passGate, ready: GATE_GONE, ignore: 'map-attrib', scenes: { main: MAIN } },
@@ -66,7 +75,7 @@ module.exports = {
     started: "!(document.getElementById('storybox') && document.getElementById('storybox').offsetParent)",
   },
   'saga-realm': {
-    base: 'saga-realm/save', pass: passGate, ready: GATE_GONE, scenes: { main: MAIN },
+    base: 'saga-realm/save', pass: passGate, ready: GATE_GONE, scenes: { main: MAIN, tactics: TACTICS },
     /* 시나리오 → 세력 — 맨 앞 것 */
     onboard: function () {
       var e = document.getElementById('encounter');

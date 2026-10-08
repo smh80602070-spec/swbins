@@ -622,6 +622,7 @@
    *   onPrompt(state, step) — 다음 합 전에 명령을 물을 차례.
    *     step(cmd) 를 불러 잇는다 — cmd: null|'press'|'hold'|'retreat'
    *   onDone(report) — march() 가 돌려주던 것과 같은 모양의 최종 보고
+   *   onTactics(ctx, done) — step('grid') 때 격자 전술판을 연다(W-0108, 보정·전사 적용은 tactics.marchGrid). 한 출진에 한 번
    * }
    * @returns setup 이 실패했으면 {ok:false,why} 를 그 자리에서, 아니면
    *   {ok:true, pending:true}(끝은 hooks.onDone 으로 온다)
@@ -696,6 +697,7 @@
     }
 
     function step(cmd) {
+      if (cmd === 'grid') { if (!(global.DG.tactics && global.DG.tactics.marchGrid({ hooks: hooks, atk: atk, def: def, toId: toId2, fromId: setup.fromId, land: land, water: water, sortie: sortie, r: r, lines: lines }, prompt))) { prompt(); } return; }
       if (cmd === 'retreat') {
         lines('↩️ 명령대로 즉시 군을 물렸다');
         finish('routed');
@@ -712,18 +714,13 @@
         finish('dusk');
         return;
       }
-      if (hooks.onPrompt) {
-        hooks.onPrompt({ r: r, atk: atk.troops, def: def.troops, wall: wallRef.wall,
-          tactic: tacticFor(land.key, atk.officers, atk.tacticUsed) }, step);
-      }
-      else { step(null); }
+      prompt();
     }
-
-    if (hooks.onPrompt) {
-      hooks.onPrompt({ r: 0, atk: atk.troops, def: def.troops, wall: wallRef.wall,
-        tactic: tacticFor(land.key, atk.officers, atk.tacticUsed) }, step);
+    function prompt() {   // 다음 합 전 명령 묻기 — 전술판 뒤에는 같은 합으로 돌아와 다시 묻는다
+      if (!hooks.onPrompt) { step(null); return; }
+      hooks.onPrompt({ r: r, atk: atk.troops, def: def.troops, wall: wallRef.wall, tactic: tacticFor(land.key, atk.officers, atk.tacticUsed), grid: !!(hooks.onTactics && !atk.grid && !water && global.DG.tactics) }, step);
     }
-    else { step(null); }
+    prompt();
     }
   }
 
@@ -882,6 +879,7 @@
     var giveMul = 1, takeMul = 1;
     if (cmd === 'press') { giveMul = 1.2; takeMul = 1.1; }
     else if (cmd === 'hold') { giveMul = 0.85; takeMul = 0.75; }
+    if (atk.grid && atk.grid.kind) { giveMul *= atk.grid.give; takeMul *= atk.grid.take; }   // 격자 전술판 보정(W-0108) — 판을 둔 뒤 남은 합에만, 안 두었으면 예전 그대로
     if (atk.fordNext) { giveMul *= 0.85; atk.fordNext = false; lines('🌊 강을 건넌 여파로 이번 합은 기세가 무디다'); }
     if (tac) {
       if (tac.key === 'ambush') { takeMul *= 0.85; }

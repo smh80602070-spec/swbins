@@ -32,7 +32,7 @@
      act() 의 'bat-cmd' 손잡이가 이걸 불러 다음 합으로 잇는다 */
   var liveStep = null;
   /* 지형 전술(PLAN §5-6) — 이번 합 프롬프트가 들고 온 "쓸 수 있는 전술" 과, 출진 카드에서 직접 고른 진형(없으면 자동) */
-  var liveTactic = null, marchForm = '';
+  var liveTactic = null, marchForm = '', liveGrid = false;   // liveGrid — 이번 합에 격자 전술판(W-0108)을 열 수 있는가
   var LAND_ICON = { plain: '🌾', hill: '⛰️', river: '🌊', mount: '🏔️' };
   var liveRepStub = null;
   var liveBase = null;
@@ -92,10 +92,10 @@
     row.appendChild(sp);
     global.setTimeout(function () { if (sp.parentNode) { sp.parentNode.removeChild(sp); } }, 1300);
   }
-  /** 전장 단축키 — 1 돌격 · 2 수비 · 3 정공법 · 4 전술 · 스페이스 멈춤 · F 빠르게 · Enter 다음 합 · R 퇴각 */
+  /** 전장 단축키 — 1 돌격 · 2 수비 · 3 정공법 · 4 전술 · 5 전술판 · 스페이스 멈춤 · F 빠르게 · Enter 다음 합 · R 퇴각 */
   function liveKey(k) {
     if (!liveOn || !liveStep) { return false; }
-    var map = { '1': 'press', '2': 'hold', '3': 'none', '4': 'tactic', r: 'retreat' };
+    var map = { '1': 'press', '2': 'hold', '3': 'none', '4': 'tactic', '5': 'grid', r: 'retreat' };
     var fake = function (o) { return { getAttribute: function (a) { return o[a] || null; } }; };
     if (map[k]) {
       if (map[k] === 'tactic') {
@@ -738,6 +738,7 @@
     } else if (a === 'bat-cmd') {
       /* 실시간 전장 — 퇴각만 바로, 나머지는 "다음 합부터" (돌격·수비·정공법은 이어지고 전술은 한 번) */
       var cmd = g('data-cmd');
+      if (cmd === 'grid') { if (liveGrid && liveStep) { var stepG = liveStep; liveStep = null; stopLiveClock(); renderLiveCmd(false); stepG('grid'); } return; }   // 전술판 — 시계를 세우고 판을 연다, 끝나면 war.js 가 같은 합을 다시 묻는다
       if (cmd === 'retreat') {
         var stepR = liveStep; liveStep = null;
         stopLiveClock();
@@ -968,7 +969,7 @@
       '<button class="btn tiny' + on(null) + '" data-act="bat-cmd" data-cmd="none" title="3">➡️ 정공법</button>' +
       tacticButton() +
       '<button class="btn tiny ghost" data-act="bat-cmd" data-cmd="retreat" title="R — 바로 물린다">↩️ 퇴각</button>' +
-      '</div><div class="brow">' +
+      '</div><div class="brow">' + (liveGrid ? '<button class="btn tiny" data-act="bat-cmd" data-cmd="grid" title="5 — 장수끼리 격자 판에서 3턴을 손으로 둔다(한 출진에 한 번)">♟️ 전술판</button>' : '') +
       '<button class="btn tiny ghost" data-act="bat-pause" title="스페이스">' + (livePaused ? '▶ 이어서' : '⏸ 멈춤') + '</button>' +
       '<button class="btn tiny ghost" data-act="bat-speed" title="F">' + (liveSpeed === 1 ? '⏩ ×2' : '⏩ ×1') + '</button>' +
       '<button class="btn tiny ghost" data-act="bat-now" title="Enter — 이번 합을 바로 친다">⏭ 다음 합</button>' +
@@ -1117,9 +1118,7 @@
   }
 
   function showBattleLive(fromId, toId, lead, t) {
-    liveStep = null; liveRepStub = null; liveBase = null;
-    liveTactic = null;
-    stopLiveClock();
+    liveStep = null; liveRepStub = null; liveBase = null; liveTactic = null; liveGrid = false; stopLiveClock();
     liveStance = null; liveQueued = null; livePaused = false; liveRound = 0; liveOn = false;
     var res = global.DG.war.marchInteractive(fromId, toId, lead, t, {
       formation: marchForm || undefined,
@@ -1129,7 +1128,7 @@
           '<div class="btop"><h3>⚔️ 전황 (진행 중)' +
             (repStub.land ? ' <small class="muted">' + (LAND_ICON[repStub.land] || '') + ' ' + esc(CD.LANDS[repStub.land].name) + '</small>' : '') + '</h3>' +
           battleHudHtml(repStub) + '<div class="bclock" id="bclock"></div></div>' +
-          '<div class="bdock"><div class="warlog blog" id="livelog"></div><div class="bcmd" id="livecmd"></div></div><div id="liveresult"></div>';
+          '<div class="bdock"><div class="warlog blog" id="livelog"></div><div class="bcmd" id="livecmd"></div></div><div id="liveresult"></div><div class="tacview" id="tacview"></div>';
         showEnc(html, 'battle');
         liveOn = true;
         liveRepStub = repStub;
@@ -1158,17 +1157,17 @@
         var SFX = global.DG.sfx;
         if (SFX) { SFX.play('round_clash'); }
       },
+      onTactics: function (ctx, done) { ctx.face = function (id) { var h = off().find(id); return h ? p3src(h, 64, 64, function () { return global.DG.sprite.portrait('hero', h, 64); }).src : ''; }; global.DG.tacticsView.open($('tacview'), ctx, done); },
       onPrompt: function (state, step) {
-        liveStep = step;
+        liveStep = step; liveGrid = !!state.grid;
         liveTactic = state.tactic || null;
         if (liveQueued && !(liveTactic && liveTactic.ok)) { liveQueued = null; }
         renderLiveCmd(true);
         armLiveClock();
       },
       onDone: function () {
-        liveStep = null;
-        stopLiveClock();
-        renderLiveCmd(false);
+        liveStep = null; stopLiveClock(); renderLiveCmd(false);
+        if ((global.DG.event && global.DG.event.view() || {}).id === 'tac_fallen') { showEvent(); }   // 전술판에서 쓰러진 장수의 열전 카드 — 결과 판 「확인」 뒤에 줄을 선다
       }
     });
     if (res && res.ok === false) {

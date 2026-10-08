@@ -263,6 +263,55 @@
     return (ids || []).length;
   }
 
+  /* ── 개입형 출진 배선(W-0108) — war.js marchInteractive 의 「♟️ 전술판」 ─────────
+   * war.js 는 큰 파일이라(tools/big-files.txt) 몸통은 여기 두고 거기선 한 줄로 부른다.
+   * m = { hooks, atk, def, toId, fromId, land, water, sortie, r, lines } — marchInteractive 의 지역 변수 그대로.
+   * 판정은 안 한다: atk.grid = { give, take, kind } 를 stepRound 가 **남은 합**의 공·피해 배율에 곱할 뿐(1 + winPct/100 · lossMul).
+   */
+  /** 판을 연다 — 끝나면 보정·전사를 적용하고 back()(같은 합 다시 묻기). 열 수 없으면(훅 없음·이미 씀·수전) false */
+  function marchGrid(m, back) {
+    var atk = m.atk, def = m.def, CD = global.DG.cityData, st = global.DG.rtk.state();
+    if (!m.hooks.onTactics || atk.grid || m.water) { return false; }
+    var foes = def.officers.slice(0, 3), n = Math.max(1, Math.min(2, 5 - foes.length)), ft = [], k;
+    for (k = 0; k < n; k++) { ft.push(Math.round(def.troops / n)); }
+    atk.grid = { give: 1, take: 1, kind: null };   // 판이 열린 동안 두 번 못 연다
+    m.hooks.onTactics({ seed: m.toId + '|' + (st.turn || 0) + '|' + m.r, land: m.land.key, siege: !m.sortie, mine: atk.officers.slice(0, 3),
+      foes: foes, foeTroops: ft, to: m.toId, where: CD.find(m.toId).name }, function (out) {
+      if (out) { marchApply(m, out); }
+      back();
+    });
+    return true;
+  }
+  /** 판 결과를 그 출진에 — 보정·전사(dead)·중상(hurt)·열전·사연 카드. 군주는 판이 끝나지 않게 중상으로 돌린다 */
+  function marchApply(m, out) {
+    var atk = m.atk, A = apply(out, { to: m.toId, where: m.toId }), off = OFF(), R = global.DG.rtk, st = R.state(), CD = global.DG.cityData;
+    var by = out.by || {}, foeName = R.forceName(m.def.force) + '군', hurt = A.wounded.slice(), dead = [];
+    atk.grid = { give: 1 + A.winPct / 100, take: A.lossMul, kind: A.kind };
+    m.lines('♟️ 전술판 ' + out.name + ' — 남은 합 공 위력 ' + (A.winPct >= 0 ? '+' : '') + A.winPct + '%' + (A.lossMul !== 1 ? ' · 받는 피해 ×' + A.lossMul : ''));
+    A.fallen.forEach(function (id) { if (off.lordOf(atk.force) === id) { hurt.push({ id: id, months: WOUND_MONTHS }); } else { dead.push(id); } });
+    function drop(id) { var i = atk.officers.indexOf(id); if (i >= 0) { atk.officers.splice(i, 1); } }
+    dead.forEach(function (id) {
+      var rc = off.rec(id), c = rc.city ? R.city(rc.city) : null;
+      rc.dead = true;
+      if (c && c.gov === id) { c.gov = null; }
+      drop(id);
+      annalize([id], m.toId, by[id] || foeName);
+      m.lines('⚰️ ' + off.find(id).name + ' 이(가) ' + CD.find(m.toId).name + ' 아래에서 쓰러졌다');
+    });
+    hurt.forEach(function (w) {
+      off.rec(w.id).hurt = Math.max(off.rec(w.id).hurt || 0, w.months);
+      drop(w.id);
+      m.lines('🩹 ' + off.find(w.id).name + ' 이(가) 크게 다쳐 물러났다(' + w.months + '달)');
+    });
+    /* 열전 사연 카드 한 장(tactics-view.js 가 정의) — 이미 떠 있는 사연이 있으면 덮지 않는다(기록은 annals 에 남았다) */
+    var E = global.DG.event;
+    if (dead.length && E && E.DEFS && E.DEFS.tac_fallen && st.events && !st.events.pending && atk.force === st.me) {
+      st.events.pending = { id: 'tac_fallen', step: 1, ctx: { a: dead[0], b: '', city: m.fromId, where: m.toId, force: atk.force } };
+    }
+    core.persist();
+    return A;
+  }
+
   /** 진단·균형용 — 양쪽 다 AI 로 끝까지 둔다 */
   function autoPlay(b) {
     var guard = 0;
@@ -275,6 +324,7 @@
     COLS: COLS, ROWS: ROWS, TURNS: TURNS, COVER: COVER, OUT: OUT, WOUND_MONTHS: WOUND_MONTHS,
     hash: hash, makeBoard: makeBoard, cellAt: cellAt, coverAt: coverAt, officerUnit: officerUnit, troopUnit: troopUnit, unitsOf: unitsOf,
     unit: unit, alive: alive, moves: moves, move: move, hitChance: hitChance, attack: attack,
-    aiTurn: aiTurn, endTurn: endTurn, outcome: outcome, apply: apply, annalize: annalize, autoPlay: autoPlay, permadeath: permadeath
+    aiTurn: aiTurn, endTurn: endTurn, outcome: outcome, apply: apply, annalize: annalize, autoPlay: autoPlay, permadeath: permadeath,
+    marchGrid: marchGrid, marchApply: marchApply
   };
 })(window);
