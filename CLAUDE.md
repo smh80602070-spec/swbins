@@ -74,7 +74,7 @@ QC          node tools/qc.mjs [--game <판>|--branch <갈래>]  → 실기 확�
 
 - **`archive/` 이력(SAGA-HISTORY 400KB+·판 HANDOFF)·판별 `README.md` 는 통째로 읽지 않는다** —
   목차(`grep -n "^## \|^### "`)·날짜·게임명 grep 으로 필요한 절만 `sed -n`.
-- `sprite.js`(100KB)·`data.js`(75KB) 도 전체 Read 금지 — 심볼·id 로 grep 해 그 자리만 읽는다.
+- `sprite.js`(100KB)·`data.js`(75KB) 도 전체 Read 금지 — 세레나 `find_symbol`·id grep 으로 그 자리만 읽는다.
 - 진단 출력은 `grep -o "RESULT [0-9/]*"`·실패 줄만(`--dump-dom` 통째 금지).
 - **문서 3층**(`SAGA-DESIGN.md` §9): 규칙(CLAUDE.md ≤6KB) / 설계(PLAN ≤70KB, 날짜 세션 기록 금지) / 이력(HANDOFF·HISTORY, append-only, grep 으로만).
   상태(3D `docs/PROJECT_STATE.md`·루트 README "현재" 절)는 **덮어쓴다**. 세션 기록은 HANDOFF·HISTORY 에만.
