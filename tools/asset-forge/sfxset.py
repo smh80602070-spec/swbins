@@ -18,6 +18,7 @@ sys.path.insert(0, HERE)
 import sfxgen as S  # noqa: E402
 
 OUT = os.path.join(HERE, '_out', 'sfx')
+CANON = os.path.join(HERE, '..', '..', 'saga-assets', 'sfx')   # --check 는 정본을 본다(_out 은 gitignore·PC 마다 다름, K-0088)
 SR = S.SR
 TARGET_RMS_DB = {'combat': -22.0, 'foot': -27.0, 'ui': -25.0, 'event': -23.0}
 tone, noise, chime, mix = S.synth_tone, S.synth_noise, S.synth_chime, S._mix
@@ -214,6 +215,10 @@ def build():
 
 
 def check():
+    global OUT
+    if os.path.isdir(CANON):
+        OUT = CANON
+    print('검사 대상:', os.path.relpath(OUT, os.path.join(HERE, '..', '..')))
     import soundfile as sf
     bad = []
     total = 0

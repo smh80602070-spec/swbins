@@ -17,6 +17,7 @@ from PIL import Image, ImageDraw, ImageFilter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, '_out', 'vfx')
+CANON = os.path.join(HERE, '..', '..', 'saga-assets', 'vfx')   # --check 는 정본을 본다(_out 은 gitignore·PC 마다 다름, K-0088)
 F = 128
 FPS = 12
 ELEMENTS = {  # 원소 → (밝은 색, 중간 색, 어두운 색)
@@ -755,6 +756,10 @@ def sheet_preview():
 
 
 def check():
+    global OUT
+    if os.path.isdir(CANON):
+        OUT = CANON
+    print('검사 대상:', os.path.relpath(OUT, os.path.join(HERE, '..', '..')))
     bad = []
     total = 0
     for pid, el, kind, n, loop in PLAN:

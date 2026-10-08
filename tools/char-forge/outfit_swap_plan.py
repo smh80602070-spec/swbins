@@ -120,6 +120,9 @@ def check(rows, parts):
 
 if __name__ == '__main__':
     rows, parts = build()
+    if '--check' in sys.argv and os.path.exists(OUT):   # 새로 뽑은 것이 아니라 저장된 계획표를 검사한다(K-0088)
+        rows = json.load(open(OUT, encoding='utf-8'))['entries']
+        print('검사 대상:', os.path.relpath(OUT))
     changed = apply_traits(rows, parts)
     if changed:
         print('성별 표로 바뀐 인물', len(changed), ':', ','.join(changed))

@@ -17,6 +17,7 @@ from PIL import Image, ImageDraw, ImageFilter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, '_out', 'ui')
+CANON = os.path.join(HERE, '..', '..', 'saga-assets', 'ui')   # --check 는 정본을 본다(_out 은 gitignore·PC 마다 다름, K-0088)
 SS = 4
 
 # 테마 → (판 id, 배경 위, 배경 아래, 테두리, 테두리 어두움, 테두리 밝음, 강조)
@@ -272,6 +273,10 @@ def build():
 
 
 def check():
+    global OUT
+    if os.path.isdir(CANON):
+        OUT = CANON
+    print('검사 대상:', os.path.relpath(OUT, os.path.join(HERE, '..', '..')))
     bad = []
     for name in THEMES:
         total = 0

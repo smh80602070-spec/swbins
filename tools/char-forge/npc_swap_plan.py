@@ -13,6 +13,7 @@
 """
 import hashlib
 import json
+import math
 import os
 import random
 import sys
@@ -20,6 +21,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import outfit_swap_plan as OP  # noqa: E402
+from unity_bodies_plan import modify_ok, vroid_file  # noqa: E402
 
 OUT = os.path.join(HERE, 'data', 'npc_swap_plan.json')
 DEX = os.path.join(HERE, 'data', 'outfit_swap_plan.json')
@@ -29,6 +31,8 @@ ROLES = [  # (역할, 성별 'M'/'F'/'MF', 수)
     ('era_past', 'MF', 12), ('era_present', 'MF', 12), ('era_future', 'MF', 12),
 ]
 ROLE_FILTER = {}       # 역할 → 샘플 글자 목록(사람이 옷 모양을 분류한 뒤 채운다). 없으면 성별 풀 전체.
+# 배치된 VRM 메타가 개작본 재배포를 막는 샘플(옛 판 AvatarSample_A 등)은 몸·옷 재료에서 뺀다(K-0088)
+NO_MOD = {L for L in set(OP.MALE) | set(OP.FEMALE) if modify_ok(vroid_file(L)) is False}
 
 
 def build():
@@ -46,10 +50,11 @@ def build():
                 g = 'M' if int(hashlib.md5(f'{role}{nn}'.encode()).hexdigest(), 16) % 100 < 50 else 'F'
             else:
                 g = gs
-            pool = [L for L in (OP.MALE if g == 'M' else OP.FEMALE) if L in parts]
+            pool = [L for L in (OP.MALE if g == 'M' else OP.FEMALE) if L in parts and L not in NO_MOD]
             if ROLE_FILTER.get(role):
                 pool = [L for L in pool if L in ROLE_FILTER[role]] or pool
-            body = pool[(nn * 5 + (3 if g == 'F' else 1)) % len(pool)]
+            step = next(k for k in (5, 7, 11, 13, 3) if math.gcd(k, len(pool)) == 1)   # 풀 크기와 서로소여야 몸이 고루 돈다(15 면 5 는 3몸뿐)
+            body = pool[(nn * step + (3 if g == 'F' else 1)) % len(pool)]
             for _ in range(800):
                 dress = [L for L in pool if 'cloth' in parts[L]]
                 if dress and g == 'F' and rng.random() < 0.3:
@@ -88,11 +93,16 @@ def check(rows, parts, dex):
                 errs.append('%s: %s 에 %s 조각 없음' % (r['id'], src, slot))
         if all(v == r['body'] for v in r['kit'].values()):
             errs.append('몸 원래 옷 ' + r['id'])
+        if {r['body'], *r['kit'].values()} & NO_MOD:
+            errs.append('개작 금지 샘플을 재료로 씀 %s (%s)' % (r['id'], ','.join(sorted({r['body'], *r['kit'].values()} & NO_MOD))))
     return errs
 
 
 if __name__ == '__main__':
     rows, parts, dex = build()
+    if '--check' in sys.argv and os.path.exists(OUT):   # 새로 뽑은 것이 아니라 저장된 계획표를 검사한다(K-0088)
+        rows = json.load(open(OUT, encoding='utf-8'))['entries']
+        print('검사 대상:', os.path.relpath(OUT))
     errs = check(rows, parts, dex)
     roles = {}
     for r in rows:

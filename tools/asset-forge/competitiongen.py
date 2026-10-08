@@ -18,6 +18,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
 OUT = os.path.join(HERE, '_out', 'competition')
+CANON = os.path.join(HERE, '..', '..', 'saga-assets', 'competition')   # --check 는 정본을 본다(_out 은 gitignore·PC 마다 다름, K-0088)
 FONTS = os.path.join(ROOT, 'tools', 'ai-art', '_out', 'fonts')
 SS = 4
 TIERS = [('bronze', (176, 112, 62), 1), ('silver', (196, 202, 212), 2), ('gold', (232, 190, 72), 3), ('platinum', (170, 226, 228), 4),
@@ -317,6 +318,10 @@ def arena_pack():
 
 
 def check():
+    global OUT
+    if os.path.isdir(CANON):
+        OUT = CANON
+    print('검사 대상:', os.path.relpath(OUT, os.path.join(HERE, '..', '..')))
     bad = []
     total = 0
     names = [f'rank_badge_{n}_{name}.png' for name, _c, n in TIERS] + [f'medal_{l}.png' for l, _c in MEDALS] + [f'reward_{k}.png' for k in REWARDS] + \

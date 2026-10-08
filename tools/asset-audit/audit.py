@@ -45,6 +45,7 @@ PEOPLE_TRIS = 65000   # 뼈 있는 사람 몸(VRoid 등 `/people/`·characters_v
 # 인물·동작 출처(char-forge README §7 단계 5 "상용 문턱") — Mixamo 는 재배포 금지·Adobe 약관 의존이라 게임이 쓰면 🔴.
 # VRoid 는 D4(09-25)로 godot 몸 정본이라 VRM 메타의 상업·재배포 허가로 판정한다. 공방(char-forge) 몸은 옆에 *.license.json(CC0) 필수.
 MIXAMO = RESTRICTED
+VROID_DIRS = r'(^|/)(characters_vroid|CharactersVroid|characters/vroid)/[^/]+\.glb$'
 FORGE = [r'(^|/)CharactersForge/[^/]+\.fbx$', r'(^|/)characters_cf/[^/]+\.glb$']
 ANIM_EXT = {'.res', '.anim'}  # 구운 동작(Godot AnimationLibrary·Unity 클립) — ASSET_EXT 밖이라 출처만 본다
 SEV = {'public': 3, 'decoder': 3, 'gitsize': 3, 'origin': 3, 'pair': 2, 'heavy': 2, 'license': 2, 'origin_local': 2, 'origin_left': 2,
@@ -167,14 +168,16 @@ def vrm_meta(path):
         com = m.get('commercialUsage', 'personalNonProfit') in ('personalProfit', 'corporation')
         red = bool(m.get('allowRedistribution', False))
         cred = m.get('creditNotation', 'required') == 'required'
-        return com, red, cred, f"VRM1 상업 {m.get('commercialUsage')} · 재배포 {red} · 표기 {m.get('creditNotation', 'required')}"
+        mod = m.get('modification', 'prohibited') == 'allowModificationRedistribution'
+        return com, red, cred, f"VRM1 상업 {m.get('commercialUsage')} · 재배포 {red} · 표기 {m.get('creditNotation', 'required')} · 개작 {m.get('modification')}", mod
     if 'VRM' in e:
         m = e['VRM'].get('meta', {})
         lic = m.get('licenseName', '')
         com = m.get('commercialUssageName') == 'Allow'
         red = lic not in ('Redistribution_Prohibited', 'Other', '')
         cred = lic.startswith('CC_BY')
-        return com, red, cred, f"VRM0 {lic} · 상업 {m.get('commercialUssageName')}"
+        mod = lic in ('CC0', 'CC_BY', 'CC_BY_SA')
+        return com, red, cred, f"VRM0 {lic} · 상업 {m.get('commercialUssageName')}", mod
     return None
 
 
@@ -205,15 +208,17 @@ def origin(rp, p, ext, pathset, ref):
         if ref:  # D5(2026-09-26): Mixamo 는 게임에 넣어 팔기 OK·재배포 금지 → 로컬 전용이면 허용(공개 저장소에 오르면 'public' 🔴)
             return 'origin_local', 'Mixamo 로컬 전용(D5 허용 — 게임 판매 OK·재배포 금지) — 다른 PC 는 다시 받는다(tools/mixamo_automation)'
         return 'origin_left', 'Mixamo 출처 파일이 남아 있다(안 씀) — 교체가 끝났으면 지워도 된다'
-    # 옆 .vrm 사본이 없어도(용량 때문에 새 몸은 .glb 만 커밋) characters_vroid 의 .glb 는 자기 안의 VRM 메타로 본다
+    # 옆 .vrm 사본이 없어도(용량 때문에 새 몸은 .glb 만 커밋) VRoid 몸 폴더의 .glb 는 자기 안의 VRM 메타로 본다
     sib = os.path.splitext(p)[0] + '.vrm'
-    if ext == '.vrm' or (ext == '.glb' and (sib in pathset or re.search(r'(^|/)characters_vroid/[^/]+\.glb$', rp))):
+    if ext == '.vrm' or (ext == '.glb' and (sib in pathset or re.search(VROID_DIRS, rp))):
         v = vrm_meta(p if ext == '.vrm' or sib not in pathset else sib)
         if v is None:
             return 'origin', 'VRoid 몸인데 VRM 라이선스 칸을 못 읽는다'
-        com, red, cred, why = v
+        com, red, cred, why, mod = v
         if not (com and red):
             return 'origin', f'VRoid 몸 라이선스가 상업·재배포를 막는다({why}) — VRoid Studio 에서 허가로 다시 내보낸다'
+        if not mod:
+            return 'origin_left', f'VRoid 몸 — 개작본 재배포 금지({why}). 원본 그대로만 쓰고 옷·머리 조합·변주 재료로 쓰지 않는다'
         if cred:
             return 'origin_left', f'VRoid 몸 — 저작자 표시가 필요한 라이선스({why}). 우리가 만든 몸이면 표기 불요로 다시 내보낸다'
         return None
@@ -258,6 +263,9 @@ def tracks(sel, game):
                                  '.overrideController', '.json', '.gltf', '.shadergraph', '.shader', '.playable',
                                  '.lighting', '.mask', '.signal', '.spriteatlas', '.spriteatlasv2', '.mixer'},
                     'docs': [os.path.join(base, 'docs', 'ASSET_GUIDE.md')]})
+    if 'canon' in sel and not game:   # 정본 saga-assets — 코드·문서 대조는 없고 공개·크기·출처만(K-0088)
+        out.append({'id': 'canon', 'kind': 'canon', 'asset_dir': os.path.join(ROOT, 'saga-assets'),
+                    'code_dirs': [], 'code_skip': set(), 'code_ext': set(), 'docs': []})
     return out
 
 
@@ -348,7 +356,7 @@ def changed_paths():
     """작업 트리에서 바뀐(수정·새로 add·추적 안 됨) 경로 — `--quick` 이 이것만 본다."""
     out = set()
     raw = git('status', '--porcelain=v1', '-z', '--untracked-files=all', '--',
-              'saga-web', 'saga-godot/assets', 'saga-unity/Assets')
+              'saga-web', 'saga-godot/assets', 'saga-unity/Assets', 'saga-assets')
     items = raw.split('\0')
     i = 0
     while i < len(items):
@@ -397,9 +405,9 @@ def audit(sel, game, want_md5=True, quick=None):
                 continue
             # 판 js 가 바뀌었으면 디코더 배선이 빠졌을 수 있다 → 그 판 GLB 를 전부 본다
             focus = None if kind == 'web' and any(c.startswith(base_rel + 'js/') for c in mine) else mine
-        code = load_code_text(t) if quick is None else ''
+        code = load_code_text(t) if quick is None and kind != 'canon' else ''
         # 출처 판정용 — 옛 도구(saga-godot/tools/mixamo_retarget.gd 등)가 부르는 건 "게임이 쓴다"가 아니다
-        gcode = load_code_text(dict(t, code_skip=t['code_skip'] | {'tools'}), with_tools=False) if quick is None and kind != 'web' else ''
+        gcode = load_code_text(dict(t, code_skip=t['code_skip'] | {'tools'}), with_tools=False) if quick is None and kind not in ('web', 'canon') else ''
         words = set(re.findall(r'\w+', code))  # id 접두어 대조용 — 정규식으로 코드 전체를 매번 훑으면 80초가 넘는다
         doc = expand_doc('\n'.join(read(p) for p in t['docs']).lower())
         # 문서의 `tile_*.png` 같은 와일드카드 표기도 출처 표기로 친다
@@ -484,6 +492,14 @@ def audit(sel, game, want_md5=True, quick=None):
                     issue('gitsize', rp, f'{size / 2**20:.0f}MB — GitHub 는 100MB 초과 파일을 거부한다', tid)
                 elif size > 50 << 20:
                     issue('gitsize', rp, f'{size / 2**20:.0f}MB — GitHub 50MB 경고선', tid)
+            if kind == 'canon':   # 정본은 게임 코드가 직접 안 읽는다 — 출처만 보고 참조·문서 대조는 배치 사본(트랙) 몫
+                if ext in MODEL:
+                    o = origin(rp, p, ext, pathset, True)
+                    if o:
+                        issue(o[0], rp, o[1], tid)
+                        rec['origin'] = o[0]
+                files.append(rec)
+                continue
             if quick is not None:
                 files.append(rec)
                 continue
@@ -628,7 +644,7 @@ $('#tb').onclick=e=>{const i=e.target.dataset.i;if(i!==undefined){sortD=sortK==+
 
 def main():
     ap = argparse.ArgumentParser(description='세 트랙 에셋 점검(읽기 전용)')
-    ap.add_argument('--track', action='append', choices=['web', 'godot', 'unity'])
+    ap.add_argument('--track', action='append', choices=['web', 'godot', 'unity', 'canon'])
     ap.add_argument('--game', choices=WEB_GAMES)
     ap.add_argument('--no-md5', action='store_true', help='사본 찾기를 건너뛰어 빠르게')
     ap.add_argument('--strict', action='store_true', help='🔴 가 있으면 종료 코드 1')
@@ -636,7 +652,7 @@ def main():
                     help='git 작업 트리에서 바뀐 에셋만 🔴 위주로(보고서 안 씀, precheck 용 — 🔴 면 종료 코드 1)')
     ap.add_argument('--out', default=OUT)
     a = ap.parse_args()
-    sel = set(a.track or (['web'] if a.game else ['web', 'godot', 'unity']))
+    sel = set(a.track or (['web'] if a.game else ['web', 'godot', 'unity', 'canon']))
     sys.stdout.reconfigure(encoding='utf-8')
     if a.quick:
         ch = changed_paths()

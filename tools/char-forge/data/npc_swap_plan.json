@@ -29,8 +29,8 @@
    "gender": "M",
    "body": "x",
    "kit": {
-    "top": "v",
-    "bottom": "p",
+    "top": "n",
+    "bottom": "z",
     "shoes": "x"
    }
   },
@@ -40,9 +40,9 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "n",
-    "bottom": "z",
-    "shoes": "x"
+    "top": "l",
+    "bottom": "r",
+    "shoes": "r"
    }
   },
   {
@@ -51,9 +51,9 @@
    "gender": "M",
    "body": "z",
    "kit": {
-    "top": "l",
-    "bottom": "r",
-    "shoes": "r"
+    "top": "p",
+    "bottom": "p",
+    "shoes": "l"
    }
   },
   {
@@ -73,9 +73,9 @@
    "gender": "M",
    "body": "c",
    "kit": {
-    "top": "g",
-    "bottom": "r",
-    "shoes": "l"
+    "top": "n",
+    "bottom": "z",
+    "shoes": "n"
    }
   },
   {
@@ -84,9 +84,9 @@
    "gender": "M",
    "body": "r",
    "kit": {
-    "top": "n",
+    "top": "l",
     "bottom": "z",
-    "shoes": "n"
+    "shoes": "x"
    }
   },
   {
@@ -95,9 +95,9 @@
    "gender": "M",
    "body": "g",
    "kit": {
-    "top": "l",
-    "bottom": "z",
-    "shoes": "x"
+    "top": "g",
+    "bottom": "p",
+    "shoes": "v"
    }
   },
   {
@@ -106,9 +106,9 @@
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "g",
-    "bottom": "p",
-    "shoes": "v"
+    "top": "p",
+    "bottom": "z",
+    "shoes": "c"
    }
   },
   {
@@ -117,9 +117,9 @@
    "gender": "M",
    "body": "l",
    "kit": {
-    "top": "p",
-    "bottom": "z",
-    "shoes": "c"
+    "top": "g",
+    "bottom": "p",
+    "shoes": "x"
    }
   },
   {
@@ -128,9 +128,9 @@
    "gender": "M",
    "body": "x",
    "kit": {
-    "top": "g",
-    "bottom": "p",
-    "shoes": "x"
+    "top": "p",
+    "bottom": "z",
+    "shoes": "c"
    }
   },
   {
@@ -139,9 +139,9 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "p",
-    "bottom": "z",
-    "shoes": "c"
+    "top": "l",
+    "bottom": "r",
+    "shoes": "p"
    }
   },
   {
@@ -150,9 +150,9 @@
    "gender": "M",
    "body": "z",
    "kit": {
-    "top": "l",
-    "bottom": "r",
-    "shoes": "p"
+    "top": "p",
+    "bottom": "z",
+    "shoes": "v"
    }
   },
   {
@@ -161,9 +161,9 @@
    "gender": "M",
    "body": "p",
    "kit": {
-    "top": "p",
-    "bottom": "z",
-    "shoes": "v"
+    "top": "v",
+    "bottom": "r",
+    "shoes": "z"
    }
   },
   {
@@ -172,9 +172,9 @@
    "gender": "M",
    "body": "c",
    "kit": {
-    "top": "v",
+    "top": "n",
     "bottom": "r",
-    "shoes": "z"
+    "shoes": "v"
    }
   },
   {
@@ -183,9 +183,9 @@
    "gender": "M",
    "body": "r",
    "kit": {
-    "top": "n",
-    "bottom": "r",
-    "shoes": "v"
+    "top": "x",
+    "bottom": "p",
+    "shoes": "p"
    }
   },
   {
@@ -194,9 +194,9 @@
    "gender": "M",
    "body": "g",
    "kit": {
-    "top": "x",
-    "bottom": "p",
-    "shoes": "p"
+    "top": "c",
+    "bottom": "z",
+    "shoes": "l"
    }
   },
   {
@@ -205,27 +205,28 @@
    "gender": "F",
    "body": "d",
    "kit": {
-    "cloth": "s",
-    "shoes": "f"
+    "cloth": "u",
+    "shoes": "j"
    }
   },
   {
    "id": "npc_walker_20",
    "role": "walker",
    "gender": "F",
-   "body": "j",
+   "body": "m",
    "kit": {
-    "cloth": "u",
-    "shoes": "u"
+    "cloth": "q",
+    "shoes": "s"
    }
   },
   {
    "id": "npc_walker_21",
    "role": "walker",
    "gender": "F",
-   "body": "s",
+   "body": "b",
    "kit": {
-    "cloth": "q",
+    "top": "i",
+    "bottom": "j",
     "shoes": "q"
    }
   },
@@ -233,109 +234,108 @@
    "id": "npc_walker_22",
    "role": "walker",
    "gender": "F",
-   "body": "b",
+   "body": "k",
    "kit": {
-    "top": "o",
-    "bottom": "a",
-    "shoes": "y"
+    "top": "d",
+    "bottom": "k",
+    "shoes": "j"
    }
   },
   {
    "id": "npc_walker_23",
    "role": "walker",
    "gender": "F",
-   "body": "i",
+   "body": "y",
    "kit": {
-    "top": "w",
-    "bottom": "y",
-    "shoes": "s"
+    "cloth": "u",
+    "shoes": "m"
    }
   },
   {
    "id": "npc_walker_24",
    "role": "walker",
    "gender": "F",
-   "body": "q",
+   "body": "j",
    "kit": {
-    "top": "q",
+    "top": "h",
     "bottom": "j",
-    "shoes": "w"
+    "shoes": "k"
    }
   },
   {
    "id": "npc_walker_25",
    "role": "walker",
    "gender": "F",
-   "body": "a",
+   "body": "w",
    "kit": {
-    "top": "s",
-    "bottom": "b",
-    "shoes": "u"
+    "top": "i",
+    "bottom": "y",
+    "shoes": "w"
    }
   },
   {
    "id": "npc_walker_26",
    "role": "walker",
    "gender": "F",
-   "body": "h",
+   "body": "i",
    "kit": {
     "top": "y",
-    "bottom": "j",
-    "shoes": "s"
+    "bottom": "k",
+    "shoes": "u"
    }
   },
   {
    "id": "npc_walker_27",
    "role": "walker",
    "gender": "F",
-   "body": "o",
+   "body": "u",
    "kit": {
-    "top": "a",
-    "bottom": "d",
-    "shoes": "f"
+    "top": "u",
+    "bottom": "k",
+    "shoes": "j"
    }
   },
   {
    "id": "npc_walker_28",
    "role": "walker",
    "gender": "F",
-   "body": "y",
+   "body": "h",
    "kit": {
-    "top": "a",
-    "bottom": "j",
-    "shoes": "a"
+    "top": "s",
+    "bottom": "y",
+    "shoes": "j"
    }
   },
   {
    "id": "npc_walker_29",
    "role": "walker",
    "gender": "F",
-   "body": "f",
+   "body": "s",
    "kit": {
-    "cloth": "m",
-    "shoes": "o"
+    "top": "q",
+    "bottom": "y",
+    "shoes": "b"
    }
   },
   {
    "id": "npc_walker_30",
    "role": "walker",
    "gender": "F",
-   "body": "m",
+   "body": "f",
    "kit": {
-    "top": "y",
-    "bottom": "b",
-    "shoes": "b"
+    "cloth": "k",
+    "shoes": "u"
    }
   },
   {
    "id": "npc_walker_31",
    "role": "walker",
    "gender": "F",
-   "body": "w",
+   "body": "q",
    "kit": {
-    "top": "w",
-    "bottom": "y",
-    "shoes": "h"
+    "top": "j",
+    "bottom": "b",
+    "shoes": "e"
    }
   },
   {
@@ -344,51 +344,50 @@
    "gender": "F",
    "body": "e",
    "kit": {
-    "cloth": "s",
-    "shoes": "d"
+    "cloth": "m",
+    "shoes": "w"
    }
   },
   {
    "id": "npc_walker_33",
    "role": "walker",
    "gender": "F",
-   "body": "k",
+   "body": "o",
    "kit": {
     "cloth": "q",
-    "shoes": "s"
+    "shoes": "f"
    }
   },
   {
    "id": "npc_walker_34",
    "role": "walker",
    "gender": "F",
-   "body": "u",
+   "body": "d",
    "kit": {
-    "top": "q",
-    "bottom": "k",
-    "shoes": "w"
+    "cloth": "m",
+    "shoes": "k"
    }
   },
   {
    "id": "npc_walker_35",
    "role": "walker",
    "gender": "F",
-   "body": "d",
+   "body": "m",
    "kit": {
-    "top": "f",
-    "bottom": "j",
-    "shoes": "d"
+    "top": "y",
+    "bottom": "d",
+    "shoes": "h"
    }
   },
   {
    "id": "npc_walker_36",
    "role": "walker",
    "gender": "F",
-   "body": "j",
+   "body": "b",
    "kit": {
-    "top": "m",
-    "bottom": "j",
-    "shoes": "d"
+    "top": "s",
+    "bottom": "b",
+    "shoes": "f"
    }
   },
   {
@@ -397,9 +396,9 @@
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "n",
-    "bottom": "l",
-    "shoes": "c"
+    "top": "v",
+    "bottom": "r",
+    "shoes": "r"
    }
   },
   {
@@ -409,19 +408,19 @@
    "body": "l",
    "kit": {
     "top": "x",
-    "bottom": "c",
-    "shoes": "v"
+    "bottom": "z",
+    "shoes": "l"
    }
   },
   {
    "id": "npc_merchant_03",
    "role": "merchant",
    "gender": "F",
-   "body": "d",
+   "body": "o",
    "kit": {
-    "top": "w",
+    "top": "s",
     "bottom": "j",
-    "shoes": "d"
+    "shoes": "u"
    }
   },
   {
@@ -430,19 +429,19 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "n",
-    "bottom": "z",
-    "shoes": "v"
+    "top": "p",
+    "bottom": "r",
+    "shoes": "g"
    }
   },
   {
    "id": "npc_merchant_05",
    "role": "merchant",
    "gender": "F",
-   "body": "s",
+   "body": "m",
    "kit": {
-    "cloth": "s",
-    "shoes": "w"
+    "cloth": "k",
+    "shoes": "b"
    }
   },
   {
@@ -451,8 +450,8 @@
    "gender": "M",
    "body": "p",
    "kit": {
-    "top": "l",
-    "bottom": "l",
+    "top": "x",
+    "bottom": "c",
     "shoes": "v"
    }
   },
@@ -462,9 +461,9 @@
    "gender": "M",
    "body": "c",
    "kit": {
-    "top": "v",
-    "bottom": "p",
-    "shoes": "l"
+    "top": "r",
+    "bottom": "l",
+    "shoes": "z"
    }
   },
   {
@@ -473,9 +472,9 @@
    "gender": "M",
    "body": "r",
    "kit": {
-    "top": "p",
-    "bottom": "z",
-    "shoes": "v"
+    "top": "x",
+    "bottom": "r",
+    "shoes": "z"
    }
   },
   {
@@ -484,29 +483,31 @@
    "gender": "M",
    "body": "g",
    "kit": {
-    "top": "z",
-    "bottom": "z",
-    "shoes": "g"
+    "top": "g",
+    "bottom": "l",
+    "shoes": "z"
    }
   },
   {
    "id": "npc_merchant_10",
    "role": "merchant",
    "gender": "F",
-   "body": "h",
+   "body": "w",
    "kit": {
-    "cloth": "e",
-    "shoes": "d"
+    "top": "k",
+    "bottom": "y",
+    "shoes": "y"
    }
   },
   {
    "id": "npc_merchant_11",
    "role": "merchant",
    "gender": "F",
-   "body": "o",
+   "body": "i",
    "kit": {
-    "cloth": "s",
-    "shoes": "i"
+    "top": "e",
+    "bottom": "d",
+    "shoes": "j"
    }
   },
   {
@@ -517,7 +518,7 @@
    "kit": {
     "top": "v",
     "bottom": "p",
-    "shoes": "c"
+    "shoes": "l"
    }
   },
   {
@@ -526,42 +527,42 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "l",
-    "bottom": "c",
-    "shoes": "n"
+    "top": "p",
+    "bottom": "z",
+    "shoes": "v"
    }
   },
   {
    "id": "npc_merchant_14",
    "role": "merchant",
    "gender": "F",
-   "body": "m",
+   "body": "s",
    "kit": {
-    "top": "f",
-    "bottom": "y",
-    "shoes": "m"
+    "top": "m",
+    "bottom": "b",
+    "shoes": "e"
    }
   },
   {
    "id": "npc_merchant_15",
    "role": "merchant",
    "gender": "F",
-   "body": "w",
+   "body": "f",
    "kit": {
-    "top": "k",
+    "top": "y",
     "bottom": "b",
-    "shoes": "q"
+    "shoes": "e"
    }
   },
   {
    "id": "npc_merchant_16",
    "role": "merchant",
    "gender": "F",
-   "body": "e",
+   "body": "q",
    "kit": {
-    "top": "e",
-    "bottom": "a",
-    "shoes": "k"
+    "top": "q",
+    "bottom": "d",
+    "shoes": "j"
    }
   },
   {
@@ -571,8 +572,8 @@
    "body": "v",
    "kit": {
     "top": "r",
-    "bottom": "r",
-    "shoes": "p"
+    "bottom": "c",
+    "shoes": "l"
    }
   },
   {
@@ -581,9 +582,9 @@
    "gender": "M",
    "body": "l",
    "kit": {
-    "top": "n",
-    "bottom": "r",
-    "shoes": "g"
+    "top": "p",
+    "bottom": "p",
+    "shoes": "n"
    }
   },
   {
@@ -592,9 +593,9 @@
    "gender": "M",
    "body": "x",
    "kit": {
-    "top": "g",
-    "bottom": "z",
-    "shoes": "v"
+    "top": "r",
+    "bottom": "p",
+    "shoes": "g"
    }
   },
   {
@@ -603,9 +604,9 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "z",
-    "bottom": "r",
-    "shoes": "v"
+    "top": "g",
+    "bottom": "p",
+    "shoes": "r"
    }
   },
   {
@@ -614,9 +615,9 @@
    "gender": "M",
    "body": "z",
    "kit": {
-    "top": "g",
-    "bottom": "r",
-    "shoes": "r"
+    "top": "v",
+    "bottom": "p",
+    "shoes": "n"
    }
   },
   {
@@ -626,8 +627,8 @@
    "body": "p",
    "kit": {
     "top": "v",
-    "bottom": "z",
-    "shoes": "l"
+    "bottom": "c",
+    "shoes": "g"
    }
   },
   {
@@ -636,9 +637,9 @@
    "gender": "M",
    "body": "c",
    "kit": {
-    "top": "c",
-    "bottom": "p",
-    "shoes": "v"
+    "top": "z",
+    "bottom": "r",
+    "shoes": "z"
    }
   },
   {
@@ -647,9 +648,9 @@
    "gender": "M",
    "body": "r",
    "kit": {
-    "top": "l",
-    "bottom": "c",
-    "shoes": "c"
+    "top": "x",
+    "bottom": "r",
+    "shoes": "g"
    }
   },
   {
@@ -658,9 +659,9 @@
    "gender": "M",
    "body": "g",
    "kit": {
-    "top": "r",
-    "bottom": "l",
-    "shoes": "n"
+    "top": "x",
+    "bottom": "z",
+    "shoes": "r"
    }
   },
   {
@@ -669,9 +670,9 @@
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "x",
-    "bottom": "p",
-    "shoes": "p"
+    "top": "v",
+    "bottom": "z",
+    "shoes": "l"
    }
   },
   {
@@ -680,9 +681,9 @@
    "gender": "M",
    "body": "l",
    "kit": {
-    "top": "r",
-    "bottom": "c",
-    "shoes": "r"
+    "top": "c",
+    "bottom": "p",
+    "shoes": "v"
    }
   },
   {
@@ -692,8 +693,8 @@
    "body": "x",
    "kit": {
     "top": "l",
-    "bottom": "z",
-    "shoes": "z"
+    "bottom": "c",
+    "shoes": "c"
    }
   },
   {
@@ -702,9 +703,9 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "n",
-    "bottom": "z",
-    "shoes": "r"
+    "top": "r",
+    "bottom": "l",
+    "shoes": "n"
    }
   },
   {
@@ -713,9 +714,9 @@
    "gender": "M",
    "body": "z",
    "kit": {
-    "top": "p",
-    "bottom": "c",
-    "shoes": "x"
+    "top": "x",
+    "bottom": "p",
+    "shoes": "p"
    }
   },
   {
@@ -724,9 +725,9 @@
    "gender": "M",
    "body": "p",
    "kit": {
-    "top": "n",
-    "bottom": "l",
-    "shoes": "c"
+    "top": "r",
+    "bottom": "c",
+    "shoes": "r"
    }
   },
   {
@@ -735,9 +736,9 @@
    "gender": "M",
    "body": "c",
    "kit": {
-    "top": "g",
-    "bottom": "p",
-    "shoes": "p"
+    "top": "l",
+    "bottom": "z",
+    "shoes": "z"
    }
   },
   {
@@ -746,9 +747,9 @@
    "gender": "M",
    "body": "r",
    "kit": {
-    "top": "p",
-    "bottom": "p",
-    "shoes": "n"
+    "top": "n",
+    "bottom": "z",
+    "shoes": "r"
    }
   },
   {
@@ -757,9 +758,9 @@
    "gender": "M",
    "body": "g",
    "kit": {
-    "top": "z",
-    "bottom": "r",
-    "shoes": "g"
+    "top": "r",
+    "bottom": "c",
+    "shoes": "c"
    }
   },
   {
@@ -768,8 +769,8 @@
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "p",
-    "bottom": "r",
+    "top": "c",
+    "bottom": "z",
     "shoes": "g"
    }
   },
@@ -779,9 +780,9 @@
    "gender": "M",
    "body": "l",
    "kit": {
-    "top": "c",
-    "bottom": "l",
-    "shoes": "z"
+    "top": "n",
+    "bottom": "z",
+    "shoes": "x"
    }
   },
   {
@@ -790,9 +791,9 @@
    "gender": "M",
    "body": "x",
    "kit": {
-    "top": "c",
-    "bottom": "r",
-    "shoes": "v"
+    "top": "p",
+    "bottom": "c",
+    "shoes": "x"
    }
   },
   {
@@ -801,9 +802,9 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "g",
+    "top": "n",
     "bottom": "l",
-    "shoes": "x"
+    "shoes": "c"
    }
   },
   {
@@ -812,9 +813,9 @@
    "gender": "M",
    "body": "z",
    "kit": {
-    "top": "v",
-    "bottom": "r",
-    "shoes": "x"
+    "top": "g",
+    "bottom": "p",
+    "shoes": "p"
    }
   },
   {
@@ -823,84 +824,84 @@
    "gender": "M",
    "body": "p",
    "kit": {
-    "top": "n",
-    "bottom": "z",
-    "shoes": "z"
+    "top": "z",
+    "bottom": "r",
+    "shoes": "g"
    }
   },
   {
    "id": "npc_soldier_25",
    "role": "soldier",
    "gender": "F",
-   "body": "a",
+   "body": "w",
    "kit": {
-    "top": "m",
-    "bottom": "j",
-    "shoes": "k"
+    "top": "k",
+    "bottom": "b",
+    "shoes": "q"
    }
   },
   {
    "id": "npc_soldier_26",
    "role": "soldier",
    "gender": "F",
-   "body": "h",
+   "body": "i",
    "kit": {
-    "top": "f",
-    "bottom": "a",
-    "shoes": "s"
+    "cloth": "s",
+    "shoes": "q"
    }
   },
   {
    "id": "npc_soldier_27",
    "role": "soldier",
    "gender": "F",
-   "body": "o",
+   "body": "u",
    "kit": {
-    "top": "u",
-    "bottom": "a",
-    "shoes": "m"
+    "cloth": "q",
+    "shoes": "j"
    }
   },
   {
    "id": "npc_soldier_28",
    "role": "soldier",
    "gender": "F",
-   "body": "y",
+   "body": "h",
    "kit": {
     "top": "u",
-    "bottom": "j",
-    "shoes": "o"
+    "bottom": "d",
+    "shoes": "q"
    }
   },
   {
    "id": "npc_soldier_29",
    "role": "soldier",
    "gender": "F",
-   "body": "f",
+   "body": "s",
    "kit": {
-    "cloth": "s",
-    "shoes": "e"
+    "top": "y",
+    "bottom": "k",
+    "shoes": "y"
    }
   },
   {
    "id": "npc_soldier_30",
    "role": "soldier",
    "gender": "F",
-   "body": "m",
+   "body": "f",
    "kit": {
-    "cloth": "k",
-    "shoes": "f"
+    "top": "f",
+    "bottom": "y",
+    "shoes": "w"
    }
   },
   {
    "id": "npc_soldier_31",
    "role": "soldier",
    "gender": "F",
-   "body": "w",
+   "body": "q",
    "kit": {
     "top": "s",
-    "bottom": "y",
-    "shoes": "k"
+    "bottom": "k",
+    "shoes": "h"
    }
   },
   {
@@ -909,9 +910,9 @@
    "gender": "F",
    "body": "e",
    "kit": {
-    "top": "d",
-    "bottom": "j",
-    "shoes": "m"
+    "top": "h",
+    "bottom": "d",
+    "shoes": "d"
    }
   },
   {
@@ -920,8 +921,8 @@
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "x",
-    "bottom": "l",
+    "top": "g",
+    "bottom": "p",
     "shoes": "x"
    }
   },
@@ -931,8 +932,8 @@
    "gender": "M",
    "body": "l",
    "kit": {
-    "top": "n",
-    "bottom": "c",
+    "top": "v",
+    "bottom": "z",
     "shoes": "v"
    }
   },
@@ -942,9 +943,9 @@
    "gender": "M",
    "body": "x",
    "kit": {
-    "top": "r",
-    "bottom": "c",
-    "shoes": "g"
+    "top": "v",
+    "bottom": "p",
+    "shoes": "n"
    }
   },
   {
@@ -953,9 +954,9 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "x",
-    "bottom": "p",
-    "shoes": "v"
+    "top": "g",
+    "bottom": "z",
+    "shoes": "g"
    }
   },
   {
@@ -964,9 +965,9 @@
    "gender": "M",
    "body": "z",
    "kit": {
-    "top": "r",
-    "bottom": "c",
-    "shoes": "z"
+    "top": "g",
+    "bottom": "l",
+    "shoes": "l"
    }
   },
   {
@@ -975,19 +976,20 @@
    "gender": "M",
    "body": "p",
    "kit": {
-    "top": "r",
-    "bottom": "z",
-    "shoes": "c"
+    "top": "l",
+    "bottom": "p",
+    "shoes": "v"
    }
   },
   {
    "id": "npc_bandit_07",
    "role": "bandit",
    "gender": "F",
-   "body": "i",
+   "body": "k",
    "kit": {
-    "cloth": "m",
-    "shoes": "w"
+    "top": "o",
+    "bottom": "b",
+    "shoes": "j"
    }
   },
   {
@@ -997,40 +999,41 @@
    "body": "r",
    "kit": {
     "top": "p",
-    "bottom": "l",
-    "shoes": "c"
+    "bottom": "r",
+    "shoes": "l"
    }
   },
   {
    "id": "npc_bandit_09",
    "role": "bandit",
    "gender": "F",
-   "body": "a",
+   "body": "j",
    "kit": {
-    "top": "m",
-    "bottom": "b",
-    "shoes": "m"
+    "top": "q",
+    "bottom": "d",
+    "shoes": "b"
    }
   },
   {
    "id": "npc_bandit_10",
    "role": "bandit",
    "gender": "F",
-   "body": "h",
+   "body": "w",
    "kit": {
-    "top": "s",
-    "bottom": "b",
-    "shoes": "o"
+    "top": "j",
+    "bottom": "j",
+    "shoes": "d"
    }
   },
   {
    "id": "npc_bandit_11",
    "role": "bandit",
    "gender": "F",
-   "body": "o",
+   "body": "i",
    "kit": {
-    "cloth": "s",
-    "shoes": "d"
+    "top": "k",
+    "bottom": "j",
+    "shoes": "j"
    }
   },
   {
@@ -1039,9 +1042,9 @@
    "gender": "M",
    "body": "x",
    "kit": {
-    "top": "l",
+    "top": "r",
     "bottom": "c",
-    "shoes": "x"
+    "shoes": "z"
    }
   },
   {
@@ -1050,19 +1053,20 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "x",
+    "top": "c",
     "bottom": "r",
-    "shoes": "z"
+    "shoes": "p"
    }
   },
   {
    "id": "npc_bandit_14",
    "role": "bandit",
    "gender": "F",
-   "body": "m",
+   "body": "s",
    "kit": {
-    "cloth": "e",
-    "shoes": "u"
+    "top": "f",
+    "bottom": "b",
+    "shoes": "q"
    }
   },
   {
@@ -1071,40 +1075,39 @@
    "gender": "M",
    "body": "p",
    "kit": {
-    "top": "n",
-    "bottom": "l",
-    "shoes": "n"
+    "top": "z",
+    "bottom": "c",
+    "shoes": "v"
    }
   },
   {
    "id": "npc_bandit_16",
    "role": "bandit",
    "gender": "F",
-   "body": "e",
+   "body": "q",
    "kit": {
-    "cloth": "m",
-    "shoes": "d"
+    "cloth": "u",
+    "shoes": "i"
    }
   },
   {
    "id": "npc_scholar_01",
    "role": "scholar",
    "gender": "F",
-   "body": "k",
+   "body": "q",
    "kit": {
-    "top": "i",
-    "bottom": "d",
-    "shoes": "i"
+    "cloth": "s",
+    "shoes": "d"
    }
   },
   {
    "id": "npc_scholar_02",
    "role": "scholar",
    "gender": "F",
-   "body": "u",
+   "body": "e",
    "kit": {
-    "top": "b",
-    "bottom": "k",
+    "top": "q",
+    "bottom": "d",
     "shoes": "b"
    }
   },
@@ -1114,9 +1117,9 @@
    "gender": "M",
    "body": "x",
    "kit": {
-    "top": "z",
-    "bottom": "p",
-    "shoes": "g"
+    "top": "v",
+    "bottom": "z",
+    "shoes": "n"
    }
   },
   {
@@ -1125,9 +1128,9 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "x",
-    "bottom": "p",
-    "shoes": "z"
+    "top": "p",
+    "bottom": "l",
+    "shoes": "n"
    }
   },
   {
@@ -1136,9 +1139,9 @@
    "gender": "M",
    "body": "z",
    "kit": {
-    "top": "z",
-    "bottom": "c",
-    "shoes": "n"
+    "top": "l",
+    "bottom": "l",
+    "shoes": "l"
    }
   },
   {
@@ -1147,9 +1150,9 @@
    "gender": "F",
    "body": "b",
    "kit": {
-    "top": "y",
-    "bottom": "a",
-    "shoes": "b"
+    "top": "h",
+    "bottom": "b",
+    "shoes": "s"
    }
   },
   {
@@ -1159,30 +1162,30 @@
    "body": "c",
    "kit": {
     "top": "n",
-    "bottom": "c",
-    "shoes": "g"
+    "bottom": "p",
+    "shoes": "n"
    }
   },
   {
    "id": "npc_scholar_08",
    "role": "scholar",
    "gender": "F",
-   "body": "q",
+   "body": "y",
    "kit": {
-    "top": "s",
-    "bottom": "k",
-    "shoes": "f"
+    "top": "b",
+    "bottom": "y",
+    "shoes": "s"
    }
   },
   {
    "id": "npc_scholar_09",
    "role": "scholar",
    "gender": "F",
-   "body": "a",
+   "body": "j",
    "kit": {
-    "top": "e",
+    "top": "m",
     "bottom": "b",
-    "shoes": "j"
+    "shoes": "m"
    }
   },
   {
@@ -1191,20 +1194,19 @@
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "g",
+    "top": "p",
     "bottom": "c",
-    "shoes": "n"
+    "shoes": "x"
    }
   },
   {
    "id": "npc_scholar_11",
    "role": "scholar",
    "gender": "F",
-   "body": "o",
+   "body": "i",
    "kit": {
-    "top": "a",
-    "bottom": "k",
-    "shoes": "j"
+    "cloth": "s",
+    "shoes": "b"
    }
   },
   {
@@ -1214,30 +1216,28 @@
    "body": "x",
    "kit": {
     "top": "n",
-    "bottom": "c",
-    "shoes": "r"
+    "bottom": "r",
+    "shoes": "x"
    }
   },
   {
    "id": "npc_farmer_01",
    "role": "farmer",
    "gender": "F",
-   "body": "k",
+   "body": "q",
    "kit": {
-    "top": "y",
-    "bottom": "a",
-    "shoes": "j"
+    "cloth": "e",
+    "shoes": "y"
    }
   },
   {
    "id": "npc_farmer_02",
    "role": "farmer",
    "gender": "F",
-   "body": "u",
+   "body": "e",
    "kit": {
-    "top": "h",
-    "bottom": "d",
-    "shoes": "e"
+    "cloth": "e",
+    "shoes": "d"
    }
   },
   {
@@ -1246,31 +1246,29 @@
    "gender": "M",
    "body": "x",
    "kit": {
-    "top": "g",
-    "bottom": "l",
-    "shoes": "r"
+    "top": "z",
+    "bottom": "r",
+    "shoes": "z"
    }
   },
   {
    "id": "npc_farmer_04",
    "role": "farmer",
    "gender": "F",
-   "body": "j",
+   "body": "d",
    "kit": {
-    "top": "q",
-    "bottom": "d",
-    "shoes": "e"
+    "cloth": "k",
+    "shoes": "m"
    }
   },
   {
    "id": "npc_farmer_05",
    "role": "farmer",
    "gender": "F",
-   "body": "s",
+   "body": "m",
    "kit": {
-    "top": "u",
-    "bottom": "a",
-    "shoes": "u"
+    "cloth": "k",
+    "shoes": "f"
    }
   },
   {
@@ -1279,8 +1277,9 @@
    "gender": "F",
    "body": "b",
    "kit": {
-    "cloth": "m",
-    "shoes": "s"
+    "top": "w",
+    "bottom": "k",
+    "shoes": "i"
    }
   },
   {
@@ -1289,30 +1288,31 @@
    "gender": "M",
    "body": "c",
    "kit": {
-    "top": "c",
-    "bottom": "z",
-    "shoes": "p"
+    "top": "v",
+    "bottom": "c",
+    "shoes": "g"
    }
   },
   {
    "id": "npc_farmer_08",
    "role": "farmer",
    "gender": "F",
-   "body": "q",
+   "body": "y",
    "kit": {
-    "cloth": "s",
-    "shoes": "i"
+    "top": "w",
+    "bottom": "d",
+    "shoes": "u"
    }
   },
   {
    "id": "npc_farmer_09",
    "role": "farmer",
    "gender": "F",
-   "body": "a",
+   "body": "j",
    "kit": {
-    "top": "f",
+    "top": "b",
     "bottom": "y",
-    "shoes": "q"
+    "shoes": "f"
    }
   },
   {
@@ -1322,19 +1322,19 @@
    "body": "v",
    "kit": {
     "top": "n",
-    "bottom": "l",
-    "shoes": "p"
+    "bottom": "c",
+    "shoes": "r"
    }
   },
   {
    "id": "npc_farmer_11",
    "role": "farmer",
    "gender": "F",
-   "body": "o",
+   "body": "i",
    "kit": {
-    "top": "y",
-    "bottom": "a",
-    "shoes": "u"
+    "top": "k",
+    "bottom": "b",
+    "shoes": "f"
    }
   },
   {
@@ -1343,9 +1343,9 @@
    "gender": "M",
    "body": "x",
    "kit": {
-    "top": "x",
+    "top": "l",
     "bottom": "p",
-    "shoes": "v"
+    "shoes": "g"
    }
   },
   {
@@ -1354,20 +1354,20 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "x",
+    "top": "g",
     "bottom": "l",
-    "shoes": "x"
+    "shoes": "r"
    }
   },
   {
    "id": "npc_farmer_14",
    "role": "farmer",
    "gender": "F",
-   "body": "m",
+   "body": "s",
    "kit": {
-    "top": "w",
-    "bottom": "d",
-    "shoes": "a"
+    "top": "i",
+    "bottom": "j",
+    "shoes": "d"
    }
   },
   {
@@ -1376,9 +1376,9 @@
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "p",
-    "bottom": "l",
-    "shoes": "n"
+    "top": "g",
+    "bottom": "c",
+    "shoes": "z"
    }
   },
   {
@@ -1387,9 +1387,9 @@
    "gender": "M",
    "body": "l",
    "kit": {
-    "top": "g",
-    "bottom": "l",
-    "shoes": "g"
+    "top": "p",
+    "bottom": "c",
+    "shoes": "p"
    }
   },
   {
@@ -1398,9 +1398,9 @@
    "gender": "M",
    "body": "x",
    "kit": {
-    "top": "z",
+    "top": "v",
     "bottom": "z",
-    "shoes": "g"
+    "shoes": "c"
    }
   },
   {
@@ -1409,9 +1409,9 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "g",
-    "bottom": "r",
-    "shoes": "z"
+    "top": "p",
+    "bottom": "l",
+    "shoes": "x"
    }
   },
   {
@@ -1420,8 +1420,8 @@
    "gender": "M",
    "body": "z",
    "kit": {
-    "top": "p",
-    "bottom": "p",
+    "top": "z",
+    "bottom": "l",
     "shoes": "l"
    }
   },
@@ -1431,9 +1431,9 @@
    "gender": "M",
    "body": "p",
    "kit": {
-    "top": "r",
-    "bottom": "c",
-    "shoes": "p"
+    "top": "l",
+    "bottom": "p",
+    "shoes": "l"
    }
   },
   {
@@ -1442,9 +1442,9 @@
    "gender": "M",
    "body": "c",
    "kit": {
-    "top": "x",
-    "bottom": "l",
-    "shoes": "g"
+    "top": "c",
+    "bottom": "r",
+    "shoes": "n"
    }
   },
   {
@@ -1453,20 +1453,20 @@
    "gender": "M",
    "body": "r",
    "kit": {
-    "top": "v",
-    "bottom": "c",
-    "shoes": "v"
+    "top": "l",
+    "bottom": "p",
+    "shoes": "x"
    }
   },
   {
    "id": "npc_priest_01",
    "role": "priest",
    "gender": "F",
-   "body": "k",
+   "body": "q",
    "kit": {
-    "top": "o",
+    "top": "k",
     "bottom": "b",
-    "shoes": "i"
+    "shoes": "y"
    }
   },
   {
@@ -1475,19 +1475,20 @@
    "gender": "M",
    "body": "l",
    "kit": {
-    "top": "g",
+    "top": "v",
     "bottom": "r",
-    "shoes": "z"
+    "shoes": "r"
    }
   },
   {
    "id": "npc_priest_03",
    "role": "priest",
    "gender": "F",
-   "body": "d",
+   "body": "o",
    "kit": {
-    "cloth": "m",
-    "shoes": "s"
+    "top": "e",
+    "bottom": "k",
+    "shoes": "j"
    }
   },
   {
@@ -1496,9 +1497,9 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "c",
-    "bottom": "p",
-    "shoes": "r"
+    "top": "p",
+    "bottom": "z",
+    "shoes": "x"
    }
   },
   {
@@ -1507,9 +1508,9 @@
    "gender": "M",
    "body": "z",
    "kit": {
-    "top": "n",
-    "bottom": "p",
-    "shoes": "r"
+    "top": "r",
+    "bottom": "c",
+    "shoes": "p"
    }
   },
   {
@@ -1518,9 +1519,9 @@
    "gender": "F",
    "body": "b",
    "kit": {
-    "top": "s",
-    "bottom": "a",
-    "shoes": "k"
+    "top": "f",
+    "bottom": "b",
+    "shoes": "f"
    }
   },
   {
@@ -1530,8 +1531,8 @@
    "body": "c",
    "kit": {
     "top": "g",
-    "bottom": "c",
-    "shoes": "x"
+    "bottom": "z",
+    "shoes": "g"
    }
   },
   {
@@ -1540,9 +1541,9 @@
    "gender": "M",
    "body": "r",
    "kit": {
-    "top": "p",
-    "bottom": "p",
-    "shoes": "p"
+    "top": "g",
+    "bottom": "r",
+    "shoes": "z"
    }
   },
   {
@@ -1551,9 +1552,9 @@
    "gender": "M",
    "body": "g",
    "kit": {
-    "top": "x",
-    "bottom": "l",
-    "shoes": "c"
+    "top": "p",
+    "bottom": "p",
+    "shoes": "l"
    }
   },
   {
@@ -1562,9 +1563,9 @@
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "c",
-    "bottom": "l",
-    "shoes": "g"
+    "top": "r",
+    "bottom": "c",
+    "shoes": "p"
    }
   },
   {
@@ -1573,9 +1574,9 @@
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "v",
-    "bottom": "r",
-    "shoes": "n"
+    "top": "x",
+    "bottom": "l",
+    "shoes": "g"
    }
   },
   {
@@ -1584,9 +1585,9 @@
    "gender": "M",
    "body": "l",
    "kit": {
-    "top": "g",
-    "bottom": "r",
-    "shoes": "x"
+    "top": "v",
+    "bottom": "c",
+    "shoes": "v"
    }
   },
   {
@@ -1595,9 +1596,9 @@
    "gender": "M",
    "body": "x",
    "kit": {
-    "top": "c",
+    "top": "r",
     "bottom": "r",
-    "shoes": "p"
+    "shoes": "r"
    }
   },
   {
@@ -1606,20 +1607,20 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "c",
-    "bottom": "z",
-    "shoes": "c"
+    "top": "n",
+    "bottom": "l",
+    "shoes": "g"
    }
   },
   {
    "id": "npc_era_past_05",
    "role": "era_past",
    "gender": "F",
-   "body": "s",
+   "body": "m",
    "kit": {
-    "top": "h",
-    "bottom": "a",
-    "shoes": "h"
+    "top": "e",
+    "bottom": "b",
+    "shoes": "i"
    }
   },
   {
@@ -1628,20 +1629,20 @@
    "gender": "M",
    "body": "p",
    "kit": {
-    "top": "l",
-    "bottom": "p",
-    "shoes": "x"
+    "top": "v",
+    "bottom": "c",
+    "shoes": "p"
    }
   },
   {
    "id": "npc_era_past_07",
    "role": "era_past",
    "gender": "F",
-   "body": "i",
+   "body": "k",
    "kit": {
-    "top": "j",
+    "top": "i",
     "bottom": "d",
-    "shoes": "k"
+    "shoes": "s"
    }
   },
   {
@@ -1650,19 +1651,20 @@
    "gender": "M",
    "body": "r",
    "kit": {
-    "top": "g",
-    "bottom": "c",
-    "shoes": "l"
+    "top": "p",
+    "bottom": "p",
+    "shoes": "z"
    }
   },
   {
    "id": "npc_era_past_09",
    "role": "era_past",
    "gender": "F",
-   "body": "a",
+   "body": "j",
    "kit": {
-    "cloth": "s",
-    "shoes": "b"
+    "top": "d",
+    "bottom": "j",
+    "shoes": "d"
    }
   },
   {
@@ -1672,8 +1674,8 @@
    "body": "v",
    "kit": {
     "top": "c",
-    "bottom": "p",
-    "shoes": "g"
+    "bottom": "r",
+    "shoes": "p"
    }
   },
   {
@@ -1682,20 +1684,20 @@
    "gender": "M",
    "body": "l",
    "kit": {
-    "top": "x",
-    "bottom": "c",
-    "shoes": "c"
+    "top": "r",
+    "bottom": "p",
+    "shoes": "x"
    }
   },
   {
    "id": "npc_era_past_12",
    "role": "era_past",
    "gender": "F",
-   "body": "y",
+   "body": "u",
    "kit": {
-    "top": "s",
-    "bottom": "b",
-    "shoes": "a"
+    "top": "q",
+    "bottom": "d",
+    "shoes": "b"
    }
   },
   {
@@ -1704,8 +1706,8 @@
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "x",
-    "bottom": "p",
+    "top": "c",
+    "bottom": "l",
     "shoes": "g"
    }
   },
@@ -1713,21 +1715,22 @@
    "id": "npc_era_present_02",
    "role": "era_present",
    "gender": "F",
-   "body": "u",
+   "body": "e",
    "kit": {
-    "top": "b",
-    "bottom": "j",
-    "shoes": "e"
+    "top": "f",
+    "bottom": "b",
+    "shoes": "k"
    }
   },
   {
    "id": "npc_era_present_03",
    "role": "era_present",
    "gender": "F",
-   "body": "d",
+   "body": "o",
    "kit": {
-    "cloth": "k",
-    "shoes": "y"
+    "top": "b",
+    "bottom": "k",
+    "shoes": "h"
    }
   },
   {
@@ -1737,18 +1740,19 @@
    "body": "n",
    "kit": {
     "top": "c",
-    "bottom": "r",
-    "shoes": "r"
+    "bottom": "z",
+    "shoes": "c"
    }
   },
   {
    "id": "npc_era_present_05",
    "role": "era_present",
    "gender": "F",
-   "body": "s",
+   "body": "m",
    "kit": {
-    "cloth": "e",
-    "shoes": "m"
+    "top": "y",
+    "bottom": "d",
+    "shoes": "d"
    }
   },
   {
@@ -1758,8 +1762,8 @@
    "body": "p",
    "kit": {
     "top": "l",
-    "bottom": "p",
-    "shoes": "c"
+    "bottom": "l",
+    "shoes": "p"
    }
   },
   {
@@ -1768,19 +1772,18 @@
    "gender": "M",
    "body": "c",
    "kit": {
-    "top": "z",
-    "bottom": "l",
-    "shoes": "z"
+    "top": "p",
+    "bottom": "p",
+    "shoes": "g"
    }
   },
   {
    "id": "npc_era_present_08",
    "role": "era_present",
    "gender": "F",
-   "body": "q",
+   "body": "y",
    "kit": {
-    "top": "d",
-    "bottom": "b",
+    "cloth": "k",
     "shoes": "f"
    }
   },
@@ -1790,9 +1793,9 @@
    "gender": "M",
    "body": "g",
    "kit": {
-    "top": "g",
+    "top": "z",
     "bottom": "z",
-    "shoes": "x"
+    "shoes": "c"
    }
   },
   {
@@ -1801,9 +1804,9 @@
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "v",
-    "bottom": "l",
-    "shoes": "n"
+    "top": "c",
+    "bottom": "p",
+    "shoes": "g"
    }
   },
   {
@@ -1812,9 +1815,9 @@
    "gender": "M",
    "body": "l",
    "kit": {
-    "top": "g",
+    "top": "x",
     "bottom": "c",
-    "shoes": "z"
+    "shoes": "c"
    }
   },
   {
@@ -1823,9 +1826,9 @@
    "gender": "M",
    "body": "x",
    "kit": {
-    "top": "z",
-    "bottom": "c",
-    "shoes": "g"
+    "top": "v",
+    "bottom": "l",
+    "shoes": "z"
    }
   },
   {
@@ -1836,40 +1839,39 @@
    "kit": {
     "top": "c",
     "bottom": "r",
-    "shoes": "x"
+    "shoes": "r"
    }
   },
   {
    "id": "npc_era_future_02",
    "role": "era_future",
    "gender": "F",
-   "body": "u",
+   "body": "e",
    "kit": {
-    "top": "w",
-    "bottom": "a",
-    "shoes": "w"
+    "top": "d",
+    "bottom": "j",
+    "shoes": "e"
    }
   },
   {
    "id": "npc_era_future_03",
    "role": "era_future",
    "gender": "F",
-   "body": "d",
+   "body": "o",
    "kit": {
-    "top": "f",
-    "bottom": "j",
-    "shoes": "u"
+    "cloth": "q",
+    "shoes": "o"
    }
   },
   {
    "id": "npc_era_future_04",
    "role": "era_future",
    "gender": "F",
-   "body": "j",
+   "body": "d",
    "kit": {
-    "top": "m",
-    "bottom": "a",
-    "shoes": "a"
+    "top": "b",
+    "bottom": "y",
+    "shoes": "e"
    }
   },
   {
@@ -1878,9 +1880,9 @@
    "gender": "M",
    "body": "z",
    "kit": {
-    "top": "p",
+    "top": "z",
     "bottom": "r",
-    "shoes": "l"
+    "shoes": "c"
    }
   },
   {
@@ -1889,28 +1891,30 @@
    "gender": "F",
    "body": "b",
    "kit": {
-    "cloth": "u",
-    "shoes": "m"
+    "top": "q",
+    "bottom": "j",
+    "shoes": "e"
    }
   },
   {
    "id": "npc_era_future_07",
    "role": "era_future",
    "gender": "F",
-   "body": "i",
+   "body": "k",
    "kit": {
-    "cloth": "s",
-    "shoes": "u"
+    "top": "d",
+    "bottom": "j",
+    "shoes": "q"
    }
   },
   {
    "id": "npc_era_future_08",
    "role": "era_future",
    "gender": "F",
-   "body": "q",
+   "body": "y",
    "kit": {
-    "cloth": "s",
-    "shoes": "u"
+    "cloth": "m",
+    "shoes": "w"
    }
   },
   {
@@ -1919,9 +1923,9 @@
    "gender": "M",
    "body": "g",
    "kit": {
-    "top": "c",
+    "top": "l",
     "bottom": "p",
-    "shoes": "l"
+    "shoes": "c"
    }
   },
   {
@@ -1930,31 +1934,30 @@
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "p",
-    "bottom": "z",
-    "shoes": "v"
+    "top": "z",
+    "bottom": "l",
+    "shoes": "z"
    }
   },
   {
    "id": "npc_era_future_11",
    "role": "era_future",
    "gender": "F",
-   "body": "o",
+   "body": "i",
    "kit": {
-    "top": "q",
-    "bottom": "b",
-    "shoes": "d"
+    "top": "d",
+    "bottom": "d",
+    "shoes": "e"
    }
   },
   {
    "id": "npc_era_future_12",
    "role": "era_future",
    "gender": "F",
-   "body": "y",
+   "body": "u",
    "kit": {
-    "top": "y",
-    "bottom": "k",
-    "shoes": "m"
+    "cloth": "k",
+    "shoes": "d"
    }
   }
  ]

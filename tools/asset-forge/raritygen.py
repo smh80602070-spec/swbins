@@ -21,6 +21,7 @@ sys.path.insert(0, HERE)
 import vfxgen as V  # noqa: E402
 
 OUT = os.path.join(HERE, '_out', 'rarity')
+CANON = os.path.join(HERE, '..', '..', 'saga-assets', 'rarity')   # --check 는 정본을 본다(_out 은 gitignore·PC 마다 다름, K-0088)
 CW, CH = 160, 224
 SS = 4
 
@@ -211,6 +212,10 @@ def build():
 
 
 def check():
+    global OUT
+    if os.path.isdir(CANON):
+        OUT = CANON
+    print('검사 대상:', os.path.relpath(OUT, os.path.join(HERE, '..', '..')))
     bad = []
     total = 0
     R = json.load(open(os.path.join(OUT, 'rarity_plan.json'), encoding='utf-8'))['rarity']
