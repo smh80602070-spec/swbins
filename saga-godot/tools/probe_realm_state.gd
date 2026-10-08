@@ -403,7 +403,8 @@ func _initialize() -> void:
 	var food0b: int = S.cities.xuchang.food
 	S.next_month()
 	check(S.gold == 1000 + inc - 12 * S.roster.size() and S.month == m0 + 1 and S.cities.xuchang.sec == sec0 - 1 and S._done_this_month.is_empty(), "월 진행: 금 += 수입(상업×0.55×치안·통치) - 무장 유지비 12 · 치안 -1 · 달 +1 · 명령 기록 비움(수입 %d)" % inc)
-	check(S.cities.xuchang.food == food0b - Orders.food_upkeep(int(S.cities.xuchang.troops)) or S.cities.xuchang.food == food0b, "수확 달이 아니면 군량은 늘지 않음(유지비만)")
+	## G-0118 — 예전엔 "유지비만 빠짐 또는 그대로" 둘 다 통과였다. 수확 달이 아닌 달만 재고, 유지비만큼 정확히.
+	check(not (m0 in Orders.HARVEST_MONTHS) and not (S.month in Orders.HARVEST_MONTHS) and S.cities.xuchang.food == food0b - Orders.food_upkeep(int(S.cities.xuchang.troops)), "수확 달이 아니면 군량은 늘지 않음(유지비 %d 만)" % Orders.food_upkeep(int(S.cities.xuchang.troops)))
 	_reset()
 	S.month = 6
 	S.cities.xuchang.troops = 1000
@@ -629,9 +630,9 @@ func _initialize() -> void:
 	S.resolve_event(0, 0)
 	check(S.officer_ambition[zid].prog == 1 and S.active_events.is_empty(), "숙적 이벤트의 공격 선택은 야망 진행 +1")
 	S.active_events = [{"id": "militant_challenge", "officer": zid, "due_month": 11, "due_year": 194}]
-	var ex0: int = S._growth(zid).exp
+	S.officer_growth.erase(zid)   # G-0118 — 1레벨·경험치 0 에서(1레벨 필요 28 > 15 라 레벨이 안 오름) 정확히 +15 인지
 	S.resolve_event(0, 0)
-	check(S.officer_growth[zid].exp != ex0 or S.officer_growth[zid].lv > 1, "응한다 → 경험치 +15 · 3달 뒤 재대결 체인")
+	check(int(S.officer_growth[zid].exp) == 15 and int(S.officer_growth[zid].lv) == 1, "응한다 → 경험치 +15 · 3달 뒤 재대결 체인")
 	check(S.active_events.size() == 1 and S.active_events[0].id == "militant_rematch" and S.active_events[0].due_month == 2 and S.active_events[0].due_year == 195, "대련 체인: 3달 뒤 재대결")
 	_reset()
 	S.active_events = [{"id": "x", "officer": zid, "due_month": 1, "due_year": 194}, {"id": "y", "officer": zid, "due_month": 1, "due_year": 194}]

@@ -108,7 +108,8 @@ func _initialize() -> void:
 	var before: Array = P.party().duplicate()
 	var second: String = String(Story.MEMBERS.keys()[1])
 	P.recruit(second)
-	check(P.members.has(second) and (P.party() == before or P.party() == before + [second]), "다음 동료를 부르면 명단에 듦 · 편성 칸이 차 있으면 그대로(%d → %d명)" % [before.size(), P.party().size()])
+	var want_party: Array = before + [second] if before.size() < P.PARTY_MAX else before   # G-0118 — 칸이 비면 들어가고, 차면 그대로(둘 다 정답이던 것)
+	check(P.members.has(second) and P.party() == want_party, "다음 동료를 부르면 명단에 듦 · 편성 칸이 차 있으면 그대로(%d → %d명)" % [before.size(), P.party().size()])
 	var dup := {}
 	for x in P.party():
 		dup[x] = true

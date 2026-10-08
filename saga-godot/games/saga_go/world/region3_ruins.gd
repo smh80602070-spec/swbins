@@ -191,9 +191,10 @@ func _travel_to_harbor(player: Node3D) -> void:
 ## _build_whalebone()과 같은 결(선택지 없는 순수 발견, primitive
 ## 하나+`_add_discovery_area()`) — 모양만 넷이 서로 달라 한눈에 구별된다.
 func _build_debris() -> void:
-	var ground: float = TerrainBuilder.LEGEND["T"].height
 	for d in DEBRIS:
-		var pos: Vector3 = TestMap.world_pos(d.grid.x, d.grid.y, RUINS_REGION) + Vector3(0, ground, 0)
+		## G-0118 — 칸 표 높이(0.15)가 아니라 실제 땅(기복 0~2.4m)에 앉힌다 — 잔해 칸이 평탄 자리로 안 모여 묻히던 것.
+		var flat: Vector3 = TestMap.world_pos(d.grid.x, d.grid.y, RUINS_REGION)
+		var pos: Vector3 = flat + Vector3(0, TerrainBuilder.height_at(RUINS_REGION, flat), 0)
 		var mi := MeshInstance3D.new()
 		match d.shape:
 			"box":

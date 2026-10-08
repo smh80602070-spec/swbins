@@ -91,6 +91,9 @@ func swap_body(body: Node3D, keep: Array = []) -> void:
 	add_child(body)
 	move_child(body, 1)
 	visual = body
+	for c in get_children():   # G-0118 — 카메라 가까이 흐림이 옛 몸(해제됨)을 들고 있지 않게
+		if c.has_method("refresh_visual_meshes"):
+			c.call("refresh_visual_meshes")
 	_anim = visual.find_child("AnimationPlayer", true, false)
 	_current_anim = ""
 	_play_anim("idle")

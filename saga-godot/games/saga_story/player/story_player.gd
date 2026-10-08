@@ -499,7 +499,12 @@ func _walk(delta: float) -> void:
 ## 충돌 미확인 — 다음에 볼 자리, w_rush 머리말과 같은 한계). 웹판의 대시
 ## 잔상(3프레임)은 새 VFX라 이번엔 뺐다.
 func _try_dash() -> void:
-	if _dash_cd_left > 0.0 or not Input.is_action_just_pressed("story_dash"):
+	if Input.is_action_just_pressed("story_dash"):
+		_do_dash()
+
+## 대시 한 번(쿨다운 중이면 안 함) — 입력과 떼어 점검이 바로 부른다(G-0118).
+func _do_dash() -> void:
+	if _dash_cd_left > 0.0:
 		return
 	_dash_cd_left = DASH_COOLDOWN
 	global_position.x += DASH_DIST_M * _facing

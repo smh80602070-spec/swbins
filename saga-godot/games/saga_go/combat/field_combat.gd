@@ -592,9 +592,9 @@ func attack() -> bool:
 
 ## 강공격 — 기본 공격 단추를 CHARGE_SEC 넘게 누르고 있으면. 앞쪽 넓게 한 번, 스태미나를 쓴다.
 func charged_attack() -> bool:
-	FeelTuning.kind = "heavy"
 	if not _grounded_ok() or float(_player.get("stamina")) < CHARGE_COST:
 		return false
+	FeelTuning.kind = "heavy"   # G-0118 — 실패하면 안 바꾼다(남으면 그 프레임 다른 타격이 강공격 손맛으로 나감)
 	_player.call("_spend", CHARGE_COST)
 	_combo = 0
 	_attack_t = 0.5
@@ -654,10 +654,10 @@ func infusion_of(id: String) -> String:
 	return String(inf.el) if float(inf.get("left", 0.0)) > 0.0 else ""
 
 func skill() -> bool:
-	FeelTuning.kind = "skill"
 	var id := active_id()
 	if _skill_cd.get(id, 0.0) > 0.0 or not _grounded_ok():
 		return false
+	FeelTuning.kind = "skill"   # G-0118 — 실패 검사 뒤에
 	_skill_cd[id] = skill_cd_of(id)
 	var el := active_element()
 	var atk := char_atk(id) * PartyState.talent_mul(id, "skill") * PartyState.passive_mul(id, "skill")
@@ -718,9 +718,9 @@ func skill() -> bool:
 	return true
 
 func burst() -> bool:
-	FeelTuning.kind = "burst"
 	if energy < ENERGY_MAX or not _grounded_ok():
 		return false
+	FeelTuning.kind = "burst"   # G-0118 — 실패 검사 뒤에
 	energy = 0.0
 	Voice.say("shout", active_id(), true)   # 필살은 늘 외친다
 	var el := active_element()

@@ -41,6 +41,19 @@ func _has_key(action: String, keycode: int) -> bool:
 	return false
 
 
+## 키 칸 낱말 — "마우스 왼쪽 · J" → 칸 통째·J·마우스 왼쪽·마우스… / "F1 · 왼쪽 가운데 \"메뉴\"" → F1… (설명 칸은 안 본다).
+func _key_cells() -> Dictionary:
+	var out := {}
+	for sec in Help.SECTIONS:
+		for line in sec.lines:
+			var cell := String(line[0])
+			out[cell] = true
+			for part in cell.split(" · "):
+				out[part.strip_edges()] = true
+				out[part.strip_edges().split(" ")[0]] = true
+	return out
+
+
 func _all_text() -> String:
 	var s := ""
 	for sec in Help.SECTIONS:
@@ -84,11 +97,12 @@ func _run() -> void:
 	for pr in pairs:
 		if not _has_key(String(pr[0]), int(pr[1])):
 			wrong.append(String(pr[0]))
-	var txt := _all_text()
+	## G-0118 — 키는 줄의 키 칸에서만 찾는다(예전엔 글 전체 부분 문자열이라 F1 줄 설명의 "H·Z·P·I·T·N" 만으로 통과했다).
+	var txt := _key_cells()
 	var mention := ["Shift", "Space", "J", "E · K", "F1", "I", "T", "N", "V", "M", "C", "G", "U", "O", "Y", "F", "H", "Z", "P"]
 	var missing: Array = []
 	for m in mention:
-		if not txt.contains(String(m)):
+		if not txt.has(String(m)):
 			missing.append(m)
 	_check("keys_match", wrong.is_empty() and missing.is_empty(), "wrong=%s missing=%s" % [wrong, missing])
 

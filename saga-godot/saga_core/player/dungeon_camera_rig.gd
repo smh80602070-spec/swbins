@@ -38,6 +38,15 @@ func _ready() -> void:
 		_visual_meshes = CameraNearFade.collect_meshes(visual)
 
 
+## G-0118 — 플레이어가 몸을 갈아 끼우면(player.swap_body) 가까이 흐림 대상을 새 몸으로 다시 모은다.
+func refresh_visual_meshes() -> void:
+	var visual := get_parent().get_node_or_null("Visual")
+	if visual:
+		_visual_meshes = CameraNearFade.collect_meshes(visual)
+	else:
+		_visual_meshes.clear()
+
+
 func _process(_delta: float) -> void:
 	if Time.get_ticks_msec() < _shake_until_msec:
 		position = _rest_pos + Vector3(

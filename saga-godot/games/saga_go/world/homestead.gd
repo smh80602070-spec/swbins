@@ -28,6 +28,7 @@ var _body: VBoxContainer
 var _prompt_btn: Button
 var _refresh_t := 0.0
 var _signature := ""
+var _pend_t := 0.0 # G-0118 — 단추 글(쌓인 냥)은 보일 때만 0.25초마다(매 틱 pending() 이 소품×물건표를 훑었다)
 
 
 func _ready() -> void:
@@ -130,8 +131,11 @@ func _physics_process(delta: float) -> void:
 		_player = get_tree().get_first_node_in_group("player") as Node3D
 		return
 	_prompt_btn.visible = not is_open and not bool(_player.get("frozen")) and near() and not get_tree().has_group("go_hud_menu")
-	var pend := Homestead.pending()
-	_prompt_btn.text = "쉼터 (T)" + (" ●%d냥" % pend if pend >= 100 else "")
+	_pend_t -= delta
+	if _prompt_btn.visible and _pend_t <= 0.0:
+		_pend_t = 0.25
+		var pend := Homestead.pending()
+		_prompt_btn.text = "쉼터 (T)" + (" ●%d냥" % pend if pend >= 100 else "")
 	if is_open:
 		_refresh_t -= delta
 		if _refresh_t <= 0.0:

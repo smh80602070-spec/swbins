@@ -129,5 +129,6 @@ func _physics_process(delta: float) -> void:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST or what == NOTIFICATION_APPLICATION_PAUSED or what == NOTIFICATION_APPLICATION_FOCUS_OUT:
-		if signature() != _sig:
+		## G-0118 — 서명에 없는 위치·알 걸음·동행 거리도 있으니 떠날 땐 서명을 안 보고 저장(방금 저장했으면 건너뜀).
+		if _since >= 1.0 or signature() != _sig:
 			try_save("떠남")

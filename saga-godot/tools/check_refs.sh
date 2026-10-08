@@ -9,7 +9,8 @@ cd "$(dirname "$0")/.." || exit 1
 bad=0
 for dir in games/saga_*/; do
   x="$(basename "$dir")"
-  hits=$(grep -rIn --include=*.gd --include=*.tscn --include=*.tres "res://games/saga_" "$dir" | grep -v "res://games/$x/" | grep -v "check_refs:allow" | cut -c1-200)
+  # G-0118 — 줄 통째로 자기 판 경로를 빼면 같은 줄의 남의 판 경로도 빠졌다. 줄 안의 경로마다 판 이름을 본다.
+  hits=$(grep -rIn --include=*.gd --include=*.tscn --include=*.tres "res://games/saga_" "$dir" | grep -v "check_refs:allow" | awk -v x="$x" '{ s = $0; bad = 0; while (match(s, "res:..games.saga_[a-z_]+/")) { if (substr(s, RSTART + 12, RLENGTH - 13) != x) bad = 1; s = substr(s, RSTART + RLENGTH) } if (bad) print substr($0, 1, 200) }')
   if [ -n "$hits" ]; then
     echo "$hits"
     bad=1

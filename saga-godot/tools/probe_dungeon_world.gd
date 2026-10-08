@@ -125,6 +125,10 @@ func _initialize() -> void:
 			boss_ok = boss_ok and b.is_boss and b.elite_key == "" and b.max_hp == roundf(24.0 * pow(1.26, f - 1) * 7.0) and b.attack_damage == roundf(5.0 * pow(1.20, f - 1) * 2.2) and b.resist.is_empty()
 			b.free()
 	check(boss_ok, "보스(3·6·9층): 체력 ×7 · 공격 ×2.2 · 정예가 안 붙음")
+	## G-0118 — 배경음: 층 보스가 서 있어도 곁(한 방 안)이 아니면 들판곡, 곁이거나 난입이면 전투곡
+	var far_boss := Vector3(0, 0, -2.0 * Room.ROOM_SPACING)
+	check(Room.pick_bgm(false, Vector3.ZERO, [far_boss]) == "dungeon-field" and Room.pick_bgm(false, far_boss + Vector3(0, 0, 3), [far_boss]) == "dungeon-battle"
+		and Room.pick_bgm(true, Vector3.ZERO, []) == "dungeon-battle" and Room.pick_bgm(false, Vector3.INF, [far_boss]) == "dungeon-field", "배경음: 먼 층 보스는 들판곡 · 보스 곁·난입은 전투곡")
 	var shade_ok := true
 	for n in 60:
 		var sh = Enemy.new(5, false, true, true)

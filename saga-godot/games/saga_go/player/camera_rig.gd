@@ -88,7 +88,7 @@ func set_aim(on: bool) -> void:
 	var body := get_parent() as CollisionObject3D
 	if on:
 		_pre_aim_len = spring_arm.spring_length
-		_base_fov = cam.fov
+		_base_fov = cam.fov + _punch_applied   # G-0118 — 타격 당김(좁힌 만큼)을 빼고 잰 원래 시야각
 		if body:
 			spring_arm.add_excluded_object(body.get_rid())
 	else:
@@ -101,14 +101,14 @@ func _process_aim(delta: float) -> void:
 	var k := 1.0 - exp(-AIM_BLEND * delta)
 	var want_len := AIM_LEN if aiming else _pre_aim_len
 	var want_off := AIM_OFFSET if aiming else Vector3.ZERO
-	var want_fov := AIM_FOV if aiming else _base_fov
+	var want_fov := AIM_FOV if aiming else _base_fov - _punch_applied
 	spring_arm.spring_length = lerpf(spring_arm.spring_length, want_len, k)
 	spring_arm.position = spring_arm.position.lerp(want_off, k)
 	cam.fov = lerpf(cam.fov, want_fov, k)
 	if not aiming and spring_arm.position.length() < 0.01:
 		spring_arm.position = Vector3.ZERO
 		spring_arm.spring_length = _pre_aim_len
-		cam.fov = _base_fov
+		cam.fov = _base_fov - _punch_applied   # G-0118 — 당김 중이면 그만큼 뺀 자리(_apply_punch 가 되돌림)
 
 func _aim_settled() -> bool:
 	return not aiming and spring_arm.position == Vector3.ZERO
@@ -121,6 +121,15 @@ func _ready() -> void:
 	var visual := get_parent().get_node_or_null("Visual")
 	if visual:
 		_visual_meshes = CameraNearFade.collect_meshes(visual)
+
+
+## G-0118 — 플레이어가 몸을 갈아 끼우면(player.swap_body) 가까이 흐림 대상을 새 몸으로 다시 모은다.
+func refresh_visual_meshes() -> void:
+	var visual := get_parent().get_node_or_null("Visual")
+	if visual:
+		_visual_meshes = CameraNearFade.collect_meshes(visual)
+	else:
+		_visual_meshes.clear()
 
 
 ## 2026-09-29 — 카메라 끈(SpringArm3D, collision_mask 1)이 적 몸(CharacterBody3D, 같은 층)에도 걸려, 적이 플레이어와 카메라

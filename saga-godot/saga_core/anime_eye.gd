@@ -159,9 +159,19 @@ static func closed_texture_for(base: Texture2D, skin: Color) -> Texture2D:
 	return tex
 
 ## 몸 안 살갗 재질 텍스처를 성기게 훑어 평균 살색을 낸다(감은 눈 채우기용).
+## G-0118 — 텍스처마다 한 번만 잰다(get_image 는 GPU 에서 통째로 읽고 압축을 푼다 — 몸을 지을 때마다 끊겼다).
+static var _skin_avg_cache: Dictionary = {}
 static func skin_average(tex: Texture2D) -> Color:
 	if tex == null:
 		return Color(0.8, 0.6, 0.5)
+	var ck: Variant = tex.resource_path if tex.resource_path != "" else tex.get_rid()
+	if _skin_avg_cache.has(ck):
+		return _skin_avg_cache[ck]
+	var c := _skin_average_raw(tex)
+	_skin_avg_cache[ck] = c
+	return c
+
+static func _skin_average_raw(tex: Texture2D) -> Color:
 	var img := tex.get_image()
 	if img == null:
 		return Color(0.8, 0.6, 0.5)

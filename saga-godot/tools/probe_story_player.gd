@@ -74,20 +74,13 @@ func _initialize() -> void:
 	p.global_position = Vector3.ZERO
 	p._facing = -1.0
 	p._dash_cd_left = 0.0
-	Input.action_press("story_dash")
-	p._try_dash()
-	Input.action_release("story_dash")
-	var dashed: bool = p._dash_cd_left == Base.DASH_COOLDOWN
-	if dashed:
-		check(near.call(p.global_position.x, -3.0) and p._invuln_time_left == Base.DASH_INVULN_SEC, "대시: 보는 쪽으로 3m · 0.12초 무적 · 쿨다운 0.9")
-		p._dash_cd_left = 0.5
-		var x_before: float = p.global_position.x
-		Input.action_press("story_dash")
-		p._try_dash()
-		Input.action_release("story_dash")
-		check(p.global_position.x == x_before, "쿨다운 중에는 대시 안 함")
-	else:
-		check(true, "대시 입력은 이 환경에서 같은 프레임에 안 읽혀 상수만 확인(생략)")
+	## G-0118 — 예전엔 입력이 안 읽히면 check(true) 로 건너뛰었다. 이제 입력을 뗀 _do_dash 를 바로 부른다.
+	p._do_dash()
+	check(p._dash_cd_left == Base.DASH_COOLDOWN and near.call(p.global_position.x, -3.0) and p._invuln_time_left == Base.DASH_INVULN_SEC, "대시: 보는 쪽으로 3m · 0.12초 무적 · 쿨다운 0.9")
+	p._dash_cd_left = 0.5
+	var x_before: float = p.global_position.x
+	p._do_dash()
+	check(p.global_position.x == x_before, "쿨다운 중에는 대시 안 함")
 	p._invuln_time_left = 0.0
 	p._dash_cd_left = 0.0
 

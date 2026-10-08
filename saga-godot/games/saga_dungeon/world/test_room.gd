@@ -129,11 +129,31 @@ var _scenario: Node   # G-0085 이야기 엔진(world/scenario_runner.gd)
 var _session_start_cleared := 0  # 표준 B(세션 카드) — 이번 세션에 새로 연 방 수 계산용
 
 
+## 배경음 고르기(1초마다, bgm_picker) — 난입 중이거나 살아 있는 층 보스가 플레이어 곁(BOSS_BGM_M, 한 방 안)이면 전투곡.
+## G-0118 — 예전엔 "보스 무리에 아무나 있으면"이라, 3·6층 보스가 처음부터 서 있는 이 씬은 늘 전투곡이었다.
+const BOSS_BGM_M := 10.0
+func bgm_key() -> String:
+	var p := get_tree().get_first_node_in_group("player") as Node3D
+	var bosses: Array = []
+	for b in get_tree().get_nodes_in_group("dungeon_boss"):
+		if b is Node3D:
+			bosses.append((b as Node3D).global_position)
+	return pick_bgm(DungeonHordeState.active, p.global_position if p != null else Vector3.INF, bosses)
+
+static func pick_bgm(horde: bool, player_pos: Vector3, boss_positions: Array) -> String:
+	if horde:
+		return "dungeon-battle"
+	for bp: Vector3 in boss_positions:
+		if bp.distance_to(player_pos) < BOSS_BGM_M:
+			return "dungeon-battle"
+	return "dungeon-field"
+
+
 func _ready() -> void:
 	## 가로 화면이면 UI 기준 크기를 바꿔 글자가 깨알만 하지 않게 + 기술 단추 줄이 길면 옆 줄로(hud_column_layout.gd).
 	add_child(preload("res://saga_core/ui/orientation_scale.gd").new())
 	add_child(preload("res://games/saga_dungeon/ui/hud_column_layout.gd").new())
-	preload("res://saga_core/audio/bgm_picker.gd").attach(self, func() -> String: return "dungeon-battle" if DungeonHordeState.active or get_tree().get_first_node_in_group("dungeon_boss") != null else "dungeon-field")  # 배경음(G-0013) — 난입·월드 보스 중이면 전투곡
+	preload("res://saga_core/audio/bgm_picker.gd").attach(self, bgm_key)  # 배경음(G-0013) — 난입·보스 곁이면 전투곡
 	for i in range(ROOM_COUNT):
 		var origin_z := -float(i) * ROOM_SPACING
 		_room_origin_z.append(origin_z)

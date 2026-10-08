@@ -221,6 +221,10 @@ func _physics_process(_delta: float) -> void:
 				_p.set_hero_body("dj_doseo")
 			if _frame == 3:
 				_check("rod_keeps", _p.visual.get_node_or_null("FishingRod") != null, "body=%s" % str(_p._body_id))
+				## G-0118 — 몸을 바꾼 뒤 카메라 가까이 흐림 대상이 새 몸 조각(해제된 옛 몸 아님)
+				var rig := _p.get_node_or_null("CameraRig")
+				var fm: Array = rig.get("_visual_meshes") if rig else []
+				_check("near_fade_swap", not fm.is_empty() and fm.all(func(m): return is_instance_valid(m) and _p.visual.is_ancestor_of(m)), "meshes=%d" % fm.size())
 				_next()
 		17: # ⑱ G-0029 — 인물이 든 무기 모델이 오른손에 쥐어진다(몸 교체에 따라 바뀌고 옛 몸엔 안 남음)
 			if _frame == 1:

@@ -313,7 +313,9 @@ func _refresh() -> void:
 				tex.texture = ImageTexture.create_from_image(im)
 		cell.add_child(tex)
 		var nm := Label.new()
-		nm.text = "%s · %s" % [String(e.name), String(Album.KIND_NAMES.get(String(e.kind), ""))]
+		## G-0118 — 이름은 지금 표에서(찍은 때 세이브에 적힌 이름은 이름 정책으로 바뀌었을 수 있다). 표에서 사라진 대상만 적힌 이름.
+		var d := Album.describe(String(id))
+		nm.text = "%s · %s" % [String(d.get("name", e.name)), String(Album.KIND_NAMES.get(String(e.kind), ""))]
 		nm.add_theme_font_size_override("font_size", 14)
 		cell.add_child(nm)
 		var st := Label.new()

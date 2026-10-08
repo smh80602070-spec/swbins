@@ -91,7 +91,12 @@ func _run() -> void:
 	PartyState.weekly_goals = {}
 	var w0 := Weekly.week()
 	var pk0 := Weekly.picks(w0)
+	## G-0118 — 점검이 올릴 수 없는 도전(상자·별조각)이 첫째인 주엔 진척·받기를 안 보고 통과하던 것: 올릴 수 있는 첫 도전을 고른다.
 	var id0: String = pk0[0]
+	for pid in pk0:
+		if not (Weekly.stat_of(pid) in ["chests", "shards"]):
+			id0 = String(pid)
+			break
 	var st0 := Weekly.stat_of(id0)
 	Weekly.ensure(prov)
 	var p_start := Weekly.progress(id0, prov)
@@ -105,8 +110,8 @@ func _run() -> void:
 	var got := Weekly.claim(id0, prov) if bumped else false
 	var again := Weekly.claim(id0, prov)
 	var foreign := Weekly.claim(not_pick, prov)
-	_check("progress_claim", p_start == 0 and (not bumped or p_after >= Weekly.goal_of(id0)) and (not bumped or (got and not again)) and not foreign
-		and (not bumped or PartyState.count("mora") >= mora0 + int(Weekly.REWARD.mora)),
+	_check("progress_claim", p_start == 0 and bumped and p_after >= Weekly.goal_of(id0) and got and not again and not foreign
+		and PartyState.count("mora") >= mora0 + int(Weekly.REWARD.mora),
 		"start=%d after=%d/%d got=%s again=%s foreign=%s" % [p_start, p_after, Weekly.goal_of(id0), got, again, foreign])
 
 	# ④ 완주 보상 — 셈을 늘릴 수 있는 주를 찾아

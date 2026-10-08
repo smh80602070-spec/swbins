@@ -36,6 +36,8 @@ for f in tools/probe_*.gd; do
   n="$(basename "$f" .gd)"
   entries+=("tree ${n#probe_}")
 done
+# G-0118 — TestVillage 밖 씬이 다는 점검(SceneTree 로 안 감싼 것): "scene <이름>" — 씬·환경변수는 아래 case
+entries+=("scene layout_walk")
 
 fails_total=0
 count=0
@@ -46,7 +48,11 @@ for e in "${entries[@]}"; do
   if [ -n "$only" ] && [[ ",$only," != *",$name,"* ]]; then continue; fi
   log="$LOGDIR/$name.log"
   t0=$(date +%s)
-  if [ "$kind" = "go" ]; then
+  if [ "$kind" = "scene" ]; then
+    case "$name" in
+      layout_walk) env "SAGA_LAYOUT_PROBE=1" timeout "$TIMEOUT_SEC" "$GODOT" --headless --path "$PROJECT" "res://games/saga_go/layout/LayoutWalk.tscn" </dev/null >"$log" 2>&1 ;;
+    esac
+  elif [ "$kind" = "go" ]; then
     up="$(echo "$name" | tr 'a-z' 'A-Z')"
     env "SAGA_${up}_PROBE=1" timeout "$TIMEOUT_SEC" "$GODOT" --headless --path "$PROJECT" "$GO_SCENE" </dev/null >"$log" 2>&1
   else

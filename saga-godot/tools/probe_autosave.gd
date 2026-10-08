@@ -94,7 +94,12 @@ func _run() -> void:
 	var saves1 := int(_a.get("saves"))
 	_a.call("_notification", NOTIFICATION_APPLICATION_PAUSED)
 	var leave_again := int(_a.get("saves")) != saves1
-	_check("leave", leave_saved and not leave_again, "saved=%s again=%s" % [leave_saved, leave_again])
+	## G-0118 — 서명이 같아도(걷기만 함) 1초 넘게 지났으면 떠날 때 저장한다(위치·알 걸음은 서명에 없다).
+	_a.set("_since", 5.0)
+	var saves2 := int(_a.get("saves"))
+	_a.call("_notification", NOTIFICATION_APPLICATION_PAUSED)
+	var leave_walk := int(_a.get("saves")) == saves2 + 1
+	_check("leave", leave_saved and not leave_again and leave_walk, "saved=%s again=%s walk_only=%s" % [leave_saved, leave_again, leave_walk])
 
 	# ⑤ 파일 내용
 	PartyState.cycle = 3
