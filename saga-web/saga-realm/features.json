@@ -322,7 +322,8 @@
   "id": "rk.war-5",
   "name": "원정(journey) — 내 땅·빈 땅 육로 여러 달, 국경에서 `march()`. 플레이어 전용·회군 없음",
   "files": [
-   "js/war.js"
+   "js/war.js",
+   "js/journey.js"
   ],
   "tests": [
    "원정 나간 장수는 성에 없다 (봉급은 그대로 나간다)",
@@ -344,7 +345,8 @@
   "id": "rk.war-6",
   "name": "원정 사건 7종 `JOURNEY_EVENTS`(16%/달, 시간 뒤틀림 -1달 포함)",
   "files": [
-   "js/war.js"
+   "js/war.js",
+   "js/journey.js"
   ],
   "tests": [
    "원정 사건 표 — 일곱 종, 저마다 이름·문구가 있다",
