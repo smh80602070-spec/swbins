@@ -95,6 +95,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/rtk-ai.js"></script>
 <script src="js/data-news.js"></script>
 <script src="js/event.js"></script>
+<script src="js/tactics.js"></script>
 <script src="js/data-scenario.js"></script>
 <script src="js/scenario.js"></script>
 <script src="js/cutscene.js"></script>
@@ -5954,6 +5955,98 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       if (bad.length) { throw new Error('실패 ' + bad.join(',')); }
       return '통과 ' + Object.keys(r).join(',');
+    });
+
+    /* ── 격자 전술 규칙 층(W-0107, `tactics.js`, PLAN §5-16) — 화면 없이 순수 함수 ── */
+    var TC = DG.tactics;
+    function tcStats(seed, ids) { var st = {}; ids.forEach(function (id) { st[id] = { might: 40 + Math.round(TC.hash(seed, id + 'm') * 55), wisdom: 40 + Math.round(TC.hash(seed, id + 'w') * 55), command: 40 + Math.round(TC.hash(seed, id + 'c') * 55) }; }); return st; }
+    function tcBoard(seed, land, siege, nTroop) {
+      var b = TC.makeBoard(seed, land, siege), mine = ['m1', 'm2', 'm3'], foes = ['f1', 'f2'];
+      var tr = [4000 + Math.round(TC.hash(seed, 'tr') * 8000), 3000 + Math.round(TC.hash(seed, 'tr2') * 6000)];   // 적 부대 병력도 씨앗마다(균형 측정과 같은 편성)
+      TC.unitsOf(b, mine, foes, tr.slice(0, nTroop || 1), { stats: tcStats(seed, mine.concat(foes)) });
+      return b;
+    }
+
+    t('rk.tactics: 전술 ① 같은 씨앗 = 같은 판·같은 수순·같은 결과 (Math.random 안 씀)', function () {
+      var a = tcBoard('det7', 'river', true), b = tcBoard('det7', 'river', true), keep = Math.random, called = 0;
+      Math.random = function () { called++; return keep(); };
+      try {
+        var same = a.cells.join() === b.cells.join(), oa = TC.autoPlay(a), ob = TC.autoPlay(b);
+        var log = JSON.stringify(a.log) === JSON.stringify(b.log);
+        var other = TC.makeBoard('det8', 'river', true).cells.join() !== a.cells.join();
+        return same && log && oa.kind === ob.kind && other && called === 0 && ('판·수순 같음 · 결과 ' + oa.kind + ' · 공격 ' + a.log.length + '번 · Math.random 0번');
+      } finally { Math.random = keep; }
+    });
+
+    t('rk.tactics: 전술 ② 엄폐 — 숲은 평지보다 명중 30%p, 성벽은 50%p 낮다', function () {
+      var at = { atk: 20, def: 0 }, tg = { atk: 0, def: 10 };
+      var p = TC.hitChance(at, tg, TC.COVER.plain), f = TC.hitChance(at, tg, TC.COVER.forest), w = TC.hitChance(at, tg, TC.COVER.wall);
+      return p - f === 30 && p - w === 50 && ('평지 ' + p + '% · 숲 ' + f + '% · 성벽 ' + w + '%');
+    });
+
+    t('rk.tactics: 전술 ③ 명중률은 늘 10~95% 안', function () {
+      var bad = 0, lo = 100, hi = 0, a, d, c;
+      for (a = 0; a <= 60; a += 5) { for (d = 0; d <= 30; d += 3) { [0, 30, 50].forEach(function (cv) { c = TC.hitChance({ atk: a }, { def: d }, cv); lo = Math.min(lo, c); hi = Math.max(hi, c); if (c < 10 || c > 95) { bad++; } }); } }
+      return bad === 0 && lo === 10 && hi === 95 && ('최저 ' + lo + '% · 최고 ' + hi + '%');
+    });
+
+    t('rk.tactics: 전술 ④ 적 AI 는 턴마다 반드시 움직이거나 친다 · 3턴이 지나면 결과가 선다', function () {
+      var b = tcBoard('ai3', 'plain', false, 2), idle = 0, i;
+      for (i = 0; i < 3 && !b.done; i++) {
+        var before = JSON.stringify(TC.alive(b, 'foe').map(function (u) { return [u.x, u.y]; })), n0 = b.log.length;
+        TC.endTurn(b);
+        var after = JSON.stringify(b.units.filter(function (u) { return u.side === 'foe'; }).map(function (u) { return [u.x, u.y]; }));
+        var foeHit = b.log.slice(n0).some(function (l) { return l.a.indexOf('foe:') === 0; });
+        if (before === after && !foeHit && !b.done) { idle++; }
+      }
+      var o = TC.outcome(b);
+      return idle === 0 && !!o && b.turn >= 4 && ('3턴 · 쉰 턴 0 · 결과 ' + o.name);
+    });
+
+    t('rk.tactics: 전술 ⑤ 적 전멸 → 대승(rout) · 보정 승률 +25%p·사상 ×0.7 (apply 는 값만)', function () {
+      var b = tcBoard('rout', 'plain', false);
+      b.units.forEach(function (u) { if (u.side === 'foe') { u.hp = 0; } });   // 전멸 상태 — 결과 규칙만 본다
+      var o = TC.outcome(b), ap = TC.apply(o, { to: 'luoyang' });
+      return o.kind === 'rout' && ap.winPct === 25 && ap.lossMul === 0.7 && ap.where === 'luoyang' && ('대승 · ' + JSON.stringify({ winPct: ap.winPct, lossMul: ap.lossMul }));
+    });
+
+    t('rk.tactics: 전술 ⑥ 내 편 전멸 → 패(−25%p) · 쓰러진 내 장수 셋이 fallen(영구 전사) · 열전 기록', function () {
+      var b = tcBoard('lose', 'plain', false), st = R.state(), keep = JSON.stringify(st.annals || null);
+      try {
+        b.units.forEach(function (u) { if (u.side === 'me') { u.hp = 0; } });
+        var o = TC.outcome(b), n = TC.annalize(o.fallen, '낙양', 'f1');
+        return o.kind === 'lose' && o.winPct === -25 && o.fallen.length === 3 && o.wounded.length === 0 && n === 3 && st.annals.m1 && st.annals.m1.where === '낙양' &&
+          ('패 · fallen ' + o.fallen.join(',') + ' · 열전 3');
+      } finally { var k = JSON.parse(keep); if (k) { st.annals = k; } else { delete st.annals; } }
+    });
+
+    t('rk.tactics: 전술 ⑦ 손잡이 rtk.permadeath 0 → 영구 전사 대신 중상(wounded, 3달)', function () {
+      var b = tcBoard('lose', 'plain', false);
+      C.setTune('rtk.permadeath', 0);
+      try {
+        b.units.forEach(function (u) { if (u.side === 'me') { u.hp = 0; } });
+        var o = TC.outcome(b), ap = TC.apply(o);
+        return o.fallen.length === 0 && o.wounded.length === 3 && ap.wounded[0].months === TC.WOUND_MONTHS && ('중상 ' + o.wounded.join(',') + ' · ' + TC.WOUND_MONTHS + '달');
+      } finally { C.setTune('rtk.permadeath', null); }
+    });
+
+    t('rk.tactics: 전술 ⑧ 60판 자동 대국 — 오류 0·승률 40~60%(균형) · 실제 장수·성 땅으로도 판이 선다', function () {
+      var lands = ['plain', 'hill', 'river', 'mount'], kinds = {}, wins = 0, err = 0, i;
+      for (i = 0; i < 60; i++) {
+        try {
+          var o = TC.autoPlay(tcBoard('bal' + i, lands[i % 4], i % 3 === 0, 1 + (i % 2)));
+          kinds[o.kind] = (kinds[o.kind] || 0) + 1;
+          if (o.kind === 'rout' || o.kind === 'win') { wins++; }
+        } catch (e) { err++; }
+      }
+      fresh('cao');
+      var mine = off.ofForce('cao').slice(0, 3).map(function (h) { return h.id; }), nb = D.neighbours('cao')[0], foes = off.ofForce(nb).slice(0, 2).map(function (h) { return h.id; });
+      var rb = TC.makeBoard('real', R.citiesOf(nb)[0], true);
+      TC.unitsOf(rb, mine, foes, [5000]);
+      var ro = TC.autoPlay(rb), rate = Math.round(wins / 60 * 100);
+      var msg = '60판 · ' + JSON.stringify(kinds) + ' · 승률 ' + rate + '% · 오류 ' + err + ' · 실제 판 유닛 ' + rb.units.length + '(내 ' + mine.length + '·적 ' + foes.length + ')';
+      if (!(err === 0 && rate >= 40 && rate <= 60 && !!ro && rb.units.length >= 4)) { throw new Error(msg); }
+      return ('60판 · ' + JSON.stringify(kinds) + ' · 승률 ' + rate + '% · 실제 판(' + rb.land + ') ' + ro.name);
     });
 
     t('오류 기록 저장 키는 이 판 것 그대로다 (saga-realm/errlog) · core 없을 땐 메모리에 담았다 합친다', function () {

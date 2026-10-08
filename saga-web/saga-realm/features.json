@@ -868,5 +868,28 @@
   "ticket": "W-0105",
   "since": "2026-10-08",
   "note": "D2: saga-web/tools/playcheck/pw-rk-news.mjs 3/3 — results/pw-rk-news.json(W-0105). 실제 ▶ 다음 달 → 이달 카드 닫고 → 소식 카드 → 💡 실제 클릭 금 +500. Claude 눈: 카드 ○ — 처음 초상이 카드 절반으로 커져(.pt 100%) 64px 칸에 가둠."
+ },
+ {
+  "id": "rk.tactics",
+  "name": "격자 전술 규칙 층 — 8×6 판·엄폐·명중률·3턴·영구 전사, 결과는 공략 보정값(화면은 W-0108)",
+  "files": [
+   "js/tactics.js"
+  ],
+  "tests": [
+   "rk.tactics: 전술 ① 같은 씨앗 = 같은 판·같은 수순·같은 결과 (Math.random 안 씀)",
+   "rk.tactics: 전술 ② 엄폐 — 숲은 평지보다 명중 30%p, 성벽은 50%p 낮다",
+   "rk.tactics: 전술 ③ 명중률은 늘 10~95% 안",
+   "rk.tactics: 전술 ④ 적 AI 는 턴마다 반드시 움직이거나 친다 · 3턴이 지나면 결과가 선다",
+   "rk.tactics: 전술 ⑤ 적 전멸 → 대승(rout) · 보정 승률 +25%p·사상 ×0.7 (apply 는 값만)",
+   "rk.tactics: 전술 ⑥ 내 편 전멸 → 패(−25%p) · 쓰러진 내 장수 셋이 fallen(영구 전사) · 열전 기록",
+   "rk.tactics: 전술 ⑦ 손잡이 rtk.permadeath 0 → 영구 전사 대신 중상(wounded, 3달)",
+   "rk.tactics: 전술 ⑧ 60판 자동 대국 — 오류 0·승률 40~60%(균형) · 실제 장수·성 땅으로도 판이 선다"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0107",
+  "since": "2026-10-08",
+  "note": "D1: 규칙 층만(화면 없음) — 진단 8 PASS. 60판 승률 57%. 화면·war.js 배선은 W-0108."
  }
 ]
