@@ -3,6 +3,7 @@ extends Node
 ##   · 대화 — 지금 단계가 talk 면 공용 창(saga_core/ui/talk_box.gd)을 띄운다(선택 창[ui_modal]·멈춤 중이면 기다림). 고르기 답은 choices 에.
 ##   · 셈 — 이 판은 신호가 없어(폴링 판) 0.3초마다 지금 모습(가구 수·주민/명소 곁·바이옴·하트·사고 기증)을 모아 단계를 본다.
 ##     채집만 CombatFeel.pickup_triggered("꽃 +1" 꼴)를 받아 갈래별로 센다(보유 수는 팔거나 기증하면 줄어서).
+##     G-0090 — 낚시는 채집 신호가 없어 Scenario.POLL_CATS(물고기)는 보유 수가 는 만큼 센다. 곁 판정은 지금 단계의 주민·명소만.
 ##   · 명소 표지 — spot 단계 동안만 그 명소 곁에 표지(코드 도형, 예 "📮 옛 우체통")를 세운다.
 ##   · 장이 끝나면 금·알림, 기념 놀이(fest)는 알림, 단계가 바뀌면 저장(ForestSaveState.save).
 
@@ -21,6 +22,7 @@ var _layer: CanvasLayer
 var _marker: Node3D
 var _marker_key := ""
 var _t := 0.0
+var _last_items := {}   # POLL_CATS 갈래 → 지난번 보유 수
 
 
 func _ready() -> void:
@@ -28,6 +30,8 @@ func _ready() -> void:
 	st = Scenario.normalize(ForestSaveState.scenario)
 	ForestSaveState.scenario = st
 	CombatFeel.pickup_triggered.connect(_on_pickup)
+	for cat in Scenario.POLL_CATS:
+		_last_items[cat] = ForestSaveState.item_count(cat)
 
 
 func _exit_tree() -> void:
@@ -49,6 +53,7 @@ func _process(delta: float) -> void:
 
 ## 한 번 보기(점검도 부른다): 단계 넘김·표지·대화 열기.
 func tick() -> void:
+	_poll_items()
 	_apply(Scenario.check(st, context()))
 	_sync_marker()
 	if Scenario.pending_scene(st) != "" and _layer == null and get_tree().get_nodes_in_group("ui_modal").is_empty():
@@ -70,10 +75,16 @@ func context() -> Dictionary:
 	var near := {}
 	var biome := ""
 	if p != null:
-		for path in ["Villager/Villager_npc_keeper", "Landmarks/Landmark_forest_shrine_stone"]:
-			var n := get_parent().get_node_or_null(path) as Node3D
+		var s := Scenario.step(st)
+		var targets := {}
+		if s.has("npc"):
+			targets[String(s.npc)] = "Villager/Villager_" + String(s.npc)
+		if String(s.get("t", "")) == "spot":
+			targets[String(s.key)] = "Landmarks/Landmark_" + String(s.key)
+		for id in targets:
+			var n := get_parent().get_node_or_null(String(targets[id])) as Node3D
 			if n != null:
-				near[String(path).get_slice("/", 1).trim_prefix("Villager_").trim_prefix("Landmark_")] = _flat_dist(p.global_position, n.global_position) <= NEAR_M
+				near[id] = _flat_dist(p.global_position, n.global_position) <= NEAR_M
 		var gx := roundi(p.global_position.x / 3.0 + MAP_W / 2.0)
 		var gy := roundi(p.global_position.z / 3.0 + MAP_H / 2.0)
 		if gx >= 0 and gx < MAP_W and gy >= 0 and gy < MAP_H:   # 집 안(먼 자리)은 바이옴 없음
@@ -87,6 +98,16 @@ func context() -> Dictionary:
 
 static func _flat_dist(a: Vector3, b: Vector3) -> float:
 	return Vector2(a.x - b.x, a.z - b.z).length()
+
+
+## 보유 수가 는 만큼 채집으로(낚시 — 팔거나 기증해 줄면 기준만 낮춘다).
+func _poll_items() -> void:
+	for cat in Scenario.POLL_CATS:
+		var c: int = ForestSaveState.item_count(cat)
+		var before := int(_last_items.get(cat, c))
+		if c > before:
+			Scenario.add_gather(st, cat, c - before)
+		_last_items[cat] = c
 
 
 func _on_pickup(label: String) -> void:
@@ -103,13 +124,13 @@ func _apply(results: Array) -> void:
 	for r: Dictionary in results:
 		changed = true
 		if r.has("fest"):
-			Toast.show(get_parent(), "🌸 숲지기가 %s를 열었다 — 호연이 꽃 좌판을 펼친다." % Scenario.FEST_NAMES.get(String(r.fest), String(r.fest)), 4.0)
+			Toast.show(get_parent(), "🎊 숲지기가 기념 %s를 열었다 — %s" % [Scenario.FEST_NAMES.get(String(r.fest), String(r.fest)), Scenario.FEST_TOASTS.get(String(r.fest), "")], 4.0)
 		if r.has("chapter"):
 			var ch: Dictionary = r.chapter
 			var gold := int(ch.get("gold", 0))
 			if gold > 0:
 				ForestSaveState.add_gold(gold)
-			Toast.show(get_parent(), "📜 봄 %d장 「%s」 끝 — 골드 +%d" % [int(ch.no), String(ch.title), gold], 4.0)
+			Toast.show(get_parent(), "📜 %s %d장 「%s」 끝 — 골드 +%d" % [Scenario.season(ch), int(ch.no), String(ch.title), gold], 4.0)
 	if changed:
 		_save()
 
@@ -135,9 +156,50 @@ func _sync_marker() -> void:
 	var lm := get_parent().get_node_or_null("Landmarks/Landmark_" + want) as Node3D
 	if lm == null:
 		return
-	_marker = _build_postbox(String(s.get("label", "")))
+	_marker = _build_cave(String(s.get("label", ""))) if String(s.get("shape", "")) == "cave" else _build_postbox(String(s.get("label", "")))
 	get_parent().add_child(_marker)
 	_marker.global_position = lm.global_position + Vector3(1.6, 0.0, 0.0)
+
+
+## 굴 입구 — 어두운 반구 둔덕에 검은 입구, 손전등 빛(G-0090 폭포 뒤 굴).
+func _build_cave(label_text: String) -> Node3D:
+	var root := Node3D.new()
+	root.name = "ScenarioSpot"
+	var rock := StandardMaterial3D.new()
+	rock.albedo_color = Color(0.36, 0.38, 0.4)
+	var dark := StandardMaterial3D.new()
+	dark.albedo_color = Color(0.03, 0.03, 0.05)
+	var mound := MeshInstance3D.new()
+	var sm := SphereMesh.new()
+	sm.radius = 1.3
+	sm.height = 1.8
+	sm.is_hemisphere = true
+	mound.mesh = sm
+	mound.material_override = rock
+	root.add_child(mound)
+	var mouth := MeshInstance3D.new()
+	var mm := CylinderMesh.new()
+	mm.top_radius = 0.55
+	mm.bottom_radius = 0.55
+	mm.height = 0.2
+	mouth.mesh = mm
+	mouth.rotation_degrees.x = 90.0
+	mouth.position = Vector3(0.0, 0.5, 1.15)
+	mouth.material_override = dark
+	root.add_child(mouth)
+	var light := OmniLight3D.new()
+	light.light_color = Color(0.7, 0.85, 1.0)
+	light.omni_range = 3.5
+	light.position = Vector3(0.0, 0.8, 1.6)
+	root.add_child(light)
+	var label := Label3D.new()
+	label.text = label_text
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.font_size = 48
+	label.outline_size = 10
+	label.position.y = 2.0
+	root.add_child(label)
+	return root
 
 
 func _build_postbox(label_text: String) -> Node3D:
@@ -194,7 +256,7 @@ func open_talk() -> void:
 	for l: Array in def.get("lines", []):
 		lines.append([Scenario.speaker(String(l[0])), String(l[1])])
 	var ch := Scenario.chapter(st)
-	_layer = TalkBox.open(get_parent(), "📜 봄 %d장 · %s" % [int(ch.get("no", 0)), String(ch.get("title", ""))], lines, _on_talk_done, def.get("choice", {}))
+	_layer = TalkBox.open(get_parent(), "📜 %s %d장 · %s" % [Scenario.season(ch), int(ch.get("no", 0)), String(ch.get("title", ""))], lines, _on_talk_done, def.get("choice", {}))
 
 
 ## 지금 창의 다음 줄 / 고르기(점검·흉내용).

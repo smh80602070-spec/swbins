@@ -1,5 +1,5 @@
 extends RefCounted
-## G-0086 — 사가마을 이야기 표(정본 `scenario/saga-forest.md` "하늘 금 우체통"). 봄 · 옛 우체통 네 장.
+## G-0086 — 사가마을 이야기 표(정본 `scenario/saga-forest.md` "하늘 금 우체통"). 봄 · 옛 우체통 네 장 + G-0090 여름 · 금으로 온 손님들 네 장.
 ## 대사·고르기는 웹 구현(saga-web/saga-forest/js/data-scenario.js SCENES)과 같다. 단계는 고돗 사가마을(바이옴 넷·주민 여섯·
 ## 집 가구·박물관, 택배·폐허·행사 놀이 없음)에 맞춰 바꿨다 — 까닭은 티켓 G-0086 "단계 바꿈".
 ## 엔진은 world/scenario_runner.gd, 진행은 ForestSaveState.scenario(fresh() 모양). 인물은 전부 가상(이름 정책). 싸움·실패 없음.
@@ -10,8 +10,8 @@ extends RefCounted
 ##     {"t": "place", "n": n}                    집에 놓인 가구 n 이상
 ##     {"t": "visit", "npc": 주민 id, "why": 글}  그 주민 곁(4m)에 간다
 ##     {"t": "biome", "key": 바이옴 키}          그 바이옴(meadow 꽃밭·dark 어둑숲·mush 버섯숲·rocky 바위 지대)에 든다
-##     {"t": "spot", "key": 명소 id, "label": 표지}  그 명소 곁(4m) — 이 단계 동안만 표지(코드 도형)가 선다
-##     {"t": "gather", "cat": 이름, "n": n}      이 단계 시작 뒤 그 갈래를 n 번 채집(채집 신호 "꽃 +1" 을 엔진이 센다)
+##     {"t": "spot", "key": 명소 id, "label": 표지, "shape"?: "postbox"|"cave"}  그 명소 곁(4m) — 이 단계 동안만 표지(코드 도형)가 선다
+##     {"t": "gather", "cat": 이름, "n": n}      이 단계 시작 뒤 그 갈래를 n 번 채집(채집 신호 "꽃 +1" 을 엔진이 센다 — 물고기는 신호가 없어 보유 수가 는 만큼)
 ##     {"t": "fest", "key": 행사 키, "npc": 주민 id}  그 주민 곁에 가면 기념 놀이를 연다(그날이 아니어도 — 정본 "기념 놀이")
 ##     {"t": "heart", "n": n}                    주민 누구든 하트 n 이상
 ##     {"t": "donate", "cat": 이름, "n": n}      사고에 그 갈래를 n 점 이상 기증
@@ -22,6 +22,11 @@ const CAST := {
 	"dareum": {"name": "택배 기사 달음", "emoji": "📦"},
 	"hoyeon": {"name": "여우 화상 호연", "emoji": "🦊"},
 	"k7": {"name": "시간 여행자 K-7", "emoji": "⌛"},
+	"pungnang": {"name": "난파 선원 풍랑", "emoji": "⚓"},
+	"chalna": {"name": "사진작가 찰나", "emoji": "📷"},
+	"explorer": {"name": "탐험가", "emoji": "🧭"},
+	"bandi": {"name": "도깨비불 반디", "emoji": "🔥"},
+	"dudu": {"name": "도깨비 대장 두두", "emoji": "👹"},
 }
 
 const SCENES := {
@@ -67,6 +72,48 @@ const SCENES := {
 		["k7", "앞날 기록에 이 마을 이름을 적어 두고 싶습니다. 알려 주시겠어요?"],
 		["me", "마을 이름을 알려 주는 건 이 마을의 미래를 맡기는 일이지요. 정하겠습니다."],
 	], "choice": {"id": "name", "prompt": "K-7 에게 마을 이름을 알려 줄까", "options": [{"key": "tell", "label": "알려 준다"}, {"key": "secret", "label": "비밀로 한다"}]}},
+	"sail1": {"lines": [
+		["pungnang", "으으… 하늘이 갈라져 배째로 떨어졌소. 난파 선원 풍랑이오. 보시오, 호수에 옛 돛배가 박혀 버렸소. 뱃밑에는 빛나는 닻이 달려 있고."],
+		["me", "수리하려면 삯이 꽤 들겠군요. 낚시로 물고기를 몇 마리 잡아다 드리면 도움이 될까요?"],
+		["pungnang", "고맙소! 낚시라면 이 몸이 가르치리다. 요즘 낚시 명인의 릴이라는 신기한 물건이 저자에 돈다지. 우선 물고기 세 마리만."],
+	]},
+	"sail2": {"lines": [
+		["pungnang", "단오 창포못 낚시가 끝났구려! 그 값으로 뱃널 몇 장은 사겠소. 이 삯을 뱃길 손님에게 전해 주시겠소?"],
+		["me", "낚시꾼 어르신 편에 전하면 되겠지요. 잠시 다녀오겠습니다."],
+	]},
+	"sail3": {"lines": [
+		["pungnang", "삯이 닿았소! 뱃전에 평상 하나를 짜서 호숫가에 놓아 드리리다. 낚시 손님이 앉아 쉬어 가시오."],
+		["me", "박힌 배가 이 마을 호수의 풍경이 되겠군요. 빛나는 닻은 밤에 보면 더 아름다울 것 같습니다."],
+	]},
+	"photo1": {"lines": [
+		["chalna", "안녕하세요! 사진작가 찰나예요. 앞날 기록에서 이 숲은 \"사라진 숲\"이라고 하더라고요. 사라지기 전에 찍어 두려고요."],
+		["chalna", "숲을 다 돌 순 없으니 세 곳만요 — 버섯숲, 바위 지대, 마지막으로 어둑숲의 반딧불 사진이요."],
+		["me", "바위 지대의 선돌은 아주 오래된 것이라 들었습니다. 같이 가 봅시다."],
+	]},
+	"photo2": {"lines": [
+		["chalna", "반딧불 사이에서 작은 드론이 떠다니는 게 찍혔어요! 다른 시대 것이 이 숲을 기록하고 있나 봐요."],
+		["me", "찰나 씨의 사진기와 드론이 같은 곳을 찍고 있었군요. 이 숲이 기억되고 있다는 뜻일지도요."],
+		["chalna", "사진 액자를 만들어 드릴게요. 마을 벽에 걸어 두면 숲이 사라지지 않을 거예요."],
+	]},
+	"fall1": {"lines": [
+		["explorer", "폭포 너머엔 뭐가 있는지 아무도 몰라. 이 폭포 뒤엔 굴이 있고 굴 벽에는 옛 글씨가, 바닥에는 미래의 발자국이 있다는 소문이 있지."],
+		["me", "손전등은 제가 준비하겠습니다. 굴 입구부터 가 보지요."],
+	]},
+	"fall2": {"lines": [
+		["explorer", "굴 벽에 옛 글씨가 가득이더군. 발자국 옆에는 빛 표식까지. 여러 시대 사람이 같은 굴을 지나갔다는 뜻이야."],
+		["me", "편지 다발도 벽 틈에 꽂혀 있었습니다. 옛 우체통과 이어진 길일지도 모르겠어요."],
+		["explorer", "도감에 \"폭포 뒤 굴\"을 적어 두자고. 또 새 수수께끼를 찾아 떠나야겠군."],
+	]},
+	"star1": {"lines": [
+		["bandi", "칠석이라고 별에 소원 빌러 몰려왔어! 나는 도깨비불 반디야. 밤길 안내는 내가 할게."],
+		["dudu", "도깨비 대장 두두다! 오작교 등도 달고 주운 손전등도 켜 놓았지. 꼬마들아 줄 서라!"],
+		["me", "이 밤에 별에 소원을 빌고 나면 그 소원이 금으로 올라간다지요. 저도 빌어 보겠습니다."],
+	]},
+	"star2": {"lines": [
+		["dudu", "소원이 하늘 금으로 스르르 올라갔어! 재밌다! 이 마을 정말 살아 볼 만하겠는데?"],
+		["bandi", "두두는 말썽만 피워서 걱정이야. 대신 내가 잘 이끌게. 이 마을에 살아도 될까?"],
+		["me", "함께 지낼 이웃이 있으면 마을이 더 밝아지겠지요. 주민들과도 벌써 정이 들었으니까요."],
+	]},
 }
 
 const CHAPTERS := [
@@ -94,10 +141,37 @@ const CHAPTERS := [
 		"mix": {"past": "화석·석비", "now": "사고 전시 조명", "future": "K-7 기록판"},
 		"steps": [{"t": "talk", "scene": "mus1"}, {"t": "donate", "cat": "화석", "n": 5}, {"t": "talk", "scene": "mus2"}],
 		"gold": 600},
+	## G-0090 여름 — 고돗엔 손님·폭포·굴·이름 있는 숲 여덟이 없어: 풍랑 배달 = 낚시꾼 곁, 숲 넷 = 바이옴 셋(정본 트랙 메모의 대응),
+	## 폭포 뒤 굴 = 나무뿌리 명소 곁 굴 표지, 손님 눌러앉히기 = 주민 하트 3, 행사 = 숲지기 기념 놀이.
+	{"id": "su_sailor", "no": 5, "season": "summer", "title": "호수에 박힌 배", "stage": "낚시터 · 마을",
+		"blurb": "옛 배와 함께 떨어진 선원 풍랑 — 단오 창포못 낚시로 배 수리 값을 번다.",
+		"mix": {"past": "옛 돛배·풍랑", "now": "낚시 명인의 릴", "future": "배 밑의 빛 닻"},
+		"steps": [{"t": "talk", "scene": "sail1"}, {"t": "gather", "cat": "물고기", "n": 3}, {"t": "fest", "key": "dano", "npc": "npc_keeper"},
+			{"t": "talk", "scene": "sail2"}, {"t": "visit", "npc": "npc_angler", "why": "낚시꾼에게 배 삯 전하기"}, {"t": "talk", "scene": "sail3"}],
+		"gold": 700},
+	{"id": "su_photo", "no": 6, "season": "summer", "title": "숲 여덟의 사진", "stage": "버섯숲 · 바위 지대 · 어둑숲",
+		"blurb": "찰나가 \"사라지기 전에 찍어 두자\"며 숲을 돈다. 어둑숲 반딧불 사진이 마지막.",
+		"mix": {"past": "바위 지대 선돌", "now": "찰나·사진기", "future": "반딧불 사이 떠도는 드론"},
+		"steps": [{"t": "talk", "scene": "photo1"}, {"t": "biome", "key": "mush"}, {"t": "biome", "key": "rocky"}, {"t": "biome", "key": "dark"}, {"t": "talk", "scene": "photo2"}],
+		"gold": 800},
+	{"id": "su_waterfall", "no": 7, "season": "summer", "title": "폭포 너머", "stage": "폭포 뒤 굴",
+		"blurb": "탐험가의 수수께끼 — 폭포 뒤 굴에 옛 편지 다발과 미래의 발자국.",
+		"mix": {"past": "굴 벽 옛 글씨", "now": "탐험가 손전등", "future": "발자국 옆 빛 표식"},
+		"steps": [{"t": "talk", "scene": "fall1"}, {"t": "spot", "key": "forest_root", "label": "🕳️ 폭포 뒤 굴", "shape": "cave"}, {"t": "talk", "scene": "fall2"}],
+		"gold": 900},
+	{"id": "su_star", "no": 8, "season": "summer", "title": "칠석, 별에 소원", "stage": "마을",
+		"blurb": "도깨비불 반디와 두두 패가 칠석 밤에 몰려온다. 마을에 정을 붙인다.",
+		"mix": {"past": "칠석 오작교 등", "now": "두두가 주운 손전등", "future": "소원이 금으로 올라가는 빛"},
+		"steps": [{"t": "talk", "scene": "star1"}, {"t": "fest", "key": "chilseok", "npc": "npc_keeper"}, {"t": "heart", "n": 3}, {"t": "talk", "scene": "star2"}],
+		"gold": 1000},
 ]
 
 const BIOME_NAMES := {"meadow": "꽃밭", "dark": "어둑숲", "mush": "버섯숲", "rocky": "바위 지대"}
-const FEST_NAMES := {"samjin": "삼짇날 꽃놀이"}
+const FEST_NAMES := {"samjin": "삼짇날 꽃놀이", "dano": "단오 창포못 낚시", "chilseok": "칠석 별에 소원"}
+const FEST_TOASTS := {"samjin": "호연이 꽃 좌판을 펼친다.", "dano": "창포못에 낚싯대가 줄지어 섰다.", "chilseok": "오작교 등 아래로 소원이 하늘 금으로 오른다."}
+const SEASON_NAMES := {"spring": "봄", "summer": "여름"}
+## 신호 없이 보유 수가 는 만큼 채집으로 세는 갈래(낚시는 채집 신호가 없다).
+const POLL_CATS := ["물고기"]
 
 
 static func fresh() -> Dictionary:
@@ -144,9 +218,9 @@ static func gathered(st: Dictionary, cat: String) -> int:
 
 
 ## 채집 하나(엔진이 채집 신호마다 부른다).
-static func add_gather(st: Dictionary, cat: String) -> void:
+static func add_gather(st: Dictionary, cat: String, n := 1) -> void:
 	var g: Dictionary = st.get("gathered", {})
-	g[cat] = int(g.get(cat, 0)) + 1
+	g[cat] = int(g.get(cat, 0)) + n
 	st.gathered = g
 
 
@@ -229,7 +303,7 @@ static func objective(st: Dictionary) -> String:
 		"biome":
 			what = "%s에 들기" % BIOME_NAMES.get(String(s.key), String(s.key))
 		"spot":
-			what = "%s 찾기(옛 돌사당 곁)" % String(s.label)
+			what = "%s 찾기" % String(s.label)
 		"gather":
 			what = "%s 채집 %d/%d" % [String(s.cat), mini(gathered(st, String(s.cat)) - int(st.get("base", 0)), int(s.n)), int(s.n)]
 		"fest":
@@ -238,7 +312,11 @@ static func objective(st: Dictionary) -> String:
 			what = "주민 하트 %d 이상" % int(s.n)
 		"donate":
 			what = "사고에 %s %d점 기증" % [String(s.cat), int(s.n)]
-	return "📜 봄 %d장 %s — %s" % [int(ch.no), String(ch.title), what]
+	return "📜 %s %d장 %s — %s" % [season(ch), int(ch.no), String(ch.title), what]
+
+
+static func season(ch: Dictionary) -> String:
+	return String(SEASON_NAMES.get(String(ch.get("season", "spring")), ""))
 
 
 static func speaker(who: String) -> String:

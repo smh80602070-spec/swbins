@@ -5,6 +5,7 @@ extends SceneTree
 ## ① 표: 장 넷 id 정본(sp_move·sp_postbox·sp_fox·sp_museum) · 시대 섞기 셋 · talk 장면·말한 이 · 단계 종류 · 금 · 고르기 모양
 ## ② 흐름 흉내(ctx 사전으로): move1 → 가구 1 → move2 → 숲지기 곁(1장 끝 금 300) → post1 → 꽃밭 → 옛 우체통 → post2 → 숲지기 → fox1 → 꽃 5(4 로는 안 됨, 채집 전 수는 안 셈)
 ##    → fox2 → 숲지기(기념 꽃놀이 알림) → 하트 1 → fox3 → mus1 → 화석 5 → mus2 고르기 "secret"(봄 끝, 금 합 1800, choices.name)
+## ②-2 G-0090 여름: sail1 → 물고기 3 → 숲지기(단오) → sail2 → 낚시꾼 곁 → sail3 → photo1 → 버섯숲·바위 지대·어둑숲 → photo2 → fall1 → 나무뿌리 굴 → fall2 → star1 → 숲지기(칠석) → 하트 3 → star2(여름 끝, 금 합 5200)
 ## ③ 옛 세이브 빈 칸 → 봄 1장 · JSON 왕복 · 이미 가구가 있으면 place 바로 넘어감
 ## ④ 대화 창: 열면 멈춤·ui_modal · 다음 줄 · 끝 줄 고르기 단추 · pick 하면 닫히고 멈춤 풀림·답 전달 · 고르기 없는 창은 끝 줄 next 로 닫힘
 ## ⑤ 엔진 스크립트 컴파일·forest_village.gd 컴파일
@@ -31,7 +32,7 @@ func _initialize() -> void:
 
 	# ① 표
 	var ids: Array = S.CHAPTERS.map(func(c): return String(c.id))
-	check(ids == ["sp_move", "sp_postbox", "sp_fox", "sp_museum"], "장 넷 id 정본 %s" % [ids])
+	check(ids == ["sp_move", "sp_postbox", "sp_fox", "sp_museum", "su_sailor", "su_photo", "su_waterfall", "su_star"], "장 여덟 id 정본 %s" % [ids])
 	var bad: Array = []
 	var known := ["talk", "place", "visit", "biome", "spot", "gather", "fest", "heart", "donate"]
 	for c: Dictionary in S.CHAPTERS:
@@ -120,8 +121,54 @@ func _initialize() -> void:
 	take.call(S.check(st, ctx))
 	check(S.pending_scene(st) == "mus2", "화석 5 → mus2")
 	take.call(S.finish_talk(st, ctx, "secret"))
-	check(S.finished(st) and int(log.gold) == 1800 and String((st.choices as Dictionary).get("name", "")) == "secret" and (st.done as Array).size() == 4 and S.objective(st) == "",
-		"봄 끝 — 금 %d · 고르기 %s" % [int(log.gold), st.choices])
+	check(int(log.gold) == 1800 and String((st.choices as Dictionary).get("name", "")) == "secret" and (st.done as Array).size() == 4 and S.pending_scene(st) == "sail1",
+		"봄 끝 — 금 %d · 고르기 %s → 여름 sail1" % [int(log.gold), st.choices])
+
+	# ②-2 여름
+	check(S.objective(st).begins_with("📜 여름 5장"), "여름 목표판 \"%s\"" % S.objective(st))
+	ctx = {"home_items": 1, "near": {}, "biome": "", "max_heart": 1, "donated": {"화석": 5}}
+	take.call(S.finish_talk(st, ctx))
+	S.add_gather(st, "물고기", 2)
+	take.call(S.check(st, ctx))
+	check(String(S.step(st).t) == "gather" and S.objective(st).contains("물고기 채집 2/3"), "물고기 2 머묾")
+	S.add_gather(st, "물고기", 1)
+	take.call(S.check(st, ctx))
+	check(String(S.step(st).t) == "fest", "물고기 3 → 단오")
+	ctx.near = {"npc_keeper": true}
+	take.call(S.check(st, ctx))
+	check(log.fest.has("dano") and S.pending_scene(st) == "sail2", "숲지기 곁 → 단오 알림 → sail2")
+	ctx.near = {}
+	take.call(S.finish_talk(st, ctx))
+	check(String(S.step(st).get("npc", "")) == "npc_angler", "낚시꾼에게")
+	ctx.near = {"npc_keeper": true}
+	take.call(S.check(st, ctx))
+	check(String(S.step(st).t) == "visit", "숲지기 곁으론 안 넘어감")
+	ctx.near = {"npc_angler": true}
+	take.call(S.check(st, ctx))
+	take.call(S.finish_talk(st, ctx))   # sail3
+	check(int(log.gold) == 2500 and S.pending_scene(st) == "photo1", "5장 끝(700) → photo1")
+	ctx.near = {}
+	take.call(S.finish_talk(st, ctx))
+	for b in ["mush", "rocky", "dark"]:
+		ctx.biome = b
+		take.call(S.check(st, ctx))
+	check(S.pending_scene(st) == "photo2", "버섯숲·바위 지대·어둑숲 → photo2")
+	take.call(S.finish_talk(st, ctx))
+	take.call(S.finish_talk(st, ctx))   # fall1
+	check(String(S.step(st).get("shape", "")) == "cave" and S.objective(st).contains("폭포 뒤 굴"), "굴 표지 단계")
+	ctx.near = {"forest_root": true}
+	take.call(S.check(st, ctx))
+	take.call(S.finish_talk(st, ctx))   # fall2
+	check(int(log.gold) == 4200 and S.pending_scene(st) == "star1", "6·7장 끝 → star1")
+	ctx.near = {}
+	take.call(S.finish_talk(st, ctx))
+	ctx.near = {"npc_keeper": true}
+	take.call(S.check(st, ctx))
+	check(log.fest.has("chilseok") and String(S.step(st).t) == "heart", "칠석 → 하트 3 단계")
+	ctx.max_heart = 3
+	take.call(S.check(st, ctx))
+	take.call(S.finish_talk(st, ctx))   # star2
+	check(S.finished(st) and int(log.gold) == 5200 and (st.done as Array).size() == 8 and S.objective(st) == "", "여름 끝 — 금 합 %d" % int(log.gold))
 
 	# ③ 옛 세이브
 	check(S.normalize({}) == S.fresh(), "빈 칸 → 봄 1장")
