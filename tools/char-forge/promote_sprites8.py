@@ -10,6 +10,10 @@ K-0029 단계 5 — 다 구운 8방향 무기 시트(`_out/sprites8/<id>/`, run_
 출처: 같은 인물의 옛 2D 시트 `sprites2d/<id>/<id>.license.json`(옷 이식 VRoid 샘플 — 상업·재배포 허용)을 이어받아
 `<id>.license.json` 을 새로 쓴다(credits.py·audit.py 가 읽는다). 옛 출처가 없는 인물은 건너뛰고 알린다.
 굽는 도중(manifest 없음)인 인물은 손대지 않는다 — 굽기와 나란히 몇 번이고 돌려도 된다.
+
+    py tools/char-forge/promote_sprites8.py --town [--write]   # K-0083 마을 사람 맨손 시트(`_out/sprites8_town/<id>/`, data/town_sprite_plan.json)
+      idle_town·walk_town.webp 둘만 정본 인물 폴더에 더하고 정본 manifest 에 `town`·`town_clipmap` 칸만 넣는다 — 전투 시트·출처는 안 건드린다.
+      정본 폴더(전투 시트)가 아직 없는 인물은 건너뛴다(manifest 를 새로 만들지 않는다).
 """
 import hashlib
 import json
@@ -40,12 +44,44 @@ def license_for(pid, man):
     return json.dumps(lic, ensure_ascii=False, indent=1) + '\n'
 
 
+def town(write):
+    """K-0083 — 맨손 평상 시트 둘을 정본에 더한다(전투 manifest 는 칸만 더함)."""
+    src = os.path.join(ROOT, 'tools', 'char-forge', '_out', 'sprites8_town')
+    ids = sorted(i for i in os.listdir(src) if os.path.exists(os.path.join(src, i, 'manifest.json'))) if os.path.isdir(src) else []
+    add = same = 0
+    skip = []
+    for pid in ids:
+        sd, dd = os.path.join(src, pid), os.path.join(DST, pid)
+        dm = os.path.join(dd, 'manifest.json')
+        if not os.path.exists(dm):
+            skip.append(pid)
+            continue
+        tm = json.load(open(os.path.join(sd, 'manifest.json'), encoding='utf-8'))
+        roles = [r for r in tm.get('clips', []) if os.path.exists(os.path.join(sd, r + '.webp'))]
+        man = json.load(open(dm, encoding='utf-8'))
+        diff = [r for r in roles if not os.path.exists(os.path.join(dd, r + '.webp')) or md5(os.path.join(sd, r + '.webp')) != md5(os.path.join(dd, r + '.webp'))]
+        man_new = dict(man, town=roles, town_clipmap=tm.get('clipmap') or {})
+        if not diff and man_new == man:
+            same += 1
+            continue
+        add += 1
+        if write:
+            for r in diff:
+                shutil.copyfile(os.path.join(sd, r + '.webp'), os.path.join(dd, r + '.webp'))
+            with open(dm, 'w', encoding='utf-8', newline='\n') as fh:
+                fh.write(json.dumps(man_new, ensure_ascii=False, indent=1))
+    print(('올림' if write else '올릴 것') + f' 마을 시트 {add} · 같음 {same} · 다 구운 인물 {len(ids)}' + (f' · 정본 전투 시트 없어 건너뜀 {len(skip)}' if skip else ''))
+    return 0
+
+
 def main():
     try:
         sys.stdout.reconfigure(encoding='utf-8')
     except Exception:
         pass
     write = '--write' in sys.argv
+    if '--town' in sys.argv:
+        return town(write)
     ids = sorted(i for i in os.listdir(SRC) if os.path.exists(os.path.join(SRC, i, 'manifest.json'))) if os.path.isdir(SRC) else []
     new = changed = same = 0
     nolic = []

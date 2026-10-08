@@ -242,6 +242,7 @@ class Clip:
                 self.aes = None
 
     def _norm(self, x):
+        x = getattr(x, 'pooler_output', x)   # transformers 5 는 get_*_features 가 출력 객체(투영 임베딩 = pooler_output)를 준다 — 4.x 는 텐서(10-08)
         return x / x.norm(dim=-1, keepdim=True)
 
     def images(self, pils, bs=16):
@@ -252,14 +253,14 @@ class Clip:
                 if self.device == 'cuda':
                     inp['pixel_values'] = inp['pixel_values'].half()
                 f = self.model.get_image_features(**inp)
-                out.append(self._norm(f.float()).cpu())
+                out.append(self._norm(getattr(f, 'pooler_output', f).float()).cpu())
         return self.torch.cat(out) if out else self.torch.zeros(0, 768)
 
     def texts(self, strs):
         with self.torch.no_grad():
             inp = self.proc(text=strs, return_tensors='pt', padding=True, truncation=True, max_length=77).to(self.device)
             f = self.model.get_text_features(**inp)
-            return self._norm(f.float()).cpu()
+            return self._norm(getattr(f, 'pooler_output', f).float()).cpu()
 
     def aesthetic(self, img_emb):
         if self.aes is None:

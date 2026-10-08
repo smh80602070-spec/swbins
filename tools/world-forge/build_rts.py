@@ -1,4 +1,4 @@
-"""world-forge 사가천하 RTS 건물 — 공방·밭·성벽 모서리·거점 성·적 기지 3단계 (K-0061 단계 ③④의 3D 밑그림). 재질만 Poly Haven CC0 사진.
+"""world-forge 사가천하 RTS 건물 — 공방·밭·성벽 모서리·거점 성·적 기지 3단계 (K-0061 단계 ③④의 3D 밑그림) + 지도 성 크기 셋 × 세 시대 `rts_city_<s|m|l>_<시대>`(K-0083). 재질만 Poly Haven CC0 사진.
 
   blender -b --factory-startup -P tools/world-forge/build_rts.py -- --all --out-dir <절대 폴더> [--style toon]
   blender -b --factory-startup -P tools/world-forge/build_rts.py -- --id rts_fortress_01 --out <절대>/x.glb
@@ -167,7 +167,110 @@ def rts_enemy_base_c(C):
     enemy_base(C, 2)
 
 
+
+# ---------------------------------------------------------------- K-0083 사가천하 지도 성 크기 셋 × 세 시대 (2D 밑그림 — 그림체 C img2img)
+# 고을(s) = 낮은 담 + 집 셋 · 성(m) = 성벽 사각 + 문루 + 탑 넷 + 본채 · 도성(l) = 이중 성벽 + 큰 전각 + 탑 여섯 + 집들. 시대는 재질·지붕·첨탑으로 갈린다.
+def _city_mats(C, era):
+    if era == 'past':
+        return dict(wall=stone(C, '#b3ac9e'), dark=stone(C, '#8a857a'), roof=C.s('clay_roof_tiles', 1.4, '#8a4a3a'), house=C.s('clay_plaster', 1.5, '#d8c7a2'),
+                    trim=C.s('brown_planks_03', 1.0, '#5a3f2b'), spire=None)
+    if era == 'present':
+        return dict(wall=C.s('concrete_wall_001', 1.2, '#b9bcc0'), dark=C.s('concrete_wall_001', 1.2, '#7d8288'), roof=C.s('concrete_wall_001', 1.0, '#5a6068'),
+                    house=C.s('grey_plaster', 1.2, '#e2e4e6'), trim=C.s('corrugated_iron', 1.0, '#3e5a78'), spire=None)
+    return dict(wall=C.s('white_stucco', 1.0, '#e8eef2'), dark=C.s('white_stucco', 1.0, '#9fb0bc'), roof=C.s('white_stucco', 1.0, '#7fd8ff', gain=1.5),
+                house=C.s('white_stucco', 1.0, '#f4f6f8'), trim=C.s('white_stucco', 1.0, '#4ad8ff', gain=1.8), spire=C.s('white_stucco', 1.0, '#9ff0ff', gain=2.0))
+
+
+def _house(M, m, era, x, y, w, d, h):
+    obox(M, (x, y, 0), (w, d, h), 0, m['house'], 1.2)
+    if era == 'past':
+        gable(M, (x, y, h), (w * 1.1, d * 1.15), 0.6 * min(w, d), 0, m['roof'], 1.4)
+    elif era == 'present':
+        obox(M, (x, y, h), (w * 1.04, d * 1.04, 0.12), 0, m['roof'], 1.0)            # 평지붕 + 창 띠
+        obox(M, (x, y - d * 0.5 - 0.01, h * 0.55), (w * 0.86, 0.04, h * 0.18), 0, m['trim'], 1.0)
+    else:
+        tube(M, (x, y, h), (x, y, h + 0.5 * min(w, d)), 0.55 * min(w, d), 0.0, m['roof'], 1.0, 10)   # 둥근 지붕
+        obox(M, (x, y - d * 0.5 - 0.01, h * 0.5), (w * 0.8, 0.04, 0.08), 0, m['trim'], 1.0)          # 발광 띠
+
+
+def _walls(M, m, half, h, thick, era, gate=True):
+    for y in (-half, half):
+        if y < 0 and gate:
+            for sx in (-1, 1):
+                obox(M, (sx * (half + 0.75) / 2, y, 0), (half - 0.75, thick, h), 0, m['wall'], 1.2)
+        else:
+            obox(M, (0, y, 0), (2 * half, thick, h), 0, m['wall'], 1.2)
+    for x in (-half, half):
+        obox(M, (x, 0, 0), (thick, 2 * half, h), 0, m['wall'], 1.2)
+    if era == 'past':                                                          # 성가퀴
+        n = int(half * 2 / 0.9)
+        for i in range(n + 1):
+            t = -half + i * 2 * half / n
+            for y in (-half, half):
+                if not (y < 0 and gate and abs(t) < 0.75):
+                    obox(M, (t, y, h), (0.32, thick, 0.28), 0, m['wall'], 1.0)
+    elif era == 'future':
+        for y in (-half, half):
+            obox(M, (0, y - thick * 0.5 * (1 if y < 0 else -1), h * 0.7), (2 * half, 0.04, 0.08), 0, m['trim'], 1.0)
+
+
+def _gatehouse(M, m, era, y, h):
+    for sx in (-1, 1):
+        obox(M, (sx * 0.75, y, 0), (0.5, 0.9, h + 0.6), 0, m['dark'], 1.0)
+    obox(M, (0, y, h), (2.0, 0.9, 0.6), 0, m['dark'], 1.0)
+    if era == 'past':
+        gable(M, (0, y, h + 0.6), (2.4, 1.3), 0.7, 0, m['roof'], 1.4)
+    elif era == 'future':
+        obox(M, (0, y - 0.46, h * 0.5), (1.0, 0.04, h * 0.9), 0, m['trim'], 1.0)   # 빛 문
+
+
+def _tower(M, m, era, x, y, r, h):
+    if era == 'present':
+        obox(M, (x, y, 0), (r * 1.7, r * 1.7, h), 0, m['wall'], 1.2)
+        obox(M, (x, y, h), (r * 1.9, r * 1.9, 0.15), 0, m['roof'], 1.0)
+        tube(M, (x, y, h + 0.15), (x, y, h + 1.2), 0.03, 0.02, m['trim'], 0.5, 4)   # 안테나
+    elif era == 'future':
+        tube(M, (x, y, 0), (x, y, h), r, r * 0.7, m['wall'], 1.0, 10)
+        tube(M, (x, y, h), (x, y, h + 1.4), r * 0.5, 0.0, m['spire'], 1.0, 8)
+    else:
+        tower(M, x, y, r, h, m['wall'], m['roof'])
+
+
+def city(C, size, era):
+    M = C.M
+    m = _city_mats(C, era)
+    if size == 's':                                                            # 고을 — 담 높이 0.8, 집 셋
+        obox(M, (0, 0, -0.1), (6.2, 6.2, 0.1), 0, m['dark'], 1.5)
+        _walls(M, m, 2.8, 0.8, 0.3, era)
+        for x, y, w, d, h in ((-1.2, -0.6, 1.6, 1.3, 1.0), (1.1, -0.3, 1.4, 1.2, 0.9), (0.0, 1.3, 1.8, 1.3, 1.1)):
+            _house(M, m, era, x, y, w, d, h)
+    elif size == 'm':                                                          # 성 — 성벽 2.2, 문루, 탑 넷, 본채
+        obox(M, (0, 0, -0.1), (8.2, 8.2, 0.1), 0, m['dark'], 1.5)
+        _walls(M, m, 3.8, 2.2, 0.6, era)
+        _gatehouse(M, m, era, -3.8, 2.2)
+        for x, y in ((-3.8, -3.8), (3.8, -3.8), (-3.8, 3.8), (3.8, 3.8)):
+            _tower(M, m, era, x, y, 0.7, 3.0)
+        _house(M, m, era, 0, 0.6, 2.8, 2.4, 2.6)
+        for x, y in ((-2.0, -1.6), (2.0, -1.6)):
+            _house(M, m, era, x, y, 1.2, 1.0, 1.0)
+    else:                                                                      # 도성 — 바깥 성벽 + 안 성벽, 큰 전각, 탑 여섯
+        obox(M, (0, 0, -0.1), (12.4, 12.4, 0.1), 0, m['dark'], 1.5)
+        _walls(M, m, 5.9, 2.6, 0.7, era)
+        _gatehouse(M, m, era, -5.9, 2.6)
+        for x, y in ((-5.9, -5.9), (5.9, -5.9), (-5.9, 5.9), (5.9, 5.9), (-5.9, 0.0), (5.9, 0.0)):
+            _tower(M, m, era, x, y, 0.8, 3.6)
+        _walls(M, m, 2.6, 2.0, 0.5, era)                                        # 안 성벽
+        _house(M, m, era, 0, 0.4, 3.0, 2.6, 3.2)                                  # 큰 전각
+        if era == 'past':
+            gable(M, (0, 0.4, 4.6), (2.4, 2.0), 0.8, 0, m['roof'], 1.4)            # 겹지붕
+        for x, y in ((-4.0, -3.6), (-2.6, -4.4), (3.9, -3.4), (4.2, 2.8), (-4.2, 3.0), (-3.8, 1.2), (3.6, 4.4)):
+            _house(M, m, era, x, y, 1.3, 1.1, 1.1)
+
+
+CITY = {f'rts_city_{sz}_{era}': (lambda C, sz=sz, era=era: city(C, sz, era)) for sz in ('s', 'm', 'l') for era in ('past', 'present', 'future')}
+
 MODELS = {f.__name__.replace('rts_enemy_base_', 'rts_enemy_base_'): f for f in (rts_workshop_01, rts_field_01, rts_wall_corner_01, rts_fortress_01, rts_enemy_base_a, rts_enemy_base_b, rts_enemy_base_c)}
+MODELS.update(CITY)   # K-0083
 
 if __name__ == '__main__':
     BP.PROPS.clear()

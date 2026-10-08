@@ -1,0 +1,82 @@
+{
+ "name": "k83_city_C",
+ "spec": "sprite",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0083 ② 사가천하 지도 성 크기 셋 × 세 시대 — 밑그림 tools/world-forge/build_rts.py rts_city_* (CC0 형태·재질) img2img",
+ "items": [
+  {
+   "id": "city_s_past",
+   "subject": "small walled village, low stone wall around three houses, ancient east asian style, stone walls, red clay tile roofs, miniature map icon",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init\\rts_city_s_past.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "city_s_present",
+   "subject": "small walled village, low stone wall around three houses, modern era, concrete walls, flat roofs, office blocks, glass windows, miniature map icon",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init\\rts_city_s_present.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "city_s_future",
+   "subject": "small walled village, low stone wall around three houses, futuristic, white panels, glowing cyan lines, domes, crystal spires, miniature map icon",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init\\rts_city_s_future.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "city_m_past",
+   "subject": "walled castle town, high walls, gatehouse, four corner towers, main keep, ancient east asian style, stone walls, red clay tile roofs, miniature map icon",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init\\rts_city_m_past.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "city_m_present",
+   "subject": "walled castle town, high walls, gatehouse, four corner towers, main keep, modern era, concrete walls, flat roofs, office blocks, glass windows, miniature map icon",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init\\rts_city_m_present.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "city_m_future",
+   "subject": "walled castle town, high walls, gatehouse, four corner towers, main keep, futuristic, white panels, glowing cyan lines, domes, crystal spires, miniature map icon",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init\\rts_city_m_future.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "city_l_past",
+   "subject": "grand walled capital city, double walls, six towers, large palace hall, many houses, ancient east asian style, stone walls, red clay tile roofs, miniature map icon",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init\\rts_city_l_past.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "city_l_present",
+   "subject": "grand walled capital city, double walls, six towers, large palace hall, many houses, modern era, concrete walls, flat roofs, office blocks, glass windows, miniature map icon",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init\\rts_city_l_present.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "city_l_future",
+   "subject": "grand walled capital city, double walls, six towers, large palace hall, many houses, futuristic, white panels, glowing cyan lines, domes, crystal spires, miniature map icon",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init\\rts_city_l_future.png",
+   "denoise": 0.6
+  }
+ ]
+}

@@ -1,0 +1,34 @@
+{
+ "name": "k83_trees_C",
+ "spec": "sprite",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0083 ③ 사가마을 2D 나무 계절 셋 — 밑그림 = 지금 그림체 C 활엽수 tree_broadleaf_01(여름) · 10-08 둘째: 초록 밑그림이면 계절색이 안 나와(12장 전부 초록) 수관 색을 계절색으로 바꾼 밑그림(season_init) + denoise 0.5.",
+ "items": [
+  {
+   "id": "tree_broadleaf_01_spring",
+   "subject": "round broadleaf tree in full pink cherry blossom, pink petals crown, brown trunk",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init\\tree_broadleaf_01_spring.png",
+   "denoise": 0.5
+  },
+  {
+   "id": "tree_broadleaf_01_autumn",
+   "subject": "round broadleaf tree with orange and red autumn leaves, brown trunk",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init\\tree_broadleaf_01_autumn.png",
+   "denoise": 0.5
+  },
+  {
+   "id": "tree_broadleaf_01_winter",
+   "subject": "round broadleaf tree in winter, bare branches with snow on top, brown trunk",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init\\tree_broadleaf_01_winter.png",
+   "denoise": 0.5
+  }
+ ]
+}
