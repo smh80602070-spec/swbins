@@ -9,8 +9,8 @@ extends "res://games/saga_go/world/story_quest_base.gd"
 ## 세이브: PartyState.story 한 필드. 임무 적·제단 불은 저장하지 않는다(불러오면 그 단계 처음부터).
 
 
-## 106장 ㉙ 대화 글자 흘리기 속도(초당 글자 수) — 점검 probe_gestures 가 이 파일 글자에서 직접 읽는다.
 const Voice := preload("res://saga_core/audio/voice.gd")   # G-0111 대사 음성
+## 106장 ㉙ 대화 글자 흘리기 속도(초당 글자 수) — 점검 probe_gestures 가 이 파일 글자에서 직접 읽는다.
 const REVEAL_CPS := 30.0
 
 # ---------------------------------------------------------------- 입력·대화

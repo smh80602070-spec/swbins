@@ -225,7 +225,6 @@ func _ready() -> void:
 	assist = FieldAssist.new()
 	assist.name = "FieldAssist"
 	add_child(assist)
-	Voice.speaker = active_id()   # G-0111 — 줍기 말은 싸우는 인물 목소리로
 	_refresh_hud()
 
 ## 새 입력 액션·키는 project.godot 를 고치지 않고 여기서 등록한다(GO 만 — 다른 판엔 안 샌다).
@@ -363,7 +362,6 @@ func switch_to(index: int, forced := false) -> bool:
 	if _player != null and _player.has_method("set_hero_body"):
 		_player.call("set_hero_body", r[index])   # G-0024 — 편성원 몸으로 교체(dex 설치 시)
 	_switch_cd = SWITCH_CD
-	Voice.speaker = r[index]
 	_ring_fx(_player.global_position, 1.6, Elements.color_of(active_element()), 0.35)
 	CombatFeel.ui()
 	_refresh_hud()
@@ -1394,6 +1392,7 @@ func _refresh_hud() -> void:
 	if _hud == null:
 		return
 	var r := roster()
+	Voice.speaker = active_id()   # G-0111 — 줍기 말은 싸우는 인물 목소리로(편성·교체 뒤 HUD 를 늘 다시 그린다)
 	var sig := ",".join(r)
 	if sig != _roster_sig:
 		_roster_sig = sig

@@ -92,7 +92,7 @@ static func set_volume(v: float) -> void:
 
 
 static func stinger(_ctx: Node, key: String) -> void:
-	Voice.system(key)   # G-0111 — 짧은 음악과 함께 해설 안내 한 줄(키가 Voice.SYSTEM 에 있을 때만)
+	Voice.system(key)   # G-0111 — 짧은 음악과 함께 해설 안내 한 줄(키가 Voice.SYSTEM 에 있을 때만, 켜기는 음성 설정을 따름)
 	var n := _inst()
 	if n != null:
 		n._stinger(key)

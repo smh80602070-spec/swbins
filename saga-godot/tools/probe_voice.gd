@@ -29,6 +29,12 @@ func check(cond: bool, msg: String) -> void:
 		print("  FAIL ", msg)
 
 
+func _idle(n: Node) -> void:
+	n._at.clear()
+	n._busy_until = 0
+	n._busy_prio = 0
+
+
 func _fresh() -> Node:
 	Voice.reset_for_test()
 	await process_frame
@@ -44,8 +50,8 @@ func _initialize() -> void:
 	Bgm.cfg_path = DIR + "audio.cfg"
 	if FileAccess.file_exists(Voice.cfg_path):
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(Voice.cfg_path))
-	Voice.always = true
 	var n := await _fresh()
+	Voice.always = true   # _fresh(reset_for_test) 가 끄므로 그 뒤에
 
 	# ① 표
 	var j: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(Voice.dir.path_join("voice_list.json")))
@@ -86,6 +92,14 @@ func _initialize() -> void:
 			if lid == "" or n.missing.has(v + "/" + lid):
 				picked_missing += 1
 	check(picked_missing == 0, "외침 600번 고르기에 빠진 줄 0 — %d" % picked_missing)
+	var picked_skip := 0
+	for k in Voice.SKIP:
+		for v in Voice.HASH_VOICES:
+			for i in 60:
+				if (Voice.SKIP[k] as Array).has(n.pick(k, v)):
+					picked_skip += 1
+	check(picked_skip == 0, "획득·인사 1200번 고르기에 상황 줄(SKIP) 0 — %d" % picked_skip)
+	check(Voice.speaker == "self", "말하는 이 기본 = 주인공 self")
 
 	# ④ 목소리 고르기 — 배정표 그대로, 없는 id 는 늘 같은 해시 목소리
 	var first_id: String = n.assign.keys()[0]
@@ -98,30 +112,41 @@ func _initialize() -> void:
 	var want_pre := "voice_%s_shout_" % n.assign[first_id]
 	check(p1.get_file().begins_with(want_pre) and ResourceLoader.exists(p1), "외침 → %s" % p1.get_file())
 	check(Voice.say("shout", first_id) == "", "간격(%.1f초) 안 두 번째 외침은 무시" % Voice.GAP["shout"])
-	check(Voice.say("greet", first_id) != "", "다른 갈래(인사)는 따로 센다")
+	check(Voice.say("greet", first_id) == "", "외침 중엔 낮은 순위(인사)는 버린다")
+	n._busy_until = 0
+	check(Voice.say("greet", first_id) != "", "말이 끝나면 다른 갈래(인사)는 따로 센다")
+	_idle(n)
+	Voice.say("shout", first_id)
+	check(Voice.say("shout", first_id, true) != "", "필살(sure)은 간격 안에서도 외친다")
+	check(Voice.say("shout", first_id) == "", "필살 외침 중 보통 외침은 못 끊는다")
+	check(Voice.say("pickup", first_id) == "", "필살 외침 중 줍기 말은 버린다")
 	check(Voice.say("system", first_id) == "", "say 로는 안내를 못 낸다(system 은 해설만)")
 	Voice.always = false
 	var said := 0
 	for i in 200:
-		n._at.clear()
+		_idle(n)
 		if Voice.say("shout", first_id) != "":
 			said += 1
 	check(said > 30 and said < 110, "외침 확률 %.0f%% — 200번 중 %d" % [Voice.CHANCE["shout"] * 100.0, said])
-	n._at.clear()
+	_idle(n)
 	check(Voice.say("shout", first_id, true) != "", "sure 면 확률 없이 외친다")
 	Voice.always = true
 
 	# ⑥ 안내 키 → 해설 줄
-	n._at.clear()
+	_idle(n)
 	check(Voice.system("levelup").get_file() == "voice_NA_system_06.ogg", "levelup → 해설 system_06")
-	n._at.clear()
+	check(Voice.system("quest").get_file() == "voice_NA_system_08.ogg", "다른 안내 키는 바로 이어서(키마다 간격)")
+	check(Voice.system("levelup") == "", "같은 안내 키는 간격 안 무시")
+	check(Voice.say("pickup", first_id) == "", "안내 중 줍기 말은 버린다")
+	check(not Voice.SYSTEM.has("discover"), "도감 짧은 음악(discover)은 안내 없음(새 지역 줄과 안 맞음)")
+	_idle(n)
 	check(Voice.system("nope") == "", "모르는 키는 조용히")
 	var bad_keys := []
 	for key in Voice.SYSTEM:
 		if not ResourceLoader.exists(n.path_of(Voice.NARRATOR, String(Voice.SYSTEM[key]))):
 			bad_keys.append(key)
 	check(bad_keys.is_empty(), "안내 키 %d 개 모두 파일 있음 %s" % [Voice.SYSTEM.size(), bad_keys])
-	n._at.clear()
+	_idle(n)
 	Bgm.stinger(null, "victory")
 	check(n.last_path.get_file() == "voice_NA_system_12.ogg", "Bgm.stinger(victory) → 해설 system_12 — %s" % n.last_path.get_file())
 
@@ -131,7 +156,7 @@ func _initialize() -> void:
 	c0.save(Voice.cfg_path)
 	Voice.set_enabled(false)
 	Voice.set_volume(0.5)
-	n._at.clear()
+	_idle(n)
 	check(Voice.say("greet", first_id) == "" and Voice.system("levelup") == "", "꺼지면 말 안 함")
 	var c := ConfigFile.new()
 	c.load(Voice.cfg_path)
@@ -147,8 +172,10 @@ func _initialize() -> void:
 			miss.append(f.get_file())
 	check(miss.is_empty(), "배선 %d 곳 %s" % [HOOKS.size(), miss])
 
+	Voice.speaker = "probe"
+	Voice.always = true
 	Voice.reset_for_test()
-	Voice.always = false
+	check(Voice.speaker == "self" and not Voice.always, "reset_for_test 가 말하는 이·always 를 되돌림")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(Voice.cfg_path))
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(DIR))
 	await process_frame
