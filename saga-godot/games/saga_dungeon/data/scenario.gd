@@ -1,5 +1,5 @@
 extends RefCounted
-## G-0085 — 사가나락 이야기 표(정본 `scenario/saga-dungeon.md` "이름 없는 구덩이"). 1막 · 중원의 난 세 장 + G-0089 2막 · 잿빛과 소금 세 장 + G-0093 3막 · 불타는 남쪽 네 장.
+## G-0085 — 사가나락 이야기 표(정본 `scenario/saga-dungeon.md` "이름 없는 구덩이"). 1막 · 중원의 난 세 장 + G-0089 2막 · 잿빛과 소금 세 장 + G-0093 3막 · 불타는 남쪽 네 장 + G-0097 4막 · 모래와 눈과 고철 네 장.
 ## 대사는 웹 구현(saga-web/saga-dungeon/js/data-scenario.js SCENES)과 같다. 단계는 고돗 굴혈(방 일곱 = 1~7층, 3·6층 보스,
 ## 5층 미니보스 = 순장 왕릉, 마을·들판 없음)에 맞춰 바꿨다 — 바꾼 까닭은 티켓 G-0085 "단계 바꿈".
 ## 엔진은 world/scenario_runner.gd, 진행은 DungeonSaveState.scenario(이 파일의 fresh() 모양). 인물은 전부 가상(이름 정책).
@@ -11,8 +11,8 @@ extends RefCounted
 ##     {"t": "boss", "n": n}             이 단계가 시작된 뒤 보스 n 마리
 ##     {"t": "floor", "n": n}            n층 방 출구를 나갔다(rooms_cleared[n-1]) — 이미 지났으면 바로 넘어간다
 ##     {"t": "rescue", "n": n, "room": i}  방 i 에 선 표지에 닿아 구한다(이 단계 동안만 선다)
-##     {"t": "wboss", "n": n}            이 단계가 시작된 뒤 월드 보스 n 마리(G-0089 — 2막 폐도시 폭주룡)
-##     {"t": "horde", "n": n}            이 단계가 시작된 뒤 난입에서 파도 HORDE_WAVE 에 n 번 닿는다(2막 개펄 촉수왕 — 난입은 15분 생존이라 파도로)
+##     {"t": "wboss", "n": n}            이 단계가 시작된 뒤 월드 보스 n 마리(G-0089 — 2막 폐도시 폭주룡) · "name" 은 목표판 이름(없으면 폐도시 폭주룡)
+##     {"t": "horde", "n": n}            이 단계가 시작된 뒤 난입에서 파도 "wave"(없으면 HORDE_WAVE)에 n 번 닿는다(2막 개펄 촉수왕 — 난입은 15분 생존이라 파도로)
 ##     {"t": "elite", "n": n}            이 단계가 시작된 뒤 정예(elite_key 있는 적) n 마리(G-0093 — 3막 균열 문지기 무리)
 ##     {"t": "sigil", "n": n}            부적 던전 n 단 이상을 깬 적(st.sigil_best ← DungeonSigilState.best_tier_cleared — 3막 굴혈 11~20층 = 부적 던전 더 깊은 단)
 ##     장의 "sigil": n 이면 장 보상으로 n 단 부적 하나(DungeonSigilState.add_sigil)
@@ -31,6 +31,9 @@ const CAST := {
 	"soyeon": {"name": "떠돌이 퇴마사 소연", "emoji": "🔮"},
 	"mechanic": {"name": "개척지 정비공", "emoji": "🔧"},
 	"mumyeong": {"name": "이름을 삼키는 목소리", "emoji": "🌑"},
+	"caravan": {"name": "대상 우두머리", "emoji": "🐫"},
+	"cable": {"name": "케이블카 기사", "emoji": "🚡"},
+	"kkik": {"name": "수리 로봇 끽", "emoji": "🤖"},
 }
 
 const SCENES := {
@@ -136,6 +139,37 @@ const SCENES := {
 		["lord", "이름을 빼앗겼지만… 성을 지킬 갑주는 남는군. 가져가라, 이 조각을."],
 		["mukhyang", "봉인된 이름은 제 기록에 따로 적어 두겠습니다. 어떤 결정이든 기록은 남습니다."],
 	],
+	"car1": [
+		["caravan", "서역 길목이 막힌 지 석 달째요. 낙타도 짐도 돌아오지 않소. 모래에 트럭이 박혀 있고 묻힌 유적 속에서는 빛 문이 열려 있다는 말도 있소."],
+		["me", "모래바다 폭군이 길을 막고 있다지요. 대상 길부터 열겠습니다."],
+	],
+	"car2": [
+		["caravan", "방울 소리가 다시 들리오! 비단 한 필을 남기고 가겠소. 이 길이 열렸으니 더 많은 이름이 돌아올 게요."],
+	],
+	"snow1": [
+		["cable", "산성 폐허에 누가 눌러앉아 케이블카가 끊겼어요. 골짜기가 고립됐습니다. 칸 안에 커다란 손자국이 얼어붙어 있었고요."],
+		["me", "케이블카를 다시 돌려 산성으로 오르겠습니다. 거한이 있다면 그 자리에서 만나지요."],
+	],
+	"snow2": [
+		["cable", "케이블카가 다시 움직여요! 골짜기에 불빛이 켜졌습니다."],
+		["me", "거한의 몸에 냉각관이 박혀 있었습니다. 산 위의 눈은 이 땅의 것이 아니었군요."],
+	],
+	"scr1": [
+		["kkik", "끽… 제 이름은 끽입니다. 쓰러진 기계들이 하나씩 사라져요. 누군가 모으고 있어요. 저는 제 이름을 꽉 붙잡아서 멀쩡합니다."],
+		["me", "이름을 먹고 일어선 기계라면 고철 거신이겠군요. 옛 감시탑 곁으로 가 보겠습니다."],
+	],
+	"scr2": [
+		["kkik", "황무지의 기계들이 잠들었어요. 이제 나사 한 줌을 드릴게요. 저도 함께 갈래요. 이름을 지키는 법을 알려 드릴 수 있어요."],
+		["me", "든든한 동행이 생겼습니다. 마을에서 수리도 부탁드리겠습니다."],
+	],
+	"hg1": [
+		["mukhyang", "부적 넷째 단의 굴혈, 업화 대문입니다. 돌기둥에 경고 표지판이 붙어 있고, 문지기의 기계 팔이 문을 지킵니다. 문 너머는 천계로 이어져 있다지요."],
+		["me", "경고 표지판은 어느 시대 글자로 쓰여 있었습니다. 문 너머가 두렵지만 가야겠습니다."],
+	],
+	"hg2": [
+		["mukhyang", "문이 열렸습니다. 이제 천계 사당이 눈앞입니다. 마지막 막이 다가옵니다."],
+		["me", "이름이 돌아오는 날까지 걷겠습니다."],
+	],
 }
 
 ## 장면 끝 고르기(웹 SCENES.choice). 답은 st.choices[id]. reward: gold(금) · boon(축복 키 하나 — DungeonRunState.apply_boon).
@@ -201,6 +235,28 @@ const CHAPTERS := [
 		"mix": {"past": "용궁 기와", "now": "잠수 장비 잔해", "future": "수압 돔"},
 		"steps": [{"t": "talk", "scene": "pal1"}, {"t": "sigil", "n": 3}, {"t": "talk", "scene": "pal2"}],
 		"gold": 12000},
+	## G-0097 4막 · 모래와 눈과 고철 — 고돗엔 서역 모랫길·북방 설산·기계 황무지 지역과 21~25층이 없어: 모래바다 폭군 = 월드 보스 둘,
+	## 산성 거한 = 난입 파도 5, 고철 거신 무리 = 정예 다섯(끽 합류는 대사로만), 업화 대문(21~25층) = 부적 4단.
+	{"id": "a4_caravan", "no": 11, "title": "끊긴 대상 길", "stage": "굴혈 · 월드 보스 둘",
+		"blurb": "대상 우두머리 — 모래가 묻힌 유적째 대상 길을 삼켰다.",
+		"mix": {"past": "대상·묻힌 유적", "now": "모래에 박힌 트럭", "future": "유적 속 빛 문"},
+		"steps": [{"t": "talk", "scene": "car1"}, {"t": "wboss", "n": 2, "name": "모래바다 폭군"}, {"t": "talk", "scene": "car2"}],
+		"gold": 15000},
+	{"id": "a4_snowfort", "no": 12, "title": "산성의 거한", "stage": "난입 · 파도 5",
+		"blurb": "케이블카 기사 — 멈춘 케이블카를 다시 돌려 산성으로.",
+		"mix": {"past": "산성 폐허", "now": "케이블카", "future": "거한 몸의 냉각관"},
+		"steps": [{"t": "talk", "scene": "snow1"}, {"t": "horde", "n": 1, "wave": 5}, {"t": "talk", "scene": "snow2"}],
+		"gold": 17000},
+	{"id": "a4_scrap", "no": 13, "title": "스스로 일어선 고철", "stage": "굴혈 · 정예 다섯",
+		"blurb": "수리 로봇 끽 — 고철 거신은 이름을 먹고 일어선 기계다. 끽은 제 이름을 지켜 멀쩡하다.",
+		"mix": {"past": "황무지 옛 감시탑", "now": "기계 더미·폐차", "future": "홀로그램 표지·끽"},
+		"steps": [{"t": "talk", "scene": "scr1"}, {"t": "elite", "n": 5}, {"t": "talk", "scene": "scr2"}],
+		"gold": 20000},
+	{"id": "a4_hellgate", "no": 14, "title": "업화 대문", "stage": "부적 던전 4단",
+		"blurb": "부적 넷째 단의 업화 문지기 — 문 너머가 천계로 이어진다.",
+		"mix": {"past": "지옥문 돌기둥", "now": "문에 걸린 경고 표지판", "future": "문지기의 기계 팔"},
+		"steps": [{"t": "talk", "scene": "hg1"}, {"t": "sigil", "n": 4}, {"t": "talk", "scene": "hg2"}],
+		"gold": 25000},
 ]
 
 ## 셈 칸 — 단계 종류 → 합계 칸 이름.
@@ -235,6 +291,12 @@ static func step(st: Dictionary) -> Dictionary:
 	var steps: Array = ch.steps
 	var i := int(st.get("step", 0))
 	return steps[i] if i < steps.size() else {}
+
+
+## 난입 단계가 노리는 파도 — 지금 단계가 horde 면 그 "wave", 아니면 HORDE_WAVE(G-0097 4막 산성 거한 = 5).
+static func horde_wave(st: Dictionary) -> int:
+	var s := step(st)
+	return int(s.get("wave", HORDE_WAVE)) if String(s.get("t", "")) == "horde" else HORDE_WAVE
 
 
 static func finished(st: Dictionary) -> bool:
@@ -337,9 +399,9 @@ static func objective(st: Dictionary) -> String:
 		"rescue":
 			what = "%d층에 갇힌 이를 구하라" % (int(s.room) + 1)
 		"wboss":
-			what = "월드 보스(폐도시 폭주룡) 처치 %d/%d" % [mini(have, int(s.n)), int(s.n)]
+			what = "월드 보스(%s) 처치 %d/%d" % [String(s.get("name", "폐도시 폭주룡")), mini(have, int(s.n)), int(s.n)]
 		"horde":
-			what = "난입에서 파도 %d 버티기" % HORDE_WAVE
+			what = "난입에서 파도 %d 버티기" % horde_wave(st)
 		"elite":
 			what = "정예 처치 %d/%d" % [mini(have, int(s.n)), int(s.n)]
 		"sigil":

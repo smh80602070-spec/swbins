@@ -7,6 +7,7 @@ extends Node
 ##   · G-0089 2막: 월드 보스 처치(DungeonWorldBossState.boss_defeated)·난입 파도 HORDE_WAVE 닿음(난입 한 판에 한 번)을 센다.
 ##     장면 끝 고르기(Scenario.CHOICES)는 창의 단추로, 답의 보상(금·축복)을 곧바로 준다.
 ##   · G-0093 3막: 정예(elite_key 있는 적) 처치를 세고, 부적 던전 깬 단(best_tier_cleared)을 st.sigil_best 에 적는다. 장의 sigil 보상 = 그 단 부적.
+##   · G-0097 4막: 난입 단계의 "wave"(산성 거한 = 파도 5)를 본다 — 나머지는 2·3막 셈 그대로.
 ##   · 장이 끝나면 금 보상·알림, 단계가 바뀔 때마다 저장(DungeonSaveState.save) · 목표판 다시 그림(부모 _refresh_goal_board).
 
 const Scenario := preload("res://games/saga_dungeon/data/scenario.gd")
@@ -218,12 +219,12 @@ func _on_world_boss_defeated(_slot: int, _floor_num: int) -> void:
 	_after_count()
 
 
-## 난입 한 판에서 파도 HORDE_WAVE 에 닿으면 한 번 센다(끝나면 다시 셀 수 있게 푼다).
+## 난입 한 판에서 지금 단계의 파도(Scenario.horde_wave — 없으면 HORDE_WAVE)에 닿으면 한 번 센다(끝나면 다시 셀 수 있게 푼다).
 func _watch_horde() -> void:
 	if not DungeonHordeState.active:
 		_horde_marked = false
 		return
-	if not _horde_marked and DungeonHordeState.wave >= Scenario.HORDE_WAVE:
+	if not _horde_marked and DungeonHordeState.wave >= Scenario.horde_wave(st):
 		_horde_marked = true
 		st.hordes = int(st.get("hordes", 0)) + 1
 		_after_count()
