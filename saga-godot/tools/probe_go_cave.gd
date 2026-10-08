@@ -39,6 +39,15 @@ func _physics_process(_delta: float) -> void:
 				var used: Dictionary = _cv.get("used_files")
 				var missing := want.filter(func(f: String) -> bool: return not used.has(f))
 				_check("kit", want.size() == 16 and missing.is_empty() and used.has("cave_floor_01"), "want=%d missing=%s" % [want.size(), missing])
+				## 입구 F 둘레에 다른 F 물건(인물·게시판·솥·채집·상자·이야기 자리)이 없다.
+				var g: Vector3 = _cv.call("gate_pos")
+				var clash: Array = []
+				for n in get_tree().current_scene.find_children("*", "Node3D", true, false):
+					for pre in ["Waypoint_", "Villager_", "StoryNpc_", "Chest", "Pot", "Kitchen", "Board", "Gather", "Shard"]:
+						if String(n.name).begins_with(pre) and Vector2((n as Node3D).global_position.x - g.x, (n as Node3D).global_position.z - g.z).length() < _cv.GATE_M + 3.75 + 0.5:
+							clash.append(String(n.name))
+							break
+				_check("gate_clear", clash.is_empty(), "clash=%s" % [clash])
 				_next()
 		1: # ② 이음
 			var joints: Array = _cv.get("joints")

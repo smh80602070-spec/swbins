@@ -153,6 +153,10 @@ func _ready() -> void:
 	var cave := preload("res://games/saga_go/world/cave_interior.gd").new()
 	cave.name = "CaveInterior"
 	add_child(cave)
+	## G-0061 — 집 안(마을 집 문 F · 세상 밖 실내 껍데기 12 · 한숨 돌리기).
+	var houses := preload("res://games/saga_go/world/house_interiors.gd").new()
+	houses.name = "HouseInteriors"
+	add_child(houses)
 	## PLAN 106장 ㉕ — 이야기 임무(들판 보스·비경 신호에 붙으므로 그 뒤).
 	## PLAN 106장 ㊳ — 9장 구름섬·바람 기둥(북쪽 봉우리 옆 하늘).
 	var sky_isle := preload("res://games/saga_go/world/sky_isle.gd").new()
@@ -189,6 +193,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_domains.gd").new())
 	if OS.get_environment("SAGA_GO_CAVE_PROBE") != "": # G-0098 굴 안
 		add_child(load("res://tools/probe_go_cave.gd").new())
+	if OS.get_environment("SAGA_GO_HOUSE_PROBE") != "": # G-0061 집 안
+		add_child(load("res://tools/probe_go_house.gd").new())
 	if OS.get_environment("SAGA_WEEKLY_PROBE") != "":
 		add_child(load("res://tools/probe_weekly_boss.gd").new())
 	if OS.get_environment("SAGA_COMMISSION_PROBE") != "":

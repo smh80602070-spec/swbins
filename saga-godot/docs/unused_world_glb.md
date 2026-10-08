@@ -10,25 +10,21 @@
 | `acc_` | 33 | 6 | 0 | 27 |
 | `wpn_` | 27 | 0 | 27 | 0 |
 | `cave_` | 16 | 4 | 12 | 0 |
-| `int_` | 12 | 0 | 0 | 12 |
+| `int_` | 12 | 12 | 0 | 0 |
 | `dungeon_` | 11 | 10 | 1 | 0 |
 | `loot_` | 20 | 20 | 0 | 0 |
 | `pet_` | 11 | 0 | 11 | 0 |
 | `rock_` | 5 | 4 | 0 | 1 |
 | `tree_` | 9 | 8 | 0 | 1 |
-| 그 밖(4개 이하 묶음) | 122 | 78 | 0 | 44 |
-| **합계** | **376** | **144** | **147** | **85** |
+| 그 밖(4개 이하 묶음) | 122 | 89 | 0 | 33 |
+| **합계** | **376** | **167** | **147** | **62** |
 
 ## 안 쓰는 이름
 
 - `acc_` 27 — acc_antenna · acc_backpack · acc_belt_pouch · acc_cap · acc_cape_short · acc_ear_cat · acc_ear_elf · acc_earring · acc_eyepatch · acc_glasses_round · acc_goggles · acc_halo · acc_holo_visor · acc_horns · acc_jetpack_small · acc_mask_half · acc_necklace · acc_pauldron_spike · acc_quiver · acc_sash · acc_scarf · acc_shoulder_fur · acc_shoulder_gem · acc_tail_cat · acc_tail_fox · acc_wings_small · acc_wrist_band
-- `int_` 12 — int_barn_01 · int_chinese_hall_01 · int_dungeon_gate_01 · int_eu_house_01 · int_forest_cottage_01 · int_future_dome_01 · int_hanok_01 · int_inn_01 · int_jp_minka_01 · int_modern_block_01 · int_silkroad_house_01 · int_stone_tower_01
 - `altar_` 1 — altar_base_01
 - `armor_` 1 — armor_stand_01
 - `bars_` 1 — bars_door_01
-- `bed_` 2 — bed_futon_01 · bed_wood_01
-- `bookshelf_` 1 — bookshelf_01
-- `chair_` 1 — chair_wood_01
 - `city_` 1 — city_wall_segment_01
 - `cliff_` 1 — cliff_ledge_01
 - `counter_` 1 — counter_01
@@ -39,7 +35,6 @@
 - `hearth_` 1 — hearth_stone_01
 - `hill_` 1 — hill_slope_01
 - `kitchen_` 1 — kitchen_pot_01
-- `map_` 1 — map_table_01
 - `meadow_` 1 — meadow_01
 - `mirror_` 1 — mirror_stand_01
 - `mountain_` 1 — mountain_01
@@ -50,14 +45,11 @@
 - `river_` 1 — river_bend_01
 - `road_` 1 — road_plain_01
 - `rock_` 1 — rock_outcrop_01
-- `rug_` 2 — rug_rect_01 · rug_round_01
 - `sail_` 1 — sail_boat_01
 - `shelf_` 1 — shelf_wall_01
 - `sofa_` 1 — sofa_01
 - `spinning_` 1 — spinning_wheel_01
-- `stool_` 1 — stool_01
-- `stove_` 1 — stove_iron_01
-- `table_` 3 — table_lamp_01 · table_round_01 · table_wood_01
+- `table_` 1 — table_wood_01
 - `tatami_` 1 — tatami_mat_01
 - `temple_` 1 — temple_roof_01
 - `tree_` 1 — tree_pine_01_snow

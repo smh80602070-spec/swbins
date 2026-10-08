@@ -3021,5 +3021,21 @@
   "fun": {},
   "ticket": "G-0098",
   "since": "2026-10-08"
+ },
+ {
+  "id": "gd.go.house-interiors",
+  "name": "사가만리 집 안 — 마을 집·사당·폐허·조선소 문 열둘에서 F → 실내 껍데기 int_* 12(천장·앞벽 걷은 인형의 집 시점, 경계 층 앞 벽), 시대별 가구 세 벌, 첫 집 모라 300·한숨 돌리기(체력 가득), 어둡게·등",
+  "files": [
+   "games/saga_go/world/house_interiors.gd",
+   "tools/probe_go_house.gd"
+  ],
+  "tests": [
+   "go_house"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0061",
+  "since": "2026-10-08"
  }
 ]

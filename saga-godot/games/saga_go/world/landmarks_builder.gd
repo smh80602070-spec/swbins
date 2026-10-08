@@ -273,6 +273,15 @@ static func cave_gate_pos() -> Vector3:
 	return TestMap.world_pos(5, 2) + Vector3(0, ground, 0)
 
 
+## 옛 사당 제단·폐허 기둥 무리 바닥 가운데(G-0061 — house_interiors.gd 가 곁에 "안으로" 문을 둔다).
+static func shrine_pos() -> Vector3:
+	return TestMap.world_pos(2, 1) + Vector3(0, TerrainBuilder.LEGEND["S"].height, 0)
+
+
+static func ruins_pos() -> Vector3:
+	return TestMap.world_pos(7, 5) + Vector3(0, TerrainBuilder.LEGEND["R"].height, 0)
+
+
 func _add_cave() -> void:
 	var base_pos := cave_gate_pos()
 	var size := CAVE_GATE_SIZE * CAVE_GATE_SCALE

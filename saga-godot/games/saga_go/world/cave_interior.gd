@@ -184,24 +184,28 @@ func _teleport(p: Vector3) -> void:
 
 
 func _darken(on: bool) -> void:
-	var scene := get_parent()
+	darken_scene(get_parent(), on, _dark_saved, DARK_SUN, DARK_AMBIENT)
+
+
+## 해·환경광을 낮추거나(on — 원래 값을 saved 에) 되돌린다. G-0061 집 안(house_interiors.gd)도 쓴다.
+static func darken_scene(scene: Node, on: bool, saved: Dictionary, sun_mul: float, ambient_mul: float) -> void:
 	var sun := scene.get_node_or_null("Sun") as DirectionalLight3D
 	var we := scene.get_node_or_null("WorldEnvironment") as WorldEnvironment
 	var env: Environment = we.environment if we else null
 	if on:
-		_dark_saved = {}
+		saved.clear()
 		if sun:
-			_dark_saved["sun"] = sun.light_energy
-			sun.light_energy *= DARK_SUN
+			saved["sun"] = sun.light_energy
+			sun.light_energy *= sun_mul
 		if env:
-			_dark_saved["ambient"] = env.ambient_light_energy
-			env.ambient_light_energy *= DARK_AMBIENT
+			saved["ambient"] = env.ambient_light_energy
+			env.ambient_light_energy *= ambient_mul
 		return
-	if sun and _dark_saved.has("sun"):
-		sun.light_energy = float(_dark_saved.sun)
-	if env and _dark_saved.has("ambient"):
-		env.ambient_light_energy = float(_dark_saved.ambient)
-	get_tree().call_group("go_night_visual", "refresh_now")   # 그사이 밤낮이 바뀌었으면 맞춘다
+	if sun and saved.has("sun"):
+		sun.light_energy = float(saved.sun)
+	if env and saved.has("ambient"):
+		env.ambient_light_energy = float(saved.ambient)
+	scene.get_tree().call_group("go_night_visual", "refresh_now")   # 그사이 밤낮이 바뀌었으면 맞춘다
 
 
 func _spawn_enemies() -> void:
