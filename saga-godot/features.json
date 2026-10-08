@@ -2666,16 +2666,18 @@
   "id": "gd.go.rematch_dawn",
   "name": "13부 이야기 보스 재대결 비경 「그날 노래의 메아리」 — 44장 뒤 청하 봉우리 발치 입구, 그날의 검은 가면",
   "files": [
-   "games/saga_go/data/domains.gd"
+   "games/saga_go/data/domains.gd",
+   "tools/shot_rematch.gd"
   ],
   "tests": [
    "aftermath"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0076",
-  "since": "2026-10-07"
+  "since": "2026-10-07",
+  "note": "G-0112 촬영 go_rematch_gate(입구 돌문·보랏빛 문)·go_rematch_in(비경 안 그날의 검은 가면 체력·방패 막대) ○"
  },
  {
   "id": "gd.go.story14",
