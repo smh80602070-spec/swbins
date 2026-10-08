@@ -505,19 +505,74 @@ func _add_bridge() -> void:
 	## 늘리면 나뭇결이 다 뭉개져 보이므로, 강을 따라 실제로 이어 붙인다
 	## (MultiMesh — 44개라도 draw call은 1회, master.md 35장 그대로).
 	var plank_count := int(ceil(bridge_length))
-	var mm := MultiMesh.new()
-	mm.transform_format = MultiMesh.TRANSFORM_3D
-	mm.mesh = plank_mesh
-	mm.instance_count = plank_count
+	var xforms: Array[Transform3D] = []
 
 	var start_z := -bridge_length * 0.5 + 0.5
 	for i in plank_count:
 		var basis := Basis().scaled(Vector3(bridge_width / PLANK_DECK_WIDTH, 1.0, 1.0))   # 이음 타일이라 겹치지 않는다
 		var pos := base_pos + Vector3(0, -PLANK_DECK_THICK * 0.5, start_z + i)   # 옛 널판은 가운데 피벗 — 윗면 높이를 그대로 맞춘다
-		mm.set_instance_transform(i, Transform3D(basis, pos))
+		xforms.append(Transform3D(basis, pos))
+	xforms.append_array(_bridge_rail_xforms(base_pos, bed, bridge_length, bridge_width))
+
+	var mm := MultiMesh.new()
+	mm.transform_format = MultiMesh.TRANSFORM_3D
+	mm.mesh = plank_mesh
+	mm.instance_count = xforms.size()
+	for i in xforms.size():
+		mm.set_instance_transform(i, xforms[i])
 
 	var mmi := MultiMeshInstance3D.new()
 	mmi.multimesh = mm
 	mmi.name = "Bridge"
 	add_child(mmi)
+	_add_bridge_rail_walls(base_pos, bridge_length, bridge_width)
 	_add_discovery_area("bridge", base_pos, self)
+
+
+## G-0113 — 널판(plank_deck_01, 폭 6×길이 1×두께 0.12, 아랫면 y=0) 한 장을 가늘게 늘려 기둥·난간으로 쓴다.
+## 같은 MultiMesh 에 넣어 그리기는 늘지 않는다. 기둥은 강바닥까지 내려가 다리가 물에 떠 보이지 않게,
+## 난간은 위(1.0m)·가운데(0.5m) 두 줄을 1m 이음 타일로.
+const BRIDGE_RAIL_INSET := 0.12
+const BRIDGE_RAIL_HEIGHTS := [0.5, 1.0]
+const BRIDGE_RAIL_SIZE := 0.1
+const BRIDGE_POST_SIZE := 0.18
+const BRIDGE_POST_GAP := 11.0
+
+func _bridge_rail_xforms(base_pos: Vector3, bed: float, length: float, width: float) -> Array[Transform3D]:
+	var out: Array[Transform3D] = []
+	var deck_top := base_pos.y + PLANK_DECK_THICK * 0.5
+	var side_x := width * 0.5 - BRIDGE_RAIL_INSET
+	## 기둥 — 널판 길이(z 1m)를 세로로 세운다(z→y, y→-z 로 돌려 행렬식이 양수 = 면이 안 뒤집힌다).
+	var post_bottom := base_pos.y - TerrainBuilder.BRIDGE_CLEARANCE - 0.3   # 강바닥(bed) 조금 아래까지
+	var post_top := deck_top + float(BRIDGE_RAIL_HEIGHTS.back()) + 0.05
+	var post_len := post_top - post_bottom
+	var post_basis := Basis(Vector3(BRIDGE_POST_SIZE / PLANK_DECK_WIDTH, 0, 0), Vector3(0, 0, -BRIDGE_POST_SIZE / PLANK_DECK_THICK), Vector3(0, post_len, 0))
+	var n := int(floor(length / BRIDGE_POST_GAP))
+	for k in n + 1:
+		var z := -length * 0.5 + 0.3 + (length - 0.6) * float(k) / float(n)
+		for sx in [-side_x, side_x]:
+			out.append(Transform3D(post_basis, base_pos + Vector3(sx, post_bottom + post_len * 0.5 - base_pos.y, z + BRIDGE_POST_SIZE * 0.5)))
+	## 난간 — 단면 0.1m 각, 1m 이음.
+	var rail_basis := Basis().scaled(Vector3(BRIDGE_RAIL_SIZE / PLANK_DECK_WIDTH, BRIDGE_RAIL_SIZE / PLANK_DECK_THICK, 1.0))
+	for h in BRIDGE_RAIL_HEIGHTS:
+		for i in int(ceil(length)):
+			for sx in [-side_x, side_x]:
+				out.append(Transform3D(rail_basis, base_pos + Vector3(sx, deck_top + float(h) - BRIDGE_RAIL_SIZE * 0.5 - base_pos.y, -length * 0.5 + 0.5 + i)))
+	return out
+
+
+## 난간 충돌 — 걸어서 강으로 떨어지지 않게(점프 1.47m 로는 넘는다). 경계 층이라 카메라 끈은 안 걸린다(house_interiors 와 같은 꼴).
+func _add_bridge_rail_walls(base_pos: Vector3, length: float, width: float) -> void:
+	var body := StaticBody3D.new()
+	body.name = "BridgeRails"
+	body.collision_layer = TerrainBuilder.BORDER_LAYER
+	body.collision_mask = 0
+	var deck_top := base_pos.y + PLANK_DECK_THICK * 0.5
+	for sx in [-1.0, 1.0]:
+		var cs := CollisionShape3D.new()
+		var box := BoxShape3D.new()
+		box.size = Vector3(0.2, 1.0, length)
+		cs.shape = box
+		cs.position = Vector3(sx * (width * 0.5 - BRIDGE_RAIL_INSET), deck_top + 0.5, 0) + Vector3(base_pos.x, 0, base_pos.z)
+		body.add_child(cs)
+	add_child(body)
