@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-08",
+  "tickets": [
+    "U-0055 사가만리 확인 닫기 ③ — 기계로 닫히는 D1 다섯"
+  ],
+  "how": "U-0054 의 PlaytestHeadless 한 판(.utmp/u0054.log, -quit 없이·세이브 치움) 줄 + U-0052 의 PlaytestGoExpCurve·PlaytestGoCycle RunBatch(장면 없이). 같은 날 같은 코드, 진단 코드 무변경",
+  "scene": "PlaytestHeadless OK - 10 frames, no errors (런타임 오류 0)",
+  "runtime_errors": 0,
+  "results": [
+    {
+      "id": "un.go.slice",
+      "playtest": "PlaytestHeadless",
+      "result": "OK",
+      "lines": "PlaytestHeadless OK - 10 frames, no errors (도적 습격 흐름 전체·bandit hitstop·level-up cut·perk choice·loot marker·bond OK)",
+      "date": "2026-10-08"
+    },
+    {
+      "id": "un.go.move-map",
+      "playtest": "PlaytestGoWorldMap",
+      "result": "OK",
+      "lines": "world map OK - 지역 7·역참 5·봉우리·망루 등반/밝히기·순간이동(진짜 버튼)·지도 열고 닫기·세이브 v18 왕복·v13 로드",
+      "date": "2026-10-08"
+    },
+    {
+      "id": "un.go.hero-dex",
+      "playtest": "PlaytestGoHeroDex",
+      "result": "OK",
+      "lines": "hero dex OK - 버튼 열림·0/105·탭 넷 칸 22/26/20/37/16·그림자·겨루기→만남·동행→등용·칸 버튼 자세히·탭 수·가로 배치·지도와 서로 닫힘·닫기·v18 왕복·v16 로드",
+      "date": "2026-10-08"
+    },
+    {
+      "id": "un.go.recruit",
+      "playtest": "PlaytestGoHeroes",
+      "result": "OK",
+      "lines": "heroes OK - 도감 105(시대 넷·원소 일곱)·명단·자리·서 있는 사람·겨루기 ★3/★4/★5·기질·굴복→동행·끌고 감·전멸 | ★3 영진(Might·초) ★4 뇌호(Might·빙) ★5 명운(Virtue·뇌)",
+      "date": "2026-10-08"
+    },
+    {
+      "id": "un.go.exp-curve",
+      "playtest": "PlaytestGoExpCurve",
+      "result": "OK",
+      "lines": "[PlaytestGoExpCurve] OK — Lv.30 481,692 · Lv.58 4,155,606 · Lv.85 33,195,231 · Lv.1→85 누적 410,295,272 · Lv.200 231,636,809,179 · [PlaytestGoCycle] OK(재출항 Lv.85)",
+      "date": "2026-10-08"
+    }
+  ],
+  "fails": 0,
+  "not_covered": "경험치 곡선의 오르는 속도(손맛)는 실플레이 · 지도·도감 창 모양은 그림 판정 묶음(U-0056) 몫"
+}

@@ -6,11 +6,12 @@
   "tests": [
    "PlaytestHeadless"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0055-20261008.json PlaytestHeadless OK."
  },
  {
   "id": "un.go.animals",
@@ -129,11 +130,12 @@
   "tests": [
    "PlaytestGoWorldMap"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0055-20261008.json PlaytestGoWorldMap OK."
  },
  {
   "id": "un.go.chests",
@@ -277,11 +279,12 @@
   "tests": [
    "PlaytestGoHeroDex"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0055-20261008.json PlaytestGoHeroDex OK."
  },
  {
   "id": "un.go.recruit",
@@ -290,11 +293,12 @@
   "tests": [
    "PlaytestGoHeroes"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0055-20261008.json PlaytestGoHeroes OK."
  },
  {
   "id": "un.go.hero-looks",
@@ -1624,11 +1628,11 @@
    "PlaytestGoExpCurve",
    "PlaytestGoCycle"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "U-0052",
   "since": "2026-10-08",
-  "note": "D1: 규칙(Lv.1~30 옛 식과 같음·Lv.1~200 단조 증가·Lv.31 ×1.08·AddExp(long.MaxValue/4) 1초 안·Lv.57→59 오름·Lv.85 문턱 33,195,231 ≤ 5e7·누적 Lv.1→85 4.1e8·옛 int 세이브 Lv.10/1000 그대로·왕복)+재출항 진단 Lv.85+PlaytestHeadless 오류 0. 200 은 루프 안전장치(레벨 상한 아님). 손맛(오르는 속도)은 실플레이"
+  "note": "D2: docs/playcheck/d2-u0055-20261008.json PlaytestGoExpCurve OK. D1: 규칙(Lv.1~30 옛 식과 같음·Lv.1~200 단조 증가·Lv.31 ×1.08·AddExp(long.MaxValue/4) 1초 안·Lv.57→59 오름·Lv.85 문턱 33,195,231 ≤ 5e7·누적 Lv.1→85 4.1e8·옛 int 세이브 Lv.10/1000 그대로·왕복)+재출항 진단 Lv.85+PlaytestHeadless 오류 0. 200 은 루프 안전장치(레벨 상한 아님). 손맛(오르는 속도)은 실플레이"
  }
 ]
