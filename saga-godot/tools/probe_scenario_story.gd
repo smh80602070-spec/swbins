@@ -9,6 +9,7 @@ extends SceneTree
 ## ②-3 G-0095 3부: cave2 → 기산채 gisan1 → q_gold1 → gisan2 → 호로곡 gorge1 → 처치 60 → 보스 1(단계 전 보스는 안 셈) → gorge2 → Lv30 lab1 → 비경 완주 1 → lab2 → Lv45 허도 job31 → 3차 → 유대 20 → job32(3부 끝)
 ## ②-4 G-0100 4부: 기산채 luoyang1 → 처치 150(149 머묾) → 보스 1 → luoyang2 → Lv70 한중 굴혈 depth1 → 비경 1 → depth2 → 보스 2(하나로 머묾) → gate1 → gate2 고르기 keep
 ##    → 허도 name1 → 4차 → name2 칭호 wander → name3_keep(4부 끝, 경험치 537930·금 427000) · close 면 name3_close · 답 없으면 close
+## ②-5 G-0104 5부: Lv72 허창 들판 bp1 → 보스 1 → beyond1 → Lv74 강릉진 bn1 → 보스 1 → beyond2 → 허도 bf1 → 비경 1 → beyond3_keep(4부 문 지킴, 경험치 1837930·금 1327000) · close 면 beyond3_close
 ## ③ legacy: 빈 칸 + Lv10 또는 1차 → 1부만 · Lv30 또는 2차 → 2부까지 · Lv3 → 1장부터 · 칸이 있으면 안 함 · legacy 로 건너뛴 진행은 2부 문턱을 넘으면 이어 건너뜀
 ## ④ 말한 이: mentor 는 넘긴 스승 이름(없으면 "스승") · 스승 이름이 도감 가명(mentor_of)에서 나옴
 ## ⑤ 엔진·장면 스크립트 컴파일(scenario_runner·story_field·story_town·goal_board_feed)
@@ -37,7 +38,7 @@ func _initialize() -> void:
 	# ① 표
 	var ids: Array = S.CHAPTERS.map(func(c): return String(c.id))
 	check(ids == ["p1_sinya", "p1_heodo", "p1_field", "p1_job", "p2_port", "p2_forest", "p2_namjeong", "p2_cave", "p3_gisan", "p3_gorge", "p3_labyrinth", "p3_job",
-		"p4_luoyang", "p4_depth", "p4_gate", "p4_name"], "장 열여섯 id 정본 %s" % [ids])
+		"p4_luoyang", "p4_depth", "p4_gate", "p4_name", "p5_past", "p5_now", "p5_future"], "장 열아홉 id 정본 %s" % [ids])
 	var bad: Array = []
 	var keys: Array = S.SCENE_KEYS.values()
 	for c: Dictionary in S.CHAPTERS:
@@ -278,8 +279,42 @@ func _initialize() -> void:
 	take.call(S.finish_talk(st, ctx, "wander"))   # name2
 	check(S.pending_scene(st, ctx) == "name3_keep" and String(st.choices.get("name", "")) == "wander", "문 지킴 → name3_keep · 칭호 wander")
 	take.call(S.finish_talk(st, ctx))
-	check(S.finished(st) and log.ch.size() == 16 and int(log.exp) == 537930 and int(log.gold) == 427000 and S.objective(st, ctx) == "",
-		"4부 끝 — 경험치 %d · 금 %d" % [int(log.exp), int(log.gold)])
+	check(log.ch.size() == 16 and int(log.exp) == 537930 and int(log.gold) == 427000 and S.objective(st, ctx).contains("Lv 72 되면"),
+		"4부 끝 — 경험치 %d · 금 %d → 5부 Lv72 잠김" % [int(log.exp), int(log.gold)])
+
+	# ②-5 G-0104 5부
+	ctx.level = 72
+	take.call(S.check(st, ctx))
+	check(String(S.step(st).t) == "stage" and S.objective(st, ctx).contains("허창 들판"), "옛 전장 = 허창 들판으로")
+	ctx.stage = "field"
+	take.call(S.check(st, ctx))
+	check(S.pending_scene(st, ctx) == "bp1", "허창 들판 → bp1")
+	ctx.bosses = 20
+	take.call(S.finish_talk(st, ctx))
+	take.call(S.check(st, ctx))
+	check(String(S.step(st).t) == "boss", "들어선 뒤 보스 전엔 머묾")
+	ctx.bosses = 21
+	take.call(S.check(st, ctx))
+	take.call(S.finish_talk(st, ctx))   # beyond1
+	check(log.ch.size() == 17 and S.objective(st, ctx).contains("Lv 74 되면"), "17장 끝 → 18장 Lv74 잠김")
+	ctx.level = 76
+	ctx.stage = "port"
+	take.call(S.check(st, ctx))
+	take.call(S.finish_talk(st, ctx))   # bn1
+	ctx.bosses = 22
+	take.call(S.check(st, ctx))
+	take.call(S.finish_talk(st, ctx))   # beyond2
+	check(log.ch.size() == 18 and S.pending_scene(st, ctx) == "", "18장 끝 → 19장은 허도에서")
+	ctx.stage = "heodo"
+	take.call(S.finish_talk(st, ctx))   # bf1
+	check(String(S.step(st).t) == "rift", "궤도 기지 = 비경")
+	st.rifts = int(st.rifts) + 1
+	take.call(S.check(st, ctx))
+	check(S.pending_scene(st, ctx) == "beyond3_keep", "4부 문 지킴 → beyond3_keep")
+	take.call(S.finish_talk(st, ctx))
+	check(S.finished(st) and log.ch.size() == 19 and int(log.exp) == 1837930 and int(log.gold) == 1327000 and S.objective(st, ctx) == "",
+		"5부 끝 — 경험치 %d · 금 %d" % [int(log.exp), int(log.gold)])
+	check(S.pending_scene(S.normalize({"ch": 18, "step": 2, "choices": {"gate": "close"}}), {"level": 76, "stage": "heodo"}) == "beyond3_close", "문 닫음 → beyond3_close")
 	check(S.pending_scene(S.normalize({"ch": 15, "step": 3, "choices": {"gate": "close"}}), {"level": 70, "stage": "heodo"}) == "name3_close", "문 닫음 → name3_close")
 	check(S.pending_scene(S.normalize({"ch": 15, "step": 3}), {"level": 70, "stage": "heodo"}) == "name3_close", "답 없으면 첫 답(close)")
 	check(S.speaker("mentor+", "다음 스승") == "🥋 다음 스승", "mentor+ 표시")
@@ -294,7 +329,9 @@ func _initialize() -> void:
 	var b3: Dictionary = S.normalize({})
 	check(S.apply_legacy(b3, true, 50, 3) == 12 and int(b3.ch) == 12, "빈 칸 + Lv50·3차 → 3부까지")
 	var b4: Dictionary = S.normalize({})
-	check(S.apply_legacy(b4, true, 70, 4) == 16 and S.finished(b4), "빈 칸 + Lv70·4차 → 4부까지")
+	check(S.apply_legacy(b4, true, 70, 4) == 16 and int(b4.ch) == 16, "빈 칸 + Lv70·4차 → 4부까지")
+	var b5: Dictionary = S.normalize({})
+	check(S.apply_legacy(b5, true, 76, 4) == 19 and S.finished(b5), "빈 칸 + Lv76 → 5부까지")
 	var c: Dictionary = S.normalize({})
 	check(S.apply_legacy(c, true, 3, 0) == 0 and S.pending_scene(c, {"level": 3, "stage": "sinya"}) == "", "빈 칸 + Lv3 → 1장부터(신야성 들어서기)")
 	var d: Dictionary = S.normalize({"ch": 1, "step": 0, "done": ["p1_sinya"], "legacy": false})
