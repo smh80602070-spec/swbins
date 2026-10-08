@@ -660,9 +660,21 @@ def acc_names():
 #   UAL 흉갑은 반폭 0.168·등 0.10·윗선 +0.30 이라 등이 비치고 턱을 덮었다(G-0060 촬영). 가로는 어깨 폭 0.145 몸 기준 — 엔진이 몸마다 어깨 폭 비율을 곱한다.
 #   아래팔 둘레(소매 포함) 90분위 반지름 0.066(중앙값)~0.12 — 팔 보호대(0.044~0.058)를 굵힌다.
 FIT = {
-    'chest': {'sx': 1.19, 'front': 1.10, 'back': 1.40, 'ztop': 0.235 / 0.30},
+    'chest': {'sx': 1.19, 'front': 1.10, 'ztop': 0.235 / 0.30,
+              # 10-08 K-0037 2D 층 시트 뒷모습: 등 1.40 한 값이면 웃옷 등이 흉갑을 뚫는다(몸 등 끝 cy50+back90 ≈ 0.14~0.19 > 흉갑 0.12~0.14).
+              # 높이(맞춘 뒤 z)별 = (cy50 + back90 + 0.012) / 껍데기 등(cy + ryb) — equip_body_ref.json all
+              'back_z': ((-0.15, 2.06), (-0.10, 1.94), (-0.05, 1.85), (0.0, 1.72), (0.05, 1.73), (0.10, 1.94), (0.15, 1.95), (0.20, 1.75), (0.25, 1.70))},
     'arm': {'radial': 1.25},
 }
+
+
+def _interp(tab, z):
+    if z <= tab[0][0]:
+        return tab[0][1]
+    for (z0, a), (z1, b) in zip(tab, tab[1:]):
+        if z <= z1:
+            return a + (b - a) * (z - z0) / (z1 - z0)
+    return tab[-1][1]
 
 
 def fit_slot(M, slot):
@@ -673,9 +685,9 @@ def fit_slot(M, slot):
         x, y, z = v.co
         if slot == 'chest':
             v.co.x = x * f['sx']
-            v.co.y = y * (f['front'] if y < 0 else f['back'])
             if z > 0:
                 v.co.z = z * f['ztop']
+            v.co.y = y * (f['front'] if y < 0 else _interp(f['back_z'], v.co.z))
         elif slot == 'arm':
             v.co.y = y * f['radial']
             v.co.z = z * f['radial']
