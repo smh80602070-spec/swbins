@@ -266,10 +266,15 @@ func _solid(size: Vector3, local_pos: Vector3, parent: Node3D) -> void:
 	parent.add_child(body)
 
 
-func _add_cave() -> void:
+## 굴 입구 바닥 가운데(G-0098 — cave_interior.gd 가 이 자리 곁에서 F 로 굴 안에 들인다).
+static func cave_gate_pos() -> Vector3:
 	var ground: float = TerrainBuilder.LEGEND["C"].height
 	## 2026-09-11㉒ 지도 확장(+2,+2) — test_map.gd 참고.
-	var base_pos := TestMap.world_pos(5, 2) + Vector3(0, ground, 0)
+	return TestMap.world_pos(5, 2) + Vector3(0, ground, 0)
+
+
+func _add_cave() -> void:
+	var base_pos := cave_gate_pos()
 	var size := CAVE_GATE_SIZE * CAVE_GATE_SCALE
 	var gate_mesh := GLBUtils.extract_mesh(CAVE_GATE_GLB)
 

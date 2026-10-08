@@ -149,6 +149,10 @@ func _ready() -> void:
 	var domains := preload("res://games/saga_go/world/domains.gd").new()
 	domains.name = "Domains"
 	add_child(domains)
+	## G-0098 — 굴 안(굴 입구 F · 세상 밖 세 구간 굴 · 끝 보물).
+	var cave := preload("res://games/saga_go/world/cave_interior.gd").new()
+	cave.name = "CaveInterior"
+	add_child(cave)
 	## PLAN 106장 ㉕ — 이야기 임무(들판 보스·비경 신호에 붙으므로 그 뒤).
 	## PLAN 106장 ㊳ — 9장 구름섬·바람 기둥(북쪽 봉우리 옆 하늘).
 	var sky_isle := preload("res://games/saga_go/world/sky_isle.gd").new()
@@ -183,6 +187,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_quest_map.gd").new())
 	if OS.get_environment("SAGA_DOMAIN_PROBE") != "":
 		add_child(load("res://tools/probe_domains.gd").new())
+	if OS.get_environment("SAGA_GO_CAVE_PROBE") != "": # G-0098 굴 안
+		add_child(load("res://tools/probe_go_cave.gd").new())
 	if OS.get_environment("SAGA_WEEKLY_PROBE") != "":
 		add_child(load("res://tools/probe_weekly_boss.gd").new())
 	if OS.get_environment("SAGA_COMMISSION_PROBE") != "":
@@ -417,7 +423,9 @@ func _ready() -> void:
 	add_child(companions)
 	companions.setup(get_tree().get_first_node_in_group("player"))
 	companions.set_count(PartyState.members.size())
-	PartyState.power_changed.connect(func(_atk: float, _def: float) -> void: companions.set_count(PartyState.members.size()))
+	PartyState.power_changed.connect(func(_atk: float, _def: float) -> void:
+		if is_instance_valid(companions):   # 씬이 내려간 뒤(촬영 도구가 씬을 갈아 끼울 때)에도 autoload 신호가 남는다
+			companions.set_count(PartyState.members.size()))
 
 
 ## saga_core/ui/goal_board.gd는 QuestState·CodexState·PartyState를 모른다

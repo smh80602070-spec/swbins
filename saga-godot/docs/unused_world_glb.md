@@ -4,26 +4,24 @@
 
 | 묶음 | 전체 | 직접 | 조립 | 안 씀 |
 |---|---|---|---|---|
-| `mon_` | 20 | 0 | 0 | 20 |
-| `boss_` | 12 | 0 | 0 | 12 |
+| `mon_` | 44 | 0 | 44 | 0 |
+| `boss_` | 12 | 12 | 0 | 0 |
 | `eq_` | 54 | 2 | 52 | 0 |
 | `acc_` | 33 | 6 | 0 | 27 |
 | `wpn_` | 27 | 0 | 27 | 0 |
-| `cave_` | 16 | 1 | 0 | 15 |
+| `cave_` | 16 | 4 | 12 | 0 |
 | `int_` | 12 | 0 | 0 | 12 |
 | `dungeon_` | 11 | 10 | 1 | 0 |
 | `loot_` | 20 | 20 | 0 | 0 |
+| `pet_` | 11 | 0 | 11 | 0 |
 | `rock_` | 5 | 4 | 0 | 1 |
 | `tree_` | 9 | 8 | 0 | 1 |
-| 그 밖(4개 이하 묶음) | 121 | 76 | 1 | 44 |
-| **합계** | **340** | **127** | **81** | **132** |
+| 그 밖(4개 이하 묶음) | 122 | 78 | 0 | 44 |
+| **합계** | **376** | **144** | **147** | **85** |
 
 ## 안 쓰는 이름
 
-- `mon_` 20 — mon_cons_01 · mon_cons_02 · mon_cons_03 · mon_cons_04 · mon_quad_01 · mon_quad_02 · mon_quad_03 · mon_quad_04 · mon_serp_01 · mon_serp_02 · mon_serp_03 · mon_serp_04 · mon_spir_01 · mon_spir_02 · mon_spir_03 · mon_spir_04 · mon_wing_01 · mon_wing_02 · mon_wing_03 · mon_wing_04
-- `boss_` 12 — boss_01 · boss_02 · boss_03 · boss_04 · boss_05 · boss_06 · boss_07 · boss_08 · boss_09 · boss_10 · boss_11 · boss_12
 - `acc_` 27 — acc_antenna · acc_backpack · acc_belt_pouch · acc_cap · acc_cape_short · acc_ear_cat · acc_ear_elf · acc_earring · acc_eyepatch · acc_glasses_round · acc_goggles · acc_halo · acc_holo_visor · acc_horns · acc_jetpack_small · acc_mask_half · acc_necklace · acc_pauldron_spike · acc_quiver · acc_sash · acc_scarf · acc_shoulder_fur · acc_shoulder_gem · acc_tail_cat · acc_tail_fox · acc_wings_small · acc_wrist_band
-- `cave_` 15 — cave_corner_01_dirt · cave_corner_01_lava · cave_corner_01_limestone · cave_corridor_01_dirt · cave_corridor_01_lava · cave_corridor_01_limestone · cave_floor_01 · cave_gate_01_lava · cave_gate_01_limestone · cave_room_01_dirt · cave_room_01_lava · cave_room_01_limestone · cave_stairs_01_dirt · cave_stairs_01_lava · cave_stairs_01_limestone
 - `int_` 12 — int_barn_01 · int_chinese_hall_01 · int_dungeon_gate_01 · int_eu_house_01 · int_forest_cottage_01 · int_future_dome_01 · int_hanok_01 · int_inn_01 · int_jp_minka_01 · int_modern_block_01 · int_silkroad_house_01 · int_stone_tower_01
 - `altar_` 1 — altar_base_01
 - `armor_` 1 — armor_stand_01

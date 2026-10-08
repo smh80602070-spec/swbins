@@ -77,6 +77,9 @@ const CUTS := [
 	["st_story", "res://games/saga_story/world/SinyaField.tscn", []],   # G-0087 사가종횡 이야기 첫 대화(새 판 신야성)
 	["fs_story", FOREST, []],   # G-0086 사가마을 이야기 첫 대화(새 판)
 	["dg_story", DUNGEON, [["free_modal"]]],   # G-0085 사가나락 이야기 첫 대화(새 판 — 출사표 창을 닫으면 뜬다)
+	["go_cave_dirt", GO, [["call", "CaveInterior", "enter"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 5.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-25.0, 180.0, 0.0)]]],   # G-0098 굴 안 흙 복도
+	["go_cave_lava", GO, [["call", "CaveInterior", "enter"], ["call", "CaveInterior", "goto_room", [2]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 6.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-30.0, 270.0, 0.0)]]],   # 용암 방(적 셋)
+	["go_cave_end", GO, [["call", "CaveInterior", "enter"], ["call", "CaveInterior", "goto_room", [3]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 9.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-35.0, 0.0, 0.0)]]],   # 끝 그릇 굴·보물
 	["go_pets", GO, [["static", "res://tools/shot_pets.gd", "line_up", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 7.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-18.0, 0.0, 0.0)]]],   # G-0084 신수 열하나
 	["go_bosses0", GO, [["static", "res://tools/shot_monsters.gd", "line_up_bosses", ["@tree", 0]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 9.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-12.0, 0.0, 0.0)]]],   # G-0082 보스 열여섯(넷씩)
 	["go_bosses1", GO, [["static", "res://tools/shot_monsters.gd", "line_up_bosses", ["@tree", 1]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 9.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-12.0, 0.0, 0.0)]]],

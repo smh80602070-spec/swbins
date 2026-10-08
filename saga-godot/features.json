@@ -3005,5 +3005,21 @@
   "fun": {},
   "ticket": "G-0088",
   "since": "2026-10-08"
+ },
+ {
+  "id": "gd.go.cave-interior",
+  "name": "사가만리 굴 안 — 굴 입구 F → 흙·석회·용암 세 구간 굴(굴 조각 cave_* 16, 위가 트인 조각·뒷면 충돌), 방마다 들판 적 2·2·3, 끝 그릇 굴 보물(한 번 실행에 한 번), 들어간 동안 어둡게·횃불 빛, 빛 원판·단추로 나감",
+  "files": [
+   "games/saga_go/world/cave_interior.gd",
+   "tools/probe_go_cave.gd"
+  ],
+  "tests": [
+   "go_cave"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0098",
+  "since": "2026-10-08"
  }
 ]
