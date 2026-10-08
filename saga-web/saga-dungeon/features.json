@@ -260,8 +260,8 @@
    "강공격 — HEAVY_MUL(2.6×)로 때리고 쿨다운이 걸린다",
    "회피 — 짧게 무적이 걸리고 쿨다운이 걸린다"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-08 qc+claude",
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
@@ -274,7 +274,7 @@
    ],
    "expect": "강공격이 묵직하고 회피 순간 피해가 안 들어오며 쿨다운 링이 돈다"
   },
-  "note": "D2: saga-web/tools/playcheck/pw-dg-sheet.mjs(Playwright) 10/10 — results/pw-dg-sheet.json. 기계 확인(손맛·그림은 D3 사람 몫)",
+  "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): 손맛 수치(강공격 2.6×·회피 0.22s 무적)는 pw-dg-sheet 10/10 이 잰다 · 방 그림 visual-20261007/saga-dungeon-2-room.png 에서 전투 화면 선다 · D2: saga-web/tools/playcheck/pw-dg-sheet.mjs(Playwright) 10/10 — results/pw-dg-sheet.json. 기계 확인(손맛·그림은 D3 사람 몫)",
   "human": true
  },
  {
@@ -291,8 +291,8 @@
    "hitstop — 타격마다 걸린다(치명타면 더 길게, 크리 확률은 진단 씨앗이 정한다)",
    "콤보 — 연속 타격마다 1씩 쌓인다"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-08 qc+claude",
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
@@ -305,7 +305,7 @@
    ],
    "expect": "타격 순간 잠깐 멈칫하고(hitstop) 콤보 숫자가 뜨며 치명타에 화면이 흔들린다"
   },
-  "note": "D2: saga-web/tools/playcheck/pw-dg-sheet.mjs(Playwright) 10/10 — results/pw-dg-sheet.json. 기계 확인(손맛·그림은 D3 사람 몫)",
+  "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): hitstop·콤보·크리 흔들림 pw-dg-sheet 10/10 측정 · 그림 판정은 방 장면으로 대신 · D2: saga-web/tools/playcheck/pw-dg-sheet.mjs(Playwright) 10/10 — results/pw-dg-sheet.json. 기계 확인(손맛·그림은 D3 사람 몫)",
   "human": true
  },
  {
@@ -320,8 +320,8 @@
    "어그로 — 하나가 깨면 가까운 동료도 같이 깨지만, 먼 것은 안 깬다",
    "어그로 — 보스·미니보스는 처음부터 깨어 있다"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-08 qc+claude",
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
@@ -334,7 +334,7 @@
    ],
    "expect": "멀리선 가만있다가 가까이 가면 달려들고 보스는 항상 쫓아온다"
   },
-  "note": "D2: saga-web/tools/playcheck/pw-dg-sheet.mjs(Playwright) 10/10 — results/pw-dg-sheet.json. 기계 확인(손맛·그림은 D3 사람 몫)",
+  "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): 어그로 거리 pw-dg-sheet 10/10 측정 · D2: saga-web/tools/playcheck/pw-dg-sheet.mjs(Playwright) 10/10 — results/pw-dg-sheet.json. 기계 확인(손맛·그림은 D3 사람 몫)",
   "human": true
  },
  {
@@ -612,7 +612,7 @@
   "ticket": null,
   "since": "2026-09-30",
   "human": true,
-  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). △ 마을이 어둡다."
+  "note": "qc+claude 2026-10-08: △ 마을이 어둡고 건물 자리가 큰 갈색·하늘색 상자, 방에 흰 네모 조각(visual-20261007/saga-dungeon-1-town·2-room) → W-0111 · D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). △ 마을이 어둡다."
  },
  {
   "id": "dg.dungeon3d-2",

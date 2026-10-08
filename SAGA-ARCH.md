@@ -59,7 +59,7 @@
   "tests": ["_test.html#field"], "level": "D1", "verified": null, "fun": {"C":"△"},
   "ticket": "T-0123", "since": "2026-09-24" }
 ```
-- 등급 규칙: D1 = 진단 항목 이름이 `tests` 에 있고 러너가 PASS · D2 = `saga-web/tools/playcheck/` 스크립트가 있고 결과 파일이 남음 · D3 = 사용자가 확인 시트에 ○ · D4 = 재미 표준 칸이 ○.
+- 등급 규칙: D1 = 진단 항목 이름이 `tests` 에 있고 러너가 PASS · D2 = `saga-web/tools/playcheck/` 스크립트가 있고 결과 파일이 남음 · D3 = 사용자가 확인 시트에 ○ **또는 QC 통과 + Claude 가 촬영 PNG·측정을 보고 ○**(`verified: "<날짜> qc+claude"`, 사용자 10-08 W-0109 — 사용자는 거부권만) · D4 = 재미 표준 칸이 ○.
 - `tools/status.mjs` 가 판별 완성도 %·D0/D1 개수·WIP 초과 여부를 한 표로 찍는다(README "현재" 절은 이 출력으로 덮어쓴다).
 - 첫 채우기는 소넷 티켓 하나로: 각 PLAN §3 "현재 시스템 지도" 표를 그대로 옮긴다(웹 5 → Godot → Unity 순).
 

@@ -62,8 +62,8 @@
    "계절은 달로 정해진다 (넷이 빠짐없이 덮는다)",
    "철 지난 것은 나오지 않는다"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-08 qc+claude",
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
@@ -75,7 +75,7 @@
    ],
    "expect": "줍기·낚시가 되고 입질 순간 반응이 보이며 가방에 쌓인다"
   },
-  "note": "D2: saga-web/tools/playcheck/pw-fs-sheet.mjs(Playwright) 17/17 — results/pw-fs-sheet.json. 기계 확인이며 D3(사람 ○)은 아직",
+  "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): 채집·낚시·심기 pw-fs-sheet 17/17 측정 · D2: saga-web/tools/playcheck/pw-fs-sheet.mjs(Playwright) 17/17 — results/pw-fs-sheet.json. 기계 확인이며 D3(사람 ○)은 아직",
   "human": true
  },
  {
@@ -472,13 +472,13 @@
    "집 안에서는 마을이 돌지 않는다 (벌레도 낚시도 밖의 일)",
    "집 안의 투영은 휘지 않는다 (왕복이 그대로 돌아온다)"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-08 qc+claude",
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
   "human": true,
-  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). · 2D 1차(W-0106, 10-08): ○1 △2/3 — 이름표 겹침·밤 땅 빛, 에셋 흠(주민 무기·그림체) K-0083"
+  "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): 2D 구면 visual-20261007/saga-forest-2-sphere2d.png ○(지평선 휨·집·주민 이름표) · 집 안 3-home ○ · D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). · 2D 1차(W-0106, 10-08): ○1 △2/3 — 이름표 겹침·밤 땅 빛, 에셋 흠(주민 무기·그림체) K-0083"
  },
  {
   "id": "fs.village-view3d",
@@ -506,7 +506,7 @@
   "ticket": null,
   "since": "2026-09-30",
   "human": true,
-  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). △ 저녁·비라 어둡다."
+  "note": "qc+claude 2026-10-08: △ 저녁·비라 어둡고 길가 빨간 판·검은 덩어리가 튐(visual-20261007/saga-forest-1-village3d.png) → W-0112 · D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). △ 저녁·비라 어둡다."
  },
  {
   "id": "fs.asset3d",

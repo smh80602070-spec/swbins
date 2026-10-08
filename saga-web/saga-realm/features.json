@@ -258,8 +258,8 @@
    "설전 카드 — 등용·화친·동맹은 세 문답을 거쳐 정답 수 배율이 넘어가고(3개 ×1.3 · 0개 ×0.8), 설전 없이 ×1, 그만이면 호출 없음, 조공은 카드 없이",
    "실시간 전장(Q9) — 전체 화면·시계, 명령 단추는 합을 넘기지 않고(다음 합부터·불 켜짐), ⏭ 은 한 합, 도중에 닫으면 남은 합을 끝까지 굴려 결과가 뜬다"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-08 qc+claude",
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
@@ -272,7 +272,7 @@
    ],
    "expect": "고른 선택에 따라 전황이 달라지고 퇴각하면 군대가 돌아온다"
   },
-  "note": "D2: saga-web/tools/playcheck/pw-rk-sheet.mjs(Playwright) 7/7 — results/pw-rk-sheet.json. 기계 확인(지도·전투 그림은 D3 사람 몫). 못 잰 것: 재야 등용·충성 이탈",
+  "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): 실시간 전장 shots/qc/saga-realm-battle3d.png ○(성벽·기병·현황판·명령 두 줄) · pw-rk-sheet 7/7 · D2: saga-web/tools/playcheck/pw-rk-sheet.mjs(Playwright) 7/7 — results/pw-rk-sheet.json. 기계 확인(지도·전투 그림은 D3 사람 몫). 못 잰 것: 재야 등용·충성 이탈",
   "human": true
  },
  {
@@ -559,13 +559,13 @@
    "세력 고르기 화면에 열세 깃발이 뜬다",
    "시나리오를 고르는 화면이 먼저 뜬다"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-08 qc+claude",
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
   "human": true,
-  "note": "D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085). 2D 지도는 휠 확대가 없다(3D 캔버스만) — 끌기 + ➕ 단추, 폰 390×844 도 ➕. · 2D 1차(W-0106, 10-08): ○2/2 — 확대 때 성 이름이 겹치던 것 고침(--lz), 성 그림 한 가지는 K-0083"
+  "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): 2D 지도 shots/qc/saga-realm-2d.png ○ · pw-rk-world 15/15 · D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085). 2D 지도는 휠 확대가 없다(3D 캔버스만) — 끌기 + ➕ 단추, 폰 390×844 도 ➕. · 2D 1차(W-0106, 10-08): ○2/2 — 확대 때 성 이름이 겹치던 것 고침(--lz), 성 그림 한 가지는 K-0083"
  },
  {
   "id": "rk.realm3d",
@@ -602,13 +602,13 @@
    "realm3d — elevAt·straitFactor·isSea 순수 함수 (SAGA-DESIGN §7-2 3D 진단 공백)",
    "asset3d — mapClips 순수 함수 (SAGA-DESIGN §7-2 3D 진단 공백)"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-08 qc+claude",
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
   "human": true,
-  "note": "D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085)."
+  "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): 3D 국토 shots/qc/saga-realm-3dmap.png ○(성·길·강·바다, 혼잡하나 읽힘) · D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085)."
  },
  {
   "id": "rk.battle3d",
@@ -619,13 +619,13 @@
   "tests": [
    "싸움터 땅(SAGA-DESIGN §12) — 성의 땅·주가 싸움터를 정한다: 늘 같고, 사막·균열 같은 주는 제 결, 물 싸움은 물빛"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-08 qc+claude",
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
   "human": true,
-  "note": "D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085). armyCount 는 병력→병사 수 순수 함수라 armyView() 양쪽 병사로 본다."
+  "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): 전투 3D shots/qc/saga-realm-battle3d.png ○(성벽 돌결·병사 몸·깃발) · D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085). armyCount 는 병력→병사 수 순수 함수라 armyView() 양쪽 병사로 본다."
  },
  {
   "id": "rk.city3d",
@@ -774,13 +774,13 @@
    "RTS 경계 조각(W-0047) — 풀 칸의 이웃에 따라 변·안쪽 구석·바깥 구석 조각을 고르고, 적 기지는 체력 단계별로 다른 그림이다",
    "RTS 길 조각 — 이웃 16가지 조합이 알맞은 조각·회전을 고르고(끝·직선·모서리·갈래·사거리·점), 전투 모델이 타격 불꽃·화살을 쌓았다가 20틱 뒤 지운다(W-0044)"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-08 qc+claude",
   "fun": {},
   "ticket": "W-0061",
   "since": "2026-10-05",
   "human": true,
-  "note": "접음(10-05 사용자 — 턴 전투로 대체, ?mode=rts 만) · D2: saga-web/tools/playcheck/pw-rts-sheet.mjs(Playwright) 12/12 — results/pw-rts-sheet.json. 기계 확인(콘솔·입력·안개·적 AI 출정). \"스타크래프트 같은가\"는 사람 몫(D3, W-0068)"
+  "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): RTS shots/qc/saga-realm-rts.png ○(건물·병사·하단 콘솔) — 접힌 모드(?mode=rts) · 접음(10-05 사용자 — 턴 전투로 대체, ?mode=rts 만) · D2: saga-web/tools/playcheck/pw-rts-sheet.mjs(Playwright) 12/12 — results/pw-rts-sheet.json. 기계 확인(콘솔·입력·안개·적 AI 출정). \"스타크래프트 같은가\"는 사람 몫(D3, W-0068)"
  },
  {
   "id": "rk.rts-fog",
@@ -812,13 +812,13 @@
    "RTS 적 AI 건물 파괴 — 출정한 유닛이 노리는 건물에 닿으면 체력을 깎아 무너뜨리고(환급 없음), 다음 건물을 고르며, 절반 밑으로 줄면 후퇴해 다시 모은다",
    "RTS 적 AI 수비·저장 — 기지 둘레에 내 유닛이 오면 집결 병력이 맞서 다가가고, 적 AI 상태가 저장·복원에서 같으며 옛 저장(AI 칸 없음)은 기본값으로 열린다"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-08 qc+claude",
   "fun": {},
   "ticket": "W-0063",
   "since": "2026-10-05",
   "human": true,
-  "note": "접음(10-05 사용자 — 턴 전투로 대체, ?mode=rts 만) · D2: saga-web/tools/playcheck/pw-rts-sheet.mjs(Playwright) 12/12 — results/pw-rts-sheet.json. 기계 확인(콘솔·입력·안개·적 AI 출정). \"디펜스가 아니라 RTS 같은가\"는 사람 몫(D3, W-0068)"
+  "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): RTS 화면 ○ · pw-rts-sheet — 접힌 모드(?mode=rts) · 접음(10-05 사용자 — 턴 전투로 대체, ?mode=rts 만) · D2: saga-web/tools/playcheck/pw-rts-sheet.mjs(Playwright) 12/12 — results/pw-rts-sheet.json. 기계 확인(콘솔·입력·안개·적 AI 출정). \"디펜스가 아니라 RTS 같은가\"는 사람 몫(D3, W-0068)"
  },
  {
   "id": "rk.rts-turn",

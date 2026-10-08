@@ -149,6 +149,7 @@ try {
   await page.locator('#btn-3d').click();
   let d3 = null;
   for (let i = 0; i < 30; i++) { await sleep(1000); d3 = await ev(() => { var c = document.getElementById('realm3d'), b = c && c.getBoundingClientRect(), s = DG.realm3d.staticCullStats(); return { avail: DG.realm3d.available(), active: DG.realm3d.active(), w: b ? Math.round(b.width) : 0, drawn: s.drawn, all: s.all, runs: s.runs }; }); if (d3.drawn > 0) { break; } }
+  await page.screenshot({ path: 'shots/qc/saga-realm-3dmap.png' }).catch(() => {});   // Claude 눈 판정(qc+claude)
   check('rk.realm3d-2 3D 국토 — 🧊 를 누르면 3D 지도가 켜져 캔버스가 서고 소품이 그려진다(drawn>0)', d3.avail && d3.active && d3.w > 0 && d3.drawn > 0, d3.avail ? JSON.stringify(d3) : 'realm3d.available() 거짓 — three 를 못 띄운 기기 ' + JSON.stringify(d3));
 
   /* rk.realm3d — 🚩 원정을 띄우면 지도 위 배우 목록에 원정군이 하나 는다 */
@@ -190,6 +191,7 @@ try {
     await mb.scrollIntoViewIfNeeded(); await mb.click(); await sleep(400);
     await page.locator('[data-act="ask-ok"]').first().click();
     for (let i = 0; i < 20; i++) { await sleep(1000); b1 = await ev(() => { var c = document.getElementById('battle3d'), v = DG.battle3d.armyView(); return { canvas: !!c, w: c ? Math.round(c.getBoundingClientRect().width) : 0, view: v && { a: v.a.n, d: v.d.n } }; }); if (b1.view && b1.view.a > 0) { break; } }
+    await page.screenshot({ path: 'shots/qc/saga-realm-battle3d.png' }).catch(() => {});   // Claude 눈 판정(qc+claude)
     const rb = page.locator('[data-act="bat-cmd"][data-cmd="retreat"]').first();   // 퇴각 단추는 명령 차례에만 보인다 — 없으면 그냥 둔다
     if (await rb.isVisible().catch(() => false)) { await rb.click().catch(() => {}); await sleep(1500); }
   }
