@@ -1030,11 +1030,12 @@
   "tests": [
    "PlaytestStorySlice"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0061-20261009.json PlaytestStorySlice OK."
  },
  {
   "id": "un.st.npc-events",
@@ -1043,11 +1044,12 @@
   "tests": [
    "PlaytestStorySlice"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0061-20261009.json PlaytestStorySlice OK."
  },
  {
   "id": "un.st.job-change",
@@ -1056,11 +1058,12 @@
   "tests": [
    "PlaytestStorySlice"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0061-20261009.json PlaytestStorySlice OK."
  },
  {
   "id": "un.st.gate-captain",
@@ -1069,11 +1072,12 @@
   "tests": [
    "PlaytestStoryGateCaptain"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0061-20261009.json PlaytestStoryGateCaptain OK."
  },
  {
   "id": "un.st.rift",
@@ -1082,11 +1086,12 @@
   "tests": [
    "PlaytestStoryRift"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0061-20261009.json PlaytestStoryRift OK."
  },
  {
   "id": "un.st.party-swap",
@@ -1095,11 +1100,12 @@
   "tests": [
    "PlaytestStorySlice"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0061-20261009.json PlaytestStorySlice OK."
  },
  {
   "id": "un.st.boss-intro",
@@ -1121,11 +1127,12 @@
   "tests": [
    "PlaytestStoryCompanions"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0061-20261009.json PlaytestStorySlice → PlaytestStoryCompanions OK."
  },
  {
   "id": "un.st.summon",
@@ -1134,11 +1141,12 @@
   "tests": [
    "PlaytestStorySummon"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0061-20261009.json PlaytestStorySlice → PlaytestStorySummon OK."
  },
  {
   "id": "un.st.skills",
@@ -1150,11 +1158,12 @@
   "tests": [
    "PlaytestStorySkills"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0061-20261009.json PlaytestStorySkills OK."
  },
  {
   "id": "un.st.job-tiers",
@@ -1163,11 +1172,12 @@
   "tests": [
    "PlaytestStoryJobTiers"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0061-20261009.json PlaytestStoryJobTiers OK."
  },
  {
   "id": "un.st.school-sets",
@@ -1176,11 +1186,12 @@
   "tests": [
    "PlaytestStorySchoolSets"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0061-20261009.json PlaytestStorySchoolSets OK."
  },
  {
   "id": "un.st.eras",
@@ -1202,11 +1213,12 @@
   "tests": [
    "PlaytestStoryBossPattern"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0061-20261009.json PlaytestStorySlice → PlaytestStoryBossPattern OK."
  },
  {
   "id": "un.st.npc-models",
@@ -1228,11 +1240,12 @@
   "tests": [
    "PlaytestStorySlice"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0061-20261009.json PlaytestStorySlice OK."
  },
  {
   "id": "un.rk.slice",

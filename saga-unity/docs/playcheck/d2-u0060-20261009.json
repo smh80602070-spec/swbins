@@ -3,7 +3,7 @@
   "tickets": [
     "U-0060 사가마을 확인 닫기 ①"
   ],
-  "how": "장면 판 = PlaytestForestHeadless(save_forest.json 치움·세이브 다섯 백업 후 복원·cmp 같음, .utmp/u0060-PlaytestForestHeadless.log) 줄 · 단독 = bash tools/unity-batch.sh -- Unity.exe -batchmode -nographics -projectPath . -executeMethod Saga.EditorTools.<진단>.Run (6000.3.24f1) — HouseTransition·Furniture·Creatures·FruitGather·Finish · common 단독은 U-0059(같은 날, 그 뒤 saga-unity/Assets 커밋 없음) 로그 · 진단 코드 무변경",
+  "how": "장면 판 = PlaytestForestHeadless(save_forest.json 치움·세이브 다섯 백업 후 복원·cmp 같음, .utmp/u0060-PlaytestForestHeadless.log) 줄 · 단독 = bash tools/unity-batch.sh -- Unity.exe -batchmode -nographics -projectPath . -executeMethod Saga.EditorTools.<진단>.Run (6000.3.24f1) — HouseTransition·Furniture·Creatures·FruitGather·Finish · common 단독은 Zones 멈춤 뒤 08:33 실행(OK) · 진단 코드 무변경",
   "scene": "[PlaytestForestHeadless] OK - 10 frames, no errors (런타임 오류 0)",
   "runtime_errors": 0,
   "results": [
@@ -67,7 +67,7 @@
       "id": "un.fs.common",
       "playtest": "PlaytestForestHeadless · PlaytestCommonSettingsLoc",
       "result": "OK",
-      "lines": "[PlaytestForestHeadless] settings panel OK - sfx/vibration/ui-scale/graphics-quality/language all verified / [PlaytestForestHeadless] action button localization OK / [PlaytestForestHeadless] goal board / session card OK - 3 lines filled, source auto-found, card shows and auto-closes / [PlaytestCommonSettingsLoc] OK (U-0059 같은 날·같은 코드)",
+      "lines": "[PlaytestForestHeadless] settings panel OK - sfx/vibration/ui-scale/graphics-quality/language all verified / [PlaytestForestHeadless] action button localization OK / [PlaytestForestHeadless] goal board / session card OK - 3 lines filled, source auto-found, card shows and auto-closes / [PlaytestCommonSettingsLoc] OK (.utmp/u0060-PlaytestCommonSettingsLoc.log, 멈춘 Zones 프로세스를 사용자 허락으로 끈 뒤 08:33 단독 실행)",
       "date": "2026-10-09"
     }
   ],

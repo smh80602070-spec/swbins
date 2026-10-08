@@ -1,0 +1,104 @@
+{
+  "date": "2026-10-09",
+  "tickets": [
+    "U-0061 사가종횡 확인 닫기 ①"
+  ],
+  "how": "장면 판 = PlaytestStorySlice(save_story.json 치움·세이브 다섯 백업 후 복원·cmp 같음, .utmp/u0061-PlaytestStorySlice.log) 줄 · 단독 = bash tools/unity-batch.sh -- Unity.exe -batchmode -nographics -projectPath . -executeMethod Saga.EditorTools.<진단>.Run (6000.3.24f1) — GateCaptain·Rift·Skills·JobTiers·SchoolSets · Companions·Summon·BossPattern 은 장면 판 하위 검사라 장면 판 줄로 잡음 · 진단 코드 무변경",
+  "scene": "[PlaytestStorySlice] OK - killed 10 grunts + boss (both quests done), npc talk/choice, sweep/bolt/brace/jump/rope/job-change/save-load all verified, no errors (런타임 오류 0)",
+  "runtime_errors": 0,
+  "results": [
+    {
+      "id": "un.st.slice",
+      "playtest": "PlaytestStorySlice",
+      "result": "OK",
+      "lines": "[PlaytestStorySlice] OK - killed 10 grunts + boss (both quests done), npc talk/choice, sweep/bolt/brace/jump/rope/job-change/save-load all verified, no errors",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.st.npc-events",
+      "playtest": "PlaytestStorySlice",
+      "result": "OK",
+      "lines": "[PlaytestStorySlice] npc talk OK - \"들판의 척후병 — 또 뵙는군요. 이 들판에 황건적 떼가 진을 쳤습니다. 조심하십시오.\" / [PlaytestStorySlice] npc choice OK - \"들판의 척후병 — 형씨! 지난번 잔치, 아직도 훈훈합니다. 이 들판은 이제 안전합니다.\" / [PlaytestStorySlice] discovery OK - event triggered, mp restored, object cleared, dedupe OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.st.job-change",
+      "playtest": "PlaytestStorySlice",
+      "result": "OK",
+      "lines": "[PlaytestStorySlice] job choice UI OK - Show()로 뜨고 버튼 클릭(Choose)으로 콜백+닫힘 확인 / [PlaytestStorySlice] weapon visual OK - 전직(warrior) 후 검 모양 생김(부품 2개) / [PlaytestStorySlice] promotion + schools OK - 2차 전직(진짜 버튼)·선행·칸 배치·세트 5종(피해/지속/발수/재사용/반경)·전우·패널·비경 식",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.st.gate-captain",
+      "playtest": "PlaytestStoryGateCaptain",
+      "result": "OK",
+      "lines": "[PlaytestStoryGateCaptain] OK / [PlaytestStorySlice] gate champion killed in 13 hits (shield broken=True), claimed for this week, quest boss done, bossKills=1",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.st.rift",
+      "playtest": "PlaytestStoryRift",
+      "result": "OK",
+      "lines": "[PlaytestStoryRift] OK / [PlaytestStorySlice] labyrinth (101-2 5-3) full verification OK / [PlaytestStorySlice] labyrinth full run OK - seed=42, cleared floor 1~5, shards now=11",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.st.party-swap",
+      "playtest": "PlaytestStorySlice",
+      "result": "OK",
+      "lines": "[PlaytestStorySlice] party swap OK - MP-free signature fired on swap, 4s cooldown enforced then respected after reset",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.st.companions",
+      "playtest": "PlaytestStorySlice → PlaytestStoryCompanions",
+      "result": "OK",
+      "lines": "[PlaytestStorySlice] companions OK — models 3/3 · follow 6.0→0.7m · hop y2.0 · vanguard 8.1dmg · mystic mp+12",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.st.summon",
+      "playtest": "PlaytestStorySlice → PlaytestStorySummon",
+      "result": "OK",
+      "lines": "[PlaytestStorySlice] summon OK — close cam z-6.8 y1.3 · slam 193×2 · model Warrok",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.st.skills",
+      "playtest": "PlaytestStorySkills",
+      "result": "OK",
+      "lines": "[PlaytestStorySkills] OK / [PlaytestStorySlice] job skills OK - SP derive/raise/refusals, auto slots, melee/aoe/dash/buff/bolt/arrow/volley/retreat cast, cooldown+mp refusals, panel rows / [PlaytestStorySlice] skill save round-trip + old-format load OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.st.job-tiers",
+      "playtest": "PlaytestStoryJobTiers",
+      "result": "OK",
+      "lines": "[PlaytestStoryJobTiers] OK / [PlaytestStorySlice] upper tiers + pins OK - 3·4차 전직(진짜 버튼·Lv.20/25·무예 8/10)·자동 칸 세트 0·칸 고정(거절/당김/자동 짝)·정 4세트·보 4세트 급소확정·차수 탭",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.st.school-sets",
+      "playtest": "PlaytestStorySchoolSets",
+      "result": "OK",
+      "lines": "[PlaytestStorySchoolSets] OK / [PlaytestStorySlice] outfit tint OK - 무명 0·1차 0.12·2차 0.24·4차 0.48, 갈래 색, 피부 14슬롯 제외(Maria=True), 되돌림",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.st.boss-pattern",
+      "playtest": "PlaytestStorySlice → PlaytestStoryBossPattern",
+      "result": "OK",
+      "lines": "[PlaytestStorySlice] bossPattern OK - 단계 문턱·목록·전환 거둠·광폭·내려찍기/낙석 맞음·비킴·지진 섬/점프/발판·휩쓸기 밖/안·잇지 않음·부르기 한 번·체력(최대치·무적·회복)·실제 들판 루프·쓰러짐·비경 두목 · 11-2 고유 기술 열둘·첫 기술·도넛·쇠뇌·화살비·불기둥 두 박자·쇠사슬·추적·그로기(셈·5초·×1.5·실제)",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.st.common",
+      "playtest": "PlaytestStorySlice",
+      "result": "OK",
+      "lines": "[PlaytestStorySlice] settings panel OK - sfx/vibration/ui-scale/graphics-quality/language all verified / [PlaytestStorySlice] action button localization OK / [PlaytestStorySlice] player hud localization OK / [PlaytestStorySlice] goal board / session card OK - 3 lines filled, source auto-found, card shows and auto-closes",
+      "date": "2026-10-09"
+    }
+  ],
+  "fails": 0,
+  "not_covered": "그림 판정 boss-intro·eras·npc-models(장면 판 줄은 OK 지만 U-0063 몫) · 손맛은 사람/QC"
+}
