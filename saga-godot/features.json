@@ -2407,12 +2407,13 @@
   "tests": [
    "world_asset"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-08 qc+claude",
   "fun": {},
   "ticket": "G-0020",
   "since": "2026-10-04",
-  "human": true
+  "human": true,
+  "note": "G-0112·G-0113 다시 촬영: 사가나락 방(dg_room_wide) 동굴 벽·바위·횃불 읽힘 ○ · 다리(v_bridge) 널판 에셋을 깎아 세운 기둥(강바닥까지)·난간 두 줄 ○"
  },
  {
   "id": "gd.go.procgen_glb",
