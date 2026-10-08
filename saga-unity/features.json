@@ -486,11 +486,12 @@
   "tests": [
    "PlaytestDungeonHeadless"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonHeadless OK."
  },
  {
   "id": "un.dg.towns",
@@ -500,11 +501,12 @@
    "PlaytestDungeonTown2",
    "PlaytestDungeonTowns34"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonTown2 OK."
  },
  {
   "id": "un.dg.floors",
@@ -513,11 +515,12 @@
   "tests": [
    "PlaytestDungeonFloorProgression"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonFloorProgression OK."
  },
  {
   "id": "un.dg.ambush",
@@ -526,11 +529,12 @@
   "tests": [
    "PlaytestDungeonFieldAmbush"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonFieldAmbush OK."
  },
  {
   "id": "un.dg.rescue-riddle",
@@ -539,11 +543,12 @@
   "tests": [
    "PlaytestDungeonQuestRescue"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonQuestRescue OK."
  },
  {
   "id": "un.dg.build-dex",
@@ -552,11 +557,12 @@
   "tests": [
    "PlaytestDungeonBuildDex"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonBuildDex OK."
  },
  {
   "id": "un.dg.explore",
@@ -565,11 +571,12 @@
   "tests": [
    "PlaytestDungeonExplore"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonExplore OK."
  },
  {
   "id": "un.dg.party",
@@ -578,11 +585,12 @@
   "tests": [
    "PlaytestDungeonParty"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonParty OK."
  },
  {
   "id": "un.dg.boss-intro",
@@ -604,11 +612,12 @@
   "tests": [
    "PlaytestDungeonLandmarks"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonLandmarks OK."
  },
  {
   "id": "un.dg.eras",
@@ -656,11 +665,12 @@
   "tests": [
    "PlaytestDungeonSecrets"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonSecrets OK."
  },
  {
   "id": "un.dg.light-pillar",
@@ -669,11 +679,12 @@
   "tests": [
    "PlaytestDungeonSecrets"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonSecrets OK."
  },
  {
   "id": "un.dg.visions",
@@ -682,11 +693,12 @@
   "tests": [
    "PlaytestDungeonSecrets"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonSecrets OK."
  },
  {
   "id": "un.dg.trial",
@@ -695,11 +707,12 @@
   "tests": [
    "PlaytestDungeonTrial"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonTrial OK."
  },
  {
   "id": "un.dg.regions",
@@ -708,11 +721,12 @@
   "tests": [
    "PlaytestDungeonRegions"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonRegions OK."
  },
  {
   "id": "un.dg.region-foes",
@@ -721,11 +735,12 @@
   "tests": [
    "PlaytestDungeonRegionFoes"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonRegionFoes OK."
  },
  {
   "id": "un.dg.region-sagas",
@@ -734,11 +749,12 @@
   "tests": [
    "PlaytestDungeonRegionSagas"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonRegionSagas OK."
  },
  {
   "id": "un.dg.gestures",
@@ -760,11 +776,12 @@
   "tests": [
    "PlaytestDungeonAllySig"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonAllySig OK."
  },
  {
   "id": "un.dg.lord-sigs",
@@ -773,11 +790,12 @@
   "tests": [
    "PlaytestDungeonLordSigs"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonLordSigs OK."
  },
  {
   "id": "un.dg.hunt",
@@ -786,11 +804,12 @@
   "tests": [
    "PlaytestDungeonHunt"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonHunt OK."
  },
  {
   "id": "un.dg.assets",
@@ -823,11 +842,12 @@
   "tests": [
    "PlaytestCommonSettingsLoc"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestCommonSettingsLoc OK."
  },
  {
   "id": "un.fs.slice",

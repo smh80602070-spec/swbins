@@ -1,0 +1,153 @@
+{
+  "date": "2026-10-09",
+  "tickets": [
+    "U-0059 사가나락 확인 닫기 ①"
+  ],
+  "how": "장면 판 = U-0058 의 PlaytestDungeonHeadless(VRoid 주인공, save_dungeon.json 치움, .utmp/u0058-PlaytestDungeonHeadless.log) 줄 · 단독 = bash tools/unity-batch.sh -- Unity.exe -batchmode -nographics -projectPath . -executeMethod Saga.EditorTools.<진단>.Run (6000.3.24f1), 진단 코드 무변경",
+  "scene": "PlaytestDungeonHeadless OK - 10 frames, no errors (런타임 오류 0)",
+  "runtime_errors": 0,
+  "results": [
+    {
+      "id": "un.dg.slice",
+      "playtest": "PlaytestDungeonHeadless",
+      "result": "OK",
+      "lines": "PlaytestDungeonHeadless OK - 10 frames, no errors",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.party",
+      "playtest": "PlaytestDungeonParty",
+      "result": "OK",
+      "lines": "party OK - 평타→게이지·덜 참 막힘·도발(무사가 대신 맞음 40%)·쓰러짐·치유(+40%·일으킴)·12초 기상·빛살·물러섬·소환(막힘 둘·컷·HUD·14m 내리치기·넘겨도 한 번·초반 넘김) | 도발 2초 무사 -4.0 · 전용 클립 무사 True·술사 True 거신 마디 14·발광 3 소환 한",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.explore",
+      "playtest": "PlaytestDungeonExplore",
+      "result": "OK",
+      "lines": "explore OK - 동쪽 문→뜰·안내·점프·징검돌→선반 상자·벽/돌 못 오름·탑 밑 상자 안 열림·탑 등반→꼭대기 상자·등반 중 회피 막힘·손 놓기·막이 | 점프 1.37m · 징검돌 점프 4번 2.5s · 탑 8m 4.6s",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.landmarks",
+      "playtest": "PlaytestDungeonLandmarks",
+      "result": "OK",
+      "lines": "landmarks OK - 표·5층 두 번(문 하나·방 이름·잡졸·주인)·같은 순서·첫 토벌만 무기/금·계단·보통 층 갈림길·내려가며 진입·세이브 v10 | 5층 문 trove:부장품 방→puzzle:석인 회랑→elite:순장 무덤칸→lord:현실(玄室)→lord:옥관 수릉장",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.secrets",
+      "playtest": "PlaytestDungeonSecrets",
+      "result": "OK",
+      "lines": "secrets OK - 다섯·Lv 1/3/5/7/9·배율 18칸·잠금·풀기·환원·실제 시전(옛 수치·신속·분노·확산 셋·반경·한기·흡혈)·빛기둥(명품·보물·고유·소리 자리)·패널 onClick·딱지·세이브 v11·비전(명소에만·다섯·×2.32·실제 시전·딴 비결·내려놓기·패널·HUD·줍기 글) | 이름 ",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.light-pillar",
+      "playtest": "PlaytestDungeonSecrets",
+      "result": "OK",
+      "lines": "secrets OK - 다섯·Lv 1/3/5/7/9·배율 18칸·잠금·풀기·환원·실제 시전(옛 수치·신속·분노·확산 셋·반경·한기·흡혈)·빛기둥(명품·보물·고유·소리 자리)·패널 onClick·딱지·세이브 v11·비전(명소에만·다섯·×2.32·실제 시전·딴 비결·내려놓기·패널·HUD·줍기 글) | 이름 ",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.visions",
+      "playtest": "PlaytestDungeonSecrets",
+      "result": "OK",
+      "lines": "secrets OK - 다섯·Lv 1/3/5/7/9·배율 18칸·잠금·풀기·환원·실제 시전(옛 수치·신속·분노·확산 셋·반경·한기·흡혈)·빛기둥(명품·보물·고유·소리 자리)·패널 onClick·딱지·세이브 v11·비전(명소에만·다섯·×2.32·실제 시전·딴 비결·내려놓기·패널·HUD·줍기 글) | 이름 ",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.trial",
+      "playtest": "PlaytestDungeonTrial",
+      "result": "OK",
+      "lines": "trial OK - 규칙(문턱·위 셋·배율·순위·10·상한)·표식(잠김→카드)·카드 onClick→방·무리 세 시대·진척→수호자·완주(순위·명소 무기·금·+2·돌아옴)·느린 완주 +1·쓰러짐 −30초(유품 없음)·HUD 붉게·시간 초과·난입 막음·세이브 v12 | 첫 무리 황건적/방역복 추적자/경비 보행",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.regions",
+      "playtest": "PlaytestDungeonRegions",
+      "result": "OK",
+      "lines": "regions OK - 표(아홉·웹 순·방위)·자리(칸 방·지역 밖·복도 절반)·땅빛·배너(1.2초·지나침·다시 안 뜸·꺼짐)·M 지도 아홉 칸·ko/en | 칸 9 방 11 배너 2 지도 9 키 54",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.region-foes",
+      "playtest": "PlaytestDungeonRegionFoes",
+      "result": "OK",
+      "lines": "regionfoes OK - 표(위험 웹 값·층·체력 ×3·이름·빌린 몸·자리)·표식 아홉·알림 한 번·밟기(우두머리+호위 셋 시대대로)·끈·토벌(기록·공적·전설·쉼 10분·흐림)·10분 뒤 다시·HUD 위험·배너·M 지도 ☠✔·세이브 v13·ko/en | 몸 10/10 표식 9 전설 wp_lm_band",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.region-sagas",
+      "playtest": "PlaytestDungeonRegionSagas",
+      "result": "OK",
+      "lines": "regionsagas OK - 표(아홉·웹 수치·자리)·열림 한 번·① 딴 지역/던전 안 셈·사냥터 셋·다시·물러남·보상 · 우두머리 먼저 잡아도 안 건너뜀 · ② 흔적 · ③ 정예만 · 쉼 해제 · ④ 우두머리만 → 평정 · 구주 평정 한 번 · HUD·M 지도 · 세이브 v14 · ko/en | 표 ",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.ally-sig",
+      "playtest": "PlaytestDungeonAllySig",
+      "result": "OK",
+      "lines": "allysig OK - 표(재사용 24·21·반경 5·밀침)·쓸 까닭 진리표·첫 4초·셋/정예/두목/반경 밖·피해 ×v·밀침(두목 제외)·얼림·재사용 · 합격 ×1.50·알림·창 한 번·창 밖 · 못 움직임·손잡이 · 회전베기 = 창 · 동행 둘·제 키 몸짓 · ko/en | 표 셋 3·피해 12·밀침 ",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.lord-sigs",
+      "playtest": "PlaytestDungeonLordSigs",
+      "result": "OK",
+      "lines": "lordsigs OK - 표(여섯·갈래·px→m·모양·순수)·주인마다 제 수 · 화살비(원 셋·알림 한 번·서면 맞음·비키면 안 맞음·쿨·방향 돎·주인 틱·강타 쉼) · 삼연돌 세 번 · 소용돌이 끌림·구르기 · 장판 틱·넷·꺼짐·쓰러지면 지움 · 십자 스물·번갈아 · 호령 두 번 · 손잡이 · ko/e",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.hunt",
+      "playtest": "PlaytestDungeonHunt",
+      "result": "OK",
+      "lines": "hunt OK - 표(부채꼴·힘·흔들림·고리)·전투방 무리(넷+여덟·55%·70%·0.75·보상 절반·이름·자리·어긋남·같음·손잡이·정예 방 없음)·평타 120°/강공격 180° 휩쓸기(곁 60%/75%·뒤·먼 적·손잡이)·경직(두목 제외)·움찔·쓰러짐 날림(방향·힘·가라앉음·눕힘·곧게) | 표 방 4+",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.towns",
+      "playtest": "PlaytestDungeonTown2",
+      "result": "OK",
+      "lines": "[PlaytestDungeonTown2] OK - walked to Town2, bought from TownMerchant, no errors · [PlaytestDungeonTowns34] OK - walked to Town3 and Town4, bought from both merchants, no errors",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.floors",
+      "playtest": "PlaytestDungeonFloorProgression",
+      "result": "OK",
+      "lines": "[PlaytestDungeonFloorProgression] OK - 12 room advances, floor reached 4, no errors",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.ambush",
+      "playtest": "PlaytestDungeonFieldAmbush",
+      "result": "OK",
+      "lines": "[PlaytestDungeonFieldAmbush] OK - visited south/west/east ambush points, no errors",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.rescue-riddle",
+      "playtest": "PlaytestDungeonQuestRescue",
+      "result": "OK",
+      "lines": "[PlaytestDungeonQuestRescue] OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.build-dex",
+      "playtest": "PlaytestDungeonBuildDex",
+      "result": "OK",
+      "lines": "[PlaytestDungeonBuildDex] OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.common",
+      "playtest": "PlaytestCommonSettingsLoc",
+      "result": "OK",
+      "lines": "[PlaytestCommonSettingsLoc] OK",
+      "date": "2026-10-09"
+    }
+  ],
+  "fails": 0,
+  "not_covered": "그림·몸짓 판정 eras·peddler-guests·era-decor·gestures·boss-intro 와 GUI 진단 wear-tiers, D0 assets 는 이 묶음 밖 · 손맛은 사람/QC"
+}
