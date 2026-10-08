@@ -766,7 +766,7 @@
   };
   var treeImgCache = {};
   function treeImg(key) {
-    var src = TREE_SRC[key] || TREE_SRC.summer;
+    var w2 = global.DG.fs2d ? global.DG.fs2d.tree(key) : null; if (w2) { return w2; } var src = TREE_SRC[key] || TREE_SRC.summer;   // W-0114 그림체 C 먼저
     var im = treeImgCache[src];
     if (!im) { im = new Image(); im.src = src; treeImgCache[src] = im; }
     return im;
@@ -781,11 +781,11 @@
     /* 그림 — 16x15 픽셀아트를 확대해 그린다. 흔들림은 밑동을 축으로 살짝
        돌리는 것으로 낸다(원본이 트임·줄기까지 한 그림이라 따로 휘지 않는다) */
     var img = treeImg(seKey);
-    var sc = 3.5 * k;
+    var sc = img.__h ? img.__h * k / img.naturalHeight : 3.5 * k;   // 256px 그림체 C 는 높이 기준(W-0114)
     var iw = img.naturalWidth || 16, ih = img.naturalHeight || 15;
     var dw = iw * sc, dh = ih * sc;
     ctx.save();
-    ctx.imageSmoothingEnabled = false;
+    ctx.imageSmoothingEnabled = !!img.__h;
     ctx.translate(x, y + 2 * k);
     ctx.rotate(sway * 0.6);
     if (img.complete && img.naturalWidth) {
@@ -845,7 +845,7 @@
   var PINE_DEFAULT_SRC = 'assets/sprites2d/pine_green.png';
   var pineImgCache = {};
   function pineImg(key) {
-    var src = PINE_SRC[key] || PINE_DEFAULT_SRC;
+    var w2 = global.DG.fs2d ? global.DG.fs2d.pine(key) : null; if (w2) { return w2; } var src = PINE_SRC[key] || PINE_DEFAULT_SRC;   // W-0114
     var im = pineImgCache[src];
     if (!im) { im = new Image(); im.src = src; pineImgCache[src] = im; }
     return im;
@@ -856,15 +856,15 @@
     /* 줄기는 잎보다 **먼저·길게** 그린다. 짧게 그렸다가 잎과 밑동이
        뚝 떨어져 보인 적이 있다 */
     ctx.fillStyle = '#7a5636';
-    ctx.fillRect(x - 4.5 * k, y - 34 * k, 9 * k, 36 * k);
+    if (!pineImg(se.key).__h) { ctx.fillRect(x - 4.5 * k, y - 34 * k, 9 * k, 36 * k); }   // 그림체 C 소나무는 줄기까지 한 그림
 
     var img = pineImg(se.key);
-    var sc = 4.6 * k;
+    var sc = img.__h ? img.__h * k / img.naturalHeight : 4.6 * k;
     var iw = img.naturalWidth || 15, ih = img.naturalHeight || 15;
     var dw = iw * sc, dh = ih * sc;
     ctx.save();
-    ctx.imageSmoothingEnabled = false;
-    ctx.translate(x, y - 30 * k);
+    ctx.imageSmoothingEnabled = !!img.__h;
+    ctx.translate(x, img.__h ? y + 2 * k : y - 30 * k);
     ctx.rotate(sway * 0.7);
     if (img.complete && img.naturalWidth) {
       ctx.drawImage(img, -dw / 2, -dh, dw, dh);
@@ -887,7 +887,7 @@
 
   /** 바위 — 둥근 덩이 + 위쪽 밝은 면 */
   function drawRock(x, y, k, se) {
-    shadow(x, y + 2 * k, 17 * k, 6 * k);
+    shadow(x, y + 2 * k, 17 * k, 6 * k); if (global.DG.fs2d && global.DG.fs2d.drawRock(ctx, x, y, k, se)) { return; }   // W-0114 그림체 C 바위
     ctx.beginPath();
     ctx.moveTo(x - 16 * k, y);
     ctx.quadraticCurveTo(x - 18 * k, y - 14 * k, x - 6 * k, y - 19 * k);

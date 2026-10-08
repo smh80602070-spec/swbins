@@ -452,7 +452,19 @@
     tileBase: 'assets/web2d/tile/',
     still: { rts_inf_ally: 1, rts_inf_enemy: 1, rts_arc_ally: 1, rts_arc_enemy: 1, rts_cav_ally: 1, rts_cav_enemy: 1, hero_m: 1, hero_f: 1 },   // 한 장 모드 풀(W-0043·W-0047) — RTS 유닛 몸: K-0061 AI 몸(팀별) + 영웅
     tile: { plain: 'realm_grass', hill: 'realm_dirt', mount: 'realm_stone', river: 'realm_water' },
-    prop2d: { 'city:s': { id: 'silkroad_house_01' }, 'city:m': { id: 'chinese_hall_01' }, 'city:l': { id: 'stone_tower_01' } }
+    prop2d: { 'city:s': { id: 'silkroad_house_01', era: 'city_s_' }, 'city:m': { id: 'chinese_hall_01', era: 'city_m_' }, 'city:l': { id: 'stone_tower_01', era: 'city_l_' } },
+    /* 성 그림 시대(W-0114, K-0083 ②) — 판 전체 시대 상태가 없어 성마다 정한다(퓨전: 과거·현대·미래가 한 지도에).
+       균열 땅 미래 · 폐허 땅 현대 · 묘역 땅 과거, 나머지는 성 id 해시로 과거 6 : 현대 2.5 : 미래 1.5 */
+    eraOf: function (d) {
+      if (!d) { return 'past'; }
+      if (d.prov === 'fu') { return 'future'; }
+      if (d.prov === 'pf') { return 'present'; }
+      if (d.prov === 'my') { return 'past'; }
+      var h = 0, s = String(d.id), i;
+      for (i = 0; i < s.length; i++) { h = (h * 31 + s.charCodeAt(i)) >>> 0; }
+      var u = (h % 1000) / 1000;
+      return u < 0.6 ? 'past' : (u < 0.85 ? 'present' : 'future');
+    }
   };
   global.DG.cfg.vroidPattern = { base: '../shared/assets/patterns/', repeat: 3 };   // 무늬는 판 폴더가 아니라 shared 에만 있다(W-0071) — 기준 주소 시험이 끝나기 전에 받아도 404 가 안 나게
 })(window);

@@ -25,6 +25,8 @@ function sheets8() {
   }
   return o;
 }
+/* 2D 그림(world2d/*.webp) 중 같은 이름 GLB 가 없는 것(W-0114 — K-0083 성 세 시대·계절 나무) — spriteUrl 이 GLB 표와 함께 본다 */
+const names2d = () => { const d = path.join(SHARED, 'assets', 'world2d'), g = new Set(names('world3d')); return fs.existsSync(d) ? fs.readdirSync(d).filter(f => f.endsWith('.webp')).map(f => f.slice(0, -5)).filter(n => !g.has(n)).sort() : []; };
 const out = path.join(SHARED, 'js', 'assets3d-ids.js');
 const body = `/* 생성: tools/gen-assets3d-ids.mjs — 손으로 고치지 않는다. 통일 3D 에셋(shared/assets) GLB 이름 표(W-0021) */
 (function (global) {
@@ -33,6 +35,7 @@ const body = `/* 생성: tools/gen-assets3d-ids.mjs — 손으로 고치지 않�
   global.DG.assets3dIds = {
     hero: ${JSON.stringify(names('characters3d'))},
     world: ${JSON.stringify(names('world3d'))},
+    world2d: ${JSON.stringify(names2d())},
     hero2d8: ${JSON.stringify(sheets8())}
   };
 })(typeof window !== 'undefined' ? window : this);
@@ -43,4 +46,4 @@ if (process.argv.includes('--check')) {
   console.log('DIFF assets3d-ids.js ≠ shared/assets GLB — node tools/gen-assets3d-ids.mjs'); process.exit(1);
 }
 fs.writeFileSync(out, body);
-console.log('쓴 것', out, '· 영웅', names('characters3d').length, '· 지물', names('world3d').length, '· 8방향 2D', Object.keys(sheets8()).length);
+console.log('쓴 것', out, '· 영웅', names('characters3d').length, '· 지물', names('world3d').length, '· 2D 만', names2d().length, '· 8방향 2D', Object.keys(sheets8()).length);

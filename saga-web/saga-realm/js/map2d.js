@@ -94,7 +94,9 @@
   function castle(d, rad) {
     var m = M(), A = global.DG && global.DG.assets3d, t = cfg().prop2d;
     if (!m || !A || !t || !m.isOn()) { return ''; }
-    var p = t[rad < 2.4 ? 'city:s' : rad < 3.2 ? 'city:m' : 'city:l'], u = p && A.spriteUrl(p.id);
+    var p = t[rad < 2.4 ? 'city:s' : rad < 3.2 ? 'city:m' : 'city:l'], ef = cfg().eraOf;
+    /* 성 그림 세 시대(W-0114) — 시대 그림이 있으면 그것, 없으면 예전 한 장 */
+    var u = p && ((p.era && ef && A.spriteUrl(p.era + ef(d))) || A.spriteUrl(p.id));
     if (!u) { return ''; }
     var hh = 3.2 + rad * 1.5;
     return '<image class="rcastle" pointer-events="none" href="' + u + '" x="' + (d.x - hh / 2).toFixed(2) + '" y="' + (d.y - hh * 0.92).toFixed(2) +

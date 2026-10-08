@@ -19,7 +19,7 @@
   function ids() { return (global.DG && global.DG.assets3dIds) || { hero: [], world: [] }; }
   function set(kind) {
     if (!sets) {
-      sets = { hero: {}, world: {} };
+      sets = { hero: {}, world: {}, world2d: {} };   // world2d — GLB 짝 없는 2D 그림(W-0114)
       var t = ids(), k, i;
       for (k in sets) { for (i = 0; i < (t[k] || []).length; i++) { sets[k][t[k][i]] = 1; } }
     }
@@ -116,7 +116,7 @@
   /** 통일 2D 스프라이트(`world2d/<id>.webp`, 256px 알파 한 장) 주소 — 3D 와 같은 id. 없으면 null */
   function spriteUrl(id) {
     if (state === 'init') { probe(); }
-    if (state !== 'ok' || !id || !tunedOn() || !set('world')[id]) { return null; }
+    if (state !== 'ok' || !id || !tunedOn() || !(set('world')[id] || set('world2d')[id])) { return null; }
     return root + 'world2d/' + id + '.webp';
   }
 

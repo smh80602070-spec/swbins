@@ -7436,6 +7436,7 @@ window.requestAnimationFrame = function () { return 0; };
       if (!a) { return '동행 서명 없음 — 건너뜀'; }
       var ce = hitOf(1.2, undefined, true), pe = hitOf(0, undefined, true), ratio = ce.dmg / (pe.dmg || 1);
       var ok = a.dmg > 0 && a.combos === 1 && late.dmg === 0 && off.dmg === 0 && pe.combos === 0 && Math.abs(ratio - 1.5) < 0.02;
+      if (!ok) { throw new Error(JSON.stringify({ a: a, late: late, off: off, ce: ce, pe: pe, ratio: ratio })); }   // 흔들림 원인 남기기(10-08)
       return ok && '합격 피해 ' + Math.round(ce.dmg) + ' / 그냥 ' + Math.round(pe.dmg) + ' (×' + ratio.toFixed(2) + ') · 창 밖·손잡이 0 은 0';
     }); });
 
