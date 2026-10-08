@@ -7,6 +7,7 @@ extends SceneTree
 ## ③ 고르기: 답 저장·다음 카드 · 첫 화친 "def" 만 설전 단계 · 설전 맞힌 수 2 → win(우호 +15·금 +300), 1 → lose
 ## ④ 엔진 효과(새 판 194 메모리): 금·수도 치안(100 상한)·훈련·군량·책사 충성·이웃 우호 · {책사}·{이웃} 칸이 도감 가명으로 채워짐
 ## ②-2 G-0092 2막: 하늘에서 떨어진 사람들(36달·성 8) → 관도 결전(48·10, 성 차지 단계 — 단계 동안 다음 카드 쉼, 성 하나 더 → win·기한 → lose) → 논객의 설전(60·12, 아무 답이나 설전)
+## ②-6 G-0110 6막: 천하의 끝 — 달·성으로는 안 뜨고 승리(result "win…")에만 · 통일/문화/화친 글 · 결말
 ## ②-5 G-0105 5막: 실크로드(144달·성 32, 성 차지 이김) → 대진의 사신(156·34, 아무 답이나 통역 설전 — 3 맞힘 이김/1 짐) → 남해의 배(168·36, 성 차지 짐)
 ## ②-4 G-0101 4막: 균열의 왕(108달·성 25, 성 차지 이김) → 역병의 근원(120·27, 은하 = 재야 인재, 성 차지 짐) → 망자의 맹세(132·30, 봉인을 골라도 일기토 — 망장 이김/짐), 실명 "백기" 없음
 ## ②-3 G-0096 3막: 항법사가 본 강(72달·성 15, 재야 인재) → 적벽 강 위(84·18, 성 차지) → 의체 무사의 일기토(96·20 — 예물은 일기토 없음, 정면·정중은 일기토), 일기토 이김 = 재야 인재·짐 = 효과 없음
@@ -34,7 +35,7 @@ func _initialize() -> void:
 
 	# ① 표
 	var ids: Array = S.CARDS.map(func(c): return String(c.id))
-	check(ids == ["r1_start", "r1_rift_sign", "r1_first_ally", "r2_fallen", "r2_plains", "r2_debate", "r3_navigator", "r3_river", "r3_duel", "r4_rift", "r4_plague", "r4_tomb", "r5_silk", "r5_west", "r5_south"], "카드 열다섯 id 정본 %s" % [ids])
+	check(ids == ["r1_start", "r1_rift_sign", "r1_first_ally", "r2_fallen", "r2_plains", "r2_debate", "r3_navigator", "r3_river", "r3_duel", "r4_rift", "r4_plague", "r4_tomb", "r5_silk", "r5_west", "r5_south", "r6_end"], "카드 열여섯 id 정본 %s" % [ids])
 	var bad: Array = []
 	for c: Dictionary in S.CARDS:
 		for era in ["past", "now", "future"]:
@@ -138,7 +139,14 @@ func _initialize() -> void:
 	var r5o: Dictionary = S.pick(st, "def")
 	S.start_own(st, "r5_south", 168, 36)
 	check(String((r5o.stage as Dictionary).get("kind", "")) == "own" and S.own_status(st, 180, 36) == "lose", "남해 → 성 차지 열두 달 짐")
-	check(S.next_card(st).is_empty() and String(S.ACT_NAMES[5]).contains("먼 길"), "5막 끝 — 남은 카드 없음")
+	check(String(S.next_card(st).id) == "r6_end" and String(S.ACT_NAMES[5]).contains("먼 길"), "5막 끝 → 6막 결말 카드")
+
+	# ②-6 G-0110 6막
+	check(not S.due(st, 999, 107) and not S.due(st, 999, 107, "") and S.due(st, 0, 3, "win_culture"), "결말 카드는 달·성으로 안 뜨고 이기면 뜸")
+	var c6: Dictionary = S.next_card(st)
+	check(S.card_text(c6, "win").begins_with("천하가 하나가") and S.card_text(c6, "win_diplomacy").begins_with("화친의 잔치") and S.card_text(c6, "") == String(c6.text), "승리 종류마다 글 · 없으면 기본")
+	var r6: Dictionary = S.pick(st, "def")
+	check((r6.stage as Dictionary).is_empty() and S.next_card(st).is_empty(), "6막 결말 — 남은 카드 없음")
 	var ra: Dictionary = S.pick(st_b, "atk")
 	check(String((ra.stage as Dictionary).get("kind", "")) == "duel", "정면 → 일기토")
 	var w3: Dictionary = S.duel_outcome(st_b, "r3_duel", true)
@@ -154,7 +162,7 @@ func _initialize() -> void:
 	var lose: Dictionary = S.debate_outcome(S.fresh(), "r1_first_ally", 1)
 	check(String(win.hint).contains("+15") and String(lose.hint).contains("-5") and int((st2.debate as Dictionary).r1_first_ally) == 2, "설전 2 맞힘 win · 1 lose")
 	check(st.picks == {"r1_start": "def", "r1_rift_sign": "util", "r1_first_ally": "atk", "r2_fallen": "atk", "r2_plains": "def", "r2_debate": "util", "r3_navigator": "util", "r3_river": "atk", "r3_duel": "util",
-		"r4_rift": "atk", "r4_plague": "util", "r4_tomb": "def", "r5_silk": "util", "r5_west": "atk", "r5_south": "def"} and (st.done as Array).size() == 15, "고른 답 저장 %s" % [st.picks])
+		"r4_rift": "atk", "r4_plague": "util", "r4_tomb": "def", "r5_silk": "util", "r5_west": "atk", "r5_south": "def", "r6_end": "def"} and (st.done as Array).size() == 16, "고른 답 저장 %s" % [st.picks])
 
 	# ④ 엔진 효과(메모리)
 	var rs: Node = root.get_node_or_null("RealmSaveState")

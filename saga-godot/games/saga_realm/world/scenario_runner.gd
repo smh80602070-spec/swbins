@@ -58,7 +58,7 @@ func tick() -> void:
 		_end_own(own, own_id)
 	if not get_tree().get_nodes_in_group("ui_modal").is_empty():
 		return
-	if Scenario.due(st, months(), RealmSaveState.cities.size()):
+	if Scenario.due(st, months(), RealmSaveState.cities.size(), RealmSaveState.result):
 		open_card()
 
 
@@ -207,7 +207,7 @@ func open_card() -> void:
 	var opts: Array = []
 	for o: Dictionary in c.choices:
 		opts.append({"key": String(o.k), "label": "%s — %s" % [String(o.label), String(o.hint)]})
-	TalkBox.open(get_parent(), "📖 %s" % Scenario.ACT_NAMES.get(int(c.act), ""), [[head, Scenario.fill(String(c.text), nm)]], _on_card_pick,
+	TalkBox.open(get_parent(), "📖 %s" % Scenario.ACT_NAMES.get(int(c.act), ""), [[head, Scenario.fill(Scenario.card_text(c, RealmSaveState.result), nm)]], _on_card_pick,
 		{"prompt": "어떻게 할 것인가", "options": opts})
 
 

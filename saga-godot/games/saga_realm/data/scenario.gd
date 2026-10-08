@@ -1,5 +1,5 @@
 extends RefCounted
-## G-0088 — 사가천하 이야기 표(정본 `scenario/saga-realm.md` "천하와 균열"). 1막 · 군웅 세 카드 + G-0092 2막 · 대전 세 카드 + G-0096 3막 · 강 위 세 카드 + G-0101 4막 · 삼계 균열 세 카드 + G-0105 5막 · 먼 길 세 카드.
+## G-0088 — 사가천하 이야기 표(정본 `scenario/saga-realm.md` "천하와 균열"). 1막 · 군웅 세 카드 + G-0092 2막 · 대전 세 카드 + G-0096 3막 · 강 위 세 카드 + G-0101 4막 · 삼계 균열 세 카드 + G-0105 5막 · 먼 길 세 카드 + G-0110 6막 · 천하의 끝(승리하면 뜨는 결말 카드).
 ## 글·고르기·결과는 웹 구현(saga-web/saga-realm/js/data-scenario.js CARDS·STAGES)과 같다. 사가천하의 이야기는 줄로 가는 퀘스트가 아니라
 ## **때가 되면 터지는 사건 카드**다 — 표 순서대로 하나씩, 그 카드의 때(when)가 되면 뜬다.
 ## 엔진은 world/scenario_runner.gd, 진행은 RealmSaveState.story(fresh() 모양). 인물은 칸({책사}·{이웃})으로만 — 도감 가명이 들어간다.
@@ -10,12 +10,13 @@ extends RefCounted
 ## STAGES[id] = 그 카드 뒤 단계 — {kind, on: 고른 k 또는 "*"(아무 답), title, intro?, months?, win{text, hint, fx}, lose{…}}
 ##   kind debate — 설전 세 문답, 둘 이상 맞히면 이김 · kind own — months 달 안에 성을 하나 더 편입하면 이김(웹 "목표 성 차지"를 고돗은 성 수로)
 ##   kind duel — {맹장}(무력 으뜸) 대 foe 이름, 베기·찌르기·막기 한 수씩(RealmWar.duel_round_result) 승부가 날 때까지(DUEL_MAX 수, 다 비기면 짐)
+## when.victory = true 카드(G-0110 6막)는 달·성이 아니라 승리(RealmSaveState.result 가 "win…")로 뜬다. textBy[승리 종류] 가 있으면 그 글.
 ##   on 은 k 하나·"*"·k 배열(예 ["atk", "def"] — 3막 일기토는 예물을 고르면 안 열림)
 ##   단계가 열려 있는 동안 다음 카드는 쉰다(웹과 같음).
 ## G-0092 — 고돗엔 시간 틈 사람(강서·도하·명변…)이 인물 표에 없다(정본 트랙 메모 "인물 표를 더한 뒤") — 그 사람을 등용하는 고르기는
 ##   "그 사람이 데려온 재야 인재 합류"(recruitFree)로, 그 사람 충성(loyalId)은 {책사} 충성으로 바꿨다.
 
-const ACT_NAMES := {1: "1막 · 군웅", 2: "2막 · 대전", 3: "3막 · 강 위", 4: "4막 · 삼계 균열", 5: "5막 · 먼 길"}
+const ACT_NAMES := {1: "1막 · 군웅", 2: "2막 · 대전", 3: "3막 · 강 위", 4: "4막 · 삼계 균열", 5: "5막 · 먼 길", 6: "6막 · 천하"}
 
 const CARDS := [
 	{"id": "r1_start", "no": 1, "act": 1, "title": "첫 성의 밤", "emoji": "🗺️", "when": {"minTurn": 0},
@@ -142,6 +143,21 @@ const CARDS := [
 			{"k": "def", "label": "포구를 다진다", "hint": "수도 치안 +8 · 포구의 성", "fx": [{"t": "sec", "n": 8}], "text": "포구가 다져져 배가 안전히 드나들었다"},
 			{"k": "util", "label": "항로를 열어 교역한다", "hint": "금 300 · 금 +800 · 포구의 성", "cost": 300, "fx": [{"t": "gold", "n": 800}], "text": "성연의 항법으로 남해 교역이 열렸다"},
 		]},
+	## G-0110 6막 · 천하 — 웹 r6_end. 승리 종류 글은 고돗 판정(realm_rules_war.check_result: 통일 win·문화 win_culture·화친 win_diplomacy)에 있는 셋만
+	## (웹의 패권·생존은 고돗 판정에 없음 — 그 판이면 기본 글).
+	{"id": "r6_end", "no": 16, "act": 6, "title": "천하의 끝", "emoji": "🎆", "when": {"minTurn": 0, "victory": true},
+		"mix": {"past": "잔치", "now": "도하가 찍은 기록 영상", "future": "성연의 귀환 항로"},
+		"text": "천하의 끝이 다가왔다. 잔치의 등불 아래 도하가 기록 영상을 찍고, 성연이 귀환 항로를 펼쳐 보인다. 시간 틈 사람들은 제 시대로 돌아갈지 남을지 저마다 고민한다. 이 판의 이야기는 여기서 매듭짓는다.",
+		"textBy": {
+			"win": "천하가 하나가 되었다. 통일 잔치의 등불 아래 도하가 기록 영상을 찍고, 성연이 귀환 항로를 펼쳐 보인다. 시간 틈 사람들은 제 시대로 돌아갈지 남을지 저마다 고민한다.",
+			"win_culture": "서고에 세 시대의 책이 나란히 꽂혔다. 도하가 기록 영상을 찍고 성연이 귀환 항로를 그려 넣었다. 시간 틈 사람들은 책 곁에 남을지 고민한다.",
+			"win_diplomacy": "화친의 잔치가 열렸다. 도하가 기록 영상을 찍고 성연이 귀환 항로를 펼친다. 이웃 나라 사신과 시간 틈 사람들이 한 자리에 앉았다.",
+		},
+		"choices": [
+			{"k": "atk", "label": "돌아가는 이를 배웅한다", "hint": "금 +2000 · 책사 충성 +5", "fx": [{"t": "gold", "n": 2000}, {"t": "loyal", "n": 5}], "text": "귀환 항로에 등불이 켜졌고 시간 틈 사람들이 손을 흔들었다"},
+			{"k": "def", "label": "남는 이와 함께 지낸다", "hint": "수도 치안 +15 · 책사 충성 +5", "fx": [{"t": "sec", "n": 15}, {"t": "loyal", "n": 5}], "text": "남은 이들이 성 안에 눌러앉아 이 시대의 이웃이 되었다"},
+			{"k": "util", "label": "기록 영상을 서고에 남긴다", "hint": "금 +1000 · 군량 +3000", "fx": [{"t": "gold", "n": 1000}, {"t": "food", "n": 3000}], "text": "기록 영상은 서고에서 세 시대를 잇는 책이 되었다"},
+		]},
 ]
 
 const STAGES := {
@@ -232,12 +248,19 @@ static func finished(st: Dictionary) -> bool:
 
 
 ## 다음 카드가 지금 뜰 때인가(성 차지 단계가 열려 있으면 쉰다).
-static func due(st: Dictionary, months: int, cities: int) -> bool:
+static func due(st: Dictionary, months: int, cities: int, result := "") -> bool:
 	var c := next_card(st)
 	if c.is_empty() or not (st.get("stage", {}) as Dictionary).is_empty():
 		return false
 	var w: Dictionary = c.when
+	if bool(w.get("victory", false)):   # G-0110 결말 카드 — 이겼을 때만
+		return result.begins_with("win")
 	return months >= int(w.get("minTurn", 0)) or (w.has("orCities") and cities >= int(w.orCities))
+
+
+## 카드 글 — textBy 에 그 승리 종류가 있으면 그 글(G-0110), 아니면 text.
+static func card_text(c: Dictionary, result := "") -> String:
+	return String((c.get("textBy", {}) as Dictionary).get(result, c.get("text", "")))
 
 
 ## 고른 답을 적고 다음 카드로. 그 고르기 사전(fx 를 엔진이 적용)과 이어질 단계(없으면 {})를 돌려준다.
