@@ -85,6 +85,48 @@ namespace Saga.Go.Player
             _heroAnimator = _pc.Animator;
         }
 
+        /// <summary>주인공 VRoid 몸(`SetupVroidHero` 가 굽는다, 로컬 전용) — 없으면 씬에 굳힌 Maria 그대로.</summary>
+        public const string HeroBodyPath = "HeroBody/hero_vroid";
+        private bool _heroSwapped;
+
+        private void Start() => UseVroidHero();
+
+        /// <summary>
+        /// 사용자 2026-10-08 "주인공도 VRoid 로" — 씬의 Maria 를 끄고 VRoid 주역 몸(Maria.controller 를 Humanoid 로 리타깃)을 주인공 몸으로 쓴다.
+        /// 몸이 Humanoid 가 아니면 Maria 를 그대로 둔다. 무기는 <see cref="Shown"/> 으로 새 손에 옮긴다.
+        /// </summary>
+        public bool UseVroidHero()
+        {
+            if (_heroSwapped) return true;
+            if (_pc == null) Awake();
+            var prefab = Resources.Load<GameObject>(HeroBodyPath);
+            if (prefab == null) return false;
+            var inst = Instantiate(prefab, transform);
+            inst.name = "HeroVroid"; // "Body_" 는 동료 몸 이름(진단이 센다) — 주인공 몸은 따로
+            inst.transform.localPosition = Vector3.zero;
+            inst.transform.localRotation = _heroVisual != null ? _heroVisual.localRotation : Quaternion.identity;
+            foreach (var col in inst.GetComponentsInChildren<Collider>()) DestroyImmediate(col);
+            float h = HeroDresser.MeasureHeight(inst);
+            if (h > 0.01f) inst.transform.localScale = inst.transform.localScale * (CharacterVisual.HumanHeight / h);
+            var anim = inst.GetComponent<Animator>();
+            if (anim == null || !anim.isHuman || anim.runtimeAnimatorController == null)
+            {
+                Debug.LogWarning("[PartyBodies] 주인공 VRoid 몸이 Humanoid 가 아님 — Maria 그대로");
+                Destroy(inst);
+                return false;
+            }
+            bool heroShown = ShownId == HeroId;
+            var old = _heroVisual;
+            _heroVisual = inst.transform;
+            _heroAnimator = anim;
+            if (heroShown) _pc.SetBody(_heroVisual, _heroAnimator);
+            else inst.SetActive(false);
+            if (old != null && old != _heroVisual) old.gameObject.SetActive(false);
+            _heroSwapped = true;
+            if (heroShown) Shown?.Invoke(HeroId);
+            return true;
+        }
+
         /// <summary>이 인물이 쓸 몸 모델(없으면 null = 주인공 몸 + 빛깔).</summary>
         public GameObject PrefabFor(string memberId)
         {

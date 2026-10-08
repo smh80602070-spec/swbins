@@ -66,7 +66,12 @@ namespace Saga.EditorTools
 
         private static void Tick()
         {
-            if (_done || ++_frame < WarmupFrames) return;
+            if (_done) return;
+            // U-0056 몸 프리팹 애니메이터는 CullUpdateTransforms 라 메인 카메라 밖 몸은 자세를 안 쓴다 — 촬영 카메라가 한 프레임에 찍으면 T자세로 나온다.
+            // 촬영 전 마지막 30 프레임은 전부 AlwaysAnimate 로 돌려 실제 자세가 서게 한다(게임 동작은 안 바꾼다 — 촬영 도구 안에서만).
+            if (++_frame >= WarmupFrames - 30 && !_stage1)
+                foreach (var a in Object.FindObjectsByType<Animator>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)) a.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+            if (_frame < WarmupFrames) return;
             try
             {
                 if (!_stage1)
