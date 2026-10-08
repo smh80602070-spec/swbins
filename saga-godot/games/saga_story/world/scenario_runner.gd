@@ -52,7 +52,8 @@ func tick() -> void:
 func context() -> Dictionary:
 	var scene := get_tree().current_scene
 	return {"level": StorySaveState.level, "stage": String(Scenario.SCENE_KEYS.get(String(scene.name) if scene != null else "", "")),
-		"quests": StorySaveState.quests_done, "tier": StoryCombat.job_tier(StorySaveState.job), "champions": StorySaveState.weekly_champion_week.size()}
+		"quests": StorySaveState.quests_done, "tier": StoryCombat.job_tier(StorySaveState.job), "champions": StorySaveState.weekly_champion_week.size(),
+		"stage_kills": StorySaveState.stage_kills, "bosses": StorySaveState.bosses, "bond": StorySaveState.mentor_bond}
 
 
 func objective() -> String:
@@ -80,6 +81,8 @@ func _apply(results: Array) -> void:
 			var ch: Dictionary = r.chapter
 			StorySaveState.add_exp(int(ch.get("exp", 0)))
 			StorySaveState.add_gold(int(ch.get("gold", 0)))
+			if int(ch.get("frags", 0)) > 0:
+				StorySaveState.add_memory_fragments(int(ch.frags))
 			Toast.show(get_parent(), "📜 %d부 %d장 「%s」 끝 — 경험치 +%d · 금 +%d" % [Scenario.part(ch), int(ch.no), String(ch.title), int(ch.exp), int(ch.gold)], 4.0)
 	if changed:
 		_save()
@@ -95,9 +98,11 @@ func open_talk() -> void:
 	if scene == "" or _layer != null:
 		return
 	var mentor := _mentor_name()
+	var nxt := StoryCombat.job_next(StorySaveState.job)
+	var mentor_next := String(StoryCombat.mentor_of(nxt).get("name", "")) if nxt != "" else mentor
 	var lines: Array = []
 	for l: Array in Scenario.SCENES.get(scene, []):
-		lines.append([Scenario.speaker(String(l[0]), mentor), String(l[1])])
+		lines.append([Scenario.speaker(String(l[0]), mentor_next if String(l[0]) == "mentor+" else mentor), String(l[1])])
 	var ch := Scenario.chapter(st)
 	_layer = TalkBox.open(get_parent(), "📜 %d부 %d장 · %s" % [Scenario.part(ch), int(ch.get("no", 0)), String(ch.get("title", ""))], lines, _on_talk_done)
 

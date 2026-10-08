@@ -1,5 +1,5 @@
 extends RefCounted
-## G-0087 — 사가종횡 이야기 표(정본 `scenario/saga-story.md` "이름 없는 떠돌이"). 1부 · 무명 네 장 + G-0091 2부 · 갈래 네 장.
+## G-0087 — 사가종횡 이야기 표(정본 `scenario/saga-story.md` "이름 없는 떠돌이"). 1부 · 무명 네 장 + G-0091 2부 · 갈래 네 장 + G-0095 3부 · 불길 네 장.
 ## 대사는 웹 구현(saga-web/saga-story/js/data-scenario.js SCENES)과 같다(감정 칸만 뺌). 단계는 웹과 거의 같다 — 고돗에도 신야성·허도·
 ## 허창 들판 장면과 사명 q_first·q_gear1·q_field·q_boss1, 1차 전직이 그대로 있다.
 ## 엔진은 world/scenario_runner.gd(장면마다 새로 뜬다), 진행은 StorySaveState.scenario(fresh() 모양). 인물은 가상, {스승}은 도감 가명.
@@ -11,6 +11,11 @@ extends RefCounted
 ##     {"t": "mission", "quest": 사명 key}         그 사명을 완수했다(StorySaveState.quests_done)
 ##     {"t": "job", "tier": n}                     n차 전직을 했다
 ##     {"t": "gate"}                               관문 대장(사냥터 주간 챔피언)을 한 번이라도 이겼다(웹 gate — 이긴 적이 있으면 그것으로 됨)
+##     {"t": "stagekill", "stage": 키, "n": n}     그 사냥터 처치 수(stage_kills) n 이상(G-0095 — 고돗에 호로곡 사명이 없어서)
+##     {"t": "boss", "n": n}                       이 단계가 시작된 뒤 보스 n(StorySaveState.bosses 차이)
+##     {"t": "rift", "n": n}                       이 단계가 시작된 뒤 비경을 n 번 끝까지 깸(story_labyrinth 가 st.rifts 를 올림)
+##     {"t": "bond", "n": n}                       지금 스승과 사제 유대(mentor_bond) n 이상 — 전직하면 0 부터
+## 장 보상 "frags": n = 기억 조각 n(add_memory_fragments). 말한 이 "mentor+" = 다음 전직 단의 스승.
 ## 장마다 "part"(부)·"legacy"{level, tier}(옛 세이브 — 그만큼 왔으면 보상 없이 지나온 길).
 ## 장면 한 줄 = [누가, 말] — 누가 = "me"(나) · "mentor"(지금 갈래 스승) · CAST 키.
 
@@ -22,12 +27,15 @@ const CAST := {
 	"wanderer": {"name": "나그네", "emoji": "🥾"},
 	"townsman": {"name": "남정성 사람", "emoji": "🏮"},
 	"ieum": {"name": "탐사 대원 이음", "emoji": "🧭"},
+	"guard": {"name": "산채 아래 경비병", "emoji": "🛡️"},
+	"ashen": {"name": "잿빛 사자", "emoji": "🌫️"},
+	"yakson": {"name": "의원 약손", "emoji": "⚕️"},
 }
 
 ## 장면 루트 이름 → 장면 키(웹 사냥터·마을 key).
 const SCENE_KEYS := {"SinyaField": "sinya", "HeodoField": "heodo", "TestField": "field", "GangneungjinField": "port",
 	"ForestHuntGround": "forest", "NamjeongseongField": "namjeong", "CaveHuntGround": "cave", "GisanchaeField": "gisan", "GorgeHuntGround": "gorge"}
-const STAGE_NAMES := {"sinya": "신야성", "heodo": "허도", "field": "허창 들판", "port": "강릉진", "forest": "오림 숲", "namjeong": "남정성", "cave": "한중 굴혈"}
+const STAGE_NAMES := {"sinya": "신야성", "heodo": "허도", "field": "허창 들판", "port": "강릉진", "forest": "오림 숲", "namjeong": "남정성", "cave": "한중 굴혈", "gisan": "기산채", "gorge": "호로곡"}
 
 const SCENES := {
 	"sinya1": [
@@ -104,6 +112,47 @@ const SCENES := {
 		["me", "문이라. 그렇다면 이름 없는 제 손에도 할 일이 있겠군요."],
 		["ieum", "마을마다 서 있겠습니다. 소식이 닿으면 어디서든 말을 거세요. 우선 둘째 스승부터 찾으세요."],
 	],
+	"gisan1": [
+		["guard", "산채 두령이 요즘 빛이 나는 병기를 쥐고 있소. 창고엔 쇠 대롱이 쌓였는데, 그게 불을 뿜으면 활이 무슨 소용이오."],
+		["ashen", "…좋은 물건이오. 값만 치르면 누구 손에든 가지. 시대가 무슨 상관이겠소."],
+		["me", "잠깐! 방금 그 도포 차림이 발소리도 없이 사라졌습니다."],
+		["guard", "잿빛 사자라고들 하오. 두령이 누구에게 병기를 받는지 이제 알겠소."],
+	],
+	"gisan2": [
+		["guard", "군자금이 모였소! 이걸로 산채 아래 길을 열 병량을 사겠소."],
+		["me", "잿빛 사자가 그 병기를 어디서 가져오는지 알아야 합니다. 이대로면 전쟁이 끝나지 않아요."],
+		["guard", "호로곡 쪽에서 불길이 올랐소. 그쪽이 더 급하오."],
+	],
+	"gorge1": [
+		["me", "골짜기 전체가 타오른다…"],
+		["yakson", "불길 속에 오래 서 있지 마시오. 탕약을 넉넉히. 부상병은 내가 옮길 테니 골짜기를 비워 주시오."],
+		["me", "이 불을 넘어야 다음 길이 열린다."],
+	],
+	"gorge2": [
+		["yakson", "부상병을 다 옮겼소. 이상한 일이 있었소 — 불길 속에서 강철 거인이 걸어 나왔는데 불이 붙지 않더이다."],
+		["me", "진압 특공대 같은 것들도 보았습니다. 이 땅의 전쟁이 아닙니다."],
+		["yakson", "적국 대장군의 갑주에도 푸른 빛 판이 박혀 있었소. 이음이라는 대원을 찾아가시오. 문 이야기를 아는 이요."],
+	],
+	"lab1": [
+		["ieum", "제 탐사 등으로 비경을 엽니다. 이 층들은 문이 남긴 기억의 껍질이에요. 돌 발판에 박힌 표지판이 보이면 다른 시대의 흔적입니다."],
+		["ieum", "허도의 비경 문으로 들어가 끝의 수호장을 쓰러뜨리면 잃어버린 조각이 나올지도 몰라요. 도중에 나가도 얻은 조각은 남습니다."],
+		["me", "제 이름이 없는 까닭이 거기 있다면 가야지요."],
+	],
+	"lab2": [
+		["me", "…기억났습니다. 저는 문 너머에서 왔어요. 문이 열릴 때 떨어져 이 땅에 나왔습니다."],
+		["ieum", "그래서 이름이 없었던 거군요. 문 너머에 두고 온 이름이 있을 겁니다."],
+		["me", "그 이름을 찾으러 문까지 가겠습니다. 잿빛 사자보다 먼저요."],
+	],
+	"job31": [
+		["mentor+", "네 이름은 문 너머에 두고 왔구나. 내 방 벽의 이 오래된 사진을 보아라 — 이 땅에서 찍을 수 없는 색이다."],
+		["mentor+", "내 칼날에 비친 것이 무엇이냐. 나도 오래 전에 문을 본 적이 있다. 이제 셋째 자리를 열어 주마."],
+		["mentor+", "🥋 허도의 수련장에서 3차 전직을 하여라. 그리고 내 곁에서 손을 맞춰 보자."],
+	],
+	"job32": [
+		["mentor", "셋째 자리에 올랐다. 손도 맞았다. 이제 네 손은 이름 없는 채로도 이 땅에서 가장 빠르다."],
+		["mentor", "잿빛 사자가 옛 도읍 낙양으로 갔다는 소문이다. 도포를 벗게 될 것이다 — 가서 확인하여라."],
+		["me", "다녀오겠습니다. 이름을 찾는 길이 그쪽에 있습니다."],
+	],
 	"cave2": [
 		["mentor", "이름 없는 채로 둘째 자리에 올랐구나. 이름이 없으니 남의 시대 기술도 그대로 배우는군."],
 		["mentor", "더 큰 불길이 기산채 쪽에서 오른다 한다. 다음 길은 스스로 정하되, 잿빛 자를 조심하라."],
@@ -154,6 +203,29 @@ const CHAPTERS := [
 		"mix": {"past": "위군 진", "now": "굴 속 발전기", "future": "이음·탐사 장비"},
 		"steps": [{"t": "stage", "stage": "cave"}, {"t": "mission", "quest": "q_cave"}, {"t": "talk", "scene": "cave1"}, {"t": "job", "tier": 2}, {"t": "talk", "scene": "cave2"}],
 		"exp": 4000, "gold": 8000},
+	## G-0095 3부 · 불길(미래 중심) — 고돗엔 q_gorge·q_cinder·q_gorge_boss 사명이 없어 호로곡 = 그 사냥터 처치 60 + 보스 하나(그은 돌은 뺌),
+	## 비경 = 끝까지 한 번(st.rifts), 셋째 스승은 정본대로 사제 유대 20(웹은 유대가 없어 뺐던 칸)까지.
+	{"id": "p3_gisan", "no": 9, "part": 3, "title": "기산채의 사자", "stage": "기산채", "need": 25, "legacy": {"level": 45, "tier": 3},
+		"blurb": "산채 두령에게 빛 병기를 대 주는 잿빛 사자가 처음 나타났다 사라진다.",
+		"mix": {"past": "산채", "now": "산채 창고 기관총", "future": "빛 병기·잿빛 사자"},
+		"steps": [{"t": "stage", "stage": "gisan"}, {"t": "talk", "scene": "gisan1", "at": "gisan"}, {"t": "mission", "quest": "q_gold1"}, {"t": "talk", "scene": "gisan2"}],
+		"exp": 8000, "gold": 10000},
+	{"id": "p3_gorge", "no": 10, "part": 3, "title": "호로곡의 불길", "stage": "호로곡", "need": 25, "legacy": {"level": 45, "tier": 3},
+		"blurb": "골짜기 전체가 탄다. 의원 약손과 부상병을 옮기고 적국 대장군을 친다.",
+		"mix": {"past": "의원·약초", "now": "진압 특공대", "future": "불길 속 강철 거신"},
+		"steps": [{"t": "stage", "stage": "gorge"}, {"t": "talk", "scene": "gorge1", "at": "gorge"}, {"t": "stagekill", "stage": "gorge", "n": 60},
+			{"t": "boss", "n": 1}, {"t": "talk", "scene": "gorge2"}],
+		"exp": 20000, "gold": 15000},
+	{"id": "p3_labyrinth", "no": 11, "part": 3, "title": "비경의 기억", "stage": "비경", "need": 30, "legacy": {"level": 45, "tier": 3},
+		"blurb": "이음이 여는 비경 — 수호장을 치면 떠돌이가 잃은 기억 조각: 자신도 문에서 떨어졌다.",
+		"mix": {"past": "비경 돌 발판", "now": "발판에 박힌 표지판", "future": "기억 조각 홀로그램"},
+		"steps": [{"t": "talk", "scene": "lab1"}, {"t": "rift", "n": 1}, {"t": "talk", "scene": "lab2"}],
+		"exp": 30000, "gold": 20000, "frags": 3},
+	{"id": "p3_job", "no": 12, "part": 3, "title": "셋째 스승", "stage": "허도", "need": 45, "legacy": {"level": 45, "tier": 3},
+		"blurb": "{스승}이 \"네 이름은 문 너머에 두고 왔구나\".",
+		"mix": {"past": "스승", "now": "스승의 오래된 사진", "future": "스승의 칼에 비친 문"},
+		"steps": [{"t": "talk", "scene": "job31", "at": "heodo"}, {"t": "job", "tier": 3}, {"t": "bond", "n": 20}, {"t": "talk", "scene": "job32"}],
+		"exp": 40000, "gold": 30000},
 ]
 
 ## 옛 세이브(웹 legacy {level 10, tier 1}) — 이만큼 왔으면 1부는 지나온 길.
@@ -162,7 +234,7 @@ const LEGACY_TIER := 1
 
 
 static func fresh() -> Dictionary:
-	return {"ch": 0, "step": 0, "done": [], "legacy": false}
+	return {"ch": 0, "step": 0, "done": [], "legacy": false, "base": 0, "base_set": false, "rifts": 0}
 
 
 static func normalize(st: Variant) -> Dictionary:
@@ -242,7 +314,26 @@ static func step_met(st: Dictionary, ctx: Dictionary) -> bool:
 			return int(ctx.get("champions", 0)) >= 1
 		"job":
 			return int(ctx.get("tier", 0)) >= int(s.tier)
+		"stagekill":
+			return int((ctx.get("stage_kills", {}) as Dictionary).get(String(s.stage), 0)) >= int(s.n)
+		"boss", "rift":
+			return counter(st, ctx, String(s.t)) - int(st.get("base", 0)) >= int(s.n)
+		"bond":
+			return int(ctx.get("bond", 0)) >= int(s.n)
 	return false
+
+
+## 단계 시작 뒤를 세는 단계의 지금 합계(boss = ctx.bosses, rift = st.rifts).
+static func counter(st: Dictionary, ctx: Dictionary, t: String) -> int:
+	return int(ctx.get("bosses", 0)) if t == "boss" else int(st.get("rifts", 0))
+
+
+## 세는 단계에 처음 닿으면 그때 합계를 기준(base)으로 적는다.
+static func _arm_base(st: Dictionary, ctx: Dictionary) -> void:
+	var t := String(step(st).get("t", ""))
+	if (t == "boss" or t == "rift") and not bool(st.get("base_set", false)):
+		st.base = counter(st, ctx, t)
+		st.base_set = true
 
 
 ## 다음 단계로. 장이 끝나면 {"chapter": 장}.
@@ -251,6 +342,7 @@ static func advance(st: Dictionary) -> Dictionary:
 	if ch.is_empty():
 		return {}
 	st.step = int(st.step) + 1
+	st.base_set = false
 	if int(st.step) >= (ch.steps as Array).size():
 		(st.done as Array).append(String(ch.id))
 		st.ch = int(st.ch) + 1
@@ -262,8 +354,10 @@ static func advance(st: Dictionary) -> Dictionary:
 static func check(st: Dictionary, ctx: Dictionary) -> Array:
 	var out: Array = []
 	var guard := 0
+	_arm_base(st, ctx)
 	while not finished(st) and String(step(st).get("t", "")) != "talk" and step_met(st, ctx) and guard < 32:
 		out.append(advance(st))
+		_arm_base(st, ctx)
 		guard += 1
 	return out
 
@@ -294,6 +388,14 @@ static func objective(st: Dictionary, ctx: Dictionary, quest_names: Dictionary =
 				what = "%d차 전직(허도 수련장)" % int(s.tier)
 			"gate":
 				what = "사냥터 관문 대장을 한 번 이기기"
+			"stagekill":
+				what = "%s 처치 %d/%d" % [STAGE_NAMES.get(String(s.stage), String(s.stage)), mini(int((ctx.get("stage_kills", {}) as Dictionary).get(String(s.stage), 0)), int(s.n)), int(s.n)]
+			"boss":
+				what = "보스 처치(%s)" % String(chapter(st).get("stage", ""))
+			"rift":
+				what = "허도 비경을 끝까지 깨기"
+			"bond":
+				what = "스승과 사제 유대 %d/%d" % [mini(int(ctx.get("bond", 0)), int(s.n)), int(s.n)]
 	return "📜 %d부 %d장 %s — %s" % [part(ch), int(ch.no), String(ch.title), what]
 
 
@@ -305,7 +407,7 @@ static func part(ch: Dictionary) -> int:
 static func speaker(who: String, mentor_name: String) -> String:
 	if who == "me":
 		return "나 · 무명"
-	if who == "mentor":
+	if who == "mentor" or who == "mentor+":
 		return "🥋 " + (mentor_name if mentor_name != "" else "스승")
 	var c: Dictionary = CAST.get(who, {})
 	return "%s %s" % [String(c.get("emoji", "")), String(c.get("name", who))]

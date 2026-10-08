@@ -341,6 +341,7 @@ func _on_boss_died(boss_x: float) -> void:
 		StoryGearPickup.spawn_at(_floor_root, Vector3(boss_x, 0, 0.6), picked)
 	StorySaveState.grant_labyrinth_scroll()
 	var frags := StoryLabyrinthState.end_run(true)
+	StorySaveState.scenario["rifts"] = int(StorySaveState.scenario.get("rifts", 0)) + 1   # G-0095 이야기 3부 "비경의 기억" — 완주 한 번
 	Toast.show(self, "🎉 비경 완주! 기억 조각 %d개를 얻었다" % frags, 3.5)
 	await get_tree().create_timer(2.2).timeout
 	_return_to_town()
