@@ -39,6 +39,15 @@ namespace Saga.Story.Player
             root == StoryJobState.NoJob || tier <= 0 ? 0f : Mathf.Min(TintMax, tier * TintPerTier);
 
         private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
+        // U-0058 VRoid 주인공 몸(glTF 재질)은 `baseColorFactor` — 옷 슬롯 이름이 `…_CLOTH`, 피부·얼굴·눈·머리는 `_SKIN`·`_FACE`·`_EYE`·`_HAIR`
+        private static readonly int GltfBaseColorId = Shader.PropertyToID("baseColorFactor");
+
+        private static int ColorIdOf(Material m) => m.HasProperty(BaseColorId) ? BaseColorId : m.HasProperty(GltfBaseColorId) ? GltfBaseColorId : -1;
+
+        /// <summary>물들이지 않는 슬롯 — 피부(Maria "Skin"·VRoid "_SKIN")와 VRoid 얼굴·눈·머리.</summary>
+        private static bool IsNotOutfit(string name) =>
+            name.IndexOf("Skin", System.StringComparison.OrdinalIgnoreCase) >= 0
+            || name.Contains("_FACE") || name.Contains("_EYE") || name.Contains("_HAIR");
 
         private StoryPlayerController _controller;
         private MaterialPropertyBlock _block;
@@ -86,16 +95,17 @@ namespace Saga.Story.Player
                 {
                     var mat = mats[i];
                     if (mat == null) continue;
-                    if (mat.name.IndexOf("Skin", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                    if (IsNotOutfit(mat.name))
                     {
                         SkippedSkinSlots++;
                         continue;
                     }
-                    if (!mat.HasProperty(BaseColorId)) continue;
+                    int colorId = ColorIdOf(mat);
+                    if (colorId < 0) continue;
                     r.GetPropertyBlock(_block, i);
                     if (mix > 0f)
                     {
-                        _block.SetColor(BaseColorId, Color.Lerp(mat.GetColor(BaseColorId), branch, mix));
+                        _block.SetColor(colorId, Color.Lerp(mat.GetColor(colorId), branch, mix));
                         TintedSlots++;
                     }
                     else
@@ -129,10 +139,11 @@ namespace Saga.Story.Player
                 for (int i = 0; i < mats.Count; i++)
                 {
                     var mat = mats[i];
-                    if (mat == null || !mat.HasProperty(BaseColorId)) continue;
-                    if (mat.name.IndexOf("Skin", System.StringComparison.OrdinalIgnoreCase) >= 0) continue;
+                    if (mat == null || IsNotOutfit(mat.name)) continue;
+                    int colorId = ColorIdOf(mat);
+                    if (colorId < 0) continue;
                     r.GetPropertyBlock(_block, i);
-                    return _block.isEmpty ? mat.GetColor(BaseColorId) : _block.GetColor(BaseColorId);
+                    return _block.isEmpty ? mat.GetColor(colorId) : _block.GetColor(colorId);
                 }
             }
             return null;
