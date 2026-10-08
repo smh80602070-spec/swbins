@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-09",
+  "tickets": [
+    "U-0064 features.json tests 칸 바로잡기"
+  ],
+  "how": "진단 실행 없음 — 같은 장면 판의 기존 로그(.utmp/hero_headless2.log, 2026-10-08 23:20 PlaytestHeadless OK, U-0053 과 같은 날) 줄을 옮겨 적음 · 진단 클래스 <summary> 와 항목 이름 대조",
+  "results": [
+    {
+      "id": "un.go.beacon-bond",
+      "playtest": "PlaytestHeadless",
+      "result": "OK",
+      "lines": "[PlaytestHeadless] beacon tower OK - 점등 보상 지급, 목표판 전환(\"봉수대까지 87m\"→\"숨은 보물까지 147m\"), 중복 점등 방지 확인 / [PlaytestHeadless] bond OK - 거리 2.1km→인연 Lv.1(2명), LeveledUp 2회, AtkMultiplier 반영(1.00→1.04), 승수 3→Lv.1 확인 / [PlaytestHeadless] drop recovery OK - 패배 시 15% 드롭·마커 생성·창 안 회수·만료 뒤 재회수 방지 확인",
+      "date": "2026-10-08"
+    },
+    {
+      "id": "un.go.daily-board",
+      "playtest": "PlaytestHeadless",
+      "result": "OK",
+      "lines": "[PlaytestHeadless] daily tasks OK - deterministic pick, stamp/weekly reward, save/load round-trip, v9 migration all verified / [PlaytestHeadless] perk choice OK - 레벨업 카드 표시·선택(Atk 1.00→1.05)·거절(+10 gold)·축 분포 50회 확인 / [PlaytestHeadless] raid boss OK - raid 모드(75s)·저스트 회피(완전 회피+기)·수동 mitigation(절반)·부위 3 파괴 보상+완파 보너스 전부 확인",
+      "date": "2026-10-08"
+    }
+  ],
+  "demoted": [
+    {
+      "id": "un.go.shrines",
+      "from": "D2",
+      "to": "D1",
+      "why": "근거 PlaytestGoArtifacts = 보패(성유물) 진단, 산신당·돌탑·동굴 유물 동작 진단 없음"
+    },
+    {
+      "id": "un.go.hidden-treasure",
+      "from": "D2",
+      "to": "D1",
+      "why": "근거 PlaytestGoTreasure = 보물 상자 17 진단, HiddenTreasure 동작 진단 없음"
+    }
+  ],
+  "tests_fixed": {
+    "un.fs.finish": "PlaytestForestFinish(벽지·장판) → PlaytestForestHeadless",
+    "un.go.falls-roof-cam": "PlaytestGoTraversal(107 이동) → PlaytestGoPeaks",
+    "un.go.common": "PlaytestMobileGraphics → PlaytestHeadless+PlaytestMobileGraphics",
+    "un.go.beacon-bond": "PlaytestGoKnots(8부 매듭) → PlaytestHeadless",
+    "un.go.daily-board": "PlaytestGoDaily → PlaytestHeadless+PlaytestGoDaily"
+  },
+  "left_as_is": "un.go.elements(원소 7) ← PlaytestGoElementalFoe — 상성·부착·화상·젖음·감전을 봐 원소 체계를 덮는다고 보고 그대로 · un.go.story-ch ← PlaytestGoStory 요약은 1~4장이나 실제 줄이 8·9장까지 봄"
+}

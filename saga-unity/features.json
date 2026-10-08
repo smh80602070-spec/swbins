@@ -28,29 +28,25 @@
   "id": "un.go.hidden-treasure",
   "name": "은닉 보물",
   "files": [],
-  "tests": [
-   "PlaytestGoTreasure"
-  ],
-  "level": "D2",
+  "tests": [],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D2: docs/playcheck/d2-u0053-20261008.json PlaytestGoTreasure OK."
+  "note": "D1(U-0064 되돌림): 10-08 D2 근거 PlaytestGoTreasure(보물 상자 17) 는 다른 기능 진단 — 은닉 보물(HiddenTreasure) 동작을 보는 진단이 없다(진단 코드엔 이름이 비킴 목록으로만). 진단을 새로 써야 D2."
  },
  {
   "id": "un.go.shrines",
   "name": "산신당·행운 돌탑·동굴 유물",
   "files": [],
-  "tests": [
-   "PlaytestGoArtifacts"
-  ],
-  "level": "D2",
+  "tests": [],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D2: docs/playcheck/d2-u0053-20261008.json PlaytestGoArtifacts OK."
+  "note": "D1(U-0064 되돌림): 10-08 D2 근거 PlaytestGoArtifacts(보패) 는 다른 기능 진단 — 산신당·행운 돌탑·동굴 유물 동작을 보는 진단이 없다(진단 코드엔 이름이 비킴 목록으로만). 진단을 새로 써야 D2."
  },
  {
   "id": "un.go.gather",
@@ -71,6 +67,7 @@
   "name": "101-2 일과판·승급 3택·75초 토벌",
   "files": [],
   "tests": [
+   "PlaytestHeadless",
    "PlaytestGoDaily"
   ],
   "level": "D2",
@@ -78,21 +75,21 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D2: docs/playcheck/d2-u0053-20261008.json PlaytestGoDaily OK."
+  "note": "D2: docs/playcheck/d2-u0064-20261009.json PlaytestHeadless daily tasks·perk choice·raid boss OK + d2-u0053 PlaytestGoDaily OK."
  },
  {
   "id": "un.go.beacon-bond",
   "name": "101-2 봉수대·인연·패배 비용·회수",
   "files": [],
   "tests": [
-   "PlaytestGoKnots"
+   "PlaytestHeadless"
   ],
   "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D2: docs/playcheck/d2-u0053-20261008.json PlaytestGoKnots OK."
+  "note": "D2: docs/playcheck/d2-u0064-20261009.json PlaytestHeadless beacon tower·bond·drop recovery OK (U-0053 근거 PlaytestGoKnots 는 8부 매듭 진단이라 바로잡음)."
  },
  {
   "id": "un.go.shrine-trial",
@@ -348,7 +345,7 @@
   "name": "109-9 폭포·지붕 카메라",
   "files": [],
   "tests": [
-   "PlaytestGoTraversal"
+   "PlaytestGoPeaks"
   ],
   "level": "D1",
   "verified": null,
@@ -471,6 +468,7 @@
   "name": "공통 66-2 라이팅·67~69 사운드/설정/Localization·목표판/세션카드·101-3 C·F·G",
   "files": [],
   "tests": [
+   "PlaytestHeadless",
    "PlaytestMobileGraphics"
   ],
   "level": "D1",
@@ -938,7 +936,7 @@
   "name": "101-2 번들·채집 손맛·평가·택배 사슬·축제",
   "files": [],
   "tests": [
-   "PlaytestForestFinish"
+   "PlaytestForestHeadless"
   ],
   "level": "D2",
   "verified": null,
