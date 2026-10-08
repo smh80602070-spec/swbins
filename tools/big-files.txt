@@ -1,7 +1,7 @@
 # 1,500줄 넘는 기존 파일(줄 수 이하면 precheck 가 봐줌, 늘면 FAIL). 줄이면 여기 숫자도 줄인다. 생성 2026-10-01
 4946 saga-web/saga-dungeon/js/dungeon.js
 4069 saga-godot/saga_core/data/characters.gd
-3503 saga-web/saga-go/js/world3d.js
+3434 saga-web/saga-go/js/world3d.js
 3281 saga-web/saga-go/js/story.js
 3202 saga-web/saga-dungeon/js/dungeon3d.js
 2800 saga-web/saga-forest/js/village-view.js

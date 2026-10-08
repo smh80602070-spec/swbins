@@ -96,6 +96,38 @@
     return pat;
   }
 
+  /**
+   * 같은 종류 칸끼리 사진 변형이 다르면 경계 쪽 띠에 이웃 칸 사진을 옅게 겹친다(W-0110).
+   * 칸마다 사진(3종)을 통째로 깔아 밝기가 다른 사진이 자로 그은 듯 맞닿았다 — 3D 마을 한가운데 십자 이음매.
+   * 사진은 세계 좌표에 맞춰 깔리므로(`landPattern` 위상) 이웃 사진이 그대로 이어져 들어온다. 띠 여섯 줄,
+   * 칸 폭의 절반까지 알파 0.5 → 0 — 경계에서 양쪽이 반반이 되어 줄이 사라진다. 계절 물감(곱하기 0.3)도 같이 얹는다.
+   * kindAt(gx, gy) = 그 칸 종류(없으면 null). a = 그 칸 진하기
+   */
+  var SEAM_BANDS = 6, SEAM_ZONE = 0.5;
+  function blendVariants(c, kind, gx, gy, x0, y0, k, a, kindAt) {
+    if ((LAND_TEX_VARIANTS[kind] || [null]).length <= 1) { return; }
+    var me = variantFor(kind, gx, gy), SS = global.DG.season, bc = LAND_COLOR[kind] || LAND_COLOR.grass;
+    if (SS) { bc = SS.landColor(kind, bc); }
+    var cx = (gx * GRID - x0) * k, cy = (gy * GRID - y0) * k, cw = GRID * k, i, d;
+    var dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+    for (d = 0; d < 4; d++) {
+      var nx = gx + dirs[d][0], ny = gy + dirs[d][1];
+      if (kindAt(nx, ny) !== kind || variantFor(kind, nx, ny) === me) { continue; }
+      var pat = landPattern(c, kind, nx * GRID, ny * GRID, k);
+      if (!pat) { continue; }
+      for (i = 0; i < SEAM_BANDS; i++) {
+        var t0 = i / SEAM_BANDS * SEAM_ZONE * cw, bw = SEAM_ZONE * cw / SEAM_BANDS, al = a * 0.5 * (1 - (i + 0.5) / SEAM_BANDS);
+        var rx = dirs[d][0] < 0 ? cx + t0 : (dirs[d][0] > 0 ? cx + cw - t0 - bw : cx);
+        var ry = dirs[d][1] < 0 ? cy + t0 : (dirs[d][1] > 0 ? cy + cw - t0 - bw : cy);
+        var rw = dirs[d][0] ? bw : cw, rh = dirs[d][1] ? bw : cw;
+        c.globalAlpha = al; c.fillStyle = pat; c.fillRect(rx, ry, rw, rh);
+        c.globalAlpha = al * 0.30; c.globalCompositeOperation = 'multiply'; c.fillStyle = bc; c.fillRect(rx, ry, rw, rh);
+        c.globalCompositeOperation = 'source-over';
+      }
+    }
+    c.globalAlpha = 1;
+  }
+
   /** 어느 소재가 왔는지 — 지형 텍스처 캐시 키에 넣어, 늦게 온 것도 다음에 반영되게 한다 */
   function landTexReadyKey() {
     var s = '', k, i, urls;
@@ -225,6 +257,13 @@
         }
       }
     }
+    var landKind = function (x, y) { var t = L.at(x, y); return t ? t.kind : null; };
+    for (gy = g0y; gy <= g1y; gy++) {
+      for (gx = g0x; gx <= g1x; gx++) {
+        var atB = L.at(gx, gy);
+        if (atB && L.owns(gx + 1, gy) && L.owns(gx - 1, gy) && L.owns(gx, gy + 1) && L.owns(gx, gy - 1)) { blendVariants(c, atB.kind, gx, gy, x0, y0, k, a0, landKind); }
+      }
+    }
     c.globalAlpha = 1;
 
     var tex = new T.CanvasTexture(cv);
@@ -326,6 +365,13 @@
             }
           }
         }
+      }
+    }
+
+    for (gy = g0y; gy <= g1y; gy++) {
+      for (gx = g0x; gx <= g1x; gx++) {
+        if (FRt && FRt.snowCell(gx, gy)) { continue; }
+        blendVariants(c, W.terrainAt(gx, gy), gx, gy, x0, y0, k, 1, W.terrainAt);
       }
     }
 
