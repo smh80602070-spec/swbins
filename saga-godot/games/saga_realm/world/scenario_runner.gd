@@ -4,6 +4,8 @@ extends Node
 ##     카드 글 한 장 + 고르기 셋(이름 — 효과). 고르면 효과(금·수도 군량/치안/훈련·책사 충성·이웃 우호)를 적용하고 결과 글을 알림으로.
 ##   · 그 카드에 단계가 있고 그 답을 골랐으면(첫 화친 → 화친) 설전 세 문답(RealmSaveState.debate_draw/debate_result)을 이어 띄운다.
 ##   · {책사} = roster 중 지력 으뜸(없으면 군주), {이웃} = 우리 성과 이웃한 세력 성의 군주(없으면 아무 세력 군주).
+##   · G-0092 — 성 차지 단계(관도 결전): 카드를 고르면 열리고, 0.3초마다 성 수·지난 달로 이김(성 하나 더)·짐(기한)을 본다.
+##     재야 등용(recruitFree)은 기존 _reveal_free(가장 귀한 재야)를 roster 로 바로, 문화 문답(quiz)은 quiz.correct 에 더한다.
 ##   · 카드·설전이 끝날 때마다 저장(RealmSaveState.save — 플레이어 노드 필요 없음). 목표판 글은 objective().
 
 const Scenario := preload("res://games/saga_realm/data/scenario.gd")
@@ -11,6 +13,7 @@ const Toast := preload("res://saga_core/ui/toast.gd")
 const TalkBox := preload("res://saga_core/ui/talk_box.gd")
 const RealmCities := preload("res://games/saga_realm/data/realm_cities.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
+const RealmDiplo := preload("res://games/saga_realm/data/realm_diplo.gd")
 
 const CHECK_SEC := 0.3
 
@@ -42,10 +45,23 @@ func tick() -> void:
 	if RealmSaveState.story != st:   # 새 시나리오(start_scenario 가 story 를 비움)·불러오기
 		st = Scenario.normalize(RealmSaveState.story)
 		RealmSaveState.story = st
+	var own_id := String((st.get("stage", {}) as Dictionary).get("id", ""))
+	var own := Scenario.own_status(st, months(), RealmSaveState.cities.size())
+	if own != "":
+		_end_own(own, own_id)
 	if not get_tree().get_nodes_in_group("ui_modal").is_empty():
 		return
 	if Scenario.due(st, months(), RealmSaveState.cities.size()):
 		open_card()
+
+
+## 성 차지 단계가 끝났다(win/lose) — 그 칸 효과·알림·저장.
+func _end_own(res: String, card_id: String) -> void:
+	var sg: Dictionary = Scenario.STAGES.get(card_id, {})
+	var out: Dictionary = sg.get(res, {})
+	apply_fx(out.get("fx", []))
+	Toast.show(get_parent(), "⚔️ %s — %s" % [String(sg.get("title", "")), Scenario.fill(String(out.get("text", "")), names())], 5.0)
+	_save()
 
 
 func months() -> int:
@@ -126,6 +142,12 @@ func apply_fx(fx: Array) -> void:
 				var sid := strategist_id()
 				if sid != "":
 					RealmSaveState.officer_loyal[sid] = clampi(int(RealmSaveState.officer_loyal.get(sid, 50)) + n, 0, 100)
+			"recruitFree":
+				var got := recruit_free(int(f.get("bonus", 0)))
+				if got != "":
+					Toast.show(get_parent(), "👤 재야의 %s 이(가) 곁에 섰다." % _display(got), 4.0)
+			"quiz":
+				RealmSaveState.quiz["correct"] = int(RealmSaveState.quiz.get("correct", 0)) + n
 			"rel":
 				var nb := neighbor_city()
 				var fid := RealmSaveState.force_of(nb) if nb != "" else ""
@@ -133,6 +155,19 @@ func apply_fx(fx: Array) -> void:
 					var d: Dictionary = RealmSaveState.diplomacy.get(fid, {"relation": 40, "truce_months": 0})
 					d.relation = clampi(int(d.get("relation", 40)) + n, 0, 100)
 					RealmSaveState.diplomacy[fid] = d
+
+
+## 재야 중 가장 귀한 이 하나를 바로 등용(수도에 배치, 시작 충성 + bonus). 재야가 없으면 "" 이고 금 +300 으로 갈음.
+func recruit_free(bonus: int) -> String:
+	var got: String = RealmSaveState._reveal_free()
+	if got == "":
+		RealmSaveState.gold += 300
+		return ""
+	RealmSaveState.found.erase(got)
+	RealmSaveState.roster.append(got)
+	RealmSaveState.officer_city[got] = capital()
+	RealmSaveState.officer_loyal[got] = clampi(RealmDiplo.base_loyal(got, RealmSaveState.current_lord_id) + bonus, 0, 100)
+	return got
 
 
 func _save() -> void:
@@ -166,8 +201,14 @@ func _on_card_pick(k: String) -> void:
 	Toast.show(get_parent(), "📖 " + Scenario.fill(String(ch.get("text", "")), nm), 4.0)
 	_save()
 	var stage: Dictionary = r.get("stage", {})
+	var card_id := String(Scenario.CARDS[int(st.next) - 1].id)
 	if String(stage.get("kind", "")) == "debate":
-		_start_debate(String(Scenario.CARDS[int(st.next) - 1].id), stage, nm)
+		_start_debate(card_id, stage, nm)
+	elif String(stage.get("kind", "")) == "own":
+		Scenario.start_own(st, card_id, months(), RealmSaveState.cities.size())
+		Toast.show(get_parent(), "⚔️ %s — %s" % [String(stage.get("title", "")), String(stage.get("intro", ""))], 5.0)
+		_save()
+		_busy = false
 	else:
 		_busy = false
 

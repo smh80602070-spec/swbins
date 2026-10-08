@@ -6,6 +6,7 @@ extends SceneTree
 ## ② 때: 지난 달 계산(194년 1월 = 0, 195년 1월 = 12) · 첫 카드 바로 · 둘째 12달 · 셋째 24달 또는 성 5 · 표 순서대로 하나씩
 ## ③ 고르기: 답 저장·다음 카드 · 첫 화친 "def" 만 설전 단계 · 설전 맞힌 수 2 → win(우호 +15·금 +300), 1 → lose
 ## ④ 엔진 효과(새 판 194 메모리): 금·수도 치안(100 상한)·훈련·군량·책사 충성·이웃 우호 · {책사}·{이웃} 칸이 도감 가명으로 채워짐
+## ②-2 G-0092 2막: 하늘에서 떨어진 사람들(36달·성 8) → 관도 결전(48·10, 성 차지 단계 — 단계 동안 다음 카드 쉼, 성 하나 더 → win·기한 → lose) → 논객의 설전(60·12, 아무 답이나 설전)
 ## ⑤ 엔진·realm_city 컴파일 · 세이브 칸 story 가 start_scenario 에서 비워짐
 ## 끝에 "PROBE scenario_realm OK" 또는 "PROBE scenario_realm FAIL n".
 
@@ -30,7 +31,7 @@ func _initialize() -> void:
 
 	# ① 표
 	var ids: Array = S.CARDS.map(func(c): return String(c.id))
-	check(ids == ["r1_start", "r1_rift_sign", "r1_first_ally"], "카드 셋 id 정본 %s" % [ids])
+	check(ids == ["r1_start", "r1_rift_sign", "r1_first_ally", "r2_fallen", "r2_plains", "r2_debate"], "카드 여섯 id 정본 %s" % [ids])
 	var bad: Array = []
 	for c: Dictionary in S.CARDS:
 		for era in ["past", "now", "future"]:
@@ -48,7 +49,7 @@ func _initialize() -> void:
 				bad.append("%s 실명/사건 %s" % [c.id, word])
 	for sid in S.STAGES:
 		var sg: Dictionary = S.STAGES[sid]
-		if String(sg.kind) != "debate" or not sg.has("win") or not sg.has("lose") or String(sg.get("on", "")) == "":
+		if not (String(sg.kind) in ["debate", "own"]) or not sg.has("win") or not sg.has("lose") or String(sg.get("on", "")) == "":
 			bad.append("단계 %s" % sid)
 	check(bad.is_empty(), "표 규칙 %s" % [bad])
 
@@ -64,14 +65,35 @@ func _initialize() -> void:
 
 	# ③ 고르기·설전
 	var r: Dictionary = S.pick(st, "atk")
-	check((r.stage as Dictionary).is_empty() and S.finished(st), "선전 포고는 설전 없음 · 1막 끝")
+	check((r.stage as Dictionary).is_empty() and String(S.next_card(st).id) == "r2_fallen", "선전 포고는 설전 없음 · 1막 끝 → 2막")
+
+	# ②-2 2막
+	check(not S.due(st, 35, 7) and S.due(st, 36, 3) and S.due(st, 30, 8), "하늘에서 떨어진 사람들 36달 또는 성 8")
+	var rf: Dictionary = S.pick(st, "atk")
+	check((rf.stage as Dictionary).is_empty() and String((rf.choice.fx as Array)[0].t) == "recruitFree", "강서 고르기 = 재야 인재 합류")
+	check(S.due(st, 48, 3) and not S.due(st, 47, 9), "관도 결전 48달 또는 성 10")
+	var rp: Dictionary = S.pick(st, "def")
+	check(String((rp.stage as Dictionary).get("kind", "")) == "own", "관도 결전 → 성 차지 단계(아무 답)")
+	S.start_own(st, "r2_plains", 48, 5)
+	check(not S.due(st, 70, 20), "단계 동안 다음 카드 쉼")
+	check(S.objective(st, 50, 5).contains("2달") == false and S.objective(st, 50, 5).contains("8달 남음"), "단계 목표판 \"%s\"" % S.objective(st, 50, 5))
+	check(S.own_status(st, 50, 5) == "", "성 그대로 · 기한 전 → 아직")
+	check(S.own_status(st, 52, 6) == "win" and (st.stage as Dictionary).is_empty() and String(st.own.r2_plains) == "win", "성 하나 더 → 이김, 단계 닫힘")
+	var lose_st: Dictionary = S.normalize({"next": 5, "stage": {}})
+	S.start_own(lose_st, "r2_plains", 48, 5)
+	check(S.own_status(lose_st, 58, 5) == "lose", "열 달 지나면 짐")
+	check(S.due(st, 60, 3), "논객의 설전 60달")
+	var rd: Dictionary = S.pick(st, "util")
+	check(String((rd.stage as Dictionary).get("kind", "")) == "debate" and S.finished(st), "논객의 설전 → 설전(아무 답) · 2막 끝")
+	var dw: Dictionary = S.debate_outcome(st, "r2_debate", 2)
+	check((dw.fx as Array).any(func(x): return String(x.t) == "quiz" and int(x.n) == 20), "설전 이김 → 문화 문답 +20")
 	var st2: Dictionary = S.normalize({"next": 2, "done": ["r1_start", "r1_rift_sign"], "picks": {}, "debate": {}})
 	var r2: Dictionary = S.pick(st2, "def")
 	check(String((r2.stage as Dictionary).get("kind", "")) == "debate", "화친 → 설전 단계")
 	var win: Dictionary = S.debate_outcome(st2, "r1_first_ally", 2)
 	var lose: Dictionary = S.debate_outcome(S.fresh(), "r1_first_ally", 1)
 	check(String(win.hint).contains("+15") and String(lose.hint).contains("-5") and int((st2.debate as Dictionary).r1_first_ally) == 2, "설전 2 맞힘 win · 1 lose")
-	check(st.picks == {"r1_start": "def", "r1_rift_sign": "util", "r1_first_ally": "atk"} and (st.done as Array).size() == 3, "고른 답 저장 %s" % [st.picks])
+	check(st.picks == {"r1_start": "def", "r1_rift_sign": "util", "r1_first_ally": "atk", "r2_fallen": "atk", "r2_plains": "def", "r2_debate": "util"} and (st.done as Array).size() == 6, "고른 답 저장 %s" % [st.picks])
 
 	# ④ 엔진 효과(메모리)
 	var rs: Node = root.get_node_or_null("RealmSaveState")
@@ -101,6 +123,13 @@ func _initialize() -> void:
 			and int((rs.get("officer_loyal") as Dictionary).get(sid, 0)) == mini(100, loy0 + 3) and rel1 == mini(100, rel0 + 25),
 			"효과 — 금·치안(상한 100)·훈련·군량·충성·우호(%d→%d, 세력 %s)" % [rel0, rel1, fid])
 		check(S.fill("{책사} 와 {이웃}", nm) == "%s 와 %s" % [nm["책사"], nm["이웃"]], "칸 채우기")
+		var ros0: int = (rs.get("roster") as Array).size()
+		var got: String = run.call("recruit_free", 5)
+		check((got != "" and (rs.get("roster") as Array).size() == ros0 + 1 and (rs.get("roster") as Array).has(got) and String((rs.get("officer_city") as Dictionary).get(got, "")) == cap) or got == "",
+			"재야 등용 %s(roster %d→%d)" % [got, ros0, (rs.get("roster") as Array).size()])
+		var q0 := int((rs.get("quiz") as Dictionary).get("correct", 0))
+		run.call("apply_fx", [{"t": "quiz", "n": 20}])
+		check(int((rs.get("quiz") as Dictionary).get("correct", 0)) == q0 + 20, "문화 문답 +20")
 		run.queue_free()
 
 	# ⑤ 컴파일
