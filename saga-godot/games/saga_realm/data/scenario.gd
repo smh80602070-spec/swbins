@@ -1,5 +1,5 @@
 extends RefCounted
-## G-0088 — 사가천하 이야기 표(정본 `scenario/saga-realm.md` "천하와 균열"). 1막 · 군웅 세 카드 + G-0092 2막 · 대전 세 카드.
+## G-0088 — 사가천하 이야기 표(정본 `scenario/saga-realm.md` "천하와 균열"). 1막 · 군웅 세 카드 + G-0092 2막 · 대전 세 카드 + G-0096 3막 · 강 위 세 카드.
 ## 글·고르기·결과는 웹 구현(saga-web/saga-realm/js/data-scenario.js CARDS·STAGES)과 같다. 사가천하의 이야기는 줄로 가는 퀘스트가 아니라
 ## **때가 되면 터지는 사건 카드**다 — 표 순서대로 하나씩, 그 카드의 때(when)가 되면 뜬다.
 ## 엔진은 world/scenario_runner.gd, 진행은 RealmSaveState.story(fresh() 모양). 인물은 칸({책사}·{이웃})으로만 — 도감 가명이 들어간다.
@@ -9,11 +9,13 @@ extends RefCounted
 ##         recruitFree(재야 중 가장 귀한 이 하나를 바로 등용, bonus = 시작 충성 +) · quiz(문화 승리 문답 정답 +n)
 ## STAGES[id] = 그 카드 뒤 단계 — {kind, on: 고른 k 또는 "*"(아무 답), title, intro?, months?, win{text, hint, fx}, lose{…}}
 ##   kind debate — 설전 세 문답, 둘 이상 맞히면 이김 · kind own — months 달 안에 성을 하나 더 편입하면 이김(웹 "목표 성 차지"를 고돗은 성 수로)
+##   kind duel — {맹장}(무력 으뜸) 대 foe 이름, 베기·찌르기·막기 한 수씩(RealmWar.duel_round_result) 승부가 날 때까지(DUEL_MAX 수, 다 비기면 짐)
+##   on 은 k 하나·"*"·k 배열(예 ["atk", "def"] — 3막 일기토는 예물을 고르면 안 열림)
 ##   단계가 열려 있는 동안 다음 카드는 쉰다(웹과 같음).
 ## G-0092 — 고돗엔 시간 틈 사람(강서·도하·명변…)이 인물 표에 없다(정본 트랙 메모 "인물 표를 더한 뒤") — 그 사람을 등용하는 고르기는
 ##   "그 사람이 데려온 재야 인재 합류"(recruitFree)로, 그 사람 충성(loyalId)은 {책사} 충성으로 바꿨다.
 
-const ACT_NAMES := {1: "1막 · 군웅", 2: "2막 · 대전"}
+const ACT_NAMES := {1: "1막 · 군웅", 2: "2막 · 대전", 3: "3막 · 강 위"}
 
 const CARDS := [
 	{"id": "r1_start", "no": 1, "act": 1, "title": "첫 성의 밤", "emoji": "🗺️", "when": {"minTurn": 0},
@@ -64,6 +66,31 @@ const CARDS := [
 			{"k": "def", "label": "서고를 정비한다", "hint": "수도 치안 +8 · 설전", "fx": [{"t": "sec", "n": 8}], "text": "서고가 정돈되니 배우러 오는 이가 늘었다"},
 			{"k": "util", "label": "학자에게 예물을 보낸다", "hint": "금 200 · 책사 충성 +5 · 설전", "cost": 200, "fx": [{"t": "loyal", "n": 5}], "text": "학자가 예물에 감복해 서고에 이름을 올렸다"},
 		]},
+	## G-0096 3막 · 강 위 — 성연·궤도·영점(시간 틈 사람)은 2막처럼 "데려온 재야 인재"로, 성연 충성은 {책사} 충성으로.
+	{"id": "r3_navigator", "no": 7, "act": 3, "title": "항법사가 본 강", "emoji": "🧭", "when": {"minTurn": 72, "orCities": 15},
+		"mix": {"past": "강가 수채", "now": "도하가 기록을 해독", "future": "성연·항법 판"},
+		"text": "항법사 성연이 항법 판을 들고 찾아왔다. \"이 강의 바람이 사흘 뒤에 바뀝니다. 미래 기록에 그렇게 남아 있습니다.\" 도하가 기록을 해독해 보니 정말로 같은 말이 적혀 있었다. 강가 수채화 같은 풍경 위에 항법 판의 빛이 겹친다.",
+		"choices": [
+			{"k": "atk", "label": "성연의 말을 군략에 쓴다", "hint": "금 300 · 성연이 데려온 재야 인재 합류", "cost": 300, "fx": [{"t": "recruitFree", "bonus": 10}], "text": "성연이 항법 판을 펴 강의 바람을 손가락으로 짚고, 강가에 숨어 살던 인재를 데려왔다"},
+			{"k": "def", "label": "기록을 고이 간직한다", "hint": "수도 치안 +5 · 책사 충성 +3", "fx": [{"t": "sec", "n": 5}, {"t": "loyal", "n": 3}], "text": "기록을 서고에 넣어 두고 바람이 바뀌길 기다렸다"},
+			{"k": "util", "label": "궤도에게도 사람을 보낸다", "hint": "금 300 · 궤도가 찾은 재야 인재 합류", "cost": 300, "fx": [{"t": "recruitFree", "bonus": 5}], "text": "궤도가 탐사 장비를 메고 성 문을 두드렸다 — 장비로 찾은 재야 하나를 데려왔다"},
+		]},
+	{"id": "r3_river", "no": 8, "act": 3, "title": "적벽 강 위", "emoji": "🌊", "when": {"minTurn": 84, "orCities": 18},
+		"mix": {"past": "수군·화공", "now": "공석의 구조선", "future": "성연의 바람 예보"},
+		"text": "강 위에서 큰 싸움이 다가온다. 성연이 \"사흘 뒤 바람이 바뀌니 그때 불을 쓰라\" 하고, 공석은 구조선을 끌어와 강가를 지키자 한다. 바람 예보를 믿을지, 수군과 화공으로 정면을 택할지 정해야 한다.",
+		"choices": [
+			{"k": "atk", "label": "바람 예보를 믿고 화공을 쓴다", "hint": "수도 훈련 +10 · 책사 충성 +3 · 결전", "fx": [{"t": "train", "n": 10}, {"t": "loyal", "n": 3}], "text": "바람이 예보대로 바뀌어 불길이 적선을 삼켰다"},
+			{"k": "def", "label": "구조선으로 강가를 지킨다", "hint": "수도 치안 +8 · 결전", "fx": [{"t": "sec", "n": 8}], "text": "구조선이 강가 백성을 실어 나르니 성 안이 든든해졌다"},
+			{"k": "util", "label": "수군을 늘려 정면으로 간다", "hint": "금 300 · 수도 훈련 +6 · 결전", "cost": 300, "fx": [{"t": "train", "n": 6}], "text": "수군을 늘려 정면에서 맞서니 적이 물러갔다"},
+		]},
+	{"id": "r3_duel", "no": 9, "act": 3, "title": "의체 무사의 일기토", "emoji": "🦾", "when": {"minTurn": 96, "orCities": 20},
+		"mix": {"past": "{맹장}", "now": "구경꾼의 휴대폰 불빛", "future": "영점의 의체"},
+		"text": "의체 무사 영점이 성 앞 공터에 서서 \"나보다 강한 장수 밑에만 서겠다\" 한다. 구경꾼들이 휴대폰 불빛을 켜 들고 모여들었다. 영점의 팔이 기계 소리를 낸다. 누가 이 일기토를 받겠는가.",
+		"choices": [
+			{"k": "atk", "label": "{맹장}이 직접 받아 친다", "hint": "수도 훈련 +5 · 일기토가 이어진다", "fx": [{"t": "train", "n": 5}], "text": "{맹장} 이(가) 창을 들고 나서자 함성이 일었다"},
+			{"k": "def", "label": "구경꾼을 물리고 정중히 청한다", "hint": "수도 치안 +5 · 일기토가 이어진다", "fx": [{"t": "sec", "n": 5}], "text": "구경꾼을 물리니 영점이 한 걸음 물러섰다"},
+			{"k": "util", "label": "예물과 술로 마음을 산다", "hint": "금 400 · 영점이 데려온 재야 인재 합류(일기토는 없다)", "cost": 400, "fx": [{"t": "recruitFree", "bonus": 0}], "text": "술잔 앞에서 영점이 기계 팔을 내려놓고, 함께 떠돌던 이를 소개했다"},
+		]},
 ]
 
 const STAGES := {
@@ -75,6 +102,14 @@ const STAGES := {
 		"intro": "결전이 열렸다 — 열 달 안에 성을 하나 더 손에 넣어라.",
 		"win": {"text": "들판의 성을 손에 넣었다 — 강서의 특공대가 야습을 해냈다는 소문이 돈다", "hint": "수도 훈련 +8 · 책사 충성 +5 · 금 +500", "fx": [{"t": "train", "n": 8}, {"t": "loyal", "n": 5}, {"t": "gold", "n": 500}]},
 		"lose": {"text": "열 달이 지나도록 들판을 얻지 못했다 — 대군을 먹인 군량만 줄었다", "hint": "수도 군량 -800", "fx": [{"t": "food", "n": -800}]}},
+	"r3_river": {"kind": "own", "on": "*", "months": 10, "title": "적벽 강 위 · 강가의 성",
+		"intro": "강 위의 결전이 열렸다 — 열 달 안에 성을 하나 더 손에 넣어라.",
+		"win": {"text": "강가의 성을 얻었다 — 성연의 바람 기록이 그날 밤 정확히 들어맞았다", "hint": "책사 충성 +8 · 금 +600 · 수도 치안 +5", "fx": [{"t": "loyal", "n": 8}, {"t": "gold", "n": 600}, {"t": "sec", "n": 5}]},
+		"lose": {"text": "강 위의 싸움을 끝내 못 이겼다 — 성연이 조용히 기록을 접었다", "hint": "책사 충성 -4", "fx": [{"t": "loyal", "n": -4}]}},
+	"r3_duel": {"kind": "duel", "on": ["atk", "def"], "foe": "의체 무사 영점", "title": "의체 무사의 일기토",
+		"intro": "영점이 의체 팔로 창을 세웠다. \"나보다 강한 장수 밑에만 선다.\" {맹장} 이(가) 마당에 나선다 — 세 수 가운데 하나씩, 승부가 날 때까지.",
+		"win": {"text": "{맹장} 이(가) 영점을 꺾었다 — 영점이 창을 거두고 함께 떠돌던 장수를 소개했다", "hint": "재야 인재 합류", "fx": [{"t": "recruitFree", "bonus": 10}]},
+		"lose": {"text": "{맹장} 이(가) 밀렸다 — 영점이 코웃음 치며 {이웃} 에게로 떠났다", "hint": "영점이 이웃 세력으로", "fx": []}},
 	"r2_debate": {"kind": "debate", "on": "*", "title": "논객의 설전 · 재야 학자",
 		"intro": "명변이 이름난 재야 학자를 마주 앉혔다. 문답 세 개 — 두 개 이상 맞히면 학자가 스스로 곁으로 온다.",
 		"win": {"text": "학자가 설전에 무릎을 꿇고 스스로 곁에 섰다 — 서당에 문답 소리가 커졌다", "hint": "재야 학자 합류 · 문화 문답 +20", "fx": [{"t": "recruitFree", "bonus": 5}, {"t": "quiz", "n": 20}]},
@@ -83,10 +118,11 @@ const STAGES := {
 
 const FX_KINDS := ["gold", "food", "sec", "train", "loyal", "rel", "recruitFree", "quiz"]
 const DEBATE_WIN := 2
+const DUEL_MAX := 5   # 일기토 최대 수 — 다 비기면 짐
 
 
 static func fresh() -> Dictionary:
-	return {"next": 0, "done": [], "picks": {}, "debate": {}, "stage": {}, "own": {}}
+	return {"next": 0, "done": [], "picks": {}, "debate": {}, "stage": {}, "own": {}, "duel": {}}
 
 
 static func normalize(st: Variant) -> Dictionary:
@@ -100,6 +136,7 @@ static func normalize(st: Variant) -> Dictionary:
 	out.debate = (out.debate as Dictionary).duplicate() if out.debate is Dictionary else {}
 	out.stage = (out.stage as Dictionary).duplicate() if out.stage is Dictionary else {}
 	out.own = (out.own as Dictionary).duplicate() if out.own is Dictionary else {}
+	out.duel = (out.duel as Dictionary).duplicate() if out.duel is Dictionary else {}
 	return out
 
 
@@ -141,8 +178,17 @@ static func pick(st: Dictionary, k: String) -> Dictionary:
 	(st.done as Array).append(String(c.id))
 	st.next = int(st.next) + 1
 	var stage: Dictionary = STAGES.get(String(c.id), {})
-	var on := String(stage.get("on", ""))
-	return {"choice": ch, "stage": stage if not stage.is_empty() and (on == "*" or on == String(ch.k)) else {}}
+	var on: Variant = stage.get("on", "")
+	var opens := on is Array and (on as Array).has(String(ch.k)) or (not (on is Array) and (String(on) == "*" or String(on) == String(ch.k)))
+	return {"choice": ch, "stage": stage if not stage.is_empty() and opens else {}}
+
+
+## 일기토 결과(이겼나) → win/lose 칸. duel[id] 에 결과.
+static func duel_outcome(st: Dictionary, card_id: String, won: bool) -> Dictionary:
+	if not st.has("duel") or not (st.duel is Dictionary):
+		st.duel = {}
+	(st.duel as Dictionary)[card_id] = "win" if won else "lose"
+	return (STAGES.get(card_id, {}) as Dictionary).get("win" if won else "lose", {})
 
 
 ## 성 차지 단계 열기 — 지금 달·성 수를 적어 둔다.
@@ -176,7 +222,7 @@ static func debate_outcome(st: Dictionary, card_id: String, correct: int) -> Dic
 
 ## {책사}·{이웃} 칸 채우기.
 static func fill(text: String, names: Dictionary) -> String:
-	return text.replace("{책사}", String(names.get("책사", "책사"))).replace("{이웃}", String(names.get("이웃", "이웃 군주")))
+	return text.replace("{책사}", String(names.get("책사", "책사"))).replace("{이웃}", String(names.get("이웃", "이웃 군주"))).replace("{맹장}", String(names.get("맹장", "맹장")))
 
 
 ## 목표판 한 줄. 다 끝났으면 "".

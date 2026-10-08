@@ -6,6 +6,8 @@ extends Node
 ##   · {책사} = roster 중 지력 으뜸(없으면 군주), {이웃} = 우리 성과 이웃한 세력 성의 군주(없으면 아무 세력 군주).
 ##   · G-0092 — 성 차지 단계(관도 결전): 카드를 고르면 열리고, 0.3초마다 성 수·지난 달로 이김(성 하나 더)·짐(기한)을 본다.
 ##     재야 등용(recruitFree)은 기존 _reveal_free(가장 귀한 재야)를 roster 로 바로, 문화 문답(quiz)은 quiz.correct 에 더한다.
+##   · G-0096 — 일기토 단계: {맹장}(roster·군주 중 무력 으뜸) 대 foe, 창 단추 베기·찌르기·막기로 한 수씩(RealmWar.duel_round_result·duel_ai_move),
+##     승부가 날 때까지(Scenario.DUEL_MAX 수, 다 비기면 짐).
 ##   · 카드·설전이 끝날 때마다 저장(RealmSaveState.save — 플레이어 노드 필요 없음). 목표판 글은 objective().
 
 const Scenario := preload("res://games/saga_realm/data/scenario.gd")
@@ -14,6 +16,7 @@ const TalkBox := preload("res://saga_core/ui/talk_box.gd")
 const RealmCities := preload("res://games/saga_realm/data/realm_cities.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
 const RealmDiplo := preload("res://games/saga_realm/data/realm_diplo.gd")
+const RealmWar := preload("res://games/saga_realm/data/realm_war.gd")
 
 const CHECK_SEC := 0.3
 
@@ -23,6 +26,10 @@ var _t := 0.0
 var _debate_qs: Array = []
 var _debate_picks: Array = []
 var _debate_card := ""
+var _duel_card := ""
+var save_enabled := true   # 점검(probe_scenario_realm)이 꺼서 세이브 파일을 안 쓴다
+var _duel_round := 0
+var _duel_rng := RandomNumberGenerator.new()
 
 
 func _ready() -> void:
@@ -104,11 +111,23 @@ func neighbor_city() -> String:
 	return fallback
 
 
+## {맹장} — roster 와 군주 중 무력 으뜸.
+func champion_id() -> String:
+	var best: String = RealmSaveState.current_lord_id
+	var best_v: float = RealmSaveState._effective_stat(best, "might")
+	for id in RealmSaveState.roster:
+		var v: float = RealmSaveState._effective_stat(String(id), "might")
+		if v > best_v:
+			best_v = v
+			best = String(id)
+	return best
+
+
 func names() -> Dictionary:
 	var sid := strategist_id()
 	var lord_id := sid if sid != "" else RealmSaveState.current_lord_id
 	var nb := neighbor_city()
-	return {"책사": _display(lord_id), "이웃": _display(RealmSaveState.lord_of(nb)) if nb != "" else "이웃 군주"}
+	return {"책사": _display(lord_id), "이웃": _display(RealmSaveState.lord_of(nb)) if nb != "" else "이웃 군주", "맹장": _display(champion_id())}
 
 
 static func _display(id: String) -> String:
@@ -172,7 +191,8 @@ func recruit_free(bonus: int) -> String:
 
 func _save() -> void:
 	RealmSaveState.story = st
-	RealmSaveState.save()
+	if save_enabled:
+		RealmSaveState.save()
 
 
 # ---------------------------------------------------------------- 카드 창
@@ -204,6 +224,8 @@ func _on_card_pick(k: String) -> void:
 	var card_id := String(Scenario.CARDS[int(st.next) - 1].id)
 	if String(stage.get("kind", "")) == "debate":
 		_start_debate(card_id, stage, nm)
+	elif String(stage.get("kind", "")) == "duel":
+		_start_duel(card_id, stage, nm)
 	elif String(stage.get("kind", "")) == "own":
 		Scenario.start_own(st, card_id, months(), RealmSaveState.cities.size())
 		Toast.show(get_parent(), "⚔️ %s — %s" % [String(stage.get("title", "")), String(stage.get("intro", ""))], 5.0)
@@ -238,6 +260,48 @@ func _ask(i: int) -> void:
 		func(a: String) -> void:
 			_debate_picks.append(int(a))
 			_ask(i + 1), {"prompt": "", "options": opts})
+
+
+func _start_duel(card_id: String, stage: Dictionary, nm: Dictionary) -> void:
+	_duel_card = card_id
+	_duel_round = 0
+	_duel_rng.randomize()
+	TalkBox.open(get_parent(), "⚔️ " + String(stage.title), [["⚔️ " + String(stage.title), Scenario.fill(String(stage.intro), nm)]], func(_a: String) -> void: _duel_ask(""))
+
+
+func _duel_ask(last: String) -> void:
+	var stage: Dictionary = Scenario.STAGES.get(_duel_card, {})
+	var nm := names()
+	_duel_round += 1
+	var opts: Array = []
+	for mv in RealmWar.DUEL_MOVES:
+		opts.append({"key": String(mv), "label": String(RealmWar.DUEL_MOVE_NAME[mv])})
+	var head := "%s 대 %s" % [String(nm["맹장"]), String(stage.get("foe", "상대"))]
+	var body := (last + "\n") if last != "" else ""
+	body += "%d수째 — 어떤 수를 낼까" % _duel_round
+	TalkBox.open(get_parent(), "⚔️ 일기토 %d수" % _duel_round, [["⚔️ " + head, body]], _duel_pick, {"prompt": "", "options": opts})
+
+
+func _duel_pick(move: String) -> void:
+	var foe_move: String = RealmWar.duel_ai_move(_duel_rng)
+	var res: String = duel_step(move, foe_move)
+	if res == "":
+		_duel_ask("비김 — %s 대 %s" % [String(RealmWar.DUEL_MOVE_NAME.get(move, move)), String(RealmWar.DUEL_MOVE_NAME.get(foe_move, foe_move))])
+
+
+## 한 수 — "win"/"lose"(끝내고 결과 적용) · ""(비김, 다음 수). 점검이 창 없이 부른다.
+func duel_step(move: String, foe_move: String) -> String:
+	var r: String = RealmWar.duel_round_result(move, foe_move)
+	if r == "tie" and _duel_round < Scenario.DUEL_MAX:
+		return ""
+	var won := r == "win"
+	var out := Scenario.duel_outcome(st, _duel_card, won)
+	apply_fx(out.get("fx", []))
+	Toast.show(get_parent(), "⚔️ %s 대 %s — %s" % [String(RealmWar.DUEL_MOVE_NAME.get(move, move)), String(RealmWar.DUEL_MOVE_NAME.get(foe_move, foe_move)),
+		Scenario.fill(String(out.get("text", "")), names())], 5.0)
+	_save()
+	_busy = false
+	return "win" if won else "lose"
 
 
 ## 설전 답(점검이 바로 부른다 — 창 없이).
