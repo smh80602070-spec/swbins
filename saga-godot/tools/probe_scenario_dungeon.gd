@@ -6,6 +6,7 @@ extends SceneTree
 ## ② 흐름 흉내: 새 판 → moru1 → 처치 5(4 로는 안 넘어감) → moru2 → 1층 출구 → moru3(1장 끝·금 300) → flag1 → 보스 1 → flag2(2장 끝) → tomb1 → 5층 → 구출 → tomb2(1막 끝), 끝낸 id 셋·금 합 2600
 ## ②-2 G-0089 2막: tomb2 → fac1 → 월드 보스 1 → fac2 → tide1 → 난입 파도 → tide2 → 7층 출구 → fort1 고르기(seal) → fort2_seal(2막 끝, 금 합 13600·choices.fort)
 ## ②-3 G-0093 3막: fort2 → rg1 → 정예 3(보통 처치로 안 됨) → rg2(장 보상 sigil 1) → sf1 → 부적 1단 → sf2 → bw1 → 부적 2단 → bw2 → pal1 → 부적 3단 → pal2(3막 끝, 금 합 52600)
+## ②-6 G-0106 6막: or1 → 부적 6단 → or2 → fd1 → 7단 → fd2 → bd1 → 8단 → bd2(결말 뒤 끝 — 장 열아홉·금 합 629600)
 ## ②-5 G-0102 5막: hv1 → 정예 6(다섯 머묾) → 부적 5단(4단 머묾) → hv2 → nl1 → 보스 3(둘 머묾) → nl2_seal(2막 봉인, 결말 — 장 열여섯·금 합 249600) · restore 면 nl2_restore
 ## ②-4 G-0097 4막: car1 → 월드 보스 2(하나로 안 됨) → car2 → snow1 → 난입 파도 5(horde_wave) → snow2 → scr1 → 정예 5(넷으로 안 됨) → scr2 → hg1 → 부적 4단(3단 머묾) → hg2(4막 끝, 장 열넷·금 합 129600)
 ## ③ 옛 세이브: 빈 칸 → 1장 처음 · JSON 이 돌려준 실수(1.0) 칸도 그대로 읽힘 ④ 이미 지난 층: 방을 다 비운 세이브는 floor 단계가 바로 넘어감
@@ -34,7 +35,8 @@ func _initialize() -> void:
 	# ① 표
 	var ids: Array = S.CHAPTERS.map(func(c): return String(c.id))
 	check(ids == ["a1_moru", "a1_blackflag", "a1_tomb", "a2_factory", "a2_tideflat", "a2_watchtower", "a3_riftgate", "a3_sunfurnace", "a3_blackwind", "a3_palace",
-		"a4_caravan", "a4_snowfort", "a4_scrap", "a4_hellgate", "a5_heaven", "a5_nameless"], "장 열여섯 id 정본 %s" % [ids])
+		"a4_caravan", "a4_snowfort", "a4_scrap", "a4_hellgate", "a5_heaven", "a5_nameless",
+		"a6_orphan", "a6_ford", "a6_beyond"], "장 열아홉 id 정본 %s" % [ids])
 	var bad: Array = []
 	var known := ["talk", "kill", "boss", "floor", "rescue", "wboss", "horde", "elite", "sigil"]
 	for c: Dictionary in S.CHAPTERS:
@@ -239,7 +241,20 @@ func _initialize() -> void:
 	take.call(S.check(st, rooms))
 	check(S.pending_scene(st) == "nl2_seal", "2막 봉인 → nl2_seal")
 	take.call(S.finish_talk(st, rooms))
-	check(S.finished(st) and (st.done as Array).size() == 16 and int(acc.gold) == 249600 and S.objective(st) == "", "5막 끝(결말) — 장 %d · 금 합 %d" % [(st.done as Array).size(), int(acc.gold)])
+	check((st.done as Array).size() == 16 and int(acc.gold) == 249600 and S.pending_scene(st) == "or1", "5막 끝(결말) — 장 %d · 금 합 %d → 6막 or1" % [(st.done as Array).size(), int(acc.gold)])
+
+	# ②-6 G-0106 6막
+	for pair in [["or1", 6, "or2"], ["fd1", 7, "fd2"], ["bd1", 8, "bd2"]]:
+		take.call(S.finish_talk(st, rooms))   # 들머리
+		check(String(S.step(st).t) == "sigil" and int(S.step(st).n) == int(pair[1]) and S.objective(st).contains("부적 던전 %d단" % int(pair[1])), "%s → 부적 %d단" % [pair[0], pair[1]])
+		st.sigil_best = int(pair[1]) - 1
+		take.call(S.check(st, rooms))
+		check(String(S.step(st).t) == "sigil", "%d단 전엔 머묾" % int(pair[1]))
+		st.sigil_best = int(pair[1])
+		take.call(S.check(st, rooms))
+		check(S.pending_scene(st) == String(pair[2]), "→ %s" % pair[2])
+		take.call(S.finish_talk(st, rooms))
+	check(S.finished(st) and (st.done as Array).size() == 19 and int(acc.gold) == 629600 and S.objective(st) == "", "6막 끝 — 장 %d · 금 합 %d" % [(st.done as Array).size(), int(acc.gold)])
 	check(S.pending_scene(S.normalize({"ch": 15, "step": 2, "done": [], "choices": {"fort": "restore"}})) == "nl2_restore", "2막 돌려줌 → nl2_restore")
 	var r2: Dictionary = S.normalize({"ch": 5, "step": 2, "done": [], "choices": {}})
 	check(S.pending_scene(r2) == "fort2_restore", "답이 없으면 첫 갈래(restore)")
