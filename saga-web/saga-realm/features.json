@@ -464,6 +464,7 @@
   "files": [
    "js/data-force.js",
    "js/rtk.js",
+   "js/milestone.js",
    "js/ui-rtk.js"
   ],
   "tests": [

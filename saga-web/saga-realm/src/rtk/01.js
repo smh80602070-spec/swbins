@@ -120,7 +120,7 @@
     }
     var want = s.rtk.scen || '194';
     if (scenApplied !== want) { FD.use(want, s.rtk.seed); scenApplied = want; }
-    if (s.rtk.started) { migrateNewCities(s.rtk); ensureMilestone(s.rtk); }
+    if (s.rtk.started) { migrateNewCities(s.rtk); if (global.DG.rtk && global.DG.rtk.ensureMilestone) { global.DG.rtk.ensureMilestone(s.rtk); } }
     return s.rtk;
   }
 
@@ -307,7 +307,7 @@
       }
     }
 
-    st.milestone = { idx: 0, at: 0, base: { core: coreCount(st, meId), cities: citiesOf(meId).length } };
+    st.milestone = { idx: 0, at: 0, base: { core: global.DG.rtk.coreCount(st, meId), cities: citiesOf(meId).length } };
     if (rd) { applyRound(st, meId, rd); }
 
     core.log('🏳️ ' + st.year + '년 봄 · ' + sc.name + '(' + sc.hanja + ') — ' +
@@ -1274,7 +1274,7 @@
 
   /** 카드 데이터(§3-B 규격) — `next` 는 다음 달 권고 한 줄 */
   function monthReport(snap) {
-    var st = state(), s = summary(st.me), rec = recommend(), mv = milestoneView();
+    var st = state(), s = summary(st.me), rec = recommend(), mv = global.DG.rtk.milestoneView();
     return {
       year: st.year, month: st.month, turn: st.turn || 0,
       lines: monthLines(snap.head),

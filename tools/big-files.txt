@@ -22,4 +22,3 @@
 1733 saga-web/saga-dungeon/js/asset3d.js
 1640 saga-web/saga-go/js/asset3d.js
 1607 saga-godot/tools/probe_story.gd
-1508 saga-web/saga-realm/js/rtk.js

@@ -1,4 +1,4 @@
-<!-- 생성: tools/status.mjs · 2026-10-08 04:57Z — 손으로 고치지 않는다(덮어쓴다) -->
+<!-- 생성: tools/status.mjs · 2026-10-08 08:12Z — 손으로 고치지 않는다(덮어쓴다) -->
 # saga-web 상태
 
 완성도 = 끝 ÷ 전체(끝 = 사람 몫 아님 D2+ · 사람 몫 human:true 는 D3+) · WIP = D0+D1(10 초과 시 `초과`) · 등급 규칙 SAGA-ARCH §3.1
@@ -27,4 +27,4 @@
 - 2528 — saga-web/saga-go/js/field-combat.js
 - 2461 — saga-web/saga-realm/js/ui-rtk.js
 - 2246 — saga-web/saga-story/js/side.js
-- … 외 12개(`node tools/status.mjs --big`)
+- … 외 11개(`node tools/status.mjs --big`)
