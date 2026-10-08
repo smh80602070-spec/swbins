@@ -38,7 +38,9 @@ try {
   check('go.track 흔적 — 고향 밖에선 둘레에 흔적 표식이 서고, 흔적 위로 가면 저절로 읽혀 읽은 수가 는다', t0.on && t1.marks > 0 && !!t1.near && t2 && t3.read === t0.read0 + 1, JSON.stringify({ t0, t1, t3 }));
 
   /* go.rogue-action — 결투 창 + 실제 키(Space 속공 · D 회피): 기세가 줄고 창이 산다 */
-  await ev(() => { DG.duel.open({ title: '시험 결투', foeHp: 3000, myAtk: 120, myDef: 5000, foeName: '시험', onDone: function () { window.__duelDone = true; } }); }); await sleep(1200);
+  /* 실제 교전과 같게 — 상대는 도감 인물 초상(stage3d), 내 쪽은 동행 선두(party[0]) */
+  await ev(() => { var H = DG.data.heroes || [], sv = DG.core.save; if (!(sv.party && sv.party[0]) && H[0]) { sv.party = [H[0].id]; } var foe = H[5] || H[1];
+    DG.duel.open({ title: '시험 결투', foeHp: 3000, myAtk: 120, myDef: 5000, foeName: foe ? foe.name : '시험', stage3d: foe ? { kind: 'hero', ref: foe } : null, onDone: function () { window.__duelDone = true; } }); }); await sleep(15000);   // 3D 무대의 두 몸(GLB)이 설 때까지
   const hpOf = () => ev(() => { var m = (document.body.innerText || '').match(/기세\s*([\d,]+)/); return m ? +m[1].replace(/,/g, '') : -1; });
   const h0 = await hpOf();
   for (let i = 0; i < 8; i++) { await page.keyboard.press(' '); await sleep(450); }

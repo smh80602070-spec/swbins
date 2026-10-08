@@ -155,7 +155,7 @@
   },
   "ticket": null,
   "since": "2026-09-30",
-  "note": "D2: pw-go-close3.mjs — 결투 창 + 실제 Space 8번·D: 기세 3000→2903, 창 유지(2026-10-08). 눈 shots/qc/saga-go-duel.png △ — 겨루는 둘이 나침반·칼 이모지(그림 몫, D3 아님) · PLAN §3: 미검증",
+  "note": "D2: pw-go-close3.mjs — 결투 창 + 실제 Space 8번·D: 기세 3000→2903, 창 유지(2026-10-08). 눈 shots/qc/saga-go-duel.png △ — 이모지는 장면이 stage3d 없이 연 탓(실제 교전은 3D 무대). 실제처럼 열면 3D 무대 두 몸이 헤드리스 15초 안에 GLB 로 안 바뀌고 초록 도형 대역(느린 조립인지 미확인) — D3 아님 · PLAN §3: 미검증",
   "sheet": {
    "preset": "⚔️ 교전 확인",
    "steps": [
