@@ -2,6 +2,7 @@ extends RefCounted
 ## G-0059 촬영 도우미 — shot_scene.gd 의 static 단계가 부른다. 플레이어 앞(카메라가 보는 -z 쪽) 7m 에 들판 여덟 종을
 ## 한 줄로 세운다(AI 끔 — 카메라 쪽을 본 채 서기 애니만). G-0082 — 기본은 종 GLB 몸(mon_sp_), SAGA_CODE_CREATURES=1 이면 코드 짐승.
 ## line_up_bosses(tree, part) — 보스 열여섯을 넷씩(part 0~3) 더 멀리·넓게.
+## 10-08 — 줄 끝 몸은 카메라가 비스듬히 봐 옆모습으로 찍혔다(몸 앞은 전부 +z) → 저마다 카메라 자리(플레이어 뒤 +z 6m)를 보게 돌려 세운다.
 
 const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
 const KINDS := ["wolf", "thunder_cat", "ice_fox", "rock_bear", "wind_hawk", "grass_snake", "fire_imp", "water_turtle"]
@@ -26,5 +27,7 @@ static func _row(tree: SceneTree, kinds: Array, gap: float, dz: float) -> void:
 		e.respawns = false
 		tree.current_scene.add_child(e)
 		e.set_physics_process(false)
+		var cam := p.global_position + Vector3(0.0, 0.0, 6.0)
+		e.call("_face", cam - e.global_position, 1.0)
 		print("SHOT_MONSTER %s %s" % [k, e.glb_path if e.glb_path != "" else "code"])
 		i += 1

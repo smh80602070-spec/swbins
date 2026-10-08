@@ -2609,7 +2609,7 @@
  },
  {
   "id": "gd.go.monster_body",
-  "name": "들판 적·보스 GLB 몸 — G-0082 종 전용 mon_sp_<종> 24(K-0080) 먼저, 없는 종만 갈래 mon_/boss_(K-0043)·키 맞춤·Run/Attack/Hit/Death, 기본 켜짐(끄기 SAGA_CODE_CREATURES=1) — 촬영 ○16 △8, 앞 방향 넷 등 K 손질 대기",
+  "name": "들판 적·보스 GLB 몸 — G-0082 종 전용 mon_sp_<종> 24(K-0080) 먼저, 없는 종만 갈래 mon_/boss_(K-0043)·키 맞춤·Run/Attack/Hit/Death, 기본 켜짐(끄기 SAGA_CODE_CREATURES=1) — 촬영 ○22 △2(K-0084 손질 뒤, 줄 끝 옆모습은 촬영 각도 탓 → 카메라 보게 세움)",
   "files": [
    "saga_core/world/monster_body.gd",
    "games/saga_go/combat/field_enemy.gd",
@@ -2620,7 +2620,7 @@
   "tests": [
    "monster_body"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0059",
