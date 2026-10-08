@@ -1,5 +1,5 @@
 extends RefCounted
-## G-0086 — 사가마을 이야기 표(정본 `scenario/saga-forest.md` "하늘 금 우체통"). 봄 · 옛 우체통 네 장 + G-0090 여름 · 금으로 온 손님들 네 장 + G-0094 가을 · 앞날의 기록 네 장.
+## G-0086 — 사가마을 이야기 표(정본 `scenario/saga-forest.md` "하늘 금 우체통"). 봄 · 옛 우체통 네 장 + G-0090 여름 · 금으로 온 손님들 네 장 + G-0094 가을 · 앞날의 기록 네 장 + G-0099 겨울 · 이어진 숲 네 장(결말 — 가을 고르기 crack 로 갈림).
 ## 대사·고르기는 웹 구현(saga-web/saga-forest/js/data-scenario.js SCENES)과 같다. 단계는 고돗 사가마을(바이옴 넷·주민 여섯·
 ## 집 가구·박물관, 택배·폐허·행사 놀이 없음)에 맞춰 바꿨다 — 까닭은 티켓 G-0086 "단계 바꿈".
 ## 엔진은 world/scenario_runner.gd, 진행은 ForestSaveState.scenario(fresh() 모양). 인물은 전부 가상(이름 정책). 싸움·실패 없음.
@@ -15,6 +15,8 @@ extends RefCounted
 ##     {"t": "fest", "key": 행사 키, "npc": 주민 id}  그 주민 곁에 가면 기념 놀이를 연다(그날이 아니어도 — 정본 "기념 놀이")
 ##     {"t": "heart", "n": n, "who"?: m}         주민 m 명(없으면 1)이 하트 n 이상
 ##     {"t": "donate", "cat": 이름, "n": n}      사고에 그 갈래를 n 점 이상 기증
+##     {"t": "rounds", "n": n, "why": 글}         이 단계 동안 서로 다른 주민 n 명 곁(4m)에 간다(G-0099 — 편지 전하기·세배 돌기, st.rounds 에 id)
+##   talk 의 "by": 고르기 id — 장면 id 는 scene + "_" + 그 답(없으면 그 고르기의 첫 답, G-0099 대보름 결말)
 ## 장면 = {"lines": [[누가, 말]…], "choice": {id, prompt, options:[{key,label}]}?} — 누가 = "me"(나) 또는 CAST 키.
 
 const CAST := {
@@ -153,6 +155,42 @@ const SCENES := {
 	]},
 }
 
+## G-0099 겨울 — 웹 대사 그대로, dong2 첫 줄만 고침(고돗엔 "살러 온 손님"이 없어 주민 정으로).
+const SCENES_WINTER := {
+	"let1": {"lines": [
+		["keeper", "옛 우체통에 앞날의 답장이 쌓였다오. 고맙다는 편지를 주민마다 전해 주시겠소?"],
+		["dareum", "붓글씨 편지에 택배 상자에 빛 편지까지, 한 상자에 세 시대가 담겼어요! 제가 나눠 실을게요."],
+	]},
+	"let2": {"lines": [
+		["keeper", "주민들이 편지를 읽고 웃었소. 편지꽂이 하나를 마련해 드리리다."],
+		["me", "앞날의 이웃이 이 마을을 기억하고 있다는 편지였습니다."],
+	]},
+	"dong1": {"lines": [
+		["keeper", "동지 팥죽을 쑬 때가 되었소. 팥죽 솥 곁에 주민과 손님이 모이면 잔치가 차오르오."],
+		["rumi", "온열 장치도 가져왔어요! 팥죽이 식지 않게요."],
+	]},
+	"dong2": {"lines": [
+		["keeper", "주민들과 정이 깊어지니 잔치가 찼구려. 이 마을이 참 따뜻해졌소."],
+	]},
+	"ny1": {"lines": [
+		["keeper", "설날이오. 한복 입은 주민마다 세배를 돌아 새해 인사를 나누시오. 복주머니를 드리겠소."],
+		["k7", "새해 기록도 남기겠습니다. 이 마을의 새해 인사가 앞날 기록에 들어가요."],
+	]},
+	"moon1": {"lines": [
+		["keeper", "대보름이오. 달집에 불을 놓으면 하늘 금이 옛 우체통 위로 내려온다는 말이 있소."],
+		["chalna", "마지막 사진을 찍을게요. 달집 불빛이 금에 닿는 순간이요!"],
+		["k7", "기록판이 바뀌고 있습니다… \"사라진 숲\" 글자가 흐려지고 있어요."],
+	]},
+	"moon2_open": {"lines": [
+		["k7", "\"이어진 숲\"! 기록판 글자가 바뀌었습니다. 금이 열려 있어서 여러 시대 손님이 모두 모였고, 별 우체통이 되어 하늘에 걸렸어요."],
+		["keeper", "이제 이 마을은 잊히지 않소. 별 우체통을 마을 명소로 삼읍시다. 그대는 이어진 숲의 이웃이오."],
+	]},
+	"moon2_quiet": {"lines": [
+		["k7", "\"이어진 숲\"! 기록판 글자가 바뀌었습니다. 금이 조용히 내려앉아 별 우체통이 고요한 밤에 걸렸어요."],
+		["keeper", "조용한 밤이 이 마을에 어울리오. 별 우체통은 마을 명소요. 그대는 이어진 숲의 이웃이오."],
+	]},
+}
+
 const CHAPTERS := [
 	{"id": "sp_move", "no": 1, "season": "spring", "title": "이사 오던 날", "stage": "마을 · 접수대",
 		"blurb": "짐을 풀던 밤, 하늘에 금이 가고 택배 기사 달음이 소포와 함께 떨어진다.",
@@ -224,18 +262,43 @@ const CHAPTERS := [
 		"mix": {"past": "동굴 벽화", "now": "탐험가 밧줄", "future": "금 조각 결정"},
 		"steps": [{"t": "talk", "scene": "cave1"}, {"t": "spot", "key": "forest_cairn_ne", "label": "🕳️ 북쪽 동굴 끝", "shape": "cave"}, {"t": "talk", "scene": "cave2"}],
 		"gold": 1400},
+	## G-0099 겨울 — 편지 다섯 배달 = 주민 다섯 곁(rounds), 살러 온 손님 둘 = 주민 셋 하트 3(여름·가을 대응과 같은 결), 설날 세배 = 기념 놀이 + 주민 여섯 곁,
+	## 달집 뒤 우체통 = 봄의 옛 돌사당 곁 "별 우체통" 표지, 결말 대화는 가을 고르기 crack(open/quiet) 로 갈림.
+	{"id": "wi_letters", "no": 13, "season": "winter", "title": "편지가 쌓이는 겨울", "stage": "마을 · 옛 우체통",
+		"blurb": "앞날의 주민들에게서 답장이 온다 — 고맙다는 편지를 주민마다 전한다.",
+		"mix": {"past": "붓글씨 편지", "now": "택배 상자", "future": "빛 편지"},
+		"steps": [{"t": "talk", "scene": "let1"}, {"t": "rounds", "n": 5, "why": "주민에게 편지 전하기"}, {"t": "heart", "n": 5}, {"t": "talk", "scene": "let2"}],
+		"gold": 1500},
+	{"id": "wi_dongji", "no": 14, "season": "winter", "title": "동지 팥죽 나눔", "stage": "마을",
+		"blurb": "팥죽을 쑤어 주민과 나눈다 — 마을 정이 깊어야 잔치가 찬다.",
+		"mix": {"past": "팥죽 솥", "now": "보온 도시락", "future": "루미의 온열 장치"},
+		"steps": [{"t": "talk", "scene": "dong1"}, {"t": "fest", "key": "dongji", "npc": "npc_keeper"}, {"t": "heart", "n": 3, "who": 3}, {"t": "talk", "scene": "dong2"}],
+		"gold": 1600},
+	{"id": "wi_newyear", "no": 15, "season": "winter", "title": "설날 세배 돌기", "stage": "마을 전체",
+		"blurb": "주민 모두에게 세배.",
+		"mix": {"past": "세배·한복", "now": "새해 문자", "future": "K-7의 새해 기록"},
+		"steps": [{"t": "talk", "scene": "ny1"}, {"t": "fest", "key": "seollal", "npc": "npc_keeper"}, {"t": "rounds", "n": 6, "why": "주민 모두에게 세배"}],
+		"gold": 1700},
+	{"id": "wi_moon", "no": 16, "season": "winter", "title": "대보름, 별 우체통", "stage": "달집 · 옛 우체통",
+		"blurb": "달집을 태우는 밤, 하늘 금이 우체통 위로 내려와 별 우체통이 된다. \"사라진 숲\"이 \"이어진 숲\"으로.",
+		"mix": {"past": "달집", "now": "찰나의 마지막 사진", "future": "기록판 글자가 바뀜"},
+		"steps": [{"t": "talk", "scene": "moon1"}, {"t": "fest", "key": "daeborum", "npc": "npc_keeper"},
+			{"t": "spot", "key": "forest_shrine_stone", "label": "✨ 별 우체통(옛 우체통)"}, {"t": "talk", "scene": "moon2", "by": "crack"}],
+		"gold": 3000},
 ]
 
 const BIOME_NAMES := {"meadow": "꽃밭", "dark": "어둑숲", "mush": "버섯숲", "rocky": "바위 지대"}
-const FEST_NAMES := {"samjin": "삼짇날 꽃놀이", "dano": "단오 창포못 낚시", "chilseok": "칠석 별에 소원", "chuseok": "한가위 줄다리기"}
-const FEST_TOASTS := {"samjin": "호연이 꽃 좌판을 펼친다.", "dano": "창포못에 낚싯대가 줄지어 섰다.", "chilseok": "오작교 등 아래로 소원이 하늘 금으로 오른다.", "chuseok": "두 편이 줄을 당기고 달 아래 송편을 나눈다."}
-const SEASON_NAMES := {"spring": "봄", "summer": "여름", "autumn": "가을"}
+const FEST_NAMES := {"samjin": "삼짇날 꽃놀이", "dano": "단오 창포못 낚시", "chilseok": "칠석 별에 소원", "chuseok": "한가위 줄다리기",
+	"dongji": "동지 팥죽 나눔", "seollal": "설날 세배", "daeborum": "대보름 달집 태우기"}
+const FEST_TOASTS := {"samjin": "호연이 꽃 좌판을 펼친다.", "dano": "창포못에 낚싯대가 줄지어 섰다.", "chilseok": "오작교 등 아래로 소원이 하늘 금으로 오른다.", "chuseok": "두 편이 줄을 당기고 달 아래 송편을 나눈다.",
+	"dongji": "팥죽 솥에서 김이 오르고 루미의 온열 장치가 반짝인다.", "seollal": "복주머니를 받고 새해 인사를 돌 차례.", "daeborum": "달집이 타오르고 하늘 금이 우체통 쪽으로 내려온다."}
+const SEASON_NAMES := {"spring": "봄", "summer": "여름", "autumn": "가을", "winter": "겨울"}
 ## 신호 없이 보유 수가 는 만큼 채집으로 세는 갈래(낚시는 채집 신호가 없다).
 const POLL_CATS := ["물고기"]
 
 
 static func fresh() -> Dictionary:
-	return {"ch": 0, "step": 0, "base": 0, "gathered": {}, "done": [], "choices": {}}
+	return {"ch": 0, "step": 0, "base": 0, "gathered": {}, "done": [], "choices": {}, "rounds": []}
 
 
 static func normalize(st: Variant) -> Dictionary:
@@ -247,7 +310,13 @@ static func normalize(st: Variant) -> Dictionary:
 	out.done = (out.done as Array).duplicate()
 	out.gathered = (out.gathered as Dictionary).duplicate() if out.gathered is Dictionary else {}
 	out.choices = (out.choices as Dictionary).duplicate() if out.choices is Dictionary else {}
+	out.rounds = (out.rounds as Array).duplicate() if out.rounds is Array else []
 	return out
+
+
+## 장면 정의(봄~가을 SCENES + 겨울 SCENES_WINTER).
+static func scene_def(id: String) -> Dictionary:
+	return SCENES.get(id, SCENES_WINTER.get(id, {}))
 
 
 static func chapter(st: Dictionary) -> Dictionary:
@@ -270,7 +339,23 @@ static func finished(st: Dictionary) -> bool:
 
 static func pending_scene(st: Dictionary) -> String:
 	var s := step(st)
-	return String(s.get("scene", "")) if String(s.get("t", "")) == "talk" else ""
+	if String(s.get("t", "")) != "talk":
+		return ""
+	if s.has("by"):
+		var ans := String((st.get("choices", {}) as Dictionary).get(String(s.by), ""))
+		if ans == "":
+			ans = first_answer(String(s.by))
+		return "%s_%s" % [String(s.scene), ans]
+	return String(s.scene)
+
+
+## 고르기 id 의 첫 답(답이 없는 옛 세이브·건너뛴 판).
+static func first_answer(choice_id: String) -> String:
+	for k in SCENES:
+		var c: Dictionary = (SCENES[k] as Dictionary).get("choice", {})
+		if String(c.get("id", "")) == choice_id and not (c.options as Array).is_empty():
+			return String(c.options[0].key)
+	return ""
 
 
 static func gathered(st: Dictionary, cat: String) -> int:
@@ -309,7 +394,20 @@ static func step_met(st: Dictionary, ctx: Dictionary) -> bool:
 			return cnt >= int(s.who)
 		"donate":
 			return int((ctx.get("donated", {}) as Dictionary).get(String(s.cat), 0)) >= int(s.n)
+		"rounds":
+			return (st.get("rounds", []) as Array).size() >= int(s.n)
 	return false
+
+
+## rounds 단계면 지금 곁에 있는 주민을 st.rounds 에 더한다(엔진이 ctx.near 에 주민 여섯을 넣는다).
+static func note_rounds(st: Dictionary, ctx: Dictionary) -> void:
+	if String(step(st).get("t", "")) != "rounds":
+		return
+	var got: Array = st.get("rounds", [])
+	for id in ctx.get("near", {}):
+		if bool(ctx.near[id]) and String(id).begins_with("npc_") and not got.has(String(id)):
+			got.append(String(id))
+	st.rounds = got
 
 
 ## 다음 단계로. {"chapter": 장, "fest": 키} 중 해당하는 것(보상·알림은 엔진이).
@@ -329,6 +427,7 @@ static func advance(st: Dictionary) -> Dictionary:
 		out.chapter = ch
 	var nxt := step(st)
 	st.base = gathered(st, String(nxt.cat)) if String(nxt.get("t", "")) == "gather" else 0
+	st.rounds = []
 	return out
 
 
@@ -336,8 +435,10 @@ static func advance(st: Dictionary) -> Dictionary:
 static func check(st: Dictionary, ctx: Dictionary) -> Array:
 	var out: Array = []
 	var guard := 0
+	note_rounds(st, ctx)
 	while not finished(st) and pending_scene(st) == "" and step_met(st, ctx) and guard < 32:
 		out.append(advance(st))
+		note_rounds(st, ctx)
 		guard += 1
 	return out
 
@@ -347,7 +448,7 @@ static func finish_talk(st: Dictionary, ctx: Dictionary, answer := "") -> Array:
 	var scene := pending_scene(st)
 	if scene == "":
 		return []
-	var ch_def: Dictionary = SCENES.get(scene, {}).get("choice", {})
+	var ch_def: Dictionary = scene_def(scene).get("choice", {})
 	if not ch_def.is_empty() and answer != "":
 		(st.choices as Dictionary)[String(ch_def.id)] = answer
 	return [advance(st)] + check(st, ctx)
@@ -378,6 +479,8 @@ static func objective(st: Dictionary) -> String:
 			what = "주민 하트 %d 이상" % int(s.n) if int(s.get("who", 1)) <= 1 else "주민 %d명 하트 %d 이상" % [int(s.who), int(s.n)]
 		"donate":
 			what = "사고에 %s %d점 기증" % [String(s.cat), int(s.n)]
+		"rounds":
+			what = "%s %d/%d" % [String(s.why), mini((st.get("rounds", []) as Array).size(), int(s.n)), int(s.n)]
 	return "📜 %s %d장 %s — %s" % [season(ch), int(ch.no), String(ch.title), what]
 
 

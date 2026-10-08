@@ -7,6 +7,8 @@ extends SceneTree
 ##    → fox2 → 숲지기(기념 꽃놀이 알림) → 하트 1 → fox3 → mus1 → 화석 5 → mus2 고르기 "secret"(봄 끝, 금 합 1800, choices.name)
 ## ②-2 G-0090 여름: sail1 → 물고기 3 → 숲지기(단오) → sail2 → 낚시꾼 곁 → sail3 → photo1 → 버섯숲·바위 지대·어둑숲 → photo2 → fall1 → 나무뿌리 굴 → fall2 → star1 → 숲지기(칠석) → 하트 3 → star2(여름 끝, 금 합 5200)
 ## ②-3 G-0094 가을: rumi1 → 광석 3 → 옛 우체통 곁 → rumi2 → ins1 → 곤충 5 → 곤충 기증 5 → ins2 → har1 → 숲지기(한가위) → 주민 둘 하트 3(한 명으론 안 됨) → har2 → cave1 → 북쪽 돌무더기 굴 → cave2 고르기 open(가을 끝, 금 합 10200)
+## ②-4 G-0099 겨울: let1 → 주민 다섯 곁(같은 이 두 번은 하나) → 하트 5 → let2 → dong1 → 숲지기(동지) → 주민 셋 하트 3(둘로는 안 됨) → dong2 → ny1 → 숲지기(설날) → 주민 여섯 세배(다섯으론 안 됨)
+##    → moon1 → 숲지기(대보름) → 별 우체통 → moon2_open(가을 답) · quiet 답이면 moon2_quiet(겨울 끝, 금 합 18000)
 ## ③ 옛 세이브 빈 칸 → 봄 1장 · JSON 왕복 · 이미 가구가 있으면 place 바로 넘어감
 ## ④ 대화 창: 열면 멈춤·ui_modal · 다음 줄 · 끝 줄 고르기 단추 · pick 하면 닫히고 멈춤 풀림·답 전달 · 고르기 없는 창은 끝 줄 next 로 닫힘
 ## ⑤ 엔진 스크립트 컴파일·forest_village.gd 컴파일
@@ -33,9 +35,10 @@ func _initialize() -> void:
 
 	# ① 표
 	var ids: Array = S.CHAPTERS.map(func(c): return String(c.id))
-	check(ids == ["sp_move", "sp_postbox", "sp_fox", "sp_museum", "su_sailor", "su_photo", "su_waterfall", "su_star", "au_rumi", "au_insect", "au_harvest", "au_cave"], "장 열둘 id 정본 %s" % [ids])
+	check(ids == ["sp_move", "sp_postbox", "sp_fox", "sp_museum", "su_sailor", "su_photo", "su_waterfall", "su_star", "au_rumi", "au_insect", "au_harvest", "au_cave",
+		"wi_letters", "wi_dongji", "wi_newyear", "wi_moon"], "장 열여섯 id 정본 %s" % [ids])
 	var bad: Array = []
-	var known := ["talk", "place", "visit", "biome", "spot", "gather", "fest", "heart", "donate"]
+	var known := ["talk", "place", "visit", "biome", "spot", "gather", "fest", "heart", "donate", "rounds"]
 	for c: Dictionary in S.CHAPTERS:
 		for era in ["past", "now", "future"]:
 			if String((c.mix as Dictionary).get(era, "")) == "":
@@ -46,10 +49,16 @@ func _initialize() -> void:
 			if not known.has(String(s.t)):
 				bad.append("%s 모르는 단계 %s" % [c.id, s.t])
 			if s.t == "talk":
-				var def: Dictionary = S.SCENES.get(String(s.scene), {})
-				if (def.get("lines", []) as Array).is_empty():
-					bad.append("장면 없음 " + String(s.scene))
-				for l: Array in def.get("lines", []):
+				var names: Array = [String(s.scene)]
+				if s.has("by"):   # 고르기 답마다 장면 하나
+					names = ["%s_open" % s.scene, "%s_quiet" % s.scene]
+				var lines: Array = []
+				for nm in names:
+					if (S.scene_def(nm).get("lines", []) as Array).is_empty():
+						bad.append("장면 없음 " + nm)
+					lines += S.scene_def(nm).get("lines", [])
+				var def: Dictionary = S.scene_def(names[0])
+				for l: Array in lines:
 					if String(l[0]) != "me" and not S.CAST.has(String(l[0])):
 						bad.append("%s 모르는 이 %s" % [s.scene, l[0]])
 				var chs: Dictionary = def.get("choice", {})
@@ -205,9 +214,57 @@ func _initialize() -> void:
 	check(String(S.step(st).get("shape", "")) == "cave" and String(S.step(st).key) == "forest_cairn_ne", "북쪽 동굴 굴 표지")
 	ctx.near = {"forest_cairn_ne": true}
 	take.call(S.check(st, ctx))
-	check(S.pending_scene(st) == "cave2" and S.SCENES.cave2.has("choice"), "cave2 고르기")
+	check(S.pending_scene(st) == "cave2" and S.scene_def("cave2").has("choice"), "cave2 고르기")
 	take.call(S.finish_talk(st, ctx, "open"))
-	check(S.finished(st) and int(log.gold) == 10200 and (st.done as Array).size() == 12 and String(st.choices.get("crack", "")) == "open" and S.objective(st) == "", "가을 끝 — 금 합 %d · 고르기 %s" % [int(log.gold), st.choices])
+	check(int(log.gold) == 10200 and (st.done as Array).size() == 12 and String(st.choices.get("crack", "")) == "open" and S.pending_scene(st) == "let1", "가을 끝 — 금 합 %d · 고르기 %s → 겨울 let1" % [int(log.gold), st.choices])
+
+	# ②-4 G-0099 겨울
+	ctx.near = {}
+	take.call(S.finish_talk(st, ctx))   # let1
+	check(String(S.step(st).t) == "rounds" and S.objective(st).contains("주민에게 편지 전하기 0/5"), "편지 단계 \"%s\"" % S.objective(st))
+	ctx.near = {"npc_keeper": true}
+	take.call(S.check(st, ctx))
+	ctx.near = {"npc_keeper": true, "npc_angler": false}
+	take.call(S.check(st, ctx))
+	check(String(S.step(st).t) == "rounds" and (st.rounds as Array).size() == 1, "같은 주민 두 번은 하나")
+	ctx.near = {"npc_angler": true, "npc_merchant": true, "npc_explorer": true, "npc_herbalist": true}
+	take.call(S.check(st, ctx))
+	check(String(S.step(st).t) == "heart" and int(S.step(st).n) == 5, "주민 다섯 → 하트 5")
+	ctx.max_heart = 5
+	take.call(S.check(st, ctx))
+	take.call(S.finish_talk(st, ctx))   # let2
+	check(int(log.gold) == 11700 and S.pending_scene(st) == "dong1", "13장 끝(1500) → dong1")
+	ctx.near = {}
+	take.call(S.finish_talk(st, ctx))   # dong1
+	ctx.near = {"npc_keeper": true}
+	take.call(S.check(st, ctx))
+	check(log.fest.has("dongji") and S.objective(st).contains("주민 3명 하트 3"), "동지 팥죽 → 주민 셋 하트 3")
+	take.call(S.check(st, ctx))
+	check(String(S.step(st).t) == "heart", "둘만 3이면 머묾")
+	ctx.hearts = [3, 4, 3, 0, 0, 0]
+	take.call(S.check(st, ctx))
+	take.call(S.finish_talk(st, ctx))   # dong2
+	take.call(S.finish_talk(st, ctx))   # ny1
+	take.call(S.check(st, ctx))   # 숲지기 곁 — 설날
+	check(log.fest.has("seollal") and String(S.step(st).t) == "rounds" and int(S.step(st).n) == 6 and (st.rounds as Array).size() == 1, "설날 → 세배 여섯(숲지기는 이미 곁)")
+	ctx.near = {"npc_angler": true, "npc_merchant": true, "npc_explorer": true, "npc_herbalist": true}
+	take.call(S.check(st, ctx))
+	check(String(S.step(st).t) == "rounds", "다섯으로는 머묾")
+	ctx.near = {"npc_wanderer": true}
+	take.call(S.check(st, ctx))
+	check(int(log.gold) == 15000 and S.pending_scene(st) == "moon1", "15장 끝(1600+1700) → moon1")
+	ctx.near = {}
+	take.call(S.finish_talk(st, ctx))   # moon1
+	ctx.near = {"npc_keeper": true}
+	take.call(S.check(st, ctx))
+	check(log.fest.has("daeborum") and String(S.step(st).t) == "spot" and String(S.step(st).key) == "forest_shrine_stone", "대보름 → 별 우체통 표지")
+	ctx.near = {"forest_shrine_stone": true}
+	take.call(S.check(st, ctx))
+	check(S.pending_scene(st) == "moon2_open", "가을 답 open → moon2_open")
+	take.call(S.finish_talk(st, ctx))
+	check(S.finished(st) and int(log.gold) == 18000 and (st.done as Array).size() == 16 and S.objective(st) == "", "겨울 끝 — 금 합 %d" % int(log.gold))
+	check(S.pending_scene(S.normalize({"ch": 15, "step": 3, "choices": {"crack": "quiet"}})) == "moon2_quiet", "답 quiet → moon2_quiet")
+	check(S.pending_scene(S.normalize({"ch": 15, "step": 3})) == "moon2_open", "답 없으면 첫 답 open")
 
 	# ③ 옛 세이브
 	check(S.normalize({}) == S.fresh(), "빈 칸 → 봄 1장")

@@ -81,6 +81,9 @@ func context() -> Dictionary:
 			targets[String(s.npc)] = "Villager/Villager_" + String(s.npc)
 		if String(s.get("t", "")) == "spot":
 			targets[String(s.key)] = "Landmarks/Landmark_" + String(s.key)
+		if String(s.get("t", "")) == "rounds":   # G-0099 편지·세배 — 주민 여섯 모두
+			for v: Dictionary in VillagerBuilder.VILLAGERS:
+				targets[String(v.id)] = "Villager/Villager_" + String(v.id)
 		for id in targets:
 			var n := get_parent().get_node_or_null(String(targets[id])) as Node3D
 			if n != null:
@@ -254,7 +257,7 @@ func open_talk() -> void:
 	var scene := Scenario.pending_scene(st)
 	if scene == "" or _layer != null:
 		return
-	var def: Dictionary = Scenario.SCENES.get(scene, {})
+	var def: Dictionary = Scenario.scene_def(scene)
 	var lines: Array = []
 	for l: Array in def.get("lines", []):
 		lines.append([Scenario.speaker(String(l[0])), String(l[1])])
