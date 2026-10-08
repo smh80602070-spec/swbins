@@ -20,6 +20,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
+import { patchSections, stripSections } from './data-section.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const GAMES = ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm'];
@@ -31,8 +32,7 @@ const sb = { window: { DG: {} }, console, Math, Date };
 sb.global = sb.window; sb.self = sb.window;
 vm.createContext(sb);
 /* 도감은 생성 절을 걷어 낸 원래 모습으로 읽는다(다시 돌려도 같은 결과) */
-const stripped = fs.readFileSync(path.join(ROOT, 'saga-web/saga-go/js/data.js'), 'utf8').replace(/\r\n/g, '\n')
-  .replace(/    \/\/ ── 사가천하 장수\(K-0021 명단\) ──[^]*?(?=\n  [\]}];)/g, '');
+const stripped = stripSections(fs.readFileSync(path.join(ROOT, 'saga-web/saga-go/js/data.js'), 'utf8'), MARK);
 vm.runInContext(stripped, sb, { filename: 'data.js' });
 for (const f of ['saga-web/saga-realm/js/data-force.js', 'saga-web/saga-realm/js/data-city.js']) {
   vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), sb, { filename: f });
@@ -111,21 +111,7 @@ const SECTIONS = [
   { open: '  var FACTIONS = {', close: '\n  };', body: head(factionLines.length) + factionLines.join('\n') + '\n' },
 ];
 
-/* 표마다 닫는 줄 앞에 절을 넣는다(이미 절이 있으면 그 절을 갈아 끼운다) — 마지막 절은 끝 쉼표를 뗀다 */
-function patch(src) {
-  const eol = src.includes('\r\n') ? '\r\n' : '\n';
-  let t = src.replace(/\r\n/g, '\n');
-  for (const S of SECTIONS) {
-    const start = t.indexOf(S.open);
-    const end = t.indexOf(S.close, start);
-    if (start < 0 || end < 0) throw new Error('표를 못 찾음: ' + S.open.trim());
-    const body = t.slice(0, end + 1);
-    const at = body.indexOf(MARK, start);
-    const before = (at >= 0 ? body.slice(0, at) : body).replace(/([}'])(\s*)$/, '$1,$2');   // 앞 절 마지막 항목에 쉼표
-    t = before + S.body.replace(/,\n$/, '\n') + t.slice(end + 1);
-  }
-  return t.replace(/\n/g, eol);
-}
+const patch = (src) => patchSections(src, SECTIONS, MARK);   // 절 갈아 끼우기 — 이웃 절(W-0116 등)은 안 건드린다
 
 let bad = 0;
 for (const g of GAMES) {
