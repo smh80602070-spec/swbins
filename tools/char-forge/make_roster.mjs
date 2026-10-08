@@ -26,7 +26,6 @@ for (const f of ['saga-web/saga-realm/js/data.js', 'saga-web/saga-realm/js/data-
   vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), sb, { filename: f });
 }
 const DG = sb.window.DG;
-const codex = DG.data.heroes;
 const F = DG.forceData;
 
 const portraitDir = path.join(ROOT, 'saga-web/saga-realm/assets/portraits/hero');
@@ -42,6 +41,8 @@ const row = (o, src) => ({
   rarity: o.rarity ?? null, trait: o.trait || null, emoji: o.emoji || null,
   gender: null, build: null,
 });
+/* W-0115 뒤 도감(HEROES)이 사가천하 장수 사본 절을 품는다 — 장수 id 는 도감 쪽에서 빼고 아래 realm 으로 한 번만 센다 */
+const codex = DG.data.heroes.filter((h) => !officers.has(h.id));
 const roster = [];
 const seen = new Set();
 for (const h of codex) { roster.push(row(h, 'codex')); seen.add(h.id); }

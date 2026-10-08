@@ -25,11 +25,12 @@
   }
 
   /** 후보 풀 — 등급 3 이하 전부. 12명이면 무작위 셔플 없이 다 보여줘도
-   *  화면이 넘치지 않는다(재뽑기 개념 자체가 필요 없다). */
+   *  화면이 넘치지 않는다(재뽑기 개념 자체가 필요 없다).
+   *  W-0115 — 도감에 붙은 사가천하 장수 사본(`realm: true`, 등급 3 이하 131)은 빼서 예전 26명 그대로 둔다. */
   function candidates() {
     var D = global.DG.data, out = [], i;
     for (i = 0; i < D.heroes.length; i++) {
-      if (D.heroes[i].rarity <= CAP_RARITY) { out.push(D.heroes[i]); }
+      if (D.heroes[i].rarity <= CAP_RARITY && !D.heroes[i].realm) { out.push(D.heroes[i]); }
     }
     return out;
   }

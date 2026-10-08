@@ -58,17 +58,30 @@
      씨앗에 앞말이 붙어 오는 판(사가나락 초상 'hero:'+id · 동행 'ally:'+id)은 앞말마다 따로 표를 짓는다 —
      맨 id 표로만 찾던 때는 사가나락에서 한 번도 안 걸렸다. 겹침은 **머리·옷 두 칸**으로 가른다 — 눈동자만 다른 쌍은
      작은 그림(2D 걷기 시트 96px·먼 3D)에서 한 픽셀도 안 달라 똑같은 사람이었다(사가나락 18쌍, 2026-09-25 2D 사람 시트 md5 로 발견).
-     두 칸은 N² 자리뿐이라 도감이 그보다 많은 판(사가천하 308명)은 예전처럼 세 칸으로 가른다 */
+     두 칸은 N² 자리뿐이라 도감이 그보다 많은 판(사가천하 308명)은 예전처럼 세 칸으로 가른다.
+     W-0115 — 도감 끝에 붙은 사가천하 장수 사본(`realm: true`)은 셈과 두 칸 판정에서 빼고 맨 뒤에 세 칸으로만 가른다 —
+     원래 인물(105·사가나락 135)의 색은 사본이 붙기 전과 한 칸도 안 바뀐다(2D 사람 시트·초상이 그 색으로 구워져 있다) */
   var uniq = {};
   function uniqTable(pre) {
     if (uniq[pre]) { return uniq[pre]; }
     var D = global.DG && global.DG.data;
     if (!D || !D.heroes || !D.heroes.length) { return null; }
-    var seen = {}, out = {}, i, k, p, key, two = D.heroes.length <= N * N;
+    var seen = {}, seen3 = {}, out = {}, i, k, p, key, h, base = 0, two;
+    for (i = 0; i < D.heroes.length; i++) { if (!D.heroes[i].realm) { base++; } }
+    two = base <= N * N;
     for (i = 0; i < D.heroes.length; i++) {
+      h = D.heroes[i];
+      if (h.realm) { continue; }
       k = 0;
-      do { p = rawPick(pre + (k ? D.heroes[i].id + '#' + k : D.heroes[i].id)); key = p.hair + ',' + p.cloth + (two ? '' : ',' + p.eye); k++; } while (seen[key] && k < 400);
-      seen[key] = 1; out[D.heroes[i].id] = p;
+      do { p = rawPick(pre + (k ? h.id + '#' + k : h.id)); key = p.hair + ',' + p.cloth + (two ? '' : ',' + p.eye); k++; } while (seen[key] && k < 400);
+      seen[key] = 1; seen3[p.hair + ',' + p.cloth + ',' + p.eye] = 1; out[h.id] = p;
+    }
+    for (i = 0; i < D.heroes.length; i++) {
+      h = D.heroes[i];
+      if (!h.realm) { continue; }
+      k = 0;
+      do { p = rawPick(pre + (k ? h.id + '#' + k : h.id)); key = p.hair + ',' + p.cloth + ',' + p.eye; k++; } while (seen3[key] && k < 400);
+      seen3[key] = 1; out[h.id] = p;
     }
     uniq[pre] = out;
     return out;

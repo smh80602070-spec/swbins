@@ -36,7 +36,7 @@
        (2026-09-01 실기기에서 실제로 밟힌 자리) */
     if (fresh || !core.save.party.length) {
       var pool = global.DG.data.heroes.filter(function (h) {
-        return h.trait === 'might' && h.rarity <= 3;
+        return h.trait === 'might' && h.rarity <= 3 && !h.realm;   // W-0115 — 첫 몸은 원래 도감에서(사가천하 장수 사본 빼고, 예전 풀 그대로)
       });
       var me = core.pick(pool.length ? pool : global.DG.data.heroes);
       core.save.dex.heroes[me.id] = { count: 1, firstAt: Date.now() };

@@ -7001,12 +7001,12 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         (a.name + '(' + a.hanja + ') · 등급' + a.rarity + ' · ' + a.trait);
     });
 
-    t('절차적 인물 — HEROES(105명 도감)에는 안 섞여 들어간다', function () {
+    t('절차적 인물 — HEROES(299명 도감)에는 안 섞여 들어간다', function () {
       var GC = DG.genchar;
       var before = DG.data.heroes.length;
       GC && GC.hero('jeju', 1, 1);
       GC && GC.hero('hamgyeong', 2, 2);
-      return DG.data.heroes.length === before && before === 105 &&
+      return DG.data.heroes.length === before && before === 299 &&   /* W-0115 105→299 */
         ('도감 인물 수 그대로 ' + before);
     });
 
@@ -7074,13 +7074,13 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         (a.name + '(' + a.hanja + ') · 등급' + a.rarity + ' · ' + a.trait);
     });
 
-    t('절차적 인물(genchar-jp) — HEROES(105명 도감)에는 안 섞여 들어가고, 한국 쪽과 id가 안 겹친다', function () {
+    t('절차적 인물(genchar-jp) — HEROES(299명 도감)에는 안 섞여 들어가고, 한국 쪽과 id가 안 겹친다', function () {
       var GJ = DG.gencharJp, GC = DG.genchar;
       var before = DG.data.heroes.length;
       GJ && GJ.hero('okinawa', 1, 1);
       GJ && GJ.hero('tohoku', 2, 2);
       var h = GJ && GJ.hero('kyushu', 3, 3);
-      return DG.data.heroes.length === before && before === 105 &&
+      return DG.data.heroes.length === before && before === 299 &&   /* W-0115 105→299 */
         (!GC || !GC.find(h.id)) && (!DG.gencharJp || DG.gencharJp.find('kr_gyeonggi_2_1') === null) &&
         ('도감 인물 수 그대로 ' + before + ' · id 교차 없음');
     });
@@ -7153,13 +7153,13 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         (a.name + '(' + a.hanja + ') · 등급' + a.rarity + ' · ' + a.trait);
     });
 
-    t('절차적 인물(genchar-cn) — HEROES(105명 도감)에는 안 섞여 들어가고, 한국·일본 쪽과 id가 안 겹친다', function () {
+    t('절차적 인물(genchar-cn) — HEROES(299명 도감)에는 안 섞여 들어가고, 한국·일본 쪽과 id가 안 겹친다', function () {
       var GC2 = DG.gencharCn, GC = DG.genchar, GJ = DG.gencharJp;
       var before = DG.data.heroes.length;
       GC2 && GC2.hero('jizhou', 1, 1);
       GC2 && GC2.hero('yuzhou', 2, 2);
       var h = GC2 && GC2.hero('yongzhou', 3, 3);
-      return DG.data.heroes.length === before && before === 105 &&
+      return DG.data.heroes.length === before && before === 299 &&   /* W-0115 105→299 */
         (!GC || !GC.find(h.id)) && (!GJ || !GJ.find(h.id)) &&
         (!GC2 || GC2.find('kr_gyeonggi_2_1') === null) && (!GC2 || GC2.find('jp_kanto_2_1') === null) &&
         ('도감 인물 수 그대로 ' + before + ' · id 교차 없음');
@@ -7207,7 +7207,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         (cases.map(function (c) { return c[0] + '→' + c[3]; }).join(' · ') + ' · 시안·서울은 제 나라 · 대표점 36 코드 겹침 0');
     });
 
-    t('절차적 인물(genchar-xy) — 결정적이고, 도감(105명)에 안 섞이며, 다른 세 나라와 id 가 안 겹치고, data.find/bio 로 되살아난다', function () {
+    t('절차적 인물(genchar-xy) — 결정적이고, 도감(299명)에 안 섞이며, 다른 세 나라와 id 가 안 겹치고, data.find/bio 로 되살아난다', function () {
       var GX = DG.gencharXy;
       if (!GX) { return false; }
       var before = DG.data.heroes.length;
@@ -7228,7 +7228,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         }
         return true;
       });
-      return same && cross && back && shape && DG.data.heroes.length === before && before === 105 &&
+      return same && cross && back && shape && DG.data.heroes.length === before && before === 299 &&   /* W-0115 105→299 */
         (a.name + '(' + a.hanja + ', ' + a.faction + ') · ' + p.name + ' · 도감 ' + before + ' 그대로 · id 교차 없음');
     });
 
@@ -8472,15 +8472,17 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
     t('vroid-variant — 도감 인물끼리는 머리·옷 조합이 하나도 안 겹친다(눈동자만 다른 쌍도 0) · 겹치던 사람만 다시 굴렸다', function () {
       /* 2026-09-25 — 해시만 쓰던 때 jp_mitsukuni = eu_frederick, wd_akbar = wd_moctezuma 가 몸·색까지 같았다.
          같은 날 판정을 머리·옷 두 칸으로 올렸다(눈동자만 다르면 작은 그림에서 같은 사람) — 다시 굴린 인물이 5 → 40 안팎 */
-      var V = DG.vroidVariant, heroes = DG.data.heroes, seen = {}, dup = 0, moved = 0;
+      /* W-0115 — 도감 끝 사가천하 장수 사본(realm)은 두 칸 판정에서 빠지고(원래 인물 색 그대로) 세 칸으로만 안 겹친다 */
+      var V = DG.vroidVariant, heroes = DG.data.heroes.filter(function (h) { return !h.realm; }), seen = {}, dup = 0, moved = 0, seen3 = {}, dup3 = 0;
       heroes.forEach(function (h) {
         var p = V.pick(h.id), r = V.rawPick(h.id), k = p.hair + '.' + p.cloth;
         if (seen[k]) { dup++; } seen[k] = 1;
         if (p.hair !== r.hair || p.cloth !== r.cloth || p.eye !== r.eye) { moved++; }
       });
+      DG.data.heroes.forEach(function (h) { var p = V.pick(h.id), k = p.hair + '.' + p.cloth + '.' + p.eye; if (seen3[k]) { dup3++; } seen3[k] = 1; });
       var sameP = function (a, b) { var x = V.pick(a), y = V.pick(b); return x.hair === y.hair && x.cloth === y.cloth && x.eye === y.eye; };
-      return dup === 0 && moved <= heroes.length / 2 && !sameP('jp_mitsukuni', 'eu_frederick') && !sameP('wd_akbar', 'wd_moctezuma') &&
-        ('겹침 0 · 다시 굴린 인물 ' + moved + '명(나머지는 예전 색 그대로)');
+      return dup === 0 && dup3 === 0 && moved <= heroes.length / 2 && !sameP('jp_mitsukuni', 'eu_frederick') && !sameP('wd_akbar', 'wd_moctezuma') &&
+        ('겹침 0(세 칸 ' + DG.data.heroes.length + '명도 0) · 다시 굴린 인물 ' + moved + '명(나머지는 예전 색 그대로)');
     });
 
     t('vroid-variant — 머리·옷·눈 재질만 인물 색으로 바꾸고, 피부·얼굴과 원본 재질은 그대로다', function () {

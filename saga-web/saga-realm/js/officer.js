@@ -30,6 +30,10 @@
 
   function mergeRoster() {
     if (merged) { return data.heroes.length; }
+    /* W-0115 — data.js HEROES 끝에 이 판 장수 194 의 사본 절(`realm: true`)이 붙었다(다섯 판 도감용 — 기질·세력·열전을 도감 꼴로 옮김).
+       이 판은 원본 객체를 써야 하므로(FD.find 가 원본을 주고, 기질 command·세력 배치도 원본 기준) 사본을 걷어 내고 아래에서 원본을 얹는다 —
+       합친 뒤 명부는 예전과 같다. 배열은 참조가 같아야 하니 제자리에서 지운다. */
+    for (var j = data.heroes.length - 1; j >= 0; j--) { if (data.heroes[j].realm) { data.heroes.splice(j, 1); } }
     for (var i = 0; i < FD.OFFICERS.length; i++) {
       var o = FD.OFFICERS[i];
       if (!data.find(o.id)) { data.heroes.push(o); }

@@ -230,8 +230,10 @@ window.requestAnimationFrame = function () { return 0; };
          비유럽 보강(15)으로 70→105. 2026-09-18 — §5.7 시대 퓨전, 이 판
          전용 data-hero-ext.js 가 현대·미래 30을 105에 push 해 135(다섯
          판 공통 data.js 자체는 그대로 105 — §10-Q1). 펫은 안 늘었다. */
-      return D.heroes.length === 135 && D.pets.length === 105 &&
-        ('인물 ' + D.heroes.length + ' · 펫 ' + D.pets.length);
+      /* W-0115 — 도감 끝에 사가천하 장수 사본 194(realm)가 붙어 135 + 194 = 329 */
+      var own = D.heroes.filter(function (h) { return !h.realm; }).length;
+      return own === 135 && D.heroes.length === 329 && D.pets.length === 105 &&
+        ('인물 ' + D.heroes.length + '(이 판 ' + own + ') · 펫 ' + D.pets.length);
     });
 
     /* ── 인물 합류 (지도가 없으니 이게 유일한 통로) ──── */
@@ -1191,8 +1193,10 @@ window.requestAnimationFrame = function () { return 0; };
 
     t('퓨전 — 135 인물 전원 sigOf가 null이 아니다 (§5.7)', function () {
       var HS = DG.heroSkillData;
-      var missing = D.heroes.filter(function (h) { return !HS.sigOf(h.id); });
-      return D.heroes.length === 135 && missing.length === 0 &&
+      /* W-0115 — 사가천하 장수 사본(realm)은 아직 서명 무예가 없다(sigOf null = "파일럿 밖", 후속 티켓) */
+      var mine = D.heroes.filter(function (h) { return !h.realm; });
+      var missing = mine.filter(function (h) { return !HS.sigOf(h.id); });
+      return mine.length === 135 && missing.length === 0 &&
         (D.heroes.length + '명 전원 sigOf 확인, 미확보 ' + missing.length + '명');
     });
 
@@ -6224,12 +6228,17 @@ window.requestAnimationFrame = function () { return 0; };
     });
 
     t('vroid-variant — 앞말 붙은 씨앗(초상 hero:·동행 ally:)도 도감 인물끼리 머리·옷 조합이 안 겹친다(눈동자만 다르면 작은 그림에서 같은 사람)', function () {
-      var V = DG.vroidVariant, heroes = DG.data.heroes, bad = [];
+      /* W-0115 — 사가천하 장수 사본(realm)은 두 칸 판정에서 빠지고 세 칸으로만 안 겹친다(원래 135 의 색 그대로) */
+      var V = DG.vroidVariant, heroes = DG.data.heroes.filter(function (h) { return !h.realm; }), bad = [];
       ['', 'hero:', 'ally:'].forEach(function (pre) {
-        var seen = {};
+        var seen = {}, seen3 = {};
         heroes.forEach(function (h) {
           var p = V.pick(pre + h.id), k = p.hair + '.' + p.cloth;
           if (seen[k]) { bad.push(pre + h.id + '=' + seen[k]); } else { seen[k] = pre + h.id; }
+        });
+        DG.data.heroes.forEach(function (h) {
+          var p = V.pick(pre + h.id), k = p.hair + '.' + p.cloth + '.' + p.eye;
+          if (seen3[k]) { bad.push(pre + h.id + '≡' + seen3[k]); } else { seen3[k] = pre + h.id; }
         });
       });
       return bad.length === 0 && ('인물 ' + heroes.length + '명 × 앞말 셋 · 겹침 0');
@@ -6238,14 +6247,17 @@ window.requestAnimationFrame = function () { return 0; };
     t('2D 사람 시트 — 도감 인물·마을 사람·손님·사람 적마다 제 시트(줄기 안 겹침), 매니페스트에 다 있다', function () {
       var S = DG.sprite, L = S.peopleList(), M = DG.peopleSprites, keys = {}, stems = {}, miss = [];
       String((M && M.keys) || '').split(',').forEach(function (k) { if (k) { keys[k] = 1; } });
-      L.forEach(function (p) { stems[p.stem] = 1; if (!keys[p.stem]) { miss.push(p.stem); } });
+      /* W-0115 — 사가천하 장수 사본(realm) 194 의 시트는 자체툴 굽기 대기 — 빠져도 되고(없으면 3D 몸으로 그린다) 따로 센다 */
+      var later = {}, wait = 0;
+      DG.data.heroes.forEach(function (x) { if (x.realm) { later['h_' + x.id] = 1; } });
+      L.forEach(function (p) { stems[p.stem] = 1; if (!keys[p.stem]) { if (later[p.stem]) { wait++; } else { miss.push(p.stem); } } });
       var h = DG.data.heroes[0], hk = S.personKeyOf(h), nk = S.personKeyOf({ id: 'town_captain', name: '군교' });
       var foe = DG.enemyData.enemies.filter(function (e) { return e.kind === 'human'; })[0], fk = S.personKeyOf(foe);
       var beast = DG.enemyData.enemies.filter(function (e) { return e.kind === 'beast'; })[0];
       return L.length >= DG.data.heroes.length + 8 && Object.keys(stems).length === L.length && miss.length === 0 &&
         hk === 'h_' + h.id && nk === 'n_captain' && !!fk && fk.indexOf('f_') === 0 &&
         S.personKeyOf(beast) === null && S.personKeyOf(null) === null &&
-        ('사람 ' + L.length + '명 · 시트 ' + Object.keys(keys).length + ' · 예: ' + hk + ' / ' + nk + ' / ' + fk);
+        ('사람 ' + L.length + '명 · 시트 ' + Object.keys(keys).length + (wait ? ' · 사가천하 장수 굽기 대기 ' + wait : '') + ' · 예: ' + hk + ' / ' + nk + ' / ' + fk);
     });
 
     t('vroid-variant — 머리·옷·눈 재질만 인물 색으로 바꾸고, 피부·얼굴과 원본 재질은 그대로다', function () {
