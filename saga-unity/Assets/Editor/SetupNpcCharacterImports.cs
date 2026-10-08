@@ -439,6 +439,8 @@ namespace Saga.EditorTools
         {
             var r = BakeVroidHumans(null);
             Debug.Log($"VROID_SWAP_REAL baked={r.baked} failed={string.Join(",", r.failed)}");
+            string lodErr = CharacterMeshLod.ApplyAll(out string lod); // U-0057 다시 구운 몸에 Mesh LOD 를 다시 붙인다
+            Debug.Log("[CharacterMeshLod] " + (lodErr == null ? "OK " + lod : "FAIL " + lodErr));
             EditorApplication.Exit(r.baked > 0 && r.failed.All(f => f.EndsWith("(표에 없음)") || f.EndsWith("(보류)")) ? 0 : 3); // 표에 없는 자리는 이 티켓 밖·보류는 K-0066 대기
         }
 

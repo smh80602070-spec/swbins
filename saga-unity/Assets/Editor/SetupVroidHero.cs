@@ -50,6 +50,7 @@ namespace Saga.EditorTools
         public static void Bake()
         {
             bool ok = BakeHero(out string why);
+            if (ok) { string lodErr = CharacterMeshLod.ApplyAll(out string lod); Debug.Log("[CharacterMeshLod] " + (lodErr == null ? "OK " + lod : "FAIL " + lodErr)); } // U-0057
             Debug.Log(ok ? $"[SetupVroidHero] OK → {PrefabPath}" : $"[SetupVroidHero] FAIL {why}");
             if (Application.isBatchMode) EditorApplication.Exit(ok ? 0 : 1);
         }
