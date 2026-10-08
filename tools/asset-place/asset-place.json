@@ -588,6 +588,36 @@
    ]
   },
   {
+   "id": "portraits-hero",
+   "src": "saga-assets/portraits-hero",
+   "include": [
+    "*.webp"
+   ],
+   "note": "K-0087 도감 인물 초상 299(도감 105 + 사가천하 장수 194, 정사각 _s · 카드 _c). 원본은 사가천하 portraits/hero(K-0021·K-0024 로컬 AI, 출처 _ai_provenance.json). 도감 확장(W-0115) 때 다섯 판 같은 초상",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-go/assets/portraits/hero"
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-dungeon/assets/portraits/hero"
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-forest/assets/portraits/hero"
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-story/assets/portraits/hero"
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-realm/assets/portraits/hero"
+    }
+   ]
+  },
+  {
    "id": "portraits-monster",
    "src": "saga-assets/portraits-monster",
    "include": [
