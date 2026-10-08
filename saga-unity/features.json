@@ -856,11 +856,12 @@
   "tests": [
    "PlaytestForestHeadless"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0060-20261009.json PlaytestForestHeadless OK."
  },
  {
   "id": "un.fs.house",
@@ -869,11 +870,12 @@
   "tests": [
    "PlaytestForestHouseTransition"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0060-20261009.json PlaytestForestHouseTransition OK."
  },
  {
   "id": "un.fs.wallpaper-furniture",
@@ -882,11 +884,12 @@
   "tests": [
    "PlaytestForestFurniture"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0060-20261009.json PlaytestForestFurniture · PlaytestForestFinish OK."
  },
  {
   "id": "un.fs.creatures",
@@ -895,11 +898,12 @@
   "tests": [
    "PlaytestForestCreatures"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0060-20261009.json PlaytestForestCreatures OK."
  },
  {
   "id": "un.fs.fruit-gather",
@@ -908,11 +912,12 @@
   "tests": [
    "PlaytestForestFruitGather"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0060-20261009.json PlaytestForestFruitGather OK."
  },
  {
   "id": "un.fs.push-combat",
@@ -921,11 +926,12 @@
   "tests": [
    "PlaytestForestCreatures"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0060-20261009.json PlaytestForestCreatures OK."
  },
  {
   "id": "un.fs.finish",
@@ -934,11 +940,12 @@
   "tests": [
    "PlaytestForestFinish"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0060-20261009.json PlaytestForestHeadless OK."
  },
  {
   "id": "un.fs.zones",
@@ -947,11 +954,12 @@
   "tests": [
    "PlaytestForestZones"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0060-20261009.json PlaytestForestHeadless → PlaytestForestZones.Run() OK."
  },
  {
   "id": "un.fs.zone-props",
@@ -1010,11 +1018,12 @@
   "tests": [
    "PlaytestCommonSettingsLoc"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0060-20261009.json PlaytestForestHeadless · PlaytestCommonSettingsLoc OK."
  },
  {
   "id": "un.st.slice",

@@ -1,0 +1,77 @@
+{
+  "date": "2026-10-09",
+  "tickets": [
+    "U-0060 사가마을 확인 닫기 ①"
+  ],
+  "how": "장면 판 = PlaytestForestHeadless(save_forest.json 치움·세이브 다섯 백업 후 복원·cmp 같음, .utmp/u0060-PlaytestForestHeadless.log) 줄 · 단독 = bash tools/unity-batch.sh -- Unity.exe -batchmode -nographics -projectPath . -executeMethod Saga.EditorTools.<진단>.Run (6000.3.24f1) — HouseTransition·Furniture·Creatures·FruitGather·Finish · common 단독은 U-0059(같은 날, 그 뒤 saga-unity/Assets 커밋 없음) 로그 · 진단 코드 무변경",
+  "scene": "[PlaytestForestHeadless] OK - 10 frames, no errors (런타임 오류 0)",
+  "runtime_errors": 0,
+  "results": [
+    {
+      "id": "un.fs.slice",
+      "playtest": "PlaytestForestHeadless",
+      "result": "OK",
+      "lines": "[PlaytestForestHeadless] OK - 10 frames, no errors",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.fs.house",
+      "playtest": "PlaytestForestHouseTransition",
+      "result": "OK",
+      "lines": "[PlaytestForestHouseTransition] OK - entered and exited the house, position held across frames, no errors",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.fs.wallpaper-furniture",
+      "playtest": "PlaytestForestFurniture · PlaytestForestFinish",
+      "result": "OK",
+      "lines": "[PlaytestForestFurniture] free-placement OK - two cells filled independently(total=42, count=2), door cell blocked, overwrite blocked / [PlaytestForestFinish] OK - bought+equipped a finish, score bonus applied, save/load round-trip verified, no errors",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.fs.creatures",
+      "playtest": "PlaytestForestCreatures",
+      "result": "OK",
+      "lines": "[PlaytestForestCreatures] models 8/8 baked (of 8) — 애니메이터·살갗·꾸밈·휨 내림 OK / [PlaytestForestCreatures] OK - all eight creatures wandered/fled + pojagoemul hostile aggro/encounter/retreat, no errors",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.fs.fruit-gather",
+      "playtest": "PlaytestForestFruitGather",
+      "result": "OK",
+      "lines": "[PlaytestForestFruitGather] OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.fs.push-combat",
+      "playtest": "PlaytestForestCreatures",
+      "result": "OK",
+      "lines": "[PlaytestForestCreatures] pojagoemul hostile encounter OK - aggro/contact/push-out/retreat all verified",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.fs.finish",
+      "playtest": "PlaytestForestHeadless",
+      "result": "OK",
+      "lines": "[PlaytestForestHeadless] museum bundle OK - 채집 자리 발견+쿨다운, 갈래별 시설 스폰, 네 갈래 완성 시 깃발까지 확인 / [PlaytestForestHeadless] gather feel OK - 채집마다 한 번씩 트리거, 3연속째 리듬 보너스 지급 확인 / [PlaytestForestHeadless] town score OK - 박물관 고정 60점에서 별2 확인, 가구 18개 채워 별5(총점 285) 도달, 조건 문구·보드 오브젝트 확인 / [PlaytestForestHeadless] delivery chain OK - 오배송 거절, 정상 배송, 3배달째 사슬 보너스, 파손, 시간초과, 세이브 round-trip, 씬 오브젝트, 목표판 연동까지 확인 / [PlaytestForestHeadless] festival OK - 세배·꽃놀이·소원 완료 1회·같은 날 중복 거절·소원 배율·목표판 D-day 문구까지 확인",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.fs.zones",
+      "playtest": "PlaytestForestHeadless → PlaytestForestZones.Run()",
+      "result": "OK",
+      "lines": "[PlaytestForestHeadless] zones OK - 표(한자·사연·명소)·존 판정·명단 정직성·명소 자리/모양/휨·명소 자막·존 자막 | 명소 모양 조각 19",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.fs.common",
+      "playtest": "PlaytestForestHeadless · PlaytestCommonSettingsLoc",
+      "result": "OK",
+      "lines": "[PlaytestForestHeadless] settings panel OK - sfx/vibration/ui-scale/graphics-quality/language all verified / [PlaytestForestHeadless] action button localization OK / [PlaytestForestHeadless] goal board / session card OK - 3 lines filled, source auto-found, card shows and auto-closes / [PlaytestCommonSettingsLoc] OK (U-0059 같은 날·같은 코드)",
+      "date": "2026-10-09"
+    }
+  ],
+  "fails": 0,
+  "not_covered": "그림 판정 zone-props·eras·visitors(장면 판 줄은 OK 지만 U-0063 몫), D0 assets 는 이 묶음 밖 · 손맛은 사람/QC",
+  "note": "PlaytestForestZones 는 단독 진단이 아니다 — PlaytestForestHeadless 가 3프레임째 부르는 bool Run()(EditorApplication.Exit 없음). 단독 -executeMethod 로 부르면 씬 없이 Fail 줄만 남기고 Unity 가 끝나지 않는다(10-09 실측). zones 근거는 장면 판 \"zones OK\" 줄."
+}
