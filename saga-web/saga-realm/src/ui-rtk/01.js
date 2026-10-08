@@ -215,9 +215,9 @@
   }
   /** renderMap() 을 통째로 다시 돌리지 않고 보이는 창만 바꾼다(조이스틱을
    *  쥔 동안 매 프레임 불러도 가볍다) */
-  function applyMapViewNow() {
+  function labelZ() { return Math.pow(mapZoom, -0.6).toFixed(3); } function applyMapViewNow() {   // labelZ — W-0106 성 이름 글자가 확대해도 지도만큼 커지지 않게(겹침)
     var svg = els.realm && els.realm.querySelector('.rmap');
-    if (svg) { svg.setAttribute('viewBox', mapViewBox()); }
+    if (svg) { svg.setAttribute('viewBox', mapViewBox()); svg.style.setProperty('--lz', labelZ()); }
   }
   function panMapBy(dx, dy) {
     var w = MAP_VB.w / mapZoom, h = MAP_VB.h / mapZoom;

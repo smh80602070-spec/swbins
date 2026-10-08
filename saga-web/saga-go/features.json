@@ -583,7 +583,7 @@
   "ticket": null,
   "since": "2026-09-30",
   "human": true,
-  "note": "D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094)."
+  "note": "D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094). · 2D 1차(W-0106, 10-08): ○1 △2/3 — 이름표 겹침·휠 방향, 시트 tasks/sheets/web-2d-20261007.md"
  },
  {
   "id": "go.expansion",

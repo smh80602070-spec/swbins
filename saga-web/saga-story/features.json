@@ -27,7 +27,7 @@
    ],
    "expect": "발판 위에서만 뛰어지고 줄을 타며 아래로 내려오는 동작이 자연스럽다"
   },
-  "note": "D2: saga-web/tools/playcheck/pw-st-sheet.mjs(Playwright) 13/13 — results/pw-st-sheet.json. 기계 확인(움직임의 맛·그림은 D3 사람 몫)",
+  "note": "D2: saga-web/tools/playcheck/pw-st-sheet.mjs(Playwright) 13/13 — results/pw-st-sheet.json. 기계 확인(움직임의 맛·그림은 D3 사람 몫) · 2D 1차(W-0106, 10-08): △3/3 — 시작 자리가 ◀ 단추 밑·몸 1/16(충돌 상자 비율), 시트 web-2d-20261007",
   "human": true
  },
  {

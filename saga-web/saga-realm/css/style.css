@@ -510,7 +510,7 @@ small.muted { display: block; margin-top: 7px; font-size: 11px; }
      안 내리면 지도의 북쪽 성들이 상단 유리판 밑으로 들어가 못 눌린다 */
   #realm { top: 176px; bottom: calc(80px + var(--safe-b)); }
   .p-sub { white-space: nowrap; }              /* "수입 388/월" 의 '월' 이 떨어져 나갔다 */
-  .rlab { font-size: 3.2px; }                  /* 성 이름을 손에 든 채 읽을 크기로 — SVG 좌표 단위(지도 폭 ~100칸)라 화면 px 이 아니다 */
+  .rlab { font-size: calc(3.2px * var(--lz, 1)); }   /* 성 이름을 손에 든 채 읽을 크기로 — SVG 좌표 단위(지도 폭 ~100칸)라 화면 px 이 아니다 */
   .rlegend { font-size: 11px; gap: 3px 8px; padding-top: 3px; }
 
   /* 손가락 목표 — 44px 이 손끝의 크기다 */
@@ -1260,8 +1260,9 @@ body.sheet-open #realm3d { right: calc(min(420px, 92vw) + 20px); }
 .rcity .ring { fill: none; stroke: var(--gold, #e8c46a); stroke-width: .45; }
 .rcity:hover circle:first-child { r: 4.2; }
 .rlab {
-  font-size: 2.5px; fill: #dfe6f2; text-anchor: middle;
-  paint-order: stroke; stroke: rgba(8, 10, 14, .85); stroke-width: .7px;
+  /* --lz — 지도 확대 배율^-0.6(W-0106): 확대할수록 글자가 지도만큼 커져 성 그림·이웃 이름을 덮던 것 */
+  font-size: calc(2.5px * var(--lz, 1)); fill: #dfe6f2; text-anchor: middle;
+  paint-order: stroke; stroke: rgba(8, 10, 14, .85); stroke-width: calc(.7px * var(--lz, 1));
   pointer-events: none; font-weight: 600;
 }
 .rdis { font-size: 3px; pointer-events: none; }

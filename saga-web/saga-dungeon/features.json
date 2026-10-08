@@ -754,7 +754,7 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "D2: saga-web/tools/playcheck/pw-dg-close3.mjs 7/7 — results/pw-dg-close3.json(W-0098)."
+  "note": "D2: saga-web/tools/playcheck/pw-dg-close3.mjs 7/7 — results/pw-dg-close3.json(W-0098). · 2D 1차(W-0106, 10-08): ○3/3 — 마을 목표판이 폭을 다 덮던 것 고침(#goals 460px), 에셋 흠 K-0083"
  },
  {
   "id": "dg.dungeon-9",

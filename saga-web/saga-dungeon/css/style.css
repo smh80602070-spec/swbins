@@ -142,6 +142,7 @@ a.icon-btn { display: flex; align-items: center; justify-content: center; text-d
 #goals {
   grid-area: goals; padding: 6px 10px; border-radius: 12px;
   display: flex; flex-direction: column; gap: 3px; cursor: pointer;
+  max-width: 460px; justify-self: start;   /* W-0106 — 넓은 화면에서 목표판이 화면 폭을 다 먹어 마을 위 1/3 을 덮었다 */
 }
 .goal-row {
   display: flex; align-items: center; gap: 7px;

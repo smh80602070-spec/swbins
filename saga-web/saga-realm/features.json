@@ -562,7 +562,7 @@
   "ticket": null,
   "since": "2026-09-30",
   "human": true,
-  "note": "D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085). 2D 지도는 휠 확대가 없다(3D 캔버스만) — 끌기 + ➕ 단추, 폰 390×844 도 ➕."
+  "note": "D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085). 2D 지도는 휠 확대가 없다(3D 캔버스만) — 끌기 + ➕ 단추, 폰 390×844 도 ➕. · 2D 1차(W-0106, 10-08): ○2/2 — 확대 때 성 이름이 겹치던 것 고침(--lz), 성 그림 한 가지는 K-0083"
  },
  {
   "id": "rk.realm3d",

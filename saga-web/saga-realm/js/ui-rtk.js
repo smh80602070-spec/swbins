@@ -215,9 +215,9 @@
   }
   /** renderMap() 을 통째로 다시 돌리지 않고 보이는 창만 바꾼다(조이스틱을
    *  쥔 동안 매 프레임 불러도 가볍다) */
-  function applyMapViewNow() {
+  function labelZ() { return Math.pow(mapZoom, -0.6).toFixed(3); } function applyMapViewNow() {   // labelZ — W-0106 성 이름 글자가 확대해도 지도만큼 커지지 않게(겹침)
     var svg = els.realm && els.realm.querySelector('.rmap');
-    if (svg) { svg.setAttribute('viewBox', mapViewBox()); }
+    if (svg) { svg.setAttribute('viewBox', mapViewBox()); svg.style.setProperty('--lz', labelZ()); }
   }
   function panMapBy(dx, dy) {
     var w = MAP_VB.w / mapZoom, h = MAP_VB.h / mapZoom;
@@ -1322,7 +1322,7 @@
      전체 범위 자체(MAP_VB, 위 "지도 이동·확대" 절)는 여기 -140/-55/380/205 와
      반드시 같아야 한다 — 보이는 창(viewBox)은 mapViewBox() 가 이동·확대
      상태에 따라 그 범위 **안의 일부**를 계산해 낸다(2026-09-10) */
-    s += '<svg class="rmap" viewBox="' + mapViewBox() + '" preserveAspectRatio="xMidYMid meet">' + (global.DG.map2d ? global.DG.map2d.terrain(CD.CITIES) + global.DG.map2d.territory(CD.CITIES, st, forceColor) : '');   // 2D 모드 지형 바닥(W-0023)·세력 영토 면(W-0027)
+    s += '<svg class="rmap" style="--lz:' + labelZ() + '" viewBox="' + mapViewBox() + '" preserveAspectRatio="xMidYMid meet">' + (global.DG.map2d ? global.DG.map2d.terrain(CD.CITIES) + global.DG.map2d.territory(CD.CITIES, st, forceColor) : '');   // 2D 모드 지형 바닥(W-0023)·세력 영토 면(W-0027)
 
     /* 길 — 인접한 성끼리. 같은 편이면 밝게 */
     var drawn = {};
