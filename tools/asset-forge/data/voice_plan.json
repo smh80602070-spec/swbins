@@ -1,0 +1,1977 @@
+{
+ "note": "K-0036 단계 2 — 생성: py tools/asset-forge/voiceplan.py (손으로 고치지 않는다). 파일 = 목소리 10 × (외침·획득·인사) + 해설 안내. 합성은 swbins3 voice-gen(Qwen3 VoiceDesign 견본 → Base 복제).",
+ "model": {
+  "design": "Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign",
+  "clone": "Qwen/Qwen3-TTS-12Hz-1.7B-Base",
+  "license": "Apache-2.0"
+ },
+ "voices": {
+  "M1": {
+   "gender": "M",
+   "desc": "A firm adult Korean man in his thirties, strong chest voice, confident and commanding, warrior tone.",
+   "sample": "앞으로! 내가 길을 연다!"
+  },
+  "M2": {
+   "gender": "M",
+   "desc": "A calm Korean man in his forties, low soft voice, measured and thoughtful, scholar tone.",
+   "sample": "서두르지 말게. 길은 하나가 아니니."
+  },
+  "M3": {
+   "gender": "M",
+   "desc": "An elderly Korean man, deep warm slightly husky voice, slow and dignified, wise elder tone.",
+   "sample": "허허, 오랜만에 반가운 얼굴이로구나."
+  },
+  "M4": {
+   "gender": "M",
+   "desc": "A cheerful young Korean man in his early twenties, bright energetic voice, quick and friendly.",
+   "sample": "좋아, 이번엔 내 차례지!"
+  },
+  "M5": {
+   "gender": "M",
+   "desc": "A rough Korean man, gravelly low voice, blunt and gruff, tough mercenary tone.",
+   "sample": "흥, 덤빌 테면 덤벼 봐."
+  },
+  "F1": {
+   "gender": "F",
+   "desc": "A bright young Korean woman, clear and lively voice, slightly fast, friendly and warm.",
+   "sample": "어서 와요! 기다리고 있었어요."
+  },
+  "F2": {
+   "gender": "F",
+   "desc": "A calm adult Korean woman, soft elegant voice, graceful and composed, noble tone.",
+   "sample": "예를 갖추어 맞이하겠습니다."
+  },
+  "F3": {
+   "gender": "F",
+   "desc": "A strong Korean woman in her thirties, clear firm voice, brave and determined, warrior tone.",
+   "sample": "물러서지 마! 여기서 막는다!"
+  },
+  "F4": {
+   "gender": "F",
+   "desc": "A gentle elderly Korean woman, warm kind voice, slow and caring, grandmother tone.",
+   "sample": "아이고, 먼 길 오느라 고생했구나."
+  },
+  "F5": {
+   "gender": "F",
+   "desc": "A playful young Korean woman, light teasing voice, quick and witty, mischievous tone.",
+   "sample": "어머, 벌써 지친 거야?"
+  },
+  "NA": {
+   "gender": "-",
+   "desc": "A neutral clear Korean announcer voice, calm and even, friendly system guide tone.",
+   "sample": "저장이 완료되었습니다."
+  }
+ },
+ "lines": [
+  {
+   "id": "shout_01",
+   "kind": "shout",
+   "text": "간다!"
+  },
+  {
+   "id": "shout_02",
+   "kind": "shout",
+   "text": "받아라!"
+  },
+  {
+   "id": "shout_03",
+   "kind": "shout",
+   "text": "이걸로 끝이다!"
+  },
+  {
+   "id": "shout_04",
+   "kind": "shout",
+   "text": "물러서!"
+  },
+  {
+   "id": "shout_05",
+   "kind": "shout",
+   "text": "조심해!"
+  },
+  {
+   "id": "shout_06",
+   "kind": "shout",
+   "text": "지금이야!"
+  },
+  {
+   "id": "shout_07",
+   "kind": "shout",
+   "text": "막아라!"
+  },
+  {
+   "id": "shout_08",
+   "kind": "shout",
+   "text": "한 번 더!"
+  },
+  {
+   "id": "shout_09",
+   "kind": "shout",
+   "text": "놓치지 마!"
+  },
+  {
+   "id": "shout_10",
+   "kind": "shout",
+   "text": "뒤를 맡겨!"
+  },
+  {
+   "id": "shout_11",
+   "kind": "shout",
+   "text": "좋아, 잡았다!"
+  },
+  {
+   "id": "shout_12",
+   "kind": "shout",
+   "text": "어림없다!"
+  },
+  {
+   "id": "shout_13",
+   "kind": "shout",
+   "text": "비켜라!"
+  },
+  {
+   "id": "shout_14",
+   "kind": "shout",
+   "text": "모두 힘을 모아!"
+  },
+  {
+   "id": "shout_15",
+   "kind": "shout",
+   "text": "여기서 끝내자!"
+  },
+  {
+   "id": "shout_16",
+   "kind": "shout",
+   "text": "크윽…!"
+  },
+  {
+   "id": "shout_17",
+   "kind": "shout",
+   "text": "아직이다!"
+  },
+  {
+   "id": "shout_18",
+   "kind": "shout",
+   "text": "도와줘!"
+  },
+  {
+   "id": "shout_19",
+   "kind": "shout",
+   "text": "후퇴한다!"
+  },
+  {
+   "id": "shout_20",
+   "kind": "shout",
+   "text": "이겼다!"
+  },
+  {
+   "id": "pickup_01",
+   "kind": "pickup",
+   "text": "좋은 걸 찾았네."
+  },
+  {
+   "id": "pickup_02",
+   "kind": "pickup",
+   "text": "이건 쓸 만하겠어."
+  },
+  {
+   "id": "pickup_03",
+   "kind": "pickup",
+   "text": "챙겨 두자."
+  },
+  {
+   "id": "pickup_04",
+   "kind": "pickup",
+   "text": "오, 반짝이는데?"
+  },
+  {
+   "id": "pickup_05",
+   "kind": "pickup",
+   "text": "운이 좋군."
+  },
+  {
+   "id": "pickup_06",
+   "kind": "pickup",
+   "text": "이거 귀한 거야."
+  },
+  {
+   "id": "pickup_07",
+   "kind": "pickup",
+   "text": "주머니가 무거워졌어."
+  },
+  {
+   "id": "pickup_08",
+   "kind": "pickup",
+   "text": "하나 더!"
+  },
+  {
+   "id": "pickup_09",
+   "kind": "pickup",
+   "text": "이 정도면 넉넉해."
+  },
+  {
+   "id": "pickup_10",
+   "kind": "pickup",
+   "text": "나중에 쓰자."
+  },
+  {
+   "id": "pickup_11",
+   "kind": "pickup",
+   "text": "꽤 값나가겠는걸."
+  },
+  {
+   "id": "pickup_12",
+   "kind": "pickup",
+   "text": "새 장비다!"
+  },
+  {
+   "id": "pickup_13",
+   "kind": "pickup",
+   "text": "이건 처음 보는데."
+  },
+  {
+   "id": "pickup_14",
+   "kind": "pickup",
+   "text": "손에 잘 맞아."
+  },
+  {
+   "id": "pickup_15",
+   "kind": "pickup",
+   "text": "고마워, 잘 쓸게."
+  },
+  {
+   "id": "pickup_16",
+   "kind": "pickup",
+   "text": "보물이다!"
+  },
+  {
+   "id": "pickup_17",
+   "kind": "pickup",
+   "text": "이걸 찾고 있었어."
+  },
+  {
+   "id": "pickup_18",
+   "kind": "pickup",
+   "text": "가방이 꽉 찼네."
+  },
+  {
+   "id": "pickup_19",
+   "kind": "pickup",
+   "text": "버리긴 아깝다."
+  },
+  {
+   "id": "pickup_20",
+   "kind": "pickup",
+   "text": "좋아, 모았다."
+  },
+  {
+   "id": "greet_01",
+   "kind": "greet",
+   "text": "안녕하세요."
+  },
+  {
+   "id": "greet_02",
+   "kind": "greet",
+   "text": "어서 오세요."
+  },
+  {
+   "id": "greet_03",
+   "kind": "greet",
+   "text": "또 만났네요."
+  },
+  {
+   "id": "greet_04",
+   "kind": "greet",
+   "text": "무슨 일이에요?"
+  },
+  {
+   "id": "greet_05",
+   "kind": "greet",
+   "text": "좋은 아침이에요."
+  },
+  {
+   "id": "greet_06",
+   "kind": "greet",
+   "text": "오늘도 수고 많아요."
+  },
+  {
+   "id": "greet_07",
+   "kind": "greet",
+   "text": "잘 지냈어요?"
+  },
+  {
+   "id": "greet_08",
+   "kind": "greet",
+   "text": "반가워요."
+  },
+  {
+   "id": "greet_09",
+   "kind": "greet",
+   "text": "조심히 다녀와요."
+  },
+  {
+   "id": "greet_10",
+   "kind": "greet",
+   "text": "필요한 게 있으면 말해요."
+  },
+  {
+   "id": "greet_11",
+   "kind": "greet",
+   "text": "다음에 또 봐요."
+  },
+  {
+   "id": "greet_12",
+   "kind": "greet",
+   "text": "오늘 날씨 좋네요."
+  },
+  {
+   "id": "greet_13",
+   "kind": "greet",
+   "text": "바쁘신가 봐요."
+  },
+  {
+   "id": "greet_14",
+   "kind": "greet",
+   "text": "잠깐 쉬었다 가요."
+  },
+  {
+   "id": "greet_15",
+   "kind": "greet",
+   "text": "고마워요."
+  },
+  {
+   "id": "greet_16",
+   "kind": "greet",
+   "text": "무사히 돌아왔군요."
+  },
+  {
+   "id": "greet_17",
+   "kind": "greet",
+   "text": "소문 들었어요."
+  },
+  {
+   "id": "greet_18",
+   "kind": "greet",
+   "text": "부탁 하나 해도 될까요?"
+  },
+  {
+   "id": "greet_19",
+   "kind": "greet",
+   "text": "좋은 하루 보내요."
+  },
+  {
+   "id": "greet_20",
+   "kind": "greet",
+   "text": "늘 응원할게요."
+  },
+  {
+   "id": "system_01",
+   "kind": "system",
+   "text": "저장이 완료되었습니다."
+  },
+  {
+   "id": "system_02",
+   "kind": "system",
+   "text": "새 지역을 발견했습니다."
+  },
+  {
+   "id": "system_03",
+   "kind": "system",
+   "text": "배낭이 가득 찼습니다."
+  },
+  {
+   "id": "system_04",
+   "kind": "system",
+   "text": "일일 의뢰가 갱신되었습니다."
+  },
+  {
+   "id": "system_05",
+   "kind": "system",
+   "text": "연결이 끊어졌습니다. 다시 시도해 주세요."
+  },
+  {
+   "id": "system_06",
+   "kind": "system",
+   "text": "레벨이 올랐습니다."
+  },
+  {
+   "id": "system_07",
+   "kind": "system",
+   "text": "새 동료가 합류했습니다."
+  },
+  {
+   "id": "system_08",
+   "kind": "system",
+   "text": "의뢰를 완료했습니다."
+  },
+  {
+   "id": "system_09",
+   "kind": "system",
+   "text": "새 장비를 얻었습니다."
+  },
+  {
+   "id": "system_10",
+   "kind": "system",
+   "text": "체력이 부족합니다."
+  },
+  {
+   "id": "system_11",
+   "kind": "system",
+   "text": "보스가 나타났습니다."
+  },
+  {
+   "id": "system_12",
+   "kind": "system",
+   "text": "전투에서 승리했습니다."
+  },
+  {
+   "id": "system_13",
+   "kind": "system",
+   "text": "전투에서 패배했습니다."
+  },
+  {
+   "id": "system_14",
+   "kind": "system",
+   "text": "불러오기가 완료되었습니다."
+  },
+  {
+   "id": "system_15",
+   "kind": "system",
+   "text": "설정이 바뀌었습니다."
+  },
+  {
+   "id": "system_16",
+   "kind": "system",
+   "text": "새 기술을 배웠습니다."
+  },
+  {
+   "id": "system_17",
+   "kind": "system",
+   "text": "시간이 얼마 남지 않았습니다."
+  },
+  {
+   "id": "system_18",
+   "kind": "system",
+   "text": "문이 열렸습니다."
+  },
+  {
+   "id": "system_19",
+   "kind": "system",
+   "text": "보상을 받았습니다."
+  },
+  {
+   "id": "system_20",
+   "kind": "system",
+   "text": "오늘의 접속 보상이 도착했습니다."
+  }
+ ],
+ "files": 620,
+ "voice_count": {
+  "F1": 23,
+  "F2": 18,
+  "F3": 20,
+  "F4": 12,
+  "F5": 23,
+  "M1": 54,
+  "M2": 41,
+  "M3": 31,
+  "M4": 34,
+  "M5": 43
+ },
+ "assign": {
+  "sg_guanyu": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_zhangfei": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_zhaoyun": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_zhugeliang": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "robe"
+  },
+  "sg_liubei": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "royal"
+  },
+  "sg_machao": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_huangzhong": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_caocao": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "royal"
+  },
+  "sg_simayi": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "robe"
+  },
+  "sg_xiahoudun": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_zhangliao": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_xunyu": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "robe"
+  },
+  "sg_sunquan": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "royal"
+  },
+  "sg_zhouyu": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "robe"
+  },
+  "sg_luxun": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "robe"
+  },
+  "sg_taishici": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_ganning": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_lubu": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_diaochan": {
+   "voice": "F2",
+   "gender": "F",
+   "attire": "court"
+  },
+  "sg_pangtong": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "robe"
+  },
+  "sg_huatuo": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "robe"
+  },
+  "sg_menghuo": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "tribal"
+  },
+  "kr_yisunsin": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "naval"
+  },
+  "kr_euljimundeok": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "kr_ganggamchan": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "kr_kimyusin": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "kr_gyebaek": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "kr_yeongaesomun": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "kr_gwanggaeto": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "kr_sejong": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "royal"
+  },
+  "kr_jangyeongsil": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "robe"
+  },
+  "kr_choemuseon": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "kr_daejoyeong": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "kr_wanggeon": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "royal"
+  },
+  "kr_jeongyakyong": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "robe"
+  },
+  "kr_heojun": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "robe"
+  },
+  "kr_sinsaimdang": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "court"
+  },
+  "kr_ahnjunggeun": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "kr_yugwansun": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "kr_kimgu": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "kr_wonhyo": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "monk"
+  },
+  "kr_kimjeongho": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "robe"
+  },
+  "kr_gwakjaeu": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "kr_nongae": {
+   "voice": "F2",
+   "gender": "F",
+   "attire": "court"
+  },
+  "kr_yihwang": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "robe"
+  },
+  "kr_yii": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "robe"
+  },
+  "kr_hwanghui": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "robe"
+  },
+  "kr_jeongmongju": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "robe"
+  },
+  "jp_himiko": {
+   "voice": "F2",
+   "gender": "F",
+   "attire": "royal"
+  },
+  "jp_taira": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "jp_yoritomo": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "jp_yoshitsune": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "jp_murasaki": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "court"
+  },
+  "jp_seishonagon": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "court"
+  },
+  "jp_tomoegozen": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "armor"
+  },
+  "jp_nobunaga": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "jp_hideyoshi": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "royal"
+  },
+  "jp_ieyasu": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "jp_shingen": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "jp_kenshin": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "jp_masamune": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "jp_yukimura": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "jp_musashi": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "jp_hanzo": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "jp_mitsukuni": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "jp_naosuke": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "jp_saigo": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "jp_ryoma": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "eu_caesar": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "eu_alexander": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "eu_hannibal": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "eu_charlemagne": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "eu_joan": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "armor"
+  },
+  "eu_napoleon": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "eu_davinci": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "eu_augustus": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "royal"
+  },
+  "eu_scipio": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "eu_leonidas": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "eu_aurelius": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "royal"
+  },
+  "eu_richard": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "eu_william": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "eu_harald": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "eu_frederick": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "royal"
+  },
+  "eu_peter": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "royal"
+  },
+  "eu_elizabeth": {
+   "voice": "F2",
+   "gender": "F",
+   "attire": "royal"
+  },
+  "eu_nelson": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "naval"
+  },
+  "eu_machiavelli": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "eu_newton": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "eu_michelangelo": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "eu_eleanor": {
+   "voice": "F2",
+   "gender": "F",
+   "attire": "royal"
+  },
+  "wd_ashoka": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "royal"
+  },
+  "wd_akbar": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "royal"
+  },
+  "wd_saladin": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "wd_suleiman": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "royal"
+  },
+  "wd_ibnsina": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "wd_genghis": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "wd_khubilai": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "royal"
+  },
+  "wd_mansamusa": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "royal"
+  },
+  "wd_shaka": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "tribal"
+  },
+  "wd_cleopatra": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "royal"
+  },
+  "wd_pachacuti": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "tribal"
+  },
+  "wd_moctezuma": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "tribal"
+  },
+  "wd_ibnbattuta": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "wd_hammurabi": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "royal"
+  },
+  "wd_attila": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "armor"
+  },
+  "dj_doseo": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "dj_gapju": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "dj_gijang": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "dj_haean": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "dj_hopak": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "dj_hwanggeum": {
+   "voice": "F2",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "dj_seohae": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "dj_seoncheok": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "dj_yuri": {
+   "voice": "F4",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "fu_gangma": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "fu_hwanryeong": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "fu_janhon": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "fu_jongwang": {
+   "voice": "F4",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "fu_myeongje": {
+   "voice": "F4",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "fu_noejang": {
+   "voice": "F2",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "fu_seonghon": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "fu_yugwi": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "fu_yuseong": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "jiao_banrok": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "jiao_botran": {
+   "voice": "F4",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "jiao_dinggo": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "jiao_hoangmi": {
+   "voice": "F4",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "jiao_jinja": {
+   "voice": "F2",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "jiao_luyan": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "jiao_madang": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "jiao_muya": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "jiao_riquan": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "jp_asahime": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "jp_hikoyama": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "jp_himetsu": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "jp_kazenari": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "jp_shioji": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "jp_taketsumi": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "jp_tamakiri": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "jp_umihiko": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "jp_wakahiko": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "kr2_ajinsa": {
+   "voice": "F2",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "kr2_dokgaru": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "kr2_gokdol": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "kr2_jimasol": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "kr2_mokrihae": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "kr2_pasodan": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "kr2_seolharan": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "kr2_sogaram": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "kr2_umorin": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "kr2_yeonuru": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "kr2_yeoyul": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "ly_byeokjeon": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "ly_heuksang": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "ly_jeonchung": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "ly_jinju": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "ly_juoh": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "ly_nogyong": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "ly_sanga": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "ly_sangnim": {
+   "voice": "F2",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "ly_uhwa": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "mb_baekwoon": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "mb_cheolgak": {
+   "voice": "F2",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "mb_gangho": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "mb_hanam": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "mb_hanpung": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "mb_hoja": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "mb_hwangto": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "mb_janggwang": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "mb_seonwoo": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "nh_bandoja": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "nh_daemo": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "nh_jinju": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "nh_metong": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "nh_migyeon": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "nh_sasin": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "nh_torak": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "nh_wion": {
+   "voice": "F2",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "nh_yeombun": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "nz_ahyang": {
+   "voice": "F2",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "nz_eunga": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "nz_geumsang": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "nz_heukwol": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "nz_hyeoncheon": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "nz_jeokpyo": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "nz_mokro": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "nz_soman": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "nz_unhwa": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_caimao": {
+   "voice": "F4",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_caohong": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_caoren": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_chengong": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_chengpu": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_chengyu": {
+   "voice": "F4",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_dianwei": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_fazheng": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_gaolan": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_gaoshun": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_gongsunzan": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_guojia": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_guosi": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_handang": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_hansui": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_huanggai": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_huangzu": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_jianyong": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_jiaxu": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_jiling": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_jushou": {
+   "voice": "F2",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_kongrong": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_kuailiang": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_lidian": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_lijue": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_liubiao": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_liuzhang": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_mateng": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_mizhu": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_pangde": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_shenpei": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_sunce": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_tianfeng": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_wenchou": {
+   "voice": "F4",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_wenpin": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_wuanguo": {
+   "voice": "F2",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_wuyi": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_xiahouyuan": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_xuchu": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_yangang": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_yanghong": {
+   "voice": "F4",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_yangren": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_yangsong": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_yanliang": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_yanyan": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_yuanshao": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_yuanshu": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_yuejin": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_yujin": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "rf_zhanghe": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_zhangji": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_zhanglu": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_zhangren": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "rf_zhoutai": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "ru_busaeng": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "ru_doksi": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "ru_geohae": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "ru_gogol": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "ru_mangdok": {
+   "voice": "F4",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "ru_sanaek": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "ru_sayeong": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "ru_seogun": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "ru_wadok": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "sl_cheonsan": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "sl_daetaek": {
+   "voice": "F2",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "sl_geumhwa": {
+   "voice": "F2",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "sl_heupu": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "sl_hosang": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "sl_hwachin": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "sl_josang": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "sl_nakta": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "sl_wangjeong": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "tb_amseup": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "tb_baekgi": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "tb_ganghae": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "tb_gojeon": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "tb_heukju": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "tb_jamhon": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "tb_japgol": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "tb_jongja": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "tb_saryeong": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "tz_beonwang": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "tz_daehacheon": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "tz_ganda": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "tz_hangha": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "tz_hyanggae": {
+   "voice": "F4",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "tz_sanri": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "tz_sawi": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "tz_seoksang": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "tz_seolsan": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "xb_bonghwa": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "xb_daein": {
+   "voice": "F2",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "xb_eoryang": {
+   "voice": "F4",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "xb_gaseul": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "xb_gyeon": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "xb_hoja": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "xb_hondo": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "xb_honin": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "xb_yong": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "xiyu_banwol": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "xiyu_cheonma": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "xiyu_chongryeong": {
+   "voice": "M2",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "xiyu_dansu": {
+   "voice": "M1",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "xiyu_gumo": {
+   "voice": "M3",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "xiyu_gyoha": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "xiyu_jeongcheon": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "xiyu_mokjil": {
+   "voice": "F3",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "xiyu_ochi": {
+   "voice": "F5",
+   "gender": "F",
+   "attire": "plain"
+  },
+  "xiyu_sarim": {
+   "voice": "M5",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "xiyu_talban": {
+   "voice": "M4",
+   "gender": "M",
+   "attire": "plain"
+  },
+  "xiyu_yeoje": {
+   "voice": "F1",
+   "gender": "F",
+   "attire": "plain"
+  }
+ }
+}
