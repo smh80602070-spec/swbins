@@ -30,11 +30,12 @@
   "tests": [
    "PlaytestGoTreasure"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0053-20261008.json PlaytestGoTreasure OK."
  },
  {
   "id": "un.go.shrines",
@@ -43,11 +44,12 @@
   "tests": [
    "PlaytestGoArtifacts"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0053-20261008.json PlaytestGoArtifacts OK."
  },
  {
   "id": "un.go.gather",
@@ -56,11 +58,12 @@
   "tests": [
    "PlaytestGoGather"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0053-20261008.json PlaytestGoGather OK."
  },
  {
   "id": "un.go.daily-board",
@@ -69,11 +72,12 @@
   "tests": [
    "PlaytestGoDaily"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0053-20261008.json PlaytestGoDaily OK."
  },
  {
   "id": "un.go.beacon-bond",
@@ -82,11 +86,12 @@
   "tests": [
    "PlaytestGoKnots"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0053-20261008.json PlaytestGoKnots OK."
  },
  {
   "id": "un.go.shrine-trial",
@@ -95,11 +100,12 @@
   "tests": [
    "PlaytestGoShrineTrial"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0053-20261008.json PlaytestGoShrineTrial OK."
  },
  {
   "id": "un.go.field-combat",
@@ -135,11 +141,12 @@
   "tests": [
    "PlaytestGoTreasure"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0053-20261008.json PlaytestGoTreasure OK."
  },
  {
   "id": "un.go.party-swap",
@@ -187,11 +194,12 @@
   "tests": [
    "PlaytestGoRegionTraits"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0053-20261008.json PlaytestGoRegionTraits OK."
  },
  {
   "id": "un.go.region-props",
@@ -200,11 +208,12 @@
   "tests": [
    "PlaytestGoRegionProps"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0053-20261008.json PlaytestGoRegionProps OK."
  },
  {
   "id": "un.go.eras-foes",
@@ -412,11 +421,12 @@
   "tests": [
    "PlaytestGoFishing"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0053-20261008.json PlaytestGoFishing OK."
  },
  {
   "id": "un.go.achieve",

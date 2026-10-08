@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-08",
+  "tickets": [
+    "U-0053 사가만리 확인 닫기 ① — Playtest 있는 D1 10개"
+  ],
+  "how": "bash saga-unity/tools/unity-batch.sh -- Unity.exe -batchmode -nographics -projectPath . -executeMethod Saga.EditorTools.<진단>.Run (6000.3.24f1), GO save.json 은 치웠다 되돌림. 티켓의 RunBatch 는 이 아홉 진단에 없다 — Gather·ShrineTrial 은 단독 Run(장면 없이), 나머지 일곱은 PlaytestHeadless 가 장면 안에서 부르는 Run 의 줄을 읽었다(같은 날 U-0052 커밋 코드로 돈 한 판, 진단 코드 무변경)",
+  "scene": "PlaytestHeadless OK - 10 frames, no errors (런타임 오류 0)",
+  "runtime_errors": 0,
+  "results": [
+    { "id": "un.go.hidden-treasure", "playtest": "PlaytestGoTreasure", "result": "OK", "lines": "treasure OK - 상자 17(평범 7·정교 4·진귀 4·화려 2)·자리·다가가 열기·높이·무리 한꺼번에 전멸·석등 원소/20초/진짜 스킬·지도 개수·세이브 왕복", "date": "2026-10-08" },
+    { "id": "un.go.chests", "playtest": "PlaytestGoTreasure", "result": "OK", "lines": "treasure OK — 위와 같은 한 판(상자 17·다가가 열기·세이브 왕복)", "date": "2026-10-08" },
+    { "id": "un.go.shrines", "playtest": "PlaytestGoArtifacts", "result": "OK", "lines": "artifacts OK - 웹 표본 넷(세트·부위·주/부옵션·+15) · 강화 값·3단 부옵션·상한 · 끼기·옮기기 · 세트 2/4 · 상한 200·★4 분해", "date": "2026-10-08" },
+    { "id": "un.go.gather", "playtest": "PlaytestGoGather", "result": "OK", "lines": "[PlaytestGoGather] OK — 한 번만 채집·복원·세이브 왕복(단독 배치, exit 0)", "date": "2026-10-08" },
+    { "id": "un.go.daily-board", "playtest": "PlaytestGoDaily", "result": "OK", "lines": "daily OK - 새벽 4시 · 하루 넷 = 갈래마다 하나(60 날·여덟 종류) · 일과 보상 · 도장 · 마무리 보상 · 목표판 줄 · 세이브 v25 왕복", "date": "2026-10-08" },
+    { "id": "un.go.beacon-bond", "playtest": "PlaytestGoKnots", "result": "OK", "lines": "knots OK - 매듭 여섯(제단 곁·26장 뒤 연기 → 묶임 표·불·금빛 줄)·먹구름 눈 · 같은 판 bond OK - 거리 2.1km→인연 Lv.1(2명)·AtkMultiplier 1.00→1.04", "date": "2026-10-08" },
+    { "id": "un.go.shrine-trial", "playtest": "PlaytestGoShrineTrial", "result": "OK", "lines": "[PlaytestGoShrineTrial] OK (단독 배치, exit 0)", "date": "2026-10-08" },
+    { "id": "un.go.region-traits", "playtest": "PlaytestGoRegionTraits", "result": "OK", "lines": "regionTraits OK - 표(한자·사연·위험 1~3)·명단 정직성·수호장 자리·위험 배율·경계 자막·지도 이름표 | 무리 적 23(위험3 8)", "date": "2026-10-08" },
+    { "id": "un.go.region-props", "playtest": "PlaytestGoRegionProps", "result": "OK", "lines": "regionProps OK - 여섯 지역 무더기·걷는 칸·비킴·충돌·LOD | 무더기 9·조각 68(LOD 45)", "date": "2026-10-08" },
+    { "id": "un.go.fishing", "playtest": "PlaytestGoFishing", "result": "OK", "lines": "fishing OK - 표(낚시터 넷·물고기 다섯·게시판) · 물고기 여덟 세 시대 · 작살 · 조합 여섯 · 흐름(미끼·던지기·입질)", "date": "2026-10-08" }
+  ],
+  "fails": 0,
+  "not_covered": "사실 몸 묶음 없는 PC — 몸이 필요한 화면 판정은 없음(열 개 다 규칙·장면 진단). 손맛·그림은 사람/QC 몫"
+}
