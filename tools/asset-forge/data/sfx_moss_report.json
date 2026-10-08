@@ -1,0 +1,369 @@
+{
+ "note": "K-0085 — CLAP(laion/larger_clap_general) 자기 프롬프트 유사도·등수, replace = MOSS 판으로 갈아 끼움",
+ "items": {
+  "sword_hit_1": {
+   "moss": 0.133,
+   "moss_rank": 8,
+   "cur": 0.118,
+   "cur_rank": 10,
+   "replace": true
+  },
+  "sword_hit_2": {
+   "moss": 0.085,
+   "moss_rank": 2,
+   "cur": 0.122,
+   "cur_rank": 4,
+   "replace": false
+  },
+  "sword_hurt_1": {
+   "moss": -0.091,
+   "moss_rank": 17,
+   "cur": 0.038,
+   "cur_rank": 23,
+   "replace": false
+  },
+  "sword_hurt_2": {
+   "moss": 0.181,
+   "moss_rank": 1,
+   "cur": 0.096,
+   "cur_rank": 9,
+   "replace": true
+  },
+  "spear_hit_1": {
+   "moss": 0.04,
+   "moss_rank": 15,
+   "cur": -0.071,
+   "cur_rank": 39,
+   "replace": true
+  },
+  "spear_hit_2": {
+   "moss": -0.029,
+   "moss_rank": 30,
+   "cur": 0.155,
+   "cur_rank": 5,
+   "replace": false
+  },
+  "spear_hurt_1": {
+   "moss": 0.17,
+   "moss_rank": 5,
+   "cur": 0.041,
+   "cur_rank": 22,
+   "replace": true
+  },
+  "spear_hurt_2": {
+   "moss": -0.044,
+   "moss_rank": 13,
+   "cur": -0.0,
+   "cur_rank": 30,
+   "replace": false
+  },
+  "axe_hit_1": {
+   "moss": -0.182,
+   "moss_rank": 45,
+   "cur": -0.109,
+   "cur_rank": 41,
+   "replace": false
+  },
+  "axe_hit_2": {
+   "moss": 0.106,
+   "moss_rank": 10,
+   "cur": 0.107,
+   "cur_rank": 9,
+   "replace": false
+  },
+  "axe_hurt_1": {
+   "moss": -0.006,
+   "moss_rank": 13,
+   "cur": 0.054,
+   "cur_rank": 14,
+   "replace": false
+  },
+  "axe_hurt_2": {
+   "moss": 0.103,
+   "moss_rank": 2,
+   "cur": 0.097,
+   "cur_rank": 7,
+   "replace": true
+  },
+  "dagger_hit_1": {
+   "moss": 0.246,
+   "moss_rank": 1,
+   "cur": 0.112,
+   "cur_rank": 10,
+   "replace": true
+  },
+  "dagger_hit_2": {
+   "moss": 0.061,
+   "moss_rank": 20,
+   "cur": 0.049,
+   "cur_rank": 27,
+   "replace": true
+  },
+  "dagger_hurt_1": {
+   "moss": 0.193,
+   "moss_rank": 6,
+   "cur": -0.015,
+   "cur_rank": 35,
+   "replace": true
+  },
+  "dagger_hurt_2": {
+   "moss": -0.004,
+   "moss_rank": 20,
+   "cur": 0.009,
+   "cur_rank": 31,
+   "replace": false
+  },
+  "bow_hit_1": {
+   "moss": -0.079,
+   "moss_rank": 25,
+   "cur": 0.131,
+   "cur_rank": 18,
+   "replace": false
+  },
+  "bow_hit_2": {
+   "moss": 0.089,
+   "moss_rank": 10,
+   "cur": 0.21,
+   "cur_rank": 3,
+   "replace": false
+  },
+  "bow_hurt_1": {
+   "moss": 0.294,
+   "moss_rank": 2,
+   "cur": 0.156,
+   "cur_rank": 4,
+   "replace": true
+  },
+  "bow_hurt_2": {
+   "moss": -0.198,
+   "moss_rank": 40,
+   "cur": 0.085,
+   "cur_rank": 10,
+   "replace": false
+  },
+  "staff_hit_1": {
+   "moss": 0.048,
+   "moss_rank": 17,
+   "cur": -0.107,
+   "cur_rank": 38,
+   "replace": true
+  },
+  "staff_hit_2": {
+   "moss": -0.06,
+   "moss_rank": 19,
+   "cur": -0.012,
+   "cur_rank": 17,
+   "replace": false
+  },
+  "staff_hurt_1": {
+   "moss": 0.215,
+   "moss_rank": 2,
+   "cur": 0.141,
+   "cur_rank": 4,
+   "replace": true
+  },
+  "staff_hurt_2": {
+   "moss": -0.075,
+   "moss_rank": 26,
+   "cur": -0.033,
+   "cur_rank": 38,
+   "replace": false
+  },
+  "gun_hit_1": {
+   "moss": -0.042,
+   "moss_rank": 23,
+   "cur": 0.122,
+   "cur_rank": 7,
+   "replace": false
+  },
+  "gun_hit_2": {
+   "moss": -0.094,
+   "moss_rank": 41,
+   "cur": -0.029,
+   "cur_rank": 27,
+   "replace": false
+  },
+  "gun_hurt_1": {
+   "moss": 0.07,
+   "moss_rank": 19,
+   "cur": 0.056,
+   "cur_rank": 16,
+   "replace": false
+  },
+  "gun_hurt_2": {
+   "moss": -0.071,
+   "moss_rank": 20,
+   "cur": 0.055,
+   "cur_rank": 18,
+   "replace": false
+  },
+  "shield_hit_1": {
+   "moss": 0.113,
+   "moss_rank": 6,
+   "cur": -0.032,
+   "cur_rank": 23,
+   "replace": true
+  },
+  "shield_hit_2": {
+   "moss": -0.076,
+   "moss_rank": 44,
+   "cur": -0.032,
+   "cur_rank": 24,
+   "replace": false
+  },
+  "shield_hurt_1": {
+   "moss": -0.017,
+   "moss_rank": 16,
+   "cur": 0.163,
+   "cur_rank": 2,
+   "replace": false
+  },
+  "shield_hurt_2": {
+   "moss": 0.084,
+   "moss_rank": 12,
+   "cur": -0.175,
+   "cur_rank": 51,
+   "replace": true
+  },
+  "gauntlet_hit_1": {
+   "moss": 0.101,
+   "moss_rank": 12,
+   "cur": 0.182,
+   "cur_rank": 1,
+   "replace": false
+  },
+  "gauntlet_hit_2": {
+   "moss": -0.164,
+   "moss_rank": 42,
+   "cur": -0.012,
+   "cur_rank": 24,
+   "replace": false
+  },
+  "gauntlet_hurt_1": {
+   "moss": -0.088,
+   "moss_rank": 19,
+   "cur": 0.096,
+   "cur_rank": 8,
+   "replace": false
+  },
+  "gauntlet_hurt_2": {
+   "moss": -0.019,
+   "moss_rank": 14,
+   "cur": 0.064,
+   "cur_rank": 16,
+   "replace": false
+  },
+  "block": {
+   "moss": 0.086,
+   "moss_rank": 13,
+   "cur": 0.074,
+   "cur_rank": 6,
+   "replace": false
+  },
+  "coin": {
+   "moss": 0.264,
+   "moss_rank": 1,
+   "cur": 0.229,
+   "cur_rank": 1,
+   "replace": true
+  },
+  "coin_big": {
+   "moss": 0.094,
+   "moss_rank": 5,
+   "cur": 0.116,
+   "cur_rank": 7,
+   "replace": false
+  },
+  "item_pick": {
+   "moss": -0.089,
+   "moss_rank": 40,
+   "cur": -0.185,
+   "cur_rank": 49,
+   "replace": true
+  },
+  "chest_open": {
+   "moss": 0.05,
+   "moss_rank": 3,
+   "cur": 0.013,
+   "cur_rank": 8,
+   "replace": true
+  },
+  "door_open": {
+   "moss": -0.116,
+   "moss_rank": 40,
+   "cur": 0.066,
+   "cur_rank": 17,
+   "replace": false
+  },
+  "splash": {
+   "moss": 0.175,
+   "moss_rank": 8,
+   "cur": -0.131,
+   "cur_rank": 47,
+   "replace": true
+  },
+  "whoosh": {
+   "moss": 0.092,
+   "moss_rank": 13,
+   "cur": -0.058,
+   "cur_rank": 39,
+   "replace": true
+  },
+  "crit": {
+   "moss": -0.071,
+   "moss_rank": 10,
+   "cur": -0.2,
+   "cur_rank": 47,
+   "replace": true
+  },
+  "death": {
+   "moss": -0.186,
+   "moss_rank": 39,
+   "cur": -0.004,
+   "cur_rank": 25,
+   "replace": false
+  },
+  "heal": {
+   "moss": -0.011,
+   "moss_rank": 7,
+   "cur": 0.085,
+   "cur_rank": 2,
+   "replace": false
+  },
+  "summon": {
+   "moss": -0.15,
+   "moss_rank": 19,
+   "cur": 0.021,
+   "cur_rank": 11,
+   "replace": false
+  },
+  "fish_bite": {
+   "moss": 0.068,
+   "moss_rank": 21,
+   "cur": -0.005,
+   "cur_rank": 24,
+   "replace": true
+  },
+  "cook_done": {
+   "moss": 0.051,
+   "moss_rank": 17,
+   "cur": -0.112,
+   "cur_rank": 23,
+   "replace": true
+  },
+  "land": {
+   "moss": -0.004,
+   "moss_rank": 25,
+   "cur": 0.02,
+   "cur_rank": 14,
+   "replace": false
+  },
+  "jump": {
+   "moss": 0.048,
+   "moss_rank": 16,
+   "cur": -0.072,
+   "cur_rank": 45,
+   "replace": true
+  }
+ }
+}

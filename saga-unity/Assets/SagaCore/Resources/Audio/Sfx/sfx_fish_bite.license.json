@@ -1,10 +1,19 @@
 {
  "id": "sfx_fish_bite",
- "generator": "tools/asset-forge/sfxset.py",
- "license": "CC0-1.0 (코드 합성 — 외부 입력 없음)",
+ "generator": "C:/swbins3/sfx-gen/moss_trial.py --plan (MOSS-SoundEffect v2, 창 10초·시작점 자르기) + tools/asset-forge/sfxmoss.py(시작점·길이 맞춘 판으로 채점)",
+ "license": "Apache-2.0 (모델·코드) — AI 생성, 원작 효과음 모사 없음",
  "category": "event",
  "duration_ms": 100,
  "rms_db": -23.0,
  "sample_rate": 44100,
- "channels": 1
+ "channels": 1,
+ "model": "OpenMOSS-Team/MOSS-SoundEffect-v2.0",
+ "prompt": "A fishing bobber plopping and a quick water tug splash",
+ "clap": {
+  "moss": 0.068,
+  "moss_rank": 21,
+  "cur": -0.005,
+  "cur_rank": 24,
+  "replace": true
+ }
 }
