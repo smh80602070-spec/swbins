@@ -90,10 +90,13 @@ func context() -> Dictionary:
 		if gx >= 0 and gx < MAP_W and gy >= 0 and gy < MAP_H:   # 집 안(먼 자리)은 바이옴 없음
 			biome = String(ForestBiome.biome_at(gx, gy).get("key", ""))
 	var max_heart := 0
+	var hearts: Array = []
 	for v: Dictionary in VillagerBuilder.VILLAGERS:
-		max_heart = maxi(max_heart, ForestSaveState.heart(String(v.id)))
+		var h: int = ForestSaveState.heart(String(v.id))
+		hearts.append(h)
+		max_heart = maxi(max_heart, h)
 	return {"home_items": ForestSaveState.home_items.size(), "near": near, "biome": biome,
-		"max_heart": max_heart, "donated": ForestSaveState.museum_donated_by_cat}
+		"max_heart": max_heart, "hearts": hearts, "donated": ForestSaveState.museum_donated_by_cat}
 
 
 static func _flat_dist(a: Vector3, b: Vector3) -> float:

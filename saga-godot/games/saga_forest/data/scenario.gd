@@ -1,5 +1,5 @@
 extends RefCounted
-## G-0086 — 사가마을 이야기 표(정본 `scenario/saga-forest.md` "하늘 금 우체통"). 봄 · 옛 우체통 네 장 + G-0090 여름 · 금으로 온 손님들 네 장.
+## G-0086 — 사가마을 이야기 표(정본 `scenario/saga-forest.md` "하늘 금 우체통"). 봄 · 옛 우체통 네 장 + G-0090 여름 · 금으로 온 손님들 네 장 + G-0094 가을 · 앞날의 기록 네 장.
 ## 대사·고르기는 웹 구현(saga-web/saga-forest/js/data-scenario.js SCENES)과 같다. 단계는 고돗 사가마을(바이옴 넷·주민 여섯·
 ## 집 가구·박물관, 택배·폐허·행사 놀이 없음)에 맞춰 바꿨다 — 까닭은 티켓 G-0086 "단계 바꿈".
 ## 엔진은 world/scenario_runner.gd, 진행은 ForestSaveState.scenario(fresh() 모양). 인물은 전부 가상(이름 정책). 싸움·실패 없음.
@@ -13,7 +13,7 @@ extends RefCounted
 ##     {"t": "spot", "key": 명소 id, "label": 표지, "shape"?: "postbox"|"cave"}  그 명소 곁(4m) — 이 단계 동안만 표지(코드 도형)가 선다
 ##     {"t": "gather", "cat": 이름, "n": n}      이 단계 시작 뒤 그 갈래를 n 번 채집(채집 신호 "꽃 +1" 을 엔진이 센다 — 물고기는 신호가 없어 보유 수가 는 만큼)
 ##     {"t": "fest", "key": 행사 키, "npc": 주민 id}  그 주민 곁에 가면 기념 놀이를 연다(그날이 아니어도 — 정본 "기념 놀이")
-##     {"t": "heart", "n": n}                    주민 누구든 하트 n 이상
+##     {"t": "heart", "n": n, "who"?: m}         주민 m 명(없으면 1)이 하트 n 이상
 ##     {"t": "donate", "cat": 이름, "n": n}      사고에 그 갈래를 n 점 이상 기증
 ## 장면 = {"lines": [[누가, 말]…], "choice": {id, prompt, options:[{key,label}]}?} — 누가 = "me"(나) 또는 CAST 키.
 
@@ -27,6 +27,8 @@ const CAST := {
 	"explorer": {"name": "탐험가", "emoji": "🧭"},
 	"bandi": {"name": "도깨비불 반디", "emoji": "🔥"},
 	"dudu": {"name": "도깨비 대장 두두", "emoji": "👹"},
+	"rumi": {"name": "불시착 탐사원 루미", "emoji": "🧑‍🚀"},
+	"nabi": {"name": "곤충 박사 나비", "emoji": "🦋"},
 }
 
 const SCENES := {
@@ -104,6 +106,41 @@ const SCENES := {
 		["me", "편지 다발도 벽 틈에 꽂혀 있었습니다. 옛 우체통과 이어진 길일지도 모르겠어요."],
 		["explorer", "도감에 \"폭포 뒤 굴\"을 적어 두자고. 또 새 수수께끼를 찾아 떠나야겠군."],
 	]},
+	"rumi1": {"lines": [
+		["rumi", "탐사원 루미예요. 우주기지에 불시착했는데, 구조 신호가 닿으려면 300년이 걸린대요. 무전기는 이 땅 것이라 옛 봉투에 넣어야 신호가 가고."],
+		["me", "봉투에 신호를? 옛 우체통이 신호를 앞날로 부치는 길이라는 말씀이지요?"],
+		["rumi", "네! 우선 광석 세 개로 송신기를 고치고 싶어요. 도와주실 수 있어요?"],
+	]},
+	"rumi2": {"lines": [
+		["rumi", "신호가 우체통으로 들어갔어요! 옛 봉투에 담긴 신호가 300년 뒤에 닿는다니… 이제 기다릴 수 있어요."],
+		["me", "편지로 소식을 전해 주세요. 우체통이 이어 줄 겁니다."],
+	]},
+	"ins1": {"lines": [
+		["nabi", "곤충 박사 나비예요! 반딧불이가 해마다 줄어드는 까닭을 찾고 있어요. 금 너머에서 새는 빛이 밤을 밝혀서 짝짓기를 방해하는 것 같아요."],
+		["me", "채집망을 빌려 주시면 곤충을 다섯 마리 잡아 보겠습니다."],
+		["nabi", "기록용으로 사고에도 기증해 주세요. 옛 정원 돌담 곁에서 반딧불이 정원을 다시 만들어 볼게요."],
+	]},
+	"ins2": {"lines": [
+		["nabi", "기증하신 곤충 덕에 빛 공해의 가설이 맞는지 확인했어요. 금에서 새는 빛이 문제였네요."],
+		["me", "금을 닫을 수는 없어도 빛이 덜 새게 할 수는 있겠군요."],
+	]},
+	"har1": {"lines": [
+		["keeper", "한가위라오. 주민과 손님을 두 편으로 갈라 줄다리기를 하고 달 아래서 송편을 나눕시다."],
+		["chalna", "단체 사진을 찍어 드릴게요! 저기 K-7 씨가 잔치를 기록하러 오셨네요."],
+		["k7", "기록 중입니다. 이 마을의 밤이 앞날 기록에 또렷이 남고 있어요."],
+	]},
+	"har2": {"lines": [
+		["k7", "기록판의 \"사라진 숲\"이 거의 다 지워졌습니다. 이 마을을 기억하는 이들이 늘었어요."],
+		["keeper", "잔치가 끝났으니 북쪽 동굴 부탁이나 살펴보시오. 동굴 끝에 이상한 빛 조각이 있다 하오."],
+	]},
+	"cave1": {"lines": [
+		["keeper", "북쪽 동굴 끝까지 가 보시오. 벽화가 있고 그 끝에 빛나는 결정이 박혀 있다 하오."],
+		["explorer", "밧줄은 내가 걸어 두었지. 조심해서 들어가 봐."],
+	]},
+	"cave2": {"lines": [
+		["k7", "이 결정은 금의 조각입니다. 금은 우체통이 부르는 길이었어요. 결정을 만지면 금이 더 벌어질 수도, 잠잠해질 수도 있습니다."],
+		["me", "금을 활짝 열어 두면 여러 시대 손님이 더 올 것이고, 조용히 해 달라면 밤이 고요해지겠지요."],
+	], "choice": {"id": "crack", "prompt": "금을 어떻게 할 것인가", "options": [{"key": "open", "label": "금을 활짝 열어 둔다"}, {"key": "quiet", "label": "조용히 해 달라 한다"}]}},
 	"star1": {"lines": [
 		["bandi", "칠석이라고 별에 소원 빌러 몰려왔어! 나는 도깨비불 반디야. 밤길 안내는 내가 할게."],
 		["dudu", "도깨비 대장 두두다! 오작교 등도 달고 주운 손전등도 켜 놓았지. 꼬마들아 줄 서라!"],
@@ -164,12 +201,35 @@ const CHAPTERS := [
 		"mix": {"past": "칠석 오작교 등", "now": "두두가 주운 손전등", "future": "소원이 금으로 올라가는 빛"},
 		"steps": [{"t": "talk", "scene": "star1"}, {"t": "fest", "key": "chilseok", "npc": "npc_keeper"}, {"t": "heart", "n": 3}, {"t": "talk", "scene": "star2"}],
 		"gold": 1000},
+	## G-0094 가을 — 우주기지 → 옛 우체통으로 신호 부치기(봄의 돌사당 곁 표지), 반딧불 참나무숲·사고 → 곤충 채집·기증, 한가위 = 숲지기 기념 놀이,
+	## 주민 둘 하트 3, 북쪽 동굴 끝 = 북쪽 돌무더기(forest_cairn_ne) 곁 굴 표지, 끝 고르기 crack(open/quiet — 정본: 겨울 결말이 갈림).
+	{"id": "au_rumi", "no": 9, "season": "autumn", "title": "우주기지의 불시착", "stage": "마을 · 옛 우체통",
+		"blurb": "탐사원 루미 — 구조 신호가 300년 뒤에 닿는다. 옛 우체통으로 신호를 \"부치자\".",
+		"mix": {"past": "우체통 봉투에 넣은 신호", "now": "무전기", "future": "우주기지·루미"},
+		"steps": [{"t": "talk", "scene": "rumi1"}, {"t": "gather", "cat": "광석", "n": 3},
+			{"t": "spot", "key": "forest_shrine_stone", "label": "📮 옛 우체통에 신호 부치기"}, {"t": "talk", "scene": "rumi2"}],
+		"gold": 1100},
+	{"id": "au_insect", "no": 10, "season": "autumn", "title": "반딧불이 정원", "stage": "숲 · 사고",
+		"blurb": "곤충 박사 나비가 반딧불이가 줄어드는 까닭을 찾는다 — 금 너머 빛 공해.",
+		"mix": {"past": "옛 정원 돌담", "now": "나비·채집망", "future": "금에서 새는 빛"},
+		"steps": [{"t": "talk", "scene": "ins1"}, {"t": "gather", "cat": "곤충", "n": 5}, {"t": "donate", "cat": "곤충", "n": 5}, {"t": "talk", "scene": "ins2"}],
+		"gold": 1200},
+	{"id": "au_harvest", "no": 11, "season": "autumn", "title": "한가위 줄다리기", "stage": "마을",
+		"blurb": "주민·손님 모두 두 편으로 — 줄다리기 뒤 달 아래 잔치.",
+		"mix": {"past": "줄다리기·송편", "now": "찰나의 단체 사진", "future": "K-7이 잔치를 기록"},
+		"steps": [{"t": "talk", "scene": "har1"}, {"t": "fest", "key": "chuseok", "npc": "npc_keeper"}, {"t": "heart", "n": 3, "who": 2}, {"t": "talk", "scene": "har2"}],
+		"gold": 1300},
+	{"id": "au_cave", "no": 12, "season": "autumn", "title": "북쪽 동굴의 조각", "stage": "북쪽 동굴",
+		"blurb": "숲지기 부탁 — 동굴 끝에 금의 조각. K-7: \"금은 우체통이 부르는 길\".",
+		"mix": {"past": "동굴 벽화", "now": "탐험가 밧줄", "future": "금 조각 결정"},
+		"steps": [{"t": "talk", "scene": "cave1"}, {"t": "spot", "key": "forest_cairn_ne", "label": "🕳️ 북쪽 동굴 끝", "shape": "cave"}, {"t": "talk", "scene": "cave2"}],
+		"gold": 1400},
 ]
 
 const BIOME_NAMES := {"meadow": "꽃밭", "dark": "어둑숲", "mush": "버섯숲", "rocky": "바위 지대"}
-const FEST_NAMES := {"samjin": "삼짇날 꽃놀이", "dano": "단오 창포못 낚시", "chilseok": "칠석 별에 소원"}
-const FEST_TOASTS := {"samjin": "호연이 꽃 좌판을 펼친다.", "dano": "창포못에 낚싯대가 줄지어 섰다.", "chilseok": "오작교 등 아래로 소원이 하늘 금으로 오른다."}
-const SEASON_NAMES := {"spring": "봄", "summer": "여름"}
+const FEST_NAMES := {"samjin": "삼짇날 꽃놀이", "dano": "단오 창포못 낚시", "chilseok": "칠석 별에 소원", "chuseok": "한가위 줄다리기"}
+const FEST_TOASTS := {"samjin": "호연이 꽃 좌판을 펼친다.", "dano": "창포못에 낚싯대가 줄지어 섰다.", "chilseok": "오작교 등 아래로 소원이 하늘 금으로 오른다.", "chuseok": "두 편이 줄을 당기고 달 아래 송편을 나눈다."}
+const SEASON_NAMES := {"spring": "봄", "summer": "여름", "autumn": "가을"}
 ## 신호 없이 보유 수가 는 만큼 채집으로 세는 갈래(낚시는 채집 신호가 없다).
 const POLL_CATS := ["물고기"]
 
@@ -240,7 +300,13 @@ static func step_met(st: Dictionary, ctx: Dictionary) -> bool:
 		"gather":
 			return gathered(st, String(s.cat)) - int(st.get("base", 0)) >= int(s.n)
 		"heart":
-			return int(ctx.get("max_heart", 0)) >= int(s.n)
+			if int(s.get("who", 1)) <= 1:
+				return int(ctx.get("max_heart", 0)) >= int(s.n)
+			var cnt := 0
+			for h in ctx.get("hearts", []):
+				if int(h) >= int(s.n):
+					cnt += 1
+			return cnt >= int(s.who)
 		"donate":
 			return int((ctx.get("donated", {}) as Dictionary).get(String(s.cat), 0)) >= int(s.n)
 	return false
@@ -309,7 +375,7 @@ static func objective(st: Dictionary) -> String:
 		"fest":
 			what = "숲지기에게 가 %s 열기" % FEST_NAMES.get(String(s.key), String(s.key))
 		"heart":
-			what = "주민 하트 %d 이상" % int(s.n)
+			what = "주민 하트 %d 이상" % int(s.n) if int(s.get("who", 1)) <= 1 else "주민 %d명 하트 %d 이상" % [int(s.who), int(s.n)]
 		"donate":
 			what = "사고에 %s %d점 기증" % [String(s.cat), int(s.n)]
 	return "📜 %s %d장 %s — %s" % [season(ch), int(ch.no), String(ch.title), what]
