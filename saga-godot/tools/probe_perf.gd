@@ -63,6 +63,9 @@ func _process(_delta: float) -> void:
 		_summary()
 		get_tree().quit()
 		return
+	if _spot == 1 and not _ds_done and OS.get_environment("SAGA_PERF_DRAWSHARE") != "":
+		_drawshare_step()
+		return
 	if _frame == 1:
 		if _spot == 0:
 			_hide_for_share()
@@ -71,6 +74,11 @@ func _process(_delta: float) -> void:
 		_p.set("velocity", Vector3.ZERO)
 	if _rig:
 		_rig.rotation.y = TAU * float(_dir) / DIRS
+	if _frame > SETTLE and _spot == 0:
+		var dcn := RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)
+		if dcn > _ds_max:
+			_ds_max = dcn
+			_ds_dir = _dir
 	if _frame > SETTLE:
 		_acc.append([
 			RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME),
@@ -245,6 +253,67 @@ func _hide_for_share() -> void:
 				node.visible = false
 				n += 1
 	print("PERF hide %s nodes=%d" % [what, n])
+
+## SAGA_PERF_DRAWSHARE=1 — 첫 자리(마을)를 다 잰 뒤, draw call 이 가장 많던 방향으로 돌아가 씬 바로 밑 노드(그 밑 한 단계까지)를
+## 하나씩 숨겨 draw call 이 얼마나 주는지 찍는다(G-0114 — 예산 넘는 몫 찾기). "PERF share <경로> -N" 을 큰 순서로.
+var _ds_dir := 0
+var _ds_max := 0
+var _ds_nodes: Array = []
+var _ds_i := -1
+var _ds_f := 0
+var _ds_base := 0
+var _ds_acc := 0
+var _ds_rows: Array = []
+var _ds_done := false
+var _ds_hidden := false
+var _ds_hid_dc := 0
+
+func _drawshare_step() -> void:
+	if _ds_nodes.is_empty() and _ds_i == -1:
+		var pos: Vector3 = _wps.call("world_pos_of", SPOTS[0][1])
+		_p.global_position = pos + Vector3(4.0, 1.0, 4.0)
+		_p.set("velocity", Vector3.ZERO)
+		if _rig:
+			_rig.rotation.y = TAU * float(_ds_dir) / DIRS
+		for c in get_tree().current_scene.get_children():
+			if c == self or c == _p or c.is_ancestor_of(_p) or not (c is Node3D):
+				continue
+			_ds_nodes.append(c)
+			if c.get_child_count() > 1:
+				for g in c.get_children():
+					if g is Node3D and not g.is_ancestor_of(_p):
+						_ds_nodes.append(g)
+	_ds_f += 1
+	var wait := 60 if _ds_i == -1 and not _ds_hidden else 10
+	if _ds_f > wait - 4:
+		_ds_acc += RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)
+	if _ds_f < wait:
+		return
+	var dc := int(_ds_acc / 4)
+	_ds_f = 0
+	_ds_acc = 0
+	## 숨긴 판 → 되살린 판(기준) 을 번갈아 재서, 숨긴 값은 바로 뒤 기준과 뺀다(순간 튐에 안 끌리게).
+	if _ds_hidden:
+		_ds_hid_dc = dc
+		(_ds_nodes[_ds_i] as Node3D).visible = true
+		_ds_hidden = false
+		return
+	if _ds_i == -1:
+		print("PERF share base dir=%d draw_calls=%d (마을 최대 %d)" % [_ds_dir, dc, _ds_max])
+	else:
+		if OS.get_environment("SAGA_PERF_DRAWSHARE") == "raw":
+			print("PERF share raw %s hidden=%d base=%d" % [_ds_nodes[_ds_i].name, _ds_hid_dc, dc])
+		_ds_rows.append([dc - _ds_hid_dc, str(get_tree().current_scene.get_path_to(_ds_nodes[_ds_i]))])
+	_ds_i += 1
+	if _ds_i >= _ds_nodes.size():
+		_ds_rows.sort_custom(func(a: Array, b: Array) -> bool: return a[0] > b[0])
+		for r in _ds_rows:
+			if int(r[0]) != 0:
+				print("PERF share %s %+d" % [r[1], -int(r[0])])
+		_ds_done = true
+		return
+	(_ds_nodes[_ds_i] as Node3D).visible = false
+	_ds_hidden = true
 
 ## SAGA_PERF_BISECT=1 — 마지막 자리에서 씬 바로 밑 노드를 하나씩 멈추고(process_mode 끔) 물리·처리 시간이 얼마나 주는지 잰다.
 var _b_nodes: Array = []

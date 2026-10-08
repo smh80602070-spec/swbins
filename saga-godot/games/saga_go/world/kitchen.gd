@@ -11,6 +11,7 @@ const Cooking := preload("res://games/saga_go/data/cooking.gd")
 const Waypoints := preload("res://games/saga_go/world/waypoints.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
+const RenderBudget := preload("res://games/saga_go/world/render_budget.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
 signal changed()
@@ -162,7 +163,7 @@ func eat(dish: String, id: String) -> String:
 
 func _build_pot(p: Vector3) -> void:
 	var root := Node3D.new()
-	root.name = "CookingPot"
+	root.name = "CookingPot_%d" % _pots.size()   # G-0114 — 같은 이름이면 둘째부터 @Node3D@ 로 바뀌어 render_budget 의 "솥 그림자 끔" 에서 빠졌다
 	add_child(root)
 	root.global_position = p
 	var iron := StandardMaterial3D.new()
@@ -199,6 +200,7 @@ func _build_pot(p: Vector3) -> void:
 		leg.position = Vector3(cos(a) * 0.55, 0.6, sin(a) * 0.55)
 		leg.rotation = Vector3(sin(a) * 0.35, 0.0, -cos(a) * 0.35)
 		root.add_child(leg)
+	RenderBudget.merge_children(root)   # G-0114 — 솥·테(쇠)·다리 셋(나무)을 재질마다 한 메시로
 	## 장작불 — 주황 빛 원뿔 + 가벼운 흔들림.
 	var fire := MeshInstance3D.new()
 	var fm := CylinderMesh.new()

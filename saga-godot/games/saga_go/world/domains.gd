@@ -11,6 +11,7 @@ extends Node3D
 const Domains := preload("res://games/saga_go/data/domains.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
+const RenderBudget := preload("res://games/saga_go/world/render_budget.gd")
 const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
 const FieldBoss := preload("res://games/saga_go/combat/field_boss.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
@@ -480,6 +481,7 @@ func _build_gate(id: String, p: Vector3) -> void:
 	var top := BoxMesh.new()
 	top.size = Vector3(4.0, 0.5, 0.8)
 	_mesh(root, top, stone, Vector3(0.0, 3.8, 0.0))
+	RenderBudget.merge_children(root)   # G-0114 — 기둥 둘·들보(같은 돌)를 한 메시로, 문 원판은 따로
 	var disc := CylinderMesh.new()
 	disc.top_radius = 1.1
 	disc.bottom_radius = 1.1

@@ -18,6 +18,7 @@ const Toast := preload("res://saga_core/ui/toast.gd")
 const Growth := preload("res://games/saga_go/data/growth.gd")
 const Weapons := preload("res://games/saga_go/data/weapons.gd")
 const ShootTarget := preload("res://games/saga_go/world/shoot_target.gd")
+const RenderBudget := preload("res://games/saga_go/world/render_budget.gd")
 
 const GRADES := {
 	"common": {"name": "평범한 상자", "exp": 5.0, "scale": 1.0,
@@ -86,6 +87,8 @@ func _ready() -> void:
 	body.scale = Vector3.ONE * float(g.scale)
 	add_child(body)
 	_build_chest(body, g.wood, g.metal)
+	RenderBudget.merge_children(body)   # G-0114 — 쇠 띠·자물쇠 조각을 한 메시로(그림 그대로, draw call 만 준다)
+	RenderBudget.merge_children(_lid)
 	if sealed:
 		_build_seal()
 	if lock == "torch":
@@ -398,6 +401,7 @@ func _build_torches() -> void:
 		band.bottom_radius = 0.21
 		band.height = 0.1
 		CreatureBuilder._add(t, band, Vector3(0, 0.85, 0), Vector3.ZERO, col, false)
+		RenderBudget.merge_children(t)   # G-0114 — 돌 기둥·머리(같은 돌색)를 한 메시로, 원소 띠·불꽃은 그대로
 		var flame := MeshInstance3D.new()
 		var sph := SphereMesh.new()
 		sph.radius = 0.2

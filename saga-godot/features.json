@@ -2458,16 +2458,20 @@
   "name": "마을 PERF 예산 — 다른 지역 식생 거리 컷, draw ≤260·삼각형 평균 ≤35만",
   "files": [
    "games/saga_go/world/render_budget.gd",
-   "tools/probe_perf.gd"
+   "tools/probe_perf.gd",
+   "games/saga_go/world/treasure_chest.gd",
+   "games/saga_go/world/kitchen.gd",
+   "games/saga_go/world/domains.gd"
   ],
   "tests": [
    "perf"
   ],
-  "level": "D3",
-  "verified": "2026-10-06",
+  "level": "D2",
+  "verified": null,
   "fun": {},
   "ticket": "G-0023",
-  "since": "2026-10-04"
+  "since": "2026-10-04",
+  "note": "G-0114(10-09): 10-06 판정 뒤 다시 넘음 — 창 모드 마을 draw 최대 275 → 같은 재질 조각 합치기(상자·석등·솥·비경 입구)·솥 이름 버그(그림자 규칙 빠짐) 고쳐 267(평균 252, 포구 221→211). 남은 몫은 그 방향의 인물 셋(VRoid 몸 8조각+윤곽선 — 뼈대 메시라 못 합침)·해 그림자 — 더 줄이려면 그림이 바뀌는 수단이라 사용자 결정(PLAN 104-7)."
  },
  {
   "id": "gd.go.hero_body_swap",

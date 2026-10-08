@@ -102,3 +102,50 @@ static func _split(mmi: MultiMeshInstance3D) -> bool:
 	parent.remove_child(mmi)
 	mmi.queue_free()
 	return true
+
+
+## G-0114 ④ 같은 재질 조각 합치기 — 코드로 짠 소품(상자·솥)은 상자 하나가 도형 20여 개라 조각마다 draw call(+그림자)이 든다.
+## parent 바로 밑 MeshInstance3D 중 자식·스크립트가 없고 재질이 같은(같은 물체, 또는 같은 셰이더·색·윤곽선) 것끼리
+## 한 메시로 합친다 — 모양·색·그림자는 그대로라 화면이 같다. 혼자인 조각(불꽃처럼 따로 움직이는 것)은 안 건드린다.
+## 조각을 변수로 붙잡아 두는 자리에는 부르지 않는다(합친 뒤 옛 노드는 지워진다). 합쳐 없앤 노드 수를 돌려준다.
+static func merge_children(parent: Node3D) -> int:
+	var groups := {}
+	for c in parent.get_children():
+		var mi := c as MeshInstance3D
+		if mi == null or mi.get_child_count() > 0 or mi.get_script() != null or mi.mesh == null or mi.mesh.get_surface_count() != 1 \
+				or mi.material_override == null or not mi.skeleton.is_empty() or not mi.visible:
+			continue
+		var k := "%s|%d|%d" % [_mat_key(mi.material_override), mi.cast_shadow, mi.layers]
+		if not groups.has(k):
+			groups[k] = []
+		groups[k].append(mi)
+	var removed := 0
+	for k in groups:
+		var arr: Array = groups[k]
+		if arr.size() < 2:
+			continue
+		var st := SurfaceTool.new()
+		for mi: MeshInstance3D in arr:
+			st.append_from(mi.mesh, 0, mi.transform)
+		var merged := MeshInstance3D.new()
+		merged.name = "Merged"
+		merged.mesh = st.commit()
+		merged.material_override = (arr[0] as MeshInstance3D).material_override
+		merged.cast_shadow = (arr[0] as MeshInstance3D).cast_shadow
+		merged.layers = (arr[0] as MeshInstance3D).layers
+		parent.add_child(merged)
+		for mi: MeshInstance3D in arr:
+			parent.remove_child(mi)
+			mi.queue_free()
+			removed += 1
+		removed -= 1
+	return removed
+
+
+static func _mat_key(m: Material) -> String:
+	var sm := m as ShaderMaterial
+	if sm == null or sm.shader == null:
+		return str(m.get_instance_id())
+	## CreatureBuilder._mat 은 부를 때마다 새 재질이라 셰이더·색·윤곽선으로 같음을 본다.
+	var nxt := sm.next_pass as ShaderMaterial
+	return "%d|%s|%s" % [sm.shader.get_instance_id(), sm.get_shader_parameter("albedo_tint"), str(nxt.shader.get_instance_id()) if nxt != null and nxt.shader != null else "-"]
