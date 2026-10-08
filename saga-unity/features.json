@@ -115,11 +115,12 @@
    "PlaytestGoFieldCombat",
    "PlaytestGoElementalFoe"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0054-20261008.json PlaytestGoFieldCombat OK."
  },
  {
   "id": "un.go.move-map",
@@ -168,11 +169,12 @@
   "tests": [
    "PlaytestGoGuardian"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0054-20261008.json PlaytestGoGuardian OK."
  },
  {
   "id": "un.go.region-mission",
@@ -181,11 +183,12 @@
   "tests": [
    "PlaytestGoRegionMission"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0054-20261008.json PlaytestGoRegionMission OK."
  },
  {
   "id": "un.go.region-traits",
@@ -329,11 +332,12 @@
    "PlaytestGoPeaks",
    "PlaytestGoTraversal"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0054-20261008.json PlaytestGoPeaks OK."
  },
  {
   "id": "un.go.falls-roof-cam",
@@ -355,11 +359,12 @@
   "tests": [
    "PlaytestGoElementalFoe"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0054-20261008.json PlaytestGoElementalFoe OK."
  },
  {
   "id": "un.go.story-ch",
@@ -369,11 +374,12 @@
    "PlaytestGoStory",
    "PlaytestGoStoryAllies"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0054-20261008.json PlaytestGoStory OK."
  },
  {
   "id": "un.go.world-quests",
@@ -382,11 +388,12 @@
   "tests": [
    "PlaytestGoWorldQuests"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0054-20261008.json PlaytestGoWorldQuests OK."
  },
  {
   "id": "un.go.aim",
@@ -395,11 +402,12 @@
   "tests": [
    "PlaytestGoAim"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0054-20261008.json PlaytestGoAim OK."
  },
  {
   "id": "un.go.map-marks",
@@ -408,11 +416,12 @@
   "tests": [
    "PlaytestGoMapMarks"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0054-20261008.json PlaytestGoMapMarks OK."
  },
  {
   "id": "un.go.fishing",
@@ -435,11 +444,12 @@
   "tests": [
    "PlaytestGoAchieve"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2: docs/playcheck/d2-u0054-20261008.json PlaytestGoAchieve OK."
  },
  {
   "id": "un.go.assets",
