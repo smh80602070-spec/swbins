@@ -10,7 +10,9 @@
  *   웹   사가만리      js/story.js 의 `id: 'chN'` 줄 수
  *        블로·숲·스토리  js/data-scenario.js 를 vm 에 돌려 DG.scenarioData.CHAPTERS.length
  *        사가천하    같은 방식, CARDS + LORD + SIDE 길이(사연 카드 사슬 + 열전 + 곁가지)
- *   고돗 사가만리      games/saga_go/data/story_chapters_*.gd 의 줄 머리 `\t{"id": "ch` 줄 수 (나머지 넷은 장 표 없음 = 0)
+ *   고돗 사가만리      games/saga_go/data/story_chapters_*.gd 의 줄 머리 `\t{"id": "ch` 줄 수
+ *        나락·마을·종횡  games/<판>/data/scenario.gd 의 `const CHAPTERS := [` 블록 안 줄 머리 `\t{"id": "` 줄 수 (10-08 G-0085~0087)
+ *        사가천하    같은 파일의 `const CARDS := [` 블록(이야기 카드, G-0088) — 파일이 없으면 0
  *   유니티 사가만리    Assets/Games/SagaGo/Data/GoStory.cs 의 `Id = "chN"` 줄 수
  *        블로·숲·스토리  Resources/scenario_*.json 의 chapters 길이
  *        사가천하    Resources/scenario_realm.json 의 cards + side 길이
@@ -44,8 +46,18 @@ const web = (key, folder) => tryCount(() => {
   return d.CHAPTERS.length;
 });
 
-const godot = (key) => tryCount(() => {
-  if (key !== 'go') return 0;
+/** 고돗 scenario.gd 의 `const NAME := [` 블록(첫 칸 `]` 까지) 안 장 줄 수 */
+function godotBlock(folder, name) {
+  const p = `saga-godot/games/${folder}/data/scenario.gd`;
+  if (!exists(p)) return 0;
+  const t = read(p).replace(/\r\n/g, '\n'), a = t.indexOf(`const ${name} := [`);
+  if (a < 0) return 0;
+  const b = t.indexOf('\n]', a);
+  return countRe(t.slice(a, b < 0 ? undefined : b), /^\t\{"id": "/gm);
+}
+
+const godot = (key, folder) => tryCount(() => {
+  if (key !== 'go') return godotBlock(folder.replace('-', '_'), key === 'realm' ? 'CARDS' : 'CHAPTERS');
   const dir = 'saga-godot/games/saga_go/data';
   return fs.readdirSync(path.join(ROOT, dir)).filter((f) => /^story_chapters_\d+\.gd$/.test(f))
     .reduce((n, f) => n + countRe(read(`${dir}/${f}`), /^\t\{"id": "ch/gm), 0);
@@ -60,7 +72,7 @@ const unity = (key, folder) => tryCount(() => {
   return j.chapters.length;
 });
 
-const rows = GAMES.map(([key, name, folder]) => ({ game: name, web: web(key, folder), godot: godot(key), unity: unity(key, folder) }));
+const rows = GAMES.map(([key, name, folder]) => ({ game: name, web: web(key, folder), godot: godot(key, folder), unity: unity(key, folder) }));
 const unknown = rows.reduce((n, r) => n + ['web', 'godot', 'unity'].filter((k) => r[k] === '?').length, 0);
 
 const B = '<!-- scenario:begin -->', E = '<!-- scenario:end -->';
