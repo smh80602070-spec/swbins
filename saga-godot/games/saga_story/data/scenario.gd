@@ -1,5 +1,5 @@
 extends RefCounted
-## G-0087 — 사가종횡 이야기 표(정본 `scenario/saga-story.md` "이름 없는 떠돌이"). 1부 · 무명 네 장.
+## G-0087 — 사가종횡 이야기 표(정본 `scenario/saga-story.md` "이름 없는 떠돌이"). 1부 · 무명 네 장 + G-0091 2부 · 갈래 네 장.
 ## 대사는 웹 구현(saga-web/saga-story/js/data-scenario.js SCENES)과 같다(감정 칸만 뺌). 단계는 웹과 거의 같다 — 고돗에도 신야성·허도·
 ## 허창 들판 장면과 사명 q_first·q_gear1·q_field·q_boss1, 1차 전직이 그대로 있다.
 ## 엔진은 world/scenario_runner.gd(장면마다 새로 뜬다), 진행은 StorySaveState.scenario(fresh() 모양). 인물은 가상, {스승}은 도감 가명.
@@ -10,18 +10,24 @@ extends RefCounted
 ##     {"t": "talk", "scene": id, "at"?: 장면 키}  대화(at 이 있으면 그 장면에서만 뜬다)
 ##     {"t": "mission", "quest": 사명 key}         그 사명을 완수했다(StorySaveState.quests_done)
 ##     {"t": "job", "tier": n}                     n차 전직을 했다
+##     {"t": "gate"}                               관문 대장(사냥터 주간 챔피언)을 한 번이라도 이겼다(웹 gate — 이긴 적이 있으면 그것으로 됨)
+## 장마다 "part"(부)·"legacy"{level, tier}(옛 세이브 — 그만큼 왔으면 보상 없이 지나온 길).
 ## 장면 한 줄 = [누가, 말] — 누가 = "me"(나) · "mentor"(지금 갈래 스승) · CAST 키.
 
 const CAST := {
 	"deokbo": {"name": "신야성 촌로 덕보", "emoji": "🧓"},
 	"courier": {"name": "택배 기사", "emoji": "📦"},
 	"sori": {"name": "척후병 소리", "emoji": "🐎"},
+	"hankeot": {"name": "여행자 한컷", "emoji": "📷"},
+	"wanderer": {"name": "나그네", "emoji": "🥾"},
+	"townsman": {"name": "남정성 사람", "emoji": "🏮"},
+	"ieum": {"name": "탐사 대원 이음", "emoji": "🧭"},
 }
 
 ## 장면 루트 이름 → 장면 키(웹 사냥터·마을 key).
 const SCENE_KEYS := {"SinyaField": "sinya", "HeodoField": "heodo", "TestField": "field", "GangneungjinField": "port",
 	"ForestHuntGround": "forest", "NamjeongseongField": "namjeong", "CaveHuntGround": "cave", "GisanchaeField": "gisan", "GorgeHuntGround": "gorge"}
-const STAGE_NAMES := {"sinya": "신야성", "heodo": "허도", "field": "허창 들판"}
+const STAGE_NAMES := {"sinya": "신야성", "heodo": "허도", "field": "허창 들판", "port": "강릉진", "forest": "오림 숲", "namjeong": "남정성", "cave": "한중 굴혈"}
 
 const SCENES := {
 	"sinya1": [
@@ -66,6 +72,43 @@ const SCENES := {
 		["mentor", "동쪽 강릉진 부두에 쇠로 된 배가 걸려 있다더라. 그 배의 사진을 찍는 여행자가 있다지 — 만나 보아라."],
 		["me", "가겠습니다. 이름은 가는 길에서 찾지요."],
 	],
+	"port1": [
+		["hankeot", "아, 마침 잘 오셨어요! 이 사진 좀 보세요. 부두에 쇠 화물선이 걸려 있는데, 배 뒤로 바다가 안 찍혀요. 텅 빈 하늘만요."],
+		["me", "옛 나루에 쇠로 된 배라니… 실물은 더 기이하겠군요."],
+		["hankeot", "조종실엔 푸른 빛 판이 깜박여요. 그 배를 차지한 게 왜구 선장인데, 사냥터 관문 대장 노릇을 하죠."],
+		["me", "선장부터 만나 보겠습니다. 문이 그 사람 손에 있다면요."],
+	],
+	"port2": [
+		["hankeot", "선장이 쓰러졌어요! 쇠배 조종실 판에서 지도 같은 게 나왔는데요."],
+		["me", "이 나루도, 이 바다도 아닌 물길이 그려져 있습니다. 없는 바다의 지도군요."],
+		["hankeot", "지도 끝이 오림 숲 쪽을 가리켜요. 거기서 발소리가 자기 것만 들리지 않는다는 말이 돌고요."],
+	],
+	"forest1": [
+		["wanderer", "숲 그늘에선 발소리가 제 것만 들리지 않소. 그림자를 조심하시오."],
+		["me", "그림자가 짙을수록 눈을 크게 뜨면 됩니다."],
+	],
+	"forest2": [
+		["wanderer", "그림자의 정체가 벼락 말벌 떼였다니… 나무에 박혀 서 있던 쇠 보행기도 봤소?"],
+		["me", "경비를 서듯 서 있었습니다. 지키는 것이 무엇인지는 알 수 없고요."],
+		["wanderer", "남정성으로 가 보시오. 성 사람들이 무슨 소문을 알고 있소."],
+	],
+	"nam2": [
+		["townsman", "밤마다 굴 쪽에서 빛이 샌다오. 가로등 하나 없는 골목에 하나만 켜져 있고, 그 불빛이 굴 입구와 똑같은 색이오."],
+		["me", "가로등과 굴 입구의 빛이 한 줄기라는 말씀이십니까?"],
+		["townsman", "위군 도독이 굴혈에 진을 친 뒤로 시작된 일이오. 누가 가서 좀 봐 주시오."],
+		["me", "길을 정했습니다. 굴혈로 가겠습니다."],
+	],
+	"cave1": [
+		["ieum", "살았다… 도독 진 깊은 곳에 묶여 있었습니다. 저는 탐사 대원 이음, 먼 시대에서 문을 쫓아 왔습니다."],
+		["ieum", "이 땅의 전쟁에 다른 시대 병기가 섞이는 건 새어 든 것입니다. 동쪽 끝에 난세의 문이 있어요."],
+		["me", "문이라. 그렇다면 이름 없는 제 손에도 할 일이 있겠군요."],
+		["ieum", "마을마다 서 있겠습니다. 소식이 닿으면 어디서든 말을 거세요. 우선 둘째 스승부터 찾으세요."],
+	],
+	"cave2": [
+		["mentor", "이름 없는 채로 둘째 자리에 올랐구나. 이름이 없으니 남의 시대 기술도 그대로 배우는군."],
+		["mentor", "더 큰 불길이 기산채 쪽에서 오른다 한다. 다음 길은 스스로 정하되, 잿빛 자를 조심하라."],
+		["me", "명심하겠습니다. 이름을 얻을 때까지 걷겠습니다."],
+	],
 }
 
 const CHAPTERS := [
@@ -90,6 +133,27 @@ const CHAPTERS := [
 		"mix": {"past": "스승 도장", "now": "연습용 표적지", "future": "스승이 가진 시대 모를 무기"},
 		"steps": [{"t": "talk", "scene": "job1", "at": "heodo"}, {"t": "job", "tier": 1}, {"t": "talk", "scene": "job2"}],
 		"exp": 600, "gold": 2000},
+	## G-0091 2부 · 갈래(현대 중심) — 웹 단계 그대로(관문 대장 = 사냥터 주간 챔피언 아무 곳이나 한 번, 오림 숲 첫 장면 forest1 은 웹의 첫 발 장면 대사).
+	{"id": "p2_port", "no": 5, "part": 2, "title": "강릉진 부두", "stage": "강릉진", "need": 10, "legacy": {"level": 25, "tier": 2},
+		"blurb": "부두에 쇠 화물선이 걸려 있다. 여행자 한컷의 사진 속 배는 \"없는 바다\"에 떠 있다.",
+		"mix": {"past": "옛 나루", "now": "쇠 화물선·한컷", "future": "화물선 조종실 빛 판"},
+		"steps": [{"t": "stage", "stage": "port"}, {"t": "talk", "scene": "port1", "at": "port"}, {"t": "gate"}, {"t": "talk", "scene": "port2"}],
+		"exp": 1200, "gold": 3000},
+	{"id": "p2_forest", "no": 6, "part": 2, "title": "오림의 그늘", "stage": "오림 숲", "need": 10, "legacy": {"level": 25, "tier": 2},
+		"blurb": "나그네 \"그림자를 조심하라\". 그림자는 벼락 말벌 떼.",
+		"mix": {"past": "숲 사당", "now": "벼락 말벌(변이 곤충)", "future": "나무에 박힌 경비 보행기"},
+		"steps": [{"t": "stage", "stage": "forest"}, {"t": "talk", "scene": "forest1", "at": "forest"}, {"t": "mission", "quest": "q_forest"}, {"t": "mission", "quest": "q_gather1"}, {"t": "talk", "scene": "forest2"}],
+		"exp": 1500, "gold": 3000},
+	{"id": "p2_namjeong", "no": 7, "part": 2, "title": "민심을 살핀다", "stage": "남정성", "need": 12, "legacy": {"level": 25, "tier": 2},
+		"blurb": "성 사람들이 \"밤마다 굴에서 빛이 샌다\"고 한다.",
+		"mix": {"past": "성 민가", "now": "가로등 하나가 켜진 골목", "future": "굴 입구 빛"},
+		"steps": [{"t": "stage", "stage": "namjeong"}, {"t": "mission", "quest": "q_talk1"}, {"t": "mission", "quest": "q_job"}, {"t": "talk", "scene": "nam2"}],
+		"exp": 2000, "gold": 4000},
+	{"id": "p2_cave", "no": 8, "part": 2, "title": "한중 굴혈", "stage": "한중 굴혈", "need": 25, "legacy": {"level": 25, "tier": 2},
+		"blurb": "위군 도독의 진 깊은 곳에서 탐사 대원 이음을 구한다. 둘째 스승.",
+		"mix": {"past": "위군 진", "now": "굴 속 발전기", "future": "이음·탐사 장비"},
+		"steps": [{"t": "stage", "stage": "cave"}, {"t": "mission", "quest": "q_cave"}, {"t": "talk", "scene": "cave1"}, {"t": "job", "tier": 2}, {"t": "talk", "scene": "cave2"}],
+		"exp": 4000, "gold": 8000},
 ]
 
 ## 옛 세이브(웹 legacy {level 10, tier 1}) — 이만큼 왔으면 1부는 지나온 길.
@@ -111,16 +175,25 @@ static func normalize(st: Variant) -> Dictionary:
 	return out
 
 
-## 빈 칸(scenario 없는 세이브)인데 이미 1부를 지난 사람 → 1부를 보상 없이 끝낸 것으로. 했으면 true.
-static func apply_legacy(st: Dictionary, raw_was_empty: bool, level: int, tier: int) -> bool:
-	if not raw_was_empty or (level < LEGACY_LEVEL and tier < LEGACY_TIER):
-		return false
-	for c: Dictionary in CHAPTERS:
+## 옛 세이브 — 빈 칸(scenario 없는 세이브)이거나 이미 legacy 로 건너뛴 진행이면, 지금 장부터 차례로 그 장의 legacy 문턱
+## (없으면 1부 문턱 Lv10·1차)을 넘은 장을 보상 없이 끝낸 것으로. 건너뛴 장 수.
+static func apply_legacy(st: Dictionary, raw_was_empty: bool, level: int, tier: int) -> int:
+	if not raw_was_empty and not bool(st.get("legacy", false)):
+		return 0
+	if int(st.get("step", 0)) != 0:
+		return 0
+	var n := 0
+	while not finished(st):
+		var c := chapter(st)
+		var lg: Dictionary = c.get("legacy", {"level": LEGACY_LEVEL, "tier": LEGACY_TIER})
+		if level < int(lg.level) and tier < int(lg.tier):
+			break
 		(st.done as Array).append(String(c.id))
-	st.ch = CHAPTERS.size()
-	st.step = 0
-	st.legacy = true
-	return true
+		st.ch = int(st.ch) + 1
+		n += 1
+	if n > 0:
+		st.legacy = true
+	return n
 
 
 static func chapter(st: Dictionary) -> Dictionary:
@@ -165,6 +238,8 @@ static func step_met(st: Dictionary, ctx: Dictionary) -> bool:
 			return String(ctx.get("stage", "")) == String(s.stage)
 		"mission":
 			return bool((ctx.get("quests", {}) as Dictionary).get(String(s.quest), false))
+		"gate":
+			return int(ctx.get("champions", 0)) >= 1
 		"job":
 			return int(ctx.get("tier", 0)) >= int(s.tier)
 	return false
@@ -217,7 +292,13 @@ static func objective(st: Dictionary, ctx: Dictionary, quest_names: Dictionary =
 				what = "사명 「%s」" % String(quest_names.get(String(s.quest), String(s.quest)))
 			"job":
 				what = "%d차 전직(허도 수련장)" % int(s.tier)
-	return "📜 1부 %d장 %s — %s" % [int(ch.no), String(ch.title), what]
+			"gate":
+				what = "사냥터 관문 대장을 한 번 이기기"
+	return "📜 %d부 %d장 %s — %s" % [part(ch), int(ch.no), String(ch.title), what]
+
+
+static func part(ch: Dictionary) -> int:
+	return int(ch.get("part", 1))
 
 
 ## 말한 이 표시 — mentor 는 부르는 쪽이 넘긴 스승 이름.
