@@ -76,7 +76,8 @@ const CUTS := [
 	["rk_story", REALM, [["free_modal"], ["call", "/root/RealmSaveState", "start_scenario", ["194"]], ["set", "/root/RealmSaveState", "scenario_ready", true]]],   # G-0088 사가천하 이야기 첫 카드(새 판 194)
 	["st_story", "res://games/saga_story/world/SinyaField.tscn", []],   # G-0087 사가종횡 이야기 첫 대화(새 판 신야성)
 	["fs_story", FOREST, []],   # G-0086 사가마을 이야기 첫 대화(새 판)
-	["dg_story", DUNGEON, [["free_modal"]]],   # G-0085 사가나락 이야기 첫 대화(새 판 — 출사표 창을 닫으면 뜬다)
+	["dg_story", DUNGEON, [["free_modal"]]],
+	["dg_room_wide", DUNGEON, [["free_modal"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 14.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-40.0, 0.0, 0.0)]]],   # G-0112 첫 방 전체(어두움 판정)   # G-0085 사가나락 이야기 첫 대화(새 판 — 출사표 창을 닫으면 뜬다)
 	["go_cave_dirt", GO, [["call", "CaveInterior", "enter"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 5.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-25.0, 180.0, 0.0)]]],   # G-0098 굴 안 흙 복도
 	["go_cave_lava", GO, [["call", "CaveInterior", "enter"], ["call", "CaveInterior", "goto_room", [2]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 6.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-30.0, 270.0, 0.0)]]],   # 용암 방(적 셋)
 	["go_cave_end", GO, [["call", "CaveInterior", "enter"], ["call", "CaveInterior", "goto_room", [3]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 9.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-35.0, 0.0, 0.0)]]],   # 끝 그릇 굴·보물
