@@ -113,7 +113,8 @@ static func merge_children(parent: Node3D) -> int:
 	for c in parent.get_children():
 		var mi := c as MeshInstance3D
 		if mi == null or mi.get_child_count() > 0 or mi.get_script() != null or mi.mesh == null or mi.mesh.get_surface_count() != 1 \
-				or mi.material_override == null or not mi.skeleton.is_empty() or not mi.visible:
+				or mi.material_override == null or not mi.skeleton.is_empty() or not mi.visible \
+				or mi.material_overlay != null or mi.visibility_range_end > 0.0 or mi.transparency > 0.0:   # 합친 노드가 못 물려받는 설정이 있으면 건너뜀(R-5)
 			continue
 		var k := "%s|%d|%d" % [_mat_key(mi.material_override), mi.cast_shadow, mi.layers]
 		if not groups.has(k):
@@ -146,6 +147,9 @@ static func _mat_key(m: Material) -> String:
 	var sm := m as ShaderMaterial
 	if sm == null or sm.shader == null:
 		return str(m.get_instance_id())
-	## CreatureBuilder._mat 은 부를 때마다 새 재질이라 셰이더·색·윤곽선으로 같음을 본다.
-	var nxt := sm.next_pass as ShaderMaterial
-	return "%d|%s|%s" % [sm.shader.get_instance_id(), sm.get_shader_parameter("albedo_tint"), str(nxt.shader.get_instance_id()) if nxt != null and nxt.shader != null else "-"]
+	## CreatureBuilder._mat 은 부를 때마다 새 재질이라 셰이더와 모든 셰이더 값(+ next_pass 도 같은 식)으로 같음을 본다.
+	var key := "%d" % sm.shader.get_instance_id()
+	for u in sm.shader.get_shader_uniform_list():
+		var v: Variant = sm.get_shader_parameter(u.name)
+		key += "|%s=%s" % [u.name, str(v.get_instance_id()) if v is Object else str(v)]
+	return key + "|next:" + (_mat_key(sm.next_pass) if sm.next_pass != null else "-")

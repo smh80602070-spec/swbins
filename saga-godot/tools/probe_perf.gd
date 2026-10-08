@@ -276,12 +276,12 @@ func _drawshare_step() -> void:
 		if _rig:
 			_rig.rotation.y = TAU * float(_ds_dir) / DIRS
 		for c in get_tree().current_scene.get_children():
-			if c == self or c == _p or c.is_ancestor_of(_p) or not (c is Node3D):
+			if c == self or c == _p or c.is_ancestor_of(_p) or not (c is Node3D) or not (c as Node3D).visible:   # 처음부터 숨은 것은 재지 않는다(되살릴 때 켜지지 않게, R-5)
 				continue
 			_ds_nodes.append(c)
 			if c.get_child_count() > 1:
 				for g in c.get_children():
-					if g is Node3D and not g.is_ancestor_of(_p):
+					if g is Node3D and not g.is_ancestor_of(_p) and (g as Node3D).visible:
 						_ds_nodes.append(g)
 	_ds_f += 1
 	var wait := 60 if _ds_i == -1 and not _ds_hidden else 10
@@ -295,12 +295,13 @@ func _drawshare_step() -> void:
 	## 숨긴 판 → 되살린 판(기준) 을 번갈아 재서, 숨긴 값은 바로 뒤 기준과 뺀다(순간 튐에 안 끌리게).
 	if _ds_hidden:
 		_ds_hid_dc = dc
-		(_ds_nodes[_ds_i] as Node3D).visible = true
+		if is_instance_valid(_ds_nodes[_ds_i]):
+			(_ds_nodes[_ds_i] as Node3D).visible = true
 		_ds_hidden = false
 		return
 	if _ds_i == -1:
 		print("PERF share base dir=%d draw_calls=%d (마을 최대 %d)" % [_ds_dir, dc, _ds_max])
-	else:
+	elif _ds_i < _ds_nodes.size() and is_instance_valid(_ds_nodes[_ds_i]):   # 재는 사이 사라진 노드(적·효과)는 버림
 		if OS.get_environment("SAGA_PERF_DRAWSHARE") == "raw":
 			print("PERF share raw %s hidden=%d base=%d" % [_ds_nodes[_ds_i].name, _ds_hid_dc, dc])
 		_ds_rows.append([dc - _ds_hid_dc, str(get_tree().current_scene.get_path_to(_ds_nodes[_ds_i]))])
@@ -311,7 +312,12 @@ func _drawshare_step() -> void:
 			if int(r[0]) != 0:
 				print("PERF share %s %+d" % [r[1], -int(r[0])])
 		_ds_done = true
+		_frame = 0   # 다음 자리(포구)가 처음부터 — 자리 옮기기·기다리기를 건너뛰지 않게(R-5)
 		return
+	while _ds_i < _ds_nodes.size() and not is_instance_valid(_ds_nodes[_ds_i]):
+		_ds_i += 1
+	if _ds_i >= _ds_nodes.size():
+		return   # 다음 틱에 끝 처리
 	(_ds_nodes[_ds_i] as Node3D).visible = false
 	_ds_hidden = true
 
