@@ -512,5 +512,7 @@
       skip: ['story_bandi', 'story_parang', 'story_carrier', 'story_garmuri', 'story_partthief', 'story_seeddrone', 'story_horse']
     }
   };
+  /* W-0119 — 통일 소품의 시대(prop3d.byEra). 집·등롱·우물은 그 자리 땅의 시대 것만 선다 — 고향·안쪽 땅(과거)은 옛 집, 바깥 폐도시·신도시는 빌딩·돔(PLAN ⑱ "시작점 300m 안은 과거"와 같은 결) */
+  global.DG.cfg.prop3dEra = { eu_house_01: 'past', modern_block_01: 'modern', future_dome_01: 'future', street_lamp_01: 'modern', signal_pylon_01: 'future', well_01: 'past' };
   global.DG.cfg.vroidPattern = { base: '../shared/assets/patterns/', repeat: 3 };   // 무늬는 판 폴더가 아니라 shared 에만 있다(W-0071) — 기준 주소 시험이 끝나기 전에 받아도 404 가 안 나게
 })(window);

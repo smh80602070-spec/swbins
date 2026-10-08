@@ -16109,15 +16109,25 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
     t('2D 바닥 — 땅 종류(물·풀·숲·길·마을·산·논밭) 전부 go_ 타일로 이어지고, 모르는 종류는 null(옛 땅 사진)', function () {
       var M = DG.mode2d, kinds = ['water', 'grass', 'forest', 'road', 'town', 'mount', 'farm'], bad = [];
       kinds.forEach(function (k) { var u = M.tileUrl(k); if (!u || u.indexOf('assets/web2d/tile/go_') !== 0) { bad.push(k); } });
-      return bad.length === 0 && M.tileUrl('lava') === null && ('땅 ' + kinds.length + '종 → ' + M.tileUrl('grass')) || bad.join(',');
+      return bad.length === 0 && M.tileUrl('lava') === null && ('땅 ' + kinds.length + '종 → ' + M.tileUrl('grass')) || ('실패 ' + (bad.join(',') || 'lava 가 null 이 아님'));   // W-0119 — 실패 갈래가 "실패 " 없이 글을 돌려줘 PASS 로 찍혔다
     });
 
-    t('통일 3D 에셋 — 표(영웅 299·지물 42)가 있고, 소품 표의 id 는 전부 지물 GLB 이며, 시험 전·실패 때 url·heroRecipe 는 null(옛 모델)', function () {
+    t('통일 3D 에셋 — 표(영웅 299·지물 42 이상)가 있고, 소품 표의 id 는 전부 지물 GLB 이며, 시험 전·실패 때 url·heroRecipe 는 null(옛 모델)', function () {
       var A = DG.assets3d, ids = DG.assets3dIds, bad = [], props = DG.cfg.assets3d.prop;
       Object.keys(props).forEach(function (k) { props[k].forEach(function (id) { if (!A.has('world', id)) { bad.push(k + ':' + id); } }); });
       A._reset();   // 시험 전 상태로 — 이 서버엔 통일 에셋이 없으니 null 이어야 한다
       var pre = A.url('hero', 'sg_guanyu') === null && A.heroRecipe({ id: 'sg_guanyu' }) === null && A.heroRecipe(null) === null;
-      return bad.length === 0 && ids.hero.length === 299 && ids.world.length === 42 && A.has('hero', 'sg_guanyu') && !A.has('hero', 'folk_x') && pre && ('영웅 ' + ids.hero.length + ' · 지물 ' + ids.world.length + ' · 소품 표 ' + Object.keys(props).length + '칸') || bad.join(',') || '표/폴백 불일치';
+      return bad.length === 0 && ids.hero.length === 299 && ids.world.length >= 42 && A.has('hero', 'sg_guanyu') && !A.has('hero', 'folk_x') && pre && ('영웅 ' + ids.hero.length + ' · 지물 ' + ids.world.length + ' · 소품 표 ' + Object.keys(props).length + '칸') || ('실패 ' + (bad.join(',') || '표/폴백 불일치 — 지물 ' + ids.world.length));   // W-0119 — 지물은 K 가 늘린다(42→298), 실패 갈래도 실패로
+    });
+
+    t('W-0119 소품 시대 — 집·등롱은 그 땅 시대 것만, 과거 몫이 없는 등롱은 옛 목록(_base), 신화는 과거, 시대 표 밖 목록은 그대로', function () {
+      var P = DG.prop3d, base = ['x/realistic/wooden_lantern.glb'], e = { all: ['s/world3d/street_lamp_01.glb', 's/world3d/signal_pylon_01.glb'], _base: base };
+      var h = { all: ['s/world3d/eu_house_01.glb', 's/world3d/modern_block_01.glb', 's/world3d/future_dome_01.glb'] };
+      var past = P.byEra(h, h.all, 'past'), fut = P.byEra(h, h.all, 'future'), myth = P.byEra(h, h.all, 'myth');
+      var lampPast = P.byEra(e, e.all, 'past'), lampMod = P.byEra(e, e.all, 'modern'), old = P.byEra({}, ['a/House_1.glb'], 'future');
+      var ok = past.length === 1 && /eu_house_01/.test(past[0]) && fut.length === 1 && /future_dome_01/.test(fut[0]) && myth[0] === past[0] &&
+        lampPast === base && lampMod.length === 1 && /street_lamp_01/.test(lampMod[0]) && old.length === 1 && P.byEra(h, h.all, null) === h.all;
+      return ok ? '과거 집 ' + past.length + ' · 과거 등롱 → 옛 목록 · 시대 표 밖 그대로' : '실패 ' + JSON.stringify({ past: past, fut: fut, lampPast: lampPast, lampMod: lampMod });
     });
 
     t('2D 지물 — 역참·성채 세 등급·랜드마크 여섯 바이옴이 prop2d 에 이어지고 id 는 전부 지물 GLB, 시험 전엔 drawKind false(옛 그림)', function () {
@@ -16127,7 +16137,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var fake = { save: function () { calls++; }, restore: function () { calls++; }, drawImage: function () { calls++; }, beginPath: function () { calls++; }, ellipse: function () { calls++; }, fill: function () { calls++; } };
       DG.assets3d._reset();
       var r = M.drawKind(fake, 'station', 10, 10, 1);
-      return bad.length === 0 && r === false && calls === 0 && ('지물 ' + need.length + '칸 연결 · 시험 전 false') || bad.join(',') || '표/폴백 불일치';
+      return bad.length === 0 && r === false && calls === 0 && ('지물 ' + need.length + '칸 연결 · 시험 전 false') || ('실패 ' + (bad.join(',') || '표/폴백 불일치'));
     });
 
     t('2D 시트 — 풀이 없거나 2D 모드가 아니면 false 를 돌려주고(부른 쪽이 기존 그림) 아무 것도 안 그린다', function () {

@@ -357,7 +357,7 @@
            ① 크기: GLB 는 키(hh)로 고르게 늘여 그려 바닥이 p.w·p.d 보다 1.4~2.2배 넓다 → 그 자리 모델의 바닥(prop3d.footprint)
               × hh × FOOT_IN(처마·지붕 끝은 밑으로 걸어 다닌다). 모델이 아직 안 왔으면 옛 p.w·p.d
            ② 돌림: 모델은 rotation.y = rot 로 서는데 벽 사각형 식(lx = dx·cos + dz·sin)은 반대 방향으로 돈다 → -rot */
-        var fp = P3h && P3h.footprint && P3h.houseOn && P3h.houseOn() ? P3h.footprint(p.t, gx + Math.round(p.x), gy + Math.round(p.z)) : null;
+        var fp = P3h && P3h.footprint && P3h.houseOn && P3h.houseOn() ? P3h.footprint(p.t, gx + Math.round(p.x), gy + Math.round(p.z), undefined, propEra(p.t, ox + p.x, oz + p.z)) : null;
         var fw = fp ? Math.max(p.w, fp.w * hh * FOOT_IN) : p.w, fd = fp ? Math.max(p.d, fp.d * hh * FOOT_IN) : p.d;
         out.push({ x: ox + p.x, z: oz + p.z, w: fw, d: fd, rot: -(p.rot || 0), h: hh });
       } else if (p.t === 'well') {
@@ -699,12 +699,12 @@
    *
    * 아직 안 왔으면 false 를 주고, 부르는 쪽이 여태 쓰던 도형으로 간다.
    */
-  function instGlb(key, want, x, z, h, gx, gy, rot) {
+  /* W-0119 땅 시대(고향 = 과거) — 집·등롱·우물만 */ function propEra(want, x, z) { var Bz = global.DG.biome, zn = (want === 'house' || want === 'lamp' || want === 'well') && Bz && Bz.zoneAt ? Bz.zoneAt(x, z) : undefined; return zn === undefined ? null : (zn && zn.era) || 'past'; }  function instGlb(key, want, x, z, h, gx, gy, rot) {
     var P3 = global.DG.prop3d;
     if (!P3) { return false; }
     /* ⑲-33 고원 땅 나무는 눈 재질 — 덩이 이름을 갈라 다른 땅 나무와 안 섞인다 */
     var FRs = global.DG.frost, snow = want === 'tree' && FRs && FRs.treeSnow ? FRs.treeSnow(x, z) : 0;
-    var got = P3.parts(want, gx, gy, undefined, snow);
+    var got = P3.parts(want, gx, gy, undefined, snow, propEra(want, x, z));
     if (!got || !got.parts.length) { return false; }
     var tag = got.snow ? '#snow' + got.snow : '';
     /* 자리마다 조금씩 돌려 세운다 — 안 돌리면 나무 백 그루가 같은 쪽을 본다.

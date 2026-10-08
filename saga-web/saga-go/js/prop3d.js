@@ -300,6 +300,9 @@
     if (!name) { return REG; }
     if (!urls) { delete REG[name]; return REG; }
     REG[name] = REG[name] || {};
+    /* W-0119 — 처음 갈아 끼울 때 옛 목록을 _base 로 남긴다. 시대 표(cfg.prop3dEra)에 그 시대 몫이 없으면 거기로 돌아간다
+       (과거 땅 등롱 = 옛 실사 나무 등롱) */
+    if ((season || 'all') === 'all' && REG[name].all && !REG[name]._base) { REG[name]._base = REG[name].all; }
     REG[name][season || 'all'] = [].concat(urls);
     return REG;
   }
@@ -336,13 +339,29 @@
    * @param gy   격자 y
    * @param sk   철을 못박고 싶을 때 (안 주면 지금 철)
    */
-  function pick(name, gx, gy, sk) {
+  /** W-0119 — 파일 이름 → 시대(past·modern·future). 판 설정 `DG.cfg.prop3dEra`(이름 → 시대), 없으면 null */
+  function eraOfUrl(u) {
+    var t = global.DG.cfg && global.DG.cfg.prop3dEra;
+    if (!t || typeof u !== 'string') { return null; }
+    var b = u.slice(u.lastIndexOf('/') + 1).replace(/\.(glb|gltf)$/, '');
+    return t[b] || null;
+  }
+  /** 시대로 거른다 — 신화 땅은 과거로 본다. 그 시대 몫이 없고 과거면 옛 목록(_base), 시대 표에 없는 목록은 그대로 */
+  function byEra(e, list, era) {
+    if (!era || !list || !list.length) { return list; }
+    var want = era === 'myth' ? 'past' : era, out = [], tagged = false, i, t;
+    for (i = 0; i < list.length; i++) { t = eraOfUrl(list[i]); if (t) { tagged = true; } if (t === want) { out.push(list[i]); } }
+    if (out.length || !tagged) { return out.length ? out : list; }
+    return want === 'past' && e._base && e._base.length ? e._base : list;
+  }
+
+  function pick(name, gx, gy, sk, era) {
     if (!ON()) { return null; }
     if ((name === 'house' || name === 'tower') && !houseOn()) { return null; }
     var e = REG[name];
     if (!e) { return null; }
     var key = sk || seasonKey();
-    var list = e[key] && e[key].length ? e[key] : e.all;
+    var list = byEra(e, e[key] && e[key].length ? e[key] : e.all, era);
     if (!list || !list.length) { return null; }
     var n = Math.min(list.length, VARIANTS());
     var h = core().hash2(gx * 17 + 5, gy * 29 + 3) * 2;   // hash2 는 0~0.5 라 두 배로
@@ -405,7 +424,30 @@
    *  주석) Poly Haven 사진측량 모델은 **그 텍스처가 실사화의 전부**라 벗기면
    *  나무가 밋밋한 회색 덩어리로 보인다 — "실사화 안 됐다"던 제보가 이거였다.
    *  IBL(`world3d.js`)이 이미 있어 PBR이 까맣게 뜨는 옛 문제도 없다 */
-  function looksRealistic(url) { return typeof url === 'string' && url.indexOf('/realistic/') >= 0; }
+  /* W-0119 — 통일 3D 에셋(shared/assets/world3d, 툰 GLB + webp 텍스처)도 무늬가 전부라 벗기지 않는다. 80ec96f19 가 집·등롱·우물을
+     이 경로로 갈아 끼운 뒤 lambertOf 가 텍스처를 버려 마을이 회색 덩어리가 됐다 */
+  function looksRealistic(url) { return typeof url === 'string' && (url.indexOf('/realistic/') >= 0 || url.indexOf('/world3d/') >= 0); }
+
+  /** W-0119 — 양자화 GLB(KHR_mesh_quantization, K-0071 Meshopt 재압축 10-05)는 위치·법선이 Int16/Int8 이고 노드 축척으로
+   *  키를 낸다. 여기에 matrixWorld 를 곱하면 three 가 결과를 **같은 정수 배열에 반올림해** 넣어 1 단위 계단으로 뭉개진다
+   *  (집이 무릎 높이 구겨진 덩어리로 섰던 이유). 굽기 전에 Float32 로 푼다 — 정규화(normalized) 값도 getX 가 풀어 준다 */
+  function floatGeo(g) {
+    var t = three(), names = Object.keys(g.attributes), n, a, k, i, arr, sz;
+    for (n = 0; n < names.length; n++) {
+      a = g.attributes[names[n]];
+      if (!a.isInterleavedBufferAttribute && a.array instanceof Float32Array) { continue; }
+      sz = a.itemSize; arr = new Float32Array(a.count * sz);
+      for (i = 0; i < a.count; i++) {
+        arr[i * sz] = a.getX(i);
+        if (sz > 1) { arr[i * sz + 1] = a.getY(i); }
+        if (sz > 2) { arr[i * sz + 2] = a.getZ(i); }
+        if (sz > 3) { arr[i * sz + 3] = a.getW(i); }
+      }
+      g.setAttribute(names[n], new t.BufferAttribute(arr, sz));
+    }
+    for (k in g.morphAttributes) { if (g.morphAttributes.hasOwnProperty(k)) { delete g.morphAttributes[k]; } }
+    return g;
+  }
 
   function partsOf(gltf, url) {
     var t = three();
@@ -425,7 +467,7 @@
     var m4 = new t.Matrix4();
     var out = [], i;
     for (i = 0; i < raw.length; i++) {
-      var g = raw[i].geometry.clone();
+      var g = floatGeo(raw[i].geometry.clone());
       g.applyMatrix4(raw[i].matrixWorld);
       /* 키 1 · 밑동 0 · 가운데 정렬 */
       m4.makeTranslation(-cx, -box.min.y, -cz);
@@ -563,9 +605,9 @@
    * 그 자리에 설 모델의 **바닥 크기**(키 1 기준 가로 w·세로 d) — 벽 판정이 보이는 모델과 맞게(2026-09-27 실기 "집을 통과하네 아직도").
    * 아직 안 왔으면 null(부르는 쪽이 제 어림값을 쓴다). parts() 와 같은 pick 이라 같은 자리엔 같은 모델이다
    */
-  function footprint(name, gx, gy, sk) {
+  function footprint(name, gx, gy, sk, era) {
     if (!three()) { return null; }
-    var url = pick(name, gx, gy, sk);
+    var url = pick(name, gx, gy, sk, era);
     var c = url ? cache[url] : null;
     if (!c || c.state !== 'ok' || !c.parts) { return null; }
     if (!c.foot) {
@@ -606,9 +648,9 @@
    * 이 소품의 조각들 — 아직 안 왔으면 **받기 시작하고 null 을 준다**.
    * 부르는 쪽(`world3d`)은 null 을 받으면 그냥 여태 쓰던 도형으로 세운다.
    */
-  function parts(name, gx, gy, sk, snow) {
+  function parts(name, gx, gy, sk, snow, era) {
     if (!three()) { return null; }
-    var url = pick(name, gx, gy, sk);
+    var url = pick(name, gx, gy, sk, era);
     if (!url) { return null; }
     var c = acquire(url);
     if (c.state !== 'ok') { return null; }
@@ -679,7 +721,7 @@
   global.DG.prop3d = {
     REG: REG, register: register,
     /* 값을 내는 함수 — three 없이도 돈다 (자가진단이 이것만 따로 본다) */
-    pick: pick, urls: urls, eagerUrls: eagerUrls, seasonKey: seasonKey, seasonTintHex: seasonTintHex,
+    pick: pick, byEra: byEra, eraOfUrl: eraOfUrl, urls: urls, eagerUrls: eagerUrls, seasonKey: seasonKey, seasonTintHex: seasonTintHex,
     ready: ready, casts: casts, PALETTE: PALETTE, snapPalette: snapPalette,
     houseOn: houseOn, heightMul: heightMul, FUSION: FUSION, footprint: footprint,
     /* 그림 층 */

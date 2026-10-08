@@ -311,7 +311,7 @@
     placeActor(meA, mx, my, h * farBoost(mx, my), walkBob + air, walking && !air && !mtRef, mot.phase, now);
     if (air > 0 && meA.mesh) { meA.node.position.y += air; }
     if (mtRef) {                                                                     // ⑲-61 말 — 같은 자리·같은 걸음, 나는 등 높이로
-      var mtA = actorOf('mount', 'pet', mtRef, 96);
+      var mtA = actorOf('mount:' + (mtRef.id || ''), 'pet', mtRef, 96);   // W-0119 — 탈것마다 따로(키 하나면 탄 채 바꿔도 첫 몸이 그대로였다)
       mtA.sky = meSky();
       var mtAlt = MTr.altitude ? MTr.altitude() : 0, fl = mtAlt >= MTr.AIR_MIN;
       placeActor(mtA, mx, my, h * farBoost(mx, my) * MTr.SCALE, 0, (walking || fl) && !air, mot.phase, now);
