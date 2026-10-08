@@ -1,5 +1,5 @@
 extends RefCounted
-## G-0086 — 사가마을 이야기 표(정본 `scenario/saga-forest.md` "하늘 금 우체통"). 봄 · 옛 우체통 네 장 + G-0090 여름 · 금으로 온 손님들 네 장 + G-0094 가을 · 앞날의 기록 네 장 + G-0099 겨울 · 이어진 숲 네 장(결말 — 가을 고르기 crack 로 갈림).
+## G-0086 — 사가마을 이야기 표(정본 `scenario/saga-forest.md` "하늘 금 우체통"). 봄 · 옛 우체통 네 장 + G-0090 여름 · 금으로 온 손님들 네 장 + G-0094 가을 · 앞날의 기록 네 장 + G-0099 겨울 · 이어진 숲 네 장(결말 — 가을 고르기 crack 로 갈림) + G-0103 둘째 해 봄 · 우체통의 답장 네 장.
 ## 대사·고르기는 웹 구현(saga-web/saga-forest/js/data-scenario.js SCENES)과 같다. 단계는 고돗 사가마을(바이옴 넷·주민 여섯·
 ## 집 가구·박물관, 택배·폐허·행사 놀이 없음)에 맞춰 바꿨다 — 까닭은 티켓 G-0086 "단계 바꿈".
 ## 엔진은 world/scenario_runner.gd, 진행은 ForestSaveState.scenario(fresh() 모양). 인물은 전부 가상(이름 정책). 싸움·실패 없음.
@@ -191,6 +191,53 @@ const SCENES_WINTER := {
 	]},
 }
 
+## G-0103 둘째 해 봄 — 웹 대사 그대로.
+const SCENES_Y2 := {
+	"rep1": {"lines": [
+		["keeper", "눈 녹은 아침에 별 우체통이 저 혼자 덜컹거렸소. 지난겨울 부친 편지에 답이 온 모양이오."],
+		["dareum", "배달 왔습니다! 소인이 찍힌 데가 한 곳이 아니에요. 붓글씨 봉투, 택배 영수증 도장, 빛 도장까지 세 시대 답장이 한꺼번에요."],
+		["me", "이걸 마을 사람들에게 하나씩 전해 드리면 되겠군요."],
+	]},
+	"rep2": {"lines": [
+		["dareum", "전해 주셔서 고맙습니다. 받은 분들 얼굴이 봄꽃 같더군요. 아직 우체통 안쪽에 답장이 한 통 더 남았는데 — 겉에 여우 그림이 그려져 있어요."],
+		["keeper", "여우 그림이라면 호연이오. 그 사람 답장은 직접 받으러 가는 게 예의라오."],
+	]},
+	"hoy1": {"lines": [
+		["hoyeon", "답장은 우체통에 넣기 전에 얼굴 보고 전하는 게 장사꾼 예의요. 지난해 좌판을 내주어 고마웠소. 올해는 내가 대접하겠소."],
+		["me", "대접이라니요. 저야 꽃 몇 송이 모았을 뿐인데요."],
+		["hoyeon", "꽃 다섯 송이만 더 모아 오시오. 시대를 잃은 물건 중에 이 마을에 어울리는 걸 하나 골라 두었소."],
+	]},
+	"hoy2": {"lines": [
+		["hoyeon", "꽃이 곱구려. 이 옛 방울에 꽃잎을 달아 두면 봄바람에 절로 울지. 마을 이웃 마음이 이만큼 통하면 방울도 제 소리를 낸다오."],
+		["keeper", "마을 사람과 정이 여섯 하트쯤 쌓이면 방울이 제 목소리를 낼 게요."],
+	]},
+	"hoy3": {"lines": [
+		["hoyeon", "방울이 우는구려! 옛 땅 방울 소리와 앞날 빛 부채 바람이 한자리에서 섞였소. 이게 답장이오. 이 마을은 시대가 오가는 길목이 되었소."],
+		["me", "아직 모자란 이웃인데도 답장을 이렇게 받아도 되나요?"],
+		["hoyeon", "답장은 받는 이가 아니라 부친 이가 정하는 법이오. 부친 이는 그대였소."],
+	]},
+	"reb1": {"lines": [
+		["k7", "기록판이 갱신됐어요. \"이어진 숲\" 밑에 새 줄이 생겼는데 — \"옛 우체통 복원 미완\"."],
+		["keeper", "탑성 폐허의 옛 우체통은 별 우체통과 한 쌍이오. 한쪽만 서 있으면 답장이 길을 잃는다오."],
+		["me", "폐허에 가서 무너진 자리를 살펴보겠습니다."],
+	]},
+	"reb2": {"lines": [
+		["dareum", "폐허 돌 위에 안전모 하나가 놓여 있었죠? 현대 공사장 물건이에요. 누군가 이미 쌓기 시작했다는 뜻이에요."],
+		["k7", "설계도 홀로그램 조각도 나왔어요. 앞날 사람과 옛사람이 함께 쌓는 우체통이라니, 기록에 없던 일입니다."],
+		["me", "편지 한 통만 더 배달하면 첫 돌을 놓을 수 있겠어요."],
+	]},
+	"ans1": {"lines": [
+		["keeper", "옛 우체통에 첫 돌이 놓였소. 이제 삼짇날 꽃놀이를 열어 새 우체통을 알리면 좋겠구려."],
+		["hoyeon", "방울을 꽃가지에 달고 나가겠소. 이번 꽃전은 내가 빚소."],
+		["dareum", "저는 답장 엽서를 한 장씩 돌리겠습니다. 이 마을 소인이 찍힌 엽서예요!"],
+	]},
+	"ans2": {"lines": [
+		["k7", "꽃놀이가 끝났군요. 기록판 새 줄이 바뀌었어요 — \"복원 미완\"이 \"이어 쌓는 중\"으로요."],
+		["keeper", "이 마을은 이제 편지를 받기만 하는 곳이 아니라 답장을 보내는 곳이오. 그대는 답장을 받는 이웃이오."],
+		["me", "내년에도, 그다음에도 이 마을에서 편지를 부치겠습니다."],
+	]},
+}
+
 const CHAPTERS := [
 	{"id": "sp_move", "no": 1, "season": "spring", "title": "이사 오던 날", "stage": "마을 · 접수대",
 		"blurb": "짐을 풀던 밤, 하늘에 금이 가고 택배 기사 달음이 소포와 함께 떨어진다.",
@@ -285,6 +332,28 @@ const CHAPTERS := [
 		"steps": [{"t": "talk", "scene": "moon1"}, {"t": "fest", "key": "daeborum", "npc": "npc_keeper"},
 			{"t": "spot", "key": "forest_shrine_stone", "label": "✨ 별 우체통(옛 우체통)"}, {"t": "talk", "scene": "moon2", "by": "crack"}],
 		"gold": 3000},
+	## G-0103 둘째 해 봄(결말 뒤) — 답장 배달 = 주민 곁 돌기(rounds), 탑성 폐허의 옛 우체통 = 봄부터 쓰던 옛 돌사당 곁 표지, 삼짇날 = 숲지기 기념 놀이.
+	{"id": "y2_reply", "no": 17, "season": "spring2", "title": "별 우체통의 첫 답장", "stage": "마을 · 별 우체통",
+		"blurb": "눈 녹은 아침, 지난겨울 부친 편지에 세 시대의 답장이 한꺼번에 도착한다.",
+		"mix": {"past": "붓글씨 봉투", "now": "택배 영수증 도장", "future": "빛 도장 답신"},
+		"steps": [{"t": "talk", "scene": "rep1"}, {"t": "rounds", "n": 2, "why": "주민에게 답장 전하기"}, {"t": "talk", "scene": "rep2"}],
+		"gold": 800},
+	{"id": "y2_hoyeon", "no": 18, "season": "spring2", "title": "호연의 답장", "stage": "꽃밭 · 마을",
+		"blurb": "여우 화상 호연이 지난해 좌판의 답례로 옛 방울을 내놓는다. 이웃과 정이 쌓여야 방울이 운다.",
+		"mix": {"past": "호연의 옛 방울", "now": "호연이 배운 택배 송장", "future": "빛 부채 바람"},
+		"steps": [{"t": "talk", "scene": "hoy1"}, {"t": "gather", "cat": "꽃", "n": 5}, {"t": "talk", "scene": "hoy2"}, {"t": "heart", "n": 6}, {"t": "talk", "scene": "hoy3"}],
+		"gold": 900},
+	{"id": "y2_ruin", "no": 19, "season": "spring2", "title": "다시 쌓는 옛 우체통", "stage": "옛 돌사당",
+		"blurb": "기록판에 \"옛 우체통 복원 미완\" 줄이 생긴다. 무너진 자리에서 옛사람과 앞날 사람이 함께 쌓은 흔적을 찾는다.",
+		"mix": {"past": "무너진 탑성 돌", "now": "공사용 안전모", "future": "설계도 홀로그램"},
+		"steps": [{"t": "talk", "scene": "reb1"}, {"t": "spot", "key": "forest_shrine_stone", "label": "🧱 옛 우체통 무너진 자리"}, {"t": "talk", "scene": "reb2"},
+			{"t": "rounds", "n": 1, "why": "편지 한 통 배달"}],
+		"gold": 1000},
+	{"id": "y2_bloom", "no": 20, "season": "spring2", "title": "답장이 온 봄", "stage": "마을 광장",
+		"blurb": "옛 우체통에 첫 돌이 놓인 날, 삼짇날 꽃놀이로 새 우체통을 알린다. 기록판 줄이 \"이어 쌓는 중\"으로.",
+		"mix": {"past": "삼짇날 꽃전", "now": "마을 소인 답장 엽서", "future": "기록판 새 줄"},
+		"steps": [{"t": "talk", "scene": "ans1"}, {"t": "fest", "key": "samjin", "npc": "npc_keeper"}, {"t": "talk", "scene": "ans2"}],
+		"gold": 3500},
 ]
 
 const BIOME_NAMES := {"meadow": "꽃밭", "dark": "어둑숲", "mush": "버섯숲", "rocky": "바위 지대"}
@@ -292,7 +361,7 @@ const FEST_NAMES := {"samjin": "삼짇날 꽃놀이", "dano": "단오 창포못 
 	"dongji": "동지 팥죽 나눔", "seollal": "설날 세배", "daeborum": "대보름 달집 태우기"}
 const FEST_TOASTS := {"samjin": "호연이 꽃 좌판을 펼친다.", "dano": "창포못에 낚싯대가 줄지어 섰다.", "chilseok": "오작교 등 아래로 소원이 하늘 금으로 오른다.", "chuseok": "두 편이 줄을 당기고 달 아래 송편을 나눈다.",
 	"dongji": "팥죽 솥에서 김이 오르고 루미의 온열 장치가 반짝인다.", "seollal": "복주머니를 받고 새해 인사를 돌 차례.", "daeborum": "달집이 타오르고 하늘 금이 우체통 쪽으로 내려온다."}
-const SEASON_NAMES := {"spring": "봄", "summer": "여름", "autumn": "가을", "winter": "겨울"}
+const SEASON_NAMES := {"spring": "봄", "summer": "여름", "autumn": "가을", "winter": "겨울", "spring2": "둘째 해 봄"}
 ## 신호 없이 보유 수가 는 만큼 채집으로 세는 갈래(낚시는 채집 신호가 없다).
 const POLL_CATS := ["물고기"]
 
@@ -314,9 +383,9 @@ static func normalize(st: Variant) -> Dictionary:
 	return out
 
 
-## 장면 정의(봄~가을 SCENES + 겨울 SCENES_WINTER).
+## 장면 정의(봄~가을 SCENES + 겨울 SCENES_WINTER + 둘째 해 SCENES_Y2).
 static func scene_def(id: String) -> Dictionary:
-	return SCENES.get(id, SCENES_WINTER.get(id, {}))
+	return SCENES.get(id, SCENES_WINTER.get(id, SCENES_Y2.get(id, {})))
 
 
 static func chapter(st: Dictionary) -> Dictionary:
