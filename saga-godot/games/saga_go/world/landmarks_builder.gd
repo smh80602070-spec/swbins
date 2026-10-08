@@ -525,13 +525,14 @@ func _add_bridge() -> void:
 	mmi.multimesh = mm
 	mmi.name = "Bridge"
 	add_child(mmi)
+	_add_bridge_rail_walls(base_pos, bridge_length, bridge_width)
 	_add_discovery_area("bridge", base_pos, self)
 
 
 ## G-0113 — 널판(plank_deck_01, 폭 6×길이 1×두께 0.12, 아랫면 y=0) 한 장을 가늘게 늘려 기둥·난간으로 쓴다.
 ## 같은 MultiMesh 에 넣어 그리기는 늘지 않는다. 기둥은 강바닥까지 내려가 다리가 물에 떠 보이지 않게,
-## 난간은 위(1.0m)·가운데(0.5m) 두 줄을 1m 이음 타일로. 보이기만 한다 — 걷는 바닥은 terrain_builder "B" 타일(한 칸 너비)이라
-## 난간에 충돌을 달면 다리 옆 물 위 바닥에서 다리로 올라올 때 투명한 벽이 된다(G-0113 R-5).
+## 난간은 위(1.0m)·가운데(0.5m) 두 줄을 1m 이음 타일로. 걷는 바닥은 terrain_builder "B" 칸(G-0115 부터 널판 폭 6m)이라
+## 난간 충돌(_add_bridge_rail_walls)이 그 가장자리와 맞는다.
 const BRIDGE_RAIL_INSET := 0.12
 const BRIDGE_RAIL_HEIGHTS := [0.5, 1.0]
 const BRIDGE_RAIL_SIZE := 0.1
@@ -559,3 +560,21 @@ func _bridge_rail_xforms(base_pos: Vector3, length: float, width: float) -> Arra
 			for sx in [-side_x, side_x]:
 				out.append(Transform3D(rail_basis, base_pos + Vector3(sx, deck_top + float(h) - BRIDGE_RAIL_SIZE * 0.5 - base_pos.y, -length * 0.5 + 0.5 + i)))
 	return out
+
+
+## 난간 충돌 — 걸어서 강으로 떨어지지 않게(점프 1.47m 로는 넘는다). 경계 층이라 카메라 끈은 안 걸린다(house_interiors 와 같은 꼴).
+## 걷는 바닥이 널판 폭과 같아진 G-0115 부터 둔다(그 전엔 바닥이 48m 라 투명한 벽이 됐다).
+func _add_bridge_rail_walls(base_pos: Vector3, length: float, width: float) -> void:
+	var body := StaticBody3D.new()
+	body.name = "BridgeRails"
+	body.collision_layer = TerrainBuilder.BORDER_LAYER
+	body.collision_mask = 0
+	add_child(body)
+	var deck_top := base_pos.y + PLANK_DECK_THICK * 0.5
+	for sx in [-1.0, 1.0]:
+		var box := BoxShape3D.new()
+		box.size = Vector3(0.2, 1.0, length)
+		var cs := CollisionShape3D.new()
+		cs.shape = box
+		cs.position = Vector3(base_pos.x + sx * (width * 0.5 - BRIDGE_RAIL_INSET), deck_top + 0.5, base_pos.z)
+		body.add_child(cs)

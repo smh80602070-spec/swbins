@@ -112,6 +112,8 @@ const WATER_HEIGHT_ABOVE_BED := 0.55
 ## 다리 널판이 강바닥 위로 뜨는 높이. landmarks_builder.gd의 다리도
 ## 이 상수를 그대로 가져다 쓴다 — 두 파일이 각자 값을 정하면 어긋난다.
 const BRIDGE_CLEARANCE := 2.0
+## G-0115 "B" 칸 걷는 바닥 너비 = 그 위 널판 폭(landmarks_builder _add_bridge 6m · region2_coast _build_dock 4m). 표에 없으면 칸 전체.
+const BRIDGE_WALK_WIDTH := {"village": 6.0, "coast": 4.0}
 
 ## 산 높이(m). 2m 계단으로 끊어 이웃 산끼리도 절벽 단이 생기게 한다.
 const MOUNTAIN_INNER_MIN := 10.0
@@ -792,7 +794,8 @@ func _build_collision() -> void:
 				continue
 			var bridge_top: float = LEGEND["B"].height + BRIDGE_CLEARANCE
 			var box := BoxShape3D.new()
-			box.size = Vector3(tile_size, 0.6, tile_size)
+			## G-0115 — 칸 전체(48m)를 깔면 널판 옆 강물 위도 걸어졌다. 보이는 널판 폭만(길이는 칸 전체 — 양쪽 뭍까지 잇는다).
+			box.size = Vector3(float(BRIDGE_WALK_WIDTH.get(region_id, tile_size)), 0.6, tile_size)
 			var bcs := CollisionShape3D.new()
 			bcs.shape = box
 			bcs.position = TestMap.world_pos(x, y, region_id) + Vector3(0, bridge_top, 0)

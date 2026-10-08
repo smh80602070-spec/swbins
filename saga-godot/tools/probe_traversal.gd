@@ -259,7 +259,23 @@ func _physics_process(_delta: float) -> void:
 				Input.action_release("move_back")
 				_check("bridge_cross", _p.mode == _p.Mode.GROUND and _p.global_position.z > _x0 + 18.0, "mode=%d %s mid_z=%.1f" % [_p.mode, _pos(), _x0])
 				_next()
-		18:
+		18: # ⑲ G-0115 — 다리 옆 강물 위는 못 걷는다(걷는 바닥 = 널판 폭 6m), 다리 위에서 옆으로 가면 난간에 막힌다
+			if _frame == 1:
+				var b := TestMap.world_pos(5, 7)
+				_x0 = b.x
+				_y0 = b.y + TerrainBuilder.LEGEND["B"].height + TerrainBuilder.BRIDGE_CLEARANCE
+				_teleport(Vector3(b.x + 9.0, _y0 + 1.0, b.z))   # 널판 가장자리(3m)에서 6m 옆 물 위
+			if _frame == 60:
+				_check("bridge_side_water", _p.global_position.y < _y0 - 0.5 or _p.mode == _p.Mode.SWIM, "mode=%d %s deck_y=%.2f" % [_p.mode, _pos(), _y0])
+				var b2 := TestMap.world_pos(5, 7)
+				_teleport(Vector3(b2.x, _y0 + 1.0, b2.z))
+			if _frame == 90:
+				Input.action_press("move_right")
+			if _frame == 240:
+				Input.action_release("move_right")
+				_check("bridge_rail", _p.mode == _p.Mode.GROUND and absf(_p.global_position.x - _x0) < 3.0 and _p.global_position.y > _y0 - 0.2, "mode=%d %s x0=%.1f" % [_p.mode, _pos(), _x0])
+				_next()
+		19:
 			print("TRAVERSAL_PROBE_DONE fails=%d" % _fails)
 			get_tree().quit()
 
