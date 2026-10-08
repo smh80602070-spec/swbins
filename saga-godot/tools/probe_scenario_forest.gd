@@ -11,6 +11,7 @@ extends SceneTree
 ##    → moon1 → 숲지기(대보름) → 별 우체통 → moon2_open(가을 답) · quiet 답이면 moon2_quiet(겨울 끝, 금 합 18000)
 ## ②-5 G-0103 둘째 해 봄: rep1 → 주민 둘 → rep2 → hoy1 → 꽃 5 → hoy2 → 하트 6(5 머묾) → hoy3 → reb1 → 옛 돌사당 → reb2 → 편지 한 통 → ans1 → 숲지기(삼짇날) → ans2(금 합 24200)
 ## ②-6 G-0107 둘째 해 여름: sal1 → 물고기 3 → sal2 → lens1 → 꽃밭·버섯숲(차례) → lens2 → night1 → 어둑숲 → 곤충 3 → night2 → end1 → 숲지기(칠석) → end2(금 합 31600)
+## ②-7 G-0108 둘째 해 가을: rum1 → 광석 3 → rum2 → 배달 하나 → rec1 → 조개 기증 3(둘 머묾) → rec2 → yhar1 → 하트 8(7 머묾) → 숲지기(한가위) → yhar2 → ccv1 → 북쪽 동굴 → ccv2(금 합 40300)
 ## ③ 옛 세이브 빈 칸 → 봄 1장 · JSON 왕복 · 이미 가구가 있으면 place 바로 넘어감
 ## ④ 대화 창: 열면 멈춤·ui_modal · 다음 줄 · 끝 줄 고르기 단추 · pick 하면 닫히고 멈춤 풀림·답 전달 · 고르기 없는 창은 끝 줄 next 로 닫힘
 ## ⑤ 엔진 스크립트 컴파일·forest_village.gd 컴파일
@@ -39,7 +40,8 @@ func _initialize() -> void:
 	var ids: Array = S.CHAPTERS.map(func(c): return String(c.id))
 	check(ids == ["sp_move", "sp_postbox", "sp_fox", "sp_museum", "su_sailor", "su_photo", "su_waterfall", "su_star", "au_rumi", "au_insect", "au_harvest", "au_cave",
 		"wi_letters", "wi_dongji", "wi_newyear", "wi_moon", "y2_reply", "y2_hoyeon", "y2_ruin", "y2_bloom",
-		"y2_album", "y2_lens", "y2_night", "y2_star"], "장 스물넷 id 정본 %s" % [ids])
+		"y2_album", "y2_lens", "y2_night", "y2_star",
+		"y2_rumi", "y2_record", "y2_moon", "y2_cavebox"], "장 스물여덟 id 정본 %s" % [ids])
 	var bad: Array = []
 	var known := ["talk", "place", "visit", "biome", "spot", "gather", "fest", "heart", "donate", "rounds"]
 	for c: Dictionary in S.CHAPTERS:
@@ -329,7 +331,40 @@ func _initialize() -> void:
 	ctx.near = {"npc_keeper": true}
 	take.call(S.check(st, ctx))
 	take.call(S.finish_talk(st, ctx))   # end2
-	check(S.finished(st) and int(log.gold) == 31600 and (st.done as Array).size() == 24 and S.objective(st) == "", "둘째 해 여름 끝 — 금 합 %d" % int(log.gold))
+	check(int(log.gold) == 31600 and (st.done as Array).size() == 24 and S.pending_scene(st) == "rum1", "둘째 해 여름 끝 — 금 합 %d → 가을 rum1" % int(log.gold))
+
+	# ②-7 G-0108 둘째 해 가을
+	ctx.near = {}
+	take.call(S.finish_talk(st, ctx))   # rum1
+	S.add_gather(st, "광석", 3)
+	take.call(S.check(st, ctx))
+	take.call(S.finish_talk(st, ctx))   # rum2
+	ctx.near = {"npc_wanderer": true}
+	take.call(S.check(st, ctx))
+	check(S.pending_scene(st) == "rec1", "광석 3 → 배달 하나 → rec1")
+	ctx.near = {}
+	take.call(S.finish_talk(st, ctx))   # rec1
+	ctx.donated = {"화석": 5, "곤충": 5, "조개": 2}
+	take.call(S.check(st, ctx))
+	check(String(S.step(st).t) == "donate" and String(S.step(st).cat) == "조개", "조개 둘로는 머묾")
+	ctx.donated = {"화석": 5, "곤충": 5, "조개": 3}
+	take.call(S.check(st, ctx))
+	take.call(S.finish_talk(st, ctx))   # rec2
+	check(S.pending_scene(st) == "yhar1" and not S.scene_def("yhar1").is_empty(), "26장 끝 → yhar1(첫해 har1 과 다른 장면)")
+	take.call(S.finish_talk(st, ctx))
+	ctx.max_heart = 7
+	take.call(S.check(st, ctx))
+	check(String(S.step(st).t) == "heart" and int(S.step(st).n) == 8, "하트 7 로는 머묾")
+	ctx.max_heart = 8
+	ctx.near = {"npc_keeper": true}
+	take.call(S.check(st, ctx))
+	take.call(S.finish_talk(st, ctx))   # yhar2
+	ctx.near = {}
+	take.call(S.finish_talk(st, ctx))   # ccv1
+	ctx.near = {"forest_cairn_ne": true}
+	take.call(S.check(st, ctx))
+	take.call(S.finish_talk(st, ctx))   # ccv2
+	check(S.finished(st) and int(log.gold) == 40300 and (st.done as Array).size() == 28 and S.objective(st) == "", "둘째 해 가을 끝 — 금 합 %d" % int(log.gold))
 	check(S.pending_scene(S.normalize({"ch": 15, "step": 3, "choices": {"crack": "quiet"}})) == "moon2_quiet", "답 quiet → moon2_quiet")
 	check(S.pending_scene(S.normalize({"ch": 15, "step": 3})) == "moon2_open", "답 없으면 첫 답 open")
 
