@@ -1,0 +1,796 @@
+{
+ "note": "K-0036 — 짧은 대사 음성. 파일 = voice_<목소리>_<줄 id>.ogg. 인물은 assign 의 목소리 줄을 쓰고, system 은 NA(해설) 한 벌. 생성: tools/asset-forge/voicepack.py",
+ "voices": {
+  "M1": {
+   "gender": "M",
+   "desc": "A firm adult Korean man in his thirties, strong chest voice, confident and commanding, warrior tone.",
+   "sample": "앞으로! 내가 길을 연다!"
+  },
+  "M2": {
+   "gender": "M",
+   "desc": "A calm Korean man in his forties, low soft voice, measured and thoughtful, scholar tone.",
+   "sample": "서두르지 말게. 길은 하나가 아니니."
+  },
+  "M3": {
+   "gender": "M",
+   "desc": "An elderly Korean man, deep warm slightly husky voice, slow and dignified, wise elder tone.",
+   "sample": "허허, 오랜만에 반가운 얼굴이로구나."
+  },
+  "M4": {
+   "gender": "M",
+   "desc": "A cheerful young Korean man in his early twenties, bright energetic voice, quick and friendly.",
+   "sample": "좋아, 이번엔 내 차례지!"
+  },
+  "M5": {
+   "gender": "M",
+   "desc": "A rough Korean man, gravelly low voice, blunt and gruff, tough mercenary tone.",
+   "sample": "흥, 덤빌 테면 덤벼 봐."
+  },
+  "F1": {
+   "gender": "F",
+   "desc": "A bright young Korean woman, clear and lively voice, slightly fast, friendly and warm.",
+   "sample": "어서 와요! 기다리고 있었어요."
+  },
+  "F2": {
+   "gender": "F",
+   "desc": "A calm adult Korean woman, soft elegant voice, graceful and composed, noble tone.",
+   "sample": "예를 갖추어 맞이하겠습니다."
+  },
+  "F3": {
+   "gender": "F",
+   "desc": "A strong Korean woman in her thirties, clear firm voice, brave and determined, warrior tone.",
+   "sample": "물러서지 마! 여기서 막는다!"
+  },
+  "F4": {
+   "gender": "F",
+   "desc": "A gentle elderly Korean woman, warm kind voice, slow and caring, grandmother tone.",
+   "sample": "아이고, 먼 길 오느라 고생했구나."
+  },
+  "F5": {
+   "gender": "F",
+   "desc": "A playful young Korean woman, light teasing voice, quick and witty, mischievous tone.",
+   "sample": "어머, 벌써 지친 거야?"
+  },
+  "NA": {
+   "gender": "-",
+   "desc": "A neutral clear Korean announcer voice, calm and even, friendly system guide tone.",
+   "sample": "저장이 완료되었습니다."
+  }
+ },
+ "lines": [
+  {
+   "id": "shout_01",
+   "kind": "shout",
+   "text": "간다!"
+  },
+  {
+   "id": "shout_02",
+   "kind": "shout",
+   "text": "받아라!"
+  },
+  {
+   "id": "shout_03",
+   "kind": "shout",
+   "text": "이걸로 끝이다!"
+  },
+  {
+   "id": "shout_04",
+   "kind": "shout",
+   "text": "물러서!"
+  },
+  {
+   "id": "shout_05",
+   "kind": "shout",
+   "text": "조심해!"
+  },
+  {
+   "id": "shout_06",
+   "kind": "shout",
+   "text": "지금이야!"
+  },
+  {
+   "id": "shout_07",
+   "kind": "shout",
+   "text": "막아라!"
+  },
+  {
+   "id": "shout_08",
+   "kind": "shout",
+   "text": "한 번 더!"
+  },
+  {
+   "id": "shout_09",
+   "kind": "shout",
+   "text": "놓치지 마!"
+  },
+  {
+   "id": "shout_10",
+   "kind": "shout",
+   "text": "뒤를 맡겨!"
+  },
+  {
+   "id": "shout_11",
+   "kind": "shout",
+   "text": "좋아, 잡았다!"
+  },
+  {
+   "id": "shout_12",
+   "kind": "shout",
+   "text": "어림없다!"
+  },
+  {
+   "id": "shout_13",
+   "kind": "shout",
+   "text": "비켜라!"
+  },
+  {
+   "id": "shout_14",
+   "kind": "shout",
+   "text": "모두 힘을 모아!"
+  },
+  {
+   "id": "shout_15",
+   "kind": "shout",
+   "text": "여기서 끝내자!"
+  },
+  {
+   "id": "shout_16",
+   "kind": "shout",
+   "text": "크윽…!"
+  },
+  {
+   "id": "shout_17",
+   "kind": "shout",
+   "text": "아직이다!"
+  },
+  {
+   "id": "shout_18",
+   "kind": "shout",
+   "text": "도와줘!"
+  },
+  {
+   "id": "shout_19",
+   "kind": "shout",
+   "text": "후퇴한다!"
+  },
+  {
+   "id": "shout_20",
+   "kind": "shout",
+   "text": "이겼다!"
+  },
+  {
+   "id": "pickup_01",
+   "kind": "pickup",
+   "text": "좋은 걸 찾았네."
+  },
+  {
+   "id": "pickup_02",
+   "kind": "pickup",
+   "text": "이건 쓸 만하겠어."
+  },
+  {
+   "id": "pickup_03",
+   "kind": "pickup",
+   "text": "챙겨 두자."
+  },
+  {
+   "id": "pickup_04",
+   "kind": "pickup",
+   "text": "오, 반짝이는데?"
+  },
+  {
+   "id": "pickup_05",
+   "kind": "pickup",
+   "text": "운이 좋군."
+  },
+  {
+   "id": "pickup_06",
+   "kind": "pickup",
+   "text": "이거 귀한 거야."
+  },
+  {
+   "id": "pickup_07",
+   "kind": "pickup",
+   "text": "주머니가 무거워졌어."
+  },
+  {
+   "id": "pickup_08",
+   "kind": "pickup",
+   "text": "하나 더!"
+  },
+  {
+   "id": "pickup_09",
+   "kind": "pickup",
+   "text": "이 정도면 넉넉해."
+  },
+  {
+   "id": "pickup_10",
+   "kind": "pickup",
+   "text": "나중에 쓰자."
+  },
+  {
+   "id": "pickup_11",
+   "kind": "pickup",
+   "text": "꽤 값나가겠는걸."
+  },
+  {
+   "id": "pickup_12",
+   "kind": "pickup",
+   "text": "새 장비다!"
+  },
+  {
+   "id": "pickup_13",
+   "kind": "pickup",
+   "text": "이건 처음 보는데."
+  },
+  {
+   "id": "pickup_14",
+   "kind": "pickup",
+   "text": "손에 잘 맞아."
+  },
+  {
+   "id": "pickup_15",
+   "kind": "pickup",
+   "text": "고마워, 잘 쓸게."
+  },
+  {
+   "id": "pickup_16",
+   "kind": "pickup",
+   "text": "보물이다!"
+  },
+  {
+   "id": "pickup_17",
+   "kind": "pickup",
+   "text": "이걸 찾고 있었어."
+  },
+  {
+   "id": "pickup_18",
+   "kind": "pickup",
+   "text": "가방이 꽉 찼네."
+  },
+  {
+   "id": "pickup_19",
+   "kind": "pickup",
+   "text": "버리긴 아깝다."
+  },
+  {
+   "id": "pickup_20",
+   "kind": "pickup",
+   "text": "좋아, 모았다."
+  },
+  {
+   "id": "greet_01",
+   "kind": "greet",
+   "text": "안녕하세요."
+  },
+  {
+   "id": "greet_02",
+   "kind": "greet",
+   "text": "어서 오세요."
+  },
+  {
+   "id": "greet_03",
+   "kind": "greet",
+   "text": "또 만났네요."
+  },
+  {
+   "id": "greet_04",
+   "kind": "greet",
+   "text": "무슨 일이에요?"
+  },
+  {
+   "id": "greet_05",
+   "kind": "greet",
+   "text": "좋은 아침이에요."
+  },
+  {
+   "id": "greet_06",
+   "kind": "greet",
+   "text": "오늘도 수고 많아요."
+  },
+  {
+   "id": "greet_07",
+   "kind": "greet",
+   "text": "잘 지냈어요?"
+  },
+  {
+   "id": "greet_08",
+   "kind": "greet",
+   "text": "반가워요."
+  },
+  {
+   "id": "greet_09",
+   "kind": "greet",
+   "text": "조심히 다녀와요."
+  },
+  {
+   "id": "greet_10",
+   "kind": "greet",
+   "text": "필요한 게 있으면 말해요."
+  },
+  {
+   "id": "greet_11",
+   "kind": "greet",
+   "text": "다음에 또 봐요."
+  },
+  {
+   "id": "greet_12",
+   "kind": "greet",
+   "text": "오늘 날씨 좋네요."
+  },
+  {
+   "id": "greet_13",
+   "kind": "greet",
+   "text": "바쁘신가 봐요."
+  },
+  {
+   "id": "greet_14",
+   "kind": "greet",
+   "text": "잠깐 쉬었다 가요."
+  },
+  {
+   "id": "greet_15",
+   "kind": "greet",
+   "text": "고마워요."
+  },
+  {
+   "id": "greet_16",
+   "kind": "greet",
+   "text": "무사히 돌아왔군요."
+  },
+  {
+   "id": "greet_17",
+   "kind": "greet",
+   "text": "소문 들었어요."
+  },
+  {
+   "id": "greet_18",
+   "kind": "greet",
+   "text": "부탁 하나 해도 될까요?"
+  },
+  {
+   "id": "greet_19",
+   "kind": "greet",
+   "text": "좋은 하루 보내요."
+  },
+  {
+   "id": "greet_20",
+   "kind": "greet",
+   "text": "늘 응원할게요."
+  },
+  {
+   "id": "system_01",
+   "kind": "system",
+   "text": "저장이 완료되었습니다."
+  },
+  {
+   "id": "system_02",
+   "kind": "system",
+   "text": "새 지역을 발견했습니다."
+  },
+  {
+   "id": "system_03",
+   "kind": "system",
+   "text": "배낭이 가득 찼습니다."
+  },
+  {
+   "id": "system_04",
+   "kind": "system",
+   "text": "일일 의뢰가 갱신되었습니다."
+  },
+  {
+   "id": "system_05",
+   "kind": "system",
+   "text": "연결이 끊어졌습니다. 다시 시도해 주세요."
+  },
+  {
+   "id": "system_06",
+   "kind": "system",
+   "text": "레벨이 올랐습니다."
+  },
+  {
+   "id": "system_07",
+   "kind": "system",
+   "text": "새 동료가 합류했습니다."
+  },
+  {
+   "id": "system_08",
+   "kind": "system",
+   "text": "의뢰를 완료했습니다."
+  },
+  {
+   "id": "system_09",
+   "kind": "system",
+   "text": "새 장비를 얻었습니다."
+  },
+  {
+   "id": "system_10",
+   "kind": "system",
+   "text": "체력이 부족합니다."
+  },
+  {
+   "id": "system_11",
+   "kind": "system",
+   "text": "보스가 나타났습니다."
+  },
+  {
+   "id": "system_12",
+   "kind": "system",
+   "text": "전투에서 승리했습니다."
+  },
+  {
+   "id": "system_13",
+   "kind": "system",
+   "text": "전투에서 패배했습니다."
+  },
+  {
+   "id": "system_14",
+   "kind": "system",
+   "text": "불러오기가 완료되었습니다."
+  },
+  {
+   "id": "system_15",
+   "kind": "system",
+   "text": "설정이 바뀌었습니다."
+  },
+  {
+   "id": "system_16",
+   "kind": "system",
+   "text": "새 기술을 배웠습니다."
+  },
+  {
+   "id": "system_17",
+   "kind": "system",
+   "text": "시간이 얼마 남지 않았습니다."
+  },
+  {
+   "id": "system_18",
+   "kind": "system",
+   "text": "문이 열렸습니다."
+  },
+  {
+   "id": "system_19",
+   "kind": "system",
+   "text": "보상을 받았습니다."
+  },
+  {
+   "id": "system_20",
+   "kind": "system",
+   "text": "오늘의 접속 보상이 도착했습니다."
+  }
+ ],
+ "assign": {
+  "sg_guanyu": "M1",
+  "sg_zhangfei": "M1",
+  "sg_zhaoyun": "M5",
+  "sg_zhugeliang": "M2",
+  "sg_liubei": "M2",
+  "sg_machao": "M5",
+  "sg_huangzhong": "M1",
+  "sg_caocao": "M2",
+  "sg_simayi": "M2",
+  "sg_xiahoudun": "M1",
+  "sg_zhangliao": "M5",
+  "sg_xunyu": "M2",
+  "sg_sunquan": "M2",
+  "sg_zhouyu": "M2",
+  "sg_luxun": "M3",
+  "sg_taishici": "M5",
+  "sg_ganning": "M1",
+  "sg_lubu": "M5",
+  "sg_diaochan": "F2",
+  "sg_pangtong": "M3",
+  "sg_huatuo": "M2",
+  "sg_menghuo": "M5",
+  "kr_yisunsin": "M3",
+  "kr_euljimundeok": "M1",
+  "kr_ganggamchan": "M1",
+  "kr_kimyusin": "M1",
+  "kr_gyebaek": "M1",
+  "kr_yeongaesomun": "M5",
+  "kr_gwanggaeto": "M5",
+  "kr_sejong": "M1",
+  "kr_jangyeongsil": "M3",
+  "kr_choemuseon": "M1",
+  "kr_daejoyeong": "M1",
+  "kr_wanggeon": "M1",
+  "kr_jeongyakyong": "M2",
+  "kr_heojun": "M2",
+  "kr_sinsaimdang": "F5",
+  "kr_ahnjunggeun": "M2",
+  "kr_yugwansun": "F5",
+  "kr_kimgu": "M4",
+  "kr_wonhyo": "M2",
+  "kr_kimjeongho": "M3",
+  "kr_gwakjaeu": "M1",
+  "kr_nongae": "F2",
+  "kr_yihwang": "M2",
+  "kr_yii": "M2",
+  "kr_hwanghui": "M2",
+  "kr_jeongmongju": "M3",
+  "jp_himiko": "F2",
+  "jp_taira": "M1",
+  "jp_yoritomo": "M1",
+  "jp_yoshitsune": "M5",
+  "jp_murasaki": "F5",
+  "jp_seishonagon": "F5",
+  "jp_tomoegozen": "F1",
+  "jp_nobunaga": "M1",
+  "jp_hideyoshi": "M1",
+  "jp_ieyasu": "M1",
+  "jp_shingen": "M5",
+  "jp_kenshin": "M5",
+  "jp_masamune": "M5",
+  "jp_yukimura": "M5",
+  "jp_musashi": "M4",
+  "jp_hanzo": "M2",
+  "jp_mitsukuni": "M4",
+  "jp_naosuke": "M4",
+  "jp_saigo": "M2",
+  "jp_ryoma": "M2",
+  "eu_caesar": "M1",
+  "eu_alexander": "M5",
+  "eu_hannibal": "M5",
+  "eu_charlemagne": "M1",
+  "eu_joan": "F3",
+  "eu_napoleon": "M2",
+  "eu_davinci": "M2",
+  "eu_augustus": "M2",
+  "eu_scipio": "M1",
+  "eu_leonidas": "M1",
+  "eu_aurelius": "M2",
+  "eu_richard": "M5",
+  "eu_william": "M1",
+  "eu_harald": "M5",
+  "eu_frederick": "M1",
+  "eu_peter": "M1",
+  "eu_elizabeth": "F2",
+  "eu_nelson": "M1",
+  "eu_machiavelli": "M2",
+  "eu_newton": "M4",
+  "eu_michelangelo": "M2",
+  "eu_eleanor": "F2",
+  "wd_ashoka": "M1",
+  "wd_akbar": "M2",
+  "wd_saladin": "M5",
+  "wd_suleiman": "M2",
+  "wd_ibnsina": "M2",
+  "wd_genghis": "M5",
+  "wd_khubilai": "M2",
+  "wd_mansamusa": "M1",
+  "wd_shaka": "M1",
+  "wd_cleopatra": "F3",
+  "wd_pachacuti": "M5",
+  "wd_moctezuma": "M5",
+  "wd_ibnbattuta": "M2",
+  "wd_hammurabi": "M2",
+  "wd_attila": "M5",
+  "dj_doseo": "M2",
+  "dj_gapju": "M2",
+  "dj_gijang": "F5",
+  "dj_haean": "M1",
+  "dj_hopak": "M4",
+  "dj_hwanggeum": "F2",
+  "dj_seohae": "M3",
+  "dj_seoncheok": "M3",
+  "dj_yuri": "F4",
+  "fu_gangma": "F1",
+  "fu_hwanryeong": "M1",
+  "fu_janhon": "F3",
+  "fu_jongwang": "F4",
+  "fu_myeongje": "F4",
+  "fu_noejang": "F2",
+  "fu_seonghon": "M4",
+  "fu_yugwi": "M1",
+  "fu_yuseong": "M3",
+  "jiao_banrok": "M1",
+  "jiao_botran": "F4",
+  "jiao_dinggo": "F3",
+  "jiao_hoangmi": "F4",
+  "jiao_jinja": "F2",
+  "jiao_luyan": "M1",
+  "jiao_madang": "F1",
+  "jiao_muya": "F1",
+  "jiao_riquan": "M5",
+  "jp_asahime": "M1",
+  "jp_hikoyama": "F1",
+  "jp_himetsu": "M3",
+  "jp_kazenari": "M4",
+  "jp_shioji": "M5",
+  "jp_taketsumi": "F3",
+  "jp_tamakiri": "F5",
+  "jp_umihiko": "M4",
+  "jp_wakahiko": "F1",
+  "kr2_ajinsa": "F2",
+  "kr2_dokgaru": "M5",
+  "kr2_gokdol": "M5",
+  "kr2_jimasol": "M4",
+  "kr2_mokrihae": "M5",
+  "kr2_pasodan": "M1",
+  "kr2_seolharan": "M3",
+  "kr2_sogaram": "F5",
+  "kr2_umorin": "M1",
+  "kr2_yeonuru": "F3",
+  "kr2_yeoyul": "M5",
+  "ly_byeokjeon": "M1",
+  "ly_heuksang": "M4",
+  "ly_jeonchung": "M3",
+  "ly_jinju": "F5",
+  "ly_juoh": "M1",
+  "ly_nogyong": "M3",
+  "ly_sanga": "F1",
+  "ly_sangnim": "F2",
+  "ly_uhwa": "F1",
+  "mb_baekwoon": "M5",
+  "mb_cheolgak": "F2",
+  "mb_gangho": "F5",
+  "mb_hanam": "M4",
+  "mb_hanpung": "M2",
+  "mb_hoja": "M4",
+  "mb_hwangto": "M1",
+  "mb_janggwang": "M2",
+  "mb_seonwoo": "M3",
+  "nh_bandoja": "F1",
+  "nh_daemo": "M5",
+  "nh_jinju": "F3",
+  "nh_metong": "M4",
+  "nh_migyeon": "M2",
+  "nh_sasin": "M3",
+  "nh_torak": "M3",
+  "nh_wion": "F2",
+  "nh_yeombun": "M4",
+  "nz_ahyang": "F2",
+  "nz_eunga": "M4",
+  "nz_geumsang": "F5",
+  "nz_heukwol": "M1",
+  "nz_hyeoncheon": "M2",
+  "nz_jeokpyo": "F5",
+  "nz_mokro": "F3",
+  "nz_soman": "M5",
+  "nz_unhwa": "F5",
+  "rf_caimao": "F4",
+  "rf_caohong": "F3",
+  "rf_caoren": "M5",
+  "rf_chengong": "M5",
+  "rf_chengpu": "M4",
+  "rf_chengyu": "F4",
+  "rf_dianwei": "M5",
+  "rf_fazheng": "F1",
+  "rf_gaolan": "M4",
+  "rf_gaoshun": "F3",
+  "rf_gongsunzan": "M5",
+  "rf_guojia": "M5",
+  "rf_guosi": "M4",
+  "rf_handang": "M1",
+  "rf_hansui": "M4",
+  "rf_huanggai": "M4",
+  "rf_huangzu": "F3",
+  "rf_jianyong": "F5",
+  "rf_jiaxu": "M1",
+  "rf_jiling": "M5",
+  "rf_jushou": "F2",
+  "rf_kongrong": "M4",
+  "rf_kuailiang": "M4",
+  "rf_lidian": "F5",
+  "rf_lijue": "M1",
+  "rf_liubiao": "F5",
+  "rf_liuzhang": "F3",
+  "rf_mateng": "M2",
+  "rf_mizhu": "F1",
+  "rf_pangde": "M1",
+  "rf_shenpei": "M3",
+  "rf_sunce": "M3",
+  "rf_tianfeng": "F1",
+  "rf_wenchou": "F4",
+  "rf_wenpin": "F3",
+  "rf_wuanguo": "F2",
+  "rf_wuyi": "F5",
+  "rf_xiahouyuan": "M5",
+  "rf_xuchu": "M2",
+  "rf_yangang": "F5",
+  "rf_yanghong": "F4",
+  "rf_yangren": "M3",
+  "rf_yangsong": "F5",
+  "rf_yanliang": "M3",
+  "rf_yanyan": "F5",
+  "rf_yuanshao": "F1",
+  "rf_yuanshu": "F3",
+  "rf_yuejin": "F1",
+  "rf_yujin": "F1",
+  "rf_zhanghe": "M1",
+  "rf_zhangji": "M4",
+  "rf_zhanglu": "M3",
+  "rf_zhangren": "M5",
+  "rf_zhoutai": "M3",
+  "ru_busaeng": "M2",
+  "ru_doksi": "F3",
+  "ru_geohae": "F3",
+  "ru_gogol": "M3",
+  "ru_mangdok": "F4",
+  "ru_sanaek": "M1",
+  "ru_sayeong": "F5",
+  "ru_seogun": "F1",
+  "ru_wadok": "F3",
+  "sl_cheonsan": "F1",
+  "sl_daetaek": "F2",
+  "sl_geumhwa": "F2",
+  "sl_heupu": "M4",
+  "sl_hosang": "M3",
+  "sl_hwachin": "M4",
+  "sl_josang": "M5",
+  "sl_nakta": "M4",
+  "sl_wangjeong": "F3",
+  "tb_amseup": "F1",
+  "tb_baekgi": "F5",
+  "tb_ganghae": "M3",
+  "tb_gojeon": "M1",
+  "tb_heukju": "M5",
+  "tb_jamhon": "M4",
+  "tb_japgol": "M1",
+  "tb_jongja": "M4",
+  "tb_saryeong": "M1",
+  "tz_beonwang": "M3",
+  "tz_daehacheon": "F3",
+  "tz_ganda": "M5",
+  "tz_hangha": "M1",
+  "tz_hyanggae": "F4",
+  "tz_sanri": "M2",
+  "tz_sawi": "F5",
+  "tz_seoksang": "M4",
+  "tz_seolsan": "M3",
+  "xb_bonghwa": "M3",
+  "xb_daein": "F2",
+  "xb_eoryang": "F4",
+  "xb_gaseul": "M3",
+  "xb_gyeon": "M1",
+  "xb_hoja": "M3",
+  "xb_hondo": "M4",
+  "xb_honin": "M4",
+  "xb_yong": "F1",
+  "xiyu_banwol": "M4",
+  "xiyu_cheonma": "F1",
+  "xiyu_chongryeong": "M2",
+  "xiyu_dansu": "M1",
+  "xiyu_gumo": "M3",
+  "xiyu_gyoha": "F1",
+  "xiyu_jeongcheon": "F1",
+  "xiyu_mokjil": "F3",
+  "xiyu_ochi": "F5",
+  "xiyu_sarim": "M5",
+  "xiyu_talban": "M4",
+  "xiyu_yeoje": "F1"
+ },
+ "missing": [
+  "F1/shout_07",
+  "F1/shout_16",
+  "F2/shout_07",
+  "F2/shout_16",
+  "F3/shout_16",
+  "F4/pickup_08",
+  "F4/shout_07",
+  "F4/shout_11",
+  "F4/shout_16",
+  "F5/shout_16",
+  "M1/greet_15",
+  "M1/pickup_08",
+  "M1/pickup_20",
+  "M1/shout_02",
+  "M1/shout_04",
+  "M1/shout_07",
+  "M1/shout_16",
+  "M2/greet_15",
+  "M2/pickup_08",
+  "M2/shout_01",
+  "M2/shout_04",
+  "M2/shout_07",
+  "M2/shout_16",
+  "M3/shout_04",
+  "M3/shout_07",
+  "M3/shout_16",
+  "M3/shout_17",
+  "M4/shout_04",
+  "M4/shout_16",
+  "M5/pickup_08",
+  "M5/shout_16"
+ ]
+}
