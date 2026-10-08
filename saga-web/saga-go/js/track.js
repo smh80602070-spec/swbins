@@ -25,7 +25,7 @@
   function FC() { return global.DG.fieldCombat || null; }
 
   var CELL = 60, JIT = 20, HOME_R = 300, READ_R = 10, NEED = 3, DUST_PER_PART = 4, HUNT_ORE = 2, PARTS_MAX = 3;
-  function SHARE() { return K('share', 0.42); }
+  function SHARE() { return K('share', 0.55); }   // 10-08 0.42 → 0.55 — 재미표준 E 빈칸 41% × → ≈28% △
   function AUTO_R(gps) { return gps ? 12 : 3; }
 
   var KINDS = {
