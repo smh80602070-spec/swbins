@@ -50,6 +50,7 @@ const GRANARY_PER := 400.0
 
 var _dyn: Node3D
 var _last_sig := ""
+var _scenario: Node   # G-0088 이야기 카드 엔진(world/scenario_runner.gd)
 
 
 ## **2026-09-14 추가 — 새 게임 시나리오 고르기(REALM 4절 "제외" 마지막
@@ -70,6 +71,10 @@ func _ready() -> void:
 		RealmSaveState.scenario_ready = false
 		_show_scenario_picker()
 	RealmSaveState.begin_session()
+	## G-0088 이야기 카드 엔진(scenario_runner.gd) — 시나리오를 고른 뒤·다른 창이 없을 때 뜬다.
+	_scenario = preload("res://games/saga_realm/world/scenario_runner.gd").new()
+	_scenario.name = "ScenarioRunner"
+	add_child(_scenario)
 	_build_base()
 	_build_tower()
 	_build_walls()
@@ -128,6 +133,9 @@ func _refresh_goal_board() -> void:
 	var now := "성 %d/%d 편입" % [RealmSaveState.cities.size(), total]
 	var session := "골드 +%d · 편입 +%d" % [
 		RealmSaveState.session_gold_gained(), RealmSaveState.session_cities_gained()]
+	var story: String = _scenario.call("objective") if _scenario != null else ""
+	if story != "":
+		now = story + " · " + now   # G-0088 이야기 다음 카드 먼저
 	var week := _closest_victory_progress()
 	board.set_goals(now, session, week)
 

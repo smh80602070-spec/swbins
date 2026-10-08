@@ -2988,5 +2988,22 @@
   "fun": {},
   "ticket": "G-0087",
   "since": "2026-10-08"
+ },
+ {
+  "id": "gd.rk.scenario-act1",
+  "name": "사가천하 이야기 1막 · 군웅 사건 카드 셋(첫 성의 밤·균열의 울림·첫 화친) — 지난 달·성 수로 뜨고 고르기 셋(금·수도 군량/치안/훈련·책사 충성·이웃 우호), 화친이면 설전 세 문답, {책사}·{이웃} 도감 가명",
+  "files": [
+   "games/saga_realm/data/scenario.gd",
+   "games/saga_realm/world/scenario_runner.gd",
+   "tools/probe_scenario_realm.gd"
+  ],
+  "tests": [
+   "scenario_realm"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0088",
+  "since": "2026-10-08"
  }
 ]

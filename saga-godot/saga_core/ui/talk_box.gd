@@ -15,7 +15,7 @@ var _i := 0
 var _paused_by_me := false
 var _name_label: Label
 var _text_label: Label
-var _buttons: HBoxContainer
+var _buttons: HFlowContainer   # 단추가 길면 다음 줄로(사가천하 카드 고르기 셋)
 
 
 static func open(parent: Node, title: String, lines: Array, on_done: Callable, choice: Dictionary = {}) -> CanvasLayer:
@@ -69,9 +69,10 @@ func _build() -> void:
 	_text_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_text_label.add_theme_font_size_override("font_size", 27)
 	v.add_child(_text_label)
-	_buttons = HBoxContainer.new()
-	_buttons.alignment = BoxContainer.ALIGNMENT_END
-	_buttons.add_theme_constant_override("separation", 12)
+	_buttons = HFlowContainer.new()
+	_buttons.alignment = FlowContainer.ALIGNMENT_END
+	_buttons.add_theme_constant_override("h_separation", 12)
+	_buttons.add_theme_constant_override("v_separation", 8)
 	v.add_child(_buttons)
 	panel.add_child(v)
 	add_child(panel)
