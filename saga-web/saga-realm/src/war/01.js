@@ -718,7 +718,7 @@
     }
     function prompt() {   // 다음 합 전 명령 묻기 — 전술판 뒤에는 같은 합으로 돌아와 다시 묻는다
       if (!hooks.onPrompt) { step(null); return; }
-      hooks.onPrompt({ r: r, atk: atk.troops, def: def.troops, wall: wallRef.wall, tactic: tacticFor(land.key, atk.officers, atk.tacticUsed), grid: !!(hooks.onTactics && !atk.grid && !water && global.DG.tactics) }, step);
+      hooks.onPrompt({ r: r, atk: atk.troops, def: def.troops, wall: wallRef.wall, tactic: tacticFor(land.key, atk.officers, atk.tacticUsed), grid: !!(hooks.onTactics && !atk.grid && !water && atk.officers.length && global.DG.tactics) }, step);
     }
     prompt();
     }

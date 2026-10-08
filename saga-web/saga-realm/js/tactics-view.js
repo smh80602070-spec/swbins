@@ -50,10 +50,11 @@
     s += '<g class="tv-unit' + (spent ? ' spent' : '') + (v.sel === u.uid ? ' sel' : '') + '" data-uid="' + u.uid + '">';
     var face = u.kind === 'officer' && v.opts.face ? v.opts.face(u.id) : '';
     if (face) {
-      s += '<clipPath id="tvc-' + esc(u.uid.replace(/[^a-z0-9]/gi, '_')) + '"><circle cx="' + cx + '" cy="' + cy + '" r="' + rr + '"/></clipPath>' +
+      var cid = 'tvc-' + u.uid.replace(/[^a-z0-9]/gi, '_');
+      s += '<clipPath id="' + cid + '"><circle cx="' + cx + '" cy="' + cy + '" r="' + rr + '"/></clipPath>' +
         '<circle cx="' + cx + '" cy="' + cy + '" r="' + rr + '" fill="#222"/>' +
         '<image href="' + esc(face) + '" x="' + (cx - rr) + '" y="' + (cy - rr) + '" width="' + (rr * 2) + '" height="' + (rr * 2) +
-        '" clip-path="url(#tvc-' + esc(u.uid.replace(/[^a-z0-9]/gi, '_')) + ')" preserveAspectRatio="xMidYMid slice"/>';
+        '" clip-path="url(#' + cid + ')" preserveAspectRatio="xMidYMid slice"/>';
     } else {
       s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + rr + '" fill="' + (me ? '#26445f' : '#5a2a24') + '"/>' +
         '<text x="' + cx + '" y="' + (cy + 6) + '" text-anchor="middle" font-size="18">' + (u.kind === 'troop' ? '🪖' : (u.rng > 1 ? '🏹' : '⚔️')) + '</text>';
@@ -225,15 +226,14 @@
    * 판을 연다 — host 는 그릴 자리(그 안을 갈아 끼운다). done(outcome) 은 「▶ 전황으로」 때 한 번
    */
   function open(host, opts, done) {
+    /* 그릴 자리가 없으면(전장 카드가 다른 카드로 바뀜) 판 없이 곧장 끝낸다 — 안 그러면 출진이 멈춘 채 남는다 */
+    if (!host) { cur = null; if (done) { done(null); } return null; }
     var b = T().makeBoard(opts.seed, opts.land, opts.siege);
     T().unitsOf(b, opts.mine, opts.foes, opts.foeTroops);
-    var wide = host && host.clientWidth ? host.clientWidth : 0;
-    cur = { host: host, opts: opts, done: done, b: b, sel: null, out: null,
-      vert: wide > 0 && wide < b.cols * 46 };
-    if (host) {
-      host.classList.add('show');
-      if (!host.__tvBound) { host.addEventListener('click', onClick); host.__tvBound = true; }
-    }
+    host.classList.add('show');   // 먼저 보여야 폭을 잰다(display:none 이면 0)
+    if (!host.__tvBound) { host.addEventListener('click', onClick); host.__tvBound = true; }
+    var wide = host.clientWidth || 0;
+    cur = { host: host, opts: opts, done: done, b: b, sel: null, out: null, vert: wide > 0 && wide < b.cols * 46 };
     render();
     return cur;
   }

@@ -271,7 +271,7 @@
   /** 판을 연다 — 끝나면 보정·전사를 적용하고 back()(같은 합 다시 묻기). 열 수 없으면(훅 없음·이미 씀·수전) false */
   function marchGrid(m, back) {
     var atk = m.atk, def = m.def, CD = global.DG.cityData, st = global.DG.rtk.state();
-    if (!m.hooks.onTactics || atk.grid || m.water) { return false; }
+    if (!m.hooks.onTactics || atk.grid || m.water || !atk.officers.length) { return false; }
     var foes = def.officers.slice(0, 3), n = Math.max(1, Math.min(2, 5 - foes.length)), ft = [], k;
     for (k = 0; k < n; k++) { ft.push(Math.round(def.troops / n)); }
     atk.grid = { give: 1, take: 1, kind: null };   // 판이 열린 동안 두 번 못 연다
@@ -308,8 +308,7 @@
     if (dead.length && E && E.DEFS && E.DEFS.tac_fallen && st.events && !st.events.pending && atk.force === st.me) {
       st.events.pending = { id: 'tac_fallen', step: 1, ctx: { a: dead[0], b: '', city: m.fromId, where: m.toId, force: atk.force } };
     }
-    core.persist();
-    return A;
+    return A;   // 저장은 출진이 끝날 때(finishMarch) 한 번 — 여기서 저장하면 나간 병력만 빠진 반쪽 판이 남는다
   }
 
   /** 진단·균형용 — 양쪽 다 AI 로 끝까지 둔다 */
