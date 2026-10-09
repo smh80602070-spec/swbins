@@ -1,0 +1,21 @@
+{
+ "id": "mon_sp_vault_queen",
+ "generator": "tools/world-forge/build_monster.py",
+ "blender": "5.2.1 LTS",
+ "style": "toon",
+ "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+ "inputs": [
+  "polyhaven: coast_sand_rocks_02",
+  "polyhaven: corrugated_iron",
+  "polyhaven: forest_ground_04",
+  "polyhaven: grey_plaster",
+  "polyhaven: white_stucco"
+ ],
+ "size_m": [
+  5.66,
+  3.41,
+  2.28
+ ],
+ "tris": 2666,
+ "family": "wing"
+}
