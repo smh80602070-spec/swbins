@@ -13,6 +13,7 @@ extends SceneTree
 ## 사용법: Godot_..._console.exe --headless --path saga-godot --script tools/ual_lib_build.gd -- \
 ##   <구운 .glb 절대경로> <게임 몸 glb res://경로> <출력 접두어>
 ## 예:  -- C:/swbins/tools/char-forge/_out/AvatarSample_A_anims.glb res://assets/characters_vroid/AvatarSample_A.glb AvatarSample_A
+## 넷째 인자(선택) = 남길 클립 이름 쉼표 목록 — 원본이 게임이 안 부르는 클립까지 품을 때 용량을 줄인다(G-0129: 54 → 18).
 
 const OUT_DIR := "res://assets/characters_vroid/anim_cc0"
 const FPS := 30.0
@@ -58,7 +59,10 @@ func _init():
 	var lib := AnimationLibrary.new()
 	var worst := 0.0
 	var report := []
+	var keep: PackedStringArray = args[3].split(",", false) if args.size() > 3 else PackedStringArray()
 	for clip in ap.get_animation_list():
+		if not keep.is_empty() and not keep.has(String(clip)):
+			continue
 		var src: Animation = ap.get_animation(clip)
 		var out := Animation.new()
 		out.length = src.length

@@ -65,6 +65,7 @@ const SHOTS := [
 	["g38_fork_gate", "fork", Vector2(4.6, 7.2), Vector3.ZERO, Vector2(3.0, 5.0), -4.0, 14.0, ""],
 	["g38_fork_works", "fork", Vector2(4.8, 4.4), Vector3.ZERO, Vector2(6.6, 4.8), -4.0, 14.0, ""],
 	["g38_fork_town", "fork", Vector2(3.3, 6.2), Vector3.ZERO, Vector2(2.0, 4.6), -6.0, 14.0, ""],
+	["k_burst_mid", "village", "v_statue", Vector3(9, 0, 0), "v_statue", -6.0, 4.0, "burst14"],   # G-0129 — 폭발(Q) 동작 가운데(내딛어 두 손 내지르기)
 	["k_ride_horse", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, "mount:pt_jeolyeong"],
 	["k_ride_horse_a", "village", "v_statue", Vector3(9, 0, 0), "v_statue", -6.0, 5.0, "mount:pt_jeolyeong"],
 	["k_ride_horse_b", "village", "v_statue", Vector3(0, 0, 9), "v_statue", -6.0, 5.0, "mount:pt_jeolyeong"],
@@ -206,6 +207,9 @@ func _process(_delta: float) -> void:
 			at.y = TerrainBuilder.height_at(String(SHOTS[_i][1]), at)
 			CombatFx.element_burst(_p, at, 2.2, Elements.color_of(els[k]), 0.5, els[k], false)
 		CombatFx.element_burst(_p, _p.global_position, 3.0, Elements.color_of("thunder"), 0.8, "thunder", true)
+	## "burstN" — 찍기 N 프레임 전에 폭발 동작만(0.6초, field_combat 와 같은 값) 건다(G-0129 새 burst 클립 확인).
+	if String(SHOTS[_i][7]).begins_with("burst") and _frame == SETTLE - int(String(SHOTS[_i][7]).substr(5)):
+		_p.call("play_action", "burst", 0.6, 0.0)
 	if String(SHOTS[_i][7]).begins_with("swing") and _frame == SETTLE - int(String(SHOTS[_i][7]).substr(5) if String(SHOTS[_i][7]).length() > 5 else "5"):
 		var fc := get_tree().get_first_node_in_group("go_field_combat")
 		if fc:
