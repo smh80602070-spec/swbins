@@ -135,7 +135,8 @@ namespace Saga.EditorTools
             Has(G + "SagaGo/UI/GoSessionTracker.cs", "SagaVoice.System(\"quest\")");
             Has(G + "SagaGo/Combat/FieldEnemy.cs", "SagaVoice.System(\"victory\")");
             Has(G + "SagaGo/Data/GoCooking.cs", "SagaVoice.Say(\"pickup\")");
-            Has(G + "SagaGo/World/GameBootstrap.cs", "SagaVoice.MasterVolume");
+            foreach (var a in new[] { "SagaGo/Audio/GoAudio.cs", "SagaDungeon/Audio/SfxPlayer.cs", "SagaForest/Audio/ForestAudio.cs", "SagaStory/Audio/StoryAudio.cs", "SagaRealm/Audio/RealmAudio.cs" })
+                Has(G + a, "SagaVoice.MasterVolume = () => MasterVolume"); // R-5 — 음성 음량은 그 판 마스터(사가만리 것을 다른 판이 물려받지 않게)
             Has(G + "SagaDungeon/Player/PlayerCombat.cs", "SagaVoice.Say(\"shout\")");
             Has(G + "SagaStory/Player/StoryPlayerController.cs", "SagaVoice.Say(\"shout\")");
             Has(G + "SagaForest/World/ForestVillager.cs", "SagaVoice.Say(\"greet\"");
