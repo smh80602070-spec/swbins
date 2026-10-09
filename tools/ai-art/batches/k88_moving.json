@@ -1,0 +1,56 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k88_moving",
+ "kit": {
+  "spec": "character",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "note": "K-0088 — 움직이는 2D 흠 4장(곰 뒤가 앞모습·발밑 흰 얼룩) 다시, 그림체 C 그대로",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 640,
+  "height": 896,
+  "steps": 30,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow",
+  "variants": 6
+ },
+ "items": [
+  {
+   "id": "villager_b_front",
+   "seed": 1886457850,
+   "prompt": "(1boy:1.15), village teenager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, solo, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain flat pastel gray-green background, no floor, no ground plane, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon, white floor, white ground, floor reflection, puddle, snow"
+  },
+  {
+   "id": "villager_b_back",
+   "seed": 2074070939,
+   "prompt": "(1boy:1.15), village teenager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, solo, from behind, back view, 1other, solo, full body, standing, game character art, centered, simple background, plain flat pastel gray-green background, no floor, no ground plane, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon, looking at viewer, face, eyes, front view, facing viewer, white floor, white ground, floor reflection, puddle, snow"
+  },
+  {
+   "id": "beast_dog_back",
+   "seed": 1513666357,
+   "prompt": "(friendly medium dog:1.15), short brown fur, floppy ears, four legs, from behind, back view, game sprite, full body, standing, single creature, centered, simple background, plain flat pastel gray-green background, no floor, no ground plane, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, looking at viewer, face, eyes, front view, facing viewer, white floor, white ground, floor reflection, puddle, snow",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  },
+  {
+   "id": "beast_big_back",
+   "seed": 511749065,
+   "prompt": "(large brown bear:1.15), brown fur, standing on all fours, four legs on the ground, natural bear anatomy, rear view from directly behind, head facing away, tail visible, no face visible, walking away, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around, from behind, back view, game sprite, full body, standing, single creature, centered, simple background, plain flat pastel gray-green background, no floor, no ground plane, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, looking at viewer, face, eyes, front view, facing viewer, white floor, white ground, floor reflection, puddle, snow",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  }
+ ]
+}

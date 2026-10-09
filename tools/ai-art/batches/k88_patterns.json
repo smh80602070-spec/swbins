@@ -1,0 +1,143 @@
+{
+ "model": "Illustrious-XL-v2.0",
+ "out": "k88_patterns",
+ "note": "K-0088 — K-0006 무늬 중 이음매 비율 ≥3 인 19장 + 테두리 비율 넘는 6장(+leather_brown 주제 틀림)을 SDXL 순환 패딩(tiling)으로 다시. 원래 프롬프트에서 뜻만 이어받음.",
+ "defaults": {
+  "prompt_prefix": "masterpiece, best quality, amazing quality, seamless tileable textile pattern, flat fabric swatch, top-down orthographic, even lighting, high detail fabric texture, no objects",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "tiling": true,
+  "variants": 2,
+  "negative": "person, people, human, body, skin, hands, face, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, folds, wrinkles, shadow, 3d render, single object, lamp, blurry, lowres, worst quality, low quality"
+ },
+ "items": [
+  {
+   "id": "pat_cyber_gradient",
+   "seed": 1511897283,
+   "prompt": "magenta and cyan gradient fabric with thin grid lines, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_denim_worn",
+   "seed": 904745237,
+   "prompt": "faded blue denim texture with stitching, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_sakura_pink",
+   "seed": 1098207533,
+   "prompt": "pale pink fabric with cherry blossom petals pattern, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_leather_brown",
+   "seed": 605935381,
+   "prompt": "plain brown cowhide leather surface, fine natural leather grain, slight wear, no objects, no metal"
+  },
+  {
+   "id": "pat_tweed_grey",
+   "seed": 595333072,
+   "prompt": "grey tweed fabric with flecks, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_canvas_beige",
+   "seed": 834498734,
+   "prompt": "beige canvas fabric with visible weave, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_holo_iridescent",
+   "seed": 729980414,
+   "prompt": "iridescent holographic fabric in pink and teal, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_graphene_black",
+   "seed": 1752766435,
+   "prompt": "black graphene carbon fabric with subtle hexagon sheen, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_aurora_gradient",
+   "seed": 1593740614,
+   "prompt": "smooth aurora gradient fabric in green and violet, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_ceramic_armor_white",
+   "seed": 264245077,
+   "prompt": "white ceramic armor panels with gold trim lines, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_lace_white",
+   "seed": 671754124,
+   "prompt": "white lace fabric with delicate floral openwork, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_leather_studs",
+   "seed": 890624538,
+   "prompt": "black leather with small silver studs, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_linen_stripes",
+   "seed": 60570890,
+   "prompt": "white linen with thin blue stripes, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_damask_crimson",
+   "seed": 1283799924,
+   "prompt": "crimson damask fabric with tonal floral pattern, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_camo_green",
+   "seed": 1124456141,
+   "prompt": "green camouflage pattern fabric, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_smart_fabric_ripple",
+   "seed": 135417409,
+   "prompt": "silver smart fabric with concentric ripple pattern, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_batik_indigo",
+   "seed": 1499673363,
+   "prompt": "indigo batik fabric with white wax resist pattern, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_corduroy_brown",
+   "seed": 1233355569,
+   "prompt": "brown corduroy fabric with vertical ribs, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_buffalo_plaid",
+   "seed": 1260772771,
+   "prompt": "red and black buffalo plaid flannel, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_crimson_felt",
+   "seed": 1104956174,
+   "prompt": "thick crimson felt wool with fine visible fibers, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_ion_glow_orange",
+   "seed": 2074301942,
+   "prompt": "charcoal fabric with soft glowing orange ion streaks, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_jade_peony_silk",
+   "seed": 1967709871,
+   "prompt": "jade green silk with subtle woven peony flower pattern, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_nano_scale_blue",
+   "seed": 463344811,
+   "prompt": "blue nanoscale armor plating pattern with tiny overlapping scales, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_pinstripe_charcoal",
+   "seed": 1386162137,
+   "prompt": "charcoal suiting fabric with thin white pinstripes, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_stripes_pastel",
+   "seed": 516866063,
+   "prompt": "pastel rainbow stripes cotton fabric, even lighting, high detail fabric texture"
+  }
+ ]
+}
