@@ -65,6 +65,18 @@ static func _find_mesh_instances(node: Node) -> Array[MeshInstance3D]:
 
 ## 2026-09-30 — 옷 기준 1.5cm 두께 외곽선이 얼굴에선 코·턱·앞머리 위로 검은 파편으로 솟았다(face_view 촬영). 얼굴·머리·눈은 훨씬 얇게, 눈·눈썹은 없이.
 ## 살갗은 짙은 살색으로(검정이 아니라 원신처럼 따뜻한 그림자 선).
+## G-0145 — 재질 이름으로 표면 종류: "skin" · "hair" · "face"(눈썹·속눈썹·눈꺼풀선·입·눈) · "cloth"(그 밖).
+## VRoid 이름은 "N00_000_00_Body_00_SKIN (Instance)" 꼴, 옛 이름은 "skin…"·"eye".
+static func _surface_kind(mat_name: String) -> String:
+	var n := mat_name.to_lower()
+	if n.begins_with("skin") or n.contains("_skin"):
+		return "skin"
+	if n.contains("hair"):
+		return "hair"
+	if n == EYE_MATERIAL or n.contains("_eye") or n.contains("_face"):
+		return "face"
+	return "cloth"
+
 static func _tune_outline(outline_mat: ShaderMaterial, mesh_name: String, mat_name: String) -> void:
 	var m := mat_name.to_lower()
 	if mesh_name.begins_with("Eye"):
@@ -109,6 +121,10 @@ static func _apply_one(mesh_instance: MeshInstance3D) -> int:
 		_tune_outline(outline_mat, String(mesh_instance.name), original.resource_name)
 		if original.resource_name.to_lower().contains("hair") and not String(mesh_instance.name).begins_with("Eye"):
 			shader_mat.set_shader_parameter("hair_gloss", 1.0)
+		## G-0145 — 결 손질: 살갗(…_SKIN·skin*)은 그늘 온기, 옷 결은 옷(…_CLOTH 등)만 — 살갗·머리·얼굴 부품·눈은 결 없음.
+		var kind := _surface_kind(original.resource_name)
+		shader_mat.set_shader_parameter("skin_warm", 1.0 if kind == "skin" else 0.0)
+		shader_mat.set_shader_parameter("cloth_grain", 1.0 if kind == "cloth" else 0.0)
 		shader_mat.next_pass = outline_mat
 		mesh_instance.set_surface_override_material(surface_index, shader_mat)
 		count += 1
