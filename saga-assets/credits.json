@@ -209,6 +209,15 @@
    ]
   },
   {
+   "tool": "bake_for_rig.py --map vroid (vroid_batch.sh anim 단계, 2026-10-07)",
+   "model": "",
+   "license": "CC0-1.0 (뼈대+동작만 — 메시·그림 없음. 동작 원본 Quaternius Universal Animation Library CC0 + 자체 키프레임 tools/char-forge/keyframes.py)",
+   "count": 1,
+   "where": [
+    "saga-assets/characters/anim-src"
+   ]
+  },
+  {
    "tool": "outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024)",
    "model": "",
    "license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
@@ -283,7 +292,7 @@
    "tool": "gen.py",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 1763,
+   "count": 1755,
    "where": [
     "saga-assets/competition",
     "saga-assets/icons/license",
@@ -523,6 +532,20 @@
    ]
   },
   {
+   "tool": "gen.py (ComfyUI)",
+   "model": "animagine-xl-4.0-opt",
+   "license": "CreativeML OpenRAIL++-M",
+   "count": 32,
+   "where": [
+    "saga-assets/web2d/moving/beast_big",
+    "saga-assets/web2d/moving/beast_dog",
+    "saga-assets/web2d/moving/villager_b",
+    "saga-assets/world/sprite",
+    "saga-web/shared/assets/web2d/moving/beast_big",
+    "saga-web/shared/assets/web2d/moving/beast_dog"
+   ]
+  },
+  {
    "tool": "make_realm_ui.py",
    "model": "",
    "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
@@ -615,16 +638,6 @@
     "saga-assets/world/web",
     "saga-godot/assets/world",
     "saga-unity/Assets/SagaCore/Resources/World",
-    "saga-web/shared/assets/world2d"
-   ]
-  },
-  {
-   "tool": "gen.py (ComfyUI)",
-   "model": "animagine-xl-4.0-opt",
-   "license": "CreativeML OpenRAIL++-M",
-   "count": 24,
-   "where": [
-    "saga-assets/world/sprite",
     "saga-web/shared/assets/world2d"
    ]
   },

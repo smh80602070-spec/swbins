@@ -178,22 +178,22 @@
 
 | 판 | 사가웹 | 사가고돗 | 사가유니티 |
 |---|---|---|---|
-| 사가만리 | 41 | 41 | 41 |
-| 사가나락 | 19 | 0 | 19 |
-| 사가마을 | 32 | 0 | 29 |
-| 사가종횡 | 19 | 0 | 17 |
-| 사가천하 | 37 | 0 | 28 |
+| 사가만리 | 41 | 56 | 41 |
+| 사가나락 | 19 | 19 | 19 |
+| 사가마을 | 32 | 32 | 29 |
+| 사가종횡 | 19 | 19 | 17 |
+| 사가천하 | 37 | 19 | 28 |
 <!-- scenario:end -->
 
 아래 손 표(장 총수·설명)는 구현할 때 고친다(날짜 기록은 그 트랙 이력에). 장 수 숫자는 위 자동 집계가 정본이다.
 
 | 판 | 장 총수(설계) | 사가웹 | 사가고돗 | 사가유니티 |
 |---|---|---|---|---|
-| 사가만리 | 29 (8부 1차 결말) | 1~9장 | 1~29장 | 0 |
-| 사가나락 | 16 (5막) | 1~19장(5막 전부 + 결말 뒤 6막 비석 너머·31층 명소 — `js/data-scenario.js`·`scenario.js`) | 0 | 1~19장(5막 전부 + 6막 — `Data/DungeonScenario*.cs`, 옛 3단계 퀘스트 줄은 시나리오가 열려 있는 동안 HUD 에서 대신 함) + 곁가지 side_visitors |
-| 사가마을 | 16 (사계절) | 1~32장(사계절 + 둘째 해 우체통의 답장 사계절 — `js/data-scenario.js`·`scenario.js`) | 0 | 29장(사계절+둘째 해, 낚시·조개 장 셋 뺌 — `Data/ForestScenario*.cs`) + 곁가지 side_guest 여덟 |
-| 사가종횡 | 16 (4부) | 1~19장(1~4부 + 5부 문 너머 — `js/data-scenario.js`·`scenario.js`, 첫 발 장면은 장 안 대사로 흡수) | 0 | 17장(웹 19장 중 신야성·허도 둘 뺌 — `Data/StoryScenario*.cs`, 웹 사냥터·사명은 이 트랙 판정(잡졸 N·두목·전직 차수·관문 대장·비경)으로 바꿈, 고르기 둘) + 곁가지 side_guests 둘 |
-| 사가천하 | 16 사슬 (6막) | 6막 열여섯 카드 전부 + 결말 뒤 7막 틈의 끝 셋 + 이계 군주 열전 아홉(`js/data-scenario.js`·`scenario.js` — event.js 사연 카드에 얹음) | 0 | 1~19장(16 카드 + 7막 셋 — `Data/RealmScenario*.cs`, 열전 아홉은 시나리오 고르기가 없어 뺌) + 곁가지 side_time 아홉 |
+| 사가만리 | 29 (8부 1차 결말) | 41장(`js/story.js`) | 56장(`games/saga_go/data/story_chapters_*.gd`) | 41장(`Resources/story_go.json`) |
+| 사가나락 | 16 (5막) | 1~19장(5막 전부 + 결말 뒤 6막 비석 너머·31층 명소 — `js/data-scenario.js`·`scenario.js`) | 19장(웹과 같은 수 — `games/saga_dungeon/data/scenario.gd` CHAPTERS, G-0085~) | 1~19장(5막 전부 + 6막 — `Data/DungeonScenario*.cs`, 옛 3단계 퀘스트 줄은 시나리오가 열려 있는 동안 HUD 에서 대신 함) + 곁가지 side_visitors |
+| 사가마을 | 16 (사계절) | 1~32장(사계절 + 둘째 해 우체통의 답장 사계절 — `js/data-scenario.js`·`scenario.js`) | 32장(웹과 같은 수 — `games/saga_forest/data/scenario.gd` CHAPTERS, G-0086~) | 29장(사계절+둘째 해, 낚시·조개 장 셋 뺌 — `Data/ForestScenario*.cs`) + 곁가지 side_guest 여덟 |
+| 사가종횡 | 16 (4부) | 1~19장(1~4부 + 5부 문 너머 — `js/data-scenario.js`·`scenario.js`, 첫 발 장면은 장 안 대사로 흡수) | 19장(웹과 같은 수 — `games/saga_story/data/scenario.gd` CHAPTERS, G-0087~) | 17장(웹 19장 중 신야성·허도 둘 뺌 — `Data/StoryScenario*.cs`, 웹 사냥터·사명은 이 트랙 판정(잡졸 N·두목·전직 차수·관문 대장·비경)으로 바꿈, 고르기 둘) + 곁가지 side_guests 둘 |
+| 사가천하 | 16 사슬 (6막) | 6막 열여섯 카드 전부 + 결말 뒤 7막 틈의 끝 셋 + 이계 군주 열전 아홉(`js/data-scenario.js`·`scenario.js` — event.js 사연 카드에 얹음) | 카드 19(`games/saga_realm/data/scenario.gd` CARDS, G-0088~ — 웹 37 은 열전·곁가지 포함) | 1~19장(16 카드 + 7막 셋 — `Data/RealmScenario*.cs`, 열전 아홉은 시나리오 고르기가 없어 뺌) + 곁가지 side_time 아홉 |
 
 **권장 구현 순서**(사용자 결정 전 제안): 한 판씩 한 트랙에서 1부(1막)만 먼저 넣어 손맛을 본다. 그 뒤 나머지 트랙으로 옮긴다.
 - 사가만리는 웹 10장~, 유니티 1장~ 이식이 남았다.

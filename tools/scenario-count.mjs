@@ -13,7 +13,7 @@
  *   고돗 사가만리      games/saga_go/data/story_chapters_*.gd 의 줄 머리 `\t{"id": "ch` 줄 수
  *        나락·마을·종횡  games/<판>/data/scenario.gd 의 `const CHAPTERS := [` 블록 안 줄 머리 `\t{"id": "` 줄 수 (10-08 G-0085~0087)
  *        사가천하    같은 파일의 `const CARDS := [` 블록(이야기 카드, G-0088) — 파일이 없으면 0
- *   유니티 사가만리    Assets/Games/SagaGo/Data/GoStory.cs 의 `Id = "chN"` 줄 수
+ *   유니티 사가만리    Assets/Games/SagaGo/Resources/story_go.json 의 chapters 길이(U-0016 이 GoStory.cs 표를 옮김 — 10-09 바로잡음)
  *        블로·숲·스토리  Resources/scenario_*.json 의 chapters 길이
  *        사가천하    Resources/scenario_realm.json 의 cards + side 길이
  */
@@ -65,7 +65,7 @@ const godot = (key, folder) => tryCount(() => {
 
 const unity = (key, folder) => tryCount(() => {
   const base = 'saga-unity/Assets/Games/';
-  if (key === 'go') return countRe(read(`${base}SagaGo/Data/GoStory.cs`), /\bId = "ch\d+"/g);
+  if (key === 'go') return JSON.parse(read(`${base}SagaGo/Resources/story_go.json`).replace(/^﻿/, '')).chapters.length;   // U-0016 뒤 장 표는 JSON(옛 GoStory.cs 줄을 세면 0)
   const cap = key.charAt(0).toUpperCase() + key.slice(1);
   const j = JSON.parse(read(`${base}Saga${cap}/Resources/scenario_${key}.json`));
   if (key === 'realm') return j.cards.length + j.side.length;

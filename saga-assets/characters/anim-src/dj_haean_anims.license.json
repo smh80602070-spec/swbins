@@ -1,0 +1,7 @@
+{
+ "id": "dj_haean_anims",
+ "generator": "tools/char-forge/bake_for_rig.py --map vroid (vroid_batch.sh anim 단계, 2026-10-07)",
+ "license": "CC0-1.0 (뼈대+동작만 — 메시·그림 없음. 동작 원본 Quaternius Universal Animation Library CC0 + 자체 키프레임 tools/char-forge/keyframes.py)",
+ "clips": 54,
+ "note": "고돗 dex 공용 동작 묶음(tools/ual_lib_build.gd → anim_cc0/dex_common_lib.res)의 원본 — K-0078 새 폭발 동작 burst(CF_Burst) 포함. 다른 PC 에서도 쓰게 저장소에 둔다(K-0088 수신함 R-0)."
+}
