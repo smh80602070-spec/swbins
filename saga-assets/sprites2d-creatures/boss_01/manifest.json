@@ -1,0 +1,26 @@
+{
+ "id": "boss_01",
+ "body": "boss_01",
+ "kind": "creature",
+ "family": "quad",
+ "px": 128,
+ "frames": 8,
+ "dirs": [
+  0,
+  1,
+  2
+ ],
+ "clips": [
+  "idle",
+  "walk",
+  "attack",
+  "hit",
+  "death"
+ ],
+ "ortho_m": 8.8635,
+ "cam_z": 3.3681,
+ "anchor_feet_y_px": 112.64,
+ "side_faces": "right",
+ "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+ "source": "saga-assets/world/toon/boss_01.glb (자기 동작 Idle·Walk·Attack·Hit·Death) — tools/char-forge/creature_sprites.py (K-0090 ③)"
+}

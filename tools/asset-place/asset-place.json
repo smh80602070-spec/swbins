@@ -835,6 +835,22 @@
    ]
   },
   {
+   "id": "sprites2d-creatures",
+   "src": "saga-assets/sprites2d-creatures",
+   "recursive": true,
+   "include": [
+    "*.webp",
+    "manifest.json"
+   ],
+   "note": "K-0090 ③ 짐승·괴물 몸 56(boss·mon_*) 2D 시트(128px·8프레임·3방향·idle/walk/attack/hit/death, 죽음·맞음은 제자리) — creature_sprites.py. 크기는 manifest ortho_m(사람 시트 2.5m 고정 대비 배수), 판 폴더 복사 없이 shared 한 곳",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/creatures2d"
+    }
+   ]
+  },
+  {
    "id": "characters-sprites2d8",
    "src": "saga-assets/characters/sprites2d8",
    "recursive": true,

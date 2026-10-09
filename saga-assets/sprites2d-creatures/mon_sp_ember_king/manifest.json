@@ -1,0 +1,26 @@
+{
+ "id": "mon_sp_ember_king",
+ "body": "mon_sp_ember_king",
+ "kind": "creature",
+ "family": "spir",
+ "px": 128,
+ "frames": 8,
+ "dirs": [
+  0,
+  1,
+  2
+ ],
+ "clips": [
+  "idle",
+  "walk",
+  "attack",
+  "hit",
+  "death"
+ ],
+ "ortho_m": 4.1911,
+ "cam_z": 1.5926,
+ "anchor_feet_y_px": 112.64,
+ "side_faces": "right",
+ "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+ "source": "saga-assets/world/toon/mon_sp_ember_king.glb (자기 동작 Idle·Walk·Attack·Hit·Death) — tools/char-forge/creature_sprites.py (K-0090 ③)"
+}

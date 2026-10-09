@@ -5,7 +5,7 @@
 
 산출: <출력>/<동작>/d<방향>_f<프레임>.png (방향 0 정면 · 1 오른쪽 옆 · 2 뒤 — 웹 mode2d 줄 순서, 반대 옆은 웹이 뒤집음) + meta.json
 동작 짝: idle=Idle · walk=Walk · attack=Attack · hit=Hit · death=Death (몸 glb 의 애니메이션 이름).
-카메라: 몸마다 한 배율(서 있기·걷기의 최대 폭·키 × 1.2 — 공격 돌진·죽음은 조금 잘릴 수 있음), 발(z=0)은 위에서 88% 자리 — 사람 시트(ORTHO 2.5·CAM_Z 0.95)와 같은 발 기준선.
+카메라: 몸마다 한 배율(서 있기·걷기의 최대 폭·키 × 1.2, 공격·맞음·죽음까지 × 1.05 — 단 서 있기 배율의 CAP 배까지만), 발(z=0)은 위에서 88% 자리 — 사람 시트(ORTHO 2.5·CAM_Z 0.95)와 같은 발 기준선.
 몸 앞 = glTF +z(K-0075·K-0084 규약) → 블렌더 −Y, 카메라는 −Y 에서 +Y 를 본다.
 """
 import json
@@ -77,8 +77,26 @@ def bbox():
     return lo, hi
 
 
-# 한 배율: 서 있기·걷기 프레임의 최대 반폭(돌려도 들어가게 x·y 중 큰 쪽)과 키 × 여유 MARGIN —
-# 공격 돌진·죽음 굴림까지 다 넣으면 몸이 반 크기로 줄어(통째 움직임, K-0031) 끝이 조금 잘리는 쪽을 택한다
+# 죽음·맞음은 옆으로 굴러 넘어지며 몸이 칸 밖으로 미끄러진다(발 자리가 굴림 축, K-0031 통째 움직임) —
+# 몸 가운데(폭 기준)를 첫 프레임 자리에 붙들어 제자리로 굽는다(사람 시트처럼 이동은 웹이 한다)
+DRIFT = ('death', 'hit')
+CAP = float(os.environ.get('CAP', '1.35'))
+
+
+def hold(key, f, c0=None):
+    """프레임 f 로 옮기고, 붙드는 동작이면 piv 를 옆으로 밀어 몸 가운데를 c0 에 둔다. c0 없으면 지금 가운데를 돌려준다."""
+    piv.location.x = 0
+    sc.frame_set(f)
+    if key not in DRIFT:
+        return None
+    lo, hi = bbox()
+    c = (lo.x + hi.x) / 2
+    if c0 is not None:
+        piv.location.x = c0 - c
+    return c
+
+
+# 한 배율: 서 있기·걷기 프레임의 최대 반폭(돌려도 들어가게 x·y 중 큰 쪽)과 키 × 여유 MARGIN
 MARGIN = float(os.environ.get('MARGIN', '1.2'))
 half, top = 0.0, 0.0
 for key, act in [(k, a) for k, a in acts.items() if k in ('idle', 'walk')] or list(acts.items()):
@@ -89,6 +107,24 @@ for key, act in [(k, a) for k, a in acts.items() if k in ('idle', 'walk')] or li
         half = max(half, abs(lo.x), abs(hi.x), abs(lo.y), abs(hi.y))
         top = max(top, hi.z)
 size = max(2 * half * MARGIN, top * MARGIN / (FEET - 0.04))
+# 공격 돌진·맞음·죽음(제자리로 붙든 뒤)도 들어가게 넓히되, 서 있기 배율의 CAP 배까지만(몸이 너무 작아지지 않게)
+xh, xt = 0.0, 0.0
+for key in ('attack', 'hit', 'death'):
+    if key not in acts:
+        continue
+    use(acts[key])
+    for d in (0, 1):                                   # 뒤(2)는 정면의 좌우 거울 — 폭이 같다
+        piv.rotation_euler.z = math.radians(90 * d)
+        fs = frames(acts[key])
+        c0 = hold(key, fs[0])
+        for f in fs:
+            hold(key, f, c0)
+            lo, hi = bbox()
+            xh = max(xh, abs(lo.x), abs(hi.x))
+            xt = max(xt, hi.z)
+piv.rotation_euler.z = 0
+piv.location.x = 0
+size = max(size, min(size * CAP, max(2 * xh * 1.05, xt * 1.05 / (FEET - 0.04))) if xh else size)
 cam_z = size * (FEET - 0.5)
 
 cam_d = bpy.data.cameras.new('cam')
@@ -130,8 +166,9 @@ for key, act in acts.items():
     os.makedirs(od, exist_ok=True)
     for d in (0, 1, 2):
         piv.rotation_euler.z = math.radians(90 * d)      # 0 정면(−Y 를 봄) · 1 오른쪽(+X) · 2 뒤
+        c0 = hold(key, frames(act)[0])
         for i, f in enumerate(frames(act)):
-            sc.frame_set(f)
+            hold(key, f, c0)
             sc.render.filepath = os.path.join(od, f'd{d}_f{i:02d}.png')
             bpy.ops.render.render(write_still=True)
     done.append(key)
