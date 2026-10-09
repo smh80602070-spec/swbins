@@ -70,6 +70,11 @@ FACTION = {
     '운령 관문': 'mountain pass guard, lamellar armor, red tassel helmet held at side',
     '고원 유목': 'highland nomad, felt coat, sheepskin collar',
 }
+# 10-10 201장 눈 판정에서 뺀 26장 — 밑그림 몸의 앞머리가 한 눈을 덮거나(대부분)·천이 얼굴을 가림·맨가슴·옷 뭉개짐.
+# 그 몸들은 빼고 같은 성별 다른 몸(씨앗 'k27b:')·두 눈·목깃·denoise 0.62·새 씨앗으로 다시 뽑는다(K-0090 ⑤ 와 같은 처방)
+REDO = set('''aq_sanghwa bw_bitnae bw_gomnae ac_simyeon aq_cheongok bw_seolgu cs_gyeongjeok gr_iseul hb_bisang hq_jamsu js_dalli js_jomyeong kd_seorim
+kd_silheom mr_bakwi mr_bingha mr_jeoksa mr_sumteo nc_ullim ns_gieok ns_hakseup ob_tongsin rg_gyeolseung sn_deonggul tw_hoegwi yk_amsu'''.split())
+REDO_NEG = ', bare chest, shirtless, topless, eyepatch, bandage on face, scarf over face, face paint'
 MOOD = {'might': 'fierce determined expression', 'wisdom': 'calm clever gaze', 'virtue': 'gentle kind smile'}
 NEG_BASE = ('lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, '
             'low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, '
@@ -101,10 +106,19 @@ def main():
         pool[g].sort(key=lambda b: h8('k27pool:' + b))
     used = {'M': 0, 'F': 0}
     items, pairs, miss = [], {}, []
-    for h in sorted(heroes, key=lambda x: h8('k27:' + x['id'])):
+    order = sorted(heroes, key=lambda x: h8('k27:' + x['id']))
+    first = {}   # 처음 돌림 몸(REDO 아닌 장은 그대로 — 이미 뽑힌 그림과 맞는다)
+    for h in order:
         g = 'F' if h8('k27g:' + h['id']) % 100 < 45 else 'M'
-        body = pool[g][used[g] % len(pool[g])]
+        first[h['id']] = (g, pool[g][used[g] % len(pool[g])])
         used[g] += 1
+    bad = {first[i][1] for i in REDO if i in first}
+    for h in order:
+        g, body = first[h['id']]
+        redo = h['id'] in REDO
+        if redo:
+            alt = [b for b in pool[g] if b not in bad]
+            body = alt[h8('k27b:' + h['id']) % len(alt)]
         r = json.load(open(os.path.join(FORGE, 'recipes', 'realm', 'hero_' + body + '.json'), encoding='utf-8'))
         female = g == 'F'
         outfit = FACTION.get(h['faction'])
@@ -112,12 +126,15 @@ def main():
             miss.append(h['faction'])
             continue
         head = '1girl, female focus, feminine, solo' if female else '1boy, male focus, masculine, strong jaw, solo'
-        prompt = ', '.join([head, 'upper body portrait, both eyes visible', age_txt(r['macro']['age'], female),
+        prompt = ', '.join([head, 'upper body portrait, both eyes visible' + (', forehead visible, high collar, closed jacket, fully clothed' if redo else ''), age_txt(r['macro']['age'], female),
                             hair_name(r.get('tints', {}).get('hair'), female, h['id']), EYE.get(r.get('eye_color', 'brown'), 'brown eyes'),
                             outfit, MOOD.get(h['trait'], 'calm expression'), 'looking at viewer, soft dramatic lighting, simple painterly gradient background'])
-        items.append({'id': h['id'], 'seed': h8('k27s:' + h['id']) % 2_000_000_000, 'prompt': prompt, 'negative': NEG[g],
-                      'init_image': os.path.join(BUSTS, 'hero_%s.png' % body), 'body': body})
-        pairs[h['id']] = {'gender': g, 'body': body, 'faction': h['faction']}
+        row = {'id': h['id'], 'seed': h8(('k27s2:' if redo else 'k27s:') + h['id']) % 2_000_000_000, 'prompt': prompt,
+               'negative': NEG[g] + (REDO_NEG if redo else ''), 'init_image': os.path.join(BUSTS, 'hero_%s.png' % body), 'body': body}
+        if redo:
+            row['denoise'] = 0.62
+        items.append(row)
+        pairs[h['id']] = dict({'gender': g, 'body': body, 'faction': h['faction']}, **({'redo': True} if redo else {}))
     if miss:
         sys.exit('옷차림 표에 없는 세력: %s' % sorted(set(miss)))
     items.sort(key=lambda x: x['id'])
