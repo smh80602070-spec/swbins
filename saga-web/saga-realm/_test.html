@@ -6310,6 +6310,21 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return art === 'assets/store/realm_key' && (!st || (st.textContent.indexOf(art + '_h.webp') > 0 && st.textContent.indexOf(art + '_v.webp') > 0)) && ('realm 키 아트 가로·세로');
     });
 
+    t('rk.tactics: 전술판 그림(W-0134) — 지형 타일 무늬·유닛 몸(부대는 진영 보병·궁병, 장수는 몸)·이모지 없음', function () {
+      var V = DG.tacticsView, r;
+      var inf = V.bodyOf({ kind: 'troop', side: 'me', rng: 1 }), arcF = V.bodyOf({ kind: 'troop', side: 'foe', rng: 2 }), off = V.bodyOf({ kind: 'officer', side: 'me', id: 'zz_none', rng: 1 });
+      var host = document.createElement('div'); document.body.appendChild(host);
+      try {
+        var ids = DG.off.ofForce(DG.rtk.me()).map(function (o) { return o.id || o; }).slice(0, 2);
+        V.open(host, { seed: 3, land: 'forest', mine: ids, foes: [], foeTroops: [3000, 3000], name: function (id) { return id; } }, function () {});
+        var html = host.innerHTML;
+        r = [inf.still === 'rts_inf_ally', arcF.still === 'rts_arc_enemy', /^hero_[mf]$/.test(off.still || ''), V.tileHref('plain').indexOf('realm_grass.webp') >= 0,
+             html.indexOf('url(#tvp-') >= 0, (html.indexOf('tv-body') >= 0 || html.indexOf('viewBox="0 128') >= 0), !/🪖|⚔️|🏹|🌲|🧱/.test(html)];
+        V.quit(); V.go();
+      } finally { host.remove(); }
+      return r.every(Boolean) && '무늬·몸 그림·이모지 0' || '실패 ' + r.join(',');
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

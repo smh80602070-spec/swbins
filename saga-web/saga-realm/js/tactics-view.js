@@ -18,6 +18,22 @@
   var CELL = 50;
   var COL = { plain: '#c8b47a', forest: '#5f8446', river: '#4f86b3', wall: '#857563' };
   var NAME = { plain: '평지', forest: '숲', river: '강', wall: '성벽' };
+  /* ── 그림(W-0134 — 파이어 엠블렘 성흔의 비밀·삼국지 조조전): 지형 타일 격자·유닛 그림·공격 컷. 그림이 없으면 옛 색 칸·원·이모지 ── */
+  var TILE = { plain: 'realm_grass', forest: 'forest_grass', river: 'realm_water', wall: 'realm_stone' };
+  var PROP = { forest: ['tree_pine_01', 'tree_broadleaf_01', 'tree_pine_02', 'tree_broadleaf_02'], wall: ['city_wall_segment_01'] };
+  function cfg2() { return (global.DG.cfg && global.DG.cfg.mode2d) || {}; }
+  function art() { var o = global.DG.core; return !(o && o.tuned && !o.tuned('realm.tacArt', 1)); }
+  function tileHref(kind) { return TILE[kind] ? (cfg2().tileBase || 'assets/web2d/tile/') + TILE[kind] + '.webp' : ''; }
+  function propHref(id) { var A = global.DG.assets3d; return A && A.spriteUrl ? (A.spriteUrl(id) || '') : ''; }
+  function stillHref(pool, view) { return (cfg2().stillBase || 'assets/web2d/moving/') + pool + '/' + view + '.webp'; }
+  function hashS(str) { var h = 2166136261, i; str = String(str); for (i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } return h >>> 0; }
+  /** 유닛 몸 그림 — 순수(진단이 본다): 장수는 제 VRoid 시트(있으면) 아니면 장수 몸 둘 중 하나, 부대는 진영 색 보병 */
+  function bodyOf(u) {
+    var A = global.DG.assets3d, me = u.side === 'me';
+    if (u.kind === 'officer' && A && A.state && A.state() === 'ok' && A.has && A.has('hero', u.id) && A.root) { return { sheet: A.root() + 'characters2d/' + u.id + '/idle.webp' }; }
+    var pool = u.kind === 'officer' ? (hashS(u.id) % 2 ? 'hero_f' : 'hero_m') : (u.rng > 1 ? 'rts_arc_' : 'rts_inf_') + (me ? 'ally' : 'enemy');
+    return { still: pool };
+  }
   var cur = null;
 
   function T() { return global.DG.tactics; }
@@ -48,6 +64,7 @@
     var me = u.side === 'me', ring = me ? '#3d8bd9' : '#d24b3c', s = '';
     var spent = me && u.moved && u.acted;
     s += '<g class="tv-unit' + (spent ? ' spent' : '') + (v.sel === u.uid ? ' sel' : '') + '" data-uid="' + u.uid + '">';
+    if (art()) { return s + bodySvg(v, u, p, cx, me, ring) + hpSvg(u, p, cx) + hitSvg(hit, p, cx) + '</g>'; }   // W-0134 몸 그림
     var face = u.kind === 'officer' && v.opts.face ? v.opts.face(u.id) : '';
     if (face) {
       var cid = 'tvc-' + u.uid.replace(/[^a-z0-9]/gi, '_');
@@ -71,6 +88,43 @@
     return s + '</g>';
   }
 
+  /** 몸 그림 — 발밑 진영 원판 + 옆모습(내 편은 오른쪽·적은 왼쪽을 본다, 눕힌 판은 내 편 뒤·적 정면) */
+  function bodySvg(v, u, p, cx, me, ring) {
+    var B = bodyOf(u), foot = p.r * CELL + CELL - 6, sel = v.sel === u.uid, s = '';
+    s += '<ellipse cx="' + cx + '" cy="' + foot + '" rx="' + (CELL * 0.36) + '" ry="' + (CELL * 0.12) + '" fill="' + ring + '" fill-opacity="' + (sel ? 0.75 : 0.45) + '" stroke="' + ring + '" stroke-width="' + (sel ? 3 : 1.5) + '"/>';
+    var flip = v.vert ? false : !me, view = v.vert ? (me ? 'back' : 'front') : 'side';
+    if (B.still) {
+      var sz = CELL * 1.12, x = cx - sz / 2, y = foot - sz * 252 / 256;
+      s += '<image class="tv-body" href="' + esc(stillHref(B.still, view)) + '" x="' + x + '" y="' + y + '" width="' + sz + '" height="' + sz + '"' + (flip ? ' transform="translate(' + (2 * cx) + ',0) scale(-1,1)"' : '') + '/>';
+    } else {
+      var fz = CELL * 1.55, row = view === 'front' ? 0 : view === 'back' ? 2 : 1, fx = cx - fz / 2, fy = foot - fz * 0.89;
+      s += '<svg x="' + fx + '" y="' + fy + '" width="' + fz + '" height="' + fz + '" viewBox="0 ' + (row * 128) + ' 128 128"' + (flip ? ' transform="translate(' + (2 * cx) + ',0) scale(-1,1)"' : '') + '>' +
+        '<image href="' + esc(B.sheet) + '" width="1024" height="384"/>' +
+        '<animate attributeName="viewBox" dur="1.2s" repeatCount="indefinite" calcMode="discrete" values="' + [0, 1, 2, 3, 4, 5, 6, 7].map(function (f) { return (f * 128) + ' ' + (row * 128) + ' 128 128'; }).join(';') + '"/></svg>';
+    }
+    return s;
+  }
+  function hpSvg(u, p, cx) {
+    var w = CELL * 0.8, fx = cx - w / 2, fy = p.r * CELL + CELL - 5, f = Math.max(0, u.hp / u.max);
+    return '<rect x="' + fx + '" y="' + fy + '" width="' + w + '" height="4" rx="2" fill="#0009"/>' +
+      '<rect x="' + fx + '" y="' + fy + '" width="' + (w * f) + '" height="4" rx="2" fill="' + (f > 0.5 ? '#5bd16a' : (f > 0.25 ? '#e3c33f' : '#e2553f')) + '"/>';
+  }
+  function hitSvg(hit, p, cx) {
+    if (hit == null) { return ''; }
+    return '<rect x="' + (cx - 19) + '" y="' + (p.r * CELL + 1) + '" width="38" height="15" rx="4" fill="#000c"/>' +
+      '<text class="tv-hit" x="' + cx + '" y="' + (p.r * CELL + 13) + '" text-anchor="middle" font-size="12" fill="#ffd75e">' + hit + '%</text>';
+  }
+
+  /** 지형 무늬(SVG pattern) — 칸 하나에 타일 한 장 */
+  function defsSvg() {
+    var s = '<defs>';
+    Object.keys(TILE).forEach(function (k) {
+      s += '<pattern id="tvp-' + k + '" patternUnits="userSpaceOnUse" width="' + CELL + '" height="' + CELL + '"><rect width="' + CELL + '" height="' + CELL + '" fill="' + COL[k] + '"/>' +
+        '<image href="' + esc(tileHref(k)) + '" width="' + CELL * 3 + '" height="' + CELL * 3 + '" preserveAspectRatio="xMidYMid slice"/>' + (k === 'plain' ? '<rect width="' + CELL + '" height="' + CELL + '" fill="#b9a56a" fill-opacity="0.42"/>' : '')   // 평지 풀은 마른 들빛으로 눌러(쨍한 풀줄무늬) 숲 칸과 갈리게 + '</pattern>';   // 무늬를 2배로(잔줄 줄이기) · 평지는 모래빛을 얹어 다른 칸과 갈리게
+    });
+    return s + '</defs>';
+  }
+
   function boardSvg(v) {
     var b = v.b, W = (v.vert ? b.rows : b.cols) * CELL, H = (v.vert ? b.cols : b.rows) * CELL, s = '', x, y;
     var rc = reach(v), mv = {};
@@ -79,8 +133,12 @@
       for (x = 0; x < b.cols; x++) {
         var t = T().cellAt(b, x, y), p = scr(v, x, y);
         s += '<rect class="tv-cell" data-x="' + x + '" data-y="' + y + '" x="' + (p.c * CELL) + '" y="' + (p.r * CELL) + '" width="' + CELL + '" height="' + CELL +
-          '" fill="' + COL[t] + '" stroke="#0004"/>';
-        if (t === 'forest') { s += '<text x="' + (p.c * CELL + 8) + '" y="' + (p.r * CELL + 16) + '" font-size="11" opacity="0.7" pointer-events="none">🌲</text>'; }
+          '" fill="' + (art() ? 'url(#tvp-' + t + ')' : COL[t]) + '" stroke="#0003"/>';
+        if (art()) {   // W-0134 — 숲은 짙은 그늘 + 나무, 성벽은 돌담 그림(이모지 대신)
+          if (t === 'forest') { s += '<rect x="' + (p.c * CELL) + '" y="' + (p.r * CELL) + '" width="' + CELL + '" height="' + CELL + '" fill="#0b2a0e" fill-opacity="0.28" pointer-events="none"/>'; }
+          var pl = PROP[t], ph = pl ? propHref(pl[hashS(x + ':' + y) % pl.length]) : '';
+          if (ph) { s += '<image href="' + esc(ph) + '" x="' + (p.c * CELL + CELL * 0.08) + '" y="' + (p.r * CELL - CELL * (t === 'forest' ? 0.18 : -0.12)) + '" width="' + (CELL * 0.84) + '" height="' + (CELL * (t === 'forest' ? 1.08 : 0.84)) + '" preserveAspectRatio="xMidYMax meet" opacity="0.95" pointer-events="none"/>'; }
+        } else if (t === 'forest') { s += '<text x="' + (p.c * CELL + 8) + '" y="' + (p.r * CELL + 16) + '" font-size="11" opacity="0.7" pointer-events="none">🌲</text>'; }
         else if (t === 'wall') { s += '<text x="' + (p.c * CELL + 6) + '" y="' + (p.r * CELL + 16) + '" font-size="11" opacity="0.7" pointer-events="none">🧱</text>'; }
         if (mv[x + ',' + y]) {
           s += '<rect x="' + (p.c * CELL + 3) + '" y="' + (p.r * CELL + 3) + '" width="' + (CELL - 6) + '" height="' + (CELL - 6) +
@@ -88,8 +146,9 @@
         }
       }
     }
-    b.units.forEach(function (u) { if (u.hp > 0) { s += unitSvg(v, u, rc.hits[u.uid]); } });
-    return '<svg class="tv-svg" viewBox="0 0 ' + W + ' ' + H + '" style="width:min(100%,' + (W * 1.2) + 'px);aspect-ratio:' + W + '/' + H + '">' + s + '</svg>';
+    b.units.filter(function (u) { return u.hp > 0; }).sort(function (a, c) { return scr(v, a.x, a.y).r - scr(v, c.x, c.y).r; })   // 위 줄부터 — 앞 줄 몸이 뒤 줄을 가린다
+      .forEach(function (u) { s += unitSvg(v, u, rc.hits[u.uid]); });
+    return '<svg class="tv-svg" viewBox="0 0 ' + W + ' ' + H + '" style="width:min(100%,' + (W * 1.2) + 'px);aspect-ratio:' + W + '/' + H + '">' + (art() ? defsSvg() : '') + s + '</svg>';
   }
 
   function logLines(v) {
@@ -131,7 +190,7 @@
     v.host.innerHTML = '<div class="tv">' +
       '<div class="tv-head"><b>♟️ 전술판</b> <span class="muted">' + Math.min(b.turn, T().TURNS) + ' / ' + T().TURNS + '턴 · ' + esc(NAME[b.land] || '') +
         (b.siege ? ' · 공성' : '') + '</span></div>' +
-      '<div class="tv-board">' + boardSvg(v) + '</div>' +
+      '<div class="tv-board">' + boardSvg(v) + cutHtml(v) + '</div>' +
       (done ? resultHtml(v) :
         '<div class="tv-info">' + selInfo(v) + '</div>' +
         '<div class="tv-log">' + logLines(v) + '</div>' +
@@ -139,6 +198,18 @@
         '<button class="btn tiny ghost" data-tv="auto" title="남은 턴을 맡긴다">🎲 맡기기</button>' +
         '<button class="btn tiny ghost" data-tv="quit" title="무승부로 판을 닫는다(보정 0)">↩️ 물러나기</button></div>') +
       '</div>';
+  }
+
+  /** 공격 컷(W-0134) — 두 장수가 좌우에서 미끄러져 마주 서고 명중·피해. 판정 결과(r)를 재생만 한다 */
+  function cutHtml(v) {
+    var c = v.cut;
+    if (!c || Date.now() - c.at > 1100) { return ''; }
+    function side(u, cls) {
+      var f = u.kind === 'officer' && v.opts.face ? v.opts.face(u.id) : '';
+      return '<div class="tv-cut-side ' + cls + (u.side === 'me' ? ' me' : ' foe') + '">' + (f ? '<img src="' + esc(f) + '" alt="">' : '<span class="tv-cut-emo">' + (u.kind === 'troop' ? '🪖' : '⚔️') + '</span>') +
+        '<b>' + esc(nameOf(v, u)) + '</b></div>';
+    }
+    return '<div class="tv-cut">' + side(c.a, 'l') + '<div class="tv-cut-mid">' + (c.r.hit ? '−' + c.r.dmg + (c.r.killed ? ' 💀' : '') : '빗나감') + '<small>' + c.r.chance + '%</small></div>' + side(c.t, 'r') + '</div>';
   }
 
   function settle() {
@@ -168,7 +239,7 @@
     if (here && here.side === 'me') { v.sel = here.uid; render(); return; }
     if (here && here.side === 'foe' && sel) {
       var r = T().attack(b, sel.uid, here.uid);
-      if (r.ok) { settle(); }
+      if (r.ok) { v.cut = { a: sel, t: here, r: r, at: Date.now() }; setTimeout(function () { if (cur === v) { v.cut = null; render(); } }, 1150); settle(); }
       render();
       return;
     }
@@ -274,6 +345,6 @@
   global.DG = global.DG || {};
   global.DG.tacticsView = {
     open: open, tap: tap, endTurn: endTurn, auto: auto, quit: quit, go: go, annalsHtml: annalsHtml,
-    cur: function () { return cur; }, scr: scr, brd: brd
+    cur: function () { return cur; }, scr: scr, brd: brd, bodyOf: bodyOf, tileHref: tileHref
   };
 })(window);

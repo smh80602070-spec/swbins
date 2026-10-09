@@ -898,5 +898,22 @@
   "ticket": "W-0108",
   "since": "2026-10-08",
   "note": "D2: saga-web/tools/playcheck/pw-rk-war.mjs 9/9(rk.tactics 전술판 장면) — results/pw-rk-war.json · Claude 눈 shots/qc/saga-realm-tactics*.png ○(격자·초상·hp 띠·결과 카드 읽힘) · 폰 배치 tactics 장면 0건(W-0108). 규칙 층 W-0107(60판 승률 57%)."
+ },
+ {
+  "id": "rk.tactics-art",
+  "name": "전술판 그림 — 파이어 엠블렘·조조전 식(지형 타일 격자·유닛 몸·공격 컷)",
+  "files": [
+   "js/tactics-view.js",
+   "css/style.css"
+  ],
+  "tests": [
+   "rk.tactics: 전술판 그림(W-0134) — 지형 타일 무늬·유닛 몸(부대는 진영 보병·궁병, 장수는 몸)·이모지 없음"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0134",
+  "since": "2026-10-09",
+  "note": "D2: saga-web/tools/playcheck/pw-tac-check.mjs → shots/tac/c-{pc,phone,land}-{board,cut}.png Claude 눈 ○(마른 들빛 평지·숲 나무·성벽 돌담·보병 궁병·장수 몸, 공격 때 두 초상이 마주 서고 −피해·명중%). 판정(tactics.js) 그대로. 손잡이 realm.tacArt 0 = 옛 색 칸·원·이모지."
  }
 ]
