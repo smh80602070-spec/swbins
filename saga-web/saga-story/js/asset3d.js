@@ -519,7 +519,14 @@
         m.color = new t.Color(src.color ? src.color.getHex() : 0xffffff).multiply(tc);
         /* 2026-09-28 실기 Q10 — VRoid 가 아닌 저폴리 사람은 무늬 없는 단색 부품(피부·옷)이라 짙은 적 빛깔(#6b5030 등)을
            곱하면 피부까지 흑갈색이 되고 툰 음영까지 겹쳐 **새까만 실루엣**으로 섰다(헤드리스 사진 — 곁의 적 절반).
-           흰색과 섞은 색만 곱하고(asset3d.tintMix 0.45), 원래 밝기의 절반 밑으로는 안 내린다. VRoid 옷은 옛 그대로 */
+           흰색과 섞은 색만 곱하고(asset3d.tintMix 0.45), 원래 밝기의 절반 밑으로는 안 내린다.
+           W-0126(사용자 10-09 "세력 색을 옅게") — VRoid 옷도 세력 색을 통째로 곱하면 같은 세력(촉 #2f7d5c 등)이 모두 같은 초록이 되어
+           인물별 옷 색(vroidVariant, 이 뒤에 곱한다)이 안 보였다 → 흰색과 섞은 세력 색만(asset3d.vroidTintMix 0.35, 1 = 옛 통째).
+           같은 세력은 비슷한 빛깔, 사람마다 다른 옷. 전직 몸 색(jobLook)은 들어오는 hex 에 이미 섞여 그대로 얹힌다 */
+        if (vroid) {
+          var Cv = global.DG.core, vmix = Cv && Cv.tuned ? Cv.tuned('asset3d.vroidTintMix', 0.35) : 0.35;
+          m.color = new t.Color(src.color ? src.color.getHex() : 0xffffff).multiply(new t.Color(1, 1, 1).lerp(tc, vmix));
+        }
         if (!vroid) {
           var Cm = global.DG.core, mix = Cm && Cm.tuned ? Cm.tuned('asset3d.tintMix', 0.45) : 0.45;
           var base = new t.Color(src.color ? src.color.getHex() : 0xffffff);
@@ -881,7 +888,7 @@
     clear: clear,
     lookup: lookup,
     oneOf: oneOf,
-    heroRecipe: heroRecipe, FIXED_HERO: FIXED_HERO, fixedRecipe: fixedRecipe,
+    heroRecipe: heroRecipe, FIXED_HERO: FIXED_HERO, fixedRecipe: fixedRecipe, applyTint: applyTint,
     mapClips: mapClips,
     build: build,
     buildHero: buildHero,

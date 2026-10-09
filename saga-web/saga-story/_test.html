@@ -5977,6 +5977,25 @@ window.DG_NO_TUNE = true;
       return s === 'attack@0.00,attack@0.75,hit@0.00,walk' && s || '실패 ' + s;
     });
 
+    t('st.portrait3d: 세력 색은 옅게(W-0126) — VRoid 옷에 세력 색을 흰색과 섞어 곱해 같은 세력도 사람마다 옷 색이 갈린다', function () {
+      var T3 = window.THREE, A = DG.asset3d, V = DG.vroidVariant, D = DG.data;
+      if (!T3 || !A.applyTint || !V) { return '건너뜀(THREE·applyTint 없음)'; }
+      var shu = D.heroes.filter(function (h) { return h.faction === D.heroes[0].faction; }), hex = D.faction(shu[0].faction).color;
+      var a = null, b = null, i, j;
+      for (i = 0; i < shu.length && !b; i++) { for (j = i + 1; j < shu.length; j++) { if (V.pick(shu[i].id).cloth !== V.pick(shu[j].id).cloth) { a = shu[i]; b = shu[j]; break; } } }
+      if (!b) { return '실패 — 같은 세력에 옷 칸이 다른 둘이 없다'; }
+      function body(id) {
+        var g = new T3.Group(), mat = new T3.MeshToonMaterial({ color: 0xffffff }); mat.name = 'N00_001_01_Tops_01_CLOTH';
+        g.add(new T3.Mesh(new T3.BoxGeometry(1, 1, 1), mat)); A.applyTint(g, hex); V.apply(g, id);
+        return g.children[0].material.color;
+      }
+      var t0 = new T3.Group(), m0 = new T3.MeshToonMaterial({ color: 0xffffff }); m0.name = 'X_CLOTH'; t0.add(new T3.Mesh(new T3.BoxGeometry(1, 1, 1), m0)); A.applyTint(t0, hex);
+      var tc = t0.children[0].material.color, f = new T3.Color(hex), ca = body(a.id), cb = body(b.id);
+      var d = Math.abs(ca.r - cb.r) + Math.abs(ca.g - cb.g) + Math.abs(ca.b - cb.b);
+      var lighter = tc.r > f.r + 0.3 && tc.g >= f.g && tc.b > f.b + 0.3;
+      return lighter && d > 0.15 && ('세력 ' + hex + ' → 옷 곱 ' + tc.getHexString() + ' · ' + a.name + '·' + b.name + ' 차이 ' + d.toFixed(2)) || '실패 ' + tc.getHexString() + ' 차이 ' + d.toFixed(2);
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

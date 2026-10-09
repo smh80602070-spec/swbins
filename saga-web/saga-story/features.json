@@ -359,14 +359,15 @@
   "tests": [
    "초상 — 펫 105종 전부 3D 로 굽는다: 실제 동물은 제 모델, 신수·창작 짐승(옛 오마주)는 사가만리와 같은 대역",
    "초상 자리표시(SAGA-DESIGN §11 Phase 0) — 3D 로 갈아 끼울 자리는 코드 스프라이트 대신 자리표시로 시작하고, 굽기를 포기하면 옛 그림으로 되돌리며, 갈아 끼워지지 않을 자리는 옛 그림 그대로다",
-   "디스크 초상(SAGA-DESIGN §11 Phase 1) — 구워 둔 파일이 목록에 있으면 of() 가 굽기 없이 파일 주소를 주고 warm() 이 다시 안 굽는다, 목록에 없거나 꼴이 안 맞으면 파일로 안 간다, sweep() 이 이름표 <img> 를 그 파일로 갈아 끼운다"
+   "디스크 초상(SAGA-DESIGN §11 Phase 1) — 구워 둔 파일이 목록에 있으면 of() 가 굽기 없이 파일 주소를 주고 warm() 이 다시 안 굽는다, 목록에 없거나 꼴이 안 맞으면 파일로 안 간다, sweep() 이 이름표 <img> 를 그 파일로 갈아 끼운다",
+   "st.portrait3d: 세력 색은 옅게(W-0126) — VRoid 옷에 세력 색을 흰색과 섞어 곱해 같은 세력도 사람마다 옷 색이 갈린다"
   ],
   "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). △ 영웅 옷이 거의 다 초록 물들임."
+  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). △ 영웅 옷이 거의 다 초록 물들임. W-0126(10-09): 같은 세력(촉) 일곱이 같은 초록 옷이던 것 → 세력 색 옅게(asset3d.vroidTintMix 0.35, 사용자 고름). shots/visual-20261007/saga-story-4-portrait.png 옷 제각각 ○(사가마을 초상과 같은 색)."
  },
  {
   "id": "st.ui",
