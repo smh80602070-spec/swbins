@@ -17,22 +17,19 @@
 
 **공통(saga_core)**: `data/characters.gd`(인물 105, id 불변)·`data/pets.gd`(신수 11) · `ui/toast.gd`·`ui/virtual_joystick.gd`·`ui/goal_board.gd`+`ui/session_card.gd`(101-4, 목표판 3줄·마무리 카드, 다섯 판 전부 붙음)·`ui/duel_hud.gd` · `combat_feel.gd`(101-3, 다섯 판 끝, 09-20㉒ 타격음 배선, 09-21 UI 사운드(`ui()`) 신설+`session_card.gd` "닫기" 배선) · `world/world_curve_material.gd`+`shaders/curved_*`(FOREST 구면) · `world/density_report.gd`(104-5, 발견 밀도, FOREST는 반경 10m) · `shaders/cel_toon.gdshader`+`cel_shader_apply.gd`(66-2/102-3, hit_flash+아웃라인 next_pass 자동) · `world/glb_utils.gd::fit_height()`(102-1, 여전히 미호출). 렌더러 Forward+/Mobile 이중(66-1, `env_pc.tres`·`env_mobile.tres`, 102-2 값).
 
-## 현재 작업 — 중단 지점(2026-10-08)
+## 현재 작업 — 중단 지점(2026-10-09)
 
-- 10-07~08 닫음(줄거리는 `tasks/godot/done/` 티켓 메모가 정본): G-0049~0070 화질·대화창·장비 외형·저장 슬롯 · G-0071 협공(끄기 SAGA_NO_ASSIST=1) · G-0059·0082 몬스터 GLB 몸(끄기 SAGA_CODE_CREATURES=1) · G-0074~0080 회차 이야기 13~17부(끝) · G-0083 갑옷 몸 · G-0084 신수 GLB(`saga_core/world/pet_body.gd`) · G-0085~0110 네 판 이야기(나락·마을·종횡 웹 끝까지, 천하 6막까지 — 7막은 시간 틈 사람이 고돗 인물 표에 없어 못 엶) · G-0098 굴 안·G-0061 집 안 · G-0111 대사 음성(`saga_core/audio/voice.gd`, 끄기 Voice.set_enabled). features D0 0. 큐 비면 수신함 고돗 몫 → RECURRING. K 대기 — 새 폭발 CF_Burst(원본 K PC 에만)·인물 표정 모프.
-- 공용 새 길: `saga_core/world/bone_gear.gd`(장비 GLB 뼈 붙이기)·`saga_core/data/graphics_settings.gd`(user://graphics.cfg)·`saga_core/ui/choice_prompt.gd`(가로 창 16px). 촬영 도구 `tools/shot_scene.gd`(컷 표·@box·@tree·@noop).
-- 이 PC Godot = WinGet Links/godot_console.exe(4.7.2). `--import` 는 추적 .import(uid 다시 매김)·스크립트 .uid 를 수십~수천 개 고쳐 쓴다 → `git checkout -- assets`·새 .uid 지우기.
-- 함정: forward_plus 로 창을 화면 밖(-4000)에 두고 찍으면 SDFGI 화면이 검은 네모 조각(원래 그럼, 성능 모드는 정상) · 사가만리 장면은 한 프로세스에서 두 번 부르면 set_count 오류(컷 하나씩).
+- 10-09 닫음(줄거리는 `tasks/godot/done/` 티켓 메모가 정본): G-0116 먼 윤곽선 끄기(효과 0 — 모바일 렌더러에서 next_pass 윤곽선은 draw call 안 씀, 되돌림) · G-0117 천하 7막(시간 틈 아홉 `saga_core/data/time_folk.gd`) · G-0118 소넷 5.5 구간 감사(시트 `tasks/sheets/godot-sonnet-audit-20261009.md`) · G-0119 탈것 키 `[` `]`(사가나락 `-` `=`) · G-0120 네 판 세이브 점검 진짜 save()/try_load() · G-0121 saga_core 가 판 autoload 를 안 부르게(check_refs 검사) · G-0122 평탄 자리 Vector2i · G-0123 하늘 밤 경계 4·21시·알 굴림 횟수·mount_host 창 치움 · G-0124 이동 프리셋 1 기본 · G-0125 마을 예산 = 지역 평균 draw ≤260(probe_perf `PERF_PROBE_DONE`) · G-0126 천하 1~5막 시간 틈 사람 직접 등용 · G-0127 서리봉 새파란 그림자(고원 안에서만 주변광 하늘 몫 0.5)·눈송이 번짐 · G-0128 눈밭 결.
+- 큐 빔. 사용자 상위 방향 = **그래픽 먼저, 고칠 때마다 같은 시간대 전후 촬영**(기준 네 컷 `tools/shot_baseline.sh`, 비교 `tools/shot_diff.mjs`). 날씨가 3시간 칸·고원 눈보라로 바뀌니 전후는 연달아 찍는다.
+- 이 PC Godot = WinGet Packages `Godot_v4.7.2-stable_win64_console.exe`. 전체 점검 `tools/probe_all.sh` 155개(마지막 10-09: perf·story9 말고 0 — story9 는 촬영과 동시 실행 때만 흔들림, 혼자 0). 러너가 도는 중엔 probe_all.sh 를 고치지 말 것.
+- 함정: 사가마을·나락 씬을 헤드리스로 띄우면 첫 안내·대화 창(ui_modal)이 연달아 떠 멈춤 — 점검은 매 프레임 창을 치울 것 · 공용 주변광(environment_profile)을 바꾸면 신상·절벽 그늘 입체감이 날아감 — 지역 안에서만 · forward_plus 로 화면 밖 촬영 시 SDFGI 검은 조각.
 
 ## 다음 작업 (우선순위)
 
-0. **새 시스템 먼저**(09-30 사용자, 그래픽은 뒤로) — 끝: 신수 알·동행 친밀(I)·쉼터 마당(T)·회차(N)·자동 저장(다섯 판)·도움말(F1)·사냥 기록(H)·주간 도전(Z)·사진 도감(P). 다음 후보: 회차 전용 이야기. 새 키는 project.godot physical_keycode·probe_help 표와 겹치는지 먼저 볼 것.
-
-1. **사용자 실기 확인 결과 대기** — 아래 목록(106장 전부 헤드리스로만 봤다).
-2. **2차 결말 뒤 — 재대결 비경 둘·밤의 잔불 열 곳은 끝**(55-5, 09-29). **12부 "돌아가는 별배" 39~41장 끝**(56-1, 3차 결말 — 새 지역 없음, 동료 나래·소담). 결말 뒤 재대결 비경(56-2)도 끝. 다음 흐름(13부 등)·배경음·다른 판 시나리오(아래 3)는 사용자 결정.
-3. **시나리오**(09-26, `../scenario/`) — DUNGEON·FOREST·STORY·REALM 0장: 판별 장 카드 1부부터. GO 는 1부 퓨전 보강도.
-4. 106장 사람 몫 — 등반·활공·수영·점프 Mixamo 클립(로그인만 사람, `tools/mixamo_automation/`), 주역 VRoid 조형.
-5. 51장 남은 것 — DUNGEON 무예 row1/row2 깊이(범위 먼저 좁힐 것).
+0. **그래픽(원신급)** — 기준 네 컷 + 다른 지역 컷(`tools/probe_shots.gd` 표)을 찍어 다음으로 눈에 띄는 것 → 티켓 → 같은 시간대 전후 촬영 판정.
+1. **사용자 손 확인** — 이동 프리셋 1(G-0124, feel_tuning D2)·탈것 키 `[` `]`·천하 7막.
+2. 51장 남은 것 — DUNGEON 무예 row1/row2 깊이(범위 먼저 좁힐 것).
+3. 106장 사람 몫 — 등반·활공·수영·점프 Mixamo 클립(로그인만 사람), 주역 VRoid 조형. 폭발 동작 CF_Burst 원본(dj_haean_anims.glb)은 K PC 대기.
 
 ## 알려진 오류
 
