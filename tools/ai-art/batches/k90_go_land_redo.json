@@ -1,12 +1,12 @@
 {
  "model": "z-image-turbo",
  "out": "k90_go_land",
- "note": "K-0090 ② — 사가만리 3D 땅 textures/land 18(종류 6 × 변형 3, 옛 ambientCG 사진)을 손그림 툰 땅 견본으로. 평평한 견본을 뽑아 make_seamless(4판 띠 섞기)로 잇는다 — SDXL tiling 은 ComfyUI 에서 깨져 안 씀(10-09). 같은 이름(grass1…farm3)으로 교체. · redo: 변형 셋이 재질·색이 달라 48m 칸 바둑판 → 종류마다 한 프롬프트 + 씨앗만 다르게(11장)",
+ "note": "K-0090 ② — 사가만리 3D 땅 textures/land 18(종류 6 × 변형 3, 옛 ambientCG 사진)을 손그림 툰 땅 견본으로. 평평한 견본을 뽑아 make_seamless(4판 띠 섞기)로 잇는다 — SDXL tiling 은 ComfyUI 에서 깨져 안 씀(10-09). 같은 이름(grass1…farm3)으로 교체. · redo: 변형 셋이 재질·색이 달라 48m 칸 바둑판 → 종류마다 한 프롬프트 + 씨앗만 다르게(11장) · 후보 2장씩(사용자 \"퀄리티는 더 좋아지면 좋지\") — 눈으로 골라 land_<이름>.png 로",
  "defaults": {
   "prompt_prefix": "",
   "width": 1024,
   "height": 1024,
-  "variants": 1,
+  "variants": 2,
   "tiling": false
  },
  "items": [

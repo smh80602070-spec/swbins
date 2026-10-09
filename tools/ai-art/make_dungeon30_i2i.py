@@ -26,6 +26,11 @@ BORROW = {
 }
 
 
+# 부정어로 안 고쳐지는 장(밑그림 몸의 파인 목선·눈 덮는 앞머리가 0.55 에서 그대로 남음, 10-09 판정) —
+# 같은 성별 다른 몸(씨앗 'k90b:')으로 밑그림을 바꾸고 목깃·두 눈을 프롬프트에 넣고 denoise 0.62
+REDO = {'ft_airesearch', 'ft_cyberdoc', 'md_firefighter', 'ft_quantumphy', 'md_chef', 'md_developer', 'md_entrepreneur', 'md_journalist', 'md_musician'}
+
+
 def gender(prompt):
     return 'F' if prompt.lstrip().startswith('1girl') else 'M'
 
@@ -40,12 +45,16 @@ def main():
         hid = it['id']
         g = gender(it['prompt'])
         body = BORROW[hid]
-        if body_g.get(body) != g:
+        if body_g.get(body) != g or hid in REDO:
             pool = by_g[g]
-            body = pool[int(hashlib.md5(('k90:' + hid).encode()).hexdigest()[:8], 16) % len(pool)]
+            body = pool[int(hashlib.md5((('k90b:' if hid in REDO else 'k90:') + hid).encode()).hexdigest()[:8], 16) % len(pool)]
             swapped.append(hid)
-        neg = it['negative'] + (', cleavage, revealing clothes, open clothes, bare chest, collarbone' if g == 'F' else '')   # 10-09 첫 장: 밑그림 옷깃이 벌어진 노출로
-        items.append(dict(it, negative=neg, init_image=os.path.join(BUSTS, 'hero_%s.png' % body), body=body))
+        neg = it['negative'] + (', cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight' if g == 'F' else '')   # 10-09 첫 장: 밑그림 옷깃이 벌어진 노출로
+        neg += ', hair over eyes, hair over face, covered face, faceless'   # 10-09 16장 판정: 밑그림 머리가 얼굴을 덮음(quantumphy·cyberdoc)
+        row = dict(it, negative=neg, init_image=os.path.join(BUSTS, 'hero_%s.png' % body), body=body)
+        if hid in REDO:
+            row.update(prompt=it['prompt'].replace('upper body portrait,', 'upper body portrait, both eyes visible, high collar, closed jacket,'), denoise=0.62)
+        items.append(row)
     out = {'model': src['model'], 'out': 'k90_dungeon30_i2i',
            'note': 'K-0090 ⑤ — web_dungeon_30 프롬프트 + 빌린 몸 반신 렌더 밑그림(성별 반대 %d명은 같은 성별 렌더로) img2img 0.55 — 도감 299 와 같은 그림체' % len(swapped),
            'defaults': dict(src['defaults'], denoise=0.55), 'items': items}

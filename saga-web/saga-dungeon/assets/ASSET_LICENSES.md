@@ -1905,7 +1905,7 @@ Orc·Demon 은 Ultimate Monsters). 사용자 결정("사가만리처럼 대역 �
 ## AI 생성 도감 초상 (2026-09-29)
 | 항목 | 내용 |
 |---|---|
-| **파일** | `assets/portraits/hero/<id>_s.webp`(192×192)·`<id>_c.webp`(300×344) — 도감 105 인물 + 사가나락 미래·현대 인물 30(`--src web_dungeon_30`, 프롬프트 `batches/web_dungeon_30.json`) |
+| **파일** | `assets/portraits/hero/<id>_s.webp`(192×192)·`<id>_c.webp`(300×344) — 도감 105 인물 + 사가나락 미래·현대 인물 30(2026-10-09 K-0090 ⑤ 다시: 프롬프트 `batches/web_dungeon_30.json` + 게임이 입히는 빌린 몸의 공방 렌더 밑그림 img2img — `make_dungeon30_i2i.py` → `batches/k90_dungeon30_i2i.json`, `--src k90_dungeon30_i2i`. 옛 판은 글→그림이라 그림체가 달랐다) |
 | **만든 법** | swbins3 로컬 sd-webui + **Animagine XL 4.0 Opt**(CreativeML OpenRAIL++-M, 상업 사용 허용) — `tools/ai-art/gen.py` → `pack_web_portraits.py` |
 | **프롬프트** | 인물 이름 없이 문화·역할·성별·나이·머리·눈 묘사만 — `tools/ai-art/batches/web_heroes_105.json` |
 | **밑그림** | 도감 105 인물은 자체 공방 몸(`tools/char-forge`, CC0 재료+레시피) 가슴 위 렌더를 밑그림으로 한 이미지→이미지 생성(`render_busts.py`, `batches/web_heroes_105_i2i.json`, denoise 0.55) — 밑그림 = 공방 몸 렌더 |

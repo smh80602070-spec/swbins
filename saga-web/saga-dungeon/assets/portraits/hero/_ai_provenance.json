@@ -1,5 +1,5 @@
 {
-"note": "AI 생성 초상 — tools/ai-art (swbins3 sd-webui, 상업 허용 모델). 프롬프트는 tools/ai-art/batches/web_heroes_105.json",
+"note": "AI 생성 초상 — tools/ai-art (swbins3 ComfyUI, 상업 허용 모델). 프롬프트는 tools/ai-art/batches/web_heroes_105.json",
 "items": {
 "eu_alexander": {
 "model": "animagine-xl-4.0-opt",
@@ -1055,181 +1055,301 @@
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 827028531,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_jp_asahime.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.62
 },
 "ft_astronaut": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 3708249903,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_kr2_sogaram.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "ft_bioeng": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 1093768174,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_kr2_seolharan.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "ft_climateeng": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 1015529101,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_fu_jongwang.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "ft_cyberdoc": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 3469071857,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_rf_mateng.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.62
 },
 "ft_dronecmd": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 4019243906,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_nh_yeombun.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "ft_ewarfare": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 35120903,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_nh_jinju.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "ft_fusioneng": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 2545667776,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_xiyu_gyoha.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "ft_hacker": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 1776467466,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_jp_shioji.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "ft_hologramartist": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 2854482544,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_jiao_luyan.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "ft_marspioneer": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 522332673,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_rf_yanghong.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "ft_nanotech": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 2945930906,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_sl_wangjeong.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "ft_orbitmech": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 2495158837,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_rf_guojia.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "ft_quantumphy": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 2331579236,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_sl_daetaek.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.62
 },
 "ft_roboteng": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 718799212,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_rf_zhangren.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "md_architect": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 4232968704,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_mb_hoja.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "md_athlete": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 1356801148,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_rf_huangzu.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "md_ceo": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 2123509746,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_rf_caoren.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "md_chef": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 1969015281,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_jp_tamakiri.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.62
 },
 "md_developer": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 1778235337,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_ly_uhwa.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.62
 },
 "md_doctor": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 2639308910,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_ru_doksi.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "md_entrepreneur": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 2660860506,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_mb_hwangto.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.62
 },
 "md_explorer": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 3768757958,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_nz_ahyang.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "md_firefighter": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 4198850514,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_rf_wuyi.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.62
 },
 "md_journalist": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 3271547184,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_tz_sawi.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.62
 },
 "md_lawyer": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 3164054149,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_nz_soman.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "md_musician": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 4229576472,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_xiyu_talban.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.62
 },
 "md_photographer": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 620692046,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_xiyu_gyoha.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "md_pilot": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 164129549,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_xb_hoja.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 },
 "md_scientist": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 4170621749,
-"date": "2026-09-29"
+"date": "2026-10-09",
+"mode": "img2img",
+"base_body": "tools/char-forge/_out/realm/hero_fu_yuseong.glb",
+"base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+"denoise": 0.55
 }
 }
 }
