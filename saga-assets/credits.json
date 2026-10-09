@@ -329,7 +329,7 @@
    "tool": "build_monster.py",
    "model": "",
    "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
-   "count": 313,
+   "count": 324,
    "where": [
     "saga-assets/pets3d",
     "saga-assets/world/toon",
@@ -633,9 +633,10 @@
    "tool": "retile_uv.py --unit 4.4 (K-0089)",
    "model": "",
    "license": "CC0-1.0 (Kenney Modular Cave Kit gate.glb 모양 그대로 + 자체 상자 투영 UV)",
-   "count": 1,
+   "count": 2,
    "where": [
-    "saga-assets/world/dungeon-kit"
+    "saga-assets/world/dungeon-kit",
+    "saga-unity/Assets/Art/Dungeon"
    ]
   },
   {
