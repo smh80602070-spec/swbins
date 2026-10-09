@@ -158,7 +158,7 @@ namespace Saga.EditorTools
                 float d0 = Walked(pc, start, dir);
                 if (d0 < 2.8f) continue;
                 GoMounts.Restore("mt_white");
-                GoMounts.TryRide(Time.time + 100f, out _);
+                if (!GoMounts.TryRide(Time.time + 100f, out string why)) { Fail($"흰 말에 못 탐 — {why}"); return; }
                 float d1 = Walked(pc, start, dir);
                 GoMounts.Dismount();
                 float ratio = d1 / d0;
