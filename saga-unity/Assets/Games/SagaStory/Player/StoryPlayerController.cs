@@ -381,6 +381,7 @@ namespace Saga.Story.Player
             _attackCooldownLeft = AttackCooldown * StoryLabyrinthState.CooldownMul;
             NotifyAttacked();
             PlayAttackAnim();
+            Saga.Core.SagaVoice.Say("shout"); // U-0068 — 가끔 외침
 
             bool hitAny = false;
             bool anyCrit = false;

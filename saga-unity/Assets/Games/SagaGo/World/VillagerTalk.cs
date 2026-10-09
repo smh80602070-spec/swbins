@@ -38,6 +38,7 @@ namespace Saga.Go.World
 
             _lastSaidTime = Time.time;
             DialogueLabel.Instance?.Show($"{_npcName} — {_lineProvider()}", LineShowSec);
+            Saga.Core.SagaVoice.Say("greet", _npcName); // U-0068 — 말을 건 인물이 인사 한 마디(표에 없으면 이름 해시 목소리)
         }
     }
 }

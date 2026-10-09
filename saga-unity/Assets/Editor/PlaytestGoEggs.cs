@@ -85,6 +85,9 @@ namespace Saga.EditorTools
             PlaytestKit.Check(GoEggs.Sources.Values.All(rows => rows.All(r => GoEggs.TierOf(r.tier) != null && r.chance > 0f && r.chance <= 1f)), "알 나오는 곳에 모르는 알·확률");
             PlaytestKit.Check(GoEggs.BagMax == 9 && GoEggs.BuddyM == 400f && GoEggs.BuddyLevelM == 500f && GoEggs.BuddyGold == 800 && GoEggs.DupGold == 1500 && GoEggs.DupExp == 30, "수치가 고돗과 다름");
             PlaytestKit.Check(GoEggs.BodyName("pt_gumiho") == "pet_pt_gumiho", "몸 이름 규칙(K-0075)이 다름");
+            // U-0068 — K-0075 몸 11 이 Resources/World 에 놓였고 열린다
+            var noBody = GoEggs.Pets.Where(p => Saga.Core.WorldModels.Load(GoEggs.BodyName(p.Id)) == null).Select(p => p.Id).ToList();
+            PlaytestKit.Check(noBody.Count == 0, $"동행 몸을 못 엶: {string.Join(",", noBody)}");
         }
 
         private static void CheckRoll()
@@ -232,6 +235,7 @@ namespace Saga.EditorTools
                 EggState.ResetForTest(); PlayerStats.Restore(30, 0);
                 CheckUi(ui, walker, parts);
                 CheckRealPaths(walker, parts);
+                CheckBodies(walker, parts);
                 CheckFile(savePath, parts);
             }
             finally
@@ -393,6 +397,30 @@ namespace Saga.EditorTools
             if (!SaveState.TryLoad()) { Fail("알 없는 옛 파일 TryLoad 실패"); return; }
             if (EggState.BagCount != 0 || EggState.OwnedCount != 0 || EggState.Buddy != "") Fail("알 없는 옛 세이브가 빈 상태로 안 읽힘");
             parts.Add("세이브(알·부화기·신수·동행·친밀 왕복 · 옛 세이브는 빈 상태 · 버전 그대로)");
+        }
+
+        /// <summary>U-0068 — 신수 11 을 하나씩 동행으로 두고 진짜 `EggWalker.Update` 를 돌리면 그 몸(그림 있음)이 주인공 뒤에 선다 · 내보내면 사라진다.</summary>
+        private static void CheckBodies(EggWalker walker, List<string> parts)
+        {
+            var update = typeof(EggWalker).GetMethod("Update", BindingFlags.Instance | BindingFlags.NonPublic);
+            var bodyField = typeof(EggWalker).GetField("_body", BindingFlags.Instance | BindingFlags.NonPublic);
+            var player = GameObject.FindWithTag("Player");
+            if (update == null || bodyField == null || player == null) { Fail("EggWalker.Update/_body/Player 없음"); return; }
+            int stood = 0;
+            foreach (var pet in GoEggs.Pets)
+            {
+                EggState.Discover(pet.Id);
+                if (EggState.SetBuddy(pet.Id).Length > 0) { Fail($"{pet.Id} 동행이 안 됨"); continue; }
+                update.Invoke(walker, null);
+                var body = bodyField.GetValue(walker) as GameObject;
+                if (body == null || body.GetComponentsInChildren<Renderer>().Length == 0) { Fail($"동행 {pet.Id} 몸이 안 섬"); continue; }
+                if (body.name != GoEggs.BodyName(pet.Id)) Fail($"동행 몸 이름이 다름 {body.name}");
+                if (Vector3.Distance(body.transform.position, player.transform.position) > 6f) Fail($"동행 {pet.Id} 몸이 주인공 곁이 아님");
+                stood++;
+            }
+            EggState.SetBuddy(""); update.Invoke(walker, null);
+            if (bodyField.GetValue(walker) as GameObject != null) Fail("동행을 내보냈는데 몸이 남음");
+            parts.Add($"동행 몸 {stood}/11 이 진짜 Update 로 주인공 곁에 섬·내보내면 사라짐");
         }
 
         private static void Fail(string msg)

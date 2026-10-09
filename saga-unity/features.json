@@ -1602,7 +1602,7 @@
   "fun": {},
   "ticket": "U-0046",
   "since": "2026-10-05",
-  "note": "D2(2026-10-05): saga-unity/docs/playcheck/d2-u0043-0046-20261005.json — 규칙+장면 3연속 + 실제 이동·진짜 상자·일과 완료 경로. UiLayoutCheck 로 단추·창 배치 점검(이 작업 몫 0건) · 창 모양·글 읽힘은 눈 · 동행 몸 3D = K-0075"
+  "note": "D2(2026-10-05): saga-unity/docs/playcheck/d2-u0043-0046-20261005.json — 규칙+장면 3연속 + 실제 이동·진짜 상자·일과 완료 경로. UiLayoutCheck 로 단추·창 배치 점검(이 작업 몫 0건) · 창 모양·글 읽힘은 눈 · U-0068: 동행 몸 11(K-0075) Resources 열림 + 장면에서 11/11 진짜 Update 로 주인공 곁에 섬·촬영 눈 ○(흠: 무릎 높이로 작고 정지 자세) — docs/playcheck/d2-u0068-20261009.json"
  },
  {
   "id": "un.go.menu-hub",
@@ -1647,12 +1647,12 @@
   "tests": [
    "PlaytestGoSfx"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "U-0048",
   "since": "2026-10-05",
-  "note": "D1: 규칙(가짜 로더 — 단일·변형 돌려 가기·없는 이름 null·기록·간격)+코드가 부르는 이름이 정본 sfx 파일에 있음+장면 3연속(진짜 클릭·창·레벨업·타격·피격·상자·부화에서 이름을 부름). **소리는 아직 안 난다 — 유니티에 파일이 없다(asset-place sfx 대상이 web·godot 뿐, K-0076 요청)** → 배치 뒤 사용자 귀. 무기별 소리·발소리는 후속"
+  "note": "D2(U-0068, docs/playcheck/d2-u0068-20261009.json): K-0076 효과음 92 가 유니티 Resources 에 놓였고 진짜 로더로 전부 열림 · 코드가 부르는 이름 27 빠짐 0(PlaytestGoSfx unity files) · 장면 사건 호출은 그대로 OK. 소리 크기·어울림은 귀 — QC 몫"
  },
  {
   "id": "un.go.sfx-move",
@@ -1665,12 +1665,31 @@
   "tests": [
    "PlaytestGoSfxMove"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "U-0051",
   "since": "2026-10-05",
-  "note": "D1: 규칙(지역→지면 표·무기 종류→타격음·걸음 거리 박자(프레임 무관)·공중/착지/입수/탈것 무음·새 이름이 정본 sfx 파일에 있음)+장면 3연속(진짜 TakeHit 이 활성 인물 무기의 <kind>_hit·진짜 Step 으로 걷기 step_<지면>·점프 jump). **소리는 아직 안 난다 — 유니티에 파일이 없다(K-0076)** → 배치 뒤 사용자 귀. 말·탈것 위 발소리·다리 위 나무 발소리는 후속"
+  "note": "D2(U-0068, docs/playcheck/d2-u0068-20261009.json): K-0076 효과음 92 가 유니티 Resources 에 놓였고 진짜 로더로 전부 열림 · 코드가 부르는 이름 27 빠짐 0(PlaytestGoSfx unity files) · 장면 사건 호출은 그대로 OK. 소리 크기·어울림은 귀 — QC 몫"
+ },
+ {
+  "id": "un.go.voice",
+  "name": "대사 음성 589 — 공격·필살 외침·줍기·인사·해설 안내(고돗 G-0111 규칙, 다섯 판 공용 SagaVoice, U-0068)",
+  "files": [
+   "saga-unity/Assets/SagaCore/SagaVoice.cs",
+   "saga-unity/Assets/Games/SagaGo/Combat/FieldCombat.cs",
+   "saga-unity/Assets/Games/SagaGo/World/VillagerTalk.cs"
+  ],
+  "tests": [
+   "PlaytestGoVoice",
+   "PlaytestGoSfx"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "U-0068",
+  "since": "2026-10-09",
+  "note": "D2(docs/playcheck/d2-u0068-20261009.json): 규칙(간격·확률·순위·sure·SKIP·빠진 줄·해시 목소리·안내 키·끄기) + 파일 589 Resources 열림 + 장면(진짜 공격·필살 외침·상자 줍기·레벨업 안내 NA 파일 열림). 나락·종횡 외침·마을 인사는 소스 확인. 설정 UI 없음(PlayerPrefs API 만, 고돗과 같음)"
  },
  {
   "id": "un.go.weapon-models",

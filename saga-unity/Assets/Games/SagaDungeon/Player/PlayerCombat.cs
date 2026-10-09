@@ -185,6 +185,7 @@ namespace Saga.Dungeon.Player
             if (enemy == null) return;
 
             _cooldownLeft = AttackCooldown * SecretState.CooldownMul(M);
+            Saga.Core.SagaVoice.Say("shout"); // U-0068 — 가끔 외침(말하는 이 = 주인공)
             _controller.FaceToward(enemy.transform.position);
             SecretState.OnCast(M, Time.time);
             float mul = ConsumeCounter();

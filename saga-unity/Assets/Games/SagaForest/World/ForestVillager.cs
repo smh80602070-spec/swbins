@@ -100,6 +100,7 @@ namespace Saga.Forest.World
             }
 
             DialogueLabel.Instance?.Show($"{DisplayName} — \"{Line}\"", ToastSec);
+            Saga.Core.SagaVoice.Say("greet", DisplayName); // U-0068 — 주민 인사 한 마디
         }
     }
 }

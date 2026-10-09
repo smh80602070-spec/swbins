@@ -403,6 +403,7 @@ namespace Saga.Go.Data
             DailyTaskState.ReportProgress(DailyTaskState.Kind.Gather, 1); // 109-14-8
             AchieveState.Bump("gather"); // 109-14-25 업적
             Saga.Go.Audio.GoSfx.Play("item_pick"); // U-0048
+            Saga.Core.SagaVoice.Say("pickup"); // U-0068
             Picked?.Invoke(n.Item);
             return true;
         }

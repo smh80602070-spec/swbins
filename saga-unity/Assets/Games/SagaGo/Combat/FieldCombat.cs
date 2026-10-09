@@ -396,6 +396,7 @@ namespace Saga.Go.Combat
         public int Attack()
         {
             if (!CanAct() || _attackCd > 0f) return -1;
+            Saga.Core.SagaVoice.Say("shout", Active.Id); // U-0068 — 가끔 외침(확률·간격은 SagaVoice)
             // 109-14-5a 든 무기 모양 — 칼·대도·창은 앞 120° 붙어 치기, 서책(인물 원소)·활은 사거리 안 가장 가까운 하나. 대도는 무거운 타격(깨뜨림)
             var md = WeaponState.ModsOf(Active.Id);
             var kit = md.Kit;
@@ -549,6 +550,7 @@ namespace Saga.Go.Combat
         {
             var m = Active;
             if (!CanAct() || m.SkillCd > 0f) return -1;
+            Saga.Core.SagaVoice.Say("shout", m.Id); // U-0068
             var hk = GoKits.KitOf(m.Id, m.Element); // 109-14-11 고유·갈래 — 지략·도감 밖은 null(109-8 모양)
             if (hk != null) return KitSkillCast(m, hk);
             m.SkillCd = SkillCooldownSec * TalentState.SkillCdMul(m.Id); // 109-14-4 깨달음 ①
@@ -731,6 +733,7 @@ namespace Saga.Go.Combat
         {
             var m = Active;
             if (!CanAct() || !m.BurstReady) return -1;
+            Saga.Core.SagaVoice.Say("shout", m.Id, true); // U-0068 — 필살은 늘 외친다
             var hk = GoKits.KitOf(m.Id, m.Element); // 109-14-11
             if (hk != null) return KitBurstCast(m, hk);
             m.Energy = 0f;
@@ -992,6 +995,7 @@ namespace Saga.Go.Combat
         /// <param name="motion">109-8 교체 연출 — 옛 몸이 옆뒤로 물러나 흩어지고 새 몸이 옆에서 들어선다(교체·쓰러져 넘김만, 되돌림·전멸은 바로).</param>
         private void ApplyLook(bool motion = false)
         {
+            if (Active != null) Saga.Core.SagaVoice.Speaker = Active.Id; // U-0068 — 줍기 말은 싸우는 인물 목소리로(편성·교체 뒤)
             if (player == null || player.Visual == null || Active == null) return;
             // 107 ⑥ — 나선 인물의 몸으로 바꾼다. 제 몸이 없는 동료(모델 없음)만 주인공 몸에 원소 빛을 옅게 입힌다.
             if (_bodies == null) _bodies = player.GetComponent<PartyBodies>();

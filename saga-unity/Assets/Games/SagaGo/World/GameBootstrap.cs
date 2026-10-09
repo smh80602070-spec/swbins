@@ -48,6 +48,7 @@ namespace Saga.Go.World
             GoSettingsState.ApplyToAllScalers();
             GoSettingsState.ApplyGraphicsQuality();
             GoAudio.PlayBgm(bgmClip);
+            Saga.Core.SagaVoice.MasterVolume = () => GoAudio.MasterVolume; // U-0068 — 음성 = 마스터 × 음성 설정
             GoBgmScene.Attach(gameObject); // tasks U-0014 — 싸움이 붙으면 go-battle 곡(파일이 없으면 그대로)
             PlayerStats.LeveledUp += OnLeveledUp;
             _cameraRig = Object.FindFirstObjectByType<CameraRig>();
@@ -63,6 +64,7 @@ namespace Saga.Go.World
         {
             _cameraRig?.PlayLevelUpCut();
             Saga.Go.Audio.GoSfx.Play("levelup"); // U-0048
+            Saga.Core.SagaVoice.System("levelup"); // U-0068 — 해설 안내 한 줄
             // 109-14-7 여정 등급 보상·천하 등급
             var adv = AdventureState.OnLevelUp(newLevel);
             if (adv.Count > 0) Saga.Go.UI.DialogueLabel.Instance?.Show(string.Join("\n", adv), 4f);

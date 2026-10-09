@@ -11,6 +11,7 @@ namespace Saga.Go.UI
         public void Save()
         {
             bool ok = SaveState.Save();
+            if (ok) Saga.Core.SagaVoice.System("save"); // U-0068
             DialogueLabel.Instance?.Show(ok ? GoLocalization.T("command.save_ok", "저장했다.")
                 : GoLocalization.T("command.save_fail_player", "저장 실패 — 플레이어를 못 찾았다."), 3f);
         }

@@ -64,6 +64,7 @@ namespace Saga.Go.World
                 ? string.Format(GoLocalization.T("egg.hatch_dup", "{0}이 부화했다 — {1} (이미 만난 신수: 금 +{2} · 경험치 +{3})"), tier, name, GoEggs.DupGold, GoEggs.DupExp)
                 : string.Format(GoLocalization.T("egg.hatch_new", "{0}이 부화했다 — 새 신수 {1}! 도감에 올랐다 (I)"), tier, name);
             Saga.Go.Audio.GoSfx.Play(h.Dup ? "item_pick" : "summon"); // U-0048
+            if (h.Dup) Saga.Core.SagaVoice.Say("pickup"); else Saga.Core.SagaVoice.System("join"); // U-0068
             if (DialogueLabel.Instance != null) DialogueLabel.Instance.Show(text, 4f);
         }
 

@@ -37,6 +37,7 @@ namespace Saga.EditorTools
                 {
                     CheckRules();
                     CheckNamesExist();
+                    CheckUnityFiles();
                     CheckGap();
                     CheckSourceHooks();
                 }
@@ -93,6 +94,20 @@ namespace Saga.EditorTools
             PlaytestKit.Check(GoSfx.Used.Distinct().Count() == GoSfx.Used.Length, "Used 에 겹친 이름");
         }
 
+        /// <summary>U-0068 — 정본 폴더만이 아니라 **유니티 Resources 에 놓인 92종**에서 진짜 로더로 열리는지(K-0076 배치 확인).</summary>
+        private static void CheckUnityFiles()
+        {
+            SagaSfx.Loader = k => Resources.Load<AudioClip>(SagaSfx.Dir + k); SagaSfx.ResetForTest();
+            string dir = "Assets/SagaCore/Resources/" + SagaSfx.Dir;
+            var names = Directory.Exists(dir) ? Directory.GetFiles(dir, "sfx_*.ogg").Select(Path.GetFileNameWithoutExtension).ToList() : new List<string>();
+            PlaytestKit.Check(names.Count == 92, $"유니티 효과음 {names.Count} ≠ 92");
+            var bad = names.Where(n => Resources.Load<AudioClip>(SagaSfx.Dir + n) == null).ToList();
+            PlaytestKit.Check(bad.Count == 0, $"Resources 에서 못 여는 효과음 {bad.Count}: {string.Join(",", bad.Take(5))}");
+            var lost = GoSfx.Used.Where(n => !SagaSfx.Has(n)).ToList();
+            PlaytestKit.Check(lost.Count == 0, $"코드가 부르는 이름이 유니티에 없음: {string.Join(",", lost)}");
+            if (bad.Count == 0 && lost.Count == 0) Debug.Log($"[PlaytestGoSfx] unity files OK - {names.Count} clips · GoSfx.Used {GoSfx.Used.Length} 전부 열림");
+        }
+
         private static void CheckGap()
         {
             SagaSfx.Loader = k => null; SagaSfx.ResetForTest(); GoSfx.ResetForTest();
@@ -140,6 +155,7 @@ namespace Saga.EditorTools
                 CheckChest(events, parts);
                 CheckLevelUp(parts);
                 CheckHatch(walker, parts);
+                CheckVoice(fc, events, parts); // U-0068 — 진짜 사건에서 음성(1500줄 상한이라 PlaytestHeadless 대신 여기)
             }
             finally
             {
@@ -222,6 +238,48 @@ namespace Saga.EditorTools
             walker.Flush();
             Expect("summon", "신수 부화");
             parts.Add("신수 부화 summon");
+        }
+
+        /// <summary>U-0068 — 진짜 공격·필살·상자·레벨업·부화에서 SagaVoice 가 그 갈래 줄을 고르고, 실제 파일(Resources)이 열리는지.</summary>
+        private static void CheckVoice(FieldCombat fc, List<string> events, List<string> parts)
+        {
+            string spk = SagaVoice.Speaker; // 게임 시작 때 FieldCombat.ApplyLook 이 정한 말하는 이 — 초기화가 "self" 로 돌려 놓지 않게
+            SagaVoice.ResetForTest(); SagaVoice.Speaker = spk; SagaVoice.Always = true;
+            try
+            {
+                void ExpectVoice(string what, string kind, string voice)
+                {
+                    string want = "voice_" + voice + "_";
+                    if (SagaVoice.LastKind != kind || !SagaVoice.LastPath.StartsWith(want)) Fail($"{what} 에서 음성 {kind}({want}…)을 안 고름 — {SagaVoice.LastKind} {SagaVoice.LastPath}");
+                    else if (SagaVoice.LastClip == null) Fail($"{what} 음성 파일을 못 염 {SagaVoice.LastPath}");
+                }
+                fc.ResetForTest(); foreach (var e in FieldEnemy.All) e.RestoreHomeForTest();
+                string me = SagaVoice.VoiceOf(fc.Active.Id);
+                SagaVoice.ResetTimingForTest();
+                if (fc.Attack() < -1) Fail("공격 반환값 이상");
+                ExpectVoice("진짜 공격(FieldCombat.Attack)", "shout", me);
+                SagaVoice.ResetTimingForTest();
+                fc.Active.Energy = FieldCombat.BurstCost;
+                if (fc.Burst() < 0) Fail("필살이 안 나감");
+                ExpectVoice("필살(sure)", "shout", me);
+                if (SagaVoice.Speaker != fc.Active.Id) Fail($"말하는 이가 싸우는 인물이 아님 {SagaVoice.Speaker}");
+                var open = typeof(TreasureChest).GetMethod("Open", BindingFlags.Instance | BindingFlags.NonPublic);
+                var chest = Object.FindObjectsByType<TreasureChest>(FindObjectsSortMode.None).FirstOrDefault(c => c.Data.Id == "south_glade");
+                if (chest == null) Fail("씬에 상자 south_glade 없음");
+                else
+                {
+                    WorldEventState.Restore(events.Where(x => x != GoTreasure.EventKey(chest.Data)));
+                    SagaVoice.ResetTimingForTest();
+                    if (!(bool)open.Invoke(chest, null)) Fail("상자가 안 열림");
+                    ExpectVoice("상자 열기(줍기)", "pickup", me);
+                }
+                PlayerStats.Restore(30, 0); AdventureState.RestoreSave(false, 30);
+                SagaVoice.ResetTimingForTest();
+                PlayerStats.AddExp(PlayerStats.ExpToNext + 1);
+                ExpectVoice("레벨업 안내", "system", SagaVoice.Narrator);
+                if (_ok) parts.Add($"음성: 공격·필살 외침({me})·상자 줍기·레벨업 안내 NA — 파일 열림 {SagaVoice.History.Count}줄");
+            }
+            finally { SagaVoice.ResetForTest(); fc.ResetForTest(); foreach (var e in FieldEnemy.All) e.RestoreHomeForTest(); }
         }
 
         private static void Fail(string msg)
