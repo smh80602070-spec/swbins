@@ -23,6 +23,7 @@ uniform sampler2D stone_rough;
 
 uniform float tile_scale : hint_range(0.05, 2.0) = 0.4; // 텍스처 반복 밀도(1/m)
 uniform float patch_scale : hint_range(0.02, 1.0) = 0.12; // 얼룩 크기
+uniform vec3 dry_tint = vec3(1.18, 1.03, 0.62); // G-0137 풀빛 큰 얼룩(누렇게 바랜 풀) — 정점색에 곱한다
 // 2026-09-30 — 풀 텍스처의 초록기를 얼마나 뺄지(0 = 그대로). 가을빛 지역(정점색이 누런 땅)만 올린다.
 uniform float hue_desat : hint_range(0.0, 1.0) = 0.0;
 uniform vec3 cliff_color = vec3(0.62, 0.53, 0.42); // 가파른 비탈 빛깔(terrain_builder.gd CLIFF_COLOR)
@@ -106,7 +107,10 @@ void fragment() {
 	float n1 = _value_noise(world_pos.xz * patch_scale);
 	float n2 = _value_noise(world_pos.xz * patch_scale * 3.7 + vec2(11.0, 5.0));
 	// G-0134 — 경계 폭 0.2(0.55~0.75)는 얼룩 대부분이 풀·흙 반반이라 흐린 진흙 자국이었다. 좁은 경계 + n2 로 가장자리 흔들기 = 또렷한 흙자리.
-	float dirt_w = smoothstep(0.68, 0.73, n1 + (n2 - 0.5) * 0.14) * 0.5;
+	// G-0137 — 흙 얼룩(상한 0.5)은 풀·흙 반반이라 올리브 진흙, 확실한 흙(0.85)으로 하면 맨흙 밭이었다 → 흙은 아주 옅게만,
+	// 들판 변화는 같은 큰 노이즈로 풀빛을 누렇게 흔드는 쪽(원신식 들판 — 맨흙은 길·마당에만).
+	float dirt_w = smoothstep(0.72, 0.8, n1 + (n2 - 0.5) * 0.14) * 0.18;
+	float dry_w = smoothstep(0.45, 0.8, n1 + (n2 - 0.5) * 0.1) * 0.55;
 	// 2026-09-28 — 평지의 돌 얼룩은 0.5 → 0.15: 풀밭 위 잿빛 얼룩이 멀리서 안개 덩어리처럼 보였다(창 모드 촬영). 경사 돌은 아래서 그대로.
 	float stone_w = smoothstep(0.6, 0.8, n2) * 0.15;
 	// 2026-09-23 GO 절벽·봉우리(terrain_builder.gd) — 경사가 급할수록 돌.
@@ -125,7 +129,8 @@ void fragment() {
 	// 2026-09-30 — 봉우리 굴곡(칸 윗면)의 가파른 비탈은 아래 절벽 무늬(판·틈)는 받는데 빛깔은 산 윗면 풀빛 정점색 그대로라,
 	// 절벽 사이사이 연두빛 반투명 조각으로 보였다(창 모드 s_port). 가파를수록 절벽 빛깔(terrain_builder CLIFF_COLOR 와 같은 값)로.
 	float steep = smoothstep(0.45, 0.8, slope);
-	ALBEDO = mix(COLOR.rgb, cliff_color, steep) * detail_albedo;
+	vec3 base_col = mix(COLOR.rgb, COLOR.rgb * dry_tint, dry_w);
+	ALBEDO = mix(base_col, cliff_color, steep) * detail_albedo;
 	// 2026-09-28 "그래픽 먼저" — 절벽(가파른 면)은 돌 텍스처 한 장만 반복돼 멀리서 한 빛 회색 판이었다.
 	// 지층 띠(높이 따라 굽이치는 가로 줄)·큰 얼룩(따뜻한 황토 ↔ 서늘한 잿빛)·세로 물때 줄을 얹는다. 평지는 cliff 0 이라 그대로.
 	float cliff = smoothstep(0.45, 0.8, slope);

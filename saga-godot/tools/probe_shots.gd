@@ -29,6 +29,10 @@ const SHOTS := [
 	["v_statue", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -18.0, 9.0, ""],
 	["v_house", "village", Vector2(4.0, 5.0), Vector3(-4, 0, 18), Vector2(4.0, 5.0), -6.0, 9.0, ""],
 	["v_village_plaza", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(4.7, 5.3), -12.0, 16.0, ""],
+	["d_plaza_noshadow", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(4.7, 5.3), -12.0, 16.0, "noshadow"],   # 광장 강가 올리브 자리 진단(10-09)
+	["d_plaza_raw", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(4.7, 5.3), -12.0, 16.0, "raw"],
+	["d_plaza_top", "village", Vector2(5.0, 6.3), Vector3.ZERO, Vector2(5.0, 6.0), -75.0, 70.0, "nofog"],
+	["d_plaza_top_nograss", "village", Vector2(5.0, 6.3), Vector3.ZERO, Vector2(5.0, 6.0), -75.0, 70.0, "nograss"],
 	["v_village_west", "village", Vector2(4.6, 5.9), Vector3.ZERO, Vector2(3.9, 5.5), -10.0, 12.0, ""],
 	["n_village_plaza", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(4.7, 5.3), -12.0, 16.0, "night"],
 	["n_house", "village", Vector2(4.0, 5.0), Vector3(-4, 0, 18), Vector2(4.0, 5.0), -6.0, 9.0, "night"],
@@ -316,6 +320,10 @@ func _act(a: String) -> void:
 				_p.global_position = _swing_enemy.global_position + Vector3(1.4, 0.4, 0.9)
 		"lineup_faces", "hide":
 			_p.visible = false # 얼굴 가까이·올려다보기 — 플레이어가 앞을 가리지 않게
+		"nograss":
+			var gf0 := get_tree().current_scene.get_node_or_null("GrassField") as Node3D
+			if gf0:
+				gf0.visible = false # 진단 — 땅 무늬와 풀잎 덩어리를 가르려고
 		"beasts", "beasts_a", "beasts_b", "pets":
 			_p.visible = false # 줄 한가운데를 가린다
 		_ when a.begins_with("beast:"):
