@@ -5996,6 +5996,13 @@ window.DG_NO_TUNE = true;
       return lighter && d > 0.15 && ('세력 ' + hex + ' → 옷 곱 ' + tc.getHexString() + ' · ' + a.name + '·' + b.name + ' 차이 ' + d.toFixed(2)) || '실패 ' + tc.getHexString() + ' 차이 ' + d.toFixed(2);
     });
 
+    t('st.side-view: 2D 화면(W-0132) — 큰 화면은 기본 확대(1~1.6), 손잡이 1 이면 확대 없음, 풀빛 바닥의 발판 흙은 갈색', function () {
+      var V = DG.sideView, C = DG.core, keep = C.tuned('side.baseZoom', 1.35), z0 = V._zoom(), r;
+      C.setTune('side.baseZoom', 1); var z1 = V._zoom(); C.setTune('side.baseZoom', keep);
+      r = [z0.base >= 1 && z0.base <= 1.6, z1.base === 1, V._dirt({ ground: '#6faf55' }) === '#8a6640', V._dirt({ ground: '#8a6b3a' }) === '#8a6b3a', V._grass({ ground: '#8a6b3a' }) === '#6f9f48'];
+      return r.every(Boolean) && ('기본 확대 ' + z0.base.toFixed(2) + ' · 화면 ' + Math.round(z0.W) + '×' + Math.round(z0.H)) || '실패 ' + r.join(',');
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

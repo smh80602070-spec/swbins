@@ -20,7 +20,7 @@
    *  transform 으로 키우고 줄인다. 두 캔버스는 같은 픽셀 좌표(camX)로 그려지므로
    *  카메라 수식은 한 자도 안 건드리고 이 둘을 나란히 스케일만 해도 그대로 맞는다 —
    *  side-view3d.js 머리말의 "좌표계를 두 벌 관리하지 않는다"를 깨지 않는 길이다 */
-  var viewZoom = 1;
+  var viewZoom = 1, lastZ = 0, lowK = 1, zoomOy = 0;
   var ZOOM_MIN = 0.65, ZOOM_MAX = 1.9;
   var zoomPointers = {}, pinchDist0 = 0;
 
@@ -42,11 +42,21 @@
     var a = zoomPointers[ks[0]], b = zoomPointers[ks[1]];
     return Math.hypot(a.x - b.x, a.y - b.y);
   }
+  /** W-0132 — 기본 배율(드래곤즈 크라운처럼 인물을 크게). 화면 키 600 미만(폰 가로)은 줄인다 — 바닥 선(floor 560)이 화면 밖이었다(옛 버그). 손잡이 side.baseZoom */
+  function baseZoom() {
+    var C = global.DG.core, k = C && C.tuned ? +C.tuned('side.baseZoom', 1.35) : 1.35;
+    return H >= 600 ? Math.max(1, Math.min(1.6, k, H / 520)) : 1;   // 키가 낮은 2D 는 resize 가 논리 높이 650 으로 그린다
+  }
+  /** 화면에 실제로 곱하는 배율 — 사람 줌 × 기본 × 보스 */
+  function effZoom() { return viewZoom * baseZoom() * (1 + bossZoomK * BOSS_ZOOM_EXTRA); }
   function applyZoomTransform() {
-    var t = 'scale(' + (viewZoom * (1 + bossZoomK * BOSS_ZOOM_EXTRA)).toFixed(3) + ')';
-    if (cv) { cv.style.transform = t; }
+    var t = 'scale(' + effZoom().toFixed(3) + ')', run = S && S.raw ? S.raw() : null, fl = run && run.stage ? run.stage.floor : 560;
+    var z = effZoom(), want = Math.min(fl, H * 0.8), oy = Math.abs(1 - z) < 1e-3 ? fl : (want - fl * z) / (1 - z);   // 바닥 선이 화면의 want 자리에 오게 기준점(px)을 푼다
+    zoomOy = oy;
+    var org = '50% ' + Math.round(oy / lowK) + 'px';   // 기준점은 CSS 픽셀(논리 ÷ lowK)
+    if (cv) { cv.style.transform = t; cv.style.transformOrigin = org; }
     if (!cv3d) { cv3d = document.getElementById('stage3d'); }
-    if (cv3d) { cv3d.style.transform = t; }
+    if (cv3d) { cv3d.style.transform = t; cv3d.style.transformOrigin = org; }
   }
   function setZoom(z) {
     viewZoom = clamp01(z, ZOOM_MIN, ZOOM_MAX);
@@ -137,13 +147,17 @@
 
   function resize() {
     dpr = Math.min(global.devicePixelRatio || 1, 2);
-    W = global.innerWidth; H = global.innerHeight;
+    /* W-0132 — 2D 이고 화면 키가 600 보다 낮으면(폰 가로) 논리 높이 650 으로 그려 화면에 맞춰 줄인다. 바닥 선(560)이
+       화면(390) 밖이라 땅·사람이 안 그려지던 옛 버그. 3D 는 제 카메라가 바닥을 가운데에 두므로 그대로(lowK 1) */
+    var iw = global.innerWidth, ih = global.innerHeight, u3 = !!(global.DG.sideView3d && global.DG.sideView3d.ready && global.DG.sideView3d.ready());
+    lowK = !u3 && ih < 600 ? 650 / ih : 1;
+    W = iw * lowK; H = ih * lowK;
     miniBotAt = 0;
-    cv.width = Math.floor(W * dpr);
-    cv.height = Math.floor(H * dpr);
-    cv.style.width = W + 'px';
-    cv.style.height = H + 'px';
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cv.width = Math.floor(iw * dpr);
+    cv.height = Math.floor(ih * dpr);
+    cv.style.width = iw + 'px';
+    cv.style.height = ih + 'px';
+    ctx.setTransform(dpr / lowK, 0, 0, dpr / lowK, 0, 0);
     if (global.DG.sideView3d) { global.DG.sideView3d.resize(); }
   }
 
@@ -248,11 +262,14 @@
     var stg = run.stage, p = run.player;
 
     updateBossZoom(!!run.boss);
-    camX = core.clamp(p.x + S.P_W / 2 - W / 2, 0, Math.max(0, stg.width - W));
+    var vz = effZoom(), hv = W / (2 * vz), lo = hv - W / 2, hi = stg.width - W / 2 - hv;   // W-0132 — 보이는 폭 = W/z, 가운데 기준 확대
+    camX = hi >= lo ? core.clamp(p.x + S.P_W / 2 - W / 2, lo, hi) : (stg.width - W) / 2;
+    if (vz !== lastZ) { lastZ = vz; applyZoomTransform(); }
     /* 3D 바탕(side-view3d.js)이 살아 있으면 세계는 거기서 그린다 — 여기서는
        하늘·뒷배경·바닥·발판·사람·몹을 건너뛰고 오버레이(미니맵·보스체력·데미지숫자)만 남긴다.
        못 켜지면(WebGL 없음) use3d 가 false 라 옛 2D 가 그대로 돈다 */
     var use3d = !!(global.DG.sideView3d && global.DG.sideView3d.ready());
+    if ((lowK !== 1) !== (!use3d && global.innerHeight < 600)) { resize(); applyZoomTransform(); }   // 2D↔3D 를 바꾸면 논리 크기를 다시
 
     /* 화면 흔들림 — **화면 층에만 있다.** side.js 는 'shake' 한 줄을 남길 뿐이고
        세기도 위상도 여기서 정한다. 그래서 흔들림을 꺼도 판정은 한 자도 안 바뀐다.
@@ -285,6 +302,7 @@
       ctx.fillStyle = stg.ground;
       ctx.fillRect(0, stg.floor, W, H - stg.floor);
       if (M2 && tl) { M2.fillTile(ctx, { id: tl, x: 0, y: stg.floor, w: W, h: H - stg.floor, dx: camX, scale: 0.25 }); }
+      groundDress(stg);   // W-0132 — 결 누르기·흙 단면·풀 가장자리
       ctx.fillStyle = 'rgba(255,255,255,0.30)';
       ctx.fillRect(0, stg.floor, W, 5);
       ctx.fillStyle = 'rgba(40,32,24,0.35)';
@@ -295,16 +313,7 @@
         var pl = stg.plats[i];
         var x = pl[0] - camX;
         if (x + pl[2] < -40 || x > W + 40) { continue; }
-        /* 원작의 발판 — 위에 잔디(밝은 띠) · 아래에 흙, 그리고 진한 테 한 줄 */
-        ctx.fillStyle = stg.ground;
-        ctx.fillRect(x, pl[1], pl[2], 16);
-        ctx.fillStyle = 'rgba(255,255,255,0.34)';
-        ctx.fillRect(x, pl[1], pl[2], 4);
-        ctx.fillStyle = 'rgba(0,0,0,0.30)';
-        ctx.fillRect(x, pl[1] + 16, pl[2], 6);
-        ctx.strokeStyle = 'rgba(40,32,24,0.55)';
-        ctx.lineWidth = 1.5;
-        ctx.strokeRect(x + 0.5, pl[1] + 0.5, pl[2] - 1, 16);
+        drawPlat(x, pl[1], pl[2], stg, pl[0]);   // W-0132 — 메이플식 흙덩이 발판(초록 막대 대신)
       }
     }
 
@@ -388,7 +397,10 @@
     drawFx();
     ctx.restore();
 
-    /* 흔들리지 않는 것 — 조작에 쓰는 것은 흔들리면 안 읽힌다 */
+    /* 흔들리지 않는 것 — 조작에 쓰는 것은 흔들리면 안 읽힌다.
+       W-0132 — 캔버스가 통째로 확대(CSS)되므로 이 겹쳐 그리기는 거꾸로 줄여 제자리(확대 안 된 화면 좌표)에 둔다 */
+    var iz = 1 / effZoom();
+    ctx.save(); ctx.translate(W / 2, zoomOy); ctx.scale(iz, iz); ctx.translate(-W / 2, -zoomOy);
     drawBossBar();
     drawMiniMap(run);
     drawOuch();
@@ -396,6 +408,7 @@
     drawLevelUp();
     drawQuestDone();
     drawFadeOverlay();
+    ctx.restore();
   }
 
   /* 손맛 표준(§5-7) — 흔들림 세기 설정(0 없음·1 약·2 보통). 기본은 2(보통) —
@@ -805,6 +818,52 @@
   }
 
   /** 밧줄·사다리 — 발판 뒤에 걸린다. 사다리는 가로대가 있고 밧줄은 한 가닥이다 */
+  /** 색 섞기 '#rrggbb' + 0..1 쪽으로(음수 = 검정, 양수 = 흰색) */
+  function mixHex(hex, amt) {
+    var n = parseInt(String(hex || '#777').replace('#', ''), 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255, t = amt < 0 ? 0 : 255, f = Math.abs(amt);
+    return 'rgb(' + Math.round(r + (t - r) * f) + ',' + Math.round(g + (t - g) * f) + ',' + Math.round(b + (t - b) * f) + ')';
+  }
+  function hs1(a, b) { var n = (a * 374761393 + b * 668265263) | 0; n = (n ^ (n >>> 13)) * 1274126177 | 0; return ((n ^ (n >>> 16)) >>> 0) / 4294967296; }
+  /** 풀 색 — 사냥터 바닥색이 풀빛이면 그 색, 흙빛이면 기본 풀빛 */
+  /** 흙 색 — 바닥색이 풀빛이면 갈색 흙, 아니면 바닥색 그대로 */
+  function dirtOf(stg) { var n = parseInt(String(stg.ground || '#6faf55').replace('#', ''), 16); return ((n >> 8) & 255) > ((n >> 16) & 255) ? '#8a6640' : stg.ground; }
+  function grassOf(stg) { var n = parseInt(String(stg.ground || '#6faf55').replace('#', ''), 16); return ((n >> 8) & 255) > ((n >> 16) & 255) ? stg.ground : '#6f9f48'; }
+
+  /** 발판 한 장(W-0132, 메이플 문법) — 둥근 끝 흙덩이(두께 26) · 윗면 풀 띠 · 늘어진 풀 · 아래 그늘. 자리·폭은 판정 그대로(윗면 y) */
+  function drawPlat(x, y, w, stg, wx) {
+    var T = 26, r = 9, dirt = dirtOf(stg), grass = grassOf(stg), i, gx;
+    ctx.fillStyle = 'rgba(0,0,0,0.22)';
+    ctx.beginPath(); ctx.ellipse(x + w / 2, y + T + 10, w * 0.46, 7, 0, 0, Math.PI * 2); ctx.fill();
+    var g = ctx.createLinearGradient(0, y, 0, y + T);
+    g.addColorStop(0, mixHex(dirt, 0.08)); g.addColorStop(1, mixHex(dirt, -0.45));
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w - 2, y + T * 0.55);
+    ctx.quadraticCurveTo(x + w - 10, y + T, x + w * 0.5, y + T); ctx.quadraticCurveTo(x + 10, y + T, x + 2, y + T * 0.55); ctx.quadraticCurveTo(x, y, x + r, y); ctx.fill();
+    ctx.fillStyle = 'rgba(0,0,0,0.18)';   // 흙 속 돌
+    for (i = 0; i < Math.max(2, w / 40); i++) { gx = x + 12 + hs1(wx + i, 7) * (w - 24); ctx.beginPath(); ctx.ellipse(gx, y + 11 + hs1(wx, i) * 9, 3 + hs1(i, wx) * 3, 2, 0, 0, Math.PI * 2); ctx.fill(); }
+    ctx.fillStyle = grass;   // 윗면 풀 띠
+    ctx.beginPath(); ctx.moveTo(x + 2, y + 1); ctx.lineTo(x + w - 2, y + 1); ctx.lineTo(x + w - 2, y + 7);
+    for (gx = x + w - 4; gx > x + 4; gx -= 7) { ctx.lineTo(gx, y + 7 + (hs1(wx + gx, 3) > 0.6 ? 6 : 2)); }
+    ctx.lineTo(x + 2, y + 7); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,0.28)'; ctx.fillRect(x + 4, y, w - 8, 2);   // 윗면 빛
+    ctx.strokeStyle = mixHex(grass, -0.35); ctx.lineWidth = 1.5;   // 늘어진 풀 몇 가닥
+    for (i = 0; i < w / 60; i++) { gx = x + 10 + hs1(wx, i + 20) * (w - 20); ctx.beginPath(); ctx.moveTo(gx, y + 6); ctx.quadraticCurveTo(gx + 3, y + 14, gx - 1, y + 20 + hs1(i, 9) * 8); ctx.stroke(); }
+  }
+
+  /** 바닥 꾸밈(W-0132) — 타일 결을 땅색으로 누르고, 윗면 풀 가장자리·흙 단면 그늘 */
+  function groundDress(stg) {
+    var fl = stg.floor, grass = grassOf(stg), gx;
+    ctx.fillStyle = mixHex(stg.ground, -0.12); ctx.globalAlpha = 0.78; ctx.fillRect(0, fl, W, H - fl); ctx.globalAlpha = 1;
+    var g = ctx.createLinearGradient(0, fl, 0, Math.min(H, fl + 140));
+    g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,0.35)');
+    ctx.fillStyle = g; ctx.fillRect(0, fl, W, H - fl);
+    ctx.fillStyle = grass; ctx.fillRect(0, fl - 2, W, 9);
+    ctx.beginPath(); ctx.moveTo(0, fl + 6);
+    for (gx = -((camX * 1) % 7); gx < W + 7; gx += 7) { ctx.lineTo(gx, fl + 7 + (hs1(Math.round(gx + camX), 5) > 0.55 ? 7 : 2)); }
+    ctx.lineTo(W, fl + 6); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,0.22)'; ctx.fillRect(0, fl - 2, W, 2);
+  }
+
   function drawRopes(stg) {
     var list = stg.ropes || [];
     for (var i = 0; i < list.length; i++) {
@@ -1284,7 +1343,7 @@
   global.DG = global.DG || {};
   global.DG.sideView = {
     init: init, draw: draw, resize: resize, miniBox: miniBox,
-    _cam: function () { return camX; },
+    _cam: function () { return camX; }, _zoom: function () { return { base: baseZoom(), eff: effZoom(), lowK: lowK, W: W, H: H }; }, _dirt: dirtOf, _grass: grassOf,   // W-0132 진단
     /** 진단용 — **흔들림의 세기는 화면 층이 정한다**(side.js 는 'shake' 한 줄만 남긴다) */
     _shake: shakeOf,
     shakeLevel: shakeLevel, setShakeLevel: setShakeLevel,

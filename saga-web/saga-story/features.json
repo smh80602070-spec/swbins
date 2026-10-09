@@ -483,5 +483,21 @@
   "ticket": "W-0104",
   "since": "2026-10-08",
   "note": "D2: saga-web/tools/playcheck/pw-st-pick.mjs 4/4 — results/pw-st-pick.json(W-0104). 실제 레벨업 → 「📜 무예 3택」 단추·고르기 실제 클릭, 사냥터 나온 세션 카드 등급 줄. Claude 눈: 3택 창 ○·카드 줄 ○ — 처음엔 바로 나와도 A 라 3마리 문턱을 넣음."
+ },
+ {
+  "id": "st.side2d",
+  "name": "2D 사냥터 — 메이플 + 드래곤즈 크라운(흙덩이 발판·큰 인물·바닥 꾸밈·폰 가로 땅 보임)",
+  "files": [
+   "js/side-view.js"
+  ],
+  "tests": [
+   "st.side-view: 2D 화면(W-0132) — 큰 화면은 기본 확대(1~1.6), 손잡이 1 이면 확대 없음, 풀빛 바닥의 발판 흙은 갈색"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0132",
+  "since": "2026-10-09",
+  "note": "D2: saga-web/tools/playcheck/pw-side-check.mjs → shots/side/d-{pc,phone,land}-{1,2}.png Claude 눈 ○(초록 막대 → 풀 띠·갈색 흙덩이·늘어진 풀 발판, 인물 ~90px, 미니맵·보스바 제자리). 폰 가로는 바닥 선이 화면 밖이라 땅·사람이 안 보이던 옛 버그 → 2D 논리 높이 650. 판정(side.js) 그대로. 손잡이 side.baseZoom 1 = 확대 없음."
  }
 ]
