@@ -13,7 +13,7 @@ powershell -ExecutionPolicy Bypass -File tools\ai-art\stop_sd.ps1      # 끝나�
 A1111 1.10.1(2025-02 멈춤) → **ComfyUI**(Windows ROCm 공식, 포트 8188). `gen.py` 는 배치 JSON 형식을 그대로 받고 뒤에서 ComfyUI 그래프(`/prompt`→`/history`→`/view`)를 짠다.
 - 모델 두 계열: **`z-image-turbo`**(Apache-2.0, GGUF Q6_K, 8단계·CFG 1 고정, 부정 프롬프트 없음, **문장형** 프롬프트 — 범용·사실풍·글자·초상 밑그림) /
   **sdxl**(`animagine-xl-4.0-opt`·`Illustrious-XL-v2.0`, 태그형 + 품질 꼬리표 + 부정 프롬프트). SDXL base·SD1.5·NoobAI 는 지웠다(밀리거나 NC).
-- 이음매 타일(`tiling`)은 **sdxl 에서만** 된다(합성곱 순환 패딩, swbins3 `comfyui-saga/saga_seamless.py`). DiT(Z-Image)는 타일이 안 된다 → 타일 배치는 Illustrious.
+- 이음매 타일(`tiling`): **10-09 실측 — ComfyUI 에서 Illustrious + 순환 패딩은 그림이 원색 파편으로 깨진다**(같은 항목 tiling 끄면 정상, K-0088). DiT(Z-Image)는 원래 안 된다. → 타일은 평범하게 뽑고 `make_seamless.seamless()`(4판 띠 섞기, 십자 이음매 없음)로 만든다. 노드(swbins3 `comfyui-saga/saga_seamless.py`) 고치기 전엔 `tiling` 쓰지 말 것.
 - sampler 는 A1111 이름("Euler a")을 그대로 써도 된다(`SAMPLERS` 로 옮김). hires(`hr`)는 잠재 공간 확대 + 둘째 KSampler.
 - 켜기 플래그(`start_sd.ps1`): `--use-pytorch-cross-attention --disable-dynamic-vram --lowvram --disable-pinned-memory --fp32-vae`(실측으로 고름 — 동적 VRAM 은 모델을 프롬프트마다 갈아 끼우고, fp16 VAE 는 Z-Image 가 깨진다), `TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=1`. MIOpen 은 ComfyUI 가 RDNA3 에서 스스로 끈다. 기동 5~6분.
 - 판정기(`asset-audit/judge/judge.sh`)도 `C:\swbins3\comfyui\venv` 파이썬으로 돈다.

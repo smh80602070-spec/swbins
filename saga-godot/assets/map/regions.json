@@ -213,7 +213,7 @@
    {
     "key": "qing",
     "name": "청주",
-    "symbol": "wave"
+    "symbol": "lighthouse"
    },
    {
     "key": "yan",
@@ -248,7 +248,7 @@
    {
     "key": "jing",
     "name": "형주",
-    "symbol": "wave"
+    "symbol": "lotus"
    },
    {
     "key": "yi",
@@ -258,7 +258,7 @@
    {
     "key": "yang",
     "name": "양주(揚)",
-    "symbol": "wave"
+    "symbol": "boat"
    },
    {
     "key": "kr",
@@ -268,7 +268,7 @@
    {
     "key": "jp",
     "name": "일본",
-    "symbol": "wave"
+    "symbol": "island"
    },
    {
     "key": "jiao",
@@ -298,7 +298,7 @@
    {
     "key": "cp",
     "name": "임읍",
-    "symbol": "wave"
+    "symbol": "fish"
    },
    {
     "key": "fu",
@@ -328,7 +328,7 @@
    {
     "key": "nh",
     "name": "남해",
-    "symbol": "wave"
+    "symbol": "coral"
    },
    {
     "key": "sl",

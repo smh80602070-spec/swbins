@@ -7,8 +7,8 @@ py tools/ai-art/pack_patterns64.py <기존32폴더> <새32폴더> <출력폴더>
 
 K-0088: 위 검사는 바깥 테두리만 봐서 오프셋 방식의 가운데 십자 이음매(밀린 그림의 이음매가 테두리 근처로 드러남)를 못 잡았다
   → `seam_ratio`(테두리·가운데 줄의 이웃 차이 ÷ 근처 16줄 중앙값) ≤ 3.0 을 함께 본다(체크·격자처럼 원래 줄이 강한 무늬가 2.5 안팎).
-  다시 뽑기는 SDXL 순환 패딩(gen.py `tiling`)으로 원래부터 이어지게 만든다:
-py tools/ai-art/pack_patterns64.py --replace <gen 출력폴더>   # pat_<id>_vNN.png 후보 중 seam_ratio 가장 낮은 것 → 정본 saga-assets/patterns 교체
+  make_seamless 도 4판 띠 섞기로 고쳤다(십자 이음매가 원리적으로 안 생김). SDXL `tiling` 은 ComfyUI 에서 그림이 깨진다(10-09 실측).
+py tools/ai-art/pack_patterns64.py --replace <gen 출력폴더>   # pat_<id>_vNN.png 견본 → 새 seamless+평탄화(안 되면 거울) 중 최선 → 정본 교체
 py tools/ai-art/pack_patterns64.py --check [폴더]             # 정본(기본) 무늬 전부 seam_ratio ≤ 3.0 · edge_ratio ≤ 1.6 · ≤ 60KB
 """
 import json
@@ -73,7 +73,8 @@ def save_webp(t, p):
 
 
 def replace(gen_dir, px=256):
-    """gen.py tiling 출력(pat_<id>_vNN.png)에서 이음매가 가장 낮은 후보를 골라 정본을 바꾼다."""
+    """다시 뽑은 견본(pat_<id>_vNN.png)을 새 seamless(4판 띠 섞기)+조명 평탄화로 타일로 만들고, 후보 중 이음매가 가장 낮은 것으로
+    정본을 바꾼다. 기준(seam ≤ SEAM_MAX · edge ≤ 1.6)을 못 넘으면 거울 반복으로 한 번 더."""
     groups = {}
     for f in sorted(os.listdir(gen_dir)):
         if f.startswith('pat_') and f.endswith('.png'):
@@ -89,20 +90,20 @@ def replace(gen_dir, px=256):
             continue
         best = None
         for f in fs:
-            im = Image.open(os.path.join(gen_dir, f)).convert('RGB')
-            c = min(im.size)
-            t = im.crop((0, 0, c, c)).resize((px, px), Image.LANCZOS)   # 순환 패딩 그림은 통째로 이어진다 — 가운데를 잘라내면 안 된다
-            r = seam_ratio(np.asarray(t))
-            if best is None or r < best[0]:
-                best = (r, f, t)
-        r, f, t = best
+            src = Image.open(os.path.join(gen_dir, f))
+            for method, t in (('quad', seamless(src, px, flatten=0.85)), ('mirror', mirror_tile(src, px))):
+                a = np.asarray(t)
+                sr, er = seam_ratio(a), edge_ratio(a)
+                score = (0 if sr <= SEAM_MAX and er <= 1.6 else 1, 0 if method == 'quad' else 1, max(sr / SEAM_MAX, er / 1.6))
+                if best is None or score < best[0]:
+                    best = (score, f, t, method, sr, er)
+        _s, f, t, method, sr, er = best
         kb = save_webp(t, os.path.join(CANON, key + '.webp'))
         lic = json.load(open(os.path.join(gen_dir, f[:-4] + '.license.json'), encoding='utf-8'))
-        rows[key].update({'model': lic.get('model'), 'seam': 'tiling', 'edge_ratio': round(edge_ratio(np.asarray(t)), 2),
-                          'seam_ratio': round(r, 2), 'kb': round(kb)})
-        prov['items'][key] = dict(prov['items'].get(key, {}), model=lic.get('model'), seed=lic.get('seed'), seam='tiling',
-                                  prompt=lic.get('prompt'), redo='K-0088 이음매 다시(SDXL 순환 패딩)')
-        print(f'{key:22s} ← {f}  seam {r:.2f}  {kb:.0f}KB')
+        rows[key].update({'model': lic.get('model'), 'seam': method, 'edge_ratio': round(er, 2), 'seam_ratio': round(sr, 2), 'kb': round(kb)})
+        prov['items'][key] = dict(prov['items'].get(key, {}), model=lic.get('model'), seed=lic.get('seed'), seam=method,
+                                  prompt=lic.get('prompt'), redo='K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)')
+        print(f'{key:22s} ← {f}  {method}  seam {sr:.2f} edge {er:.2f}  {kb:.0f}KB')
     json.dump(table, open(pj, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     json.dump(prov, open(pv, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 

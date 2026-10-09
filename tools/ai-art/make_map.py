@@ -51,9 +51,10 @@ SYM = {
     'go': {'home': 'house', 'plain': 'wheat', 'bamboo': 'bamboo', 'canyon': 'mountain', 'marsh': 'wave', 'ruins': 'ruin'},
     'story': {'sinya': 'house', 'heodo': 'castle', 'field': 'wheat', 'gangneungjin': 'wave', 'forest': 'pine', 'namjeongseong': 'castle', 'cave': 'cave', 'gisanchae': 'mountain',
               'gorge': 'flame', 'ruin': 'ruin', 'deepcave': 'cave', 'beyond_past': 'sword', 'beyond_now': 'city', 'beyond_future': 'gear'},
-    'realm': {'you': 'snow', 'ji': 'wheat', 'bing': 'mountain', 'qing': 'wave', 'yan': 'wheat', 'xu': 'wave', 'yu': 'wheat', 'si': 'castle', 'yong': 'mountain', 'liang': 'dune', 'jing': 'wave',
-              'yi': 'pine', 'yang': 'wave', 'kr': 'pine', 'jp': 'wave', 'jiao': 'bamboo', 'xi': 'dune', 'nz': 'bamboo', 'tz': 'temple', 'mb': 'snow', 'cp': 'wave', 'fu': 'flame', 'pf': 'ruin',
-              'my': 'tomb', 'dj': 'city', 'xb': 'dune', 'nh': 'wave', 'sl': 'dune'},
+    # K-0088: 물가 7칸이 같은 물결이던 것 → 등대·연꽃·배·섬·물고기·산호로 가름(고정·특색 지역)
+    'realm': {'you': 'snow', 'ji': 'wheat', 'bing': 'mountain', 'qing': 'lighthouse', 'yan': 'wheat', 'xu': 'wave', 'yu': 'wheat', 'si': 'castle', 'yong': 'mountain', 'liang': 'dune', 'jing': 'lotus',
+              'yi': 'pine', 'yang': 'boat', 'kr': 'pine', 'jp': 'island', 'jiao': 'bamboo', 'xi': 'dune', 'nz': 'bamboo', 'tz': 'temple', 'mb': 'snow', 'cp': 'fish', 'fu': 'flame', 'pf': 'ruin',
+              'my': 'tomb', 'dj': 'city', 'xb': 'dune', 'nh': 'coral', 'sl': 'dune'},
 }
 GAME_COLOR = {'go': (127, 216, 208), 'dungeon': (192, 70, 58), 'forest': (232, 216, 160), 'story': (127, 184, 255), 'realm': (216, 181, 106)}
 GAME_BG = {'go': (28, 58, 68), 'dungeon': (42, 18, 20), 'forest': (47, 74, 44), 'story': (28, 42, 74), 'realm': (38, 29, 20)}
@@ -171,6 +172,47 @@ def symbol(d, kind, c, S):
         d.rectangle((*p(18, 32), *p(46, 54)), fill=c)
         d.line([p(32, 24), p(32, 40)], fill=GAME_BG_NOW, width=w)
         d.line([p(26, 30), p(38, 30)], fill=GAME_BG_NOW, width=w)
+    elif kind == 'lighthouse':
+        d.polygon([p(26, 54), p(38, 54), p(35, 20), p(29, 20)], fill=c)
+        d.rectangle((*p(27, 14), *p(37, 20)), fill=lt)
+        d.polygon([p(27, 14), p(32, 8), p(37, 14)], fill=c)
+        for y in (30, 42):
+            d.rectangle((*p(28, y), *p(36, y + 4)), fill=GAME_BG_NOW)
+        d.polygon([p(37, 15), p(58, 9), p(58, 21)], fill=lt)
+    elif kind == 'lotus':
+        def petal(ang, ln, wd, col):
+            ax, ay = math.cos(ang), math.sin(ang)
+            bx, by = -ay, ax
+            d.polygon([p(32, 46), p(32 + ax * ln * 0.5 + bx * wd, 46 + ay * ln * 0.5 + by * wd), p(32 + ax * ln, 46 + ay * ln),
+                       p(32 + ax * ln * 0.5 - bx * wd, 46 + ay * ln * 0.5 - by * wd)], fill=col)
+        for ang, ln, wd, col in ((-2.75, 20, 6, c), (-0.39, 20, 6, c), (-2.25, 27, 7, lt), (-0.89, 27, 7, lt), (-math.pi / 2, 32, 8, c)):
+            petal(ang, ln, wd, col)
+        d.pieslice((*p(12, 44), *p(52, 56)), 0, 180, fill=c)
+    elif kind == 'boat':
+        d.polygon([p(8, 40), p(56, 40), p(48, 52), p(16, 52)], fill=c)
+        d.line([p(32, 40), p(32, 10)], fill=c, width=w)
+        d.polygon([p(33, 12), p(52, 36), p(33, 36)], fill=lt)
+        d.polygon([p(31, 16), p(16, 36), p(31, 36)], fill=lt)
+    elif kind == 'island':
+        d.pieslice((*p(10, 36), *p(54, 66)), 180, 360, fill=c)
+        d.line([p(34, 50), p(32, 36), p(30, 22)], fill=lt, width=int(3 * SS))
+        for tx, ty in ((12, 30), (16, 18), (44, 18), (48, 30), (30, 10)):
+            mx, my = (30 + tx) / 2, (22 + ty) / 2 - 4
+            d.polygon([p(30, 22), p(mx - 2, my - 3), p(tx, ty), p(mx + 2, my + 3)], fill=lt)
+        for k in range(2):
+            y = 55 + k * 5
+            d.line([p(8, y), p(20, y - 2), p(32, y), p(44, y - 2), p(56, y)], fill=c, width=int(2 * SS))
+    elif kind == 'fish':
+        d.ellipse((*p(12, 22), *p(46, 44)), fill=c)
+        d.polygon([p(42, 33), p(58, 20), p(58, 46)], fill=c)
+        d.ellipse((*p(18, 28), *p(24, 34)), fill=GAME_BG_NOW)
+        d.arc((*p(22, 24), *p(38, 42)), 300, 60, fill=lt, width=int(2 * SS))
+    elif kind == 'coral':
+        d.line([p(32, 56), p(32, 30)], fill=c, width=int(4 * SS))
+        for a, b in (((32, 44), (18, 30)), ((32, 38), (46, 24)), ((18, 30), (14, 16)), ((18, 30), (26, 18)), ((46, 24), (52, 12)), ((32, 30), (34, 14))):
+            d.line([p(*a), p(*b)], fill=c, width=int(3 * SS))
+        for x, y in ((14, 16), (26, 18), (52, 12), (34, 14)):
+            d.ellipse((*p(x - 3, y - 3), *p(x + 3, y + 3)), fill=lt)
     else:
         d.ellipse((*p(16, 16), *p(48, 48)), fill=c)
 
