@@ -352,6 +352,8 @@ namespace Saga.EditorTools
             if (ui.OpenButton.gameObject.activeSelf || !ui.BoardButton.gameObject.activeSelf) Fail("게시판 곁: 게시판 단추만 보여야 함");
             ui.OpenBoard();
             if (!ui.BoardOpen || !ui.RowText(0).Contains(GoFishing.Exchange[0].Name)) Fail("게시판 창");
+            // U-0072 — 게시판이 열린 동안 바깥 대사 줄은 꺼진다(사공 인사가 게시판 글을 덮었다)
+            if (!DialogueLabel.Muted) Fail("게시판이 열렸는데 대사 줄이 안 꺼짐");
             if (ui.SwapButton(1).interactable) Fail("물고기 없는데 바꾸기가 열림");
             var bag = new List<CookState.Entry> { new CookState.Entry { id = "crucian", n = 3 } };
             FishState.Restore(bag, null, null);
@@ -359,8 +361,10 @@ namespace Saga.EditorTools
             int g0 = GoldState.Gold;
             ui.SwapButton(1).onClick.Invoke();
             if (GoldState.Gold != g0 + 800 || FishState.Count("crucian") != 0 || ui.SwapButton(1).interactable) Fail("게시판 바꾸기 단추");
+            if (string.IsNullOrEmpty(ui.BoardNote)) Fail("바꾸기 결과가 게시판 안 알림 줄에 안 뜸(U-0072)");
             ui.CloseBoard();
             if (ui.BoardOpen) Fail("게시판 닫기");
+            if (DialogueLabel.Muted) Fail("게시판을 닫았는데 대사 줄이 꺼진 채(U-0072)");
 
             // 지도 — 낚시터 "~ 이름" 넷(못 가 본 땅이면 숨고 밝혀지면 보임)
             var map = WorldMapUi.Instance;

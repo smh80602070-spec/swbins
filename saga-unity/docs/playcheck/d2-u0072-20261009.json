@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-09",
+  "tickets": ["U-0072 사가만리 낚시 게시판 ↔ 대사 줄 겹침(UiLayoutCheck 남은 3)"],
+  "how": "세이브 치운 새 판(다섯 백업·판마다 복원) PlaytestHeadless + UiLayoutCheck, 활성 대상 Android(빌드 없음)",
+  "fix": [
+    "DialogueLabel.Muted — 참이면 Show 안 함·켜는 순간 떠 있던 줄 숨김, Awake 에서 거짓으로",
+    "FishingUi: OpenBoard → Muted 참, CloseBoard·OnDestroy → 거짓 · 게시판 알림(바꾸기 결과·이유)은 게시판 안 새 줄 _boardNote(y −200) 에 2.5초, 닫혀 있으면 예전처럼 대사 줄"
+  ],
+  "tests": "PlaytestGoFishing 에 셋 추가 — 게시판 열면 Muted · 바꾸기 결과가 게시판 안 줄에 · 닫으면 Muted 풀림",
+  "scene": ["[PlaytestHeadless] fishing OK", "[PlaytestHeadless] OK - 10 frames, no errors"],
+  "runtime_errors": 0,
+  "layout": "UiLayoutCheck OK - 문제 0 (10-09 첫 판 19 → U-0067 8 → U-0071 3 → 0). 영어에 한글 6 = 사가천하 문답 문제 글(사자성어·신조어에 로마자 — 뽑힌 문제에 따라 나옴, 문제로 안 셈)"
+}

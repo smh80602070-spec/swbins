@@ -30,6 +30,8 @@ namespace Saga.Go.UI
         private readonly TextMeshProUGUI[] _baitText = new TextMeshProUGUI[3];
         private RectTransform _zone, _cursor, _progress;
         private TextMeshProUGUI _boardTitle, _boardBag;
+        private TextMeshProUGUI _boardNote; // U-0072 게시판 안 알림 줄(바꾸기 결과) — 바깥 대사 줄은 게시판이 열린 동안 꺼진다
+        private float _noteT;
         private readonly TextMeshProUGUI[] _rows = new TextMeshProUGUI[6];
         private readonly Button[] _swap = new Button[6];
         private float _along, _side, _refresh;
@@ -61,6 +63,7 @@ namespace Saga.Go.UI
             FishState.Changed -= OnData;
             CookState.Changed -= OnData;
             if (Instance == this) Instance = null;
+            if (BoardOpen) DialogueLabel.Muted = false;
         }
 
         private void Start()
@@ -167,6 +170,9 @@ namespace Saga.Go.UI
             BoardClose = EncounterUiKit.NewButton(_board.transform, GoLocalization.T("dex.close", "닫는다"), mid, new Vector2(0f, -405f), new Vector2(200f, 44f), null);
             Center((RectTransform)BoardClose.transform);
             BoardClose.onClick.AddListener(CloseBoard);
+            // 거래 줄 여섯(마지막 −110)과 닫기(−405) 사이 빈 곳
+            _boardNote = EncounterUiKit.NewText(_board.transform, "", mid, new Vector2(0f, -200f), new Vector2(1200f, 40f), 17);
+            Center(_boardNote.rectTransform);
         }
 
         private Button HudButton(string label, Vector2 anchor, Vector2 pos, Vector2 size, int font)
@@ -244,13 +250,19 @@ namespace Saga.Go.UI
         {
             if (_board == null || (_flow != null && _flow.Busy)) return;
             _board.SetActive(true);
+            DialogueLabel.Muted = true; // U-0072 — 사공 인사 등이 게시판 글을 덮지 않게
+            if (_boardNote != null) { _boardNote.text = ""; _noteT = 0f; }
             Refresh();
         }
 
         public void CloseBoard()
         {
             if (_board != null) _board.SetActive(false);
+            DialogueLabel.Muted = false;
         }
+
+        /// <summary>진단용 — 게시판 안 알림 줄 글.</summary>
+        public string BoardNote => _boardNote != null ? _boardNote.text : "";
 
         public void ToggleBoard()
         {
@@ -266,9 +278,11 @@ namespace Saga.Go.UI
             Refresh();
         }
 
-        private static void Toast(string text)
+        private void Toast(string text)
         {
-            if (DialogueLabel.Instance != null && !string.IsNullOrEmpty(text)) DialogueLabel.Instance.Show(text, 2.5f);
+            if (string.IsNullOrEmpty(text)) return;
+            if (BoardOpen && _boardNote != null) { _boardNote.text = text; _noteT = 2.5f; return; } // U-0072
+            if (DialogueLabel.Instance != null) DialogueLabel.Instance.Show(text, 2.5f);
         }
 
         // ---- 글 ----
@@ -361,6 +375,7 @@ namespace Saga.Go.UI
 
         private void Update()
         {
+            if (_noteT > 0f && (_noteT -= Time.unscaledDeltaTime) <= 0f && _boardNote != null) _boardNote.text = "";
             if (_flow == null) return;
             Vector2 p = Feet();
             bool busy = _flow.Busy;

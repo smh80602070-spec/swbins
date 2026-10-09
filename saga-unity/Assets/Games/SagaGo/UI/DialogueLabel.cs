@@ -19,9 +19,18 @@ namespace Saga.Go.UI
 
         private Coroutine _hideRoutine;
 
+        // U-0072 — 화면 전체 판(낚시 게시판)이 열린 동안 대사 줄이 그 글을 덮었다. 참이면 Show 가 아무것도 안 하고, 켜는 순간 떠 있던 줄도 숨긴다.
+        private static bool _muted;
+        public static bool Muted
+        {
+            get => _muted;
+            set { _muted = value; if (value && Instance != null) Instance.HideNow(); }
+        }
+
         private void Awake()
         {
             Instance = this;
+            _muted = false; // 정적이라 도메인 리로드를 끈 촬영 도구에서 지난 판 값이 남지 않게
             if (label != null)
             {
                 ApplyLayout(label);
@@ -45,7 +54,7 @@ namespace Saga.Go.UI
 
         public void Show(string text, float seconds)
         {
-            if (label == null) return;
+            if (label == null || _muted) return;
 
             label.text = text;
             label.gameObject.SetActive(true);
@@ -54,6 +63,12 @@ namespace Saga.Go.UI
                 StopCoroutine(_hideRoutine);
             }
             _hideRoutine = StartCoroutine(HideAfter(seconds));
+        }
+
+        private void HideNow()
+        {
+            if (_hideRoutine != null) { StopCoroutine(_hideRoutine); _hideRoutine = null; }
+            if (label != null) label.gameObject.SetActive(false);
         }
 
         private IEnumerator HideAfter(float seconds)
