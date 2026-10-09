@@ -91,6 +91,7 @@ namespace Saga.EditorTools
             {
                 CheckDebugHud();
                 CheckSettingsPanel();
+                PlaytestSettingsVoice.Check("PlaytestForestHeadless", typeof(Saga.Forest.UI.ForestSettingsPanel)); // U-0075 음성 줄
                 CheckButtonWiring();
                 CheckActionButtonLocalization();
                 CheckGoalBoardAndSessionCard();

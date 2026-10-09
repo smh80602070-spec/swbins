@@ -7,6 +7,7 @@
     { "key": "settings.graphics_quality", "value": "Graphics Quality" },
     { "key": "settings.language", "value": "Language" },
     { "key": "settings.bgm", "value": "Music" },
+    { "key": "settings.voice", "value": "Voice" },
     { "key": "settings.close", "value": "Close" },
     { "key": "state.on", "value": "On" },
     { "key": "state.off", "value": "Off" },

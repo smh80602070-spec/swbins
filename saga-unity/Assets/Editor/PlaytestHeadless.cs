@@ -122,6 +122,7 @@ namespace Saga.EditorTools
                 GoAudio.PlaySfx(clip);
                 CheckDebugHud();
                 CheckSettingsPanel();
+                PlaytestSettingsVoice.Check("PlaytestHeadless", typeof(GoSettingsPanel)); // U-0075 음성 줄
                 CheckButtonWiring();
                 CheckPlayerHudLocalization();
                 CheckActionButtonLocalization();

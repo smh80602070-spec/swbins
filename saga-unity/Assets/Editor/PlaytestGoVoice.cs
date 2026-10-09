@@ -140,6 +140,8 @@ namespace Saga.EditorTools
             Has(G + "SagaDungeon/Player/PlayerCombat.cs", "SagaVoice.Say(\"shout\")");
             Has(G + "SagaStory/Player/StoryPlayerController.cs", "SagaVoice.Say(\"shout\")");
             Has(G + "SagaForest/World/ForestVillager.cs", "SagaVoice.Say(\"greet\"");
+            foreach (var sp in new[] { "SagaGo/UI/GoSettingsPanel.cs", "SagaDungeon/UI/DungeonSettingsPanel.cs", "SagaForest/UI/ForestSettingsPanel.cs", "SagaStory/UI/StorySettingsPanel.cs" })
+                Has(G + sp, "SagaVoice.Enabled = !Saga.Core.SagaVoice.Enabled"); // U-0075 설정 창 음성 줄
             Debug.Log("[PlaytestGoVoice] hooks OK - GO 공격·필살·줍기·인사·안내 넷 · 나락·종횡 외침 · 마을 인사");
         }
     }

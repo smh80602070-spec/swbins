@@ -178,6 +178,7 @@ namespace Saga.EditorTools
                     Saga.Story.Data.StoryTutorial.Enabled = false; // tasks U-0020 — 목표판 진단이 첫 줄을 "지금 —" 로 기대한다
                     if (!CheckButtonWiring()) { Fail(); return; }
                     if (!CheckSettingsPanel()) { Fail(); return; }
+                    if (!PlaytestSettingsVoice.Check("PlaytestStorySlice", typeof(Saga.Story.UI.StorySettingsPanel))) { Fail(); return; } // U-0075 음성 줄
                     if (!CheckPlayerHudLocalization()) { Fail(); return; }
                     if (!CheckActionButtonLocalization()) { Fail(); return; }
                     if (!CheckGoalBoardAndSessionCard()) { Fail(); return; }

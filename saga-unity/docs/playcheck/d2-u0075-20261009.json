@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-09",
+  "tickets": ["U-0075 설정 창에 \"음성\" 켜기/끄기 줄(만리·나락·마을·종횡)"],
+  "how": "PlaytestGoVoice + 장면 판 넷(세이브 다섯 백업·복원) + UiLayoutCheck, 활성 대상 Android(빌드 없음)",
+  "fix": [
+    "네 판 *SettingsPanel: Start 의 EnsureVoiceRow — 씬에 구운 창에 음성 줄을 실행 때 만들고(사가종횡 회귀 줄과 같은 꼴) 줄 전체를 82 간격으로 다시 놓음(첫 줄 −130·음성 −622·종횡 회귀 −704)",
+    "ChooseVoice → SagaVoice.Enabled 뒤집기 · Refresh 에 이름·켬/끔 글",
+    "번역 settings.voice — 음성 / Voice(네 판 ko·en)",
+    "Build() 는 무변경(에디터에서 지은 단추는 저장 때 리스너가 안 남는 함정 — ButtonWiring)"
+  ],
+  "tests": "새 PlaytestSettingsVoice.Check(줄 생김·눌러 뒤집힘·되돌림·자리 −622) 를 네 판 장면 판이 설정 창 점검 뒤에 부름 · PlaytestGoVoice 소스 확인에 네 설정 창",
+  "results": [
+    "[PlaytestGoVoice] OK",
+    "[PlaytestHeadless]·[PlaytestDungeonHeadless]·[PlaytestForestHeadless]·[PlaytestStorySlice] settings voice OK · 판 전체 OK·오류 0"
+  ],
+  "runtime_errors": 0,
+  "layout": "UiLayoutCheck FAIL 3 — 설정 창 상태는 네 판 모두 겹침 0. 3 = 사가나락 '축복 3택' 창 ↔ '쓰러졌다' 정리 카드(세 화면비). U-0072 18시 판엔 0. 이 diff 밖임을 가림: 사가나락 설정 창을 HEAD 판으로 돌려도 · U-0073 두 파일을 이전 판으로 돌려도 같은 3 → 시각 의존(밤낮·날씨 — 점검 도중 주인공이 쓰러짐) 의심, 미확인",
+  "left": "사가나락 축복 3택 ↔ 쓰러졌다 카드(UiLayoutCheck 3) — 후속 후보(점검이 시각을 붙들지 않음)"
+}

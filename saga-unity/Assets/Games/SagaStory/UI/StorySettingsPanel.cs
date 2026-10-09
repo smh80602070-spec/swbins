@@ -38,6 +38,8 @@ namespace Saga.Story.UI
         [SerializeField] private TextMeshProUGUI _languageValueLabel;
         [SerializeField] private TextMeshProUGUI _bgmNameLabel;
         [SerializeField] private TextMeshProUGUI _bgmValueLabel;
+        // U-0075 — 대사 음성 켬/끔(SagaVoice.Enabled, 다섯 판 공용 PlayerPrefs). 씬에 구운 창엔 없어 실행 때만 만든다(회귀 줄과 같은 꼴).
+        private TextMeshProUGUI _voiceNameLabel, _voiceValueLabel;
         // 2026-09-23 — Build()(에디터 전용)의 onClick.AddListener는 씬 저장 때 안 남아 실제
         // 플레이에선 설정 버튼이 전부 먹통이었다(StoryJobChoiceUi와 같은 발견). 버튼만
         // 직렬화하고 Awake()에서 건다. _rowButtons 순서 = RowHandlers() 순서.
@@ -111,8 +113,31 @@ namespace Saga.Story.UI
         private void ChooseLanguage() { StoryLocalization.CycleLanguage(); StoryLocalization.RelocalizeScene(); Refresh(); }
 
         /// <summary>110 ⑤c-2c — 씬에 구운 글(빌더 = 한국어)을 지금 언어로, 이 창의 글도 한 번 새로(예전엔 값을 바꿀 때만).</summary>
-        private void Start() { EnsureRoundRow(); StoryLocalization.RelocalizeScene(); Refresh(); }
+        private void Start() { EnsureRoundRow(); EnsureVoiceRow(); StoryLocalization.RelocalizeScene(); Refresh(); }
         private void ChooseBgm() { StorySettingsState.BgmOn = !StorySettingsState.BgmOn; Refresh(); }
+
+        /// <summary>U-0075 — 음성 줄을 붙이고 줄 전체를 82 간격으로 다시 놓는다(예전 95 간격 여섯 줄 판엔 일곱째 자리가 없었다 —
+        /// 첫 줄 −130, 여덟째(회귀) −704, 닫기 위 끝보다 위). 단추는 실행 때 만들어 리스너를 바로 건다.</summary>
+        private void EnsureVoiceRow()
+        {
+            if (!Application.isPlaying || _panel == null || _voiceValueLabel != null) return;
+            _voiceNameLabel = NewText(_panel.transform, StoryLocalization.T("settings.voice", "음성"), new Vector2(0f, 1f),
+                new Vector2(60f, -130f), new Vector2(260f, 70f), 26);
+            _voiceNameLabel.alignment = TextAlignmentOptions.Left;
+            var button = NewButton(_panel.transform, "", new Vector2(1f, 1f), new Vector2(-60f, -130f), new Vector2(260f, 70f));
+            _voiceValueLabel = button.GetComponentInChildren<TextMeshProUGUI>();
+            button.onClick.AddListener(ChooseVoice);
+            var rows = new[] { (_sfxNameLabel, _sfxValueLabel), (_vibrationNameLabel, _vibrationValueLabel), (_uiScaleNameLabel, _uiScaleValueLabel), (_qualityNameLabel, _qualityValueLabel), (_languageNameLabel, _languageValueLabel), (_bgmNameLabel, _bgmValueLabel), (_voiceNameLabel, _voiceValueLabel), (_roundNameLabel, _roundValueLabel) };
+            for (int i = 0; i < rows.Length; i++)
+            {
+                if (rows[i].Item1 == null || rows[i].Item2 == null) continue;
+                float y = -130f - 82f * i;
+                var n = rows[i].Item1.rectTransform; n.anchoredPosition = new Vector2(n.anchoredPosition.x, y);
+                if (rows[i].Item2.transform.parent is RectTransform v) v.anchoredPosition = new Vector2(v.anchoredPosition.x, y);
+            }
+        }
+
+        private void ChooseVoice() { Saga.Core.SagaVoice.Enabled = !Saga.Core.SagaVoice.Enabled; Refresh(); }
 
         private void TogglePanel() => _panel.SetActive(!_panel.activeSelf);
 
@@ -136,6 +161,11 @@ namespace Saga.Story.UI
             _qualityValueLabel.text = StorySettingsState.GraphicsQualityLabel();
             _languageValueLabel.text = StoryLocalization.LanguageLabel();
             _bgmValueLabel.text = StoryLocalization.T(StorySettingsState.BgmOn ? "state.on" : "state.off");
+            if (_voiceValueLabel != null)
+            {
+                _voiceNameLabel.text = StoryLocalization.T("settings.voice", "음성");
+                _voiceValueLabel.text = StoryLocalization.T(Saga.Core.SagaVoice.Enabled ? "state.on" : "state.off");
+            }
             RefreshRound();
         }
 

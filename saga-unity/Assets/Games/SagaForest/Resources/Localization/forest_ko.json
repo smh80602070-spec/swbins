@@ -7,6 +7,7 @@
     { "key": "settings.graphics_quality", "value": "그래픽 품질" },
     { "key": "settings.language", "value": "언어" },
     { "key": "settings.bgm", "value": "배경음악" },
+    { "key": "settings.voice", "value": "음성" },
     { "key": "settings.close", "value": "닫는다" },
     { "key": "state.on", "value": "켜짐" },
     { "key": "state.off", "value": "꺼짐" },

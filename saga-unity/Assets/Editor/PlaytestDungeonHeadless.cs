@@ -123,6 +123,7 @@ namespace Saga.EditorTools
                 CheckWhirl();
                 CheckDebugHud();
                 CheckSettingsPanel();
+                PlaytestSettingsVoice.Check("PlaytestDungeonHeadless", typeof(Saga.Dungeon.UI.DungeonSettingsPanel)); // U-0075 음성 줄
                 CheckButtonWiring();
                 CheckPlayerHudLocalization();
                 CheckActionButtonLocalization();
