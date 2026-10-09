@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-09",
+  "tickets": ["U-0073 그림자 판·공용 모델 생성 충돌체가 만든 프레임 동안 남음"],
+  "how": "PlaytestWorldModels(규칙 층) + PlaytestHeadless(세이브 다섯 백업·복원), 활성 대상 Android(빌드 없음)",
+  "fix": "BlobShadow.BuildQuad·WorldModels.Spawn 의 충돌체 지우기 Destroy(프레임 끝) → DestroyImmediate(그 자리) — 판 코드 83곳은 그대로",
+  "tests": "PlaytestWorldModels.CheckBlobShadow — BuildQuad 를 직접 불러 같은 프레임에 충돌체 0·위에서 쏜 레이 안 맞음(예전 코드면 에디터에선 Destroy 가 안 먹어 FAIL)",
+  "results": ["[PlaytestWorldModels] blob shadow OK - 만든 프레임에 충돌체 0·레이 안 맞음", "[PlaytestWorldModels] OK", "[PlaytestHeadless] eggs OK · mount OK · OK - 10 frames, no errors"],
+  "runtime_errors": 0
+}

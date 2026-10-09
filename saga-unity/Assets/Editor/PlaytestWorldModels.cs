@@ -42,9 +42,34 @@ namespace Saga.EditorTools
                 }
                 PlaytestKit.Check(WorldModels.Spawn("no_such_model", parent) == null && WorldModels.Spawn(null, parent) == null, "없는 이름이 null 이 아님");
                 Object.DestroyImmediate(parent.gameObject);
+                CheckBlobShadow();
             }
             PlaytestKit.Summary("PlaytestWorldModels");
             if (Application.isBatchMode) EditorApplication.Exit(PlaytestKit.Fails == 0 ? 0 : 1);
+        }
+
+        /// <summary>U-0073 — 그림자 판(캐릭터 발밑 사각형)을 만든 **같은 프레임**에 충돌체가 없고 위에서 쏜 레이가 안 맞는다
+        /// (예전 Destroy 는 프레임 끝에 지워 발밑 레이가 이 판을 맞혔다). Awake 는 에디터 진단에서 안 불려 BuildQuad 를 직접 부른다.</summary>
+        private static void CheckBlobShadow()
+        {
+            var host = new GameObject("__blob");
+            host.transform.position = new Vector3(5000f, 0f, 5000f); // 다른 물체와 안 겹치는 빈 곳
+            try
+            {
+                var shadow = host.AddComponent<BlobShadow>();
+                var build = typeof(BlobShadow).GetMethod("BuildQuad", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+                if (build == null) { PlaytestKit.Fail("BlobShadow.BuildQuad 를 못 찾음"); return; }
+                build.Invoke(shadow, null);
+                var quad = host.transform.Find("BlobShadow");
+                PlaytestKit.Check(quad != null, "그림자 판이 안 생김");
+                PlaytestKit.Check(host.GetComponentsInChildren<Collider>(true).Length == 0, "그림자 판을 만든 프레임에 충돌체가 남음");
+                Physics.SyncTransforms();
+                bool hit = Physics.Raycast(host.transform.position + Vector3.up * 2f, Vector3.down, out RaycastHit h, 4f, ~0, QueryTriggerInteraction.Ignore)
+                    && h.collider.transform.IsChildOf(host.transform);
+                PlaytestKit.Check(!hit, "위에서 쏜 레이가 그림자 판을 맞힘");
+                Debug.Log("[PlaytestWorldModels] blob shadow OK - 만든 프레임에 충돌체 0·레이 안 맞음");
+            }
+            finally { Object.DestroyImmediate(host); }
         }
     }
 }

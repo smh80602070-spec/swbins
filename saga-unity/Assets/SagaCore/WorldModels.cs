@@ -32,7 +32,7 @@ namespace Saga.Core
             go.transform.localPosition = Vector3.zero;
             go.transform.localRotation = Quaternion.identity;
             go.transform.localScale = Vector3.one;
-            foreach (var c in go.GetComponentsInChildren<Collider>(true)) Object.Destroy(c);
+            foreach (var c in go.GetComponentsInChildren<Collider>(true)) Object.DestroyImmediate(c); // U-0073 — 만든 프레임의 레이·컨트롤러가 걸리지 않게 바로
             var cache = new Dictionary<Material, Material>();
             var mats = new List<Material>();
             Bounds b = default; bool any = false;
