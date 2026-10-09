@@ -8,7 +8,7 @@ namespace Saga.Realm.UI
 {
     /// <summary>화면 위 상태 줄 — 현재 성 이름과 그 성의 아홉 값(개간·
     /// 상업·기술·치안·축성·훈련·조선·인구·병력·군량), 세력 금고·연월·
-    /// 로스터(이름+배치 성)·적국 전황 전부(3절, 51장으로 소패·정도 둘).
+    /// 로스터(이름+배치 성)·적국 전황 요약(3절, U-0067 로 함락 수+남은 곳 셋).
     /// RealmCityState.Changed·
     /// RealmWarState.Changed를 구독해 명령·다음 달 정산·성 전환·공격
     /// 직후 바로 갱신한다. RealmCityBuilder.cs와 같은 이유로 로드 순서
@@ -19,8 +19,25 @@ namespace Saga.Realm.UI
 
         private bool _synced;
 
+        // U-0067 — 로스터·적국을 전부 이어 붙이면 상자(760×340)를 넘쳐 화면
+        // 절반을 덮었다. 로스터는 RosterMax 명, 적국은 요약만, 그래도 넘치면 말줄임.
+        private const int RosterMax = 6;
+        private const int EnemyMax = 3;
+        // 위 가운데 GoalBoard(폭 540)가 16:9·4:3 에서 x 530 부터라, 씬이 구운 폭 760 을
+        // 그 앞에서 끊는다. 줄이 늘면 글자를 줄여(18~26) 상자 안에 담는다.
+        private const float MaxWidth = 500f;
+
         private void Awake()
         {
+            if (label != null)
+            {
+                var rt = label.rectTransform;
+                if (rt.sizeDelta.x > MaxWidth) rt.sizeDelta = new Vector2(MaxWidth, rt.sizeDelta.y);
+                label.enableAutoSizing = true;
+                label.fontSizeMin = 18f;
+                label.fontSizeMax = Mathf.Max(18f, label.fontSize);
+                label.overflowMode = TextOverflowModes.Ellipsis;
+            }
             RealmCityState.Changed += Refresh;
             RealmWarState.Changed += Refresh;
         }
@@ -61,31 +78,55 @@ namespace Saga.Realm.UI
                 .Append(" · ").Append(RealmLocalization.T("hud.troops")).Append(' ').Append(record.Troops)
                 .Append(" · ").Append(RealmLocalization.T("hud.food")).Append(' ').Append(record.Food).Append('\n');
             sb.Append(RealmLocalization.T("hud.roster"));
-            bool first = true;
+            int shown = 0, rosterTotal = 0;
             foreach (var id in RealmCityState.RosterIds)
             {
-                if (!first) sb.Append(", ");
-                first = false;
+                rosterTotal++;
+                if (shown >= RosterMax) continue;
+                if (shown > 0) sb.Append(", ");
+                shown++;
                 var officer = RealmOfficerPool.Get(id);
                 var atCity = RealmCityData.Get(RealmCityState.OfficerCityId(id));
                 sb.Append(officer != null ? officer.Name : id);
                 if (atCity != null) sb.Append('(').Append(atCity.Name).Append(')');
                 sb.Append(TraitsAndAmbitionOf(id));
             }
+            if (rosterTotal > shown)
+                sb.Append(string.Format(RealmLocalization.T("hud.roster_more", " 외 {0}명"), rosterTotal - shown));
             sb.Append('\n');
-            bool firstEnemy = true;
+            AppendEnemySummary(sb);
+            label.text = sb.ToString();
+        }
+
+        /// <summary>U-0067 — 적국 55곳을 한 줄씩 다 쓰던 것을 "함락 K/N ·
+        /// 남은 곳(병력 적은 순) EnemyMax 곳 · 외 n곳" 으로 줄인다.</summary>
+        private static void AppendEnemySummary(StringBuilder sb)
+        {
+            int total = 0, captured = 0;
+            var remaining = new System.Collections.Generic.List<(RealmEnemyCityDef def, RealmEnemyRecord rec)>();
             foreach (var enemyId in RealmEnemyCity.AllIds)
             {
                 var enemyDef = RealmEnemyCity.Get(enemyId);
                 var enemy = RealmWarState.Get(enemyId);
                 if (enemyDef == null || enemy == null) continue;
-                if (!firstEnemy) sb.Append(" · ");
-                firstEnemy = false;
-                sb.Append(enemyDef.Name).Append(" — ").Append(enemy.Captured
-                    ? RealmLocalization.T("hud.captured")
-                    : string.Format(RealmLocalization.T("hud.enemy_status"), enemy.Troops, enemy.Wall, enemy.Train));
+                total++;
+                if (enemy.Captured) captured++;
+                else remaining.Add((enemyDef, enemy));
             }
-            label.text = sb.ToString();
+            sb.Append(string.Format(RealmLocalization.T("hud.enemy_summary", "적국 함락 {0}/{1}"), captured, total));
+            if (remaining.Count == 0) return;
+            remaining.Sort((a, b) => a.rec.Troops.CompareTo(b.rec.Troops));
+            sb.Append(RealmLocalization.T("hud.enemy_remaining", " · 남은 곳 "));
+            int n = System.Math.Min(EnemyMax, remaining.Count);
+            for (int i = 0; i < n; i++)
+            {
+                if (i > 0) sb.Append(" · ");
+                var (def, rec) = remaining[i];
+                sb.Append(def.Name).Append(" — ")
+                    .Append(string.Format(RealmLocalization.T("hud.enemy_status"), rec.Troops, rec.Wall, rec.Train));
+            }
+            if (remaining.Count > n)
+                sb.Append(string.Format(RealmLocalization.T("hud.enemy_more", " 외 {0}곳"), remaining.Count - n));
         }
 
         private static readonly System.Collections.Generic.Dictionary<RealmOfficerTraits.Trait, string> TraitLabel =

@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-09",
+  "tickets": [
+    "U-0067 HUD 글자 겹침 — 디버그 HUD F3 · 사가천하 목록 요약"
+  ],
+  "how": "장면 판 다섯(판마다 세이브 다섯 치움·백업·복원 cmp) + UiLayoutCheck 두 번 + PlaytestDungeonWearTiersGui·PlaytestRealmWallTiersGui 재촬영(세이브 치움) Claude 눈",
+  "cause": "디버그 HUD 가 플레이어 HUD 와 같은 자리(왼쪽 위 20,-20) · RealmHud 가 로스터 전원+적국 55곳을 한 줄씩 전부 이어 붙여 760×340 상자 밖으로 그림",
+  "fix": "DebugHud 다섯 = 기본 숨김(label.enabled)·F3 토글, 글 갱신은 계속 · RealmHud = 로스터 6명+외 n · 적국 함락 K/N + 병력 적은 남은 곳 3 + 외 n · 상자 폭 500(위 가운데 GoalBoard x 530 앞)·자동 크기 18~26·말줄임",
+  "scene": [
+    "[PlaytestHeadless] OK - 10 frames, no errors",
+    "[PlaytestDungeonHeadless] OK - 10 frames, no errors (debug hud OK — 숨긴 채 label.text 갱신)",
+    "[PlaytestForestHeadless] OK - 10 frames, no errors",
+    "[PlaytestStorySlice] OK - ... no errors",
+    "[PlaytestRealmSlice] OK - ... all verified, no errors (realm hud localization OK — Farming·Troops)"
+  ],
+  "runtime_errors": 0,
+  "layout": {
+    "run1": "FAIL 19 — 그중 11 = RealmHud↔GoalBoard(16:9·4:3, 영어 포함). 옛 목록은 화면 30% 를 넘어 점검이 '모달'로 보고 겹침을 안 셌다 — 요약으로 줄자 드러남",
+    "run2": "FAIL 8 — RealmHud↔GoalBoard 0. 남은 8 은 이번 diff 밖: 사가마을 첫 장 대화 줄 ↔ GoalBoard·일시정지(5) · 사가천하 '다음 달' SessionCard ↔ EventButtons 단추(3). 세이브 치운 새 판 상태라 10-05(0건) 때와 장면이 다를 수 있음"
+  },
+  "results": [
+    {
+      "id": "un.rk.wall-tiers",
+      "eye": "○",
+      "shots": "30~32_realm_wall_tier*.png (옛 세션 scratchpad unity_screens/ — 도구 경로 고정)",
+      "note": "0단 낮은 벽·1단 높아진 벽(화면 8% 다름)·2단 모서리 망루. 왼쪽 위 상태 글 9줄이 상자 안, 디버그 줄 안 보임",
+      "result": "OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.wear-tiers",
+      "eye": "못 봄",
+      "shots": "20~22_dungeon_wear_tier*.png",
+      "note": "왼쪽 위 HUD 한 벌(겹침 풀림). 그러나 첫 장 대화창·붉은 고리가 방을 가림 — 도구가 시나리오 창을 닫아야 함. 아래 가운데 장 이름 글과 이야기 줄이 겹쳐 보임(DungeonScenarioUi)",
+      "result": "D1 유지",
+      "date": "2026-10-09"
+    }
+  ],
+  "left": "사가마을 첫 장 대화 줄 겹침 · 사가천하 다음 달 정리 카드↔이벤트 단추 · 사가나락 시나리오 아래 글 겹침 · WearTiersGui 대화창 닫기 — 후속 후보(큐 머리말)"
+}

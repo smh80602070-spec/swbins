@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Saga.Realm.Data;
@@ -27,6 +28,9 @@ namespace Saga.Realm.UI
         private float _fpsTimer;
         private int _frameCount;
         private float _fps;
+        // U-0067 — 플레이어 HUD 와 같은 자리라 기본 숨김, F3 으로 켜고 끈다.
+        // 글자 갱신은 숨겨도 계속한다(진단이 label.text 를 읽는다).
+        private bool _shown;
 
         private void Awake()
         {
@@ -38,6 +42,9 @@ namespace Saga.Realm.UI
 
         private void Update()
         {
+            if (Keyboard.current != null && Keyboard.current.f3Key.wasPressedThisFrame)
+                _shown = !_shown;
+            if (label != null && label.enabled != _shown) label.enabled = _shown;
             _frameCount++;
             _fpsTimer += Time.unscaledDeltaTime;
             if (_fpsTimer >= 0.5f)
