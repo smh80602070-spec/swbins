@@ -1,0 +1,242 @@
+{
+  "date": "2026-10-09",
+  "tickets": [
+    "U-0063 그림 판정 D1 묶음"
+  ],
+  "how": "PlaytestShowcaseGui(GUI, -batchmode 없이, 한 판씩, SAGA_SHOT_HOUR=13·MAX=3) 사가만리 18·사가나락 15·사가마을 7·사가종횡 5·사가천하 2장 + PlaytestDungeonWearTiersGui·PlaytestRealmWallTiersGui 각 3장 — PNG 를 Claude 가 직접 봄(사람 아님). 세이브 다섯 백업 후 판마다 복원(촬영이 save.json·save_dungeon 등을 바꿈 → 되돌림)",
+  "results": [
+    {
+      "id": "un.go.eras-foes",
+      "eye": "△",
+      "shots": ".utmp/shots-u0063/go/typeFieldEnemy_0~2.png",
+      "note": "세 시대 적이 서로 다른 몸으로 섬(노인 도사·미래 병사). 흠: 미래 병사 둘이 같은 몸. 이름표가 좌우 뒤집혀 보이는 건 촬영 카메라가 뒤쪽이라서(게임 카메라 아님)",
+      "result": "OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.go.eras-people",
+      "eye": "△",
+      "shots": ".utmp/shots-u0063/go/typeFolkWalker_0~2.png",
+      "note": "역참 사람 현대·미래 옷 몸이 서고 그림자·툰 정상. 흠: 행인 하나가 미래 적과 같은 몸",
+      "result": "OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.go.eras-props",
+      "eye": "○",
+      "shots": ".utmp/shots-u0063/go/nameRegionProps_0~2.png",
+      "note": "통·타이어·모닥불·드럼통·배전함·바위 — 텍스처·그림자 정상",
+      "result": "OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.go.rift-debris",
+      "eye": "×",
+      "shots": ".utmp/shots-u0063/go/typeRiftSpin_0~2.png",
+      "note": "시간 틈 잔해(컨테이너)가 무늬·음영 없는 하늘색 단색 판으로 보임 — 사가나락·사가마을에도 같은 단색 물체. 버그 초안 U-0066",
+      "result": "D1",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.go.hero-looks",
+      "eye": "△",
+      "shots": ".utmp/shots-u0063/go/nameHeroIdle_0~2.png",
+      "note": "도감 인물마다 옷·색이 다름(붉은 도포·녹색 갑옷). 흠: 대기 자세가 다리를 벌리고 무릎을 굽혀 치마가 종처럼 부풂(10-08 과 같음)",
+      "result": "OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.go.weapon-models",
+      "eye": "못 봄",
+      "shots": ".utmp/shots-u0063/go/typeWeaponVisual_0.png",
+      "note": "이번 촬영은 카메라가 벽에 막힘. 10-08 사가나락 주인공 칼 쥠 ○(.utmp/shots-u0058) 이 있으나 사가만리 항목이라 D1 유지",
+      "result": "D1",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.go.party-swap",
+      "eye": "못 봄",
+      "shots": "(name:Body_ 0개)",
+      "note": "교체 동작 — 정지 사진 대상 없음",
+      "result": "D1",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.go.skill-shapes",
+      "eye": "못 봄",
+      "shots": "-",
+      "note": "움직임으로만 판정 — 정지 사진으로 못 봄",
+      "result": "D1",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.go.falls-roof-cam",
+      "eye": "못 봄",
+      "shots": "-",
+      "note": "카메라 움직임 — 정지 사진으로 못 봄",
+      "result": "D1",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.go.common",
+      "eye": "○",
+      "shots": ".utmp/shots-u0063/go/(전 사진)",
+      "note": "하늘·구름·안개·툰 그림자 정상(낮 13시). 설정·번역·목표판은 10-08 장면 판 줄(settings panel·localization·goal board OK)",
+      "result": "OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.eras",
+      "eye": "○",
+      "shots": ".utmp/shots-u0063/dungeon/typeEraFolk_0~2.png",
+      "note": "시대 적(정장·메이드·검은 옷)이 서로 다른 몸, 눈빛 발광. 던전 조명 어둡지만 의도",
+      "result": "OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.peddler-guests",
+      "eye": "△",
+      "shots": ".utmp/shots-u0063/dungeon/typeDungeonMerchant_0~2.png",
+      "note": "행상 사람은 정상. 흠: 좌판이 무늬 없는 초록 단색 상자(U-0066)",
+      "result": "OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.era-decor",
+      "eye": "못 봄",
+      "shots": ".utmp/shots-u0063/dungeon/nameEraDecor_0~2.png",
+      "note": "세 장 다 벽만 찍힘 — 꾸밈 조각이 안 보임. 흠: 기둥·아치 무늬가 줄무늬로 늘어남(U-0066)",
+      "result": "D1",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.gestures",
+      "eye": "못 봄",
+      "shots": "-",
+      "note": "몸짓 — 정지 사진으로 못 봄",
+      "result": "D1",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.boss-intro",
+      "eye": "못 봄",
+      "shots": "-",
+      "note": "등장 컷 — 정지 사진으로 못 봄",
+      "result": "D1",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.wear-tiers",
+      "eye": "못 봄",
+      "shots": "20~22_dungeon_wear_tier*.png (옛 세션 scratchpad unity_screens/ — 도구 경로 고정)",
+      "note": "대화창·\"쓰러졌다\" 창이 방을 가림(세이브 상태). 흠: 왼쪽 위 HUD 글자 두 줄이 겹침(U-0067)",
+      "result": "D1",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.fs.zone-props",
+      "eye": "△",
+      "shots": ".utmp/shots-u0063/forest/nameZoneProps_0~2.png",
+      "note": "존 무더기(바위·고목·타이어·배전함·흰 석물·가로등) 정상. 흠: 하늘색 단색 판이 공중에 뜸(U-0066)",
+      "result": "OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.fs.eras",
+      "eye": "○",
+      "shots": ".utmp/shots-u0063/forest/typeForestEraFolk_0~2.png",
+      "note": "마을 사람 시대별로 다른 몸(요정 옷·카디건 등) 정상",
+      "result": "OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.fs.visitors",
+      "eye": "△",
+      "shots": ".utmp/shots-u0063/forest/typeForestVisitorNpc_0.png",
+      "note": "방문객(유카타) 정상. 흠: 그날 조각(ForestVisitorPiece) 0개라 조각 모양은 못 봄",
+      "result": "OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.st.eras",
+      "eye": "△",
+      "shots": ".utmp/shots-u0063/story/typeStoryEraFolk_0~1.png",
+      "note": "시대 적·손님(미래 옷·유카타) 정상. 흠: VRoid 툰 몸 옆에 옛 사실풍 노인이 섞여 그림체가 갈림",
+      "result": "OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.st.npc-models",
+      "eye": "△",
+      "shots": ".utmp/shots-u0063/story/npc_0~2.png",
+      "note": "NPC 몸 정상. 흠: 좁은 발판에 둘이 겹쳐 섬",
+      "result": "OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.st.boss-intro",
+      "eye": "못 봄",
+      "shots": "-",
+      "note": "등장 컷 — 정지 사진으로 못 봄",
+      "result": "D1",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.rk.eras",
+      "eye": "못 봄",
+      "shots": ".utmp/shots-u0063/realm/sky_*.png",
+      "note": "시간 틈 성은 지도 표식 — 이번 촬영 대상 없음",
+      "result": "D1",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.rk.actors",
+      "eye": "못 봄",
+      "shots": "(name:Actor_ 0개)",
+      "note": "월드맵을 열어야 인물이 생김 — 촬영 때 지도 닫힘",
+      "result": "D1",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.rk.wall-tiers",
+      "eye": "못 봄",
+      "shots": "30~32_realm_wall_tier*.png (옛 세션 scratchpad unity_screens/ — 도구 경로 고정)",
+      "note": "정복 승리 창·긴 성 목록 글자가 성벽을 가림. 흠: 왼쪽 성 목록 글자가 화면 절반을 덮고 아래 단추와 겹침(U-0067)",
+      "result": "D1",
+      "date": "2026-10-09"
+    }
+  ],
+  "raised": [
+    "un.go.eras-foes",
+    "un.go.eras-people",
+    "un.go.eras-props",
+    "un.go.hero-looks",
+    "un.go.common",
+    "un.dg.eras",
+    "un.dg.peddler-guests",
+    "un.fs.zone-props",
+    "un.fs.eras",
+    "un.fs.visitors",
+    "un.st.eras",
+    "un.st.npc-models"
+  ],
+  "held": [
+    "un.go.rift-debris",
+    "un.go.weapon-models",
+    "un.go.party-swap",
+    "un.go.skill-shapes",
+    "un.go.falls-roof-cam",
+    "un.dg.era-decor",
+    "un.dg.gestures",
+    "un.dg.boss-intro",
+    "un.dg.wear-tiers",
+    "un.st.boss-intro",
+    "un.rk.eras",
+    "un.rk.actors",
+    "un.rk.wall-tiers"
+  ],
+  "bugs": {
+    "U-0066": "단색 잔해·초록 좌판 상자·기둥 무늬 늘어남(그림 흠, 세 판)",
+    "U-0067": "HUD 글자 겹침·사가천하 성 목록 넘침"
+  }
+}

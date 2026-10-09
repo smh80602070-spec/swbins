@@ -159,7 +159,8 @@
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D1(U-0063 눈 못 봄): 교체 동작 — 정지 사진 대상 없음"
  },
  {
   "id": "un.go.guardian",
@@ -224,11 +225,12 @@
   "tests": [
    "PlaytestGoEras"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2(눈 △): docs/playcheck/d2-u0063-20261009.json — 세 시대 적이 서로 다른 몸으로 섬(노인 도사·미래 병사). 흠: 미래 병사 둘이 같은 몸. 이름표가 좌우 뒤집혀 보이는 건 촬영 카메라가 뒤쪽이라서(게임 카메라"
  },
  {
   "id": "un.go.eras-people",
@@ -237,11 +239,12 @@
   "tests": [
    "PlaytestGoEras"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2(눈 △): docs/playcheck/d2-u0063-20261009.json — 역참 사람 현대·미래 옷 몸이 서고 그림자·툰 정상. 흠: 행인 하나가 미래 적과 같은 몸"
  },
  {
   "id": "un.go.eras-props",
@@ -250,11 +253,12 @@
   "tests": [
    "PlaytestGoEras"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2(눈 ○): docs/playcheck/d2-u0063-20261009.json — 통·타이어·모닥불·드럼통·배전함·바위 — 텍스처·그림자 정상"
  },
  {
   "id": "un.go.rift-debris",
@@ -267,7 +271,8 @@
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D1(U-0063 눈 ×): 시간 틈 잔해(컨테이너)가 무늬·음영 없는 하늘색 단색 판으로 보임 — 사가나락·사가마을에도 같은 단색 물체. 버그 초안 U-0066"
  },
  {
   "id": "un.go.hero-dex",
@@ -306,11 +311,12 @@
   "tests": [
    "PlaytestGoHeroLooks"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2(눈 △): docs/playcheck/d2-u0063-20261009.json — 도감 인물마다 옷·색이 다름(붉은 도포·녹색 갑옷). 흠: 대기 자세가 다리를 벌리고 무릎을 굽혀 치마가 종처럼 부풂(10-08 과 같음)"
  },
  {
   "id": "un.go.skill-shapes",
@@ -323,7 +329,8 @@
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D1(U-0063 눈 못 봄): 움직임으로만 판정 — 정지 사진으로 못 봄"
  },
  {
   "id": "un.go.peaks",
@@ -351,7 +358,8 @@
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D1(U-0063 눈 못 봄): 카메라 움직임 — 정지 사진으로 못 봄"
  },
  {
   "id": "un.go.elements",
@@ -471,11 +479,12 @@
    "PlaytestHeadless",
    "PlaytestMobileGraphics"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2(눈 ○): docs/playcheck/d2-u0063-20261009.json — 하늘·구름·안개·툰 그림자 정상(낮 13시). 설정·번역·목표판은 10-08 장면 판 줄(settings panel·localization·goal board O"
  },
  {
   "id": "un.dg.slice",
@@ -601,7 +610,8 @@
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D1(U-0063 눈 못 봄): 등장 컷 — 정지 사진으로 못 봄"
  },
  {
   "id": "un.dg.landmarks",
@@ -624,11 +634,12 @@
   "tests": [
    "PlaytestDungeonEras"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2(눈 ○): docs/playcheck/d2-u0063-20261009.json — 시대 적(정장·메이드·검은 옷)이 서로 다른 몸, 눈빛 발광. 던전 조명 어둡지만 의도"
  },
  {
   "id": "un.dg.peddler-guests",
@@ -637,11 +648,12 @@
   "tests": [
    "PlaytestDungeonEras"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2(눈 △): docs/playcheck/d2-u0063-20261009.json — 행상 사람은 정상. 흠: 좌판이 무늬 없는 초록 단색 상자(U-0066)"
  },
  {
   "id": "un.dg.era-decor",
@@ -654,7 +666,8 @@
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D1(U-0063 눈 못 봄): 세 장 다 벽만 찍힘 — 꾸밈 조각이 안 보임. 흠: 기둥·아치 무늬가 줄무늬로 늘어남(U-0066)"
  },
  {
   "id": "un.dg.secrets",
@@ -765,7 +778,8 @@
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D1(U-0063 눈 못 봄): 몸짓 — 정지 사진으로 못 봄"
  },
  {
   "id": "un.dg.ally-sig",
@@ -831,7 +845,8 @@
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D1(U-0063 눈 못 봄): 대화창·\"쓰러졌다\" 창이 방을 가림(세이브 상태). 흠: 왼쪽 위 HUD 글자 두 줄이 겹침(U-0067)"
  },
  {
   "id": "un.dg.common",
@@ -966,11 +981,12 @@
   "tests": [
    "PlaytestForestZoneProps"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2(눈 △): docs/playcheck/d2-u0063-20261009.json — 존 무더기(바위·고목·타이어·배전함·흰 석물·가로등) 정상. 흠: 하늘색 단색 판이 공중에 뜸(U-0066)"
  },
  {
   "id": "un.fs.eras",
@@ -979,11 +995,12 @@
   "tests": [
    "PlaytestForestEras"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2(눈 ○): docs/playcheck/d2-u0063-20261009.json — 마을 사람 시대별로 다른 몸(요정 옷·카디건 등) 정상"
  },
  {
   "id": "un.fs.visitors",
@@ -992,11 +1009,12 @@
   "tests": [
    "PlaytestForestVisitors"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2(눈 △): docs/playcheck/d2-u0063-20261009.json — 방문객(유카타) 정상. 흠: 그날 조각(ForestVisitorPiece) 0개라 조각 모양은 못 봄"
  },
  {
   "id": "un.fs.assets",
@@ -1118,7 +1136,8 @@
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D1(U-0063 눈 못 봄): 등장 컷 — 정지 사진으로 못 봄"
  },
  {
   "id": "un.st.companions",
@@ -1200,11 +1219,12 @@
   "tests": [
    "PlaytestStoryEras"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2(눈 △): docs/playcheck/d2-u0063-20261009.json — 시대 적·손님(미래 옷·유카타) 정상. 흠: VRoid 툰 몸 옆에 옛 사실풍 노인이 섞여 그림체가 갈림"
  },
  {
   "id": "un.st.boss-pattern",
@@ -1227,11 +1247,12 @@
   "tests": [
    "PlaytestNpcModels"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D2(눈 △): docs/playcheck/d2-u0063-20261009.json — NPC 몸 정상. 흠: 좁은 발판에 둘이 겹쳐 섬"
  },
  {
   "id": "un.st.common",
@@ -1357,7 +1378,8 @@
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D1(U-0063 눈 못 봄): 시간 틈 성은 지도 표식 — 이번 촬영 대상 없음"
  },
  {
   "id": "un.rk.battlefield",
@@ -1384,7 +1406,8 @@
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D1(U-0063 눈 못 봄): 월드맵을 열어야 인물이 생김 — 촬영 때 지도 닫힘"
  },
  {
   "id": "un.rk.wall-tiers",
@@ -1397,7 +1420,8 @@
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-16"
+  "since": "2026-09-16",
+  "note": "D1(U-0063 눈 못 봄): 정복 승리 창·긴 성 목록 글자가 성벽을 가림. 흠: 왼쪽 성 목록 글자가 화면 절반을 덮고 아래 단추와 겹침(U-0067)"
  },
  {
   "id": "un.rk.assets",
@@ -1663,7 +1687,7 @@
   "fun": {},
   "ticket": "U-0049",
   "since": "2026-10-05",
-  "note": "D1: 규칙(이름 표·15벌 Fit·장착→모델)+장면 3연속(손에 모델·코드 칼날 렌더러만 꺼짐·활 인물 bow·편성 교체 따라옴·돌아옴). GUI 촬영은 카메라가 돌담에 가려 판정 못 함 → D2 아님. 크기·방향·왼손 활은 눈"
+  "note": "D1(U-0063 눈 못 봄): 이번 촬영은 카메라가 벽에 막힘. 10-08 사가나락 주인공 칼 쥠 ○(.utmp/shots-u0058) 이 있으나 사가만리 항목이라 D1 유지"
  },
  {
   "id": "un.go.exp-curve",
