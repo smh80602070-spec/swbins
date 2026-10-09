@@ -191,11 +191,12 @@ void fragment() {
 	float snow_w = smoothstep(0.25, 0.75, v_surf.x) * (1.0 - smoothstep(0.35, 0.7, slope));
 	// 눈은 정점색보다 한 단 희게(길·숲 바닥 색이 비치되 눈빛이 이기게) — AgX 톤매핑에서 0.86 은 회색으로 가라앉았다.
 	// 09-28 GO 가 ACES·밝은 해로 바뀐 뒤 0.95 눈은 하얗게 포화돼 결이 사라졌다(창 모드 촬영) — 한 단 낮추고 얼룩을 키운다.
-	vec3 snow = mix(COLOR.rgb * 0.62, vec3(0.52, 0.57, 0.64), 0.5) * (0.84 + 0.16 * n2) * mix(vec3(1.0), stone_a * 1.6, 0.12);
+	// 2026-10-09 G-0128 — 해 드는 눈밭이 한 빛(243)이라 결이 안 보였다 — 얼룩·물결 폭을 키운다(밝은 곳은 그대로 희게).
+	vec3 snow = mix(COLOR.rgb * 0.62, vec3(0.52, 0.57, 0.64), 0.5) * (0.76 + 0.24 * n2) * mix(vec3(1.0), stone_a * 1.6, 0.12) * 0.85;   // × 0.85 — 해 든 눈이 255 로 꽉 차 결이 묻혔다
 	// 2026-09-30 — 눈밭이 넓은 한 빛 흰 판이었다(창 모드 f_fort). 바람이 쓸어 만든 눈 물결(굽이치는 결)과 그늘진 골의 푸른 기, 햇빛에 반짝이는 점.
 	float drift = sin(dot(world_pos.xz, vec2(0.6, 0.8)) * 0.85 + _value_noise(world_pos.xz * 0.09) * 8.0) * 0.5 + 0.5;
 	float drift2 = sin(dot(world_pos.xz, vec2(-0.8, 0.6)) * 2.1 + _value_noise(world_pos.xz * 0.3) * 5.0) * 0.5 + 0.5;
-	snow *= mix(vec3(0.8, 0.87, 1.0), vec3(1.0), smoothstep(0.25, 0.7, drift)) * mix(0.95, 1.02, drift2);
+	snow *= mix(vec3(0.72, 0.8, 0.96), vec3(1.0), smoothstep(0.25, 0.7, drift)) * mix(0.9, 1.03, drift2);
 	vec2 gl = world_pos.xz * 3.0;
 	float glint = step(0.985, _hash(floor(gl))) * (1.0 - smoothstep(0.1, 0.22, length(fract(gl) - 0.5)));
 	ALBEDO = mix(ALBEDO, snow, snow_w);
