@@ -20,6 +20,7 @@ extends Node3D
 @export var map_path: String = "res://games/saga_story/data/field_map.gd"
 
 const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
+const CaveBackdrop := preload("res://games/saga_story/world/story_cave_backdrop.gd")
 
 const TREE_GLB := "res://assets/world/tree_broadleaf_01.glb"
 const HILL_GLB := "res://assets/world/hill_01.glb"
@@ -49,11 +50,14 @@ const RIDGES := [[-230.0, 60.0, Color(0.44, 0.5, 0.58)], [-330.0, 85.0, Color(0.
 
 func _ready() -> void:
 	_map = (load(map_path) as GDScript).new()
+	var scene_path := owner.scene_file_path if owner != null else ""
+	if scene_path.contains("Cave") or scene_path.contains("Labyrinth"):
+		## G-0150 — 동굴 안에 들판 나무·언덕 실루엣 대신 바위 벽·천장·종유석·횃불.
+		CaveBackdrop.build(self, _map.width_m(), CaveBackdrop.LABYRINTH if scene_path.contains("Labyrinth") else CaveBackdrop.CAVE)
+		return
 	_build_layer(TREE_GLB, TREE_COUNT, TREE_SCALE, TREE_Z, TREE_COLOR, "BackgroundTrees")
 	_build_layer(HILL_GLB, HILL_COUNT, HILL_SCALE, HILL_Z, HILL_COLOR, "BackgroundHills")
-	var scene_path := owner.scene_file_path if owner != null else ""
-	if not (scene_path.contains("Cave") or scene_path.contains("Labyrinth")):
-		_build_scenery()
+	_build_scenery()
 
 
 static func _h(i: int, salt: int) -> float:
