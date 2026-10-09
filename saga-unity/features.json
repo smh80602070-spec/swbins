@@ -1602,7 +1602,7 @@
   "fun": {},
   "ticket": "U-0046",
   "since": "2026-10-05",
-  "note": "D2(2026-10-05): saga-unity/docs/playcheck/d2-u0043-0046-20261005.json — 규칙+장면 3연속 + 실제 이동·진짜 상자·일과 완료 경로. UiLayoutCheck 로 단추·창 배치 점검(이 작업 몫 0건) · 창 모양·글 읽힘은 눈 · U-0068: 동행 몸 11(K-0075) Resources 열림 + 장면에서 11/11 진짜 Update 로 주인공 곁에 섬·촬영 눈 ○(흠: 무릎 높이로 작고 정지 자세) — docs/playcheck/d2-u0068-20261009.json"
+  "note": "D2(2026-10-05): saga-unity/docs/playcheck/d2-u0043-0046-20261005.json — 규칙+장면 3연속 + 실제 이동·진짜 상자·일과 완료 경로. UiLayoutCheck 로 단추·창 배치 점검(이 작업 몫 0건) · 창 모양·글 읽힘은 눈 · U-0068: 동행 몸 11(K-0075) Resources 열림 + 장면에서 11/11 진짜 Update 로 주인공 곁에 섬·촬영 눈 ○(흠이던 0.5m·정지 자세는 U-0074 로 풀림: 키 0.9m·가장 긴 변 ≤ 2.2m·Idle/Walk/Run, docs/playcheck/d2-u0074-20261009.json) — docs/playcheck/d2-u0068-20261009.json"
  },
  {
   "id": "un.go.menu-hub",

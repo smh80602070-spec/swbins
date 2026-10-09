@@ -63,6 +63,8 @@ namespace Saga.Go.Data
         /// <summary>부화기 칸이 열리는 레벨(여정 등급).</summary>
         public static readonly int[] SlotRank = { 1, 4, 8 };
         public const float StepCapM = 3f, BuddyM = 400f, BuddyLevelM = 500f;
+        /// <summary>U-0074 동행 몸 — 키(m)·가장 긴 가로 변 상한(m)·동작 고르는 속도 문턱(m/s: 아래 Idle · 사이 Walk · 위 Run).</summary>
+        public const float BuddyHeight = 0.9f, BuddyMaxLen = 2.2f, BuddyIdleSpeed = 0.15f, BuddyRunSpeed = 3f;
         public const int BuddyGold = 800, DupGold = 1500, DupExp = 30, BuddyMaxLevel = 10;
 
         /// <summary>알이 나오는 곳 — (확률, 알 종류). 굴림은 (곳, 열쇠) 해시라 같은 상자·같은 일과는 늘 같다.</summary>

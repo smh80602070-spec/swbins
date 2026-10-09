@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-09",
+  "tickets": ["U-0074 동행 신수 몸 키 맞추기·걷기/서기/달리기 동작"],
+  "how": "측정(일회용 ProbeU0074, 커밋 안 함) → PlaytestGoEggs RunBatch + PlaytestHeadless(세이브 다섯 백업·복원) + ShowcaseGui buddy 촬영 Claude 눈, 활성 대상 Android(빌드 없음)",
+  "measure": "Resources.LoadAll<AnimationClip>(World/pet_pt_*) = 7(Attack 0.7·Death 1.1·Hit 0.4·Idle 2.4·Run 0.6·Special 1.3·Walk 1.0초, 반복, legacy 아님) · 프리팹에 Animator 있음",
+  "fix": [
+    "새 SagaCore/GltfClipPlayer — glb 하위 클립을 이름으로 AnimationPlayableUtilities.PlayClip(같은 이름이면 그대로, 없으면 null)",
+    "EggWalker: 몸을 받침 아래 세우고 받침을 따라가게(클립이 몸 뿌리를 써도 안 싸우게) · 키 0.9m·가장 긴 가로 변 ≤ 2.2m 로 맞춤 · 몸이 실제로 움직인 속도로 Idle(<0.15)·Walk(<3)·Run",
+    "GoEggs 상수 BuddyHeight·BuddyMaxLen·BuddyIdleSpeed·BuddyRunSpeed"
+  ],
+  "tests": ["CheckBodies — 11종 크기(키 0.9±0.05 또는 길이 상한)·막 선 몸 Idle", "CheckBuddyGait — 1.5m/s Walk · 8m/s Run · 멈춤 Idle"],
+  "results": ["[PlaytestGoEggs] OK", "[PlaytestHeadless] eggs OK(동행 몸 11/11 · 동행 걸음 1.5m/s Walk·8m/s Run·멈춤 Idle) · OK - 10 frames, no errors"],
+  "runtime_errors": 0,
+  "eye": { "id": "un.go.eggs", "result": "○", "shots": ".utmp/shots-u0074/buddy_gamecam·buddy_side·namepetpt_0.png", "note": "구미호가 예전보다 커지고(0.5m → 길이 상한 2.2m 에 걸려 키 ~0.7m) 다리 자세가 Idle 동작으로 바뀜. 긴 몸은 길이 상한이 먼저 걸려 키가 0.9 보다 작다(의도)" },
+  "left": "촬영 종료 단계에서 GUI Unity 가 멈춤(알려진 함정 — 감시가 3분 뒤 그 PID 만 끔) · 남은 VBCSCompiler 도 끔"
+}

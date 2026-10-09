@@ -416,11 +416,40 @@ namespace Saga.EditorTools
                 if (body == null || body.GetComponentsInChildren<Renderer>().Length == 0) { Fail($"동행 {pet.Id} 몸이 안 섬"); continue; }
                 if (body.name != GoEggs.BodyName(pet.Id)) Fail($"동행 몸 이름이 다름 {body.name}");
                 if (Vector3.Distance(body.transform.position, player.transform.position) > 6f) Fail($"동행 {pet.Id} 몸이 주인공 곁이 아님");
+                // U-0074 — 키 0.9m(가장 긴 가로 변 ≤ 2.2m) · 막 선 몸은 Idle
+                Bounds bb = default; bool anyR = false;
+                foreach (var r in body.GetComponentsInChildren<Renderer>()) { if (!anyR) { bb = r.bounds; anyR = true; } else bb.Encapsulate(r.bounds); }
+                float len = Mathf.Max(bb.size.x, bb.size.z);
+                bool tallOk = Mathf.Abs(bb.size.y - GoEggs.BuddyHeight) <= 0.05f, lenCapped = len <= GoEggs.BuddyMaxLen + 0.02f;
+                if (!lenCapped || (!tallOk && Mathf.Abs(len - GoEggs.BuddyMaxLen) > 0.02f)) Fail($"동행 {pet.Id} 크기 키 {bb.size.y:0.00}·길이 {len:0.00}(키 {GoEggs.BuddyHeight}·길이 ≤ {GoEggs.BuddyMaxLen})");
+                if (walker.BuddyClip != "Idle") Fail($"동행 {pet.Id} 막 섰는데 동작 '{walker.BuddyClip}'(Idle 이어야)");
                 stood++;
             }
+            CheckBuddyGait(walker, update, player.transform, parts);
             EggState.SetBuddy(""); update.Invoke(walker, null);
             if (bodyField.GetValue(walker) as GameObject != null) Fail("동행을 내보냈는데 몸이 남음");
             parts.Add($"동행 몸 {stood}/11 이 진짜 Update 로 주인공 곁에 섬·내보내면 사라짐");
+        }
+
+        /// <summary>U-0074 — 마지막 동행 몸으로: 주인공을 1.5m/s 로 옮기면 Walk · 8m/s 면 Run · 멈추면 다시 Idle(진짜 Update, 같은 프레임 안 반복).</summary>
+        private static void CheckBuddyGait(EggWalker walker, MethodInfo update, Transform player, List<string> parts)
+        {
+            Vector3 home = player.position;
+            float dt = Mathf.Max(Time.deltaTime, 0.02f);
+            string Drive(float speed, int steps)
+            {
+                for (int i = 0; i < steps; i++) { player.position += Vector3.forward * speed * dt; update.Invoke(walker, null); }
+                return walker.BuddyClip;
+            }
+            try
+            {
+                string walk = Drive(1.5f, 80), run = Drive(8f, 80), idle = Drive(0f, 200);
+                if (walk != "Walk") Fail($"1.5m/s 로 따라오는데 동작 '{walk}'(Walk 이어야)");
+                if (run != "Run") Fail($"8m/s 로 따라오는데 동작 '{run}'(Run 이어야)");
+                if (idle != "Idle") Fail($"멈췄는데 동작 '{idle}'(Idle 이어야)");
+                parts.Add($"동행 걸음 1.5m/s {walk}·8m/s {run}·멈춤 {idle}");
+            }
+            finally { player.position = home; update.Invoke(walker, null); }
         }
 
         private static void Fail(string msg)
