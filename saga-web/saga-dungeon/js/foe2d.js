@@ -9,6 +9,7 @@
   'use strict';
 
   /** e = 적, p = 화면 좌표(발 밑 가운데), bodyH = 스탬프 몸 높이(px), now = 시각(ms) */
+  var seen = typeof WeakMap === 'function' ? new WeakMap() : { get: function () { return null; }, set: function () {} }, HOLD = 360;   // 적 → { 지난 쿨·공격 시각·피격 시각 }
   function draw(ctx, e, p, bodyH, now) {
     var M = global.DG.mode2d, ref = e && e.ref;
     if (!M || !ref) { return false; }
@@ -17,8 +18,14 @@
     var pool = bz ? bz.pool : M.pick('t' + (ref.tier || 1), ref.name);
     if (!pool) { return false; }
     var run = global.DG.dungeon.raw && global.DG.dungeon.raw(), px = run && run.player ? run.player.x : e.x - 1;
-    var clip = e.hurt > 0 ? 'hit' : (e.atkAnim > 0 ? 'attack' : (e.aggro ? 'walk' : 'idle'));
-    var ms = clip === 'attack' ? Math.max(0, 0.3 - e.atkAnim) * 1000 : (clip === 'hit' ? Math.max(0, 0.3 - e.hurt) * 1000 : now + (e.phase || 0) * 160);
+    /* W-0122 — 적엔 atkAnim 이 없어(플레이어·동행만 쓴다) 공격 동작이 영영 안 나왔고, 피격은 e.hurt(0.08 에서 시작)를 0.3 기준으로 세어 끝 80ms 만 보였다.
+       게임 규칙은 안 건드리고 여기서 본다 — 공격 = 쿨(e.cd)이 다시 차오른 순간부터 HOLD ms, 피격 = e.hurt 가 켜진 순간부터 HOLD ms */
+    var st = seen.get(e); if (!st) { st = { cd: e.cd || 0, atk: -1e9, hit: -1e9, hurt: 0 }; seen.set(e, st); }
+    if ((e.cd || 0) > st.cd + 0.05) { st.atk = now; }
+    if (e.hurt > 0 && !(st.hurt > 0)) { st.hit = now; }
+    st.cd = e.cd || 0; st.hurt = e.hurt || 0;
+    var clip = now - st.hit < HOLD ? 'hit' : (now - st.atk < HOLD ? 'attack' : (e.aggro ? 'walk' : 'idle'));
+    var ms = clip === 'attack' ? now - st.atk : (clip === 'hit' ? now - st.hit : now + (e.phase || 0) * 160);
     var tH = (global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.targetH) || 40;
     return M.draw(ctx, { pool: pool, clip: clip, facing: px >= e.x ? 1 : -1, ms: ms, x: p.x, y: p.y, scale: bodyH * 1.45 / tH * (bz ? bz.k : 1) });
   }

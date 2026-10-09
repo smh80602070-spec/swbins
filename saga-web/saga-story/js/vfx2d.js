@@ -85,6 +85,7 @@
    * f.life 는 남은 초, 처음 값을 f.l0 에 한 번 적어 나이를 센다. (x,y) = 화면 좌표(맞은 몸 가운데). 그린 게 없으면 false. 다른 fx 는 건드리지 않는다
    */
   function fxLayer(ctx, f, x, y) {
+    if (!wired) { wire(); }
     if (!f || (f.t !== 'hit' && f.t !== 'pop' && f.t !== 'elem' && f.t !== 'lvl' && f.t !== 'get')) { return false; }
     if (f.t === 'get' && !f.rar && f.k !== 'gold') { return false; }   // 줍는 글자 fx 중 등급 장비·금만 연출을 단다
     if (f.l0 === undefined) { f.l0 = f.life; }
@@ -122,13 +123,20 @@
   /** 미리 받아 둔다 — 첫 타격에 한 박자 늦지 않게 */
   function preload(names) { (names || Object.keys(SHEETS)).forEach(sheet); }
 
-  /** 판이 cfg.vfx.levelup 을 주면 레벨업 때 그 함수가 자기 fx 목록에 {t:'lvl'} 을 쌓는다 — 게임 규칙 코드를 안 건드리고 이 모듈이 'levelup' 알림을 듣는다 */
-  (function () {
+  /** 판이 cfg.vfx.levelup 을 주면 레벨업 때 그 함수가 자기 fx 목록에 {t:'lvl'} 을 쌓는다 — 게임 규칙 코드를 안 건드리고 이 모듈이 'levelup' 알림을 듣는다.
+   *  W-0122 — 이 파일은 판 core.js 보다 **먼저** 실려(manifest·번들 순서) 실릴 때 한 번 읽으면 core·cfg.vfx 가 아직 없어 훅이 영영 안 걸렸다
+   *  (레벨업 버스트 0번, cfg.vfx.preload 도 무시). core 가 생긴 뒤 한 번만 건다 — 지금·첫 fxLayer·load 중 먼저 오는 때 */
+  var wired = false;
+  function wire() {
     var cv = global.DG.cfg && global.DG.cfg.vfx, core = global.DG.core;
-    if (cv && cv.levelup && core && core.on) { core.on('levelup', function () { try { cv.levelup(); } catch (e) { /* 그림일 뿐 */ } }); }
-  })();
+    if (wired || !core || !core.on) { return wired; }
+    wired = true;
+    if (cv && cv.levelup) { core.on('levelup', function () { try { cv.levelup(); } catch (e) { /* 그림일 뿐 */ } }); }
+    preload(((cv && cv.preload) || []).concat(['spark_hit', 'crit_flash', 'death_smoke']));   // 첫 타격에 한 박자 늦지 않게 — 판이 cfg.vfx.preload 로 더 주면 같이
+    return true;
+  }
+  wire();
+  if (!wired && global.addEventListener) { global.addEventListener('load', wire); }
 
-  preload(((global.DG.cfg && global.DG.cfg.vfx && global.DG.cfg.vfx.preload) || []).concat(['spark_hit', 'crit_flash', 'death_smoke']));   // 첫 타격에 한 박자 늦지 않게 — 판이 cfg.vfx.preload 로 더 주면 같이
-
-  global.DG.vfx2d = { draw: draw, fxLayer: fxLayer, aura: aura, rarOfTier: rarOfTier, proj: proj, PROJ: PROJ, frameAt: frameAt, ELEM_HIT: ELEM_HIT, preload: preload, keyAlpha: keyAlpha, SHEETS: SHEETS, FRAME: FRAME };
+  global.DG.vfx2d = { draw: draw, fxLayer: fxLayer, aura: aura, rarOfTier: rarOfTier, proj: proj, PROJ: PROJ, frameAt: frameAt, ELEM_HIT: ELEM_HIT, preload: preload, keyAlpha: keyAlpha, SHEETS: SHEETS, FRAME: FRAME, wire: wire, wired: function () { return wired; } };
 })(typeof window !== 'undefined' ? window : this);

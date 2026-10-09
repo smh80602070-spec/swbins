@@ -2088,8 +2088,7 @@
    *            {roomW, roomH, pr, floor, roomIdx, theme}.
    */
   function fieldBlockedAt(x, y, ctx) {
-    var MTb = global.DG.mount;
-    if (MTb && MTb.flying && MTb.flying() && ctx && ctx.town) { return false; }      // 학·용을 타고 뜨면 마을·들판 소품(나무·바위·건물)을 넘는다(mount.js)
+    if (ctx && ctx.town && ctx.fly) { return false; }      // 학·용을 타고 뜨면 마을·들판 소품을 넘는다 — W-0122 boundPlayer 만 fly 를 단다(생성 자리 적·보물·행상은 그대로 막힘)
     var F = global.DG.field3d;
     var floor = ctx ? ctx.floor : (run && run.floor);
     if (!F || floor === undefined || floor === null) { return false; }
@@ -2238,6 +2237,7 @@
    *            사이). 세계 한계만 두고 소품 충돌만 축분리로 본다.
    */
   function boundPlayer(p, px, py, ctx) {
+    var MTf = global.DG.mount; if (ctx && ctx.town && MTf && MTf.flying && MTf.flying()) { ctx = Object.create(ctx); ctx.fly = true; }   // W-0122 나는 동안 이동만 소품을 넘는다
     var ax = (ctx && ctx.anchor) ? ctx.anchor.x : 0, ay = (ctx && ctx.anchor) ? ctx.anchor.y : 0;
     /* 빠져나오기(§5.12) — 이미 소품 안에 서 있으면(무엇 때문이든) 소품 충돌은 안 본다.
        막힌 자리에서 막힌 자리로만 가려 해 영영 못 움직이던 "끼임"이 없어진다.

@@ -18,7 +18,7 @@
   /** 단계 표. `on` = 기다리는 이벤트, `min` = 값(레벨)이 이 이상일 때만 */
   var STEPS = [
     { key: 'talk', text: '🗣️ 마을 사람과 이야기해 보세요', on: 'town:npc', gold: 30 },
-    { key: 'dive', text: '🚪 던전에 들어가 보세요', on: 'dungeon:room', gold: 30 },
+    { key: 'dive', text: '🚪 던전에 들어가 보세요', on: 'dungeon:enter', gold: 30 },   // W-0122 — 'dungeon:room' 은 다음 방으로 옮길 때만 나가 둘째 방에서야 넘어갔다
     { key: 'skill', text: '✨ 스킬을 써 보세요', on: 'dungeon:skill', gold: 30 },
     { key: 'gear', text: '🎁 장비를 얻어 보세요', on: 'gear:drop', gold: 50 },
     { key: 'level', text: '⬆️ 레벨 2 에 올라 보세요', on: 'levelup', min: 2, lv: 2, gold: 100 }
@@ -61,6 +61,7 @@
     autoLevel();
     var s = STEPS[step()];
     if (!s || s.on !== evt) { return false; }
+    if (evt === 'dungeon:skill' && typeof p === 'string' && p.indexOf('ally:') === 0) { return false; }   // W-0122 동행 자동 스킬로는 안 넘어간다
     if (s.min && !(typeof p === 'number' && p >= s.min)) { return false; }
     return complete();
   }

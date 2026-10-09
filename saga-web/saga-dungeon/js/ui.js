@@ -938,11 +938,11 @@
   function folkStory(o) {
     var sv = core.save, n;
     if (!sv.folkStory || typeof sv.folkStory !== 'object') { sv.folkStory = {}; }
-    n = sv.folkStory[o.name] || 0;
+    var k = o.key || o.name; if (o.key && sv.folkStory[o.name] !== undefined && sv.folkStory[k] === undefined) { sv.folkStory[k] = sv.folkStory[o.name]; delete sv.folkStory[o.name]; } n = sv.folkStory[k] || 0;   // W-0122 표시 이름(바뀔 수 있다) 대신 id 키 — 옛 이름 키 진행은 한 번 옮긴다
     if (n >= o.story.length) { return false; }
-    sv.folkStory[o.name] = n + 1;
+    sv.folkStory[k] = n + 1;
     var gold = global.DG.town && global.DG.town.FOLK_STORY_GOLD || 0, last = n + 1 === o.story.length;
-    if (last) { sv.player.gold = (sv.player.gold || 0) + gold; core.persist(); }
+    if (last) { sv.player.gold = (sv.player.gold || 0) + gold; } core.persist();   // 토막마다 남긴다(전엔 끝 토막만)
     toast(o.emoji + ' ' + o.name + ' — ' + o.story[n] + ' (사연 ' + (n + 1) + '/' + o.story.length + ')' + (last ? ' · 🪙 +' + core.fmt(gold) : ''));
     return true;
   }
