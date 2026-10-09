@@ -821,5 +821,23 @@
   "ticket": "W-0128",
   "since": "2026-10-09",
   "note": "D2: saga-web/tools/playcheck/pw-belt-check.mjs → shots/belt/b-{pc,phone,land}-{1,2}.png Claude 눈 ○(몸이 화면 높이 ¼ 안팎, 뒷벽·바닥 띠·깊이, 카메라 따라감, 오른쪽 벽 문 아치). △ 그림 없는 몸(날개·짐승 일부)은 검은·흰 대역 — 몬스터 2D 시트 56(K-0090 ③) 배선이 풀 몫. 손잡이 dg.belt2d 0 = 옛 아이소."
+ },
+ {
+  "id": "dg.creature2d",
+  "name": "2D 적 몬스터 시트 56(K-0090 ③) — 사람형 아닌 적은 몸 id 시트로(검은·흰 대역 대신)",
+  "files": [
+   "js/foe2d.js",
+   "../shared/js/mode2d.js",
+   "js/monster-portrait.js"
+  ],
+  "tests": [
+   "dg.belt2d: 몬스터 2D 시트(W-0129) — 사람형 아닌 적은 몸 id(56벌 이름)로 짝, manifest 로 배율·발(상한 2.2)"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0129",
+  "since": "2026-10-09",
+  "note": "D2: pw-belt-check.mjs d beasts → shots/belt/d-{pc,land}-1.png Claude 눈 ○(유령 mon_spir_02·천룡 boss_10 등 시트로 섬, 덩어리 대역 0). 짐승 116/116 짝·우두머리 11. mon_sp_* 23 은 짝 표(family 칸) 없어 아직 안 씀."
  }
 ]

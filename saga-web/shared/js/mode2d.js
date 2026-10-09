@@ -56,6 +56,26 @@
   }
   function isVroid(pool) { return typeof pool === 'string' && pool.indexOf(VPRE) === 0; }
 
+  /* ── 몬스터 2D 시트(W-0129, K-0090 ③) — `shared/assets/creatures2d/<id>/`(id = 3D 몸 id: boss_01..12·mon_<계통>_01..04·mon_sp_*). 사람 시트와 같은 꼴(128px·8프레임·
+     행 0 정면·1 오른쪽 옆·2 뒤). 몸마다 찍은 폭이 달라(manifest `ortho_m`, 사람 시트는 2.5m) 배율 = ortho_m÷2.5(상한 CREA_MAX), 발 = anchor_feet_y_px/px.
+     manifest 를 받기 전·공용 에셋 주소를 아직 모르면 false(→ 부른 쪽이 옛 그림). 풀 이름 'crea:<id>' */
+  var CPRE = 'crea:', CREA_MAX = 2.2, creas = {};
+  function isCrea(pool) { return typeof pool === 'string' && pool.indexOf(CPRE) === 0; }
+  function creaRoot() { var A = global.DG && global.DG.assets3d; return A && A.state && A.state() === 'ok' && A.root ? A.root() : null; }
+  /** manifest → { foot, k } — 순수(진단이 그대로 부른다) */
+  function creaFit(man) { var px = (man && man.px) || PX; return { foot: man && man.anchor_feet_y_px ? man.anchor_feet_y_px / px : 0.88, k: Math.min(CREA_MAX, Math.max(0.4, ((man && man.ortho_m) || 2.5) / 2.5)) }; }
+  function creaInfo(id) {
+    var c = creas[id], r = creaRoot();
+    if (c || !r) { return c || null; }
+    c = creas[id] = { fit: null, fail: false };
+    if (!global.fetch) { c.fail = true; return c; }
+    global.fetch(r + 'creatures2d/' + id + '/manifest.json').then(function (x) { return x.ok ? x.json() : null; })
+      .then(function (j) { if (j) { c.fit = creaFit(j); } else { c.fail = true; } })['catch'](function () { c.fail = true; });
+    return c;
+  }
+  /** 몸 id → 풀 이름(공용 에셋 주소를 아직 모르면 null) */
+  function creaPool(id) { return id && creaRoot() ? CPRE + id : null; }
+
   /* ── 빌린 몸 옷 색(W-0121) — 빌린 VRoid 시트는 옷이 검정·회색 정장이라 작은 2D 에서 주민이 회색 조각상처럼 섰다. 사람 씨앗으로 색 칸(1~11)을
      정해 풀 이름 꼬리('vroid:<몸>~<칸>')에 싣고, 그릴 때 시트의 어둡고 채도 낮은 화소(옷)만 그 색조로 바꾼다 — 밝은 얼굴·흰 셔츠·피부·윤곽선은 그대로.
      결과는 (시트·칸·프레임·행) 한 칸씩 캐시(매 프레임 새 캔버스 없음). 손잡이 core.tuned('mode2d.borrowTint', 1) — 0 이면 원본, 0~1 은 섞는 세기 */
@@ -187,7 +207,8 @@
     var im = new global.Image();
     im.onload = function () { e.ok = true; };
     im.onerror = function () { e.fail = true; };   // 파일이 없으면 영영 기존 그림 — 다시 받으려 들지 않는다
-    im.src = isVroid(pool) ? global.DG.assets3d.root() + (eight ? 'characters2d8/' : 'characters2d/') + pool.slice(VPRE.length) + '/' + clip + '.webp' : base() + pool + '/' + clip + '.webp';
+    im.src = isCrea(pool) ? creaRoot() + 'creatures2d/' + pool.slice(CPRE.length) + '/' + clip + '.webp'   // W-0129 몬스터 시트
+      : isVroid(pool) ? global.DG.assets3d.root() + (eight ? 'characters2d8/' : 'characters2d/') + pool.slice(VPRE.length) + '/' + clip + '.webp' : base() + pool + '/' + clip + '.webp';
     e.img = im;
     return e;
   }
@@ -204,6 +225,8 @@
   function draw(ctx, o) {
     if (!ctx || !o || !o.pool || !isOn()) { return false; }
     if (isStill(o.pool)) { return drawStill(ctx, o); }      // 한 장 모드 풀(W-0032)
+    var cr = null;
+    if (isCrea(o.pool)) { var ci = creaInfo(o.pool.slice(CPRE.length)); if (!ci || !ci.fit) { return false; } cr = ci.fit; }   // W-0129 — manifest 받기 전엔 옛 그림
     var s8 = sheet8(o.pool), eight = !!s8, role = roleOf(o.clip, eight), e = getImg(o.pool, role, eight);
     if (eight && !e.ok) {
       /* 8방향이 아직 안 왔으면(받는 중·실패) 같은 사람의 3행 시트로 — 몸이 깜박이지 않게 */
@@ -216,8 +239,8 @@
       e = base; role = 'idle';
     }
     var P = eight ? s8[0] : PX, d = eight ? dirOf8(o.dirX, o.dirY, o.facing) : dirOf(o.facing), f = (o.t !== undefined && o.t !== null) ? Math.min(FRAMES - 1, Math.max(0, Math.floor(o.t * FRAMES))) : frameAt(role, o.ms || 0);
-    var cf = C(), vr = isVroid(o.pool) && cf.vroid2d, ph = vr ? (vr.h || 85) : (cf.poolH || {})[o.pool], sc = (ph ? (cf.targetH || 62) / ph : (cf.scale || 1)) * (o.scale || 1), w = P * sc, h = P * sc;
-    var foot = eight ? (P / 2 + s8[1] * PPM + 1.5) / P : ((vr && vr.foot) || cf.foot || 0.87);   // 8방향 칸: 가운데 + 카메라 높이(실측 114/128·156/192 와 ±1px)
+    var cf = C(), vr = (isVroid(o.pool) || cr) && cf.vroid2d, ph = vr ? (vr.h || 85) : (cf.poolH || {})[o.pool], sc = (ph ? (cf.targetH || 62) / ph : (cf.scale || 1)) * (o.scale || 1) * (cr ? cr.k : 1), w = P * sc, h = P * sc;   // 몬스터는 사람 시트 배율 × 찍은 폭 비(W-0129)
+    var foot = cr ? cr.foot : eight ? (P / 2 + s8[1] * PPM + 1.5) / P : ((vr && vr.foot) || cf.foot || 0.87);   // 8방향 칸: 가운데 + 카메라 높이(실측 114/128·156/192 와 ±1px)
     ctx.save();
     if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
     ctx.imageSmoothingEnabled = true;
@@ -452,6 +475,7 @@
 
   global.DG = global.DG || {};
   global.DG.mode2d = {
+    isCrea: isCrea, creaPool: creaPool, creaFit: creaFit,   // W-0129 몬스터 2D 시트
     drawSprite: drawSprite, drawKind: drawKind, hasKind: hasKind, spriteReady: function (id) { return !!spriteOf(id); },
     fillIso: fillIso,
     interiorUrls: interiorUrls,

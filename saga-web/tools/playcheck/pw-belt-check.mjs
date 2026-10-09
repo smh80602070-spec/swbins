@@ -20,6 +20,10 @@ for (const V of VIEWS) {
     if (await ev(() => DG.dungeon3d && DG.dungeon3d.wanted())) { await ev(() => document.getElementById('btn-3d').click()); await sleep(1500); }
     await ev(() => { if (DG.town && DG.town.leave) DG.town.leave(); DG.dungeon.enter({ floor: 1 }); }); await sleep(2500); await skip(ev);
     await ev(() => { const R = DG.dungeon.raw(); if (R) { R.hp = R.hpMax = 999999; } });
+    if (process.argv.includes('beasts')) {   // 그림 확인용 — 적 몇을 사람형이 아닌 몸으로(판정과 무관)
+      console.log(V.k, '몬스터', JSON.stringify(await ev(() => { const R = DG.dungeon.raw(), ED = DG.enemyData, pick = ['quad', 'bird', 'serpent', 'ogre', 'toad', 'dragon'].map((f) => ED.enemies.find((e) => e.form === f && e.kind !== 'human')).filter(Boolean); const out = []; R.room.enemies.slice(0, pick.length + 1).forEach((e, i) => { e.ref = i < pick.length ? pick[i] : ED.bosses[ED.bosses.length - 1]; e.boss = i >= pick.length; e.x = 240 + i * 70; e.y = 120 + (i % 3) * 110; e.aggro = false; out.push(e.ref.name + '→' + (DG.monsterPortrait.idOf(e.ref, e.boss) || '-')); }); R.player.x = 420; return out; })));
+      await sleep(2500);
+    }
     await sleep(1500);
     await r.page.screenshot({ path: path.join(OUT, `${tag}-${V.k}-1.png`) });
     const info = await ev(() => { const R = DG.dungeon.raw(); return { belt: DG.belt2d.want(R), px: Math.round(R.player.x), py: Math.round(R.player.y), foes: R.room.enemies.length, kind: R.room.kind }; });

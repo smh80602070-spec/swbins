@@ -14,8 +14,10 @@
     var M = global.DG.mode2d, ref = e && e.ref;
     if (!M || !ref) { return false; }
     var bz = ref.kind === 'beast' ? (M.beastOf ? M.beastOf(ref.name) : null) : null;
-    if (ref.kind === 'beast' && !bz) { return false; }
-    var pool = bz ? bz.pool : M.pick('t' + (ref.tier || 1), ref.name);
+    /* W-0129 — 사람형이 아닌 적은 몬스터 2D 시트(K-0090 ③, 몸 id = 초상과 같은 monsterPortrait.idOf). 받기 전·없으면 옛 길 */
+    var MP = global.DG.monsterPortrait, cid = ref.kind !== 'human' && MP && MP.idOf ? MP.idOf(ref, !!e.boss) : null, crea = cid && M.creaPool ? M.creaPool(cid) : null;
+    if (ref.kind === 'beast' && !bz && !crea) { return false; }
+    var pool = crea || (bz ? bz.pool : M.pick('t' + (ref.tier || 1), ref.name));
     if (!pool) { return false; }
     var run = global.DG.dungeon.raw && global.DG.dungeon.raw(), px = run && run.player ? run.player.x : e.x - 1;
     /* W-0122 — 적엔 atkAnim 이 없어(플레이어·동행만 쓴다) 공격 동작이 영영 안 나왔고, 피격은 e.hurt(0.08 에서 시작)를 0.3 기준으로 세어 끝 80ms 만 보였다.
@@ -27,7 +29,14 @@
     var clip = now - st.hit < HOLD ? 'hit' : (now - st.atk < HOLD ? 'attack' : (e.aggro ? 'walk' : 'idle'));
     var ms = clip === 'attack' ? now - st.atk : (clip === 'hit' ? now - st.hit : now + (e.phase || 0) * 160);
     var tH = (global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.targetH) || 40;
-    return M.draw(ctx, { pool: pool, clip: clip, facing: px >= e.x ? 1 : -1, ms: ms, x: p.x, y: p.y, scale: bodyH * 1.45 / tH * (bz ? bz.k : 1) });
+    return M.draw(ctx, { pool: pool, clip: clip, facing: px >= e.x ? 1 : -1, ms: ms, x: p.x, y: p.y, scale: bodyH * 1.45 / tH * (bz && !crea ? bz.k : 1) }) || (crea ? draw2(ctx, e, p, bodyH, now, bz, clip, ms, px, tH) : false);
+  }
+
+  /** 몬스터 시트를 아직 못 받았을 때 옛 길(짐승 이름 표·사람 풀) — 없으면 false(→ 스탬프) */
+  function draw2(ctx, e, p, bodyH, now, bz, clip, ms, px, tH) {
+    var M = global.DG.mode2d, ref = e.ref;
+    if (ref.kind === 'beast' && !bz) { return false; }
+    return M.draw(ctx, { pool: bz ? bz.pool : M.pick('t' + (ref.tier || 1), ref.name), clip: clip, facing: px >= e.x ? 1 : -1, ms: ms, x: p.x, y: p.y, scale: bodyH * 1.45 / tH * (bz ? bz.k : 1) });
   }
 
   global.DG = global.DG || {};

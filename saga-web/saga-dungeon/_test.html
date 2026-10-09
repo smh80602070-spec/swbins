@@ -8214,6 +8214,16 @@ window.requestAnimationFrame = function () { return 0; };
       return r.every(Boolean) && ('왕복 · 카메라 ' + Math.round(L0.camX) + '~' + Math.round(L1.camX) + ' · 몸 ' + Math.round(40 * L0.s) + 'px/610 · 마을 제외') || '실패 ' + r.join(',');
     });
 
+    t('dg.belt2d: 몬스터 2D 시트(W-0129) — 사람형 아닌 적은 몸 id(56벌 이름)로 짝, manifest 로 배율·발(상한 2.2)', function () {
+      var M = DG.mode2d, MP = DG.monsterPortrait, ED = DG.enemyData, re = /^(boss_(0[1-9]|1[0-2])|mon_(cons|quad|serp|spir|wing)_0[1-4])$/;
+      var beasts = ED.enemies.filter(function (e) { return e.kind !== 'human' && !e.look; }), bad = beasts.filter(function (e) { var id = MP.idOf(e, false); return id && !re.test(id); });
+      var mapped = beasts.filter(function (e) { return MP.idOf(e, false); }).length, bossOk = ED.bosses.every(function (b) { return re.test(MP.idOf(b, true)); });
+      var f1 = M.creaFit({ px: 128, anchor_feet_y_px: 112.64, ortho_m: 8.8635 }), f2 = M.creaFit({ px: 128, anchor_feet_y_px: 112.64, ortho_m: 3 });
+      var fit = Math.abs(f1.foot - 0.88) < 1e-3 && f1.k === 2.2 && Math.abs(f2.k - 1.2) < 1e-9 && M.isCrea('crea:boss_01') && !M.isCrea('vroid:x');
+      var r = [bad.length === 0, mapped > 10, bossOk, fit];
+      return r.every(Boolean) && ('짐승 ' + mapped + '/' + beasts.length + ' 짝 · 우두머리 11 · 배율 ' + f1.k + '·' + f2.k) || '실패 ' + r.join(',') + ' ' + bad.map(function (e) { return e.name; }).join(',');
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });
