@@ -126,6 +126,14 @@ func _run() -> void:
 		and PartyState.count("mora") >= mora0 + Eggs.DUP_MORA and PartyState.exp > exp0,
 		"seen=%d/%d dup=%s mora=%d" % [seen.size(), pool.size(), rd, PartyState.count("mora") - mora0])
 
+	# ⑦-0 G-0123 — 비경(0.6)을 같은 날 같은 단계로 1000번: 알 비율이 0.6 근처(예전엔 0 또는 1) · 횟수는 세이브 칸에 쌓임 · 상자 열쇠는 그대로
+	PartyState.eggs = {}
+	var got_n := 0
+	for i in 1000:
+		got_n += Eggs.roll("domain", Eggs.next_key("domain", "d1|3|20000")).size()
+	_check("repeat_roll", got_n > 540 and got_n < 660 and int((Eggs.state().roll_n as Dictionary).get("domain", 0)) == 1000 and Eggs.next_key("chest:common", "c9") == "c9",
+		"domain 1000번 중 %d · roll_n=%s" % [got_n, str(Eggs.state().get("roll_n", {}))])
+
 	# ⑦ award
 	PartyState.eggs = {}
 	_n.call("award", "commission", "t")

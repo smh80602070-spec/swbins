@@ -77,6 +77,20 @@ static func _h(text: String) -> int:
 	return absi(text.hash())
 
 
+## G-0123 — 같은 날 되풀이할 수 있는 곳(비경·주간 보스·보스 꽃)은 열쇠가 "곳|단계|날짜" 라 그날 굴림이 늘 같았다(늘 알이면 원기만큼 뽑기).
+## 그 곳은 굴릴 때마다 횟수(세이브 eggs.roll_n — 없으면 0)를 열쇠에 붙인다. 상자(상자 id)·의뢰·주간 도전은 한 번뿐이라 그대로.
+const REPEAT_SOURCES := ["domain", "weekly", "bloom"]
+static func next_key(source: String, key: String) -> String:
+	if not (source in REPEAT_SOURCES):
+		return key
+	var s := state()
+	var rn: Dictionary = s.get("roll_n", {})
+	var n := int(rn.get(source, 0)) + 1
+	rn[source] = n
+	s["roll_n"] = rn
+	return "%s|%d" % [key, n]
+
+
 ## 곳(source)에서 나온 알 종류들(비었으면 []). 굴림만 — 주머니에 넣는 건 add_egg.
 static func roll(source: String, key: String) -> Array[String]:
 	var out: Array[String] = []

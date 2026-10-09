@@ -37,7 +37,7 @@ for f in tools/probe_*.gd; do
   entries+=("tree ${n#probe_}")
 done
 # G-0118 — TestVillage 밖 씬이 다는 점검(SceneTree 로 안 감싼 것): "scene <이름>" — 씬·환경변수는 아래 case
-entries+=("scene layout_walk")
+entries+=("scene layout_walk" "scene mount_dungeon" "scene mount_forest" "scene mount_story")   # mount_* = tools/mount_host.tscn(G-0123)
 
 fails_total=0
 count=0
@@ -51,6 +51,9 @@ for e in "${entries[@]}"; do
   if [ "$kind" = "scene" ]; then
     case "$name" in
       layout_walk) env "SAGA_LAYOUT_PROBE=1" timeout "$TIMEOUT_SEC" "$GODOT" --headless --path "$PROJECT" "res://games/saga_go/layout/LayoutWalk.tscn" </dev/null >"$log" 2>&1 ;;
+      mount_dungeon|mount_forest|mount_story)
+        case "$name" in mount_dungeon) sc="res://games/saga_dungeon/world/TestRoom.tscn" ;; mount_forest) sc="res://games/saga_forest/world/TestVillageForest.tscn" ;; *) sc="res://games/saga_story/world/TestField.tscn" ;; esac
+        env "SAGA_MOUNT_ALL=1" timeout "$TIMEOUT_SEC" "$GODOT" --headless --path "$PROJECT" "res://tools/mount_host.tscn" -- "$sc" </dev/null >"$log" 2>&1 ;;
     esac
   elif [ "$kind" = "go" ]; then
     up="$(echo "$name" | tr 'a-z' 'A-Z')"
@@ -64,7 +67,7 @@ for e in "${entries[@]}"; do
     fails=1; note="TIMEOUT"
   else
     note=""
-    line=$(grep -aoE '_PROBE_DONE fails=[0-9]+|^PROBE [A-Za-z0-9_]+ (OK|FAIL [0-9]+)' "$log" | tail -1)
+    line=$(grep -aoE '(_PROBE|MOUNT_HOST)_DONE fails=[0-9]+|^PROBE [A-Za-z0-9_]+ (OK|FAIL [0-9]+)' "$log" | tail -1)
     case "$line" in
       *fails=*) fails="${line##*fails=}" ;;
       *" OK") fails=0 ;;

@@ -114,6 +114,9 @@ func _initialize() -> void:
 			var key: String = "%s-%s" % [g, sc]
 			real[key] = true
 			check(FileAccess.file_exists("res://assets/audio/bgm/%s.ogg" % key), "곡 파일 %s.ogg" % key)
+			## G-0123 — bgm.gd 는 헤드리스에서 res:// 곡을 안 연다(종료 때 재생 중 자원이 남아 점검이 막힘, G-0013) → 여기서 직접 열어 본다(캐시 없이, 재생 안 함).
+			var st := ResourceLoader.load("res://assets/audio/bgm/%s.ogg" % key, "", ResourceLoader.CACHE_MODE_IGNORE) as AudioStream
+			check(st != null and st.get_length() > 5.0, "곡 %s 열림 · %.0f초" % [key, st.get_length() if st != null else 0.0])
 	var rx := RegEx.new()
 	rx.compile('"((?:go|dungeon|forest|story|realm)-(?:town|field|battle|[a-z]+))"')
 	var found := {}

@@ -40,11 +40,12 @@ static func _env_hour() -> float:
 static func force(is_night_value: Variant) -> void:
 	_forced = is_night_value
 
+## G-0123 — hour_float() 와 같은 순서(명시한 시각 SAGA_SKY_HOUR 먼저, 그다음 강제) — 예전엔 거꾸로라 하늘과 밤 조명이 갈렸다.
 static func is_night() -> bool:
-	if _forced != null:
-		return _forced
 	var e := _env_hour()
 	if e >= 0.0:
 		return e >= 21.0 or e < 4.0
+	if _forced != null:
+		return _forced
 	var h: int = Time.get_time_dict_from_system()["hour"]
 	return h >= 21 or h < 4

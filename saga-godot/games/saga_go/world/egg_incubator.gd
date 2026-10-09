@@ -55,7 +55,7 @@ func _ready() -> void:
 
 ## 곳(data/eggs.gd SOURCES)에서 알이 나왔는지 굴려 주머니에 넣는다. 그룹 "go_eggs" 로 부른다.
 func award(source: String, key: String = "") -> void:
-	for t in Eggs.roll(source, key):
+	for t in Eggs.roll(source, Eggs.next_key(source, key)):
 		var td := Eggs.tier(t)
 		if Eggs.add_egg(t) == "ok":
 			Toast.show(self, "%s %s 을(를) 얻었다 — 알 주머니 (I)" % [td.emoji, td.name], 3.0)

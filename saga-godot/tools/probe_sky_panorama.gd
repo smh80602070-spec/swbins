@@ -23,12 +23,14 @@ func _expect(hour: float, a: String, b: String, mix: float) -> void:
 
 func _init() -> void:
 	_expect(0.0, "night", "night", 0.0)
-	_expect(1.5, "night", "night", 0.0)
-	_expect(3.75, "night", "dawn", 0.5)
+	_expect(4.0, "night", "night", 0.0)   # G-0123 — 밤 경계는 is_night(21~4시)와 같게
+	_expect(5.0, "night", "dawn", 0.5)
 	_expect(6.0, "night", "dawn", 1.0)
 	_expect(9.0, "dawn", "noon", 0.5)
 	_expect(12.0, "dawn", "noon", 1.0)
 	_expect(18.5, "noon", "sunset", 1.0)
+	_expect(19.75, "sunset", "night", 0.5)
+	_expect(21.0, "night", "night", 0.0)
 	_expect(23.0, "night", "night", 0.0)
 	_expect(25.0, "night", "night", 0.0)   # 하루를 넘겨도 같은 값(1시)
 	if ResourceLoader.exists(SkyPanorama.sky_path("noon", "past", false)):

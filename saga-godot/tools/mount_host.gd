@@ -48,6 +48,12 @@ func _ready() -> void:
 		_check("fresh_locked", (_m.call("owned") as Array).is_empty(), "%s progress=%s scene=%s" % [str(_m.call("owned")), str(_m.call("game_progress")), get_tree().current_scene.scene_file_path])
 	else:
 		_check("all_open", (_m.call("owned") as Array).size() == 6, str(_m.call("owned")))
+	## G-0123 — 첫 실행 안내·대화 창(ui_modal, TalkBox)이 연달아 떠 게임을 멈춰 두면 걷기·날기가 0 이었다(사가마을, 창을 지우면 사가나락도 다음 대화창).
+	## 점검 동안 매 프레임 창을 치우고 멈춤을 푼다.
+	get_tree().process_frame.connect(_unmodal)
+	_unmodal()
+	for _i in 2:
+		await get_tree().physics_frame
 	var x0 := _p.global_position.x
 	Input.action_press("move_right")
 	for _i in 30:
@@ -94,6 +100,13 @@ func _ready() -> void:
 	_m.call("dismount", "")
 	print("MOUNT_HOST_DONE fails=%d" % _fails)
 	get_tree().quit()
+
+func _unmodal() -> void:
+	for m in get_tree().get_nodes_in_group("ui_modal"):
+		m.queue_free()
+	if get_tree().paused:
+		get_tree().paused = false
+
 
 func _check(name: String, ok: bool, detail: String) -> void:
 	if not ok:

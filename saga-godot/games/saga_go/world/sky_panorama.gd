@@ -17,8 +17,9 @@ const SUN_MIN_EL := 22.0
 const SUN_TINT := {
 	"dawn": Color(1.0, 0.80, 0.68), "noon": Color(1.0, 0.95, 0.86), "sunset": Color(1.0, 0.72, 0.50), "night": Color(1.0, 0.80, 0.68),
 }
-## 키 시각(시) → 하늘. 밤은 TimeOfDay.is_night(21~4시)와 같은 경계. 양끝(1.5 이전·23 이후)은 밤 그대로.
-const KEYS := [[1.5, "night"], [6.0, "dawn"], [12.0, "noon"], [18.5, "sunset"], [23.0, "night"]]
+## 키 시각(시) → 하늘. 밤은 TimeOfDay.is_night(21~4시)와 같은 경계 — 양끝(4 이전·21 이후)은 밤 그대로.
+## G-0123 — 예전 1.5·23 이라 21~23·1.5~4시엔 밤 조명(night_visual) 아래 노을·새벽 하늘이 섞였다.
+const KEYS := [[4.0, "night"], [6.0, "dawn"], [12.0, "noon"], [18.5, "sunset"], [21.0, "night"]]
 ## 지역 → 하늘 시대(past 과거·present 현대·future 미래). 취향대로 여기서 고친다.
 const REGION_ERA := {
 	"village": "past", "coast": "present", "ruins": "past", "frost": "future", "skyport": "future",

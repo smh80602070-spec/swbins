@@ -88,32 +88,30 @@ func _spawn(x: int, y: int) -> void:
 			_spawn_prop(ROCK_GLB, pos, ROCK_SCALE, _hash(x, y, 7) * TAU)
 
 
-## Quaternius Mushroom_Common(버섯 무리)은 정점색이 없고 불투명 텍스처
-## 한 장이라, vertex_color_material(정점색×tint — 정점색이 없으면 흰색)이
-## 아니라 textured_material로 원본 텍스처를 곡률째 그린다. 옛 primitive
-## 버섯 최종 높이(갓 꼭대기 0.32m)에 맞춰 실측고(0.463m)로 역산.
+## 바위·버섯 — 통일 툰 GLB(G-0019), 표면별 텍스처를 곡률째(_spawn_prop). 배율은 옛 primitive 높이 ÷ 실측고.
 const ROCK_GLB := "res://assets/world/rock_small_01.glb"
 const ROCK_SCALE := 0.225    # 0.115 / 0.511
 const MUSHROOM_GLB := "res://assets/world/mushroom_01.glb"
 const MUSHROOM_SCALE := 0.64 # 0.32 / 0.5
 
-## meadow(옛 primitive 구 0.28m)·dark(옛 상자 0.4m) 자리. 둘 다 gltf
-## alphaMode MASK(잎·꽃 카드)라 curved_textured_cutout(양면+알파 컷)으로
-## 그리고, 표면마다 텍스처가 달라(Flower_3_Group: 잎·꽃 2장) 원본 재질에서
-## 표면별로 텍스처·컷 값을 꺼내 surface override로 입힌다(공유 Mesh는 안
-## 건드린다). 배율은 옛 높이 ÷ 실측고(trimesh).
+## meadow(옛 primitive 구 0.28m)·dark(옛 상자 0.4m) 자리 — 꽃 무리·풀 포기 통일 툰 GLB(G-0019). 배율은 옛 높이 ÷ 실측고(trimesh).
 const FLOWER_GLB := "res://assets/world/flower_patch_01.glb"
 const FLOWER_SCALE := 0.5    # 0.28 / 0.559
 const FERN_GLB := "res://assets/world/grass_tuft_01.glb"   # 고사리 자리 — 짝이 되는 풀 포기
 const FERN_SCALE := 0.552    # 0.4 / 0.724
 
 ## G-0019 — 통일 툰 GLB 한 개를 곡률 재질(표면별 텍스처)로 놓는다. 꽃·풀·버섯·바위 공용.
+## G-0123 — 곡률 재질을 입힌 메시는 GLB 마다 한 벌(예전엔 소품마다 메시 복제 + 셰이더 재질 새로 — 묶어 그리지 못하고 메모리도 소품 수만큼).
+static var _prop_mesh := {}
 func _spawn_prop(glb: String, pos: Vector3, s: float, yaw: float) -> void:
-	var mesh: Mesh = GLBUtils.extract_mesh(glb)
+	if not _prop_mesh.has(glb):
+		var src: Mesh = GLBUtils.extract_mesh(glb)
+		_prop_mesh[glb] = WorldCurveMaterial.textured_surfaces(src, CURVE_AMOUNT, 0.9) if src != null else null
+	var mesh: Mesh = _prop_mesh[glb]
 	if mesh == null:
 		return
 	var mi := MeshInstance3D.new()
-	mi.mesh = WorldCurveMaterial.textured_surfaces(mesh, CURVE_AMOUNT, 0.9)
+	mi.mesh = mesh
 	mi.scale = Vector3.ONE * s
 	mi.rotation.y = yaw
 	mi.position = pos
