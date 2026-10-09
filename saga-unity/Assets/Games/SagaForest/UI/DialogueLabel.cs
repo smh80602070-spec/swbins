@@ -18,11 +18,17 @@ namespace Saga.Forest.UI
 
         private Coroutine _hideRoutine;
 
+        // U-0071 — 씬이 구운 자리(위 가운데 y −80)는 목표판(y −10·높이 90)·오른쪽 위 일시정지 단추(y −30·80, 아래 끝 110)와
+        // 겹쳤다. 둘 다 끝나는 120 아래로 내린다(폭 920 은 그대로 — 내려가면 단추와 가로로 안 만난다).
+        private const float TopY = -120f;
+
         private void Awake()
         {
             Instance = this;
             if (label != null)
             {
+                var rt = label.rectTransform;
+                if (rt.anchoredPosition.y > TopY) rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, TopY);
                 label.gameObject.SetActive(false);
             }
         }

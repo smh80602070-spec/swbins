@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-09",
+  "tickets": ["U-0071 UiLayoutCheck 남은 겹침 8 — 사가마을 대화 줄↔목표판·일시정지 · 사가천하 정리 카드↔이달 사건 창"],
+  "how": "세이브 치운 새 판(다섯 백업·판마다 복원) PlaytestForestHeadless·PlaytestRealmSlice·UiLayoutCheck, 활성 대상 Android(빌드 없음)",
+  "measure": "일시정지 단추 = 오른쪽 위 (−386, −30)·80×80(SagaFlow.cs 114·116행) → 위 30~110 · 목표판 위 10~100 · 사가마을 대화 글 상자 위 80~240",
+  "fix": [
+    "사가마을 DialogueLabel.Awake: 글 상자 y −80 → −120(목표판·일시정지 단추 아래), 폭 920 그대로",
+    "사가천하: 사건 창이 열릴 때 정리 카드가 떠 있으면 접고(RealmSessionTracker.HoldSummary), 사건을 고른 뒤 같은 카드를 결과 한 줄과 함께 다시(ReleaseSummary) — 이때 결과 토스트는 안 띄움(카드 아래와 겹치므로). 사건 없는 달은 그대로"
+  ],
+  "scene": ["[PlaytestForestHeadless] OK - 10 frames, no errors", "[PlaytestRealmSlice] OK - ... no errors"],
+  "runtime_errors": 0,
+  "layout": "UiLayoutCheck 8(10-09 run2) → 3 — 사가마을 5·사가천하 3 은 0. 남은 3 = en:TestVillage 낚시 게시판 ↔ 사공 대화 줄(사가만리 영어, 세 화면비) — 이 diff 밖, 그 순간 사공 대사가 떠 있을 때만(run1 에 있고 run2 에 없던 것)",
+  "left": "사가만리 낚시 게시판이 열려 있을 때 사공 대화 줄이 겹침(영어 글이 길어 두 줄) — 후속 후보"
+}

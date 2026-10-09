@@ -107,10 +107,40 @@ namespace Saga.Realm.UI
             if (_sessionCard == null) return;
             int goldGained = RealmCityState.Gold - _sessionStartGold;
             string goldStr = goldGained >= 0 ? $"+{goldGained}" : goldGained.ToString();
-            _sessionCard.Show(string.Format(RealmLocalization.T("summary.title", "{0}년 {1}월 정리"), RealmCityState.Year, RealmCityState.Month),
+            _lastTitle = string.Format(RealmLocalization.T("summary.title", "{0}년 {1}월 정리"), RealmCityState.Year, RealmCityState.Month);
+            _lastLines = new[]
+            {
                 string.Format(RealmLocalization.T("summary.gold", "금 {0}({1})"), RealmCityState.Gold, goldStr),
                 GoalLineSession(),
-                string.Format(RealmLocalization.T("summary.next", "다음: {0}"), GoalLineWeek()));
+                string.Format(RealmLocalization.T("summary.next", "다음: {0}"), GoalLineWeek()),
+            };
+            _sessionCard.Show(_lastTitle, _lastLines);
+        }
+
+        // U-0071 — "다음 달" 에 이달 사건 창이 같은 순간 가운데에 떠 정리 카드가 고르기 단추를 덮었다.
+        // 사건이 먼저: 사건 창이 열릴 때 카드를 접어 두고(HoldSummary), 고른 뒤 같은 카드를 결과 한 줄과 함께 다시 띄운다.
+        private string _lastTitle;
+        private string[] _lastLines;
+        private bool _held;
+
+        /// <summary>정리 카드가 떠 있으면 접고 참(나중에 <see cref="ReleaseSummary"/>).</summary>
+        public bool HoldSummary()
+        {
+            if (_sessionCard == null || !_sessionCard.IsShowing || _lastTitle == null) return false;
+            _sessionCard.Hide();
+            _held = true;
+            return true;
+        }
+
+        /// <summary>접어 둔 정리 카드를 다시 띄운다 — <paramref name="extra"/>(사건 결과)를 마지막 줄로. 접은 게 없으면 거짓.</summary>
+        public bool ReleaseSummary(string extra)
+        {
+            if (!_held || _sessionCard == null) return false;
+            _held = false;
+            var lines = new System.Collections.Generic.List<string>(_lastLines);
+            if (!string.IsNullOrEmpty(extra)) lines.Add(extra);
+            _sessionCard.Show(_lastTitle, lines.ToArray());
+            return true;
         }
 
         public string GoalLineNow()

@@ -1160,7 +1160,11 @@ namespace Saga.Realm.UI
         {
             RefreshEventPanel(card);
             _eventPanel.SetActive(true);
+            Tracker()?.HoldSummary(); // U-0071 — 정리 카드가 고르기 단추를 덮지 않게 사건이 먼저
         }
+
+        private RealmSessionTracker _tracker;
+        private RealmSessionTracker Tracker() => _tracker != null ? _tracker : (_tracker = Object.FindFirstObjectByType<RealmSessionTracker>());
 
         /// <summary>PLAN.md 109-16 — 씬에 구워진 옛 카드 판(680×520)도 긴 시나리오 본문을 담게 열 때마다 크기·자리를 맞춘다(씬 재빌드 없이).</summary>
         private void ApplyEventLayout()
@@ -1215,9 +1219,10 @@ namespace Saga.Realm.UI
                 return;
             }
             var result = RealmEventState.Resolve(card, choice);
-            RealmToast.Instance?.Show(result.Message, 6f);
-            PlayOutcomeSfx(result.Ok);
             _eventPanel.SetActive(false);
+            // U-0071 — 접어 둔 정리 카드가 있으면 결과를 그 마지막 줄로(토스트까지 띄우면 카드 아래와 또 겹친다)
+            if (Tracker() == null || !Tracker().ReleaseSummary(result.Message)) RealmToast.Instance?.Show(result.Message, 6f);
+            PlayOutcomeSfx(result.Ok);
         }
     }
 }
