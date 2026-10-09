@@ -61,6 +61,7 @@ func _process(_delta: float) -> void:
 		if OS.get_environment("SAGA_PERF_BISECT") != "" and _bisect_step():
 			return
 		_summary()
+		_verdict()
 		get_tree().quit()
 		return
 	if _spot == 1 and not _ds_done and OS.get_environment("SAGA_PERF_DRAWSHARE") != "":
@@ -98,6 +99,18 @@ func _process(_delta: float) -> void:
 			_frame = 0
 
 var _rows: Array = []
+const BUDGET_DRAW_AVG := 260
+const BUDGET_TRI_AVG := 350000
+const BUDGET_TRI_MAX := 500000
+var _budget_fails := 0
+var _headless_rows := 0
+
+## 합격 줄 — probe_all 이 읽는다. 그리기 수가 0(헤드리스 더미 렌더러)이면 판정 없이 0.
+func _verdict() -> void:
+	if _headless_rows > 0 and _rows.size() == _headless_rows:
+		print("PERF_PROBE_DONE fails=0 (헤드리스 — 그리기 수가 없어 예산 판정 없음, 창 모드에서만)")
+	else:
+		print("PERF_PROBE_DONE fails=%d" % _budget_fails)
 
 func _report(region: String) -> void:
 	var mx := [0, 0, 0, 0.0, 0.0]
@@ -117,6 +130,20 @@ func _report(region: String) -> void:
 		region, mx[0], sm[0] / n, mx[1], sm[1] / n, mx[2], sm[2] / n, med.call(pr, 0.5), med.call(pr, 0.9), med.call(ph, 0.5), med.call(ph, 0.9)]
 	print(line)
 	_rows.append(line)
+	## G-0125 — PLAN 104-7 예산(사용자 10-09: draw call 은 최대가 실행마다 ±25 흔들려 평균으로): 평균 draw ≤260 · 삼각형 평균 ≤35만 · 최대 ≤50만
+	if mx[0] > 0:
+		var over: Array = []
+		if sm[0] / n > BUDGET_DRAW_AVG:
+			over.append("draw 평균 %d > %d" % [sm[0] / n, BUDGET_DRAW_AVG])
+		if sm[2] / n > BUDGET_TRI_AVG:
+			over.append("삼각형 평균 %d > %d" % [sm[2] / n, BUDGET_TRI_AVG])
+		if mx[2] > BUDGET_TRI_MAX:
+			over.append("삼각형 최대 %d > %d" % [mx[2], BUDGET_TRI_MAX])
+		if not over.is_empty():
+			_budget_fails += 1
+			print("PERF over %s %s" % [region, ", ".join(PackedStringArray(over))])
+	else:
+		_headless_rows += 1
 
 func _summary() -> void:
 	var lights := 0

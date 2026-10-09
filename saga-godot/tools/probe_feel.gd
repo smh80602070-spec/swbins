@@ -245,6 +245,15 @@ func _physics_process(delta: float) -> void:
 				for _i in 10:
 					_p.call("_steer", Vector3.ZERO, 0.01, "decel")
 				_m("move_speed_after_0.1s_decel", "%.1f" % _p.velocity.x)
+				## G-0124 — 기본 프리셋은 1(SAGA_MOVE 없을 때): 0.05초 가속 뒤 속도 = min(6, accel×0.05) — 옛 방식(즉시 6)과 다르다
+				_p.velocity = Vector3.ZERO
+				for _i in 5:
+					_p.call("_steer", Vector3(6, 0, 0), 0.01, "accel")
+				var want_v := minf(6.0, float(FeelTuning.move_preset.get("accel", 1.0e9)) * 0.05)
+				_m("move_speed_after_0.05s_accel", "%.2f" % _p.velocity.x)
+				var env_mv := OS.get_environment("SAGA_MOVE")
+				if absf(_p.velocity.x - want_v) > 0.01 or (env_mv == "" and not FeelTuning.old_style and FeelTuning.move_index() != 1):
+					_fail("이동 프리셋: 기본 %d · 0.05초 %.2f(기대 %.2f)" % [FeelTuning.move_index(), _p.velocity.x, want_v])
 				_p.velocity = Vector3.ZERO
 			elif _dodge_start < 0 and _frame >= 30 and Engine.time_scale > 0.99:
 				_pos0 = _p.global_position

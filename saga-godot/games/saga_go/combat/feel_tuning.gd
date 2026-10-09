@@ -19,7 +19,9 @@ const KINDS := {
 ## 입력 선행(G-0018 단계 3) — 공격 후딜 중에 누른 단추를 이 시간(초) 안이면 기억했다가 후딜이 끝나는 즉시 낸다. 마지막 입력 하나만 보존. 0 이면 끔.
 const INPUT_BUFFER_SEC := 0.15
 
-## 이동 느낌(G-0018 단계 4) — 환경변수 SAGA_MOVE=0|1|2 로 고른다(기본 0 = 옛 방식: 속도가 즉시 바뀌고 착지 경직 없음. 결정은 사용자).
+## 이동 느낌(G-0018 단계 4) — 환경변수 SAGA_MOVE=0|1|2 로 고른다. 기본은 1 산뜻(G-0124, 사용자 10-09 결정 — 예전 기본 0 이라 평소 플레이에서 안 돌았다).
+## 0 = 옛 방식(속도가 즉시 바뀌고 착지 경직 없음). SAGA_FEEL_OLD=1 이면 0.
+const DEFAULT_MOVE := 1
 ##   accel/decel: 땅에서 목표 속도로 가고/멈출 때 초당 m/s 변화 · air: 공중에서 방향을 바꾸는 속도 · land_sec/land_mul: 높은 데서 떨어져 착지하면 그 시간 동안 이동 속도 배율
 const MOVE_PRESETS := [
 	{}, # 0 옛 방식
@@ -52,7 +54,12 @@ static var cam_punch_mul := 0.0 if OS.get_environment("SAGA_FEEL_OLD") != "" els
 
 ## 지금 처리 중인 피해의 종류. field_combat 가 공격을 시작할 때 정하고 매 물리 프레임 처음에 "normal" 로 되돌린다.
 static var kind := "normal"
-static var move_preset: Dictionary = {} if OS.get_environment("SAGA_FEEL_OLD") != "" else MOVE_PRESETS[clampi(int(OS.get_environment("SAGA_MOVE")), 0, MOVE_PRESETS.size() - 1)]
+static var move_preset: Dictionary = {} if OS.get_environment("SAGA_FEEL_OLD") != "" else MOVE_PRESETS[move_index()]
+
+## 고른 이동 프리셋 번호 — SAGA_MOVE 가 비면 DEFAULT_MOVE.
+static func move_index() -> int:
+	var e := OS.get_environment("SAGA_MOVE")
+	return clampi(int(e) if e != "" else DEFAULT_MOVE, 0, MOVE_PRESETS.size() - 1)
 static var old_style := OS.get_environment("SAGA_FEEL_OLD") != ""
 
 
