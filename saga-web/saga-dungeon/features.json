@@ -803,5 +803,23 @@
   "ticket": "W-0117",
   "since": "2026-10-09",
   "note": "D2: saga-web/tools/playcheck/pw-dex-look.mjs → shots/qc/saga-dungeon-dex.png(W-0117, 2D 판). 153 칸 중 처치 22 종이 열리고 몸 계열 초상 16·사람형은 이모지·×처치 수. Claude 눈 ○. 세이브 save.kills[종 키]={n,floor,at}(판 올림 없음), dungeon.js 무수정(사건만 들음)."
+ },
+ {
+  "id": "dg.belt2d",
+  "name": "2D 던전 방 — 던전앤파이터식 벨트 스크롤(옆 시점·깊이 띠·큰 인물·따라가는 카메라)",
+  "files": [
+   "js/belt2d.js",
+   "src/dungeon-view/01.js",
+   "src/dungeon-view/02.js"
+  ],
+  "tests": [
+   "dg.belt2d: 던파식 벨트 2D(W-0128) — 투영 왕복·카메라가 방 끝에서 멈춤·마을 제외·폰 폭 배율"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0128",
+  "since": "2026-10-09",
+  "note": "D2: saga-web/tools/playcheck/pw-belt-check.mjs → shots/belt/b-{pc,phone,land}-{1,2}.png Claude 눈 ○(몸이 화면 높이 ¼ 안팎, 뒷벽·바닥 띠·깊이, 카메라 따라감, 오른쪽 벽 문 아치). △ 그림 없는 몸(날개·짐승 일부)은 검은·흰 대역 — 몬스터 2D 시트 56(K-0090 ③) 배선이 풀 몫. 손잡이 dg.belt2d 0 = 옛 아이소."
  }
 ]

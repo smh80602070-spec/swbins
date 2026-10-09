@@ -547,7 +547,7 @@
    * uMin 은 마름모의 왼쪽 끝 (x=0, y=H 모서리).
    */
   function metrics() {
-    var W = d().ROOM_W, H = d().ROOM_H;
+    var BTm = global.DG.belt2d; if (BTm && BTm.want(d().raw())) { return BTm.metrics(cv, d(), userZoom(), PAD_BOT); }   var W = d().ROOM_W, H = d().ROOM_H;   // W-0128 — 2D 던전 방은 벨트 스크롤(belt2d.js)
     var cw = cv.clientWidth || 1, ch = cv.clientHeight || 1;
     var uw = (W + H) * IX;                     // 마름모 가로폭
     var vh = (W + H) * IY;                     // 마름모 세로높이
@@ -581,18 +581,18 @@
   }
 
   function proj(m, x, y) {
-    return { x: m.ox + (x - y) * IX * m.s, y: m.oy + (x + y) * IY * m.s };
+    if (m.belt) { return m.belt(x, y); } return { x: m.ox + (x - y) * IX * m.s, y: m.oy + (x + y) * IY * m.s };
   }
 
   function toRoom(px, py) {
-    var m = metrics();
+    var m = metrics(); if (m.belt) { return m.unbelt(px, py); }
     var u = (px - m.ox) / m.s, v = (py - m.oy) / m.s;
     return { x: (u / IX + v / IY) / 2, y: (v / IY - u / IX) / 2 };
   }
 
   /** 논리 공간의 원 → 화면의 납작한 타원 (그림자·조명·범위 표시에 쓴다) */
   function isoEllipse(c, m, x, y, r) {
-    var p = proj(m, x, y);
+    if (m.belt) { return m.ellipse(c, x, y, r); } var p = proj(m, x, y);
     c.ellipse(p.x, p.y, r * 1.414 * IX * m.s, r * 1.414 * IY * m.s, 0, 0, Math.PI * 2);
     return p;
   }

@@ -50,7 +50,7 @@
       shake -= 0.7;
     }
 
-    /* 방 밖 배경 — 돌 어둠 */
+    var BT = m.belt ? global.DG.belt2d : null; if (BT) { dec = run.room.decor || []; wh = WALLH * m.s * 0.6; BT.stage(ctx, m, run, theme, now, gore, DOOR_ICON); } else {   /* 방 밖 배경 — 돌 어둠 (W-0128 — 벨트 2D 면 무대를 belt2d 가 그리고 아래 바닥·벽·문을 건너뛴다) */
     var bg = ctx.createLinearGradient(0, 0, 0, m.ch);
     bg.addColorStop(0, '#08090d');
     bg.addColorStop(1, '#0e1015');
@@ -196,7 +196,7 @@
         ctx.fillText(dr.title, dc.x - 34 * m.s, dc.y + 14 * m.s);
       }
       ctx.globalAlpha = 1;
-    }
+    } }   // W-0128 벨트 무대 갈래 끝
 
     /* ── 깊이 정렬 대상 (기둥·장치·적·플레이어) ── */
     var items = [];
@@ -258,7 +258,7 @@
       items.push({ z: run.companion.x + run.companion.y, kind: 'companion', o: run.companion });
     }
 
-    items.sort(function (a, b) { return a.z - b.z; });
+    items.sort(m.belt ? function (a, b) { return ((a.o && a.o.y) || 0) - ((b.o && b.o.y) || 0); } : function (a, b) { return a.z - b.z; });   // W-0128 — 벨트는 깊이(y) 순
 
     /* 바닥에 떨어진 것 (이름표는 조명 뒤에 다시 그린다) */
     var plates = [];
@@ -871,7 +871,7 @@
   /** 불빛 한 겹 — hole 과 같은 자리에 색을 얹는다 (composite 는 부르는 쪽이 정한다) */
   function glow(c, m, x, y, r, color) {
     var p = proj(m, x, y);
-    var rx = r * 1.414 * IX * m.s, ry = r * 1.414 * IY * m.s;
+    var rx = m.belt ? r * m.s : r * 1.414 * IX * m.s, ry = m.belt ? r * m.k : r * 1.414 * IY * m.s;
     c.save();
     c.translate(p.x, p.y - 8 * m.s);
     c.scale(1, ry / rx);
@@ -888,7 +888,7 @@
   /** 어둠에 빛 구멍 하나 — 납작한 타원 그라디언트 */
   function hole(c, m, x, y, r, strength) {
     var p = proj(m, x, y);
-    var rx = r * 1.414 * IX * m.s, ry = r * 1.414 * IY * m.s;
+    var rx = m.belt ? r * m.s : r * 1.414 * IX * m.s, ry = m.belt ? r * m.k : r * 1.414 * IY * m.s;
     c.save();
     c.translate(p.x, p.y - 8 * m.s);
     c.scale(1, ry / rx);
