@@ -27,7 +27,7 @@ func save_version() -> int:
 
 
 func save_path() -> String:
-	return SaveSlots.path_for("forest", SAVE_PATH)
+	return path_override if path_override != "" else SaveSlots.path_for("forest", SAVE_PATH)
 
 
 var items: Dictionary = {}  # item_label(String) -> count(int)

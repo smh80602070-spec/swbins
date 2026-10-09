@@ -13,8 +13,7 @@ const SAVE_PATH := "user://save.json"
 const SaveSlots := preload("res://saga_core/data/save_slots.gd")   # G-0070 슬롯(1 = 이 파일 그대로)
 const SafeFile := preload("res://saga_core/data/safe_file.gd")
 
-## 점검이 임시 파일로 돌릴 때만 채운다(진짜 세이브를 건드리지 않게).
-var path_override := ""
+## 점검용 path_override 는 SagaSaveBase 에 있다(G-0120 — 다섯 판 공통).
 
 
 func save_path() -> String:

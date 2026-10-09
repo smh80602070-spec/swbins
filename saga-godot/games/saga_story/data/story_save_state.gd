@@ -26,7 +26,7 @@ func save_version() -> int:
 
 
 func save_path() -> String:
-	return SaveSlots.path_for("story", SAVE_PATH)
+	return path_override if path_override != "" else SaveSlots.path_for("story", SAVE_PATH)
 
 
 var level := 1

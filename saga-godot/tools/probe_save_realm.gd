@@ -8,5 +8,8 @@ const Base := preload("res://tools/probe_save_base.gd")
 
 
 func _initialize() -> void:  # autoload 이름은 _init 뒤에야 등록된다
-	var fails: int = Base.run("realm", "res://games/saga_realm/data/realm_save_state.gd", {}, Callable())
+	await process_frame
+	var rt := {"tree": self, "autoload": "RealmSaveState", "fields": {
+		"gold": [4321, 1], "year": [197, 194], "month": [5, 1], "story": [{"next": 3, "done": ["r1_start"]}, {}]}}
+	var fails: int = Base.run("realm", "res://games/saga_realm/data/realm_save_state.gd", {}, Callable(), rt)
 	quit(1 if fails > 0 else 0)

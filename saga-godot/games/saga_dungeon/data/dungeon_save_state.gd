@@ -21,7 +21,7 @@ func save_version() -> int:
 
 
 func save_path() -> String:
-	return SaveSlots.path_for("dungeon", SAVE_PATH)
+	return path_override if path_override != "" else SaveSlots.path_for("dungeon", SAVE_PATH)
 
 
 ## "제외" 목록 2번(여러 방 연결) — 방 하나짜리 `room_cleared: bool`을

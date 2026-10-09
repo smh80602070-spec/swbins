@@ -14,7 +14,11 @@ func save_version() -> int:
 	return 0
 
 
-## 세이브 파일 경로. 판이 덮어쓴다(GO 는 점검용 path_override 도 본다).
+## 점검이 임시 파일로 돌릴 때만 채운다(진짜 세이브를 건드리지 않게) — 다섯 판 save_path() 가 먼저 본다(G-0120, 옛날엔 GO 만).
+var path_override := ""
+
+
+## 세이브 파일 경로. 판이 덮어쓴다(path_override 가 있으면 그것).
 func save_path() -> String:
 	return ""
 
