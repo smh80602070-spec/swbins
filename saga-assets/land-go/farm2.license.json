@@ -1,0 +1,23 @@
+{
+ "id": "farm2",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat, evenly lit, top-down view of a hand-painted stylized game ground texture: rows of young green crop sprouts on brown tilled soil, soft painterly brush strokes. Clean warm colors of a stylized open-world fantasy game, the field fills the entire frame edge to edge, no shadows, no horizon, no objects, no border. Uniform repeating terrain texture.",
+ "negative_prompt": "",
+ "seed": 90100602,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  1024,
+  1024
+ ],
+ "seconds": 130.2,
+ "date": "2026-10-09",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "derived": "tools/ai-art/pack_land.py — make_seamless.seamless(4판 띠 섞기, flatten 0.6) → 1024px WebP q88",
+ "seam_ratio": 2.05,
+ "edge_ratio": 0.94,
+ "replaces": "saga-web/saga-go/assets/textures/land/farm2.webp (ambientCG 사진)"
+}

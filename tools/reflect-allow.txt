@@ -1,5 +1,3 @@
 # 아직 화면에 안 쓰이는 정본 범주(봐줌). 배선되면 지운다. 생성 2026-10-07 W-0086
 competition
 web2d/realm-ui
-# K-0090 ③ 짐승·괴물 2D 시트 56 — 웹 배선(수신함 W 줄) 전
-sprites2d-creatures

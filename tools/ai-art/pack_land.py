@@ -36,8 +36,33 @@ def match(t, ref):
     return Image.fromarray(np.clip((a - am) / asd * rsd + rm, 0, 255).astype(np.uint8))
 
 
+# 규칙 격자(벽돌·판석)는 띠 섞기에서 줄이 이중으로 겹친다(10-09 마을1·2) → 원본 크기 그대로 가운데 절반을 거울 2×2
+MIRROR = {'town'}
+
+
+def mirror_native(im, size):
+    im = im.convert('RGB').resize((size, size), Image.LANCZOS)
+    q = im.crop((size // 4, size // 4, size // 4 + size // 2, size // 4 + size // 2))
+    t = Image.new('RGB', (size, size))
+    t.paste(q, (0, 0))
+    t.paste(q.transpose(Image.FLIP_LEFT_RIGHT), (size // 2, 0))
+    t.paste(q.transpose(Image.FLIP_TOP_BOTTOM), (0, size // 2))
+    t.paste(q.transpose(Image.ROTATE_180), (size // 2, size // 2))
+    return t
+
+
+def tile(k, im):
+    return mirror_native(im, PX) if k in MIRROR else seamless(im, PX, flatten=0.6)
+
+
+def edge_abs(a):
+    a = a.astype(np.float32)
+    return max(float(np.abs(a[:, 0] - a[:, -1]).mean()), float(np.abs(a[0] - a[-1]).mean()))
+
+
 def ok(a):
-    return seam_ratio(a) <= SEAM_MAX and edge_ratio(a) <= 1.6
+    # 매끄러운 흙길은 안쪽 이웃 차이가 작아 비율이 과민하다(10-09 눈으로 이음매 없음 확인) — 절대 차이 6 이하도 통과
+    return seam_ratio(a) <= SEAM_MAX and (edge_ratio(a) <= 1.6 or edge_abs(a) <= 6.0)
 
 
 def save(t, p):
@@ -54,25 +79,25 @@ def pack():
     tiles = []
     for k in KINDS:
         rp = os.path.join(GEN, f'land_{k}{REF[k]}.png')
-        ref = seamless(Image.open(rp), PX, flatten=0.6) if os.path.exists(rp) else None
+        ref = tile(k, Image.open(rp)) if os.path.exists(rp) else None
         for n in (1, 2, 3):
             name = f'{k}{n}'
             src = os.path.join(GEN, f'land_{name}.png')
             if not os.path.exists(src):
                 print('없음', src)
                 continue
-            t = ref if n == REF[k] and ref is not None else seamless(Image.open(src), PX, flatten=0.6)
+            t = ref if n == REF[k] and ref is not None else tile(k, Image.open(src))
             if ref is not None and n != REF[k]:
                 t = match(t, ref)
             dst = os.path.join(CANON, name + '.webp')
             q = save(t, dst)
             a = np.asarray(Image.open(dst).convert('RGB'))
             lic = json.load(open(src[:-4] + '.license.json', encoding='utf-8'))
-            lic.update(id=name, derived='tools/ai-art/pack_land.py — make_seamless.seamless(4판 띠 섞기, flatten 0.6)%s → %dpx WebP q%d' % ('' if n == REF[k] else ' · 색 평균·편차를 %s%d 에 맞춤' % (k, REF[k]), PX, q),
+            lic.update(id=name, derived='tools/ai-art/pack_land.py — %s%s → %dpx WebP q%d' % ('가운데 절반 거울 2×2' if k in MIRROR else 'make_seamless.seamless(4판 띠 섞기, flatten 0.6)', '' if n == REF[k] else ' · 색 평균·편차를 %s%d 에 맞춤' % (k, REF[k]), PX, q),
                        seam_ratio=round(seam_ratio(a), 2), edge_ratio=round(edge_ratio(a), 2), replaces='saga-web/saga-go/assets/textures/land/%s.webp (ambientCG 사진)' % name)
             json.dump(lic, open(os.path.join(CANON, name + '.license.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
             tiles.append((name, Image.open(dst).convert('RGB')))
-            print(f'{name:8s} seam {seam_ratio(a):.2f} edge {edge_ratio(a):.2f} q{q} {os.path.getsize(dst) // 1024}KB')
+            print(f'{name:8s} seam {seam_ratio(a):.2f} edge {edge_ratio(a):.2f}/{edge_abs(a):.1f} q{q} {os.path.getsize(dst) // 1024}KB')
     # 확인용: 종류마다 2×2 반복 한 칸씩
     if tiles:
         cell = 256

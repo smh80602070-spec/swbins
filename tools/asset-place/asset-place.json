@@ -549,6 +549,21 @@
    ]
   },
   {
+   "id": "land-go",
+   "src": "saga-assets/land-go",
+   "include": [
+    "*.webp",
+    "*.license.json"
+   ],
+   "note": "K-0090 ② 사가만리 3D 땅 18(종류 6 × 변형 3, 옛 ambientCG 사진 textures/land 와 같은 이름) — 손그림 툰, 종류 안 변형끼리 색 맞춤(tools/ai-art/pack_land.py). 웹이 LAND_TEX_VARIANTS 경로를 land_c 로 바꾸면 쓰인다",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-go/assets/textures/land_c"
+    }
+   ]
+  },
+  {
    "id": "sky-unity",
    "src": "saga-assets/sky-unity",
    "include": [
