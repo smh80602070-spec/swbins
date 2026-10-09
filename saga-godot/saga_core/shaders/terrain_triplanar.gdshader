@@ -105,7 +105,8 @@ void fragment() {
 
 	float n1 = _value_noise(world_pos.xz * patch_scale);
 	float n2 = _value_noise(world_pos.xz * patch_scale * 3.7 + vec2(11.0, 5.0));
-	float dirt_w = smoothstep(0.55, 0.75, n1) * 0.6;
+	// G-0134 — 경계 폭 0.2(0.55~0.75)는 얼룩 대부분이 풀·흙 반반이라 흐린 진흙 자국이었다. 좁은 경계 + n2 로 가장자리 흔들기 = 또렷한 흙자리.
+	float dirt_w = smoothstep(0.68, 0.73, n1 + (n2 - 0.5) * 0.14) * 0.5;
 	// 2026-09-28 — 평지의 돌 얼룩은 0.5 → 0.15: 풀밭 위 잿빛 얼룩이 멀리서 안개 덩어리처럼 보였다(창 모드 촬영). 경사 돌은 아래서 그대로.
 	float stone_w = smoothstep(0.6, 0.8, n2) * 0.15;
 	// 2026-09-23 GO 절벽·봉우리(terrain_builder.gd) — 경사가 급할수록 돌.
