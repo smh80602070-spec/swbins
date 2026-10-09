@@ -300,7 +300,8 @@ func _tick_ground(delta: float, move_dir: Vector3) -> void:
 	if is_on_floor():
 		_coyote = COYOTE_SEC
 		_safe_t += delta
-		if _safe_t > 0.5:
+		## G-0139 — 물가가 얕아져(물 바닥 비탈) 물속 바닥에 서서 걷기도 한다. 그 자리는 익수 복귀 자리로 안 친다(발이 수면 위일 때만).
+		if _safe_t > 0.5 and (is_nan(_water_y) or global_position.y > _water_y):
 			_safe_t = 0.0
 			_last_safe = global_position
 	else:

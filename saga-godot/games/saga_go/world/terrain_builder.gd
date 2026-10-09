@@ -146,6 +146,15 @@ const SUB := 8
 const EDGE_BLEND_MARGIN := 0.34
 ## G-0135 — 색 모서리 섞기에서 뺄 물 칸(색이 강바닥 흙이라 둑 풀밭에 번진다).
 const WATER_CHARS := ["~", "B"]
+## G-0139 — 물 칸 바닥(보이는 메시 = 충돌). 예전엔 칸 기준 높이 그대로(강 −3·다리 밑 −1)라 칸 경계마다 물속 계단이었다.
+## 물 아닌 이웃 칸 변에서 BANK_TOP(들판 높이)으로 시작해 BANK_RUN 안에 BANK_BED(수면 아래 0.25m)까지 비탈, 그 뒤 SHELF_M 동안 WATER_BED_DEEP 로.
+## 둑 벽이 없어 헤엄 → 얕은 물 걷기 → 비탈로 걸어 나온다(예전 0.75m 턱은 땅에서 넘어오르기 감지보다 낮아 막혔다).
+## 다리 널판·충돌은 LEGEND["B"].height 상수를 그대로 쓴다(landmarks_builder·region2_coast·_build_collision).
+const BANK_TOP := 0.05
+const BANK_RUN := 3.0
+const BANK_BED := -0.7
+const WATER_BED_DEEP := -3.0
+const SHELF_M := 14.0
 
 ## 09-28 0.5,0.48,0.45 → 따뜻한 황갈색 — 회색 돌 텍스처와 곱해져 절벽이 잿빛 벽으로 보였다(창 모드 촬영).
 const CLIFF_COLOR := Color(0.62, 0.53, 0.42)
@@ -220,6 +229,8 @@ static func tile_base_height(region: String, x: int, y: int) -> float:
 static func vertex_height(region: String, x: int, y: int, u: float, v: float) -> float:
 	var base := tile_base_height(region, x, y)
 	var tch := TestMap.tile_at(x, y, region)
+	if tch in WATER_CHARS:
+		return _water_bed(region, x, y, u, v)
 	if tch in RELIEF_FLAT and region in RELIEF_REGIONS:
 		return base + _relief(region, x, y, u, v)
 	if tch == "K":
@@ -235,6 +246,27 @@ static func vertex_height(region: String, x: int, y: int, u: float, v: float) ->
 	var ts := TestMap.tile_size_of(region)
 	var n := _peak_noise().get_noise_2d((x + u) * ts, (y + v) * ts) * 0.5 + 0.5
 	return base + MOUNTAIN_PEAK_AMP * pow(n, 1.4) * f
+
+## G-0139 — 물 칸 (u,v) 의 바닥: 둘레 8칸 중 물 아닌 칸까지 거리(m)로 BANK_BED → WATER_BED_DEEP.
+## 지도 밖은 셈하지 않는다(가장자리는 산 테두리). (u,v) 는 이웃 칸 정점 계산용으로 0~1 을 조금 벗어날 수 있다.
+static func _water_bed(region: String, x: int, y: int, u: float, v: float) -> float:
+	var s := TestMap.size(region)
+	var d := 1e9
+	for dy in [-1, 0, 1]:
+		for dx in [-1, 0, 1]:
+			if dx == 0 and dy == 0:
+				continue
+			var nx: int = x + dx
+			var ny: int = y + dy
+			if nx < 0 or ny < 0 or nx >= s.x or ny >= s.y or TestMap.tile_at(nx, ny, region) in WATER_CHARS:
+				continue
+			var px := clampf(u, float(dx), float(dx) + 1.0)
+			var py := clampf(v, float(dy), float(dy) + 1.0)
+			d = minf(d, Vector2(u - px, v - py).length())
+	var dm := d * TestMap.tile_size_of(region)
+	if dm < BANK_RUN:
+		return lerpf(BANK_TOP, BANK_BED, dm / BANK_RUN)
+	return lerpf(BANK_BED, WATER_BED_DEEP, smoothstep(BANK_RUN, BANK_RUN + SHELF_M, dm))
 
 ## 월드 좌표의 지면 높이(바위·소품을 산 위에 앉힐 때).
 static func height_at(region: String, world: Vector3) -> float:
@@ -502,6 +534,8 @@ func _add_cliffs(st: SurfaceTool, x: int, y: int) -> void:
 	var half := TestMap.tile_size_of(region_id) * 0.5
 	var top := tile_base_height(region_id, x, y)
 	var own_ch := TestMap.tile_at(x, y, region_id)
+	if own_ch in WATER_CHARS:
+		return   # G-0139 — 물 칸 바닥은 이웃과 이어진 비탈이라 벽이 없다(예전 다리 밑 −1 → 강 −3 물속 벽)
 	# (이웃 dx, dy, 변 시작 로컬, 변 끝 로컬, 바깥 법선)
 	var edges := [
 		[1, 0, Vector3(half, 0, -half), Vector3(half, 0, half), Vector3.RIGHT],
@@ -514,6 +548,8 @@ func _add_cliffs(st: SurfaceTool, x: int, y: int) -> void:
 		var ny: int = y + e[1]
 		var outside := nx < 0 or ny < 0 or nx >= s.x or ny >= s.y
 		var bottom := OUTER_SKIRT_Y if outside else tile_base_height(region_id, nx, ny)
+		if not outside and TestMap.tile_at(nx, ny, region_id) in WATER_CHARS:
+			bottom = BANK_TOP   # G-0139 — 물 바닥이 둑 변에서 들판 높이로 시작 — 들판 옆은 벽 없음, 산 옆은 들판 높이까지만
 		if outside:
 			## 106장 ⑤ — 변 너머가 붙어 있는 다른 지역이면 그 칸 높이까지만.
 			var probe: Vector3 = center + (e[4] as Vector3) * (half + 1.0)

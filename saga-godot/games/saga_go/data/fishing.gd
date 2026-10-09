@@ -56,9 +56,9 @@ const SPOTS := {
 		"fish": ["crucian", "crucian", "mandarin", "mandarin", "clockcarp"]},
 	"v_river_e": {"name": "강가 동쪽 낚시터", "region": "village", "stand": Vector2(7.3, 6.42), "cast": Vector2(7.3, 6.62),
 		"fish": ["crucian", "crucian", "crucian", "mandarin", "clockcarp"]},
-	"c_dock": {"name": "선착장 곁 낚시터", "region": "coast", "stand": Vector2(5.0, 3.62), "cast": Vector2(5.0, 3.42),
+	"c_dock": {"name": "선착장 곁 낚시터", "region": "coast", "stand": Vector2(5.0, 3.62), "cast": Vector2(5.0, 3.36),   # G-0139 3.42 → 3.36(물가 비탈이 생겨 3.42 는 수심 0.27m)
 		"fish": ["gizzard", "gizzard", "lanternpuffer", "steelflounder", "neonhairtail"]},
-	"c_shore_w": {"name": "서쪽 갯가 낚시터", "region": "coast", "stand": Vector2(2.0, 3.62), "cast": Vector2(2.0, 3.42),
+	"c_shore_w": {"name": "서쪽 갯가 낚시터", "region": "coast", "stand": Vector2(2.0, 3.62), "cast": Vector2(2.0, 3.36),   # G-0139 같은 까닭
 		"fish": ["gizzard", "lanternpuffer", "lanternpuffer", "steelflounder", "moonjelly"]},
 }
 const SPOT_ORDER := ["v_river_w", "v_river_e", "c_dock", "c_shore_w"]

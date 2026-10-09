@@ -544,7 +544,7 @@ func _bridge_rail_xforms(base_pos: Vector3, length: float, width: float) -> Arra
 	var deck_top := base_pos.y + PLANK_DECK_THICK * 0.5
 	var side_x := width * 0.5 - BRIDGE_RAIL_INSET
 	## 기둥 — 널판 길이(z 1m)를 세로로 세운다(z→y, y→-z 로 돌려 행렬식이 양수 = 면이 안 뒤집힌다).
-	var post_bottom := base_pos.y - TerrainBuilder.BRIDGE_CLEARANCE - 0.3   # base_pos 는 강바닥 + BRIDGE_CLEARANCE — 강바닥 조금 아래까지
+	var post_bottom := TerrainBuilder.WATER_BED_DEEP - 0.3   # G-0139 — 물 바닥이 가운데로 깊어져(−3) 깊은 바닥 조금 아래까지(둑 쪽은 땅에 묻힌다)
 	var post_top := deck_top + float(BRIDGE_RAIL_HEIGHTS.back()) + 0.05
 	var post_len := post_top - post_bottom
 	var post_basis := Basis(Vector3(BRIDGE_POST_SIZE / PLANK_DECK_WIDTH, 0, 0), Vector3(0, 0, -BRIDGE_POST_SIZE / PLANK_DECK_THICK), Vector3(0, post_len, 0))

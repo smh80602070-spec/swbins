@@ -127,7 +127,8 @@ func _physics_process(_delta: float) -> void:
 		6: # ⑦ 북쪽 둑(3,6 들판)까지 헤엄쳐 넘어오른다
 			if _frame == 30:
 				_check_pose("pose_swim_move", "swim", "walk")   # G-0025 — 헤엄치며 나아가는 중
-			if _p.mode == _p.Mode.GROUND and _p.is_on_floor():
+			## G-0139 — 물가가 얕아 둑 앞에서 물속 바닥을 걷고 비탈로 나온다 — 둑 칸에 올라선 뒤에 판정한다.
+			if _p.mode == _p.Mode.GROUND and _p.is_on_floor() and _p.global_position.z < TestMap.world_pos(3, 7).z - TestMap.TILE_SIZE * 0.5:
 				Input.action_release("move_forward")
 				var bank_z := TestMap.world_pos(3, 7).z - TestMap.TILE_SIZE * 0.5
 				var ok := _p.global_position.z < bank_z and absf(_p.global_position.y) < 0.3
