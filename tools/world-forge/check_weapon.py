@@ -42,6 +42,8 @@ def main():
             wp = os.path.join(web, pid + '.glb')
             if os.path.exists(wp) and os.path.getsize(wp) > 300 * 1024:
                 bad.append(f'{pid}: 웹 경량본 {os.path.getsize(wp) // 1024}KB > 300KB')
+            if os.path.exists(wp) and NEED.get(k, {'grip', 'tip', 'up'}) - nodes_of(wp):   # 압축이 소켓 노드를 지우면 안 된다(K-0088)
+                bad.append(f'{pid}: 웹 경량본 노드 없음 {sorted(NEED.get(k, {"grip", "tip", "up"}) - nodes_of(wp))}')
     print('무기', len(KINDS) * len(GRADES), '· 오류', len(bad))
     print('WEAPON_FAIL' if bad else 'WEAPON_OK')
     for b in bad:

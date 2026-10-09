@@ -87,11 +87,11 @@ const files = walk(root, []);
 console.log(`${files.length}개 GLB 발견 (${root})` + (meshOnly ? ' — 메시만(--mesh-only), 텍스처 그대로' : ''));
 
 const OPTIMIZE_FLAGS = [
-  '--compress', 'meshopt', '--meshopt-level', 'high',
+  '--compress', 'false',   // meshopt 는 prune 뒤 마지막에(아래) — prune 이 다시 쓰면 압축이 풀린다
   ...(meshOnly ? ['--texture-compress', 'false'] : ['--texture-compress', 'webp', '--texture-size', '1024']),
   '--simplify', 'false', '--palette', 'false', '--join', 'false',
   '--flatten', 'false', '--instance', 'false',
-  '--resample', 'true', '--prune', 'true', '--weld', 'true', '--sparse', 'true'
+  '--resample', 'true', '--prune', 'false', '--weld', 'true', '--sparse', 'true'
 ];
 
 let totalBefore = 0, totalAfter = 0, done = 0, skipped = 0, failed = 0, already = 0, rejected = 0, unknownExt = 0;
@@ -123,7 +123,14 @@ for (const file of files) {
   }
   const tmp = file + '.tmp.glb';
   try {
-    execFileSync(process.execPath, [CLI_JS, 'optimize', file, tmp, ...OPTIMIZE_FLAGS], { stdio: ['ignore', 'ignore', 'pipe'] });
+    /* optimize 의 --prune 은 빈 잎 노드(무기 grip·tip, 실내 door_out·spawn_in, 가구 use_point 같은 소켓·표식)까지 지운다 —
+       그래서 prune 을 따로, **맨 앞에서**(단색 텍스처 판정은 WebP 로 바뀌기 전 그림만 된다) 잎 노드는 남기고 돌린다.
+       meshopt 는 맨 끝(뒤에서 다시 쓰면 압축이 풀린다). K-0088 — 소넷 K-0026·0030·0037 웹판이 노드를 다 잃었던 것 */
+    const tmp2 = file + '.tmp2.glb';
+    execFileSync(process.execPath, [CLI_JS, 'prune', file, tmp2, '--keep-leaves', 'true', '--keep-solid-textures', meshOnly ? 'true' : 'false'], { stdio: ['ignore', 'ignore', 'pipe'] });
+    execFileSync(process.execPath, [CLI_JS, 'optimize', tmp2, tmp, ...OPTIMIZE_FLAGS], { stdio: ['ignore', 'ignore', 'pipe'] });
+    execFileSync(process.execPath, [CLI_JS, 'meshopt', tmp, tmp2, '--level', 'high'], { stdio: ['ignore', 'ignore', 'pipe'] });
+    fs.renameSync(tmp2, tmp);
     const after = fs.statSync(tmp).size;
     if (after <= 0 || after > before) {
       /* 압축이 오히려 커지면(이미 작은 파일 등) 원본을 그대로 둔다 */

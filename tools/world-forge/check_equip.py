@@ -54,6 +54,8 @@ def main():
         wp = os.path.join(web, pid + '.glb')
         if os.path.exists(wp) and os.path.getsize(wp) > 300 * 1024:
             bad.append(f'{pid}: 웹 경량본 {os.path.getsize(wp) // 1024}KB > 300KB')
+        if os.path.exists(wp) and 'attach' not in nodes_of(wp):   # 압축이 attach 노드를 지우면 안 된다(K-0088)
+            bad.append(f'{pid}: 웹 경량본 attach 노드 없음')
     print('조각', len(ids), '· 오류', len(bad))
     print('EQUIP_FAIL' if bad else 'EQUIP_OK')
     for b in bad:
