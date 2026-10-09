@@ -25,7 +25,7 @@ extends Node3D
 ## 않는다는 뜻이지 못 간다는 뜻이 아니게 됐다).
 
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
-const WATER_SHADER := preload("res://saga_core/shaders/water_toon.gdshader")
+const WATER_SHADER := preload("res://saga_core/shaders/water_real.gdshader")   # G-0140 사실적 물(폭포는 landmarks_builder 의 water_toon 그대로)
 
 @export var region_id := "village"
 

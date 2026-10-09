@@ -33,7 +33,7 @@ func _physics_process(_delta: float) -> void:
 				mats.append(m.get_surface_override_material(i))
 				mats.append(m.mesh.surface_get_material(i))
 		for mat in mats:
-			if mat is ShaderMaterial and (mat as ShaderMaterial).shader != null and (mat as ShaderMaterial).shader.resource_path.ends_with("water_toon.gdshader"):
+			if mat is ShaderMaterial and (mat as ShaderMaterial).shader != null and ((mat as ShaderMaterial).shader.resource_path.ends_with("water_toon.gdshader") or (mat as ShaderMaterial).shader.resource_path.ends_with("water_real.gdshader")):   # G-0140 강·바다는 water_real
 				water += 1
 				break
 	_check("water_toon", water >= 1, "물 메시 %d" % water)
