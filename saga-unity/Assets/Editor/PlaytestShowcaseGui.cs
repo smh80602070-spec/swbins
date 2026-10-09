@@ -10,7 +10,7 @@ namespace Saga.EditorTools
     /// <summary>
     /// 사용자가 "확인 대기는 화면을 보여줘"로 명시적으로 요청했을 때만 쓰는 1회성 GUI 촬영 도구(프로젝트 규칙: 개발 중 습관적 촬영 금지).
     /// 씬을 플레이 모드로 띄워 런타임 생성물(NPC 몸·과일나무·하늘·툰 패스)이 선 뒤, 대상마다 전용 카메라로 렌더 텍스처에 찍어 PNG 로 남긴다.
-    /// 환경변수: SAGA_SHOT_SCENE(씬 경로) · SAGA_SHOT_TARGETS("type:ForestFruitTree;type:CrowdBodyAnimator;sky;npc") · SAGA_SHOT_DIR · SAGA_SHOT_MAX(종류당 장수, 기본 2).
+    /// 환경변수: SAGA_SHOT_SCENE(씬 경로) · SAGA_SHOT_TARGETS("type:ForestFruitTree;type:CrowdBodyAnimator;sky;npc") · SAGA_SHOT_DIR · SAGA_SHOT_MAX(종류당 장수, 기본 2) · SAGA_SHOT_INSIDE=1(카메라를 대상 경계 안 천장 아래에 — 방 가장자리 묶음용).
     /// 대상 문법: `type:<컴포넌트 클래스 이름>` · `name:<GameObject 이름 앞부분>` · `npc`(NpcIdle) · `sky`(메인 카메라 위치에서 하늘 두 방향).
     /// 실행: `Unity.exe -projectPath . -executeMethod Saga.EditorTools.PlaytestShowcaseGui.Run` (-batchmode 없이 — 그래픽 필요). 끝나면 스스로 종료.
     /// </summary>
@@ -218,6 +218,21 @@ namespace Saga.EditorTools
             var fwd = root.forward; fwd.y = 0f;
             if (fwd.sqrMagnitude < 0.01f) fwd = Vector3.forward;
             fwd = (Quaternion.Euler(0f, 28f, 0f) * fwd.normalized);
+            // SAGA_SHOT_INSIDE=1 — 방 가장자리에 흩어진 묶음(EraDecor_ 등)은 바깥에 서면 벽만 찍히고, 경계 가운데는 빈 바닥이다(U-0077).
+            // 경계 가운데(천장 아래 2.6m)에서 1m 물러나 가장 큰 조각 쪽을 바라본다 — 그 조각 둘레 꾸밈이 벽을 등지고 보인다.
+            if (System.Environment.GetEnvironmentVariable("SAGA_SHOT_INSIDE") == "1")
+            {
+                // SAGA_SHOT_PIECE — 이름에 그 글자가 든 조각만 겨눈다(예 "_Modern_" — EraDecorBuilder 조각 이름 `{i}_{시대}_{모델}`)
+                string piece = System.Environment.GetEnvironmentVariable("SAGA_SHOT_PIECE");
+                var pool = string.IsNullOrEmpty(piece) ? rs : rs.Where(r => r.GetComponentsInParent<Transform>().Any(p => p.name.Contains(piece))).ToArray();
+                if (pool.Length == 0) pool = rs;
+                var big = pool.OrderByDescending(r => r.bounds.size.sqrMagnitude).First().bounds;
+                var dir = big.center - center; dir.y = 0f;
+                if (dir.sqrMagnitude < 0.25f) dir = -fwd;
+                pos = new Vector3(center.x, b.min.y + 2.6f, center.z) - dir.normalized * 1f;
+                rot = Quaternion.LookRotation(big.center - pos, Vector3.up);
+                return true;
+            }
             float.TryParse(System.Environment.GetEnvironmentVariable("SAGA_SHOT_DIST"), out var dist);   // 거리 배율(기본 1.25) — 작은 것은 0.6 쯤
             if (dist <= 0f) dist = 1.25f;
             pos = center + fwd * (size * dist + 1.2f) + Vector3.up * (size * 0.18f);

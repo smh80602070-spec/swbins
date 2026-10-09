@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-09",
+  "tickets": ["U-0077 사가나락 그림 판정 촬영 손질 — 마모 3단·시대 꾸밈 눈 판정"],
+  "how": "도구만 손질(게임 코드 무변경) 뒤 GUI 촬영(Android 대상, 세이브 다섯 백업·cmp 복원) → Claude 눈. PlaytestDungeonHeadless 회귀 한 판",
+  "fix": "PlaytestDungeonWearTiersGui: 촬영 내내 HeroState.DamageHold++ · 찍기 10프레임 전부터 DungeonScenarioUi.Hide·SessionCard.Hide·DialogueLabel 비움·DungeonEnemy.Active 끄기(찍은 2프레임 뒤 켬) · SAGA_SHOT_LIGHT=1 이면 카메라 곁 보조등 · SAGA_SHOT_DIR. PlaytestShowcaseGui: SAGA_SHOT_INSIDE=1 이면 경계 가운데 천장 아래(2.6m)에서 가장 큰 조각 쪽을 봄 · SAGA_SHOT_PIECE 로 조각 이름 거르기(예 _Modern_). 기본 동작은 그대로",
+  "commands": [
+    "SAGA_SHOT_LIGHT=1 SAGA_SHOT_DIR=<dir> Unity -buildTarget Android -executeMethod Saga.EditorTools.PlaytestDungeonWearTiersGui.Run",
+    "SAGA_SHOT_SCENE=Assets/Scenes/TestDungeon.unity SAGA_SHOT_TARGETS=name:EraDecor_ SAGA_SHOT_INSIDE=1 SAGA_SHOT_LIGHT=1 SAGA_SHOT_MAX=3 [SAGA_SHOT_PIECE=_Modern_] … PlaytestShowcaseGui.Run"
+  ],
+  "scene": ["[PlaytestDungeonHeadless] OK - 10 frames, no errors"],
+  "runtime_errors": 0,
+  "shots": "세션 scratchpad shots/20~22_dungeon_wear_tier*.png · nameEraDecor_0~2.png · modern/nameEraDecor_0~2.png (커밋 안 함)",
+  "results": [
+    { "id": "un.dg.wear-tiers", "eye": "○", "note": "가림 0(창·카드·고리 없음). 층2 깨끗한 회색 돌길 · 층40 갈색 때 · 층70 짙게 바랜 폐허조 — WearTint 0/1/2 설계와 같음. 벽은 피치 30° 라 화면 위쪽에만", "result": "D1→D2", "date": "2026-10-09" },
+    { "id": "un.dg.era-decor", "eye": "○", "note": "Crossroads·Crossroads2·Town2 방 안: 과거 술통·이끼 바위·좌판, 현대 배전함·타이어, 미래 청록 발광 발전기·판이 1.9m 떠 돎(DungeonEraDecor.Rift hover, 의도)", "result": "D1→D2", "date": "2026-10-09" }
+  ],
+  "left": "실제 화면 방 조명: 보조등 없는 첫 촬영은 방이 거의 까맣다(천장이 해를 막고 앰비언트 0.16·등불만) — 폰에서도 그런지 조명 점검 후속 후보 · GUI 촬영은 매번 종료에서 멈춰 감시가 그 PID 를 끔"
+}

@@ -3,7 +3,11 @@ using System.Reflection;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using System.Collections.Generic;
+using Saga.Core;
+using Saga.Dungeon.Data;
 using Saga.Dungeon.Player;
+using Saga.Dungeon.UI;
 using Saga.Dungeon.World;
 
 namespace Saga.EditorTools
@@ -19,8 +23,12 @@ namespace Saga.EditorTools
     public static class PlaytestDungeonWearTiersGui
     {
         private const string ScenePath = "Assets/Scenes/TestDungeon.unity";
-        public const string ShotDir =
+        private const string DefaultShotDir =
             "C:/Users/user/AppData/Local/Temp/claude/C--swbins/ed93fe4d-26ed-4226-9dba-82a8fa65cb83/scratchpad/unity_screens/";
+        // SAGA_SHOT_DIR 가 있으면 그쪽(U-0077) — 없으면 옛 자리 그대로.
+        public static string ShotDir =>
+            (System.Environment.GetEnvironmentVariable("SAGA_SHOT_DIR") is string d && d.Length > 0)
+                ? d.Replace((char)92, (char)47).TrimEnd((char)47) + "/" : DefaultShotDir;
 
         private static readonly Vector3 ProcRoomCenter = new Vector3(0f, 0f, 120f); // BuildTestDungeonScene.cs와 같은 값.
         private static readonly Vector3 ShotOffset = new Vector3(0f, 0.1f, -4f);
@@ -37,6 +45,8 @@ namespace Saga.EditorTools
         private static int _frame;
         private static int _stopIndex;
         private static int _phase; // 0=층 이동+텔레포트 대기, 1=찍음
+        private static readonly List<GameObject> _hiddenEnemies = new List<GameObject>();
+        private static GameObject _fillLight;
 
         [MenuItem("Saga/Playtest Dungeon Wear Tiers (GUI Screenshot)")]
         public static void Run()
@@ -53,6 +63,7 @@ namespace Saga.EditorTools
             _frame = 0;
             _stopIndex = -1;
             _phase = 1;
+            _hiddenEnemies.Clear();
             EditorApplication.playModeStateChanged += OnStateChanged;
             EditorApplication.isPlaying = true;
         }
@@ -61,6 +72,8 @@ namespace Saga.EditorTools
         {
             if (state == PlayModeStateChange.EnteredPlayMode)
             {
+                // 첫 장 시나리오 창·쓰러짐 카드가 방을 덮지 않게 촬영 내내 피해를 막는다(U-0077, U-0076 과 같은 칸).
+                HeroState.DamageHold++;
                 EditorApplication.update += Tick;
             }
             else if (state == PlayModeStateChange.EnteredEditMode)
@@ -77,12 +90,15 @@ namespace Saga.EditorTools
         {
             _frame++;
 
+            if (_phase == 2) { TickAfterShot(); return; }
+
             if (_phase == 1)
             {
                 _stopIndex++;
                 if (_stopIndex >= Stops.Length)
                 {
                     EditorApplication.update -= Tick;
+                    HeroState.DamageHold = Mathf.Max(0, HeroState.DamageHold - 1);
                     EditorApplication.isPlaying = false;
                     return;
                 }
@@ -93,10 +109,55 @@ namespace Saga.EditorTools
             }
 
             int waitFrames = _stopIndex == 0 ? 180 : 40; // 66-2장 ⑩ 셰이더 변형 컴파일 함정, 첫 지점만 넉넉히.
+            // 찍기 몇 프레임 전부터 방을 가리는 것(창·카드·대사·적과 공격 예고 고리)을 치운다(U-0077).
+            if (_frame >= waitFrames - 10) ClearView();
             if (_frame >= waitFrames)
             {
                 ScreenCapture.CaptureScreenshot(ShotDir + Stops[_stopIndex].shot);
-                Debug.Log($"[PlaytestDungeonWearTiersGui] shot {_stopIndex}: {Stops[_stopIndex].shot}");
+                Debug.Log($"[PlaytestDungeonWearTiersGui] shot {_stopIndex}: {Stops[_stopIndex].shot} (적 {_hiddenEnemies.Count} 숨김)");
+                _phase = 2;
+                _frame = 0;
+                return;
+            }
+        }
+
+        private static void Restore()
+        {
+            foreach (var go in _hiddenEnemies) if (go != null) go.SetActive(true);
+            _hiddenEnemies.Clear();
+            if (_fillLight != null) Object.Destroy(_fillLight);
+            _fillLight = null;
+        }
+
+        /// <summary>시나리오 창·마무리 카드 닫기, 대사 줄 비우기, 그 층 적을 찍는 동안만 끄기.</summary>
+        private static void ClearView()
+        {
+            DungeonScenarioUi.Instance?.Hide();
+            foreach (var c in Object.FindObjectsByType<SessionCard>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)) c.Hide();
+            if (DialogueLabel.Instance != null && DialogueLabel.Instance.CurrentText.Length > 0) DialogueLabel.Instance.Show("", 0f);
+            foreach (var e in DungeonEnemy.Active.ToArray())
+            {
+                if (e == null || !e.gameObject.activeSelf) continue;
+                _hiddenEnemies.Add(e.gameObject);
+                e.gameObject.SetActive(false);
+            }
+            // SAGA_SHOT_LIGHT=1 — 천장이 해를 막아 방이 거의 까맣게 찍힌다(U-0077 첫 촬영) — 마모 결을 보려고 촬영 동안만 카메라 곁 보조등(ShowcaseGui 와 같은 칸).
+            if (_fillLight == null && System.Environment.GetEnvironmentVariable("SAGA_SHOT_LIGHT") == "1" && Camera.main != null)
+            {
+                _fillLight = new GameObject("ShotFillLight");
+                var lg = _fillLight.AddComponent<Light>();
+                lg.type = LightType.Point; lg.range = 18f; lg.intensity = 6f; lg.shadows = LightShadows.None;
+                _fillLight.transform.SetParent(Camera.main.transform, false);
+                _fillLight.transform.localPosition = new Vector3(0.6f, 0.8f, -0.4f);
+            }
+        }
+
+        private static void TickAfterShot()
+        {
+            // CaptureScreenshot 은 프레임 끝에 쓴다 — 두 프레임 뒤에 적을 되돌린다.
+            if (_frame >= 2)
+            {
+                Restore();
                 _phase = 1;
                 _frame = 0;
             }
