@@ -59,6 +59,7 @@ namespace Saga.EditorTools
             SetField(room, "biome", SagaBiome.Ruins);
             SetField(room, "decorOffset", new Vector3(-7f, 0f, 7f));
             SetField(room, "gateModel", gateGlb);
+            SetField(room, "gateTiledModel", AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Art/Dungeon/gate_tiled.glb")); // U-0069 PBR 아치
             SetField(room, "roomModel", roomGlb);
             SetField(room, "floorMaterial", floorMat);
             SetField(room, "wallMaterial", wallMat);

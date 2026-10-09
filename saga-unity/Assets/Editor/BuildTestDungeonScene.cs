@@ -58,6 +58,7 @@ namespace Saga.EditorTools
         // 로 풀었다).
         private const string CorridorGlbPath = "Assets/Art/Dungeon/corridor.glb";
         private const string GateGlbPath = "Assets/Art/Dungeon/gate.glb";
+        private const string GateTiledGlbPath = "Assets/Art/Dungeon/gate_tiled.glb"; // U-0069 PBR 경로 아치(돌 타일 UV)
         private const string RoomGlbPath = "Assets/Art/Dungeon/room-small.glb";
 
         // 44장 "Environment" 교체 — ⑥이 미리 구워 둔 Poly Haven PBR 재질
@@ -311,7 +312,7 @@ namespace Saga.EditorTools
         private static GameObject _skeleton, _paladin, _peasantMan, _peasantGirl;
         private static GameObject _ninja, _demon, _alienSoldier; // 두목 전용 몸(106-4, 없는 PC 는 null → 옛 몸)
         private static int _villagerCount;
-        private static GameObject _corridorGlb, _gateGlb, _roomGlb;
+        private static GameObject _corridorGlb, _gateGlb, _gateTiledGlb, _roomGlb;
         private static Material _dungeonFloorMat, _dungeonWallMat;
 
         [MenuItem("Saga/Build TestDungeon Scene")]
@@ -403,6 +404,7 @@ namespace Saga.EditorTools
         {
             _corridorGlb = AssetDatabase.LoadAssetAtPath<GameObject>(CorridorGlbPath);
             _gateGlb = AssetDatabase.LoadAssetAtPath<GameObject>(GateGlbPath);
+            _gateTiledGlb = AssetDatabase.LoadAssetAtPath<GameObject>(GateTiledGlbPath);
             _roomGlb = AssetDatabase.LoadAssetAtPath<GameObject>(RoomGlbPath);
             if (_corridorGlb == null || _gateGlb == null || _roomGlb == null)
             {
@@ -461,7 +463,7 @@ namespace Saga.EditorTools
             // 상자(-2,-5)·성소(-8,-4)·잡졸·두목과 안 겹치는 NW 빈 구석.
             SetPrivateField(builder, "biome", SagaBiome.Forest);
             SetPrivateField(builder, "decorOffset", new Vector3(-8f, 0f, 5f));
-            SetPrivateField(builder, "gateModel", _gateGlb); // "환경/건물 GLB"
+            SetPrivateField(builder, "gateModel", _gateGlb); SetPrivateField(builder, "gateTiledModel", _gateTiledGlb); // "환경/건물 GLB"
             SetPrivateField(builder, "roomModel", _roomGlb); // "방 셸 GLB"
             AssignEnvironmentMaterials(builder);
             builder.Build();
@@ -495,7 +497,7 @@ namespace Saga.EditorTools
             // biome=None — 다섯 바이옴(숲·늪·산·사당·폐허)은 전부 이 던전
             // "야생" 쪽 정체성이라, 마을(문명)은 일부러 그 다섯에 안 낀다
             // (Colors()의 "예전 색"이 곧 이 방의 고유색이 되는 셈).
-            SetPrivateField(town2Builder, "gateModel", _gateGlb); // "환경/건물 GLB"
+            SetPrivateField(town2Builder, "gateModel", _gateGlb); SetPrivateField(town2Builder, "gateTiledModel", _gateTiledGlb); // "환경/건물 GLB"
             SetPrivateField(town2Builder, "roomModel", _roomGlb); // "방 셸 GLB"
             AssignEnvironmentMaterials(town2Builder);
             town2Builder.Build();
@@ -544,7 +546,7 @@ namespace Saga.EditorTools
             var town3Go = new GameObject("Town3");
             town3Go.transform.position = Town3Center;
             var town3Builder = town3Go.AddComponent<DungeonRoomBuilder>();
-            SetPrivateField(town3Builder, "gateModel", _gateGlb);
+            SetPrivateField(town3Builder, "gateModel", _gateGlb); SetPrivateField(town3Builder, "gateTiledModel", _gateTiledGlb);
             SetPrivateField(town3Builder, "roomModel", _roomGlb);
             AssignEnvironmentMaterials(town3Builder);
             town3Builder.Build();
@@ -581,7 +583,7 @@ namespace Saga.EditorTools
             var town4Go = new GameObject("Town4");
             town4Go.transform.position = Town4Center;
             var town4Builder = town4Go.AddComponent<DungeonRoomBuilder>();
-            SetPrivateField(town4Builder, "gateModel", _gateGlb);
+            SetPrivateField(town4Builder, "gateModel", _gateGlb); SetPrivateField(town4Builder, "gateTiledModel", _gateTiledGlb);
             SetPrivateField(town4Builder, "roomModel", _roomGlb);
             AssignEnvironmentMaterials(town4Builder);
             town4Builder.Build();
@@ -623,7 +625,7 @@ namespace Saga.EditorTools
             var crossroadsGo = new GameObject("Crossroads");
             crossroadsGo.transform.position = CrossroadsCenter;
             var crossroadsBuilder = crossroadsGo.AddComponent<DungeonRoomBuilder>();
-            SetPrivateField(crossroadsBuilder, "gateModel", _gateGlb);
+            SetPrivateField(crossroadsBuilder, "gateModel", _gateGlb); SetPrivateField(crossroadsBuilder, "gateTiledModel", _gateTiledGlb);
             SetPrivateField(crossroadsBuilder, "roomModel", _roomGlb);
             AssignEnvironmentMaterials(crossroadsBuilder);
             crossroadsBuilder.Build();
@@ -662,7 +664,7 @@ namespace Saga.EditorTools
             var crossroads2Go = new GameObject("Crossroads2");
             crossroads2Go.transform.position = Crossroads2Center;
             var crossroads2Builder = crossroads2Go.AddComponent<DungeonRoomBuilder>();
-            SetPrivateField(crossroads2Builder, "gateModel", _gateGlb);
+            SetPrivateField(crossroads2Builder, "gateModel", _gateGlb); SetPrivateField(crossroads2Builder, "gateTiledModel", _gateTiledGlb);
             SetPrivateField(crossroads2Builder, "roomModel", _roomGlb);
             AssignEnvironmentMaterials(crossroads2Builder);
             crossroads2Builder.Build();
@@ -793,7 +795,7 @@ namespace Saga.EditorTools
             // (-4,-2)·행상(3,-3)과 안 겹치는 NE 빈 구석).
             SetPrivateField(room2Builder, "biome", SagaBiome.Swamp);
             SetPrivateField(room2Builder, "decorOffset", new Vector3(7f, 0f, 5f));
-            SetPrivateField(room2Builder, "gateModel", _gateGlb); // "환경/건물 GLB"
+            SetPrivateField(room2Builder, "gateModel", _gateGlb); SetPrivateField(room2Builder, "gateTiledModel", _gateTiledGlb); // "환경/건물 GLB"
             SetPrivateField(room2Builder, "roomModel", _roomGlb); // "방 셸 GLB"
             AssignEnvironmentMaterials(room2Builder);
             room2Builder.Build();
@@ -859,7 +861,7 @@ namespace Saga.EditorTools
             // 신규 행상(-8,4)과 안 겹치는 남쪽 빈 자리(문 폭 밖 x=3).
             SetPrivateField(room3Builder, "biome", SagaBiome.Mountain);
             SetPrivateField(room3Builder, "decorOffset", new Vector3(3f, 0f, -6f));
-            SetPrivateField(room3Builder, "gateModel", _gateGlb); // "환경/건물 GLB"
+            SetPrivateField(room3Builder, "gateModel", _gateGlb); SetPrivateField(room3Builder, "gateTiledModel", _gateTiledGlb); // "환경/건물 GLB"
             SetPrivateField(room3Builder, "roomModel", _roomGlb); // "방 셸 GLB"
             AssignEnvironmentMaterials(room3Builder);
             room3Builder.Build();
@@ -970,7 +972,7 @@ namespace Saga.EditorTools
             // (5,±2.5)·퍼즐(-5,0)·채집(-2,2)과 안 겹치는 SW 빈 자리.
             SetPrivateField(room4Builder, "biome", SagaBiome.Shrine);
             SetPrivateField(room4Builder, "decorOffset", new Vector3(-8f, 0f, -5f));
-            SetPrivateField(room4Builder, "gateModel", _gateGlb); // "환경/건물 GLB"
+            SetPrivateField(room4Builder, "gateModel", _gateGlb); SetPrivateField(room4Builder, "gateTiledModel", _gateTiledGlb); // "환경/건물 GLB"
             SetPrivateField(room4Builder, "roomModel", _roomGlb); // "방 셸 GLB"
             AssignEnvironmentMaterials(room4Builder);
             room4Builder.Build();
@@ -1013,7 +1015,7 @@ namespace Saga.EditorTools
             var procRoomBuilder = procRoomGo.AddComponent<DungeonRoomBuilder>();
             SetPrivateField(procRoomBuilder, "biome", SagaBiome.Ruins);
             SetPrivateField(procRoomBuilder, "decorOffset", new Vector3(-8f, 0f, 5f));
-            SetPrivateField(procRoomBuilder, "gateModel", _gateGlb);
+            SetPrivateField(procRoomBuilder, "gateModel", _gateGlb); SetPrivateField(procRoomBuilder, "gateTiledModel", _gateTiledGlb);
             SetPrivateField(procRoomBuilder, "roomModel", _roomGlb);
             AssignEnvironmentMaterials(procRoomBuilder);
             procRoomBuilder.Build();
@@ -1348,7 +1350,7 @@ namespace Saga.EditorTools
             var arenaBuilder = arenaGo.AddComponent<DungeonRoomBuilder>();
             SetPrivateField(arenaBuilder, "biome", SagaBiome.Ruins);
             SetPrivateField(arenaBuilder, "decorOffset", new Vector3(-8f, 0f, 5f));
-            SetPrivateField(arenaBuilder, "gateModel", _gateGlb);
+            SetPrivateField(arenaBuilder, "gateModel", _gateGlb); SetPrivateField(arenaBuilder, "gateTiledModel", _gateTiledGlb);
             SetPrivateField(arenaBuilder, "roomModel", _roomGlb);
             AssignEnvironmentMaterials(arenaBuilder);
             arenaBuilder.Build();

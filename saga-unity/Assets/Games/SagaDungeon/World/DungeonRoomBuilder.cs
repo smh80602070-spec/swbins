@@ -77,6 +77,9 @@ namespace Saga.Dungeon.World
         // AssetDatabase로 채워 준다(런타임 Awake()는 그 API를 못 씀).
         [SerializeField] private GameObject gateModel;
         public const float GateModelWidth = 4.4f;
+        // U-0069 — 같은 모양에 돌 타일 UV(0~1 = 4.4m, 상자 투영)를 편 판(K-0089 `gate_tiled.glb`). PBR 경로에서만 쓴다 —
+        // 원본 UV 는 아틀라스 한 점이라 벽 돌을 씌우면 세로 줄무늬로 늘어났다. 아틀라스 경로는 원본 그대로(새 UV 로 colormap 을 찍으면 색이 틀림).
+        [SerializeField] private GameObject gateTiledModel;
 
         // room-small.glb — 실측 12×4.4×12(바닥 중앙 피벗), 정사각형이라
         // RoomWidth(20)/원본(12) 배율(5/3)을 X·Y·Z에 똑같이 적용하면
@@ -105,7 +108,12 @@ namespace Saga.Dungeon.World
             // 뒤라 그대로 두면 바닥·벽이 두 벌씩 겹쳐 생긴다 — SagaGo의
             // NpcBuilder.cs와 같은 방어(2026-09-12에 이미 6곳에서 빠뜨렸다가
             // 고친 패턴 — 새로 짜는 컴포넌트엔 처음부터 넣는다).
-            if (transform.childCount > 0) return;
+            if (transform.childCount > 0)
+            {
+                // 씬에 구운 아치는 빌더가 다시 안 짓는다 — 메시만 타일 UV 판으로 바꿔 끼운다(U-0069)
+                if (UsePbrEnvironment) foreach (Transform child in transform) if (child.name.EndsWith("_Gate")) UseTiledGateMesh(child);
+                return;
+            }
             Build();
         }
 
@@ -439,12 +447,23 @@ namespace Saga.Dungeon.World
             // 텍스처는 아니지만, 최소한 밋밋한 단색 아치보다는 낫다.
             if (UsePbrEnvironment)
             {
+                UseTiledGateMesh(gate.transform);
                 var archMat = EnvironmentMaterial.MakeTiled(wallMaterial, GateModelWidth, GateModelWidth, wearTier);
                 foreach (var r in gate.GetComponentsInChildren<Renderer>())
                 {
                     r.sharedMaterial = archMat;
                 }
             }
+        }
+
+        /// <summary>U-0069 — 아치 메시를 타일 UV 판으로(모양·크기·원점 같음, UV 만 다름). 판이 없으면(다른 PC·옛 씬) 그대로.</summary>
+        public Mesh TiledGateMesh => gateTiledModel != null ? gateTiledModel.GetComponentInChildren<MeshFilter>(true)?.sharedMesh : null;
+
+        private void UseTiledGateMesh(Transform gate)
+        {
+            var tiled = TiledGateMesh;
+            if (tiled == null) return;
+            foreach (var mf in gate.GetComponentsInChildren<MeshFilter>(true)) mf.sharedMesh = tiled;
         }
 
         private void SpawnWall(string name, Vector3 pos, Vector3 size, Color color)

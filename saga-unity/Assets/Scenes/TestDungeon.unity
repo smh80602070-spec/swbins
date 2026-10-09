@@ -14480,6 +14480,7 @@ MonoBehaviour:
   biome: 0
   decorOffset: {x: -8, y: 0, z: 5}
   gateModel: {fileID: -19169664459260225, guid: 88a92af00093e574ba5cf3b8ba41da5a, type: 3}
+  gateTiledModel: {fileID: 2447093438199970555, guid: 89d3cd2d5d7a41e2918d2f76633d7b1b, type: 3}
   roomModel: {fileID: -3467648007430743564, guid: 9ed4452b2880c2c43a5146f0bce9aeae, type: 3}
   floorMaterial: {fileID: 2100000, guid: 0f4909ca695cafe44a66d6fb0de9b1cd, type: 2}
   wallMaterial: {fileID: 2100000, guid: e832c65dedabd25409ac77532b0b524d, type: 2}
@@ -17508,6 +17509,7 @@ MonoBehaviour:
   biome: 4
   decorOffset: {x: -7, y: 0, z: -7}
   gateModel: {fileID: -19169664459260225, guid: 88a92af00093e574ba5cf3b8ba41da5a, type: 3}
+  gateTiledModel: {fileID: 2447093438199970555, guid: 89d3cd2d5d7a41e2918d2f76633d7b1b, type: 3}
   roomModel: {fileID: -3467648007430743564, guid: 9ed4452b2880c2c43a5146f0bce9aeae, type: 3}
   floorMaterial: {fileID: 2100000, guid: 0f4909ca695cafe44a66d6fb0de9b1cd, type: 2}
   wallMaterial: {fileID: 2100000, guid: e832c65dedabd25409ac77532b0b524d, type: 2}
@@ -26874,6 +26876,7 @@ MonoBehaviour:
   biome: 0
   decorOffset: {x: -8, y: 0, z: 5}
   gateModel: {fileID: -19169664459260225, guid: 88a92af00093e574ba5cf3b8ba41da5a, type: 3}
+  gateTiledModel: {fileID: 2447093438199970555, guid: 89d3cd2d5d7a41e2918d2f76633d7b1b, type: 3}
   roomModel: {fileID: -3467648007430743564, guid: 9ed4452b2880c2c43a5146f0bce9aeae, type: 3}
   floorMaterial: {fileID: 2100000, guid: 0f4909ca695cafe44a66d6fb0de9b1cd, type: 2}
   wallMaterial: {fileID: 2100000, guid: e832c65dedabd25409ac77532b0b524d, type: 2}
@@ -31037,6 +31040,7 @@ MonoBehaviour:
   biome: 0
   decorOffset: {x: -8, y: 0, z: 5}
   gateModel: {fileID: -19169664459260225, guid: 88a92af00093e574ba5cf3b8ba41da5a, type: 3}
+  gateTiledModel: {fileID: 2447093438199970555, guid: 89d3cd2d5d7a41e2918d2f76633d7b1b, type: 3}
   roomModel: {fileID: -3467648007430743564, guid: 9ed4452b2880c2c43a5146f0bce9aeae, type: 3}
   floorMaterial: {fileID: 2100000, guid: 0f4909ca695cafe44a66d6fb0de9b1cd, type: 2}
   wallMaterial: {fileID: 2100000, guid: e832c65dedabd25409ac77532b0b524d, type: 2}
@@ -36436,6 +36440,7 @@ MonoBehaviour:
   biome: 4
   decorOffset: {x: -8, y: 0, z: -5}
   gateModel: {fileID: -19169664459260225, guid: 88a92af00093e574ba5cf3b8ba41da5a, type: 3}
+  gateTiledModel: {fileID: 2447093438199970555, guid: 89d3cd2d5d7a41e2918d2f76633d7b1b, type: 3}
   roomModel: {fileID: -3467648007430743564, guid: 9ed4452b2880c2c43a5146f0bce9aeae, type: 3}
   floorMaterial: {fileID: 2100000, guid: 0f4909ca695cafe44a66d6fb0de9b1cd, type: 2}
   wallMaterial: {fileID: 2100000, guid: e832c65dedabd25409ac77532b0b524d, type: 2}
@@ -42628,6 +42633,7 @@ MonoBehaviour:
   biome: 4
   decorOffset: {x: 7, y: 0, z: -7}
   gateModel: {fileID: -19169664459260225, guid: 88a92af00093e574ba5cf3b8ba41da5a, type: 3}
+  gateTiledModel: {fileID: 2447093438199970555, guid: 89d3cd2d5d7a41e2918d2f76633d7b1b, type: 3}
   roomModel: {fileID: -3467648007430743564, guid: 9ed4452b2880c2c43a5146f0bce9aeae, type: 3}
   floorMaterial: {fileID: 2100000, guid: 0f4909ca695cafe44a66d6fb0de9b1cd, type: 2}
   wallMaterial: {fileID: 2100000, guid: e832c65dedabd25409ac77532b0b524d, type: 2}
@@ -66976,6 +66982,7 @@ MonoBehaviour:
   biome: 5
   decorOffset: {x: -8, y: 0, z: 5}
   gateModel: {fileID: -19169664459260225, guid: 88a92af00093e574ba5cf3b8ba41da5a, type: 3}
+  gateTiledModel: {fileID: 2447093438199970555, guid: 89d3cd2d5d7a41e2918d2f76633d7b1b, type: 3}
   roomModel: {fileID: -3467648007430743564, guid: 9ed4452b2880c2c43a5146f0bce9aeae, type: 3}
   floorMaterial: {fileID: 2100000, guid: 0f4909ca695cafe44a66d6fb0de9b1cd, type: 2}
   wallMaterial: {fileID: 2100000, guid: e832c65dedabd25409ac77532b0b524d, type: 2}
@@ -69548,6 +69555,7 @@ MonoBehaviour:
   biome: 0
   decorOffset: {x: -8, y: 0, z: 5}
   gateModel: {fileID: -19169664459260225, guid: 88a92af00093e574ba5cf3b8ba41da5a, type: 3}
+  gateTiledModel: {fileID: 2447093438199970555, guid: 89d3cd2d5d7a41e2918d2f76633d7b1b, type: 3}
   roomModel: {fileID: -3467648007430743564, guid: 9ed4452b2880c2c43a5146f0bce9aeae, type: 3}
   floorMaterial: {fileID: 2100000, guid: 0f4909ca695cafe44a66d6fb0de9b1cd, type: 2}
   wallMaterial: {fileID: 2100000, guid: e832c65dedabd25409ac77532b0b524d, type: 2}
@@ -84249,6 +84257,7 @@ MonoBehaviour:
   biome: 2
   decorOffset: {x: 7, y: 0, z: 5}
   gateModel: {fileID: -19169664459260225, guid: 88a92af00093e574ba5cf3b8ba41da5a, type: 3}
+  gateTiledModel: {fileID: 2447093438199970555, guid: 89d3cd2d5d7a41e2918d2f76633d7b1b, type: 3}
   roomModel: {fileID: -3467648007430743564, guid: 9ed4452b2880c2c43a5146f0bce9aeae, type: 3}
   floorMaterial: {fileID: 2100000, guid: 0f4909ca695cafe44a66d6fb0de9b1cd, type: 2}
   wallMaterial: {fileID: 2100000, guid: e832c65dedabd25409ac77532b0b524d, type: 2}
@@ -86925,6 +86934,7 @@ MonoBehaviour:
   biome: 4
   decorOffset: {x: 7, y: 0, z: 7}
   gateModel: {fileID: -19169664459260225, guid: 88a92af00093e574ba5cf3b8ba41da5a, type: 3}
+  gateTiledModel: {fileID: 2447093438199970555, guid: 89d3cd2d5d7a41e2918d2f76633d7b1b, type: 3}
   roomModel: {fileID: -3467648007430743564, guid: 9ed4452b2880c2c43a5146f0bce9aeae, type: 3}
   floorMaterial: {fileID: 2100000, guid: 0f4909ca695cafe44a66d6fb0de9b1cd, type: 2}
   wallMaterial: {fileID: 2100000, guid: e832c65dedabd25409ac77532b0b524d, type: 2}
@@ -117280,6 +117290,7 @@ MonoBehaviour:
   biome: 4
   decorOffset: {x: -7, y: 0, z: 7}
   gateModel: {fileID: -19169664459260225, guid: 88a92af00093e574ba5cf3b8ba41da5a, type: 3}
+  gateTiledModel: {fileID: 2447093438199970555, guid: 89d3cd2d5d7a41e2918d2f76633d7b1b, type: 3}
   roomModel: {fileID: -3467648007430743564, guid: 9ed4452b2880c2c43a5146f0bce9aeae, type: 3}
   floorMaterial: {fileID: 2100000, guid: 0f4909ca695cafe44a66d6fb0de9b1cd, type: 2}
   wallMaterial: {fileID: 2100000, guid: e832c65dedabd25409ac77532b0b524d, type: 2}
@@ -118486,6 +118497,7 @@ MonoBehaviour:
   biome: 3
   decorOffset: {x: 3, y: 0, z: -6}
   gateModel: {fileID: -19169664459260225, guid: 88a92af00093e574ba5cf3b8ba41da5a, type: 3}
+  gateTiledModel: {fileID: 2447093438199970555, guid: 89d3cd2d5d7a41e2918d2f76633d7b1b, type: 3}
   roomModel: {fileID: -3467648007430743564, guid: 9ed4452b2880c2c43a5146f0bce9aeae, type: 3}
   floorMaterial: {fileID: 2100000, guid: 0f4909ca695cafe44a66d6fb0de9b1cd, type: 2}
   wallMaterial: {fileID: 2100000, guid: e832c65dedabd25409ac77532b0b524d, type: 2}
@@ -121205,6 +121217,7 @@ MonoBehaviour:
   biome: 5
   decorOffset: {x: -8, y: 0, z: 5}
   gateModel: {fileID: -19169664459260225, guid: 88a92af00093e574ba5cf3b8ba41da5a, type: 3}
+  gateTiledModel: {fileID: 2447093438199970555, guid: 89d3cd2d5d7a41e2918d2f76633d7b1b, type: 3}
   roomModel: {fileID: -3467648007430743564, guid: 9ed4452b2880c2c43a5146f0bce9aeae, type: 3}
   floorMaterial: {fileID: 2100000, guid: 0f4909ca695cafe44a66d6fb0de9b1cd, type: 2}
   wallMaterial: {fileID: 2100000, guid: e832c65dedabd25409ac77532b0b524d, type: 2}
@@ -136248,6 +136261,7 @@ MonoBehaviour:
   biome: 4
   decorOffset: {x: -7, y: 0, z: 7}
   gateModel: {fileID: -19169664459260225, guid: 88a92af00093e574ba5cf3b8ba41da5a, type: 3}
+  gateTiledModel: {fileID: 2447093438199970555, guid: 89d3cd2d5d7a41e2918d2f76633d7b1b, type: 3}
   roomModel: {fileID: -3467648007430743564, guid: 9ed4452b2880c2c43a5146f0bce9aeae, type: 3}
   floorMaterial: {fileID: 2100000, guid: 0f4909ca695cafe44a66d6fb0de9b1cd, type: 2}
   wallMaterial: {fileID: 2100000, guid: e832c65dedabd25409ac77532b0b524d, type: 2}
@@ -142060,6 +142074,7 @@ MonoBehaviour:
   biome: 0
   decorOffset: {x: -8, y: 0, z: 5}
   gateModel: {fileID: -19169664459260225, guid: 88a92af00093e574ba5cf3b8ba41da5a, type: 3}
+  gateTiledModel: {fileID: 2447093438199970555, guid: 89d3cd2d5d7a41e2918d2f76633d7b1b, type: 3}
   roomModel: {fileID: -3467648007430743564, guid: 9ed4452b2880c2c43a5146f0bce9aeae, type: 3}
   floorMaterial: {fileID: 2100000, guid: 0f4909ca695cafe44a66d6fb0de9b1cd, type: 2}
   wallMaterial: {fileID: 2100000, guid: e832c65dedabd25409ac77532b0b524d, type: 2}
@@ -143524,6 +143539,7 @@ MonoBehaviour:
   biome: 5
   decorOffset: {x: -7, y: 0, z: 7}
   gateModel: {fileID: -19169664459260225, guid: 88a92af00093e574ba5cf3b8ba41da5a, type: 3}
+  gateTiledModel: {fileID: 2447093438199970555, guid: 89d3cd2d5d7a41e2918d2f76633d7b1b, type: 3}
   roomModel: {fileID: -3467648007430743564, guid: 9ed4452b2880c2c43a5146f0bce9aeae, type: 3}
   floorMaterial: {fileID: 2100000, guid: 0f4909ca695cafe44a66d6fb0de9b1cd, type: 2}
   wallMaterial: {fileID: 2100000, guid: e832c65dedabd25409ac77532b0b524d, type: 2}
@@ -166333,6 +166349,7 @@ MonoBehaviour:
   biome: 1
   decorOffset: {x: -8, y: 0, z: 5}
   gateModel: {fileID: -19169664459260225, guid: 88a92af00093e574ba5cf3b8ba41da5a, type: 3}
+  gateTiledModel: {fileID: 2447093438199970555, guid: 89d3cd2d5d7a41e2918d2f76633d7b1b, type: 3}
   roomModel: {fileID: -3467648007430743564, guid: 9ed4452b2880c2c43a5146f0bce9aeae, type: 3}
   floorMaterial: {fileID: 2100000, guid: 0f4909ca695cafe44a66d6fb0de9b1cd, type: 2}
   wallMaterial: {fileID: 2100000, guid: e832c65dedabd25409ac77532b0b524d, type: 2}

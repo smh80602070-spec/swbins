@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-09",
+  "tickets": ["U-0069 사가나락 문 아치 PBR = 타일 UV 판 gate_tiled(K-0089)"],
+  "how": "PatchDungeonGateTiled(일회용, 커밋 안 함)로 구운 TestDungeon 의 DungeonRoomBuilder 17 에 gateTiledModel 칸만 채움 + PlaytestDungeonHeadless + ShowcaseGui 전후 촬영(name:EraDecor_·type:EraFolk, U-0066 과 같은 대상) Claude 눈",
+  "fix": "DungeonRoomBuilder: PBR 경로에서만 아치 메시를 gate_tiled 로(새로 지을 때 BuildGateArch · 씬에 구운 아치는 Awake) — 아틀라스 경로는 원본 gate.glb. 씬 빌더 셋(TestDungeon·Temple·WatchCourt)이 칸을 채움. gate_tiled.glb.meta = gate.glb.meta 설정 + 새 guid",
+  "scene": ["[PatchDungeonGateTiled] OK - builders 17 · saved True (gate_tiled mesh gate tris 592)", "[PlaytestDungeonHeadless] OK - 10 frames, no errors"],
+  "runtime_errors": 0,
+  "before": ".utmp/shots-u0066/dungeon/nameEraDecor_0~2·typeEraFolk_1 — 아치·기둥 세로 줄무늬",
+  "after": ".utmp/shots-u0069/nameEraDecor_0~2·typeEraFolk_1",
+  "results": [
+    { "id": "un.dg.era-decor", "eye": "○(아치)", "note": "아치·기둥에 벽과 같은 크기의 돌 결이 이어짐, 줄무늬 없음. 꾸밈 조각은 여전히 안 찍힘(시점) → D1 그대로", "result": "흠 풀림", "date": "2026-10-09" }
+  ],
+  "left": "문 위 가로 벽 띠 윗면 줄무늬(Wall_ 상자 윗면 UV — 아치 아님) · EraDecor 촬영 시점(꾸밈 조각이 안 보임)"
+}
