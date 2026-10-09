@@ -20,13 +20,15 @@
 ## 현재 작업 — 중단 지점(2026-10-09)
 
 - 10-09 닫음(줄거리는 `tasks/godot/done/` 티켓 메모가 정본): G-0116 먼 윤곽선 끄기(효과 0 — 모바일 렌더러에서 next_pass 윤곽선은 draw call 안 씀, 되돌림) · G-0117 천하 7막(시간 틈 아홉 `saga_core/data/time_folk.gd`) · G-0118 소넷 5.5 구간 감사(시트 `tasks/sheets/godot-sonnet-audit-20261009.md`) · G-0119 탈것 키 `[` `]`(사가나락 `-` `=`) · G-0120 네 판 세이브 점검 진짜 save()/try_load() · G-0121 saga_core 가 판 autoload 를 안 부르게(check_refs 검사) · G-0122 평탄 자리 Vector2i · G-0123 하늘 밤 경계 4·21시·알 굴림 횟수·mount_host 창 치움 · G-0124 이동 프리셋 1 기본 · G-0125 마을 예산 = 지역 평균 draw ≤260(probe_perf `PERF_PROBE_DONE`) · G-0126 천하 1~5막 시간 틈 사람 직접 등용 · G-0127 서리봉 새파란 그림자(고원 안에서만 주변광 하늘 몫 0.5)·눈송이 번짐 · G-0128 눈밭 결.
-- 큐 빔. 사용자 상위 방향 = **그래픽 먼저, 고칠 때마다 같은 시간대 전후 촬영**(기준 네 컷 `tools/shot_baseline.sh`, 비교 `tools/shot_diff.mjs`). 날씨가 3시간 칸·고원 눈보라로 바뀌니 전후는 연달아 찍는다.
+- 10-09 오후 닫음: G-0129 폭발 burst 새 동작 · G-0130~0138 그래픽 손질(섬 밑동·갈림길 풀빛·그늘 채도·흙 얼룩·강가 색·흙길 띠·진흙 얼룩·PC 조이스틱 숨김) · G-0132 물 두께(되돌림) · G-0139 물 밑 비탈 · G-0140 사실적 물 · G-0141 사실적 하늘 · G-0142 사실적 풀 · G-0143 1단계(지금 텍스처로) · G-0145 인물 결(셰이더만, 다섯 판) · G-0146 길 칸 풀 · G-0147 눈밭 결 · G-0148 네 판 하늘·사가마을 연못 · G-0149 사가종횡 들판 배경.
+- **방향(사용자 10-09, PLAN 66-2·SAGA-DESIGN §6.0-1 반영)**: 인물·몬스터는 툰 그대로, **배경(물·하늘·풀·땅·소품 재질)은 사실 쪽**. 사용자 판정 "고친거 마음에 들어"·"괜찮네" ○. 기준 네 컷 `graphics/baseline/go/`(10-09 16:17, 이후 `node tools/shot_diff.mjs graphics/baseline/go <폴더>`).
+- 보여 주기 = 같은 시간대 전후 밀어 보기 비교 페이지(Artifact https://claude.ai/artifact/2shrD5bSfk5crvfmAEk3KT, 스크래치 `gallery/index.html` 은 세션마다 사라지니 새 세션은 `Artifact read` 로 받아 이어 붙일 것). GO 컷 = `tools/probe_shots.gd`(진단 컷 d_plaza_*·d_bridge_top·할 일 hide/nograss/burstN), 다른 판 = `tools/scene_shot.tscn`(판 씬 한 장, 넷째 인자 노드 곁에 서기).
 - 이 PC Godot = WinGet Packages `Godot_v4.7.2-stable_win64_console.exe`. 전체 점검 `tools/probe_all.sh` 155개(마지막 10-09: perf·story9 말고 0 — story9 는 촬영과 동시 실행 때만 흔들림, 혼자 0). 러너가 도는 중엔 probe_all.sh 를 고치지 말 것.
 - 함정: 사가마을·나락 씬을 헤드리스로 띄우면 첫 안내·대화 창(ui_modal)이 연달아 떠 멈춤 — 점검은 매 프레임 창을 치울 것 · 공용 주변광(environment_profile)에 밝은 색을 섞으면 신상·절벽 그늘 입체감이 날아감(G-0127) — 섞을 땐 하늘 밝기 쯤 중간 회색으로 채도만(G-0133) · forward_plus 로 화면 밖 촬영 시 SDFGI 검은 조각.
 
 ## 다음 작업 (우선순위)
 
-0. **그래픽(원신급)** — 기준 네 컷 + 다른 지역 컷(`tools/probe_shots.gd` 표)을 찍어 다음으로 눈에 띄는 것 → 티켓 → 같은 시간대 전후 촬영 판정.
+0. **그래픽 — 배경 사실화 이어서**. 큐 G-0143(바닥 사진 텍스처 본작업)·G-0144(소품·건물 PBR 재질)는 **자체툴 CC0 사진 PBR 텍스처 대기**(수신함 10-09, `assets/generated/tiles_real/` 가칭) — 오면 바로. 그동안 후보: 사가종횡 동굴·미궁 배경(회색 빈 화면 — 바위 벽 겹, 사용자 결정 전), 사가나락 동굴 바닥·벽 재질(텍스처 뒤), 얼굴·머리 텍스처 2048(용량↑ — 사용자 확인 뒤 K). 큐가 비면 촬영 묶음으로 다음 거리 찾기.
 1. **사용자 손 확인** — 이동 프리셋 1(G-0124, feel_tuning D2)·탈것 키 `[` `]`·천하 7막.
 2. 51장 남은 것 — DUNGEON 무예 row1/row2 깊이(범위 먼저 좁힐 것).
 3. 106장 사람 몫 — 등반·활공·수영·점프 Mixamo 클립(로그인만 사람), 주역 VRoid 조형. 폭발 동작 CF_Burst 원본(dj_haean_anims.glb)은 K PC 대기.
