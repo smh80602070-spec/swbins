@@ -119,7 +119,21 @@ void fragment() {
 	stone_w = max(stone_w, smoothstep(0.25, 0.6, slope));
 	dirt_w *= 1.0 - smoothstep(0.25, 0.6, slope);
 	float grass_w = max(0.05, 1.0 - dirt_w - stone_w);
+	// G-0143 — 높이 기반 섞기: 텍스처 밝기를 높이로 보고(돌·흙 알갱이 윗면이 밝다) 섞는 경계에서 높은 쪽이 이긴다 —
+	// 부드러운 번짐 대신 돌 틈에 풀·흙이 차는 실제 경계. 한 종류만 있는 곳(평지 풀밭)은 그대로.
+	float hg = dot(grass_a, vec3(0.333)) + grass_w;
+	float hd = dot(dirt_a, vec3(0.333)) + dirt_w;
+	float hs = dot(stone_a, vec3(0.333)) * 1.2 + stone_w;
+	float hmax = max(hg, max(hd, hs)) - 0.18;
+	grass_w = max(hg - hmax, 0.0) * step(0.001, grass_w) + 0.0001;
+	dirt_w = max(hd - hmax, 0.0) * step(0.001, dirt_w);
+	stone_w = max(hs - hmax, 0.0) * step(0.001, stone_w);
 	float wsum = grass_w + dirt_w + stone_w;
+	// G-0143 — 반복 감추기: 풀 텍스처를 넉 배 크게 한 번 더(돌려서) 읽어 멀어질수록 섞는다(한 장 2.5m 반복 무늬가 멀리서 격자로 보였다).
+	float cam_dist = length(world_pos - CAMERA_POSITION_WORLD);
+	float far_mix = smoothstep(12.0, 60.0, cam_dist) * 0.55;
+	vec2 rp = mat2(vec2(0.8, -0.6), vec2(0.6, 0.8)) * world_pos.xz * tile_scale * 0.23;
+	grass_a = mix(grass_a, texture(grass_albedo, rp).rgb, far_mix);
 
 	vec3 detail_albedo = (grass_a * grass_w + dirt_a * dirt_w + stone_a * stone_w) / wsum;
 	detail_albedo = mix(detail_albedo, vec3(dot(detail_albedo, vec3(0.3, 0.59, 0.11)) * 1.55), hue_desat * (1.0 - stone_w) * (1.0 - smoothstep(4.0, 8.0, world_pos.y)));
@@ -171,7 +185,8 @@ void fragment() {
 	float ledge = smoothstep(0.04, 0.2, ny) * (1.0 - smoothstep(0.4, 0.65, ny));
 	float moss = cliff * smoothstep(0.55, 0.72, mpatch + ny * 0.12) * mix(0.1, 1.0, ledge);
 	ALBEDO = mix(ALBEDO, vec3(0.16, 0.27, 0.1) * (0.85 + 0.3 * n1), moss * 0.6);
-	NORMAL_MAP = detail_normal * 0.5 + 0.5;
+	// G-0143 — 멀수록 법선 결을 줄인다(밉맵으로 뭉개진 법선이 멀리서 반짝이는 잡음이 됐다).
+	NORMAL_MAP = mix(vec3(0.0, 0.0, 1.0), detail_normal, 1.0 - smoothstep(25.0, 90.0, cam_dist) * 0.7) * 0.5 + 0.5;
 	ROUGHNESS = detail_rough;
 	// 모래 표시 — 풀 텍스처 대신 모래색에 흙결만 옅게(평평한 모래밭).
 	// 정점색은 sRGB 로 적은 값이라(풀·흙은 어두운 텍스처와 곱해져 맞았다) 그대로 칠하는 모래는 선형으로 — 안 그러면 한 단 허옇게 뜬다.
