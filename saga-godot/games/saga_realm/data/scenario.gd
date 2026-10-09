@@ -15,7 +15,8 @@ extends RefCounted
 ##   on 은 k 하나·"*"·k 배열(예 ["atk", "def"] — 3막 일기토는 예물을 고르면 안 열림)
 ##   단계가 열려 있는 동안 다음 카드는 쉰다(웹과 같음).
 ## G-0092 — 고돗엔 시간 틈 사람(강서·도하·명변…)이 인물 표에 없다(정본 트랙 메모 "인물 표를 더한 뒤") — 그 사람을 등용하는 고르기는
-##   "그 사람이 데려온 재야 인재 합류"(recruitFree)로, 그 사람 충성(loyalId)은 {책사} 충성으로 바꿨다.
+##   "그 사람이 데려온 재야 인재 합류"(recruitFree)로, 그 사람 충성(loyalId)은 {책사} 충성으로 바꿨었다 — G-0126 에서 시간 틈 아홉(saga_core/data/time_folk.gd)이
+##   들어와 웹 그대로 되돌렸다: recruit(그 사람 바로 등용) · loyalId(그 사람이 우리 사람이면 충성). 웹 lend(영점이 이웃에게) 는 고돗에 없어 뺐다.
 
 const ACT_NAMES := {1: "1막 · 군웅", 2: "2막 · 대전", 3: "3막 · 강 위", 4: "4막 · 삼계 균열", 5: "5막 · 먼 길", 6: "6막 · 천하", 7: "7막 · 틈의 끝"}
 
@@ -48,9 +49,9 @@ const CARDS := [
 		"mix": {"past": "재야 촌락", "now": "강서·공석·금담·명변·도하", "future": "도하 노트북 속 앞날 지도"},
 		"text": "재야를 탐색하던 척후가 이상한 소문을 물어 왔다. 현대 옷차림의 사람 다섯이 하늘에서 떨어졌다는 것이다. 그중 강서라는 이는 특공대장이었다고 하고, 노트북을 든 도하의 화면에는 아직 그려지지 않은 앞날의 지도가 떠 있다 한다. {책사} 이(가) 한 사람부터 찾자고 한다.",
 		"choices": [
-			{"k": "atk", "label": "강서를 직접 찾아 나선다", "hint": "금 300 · 강서가 데려온 재야 인재 합류", "cost": 300, "fx": [{"t": "recruitFree", "bonus": 10}], "text": "강서가 특공대 제복 그대로 찾아와 절도 있게 인사하고, 숨어 있던 인재를 데려왔다"},
+			{"k": "atk", "label": "강서를 직접 찾아 등용한다", "hint": "금 300 · 시간 틈 특공대장 강서 합류", "cost": 300, "fx": [{"t": "recruit", "id": "tm_gangseo", "bonus": 10}], "text": "강서가 특공대 제복 그대로 찾아와 절도 있게 인사했다"},
 			{"k": "def", "label": "소문을 더 모은다", "hint": "수도 치안 +5 · 책사 충성 +3", "fx": [{"t": "sec", "n": 5}, {"t": "loyal", "n": 3}], "text": "소문을 모아 지도에 표시하니 성 안이 술렁임을 그쳤다"},
-			{"k": "util", "label": "도하의 노트북부터 산다", "hint": "금 400 · 노트북 지도로 찾은 재야 인재 합류", "cost": 400, "fx": [{"t": "recruitFree", "bonus": 5}], "text": "도하가 값을 치른 노트북 앞에서 앞날 지도를 펼쳐 보였다 — 지도 위의 재야 하나를 찾아냈다"},
+			{"k": "util", "label": "도하의 노트북부터 산다", "hint": "금 400 · 시간 틈 해커 도하 합류", "cost": 400, "fx": [{"t": "recruit", "id": "tm_doha", "bonus": 5}], "text": "도하가 값을 치른 노트북 앞에서 앞날 지도를 펼쳐 보였다"},
 		]},
 	{"id": "r2_plains", "no": 5, "act": 2, "title": "관도 결전", "emoji": "⚔️", "when": {"minTurn": 48, "orCities": 10},
 		"mix": {"past": "대군·군량", "now": "강서 특공대", "future": "금담이 가져온 태양광 등"},
@@ -64,7 +65,7 @@ const CARDS := [
 		"mix": {"past": "학자·서당", "now": "명변·확성기", "future": "퀴즈 판이 빛 판"},
 		"text": "논객 명변이 확성기를 들고 찾아왔다. \"이름난 재야 학자를 설전으로 불러 옵시다. 서당에 사람이 모이면 성이 밝아집니다.\" 퀴즈 판이 빛 판으로 바뀐 서고 앞에서 {책사} 도 고개를 끄덕인다.",
 		"choices": [
-			{"k": "atk", "label": "명변을 앞세운다", "hint": "금 300 · 명변이 데려온 재야 인재 합류 · 설전", "cost": 300, "fx": [{"t": "recruitFree", "bonus": 10}], "text": "명변이 확성기를 들고 서당 앞에서 큰 설전을 벌였다"},
+			{"k": "atk", "label": "명변을 군사로 등용한다", "hint": "금 300 · 시간 틈 논객 명변 합류", "cost": 300, "fx": [{"t": "recruit", "id": "tm_myeongbyeon", "bonus": 10}], "text": "명변이 확성기를 들고 서당 앞에서 큰 설전을 벌였다"},
 			{"k": "def", "label": "서고를 정비한다", "hint": "수도 치안 +8 · 설전", "fx": [{"t": "sec", "n": 8}], "text": "서고가 정돈되니 배우러 오는 이가 늘었다"},
 			{"k": "util", "label": "학자에게 예물을 보낸다", "hint": "금 200 · 책사 충성 +5 · 설전", "cost": 200, "fx": [{"t": "loyal", "n": 5}], "text": "학자가 예물에 감복해 서고에 이름을 올렸다"},
 		]},
@@ -73,9 +74,9 @@ const CARDS := [
 		"mix": {"past": "강가 수채", "now": "도하가 기록을 해독", "future": "성연·항법 판"},
 		"text": "항법사 성연이 항법 판을 들고 찾아왔다. \"이 강의 바람이 사흘 뒤에 바뀝니다. 미래 기록에 그렇게 남아 있습니다.\" 도하가 기록을 해독해 보니 정말로 같은 말이 적혀 있었다. 강가 수채화 같은 풍경 위에 항법 판의 빛이 겹친다.",
 		"choices": [
-			{"k": "atk", "label": "성연의 말을 군략에 쓴다", "hint": "금 300 · 성연이 데려온 재야 인재 합류", "cost": 300, "fx": [{"t": "recruitFree", "bonus": 10}], "text": "성연이 항법 판을 펴 강의 바람을 손가락으로 짚고, 강가에 숨어 살던 인재를 데려왔다"},
+			{"k": "atk", "label": "성연을 군사로 삼는다", "hint": "금 300 · 시간 틈 항법사 성연 합류", "cost": 300, "fx": [{"t": "recruit", "id": "tm_seongyeon", "bonus": 10}], "text": "성연이 항법 판을 펴 강의 바람을 손가락으로 짚었다"},
 			{"k": "def", "label": "기록을 고이 간직한다", "hint": "수도 치안 +5 · 책사 충성 +3", "fx": [{"t": "sec", "n": 5}, {"t": "loyal", "n": 3}], "text": "기록을 서고에 넣어 두고 바람이 바뀌길 기다렸다"},
-			{"k": "util", "label": "궤도에게도 사람을 보낸다", "hint": "금 300 · 궤도가 찾은 재야 인재 합류", "cost": 300, "fx": [{"t": "recruitFree", "bonus": 5}], "text": "궤도가 탐사 장비를 메고 성 문을 두드렸다 — 장비로 찾은 재야 하나를 데려왔다"},
+			{"k": "util", "label": "궤도에게도 사람을 보낸다", "hint": "금 300 · 탐사 대장 궤도 합류", "cost": 300, "fx": [{"t": "recruit", "id": "tm_gwedo", "bonus": 5}], "text": "궤도가 탐사 장비를 메고 성 문을 두드렸다"},
 		]},
 	{"id": "r3_river", "no": 8, "act": 3, "title": "적벽 강 위", "emoji": "🌊", "when": {"minTurn": 84, "orCities": 18},
 		"mix": {"past": "수군·화공", "now": "공석의 구조선", "future": "성연의 바람 예보"},
@@ -91,7 +92,7 @@ const CARDS := [
 		"choices": [
 			{"k": "atk", "label": "{맹장}이 직접 받아 친다", "hint": "수도 훈련 +5 · 일기토가 이어진다", "fx": [{"t": "train", "n": 5}], "text": "{맹장} 이(가) 창을 들고 나서자 함성이 일었다"},
 			{"k": "def", "label": "구경꾼을 물리고 정중히 청한다", "hint": "수도 치안 +5 · 일기토가 이어진다", "fx": [{"t": "sec", "n": 5}], "text": "구경꾼을 물리니 영점이 한 걸음 물러섰다"},
-			{"k": "util", "label": "예물과 술로 마음을 산다", "hint": "금 400 · 영점이 데려온 재야 인재 합류(일기토는 없다)", "cost": 400, "fx": [{"t": "recruitFree", "bonus": 0}], "text": "술잔 앞에서 영점이 기계 팔을 내려놓고, 함께 떠돌던 이를 소개했다"},
+			{"k": "util", "label": "예물과 술로 마음을 산다", "hint": "금 400 · 무사 영점 합류(일기토는 없다)", "cost": 400, "fx": [{"t": "recruit", "id": "tm_yeongjeom", "bonus": 0}], "text": "술잔 앞에서 영점이 기계 팔을 내려놓았다"},
 		]},
 	## G-0101 4막 · 삼계 균열 — 은하(시간 틈 사람)는 "데려온 재야 인재"로, 강서 충성은 {책사} 충성으로(2·3막과 같다).
 	## 웹 일기토 상대 "백기"는 실존 장수 이름이라(이름 정책) "묘역의 망장"으로.
@@ -109,7 +110,7 @@ const CARDS := [
 		"choices": [
 			{"k": "atk", "label": "거해의 근원을 직접 친다", "hint": "수도 훈련 +8 · 치안 +4 · 폐허 곁의 성", "fx": [{"t": "train", "n": 8}, {"t": "sec", "n": 4}], "text": "방호복 부대가 근원을 봉쇄하니 역병이 잦아들었다"},
 			{"k": "def", "label": "백신 공장을 세운다", "hint": "수도 치안 +10 · 폐허 곁의 성", "fx": [{"t": "sec", "n": 10}], "text": "공장이 백신을 쏟아내 성 안이 나았다"},
-			{"k": "util", "label": "은하에게 방호를 맡긴다", "hint": "금 300 · 은하가 데려온 재야 인재 합류 · 폐허 곁의 성", "cost": 300, "fx": [{"t": "recruitFree", "bonus": 5}], "text": "은하가 방호복을 입고 성 문 앞에 섰다 — 함께 온 재야 하나가 곁에 남았다"},
+			{"k": "util", "label": "은하에게 방호를 맡긴다", "hint": "금 300 · 우주 창병 은하 합류", "cost": 300, "fx": [{"t": "recruit", "id": "tm_eunha", "bonus": 5}], "text": "은하가 방호복을 입고 성 문 앞에 섰다"},
 		]},
 	{"id": "r4_tomb", "no": 12, "act": 4, "title": "망자의 맹세", "emoji": "🔔", "when": {"minTurn": 132, "orCities": 30},
 		"mix": {"past": "{맹장}·종소리", "now": "공석이 망자 명부를 정리", "future": "영점 의체의 반응·이계 강해"},
@@ -206,20 +207,20 @@ const STAGES := {
 		"lose": {"text": "말문이 막혀 조건을 못 얻었다 — 사신이 어색하게 돌아갔다", "hint": "이웃 우호 -5", "fx": [{"t": "rel", "n": -5}]}},
 	"r2_plains": {"kind": "own", "on": "*", "months": 10, "title": "관도 결전 · 들판의 성",
 		"intro": "결전이 열렸다 — 열 달 안에 성을 하나 더 손에 넣어라.",
-		"win": {"text": "들판의 성을 손에 넣었다 — 강서의 특공대가 야습을 해냈다는 소문이 돈다", "hint": "수도 훈련 +8 · 책사 충성 +5 · 금 +500", "fx": [{"t": "train", "n": 8}, {"t": "loyal", "n": 5}, {"t": "gold", "n": 500}]},
+		"win": {"text": "들판의 성을 손에 넣었다 — 강서의 특공대가 야습을 해냈다는 소문이 돈다", "hint": "수도 훈련 +8 · 강서 충성 +5 · 금 +500", "fx": [{"t": "train", "n": 8}, {"t": "loyalId", "id": "tm_gangseo", "n": 5}, {"t": "gold", "n": 500}]},
 		"lose": {"text": "열 달이 지나도록 들판을 얻지 못했다 — 대군을 먹인 군량만 줄었다", "hint": "수도 군량 -800", "fx": [{"t": "food", "n": -800}]}},
 	"r3_river": {"kind": "own", "on": "*", "months": 10, "title": "적벽 강 위 · 강가의 성",
 		"intro": "강 위의 결전이 열렸다 — 열 달 안에 성을 하나 더 손에 넣어라.",
-		"win": {"text": "강가의 성을 얻었다 — 성연의 바람 기록이 그날 밤 정확히 들어맞았다", "hint": "책사 충성 +8 · 금 +600 · 수도 치안 +5", "fx": [{"t": "loyal", "n": 8}, {"t": "gold", "n": 600}, {"t": "sec", "n": 5}]},
-		"lose": {"text": "강 위의 싸움을 끝내 못 이겼다 — 성연이 조용히 기록을 접었다", "hint": "책사 충성 -4", "fx": [{"t": "loyal", "n": -4}]}},
+		"win": {"text": "강가의 성을 얻었다 — 성연의 바람 기록이 그날 밤 정확히 들어맞았다", "hint": "성연 충성 +8 · 금 +600 · 수도 치안 +5", "fx": [{"t": "loyalId", "id": "tm_seongyeon", "n": 8}, {"t": "gold", "n": 600}, {"t": "sec", "n": 5}]},
+		"lose": {"text": "강 위의 싸움을 끝내 못 이겼다 — 성연이 조용히 기록을 접었다", "hint": "성연 충성 -4", "fx": [{"t": "loyalId", "id": "tm_seongyeon", "n": -4}]}},
 	"r3_duel": {"kind": "duel", "on": ["atk", "def"], "foe": "의체 무사 영점", "title": "의체 무사의 일기토",
 		"intro": "영점이 의체 팔로 창을 세웠다. \"나보다 강한 장수 밑에만 선다.\" {맹장} 이(가) 마당에 나선다 — 세 수 가운데 하나씩, 승부가 날 때까지.",
-		"win": {"text": "{맹장} 이(가) 영점을 꺾었다 — 영점이 창을 거두고 함께 떠돌던 장수를 소개했다", "hint": "재야 인재 합류", "fx": [{"t": "recruitFree", "bonus": 10}]},
+		"win": {"text": "{맹장} 이(가) 영점을 꺾었다 — 영점이 창을 거두고 무릎을 꿇었다", "hint": "영점 합류", "fx": [{"t": "recruit", "id": "tm_yeongjeom", "bonus": 10}]},
 		"lose": {"text": "{맹장} 이(가) 밀렸다 — 영점이 코웃음 치며 {이웃} 에게로 떠났다", "hint": "영점이 이웃 세력으로", "fx": []}},
 	## G-0101 4막 — 웹 "목표 성(prov fu·pf) 차지 열두 달"을 고돗은 2·3막처럼 열두 달 안에 성 하나 더. 일기토는 웹처럼 어떤 답이든(상대가 우리 편이 아니므로).
 	"r4_rift": {"kind": "own", "on": "*", "months": 12, "title": "균열의 왕 · 문 곁의 성",
 		"intro": "균열의 문이 열렸다 — 열두 달 안에 성을 하나 더 손에 넣어 문을 눌러라.",
-		"win": {"text": "균열 곁의 성을 빼앗아 문을 눌렀다 — 성벽 위에서 강서의 특공대가 함성을 올렸다", "hint": "수도 훈련 +8 · 책사 충성 +5 · 금 +600", "fx": [{"t": "train", "n": 8}, {"t": "loyal", "n": 5}, {"t": "gold", "n": 600}]},
+		"win": {"text": "균열 곁의 성을 빼앗아 문을 눌렀다 — 성벽 위에서 강서의 특공대가 함성을 올렸다", "hint": "수도 훈련 +8 · 강서 충성 +5 · 금 +600", "fx": [{"t": "train", "n": 8}, {"t": "loyalId", "id": "tm_gangseo", "n": 5}, {"t": "gold", "n": 600}]},
 		"lose": {"text": "열두 달이 지나도록 문 곁의 성을 못 얻었다 — 성혼의 기세가 성벽을 갉았다", "hint": "수도 치안 -6", "fx": [{"t": "sec", "n": -6}]}},
 	"r4_plague": {"kind": "own", "on": "*", "months": 12, "title": "역병의 근원 · 폐허 곁의 성",
 		"intro": "역병의 근원이 드러났다 — 열두 달 안에 성을 하나 더 손에 넣어 근원을 막아라.",
@@ -240,7 +241,7 @@ const STAGES := {
 		"lose": {"text": "말이 어긋나 사신이 불쾌해했다 — 번역기가 조용해졌다", "hint": "이웃 우호 -5", "fx": [{"t": "rel", "n": -5}]}},
 	"r5_south": {"kind": "own", "on": "*", "months": 12, "title": "남해의 배 · 포구의 성",
 		"intro": "남해 항로가 보인다 — 열두 달 안에 성을 하나 더 손에 넣어 포구를 열어라.",
-		"win": {"text": "포구의 성을 얻어 항로를 열었다 — 성연의 항법이 섬마다 표류물을 짚어 냈다", "hint": "책사 충성 +5 · 금 +700 · 수도 훈련 +6", "fx": [{"t": "loyal", "n": 5}, {"t": "gold", "n": 700}, {"t": "train", "n": 6}]},
+		"win": {"text": "포구의 성을 얻어 항로를 열었다 — 성연의 항법이 섬마다 표류물을 짚어 냈다", "hint": "성연 충성 +5 · 금 +700 · 수도 훈련 +6", "fx": [{"t": "loyalId", "id": "tm_seongyeon", "n": 5}, {"t": "gold", "n": 700}, {"t": "train", "n": 6}]},
 		"lose": {"text": "포구를 얻지 못한 채 계절이 갔다 — 표류물은 다른 이의 것이 되었다", "hint": "금 -300", "fx": [{"t": "gold", "n": -300}]}},
 	"r2_debate": {"kind": "debate", "on": "*", "title": "논객의 설전 · 재야 학자",
 		"intro": "명변이 이름난 재야 학자를 마주 앉혔다. 문답 세 개 — 두 개 이상 맞히면 학자가 스스로 곁으로 온다.",
@@ -248,7 +249,7 @@ const STAGES := {
 		"lose": {"text": "학자가 웃으며 돌아섰다 — 그래도 서당엔 토론 소리가 남았다", "hint": "문화 문답 +5", "fx": [{"t": "quiz", "n": 5}]}},
 }
 
-const FX_KINDS := ["gold", "food", "sec", "train", "loyal", "rel", "recruitFree", "quiz"]
+const FX_KINDS := ["gold", "food", "sec", "train", "loyal", "rel", "recruitFree", "quiz", "recruit", "loyalId"]
 const DEBATE_WIN := 2
 const DUEL_MAX := 5   # 일기토 최대 수 — 다 비기면 짐
 
@@ -371,7 +372,8 @@ static func fill(text: String, names: Dictionary) -> String:
 
 
 ## 목표판 한 줄. 다 끝났으면 "".
-static func objective(st: Dictionary, months: int, cities: int) -> String:
+## time_n — 우리 사람이 된 시간 틈 사람 수(-1 = 모름). 7막(allTime)은 "n/9 — 이기기 전에 모아야" 를 보인다(G-0126 — 이기면 달이 멈춘다).
+static func objective(st: Dictionary, months: int, cities: int, time_n := -1) -> String:
 	var sg: Dictionary = st.get("stage", {})
 	if String(sg.get("kind", "")) == "own":
 		var left_m := int(sg.months) - (months - int(sg.start))
@@ -384,4 +386,8 @@ static func objective(st: Dictionary, months: int, cities: int) -> String:
 	var when_txt := "곧" if left <= 0 else "%d달 뒤" % left
 	if w.has("orCities") and left > 0:
 		when_txt += " 또는 성 %d" % int(w.orCities)
+	if bool(w.get("victory", false)):
+		when_txt = "이기면"
+	if bool(w.get("allTime", false)) and time_n >= 0 and time_n < 9:
+		when_txt = "시간 틈 %d/9 — 이기기 전에 모아야" % time_n
 	return "📜 %s 다음: %s %s (%s)" % [ACT_NAMES.get(int(c.act), ""), String(c.emoji), String(c.title), when_txt]

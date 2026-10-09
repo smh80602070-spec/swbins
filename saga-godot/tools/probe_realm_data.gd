@@ -208,7 +208,7 @@ func _initialize() -> void:
 			any_pick += 1
 			pick_ok = pick_ok and Traits.has_trait(String(c.id), String(Events.EVENTS[k].trait))
 	check(pick_ok and any_pick > 40 and Events.pick_for("sg_caocao", "rival", rng2) != "" and Events.by_key("rival_chance").ambition == "rival" and Events.by_key("zzz").is_empty(), "이벤트 고르기: 그 인물의 특성에 맞는 것만(%d/200명) · 야망 숙적이면 숙적 이벤트도 후보" % any_pick)
-	var pool_ok: bool = Characters.find(String(Pool.STARTING_OFFICER)) != null and Pool.HIDDEN_POOL_BY_CITY.size() == 10
+	var pool_ok: bool = Characters.find(String(Pool.STARTING_OFFICER)) != null and Pool.HIDDEN_POOL_BY_CITY.size() == 3
 	for cid in Pool.HIDDEN_POOL_BY_CITY:
 		pool_ok = pool_ok and Cities.any_by_id(String(cid)).size() > 0
 		for oid in Pool.HIDDEN_POOL_BY_CITY[cid]:

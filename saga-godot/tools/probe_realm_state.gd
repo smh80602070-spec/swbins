@@ -139,10 +139,9 @@ func _initialize() -> void:
 	S.current_city = "chenliu"
 	S.officer_city.sg_zhugeliang = "chenliu"
 	var se: Dictionary = S.execute_order("search")
-	## G-0117 — 진류엔 재야가 둘(jp_musashi·시간 틈 tm_doha), 지력 100 이면 둘 다 손이 닿아 어느 쪽이든 나온다.
-	var chen: Array = ["jp_musashi", "tm_doha"]
+	## G-0117·G-0126 — 진류 재야는 표(realm_officer_pool)에서 읽는다(원래 재야 + 시간 틈). 지력 100 이면 앞쪽 여럿에 손이 닿아 어느 쪽이든 나온다.
+	var chen: Array = load("res://games/saga_realm/data/realm_officer_pool.gd").HIDDEN_POOL_BY_CITY.chenliu
 	var who := String(se.found)
-	var other := String(chen[1] if who == chen[0] else chen[0])
 	check(se.ok and who in chen and S.found == [who], "수색: 그 성의 재야를 찾아냄(진류 → 숨은 인재 %s)" % who)
 	var hired := false
 	var tries := 0
@@ -155,11 +154,22 @@ func _initialize() -> void:
 	check(hired and S.roster.has(who) and S.found.is_empty() and S.officer_city.get(who, "") == "chenliu" and S.officer_loyal.get(who, -1) == Diplo.base_loyal(who, S.current_lord_id) and S._done_this_month.get(who, false), "등용: 영입되면 로스터·그 성 배치·충성 기본값·그 달은 일 안 함(%d번째 시도)" % tries)
 	S._done_this_month.clear()
 	S.gold = 9000
-	var se2: Dictionary = S.execute_order("search")
-	check(se2.ok and se2.found == other, "남은 재야 %s 를 찾음(G-0117)" % other)
+	## 남은 재야를 다 찾을 때까지 수색 — 매번 아직 안 찾은 진류 재야가 하나씩, 다 찾으면 아무 일 없음
+	var seen := [who]
+	var each_new := true
+	for _i in chen.size() - 1:
+		S._done_this_month.clear()
+		var sx: Dictionary = S.execute_order("search")
+		each_new = each_new and sx.ok and String(sx.found) in chen and not (String(sx.found) in seen)
+		seen.append(String(sx.found))
+	check(each_new and seen.size() == chen.size(), "남은 재야를 하나씩 다 찾음 %s" % [seen])
 	S._done_this_month.clear()
 	var se3: Dictionary = S.execute_order("search")
-	check(se3.ok and se3.found == "" and S.found == [other], "찾을 재야가 없으면 아무 일 없음")
+	check(se3.ok and se3.found == "" and S.found.size() == chen.size() - 1, "찾을 재야가 없으면 아무 일 없음")
+	## G-0126 — 학식(_reveal_free)은 원래 재야를 시간 틈 사람보다 먼저
+	_reset()
+	var first_free: String = S._reveal_free()
+	check(not (first_free in load("res://games/saga_realm/data/realm_officer_pool.gd").TIME_FOLK) and first_free != "", "학식 첫 재야는 원래 재야 %s" % first_free)
 	# 성장
 	_reset()
 	S._growth("sg_zhugeliang")

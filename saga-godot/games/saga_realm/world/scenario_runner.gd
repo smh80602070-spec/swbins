@@ -77,7 +77,7 @@ func months() -> int:
 
 
 func objective() -> String:
-	return Scenario.objective(st, months(), RealmSaveState.cities.size())
+	return Scenario.objective(st, months(), RealmSaveState.cities.size(), time_count())
 
 
 func is_busy() -> bool:
@@ -114,10 +114,15 @@ func neighbor_city() -> String:
 
 ## G-0117 — 시간 틈 사람 아홉(realm_officer_pool TIME_FOLK)이 모두 roster 에 있나(7막 when.allTime).
 static func all_time() -> bool:
+	return time_count() == RealmOfficerPool.TIME_FOLK.size()
+
+## 우리 사람이 된 시간 틈 사람 수(목표판 n/9, G-0126).
+static func time_count() -> int:
+	var n := 0
 	for id: String in RealmOfficerPool.TIME_FOLK:
-		if not (id in RealmSaveState.roster):
-			return false
-	return true
+		if id in RealmSaveState.roster:
+			n += 1
+	return n
 
 
 ## {맹장} — roster 와 군주 중 무력 으뜸.
@@ -174,6 +179,14 @@ func apply_fx(fx: Array) -> void:
 				var got := recruit_free(int(f.get("bonus", 0)))
 				if got != "":
 					Toast.show(get_parent(), "👤 재야의 %s 이(가) 곁에 섰다." % _display(got), 4.0)
+			"recruit":   # G-0126 — 웹 그대로 그 사람(시간 틈)을 바로 등용
+				var rid := String(f.get("id", ""))
+				if recruit_id(rid, int(f.get("bonus", 0))):
+					Toast.show(get_parent(), "👤 %s 이(가) 곁에 섰다." % _display(rid), 4.0)
+			"loyalId":   # G-0126 — 그 사람이 우리 사람이면 충성
+				var lid := String(f.get("id", ""))
+				if lid in RealmSaveState.roster:
+					RealmSaveState.officer_loyal[lid] = clampi(int(RealmSaveState.officer_loyal.get(lid, 50)) + n, 0, 100)
 			"quiz":
 				RealmSaveState.quiz["correct"] = int(RealmSaveState.quiz.get("correct", 0)) + n
 			"rel":
@@ -183,6 +196,17 @@ func apply_fx(fx: Array) -> void:
 					var d: Dictionary = RealmSaveState.diplomacy.get(fid, {"relation": 40, "truce_months": 0})
 					d.relation = clampi(int(d.get("relation", 40)) + n, 0, 100)
 					RealmSaveState.diplomacy[fid] = d
+
+
+## G-0126 — 정한 사람(id)을 바로 등용(수도, 시작 충성 + bonus). 이미 우리 사람이거나 없는 사람이면 false(금 +300 갈음 없음 — 웹 recruit 와 같음).
+func recruit_id(id: String, bonus: int) -> bool:
+	if id == "" or id in RealmSaveState.roster or Characters.find(id) == null:
+		return false
+	RealmSaveState.found.erase(id)
+	RealmSaveState.roster.append(id)
+	RealmSaveState.officer_city[id] = capital()
+	RealmSaveState.officer_loyal[id] = clampi(RealmDiplo.base_loyal(id, RealmSaveState.current_lord_id) + bonus, 0, 100)
+	return true
 
 
 ## 재야 중 가장 귀한 이 하나를 바로 등용(수도에 배치, 시작 충성 + bonus). 재야가 없으면 "" 이고 금 +300 으로 갈음.

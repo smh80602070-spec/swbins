@@ -209,8 +209,7 @@ func _do_search(officer_id: String) -> Dictionary:
 	if hidden.is_empty():
 		return {"ok": true, "found": ""}
 
-	hidden.sort_custom(func(a: String, b: String) -> bool:
-		return int(Characters.find(a).rarity) > int(Characters.find(b).rarity))
+	hidden.sort_custom(_hidden_first)
 
 	var wis: float = _effective_stat(officer_id, "wisdom")
 	var reach := clampi(roundi(hidden.size() * wis / 130.0), 1, hidden.size())
@@ -435,6 +434,15 @@ func quiz_answer(p: Dictionary, choice_idx: int) -> Dictionary:
 ## 안 드러난(found·roster 어디에도 없는) 사람을 rarity 내림차순으로
 ## 하나 고른다. `_do_search()`(지력 판정 있음)와 달리 판정이 없다 —
 ## 원작도 study()가 부를 땐 그냥 가장 귀한 사람을 바로 준다.
+## 재야 정렬(G-0126) — 원래 재야를 시간 틈 사람보다 앞에, 그 안에선 귀한 순. 수색은 지력 손이 닿는 앞쪽에서 고르고 학식·카드는 맨 앞.
+func _hidden_first(a: String, b: String) -> bool:
+	var ta := a in RealmOfficerPool.TIME_FOLK
+	var tb := b in RealmOfficerPool.TIME_FOLK
+	if ta != tb:
+		return tb
+	return int(Characters.find(a).rarity) > int(Characters.find(b).rarity)
+
+
 func _reveal_free() -> String:
 	var pool: Array = []
 	for city_id: String in RealmCities.playable_ids():
@@ -445,8 +453,7 @@ func _reveal_free() -> String:
 	if pool.is_empty():
 		return ""
 
-	pool.sort_custom(func(a: String, b: String) -> bool:
-		return int(Characters.find(a).rarity) > int(Characters.find(b).rarity))
+	pool.sort_custom(_hidden_first)
 	var got: String = pool[0]
 	found.append(got)
 	return got
