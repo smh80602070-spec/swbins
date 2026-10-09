@@ -15,7 +15,7 @@
   "cfg": 6.0,
   "sampler": "Euler a",
   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow",
-  "variants": 3
+  "variants": 2
  },
  "items": [
   {
