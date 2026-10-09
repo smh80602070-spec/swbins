@@ -472,7 +472,7 @@ func _build_snow() -> void:
 	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	m.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
 	m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	m.albedo_color = Color(1, 1, 1, 0.9)
+	m.albedo_color = Color(0.82, 0.85, 0.9, 0.85)   # G-0127 — 순백 1.0 이면 화면 번짐(glow)이 눈송이마다 큰 흐린 원을 그렸다
 	## 09-30 — 무늬 없는 정사각 빌보드라 가까운 눈송이가 각진 흰 네모로 보였다(창 모드 f_pass_view). 가운데가 밝고 가장자리가 녹는 동그란 점으로.
 	var g := Gradient.new()
 	g.colors = PackedColorArray([Color(1, 1, 1, 1), Color(1, 1, 1, 0)])
@@ -485,6 +485,10 @@ func _build_snow() -> void:
 	gt.width = 32
 	gt.height = 32
 	m.albedo_texture = gt
+	## G-0127 — 카메라 바로 앞 눈송이가 화면에 큰 흰 원으로 보였다(f_pass_view) — 3m 안은 사라지고 6m 까지 서서히 나타난다(0.1m 눈송이가 2m 앞이면 화면에 25px 원).
+	m.distance_fade_mode = BaseMaterial3D.DISTANCE_FADE_PIXEL_ALPHA
+	m.distance_fade_min_distance = 3.0
+	m.distance_fade_max_distance = 6.0
 	q.material = m
 	_snow.mesh = q
 	_snow.emitting = false
@@ -497,6 +501,26 @@ static func calm() -> bool:
 
 func snow_amount() -> int:
 	return _snow.amount
+
+## G-0127 — 눈밭 그림자가 새파랬다(주변광이 하늘 100% — 밝은 눈은 하얗게 날고 그늘은 하늘빛 그대로, 58,112,185).
+## 고원 안에서만 주변광의 하늘 몫을 줄이고 옅은 회청을 섞는다 — 다섯 판 공용 값을 바꾸면 신상·절벽의 푸른 그늘(입체감)까지 날아가 지역 안으로 좁혔다.
+const SNOW_AMBIENT_SKY := 0.5
+const SNOW_AMBIENT_COLOR := Color(0.9, 0.91, 0.95)
+var _amb_saved: Array = []   # [하늘 몫, 색] — 고원을 나가면 되돌린다
+
+func _snow_ambient(on: bool) -> void:
+	var env: Environment = get_viewport().world_3d.environment if get_viewport() and get_viewport().world_3d else null
+	if env == null:
+		return
+	if on and _amb_saved.is_empty():
+		_amb_saved = [env.ambient_light_sky_contribution, env.ambient_light_color]
+		env.ambient_light_sky_contribution = SNOW_AMBIENT_SKY
+		env.ambient_light_color = SNOW_AMBIENT_COLOR
+	elif not on and not _amb_saved.is_empty():
+		env.ambient_light_sky_contribution = float(_amb_saved[0])
+		env.ambient_light_color = _amb_saved[1]
+		_amb_saved = []
+
 
 func player_inside() -> bool:
 	return _player != null and TestMap.region_at(_player.global_position) == REGION
@@ -519,6 +543,7 @@ func _process(delta: float) -> void:
 		_refresh_away()
 	if _snow.emitting != inside:
 		_snow.emitting = inside
+		_snow_ambient(inside)
 	if inside:
 		_snow.global_position = _player.global_position + Vector3(0, 14, 0)
 
