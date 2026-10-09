@@ -11,10 +11,12 @@
    "era": "past"
   },
   "batik_indigo": {
-   "model": "animagine-xl-4.0-opt",
-   "seed": 3647156923,
-   "seam": "offset",
-   "era": "past"
+   "model": "z-image-turbo",
+   "seed": 1499673364,
+   "seam": "quad",
+   "era": "past",
+   "prompt": "A flat, evenly lit, top-down close-up photo of indigo batik fabric with white wax resist pattern. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "brocade_gold": {
    "model": "animagine-xl-4.0-opt",
@@ -23,22 +25,28 @@
    "era": "past"
   },
   "buffalo_plaid": {
-   "model": "animagine-xl-4.0-opt",
-   "seed": 3408256331,
-   "seam": "offset",
-   "era": "modern"
+   "model": "z-image-turbo",
+   "seed": 1260772772,
+   "seam": "quad",
+   "era": "modern",
+   "prompt": "A flat, evenly lit, top-down close-up photo of red and black buffalo plaid flannel. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "camo_green": {
-   "model": "animagine-xl-4.0-opt",
-   "seed": 1124456053,
-   "seam": "offset",
-   "era": "modern"
+   "model": "z-image-turbo",
+   "seed": 1124456142,
+   "seam": "quad",
+   "era": "modern",
+   "prompt": "A flat, evenly lit, top-down close-up photo of green camouflage pattern fabric. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "canvas_beige": {
-   "model": "animagine-xl-4.0-opt",
-   "seed": 2981982294,
-   "seam": "offset",
-   "era": "past"
+   "model": "z-image-turbo",
+   "seed": 834498734,
+   "seam": "quad",
+   "era": "past",
+   "prompt": "A flat, evenly lit, top-down close-up photo of beige canvas fabric with visible weave. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "carbon_weave": {
    "model": "animagine-xl-4.0-opt",
@@ -65,22 +73,28 @@
    "era": "past"
   },
   "cyber_gradient": {
-   "model": "animagine-xl-4.0-opt",
-   "seed": 1511897195,
-   "seam": "offset",
-   "era": "future"
+   "model": "z-image-turbo",
+   "seed": 1511897284,
+   "seam": "mirror",
+   "era": "future",
+   "prompt": "A flat, evenly lit, top-down close-up photo of magenta and cyan gradient fabric with thin grid lines. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "damask_crimson": {
-   "model": "animagine-xl-4.0-opt",
-   "seed": 3431283484,
-   "seam": "offset",
-   "era": "past"
+   "model": "z-image-turbo",
+   "seed": 1283799925,
+   "seam": "quad",
+   "era": "past",
+   "prompt": "A flat, evenly lit, top-down close-up photo of crimson damask fabric with tonal floral pattern. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "denim_worn": {
-   "model": "animagine-xl-4.0-opt",
-   "seed": 3052228797,
-   "seam": "offset",
-   "era": "modern"
+   "model": "z-image-turbo",
+   "seed": 904745237,
+   "seam": "quad",
+   "era": "modern",
+   "prompt": "A flat, evenly lit, top-down close-up photo of faded blue denim texture with stitching. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "ethnic_geo": {
    "model": "animagine-xl-4.0-opt",
@@ -107,40 +121,52 @@
    "era": "past"
   },
   "holo_iridescent": {
-   "model": "animagine-xl-4.0-opt",
-   "seed": 2877463974,
-   "seam": "offset",
-   "era": "future"
+   "model": "z-image-turbo",
+   "seed": 729980415,
+   "seam": "quad",
+   "era": "future",
+   "prompt": "A flat, evenly lit, top-down close-up photo of iridescent holographic fabric in pink and teal. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "lace_white": {
-   "model": "animagine-xl-4.0-opt",
-   "seed": 2819237684,
-   "seam": "offset",
-   "era": "past"
+   "model": "z-image-turbo",
+   "seed": 671754124,
+   "seam": "quad",
+   "era": "past",
+   "prompt": "A flat, evenly lit, top-down close-up photo of white lace fabric with delicate floral openwork. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "leather_brown": {
-   "model": "animagine-xl-4.0-opt",
-   "seed": 2753418941,
-   "seam": "offset",
-   "era": "past"
+   "model": "z-image-turbo",
+   "seed": 605935382,
+   "seam": "quad",
+   "era": "past",
+   "prompt": "A flat, evenly lit, top-down close-up photo of plain brown cowhide leather surface, fine natural leather grain, slight wear. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "leather_studs": {
-   "model": "animagine-xl-4.0-opt",
-   "seed": 890624450,
-   "seam": "offset",
-   "era": "modern"
+   "model": "z-image-turbo",
+   "seed": 890624539,
+   "seam": "quad",
+   "era": "modern",
+   "prompt": "A flat, evenly lit, top-down close-up photo of black leather with small silver studs. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "linen_stripes": {
-   "model": "animagine-xl-4.0-opt",
-   "seed": 60570802,
-   "seam": "offset",
-   "era": "past"
+   "model": "z-image-turbo",
+   "seed": 60570891,
+   "seam": "quad",
+   "era": "past",
+   "prompt": "A flat, evenly lit, top-down close-up photo of white linen with thin blue stripes. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "sakura_pink": {
-   "model": "animagine-xl-4.0-opt",
-   "seed": 1098207445,
-   "seam": "offset",
-   "era": "past"
+   "model": "z-image-turbo",
+   "seed": 1098207533,
+   "seam": "quad",
+   "era": "past",
+   "prompt": "A flat, evenly lit, top-down close-up photo of pale pink fabric with cherry blossom petals pattern. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "scale_silver": {
    "model": "animagine-xl-4.0-opt",
@@ -161,10 +187,12 @@
    "era": "modern"
   },
   "stripes_pastel": {
-   "model": "animagine-xl-4.0-opt",
-   "seed": 516865975,
+   "model": "z-image-turbo",
+   "seed": 516866063,
    "seam": "mirror",
-   "era": "modern"
+   "era": "modern",
+   "prompt": "A flat, evenly lit, top-down close-up photo of pastel rainbow stripes cotton fabric. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "sunflower": {
    "model": "animagine-xl-4.0-opt",
@@ -179,10 +207,12 @@
    "era": "past"
   },
   "tweed_grey": {
-   "model": "animagine-xl-4.0-opt",
-   "seed": 2742816632,
-   "seam": "offset",
-   "era": "modern"
+   "model": "z-image-turbo",
+   "seed": 595333072,
+   "seam": "quad",
+   "era": "modern",
+   "prompt": "A flat, evenly lit, top-down close-up photo of grey tweed fabric with flecks. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "velvet_purple": {
    "model": "animagine-xl-4.0-opt",
@@ -203,10 +233,12 @@
    "era": "modern"
   },
   "aurora_gradient": {
-   "model": "sd_xl_base_1.0",
-   "seed": 3741224174,
-   "seam": "offset",
-   "era": "future"
+   "model": "z-image-turbo",
+   "seed": 1593740614,
+   "seam": "mirror",
+   "era": "future",
+   "prompt": "A flat, evenly lit, top-down close-up photo of smooth aurora gradient fabric in green and violet. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "bio_mesh_green": {
    "model": "sd_xl_base_1.0",
@@ -215,16 +247,20 @@
    "era": "future"
   },
   "ceramic_armor_white": {
-   "model": "sd_xl_base_1.0",
-   "seed": 264244989,
-   "seam": "offset",
-   "era": "future"
+   "model": "z-image-turbo",
+   "seed": 264245077,
+   "seam": "quad",
+   "era": "future",
+   "prompt": "A flat, evenly lit, top-down close-up photo of white ceramic armor panels with gold trim lines. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "corduroy_brown": {
-   "model": "sd_xl_base_1.0",
-   "seed": 3380839129,
-   "seam": "offset",
-   "era": "modern"
+   "model": "z-image-turbo",
+   "seed": 1233355570,
+   "seam": "quad",
+   "era": "modern",
+   "prompt": "A flat, evenly lit, top-down close-up photo of brown corduroy fabric with vertical ribs. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "crest_crane_gold": {
    "model": "sd_xl_base_1.0",
@@ -251,10 +287,12 @@
    "era": "crest"
   },
   "crimson_felt": {
-   "model": "sd_xl_base_1.0",
-   "seed": 1104956086,
-   "seam": "offset",
-   "era": "past"
+   "model": "z-image-turbo",
+   "seed": 1104956175,
+   "seam": "quad",
+   "era": "past",
+   "prompt": "A flat, evenly lit, top-down close-up photo of thick crimson felt wool with fine visible fibers. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "data_stream_blue": {
    "model": "sd_xl_base_1.0",
@@ -269,10 +307,12 @@
    "era": "future"
   },
   "graphene_black": {
-   "model": "sd_xl_base_1.0",
-   "seed": 1752766347,
-   "seam": "offset",
-   "era": "future"
+   "model": "z-image-turbo",
+   "seed": 1752766435,
+   "seam": "quad",
+   "era": "future",
+   "prompt": "A flat, evenly lit, top-down close-up photo of black graphene carbon fabric with subtle hexagon sheen. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "hex_plate_white": {
    "model": "sd_xl_base_1.0",
@@ -299,16 +339,20 @@
    "era": "past"
   },
   "ion_glow_orange": {
-   "model": "sd_xl_base_1.0",
-   "seed": 4221785502,
-   "seam": "mirror",
-   "era": "future"
+   "model": "z-image-turbo",
+   "seed": 2074301943,
+   "seam": "quad",
+   "era": "future",
+   "prompt": "A flat, evenly lit, top-down close-up photo of charcoal fabric with soft glowing orange ion streaks. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "jade_peony_silk": {
-   "model": "sd_xl_base_1.0",
-   "seed": 4115193431,
-   "seam": "offset",
-   "era": "past"
+   "model": "z-image-turbo",
+   "seed": 1967709871,
+   "seam": "mirror",
+   "era": "past",
+   "prompt": "A flat, evenly lit, top-down close-up photo of jade green silk with subtle woven peony flower pattern. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "knit_cream": {
    "model": "sd_xl_base_1.0",
@@ -323,10 +367,12 @@
    "era": "future"
   },
   "nano_scale_blue": {
-   "model": "sd_xl_base_1.0",
-   "seed": 463344723,
-   "seam": "offset",
-   "era": "future"
+   "model": "z-image-turbo",
+   "seed": 463344812,
+   "seam": "quad",
+   "era": "future",
+   "prompt": "A flat, evenly lit, top-down close-up photo of blue nanoscale armor plating pattern with tiny overlapping scales. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "neon_grid_pink": {
    "model": "sd_xl_base_1.0",
@@ -347,10 +393,12 @@
    "era": "modern"
   },
   "pinstripe_charcoal": {
-   "model": "sd_xl_base_1.0",
-   "seed": 3533645697,
-   "seam": "mirror",
-   "era": "modern"
+   "model": "z-image-turbo",
+   "seed": 1386162138,
+   "seam": "quad",
+   "era": "modern",
+   "prompt": "A flat, evenly lit, top-down close-up photo of charcoal suiting fabric with thin white pinstripes. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "plasma_veins_violet": {
    "model": "sd_xl_base_1.0",
@@ -377,10 +425,12 @@
    "era": "modern"
   },
   "smart_fabric_ripple": {
-   "model": "sd_xl_base_1.0",
-   "seed": 135417321,
-   "seam": "offset",
-   "era": "future"
+   "model": "z-image-turbo",
+   "seed": 135417410,
+   "seam": "quad",
+   "era": "future",
+   "prompt": "A flat, evenly lit, top-down close-up photo of silver smart fabric with concentric ripple pattern. The material fills the entire frame edge to edge with no folds, no wrinkles, no shadows, no border and no objects. Uniform repeating textile swatch.",
+   "redo": "K-0088 이음매 다시(평평한 견본 + 4판 띠 섞기)"
   },
   "solar_panel_dark": {
    "model": "sd_xl_base_1.0",

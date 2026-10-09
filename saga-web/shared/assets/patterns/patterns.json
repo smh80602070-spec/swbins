@@ -17,10 +17,11 @@
    "era": "past",
    "name": "batik_indigo",
    "file": "batik_indigo.webp",
-   "model": "animagine-xl-4.0-opt",
-   "seam": "offset",
-   "edge_ratio": 1.18,
-   "kb": 26
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 0.93,
+   "kb": 30,
+   "seam_ratio": 0.92
   },
   {
    "id": "brocade_gold",
@@ -37,30 +38,33 @@
    "era": "modern",
    "name": "buffalo_plaid",
    "file": "buffalo_plaid.webp",
-   "model": "animagine-xl-4.0-opt",
-   "seam": "offset",
-   "edge_ratio": 0.51,
-   "kb": 17
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 1.12,
+   "kb": 7,
+   "seam_ratio": 2.42
   },
   {
    "id": "camo_green",
    "era": "modern",
    "name": "camo_green",
    "file": "camo_green.webp",
-   "model": "animagine-xl-4.0-opt",
-   "seam": "offset",
-   "edge_ratio": 0.98,
-   "kb": 22
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 1.45,
+   "kb": 19,
+   "seam_ratio": 1.27
   },
   {
    "id": "canvas_beige",
    "era": "past",
    "name": "canvas_beige",
    "file": "canvas_beige.webp",
-   "model": "animagine-xl-4.0-opt",
-   "seam": "offset",
-   "edge_ratio": 1.29,
-   "kb": 5
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 1.27,
+   "kb": 3,
+   "seam_ratio": 1.07
   },
   {
    "id": "carbon_weave",
@@ -107,30 +111,33 @@
    "era": "future",
    "name": "cyber_gradient",
    "file": "cyber_gradient.webp",
-   "model": "animagine-xl-4.0-opt",
-   "seam": "offset",
-   "edge_ratio": 1.31,
-   "kb": 9
+   "model": "z-image-turbo",
+   "seam": "mirror",
+   "edge_ratio": 1.02,
+   "kb": 1,
+   "seam_ratio": 1.02
   },
   {
    "id": "damask_crimson",
    "era": "past",
    "name": "damask_crimson",
    "file": "damask_crimson.webp",
-   "model": "animagine-xl-4.0-opt",
-   "seam": "offset",
-   "edge_ratio": 1.19,
-   "kb": 18
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 1.44,
+   "kb": 24,
+   "seam_ratio": 1.23
   },
   {
    "id": "denim_worn",
    "era": "modern",
    "name": "denim_worn",
    "file": "denim_worn.webp",
-   "model": "animagine-xl-4.0-opt",
-   "seam": "offset",
-   "edge_ratio": 1.11,
-   "kb": 11
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 1.09,
+   "kb": 25,
+   "seam_ratio": 1.06
   },
   {
    "id": "ethnic_geo",
@@ -177,60 +184,66 @@
    "era": "future",
    "name": "holo_iridescent",
    "file": "holo_iridescent.webp",
-   "model": "animagine-xl-4.0-opt",
-   "seam": "offset",
-   "edge_ratio": 1.1,
-   "kb": 7
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 1.57,
+   "kb": 20,
+   "seam_ratio": 1.37
   },
   {
    "id": "lace_white",
    "era": "past",
    "name": "lace_white",
    "file": "lace_white.webp",
-   "model": "animagine-xl-4.0-opt",
-   "seam": "offset",
+   "model": "z-image-turbo",
+   "seam": "quad",
    "edge_ratio": 1.24,
-   "kb": 14
+   "kb": 8,
+   "seam_ratio": 1.29
   },
   {
    "id": "leather_brown",
    "era": "past",
    "name": "leather_brown",
    "file": "leather_brown.webp",
-   "model": "animagine-xl-4.0-opt",
-   "seam": "offset",
-   "edge_ratio": 1.19,
-   "kb": 10
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 1.06,
+   "kb": 1,
+   "seam_ratio": 1.06
   },
   {
    "id": "leather_studs",
    "era": "modern",
    "name": "leather_studs",
    "file": "leather_studs.webp",
-   "model": "animagine-xl-4.0-opt",
-   "seam": "offset",
-   "edge_ratio": 1.1,
-   "kb": 14
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 1.16,
+   "kb": 10,
+   "seam_ratio": 1.27
   },
   {
    "id": "linen_stripes",
    "era": "past",
    "name": "linen_stripes",
    "file": "linen_stripes.webp",
-   "model": "animagine-xl-4.0-opt",
-   "seam": "offset",
-   "edge_ratio": 1.05,
-   "kb": 6
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 1.29,
+   "kb": 17,
+   "seam_ratio": 1.13
   },
   {
    "id": "sakura_pink",
    "era": "past",
    "name": "sakura_pink",
    "file": "sakura_pink.webp",
-   "model": "animagine-xl-4.0-opt",
-   "seam": "offset",
-   "edge_ratio": 1.06,
-   "kb": 4
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 1.42,
+   "kb": 2,
+   "seam_ratio": 1.42
   },
   {
    "id": "scale_silver",
@@ -267,10 +280,11 @@
    "era": "modern",
    "name": "stripes_pastel",
    "file": "stripes_pastel.webp",
-   "model": "animagine-xl-4.0-opt",
+   "model": "z-image-turbo",
    "seam": "mirror",
-   "edge_ratio": 0.0,
-   "kb": 4
+   "edge_ratio": 1.33,
+   "kb": 6,
+   "seam_ratio": 1.33
   },
   {
    "id": "sunflower",
@@ -297,10 +311,11 @@
    "era": "modern",
    "name": "tweed_grey",
    "file": "tweed_grey.webp",
-   "model": "animagine-xl-4.0-opt",
-   "seam": "offset",
-   "edge_ratio": 1.22,
-   "kb": 9
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 1.19,
+   "kb": 21,
+   "seam_ratio": 1.17
   },
   {
    "id": "velvet_purple",
@@ -337,10 +352,11 @@
    "era": "future",
    "name": "오로라 그라데이션",
    "file": "aurora_gradient.webp",
-   "model": "sd_xl_base_1.0",
-   "seam": "offset",
-   "edge_ratio": 1.14,
-   "kb": 6
+   "model": "z-image-turbo",
+   "seam": "mirror",
+   "edge_ratio": 0.57,
+   "kb": 6,
+   "seam_ratio": 1.26
   },
   {
    "id": "bio_mesh_green",
@@ -357,20 +373,22 @@
    "era": "future",
    "name": "흰 도자 갑옷",
    "file": "ceramic_armor_white.webp",
-   "model": "sd_xl_base_1.0",
-   "seam": "offset",
-   "edge_ratio": 0.17,
-   "kb": 14
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 1.28,
+   "kb": 3,
+   "seam_ratio": 1.43
   },
   {
    "id": "corduroy_brown",
    "era": "modern",
    "name": "갈색 코듀로이",
    "file": "corduroy_brown.webp",
-   "model": "sd_xl_base_1.0",
-   "seam": "offset",
-   "edge_ratio": 1.22,
-   "kb": 3
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 1.15,
+   "kb": 9,
+   "seam_ratio": 1.06
   },
   {
    "id": "crest_crane_gold",
@@ -417,10 +435,11 @@
    "era": "past",
    "name": "진홍 펠트",
    "file": "crimson_felt.webp",
-   "model": "sd_xl_base_1.0",
-   "seam": "offset",
-   "edge_ratio": 1.2,
-   "kb": 2
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 1.55,
+   "kb": 12,
+   "seam_ratio": 1.46
   },
   {
    "id": "data_stream_blue",
@@ -447,10 +466,11 @@
    "era": "future",
    "name": "검은 그래핀",
    "file": "graphene_black.webp",
-   "model": "sd_xl_base_1.0",
-   "seam": "offset",
-   "edge_ratio": 0.53,
-   "kb": 16
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 1.46,
+   "kb": 18,
+   "seam_ratio": 2.06
   },
   {
    "id": "hex_plate_white",
@@ -497,20 +517,22 @@
    "era": "future",
    "name": "주황 이온 줄기",
    "file": "ion_glow_orange.webp",
-   "model": "sd_xl_base_1.0",
-   "seam": "mirror",
-   "edge_ratio": 0.0,
-   "kb": 4
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 1.48,
+   "kb": 2,
+   "seam_ratio": 1.48
   },
   {
    "id": "jade_peony_silk",
    "era": "past",
    "name": "옥빛 모란 비단",
    "file": "jade_peony_silk.webp",
-   "model": "sd_xl_base_1.0",
-   "seam": "offset",
-   "edge_ratio": 1.56,
-   "kb": 22
+   "model": "z-image-turbo",
+   "seam": "mirror",
+   "edge_ratio": 1.46,
+   "kb": 4,
+   "seam_ratio": 1.29
   },
   {
    "id": "knit_cream",
@@ -537,10 +559,11 @@
    "era": "future",
    "name": "푸른 나노 비늘",
    "file": "nano_scale_blue.webp",
-   "model": "sd_xl_base_1.0",
-   "seam": "offset",
-   "edge_ratio": 1.46,
-   "kb": 27
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 1.27,
+   "kb": 21,
+   "seam_ratio": 1.27
   },
   {
    "id": "neon_grid_pink",
@@ -577,10 +600,11 @@
    "era": "modern",
    "name": "숯빛 세로줄",
    "file": "pinstripe_charcoal.webp",
-   "model": "sd_xl_base_1.0",
-   "seam": "mirror",
-   "edge_ratio": 0.0,
-   "kb": 2
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 1.57,
+   "kb": 5,
+   "seam_ratio": 1.18
   },
   {
    "id": "plasma_veins_violet",
@@ -627,10 +651,11 @@
    "era": "future",
    "name": "은빛 물결 스마트 천",
    "file": "smart_fabric_ripple.webp",
-   "model": "sd_xl_base_1.0",
-   "seam": "offset",
-   "edge_ratio": 1.41,
-   "kb": 12
+   "model": "z-image-turbo",
+   "seam": "quad",
+   "edge_ratio": 0.79,
+   "kb": 12,
+   "seam_ratio": 1.16
   },
   {
    "id": "solar_panel_dark",

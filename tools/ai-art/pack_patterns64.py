@@ -64,8 +64,16 @@ def seam_ratio(a):
 
 
 def save_webp(t, p):
+    """≤ 60KB 안에서 저장 — 손실 압축 블록이 테두리 이음을 깨면(저장 뒤 다시 재서 기준 밖) 품질을 올리고, 그래도 안 되면 무손실(K-0088)."""
+    def ok():
+        a = np.asarray(Image.open(p).convert('RGB'))
+        return seam_ratio(a) <= SEAM_MAX and edge_ratio(a) <= 1.6
+    for kw in ({'quality': 85}, {'quality': 95}, {'lossless': True}):
+        t.save(p, 'WEBP', method=6, **kw)
+        if os.path.getsize(p) <= 60 * 1024 and ok():
+            return os.path.getsize(p) / 1024
     q = 85
-    while True:
+    while True:   # 기준은 못 맞춰도 크기는 지킨다(--check 가 잡는다)
         t.save(p, 'WEBP', quality=q, method=6)
         if os.path.getsize(p) <= 60 * 1024 or q <= 40:
             return os.path.getsize(p) / 1024
@@ -88,17 +96,24 @@ def replace(gen_dir, px=256):
         if key not in rows:
             print('정본에 없는 id', key)
             continue
-        best = None
+        cands = []
         for f in fs:
             src = Image.open(os.path.join(gen_dir, f))
-            for method, t in (('quad', seamless(src, px, flatten=0.85)), ('mirror', mirror_tile(src, px))):
+            # 그라데이션은 반복과 본질이 충돌 — 거울만(평탄화가 그라데이션을 지운다)
+            ways = ((('mirror', mirror_tile(src, px)),) if 'gradient' in key else
+                    (('quad', seamless(src, px, flatten=0.85)), ('mirror', mirror_tile(src, px))))
+            for method, t in ways:
                 a = np.asarray(t)
                 sr, er = seam_ratio(a), edge_ratio(a)
-                score = (0 if sr <= SEAM_MAX and er <= 1.6 else 1, 0 if method == 'quad' else 1, max(sr / SEAM_MAX, er / 1.6))
-                if best is None or score < best[0]:
-                    best = (score, f, t, method, sr, er)
-        _s, f, t, method, sr, er = best
-        kb = save_webp(t, os.path.join(CANON, key + '.webp'))
+                score = (0 if sr <= SEAM_MAX and er <= 1.6 else 1, 0 if method == 'quad' else 1, -float(a.std()))   # 통과한 것 중 무늬가 풍부한 쪽(이음매는 다 1 안팎)
+                cands.append((score, f, t, method))
+        dst = os.path.join(CANON, key + '.webp')
+        for _s, f, t, method in sorted(cands, key=lambda c: c[0]):   # 저장(≤60KB) 뒤에도 기준 안인 첫 후보
+            kb = save_webp(t, dst)
+            a = np.asarray(Image.open(dst).convert('RGB'))
+            sr, er = seam_ratio(a), edge_ratio(a)
+            if sr <= SEAM_MAX and er <= 1.6:
+                break
         lic = json.load(open(os.path.join(gen_dir, f[:-4] + '.license.json'), encoding='utf-8'))
         rows[key].update({'model': lic.get('model'), 'seam': method, 'edge_ratio': round(er, 2), 'seam_ratio': round(sr, 2), 'kb': round(kb)})
         prov['items'][key] = dict(prov['items'].get(key, {}), model=lic.get('model'), seed=lic.get('seed'), seam=method,
