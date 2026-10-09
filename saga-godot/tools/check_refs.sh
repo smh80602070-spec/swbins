@@ -21,4 +21,13 @@ if [ -n "$core" ]; then
   echo "$core"
   bad=1
 fi
+# G-0121 — saga_core 가 판 autoload(project.godot [autoload] 중 res://games/ 경로)를 이름으로 직접 부르면 안 된다(경로 문자열 없이 판을 부르는 길). 주석 줄은 뺀다.
+names=$(grep -E '^[A-Za-z0-9_]+="\*res://games/' project.godot | cut -d= -f1 | paste -sd'|')
+if [ -n "$names" ]; then
+  auto=$(grep -rInwE --include=*.gd --include=*.tscn "($names)" saga_core | grep -v "check_refs:allow" | awk -F: '{ c = $0; sub(/^[^:]*:[^:]*:/, "", c); if (c !~ /^[ \t]*#/) print substr($0, 1, 200) }')
+  if [ -n "$auto" ]; then
+    echo "$auto"
+    bad=1
+  fi
+fi
 exit $bad

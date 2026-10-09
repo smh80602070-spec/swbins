@@ -129,6 +129,11 @@ var _scenario: Node   # G-0085 이야기 엔진(world/scenario_runner.gd)
 var _session_start_cleared := 0  # 표준 B(세션 카드) — 이번 세션에 새로 연 방 수 계산용
 
 
+## 탈것 열림(saga_core mount.gd game_progress) — 클리어한 방 수 ×4(7방이면 28, 이야기 장 문턱에 맞춤).
+func mount_progress() -> int:
+	return DungeonSaveState.rooms_cleared.count(true) * 4
+
+
 ## 배경음 고르기(1초마다, bgm_picker) — 난입 중이거나 살아 있는 층 보스가 플레이어 곁(BOSS_BGM_M, 한 방 안)이면 전투곡.
 ## G-0118 — 예전엔 "보스 무리에 아무나 있으면"이라, 3·6층 보스가 처음부터 서 있는 이 씬은 늘 전투곡이었다.
 const BOSS_BGM_M := 10.0

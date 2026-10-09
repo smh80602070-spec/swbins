@@ -3,7 +3,7 @@ extends Button
 ## HUD 씬에서 game_id 만 정한다. 판 이름 → 세이브 autoload·저장 함수는 아래 표(사가나락만 저장에 플레이어가 든다).
 
 const Screen := preload("res://saga_core/ui/save_transfer_screen.gd")
-const STATES := {"dungeon": "DungeonSaveState", "forest": "ForestSaveState", "story": "StorySaveState", "realm": "RealmSaveState"}
+const STATES := {"dungeon": "DungeonSaveState", "forest": "ForestSaveState", "story": "StorySaveState", "realm": "RealmSaveState"}   # check_refs:allow — 판 세이브를 이름으로 get_node(옮기기 단추는 다섯 판 공용)
 
 @export var game_id := ""
 

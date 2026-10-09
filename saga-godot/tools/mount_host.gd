@@ -59,7 +59,8 @@ func _ready() -> void:
 	_m.call("mount", "pt_jeolyeong")
 	for _i in 10:
 		await get_tree().physics_frame
-	_check("mounted", bool(_p.get("mounted")) and float(_p.get("ride_height")) > 0.5, "ride=%.2f" % float(_p.get("ride_height")))
+	## G-0121 — 기준 0.5 는 안장 방식(G-0024 후속, 말 0.35) 전 값 — probe_mount 와 같은 0.2 로.
+	_check("mounted", bool(_p.get("mounted")) and float(_p.get("ride_height")) > 0.2, "ride=%.2f" % float(_p.get("ride_height")))
 	x0 = _p.global_position.x
 	Input.action_press("move_left")
 	for _i in 30:

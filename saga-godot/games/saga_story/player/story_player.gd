@@ -40,6 +40,11 @@ func heal_pct(pct: float) -> void:
 	hp = clampf(hp + max_hp * pct, 0.0, max_hp)
 
 
+## 탈것 열림(saga_core mount.gd game_progress) — 끝낸 본편 사명 ×2(13이면 26, 이야기 장 문턱에 맞춤).
+func mount_progress() -> int:
+	return mini(StorySaveState.quests_done.size(), 13) * 2
+
+
 func _ready() -> void:
 	if body_id != "":   # G-0030 — 새 인물 몸으로
 		visual = VroidBody.wear(visual, body_id)

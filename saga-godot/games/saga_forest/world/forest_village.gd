@@ -21,6 +21,11 @@ var _player: Node3D = null
 var _scenario: Node   # G-0086 이야기 엔진(world/scenario_runner.gd)
 
 
+## 탈것 열림(saga_core mount.gd game_progress) — 끝낸 주민 부탁 ×5(6이면 30, 이야기 장 문턱에 맞춤).
+func mount_progress() -> int:
+	return ForestSaveState.quests_done.size() * 5
+
+
 func _ready() -> void:
 	## 가로 화면이면 UI 기준 크기를 바꿔 글자가 깨알만 하지 않게(saga_core/ui/orientation_scale.gd).
 	add_child(preload("res://saga_core/ui/orientation_scale.gd").new())

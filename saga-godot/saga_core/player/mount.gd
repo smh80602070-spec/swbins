@@ -125,16 +125,15 @@ func is_flying_mount() -> bool:
 func owned() -> Array:
 	return Mounts.unlocked(int(_player.call("mount_chapter")) if _player.has_method("mount_chapter") else game_progress())
 
-## 판마다 진행을 이야기 장(mounts.gd req_ch 2·5·8·10·16·26)에 맞춘 값으로 — 사가나락: 클리어한 방 수 ×4(7방이면 28),
-## 사가마을: 끝낸 주민 부탁 ×5(6이면 30), 사가종횡: 끝낸 본편 사명 ×2(13이면 26). 그 밖의 곳은 전부 열림.
+## 판마다 진행을 이야기 장(mounts.gd req_ch 2·5·8·10·16·26)에 맞춘 값으로 — 조상 가운데 `mount_progress()` 를 가진 첫 노드가 준다
+## (사가나락 test_room 방 ×4 · 사가마을 forest_village 부탁 ×5 · 사가종횡 story_player 사명 ×2). 없는 곳은 전부 열림(99).
+## G-0121 — 예전엔 여기서 판 세이브(Dungeon/Forest/StorySaveState)를 직접 읽었다(saga_core 는 판을 안 부른다).
 func game_progress() -> int:
-	var sp := _game_path()
-	if sp.contains("saga_dungeon"):
-		return DungeonSaveState.rooms_cleared.count(true) * 4
-	if sp.contains("saga_forest"):
-		return ForestSaveState.quests_done.size() * 5
-	if sp.contains("saga_story"):
-		return mini(StorySaveState.quests_done.size(), 13) * 2
+	var n: Node = get_parent()
+	while n != null:
+		if n.has_method("mount_progress"):
+			return int(n.call("mount_progress"))
+		n = n.get_parent()
 	return 99
 
 func _unhandled_input(event: InputEvent) -> void:
