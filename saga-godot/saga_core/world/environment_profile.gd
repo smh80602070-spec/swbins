@@ -40,6 +40,12 @@ func _pick_environment() -> void:
 	var scene_path := owner.scene_file_path if owner != null else ""
 	if not scene_path.begins_with(TOON_SKY_SCENE_PREFIX):
 		environment = base
+		## G-0148 — 다른 네 판의 바깥 씬도 사실적 하늘(사용자 "다섯판 모두"). 안개·노출·톤은 그 판 값 그대로, 하늘만 바꾼다.
+		## 동굴·미궁·던전 방은 하늘이 안 보이고 하늘빛 주변광만 바뀌어 실내 밝기가 흔들리니 뺀다.
+		if _real_sky_scene(scene_path):
+			var env2 := base.duplicate() as Environment
+			env2.sky = _real_sky()
+			environment = env2
 		return
 	var env := base.duplicate() as Environment
 	var mat := ShaderMaterial.new()
@@ -66,3 +72,23 @@ func _pick_environment() -> void:
 	env.glow_intensity = 0.35
 	env.fog_sky_affect = 0.35   # 안개가 하늘까지 덮으면 하늘이 허옇게 바랬다 — 하늘은 하늘빛 그대로
 	environment = env
+
+
+## G-0141·G-0148 — 사실적 하늘(sky_real) 한 벌. 구름 흐름·노을 값은 GO 만 sky_panorama 가 넣고, 다른 판은 기본값(한낮·덮개 0.45).
+static func _real_sky() -> Sky:
+	var mat := ShaderMaterial.new()
+	mat.shader = load("res://saga_core/shaders/sky_real.gdshader")
+	mat.set_shader_parameter("horizon_color", SKY_HORIZON_REAL)
+	var sky := Sky.new()
+	sky.sky_material = mat
+	sky.process_mode = Sky.PROCESS_MODE_INCREMENTAL
+	return sky
+
+
+## G-0148 — GO 밖에서 사실적 하늘을 거는 씬: 사가마을·사가천하 전부, 사가종횡은 동굴·미궁 빼고. 사가나락은 던전 방이라 안 건다.
+static func _real_sky_scene(path: String) -> bool:
+	if path.begins_with("res://games/saga_forest/") or path.begins_with("res://games/saga_realm/"):   # check_refs:allow — 경로 판별 문자열
+		return true
+	if path.begins_with("res://games/saga_story/"):   # check_refs:allow
+		return not (path.contains("Cave") or path.contains("Labyrinth"))
+	return false

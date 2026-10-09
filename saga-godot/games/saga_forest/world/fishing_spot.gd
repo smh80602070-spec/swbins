@@ -65,7 +65,12 @@ func _ready() -> void:
 	var pond := MeshInstance3D.new()
 	pond.name = "Pond"
 	pond.mesh = pond_mesh()
-	pond.material_override = WorldCurveMaterial.vertex_color_material(CURVE_AMOUNT, 0.5)
+	## G-0148 — 사실적 물(curved_water: 잔물결·하늘 반사·깊이 물빛, 구면 투영 그대로).
+	WorldCurveMaterial.ensure_global_registered()
+	var water := ShaderMaterial.new()
+	water.shader = preload("res://saga_core/shaders/curved_water.gdshader")
+	water.set_shader_parameter("curve_amount", CURVE_AMOUNT)
+	pond.material_override = water
 	add_child(pond)
 	_build_rim()
 

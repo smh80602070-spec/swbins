@@ -84,7 +84,8 @@ void sky() {
 			t = mix(t, pow(t, 0.6), warm);   // 노을빛이 지평선에서 더 높이 번진다
 			col = mix(hor, zen, t);
 		} else {
-			col = mix(horizon_color, ground_color, smoothstep(0.0, 0.1, -h));
+			// G-0148 — 지평선 아래: 옆 스크롤(사가종횡)은 여기가 화면 아래 절반이라, 회색 바닥 판 대신 지평선 빛이 천천히 옅게 가라앉는다.
+			col = mix(horizon_color, mix(horizon_color, ground_color, 0.35), smoothstep(0.0, 0.5, -h));
 		}
 		// 미 산란 — 해 둘레 빛무리(넓은 것·좁은 것), 해 원반.
 		float sdp = max(sd, 0.0);
