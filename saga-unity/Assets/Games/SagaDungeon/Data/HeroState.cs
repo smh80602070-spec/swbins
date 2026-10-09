@@ -63,6 +63,10 @@ namespace Saga.Dungeon.Data
         /// 같은 뜻, DungeonEnemy.cs는 이 플래그를 몰라도 된다).</summary>
         public static bool Invulnerable { get; set; }
 
+        /// <summary>U-0076 — 켠 쪽 수(0 이면 평소). 0 보다 크면 TakeDamage 가 피해를 안 준다 — 축복 3택 창이 떠 있는 동안(게임이 안 멈춰
+        /// 고르는 사이 쓰러지면 "쓰러졌다" 카드가 단추를 덮었다)·배치 점검이 사가나락을 도는 동안. `Invulnerable` 은 회피가 매 프레임 덮어써 따로 둔다.</summary>
+        public static int DamageHold { get; set; }
+
         /// <summary>PLAN.md 109-10-3 시련 동안 켠다 — 쓰러져도 유품(금)을 떨구지 않는다.</summary>
         public static bool GraveSuppressed { get; set; }
 
@@ -138,7 +142,7 @@ namespace Saga.Dungeon.Data
         /// 나눈다(클수록 덜 맞는다, PerkState.cs의 def 곱과 같은 방향).</summary>
         public static void TakeDamage(float amount)
         {
-            if (Invulnerable || amount <= 0f || Hp <= 0) return;
+            if (Invulnerable || DamageHold > 0 || amount <= 0f || Hp <= 0) return;
             Hp = Math.Max(0, Hp - RoundInt(amount / BlessingState.DefMultiplier));
             Hurt?.Invoke();
             if (Hp <= 0) Died?.Invoke(DropGoldAsGrave());

@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-09",
+  "tickets": ["U-0076 사가나락 축복 고르는 동안 쓰러짐 — 쓰러졌다 카드가 3택을 덮음(UiLayoutCheck 3)"],
+  "how": "PlaytestDungeonHeadless(세이브 다섯 백업·복원) + UiLayoutCheck 두 판(20시대 둘), 활성 대상 Android(빌드 없음)",
+  "fix": [
+    "HeroState.DamageHold(정수) — 0 보다 크면 TakeDamage 가 피해를 안 줌(회피용 Invulnerable 은 PlayerController 가 매 프레임 덮어써 따로)",
+    "BlessingChoiceUi: Show 때 켜고, 고르기·거절·파괴 때 한 번만 끔",
+    "UiLayoutCheck: 사가나락 장면을 도는 동안 켬(try/finally)"
+  ],
+  "tests": "PlaytestDungeonHeadless 난입 중 레벨업 3택 — 떠 있는 동안 TakeDamage 가 Hp 를 안 깎음·고르면 DamageHold 0",
+  "results": ["[PlaytestDungeonHeadless] blessing hold OK", "[PlaytestDungeonHeadless] OK - 10 frames, no errors", "[UiLayoutCheck] OK - 문제 0 (두 판)"],
+  "runtime_errors": 0,
+  "note": "영어에 한글 2·4 = 사가천하 문답 문제 글(뽑힌 문제에 따라) — 문제로 안 셈"
+}

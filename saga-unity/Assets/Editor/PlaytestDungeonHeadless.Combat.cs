@@ -95,6 +95,15 @@ namespace Saga.EditorTools
                 _hadError = true;
                 return;
             }
+            // U-0076 — 3택이 떠 있는 동안은 안 맞는다(고르는 사이 쓰러져 "쓰러졌다" 카드가 단추를 덮었다)
+            int hpOpen = HeroState.Hp;
+            HeroState.TakeDamage(5f);
+            if (HeroState.Hp != hpOpen || HeroState.DamageHold <= 0)
+            {
+                Debug.LogError($"[PlaytestDungeonHeadless] 축복 3택이 떠 있는데 피해가 들어옴(Hp {hpOpen}→{HeroState.Hp}, DamageHold {HeroState.DamageHold})");
+                _hadError = true;
+                return;
+            }
             var chooseIndex = typeof(BlessingChoiceUi).GetMethod("ChooseIndex", BindingFlags.NonPublic | BindingFlags.Instance);
             chooseIndex.Invoke(blessingUi, new object[] { 0 });
             if (blessingUi.IsShowing)
@@ -103,6 +112,13 @@ namespace Saga.EditorTools
                 _hadError = true;
                 return;
             }
+            if (HeroState.DamageHold != 0)
+            {
+                Debug.LogError($"[PlaytestDungeonHeadless] 축복 3택을 골랐는데 피해 막기가 안 풀림(DamageHold {HeroState.DamageHold})");
+                _hadError = true;
+                return;
+            }
+            Debug.Log("[PlaytestDungeonHeadless] blessing hold OK - 3택이 떠 있는 동안 피해 0·고르면 풀림");
 
             // 15분 생존 종료 — 실시간 대기 대신 타이머를 목표 직전으로 밀어 두고
             // Update()를 한 번 더 돌려 그 프레임에 넘기게 한다(CheckWorldBoss와 같은 결).

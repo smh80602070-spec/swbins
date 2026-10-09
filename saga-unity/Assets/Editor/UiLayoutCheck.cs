@@ -157,14 +157,21 @@ namespace Saga.EditorTools
                 for (int i = 0; i < Scenes.Length; i++)
                 {
                     if (i > 0 || lang != Langs[0]) EditorSceneManager.LoadSceneInPlayMode(Scenes[i], new LoadSceneParameters(LoadSceneMode.Single));
-                    float t0 = Time.realtimeSinceStartup;
-                    int frames = 0;
-                    while (frames < 60 || Time.realtimeSinceStartup - t0 < 1.5f) { frames++; yield return null; }
-                    string label = (lang == Langs[0] ? "" : lang + ":") + Path.GetFileNameWithoutExtension(Scenes[i]);
-                    if (Quick) { Hidden(label); continue; }
-                    foreach (var sc in Screens) Measure(label, sc.name, sc.w, sc.h);
-                    yield return Panels(label, i == 0);
-                    yield return States(label, Path.GetFileNameWithoutExtension(Scenes[i]));
+                    // U-0076 — 점검은 게임을 안 멈춘다: 사가나락에선 새 판 주인공이 도중에 쓰러져 "쓰러졌다" 카드가 다음 상태 위에 남았다 → 피해 막기
+                    bool hold = Path.GetFileNameWithoutExtension(Scenes[i]) == "TestDungeon";
+                    if (hold) Saga.Dungeon.Data.HeroState.DamageHold++;
+                    try
+                    {
+                        float t0 = Time.realtimeSinceStartup;
+                        int frames = 0;
+                        while (frames < 60 || Time.realtimeSinceStartup - t0 < 1.5f) { frames++; yield return null; }
+                        string label = (lang == Langs[0] ? "" : lang + ":") + Path.GetFileNameWithoutExtension(Scenes[i]);
+                        if (Quick) { Hidden(label); continue; }
+                        foreach (var sc in Screens) Measure(label, sc.name, sc.w, sc.h);
+                        yield return Panels(label, i == 0);
+                        yield return States(label, Path.GetFileNameWithoutExtension(Scenes[i]));
+                    }
+                    finally { if (hold) Saga.Dungeon.Data.HeroState.DamageHold = Mathf.Max(0, Saga.Dungeon.Data.HeroState.DamageHold - 1); }
                 }
             }
             _done = true;

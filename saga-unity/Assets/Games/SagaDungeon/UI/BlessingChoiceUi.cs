@@ -92,19 +92,33 @@ namespace Saga.Dungeon.UI
                 _cardLabels[i].text = $"{axis} {DungeonLocalization.T("blessing." + blessing.Id, blessing.Name)}\n(+{Mathf.RoundToInt(blessing.Bonus * 100f)}%)";
             }
             _panel.SetActive(true);
+            if (!_holding) { HeroState.DamageHold++; _holding = true; } // U-0076 — 고르는 동안은 안 맞는다
         }
+
+        private bool _holding;
+
+        private void Release()
+        {
+            if (!_holding) return;
+            _holding = false;
+            HeroState.DamageHold = Mathf.Max(0, HeroState.DamageHold - 1);
+        }
+
+        private void OnDestroy() => Release();
 
         private void ChooseIndex(int index)
         {
             if (index < 0 || index >= _offer.Length) return;
             var blessing = _offer[index];
             _panel.SetActive(false);
+            Release();
             _onChosen?.Invoke(blessing);
         }
 
         private void Reject()
         {
             _panel.SetActive(false);
+            Release();
             _onRejected?.Invoke();
         }
 
