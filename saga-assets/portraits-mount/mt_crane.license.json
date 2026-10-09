@@ -1,0 +1,35 @@
+{
+ "id": "mt_crane",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, (giant gray-blue crane:1.15), long thin legs, long neck, small cushioned saddle on its back, ribbon reins, no humans, mount, riding animal, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+ "negative_prompt": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+ "seed": 20271213,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "euler_ancestral/normal",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 32.1,
+ "date": "2026-10-09",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "mode": "img2img",
+ "denoise": 0.62,
+ "base_body": "saga-web/saga-go/assets/models/animals/Crane.glb",
+ "base_license": "CC0-1.0 (Quaternius Ultimate Animated Animals — 사가만리 assets/ASSET_LICENSES.md)",
+ "picked": "mount_dex_C/mt_crane_v03.png",
+ "sizes": {
+  "s": [
+   192,
+   192
+  ],
+  "c": [
+   300,
+   344
+  ]
+ },
+ "packed_by": "tools/ai-art/make_mount_dex.py pack (K-0032)"
+}

@@ -35,9 +35,10 @@
 | competitiongen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 21 |
 | gen.py | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1755 |
 | icon_pack.py | none | CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음) | 76 |
-| gen.py (ComfyUI) | z-image-turbo | Apache-2.0 | 18 |
+| gen.py (ComfyUI) | z-image-turbo | Apache-2.0 | 36 |
 | make_map.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 195 |
 | build_monster.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드) | 335 |
+| gen.py (ComfyUI) | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 37 |
 | raritygen.py | - | CC0-1.0 (코드 생성 — 외부 입력 없음) | 60 |
 | region_hero.py | - | CC0-1.0 (자체 생성 형태, 재질은 단색·CC0) | 12 |
 | region_hero.py | - | CC0-1.0 (배치표 — 자체 생성 데이터, 조각·재질은 각각 CC0) | 12 |
@@ -54,7 +55,6 @@
 | uigen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 285 |
 | vfxgen.py | - | CC0-1.0 (코드 생성 — 외부 입력 없음) | 120 |
 | voiceplan.py | Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign · Qwen/Qwen3-TTS-12Hz-1.7B-Base | Apache-2.0 (모델·코드) — 목소리는 글 설명으로 만든 것, 실존 인물·배우 목소리 모사 없음 | 2356 |
-| gen.py (ComfyUI) | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 32 |
 | make_realm_ui.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 12 |
 | make_realm_ui.py | - | CC0-1.0 코드 배치 + 글꼴 SIL OFL-1.1 (Nanum Brush Script·Noto Serif KR) | 56 |
 | make_realm_ui.py woff2 | - | SIL Open Font License 1.1 (OFL-NotoSerif.txt) | 2 |

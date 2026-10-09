@@ -564,6 +564,21 @@
    ]
   },
   {
+   "id": "portraits-mount",
+   "src": "saga-assets/portraits-mount",
+   "include": [
+    "*.webp",
+    "*.license.json"
+   ],
+   "note": "K-0032 사가만리 탈것 도감 초상 5(mount.js MOUNTS id mt_* × 정사각 192·카드 300x344, tools/ai-art/make_mount_dex.py) — codex.js 탈것 칸이 연결 펫 초상 대신 쓰게 웹이 portrait 'mount' 종류로 잇는다",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-go/assets/portraits/mount"
+    }
+   ]
+  },
+  {
    "id": "sky-unity",
    "src": "saga-assets/sky-unity",
    "include": [

@@ -1,0 +1,61 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "mount_dex_C",
+ "kit": {
+  "spec": "creature",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "mt_farm",
+   "seed": 20271100,
+   "prompt": "(sturdy bay draft horse:1.15), leather saddle, simple reins, saddlebags, thick mane, calm, no humans, mount, riding animal, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/mount_init/mt_farm.png",
+   "denoise": 0.62
+  },
+  {
+   "id": "mt_brown",
+   "seed": 20271137,
+   "prompt": "(sleek brown riding horse:1.15), red saddle blanket, leather saddle, bridle and reins, flowing dark mane, no humans, mount, riding animal, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/mount_init/mt_brown.png",
+   "denoise": 0.62
+  },
+  {
+   "id": "mt_white",
+   "seed": 20271174,
+   "prompt": "(graceful white horse:1.15), silver trimmed saddle, blue saddle blanket, bridle, flowing white mane, no humans, mount, riding animal, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/mount_init/mt_white.png",
+   "denoise": 0.62
+  },
+  {
+   "id": "mt_crane",
+   "seed": 20271211,
+   "prompt": "(giant gray-blue crane:1.15), long thin legs, long neck, small cushioned saddle on its back, ribbon reins, no humans, mount, riding animal, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/mount_init/mt_crane.png",
+   "denoise": 0.62
+  },
+  {
+   "id": "mt_dragon",
+   "seed": 20271248,
+   "prompt": "(teal blue-green eastern dragon:1.15), long serpentine body, small horns, golden saddle with tassels on its back, reins, cloud wisps, no humans, mount, riding animal, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/mount_init/mt_dragon.png",
+   "denoise": 0.62
+  }
+ ]
+}

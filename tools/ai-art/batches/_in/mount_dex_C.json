@@ -1,0 +1,55 @@
+{
+ "name": "mount_dex_C",
+ "spec": "creature",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0032 탈것 도감 다섯 — 게임 몸 렌더 밑그림 img2img, 안장·고삐로 탈것임을 보인다",
+ "items": [
+  {
+   "id": "mt_farm",
+   "subject": "sturdy bay draft horse, leather saddle, simple reins, saddlebags, thick mane, calm",
+   "view": "three_quarter",
+   "extra": "no humans, mount, riding animal",
+   "init_image": "tools/ai-art/_out/mount_init/mt_farm.png",
+   "denoise": 0.62,
+   "seed": 20271100
+  },
+  {
+   "id": "mt_brown",
+   "subject": "sleek brown riding horse, red saddle blanket, leather saddle, bridle and reins, flowing dark mane",
+   "view": "three_quarter",
+   "extra": "no humans, mount, riding animal",
+   "init_image": "tools/ai-art/_out/mount_init/mt_brown.png",
+   "denoise": 0.62,
+   "seed": 20271137
+  },
+  {
+   "id": "mt_white",
+   "subject": "graceful white horse, silver trimmed saddle, blue saddle blanket, bridle, flowing white mane",
+   "view": "three_quarter",
+   "extra": "no humans, mount, riding animal",
+   "init_image": "tools/ai-art/_out/mount_init/mt_white.png",
+   "denoise": 0.62,
+   "seed": 20271174
+  },
+  {
+   "id": "mt_crane",
+   "subject": "giant gray-blue crane, long thin legs, long neck, small cushioned saddle on its back, ribbon reins",
+   "view": "three_quarter",
+   "extra": "no humans, mount, riding animal",
+   "init_image": "tools/ai-art/_out/mount_init/mt_crane.png",
+   "denoise": 0.62,
+   "seed": 20271211
+  },
+  {
+   "id": "mt_dragon",
+   "subject": "teal blue-green eastern dragon, long serpentine body, small horns, golden saddle with tassels on its back, reins, cloud wisps",
+   "view": "three_quarter",
+   "extra": "no humans, mount, riding animal",
+   "init_image": "tools/ai-art/_out/mount_init/mt_dragon.png",
+   "denoise": 0.62,
+   "seed": 20271248
+  }
+ ]
+}

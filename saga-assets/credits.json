@@ -318,9 +318,10 @@
    "tool": "gen.py (ComfyUI)",
    "model": "z-image-turbo",
    "license": "Apache-2.0",
-   "count": 18,
+   "count": 36,
    "where": [
-    "saga-assets/land-go"
+    "saga-assets/land-go",
+    "saga-web/saga-go/assets/textures/land_c"
    ]
   },
   {
@@ -346,6 +347,20 @@
     "saga-godot/assets/world",
     "saga-unity/Assets/SagaCore/Resources/World",
     "saga-web/shared/assets/world3d"
+   ]
+  },
+  {
+   "tool": "gen.py (ComfyUI)",
+   "model": "animagine-xl-4.0-opt",
+   "license": "CreativeML OpenRAIL++-M",
+   "count": 37,
+   "where": [
+    "saga-assets/portraits-mount",
+    "saga-assets/web2d/moving/beast_big",
+    "saga-assets/web2d/moving/beast_dog",
+    "saga-assets/web2d/moving/villager_b",
+    "saga-assets/world/sprite",
+    "saga-web/shared/assets/web2d/moving/beast_big"
    ]
   },
   {
@@ -551,20 +566,6 @@
     "saga-godot/assets/audio/voice",
     "saga-unity/Assets/SagaCore/Resources/Audio/Voice",
     "saga-web/shared/audio/voice"
-   ]
-  },
-  {
-   "tool": "gen.py (ComfyUI)",
-   "model": "animagine-xl-4.0-opt",
-   "license": "CreativeML OpenRAIL++-M",
-   "count": 32,
-   "where": [
-    "saga-assets/web2d/moving/beast_big",
-    "saga-assets/web2d/moving/beast_dog",
-    "saga-assets/web2d/moving/villager_b",
-    "saga-assets/world/sprite",
-    "saga-web/shared/assets/web2d/moving/beast_big",
-    "saga-web/shared/assets/web2d/moving/beast_dog"
    ]
   },
   {
