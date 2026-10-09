@@ -12,12 +12,12 @@
    * 쓰므로(다시 구워도 안 바뀐다) 반복은 여전히 있지만 그 주기가 훨씬
    * 길고 불규칙해져 덜 눈에 띈다. */
   var LAND_TEX_VARIANTS = {
-    grass: ['assets/textures/land/grass1.webp', 'assets/textures/land/grass2.webp', 'assets/textures/land/grass3.webp'],
-    forest: ['assets/textures/land/forest1.webp', 'assets/textures/land/forest2.webp', 'assets/textures/land/forest3.webp'],
-    mount: ['assets/textures/land/mount1.webp', 'assets/textures/land/mount2.webp', 'assets/textures/land/mount3.webp'],
-    road: ['assets/textures/land/road1.webp', 'assets/textures/land/road2.webp', 'assets/textures/land/road3.webp'],
-    town: ['assets/textures/land/town1.webp', 'assets/textures/land/town2.webp', 'assets/textures/land/town3.webp'],
-    farm: ['assets/textures/land/farm1.webp', 'assets/textures/land/farm2.webp', 'assets/textures/land/farm3.webp']
+    grass: ['assets/textures/land_c/grass1.webp', 'assets/textures/land_c/grass2.webp', 'assets/textures/land_c/grass3.webp'],
+    forest: ['assets/textures/land_c/forest1.webp', 'assets/textures/land_c/forest2.webp', 'assets/textures/land_c/forest3.webp'],
+    mount: ['assets/textures/land_c/mount1.webp', 'assets/textures/land_c/mount2.webp', 'assets/textures/land_c/mount3.webp'],
+    road: ['assets/textures/land_c/road1.webp', 'assets/textures/land_c/road2.webp', 'assets/textures/land_c/road3.webp'],
+    town: ['assets/textures/land_c/town1.webp', 'assets/textures/land_c/town2.webp', 'assets/textures/land_c/town3.webp'],
+    farm: ['assets/textures/land_c/farm1.webp', 'assets/textures/land_c/farm2.webp', 'assets/textures/land_c/farm3.webp']
   };
   var LAND_TEX_IMG = {};
   function landTexImg(kind, variant) {

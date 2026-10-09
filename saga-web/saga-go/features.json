@@ -706,5 +706,23 @@
   "ticket": "W-0130",
   "since": "2026-10-09",
   "note": "D2: saga-web/tools/playcheck/pw-go2d-check.mjs → shots/go2d/d-{pc,phone,land}.png Claude 눈 ○(맑은 풀밭·흙길·돌 광장 줄눈·숲 나무·건초·물가 거품, 인물 큼). 실제 길 배치는 geo 땅 종류 그대로. K-0020 go_* 타일은 크게 보면 벽처럼(조각 나무판·담쟁이·벽돌) 들판 모드에서 안 씀. 손잡이 world.field2d 0 = 옛 OSM 지도."
+ },
+ {
+  "id": "go.land3d.toon",
+  "name": "3D 땅 손그림 18(land_c) · 자체 하늘 환경광 HDR",
+  "files": [
+   "src/world3d/01-core.js",
+   "src/world3d/02-ground.js",
+   "js/world3d.js"
+  ],
+  "tests": [
+   "3D 땅 그림 — 여섯 종류 × 3 이 전부 손그림 land_c 이고 환경광은 shared 하늘 HDR 로 간다 (W-0139)"
+  ],
+  "level": "D2",
+  "verified": "2026-10-10 qc+claude",
+  "fun": {},
+  "ticket": "W-0139",
+  "since": "2026-10-10",
+  "note": "D2(qc+claude 2026-10-10): visual-20261007/saga-go-1-world3d·2-close·4-burst ○ — 마을 땅이 진흙 단색에서 돌바닥·풀 무늬로, 48m 바둑판 없음. 환경광은 assets3d 시험 뒤 shared/assets/sky/ibl_noon_present_1k.hdr, 못 받으면 옛 alps_field(안 지움 — 정리는 다음). △ 먼 땅 띠는 옛 그대로(이번 범위 밖) · 하늘 물고기는 별건."
  }
 ]

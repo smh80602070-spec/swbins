@@ -6355,6 +6355,15 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       return on0 === true && off === false && 'sky3d.lightning=0 이면 안 친다';
     });
 
+    t('3D 땅 그림 — 여섯 종류 × 3 이 전부 손그림 land_c 이고 환경광은 shared 하늘 HDR 로 간다 (W-0139)', function () {
+      var tbl = R3._landTex(), kinds = ['grass', 'forest', 'mount', 'road', 'town', 'farm'], n = 0, bad = [];
+      kinds.forEach(function (k) { (tbl[k] || []).forEach(function (u) { n++; if (u.indexOf('assets/textures/land_c/' + k) !== 0 || u.slice(-5) !== '.webp') { bad.push(u); } }); });
+      var src = R3._iblSrc();
+      var okSrc = src.slice(-27) === 'sky/ibl_noon_present_1k.hdr' || src === 'assets/hdri/alps_field_1k.hdr';
+      C.setTune('world3d.ibl', 0); var offV = C.tuned('world3d.ibl', 1); C.setTune('world3d.ibl', null);   // 손잡이 world3d.ibl 은 그대로
+      return n === 18 && bad.length === 0 && okSrc && offV === 0 && ('18/18 land_c · 환경광 ' + src.split('/').slice(-2).join('/'));
+    });
+
     t('3D — 값을 내도 세이브는 그대로다', function () {
       /* 화면 층이 판정에 스미지 않는지 — 조명·계획·카메라를 굴려 보고 세이브를 비교한다 */
       var before = JSON.stringify(C.save);

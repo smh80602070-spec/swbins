@@ -163,21 +163,21 @@
    * 맞춰져 있어(`lightingAt` 의 밤 최저치 주석 참고) 낮과 크게 다투지 않는다.
    * 못 받아도(느린 회선·file:// 단독판 등) 조용히 넘어가고 옛 조명만으로 돈다.
    */
-  var IBL_SRC = 'assets/hdri/alps_field_1k.hdr';
+  var IBL_SRC = 'assets/hdri/alps_field_1k.hdr';   function iblSrc() { var A = global.DG.assets3d; return (A && A.root && A.root()) ? A.root() + 'sky/ibl_noon_present_1k.hdr' : IBL_SRC; }   // W-0139 — 자체 하늘 C HDR 먼저, 옛 사진 HDR 은 shared 를 못 받을 때만
   function IBL_ON() { return core.tuned('world3d.ibl', 1) ? true : false; }
   /** 얼마나 세게 섞나 — hemi.intensity(대략 1.4~1.7) 에 곱하는 비율.
    *  너무 세면 반사가 재질 색을 삼킨다(눈으로 보고 0.30으로 정함) */
   function IBL_SCALE() { return core.tuned('world3d.iblScale', 0.30); }
   function loadEnvironment() {
     if (!IBL_ON() || !T.RGBELoader || !T.PMREMGenerator || !renderer) { return; }
-    var pmrem = new T.PMREMGenerator(renderer);
+    var pmrem = new T.PMREMGenerator(renderer), A = global.DG.assets3d;   // W-0139 — 자체 하늘 C 로 구운 HDR(shared/assets/sky)이 먼저, 못 받으면 옛 alps_field
     pmrem.compileEquirectangularShader();
-    new T.RGBELoader().load(IBL_SRC, function (hdr) {
+    var go = function (src) { new T.RGBELoader().load(src, function (hdr) {
       var envMap = pmrem.fromEquirectangular(hdr).texture;
       if (scene) { scene.environment = envMap; }
-      hdr.dispose();
-      pmrem.dispose();
-    }, undefined, function () { pmrem.dispose(); });
+      hdr.dispose(); pmrem.dispose();
+    }, undefined, function () { if (src !== IBL_SRC) { go(IBL_SRC); } else { pmrem.dispose(); } }); };
+    if (A && A.whenSettled) { A.whenSettled(function () { go(iblSrc()); }); } else { go(IBL_SRC); }
   }
 
   /* ── 켜기 ─────────────────────────────────────────────── */

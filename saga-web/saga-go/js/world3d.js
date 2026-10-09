@@ -163,21 +163,21 @@
    * 맞춰져 있어(`lightingAt` 의 밤 최저치 주석 참고) 낮과 크게 다투지 않는다.
    * 못 받아도(느린 회선·file:// 단독판 등) 조용히 넘어가고 옛 조명만으로 돈다.
    */
-  var IBL_SRC = 'assets/hdri/alps_field_1k.hdr';
+  var IBL_SRC = 'assets/hdri/alps_field_1k.hdr';   function iblSrc() { var A = global.DG.assets3d; return (A && A.root && A.root()) ? A.root() + 'sky/ibl_noon_present_1k.hdr' : IBL_SRC; }   // W-0139 — 자체 하늘 C HDR 먼저, 옛 사진 HDR 은 shared 를 못 받을 때만
   function IBL_ON() { return core.tuned('world3d.ibl', 1) ? true : false; }
   /** 얼마나 세게 섞나 — hemi.intensity(대략 1.4~1.7) 에 곱하는 비율.
    *  너무 세면 반사가 재질 색을 삼킨다(눈으로 보고 0.30으로 정함) */
   function IBL_SCALE() { return core.tuned('world3d.iblScale', 0.30); }
   function loadEnvironment() {
     if (!IBL_ON() || !T.RGBELoader || !T.PMREMGenerator || !renderer) { return; }
-    var pmrem = new T.PMREMGenerator(renderer);
+    var pmrem = new T.PMREMGenerator(renderer), A = global.DG.assets3d;   // W-0139 — 자체 하늘 C 로 구운 HDR(shared/assets/sky)이 먼저, 못 받으면 옛 alps_field
     pmrem.compileEquirectangularShader();
-    new T.RGBELoader().load(IBL_SRC, function (hdr) {
+    var go = function (src) { new T.RGBELoader().load(src, function (hdr) {
       var envMap = pmrem.fromEquirectangular(hdr).texture;
       if (scene) { scene.environment = envMap; }
-      hdr.dispose();
-      pmrem.dispose();
-    }, undefined, function () { pmrem.dispose(); });
+      hdr.dispose(); pmrem.dispose();
+    }, undefined, function () { if (src !== IBL_SRC) { go(IBL_SRC); } else { pmrem.dispose(); } }); };
+    if (A && A.whenSettled) { A.whenSettled(function () { go(iblSrc()); }); } else { go(IBL_SRC); }
   }
 
   /* ── 켜기 ─────────────────────────────────────────────── */
@@ -326,12 +326,12 @@
    * 쓰므로(다시 구워도 안 바뀐다) 반복은 여전히 있지만 그 주기가 훨씬
    * 길고 불규칙해져 덜 눈에 띈다. */
   var LAND_TEX_VARIANTS = {
-    grass: ['assets/textures/land/grass1.webp', 'assets/textures/land/grass2.webp', 'assets/textures/land/grass3.webp'],
-    forest: ['assets/textures/land/forest1.webp', 'assets/textures/land/forest2.webp', 'assets/textures/land/forest3.webp'],
-    mount: ['assets/textures/land/mount1.webp', 'assets/textures/land/mount2.webp', 'assets/textures/land/mount3.webp'],
-    road: ['assets/textures/land/road1.webp', 'assets/textures/land/road2.webp', 'assets/textures/land/road3.webp'],
-    town: ['assets/textures/land/town1.webp', 'assets/textures/land/town2.webp', 'assets/textures/land/town3.webp'],
-    farm: ['assets/textures/land/farm1.webp', 'assets/textures/land/farm2.webp', 'assets/textures/land/farm3.webp']
+    grass: ['assets/textures/land_c/grass1.webp', 'assets/textures/land_c/grass2.webp', 'assets/textures/land_c/grass3.webp'],
+    forest: ['assets/textures/land_c/forest1.webp', 'assets/textures/land_c/forest2.webp', 'assets/textures/land_c/forest3.webp'],
+    mount: ['assets/textures/land_c/mount1.webp', 'assets/textures/land_c/mount2.webp', 'assets/textures/land_c/mount3.webp'],
+    road: ['assets/textures/land_c/road1.webp', 'assets/textures/land_c/road2.webp', 'assets/textures/land_c/road3.webp'],
+    town: ['assets/textures/land_c/town1.webp', 'assets/textures/land_c/town2.webp', 'assets/textures/land_c/town3.webp'],
+    farm: ['assets/textures/land_c/farm1.webp', 'assets/textures/land_c/farm2.webp', 'assets/textures/land_c/farm3.webp']
   };
   var LAND_TEX_IMG = {};
   function landTexImg(kind, variant) {
@@ -3231,7 +3231,7 @@
       };
     },
     actorKeys: function () { return Object.keys(actors); }, actorNode: function (key) { return actors[key] ? actors[key].node : null; },   // ㉑ 배우 마디 — weapon.js 무기 빛이 선두 외곽선 색만 고친다
-    available: available, active: active, wanted: wanted,
+    available: available, active: active, wanted: wanted, _landTex: function () { return LAND_TEX_VARIANTS; }, _iblSrc: iblSrc,   // W-0139 진단용
     /* 값을 내는 함수 — three 없이도 돈다(자가진단이 이것만 따로 본다) */
     lightingAt: lightingAt, propPlan: propPlan, urbanity: urbanity, camAim: camAim,
     /** 짓는 반경(R)·부수는 반경(UR, PLAN 42절) — 손잡이로 잡는다 */

@@ -438,7 +438,7 @@
       };
     },
     actorKeys: function () { return Object.keys(actors); }, actorNode: function (key) { return actors[key] ? actors[key].node : null; },   // ㉑ 배우 마디 — weapon.js 무기 빛이 선두 외곽선 색만 고친다
-    available: available, active: active, wanted: wanted,
+    available: available, active: active, wanted: wanted, _landTex: function () { return LAND_TEX_VARIANTS; }, _iblSrc: iblSrc,   // W-0139 진단용
     /* 값을 내는 함수 — three 없이도 돈다(자가진단이 이것만 따로 본다) */
     lightingAt: lightingAt, propPlan: propPlan, urbanity: urbanity, camAim: camAim,
     /** 짓는 반경(R)·부수는 반경(UR, PLAN 42절) — 손잡이로 잡는다 */
