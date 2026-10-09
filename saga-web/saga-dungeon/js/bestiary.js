@@ -109,7 +109,7 @@
   function faceOf(ref, boss) {
     var MP = global.DG.monsterPortrait, emo = ref.emoji || '👹', p = MP ? MP.src(ref, boss) : null;
     if (!p) { return emo; }
-    return '<img class="d2-fport" alt="" src="' + p + '" width="40" height="40" onerror="this.replaceWith(document.createTextNode(\'' + emo + '\'))">';
+    return '<img class="d2-fport" alt="" src="' + p + '" width="40" height="40" style="border-radius:6px;border:1px solid #8a6a3a;box-shadow:0 0 0 2px #1a140c" onerror="this.replaceWith(document.createTextNode(\'' + emo + '\'))">';
   }
 
   /** 시트 본문 — ui.js 의 `esc`·`dexBar` 를 받아 쓴다. 칸은 도감과 같은 `dexgrid`/`dcell`(새 CSS 없음, 누를 것이 없어 손가락 모양을 끈다) */
@@ -124,7 +124,7 @@
       html += '<div class="sec"><h4>' + g.name + ' <small class="muted">' + (g.open ? gs : gs + ' / ' + g.rows.length) + '</small></h4><div class="dexgrid">';
       g.rows.forEach(function (r) {
         var have = r.n > 0;
-        html += '<div class="dcell bst-cell' + (have ? '' : ' locked') + '" style="cursor:default;transform:none" title="' +
+        html += '<div class="dcell bst-cell' + (have ? '' : ' locked') + '" data-k="' + esc(r.key) + '" onclick="DG.bestiary.tell(this.dataset.k)" title="' +
           esc(have ? r.ref.name + ' · 처치 ' + r.n + ' · 처음 ' + placeText(r.floor) : '아직 못 잡음') + '">' +
           (have ? '<span class="de">' + faceOf(r.ref, r.boss) + '</span>' : '<span class="de locked-mark">❔</span>') +
           '<small>' + (have ? esc(r.ref.name) : '???') + '</small>' +
@@ -132,8 +132,17 @@
       });
       html += '</div></div>';
     });
-    return html + '<div class="hint">잡으면 칸이 열립니다. 칸에 손을 올리면 처치 수와 처음 잡은 곳이 보입니다. ' +
+    return html + '<div class="hint">잡으면 칸이 열립니다. 칸을 누르면 처치 수와 처음 잡은 곳이 나옵니다. ' +
       '그림은 몸 계열 초상이라 닮은 것끼리 같은 얼굴을 씁니다.</div>';
+  }
+
+  /** 칸을 눌렀을 때 — 폰엔 마우스 올림(title)이 없어 알림으로 보여 준다 */
+  function tell(key) {
+    var r = null, U = global.DG.ui;
+    groups().forEach(function (g) { g.rows.forEach(function (x) { if (x.key === key) { r = x; } }); });
+    var t = !r ? '' : r.n ? (r.ref.emoji || '👹') + ' ' + r.ref.name + ' — 처치 ' + r.n + '마리 · 처음 ' + placeText(r.floor) : '❔ 아직 못 잡은 적입니다';
+    if (t && U && U.toast) { U.toast(t); }
+    return t;
   }
 
   var started = false;
@@ -147,7 +156,7 @@
 
   global.DG.bestiary = {
     RENAMED: RENAMED,
-    keyOf: keyOf, record: record, onKill: onKill, groups: groups, tally: tally, view: view, start: start,
+    keyOf: keyOf, record: record, onKill: onKill, tell: tell, groups: groups, tally: tally, view: view, start: start,
     /** 진단이 제 뒤를 치울 때 */
     clear: function () { core().save.kills = {}; return true; }
   };

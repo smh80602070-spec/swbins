@@ -974,12 +974,12 @@
     var pC = Object.keys(core.save.dex.pets).length;
     var ST = global.DG.story, mem = ST && ST.MEMBERS ? Object.keys(ST.MEMBERS).map(function (k) { return ST.MEMBERS[k]; })
       .filter(function (e) { return core.save.dex.heroes[e.id]; }) : [];
-    return darkStrip() + buddyStrip() + rosterStrip() +
+    return darkStrip() + buddyStrip() + rosterStrip() + (global.DG.codex && global.DG.codex.mountView ? global.DG.codex.mountView(esc, pt, dexBar) : '') +   // W-0117 탈것 칸(다섯 칸 — 인물 500 칸 아래 두면 안 보인다)
            '<div class="sec"><h4>인물</h4>' + dexBar(hC, data.heroes.length) +
              dexGrid(data.heroes, core.save.dex.heroes) + '</div>' +
            (mem.length ? '<div class="sec"><h4>📖 이야기 동료</h4>' + dexGrid(mem, core.save.dex.heroes) + '</div>' : '') +
            '<div class="sec"><h4>펫</h4>' + dexBar(pC, data.pets.length) +
-             dexGrid(data.pets, core.save.dex.pets) + '</div>' + (global.DG.codex && global.DG.codex.mountView ? global.DG.codex.mountView(esc, pt, dexBar) : '') +   // W-0117 탈것 칸
+             dexGrid(data.pets, core.save.dex.pets) + '</div>' +
            '<div class="hint">카드를 누르면 열전·승급·펫 장착 화면이 열립니다. ' +
            '같은 인물을 또 등용하면 <b>중복(+n)</b>이 쌓여 승급 재료가 됩니다.</div>';
   }

@@ -8181,7 +8181,7 @@ window.requestAnimationFrame = function () { return 0; };
         var t = B.tally(), a = C.save.kills[mob.name], b = C.save.kills['b:' + boss.id], x = C.save.kills['x:rb_test'];
         var v = B.view(function (s) { return String(s); }, function (n, m) { return '<i>' + n + '/' + m + '</i>'; });
         r = [a && a.n, a && a.floor, b && b.n, x && x.n, !C.save.kills['b:rb_test'] && !C.save.kills['옛이름'], t.seen, t.kills, t.total > 100,
-             v.indexOf('×6') >= 0, v.indexOf('시험 우두머리') >= 0, v.indexOf('???') >= 0, v.indexOf('<i>3/') >= 0];
+             v.indexOf('×6') >= 0, v.indexOf('시험 우두머리') >= 0, v.indexOf('???') >= 0, v.indexOf('<i>3/') >= 0 && B.tell(mob.name).indexOf('처치 6마리 · 처음 제2층') >= 0];
       } finally { C.save.kills = keep; delete DG.bestiary.RENAMED['옛이름']; }
       return r.join(',') === '6,2,1,1,true,3,8,true,true,true,true,true' && ('종 ' + r.join(',')) || '실패 ' + r.join(',');
     });

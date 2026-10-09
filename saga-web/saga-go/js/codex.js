@@ -226,19 +226,29 @@
     return M.MOUNTS.map(function (m) { return { m: m, pet: D ? D.find(m.pet) : null, have: M.isUnlocked(m) }; });
   }
 
-  /** 도감 시트의 탈것 칸 — ui 의 `esc`·`pt`(초상)·`dexBar` 를 받아 쓴다. 칸은 인물·펫과 같은 `dexgrid`/`dcell`(누를 것이 없어 손가락 모양을 끈다) */
+  /** 탈것 한 칸을 눌렀을 때 — 폰엔 마우스 올림(title)이 없어 알림으로 보여 준다 */
+  function mountText(r) {
+    var m = r.m, sp = m.kind === 'fly' ? '걸음 ×' + m.mul + ' · 날면 ×' + m.fly : '걸음 ×' + m.mul;
+    return r.have ? '🐎 ' + m.name + ' · ' + (m.kind === 'fly' ? '나는 탈것' : '땅 탈것') + ' · ' + sp + ' — ' + m.desc
+      : '🐎 ??? — 모험 레벨 ' + m.lv + ' 에 열림(또는 그 짐승을 도감에 등록)';
+  }
+  function tellMount(id) {
+    var r = mounts().filter(function (x) { return x.m.id === id; })[0], U = global.DG.ui;
+    if (r && U && U.toast) { U.toast(mountText(r)); }
+    return r ? mountText(r) : '';
+  }
+
+  /** 도감 시트의 탈것 칸 — ui 의 `esc`·`pt`(초상)·`dexBar` 를 받아 쓴다. 칸은 인물·펫과 같은 `dexgrid`/`dcell`, 누르면 tellMount */
   function mountView(esc, pt, dexBar) {
     var rows = mounts(), have = rows.filter(function (r) { return r.have; }).length, out = '';
     if (!rows.length) { return ''; }
     rows.forEach(function (r) {
-      var m = r.m, sp = m.kind === 'fly' ? '걸음 ×' + m.mul + ' · 날면 ×' + m.fly : '걸음 ×' + m.mul;
-      var face = r.have ? (r.pet && pt ? pt('pet', r.pet, 52) : (m.kind === 'fly' ? '🦅' : '🐎')) : '❔';
-      out += '<div class="dcell' + (r.have ? '' : ' locked') + '" style="cursor:default;transform:none" title="' +
-        esc(m.name + ' · ' + (m.kind === 'fly' ? '나는 탈것' : '땅 탈것') + ' · ' + sp + ' — ' + m.desc +
-          (r.have ? '' : ' (모험 레벨 ' + m.lv + ' 또는 그 짐승을 도감에 등록하면 열림)')) + '">' +
+      var m = r.m;
+      var face = r.have ? (r.pet && pt ? pt('pet', r.pet, 52) : '🐎') : '❔';
+      out += '<div class="dcell' + (r.have ? '' : ' locked') + '" data-mt="' + m.id + '" onclick="DG.codex.tellMount(this.dataset.mt)" title="' + esc(mountText(r)) + '">' +
         '<span class="de' + (r.have ? '' : ' locked-mark') + '">' + face + '</span>' +
         '<small>' + (r.have ? esc(m.name) : 'Lv.' + m.lv) + '</small>' +
-        (m.kind === 'fly' ? '<i class="cnt">🦅</i>' : '') + '</div>';
+        (m.kind === 'fly' ? '<i class="cnt">비행</i>' : '') + '</div>';
     });
     return '<div class="sec"><h4>🐎 탈것</h4>' + (dexBar ? dexBar(have, rows.length) : '') +
       '<div class="dexgrid">' + out + '</div></div>';
@@ -299,7 +309,7 @@
   global.DG.codex = {
     KINDS: KINDS,
     on: on, kindOf: kindOf, has: has, discover: discover, nameOf: nameOf, rewardOf: rewardOf,
-    tally: tally, all: all, rate: rate, dex: dex, mounts: mounts, mountView: mountView,
+    tally: tally, all: all, rate: rate, dex: dex, mounts: mounts, mountView: mountView, tellMount: tellMount,
     tick: tick, stats: stats,
     /** 도장을 다 지운다 (진단이 제 뒤를 치울 때) */
     clear: function () { core.save.codex = {}; return true; }
