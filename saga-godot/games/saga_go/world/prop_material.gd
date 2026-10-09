@@ -21,7 +21,9 @@ static func kind_for(c: Color) -> int:
 	if c.v > 0.8 and c.s < 0.3:
 		return Kind.PLASTER
 	if c.s < 0.14:
-		if c.v < 0.3 or c.b - c.r > 0.03:
+		## 푸른 기만으론 STEEL(0.7,0.72,0.74)·STONE_DARK(0.36,0.38,0.4)가 같아(b−r 0.04) 밝기로 가른다 — 어두운 청회색은 돌(서리봉 문 들보가 쇠 광택이던 것).
+		var blue := c.b - c.r
+		if c.v < 0.3 or blue > 0.055 or (blue > 0.035 and c.v > 0.45):
 			return Kind.METAL
 		return Kind.STONE
 	if h >= 15.0 and h <= 50.0 and c.s >= 0.25 and c.v < 0.6:

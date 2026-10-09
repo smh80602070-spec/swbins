@@ -16,7 +16,7 @@ const CEIL_Y := 16.0
 const TORCH_EVERY := 12.0
 
 const CAVE := {"rock": Color(0.5, 0.46, 0.5), "floor": Color(0.36, 0.33, 0.36), "torch": Color(1.0, 0.62, 0.32)}
-const LABYRINTH := {"rock": Color(0.62, 0.54, 0.74), "floor": Color(0.5, 0.44, 0.58), "torch": Color(0.78, 0.6, 1.0)}
+const LABYRINTH := {"rock": Color(0.62, 0.54, 0.74), "floor": Color(0.5, 0.44, 0.58), "path": Color(0.78, 0.72, 0.86), "torch": Color(0.78, 0.6, 1.0)}
 
 
 static func _h(i: int, salt: int) -> float:

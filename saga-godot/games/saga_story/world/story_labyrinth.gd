@@ -114,7 +114,7 @@ func _build_ground(width: float) -> void:
 	box.size = Vector3(width, PLATFORM_THICKNESS, PLATFORM_DEPTH)
 	mi.mesh = box
 	## G-0150 — 보라 단색 판 → 동굴 바닥 돌 결, 둘레엔 바위 벽·천장·종유석·횃불(층과 같이 지워진다).
-	mi.material_override = CaveBackdrop.rock_material(CaveBackdrop.LABYRINTH["floor"])
+	mi.material_override = CaveBackdrop.rock_material(CaveBackdrop.LABYRINTH["path"])   # 동굴 바닥보다 밝은 다듬은 돌길(경계가 보이게)
 	body.add_child(mi)
 	CaveBackdrop.build(_floor_root, width, CaveBackdrop.LABYRINTH)
 	var cs := CollisionShape3D.new()
