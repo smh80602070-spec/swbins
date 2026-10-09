@@ -715,18 +715,19 @@
         var kind = terrainAt(tx, ty);
         var sx = (tx * 48 - camX) * sc, sy = (ty * 48 - camY) * sc;
         if (!(kind in patCache)) {
-          patCache[kind] = (LAND_TEX_VARIANTS[kind] || global.DG.mode2d.tileUrl(kind)) ? landPattern2D(ctx, kind, camX, camY, sc) : null;
+          patCache[kind] = !(global.DG.field2d && global.DG.field2d.on()) && (LAND_TEX_VARIANTS[kind] || global.DG.mode2d.tileUrl(kind)) ? landPattern2D(ctx, kind, camX, camY, sc) : null;   // W-0130 — 들판은 타일 그림(벽처럼 보임) 대신 맑은 색 + 잔결
         }
         var pat = patCache[kind];
         if (pat) {
           ctx.fillStyle = pat;
           ctx.fillRect(sx, sy, T + 1, T + 1);
         } else {
-          ctx.fillStyle = TERRAIN[kind];
+          ctx.fillStyle = global.DG.field2d && global.DG.field2d.on() ? global.DG.field2d.color(kind) : TERRAIN[kind];
           ctx.fillRect(sx, sy, T + 1, T + 1);
         }
       }
     }
+    if (global.DG.field2d) { global.DG.field2d.decorate(ctx, camX, camY, W, H, sc, terrainAt); }   // W-0130 — 칸 결·경계·소품(나무·바위·풀포기)
   }
 
   /* ── 스폰 ─────────────────────────────────────────────── */

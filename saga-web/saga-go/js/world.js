@@ -715,18 +715,19 @@
         var kind = terrainAt(tx, ty);
         var sx = (tx * 48 - camX) * sc, sy = (ty * 48 - camY) * sc;
         if (!(kind in patCache)) {
-          patCache[kind] = (LAND_TEX_VARIANTS[kind] || global.DG.mode2d.tileUrl(kind)) ? landPattern2D(ctx, kind, camX, camY, sc) : null;
+          patCache[kind] = !(global.DG.field2d && global.DG.field2d.on()) && (LAND_TEX_VARIANTS[kind] || global.DG.mode2d.tileUrl(kind)) ? landPattern2D(ctx, kind, camX, camY, sc) : null;   // W-0130 — 들판은 타일 그림(벽처럼 보임) 대신 맑은 색 + 잔결
         }
         var pat = patCache[kind];
         if (pat) {
           ctx.fillStyle = pat;
           ctx.fillRect(sx, sy, T + 1, T + 1);
         } else {
-          ctx.fillStyle = TERRAIN[kind];
+          ctx.fillStyle = global.DG.field2d && global.DG.field2d.on() ? global.DG.field2d.color(kind) : TERRAIN[kind];
           ctx.fillRect(sx, sy, T + 1, T + 1);
         }
       }
     }
+    if (global.DG.field2d) { global.DG.field2d.decorate(ctx, camX, camY, W, H, sc, terrainAt); }   // W-0130 — 칸 결·경계·소품(나무·바위·풀포기)
   }
 
   /* ── 스폰 ─────────────────────────────────────────────── */
@@ -986,7 +987,7 @@
     if (raw === undefined || raw === null || raw === '') { raw = ZOOM2_DEFAULT; }
     var z = Number(raw);
     if (!isFinite(z) || z <= 0) { z = ZOOM2_DEFAULT; }
-    return core.clamp(z, ZOOM2_MIN, ZOOM2_MAX);
+    return core.clamp(z, ZOOM2_MIN, ZOOM2_MAX) * (global.DG.field2d && global.DG.field2d.on() && core.save.settings && core.save.settings.tilt === 0 ? global.DG.field2d.zoomMul() : 1);   // W-0130 — 2D 들판만 가깝게(2.5D 는 그대로)
   }
   function setCamZoom2d(z) {
     if (!core.save.settings) { return 1; }
@@ -1373,7 +1374,7 @@
 
     /* 지도 타일 — 타일 자체는 늘 원래 zoom(ZOOM)레벨로 받아 둔다(다시 받아올
        필요가 없게). camZoom2d 는 그리는 크기만 늘이거나 줄인다 */
-    if (tilesUsable()) {
+    if (tilesUsable() && !(global.DG.field2d && global.DG.field2d.on())) {   // W-0130 — 게임 타일 들판(field2d)이면 OSM 그림 대신 땅 종류 타일
       var cz = camZoom2d(), dTile = TILE_PX * cz;
       var ll = worldToLatLng(camX, camY);
       var px = latLngToPixel(ll.lat, ll.lng);
@@ -1395,7 +1396,7 @@
     /* 구역 경계선 — 지도에 결을 주는 옅은 격자 (소유 개념은 없다) */
     var r0x = Math.floor(camX / REGION_SIZE), r1x = Math.ceil((camX + g.GW / sc) / REGION_SIZE);
     var r0y = Math.floor(camY / REGION_SIZE), r1y = Math.ceil((camY + g.GH / sc) / REGION_SIZE);
-    for (var ry = r0y; ry <= r1y; ry++) {
+    for (var ry = r0y; ry <= r1y && !(global.DG.field2d && global.DG.field2d.on()); ry++) {   // 지도 격자는 지도일 때만
       for (var rx = r0x; rx <= r1x; rx++) {
         var bx = (rx * REGION_SIZE - camX) * sc, by = (ry * REGION_SIZE - camY) * sc;
         var bs = REGION_SIZE * sc;

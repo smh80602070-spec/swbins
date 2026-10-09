@@ -10,7 +10,7 @@
     if (raw === undefined || raw === null || raw === '') { raw = ZOOM2_DEFAULT; }
     var z = Number(raw);
     if (!isFinite(z) || z <= 0) { z = ZOOM2_DEFAULT; }
-    return core.clamp(z, ZOOM2_MIN, ZOOM2_MAX);
+    return core.clamp(z, ZOOM2_MIN, ZOOM2_MAX) * (global.DG.field2d && global.DG.field2d.on() && core.save.settings && core.save.settings.tilt === 0 ? global.DG.field2d.zoomMul() : 1);   // W-0130 — 2D 들판만 가깝게(2.5D 는 그대로)
   }
   function setCamZoom2d(z) {
     if (!core.save.settings) { return 1; }
@@ -397,7 +397,7 @@
 
     /* 지도 타일 — 타일 자체는 늘 원래 zoom(ZOOM)레벨로 받아 둔다(다시 받아올
        필요가 없게). camZoom2d 는 그리는 크기만 늘이거나 줄인다 */
-    if (tilesUsable()) {
+    if (tilesUsable() && !(global.DG.field2d && global.DG.field2d.on())) {   // W-0130 — 게임 타일 들판(field2d)이면 OSM 그림 대신 땅 종류 타일
       var cz = camZoom2d(), dTile = TILE_PX * cz;
       var ll = worldToLatLng(camX, camY);
       var px = latLngToPixel(ll.lat, ll.lng);
@@ -419,7 +419,7 @@
     /* 구역 경계선 — 지도에 결을 주는 옅은 격자 (소유 개념은 없다) */
     var r0x = Math.floor(camX / REGION_SIZE), r1x = Math.ceil((camX + g.GW / sc) / REGION_SIZE);
     var r0y = Math.floor(camY / REGION_SIZE), r1y = Math.ceil((camY + g.GH / sc) / REGION_SIZE);
-    for (var ry = r0y; ry <= r1y; ry++) {
+    for (var ry = r0y; ry <= r1y && !(global.DG.field2d && global.DG.field2d.on()); ry++) {   // 지도 격자는 지도일 때만
       for (var rx = r0x; rx <= r1x; rx++) {
         var bx = (rx * REGION_SIZE - camX) * sc, by = (ry * REGION_SIZE - camY) * sc;
         var bs = REGION_SIZE * sc;

@@ -688,5 +688,23 @@
   "ticket": "W-0117",
   "since": "2026-10-09",
   "note": "D2: saga-web/tools/playcheck/pw-dex-look.mjs → shots/qc/saga-go-dex.png(W-0117, 2D 판). 모험 레벨 22 로 열린 셋(농마·갈색 말·학)에 연결 펫 초상, 잠긴 둘은 ❔+문턱 레벨. Claude 눈 ○. 탈것 수는 dex()(인물+펫) 말고 rate()·stats().by.mount 에 따로 든다."
+ },
+ {
+  "id": "go.field2d",
+  "name": "2D 들판 — 젤다 신들의 트라이포스·포켓몬 HGSS 식 게임 타일 세계(지도 앱 대신)",
+  "files": [
+   "js/field2d.js",
+   "src/world/01.js",
+   "src/world/02.js"
+  ],
+  "tests": [
+   "go.field2d: 2D 들판(W-0130) — 소품은 좌표 해시로 늘 같고, 숲엔 나무·물가엔 거품, 2D 일 때만 카메라 ×1.7"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0130",
+  "since": "2026-10-09",
+  "note": "D2: saga-web/tools/playcheck/pw-go2d-check.mjs → shots/go2d/d-{pc,phone,land}.png Claude 눈 ○(맑은 풀밭·흙길·돌 광장 줄눈·숲 나무·건초·물가 거품, 인물 큼). 실제 길 배치는 geo 땅 종류 그대로. K-0020 go_* 타일은 크게 보면 벽처럼(조각 나무판·담쟁이·벽돌) 들판 모드에서 안 씀. 손잡이 world.field2d 0 = 옛 OSM 지도."
  }
 ]

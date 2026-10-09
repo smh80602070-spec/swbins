@@ -122,6 +122,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/mount.js"></script>
 <script src="js/geo.js"></script>
 <script src="js/world.js"></script>
+<script src="js/field2d.js"></script>
 <script src="js/npc.js"></script>
 <script src="js/folk.js"></script>
 <script src="js/animal.js"></script>
@@ -16303,6 +16304,18 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
              (v.match(/class="dcell/g) || []).length, v.indexOf('4 / 5') >= 0, v.indexOf('Lv.30') >= 0 && X.tellMount('mt_white').indexOf('레벨 30') >= 0 && X.tellMount('mt_farm').indexOf('걸음 ×1.6') >= 0];
       } finally { P.level = keepLv; C.save.dex.pets = keepPets; }
       return r.join(',') === '5,0,mt_farm|mt_brown|mt_crane|mt_dragon,true,true,5,true,true' && ('탈것 ' + r.join(',')) || '실패 ' + r.join(',');
+    });
+
+    t('go.field2d: 2D 들판(W-0130) — 소품은 좌표 해시로 늘 같고, 숲엔 나무·물가엔 거품, 2D 일 때만 카메라 ×1.7', function () {
+      var F = DG.field2d, W = DG.world, st = C.save.settings, keep = st.tilt, r;
+      try {
+        var a = JSON.stringify(F.propsAt('forest', 12, -7)), b = JSON.stringify(F.propsAt('forest', 12, -7)), road = F.propsAt('road', 3, 3).length, water = F.propsAt('water', 5, 5).length;
+        var trees = 0, i; for (i = 0; i < 40; i++) { trees += F.propsAt('forest', i, i * 3).filter(function (p) { return /^tree_/.test(p.id); }).length; }
+        var edge = /230,245,255/.test(F.edgeColor('water', 'grass')) && F.edgeColor('grass', 'grass') === null;
+        st.tilt = 0; var z2 = W.camZoom2d; st.tilt = 1; var z1 = W.camZoom2d;
+        r = [a === b, road === 0 && water === 0, trees > 30, edge, F.color('road') !== F.color('grass'), typeof z2 === 'number' && Math.abs(z2 / z1 - F.zoomMul()) < 1e-9];
+      } finally { st.tilt = keep; }
+      return r.every(Boolean) && ('숲 40칸 나무 ' + trees + ' · 2D 배율 ×' + F.zoomMul()) || '실패 ' + r.join(',');
     });
 
     t('런타임 에러 없음', function () {
