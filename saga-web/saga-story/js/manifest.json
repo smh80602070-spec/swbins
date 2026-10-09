@@ -2,6 +2,7 @@
  "index": [
   [
    "js/errlog.js",
+   "js/emojicompat.js",
    "js/data.js",
    "js/data-enemy.js",
    "js/data-side.js",

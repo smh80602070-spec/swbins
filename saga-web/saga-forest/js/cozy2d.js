@@ -17,11 +17,15 @@
 
   function C() { return global.DG && global.DG.core; }
   function on() { var c = C(); return !!(c && c.tuned ? c.tuned('village.cozy2d', 1) : 1); }
-  function zoomMul() {
+  function wantZoom() {
     if (!on()) { return 1; }
     var c = C(), z = c && c.tuned ? c.tuned('village.cozyZoom', 1.35) : 1.35;
     return Math.max(0.6, Math.min(2.5, Number(z) || 1));
   }
+  var usedZ = null;   // village-view resize() 가 마지막으로 쓴 배율
+  function zoomMul() { usedZ = wantZoom(); return usedZ; }
+  /** 손잡이(village.cozy2d·cozyZoom)가 바뀌었으면 village-view 를 다시 잰다 — 창 크기를 안 바꿔도 곧바로(리뷰 R-5) */
+  function sync() { if (usedZ !== null && wantZoom() !== usedZ && global.DG.villageView) { global.DG.villageView.resize(); } }
 
   /* 좌표 해시 — 0~1. 칸(tx,ty)과 몇 번째(n)로만 정해진다 */
   function hh(x, y, n) {
@@ -64,6 +68,14 @@
     return out;
   }
 
+  /* 칸 덧칠은 (종류·칸·계절)로만 정해진다 — 매 프레임 새로 만들지 않게 담아 둔다 */
+  var spCache = {}, spN = 0;
+  function specksOf(kind, tx, ty, seKey) {
+    var k = kind + '|' + tx + '|' + ty + '|' + seKey, v = spCache[k];
+    if (!v) { if (spN > 6000) { spCache = {}; spN = 0; } v = spCache[k] = specks(kind, tx, ty, seKey); spN++; }
+    return v;
+  }
+
   /** 가장자리 — 맨땅(흙길·모래·돌길·마루) 옆이 풀이면 풀이 넘어온다('grass'), 물 옆이 땅이면 거품('foam'). 변 순서 n·e·s·w */
   function rims(kind, n, e, s, w) {
     var nb = [n, e, s, w], out = [], i, bare = kind === 'path' || kind === 'sand' || kind === 'stone' || kind === 'floor';
@@ -86,27 +98,33 @@
 
   /** 가까운 칸 목록 위에 덧칠 — o = { project, T, se, zoom, tileAt, tiles } · list[i] = { kind, tx, ty, a0 } */
   function ground(ctx, list, o) {
+    sync();
     if (!on() || !list || !list.length) { return; }
     var P = o.project, T = o.T, se = o.se || {}, Z = o.zoom || 1, key = se.key || 'summer';
-    var grassCol = function (k) { return k === 'grass' ? (se.grass || '#63b04a') : ((o.tiles && o.tiles[k] && o.tiles[k].color) || se.grass || '#63b04a'); };
+    /* 풀색 — 맨풀은 village-view 처럼 바둑판((x+y) 짝수 grass · 홀수 grass2), 숲 고리 풀은 제 색(계절 안 탐) */
+    var grassCol = function (k, x, y) {
+      if (k === 'grass') { return ((x + y) % 2 + 2) % 2 === 0 ? (se.grass || '#63b04a') : (se.grass2 || se.grass || '#6fbb52'); }
+      return (o.tiles && o.tiles[k] && o.tiles[k].color) || se.grass || '#63b04a';
+    };
+    var DX = [0, 1, 0, -1], DY = [-1, 0, 1, 0];
     var bladeD = {}, bladeL = {}, flowers = [], pebbles = [], snows = [], specksD = [], fringes = {}, foams = [];
     var i, j, it, sp, q, p, bk;
     for (i = 0; i < list.length; i++) {
       it = list[i];
       if (!it.a0 || it.a0.a < -0.8) { continue; }   // 먼 줄은 몇 픽셀 — 덧칠하면 지저분하다
-      sp = specks(it.kind, it.tx, it.ty, key);
+      sp = specksOf(it.kind, it.tx, it.ty, key);
       for (j = 0; j < sp.length; j++) {
         q = sp[j]; p = P((it.tx + q.u) * T, (it.ty + q.v) * T);
-        if (q.t === 'blade') { bk = grassCol(it.kind); ((q.c ? bladeL : bladeD)[bk] = (q.c ? bladeL : bladeD)[bk] || []).push(p); }
+        if (q.t === 'blade') { bk = grassCol(it.kind, it.tx, it.ty); ((q.c ? bladeL : bladeD)[bk] = (q.c ? bladeL : bladeD)[bk] || []).push(p); }
         else if (q.t === 'flower') { flowers.push({ p: p, c: q.c }); }
-        else if (q.t === 'pebble') { pebbles.push(p); }
+        else if (q.t === 'pebble') { pebbles.push({ p: p, c: q.c }); }
         else if (q.t === 'snow') { snows.push(p); }
         else { specksD.push({ p: p, k: it.kind }); }
       }
       if (o.tileAt && (it.kind === 'path' || it.kind === 'sand' || it.kind === 'stone' || it.kind === 'floor' || it.kind === 'water')) {
         var rr = rims(it.kind, o.tileAt(it.tx, it.ty - 1), o.tileAt(it.tx + 1, it.ty), o.tileAt(it.tx, it.ty + 1), o.tileAt(it.tx - 1, it.ty));
         for (j = 0; j < rr.length; j++) {
-          if (rr[j].t === 'grass') { bk = key === 'winter' ? '#eaf2f6' : grassCol(rr[j].g); (fringes[bk] = fringes[bk] || []).push({ tx: it.tx, ty: it.ty, side: rr[j].side }); }
+          if (rr[j].t === 'grass') { bk = grassCol(rr[j].g, it.tx + DX[rr[j].side], it.ty + DY[rr[j].side]); (fringes[bk] = fringes[bk] || []).push({ tx: it.tx, ty: it.ty, side: rr[j].side }); }
           else { foams.push({ tx: it.tx, ty: it.ty, side: rr[j].side }); }
         }
       }
@@ -166,8 +184,8 @@
     }
     /* 자갈 — 회색 알 + 위쪽 빛 */
     for (i = 0; i < pebbles.length; i++) {
-      p = pebbles[i]; var pr = 2.6 * Z * p.s;
-      ctx.fillStyle = '#8e8a80'; ctx.beginPath(); ctx.ellipse(p.x, p.y, pr, pr * 0.62, 0, 0, Math.PI * 2); ctx.fill();
+      p = pebbles[i].p; var pr = 2.6 * Z * p.s;
+      ctx.fillStyle = pebbles[i].c ? '#9a8466' : '#8e8a80'; ctx.beginPath(); ctx.ellipse(p.x, p.y, pr, pr * 0.62, 0, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = 'rgba(255,255,255,0.45)'; ctx.beginPath(); ctx.ellipse(p.x - pr * 0.25, p.y - pr * 0.22, pr * 0.42, pr * 0.24, 0, 0, Math.PI * 2); ctx.fill();
     }
     /* 꽃 점 — 꽃잎 넷 + 노란 술 */
@@ -199,9 +217,34 @@
     dawn:  { mul: 'rgb(255,238,204)', near: null,              glow: null,                     warm: 'rgba(255,236,170,0.20)', vign: 0.12 },
     day:   { mul: null,               near: null,              glow: null,                     warm: null,                     vign: 0.08 },
     even:  { mul: 'rgb(255,196,150)', near: null,              glow: null,                     warm: 'rgba(255,170,90,0.18)',  vign: 0.18 },
-    night: { mul: 'rgb(64,78,150)',   near: 'rgb(214,200,180)', glow: 'rgba(255,190,110,0.22)', warm: null,                     vign: 0.26 }
+    night: { mul: 'rgb(64,78,150)', a: 0.75, near: 'rgb(214,200,180)', glow: 'rgba(255,190,110,0.22)', warm: null,                     vign: 0.26 }
   };
   function lightSpec(key) { return LIGHT[key] || LIGHT.day; }
+
+  /* 해 쪽(새벽 왼쪽 위·저녁 오른쪽 위) 따뜻한 빛 + 가장자리 어둡게 — 반 크기 화면 밖 캔버스에 한 번 */
+  var layC = null, layKey = '';
+  function layer(key, L, W, H) {
+    if (!L.warm && !L.vign) { return null; }
+    var k = key + '|' + W + '|' + H;
+    if (layC && layKey === k) { return layC; }
+    if (typeof document === 'undefined') { return null; }
+    var w = Math.max(1, Math.round(W / 2)), h = Math.max(1, Math.round(H / 2)), cv = layC || document.createElement('canvas'), c, g;
+    cv.width = w; cv.height = h; c = cv.getContext('2d');
+    c.clearRect(0, 0, w, h);
+    if (L.warm) {
+      var sx = key === 'dawn' ? w * 0.12 : w * 0.88;
+      g = c.createRadialGradient(sx, 0, 0, sx, 0, Math.max(w, h) * 0.75);
+      g.addColorStop(0, L.warm); g.addColorStop(1, 'rgba(255,200,120,0)');
+      c.fillStyle = g; c.fillRect(0, 0, w, h);
+    }
+    if (L.vign) {
+      g = c.createRadialGradient(w / 2, h * 0.55, Math.min(w, h) * 0.35, w / 2, h * 0.55, Math.max(w, h) * 0.78);
+      g.addColorStop(0, 'rgba(40,24,10,0)'); g.addColorStop(1, 'rgba(40,24,10,' + L.vign + ')');
+      c.fillStyle = g; c.fillRect(0, 0, w, h);
+    }
+    layC = cv; layKey = k;
+    return cv;
+  }
 
   function light(ctx, ph, W, H, me, Z) {
     if (!on() || !ph) { return false; }
@@ -209,6 +252,7 @@
     ctx.save();
     if (L.mul) {
       ctx.globalCompositeOperation = 'multiply';
+      ctx.globalAlpha = L.a || 1;
       if (L.near) {
         g = ctx.createRadialGradient(mx, my, lr * 0.2, mx, my, lr);
         g.addColorStop(0, L.near); g.addColorStop(1, L.mul);
@@ -216,28 +260,19 @@
       } else { ctx.fillStyle = L.mul; }
       ctx.fillRect(0, 0, W, H);
       ctx.globalCompositeOperation = 'source-over';
+      ctx.globalAlpha = 1;
     }
     if (L.glow) {
       g = ctx.createRadialGradient(mx, my, 0, mx, my, lr * 0.8);
       g.addColorStop(0, L.glow); g.addColorStop(1, 'rgba(255,190,110,0)');
       ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
     }
-    if (L.warm) {
-      /* 해 쪽(새벽 왼쪽 위·저녁 오른쪽 위)에서 번지는 따뜻한 빛 */
-      var sx = ph.key === 'dawn' ? W * 0.12 : W * 0.88;
-      g = ctx.createRadialGradient(sx, 0, 0, sx, 0, Math.max(W, H) * 0.75);
-      g.addColorStop(0, L.warm); g.addColorStop(1, 'rgba(255,200,120,0)');
-      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-    }
-    if (L.vign) {
-      g = ctx.createRadialGradient(W / 2, H * 0.55, Math.min(W, H) * 0.35, W / 2, H * 0.55, Math.max(W, H) * 0.78);
-      g.addColorStop(0, 'rgba(40,24,10,0)'); g.addColorStop(1, 'rgba(40,24,10,' + L.vign + ')');
-      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-    }
+    var lay = layer(ph.key, L, W, H);
+    if (lay) { ctx.drawImage(lay, 0, 0, W, H); }
     ctx.restore();
     return true;
   }
 
   global.DG = global.DG || {};
-  global.DG.cozy2d = { on: on, zoomMul: zoomMul, specks: specks, rims: rims, ground: ground, lightSpec: lightSpec, light: light, _hash: hh };
+  global.DG.cozy2d = { on: on, zoomMul: zoomMul, wantZoom: wantZoom, sync: sync, specks: specks, rims: rims, ground: ground, lightSpec: lightSpec, light: light, _hash: hh };
 })(window);

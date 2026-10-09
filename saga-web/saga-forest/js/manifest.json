@@ -2,6 +2,7 @@
  "index": [
   [
    "js/errlog.js",
+   "js/emojicompat.js",
    "js/data.js",
    "js/data-village.js",
    "js/sprite.js",
@@ -110,6 +111,7 @@
    "js/craft.js",
    "js/fs2d.js",
    "js/cozy2d.js",
+   "js/emojicompat.js",
    "js/village-view.js",
    "js/village-view3d.js",
    "js/net.js",

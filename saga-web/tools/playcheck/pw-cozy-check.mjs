@@ -8,6 +8,7 @@ process.env.PW_BASE = `http://127.0.0.1:${port}/`;
 const { open, sleep } = await import('./pw.mjs'); await sleep(800);
 const tag = process.argv[2] || 'a';
 const skip = async (ev, page) => { for (let i = 0; i < 14; i++) { const o = await ev(() => !!((DG.scenario && DG.scenario.isOpen && DG.scenario.isOpen()) || (DG.story && DG.story.isOpen && DG.story.isOpen()))); if (!o) break; await page.keyboard.press('Escape'); await sleep(200); } };
+try {
 for (const V of [{ k: 'pc', w: 1280, h: 720 }, { k: 'phone', w: 390, h: 844, mobile: true }, { k: 'land', w: 844, h: 390, mobile: true }]) {
   const r = await open('saga-forest', V); const ev = (f, a) => r.page.evaluate(f, a);
   try {
@@ -21,8 +22,9 @@ for (const V of [{ k: 'pc', w: 1280, h: 720 }, { k: 'phone', w: 390, h: 844, mob
       await r.page.screenshot({ path: path.join(OUT, `${tag}-${V.k}-${ph}.png`) });
     }
     await ev(() => { DG.core.setTune('time.phase', null); });
-    console.log(V.k, JSON.stringify(await ev(() => ({ is3d: !!(DG.villageView3d && DG.villageView3d.active && DG.villageView3d.active()), cozy: DG.cozy2d ? DG.cozy2d.zoomMul() : null }))), r.errors.filter((e) => !/404|ERR_CONN/.test(e)).slice(0, 3).join(' | '));
+    console.log(V.k, JSON.stringify(await ev(() => ({ is3d: !!(DG.villageView3d && DG.villageView3d.active && DG.villageView3d.active()), cozy: DG.cozy2d ? DG.cozy2d.wantZoom() : null }))), r.errors.filter((e) => !/404|ERR_CONN/.test(e)).slice(0, 3).join(' | '));
   } catch (e) { console.log(V.k, 'ERR', e.message.split('\n')[0]); }
   await r.close();
 }
-srv.kill(); process.exit(0);
+} finally { srv.kill(); }   // 브라우저가 못 떠도 서버는 끈다(R-5)
+process.exit(0);

@@ -53,7 +53,7 @@
 window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; window.DG_NO_LOOP = true; window.DG_NO_SCENARIO = true;
 /* 어드민의 균형 손잡이를 읽지 않는다 — 손잡이를 잡아 둔 기기에서
    판정이 흔들리면 안 된다 (씨앗을 고정한 것과 같은 이유다) */
-window.DG_NO_TUNE = true;
+window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진단은 원래 이모지 글자를 비교한다(대체표만 검사)
 
 /* 무작위 고정 — 진단이 굴릴 때마다 달라지면 판정이 흔들린다.
    게임 스크립트보다 **먼저** 갈아 둬야 부트에서 쓰는 난수까지 잡힌다.
@@ -116,6 +116,7 @@ window.DG_NO_TUNE = true;
 <script src="js/craft.js"></script>
 <script src="js/fs2d.js"></script>
 <script src="js/cozy2d.js"></script>
+<script src="js/emojicompat.js"></script>
 <script src="js/village-view.js"></script>
 <script src="js/village-view3d.js"></script>
 <script src="js/net.js"></script>
@@ -6893,7 +6894,7 @@ window.DG_NO_TUNE = true;
       } finally { crBack(k); }
     });
 
-    t('fs.cozy2d: 2D 마을 스타듀식(W-0133) — 배율 기본 1.35·손잡이 0 이면 1, 지평선 자리 그대로·투영 왕복, 땅 덧칠은 좌표 해시(같은 칸 같은 무늬·Math.random 안 먹음), 흙길 가장자리 풀·물가 거품, 시간대 빛 색', function () {
+    t('fs.cozy2d: 2D 마을 스타듀식(W-0133) — 배율 기본 1.35·손잡이 0 이면 1, 지평선 자리 그대로·투영 왕복, 땅 덧칠은 좌표 해시(같은 칸 같은 무늬·Math.random 안 먹음), 흙길 가장자리 풀·물가 거품, 시간대 빛 색, 손잡이 곧바로', function () {
       var Z = DG.cozy2d, C = DG.core, VV = DG.villageView, cam = VV._cam(), r = [], i;
       var keepZ = C.tuned('village.cozyZoom', ''), keepO = C.tuned('village.cozy2d', '');
       var probe = function () {
@@ -6904,8 +6905,9 @@ window.DG_NO_TUNE = true;
       try {
         C.setTune({ 'village.cozyZoom': null, 'village.cozy2d': null });
         var z0 = Z.zoomMul(), a = probe();
+        C.setTune('village.cozyZoom', 1.8); Z.sync(); var q0 = VV._project(cam.x, cam.y), q1 = VV._project(cam.x + 40, cam.y), dz = q1.x - q0.x; C.setTune('village.cozyZoom', null);   // 손잡이를 바꾸면 창 크기 그대로여도 곧바로(R-5)
         C.setTune('village.cozy2d', 0); var z1 = Z.zoomMul(), b = probe();
-        r.push(z0 === 1.35, z1 === 1, Math.abs(a.dx / b.dx - 1.35) < 0.01, Math.abs(a.top - b.top) < 1.5, a.rt < 0.01);
+        r.push(z0 === 1.35, z1 === 1, Math.abs(dz / a.dx - 1.8 / 1.35) < 0.02, Math.abs(a.dx / b.dx - 1.35) < 0.01, Math.abs(a.top - b.top) < 1.5, a.rt < 0.01);
       } finally { C.setTune({ 'village.cozyZoom': keepZ === '' ? null : keepZ, 'village.cozy2d': keepO === '' ? null : keepO }); VV.resize(); }
       var rnd = Math.random, calls = 0; Math.random = function () { calls++; return rnd(); };
       try {
@@ -6919,6 +6921,13 @@ window.DG_NO_TUNE = true;
       var rgb = function (k) { return Z.lightSpec(k).mul && Z.lightSpec(k).mul.match(/\d+/g).map(Number); }, dw = rgb('dawn'), ev = rgb('even'), nt = rgb('night');
       r.push(dw[0] > dw[2] && dw[1] > dw[2], ev[0] > ev[1] && ev[1] > ev[2], nt[2] > nt[0] && nt[2] > nt[1], Z.lightSpec('day').mul === null, !!Z.lightSpec('night').near);
       return r.every(Boolean) && ('배율 ' + z0 + ' → 한 칸 ' + a.dx.toFixed(1) + 'px(끄면 ' + b.dx.toFixed(1) + ') · 마루 ' + Math.round(a.top) + '/' + Math.round(b.top) + ' · 꽃밭 400칸 꽃 ' + fl) || '실패 ' + r.join(',');
+    });
+
+    t('emoji-compat: 윈도 10 빈 네모 대체표(W-0135) — 40여 새 이모지마다 옛 이모지 하나, 대체 글자는 표 안 글자가 아님(다시 안 바뀜), 꺼 두면 글자 그대로, 판정은 참/거짓', function () {
+      var E = DG.emojiCompat, keys = Object.keys(E.MAP), bad = [];
+      keys.forEach(function (k) { var v = E.MAP[k]; if (!v || v === k || keys.some(function (q) { return v.indexOf(q) >= 0; })) { bad.push(k); } });
+      var same = E.fix('돈 🪙120') === '돈 🪙120', sup = typeof E.supports('🪙') === 'boolean';
+      return keys.length >= 38 && !bad.length && same && sup && E.bad.length === 0 && ('표 ' + keys.length + '자 · 이 기기 🪙 ' + (E.supports('🪙') ? '그림' : '빈 네모')) || '실패 ' + keys.length + ' ' + bad.join('') + ' ' + same + sup;
     });
 
     t('런타임 에러 없음', function () {

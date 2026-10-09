@@ -730,7 +730,7 @@
    "src/village-view/01.js"
   ],
   "tests": [
-   "fs.cozy2d: 2D 마을 스타듀식(W-0133) — 배율 기본 1.35·손잡이 0 이면 1, 지평선 자리 그대로·투영 왕복, 땅 덧칠은 좌표 해시(같은 칸 같은 무늬·Math.random 안 먹음), 흙길 가장자리 풀·물가 거품, 시간대 빛 색"
+   "fs.cozy2d: 2D 마을 스타듀식(W-0133) — 배율 기본 1.35·손잡이 0 이면 1, 지평선 자리 그대로·투영 왕복, 땅 덧칠은 좌표 해시(같은 칸 같은 무늬·Math.random 안 먹음), 흙길 가장자리 풀·물가 거품, 시간대 빛 색, 손잡이 곧바로"
   ],
   "level": "D2",
   "verified": null,
@@ -738,5 +738,21 @@
   "ticket": "W-0133",
   "since": "2026-10-09",
   "note": "D2: saga-web/tools/playcheck/pw-cozy-check.mjs → shots/cozy/{a,d}-{pc,phone,land}-{day,even,night}.png Claude 눈 ○(a=전, d=후: 인물·집 ×1.35 · 마루·하늘 제자리 · 풀 결·흙길 톱니 가장자리·자갈 · 밤은 남색 곱하기 + 내 둘레 등불, 옛 얹기 빛은 뿌옇게 바랬음). 집 안(평면) 그대로(QC 3-home). 손잡이 village.cozy2d 0 = 옛 모습, village.cozyZoom 배율."
+ },
+ {
+  "id": "web.emojicompat",
+  "name": "윈도 10 빈 네모 이모지 → 옛 이모지(다섯 판 공용 shared/js/emojicompat.js, 못 그리는 기기에서만)",
+  "files": [
+   "js/emojicompat.js"
+  ],
+  "tests": [
+   "emoji-compat: 윈도 10 빈 네모 대체표(W-0135) — 40여 새 이모지마다 옛 이모지 하나, 대체 글자는 표 안 글자가 아님(다시 안 바뀜), 꺼 두면 글자 그대로, 판정은 참/거짓"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0135",
+  "since": "2026-10-09",
+  "note": "D2: QC 2D 다섯 장(tools/_out/qc/20261009-1348.md) Claude 눈 ○ — HUD 돈 칸 □→💰(사가마을·사가종횡·사가천하), 사가나락 이름표 앞 □→📋. 이 PC(윈도 10) 판정 🪙 빈 네모 확인. 정본 shared/, 다섯 판 사본."
  }
 ]

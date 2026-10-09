@@ -303,11 +303,6 @@
     }
 
     drawWeather(se, now);
-    /* 백중 밤의 불꽃 — 밤과 저녁에만 오른다 */
-    if (evTag() === 'fire' && (ph.key === 'night' || ph.key === 'even')) {
-      drawFireworks(now);
-    }
-
     /* 계절빛 — 아주 옅게 한 겹 (계절이 바뀐 걸 눈이 먼저 안다) */
     ctx.fillStyle = se.tint;
     ctx.fillRect(0, 0, W, H);
@@ -316,6 +311,11 @@
     if (global.DG.cozy2d && global.DG.cozy2d.light(ctx, ph, W, H, project(p.x, p.y), ZOOM)) { /* W-0133 아늑한 빛이 대신 덮었다 */ } else if (ph.light !== 'rgba(0,0,0,0)') {
       ctx.fillStyle = ph.light;
       ctx.fillRect(0, 0, W, H);
+    }
+
+    /* 백중 밤의 불꽃 — 밤과 저녁에만 오른다. 빛 위에 그린다(W-0133 — 밤 곱하기에 묻히지 않게) */
+    if (evTag() === 'fire' && (ph.key === 'night' || ph.key === 'even')) {
+      drawFireworks(now);
     }
   }
 
@@ -637,7 +637,7 @@
     }
 
     if (global.DG.cozy2d) { global.DG.cozy2d.ground(ctx, texList, { project: project, T: T, se: se, zoom: ZOOM, tileAt: V.tileAt, tiles: VD.TILES }); }   /* W-0133 풀 결·꽃 점·흙길 가장자리 덧칠, 그 위에 잔디 술 — 세 갈래 짧은 선 */
-    if (tufts.length) {
+    if (tufts.length && !(global.DG.cozy2d && global.DG.cozy2d.on())) {   // W-0133 — 켜져 있으면 cozy2d 풀 결이 대신(배율 따라 커진다)
       ctx.strokeStyle = dark(se.grass, 0.22);
       ctx.lineWidth = 1.6;
       ctx.lineCap = 'round';
