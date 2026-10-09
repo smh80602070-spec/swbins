@@ -13,6 +13,7 @@ extends Node3D
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const SkyIsle := preload("res://games/saga_go/world/sky_isle.gd")
+const IsleRock := preload("res://games/saga_go/world/isle_rock.gd")
 
 const CH27 := 26 # 27장(0부터)
 const CH28 := 27
@@ -420,7 +421,7 @@ func _build_eye() -> void:
 	cone.height = 12.0
 	cone.radial_segments = 14
 	cone.rings = 1
-	_mesh(_eye, cone, _mat(SLATE_DARK), Vector3(0.0, -7.4, 0.0))
+	IsleRock.add(_eye, cone, SLATE_DARK, Vector3(0.0, -7.4, 0.0), 28)   # G-0130 — 바위 밑동(층·뿌리)
 	var ccs := CollisionShape3D.new()
 	ccs.shape = cone.create_convex_shape()
 	ccs.position = Vector3(0.0, -7.4, 0.0)

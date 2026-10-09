@@ -12,6 +12,7 @@ const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const Adventure := preload("res://games/saga_go/data/adventure.gd")
 const Story := preload("res://games/saga_go/data/story.gd")
+const IsleRock := preload("res://games/saga_go/world/isle_rock.gd")
 
 const REGION := "village"
 const CELL := Vector2(7.1, 1.0) # 섬 가운데
@@ -136,7 +137,7 @@ func _build_isle() -> void:
 	cone.height = 13.0
 	cone.radial_segments = 14
 	cone.rings = 1
-	_mesh(body, cone, _mat(Color(0.46, 0.43, 0.42)), Vector3(0.0, -7.7, 0.0))
+	IsleRock.add(body, cone, Color(0.46, 0.43, 0.42), Vector3(0.0, -7.7, 0.0), 71)   # G-0130 — 바위 밑동(층·뿌리)
 	var ccs := CollisionShape3D.new()
 	ccs.shape = cone.create_convex_shape()
 	ccs.position = Vector3(0.0, -7.7, 0.0)

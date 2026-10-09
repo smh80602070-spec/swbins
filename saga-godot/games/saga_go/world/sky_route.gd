@@ -13,6 +13,7 @@ extends Node3D
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const Sunken := preload("res://games/saga_go/world/region7_sunken.gd")
+const IsleRock := preload("res://games/saga_go/world/isle_rock.gd")
 
 const REGION := "sunken"
 ## [id, 가운데 칸, 윗면 높이(월드 y), 반지름, 이름, 도감 place id]
@@ -298,7 +299,10 @@ func _build_isle(id: String, r: float, title: String) -> void:
 	cone.height = 14.0
 	cone.radial_segments = 14
 	cone.rings = 1
-	_mesh(body, cone, _mat(STEEL_DARK if metal else Color(0.42, 0.4, 0.42)), Vector3(0.0, -8.4, 0.0))
+	if metal:
+		_mesh(body, cone, _mat(STEEL_DARK), Vector3(0.0, -8.4, 0.0))
+	else:
+		IsleRock.add(body, cone, Color(0.42, 0.4, 0.42), Vector3(0.0, -8.4, 0.0), id.hash())   # G-0130 — 바위 밑동(층·뿌리)
 	var ccs := CollisionShape3D.new()
 	ccs.shape = cone.create_convex_shape()
 	ccs.position = Vector3(0.0, -8.4, 0.0)

@@ -65,6 +65,8 @@ const SHOTS := [
 	["g38_fork_gate", "fork", Vector2(4.6, 7.2), Vector3.ZERO, Vector2(3.0, 5.0), -4.0, 14.0, ""],
 	["g38_fork_works", "fork", Vector2(4.8, 4.4), Vector3.ZERO, Vector2(6.6, 4.8), -4.0, 14.0, ""],
 	["g38_fork_town", "fork", Vector2(3.3, 6.2), Vector3.ZERO, Vector2(2.0, 4.6), -6.0, 14.0, ""],
+	["i_rift_under", "crossing", Vector2(6.3, 3.6), Vector3.ZERO, Vector2(6.3, 2.6), 30.0, 3.0, "hide"],   # G-0130 — 떠 있는 섬 밑동 올려다보기
+	["i_skyisle_under", "village", Vector2(7.1, 2.2), Vector3.ZERO, Vector2(7.1, 1.0), 30.0, 3.0, "hide"],
 	["k_burst_mid", "village", "v_statue", Vector3(9, 0, 0), "v_statue", -6.0, 4.0, "burst14"],   # G-0129 — 폭발(Q) 동작 가운데(내딛어 두 손 내지르기)
 	["k_ride_horse", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, "mount:pt_jeolyeong"],
 	["k_ride_horse_a", "village", "v_statue", Vector3(9, 0, 0), "v_statue", -6.0, 5.0, "mount:pt_jeolyeong"],
@@ -312,8 +314,8 @@ func _act(a: String) -> void:
 				_swing_enemy.set_physics_process(false)
 				_swing_enemy.set_process(false)
 				_p.global_position = _swing_enemy.global_position + Vector3(1.4, 0.4, 0.9)
-		"lineup_faces":
-			_p.visible = false # 얼굴 가까이 — 플레이어가 앞을 가리지 않게
+		"lineup_faces", "hide":
+			_p.visible = false # 얼굴 가까이·올려다보기 — 플레이어가 앞을 가리지 않게
 		"beasts", "beasts_a", "beasts_b", "pets":
 			_p.visible = false # 줄 한가운데를 가린다
 		_ when a.begins_with("beast:"):
