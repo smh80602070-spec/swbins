@@ -91,7 +91,7 @@
       g = a.group.map(function (id) { return s.units[id]; }).filter(function (u) { return !!u; });
       a.group = g.map(function (u) { return u.id; });
       if (!g.length) { a.mode = 'muster'; }
-      else if (g.length * 2 < a.size) { a.mode = 'retreat'; a.rt = s.tick + 150; }
+      else if (g.length * 2 < a.size) { a.mode = 'retreat'; a.rt = s.tick + 150; g.forEach(function (u) { u.path = []; u.goal = null; u.want = null; u.rp = 0; }); }   // W-0125 걷던 길을 버려야 바로 돌아선다(전엔 노리던 건물까지 다 걸어간 뒤)
       else if (!s.buildings[a.tgt] || s.tick % 10 === 0) { a.tgt = pickTarget(s, g); }
     } else if (a.mode === 'retreat') {
       if (s.tick >= a.rt) { a.mode = 'muster'; a.group = []; s.raid.next = Math.max(s.raid.next, s.tick + RAID_GAP / 2); }

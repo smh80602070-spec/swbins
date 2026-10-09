@@ -20,7 +20,7 @@
     { k: 'market', n: '시장', i: '🏪' }, { k: 'workshop', n: '공방', i: '🔨' }, { k: 'barracks', n: '군영', i: '⚔️' }, { k: 'well', n: '우물', i: '💧' }, { k: 'tower', n: '망루', i: '🗼' }, { k: 'wall', n: '성벽', i: '🧱' }, { k: 'erase', n: '철거', i: '🧹' }];
 
   var R = function () { return global.DG.rts; };
-  var S = null, cv, ctx, mini, mctx, miniBase = null, els = {};
+  var S = null, cv, ctx, mini, mctx, miniBase = null, els = {}, diffOpen = false;
   var cam = { x: 80, y: 50, z: 1.4 }, tool = 'select', hover = null, ptrs = {}, pinch = 0, painting = false, panning = false, panLast = null;
   var fogSt = null, fogOn = true, lastFog = 0;   // 전장 안개(W-0062) — js/rts/fog.js
   var amMode = false, edgeP = null, groups = {};   // 공격 이동 대기(A) · 마우스 위치(가장자리 스크롤) · 부대 번호 1~9 → 유닛 id 모음(W-0061, 저장 안 함)
@@ -231,7 +231,11 @@
       if (n) { h += '<div class="sl-h"><b>선택 ' + n + '기</b></div><div class="sl-u">' + Object.keys(kinds).map(function (t) { return U.UDEF[t].icon + ' ' + U.UDEF[t].name + ' ' + kinds[t]; }).join(' · ') + '</div><small>우클릭(폰은 땅을 눌러)으로 이동</small><div class="sl-row"><div class="sl-btns"><button data-stop="1" title="정지 (S)"><span>✋</span><small>정지<br>S</small></button><button data-am="1" title="공격 이동 (A) — 갈 곳을 클릭"><span>⚔️</span><small>공격 이동<br>A</small></button></div>' + R().heroes.skillBtn(S, sel) + '</div>'; }
       else if (U.count(S, 0)) { h += '<div class="sl-btns"><button data-all="1" title="내 군대 전부 고르기"><span>🛡️</span><small>전군<br>선택</small></button></div>'; }
     }
-    if (h !== els.sel.__h) { els.sel.innerHTML = h; els.sel.__h = h; }
+    /* W-0125 — 진행 막대 폭·일격 쿨다운 글자가 매 hud(250ms)마다 달라 단추 줄을 통째로 갈았고, 누르는 사이 단추 노드가 바뀌어 클릭이 자주 먹혔다.
+       구성(이 두 값을 뺀 꼴)이 바뀔 때만 다시 쓰고, 두 값은 그 자리만 고친다 */
+    var pw = /<u style="width:(\d+)%">/.exec(h), cdt = /<em class="cd">([^<]*)<\/em>/.exec(h), key = h.replace(/<u style="width:\d+%">/g, '<u>').replace(/<em class="cd">[^<]*<\/em>/g, '<em class="cd"></em>'), el;
+    if (key !== els.sel.__h) { els.sel.innerHTML = h; els.sel.__h = key; }
+    else { if (pw && (el = els.sel.querySelector('.sl-q u'))) { el.style.width = pw[1] + '%'; } if (cdt && (el = els.sel.querySelector('em.cd'))) { el.textContent = cdt[1]; } }
     els.sel.classList.toggle('show', !!h);
   }
 
@@ -317,7 +321,7 @@
     var ids = liveIds(), t = toTile(p.x, p.y);
     if (!ids.length || !R().grid.inBounds(t.x, t.y)) { return; }
     R().units.moveGroup(S, ids, t.x, t.y);
-    ids.forEach(function (id) { S.units[id].amGoal = { x: t.x + 0.5, y: t.y + 0.5 }; });
+    ids.forEach(function (id) { var u = S.units[id], g = u.want || u.goal; u.amGoal = g ? { x: g.x + 0.5, y: g.y + 0.5 } : { x: t.x + 0.5, y: t.y + 0.5 }; });   // W-0125 제 자리(moveGroup 이 둘레로 흩은 칸) — 전엔 모두 가운데라 도착 뒤 한 칸으로 뭉쳤다
     say('공격 이동'); dirty = true;
   }
   /** A 키·공격 이동 단추 — 다음 왼쪽 클릭을 공격 이동으로 받는다 */
@@ -347,6 +351,7 @@
   /** 새 판을 열 때 난이도를 묻는다 — 고르기 전엔 멈춰 있다. 이어하기·주소의 ?diff= 가 있으면 안 묻는다 */
   function askDiff(end) {
     var box2 = global.document.createElement('div'), names = R().rules.DIFF.names;
+    diffOpen = true;   // W-0125 — 고르기 전 임시 판(보통·일시정지)이 숨김·닫기 저장으로 남아, 다음에 난이도를 안 묻고 열리던 것
     box2.id = 'rts-diff'; box2.className = 'rt-box';
     if (TB) {
       box2.innerHTML = (end ? '<h3>' + (S.won ? '🏆 승리' : '💀 패배') + '</h3><p>' + S.tb.why + ' · ' + S.tb.turn + '턴 · 쓰러뜨린 적 ' + (S.kills || 0) + ' — 난이도를 골라 새 전투를 시작하세요.</p>'
@@ -357,7 +362,7 @@
         var auto = !!S.tb.auto;
         S = TT().start(end ? (Date.now() & 0xffff) + 1 : S.seed, +b.getAttribute('data-diff')); S.tb.auto = auto && !end ? auto : false;
         overSeen = false; floats = []; pick(0); if (fogOn) { fogSt = R().fog.create(); R().fog.update(fogSt, S); }
-        miniBase = null; camToArmy(); box2.parentNode.removeChild(box2); save(); hud();
+        diffOpen = false; miniBase = null; camToArmy(); box2.parentNode.removeChild(box2); save(); hud();
       });
       return;
     }
@@ -369,7 +374,7 @@
       S = R().state.create(end ? (Date.now() & 0xffff) + 1 : S.seed, +b.getAttribute('data-diff')); if (/[?&]qa=1/.test(global.location ? global.location.search : '')) { R().state.qaPreset(S); }
       lastSaveDay = S.day; sel = {}; selB = 0; overSeen = false; groups = {}; if (fogOn) { fogSt = R().fog.create(); R().fog.update(fogSt, S); }
       var cs2 = R().grid.castleSite(); cam.x = cs2.x + 1.5; cam.y = cs2.y + 1.5;
-      box2.parentNode.removeChild(box2); dirty = true; hud();
+      diffOpen = false; miniBase = null; box2.parentNode.removeChild(box2); dirty = true; hud();   // W-0125 새 판은 시드가 바뀌니 미니맵 지형도 다시 굽는다
     });
   }
   function diffFromUrl() { var m = /[?&]diff=([012])/.exec(global.location ? global.location.search : ''); return m ? +m[1] : 1; }
@@ -715,6 +720,7 @@
 
   function save() {
     var c = global.DG.core;
+    if (diffOpen) { return; }
     if (TB) { if (!S || !c || !c.save) { return; } c.save.rtsTb = S.over || S.won ? null : TT().serialize(S); c.persist(); return; }   // 턴 전투는 수마다(옛 save.rts 는 안 건드림)
     if (!S || !c || !c.save || S.over || S.won) { return; }
     c.save.rts = R().state.serialize(S); c.persist(); lastSaveDay = S.day;

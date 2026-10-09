@@ -26,7 +26,7 @@
   /** 저장 꼴 — 지형·점유 격자는 뺀다 */
   function serialize(s) {
     var list = [], id, b;
-    for (id in s.buildings) { b = s.buildings[id]; if (b.t !== 'castle' && b.t !== 'stronghold') { list.push({ id: b.id, t: b.t, x: b.x, y: b.y }); } }
+    for (id in s.buildings) { b = s.buildings[id]; if (b.t !== 'castle' && b.t !== 'stronghold') { list.push(b.hp === undefined ? { id: b.id, t: b.t, x: b.x, y: b.y } : { id: b.id, t: b.t, x: b.x, y: b.y, hp: Math.round(b.hp * 10) / 10 }); } }   // W-0125 깎인 체력도(전엔 불러오면 만피 — 적 출정 피해가 사라졌다)
     list.sort(function (a, c) { return a.id - c.id; });
     return { v: V, seed: s.seed, res: { food: s.res.food, gold: s.res.gold }, pop: s.pop, day: s.day, tick: s.tick, speed: s.speed, tax: s.tax, nextId: s.nextId, buildings: list,
       units: serUnits(s), queues: serQueues(s), nextUid: s.nextUid,
@@ -65,6 +65,7 @@
       var keep = s.res.gold; s.res.gold = 1e9;   // 복원은 비용을 안 낸다
       R().rules.place(s, b.t, b.x | 0, b.y | 0, b.id | 0 || undefined);
       s.res.gold = keep;
+      if (+b.hp > 0 && s.buildings[b.id | 0]) { s.buildings[b.id | 0].hp = +b.hp; }   // W-0125 깎인 체력(옛 저장은 칸이 없어 만피)
     }
     for (i in s.buildings) { s.nextId = Math.max(s.nextId, s.buildings[i].id + 1); }
     s.nextId = Math.max(s.nextId, o.nextId | 0);

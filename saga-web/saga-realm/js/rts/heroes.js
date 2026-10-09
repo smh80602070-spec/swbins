@@ -74,7 +74,7 @@
     var id, n = 0, cd = 0, u;
     for (id in sel) { u = s.units[id]; if (u && u.t === 'hero') { n++; cd = Math.max(cd, u.skillCd | 0); } }
     if (!n) { return ''; }
-    return '<div class="sl-btns"><button data-skill="1" title="일격 — 둘레 2.5칸 적에게 큰 피해(쿨다운 15초) · Q"><span>' + ico('strike', '💥') + '</span><small>일격 Q<br>' + (cd > 0 ? Math.ceil(cd / 10) + '초' : '준비') + '</small></button></div>';
+    return '<div class="sl-btns"><button data-skill="1" title="일격 — 둘레 2.5칸 적에게 큰 피해(쿨다운 15초) · Q"><span>' + ico('strike', '💥') + '</span><small>일격 Q<br><em class="cd">' + (cd > 0 ? Math.ceil(cd / 10) + '초' : '준비') + '</em></small></button></div>';   // em.cd — 글자만 바뀌는 칸(view selPanel 이 그 자리만 고친다)
   }
 
   global.DG = global.DG || {};

@@ -127,12 +127,13 @@ window.DG_NO_TUNE = true;
   var out = [], errors = [];
   window.addEventListener('error', function (e) { errors.push(e.message); });
 
+  /* W-0125 — "실패 …" 로 시작하는 설명 글은 실패다(다섯 판 같은 규칙) */
   function t(name, fn) {
     try {
-      var r = fn();
-      out.push((r ? '<span class="pass">PASS</span> ' : '<span class="fail">FAIL</span> ') +
+      var r = fn(), ok = !!r && !(typeof r === 'string' && /^실패 /.test(r));
+      out.push((ok ? '<span class="pass">PASS</span> ' : '<span class="fail">FAIL</span> ') +
         name + (typeof r === 'string' ? ' — ' + r : ''));
-      return !!r;
+      return ok;
     } catch (e) {
       out.push('<span class="fail">FAIL</span> ' + name + ' — 예외: ' + e.message);
       return false;

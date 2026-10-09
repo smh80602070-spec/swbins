@@ -128,12 +128,13 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
   var out = [], errors = [];
   window.addEventListener('error', function (e) { errors.push(e.message); });
 
+  /* W-0125 — "실패 …" 로 시작하는 설명 글은 실패다(사가만리·사가나락 t 와 같은 규칙) */
   function t(name, fn) {
     try {
-      var r = fn();
-      out.push((r ? '<span class="pass">PASS</span> ' : '<span class="fail">FAIL</span> ') +
+      var r = fn(), ok = !!r && !(typeof r === 'string' && /^실패 /.test(r));
+      out.push((ok ? '<span class="pass">PASS</span> ' : '<span class="fail">FAIL</span> ') +
         name + (typeof r === 'string' ? ' — ' + r : ''));
-      return !!r;
+      return ok;
     } catch (e) {
       out.push('<span class="fail">FAIL</span> ' + name + ' — 예외: ' + e.message);
       return false;
@@ -625,9 +626,37 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var R = DG.rts, U = R.units, C = R.combat, s = R.state.create(7), sb = s.buildings[-1]; s.raid.next = 1e9;
       var me = U.spawn(s, 'soldier', 0, sb.x - 2.5, sb.y + 1.5), h0 = me.hp, g0 = s.res.gold; C.tick(s);
       var shot = me.hp === h0 - 5; me.hp = 3; for (var i = 0; i < 11; i++) { C.tick(s); } var dead = !s.units[me.id] && s.res.gold === g0 && !s.kills;
-      var q = R.state.create(7); q.tick = 250; C.tick(q);
-      var from = Object.keys(q.units).every(function (k) { var u = q.units[k]; return u.team === 1 && Math.hypot(u.x - (q.buildings[-1].x + 1.5), u.y - (q.buildings[-1].y + 1.5)) < 9 && u.goal; });
+      var q = R.state.create(7); delete q.ai; q.tick = 250; C.tick(q);   // W-0125 — 옛 파도 길(s.ai 없음). 전엔 AI 가 있는 판이라 한 틱엔 유닛 0 → [].every 가 늘 참
+      var from = Object.keys(q.units).length > 0 && Object.keys(q.units).every(function (k) { var u = q.units[k]; return u.team === 1 && Math.hypot(u.x - (q.buildings[-1].x + 1.5), u.y - (q.buildings[-1].y + 1.5)) < 9 && u.goal; });
       return shot && dead && from && ('기지 사격 5 · 현상금 없음 · 파도는 기지에서');
+    });
+
+    t('W-0125 AI 출정(실제 길, s.ai 있음) — 출정대가 거점에 닿으면 체력이 깎이고 0 이면 함락 · 길이 막히면 가까운 성벽을 부순다 · 절반 밑이면 후퇴하며 걷던 길을 버린다', function () {
+      var R = DG.rts, U = R.units, C = R.combat, r = {};
+      var s = R.state.create(7), c = s.buildings[1]; s.raid.next = 1e9; s.tick = 3;
+      var u = U.spawn(s, 'soldier', 1, c.x + 3.6, c.y + 1.5); s.ai.mode = 'attack'; s.ai.group = [u.id]; s.ai.size = 1; s.ai.tgt = 1;
+      var h0 = s.cHp; C.tick(s); r.hit = s.cHp < h0 && !s.over;
+      s.cHp = 1; u.cd = 0; C.tick(s); r.lost = s.over === true && s.cHp === 0;
+      var w2 = R.state.create(7), cs = R.grid.castleSite(); w2.raid.next = 1e9; w2.tick = 3; w2.res.gold = 9999;
+      var wall = R.rules.place(w2, 'wall', cs.x + 8, cs.y - 3), far = R.rules.place(w2, 'house', cs.x - 6, cs.y + 4);
+      var v = U.spawn(w2, 'soldier', 1, cs.x + 7.5, cs.y - 2.5); v.path = []; v.rp = 1000;
+      w2.ai.mode = 'attack'; w2.ai.group = [v.id]; w2.ai.size = 1; w2.ai.tgt = far ? far.id : 0;
+      var i; for (i = 0; i < 12; i++) { w2.tick = 3; C.tick(w2); }
+      r.wall = !!wall && !!far && (!w2.buildings[wall.id] || w2.buildings[wall.id].hp < 40);
+      var t3 = R.state.create(7), sb = t3.buildings[-1], ids = [];
+      for (i = 0; i < 4; i++) { var e = U.spawn(t3, 'soldier', 1, sb.x + i, sb.y + 4.5); e.path = [{ x: 1, y: 1 }]; e.goal = { x: 1, y: 1 }; ids.push(e.id); }
+      t3.ai.mode = 'attack'; t3.ai.group = ids.slice(); t3.ai.size = 10; t3.tick = 3; R.ai.tick(t3);
+      r.retreat = t3.ai.mode === 'retreat' && ids.every(function (id) { var x = t3.units[id]; return !x || (x.path.length === 0 && !x.goal); });
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '거점 깎임·함락 · 성벽 부숨 · 후퇴하면 길 버림' : '실패 ' + bad.join(',');
+    });
+
+    t('W-0125 RTS 저장 — 깎인 건물 체력이 왕복에서 같고, 칸이 없는 옛 저장은 만피로 열린다', function () {
+      var R = DG.rts, s = R.state.create(7), cs = R.grid.castleSite(); s.res.gold = 9999;
+      var h = R.rules.place(s, 'house', cs.x + 4, cs.y - 1); s.buildings[h.id].hp = 17.5;
+      var o = R.state.serialize(s), back = R.state.restore(JSON.parse(JSON.stringify(o)));
+      var row = o.buildings.filter(function (b) { return b.id === h.id; })[0]; delete row.hp; var old = R.state.restore(JSON.parse(JSON.stringify(o)));
+      return back && back.buildings[h.id] && back.buildings[h.id].hp === 17.5 && old && old.buildings[h.id] && old.buildings[h.id].hp === undefined ? '건물 체력 17.5 왕복 · 옛 저장 만피' : '실패 ' + JSON.stringify(back && back.buildings[h.id]);
     });
 
     t('RTS 저장 — 기지 체력·승리가 왕복에서 같고, 옛 저장(기지 칸 없음)은 온전한 기지로 열리며, 승리한 판은 기지 hp 0 으로 열린다', function () {
