@@ -2,6 +2,8 @@
 
   py tools/ai-art/pack_web_portraits.py [--games saga-go,saga-dungeon,...] [--only id,id] [--src web_dungeon_30|web_realm_194] [--preview 경로]
 
+`--dest <폴더>`(K-0027): 판 폴더 대신 정본(예 saga-assets/portraits-hero)에 **새 인물도** 쓴다 → place portraits-hero 로 다섯 판 →
+같은 명령을 `--dest` 없이 한 번 더 돌리면 판마다 `_ai_provenance.json` 에 합쳐진다(같은 입력이라 webp 는 같은 바이트).
 `--src` 는 `_out/` 아래 폴더 이름(기본 web_heroes_105, 파일명 `hero_<id>.png`). 던전 30·국지 194 는 파일명이 `<id>.png` 이고 그 판에만 있는 인물이라 `--games` 도 함께.
 출처 표는 `_ai_provenance.json` 에 **합쳐 쓴다**(도감 105 표를 지우지 않는다).
 
@@ -59,14 +61,18 @@ def main():
         if lic.get('mode') == 'img2img':      # 밑그림 = 공방 몸 렌더(입력 전부 CC0)
             prov[hid].update({'mode': 'img2img', 'base_body': lic['base_body'], 'base_license': lic['base_license'], 'denoise': lic['denoise']})
         s, c = crops(Image.open(f).convert('RGB'))
+        if opt('--dest', ''):
+            s.save(os.path.join(opt('--dest', ''), hid + '_s.webp'), 'WEBP', quality=84, method=6)
+            c.save(os.path.join(opt('--dest', ''), hid + '_c.webp'), 'WEBP', quality=84, method=6)
+            continue
         for g in games:
             d = os.path.join(WEB, g, 'assets', 'portraits', 'hero')
             if not os.path.exists(os.path.join(d, hid + '_s.webp')):
                 continue          # 그 판에 없는 인물은 건드리지 않는다
             s.save(os.path.join(d, hid + '_s.webp'), 'WEBP', quality=84, method=6)
             c.save(os.path.join(d, hid + '_c.webp'), 'WEBP', quality=84, method=6)
-    for g in games:
-        d = os.path.join(WEB, g, 'assets', 'portraits', 'hero')
+    for g in ([None] if opt('--dest', '') else games):
+        d = opt('--dest', '') if g is None else os.path.join(WEB, g, 'assets', 'portraits', 'hero')
         pj = os.path.join(d, '_ai_provenance.json')
         items = json.load(open(pj, encoding='utf-8')).get('items', {}) if os.path.exists(pj) else {}
         items.update({k: v for k, v in prov.items() if os.path.exists(os.path.join(d, k + '_s.webp'))})

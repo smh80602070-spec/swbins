@@ -1,0 +1,1625 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k27_late201_i2i",
+ "note": "K-0027 도감 신규 인물 201 — 국지 194 공방 몸 반신 렌더 밑그림 img2img(성별 해시·몸 고르게 돌림), 세력 옷차림 표 · denoise 0.6",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 1024,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "Euler a",
+  "negative": "",
+  "denoise": 0.6
+ },
+ "items": [
+  {
+   "id": "ac_balgwang",
+   "seed": 1997127999,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, light brown eyes, deep sea explorer, padded pressure suit jacket, high collar, shoulder lamp, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_yanghong.png",
+   "body": "rf_yanghong"
+  },
+  {
+   "id": "ac_choeumpa",
+   "seed": 1227811242,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_jp_asahime.png",
+   "body": "jp_asahime"
+  },
+  {
+   "id": "ac_gipo",
+   "seed": 416895610,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, light brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nz_ahyang.png",
+   "body": "nz_ahyang"
+  },
+  {
+   "id": "ac_haebit",
+   "seed": 400204088,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_wuanguo.png",
+   "body": "rf_wuanguo"
+  },
+  {
+   "id": "ac_haecho",
+   "seed": 1891345502,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_wuanguo.png",
+   "body": "rf_wuanguo"
+  },
+  {
+   "id": "ac_haemun",
+   "seed": 740214285,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_zhangji.png",
+   "body": "rf_zhangji"
+  },
+  {
+   "id": "ac_simyeon",
+   "seed": 1481418047,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, light brown eyes, deep sea explorer, padded pressure suit jacket, high collar, shoulder lamp, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_kr2_yeonuru.png",
+   "body": "kr2_yeonuru"
+  },
+  {
+   "id": "ac_suap",
+   "seed": 1169988719,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, light brown eyes, deep sea explorer, padded pressure suit jacket, high collar, shoulder lamp, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_mb_gangho.png",
+   "body": "mb_gangho"
+  },
+  {
+   "id": "ac_sumbi",
+   "seed": 865673759,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, brown hair, green eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ly_uhwa.png",
+   "body": "ly_uhwa"
+  },
+  {
+   "id": "aq_byeolgil",
+   "seed": 1668996181,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, brown hair, brown eyes, desert caravan merchant, long striped coat, wide sash, turban scarf, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_mb_hwangto.png",
+   "body": "mb_hwangto"
+  },
+  {
+   "id": "aq_cheongok",
+   "seed": 1503400555,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, brown eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_zhangren.png",
+   "body": "rf_zhangren"
+  },
+  {
+   "id": "aq_dalgu",
+   "seed": 966056518,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, light brown eyes, desert caravan merchant, long striped coat, wide sash, turban scarf, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_caoren.png",
+   "body": "rf_caoren"
+  },
+  {
+   "id": "aq_gyeongbong",
+   "seed": 135159180,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, brown eyes, desert caravan merchant, long striped coat, wide sash, turban scarf, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_kr2_gokdol.png",
+   "body": "kr2_gokdol"
+  },
+  {
+   "id": "aq_nokju",
+   "seed": 633011676,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, grey eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xb_gaseul.png",
+   "body": "xb_gaseul"
+  },
+  {
+   "id": "aq_saebom",
+   "seed": 116581839,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, blonde hair, green eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ly_byeokjeon.png",
+   "body": "ly_byeokjeon"
+  },
+  {
+   "id": "aq_sanghwa",
+   "seed": 580118864,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, desert caravan merchant, long striped coat, wide sash, turban scarf, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ru_wadok.png",
+   "body": "ru_wadok"
+  },
+  {
+   "id": "aq_sapung",
+   "seed": 300503142,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, blue eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_dj_doseo.png",
+   "body": "dj_doseo"
+  },
+  {
+   "id": "aq_yeolsa",
+   "seed": 1780078035,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, young adult, brown hair, brown eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_kr2_pasodan.png",
+   "body": "kr2_pasodan"
+  },
+  {
+   "id": "bw_bitnae",
+   "seed": 200521049,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, light brown eyes, snowfield cavalry rider, fur-lined lamellar armor, fur hat, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_liuzhang.png",
+   "body": "rf_liuzhang"
+  },
+  {
+   "id": "bw_cheolgi",
+   "seed": 1193573542,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, brown hair, light brown eyes, snowfield cavalry rider, fur-lined lamellar armor, fur hat, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_tb_jongja.png",
+   "body": "tb_jongja"
+  },
+  {
+   "id": "bw_gamu",
+   "seed": 1838322137,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_huangzu.png",
+   "body": "rf_huangzu"
+  },
+  {
+   "id": "bw_gomnae",
+   "seed": 589454299,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, light brown eyes, snowfield cavalry rider, fur-lined lamellar armor, fur hat, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_xiahouyuan.png",
+   "body": "rf_xiahouyuan"
+  },
+  {
+   "id": "bw_hwaro",
+   "seed": 981260183,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, auburn hair, light brown eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xiyu_ochi.png",
+   "body": "xiyu_ochi"
+  },
+  {
+   "id": "bw_sangwol",
+   "seed": 1797031264,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, brown hair, grey eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_jiao_muya.png",
+   "body": "jiao_muya"
+  },
+  {
+   "id": "bw_seolgu",
+   "seed": 1795938938,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, brown hair, green eyes, snowfield cavalry rider, fur-lined lamellar armor, fur hat, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ly_uhwa.png",
+   "body": "ly_uhwa"
+  },
+  {
+   "id": "bw_sungeom",
+   "seed": 1022151390,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_yanliang.png",
+   "body": "rf_yanliang"
+  },
+  {
+   "id": "bw_yanggil",
+   "seed": 887703986,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, teal eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ru_geohae.png",
+   "body": "ru_geohae"
+  },
+  {
+   "id": "cs_cheolgil",
+   "seed": 1229878265,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, light brown eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_tz_sanri.png",
+   "body": "tz_sanri"
+  },
+  {
+   "id": "cs_gijeok",
+   "seed": 85279217,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, mature adult, brown hair, blue eyes, steam train engineer, denim overalls, engineer cap, red neckerchief, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_sl_nakta.png",
+   "body": "sl_nakta"
+  },
+  {
+   "id": "cs_gyeongjeok",
+   "seed": 1210025636,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, black hair, blue eyes, steam train engineer, denim overalls, engineer cap, red neckerchief, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_sl_josang.png",
+   "body": "sl_josang"
+  },
+  {
+   "id": "cs_hwamul",
+   "seed": 971490329,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, brown eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_jp_tamakiri.png",
+   "body": "jp_tamakiri"
+  },
+  {
+   "id": "cs_jeongbi",
+   "seed": 2253808,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, light brown eyes, steam train engineer, denim overalls, engineer cap, red neckerchief, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_sl_cheonsan.png",
+   "body": "sl_cheonsan"
+  },
+  {
+   "id": "cs_noseon",
+   "seed": 182461932,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, young adult, brown hair, green eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_tz_ganda.png",
+   "body": "tz_ganda"
+  },
+  {
+   "id": "cs_seoktan",
+   "seed": 1794216387,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, steam train engineer, denim overalls, engineer cap, red neckerchief, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xiyu_sarim.png",
+   "body": "xiyu_sarim"
+  },
+  {
+   "id": "cs_seungmu",
+   "seed": 534832192,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, young adult, brown hair, brown eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_pangde.png",
+   "body": "rf_pangde"
+  },
+  {
+   "id": "cs_yeokjang",
+   "seed": 1672135572,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_jp_hikoyama.png",
+   "body": "jp_hikoyama"
+  },
+  {
+   "id": "dk_amgyeol",
+   "seed": 1385318331,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, brown eyes, valley guard, studded leather armor, green hooded cloak lowered, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_jp_asahime.png",
+   "body": "jp_asahime"
+  },
+  {
+   "id": "dk_gulttuk",
+   "seed": 961259390,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, blonde hair, grey eyes, highland valley clan member, woven patterned tunic, wool shawl, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nz_mokro.png",
+   "body": "nz_mokro"
+  },
+  {
+   "id": "dk_gyedo",
+   "seed": 197698096,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, green eyes, valley guard, studded leather armor, green hooded cloak lowered, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xiyu_dansu.png",
+   "body": "xiyu_dansu"
+  },
+  {
+   "id": "dk_jeoljeong",
+   "seed": 428076795,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, blue eyes, valley guard, studded leather armor, green hooded cloak lowered, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_tb_ganghae.png",
+   "body": "tb_ganghae"
+  },
+  {
+   "id": "dk_meari",
+   "seed": 1994011440,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, green eyes, valley guard, studded leather armor, green hooded cloak lowered, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_dj_yuri.png",
+   "body": "dj_yuri"
+  },
+  {
+   "id": "dk_mullae",
+   "seed": 1683464099,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, auburn hair, green eyes, highland valley clan member, woven patterned tunic, wool shawl, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xiyu_mokjil.png",
+   "body": "xiyu_mokjil"
+  },
+  {
+   "id": "dk_pungnyeon",
+   "seed": 1202477511,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, brown eyes, highland valley clan member, woven patterned tunic, wool shawl, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_jp_taketsumi.png",
+   "body": "jp_taketsumi"
+  },
+  {
+   "id": "dk_saneum",
+   "seed": 557386730,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, brown hair, light brown eyes, highland valley clan member, woven patterned tunic, wool shawl, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nh_bandoja.png",
+   "body": "nh_bandoja"
+  },
+  {
+   "id": "dk_suro",
+   "seed": 1785773509,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, dark brown hair, blue eyes, highland valley clan member, woven patterned tunic, wool shawl, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_jiao_dinggo.png",
+   "body": "jiao_dinggo"
+  },
+  {
+   "id": "fy_baramgae",
+   "seed": 1549185655,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, brown eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_zhanglu.png",
+   "body": "rf_zhanglu"
+  },
+  {
+   "id": "fy_buyang",
+   "seed": 783408460,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, light brown eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_zhoutai.png",
+   "body": "rf_zhoutai"
+  },
+  {
+   "id": "fy_cheonggong",
+   "seed": 827201374,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, auburn hair, green eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xiyu_mokjil.png",
+   "body": "xiyu_mokjil"
+  },
+  {
+   "id": "fy_gitteol",
+   "seed": 524623314,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, blonde hair, light brown eyes, cloud garden keeper, futuristic pastel smock, flower pin, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ru_sayeong.png",
+   "body": "ru_sayeong"
+  },
+  {
+   "id": "fy_mujigae",
+   "seed": 690898036,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, blonde hair, blue eyes, cloud garden keeper, futuristic pastel smock, flower pin, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_fu_janhon.png",
+   "body": "fu_janhon"
+  },
+  {
+   "id": "fy_paran",
+   "seed": 888526800,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, light brown eyes, cloud garden keeper, futuristic pastel smock, flower pin, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_fu_hwanryeong.png",
+   "body": "fu_hwanryeong"
+  },
+  {
+   "id": "fy_seomgil",
+   "seed": 839118098,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, brown eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_liubiao.png",
+   "body": "rf_liubiao"
+  },
+  {
+   "id": "fy_ttangkkeut",
+   "seed": 887909409,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, auburn hair, light brown eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_sl_daetaek.png",
+   "body": "sl_daetaek"
+  },
+  {
+   "id": "fy_unwon",
+   "seed": 903810271,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, brown hair, light brown eyes, cloud garden keeper, futuristic pastel smock, flower pin, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nz_jeokpyo.png",
+   "body": "nz_jeokpyo"
+  },
+  {
+   "id": "gm_cheolbu",
+   "seed": 7580392,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, young adult, blonde hair, green eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_dj_gapju.png",
+   "body": "dj_gapju"
+  },
+  {
+   "id": "gm_dolbae",
+   "seed": 1399791923,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, black hair, brown eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_gaoshun.png",
+   "body": "rf_gaoshun"
+  },
+  {
+   "id": "gm_gaenghwa",
+   "seed": 1972446574,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, auburn hair, light brown eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_sl_daetaek.png",
+   "body": "sl_daetaek"
+  },
+  {
+   "id": "gm_geumhyeol",
+   "seed": 1033936681,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, golden fortress knight, gilded lamellar armor, horse crest, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_mizhu.png",
+   "body": "rf_mizhu"
+  },
+  {
+   "id": "gm_hwangma",
+   "seed": 1713550087,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, golden fortress knight, gilded lamellar armor, horse crest, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nz_eunga.png",
+   "body": "nz_eunga"
+  },
+  {
+   "id": "gm_jeongdong",
+   "seed": 747694383,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, brown eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_jp_umihiko.png",
+   "body": "jp_umihiko"
+  },
+  {
+   "id": "gm_mahyang",
+   "seed": 265521442,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, mature adult, blonde hair, blue eyes, golden fortress knight, gilded lamellar armor, horse crest, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_dj_hwanggeum.png",
+   "body": "dj_hwanggeum"
+  },
+  {
+   "id": "gm_myeongseok",
+   "seed": 1137149737,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, blonde hair, grey eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_mb_hanpung.png",
+   "body": "mb_hanpung"
+  },
+  {
+   "id": "gm_sanul",
+   "seed": 1462323832,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, brown hair, teal eyes, golden fortress knight, gilded lamellar armor, horse crest, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_fu_seonghon.png",
+   "body": "fu_seonghon"
+  },
+  {
+   "id": "gr_bangpung",
+   "seed": 832304480,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, brown eyes, seed vault scientist, white lab coat, seed pouches on belt, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_chengyu.png",
+   "body": "rf_chengyu"
+  },
+  {
+   "id": "gr_haetbit",
+   "seed": 1038862561,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, blonde hair, grey eyes, eco engineer, green field jacket, leaf emblem, utility pockets, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_fu_gangma.png",
+   "body": "fu_gangma"
+  },
+  {
+   "id": "gr_iseul",
+   "seed": 1919168998,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, brown hair, brown eyes, seed vault scientist, white lab coat, seed pouches on belt, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_mb_hwangto.png",
+   "body": "mb_hwangto"
+  },
+  {
+   "id": "gr_kkulbeol",
+   "seed": 128032022,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, brown eyes, eco engineer, green field jacket, leaf emblem, utility pockets, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_jiaxu.png",
+   "body": "rf_jiaxu"
+  },
+  {
+   "id": "gr_mojong",
+   "seed": 281595868,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, seed vault scientist, white lab coat, seed pouches on belt, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_tianfeng.png",
+   "body": "rf_tianfeng"
+  },
+  {
+   "id": "gr_nokhwa",
+   "seed": 146016248,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, blue eyes, eco engineer, green field jacket, leaf emblem, utility pockets, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_fu_yuseong.png",
+   "body": "fu_yuseong"
+  },
+  {
+   "id": "gr_ssiat",
+   "seed": 1852564126,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, brown hair, light brown eyes, seed vault scientist, white lab coat, seed pouches on belt, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ly_jinju.png",
+   "body": "ly_jinju"
+  },
+  {
+   "id": "gr_supgil",
+   "seed": 33921178,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, auburn hair, blue eyes, seed vault scientist, white lab coat, seed pouches on belt, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_tb_amseup.png",
+   "body": "tb_amseup"
+  },
+  {
+   "id": "gr_toyang",
+   "seed": 1358172887,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, auburn hair, brown eyes, eco engineer, green field jacket, leaf emblem, utility pockets, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_mb_baekwoon.png",
+   "body": "mb_baekwoon"
+  },
+  {
+   "id": "hb_bisang",
+   "seed": 1656754242,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, light brown eyes, aviator pilot, leather flight jacket, white scarf, wings badge, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_caohong.png",
+   "body": "rf_caohong"
+  },
+  {
+   "id": "hb_gisang",
+   "seed": 346929074,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, air traffic controller, navy uniform, headset around neck, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_kr2_jimasol.png",
+   "body": "kr2_jimasol"
+  },
+  {
+   "id": "hb_gwanje",
+   "seed": 1420759394,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, air traffic controller, navy uniform, headset around neck, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_mb_seonwoo.png",
+   "body": "mb_seonwoo"
+  },
+  {
+   "id": "hb_gyeongro",
+   "seed": 479196611,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, brown hair, grey eyes, air traffic controller, navy uniform, headset around neck, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_jiao_muya.png",
+   "body": "jiao_muya"
+  },
+  {
+   "id": "hb_hwaljuro",
+   "seed": 1515233311,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, light brown eyes, air traffic controller, navy uniform, headset around neck, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_caimao.png",
+   "body": "rf_caimao"
+  },
+  {
+   "id": "hb_jeomgeom",
+   "seed": 1458663742,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, blonde hair, blue eyes, aviator pilot, leather flight jacket, white scarf, wings badge, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ly_jeonchung.png",
+   "body": "ly_jeonchung"
+  },
+  {
+   "id": "hb_mangwon",
+   "seed": 1525729950,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, light brown eyes, aviator pilot, leather flight jacket, white scarf, wings badge, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_zhoutai.png",
+   "body": "rf_zhoutai"
+  },
+  {
+   "id": "hb_sangae",
+   "seed": 62505542,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, blue eyes, aviator pilot, leather flight jacket, white scarf, wings badge, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_tz_seolsan.png",
+   "body": "tz_seolsan"
+  },
+  {
+   "id": "hb_seonhoe",
+   "seed": 510564764,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, blue eyes, aviator pilot, leather flight jacket, white scarf, wings badge, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nh_torak.png",
+   "body": "nh_torak"
+  },
+  {
+   "id": "hl_baekhwa",
+   "seed": 830230616,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, green eyes, flower forest palace courtier, layered silk robes with floral embroidery, ornate hairpin, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_jiao_botran.png",
+   "body": "jiao_botran"
+  },
+  {
+   "id": "hl_damhwa",
+   "seed": 1594709430,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, young adult, brown hair, light brown eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_fu_noejang.png",
+   "body": "fu_noejang"
+  },
+  {
+   "id": "hl_geumsil",
+   "seed": 1316963344,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, blonde hair, grey eyes, flower forest palace courtier, layered silk robes with floral embroidery, ornate hairpin, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_fu_jongwang.png",
+   "body": "fu_jongwang"
+  },
+  {
+   "id": "hl_gyeongun",
+   "seed": 1578617321,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_hansui.png",
+   "body": "rf_hansui"
+  },
+  {
+   "id": "hl_hwaseo",
+   "seed": 1665374958,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, black hair, light brown eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_jp_wakahiko.png",
+   "body": "jp_wakahiko"
+  },
+  {
+   "id": "hl_jeongwon",
+   "seed": 109584388,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, light brown eyes, flower forest palace courtier, layered silk robes with floral embroidery, ornate hairpin, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_jushou.png",
+   "body": "rf_jushou"
+  },
+  {
+   "id": "hl_kkotbi",
+   "seed": 1327120420,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, light brown eyes, flower forest palace courtier, layered silk robes with floral embroidery, ornate hairpin, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xb_hoja.png",
+   "body": "xb_hoja"
+  },
+  {
+   "id": "hl_mukhyang",
+   "seed": 1355207502,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, grey eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_fu_yugwi.png",
+   "body": "fu_yugwi"
+  },
+  {
+   "id": "hl_noeul",
+   "seed": 139883367,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, mature adult, blonde hair, light brown eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_dj_gijang.png",
+   "body": "dj_gijang"
+  },
+  {
+   "id": "hq_dotdae",
+   "seed": 93217330,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, auburn hair, light brown eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_sl_wangjeong.png",
+   "body": "sl_wangjeong"
+  },
+  {
+   "id": "hq_eodeok",
+   "seed": 300029972,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, blue eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xiyu_gumo.png",
+   "body": "xiyu_gumo"
+  },
+  {
+   "id": "hq_gaebeol",
+   "seed": 1203721894,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_chengong.png",
+   "body": "rf_chengong"
+  },
+  {
+   "id": "hq_haeryeong",
+   "seed": 437808891,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, teal eyes, undersea palace royal, ornate flowing robes, pearl strands, coral hairpin, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_tz_sawi.png",
+   "body": "tz_sawi"
+  },
+  {
+   "id": "hq_jamsu",
+   "seed": 1126310275,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, black hair, light brown eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_jp_wakahiko.png",
+   "body": "jp_wakahiko"
+  },
+  {
+   "id": "hq_jugwang",
+   "seed": 737319724,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, light brown eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_yuejin.png",
+   "body": "rf_yuejin"
+  },
+  {
+   "id": "hq_mulgyeol",
+   "seed": 1996230638,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, blue eyes, undersea palace royal, ornate flowing robes, pearl strands, coral hairpin, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xiyu_talban.png",
+   "body": "xiyu_talban"
+  },
+  {
+   "id": "hq_sanho",
+   "seed": 1010763166,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, young adult, brown hair, light brown eyes, undersea palace royal, ornate flowing robes, pearl strands, coral hairpin, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_gongsunzan.png",
+   "body": "rf_gongsunzan"
+  },
+  {
+   "id": "hq_yongpa",
+   "seed": 34426027,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, teal eyes, undersea palace royal, ornate flowing robes, pearl strands, coral hairpin, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nh_metong.png",
+   "body": "nh_metong"
+  },
+  {
+   "id": "js_bodo",
+   "seed": 24368692,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, black hair, light brown eyes, modern news anchor, tailored blazer, press badge, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_shenpei.png",
+   "body": "rf_shenpei"
+  },
+  {
+   "id": "js_dalli",
+   "seed": 483609888,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, black hair, brown eyes, field reporter, khaki utility vest, camera strap over shoulder, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_guojia.png",
+   "body": "rf_guojia"
+  },
+  {
+   "id": "js_eumseong",
+   "seed": 265633109,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, light brown eyes, modern news anchor, tailored blazer, press badge, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xb_daein.png",
+   "body": "xb_daein"
+  },
+  {
+   "id": "js_hyeonjang",
+   "seed": 1212351705,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, light brown eyes, field reporter, khaki utility vest, camera strap over shoulder, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_tz_beonwang.png",
+   "body": "tz_beonwang"
+  },
+  {
+   "id": "js_jamak",
+   "seed": 1948422533,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, dark brown hair, grey eyes, modern news anchor, tailored blazer, press badge, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_dj_seohae.png",
+   "body": "dj_seohae"
+  },
+  {
+   "id": "js_jeonpa",
+   "seed": 643889181,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, light brown eyes, modern news anchor, tailored blazer, press badge, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_kr2_sogaram.png",
+   "body": "kr2_sogaram"
+  },
+  {
+   "id": "js_jomyeong",
+   "seed": 841548866,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, teal eyes, modern news anchor, tailored blazer, press badge, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_sl_hosang.png",
+   "body": "sl_hosang"
+  },
+  {
+   "id": "js_saengbang",
+   "seed": 1216033679,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, blonde hair, grey eyes, modern news anchor, tailored blazer, press badge, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nz_mokro.png",
+   "body": "nz_mokro"
+  },
+  {
+   "id": "js_teukjong",
+   "seed": 1398573481,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, auburn hair, grey eyes, field reporter, khaki utility vest, camera strap over shoulder, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nh_daemo.png",
+   "body": "nh_daemo"
+  },
+  {
+   "id": "kd_cheolsim",
+   "seed": 687048837,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, elderly, wrinkles, gray beard, brown hair, grey eyes, robotics club member, team jacket, tool belt, robot arm patch, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_sl_heupu.png",
+   "body": "sl_heupu"
+  },
+  {
+   "id": "kd_cheongram",
+   "seed": 1432003127,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, black hair, light brown eyes, engineering university student, zip-up hoodie, lanyard id card, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_shenpei.png",
+   "body": "rf_shenpei"
+  },
+  {
+   "id": "kd_hoero",
+   "seed": 831702945,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, brown hair, teal eyes, robotics club member, team jacket, tool belt, robot arm patch, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_tz_seoksang.png",
+   "body": "tz_seoksang"
+  },
+  {
+   "id": "kd_jeonji",
+   "seed": 381788772,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, auburn hair, light brown eyes, engineering university student, zip-up hoodie, lanyard id card, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_sl_wangjeong.png",
+   "body": "sl_wangjeong"
+  },
+  {
+   "id": "kd_nalgae",
+   "seed": 1203923865,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, black hair, brown eyes, robotics club member, team jacket, tool belt, robot arm patch, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_jp_himetsu.png",
+   "body": "jp_himetsu"
+  },
+  {
+   "id": "kd_seolgye",
+   "seed": 564490141,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, engineering university student, zip-up hoodie, lanyard id card, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_jiling.png",
+   "body": "rf_jiling"
+  },
+  {
+   "id": "kd_seorim",
+   "seed": 153681053,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, brown eyes, engineering university student, zip-up hoodie, lanyard id card, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_yujin.png",
+   "body": "rf_yujin"
+  },
+  {
+   "id": "kd_silheom",
+   "seed": 1377648346,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, teal eyes, engineering university student, zip-up hoodie, lanyard id card, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_dj_hopak.png",
+   "body": "dj_hopak"
+  },
+  {
+   "id": "kd_yongjeop",
+   "seed": 1757064456,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, robotics club member, team jacket, tool belt, robot arm patch, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_zhanghe.png",
+   "body": "rf_zhanghe"
+  },
+  {
+   "id": "lg_baekgeom",
+   "seed": 1683032986,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, brown hair, blue eyes, legendary mythic hero, ornate ancient armor with faintly glowing runes, flowing cape, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nh_sasin.png",
+   "body": "nh_sasin"
+  },
+  {
+   "id": "lg_ilwol",
+   "seed": 436671299,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, light brown eyes, legendary mythic hero, ornate ancient armor with faintly glowing runes, flowing cape, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_yanyan.png",
+   "body": "rf_yanyan"
+  },
+  {
+   "id": "lg_mugyeong",
+   "seed": 561887462,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, young adult, brown hair, blue eyes, legendary mythic hero, ornate ancient armor with faintly glowing runes, flowing cape, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xiyu_cheonma.png",
+   "body": "xiyu_cheonma"
+  },
+  {
+   "id": "mh_bungdae",
+   "seed": 241557353,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, light brown eyes, hospital doctor, white coat, stethoscope around neck, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_kr2_sogaram.png",
+   "body": "kr2_sogaram"
+  },
+  {
+   "id": "mh_gangin",
+   "seed": 1941787538,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, brown hair, light brown eyes, paramedic, rescue uniform with reflective stripes, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nz_jeokpyo.png",
+   "body": "nz_jeokpyo"
+  },
+  {
+   "id": "mh_ganhui",
+   "seed": 893707017,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, light brown eyes, hospital doctor, white coat, stethoscope around neck, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ly_sangnim.png",
+   "body": "ly_sangnim"
+  },
+  {
+   "id": "mh_gugeup",
+   "seed": 487683023,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, mature adult, brown hair, blue eyes, paramedic, rescue uniform with reflective stripes, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xb_honin.png",
+   "body": "xb_honin"
+  },
+  {
+   "id": "mh_maekbak",
+   "seed": 483293092,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, light brown eyes, hospital doctor, white coat, stethoscope around neck, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_dianwei.png",
+   "body": "rf_dianwei"
+  },
+  {
+   "id": "mh_muha",
+   "seed": 901568442,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, brown eyes, hospital doctor, white coat, stethoscope around neck, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_kr2_gokdol.png",
+   "body": "kr2_gokdol"
+  },
+  {
+   "id": "mh_onyu",
+   "seed": 1132887638,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, hospital doctor, white coat, stethoscope around neck, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_kr2_ajinsa.png",
+   "body": "kr2_ajinsa"
+  },
+  {
+   "id": "mh_sabang",
+   "seed": 372564991,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, brown eyes, paramedic, rescue uniform with reflective stripes, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_wenchou.png",
+   "body": "rf_wenchou"
+  },
+  {
+   "id": "mh_yakseon",
+   "seed": 629629766,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, hospital doctor, white coat, stethoscope around neck, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_fazheng.png",
+   "body": "rf_fazheng"
+  },
+  {
+   "id": "mr_bakwi",
+   "seed": 153579565,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, black hair, brown eyes, mars base engineer, dusty red jumpsuit, utility harness, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_tb_heukju.png",
+   "body": "tb_heukju"
+  },
+  {
+   "id": "mr_bingha",
+   "seed": 177461796,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, light brown eyes, mars colonist, rust orange environment suit, high collar, mission patch, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_yanyan.png",
+   "body": "rf_yanyan"
+  },
+  {
+   "id": "mr_cheolgu",
+   "seed": 1497222737,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, brown hair, light brown eyes, mars colonist, rust orange environment suit, high collar, mission patch, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_jiao_banrok.png",
+   "body": "jiao_banrok"
+  },
+  {
+   "id": "mr_cheotbom",
+   "seed": 245495424,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, light brown eyes, mars colonist, rust orange environment suit, high collar, mission patch, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xiyu_yeoje.png",
+   "body": "xiyu_yeoje"
+  },
+  {
+   "id": "mr_gaecheok",
+   "seed": 438307699,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, brown hair, teal eyes, mars colonist, rust orange environment suit, high collar, mission patch, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_tz_seoksang.png",
+   "body": "tz_seoksang"
+  },
+  {
+   "id": "mr_gwangmul",
+   "seed": 403878906,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, brown eyes, mars base engineer, dusty red jumpsuit, utility harness, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_kr2_yeoyul.png",
+   "body": "kr2_yeoyul"
+  },
+  {
+   "id": "mr_jeoksa",
+   "seed": 1063233912,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, black hair, light brown eyes, mars base engineer, dusty red jumpsuit, utility harness, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_kongrong.png",
+   "body": "rf_kongrong"
+  },
+  {
+   "id": "mr_onsil",
+   "seed": 1907989049,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, young adult, brown hair, brown eyes, mars colonist, rust orange environment suit, high collar, mission patch, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_gaolan.png",
+   "body": "rf_gaolan"
+  },
+  {
+   "id": "mr_sumteo",
+   "seed": 1479747377,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, teal eyes, mars colonist, rust orange environment suit, high collar, mission patch, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_dj_hopak.png",
+   "body": "dj_hopak"
+  },
+  {
+   "id": "nc_baekdo",
+   "seed": 395756188,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, blonde hair, grey eyes, neon market merchant, glossy jacket, holographic accessories, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_fu_jongwang.png",
+   "body": "fu_jongwang"
+  },
+  {
+   "id": "nc_bitsal",
+   "seed": 127522840,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, brown hair, teal eyes, cyberpunk city patrol officer, armored jacket with neon trim, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nh_yeombun.png",
+   "body": "nh_yeombun"
+  },
+  {
+   "id": "nc_geori",
+   "seed": 958495936,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, brown eyes, neon market merchant, glossy jacket, holographic accessories, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_sunce.png",
+   "body": "rf_sunce"
+  },
+  {
+   "id": "nc_hamseong",
+   "seed": 186046091,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, elderly, wrinkles, gray beard, brown hair, light brown eyes, cyberpunk city patrol officer, armored jacket with neon trim, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xiyu_banwol.png",
+   "body": "xiyu_banwol"
+  },
+  {
+   "id": "nc_hwalgi",
+   "seed": 1032837968,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, light brown eyes, neon market merchant, glossy jacket, holographic accessories, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_jp_shioji.png",
+   "body": "jp_shioji"
+  },
+  {
+   "id": "nc_jeongmyeong",
+   "seed": 1707669652,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, blonde hair, grey eyes, cyberpunk city patrol officer, armored jacket with neon trim, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_mb_janggwang.png",
+   "body": "mb_janggwang"
+  },
+  {
+   "id": "nc_sinho",
+   "seed": 330064283,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, light brown eyes, cyberpunk city patrol officer, armored jacket with neon trim, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ly_sanga.png",
+   "body": "ly_sanga"
+  },
+  {
+   "id": "nc_ullim",
+   "seed": 588662966,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, auburn hair, light brown eyes, neon market merchant, glossy jacket, holographic accessories, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xb_eoryang.png",
+   "body": "xb_eoryang"
+  },
+  {
+   "id": "nc_yagyeong",
+   "seed": 1315520648,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, brown eyes, cyberpunk city patrol officer, armored jacket with neon trim, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_lidian.png",
+   "body": "rf_lidian"
+  },
+  {
+   "id": "ns_banghwabyeok",
+   "seed": 1379069406,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, virtual reality netrunner, long tech coat, visor hanging around neck, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_xuchu.png",
+   "body": "rf_xuchu"
+  },
+  {
+   "id": "ns_buho",
+   "seed": 1021212399,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, light brown eyes, virtual reality netrunner, long tech coat, visor hanging around neck, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_liuzhang.png",
+   "body": "rf_liuzhang"
+  },
+  {
+   "id": "ns_eungdap",
+   "seed": 771480610,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, neural city hacker, dark coat with glowing circuit lines, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nz_soman.png",
+   "body": "nz_soman"
+  },
+  {
+   "id": "ns_gieok",
+   "seed": 1574070381,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, auburn hair, brown eyes, neural city hacker, dark coat with glowing circuit lines, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_mb_hoja.png",
+   "body": "mb_hoja"
+  },
+  {
+   "id": "ns_hakseup",
+   "seed": 1965377988,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, auburn hair, light brown eyes, virtual reality netrunner, long tech coat, visor hanging around neck, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ru_seogun.png",
+   "body": "ru_seogun"
+  },
+  {
+   "id": "ns_hwamyeon",
+   "seed": 1969304851,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, grey eyes, neural city hacker, dark coat with glowing circuit lines, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_mb_hanam.png",
+   "body": "mb_hanam"
+  },
+  {
+   "id": "ns_jeopsok",
+   "seed": 1326710061,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, young adult, black hair, brown eyes, virtual reality netrunner, long tech coat, visor hanging around neck, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_mateng.png",
+   "body": "rf_mateng"
+  },
+  {
+   "id": "ns_singyeong",
+   "seed": 965208710,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, blonde hair, grey eyes, neural city hacker, dark coat with glowing circuit lines, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_sl_geumhwa.png",
+   "body": "sl_geumhwa"
+  },
+  {
+   "id": "ns_yeongyeol",
+   "seed": 1109329132,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, brown eyes, neural city hacker, dark coat with glowing circuit lines, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_wuyi.png",
+   "body": "rf_wuyi"
+  },
+  {
+   "id": "ob_byeolbit",
+   "seed": 1134212907,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, blonde hair, blue eyes, space station crew member, fitted crew uniform, mission patches, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_fu_janhon.png",
+   "body": "fu_janhon"
+  },
+  {
+   "id": "ob_gongjeon",
+   "seed": 196053828,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, brown eyes, space station crew member, fitted crew uniform, mission patches, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_guosi.png",
+   "body": "rf_guosi"
+  },
+  {
+   "id": "ob_jungnyeok",
+   "seed": 1167524485,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, brown eyes, space station crew member, fitted crew uniform, mission patches, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_lijue.png",
+   "body": "rf_lijue"
+  },
+  {
+   "id": "ob_mujung",
+   "seed": 1544564990,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, light brown eyes, space mechanic, padded jumpsuit, tool harness, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xiyu_gyoha.png",
+   "body": "xiyu_gyoha"
+  },
+  {
+   "id": "ob_sanso",
+   "seed": 1579617987,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, brown eyes, space mechanic, padded jumpsuit, tool harness, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_kr2_dokgaru.png",
+   "body": "kr2_dokgaru"
+  },
+  {
+   "id": "ob_seongun",
+   "seed": 375415966,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, light brown eyes, space station crew member, fitted crew uniform, mission patches, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_yangang.png",
+   "body": "rf_yangang"
+  },
+  {
+   "id": "ob_taeyang",
+   "seed": 1913607510,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, brown hair, light brown eyes, space mechanic, padded jumpsuit, tool harness, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_tb_jongja.png",
+   "body": "tb_jongja"
+  },
+  {
+   "id": "ob_tongsin",
+   "seed": 920407236,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, brown eyes, space station crew member, fitted crew uniform, mission patches, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_wenchou.png",
+   "body": "rf_wenchou"
+  },
+  {
+   "id": "ob_yeonryo",
+   "seed": 985529157,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, space mechanic, padded jumpsuit, tool harness, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_kr2_mokrihae.png",
+   "body": "kr2_mokrihae"
+  },
+  {
+   "id": "rg_eungwon",
+   "seed": 241154231,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, light brown eyes, racing driver, racing suit with sponsor patches, high collar, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_kr2_umorin.png",
+   "body": "kr2_umorin"
+  },
+  {
+   "id": "rg_gyeolseung",
+   "seed": 662667586,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, brown eyes, racing driver, racing suit with sponsor patches, high collar, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_lidian.png",
+   "body": "rf_lidian"
+  },
+  {
+   "id": "rg_gyesan",
+   "seed": 668940984,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, auburn hair, light brown eyes, pit crew mechanic, team uniform, work gloves, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xiyu_ochi.png",
+   "body": "xiyu_ochi"
+  },
+  {
+   "id": "rg_jagal",
+   "seed": 186479425,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, auburn hair, grey eyes, pit crew mechanic, team uniform, work gloves, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nz_geumsang.png",
+   "body": "nz_geumsang"
+  },
+  {
+   "id": "rg_jilju",
+   "seed": 11013730,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, light brown eyes, racing driver, racing suit with sponsor patches, high collar, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xb_bonghwa.png",
+   "body": "xb_bonghwa"
+  },
+  {
+   "id": "rg_saekdong",
+   "seed": 1163411630,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, brown eyes, pit crew mechanic, team uniform, work gloves, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_zhangren.png",
+   "body": "rf_zhangren"
+  },
+  {
+   "id": "rg_singi",
+   "seed": 1729461809,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, teal eyes, pit crew mechanic, team uniform, work gloves, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_jiao_jinja.png",
+   "body": "jiao_jinja"
+  },
+  {
+   "id": "rg_suri",
+   "seed": 518676228,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, brown hair, light brown eyes, pit crew mechanic, team uniform, work gloves, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_jiao_banrok.png",
+   "body": "jiao_banrok"
+  },
+  {
+   "id": "rg_yeonseup",
+   "seed": 1041232618,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, auburn hair, light brown eyes, racing driver, racing suit with sponsor patches, high collar, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nz_unhwa.png",
+   "body": "nz_unhwa"
+  },
+  {
+   "id": "sn_bitdol",
+   "seed": 1129451771,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, mature adult, brown hair, light brown eyes, southern jungle kingdom noble, gold armlets, colorful layered sash, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xiyu_chongryeong.png",
+   "body": "xiyu_chongryeong"
+  },
+  {
+   "id": "sn_deonggul",
+   "seed": 1087078622,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, dark brown hair, light brown eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nh_jinju.png",
+   "body": "nh_jinju"
+  },
+  {
+   "id": "sn_gojeok",
+   "seed": 1711657951,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, dark brown hair, grey eyes, southern jungle kingdom noble, gold armlets, colorful layered sash, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ru_gogol.png",
+   "body": "ru_gogol"
+  },
+  {
+   "id": "sn_horang",
+   "seed": 1979009418,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, brown eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_guosi.png",
+   "body": "rf_guosi"
+  },
+  {
+   "id": "sn_milhyang",
+   "seed": 1361031552,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, blonde hair, grey eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_mb_hanpung.png",
+   "body": "mb_hanpung"
+  },
+  {
+   "id": "sn_nuri",
+   "seed": 209868542,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, brown hair, teal eyes, southern jungle kingdom noble, gold armlets, colorful layered sash, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_fu_seonghon.png",
+   "body": "fu_seonghon"
+  },
+  {
+   "id": "sn_ppuri",
+   "seed": 1970830634,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, mature adult, brown hair, light brown eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_tz_hyanggae.png",
+   "body": "tz_hyanggae"
+  },
+  {
+   "id": "sn_saessak",
+   "seed": 292420681,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, elderly, wrinkles, gray beard, white hair, light brown eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ly_juoh.png",
+   "body": "ly_juoh"
+  },
+  {
+   "id": "sn_seokhwan",
+   "seed": 1060539511,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, dark brown hair, blue eyes, southern jungle kingdom noble, gold armlets, colorful layered sash, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_dj_seoncheok.png",
+   "body": "dj_seoncheok"
+  },
+  {
+   "id": "tw_baekya",
+   "seed": 827879547,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, brown hair, teal eyes, clockmaker, leather apron, brass gears, magnifier loupe on chain, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ru_doksi.png",
+   "body": "ru_doksi"
+  },
+  {
+   "id": "tw_bunchim",
+   "seed": 1475006931,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, light brown eyes, time observatory scholar, long dark coat, clockwork brooch, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_jiao_luyan.png",
+   "body": "jiao_luyan"
+  },
+  {
+   "id": "tw_cheonryu",
+   "seed": 742009702,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, light brown eyes, time observatory scholar, long dark coat, clockwork brooch, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_kr2_yeonuru.png",
+   "body": "kr2_yeonuru"
+  },
+  {
+   "id": "tw_girok",
+   "seed": 367093405,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, black hair, brown eyes, clockmaker, leather apron, brass gears, magnifier loupe on chain, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_jianyong.png",
+   "body": "rf_jianyong"
+  },
+  {
+   "id": "tw_hoegwi",
+   "seed": 1645176450,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, auburn hair, light brown eyes, time observatory scholar, long dark coat, clockwork brooch, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ru_sanaek.png",
+   "body": "ru_sanaek"
+  },
+  {
+   "id": "tw_jogak",
+   "seed": 1402897298,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, brown hair, light brown eyes, time observatory scholar, long dark coat, clockwork brooch, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nh_bandoja.png",
+   "body": "nh_bandoja"
+  },
+  {
+   "id": "tw_jongsori",
+   "seed": 1556708443,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, blonde hair, light brown eyes, clockmaker, leather apron, brass gears, magnifier loupe on chain, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ru_sayeong.png",
+   "body": "ru_sayeong"
+  },
+  {
+   "id": "tw_topni",
+   "seed": 1973983080,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, adult, black hair, blue eyes, clockmaker, leather apron, brass gears, magnifier loupe on chain, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_sl_josang.png",
+   "body": "sl_josang"
+  },
+  {
+   "id": "tw_yegyeon",
+   "seed": 1956206540,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, dark brown hair, light brown eyes, time observatory scholar, long dark coat, clockwork brooch, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nh_jinju.png",
+   "body": "nh_jinju"
+  },
+  {
+   "id": "yk_amsu",
+   "seed": 583137195,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, light brown eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_yangren.png",
+   "body": "rf_yangren"
+  },
+  {
+   "id": "yk_baekyeong",
+   "seed": 1760841207,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, highland nomad, felt coat, sheepskin collar, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nz_hyeoncheon.png",
+   "body": "nz_hyeoncheon"
+  },
+  {
+   "id": "yk_cheonro",
+   "seed": 1756280669,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, blonde hair, teal eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nh_migyeon.png",
+   "body": "nh_migyeon"
+  },
+  {
+   "id": "yk_hyangdo",
+   "seed": 1776430456,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, green eyes, highland nomad, felt coat, sheepskin collar, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_sl_hwachin.png",
+   "body": "sl_hwachin"
+  },
+  {
+   "id": "yk_jinbaek",
+   "seed": 1236491377,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, brown eyes, highland nomad, felt coat, sheepskin collar, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_handang.png",
+   "body": "rf_handang"
+  },
+  {
+   "id": "yk_pungdeung",
+   "seed": 459760523,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, brown hair, teal eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ru_doksi.png",
+   "body": "ru_doksi"
+  },
+  {
+   "id": "yk_sanyeom",
+   "seed": 343191420,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, black hair, blue eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_xiyu_gumo.png",
+   "body": "xiyu_gumo"
+  },
+  {
+   "id": "yk_seolmae",
+   "seed": 455110963,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, both eyes visible, young adult, auburn hair, light brown eyes, highland nomad, felt coat, sheepskin collar, gentle kind smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone, large breasts, skin tight",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ru_seogun.png",
+   "body": "ru_seogun"
+  },
+  {
+   "id": "yk_unsu",
+   "seed": 529404340,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, light brown eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_yangsong.png",
+   "body": "rf_yangsong"
+  }
+ ]
+}
