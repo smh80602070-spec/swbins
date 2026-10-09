@@ -8201,7 +8201,7 @@ window.requestAnimationFrame = function () { return 0; };
       return r[0] === 0 && r[1] === 1 && ('들어설 때 0번 · 다시 오면 1번') || '실패 ' + r.join(',');
     });
 
-    t('dg.belt2d: 던파식 벨트 2D(W-0128) — 투영 왕복·카메라가 방 끝에서 멈춤·마을 제외·폰 폭 배율', function () {
+    t('dg.belt2d: 던파식 벨트 2D(W-0128) — 투영 왕복·카메라가 방 끝에서 멈춤·마을 손잡이 0 이면 제외·폰 폭 배율', function () {
       var B = DG.belt2d, cv = { clientWidth: 1280, clientHeight: 720 }, px = 300;
       var D = { ROOM_W: 700, ROOM_H: 440, raw: function () { return { player: { x: px, y: 200 } }; } };
       var m = B.metrics(cv, D, 1, 110), q = m.unbelt(m.belt(123, 321).x, m.belt(123, 321).y);
@@ -8209,7 +8209,7 @@ window.requestAnimationFrame = function () { return 0; };
       var L0 = B.layout(1280, 720, 700, 440, 0, 1, 110), L1 = B.layout(1280, 720, 700, 440, 700, 1, 110), half = 1280 / (2 * L0.s);
       var clamp = Math.abs(L0.camX - (half - 30)) < 1e-6 && Math.abs(L1.camX - (700 - half + 30)) < 1e-6;
       var big = 40 * L0.s / 610 > 0.18, phone = Math.abs(B.layout(390, 844, 700, 440, 300, 1, 110).s - 390 / 240) < 1e-6;
-      var room = B.want({ player: {}, room: { kind: 'fight' } }) && !B.want({ player: {}, room: { kind: 'town' } });
+      var keepT = C.tuned('dg.belt2dTown', 1); C.setTune('dg.belt2dTown', 0); var room = B.want({ player: {}, room: { kind: 'fight' } }) && !B.want({ player: {}, room: { kind: 'town' } }); C.setTune('dg.belt2dTown', keepT);   // W-0131 — 마을도 벨트가 됐다, 손잡이 0 이면 제외
       var r = [round, clamp, big, phone, room];
       return r.every(Boolean) && ('왕복 · 카메라 ' + Math.round(L0.camX) + '~' + Math.round(L1.camX) + ' · 몸 ' + Math.round(40 * L0.s) + 'px/610 · 마을 제외') || '실패 ' + r.join(',');
     });
@@ -8222,6 +8222,15 @@ window.requestAnimationFrame = function () { return 0; };
       var fit = Math.abs(f1.foot - 0.88) < 1e-3 && f1.k === 2.2 && Math.abs(f2.k - 1.2) < 1e-9 && M.isCrea('crea:boss_01') && !M.isCrea('vroid:x');
       var r = [bad.length === 0, mapped > 10, bossOk, fit];
       return r.every(Boolean) && ('짐승 ' + mapped + '/' + beasts.length + ' 짝 · 우두머리 11 · 배율 ' + f1.k + '·' + f2.k) || '실패 ' + r.join(',') + ' ' + bad.map(function (e) { return e.name; }).join(',');
+    });
+
+    t('dg.belt2d: 마을·들판 벨트(W-0131) — 깊이 창이 나를 따라가고 마을은 발판 안에서 멈춤·들판은 안 멈춤·마을도 want·들판 소품 짝', function () {
+      var B = DG.belt2d, L1 = B.layoutTown(1280, 720, 1120, 760, 300, 380, 0, 0, false, 1, 110), L2 = B.layoutTown(1280, 720, 1120, 760, -5000, 9000, 0, 0, true, 1, 110), L3 = B.layoutTown(1280, 720, 1120, 760, -5000, 9000, 0, 0, false, 1, 110);
+      var follow = Math.abs(L2.camX + 5000) < 1e-9 && Math.abs(L2.y0 - (9000 - B.HWIN * 0.55)) < 1e-9;
+      var clampT = L3.camX >= -30 && L3.camX <= 1150 && L3.y0 <= 760 - B.HWIN + 40 + 1e-9 && L1.y0 >= -40;
+      var want = B.want({ player: {}, room: { kind: 'town' } }), kinds = ['tree', 'rock', 'pond', 'tent', 'reed'].every(function (k) { return B.PIECE[k] && B.PIECE[k][0].length; });
+      var r = [follow, clampT, want, kinds];
+      return r.every(Boolean) && ('들판 창 따라감 · 마을 멈춤 x ' + Math.round(L3.camX) + ' · 소품 ' + Object.keys(B.PIECE).length + '종') || '실패 ' + r.join(',');
     });
 
     t('런타임 에러 없음', function () {

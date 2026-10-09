@@ -50,7 +50,7 @@
       shake -= 0.7;
     }
 
-    var BT = m.belt ? global.DG.belt2d : null; if (BT) { dec = run.room.decor || []; wh = WALLH * m.s * 0.6; BT.stage(ctx, m, run, theme, now, gore, DOOR_ICON); } else {   /* 방 밖 배경 — 돌 어둠 (W-0128 — 벨트 2D 면 무대를 belt2d 가 그리고 아래 바닥·벽·문을 건너뛴다) */
+    var BT = m.belt ? global.DG.belt2d : null; if (BT) { dec = run.room.decor || []; wh = WALLH * m.s * 0.6; BT.stage(ctx, m, run, theme, now, gore, DOOR_ICON); dec.forEach(function (o2) { if (o2.t === 'torch') { drawTorch(m, o2, now); } }); } else {   /* 방 밖 배경 — 돌 어둠 (W-0128 — 벨트 2D 면 무대를 belt2d 가 그리고 아래 바닥·벽·문을 건너뛴다) */
     var bg = ctx.createLinearGradient(0, 0, 0, m.ch);
     bg.addColorStop(0, '#08090d');
     bg.addColorStop(1, '#0e1015');
@@ -258,7 +258,7 @@
       items.push({ z: run.companion.x + run.companion.y, kind: 'companion', o: run.companion });
     }
 
-    items.sort(m.belt ? function (a, b) { return ((a.o && a.o.y) || 0) - ((b.o && b.o.y) || 0); } : function (a, b) { return a.z - b.z; });   // W-0128 — 벨트는 깊이(y) 순
+    if (BT && m.town) { BT.fieldItems(m).forEach(function (fp) { items.push({ z: 0, kind: 'fp', o: fp }); }); } items.sort(m.belt ? function (a, b) { return ((a.o && a.o.y) || 0) - ((b.o && b.o.y) || 0); } : function (a, b) { return a.z - b.z; });   // W-0128 — 벨트는 깊이(y) 순
 
     /* 바닥에 떨어진 것 (이름표는 조명 뒤에 다시 그린다) */
     var plates = [];
@@ -344,12 +344,12 @@
     for (i = 0; i < items.length; i++) {
       var it = items[i];
       if (it.kind === 'jar') { drawJar(m, it.o, now); }
-      else if (it.kind === 'pillar') { drawPillar(m, it.o, theme, wh); } else if (it.kind === 'prop2d') { var bp = proj(m, it.o.x, it.o.y); global.DG.mode2d.drawKind(ctx, it.o.t, bp.x, bp.y, it.o.h * m.s, it.o.seed || (it.o.x + ',' + it.o.y)); }
+      else if (it.kind === 'pillar') { drawPillar(m, it.o, theme, wh); } else if (it.kind === 'prop2d') { var bp = proj(m, it.o.x, it.o.y), bcv = m.belt && it.o.y > m.py && Math.abs(it.o.x - m.px) < it.o.h * 0.7 && it.o.y - m.py < it.o.h * 1.4; if (bcv) { ctx.save(); ctx.globalAlpha = 0.4; } global.DG.mode2d.drawKind(ctx, it.o.t, bp.x, bp.y, it.o.h * m.s, it.o.seed || (it.o.x + ',' + it.o.y)); if (bcv) { ctx.restore(); } }   // W-0131 — 벨트에서 나를 가리는 건물은 비친다
       else if (it.kind === 'thing') { drawThing(m, it.o, it.icon, now); }
       else if (it.kind === 'foe') { drawFoe(m, it.o, now, bars); }
       else if (it.kind === 'npc') { drawNpc(m, it.o, now, plates, it.near); }
       else if (it.kind === 'mark') { drawMark(m, it.o, now, plates, it.near); }
-      else if (it.kind === 'companion') { drawCompanion(m, it.o, now, plates); }
+      else if (it.kind === 'companion') { drawCompanion(m, it.o, now, plates); } else if (it.kind === 'fp') { BT.drawPiece(ctx, m, it.o); }   // W-0131 들판 소품
       else { drawPlayer(m, run, now); }
     }
 

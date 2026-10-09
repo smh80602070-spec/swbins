@@ -839,5 +839,22 @@
   "ticket": "W-0129",
   "since": "2026-10-09",
   "note": "D2: pw-belt-check.mjs d beasts → shots/belt/d-{pc,land}-1.png Claude 눈 ○(유령 mon_spir_02·천룡 boss_10 등 시트로 섬, 덩어리 대역 0). 짐승 116/116 짝·우두머리 11. mon_sp_* 23 은 짝 표(family 칸) 없어 아직 안 씀."
+ },
+ {
+  "id": "dg.belt2d-town",
+  "name": "2D 마을·들판 던파식 벨트 — 하늘·먼 산·땅 띠·들판 나무·천막, 나를 가리는 앞 소품·건물은 비침",
+  "files": [
+   "js/belt2d.js",
+   "src/dungeon-view/02.js"
+  ],
+  "tests": [
+   "dg.belt2d: 마을·들판 벨트(W-0131) — 깊이 창이 나를 따라가고 마을은 발판 안에서 멈춤·들판은 안 멈춤·마을도 want·들판 소품 짝"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0131",
+  "since": "2026-10-09",
+  "note": "D2: pw-belt-check.mjs <태그> town → shots/belt/z-{pc,phone,land}-{town,wild}.png Claude 눈 ○(마을 = 하늘·능선 두 겹·한옥·주민·우물, 들판 = 숲·천막·돌담, 앞 나무·집 비침). 들판 소품은 worldMap.pieces(판정·3D 와 같은 배열). 손잡이 dg.belt2dTown 0 = 마을·들판만 옛 아이소."
  }
 ]

@@ -18,6 +18,15 @@ for (const V of VIEWS) {
     await ev(() => { [...document.querySelectorAll('.stc-cell')].slice(0, 3).forEach((c) => c.click()); const b = document.querySelector('.stc-btn'); if (b) b.click(); });
     await sleep(3500); await skip(ev);
     if (await ev(() => DG.dungeon3d && DG.dungeon3d.wanted())) { await ev(() => document.getElementById('btn-3d').click()); await sleep(1500); }
+    if (process.argv.includes('town')) {   // W-0131 — 마을·들판
+      await skip(ev); await sleep(1500);
+      await r.page.screenshot({ path: path.join(OUT, `${tag}-${V.k}-town.png`) });
+      const ti = await ev(() => { const R = DG.town.raw(); return { belt: DG.belt2d.want(R), wild: R.wild, p: [R.player.x | 0, R.player.y | 0] }; });
+      await ev(() => { DG.town._put(-900, 380); }); await sleep(2500);
+      await r.page.screenshot({ path: path.join(OUT, `${tag}-${V.k}-wild.png`) });
+      console.log(V.k, 'town', JSON.stringify(ti), JSON.stringify(await ev(() => { const R = DG.town.raw(); return { wild: R.wild, belt: DG.belt2d.want(R) }; })));
+      await r.close(); continue;
+    }
     await ev(() => { if (DG.town && DG.town.leave) DG.town.leave(); DG.dungeon.enter({ floor: 1 }); }); await sleep(2500); await skip(ev);
     await ev(() => { const R = DG.dungeon.raw(); if (R) { R.hp = R.hpMax = 999999; } });
     if (process.argv.includes('beasts')) {   // 그림 확인용 — 적 몇을 사람형이 아닌 몸으로(판정과 무관)
