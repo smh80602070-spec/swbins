@@ -75,6 +75,12 @@ namespace Saga.Realm.World
             if (prefab == null || controller == null || prefab.GetComponent<Animator>() == null) return false;
             var inst = Instantiate(prefab, transform, false);
             var anim = inst.GetComponent<Animator>();
+            // VRoid 몸(U-0034)은 바깥 Animator 가 Generic — 사가천하 전용 Humanoid 아바타(`BakeRealmAvatars`, 로컬 전용)가 있으면 씌운다(U-0065)
+            if (!anim.isHuman)
+            {
+                var av = Resources.Load<Avatar>("RealmAvatars/" + prefab.name);
+                if (av != null && av.isHuman) anim.avatar = av;
+            }
             if (!anim.isHuman)
             {
                 DestroyImmediate(inst);

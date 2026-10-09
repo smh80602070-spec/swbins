@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-09",
+  "tickets": [
+    "U-0065 사가천하 인물 대역 회귀"
+  ],
+  "how": "BakeRealmAvatars.Run(9벌 사가천하 전용 Humanoid 아바타, 로컬 전용 Resources/RealmAvatars) → PlaytestRealmSlice(save_realm.json 치움·세이브 다섯 백업 후 복원·cmp 같음) · bash tools/unity-batch.sh -- Unity.exe -batchmode -nographics (6000.3.24f1)",
+  "bake": "[BakeRealmAvatars] OK 9/9",
+  "scene": "[PlaytestRealmSlice] OK - world-map/location gate/ships gate/orders(10)/draft/search/hire/city-assignment/war/diplo(rumor+fire)/captured-city-absorb/multi-target-attack(16th)/multi-target-plot/chain-17th(cangwu+jianning) (런타임 오류 0)",
+  "runtime_errors": 0,
+  "results": [
+    {
+      "id": "un.rk.slice",
+      "playtest": "PlaytestRealmSlice",
+      "result": "OK",
+      "lines": "[PlaytestRealmSlice] OK - world-map/location gate/ships gate/orders(10)/draft/search/hire/city-assignment/war/diplo(rumor+fire)/captured-city-absorb/multi-target-attack(16th)/multi-target-plot/chain-17th(cangwu+jianning) / [PlaytestRealmSlice] actors OK - 표 10 명령 · 상한 24 · 끄면 빈 목록 · 지금 판 태수 6·재야 0 · 월드맵 배우 6 · 두 장수 순서표 · 사실 몸 무장 4·재야 5",
+      "date": "2026-10-09"
+    }
+  ],
+  "fails": 0,
+  "before": "U-0062 같은 날 판 FAIL(actors 사실 몸 대역) → 고친 뒤 OK",
+  "not_covered": "un.rk.actors 는 그림 판정(사실 몸이 제 자세·손 도구로 보이는지)이라 D1 — U-0063 촬영+눈"
+}

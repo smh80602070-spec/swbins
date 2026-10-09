@@ -23,7 +23,7 @@ namespace Saga.EditorTools
         public const string AvatarPath = OutDir + "/hero_vroid_avatar.asset";
 
         // Unity 사람 뼈 이름 → VRoid 뼈 이름(손가락은 1·2·3 = Proximal·Intermediate·Distal)
-        private static Dictionary<string, string> BoneMap()
+        internal static Dictionary<string, string> BoneMap() // BakeRealmAvatars(U-0065)도 같은 뼈 지도를 쓴다
         {
             var m = new Dictionary<string, string>
             {

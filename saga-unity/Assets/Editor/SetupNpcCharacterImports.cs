@@ -441,6 +441,8 @@ namespace Saga.EditorTools
             Debug.Log($"VROID_SWAP_REAL baked={r.baked} failed={string.Join(",", r.failed)}");
             string lodErr = CharacterMeshLod.ApplyAll(out string lod); // U-0057 다시 구운 몸에 Mesh LOD 를 다시 붙인다
             Debug.Log("[CharacterMeshLod] " + (lodErr == null ? "OK " + lod : "FAIL " + lodErr));
+            string avErr = BakeRealmAvatars.BakeAll(out string av); // U-0065 사가천하 인물 몸에 Humanoid 아바타를 다시 굽는다
+            Debug.Log("[BakeRealmAvatars] " + (avErr == null ? "OK " + av : "FAIL " + av + " — " + avErr));
             EditorApplication.Exit(r.baked > 0 && r.failed.All(f => f.EndsWith("(표에 없음)") || f.EndsWith("(보류)")) ? 0 : 3); // 표에 없는 자리는 이 티켓 밖·보류는 K-0066 대기
         }
 

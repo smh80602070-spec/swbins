@@ -1254,12 +1254,12 @@
   "tests": [
    "PlaytestRealmSlice"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D1(U-0062 10-09): PlaytestRealmSlice 판 FAIL — actors 사실 몸 대역(U-0065). 고친 뒤 다시."
+  "note": "D2: docs/playcheck/d2-u0065-20261009.json PlaytestRealmSlice OK (U-0065 사실 몸 회귀 고친 뒤)."
  },
  {
   "id": "un.rk.orders",

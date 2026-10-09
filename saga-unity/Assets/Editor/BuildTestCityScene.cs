@@ -363,8 +363,8 @@ namespace Saga.EditorTools
         private const string MariaControllerPath = "Assets/Animators/Maria.controller";
         // PLAN.md 109-13-2b — 지도·싸움터 인물이 입는 사실 몸(무장 = 갑옷·두건 사내, 재야 = 베옷·무도복·여인). 몸은 전부 Humanoid 라
         // 주인공 Maria.controller 로 리타깃(GO `PartyBodies` 와 같은 방식). 프리팹이 없는 PC 는 그 몸만 빠지고, 다 없으면 대역 도형.
-        private static readonly string[] OfficerBodyNames = { "Dreyar", "CastleGuard02", "Heraklios", "Paladin" };
-        private static readonly string[] WandererBodyNames = { "PeasantMan", "Brady", "PeasantGirl", "Kachujin", "Eve" };
+        internal static readonly string[] OfficerBodyNames = { "Dreyar", "CastleGuard02", "Heraklios", "Paladin" };
+        internal static readonly string[] WandererBodyNames = { "PeasantMan", "Brady", "PeasantGirl", "Kachujin", "Eve" };
 
         private static void BuildActorBodies()
         {
