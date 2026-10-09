@@ -17,11 +17,11 @@
 | 10 | 사가나락 | ba7571792·883bd9f78 | `js/foe2d.js:19-21` | 적 2D 공격 동작이 안 나옴(atkAnim 없음)·피격은 끝 80ms 만 | 하 | W-0122 고침 |
 | 11 | 사가나락 | 54a6a21b4 | `js/tutorial.js:21` | "던전에 들어가 보세요"가 둘째 방에서야 넘어감(dungeon:enter 아님)·스킬 단계가 동행 자동 스킬로 넘어감 | 하 | W-0122 고침 |
 | 12 | 사가나락 | e351a4d39·5e8db8520·b0a1c9031 | `_test.html` 8086~ · `js/ui.js:941` | 아무것도 안 재는 진단 둘 · 손님 사연 진행을 표시 이름 키로 저장(이름 바뀌면 사라짐) | 하 | W-0122 고침 |
-| 13 | 공용 | 38e0503a5·e21d5783e | `shared/js/errlog.js:26-29·46-48·61-67` | 부팅 중 오류(core 전)가 저장 안 됨 — 옛 판별 키는 즉시 저장했음 | 중상 | W-0123 |
-| 14 | 공용 | e21d5783e | `shared/build/bundle.mjs` · 다섯 판 index | 한 파일 예외가 번들 뒤 전부를 멈춤·sourcemap 없어 errlog 스택이 압축 위치만·진단은 번들 안 돔 | 중 | W-0123 |
-| 15 | 사가종횡 | 53ae059da | `saga-story/js/core.js:428-434`(cfg.account 에 drawer 없음) | 👤 단추가 폰 도구 서랍 밖 도구줄 맨 앞으로 빠짐 | 중하 | W-0123 |
-| 16 | 도구 | 470c35773·c80032665·6792218f9 | `tools/test-web.mjs:101·71` · `tools/precheck.sh:229` | n<m 이어도 종료 0·`--dump` 가 _out 만들기 전에 씀 · 진단 수 감소 경고가 한 번만(기준선 덮어씀) | 하 | W-0123 |
-| 17 | 공용 | 80ec96f19 | `saga-web/tools/lib/gameserve.js:174-193` | 진단 서버가 /_shared/·../shared/ 를 못 이어 assets3d 가 늘 fail — 경로가 깨져도 진단 초록 | 하 | W-0123 |
+| 13 | 공용 | 38e0503a5·e21d5783e | `shared/js/errlog.js:26-29·46-48·61-67` | 부팅 중 오류(core 전)가 저장 안 됨 — 옛 판별 키는 즉시 저장했음 | 중상 | W-0123 고침 |
+| 14 | 공용 | e21d5783e | `shared/build/bundle.mjs` · 다섯 판 index | 한 파일 예외가 번들 뒤 전부를 멈춤·sourcemap 없어 errlog 스택이 압축 위치만·진단은 번들 안 돔 | 중 | W-0123 고침 |
+| 15 | 사가종횡 | 53ae059da | `saga-story/js/core.js:428-434`(cfg.account 에 drawer 없음) | 👤 단추가 폰 도구 서랍 밖 도구줄 맨 앞으로 빠짐 | 중하 | W-0123 고침 |
+| 16 | 도구 | 470c35773·c80032665·6792218f9 | `tools/test-web.mjs:101·71` · `tools/precheck.sh:229` | n<m 이어도 종료 0·`--dump` 가 _out 만들기 전에 씀 · 진단 수 감소 경고가 한 번만(기준선 덮어씀) | 하 | W-0123 고침 |
+| 17 | 공용 | 80ec96f19 | `saga-web/tools/lib/gameserve.js:174-193` | 진단 서버가 /_shared/·../shared/ 를 못 이어 assets3d 가 늘 fail — 경로가 깨져도 진단 초록 | 하 | 남음(진단 6개 재작성 — W-0123 메모) |
 | 18 | 사가마을 | d59440063 | `src/village-view/01.js:695` · mode2d drawKind | 2D 에서 우체통 안 읽은 깃발·가게 간판·가게 크기 성장·집 등급 외형이 사라짐 | 중 | W-0124 |
 | 19 | 사가마을 | a696aaf0f | `js/bgm.js:89·113-121` | 첫 누름 전에 changed 가 오면 그 세션 내내 배경음 안 남(공용화로 생김) | 하~중 | W-0124 |
 | 20 | 마을·종횡 | 36a9947b8 | 두 판 `js/core.js` bgm tracks | 곡이 .ogg 하나 — 옛 Safari·iOS 무음(mp3 는 폴더에 남음) | 중(실기 확인) | W-0124 |

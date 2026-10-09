@@ -22,10 +22,14 @@
   'use strict';
 
   var MAX = 50;
-  /** 판의 저장 키 — `core.SAVE_BASE`('deungyong-go/save' 꼴)의 `/save` 를 `/errlog` 로. core 가 아직 없으면 null */
+  /** 판의 저장 키 — `core.SAVE_BASE`('deungyong-go/save' 꼴)의 `/save` 를 `/errlog` 로.
+   *  W-0123 — core 가 서기 전(부팅 중 data·core 자체가 던진 오류 — 제보가 가장 필요한 때)엔 주소의 판 폴더로 옛 키를 고른다.
+   *  공용화(38e0503a5) 전엔 판마다 키를 글자로 박아 바로 저장했는데, 공용화 뒤엔 메모리에만 남아 사라졌다. 키 글자는 옛 것 그대로 */
+  var OLD_KEY = { 'saga-go': 'deungyong-go', 'saga-dungeon': 'yeoksa-dungeon', 'saga-forest': 'yeoksa-village', 'saga-story': 'yeoksa-side', 'saga-realm': 'saga-realm' };
+  function keyOfPath(p) { var m = /\/(saga-go|saga-dungeon|saga-forest|saga-story|saga-realm)\//.exec(String(p || '')); return m ? OLD_KEY[m[1]] + '/errlog' : null; }
   function storageKey() {
     var core = global.DG && global.DG.core, base = core && core.SAVE_BASE;
-    return base ? String(base).replace(/\/save$/, '') + '/errlog' : null;
+    return base ? String(base).replace(/\/save$/, '') + '/errlog' : keyOfPath(global.location && global.location.pathname);
   }
   var pending = [];   // 키가 생기기 전에 난 오류(메모리)
 
@@ -115,7 +119,7 @@
     MAX: MAX, ON: ON,
     record: record, list: list, clear: clear, push: push,
     fromErrorEvent: fromErrorEvent, fromRejectionEvent: fromRejectionEvent,
-    install: install, storageKey: storageKey, flush: flush
+    install: install, storageKey: storageKey, keyOfPath: keyOfPath, flush: flush
   };
   install();
 })(window);

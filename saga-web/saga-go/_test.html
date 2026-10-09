@@ -3076,7 +3076,10 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 
     t('배우 — 걸으면 다리가 엇갈린다', function () {
       if (!A3.ready()) { return false; }
-      var node = A3.build('hero', D.find('kr_yisunsin'));
+      /* W-0123 — 도형 몸의 뼈대(rig)를 재는 진단이다. 그 사이 같은 인물 GLB 가 먼저 받아지면 GLB 몸(rig 없음)이 나와
+         받는 속도 따라 붙었다 떨어졌다(10-09 배경음 파일 교체 뒤 늘 떨어짐) → 이 한 번만 GLB 를 끄고 도형으로 */
+      C.setTune('world3d.glb', 0);
+      var node; try { node = A3.build('hero', D.find('kr_yisunsin')); } finally { C.setTune('world3d.glb', null); }
       A3.step(node, { t: 1, walking: true, phase: Math.PI / 2 });
       var rig = node.userData.rig;
       var l = rig.legL.rotation.x, r = rig.legR.rotation.x;
@@ -16032,6 +16035,12 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var ok = after.length === Math.min(E.MAX, before + 1) && after[after.length - 1].msg === 'W-errlog';
       if (had === null) { localStorage.removeItem(key); } else { localStorage.setItem(key, had); }
       return ok && ('키 ' + key + ' · 한 건 기록');
+    });
+
+    t('W-0123 오류 기록 — core 가 서기 전(부팅 오류)엔 주소의 판 폴더로 옛 키를 고른다(다섯 판 · Pages 하위 경로 · 진단 서버 경로), 모르는 주소는 null', function () {
+      var K = DG.errlog.keyOfPath, want = { 'saga-go': 'deungyong-go', 'saga-dungeon': 'yeoksa-dungeon', 'saga-forest': 'yeoksa-village', 'saga-story': 'yeoksa-side', 'saga-realm': 'saga-realm' }, bad = [];
+      Object.keys(want).forEach(function (g) { if (K('/swbins/saga-web/' + g + '/index.html') !== want[g] + '/errlog' || K('/play/' + g + '/_test.html') !== want[g] + '/errlog') { bad.push(g); } });
+      return bad.length === 0 && K('/other/x.html') === null && K('') === null ? '다섯 판 옛 키 · 모르는 주소 null' : '실패 ' + bad.join(',');
     });
 
     /* ── 배경음악(BGM, W-0017) — 공용 shared/js/bgm.js + 이 판 DG.cfg.bgm ─────────

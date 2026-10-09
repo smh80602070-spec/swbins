@@ -213,7 +213,7 @@ console.log((bad ? '' : 'ok   ') + '확인 ' + n + '개');
 process.exit(bad ? 1 : 0);
 NODE
 
-echo "== 진단 수 (_test.html 의 t(' 줄 수가 tools/_out/testcount.json 보다 줄면 WARN)"
+echo "== 진단 수 (_test.html 의 t(' 줄 수가 tools/_out/testcount.json 보다 줄면 WARN — 기준선은 안 줄어든다, 일부러 줄였으면 TESTCOUNT_RESET=1)"
 node - <<'NODE'
 const fs = require('fs'), path = require('path');
 const file = 'tools/_out/testcount.json';
@@ -226,7 +226,10 @@ for (const g of fs.readdirSync('saga-web')) {
   if (old[g] > now[g]) console.log('WARN ' + g + ' 진단 ' + old[g] + ' → ' + now[g] + ' (줄었다)');
 }
 fs.mkdirSync(path.dirname(file), { recursive: true });
-fs.writeFileSync(file, JSON.stringify(Object.assign(old, now), null, 1));
+/* W-0123 — 전엔 매번 지금 값으로 덮어 한 번 경고한 감소가 다음 실행에선 조용히 기준선이 됐다. 늘 때만 올리고, 줄인 건 TESTCOUNT_RESET=1 로만 받는다 */
+const keep = Object.assign({}, old);
+for (const g of Object.keys(now)) { keep[g] = process.env.TESTCOUNT_RESET === '1' ? now[g] : Math.max(old[g] || 0, now[g]); }
+fs.writeFileSync(file, JSON.stringify(keep, null, 1));
 console.log('ok   진단 수 ' + Object.entries(now).map(([g, n]) => g.replace('saga-', '') + ' ' + n).join(' · '));
 NODE
 

@@ -430,7 +430,8 @@
     name: '사가종횡',
     emoji: '🏃',
     tag: '역사 인물로 노는 옆으로 걷는 액션',
-    settings: true   // 타이틀에 ⚙️ 설정 단추(ui 설정 시트를 곧장 연다)
+    settings: true,   // 타이틀에 ⚙️ 설정 단추(ui 설정 시트를 곧장 연다)
+    drawer: true   // W-0123 👤 단추를 도구 서랍(#tools-drawer) 안으로 — 공용화(53ae059da) 전엔 늘 서랍 안이었다
   };
 })(window);
 

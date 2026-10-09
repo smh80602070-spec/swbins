@@ -68,7 +68,7 @@ function runOnce(game, port) {
     chrome.stdout.on('data', d => { out += d; });
     chrome.on('error', e => finish({ error: '크롬 실행 실패 ' + e.message }));
     chrome.on('close', () => {
-      if (opt.dump) { fs.writeFileSync(path.join(HERE, '_out', 'last-' + game + (opt.runs > 1 ? '-' + (dumpN++) : '') + '.html'), out); }
+      if (opt.dump) { fs.mkdirSync(path.join(HERE, '_out'), { recursive: true }); fs.writeFileSync(path.join(HERE, '_out', 'last-' + game + (opt.runs > 1 ? '-' + (dumpN++) : '') + '.html'), out); }
       const m = /<title>RESULT (\d+)\/(\d+)<\/title>/.exec(out);
       if (!m) return finish({ error: 'RESULT 없음(출력 ' + out.length + 'B)' });
       const names = [];
@@ -98,7 +98,7 @@ function runOnce(game, port) {
     const fails = [...new Set(rs.flatMap(x => x.fails))];
     fails.forEach(f => console.log('  FAIL ' + f));
     result[g] = { n: r.n, m: r.m, fails, at: new Date().toISOString() };
-    if (fails.length || !same) bad = true;
+    if (fails.length || !same || r.n !== r.m) bad = true;   // W-0123 — 제목 RESULT 가 n<m 인데 FAIL 줄을 못 찾아도(설명 글 속 FAIL 등) 실패로
   }
   const outDir = path.join(HERE, '_out');
   fs.mkdirSync(outDir, { recursive: true });

@@ -72,7 +72,8 @@ if (addAt >= 0) {
   if (!did) { console.error(`${after} 이 든 묶음이 없다(${kinds.join('·')})`); process.exit(1); }
   writeMf(g, m);
   const sw = path.join(WEB, g, 'sw.js');
-  if (fs.existsSync(sw) && !fs.readFileSync(sw, 'utf8').includes(`'./${js}'`)) console.log(`주의: ${g}/sw.js SHELL 에 './${js}' 가 없다 — 넣고 VERSION 을 올릴 것`);
+  if (m.bundle) console.log(`주의: ${g} 는 번들 판 — node saga-web/shared/build/bundle.mjs ${g} 로 dist 를 다시 만들고 sw.js VERSION 을 올릴 것(SHELL 엔 dist 만 — W-0123)`);
+  else if (fs.existsSync(sw) && !fs.readFileSync(sw, 'utf8').includes(`'./${js}'`)) console.log(`주의: ${g}/sw.js SHELL 에 './${js}' 가 없다 — 넣고 VERSION 을 올릴 것`);
   // 아래 기본 실행(html 다시 쓰기)으로 이어 간다
 }
 
