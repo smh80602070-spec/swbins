@@ -145,7 +145,9 @@
     var c = cfg().borrow, D = global.DG && global.DG.data, own = {}, i;
     borrowed = { named: {}, rest: [] };
     if (!c) { return borrowed; }
-    if (c.pool !== 'all') { ((D && D.heroes) || []).forEach(function (h) { own[h.id] = 1; }); }
+    /* W-0121 — 도감 끝에 붙은 사가천하 장수 사본(`realm`)·새 가상 인물(`late`)은 빼지 않는다. W-0115 로 299 몸 전부가 도감에 들자
+       빌릴 몸이 0 이 돼 주민·적이 3D 는 옛 몸, 2D 는 옛 한 장 그림(흰 도포 노인)으로 떨어졌다 — 빌리는 몸은 W-0115 전과 같은 194 */
+    if (c.pool !== 'all') { ((D && D.heroes) || []).forEach(function (h) { if (!h.realm && !h.late) { own[h.id] = 1; } }); }
     (c.exclude || []).forEach(function (x) { own[x] = 1; });
     var pool = (ids().hero || []).filter(function (x) { return !own[x]; }).sort();
     var names = c.named || [], step = Math.max(1, Math.floor(pool.length / Math.max(1, names.length))), used = {};

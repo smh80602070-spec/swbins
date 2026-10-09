@@ -50,9 +50,64 @@
     var id = String(seed === undefined || seed === null ? '' : seed);
     if (id && A.has('hero', id)) { return VPRE + id; }
     var r = A.borrowRecipe && A.borrowRecipe(id || kind);
-    return r && r.key && r.key.indexOf('uni:') === 0 ? VPRE + r.key.slice(4) : null;
+    if (!(r && r.key && r.key.indexOf('uni:') === 0)) { return null; }
+    var Co = global.DG.core, k = Co && Co.tuned ? +Co.tuned('mode2d.borrowTint', 1) : 1;
+    return VPRE + r.key.slice(4) + (k > 0 ? TPRE + tintSlot(id || kind) : '');   // W-0121 — 빌린 몸은 사람마다 옷 색(풀 꼬리 '~칸')
   }
   function isVroid(pool) { return typeof pool === 'string' && pool.indexOf(VPRE) === 0; }
+
+  /* ── 빌린 몸 옷 색(W-0121) — 빌린 VRoid 시트는 옷이 검정·회색 정장이라 작은 2D 에서 주민이 회색 조각상처럼 섰다. 사람 씨앗으로 색 칸(1~11)을
+     정해 풀 이름 꼬리('vroid:<몸>~<칸>')에 싣고, 그릴 때 시트의 어둡고 채도 낮은 화소(옷)만 그 색조로 바꾼다 — 밝은 얼굴·흰 셔츠·피부·윤곽선은 그대로.
+     결과는 (시트·칸·프레임·행) 한 칸씩 캐시(매 프레임 새 캔버스 없음). 손잡이 core.tuned('mode2d.borrowTint', 1) — 0 이면 원본, 0~1 은 섞는 세기 */
+  var TPRE = '~', TINT_N = 11;
+  function tintSlot(seed) { return 1 + hashOf('tint:' + (seed === undefined || seed === null ? '' : seed)) % TINT_N; }
+  function bare(pool) { var i = typeof pool === 'string' ? pool.indexOf(TPRE) : -1; return i > 0 ? pool.slice(0, i) : pool; }
+  function tintOf(pool) { var i = typeof pool === 'string' ? pool.indexOf(TPRE) : -1; return i > 0 ? (+pool.slice(i + 1) || 0) : 0; }
+  function hsl(h, s, l) {
+    function f(n) { var q = (n + h * 12) % 12, a = s * Math.min(l, 1 - l); return l - a * Math.max(-1, Math.min(q - 3, 9 - q, 1)); }
+    return [f(0), f(8), f(4)];
+  }
+  /** 화소 하나 → 새 [r, g, b] (순수 함수). 옷 무게 = 어두움(밝기 0.45 아래 다, 0.62 위 없음) × 무채색(채도 0.10 아래 다, 0.20 위 없음) × 윤곽선 아님(밝기 0.03 위).
+   *  새 색 = 칸 색조(채도 0.55)에 원래 밝기를 들어 올린 명도 — 검정 정장도 어두운 색 옷이 된다 */
+  function tintPx(r, g, b, slot, k) {
+    var L = (0.299 * r + 0.587 * g + 0.114 * b) / 255, S = (Math.max(r, g, b) - Math.min(r, g, b)) / 255;
+    var w = Math.min(1, Math.max(0, (0.62 - L) / 0.17)) * Math.min(1, Math.max(0, (0.20 - S) / 0.10)) * Math.min(1, Math.max(0, (L - 0.03) / 0.04)) * (k === undefined ? 1 : k);
+    if (!(w > 0) || !(slot > 0)) { return [r, g, b]; }
+    var c = hsl((slot - 1) / TINT_N, 0.55, Math.min(0.62, 0.14 + L * 1.05));
+    return [Math.round(r + (c[0] * 255 - r) * w), Math.round(g + (c[1] * 255 - g) * w), Math.round(b + (c[2] * 255 - b) * w)];
+  }
+  /** RGBA 화소 배열을 제자리에서 바꾼다 — 바뀐 화소 수 */
+  function tintData(d, slot, k) {
+    var n = 0, i, p;
+    for (i = 0; i < d.length; i += 4) {
+      if (d[i + 3] < 8) { continue; }
+      p = tintPx(d[i], d[i + 1], d[i + 2], slot, k);
+      if (p[0] !== d[i] || p[1] !== d[i + 1] || p[2] !== d[i + 2]) { d[i] = p[0]; d[i + 1] = p[1]; d[i + 2] = p[2]; n++; }
+    }
+    return n;
+  }
+  var tints = {}, tintPxSum = 0, TINT_CAP = 12e6;   // 칸 캐시 — 화소 합이 상한(≈48MB)을 넘으면 비우고 다시 칠한다
+  /** 시트 한 칸(sx, sy, P)을 칸 색으로 칠한 캔버스 — 못 하면(캔버스 없음·읽기 막힘) null → 원본 그대로 */
+  function tintCell(e, key, sx, sy, P, slot, k) {
+    var ck = key + '~' + slot + '@' + k + '|' + sx + ',' + sy, c = tints[ck];
+    if (c !== undefined) { return c; }
+    if (tintPxSum > TINT_CAP) { tints = {}; tintPxSum = 0; }
+    c = null;
+    try {
+      var doc = global.document, cv = doc && doc.createElement('canvas');
+      if (cv && cv.getContext) {
+        cv.width = cv.height = P;
+        var g = cv.getContext('2d');
+        g.drawImage(e.img, sx, sy, P, P, 0, 0, P, P);
+        var im = g.getImageData(0, 0, P, P);
+        tintData(im.data, slot, k);
+        g.putImageData(im, 0, 0);
+        c = cv; tintPxSum += P * P;
+      }
+    } catch (err) { c = null; }
+    tints[ck] = c;
+    return c;
+  }
 
   function pick(kind, seed) {
     var vp = vroidPick(kind, seed);
@@ -90,7 +145,7 @@
   var PPM = 51.2;   // 1m = 51.2px — 128 칸(2.5m)·192 칸(3.75m) 공통(K-0029 manifest px_per_m)
   function sheet8(pool) {
     var t = isVroid(pool) && global.DG && global.DG.assets3dIds && global.DG.assets3dIds.hero2d8;
-    return (t && t[pool.slice(VPRE.length)]) || null;
+    return (t && t[bare(pool).slice(VPRE.length)]) || null;
   }
   /** 동작 이름 → 시트에 있는 역할. 8방향은 8역할, 3행 시트는 idle·walk·attack·hit·death 다섯(나머지는 가까운 것) */
   function roleOf(clip, eight) {
@@ -124,6 +179,7 @@
   function actInfo(key) { return acts[key] || null; }
 
   function getImg(pool, clip, eight) {
+    pool = bare(pool);   // 옷 색 꼬리(W-0121)는 같은 시트를 쓴다
     var key = pool + '/' + clip + (eight ? '#8' : ''), e = imgs[key];
     if (e) { return e; }
     e = imgs[key] = { img: null, ok: false, fail: false };
@@ -155,7 +211,7 @@
     }
     if (!e.ok) {
       /* 받는 동안 몸이 깜박이지 않게 같은 풀의 idle 이 이미 있으면 그걸로 */
-      var base = role !== 'idle' ? imgs[o.pool + '/idle' + (eight ? '#8' : '')] : null;
+      var base = role !== 'idle' ? imgs[bare(o.pool) + '/idle' + (eight ? '#8' : '')] : null;
       if (!(base && base.ok)) { return false; }
       e = base; role = 'idle';
     }
@@ -166,7 +222,10 @@
     if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
     ctx.imageSmoothingEnabled = true;
     if (d.flip) { ctx.translate(o.x, 0); ctx.scale(-1, 1); ctx.translate(-o.x, 0); }
-    ctx.drawImage(e.img, f * P, d.row * P, P, P, o.x - w / 2, o.y - h * foot, w, h);
+    var slot = tintOf(o.pool), Co = global.DG && global.DG.core, tk = slot && Co && Co.tuned ? Math.min(1, Math.max(0, +Co.tuned('mode2d.borrowTint', 1))) : 1;
+    var cell = slot && tk > 0 ? tintCell(e, bare(o.pool) + '/' + role + (eight ? '#8' : ''), f * P, d.row * P, P, slot, tk) : null;
+    if (cell) { ctx.drawImage(cell, 0, 0, P, P, o.x - w / 2, o.y - h * foot, w, h); }
+    else { ctx.drawImage(e.img, f * P, d.row * P, P, P, o.x - w / 2, o.y - h * foot, w, h); }
     ctx.restore();
     return true;
   }
@@ -403,11 +462,11 @@
     tileOk: function (id) { var t = tiles[id]; return t ? t.ok : null; },
     FRAMES: FRAMES, PX: PX, FPS: FPS,
     isOn: isOn, pick: pick, vroidPick: vroidPick, face: face, actT: actT, actInfo: actInfo, dirOf8: dirOf8, roleOf: roleOf, sheet8: sheet8, beastOf: beastOf, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
-    draw: draw, preload: preload, loadIndex: loadIndex,
+    draw: draw, preload: preload, loadIndex: loadIndex, tintSlot: tintSlot, tintPx: tintPx, tintData: tintData, tintOf: tintOf, bare: bare,
     drawStill: drawStill, stillPose: stillPose, isStill: isStill,
     stillLoaded: function (pool, view) { var e = stills[pool + '/' + view]; return e ? e.ok : null; },
     /** 진단용 — 그 풀·동작 이미지를 받았나(true/false), 아직 안 불렀으면 null */
-    loaded: function (pool, clip) { var e = imgs[pool + '/' + clip]; return e ? e.ok : null; },
-    failed: function (pool, clip) { var e = imgs[pool + '/' + clip]; return e ? e.fail : null; }
+    loaded: function (pool, clip) { var e = imgs[bare(pool) + '/' + clip]; return e ? e.ok : null; },
+    failed: function (pool, clip) { var e = imgs[bare(pool) + '/' + clip]; return e ? e.fail : null; }
   };
 })(typeof window !== 'undefined' ? window : this);
