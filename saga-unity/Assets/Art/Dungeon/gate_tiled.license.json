@@ -1,0 +1,10 @@
+{
+ "id": "gate_tiled",
+ "generator": "tools/world-forge/retile_uv.py --unit 4.4 (K-0089)",
+ "license": "CC0-1.0 (Kenney Modular Cave Kit gate.glb 모양 그대로 + 자체 상자 투영 UV)",
+ "source": "saga-unity/Assets/Art/Dungeon/gate.glb (Kenney, CC0)",
+ "size_m": [4.4, 4.4, 1.4],
+ "origin": "바닥 가운데",
+ "uv": "UV 0~1 = 4.4m (MakeTiled(wallMaterial, 4.4, 4.4) 와 맞음) — 면 법선 큰 축 상자 투영, 넓이비 중앙 1.0",
+ "note": "PBR 경로 전용. 색 아틀라스(colormap) 경로는 원본 gate.glb 를 그대로 쓴다."
+}

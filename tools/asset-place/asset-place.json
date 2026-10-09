@@ -923,6 +923,24 @@
      ]
     }
    ]
+  },
+  {
+   "id": "dungeon-kit",
+   "src": "saga-assets/world/dungeon-kit",
+   "include": [
+    "*.glb",
+    "*.license.json"
+   ],
+   "note": "K-0089 사가나락 방 조각(타일 UV 판) — 유니티 PBR 경로가 벽 재질을 씌울 때 늘어나지 않게",
+   "targets": [
+    {
+     "track": "unity",
+     "dir": "saga-unity/Assets/Art/Dungeon",
+     "sidecar": [
+      ".meta"
+     ]
+    }
+   ]
   }
  ]
 }
