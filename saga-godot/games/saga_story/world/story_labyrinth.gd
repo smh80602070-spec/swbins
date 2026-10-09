@@ -14,6 +14,7 @@ extends Node3D
 const StoryEnemyScene := preload("res://games/saga_story/world/story_enemy.gd")
 const StoryGoldPickup := preload("res://games/saga_story/world/story_gold_pickup.gd")
 const StoryGearPickup := preload("res://games/saga_story/world/story_gear_pickup.gd")
+const CaveBackdrop := preload("res://games/saga_story/world/story_cave_backdrop.gd")
 const StoryCombat := preload("res://games/saga_story/data/story_combat.gd")
 const StoryLabyrinth := preload("res://games/saga_story/data/story_labyrinth.gd")
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
@@ -25,7 +26,6 @@ const TOWN_ARRIVAL_X := 24.0
 const GROUND_Y := 0.0
 const PLATFORM_THICKNESS := 0.4
 const PLATFORM_DEPTH := 4.0
-const GROUND_COLOR := Color(0.16, 0.08, 0.2)
 const PEDESTAL_HEIGHT := 0.5
 const PEDESTAL_SIZE := 3.0
 const NODE_START_X := 6.0
@@ -113,10 +113,10 @@ func _build_ground(width: float) -> void:
 	var box := BoxMesh.new()
 	box.size = Vector3(width, PLATFORM_THICKNESS, PLATFORM_DEPTH)
 	mi.mesh = box
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = GROUND_COLOR
-	mi.material_override = mat
+	## G-0150 — 보라 단색 판 → 동굴 바닥 돌 결, 둘레엔 바위 벽·천장·종유석·횃불(층과 같이 지워진다).
+	mi.material_override = CaveBackdrop.rock_material(CaveBackdrop.LABYRINTH["path"])   # 동굴 바닥보다 밝은 다듬은 돌길(경계가 보이게)
 	body.add_child(mi)
+	CaveBackdrop.build(_floor_root, width, CaveBackdrop.LABYRINTH)
 	var cs := CollisionShape3D.new()
 	var shape := BoxShape3D.new()
 	shape.size = box.size

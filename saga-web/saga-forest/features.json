@@ -721,5 +721,22 @@
   "ticket": "W-0103",
   "since": "2026-10-08",
   "note": "D2: saga-web/tools/playcheck/pw-fs-craft.mjs 4/4 — results/pw-fs-craft.json(W-0103). 제작대 곁 실제 ␣ → 창 → 「짓기」 실제 클릭 → 3택 실제 클릭. Claude 눈: 제작대 창 ○·3택 창 ○·3D 제작대(Bench_1) 보임 ○."
+ },
+ {
+  "id": "fs.cozy2d",
+  "name": "2D 마을 스타듀식 — 큰 인물(배율 ×1.35, 구 반지름 같은 비로 줄여 지평선 그대로)·풀 결·꽃 점·흙길 가장자리·물가 거품·시간대 곱하기 빛·밤 등불",
+  "files": [
+   "js/cozy2d.js",
+   "src/village-view/01.js"
+  ],
+  "tests": [
+   "fs.cozy2d: 2D 마을 스타듀식(W-0133) — 배율 기본 1.35·손잡이 0 이면 1, 지평선 자리 그대로·투영 왕복, 땅 덧칠은 좌표 해시(같은 칸 같은 무늬·Math.random 안 먹음), 흙길 가장자리 풀·물가 거품, 시간대 빛 색"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0133",
+  "since": "2026-10-09",
+  "note": "D2: saga-web/tools/playcheck/pw-cozy-check.mjs → shots/cozy/{a,d}-{pc,phone,land}-{day,even,night}.png Claude 눈 ○(a=전, d=후: 인물·집 ×1.35 · 마루·하늘 제자리 · 풀 결·흙길 톱니 가장자리·자갈 · 밤은 남색 곱하기 + 내 둘레 등불, 옛 얹기 빛은 뿌옇게 바랬음). 집 안(평면) 그대로(QC 3-home). 손잡이 village.cozy2d 0 = 옛 모습, village.cozyZoom 배율."
  }
 ]

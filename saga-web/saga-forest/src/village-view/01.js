@@ -38,7 +38,7 @@
    * ZOOM 화면 크기에 맞춘 배율 — resize() 가 정한다. 이게 없으면 작은 화면에서
    *      지평선이 화면 위로 밀려 나간다
    */
-  var R = 520;
+  var R0 = 520, R = R0;   // W-0133 — R 은 resize 가 R0 ÷ 스타듀 배율(cozy2d)로 줄인다: 배율을 키워도 지평선(마루)이 화면 같은 자리
   var TILT = 0.66;
   var BEND = 0.000155;
   var ZOOM = 1;
@@ -152,7 +152,7 @@
     cv.style.height = H + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    ZOOM = core.clamp(H / 620, 0.82, 1.7);
+    var CZ = global.DG.cozy2d ? global.DG.cozy2d.zoomMul() : 1; ZOOM = core.clamp(H / 620, 0.82, 1.7) * CZ; R = R0 / CZ;   // W-0133 스타듀식 큰 인물(손잡이 village.cozyZoom)
     CX = W * 0.5;
     CY = H * 0.62;
     horizonY = CY - R * ZOOM * TILT;
@@ -313,7 +313,7 @@
     ctx.fillRect(0, 0, W, H);
 
     /* 시간대 빛 — 밤이면 어둡게 덮는다 */
-    if (ph.light !== 'rgba(0,0,0,0)') {
+    if (global.DG.cozy2d && global.DG.cozy2d.light(ctx, ph, W, H, project(p.x, p.y), ZOOM)) { /* W-0133 아늑한 빛이 대신 덮었다 */ } else if (ph.light !== 'rgba(0,0,0,0)') {
       ctx.fillStyle = ph.light;
       ctx.fillRect(0, 0, W, H);
     }
@@ -601,7 +601,7 @@
         batch[key].push(a0, a1, a2, a3);
         /* 그림은 가까운 칸에만 얹는다(step===1) — 먼 줄은 색만으로 충분하고
            칸이 작아 그림을 얹어도 안 보인다. 아핀 근사도 먼 칸일수록 어긋난다 */
-        if (step === 1) { texList.push({ img: tileImg(kind, se), a0: a0, a1: a1, a3: a3 }); }
+        if (step === 1) { texList.push({ img: tileImg(kind, se), a0: a0, a1: a1, a3: a3, kind: kind, tx: tx, ty: ty }); }
 
         /* 잔디 술 · 물빛 — 가까운 칸에만 (멀면 지저분해진다) */
         if (midA > -0.75 && step === 1) {
@@ -636,7 +636,7 @@
       drawTileTexture(texList[ti].img, texList[ti].a0, texList[ti].a1, texList[ti].a3);
     }
 
-    /* 잔디 술 — 세 갈래 짧은 선 */
+    if (global.DG.cozy2d) { global.DG.cozy2d.ground(ctx, texList, { project: project, T: T, se: se, zoom: ZOOM, tileAt: V.tileAt, tiles: VD.TILES }); }   /* W-0133 풀 결·꽃 점·흙길 가장자리 덧칠, 그 위에 잔디 술 — 세 갈래 짧은 선 */
     if (tufts.length) {
       ctx.strokeStyle = dark(se.grass, 0.22);
       ctx.lineWidth = 1.6;

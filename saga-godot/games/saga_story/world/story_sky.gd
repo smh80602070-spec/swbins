@@ -43,3 +43,6 @@ func _ready() -> void:
 	## 발판 아래 허공이 잿빛 땅 반구로 보였다(창 모드 SinyaField) — 아래 반구도 같은 하늘빛으로 이어 준다.
 	sky_mat.ground_horizon_color = sky_horizon_color
 	sky_mat.ground_bottom_color = sky_horizon_color.darkened(0.12)
+	## G-0150 — 여기까지 오는 건 절차 하늘이 남은 동굴·미궁뿐(다른 씬은 사실적 하늘, environment_profile G-0148).
+	## 공용 잿빛 안개가 동굴을 회색 허공으로 씻어 냈다 — 안개를 그 하늘빛 어둡게(먼 바위가 어둠 속으로 물러나게).
+	env.fog_light_color = sky_horizon_color.darkened(0.35)

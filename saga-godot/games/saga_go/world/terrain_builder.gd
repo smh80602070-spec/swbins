@@ -260,6 +260,10 @@ static func _water_bed(region: String, x: int, y: int, u: float, v: float) -> fl
 			var ny: int = y + dy
 			if nx < 0 or ny < 0 or nx >= s.x or ny >= s.y or TestMap.tile_at(nx, ny, region) in WATER_CHARS:
 				continue
+			## G-0151 — 물 바닥보다 낮은 이웃(잠긴 도읍 돔 바닥 U −10)은 둑이 아니다. 둑으로 셈하면 돔 둘레 물 바닥이
+			## −3 → −0.7 로 솟아 받침(바닥 −3 + lift 3.5 = DECK_Y)에 맞춘 석등·지키기 자리가 2.3m 떴다(probe story6).
+			if tile_base_height(region, nx, ny) < WATER_BED_DEEP:
+				continue
 			var px := clampf(u, float(dx), float(dx) + 1.0)
 			var py := clampf(v, float(dy), float(dy) + 1.0)
 			d = minf(d, Vector2(u - px, v - py).length())

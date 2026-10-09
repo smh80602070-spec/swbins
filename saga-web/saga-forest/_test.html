@@ -115,6 +115,7 @@ window.DG_NO_TUNE = true;
 <script src="js/terrain.js"></script>
 <script src="js/craft.js"></script>
 <script src="js/fs2d.js"></script>
+<script src="js/cozy2d.js"></script>
 <script src="js/village-view.js"></script>
 <script src="js/village-view3d.js"></script>
 <script src="js/net.js"></script>
@@ -6890,6 +6891,34 @@ window.DG_NO_TUNE = true;
         return Math.abs(pn.timeMul - 0.8) < 1e-9 && pn.extraP === 0 && ps.rareMul === 1.5 && rare === 13.5 && common === 40 && free &&
           ('잠자리채 timeMul ' + pn.timeMul + ' · 삽 드문 무게 9→' + rare + '·흔한 40→' + common + ' · 자재 한 칸 씀');
       } finally { crBack(k); }
+    });
+
+    t('fs.cozy2d: 2D 마을 스타듀식(W-0133) — 배율 기본 1.35·손잡이 0 이면 1, 지평선 자리 그대로·투영 왕복, 땅 덧칠은 좌표 해시(같은 칸 같은 무늬·Math.random 안 먹음), 흙길 가장자리 풀·물가 거품, 시간대 빛 색', function () {
+      var Z = DG.cozy2d, C = DG.core, VV = DG.villageView, cam = VV._cam(), r = [], i;
+      var keepZ = C.tuned('village.cozyZoom', ''), keepO = C.tuned('village.cozy2d', '');
+      var probe = function () {
+        VV.resize(); var o = VV._project(cam.x, cam.y), q = VV._project(cam.x + 40, cam.y), top = 1e9, rt = VV._unproject(VV._project(cam.x + 37, cam.y - 55).x, VV._project(cam.x + 37, cam.y - 55).y);
+        for (i = 0; i <= 1500; i += 2) { top = Math.min(top, VV._project(cam.x, cam.y - i).y); }
+        return { dx: q.x - o.x, top: top, rt: Math.abs(rt.x - cam.x - 37) + Math.abs(rt.y - cam.y + 55) };
+      };
+      try {
+        C.setTune({ 'village.cozyZoom': null, 'village.cozy2d': null });
+        var z0 = Z.zoomMul(), a = probe();
+        C.setTune('village.cozy2d', 0); var z1 = Z.zoomMul(), b = probe();
+        r.push(z0 === 1.35, z1 === 1, Math.abs(a.dx / b.dx - 1.35) < 0.01, Math.abs(a.top - b.top) < 1.5, a.rt < 0.01);
+      } finally { C.setTune({ 'village.cozyZoom': keepZ === '' ? null : keepZ, 'village.cozy2d': keepO === '' ? null : keepO }); VV.resize(); }
+      var rnd = Math.random, calls = 0; Math.random = function () { calls++; return rnd(); };
+      try {
+        var s1 = JSON.stringify(Z.specks('grass', 12, 7, 'summer')), s2 = JSON.stringify(Z.specks('grass', 12, 7, 'summer')), s3 = JSON.stringify(Z.specks('grass', 13, 7, 'summer'));
+        var win = Z.specks('grass', 12, 7, 'winter'), fl = 0;
+        for (i = 0; i < 400; i++) { fl += Z.specks('grass_meadow', i, 3, 'spring').filter(function (q) { return q.t === 'flower'; }).length; }
+        r.push(s1 === s2, s1 !== s3, win.every(function (q) { return q.t === 'snow'; }), fl > 60 && fl < 200, calls === 0);
+      } finally { Math.random = rnd; }
+      var rp = Z.rims('path', 'grass', 'path', 'water', 'grass_meadow'), rw = Z.rims('water', 'sand', 'water', 'water', 'water');
+      r.push(rp.length === 2 && rp[0].side === 0 && rp[1].side === 3 && rp[0].t === 'grass', rw.length === 1 && rw[0].t === 'foam', Z.rims('grass', 'path', 'path', 'path', 'path').length === 0);
+      var rgb = function (k) { return Z.lightSpec(k).mul && Z.lightSpec(k).mul.match(/\d+/g).map(Number); }, dw = rgb('dawn'), ev = rgb('even'), nt = rgb('night');
+      r.push(dw[0] > dw[2] && dw[1] > dw[2], ev[0] > ev[1] && ev[1] > ev[2], nt[2] > nt[0] && nt[2] > nt[1], Z.lightSpec('day').mul === null, !!Z.lightSpec('night').near);
+      return r.every(Boolean) && ('배율 ' + z0 + ' → 한 칸 ' + a.dx.toFixed(1) + 'px(끄면 ' + b.dx.toFixed(1) + ') · 마루 ' + Math.round(a.top) + '/' + Math.round(b.top) + ' · 꽃밭 400칸 꽃 ' + fl) || '실패 ' + r.join(',');
     });
 
     t('런타임 에러 없음', function () {
