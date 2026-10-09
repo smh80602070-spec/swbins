@@ -21,7 +21,13 @@ namespace Saga.Go.World
         private Vector3 _last;
         private bool _has;
         private float _acc;
-        private GameObject _body;
+        private GameObject _body;            // U-0074 받침(따라가기는 이걸 움직인다) — 그 아래 몸 모델·동작
+        private Saga.Core.GltfClipPlayer _anim;
+        private Vector3 _lastBodyPos;
+        private float _bodySpeed;
+
+        /// <summary>진단용 — 동행 몸이 지금 트는 동작 이름(몸·동작 없으면 빈 글).</summary>
+        public string BuddyClip => _anim != null ? _anim.Current : "";
         private string _bodyFor = "";
 
         /// <summary>마지막으로 알린 부화들(진단이 읽는다).</summary>
@@ -89,17 +95,52 @@ namespace Saga.Go.World
             {
                 if (_body != null) Destroy(_body);
                 _body = null; _bodyFor = id;
+                _anim = null;
                 if (id.Length > 0)
                 {
-                    _body = Saga.Core.WorldModels.Spawn(GoEggs.BodyName(id), null, 1.4f); // 없으면 null — 몸 없이 간다(K-0075)
-                    if (_body != null) _body.transform.position = _player.position - _player.forward * FollowDist;
+                    string bodyName = GoEggs.BodyName(id);
+                    var holder = new GameObject(bodyName);
+                    var model = Saga.Core.WorldModels.Spawn(bodyName, holder.transform, 0f); // 없으면 null — 몸 없이 간다(K-0075)
+                    if (model == null) Destroy(holder);
+                    else
+                    {
+                        FitBuddy(model);
+                        _anim = Saga.Core.GltfClipPlayer.Attach(model, "World/" + bodyName); // 클립 없으면 null — 정지 자세
+                        _anim?.Play("Idle");
+                        _body = holder;
+                        _body.transform.position = _player.position - _player.forward * FollowDist;
+                        _lastBodyPos = _body.transform.position;
+                        _bodySpeed = 0f;
+                    }
                 }
             }
             if (_body == null) return;
+            float dt = Mathf.Max(Time.deltaTime, 1e-4f);
             var target = _player.position - _player.forward * FollowDist;
-            _body.transform.position = Vector3.Lerp(_body.transform.position, target, 1f - Mathf.Exp(-4f * Time.deltaTime));
+            _body.transform.position = Vector3.Lerp(_body.transform.position, target, 1f - Mathf.Exp(-4f * dt));
             var look = _player.position - _body.transform.position; look.y = 0f;
-            if (look.sqrMagnitude > 0.01f) _body.transform.rotation = Quaternion.Slerp(_body.transform.rotation, Quaternion.LookRotation(look), 1f - Mathf.Exp(-8f * Time.deltaTime));
+            if (look.sqrMagnitude > 0.01f) _body.transform.rotation = Quaternion.Slerp(_body.transform.rotation, Quaternion.LookRotation(look), 1f - Mathf.Exp(-8f * dt));
+            // U-0074 — 몸이 실제로 움직인 속도로 서기·걷기·달리기(부드럽게 — 문턱 근처 깜빡임 줄이기)
+            var moved = _body.transform.position - _lastBodyPos; moved.y = 0f;
+            _lastBodyPos = _body.transform.position;
+            _bodySpeed = Mathf.Lerp(_bodySpeed, moved.magnitude / dt, 1f - Mathf.Exp(-10f * dt));
+            if (_anim != null) _anim.Play(_bodySpeed < GoEggs.BuddyIdleSpeed ? "Idle" : _bodySpeed < GoEggs.BuddyRunSpeed ? "Walk" : "Run");
+        }
+
+        /// <summary>U-0074 — 키 <see cref="GoEggs.BuddyHeight"/> 에 맞추되 가장 긴 가로 변이 <see cref="GoEggs.BuddyMaxLen"/> 를 넘지 않게
+        /// (예전엔 가장 긴 가로 변 1.4m 맞춤이라 긴 몸은 키 0.5m). Spawn 이 배율 1 로 둔 바닥 맞춤 자리도 같은 배율로.</summary>
+        private static void FitBuddy(GameObject model)
+        {
+            Bounds b = default; bool any = false;
+            foreach (var r in model.GetComponentsInChildren<Renderer>(true))
+            {
+                if (!any) { b = r.bounds; any = true; } else b.Encapsulate(r.bounds);
+            }
+            if (!any || b.size.y < 0.01f) return;
+            float len = Mathf.Max(0.01f, Mathf.Max(b.size.x, b.size.z));
+            float k = Mathf.Min(GoEggs.BuddyHeight / b.size.y, GoEggs.BuddyMaxLen / len);
+            model.transform.localScale = Vector3.one * k;
+            model.transform.localPosition *= k;
         }
     }
 }
