@@ -22,7 +22,7 @@ func _physics_process(_delta: float) -> void:
 		var env := (we as WorldEnvironment).environment
 		if env != null and env.sky != null and env.sky.sky_material is ShaderMaterial:
 			var sh := (env.sky.sky_material as ShaderMaterial).shader
-			sky_ok = sky_ok or (sh != null and sh.resource_path.ends_with("sky_toon.gdshader"))
+			sky_ok = sky_ok or (sh != null and (sh.resource_path.ends_with("sky_toon.gdshader") or sh.resource_path.ends_with("sky_real.gdshader")))   # G-0141 GO 는 sky_real
 	_check("sky_toon", sky_ok)
 	var water := 0
 	for mi in get_tree().root.find_children("*", "MeshInstance3D", true, false):

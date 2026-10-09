@@ -26,6 +26,14 @@ const REGION_ERA := {
 	"crossing": "present", "sunken": "past", "amber": "present", "vault": "future", "fork": "present",
 }
 
+## G-0141 — 사용자 "하늘도 사실처럼"(10-09): 그림 파노라마 대신 사실적 하늘 셰이더(sky_real). true 면 예전처럼 그림을 덮는다(손잡이).
+const USE_PANORAMA := false
+## 날씨 → 구름 덮개(sky_real cloud_cover). 표에 없는 날씨는 0.45.
+const CLOUD_COVER := {"clear": 0.32, "cloud": 0.72, "rain": 0.9, "wind": 0.5}
+## 구름 흐름 — 초당 하늘 평면 uv 이동(아주 느리게). CHECK_SEC 마다 넣으니 한 번에 0.02 남짓 움직인다.
+const CLOUD_DRIFT := Vector2(0.0035, 0.0012)
+const WARM_SLOT := {"dawn": 1.0, "sunset": 1.0, "noon": 0.0, "night": 0.0}
+
 var _sky: ShaderMaterial
 var _player: Node3D
 var _check := 0.0
@@ -63,6 +71,16 @@ static func slots_for(hour: float) -> Array:
 	return ["noon", "noon", 0.0]
 
 
+## 순수 함수 — 두 하늘 슬롯과 섞기 값 → 노을 정도(0 한낮·밤, 1 새벽·노을).
+static func warm_of(a: String, b: String, mix: float) -> float:
+	return lerpf(float(WARM_SLOT.get(a, 0.0)), float(WARM_SLOT.get(b, 0.0)), mix)
+
+
+## 순수 함수 — 실제 시각(초) → 구름 흐름 offset(하늘 평면 uv). 1만 단위로 되돌려 큰 값의 정밀도 손실을 막는다.
+static func cloud_offset_at(unix_sec: float) -> Vector2:
+	return CLOUD_DRIFT * fmod(unix_sec, 100000.0)
+
+
 static func era_of(region_id: String) -> String:
 	return String(REGION_ERA.get(region_id, "past"))
 
@@ -86,7 +104,7 @@ func _ready() -> void:
 		var j: Variant = JSON.parse_string(FileAccess.get_file_as_string(mp))
 		if j is Dictionary and (j as Dictionary).has("skies"):
 			_markers = (j as Dictionary).skies
-	if _sky == null or not ResourceLoader.exists(sky_path("noon", "past", _mobile)):
+	if _sky == null or (USE_PANORAMA and not ResourceLoader.exists(sky_path("noon", "past", _mobile))):
 		set_process(false)
 		return
 	refresh_now()
@@ -107,6 +125,14 @@ func refresh_now() -> void:
 	var region := TestMap.region_at(_player.global_position) if _player else "village"
 	var era := era_of(region)
 	var s := slots_for(TimeOfDay.hour_float())
+	if not USE_PANORAMA:
+		## G-0141 — 사실적 하늘(sky_real): 그림 대신 노을 정도·구름 덮개·구름 흐름만 넣고, 해 방향은 그대로 따른다.
+		_sky.set_shader_parameter("pano_on", 0.0)
+		_sky.set_shader_parameter("warm", warm_of(String(s[0]), String(s[1]), float(s[2])))
+		_sky.set_shader_parameter("cloud_cover", float(CLOUD_COVER.get(Weather.current_key(), 0.45)))
+		_sky.set_shader_parameter("cloud_offset", cloud_offset_at(Time.get_unix_time_from_system()))
+		_follow_sun(String(s[0]), String(s[1]), era, float(s[2]))
+		return
 	var a := _tex(String(s[0]), era)
 	var b := _tex(String(s[1]), era)
 	if a == null or b == null:
