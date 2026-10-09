@@ -228,7 +228,7 @@ namespace Saga.EditorTools
                     if (size < 0.8f || size > 2.4f) Fail($"{id} 잔해 크기 {size:F2}m(0.8~2.4)");
                     foreach (var r in piece.GetComponentsInChildren<MeshRenderer>(true))
                         foreach (var mat in r.sharedMaterials)
-                            if (mat == null || !mat.name.EndsWith("_rift") || !mat.IsKeywordEnabled("_EMISSION")) Fail($"{id} 잔해 재질 {mat?.name}");
+                            if (mat == null || !mat.name.EndsWith("_rift") || mat.shader == null || mat.shader.name != "Saga/CelToon" || mat.GetFloat("_RimStrength") < 1f) Fail( /* U-0066 툰 + 하늘색 림 */$"{id} 잔해 재질 {mat?.name}");
                     if (spin != null)
                     {
                         // 돌아도 밑면이 그대로 — 10초 뒤 자리로 돌려 다시 잰다.

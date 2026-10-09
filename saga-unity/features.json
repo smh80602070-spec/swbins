@@ -267,12 +267,12 @@
   "tests": [
    "PlaytestGoEras"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D1(U-0063 눈 ×): 시간 틈 잔해(컨테이너)가 무늬·음영 없는 하늘색 단색 판으로 보임 — 사가나락·사가마을에도 같은 단색 물체. 버그 초안 U-0066"
+  "note": "D2(눈 ○, U-0066): docs/playcheck/d2-u0066-20261009.json — 잔해에 무늬(무전기 다이얼·탐조등 테·CCTV 렌즈)와 하늘색 림이 보임. 흠: 탐조등 하나가 나무 줄기와 겹쳐 뜸"
  },
  {
   "id": "un.go.hero-dex",
@@ -653,7 +653,7 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D2(눈 △): docs/playcheck/d2-u0063-20261009.json — 행상 사람은 정상. 흠: 좌판이 무늬 없는 초록 단색 상자(U-0066)"
+  "note": "D2(눈 ○, U-0066): docs/playcheck/d2-u0066-20261009.json — 좌판이 공용 market_stall_01(차양·판자·진열품), 행상이 뒤에 섬"
  },
  {
   "id": "un.dg.era-decor",
@@ -986,7 +986,7 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D2(눈 △): docs/playcheck/d2-u0063-20261009.json — 존 무더기(바위·고목·타이어·배전함·흰 석물·가로등) 정상. 흠: 하늘색 단색 판이 공중에 뜸(U-0066)"
+  "note": "D2(눈 ○, U-0066): docs/playcheck/d2-u0066-20261009.json — 뜬 잔해 판에 배전반 무늬·하늘색 림"
  },
  {
   "id": "un.fs.eras",

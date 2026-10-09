@@ -38,6 +38,7 @@ namespace Saga.Forest.World
         private void Awake()
         {
             if (transform.childCount == 0) Build();
+            else RefreshRift();
             var playerGo = GameObject.FindWithTag("Player");
             _player = playerGo != null ? playerGo.transform : null;
         }
@@ -140,6 +141,12 @@ namespace Saga.Forest.World
         }
 
         /// <summary>DUNGEON `EraDecorBuilder.Rift` 와 같은 식 — glTFast 재질 텍스처를 URP Lit 칸으로 옮기고 청록 발광.</summary>
+        // U-0066 — 씬에 구운 옛 잔해 재질(발광 Lit → 툰 패스가 하늘색 단색 Unlit 로 바꿈)을 Play 때 툰 + 하늘색 림으로 갈아 끼운다(씬 재빌드 없이).
+        private void RefreshRift()
+        {
+            foreach (var s in GetComponentsInChildren<ForestRiftSpin>(true)) Rift(s.gameObject);
+        }
+
         private void Rift(GameObject go)
         {
             var lit = Shader.Find("Universal Render Pipeline/Lit");
@@ -151,19 +158,21 @@ namespace Saga.Forest.World
                 {
                     var m = mats[i];
                     if (m == null) continue;
+                    if (m.name.EndsWith("_rift") && m.shader != null && m.shader.name == "Saga/CelToon") continue; // 이미 새 잔해 재질
                     if (!_rift.TryGetValue(m, out var glow))
                     {
-                        glow = new Material(lit) { name = m.name + "_rift" };
-                        Texture baseTex = m.HasProperty("baseColorTexture") ? m.GetTexture("baseColorTexture") : m.HasProperty("_BaseMap") ? m.GetTexture("_BaseMap") : null;
-                        Texture normal = m.HasProperty("normalTexture") ? m.GetTexture("normalTexture") : m.HasProperty("_BumpMap") ? m.GetTexture("_BumpMap") : null;
-                        if (baseTex != null) { glow.SetTexture("_BaseMap", baseTex); glow.SetTexture("_EmissionMap", baseTex); }
-                        if (normal != null) { glow.SetTexture("_BumpMap", normal); glow.EnableKeyword("_NORMALMAP"); }
-                        glow.SetColor("_BaseColor", ForestEras.RiftTint);
-                        glow.SetFloat("_Metallic", 0.8f);
-                        glow.SetFloat("_Smoothness", 0.6f);
-                        glow.EnableKeyword("_EMISSION");
-                        glow.SetColor("_EmissionColor", ForestEras.RiftGlow);
-                        glow.globalIlluminationFlags = MaterialGlobalIlluminationFlags.None;
+                        // U-0066 — 발광 Lit 을 만들면 ToonScenePass 가 Unlit 발광색 단색으로 바꿔 무늬가 사라졌다(하늘색 실루엣).
+                        // 처음부터 툰 재질(그림 × 시간 틈 빛깔) + 하늘색 림으로 — 툰은 패스가 건너뛰어 그림이 남는다.
+                        Texture baseTex = null;
+                        foreach (var prop in new[] { "baseColorTexture", "_BaseMap", "_MainTex" })
+                            if (baseTex == null && m.HasProperty(prop)) baseTex = m.GetTexture(prop);
+                        glow = Saga.Core.Region.RegionMaterials.Toon(baseTex, ForestEras.RiftTint.linear);
+                        if (glow == null) continue;
+                        glow.name = m.name.EndsWith("_rift") ? m.name : m.name + "_rift";
+                        glow.SetColor("_RimColor", ForestEras.RiftGlow * 1.4f);
+                        glow.SetFloat("_RimPower", 2.5f);
+                        glow.SetFloat("_RimStrength", 1.2f);
+                        if (baseTex == null) Debug.Log($"[Rift] {m.name} 바탕 그림 없음 — 빛깔만");
                         _rift[m] = glow;
                     }
                     mats[i] = glow;

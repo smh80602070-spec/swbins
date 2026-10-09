@@ -221,7 +221,7 @@ namespace Saga.EditorTools
                             if (mat == null) continue;
                             bool rift = mat.name.EndsWith("_rift");
                             anyRift |= rift; allRift &= rift;
-                            if (rift && !mat.IsKeywordEnabled("_EMISSION")) emissive = false;
+                            if (rift && !(mat.shader != null && mat.shader.name == "Saga/CelToon" && mat.GetFloat("_RimStrength") >= 1f)) emissive = false; // U-0066 툰 + 하늘색 림
                         }
                     if (p.Era != GoEra.Future)
                     {
@@ -229,7 +229,7 @@ namespace Saga.EditorTools
                         continue;
                     }
                     if (spin == null) { Fail($"{c.Id} {go.name} 잔해가 안 돎"); continue; }
-                    if (!allRift || !emissive) Fail($"{c.Id} {go.name} 잔해 재질이 청록 발광 아님");
+                    if (!allRift || !emissive) Fail($"{c.Id} {go.name} 잔해 재질이 툰·하늘색 림 아님");
                     if (go.isStatic) Fail($"{c.Id} {go.name} 잔해가 정적");
                     if (go.GetComponentsInChildren<Collider>(true).Length > 0) Fail($"{c.Id} {go.name} 잔해에 충돌");
                     if (!Bounds(go, out var b0)) continue;

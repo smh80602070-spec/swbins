@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-09",
+  "tickets": [
+    "U-0066 그림 흠 — 잔해 재질·좌판 모델"
+  ],
+  "how": "장면 판 셋(세이브 치움·다섯 백업·판마다 복원) + PlaytestShowcaseGui 재촬영(사가만리 6·사가나락 9·사가마을 3장) Claude 눈",
+  "cause": "잔해 발광 Lit → ToonScenePass 가 Unlit 발광색 단색으로 바꿈(텍스처는 emissiveTexture 칸만 봄). 씬에 구운 무더기는 빌더가 건너뛰어 Awake 에서 다시 씌움",
+  "scene": [
+    "[PlaytestHeadless] OK - 10 frames, no errors",
+    "[PlaytestDungeonHeadless] OK - 10 frames, no errors",
+    "[PlaytestForestHeadless] OK - 10 frames, no errors"
+  ],
+  "runtime_errors": 0,
+  "results": [
+    {
+      "id": "un.go.rift-debris",
+      "eye": "○",
+      "shots": ".utmp/shots-u0066/go/typeRiftSpin_0~2·nameRegionProps_0~2",
+      "note": "잔해에 무늬(무전기 다이얼·탐조등 테·CCTV 렌즈)와 하늘색 림이 보임. 흠: 탐조등 하나가 나무 줄기와 겹쳐 뜸",
+      "result": "OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.dg.peddler-guests",
+      "eye": "○",
+      "shots": ".utmp/shots-u0066/dungeon/typeDungeonMerchant_0~2",
+      "note": "좌판이 공용 market_stall_01(차양·판자·진열품), 행상이 뒤에 섬",
+      "result": "OK",
+      "date": "2026-10-09"
+    },
+    {
+      "id": "un.fs.zone-props",
+      "eye": "○",
+      "shots": ".utmp/shots-u0066/forest/nameZoneProps_0~2",
+      "note": "뜬 잔해 판에 배전반 무늬·하늘색 림",
+      "result": "OK",
+      "date": "2026-10-09"
+    }
+  ],
+  "left": "아치·기둥 줄무늬 = K-0089(모델 UV) 대기"
+}

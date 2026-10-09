@@ -231,7 +231,7 @@ namespace Saga.EditorTools
                     if (piece.GetComponentInChildren<Collider>(true) != null) Fail($"{c.Id} {piece.name} 잔해에 충돌");
                     foreach (var r in body.GetComponentsInChildren<MeshRenderer>(true))
                         foreach (var m in r.sharedMaterials)
-                            if (m == null || !m.name.EndsWith("_rift") || !m.IsKeywordEnabled("_EMISSION")) { Fail($"{c.Id} {piece.name}/{r.name} 발광 재질 아님 ({(m != null ? m.name : "null")})"); break; }
+                            if (m == null || !m.name.EndsWith("_rift") || m.shader == null || m.shader.name != "Saga/CelToon" || m.GetFloat("_RimStrength") < 1f) { Fail($"{c.Id} {piece.name}/{r.name} 잔해 툰·림 재질 아님 ({(m != null ? m.name : "null")})"); break; }
                     // 돌아도 밑면 그대로(세로축 회전).
                     builder.Follow(piece.position);
                     var saved = body.localRotation;

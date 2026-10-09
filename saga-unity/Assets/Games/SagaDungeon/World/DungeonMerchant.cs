@@ -75,6 +75,23 @@ namespace Saga.Dungeon.World
 
         private void BuildVisual()
         {
+            // U-0066 — 공용 좌판 모델(사가만리와 같은 market_stall_01). 없으면(로컬 묶음 없는 PC) 예전 상자 좌판.
+            var stall = WorldModels.Spawn("market_stall_01", transform, 1.6f);
+            if (stall != null) stall.name = "Visual";
+            else BuildBoxStall();
+
+            if (modelPrefab != null)
+            {
+                var keeper = new GameObject("Keeper").transform;
+                keeper.SetParent(transform, false);
+                keeper.localPosition = new Vector3(0f, 0f, -0.75f); // 좌판 뒤, 앞(+z)을 본다.
+                NpcIdle.SpawnRigged(modelPrefab, keeper, "Idle");
+            }
+            AttachKeeperGesture();
+        }
+
+        private void BuildBoxStall()
+        {
             var visual = GameObject.CreatePrimitive(PrimitiveType.Cube);
             visual.name = "Visual";
             visual.transform.SetParent(transform, false);
@@ -86,15 +103,6 @@ namespace Saga.Dungeon.World
             visual.GetComponent<MeshRenderer>().sharedMaterial = mat;
 
             Object.Destroy(visual.GetComponent<Collider>());
-
-            if (modelPrefab != null)
-            {
-                var keeper = new GameObject("Keeper").transform;
-                keeper.SetParent(transform, false);
-                keeper.localPosition = new Vector3(0f, 0f, -0.75f); // 좌판 뒤, 앞(+z)을 본다.
-                NpcIdle.SpawnRigged(modelPrefab, keeper, "Idle");
-            }
-            AttachKeeperGesture();
         }
 
         /// <summary>PLAN.md 109-10-7 몸짓 — 좌판 뒤 주인(씬에 구운 것도)에게. 다가서면 인사, 팔면 💰 흥정.</summary>
