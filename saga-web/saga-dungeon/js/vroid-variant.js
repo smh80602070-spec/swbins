@@ -67,18 +67,18 @@
     var D = global.DG && global.DG.data;
     if (!D || !D.heroes || !D.heroes.length) { return null; }
     var seen = {}, seen3 = {}, out = {}, i, k, p, key, h, base = 0, two;
-    for (i = 0; i < D.heroes.length; i++) { if (!D.heroes[i].realm) { base++; } }
+    for (i = 0; i < D.heroes.length; i++) { if (!D.heroes[i].realm && !D.heroes[i].late) { base++; } }   // W-0116 새 가상 인물(late)도 사본처럼 셈에서 뺀다
     two = base <= N * N;
     for (i = 0; i < D.heroes.length; i++) {
       h = D.heroes[i];
-      if (h.realm) { continue; }
+      if (h.realm || h.late) { continue; }
       k = 0;
       do { p = rawPick(pre + (k ? h.id + '#' + k : h.id)); key = p.hair + ',' + p.cloth + (two ? '' : ',' + p.eye); k++; } while (seen[key] && k < 400);
       seen[key] = 1; seen3[p.hair + ',' + p.cloth + ',' + p.eye] = 1; out[h.id] = p;
     }
     for (i = 0; i < D.heroes.length; i++) {
       h = D.heroes[i];
-      if (!h.realm) { continue; }
+      if (!h.realm && !h.late) { continue; }
       k = 0;
       do { p = rawPick(pre + (k ? h.id + '#' + k : h.id)); key = p.hair + ',' + p.cloth + ',' + p.eye; k++; } while (seen3[key] && k < 400);
       seen3[key] = 1; out[h.id] = p;

@@ -846,7 +846,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
     });
 
     t('RTS 턴 전투(W-0080) — 영웅 일격: 둘레 맨해튼 2 의 적 전부에 공격×(1+지력/100)×2, 쿨다운 3턴(턴 끝마다 1씩)', function () {
-      var T = DG.rts.tactics, s = tbField(), h = s.put('hero', 0, 67, 37, DG.rts.heroes.roster()[0].id);
+      var T = DG.rts.tactics, s = tbField(), h = s.put('hero', 0, 67, 37, DG.rts.heroes.roster().filter(function (x) { return !x.late; })[0].id);   /* W-0116 — 맨 앞이 새 인물(체력 낮음)이면 쿨다운 재는 사이 적 차례에 쓰러졌다 */
       var e1 = s.put('soldier', 1, 68, 37), e2 = s.put('soldier', 1, 67, 39), e3 = s.put('cavalry', 1, 67, 41);
       e1.hp = e2.hp = e3.hp = 999;
       var st = DG.rts.units.statOf(h), want = Math.round(st.atk * (1 + st.wis / 100) * 2), r = T.cast(s, h);

@@ -30,7 +30,7 @@
   function candidates() {
     var D = global.DG.data, out = [], i;
     for (i = 0; i < D.heroes.length; i++) {
-      if (D.heroes[i].rarity <= CAP_RARITY && !D.heroes[i].realm) { out.push(D.heroes[i]); }
+      if (D.heroes[i].rarity <= CAP_RARITY && !D.heroes[i].realm && !D.heroes[i].late) { out.push(D.heroes[i]); }
     }
     return out;
   }
