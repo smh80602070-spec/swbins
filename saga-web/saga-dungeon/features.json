@@ -784,5 +784,24 @@
   "ticket": "W-0102",
   "since": "2026-10-08",
   "note": "D2: saga-web/tools/playcheck/pw-dg-grace.mjs 3/3 — results/pw-dg-grace.json(W-0102). 실제로 쓰러져 카드 세 줄을 보고 「은총에서 다시」 단추를 실제 클릭. Claude 눈: 카드 ○(세 줄·단추 두 개 겹침 없음), 복귀 화면 ○(제3층 1/5 방)."
+ },
+ {
+  "id": "dg.bestiary",
+  "name": "👹 몬스터 도감 — 종별 처치 수·처음 잡은 층(우두머리·잡졸 4단계·다른 시대)",
+  "files": [
+   "js/bestiary.js",
+   "js/monster-portrait.js",
+   "src/ui/01.js",
+   "index.html"
+  ],
+  "tests": [
+   "몬스터 도감(W-0117) — dungeon:kill 을 들어 종별 처치 수·처음 층을 세고, 분신은 안 세고, 우두머리는 b:id 키, 시트 칸이 열린다"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0117",
+  "since": "2026-10-09",
+  "note": "D2: saga-web/tools/playcheck/pw-dex-look.mjs → shots/qc/saga-dungeon-dex.png(W-0117, 2D 판). 153 칸 중 처치 22 종이 열리고 몸 계열 초상 16·사람형은 이모지·×처치 수. Claude 눈 ○. 세이브 save.kills[종 키]={n,floor,at}(판 올림 없음), dungeon.js 무수정(사건만 들음)."
  }
 ]

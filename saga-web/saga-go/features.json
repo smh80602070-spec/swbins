@@ -670,5 +670,23 @@
   "ticket": "W-0101",
   "since": "2026-10-08",
   "note": "D2: saga-web/tools/playcheck/pw-go-close3.mjs 3/3 — results/pw-go-close3.json(2026-10-08). 고향 밖 900m: 둘레 흔적 표식 41·흔적 위로 가면 저절로 읽힘. 눈 shots/qc/saga-go-track.png ○(W-0113 뒤 — 산봉우리 가림을 카메라가 당겨 사람·흔적 표식이 보인다) · D1: 진단 6 PASS · QC 2D/3D 장면 PASS(2026-10-08). D2 는 흔적이 보이는 장면 눈 판정 뒤 — QC 장면은 고향 300m 안이라 흔적이 안 찍힌다(고향 밖 장면 필요)."
+ },
+ {
+  "id": "go.mount-dex",
+  "name": "도감 시트 🐎 탈것 칸(다섯 — 땅 셋·나는 것 둘)",
+  "files": [
+   "js/codex.js",
+   "js/mount.js",
+   "src/ui/01.js"
+  ],
+  "tests": [
+   "탈것 도감(W-0117) — 도감 시트에 탈것 다섯 칸, 얻음은 mount.isUnlocked(레벨 문턱·펫 등록), 합계에 탈것이 든다"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0117",
+  "since": "2026-10-09",
+  "note": "D2: saga-web/tools/playcheck/pw-dex-look.mjs → shots/qc/saga-go-dex.png(W-0117, 2D 판). 모험 레벨 22 로 열린 셋(농마·갈색 말·학)에 연결 펫 초상, 잠긴 둘은 ❔+문턱 레벨. Claude 눈 ○. 탈것 수는 dex()(인물+펫) 말고 rate()·stats().by.mount 에 따로 든다."
  }
 ]

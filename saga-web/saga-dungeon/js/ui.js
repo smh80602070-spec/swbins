@@ -595,7 +595,7 @@
   /* ── 시트 ─────────────────────────────────────────────── */
 
   var SHEET_TITLE = {
-    party: '⚔️ 부대', gear: '🎒 장비', craft: '🔨 세공', skill: '📜 무예', vendor: '\uD83E\uDDFA 행상', dex: '📖 도감', log: '📜 기록', world: '🗺️ 월드맵',
+    party: '⚔️ 부대', gear: '🎒 장비', craft: '🔨 세공', skill: '📜 무예', vendor: '\uD83E\uDDFA 행상', dex: '📖 도감', beast: '👹 몬스터 도감', log: '📜 기록', world: '🗺️ 월드맵',
     quest: '🚩 퀘스트', look: '🧑 외모', keys: '⌨️ 키설정', settings: '⚙️ 설정'
   };
 
@@ -716,7 +716,7 @@
           : openTab === 'craft' ? viewCraft()
           : openTab === 'vendor' ? viewVendor()
           : openTab === 'skill' ? viewSkill()
-          : openTab === 'dex' ? viewDex()
+          : openTab === 'dex' ? viewDex() : openTab === 'beast' ? (global.DG.bestiary ? global.DG.bestiary.view(esc) : '')
           : openTab === 'world' ? viewWorldMap()
           : openTab === 'quest' ? viewQuest()
           : openTab === 'look' ? viewLook()

@@ -150,6 +150,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/vendor.js"></script>
 <script src="js/forge.js"></script>
 <script src="js/quest.js"></script>
+<script src="js/bestiary.js"></script>
 <script src="js/goals.js"></script>
 <script src="js/grace.js"></script>
 <script src="js/scenario.js"></script>
@@ -8166,6 +8167,19 @@ window.requestAnimationFrame = function () { return 0; };
         M.actT('_st', 0);
       } finally { Date.now = keepNow; }
       return r[0] === 0 && r[1] === 0.2 && r[2] === '0.05' && ('새 몸짓 ' + r.join(',')) || '실패 ' + r.join(',');
+    });
+
+    t('몬스터 도감(W-0117) — dungeon:kill 을 들어 종별 처치 수·처음 층을 세고, 분신은 안 세고, 우두머리는 b:id 키, 시트 칸이 열린다', function () {
+      var B = DG.bestiary, ED = DG.enemyData, keep = C.save.kills, r;
+      C.save.kills = {};
+      try {
+        var mob = ED.enemies[0], boss = ED.bosses[0];
+        C.emit('dungeon:kill', { e: { ref: mob }, floor: 3 }); C.emit('dungeon:kill', { e: { ref: mob }, floor: 7 });
+        C.emit('dungeon:kill', { e: { ref: mob, shade: true }, floor: 9 }); C.emit('dungeon:kill', { e: { ref: boss, boss: true }, floor: 0 });
+        var a = C.save.kills[mob.name], b = C.save.kills['b:' + boss.id], t = B.tally(), v = B.view(function (x) { return String(x); });
+        r = [a && a.n, a && a.floor, b && b.n, t.seen, t.kills, t.total > 100, v.indexOf('×2') >= 0, v.indexOf('???') >= 0];
+      } finally { C.save.kills = keep; }
+      return r.join(',') === '2,3,1,2,3,true,true,true' && ('종 ' + r.join(',')) || '실패 ' + r.join(',');
     });
 
     t('런타임 에러 없음', function () {

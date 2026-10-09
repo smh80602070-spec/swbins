@@ -4561,7 +4561,8 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       CX.discover('beast', 'wolf');
       var r1 = CX.rate();
       CX.clear();
-      return r1.seen === r0.seen + 2 && r1.total === r0.total &&
+      /* W-0117 탈것은 레벨 문턱이라 발견 보상 경험치로 하나 더 열릴 수 있다 — 그 몫은 빼고 잰다 */
+      return r1.seen - r1.mount.seen === r0.seen - r0.mount.seen + 2 && r1.total === r0.total &&
         r0.total > EV.EVENTS.length && r0.dex.total > 100 &&
         ('분모 ' + r0.total + '(그중 인물·짐승 도감 ' + r0.dex.total + ') · 둘 찍으니 ' +
          r0.seen + ' → ' + r1.seen);
@@ -16288,6 +16289,20 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var none = M.sheet8('vroid:__없는_인물__') === null && M.sheet8('villager_a') === null;
       return dirs === '0,1,2,3,4,3m,2m,1m,2m,4' && roles === 'attack2/attack,heavy/attack,knockdown/death,idle/idle' && none &&
         ('8쪽 행 표 · 역할 8/3행 폴백 · 표 밖은 3행') || '실패 ' + dirs + ' | ' + roles + ' | ' + none;
+    });
+
+    t('탈것 도감(W-0117) — 도감 시트에 탈것 다섯 칸, 얻음은 mount.isUnlocked(레벨 문턱·펫 등록), 합계에 탈것이 든다', function () {
+      var X = DG.codex, M = DG.mount, P = C.save.player, keepLv = P.level, keepPets = C.save.dex.pets, r;
+      try {
+        P.level = 1; C.save.dex.pets = {};
+        var r0 = X.mounts().filter(function (x) { return x.have; }).length;
+        P.level = 20; C.save.dex.pets = { pt_cheongryong: { count: 1 } };
+        var d0 = X.dex(), rows = X.mounts(), got = rows.filter(function (x) { return x.have; }).map(function (x) { return x.m.id; }).join('|');
+        var v = X.mountView(function (x) { return String(x); }, function () { return '<img class="pt">'; });
+        r = [rows.length, r0, got, rows.every(function (x) { return !!x.pet; }), d0.total === D.heroes.length + D.pets.length && X.rate().mount.total === M.MOUNTS.length && X.stats().by.mount === '4/5',
+             (v.match(/class="dcell/g) || []).length, v.indexOf('4 / 5') >= 0, v.indexOf('Lv.30') >= 0];
+      } finally { P.level = keepLv; C.save.dex.pets = keepPets; }
+      return r.join(',') === '5,0,mt_farm|mt_brown|mt_crane|mt_dragon,true,true,5,true,true' && ('탈것 ' + r.join(',')) || '실패 ' + r.join(',');
     });
 
     t('런타임 에러 없음', function () {

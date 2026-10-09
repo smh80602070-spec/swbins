@@ -201,7 +201,9 @@
     for (i = 0; i < ts.length; i++) { seen += ts[i].seen; total += ts[i].total; }
     var d = dex();
     seen += d.seen; total += d.total;
-    return { seen: seen, total: total, pct: total ? Math.round(seen / total * 100) : 0, dex: d };
+    var ms = mounts(), mt = { seen: ms.filter(function (x) { return x.have; }).length, total: ms.length };   // W-0117 탈것
+    seen += mt.seen; total += mt.total;
+    return { seen: seen, total: total, pct: total ? Math.round(seen / total * 100) : 0, dex: d, mount: mt };
   }
 
   /** 기존 도감(인물·짐승) — 여기서 만들지 않고 세기만 한다 */
@@ -213,6 +215,34 @@
     if (save.pets) { n += Object.keys(save.pets).length; }
     var total = D ? (D.heroes.length + D.pets.length) : 0;
     return { seen: Math.min(n, total), total: total };
+  }
+
+  /* ── 탈것 칸(W-0117) ─────────────────────────────────
+   * 표는 `mount.js` 의 `MOUNTS` 가 유일한 소유자 — 여기는 읽기만 한다. 얻음 = `mount.isUnlocked`
+   * (레벨 문턱이나 그 말을 도감에 등록). 초상은 연결 펫(`pet`)의 초상을 그대로 쓴다(새 그림 없음). */
+  function mounts() {
+    var M = global.DG.mount, D = global.DG.data;
+    if (!M || !M.MOUNTS || !M.on()) { return []; }
+    return M.MOUNTS.map(function (m) { return { m: m, pet: D ? D.find(m.pet) : null, have: M.isUnlocked(m) }; });
+  }
+
+  /** 도감 시트의 탈것 칸 — ui 의 `esc`·`pt`(초상) 를 받아 쓴다. 칸은 인물·펫과 같은 `dexgrid`/`dcell` */
+  function mountView(esc, pt) {
+    var rows = mounts(), have = rows.filter(function (r) { return r.have; }).length, out = '';
+    if (!rows.length) { return ''; }
+    rows.forEach(function (r) {
+      var m = r.m, sp = m.kind === 'fly' ? '걸음 ×' + m.mul + ' · 날면 ×' + m.fly : '걸음 ×' + m.mul;
+      var face = r.have ? (r.pet && pt ? pt('pet', r.pet, 52) : (m.kind === 'fly' ? '🦅' : '🐎')) : '❔';
+      out += '<div class="dcell' + (r.have ? '' : ' locked') + '" title="' +
+        esc(m.name + ' · ' + (m.kind === 'fly' ? '나는 탈것' : '땅 탈것') + ' · ' + sp + ' — ' + m.desc +
+          (r.have ? '' : ' (모험 레벨 ' + m.lv + ' 또는 그 짐승을 도감에 등록하면 열림)')) + '">' +
+        '<span class="de' + (r.have ? '' : ' locked-mark') + '">' + face + '</span>' +
+        '<small>' + (r.have ? esc(m.name) : 'Lv.' + m.lv) + '</small>' +
+        (m.kind === 'fly' ? '<i class="cnt">🦅</i>' : '') + '</div>';
+    });
+    return '<div class="sec"><h4>🐎 탈것</h4><div class="dexbar"><div class="bar"><i style="width:' +
+      (have / rows.length * 100) + '%"></i></div><small>' + have + ' / ' + rows.length + '</small></div>' +
+      '<div class="dexgrid">' + out + '</div></div>';
   }
 
   /* ── 지나가며 도장을 찍는다 ──────────────────────────
@@ -262,6 +292,7 @@
     var by = {};
     all().forEach(function (t) { by[t.key] = t.seen + '/' + t.total; });
     by.dex = r.dex.seen + '/' + r.dex.total;
+    by.mount = r.mount.seen + '/' + r.mount.total;
     return { on: on(), pct: r.pct, seen: r.seen, total: r.total, by: by };
   }
 
@@ -269,7 +300,7 @@
   global.DG.codex = {
     KINDS: KINDS,
     on: on, kindOf: kindOf, has: has, discover: discover, nameOf: nameOf, rewardOf: rewardOf,
-    tally: tally, all: all, rate: rate, dex: dex,
+    tally: tally, all: all, rate: rate, dex: dex, mounts: mounts, mountView: mountView,
     tick: tick, stats: stats,
     /** 도장을 다 지운다 (진단이 제 뒤를 치울 때) */
     clear: function () { core.save.codex = {}; return true; }

@@ -979,7 +979,7 @@
              dexGrid(data.heroes, core.save.dex.heroes) + '</div>' +
            (mem.length ? '<div class="sec"><h4>📖 이야기 동료</h4>' + dexGrid(mem, core.save.dex.heroes) + '</div>' : '') +
            '<div class="sec"><h4>펫</h4>' + dexBar(pC, data.pets.length) +
-             dexGrid(data.pets, core.save.dex.pets) + '</div>' +
+             dexGrid(data.pets, core.save.dex.pets) + '</div>' + (global.DG.codex && global.DG.codex.mountView ? global.DG.codex.mountView(esc, pt) : '') +   // W-0117 탈것 칸
            '<div class="hint">카드를 누르면 열전·승급·펫 장착 화면이 열립니다. ' +
            '같은 인물을 또 등용하면 <b>중복(+n)</b>이 쌓여 승급 재료가 됩니다.</div>';
   }
