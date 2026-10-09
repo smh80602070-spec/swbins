@@ -1,7 +1,8 @@
 extends Node3D
 
 ## 2026-09-30 탈것 — GO 플레이어(go_player.gd)의 자식. 데이터는 data/mounts.gd.
-##   V  마지막에 쓴 탈것 타기/내리기    B  다음 탈것으로 바꿔 타기    (터치 화면이면 단추도 — _build_touch)
+##   [  마지막에 쓴 탈것 타기/내리기    ]  다음 탈것으로 바꿔 타기    (사가나락은 - · =, 터치 화면이면 단추도 — _build_touch)
+## G-0119 — 예전 V·B 는 사가나락 기술 4·5, 사가종횡 직업 기술, 사가만리 시야·가방과 겹쳐 한 번에 둘 다 일어났다(사용자 10-09 결정).
 ## 타는 동안: 땅 탈것은 달리기 배율·스태미나 안 씀·점프 배율·등반 못 함, 나는 탈것은 떠올라 난다(go_player Mode.FLY).
 ## 전투는 못 한다 — 공격(combat_quick)을 누르면 내린다. 깊은 물에 들면 내린다.
 ## 몸은 신수 모습(CreatureBuilder.build_pet)을 그대로 쓴다(따로 탈것 그림을 만들지 않는다).
@@ -22,6 +23,9 @@ const ATTACK_ACTIONS := ["combat_quick", "dungeon_attack"]
 const CONFIG_PATH := "user://mount.cfg"
 const MODE_SWIM := 4  # go_player.gd Mode enum 값 (GROUND0 AIR1 GLIDE2 CLIMB3 SWIM4 MANTLE5 FLY6)
 const MODE_FLY := 6
+## 판별 탈것 키 [타기/내리기, 다음 탈것] — 판마다 빈 키(사가나락은 글자·숫자·[ ] 를 다 써서 - =).
+const KEYS := {"saga_dungeon": [KEY_MINUS, KEY_EQUAL]}
+const KEYS_DEFAULT := [KEY_BRACKETLEFT, KEY_BRACKETRIGHT]
 
 var current := ""            # 타고 있는 탈것 id("" = 안 탐)
 var last_id := ""            # 마지막에 쓴 탈것
@@ -34,14 +38,31 @@ var _t := 0.0
 func _ready() -> void:
 	_player = get_parent() as CharacterBody3D
 	name = "Mount"
-	_ensure_action("go_mount", KEY_V)
-	_ensure_action("go_mount_next", KEY_B)
+	var keys: Array = keys_for(_game_path())
+	_ensure_action("go_mount", keys[0])
+	_ensure_action("go_mount_next", keys[1])
 	## 마지막에 쓴 탈것은 설치마다 기억한다(세이브 밖 — 세이브 스키마를 건드리지 않는다).
 	var cf := ConfigFile.new()
 	if cf.load(CONFIG_PATH) == OK:
 		last_id = String(cf.get_value("mount", "last", ""))
 	if DisplayServer.is_touchscreen_available():
 		_build_touch()
+
+## 씬 경로(games/saga_* 를 담은)로 그 판의 탈것 키.
+static func keys_for(scene_path: String) -> Array:
+	for g in KEYS:
+		if scene_path.contains("/games/%s/" % g):
+			return KEYS[g]
+	return KEYS_DEFAULT
+
+## 어느 판인지 — 조상 가운데 씬 파일 경로가 games/saga_* 인 첫 노드(플레이어 씬 자신 또는 판 씬). 점검 호스트처럼 current_scene 이 다른 씬이어도 맞는다.
+func _game_path() -> String:
+	var n: Node = self
+	while n != null:
+		if n.scene_file_path.contains("/games/saga_"):
+			return n.scene_file_path
+		n = n.get_parent()
+	return ""
 
 static func _ensure_action(action: String, key: Key) -> void:
 	if InputMap.has_action(action):
@@ -107,14 +128,7 @@ func owned() -> Array:
 ## 판마다 진행을 이야기 장(mounts.gd req_ch 2·5·8·10·16·26)에 맞춘 값으로 — 사가나락: 클리어한 방 수 ×4(7방이면 28),
 ## 사가마을: 끝낸 주민 부탁 ×5(6이면 30), 사가종횡: 끝낸 본편 사명 ×2(13이면 26). 그 밖의 곳은 전부 열림.
 func game_progress() -> int:
-	## 어느 판인지는 조상 가운데 씬 파일 경로가 games/saga_* 인 첫 노드(플레이어 씬 자신 또는 판 씬)로 — 점검 호스트처럼 current_scene 이 다른 씬이어도 맞는다.
-	var sp := ""
-	var n: Node = self
-	while n != null:
-		if n.scene_file_path.contains("/games/saga_"):
-			sp = n.scene_file_path
-			break
-		n = n.get_parent()
+	var sp := _game_path()
 	if sp.contains("saga_dungeon"):
 		return DungeonSaveState.rooms_cleared.count(true) * 4
 	if sp.contains("saga_forest"):

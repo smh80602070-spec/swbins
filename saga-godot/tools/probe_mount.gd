@@ -18,6 +18,35 @@ var _v_walk := 0.0
 var _y_peak := 0.0
 var _s0 := 0.0
 
+## G-0119 — 판마다 탈것 키(Mount.keys_for)가 그 판에서 쓰는 다른 동작의 키와 안 겹치는가. 판 동작 = 그 판 접두(dungeon_·story_·forest_) + 공용(접두 없는 것).
+## InputMap 에는 project.godot 동작과 지금 판(GO) 코드가 단 동작이 같이 있다. 겹치면 "판:동작" 목록.
+func _key_clashes() -> Array:
+	var MountScript: Script = load("res://saga_core/player/mount.gd")
+	var prefixes := {"saga_go": "", "saga_forest": "forest_", "saga_story": "story_", "saga_dungeon": "dungeon_"}
+	var others := ["dungeon_", "story_", "forest_", "realm_", "ui_"]
+	var out: Array = []
+	for g in prefixes:
+		var keys: Array = MountScript.keys_for("res://games/%s/x.tscn" % g)
+		for action in InputMap.get_actions():
+			var a := String(action)
+			if a.begins_with("go_mount"):
+				continue
+			var own: String = prefixes[g]
+			var foreign := false
+			for p in others:
+				if a.begins_with(p) and p != own:
+					foreign = true
+			if foreign or (g != "saga_go" and a.begins_with("go_")):
+				continue
+			for ev in InputMap.action_get_events(action):
+				if ev is InputEventKey:
+					var k := ev as InputEventKey
+					var code: int = k.physical_keycode if k.physical_keycode != KEY_NONE else k.keycode
+					if code in keys:
+						out.append("%s:%s" % [g, a])
+	return out
+
+
 func _ready() -> void:
 	_p = get_tree().get_first_node_in_group("player")
 
@@ -31,6 +60,7 @@ func _physics_process(_delta: float) -> void:
 				_check("locked_ch0", Mounts.unlocked(0).is_empty() or OS.get_environment("SAGA_MOUNT_ALL") != "", str(Mounts.unlocked(0)))
 				_check("locked_ch2", Mounts.unlocked(2).has("pt_jeolyeong") and not Mounts.unlocked(2).has("pt_samjogo") or OS.get_environment("SAGA_MOUNT_ALL") != "", str(Mounts.unlocked(2)))
 				_check("locked_ch26", Mounts.unlocked(26).has("pt_cheongryong"), "")
+				_check("key_clash", _key_clashes().is_empty(), str(_key_clashes()))
 				_m.call("_build_touch") # 터치 화면이 아니라 안 만들어지므로 직접 — 단추 둘이 생기는지
 				_check("touch_buttons", _m.find_child("MountButton", true, false) != null and _m.find_child("MountDownButton", true, false) != null, "")
 				_teleport(TestMap.world_pos(5, 4) + Vector3(0, 1.0, 0))

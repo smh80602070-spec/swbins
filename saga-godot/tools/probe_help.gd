@@ -99,7 +99,7 @@ func _run() -> void:
 			wrong.append(String(pr[0]))
 	## G-0118 — 키는 줄의 키 칸에서만 찾는다(예전엔 글 전체 부분 문자열이라 F1 줄 설명의 "H·Z·P·I·T·N" 만으로 통과했다).
 	var txt := _key_cells()
-	var mention := ["Shift", "Space", "J", "E · K", "F1", "I", "T", "N", "V", "M", "C", "G", "U", "O", "Y", "F", "H", "Z", "P"]
+	var mention := ["Shift", "Space", "J", "E · K", "F1", "I", "T", "N", "[", "]", "M", "C", "G", "U", "O", "Y", "F", "H", "Z", "P"]
 	var missing: Array = []
 	for m in mention:
 		if not txt.has(String(m)):
