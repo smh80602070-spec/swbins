@@ -9,23 +9,22 @@
 - 규칙·방향·함정: `SAGA-HANDOFF.md`(≤80KB) · 이력: `archive/SAGA-HISTORY.md`(grep 으로만, "토큰" 절)
 - 도구: `tools/README.md` · `git commit` 때 훅이 `tools/precheck.sh` 를 돌린다(막히면 원인을 고친다)
 
-## 다섯 판 — 완전히 별개인 프로젝트
+## 다섯 판 — 별개 프로젝트 (부르는 이름 = **번호+두 글자** 1만리·2나락·3마을·4종횡·5천하, 10-10 — 폴더·세이브 키·id 그대로, 옛 글 안 고침)
 
 | 게임 | 폴더 | 포트 | 원작 | 세이브 키 |
 |---|---|---|---|---|
-| 사가만리 | `saga-web/saga-go` | 8791 | 포켓몬GO | `deungyong-go/save/<프로필>` |
-| 사가나락 | `saga-web/saga-dungeon` | 8792 | 디아블로 | `yeoksa-dungeon/save/<프로필>` |
-| 사가마을 | `saga-web/saga-forest` | 8793 | 동물의숲 | `yeoksa-village/save/<프로필>` |
-| 사가종횡 | `saga-web/saga-story` | 8794 | 메이플스토리 | `yeoksa-side/save/<프로필>` |
-| 사가천하 | `saga-web/saga-realm` | 8795 | 코에이 삼국지 | `saga-realm/save/<프로필>` |
+| 1만리 | `saga-web/saga-go` | 8791 | 포켓몬GO | `deungyong-go/save/<프로필>` |
+| 2나락 | `saga-web/saga-dungeon` | 8792 | 디아블로 | `yeoksa-dungeon/save/<프로필>` |
+| 3마을 | `saga-web/saga-forest` | 8793 | 동물의숲 | `yeoksa-village/save/<프로필>` |
+| 4종횡 | `saga-web/saga-story` | 8794 | 메이플스토리 | `yeoksa-side/save/<프로필>` |
+| 5천하 | `saga-web/saga-realm` | 8795 | 코에이 삼국지 | `saga-realm/save/<프로필>` |
 
 - 세이브 키·앱 id 는 폴더 이름과 **다르다**. 맞추려고 바꾸면 진행이 사라진다.
-- `data.js`·`sprite.js`·`core.js`·`hero.js` 는 다섯 벌 복사본이다. 합치자고 제안하지 않는다.
-  도감(`data.js`)을 고치면 **다섯 벌 함께** 고치고 md5 로 같은지 확인한다.
+- `data.js`·`sprite.js`·`core.js`·`hero.js` 는 다섯 벌 복사본(합치자고 안 함). 도감(`data.js`)은 **다섯 벌 함께** 고치고 md5 확인.
 
 ## 어디서 도는가
 
-- 로컬: 각 폴더 `run.bat`(브라우저 열림) · `start_server.bat`(허브용) · 사가만리 폰용 `run-phone.bat`(HTTPS)
+- 로컬: 각 폴더 `run.bat`(브라우저 열림) · `start_server.bat`(허브) · 1만리 폰 `run-phone.bat`(HTTPS)
 - 제작 도구: `saga-web/tools/run-tools.bat`(편집기·엔진 :8799~8801)
 - 공개: <https://smh80602070-spec.github.io/swbins/saga-web/saga-go/> 식 하위 경로(GitHub Pages)
 
@@ -44,11 +43,10 @@
 
 - 세이브 키·앱 id·도감 펫 `id` 바꾸기(표시 `name` 만 바꿀 수 있다)
 - **이름 정책(다섯 판·3D 공통)**: 원작 인물·장수·펫·시리즈·실존 역사 인물의 실명을 표시 글자에 쓰지 않는다.
-  가명은 임의로 정하고, id·세이브 키는 안 건드린다. `HEROES` 의 `name`·`hanja` 뿐 아니라
-  `BIOS`·`PETS` 의 `desc` 도 "표시 글자"다. 새 인물·괴물도 실명 금지.
+  가명은 임의, id·세이브 키는 안 건드림. `HEROES` 의 `name`·`hanja`·`BIOS`·`PETS` 의 `desc` 도 "표시 글자". 새 인물·괴물도 실명 금지.
 - 원작 개체값(IV)·CP 도입 — 이 판의 펫은 개체가 아니라 **종**
 - 경영·문답을 `saga-realm` 밖으로 퍼뜨리기
-- 사가마을 구면 투영을 평평한 탑다운으로 되돌리기(집 안만 일부러 안 휜다)
+- 3마을 구면 투영을 평평한 탑다운으로 되돌리기(집 안만 안 휜다)
 - 원작사의 실제 에셋(그림·소리·데이터) 넣기 — 문법만 따른다. 그림은 CC0·코드·상업 허용 로컬 AI(`tools/ai-art`, §7.4)
 
 ## 검증
