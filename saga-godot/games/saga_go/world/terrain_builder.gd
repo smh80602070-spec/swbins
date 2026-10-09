@@ -144,6 +144,8 @@ const WATER_LAYER := 4
 ## 경계 색 섞기(EDGE_BLEND_MARGIN)는 u,v 비율로 계산해 조각 수와 무관하다.
 const SUB := 8
 const EDGE_BLEND_MARGIN := 0.34
+## G-0135 — 색 모서리 섞기에서 뺄 물 칸(색이 강바닥 흙이라 둑 풀밭에 번진다).
+const WATER_CHARS := ["~", "B"]
 
 ## 09-28 0.5,0.48,0.45 → 따뜻한 황갈색 — 회색 돌 텍스처와 곱해져 절벽이 잿빛 벽으로 보였다(창 모드 촬영).
 const CLIFF_COLOR := Color(0.62, 0.53, 0.42)
@@ -179,12 +181,23 @@ const RELIEF_FLAT := [".", "T", "F", "="]
 const RELIEF_BASE := 0.05
 const RELIEF_REGIONS := ["village", "ruins", "frost", "skyport", "crossing", "sunken", "amber", "vault", "fork"]
 
+## G-0136 — 이 지역에 흙길 띠(road_builder.gd)를 얹으면 길(=) 칸 바닥은 들판(.) 빛으로 칠한다.
+var _roads := false
+
 func _ready() -> void:
+	var road_builder: Script = load("res://games/saga_go/world/road_builder.gd")   # 서로 preload 하면 순환이라 여기서 읽는다
+	_roads = road_builder.call("wants", region_id)
 	_build()
+	if _roads:
+		road_builder.call("build", self, region_id)
 	_build_water()
 	_build_collision()
 	_build_cliff_rocks()
 	_build_border()
+
+## G-0136 — 지형 정점색에 쓸 글자(흙길 띠가 있으면 길 칸은 들판빛). 표시(눈·모래)·지도 색은 이 함수를 안 거친다.
+func _paint_ch(ch: String) -> String:
+	return "." if _roads and ch == "=" else ch
 
 # ---------------------------------------------------------------- 높이 API
 
@@ -376,11 +389,12 @@ func _build() -> void:
 			if not LEGEND.has(ch):
 				push_warning("terrain_builder: 모르는 지형 글자 '%s'" % ch)
 				continue
-			var own_color: Color = color_of(region_id, ch)
-			var col00 := _corner_color(rows, x, y)
-			var col10 := _corner_color(rows, x + 1, y)
-			var col01 := _corner_color(rows, x, y + 1)
-			var col11 := _corner_color(rows, x + 1, y + 1)
+			var own_color: Color = color_of(region_id, _paint_ch(ch))
+			var dry := not WATER_CHARS.has(ch)
+			var col00 := _corner_color(rows, x, y, false, dry, own_color)
+			var col10 := _corner_color(rows, x + 1, y, false, dry, own_color)
+			var col01 := _corner_color(rows, x, y + 1, false, dry, own_color)
+			var col11 := _corner_color(rows, x + 1, y + 1, false, dry, own_color)
 			var surf := [surface_of(region_id, ch), _corner_color(rows, x, y, true), _corner_color(rows, x + 1, y, true),
 				_corner_color(rows, x, y + 1, true), _corner_color(rows, x + 1, y + 1, true)]
 			_add_tile_quads(st, x, y, own_color, col00, col10, col01, col11, surf)
@@ -576,7 +590,9 @@ func _tile_vertex_color(own: Color, c00: Color, c10: Color, c01: Color, c11: Col
 	return own.lerp(corner_blend, t)
 
 ## 격자 교차점(cx, cy)에 맞닿은 칸(최대 4개)의 색을 평균낸다. surface 면 색 대신 눈·얼음 표시를.
-func _corner_color(rows: Array, cx: int, cy: int, surface := false) -> Color:
+## G-0135 — skip_water 면 물 칸(~·B, 색 = 강바닥 흙)을 빼고 평균(남는 칸이 없으면 fallback). 물이 아닌 칸의 색 모서리용 —
+## 예전엔 강바닥 흙색이 둑 쪽 풀밭에 칸의 34%(약 16m)까지 진흙빛으로 번졌다.
+func _corner_color(rows: Array, cx: int, cy: int, surface := false, skip_water := false, fallback := Color(0, 0, 0)) -> Color:
 	var total := Color(0, 0, 0, 0)
 	var n := 0
 	for dy in [-1, 0]:
@@ -589,12 +605,12 @@ func _corner_color(rows: Array, cx: int, cy: int, surface := false) -> Color:
 			if tx < 0 or tx >= row.length():
 				continue
 			var ch: String = row[tx]
-			if not LEGEND.has(ch):
+			if not LEGEND.has(ch) or (skip_water and WATER_CHARS.has(ch)):
 				continue
-			total += surface_of(region_id, ch) if surface else color_of(region_id, ch)
+			total += surface_of(region_id, ch) if surface else color_of(region_id, _paint_ch(ch))
 			n += 1
 	if n == 0:
-		return Color(0, 0, 0)
+		return fallback
 	return total / float(n)
 
 # ---------------------------------------------------------------- 물

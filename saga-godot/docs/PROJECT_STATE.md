@@ -22,7 +22,7 @@
 - 10-09 닫음(줄거리는 `tasks/godot/done/` 티켓 메모가 정본): G-0116 먼 윤곽선 끄기(효과 0 — 모바일 렌더러에서 next_pass 윤곽선은 draw call 안 씀, 되돌림) · G-0117 천하 7막(시간 틈 아홉 `saga_core/data/time_folk.gd`) · G-0118 소넷 5.5 구간 감사(시트 `tasks/sheets/godot-sonnet-audit-20261009.md`) · G-0119 탈것 키 `[` `]`(사가나락 `-` `=`) · G-0120 네 판 세이브 점검 진짜 save()/try_load() · G-0121 saga_core 가 판 autoload 를 안 부르게(check_refs 검사) · G-0122 평탄 자리 Vector2i · G-0123 하늘 밤 경계 4·21시·알 굴림 횟수·mount_host 창 치움 · G-0124 이동 프리셋 1 기본 · G-0125 마을 예산 = 지역 평균 draw ≤260(probe_perf `PERF_PROBE_DONE`) · G-0126 천하 1~5막 시간 틈 사람 직접 등용 · G-0127 서리봉 새파란 그림자(고원 안에서만 주변광 하늘 몫 0.5)·눈송이 번짐 · G-0128 눈밭 결.
 - 큐 빔. 사용자 상위 방향 = **그래픽 먼저, 고칠 때마다 같은 시간대 전후 촬영**(기준 네 컷 `tools/shot_baseline.sh`, 비교 `tools/shot_diff.mjs`). 날씨가 3시간 칸·고원 눈보라로 바뀌니 전후는 연달아 찍는다.
 - 이 PC Godot = WinGet Packages `Godot_v4.7.2-stable_win64_console.exe`. 전체 점검 `tools/probe_all.sh` 155개(마지막 10-09: perf·story9 말고 0 — story9 는 촬영과 동시 실행 때만 흔들림, 혼자 0). 러너가 도는 중엔 probe_all.sh 를 고치지 말 것.
-- 함정: 사가마을·나락 씬을 헤드리스로 띄우면 첫 안내·대화 창(ui_modal)이 연달아 떠 멈춤 — 점검은 매 프레임 창을 치울 것 · 공용 주변광(environment_profile)을 바꾸면 신상·절벽 그늘 입체감이 날아감 — 지역 안에서만 · forward_plus 로 화면 밖 촬영 시 SDFGI 검은 조각.
+- 함정: 사가마을·나락 씬을 헤드리스로 띄우면 첫 안내·대화 창(ui_modal)이 연달아 떠 멈춤 — 점검은 매 프레임 창을 치울 것 · 공용 주변광(environment_profile)에 밝은 색을 섞으면 신상·절벽 그늘 입체감이 날아감(G-0127) — 섞을 땐 하늘 밝기 쯤 중간 회색으로 채도만(G-0133) · forward_plus 로 화면 밖 촬영 시 SDFGI 검은 조각.
 
 ## 다음 작업 (우선순위)
 

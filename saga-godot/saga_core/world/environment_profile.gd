@@ -56,6 +56,10 @@ func _pick_environment() -> void:
 	env.adjustment_saturation = 1.22
 	env.adjustment_contrast = 1.08
 	env.ambient_light_energy = 1.15
+	## G-0133 — 그늘 속이 하늘빛 100% 라 회색 돌·건물 옆면이 새파랬다. 하늘과 밝기가 비슷한 중간 회색을 섞어 채도만 뺀다
+	## (G-0127 은 밝은 회청을 섞어 그늘이 떠 신상·절벽 입체감이 날아갔다 — 밝기는 그대로 둘 것).
+	env.ambient_light_sky_contribution = 0.65
+	env.ambient_light_color = Color(0.58, 0.6, 0.64)
 	env.ssao_intensity = 1.2
 	env.glow_intensity = 0.35
 	env.fog_sky_affect = 0.35   # 안개가 하늘까지 덮으면 하늘이 허옇게 바랬다 — 하늘은 하늘빛 그대로
