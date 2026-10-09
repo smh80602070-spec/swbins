@@ -20,8 +20,8 @@ const CHUNK_M := 16.0
 const SPACING_M := 1.35          # 덤불 간격(흔든 격자)
 const JITTER_M := 5.0            # 칸 경계 들쭉날쭉
 ## [가까운 잎 수, 먼 잎 수, 반경 m, 가까운 반경 m]
-const PROFILE_PC := [14, 7, 40.0, 20.0]
-const PROFILE_MOBILE := [6, 3, 26.0, 13.0]
+const PROFILE_PC := [11, 6, 40.0, 20.0]   # G-0142 잎이 세 마디(5 세모)가 돼 14 → 11장(세모 42 → 55)
+const PROFILE_MOBILE := [5, 3, 26.0, 13.0]
 const BUILDS_PER_FRAME := 2
 
 var _radius := 40.0
@@ -186,34 +186,63 @@ func _measure(key: Vector2i) -> Array:
 	return [xforms, cols]
 
 
-## 덤불 하나 = 잎 n 장(잎마다 5 정점·3 삼각형, 밑동이 넓고 끝이 뾰족, 살짝 휜다). 먼 덤불은 같은 씨앗의 앞 n 장이라 모양이 이어진다.
+## 덤불 하나 = 잎 n 장. G-0142 — 잎마다 세 마디(5 삼각형): 밑동에서 끝으로 가늘어지고, 위로 갈수록 한쪽으로 휘어 처진다(사실적 들풀).
+## 법선 = 잎 면(휜 방향 반영) — 셰이더가 위쪽과 섞어 포기가 둥글게 빛을 받고, 해가 잎 뒤면 끝이 비친다.
+## UV.x = 잎 가로(−1 왼 가장자리 ~ 1 오른), UV.y = 밑동 0 → 끝 1, UV2.x = 잎마다 난수(색 흔들기).
+## 먼 덤불은 같은 씨앗의 앞 n 장이라 모양이 이어진다.
+const SEGS := 3
 static func _clump_mesh(n: int) -> ArrayMesh:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	for i in n:
 		var a := _hash(i, 0, 11) * TAU
-		var r := sqrt(_hash(i, 0, 12)) * 0.65
+		var r := sqrt(_hash(i, 0, 12)) * 0.6
 		var o := Vector3(cos(a) * r, 0.0, sin(a) * r)
 		var face := _hash(i, 0, 13) * TAU
 		var side := Vector3(cos(face), 0.0, sin(face))
-		var lean := Vector3(-side.z, 0.0, side.x) * (_hash(i, 0, 14) - 0.5) * 0.5
-		var h := (0.34 + _hash(i, 0, 15) * 0.34) * 0.72
-		var w := 0.03 + _hash(i, 0, 16) * 0.02
+		var fwd := Vector3(-side.z, 0.0, side.x)              # 잎 면이 보는 쪽 = 휘는 쪽
+		var bend := 0.15 + _hash(i, 0, 14) * 0.45            # 끝이 앞으로 처지는 정도(키 배수)
+		var h := (0.4 + _hash(i, 0, 15) * 0.45) * 0.72
+		var w := 0.034 + _hash(i, 0, 16) * 0.022   # 0.022~0.038 은 너무 가늘어 들판이 성겨 보였다
 		var shade := 0.8 + _hash(i, 0, 17) * 0.2
 		var col := Color(shade, shade, shade * (0.92 + _hash(i, 0, 18) * 0.08))
-		var b0 := o - side * w
-		var b1 := o + side * w
-		var m0 := o - side * w * 0.65 + Vector3(0, h * 0.5, 0) + lean * 0.3
-		var m1 := o + side * w * 0.65 + Vector3(0, h * 0.5, 0) + lean * 0.3
-		var tip := o + Vector3(0, h, 0) + lean
-		var verts := [[b0, 0.0], [b1, 0.0], [m0, 0.5], [m1, 0.5], [tip, 1.0]]
-		for tri in [[0, 1, 2], [1, 3, 2], [2, 3, 4]]:
-			for k in tri:
-				st.set_color(col)
-				st.set_normal(Vector3.UP)
-				st.set_uv(Vector2(0.0, verts[k][1]))
-				st.add_vertex(verts[k][0])
+		var rnd := _hash(i, 0, 19)
+		## 마디 점 — t 를 따라 위로 올라가며 fwd 쪽으로 t² 만큼 처진다(높이도 그만큼 줄어든다).
+		var rows: Array = []
+		for s in SEGS + 1:
+			var t := float(s) / float(SEGS)
+			var c := o + Vector3(0, h * (t - 0.35 * bend * t * t), 0) + fwd * h * bend * t * t
+			var hw := w * (1.0 - t * 0.85)
+			var tang := (Vector3(0, h * (1.0 - 0.7 * bend * t), 0) + fwd * h * bend * 2.0 * t).normalized()
+			var nrm := side.cross(tang).normalized()
+			if nrm.dot(fwd) < 0.0:
+				nrm = -nrm
+			rows.append([c - side * hw, c + side * hw, t, nrm])
+		var tip := o + Vector3(0, h * (1.0 - 0.35 * bend) + 0.02, 0) + fwd * (h * bend + 0.02)
+		for s in SEGS:
+			var r0: Array = rows[s]
+			var r1: Array = rows[s + 1]
+			if s == SEGS - 1:
+				## 마지막 마디는 뾰족하게 — 세모 하나.
+				_blade_vert(st, r0[0], -1.0, r0[2], r0[3], col, rnd)
+				_blade_vert(st, r0[1], 1.0, r0[2], r0[3], col, rnd)
+				_blade_vert(st, tip, 0.0, 1.0, r1[3], col, rnd)
+				continue
+			_blade_vert(st, r0[0], -1.0, r0[2], r0[3], col, rnd)
+			_blade_vert(st, r0[1], 1.0, r0[2], r0[3], col, rnd)
+			_blade_vert(st, r1[0], -1.0, r1[2], r1[3], col, rnd)
+			_blade_vert(st, r0[1], 1.0, r0[2], r0[3], col, rnd)
+			_blade_vert(st, r1[1], 1.0, r1[2], r1[3], col, rnd)
+			_blade_vert(st, r1[0], -1.0, r1[2], r1[3], col, rnd)
 	return st.commit()
+
+
+static func _blade_vert(st: SurfaceTool, p: Vector3, across: float, t: float, nrm: Vector3, col: Color, rnd: float) -> void:
+	st.set_color(col)
+	st.set_normal(nrm)
+	st.set_uv(Vector2(across, t))
+	st.set_uv2(Vector2(rnd, 0.0))
+	st.add_vertex(p)
 
 
 static func _hash(gx: int, gy: int, salt: int) -> float:
