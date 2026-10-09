@@ -662,12 +662,12 @@
   "tests": [
    "PlaytestDungeonEraDecor"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D1(U-0069 재촬영도 벽만 찍힘 — 꾸밈 조각이 안 보임, 도구 시점 문제). 아치·기둥 줄무늬 흠은 풀림(U-0069 gate_tiled, docs/playcheck/d2-u0069-20261009.json)"
+  "note": "D2(눈 ○, U-0077): docs/playcheck/d2-u0077-20261009.json — 방 안 카메라(SAGA_SHOT_INSIDE·SAGA_SHOT_PIECE)로 세 묶음: 과거 술통·이끼 바위·좌판, 현대 배전함·눕힌 타이어, 미래 청록 발광으로 떠 도는 발전기·판(설계대로 hover). 아치 줄무늬 흠은 U-0069 로 풀림"
  },
  {
   "id": "un.dg.secrets",
@@ -841,12 +841,12 @@
   "tests": [
    "PlaytestDungeonWearTiersGui"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D1(U-0067 눈 또 못 봄): 세이브 치운 채 재촬영해도 첫 장 대화창·붉은 고리가 방을 가림 — 도구가 대화창을 닫아야 함. 왼쪽 위 HUD 겹침은 풀림(디버그 HUD F3)"
+  "note": "D2(눈 ○, U-0077): docs/playcheck/d2-u0077-20261009.json — 창·카드·대사·적 고리 치운 화면에서 층 2·40·70 바닥 결이 깨끗한 회색 → 갈색 때 → 짙게 바랜 폐허조(WearTint 설계대로). 단 촬영 보조등(SAGA_SHOT_LIGHT) 없이는 방이 거의 까맣다 — 후속 후보"
  },
  {
   "id": "un.dg.common",
