@@ -497,6 +497,15 @@
    ]
   },
   {
+   "tool": "make_ibl.py",
+   "model": "Illustrious-XL-v2.0",
+   "license": "자체 하늘 그림(saga-assets/sky/sky_noon_present.webp)에서 코드로 — 그 그림의 라이선스를 따른다",
+   "count": 1,
+   "where": [
+    "saga-assets/sky"
+   ]
+  },
+  {
    "tool": "uigen.py",
    "model": "",
    "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",

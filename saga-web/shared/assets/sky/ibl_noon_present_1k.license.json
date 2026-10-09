@@ -1,0 +1,19 @@
+{
+ "id": "ibl_noon_present_1k",
+ "generator": "tools/ai-art/make_ibl.py",
+ "model": "Illustrious-XL-v2.0",
+ "model_license": "CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-07 확인), 폐쇄 파생 모델 수익화만 금지",
+ "license": "자체 하늘 그림(saga-assets/sky/sky_noon_present.webp)에서 코드로 — 그 그림의 라이선스를 따른다",
+ "derived_from": "saga-assets/sky/sky_noon_present.webp",
+ "ref_match": {
+  "ref": "saga-web/saga-go/assets/hdri/alps_field_1k.hdr",
+  "up": 1.4164,
+  "down": 1.1683
+ },
+ "sun_uv": [
+  0.5,
+  0.1556,
+  13099.7
+ ],
+ "note": "IBL(반사·거칠기 보조)용 — 위 반구 하늘 그림 선형화, 아래 반구 지평선색→풀밭빛, 해 원반 고휘도. K-0090 ②"
+}

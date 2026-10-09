@@ -535,6 +535,20 @@
    ]
   },
   {
+   "id": "ibl-web",
+   "src": "saga-assets/sky",
+   "include": [
+    "ibl_*.hdr"
+   ],
+   "note": "K-0090 ② 웹 3D 환경광(IBL) — 자체 하늘 그림으로 만든 .hdr(tools/ai-art/make_ibl.py, 옛 alps_field 사진 HDR 과 환경광 총량 맞춤). license.json 은 sky 항목이 같이 놓는다",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/sky"
+    }
+   ]
+  },
+  {
    "id": "sky-unity",
    "src": "saga-assets/sky-unity",
    "include": [
