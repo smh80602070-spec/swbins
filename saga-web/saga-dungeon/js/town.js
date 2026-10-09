@@ -967,7 +967,7 @@
   var input = { dx: 0, dy: 0 };
   var target = null;                    // 걸어가는 목표 {x, y}
   var fx = [];
-  var armed = {};                       // 닿아서 이미 발동한 것 — 벗어나야 풀린다
+  var armed = {}, fresh = false;      // armed: 닿아서 이미 발동한 것 — 벗어나야 풀린다 · fresh(W-0127): enter() 로 막 들어섰다 — 첫 검사는 이미 닿아 있는 것을 발동 없이 armed 로만(시작 자리 옆 포교가 퀘스트 시트를 저절로 열어 폰 화면 절반을 덮었다)
 
   /* 마을 둘레 필드 전투 — 던전이 이미 검증해 둔 메커니즘(dungeon.js 의
      fieldBoundPlayer·spawnFieldRoamers·stepFieldCombat)을 그대로 빌려 쓴다.
@@ -1430,7 +1430,7 @@
        CURRENT_TOWN 에 저장돼 있지 않고 매번 좌표로 다시 구해진다). */
     CURRENT_TOWN = opts.fromDungeon ? 'moru' : pickActiveTown(player.x, player.y);
     markTownVisited(CURRENT_TOWN);
-    build();
+    build(); fresh = true;               // W-0127 — 들어선 자리에서 이미 닿아 있는 NPC·표식은 첫 검사에서 발동 없이 armed 로만
     /* 던전에서 막 나온 참이면 굴혈 앞에 세운다 — 나온 자리에 서 있어야
        "다시 들어간다" 가 한 걸음이다. 다만 입구에 **닿은 채로** 세우면
        그 자리에서 곧바로 다시 빨려 들어간다. 그래서 한 발 물려 세우고
@@ -1509,7 +1509,7 @@
    * 대장장이 옆에 서 있는 동안 창이 끝없이 다시 열린다.
    */
   function touchCheck() {
-    var i, o, d;
+    var i, o, d, all; if (fresh) { fresh = false; all = room.npcs.concat(room.marks); for (i = 0; i < all.length; i++) { if (dist(player, all[i]) <= TALK_R) { armed[all[i].key] = true; } } return; }   // W-0127 — 들어선 자리에서 이미 닿아 있는 것은 한 번 벗어났다 다시 와야 열린다
     for (i = 0; i < room.npcs.length; i++) {
       o = room.npcs[i];
       d = dist(player, o);
@@ -1896,7 +1896,7 @@
       build();
     },
     /** 자가진단용 — 그 자리로 순간 옮긴다 (걸어가지 않고) */
-    _put: function (x, y) { if (player) { player.x = x; player.y = y; } },
+    _put: function (x, y) { if (player) { player.x = x; player.y = y; } fresh = false; },   // 진단·도구의 순간이동은 일부러 닿은 것 — 첫 검사 넘김(W-0127)을 풀어 곧바로 발동
     /** 자가진단용(PLAN §28-8) — 앱을 처음부터 다시 켠 것처럼 player 를
      *  잊는다. 다음 enter() 가 세이브(pos, 없으면 옛 current 마이그레이션)
      *  로 다시 서는 실제 첫 진입 경로를 타는지 확인할 때 쓴다. */

@@ -8186,6 +8186,20 @@ window.requestAnimationFrame = function () { return 0; };
       return r.join(',') === '6,2,1,1,true,3,8,true,true,true,true,true' && ('종 ' + r.join(',')) || '실패 ' + r.join(',');
     });
 
+    t('폰 첫 화면(W-0127) — 들어선 자리에서 이미 닿아 있는 포교는 말이 저절로 안 열리고, 물러났다 다시 오면 열린다', function () {
+      var T = DG.town, hits = [], fn = function (o) { hits.push(o.key); }, r;
+      C.on('town:npc', fn);
+      try {
+        T._reset('moru'); var h = T.raw().room.npcs.filter(function (o) { return o.key === 'herald'; })[0];
+        if (!h) { return '실패 — 모루골 포교 없음'; }
+        T._put(h.x, h.y); T.enter(); T.update(0.05); T.update(0.05);
+        var first = hits.filter(function (k) { return k === 'herald'; }).length;
+        T._put(h.x + 400, h.y); T.update(0.05); T._put(h.x, h.y); T.update(0.05);
+        r = [first, hits.filter(function (k) { return k === 'herald'; }).length];
+      } finally { DG.ui.closeSheet(); T._reset(); }
+      return r[0] === 0 && r[1] === 1 && ('들어설 때 0번 · 다시 오면 1번') || '실패 ' + r.join(',');
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

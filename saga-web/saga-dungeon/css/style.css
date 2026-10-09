@@ -1446,3 +1446,6 @@ body.town-open .dg-tip {
 /* W-0117 — 가로 폰(높이 390 안팎)에서 「더보기」 3열 다섯 줄이 화면 위로 잘리고 오른쪽 위 단추와 겹쳤다 → 낮은 화면은 5열 세 줄 */
 @media (max-height: 520px) { #dock-more { grid-template-columns: repeat(5, 58px); } }
 @media (max-height: 520px) and (max-width: 780px) { #dock-more { grid-template-columns: repeat(5, 52px); } }
+/* W-0127 — 폰 독 52px 칸에서 「오버월드」가 「오버월 / 드」로 갈렸다 → 한 줄로(자간만 조금 좁힘) */
+body #dock button small { white-space: nowrap; }
+@media (max-width: 780px) { body #dock button small { letter-spacing: -0.04em; } }

@@ -1851,7 +1851,7 @@
         if (e && e.style.display !== 'none' && e.textContent) { belowHeader = Math.max(belowHeader, Math.ceil(e.getBoundingClientRect().bottom)); }
       });
     }
-    root.setProperty('--below-header', belowHeader + 'px');
+    root.setProperty('--below-header', belowHeader + 'px'); var stk = document.getElementById('story-track'), sb = stk && stk.style.display !== 'none' && stk.textContent ? Math.ceil(stk.getBoundingClientRect().bottom) : 0; root.setProperty('--toast-top', Math.max(84, sb + 6) + 'px');   // W-0127 — 알림이 이야기 띠(#story-track)를 덮지 않게 그 밑으로
   }
 
   /* ── 자동 순행 상태줄 ─────────────────────────────────── */
