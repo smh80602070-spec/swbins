@@ -1,0 +1,18 @@
+{
+ "id": "mon_spir_04",
+ "generator": "tools/world-forge/build_monster.py",
+ "blender": "5.2.1 LTS",
+ "style": "toon",
+ "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+ "inputs": [
+  "polyhaven: bitumen",
+  "polyhaven: white_stucco"
+ ],
+ "size_m": [
+  0.48,
+  0.58,
+  0.63
+ ],
+ "tris": 2644,
+ "family": "spir"
+}
