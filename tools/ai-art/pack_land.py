@@ -23,6 +23,17 @@ CANON = os.path.join(HERE, '..', '..', 'saga-assets', 'land-go')
 KINDS = ['grass', 'forest', 'mount', 'road', 'town', 'farm']
 PX = 1024
 MAX_KB = 400
+# 게임은 48m 칸마다 변형 셋 중 하나를 고른다 — 변형끼리 색이 다르면 들판이 바둑판이 된다(10-09 눈 판정: 풀3 노랑·숲2 갈색).
+# 종류마다 기준 변형(REF)의 채널 평균·편차에 나머지를 맞춘다(무늬는 그대로, 색만)
+REF = {'grass': 1, 'forest': 1, 'mount': 2, 'road': 3, 'town': 2, 'farm': 2}
+
+
+def match(t, ref):
+    a = np.asarray(t).astype(np.float32)
+    r = np.asarray(ref).astype(np.float32)
+    am, asd = a.mean((0, 1)), a.std((0, 1)) + 1e-3
+    rm, rsd = r.mean((0, 1)), r.std((0, 1))
+    return Image.fromarray(np.clip((a - am) / asd * rsd + rm, 0, 255).astype(np.uint8))
 
 
 def ok(a):
@@ -42,18 +53,22 @@ def pack():
     os.makedirs(CANON, exist_ok=True)
     tiles = []
     for k in KINDS:
+        rp = os.path.join(GEN, f'land_{k}{REF[k]}.png')
+        ref = seamless(Image.open(rp), PX, flatten=0.6) if os.path.exists(rp) else None
         for n in (1, 2, 3):
             name = f'{k}{n}'
             src = os.path.join(GEN, f'land_{name}.png')
             if not os.path.exists(src):
                 print('없음', src)
                 continue
-            t = seamless(Image.open(src), PX, flatten=0.6)
+            t = ref if n == REF[k] and ref is not None else seamless(Image.open(src), PX, flatten=0.6)
+            if ref is not None and n != REF[k]:
+                t = match(t, ref)
             dst = os.path.join(CANON, name + '.webp')
             q = save(t, dst)
             a = np.asarray(Image.open(dst).convert('RGB'))
             lic = json.load(open(src[:-4] + '.license.json', encoding='utf-8'))
-            lic.update(id=name, derived='tools/ai-art/pack_land.py — make_seamless.seamless(4판 띠 섞기, flatten 0.6) → %dpx WebP q%d' % (PX, q),
+            lic.update(id=name, derived='tools/ai-art/pack_land.py — make_seamless.seamless(4판 띠 섞기, flatten 0.6)%s → %dpx WebP q%d' % ('' if n == REF[k] else ' · 색 평균·편차를 %s%d 에 맞춤' % (k, REF[k]), PX, q),
                        seam_ratio=round(seam_ratio(a), 2), edge_ratio=round(edge_ratio(a), 2), replaces='saga-web/saga-go/assets/textures/land/%s.webp (ambientCG 사진)' % name)
             json.dump(lic, open(os.path.join(CANON, name + '.license.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
             tiles.append((name, Image.open(dst).convert('RGB')))
