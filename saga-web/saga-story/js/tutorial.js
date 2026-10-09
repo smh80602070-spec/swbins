@@ -72,8 +72,7 @@
   }
 
   /** 목표판 첫 줄에 쓸 문구 — 끝났거나 안내가 없는 세이브면 '' */
-  function line() {
-    autoLevel();
+  function line() {   // W-0124 — 그리기 경로라 부작용(금·저장·changed)이 없다. 레벨 확인은 'changed' 쪽(wire)
     if (done()) { return ''; }
     var s = STEPS[step()];
     return s ? s.text + ' <small>(' + (step() + 1) + '/' + STEPS.length + ')</small>' : '';
@@ -81,6 +80,7 @@
 
   function wire() {
     STEPS.forEach(function (s) { core.on(s.on, function (p) { feed(s.on, p); }); });
+    core.on('changed', autoLevel);   // 앞 단계를 마친 뒤 이미 레벨이 넘었으면 그 자리에서(전엔 line() 이 그리다가 했다)
   }
   wire();
 

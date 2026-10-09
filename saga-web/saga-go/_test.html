@@ -16222,9 +16222,10 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
     });
 
     t('타이틀 키 아트(W-0050) — 계정 화면이 가로·세로 키 아트 주소를 받고, 스타일에 두 장이 들어간다', function () {
-      var art = DG.cfg.account && DG.cfg.account.art, st = document.getElementById('acc-style');
-      if (!st) { DG.account.showSignup && void 0; }
-      return art === 'assets/store/go_key' && (!st || (st.textContent.indexOf(art + '_h.webp') > 0 && st.textContent.indexOf(art + '_v.webp') > 0)) && ('go 키 아트 가로·세로');
+      var art = DG.cfg.account && DG.cfg.account.art;
+      if (DG.account._style) { DG.account._style(); }   // W-0124 — 전엔 `showSignup && void 0`(아무 일 안 함)이라 스타일이 없으면 그냥 통과했다
+      var st = document.getElementById('acc-style');
+      return art === 'assets/store/go_key' && !!st && st.textContent.indexOf(art + '_h.webp') > 0 && st.textContent.indexOf(art + '_v.webp') > 0 && ('go 키 아트 가로·세로');
     });
 
     /* ── go.expansion: 보관 모듈(js/_expansion — 환생·방치) ──────────────────

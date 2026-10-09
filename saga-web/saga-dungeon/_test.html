@@ -8030,8 +8030,9 @@ window.requestAnimationFrame = function () { return 0; };
     t('첫 10분 — 레벨 2 에 앞 단계보다 먼저 닿았어도 레벨 단계는 넘어간다(이벤트를 놓쳐도 상태로 본다)', function () {
       return tutWith(function (T, sv) {
         sv.tut = { done: ['talk', 'dive', 'skill', 'gear'] }; sv.player.level = 3;
-        var line = T.line(), row = T.rowHtml();
-        return T.done() && line === '' && row === '' && sv.tut.done.indexOf('level') === 4 && ('마지막이 레벨 단계라 레벨 3 이면 자동 완료');
+        var before = T.done();                        // W-0124 — line() 은 그리기만, 넘기는 건 'changed'
+        C.emit('changed'); var line = T.line(), row = T.rowHtml();
+        return !before && T.done() && line === '' && row === '' && sv.tut.done.indexOf('level') === 4 && ('마지막이 레벨 단계라 레벨 3 이면 자동 완료');
       });
     });
 

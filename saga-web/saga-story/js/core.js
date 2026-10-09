@@ -441,7 +441,7 @@
   global.DG = global.DG || {};
   global.DG.cfg = global.DG.cfg || {};
   global.DG.cfg.bgm = {
-    tracks: { town: 'saga-story-town.ogg', forest: 'saga-story-field.ogg', battle: 'saga-story-battle.ogg' },   // 자체 곡(W-0020 2부) — 옛 OpenGameArt mp3 는 폴더에 그대로(되돌림: 이 줄을 town.mp3·forest.mp3·battle.mp3 로)
+    tracks: { town: ['saga-story-town.ogg', 'town.mp3'], forest: ['saga-story-field.ogg', 'forest.mp3'], battle: ['saga-story-battle.ogg', 'battle.mp3'] },   // W-0124 Ogg 못 트는 브라우저는 옛 mp3 ·   // 자체 곡(W-0020 2부) — 옛 OpenGameArt mp3 는 폴더에 그대로(되돌림: 이 줄을 town.mp3·forest.mp3·battle.mp3 로)
     vol: 0.4,
     first: 'town',
     /** 지금 틀 트랙 — 사냥 중이 아니면 마을, 보스면 전투, 마을 사냥터면 마을, 아니면 숲 */

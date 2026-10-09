@@ -446,6 +446,6 @@
     gate: gate, showSignup: showSignup, showSwitch: showSwitch, showTitle: showTitle,
     injectButton: injectButton,
     /** 자가진단용 — 화면 없이 프로필만 다룬다 */
-    _store: STORE, _legacy: LEGACY, _read: read, _write: write
+    _store: STORE, _legacy: LEGACY, _read: read, _write: write, _style: style   // W-0124 키 아트 진단이 스타일을 실제로 만들어 본다
   };
 })(window);

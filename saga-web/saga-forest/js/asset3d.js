@@ -883,6 +883,26 @@
    * `gltf.scene`은 절대 이동·확대하지 않는다(다른 코드가 `buildGeneric()`으로
    * 이 url을 또 쓸 수 있어 원본은 그대로 둬야 한다).
    */
+  /** W-0124 — 양자화 GLB(KHR_mesh_quantization, K-0071 Meshopt 10-05)는 위치·법선이 Int16/Int8. 여기에 행렬을 곱하면 three 가 결과를
+   *  같은 정수 배열에 반올림해 넣어 모양이 계단으로 뭉갠다(사가만리 집이 구겨진 덩어리가 된 원인 — W-0119). 굽기 전 Float32 로 푼다 */
+  function floatGeo(g) {
+    var t = three(), names = Object.keys(g.attributes), n, a, i, arr, sz;
+    for (n = 0; n < names.length; n++) {
+      a = g.attributes[names[n]];
+      if (!a.isInterleavedBufferAttribute && a.array instanceof Float32Array) { continue; }
+      sz = a.itemSize; arr = new Float32Array(a.count * sz);
+      for (i = 0; i < a.count; i++) {
+        arr[i * sz] = a.getX(i);
+        if (sz > 1) { arr[i * sz + 1] = a.getY(i); }
+        if (sz > 2) { arr[i * sz + 2] = a.getZ(i); }
+        if (sz > 3) { arr[i * sz + 3] = a.getW(i); }
+      }
+      g.setAttribute(names[n], new t.BufferAttribute(arr, sz));
+    }
+    g.morphAttributes = {};
+    return g;
+  }
+
   function extractParts(root) {
     var t = three();
     root.updateMatrixWorld(true);
@@ -894,7 +914,7 @@
     var list = [];
     root.traverse(function (o) {
       if (!o.isMesh) { return; }
-      var geo = o.geometry.clone();
+      var geo = floatGeo(o.geometry.clone());
       geo.applyMatrix4(o.matrixWorld);   // 이 메시가 씬 안 어디 있었든 실제 자리부터 굽는다
       geo.applyMatrix4(bake);            // 그 위에 "키 1로 눕히는" 정규화까지 굽는다
       list.push({ geometry: geo, material: o.material });

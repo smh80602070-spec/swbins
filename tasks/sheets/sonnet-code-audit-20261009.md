@@ -22,11 +22,11 @@
 | 15 | 사가종횡 | 53ae059da | `saga-story/js/core.js:428-434`(cfg.account 에 drawer 없음) | 👤 단추가 폰 도구 서랍 밖 도구줄 맨 앞으로 빠짐 | 중하 | W-0123 고침 |
 | 16 | 도구 | 470c35773·c80032665·6792218f9 | `tools/test-web.mjs:101·71` · `tools/precheck.sh:229` | n<m 이어도 종료 0·`--dump` 가 _out 만들기 전에 씀 · 진단 수 감소 경고가 한 번만(기준선 덮어씀) | 하 | W-0123 고침 |
 | 17 | 공용 | 80ec96f19 | `saga-web/tools/lib/gameserve.js:174-193` | 진단 서버가 /_shared/·../shared/ 를 못 이어 assets3d 가 늘 fail — 경로가 깨져도 진단 초록 | 하 | 남음(진단 6개 재작성 — W-0123 메모) |
-| 18 | 사가마을 | d59440063 | `src/village-view/01.js:695` · mode2d drawKind | 2D 에서 우체통 안 읽은 깃발·가게 간판·가게 크기 성장·집 등급 외형이 사라짐 | 중 | W-0124 |
-| 19 | 사가마을 | a696aaf0f | `js/bgm.js:89·113-121` | 첫 누름 전에 changed 가 오면 그 세션 내내 배경음 안 남(공용화로 생김) | 하~중 | W-0124 |
-| 20 | 마을·종횡 | 36a9947b8 | 두 판 `js/core.js` bgm tracks | 곡이 .ogg 하나 — 옛 Safari·iOS 무음(mp3 는 폴더에 남음) | 중(실기 확인) | W-0124 |
-| 21 | 마을·종횡·만리 | a7d3ae73a | `_test.html` acc-style 진단 | `(!st || …)` 라 하나 마나 | 하 | W-0124 |
-| 22 | 사가종횡 | 54a6a21b4 | `js/tutorial.js:70-81` | 그리기 도중(line) 금 지급·persist·changed — 부작용이 그리기 경로에 | 하 | W-0124 |
+| 18 | 사가마을 | d59440063 | `src/village-view/01.js:695` · mode2d drawKind | 2D 에서 우체통 안 읽은 깃발·가게 간판·가게 크기 성장·집 등급 외형이 사라짐 | 중 | W-0124 고침 |
+| 19 | 사가마을 | a696aaf0f | `js/bgm.js:89·113-121` | 첫 누름 전에 changed 가 오면 그 세션 내내 배경음 안 남(공용화로 생김) | 하~중 | W-0124 고침 |
+| 20 | 마을·종횡 | 36a9947b8 | 두 판 `js/core.js` bgm tracks | 곡이 .ogg 하나 — 옛 Safari·iOS 무음(mp3 는 폴더에 남음) | 중(실기 확인) | W-0124 고침 |
+| 21 | 마을·종횡·만리 | a7d3ae73a | `_test.html` acc-style 진단 | `(!st || …)` 라 하나 마나 | 하 | W-0124 고침 |
+| 22 | 사가종횡 | 54a6a21b4 | `js/tutorial.js:70-81` | 그리기 도중(line) 금 지급·persist·changed — 부작용이 그리기 경로에 | 하 | W-0124 고침 |
 | 23 | 사가천하 | 0745f475b·3061ce21e | `js/rts/view.js:227·234·739` | 생산 단추 줄을 250ms 마다 innerHTML 로 갈아 클릭이 자주 먹힘 | 중 | W-0125 |
 | 24 | 사가천하 | a929cba1b | `js/rts/ai.js:94` · `combat.js:143·166` | AI 후퇴가 걷던 유닛을 안 멈춤(path 안 비움) | 중 | W-0125 |
 | 25 | 사가천하 | a929cba1b·96f961c83 | `_test.html:438·559·571-589·628-629` | 진단이 실제 게임이 안 타는 옛 파도 길만 검사 · `[].every` 로 무조건 통과 | 중 | W-0125 |

@@ -44,6 +44,17 @@
   function enabled() { return settings().music !== false; }
   function volume() { return settings().musicVol; }
 
+  /** W-0124 — 트랙 값이 [ogg, mp3] 같은 배열이면 이 브라우저가 틀 수 있는 첫 것(canPlayType). 옛 Safari·iOS 는 Ogg 를 못 틀어 조용히 무음이었다.
+   *  순수에 가깝게 — audio 가 없거나 canPlayType 이 없으면 첫 것 */
+  function srcOf(v, a) {
+    var list = [].concat(v || []), i, t;
+    for (i = 0; i < list.length; i++) {
+      t = /\.ogg$/i.test(list[i]) ? 'audio/ogg; codecs=vorbis' : (/\.mp3$/i.test(list[i]) ? 'audio/mpeg' : '');
+      if (!a || !a.canPlayType || !t || a.canPlayType(t)) { return list[i]; }
+    }
+    return list[0] || '';
+  }
+
   /** 처음 부를 때만 <audio> 를 만든다 — `_test.html`(document 없음일 수 있는
    *  환경은 아니지만, 그래도 재생 전엔 굳이 만들지 않는다) 배려 */
   function ensureEls() {
@@ -53,7 +64,7 @@
     for (k in TRACKS) {
       if (!Object.prototype.hasOwnProperty.call(TRACKS, k)) { continue; }
       var a = document.createElement('audio');
-      a.src = BASE + TRACKS[k];
+      a.src = BASE + srcOf(TRACKS[k], a);
       a.loop = true;
       a.preload = 'none';   // 느린 회선 배려 — 실제로 켜기 전엔 안 받는다
       a.volume = volume();
@@ -119,7 +130,7 @@
     if (unlocked) { return; }
     unlocked = true;
     ensureEls();
-    tick();
+    play(desiredTrack());   // W-0124 — tick() 은 want === current 면 안 튼다. 잠금 전 'changed' 가 current 를 먼저 적으면 그 세션 내내 무음이었다
   }
 
   /** 브라우저는 사람이 한 번 누르기 전엔 소리를 못 낸다 — `sfx.js` 와 같은 요령이되
@@ -177,7 +188,7 @@
   global.DG.bgm = {
     enabled: enabled, setEnabled: setEnabled,
     volume: volume, setVolume: setVolume,
-    desiredTrack: desiredTrack, settingsHtml: settingsHtml,
+    desiredTrack: desiredTrack, settingsHtml: settingsHtml, srcOf: srcOf,
     current: function () { return current; },
     unlocked: function () { return unlocked; },
     hasEl: function () { return made; }

@@ -5886,8 +5886,9 @@ window.DG_NO_TUNE = true;
     t('첫 10분 — 레벨 2 에 앞 단계보다 먼저 닿았어도 레벨 단계는 넘어간다(이벤트를 놓쳐도 상태로 본다)', function () {
       return tutWith(function (T, sv) {
         sv.tut = { done: ['enter', 'kill', 'skill'] }; sv.player.level = 3;
-        var line = T.line();                          // 레벨 단계가 자동으로 끝나고 다음(대화) 문구가 된다
-        return T.step() === 4 && line.indexOf(T.STEPS[4].text) === 0 && sv.tut.done.indexOf('level') === 3 && ('레벨 3 이면 레벨 단계 자동 통과 → 대화');
+        var before = T.step();                        // W-0124 — line() 은 그리기만(부작용 없음), 넘기는 건 'changed'
+        C.emit('changed'); var line = T.line();       // 레벨 단계가 자동으로 끝나고 다음(대화) 문구가 된다
+        return before === 3 && T.step() === 4 && line.indexOf(T.STEPS[4].text) === 0 && sv.tut.done.indexOf('level') === 3 && ('레벨 3 이면 레벨 단계 자동 통과 → 대화');
       });
     });
 
@@ -5944,9 +5945,10 @@ window.DG_NO_TUNE = true;
     });
 
     t('타이틀 키 아트(W-0050) — 계정 화면이 가로·세로 키 아트 주소를 받고, 스타일에 두 장이 들어간다', function () {
-      var art = DG.cfg.account && DG.cfg.account.art, st = document.getElementById('acc-style');
-      if (!st) { DG.account.showSignup && void 0; }
-      return art === 'assets/store/story_key' && (!st || (st.textContent.indexOf(art + '_h.webp') > 0 && st.textContent.indexOf(art + '_v.webp') > 0)) && ('story 키 아트 가로·세로');
+      var art = DG.cfg.account && DG.cfg.account.art;
+      if (DG.account._style) { DG.account._style(); }   // W-0124 — 전엔 `showSignup && void 0`(아무 일 안 함)이라 스타일이 없으면 그냥 통과했다
+      var st = document.getElementById('acc-style');
+      return art === 'assets/store/story_key' && !!st && st.textContent.indexOf(art + '_h.webp') > 0 && st.textContent.indexOf(art + '_v.webp') > 0 && ('story 키 아트 가로·세로');
     });
 
     t('짐승 적 새 몸(W-0051) — 이름 표의 몸은 한 장 모드 풀이고 표 밖·사람형 이름은 비어 있으며, 표의 이름은 실제 짐승형 적이다', function () {

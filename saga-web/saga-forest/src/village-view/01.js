@@ -692,7 +692,7 @@
 
     ctx.save();
     ctx.globalAlpha = spent && !big ? 0.62 : 1;
-    if (!(global.DG.mode2d && global.DG.mode2d.drawKind(ctx, prop.kind, p.x, p.y, k))) switch (prop.kind) {   // 2D 모드 통일 스프라이트(W-0019) 먼저
+    if (!(global.DG.mode2d && global.DG.mode2d.drawKind(ctx, prop.kind, p.x, p.y, kindK(prop.kind, k)) && kindOver(prop.kind, p.x, p.y, k, now))) switch (prop.kind) {   // 2D 모드 통일 스프라이트(W-0019) 먼저 — W-0124 가게·집 크기 성장·우체통 깃발은 그 위에도
       case 'tree':    drawTree(p.x, p.y, k, sway, se, !spent); break;
       case 'pine':    drawPine(p.x, p.y, k, sway, se); break;
       case 'rock':    drawRock(p.x, p.y, k, se); break;
@@ -1246,11 +1246,12 @@
    * 우편함 — **안 읽은 편지가 있으면 깃발이 선다.**
    * 원작의 그 빨간 깃발이다. 우편함까지 걸어가 열어 봐야 아는 건 불친절하다.
    */
+  function kindK(kind, k) { return kind === 'shop' ? k * (1 + global.DG.village.shopLevel().n * 0.10) : (kind === 'home' && global.DG.home ? k * (1 + global.DG.home.state().tier * 0.12) : k); }   // W-0124 통일 스프라이트가 그려지면 switch 를 건너뛰어 가게 크기 성장·집 등급·편지 깃발이 사라졌다(d59440063)
+  function kindOver(kind, x, y, k, now) { if (kind === 'mail') { mailFlag(x, y, k, now, global.DG.mail ? global.DG.mail.unread() : 0); } return true; }
   function drawMailbox(x, y, k, now) {
     var n = global.DG.mail ? global.DG.mail.unread() : 0;
     shadow(x, y + 2 * k, 10 * k, 4 * k);
-    ctx.fillStyle = '#6f4e30';                     // 기둥
-    ctx.fillRect(x - 2.5 * k, y - 22 * k, 5 * k, 22 * k);
+    ctx.fillStyle = '#6f4e30'; ctx.fillRect(x - 2.5 * k, y - 22 * k, 5 * k, 22 * k);   // 기둥
     ctx.fillStyle = '#c8503c';                     // 함
     ctx.beginPath();
     ctx.moveTo(x - 10 * k, y - 22 * k);
@@ -1259,15 +1260,14 @@
     ctx.lineTo(x + 10 * k, y - 22 * k);
     ctx.closePath();
     ctx.fill();
-    ctx.fillStyle = 'rgba(255,255,255,0.20)';
-    ctx.fillRect(x - 10 * k, y - 33 * k, 20 * k, 2.6 * k);
-    ctx.fillStyle = '#f4ecd8';                     // 투입구
-    ctx.fillRect(x - 5 * k, y - 28 * k, 10 * k, 2.6 * k);
-
+    ctx.fillStyle = 'rgba(255,255,255,0.20)'; ctx.fillRect(x - 10 * k, y - 33 * k, 20 * k, 2.6 * k);
+    ctx.fillStyle = '#f4ecd8'; ctx.fillRect(x - 5 * k, y - 28 * k, 10 * k, 2.6 * k);   // 투입구
+    mailFlag(x, y, k, now, n);
+  }
+  function mailFlag(x, y, k, now, n) {
     if (n > 0) {                                   // 깃발 — 살짝 흔들린다
       var w = Math.sin(now / 320) * 1.6 * k;
-      ctx.strokeStyle = '#8a6440';
-      ctx.lineWidth = 1.8 * k;
+      ctx.strokeStyle = '#8a6440'; ctx.lineWidth = 1.8 * k;
       ctx.beginPath();
       ctx.moveTo(x + 11 * k, y - 22 * k);
       ctx.lineTo(x + 11 * k, y - 42 * k);
