@@ -150,7 +150,14 @@ namespace Saga.EditorTools
         private static void CheckSpeed(PlayerController pc, List<string> parts)
         {
             PlayerStats.Restore(30, 0);
-            Vector3 start = GoStory.GridPos(3.7f, 4.1f) + new Vector3(0f, 0.3f, 0f);
+            // U-0070 — 예전 +0.3m 는 Teleport 의 땅 판정 경계(<0.3)와 같아 부동소수 끝자리가 땅/공중을 갈랐다(Windows 대상은 지형, 안드로이드는
+            // 발밑 그림자 판에 맞아 끝자리가 달라 Windows 에서만 "공중 → 말에서 내림"). 발밑을 재서 실제 땅 + 0.05m 에서 시작한다.
+            Vector3 start = GoStory.GridPos(3.7f, 4.1f);
+            float groundY = float.MaxValue, best = float.MaxValue; // 주인공 제 캡슐(그 자리에 서 있을 수 있다)은 건너뛴다
+            foreach (var h in Physics.RaycastAll(start + Vector3.up * 5f, Vector3.down, 20f, ~0, QueryTriggerInteraction.Ignore))
+                if (!h.collider.transform.IsChildOf(pc.transform) && h.distance < best) { best = h.distance; groundY = h.point.y; }
+            if (groundY != float.MaxValue) start.y = groundY;
+            start.y += 0.05f;
             bool done = false;
             foreach (var dir in new[] { new Vector2(0f, 1f), new Vector2(0f, -1f), new Vector2(1f, 0f), new Vector2(-1f, 0f) })
             {

@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-09",
+  "tickets": ["U-0070 사가만리 지상 탈것 배율이 Windows 대상에서 안 먹음"],
+  "how": "측정 줄(Teleport 직후 HeightAboveGround·맞은 콜라이더)을 잠시 넣어 Android·Windows 대상 PlaytestHeadless 각 한 판 → 시험만 고쳐 두 대상 다시 → 활성 대상 Android 로 되돌림(빌드 없음)",
+  "measure": [
+    "Android: start 0.300 h 0.300 mode Ground hit BlobShadow@0.000",
+    "Windows: start 0.300 h 0.300 mode Air hit Col_plains_4_4@0.000"
+  ],
+  "cause": "시험 시작 높이 +0.3m 가 Teleport 의 땅 판정 경계(<0.3)와 같아, 부동소수 끝자리가 땅/공중을 갈랐다 — 대상마다 맞은 콜라이더(안드로이드 = 발밑 그림자 판, Windows = 지형)가 달라 끝자리가 달랐고 Windows 에서만 공중 → 말에서 내림. 게임 판정은 정상(갈래 ①)",
+  "fix": "PlaytestGoMount.CheckSpeed 시작 높이 = 발밑 RaycastAll(주인공 제 캡슐은 건너뜀)로 잰 실제 땅 + 0.05m. 게임 코드 무변경",
+  "scene": [
+    "Windows: [PlaytestHeadless] mount OK · OK - 10 frames, no errors",
+    "Android: [PlaytestHeadless] mount OK · OK - 10 frames, no errors"
+  ],
+  "runtime_errors": 0,
+  "left": "발밑 그림자 판(BlobShadow)에 콜라이더가 붙어 레이캐스트에 잡힌다(모바일에서만 켜짐) — 후속 후보"
+}
