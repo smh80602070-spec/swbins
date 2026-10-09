@@ -27,5 +27,17 @@
   "lm_model": null
  },
  "edited_by_human": true,
- "picked": "a"
+ "picked": "a",
+ "level": {
+  "by": "tools/asset-forge/bgmlevel.py (K-0088)",
+  "lufs_before": -13.7,
+  "lufs_after": -13.8,
+  "group_target": -13.8,
+  "gain_db": -0.1,
+  "capped": false,
+  "trim_head_s": 0.4,
+  "trim_tail_s": 5.7,
+  "ceiling_dbfs": -1.5
+ },
+ "duration_s": 68.9
 }

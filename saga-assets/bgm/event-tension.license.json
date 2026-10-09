@@ -34,5 +34,17 @@
  "game": "all",
  "loop": false,
  "seconds": 45,
- "plan": "data/bgm-plan2.json"
+ "plan": "data/bgm-plan2.json",
+ "level": {
+  "by": "tools/asset-forge/bgmlevel.py (K-0088)",
+  "lufs_before": -16.7,
+  "lufs_after": -16.7,
+  "group_target": -16.7,
+  "gain_db": 0.0,
+  "capped": false,
+  "trim_head_s": 0.0,
+  "trim_tail_s": 0.0,
+  "ceiling_dbfs": -1.5
+ },
+ "duration_s": 45.0
 }

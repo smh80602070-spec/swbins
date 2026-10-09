@@ -34,5 +34,17 @@
  "game": "saga-story",
  "loop": true,
  "seconds": 60,
- "plan": "data/bgm-plan2.json"
+ "plan": "data/bgm-plan2.json",
+ "level": {
+  "by": "tools/asset-forge/bgmlevel.py (K-0088)",
+  "lufs_before": -15.5,
+  "lufs_after": -13.8,
+  "group_target": -13.8,
+  "gain_db": 1.7,
+  "capped": false,
+  "trim_head_s": 0.0,
+  "trim_tail_s": 3.75,
+  "ceiling_dbfs": -1.5
+ },
+ "duration_s": 56.25
 }
