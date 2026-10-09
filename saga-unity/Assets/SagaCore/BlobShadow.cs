@@ -50,7 +50,8 @@ namespace Saga.Core
         {
             var quadGo = GameObject.CreatePrimitive(PrimitiveType.Quad);
             quadGo.name = "BlobShadow";
-            Destroy(quadGo.GetComponent<Collider>());
+            // U-0073 — Destroy 는 프레임 끝에 지워, 만든 프레임 동안 발밑 레이가 이 판을 맞혔다(캐릭터 발밑 자식이라). 바로 지운다.
+            DestroyImmediate(quadGo.GetComponent<Collider>());
             quadGo.transform.SetParent(transform, false);
             quadGo.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
             quadGo.transform.localScale = new Vector3(Diameter, Diameter, 1f);
