@@ -12,6 +12,10 @@ var _active_index := -2  # -2 = 아무도 안 쥠, -1 = 마우스, 0+ = 터치 i
 
 func _ready() -> void:
 	_center_knob()
+	## G-0138 — 터치 화면이 없으면(PC 마우스·키보드) 숨긴다. 다른 터치 전용 UI(field_combat_ui·go_player 조준)와 같은 기준.
+	## 헤드리스 점검은 그대로 둔다. 숨긴 동안 value 는 0 이라 player.gd 는 키보드 입력만 쓴다.
+	if DisplayServer.get_name() != "headless" and not DisplayServer.is_touchscreen_available():
+		visible = false
 
 func _center_knob() -> void:
 	knob.position = size * 0.5 - knob.size * 0.5

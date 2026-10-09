@@ -33,6 +33,7 @@ const SHOTS := [
 	["d_plaza_raw", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(4.7, 5.3), -12.0, 16.0, "raw"],
 	["d_plaza_top", "village", Vector2(5.0, 6.3), Vector3.ZERO, Vector2(5.0, 6.0), -75.0, 70.0, "nofog"],
 	["d_plaza_top_nograss", "village", Vector2(5.0, 6.3), Vector3.ZERO, Vector2(5.0, 6.0), -75.0, 70.0, "nograss"],
+	["d_bridge_top", "village", Vector2(5.0, 6.45), Vector3.ZERO, Vector2(5.0, 6.5), -80.0, 35.0, "nograss"],
 	["v_village_west", "village", Vector2(4.6, 5.9), Vector3.ZERO, Vector2(3.9, 5.5), -10.0, 12.0, ""],
 	["n_village_plaza", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(4.7, 5.3), -12.0, 16.0, "night"],
 	["n_house", "village", Vector2(4.0, 5.0), Vector3(-4, 0, 18), Vector2(4.0, 5.0), -6.0, 9.0, "night"],
