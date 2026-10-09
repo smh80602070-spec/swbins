@@ -79,8 +79,42 @@ func _initialize() -> void:
 				overlap += 1
 	check(overlap == 0, "지역 사각형끼리 겹침 %d쌍" % overlap)
 
+	# ④ G-0122 — 손으로 놓은 칸(Vector2i grid 상수·표)은 평탄 자리 — 그 칸 가운데 땅 높이가 칸 표 높이와 0.3m 안
+	var TB: GDScript = load("res://games/saga_go/world/terrain_builder.gd")
+	var worst := 0.0
+	var worst_at := ""
+	var n_sites := 0
+	for pair in [["landmarks_builder", "village"], ["npc_builder", "village"], ["region2_coast", "coast"], ["region3_ruins", "ruins"]]:
+		var cm: Dictionary = load("res://games/saga_go/world/%s.gd" % pair[0]).get_script_constant_map()
+		for k in cm:
+			var reg := String(TB.SITE_REGION_BY_NAME.get(k, pair[1]))
+			for g in _grids(cm[k]):
+				var ch := TestMap.tile_at(g.x, g.y, reg)
+				if not TB.LEGEND.has(ch) or not bool(TB.LEGEND[ch].get("walkable", false)) or ch == "B":
+					continue
+				n_sites += 1
+				var d: float = absf(float(TB.height_at(reg, TestMap.world_pos(g.x, g.y, reg))) - float(TB.LEGEND[ch].height))
+				if d > worst:
+					worst = d
+					worst_at = "%s %s(%d,%d)" % [pair[0], reg, g.x, g.y]
+	check(n_sites > 30 and worst < 0.3, "손 놓은 칸 %d곳이 평탄 — 가장 큰 차 %.2fm %s" % [n_sites, worst, worst_at])
+
 	print("PROBE regions ", "OK" if fails == 0 else "FAIL %d" % fails)
 	quit(1 if fails > 0 else 0)
+
+
+## 상수 값에서 Vector2i 칸 좌표를 모두(사전·배열 안까지).
+func _grids(v: Variant) -> Array:
+	var out: Array = []
+	if v is Vector2i:
+		out.append(v)
+	elif v is Dictionary:
+		for k in v:
+			out.append_array(_grids(v[k]))
+	elif v is Array:
+		for e in v:
+			out.append_array(_grids(e))
+	return out
 
 
 func _rect(id: String) -> Rect2:

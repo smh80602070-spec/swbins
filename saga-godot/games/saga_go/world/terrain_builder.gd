@@ -169,6 +169,8 @@ const RELIEF_SITE_SCRIPTS := {
 	"crossing": ["region6_crossing"], "sunken": ["region7_sunken"], "amber": ["region8_amber"], "vault": ["region9_vault"],
 	"fork": ["region10_fork"],
 }
+## G-0122 — 다른 지역 칸을 가리키는 상수(이동 목적지·역참 재계산)는 그 지역 자리로.
+const SITE_REGION_BY_NAME := {"VILLAGE_WAYSTATION_GRID": "village", "RUINS_ENTRY_GRID": "ruins", "HARBOR_GATE_GRID": "coast"}
 static var _sites: Dictionary = {}   # 지역 → {Vector2i 칸 → PackedVector2Array(칸 좌표)}
 static var _sites_ready := false
 const RELIEF_FADE_M := 14.0
@@ -255,7 +257,7 @@ static func _collect_sites() -> void:
 				continue
 			var cm := s.get_script_constant_map()
 			for k in cm:
-				_walk_sites(cm[k], String(region))
+				_walk_sites(cm[k], String(SITE_REGION_BY_NAME.get(k, region)))
 
 ## 지도 가장자리 길 칸(고개 — 이웃 지역과 이어지는 문·시간 틈 문이 서는 자리)도 평탄해야 한다.
 static func _border_road_sites() -> void:
@@ -282,6 +284,8 @@ static func _add_site(region: String, c: Vector2) -> void:
 static func _walk_sites(v: Variant, region: String) -> void:
 	if v is Vector2:
 		_add_site(region, v)
+	elif v is Vector2i:   # G-0122 — 손 놓은 칸 상수 대부분이 Vector2i(grid)인데 예전엔 버려 그 자리에 기복이 얹혔다
+		_add_site(region, Vector2(v))
 	elif v is Dictionary:
 		var r := String(v.get("region", region))
 		if not r in RELIEF_REGIONS:
