@@ -67,6 +67,29 @@ static func build(parent: Node3D, region: String) -> MeshInstance3D:
 	return mi
 
 
+## G-0146 — p 가 길(=) 칸이면 그 칸 흙길 중심선(칸 가운데 → 이어진 변 가운데 선분들·가운데 마당)까지 수평 거리(m).
+## 길 칸이 아니면 INF. 풀(grass_field)이 띠 둘레만 비우고 심을 때 쓴다(굽이침은 셈하지 않으니 부르는 쪽이 여유를 둔다).
+static func dist_to_road(region: String, p: Vector3) -> float:
+	var g := TestMap.grid_at(region, p)
+	var rows: Array = TestMap.rows_of(region)
+	if TestMap.tile_at(g.x, g.y, region) != "=":
+		return INF
+	var c := TestMap.world_pos(g.x, g.y, region)
+	var half := TestMap.tile_size_of(region) * 0.5
+	var q := Vector2(p.x, p.z)
+	var best := Vector2(c.x, c.z).distance_to(q)
+	for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+		var nx: int = g.x + d.x
+		var ny: int = g.y + d.y
+		var outside: bool = ny < 0 or ny >= rows.size() or nx < 0 or nx >= String(rows[ny]).length()
+		if not outside and not LINK.has(String(rows[ny])[nx]):
+			continue
+		var a := Vector2(c.x, c.z)
+		var b := a + Vector2(d.x, d.y) * half
+		best = minf(best, Geometry2D.get_closest_point_to_segment(q, a, b).distance_to(q))
+	return best
+
+
 ## 월드 좌표 노이즈 — 굽이침·폭 흔들림(같은 자리면 어느 칸에서 재도 같은 값).
 static func _wob(p: Vector3) -> float:
 	return sin(p.x * 0.071 + p.z * 0.049) * 0.6 + sin(p.x * 0.023 - p.z * 0.037 + 1.7) * 0.4

@@ -12,6 +12,9 @@ extends Node3D
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const SHADER := preload("res://saga_core/shaders/grass_blades.gdshader")
+const RoadBuilder := preload("res://games/saga_go/world/road_builder.gd")
+## G-0146 — 흙길 중심선에서 이 거리 안은 풀 없음(띠 반폭 2.25+0.45 · 흐림 1.3 · 굽이침 1.1 · 여유 0.6).
+const ROAD_CLEAR_M := 5.7
 
 ## 칸 글자 → 심는 비율(숲 바닥은 나무 그늘이라 성기게, 폐허·사당 터는 돌 틈으로 듬성듬성, 마을 마당은 조금).
 const GRASS_TILES := {".": 1.0, "T": 0.6, "K": 0.9, "R": 0.55, "S": 0.4, "H": 0.15}
@@ -159,6 +162,9 @@ func _measure(key: Vector2i) -> Array:
 			var g := TestMap.grid_at(region, p)
 			var ch := TestMap.tile_at(g.x, g.y, region)
 			var rate: float = GRASS_TILES.get(ch, 0.0)
+			## G-0146 — 흙길 띠를 얹는 지역의 길 칸은 들판빛 바닥이라 풀도 심는다 — 띠 둘레(반폭+흐림+굽이침+여유)만 비운다.
+			if ch == "=" and _road_region(region):
+				rate = 1.0 if RoadBuilder.dist_to_road(region, p) > ROAD_CLEAR_M else 0.0
 			if rate <= 0.0 or _hash(gx, gz, 3) > rate:
 				continue
 			## 눈 덮인 칸(서리봉 숲 바닥 등, terrain_builder surface_of .r)엔 안 심는다 — 눈 위로 초록 풀이 솟았다(09-28 촬영).
@@ -170,7 +176,8 @@ func _measure(key: Vector2i) -> Array:
 			if jr == "":
 				continue
 			var jg := TestMap.grid_at(jr, jp)
-			if not GRASS_TILES.has(TestMap.tile_at(jg.x, jg.y, jr)):
+			var jch := TestMap.tile_at(jg.x, jg.y, jr)
+			if not GRASS_TILES.has(jch) and not (jch == "=" and _road_region(jr)):
 				continue
 			p.y = TerrainBuilder.height_at(region, p)
 			q.from = p + Vector3(0, 6.0, 0)
@@ -247,3 +254,11 @@ static func _blade_vert(st: SurfaceTool, p: Vector3, across: float, t: float, nr
 
 static func _hash(gx: int, gy: int, salt: int) -> float:
 	return TerrainBuilder._hash(gx, gy, salt)
+
+
+## G-0146 — 지역이 흙길 띠를 얹는가(road_builder.wants) — 지역마다 한 번만 재 둔다.
+static var _road_cache := {}
+static func _road_region(region: String) -> bool:
+	if not _road_cache.has(region):
+		_road_cache[region] = RoadBuilder.wants(region)
+	return bool(_road_cache[region])
