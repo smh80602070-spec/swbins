@@ -17,7 +17,7 @@
    "id": "ft_airesearch",
    "seed": 827028531,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, blonde hair, dark brown eyes, ai researcher wearing holographic glasses, clean white futuristic jacket, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone",
    "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ly_jinju.png",
    "body": "ly_jinju"
   },
@@ -25,7 +25,7 @@
    "id": "ft_astronaut",
    "seed": 3708249903,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, blonde hair, black eyes, astronaut in a white space suit without helmet, mission patches, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone",
    "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_kr2_sogaram.png",
    "body": "kr2_sogaram"
   },
@@ -41,7 +41,7 @@
    "id": "ft_climateeng",
    "seed": 1015529101,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, blonde hair, green eyes, climate engineer with a tablet, rugged weatherproof jacket, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone",
    "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_fu_jongwang.png",
    "body": "fu_jongwang"
   },
@@ -57,7 +57,7 @@
    "id": "ft_dronecmd",
    "seed": 4019243906,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, short silver hair, black eyes, drone commander with holographic control gloves, sleek uniform, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone",
    "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nh_yeombun.png",
    "body": "nh_yeombun"
   },
@@ -65,7 +65,7 @@
    "id": "ft_ewarfare",
    "seed": 35120903,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, brown hair, black eyes, electronic warfare officer with a headset, dark tactical uniform, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone",
    "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nh_jinju.png",
    "body": "nh_jinju"
   },
@@ -105,7 +105,7 @@
    "id": "ft_nanotech",
    "seed": 2945930906,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, brown hair, green eyes, nanotech scientist, silver particles floating around, sleek suit, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone",
    "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_sl_wangjeong.png",
    "body": "sl_wangjeong"
   },
@@ -113,7 +113,7 @@
    "id": "ft_orbitmech",
    "seed": 2495158837,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, dark brown hair, brown eyes, orbital station mechanic with a tool belt and a zero gravity suit, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone",
    "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_guojia.png",
    "body": "rf_guojia"
   },
@@ -121,7 +121,7 @@
    "id": "ft_quantumphy",
    "seed": 2331579236,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, dark brown hair, black eyes, quantum physicist with glowing equations behind, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone",
    "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_lidian.png",
    "body": "rf_lidian"
   },
@@ -129,7 +129,7 @@
    "id": "ft_roboteng",
    "seed": 718799212,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, black hair, dark brown eyes, robotics engineer with a mechanical arm, workshop background, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone",
    "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_zhangren.png",
    "body": "rf_zhangren"
   },
@@ -137,7 +137,7 @@
    "id": "md_architect",
    "seed": 4232968704,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, short silver hair, black eyes, architect with a rolled blueprint and a hard hat, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone",
    "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_mb_hoja.png",
    "body": "mb_hoja"
   },
@@ -169,7 +169,7 @@
    "id": "md_developer",
    "seed": 1778235337,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, blonde hair, black eyes, software developer with headphones, casual hoodie, laptop glow, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone",
    "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ru_seogun.png",
    "body": "ru_seogun"
   },
@@ -177,7 +177,7 @@
    "id": "md_doctor",
    "seed": 2639308910,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, brown hair, dark brown eyes, doctor in a white coat with a stethoscope, kind expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone",
    "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ru_doksi.png",
    "body": "ru_doksi"
   },
@@ -185,7 +185,7 @@
    "id": "md_entrepreneur",
    "seed": 2660860506,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, brown hair, black eyes, young entrepreneur in a smart casual blazer, energetic, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone",
    "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_lidian.png",
    "body": "rf_lidian"
   },
@@ -201,7 +201,7 @@
    "id": "md_firefighter",
    "seed": 4198850514,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, dark brown hair, brown eyes, firefighter in uniform, soot on the cheek, brave, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard, cleavage, revealing clothes, open clothes, bare chest, collarbone",
    "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_nh_jinju.png",
    "body": "nh_jinju"
   },

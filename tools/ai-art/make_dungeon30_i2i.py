@@ -44,7 +44,8 @@ def main():
             pool = by_g[g]
             body = pool[int(hashlib.md5(('k90:' + hid).encode()).hexdigest()[:8], 16) % len(pool)]
             swapped.append(hid)
-        items.append(dict(it, init_image=os.path.join(BUSTS, 'hero_%s.png' % body), body=body))
+        neg = it['negative'] + (', cleavage, revealing clothes, open clothes, bare chest, collarbone' if g == 'F' else '')   # 10-09 첫 장: 밑그림 옷깃이 벌어진 노출로
+        items.append(dict(it, negative=neg, init_image=os.path.join(BUSTS, 'hero_%s.png' % body), body=body))
     out = {'model': src['model'], 'out': 'k90_dungeon30_i2i',
            'note': 'K-0090 ⑤ — web_dungeon_30 프롬프트 + 빌린 몸 반신 렌더 밑그림(성별 반대 %d명은 같은 성별 렌더로) img2img 0.55 — 도감 299 와 같은 그림체' % len(swapped),
            'defaults': dict(src['defaults'], denoise=0.55), 'items': items}
