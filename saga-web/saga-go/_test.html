@@ -16298,7 +16298,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         var r0 = X.mounts().filter(function (x) { return x.have; }).length;
         P.level = 20; C.save.dex.pets = { pt_cheongryong: { count: 1 } };
         var d0 = X.dex(), rows = X.mounts(), got = rows.filter(function (x) { return x.have; }).map(function (x) { return x.m.id; }).join('|');
-        var v = X.mountView(function (x) { return String(x); }, function () { return '<img class="pt">'; });
+        var v = X.mountView(function (x) { return String(x); }, function () { return '<img class="pt">'; }, function (n, m) { return n + ' / ' + m; });
         r = [rows.length, r0, got, rows.every(function (x) { return !!x.pet; }), d0.total === D.heroes.length + D.pets.length && X.rate().mount.total === M.MOUNTS.length && X.stats().by.mount === '4/5',
              (v.match(/class="dcell/g) || []).length, v.indexOf('4 / 5') >= 0, v.indexOf('Lv.30') >= 0];
       } finally { P.level = keepLv; C.save.dex.pets = keepPets; }

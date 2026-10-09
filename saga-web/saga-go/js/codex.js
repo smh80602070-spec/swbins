@@ -226,22 +226,21 @@
     return M.MOUNTS.map(function (m) { return { m: m, pet: D ? D.find(m.pet) : null, have: M.isUnlocked(m) }; });
   }
 
-  /** 도감 시트의 탈것 칸 — ui 의 `esc`·`pt`(초상) 를 받아 쓴다. 칸은 인물·펫과 같은 `dexgrid`/`dcell` */
-  function mountView(esc, pt) {
+  /** 도감 시트의 탈것 칸 — ui 의 `esc`·`pt`(초상)·`dexBar` 를 받아 쓴다. 칸은 인물·펫과 같은 `dexgrid`/`dcell`(누를 것이 없어 손가락 모양을 끈다) */
+  function mountView(esc, pt, dexBar) {
     var rows = mounts(), have = rows.filter(function (r) { return r.have; }).length, out = '';
     if (!rows.length) { return ''; }
     rows.forEach(function (r) {
       var m = r.m, sp = m.kind === 'fly' ? '걸음 ×' + m.mul + ' · 날면 ×' + m.fly : '걸음 ×' + m.mul;
       var face = r.have ? (r.pet && pt ? pt('pet', r.pet, 52) : (m.kind === 'fly' ? '🦅' : '🐎')) : '❔';
-      out += '<div class="dcell' + (r.have ? '' : ' locked') + '" title="' +
+      out += '<div class="dcell' + (r.have ? '' : ' locked') + '" style="cursor:default;transform:none" title="' +
         esc(m.name + ' · ' + (m.kind === 'fly' ? '나는 탈것' : '땅 탈것') + ' · ' + sp + ' — ' + m.desc +
           (r.have ? '' : ' (모험 레벨 ' + m.lv + ' 또는 그 짐승을 도감에 등록하면 열림)')) + '">' +
         '<span class="de' + (r.have ? '' : ' locked-mark') + '">' + face + '</span>' +
         '<small>' + (r.have ? esc(m.name) : 'Lv.' + m.lv) + '</small>' +
         (m.kind === 'fly' ? '<i class="cnt">🦅</i>' : '') + '</div>';
     });
-    return '<div class="sec"><h4>🐎 탈것</h4><div class="dexbar"><div class="bar"><i style="width:' +
-      (have / rows.length * 100) + '%"></i></div><small>' + have + ' / ' + rows.length + '</small></div>' +
+    return '<div class="sec"><h4>🐎 탈것</h4>' + (dexBar ? dexBar(have, rows.length) : '') +
       '<div class="dexgrid">' + out + '</div></div>';
   }
 

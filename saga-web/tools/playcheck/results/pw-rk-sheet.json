@@ -37,22 +37,22 @@
   {
    "name": "출진 — 맞닿은 적 성으로 출진하면 전투가 치러져 승패·손실이 나오고 출진한 성의 병력이 줄어든다",
    "ok": true,
-   "detail": "{\"ok\":true,\"won\":false,\"lossA\":657,\"lossD\":79,\"troopsFrom\":[5444,4787]}"
+   "detail": "{\"ok\":true,\"won\":false,\"lossA\":858,\"lossD\":92,\"troopsFrom\":[889,31]}"
   },
   {
    "name": "개입형 전투 — 출진하면 합마다 명령을 물어 오고(돌격·수비) 끝에 보고가 나온다",
    "ok": true,
-   "detail": "{\"ok\":true,\"intro\":true,\"prompts\":1,\"rounds\":1,\"cmds\":[\"press\"],\"hasReport\":true,\"ms\":143}"
+   "detail": "{\"ok\":true,\"intro\":true,\"prompts\":1,\"rounds\":1,\"cmds\":[\"press\"],\"hasReport\":true,\"ms\":194}"
   },
   {
    "name": "무장 — 공과 금을 갖추면 승진해 관직이 한 단 오르고 금이 들고 충성이 오른다",
    "ok": true,
-   "detail": "{\"id\":\"sg_huangzhong\",\"rank\":[0,1],\"cost\":{\"feats\":20,\"gold\":300},\"g\":[6144,5844],\"loyal\":[57,69],\"name\":\"교위(校尉)\",\"res\":true,\"earlyWhy\":\"공이 모자랍니다 (0/20)\"}"
+   "detail": "{\"id\":\"sg_huangzhong\",\"rank\":[0,1],\"cost\":{\"feats\":20,\"gold\":300},\"g\":[5742,5442],\"loyal\":[56,68],\"name\":\"교위(校尉)\",\"res\":true,\"earlyWhy\":\"공이 모자랍니다 (0/20)\"}"
   },
   {
    "name": "전략 화면 틀 — #cpanel 은 realm/window.png, 독 단추는 btn_normal, 배너는 popup·성 열기는 tab_on 9-slice 그림을 입고 그림이 다 온다(W-0088)",
    "ok": true,
-   "detail": "{\"fr\":{\"cpanel\":\"url(\\\"http://127.0.0.1:52367/shared/assets/ui/realm/window.png\\\")\",\"dock\":\"url(\\\"http://127.0.0.1:52367/shared/assets/ui/realm/btn_normal.png\\\")\",\"banner\":\"url(\\\"http://127.0.0.1:52367/shared/assets/ui/realm/popup.png\\\")\",\"open\":\"url(\\\"http://127.0.0.1:52367/shared/assets/ui/realm/tab_on.png\\\")\",\"status\":[200,200,200,200]},\"uiMiss\":[]}"
+   "detail": "{\"fr\":{\"cpanel\":\"url(\\\"http://127.0.0.1:13858/shared/assets/ui/realm/window.png\\\")\",\"dock\":\"url(\\\"http://127.0.0.1:13858/shared/assets/ui/realm/btn_normal.png\\\")\",\"banner\":\"url(\\\"http://127.0.0.1:13858/shared/assets/ui/realm/popup.png\\\")\",\"open\":\"url(\\\"http://127.0.0.1:13858/shared/assets/ui/realm/tab_on.png\\\")\",\"status\":[200,200,200,200]},\"uiMiss\":[]}"
   }
  ]
 }

@@ -14,14 +14,19 @@ const srv = spawn(process.execPath, [path.join(HERE, 'serve.mjs'), path.resolve(
 process.env.PW_BASE = process.env.PW_BASE || `http://127.0.0.1:${port}/`;
 const { open, sleep } = await import('./pw.mjs');
 fs.mkdirSync(path.join(HERE, 'shots', 'qc'), { recursive: true });
-await sleep(600);
+for (let i = 0; i < 50; i++) {   // 서버가 실제로 듣기 시작할 때까지(최대 10초)
+  const up = await new Promise((res) => { const s = net.connect(port, '127.0.0.1', () => { s.end(); res(true); }); s.on('error', () => res(false)); });
+  if (up) { break; }
+  await sleep(200);
+}
 
 for (const game of games) {
   const dest = path.join(HERE, 'shots', 'qc', `${game}-dex.png`);
-  const r = await open(game, { w: 1280, h: 720 });
-  const { page } = r;
-  const ev = (fn, arg) => page.evaluate(fn, arg);
+  let r = null;
   try {
+    r = await open(game, { w: 1280, h: 720 });
+    const { page } = r;
+    const ev = (fn, arg) => page.evaluate(fn, arg);
     await page.goto(r.url('index.html')); await sleep(1500);
     await ev(() => { DG.account.create('도감'); });
     await page.goto(r.url('index.html')); await sleep(2500);
@@ -64,7 +69,7 @@ for (const game of games) {
     await page.screenshot({ path: dest });
     console.log(game, '저장', dest, JSON.stringify(info), r.errors.length ? 'errors ' + JSON.stringify(r.errors.slice(0, 3)) : '예외 없음', r.notFound.length ? '404 ' + r.notFound.slice(0, 4).join(' ') : '');
   } catch (e) { console.log(game, 'ERR', e.message); }
-  await r.close();
+  if (r) { await r.close().catch(() => {}); }
 }
 srv.kill();
 process.exit(0);

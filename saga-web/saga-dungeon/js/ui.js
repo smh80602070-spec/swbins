@@ -716,7 +716,7 @@
           : openTab === 'craft' ? viewCraft()
           : openTab === 'vendor' ? viewVendor()
           : openTab === 'skill' ? viewSkill()
-          : openTab === 'dex' ? viewDex() : openTab === 'beast' ? (global.DG.bestiary ? global.DG.bestiary.view(esc) : '')
+          : openTab === 'dex' ? viewDex() : openTab === 'beast' ? (global.DG.bestiary ? global.DG.bestiary.view(esc, dexBar) : '')
           : openTab === 'world' ? viewWorldMap()
           : openTab === 'quest' ? viewQuest()
           : openTab === 'look' ? viewLook()

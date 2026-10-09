@@ -979,7 +979,7 @@
              dexGrid(data.heroes, core.save.dex.heroes) + '</div>' +
            (mem.length ? '<div class="sec"><h4>📖 이야기 동료</h4>' + dexGrid(mem, core.save.dex.heroes) + '</div>' : '') +
            '<div class="sec"><h4>펫</h4>' + dexBar(pC, data.pets.length) +
-             dexGrid(data.pets, core.save.dex.pets) + '</div>' + (global.DG.codex && global.DG.codex.mountView ? global.DG.codex.mountView(esc, pt) : '') +   // W-0117 탈것 칸
+             dexGrid(data.pets, core.save.dex.pets) + '</div>' + (global.DG.codex && global.DG.codex.mountView ? global.DG.codex.mountView(esc, pt, dexBar) : '') +   // W-0117 탈것 칸
            '<div class="hint">카드를 누르면 열전·승급·펫 장착 화면이 열립니다. ' +
            '같은 인물을 또 등용하면 <b>중복(+n)</b>이 쌓여 승급 재료가 됩니다.</div>';
   }
@@ -1074,7 +1074,7 @@
         '<small>' + t.seen + '/' + t.total + '</small></div>';
     }
     out += '<div class="cx-cell' + (r.dex.seen === r.dex.total ? ' full' : '') + '">' +
-      '<b>📕</b><span>도감</span><small>' + r.dex.seen + '/' + r.dex.total + '</small></div>';
+      '<b>📕</b><span>도감</span><small>' + r.dex.seen + '/' + r.dex.total + '</small></div>' + (r.mount && r.mount.total ? '<div class="cx-cell' + (r.mount.seen === r.mount.total ? ' full' : '') + '"><b>🐎</b><span>탈것</span><small>' + r.mount.seen + '/' + r.mount.total + '</small></div>' : '');   // W-0117 R-5 — 완성률에 든 탈것도 칸으로
     out += '</div>';
     /* 아직 못 본 것 중 **숨은 곳**만 귀띔한다 — 다 알려 주면 찾을 것이 없다 */
     var hidden = [];
