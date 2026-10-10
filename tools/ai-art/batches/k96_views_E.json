@@ -1,0 +1,309 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k96_views_E",
+ "kit": {
+  "spec": "creature",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "anglerfish",
+   "seed": 2184004639,
+   "prompt": "(deep sea anglerfish:1.15), glowing lure on head, wide toothy mouth, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Anglerfish"
+  },
+  {
+   "id": "armored_catfish",
+   "seed": 3057362437,
+   "prompt": "(armored catfish:1.15), bony plates, whiskers, flat belly, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Armored_Catfish"
+  },
+  {
+   "id": "betta",
+   "seed": 847439619,
+   "prompt": "(betta fish:1.15), long flowing red and blue fins, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Betta"
+  },
+  {
+   "id": "black_lionfish",
+   "seed": 2087636647,
+   "prompt": "(black lionfish:1.15), long spiky fin rays, dark stripes, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Black_Lion_Fish"
+  },
+  {
+   "id": "blobfish",
+   "seed": 585795322,
+   "prompt": "(pink blobfish:1.15), droopy soft body, sad face, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Blobfish"
+  },
+  {
+   "id": "blue_goldfish",
+   "seed": 2112783483,
+   "prompt": "(blue goldfish:1.15), round body, fan tail, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Blue_Goldfish"
+  },
+  {
+   "id": "blue_tang",
+   "seed": 2533477039,
+   "prompt": "(blue tang fish:1.15), bright blue body, yellow tail, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Blue_Tang"
+  },
+  {
+   "id": "butterflyfish",
+   "seed": 2766003295,
+   "prompt": "(butterfly fish:1.15), yellow and white disc body, black eye stripe, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Butterfly_Fish"
+  },
+  {
+   "id": "cardinalfish",
+   "seed": 2883907122,
+   "prompt": "(cardinal fish:1.15), red body, big eyes, striped, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Cardinal_Fish"
+  },
+  {
+   "id": "clownfish",
+   "seed": 1227521595,
+   "prompt": "(clownfish:1.15), orange with white bands, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Clownfish"
+  },
+  {
+   "id": "coral_grouper",
+   "seed": 2240862488,
+   "prompt": "(coral grouper:1.15), red body with blue spots, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Coral_Grouper"
+  },
+  {
+   "id": "cowfish",
+   "seed": 2165726421,
+   "prompt": "(cowfish:1.15), boxy yellow body, small horns, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Cowfish"
+  },
+  {
+   "id": "flatfish",
+   "seed": 3848657935,
+   "prompt": "(flatfish:1.15), flat oval body, both eyes on top side, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Flatfish"
+  },
+  {
+   "id": "flowerhorn",
+   "seed": 609398075,
+   "prompt": "(flowerhorn cichlid:1.15), big forehead hump, colorful scales, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Flower_Horn"
+  },
+  {
+   "id": "goblin_shark",
+   "seed": 609004319,
+   "prompt": "(goblin shark:1.15), long flat snout, pink skin, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Goblin_Shark"
+  },
+  {
+   "id": "goldfish",
+   "seed": 3511902192,
+   "prompt": "(orange goldfish:1.15), round body, double fan tail, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Goldfish"
+  },
+  {
+   "id": "humphead",
+   "seed": 102300545,
+   "prompt": "(humphead wrasse:1.15), green blue, big forehead bump, thick lips, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Humphead"
+  },
+  {
+   "id": "koi",
+   "seed": 803116772,
+   "prompt": "(koi carp:1.15), white with orange and black patches, whiskers, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Koi"
+  },
+  {
+   "id": "lionfish",
+   "seed": 106345390,
+   "prompt": "(red lionfish:1.15), long striped spiky fins, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Lionfish"
+  },
+  {
+   "id": "mandarinfish",
+   "seed": 3166724472,
+   "prompt": "(mandarin fish:1.15), swirly blue and orange pattern, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Mandarin_Fish"
+  },
+  {
+   "id": "moorish_idol",
+   "seed": 2187653534,
+   "prompt": "(moorish idol fish:1.15), tall disc body, black white yellow bands, long dorsal fin, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Moorish_Idol"
+  },
+  {
+   "id": "parrotfish",
+   "seed": 3112323996,
+   "prompt": "(parrotfish:1.15), beak-like mouth, green and pink scales, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Parrot_Fish"
+  },
+  {
+   "id": "piranha",
+   "seed": 2439898409,
+   "prompt": "(piranha:1.15), sharp teeth, silver body, red belly, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Piranha"
+  },
+  {
+   "id": "puffer",
+   "seed": 4217689170,
+   "prompt": "(pufferfish:1.15), round spiky inflated body, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Puffer"
+  },
+  {
+   "id": "red_snapper",
+   "seed": 3257571487,
+   "prompt": "(red snapper fish:1.15), pink red body, pointed fins, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Red_Snapper"
+  },
+  {
+   "id": "royal_gramma",
+   "seed": 3312351495,
+   "prompt": "(royal gramma fish:1.15), purple front, yellow back, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Royal_Gramma"
+  },
+  {
+   "id": "shark",
+   "seed": 114454502,
+   "prompt": "(shark:1.15), gray body, tall dorsal fin, pointed snout, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Shark"
+  },
+  {
+   "id": "sunfish",
+   "seed": 3627018567,
+   "prompt": "(ocean sunfish:1.15), huge round flat body, tall fins, no tail, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Sunfish"
+  },
+  {
+   "id": "swordfish",
+   "seed": 3421112536,
+   "prompt": "(swordfish:1.15), long sword bill, sleek blue body, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Swordfish"
+  },
+  {
+   "id": "tang",
+   "seed": 4064216049,
+   "prompt": "(yellow tang fish:1.15), bright yellow disc body, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Tang"
+  },
+  {
+   "id": "tetra",
+   "seed": 1025892036,
+   "prompt": "(neon tetra:1.15), small, blue and red stripe, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Tetra"
+  },
+  {
+   "id": "tuna",
+   "seed": 4076578582,
+   "prompt": "(tuna:1.15), torpedo body, dark blue back, silver belly, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Tuna"
+  },
+  {
+   "id": "turbot",
+   "seed": 4097496148,
+   "prompt": "(turbot:1.15), flat round body, brown speckled, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Turbot"
+  },
+  {
+   "id": "yellow_tang",
+   "seed": 2291519099,
+   "prompt": "(yellow tang:1.15), bright yellow oval body, small snout, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Yellow_Tang"
+  },
+  {
+   "id": "zebra_clownfish",
+   "seed": 1933490759,
+   "prompt": "(striped clownfish:1.15), black and white bands, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Zebra_Clown_Fish"
+  },
+  {
+   "id": "whale",
+   "seed": 2980568838,
+   "prompt": "(blue whale:1.15), huge long body, small dorsal fin, flukes, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Whale"
+  },
+  {
+   "id": "dolphin",
+   "seed": 3964922647,
+   "prompt": "(dolphin:1.15), gray smooth body, curved dorsal fin, beak, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Dolphin"
+  },
+  {
+   "id": "manta_ray",
+   "seed": 2551027606,
+   "prompt": "(manta ray:1.15), wide flat wings, two head fins, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "MantaRay"
+  },
+  {
+   "id": "fish_a",
+   "seed": 301885281,
+   "prompt": "(small river fish:1.15), silver scales, simple fins, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Fish1"
+  },
+  {
+   "id": "fish_b",
+   "seed": 3483421528,
+   "prompt": "(small pond fish:1.15), green brown scales, round fins, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Fish2"
+  },
+  {
+   "id": "fish_c",
+   "seed": 1531982191,
+   "prompt": "(small sea fish:1.15), blue stripes, forked tail, swimming pose, fins spread, no water, whole body visible, single fish, three-quarter view, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "Fish3"
+  }
+ ],
+ "note_k96": "묶음 B 에서 배운 부정 태그(바닥 판·장식 원 → 3D 접시·공) 그대로"
+}

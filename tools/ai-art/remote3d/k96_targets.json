@@ -755,6 +755,416 @@
    "note": "보임: 숲 드문 손님",
    "height": 0.5,
    "rig": ""
+  },
+  {
+   "id": "anglerfish",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Anglerfish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.25,
+   "rig": "worm"
+  },
+  {
+   "id": "armored_catfish",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Armored_Catfish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.1,
+   "rig": "worm"
+  },
+  {
+   "id": "betta",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Betta (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.08,
+   "rig": "worm"
+  },
+  {
+   "id": "black_lionfish",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Black_Lion_Fish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.2,
+   "rig": "worm"
+  },
+  {
+   "id": "blobfish",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Blobfish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.12,
+   "rig": "worm"
+  },
+  {
+   "id": "blue_goldfish",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Blue_Goldfish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.08,
+   "rig": "worm"
+  },
+  {
+   "id": "blue_tang",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Blue_Tang (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.12,
+   "rig": "worm"
+  },
+  {
+   "id": "butterflyfish",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Butterfly_Fish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.1,
+   "rig": "worm"
+  },
+  {
+   "id": "cardinalfish",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Cardinal_Fish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.07,
+   "rig": "worm"
+  },
+  {
+   "id": "clownfish",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Clownfish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.06,
+   "rig": "worm"
+  },
+  {
+   "id": "coral_grouper",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Coral_Grouper (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.2,
+   "rig": "worm"
+  },
+  {
+   "id": "cowfish",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Cowfish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.08,
+   "rig": "worm"
+  },
+  {
+   "id": "flatfish",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Flatfish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.05,
+   "rig": "worm"
+  },
+  {
+   "id": "flowerhorn",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Flower_Horn (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.15,
+   "rig": "worm"
+  },
+  {
+   "id": "goblin_shark",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Goblin_Shark (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.35,
+   "rig": "worm"
+  },
+  {
+   "id": "goldfish",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Goldfish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.07,
+   "rig": "worm"
+  },
+  {
+   "id": "humphead",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Humphead (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.4,
+   "rig": "worm"
+  },
+  {
+   "id": "koi",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Koi (dungeon animals·dungeon animals_extra2·forest animals·forest animals_extra2·go animals·go animals_extra2·story animals·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.12,
+   "rig": "worm"
+  },
+  {
+   "id": "lionfish",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Lionfish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.18,
+   "rig": "worm"
+  },
+  {
+   "id": "mandarinfish",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Mandarin_Fish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.05,
+   "rig": "worm"
+  },
+  {
+   "id": "moorish_idol",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Moorish_Idol (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.18,
+   "rig": "worm"
+  },
+  {
+   "id": "parrotfish",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Parrot_Fish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.2,
+   "rig": "worm"
+  },
+  {
+   "id": "piranha",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Piranha (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.12,
+   "rig": "worm"
+  },
+  {
+   "id": "puffer",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Puffer (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.15,
+   "rig": "worm"
+  },
+  {
+   "id": "red_snapper",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Red_Snapper (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.2,
+   "rig": "worm"
+  },
+  {
+   "id": "royal_gramma",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Royal_Gramma (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.05,
+   "rig": "worm"
+  },
+  {
+   "id": "shark",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Shark (dungeon animals_extra·dungeon animals_extra2·forest animals_extra·forest animals_extra2·go animals·go animals_extra2·story animals_extra·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.5,
+   "rig": "worm"
+  },
+  {
+   "id": "sunfish",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Sunfish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 1.5,
+   "rig": "worm"
+  },
+  {
+   "id": "swordfish",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Swordfish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.4,
+   "rig": "worm"
+  },
+  {
+   "id": "tang",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Tang (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.12,
+   "rig": "worm"
+  },
+  {
+   "id": "tetra",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Tetra (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.03,
+   "rig": "worm"
+  },
+  {
+   "id": "tuna",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Tuna (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.4,
+   "rig": "worm"
+  },
+  {
+   "id": "turbot",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Turbot (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.06,
+   "rig": "worm"
+  },
+  {
+   "id": "yellow_tang",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Yellow_Tang (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.12,
+   "rig": "worm"
+  },
+  {
+   "id": "zebra_clownfish",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Zebra_Clown_Fish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.06,
+   "rig": "worm"
+  },
+  {
+   "id": "whale",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Whale (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 3.0,
+   "rig": "worm"
+  },
+  {
+   "id": "dolphin",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Dolphin (dungeon animals_extra·forest animals_extra·go animals·story animals_extra)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.6,
+   "rig": "worm"
+  },
+  {
+   "id": "manta_ray",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — MantaRay (dungeon animals_extra·forest animals_extra·story animals_extra)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.4,
+   "rig": "worm"
+  },
+  {
+   "id": "fish_a",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Fish1 (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.08,
+   "rig": "worm"
+  },
+  {
+   "id": "fish_b",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Fish2 (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.08,
+   "rig": "worm"
+  },
+  {
+   "id": "fish_c",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Fish3 (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.08,
+   "rig": "worm"
   }
  ],
  "note_4": "④ 10-11 조사(보이는 것만): 사람 꼴 괴물(Wizard·Orc·Orc_Enemy·Yeti·Alien·Alien_2·Demon·Blue_Demon·Zombie·Giant·Skeleton 5·Ninja)은 TRELLIS 아님 — 인간형 몸은 char-forge 괴물 몸 쪽(ARCH §4.5) · 던전 적 body 는 crea: 자체 몸이 먼저라 대체 안 해도 됨(look 칸 있는 적만 예외 = 로봇 둘, 표에 있음) · Demon.gltf·Alpaking_Evolved·Armabee·Chicken·D quat Birb/Pigeon 사본은 참조 0(지워도 됨) · SlimeEnemy(CC-BY)는 ① slime 이 대신 · rig 칸은 3D 보고 정함"

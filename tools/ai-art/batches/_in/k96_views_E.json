@@ -1,0 +1,297 @@
+{
+ "name": "k96_views_E",
+ "spec": "creature",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0096 묶음 E(⑤ 물고기 41 — 1만리·2나락·3마을·4종횡 낚시·물속에서 읽힘) — TRELLIS 입력 그림, txt2img, 한 장 = 한 종",
+ "items": [
+  {
+   "id": "anglerfish",
+   "subject": "deep sea anglerfish, glowing lure on head, wide toothy mouth, swimming pose, fins spread",
+   "subject_ko": "Anglerfish",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "armored_catfish",
+   "subject": "armored catfish, bony plates, whiskers, flat belly, swimming pose, fins spread",
+   "subject_ko": "Armored_Catfish",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "betta",
+   "subject": "betta fish, long flowing red and blue fins, swimming pose, fins spread",
+   "subject_ko": "Betta",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "black_lionfish",
+   "subject": "black lionfish, long spiky fin rays, dark stripes, swimming pose, fins spread",
+   "subject_ko": "Black_Lion_Fish",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "blobfish",
+   "subject": "pink blobfish, droopy soft body, sad face, swimming pose, fins spread",
+   "subject_ko": "Blobfish",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "blue_goldfish",
+   "subject": "blue goldfish, round body, fan tail, swimming pose, fins spread",
+   "subject_ko": "Blue_Goldfish",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "blue_tang",
+   "subject": "blue tang fish, bright blue body, yellow tail, swimming pose, fins spread",
+   "subject_ko": "Blue_Tang",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "butterflyfish",
+   "subject": "butterfly fish, yellow and white disc body, black eye stripe, swimming pose, fins spread",
+   "subject_ko": "Butterfly_Fish",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "cardinalfish",
+   "subject": "cardinal fish, red body, big eyes, striped, swimming pose, fins spread",
+   "subject_ko": "Cardinal_Fish",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "clownfish",
+   "subject": "clownfish, orange with white bands, swimming pose, fins spread",
+   "subject_ko": "Clownfish",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "coral_grouper",
+   "subject": "coral grouper, red body with blue spots, swimming pose, fins spread",
+   "subject_ko": "Coral_Grouper",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "cowfish",
+   "subject": "cowfish, boxy yellow body, small horns, swimming pose, fins spread",
+   "subject_ko": "Cowfish",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "flatfish",
+   "subject": "flatfish, flat oval body, both eyes on top side, swimming pose, fins spread",
+   "subject_ko": "Flatfish",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "flowerhorn",
+   "subject": "flowerhorn cichlid, big forehead hump, colorful scales, swimming pose, fins spread",
+   "subject_ko": "Flower_Horn",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "goblin_shark",
+   "subject": "goblin shark, long flat snout, pink skin, swimming pose, fins spread",
+   "subject_ko": "Goblin_Shark",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "goldfish",
+   "subject": "orange goldfish, round body, double fan tail, swimming pose, fins spread",
+   "subject_ko": "Goldfish",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "humphead",
+   "subject": "humphead wrasse, green blue, big forehead bump, thick lips, swimming pose, fins spread",
+   "subject_ko": "Humphead",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "koi",
+   "subject": "koi carp, white with orange and black patches, whiskers, swimming pose, fins spread",
+   "subject_ko": "Koi",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "lionfish",
+   "subject": "red lionfish, long striped spiky fins, swimming pose, fins spread",
+   "subject_ko": "Lionfish",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "mandarinfish",
+   "subject": "mandarin fish, swirly blue and orange pattern, swimming pose, fins spread",
+   "subject_ko": "Mandarin_Fish",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "moorish_idol",
+   "subject": "moorish idol fish, tall disc body, black white yellow bands, long dorsal fin, swimming pose, fins spread",
+   "subject_ko": "Moorish_Idol",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "parrotfish",
+   "subject": "parrotfish, beak-like mouth, green and pink scales, swimming pose, fins spread",
+   "subject_ko": "Parrot_Fish",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "piranha",
+   "subject": "piranha, sharp teeth, silver body, red belly, swimming pose, fins spread",
+   "subject_ko": "Piranha",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "puffer",
+   "subject": "pufferfish, round spiky inflated body, swimming pose, fins spread",
+   "subject_ko": "Puffer",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "red_snapper",
+   "subject": "red snapper fish, pink red body, pointed fins, swimming pose, fins spread",
+   "subject_ko": "Red_Snapper",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "royal_gramma",
+   "subject": "royal gramma fish, purple front, yellow back, swimming pose, fins spread",
+   "subject_ko": "Royal_Gramma",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "shark",
+   "subject": "shark, gray body, tall dorsal fin, pointed snout, swimming pose, fins spread",
+   "subject_ko": "Shark",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "sunfish",
+   "subject": "ocean sunfish, huge round flat body, tall fins, no tail, swimming pose, fins spread",
+   "subject_ko": "Sunfish",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "swordfish",
+   "subject": "swordfish, long sword bill, sleek blue body, swimming pose, fins spread",
+   "subject_ko": "Swordfish",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "tang",
+   "subject": "yellow tang fish, bright yellow disc body, swimming pose, fins spread",
+   "subject_ko": "Tang",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "tetra",
+   "subject": "neon tetra, small, blue and red stripe, swimming pose, fins spread",
+   "subject_ko": "Tetra",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "tuna",
+   "subject": "tuna, torpedo body, dark blue back, silver belly, swimming pose, fins spread",
+   "subject_ko": "Tuna",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "turbot",
+   "subject": "turbot, flat round body, brown speckled, swimming pose, fins spread",
+   "subject_ko": "Turbot",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "yellow_tang",
+   "subject": "yellow tang, bright yellow oval body, small snout, swimming pose, fins spread",
+   "subject_ko": "Yellow_Tang",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "zebra_clownfish",
+   "subject": "striped clownfish, black and white bands, swimming pose, fins spread",
+   "subject_ko": "Zebra_Clown_Fish",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "whale",
+   "subject": "blue whale, huge long body, small dorsal fin, flukes, swimming pose, fins spread",
+   "subject_ko": "Whale",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "dolphin",
+   "subject": "dolphin, gray smooth body, curved dorsal fin, beak, swimming pose, fins spread",
+   "subject_ko": "Dolphin",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "manta_ray",
+   "subject": "manta ray, wide flat wings, two head fins, swimming pose, fins spread",
+   "subject_ko": "MantaRay",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "fish_a",
+   "subject": "small river fish, silver scales, simple fins, swimming pose, fins spread",
+   "subject_ko": "Fish1",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "fish_b",
+   "subject": "small pond fish, green brown scales, round fins, swimming pose, fins spread",
+   "subject_ko": "Fish2",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  },
+  {
+   "id": "fish_c",
+   "subject": "small sea fish, blue stripes, forked tail, swimming pose, fins spread",
+   "subject_ko": "Fish3",
+   "view": "three_quarter",
+   "extra": "no water, whole body visible, single fish"
+  }
+ ]
+}
