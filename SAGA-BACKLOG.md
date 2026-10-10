@@ -56,12 +56,9 @@
 | 네 판이 `saga_go/` 참조(choice_prompt 29·environment_profile 13·glb_utils 8·anim_library_loader·creature_builder·vroid_body·player) | 참조 조사 | ARCH T-15 saga_core 승격 + 참조 방향 게이트 |
 | 세이브 5벌이 `_migrate` 계약 복사 · `realm_save_state.gd` 2,230줄(저장+경영 로직) | 파일 조사 | ARCH T-16 `save_base.gd` · realm 분리 |
 | `story_player.gd` 2,324줄(무예 전부 한 파일) · `characters.gd` 4,069(손 편집 데이터) | 파일 조사 | 무예를 `story_skills/*.gd` 로 · characters 는 생성물(T-11) |
-| autoload 23개 항상 로드(공통 1·GO 6·DUNGEON 12…) | project.godot | 판별 autoload 를 씬 진입 시 `add_child` 하는 `GameBoot` 하나로(메모리·부팅) — 소넷 티켓 하나, 되돌리기 쉬움 |
-| probe 61개 전부 GO · 일괄 실행 없음 | tools 조사 | T-8 `probe_all.sh` + 4판 최소 probe |
+| autoload 23개 항상 로드(공통 1·GO 6·DUNGEON 12…, 10-10 확인 24개) | project.godot | 판별 autoload 를 씬 진입 시 `add_child` 하는 `GameBoot` 하나로(메모리·부팅) — 소넷 티켓 하나, 되돌리기 쉬움 |
 | `assets/generated/variants` 1,010MB(나무 한 그루 7.6MB, 1,572파일) | du | Meshopt 압축(`glb-compress`)·중복 변형 정리 → 저장소 1.25GB pack 의 큰 몫 |
 | PLAN 217KB(상한 100KB) · HISTORY 1.17MB · `ASSET_LICENSES.md` 없음(`docs/ASSET_GUIDE.md` 가 대신) | 문서 조사 | T-5 상한 · PLAN 분할 · 라이선스 표 한 파일로 |
-| `glb_utils.fit_height()` 미호출 | PROJECT_STATE | 지우거나 쓰거나(티켓 한 줄) |
-| 폰 가로 UI 56% → `orientation_scale.gd` 로 고침(미커밋 `??`) | git status | 커밋부터 |
 | 배경음 0 · 인물별 고유 모델 방식 미정 · 다른 4판 시나리오 0장 | PROJECT_STATE | §1-2 · ARCH §4.5 · 플래그십 뒤로 |
 
 ### 3.3 Unity
@@ -97,9 +94,7 @@
 - **지역별 배경음 + 전투 전환**(P0-2) — 지역 열여섯 중 바이옴 6 묶음 × 낮/밤.
 - **회차 전용 이야기**(Godot PROJECT_STATE 다음 후보) — 결말 셋 뒤 "다른 시대 시점" 13부. 시나리오 정본에 먼저 장 카드.
 - **인물별 고유 모델** — ARCH §4.5 VRoid 기본형 12벌 → 주역·동료 12명부터 1인 1벌.
-- **폰 가로 UI**(Godot, 미커밋 `orientation_scale.gd`) — 커밋 → 다섯 판 확인 시트.
 - **사진 모드 공유** — 사진 도감(P) 은 있음. 워터마크·저장만(서버 없음).
-- **동행 AI 한 단계** — 동행 넷이 원소 반응을 노려 스킬을 쓰는 규칙 3개(지금은 교체만).
 - **높은 곳 눈빛 땅색·도감 인물 옷 세 시대**(PLAN §8 다음) — 그래픽 게이트 뒤.
 - Unity: 14-45(21장)·탈것·14-27b·동료 몸 Maria 리타깃(PROJECT_STATE) — 순서 유지.
 
@@ -134,10 +129,9 @@
 - Unity: 4·5막·회차 이식 순서 유지, REALM 마이그레이션(P2) 먼저.
 
 ### 4.6 3D 공통
-- **컷신 스킵·대화 빨리 감기** — 확인 시트 시간을 줄이는 기능이기도 하다.
-- **설정에 "성능/화질" 2단 + 30fps 고정**(SAGA-DESIGN §6.1-B ②) — Godot 는 `env_mobile.tres` 있음, 스위치만.
-- **저장 슬롯 3개 + 자동 저장 표시**(Godot 자동 저장은 있음).
-- **크래시 로그 보기**(Unity `SagaCrashLog` 있음 → Godot 도).
+- **컷신 스킵·대화 빨리 감기**(Unity 만 — Godot 끝) — 확인 시트 시간을 줄이는 기능이기도 하다.
+- **설정에 "성능/화질" 2단 + 30fps 고정**(SAGA-DESIGN §6.1-B ②, Unity 만 — Godot 끝).
+- **저장 슬롯 3개 + 자동 저장 표시**(Unity 만 — Godot 끝).
 
 ### 4.7 AI 생성 도구(swbins3) 갈래 — ARCH §4.5 표 "된다" 만
 - **배경음·효과음**(T-28) — P0-2 와 같은 항목. 판별 15곡 + 효과음 보강. 곡마다 모델·프롬프트 기록.
@@ -163,7 +157,7 @@
 
 ## 7. 정리 후보 — 필요 없거나 낡은 플랜·기능 (2026-09-30, 사용자 질문)
 
-**지금 정리해도 되는 것**(T-0006 archive 이동에 묶는다): Godot `glb_utils.fit_height()` 미호출 · char-forge 몸 생성(`build_real.py`·MakeHuman)·레시피 566·`_out` 21GB · char-forge README 세션 일지 · 1만리 `mobile/` Capacitor(v1.7) · Godot `docs/VERTICAL_SLICE_*.md` 셋 · SAGA-HANDOFF "이어서" 중 끝난 항목 · 웹 PLAN "Phase 6 genchar 확장 대기"(§13 으로 대체) · SAGA-DESIGN §10 Q7(§13 이 답) · 2나락 루트 `_cdp_*.py` 넷(playcheck 와 중복).
+**지금 정리해도 되는 것**(T-0006 archive 이동에 묶는다): char-forge 몸 생성(`build_real.py`·MakeHuman)·레시피 566·`_out` 21GB · char-forge README 세션 일지 · 1만리 `mobile/` Capacitor(v1.7) · Godot `docs/VERTICAL_SLICE_*.md` 셋 · SAGA-HANDOFF "이어서" 중 끝난 항목 · 웹 PLAN "Phase 6 genchar 확장 대기"(§13 으로 대체) · SAGA-DESIGN §10 Q7(§13 이 답) · 2나락 루트 `_cdp_*.py` 넷(playcheck 와 중복).
 
 **결정이 필요한 것**(ARCH §8 에 붙임): 웹 2D 모드 전체(`sprite.js` 100KB×5·2D 시트, "3D 못 쓸 때 비상 경로" — 지우면 코드 15% 가량과 유지 부담이 줆) · 1만리 온라인 사관 서버(Claude API 비용, 오프라인과 독립) · Godot `assets/generated/variants` 1GB(참조 조사 뒤 안 쓰는 것) · 5천하 옛 사람 에셋(Q5 유지 결정 — 유지 권고) · 웹 후처리 폰 경로(계측 뒤).
 
@@ -172,3 +166,5 @@
 P0 1·2·3·7·8 → P1 플래그십 셋(1만리 회피·타격음, 2나락 미검증 30, 4종횡 손맛) → P2 구조(ARCH T-10~T-19) → P3 플래그십 추가 → 나머지 열두 판은 확인 시트로 D3 올리기만.
 
 **리뉴얼 10-07(페이블 R-0, 사용자 "게임성 추가·다섯 판 리뉴얼·2D 리뉴얼")**: 판마다 PLAN §4 가장 큰 구멍 하나씩 — 웹 큐 W-0101 만리 사냥 의뢰 루프(E·G) → W-0102 나락 은총·사망 카드(F) → W-0103 마을 제작대·3택(D) → W-0104 종횡 무예 3택·결과 등급(D·B) → W-0105 천하 영내 소식(E·인물) → W-0106 2D 모드 1차 → W-0107·0108 천하 격자 전술(규칙→화면). 고돗 G-0082·0083, 자체툴 K-0075·0076. 다음 R-0 묶음 = 재미표준 측정 8 을 네 판 `_test.html` 에도(QC 가 "측정 없음" 으로 센다) · 만리 E 2차(규격 10%) · 나락 주간 구조(H).
+
+**고돗 끝(10-10 정리, G-0154)**: 저장 슬롯 G-0070 · 동행 AI G-0071 · 컷신 스킵(story_quest skip_dialogue) · 성능 2단(graphics_settings) · 크래시 로그(error_log_screen) · probe_all · 가로 UI(orientation_scale 커밋) — fit_height 는 monster_body 가 씀. §4.6 셋은 Unity 몫만 남음.
