@@ -90,7 +90,7 @@ func _build() -> void:
 	_root.visible = false
 	add_child(_root)
 	var dim := ColorRect.new()
-	dim.color = Color(0.08, 0.06, 0.05, 0.84)
+	dim.color = Color(0.08, 0.06, 0.05, 0.98)   # G-0164 — 0.84(0.95 도) 면 뒤 HUD(목표판) 글자가 "먹을 인물" 칸 뒤로 비쳐 섞였다
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_root.add_child(dim)
 	var close := Button.new()

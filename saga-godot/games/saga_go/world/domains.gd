@@ -335,22 +335,35 @@ func _build_menu() -> void:
 	dim.color = Color(0.05, 0.05, 0.1, 0.8)
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_menu.add_child(dim)
+	## G-0164 — 판 없이 막 위에 바로·설명 16pt 라 가로 창에서 작고 뒤 알림 띠가 비쳤다 — choice_prompt 와 같은 진한 판·큰 글자.
+	var panel := PanelContainer.new()
+	panel.set_anchors_preset(Control.PRESET_CENTER)
+	panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	panel.grow_vertical = Control.GROW_DIRECTION_BOTH
+	var bg := StyleBoxFlat.new()
+	bg.bg_color = Color(0.07, 0.06, 0.09, 0.93)
+	bg.border_color = Color(0.85, 0.7, 0.4, 0.8)
+	bg.set_border_width_all(2)
+	bg.set_corner_radius_all(14)
+	bg.set_content_margin_all(18)
+	panel.add_theme_stylebox_override("panel", bg)
+	_menu.add_child(panel)
 	var box := VBoxContainer.new()
-	box.set_anchors_preset(Control.PRESET_CENTER)
-	box.custom_minimum_size = Vector2(640, 0)
-	box.position = Vector2(-320, -200)
+	box.custom_minimum_size = Vector2(700, 0)
 	box.add_theme_constant_override("separation", 10)
-	_menu.add_child(box)
+	panel.add_child(box)
 	_menu_title = Label.new()
-	_menu_title.add_theme_font_size_override("font_size", 26)
+	_menu_title.add_theme_font_size_override("font_size", 30)
+	_menu_title.add_theme_color_override("font_color", Color(1.0, 0.88, 0.6))
 	box.add_child(_menu_title)
 	_menu_body = Label.new()
-	_menu_body.add_theme_font_size_override("font_size", 16)
+	_menu_body.add_theme_font_size_override("font_size", 22)
 	_menu_body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	box.add_child(_menu_body)
 	for lv in Domains.LEVELS.size():
 		var b := Button.new()
-		b.custom_minimum_size = Vector2(0, 48)
+		b.custom_minimum_size = Vector2(0, 56)
+		b.add_theme_font_size_override("font_size", 24)
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		var l: int = lv
@@ -359,7 +372,8 @@ func _build_menu() -> void:
 		_menu_levels.append(b)
 	var close := Button.new()
 	close.text = "닫기 (Esc)"
-	close.custom_minimum_size = Vector2(0, 44)
+	close.custom_minimum_size = Vector2(0, 52)
+	close.add_theme_font_size_override("font_size", 24)
 	close.pressed.connect(close_menu)
 	box.add_child(close)
 
