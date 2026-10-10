@@ -54,7 +54,7 @@
 | 항목 | 근거 | 처방 |
 |---|---|---|
 | `characters` 명단 손 편집 데이터(R-4 로 `saga_core/data/heroes/*.gd` 다섯으로 나눔) | 파일 조사 | 생성물(T-11) — T-10 `data/heroes.json` 뒤 생성으로 |
-| autoload 23개 항상 로드(공통 1·GO 6·DUNGEON 12…, 10-10 확인 24개) | project.godot | 판별 autoload 를 씬 진입 시 `add_child` 하는 `GameBoot` 하나로(메모리·부팅) — 전역 이름 참조 4,424곳·409파일(tools 포함, 10-10 grep), 할지 사용자 결정(§8) |
+| autoload 23개 항상 로드(공통 1·GO 6·DUNGEON 12…, 10-10 확인 24개) | project.godot | 판별 autoload 를 씬 진입 시 `add_child` 하는 `GameBoot` 하나로(메모리·부팅) — 전역 이름 참조 4,424곳·409파일(tools 포함, 10-10 grep), 사용자 결정 10-11: 안 함(얻는 것 작고 바꿀 곳 많음) |
 | `ASSET_LICENSES.md` 없음(`docs/ASSET_GUIDE.md` 가 대신) | 문서 조사 | 라이선스 표 한 파일로 |
 | 인물별 고유 모델 방식 미정 | PROJECT_STATE | ARCH §4.5 · 플래그십 뒤로 |
 
