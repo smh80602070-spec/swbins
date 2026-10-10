@@ -382,7 +382,7 @@ func _build_screen() -> void:
 	box.add_theme_constant_override("separation", 8)
 	_panel.add_child(box)
 	_title = Label.new()
-	_title.add_theme_font_size_override("font_size", 19)
+	_title.add_theme_font_size_override("font_size", 24)
 	_title.add_theme_color_override("font_color", Color(1.0, 0.86, 0.5))
 	_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	box.add_child(_title)
@@ -398,7 +398,7 @@ func _build_screen() -> void:
 	_pick_box.add_theme_constant_override("separation", 6)
 	box.add_child(_pick_box)
 	_pick_label = Label.new()
-	_pick_label.add_theme_font_size_override("font_size", 15)
+	_pick_label.add_theme_font_size_override("font_size", 19)
 	_pick_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_pick_box.add_child(_pick_label)
 	_hours_row = HBoxContainer.new()
@@ -449,7 +449,7 @@ func _refresh() -> void:
 		var l := Label.new()
 		l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		l.add_theme_font_size_override("font_size", 15)
+		l.add_theme_font_size_override("font_size", 19)
 		var el := String(d.element)
 		var head := "%s  [%s · %s] %s 잘 맞음" % [d.name, WorldMap.REGION_NAMES.get(d.region, d.region), d.era, Elements.name_of(el)]
 		var b := Button.new()

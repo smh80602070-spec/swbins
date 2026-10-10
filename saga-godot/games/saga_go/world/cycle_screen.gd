@@ -129,7 +129,7 @@ func _build_screen() -> void:
 	_panel.add_child(_body)
 
 
-func _label(text: String, size := 15, color := Color(0.92, 0.92, 0.92)) -> void:
+func _label(text: String, size := 19, color := Color(0.92, 0.92, 0.92)) -> void:   # G-0166 15→19
 	var l := Label.new()
 	l.text = text
 	l.add_theme_font_size_override("font_size", size)
@@ -143,22 +143,22 @@ func _refresh() -> void:
 		c.queue_free()
 	var cyc: int = PartyState.cycle
 	_label("⛵ 별배 재출항 — %d회차 (최대 %d)" % [cyc, Cycle.MAX_CYCLE], 20, Color(1.0, 0.86, 0.5))
-	_label("지금: 공격력·경험치 +%d%% · 세계 등급 상한 %d" % [int(100.0 * Cycle.bonus()), 8 + Adventure.CYCLE_WL * cyc], 15, Color(0.7, 0.95, 0.75))
-	_label("이야기: %s · 모험 등급 %d/%d" % ["끝났다 ✔" if Cycle.story_done() else "끝나지 않았다 (%d/%d장)" % [int(PartyState.story.get("ch", 0)), Story.MAIN_CHAPTERS], Adventure.ar(), Cycle.REQ_AR], 15)
+	_label("지금: 공격력·경험치 +%d%% · 세계 등급 상한 %d" % [int(100.0 * Cycle.bonus()), 8 + Adventure.CYCLE_WL * cyc], 19, Color(0.7, 0.95, 0.75))
+	_label("이야기: %s · 모험 등급 %d/%d" % ["끝났다 ✔" if Cycle.story_done() else "끝나지 않았다 (%d/%d장)" % [int(PartyState.story.get("ch", 0)), Story.MAIN_CHAPTERS], Adventure.ar(), Cycle.REQ_AR], 19)
 	_label("출항하면", 17, Color(1.0, 0.9, 0.6))
-	_label("· 열어 둔 상자가 모두 되살아난다 · 채집 자리 회복 · 주간 비경 횟수·밤의 잔불 초기화 · 세계 등급 낮춤 해제", 14)
-	_label("· 공격력·경험치가 영구히 +%d%% 더 · 세계 등급 상한 +%d(모험 등급 45·50·… 에 하나씩 열림 — 적이 더 세지고 전리품이 더 붙는다)" % [int(100.0 * Cycle.BONUS_PER_CYCLE), Adventure.CYCLE_WL], 14)
-	_label("· 보상: 냥 %d · 두꺼운 견문록 %d · 인연 매듭 %d" % [int(Cycle.CYCLE_REWARD.mora), int(Cycle.CYCLE_REWARD.book_l), int(Cycle.CYCLE_REWARD.fate_knot)], 14)
+	_label("· 열어 둔 상자가 모두 되살아난다 · 채집 자리 회복 · 주간 비경 횟수·밤의 잔불 초기화 · 세계 등급 낮춤 해제", 18)
+	_label("· 공격력·경험치가 영구히 +%d%% 더 · 세계 등급 상한 +%d(모험 등급 45·50·… 에 하나씩 열림 — 적이 더 세지고 전리품이 더 붙는다)" % [int(100.0 * Cycle.BONUS_PER_CYCLE), Adventure.CYCLE_WL], 18)
+	_label("· 보상: 냥 %d · 두꺼운 견문록 %d · 인연 매듭 %d" % [int(Cycle.CYCLE_REWARD.mora), int(Cycle.CYCLE_REWARD.book_l), int(Cycle.CYCLE_REWARD.fate_knot)], 18)
 	## G-0074·G-0077 — 회차 전용 이야기(장 칸 cycle). 다음 회차에 열리는 첫 장을 알려 준다(13부 1회차 · 14부 2회차 …).
 	for i in range(Story.MAIN_CHAPTERS, Story.CHAPTERS.size()):
 		var cc := Story.chapter(i)
 		if int(cc.get("cycle", 0)) == cyc + 1:
-			_label("· 회차 전용 이야기가 열린다 — %s~ (앞 부의 그날을 다른 시대의 눈으로)" % String(cc.name), 14, Color(1.0, 0.8, 0.95))
+			_label("· 회차 전용 이야기가 열린다 — %s~ (앞 부의 그날을 다른 시대의 눈으로)" % String(cc.name), 18, Color(1.0, 0.8, 0.95))
 			break
-	_label("그대로 남는 것: 이야기 진행·도감·인물·무기·성유물·신수·마당", 14, Color(0.7, 0.8, 0.95))
+	_label("그대로 남는 것: 이야기 진행·도감·인물·무기·성유물·신수·마당", 18, Color(0.7, 0.8, 0.95))
 	var why := Cycle.blocker()
 	if why != "":
-		_label("지금은 출항할 수 없다 — " + why, 15, Color(0.95, 0.7, 0.5))
+		_label("지금은 출항할 수 없다 — " + why, 19, Color(0.95, 0.7, 0.5))
 	var go := Button.new()
 	go.text = "정말 출항한다 (한 번 더 누르면 새 회차로)" if confirming else "별배 재출항"
 	go.custom_minimum_size = Vector2(0, 46)

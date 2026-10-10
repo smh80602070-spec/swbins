@@ -214,7 +214,7 @@ func _build_panel() -> void:
 	_panel.add_child(box)
 	## 106장 ㉒ — 원신 모험 수첩처럼 의뢰판 맨 위에 모험 등급·세계 등급, 세계 등급 낮추기 단추.
 	_ar_label = Label.new()
-	_ar_label.add_theme_font_size_override("font_size", 15)
+	_ar_label.add_theme_font_size_override("font_size", 19)
 	_ar_label.add_theme_color_override("font_color", Color(1.0, 0.86, 0.5))
 	_ar_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	box.add_child(_ar_label)
@@ -227,7 +227,7 @@ func _build_panel() -> void:
 		_refresh_panel())
 	box.add_child(_wl_btn)
 	_label = Label.new()
-	_label.add_theme_font_size_override("font_size", 15)
+	_label.add_theme_font_size_override("font_size", 19)
 	_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	box.add_child(_label)
 	PartyState.world_changed.connect(_refresh_panel)

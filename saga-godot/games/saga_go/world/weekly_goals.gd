@@ -152,7 +152,7 @@ func _build() -> void:
 	_btn.offset_right = 1250
 	_btn.offset_top = 70
 	_btn.offset_bottom = 108
-	_btn.add_theme_font_size_override("font_size", 15)
+	_btn.add_theme_font_size_override("font_size", 19)
 	_btn.visible = false
 	_btn.pressed.connect(func() -> void: open_screen())
 	_layer.add_child(_btn)
@@ -179,7 +179,7 @@ func _build() -> void:
 	box.add_theme_constant_override("separation", 8)
 	_panel.add_child(box)
 	_title = Label.new()
-	_title.add_theme_font_size_override("font_size", 19)
+	_title.add_theme_font_size_override("font_size", 24)
 	_title.add_theme_color_override("font_color", Color(1.0, 0.86, 0.5))
 	box.add_child(_title)
 	_body = VBoxContainer.new()
@@ -214,12 +214,12 @@ func _refresh() -> void:
 		row.add_child(info)
 		var nm := Label.new()
 		nm.text = Weekly.name_of(id)
-		nm.add_theme_font_size_override("font_size", 16)
+		nm.add_theme_font_size_override("font_size", 20)
 		nm.add_theme_color_override("font_color", Color(0.6, 0.9, 0.65) if Weekly.claimed(id) else Color(1.0, 0.92, 0.7))
 		info.add_child(nm)
 		var ds := Label.new()
 		ds.text = Weekly.desc_of(id)
-		ds.add_theme_font_size_override("font_size", 13)
+		ds.add_theme_font_size_override("font_size", 17)
 		info.add_child(ds)
 		var prog := Weekly.progress(id, _prov())
 		var goal := Weekly.goal_of(id)
@@ -256,7 +256,7 @@ func _refresh() -> void:
 		row.add_child(b)
 	var sep := Label.new()
 	sep.text = "다섯을 다 받으면 완주 보상: 인연 매듭 %d · 견문록 %d · 연마석 %d · 빛나는 신수 알" % [int(Weekly.BONUS.fate_knot), int(Weekly.BONUS.book_m), int(Weekly.BONUS.polish)]
-	sep.add_theme_font_size_override("font_size", 14)
+	sep.add_theme_font_size_override("font_size", 18)
 	sep.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_body.add_child(sep)
 	var bb := Button.new()

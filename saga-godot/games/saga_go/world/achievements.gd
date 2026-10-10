@@ -314,7 +314,7 @@ func _build_screen() -> void:
 	box.add_theme_constant_override("separation", 8)
 	_panel.add_child(box)
 	_title = Label.new()
-	_title.add_theme_font_size_override("font_size", 20)
+	_title.add_theme_font_size_override("font_size", 24)
 	_title.add_theme_color_override("font_color", Color(1.0, 0.86, 0.5))
 	box.add_child(_title)
 	_tabs = HBoxContainer.new()
@@ -377,7 +377,7 @@ func _refresh() -> void:
 		var goal := int(tiers[next_t - 1])
 		var line2 := "다 이룸" if t >= n else "%s — %d/%d" % [Achievements.desc_of(id, next_t), mini(progress_of(id), goal), goal]
 		l.text = "%s %s\n%s" % [d.name, _stars(id, t), line2]
-		l.add_theme_font_size_override("font_size", 15)
+		l.add_theme_font_size_override("font_size", 19)
 		if t >= n:
 			l.add_theme_color_override("font_color", Color(0.75, 0.95, 0.7))
 		row.add_child(l)
