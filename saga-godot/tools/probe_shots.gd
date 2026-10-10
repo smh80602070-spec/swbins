@@ -44,6 +44,7 @@ const SHOTS := [
 	["v_bridge", "village", Vector2(5.0, 6.2), Vector3(8, 0, 0), Vector2(5.0, 7.0), -12.0, 14.0, ""],
 	["x_swing", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -24.0, 7.5, "swing3"],
 	["x_swing_late", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -24.0, 7.5, "swing8"],
+	["x_tell", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -24.0, 7.5, "tell"],   # 적 공격 예고(!) 읽힘
 	["x_fxring", "ruins", "r_statue", Vector3(14, 0, -4), "r_statue", -32.0, 14.0, "fxring"],
 	["v_statue_far", "village", "v_statue", Vector3(3, 0, 12), "v_statue", -2.0, 14.0, ""],
 	["h_homestead", "village", "v_statue", Vector3(-14, 0, 18), "v_statue", -10.0, 8.0, ""],   # G-0014 — 마당 표지(등롱·비석 둘레) 새 툰 GLB 확인
@@ -350,6 +351,19 @@ func _act(a: String) -> void:
 				_swing_enemy.set_physics_process(false)
 				_swing_enemy.set_process(false)
 				_p.global_position = _swing_enemy.global_position + Vector3(1.4, 0.4, 0.9)
+		"tell":   # 공격 예고 중인 적 — 가장 가까운 적 곁에 서고, 그 적을 예고 상태로 멈춰 둔다(덮치지 않게 물리 끔)
+			var bt := 1e9
+			for e in get_tree().get_nodes_in_group("field_enemy"):
+				var d := (e as Node3D).global_position.distance_to(_p.global_position)
+				if d < bt:
+					bt = d
+					_swing_enemy = e
+			if _swing_enemy:
+				_swing_enemy.set_physics_process(false)
+				_p.global_position = _swing_enemy.global_position + Vector3(1.4, 0.4, 0.9)
+				_swing_enemy.set("_tell_total", 1.0)
+				_swing_enemy.set("_t", 0.4)   # G-0172 — 부채꼴이 60% 찬 순간
+				_swing_enemy.call("_set_tell", true)
 		"lineup_faces", "hide":
 			_p.visible = false # 얼굴 가까이·올려다보기 — 플레이어가 앞을 가리지 않게
 		"nograss":

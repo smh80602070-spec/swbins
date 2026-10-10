@@ -307,6 +307,28 @@ var _shield_fill: MeshInstance3D = null
 var _shield_bg: MeshInstance3D = null
 var _aura_dot: MeshInstance3D = null
 var _tell_label: Label3D = null
+## G-0172 — 공격 예고 동안 발밑에 실제로 맞는 범위(앞 부채꼴: reach+0.6m·앞 dot>=0.3 = _try_hit_player 와 같은 값)를 깔고,
+## 덮치기까지 남은 시간만큼 안쪽이 가운데서 바깥으로 차오른다(피하기 타이밍). 머티리얼은 한 번만 만들고 progress 만 바꾼다.
+const TELL_FAN_SHADER := """
+shader_type spatial;
+render_mode unshaded, cull_disabled, shadows_disabled, depth_draw_never;
+uniform float radius = 1.0;
+uniform float min_dot = 0.3;
+uniform float progress = 0.0;
+varying vec2 lp;
+void vertex() { lp = VERTEX.xz; }
+void fragment() {
+	float r = length(lp) / radius;
+	if (r > 1.0 || r < 0.001 || normalize(lp).y < min_dot) { discard; }
+	float edge = smoothstep(0.9, 1.0, r);
+	float fill = r <= progress ? 0.38 : 0.0;
+	ALBEDO = vec3(1.0, 0.18, 0.12);
+	ALPHA = max(0.14 + fill, edge * 0.75);
+}
+"""
+var _tell_fan: MeshInstance3D = null
+var _tell_fan_mat: ShaderMaterial = null
+var _tell_total := 1.0
 var _anim: AnimationPlayer = null
 var glb_path := "" # G-0059 몬스터 GLB 몸이면 그 경로(아니면 "" — 코드 짐승·사람 몸)
 var _anim_lock := 0 # G-0059 공격·맞기 한 번 애니가 끝나는 시각(ms) — 그 전엔 걷기·서기로 안 바꾼다
@@ -415,6 +437,7 @@ func _physics_process(delta: float) -> void:
 				if to_s.length() <= def.reach + float(siege.call("siege_radius")):
 					ai = AI.WINDUP
 					_t = def.tell * FeelTuning.enemy_tell_mul
+					_tell_total = maxf(_t, 0.01)
 					_hit_siege = true
 					_set_tell(true)
 				else:
@@ -424,11 +447,13 @@ func _physics_process(delta: float) -> void:
 			elif dist <= def.reach:
 				ai = AI.WINDUP
 				_t = def.tell * FeelTuning.enemy_tell_mul
+				_tell_total = maxf(_t, 0.01)
 				_hit_siege = false
 				_set_tell(true)
 			else:
 				move = to_player.normalized() * def.speed
 		AI.WINDUP:
+			_tick_tell_fan()
 			if _hit_siege and is_instance_valid(siege):
 				_face(siege.global_position - global_position, delta * 3.0)
 			else:
@@ -733,6 +758,10 @@ func _leave_corpse() -> void:
 func _set_tell(on: bool) -> void:
 	if _tell_label:
 		_tell_label.visible = on
+	if _tell_fan:
+		_tell_fan.visible = on
+		if on:
+			_tick_tell_fan()
 	if on:
 		_one_shot("attack")
 	if _visual:
@@ -833,6 +862,28 @@ func _build_overhead() -> void:
 	_tell_label.position = Vector3(0, top + 0.7, 0)
 	_tell_label.visible = false
 	add_child(_tell_label)
+	var fr := float(def.reach) + 0.6
+	_tell_fan = MeshInstance3D.new()
+	var pm := PlaneMesh.new()
+	pm.size = Vector2(fr * 2.0, fr * 2.0)
+	_tell_fan.mesh = pm
+	var sh := Shader.new()
+	sh.code = TELL_FAN_SHADER
+	_tell_fan_mat = ShaderMaterial.new()
+	_tell_fan_mat.shader = sh
+	_tell_fan_mat.set_shader_parameter("radius", fr)
+	_tell_fan.material_override = _tell_fan_mat
+	_tell_fan.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_tell_fan.position = Vector3(0, 0.06, 0)
+	_tell_fan.visible = false
+	add_child(_tell_fan)
+
+func _tick_tell_fan() -> void:
+	if _tell_fan == null or not _tell_fan.visible:
+		return
+	if _visual:
+		_tell_fan.rotation.y = _visual.rotation.y
+	_tell_fan_mat.set_shader_parameter("progress", clampf(1.0 - _t / _tell_total, 0.0, 1.0))
 
 func _bar_quad(color: Color, size: Vector2) -> MeshInstance3D:
 	var mi := MeshInstance3D.new()
