@@ -16339,6 +16339,13 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       return r.join(',') === '5,0,mt_farm|mt_brown|mt_crane|mt_dragon,true,true,5,true,true,true' && ('탈것 ' + r.join(',')) || '실패 ' + r.join(',');
     });
 
+    t('go.world3d: 길 칸 색(W-0153) — 새 길 무늬(진한 주황)가 48m 칸 통째라 먼 띠로 보이던 것을 길 제 색(옅은 베이지)으로 덮어 칠한다(손잡이 roadTone 0.55)', function () {
+      var W3 = DG.world3d, LC = W3._landColor ? W3._landColor() : null, C = DG.core, tone = C.tuned('world3d.roadTone', 0.55);
+      var hex = LC && LC.road, rgb = hex ? [1, 3, 5].map(function (i) { return parseInt(hex.substr(i, 2), 16); }) : [0, 0, 0];
+      var pale = rgb[0] > 180 && rgb[1] > 170 && rgb[0] - rgb[2] < 40;   // 옅고 주황기 없는 베이지
+      var r = [!!LC, pale, tone >= 0.4 && tone <= 0.8, !!(W3._landTex() || {}).road];
+      return r.every(Boolean) && ('길 색 ' + hex + ' · 덮어 칠하기 ' + tone) || '실패 ' + r.join(',');
+    });
     t('go.world: 물고기 스폰은 물 칸에만(W-0152) — 펫 스폰 400 중 물고기 꼴이 물 아닌 칸에 선 것 0', function () {
       var W = DG.world, S = DG.sprite, n = 0, fish = 0, bad = [], i, s;
       for (i = 0; i < 400; i++) { s = W._makeSpawn(); if (s.kind !== 'pet') { continue; } n++; if (S.beastFormOf(s.ref) === 'fish') { fish++; if (W.terrainAt(Math.floor(s.x / 48), Math.floor(s.y / 48)) !== 'water') { bad.push(s.ref.id); } } }

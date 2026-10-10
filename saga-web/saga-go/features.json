@@ -723,7 +723,7 @@
   "fun": {},
   "ticket": "W-0139",
   "since": "2026-10-10",
-  "note": "D2(qc+claude 2026-10-10): visual-20261007/saga-go-1-world3d·2-close·4-burst ○ — 마을 땅이 진흙 단색에서 돌바닥·풀 무늬로, 48m 바둑판 없음. 환경광은 assets3d 시험 뒤 shared/assets/sky/ibl_noon_present_1k.hdr, 못 받으면 옛 alps_field(안 지움 — 정리는 다음). △ 먼 땅 띠는 옛 그대로(이번 범위 밖) · 하늘 물고기는 별건."
+  "note": "D2(qc+claude 2026-10-10): visual-20261007/saga-go-1-world3d·2-close·4-burst ○ — 마을 땅이 진흙 단색에서 돌바닥·풀 무늬로, 48m 바둑판 없음. 환경광은 assets3d 시험 뒤 shared/assets/sky/ibl_noon_present_1k.hdr, 못 받으면 옛 alps_field(안 지움 — 정리는 다음). 먼 땅 띠는 W-0153(qc+claude 2026-10-10): 범인 = 길(road) 칸 — 새 길 무늬(진한 주황)가 48m 칸 통째 → 길 칸만 제 색(#c9bfa8)을 0.55 로 덮어 칠해 주황 단색 띠 없음, △ 길이 48m 폭으로 넓은 것은 그대로 · 하늘 물고기는 W-0152 로 닫음."
  },
  {
   "id": "go.pet3d-shinsu",

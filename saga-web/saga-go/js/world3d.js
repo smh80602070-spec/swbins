@@ -553,8 +553,8 @@
           /* 계절 빛깔은 그 위에 **옅게 곱하기**로 얹는다 — 사진을 지우지 않고
              물들이기만 한다(겨울 들판이 누렇게 뜨는 정도) */
           var seasonAlpha = c.globalAlpha;
-          c.globalAlpha = seasonAlpha * 0.30;
-          c.globalCompositeOperation = 'multiply';
+          c.globalAlpha = seasonAlpha * (at.kind === 'road' ? core.tuned('world3d.roadTone', 0.55) : 0.30);   // W-0153 — 길 칸은 제 색을 덮어 칠한다(아래 terrainTexture 와 같은 손잡이)
+          c.globalCompositeOperation = at.kind === 'road' ? 'source-over' : 'multiply';
           c.fillStyle = baseCol;
           c.fillRect(rx, ry, rw, rh);
           c.globalCompositeOperation = 'source-over';
@@ -667,8 +667,8 @@
             if (pat) {
               c.fillStyle = pat;
               c.fillRect(rx, ry, rw, rh);
-              c.globalAlpha = 0.30;
-              c.globalCompositeOperation = 'multiply';
+              c.globalAlpha = useKind === 'road' ? core.tuned('world3d.roadTone', 0.55) : 0.30;   // W-0153 — 새 길 무늬(land_c 진한 주황)가 48m 칸 통째라 먼 띠로 보였다: 길 칸만 제 색(옅은 베이지)을 덮어 칠한다
+              c.globalCompositeOperation = useKind === 'road' ? 'source-over' : 'multiply';
               c.fillStyle = baseCol;
               c.fillRect(rx, ry, rw, rh);
               c.globalCompositeOperation = 'source-over';
@@ -3231,7 +3231,7 @@
       };
     },
     actorKeys: function () { return Object.keys(actors); }, actorNode: function (key) { return actors[key] ? actors[key].node : null; },   // ㉑ 배우 마디 — weapon.js 무기 빛이 선두 외곽선 색만 고친다
-    available: available, active: active, wanted: wanted, _landTex: function () { return LAND_TEX_VARIANTS; }, _iblSrc: iblSrc,   // W-0139 진단용
+    available: available, active: active, wanted: wanted, _landTex: function () { return LAND_TEX_VARIANTS; }, _iblSrc: iblSrc, _landColor: function () { return LAND_COLOR; },   // W-0139·W-0153 진단용
     /* 값을 내는 함수 — three 없이도 돈다(자가진단이 이것만 따로 본다) */
     lightingAt: lightingAt, propPlan: propPlan, urbanity: urbanity, camAim: camAim,
     /** 짓는 반경(R)·부수는 반경(UR, PLAN 42절) — 손잡이로 잡는다 */
