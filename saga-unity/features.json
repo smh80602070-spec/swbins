@@ -1496,16 +1496,19 @@
  {
   "id": "un.go.house-interior",
   "name": "마을 집 실내 방 입장(U-0039)",
-  "files": [],
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/World/GoHouseInterior.cs"
+  ],
   "tests": [
-   "PlaytestHeadless"
+   "PlaytestHeadless",
+   "PlaytestShowcaseGui"
   ],
   "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "U-0039",
   "since": "2026-10-04",
-  "note": "D2: 배치 진단 saga-unity/docs/playcheck/diag-20261005.json — 방 크기·순간이동 왕복·방 안 저장 치환. 실제 걸어 들어가기는 눈 필요"
+  "note": "D2: 배치 진단 saga-unity/docs/playcheck/diag-20261005.json — 방 크기·순간이동 왕복·방 안 저장 치환 · U-0089(docs/playcheck/d2-u0089-20261010.json): 방 벽 NoClimb(북·서 벽 밀어도 안 매달림, 전 4.8~5.2m) · 출구를 벽 안쪽 1m 로(GLB door_out 이 벽 바깥이라 걸어서 못 나가 갇혔음, 전 2.1m 밖) · 시트 눈 ○ 걸어 들어감 → 문 앞 → 걸어 나옴"
  },
  {
   "id": "un.go.anon-crowd",

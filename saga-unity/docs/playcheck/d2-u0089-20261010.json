@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-10",
+  "tickets": ["U-0089 1만리 마을집 방 안 벽 오르기 — 방 벽에 오르기 금지 표식(+ 걷다 발견: 방에서 걸어 나갈 수 없던 것)"],
+  "how": "PlaytestGoHouseInterior 에 방마다 오르기 검사(북·서 벽을 SetTestInput·Step 로 2초 밀기) → 고치기 전 FAIL(북 벽 매달려 바닥 위 4.8·5.2m, 서 벽 매달림) → RoomColliders 뿌리에 NoClimb → OK(0.2m = 시작 높이) · U-0086 과 같은 시트에서 주인공이 문 앞에서 멈춘 채 안 나가는 것을 봄 → 걸어 나가기 검사(들어선 자리에서 출구 쪽 3초) → FAIL 둘 다 '출구에서 2.1m 밖(반경 1.2)': GLB door_out 이 벽 바깥(한옥·여관 모두 1.2m)이라 몸(반지름 0.9)이 벽에 막혀 못 닿음 → 출구만 벽 안쪽 1m 로 당김(들어선 자리는 원래 문 기준) → OK 0.0m",
+  "fix": "GoHouseInterior: RoomColliders 에 NoClimb · ExitIndoor = door_out 을 방 경계 안쪽 1m 로 Clamp. PlaytestGoHouseInterior: CheckNoClimb(북·서) · CheckWalkOut(출구 반경 안에 닿음)",
+  "commands": [
+    "bash tools/unity-batch.sh -- Unity -batchmode -nographics -buildTarget Android -executeMethod Saga.EditorTools.PlaytestHeadless.Run",
+    "SAGA_SHOT_SCENE=Assets/Scenes/TestVillage.unity SAGA_SHOT_TARGETS=gamecam SAGA_SHOT_SEQ=10,6|10,12 SAGA_SHOT_ACT=roof Unity -buildTarget Android -executeMethod Saga.EditorTools.PlaytestShowcaseGui.Run"
+  ],
+  "scene": [
+    "[PlaytestHeadless] house interior OK - [House_2] … 벽 안 오름 북벽 0.2m 서벽 0.2m 걸어 나가기 0.0m [House_3] … 같음",
+    "[PlaytestHeadless] traversal OK - … 등반 12.5m 3.9s(바깥 오르기 그대로)",
+    "[PlaytestHeadless] OK - 10 frames, no errors"
+  ],
+  "runtime_errors": 0,
+  "shots": "세션 scratchpad roof89(벽 앞에 섬) · roof89b(10칸 12프레임: 2~7 방 안 문 앞 → 8 걸어 나옴 → 9·10 집 앞) — 커밋 안 함",
+  "results": [
+    { "id": "un.go.house-interior", "eye": "○", "note": "방 안에서 북쪽 벽(문)으로 걸어도 매달리지 않고 문 앞에 섰다가 걸어 나감(전: 4~10칸 벽 타고 천장까지·문 앞에서 갇힘)", "result": "D2 유지(note)" }
+  ],
+  "left": "나온 뒤 재입장 대기(1.5초) 중에 계속 밀면 집 바깥 벽을 오른다(바깥 오르기 — 원래 동작, 시트 10칸) · 출구 자리가 문 그림보다 1m 안쪽이라 문틀 앞에서 나가짐(눈으로 어색하지 않음)"
+}

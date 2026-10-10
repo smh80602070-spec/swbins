@@ -102,6 +102,9 @@ namespace Saga.Go.World
             var spawnNode = FindDeep(Room, "spawn_in");
             if (spawnNode != null && Flat(spawnNode.position - door) >= MinLandingGap) spawn = new Vector3(spawnNode.position.x, b.min.y, spawnNode.position.z);
             LandingIndoor = spawn + Vector3.up * 0.1f;
+            // U-0089 GLB `door_out` 은 벽 바깥(문 너머)에 있어 벽 충돌체에 막힌 몸(반지름 0.9)이 출구 반경에 못 닿아 갇혔다 — 출구만 벽 안쪽 1m 로 당긴다(들어선 자리는 원래 문 기준)
+            const float exitInset = 1f;
+            ExitIndoor = new Vector3(Mathf.Clamp(door.x, b.min.x + exitInset, b.max.x - exitInset), door.y, Mathf.Clamp(door.z, b.min.z + exitInset, b.max.z - exitInset));
 
             var colNode = FindDeep(Room, "col_room");
             CeilingY = colNode != null ? Room.position.y + 2f * (colNode.position.y - Room.position.y) : b.min.y + b.size.y * 0.9f;
@@ -162,6 +165,7 @@ namespace Saga.Go.World
         {
             var root = new GameObject("RoomColliders").transform;
             root.SetParent(transform, false);
+            root.gameObject.AddComponent<NoClimb>();   // U-0089 방 벽은 매달리지 않는다(머리가 천장 판에 닿고 벽 너머로 넘어갔다)
             const float t = 0.6f;
             float h = Mathf.Max(b.size.y, 6f);
             Box(root, "Floor", new Vector3(b.center.x, b.min.y - t * 0.5f, b.center.z), new Vector3(b.size.x + 2f, t, b.size.z + 2f));
