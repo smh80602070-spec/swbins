@@ -74,10 +74,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -160.0
-offset_top = -990.0
-offset_right = -40.0
-offset_bottom = -930.0
+offset_left = -300.0
+offset_top = -570.0
+offset_right = -180.0
+offset_bottom = -510.0
 script = ExtResource("16")
 
 [node name="EventButton" type="Button" parent="."]
@@ -85,10 +85,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -160.0
-offset_top = -920.0
-offset_right = -40.0
-offset_bottom = -860.0
+offset_left = -300.0
+offset_top = -500.0
+offset_right = -180.0
+offset_bottom = -440.0
 script = ExtResource("15")
 
 [node name="PromoteButton" type="Button" parent="."]
@@ -96,10 +96,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -160.0
-offset_top = -850.0
-offset_right = -40.0
-offset_bottom = -790.0
+offset_left = -300.0
+offset_top = -430.0
+offset_right = -180.0
+offset_bottom = -370.0
 script = ExtResource("13")
 
 [node name="ArchiveButton" type="Button" parent="."]
@@ -107,10 +107,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -160.0
-offset_top = -780.0
-offset_right = -40.0
-offset_bottom = -720.0
+offset_left = -300.0
+offset_top = -360.0
+offset_right = -180.0
+offset_bottom = -300.0
 script = ExtResource("12")
 
 [node name="QuizButton" type="Button" parent="."]
@@ -118,10 +118,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -160.0
-offset_top = -710.0
-offset_right = -40.0
-offset_bottom = -650.0
+offset_left = -300.0
+offset_top = -290.0
+offset_right = -180.0
+offset_bottom = -230.0
 script = ExtResource("11")
 
 [node name="PlotButton" type="Button" parent="."]
@@ -129,10 +129,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -160.0
-offset_top = -640.0
-offset_right = -40.0
-offset_bottom = -580.0
+offset_left = -300.0
+offset_top = -220.0
+offset_right = -180.0
+offset_bottom = -160.0
 script = ExtResource("10")
 
 [node name="DiploButton" type="Button" parent="."]
@@ -140,10 +140,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -160.0
-offset_top = -570.0
-offset_right = -40.0
-offset_bottom = -510.0
+offset_left = -300.0
+offset_top = -150.0
+offset_right = -180.0
+offset_bottom = -90.0
 script = ExtResource("9")
 
 [node name="AttackButton" type="Button" parent="."]
