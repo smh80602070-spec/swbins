@@ -539,6 +539,8 @@ func _best_officer_for(stat: String, city_filter: String = "") -> String:
 	for id: String in roster:
 		if _done_this_month.get(id, false):
 			continue
+		if int(officer_hurt.get(id, 0)) > 0:   # G-0182 중상 — 나을 때까지 명령·출진 못 함
+			continue
 		if not city_filter.is_empty() and officer_city.get(id, "") != city_filter:
 			continue
 		if Characters.find(id) == null:

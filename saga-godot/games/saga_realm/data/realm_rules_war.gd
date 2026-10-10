@@ -298,7 +298,7 @@ func transfer_officer(officer_id: String, to_city_id: String) -> Dictionary:
 ## 안 주면(빈 배열) 지금까지와 완전히 동치 — 진단 "AI 일기토 무영향"·
 ## "선택 없이 자동으로 돌리면 기존 fight()와 결과 동일"이 이 기본값
 ## 하나로 보장된다.
-func attack(enemy_id: String, duel_moves: Array = []) -> Dictionary:
+func attack(enemy_id: String, duel_moves: Array = [], grid: Dictionary = {}) -> Dictionary:
 	var enemy_def := RealmCities.enemy_by_id(enemy_id)
 	if enemy_def.is_empty():
 		return {"ok": false, "why": "없는 목표"}
@@ -362,6 +362,29 @@ func attack(enemy_id: String, duel_moves: Array = []) -> Dictionary:
 		"best_command": _effective_stat(officer_id, "command"), "best_might": atk_might,
 		"officer_count": 1,
 	}
+	## G-0182 — 격자 전술 결과(realm_tactics.gd apply()). 비면 아무것도 안 한다(예전과 비트 단위로 같다).
+	## 웹 tactics.js marchApply() 그대로: 공 위력 ×(1 + winPct/100) · 받는 피해 ×lossMul(RealmWar.step_round 가 atk.give/take 를 곱한다).
+	## 쓰러진 장수(전사·중상)는 남은 싸움에서 빠진다 — 이 판은 데려가는 장수가 하나라 "장수 없는 부대"(lead 0.6)가 된다.
+	## 군주가 쓰러지면 판이 끝나지 않게 중상으로 돌린다(웹 그대로).
+	var grid_dead: Array = []
+	var grid_hurt: Array = []
+	if not grid.is_empty():
+		atk["give"] = 1.0 + float(grid.get("winPct", 0)) / 100.0
+		atk["take"] = float(grid.get("lossMul", 1.0))
+		for id: Variant in grid.get("fallen", []):
+			if String(id) == current_lord_id:
+				grid_hurt.append({"id": String(id), "months": RealmTactics.WOUND_MONTHS})
+			else:
+				grid_dead.append(String(id))
+		for w: Variant in grid.get("wounded", []):
+			grid_hurt.append({"id": String(w.id), "months": int(w.months)})
+		var down: Array = grid_dead.duplicate()
+		for w: Dictionary in grid_hurt:
+			down.append(w.id)
+		if officer_id in down:
+			atk.best_command = 0.0
+			atk.best_might = 0.0
+			atk.officer_count = 0
 	## **2026-09-12 갱신 — 이간·매수로 이름 있는 수비 무장이 생겼다.**
 	## `e.officers`(비면 예전처럼 0)를 그대로 반영한다 — 매수·이간으로
 	## 미리 빼내면 그만큼 수비가 약해진다(officer_count·best_command·
@@ -434,14 +457,75 @@ func attack(enemy_id: String, duel_moves: Array = []) -> Dictionary:
 		c.food = int(c.food) + baggage
 		e.troops = int(rep.def_troops_left)
 	enemies[enemy_id] = e
+	## G-0182 — 전사는 로스터에서 영구히 빠지고 열전(annals)에 남는다 · 중상은 남은 달만큼 명령·출진 못 함.
+	for id: String in grid_dead:
+		_fall_in_tactics(id, enemy_id, force_id)
+	var hurt_ids: Array = []
+	for w: Dictionary in grid_hurt:
+		officer_hurt[w.id] = maxi(int(officer_hurt.get(w.id, 0)), int(w.months))
+		hurt_ids.append(w.id)
 
-	return {
+	var out := {
 		"ok": true, "won": rep.won, "routed": rep.routed, "sortie": rep.sortie,
 		"loss_a": rep.loss_a, "loss_d": rep.loss_d,
 		"wall_from": rep.wall_from, "wall_to": rep.wall_to,
 		"boss_beaten": boss_beaten,
 		"duel_rounds": duel_rounds, "duel_mul": duel_mul,
 	}
+	## G-0182 — 전술 결과가 있을 때만 붙인다(없으면 돌려주는 값도 예전과 한 글자도 같다 — probe_realm_golden md5).
+	if not grid.is_empty():
+		out["grid"] = String(grid.get("kind", ""))
+		out["fallen"] = grid_dead
+		out["hurt"] = hurt_ids
+	return out
+
+
+## G-0182 — 전술판에서 쓰러진 장수를 영구히 내보낸다(웹 marchApply dead 갈래 — rec.dead·gov 비움·annalize).
+## 태수 자리는 officer_city 를 매번 다시 훑는 구조라(_governor_at) 지우기만 하면 저절로 빈다.
+func _fall_in_tactics(id: String, where: String, by: String) -> void:
+	roster.erase(id)
+	officer_city.erase(id)
+	officer_loyal.erase(id)
+	officer_hurt.erase(id)
+	_succession_shock_until.erase(id)
+	if heir_id == id:
+		heir_id = ""
+	annals[id] = {"year": year, "month": month, "where": where, "by": by}
+
+
+## G-0182 — 이 출진의 전술판 하나(판·유닛을 세운다). 못 열면 {"ok": false, "why"}. G-0183 화면·G-0188 측정이 부른다.
+## 웹 marchGrid() 그대로: 내 편 = 데려갈 장수(이 판은 attack() 과 같은 한 명), 적 = 수비 장수 셋까지 + 부대 1~2(수비 병력을 나눔),
+## 땅 = 그 성의 땅 꼴, 공성. 씨앗 = 목표|해|달(같은 달 같은 성 = 같은 판).
+func tactics_board(enemy_id: String) -> Dictionary:
+	var enemy_def := RealmCities.enemy_by_id(enemy_id)
+	if enemy_def.is_empty():
+		return {"ok": false, "why": "없는 목표"}
+	var officer_id := _best_officer_for("might", String(enemy_def.get("from_city", "")))
+	if officer_id.is_empty():
+		return {"ok": false, "why": "데려갈 장수가 없습니다"}
+	var e: Dictionary = enemies.get(enemy_id, {})
+	var foes: Array = []
+	for oid: Variant in e.get("officers", []):
+		if Characters.find(String(oid)) != null and foes.size() < 3:
+			foes.append(String(oid))
+	var n := maxi(1, mini(2, 5 - foes.size()))
+	var foe_troops: Array = []
+	for k in n:
+		foe_troops.append(RealmTactics.js_round(float(e.get("troops", 0)) / float(n)))
+	var stats := {}
+	for id: String in [officer_id] + foes:
+		stats[id] = {"might": _effective_stat(id, "might"), "wisdom": _effective_stat(id, "wisdom"), "command": _effective_stat(id, "command")}
+	var b := RealmTactics.make_board("%s|%d|%d" % [enemy_id, year, month], String(enemy_def.get("land", "plain")), true)
+	RealmTactics.units_of(b, [officer_id], foes, foe_troops, stats)
+	return {"ok": true, "board": b, "officer": officer_id}
+
+
+## G-0182 — 양쪽 다 AI 로 끝까지 둔 결과의 보정값(attack() 셋째 인자로 바로 넘긴다). 못 열면 {}.
+func tactics_auto(enemy_id: String) -> Dictionary:
+	var tb := tactics_board(enemy_id)
+	if not bool(tb.ok):
+		return {}
+	return RealmTactics.apply(RealmTactics.auto_play(tb.board), enemy_id)
 
 
 ## war.js capture()를 좁혀 옮긴 것(2026-09-12, "1,2,3 순서대로 다해" —

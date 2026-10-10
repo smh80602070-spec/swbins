@@ -103,8 +103,19 @@ func next_month() -> void:
 		month = 1
 		year += 1
 	_done_this_month.clear()
+	_tick_hurt()
 	check_result()
 
+
+
+## G-0182 — 중상(officer_hurt) 남은 달을 하나씩 줄이고 0 이면 지운다(웹 rec.hurt 가 달마다 주는 것과 같다).
+func _tick_hurt() -> void:
+	for id: String in officer_hurt.keys():
+		var left := int(officer_hurt[id]) - 1
+		if left <= 0:
+			officer_hurt.erase(id)
+		else:
+			officer_hurt[id] = left
 
 ## rtk.js rollDisasters() 그대로 — 달마다 한 번, DISASTER_CHANCE 확률로
 ## 성 하나를 골라 재해(또는 풍년)를 새로 건다. 이미 재해가 있거나 우리

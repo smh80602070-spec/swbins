@@ -49,6 +49,7 @@ const RealmGrowth := preload("res://games/saga_realm/data/realm_growth.gd")
 const RealmQuizData := preload("res://games/saga_realm/data/realm_quiz_data.gd")
 const RealmTraits := preload("res://games/saga_realm/data/realm_traits.gd")
 const RealmEvents := preload("res://games/saga_realm/data/realm_events.gd")
+const RealmTactics := preload("res://games/saga_realm/data/realm_tactics.gd")   # G-0182 격자 전술
 const Toast := preload("res://saga_core/ui/toast.gd")
 const SessionCard := preload("res://saga_core/ui/session_card.gd")
 const LordPortrait := preload("res://games/saga_realm/ui/lord_portrait.gd")
@@ -171,6 +172,10 @@ var heir_id := ""  # 로스터 id 또는 ""(미지정 — 계승 때 자동으�
 ## officer_id -> {month, year} — 계승 충격 창(3달, 웹판 그대로). "야심"
 ## 특성만 이 창 안에서 이탈 판정 배율이 오른다(_check_defection() 참고).
 var _succession_shock_until: Dictionary = {}
+## G-0182 — 격자 전술(realm_tactics.gd)의 결과. officer_hurt: id -> 남은 달(중상, 0 이 되면 지움 — 그동안 명령·출진에 안 나간다, 웹 rec.hurt).
+## annals: id -> {year, month, where, by} — 전술판에서 쓰러져 영구히 떠난 장수의 기록(열전, 웹 save.rtk.annals).
+var officer_hurt: Dictionary = {}
+var annals: Dictionary = {}
 
 ## **2026-09-12 추가 — 적 목표(realm_war.gd 첫 전투 슬라이스).**
 ## enemy_id -> {troops, wall, max_wall, train, tech, captured}. _init_enemies()
@@ -398,6 +403,8 @@ func start_scenario(id: String) -> void:
 	officer_growth = {}
 	officer_ambition = {}
 	enemies_subverted = 0
+	officer_hurt = {}
+	annals = {}
 	_done_this_month.clear()
 	viewing_map = false
 

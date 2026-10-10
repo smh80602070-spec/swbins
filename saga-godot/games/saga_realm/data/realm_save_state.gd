@@ -5,7 +5,7 @@ extends RealmRulesMonth
 const SAVE_PATH := "user://save_realm.json"
 const SaveSlots := preload("res://saga_core/data/save_slots.gd")   # G-0070 슬롯(1 = 이 파일 그대로)
 const SafeFile := preload("res://saga_core/data/safe_file.gd")  # 임시 파일 → .bak → 바꿔치기(쓰는 도중 꺼져도 직전본이 남는다)
-const SAVE_VERSION := 17  # 16→17(이야기 카드: story, G-0088) · 1(성 하나) → 2(성 여러 곳) → 3(officer_city) → 4(enemies) → 5(diplomacy) → 6(정복 성 편입) → 7(충성·계략) → 8(문답) → 9(이간·매수) → 10(인구 증감+재해: cities[].disaster/d_left) → 11(승진/관직: officer_growth) → 12(승패 판정: result) → 13(시나리오: scenario_id) → 14(특성·야망: officer_ambition/enemies_subverted, PLAN 101-2 REALM ③) → 15(이벤트 체인: active_events/events_done, PLAN 101-2 REALM ⑤) → 16(계승: lord_succession_enabled/current_lord_id/heir_id/_succession_shock_until, PLAN 101-2 REALM ⑥)
+const SAVE_VERSION := 18  # 17→18(격자 전술: officer_hurt/annals, G-0182) · 16→17(이야기 카드: story, G-0088) · 1(성 하나) → 2(성 여러 곳) → 3(officer_city) → 4(enemies) → 5(diplomacy) → 6(정복 성 편입) → 7(충성·계략) → 8(문답) → 9(이간·매수) → 10(인구 증감+재해: cities[].disaster/d_left) → 11(승진/관직: officer_growth) → 12(승패 판정: result) → 13(시나리오: scenario_id) → 14(특성·야망: officer_ambition/enemies_subverted, PLAN 101-2 REALM ③) → 15(이벤트 체인: active_events/events_done, PLAN 101-2 REALM ⑤) → 16(계승: lord_succession_enabled/current_lord_id/heir_id/_succession_shock_until, PLAN 101-2 REALM ⑥)
 
 
 func save_version() -> int:
@@ -43,6 +43,8 @@ func save() -> bool:
 		"current_lord_id": current_lord_id,
 		"heir_id": heir_id,
 		"succession_shock_until": _succession_shock_until,
+		"officer_hurt": officer_hurt,   # G-0182
+		"annals": annals,
 	}
 	return SafeFile.write_text(save_path(), JSON.stringify(data))
 
@@ -108,6 +110,10 @@ func try_load() -> bool:
 	heir_id = String(data.get("heir_id", ""))
 	var loaded_shock: Variant = data.get("succession_shock_until", {})
 	_succession_shock_until = loaded_shock if typeof(loaded_shock) == TYPE_DICTIONARY else {}
+	var loaded_hurt: Variant = data.get("officer_hurt", {})   # G-0182 — 옛 세이브는 빈 값
+	officer_hurt = loaded_hurt if typeof(loaded_hurt) == TYPE_DICTIONARY else {}
+	var loaded_annals: Variant = data.get("annals", {})
+	annals = loaded_annals if typeof(loaded_annals) == TYPE_DICTIONARY else {}
 	_done_this_month.clear()
 	return true
 

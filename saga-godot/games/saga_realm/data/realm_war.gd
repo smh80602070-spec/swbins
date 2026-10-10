@@ -46,6 +46,7 @@ static func army_power(troops: int, train: int, tech: int,
 ## 결). rng는 RealmSaveState._rng(고정 시드)를 그대로 받아 진단 결정성을
 ## 지킨다.
 ##   atk/def: {troops, start, train, tech, best_command, best_might, officer_count}
+##   G-0182 — atk 에 give(공 위력 배율)·take(받는 피해 배율)가 있으면 곱한다(격자 전술 결과, 웹 atk.grid). 없으면 1.0 이라 예전과 비트 단위로 같다.
 ##   wall:    {wall, max_wall}
 static func step_round(atk: Dictionary, def: Dictionary, wall: Dictionary,
 		land_def: float, land_siege: float, sortie: bool,
@@ -57,11 +58,11 @@ static func step_round(atk: Dictionary, def: Dictionary, wall: Dictionary,
 		wall_f = land_def * (1.0 + float(wall.wall) / maxf(1.0, float(wall.max_wall)) * 0.9)
 
 	var ap := army_power(int(atk.troops), int(atk.train), int(atk.tech),
-		float(atk.best_command), float(atk.best_might), int(atk.officer_count))
+		float(atk.best_command), float(atk.best_might), int(atk.officer_count)) * float(atk.get("give", 1.0))
 	var dp := army_power(int(def.troops), int(def.train), int(def.tech),
 		float(def.best_command), float(def.best_might), int(def.officer_count)) * wall_f
 
-	var loss_a := roundi(dp * 0.055 * (0.85 + rng.randf() * 0.3))
+	var loss_a := roundi(dp * 0.055 * (0.85 + rng.randf() * 0.3) * float(atk.get("take", 1.0)))
 	var loss_d := roundi(ap * 0.055 * (0.85 + rng.randf() * 0.3))
 	atk.troops = maxi(0, int(atk.troops) - loss_a)
 	def.troops = maxi(0, int(def.troops) - loss_d)

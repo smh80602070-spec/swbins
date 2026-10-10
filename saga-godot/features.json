@@ -3067,5 +3067,29 @@
   "fun": {},
   "ticket": "G-0111",
   "since": "2026-10-08"
+ },
+ {
+  "id": "gd.rk.tactics",
+  "name": "사가천하 격자 전술 규칙 — 웹 tactics.js 이식(8×6·3턴·엄폐·AI·결과 넷), attack() 셋째 인자 보정(공 위력·받는 피해)·전사(열전)·중상 3달, 웹 값과 같은 판·결과(probe ⓪)",
+  "files": [
+   "games/saga_realm/data/realm_tactics.gd",
+   "games/saga_realm/data/realm_rules_war.gd",
+   "games/saga_realm/data/realm_war.gd",
+   "games/saga_realm/data/realm_rules.gd",
+   "games/saga_realm/data/realm_rules_month.gd",
+   "games/saga_realm/data/realm_state.gd",
+   "games/saga_realm/data/realm_save_state.gd",
+   "tools/probe_realm_tactics.gd"
+  ],
+  "tests": [
+   "realm_tactics",
+   "realm_golden",
+   "realm_state"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0182",
+  "since": "2026-10-11"
  }
 ]
