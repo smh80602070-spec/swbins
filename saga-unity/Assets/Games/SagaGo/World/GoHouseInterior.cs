@@ -9,7 +9,8 @@ namespace Saga.Go.World
     /// U-0039 — GO 마을집(`House_2`·`House_3`)에 들어갈 수 있는 방(집마다 다른 방 GLB — <see cref="Houses"/>). 숲 `ForestHouse` 의 "포켓 공간" 선례를 GO 에 맞춰 줄였다:
     /// 방(`Resources/World/int_hanok_01`, K-0026)을 마을과 안 겹치는 먼 자리에 세워 두고, 문 앞 근접 → 순간이동 / 방 안 출구 근접 → 복귀.
     /// 입력 키는 안 만든다(자동). 방 규약(K-0026): 문 = 남쪽 가운데, 빈 노드 `spawn_in`·`door_out`·`light_*`. 방 GLB 는 1.7m 사람 기준이라
-    /// 이 판 사람 키(3.4m)에 맞춰 <see cref="RoomScale"/> 배. 충돌체는 GLB 에 없어 바닥·벽 박스를 덧붙인다(천장은 안 닫는다 — 카메라가 위에서 내려다본다).
+    /// 이 판 사람 키(3.4m)에 맞춰 <see cref="RoomScale"/> 배. 충돌체는 GLB 에 없어 바닥·벽 박스를 덧붙인다(천장은 몸이 안 막힌다).
+    /// U-0086 — 방 GLB 엔 천장 판이 있어(바닥 위 6m 남짓) 카메라가 9m 뒤로 물러나면 천장 판 위·속을 비췄다 → 천장에 카메라만 막는 트리거(`CameraOccluder`)를 덮는다.
     /// 안전장치: 방에서 떨어지거나 너무 멀어지면 밖으로 복귀 · 방 안에서 저장하면 밖 복귀 자리로 치환(<see cref="SavePosition"/>).
     /// </summary>
     public class GoHouseInterior : MonoBehaviour
@@ -36,6 +37,8 @@ namespace Saga.Go.World
         public Vector3 LandingIndoor { get; private set; }     // 들어오면 서는 자리
         public Vector3 ExitIndoor { get; private set; }        // 방 안 문 자리 — 여기 다가가면 나간다
         public Bounds RoomBounds { get; private set; }
+        /// <summary>U-0086 천장 아랫면 높이(월드) — GLB `col_room`(방 높이 가운데 표식)의 두 배, 없으면 경계 높이의 0.9.</summary>
+        public float CeilingY { get; private set; }
         public int LightCount { get; private set; }
         public Transform Room { get; private set; }
 
@@ -100,6 +103,8 @@ namespace Saga.Go.World
             if (spawnNode != null && Flat(spawnNode.position - door) >= MinLandingGap) spawn = new Vector3(spawnNode.position.x, b.min.y, spawnNode.position.z);
             LandingIndoor = spawn + Vector3.up * 0.1f;
 
+            var colNode = FindDeep(Room, "col_room");
+            CeilingY = colNode != null ? Room.position.y + 2f * (colNode.position.y - Room.position.y) : b.min.y + b.size.y * 0.9f;
             BuildColliders(b);
             BuildLights();
         }
@@ -164,6 +169,7 @@ namespace Saga.Go.World
             Box(root, "WallN", new Vector3(b.center.x, b.min.y + h * 0.5f, b.max.z + t * 0.5f), new Vector3(b.size.x + 2f, h, t));
             Box(root, "WallW", new Vector3(b.min.x - t * 0.5f, b.min.y + h * 0.5f, b.center.z), new Vector3(t, h, b.size.z + 2f));
             Box(root, "WallE", new Vector3(b.max.x + t * 0.5f, b.min.y + h * 0.5f, b.center.z), new Vector3(t, h, b.size.z + 2f));
+            CameraOccluder.AttachBox(transform, "CeilingCam", new Vector3(b.center.x, CeilingY + 1f, b.center.z), new Vector3(b.size.x + 2f, 2f, b.size.z + 2f));   // 카메라만 — 몸·오르기는 트리거를 안 본다(바닥·벽 다섯과 따로 둔다)
         }
 
         private static void Box(Transform parent, string name, Vector3 center, Vector3 size)

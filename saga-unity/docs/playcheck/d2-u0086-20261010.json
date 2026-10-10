@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-10",
+  "tickets": ["U-0086 1만리 지붕 카메라 — 집 곁을 걸을 때 카메라가 판자 속(U-0080 시트 ×)"],
+  "how": "1 원인 가리기: PlaytestGoPeaks 에 지붕 걷기 표(촬영 roof 와 같은 길, 0.25m 칸마다 실제 리그 자리·방향으로 당김·카메라/가까운 면이 지붕 상자 안인지) → 바깥 12칸 모두 당김 없음·상자 안 0(카메라는 남쪽 뒤, 걷는 쪽과 반대) → 티켓 의심 ⓐⓒ 아님. GUI 시트(같은 명령)에 칸마다 주인공·리그·실제 카메라·당김 계산 임시 로그(커밋 안 함) → 1칸 뒤 문으로 들어 방(주머니 공간 z≈886)으로 옮겨짐, 당김 9.00 그대로·실제 카메라 = 가상 카메라(ⓑ 아님), 카메라 높이 6.8m. 방 GLB(int_hanok_01·int_inn_01) 천장 판 = 로컬 3.0·3.2 × 2배 = 바닥 위 6.0·6.4m 인데 충돌 없음(코드 주석 '천장은 안 닫는다 — 위에서 내려다본다'가 모델과 어긋남) → 진짜 원인 ⓓ 방 천장 판 속",
+  "fix": "GoHouseInterior: CeilingY(GLB col_room 표식 높이 × 2, 없으면 경계 높이 0.9) · 천장 위에 카메라만 막는 트리거 상자 CeilingCam(CameraOccluder, 방 루트 아래 — 바닥·벽 다섯 검사와 따로) · CameraOccluder.AttachBox(렌더러 없는 월드 상자) · 촬영 도구 roof 동작과 진단 지붕 걷기는 방 천장 트리거를 빼고 마을 지붕만 고름(새 트리거가 InstanceID 첫 자리를 차지해 주인공을 주머니 공간 밖에 떨어뜨리던 것)",
+  "commands": [
+    "bash tools/unity-batch.sh -- Unity -batchmode -nographics -buildTarget Android -executeMethod Saga.EditorTools.PlaytestHeadless.Run (PlaytestGoPeaks 포함)",
+    "SAGA_SHOT_SCENE=Assets/Scenes/TestVillage.unity SAGA_SHOT_TARGETS=gamecam SAGA_SHOT_SEQ=10,6 SAGA_SHOT_ACT=roof Unity -buildTarget Android -executeMethod Saga.EditorTools.PlaytestShowcaseGui.Run",
+    "node tools/qc.mjs --branch unity"
+  ],
+  "scene": [
+    "[PlaytestHeadless] house interior OK - [House_2] 방 12.8×10.8×6.5m · [House_3] 방 18.8×14.8×6.9m",
+    "[PlaytestHeadless] peaks OK - … 지붕 5 · 지붕 너머 16→4.3m · 지붕 걷기 12칸 · 상자 안 0 · 방 카메라 6.9m/천장-0.5 6.0m/천장-1.0 7.6m/천장-0.5 7.6m/천장-0.5",
+    "[PlaytestHeadless] OK - 10 frames, no errors",
+    "QC PASS · FAIL 0 · WARN 0 (Unity 배치 SKIP — 위 명령으로 돌림)"
+  ],
+  "before_log": "고치기 전 GUI 칸 f1~f9: inside IN · occl 9.00 · 실제 카메라 y 6.8~10.6(주인공이 북쪽 벽을 오르며 같이 올라감) · 천장 6.4",
+  "after_log": "고친 뒤 f1~f9: occl 7.66 → 2.85(주인공이 오를수록 당김) · 실제 카메라 y 6.04 고정(천장 아래)",
+  "runtime_errors": 0,
+  "shots": "세션 scratchpad roof_before/gamecam_seq.png(2~10칸 천장 판만) · roof_after/gamecam_seq.png — 커밋 안 함",
+  "results": [
+    { "id": "un.go.falls-roof-cam", "eye": "○", "note": "1칸: 집 앞을 북쪽으로 걷는 주인공(바깥 카메라 정상). 2~10칸: 방 안 — 천장 밑에서 내려다본 마루·판자 벽·열린 북쪽 문, 주인공이 10칸 내내 화면 가운데에 보임(고치기 전엔 2~10칸 천장 판만, 주인공 0칸). 판자 속·검은 칸 없음", "result": "D1 → D2", "date": "2026-10-10" }
+  ],
+  "left": "방 안에서 벽을 오른다(4~10칸 북쪽 벽에 매달려 천장 쪽으로 — 방 벽 박스에 NoClimb 없음, 이 티켓 밖 · 후속 후보) · 바깥 지붕 곁을 서→동으로 지나가는 컷은 촬영 동작이 없어 진단 표로만(바깥은 카메라가 걷는 쪽 반대라 지붕을 안 지남)"
+}

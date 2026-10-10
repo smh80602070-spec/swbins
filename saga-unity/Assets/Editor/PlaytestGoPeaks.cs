@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -47,6 +48,7 @@ namespace Saga.EditorTools
                 CheckSave(savePath);
                 falls = CheckWaterfalls(ui);
                 cam = CheckCamera(fc);
+                cam += " · " + CheckRoofWalk(pc);
             }
             finally
             {
@@ -252,5 +254,87 @@ namespace Saga.EditorTools
             if (solidHit && sh.distance + 0.6f <= z + 0.6f) Fail($"지붕이 아니라 단단한 {sh.collider.name} 이 막음 — 지붕 트리거 검사가 안 됨");
             return $"지붕 {roofs.Length} · 지붕 너머 16→{z:F1}m(발밑 광선은 {(solidHit ? sh.collider.name : "안 맞음")})";
         }
+
+        /// <summary>U-0086 지붕 걷기 — 촬영 `SAGA_SHOT_ACT=roof` 와 같은 길(첫 지붕 표식 남쪽 3m → 북쪽 벽에 닿을 때까지 0.25m 씩)에서
+        /// 칸마다 실제 리그 자리·방향으로 당김을 재고, 카메라 자리·가까운 면(0.3m)이 지붕 상자 안인지 센다. 표는 로그에(o = 머리가 지붕 상자 안 · C = 카메라가 상자 안 · n = 가까운 면이 상자에 닿음).</summary>
+        private static string CheckRoofWalk(PlayerController pc)
+        {
+            var rig = pc.GetComponentInChildren<CameraRig>();
+            var roof = Object.FindObjectsByType<CameraOccluder>(FindObjectsSortMode.InstanceID).FirstOrDefault(o => o.GetComponentInParent<GoHouseInterior>() == null);   // 마을 지붕만 — 촬영 roof 와 같은 것
+            var roofCol = roof != null ? roof.GetComponent<Collider>() : null;
+            if (rig == null || roofCol == null) { Fail("CameraRig·지붕 표식 없음"); return ""; }
+            var roofCols = Object.FindObjectsByType<CameraOccluder>(FindObjectsSortMode.None).Select(o => o.GetComponent<Collider>()).Where(c => c != null).ToArray();
+            var rb = roofCol.bounds;
+            Vector3 start = pc.transform.position;
+            Vector3 dir = rig.transform.TransformDirection(Vector3.back);
+            int n = 0, originIn = 0, camIn = 0, nearIn = 0;
+            var rows = new List<string>();
+            // 땅 높이 — 지붕 남쪽 3m(집 밖)에서 아래로(앞 검사가 주인공을 정상에 올려 둔 채라 지금 높이는 못 쓴다)
+            var from = new Vector3(rb.center.x, rb.max.y + 30f, rb.min.z - 3f);
+            float groundY = Physics.Raycast(from, Vector3.down, out var gh, 200f, ~0, QueryTriggerInteraction.Ignore) ? gh.point.y : 0f;
+            try
+            {
+                for (float z = rb.min.z - 3f; z <= rb.max.z; z += 0.25f)
+                {
+                    var p = new Vector3(rb.center.x, groundY, z);
+                    // 벽(단단한 충돌체)에 닿으면 멈춤 — 주인공 캡슐 반지름 0.9
+                    if (Physics.OverlapCapsule(p + Vector3.up * 1.0f, p + Vector3.up * 2.5f, 0.9f, ~0, QueryTriggerInteraction.Ignore).Any(c => c.transform.root != pc.transform.root)) break;
+                    pc.transform.position = p;
+                    Physics.SyncTransforms();
+                    Vector3 o = rig.transform.position;
+                    float zoom = CameraRig.OcclusionZoom(o, dir, 9f);
+                    Vector3 c = o + dir * zoom;
+                    bool oi = roofCols.Any(rc => Inside(rc, o)), ci = roofCols.Any(rc => Inside(rc, c)), ni = roofCols.Any(rc => (rc.ClosestPoint(c) - c).magnitude < 0.3f);
+                    n++; if (oi) originIn++; if (ci) camIn++; if (ni) nearIn++;
+                    rows.Add($"{z - rb.min.z:+0.00;-0.00}:{zoom:F1}{(oi ? "o" : "")}{(ci ? "C" : "")}{(ni ? "n" : "")}");
+                }
+            }
+            finally
+            {
+                pc.transform.position = start;
+                Physics.SyncTransforms();
+            }
+            Debug.Log($"{_tag} 지붕 걷기 땅 {groundY:F1} dir {dir:F2} 지붕 {rb.min:F1}~{rb.max:F1} | {string.Join(" ", rows)}");
+            if (n < 4) Fail($"지붕 걷기 칸이 {n} — 길이 막힘");
+            if (camIn > 0 || nearIn > 0) Fail($"지붕 걷기 {n}칸 중 카메라가 지붕 상자 안 {camIn}·가까운 면 닿음 {nearIn}(머리가 상자 안 {originIn})");
+            string room = CheckRoomCamera(pc, rig, dir);
+            pc.transform.position = start;   // 방에서 나오면 집 앞 — 처음 자리로
+            Physics.SyncTransforms();
+            return $"지붕 걷기 {n}칸 · 상자 안 0 · {room}";
+        }
+
+        /// <summary>U-0086 — 지붕 걷기로 문에 들면 방(주머니 공간)으로 간다. 방마다 들어가 들어선 자리·방 가운데에서 카메라(가까운 면 0.3m 포함)가
+        /// 천장(`CeilingY`) 아래·방 경계 안인지 본다(고치기 전: 당김 없이 9m → 천장 높이 6.8m 로 천장 판 속).</summary>
+        private static string CheckRoomCamera(PlayerController pc, CameraRig rig, Vector3 dir)
+        {
+            var rooms = GoHouseInterior.All.ToList();
+            if (rooms.Count == 0) { Fail("마을집 방 없음"); return ""; }
+            var parts = new List<string>();
+            foreach (var gi in rooms)
+            {
+                gi.Enter();
+                if (!gi.Inside) { Fail($"{gi.HouseName} 방에 못 들어감"); continue; }
+                try
+                {
+                    var spots = new[] { gi.LandingIndoor, new Vector3(gi.RoomBounds.center.x, gi.LandingIndoor.y, gi.RoomBounds.center.z) };
+                    foreach (var spot in spots)
+                    {
+                        pc.transform.position = spot;
+                        Physics.SyncTransforms();
+                        Vector3 o = rig.transform.position;
+                        float zoom = CameraRig.OcclusionZoom(o, dir, 9f);
+                        Vector3 c = o + dir * zoom;
+                        var rb = gi.RoomBounds;
+                        bool under = c.y + 0.3f < gi.CeilingY, inRoom = c.x > rb.min.x && c.x < rb.max.x && c.z > rb.min.z && c.z < rb.max.z;
+                        if (!under || !inRoom) Fail($"{gi.HouseName} 방 카메라 {c:F1}(당김 {zoom:F1}m) — 천장 {gi.CeilingY:F1} 아래 {under}·방 안 {inRoom}");
+                        parts.Add($"{zoom:F1}m/천장-{gi.CeilingY - c.y:F1}");
+                    }
+                }
+                finally { gi.Exit(); }
+            }
+            return $"방 카메라 {string.Join(" ", parts)}";
+        }
+
+        private static bool Inside(Collider c, Vector3 p) => (c.ClosestPoint(p) - p).sqrMagnitude < 1e-6f;
     }
 }

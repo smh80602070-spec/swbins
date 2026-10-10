@@ -143,7 +143,7 @@ namespace Saga.EditorTools
                         fc.Skill();
                         break;
                     case "roof":
-                        var roof = Object.FindObjectsByType<Saga.Go.World.CameraOccluder>(FindObjectsSortMode.InstanceID).FirstOrDefault();
+                        var roof = Object.FindObjectsByType<Saga.Go.World.CameraOccluder>(FindObjectsSortMode.InstanceID).FirstOrDefault(o => o.GetComponentInParent<Saga.Go.World.GoHouseInterior>() == null);   // 마을 지붕만(방 천장 트리거 U-0086 빼고)
                         var pl = GameObject.FindWithTag("Player");
                         if (roof == null || pl == null) { Skip(act); return; }
                         var rb = roof.GetComponentInChildren<Collider>()?.bounds ?? new Bounds(roof.transform.position, Vector3.one * 8f);

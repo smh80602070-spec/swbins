@@ -354,16 +354,21 @@
  {
   "id": "un.go.falls-roof-cam",
   "name": "109-9 폭포·지붕 카메라",
-  "files": [],
-  "tests": [
-   "PlaytestGoPeaks"
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/Player/CameraRig.cs",
+   "saga-unity/Assets/Games/SagaGo/World/CameraOccluder.cs",
+   "saga-unity/Assets/Games/SagaGo/World/GoHouseInterior.cs"
   ],
-  "level": "D1",
+  "tests": [
+   "PlaytestGoPeaks",
+   "PlaytestShowcaseGui"
+  ],
+  "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": null,
+  "ticket": "U-0086",
   "since": "2026-09-16",
-  "note": "D1(U-0080 ×): docs/playcheck/d2-u0080-20261010.json — 마을집 지붕 남쪽에서 북으로 걷는 게임 카메라 10칸 중 2~5칸이 지붕 판자 속만 보이고 주인공이 가려짐 — 후속 후보(지붕 카메라 당김)"
+  "note": "D2(눈 ○, U-0086): docs/playcheck/d2-u0086-20261010.json — U-0080 의 '지붕 판자 속'은 실은 문으로 든 방(주머니 공간)의 천장 판: 방 GLB 엔 천장(바닥 위 6.0~6.4m)이 있는데 충돌이 없어 카메라가 9m 그대로 천장 높이에. 방 천장에 카메라만 막는 트리거(CameraOccluder, col_room ×2 높이) → roof 시트 10칸 모두 주인공 보임. 진단 PlaytestGoPeaks 지붕 걷기 11칸·방 두 곳 카메라 천장 아래·방 안"
  },
  {
   "id": "un.go.elements",

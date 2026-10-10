@@ -24,5 +24,18 @@ namespace Saga.Go.World
             go.AddComponent<CameraOccluder>();
             return col;
         }
+
+        /// <summary>U-0086 — 렌더러 없이 월드 상자 하나(마을집 방 천장처럼 모델 경계로 못 잡는 자리).</summary>
+        public static BoxCollider AttachBox(Transform parent, string name, Vector3 center, Vector3 size)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(parent, false);
+            go.transform.position = center;
+            var col = go.AddComponent<BoxCollider>();
+            col.isTrigger = true;
+            col.size = size;
+            go.AddComponent<CameraOccluder>();
+            return col;
+        }
     }
 }
