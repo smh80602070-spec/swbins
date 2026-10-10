@@ -705,10 +705,10 @@
     if (AS3 && isBeast) {
       /* 짐승 형 적 — data-enemy.js 의 `body` 필드로 실제 GLB 를 고른다(없으면
          기본 'beast'=늑대). 2026-09-05 — 몬스터 다양화 하면서 이름 정규식
-         (`/코끼리/`으로 큰 놈만 가르던 것)을 표 필드로 뺐다 — 종류가 더 늘어도
-         여기는 안 건드리고 data-enemy.js·asset3d.js REG 만 고치면 된다.
-         세력색은 안 물들인다(짐승 제 털빛이 맞다) */
-      foeBody = AS3.build((enemyDef && enemyDef.body) || 'beast',
+         (`/코끼리/`으로 큰 놈만 가르던 것)을 표 필드로 뺐다 — 종류가 더 늘어도 여기는 안 건드리고 data-enemy.js·asset3d.js REG 만 고치면 된다.
+         세력색은 안 물들인다(짐승 제 털빛이 맞다). W-0147 — 자체툴 새 몸(보스 12·계열 20, 2D 시트·초상과 같은 id)이 있으면 그것 먼저, 없으면 옛 표 */
+      var MPd = global.DG.monsterPortrait, cid = MPd && MPd.idOf ? MPd.idOf(enemyDef, !!(ref && ref.boss)) : null;
+      foeBody = AS3.build((cid && AS3.wants('crea:' + cid, 'foe') ? 'crea:' + cid : null) || (enemyDef && enemyDef.body) || 'beast',
         (ref && ref.ref && ref.ref.name) || 'beast',
         hh + r * 0.95, null, function () { return foeShape(r, hh, col); });
     } else if (AS3) {

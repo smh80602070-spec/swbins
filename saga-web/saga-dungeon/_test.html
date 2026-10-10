@@ -8235,6 +8235,21 @@ window.requestAnimationFrame = function () { return 0; };
       return r.every(Boolean) && ('짐승 ' + mapped + '/' + beasts.length + ' 짝 · 우두머리 11 · 배율 ' + f1.k + '·' + f2.k) || '실패 ' + r.join(',') + ' ' + bad.map(function (e) { return e.name; }).join(',');
     });
 
+    t('asset3d: 몬스터 3D 몸(W-0147) — 짐승 적·우두머리가 crea:<id>(통일 world 표) 로 GLB 주소를 받고, 클립 Hit·Death 가 슬롯에 걸린다', function () {
+      var A = DG.asset3d, MP = DG.monsterPortrait, ED = DG.enemyData, W = (DG.assets3dIds && DG.assets3dIds.world) || [];
+      var beast = ED.enemies.filter(function (e) { return e.kind === 'beast' && MP.idOf(e, false); })[0], boss = ED.bosses.filter(function (b) { return b.kind === 'beast'; })[0] || ED.bosses[0];
+      /* 진단에선 통일 표가 꺼져 있다(위 '통일 3D 에셋' 항목 — 시험 전 null) → url 만 잠깐 대역(표에 있는 id 만 주소를 준다) */
+      var A3 = DG.assets3d, keepUrl = A3.url, bu, su, none;
+      var bid = beast && MP.idOf(beast, false), sid = boss && MP.idOf(boss, true);
+      A3.url = function (k, id) { return A3.has(k, id) ? '_shared/assets/world3d/' + id + '.glb' : null; };
+      try { bu = bid && A.urlOf('crea:' + bid, 'foe'); su = sid && A.urlOf('crea:' + sid, 'foe'); none = A.urlOf('crea:없는몸', 'foe') === null; } finally { A3.url = keepUrl; }
+      var off = A.urlOf('crea:' + bid, 'foe') === null;   // 표가 꺼지면 null → 03.js 가 옛 body 로
+      var inW = W.indexOf(bid) >= 0 && W.indexOf(sid) >= 0, urls = !!bu && bu.indexOf('world3d/mon_') >= 0 && !!su && su.indexOf('world3d/boss_') >= 0 && off;
+      var m = A.mapClips(['Idle', 'Walk', 'Run', 'Attack', 'Hit', 'Death', 'Special']);
+      var clips = m.idle === 'Idle' && m.walk === 'Walk' && m.attack === 'Attack' && m.hit === 'Hit' && m.death === 'Death';
+      var r = [!!bid && !!sid, inW, urls, none, clips];
+      return r.every(Boolean) && (beast.name + ' → ' + bid + ' · ' + boss.name + ' → ' + sid + ' · 클립 다섯') || '실패 ' + r.join(',') + ' ' + bu + ' ' + su;
+    });
     t('dg.belt2d: 마을·들판 벨트(W-0131) — 깊이 창이 나를 따라가고 마을은 발판 안에서 멈춤·들판은 안 멈춤·마을도 want·들판 소품 짝', function () {
       var B = DG.belt2d, L1 = B.layoutTown(1280, 720, 1120, 760, 300, 380, 0, 0, false, 1, 110), L2 = B.layoutTown(1280, 720, 1120, 760, -5000, 9000, 0, 0, true, 1, 110), L3 = B.layoutTown(1280, 720, 1120, 760, -5000, 9000, 0, 0, false, 1, 110);
       var follow = Math.abs(L2.camX + 5000) < 1e-9 && Math.abs(L2.y0 - (9000 - B.HWIN * 0.55)) < 1e-9;

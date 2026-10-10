@@ -841,6 +841,25 @@
   "note": "D2: pw-belt-check.mjs d beasts → shots/belt/d-{pc,land}-1.png Claude 눈 ○(유령 mon_spir_02·천룡 boss_10 등 시트로 섬, 덩어리 대역 0). 짐승 116/116 짝·우두머리 11. mon_sp_* 23 은 짝 표(family 칸) 없어 아직 안 씀."
  },
  {
+  "id": "dg.creature3d",
+  "name": "3D 적 몬스터 몸(K-0090 ①) — 짐승형 적·우두머리는 자체툴 몸 crea:<id>(2D 시트·초상과 같은 id), 옛 회색 저다각 대신",
+  "files": [
+   "js/asset3d.js",
+   "src/dungeon3d/03.js",
+   "js/monster-portrait.js",
+   "../shared/js/assets3d.js"
+  ],
+  "tests": [
+   "asset3d: 몬스터 3D 몸(W-0147) — 짐승 적·우두머리가 crea:<id>(통일 world 표) 로 GLB 주소를 받고, 클립 Hit·Death 가 슬롯에 걸린다"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0147",
+  "since": "2026-10-10",
+  "note": "D2: 첫 방 점검(헤드리스, 응답 목록) — mon_spir_01·02·mon_cons_02·04 GLB 를 받고 옛 짐승 GLB 0, QC visual-20261007 2-room·4-next 몸 실패 0(glb 74·68). Claude 눈 △: 청록 각진 몸이 서지만 방이 어두워 작게 보임(밝기는 W-0145). 사람형 적·사람 우두머리는 그대로. mon_sp_* 24 는 idOf 짝 표에 없어 안 씀(2D 와 같음)."
+ },
+ {
   "id": "dg.belt2d-town",
   "name": "2D 마을·들판 던파식 벨트 — 하늘·먼 산·땅 띠·들판 나무·천막, 나를 가리는 앞 소품·건물은 비침",
   "files": [

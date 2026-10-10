@@ -998,11 +998,10 @@
      `monster:` 를 붙여 한 번 더 찾는다 — dead 네임스페이스였던 `monster:`
      접두 키를 이제 실제로 연결한다. DEFAULTS·data-enemy.js 는 한 글자도
      안 건드렸다(주석 "여기는 안 건드리고 표만 고치면 된다"의 그 표 쪽 문제였다). */
-  function lookup(kind) {
-    if (REG[kind]) { return { key: kind, url: REG[kind] }; }
-    var mk = 'monster:' + kind;
-    if (REG[mk]) { return { key: mk, url: REG[mk] }; }
-    return null;
+  function lookup(kind) {   // W-0147 — 'crea:<id>' = 자체툴 몬스터 몸(통일 world 표 · 2D 시트·초상과 같은 monsterPortrait.idOf id), 없으면 null
+    var A3 = global.DG.assets3d, cu = /^crea:/.test(kind) && A3 && A3.url ? A3.url('world', kind.slice(5)) : null, mk = 'monster:' + kind;
+    if (cu || /^crea:/.test(kind)) { return cu ? { key: kind, url: cu } : null; }
+    return REG[kind] ? { key: kind, url: REG[kind] } : (REG[mk] ? { key: mk, url: REG[mk] } : null);
   }
 
   function strHash(s) {
