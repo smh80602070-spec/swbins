@@ -1784,5 +1784,25 @@
   "ticket": "U-0085",
   "since": "2026-10-10",
   "note": "D2(눈 ○, U-0085 1단계): docs/playcheck/d2-u0085-20261010.json — 다섯 판 전후 촬영(전 = SAGA_PROPS_TOON=1): 3마을 과일나무 툰 띠 → 부드러운 PBR 명암, 2나락 돌벽·천장 결이 입체, 4종횡 나무판 나무결, 5천하 성곽 돌 PBR, 인물은 툰 그대로라 배경에 안 묻힘. PlaytestToonSplit 다섯 판 배경 툰 0. 시간 틈 잔해(_rift 툰+림)·발광(Unlit)·반투명은 옛 규칙 그대로. 2단계(사진 텍스처)는 K-0093 대기"
+ },
+ {
+  "id": "un.go.ground-real",
+  "name": "사실 땅 1단계 — 땅 계열 셰이더(RegionGround 띠·림 툰 / VertexColorLit·ForestWorldCurve 램버트)를 URP PBR 조명으로(거칠기 0.85·금속 0, 그림자·하늘 SH·반사·추가 조명), 텍스처·섞음·휨 그대로(U-0084)",
+  "files": [
+   "saga-unity/Assets/Shaders/SagaGroundPBR.hlsl",
+   "saga-unity/Assets/Shaders/RegionGround.shader",
+   "saga-unity/Assets/Games/SagaGo/World/VertexColorLit.shader",
+   "saga-unity/Assets/Games/SagaForest/Shaders/ForestWorldCurve.shader"
+  ],
+  "tests": [
+   "PlaytestGroundLook",
+   "PlaytestShowcaseGui"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "U-0084",
+  "since": "2026-10-10",
+  "note": "D2(눈 ○, U-0084 1단계): docs/playcheck/d2-u0084-20261010.json — 1만리·3마을·4종횡·5천하 낮 전후(전 = SAGA_GROUND_TOON=1): 띠 경계 없음·그림자가 땅에 앉음·3마을 휨 그대로·날림 없음. 1만리·3마을은 원래 램버트라 차이가 작고(조금 부드러움·추가 조명 받음), 4종횡·5천하 땅은 이미 URP Lit, 띠·림 툰이던 RegionGround 는 게임 씬 미사용(지역 로더 전용). 2단계(사진 텍스처·높이 섞기)는 K-0093 대기"
  }
 ]

@@ -52,12 +52,14 @@ Shader "Saga/RegionGround"
             #pragma multi_compile _ _CLUSTER_LIGHT_LOOP
             #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
             #pragma multi_compile_fragment _ _SHADOWS_SOFT
+            #pragma multi_compile_fragment _ _SAGA_GROUND_TOON
             #pragma multi_compile_instancing
             #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Fog.hlsl"
 
             #include "Assets/Shaders/RegionGroundInput.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Assets/Shaders/SagaGroundPBR.hlsl"
 
             struct Attributes
             {
@@ -138,6 +140,10 @@ Shader "Saga/RegionGround"
                 albedo *= _BaseColor.rgb;
 
                 half3 normalWS = normalize(input.normalWS);
+                #if !defined(_SAGA_GROUND_TOON)
+                // U-0084 — 띠 명암·림 대신 PBR(거칠기 0.85·금속 0)
+                return half4(MixFog(SagaGroundPBR(albedo, input.positionWS, normalWS, input.positionCS, 0.85h), input.fogFactor), 1.0h);
+                #endif
                 half3 viewDirWS = (half3)GetWorldSpaceNormalizeViewDir(input.positionWS);
 
                 InputData inputData = (InputData)0;

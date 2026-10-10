@@ -64,6 +64,17 @@ namespace Saga.Core.Region
 
         public static bool PropsToon => System.Environment.GetEnvironmentVariable("SAGA_PROPS_TOON") == "1";
 
+        // U-0084 사실 땅 — 땅 계열 셰이더(RegionGround·VertexColorLit·ForestWorldCurve)는 기본 PBR 조명, `SAGA_GROUND_TOON=1` 이면 옛 명암(띠·램버트).
+        public const string GroundToonKeyword = "_SAGA_GROUND_TOON";
+        public static bool GroundToon => System.Environment.GetEnvironmentVariable("SAGA_GROUND_TOON") == "1";
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        public static void ApplyGroundLook()
+        {
+            // 전역 키워드는 에디터 Play 사이에 남는다 — 매번 환경변수대로 다시 맞춘다
+            if (GroundToon) Shader.EnableKeyword(GroundToonKeyword); else Shader.DisableKeyword(GroundToonKeyword);
+        }
+
         /// <summary>인물(툰 유지 대상)인가 — 스킨 메시이거나 위(부모 포함)에 Animator 가 있는 것. 손에 든 무기도 뼈 아래라 인물 쪽.</summary>
         public static bool IsCharacter(Renderer r) =>
             r is SkinnedMeshRenderer || (r != null && r.GetComponentInParent<Animator>(true) != null);

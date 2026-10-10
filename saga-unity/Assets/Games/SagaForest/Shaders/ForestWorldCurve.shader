@@ -38,6 +38,7 @@ Shader "Saga/ForestWorldCurve"
         _DetailTex ("Detail (grayscale multiply)", 2D) = "white" {}
         _DetailTiling ("Detail Tiling (world units per repeat)", Float) = 4
         _DetailStrength ("Detail Strength", Range(0,1)) = 0
+        _Roughness ("Roughness (U-0084 PBR)", Range(0,1)) = 0.85
     }
     SubShader
     {
@@ -52,12 +53,17 @@ Shader "Saga/ForestWorldCurve"
             HLSLPROGRAM
             #pragma vertex Vert
             #pragma fragment Frag
-            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS
-            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
+            #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
+            #pragma multi_compile _ _CLUSTER_LIGHT_LOOP
+            #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
+            #pragma multi_compile_fragment _ _SHADOWS_SOFT
+            #pragma multi_compile_fragment _ _SAGA_GROUND_TOON
             #pragma multi_compile_fog
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Assets/Shaders/SagaGroundPBR.hlsl"
 
             half4 _BaseColor;
             float _CurveAmount;
@@ -65,6 +71,7 @@ Shader "Saga/ForestWorldCurve"
             TEXTURE2D(_DetailTex); SAMPLER(sampler_DetailTex);
             float _DetailTiling;
             float _DetailStrength;
+            float _Roughness;
 
             struct Attributes
             {
@@ -114,7 +121,11 @@ Shader "Saga/ForestWorldCurve"
                 half3 ambient = SampleSH(normalWS);
                 half detail = SAMPLE_TEXTURE2D(_DetailTex, sampler_DetailTex, IN.positionWS.xz / _DetailTiling).r;
                 half3 albedo = _BaseColor.rgb * IN.color.rgb * lerp(1.0h, detail, _DetailStrength);
+                #if defined(_SAGA_GROUND_TOON)
                 half3 lit = albedo * (shadowed + ambient);
+                #else
+                half3 lit = SagaGroundPBR(albedo, IN.positionWS, (half3)normalWS, IN.positionHCS, (half)_Roughness);
+                #endif
                 lit = MixFog(lit, IN.fogCoord);
                 return half4(lit, _BaseColor.a);
             }

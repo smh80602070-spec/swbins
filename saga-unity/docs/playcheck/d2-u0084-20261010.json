@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-10",
+  "tickets": ["U-0084 사실 땅 ③ 1단계 — 땅 셰이더 조명을 PBR 로"],
+  "how": "판별 땅 셰이더 확정(grep·씬 재질) → 공통 PBR 조명 include + 세 셰이더 교체 → 전(SAGA_GROUND_TOON=1 = 옛 명암)·후 촬영(GUI, Android, 낮 12시, 세이브 다섯 백업·복원) → Claude 눈 → 성능 전후(순서 바꿔 두 번) → 진단 다섯(세이브 치운 채, 판마다 복원)",
+  "grounds": "1만리 = Saga/VertexColorLit(TerrainBuilder 땅 + VegetationBuilder 풀, 램버트) · 3마을 = Saga/ForestWorldCurve(ForestGroundBuilder 땅 + ForestCreature 단순 몸, 램버트·구면 휨) · 4종횡·5천하 = URP Lit(leafy_grass·cobblestone_floor 사진 재질, 이미 PBR — 무변경) · 2나락 = EnvironmentMaterial 사진 PBR(제외) · Saga/RegionGround(띠 3단·림 = 유일한 툰 땅) 은 RegionLoader 전용, 게임 씬 미사용 · Saga/VertexColorTriplanarLit(procgen 나무·바위 소품)은 땅이 아니라 안 건드림",
+  "fix": "새 Shaders/SagaGroundPBR.hlsl(InputData+SurfaceData → UniversalFragmentPBR, 금속 0·거칠기 0.85, 주 조명 부드러운 그림자·SH 앰비언트·반사 프로브·추가 조명) · RegionGround(띠·림 → PBR) · VertexColorLit·ForestWorldCurve(램버트 → PBR, _Roughness 0.85 속성, 추가 조명·소프트 그림자·Forward+ 키워드) · 셋 다 multi_compile_fragment _SAGA_GROUND_TOON 이면 옛 명암 · RegionMaterials.ApplyGroundLook(BeforeSceneLoad, 환경변수 SAGA_GROUND_TOON=1 → 전역 키워드). 바탕색·디테일·섞음·휨·충돌 무변경, 높이 그림 법선 유도는 높이 그림이 없어(2단계 K-0093) 메시 법선",
+  "commands": [
+    "[SAGA_GROUND_TOON=1] SAGA_SHOT_HOUR=12 SAGA_SHOT_MAX=1 SAGA_SHOT_SCENE=<TestVillage|TestVillageForest|TestField|TestCity> SAGA_SHOT_TARGETS=<sky;type:RegionPropsBuilder | type:ForestFruitTree;sky | npc | name:Wall_West> Unity -buildTarget Android -executeMethod Saga.EditorTools.PlaytestShowcaseGui.Run",
+    "Unity -buildTarget Android -executeMethod Saga.EditorTools.PlaytestSagaPerf.Run (후→전, 다시 전→후)",
+    "bash tools/unity-batch.sh -- Unity -batchmode -nographics -buildTarget Android -executeMethod Saga.EditorTools.<PlaytestGroundLook|PlaytestHeadless|PlaytestForestHeadless|PlaytestStorySlice|PlaytestRealmSlice>.Run"
+  ],
+  "scene": [
+    "[PlaytestGroundLook] TestVillage 땅 Saga/VertexColorLit | TestVillageForest 땅 Saga/ForestWorldCurve | TestField 땅 URP Lit | TestCity 땅 URP Lit · 셋 셰이더 오류 0·옛 명암 키워드 있음·환경변수 없으면 꺼짐 · OK",
+    "[PlaytestHeadless] OK - 10 frames, no errors",
+    "[PlaytestForestHeadless] OK - 10 frames, no errors",
+    "[PlaytestStorySlice] OK",
+    "[PlaytestRealmSlice] OK"
+  ],
+  "runtime_errors": 0,
+  "shader_errors": 0,
+  "perf": {
+    "how": "PlaytestSagaPerf 평균 fps 상한/풀기",
+    "round1_after_first": "후 go 45/54 · dungeon 150/99 · forest 77/77 · story 194/119 · realm 624/120 — 전 go 52/65 · dungeon 145/120 · forest 81/76 · story 203/119 · realm 595/120",
+    "round2_before_first": "전 go 54/57 · dungeon 152/104 · forest 79/77 · story 199/119 · realm 475/120 — 후 go 52/65 · dungeon 152/119 · forest 77/80 · story 197/119 · realm 596/120",
+    "judge": "첫 판은 늘 느리다(이 셰이더를 안 쓰는 2나락도 첫 판 99·104 vs 둘째 119·120). 같은 자리끼리: 1만리 풀기 첫 판 57→54(−5%)·둘째 판 65→65(0%), 3마을 77→77·76→80 — 잡음 범위, 법선 유도는 애초에 없음(끌 것 없음)"
+  },
+  "shots": "세션 scratchpad shots/gbefore_{go,forest,story,realm} · gafter_* (커밋 안 함)",
+  "results": [
+    { "id": "un.go.ground-real", "eye": "○", "note": "1만리 강가·마을 들판: 띠 경계 없음, 전후 거의 같고 땅이 조금 부드럽게 밝음. 3마을 구면 들판: 휨 그대로, 나무 그림자가 땅에 또렷이 앉음, 풀빛 날림 없음. 4종횡·5천하: 원래 PBR 사진 땅이라 무변화. 하얗게·까맣게 날린 곳 없음", "result": "새 항목 D2", "date": "2026-10-10" }
+  ],
+  "left": "2단계(K-0093 사진 — 풀흙·흙·자갈·바위·모래·눈 바탕·법선·거칠기·높이 → 높이 섞기·반복 깨기) 대기 · 1만리 땅은 정점색 + 회색 디테일이라 PBR 로 바꿔도 '사진 같은 땅'은 아님 — 실감은 2단계 몫 · ForestWorldCurve 를 쓰는 3마을 단순 짐승 몸도 같이 PBR(원래 툰 아님)"
+}
