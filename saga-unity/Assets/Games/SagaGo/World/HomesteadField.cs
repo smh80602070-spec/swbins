@@ -73,7 +73,7 @@ namespace Saga.Go.World
 
         private Material ColorMat(Color c)
         {
-            if (!_colorMats.TryGetValue(c, out var m)) _colorMats[c] = m = RegionMaterials.Toon(null, c);
+            if (!_colorMats.TryGetValue(c, out var m)) _colorMats[c] = m = RegionMaterials.Backdrop(null, c); // U-0085 배경 사실 재질
             return m;
         }
 
@@ -137,7 +137,7 @@ namespace Saga.Go.World
                         var mats = r.sharedMaterials; bool any = false;
                         for (int i = 0; i < mats.Length; i++)
                         {
-                            var m = RegionMaterials.FromGltf(mats[i], _matCache, out _);
+                            var m = (RegionMaterials.IsCharacter(r) ? RegionMaterials.FromGltf(mats[i], _matCache, out _) : RegionMaterials.ForBackdrop(mats[i], _matCache, out _));
                             if (m != null && m != mats[i]) { mats[i] = m; any = true; }
                         }
                         if (any) r.sharedMaterials = mats;

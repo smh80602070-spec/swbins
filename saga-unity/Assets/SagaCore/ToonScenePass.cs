@@ -14,6 +14,8 @@ namespace Saga.Core
     /// 끄기: 환경변수 `SAGA_NO_TOON=1`, 또는 코드에서 <see cref="Enabled"/> = false.
     /// 배치 모드(헤드리스 진단)는 기본으로 안 돈다 — 진단이 원래 재질 값을 읽기 때문. 켜려면 `SAGA_TOON=1`.
     /// Start 에서 만들어지는 물체까지 잡으려고 씬이 켜진 첫 프레임에 한 번, 두 프레임 뒤 한 번 더 훑는다(이미 툰이면 그대로라 값싸다).
+    /// U-0085 — 툰은 **인물에만**(<see cref="RegionMaterials.IsCharacter"/>: 스킨 메시·Animator 아래·손에 든 무기). 소품·건물·나무는
+    /// <see cref="RegionMaterials.ForBackdrop"/>(PBR 그대로 + 재질 이름별 거칠기·금속, 외곽선 없음). 옛 툰 전부 = `SAGA_PROPS_TOON=1`.
     /// </summary>
     public static class ToonScenePass
     {
@@ -28,7 +30,7 @@ namespace Saga.Core
 
         private static UnityEngine.Events.UnityAction<Scene, LoadSceneMode> _handler;
 
-        public struct Stats { public int renderers, slots, converted, kept; }
+        public struct Stats { public int renderers, slots, converted, kept, toonSlots, litSlots; }
 
         public static bool ActiveByEnvironment()
         {
@@ -69,6 +71,7 @@ namespace Saga.Core
         {
             var st = new Stats();
             var cache = new Dictionary<Material, Material>();
+            var backdropCache = new Dictionary<Material, Material>();   // 같은 원본이 인물·배경에 같이 쓰여도 따로
             var mats = new List<Material>();
             foreach (var root in scene.GetRootGameObjects())
             {
@@ -78,13 +81,16 @@ namespace Saga.Core
                     st.renderers++;
                     r.GetSharedMaterials(mats);
                     bool any = false;
+                    bool character = RegionMaterials.IsCharacter(r);
                     for (int i = 0; i < mats.Count; i++)
                     {
                         var src = mats[i];
                         if (src == null) continue;
                         st.slots++;
                         if (src.shader == null || !Convertible.Contains(src.shader.name)) { st.kept++; continue; }
-                        var made = RegionMaterials.FromGltf(src, cache, out _);
+                        var made = character ? RegionMaterials.FromGltf(src, cache, out var kind) : RegionMaterials.ForBackdrop(src, backdropCache, out kind);
+                        if (kind == RegionMaterials.Kind.Toon) st.toonSlots++;
+                        else if (kind == RegionMaterials.Kind.Lit) st.litSlots++;
                         if (made == null || made == src) { st.kept++; continue; }
                         mats[i] = made; any = true; st.converted++;
                     }

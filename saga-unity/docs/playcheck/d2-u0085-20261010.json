@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-10",
+  "tickets": ["U-0085 사실 소품·건물·나무 ④ 1단계 — 툰은 인물에만, 배경은 PBR + 재질 이름별 값"],
+  "how": "툰 만드는 곳 grep → 코드 → 전(SAGA_PROPS_TOON=1 = 옛 툰 경로 그대로)·후 촬영(GUI, Android 대상, 세이브 다섯 백업·복원, 다섯 판 한 번씩) → Claude 눈 → 성능 전후 → 진단 일곱(세이브 치운 채, 판마다 복원)",
+  "grep": "툰을 만드는 곳: ToonScenePass(씬 GLB·URP 표준 전부) · RegionMaterials.FromGltf/Toon · WorldModels · GoHouseInterior · HomesteadField(GLB·색 소품) · ForestFruitTree · ForestFurniturePlacer · RegionLoader(길·광장·물·조각·풍경 — 게임 씬은 안 씀, PlaytestRegions 만) · WeaponVisual(손 무기 — 인물 쪽이라 그대로) · RegionPropsBuilder·ForestZonePropsBuilder·EraDecorBuilder 의 시간 틈 잔해(_rift 툰+림 — 빛나는 효과라 그대로) · RegionLoader 코드 나무·꽃 ToonVertex(정점색 Lit 원본 없음 — 그대로, 게임 씬 미사용)",
+  "fix": "RegionMaterials: IsCharacter(스킨 메시·Animator 아래) · ForBackdrop(반투명·발광은 FromGltf 규칙, 나머지 PBR 그대로 + 이름별 금속·거칠기 복제 — 돌·기와·벽 0.9 · 나무 0.8 · 회벽·흙 0.95 · 쇠 금속 0.6·거칠기 0.5 · 잎 0.85 · 천 0.9, 모르는 이름은 원본) · Backdrop(코드 메시용 URP Lit) · Kind.Lit · 원본 표에 Lit(+Resources/RegionMaterials/Lit.mat) · SAGA_PROPS_TOON=1 이면 옛 툰. ToonScenePass: 렌더러마다 인물이면 툰, 아니면 ForBackdrop(같은 원본도 캐시 따로)·통계 toonSlots/litSlots. 판별 빌더 다섯(WorldModels·GoHouseInterior·HomesteadField·ForestFruitTree·ForestFurniturePlacer)·RegionLoader 같은 규칙. 외곽선은 CelToon 패스라 배경에서 같이 빠짐",
+  "commands": [
+    "[SAGA_PROPS_TOON=1] SAGA_SHOT_HOUR=12 SAGA_SHOT_MAX=1 SAGA_SHOT_SCENE=<TestVillage|TestVillageForest|TestDungeon(INSIDE·LIGHT)|TestField|TestCity> SAGA_SHOT_TARGETS=<npc;name:Bridge;type:RegionPropsBuilder;sky | type:ForestFruitTree;npc | name:EraDecor_ | sky;npc | name:Tower_;name:Wall_West> Unity -buildTarget Android -executeMethod Saga.EditorTools.PlaytestShowcaseGui.Run",
+    "Unity -buildTarget Android -executeMethod Saga.EditorTools.PlaytestSagaPerf.Run (후) · SAGA_PROPS_TOON=1 … (전)",
+    "bash tools/unity-batch.sh -- Unity -batchmode -nographics -buildTarget Android -executeMethod Saga.EditorTools.<PlaytestToonSplit|PlaytestVroidSwap|PlaytestHeadless|PlaytestDungeonHeadless|PlaytestForestHeadless|PlaytestStorySlice|PlaytestRealmSlice>.Run"
+  ],
+  "scene": [
+    "[PlaytestToonSplit] TestVillage 인물 툰 44·배경 사실 696 | TestDungeon 인물 툰 96·배경 사실 482 | TestVillageForest 인물 툰 77·배경 사실 134 | TestField 인물 툰 79·배경 사실 8 | TestCity 인물 툰 0·배경 사실 28 — 배경 툰 0 · OK",
+    "[PlaytestVroidSwap] OK",
+    "[PlaytestHeadless] OK - 10 frames, no errors",
+    "[PlaytestDungeonHeadless] OK - 10 frames, no errors",
+    "[PlaytestForestHeadless] OK - 10 frames, no errors",
+    "[PlaytestStorySlice] OK",
+    "[PlaytestRealmSlice] OK"
+  ],
+  "runtime_errors": 0,
+  "shader_errors": 0,
+  "perf": {
+    "how": "PlaytestSagaPerf 평균 fps 상한/풀기, 후 → 전 한 판씩",
+    "after": "go 57/58 · dungeon 145/117 · forest 74/70 · story 196/120 · realm 584/113",
+    "before": "go 43/59 · dungeon 140/119 · forest 75/75 · story 223/120 · realm 591/120",
+    "judge": "풀기 쪽 −2%~−7%(3마을 −7%·5천하 −6%), 상한 쪽은 1만리 +33%·4종횡 −12% 로 엇갈려 구간 잡음 — 10% 넘는 일관된 하락 없음, 단순화 안 함"
+  },
+  "shots": "세션 scratchpad shots/pbefore_{go,forest,dungeon,story,realm} · pafter_* (커밋 안 함)",
+  "results": [
+    { "id": "un.go.props-real", "eye": "○", "note": "3마을 과일나무: 툰 삼각 띠 → 부드러운 PBR 명암(앞면만이라 잎 덩어리가 또렷). 2나락 방: 돌벽·기둥·천장 결이 입체로, 현대 발전기 쇠 느낌. 4종횡: 위 나무판이 사실 나무결, 주황 작업복·주인공은 툰 띠 그대로. 5천하 성곽: 돌벽 PBR. 1만리 마을: 먼 집·소품은 안개 속이라 차이 작음. 검은 외곽선 배경에 없음, 인물은 외곽선·띠 그대로라 배경에 안 묻힘", "result": "새 항목 D2", "date": "2026-10-10" }
+  ],
+  "left": "2단계(K-0093 사진 텍스처 → 재질 이름 연결·상자 투영 UV) 대기 · 2나락 방은 PBR 이 되며 조금 더 어둡다(U-0082 방 조명 몫) · 1만리 마을 소품 가까운 컷은 없음(npc 컷 뒤 갈색 덩어리는 툰이 아니라 바뀌지 않음)"
+}

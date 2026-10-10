@@ -5,7 +5,7 @@ using Saga.Core.Region;
 namespace Saga.Core
 {
     /// <summary>
-    /// U-0037 — 자체툴 월드 소품 GLB(`Resources/World/<이름>`)를 런타임에 한 개 세우는 공용 도우미. 콜라이더를 떼고 재질을 툰으로(`RegionMaterials.FromGltf`)
+    /// U-0037 — 자체툴 월드 소품 GLB(`Resources/World/<이름>`)를 런타임에 한 개 세우는 공용 도우미. 콜라이더를 떼고 재질을 바꾼다(U-0085: 인물이면 툰 `FromGltf`, 배경이면 사실 `ForBackdrop`)
     /// 바꾸고, 가장 넓은 변을 `maxWidth` 이하로 맞추고 바닥을 부모 원점에 둔다. 모델이 없으면 null — 부른 쪽이 기존 도형을 그대로 둔다.
     /// 모델은 이 파일이 안 놓는다(K-0019 배치).
     /// </summary>
@@ -42,7 +42,7 @@ namespace Saga.Core
                 bool changed = false;
                 for (int i = 0; i < mats.Count; i++)
                 {
-                    var made = RegionMaterials.FromGltf(mats[i], cache, out _);
+                    var made = (RegionMaterials.IsCharacter(r) ? RegionMaterials.FromGltf(mats[i], cache, out _) : RegionMaterials.ForBackdrop(mats[i], cache, out _));
                     if (made != null && made != mats[i]) { mats[i] = made; changed = true; }
                 }
                 if (changed) r.SetSharedMaterials(mats);

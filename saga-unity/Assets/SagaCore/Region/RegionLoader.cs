@@ -27,7 +27,7 @@ namespace Saga.Core.Region
         public int treeCount, flowerCount, lightCount, activeLights;
         public int roadMeshes, terrainQuads;
         public int sceneryRenderers;
-        public int toonMats, glowMats, keptMats;
+        public int toonMats, glowMats, keptMats, litMats;
         public int drawCallsEstimate;       // (렌더러 × 칸) + 인스턴싱 호출 + 입자 — SRP Batcher 가 묶기 전 추정
         public long triangles;
         public bool skyApplied, fogApplied;
@@ -119,7 +119,7 @@ namespace Saga.Core.Region
                     string texPath = kv.Key == "dirt" ? "tex/road_dirt.jpg" : kv.Key == "asphalt" ? "tex/road_asphalt.jpg" : null;
                     Texture tex = texPath == null ? null : LoadTex(L.id, texPath);
                     if (tex == null) res.warnings.Add("길 그림 없음: " + kv.Key);
-                    AddMesh(parent, "Road_" + kv.Key, kv.Value, RegionMaterials.Toon(tex, tex == null ? new Color(0.2f, 0.15f, 0.1f) : Color.white), res);
+                    AddMesh(parent, "Road_" + kv.Key, kv.Value, RegionMaterials.Backdrop(tex, tex == null ? new Color(0.2f, 0.15f, 0.1f) : Color.white), res);
                     res.roadMeshes++;
                 }
             }
@@ -127,7 +127,7 @@ namespace Saga.Core.Region
             {
                 var tex = LoadTex(L.id, "tex/plaza_cobble.jpg");
                 if (tex == null) res.warnings.Add("광장 그림 없음");
-                AddMesh(parent, "Plaza", RegionMeshes.Plaza(L), RegionMaterials.Toon(tex, tex == null ? Color.gray : Color.white), res);
+                AddMesh(parent, "Plaza", RegionMeshes.Plaza(L), RegionMaterials.Backdrop(tex, tex == null ? Color.gray : Color.white), res);
             }
         }
 
@@ -264,7 +264,7 @@ namespace Saga.Core.Region
         private static void BuildWater(RegionLayout L, Transform parent, RegionLoadResult res)
         {
             if (!L.hasWater) return;
-            var go = AddMesh(parent, "Water", RegionMeshes.WaterPlane(L.waterSize), RegionMaterials.Toon(null, L.waterColor), res);
+            var go = AddMesh(parent, "Water", RegionMeshes.WaterPlane(L.waterSize), RegionMaterials.Backdrop(null, L.waterColor, 0.08f), res);
             go.transform.localPosition = new Vector3(0f, L.waterY, 0f);
         }
 
@@ -430,10 +430,11 @@ namespace Saga.Core.Region
         private static Material FromGltfCounted(Material src, Dictionary<Material, Material> cache, RegionLoadResult res)
         {
             bool known = src != null && cache.ContainsKey(src);
-            var made = RegionMaterials.FromGltf(src, cache, out var kind);
+            var made = RegionMaterials.ForBackdrop(src, cache, out var kind);   // U-0085 지역 풍경·조각은 배경 — 사실 재질
             if (!known && src != null)
             {
                 if (kind == RegionMaterials.Kind.Toon) res.toonMats++;
+                else if (kind == RegionMaterials.Kind.Lit) res.litMats++;
                 else if (kind == RegionMaterials.Kind.Emissive) res.glowMats++;
                 else res.keptMats++;
             }

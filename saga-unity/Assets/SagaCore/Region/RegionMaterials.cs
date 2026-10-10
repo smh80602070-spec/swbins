@@ -11,7 +11,7 @@ namespace Saga.Core.Region
     {
         public const string Dir = "RegionMaterials/";
 
-        public enum Kind { Toon, Emissive, KeptTransparent }
+        public enum Kind { Toon, Emissive, KeptTransparent, Lit }
 
         /// <summary>이름 → (마스터 셰이더). 에디터 도구가 같은 표로 .mat 를 만든다.</summary>
         public static readonly (string name, string shader)[] Sources =
@@ -20,6 +20,7 @@ namespace Saga.Core.Region
             ("ToonVertex", "Saga/CelToon"),
             ("Ground", "Saga/RegionGround"),
             ("Unlit", "Universal Render Pipeline/Unlit"),
+            ("Lit", "Universal Render Pipeline/Lit"),   // U-0085 배경(소품·길·광장) 사실 재질
             ("SparkAdd", "Saga/RegionSpark"),
             ("SparkAlpha", "Saga/RegionSpark"),
             ("Sky", "Skybox/Panoramic"),
@@ -54,6 +55,72 @@ namespace Saga.Core.Region
             if (m == null) return null;
             if (tex != null) m.SetTexture("_BaseMap", tex);
             m.SetColor("_BaseColor", baseColorLinear.gamma);
+            return m;
+        }
+
+        // ---- U-0085 배경 사실 재질 — 툰은 인물에만 ----
+        // "배경 전부 사실·인물 툰"(사용자 10-09): 소품·건물·나무·꾸밈은 GLB 의 PBR(glTFast·URP Lit) 그대로 두고 재질 이름으로 거칠기·금속값만 다듬는다.
+        // 반투명은 그대로, 스스로 빛나는 재질은 지금 규칙(Unlit) 그대로. 되돌리기 = 환경변수 `SAGA_PROPS_TOON=1`(옛 툰).
+
+        public static bool PropsToon => System.Environment.GetEnvironmentVariable("SAGA_PROPS_TOON") == "1";
+
+        /// <summary>인물(툰 유지 대상)인가 — 스킨 메시이거나 위(부모 포함)에 Animator 가 있는 것. 손에 든 무기도 뼈 아래라 인물 쪽.</summary>
+        public static bool IsCharacter(Renderer r) =>
+            r is SkinnedMeshRenderer || (r != null && r.GetComponentInParent<Animator>(true) != null);
+
+        /// <summary>배경 재질 하나 — 반투명·발광은 <see cref="FromGltf"/> 와 같은 규칙, 나머지는 PBR 그대로 + 이름별 값(같은 원본은 cache).</summary>
+        public static Material ForBackdrop(Material src, Dictionary<Material, Material> cache, out Kind kind)
+        {
+            if (PropsToon) return FromGltf(src, cache, out kind);
+            kind = Kind.Lit;
+            if (src == null) return null;
+            if (src.shader != null && (src.shader.name == "Saga/CelToon" || src.shader.name == "Universal Render Pipeline/Unlit")) { kind = KindOf(src, null); return src; }
+            if (cache != null && cache.TryGetValue(src, out var done)) { kind = done != src ? KindOf(done, src) : IsTransparent(src) ? Kind.KeptTransparent : Kind.Lit; return done; }
+            if (IsTransparent(src) || IsEmissive(src, out _)) return FromGltf(src, cache, out kind);
+            if (src.name.EndsWith(" (real)")) return src;   // 이미 다듬은 것(씬 패스는 두 번 훑는다)
+            var result = TuneByName(src);
+            if (cache != null) cache[src] = result;
+            return result;
+        }
+
+        /// <summary>재질 이름 → (금속, 거칠기). 모르는 이름은 null(원본 값 그대로).</summary>
+        public static (float metallic, float roughness)? SurfaceFor(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return null;
+            string n = name.ToLowerInvariant();
+            bool Has(params string[] keys) { foreach (var k in keys) if (n.Contains(k)) return true; return false; }
+            if (Has("metal", "iron", "steel", "rust", "bronze", "copper", "brass", "chrome", "gold")) return (0.6f, 0.5f);
+            if (Has("plaster", "stucco", "clay", "mud", "adobe", "concrete", "cement")) return (0f, 0.95f);
+            if (Has("stone", "rock", "brick", "slate", "tile", "roof", "cobble", "marble", "granite", "wall", "boulder", "pebble", "gravel")) return (0f, 0.9f);
+            if (Has("wood", "plank", "log", "bark", "timber", "barrel", "crate", "trunk", "branch", "fence")) return (0f, 0.8f);
+            if (Has("leaf", "leaves", "foliage", "grass", "bush", "hay", "straw")) return (0f, 0.85f);
+            if (Has("cloth", "fabric", "canvas", "rope", "rug", "carpet", "cushion")) return (0f, 0.9f);
+            return null;
+        }
+
+        /// <summary>이름이 알려진 재질이면 복제해 금속·거칠기를 맞춘다(glTFast·URP Lit 속성 둘 다), 아니면 원본 그대로.</summary>
+        public static Material TuneByName(Material src)
+        {
+            var s = SurfaceFor(src.name);
+            if (s == null) return src;
+            var m = new Material(src) { name = src.name + " (real)" };
+            if (m.HasProperty("metallicFactor")) m.SetFloat("metallicFactor", s.Value.metallic);
+            if (m.HasProperty("roughnessFactor")) m.SetFloat("roughnessFactor", s.Value.roughness);
+            if (m.HasProperty("_Metallic")) m.SetFloat("_Metallic", s.Value.metallic);
+            if (m.HasProperty("_Smoothness")) m.SetFloat("_Smoothness", 1f - s.Value.roughness);
+            return m;
+        }
+
+        /// <summary>코드 메시(길·광장·쉼터 색 소품)용 배경 재질 — URP Lit(거칠게). `SAGA_PROPS_TOON=1` 이면 옛 툰.</summary>
+        public static Material Backdrop(Texture tex, Color baseColorLinear, float roughness = 0.9f)
+        {
+            if (PropsToon) return Toon(tex, baseColorLinear);
+            var m = Make("Lit");
+            if (m == null) return Toon(tex, baseColorLinear);
+            if (tex != null) m.SetTexture("_BaseMap", tex);
+            m.SetColor("_BaseColor", baseColorLinear.gamma);
+            m.SetFloat("_Metallic", 0f);
+            m.SetFloat("_Smoothness", 1f - roughness);
             return m;
         }
 
@@ -143,7 +210,8 @@ namespace Saga.Core.Region
         private static Kind KindOf(Material made, Material src)
         {
             if (made == src) return Kind.KeptTransparent;
-            return made.shader != null && made.shader.name == "Universal Render Pipeline/Unlit" ? Kind.Emissive : Kind.Toon;
+            if (made.shader != null && made.shader.name == "Universal Render Pipeline/Unlit") return Kind.Emissive;
+            return made.shader != null && made.shader.name == "Saga/CelToon" ? Kind.Toon : Kind.Lit;
         }
 
         private static void SetST(Material m, Vector4 st)

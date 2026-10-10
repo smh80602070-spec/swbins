@@ -161,7 +161,7 @@ namespace Saga.Forest.World
                 bool changed = false;
                 for (int i = 0; i < mats.Count; i++)
                 {
-                    var made = Saga.Core.Region.RegionMaterials.FromGltf(mats[i], cache, out _);
+                    var made = (Saga.Core.Region.RegionMaterials.IsCharacter(r) ? Saga.Core.Region.RegionMaterials.FromGltf(mats[i], cache, out _) : Saga.Core.Region.RegionMaterials.ForBackdrop(mats[i], cache, out _));
                     if (made != null && made != mats[i]) { mats[i] = made; changed = true; }
                 }
                 if (changed) r.SetSharedMaterials(mats);

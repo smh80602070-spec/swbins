@@ -204,7 +204,7 @@ namespace Saga.Go.World
                 bool changed = false;
                 for (int i = 0; i < mats.Count; i++)
                 {
-                    var made = RegionMaterials.FromGltf(mats[i], cache, out _);
+                    var made = (RegionMaterials.IsCharacter(r) ? RegionMaterials.FromGltf(mats[i], cache, out _) : RegionMaterials.ForBackdrop(mats[i], cache, out _));
                     if (made != null && made != mats[i]) { mats[i] = made; changed = true; }
                 }
                 if (changed) r.SetSharedMaterials(mats);

@@ -376,7 +376,7 @@ namespace Saga.EditorTools
             }
 
             string line = $"[Regions] 지역 {id}: 조각 {L.pieces.Count}(오브젝트 {res.pieceObjects} · 인스턴싱 {res.pieceInstanced}) 나무 {res.treeCount} 꽃 {res.flowerCount} 지형면 {res.terrainQuads} 길 {res.roadMeshes} " +
-                          $"풍경렌더러 {res.sceneryRenderers} 광원 {res.lightCount}(켬 {res.activeLights}) 재질 툰{res.toonMats}/빛{res.glowMats}/원본{res.keptMats} 드로우콜추정 {res.drawCallsEstimate} 삼각형 {res.triangles} 안개 {(res.fogApplied ? "O" : "X")}";
+                          $"풍경렌더러 {res.sceneryRenderers} 광원 {res.lightCount}(켬 {res.activeLights}) 재질 툰{res.toonMats}/사실{res.litMats}/빛{res.glowMats}/원본{res.keptMats} 드로우콜추정 {res.drawCallsEstimate} 삼각형 {res.triangles} 안개 {(res.fogApplied ? "O" : "X")}";
             Debug.Log(line);
             if (id == "Village") _lastSummary = line;
             Object.DestroyImmediate(res.root);

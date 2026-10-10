@@ -1765,5 +1765,24 @@
   "ticket": "U-0083",
   "since": "2026-10-10",
   "note": "D2(눈 ○, U-0083): docs/playcheck/d2-u0083-20261010.json — 1만리 6·12·17·22시 + 3마을·4종횡 12시 전후 촬영: 그림 하늘(지평선 그림·이음매 세로줄) → 해 원반이 물 반짝임 길·조명과 한 줄, 지평선이 안개로 녹음, 새벽 분홍·17시 노을빛·밤 별·달·남회색 구름. 3마을·4종횡은 같은 하늘이라 이 항목 note 로. 그림 하늘은 SAGA_SKY_PANO=1"
+ },
+ {
+  "id": "un.go.props-real",
+  "name": "배경 사실·인물 툰 — 소품·건물·나무·길은 PBR(재질 이름별 거칠기·금속, 외곽선 없음), 툰은 인물(스킨 메시·Animator 아래·손 무기)에만(U-0085 1단계, 다섯 판)",
+  "files": [
+   "saga-unity/Assets/SagaCore/ToonScenePass.cs",
+   "saga-unity/Assets/SagaCore/Region/RegionMaterials.cs"
+  ],
+  "tests": [
+   "PlaytestToonSplit",
+   "PlaytestVroidSwap",
+   "PlaytestShowcaseGui"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "U-0085",
+  "since": "2026-10-10",
+  "note": "D2(눈 ○, U-0085 1단계): docs/playcheck/d2-u0085-20261010.json — 다섯 판 전후 촬영(전 = SAGA_PROPS_TOON=1): 3마을 과일나무 툰 띠 → 부드러운 PBR 명암, 2나락 돌벽·천장 결이 입체, 4종횡 나무판 나무결, 5천하 성곽 돌 PBR, 인물은 툰 그대로라 배경에 안 묻힘. PlaytestToonSplit 다섯 판 배경 툰 0. 시간 틈 잔해(_rift 툰+림)·발광(Unlit)·반투명은 옛 규칙 그대로. 2단계(사진 텍스처)는 K-0093 대기"
  }
 ]
