@@ -15,7 +15,12 @@ const BUTTON_H := 64.0
 const SEP := 10.0
 
 ## lines: Array of String — 이번 세션에 쌓인 것을 한 줄씩.
+## G-0179 표준 B "다음에 할 것 1개" — 목표판(그룹 "goal_board")의 🎯 지금 줄이 있으면 끝에 "▶ 다음: …" 을 붙인다.
+## 부르는 다섯 곳(save_button·test_room·forest/story_save_button·realm_month_button)은 그대로 — 목표판이 없거나 빈 글이면 안 붙는다.
 static func show(parent: Node, title_text: String, lines: Array) -> CanvasLayer:
+	var next := _next_line(parent)
+	if next != "":
+		lines = lines + [next]
 	var layer := CanvasLayer.new()
 	layer.layer = 7   # 막는 창 층(choice_prompt 와 같음 — 인물·요리 화면 위)
 	layer.add_to_group("ui_modal") # GO 마우스 시점이 커서를 풀어 준다(다른 판엔 영향 없음)
@@ -59,6 +64,8 @@ static func show(parent: Node, title_text: String, lines: Array) -> CanvasLayer:
 		lbl.text = String(line)
 		lbl.autowrap_mode = 3
 		lbl.add_theme_font_size_override("font_size", LINE_FONT)
+		if next != "" and String(line) == next:
+			lbl.add_theme_color_override("font_color", Color(1.0, 0.88, 0.6))
 		vbox.add_child(lbl)
 
 	var btn := Button.new()
@@ -72,3 +79,14 @@ static func show(parent: Node, title_text: String, lines: Array) -> CanvasLayer:
 	vbox.add_child(btn)
 
 	return layer
+
+
+static func _next_line(parent: Node) -> String:
+	if parent == null or not parent.is_inside_tree():
+		return ""
+	var board := parent.get_tree().get_first_node_in_group("goal_board")
+	if board == null:
+		return ""
+	var v: Variant = board.get("now_line")
+	var now := String(v).strip_edges() if v != null else ""
+	return "▶ 다음: %s" % now if now != "" else ""

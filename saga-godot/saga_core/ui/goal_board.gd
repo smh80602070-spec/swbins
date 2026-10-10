@@ -28,5 +28,10 @@ func _ready() -> void:
 	text = ""
 
 
+## G-0179 — 세션 마무리 카드(session_card.gd)가 "▶ 다음:" 줄로 쓴다(표준 B "다음에 할 것 1개").
+var now_line := ""
+
+
 func set_goals(now: String, session: String, week: String) -> void:
+	now_line = now
 	text = "🎯 %s\n⏱ %s\n📅 %s" % [now, session, week]

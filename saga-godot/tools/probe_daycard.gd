@@ -99,7 +99,9 @@ func _run() -> void:
 		var want_exp := "경험치 +%.0f" % PartyState.session_exp_gained()
 		var want_found := "발견 +%d" % CodexState.session_discovered()
 		var want_party := "부대 %d명" % PartyState.members.size()
-		_check("card_shown", cards.size() == before + 1 and card != null and labels.size() == 4 and labels[0] == "저장했다 — 이번 세션" and labels[1] == want_exp and labels[2] == want_found and labels[3] == want_party, str(labels))
+		var gb := get_tree().get_first_node_in_group("goal_board")   # G-0179 — 끝에 "▶ 다음: <목표판 🎯 줄>"
+		var want_next := "▶ 다음: %s" % String(gb.get("now_line")) if gb else ""
+		_check("card_shown", cards.size() == before + 1 and card != null and labels.size() == 5 and labels[0] == "저장했다 — 이번 세션" and labels[1] == want_exp and labels[2] == want_found and labels[3] == want_party and labels[4] == want_next and want_next.length() > 7, str(labels))
 		if close_btn != null:
 			close_btn.emit_signal("pressed")
 			await _frames(2)
