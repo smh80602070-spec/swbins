@@ -2371,13 +2371,13 @@
   "tests": [
    "feel"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-10 qc+claude",
   "fun": {},
   "ticket": "G-0018",
   "since": "2026-10-04",
   "human": true,
-  "note": "G-0124(10-09): 이동 프리셋 기본을 0(옛 방식)→1(산뜻, 0.1초 안에 최고 속도·공중 방향 전환 약간 느림)으로 — 사용자 결정. 10-06 판정은 옛 기본이라 D3→D2, 손으로 다시 해 볼 것(SAGA_MOVE=0 이면 옛 방식)."
+  "note": "G-0124(10-09): 이동 프리셋 기본을 0(옛 방식)→1(산뜻, 0.1초 안에 최고 속도·공중 방향 전환 약간 느림)으로 — 사용자 결정. 10-06 판정은 옛 기본이라 D3→D2, 손으로 다시 해 볼 것(SAGA_MOVE=0 이면 옛 방식). · G-0152(10-10) 프리셋 1 다시 판정 ○: probe feel 0.05초 3.00·0.1초 6.0·멈춤 0.1초 0.0, 창 모드 컷(q_walk_005·010·030·q_stop_010, 실제 move_forward 입력) 속도 5.00·6.00·6.00·0.00 — 걷는 자세 바로 나오고 멈춤 미끄러짐 없음"
  },
  {
   "id": "gd.fs.nature_unified",
@@ -3013,11 +3013,12 @@
    "realm_state",
    "realm_data"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-10 qc+claude",
   "fun": {},
   "ticket": "G-0088",
-  "since": "2026-10-08"
+  "since": "2026-10-08",
+  "note": "G-0152(10-10) 7막 판정 ○: probe scenario_realm·realm_state·realm_data fails=0, 창 모드 rk_act7(6막까지 끝·승리·시간 틈 아홉) 카드 \"틈 아래 모인 아홉\" 글·선택 셋·목표판 7막 표시"
  },
  {
   "id": "gd.go.cave-interior",

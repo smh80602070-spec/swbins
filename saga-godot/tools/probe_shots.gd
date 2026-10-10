@@ -81,6 +81,13 @@ const SHOTS := [
 	["k_ride_dragon", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -14.0, 11.0, "mount:pt_cheongryong"],
 	["k_fly_dragon", "village", "v_statue", Vector3(9, 0, 9), "v_statue", 8.0, 16.0, "mountfly:pt_cheongryong"],
 	["k_fly_crow", "village", "v_statue", Vector3(9, 0, 9), "v_statue", 10.0, 14.0, "mountfly:pt_samjogo"],
+	# G-0152 — 손 확인 셋을 창 모드로: 이동 프리셋(걷기 시작 0.05·0.1·0.3초, 멈춤 0.1초 — 컷 때 속도도 찍는다) · 탈것 실제 키 [ 전후
+	["q_walk_005", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, "walk3"],
+	["q_walk_010", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, "walk6"],
+	["q_walk_030", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, "walk18"],
+	["q_stop_010", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, "stop6"],
+	["q_key_before", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, ""],
+	["q_key_mount", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, "keymount"],
 	["v_people_lineup", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -8.0, 7.0, "lineup"],
 	["p_faces", "village", "v_statue", Vector3(-14, 0, 12), "lineup", 12.0, 2.0, "lineup_faces"],
 	["v_cliff_n", "village", Vector2(3.5, 4.4), Vector3.ZERO, Vector2(3.5, 2.6), -4.0, 8.0, ""],
@@ -217,6 +224,11 @@ func _process(_delta: float) -> void:
 	## "burstN" — 찍기 N 프레임 전에 폭발 동작만(0.6초, field_combat 와 같은 값) 건다(G-0129 새 burst 클립 확인).
 	if String(SHOTS[_i][7]).begins_with("burst") and _frame == SETTLE - int(String(SHOTS[_i][7]).substr(5)):
 		_p.call("play_action", "burst", 0.6, 0.0)
+	## G-0152 — "walkN": 찍기 N 프레임 전에 앞으로 걷기 시작 · "stopN": 20 프레임째부터 걷다가 찍기 N 프레임 전에 뗀다
+	if String(SHOTS[_i][7]).begins_with("walk") and _frame == SETTLE - int(String(SHOTS[_i][7]).substr(4)):
+		Input.action_press("move_forward")
+	if String(SHOTS[_i][7]).begins_with("stop") and _frame == SETTLE - int(String(SHOTS[_i][7]).substr(4)):
+		Input.action_release("move_forward")
 	if String(SHOTS[_i][7]).begins_with("swing") and _frame == SETTLE - int(String(SHOTS[_i][7]).substr(5) if String(SHOTS[_i][7]).length() > 5 else "5"):
 		var fc := get_tree().get_first_node_in_group("go_field_combat")
 		if fc:
@@ -337,6 +349,18 @@ func _act(a: String) -> void:
 			if mf:
 				mf.call("mount", a.substr(9))
 				Input.action_press("jump") # 떠올라 계속 오른다 — _undo 가 뗀다
+		_ when a.begins_with("stop"):
+			Input.action_press("move_forward")
+		"keymount":   # G-0152 — 실제 키 [ 로 타기: 이야기를 탈것 열린 장(10)으로 컷 동안만 옮기고 키 이벤트를 넣는다
+			_story_saved = PartyState.story.duplicate(true)
+			PartyState.story["ch"] = 10
+			_refresh_story_stages()
+			for down in [true, false]:
+				var k := InputEventKey.new()
+				k.physical_keycode = KEY_BRACKETLEFT
+				k.keycode = KEY_BRACKETLEFT
+				k.pressed = down
+				Input.parse_input_event(k)
 		_ when a.begins_with("mount:"):
 			var mn := _p.get_node_or_null("Mount")
 			if mn:
@@ -445,6 +469,8 @@ func _undo() -> void:
 		PartyState.story = _story_saved
 		_story_saved = null
 		_refresh_story_stages()
+	if Input.is_action_pressed("move_forward"):
+		Input.action_release("move_forward")
 	if Input.is_action_pressed("jump"):
 		Input.action_release("jump")
 	if not _close_call.is_empty():
@@ -547,6 +573,9 @@ func _capture(name: String) -> void:
 	var path := _dir.path_join("%s_%dx%d.png" % [name, img.get_width(), img.get_height()])
 	var err := img.save_png(path)
 	_done.append(name)
+	if _p and name.begins_with("q_"):   # G-0152 — 이동·탈것 컷 수치
+		var mq := _p.get_node_or_null("Mount")
+		print("SHOT_Q %s speed=%.2f riding=%s" % [name, Vector2(_p.velocity.x, _p.velocity.z).length(), str(mq.call("is_riding")) if mq else "-"])
 	var cam := get_viewport().get_camera_3d()
 	var arm := _rig.get("spring_arm") as SpringArm3D if _rig else null
 	if arm and arm.get_hit_length() < 0.5:
