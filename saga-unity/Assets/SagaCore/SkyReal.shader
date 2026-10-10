@@ -5,6 +5,8 @@ Shader "Saga/SkyReal"
     // 하늘빛 = 레일리 근사(천정 파랑 → 지평선 옅게, 해가 낮으면 지평선 주황·천정 보랏빛 남색) + 미 빛무리 + 해 원반 ·
     // 구름 = 2D FBM 을 하늘 높이 평면으로 투영해 바람으로 흘림, 해 쪽 가장자리 은빛·노을 주황 · 밤 = 절차 별 + 달 원반 ·
     // 지평선 띠는 안개색(unity_FogColor)으로 녹여 3D 땅의 안개와 이음매가 안 생기게.
+    // U-0079 미래 땅 덧층 `_Future`(0~1, SkyPass 가 땅 자리로 정함) — 북동 하늘 큰 행성+고리(낮 옅게·밤 또렷)·밤 북쪽 오로라·별 2.5배·지평선 보랏빛.
+    // 구름·흐림이 덧층을 가린다. 0 이면 덧층 분기를 안 타서 사실 하늘 픽셀이 그대로.
     Properties
     {
         _SunDir ("Sun dir (code)", Vector) = (0.3, 0.8, -0.5, 0)
@@ -16,6 +18,7 @@ Shader "Saga/SkyReal"
         _SunSize ("Sun size deg", Float) = 1.6
         _Exposure ("Exposure", Float) = 1
         _HorizonFog ("Horizon fog blend", Range(0, 1)) = 0.65
+        _Future ("Future overlay (code)", Range(0, 1)) = 0
     }
     SubShader
     {
@@ -31,7 +34,7 @@ Shader "Saga/SkyReal"
 
             CBUFFER_START(UnityPerMaterial)
                 float4 _SunDir, _MoonDir;
-                float _CloudCover, _Overcast, _Wind, _CloudScale, _SunSize, _Exposure, _HorizonFog;
+                float _CloudCover, _Overcast, _Wind, _CloudScale, _SunSize, _Exposure, _HorizonFog, _Future;
             CBUFFER_END
 
             struct Attributes { float4 positionOS : POSITION; };
@@ -100,6 +103,7 @@ Shader "Saga/SkyReal"
                 float3 hor = lerp(horNight, horDay, day);
                 zen = lerp(zen, zenSet, low * 0.75);
                 hor = lerp(hor, lerp(horSet * 0.55 + float3(0.12, 0.08, 0.14), horSet, toward), low);
+                hor = lerp(hor, hor * float3(0.92, 0.82, 1.18) + float3(0.012, 0.0, 0.03) * (1.0 - day), _Future * 0.6);   // 미래 땅 — 지평선 보랏빛
                 float3 sky = lerp(hor, zen, pow(up, 0.42));
 
                 // 미 빛무리 + 해 원반(원반은 지평선 아래면 숨김)
@@ -114,7 +118,7 @@ Shader "Saga/SkyReal"
                 float3 sp = d * 260.0;
                 float3 cell = floor(sp);
                 float hs3 = Hash3(cell);
-                float star = step(0.9965, hs3) * saturate(1.0 - length(frac(sp) - 0.5) * 2.6) * (0.4 + 0.6 * Hash3(cell + 7.0));
+                float star = step(lerp(0.9965, 0.99125, _Future), hs3) * saturate(1.0 - length(frac(sp) - 0.5) * 2.6) * (0.4 + 0.6 * Hash3(cell + 7.0));
                 star *= smoothstep(0.02, 0.25, d.y) * night;
                 float cosM = dot(d, moon);
                 float moonDisk = smoothstep(cos(radians(1.3)), cos(radians(1.05)), cosM) * smoothstep(0.0, 0.05, moon.y) * night;
@@ -122,7 +126,49 @@ Shader "Saga/SkyReal"
 
                 // 구름 — 하늘 높이 평면 투영
                 float3 col = sky + star * float3(0.9, 0.95, 1.1) * 1.5 + moonGlow * float3(0.6, 0.7, 1.0);
+
+                // 미래 땅 덧층 — 행성(공 명암·띠·기운 고리)과 밤 오로라. 오로라는 구름 아래(먼저 그림), 행성은 구름 뒤에 비쳐 보이게 구름 다음에 섞는다
+                float pMix = 0.0, rMix = 0.0;
+                float3 pCol = 0.0, rCol = 0.0;
+                [branch] if (_Future > 0.001)   // 바깥 땅은 통째로 건너뛴다(균일 값 분기)
+                {
+                    float3 pDir = normalize(float3(0.62, 0.42, 0.66));                     // 북동 · 고도 ~25°
+                    float sinR = sin(radians(7.0));
+                    float cosP = dot(d, pDir);
+                    float3 t1 = normalize(cross(float3(0, 1, 0), pDir)), t2 = cross(pDir, t1);
+                    float3 q = d - pDir * cosP;
+                    float2 uv = float2(dot(q, t1), dot(q, t2)) / sinR;                      // 행성 반지름 = 1
+                    float r2 = dot(uv, uv);
+                    float front = step(0.0, cosP);
+                    float pAlpha = lerp(0.6, 1.0, night) * _Future * front * smoothstep(0.0, 0.08, d.y);
+                    float pDisk = (1.0 - smoothstep(0.96, 1.0, r2)) * front;
+                    float3 pn = normalize(t1 * uv.x + t2 * uv.y - pDir * sqrt(saturate(1.0 - r2)));
+                    float pl = saturate(dot(pn, sun)) * day + saturate(dot(pn, moon)) * 0.12 * night;
+                    float bands = 0.82 + 0.18 * sin(uv.y * 17.0 + Noise(uv * 3.0) * 2.5);
+                    float3 pAlb = lerp(float3(0.55, 0.62, 0.78), float3(0.72, 0.58, 0.82), saturate(uv.y * 0.5 + 0.5)) * bands;
+                    pCol = pAlb * (pl * 1.15 + 0.05) + sky * 0.35;
+                    // 고리 — 행성 평면에서 20° 기울고 납작한 띠, 행성 뒤쪽 반은 공에 가린다
+                    float2 ru = float2(uv.x * 0.94 + uv.y * 0.34, -uv.x * 0.34 + uv.y * 0.94);
+                    float re = length(float2(ru.x, ru.y * 3.4));
+                    float ring = smoothstep(1.32, 1.40, re) * (1.0 - smoothstep(1.78, 1.92, re)) * (0.55 + 0.45 * sin(re * 40.0));
+                    ring *= 1.0 - pDisk * step(0.0, ru.y);
+                    rCol = float3(0.80, 0.76, 0.86) * (0.25 + 0.75 * saturate(sun.y * 2.0 + 0.3) * day + 0.2 * night);
+                    pMix = pDisk * pAlpha;
+                    rMix = saturate(ring) * pAlpha * 0.7;
+
+                    // 오로라 — 북쪽(+Z) 하늘 커튼, 아래 초록 → 위 보라, 천천히 일렁임
+                    float north = smoothstep(0.05, 0.6, d.z) * smoothstep(0.03, 0.15, d.y);
+                    float az = atan2(d.x, d.z);
+                    float t = _Time.y;
+                    float base = 0.22 + (Noise(float2(az * 2.2 + t * 0.03, 3.1)) - 0.5) * 0.18;
+                    float h = d.y - base;
+                    float curtain = exp(-h * h / (h > 0.0 ? 0.045 : 0.004));                // 아래 끝 또렷·위로 길게 번짐
+                    float rays = 0.45 + 0.55 * Noise(float2(az * 38.0 + t * 0.25, t * 0.1));
+                    float3 aCol = lerp(float3(0.10, 0.95, 0.45), float3(0.55, 0.25, 0.95), saturate(h * 3.0 + 0.2));
+                    col += aCol * curtain * rays * north * night * _Future * 0.55;
+                }
                 float cover = saturate(_CloudCover * 0.75 + _Overcast * 0.5 + 0.08);
+                float cloudDens = 0.0;
                 if (d.y > 0.0)
                 {
                     float2 uv = d.xz / (d.y + 0.08) * _CloudScale;
@@ -140,11 +186,15 @@ Shader "Saga/SkyReal"
                     cloud += sunCol * pow(saturate(cosS), 10.0) * (1.0 - dens) * 0.9 * vis;   // 해 쪽 가장자리 은빛
                     cloud = lerp(cloud, cloud * float3(0.75, 0.78, 0.82), _Overcast);
                     col = lerp(col, cloud, dens);
+                    cloudDens = dens;
                     disk *= 1.0 - dens;
                     moonDisk *= 1.0 - dens;
                 }
                 col += sunCol * disk * 18.0 * vis;
                 col += float3(0.8, 0.85, 0.95) * moonDisk * 1.2;
+                float see = 1.0 - cloudDens * 0.7;                                        // 행성은 큰 몸이라 얇은 구름 너머로 비친다(0 이면 그대로)
+                col = lerp(col, pCol, pMix * see);
+                col = lerp(col, rCol, rMix * see);
 
                 // 흐림 — 하늘 전체를 잿빛으로
                 float3 grey = float3(0.40, 0.43, 0.48) * lerp(0.04, 1.0, day);

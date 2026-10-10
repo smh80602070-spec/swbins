@@ -763,7 +763,15 @@ namespace Saga.Go.World
             if (_wait > 0f) return;
             _wait = CheckEverySec;
             Refresh();
+            SkyFor(feet);
             Check(feet);
+        }
+
+        /// <summary>U-0079 — 발 자리가 미래 땅이면 하늘 덧층을 켠다(아니면 끔). 진단도 부른다.</summary>
+        public static void SkyFor(Vector3 feet)
+        {
+            var a = GoAreas.AreaAt(feet);
+            Saga.Core.SkyPass.FutureTarget = a != null && a.SkyFuture ? 1f : 0f;
         }
 
         /// <summary>이동 단추를 발 자리에 맞춘다(진단도 부른다).</summary>
@@ -795,6 +803,7 @@ namespace Saga.Go.World
             if (pc == null || fc.InCombat()) return false;
             if (toArea && !a.Open()) return false;
             pc.Teleport(toArea ? a.ArrivalPos : a.ReturnPos);
+            SkyFor(toArea ? a.ArrivalPos : a.ReturnPos);
             if (_travel != null) _travel.gameObject.SetActive(false);
             return true;
         }

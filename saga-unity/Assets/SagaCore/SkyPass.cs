@@ -11,10 +11,11 @@ namespace Saga.Core
     /// 씬마다 방식(<see cref="ModeFor"/>): 사가만리 마을(`TestVillage`)·사가마을(`TestVillageForest`)·사가종횡(`TestField`) = 하늘+조명 /
     /// 사가천하 도시(`TestCity`, 위에서 내려다보는 전략 화면이라 하늘이 안 보임) = 조명만 / 던전(실내)·그 밖 = 안 건드림.
     /// 끄기: 환경변수 `SAGA_NO_SKY=1`(전부) · `SAGA_NO_SKYLIGHT=1`(조명만). 배치 모드(헤드리스 진단)는 기본 꺼짐(켜려면 `SAGA_SKY=1`).
-    /// 시각이 바뀌면(다음 시간대) 한 번 더 바꾼다. 시대는 현재(`present`) 고정 — 지역별 시대 연결은 후속.
+    /// 시각이 바뀌면(다음 시간대) 한 번 더 바꾼다. 그림 하늘 시대는 과거(`past`), 미래 땅에선 `future`(U-0079 — <see cref="FutureTarget"/>).
     /// 해가 지평선에 너무 낮으면 조명 고도를 <see cref="MinPitch"/>° 로 끌어올린다(그림자가 끝없이 길어지지 않게). 방위·`RimLight`·앰비언트는 안 건드린다.
     /// U-0083 — 기본은 그림 대신 사실 하늘 셰이더(`Saga/SkyReal`): 해·달 방향을 시각에서 계산(<see cref="SunDirAt"/>, 옛 표식과 같은 규칙 — 아침 동쪽 +X·정오 남쪽 −Z 62°·저녁 서쪽 −X)해
     /// 하늘 원반과 주 조명에 같이 쓴다. 그림 파노라마는 `SAGA_SKY_PANO=1` 일 때만(비교·되돌리기). 앰비언트 방식(Trilight)은 그대로, 반사(DynamicGI)는 시간대가 바뀔 때만 다시 굽는다.
+    /// U-0079 — 미래 땅(GO 은하 나루·틈새 갈림길)에 서면 판 코드가 <see cref="FutureTarget"/> = 1 을 넣고, 사실 하늘 `_Future` 가 <see cref="FutureFadeSec"/> 초에 걸쳐 따라간다(행성·오로라·별 덧층).
     /// </summary>
     public static class SkyPass
     {
@@ -23,7 +24,23 @@ namespace Saga.Core
         public static bool Enabled = true;
         public static bool LightEnabled = true;
         public static Func<int> HourFn = () => DateTime.Now.Hour; // 진단·촬영이 시각을 붙든다
-        public static string Era = "present";
+        public static string Era = "past";
+        /// <summary>U-0079 — 미래 땅 덧층 목표(0 또는 1). 판 코드(GO AreaField)가 땅 자리로 넣는다. 다른 판은 0 그대로.</summary>
+        public static float FutureTarget;
+        public const float FutureFadeSec = 2f;
+        private static float _future;
+        /// <summary>지금 하늘에 입힌 덧층 값(따라가는 중이면 사이 값).</summary>
+        public static float FutureNow => _future;
+        /// <summary>덧층을 <paramref name="dt"/> 초만큼 목표 쪽으로 — 그림 하늘 시대도 같이 정한다. 값이 바뀌었으면 참. Runner 가 매 프레임, 진단이 직접 부른다.</summary>
+        public static bool StepFuture(float dt)
+        {
+            Era = FutureTarget > 0.5f ? "future" : "past";
+            float next = Mathf.MoveTowards(_future, Mathf.Clamp01(FutureTarget), dt / FutureFadeSec);
+            if (Mathf.Approximately(next, _future)) return false;
+            _future = next;
+            if (_realSky != null) _realSky.SetFloat("_Future", _future);
+            return true;
+        }
         public const float MinPitch = 10f;
         /// <summary>분까지 — 기본은 벽시계 분, 진단·촬영이 <see cref="HourFn"/> 을 붙들면 0(정각, 재현 가능).</summary>
         public static Func<float> MinuteFracFn = () => DateTime.Now.Minute / 60f;
@@ -148,6 +165,7 @@ namespace Saga.Core
             }
             _realSky.SetVector("_SunDir", SunDirAt(hour));
             _realSky.SetVector("_MoonDir", MoonDirAt(hour));
+            _realSky.SetFloat("_Future", _future);
             if (RenderSettings.skybox != _realSky) { RenderSettings.skybox = _realSky; rebake = true; }
             if (SkyWeather.Instance != null) SkyWeather.Instance.Refresh();   // 날씨 덮개 + 원통 구름 끔
             else { var w = SkyWeatherRules.Current(); SetSkyWeather(w.CloudAlpha, OvercastOf(w.Kind), w.WindMul); }
@@ -198,8 +216,11 @@ namespace Saga.Core
         private sealed class Runner : MonoBehaviour
         {
             private Coroutine _co;
+            private void Update() => StepFuture(Time.deltaTime);   // U-0079 — 같을 땐 SetFloat 안 함
+
             public void Begin()
             {
+                FutureTarget = 0f; _future = 0f;   // 새 씬은 덧층 없이 — 미래 땅이면 판 코드가 다시 넣는다
                 if (_co != null) StopCoroutine(_co);
                 _co = StartCoroutine(Loop());
             }

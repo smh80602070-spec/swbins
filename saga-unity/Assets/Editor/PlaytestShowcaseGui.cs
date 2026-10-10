@@ -12,6 +12,7 @@ namespace Saga.EditorTools
     /// 씬을 플레이 모드로 띄워 런타임 생성물(NPC 몸·과일나무·하늘·툰 패스)이 선 뒤, 대상마다 전용 카메라로 렌더 텍스처에 찍어 PNG 로 남긴다.
     /// 환경변수: SAGA_SHOT_SCENE(씬 경로) · SAGA_SHOT_TARGETS("type:ForestFruitTree;type:CrowdBodyAnimator;sky;npc") · SAGA_SHOT_DIR · SAGA_SHOT_MAX(종류당 장수, 기본 2) · SAGA_SHOT_INSIDE=1(카메라를 대상 경계 안 천장 아래에 — 방 가장자리 묶음용).
     /// 대상 문법: `type:<컴포넌트 클래스 이름>` · `name:<GameObject 이름 앞부분>` · `npc`(NpcIdle) · `sky`(메인 카메라 위치에서 하늘 두 방향).
+    /// `skyarea:<땅 id>`(U-0079) — 다른 대상을 찍은 뒤 주인공을 그 GO 땅(`GoAreas`) 내리는 자리로 옮기고 150 프레임 뒤 하늘 넷(남·북·행성 쪽 북동·게임 카메라). 여러 개면 차례로.
     /// 움직임 시트(U-0080): `SAGA_SHOT_SEQ`·`SAGA_SHOT_ACT` — `PlaytestShowcaseGui.Seq.cs`.
     /// 실행: `Unity.exe -projectPath . -executeMethod Saga.EditorTools.PlaytestShowcaseGui.Run` (-batchmode 없이 — 그래픽 필요). 끝나면 스스로 종료.
     /// </summary>
@@ -28,6 +29,9 @@ namespace Saga.EditorTools
         private static int _stage2At, _houseIndex;
         private static bool _origEnterOpts;
         private static EnterPlayModeOptions _origOpts;
+        private static readonly List<string> _areaQ = new List<string>();
+        private static string _areaNow;
+        private static int _areaAt;
 
         [MenuItem("Saga/Playtest Showcase (GUI Screenshot)")]
         public static void Run()
@@ -48,6 +52,8 @@ namespace Saga.EditorTools
             EditorSceneManager.OpenScene(scene);
             // SAGA_SHOT_HOUR — 하늘·조명 시각을 붙든다(`SkyPass.HourFn`, 도메인 리로드를 꺼서 플레이까지 유지된다)
             if (int.TryParse(System.Environment.GetEnvironmentVariable("SAGA_SHOT_HOUR"), out int hour)) Saga.Core.SkyPass.HourFn = () => hour;
+            _areaQ.Clear(); _areaNow = null;
+            foreach (var t in _targets) if (t.StartsWith("skyarea:")) _areaQ.Add(t.Substring(8));
             _frame = 0; _done = false; _stage1 = false; _wantHouse = _targets.Contains("house") || _targets.Contains("house2"); _houseIndex = _targets.Contains("house2") ? 1 : 0; _stage2At = 0;
             EditorApplication.playModeStateChanged += OnState;
             EditorApplication.isPlaying = true;
@@ -88,8 +94,10 @@ namespace Saga.EditorTools
                     if (SeqActive) { SeqBegin(); return; }   // U-0080 움직임 시트 — 다음 틱들에서 찍는다
                     ShootAll();
                     if (_wantHouse && EnterHouse()) { _stage2At = _frame + 150; return; }   // 카메라가 방 안 플레이어를 따라올 시간
+                    if (_areaQ.Count > 0 && !AreaTick()) return;
                 }
                 else if (SeqActive) { if (!SeqTick()) return; }
+                else if (_areaQ.Count > 0 || _areaNow != null) { if (!AreaTick()) return; }
                 else if (_wantHouse && _frame < _stage2At) return;
                 else if (_wantHouse) ShootHouse();
             }
@@ -125,6 +133,43 @@ namespace Saga.EditorTools
             Debug.Log($"[ShowcaseGui] house 촬영 — 플레이어 {GameObject.FindWithTag("Player")?.transform.position} 카메라 {main.transform.position}");
         }
 
+        /// <summary>U-0079 `skyarea:<id>` 차례 — 옮기고 150 프레임(땅 안개·하늘 덧층이 따라올 시간) 뒤 찍는다. 다 찍었으면 참.</summary>
+        private static bool AreaTick()
+        {
+            if (_areaNow != null)
+            {
+                if (_frame < _areaAt) return false;
+                ShootArea(_areaNow);
+                _areaNow = null;
+            }
+            while (_areaQ.Count > 0)
+            {
+                string id = _areaQ[0];
+                _areaQ.RemoveAt(0);
+                var pc = Object.FindAnyObjectByType<Saga.Go.Player.PlayerController>();
+                if (!Saga.Go.Data.GoAreas.TryArea(id, out var a) || pc == null) { Debug.LogError($"[ShowcaseGui] skyarea:{id} — 땅·주인공 없음"); continue; }
+                pc.Teleport(a.ArrivalPos);
+                Debug.Log($"[ShowcaseGui] skyarea {id} — {a.ArrivalPos} 로 옮김");
+                _areaNow = id;
+                _areaAt = _frame + 150;
+                return false;
+            }
+            return true;
+        }
+
+        private static void ShootArea(string id)
+        {
+            var main = Camera.main;
+            var pc = Object.FindAnyObjectByType<Saga.Go.Player.PlayerController>();
+            if (main == null || pc == null) return;
+            Saga.Go.World.AreaField.SkyFor(pc.transform.position);
+            Saga.Core.SkyPass.StepFuture(10f);   // 따라가기 끝까지(촬영 프레임 속도와 상관없이)
+            Debug.Log($"[ShowcaseGui] skyarea {id} — 덧층 {Saga.Core.SkyPass.FutureNow} 시대 {Saga.Core.SkyPass.Era} 하늘 {Saga.Core.SkyPass.RealSkyMaterial?.GetFloat("_Future")}");
+            Shoot(main, $"skyarea_{id}_gamecam", main.transform.position, main.transform.rotation);
+            foreach (var (tag, rot) in new[] { ("south", Quaternion.Euler(-12f, 180f, 0f)), ("north", Quaternion.Euler(-18f, 0f, 0f)), ("planet", Quaternion.Euler(-24f, 43f, 0f)) })
+                Shoot(main, $"skyarea_{id}_{tag}", pc.transform.position + Vector3.up * 2.4f + rot * Vector3.forward * 1.5f, rot);   // 주인공 몸 앞으로 내어 머리카락이 안 가리게
+        }
+
         private static void ShootAll()
         {
             var main = Camera.main;
@@ -155,6 +200,7 @@ namespace Saga.EditorTools
                     }
                     continue;
                 }
+                if (spec.StartsWith("skyarea:")) continue;   // 다른 대상 뒤 AreaTick 이 찍는다
                 if (spec == "sky")
                 {
                     foreach (var yaw in new[] { 0f, 180f })

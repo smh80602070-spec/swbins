@@ -53,6 +53,8 @@ namespace Saga.Go.Data
             public int Danger = 1;
             public Color Fog, Sun;
             public float FogDensity = 1.5f;
+            /// <summary>U-0079 미래 땅 — 서 있으면 사실 하늘에 행성·오로라·별 덧층(`SkyPass.FutureTarget`).</summary>
+            public bool SkyFuture;
             public string NameKey => "region." + Id;
 
             public bool Contains(Vector3 p) => Mathf.Abs(p.x - Center.x) <= HalfX + 5f && Mathf.Abs(p.z - Center.z) <= HalfZ + 5f;
@@ -101,6 +103,7 @@ namespace Saga.Go.Data
             Id = "skyport", NameKo = "은하 나루", Hanja = "銀河", GroundHex = "5b6470",
             LoreKo = "별배가 떠나온 나루. 태양광 밭과 은하역, 옛 절터가 한 땅에 겹쳐 있고 남쪽 끝 틈 고개 너머로 시간 틈 문이 열린다.",
             Center = new Vector3(1400f, 0f, -860f),
+            SkyFuture = true,
             GateSite = "gate",
             MapGate = () => GoStory.GridPos(3.0f, 9.0f),
             Open = () => StoryState.Ch > 14, OpenCh = 15, // 15장을 마쳐야 틈 문이 열린다
@@ -128,6 +131,7 @@ namespace Saga.Go.Data
             Id = "crossing", NameKo = "틈새 갈림길", Hanja = "岐路", GroundHex = "6a6470",
             LoreKo = "시간 틈 안쪽, 시대가 가장 심하게 뒤엉킨 땅. 멈춘 시계와 떠 있는 섬돌, 뒤엉킨 성문이 한 갈림길에 겹쳐 있다.",
             Center = new Vector3(2200f, 0f, -860f),
+            SkyFuture = true,
             GateSite = "gate",
             MapGate = () => Skyport.GateSiteObj.Pos + new Vector3(-4f, 0f, 0f), // 은하 나루 틈 고개 경계비 곁(나가는 돌기둥 맞은편)
             Open = () => StoryState.Ch > 17, OpenCh = 18, // 18장(4부)을 마쳐야 틈 문이 열린다

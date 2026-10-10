@@ -102,6 +102,55 @@ namespace Saga.EditorTools
             Debug.Log($"[PlaytestSkyPanorama] 사실 하늘 OK - 6시 {El(d6):0.0}° · 12시 {El(d12):0.0}° · 17시 {El(d17):0.0}° · 22시 해 {El(d22):0.0}°/달 {El(SkyPass.MoonDirAt(22f)):0.0}°");
         }
 
+        /// <summary>U-0079 미래 땅 덧층 — 셰이더 `_Future`(기본 0) · 미래 땅 = 은하 나루·틈새 갈림길 둘만 · 발 자리 → 목표 · 2초 따라가기·되돌아옴 · 그림 하늘 시대 past/future.</summary>
+        private static void CheckFutureSky()
+        {
+            var sh = Shader.Find(SkyPass.RealSkyShader);
+            PlaytestKit.Check(sh != null && sh.FindPropertyIndex("_Future") >= 0, "SkyReal 에 _Future 가 없음");
+            if (sh != null && sh.FindPropertyIndex("_Future") >= 0)
+            {
+                var fresh = new Material(sh);
+                PlaytestKit.Check(Mathf.Approximately(fresh.GetFloat("_Future"), 0f), "_Future 기본이 0 이 아님(사실 하늘이 바뀜)");
+                Object.DestroyImmediate(fresh);
+            }
+            var fut = new System.Collections.Generic.List<string>();
+            foreach (var a in Saga.Go.Data.GoAreas.All) if (a.SkyFuture) fut.Add(a.Id);
+            PlaytestKit.Check(fut.Count == 2 && fut.Contains("skyport") && fut.Contains("crossing"), $"미래 하늘 땅이 은하 나루·틈새 갈림길 둘이 아님: {string.Join(",", fut)}");
+
+            Saga.Go.World.AreaField.SkyFor(Saga.Go.Data.GoAreas.Skyport.ArrivalPos);
+            PlaytestKit.Check(Mathf.Approximately(SkyPass.FutureTarget, 1f), "은하 나루에 내렸는데 덧층 목표가 1 이 아님");
+            Saga.Go.World.AreaField.SkyFor(Saga.Go.Data.GoAreas.Crossing.Center + Vector3.up * 90f);
+            PlaytestKit.Check(Mathf.Approximately(SkyPass.FutureTarget, 1f), "틈새 갈림길 하늘 섬 위인데 덧층 목표가 1 이 아님");
+            Saga.Go.World.AreaField.SkyFor(Saga.Go.Data.GoAreas.Sunken.Center);
+            PlaytestKit.Check(Mathf.Approximately(SkyPass.FutureTarget, 0f), "잠긴 도읍(과거)인데 덧층 목표가 0 이 아님");
+            Saga.Go.World.AreaField.SkyFor(Saga.Go.Data.GoAreas.Skyport.ReturnPos);
+            PlaytestKit.Check(Mathf.Approximately(SkyPass.FutureTarget, 0f), "지도로 나왔는데 덧층 목표가 0 이 아님");
+
+            var before = RenderSettings.skybox;
+            var camGo = new GameObject("__cam", typeof(Camera));
+            bool ok = SkyPass.ApplyRealSky(22f, camGo.GetComponent<Camera>(), false);
+            var m = SkyPass.RealSkyMaterial;
+            PlaytestKit.Check(ok && m != null, "사실 하늘을 못 입힘");
+            if (m != null)
+            {
+                SkyPass.FutureTarget = 0f; SkyPass.StepFuture(10f);
+                PlaytestKit.Check(SkyPass.Era == "past" && Mathf.Approximately(m.GetFloat("_Future"), 0f), $"덧층 0 에서 시대 {SkyPass.Era}·_Future {m.GetFloat("_Future")}");
+                SkyPass.FutureTarget = 1f;
+                SkyPass.StepFuture(1f);
+                float half = m.GetFloat("_Future");
+                PlaytestKit.Check(SkyPass.Era == "future" && Mathf.Abs(half - 0.5f) < 1e-3f, $"1초 뒤 덧층 반쯤이어야 {half}·시대 {SkyPass.Era}");
+                SkyPass.StepFuture(1.5f);
+                PlaytestKit.Check(Mathf.Approximately(m.GetFloat("_Future"), 1f) && Mathf.Approximately(SkyPass.FutureNow, 1f), $"2초 넘으면 덧층 1 이어야 {m.GetFloat("_Future")}");
+                PlaytestKit.Check(!SkyPass.StepFuture(1f), "목표에 닿았는데 또 바뀜(매 프레임 SetFloat)");
+                PlaytestKit.Check(SkyPanorama.NameFor(22, SkyPass.Era) == "sky_night_future", "미래 땅 그림 하늘 이름이 sky_night_future 가 아님");
+                SkyPass.FutureTarget = 0f; SkyPass.StepFuture(5f);
+                PlaytestKit.Check(SkyPass.Era == "past" && Mathf.Approximately(m.GetFloat("_Future"), 0f) && SkyPanorama.NameFor(12, SkyPass.Era) == "sky_noon_past", "지도로 나오면 덧층 0·시대 past 로 안 돌아옴");
+            }
+            RenderSettings.skybox = before;
+            Object.DestroyImmediate(camGo);
+            Debug.Log($"[PlaytestSkyPanorama] 미래 하늘 OK - 땅 {string.Join(",", fut)} · 따라가기 {SkyPass.FutureFadeSec}초");
+        }
+
         [MenuItem("Saga/Playtest Sky Panorama")]
         public static void Run()
         {
@@ -140,6 +189,7 @@ namespace Saga.EditorTools
                 Object.DestroyImmediate(camGo);
                 CheckSunMarkers();
                 CheckRealSky();
+                CheckFutureSky();
                 Debug.Log($"[PlaytestSkyPanorama] 하늘 {n}/12 읽힘");
             }
             PlaytestKit.Summary("PlaytestSkyPanorama");
