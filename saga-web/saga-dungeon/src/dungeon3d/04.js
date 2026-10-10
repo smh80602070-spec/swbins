@@ -384,7 +384,7 @@
       /* 자리(i)는 같아도 떨어진 물건이 바뀌면 다시 짓는다 — 옛 색이 남던 것 */
       if (!da.node.userData.built || da.node.userData.ref !== dp) {
         while (da.node.children.length) { da.node.remove(da.node.children[0]); }
-        box(da.node, 0, 3, 0, 12, 6, 12, dropHex(dp), 'glow', false);
+        if (!(global.DG.loot3d && global.DG.loot3d.add(da.node, dp, T, dropHex(dp)))) { box(da.node, 0, 3, 0, 12, 6, 12, global.DG.loot3d ? global.DG.loot3d.hexOf(dp, dropHex(dp)) : dropHex(dp), 'glow', false); }   // W-0146 아이콘 + 등급 받침(loot3d.js), 아이콘 없으면 옛 상자(종류 색)
         var bm = lootBeam(dp);
         if (bm) { da.node.add(bm); }
         da.node.userData.built = true;

@@ -140,6 +140,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/field-instance.js"></script>
 <script src="js/portrait3d.js"></script>
 <script src="js/belt-cam3d.js"></script>
+<script src="js/loot3d.js"></script>
 <script src="js/dungeon3d.js"></script>
 <script src="js/fx3d.js"></script>
 <script src="js/belt2d.js"></script>
@@ -4637,6 +4638,20 @@ window.requestAnimationFrame = function () { return 0; };
         DN.active !== undefined && '진단에서는 3D 가 잠들어 있다';
     });
 
+    t('3D 전리품 아이콘(W-0146) — 장비·보석은 등급 받침 + 아이콘 스프라이트 둘(주소 = 가방과 같은 itemicon.src), 금·물약은 아이콘 없음 → 옛 상자(흰색 대신 종류 색)', function () {
+      var L = DG.loot3d, I = DG.itemicon, tbl = (DG.itemiconIds || {})['saga-dungeon'] || {}, eq = Object.keys(tbl).filter(function (k) { return k.indexOf('equip:') === 0; })[0], gm = Object.keys(tbl).filter(function (k) { return k.indexOf('gem:') === 0; })[0];
+      if (!eq || !gm) { return '실패 아이콘 표 없음'; }
+      var dItem = { kind: 'item', item: { base: eq.slice(6), tier: 1 } }, dGem = { kind: 'mat', mat: { kind: 'gem', key: gm.slice(4), g: 1 } }, dGold = { kind: 'gold', amount: 5 };
+      function N() { this.children = []; this.position = { y: 0 }; this.scale = { set: function () {} }; } N.prototype.add = function (c) { this.children.push(c); };
+      var loads = [], FT = { BoxGeometry: function () {}, MeshBasicMaterial: function () {}, Mesh: function () { N.call(this); this.mesh = 1; }, SpriteMaterial: function (o) { this.map = o.map; },
+        Sprite: function (m) { N.call(this); this.sprite = 1; this.material = m; }, TextureLoader: function () { this.load = function (u) { loads.push(u); return { url: u }; }; } };
+      var node = new N(), node2 = new N(), node3 = new N();
+      var okI = L.add(node, dItem, FT, 0xd9d9e0), okG = L.add(node2, dGem, FT, 0x6fa8ff), okN = L.add(node3, dGold, FT, 0xffd700);
+      var r = [okI && node.children.length === 2 && !!node.children[0].mesh && !!node.children[1].sprite, okG && node2.children.length === 2, okN === false && node3.children.length === 0,
+        L.iconUrl(dItem) === I.src('saga-dungeon', 'equip', eq.slice(6)) && L.iconUrl(dGem) === I.src('saga-dungeon', 'gem', gm.slice(4)), loads.indexOf(L.iconUrl(dItem)) >= 0,
+        L.iconOf({ kind: 'item', item: { base: 'x', uniq: 'u1' } }).id === 'u1', L.hexOf(dGold, 0xd9d9e0) === 0xf0c34a && L.hexOf(dGold, 0x123456) === 0x123456 && L.hexOf(dItem, 0xd9d9e0) === 0xd9d9e0];
+      return r.every(Boolean) && ('장비 ' + eq + ' · 보석 ' + gm + ' → 받침+아이콘 · 금 → 옛 상자') || '실패 ' + r.join(',');
+    });
     t('3D 방 밝기(W-0145) — 방 바닥·벽 물감을 흰 쪽으로 0.65·반구광 색을 밝은 회청 쪽으로 0.5(손잡이 0 = 옛), 마을 조명은 그대로', function () {
       var D3 = DG.dungeon3d, C = DG.core, k = D3._roomLight(), k1 = C.tuned('dungeon3d.roomLift', 0.65), off;
       try { C.setTune('dungeon3d.roomLift', 0); off = D3._roomLight().lift; } finally { C.setTune('dungeon3d.roomLift', k1); }
