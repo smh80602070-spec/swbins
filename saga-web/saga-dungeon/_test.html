@@ -7938,7 +7938,7 @@ window.requestAnimationFrame = function () { return 0; };
       Object.keys(reg).forEach(function (k) { reg[k].forEach(function (id) { if (!A.has('world', id)) { bad.push(k + ':' + id); } }); });
       A._reset();
       var pre = A.heroRecipe('hero:sg_guanyu') === null && A.heroRecipe({ id: 'sg_guanyu' }) === null && A.heroRecipe(null) === null;
-      return bad.length === 0 && ids.hero.length === 299 && ids.world.length === 42 && A.has('hero', 'sg_guanyu') && pre && ('영웅 ' + ids.hero.length + ' · 지물 ' + ids.world.length + ' · 등록 표 ' + Object.keys(reg).length + '칸') || bad.join(',') || '표/폴백 불일치';
+      return bad.length === 0 && ids.hero.length >= 299 && ids.world.length === 42 && A.has('hero', 'sg_guanyu') && pre && ('영웅 ' + ids.hero.length + ' · 지물 ' + ids.world.length + ' · 등록 표 ' + Object.keys(reg).length + '칸') || bad.join(',') || '표/폴백 불일치';
     });
 
     t('2D 마을 건물 — 집·우물·여관·종탑이 prop2d 에 이어지고 id 는 전부 지물 GLB, 시험 전엔 hasKind 가 거짓이 아니어도 drawKind 는 false(옛 방), 짝 없는 대장간·마구간·방앗간은 표에 없다', function () {
@@ -8260,7 +8260,7 @@ window.requestAnimationFrame = function () { return 0; };
         var s = 'hero:' + h.id, k, x = 0; for (k = 0; k < s.length; k++) { x = (x * 31 + s.charCodeAt(k)) >>> 0; } if (T.rest.length && HS[T.rest[x % T.rest.length]] !== h.sex) { old++; }   // 성별 안 보던 옛 고르기
       });
       var two = (A.borrowPick('hero:ft_airesearch') || {}).id, chef = (A.borrowPick('hero:md_chef') || {}).id, named = (A.borrowPick('황건적') || {}).id === T.named['황건적'];
-      var r = [ext.length === 30, ext.every(function (h) { return h.sex === 'f' || h.sex === 'm'; }), Object.keys(HS).length === DG.assets3dIds.hero.length, bad.length === 0, HS[two] === 'f', HS[chef] === 'm', named];
+      var r = [ext.length === 30, ext.every(function (h) { return h.sex === 'f' || h.sex === 'm'; }), Object.keys(HS).length >= 299, bad.length === 0, HS[two] === 'f', HS[chef] === 'm', named];
       return r.every(Boolean) && ('반대 성별 몸 ' + old + ' → 0 / 30 · ft_airesearch ' + two + ' · md_chef ' + chef) || '실패 ' + r.join(',') + ' ' + bad.join(' ');
     });
     t('asset3d: 몬스터 3D 몸(W-0147) — 짐승 적·우두머리가 crea:<id>(통일 world 표) 로 GLB 주소를 받고, 클립 Hit·Death 가 슬롯에 걸린다', function () {

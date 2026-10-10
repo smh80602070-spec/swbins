@@ -443,7 +443,7 @@
     }
     var c = r.cell;
     if (c.biome !== 'home' && !found(c.key) && Math.hypot(pos.x - c.x, pos.y - c.y) < FIND_R) { discover(c.key); }
-    if (!global.DG_NO_DRAW) { paintBeams(pos); paintMission(c); }
+    if (!global.DG_NO_DRAW) { paintBeams(pos); paintMission(c); if (global.DG.landmark3d) { global.DG.landmark3d.paint(pos); } }   // W-0162 거리 이름표(landmark3d.js)
   }
 
   /* 빛기둥 — 안개를 뚫고 멀리서 보인다(fog:false). 못 찾은 곳은 금빛, 찾은 곳은 옅은 푸른빛 */

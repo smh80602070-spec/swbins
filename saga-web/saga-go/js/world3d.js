@@ -2961,7 +2961,7 @@
     /* ⑲-22 활 조준 — 오른 어깨 너머에서 겨눈 쪽을 본다(대화·조우 무대가 먼저) */
     var FCv = global.DG.fieldCombat, AV = !TS && !stageAt && FCv && FCv.aimView ? FCv.aimView() : null;
     var aim = TS ? global.DG.talkface.talkAim(TS.spk, TS.lst, ACTOR_H()) : (AV ? aimCam(pos, AV, ACTOR_H()) : camAim(pos, W.tiltMode, focusLive(), stageAt,
-      stageAt ? 1 : W.zoom3d, battleOn, stageAt ? 0 : yaw, duelFoe));
+      stageAt ? 1 : W.zoom3d, battleOn, stageAt ? 0 : yaw, duelFoe)); if (!TS && !AV && !stageAt && !duelFoe && !focusLive() && global.DG.landmark3d) { aim = global.DG.landmark3d.apply(aim); }   // W-0162 멀리 보기(기본 구도만)
     /* **카메라와 시선도 땅을 따라 오른다.** 안 그러면 산에 오를 때 카메라가
        제자리에 남아 땅이 화면을 덮고, 골짜기에서는 하늘만 보인다.
        `camAim` 은 평면 기준으로 값을 내므로 여기서 땅 높이만 얹는다 —

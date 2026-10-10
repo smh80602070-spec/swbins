@@ -1130,7 +1130,7 @@
       moved = Math.max(moved, Math.hypot(x - dx0, y - dy0));
       if (!turning && moved > DRAG_MIN) { turning = true; }
       if (!turning) { return false; }
-      turnBy(x - dx0);
+      turnBy(x - dx0); if (global.DG.landmark3d && tiltMode() === 2) { global.DG.landmark3d.tilt(y - dy0, geom ? geom.H : 480); }   // W-0162 세로로 끌면 멀리 보기
       dx0 = x; dy0 = y;
       return true;
     }

@@ -118,6 +118,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/vendor/RGBELoader.js"></script>
 <script src="js/land.js"></script>
 <script src="js/biome.js"></script>
+<script src="js/landmark3d.js"></script>
 <script src="js/landform.js"></script>
 <script src="js/mount.js"></script>
 <script src="js/geo.js"></script>
@@ -16149,7 +16150,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       Object.keys(props).forEach(function (k) { props[k].forEach(function (id) { if (!A.has('world', id)) { bad.push(k + ':' + id); } }); });
       A._reset();   // 시험 전 상태로 — 이 서버엔 통일 에셋이 없으니 null 이어야 한다
       var pre = A.url('hero', 'sg_guanyu') === null && A.heroRecipe({ id: 'sg_guanyu' }) === null && A.heroRecipe(null) === null;
-      return bad.length === 0 && ids.hero.length === 299 && ids.world.length >= 42 && A.has('hero', 'sg_guanyu') && !A.has('hero', 'folk_x') && pre && ('영웅 ' + ids.hero.length + ' · 지물 ' + ids.world.length + ' · 소품 표 ' + Object.keys(props).length + '칸') || ('실패 ' + (bad.join(',') || '표/폴백 불일치 — 지물 ' + ids.world.length));   // W-0119 — 지물은 K 가 늘린다(42→298), 실패 갈래도 실패로
+      return bad.length === 0 && ids.hero.length >= 299 && ids.world.length >= 42 && A.has('hero', 'sg_guanyu') && !A.has('hero', 'folk_x') && pre && ('영웅 ' + ids.hero.length + ' · 지물 ' + ids.world.length + ' · 소품 표 ' + Object.keys(props).length + '칸') || ('실패 ' + (bad.join(',') || '표/폴백 불일치 — 지물 ' + ids.world.length));   // W-0119 — 지물은 K 가 늘린다(42→298), 실패 갈래도 실패로 · 영웅도 K-0028 로 299→500(W-0162 때 >= 로)
     });
 
     t('W-0119 소품 시대 — 집·등롱은 그 땅 시대 것만, 과거 몫이 없는 등롱은 옛 목록(_base), 신화는 과거, 시대 표 밖 목록은 그대로', function () {
@@ -16352,6 +16353,23 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var pool = DG.data.pets.filter(function (p) { return S.beastFormOf(p) === 'fish'; }).length;
       var r = [n > 50, bad.length === 0, pool > 0];
       return r.every(Boolean) && ('펫 스폰 ' + n + ' · 물고기 ' + fish + '(전부 물 칸) · 물고기 꼴 펫 ' + pool + '종') || '실패 ' + r.join(',') + ' ' + bad.slice(0, 5).join(',');
+    });
+    t('go.world3d: 랜드마크 이름표(W-0162) — 1.35km 안 랜드마크 수 = 이름표 수, 400m 밖은 "이름 · 거리", 안은 이름만, 멀수록 높이 올린다', function () {
+      var B = DG.biome, LM = DG.landmark3d, far = B.landmarks(0, 0, 6000)[0];
+      if (!far) { return '실패 랜드마크 없음'; }
+      var pa = { x: far.x + 900, y: far.y }, pb = { x: far.x + 120, y: far.y }, A = LM.plan(pa), Bp = LM.plan(pb);
+      var na = B.landmarks(pa.x, pa.y, 1350).length, a0 = A.filter(function (p) { return p.key === far.key; })[0], b0 = Bp.filter(function (p) { return p.key === far.key; })[0];
+      var r = [A.length === na && na > 0, !!a0 && a0.text === far.name + ' · ' + LM.distText(a0.dist), !!b0 && b0.text === far.name, !!a0 && !!b0 && a0.lift > b0.lift,
+        LM.distText(1234) === '1.2km' && LM.distText(640) === '650m'];
+      return r.every(Boolean) && ('이름표 ' + A.length + '개(= 랜드마크 ' + na + ') · "' + a0.text + '" · 가까이 "' + b0.text + '"') || '실패 ' + r.join(',');
+    });
+    t('go.world3d: 멀리 보기(W-0162) — 세로로 끌어도 기울기는 손잡이(pitchMax) 안, 구도는 내 둘레로만 돌고(거리 그대로) 3.5°~83° 를 안 넘는다', function () {
+      var LM = DG.landmark3d, C = DG.core, mx = C.tuned('world3d.pitchMax', 0.55), r = [], up, dn;
+      LM._reset(); up = LM.tilt(-100000, 480); LM._reset(); dn = LM.tilt(100000, 480); LM._reset();
+      var aim = { pos: { x: 0, y: 6, z: 10 }, look: { x: 0, y: 1, z: 0 } }, a2 = LM.pitchAim(aim, mx), a3 = LM.pitchAim(aim, -3);
+      var d0 = Math.hypot(5, 10), d2 = Math.hypot(a2.pos.y - 1, a2.pos.z), e2 = Math.atan2(a2.pos.y - 1, a2.pos.z), e3 = Math.atan2(a3.pos.y - 1, a3.pos.z);
+      r = [Math.abs(up - mx) < 1e-9, Math.abs(dn - LM.PITCH_MIN) < 1e-9, Math.abs(d2 - d0) < 1e-9, e2 < Math.atan2(5, 10) && e2 >= 0.06 - 1e-9, e3 <= 1.45 + 1e-9, a2.look === aim.look, LM.pitchAim(aim, 0) === aim];
+      return r.every(Boolean) && ('위로 끝까지 ' + up.toFixed(2) + ' · 아래 ' + dn.toFixed(2) + ' rad · 거리 그대로 · 기울기 ' + (e2 * 180 / Math.PI).toFixed(1) + '°') || '실패 ' + r.join(',');
     });
     t('go.world: 휠 방향(W-0155) — 휠 위(deltaY −100)는 가까이: 2D 배율은 커지고 3D 거리는 준다', function () {
       var W = DG.world, W3 = DG.world3d, st = DG.core.save.settings, k2 = st.camZoom2d, k3 = st.zoom3d, cv = document.createElement('canvas'), r = {}, a, b;
