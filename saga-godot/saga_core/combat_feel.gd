@@ -237,6 +237,8 @@ func _do_popup(target: Node3D, amount: float, crit: bool, pop_mul: float = 1.0) 
 	var label := Label3D.new()
 	label.text = str(int(roundf(amount)))
 	label.modulate = Color(1.0, 0.55, 0.1) if crit else Color(1.0, 1.0, 1.0)
+	if _is_player(target):
+		label.modulate = Color(1.0, 0.35, 0.3)   # G-0171 — 내가 받은 피해는 붉게(적에게 준 흰 숫자와 가르게)
 	label.font_size = 48
 	label.pixel_size = 0.01 * (POPUP_CRIT_SCALE if crit else 1.0) * pop_mul
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
@@ -261,6 +263,14 @@ func _do_popup(target: Node3D, amount: float, crit: bool, pop_mul: float = 1.0) 
 	tw.parallel().tween_property(label, "modulate:a", 0.0, POPUP_SEC)
 	tw.tween_callback(label.queue_free)
 	popup_triggered.emit(amount, crit)
+
+
+func _is_player(n: Node) -> bool:
+	while n != null:
+		if n.is_in_group("player"):
+			return true
+		n = n.get_parent()
+	return false
 
 
 func _do_pickup_popup(target: Node3D, label: String) -> void:

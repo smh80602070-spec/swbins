@@ -1333,6 +1333,9 @@ func take_damage(amount: float, source: Node) -> void:
 	hp = maxf(hp - dmg, 0.0)
 	_since_hurt = 0.0
 	CombatFeel.hit(_player.get_node("Visual"), dmg, false)
+	var hv := _hurt_vignette()
+	if hv:
+		hv.call("flash")   # G-0171
 	_player.call("play_action", "hit", 0.3, 0.0)
 	if hp <= 0.0:
 		_down()
@@ -1388,7 +1391,17 @@ func _down() -> void:
 	Toast.show(_player, "쓰러졌다 — 정신을 차려 보니 안전한 곳이다", 3.0)
 	party_wiped.emit()
 
+## G-0171 — 화면 가장자리 신호(ui/hurt_vignette.gd). 한 번 찾아 둔다(매 프레임 그룹 순회 안 함).
+var _hv: Node = null
+func _hurt_vignette() -> Node:
+	if _hv == null or not is_instance_valid(_hv):
+		_hv = get_tree().get_first_node_in_group("go_hurt_vignette")
+	return _hv
+
 func _refresh_hud() -> void:
+	var hv := _hurt_vignette()
+	if hv:
+		hv.call("set_low", hp > 0.0 and hp < max_hp * 0.3)
 	if _hud == null:
 		return
 	var r := roster()

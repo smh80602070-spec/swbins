@@ -86,6 +86,8 @@ const SHOTS := [
 	["q_walk_010", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, "walk6"],
 	["q_walk_030", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, "walk18"],
 	["q_stop_010", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, "stop6"],
+	["q_hurt", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, "hurt:0.2"],   # G-0171 체력 낮음 맥박 + 번쩍
+	["q_hurt_hi", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, "hurt:0.9"],   # 번쩍만
 	["q_key_before", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, ""],
 	["q_key_mount", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, "keymount"],
 	["v_people_lineup", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -8.0, 7.0, "lineup"],
@@ -227,6 +229,12 @@ func _process(_delta: float) -> void:
 	if String(SHOTS[_i][7]).begins_with("burst") and _frame == SETTLE - int(String(SHOTS[_i][7]).substr(5)):
 		_p.call("play_action", "burst", 0.6, 0.0)
 	## G-0152 — "walkN": 찍기 N 프레임 전에 앞으로 걷기 시작 · "stopN": 20 프레임째부터 걷다가 찍기 N 프레임 전에 뗀다
+	## G-0171 — "hurt:<비율>" 찍기 6 프레임 전에 지금 인물 체력을 비율로 두고 한 대 맞는다(화면 가장자리 신호 확인, 저장 안 함)
+	if String(SHOTS[_i][7]).begins_with("hurt:") and _frame == SETTLE - 6:
+		var fch := get_tree().get_first_node_in_group("go_field_combat")
+		if fch:
+			fch.set("hp", float(fch.get("max_hp")) * float(String(SHOTS[_i][7]).substr(5)) + 8.0)
+			fch.call("take_damage", 8.0, null)
 	## G-0170 — "enemyhp:<비율>:<프레임>" 찍기 N 프레임 전에 가장 가까운 적 체력을 비율로(체력 바 흰 잔상 확인, 저장 안 함)
 	if String(SHOTS[_i][7]).begins_with("enemyhp:") and _frame == SETTLE - int(String(SHOTS[_i][7]).get_slice(":", 2)):
 		var ne: Node3D = null
