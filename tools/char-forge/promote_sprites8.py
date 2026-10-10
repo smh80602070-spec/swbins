@@ -92,8 +92,14 @@ def main():
         if lic is None:
             nolic.append(pid)
             continue
-        files = [f for f in os.listdir(sd) if f.endswith('.webp') or f == 'manifest.json']
+        files = [f for f in os.listdir(sd) if f.endswith('.webp')]
         diff = [f for f in files if not os.path.exists(os.path.join(dd, f)) or md5(os.path.join(sd, f)) != md5(os.path.join(dd, f))]
+        # manifest: 정본에 --town 이 더한 칸(town·town_clipmap)은 남긴다 — 전투 시트를 다시 올려도 마을 시트 연결이 안 끊기게(K-0028)
+        dm = os.path.join(dd, 'manifest.json')
+        keep = {k: v for k, v in json.load(open(dm, encoding='utf-8')).items() if k in ('town', 'town_clipmap')} if os.path.exists(dm) else {}
+        man_txt = json.dumps(dict(man, **keep), ensure_ascii=False, indent=1) if keep else open(os.path.join(sd, 'manifest.json'), encoding='utf-8').read()
+        if not os.path.exists(dm) or open(dm, encoding='utf-8').read() != man_txt:
+            diff.append('manifest.json')
         lp = os.path.join(dd, pid + '.license.json')
         lic_diff = not os.path.exists(lp) or open(lp, encoding='utf-8').read() != lic
         if not diff and not lic_diff:
@@ -106,7 +112,11 @@ def main():
         if write:
             os.makedirs(dd, exist_ok=True)
             for f in diff:
-                shutil.copyfile(os.path.join(sd, f), os.path.join(dd, f))
+                if f == 'manifest.json':
+                    with open(dm, 'w', encoding='utf-8', newline='\n') as fh:
+                        fh.write(man_txt)
+                else:
+                    shutil.copyfile(os.path.join(sd, f), os.path.join(dd, f))
             if lic_diff:
                 with open(lp, 'w', encoding='utf-8', newline='\n') as fh:
                     fh.write(lic)
