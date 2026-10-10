@@ -221,6 +221,8 @@ func _ready() -> void:
 	if OS.get_environment("SAGA_MONSTER_BODY_PROBE") != "": # G-0059 들판 적·보스 GLB 몸
 		add_child(load("res://tools/probe_monster_body.gd").new())
 	## G-0018 전투·이동 손맛 기준선 측정 — 측정할 때만 붙인다.
+	if OS.get_environment("SAGA_MOVESND_PROBE") != "":   # G-0176
+		add_child(load("res://tools/probe_move_sounds.gd").new())
 	if OS.get_environment("SAGA_FEEL_PROBE") != "":
 		add_child(load("res://tools/probe_feel.gd").new())
 	if OS.get_environment("SAGA_PERF_PROBE") != "":

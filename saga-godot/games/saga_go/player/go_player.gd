@@ -188,6 +188,9 @@ func _ready() -> void:
 	combat.name = "FieldCombat"
 	add_child(combat)
 	set_hero_body("self")   # G-0024 — 주인공 몸(dex 설치 시)
+	var ms := preload("res://games/saga_go/player/move_sounds.gd").new()   # G-0176 — 발소리·점프·착지·대시 소리
+	ms.name = "MoveSounds"
+	add_child(ms)
 	if camera_rig:
 		camera_rig.set("mouse_look", true) # 106장 ⑧ 원신 PC 시점
 
