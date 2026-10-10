@@ -18,7 +18,8 @@
     var key = role + ':' + ((ref && (ref.id || ref.name)) || ''), ht = M.actT ? M.actT(key + ':hit', o.hurt) : null, at = M.actT ? M.actT(key + ':atk', o.atk) : null;   // W-0073 단계 4
     var ai = at !== null && M.actInfo ? M.actInfo(key + ':atk') : null, atkClip = (o.cast || (ai && ai.dur >= 0.3)) ? 'heavy' : (ai && ai.n % 2 === 0 ? 'attack2' : 'attack');   // 강공격 0.38초·스킬 = heavy, 평타는 연타 번갈아
     var clip = ht !== null ? 'hit' : (at !== null ? atkClip : (o.walking ? 'walk' : 'idle'));
-    return M.draw(ctx, { pool: pool, clip: clip, t: ht !== null ? ht : at, facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: (o.now || Date.now()) + (o.phase || 0) * 160, x: x, y: y, scale: s * 40 * 1.2 / tH });
+    var TW = global.DG.town, town = role === 'npc' || !!(TW && TW.active && TW.active());   // W-0138 — 마을 사람·마을에 선 나/동행은 맨손 서기·걷기(공격·피격은 그대로)
+    return M.draw(ctx, { pool: pool, clip: clip, t: ht !== null ? ht : at, facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: (o.now || Date.now()) + (o.phase || 0) * 160, x: x, y: y, scale: s * 40 * 1.2 / tH, town: town });
   }
 
   global.DG = global.DG || {};

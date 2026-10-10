@@ -822,5 +822,22 @@
   "fun": {},
   "ticket": "W-0145",
   "since": "2026-10-10"
+ },
+ {
+  "id": "fs.town-sheet2d",
+  "name": "마을 맨손 시트(K-0083 ①) — 8방향 시트 사람이 마을이면 서기·걷기를 idle_town·walk_town 으로(3마을 전부·2나락 마을 사람과 마을에 선 나/동행), 공격·피격·던전은 그대로",
+  "files": [
+   "js/mode2d.js",
+   "js/actor2d.js"
+  ],
+  "tests": [
+   "mode2d: 마을 맨손 시트(W-0138) — 8방향 시트 사람이 town 이면 서기·걷기를 idle_town·walk_town 으로, 공격·피격·마을 밖·3행 시트는 그대로"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0138",
+  "since": "2026-10-10",
+  "note": "D2(qc+claude 2026-10-10): 점검(tools/_out/w145/town-probe) 2D 마을 — 3마을 idle_town 3·walk_town 1, 2나락 idle_town 5·walk_town 1, 실패(404) 0 · 2나락 마을 컷 Read — 행상·나 무기 없이 팔 내리고 섬 ○ · 같은 진단이 2나락 _test 에도."
  }
 ]

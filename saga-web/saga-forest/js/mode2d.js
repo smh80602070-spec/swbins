@@ -173,6 +173,11 @@
     if (eight) { return ROLES8[clip] ? clip : (/^attack/.test(clip) ? 'attack' : 'idle'); }
     return { attack2: 'attack', heavy: 'attack', knockdown: 'death' }[clip] || (FPS[clip] && clip) || 'idle';   // 3행 시트에 없는 이름은 idle(없는 파일 404 막기)
   }
+  /** W-0138 — 마을 맨손 시트(K-0083 ①): 8방향 시트를 가진 사람(hero2d8, 299 전부 idle_town·walk_town 있음)이 o.town 이면
+   *  서기·걷기를 맨손 그림으로. 순수(진단이 본다) — 그 밖(공격·피격, 3행 시트, 짐승)은 roleOf 그대로 */
+  function townRole(role, eight, town) { return town && eight && (role === 'idle' || role === 'walk') ? role + '_town' : role; }
+  /** 이 풀·동작·마을 여부로 고를 시트 열쇠(받기 전 판단, 진단용) */
+  function roleKey(pool, clip, town) { var e8 = !!sheet8(pool); return townRole(roleOf(clip, e8), e8, town); }
   /** 움직인 쪽(dx, dy — 화면 아래가 +) → 8방향 행·뒤집기. 45° 칸. 둘 다 0 이면 facing('front'·'back'·±1·'left'/'right')으로 */
   function dirOf8(dx, dy, facing) {
     dx = +dx || 0; dy = +dy || 0;
@@ -228,6 +233,8 @@
     var cr = null;
     if (isCrea(o.pool)) { var ci = creaInfo(o.pool.slice(CPRE.length)); if (!ci || !ci.fit) { return false; } cr = ci.fit; }   // W-0129 — manifest 받기 전엔 옛 그림
     var s8 = sheet8(o.pool), eight = !!s8, role = roleOf(o.clip, eight), e = getImg(o.pool, role, eight);
+    var tr = townRole(role, eight, o.town), et = tr !== role ? getImg(o.pool, tr, true) : null;   // W-0138 마을 맨손 — 받는 중·없으면 전투 시트 그대로
+    if (et && et.ok) { e = et; role = tr; }
     if (eight && !e.ok) {
       /* 8방향이 아직 안 왔으면(받는 중·실패) 같은 사람의 3행 시트로 — 몸이 깜박이지 않게 */
       eight = false; s8 = null; role = roleOf(o.clip, false); e = getImg(o.pool, role, false);
@@ -485,7 +492,7 @@
     preloadBg: function (region) { getBg(region); },
     tileOk: function (id) { var t = tiles[id]; return t ? t.ok : null; },
     FRAMES: FRAMES, PX: PX, FPS: FPS,
-    isOn: isOn, pick: pick, vroidPick: vroidPick, face: face, actT: actT, actInfo: actInfo, dirOf8: dirOf8, roleOf: roleOf, sheet8: sheet8, beastOf: beastOf, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
+    isOn: isOn, pick: pick, vroidPick: vroidPick, face: face, actT: actT, actInfo: actInfo, dirOf8: dirOf8, roleOf: roleOf, roleKey: roleKey, townRole: townRole, sheet8: sheet8, beastOf: beastOf, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
     draw: draw, preload: preload, loadIndex: loadIndex, tintSlot: tintSlot, tintPx: tintPx, tintData: tintData, tintOf: tintOf, bare: bare,
     drawStill: drawStill, stillPose: stillPose, isStill: isStill,
     stillLoaded: function (pool, view) { var e = stills[pool + '/' + view]; return e ? e.ok : null; },

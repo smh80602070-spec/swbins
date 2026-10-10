@@ -15,7 +15,7 @@
     if (!pool) { return false; }
     o = o || {};
     var tH = (global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.targetH) || 40;
-    return M.draw(ctx, { pool: pool, clip: o.moving ? 'walk' : 'idle', facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: (o.now || Date.now()) + (o.phase || 0) * 160, x: x, y: y, scale: s * 40 * 1.2 / tH });
+    return M.draw(ctx, { pool: pool, clip: o.moving ? 'walk' : 'idle', facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: (o.now || Date.now()) + (o.phase || 0) * 160, x: x, y: y, scale: s * 40 * 1.2 / tH, town: true });   // W-0138 — 마을은 싸움이 없다: 맨손 서기·걷기 시트
   }
 
   global.DG = global.DG || {};

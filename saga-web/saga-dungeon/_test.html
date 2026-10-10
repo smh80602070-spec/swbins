@@ -4668,6 +4668,13 @@ window.requestAnimationFrame = function () { return 0; };
         L.iconOf({ kind: 'item', item: { base: 'x', uniq: 'u1' } }).id === 'u1', L.hexOf(dGold, 0xd9d9e0) === 0xf0c34a && L.hexOf(dGold, 0x123456) === 0x123456 && L.hexOf(dItem, 0xd9d9e0) === 0xd9d9e0];
       return r.every(Boolean) && ('장비 ' + eq + ' · 보석 ' + gm + ' → 받침+아이콘 · 금 → 옛 상자') || '실패 ' + r.join(',');
     });
+    t('mode2d: 마을 맨손 시트(W-0138) — 8방향 시트 사람이 town 이면 서기·걷기를 idle_town·walk_town 으로, 공격·피격·마을 밖·3행 시트는 그대로', function () {
+      var M = DG.mode2d, ids = Object.keys((DG.assets3dIds && DG.assets3dIds.hero2d8) || {}), p = ids.length ? 'vroid:' + ids[0] : '';
+      if (!p) { return '실패 8방향 표 없음'; }
+      var r = [M.roleKey(p, 'idle', true) === 'idle_town', M.roleKey(p, 'walk', true) === 'walk_town', M.roleKey(p, 'attack', true) === 'attack', M.roleKey(p, 'hit', true) === 'hit',
+        M.roleKey(p, 'idle', false) === 'idle', M.roleKey('hero_m', 'idle', true) === 'idle', M.townRole('walk', true, true) === 'walk_town', ids.length === 299];
+      return r.every(Boolean) && ('맨손 ' + p + ' idle→idle_town · walk→walk_town · 공격·마을 밖·3행 시트 그대로 · 8방향 ' + ids.length + '명') || '실패 ' + r.join(',');
+    });
     t('3D 방 밝기(W-0145) — 방 바닥·벽 물감을 흰 쪽으로 0.65·반구광 색을 밝은 회청 쪽으로 0.5(손잡이 0 = 옛), 마을 조명은 그대로', function () {
       var D3 = DG.dungeon3d, C = DG.core, k = D3._roomLight(), k1 = C.tuned('dungeon3d.roomLift', 0.65), off;
       try { C.setTune('dungeon3d.roomLift', 0); off = D3._roomLight().lift; } finally { C.setTune('dungeon3d.roomLift', k1); }
