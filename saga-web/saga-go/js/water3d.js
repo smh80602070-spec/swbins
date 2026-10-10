@@ -38,15 +38,18 @@
 
   /* 등급마다 얼마나 물을 들이나 — LOW 는 통째로 안 쓴다(옛 판으로 돌아간다) */
   var TIER_WATER = {
-    HIGH:   { on: true,  wave: 1.00, glint: 1.00 },
-    MEDIUM: { on: true,  wave: 0.80, glint: 0.75 },
-    LOW:    { on: false, wave: 0,    glint: 0 }
+    HIGH:   { on: true,  wave: 1.00, glint: 1.00, refl: true },
+    MEDIUM: { on: true,  wave: 0.80, glint: 0.75, refl: false },   // W-0140 폰(MEDIUM)은 하늘 그림 반사를 끈다 — 단색 하늘빛 프레넬로
+    LOW:    { on: false, wave: 0,    glint: 0,    refl: false }
   };
 
   function ON() { return core.tuned('water3d.on', 1) ? true : false; }
   function WAVE() { return core.tuned('water3d.wave', 1); }
   function GLINT() { return core.tuned('water3d.glint', 1); }
   function OPACITY() { return core.tuned('water3d.opacity', 0.78); }
+  function REFL() { return core.tuned('water3d.refl', 1) ? true : false; }     // W-0140 하늘 그림을 비춘다
+  function FINE() { return core.tuned('water3d.fine', 1); }                     // W-0140 잔물결 두 겹 세기
+  function FOAM() { return core.tuned('water3d.foam', 1); }                     // W-0140 물가 거품 띠 세기
 
   /* ══ 값 층 — three 없이도 돈다 ═══════════════════════════ */
 
@@ -95,6 +98,10 @@
       wave: +Math.max(0, wave).toFixed(4),
       glint: +Math.max(0, glint).toFixed(4),
       ripple: ripple,
+      /* W-0140 — 하늘 그림 반사(등급·손잡이)·잔물결·물가 거품. 비 오면 흙탕이라 거품이 짙고, 눈 오면 가라앉는다 */
+      refl: !!(REFL() && tp.refl),
+      fine: +Math.max(0, FINE() * (w === 'rain' ? 1.3 : (w === 'snow' ? 0.6 : 1))).toFixed(4),
+      foam: +Math.max(0, FOAM() * (w === 'rain' ? 1.25 : (w === 'snow' ? 0.7 : 1))).toFixed(4),
       /* 비 오는 흙탕물은 덜 비친다 — 하늘을 덜 섞는다 */
       sky: w === 'rain' ? 0.62 : (w === 'fog' ? 0.72 : 1),
       opacity: Math.max(0, Math.min(1, OPACITY()))
@@ -112,11 +119,14 @@
   var clock = 0;
 
   var VERT = [
+    'attribute float foam;',     // W-0140 물가 정점 1(03-props unitGeo 의 disc·shoreW) — 없는 판은 0(defaultAttributeValues)
+    'varying float vFoam;',
     'varying vec3 vWorld;',
     '#include <fog_pars_vertex>',
     'void main() {',
     '  vec4 wp = modelMatrix * vec4(position, 1.0);',
     '  vWorld = wp.xyz;',
+    '  vFoam = foam;',
     '  vec4 mvPosition = viewMatrix * wp;',
     '  gl_Position = projectionMatrix * mvPosition;',
     '  #include <fog_vertex>',
@@ -140,6 +150,12 @@
     'uniform float uRipple;',
     'uniform float uSkyMix;',
     'uniform float uOpacity;',
+    'uniform sampler2D uPano;',
+    'uniform float uPanoOn;',
+    'uniform float uPanoH;',
+    'uniform float uFine;',
+    'uniform float uFoam;',
+    'varying float vFoam;',
     'varying vec3 vWorld;',
     '#include <fog_pars_fragment>',
 
@@ -161,6 +177,12 @@
     '    vec2 d6 = normalize(vec2(-1.00, 0.20));',
     '    g += d6 * 2.300 * 0.07 * uRipple * cos(dot(p, d6) * 2.300 + t * 9.0);',
     '  }',
+    /* W-0140 잔물결 두 겹 — 큰 결 넷 위에 잘게 흐르는 결을 엇갈린 방향으로 얹는다. 멀리선 줄인다(먼 물이 지글거리지 않게) */
+    '  float nearF = 1.0 - smoothstep(22.0, 85.0, length(cameraPosition - vWorld));',
+    '  vec2 q1 = p * 1.9 + vec2(t * 0.35, t * 0.21);',
+    '  vec2 q2 = mat2(0.8, -0.6, 0.6, 0.8) * p * 3.1 - vec2(t * 0.27, -t * 0.40);',
+    '  g += (vec2(cos(q1.x + sin(q1.y * 1.3)), cos(q1.y * 1.1 + sin(q1.x * 0.9))) * 0.020 +',
+    '        vec2(cos(q2.x * 1.2 + sin(q2.y)), cos(q2.y + sin(q2.x * 1.4))) * 0.012) * nearF * uFine;',
     '  return normalize(vec3(-g.x * uWave * 14.0, 1.0, -g.y * uWave * 14.0));',
     '}',
 
@@ -172,12 +194,17 @@
     '  float f = pow(1.0 - clamp(dot(V, N), 0.0, 1.0), 3.2);',
     '  f = clamp(0.04 + f * 0.55, 0.0, 1.0) * uSkyMix;',
     '  vec3 body = mix(uDeep, uSky, f);',
+    /* W-0140 하늘 그림 반사 — 반사 방향의 방위·고도로 그림을 읽는다(skypano3d 규약: 북 +z·동 −x, u = 방위/360, 고도 0 = 그림 지평선 행 uPanoH).
+       반사는 해·하늘빛을 또 곱하지 않는다(이미 빛이 든 하늘이다) — 물 몸통만 빛을 받는다 */
+    '  vec3 Rf = reflect(-V, N);',
+    '  vec2 ruv = vec2(fract(atan(-Rf.x, Rf.z) * 0.15915494), 1.0 - uPanoH * (1.0 - asin(clamp(Rf.y, 0.02, 1.0)) * 0.63661977));',
+    '  vec3 refl = texture2D(uPano, ruv).rgb;',
     /* **빛을 물린다.** 이것이 빠지면 물만 빛과 무관한 밝은 파랑으로 떠오른다 —
        옆의 땅은 Lambert 로 해와 하늘을 받는데 물만 안 받기 때문이다.
        처음에 빠뜨렸고, 강이 납작한 파란 띠로 찍혀 나와서 알았다 */
     '  float ndl = max(dot(N, uSunDir), 0.0);',
     '  vec3 lit = uAmbient + uSun * (uSunPow * ndl);',
-    '  vec3 col = body * lit;',
+    '  vec3 col = uPanoOn > 0.5 ? mix(uDeep * lit, refl * 0.92, clamp(f * 1.25, 0.0, 0.8)) : body * lit;',
     /* 윤슬 — 해 쪽으로 반짝인다. 결이 보이라고 봉우리를 넓게 잡았다 */
     '  vec3 H = normalize(uSunDir + V);',
     '  float spec = pow(max(dot(N, H), 0.0), 42.0);',
@@ -190,7 +217,12 @@
     '  col += uSky * crest * 0.30 * uWave * (0.35 + 0.65 * ndl);',
     /* 골은 반대로 눌러 준다 — 마루만 들면 물이 뿌옇게 뜨기만 한다 */
     '  col *= 1.0 - (1.0 - smoothstep(0.80, 0.93, N.y)) * 0.20 * uWave;',
-    '  gl_FragColor = vec4(col, mix(uOpacity, 0.92, f * 0.7));',
+    /* W-0140 물가 거품 띠 — 물가 정점에서 안으로 옅어진다. 결 따라 끊겨 흐르게 사인 둘로 흩는다 */
+    '  float fb = smoothstep(0.55, 1.0, vFoam) * uFoam;',
+    '  float brk = 0.5 + 0.5 * sin(vWorld.x * 1.7 + uTime * 0.8 + sin(vWorld.z * 1.3 + uTime * 0.5) * 2.0);',
+    '  float fa = clamp(fb * (0.5 + 0.5 * brk), 0.0, 1.0);',
+    '  col = mix(col, vec3(0.86, 0.91, 0.92) * lit, fa * 0.8);',
+    '  gl_FragColor = vec4(col, max(mix(uOpacity, 0.92, f * 0.7), fa * 0.9));',
     '  #include <tonemapping_fragment>',
     '  #include <colorspace_fragment>',
     '  #include <fog_fragment>',
@@ -230,7 +262,12 @@
           uGlint: { value: 1 },
           uRipple: { value: 0 },
           uSkyMix: { value: 1 },
-          uOpacity: { value: 0.78 }
+          uOpacity: { value: 0.78 },
+          uPano: { value: null },
+          uPanoOn: { value: 0 },
+          uPanoH: { value: 0.68 },
+          uFine: { value: 1 },
+          uFoam: { value: 1 }
         }
       ]);
       uni.uDeep.value = hexToVec(hex);
@@ -243,6 +280,7 @@
         /* 옛 판과 같은 이유로 깊이를 안 적는다 — 적으면 물속의 잉어가 통째로 잘린다 */
         depthWrite: false
       });
+      m.defaultAttributeValues.foam = [0];   // W-0140 물가 표시 없는 판(plane)은 거품 0
       mats[key] = m;
       return m;
     } catch (e) {
@@ -287,6 +325,11 @@
       u.uRipple.value = p.ripple;
       u.uSkyMix.value = p.sky;
       u.uOpacity.value = p.opacity;
+      u.uFine.value = p.fine;
+      u.uFoam.value = p.foam;
+      /* W-0140 — skypano3d 가 L.pano 에 실어 준 그림을 비춘다(없거나 폰이면 옛 단색 프레넬) */
+      var pano = p.refl && light && light.pano ? light.pano : null;
+      u.uPano.value = pano; u.uPanoOn.value = pano ? 1 : 0; u.uPanoH.value = (light && light.panoH) || 0.68;
       if (light) {
         /* 하늘빛·햇빛은 그때그때 받아 쓴다 — 물이 저녁이면 저녁빛을 비춘다 */
         u.uSky.value.setHex(light.bg);

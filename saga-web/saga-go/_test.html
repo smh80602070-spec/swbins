@@ -138,6 +138,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/ssao3d.js"></script>
 <script src="js/post3d.js"></script>
 <script src="js/world3d-light.js"></script>
+<script src="js/skypano3d.js"></script>
 <script src="js/world3d.js"></script>
 <script src="js/encounter.js"></script>
 <script src="js/encounter3d.js"></script>
@@ -6391,6 +6392,34 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var okSrc = src.slice(-27) === 'sky/ibl_noon_present_1k.hdr' || src === 'assets/hdri/alps_field_1k.hdr';
       C.setTune('world3d.ibl', 0); var offV = C.tuned('world3d.ibl', 1); C.setTune('world3d.ibl', null);   // 손잡이 world3d.ibl 은 그대로
       return n === 18 && bad.length === 0 && okSrc && offV === 0 && ('18/18 land_c · 환경광 ' + src.split('/').slice(-2).join('/'));
+    });
+
+    t('하늘 그림 — 때·시대·천후가 그림 이름을 정하고 해는 그림 속 해 자리(한낮 남 −z·새벽 동 −x, 고도 하한 22°)에서 비춘다 · 폰은 물 반사 끔 (W-0140)', function () {
+      var SP = DG.skypano3d, WT = DG.water3d;
+      var a = SP.keyOf({ phase: 'day', hour: 12, weather: 'clear', era: 'modern' });
+      var b = SP.keyOf({ phase: 'twilight', hour: 18, weather: 'cloud', era: 'myth' });
+      var c = SP.keyOf({ phase: 'deepnight', hour: 2, weather: 'wind', era: 'future' });
+      var d = SP.keyOf({ phase: 'day', hour: 12, weather: 'rain', era: 'past' });
+      var e = SP.keyOf({ phase: 'dawn', hour: 7 });
+      var n = SP.dirOf(180, 62, 22), w = SP.dirOf(95, 8, 22);
+      var okDir = n.z < -0.4 && Math.abs(n.x) < 1e-9 && n.y > 0.85 && w.x < -0.9 && Math.abs(w.y - Math.sin(22 * Math.PI / 180)) < 1e-9;
+      var L12 = R3.lightingAt(atH(12), 'clear');            // 옛 조명의 한낮 해도 −z 쪽 — 같은 방위 규약
+      C.setTune('sky3d.pano', 0); var off = SP.on(); C.setTune('sky3d.pano', null);
+      var reflHi = WT.plan({ tier: 'HIGH' }).refl, reflMid = WT.plan({ tier: 'MEDIUM' }).refl;
+      return a === 'noon_present' && b === 'sunset_past' && c === 'night_future' && d === null && e === 'dawn_present' &&
+        okDir && L12.sun.z < 0 && off === false && SP.on() === true && reflHi === true && reflMid === false &&
+        (a + ' · ' + b + ' · ' + c + ' · 비=단색 · 반사 HIGH만');
+    });
+
+    t('3D 재질 — 인물 GLB 는 툰 그대로, 건물 GLB 는 부드러운 명암(거칠기 0.85·금속 0), 손잡이 0 이면 건물도 툰 (W-0140, three 가짜)', function () {
+      var A = DG.asset3d, TN = { toonify: function () { return { isMeshToonMaterial: true }; } };
+      function fake() { return { isMeshStandardMaterial: true, roughness: 0.4, metalness: 0.6, clone: function () { var o = fake(); o.cloned = true; return o; } }; }
+      var hero = A.shadeOne(fake(), 'assets/models/people/folk/a.glb', true, TN);
+      var bld = A.shadeOne(fake(), 'assets/models/buildings/Tower.glb', true, TN);
+      C.setTune('world3d.softBackdrop', 0); var bld0 = A.shadeOne(fake(), 'assets/models/buildings/Tower.glb', true, TN); C.setTune('world3d.softBackdrop', null);
+      return hero.isMeshToonMaterial === true && bld.cloned === true && bld.roughness === 0.85 && bld.metalness === 0 && !bld.isMeshToonMaterial &&
+        bld0.isMeshToonMaterial === true && A.isBackdrop('x/characters3d/h.glb') === false && A.isBackdrop('x/world3d/tree.glb') === true &&
+        '인물 툰 · 건물 부드러운 명암 · 손잡이로 복귀';
     });
 
     t('3D — 값을 내도 세이브는 그대로다', function () {

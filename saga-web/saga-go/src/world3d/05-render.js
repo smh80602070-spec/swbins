@@ -238,7 +238,7 @@
   function syncLight(dt) {
     var L = lightingAt(forcedMs === null ? undefined : forcedMs, weatherKey());
     lightNow = L;
-    var pos = core.save.player.pos;
+    var pos = core.save.player.pos; if (global.DG.skypano3d) { global.DG.skypano3d.apply(L, { three: T, scene: scene, camera: camera, pos: pos, dark: eventDark }); }   // W-0140 그린 하늘·그 해 자리·지평선 색(skypano3d.js)
     /* 해는 늘 플레이어 곁을 따라다닌다 — 그림자 상자를 좁게 유지하려고.
        높이·방위만 시각이 정한다 */
     sun.position.set(pos.x + L.sun.x, L.sun.y, pos.y + L.sun.z);

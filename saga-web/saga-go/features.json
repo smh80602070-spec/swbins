@@ -810,5 +810,27 @@
   "ticket": "W-0137",
   "since": "2026-10-10",
   "note": "D2(qc+claude 2026-10-10): 점검(tools/_out/w145/voice-probe) 다섯 판 — 첫 터치 뒤 레벨업 안내 voice_NA_system_06 200 · 2나락 sig:sg_guanyu → voice_M1_shout_* 200 · 말 걸기 voice_M1_greet_* 200 · 설정 시트 \"대사 음성\" 줄 ○. 같은 진단이 다섯 판 _test 에 하나씩. 판별 사건 표는 voice.js EVENTS(판 이름으로 고름)."
+ },
+ {
+  "id": "go.sky3d.pano",
+  "name": "3D 하늘 그림(시각×시대 파노라마 C)·물 하늘 반사·잔물결·물가 거품·건물 부드러운 명암",
+  "files": [
+   "js/skypano3d.js",
+   "js/water3d.js",
+   "js/asset3d.js",
+   "src/world3d/03-props.js",
+   "src/world3d/05-render.js",
+   "js/world3d.js"
+  ],
+  "tests": [
+   "하늘 그림 — 때·시대·천후가 그림 이름을 정하고 해는 그림 속 해 자리(한낮 남 −z·새벽 동 −x, 고도 하한 22°)에서 비춘다 · 폰은 물 반사 끔 (W-0140)",
+   "3D 재질 — 인물 GLB 는 툰 그대로, 건물 GLB 는 부드러운 명암(거칠기 0.85·금속 0), 손잡이 0 이면 건물도 툰 (W-0140, three 가짜)"
+  ],
+  "level": "D2",
+  "verified": "2026-10-11 qc+claude",
+  "fun": {},
+  "ticket": "W-0140",
+  "since": "2026-10-11",
+  "note": "D2(qc+claude 2026-10-11): tools/playcheck/shots/w0140/sky-{noon,sunset,night,dawn,noon-off}.png·water-close.png ○ — 맑은 한낮 지평선 위 구름·노을 보라·밤 별하늘이 둘러섬(비·눈·안개는 옛 단색), 그림 지평선 행 0.68 을 고도 0 에(등장방형 0.5 면 구름이 땅 밑에 숨어 파랑 한 줄), 해 방향 = sky_markers sun_uv(고도 하한 22°). 물은 그림 반사·잔물결 두 겹(HIGH 만, 폰 MEDIUM 끔), 물가 거품은 손그림 강(shoreW)만 — 원반 물은 겹쳐 놓여 고리가 떠서 뺌. 인물은 툰, 건물 GLB(assets/models/buildings)만 Standard 거칠기 0.85. 예산 A/B(같은 실행): LOW 콜 +3·삼각형 +1.9k·ms 같음, HIGH ms +3%(소프트 렌더 잡음 안). 손잡이 sky3d.pano·water3d.refl·water3d.fine·water3d.foam·world3d.softBackdrop 0 = 옛 화면."
  }
 ]

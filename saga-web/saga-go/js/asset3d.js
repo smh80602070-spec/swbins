@@ -1004,7 +1004,8 @@
      벗기고(`toon3d.toonify`), 큰 덩이(사람·짐승)엔 뒤집힌 헐 외곽선도 얹는다.
      `world3d.toon`/`world3d.outline` 손잡이가 꺼지면 예전 Lambert 그대로다.
      실사(`/realistic/`) 는 이 함수에 아예 안 들어온다 — PLAN §10-Q1: 기본은 툰,
-     실사는 (`world3d.realisticPeople`) 손잡이 뒤로. */
+     실사는 (`world3d.realisticPeople`) 손잡이 뒤로. W-0140 — 배경(건물·지물 GLB)은 툰 띠 대신 부드러운 명암(Standard 거칠기 0.85·금속 0, 환경광을 받는다). 인물·짐승은 툰 그대로(DESIGN §6.0-1). 손잡이 world3d.softBackdrop 0 이면 예전 툰 */
+  function isBackdrop(url) { return typeof url === 'string' && (url.indexOf(BLD) >= 0 || url.indexOf('/world3d/') >= 0); } function shadeOne(m, url, toon, TN) { if (isBackdrop(url) && core().tuned('world3d.softBackdrop', 1)) { var s = m.clone(); s.roughness = 0.85; s.metalness = 0; return s; } return toon ? TN.toonify(m) : null; }
   function delam(root, url) {
     if (looksRealistic(url)) { return; }
     var t = three();
@@ -1020,7 +1021,7 @@
       var one = Array.isArray(o.material) ? o.material : [o.material];
       var out = one.map(function (m) {
         if (!m || (!m.isMeshStandardMaterial && !m.isMeshPhysicalMaterial)) { return m; }
-        if (toon) { return TN.toonify(m); }
+        var sh = (toon || isBackdrop(url)) ? shadeOne(m, url, toon, TN) : null; if (sh) { return sh; }
         /* vertexColors 를 안 옮기면(정점빛깔로 색을 주고 baseColorFactor 는
            검게 비워 둔 옷감이 있다) 그 자리가 조명과 무관하게 통째로 새까맣게
            뜬다 — 2026-09-03, 사가천하 무장 초상에서 처음 잡은 버그다 */
@@ -1611,7 +1612,7 @@
   global.DG = global.DG || {};
   global.DG.asset3d = {
     /* 표 — three 없이도 돈다 */
-    REG: REG, register: register, keysFor: keysFor, lookup: lookup, urlOf: urlOf,
+    REG: REG, register: register, keysFor: keysFor, lookup: lookup, urlOf: urlOf, isBackdrop: isBackdrop, shadeOne: shadeOne,
     wants: wants, chain: chain, SLOTS: SLOTS,
     /* 이름·크기 맞추기 — 순수 함수 */
     normName: normName, score: score, mapClips: mapClips, fit: fit,

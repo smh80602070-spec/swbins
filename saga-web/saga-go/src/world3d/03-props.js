@@ -397,7 +397,7 @@
     else if (name === 'cone') { g = new T.ConeGeometry(0.5, 1, 7); }
     else if (name === 'sph') { g = new T.SphereGeometry(0.5, 8, 6); }
     else if (name === 'plane') { g = new T.PlaneGeometry(1, 1); }
-    else if (name === 'disc') { g = new T.CircleGeometry(1, 20); }
+    else if (name === 'disc') { g = new T.CircleGeometry(1, 20); }   // W-0140 원반 물은 거품을 안 단다 — 원반끼리 겹쳐 놓여 테두리가 물 한가운데 고리로 떴다(촬영으로 확인)
     else if (name.indexOf('shoreW') === 0) { g = shoreGeo(+name.slice(6)); }
     unit[name] = g;
     return g;
@@ -415,7 +415,7 @@
     var SEG = 10, EAST = 1, WEST = 2, NORTH = 4, SOUTH = 8;
     var g = new T.PlaneGeometry(1, 1, SEG, SEG);
     var pos = g.getAttribute('position');
-    var AMP_MIN = 0.07, AMP_RANGE = 0.10;
+    var AMP_MIN = 0.07, AMP_RANGE = 0.10, foamA = new Float32Array(pos.count);   // W-0140 foamA — 물가 변에서 0.25 안쪽까지 1→0
     for (var i = 0; i < pos.count; i++) {
       var lx = pos.getX(i), ly = pos.getY(i), nx = lx, ny = ly;
       if ((mask & EAST) && Math.abs(lx - 0.5) < 1e-6) {
@@ -430,9 +430,9 @@
       if ((mask & SOUTH) && Math.abs(ly + 0.5) < 1e-6) {
         ny = -0.5 + (AMP_MIN + h1(i * 11 + 23, mask * 19 + 4) * AMP_RANGE);
       }
-      if (nx !== lx || ny !== ly) { pos.setXY(i, nx, ny); }
+      if (nx !== lx || ny !== ly) { pos.setXY(i, nx, ny); } foamA[i] = Math.max(0, (mask & EAST) ? 1 - (0.5 - lx) / 0.25 : 0, (mask & WEST) ? 1 - (lx + 0.5) / 0.25 : 0, (mask & NORTH) ? 1 - (0.5 - ly) / 0.25 : 0, (mask & SOUTH) ? 1 - (ly + 0.5) / 0.25 : 0);
     }
-    pos.needsUpdate = true;
+    pos.needsUpdate = true; g.setAttribute('foam', new T.BufferAttribute(foamA, 1));
     g.computeVertexNormals();
     return g;
   }
