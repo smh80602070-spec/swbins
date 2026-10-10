@@ -201,7 +201,9 @@ func _build_panel() -> void:
 	_panel.custom_minimum_size = Vector2(420, 0)
 	_panel.visible = false
 	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0.08, 0.07, 0.06, 0.82)
+	sb.bg_color = Color(0.07, 0.06, 0.09, 0.93)   # G-0167 — 0.82 면 왼쪽 HUD 첫 줄 위로 펼쳐질 때 아래 글자와 섞였다
+	sb.border_color = Color(0.85, 0.7, 0.4, 0.8)
+	sb.set_border_width_all(2)
 	sb.set_corner_radius_all(8)
 	sb.content_margin_left = 14
 	sb.content_margin_right = 14

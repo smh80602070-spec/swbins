@@ -168,6 +168,7 @@ func _build_screen() -> void:
 	box.add_child(foot)
 	var close := Button.new()
 	close.text = "닫기 (X·Esc)"
+	close.add_theme_font_size_override("font_size", 22)   # G-0167
 	close.custom_minimum_size = Vector2(160, 40)
 	close.pressed.connect(close_screen)
 	foot.add_child(close)

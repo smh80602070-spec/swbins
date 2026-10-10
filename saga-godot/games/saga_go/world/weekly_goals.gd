@@ -188,6 +188,7 @@ func _build() -> void:
 	box.add_child(_body)
 	var close := Button.new()
 	close.text = "닫기 (Z)"
+	close.add_theme_font_size_override("font_size", 22)   # G-0167
 	close.custom_minimum_size = Vector2(0, 40)
 	close.pressed.connect(close_screen)
 	box.add_child(close)
@@ -262,6 +263,7 @@ func _refresh() -> void:
 	var bb := Button.new()
 	var bonus_done: bool = bool(PartyState.weekly_goals.get("bonus", false))
 	bb.text = "완주 보상 받음 ✔" if bonus_done else "완주 보상 받기"
+	bb.add_theme_font_size_override("font_size", 22)   # G-0167
 	bb.disabled = bonus_done or not Weekly.all_claimed()
 	bb.custom_minimum_size = Vector2(0, 42)
 	bb.pressed.connect(func() -> void: do_claim_bonus())

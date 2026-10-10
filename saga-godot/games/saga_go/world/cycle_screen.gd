@@ -161,6 +161,7 @@ func _refresh() -> void:
 		_label("지금은 출항할 수 없다 — " + why, 19, Color(0.95, 0.7, 0.5))
 	var go := Button.new()
 	go.text = "정말 출항한다 (한 번 더 누르면 새 회차로)" if confirming else "별배 재출항"
+	go.add_theme_font_size_override("font_size", 22)   # G-0167
 	go.custom_minimum_size = Vector2(0, 46)
 	go.disabled = why != ""
 	go.pressed.connect(func() -> void:
@@ -172,6 +173,7 @@ func _refresh() -> void:
 	_body.add_child(go)
 	var close := Button.new()
 	close.text = "닫기 (N)"
+	close.add_theme_font_size_override("font_size", 22)   # G-0167
 	close.custom_minimum_size = Vector2(0, 40)
 	close.pressed.connect(close_screen)
 	_body.add_child(close)

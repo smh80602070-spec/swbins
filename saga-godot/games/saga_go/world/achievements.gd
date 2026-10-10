@@ -337,11 +337,13 @@ func _build_screen() -> void:
 	box.add_child(foot)
 	_claim_all = Button.new()
 	_claim_all.text = "모두 받기"
+	_claim_all.add_theme_font_size_override("font_size", 22)   # G-0167
 	_claim_all.custom_minimum_size = Vector2(160, 40)
 	_claim_all.pressed.connect(func() -> void: claim_all())
 	foot.add_child(_claim_all)
 	var close := Button.new()
 	close.text = "닫기 (Y·Esc)"
+	close.add_theme_font_size_override("font_size", 22)   # G-0167
 	close.custom_minimum_size = Vector2(160, 40)
 	close.pressed.connect(close_screen)
 	foot.add_child(close)
