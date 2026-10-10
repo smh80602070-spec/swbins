@@ -443,8 +443,8 @@ func _build_banner() -> void:
 	_banner.offset_bottom = 150
 	_banner.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_banner.add_theme_font_size_override("font_size", 40)
-	_banner.add_theme_constant_override("outline_size", 10)
-	_banner.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.6))
+	_banner.add_theme_constant_override("outline_size", 4)   # G-0157 — 가로 창 배율 0.56 에서 10 이면 획을 먹어 회색 덩어리
+	_banner.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.85))
 	_banner.add_theme_color_override("font_color", Color(1.0, 0.96, 0.86))
 	_banner.modulate.a = 0.0
 	_banner.mouse_filter = Control.MOUSE_FILTER_IGNORE

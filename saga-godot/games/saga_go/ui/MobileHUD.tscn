@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://saga_core/ui/virtual_joystick.gd" id="1"]
 [ext_resource type="Script" path="res://games/saga_go/ui/renderer_debug_label.gd" id="2"]
@@ -10,6 +10,15 @@
 [ext_resource type="Script" path="res://games/saga_go/ui/photo_mode_button.gd" id="8"]
 [ext_resource type="Script" path="res://saga_core/ui/goal_board.gd" id="9"]
 [ext_resource type="Texture2D" path="res://assets/generated/sprites/panel_9slice.png" id="10"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g157"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0, 0, 0, 0.38)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="MobileHUD" type="CanvasLayer"]
 
@@ -72,7 +81,7 @@ offset_bottom = 100.0
 theme_override_font_sizes/font_size = 26
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 6
+theme_override_constants/outline_size = 3
 horizontal_alignment = 1
 autowrap_mode = 3
 
@@ -86,7 +95,8 @@ offset_bottom = 140.0
 theme_override_font_sizes/font_size = 20
 theme_override_colors/font_color = Color(1, 1, 1, 0.9)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 5
+theme_override_constants/outline_size = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_g157")
 script = ExtResource("3")
 
 [node name="QuestLabel" type="Label" parent="."]
@@ -99,7 +109,8 @@ offset_bottom = 175.0
 theme_override_font_sizes/font_size = 20
 theme_override_colors/font_color = Color(1, 0.92, 0.6, 0.95)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 5
+theme_override_constants/outline_size = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_g157")
 script = ExtResource("5")
 
 [node name="CodexLabel" type="Label" parent="."]
@@ -112,7 +123,8 @@ offset_bottom = 210.0
 theme_override_font_sizes/font_size = 20
 theme_override_colors/font_color = Color(0.75, 0.9, 1, 0.9)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 5
+theme_override_constants/outline_size = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_g157")
 script = ExtResource("6")
 
 [node name="WeatherLabel" type="Label" parent="."]
@@ -125,7 +137,8 @@ offset_bottom = 245.0
 theme_override_font_sizes/font_size = 20
 theme_override_colors/font_color = Color(0.85, 0.95, 0.85, 0.9)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 5
+theme_override_constants/outline_size = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_g157")
 script = ExtResource("7")
 
 [node name="SaveButton" type="Button" parent="."]
@@ -165,7 +178,7 @@ script = ExtResource("8")
 [node name="GoalBoard" type="Label" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -300.0
+offset_left = -450.0
 offset_top = 50.0
 offset_right = -10.0
 offset_bottom = 135.0
@@ -173,6 +186,7 @@ theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(1, 1, 1, 0.88)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_g157")
 horizontal_alignment = 2
 script = ExtResource("9")
 
