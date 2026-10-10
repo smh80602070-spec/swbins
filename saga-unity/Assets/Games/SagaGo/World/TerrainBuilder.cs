@@ -53,10 +53,12 @@ namespace Saga.Go.World
         /// (`Saga/WaterfallUnlit`, 흘러내리는 물살) → 아래에 물보라(입자). 충돌체 없음 — 뒤 절벽은 그대로 기어오른다.</summary>
         private void BuildWaterfalls()
         {
+            ClearBuilt("Waterfalls");
             var parent = new GameObject("Waterfalls");
             parent.transform.SetParent(transform, false);
             var shader = Shader.Find("Saga/WaterfallUnlit");
             var poolShader = Shader.Find("Saga/WaterUnlit");
+            var realShader = Shader.Find(WaterRealShader);
             foreach (var w in TestMapData.Waterfalls)
             {
                 TestMapData.WaterfallGeometry(w, out Vector3 lip, out Vector3 foot, out Vector3 dir, out Vector3 side);
@@ -115,7 +117,7 @@ namespace Saga.Go.World
                 pool.transform.position = lip - dir * 6f + Vector3.up * 0.06f;
                 pool.transform.rotation = Quaternion.LookRotation(Vector3.down, dir);
                 pool.transform.localScale = new Vector3(TestMapData.WaterfallWidth + 2f, 8f, 1f);
-                pool.GetComponent<MeshRenderer>().sharedMaterial = new Material(poolShader) { name = "WaterfallPool (generated)" };
+                pool.GetComponent<MeshRenderer>().sharedMaterial = WaterMaterial(realShader, poolShader, "WaterfallPool (generated)", poolDepth: 1.4f);
 
                 // 물보라 — 아래끝 수면에서 피어오르는 흰 김
                 var mist = new GameObject("Mist");
@@ -284,7 +286,17 @@ namespace Saga.Go.World
                     Color col01 = CornerColor(x, y + 1);
                     Color col11 = CornerColor(x + 1, y + 1);
 
-                    AddTileQuads(verts, colors, normals, uvs, tris, center, half, own, col00, col10, col01, col11);
+                    if (TestMapData.IsWater(ch))
+                    {
+                        // U-0078 물 밑 비탈 — 흙 둑에서 강바닥까지 보이는 높이만 비탈로(충돌·헤엄 규칙은 그대로)
+                        int gx = x, gy = y;
+                        AddTileQuads(verts, colors, normals, uvs, tris, center, half, own, col00, col10, col01, col11,
+                            BedSub, p => RiverBedAt(gx, gy, p));
+                    }
+                    else
+                    {
+                        AddTileQuads(verts, colors, normals, uvs, tris, center, half, own, col00, col10, col01, col11);
+                    }
                     AddCliffSides(verts, colors, normals, uvs, tris, x, y, center, half, ch);
                 }
             }
@@ -322,16 +334,17 @@ namespace Saga.Go.World
         /// 44장 "Environment" 디테일 오버레이 — uv는 월드 XZ 그대로 담는다
         /// (셰이더가 타일링 배율을 곱한다, 정점색 블렌딩과는 무관한 별도 채널).</summary>
         private static void AddTileQuads(List<Vector3> verts, List<Color> colors, List<Vector3> normals, List<Vector2> uvs, List<int> tris,
-            Vector3 center, float half, Color own, Color col00, Color col10, Color col01, Color col11)
+            Vector3 center, float half, Color own, Color col00, Color col10, Color col01, Color col11,
+            int sub = Sub, System.Func<Vector3, float> heightAt = null)
         {
-            for (int j = 0; j < Sub; j++)
+            for (int j = 0; j < sub; j++)
             {
-                float v0 = (float)j / Sub;
-                float v1 = (float)(j + 1) / Sub;
-                for (int i = 0; i < Sub; i++)
+                float v0 = (float)j / sub;
+                float v1 = (float)(j + 1) / sub;
+                for (int i = 0; i < sub; i++)
                 {
-                    float u0 = (float)i / Sub;
-                    float u1 = (float)(i + 1) / Sub;
+                    float u0 = (float)i / sub;
+                    float u1 = (float)(i + 1) / sub;
 
                     Vector3 p00 = center + new Vector3(Mathf.Lerp(-half, half, u0), 0, Mathf.Lerp(-half, half, v0));
                     Vector3 p10 = center + new Vector3(Mathf.Lerp(-half, half, u1), 0, Mathf.Lerp(-half, half, v0));
@@ -343,11 +356,18 @@ namespace Saga.Go.World
                     Color cc11 = TileVertexColor(own, col00, col10, col01, col11, u1, v1);
                     Color cc01 = TileVertexColor(own, col00, col10, col01, col11, u0, v1);
 
+                    Vector3 n00 = Vector3.up, n10 = Vector3.up, n11 = Vector3.up, n01 = Vector3.up;
+                    if (heightAt != null)
+                    {
+                        n00 = Slope(ref p00, heightAt); n10 = Slope(ref p10, heightAt);
+                        n11 = Slope(ref p11, heightAt); n01 = Slope(ref p01, heightAt);
+                    }
+
                     int b = verts.Count;
-                    verts.Add(p00); colors.Add(cc00); normals.Add(Vector3.up); uvs.Add(new Vector2(p00.x, p00.z));
-                    verts.Add(p10); colors.Add(cc10); normals.Add(Vector3.up); uvs.Add(new Vector2(p10.x, p10.z));
-                    verts.Add(p11); colors.Add(cc11); normals.Add(Vector3.up); uvs.Add(new Vector2(p11.x, p11.z));
-                    verts.Add(p01); colors.Add(cc01); normals.Add(Vector3.up); uvs.Add(new Vector2(p01.x, p01.z));
+                    verts.Add(p00); colors.Add(cc00); normals.Add(n00); uvs.Add(new Vector2(p00.x, p00.z));
+                    verts.Add(p10); colors.Add(cc10); normals.Add(n10); uvs.Add(new Vector2(p10.x, p10.z));
+                    verts.Add(p11); colors.Add(cc11); normals.Add(n11); uvs.Add(new Vector2(p11.x, p11.z));
+                    verts.Add(p01); colors.Add(cc01); normals.Add(n01); uvs.Add(new Vector2(p01.x, p01.z));
 
                     // 노멀을 명시로 주고 셰이더가 Cull Off라 감김 방향은 안 가린다
                     // (Godot 쪽에서 겪은 외적 부호 계산 문제를 여기선 안 밟는다).
@@ -355,6 +375,44 @@ namespace Saga.Go.World
                     tris.Add(b + 0); tris.Add(b + 2); tris.Add(b + 3);
                 }
             }
+        }
+
+        // ---- U-0078 물 밑 비탈 -------------------------------------------
+        // 강 칸 바닥이 -3.5m 평판이라 둑이 계단(세로 벽)으로 보였다. 흙 둑 쪽은 둑 끝(수면 0.25m 위)에서
+        // BankSlopeWidth 안에 강바닥까지 내려간다 — 물가에 얕은 띠가 생겨 물 셰이더 거품·깊이 흡수가 산다.
+        // 산(절벽) 쪽은 그대로 깊다(폭포 발이 얕은 물에 떨어지지 않게). 보이는 메시만, 충돌체는 그대로.
+        private const int BedSub = 8;
+        public const float BankSlopeWidth = 14f;
+        public const float BankLipHeight = TestMapData.WaterSurfaceHeight + 0.25f;
+
+        /// <summary>강 칸(gx,gy) 안 월드 점 p 의 보이는 바닥 높이 — 가장 가까운 흙 둑 칸까지 거리로 비탈.</summary>
+        public static float RiverBedAt(int gx, int gy, Vector3 p)
+        {
+            float half = TestMapData.TileSize * 0.5f;
+            float d = float.MaxValue;
+            for (int dy = -1; dy <= 1; dy++)
+                for (int dx = -1; dx <= 1; dx++)
+                {
+                    if (dx == 0 && dy == 0) continue;
+                    char n = TestMapData.TileAt(gx + dx, gy + dy);
+                    if (TestMapData.IsWater(n) || n == '^') continue;
+                    Vector3 c = TestMapData.WorldPos(gx + dx, gy + dy);
+                    float qx = Mathf.Max(Mathf.Abs(p.x - c.x) - half, 0f);
+                    float qz = Mathf.Max(Mathf.Abs(p.z - c.z) - half, 0f);
+                    d = Mathf.Min(d, Mathf.Sqrt(qx * qx + qz * qz));
+                }
+            if (d == float.MaxValue) return TestMapData.RiverBedHeight;
+            return Mathf.Lerp(BankLipHeight, TestMapData.RiverBedHeight, Mathf.SmoothStep(0f, 1f, d / BankSlopeWidth));
+        }
+
+        /// <summary>p.y 를 높이 함수로 올리고 그 자리 법선(중앙 차분)을 돌려준다.</summary>
+        private static Vector3 Slope(ref Vector3 p, System.Func<Vector3, float> heightAt)
+        {
+            const float e = 0.5f;
+            p.y = heightAt(p);
+            float hx = heightAt(p + new Vector3(e, 0, 0)) - heightAt(p - new Vector3(e, 0, 0));
+            float hz = heightAt(p + new Vector3(0, 0, e)) - heightAt(p - new Vector3(0, 0, e));
+            return new Vector3(-hx, 2f * e, -hz).normalized;
         }
 
         private static readonly Color CliffRockColor = new Color(0.43f, 0.41f, 0.38f);
@@ -445,6 +503,7 @@ namespace Saga.Go.World
         /// <summary>강(river)·다리(bridge) 타일 위에 반투명 수면 한 장씩을 얹는다.</summary>
         private void BuildWater()
         {
+            ClearBuilt("WaterSurface");
             var positions = new List<Vector3>();
             for (int y = 0; y < TestMapData.RowCount; y++)
             {
@@ -485,8 +544,37 @@ namespace Saga.Go.World
             var go = new GameObject("WaterSurface");
             go.transform.SetParent(transform, false);
             go.AddComponent<MeshFilter>().sharedMesh = mesh;
-            var mat = new Material(Shader.Find("Saga/WaterUnlit")) { name = "Water (generated)" };
-            go.AddComponent<MeshRenderer>().sharedMaterial = mat;
+            var mr = go.AddComponent<MeshRenderer>();
+            mr.sharedMaterial = WaterMaterial(Shader.Find(WaterRealShader), Shader.Find("Saga/WaterUnlit"), "Water (generated)", poolDepth: 0f);
+            mr.shadowCastingMode = ShadowCastingMode.Off;
+        }
+
+        public const string WaterRealShader = "Saga/WaterReal";
+
+        /// <summary>U-0078 — 사실 물 재질. 굴절은 불투명 텍스처가 켜진 파이프라인(PC)일 때만, 셰이더가 없으면 옛 단색 물.
+        /// poolDepth &gt; 0 = 땅 위에 얹은 얕은 판(폭포 샘 웅덩이) — 깊이를 그만큼 더해 물빛을 내고 거품은 끈다.</summary>
+        public static Material WaterMaterial(Shader real, Shader fallback, string name, float poolDepth)
+        {
+            if (real == null || !real.isSupported) return new Material(fallback) { name = name };
+            var mat = new Material(real) { name = name };
+            var urp = GraphicsSettings.currentRenderPipeline as UnityEngine.Rendering.Universal.UniversalRenderPipelineAsset;
+            mat.SetFloat("_Refract", urp != null && urp.supportsCameraOpaqueTexture ? 1f : 0f);
+            mat.SetFloat("_FakeDepth", poolDepth);
+            return mat;
+        }
+
+        /// <summary>씬에 이미 구워 저장된 같은 이름 자식(편집기 BuildTestVillageScene 이 Build 한 것)을 치운다 —
+        /// Awake 가 다시 지으면 물·폭포가 두 겹으로 겹쳐 그려졌다(U-0078 에서 발견).</summary>
+        private void ClearBuilt(string childName)
+        {
+            for (int i = transform.childCount - 1; i >= 0; i--)
+            {
+                var c = transform.GetChild(i);
+                if (c.name != childName) continue;
+                c.gameObject.SetActive(false);
+                c.SetParent(null, false);
+                if (Application.isPlaying) Destroy(c.gameObject); else DestroyImmediate(c.gameObject);
+            }
         }
 
         // ---- 충돌 --------------------------------------------------------

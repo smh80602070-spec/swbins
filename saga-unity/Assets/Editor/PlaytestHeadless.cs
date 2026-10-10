@@ -204,6 +204,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoAreas.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-37 지도 밖 독립 땅 은하 나루(표·지역·땅·돌기둥·발견·세이브)
                 if (!PlaytestGoStoryAllies.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-15 이야기 동료·고유 스킬 둘·편성(동행·진행·돈·들판 되돌림)
                 if (!PlaytestGoPresets.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-18 편성 1~4·싸우는 중 막기(동행·편성·들판·적 되돌림)
+                if (!PlaytestGoWater.Run("PlaytestHeadless")) _hadError = true; // tasks U-0078 사실 물(수면·웅덩이 재질·한 벌·물 밑 비탈·Mobile 깊이 텍스처)
                 if (!PlaytestGoPeaks.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-9 정상 발견·순간이동·건물 가림 카메라(기록·돈·세이브 되돌림)
                 // 반드시 마지막 — DailyTaskState 진단이 SaveState.TryLoad()로
                 // 세이브 파일을 v9 모양으로 잠깐 바꿔치기해 로드하는데, 이건

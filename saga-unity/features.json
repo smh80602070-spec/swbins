@@ -1726,5 +1726,24 @@
   "ticket": "U-0052",
   "since": "2026-10-08",
   "note": "D2: docs/playcheck/d2-u0055-20261008.json PlaytestGoExpCurve OK. D1: 규칙(Lv.1~30 옛 식과 같음·Lv.1~200 단조 증가·Lv.31 ×1.08·AddExp(long.MaxValue/4) 1초 안·Lv.57→59 오름·Lv.85 문턱 33,195,231 ≤ 5e7·누적 Lv.1→85 4.1e8·옛 int 세이브 Lv.10/1000 그대로·왕복)+재출항 진단 Lv.85+PlaytestHeadless 오류 0. 200 은 루프 안전장치(레벨 상한 아님). 손맛(오르는 속도)은 실플레이"
+ },
+ {
+  "id": "un.go.water-real",
+  "name": "사가만리 사실 물 — 잔물결·하늘 반사·깊이 흡수·물가 거품(Saga/WaterReal, 굴절은 PC 만) + 물 밑 비탈(U-0078)",
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/World/WaterReal.shader",
+   "saga-unity/Assets/Games/SagaGo/World/TerrainBuilder.cs",
+   "saga-unity/Assets/Settings/Mobile_RPAsset.asset"
+  ],
+  "tests": [
+   "PlaytestGoWater",
+   "PlaytestShowcaseGui"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "U-0078",
+  "since": "2026-10-10",
+  "note": "D2(눈 ○, U-0078): docs/playcheck/d2-u0078-20261010.json — 다리 자리 12시·17시 전후 촬영: 단색 판 → 잔물결·하늘 반사·물가 거품 띠·물 밑 다리 그림자, 검은 판·줄무늬 없음. 씬에 구운 옛 수면·폭포가 런타임 것과 두 겹이던 것도 치움. 굴절(PC 경로)은 Android 대상 촬영이라 눈 못 봄"
  }
 ]

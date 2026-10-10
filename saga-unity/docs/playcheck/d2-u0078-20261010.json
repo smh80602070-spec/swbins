@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-10",
+  "tickets": ["U-0078 사가만리 사실 물 ① — 잔물결·하늘 반사·깊이 흡수·물가 거품 + 물 밑 비탈"],
+  "how": "전 촬영(옛 코드) → Saga/WaterReal·물 밑 비탈·Mobile 깊이 텍스처 → 같은 자리·시각 후 촬영(GUI, Android 대상, 세이브 다섯 백업·cmp 복원) → Claude 눈 → 물결 세기·물빛 한 번 손질 뒤 재촬영. 성능은 PlaytestSagaPerf 를 후·전(HEAD 파일로 잠깐 바꿔) 한 판씩. PlaytestHeadless 한 판",
+  "fix": "새 Saga/WaterReal(손 HLSL, 텍스처 없음): 값 노이즈 세 겹 기울기 법선 · 프레넬 반사(반사 프로브, 비면 안개색↔하늘 앰비언트) + 해 반짝임 · 깊이 텍스처로 물 두께 → exp 흡수(청록 → 남색) · 두께 0~0.45m 거품 띠 · 굴절은 파이프라인 불투명 텍스처가 켜졌을 때만(_Refract, PC) · 깊이 텍스처가 없으면 고정 알파. TerrainBuilder: 수면·샘 웅덩이(덧깊이 1.4m) 재질 교체, 강 칸 바닥을 흙 둑 끝(수면 0.25m 위)에서 14m 안에 강바닥까지 비탈(8×8 쪼갬·법선, 산 쪽은 그대로 깊음 — 폭포 발), 씬에 구워 저장된 옛 WaterSurface·Waterfalls 를 다시 지을 때 치움(전엔 런타임 것과 두 겹). Mobile_RPAsset 깊이 텍스처 0→1(불투명 텍스처는 그대로 0)",
+  "commands": [
+    "SAGA_SHOT_SCENE=Assets/Scenes/TestVillage.unity SAGA_SHOT_TARGETS='name:Waterfall_;name:Bridge' SAGA_SHOT_MAX=2 SAGA_SHOT_HOUR=12|17 Unity -buildTarget Android -executeMethod Saga.EditorTools.PlaytestShowcaseGui.Run",
+    "Unity -buildTarget Android -executeMethod Saga.EditorTools.PlaytestSagaPerf.Run (후 → 전)",
+    "bash tools/unity-batch.sh -- Unity -batchmode -nographics -buildTarget Android -executeMethod Saga.EditorTools.PlaytestHeadless.Run"
+  ],
+  "scene": [
+    "[PlaytestHeadless] water OK - 수면 1·폭포 1·웅덩이 2 WaterReal(굴절 0) | 비탈(1,5) 둑 -0.20→6m -1.50→가운데 -3.50 · 폭포 발 fall_east -3.5 fall_west -3.5 | Mobile 깊이 텍스처 켬",
+    "[PlaytestHeadless] OK - 10 frames, no errors"
+  ],
+  "runtime_errors": 0,
+  "shader_errors": 0,
+  "perf": {
+    "how": "PlaytestSagaPerf 자동 측정(에디터, 구간 3.5초) 평균 fps 상한/풀기",
+    "after": "go 54/54 · dungeon 136/119 · forest 76/76 · story 210/120 · realm 474/120",
+    "before": "go 48/60 · dungeon 131/119 · forest 72/86 · story 206/120 · realm 614/120",
+    "judge": "사가만리 풀기 60→54(−10%, 상한은 48→54 로 오름). 물과 무관한 사가마을도 86→76(−12%)으로 흔들려 구간 잡음 안 — 줄이기 단계는 안 함. 폰 실측은 측정용 APK 때(빌드 금지라 이번엔 없음)"
+  },
+  "shots": "세션 scratchpad shots/before_12·before_17·after_12·after_17·tune_12·tune_17/nameBridge_0.png·nameWaterfall_0.png (커밋 안 함)",
+  "results": [
+    { "id": "un.go.water-real", "eye": "○", "note": "다리 자리 12시: 전 = 평평한 파란 단색 판 → 후 = 고른 잔물결·수평선 쪽 하늘빛 반사·흙 둑 따라 흰 거품 띠·물 밑 강바닥에 다리 그림자가 비침(깊이 흡수). 17시: 같은 결에 거품이 노을빛, 하늘 파노라마가 어두워 반사도 회보라. 계단 바닥·검은 판·줄무늬 없음. 첫 후 촬영은 물결 대비가 세 얼룩처럼 보여 세기 0.32→0.2·큰 겹 0.7·물빛 청록 쪽으로 손질 뒤 ○. 폭포 사진은 물 판만 크게 잡혀 웅덩이는 못 봄(진단으로 재질·덧깊이 확인)", "result": "새 항목 D2", "date": "2026-10-10" }
+  ],
+  "left": "굴절(PC 경로)은 Android 대상 촬영이라 눈 못 봄 · 노을 해 반짝임은 해가 카메라 뒤라 안 보임 · 지형 다른 빌더(충돌·봉우리·경사로)도 씬 저장분 + 런타임이 두 벌일 수 있음(이번엔 물·폭포만 치움) — 후속 후보"
+}
