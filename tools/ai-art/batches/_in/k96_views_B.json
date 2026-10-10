@@ -4,7 +4,7 @@
  "style": "C",
  "model": "animagine-xl-4.0-opt",
  "variants": 4,
- "note": "K-0096 묶음 B — TRELLIS 입력 그림(전신·3/4 측면·단색 배경·그림자 없음, 한 장 = 한 종). panda·owl 은 묶음 A ✗ 다시",
+ "note": "K-0096 묶음 B — TRELLIS 입력 그림, 전부 txt2img(빌린 모델 렌더 밑그림 금지 — 묶음 A 는 밑그림이 빌린 모델이라 철회). 전신·3/4 측면·단색 배경, 한 장 = 한 종",
  "items": [
   {
    "id": "panda",
@@ -73,6 +73,62 @@
    "id": "zebra",
    "subject": "zebra, black and white stripes, short mane, simple leather saddle, bridle",
    "subject_ko": "얼룩말(탈것)",
+   "view": "three_quarter",
+   "extra": "no humans, mount, riding animal, all legs visible"
+  },
+  {
+   "id": "tiger",
+   "subject": "tiger, on all fours, orange fur with black stripes, white belly",
+   "subject_ko": "호랑이",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "bear",
+   "subject": "asian black bear, on all fours, black fur, white chest crescent",
+   "subject_ko": "곰",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "boar",
+   "subject": "wild boar, on all fours, dark bristly fur, small tusks",
+   "subject_ko": "멧돼지",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "crane",
+   "subject": "red-crowned crane, long legs, white feathers, black neck, red crown",
+   "subject_ko": "학",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "monkey",
+   "subject": "macaque monkey, on all fours, brown fur, red face, short tail",
+   "subject_ko": "원숭이",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "horse",
+   "subject": "brown riding horse, red saddle blanket, leather saddle, bridle, dark mane",
+   "subject_ko": "말(탈것)",
+   "view": "three_quarter",
+   "extra": "no humans, mount, riding animal, all legs visible"
+  },
+  {
+   "id": "horse_farm",
+   "subject": "sturdy bay draft horse, leather saddle, saddlebags, thick mane",
+   "subject_ko": "짐말(탈것)",
+   "view": "three_quarter",
+   "extra": "no humans, mount, riding animal, all legs visible"
+  },
+  {
+   "id": "horse_white",
+   "subject": "white horse, teal saddle blanket, leather saddle, bridle, silver mane",
+   "subject_ko": "백마(탈것)",
    "view": "three_quarter",
    "extra": "no humans, mount, riding animal, all legs visible"
   }

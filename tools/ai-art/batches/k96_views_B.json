@@ -86,6 +86,62 @@
    "prompt": "(zebra:1.15), black and white stripes, short mane, simple leather saddle, bridle, no humans, mount, riding animal, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
    "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
    "subject_ko": "얼룩말(탈것)"
+  },
+  {
+   "id": "tiger",
+   "seed": 2639241598,
+   "prompt": "(tiger:1.15), on all fours, orange fur with black stripes, white belly, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "호랑이"
+  },
+  {
+   "id": "bear",
+   "seed": 3366493335,
+   "prompt": "(asian black bear:1.15), on all fours, black fur, white chest crescent, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "곰"
+  },
+  {
+   "id": "boar",
+   "seed": 2597107757,
+   "prompt": "(wild boar:1.15), on all fours, dark bristly fur, small tusks, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "멧돼지"
+  },
+  {
+   "id": "crane",
+   "seed": 2974888136,
+   "prompt": "(red-crowned crane:1.15), long legs, white feathers, black neck, red crown, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "학"
+  },
+  {
+   "id": "monkey",
+   "seed": 3825213534,
+   "prompt": "(macaque monkey:1.15), on all fours, brown fur, red face, short tail, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "원숭이"
+  },
+  {
+   "id": "horse",
+   "seed": 1354016326,
+   "prompt": "(brown riding horse:1.15), red saddle blanket, leather saddle, bridle, dark mane, no humans, mount, riding animal, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "말(탈것)"
+  },
+  {
+   "id": "horse_farm",
+   "seed": 3617245427,
+   "prompt": "(sturdy bay draft horse:1.15), leather saddle, saddlebags, thick mane, no humans, mount, riding animal, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "짐말(탈것)"
+  },
+  {
+   "id": "horse_white",
+   "seed": 3140527935,
+   "prompt": "(white horse:1.15), teal saddle blanket, leather saddle, bridle, silver mane, no humans, mount, riding animal, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "백마(탈것)"
   }
  ]
 }
