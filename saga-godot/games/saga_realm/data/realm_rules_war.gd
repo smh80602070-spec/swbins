@@ -371,6 +371,8 @@ func attack(enemy_id: String, duel_moves: Array = [], grid: Dictionary = {}) -> 
 	if not grid.is_empty():
 		atk["give"] = 1.0 + float(grid.get("winPct", 0)) / 100.0
 		atk["take"] = float(grid.get("lossMul", 1.0))
+		for id: Variant in grid.get("mine", []):   # G-0183 — 판에 함께 선 장수도 이 달은 끝
+			_done_this_month[String(id)] = true
 		for id: Variant in grid.get("fallen", []):
 			if String(id) == current_lord_id:
 				grid_hurt.append({"id": String(id), "months": RealmTactics.WOUND_MONTHS})
@@ -496,13 +498,47 @@ func _fall_in_tactics(id: String, where: String, by: String) -> void:
 ## G-0182 — 이 출진의 전술판 하나(판·유닛을 세운다). 못 열면 {"ok": false, "why"}. G-0183 화면·G-0188 측정이 부른다.
 ## 웹 marchGrid() 그대로: 내 편 = 데려갈 장수(이 판은 attack() 과 같은 한 명), 적 = 수비 장수 셋까지 + 부대 1~2(수비 병력을 나눔),
 ## 땅 = 그 성의 땅 꼴, 공성. 씨앗 = 목표|해|달(같은 달 같은 성 = 같은 판).
-func tactics_board(enemy_id: String) -> Dictionary:
+## G-0183 — attack() 이 거절할 이유를 판을 열기 전에 미리 본다(attack() 앞머리 검사와 같은 순서·같은 문구, 상태는 안 바꾼다). 칠 수 있으면 "".
+func attack_check(enemy_id: String) -> String:
 	var enemy_def := RealmCities.enemy_by_id(enemy_id)
 	if enemy_def.is_empty():
-		return {"ok": false, "why": "없는 목표"}
-	var officer_id := _best_officer_for("might", String(enemy_def.get("from_city", "")))
+		return "없는 목표"
+	if bool((enemies.get(enemy_id, {}) as Dictionary).get("captured", false)):
+		return "이미 함락한 성입니다"
+	if int((diplomacy.get(force_of(enemy_id), {}) as Dictionary).get("truce_months", 0)) > 0:
+		return "맹약이 있어 칠 수 없습니다"
+	var from_city := String(enemy_def.get("from_city", ""))
+	if not cities.has(from_city):
+		return "없는 출진 성"
+	var troops := int(cities[from_city].troops)
+	if troops < 500:
+		return "오백은 넘겨야 군대라 하지요"
+	var officer_id := _best_officer_for("might", from_city)
 	if officer_id.is_empty():
-		return {"ok": false, "why": "데려갈 장수가 없습니다"}
+		return "데려갈 장수가 없습니다"
+	if int(cities[from_city].food) < RealmOrders.food_upkeep(troops) * 2:
+		return "군량이 모자랍니다"
+	return ""
+
+
+func tactics_board(enemy_id: String) -> Dictionary:
+	var why := attack_check(enemy_id)
+	if why != "":
+		return {"ok": false, "why": why}
+	var enemy_def := RealmCities.enemy_by_id(enemy_id)
+	var from_city := String(enemy_def.get("from_city", ""))
+	var officer_id := _best_officer_for("might", from_city)
+	## G-0183 — 웹처럼 출진 성의 장수가 셋까지 판에 선다(앞장 = attack() 이 데려갈 장수, 나머지는 무력 순). 판을 쓰면 모두 이 달 명령을 쓴 것으로 친다(attack() 의 grid.mine).
+	var mine: Array = [officer_id]
+	var others: Array = []
+	for id: String in roster:
+		if id != officer_id and officer_city.get(id, "") == from_city and not _done_this_month.get(id, false) and int(officer_hurt.get(id, 0)) <= 0 and Characters.find(id) != null:
+			others.append(id)
+	others.sort_custom(func(p: String, q: String) -> bool:
+		var mp := _effective_stat(p, "might")
+		var mq := _effective_stat(q, "might")
+		return mp > mq or (mp == mq and p < q))
+	mine.append_array(others.slice(0, 2))
 	var e: Dictionary = enemies.get(enemy_id, {})
 	var foes: Array = []
 	for oid: Variant in e.get("officers", []):
@@ -513,11 +549,11 @@ func tactics_board(enemy_id: String) -> Dictionary:
 	for k in n:
 		foe_troops.append(RealmTactics.js_round(float(e.get("troops", 0)) / float(n)))
 	var stats := {}
-	for id: String in [officer_id] + foes:
+	for id: String in mine + foes:
 		stats[id] = {"might": _effective_stat(id, "might"), "wisdom": _effective_stat(id, "wisdom"), "command": _effective_stat(id, "command")}
 	var b := RealmTactics.make_board("%s|%d|%d" % [enemy_id, year, month], String(enemy_def.get("land", "plain")), true)
-	RealmTactics.units_of(b, [officer_id], foes, foe_troops, stats)
-	return {"ok": true, "board": b, "officer": officer_id}
+	RealmTactics.units_of(b, mine, foes, foe_troops, stats)
+	return {"ok": true, "board": b, "officer": officer_id, "mine": mine}
 
 
 ## G-0182 — 양쪽 다 AI 로 끝까지 둔 결과의 보정값(attack() 셋째 인자로 바로 넘긴다). 못 열면 {}.
@@ -525,7 +561,9 @@ func tactics_auto(enemy_id: String) -> Dictionary:
 	var tb := tactics_board(enemy_id)
 	if not bool(tb.ok):
 		return {}
-	return RealmTactics.apply(RealmTactics.auto_play(tb.board), enemy_id)
+	var grid := RealmTactics.apply(RealmTactics.auto_play(tb.board), enemy_id)
+	grid["mine"] = tb.mine
+	return grid
 
 
 ## war.js capture()를 좁혀 옮긴 것(2026-09-12, "1,2,3 순서대로 다해" —

@@ -240,6 +240,53 @@ func _initialize() -> void:
 	var ta: Dictionary = S.tactics_auto("xiaopei")
 	check(tb.ok and (tb.board.units as Array).size() >= 4 and String(tb.officer) == hero and ta.has("kind") and ta.has("winPct"), "tactics_board: 내 장수 %s + 적(수비 장수·부대) %d · tactics_auto → %s" % [tb.officer, (tb.board.units as Array).size() - 1, ta.get("kind", "?")])
 
+	# G-0183 화면 ① 광선 → 칸 ② 판을 열고 아무것도 안 한 채 턴 끝 ×3 = 규칙만 돌린 결과 ③ 물러나기 = 빈 보정
+	var View: GDScript = load("res://games/saga_realm/world/realm_tactics_view.gd")
+	var c00: Vector3 = View.cell_center(0, 0)
+	var c75: Vector3 = View.cell_center(7, 5)
+	var down := Vector3(0, -1, 0)
+	var o: Vector3 = View.ORIGIN
+	check(View.ray_to_cell(c00 + Vector3(0, 10, 0), down, o) == Vector2i(0, 0) and View.ray_to_cell(c75 + Vector3(0, 10, 0), down, o) == Vector2i(7, 5)
+		and View.ray_to_cell(o + Vector3(-8.01, 10, 0), down, o) == Vector2i(-1, -1) and View.ray_to_cell(o + Vector3(-7.99, 10, 0), down, o).x == 0
+		and View.ray_to_cell(o + Vector3(7.99, 10, 5.99), down, o) == Vector2i(7, 5) and View.ray_to_cell(o + Vector3(0, 10, 6.01), down, o) == Vector2i(-1, -1)
+		and View.ray_to_cell(o + Vector3(0, 10, 0), Vector3(0, 1, 0), o) == Vector2i(-1, -1)
+		and View.ray_to_cell(o + Vector3(0, 10, 10), Vector3(0, -10, -10).normalized(), o) == Vector2i(4, 3), "광선 → 칸: 모서리 (0,0)·(7,5) · 판 밖·위를 보면 (-1,-1) · 비스듬히 칸 (4,3)")
+	_reset()
+	S.cities.xuchang.troops = 2000
+	var tb2: Dictionary = S.tactics_board("xiaopei")
+	var shadow: Dictionary = (tb2.board as Dictionary).duplicate(true)
+	var guard2 := 0
+	while T.outcome(shadow).is_empty() and guard2 < 10:
+		guard2 += 1
+		T.ai_turn(shadow)
+	var expect: Dictionary = T.apply(T.outcome(shadow), "xiaopei")
+	var got := {"grid": null}
+	var view: Node = View.open(root, "xiaopei", tb2, func(g: Dictionary) -> void: got.grid = g, true)
+	await process_frame
+	var bodies := 0
+	for u: Dictionary in tb2.board.units:
+		if view._units.has(String(u.uid)):
+			bodies += 1
+	for k in 6:
+		if got.grid != null:
+			break
+		await view._on_end_turn()
+	var g2: Variant = got.grid
+	check(bodies == (tb2.board.units as Array).size() and g2 != null and String(g2.kind) == String(expect.kind) and g2.fallen == expect.fallen and int(g2.winPct) == int(expect.winPct) and g2.mine == tb2.mine,
+		"판을 열고 턴 끝만 → 규칙만 돌린 결과와 같다(%s · 유닛 몸 %d · 함께 선 장수 %s)" % [expect.kind, bodies, str(tb2.mine)])
+	await process_frame
+	_reset()
+	S.cities.xuchang.troops = 2000
+	var got2 := {"grid": null}
+	var view2: Node = View.open(root, "xiaopei", S.tactics_board("xiaopei"), func(g: Dictionary) -> void: got2.grid = g, true)
+	await process_frame
+	view2._on_cancel()
+	await process_frame
+	check(got2.grid is Dictionary and (got2.grid as Dictionary).is_empty() and not is_instance_valid(view2), "물러나기 → 빈 보정(그냥 출진)·판 닫힘")
+	S.cities.xuchang.troops = 100
+	var tb3: Dictionary = S.tactics_board("xiaopei")
+	check(not tb3.ok and "오백" in String(tb3.why) and S.attack_check("xiaopei") == String(tb3.why), "판을 열기 전에 attack 과 같은 이유로 거절(%s)" % tb3.why)
+
 	# 되돌리기
 	for v in SAVED:
 		S.set(v, saved[v])

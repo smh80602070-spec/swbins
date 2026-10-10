@@ -3070,7 +3070,7 @@
  },
  {
   "id": "gd.rk.tactics",
-  "name": "사가천하 격자 전술 규칙 — 웹 tactics.js 이식(8×6·3턴·엄폐·AI·결과 넷), attack() 셋째 인자 보정(공 위력·받는 피해)·전사(열전)·중상 3달, 웹 값과 같은 판·결과(probe ⓪)",
+  "name": "사가천하 격자 전술 — 규칙(웹 tactics.js 이식, attack 셋째 인자 보정·전사·중상) + 전술판 3D(출진 상자 \"♟️ 전술판\", 8×6 지형 넷·장수 몸·이동/공격 연출·패드)",
   "files": [
    "games/saga_realm/data/realm_tactics.gd",
    "games/saga_realm/data/realm_rules_war.gd",
@@ -3079,17 +3079,21 @@
    "games/saga_realm/data/realm_rules_month.gd",
    "games/saga_realm/data/realm_state.gd",
    "games/saga_realm/data/realm_save_state.gd",
-   "tools/probe_realm_tactics.gd"
+   "tools/probe_realm_tactics.gd",
+   "games/saga_realm/world/realm_tactics_view.gd",
+   "games/saga_realm/ui/realm_attack_button.gd",
+   "tools/shot_realm_tactics.gd"
   ],
   "tests": [
    "realm_tactics",
    "realm_golden",
    "realm_state"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": "G-0182",
-  "since": "2026-10-11"
+  "ticket": "G-0182·G-0183",
+  "since": "2026-10-11",
+  "note": "G-0183(10-11) 창 모드 rk_tactics·rk_tactics_wide Claude 눈 ○: 격자·지형·장수 몸·선택/이동 칸·단추 셋"
  }
 ]

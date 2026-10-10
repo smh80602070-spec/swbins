@@ -18,6 +18,9 @@ const RealmCities := preload("res://games/saga_realm/data/realm_cities.gd")
 const RealmWar := preload("res://games/saga_realm/data/realm_war.gd")
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
+const TacticsView := preload("res://games/saga_realm/world/realm_tactics_view.gd")   # G-0183
+const RealmTactics := preload("res://games/saga_realm/data/realm_tactics.gd")
+const Characters := preload("res://saga_core/data/characters.gd")
 
 const TOAST_SEC := 3.5
 
@@ -58,6 +61,8 @@ func _attack(target_id: String, layer_box: Dictionary) -> void:
 	(layer_box["layer"] as CanvasLayer).queue_free()
 	var ask_box := {}
 	var choices: Array = [
+		{"label": "♟️ 전술판을 펼친다(3턴 격자 — 이기면 위력↑, 지면 위력↓ · 쓰러진 장수는 영영 떠난다)",
+			"cb": func() -> void: _open_tactics(target_id, ask_box)},
 		{"label": "⚔️ 일기토를 건다(3합 — 이기면 위력↑, 지면 위력↓)",
 			"cb": func() -> void: _duel_round(target_id, [])},
 		{"label": "바로 친다",
@@ -88,14 +93,26 @@ func _duel_pick(target_id: String, moves: Array, mv: String, layer_box: Dictiona
 		_finish_attack(target_id, next_moves, {})
 
 
+## G-0183 — 전술판(realm_tactics_view.gd)을 연다. 못 열면(병력·장수·군량…) attack() 과 같은 이유를 토스트로.
+## 판이 끝나면 그 보정값으로 친다 — 물러나기(Esc)면 보정 없이 그냥 친다(웹과 같음).
+func _open_tactics(target_id: String, layer_box: Dictionary) -> void:
+	if layer_box.has("layer"):
+		(layer_box["layer"] as CanvasLayer).queue_free()
+	var tb: Dictionary = RealmSaveState.tactics_board(target_id)
+	if not bool(tb.get("ok", false)):
+		Toast.show(self, "공격 — %s" % tb.get("why", "실패"), TOAST_SEC)
+		return
+	TacticsView.open(self, target_id, tb, func(grid: Dictionary) -> void: _finish_attack(target_id, [], {}, grid))
+
+
 func _target_name(target_id: String) -> String:
 	return String(RealmCities.enemy_by_id(target_id).get("name", target_id))
 
 
-func _finish_attack(target_id: String, duel_moves: Array, layer_box: Dictionary) -> void:
+func _finish_attack(target_id: String, duel_moves: Array, layer_box: Dictionary, grid: Dictionary = {}) -> void:
 	if layer_box.has("layer"):
 		(layer_box["layer"] as CanvasLayer).queue_free()
-	var r := RealmSaveState.attack(target_id, duel_moves)
+	var r := RealmSaveState.attack(target_id, duel_moves, grid)
 	if not r.get("ok", false):
 		Toast.show(self, "공격 — %s" % r.get("why", "실패"), TOAST_SEC)
 		return
@@ -112,6 +129,19 @@ func _finish_attack(target_id: String, duel_moves: Array, layer_box: Dictionary)
 		msg = "⚔️ 일기토 %d합 %d승 (위력 ×%.2f)\n" % [duel_rounds.size(), wins, float(r.get("duel_mul", 1.0))]
 	else:
 		msg = ""
+	if r.has("grid"):   # G-0183 전술판 결과 한 줄 + 쓰러진·다친 장수
+		var gk := String(r.grid)
+		msg += "♟️ 전술판 %s (위력 %s%d%%)
+" % [String(RealmTactics.OUT.get(gk, {}).get("name", gk)), "+" if int(grid.get("winPct", 0)) >= 0 else "", int(grid.get("winPct", 0))]
+		for id: String in r.get("fallen", []):
+			var h = Characters.find(id)
+			msg += "⚰️ %s 이(가) 쓰러졌다
+" % (String(h.name) if h != null else id)
+		for id: String in r.get("hurt", []):
+			var h2 = Characters.find(id)
+			msg += "🩹 %s 이(가) 크게 다쳐 물러났다(3달)
+" % (String(h2.name) if h2 != null else id)
+		toast_sec = TOAST_SEC + 1.5
 	if r.won:
 		msg += "🚩 %s 함락! (아군 손실 %d · 적 손실 %d)" % [target_name, int(r.loss_a), int(r.loss_d)]
 		var boss_beaten := String(r.get("boss_beaten", ""))
