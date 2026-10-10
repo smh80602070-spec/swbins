@@ -25,11 +25,13 @@
    "id": "panda",
    "group": "1-ccby",
    "borrowed": "Poly by Google CC-BY 3.0 — Panda.glb (dungeon·forest·go·story animals/)",
-   "input": "",
-   "status": "새로",
+   "input": "tools/ai-art/_out/remote3d_in_k96b/panda.png",
+   "status": "있음(txt2img)",
    "note": "",
    "height": 1.0,
-   "judge_a": "✗ 대나무가 몸에 붙음 → 대나무 없는 흰 배경 그림으로"
+   "judge_a": "✗ 대나무가 몸에 붙음 → 대나무 없는 흰 배경 그림으로",
+   "yaw": 0,
+   "judge_b": "✗ 바닥 타원이 접시로 붙음 → 다시 뽑음"
   },
   {
    "id": "monkey",
@@ -55,11 +57,13 @@
    "id": "owl",
    "group": "1-ccby",
    "borrowed": "Poly by Google CC-BY 3.0 — Owl.glb (dungeon·forest·go·story animals/)",
-   "input": "",
-   "status": "새로",
+   "input": "tools/ai-art/_out/remote3d_in_k96b/owl.png",
+   "status": "있음(txt2img)",
    "note": "",
    "height": 0.5,
-   "judge_a": "✗ 비스듬히 앉은 구도라 몸이 기울어짐 → 바로 선 흰 배경 그림으로"
+   "judge_a": "✗ 비스듬히 앉은 구도라 몸이 기울어짐 → 바로 선 흰 배경 그림으로",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "crane",
@@ -76,37 +80,45 @@
    "id": "elephant",
    "group": "1-ccby",
    "borrowed": "Poly CC-BY — Elephant.glb (dungeon animals/, forest·go·story standin/)",
-   "input": "",
-   "status": "새로",
+   "input": "tools/ai-art/_out/remote3d_in_k96b/elephant.png",
+   "status": "있음(txt2img)",
    "note": "신수 불가사리 몸은 따로 있음(pets3d)",
-   "height": 2.6
+   "height": 2.6,
+   "yaw": 0,
+   "judge_b": "△ 발밑 그림자 원반 붙음 → 다시 뽑음"
   },
   {
    "id": "rabbit",
    "group": "1-ccby",
    "borrowed": "Poly CC-BY — Rabbit.glb (forest animals/)",
-   "input": "",
-   "status": "새로",
+   "input": "tools/ai-art/_out/remote3d_in_k96b/rabbit.png",
+   "status": "있음(txt2img)",
    "note": "",
-   "height": 0.35
+   "height": 0.35,
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "squirrel",
    "group": "1-ccby",
    "borrowed": "Poly CC-BY — Squirrel.glb (forest animals/)",
-   "input": "",
-   "status": "새로",
+   "input": "tools/ai-art/_out/remote3d_in_k96b/squirrel.png",
+   "status": "있음(txt2img)",
    "note": "",
-   "height": 0.25
+   "height": 0.25,
+   "yaw": 0,
+   "judge_b": "○ 떠 있는 공 = finish 가 지움"
   },
   {
    "id": "duck",
    "group": "1-ccby",
    "borrowed": "Poly CC-BY — Duck.glb (forest animals/)",
-   "input": "",
-   "status": "새로",
+   "input": "tools/ai-art/_out/remote3d_in_k96b/duck.png",
+   "status": "있음(txt2img)",
    "note": "",
-   "height": 0.45
+   "height": 0.45,
+   "yaw": -90,
+   "judge_b": "○"
   },
   {
    "id": "sparrow",

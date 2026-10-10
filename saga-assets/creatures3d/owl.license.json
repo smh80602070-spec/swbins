@@ -1,0 +1,43 @@
+{
+ "id": "owl",
+ "generator": "TRELLIS (microsoft/TRELLIS, Kaggle T4) — tools/ai-art/remote3d",
+ "model": "microsoft/TRELLIS-image-large",
+ "model_license": "MIT",
+ "input_image": "tools/ai-art/_out/remote3d_in_k96b/owl.png",
+ "input_license": {
+  "id": "owl_v02",
+  "generator": "tools/ai-art/gen.py (ComfyUI)",
+  "model": "animagine-xl-4.0-opt",
+  "model_license": "CreativeML OpenRAIL++-M",
+  "prompt": "masterpiece, high score, great score, absurdres, (owl:1.15), standing upright on ground, wings folded, round eyes, feather tufts, no humans, upright posture, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+  "negative_prompt": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+  "seed": 1175471251,
+  "steps": 28,
+  "cfg_scale": 5.5,
+  "sampler": "euler_ancestral/normal",
+  "size": [
+   768,
+   768
+  ],
+  "seconds": 60.1,
+  "date": "2026-10-10",
+  "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+  "k96_pick": "owl_v02.png",
+  "judge_score": 82.6
+ },
+ "seed": 1,
+ "simplify": 0.95,
+ "texture_size": 1024,
+ "times": {
+  "gen_sec": 48,
+  "glb_sec": 38,
+  "bytes": 1757056
+ },
+ "date": "2026-10-10",
+ "note": "K-0096 자체 생성(입력 = 우리 txt2img 그림). 빌린 모델을 대신한다 — 게임 참조 바꾸기는 W 티켓.",
+ "pipeline": "remote3d/finish.py(얼굴 +Z·발 밑 원점·키 m·떨어진 조각 지움) → glb-compress/creature_fill.mjs --forward-z(뼈 없는 동작 7) → compress.mjs(Meshopt·WebP)",
+ "yaw": 0,
+ "height_m": 0.5,
+ "replaces": "Poly by Google CC-BY 3.0 — Owl.glb (dungeon·forest·go·story animals/)",
+ "commercial_use": true
+}

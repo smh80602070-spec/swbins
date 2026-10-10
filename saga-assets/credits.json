@@ -303,6 +303,15 @@
    ]
   },
   {
+   "tool": "remote3d",
+   "model": "microsoft/TRELLIS-image-large",
+   "license": "MIT",
+   "count": 4,
+   "where": [
+    "saga-assets/creatures3d"
+   ]
+  },
+  {
    "tool": "icon_pack.py",
    "model": "none",
    "license": "CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음)",
