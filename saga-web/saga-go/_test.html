@@ -6389,9 +6389,15 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var tbl = R3._landTex(), kinds = ['grass', 'forest', 'mount', 'road', 'town', 'farm'], n = 0, bad = [];
       kinds.forEach(function (k) { (tbl[k] || []).forEach(function (u) { n++; if (u.indexOf('assets/textures/land_c/' + k) !== 0 || u.slice(-5) !== '.webp') { bad.push(u); } }); });
       var src = R3._iblSrc();
-      var okSrc = src.slice(-27) === 'sky/ibl_noon_present_1k.hdr' || src === 'assets/hdri/alps_field_1k.hdr';
+      var okSrc = src.slice(-27) === 'sky/ibl_noon_present_1k.hdr';   // W-0154 — 옛 alps_field 폴백 지움
       C.setTune('world3d.ibl', 0); var offV = C.tuned('world3d.ibl', 1); C.setTune('world3d.ibl', null);   // 손잡이 world3d.ibl 은 그대로
       return n === 18 && bad.length === 0 && okSrc && offV === 0 && ('18/18 land_c · 환경광 ' + src.split('/').slice(-2).join('/'));
+    });
+
+    t('2D 땅 무늬표 — 여섯 종류 × 3 도 전부 land_c 이고 옛 사진 land/ 는 안 가리킨다 (W-0154)', function () {
+      var tbl = DG.world._landTex2D(), kinds = ['grass', 'forest', 'mount', 'road', 'town', 'farm'], n = 0, bad = [];
+      kinds.forEach(function (k) { (tbl[k] || []).forEach(function (u) { n++; if (u.indexOf('assets/textures/land_c/' + k) !== 0 || u.slice(-5) !== '.webp') { bad.push(u); } }); });
+      return n === 18 && bad.length === 0 && '18/18 land_c';
     });
 
     t('하늘 그림 — 때·시대·천후가 그림 이름을 정하고 해는 그림 속 해 자리(한낮 남 −z·새벽 동 −x, 고도 하한 22°)에서 비춘다 · 폰은 물 반사 끔 (W-0140)', function () {

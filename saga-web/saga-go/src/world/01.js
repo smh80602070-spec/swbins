@@ -649,8 +649,8 @@
   }
 
   /** 2026-09-10 — 2D 폴백 지형도 실제 사진으로. 3D(`world3d.js`의
-   *  `landTexture`)가 이미 받아 둔 ambientCG CC0 땅 사진(`assets/textures/
-   *  land/`)을 그대로 재사용한다 — `water`는 3D처럼 뺀다(맞는 CC0 사진이
+   *  `landTexture`)가 이미 받아 둔 땅 그림을 그대로 재사용한다(W-0154 — 옛 ambientCG
+   *  사진 `land/` 은 지우고 3D 와 같은 손그림 `assets/textures/land_c/`) — `water`는 3D처럼 뺀다(맞는 CC0 사진이
    *  없어 옅은 색 그대로 둔다, 실제 물결도 없는 자리라 색만으로 충분하다).
    *
    *  **첫 버전(칸마다 같은 사진을 통째로 욱여넣기)은 오히려 "바둑판" 을
@@ -664,12 +664,12 @@
    *  섞으면 그 경계마다 다시 이음매가 생겨 도로아미타불이다.
    */
   var LAND_TEX_VARIANTS = {
-    grass: ['assets/textures/land/grass1.webp', 'assets/textures/land/grass2.webp', 'assets/textures/land/grass3.webp'],
-    forest: ['assets/textures/land/forest1.webp', 'assets/textures/land/forest2.webp', 'assets/textures/land/forest3.webp'],
-    mount: ['assets/textures/land/mount1.webp', 'assets/textures/land/mount2.webp', 'assets/textures/land/mount3.webp'],
-    road: ['assets/textures/land/road1.webp', 'assets/textures/land/road2.webp', 'assets/textures/land/road3.webp'],
-    town: ['assets/textures/land/town1.webp', 'assets/textures/land/town2.webp', 'assets/textures/land/town3.webp'],
-    farm: ['assets/textures/land/farm1.webp', 'assets/textures/land/farm2.webp', 'assets/textures/land/farm3.webp']
+    grass: ['assets/textures/land_c/grass1.webp', 'assets/textures/land_c/grass2.webp', 'assets/textures/land_c/grass3.webp'],
+    forest: ['assets/textures/land_c/forest1.webp', 'assets/textures/land_c/forest2.webp', 'assets/textures/land_c/forest3.webp'],
+    mount: ['assets/textures/land_c/mount1.webp', 'assets/textures/land_c/mount2.webp', 'assets/textures/land_c/mount3.webp'],
+    road: ['assets/textures/land_c/road1.webp', 'assets/textures/land_c/road2.webp', 'assets/textures/land_c/road3.webp'],
+    town: ['assets/textures/land_c/town1.webp', 'assets/textures/land_c/town2.webp', 'assets/textures/land_c/town3.webp'],
+    farm: ['assets/textures/land_c/farm1.webp', 'assets/textures/land_c/farm2.webp', 'assets/textures/land_c/farm3.webp']
   };
   /** 사진 한 변이 세계에서 덮는 폭(m) — 3D(12m)보다 성기다. 2D는 화면이
    *  작고 확대도 자주 안 해 더 촘촘히 반복하면 오히려 무늬가 흐물거린다 */

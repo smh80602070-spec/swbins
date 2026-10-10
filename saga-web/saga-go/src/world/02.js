@@ -1052,7 +1052,7 @@
     REGION_SIZE: REGION_SIZE, ENCOUNTER_RANGE: ENCOUNTER_RANGE,
     init: function (objEl, groundEl) { initCanvas(objEl, groundEl); bindKeys(); tickSpawns(); },
     update: function (dt) { moveByKeys(dt); updatePlayerMotion(dt); wanderSpawns(dt); tickSpawns(); },
-    draw: draw, resize: resize, layoutLabels: layoutLabels, _makeSpawn: makeSpawn,   // W-0144·W-0152 진단
+    draw: draw, resize: resize, layoutLabels: layoutLabels, _makeSpawn: makeSpawn, _landTex2D: function () { return LAND_TEX_VARIANTS; },   // W-0144·W-0152·W-0154 진단
     get spawns() { return spawns; },
     removeSpawn: removeSpawn,
     nearest: nearest, maxSpawns: maxSpawns, spawnSpecial: spawnSpecial,
