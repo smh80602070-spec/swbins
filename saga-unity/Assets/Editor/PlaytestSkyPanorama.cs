@@ -57,6 +57,51 @@ namespace Saga.EditorTools
             Object.DestroyImmediate(go);
         }
 
+        /// <summary>U-0083 사실 하늘 — 셰이더·빌드 원본 표 · 시각 → 해 방향 공식 넷(옛 정오 표식과 같은 자리) · 밤 달 · 조명 적용 · 하늘 입히기·날씨 덮개.</summary>
+        private static void CheckRealSky()
+        {
+            var sh = Shader.Find(SkyPass.RealSkyShader);
+            PlaytestKit.Check(sh != null && !ShaderUtil.ShaderHasError(sh), "Saga/SkyReal 셰이더 없음·오류");
+            PlaytestKit.Check(System.Array.Exists(Saga.Core.Region.RegionMaterials.Sources, s => s.name == "SkyReal" && s.shader == SkyPass.RealSkyShader), "RegionMaterials 원본 표에 SkyReal 없음(빌드에서 빠짐)");
+            float El(Vector3 v) => Mathf.Asin(v.y) * Mathf.Rad2Deg;
+            Vector3 d6 = SkyPass.SunDirAt(6f), d12 = SkyPass.SunDirAt(12f), d17 = SkyPass.SunDirAt(17f), d22 = SkyPass.SunDirAt(22f);
+            PlaytestKit.Check(El(d6) > -0.5f && El(d6) < 15f && d6.x > 0.9f, $"6시 해 — 동쪽 지평선이어야 {d6} {El(d6):0.0}°");
+            PlaytestKit.Check(Mathf.Abs(El(d12) - SkyPass.NoonElevation) < 2f && d12.z < -0.4f, $"12시 해 — 남쪽 {SkyPass.NoonElevation}° 여야 {d12} {El(d12):0.0}°");
+            PlaytestKit.Check(El(d17) > 8f && El(d17) < 25f && d17.x < -0.5f, $"17시 해 — 서쪽 낮게(노을빛)여야 {d17} {El(d17):0.0}°");
+            PlaytestKit.Check(El(d22) < 0f && El(SkyPass.MoonDirAt(22f)) > 40f, $"22시 — 해 아래·달 높이 {El(d22):0.0}°/{El(SkyPass.MoonDirAt(22f)):0.0}°");
+            PlaytestKit.Check(SkyPass.LightSourceAt(22f) == SkyPass.MoonDirAt(22f) && SkyPass.LightSourceAt(12f) == d12, "밤 빛원 = 달·낮 = 해 가 아님");
+            // 옛 정오 표식 자리와 같은 방향(그림자 방향이 바뀌지 않게)
+            if (SkyPanorama.TrySun("sky_noon_present", out var mark, out _))
+                PlaytestKit.Check(Vector3.Angle(mark, d12) < 4f, $"12시 공식이 옛 정오 표식과 {Vector3.Angle(mark, d12):0.0}° 어긋남");
+            var hourWas = SkyPass.HourFn;
+            SkyPass.HourFn = () => 17;
+            PlaytestKit.Check(Mathf.Approximately(SkyPass.HourNow(), 17f), $"시각을 붙들면 정각이어야 {SkyPass.HourNow()}");
+            SkyPass.HourFn = hourWas;
+
+            var go = new GameObject("Sun");
+            var sun = go.AddComponent<Light>();
+            sun.type = LightType.Directional; sun.shadows = LightShadows.Soft; sun.intensity = 2f;
+            bool ok = SkyPass.ApplyLightAt(12f, out var noon);
+            PlaytestKit.Check(ok && (go.transform.forward + d12).magnitude < 1e-3f && (noon - d12).magnitude < 1e-3f, "12시: 조명이 공식 해 반대쪽을 안 비춤");
+            ok = SkyPass.ApplyLightAt(5f, out var dawn);   // 해가 아직 아래 → MinPitch 로 끌어올림, 방위는 해 쪽
+            PlaytestKit.Check(ok && Mathf.Abs(El(dawn) - SkyPass.MinPitch) < 0.1f && dawn.x > 0.9f, $"5시: 고도 보정 {El(dawn):0.0}°·동쪽 {dawn}");
+            ok = SkyPass.ApplyLightAt(22f, out _);
+            PlaytestKit.Check(ok && sun.color.b > sun.color.r && Mathf.Abs(sun.intensity - 2f * 0.35f) < 1e-3f, "22시: 달빛(푸른빛·어둡게)이 아님");
+            Object.DestroyImmediate(go);
+
+            var before = RenderSettings.skybox;
+            var camGo = new GameObject("__cam", typeof(Camera));
+            ok = SkyPass.ApplyRealSky(12f, camGo.GetComponent<Camera>(), false);
+            var m = SkyPass.RealSkyMaterial;
+            PlaytestKit.Check(ok && m != null && m.shader.name == SkyPass.RealSkyShader && camGo.GetComponent<Camera>().clearFlags == CameraClearFlags.Skybox
+                && ((Vector3)m.GetVector("_SunDir") - d12).magnitude < 1e-3f, "사실 하늘을 안 입힘·해 방향이 안 넘어감");
+            SkyPass.SetSkyWeather(0.9f, SkyPass.OvercastOf(SkyWeatherRules.Kind.Rain), 1.5f);
+            PlaytestKit.Check(m != null && Mathf.Approximately(m.GetFloat("_CloudCover"), 0.9f) && Mathf.Approximately(m.GetFloat("_Overcast"), 0.8f), "날씨 덮개가 안 넘어감");
+            RenderSettings.skybox = before;
+            Object.DestroyImmediate(camGo);
+            Debug.Log($"[PlaytestSkyPanorama] 사실 하늘 OK - 6시 {El(d6):0.0}° · 12시 {El(d12):0.0}° · 17시 {El(d17):0.0}° · 22시 해 {El(d22):0.0}°/달 {El(SkyPass.MoonDirAt(22f)):0.0}°");
+        }
+
         [MenuItem("Saga/Playtest Sky Panorama")]
         public static void Run()
         {
@@ -94,6 +139,7 @@ namespace Saga.EditorTools
                 RenderSettings.skybox = before;
                 Object.DestroyImmediate(camGo);
                 CheckSunMarkers();
+                CheckRealSky();
                 Debug.Log($"[PlaytestSkyPanorama] 하늘 {n}/12 읽힘");
             }
             PlaytestKit.Summary("PlaytestSkyPanorama");

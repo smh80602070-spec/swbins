@@ -279,6 +279,11 @@ namespace Saga.Core
             Kind = w.Kind;
             _windMul = w.WindMul;
             Color tod = TimeTint(SkyPanorama.TimeOf(SkyPass.HourFn()));
+            // U-0083 — 사실 하늘(Saga/SkyReal)이면 구름은 하늘 셰이더가 그린다: 날씨 덮개만 넘기고 원통 구름 세 겹은 끈다(그림 하늘일 때만 켬)
+            bool realSky = SkyPass.RealSkyMaterial != null;
+            SkyPass.SetSkyWeather(w.CloudAlpha, SkyPass.OvercastOf(w.Kind), w.WindMul);
+            for (int i = 0; i < 3; i++)
+                if (_layers[i] != null) _layers[i].GetComponent<MeshRenderer>().enabled = !realSky;
             for (int i = 0; i < 3; i++)
                 if (_layerMats[i] != null)
                 {

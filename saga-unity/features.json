@@ -1745,5 +1745,25 @@
   "ticket": "U-0078",
   "since": "2026-10-10",
   "note": "D2(눈 ○, U-0078): docs/playcheck/d2-u0078-20261010.json — 다리 자리 12시·17시 전후 촬영: 단색 판 → 잔물결·하늘 반사·물가 거품 띠·물 밑 다리 그림자, 검은 판·줄무늬 없음. 씬에 구운 옛 수면·폭포가 런타임 것과 두 겹이던 것도 치움. 굴절(PC 경로)은 Android 대상 촬영이라 눈 못 봄"
+ },
+ {
+  "id": "un.go.sky-real",
+  "name": "사실 하늘 — 시각 공식 해·달 + 산란 하늘·해 원반·흐르는 구름·별(Saga/SkyReal, 1만리·3마을·4종횡, U-0083)",
+  "files": [
+   "saga-unity/Assets/SagaCore/SkyReal.shader",
+   "saga-unity/Assets/SagaCore/SkyPass.cs",
+   "saga-unity/Assets/SagaCore/SkyWeather.cs"
+  ],
+  "tests": [
+   "PlaytestSkyPanorama",
+   "PlaytestSkyWeather",
+   "PlaytestShowcaseGui"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "U-0083",
+  "since": "2026-10-10",
+  "note": "D2(눈 ○, U-0083): docs/playcheck/d2-u0083-20261010.json — 1만리 6·12·17·22시 + 3마을·4종횡 12시 전후 촬영: 그림 하늘(지평선 그림·이음매 세로줄) → 해 원반이 물 반짝임 길·조명과 한 줄, 지평선이 안개로 녹음, 새벽 분홍·17시 노을빛·밤 별·달·남회색 구름. 3마을·4종횡은 같은 하늘이라 이 항목 note 로. 그림 하늘은 SAGA_SKY_PANO=1"
  }
 ]

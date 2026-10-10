@@ -23,6 +23,8 @@ namespace Saga.Core.Region
             ("SparkAdd", "Saga/RegionSpark"),
             ("SparkAlpha", "Saga/RegionSpark"),
             ("Sky", "Skybox/Panoramic"),
+            ("SkyReal", "Saga/SkyReal"),       // U-0083 사실 하늘(SkyPass)
+            ("WaterReal", "Saga/WaterReal"),   // U-0078 사실 물 — TerrainBuilder 는 Shader.Find 로 찾으니 빌드에 남기려고 원본만 둔다
         };
 
         public static Material Make(string name)

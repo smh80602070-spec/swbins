@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-10",
+  "tickets": ["U-0083 사실 하늘 ② — 물리 산란·해 원반·흐르는 구름(1만리·3마을·4종횡)"],
+  "how": "전 촬영(그림 하늘) → Saga/SkyReal·SkyPass 시각 공식·날씨 덮개 → 같은 컷 후 촬영(GUI, Android 대상, 세이브 다섯 백업·cmp 복원) → Claude 눈 → 손질(해 뜨고 짐 6/18시·노을빛 범위·밤 구름 색·천정) 재촬영 → 성능 전후 두 번(전 = SAGA_SKY_PANO=1 그림 하늘 경로) → 구름 겹 줄여 다시 잼·12시 확인 컷. 진단 다섯",
+  "fix": "새 Saga/SkyReal(스카이박스 손 HLSL, 텍스처 없음): 천정·지평선 두 색 레일리 근사(해 고도에 따라 낮 파랑·노을 주황·보랏빛 천정·밤 남색) · 미 빛무리 + 해 원반 · 구름 = FBM 4겹을 하늘 높이 평면에 투영해 바람으로 흘림, 해 쪽 3겹 차이로 자기 그늘·은빛 가장자리 · 밤 = 절차 별 + 달 원반 · 지평선 띠와 땅 아래를 안개색으로 녹임. SkyPass: 해·달 방향을 시각(분까지, 진단이 시각을 붙들면 정각)에서 계산 — 아침 동쪽 +X·정오 남쪽 −Z 62°(옛 표식과 같은 자리)·저녁 서쪽, 해 6~18시, 달은 12시간 어긋남 · 주 조명도 같은 방향(밤 = 달, 고도 MinPitch 보정·시간대 색은 그대로) · 반사(DynamicGI)는 시간대가 바뀔 때만 · 그림 하늘은 SAGA_SKY_PANO=1(셰이더가 없으면 자동). SkyWeather: 날씨 → 구름 양·흐림·바람을 하늘에 넘기고, 사실 하늘일 땐 원통 구름 세 겹은 끔(그림 하늘일 때만 켬). 빌드: RegionMaterials 원본 표에 SkyReal·WaterReal(U-0078 빈틈) + Resources/RegionMaterials/*.mat 원본 둘(셰이더가 빌드에서 안 빠지게). 앰비언트 방식(Trilight)·하늘 그림·인물 무변경",
+  "commands": [
+    "SAGA_SHOT_SCENE=Assets/Scenes/TestVillage.unity|TestVillageForest.unity|TestField.unity SAGA_SHOT_TARGETS='sky;sunsky' SAGA_SHOT_HOUR=6|12|17|22 Unity -buildTarget Android -executeMethod Saga.EditorTools.PlaytestShowcaseGui.Run",
+    "Unity -buildTarget Android -executeMethod Saga.EditorTools.PlaytestSagaPerf.Run (후) · SAGA_SKY_PANO=1 … (전)",
+    "bash tools/unity-batch.sh -- Unity -batchmode -nographics -buildTarget Android -executeMethod Saga.EditorTools.<PlaytestSkyPanorama.Run|PlaytestSkyWeather.RunBatch|PlaytestHeadless.Run|PlaytestForestHeadless.Run|PlaytestStorySlice.Run>"
+  ],
+  "scene": [
+    "[PlaytestSkyPanorama] 사실 하늘 OK - 6시 0.0° · 12시 62.0° · 17시 16.0° · 22시 해 -56.6°/달 53.7° · [PlaytestSkyPanorama] OK",
+    "[PlaytestSkyWeather] OK",
+    "[PlaytestHeadless] OK - 10 frames, no errors",
+    "[PlaytestForestHeadless] OK - 10 frames, no errors",
+    "[PlaytestStorySlice] OK - killed 10 grunts + boss … no errors (세이브 치운 채 — 진짜 save_story.json 이면 '기본 활성 역할 0 아님' FAIL, 옛 함정)"
+  ],
+  "runtime_errors": 0,
+  "shader_errors": 0,
+  "perf": {
+    "how": "PlaytestSagaPerf 자동 측정(에디터, 구간 3.5초) 평균 fps 상한/풀기, 후 → 전 순서로 한 판씩",
+    "round1_5oct": "후 go 39/50 · dungeon 114/115 · forest 76/78 · story 205/118 — 전 go 53/56 · dungeon 143/118 · forest 77/76 · story 215/119",
+    "round2_4oct": "후 go 47/60 · dungeon 147/119 · forest 77/75 · story 211/119 — 전 go 53/54 · dungeon 143/118 · forest 77/77 · story 209/119",
+    "judge": "1차는 1만리가 10% 넘게 떨어져(하늘 없는 2나락도 −20% — 첫 판 예열 섞임) 티켓대로 구름 FBM 5겹 → 모양 4·그늘 3겹. 2차는 1만리 상한 −11%·풀기 +11% 로 엇갈려 잡음 범위, 3마을·4종횡·2나락 같음. 폰 실측은 측정용 APK 때(빌드 금지)"
+  },
+  "shots": "세션 scratchpad shots/before_{go_6,go_12,go_17,go_22,forest_12,story_12} · after_* · tune_go_{12,17,22} · final_go_12 (커밋 안 함)",
+  "results": [
+    { "id": "un.go.sky-real", "eye": "○", "note": "6시: 해 원반이 동쪽 지평선 위, 물 위 반짝임 길과 정확히 한 줄(조명 방향 일치), 분홍·자줏빛 하늘·연분홍 구름. 12시: 맑은 파랑(천정 짙고 지평선 옅음)·흰 뭉게구름, 해 둘레 빛무리. 17시(손질 뒤 고도 16°): 보랏빛 노을 하늘·해 쪽 연분홍 빛무리·물 반짝임. 22시: 짙은 남색·별·달 원반·남회색 구름(손질 전엔 갈색 얼룩). 3마을·4종횡 12시: 같은 하늘, 그림 하늘의 이음매 세로줄이 사라짐. 지평선은 안개색으로 녹아 3D 산 그림자와 띠가 안 생김. 줄무늬·이음매 없음", "result": "새 항목 D2", "date": "2026-10-10" }
+  ],
+  "left": "17시 노을이 그림 하늘의 금빛보다 서늘(보랏빛) — 고돗 G-0141 과 같은 결 · 밤에도 안개색이 밝아 먼 산이 희게 뜸(안개는 시각을 안 따름 — 이 티켓 밖, 후속 후보) · 3마을 지도 끝 너머는 안개색(노랑) 바닥으로 보임(전엔 땅 아래에 구름 그림) · U-0079(지역별 시대 하늘)는 이제 판단 가능"
+}
