@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-10",
+  "tickets": ["U-0081 1만리 산신당·행운 돌탑·동굴 유물·은닉 보물 — 제 동작 진단 새로 쓰기"],
+  "how": "새 Editor/PlaytestGoShrines.cs 를 PlaytestHeadless 사슬(플레이 모드, TestVillage)에서 — 보상 길 OnTriggerEnter(private)를 리플렉션으로 주인공 충돌체와 부름(PlaytestHeadless 의 봉화대 진단과 같은 방식). 세이브 다섯 치운 채 실행·끝나고 cmp 복원. 게임 코드 무변경",
+  "facts": "코드 읽기로 바로잡음: 산신당(5,1)·동쪽 숲 유적(7,3)·은닉 보물(3,0)+7m 은 하루 한 번이 아니라 평생 한 번(WorldEventState shrine_blessing·east_grove_relic·cave_treasure, 세이브 worldFlags v29) — 보상은 경험·금(보물은 wp_relic), 들어서면 바로 받음. 행운 돌탑(4,7)은 한 번만이 아니라 반복 — 20초 쿨다운(Time.time)·소원 3냥·Random 결과 넷(가중 50/32/14/4). 하루 한 번은 다른 기능(사당 시련 ShrineTrial)",
+  "scene": [
+    "[PlaytestHeadless] shrines OK - MountainShrine 금 +25·한 번만·재생성 막힘 | EastGroveRelic 금 +15·한 번만·재생성 막힘 | HiddenTreasure 금 +20·한 번만·재생성 막힘 | 돌탑 12번 결과 -3/2/12/17·쿨다운·3냥 | 세이브 왕복 기록 셋 유지",
+    "[PlaytestHeadless] OK - 10 frames, no errors"
+  ],
+  "runtime_errors": 0,
+  "save_restore": "세이브 다섯 cmp 같음",
+  "results": [
+    { "id": "un.go.shrines", "check": "주인공 아닌 것 무시·첫 번째 금/경험·두 번째 무효·이미 받았으면 새 물체가 자리 안 잡음·세이브 왕복 / 돌탑 결과 넷·쿨다운·3냥", "result": "D1→D2" },
+    { "id": "un.go.hidden-treasure", "check": "금 +20·경험·wp_relic·두 번째 무효·재생성 막힘·세이브 왕복", "result": "D1→D2" }
+  ]
+}

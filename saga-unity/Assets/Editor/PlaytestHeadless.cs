@@ -163,6 +163,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoHouseInterior.Run("PlaytestHeadless")) _hadError = true; // U-0039 마을집 방(순간이동 왕복·방 안 저장 치환)
                 if (!PlaytestNpcModels.Go()) _hadError = true; // PLAN.md 106-4 GO 몫 — 마을 사람 사실 모델(읽기만)
                 if (!PlaytestMobileGraphics.Run()) _hadError = true; // 2026-09-24 폰 발열 점검(읽기만)
+                if (!PlaytestGoShrines.Run("PlaytestHeadless")) _hadError = true; // tasks U-0081 산신당·동쪽 숲 유적·은닉 보물(평생 한 번)·행운 돌탑(쿨다운·무작위) — 기록·돈·경험·소지품·세이브 되돌림
                 if (!PlaytestGoTreasure.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 107-4 보물 상자(세이브·상자 기록 되돌림 포함)
                 if (!PlaytestGoRegionMission.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 107-8 지역 사명 사슬(사명·지도·수호장·상자 기록·세이브 되돌림)
                 if (!PlaytestGoPartyBodies.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 107-6 동료 모델

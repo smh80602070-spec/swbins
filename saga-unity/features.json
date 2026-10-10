@@ -28,25 +28,29 @@
   "id": "un.go.hidden-treasure",
   "name": "은닉 보물",
   "files": [],
-  "tests": [],
-  "level": "D1",
+  "tests": [
+   "PlaytestGoShrines"
+  ],
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D1(U-0064 되돌림): 10-08 D2 근거 PlaytestGoTreasure(보물 상자 17) 는 다른 기능 진단 — 은닉 보물(HiddenTreasure) 동작을 보는 진단이 없다(진단 코드엔 이름이 비킴 목록으로만). 진단을 새로 써야 D2."
+  "note": "D2(U-0081 진단): docs/playcheck/d2-u0081-20261010.json — PlaytestGoShrines: 은닉 보물(cave_treasure) 들어서면 바로 집음(따로 여는 단계 없음) — 금 +20·경험·wp_relic·두 번째 무효·이미 받았으면 재생성 막힘·세이브 JSON 왕복 유지"
  },
  {
   "id": "un.go.shrines",
   "name": "산신당·행운 돌탑·동굴 유물",
   "files": [],
-  "tests": [],
-  "level": "D1",
+  "tests": [
+   "PlaytestGoShrines"
+  ],
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D1(U-0064 되돌림): 10-08 D2 근거 PlaytestGoArtifacts(보패) 는 다른 기능 진단 — 산신당·행운 돌탑·동굴 유물 동작을 보는 진단이 없다(진단 코드엔 이름이 비킴 목록으로만). 진단을 새로 써야 D2."
+  "note": "D2(U-0081 진단): docs/playcheck/d2-u0081-20261010.json — PlaytestGoShrines(PlaytestHeadless 안): 산신당·동쪽 숲 유적은 평생 한 번(WorldEventState) — 주인공 아닌 것 무시·첫 번째 금 +25/+15·경험·두 번째 무효·이미 받았으면 새로 세워도 자리 안 잡음·세이브 JSON 왕복 유지. 행운 돌탑은 반복(20초 쿨다운·소원 3냥) — 12번 결과 −3/+2/+12/+17 넷 다 나옴·쿨다운 안 두 번째 무효·2냥이면 못 빎. \"하루 한 번\"이 아니다(옛 메모 바로잡음 — 하루 한 번은 사당 시련 ShrineTrial)"
  },
  {
   "id": "un.go.gather",
