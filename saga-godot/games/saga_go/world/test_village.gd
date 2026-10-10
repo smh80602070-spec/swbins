@@ -38,6 +38,7 @@ func _ready() -> void:
 	add_child(preload("res://games/saga_go/world/go_bgm.gd").new())  # 배경음(G-0011) — 지역 보고 곡 고름, 곡 없으면 조용
 	add_child(preload("res://games/saga_go/ui/boss_bar.gd").new())   # G-0161 — 보스 곁이면 화면 위 보스 바
 	add_child(preload("res://games/saga_go/ui/hurt_vignette.gd").new())   # G-0171 — 내가 맞으면 가장자리 붉게·체력 낮으면 맥박
+	add_child(preload("res://games/saga_go/world/go_sfx.gd").new())   # G-0177 — 1만리 효과음(무기별 타격·상자·임무·요리·낚시·UI)
 	if _any_probe():
 		PartyState.party_size = PartyState.PARTY_MAX
 	## PLAN 106장 ㊺ — 넷째 지역 서리봉 고원(마을 북쪽 고개 너머). 지형이 다른 것보다 먼저 서게 맨 앞에.
@@ -223,6 +224,8 @@ func _ready() -> void:
 	## G-0018 전투·이동 손맛 기준선 측정 — 측정할 때만 붙인다.
 	if OS.get_environment("SAGA_MOVESND_PROBE") != "":   # G-0176
 		add_child(load("res://tools/probe_move_sounds.gd").new())
+	if OS.get_environment("SAGA_GOSFX_PROBE") != "":   # G-0177
+		add_child(load("res://tools/probe_go_sfx.gd").new())
 	if OS.get_environment("SAGA_FEEL_PROBE") != "":
 		add_child(load("res://tools/probe_feel.gd").new())
 	if OS.get_environment("SAGA_PERF_PROBE") != "":

@@ -298,7 +298,7 @@ func cast() -> bool:
 	_float_node.visible = true
 	_line.visible = true
 	_ripple(float_pos, 0.6)
-	CombatFeel.ui()
+	get_tree().call_group("go_sfx", "play", "splash")   # G-0177
 	_set_state(S.WAIT)
 	return true
 
@@ -410,6 +410,7 @@ func _physics_process(delta: float) -> void:
 				if _nibbles_left <= 0:
 					_bob(0.35)
 					_set_state(S.BITE)
+					get_tree().call_group("go_sfx", "play", "fish_bite")   # G-0177
 					Toast.show(self, "입질! — 지금 당겨라", Fishing.BITE_WINDOW)
 		S.BITE:
 			if _t > Fishing.BITE_WINDOW:

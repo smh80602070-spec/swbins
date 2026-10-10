@@ -81,7 +81,7 @@ func cook(recipe: String, q: int) -> bool:
 		return false
 	PartyState.add_items({Cooking.dish_id(recipe, q): 1})
 	PartyState.cook_prof[recipe] = mini(prof(recipe) + 1, Cooking.PROF_MAX)
-	CombatFeel.ui()
+	get_tree().call_group("go_sfx", "play", "cook_done")   # G-0177
 	cooked.emit(recipe, q)
 	changed.emit()
 	return true

@@ -92,6 +92,9 @@ var _flash_state: Dictionary = {}  # MeshInstance3D 인스턴스ID -> {mesh, ori
 var _sound_idx := 0
 var _pick_sound_idx := 0
 var _ui_sound_idx := 0
+## G-0177 — 판이 자기 효과음을 낼 때 건다(1만리 go_sfx.gd). call(kind "hit"|"pick"|"ui", target, crit) 이 true 면
+## 아래 기본 wav 를 안 낸다(sound_triggered 는 그대로). 안 걸면 다른 판은 지금과 같다.
+var sound_hook: Callable
 
 
 ## tune(선택, G-0018): {stop_ms 히트스톱 길이(치명이면 +50), shake_mul 흔들림 배율(0=없음), pop_mul 숫자 크기 배율, quiet 타격음 끔}.
@@ -103,7 +106,10 @@ func hit(target: Node3D, amount: float, crit: bool, tune: Dictionary = {}) -> vo
 		_do_flash(target)
 		_do_popup(target, amount, crit, float(tune.get("pop_mul", 1.0)))
 	if not bool(tune.get("quiet", false)):
-		_do_sound("hit")
+		if _hooked("hit", target, crit):
+			sound_triggered.emit(_sound_idx)
+		else:
+			_do_sound("hit")
 
 
 ## PLAN 101-4 순서 2(FOREST 연결), 2026-09-18. 웹 §5 "채집 손맛" 후보용 —
@@ -118,7 +124,10 @@ func hit(target: Node3D, amount: float, crit: bool, tune: Dictionary = {}) -> vo
 func pickup(target: Node3D, label: String) -> void:
 	if is_instance_valid(target):
 		_do_pickup_popup(target, label)
-	_do_sound("pick")
+	if _hooked("pick", target, false, label):
+		sound_triggered.emit(_pick_sound_idx)
+	else:
+		_do_sound("pick")
 	Voice.say("pickup")   # G-0111 — 말하는 이 = Voice.speaker
 	pickup_triggered.emit(label)
 
@@ -128,6 +137,8 @@ func pickup(target: Node3D, label: String) -> void:
 ## 화면 안 3D 좌표가 없는 CanvasLayer 버튼 자리라 `_do_popup`류가 필요
 ## 없다. `session_card.gd`(다섯 판 공용 "닫기") 호출용.
 func ui() -> void:
+	if _hooked("ui", null, false):
+		return
 	_ui_sound_idx = (_ui_sound_idx + 1) % SOUND_CUE_COUNT
 	_play_one_shot(UI_SOUNDS[_ui_sound_idx])
 
@@ -299,6 +310,10 @@ func _do_pickup_popup(target: Node3D, label: String) -> void:
 	tw.tween_property(lbl, "position:y", lbl.position.y + POPUP_RISE_M, POPUP_SEC)
 	tw.parallel().tween_property(lbl, "modulate:a", 0.0, POPUP_SEC)
 	tw.tween_callback(lbl.queue_free)
+
+
+func _hooked(kind: String, target: Node3D, crit: bool, label: String = "") -> bool:
+	return sound_hook.is_valid() and bool(sound_hook.call(kind, target, crit, label))
 
 
 func _do_sound(kind: String = "hit") -> void:

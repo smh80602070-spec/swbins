@@ -1107,6 +1107,8 @@ func heal_member(id: String, ratio: float, flat: float = 0.0) -> float:
 		return -1.0
 	var before := hp_of(id)
 	_hp[id] = minf(before + max_hp_of(id) * ratio + flat, max_hp_of(id))
+	if hp_of(id) > before:
+		get_tree().call_group("go_sfx", "play", "heal")   # G-0177
 	_refresh_hud()
 	return hp_of(id) - before
 
@@ -1329,6 +1331,7 @@ func take_damage(amount: float, source: Node) -> void:
 		dmg -= absorbed
 		if dmg <= 0.0:
 			_reaction_text(_player, "막음", Elements.color_of(shield_element))
+			get_tree().call_group("go_sfx", "play", "block")   # G-0177
 			_refresh_hud()
 			return
 	hp = maxf(hp - dmg, 0.0)

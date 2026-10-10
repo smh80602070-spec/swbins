@@ -150,6 +150,7 @@ func open() -> float:
 	if is_open or sealed:
 		return 0.0
 	is_open = true
+	get_tree().call_group("go_sfx", "play", "chest_open")   # G-0177
 	var g: Dictionary = GRADES[grade]
 	EventState.mark_resolved("chest_" + chest_id)
 	var reward: float = g.exp

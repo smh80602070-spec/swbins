@@ -223,6 +223,7 @@ func _wq_begin(id: String) -> void:
 	var steps: Dictionary = PartyState.world_quests["steps"]
 	if not steps.has(id):
 		steps[id] = 0
+		get_tree().call_group("go_sfx", "play", "quest_accept")   # G-0177
 		wq_changed.emit(id, 0)
 	PartyState.world_quests["track"] = id
 	_enter_step()
@@ -241,7 +242,7 @@ func _advance_wq(id: String) -> void:
 		PartyState.add_items(q.reward)
 		PartyState.add_exp(float(q.exp))
 		Toast.show(self, "세계 임무 완료 — %s\n보상: %s" % [q.name, _reward_text(q.reward)], 4.0)
-		CombatFeel.ui()
+		get_tree().call_group("go_sfx", "play", "quest_done")   # G-0177
 		wq_changed.emit(id, -1)
 		track_changed.emit("")
 	else:
@@ -647,7 +648,7 @@ func advance() -> void:
 		PartyState.story = {"ch": ch() + 1, "step": 0}
 		var joined := _join(String(c.get("join", "")))
 		Toast.show(self, "이야기 임무 완료 — %s\n보상: %s%s" % [c.name, _reward_text(c.reward), _join_text(joined)], 4.0)
-		CombatFeel.ui()
+		get_tree().call_group("go_sfx", "play", "quest_done")   # G-0177
 		chapter_done.emit(ch() - 1)
 	else:
 		PartyState.story = {"ch": ch(), "step": next}

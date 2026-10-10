@@ -666,6 +666,7 @@ func _tick_status(delta: float) -> void:
 
 func _die() -> void:
 	ai = AI.DEAD
+	get_tree().call_group("go_sfx", "play", "death")   # G-0177
 	_t = RESPAWN_SEC
 	_set_tell(false)
 	aura = ""
