@@ -24,7 +24,7 @@
 - 10-09 밤 닫음: G-0144 1단계(건물·소품 `prop_real.gdshader` 재질 5종 PBR — 색으로 종류, prop_toon 은 되돌리기용) · G-0150 사가종횡 동굴·미궁 배경(`story_cave_backdrop.gd` 바위 벽·천장·종유석·횃불, 동굴·미궁만 안개 어둡게) · G-0151 잠긴 도읍 석등 자리 뜸(G-0139 회귀 — 돔 바닥 U 를 둑으로 셈).
 - **방향(사용자 10-09, PLAN 66-2·SAGA-DESIGN §6.0-1 반영)**: 인물·몬스터는 툰 그대로, **배경(물·하늘·풀·땅·소품 재질)은 사실 쪽**. 사용자 판정 "고친거 마음에 들어"·"괜찮네" ○. 기준 네 컷 `graphics/baseline/go/`(10-09 16:17, 이후 `node tools/shot_diff.mjs graphics/baseline/go <폴더>`).
 - 보여 주기 = 같은 시간대 전후 밀어 보기 비교 페이지(Artifact https://claude.ai/artifact/2shrD5bSfk5crvfmAEk3KT, 스크래치 `gallery/index.html` 은 세션마다 사라지니 새 세션은 `Artifact read` 로 받아 이어 붙일 것). GO 컷 = `tools/probe_shots.gd`(진단 컷 d_plaza_*·d_bridge_top·할 일 hide/nograss/burstN), 다른 판 = `tools/scene_shot.tscn`(판 씬 한 장, 넷째 인자 노드 곁에 서기).
-- 이 PC Godot = WinGet Packages `Godot_v4.7.2-stable_win64_console.exe`. 전체 점검 `tools/probe_all.sh` 153개(마지막 10-09 밤 고돗 QC `qc.mjs --branch godot` 58분: story6 3 → G-0151 로 고쳐 0, story4·story9 는 촬영·점검과 동시 실행 때만 흔들림, 혼자 0). 러너가 도는 중엔 probe_all.sh 를 고치지 말 것.
+- 이 PC Godot = WinGet Packages `Godot_v4.7.2-stable_win64_console.exe`. 전체 점검 `tools/probe_all.sh` 153개(10-10 G-0157~0174 뒤 전부 fails=0 — 세이브 user://save.json 을 비켜 두고 돌림). 러너가 도는 중엔 probe_all.sh 를 고치지 말 것.
 - 함정: 사가마을·나락 씬을 헤드리스로 띄우면 첫 안내·대화 창(ui_modal)이 연달아 떠 멈춤 — 점검은 매 프레임 창을 치울 것 · 공용 주변광(environment_profile)에 밝은 색을 섞으면 신상·절벽 그늘 입체감이 날아감(G-0127) — 섞을 땐 하늘 밝기 쯤 중간 회색으로 채도만(G-0133) · forward_plus 로 화면 밖 촬영 시 SDFGI 검은 조각.
 
 ## 다음 작업 (우선순위)
