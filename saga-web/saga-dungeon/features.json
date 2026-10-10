@@ -875,5 +875,23 @@
   "ticket": "W-0131",
   "since": "2026-10-09",
   "note": "D2: pw-belt-check.mjs <태그> town → shots/belt/z-{pc,phone,land}-{town,wild}.png Claude 눈 ○(마을 = 하늘·능선 두 겹·한옥·주민·우물, 들판 = 숲·천막·돌담, 앞 나무·집 비침). 들판 소품은 worldMap.pieces(판정·3D 와 같은 배열). 손잡이 dg.belt2dTown 0 = 마을·들판만 옛 아이소."
+ },
+ {
+  "id": "dg.borrow-sex",
+  "name": "빌린 몸 성별 맞춤(K-0090 ⑤) — 확장 인물 30(현대·미래)이 제 성별 통일 몸을 빌린다",
+  "files": [
+   "js/data-hero-ext.js",
+   "../shared/js/assets3d.js",
+   "../shared/js/assets3d-ids.js"
+  ],
+  "tests": [
+   "빌린 몸 성별(W-0150) — 확장 인물 30 은 제 성별(sex) 몸만 빌리고, 성별 모르는 이름 있는 사람(적·주민)은 그대로"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0150",
+  "since": "2026-10-10",
+  "note": "D2: 진단 반대 성별 0/30(성별 안 보던 옛 고르기는 12) · 실제 페이지(헤드리스, 통일 표 ok) ft_airesearch → rf_guojia(여, 옛 nz_soman 남). 초상 30 한 판(scratchpad probe150-portraits.png) Claude 눈 ○ 그림체 한 벌·성별 대체로 맞음, △ 셋(hacker 남·dronecmd 여·journalist 남이 중성적) · explorer 모자 이상·doctor 어깨 노출·bioeng 고개 기욺. 3D 몸 반신 렌더는 헤드리스 90초 안에 안 구워짐(못 봄)."
  }
 ]

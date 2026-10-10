@@ -157,26 +157,35 @@
       used[pool[k]] = 1; borrowed.named[names[i]] = pool[k];
     }
     borrowed.rest = pool.filter(function (x) { return !used[x]; });
+    /* W-0150 — 성별을 아는 사람(인물 표의 sex)은 같은 성별 몸에서 고른다(전엔 해시뿐이라 사가나락 확장 30 중 12 가 반대 성별 몸). 표는 여기서 한 번만 */
+    var hs = ids().heroSex || {};
+    borrowed.bySex = { f: borrowed.rest.filter(function (x) { return hs[x] === 'f'; }), m: borrowed.rest.filter(function (x) { return hs[x] === 'm'; }) };
+    borrowed.sexOf = {}; ((D && D.heroes) || []).forEach(function (h) { if (h.sex === 'f' || h.sex === 'm') { borrowed.sexOf[h.id] = h.sex; } });
     return borrowed;
   }
-  function borrowRecipe(ref) {
+  /** 빌릴 몸 id 고르기(주소 없이 — 진단이 센다) — { id, seed } 또는 null */
+  function borrowPick(ref) {
     var c = cfg().borrow, C = global.DG && global.DG.core;
     if (!c || (C && C.tuned && !C.tuned('assets3d.borrow', 1))) { return null; }
     var seed = ref && typeof ref === 'object' ? ref.id : String(ref || ''), id = refId(ref);
     if (!seed || set('hero')[id] || (c.skip || []).indexOf(seed) >= 0) { return null; }
     if (ref && typeof ref === 'object' && (c.skipEra || []).indexOf(ref.era) >= 0) { return null; }
     if ((c.same || {})[seed]) { seed = c.same[seed]; }
-    var t = borrowTable(), b = t.named[seed], i, h = 0;
-    if (!b && t.rest.length) {
+    var t = borrowTable(), b = t.named[seed], i, h = 0, sx = (ref && typeof ref === 'object' && ref.sex) || (t.sexOf && t.sexOf[id]);
+    var rest = sx && t.bySex && t.bySex[sx] && t.bySex[sx].length ? t.bySex[sx] : t.rest;   // W-0150 — 성별 아는 사람은 같은 성별 몸만
+    if (!b && rest.length) {
       for (i = 0; i < seed.length; i++) { h = (h * 31 + seed.charCodeAt(i)) >>> 0; }
-      b = t.rest[h % t.rest.length];
+      b = rest[h % rest.length];
     }
-    var u = b && url('hero', b);
-    return u ? { key: 'uni:' + b, body: u, borrowedFor: seed } : null;
+    return b ? { id: b, seed: seed } : null;
+  }
+  function borrowRecipe(ref) {
+    var p = borrowPick(ref), u = p && url('hero', p.id);
+    return u ? { key: 'uni:' + p.id, body: u, borrowedFor: p.seed } : null;
   }
 
   global.DG.assets3d = {
-    url: url, spriteUrl: spriteUrl, probe: probe, heroRecipe: heroRecipe, borrowRecipe: borrowRecipe, borrowTable: borrowTable, applyProps: applyProps,
+    url: url, spriteUrl: spriteUrl, probe: probe, heroRecipe: heroRecipe, borrowRecipe: borrowRecipe, borrowPick: borrowPick, borrowTable: borrowTable, applyProps: applyProps,
     has: function (kind, id) { return !!set(kind)[id]; },
     /** 진단·점검용 — 'init' | 'probing' | 'ok' | 'fail' */
     state: function () { return state; },

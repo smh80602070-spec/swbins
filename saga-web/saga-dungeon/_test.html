@@ -8235,6 +8235,16 @@ window.requestAnimationFrame = function () { return 0; };
       return r.every(Boolean) && ('짐승 ' + mapped + '/' + beasts.length + ' 짝 · 우두머리 11 · 배율 ' + f1.k + '·' + f2.k) || '실패 ' + r.join(',') + ' ' + bad.map(function (e) { return e.name; }).join(',');
     });
 
+    t('빌린 몸 성별(W-0150) — 확장 인물 30 은 제 성별(sex) 몸만 빌리고, 성별 모르는 이름 있는 사람(적·주민)은 그대로', function () {
+      var A = DG.assets3d, HS = (DG.assets3dIds && DG.assets3dIds.heroSex) || {}, ext = DG.data.heroes.filter(function (h) { return /^(ft|md)_/.test(h.id); }), bad = [], old = 0, T = A.borrowTable();
+      ext.forEach(function (h) {
+        var p = A.borrowPick('hero:' + h.id); if (!p || HS[p.id] !== h.sex) { bad.push(h.id + '→' + (p && p.id)); }
+        var s = 'hero:' + h.id, k, x = 0; for (k = 0; k < s.length; k++) { x = (x * 31 + s.charCodeAt(k)) >>> 0; } if (T.rest.length && HS[T.rest[x % T.rest.length]] !== h.sex) { old++; }   // 성별 안 보던 옛 고르기
+      });
+      var two = (A.borrowPick('hero:ft_airesearch') || {}).id, chef = (A.borrowPick('hero:md_chef') || {}).id, named = (A.borrowPick('황건적') || {}).id === T.named['황건적'];
+      var r = [ext.length === 30, ext.every(function (h) { return h.sex === 'f' || h.sex === 'm'; }), Object.keys(HS).length === DG.assets3dIds.hero.length, bad.length === 0, HS[two] === 'f', HS[chef] === 'm', named];
+      return r.every(Boolean) && ('반대 성별 몸 ' + old + ' → 0 / 30 · ft_airesearch ' + two + ' · md_chef ' + chef) || '실패 ' + r.join(',') + ' ' + bad.join(' ');
+    });
     t('asset3d: 몬스터 3D 몸(W-0147) — 짐승 적·우두머리가 crea:<id>(통일 world 표) 로 GLB 주소를 받고, 클립 Hit·Death 가 슬롯에 걸린다', function () {
       var A = DG.asset3d, MP = DG.monsterPortrait, ED = DG.enemyData, W = (DG.assets3dIds && DG.assets3dIds.world) || [];
       var beast = ED.enemies.filter(function (e) { return e.kind === 'beast' && MP.idOf(e, false); })[0], boss = ED.bosses.filter(function (b) { return b.kind === 'beast'; })[0] || ED.bosses[0];
