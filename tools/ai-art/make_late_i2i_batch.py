@@ -74,6 +74,8 @@ FACTION = {
 # 그 몸들은 빼고 같은 성별 다른 몸(씨앗 'k27b:')·두 눈·목깃·denoise 0.62·새 씨앗으로 다시 뽑는다(K-0090 ⑤ 와 같은 처방)
 REDO = set('''aq_sanghwa bw_bitnae bw_gomnae ac_simyeon aq_cheongok bw_seolgu cs_gyeongjeok gr_iseul hb_bisang hq_jamsu js_dalli js_jomyeong kd_seorim
 kd_silheom mr_bakwi mr_bingha mr_jeoksa mr_sumteo nc_ullim ns_gieok ns_hakseup ob_tongsin rg_gyeolseung sn_deonggul tw_hoegwi yk_amsu'''.split())
+# 10-10 REDO 판정에서 둘째 몸도 앞머리가 한 눈 — 셋째 몸(씨앗 'k27c:', 둘째 몸도 bad)·묶은 머리
+REDO3 = {'tw_hoegwi'}
 REDO_NEG = ', bare chest, shirtless, topless, eyepatch, bandage on face, scarf over face, face paint'
 MOOD = {'might': 'fierce determined expression', 'wisdom': 'calm clever gaze', 'virtue': 'gentle kind smile'}
 NEG_BASE = ('lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, '
@@ -113,12 +115,20 @@ def main():
         first[h['id']] = (g, pool[g][used[g] % len(pool[g])])
         used[g] += 1
     bad = {first[i][1] for i in REDO if i in first}
+    bad2 = set()   # 둘째 몸(REDO3 가 쓴 것) — 셋째 몸 고를 때만 뺀다(다른 REDO 장은 그대로)
+    for i in REDO3:
+        if i in first:
+            alt = [b for b in pool[first[i][0]] if b not in bad]
+            bad2.add(alt[h8('k27b:' + i) % len(alt)])
     for h in order:
         g, body = first[h['id']]
         redo = h['id'] in REDO
         if redo:
             alt = [b for b in pool[g] if b not in bad]
             body = alt[h8('k27b:' + h['id']) % len(alt)]
+            if h['id'] in REDO3:
+                alt = [b for b in alt if b not in bad2]
+                body = alt[h8('k27c:' + h['id']) % len(alt)]
         r = json.load(open(os.path.join(FORGE, 'recipes', 'realm', 'hero_' + body + '.json'), encoding='utf-8'))
         female = g == 'F'
         outfit = FACTION.get(h['faction'])
@@ -127,9 +137,9 @@ def main():
             continue
         head = '1girl, female focus, feminine, solo' if female else '1boy, male focus, masculine, strong jaw, solo'
         prompt = ', '.join([head, 'upper body portrait, both eyes visible' + (', forehead visible, high collar, closed jacket, fully clothed' if redo else ''), age_txt(r['macro']['age'], female),
-                            hair_name(r.get('tints', {}).get('hair'), female, h['id']), EYE.get(r.get('eye_color', 'brown'), 'brown eyes'),
+                            hair_name(r.get('tints', {}).get('hair'), female, h['id']) + (', tied back hair' if h['id'] in REDO3 else ''), EYE.get(r.get('eye_color', 'brown'), 'brown eyes'),
                             outfit, MOOD.get(h['trait'], 'calm expression'), 'looking at viewer, soft dramatic lighting, simple painterly gradient background'])
-        row = {'id': h['id'], 'seed': h8(('k27s2:' if redo else 'k27s:') + h['id']) % 2_000_000_000, 'prompt': prompt,
+        row = {'id': h['id'], 'seed': h8(('k27s3:' if h['id'] in REDO3 else 'k27s2:' if redo else 'k27s:') + h['id']) % 2_000_000_000, 'prompt': prompt,
                'negative': NEG[g] + (REDO_NEG if redo else ''), 'init_image': os.path.join(BUSTS, 'hero_%s.png' % body), 'body': body}
         if redo:
             row['denoise'] = 0.62

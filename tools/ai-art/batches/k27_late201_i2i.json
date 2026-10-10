@@ -1535,11 +1535,11 @@
   },
   {
    "id": "tw_hoegwi",
-   "seed": 601202021,
-   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, forehead visible, high collar, closed jacket, fully clothed, adult, black hair, light brown eyes, time observatory scholar, long dark coat, clockwork brooch, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "seed": 1321953903,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, forehead visible, high collar, closed jacket, fully clothed, adult, black hair, tied back hair, brown eyes, time observatory scholar, long dark coat, clockwork brooch, fierce determined expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
    "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup, bare chest, shirtless, topless, eyepatch, bandage on face, scarf over face, face paint",
-   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_ru_busaeng.png",
-   "body": "ru_busaeng",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\busts_realm\\hero_rf_chengyu.png",
+   "body": "rf_chengyu",
    "denoise": 0.62
   },
   {
