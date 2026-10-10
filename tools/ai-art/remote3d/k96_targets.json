@@ -5,53 +5,63 @@
    "id": "tiger",
    "group": "1-ccby",
    "borrowed": "Poly by Google CC-BY 3.0 — Tiger.glb (dungeon·forest·go·story animals/)",
-   "input": "tools/ai-art/_out/web_pets_105_i2i/pt_tiger.png",
-   "status": "있음",
+   "input": "tools/ai-art/_out/remote3d_in_k96b2/tiger.png",
+   "status": "있음(txt2img)",
    "note": "",
    "height": 1.0,
-   "judge_a": "○"
+   "judge_a": "○",
+   "yaw": -90,
+   "plate": true,
+   "judge_b": "○"
   },
   {
    "id": "bear",
    "group": "1-ccby",
    "borrowed": "Poly by Google CC-BY 3.0 — Bear.glb (dungeon·forest·go·story animals/)",
-   "input": "tools/ai-art/_out/web_pets_105_i2i/pt_bear.png",
-   "status": "있음",
+   "input": "tools/ai-art/_out/remote3d_in_k96b2/bear.png",
+   "status": "있음(txt2img)",
    "note": "",
    "height": 1.2,
-   "judge_a": "○"
+   "judge_a": "○",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "panda",
    "group": "1-ccby",
    "borrowed": "Poly by Google CC-BY 3.0 — Panda.glb (dungeon·forest·go·story animals/)",
-   "input": "tools/ai-art/_out/remote3d_in_k96b/panda.png",
+   "input": "tools/ai-art/_out/remote3d_in_k96b2/panda.png",
    "status": "있음(txt2img)",
    "note": "",
    "height": 1.0,
    "judge_a": "✗ 대나무가 몸에 붙음 → 대나무 없는 흰 배경 그림으로",
    "yaw": 0,
-   "judge_b": "✗ 바닥 타원이 접시로 붙음 → 다시 뽑음"
+   "judge_b": "○",
+   "plate": true
   },
   {
    "id": "monkey",
    "group": "1-ccby",
    "borrowed": "Poly by Google CC-BY 3.0 — Monkey.glb (dungeon·forest·go·story animals/)",
-   "input": "tools/ai-art/_out/web_pets_105_i2i/pt_monkey.png",
-   "status": "있음",
+   "input": "tools/ai-art/_out/remote3d_in_k96b2/monkey.png",
+   "status": "있음(txt2img)",
    "note": "",
    "height": 0.6,
-   "judge_a": "○ 앉은 자세(펫 ○, 걷는 짐승엔 어색)"
+   "judge_a": "○ 앉은 자세(펫 ○, 걷는 짐승엔 어색)",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "boar",
    "group": "1-ccby",
    "borrowed": "Poly by Google CC-BY 3.0 — Boar.glb (dungeon·forest·go·story animals/)",
-   "input": "tools/ai-art/_out/web_pets_105_i2i/pt_boar.png",
-   "status": "있음",
+   "input": "tools/ai-art/_out/remote3d_in_k96b2/boar.png",
+   "status": "있음(txt2img)",
    "note": "",
    "height": 0.9,
-   "judge_a": "○"
+   "judge_a": "○",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "owl",
@@ -69,23 +79,26 @@
    "id": "crane",
    "group": "1-ccby",
    "borrowed": "Poly by Google CC-BY 3.0 — Crane.glb (dungeon·forest·go·story animals/)",
-   "input": "tools/ai-art/_out/web_pets_105_i2i/pt_crane.png",
-   "status": "있음",
+   "input": "tools/ai-art/_out/remote3d_in_k96b2/crane.png",
+   "status": "있음(txt2img)",
    "note": "",
    "height": 1.4,
    "yaw": -90,
-   "judge_a": "○"
+   "judge_a": "○",
+   "judge_b": "○"
   },
   {
    "id": "elephant",
    "group": "1-ccby",
    "borrowed": "Poly CC-BY — Elephant.glb (dungeon animals/, forest·go·story standin/)",
-   "input": "tools/ai-art/_out/remote3d_in_k96b/elephant.png",
+   "input": "tools/ai-art/_out/remote3d_in_k96b2/elephant.png",
    "status": "있음(txt2img)",
    "note": "신수 불가사리 몸은 따로 있음(pets3d)",
    "height": 2.6,
    "yaw": 0,
-   "judge_b": "△ 발밑 그림자 원반 붙음 → 다시 뽑음"
+   "judge_b": "○",
+   "plate": true,
+   "plate_cut": 0.025
   },
   {
    "id": "rabbit",
@@ -124,19 +137,25 @@
    "id": "sparrow",
    "group": "1-ccby",
    "borrowed": "Poly CC-BY — Bird.glb (forest animals/)",
-   "input": "",
-   "status": "새로",
+   "input": "tools/ai-art/_out/remote3d_in_k96b2/sparrow.png",
+   "status": "있음(txt2img)",
    "note": "",
-   "height": 0.18
+   "height": 0.18,
+   "yaw": -90,
+   "plate": true,
+   "judge_b": "○"
   },
   {
    "id": "slime",
    "group": "1-ccby",
    "borrowed": "\"Charlie\" CC-BY — monsters/community/SlimeEnemy.glb (dungeon·realm)",
-   "input": "",
-   "status": "새로",
+   "input": "tools/ai-art/_out/remote3d_in_k96b2/slime.png",
+   "status": "있음(txt2img)",
    "note": "",
-   "height": 0.6
+   "height": 0.6,
+   "yaw": 0,
+   "plate": true,
+   "judge_b": "○"
   },
   {
    "id": "crow",
@@ -150,49 +169,64 @@
    "id": "horse",
    "group": "2-mount",
    "borrowed": "Quaternius CC0 — horse (animals_extra·go animals·realm troops)",
-   "input": "tools/ai-art/_out/mount_dex_C/mt_brown_v02.png",
-   "status": "있음",
+   "input": "tools/ai-art/_out/remote3d_in_k96b2/horse.png",
+   "status": "있음(txt2img)",
    "note": "",
    "height": 1.7,
-   "judge_a": "○"
+   "judge_a": "○",
+   "yaw": 90,
+   "plate": true,
+   "plate_cut": 0.06,
+   "judge_b": "○"
   },
   {
    "id": "horse_white",
    "group": "2-mount",
    "borrowed": "Quaternius CC0 — horse_white (animals_extra·go animals·realm troops)",
-   "input": "tools/ai-art/_out/mount_dex_C/mt_white_v03.png",
-   "status": "있음",
+   "input": "tools/ai-art/_out/remote3d_in_k96b2/horse_white.png",
+   "status": "있음(txt2img)",
    "note": "",
    "height": 1.7,
-   "judge_a": "○"
+   "judge_a": "○",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "horse_farm",
    "group": "2-mount",
    "borrowed": "Quaternius CC0 — horse_farm (animals_extra·go animals·realm troops)",
-   "input": "tools/ai-art/_out/mount_dex_C/mt_farm_v03.png",
-   "status": "있음",
+   "input": "tools/ai-art/_out/remote3d_in_k96b2/horse_farm.png",
+   "status": "있음(txt2img)",
    "note": "",
    "height": 1.6,
-   "judge_a": "○"
+   "judge_a": "○",
+   "yaw": 0,
+   "plate": true,
+   "judge_b": "○"
   },
   {
    "id": "donkey",
    "group": "2-mount",
    "borrowed": "Quaternius CC0 — Donkey.glb",
-   "input": "",
-   "status": "새로",
+   "input": "tools/ai-art/_out/remote3d_in_k96b2/donkey.png",
+   "status": "있음(txt2img)",
    "note": "",
-   "height": 1.3
+   "height": 1.3,
+   "yaw": 0,
+   "plate": true,
+   "plate_cut": 0.035,
+   "judge_b": "△ 발밑 그림자 줄 조금(plate_cut 0.035)"
   },
   {
    "id": "zebra",
    "group": "2-mount",
    "borrowed": "Quaternius CC0 — Zebra.glb",
-   "input": "",
-   "status": "새로",
+   "input": "tools/ai-art/_out/remote3d_in_k96b2/zebra.png",
+   "status": "있음(txt2img)",
    "note": "",
-   "height": 1.4
+   "height": 1.4,
+   "yaw": 0,
+   "judge_b": "○"
   }
  ]
 }

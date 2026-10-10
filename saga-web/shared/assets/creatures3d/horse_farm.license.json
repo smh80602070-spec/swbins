@@ -1,0 +1,43 @@
+{
+ "id": "horse_farm",
+ "generator": "TRELLIS (microsoft/TRELLIS, Kaggle T4) — tools/ai-art/remote3d",
+ "model": "microsoft/TRELLIS-image-large",
+ "model_license": "MIT",
+ "input_image": "tools/ai-art/_out/remote3d_in_k96b2/horse_farm.png",
+ "input_license": {
+  "id": "horse_farm_v03",
+  "generator": "tools/ai-art/gen.py (ComfyUI)",
+  "model": "animagine-xl-4.0-opt",
+  "model_license": "CreativeML OpenRAIL++-M",
+  "prompt": "masterpiece, high score, great score, absurdres, (sturdy bay draft horse:1.15), leather saddle, saddlebags, thick mane, no humans, mount, riding animal, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+  "negative_prompt": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+  "seed": 3617245429,
+  "steps": 28,
+  "cfg_scale": 5.5,
+  "sampler": "euler_ancestral/normal",
+  "size": [
+   768,
+   768
+  ],
+  "seconds": 88.3,
+  "date": "2026-10-11",
+  "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+  "k96_pick": "horse_farm_v03.png",
+  "judge_score": 83.5
+ },
+ "seed": 1,
+ "simplify": 0.95,
+ "texture_size": 1024,
+ "times": {
+  "gen_sec": 32,
+  "glb_sec": 34,
+  "bytes": 1593576
+ },
+ "date": "2026-10-11",
+ "note": "K-0096 자체 생성(입력 = 우리 txt2img 그림). 빌린 모델을 대신한다 — 게임 참조 바꾸기는 W 티켓.",
+ "pipeline": "remote3d/finish.py(얼굴 +Z·발 밑 원점·키 m·떨어진 조각 지움) → glb-compress/creature_fill.mjs --forward-z(뼈 없는 동작 7) → compress.mjs(Meshopt·WebP)",
+ "yaw": 0,
+ "height_m": 1.6,
+ "replaces": "Quaternius CC0 — horse_farm (animals_extra·go animals·realm troops)",
+ "commercial_use": true
+}

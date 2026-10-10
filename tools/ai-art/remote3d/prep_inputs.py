@@ -1,9 +1,9 @@
 """K-0096 — 판정기 1등(또는 눈으로 바꾼 후보)을 TRELLIS 입력 폴더로 모은다: <id>.png + <id>.license.json.
 
-  py tools/ai-art/remote3d/prep_inputs.py <report.json> --dest <폴더> [--pick panda=v03,owl=v02] [--targets k96_targets.json] [--write]
+  py tools/ai-art/remote3d/prep_inputs.py <report.json> --dest <폴더> [--pick panda=v03,owl=v02] [--targets k96_targets.json] [--only bear,boar] [--write]
 
 대상 표에 있는 id 만 고른다. --pick 은 판정기 1등 대신 쓸 후보(눈 판정). 입력은 txt2img 만 — license 에 init_image 가 있으면 멈춘다.
---write 면 대상 표의 input·status 를 새 그림으로 고친다(없으면 세기만).
+--only 면 그 id 만(이미 올린 것의 입력을 안 건드리게). --write 면 대상 표의 input·status 를 새 그림으로 고친다(없으면 세기만).
 """
 import json
 import os
@@ -22,6 +22,7 @@ def main():
     dest = os.path.abspath(opt('--dest'))
     tj = opt('--targets', os.path.join(HERE, 'k96_targets.json'))
     T = json.load(open(tj, encoding='utf-8'))
+    only = set(opt('--only', '').split(',')) - {''}
     over = dict(kv.split('=') for kv in opt('--pick', '').split(',') if kv)
     rows = {}
     for r in rep['rows']:
@@ -30,6 +31,8 @@ def main():
     got, miss = [], []
     for t in T['items']:
         i = t['id']
+        if only and i not in only:
+            continue
         rs = rows.get(i)
         if not rs:
             miss.append(i)
