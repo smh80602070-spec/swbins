@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-10",
+  "tickets": ["U-0087 VRoid 사람 몸 — 2나락 동료 둘·4종횡 적·두목 T자세(U-0080 시트 ×·△)"],
+  "how": "티켓 가설(아바타 빈 VRoid 몸 → 사가천하 U-0065 식 런타임 아바타)대로 굽기 확장·VroidAvatar.Ensure 를 넣고 진단 → 동료 둘이 '사람형인데 팔 0°' → 컨트롤러 클립 목록 출력: Paladin·PeasantGirl·Morak 등 25개 컨트롤러의 클립이 전부 없는 파일(Mixamo FBX, U-0035 로 삭제)을 가리킴. 39개 컨트롤러가 10-10 09:48 에 한꺼번에 git HEAD 의 09-24 Mixamo 시절 판(줄끝만 다름)으로 덮였음 — git 이 추적하면서 assume-unchanged(h)로 숨긴 로컬 전용 VRoid 판이 공유 트리의 git 작업에 덮인 것. 로컬 BakeVroidHumansReal 로 복구(몸 39·LOD·아바타) → 클립 = crowd_anims.glb. 다시 재니 뼈가 상태와 상관없이 고정(팔 앞으로 '좀비' 자세) — Generic 클립에 사람형 아바타를 씌우면 Unity 가 매 프레임 사람형 기본 자세로 덮음. Ensure·굽기 확장을 되돌리니 뼈가 움직임(팔 68° 아래·걸을 때 다리 흔들림) → 진짜 원인은 컨트롤러 덮임 하나, 아바타 가설은 틀림",
+  "fix": "게임 코드 무변경(아바타 씌우기·VroidAvatar.cs·BakeRealmAvatars 확장은 해로워 되돌림). 로컬 복구: SetupNpcCharacterImports.BakeVroidHumansReal(VROID_SWAP_REAL baked=39, CharacterMeshLod OK, BakeRealmAvatars OK) — 로컬 전용 파일만 바뀜(커밋 없음). 진단: PlaytestDungeonParty.BodyMoves — 서기에서 왼 위팔이 수평 아래 30° 넘게 · Speed 가 있으면 걸을 때 허벅지 3° 넘게 흔들림(VRoid Generic 은 J_Bip_* 뼈 이름, 사람형이면 GetBoneTransform, 잴 때만 AlwaysAnimate, 끝에 서기 전환 마침) — 동료 둘, PlaytestStoryBossIntro 가 같은 함수로 두목",
+  "commands": [
+    "bash tools/unity-batch.sh -- Unity -batchmode -nographics -buildTarget Android -executeMethod Saga.EditorTools.SetupNpcCharacterImports.BakeVroidHumansReal",
+    "bash tools/unity-batch.sh -- Unity -batchmode -nographics -buildTarget Android -executeMethod Saga.EditorTools.<PlaytestDungeonHeadless.Run|PlaytestStorySlice.Run(save_story.json 치운 채)|PlaytestRealmSlice.Run>",
+    "SAGA_SHOT_SCENE=Assets/Scenes/TestDungeon.unity SAGA_SHOT_TARGETS='name:Ally;name:AllyMystic' SAGA_SHOT_SEQ=8,6 SAGA_SHOT_ACT=gesture · SAGA_SHOT_SCENE=Assets/Scenes/TestField.unity SAGA_SHOT_TARGETS=gamecam SAGA_SHOT_ACT=bossintro … PlaytestShowcaseGui.Run"
+  ],
+  "before": "죽은 컨트롤러 셋(백업본)을 잠깐 되돌려 같은 진단: 무사·술사 '팔 0° 아래 · 걸을 때 다리 0°' FAIL, 4종횡 두목 같은 FAIL",
+  "scene": [
+    "[PlaytestDungeonParty] 무사 몸 팔 69° 아래 · 걸을 때 다리 31°(컨트롤러 Paladin) · 술사 같음(PeasantGirl)",
+    "[PlaytestDungeonHeadless] OK - 10 frames, no errors",
+    "[PlaytestStorySlice] boss intro 두목 몸 팔 69° 아래 · 걸을 때 다리 32°(컨트롤러 Morak) · [PlaytestStorySlice] OK",
+    "[PlaytestRealmSlice] OK"
+  ],
+  "runtime_errors": 0,
+  "shots": "세션 scratchpad dg_gesture2(아바타 덧씌운 '좀비 팔' 고정 자세) · dg_gesture3/st_boss3(고친 뒤) — 커밋 안 함",
+  "results": [
+    { "id": "un.dg.gestures", "eye": "○", "note": "환호 시트: 빨간 머리 무사·술사 모두 팔 내린 서기, 술사 치마가 칸마다 흔들림, 머리 위 환호 표식(전: 8칸 T자세)", "result": "D1 → D2" },
+    { "id": "un.st.boss-intro", "eye": "○", "note": "두목 컷 시트: 1~3 들판 넓게 → 4~8 두목 무리 쪽으로, 두목·졸개 팔 내린 서기, T 없음", "result": "D1 → D2" },
+    { "id": "un.dg.boss-intro", "eye": "△", "note": "동료 몸 T자세는 풀림, 촬영 두목은 여전히 진단 더미(캡슐)", "result": "D1 그대로(note)" }
+  ],
+  "left": "재발 막기(결정 필요): 사람 몸 컨트롤러 39개는 git 이 Mixamo 시절 판을 추적하면서 assume-unchanged 로 숨겨 둔 것이라 공유 트리의 checkout·reset 류가 또 덮을 수 있다 — git rm --cached(다른 PC 에선 지워짐, 거기도 Mixamo 없어 죽은 판) 또는 그대로 두고 진단으로만 잡기. 동작 원본 crowd_anims.glb 는 로컬 전용이라 컨트롤러를 커밋해도 다른 PC 엔 소용없음 · 다른 판의 Animator 몸 자리 여덟(2나락 적·소환·지역 두목, 1만리 적·영웅·산적·옷·동행)도 같은 컨트롤러를 쓰면 09:48~복구 사이 T자세였음 — 지금은 복구됨, 진단 없음 · 2나락 주인공(VRoid)은 서기에서 팔이 옆으로 벌어진 자세(시트 곁, 이 티켓 밖)"
+}

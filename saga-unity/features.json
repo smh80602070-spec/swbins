@@ -620,7 +620,7 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D1(U-0080 △): docs/playcheck/d2-u0080-20261010.json — 등장 컷 카메라는 두목 쪽으로 고정(2~8칸 안정)되나 촬영 두목은 진단 더미(캡슐)라 진짜 모습 아님, 곁의 동료 몸이 T자세(×) — 후속 후보(사가나락 동료 몸 애니)"
+  "note": "D1(U-0080 △ · U-0087 동료 몸은 풀림): docs/playcheck/d2-u0080-20261010.json — 등장 컷 카메라는 두목 쪽으로 고정(2~8칸 안정)되나 촬영 두목은 진단 더미(캡슐)라 진짜 모습 아님. 곁의 동료 몸 T자세는 U-0087(컨트롤러 복구)로 풀림 — 남은 것 = 진짜 두목 몸 촬영"
  },
  {
   "id": "un.dg.landmarks",
@@ -779,16 +779,21 @@
  {
   "id": "un.dg.gestures",
   "name": "109-10 몸짓",
-  "files": [],
-  "tests": [
-   "PlaytestDungeonGestures"
+  "files": [
+   "saga-unity/Assets/Games/SagaDungeon/World/AllyFighter.cs",
+   "saga-unity/Assets/Games/SagaDungeon/World/AllyMystic.cs"
   ],
-  "level": "D1",
+  "tests": [
+   "PlaytestDungeonGestures",
+   "PlaytestDungeonParty",
+   "PlaytestShowcaseGui"
+  ],
+  "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": null,
+  "ticket": "U-0087",
   "since": "2026-09-16",
-  "note": "D1(U-0080 ×): docs/playcheck/d2-u0080-20261010.json — 동료 환호: 머리 위 표식은 뜨나 동료 몸이 8칸 내내 T자세 — 후속 후보(사가나락 동료 몸에 애니메이터·클립 없음)"
+  "note": "D2(눈 ○, U-0087): docs/playcheck/d2-u0087-20261010.json — T자세 원인 = 사람 몸 컨트롤러가 git 의 Mixamo 시절 판(클립 죽음)으로 덮임(10-10 09:48, assume-unchanged 39). 로컬 BakeVroidHumansReal 로 복구 → 환호 시트 무사·술사 팔 내린 서기·치마 흔들림, 표식. 진단 PlaytestDungeonParty 몸 움직임(팔 69°·걸을 때 다리 31°, 죽은 컨트롤러면 0°·0° FAIL)"
  },
  {
   "id": "un.dg.ally-sig",
@@ -1139,14 +1144,15 @@
   "name": "106-8 두목 등장 컷",
   "files": [],
   "tests": [
-   "PlaytestStoryBossIntro"
+   "PlaytestStoryBossIntro",
+   "PlaytestShowcaseGui"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": null,
+  "ticket": "U-0087",
   "since": "2026-09-16",
-  "note": "D1(U-0080 △): docs/playcheck/d2-u0080-20261010.json — 6m 안 CheckIntro 뒤 게임 카메라가 1~4칸 다가가 5~8칸 두목 무리를 안정되게 잡음(○)이나 두목 몸이 T자세(×) — 후속 후보"
+  "note": "D2(눈 ○, U-0087): docs/playcheck/d2-u0087-20261010.json — 두목(Morak) 몸 T자세 원인 = 컨트롤러가 git 의 Mixamo 시절 판(클립 죽음)으로 덮임. 로컬 BakeVroidHumansReal 로 복구 → 두목 컷 시트 5~8칸 두목 무리 팔 내린 서기, T 없음. 진단 PlaytestStoryBossIntro 몸 움직임(팔 69°·걸을 때 다리 32°, 죽은 컨트롤러면 FAIL)"
  },
  {
   "id": "un.st.companions",

@@ -34,6 +34,9 @@ namespace Saga.EditorTools
                 Fail($"필요한 것 없음(player {pc != null}, 컷 {cuts != null}, 두목 {boss != null}, HUD {hud != null}) — 씬 재빌드?");
                 return false;
             }
+            string pose = PlaytestDungeonParty.BodyMoves(boss.GetComponentInChildren<Animator>(), out bool moves);   // U-0087 두목 몸 T자세
+            if (!moves) Fail($"두목 몸이 안 움직인다(T자세·고정 자세) — {pose}");
+            else Debug.Log($"{T} 두목 몸 {pose}");
             Vector3 start = playerGo.transform.position;
             string metrics = "";
             try

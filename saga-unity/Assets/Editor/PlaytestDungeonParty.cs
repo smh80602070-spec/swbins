@@ -39,6 +39,12 @@ namespace Saga.EditorTools
                 Fail($"필요한 것 없음(명령 {party != null}, 전투 {combat != null}, 무사 {guard != null}, 술사 {mystic != null}, HUD {hud != null}, 컷 {cuts != null}) — 씬 재빌드?");
                 return false;
             }
+            foreach (var (who, anim) in new[] { ("무사", guard.Animator), ("술사", mystic.Animator) })
+            {
+                string pose = BodyMoves(anim, out bool moves);
+                if (!moves) Fail($"{who} 몸이 안 움직인다(T자세·고정 자세) — {pose}");
+                else Debug.Log($"[PlaytestDungeonParty] {who} 몸 {pose}");
+            }
 
             Vector3 start = playerGo.transform.position;
             Vector3 guardStart = guard.transform.position, mysticStart = mystic.transform.position;
@@ -270,6 +276,40 @@ namespace Saga.EditorTools
             (float)typeof(DungeonEnemy).GetField("_curHp", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(e);
 
         private static bool Near(float a, float b, float eps = 0.05f) => Mathf.Abs(a - b) <= eps;
+        /// <summary>U-0087 — 몸이 실제로 움직이나: 서기에서 왼 위팔이 수평 아래로 30° 넘게 · `Speed` 가 있으면 걸을 때 왼 허벅지가 3° 넘게 흔들림.
+        /// 사람 몸 컨트롤러가 클립 죽은 옛 판(Mixamo 시절, git 이 덮음)이면 T자세, 사람형 아바타를 덧씌우면 Generic 클립이 안 먹어 고정 자세 — 둘 다 잡는다.
+        /// VRoid 몸은 Generic 이라 뼈 이름(J_Bip_*)으로, 사람형이면 GetBoneTransform 으로. 카메라 밖 몸도 재도록 그동안만 AlwaysAnimate. 4종횡 두목 진단도 부른다.</summary>
+        internal static string BodyMoves(Animator anim, out bool moves)
+        {
+            moves = false;
+            if (anim == null || anim.runtimeAnimatorController == null) return "Animator·컨트롤러 없음";
+            var all = anim.GetComponentsInChildren<Transform>(true);
+            Transform Bone(string vroid, HumanBodyBones hb) => anim.isHuman ? anim.GetBoneTransform(hb) : System.Array.Find(all, x => x.name == vroid);
+            Transform ua = Bone("J_Bip_L_UpperArm", HumanBodyBones.LeftUpperArm), la = Bone("J_Bip_L_LowerArm", HumanBodyBones.LeftLowerArm);
+            Transform ul = Bone("J_Bip_L_UpperLeg", HumanBodyBones.LeftUpperLeg), ll = Bone("J_Bip_L_LowerLeg", HumanBodyBones.LeftLowerLeg);
+            if (ua == null || la == null || ul == null || ll == null) return "팔·다리 뼈 못 찾음";
+            bool speed = HasParam(anim, "Speed");
+            var cull = anim.cullingMode;
+            anim.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+            if (speed) anim.SetFloat("Speed", 0f);
+            anim.Update(0.5f);
+            var arm = (la.position - ua.position).normalized;
+            float drop = Mathf.Asin(Mathf.Clamp(-arm.y, -1f, 1f)) * Mathf.Rad2Deg;
+            float swing = 0f;
+            if (speed)
+            {
+                anim.SetFloat("Speed", 0.5f);
+                anim.Update(0.5f);
+                var leg0 = (ll.position - ul.position).normalized;
+                for (int i = 0; i < 4; i++) { anim.Update(0.17f); swing = Mathf.Max(swing, Vector3.Angle(leg0, (ll.position - ul.position).normalized)); }
+                anim.SetFloat("Speed", 0f);
+                for (int i = 0; i < 6 && (i < 2 || anim.IsInTransition(0)); i++) anim.Update(0.5f);   // 서기로 다 돌아온 뒤 넘긴다(전환 중이면 뒤 검사의 트리거가 막힌다)
+            }
+            anim.cullingMode = cull;
+            moves = drop > 30f && (!speed || swing > 3f);
+            return $"팔 {drop:F0}° 아래 · 걸을 때 다리 {(speed ? swing.ToString("F0") + "°" : "Speed 없음")}(컨트롤러 {anim.runtimeAnimatorController.name}{(anim.isHuman ? "·사람형" : "")})";
+        }
+
         private static bool HasParam(Animator a, string name) { if (a == null || a.runtimeAnimatorController == null) return false; foreach (var p in a.parameters) if (p.name == name) return true; return false; }
 
         private static void SetPrivate(object target, string field, object value)
