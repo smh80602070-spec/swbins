@@ -839,27 +839,40 @@ func _build_board_panel() -> void:
 	_board_panel.anchor_right = 0.5
 	_board_panel.anchor_top = 0.5
 	_board_panel.anchor_bottom = 0.5
-	_board_panel.offset_left = -300
-	_board_panel.offset_right = 300
-	_board_panel.offset_top = -230
-	_board_panel.offset_bottom = 230
+	## G-0165 — 기본 회색 반투명 판·본문 14 라 뒤 세상이 비치고 줄이 묻혔다 — choice_prompt 와 같은 진한 판·큰 글자.
+	_board_panel.offset_left = -380
+	_board_panel.offset_right = 380
+	_board_panel.offset_top = -260
+	_board_panel.offset_bottom = 260
+	_board_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_board_panel.grow_vertical = Control.GROW_DIRECTION_BOTH
+	var bg := StyleBoxFlat.new()
+	bg.bg_color = Color(0.07, 0.06, 0.09, 0.93)
+	bg.border_color = Color(0.85, 0.7, 0.4, 0.8)
+	bg.set_border_width_all(2)
+	bg.set_corner_radius_all(14)
+	bg.set_content_margin_all(18)
+	_board_panel.add_theme_stylebox_override("panel", bg)
 	_board_panel.visible = false
 	_hud.add_child(_board_panel)
 	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 8)
 	_board_panel.add_child(box)
 	var title := Label.new()
 	title.text = "낚시 조합 — 물고기 바꾸기"
-	title.add_theme_font_size_override("font_size", 20)
+	title.add_theme_font_size_override("font_size", 30)
+	title.add_theme_color_override("font_color", Color(1.0, 0.88, 0.6))
 	box.add_child(title)
 	_board_label = Label.new()
-	_board_label.add_theme_font_size_override("font_size", 14)
+	_board_label.add_theme_font_size_override("font_size", 22)
 	_board_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	box.add_child(_board_label)
 	_board_list = VBoxContainer.new()
 	box.add_child(_board_list)
 	var close := Button.new()
 	close.text = "닫기"
-	close.custom_minimum_size = Vector2(0, 40)
+	close.custom_minimum_size = Vector2(0, 52)
+	close.add_theme_font_size_override("font_size", 24)
 	close.pressed.connect(close_board)
 	box.add_child(close)
 
@@ -932,7 +945,9 @@ func _refresh_board() -> void:
 		var b := Button.new()
 		b.text = "%s  ←  %s" % [row.name, " · ".join(cost)]
 		b.disabled = not can_exchange(i)
-		b.custom_minimum_size = Vector2(0, 38)
+		b.custom_minimum_size = Vector2(0, 52)
+		b.add_theme_font_size_override("font_size", 22)
+		b.add_theme_color_override("font_disabled_color", Color(0.85, 0.85, 0.85, 0.75))   # 못 바꾸는 줄도 무엇이 드는지 읽히게
 		var idx := i
 		b.pressed.connect(func() -> void: exchange(idx))
 		_board_list.add_child(b)
