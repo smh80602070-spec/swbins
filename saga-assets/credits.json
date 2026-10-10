@@ -303,6 +303,15 @@
    ]
   },
   {
+   "tool": "remote3d",
+   "model": "microsoft/TRELLIS-image-large",
+   "license": "MIT",
+   "count": 8,
+   "where": [
+    "saga-assets/creatures3d"
+   ]
+  },
+  {
    "tool": "icon_pack.py",
    "model": "none",
    "license": "CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음)",
@@ -353,14 +362,14 @@
    "tool": "gen.py (ComfyUI)",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 37,
+   "count": 42,
    "where": [
     "saga-assets/portraits-mount",
     "saga-assets/web2d/moving/beast_big",
     "saga-assets/web2d/moving/beast_dog",
     "saga-assets/web2d/moving/villager_b",
     "saga-assets/world/sprite",
-    "saga-web/shared/assets/web2d/moving/beast_big"
+    "saga-web/saga-go/assets/portraits/mount"
    ]
   },
   {

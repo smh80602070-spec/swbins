@@ -1001,6 +1001,21 @@
      ]
     }
    ]
+  },
+  {
+   "id": "creatures3d",
+   "src": "saga-assets/creatures3d",
+   "include": [
+    "*.glb",
+    "*.license.json"
+   ],
+   "note": "K-0096 자체 동물·탈것·괴물 3D(TRELLIS 원격 생성 → 얼굴 +Z·발 밑 원점·뼈 없는 동작 7·Meshopt) — 빌린 Poly CC-BY·Quaternius 대체. 게임 참조 바꾸기는 W 티켓",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/creatures3d"
+    }
+   ]
   }
  ]
 }
