@@ -38,5 +38,13 @@
   "hit": "hit",
   "death": "death",
   "knockdown": "knockdown"
+ },
+ "town": [
+  "idle_town",
+  "walk_town"
+ ],
+ "town_clipmap": {
+  "idle_town": "idle",
+  "walk_town": "walk"
  }
 }

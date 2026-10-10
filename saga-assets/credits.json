@@ -235,7 +235,7 @@
    "tool": "outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024))",
    "model": "",
    "license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
-   "count": 799,
+   "count": 1000,
    "where": [
     "saga-assets/characters/sprites2d8/ac_balgwang",
     "saga-assets/characters/sprites2d8/ac_choeumpa",
