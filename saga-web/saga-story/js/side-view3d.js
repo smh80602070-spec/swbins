@@ -551,9 +551,9 @@
     for (var dk in deadMeshes) { actorGroup.remove(deadMeshes[dk]); disposeDeep(deadMeshes[dk]); }
     deadMeshes = {};
 
-    var L = moodLight(stg.mood, stg.town);
+    var L = moodLight(stg.mood, stg.town); if (stg.town && SL()) { L = SL().townFog(L, global.DG.core.tuned('story3d.townFog', 0.4)); }   // W-0145 마을 안개 — 계산은 side-layers3d
     scene.background = (global.DG.toon3d && global.DG.toon3d.skyBackground) ? global.DG.toon3d.skyBackground(L.sky) : new Tc.Color(L.sky);   // 하늘 그라디언트(2026-09-23, 아래는 안개색 그대로)
-    scene.fog = new Tc.Fog(L.sky, L.fog * 0.35, L.fog);
+    scene.fog = new Tc.Fog(L.sky, L.fog * (L.nearK || 0.35), L.fog);
     ambLight.intensity = L.amb;
     dirLight.intensity = L.dir;
     dirLight.color.setHex(L.dirCol);

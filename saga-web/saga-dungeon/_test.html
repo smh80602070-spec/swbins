@@ -4637,6 +4637,13 @@ window.requestAnimationFrame = function () { return 0; };
         DN.active !== undefined && '진단에서는 3D 가 잠들어 있다';
     });
 
+    t('3D 방 밝기(W-0145) — 방 바닥·벽 물감을 흰 쪽으로 0.65·반구광 색을 밝은 회청 쪽으로 0.5(손잡이 0 = 옛), 마을 조명은 그대로', function () {
+      var D3 = DG.dungeon3d, C = DG.core, k = D3._roomLight(), k1 = C.tuned('dungeon3d.roomLift', 0.65), off;
+      try { C.setTune('dungeon3d.roomLift', 0); off = D3._roomLight().lift; } finally { C.setTune('dungeon3d.roomLift', k1); }
+      var town = D3.lightPlan(1, 'town', 0.45), room = D3.lightPlan(1, 'fight', 0.45);
+      var r = [k.lift === 0.65, k.amb === 0.5, off === 0, town.ambient === 1.45 && town.ambientHex === 0xe7eaed, room.ambientHex === 0x2a2f3c];
+      return r.every(Boolean) && '방 물감 +0.65 · 반구 색 +0.5 · 손잡이 0 → 옛 · 마을·lightPlan 값 그대로' || '실패 ' + r.join(',');
+    });
     t('3D 벨트 카메라(W-0158) — x 만 나를 따라가다 방 양 끝에서 멈추고, 높이·z·내려다보는 각은 고정, 앞벽까지 화면 안', function () {
       var BC = DG.beltCam3d, W = DN.ROOM_W, H = DN.ROOM_H, o = { aspect: 16 / 9, fov: 46, pitch: 32, dist: 340 };
       var L = BC.beltCam(40, 100, W, H, o), M = BC.beltCam(W / 2, 300, W, H, o), R = BC.beltCam(W - 40, 400, W, H, o), R2 = BC.beltCam(W - 10, 50, W, H, o);

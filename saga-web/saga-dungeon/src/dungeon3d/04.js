@@ -161,7 +161,7 @@
     if (global.DG.sway3d) { global.DG.sway3d.tick(); }
 
     /* 조명 */
-    var L = lightPlan(run.floor, run.room && run.room.kind, DARK());
+    var L = lightPlan(run.floor, run.room && run.room.kind, DARK()); if (!L.town) { L.ambientHex = mix(L.ambientHex, 0xb8c4d6, tuned('dungeon3d.roomAmb', 0.5)); }   // W-0145 방 반구광 색을 밝은 회청 쪽으로(짙은 남색 0x2a2f3c 이라 횃불 밖 바닥이 검었다) — 손잡이 0 = 옛
     amb.intensity = L.ambient;
     amb.color.setHex(L.ambientHex);
     /* **다섯 번째 재조사(2026-09-04)의 진짜 원인** — `HemisphereLight`는
@@ -609,7 +609,7 @@
     addFx: function (n) { if (fxGroup && n) { fxGroup.add(n); } return n; },
     camNode: function () { return camera; },
     /** 손잡이 — 이 판에는 어드민이 없어 콘솔·데모가 두드린다 */
-    set: set, tuned: tuned,
+    set: set, tuned: tuned, _roomLight: function () { return { lift: tuned('dungeon3d.roomLift', 0.65), amb: tuned('dungeon3d.roomAmb', 0.5) }; },   // W-0145 진단
     stats: stats,
     /** PLAN §28-4 Phase 4 — 순수 함수만 자가진단에 내준다(T 없이도 돈다) */
     _doorPrefetchTargets: doorPrefetchTargets, _nextRoomFor: nextRoomFor,

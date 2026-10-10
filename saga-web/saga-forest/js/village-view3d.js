@@ -689,9 +689,9 @@
     dawn:  { color: 0xffd9a0, intensity: 0.55 },
     day:   { color: 0xfff4e0, intensity: 1.0 },
     even:  { color: 0xff8a4a, intensity: 0.6 },
-    night: { color: 0x8fa8ff, intensity: 0.12 }
+    night: { color: 0x8fa8ff, intensity: 0.2 }   // W-0145 0.12→0.2 — 밤 마을이 거의 검었다(평균 19/255)
   };
-  var PHASE_HEMI = { dawn: 0.55, day: 0.9, even: 0.7, night: 0.3 };   // W-0112 저녁 0.6→0.7
+  var PHASE_HEMI = { dawn: 0.55, day: 0.9, even: 0.7, night: 0.7 };   // W-0112 저녁 0.6→0.7 · W-0145 밤 0.3→0.7(손잡이 village3d.nightHemi — 0.45 는 평균 24, 0.7 은 29.7 로 풀밭까지 읽힘. 하늘·안개는 PHASE_DARK 0.28 그대로라 밤으로 보인다)
   /** 날씨(PLAN 21절)도 하늘을 더 어둡히고 안개를 짙힌다(fog near/far 를 좁힌다) —
    *  clear 는 기준값(1) 그대로, cloud/rain/snow 순으로 점점 짙어진다 */
   var WEATHER_DARK = { clear: 1, cloud: 0.85, rain: 0.75, snow: 0.82 };   // W-0112 비 0.6→0.75 — 저녁×비가 0.36 까지 곱해져 마을이 안 읽혔다
@@ -759,7 +759,7 @@
     }
     var sunCfg = PHASE_SUN[ph] || PHASE_SUN.day;
     if (sunLight) { sunLight.color.setHex(sunCfg.color); sunLight.intensity = sunCfg.intensity * (WEATHER_DARK[wk] != null ? WEATHER_DARK[wk] : 1); }
-    if (hemiLight) { hemiLight.intensity = (PHASE_HEMI[ph] != null ? PHASE_HEMI[ph] : 0.9) * (WEATHER_DARK[wk] != null ? WEATHER_DARK[wk] : 1); }
+    if (hemiLight) { hemiLight.intensity = (ph === 'night' ? C().tuned('village3d.nightHemi', PHASE_HEMI.night) : PHASE_HEMI[ph] != null ? PHASE_HEMI[ph] : 0.9) * (WEATHER_DARK[wk] != null ? WEATHER_DARK[wk] : 1); }
   }
 
   /** 비/눈은 날씨 키가 그대로, 반딧불이(PLAN 22절)는 맑은 밤에만 — 순수 함수라 scene 없이도 확인된다 */
@@ -2110,7 +2110,7 @@
     userZoom: function () { return userZoom; },
     setUserZoom: setUserZoom,
     /** 진단·QA 전용 — 사람이 드래그로 돌린 시점 덧각(라디안) */
-    mouseYaw: function () { return mouseYaw; },
+    mouseYaw: function () { return mouseYaw; }, _nightLight: function () { return { hemi: C().tuned('village3d.nightHemi', PHASE_HEMI.night), sun: PHASE_SUN.night.intensity, even: PHASE_HEMI.even }; },   // W-0145 진단
     setMouseYaw: function (y) { mouseYaw = y; },
     /** Q12 — 카메라 방위(키·조이스틱을 돌리는 각)와 화면 한 점이 짚는 땅(마을 좌표). 진단·확인용으로도 쓴다 */
     camAz: camAz, groundAt: groundAt,

@@ -6024,6 +6024,12 @@ window.DG_NO_TUNE = true;
       var r = [screenX >= 110 + 24 - 0.5, SV.startClearX(1280, 800) === 0, SV.startClearX(390, 844) === 0, Math.max(80, SV.startClearX(1280, 800)) === 80, !!z];
       return r.every(Boolean) && ('폰 가로 시작 x ' + land + '(화면 ' + screenX.toFixed(0) + 'px ≥ 134) · PC·세로 80') || '실패 ' + r.join(',') + ' ' + land;
     });
+    t('st.side-view3d: 마을 안개(W-0145) — 노을빛 하늘·안개색(0xe8b878) 채도 40% 빼 옅은 베이지, 안개 시작 0.35 → 0.6, 손잡이 0 이면 옛 색·0.35', function () {
+      var SL = DG.sideLayers3d, L = { sky: 0xe8b878, fog: 2200, amb: 0.85 }, a = SL.townFog(L, 0.4), z = SL.townFog(L, 0);
+      var sat = function (h) { var r = (h >> 16) & 255, g = (h >> 8) & 255, b = h & 255; return Math.max(r, g, b) - Math.min(r, g, b); };
+      var r = [sat(a.sky) < sat(L.sky) * 0.7, a.nearK === 0.6, z.sky === L.sky && z.nearK === 0.35, L.sky === 0xe8b878, a.fog === 2200 && a.amb === 0.85];
+      return r.every(Boolean) && ('마을 안개 ' + L.sky.toString(16) + ' → ' + a.sky.toString(16) + ' · 시작 0.6') || '실패 ' + r.join(',');
+    });
     t('st.side-view3d: 시차 층(W-0161) — 사냥터가 쓰는 배경 지역 전부 layers.json 이 있고, 층 셋 깊이 far < mid < near < 0 < 앞 풀, mid·near 는 그 깊이 땅(0)에 앉는다', function () {
       var V = DG.sideLayers3d, M = DG.cfg.mode2d, seen = {}, bad = [], n = 0, D = 360 / Math.tan(17.5 * Math.PI / 180);
       Object.keys(M.region).forEach(function (k) { seen[M.region[k]] = 1; });

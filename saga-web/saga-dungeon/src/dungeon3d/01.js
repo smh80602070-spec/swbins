@@ -915,7 +915,7 @@
     /* 앞에서부터 지우면 Object3D.remove() 의 indexOf+splice 가 매번 배열을
        통째로 당겨 O(n²)가 된다 — 뒤에서부터 지워 O(n)으로(감사, 2026-09-08) */
     for (var wgi = wallGroup.children.length - 1; wgi >= 0; wgi--) { wallGroup.remove(wallGroup.children[wgi]); }
-    var stone = themeHex(run);
+    var stone = themeHex(run); if (!run.town) { stone = mix(stone, 0xffffff, tuned('dungeon3d.roomLift', 0.65)); }   // W-0145 방 바닥·벽 물감을 흰 쪽으로(층 테마 돌색이 짙어 무늬를 곱하면 반사율이 0 에 가까웠다 — W-0111 마을과 같은 뿌리), 손잡이 0 = 옛
 
     /* 바닥 — 한 판으로 깐다. 2026-09-04 이전엔 단색이었다("격자 무늬는
        텍스처 대신 얇은 홈으로" 라 적혀 있었지만 그 홈 자체가 구현된 적은

@@ -30,6 +30,19 @@
     return { z: z, f: f, top: top, bot: bot, unitW: L.w * k * f };
   }
 
+  /** W-0145 — 마을 하늘·안개가 누렇게 덮던 것(노을빛 0xe8b878 을 안개색으로 그대로 썼다): 채도를 k 만큼 회색 쪽으로 빼
+   *  옅은 베이지로, 안개 시작을 0.35 → 0.6 으로 미뤄 가까운 집은 또렷하게. side-view3d 가 마을(town)에서만 부른다.
+   *  손잡이 `story3d.townFog`(0.4, 0 = 옛 색·0.35) */
+  function townFog(L, k) {
+    var r = (L.sky >> 16) & 255, g = (L.sky >> 8) & 255, b = L.sky & 255, y = 0.299 * r + 0.587 * g + 0.114 * b;
+    function m(c) { return Math.round(c + (y - c) * k); }
+    var o = {}, key;
+    for (key in L) { if (Object.prototype.hasOwnProperty.call(L, key)) { o[key] = L[key]; } }
+    o.sky = (m(r) << 16) | (m(g) << 8) | m(b);
+    o.nearK = k > 0 ? 0.6 : 0.35;
+    return o;
+  }
+
   global.DG = global.DG || {};
-  global.DG.sideLayers3d = { LAYER_Z: LAYER_Z, FRONT_Z: FRONT_Z, on: on, regionOf: regionOf, layerRect: layerRect };
+  global.DG.sideLayers3d = { LAYER_Z: LAYER_Z, FRONT_Z: FRONT_Z, on: on, regionOf: regionOf, layerRect: layerRect, townFog: townFog };
 })(window);

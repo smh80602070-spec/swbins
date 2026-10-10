@@ -812,7 +812,7 @@
     userZoom: function () { return userZoom; },
     setUserZoom: setUserZoom,
     /** 진단·QA 전용 — 사람이 드래그로 돌린 시점 덧각(라디안) */
-    mouseYaw: function () { return mouseYaw; },
+    mouseYaw: function () { return mouseYaw; }, _nightLight: function () { return { hemi: C().tuned('village3d.nightHemi', PHASE_HEMI.night), sun: PHASE_SUN.night.intensity, even: PHASE_HEMI.even }; },   // W-0145 진단
     setMouseYaw: function (y) { mouseYaw = y; },
     /** Q12 — 카메라 방위(키·조이스틱을 돌리는 각)와 화면 한 점이 짚는 땅(마을 좌표). 진단·확인용으로도 쓴다 */
     camAz: camAz, groundAt: groundAt,

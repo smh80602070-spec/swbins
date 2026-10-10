@@ -806,5 +806,21 @@
   "ticket": "W-0160",
   "since": "2026-10-10",
   "note": "D2(qc+claude 2026-10-10): pw-visual-close saga-forest 9/9 · 1-village3d Read — 길이 화면 가로·세로로 반듯(위 = 북), 풀밭 칸에만 격자 ○ · 2-sphere2d 그대로 ○ · 3-home 평면 그대로. 손잡이 village3d.cozyCam 0 = 옛(끌어 돌리기·기울이기), cozyPitch 55, cozyDist 14, cozyGrid 1."
+ },
+ {
+  "id": "fs.night-light3d",
+  "name": "3D 마을 밤 밝기 — 밤 반구광 0.3→0.7(village3d.nightHemi)·달빛 0.12→0.2, 저녁 0.7 그대로",
+  "files": [
+   "js/village-view3d.js"
+  ],
+  "tests": [
+   "village-view3d — 밤 밝기(W-0145) — 밤 반구광 0.7(손잡이 village3d.nightHemi)·달빛 0.2, 저녁 0.7 은 그대로"
+  ],
+  "note": "D2(qc+claude 2026-10-10): 밤·맑음 점검 컷 평균 19.2 → 29.7(0.45 는 24) — 길·집·나무·풀밭 칸 읽힘, 하늘·안개는 밤 어둠 0.28 그대로라 밤으로 보임 ○ · QC 1-village3d(밤·비) 25.5 ○.",
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0145",
+  "since": "2026-10-10"
  }
 ]

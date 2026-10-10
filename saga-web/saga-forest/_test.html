@@ -903,6 +903,12 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
         '기본 1(부감) · 1.5→1 · -0.5→0 로 갇힘';
     });
 
+    t('village-view3d — 밤 밝기(W-0145) — 밤 반구광 0.7(손잡이 village3d.nightHemi)·달빛 0.2, 저녁 0.7 은 그대로', function () {
+      var L = DG.villageView3d._nightLight(), C = DG.core, k0 = C.tuned('village3d.nightHemi', 0.7), low;
+      try { C.setTune('village3d.nightHemi', 0.3); low = DG.villageView3d._nightLight().hemi; } finally { C.setTune('village3d.nightHemi', k0); }
+      var r = [L.hemi === 0.7, L.sun === 0.2, L.even === 0.7, low === 0.3];
+      return r.every(Boolean) && '밤 반구 0.7 · 달빛 0.2 · 저녁 0.7 · 손잡이로 옛 0.3' || '실패 ' + r.join(',');
+    });
     t('village-view3d — 스타듀 고정 시점(W-0160): 손잡이 1 이면 yaw 0(정남쪽)·내려다보는 각 55°, 줌은 거리만 줄이고 각은 그대로 · 풀밭 칸만 격자', function () {
       var CZ = DG.cozyCam3d, C = DG.core, k0 = C.tuned('village3d.cozyCam', 1), r, on1;
       try { C.setTune('village3d.cozyCam', 1); on1 = CZ.on(); } finally { C.setTune('village3d.cozyCam', k0); }
