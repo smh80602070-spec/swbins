@@ -22,6 +22,8 @@ namespace Saga.EditorTools
         private static List<(string name, Transform target)> _seqTargets;
         private static List<List<Texture2D>> _seqFrames;
         private static bool _seqWalk;
+        private static bool _kitsWas, _kitsSet;
+        private static int _skillRetry = -1, _skillTries;   // U-0090 순간이동 직후엔 공중이라 Skill() 이 거절(-1) — 땅에 설 때까지 다시 쓰고 그 뒤에 찍는다   // U-0090 party 동작이 켠 GoKits.OffForTest — 시트를 다 쓰면 되돌린다
 
         private static bool SeqActive
         {
@@ -69,6 +71,12 @@ namespace Saga.EditorTools
         private static bool SeqTick()
         {
             if (_seqWalk) SetJoystick(new Vector2(0f, 1f));
+            if (_skillRetry >= 0)
+            {
+                if (TrySkill(_skillRetry) == -1 && ++_skillTries < 120) { _seqNextAt = _frame + 2; return false; }
+                _skillRetry = -1;
+                _seqNextAt = _frame + 1;
+            }
             if (_frame < _seqNextAt) return false;
             var main = Camera.main;
             for (int i = 0; i < _seqTargets.Count; i++)
@@ -93,6 +101,7 @@ namespace Saga.EditorTools
             _seqNextAt = _frame + _seqGap;
             if (_seqTaken < _seqN) return false;
             if (_seqWalk) SetJoystick(Vector2.zero);
+            if (_kitsSet) { Saga.Go.Combat.GoKits.OffForTest = _kitsWas; _kitsSet = false; }
             for (int i = 0; i < _seqTargets.Count; i++) WriteSheet(_seqTargets[i].name, _seqFrames[i]);
             Debug.Log($"[ShowcaseGui] 찍음 시트 {_seqTargets.Count}장({_seqN}칸) → {_dir}");
             return true;
@@ -118,13 +127,27 @@ namespace Saga.EditorTools
                     case "walk": _seqWalk = Object.FindFirstObjectByType<Saga.Core.VirtualJoystick>() != null; break;
                     case "party":
                     case "party2":
-                        // 스킬 진단(PlaytestGoSkillShapes)처럼 모양별 첫 동료로 편성 — party = 찌르기·돌진·장판, party2 = 찌르기·돌진·소환(새 세이브는 주인공 혼자)
+                        // 스킬 진단(PlaytestGoSkillShapes)처럼 모양별 첫 동료로 편성 — party = 찌르기·돌진·장판, party2 = 찌르기·돌진·소환(새 세이브는 주인공 혼자). 들판 칸은 목록 뒤부터(PartyState.FieldIds) → party 칸 1 장판·2 돌진·3 찌르기, party2 칸 1 소환
+                        // U-0090 진단과 같은 스위치(GoKits.OffForTest) — 끄면 무용·통솔·덕망·고유 인물은 109-14-11 갈래 스킬이 나가 모양 효과가 안 찍혔다
                         if (fc == null) { Skip(act); return; }
+                        if (!_kitsSet) { _kitsWas = Saga.Go.Combat.GoKits.OffForTest; _kitsSet = true; }
+                        Saga.Go.Combat.GoKits.OffForTest = true;
                         string First(Saga.Go.Combat.SkillShape sh) => Saga.Go.Data.GoHeroes.All.First(h => Saga.Go.Combat.GoSkillShapes.ShapeOf(h.Id) == sh).Id;
                         var third = act == "party" ? Saga.Go.Combat.SkillShape.Field : Saga.Go.Combat.SkillShape.Summon;
                         Saga.Go.Data.PartyState.Restore(new[] { First(Saga.Go.Combat.SkillShape.Thrust), First(Saga.Go.Combat.SkillShape.Dash), First(third) });
                         fc.RebuildParty();
                         break;
+                    case "partywise":
+                    {
+                        // U-0090 게임 그대로(스위치 없이) 모양 길을 타는 인물 — 지략·고유 없음(갈래 스킬 null) 첫 사람 하나(동료 칸 1)
+                        if (fc == null) { Skip(act); return; }
+                        string wise = Saga.Go.Data.GoHeroes.All.Where(h => h.Trait == Saga.Go.Data.HeroTrait.Wisdom && Saga.Go.Combat.GoKits.KitOf(h.Id, Saga.Go.Combat.GoElements.ForMember(h.Id)) == null).Select(h => h.Id).FirstOrDefault();
+                        if (wise == null) { Skip(act); return; }
+                        Saga.Go.Data.PartyState.Restore(new[] { wise });
+                        fc.RebuildParty();
+                        Debug.Log($"[ShowcaseGui] partywise {wise} 모양 {Saga.Go.Combat.GoSkillShapes.ShapeOf(wise)}");
+                        break;
+                    }
                     case "attack":
                         if (fc != null) fc.Attack();
                         else if (dcombat != null) dcombat.TriggerAttack();
@@ -140,7 +163,7 @@ namespace Saga.EditorTools
                         fc.TickTimers(Saga.Go.Combat.FieldCombat.SwapCooldownSec + 0.05f);
                         if (fc.ActiveIndex != n) fc.Swap(n);
                         fc.TickTimers(Saga.Go.Combat.FieldCombat.SwapCooldownSec + 0.05f);
-                        fc.Skill();
+                        if (TrySkill(n) == -1) { _skillRetry = n; _skillTries = 0; }
                         break;
                     case "roof":
                         var roof = Object.FindObjectsByType<Saga.Go.World.CameraOccluder>(FindObjectsSortMode.InstanceID).FirstOrDefault(o => o.GetComponentInParent<Saga.Go.World.GoHouseInterior>() == null);   // 마을 지붕만(방 천장 트리거 U-0086 빼고)
@@ -166,6 +189,20 @@ namespace Saga.EditorTools
                 Debug.Log($"[ShowcaseGui] act {act}");
             }
             catch (System.Exception e) { Debug.Log($"[ShowcaseGui] act {act} SKIP — {e.GetType().Name}: {e.Message}"); }
+        }
+
+        /// <summary>U-0090 — n 번 동료로 스킬. 결과·모양·만든 효과 수를 로그(거절이면 이유 칸도).</summary>
+        private static int TrySkill(int n)
+        {
+            var fc = Saga.Go.Combat.FieldCombat.Instance;
+            if (fc == null) return 0;
+            if (fc.ActiveIndex != n) { fc.TickTimers(Saga.Go.Combat.FieldCombat.SwapCooldownSec + 0.05f); fc.Swap(n); }
+            int got = fc.Skill();
+            var pc = fc.GetComponent<Saga.Go.Player.PlayerController>();
+            if (got != -1 || _skillTries == 0 || _skillTries >= 119)
+                Debug.Log($"[ShowcaseGui] skill:{n} {fc.Active?.Id} → {got}(시도 {_skillTries + 1}) 모양 {fc.LastShape} · 선 효과 {Object.FindObjectsByType<Saga.Go.Combat.FieldLineFx>(FindObjectsSortMode.None).Length} · 정령 {Object.FindObjectsByType<Saga.Go.Combat.SkillSpirit>(FindObjectsSortMode.None).Length} · 장판 {fc.Zones.Count} · 갈래 끔 {Saga.Go.Combat.GoKits.OffForTest}"
+                    + (got == -1 ? $" | 거절: 발 {pc?.OnFoot}({pc?.Mode}) 결투 {Saga.Go.Combat.DuelGate.Active} 낚시 {Saga.Go.World.FishingField.Busy} 쓰러짐 {fc.Active?.Down} 쿨 {fc.Active?.SkillCd:F1}" : ""));
+            return got;
         }
 
         private static void Skip(string act) => Debug.Log($"[ShowcaseGui] act {act} SKIP(이 판에 없음)");

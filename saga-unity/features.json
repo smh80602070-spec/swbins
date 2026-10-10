@@ -325,16 +325,20 @@
  {
   "id": "un.go.skill-shapes",
   "name": "109-8 스킬 모양 넷",
-  "files": [],
-  "tests": [
-   "PlaytestGoSkillShapes"
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/Combat/GoSkillShapes.cs",
+   "saga-unity/Assets/Games/SagaGo/Combat/FieldCombat.cs"
   ],
-  "level": "D1",
+  "tests": [
+   "PlaytestGoSkillShapes",
+   "PlaytestShowcaseGui"
+  ],
+  "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": null,
+  "ticket": "U-0090",
   "since": "2026-09-16",
-  "note": "D1(U-0080 못 봄): docs/playcheck/d2-u0080-20261010.json — party+skill:1~3·party2+skill:3 시트에서 교체(몸·고리)는 보이나 스킬 모양 효과(찌르기·돌진·장판·소환)가 칸에 안 잡힘 — 후속 후보(효과 자리 촬영)"
+  "note": "D2(눈 ○, U-0090): docs/playcheck/d2-u0090-20261011.json — 찌르기(이름 글·앞 선·창 내지름)·돌진(넓은 궤적·몸이 파고듦)·장판(바닥 원이 남음)·소환(주황 고리·정령) + 게임 그대로 지략 인물 장판. U-0080 이 못 본 이유 = 무용·통솔·덕망·고유 인물은 109-14-11 갈래 스킬이 덮음(촬영은 진단과 같은 GoKits.OffForTest) + 순간이동 직후 공중이라 Skill() 거절. 흠: 찌르기 선이 1~2칸만·소환 정령이 작음"
  },
  {
   "id": "un.go.peaks",

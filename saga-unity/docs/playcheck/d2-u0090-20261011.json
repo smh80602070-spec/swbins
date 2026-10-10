@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-11",
+  "tickets": ["U-0090 1만리 스킬 모양 넷 촬영 — 찌르기·돌진·장판·소환 효과 눈 판정(U-0080 못 봄)"],
+  "how": "촬영 도구 Seq: party/party2 가 진단(PlaytestGoSkillShapes)과 같은 GoKits.OffForTest 를 켜고 시트를 다 쓰면 되돌림 · 새 partywise(스위치 없이 지략·갈래 없음 첫 인물 = sg_caocao, 게임 그대로 장판) · skill 동작이 결과·모양·효과 수·거절 이유를 로그. 첫 다섯 판은 전부 Skill() = -1 → 거절 이유 로그로 원인: SeqBegin 이 주인공을 안전한 땅으로 순간이동한 그 프레임엔 Swim/Air(OnFoot 거짓) → 땅에 설 때까지 다시 쓰고(최대 120번, 실제 2번째) 그 뒤에 찍음. 들판 칸은 목록 뒤부터(PartyState.FieldIds)라 party 칸 1 장판·2 돌진·3 찌르기, party2 칸 1 소환",
+  "commands": [
+    "SAGA_SHOT_SCENE=Assets/Scenes/TestVillage.unity SAGA_SHOT_TARGETS='gamecam;player' SAGA_SHOT_SEQ=8,3 SAGA_SHOT_ACT='party+skill:1|2|3' · 'party2+skill:1' · 'partywise+skill:1' Unity -buildTarget Android -executeMethod Saga.EditorTools.PlaytestShowcaseGui.Run",
+    "bash tools/unity-batch.sh -- Unity -batchmode -nographics -buildTarget Android -executeMethod Saga.EditorTools.PlaytestHeadless.Run"
+  ],
+  "logs": [
+    "skill:3 sg_guanyu → 0(시도 2) 모양 Thrust · 선 효과 1",
+    "skill:2 sg_zhangfei → 0(시도 2) 모양 Dash · 선 효과 1",
+    "skill:1 sg_zhugeliang → 0(시도 2) 모양 Field · 장판 1",
+    "skill:1 sg_xunyu → 0(시도 2) 모양 Summon · 정령 1 · 장판 1",
+    "partywise sg_caocao → skill:1 0(시도 2) 모양 Field · 장판 1 · 갈래 끔 False"
+  ],
+  "scene": ["[PlaytestHeadless] OK - 10 frames, no errors(도구 손질 뒤 두 번)"],
+  "runtime_errors": 0,
+  "shots": "세션 scratchpad sk_thrust3·sk_dash3·sk_field2·sk_summon3·sk_wise3 (gamecam·player 시트) — 커밋 안 함",
+  "results": [
+    { "id": "un.go.skill-shapes", "eye": "○", "note": "찌르기: 1칸 '찌르기' 글·앞으로 뻗은 옅은 보라 선, 2칸 창 내지름 · 돌진: 1칸 넓은 흰 궤적, 2~8칸 몸이 앞으로 파고들어 이동 · 장판: 바닥 원이 3~7칸 남음(player 시트) · 소환: 주황 고리·뒤 위에 정령이 1~8칸 내내 · 게임 그대로 지략(조조): '장판' 글·큰 파란 바닥 원이 옅어지며 남고 8칸에 다시 맥동", "result": "D1 → D2" }
+  ],
+  "left": "찌르기 선 효과가 1~2칸(약 0.1초)만 보여 짧음 · 소환 정령이 작아 들판 카메라로는 점 크기 · 무용·통솔·덕망 인물은 지금 게임에서 모양 스킬 대신 109-14-11 갈래 스킬이라 찌르기·돌진은 도감 밖 동료만 씀 · player 시트 카메라가 몸에 너무 붙음(도구)"
+}
