@@ -56,6 +56,10 @@ var _layer: CanvasLayer
 const TALK_NEAR := 2.2
 const TALK_AIM_DROP := 0.6
 var _rig: Node = null
+## G-0174 — 걸어가는 중에 비추면 이동(카메라 기준) 방향이 틀어졌다(traversal fails=10). 멈춰 서 있을 때만 비추고 다시 걸으면 푼다.
+const FRAME_STILL := 0.3   # m/s 밑이면 멈춘 것
+const FRAME_MOVING := 1.5  # m/s 넘으면 걷는 것
+var _player: Node3D = null
 
 func _ready() -> void:
 	add_to_group("go_heroes") # 사진 도감(photo_album.gd)이 화면 안 인물을 찾는다
@@ -67,6 +71,7 @@ func _ready() -> void:
 	_hero = found
 	_spawn_visual()
 	_spawn_area()
+	set_physics_process(false)   # G-0174 — 창이 떠 있을 때만 돈다
 
 func _spawn_visual() -> void:
 	var ch: String = TestMap.tile_at(grid.x, grid.y, region_id)
@@ -93,8 +98,20 @@ func _on_body_entered(body: Node3D) -> void:
 	CodexState.discover("record", hero_id)
 	_persuade = PersuadeRules.create(_hero["trait"])
 	_revealed = int(_hero.rarity) <= 3
-	_frame_hero(body)
+	_player = body
+	set_physics_process(true)
 	_show_round()
+
+func _physics_process(_delta: float) -> void:
+	if _layer == null or not is_instance_valid(_layer) or _player == null or not is_instance_valid(_player):
+		set_physics_process(false)
+		_end_frame()
+		return
+	var v := Vector2(_player.velocity.x, _player.velocity.z).length() if _player is CharacterBody3D else 0.0
+	if _rig == null and v < FRAME_STILL:
+		_frame_hero(_player)
+	elif _rig != null and v > FRAME_MOVING:
+		_end_frame()
 
 func _frame_hero(player: Node3D) -> void:
 	_rig = player.get_node_or_null("CameraRig")
@@ -134,7 +151,7 @@ func _show_round() -> void:
 	for a in APPEALS:
 		choices.append({"label": a.label, "cb": func() -> void: _do_appeal(a.key)})
 	choices.append({"label": "물러난다", "cb": _flee})
-	_layer = ChoicePrompt.build(self, title, choices, _rig != null)   # G-0158 — 인물을 비추면 창은 아래로
+	_layer = ChoicePrompt.build(self, title, choices, true)   # G-0158·G-0174 — 창은 늘 아래(멈춰 서면 카메라가 인물을 비춘다)
 
 func _do_appeal(key: String) -> void:
 	var r: Dictionary = _persuade.appeal(key)
