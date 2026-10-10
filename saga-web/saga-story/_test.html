@@ -116,6 +116,7 @@ window.DG_NO_TUNE = true;
 <script src="js/achieve.js"></script>
 <script src="js/sfx.js"></script>
 <script src="js/bgm.js"></script>
+<script src="js/voice.js"></script>
 <script src="js/net.js"></script>
 <script src="js/ai.js"></script>
 <script src="js/auto.js"></script>
@@ -143,6 +144,21 @@ window.DG_NO_TUNE = true;
   setTimeout(function () {
     var C = DG.core, S = DG.side, SD = DG.sideData, AU = DG.auto;
 
+    t('voice: 대사 음성(W-0137) — 첫 터치 전엔 무음 · 1.5초 안 두 번째 외침은 무시 · 빠진 줄은 주소를 안 만든다 · 설정 끄면 무음 · 이 판 사건 넷 이상', function () {
+      var V = DG.voice, clock = 1000, tb = { lines: [{ id: 'shout_01', kind: 'shout' }, { id: 'pickup_01', kind: 'pickup' }, { id: 'system_06', kind: 'system' }], assign: { hero_a: 'M1', hero_b: 'F2' }, missing: ['F2/pickup_01'] };
+      var o = { unlocked: false, table: tb, base: 'v/', rand: function () { return 0; }, now: function () { return clock; } }, r = [], s = DG.core.save.settings || (DG.core.save.settings = {}), v0 = s.voice;
+      try {
+        V._test(o); r.push(V.say('shout', 'hero_a', true) === '');                                   // 잠금 전
+        o.unlocked = true; V._test(o); var a = V.say('shout', 'hero_a'); r.push(a === 'v/voice_M1_shout_01.ogg');
+        clock += 800; r.push(V.say('shout', 'hero_a') === '');                                       // 1.5초 안·간격 안
+        r.push(V.say('pickup', 'hero_b') === '' && V.state().last === a);                           // 빠진 줄 — 주소 안 만듦
+        clock += 5000; s.voice = false; r.push(V.say('pickup', 'hero_a') === '' && V.system('levelup') === '');
+        s.voice = true; r.push(V.system('levelup') === 'v/voice_NA_system_06.ogg');
+        var ev = V.EVENTS[DG.cfg.account.name] || []; r.push(ev.length >= 4 && ev.some(function (e) { return e[0] === 'levelup'; }));
+        r.push(V.voiceOf('zz_none') === V.voiceOf('zz_none') && /^[MF][1-5]$/.test(V.voiceOf('zz_none')));
+      } finally { s.voice = v0 === undefined ? true : v0; V._test({ noPlay: true }); }
+      return r.every(Boolean) && ('잠금·간격·빠진 줄·끄기 규칙 · ' + DG.cfg.account.name + ' 사건 ' + (V.EVENTS[DG.cfg.account.name] || []).length) || '실패 ' + r.join(',');
+    });
     t('루프 문지기(W-0066) — 숨김이면 park(다음 프레임 예약 없음)·보이되 포커스 없으면 wait·보이고 포커스면 run, 깨우기는 멈춰 있을 때만 한 번(사슬이 둘이 되지 않는다)', function () {
       var G = DG.game, saved = window.requestAnimationFrame, n = 0, prevParked = G._parked(), r = {};
       function hide(v) { if (v) { Object.defineProperty(document, 'hidden', { configurable: true, get: function () { return true; } }); } else { delete document.hidden; } }

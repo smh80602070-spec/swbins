@@ -794,5 +794,21 @@
   "ticket": "W-0162",
   "since": "2026-10-10",
   "note": "D2(qc+claude 2026-10-10): 점검(probe162 — 대숲 고을 \"옛 고을 터\" 남쪽 650m) Read — 기본 시점은 탑 꼭대기가 화면 위로 잘리고, 위로 끌면 지평선·탑 전체·\"옛 고을 터 · 650m\" 이름표 ○ · 끄는 동안 기울기 0.55 유지·손 떼면 0 ○ · 이름표 \"노을 바위 · 850m\"·\"학이 앉은 골 · 1.1km\" ○. 탑(지역별 GLB)·빛기둥은 원래 있던 것. 손잡이 world3d.landmark 0 = 이름표 없음, world3d.pitchMax."
+ },
+ {
+  "id": "go.voice",
+  "name": "대사 음성(다섯 판 공용 shared/js/voice.js) — 외침·획득·말 걸기·안내를 판별 core 사건에 · bgm 잠금·⚙️ \"대사 음성\" 끄기 · 빠진 31줄 무음",
+  "files": [
+   "js/voice.js"
+  ],
+  "tests": [
+   "voice: 대사 음성(W-0137) — 첫 터치 전엔 무음 · 1.5초 안 두 번째 외침은 무시 · 빠진 줄은 주소를 안 만든다 · 설정 끄면 무음 · 이 판 사건 넷 이상"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0137",
+  "since": "2026-10-10",
+  "note": "D2(qc+claude 2026-10-10): 점검(tools/_out/w145/voice-probe) 다섯 판 — 첫 터치 뒤 레벨업 안내 voice_NA_system_06 200 · 2나락 sig:sg_guanyu → voice_M1_shout_* 200 · 말 걸기 voice_M1_greet_* 200 · 설정 시트 \"대사 음성\" 줄 ○. 같은 진단이 다섯 판 _test 에 하나씩. 판별 사건 표는 voice.js EVENTS(판 이름으로 고름)."
  }
 ]

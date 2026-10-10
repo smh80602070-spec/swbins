@@ -26,6 +26,7 @@ const FILES = [
   ['js/errlog.js', 'js/errlog.js'],
   ['js/emojicompat.js', 'js/emojicompat.js'],   // W-0135 — 윈도 10 빈 네모 이모지 대체(manifest index 에만, 진단 test 엔 안 넣음)
   ['js/bgm.js', 'js/bgm.js'],
+  ['js/voice.js', 'js/voice.js'],   // W-0137 — 대사 음성(bgm 잠금·설정 줄 뒤, 판별 core 이벤트를 듣는다)
   ['js/assets3d-ids.js', 'js/assets3d-ids.js'],   // W-0021 — 통일 3D 에셋 조회(판을 배선하며 판 목록에 추가). ids 는 tools/gen-assets3d-ids.mjs 생성물
   ['js/assets3d.js', 'js/assets3d.js'],
   ['js/ai.js', 'js/ai.js', ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story']],   // R-4 — 네 판이 글자까지 같다(5천하는 따로 갈라짐)
