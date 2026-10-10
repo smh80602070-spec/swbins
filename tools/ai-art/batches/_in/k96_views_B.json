@@ -1,0 +1,80 @@
+{
+ "name": "k96_views_B",
+ "spec": "creature",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0096 묶음 B — TRELLIS 입력 그림(전신·3/4 측면·단색 배경·그림자 없음, 한 장 = 한 종). panda·owl 은 묶음 A ✗ 다시",
+ "items": [
+  {
+   "id": "panda",
+   "subject": "giant panda, standing on all fours, black and white fur, round ears, calm",
+   "subject_ko": "판다(대나무 없이)",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "owl",
+   "subject": "owl, standing upright on ground, wings folded, round eyes, feather tufts",
+   "subject_ko": "부엉이(바로 선)",
+   "view": "three_quarter",
+   "extra": "no humans, upright posture, all legs visible"
+  },
+  {
+   "id": "elephant",
+   "subject": "asian elephant, large ears, long trunk, small tusks, gray wrinkled skin",
+   "subject_ko": "코끼리",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "rabbit",
+   "subject": "wild rabbit, sitting alert, long ears, brown fur, white tail",
+   "subject_ko": "토끼",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "squirrel",
+   "subject": "red squirrel, standing on hind legs, bushy tail, tufted ears",
+   "subject_ko": "다람쥐",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "duck",
+   "subject": "mallard duck, green head, orange feet, white neck ring",
+   "subject_ko": "오리",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "sparrow",
+   "subject": "small sparrow, standing on ground, brown streaked feathers, short beak",
+   "subject_ko": "참새",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "slime",
+   "subject": "green slime blob monster, glossy translucent jelly body, cute simple face",
+   "subject_ko": "슬라임(괴물)",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "donkey",
+   "subject": "donkey, gray coat, long ears, simple leather saddle, bridle",
+   "subject_ko": "당나귀(탈것)",
+   "view": "three_quarter",
+   "extra": "no humans, mount, riding animal, all legs visible"
+  },
+  {
+   "id": "zebra",
+   "subject": "zebra, black and white stripes, short mane, simple leather saddle, bridle",
+   "subject_ko": "얼룩말(탈것)",
+   "view": "three_quarter",
+   "extra": "no humans, mount, riding animal, all legs visible"
+  }
+ ]
+}

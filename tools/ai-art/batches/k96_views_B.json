@@ -1,0 +1,91 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k96_views_B",
+ "kit": {
+  "spec": "creature",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "panda",
+   "seed": 3710569665,
+   "prompt": "(giant panda:1.15), standing on all fours, black and white fur, round ears, calm, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "판다(대나무 없이)"
+  },
+  {
+   "id": "owl",
+   "seed": 1175471250,
+   "prompt": "(owl:1.15), standing upright on ground, wings folded, round eyes, feather tufts, no humans, upright posture, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "부엉이(바로 선)"
+  },
+  {
+   "id": "elephant",
+   "seed": 2586431872,
+   "prompt": "(asian elephant:1.15), large ears, long trunk, small tusks, gray wrinkled skin, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "코끼리"
+  },
+  {
+   "id": "rabbit",
+   "seed": 2845458470,
+   "prompt": "(wild rabbit:1.15), sitting alert, long ears, brown fur, white tail, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "토끼"
+  },
+  {
+   "id": "squirrel",
+   "seed": 3178052842,
+   "prompt": "(red squirrel:1.15), standing on hind legs, bushy tail, tufted ears, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "다람쥐"
+  },
+  {
+   "id": "duck",
+   "seed": 1448252408,
+   "prompt": "(mallard duck:1.15), green head, orange feet, white neck ring, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "오리"
+  },
+  {
+   "id": "sparrow",
+   "seed": 3647157717,
+   "prompt": "(small sparrow:1.15), standing on ground, brown streaked feathers, short beak, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "참새"
+  },
+  {
+   "id": "slime",
+   "seed": 3225078055,
+   "prompt": "(green slime blob monster:1.15), glossy translucent jelly body, cute simple face, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "슬라임(괴물)"
+  },
+  {
+   "id": "donkey",
+   "seed": 1226541012,
+   "prompt": "(donkey:1.15), gray coat, long ears, simple leather saddle, bridle, no humans, mount, riding animal, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "당나귀(탈것)"
+  },
+  {
+   "id": "zebra",
+   "seed": 3591444415,
+   "prompt": "(zebra:1.15), black and white stripes, short mane, simple leather saddle, bridle, no humans, mount, riding animal, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "얼룩말(탈것)"
+  }
+ ]
+}
