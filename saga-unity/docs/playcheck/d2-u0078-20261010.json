@@ -1,6 +1,6 @@
 {
   "date": "2026-10-10",
-  "tickets": ["U-0078 사가만리 사실 물 ① — 잔물결·하늘 반사·깊이 흡수·물가 거품 + 물 밑 비탈"],
+  "tickets": ["U-0078 1만리 사실 물 ① — 잔물결·하늘 반사·깊이 흡수·물가 거품 + 물 밑 비탈"],
   "how": "전 촬영(옛 코드) → Saga/WaterReal·물 밑 비탈·Mobile 깊이 텍스처 → 같은 자리·시각 후 촬영(GUI, Android 대상, 세이브 다섯 백업·cmp 복원) → Claude 눈 → 물결 세기·물빛 한 번 손질 뒤 재촬영. 성능은 PlaytestSagaPerf 를 후·전(HEAD 파일로 잠깐 바꿔) 한 판씩. PlaytestHeadless 한 판",
   "fix": "새 Saga/WaterReal(손 HLSL, 텍스처 없음): 값 노이즈 세 겹 기울기 법선 · 프레넬 반사(반사 프로브, 비면 안개색↔하늘 앰비언트) + 해 반짝임 · 깊이 텍스처로 물 두께 → exp 흡수(청록 → 남색) · 두께 0~0.45m 거품 띠 · 굴절은 파이프라인 불투명 텍스처가 켜졌을 때만(_Refract, PC) · 깊이 텍스처가 없으면 고정 알파. TerrainBuilder: 수면·샘 웅덩이(덧깊이 1.4m) 재질 교체, 강 칸 바닥을 흙 둑 끝(수면 0.25m 위)에서 14m 안에 강바닥까지 비탈(8×8 쪼갬·법선, 산 쪽은 그대로 깊음 — 폭포 발), 씬에 구워 저장된 옛 WaterSurface·Waterfalls 를 다시 지을 때 치움(전엔 런타임 것과 두 겹). Mobile_RPAsset 깊이 텍스처 0→1(불투명 텍스처는 그대로 0)",
   "commands": [
@@ -18,7 +18,7 @@
     "how": "PlaytestSagaPerf 자동 측정(에디터, 구간 3.5초) 평균 fps 상한/풀기",
     "after": "go 54/54 · dungeon 136/119 · forest 76/76 · story 210/120 · realm 474/120",
     "before": "go 48/60 · dungeon 131/119 · forest 72/86 · story 206/120 · realm 614/120",
-    "judge": "사가만리 풀기 60→54(−10%, 상한은 48→54 로 오름). 물과 무관한 사가마을도 86→76(−12%)으로 흔들려 구간 잡음 안 — 줄이기 단계는 안 함. 폰 실측은 측정용 APK 때(빌드 금지라 이번엔 없음)"
+    "judge": "1만리 풀기 60→54(−10%, 상한은 48→54 로 오름). 물과 무관한 3마을도 86→76(−12%)으로 흔들려 구간 잡음 안 — 줄이기 단계는 안 함. 폰 실측은 측정용 APK 때(빌드 금지라 이번엔 없음)"
   },
   "shots": "세션 scratchpad shots/before_12·before_17·after_12·after_17·tune_12·tune_17/nameBridge_0.png·nameWaterfall_0.png (커밋 안 함)",
   "results": [

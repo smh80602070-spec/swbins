@@ -1729,7 +1729,7 @@
  },
  {
   "id": "un.go.water-real",
-  "name": "사가만리 사실 물 — 잔물결·하늘 반사·깊이 흡수·물가 거품(Saga/WaterReal, 굴절은 PC 만) + 물 밑 비탈(U-0078)",
+  "name": "1만리 사실 물 — 잔물결·하늘 반사·깊이 흡수·물가 거품(Saga/WaterReal, 굴절은 PC 만) + 물 밑 비탈(U-0078)",
   "files": [
    "saga-unity/Assets/Games/SagaGo/World/WaterReal.shader",
    "saga-unity/Assets/Games/SagaGo/World/TerrainBuilder.cs",
