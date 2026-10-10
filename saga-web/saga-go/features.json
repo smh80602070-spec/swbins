@@ -741,5 +741,22 @@
   "ticket": "W-0148",
   "since": "2026-10-10",
   "note": "D2: 점검(scratchpad probe148, 헤드리스) — portrait3d 로 신수 11 전부 구움, pet_pt_*.glb 11 받음, Claude 눈 ○(해태 뿔·청룡 뱀 몸·주작·현무 등딱지 — 옛 Birb·Goleling·Dragon_Evolved 아님). 들판 괴물 중 ref 가 신수인 것(불도깨비·이무기·구미호 등)·탈것 푸른 용도 같은 몸. 도감 초상 webp 는 자체툴 AI 그림이라 다시 안 구움. QC --game saga-go PASS."
+ },
+ {
+  "id": "go.mount-portrait",
+  "name": "탈것 도감 초상 5(K-0032) — 얻은 탈것 칸은 portraits/mount 초상, 못 받으면 펫 초상·🐎",
+  "files": [
+   "js/codex.js",
+   "css/style.css"
+  ],
+  "tests": [
+   "탈것 도감(W-0117) — 도감 시트에 탈것 다섯 칸, 얻음은 mount.isUnlocked(레벨 문턱·펫 등록), 합계에 탈것이 든다"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0151",
+  "since": "2026-10-10",
+  "note": "D2: pw-dex-look saga-go → shots/qc/saga-go-dex.png Claude 눈 ○ — 농마·갈색 말·학 칸이 그림 초상(3/5 얻음 판), 못 얻은 백마·용은 ❔. QC --game saga-go PASS."
  }
 ]

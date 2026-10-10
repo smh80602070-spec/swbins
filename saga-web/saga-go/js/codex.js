@@ -244,7 +244,9 @@
     if (!rows.length) { return ''; }
     rows.forEach(function (r) {
       var m = r.m;
-      var face = r.have ? (r.pet && pt ? pt('pet', r.pet, 52) : '🐎') : '❔';
+      var old = r.pet && pt ? pt('pet', r.pet, 52) : '🐎';
+      /* W-0151 — 자체툴 탈것 초상(K-0090, assets/portraits/mount/<id>_s.webp) 먼저 — 파일이 안 받아지면 그 자리에서 옛 펫 초상·🐎 로 */
+      var face = r.have ? '<img class="pt mtp" alt="" src="assets/portraits/mount/' + m.id + '_s.webp" onerror="this.hidden=true;this.nextSibling.hidden=false"><span hidden>' + old + '</span>' : '❔';
       out += '<div class="dcell' + (r.have ? '' : ' locked') + '" data-mt="' + m.id + '" onclick="DG.codex.tellMount(this.dataset.mt)" title="' + esc(mountText(r)) + '">' +
         '<span class="de' + (r.have ? '' : ' locked-mark') + '">' + face + '</span>' +
         '<small>' + (r.have ? esc(m.name) : 'Lv.' + m.lv) + '</small>' +

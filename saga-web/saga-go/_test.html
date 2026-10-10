@@ -16335,7 +16335,8 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         r = [rows.length, r0, got, rows.every(function (x) { return !!x.pet; }), d0.total === D.heroes.length + D.pets.length && X.rate().mount.total === M.MOUNTS.length && X.stats().by.mount === '4/5',
              (v.match(/class="dcell/g) || []).length, v.indexOf('4 / 5') >= 0, v.indexOf('Lv.30') >= 0 && X.tellMount('mt_white').indexOf('레벨 30') >= 0 && X.tellMount('mt_farm').indexOf('걸음 ×1.6') >= 0];
       } finally { P.level = keepLv; C.save.dex.pets = keepPets; }
-      return r.join(',') === '5,0,mt_farm|mt_brown|mt_crane|mt_dragon,true,true,5,true,true' && ('탈것 ' + r.join(',')) || '실패 ' + r.join(',');
+      r.push(v.indexOf('portraits/mount/mt_farm_s.webp') >= 0 && v.indexOf('portraits/mount/mt_dragon_s.webp') >= 0 && v.indexOf('onerror=') >= 0 && v.indexOf('portraits/mount/mt_white_s.webp') < 0);   // W-0151 — 얻은 넷만 탈것 초상, 실패하면 옛 초상
+      return r.join(',') === '5,0,mt_farm|mt_brown|mt_crane|mt_dragon,true,true,5,true,true,true' && ('탈것 ' + r.join(',')) || '실패 ' + r.join(',');
     });
 
     t('go.field2d: 2D 들판(W-0130) — 소품은 좌표 해시로 늘 같고, 숲엔 나무·물가엔 거품, 2D 일 때만 카메라 ×1.7', function () {

@@ -406,6 +406,7 @@ small.muted { display: block; margin-top: 7px; font-size: 11px; }
 .pt { width: 100%; height: 100%; object-fit: contain; display: block; }
 .dcell .de { height: 40px; }
 .dcell .de .pt { height: 100%; }
+.dcell .de .mtp { width: 40px; height: 40px; object-fit: cover; border-radius: 8px; margin: 0 auto; }   /* W-0151 탈것 초상 */
 .locked-mark { font-size: 22px; line-height: 40px; }
 .brow .bi { width: 26px; height: 26px; }
 .enc-big { height: 96px; display: grid; place-items: center; }
