@@ -12,7 +12,8 @@
    "judge_a": "○",
    "yaw": -90,
    "plate": true,
-   "judge_b": "○"
+   "judge_b": "○",
+   "rig": "quad"
   },
   {
    "id": "bear",
@@ -24,7 +25,8 @@
    "height": 1.2,
    "judge_a": "○",
    "yaw": 0,
-   "judge_b": "○"
+   "judge_b": "○",
+   "rig": "quad"
   },
   {
    "id": "panda",
@@ -37,7 +39,8 @@
    "judge_a": "✗ 대나무가 몸에 붙음 → 대나무 없는 흰 배경 그림으로",
    "yaw": 0,
    "judge_b": "○",
-   "plate": true
+   "plate": true,
+   "rig": "quad"
   },
   {
    "id": "monkey",
@@ -49,7 +52,8 @@
    "height": 0.6,
    "judge_a": "○ 앉은 자세(펫 ○, 걷는 짐승엔 어색)",
    "yaw": 0,
-   "judge_b": "○"
+   "judge_b": "○",
+   "rig": "quad"
   },
   {
    "id": "boar",
@@ -61,7 +65,8 @@
    "height": 0.9,
    "judge_a": "○",
    "yaw": 0,
-   "judge_b": "○"
+   "judge_b": "○",
+   "rig": "quad"
   },
   {
    "id": "owl",
@@ -73,7 +78,8 @@
    "height": 0.5,
    "judge_a": "✗ 비스듬히 앉은 구도라 몸이 기울어짐 → 바로 선 흰 배경 그림으로",
    "yaw": 0,
-   "judge_b": "○"
+   "judge_b": "○",
+   "rig": "bird"
   },
   {
    "id": "crane",
@@ -85,7 +91,8 @@
    "height": 1.4,
    "yaw": -90,
    "judge_a": "○",
-   "judge_b": "○"
+   "judge_b": "○",
+   "rig": "bird"
   },
   {
    "id": "elephant",
@@ -98,7 +105,8 @@
    "yaw": 0,
    "judge_b": "○",
    "plate": true,
-   "plate_cut": 0.025
+   "plate_cut": 0.025,
+   "rig": "quad"
   },
   {
    "id": "rabbit",
@@ -109,7 +117,8 @@
    "note": "",
    "height": 0.35,
    "yaw": 0,
-   "judge_b": "○"
+   "judge_b": "○",
+   "rig": "quad"
   },
   {
    "id": "squirrel",
@@ -120,7 +129,8 @@
    "note": "",
    "height": 0.25,
    "yaw": 0,
-   "judge_b": "○ 떠 있는 공 = finish 가 지움"
+   "judge_b": "○ 떠 있는 공 = finish 가 지움",
+   "rig": "quad"
   },
   {
    "id": "duck",
@@ -131,7 +141,8 @@
    "note": "",
    "height": 0.45,
    "yaw": -90,
-   "judge_b": "○"
+   "judge_b": "○",
+   "rig": "bird"
   },
   {
    "id": "sparrow",
@@ -143,7 +154,8 @@
    "height": 0.18,
    "yaw": -90,
    "plate": true,
-   "judge_b": "○"
+   "judge_b": "○",
+   "rig": "bird"
   },
   {
    "id": "slime",
@@ -155,7 +167,8 @@
    "height": 0.6,
    "yaw": 0,
    "plate": true,
-   "judge_b": "○"
+   "judge_b": "○",
+   "rig": "worm"
   },
   {
    "id": "crow",
@@ -177,7 +190,8 @@
    "yaw": 90,
    "plate": true,
    "plate_cut": 0.06,
-   "judge_b": "○"
+   "judge_b": "○",
+   "rig": "quad"
   },
   {
    "id": "horse_white",
@@ -189,7 +203,8 @@
    "height": 1.7,
    "judge_a": "○",
    "yaw": 0,
-   "judge_b": "○"
+   "judge_b": "○",
+   "rig": "quad"
   },
   {
    "id": "horse_farm",
@@ -202,7 +217,8 @@
    "judge_a": "○",
    "yaw": 0,
    "plate": true,
-   "judge_b": "○"
+   "judge_b": "○",
+   "rig": "quad"
   },
   {
    "id": "donkey",
@@ -215,7 +231,8 @@
    "yaw": 0,
    "plate": true,
    "plate_cut": 0.035,
-   "judge_b": "△ 발밑 그림자 줄 조금(plate_cut 0.035)"
+   "judge_b": "△ 발밑 그림자 줄 조금(plate_cut 0.035)",
+   "rig": "quad"
   },
   {
    "id": "zebra",
@@ -226,7 +243,8 @@
    "note": "",
    "height": 1.4,
    "yaw": 0,
-   "judge_b": "○"
+   "judge_b": "○",
+   "rig": "quad"
   }
  ]
 }

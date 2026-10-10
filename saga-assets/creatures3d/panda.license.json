@@ -35,9 +35,10 @@
  },
  "date": "2026-10-11",
  "note": "K-0096 자체 생성(입력 = 우리 txt2img 그림). 빌린 모델을 대신한다 — 게임 참조 바꾸기는 W 티켓.",
- "pipeline": "remote3d/finish.py(얼굴 +Z·발 밑 원점·키 m·떨어진 조각 지움) → glb-compress/creature_fill.mjs --forward-z(뼈 없는 동작 7) → compress.mjs(Meshopt·WebP)",
+ "pipeline": "remote3d/finish.py(얼굴 +Z·발 밑 원점·키 m·떨어진 조각·바닥 판 지움) → asset-forge/creature_rig.py(자체 뼈대 + 자체 키프레임 동작 7, quad·bird·worm) → glb-compress/compress.mjs(Meshopt·WebP)",
  "yaw": 0,
  "height_m": 1.0,
  "replaces": "Poly by Google CC-BY 3.0 — Panda.glb (dungeon·forest·go·story animals/)",
- "commercial_use": true
+ "commercial_use": true,
+ "rig": "quad"
 }
