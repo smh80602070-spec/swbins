@@ -546,11 +546,10 @@
   }
 
   /** 표에서 첫 히트 — 없으면 null. 순수 함수다 */
-  function lookup(kind, ref) {
-    var ks = keysFor(kind, ref), i;
-    for (i = 0; i < ks.length; i++) {
-      if (REG[ks[i]]) { return { key: ks[i], url: REG[ks[i]] }; }
-    }
+  function lookup(kind, ref) {   // W-0148 — 펫은 통일 world 표의 신수 몸(pet_<id>.glb)이 있으면 그것 먼저, 없으면 옛 표
+    var ks = keysFor(kind, ref), i, A3 = global.DG.assets3d, pu = kind === 'pet' && ref && ref.id && A3 && A3.url ? A3.url('world', 'pet_' + ref.id) : null;
+    if (pu) { return { key: 'pet:' + ref.id, url: pu }; }
+    for (i = 0; i < ks.length; i++) { if (REG[ks[i]]) { return { key: ks[i], url: REG[ks[i]] }; } }
     return null;
   }
 

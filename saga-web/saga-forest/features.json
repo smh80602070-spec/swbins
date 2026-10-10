@@ -754,5 +754,22 @@
   "ticket": "W-0135",
   "since": "2026-10-09",
   "note": "D2: QC 2D 다섯 장(tools/_out/qc/20261009-1348.md) Claude 눈 ○ — HUD 돈 칸 □→💰(사가마을·사가종횡·사가천하), 사가나락 이름표 앞 □→📋. 이 PC(윈도 10) 판정 🪙 빈 네모 확인. 정본 shared/, 다섯 판 사본."
+ },
+ {
+  "id": "fs.pet3d-shinsu",
+  "name": "신수 펫 11 3D 몸(K-0090 ④) — pet:pt_* 옛 대역 대신 통일 world 표 pet_pt_*.glb",
+  "files": [
+   "js/asset3d.js",
+   "../shared/js/assets3d.js"
+  ],
+  "tests": [
+   "에셋 — 신수 펫 11(W-0148) 은 통일 world 표의 pet_<id> 몸이 먼저, 표가 꺼지면 옛 대역 · 클립 Hit·Death 가 자리에 걸린다"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0148",
+  "since": "2026-10-10",
+  "note": "D2: 점검(scratchpad probe148, 헤드리스) — 90초 안에 신수 5 구움(삼족오·해태·청룡·백호·주작 ○, 나머지 6 은 시간 초과 — 같은 GLB 가 1만리에선 11 다 구워짐). 옛 대역 GLB 0. 도감 초상 webp 는 자체툴 AI 그림이라 다시 안 구움. QC --game saga-forest PASS(점검과 겹쳐 돌린 첫 판은 3D 장면 7/9, 혼자 다시 돌려 PASS)."
  }
 ]

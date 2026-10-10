@@ -724,5 +724,22 @@
   "ticket": "W-0139",
   "since": "2026-10-10",
   "note": "D2(qc+claude 2026-10-10): visual-20261007/saga-go-1-world3d·2-close·4-burst ○ — 마을 땅이 진흙 단색에서 돌바닥·풀 무늬로, 48m 바둑판 없음. 환경광은 assets3d 시험 뒤 shared/assets/sky/ibl_noon_present_1k.hdr, 못 받으면 옛 alps_field(안 지움 — 정리는 다음). △ 먼 땅 띠는 옛 그대로(이번 범위 밖) · 하늘 물고기는 별건."
+ },
+ {
+  "id": "go.pet3d-shinsu",
+  "name": "신수 펫 11 3D 몸(K-0090 ④) — pet:pt_* 옛 대역 대신 통일 world 표 pet_pt_*.glb",
+  "files": [
+   "js/asset3d.js",
+   "../shared/js/assets3d.js"
+  ],
+  "tests": [
+   "에셋 — 신수 펫 11(W-0148) 은 통일 world 표의 pet_<id> 몸이 먼저, 표가 꺼지면 옛 대역 · 클립 Hit·Death 가 자리에 걸린다"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0148",
+  "since": "2026-10-10",
+  "note": "D2: 점검(scratchpad probe148, 헤드리스) — portrait3d 로 신수 11 전부 구움, pet_pt_*.glb 11 받음, Claude 눈 ○(해태 뿔·청룡 뱀 몸·주작·현무 등딱지 — 옛 Birb·Goleling·Dragon_Evolved 아님). 들판 괴물 중 ref 가 신수인 것(불도깨비·이무기·구미호 등)·탈것 푸른 용도 같은 몸. 도감 초상 webp 는 자체툴 AI 그림이라 다시 안 구움. QC --game saga-go PASS."
  }
 ]

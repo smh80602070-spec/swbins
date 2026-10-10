@@ -5172,6 +5172,18 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         ('격자 ' + at.join(',') + ' 에 폭포 한 자리 · 키 ' + falls[0].h);
     });
 
+    t('에셋 — 신수 펫 11(W-0148) 은 통일 world 표의 pet_<id> 몸이 먼저, 표가 꺼지면 옛 대역 · 클립 Hit·Death 가 자리에 걸린다', function () {
+      var A = DG.asset3d, A3 = DG.assets3d, W = (DG.assets3dIds && DG.assets3dIds.world) || [], keep = A3.url, got = [], bad = [];
+      var ids = ['pt_samjogo', 'pt_haetae', 'pt_cheongryong', 'pt_baekho', 'pt_jujak', 'pt_hyeonmu', 'pt_gumiho', 'pt_dokkaebi', 'pt_bulgasari', 'pt_jeoktoma', 'pt_jeolyeong'];
+      var allW = ids.every(function (id) { return W.indexOf('pet_' + id) >= 0; }), key0 = A.keysFor('pet', { id: 'pt_samjogo' })[0] === 'pet:pt_samjogo';
+      /* 진단에선 통일 표가 꺼져 있을 수 있다 — url 만 잠깐 대역(표에 있는 id 만 주소) */
+      A3.url = function (k, id) { return A3.has(k, id) ? '_shared/assets/world3d/' + id + '.glb' : null; };
+      try { ids.forEach(function (id) { var h = A.lookup('pet', { id: id }); if (h && h.key === 'pet:' + id && String(h.url).indexOf('world3d/pet_' + id + '.glb') >= 0) { got.push(id); } else { bad.push(id); } }); var other = A.lookup('pet', { id: 'pt_fox' }); } finally { A3.url = keep; }
+      var oldOk = !other || String(other.url).indexOf('world3d/pet_') < 0, m = A.mapClips(['Idle', 'Walk', 'Run', 'Attack', 'Hit', 'Death', 'Special']);
+      var clips = m.idle === 'Idle' && m.walk === 'Walk' && m.attack === 'Attack' && m.hit === 'Hit' && m.death === 'Death';
+      var r = [allW, key0, got.length === 11, oldOk, clips];
+      return r.every(Boolean) && ('신수 ' + got.length + '/11 새 몸 · 다른 펫은 옛 표 · 클립 다섯') || '실패 ' + r.join(',') + ' ' + bad.join(',');
+    });
     t('에셋 — 역참 건물은 마을에 안 선다 (헛걸음 막기)', function () {
       /* 역참 건물이 마을의 높은 집으로도 서면, 들판에서 그 모양을 보고
          역참인 줄 알고 걸어갔다가 그냥 남의 집이 된다 — 마을 목록에서 뺐다.
