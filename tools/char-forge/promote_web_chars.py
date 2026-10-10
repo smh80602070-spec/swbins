@@ -41,6 +41,7 @@ def lic_of(r, suffix=''):
 
 
 def main():
+    sys.stdout.reconfigure(encoding="utf-8")
     a = sys.argv[1:]
     opt = lambda k, d=None: a[a.index(k) + 1] if k in a else d
     rows = json.load(open(PLAN, encoding='utf-8'))['entries']
