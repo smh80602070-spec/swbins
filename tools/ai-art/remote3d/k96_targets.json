@@ -505,6 +505,257 @@
    "note": "",
    "height": 4.0,
    "rig": "quad"
+  },
+  {
+   "id": "mushnub",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 Ultimate Monsters — Mushnub (D quaternius·F G S standin·F monsters)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: 펫 넷 판·숲 괴물",
+   "height": 0.6,
+   "rig": ""
+  },
+  {
+   "id": "dino_pet",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 Ultimate Monsters — Dino (D quaternius·F G S standin)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: 펫",
+   "height": 0.7,
+   "rig": ""
+  },
+  {
+   "id": "squidle",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 Ultimate Monsters — Squidle (D·F G S standin)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: 펫",
+   "height": 0.5,
+   "rig": ""
+  },
+  {
+   "id": "glub",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 Ultimate Monsters — Glub (D·F G S standin)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: 펫",
+   "height": 0.5,
+   "rig": ""
+  },
+  {
+   "id": "glub_evolved",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 Ultimate Monsters — Glub_Evolved (D·F G S standin)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: 펫",
+   "height": 0.8,
+   "rig": ""
+  },
+  {
+   "id": "bunny",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 Ultimate Monsters — Bunny (D·F G S standin)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: 펫",
+   "height": 0.5,
+   "rig": ""
+  },
+  {
+   "id": "monkroose",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 Ultimate Monsters — Monkroose (D·F G S standin)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: 펫",
+   "height": 0.6,
+   "rig": ""
+  },
+  {
+   "id": "pink_slime",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 Ultimate Monsters — Pink_Slime (D·F G S standin)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: 펫",
+   "height": 0.4,
+   "rig": ""
+  },
+  {
+   "id": "ghost",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 Ultimate Monsters — Ghost (D·F G S standin·F monsters)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: 펫·숲 손님",
+   "height": 0.9,
+   "rig": ""
+  },
+  {
+   "id": "alpaking",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 Ultimate Monsters — Alpaking (D·F G S standin)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: 펫",
+   "height": 1.2,
+   "rig": ""
+  },
+  {
+   "id": "dragon",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 Ultimate Monsters — Dragon (D·F G S standin)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: 펫",
+   "height": 1.0,
+   "rig": ""
+  },
+  {
+   "id": "dragon_evolved",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 Ultimate Monsters — Dragon_Evolved (D R quaternius·F G S standin)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: D S R 펫·두목·탈것",
+   "height": 2.2,
+   "rig": ""
+  },
+  {
+   "id": "cat_monster",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 Ultimate Monsters — Cat_Monster (D·F G S standin)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: 펫",
+   "height": 0.6,
+   "rig": ""
+  },
+  {
+   "id": "goleling",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 Ultimate Monsters — Goleling (D·F G S standin)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: D S 펫",
+   "height": 0.8,
+   "rig": ""
+  },
+  {
+   "id": "goleling_evolved",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 Ultimate Monsters — Goleling_Evolved (D R quaternius)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: R 장수 몸",
+   "height": 2.0,
+   "rig": ""
+  },
+  {
+   "id": "hywirl",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 Ultimate Monsters — Hywirl (D·F G S standin)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: D S 펫",
+   "height": 0.8,
+   "rig": ""
+  },
+  {
+   "id": "ghost_skull",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 Ultimate Monsters — Ghost_Skull (D R quaternius)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: R 장수 몸",
+   "height": 1.0,
+   "rig": ""
+  },
+  {
+   "id": "rat",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 (2nd pack) — Rat (D R quaternius2·G S foes)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: G S R 적",
+   "height": 0.5,
+   "rig": ""
+  },
+  {
+   "id": "wasp",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 (2nd pack) — Wasp (D R quaternius2·G S foes)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: G S R 적",
+   "height": 0.6,
+   "rig": ""
+  },
+  {
+   "id": "spider",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 (2nd pack) — Spider (D R quaternius2)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: R 적",
+   "height": 0.7,
+   "rig": ""
+  },
+  {
+   "id": "frog_brute",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 (2nd pack) — FrogEnemy (D R quaternius2)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: R 적",
+   "height": 0.9,
+   "rig": ""
+  },
+  {
+   "id": "robot_drone",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 (robots·space) — Robot_Drone (D monsters/robots·G S foes)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: D G S 적",
+   "height": 0.8,
+   "rig": ""
+  },
+  {
+   "id": "robot_walker",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 (robots·space) — Robot_Walker (D robots·F G S foes)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: F G S 적",
+   "height": 1.6,
+   "rig": ""
+  },
+  {
+   "id": "robot_large",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 (robots·space) — Robot_Large (D robots·G S foes)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: D G S 적",
+   "height": 2.4,
+   "rig": ""
+  },
+  {
+   "id": "space_bug",
+   "group": "4-monster",
+   "borrowed": "Quaternius CC0 (robots·space) — EnemySmall (F monsters/space)",
+   "input": "",
+   "status": "새로",
+   "note": "보임: 숲 드문 손님",
+   "height": 0.5,
+   "rig": ""
   }
- ]
+ ],
+ "note_4": "④ 10-11 조사(보이는 것만): 사람 꼴 괴물(Wizard·Orc·Orc_Enemy·Yeti·Alien·Alien_2·Demon·Blue_Demon·Zombie·Giant·Skeleton 5·Ninja)은 TRELLIS 아님 — 인간형 몸은 char-forge 괴물 몸 쪽(ARCH §4.5) · 던전 적 body 는 crea: 자체 몸이 먼저라 대체 안 해도 됨(look 칸 있는 적만 예외 = 로봇 둘, 표에 있음) · Demon.gltf·Alpaking_Evolved·Armabee·Chicken·D quat Birb/Pigeon 사본은 참조 0(지워도 됨) · SlimeEnemy(CC-BY)는 ① slime 이 대신 · rig 칸은 3D 보고 정함"
 }

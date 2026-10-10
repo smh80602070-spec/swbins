@@ -1,0 +1,185 @@
+{
+ "name": "k96_views_D",
+ "spec": "creature",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0096 묶음 D(④ 보이는 괴물 25, 사람 꼴 제외) — TRELLIS 입력 그림, 전부 txt2img, 일반 생김새만(빌린 모델 모양 안 따름), 한 장 = 한 종",
+ "items": [
+  {
+   "id": "mushnub",
+   "subject": "small mushroom creature, big round mushroom cap, stubby legs, tiny arms, cute face, standing on two legs",
+   "subject_ko": "버섯 꼬마",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "dino_pet",
+   "subject": "small cute baby dinosaur, green scales, big head, short tail, standing on two legs",
+   "subject_ko": "아기 공룡",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "squidle",
+   "subject": "little squid creature, big eyes, short tentacles as legs",
+   "subject_ko": "꼬마 오징어",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "glub",
+   "subject": "plump round fish creature, puffy fins, tiny feet",
+   "subject_ko": "동글 물고기",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "glub_evolved",
+   "subject": "big round fish monster, large fins, webbed feet, wide mouth, standing on two legs",
+   "subject_ko": "큰 물고기 괴물",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "bunny",
+   "subject": "rabbit monster, very long ears, fluffy white fur, big feet, standing on two legs",
+   "subject_ko": "토끼 괴물",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "monkroose",
+   "subject": "small monkey critter, long curled tail, big ears, standing on all fours",
+   "subject_ko": "원숭이 꼬마",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "pink_slime",
+   "subject": "pink jelly slime blob, glossy, two eyes, sitting on ground",
+   "subject_ko": "분홍 슬라임",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "ghost",
+   "subject": "cartoon ghost, white flowing sheet body, small arms, round eyes, floating upright",
+   "subject_ko": "유령",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "alpaking",
+   "subject": "alpaca beast, huge fluffy wool mane shaped like a crown, proud, standing on all fours",
+   "subject_ko": "왕관 알파카",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "dragon",
+   "subject": "small dragon, wings folded, horns, long tail, red scales, standing on all fours",
+   "subject_ko": "작은 용",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "dragon_evolved",
+   "subject": "large dragon, big horned head, wings spread, long tail, purple scales, standing on all fours",
+   "subject_ko": "큰 용",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "cat_monster",
+   "subject": "cat-like monster, big pointed ears, long tail, purple fur, standing on two legs",
+   "subject_ko": "고양이 괴물",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "goleling",
+   "subject": "small rock golem, round stone body, mossy, glowing eyes, standing on two legs",
+   "subject_ko": "돌 꼬마",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "goleling_evolved",
+   "subject": "huge rock golem, massive stone arms, cracked boulders, glowing eyes, standing on two legs",
+   "subject_ko": "큰 돌 거인",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "hywirl",
+   "subject": "wind bird spirit, swirling feather tail, small wings, blue, standing on ground",
+   "subject_ko": "바람 새",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "ghost_skull",
+   "subject": "floating skull ghost, wispy smoke tail, glowing eye sockets, floating upright",
+   "subject_ko": "해골 유령",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "rat",
+   "subject": "giant rat, gray fur, long bare tail, sharp teeth, standing on all fours",
+   "subject_ko": "큰 쥐",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "wasp",
+   "subject": "giant wasp, yellow and black striped body, wings spread, stinger, hovering",
+   "subject_ko": "큰 말벌",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "spider",
+   "subject": "giant spider, eight long legs, hairy dark body, red eyes",
+   "subject_ko": "큰 거미",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "frog_brute",
+   "subject": "large brute frog, muscular arms, warty green skin, standing on two legs",
+   "subject_ko": "두꺼비 장사",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "robot_drone",
+   "subject": "hovering round robot drone, single camera eye, small rotors, metal, hovering",
+   "subject_ko": "로봇 드론",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "robot_walker",
+   "subject": "bipedal walker robot, boxy metal body, two mechanical legs",
+   "subject_ko": "두 발 로봇",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "robot_large",
+   "subject": "hulking heavy robot, huge metal arms, armored chest",
+   "subject_ko": "큰 로봇",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "space_bug",
+   "subject": "small alien bug, six legs, shiny shell, glowing eyes",
+   "subject_ko": "외계 벌레",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  }
+ ]
+}
