@@ -976,16 +976,48 @@
     ctx.textAlign = 'left';
   }
 
+  /* W-0149 — 사람 아닌 적의 몬스터 2D 시트(K-0090 ③, shared/assets/creatures2d/<id>). 2나락 monster-portrait.js 의 계통 표를 옮겼다(id 문자열만) —
+     같은 이름 = 같은 몸. 받기 전·없으면 null → 옛 길(W-0051 beast 표·스탬프) */
+  var CREA_IDS = {
+    boss: ['boss_01', 'boss_02', 'boss_03', 'boss_04', 'boss_05', 'boss_06', 'boss_07', 'boss_08', 'boss_09', 'boss_10', 'boss_11', 'boss_12'],
+    cons: ['mon_cons_01', 'mon_cons_02', 'mon_cons_03', 'mon_cons_04'], quad: ['mon_quad_01', 'mon_quad_02', 'mon_quad_03', 'mon_quad_04'],
+    serp: ['mon_serp_01', 'mon_serp_02', 'mon_serp_03', 'mon_serp_04'], spir: ['mon_spir_01', 'mon_spir_02', 'mon_spir_03', 'mon_spir_04'],
+    wing: ['mon_wing_01', 'mon_wing_02', 'mon_wing_03', 'mon_wing_04']
+  };
+  var CREA_ROBOT = /기계|강철|철갑|드론|거신|로봇|전차/;
+  /** 계통 — 'boss'|'cons'|'quad'|'serp'|'spir'|'wing'|null(사람형) */
+  function creaFamily(ref, isBoss) {
+    if (!ref || ref.kind === 'human') { return null; }
+    if (isBoss) { return 'boss'; }
+    var f = ref.form, n = ref.name || '', em = ref.emoji || '';
+    if (CREA_ROBOT.test(n)) { return 'cons'; }
+    if (f === 'serpent' || f === 'dragon' || f === 'fish' || /🐍/.test(em)) { return 'serp'; }
+    if (f === 'bird' || /🐦|🦅/.test(em)) { return 'wing'; }
+    if (f === 'quad' || f === 'toad' || /🐕|🐺|🐗|🐘|🐯/.test(em)) { return 'quad'; }
+    if (f === 'ogre' || /👻/.test(em)) { return 'spir'; }
+    return 'cons';
+  }
+  function creaIdOf(ref, isBoss) {
+    var list = CREA_IDS[creaFamily(ref, isBoss)], s = String((ref && (ref.key || ref.id || ref.name)) || ''), h = 2166136261, i;
+    if (!list) { return null; }
+    for (i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+    return list[(h >>> 0) % list.length];
+  }
+  function creaPoolOf(M, ref, isBoss) { var id = M && M.creaPool ? creaIdOf(ref, isBoss) : null; return id ? M.creaPool(id) : null; }
+
   /** 2D 시트(shared/js/mode2d.js)로 적을 그린다 — 풀이 없거나 아직 안 받았으면 false(→ 기존 스탬프). 적 단계(tier)로 풀을 고르고 이름으로 같은 적은 같은 몸을 받는다 */
   function drawSheetEnemy(e, x, y) {
     var M = global.DG.mode2d;
     var bz = e.ref.kind === 'human' ? null : (M && M.beastOf ? M.beastOf(e.ref.name) : null);   // 짐승은 어울리는 몸이 표에 있을 때만(W-0051), 드론·나머지는 기존 스탬프
-    if (!M || (e.ref.kind !== 'human' && !bz)) { return false; }
-    var pool = bz ? bz.pool : M.pick('t' + (e.ref.tier || 1), e.ref.name);
+    var crea = creaPoolOf(M, e.ref, e.boss);   // W-0149 — 몬스터 시트가 먼저
+    if (!M || (e.ref.kind !== 'human' && !bz && !crea)) { return false; }
+    var pool = crea || (bz ? bz.pool : M.pick('t' + (e.ref.tier || 1), e.ref.name));
     if (!pool) { return false; }
     var clip = e.hurt > 0 ? 'hit' : (e.atkAnim > 0 ? 'attack' : 'walk');
     var ms = clip === 'attack' ? (0.28 - e.atkAnim) * 1000 : (clip === 'hit' ? Math.max(0, 0.3 - e.hurt) * 1000 : Date.now() + (e.phase || 0) * 160);
-    return M.draw(ctx, { pool: pool, clip: clip, facing: e.dir, ms: ms, x: x, y: y, scale: (bz ? bz.k : 1) * (e.boss ? 1.9 : (e.mini || e.rare ? 1.25 : 1)) });
+    var sz = e.boss ? 1.9 : (e.mini || e.rare ? 1.25 : 1);
+    return M.draw(ctx, { pool: pool, clip: clip, facing: e.dir, ms: ms, x: x, y: y, scale: (bz && !crea ? bz.k : 1) * sz }) ||
+      (crea && (bz || e.ref.kind === 'human') ? M.draw(ctx, { pool: bz ? bz.pool : M.pick('t' + (e.ref.tier || 1), e.ref.name), clip: clip, facing: e.dir, ms: ms, x: x, y: y, scale: (bz ? bz.k : 1) * sz }) : false);   // 시트 manifest 받기 전엔 옛 길
   }
 
   /** 죽는 몸짓(run.dying) — 2D 시트의 death 동작. 끝날 무렵 흐려진다. 시트가 없으면 안 그린다(예전에도 안 그렸다) */
@@ -994,12 +1026,12 @@
     if (!M || !run || !run.dying || !run.dying.length) { return; }
     for (var i = 0; i < run.dying.length; i++) {
       var d = run.dying[i], x = d.x + d.w / 2 - camX, y = d.y + d.h;
-      var dz = d.ref.kind === 'human' ? null : (M.beastOf ? M.beastOf(d.ref.name) : null);
-      if (x < -80 || x > W + 80 || (d.ref.kind !== 'human' && !dz)) { continue; }
-      var pool = dz ? dz.pool : M.pick('t' + (d.ref.tier || 1), d.ref.name);
+      var dz = d.ref.kind === 'human' ? null : (M.beastOf ? M.beastOf(d.ref.name) : null), dc = creaPoolOf(M, d.ref, d.boss);
+      if (x < -80 || x > W + 80 || (d.ref.kind !== 'human' && !dz && !dc)) { continue; }
+      var pool = dc || (dz ? dz.pool : M.pick('t' + (d.ref.tier || 1), d.ref.name));
       if (!pool) { continue; }
       var f = d.dur > 0 ? d.t / d.dur : 1;
-      M.draw(ctx, { pool: pool, clip: 'death', facing: d.dir, ms: d.t * 1000, x: x, y: y, scale: (dz ? dz.k : 1) * (d.boss ? 1.9 : (d.mini || d.rare ? 1.25 : 1)), alpha: f > 0.7 ? Math.max(0, 1 - (f - 0.7) / 0.3) : 1 });
+      M.draw(ctx, { pool: pool, clip: 'death', facing: d.dir, ms: d.t * 1000, x: x, y: y, scale: (dz && !dc ? dz.k : 1) * (d.boss ? 1.9 : (d.mini || d.rare ? 1.25 : 1)), alpha: f > 0.7 ? Math.max(0, 1 - (f - 0.7) / 0.3) : 1 });
     }
   }
 
@@ -1343,7 +1375,7 @@
   global.DG = global.DG || {};
   global.DG.sideView = {
     init: init, draw: draw, resize: resize, miniBox: miniBox,
-    _cam: function () { return camX; }, _zoom: function () { return { base: baseZoom(), eff: effZoom(), lowK: lowK, W: W, H: H }; }, _dirt: dirtOf, _grass: grassOf,   // W-0132 진단
+    _cam: function () { return camX; }, _zoom: function () { return { base: baseZoom(), eff: effZoom(), lowK: lowK, W: W, H: H }; }, _dirt: dirtOf, _grass: grassOf, _creaFamily: creaFamily, _creaId: creaIdOf, _creaIds: CREA_IDS,   // W-0132 진단
     /** 진단용 — **흔들림의 세기는 화면 층이 정한다**(side.js 는 'shake' 한 줄만 남긴다) */
     _shake: shakeOf,
     shakeLevel: shakeLevel, setShakeLevel: setShakeLevel,
