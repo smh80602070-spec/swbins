@@ -63,7 +63,9 @@ var _scenario: Node   # G-0088 이야기 카드 엔진(world/scenario_runner.gd)
 ## 가 바꾼 현재 성 값을 다음 프레임에 저절로 집어 든다.
 func _ready() -> void:
 	## 가로 화면이면 UI 기준 크기를 바꿔 글자가 깨알만 하지 않게(saga_core/ui/orientation_scale.gd).
-	add_child(preload("res://saga_core/ui/orientation_scale.gd").new())
+	var ui_scale := preload("res://saga_core/ui/orientation_scale.gd").new()
+	ui_scale.set("landscape", Vector2i(1920, 1280))   # G-0162 — 명령 단추 열 14개가 1600×1066 에선 목표판과 겹친다(배치 손보기 전까지 예전 기준)
+	add_child(ui_scale)
 	preload("res://saga_core/audio/bgm_picker.gd").attach(self, func() -> String: return "realm-field" if RealmSaveState.viewing_map else "realm-town")  # 배경음(G-0013) — 지도 화면이면 들판, 성이면 마을
 	## 자동 저장(saga_core/world/autosave_timer.gd) — 60초마다·앱 멈춤 때. 시나리오를 고르는 중에는 안 한다.
 	preload("res://saga_core/world/autosave_timer.gd").attach(self, RealmSaveState.save, func() -> bool: return RealmSaveState.scenario_ready)

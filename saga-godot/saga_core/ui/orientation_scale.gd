@@ -9,7 +9,9 @@ extends Node
 ## 개발용: SAGA_QUICK_SHOT=<png 경로> 가 있으면 2.5초(SAGA_QUICK_SHOT_DELAY) 뒤 화면을 저장하고 끝낸다(창 모드 가로 UI 확인용).
 
 const PORTRAIT := Vector2i(1080, 1920)
-const LANDSCAPE := Vector2i(1920, 1280)
+const LANDSCAPE := Vector2i(1600, 1066)   # G-0162 — 1920×1280 이면 1280×720 창에서 0.56배라 메뉴 글자 8~9px, 1.2배로
+## G-0162 — 판이 달기 전에 바꿔 넣을 수 있다(사가천하는 오른쪽 명령 단추 열이 1066 높이에 안 들어가 목표판과 겹쳐 예전 1920×1280).
+var landscape := LANDSCAPE
 
 
 func _ready() -> void:
@@ -24,6 +26,10 @@ func _ready() -> void:
 func _fit() -> void:
 	var win := get_window()
 	var s := win.size
-	var want := LANDSCAPE if s.x > s.y else PORTRAIT
+	var land := landscape
+	var e := OS.get_environment("SAGA_UI_LANDSCAPE")   # 개발용 "1440x960" — 가로 기준 크기 시험
+	if e.contains("x"):
+		land = Vector2i(int(e.get_slice("x", 0)), int(e.get_slice("x", 1)))
+	var want := land if s.x > s.y else PORTRAIT
 	if win.content_scale_size != want:
 		win.content_scale_size = want
