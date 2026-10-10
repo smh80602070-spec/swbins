@@ -114,6 +114,7 @@ const SHOTS := [
 	["f_airship", "frost", Vector2(5.85, 6.0), Vector3.ZERO, Vector2(6.45, 5.25), -14.0, 10.0, ""],
 	["f_snow_bloom", "frost", Vector2(4.2, 3.5), Vector3.ZERO, Vector2(4.2, 3.4), -40.0, 6.0, ""],
 	["f_bear_king", "frost", Vector2(3.15, 6.05), Vector3.ZERO, "boss:snow_bear_king", -12.0, 10.0, ""],
+	["f_bear_king_p2", "frost", Vector2(3.15, 6.05), Vector3.ZERO, "boss:snow_bear_king", -12.0, 10.0, "bosshp:0.4"],   # G-0161 2단계 방패·보스 바
 	["c_shipyard", "coast", Vector2(6.6, 4.55), Vector3.ZERO, Vector2(7.3, 3.85), -12.0, 11.0, ""],
 	["r_observatory", "ruins", Vector2(1.2, 2.85), Vector3.ZERO, Vector2(1.2, 2.2), 8.0, 12.0, ""],
 	["r_obs_deck", "ruins", Vector2(1.2, 2.2), Vector3(0.0, 24.5, 6.0), Vector2(1.2, 2.1), -20.0, 9.0, ""],
@@ -437,6 +438,15 @@ func _act(a: String) -> void:
 				_close_call = [tn, tp[2] if tp.size() > 2 else ""]
 		"card":   # 저장 마무리 카드 — 저장은 안 하고 카드만(save_button.gd 와 같은 줄)
 			SessionCard.show(get_tree().current_scene, "저장했다 — 이번 세션", ["경험치 +%.0f" % PartyState.session_exp_gained(), "발견 +%d" % CodexState.session_discovered(), "부대 %d명" % PartyState.members.size()])
+		_ when a.begins_with("bosshp:"):
+			## G-0161 — "bosshp:<비율>" 가장 가까운 보스(그룹 go_boss) 체력을 비율로 맞추고 단계 판정(2단계 방패·보스 바 확인용, 저장 안 함).
+			var bb: Node3D = null
+			for b in get_tree().get_nodes_in_group("go_boss"):
+				if bb == null or (b as Node3D).global_position.distance_to(_p.global_position) < bb.global_position.distance_to(_p.global_position):
+					bb = b
+			if bb:
+				bb.set("hp", float(bb.get("max_hp")) * float(a.substr(7)))
+				bb.call("_check_phase")
 		_ when a.begins_with("call:"):
 			## "call:<그룹>:<여는 함수>:<인자>:<닫는 함수>" — 화면 하나를 열어 찍고 다음 컷 전에 닫는다(10-06 오래된 기능 판정).
 			var parts := a.split(":")

@@ -35,6 +35,11 @@ const RIFT := {"count": 5, "first": 2.0, "step": 2.6, "radius": 1.8, "tell": 1.0
 
 var phase := 1
 var skill := ""
+
+## G-0161 — 화면 위 보스 바(ui/boss_bar.gd)가 이 그룹에서 가까운 보스를 고른다.
+func _enter_tree() -> void:
+	add_to_group("go_boss")
+
 var skill_t := 0.0
 var skill_cd := 2.0
 var hits_taken := 0 # 점검용 — 패턴에 맞은 번수
