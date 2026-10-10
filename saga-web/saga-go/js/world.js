@@ -828,11 +828,13 @@
     var rar = rarityRoll();
     var sx = pos.x + Math.cos(ang) * dist;
     var sy = pos.y + Math.sin(ang) * dist;
-    var region = genRegionAt(sx, sy);
+    var region = genRegionAt(sx, sy), ref = isHero ? pickHero(rar, region) : pickPet(rar, region), SPf = global.DG.sprite;
+    /* W-0152 — 물고기 꼴 펫은 물 칸에만. 산·들에 선 잉어·붕어가 3D 에서 먼 언덕 위 = 지붕 높이 공중 물고기로 보였다 */
+    for (var tr = 0; !isHero && tr < 8 && SPf && SPf.beastFormOf && SPf.beastFormOf(ref) === 'fish' && terrainAt(Math.floor(sx / 48), Math.floor(sy / 48)) !== 'water'; tr++) { ref = pickPet(rar, region); }
     return {
       uid: ++spawnSeq,
       kind: isHero ? 'hero' : 'pet',
-      ref: isHero ? pickHero(rar, region) : pickPet(rar, region),
+      ref: ref,
       x: sx, y: sy,
       homeX: sx, homeY: sy,          // 배회 중심
       tx: sx, ty: sy,                // 현재 목적지
@@ -2029,7 +2031,7 @@
     REGION_SIZE: REGION_SIZE, ENCOUNTER_RANGE: ENCOUNTER_RANGE,
     init: function (objEl, groundEl) { initCanvas(objEl, groundEl); bindKeys(); tickSpawns(); },
     update: function (dt) { moveByKeys(dt); updatePlayerMotion(dt); wanderSpawns(dt); tickSpawns(); },
-    draw: draw, resize: resize, layoutLabels: layoutLabels,   // W-0144 진단
+    draw: draw, resize: resize, layoutLabels: layoutLabels, _makeSpawn: makeSpawn,   // W-0144·W-0152 진단
     get spawns() { return spawns; },
     removeSpawn: removeSpawn,
     nearest: nearest, maxSpawns: maxSpawns, spawnSpecial: spawnSpecial,

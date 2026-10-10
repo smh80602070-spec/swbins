@@ -82,7 +82,7 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "D3(qc+claude, W-0110): 땅 사진 변형 경계 섞기 뒤 visual-20261007/saga-go-1-world3d.png ○(가운데 십자 이음매 사라짐, 길·흙 같은 다른 종류 경계 직선은 그대로) · qc+claude 2026-10-08: △ 땅이 OSM 칸마다 재질·밝기가 갈려 화면 가운데 십자 이음매(visual-20261007/saga-go-1-world3d.png) → W-0110 · D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). △ 땅 네 칸 이음매·하늘 물고기는 사람 판정.",
+  "note": "D3(qc+claude, W-0110): 땅 사진 변형 경계 섞기 뒤 visual-20261007/saga-go-1-world3d.png ○(가운데 십자 이음매 사라짐, 길·흙 같은 다른 종류 경계 직선은 그대로) · qc+claude 2026-10-08: △ 땅이 OSM 칸마다 재질·밝기가 갈려 화면 가운데 십자 이음매(visual-20261007/saga-go-1-world3d.png) → W-0110 · D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). △ 땅 네 칸 이음매는 사람 판정 · 하늘 물고기는 W-0152 로 닫음(qc+claude 2026-10-10 — 물고기 꼴 펫 스폰이 산·들 칸에 서던 것, 2-close·4-burst ○).",
   "human": true
  },
  {

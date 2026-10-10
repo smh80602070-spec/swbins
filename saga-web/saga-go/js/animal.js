@@ -241,8 +241,9 @@
         if (!base) { delete cache[m.id]; continue; }
         c = cache[m.id] = { t: t, base: base, r: react(m, base, pos, t) };
       }
-      var dist = Math.hypot(c.r.x - pos.x, c.r.y - pos.y);
+      var dist = Math.hypot(c.r.x - pos.x, c.r.y - pos.y), Wd = global.DG.world;
       if (lod(dist).ms < 0) { continue; }
+      if (m.kind.form === 'fish' && Wd && Wd.terrainAt && Wd.terrainAt(Math.floor(c.r.x / 48), Math.floor(c.r.y / 48)) !== 'water') { continue; }   // W-0152 — 물 칸 아니면 잉어를 안 세운다(3D 공중 물고기)
       out.push({
         m: m, kind: m.kind, x: c.r.x, y: c.r.y, lift: c.r.lift,
         alarm: c.r.alarm, moving: c.r.moving, ang: c.r.ang,
