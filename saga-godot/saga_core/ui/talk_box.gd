@@ -128,6 +128,14 @@ func is_last_line() -> bool:
 	return _i >= _lines.size() - 1
 
 
+## G-0155 — 닫지 않고 지워져도(씬 바뀜·reload_current_scene·창 강제 해제) 내가 건 멈춤은 푼다.
+## 안 풀면 SceneTree.paused 가 새 씬까지 남아 카메라·HUD 가 첫 프레임에서 멈춘다(5천하 성 조망이 원점에).
+func _exit_tree() -> void:
+	if _paused_by_me and get_tree():
+		get_tree().paused = false
+		_paused_by_me = false
+
+
 func _close(answer: String) -> void:
 	if _paused_by_me:
 		get_tree().paused = false
