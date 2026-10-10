@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-10",
+  "tickets": ["U-0082 2나락 방 조명 — 주인공 횃불 + 방 앰비언트 + LUT 세기(R-0 셋째)"],
+  "how": "보조등(SAGA_SHOT_LIGHT) 없이 PlaytestDungeonWearTiersGui 층 2·40·70 + PlaytestShowcaseGui name:EraDecor_ INSIDE·sky (GUI, Android, 세이브 백업·복원) → PIL 가운데 영역(1280×720 기준 300..750×150..480 비율) 평균 휘도·최대 + Claude 눈 · PlaytestDungeonHeadless(세이브 치운 채)",
+  "fix": "새 Games/SagaDungeon/Player/HeroTorch.cs — 주인공 자식 점광(1,0.78,0.55)·4.0·12m·높이 2.2m·그림자 없음 + RenderSettings 앰비언트 Flat (0.7,0.66,0.76) 과 ambientProbe SH 직접(실행 중엔 ambientLight 만으론 SH 가 안 바뀜) · PlayerController.Awake 한 줄 · BuildGameToneLuts.DungeonContribution 0.3(빌더에 판별 세기 칸, 나머지 판 1) + Settings/ToneVolume_dungeon.asset contribution 1→0.3(LUT 그림은 무변경) · PlaytestDungeonHeadless CheckHeroTorch",
+  "history": "첫 실행 3회(횃불·앰비언트만) 0단 13.8→27.0→38.0 미달·되돌림 → 원인 LUT(청록·대비 1.12 가 그늘을 누름)·마모 색 → R-0 다시 LUT 0.5 42.5·0.3 44.6(단별 기준 45·35·25 미달·되돌림, 눈 ○) → R-0 셋째 기준 0단 ≥44·1·2단 눈",
+  "scene": ["[PlaytestDungeonHeadless] hero torch OK - 점광 1·12m·4·그림자 없음 · 앰비언트 RGBA(0.700, 0.660, 0.760, 1.000) · LUT 세기 0.3", "[PlaytestDungeonHeadless] OK - 10 frames, no errors"],
+  "measure": "20_dungeon_wear_tier0 평균 44.8 최대 242 · 21_tier1 29.6 · 22_tier2 18.7 (U-0077 보조등 없는 옛 사진 ≈ 최대 (32,46,114))",
+  "runtime_errors": 0,
+  "shots": "세션 scratchpad shots/torch_wear(20~22) · torch_decor(nameEraDecor_0~1·sky_yaw0/180) (커밋 안 함)",
+  "results": [
+    { "id": "un.dg.room-light", "eye": "○", "note": "0·1단: 바닥 돌 결·주인공 옷 색이 화면 전체에서 읽힘, 주인공 둘레 따뜻한 횃불. 2단: 가까운 바닥·주인공 읽힘, 가장자리는 마모 색대로 어둡다(설계). 방 안 컷(보조등 없음): 돌벽·자갈 바닥·꾸밈 다 보임. 지붕 위 컷: 아치·벽 따뜻한 돌색, 날림 없음. 마모 0·1·2 차이 유지", "result": "새 항목 D2", "date": "2026-10-10" }
+  ],
+  "left": "성능은 이 티켓 검증에 없음(점광 하나·그림자 없음) — 다음 PlaytestSagaPerf 때 2나락 함께 보기"
+}

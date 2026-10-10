@@ -115,6 +115,7 @@ namespace Saga.EditorTools
                 // 이 체크를 세션의 첫 레벨업으로 만들면 zoomBefore가 항상 손 안 댄
                 // 기본값(6)이라 결정적으로 통과한다.
                 CheckLevelUpCut();
+                CheckHeroTorch(); // tasks U-0082 방 조명(주인공 횃불·방 앰비언트·LUT 세기)
                 CheckLootMarker();
                 CheckSigilState();
                 CheckWorldBoss();

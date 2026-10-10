@@ -1804,5 +1804,25 @@
   "ticket": "U-0084",
   "since": "2026-10-10",
   "note": "D2(눈 ○, U-0084 1단계): docs/playcheck/d2-u0084-20261010.json — 1만리·3마을·4종횡·5천하 낮 전후(전 = SAGA_GROUND_TOON=1): 띠 경계 없음·그림자가 땅에 앉음·3마을 휨 그대로·날림 없음. 1만리·3마을은 원래 램버트라 차이가 작고(조금 부드러움·추가 조명 받음), 4종횡·5천하 땅은 이미 URP Lit, 띠·림 툰이던 RegionGround 는 게임 씬 미사용(지역 로더 전용). 2단계(사진 텍스처·높이 섞기)는 K-0093 대기"
+ },
+ {
+  "id": "un.dg.room-light",
+  "name": "2나락 방 조명 — 주인공 횃불 점광(4.0·12m·그림자 없음) + 방 앰비언트 Flat 0.7(SH 직접) + 2나락 색 보정 LUT 세기 0.3(U-0082)",
+  "files": [
+   "saga-unity/Assets/Games/SagaDungeon/Player/HeroTorch.cs",
+   "saga-unity/Assets/Games/SagaDungeon/Player/PlayerController.cs",
+   "saga-unity/Assets/Editor/BuildGameToneLuts.cs",
+   "saga-unity/Assets/Settings/ToneVolume_dungeon.asset"
+  ],
+  "tests": [
+   "PlaytestDungeonWearTiersGui",
+   "PlaytestDungeonHeadless"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "U-0082",
+  "since": "2026-10-10",
+  "note": "D2(수치+눈 ○, U-0082): docs/playcheck/d2-u0082-20261010.json — 보조등 없이 마모 0단 가운데 평균 휘도 44.8(≥44, 전 ≈14)·최대 242, 1·2단 29.6·18.7(마모 색 설계, 눈 ○). 방 꾸밈 컷 보조등 없이 벽·바닥·꾸밈 읽힘, 지붕 위 컷 날림 없음"
  }
 ]

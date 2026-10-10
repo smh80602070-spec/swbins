@@ -48,7 +48,7 @@ namespace Saga.EditorTools
         public static void Build()
         {
             BuildOne(GoLutPath, GoProfilePath, GradeVillage);
-            BuildOne(DungeonLutPath, DungeonProfilePath, GradeDungeon);
+            BuildOne(DungeonLutPath, DungeonProfilePath, GradeDungeon, DungeonContribution);
             BuildOne(ForestLutPath, ForestProfilePath, GradeForest);
             BuildOne(StoryLutPath, StoryProfilePath, GradeStory);
             BuildOne(RealmLutPath, RealmProfilePath, GradeRealm);
@@ -57,10 +57,13 @@ namespace Saga.EditorTools
             Debug.Log("[BuildGameToneLuts] saved 5 LUTs + 5 tone volume profiles");
         }
 
-        private static void BuildOne(string lutPath, string profilePath, Func<Color, Color> grade)
+        /// <summary>tasks U-0082 — 2나락 LUT 세기. 청록·대비 1.12 가 그늘을 눌러 보조등 없는 방이 까맸다 — 0.3 만 섞는다(10-10 측정, 나머지 판은 1).</summary>
+        public const float DungeonContribution = 0.3f;
+
+        private static void BuildOne(string lutPath, string profilePath, Func<Color, Color> grade, float contribution = 1f)
         {
             var tex = BakeAndImportLut(lutPath, grade);
-            BuildToneProfile(profilePath, tex);
+            BuildToneProfile(profilePath, tex, contribution);
         }
 
         private static Texture2D BakeAndImportLut(string path, Func<Color, Color> grade)
@@ -107,7 +110,7 @@ namespace Saga.EditorTools
             return AssetDatabase.LoadAssetAtPath<Texture2D>(path);
         }
 
-        private static void BuildToneProfile(string path, Texture2D lut)
+        private static void BuildToneProfile(string path, Texture2D lut, float contribution)
         {
             if (AssetDatabase.LoadAssetAtPath<VolumeProfile>(path) != null)
             {
@@ -119,7 +122,7 @@ namespace Saga.EditorTools
             var lookup = profile.Add<ColorLookup>(true);
             AssetDatabase.AddObjectToAsset(lookup, profile);
             lookup.texture.value = lut;
-            lookup.contribution.value = 1f;
+            lookup.contribution.value = contribution;
 
             EditorUtility.SetDirty(profile);
         }

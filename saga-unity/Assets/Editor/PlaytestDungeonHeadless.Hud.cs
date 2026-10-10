@@ -298,5 +298,34 @@ namespace Saga.EditorTools
 
             Debug.Log("[PlaytestDungeonHeadless] goal board / session card OK - 3 lines filled, source auto-found, card shows and auto-closes");
         }
+
+        /// <summary>tasks U-0082 — 주인공 밑 횃불 점광 하나(그림자 없음)·방 앰비언트·2나락 LUT 세기.</summary>
+        private static void CheckHeroTorch()
+        {
+            var pc = Object.FindFirstObjectByType<PlayerController>();
+            int n = 0; Light t = null;
+            if (pc != null) foreach (var l in pc.GetComponentsInChildren<Light>(true)) if (l.name == HeroTorch.ObjectName) { n++; t = l; }
+            if (n != 1 || t.type != LightType.Point || t.shadows != LightShadows.None
+                || !Mathf.Approximately(t.range, HeroTorch.HeroTorchRange) || !Mathf.Approximately(t.intensity, HeroTorch.HeroTorchIntensity))
+            {
+                Debug.LogError($"[PlaytestDungeonHeadless] 주인공 횃불 {n}개·{t?.type}·그림자 {t?.shadows}·{t?.range}m·{t?.intensity}(점광 하나·그림자 없음·{HeroTorch.HeroTorchRange}m·{HeroTorch.HeroTorchIntensity}이어야)");
+                _hadError = true;
+                return;
+            }
+            if (RenderSettings.ambientMode != UnityEngine.Rendering.AmbientMode.Flat || RenderSettings.ambientLight != HeroTorch.RoomAmbient)
+            {
+                Debug.LogError($"[PlaytestDungeonHeadless] 방 앰비언트 {RenderSettings.ambientMode} {RenderSettings.ambientLight} ≠ {HeroTorch.RoomAmbient}");
+                _hadError = true;
+                return;
+            }
+            var tone = AssetDatabase.LoadAssetAtPath<UnityEngine.Rendering.VolumeProfile>(BuildGameToneLuts.DungeonProfilePath);
+            if (tone == null || !tone.TryGet<UnityEngine.Rendering.Universal.ColorLookup>(out var lut) || !Mathf.Approximately(lut.contribution.value, BuildGameToneLuts.DungeonContribution))
+            {
+                Debug.LogError($"[PlaytestDungeonHeadless] 2나락 LUT 세기가 {BuildGameToneLuts.DungeonContribution} 이 아님");
+                _hadError = true;
+                return;
+            }
+            Debug.Log($"[PlaytestDungeonHeadless] hero torch OK - 점광 1·{t.range}m·{t.intensity}·그림자 없음 · 앰비언트 {RenderSettings.ambientLight} · LUT 세기 {lut.contribution.value}");
+        }
     }
 }

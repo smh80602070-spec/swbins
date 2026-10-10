@@ -169,6 +169,7 @@ namespace Saga.Dungeon.Player
         private void Awake()
         {
             _controller = GetComponent<CharacterController>();
+            HeroTorch.Attach(transform); // tasks U-0082 — 방이 까맣지 않게 주인공 횃불 + 방 앰비언트
 
             if (inputActions != null)
             {
