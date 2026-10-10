@@ -144,6 +144,14 @@ func _do_hitstop(crit: bool, stop_ms: int = -1) -> void:
 	hitstop_triggered.emit(dur)
 
 
+## G-0173 — 짧은 느려짐(회피 성공 등). 히트스톱과 같은 틀 — 더 느린 쪽·더 늦게 풀리는 쪽을 따르고 _process 가 실제 시간으로 푼다.
+func slow(ms: int, scale: float) -> void:
+	if ms <= 0:
+		return
+	_hitstop_until_msec = maxi(_hitstop_until_msec, Time.get_ticks_msec() + ms)
+	Engine.time_scale = minf(Engine.time_scale, scale)
+
+
 func _process(_delta: float) -> void:
 	if _hitstop_until_msec > 0 and Time.get_ticks_msec() >= _hitstop_until_msec:
 		Engine.time_scale = 1.0

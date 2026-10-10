@@ -82,7 +82,7 @@ func _bolt_fx(pos: Vector3) -> void:
 	tw.tween_property(mat, "albedo_color:a", 0.0, 0.25)
 	tw.tween_callback(mi.queue_free)
 
-func _reaction_text(target: Node3D, text: String, color: Color) -> void:
+func _reaction_text(target: Node3D, text: String, color: Color, up := 2.4, side := Vector3.ZERO) -> void:   # G-0173 up·side — 높이·옆 비킴(회피 글자는 몸 옆에)
 	var l := Label3D.new()
 	l.text = text
 	l.modulate = color
@@ -92,7 +92,7 @@ func _reaction_text(target: Node3D, text: String, color: Color) -> void:
 	l.outline_size = 10
 	l.pixel_size = 0.006
 	get_tree().current_scene.add_child(l)
-	l.global_position = target.global_position + Vector3.UP * 2.4
+	l.global_position = target.global_position + Vector3.UP * up + side
 	var tw := l.create_tween()
 	tw.set_parallel(true)
 	tw.tween_property(l, "global_position:y", l.global_position.y + 1.0, 0.8)

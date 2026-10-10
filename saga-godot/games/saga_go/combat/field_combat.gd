@@ -1316,6 +1316,7 @@ func take_damage(amount: float, source: Node) -> void:
 	if hp <= 0.0 or _duel_open():
 		return
 	if _player.call("is_invulnerable"):
+		_dodge_success()
 		return
 	var d := PartyState.char_def(active_id())
 	var dmg := amount * FeelTuning.enemy_dmg_mul * (1.0 - d / (d + 120.0))
@@ -1342,6 +1343,23 @@ func take_damage(amount: float, source: Node) -> void:
 	elif source != null and source.get("element") != null:
 		_elemental_hit(String(source.get("element")), dmg)
 	_refresh_hud()
+
+## G-0173 — 대시(무적) 중에 들어온 공격 — "회피!"·푸른 고리·짧은 느려짐. 한 번 대시에 한 번만(_dodged_at = 그 대시를 알아챈 시각).
+const DODGE_OK_MS := 250
+const DODGE_OK_SCALE := 0.35
+const DODGE_OK_COLOR := Color(0.55, 0.9, 1.0)
+var _dodged_at := -100000
+func _dodge_success() -> void:
+	var now := Time.get_ticks_msec()
+	if now - _dodged_at < 600:   # 같은 대시(무적 약 0.3초) 안에 또 맞으면 다시 알리지 않는다
+		return
+	_dodged_at = now
+	var cam := get_viewport().get_camera_3d()
+	var left := -cam.global_basis.x if cam else Vector3.LEFT
+	left.y = 0.0
+	_reaction_text(_player, "회피!", DODGE_OK_COLOR, 1.3, left.normalized() * 1.1)   # 몸 왼쪽 가슴 높이 — 뒤 적 이름표와 안 겹치게
+	_ring_fx(_player.global_position, 1.6, DODGE_OK_COLOR, 0.35)
+	CombatFeel.slow(DODGE_OK_MS, DODGE_OK_SCALE)
 
 func _elemental_hit(el: String, dmg: float) -> void:
 	match el:

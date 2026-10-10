@@ -44,6 +44,7 @@ const SHOTS := [
 	["v_bridge", "village", Vector2(5.0, 6.2), Vector3(8, 0, 0), Vector2(5.0, 7.0), -12.0, 14.0, ""],
 	["x_swing", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -24.0, 7.5, "swing3"],
 	["x_swing_late", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -24.0, 7.5, "swing8"],
+	["x_pdodge", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -24.0, 7.5, "pdodge"],   # G-0173 회피 성공
 	["x_tell", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -24.0, 7.5, "tell"],   # 적 공격 예고(!) 읽힘
 	["x_fxring", "ruins", "r_statue", Vector3(14, 0, -4), "r_statue", -32.0, 14.0, "fxring"],
 	["v_statue_far", "village", "v_statue", Vector3(3, 0, 12), "v_statue", -2.0, 14.0, ""],
@@ -230,6 +231,11 @@ func _process(_delta: float) -> void:
 	if String(SHOTS[_i][7]).begins_with("burst") and _frame == SETTLE - int(String(SHOTS[_i][7]).substr(5)):
 		_p.call("play_action", "burst", 0.6, 0.0)
 	## G-0152 — "walkN": 찍기 N 프레임 전에 앞으로 걷기 시작 · "stopN": 20 프레임째부터 걷다가 찍기 N 프레임 전에 뗀다
+	## G-0173 — "pdodge" 찍기 4 프레임 전에 대시하고 곧바로 곁의 적에게 맞는다(회피 성공 알림 확인)
+	if String(SHOTS[_i][7]) == "pdodge" and _frame == SETTLE - 4:
+		var fcd := get_tree().get_first_node_in_group("go_field_combat")
+		if fcd and _p.call("start_dodge"):
+			fcd.call("take_damage", 8.0, _swing_enemy)
 	## G-0171 — "hurt:<비율>" 찍기 6 프레임 전에 지금 인물 체력을 비율로 두고 한 대 맞는다(화면 가장자리 신호 확인, 저장 안 함)
 	if String(SHOTS[_i][7]).begins_with("hurt:") and _frame == SETTLE - 6:
 		var fch := get_tree().get_first_node_in_group("go_field_combat")
@@ -350,6 +356,16 @@ func _act(a: String) -> void:
 			if _swing_enemy:
 				_swing_enemy.set_physics_process(false)
 				_swing_enemy.set_process(false)
+				_p.global_position = _swing_enemy.global_position + Vector3(1.4, 0.4, 0.9)
+		"pdodge":   # G-0173 — 가장 가까운 적 곁에 서고 그 적을 멈춘다(맞는 건 찍기 직전 위에서)
+			var bp := 1e9
+			for e in get_tree().get_nodes_in_group("field_enemy"):
+				var d := (e as Node3D).global_position.distance_to(_p.global_position)
+				if d < bp:
+					bp = d
+					_swing_enemy = e
+			if _swing_enemy:
+				_swing_enemy.set_physics_process(false)
 				_p.global_position = _swing_enemy.global_position + Vector3(1.4, 0.4, 0.9)
 		"tell":   # 공격 예고 중인 적 — 가장 가까운 적 곁에 서고, 그 적을 예고 상태로 멈춰 둔다(덮치지 않게 물리 끔)
 			var bt := 1e9
