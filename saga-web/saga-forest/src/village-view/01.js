@@ -240,7 +240,7 @@
   /* ── 그리기 ───────────────────────────────────────────── */
 
   function draw() {
-    if (!ctx) { return; }
+    if (!ctx) { return; } bubbleRects.length = 0;   // W-0144 — 말풍선 자리는 프레임마다 새로
     var raw = V.raw(), p = raw.player;
     var T = V.TILE;
     var now = Date.now();

@@ -245,7 +245,7 @@
     /** 자가진단용 */
     _cam: function () { return cam; },
     _animalSprite: function (kind) { return ANIMAL_SPRITE[kind] || null; },
-    _project: project,
+    _project: project, _bubbleSlot: bubbleSlot,   // W-0144 진단
     _unproject: unproject,
     _projectIn: projIn,
     _unprojectIn: unprojIn

@@ -1655,7 +1655,25 @@
 
     // 먼 것부터 그려야 겹침이 자연스럽다
     items.sort(function (a, b) { return a.v - b.v; });
-    for (var k = 0; k < items.length; k++) { items[k].draw(); }
+    tagQ.length = 0; for (var k = 0; k < items.length; k++) { items[k].draw(); } flushTags();   // W-0144 — 이름표는 몸을 다 그린 뒤 겹침을 풀어 한 번에
+  }
+
+  /* W-0144 — 이름표 겹침 풀기(순수). items [{x, y, w, h, dist}] → 각 줄에 y(옮긴 자리)·alpha. 가까운 것부터 제자리, 겹치면 위로 h+2 씩
+     한 자리에 셋까지, 그래도 겹치면 숨김(alpha 0) — 가장 가까운 것은 늘 보인다 */
+  var tagQ = [];
+  function layoutLabels(items) {
+    var order = items.slice().sort(function (a, b) { return (a.dist || 0) - (b.dist || 0); }), placed = [], i, s, y;
+    for (i = 0; i < order.length; i++) {
+      var it = order[i], hit = function (q) { return Math.abs(q.x - it.x) * 2 < q.w + it.w && Math.abs(q.y - y) < (q.h + it.h) / 2; };
+      for (s = 0, it.alpha = 0; s < 3 && !it.alpha; s++) { y = it.y - s * (it.h + 2); if (i === 0 || !placed.some(hit)) { it.y = y; it.alpha = 1; placed.push(it); } }
+    }
+    return items;
+  }
+  function flushTags() {
+    ctx.textAlign = 'center';
+    tagQ.forEach(function (q) { ctx.font = '600 ' + q.px + 'px system-ui, sans-serif'; q.w = ctx.measureText(q.t).width + 4; q.h = q.px + 2; });
+    layoutLabels(tagQ).forEach(function (q) { if (!q.alpha) { return; } ctx.globalAlpha = q.ga || 1; ctx.font = '600 ' + q.px + 'px system-ui, sans-serif'; ctx.fillStyle = q.shade; ctx.fillText(q.t, q.x + 1, q.y + 1); ctx.fillStyle = q.fill; ctx.fillText(q.t, q.x, q.y); });
+    ctx.textAlign = 'left'; ctx.globalAlpha = 1; tagQ.length = 0;
   }
 
   /**
@@ -1845,16 +1863,7 @@
       t: now
     });
 
-    if (p.s > 0.45) {
-      ctx.textAlign = 'center';
-      ctx.font = '600 ' + Math.round(11 * z) + 'px system-ui, sans-serif';
-      var ny = p.y - bodyH * 1.12 - 6 * z;
-      ctx.fillStyle = 'rgba(0,0,0,0.62)';
-      ctx.fillText(s.ref.name, p.x + 1, ny + 1);
-      ctx.fillStyle = near ? '#fff' : 'rgba(255,255,255,0.78)';
-      ctx.fillText(s.ref.name, p.x, ny);
-      ctx.textAlign = 'left';
-    }
+    if (p.s > 0.45) { tagQ.push({ t: s.ref.name, x: p.x, y: p.y - bodyH * 1.12 - 6 * z, px: Math.round(11 * z), shade: 'rgba(0,0,0,0.62)', fill: near ? '#fff' : 'rgba(255,255,255,0.78)', dist: Math.hypot(s.x - pos.x, s.y - pos.y), ga: ctx.globalAlpha }); }   // W-0144 — flushTags 가 그린다
     ctx.globalAlpha = 1;
   }
 
@@ -1889,16 +1898,7 @@
       t: now
     });
 
-    if (p.s > 0.45) {
-      ctx.textAlign = 'center';
-      ctx.font = '600 ' + Math.round(10 * z) + 'px system-ui, sans-serif';
-      var ny = p.y - bodyH * 1.10 - 5 * z;
-      ctx.fillStyle = 'rgba(0,0,0,0.55)';
-      ctx.fillText(n.p.name, p.x + 1, ny + 1);
-      ctx.fillStyle = near ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.42)';
-      ctx.fillText(n.p.name, p.x, ny);
-      ctx.textAlign = 'left';
-    }
+    if (p.s > 0.45) { tagQ.push({ t: n.p.name, x: p.x, y: p.y - bodyH * 1.10 - 5 * z, px: Math.round(10 * z), shade: 'rgba(0,0,0,0.55)', fill: near ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.42)', dist: n.dist }); }   // W-0144
   }
 
   /**
@@ -2029,7 +2029,7 @@
     REGION_SIZE: REGION_SIZE, ENCOUNTER_RANGE: ENCOUNTER_RANGE,
     init: function (objEl, groundEl) { initCanvas(objEl, groundEl); bindKeys(); tickSpawns(); },
     update: function (dt) { moveByKeys(dt); updatePlayerMotion(dt); wanderSpawns(dt); tickSpawns(); },
-    draw: draw, resize: resize,
+    draw: draw, resize: resize, layoutLabels: layoutLabels,   // W-0144 진단
     get spawns() { return spawns; },
     removeSpawn: removeSpawn,
     nearest: nearest, maxSpawns: maxSpawns, spawnSpecial: spawnSpecial,

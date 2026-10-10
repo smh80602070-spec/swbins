@@ -771,5 +771,22 @@
   "ticket": "W-0148",
   "since": "2026-10-10",
   "note": "D2: 점검(scratchpad probe148, 헤드리스) — 90초 안에 신수 5 구움(삼족오·해태·청룡·백호·주작 ○, 나머지 6 은 시간 초과 — 같은 GLB 가 1만리에선 11 다 구워짐). 옛 대역 GLB 0. 도감 초상 webp 는 자체툴 AI 그림이라 다시 안 구움. QC --game saga-forest PASS(점검과 겹쳐 돌린 첫 판은 3D 장면 7/9, 혼자 다시 돌려 PASS)."
+ },
+ {
+  "id": "fs.bubble-slot",
+  "name": "2D 말풍선 겹침 풀기 — 이 프레임에 그린 자리와 겹치면 위로(셋까지), 넘치면 숨김(행동 안내 [키] 는 안 숨김)",
+  "files": [
+   "src/village-view/02.js",
+   "src/village-view/01.js"
+  ],
+  "tests": [
+   "말풍선 겹침(W-0144) — 같은 점 여섯은 셋이 위로 비켜 서고 나머지는 숨김, 행동 안내([키])는 안 숨김, 떨어진 것은 제자리"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0144",
+  "since": "2026-10-10",
+  "note": "D2: QC qc/saga-forest-2d.png Claude 눈 ○ — 전방 말풍선이 곤충 박사 나비 위로 비켜 섬(전엔 맞닿음). QC --game saga-forest PASS."
  }
 ]

@@ -758,5 +758,21 @@
   "ticket": "W-0151",
   "since": "2026-10-10",
   "note": "D2: pw-dex-look saga-go → shots/qc/saga-go-dex.png Claude 눈 ○ — 농마·갈색 말·학 칸이 그림 초상(3/5 얻음 판), 못 얻은 백마·용은 ❔. QC --game saga-go PASS."
+ },
+ {
+  "id": "go.label2d",
+  "name": "2D 이름표 겹침 풀기 — 스폰·주민 이름표를 모아 가까운 것부터 제자리, 겹치면 위로(셋까지)·넘치면 숨김",
+  "files": [
+   "src/world/02.js"
+  ],
+  "tests": [
+   "go.world: 2D 이름표 겹침(W-0144) — 같은 점 여섯은 셋이 위로 비켜 서고 셋은 숨김, 가장 가까운 것은 제자리·보임, 떨어진 것은 안 건드림"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0144",
+  "since": "2026-10-10",
+  "note": "D2: QC qc/saga-go-2d.png Claude 눈 ○ — 시작 광장 가운데 청하 촌장 누리·역참지기 독호·대장장이 이름표가 갈라져 읽힘(전엔 다섯이 한 점). QC --game saga-go PASS."
  }
 ]

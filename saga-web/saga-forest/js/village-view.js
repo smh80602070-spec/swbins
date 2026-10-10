@@ -240,7 +240,7 @@
   /* ── 그리기 ───────────────────────────────────────────── */
 
   function draw() {
-    if (!ctx) { return; }
+    if (!ctx) { return; } bubbleRects.length = 0;   // W-0144 — 말풍선 자리는 프레임마다 새로
     var raw = V.raw(), p = raw.player;
     var T = V.TILE;
     var now = Date.now();
@@ -1403,26 +1403,25 @@
    * 말풍선 — 원작의 그 둥근 이름표.
    * 화면에 글자를 그냥 얹지 않는다. 흰 판에 얹고 아래에 꼬리를 단다.
    */
+  /* W-0144 — 말풍선 겹침 풀기(순수). rects = 이 프레임에 이미 그린 자리(draw() 첫머리에서 비움). 겹치면 위로 h+2 씩 셋째 자리까지,
+     그래도 겹치면 null(숨김) — 행동 안내(keep, 글에 [키])는 안 숨기고 마지막 자리에 */
+  var bubbleRects = [];
+  function bubbleSlot(rects, x, y, w, h, keep) {
+    for (var s = 0, ny; s < 3; s++) { ny = y - s * (h + 2); if (!rects.some(function (q) { return Math.abs(q.x - x) * 2 < q.w + w && Math.abs(q.y - ny) < h; })) { rects.push({ x: x, y: ny, w: w }); return ny; } }
+    return keep ? (rects.push({ x: x, y: ny, w: w }), ny) : null;
+  }
   function bubble(text, x, y, fg, bg) {
     ctx.save();
     ctx.font = '700 12.5px "Malgun Gothic", system-ui';
     var w = ctx.measureText(text).width + 18;
     var h = 21, rr = h * 0.5;
+    y = bubbleSlot(bubbleRects, x, y, w, h + 6, String(text).indexOf('[') >= 0);
+    if (y === null) { ctx.restore(); return; }
     var l = x - w * 0.5, t = y - h * 0.5;
-
     ctx.beginPath();
-    ctx.moveTo(l + rr, t);
-    ctx.lineTo(l + w - rr, t);
-    ctx.quadraticCurveTo(l + w, t, l + w, t + rr);
-    ctx.lineTo(l + w, t + h - rr);
-    ctx.quadraticCurveTo(l + w, t + h, l + w - rr, t + h);
-    ctx.lineTo(x + 5, t + h);
-    ctx.lineTo(x, t + h + 6);
-    ctx.lineTo(x - 5, t + h);
-    ctx.lineTo(l + rr, t + h);
-    ctx.quadraticCurveTo(l, t + h, l, t + h - rr);
-    ctx.lineTo(l, t + rr);
-    ctx.quadraticCurveTo(l, t, l + rr, t);
+    ctx.moveTo(l + rr, t); ctx.lineTo(l + w - rr, t); ctx.quadraticCurveTo(l + w, t, l + w, t + rr); ctx.lineTo(l + w, t + h - rr);
+    ctx.quadraticCurveTo(l + w, t + h, l + w - rr, t + h); ctx.lineTo(x + 5, t + h); ctx.lineTo(x, t + h + 6); ctx.lineTo(x - 5, t + h);
+    ctx.lineTo(l + rr, t + h); ctx.quadraticCurveTo(l, t + h, l, t + h - rr); ctx.lineTo(l, t + rr); ctx.quadraticCurveTo(l, t, l + rr, t);
     ctx.closePath();
 
     ctx.fillStyle = 'rgba(0,0,0,0.20)';
@@ -2792,7 +2791,7 @@
     /** 자가진단용 */
     _cam: function () { return cam; },
     _animalSprite: function (kind) { return ANIMAL_SPRITE[kind] || null; },
-    _project: project,
+    _project: project, _bubbleSlot: bubbleSlot,   // W-0144 진단
     _unproject: unproject,
     _projectIn: projIn,
     _unprojectIn: unprojIn

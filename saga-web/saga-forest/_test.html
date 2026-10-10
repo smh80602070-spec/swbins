@@ -272,6 +272,14 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       var r = [allW, key0, got.length === 11, oldOk, clips];
       return r.every(Boolean) && ('신수 ' + got.length + '/11 새 몸 · 다른 펫은 옛 표 · 클립 다섯') || '실패 ' + r.join(',') + ' ' + bad.join(',');
     });
+    t('말풍선 겹침(W-0144) — 같은 점 여섯은 셋이 위로 비켜 서고 나머지는 숨김, 행동 안내([키])는 안 숨김, 떨어진 것은 제자리', function () {
+      var S = DG.villageView._bubbleSlot, rects = [], ys = [], i, y;
+      for (i = 0; i < 6; i++) { ys.push(S(rects, 100, 200, 80, 27, false)); }
+      var keep = S(rects, 100, 200, 80, 27, true), far = S(rects, 400, 200, 80, 27, false);
+      var shown = ys.filter(function (v) { return v !== null; });
+      var r = [shown.join() === '200,171,142', ys.slice(3).every(function (v) { return v === null; }), keep === 142, far === 200];
+      return r.every(Boolean) && ('보임 ' + shown.join('/') + ' · 숨김 3 · 안내 ' + keep) || '실패 ' + r.join(',') + ' ' + JSON.stringify(ys);
+    });
     t('mapClips — 이름이 뒤섞인 클립도 자리(idle·walk·attack…)를 찾아낸다', function () {
       var A3 = DG.asset3d;
       var m = A3.mapClips(['Armature|mixamo.com|Idle_Loop', 'Walk.001', 'Anim_Attack_Slash', 'RunCycle']);
