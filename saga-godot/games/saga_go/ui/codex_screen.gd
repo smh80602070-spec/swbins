@@ -100,14 +100,15 @@ func _build_screen() -> void:
 	box.add_theme_constant_override("separation", 8)
 	_panel.add_child(box)
 	_title = Label.new()
-	_title.add_theme_font_size_override("font_size", 20)
+	_title.add_theme_font_size_override("font_size", 24)   # G-0168 — 20 → 24(탭·칸·설명도 키움)
 	_title.add_theme_color_override("font_color", Color(1.0, 0.86, 0.5))
 	box.add_child(_title)
 	_tabs = HBoxContainer.new()
 	box.add_child(_tabs)
 	for t in ["hero", "pet", "find"]:
 		var b := Button.new()
-		b.custom_minimum_size = Vector2(150, 36)
+		b.custom_minimum_size = Vector2(150, 40)
+		b.add_theme_font_size_override("font_size", 20)
 		var tt: String = t
 		b.pressed.connect(func() -> void: show_tab(tt))
 		_tabs.add_child(b)
@@ -158,10 +159,11 @@ func _build_screen() -> void:
 	_view.add_child(cam)
 	cam.look_at_from_position(cam.position, Vector3(0.0, 0.85, 0.0))
 	_detail_name = Label.new()
-	_detail_name.add_theme_font_size_override("font_size", 20)
+	_detail_name.add_theme_font_size_override("font_size", 26)
 	side.add_child(_detail_name)
 	_detail_text = Label.new()
 	_detail_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_detail_text.add_theme_font_size_override("font_size", 20)
 	_detail_text.custom_minimum_size = Vector2(340, 0)
 	side.add_child(_detail_text)
 	var foot := HBoxContainer.new()
@@ -277,7 +279,7 @@ func show_tab(t: String) -> void:
 			var n := kind_count(k)
 			var all := int(CodexState.TOTAL.get(k, 0))
 			lb.text = "%s  %d / %d" % [KIND_NAMES[k], n, all]
-			lb.add_theme_font_size_override("font_size", 17)
+			lb.add_theme_font_size_override("font_size", 20)
 			lb.add_theme_color_override("font_color", Color(1.0, 0.86, 0.5))
 			row.add_child(lb)
 			var bar := ProgressBar.new()
@@ -314,7 +316,7 @@ func _name_flow(kind: String, items: Array) -> HFlowContainer:
 		var found := CodexState.has(kind, String(e[0]))
 		var l := Label.new()
 		l.text = String(e[1]) if found else "???"
-		l.add_theme_font_size_override("font_size", 15)
+		l.add_theme_font_size_override("font_size", 19)
 		l.add_theme_color_override("font_color", Color(0.92, 0.92, 0.88) if found else Color(0.45, 0.45, 0.5))
 		l.set_meta("codex_kind", kind)
 		l.set_meta("codex_id", String(e[0]))
@@ -325,8 +327,9 @@ func _name_flow(kind: String, items: Array) -> HFlowContainer:
 func _cell(text: String, state: String) -> Button:
 	var b := Button.new()
 	b.text = text
-	b.custom_minimum_size = Vector2(124, 38)
+	b.custom_minimum_size = Vector2(124, 42)
 	b.clip_text = true
+	b.add_theme_font_size_override("font_size", 18)
 	if state == "":
 		b.add_theme_color_override("font_color", Color(0.5, 0.5, 0.55))
 	elif state == "owned":

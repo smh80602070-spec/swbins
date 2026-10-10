@@ -660,11 +660,18 @@ func _build_ui() -> void:
 	## 추적 글자 — 미니맵·왼쪽 위 글자들 밑(world_map 이 옮긴 날씨 줄 아래).
 	_tracker = Label.new()
 	_tracker.offset_left = 40
-	_tracker.offset_top = 455
-	_tracker.add_theme_font_size_override("font_size", 17)
+	_tracker.offset_top = 447   # G-0168 띠가 아래 "메뉴" 단추에 닿지 않게(455→447)
+	_tracker.add_theme_font_size_override("font_size", 18)
 	_tracker.add_theme_color_override("font_color", GOLD)
 	_tracker.add_theme_color_override("font_outline_color", Color(0, 0, 0))
-	_tracker.add_theme_constant_override("outline_size", 6)
+	_tracker.add_theme_constant_override("outline_size", 2)
+	## G-0168 — 테두리 6 은 가로 배율에서 획을 먹었다(G-0157 HUD 와 같은 병) — 같은 반투명 띠를 깐다.
+	var band := StyleBoxFlat.new()
+	band.bg_color = Color(0, 0, 0, 0.38)
+	band.set_corner_radius_all(8)
+	band.content_margin_left = 10
+	band.content_margin_right = 10
+	_tracker.add_theme_stylebox_override("normal", band)
 	_tracker.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	layer.add_child(_tracker)
 	_talk_btn = Button.new()
