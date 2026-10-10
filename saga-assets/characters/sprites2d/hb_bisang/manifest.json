@@ -1,0 +1,24 @@
+{
+ "id": "hb_bisang",
+ "body": "hb_bisang",
+ "kind": "human",
+ "px": 128,
+ "frames": 8,
+ "dirs": [
+  0,
+  1,
+  2
+ ],
+ "clips": [
+  "idle",
+  "walk",
+  "attack",
+  "hit",
+  "death"
+ ],
+ "ortho_m": 2.5,
+ "cam_z": 0.95,
+ "side_faces": "right",
+ "px_per_m": 51.2,
+ "license": "CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vroid, 코드 gear_sprites.py"
+}
