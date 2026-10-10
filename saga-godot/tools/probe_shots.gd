@@ -114,6 +114,7 @@ const SHOTS := [
 	["f_airship", "frost", Vector2(5.85, 6.0), Vector3.ZERO, Vector2(6.45, 5.25), -14.0, 10.0, ""],
 	["f_snow_bloom", "frost", Vector2(4.2, 3.5), Vector3.ZERO, Vector2(4.2, 3.4), -40.0, 6.0, ""],
 	["f_bear_king", "frost", Vector2(3.15, 6.05), Vector3.ZERO, "boss:snow_bear_king", -12.0, 10.0, ""],
+	["f_bear_king_ghost", "frost", Vector2(3.15, 6.05), Vector3.ZERO, "boss:snow_bear_king", 2.0, 7.0, "enemyhp:0.6:8"],   # G-0170 체력 바 흰 잔상(맞은 직후)
 	["f_bear_king_p2", "frost", Vector2(3.15, 6.05), Vector3.ZERO, "boss:snow_bear_king", -12.0, 10.0, "bosshp:0.4"],   # G-0161 2단계 방패·보스 바
 	["c_shipyard", "coast", Vector2(6.6, 4.55), Vector3.ZERO, Vector2(7.3, 3.85), -12.0, 11.0, ""],
 	["r_observatory", "ruins", Vector2(1.2, 2.85), Vector3.ZERO, Vector2(1.2, 2.2), 8.0, 12.0, ""],
@@ -226,6 +227,15 @@ func _process(_delta: float) -> void:
 	if String(SHOTS[_i][7]).begins_with("burst") and _frame == SETTLE - int(String(SHOTS[_i][7]).substr(5)):
 		_p.call("play_action", "burst", 0.6, 0.0)
 	## G-0152 — "walkN": 찍기 N 프레임 전에 앞으로 걷기 시작 · "stopN": 20 프레임째부터 걷다가 찍기 N 프레임 전에 뗀다
+	## G-0170 — "enemyhp:<비율>:<프레임>" 찍기 N 프레임 전에 가장 가까운 적 체력을 비율로(체력 바 흰 잔상 확인, 저장 안 함)
+	if String(SHOTS[_i][7]).begins_with("enemyhp:") and _frame == SETTLE - int(String(SHOTS[_i][7]).get_slice(":", 2)):
+		var ne: Node3D = null
+		for e in get_tree().get_nodes_in_group("field_enemy"):
+			if ne == null or (e as Node3D).global_position.distance_to(_p.global_position) < ne.global_position.distance_to(_p.global_position):
+				ne = e
+		if ne:
+			ne.set("hp", float(ne.get("max_hp")) * float(String(SHOTS[_i][7]).get_slice(":", 1)))
+			ne.call("_refresh_bar")
 	if String(SHOTS[_i][7]).begins_with("walk") and _frame == SETTLE - int(String(SHOTS[_i][7]).substr(4)):
 		Input.action_press("move_forward")
 	if String(SHOTS[_i][7]).begins_with("stop") and _frame == SETTLE - int(String(SHOTS[_i][7]).substr(4)):

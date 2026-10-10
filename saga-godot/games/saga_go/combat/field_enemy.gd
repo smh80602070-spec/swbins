@@ -296,6 +296,13 @@ var _dots: Array = [] # [{left, every, t, amount}]
 var _visual: Node3D = null
 var _visual_scale := 1.0
 var _bar_fill: MeshInstance3D = null
+## G-0170 — 맞은 만큼 흰 잔상이 BAR_GHOST_HOLD 초 남았다가 BAR_GHOST_SPEED(막대 폭/초)로 따라 준다. 잔상이 채움보다 클 때만 셈.
+const BAR_H := 0.09
+const BAR_GHOST_HOLD := 0.3
+const BAR_GHOST_SPEED := 1.2
+var _bar_ghost: MeshInstance3D = null
+var _ghost_r := 1.0
+var _ghost_hold := 0.0
 var _shield_fill: MeshInstance3D = null
 var _shield_bg: MeshInstance3D = null
 var _aura_dot: MeshInstance3D = null
@@ -361,6 +368,8 @@ func _ready() -> void:
 # ---------------------------------------------------------------- AI
 
 func _physics_process(delta: float) -> void:
+	if _bar_ghost != null and _ghost_r > hp / max_hp:
+		_tick_ghost(delta)
 	if ai == AI.DEAD:
 		_t -= delta
 		if _t <= 0.0:
@@ -781,11 +790,17 @@ func _build_overhead() -> void:
 	label.position = Vector3(0, top + 0.22, 0)
 	add_child(label)
 
-	var bg := _bar_quad(Color(0.1, 0.08, 0.08, 0.8), Vector2(1.0, 0.1))
+	var bg := _bar_quad(Color(0.1, 0.08, 0.08, 0.8), Vector2(1.0, 0.12))
 	bg.position = Vector3(0, top, 0)
 	add_child(bg)
-	_bar_fill = _bar_quad(Color(0.9, 0.25, 0.2), Vector2(1.0, 0.07))
+	_bar_ghost = _bar_quad(Color(1.0, 0.97, 0.9, 0.85), Vector2(1.0, BAR_H))
+	_bar_ghost.position = Vector3(0, top, 0.0005)
+	(_bar_ghost.material_override as StandardMaterial3D).render_priority = 2   # 투명 정렬이 제멋대로라 순서를 박는다: 바탕 1 < 잔상 2 < 채움 3
+	add_child(_bar_ghost)
+	_ghost_r = clampf(hp / max_hp, 0.0, 1.0) if max_hp > 0.0 else 1.0
+	_bar_fill = _bar_quad(Color(0.9, 0.25, 0.2), Vector2(1.0, BAR_H))
 	_bar_fill.position = Vector3(0, top, 0.001)
+	(_bar_fill.material_override as StandardMaterial3D).render_priority = 3
 	add_child(_bar_fill)
 	## 원소 방패 막대 — 체력 막대 바로 위, 방패 원소 색(들판 보스는 2단계에 생기는 방패 자리를 미리).
 	if max_shield > 0.0 or def.has("phase_shield"):
@@ -794,6 +809,7 @@ func _build_overhead() -> void:
 		add_child(_shield_bg)
 		_shield_fill = _bar_quad(Elements.color_of(element), Vector2(1.0, 0.055))
 		_shield_fill.position = Vector3(0, top + 0.11, 0.001)
+		(_shield_fill.material_override as StandardMaterial3D).render_priority = 3
 		add_child(_shield_fill)
 		label.position.y += 0.1
 
@@ -838,12 +854,33 @@ func _refresh_bar() -> void:
 	if _bar_fill == null:
 		return
 	var r := clampf(hp / max_hp, 0.0, 1.0)
-	(_bar_fill.mesh as QuadMesh).size = Vector2(maxf(r, 0.001), 0.07)
+	_set_bar(_bar_fill, r, BAR_H)
+	if _bar_ghost:
+		if r < _ghost_r:
+			_ghost_hold = BAR_GHOST_HOLD   # 새로 맞음 — 잔상은 잠깐 그 자리
+		else:
+			_ghost_r = r   # 회복·되돌림 — 잔상 없이 맞춘다
+		_set_bar(_bar_ghost, _ghost_r, BAR_H)
 	if _shield_fill:
 		var s := clampf(shield / max_shield, 0.0, 1.0) if max_shield > 0.0 else 0.0
 		_shield_fill.visible = s > 0.0
 		_shield_bg.visible = s > 0.0
-		(_shield_fill.mesh as QuadMesh).size = Vector2(maxf(s, 0.001), 0.055)
+		_set_bar(_shield_fill, s, 0.055)
+
+## G-0170 — 왼쪽 고정: 가운데 기준 쿼드라 폭만 줄이면 양끝이 같이 깎였다. 빌보드라 center_offset.x 가 화면 가로로 남는다.
+func _set_bar(bar: MeshInstance3D, r: float, h: float) -> void:
+	var q := bar.mesh as QuadMesh
+	var w := maxf(r, 0.001)
+	q.size = Vector2(w, h)
+	q.center_offset = Vector3(-(1.0 - w) * 0.5, 0.0, 0.0)
+
+func _tick_ghost(delta: float) -> void:
+	var r := clampf(hp / max_hp, 0.0, 1.0)
+	if _ghost_hold > 0.0:
+		_ghost_hold -= delta
+		return
+	_ghost_r = maxf(r, _ghost_r - BAR_GHOST_SPEED * delta)
+	_set_bar(_bar_ghost, _ghost_r, BAR_H)
 
 func _refresh_aura() -> void:
 	if _aura_dot == null:
