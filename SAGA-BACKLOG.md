@@ -28,7 +28,7 @@
 | 3마을 | D | E F G | 성장 선택 없음 · 바깥 고리 사건 밀도 미측정(A·B·C·H 구현됨) | 60m 격자 빈칸 측정을 진단으로 · 성장 선택(3택) 검토 |
 | 4종횡 | D | C E F G H | 무예 96 을 거의 다 찍음(선택 3택 없음) · 손맛 5요소·목표판·세션 카드는 구현됨(흔들림 보통 타격 2px/80ms 가 규격보다 작음) | SP 선택을 3택으로 · 재미표준 측정 진단 8개를 이 판에도 |
 | 5천하 | — | C D E F G H | **인물이 숫자** · **전투가 구경**(A·B 구현됨 — 이정표·승리·다음 달 카드) | 장수 초상+한 줄 대사(초상은 있음) · 전투 개입 1개(돌격 타이밍 버튼) |
-| Godot 다섯 | — | F | 측정 있음: A probe_goal_boards(다섯) · B probe_session_card(다섯, G-0179 "▶ 다음:" 줄) · C probe_combat_feel(공용)·dungeon_melee · F probe_defeat·dungeon_run ④·story_fall | 천하 F(공성 실패 비용) 측정 · 마을 F 해당 여부 |
+| Godot 다섯 | — | F | 측정 있음: A probe_goal_boards(다섯) · B probe_session_card(다섯, G-0179 "▶ 다음:" 줄) · C probe_combat_feel(공용)·dungeon_melee · F probe_defeat·dungeon_run ④·story_fall·realm_defeat(G-0180 천하 공성 패배: 비용 나라 병력의 7.5~7.9%·재도전 조작 2~4·회복 2달 — 비용이 F 10~20% 밑, 500 판 조작 4 는 ≤3 밖) | 마을 F 해당 여부 · 천하 F 기준 밖 둘(비용 낮음·500 판 조작 4) 손볼지 R-0 |
 | Unity 다섯 | — | — | 같음. Playtest 는 "돈다"만 보고 재미 수치는 안 본다 | Playtest 에 표준 A·E·F 수치 assert 추가 |
 
 ## 3. P2 — 품질·성능·구조 (판별)
