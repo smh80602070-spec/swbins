@@ -99,7 +99,7 @@
    */
   function nudgeCamZoom(mul) {
     var W3 = global.DG.world3d;
-    return (W3 && W3.active && W3.active()) ? nudgeZoom(mul) : nudgeZoom2d(mul);
+    return (W3 && W3.active && W3.active()) ? nudgeZoom(mul) : nudgeZoom2d(1 / mul);   // W-0155 — mul 은 3D 거리 뜻(>1 멀리), 2D 줌은 배율(>1 가까이)이라 뒤집는다
   }
 
   /** 휠과 두 손가락으로 카메라를 당기고 민다 — 2D·2.5D·3D 어디서든 듣는다 */
@@ -1098,7 +1098,7 @@
     ZOOM3_MIN: ZOOM3_MIN, ZOOM3_MAX: ZOOM3_MAX, ZOOM3_DEFAULT: ZOOM3_DEFAULT,
     /** 2D·2.5D 카메라 배율 — 화면 값이다(판정에는 안 닿는다) */
     get camZoom2d() { return camZoom2d(); },
-    setCamZoom2d: setCamZoom2d, nudgeZoom2d: nudgeZoom2d,
+    setCamZoom2d: setCamZoom2d, nudgeZoom2d: nudgeZoom2d, _bindZoom: bindZoom,   // W-0155 진단
     ZOOM2_MIN: ZOOM2_MIN, ZOOM2_MAX: ZOOM2_MAX, ZOOM2_DEFAULT: ZOOM2_DEFAULT,
     /** 3인치 모드 — 화면을 멀리서 보는 스위치 (2D·2.5D·3D 어디서든 켠다) */
     get wide3in() { return is3inch(); },

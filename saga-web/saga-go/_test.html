@@ -16353,6 +16353,19 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var r = [n > 50, bad.length === 0, pool > 0];
       return r.every(Boolean) && ('펫 스폰 ' + n + ' · 물고기 ' + fish + '(전부 물 칸) · 물고기 꼴 펫 ' + pool + '종') || '실패 ' + r.join(',') + ' ' + bad.slice(0, 5).join(',');
     });
+    t('go.world: 휠 방향(W-0155) — 휠 위(deltaY −100)는 가까이: 2D 배율은 커지고 3D 거리는 준다', function () {
+      var W = DG.world, W3 = DG.world3d, st = DG.core.save.settings, k2 = st.camZoom2d, k3 = st.zoom3d, cv = document.createElement('canvas'), r = {}, a, b;
+      var roll = function (dy) { cv.dispatchEvent(new WheelEvent('wheel', { deltaY: dy, cancelable: true })); };
+      try {
+        W._bindZoom(cv); W.setCamZoom2d(1); st.zoom3d = 2;
+        DG.world3d = Object.create(W3 || {}, { active: { value: function () { return false; } } });
+        a = W.camZoom2d; roll(-100); b = W.camZoom2d; r.near2d = b > a; roll(100); r.back2d = Math.abs(W.camZoom2d - a) < 1e-9;
+        DG.world3d = Object.create(W3 || {}, { active: { value: function () { return true; } } });
+        a = W.zoom3d; roll(-100); r.near3d = W.zoom3d < a;
+      } finally { DG.world3d = W3; st.camZoom2d = k2; st.zoom3d = k3; }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '휠 위 → 2D 배율 커짐 · 3D 거리 줄어듦 · 휠 아래로 제자리' : ('실패 ' + bad.join(','));
+    });
     t('go.world: 2D 이름표 겹침(W-0144) — 같은 점 여섯은 셋이 위로 비켜 서고 셋은 숨김, 가장 가까운 것은 제자리·보임, 떨어진 것은 안 건드림', function () {
       var L = DG.world.layoutLabels, six = [5, 1, 4, 2, 6, 3].map(function (d) { return { x: 100, y: 200, w: 60, h: 13, dist: d }; }), far = { x: 400, y: 200, w: 60, h: 13, dist: 9 };
       L(six.concat([far]));

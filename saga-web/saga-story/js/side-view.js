@@ -47,6 +47,16 @@
     var C = global.DG.core, k = C && C.tuned ? +C.tuned('side.baseZoom', 1.35) : 1.35;
     return H >= 600 ? Math.max(1, Math.min(1.6, k, H / 520)) : 1;   // 키가 낮은 2D 는 resize 가 논리 높이 650 으로 그린다
   }
+  /** W-0155 — 폰 가로(키 500 아래·폭 780 넘음)면 시작 자리를 ◀▶ 조작판 오른쪽 끝 + 24px 뒤로(세계 좌표). 화면 x = 세계 x × 배율 ÷ lowK.
+      조작판이 보이면 실제 끝을, 안 보이면 가로 CSS 값(14 + 44·2 + 8 = 110). PC·세로는 0(= 옛 80 그대로) */
+  function startClearX(iw, ih) {
+    iw = iw || global.innerWidth || 0; ih = ih || global.innerHeight || 0;
+    if (!(ih && ih <= 500 && iw > 780 && iw > ih)) { return 0; }
+    var pl = global.document && global.document.querySelector('#touchpad.show .pad-l'), r = pl && pl.getBoundingClientRect(), edge = r && r.right > 0 ? r.right : 110;
+    var C = global.DG.core, tk = C && C.tuned ? +C.tuned('side.baseZoom', 1.35) : 1.35, k = ih < 600 ? 650 / ih : 1, h = ih * k;
+    var z = viewZoom * (h >= 600 ? Math.max(1, Math.min(1.6, tk, h / 520)) : 1);
+    return Math.ceil((edge + 24) * k / z);
+  }
   /** 화면에 실제로 곱하는 배율 — 사람 줌 × 기본 × 보스 */
   function effZoom() { return viewZoom * baseZoom() * (1 + bossZoomK * BOSS_ZOOM_EXTRA); }
   function applyZoomTransform() {
@@ -1374,7 +1384,7 @@
 
   global.DG = global.DG || {};
   global.DG.sideView = {
-    init: init, draw: draw, resize: resize, miniBox: miniBox,
+    init: init, draw: draw, resize: resize, miniBox: miniBox, startClearX: startClearX,   // W-0155 시작 자리
     _cam: function () { return camX; }, _zoom: function () { return { base: baseZoom(), eff: effZoom(), lowK: lowK, W: W, H: H }; }, _dirt: dirtOf, _grass: grassOf, _creaFamily: creaFamily, _creaId: creaIdOf, _creaIds: CREA_IDS,   // W-0132 진단
     /** 진단용 — **흔들림의 세기는 화면 층이 정한다**(side.js 는 'shake' 한 줄만 남긴다) */
     _shake: shakeOf,

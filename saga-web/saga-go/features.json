@@ -13,7 +13,7 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094). 시점은 #btn-tilt 실제 클릭(2D·2.5D·3D 돌기)."
+  "note": "D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094). 시점은 #btn-tilt 실제 클릭(2D·2.5D·3D 돌기). · 2D 조작(W-0155, qc+claude 10-10): 휠 위·핀치 벌리기·+ 키 = 2D 도 가까이(옛날엔 2D 만 반대 — 2D 줌은 배율, 3D 줌은 거리라 같은 곱이 뜻이 갈렸다). 진단 go.world 휠 방향."
  },
  {
   "id": "go.geo",

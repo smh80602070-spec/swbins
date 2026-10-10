@@ -6016,6 +6016,13 @@ window.DG_NO_TUNE = true;
       var r = [beasts.length >= 9, bad.length === 0, hum, boss, !!DG.mode2d.creaPool];
       return r.every(Boolean) && ('짐승 ' + beasts.length + ' 짝 · 계통 ' + Object.keys(seen).join('·') + ' · 사람 ' + humans.length + ' 옛 길') || '실패 ' + r.join(',') + ' ' + bad.join(',') + ' n=' + beasts.length;
     });
+    t('st.side-view: 시작 자리(W-0155) — 폰 가로(844×390)는 ◀▶ 조작판 끝 + 24px 뒤(화면 x), PC·세로는 옛 80', function () {
+      var SV = DG.sideView, land = SV.startClearX(844, 390), z = SV._zoom(), k = 650 / 390;
+      var tk = +DG.core.tuned('side.baseZoom', 1.35), zz = Math.max(1, Math.min(1.6, tk, 650 / 520));
+      var screenX = land * zz / k;   // 세계 x → 폰 가로 화면 x(CSS)
+      var r = [screenX >= 110 + 24 - 0.5, SV.startClearX(1280, 800) === 0, SV.startClearX(390, 844) === 0, Math.max(80, SV.startClearX(1280, 800)) === 80, !!z];
+      return r.every(Boolean) && ('폰 가로 시작 x ' + land + '(화면 ' + screenX.toFixed(0) + 'px ≥ 134) · PC·세로 80') || '실패 ' + r.join(',') + ' ' + land;
+    });
     t('st.side-view: 2D 화면(W-0132) — 큰 화면은 기본 확대(1~1.6), 손잡이 1 이면 확대 없음, 풀빛 바닥의 발판 흙은 갈색', function () {
       var V = DG.sideView, C = DG.core, keep = C.tuned('side.baseZoom', 1.35), z0 = V._zoom(), r;
       C.setTune('side.baseZoom', 1); var z1 = V._zoom(); C.setTune('side.baseZoom', keep);

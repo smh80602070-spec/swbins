@@ -331,7 +331,7 @@
     var pw = power();
     run = {
       stage: stg, hpMax: pw.hp, hp: pw.hp, mp: pw.mp, mpMax: pw.mp,
-      player: { x: 80, y: stg.floor - P_H, vx: 0, vy: 0, facing: 1,
+      player: { x: Math.max(80, global.DG.sideView && global.DG.sideView.startClearX ? global.DG.sideView.startClearX() : 0), y: stg.floor - P_H, vx: 0, vy: 0, facing: 1,   // W-0155 폰 가로는 조작판 뒤
                 onGround: true, phase: 0, atkCd: 0, hurt: 0, invuln: 0,
                 cds: [0, 0, 0, 0, 0, 0], buff: null,
                 climb: null, dropThru: 0, resting: 0, dodgeCd: 0,
