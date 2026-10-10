@@ -915,5 +915,24 @@
   "ticket": "W-0134",
   "since": "2026-10-09",
   "note": "D2: saga-web/tools/playcheck/pw-tac-check.mjs → shots/tac/c-{pc,phone,land}-{board,cut}.png Claude 눈 ○(마른 들빛 평지·숲 나무·성벽 돌담·보병 궁병·장수 몸, 공격 때 두 초상이 마주 서고 −피해·명중%). 판정(tactics.js) 그대로. 손잡이 realm.tacArt 0 = 옛 색 칸·원·이모지."
+ },
+ {
+  "id": "rk.realm-real3d",
+  "name": "3D 국토 지도 사실 하늘·물·재질 — 하늘 그림(sky_<시각>_<시대>_1k, 막·달로 고름)·지평선 안개색·그림 속 해 자리 빛 · 바다·강 물결 셰이더(폰 반사 끔) · 지도 GLB 표준(PBR) 재질",
+  "files": [
+   "js/realm-sky3d.js",
+   "js/realm-water3d.js",
+   "js/realm3d.js"
+  ],
+  "tests": [
+   "realm3d — 하늘 그림 고르기(W-0141): 막 1~3 과거·4~6 현재·7~9 미래, 균열·혼돈은 미래 · 달로 시각(봄여름 낮·가을 노을·겨울 새벽) · 손잡이로 밤 · 해 방향은 그림 속 자리",
+   "realm3d — 물결(W-0141): 폰 등급(low·medium = DPR ≤1.5)은 반사(하늘빛·윤슬) 끔, high 만 켬 · 손잡이 realm3d.real 0 이면 옛 판(재질 null)"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0141",
+  "since": "2026-10-10",
+  "note": "D2(qc+claude 2026-10-10): saga-web/tools/playcheck/pw-rk-sky.mjs → shots/rk-sky/sky-{noon,night}-{top,low}.png Claude 눈 — 밤 하늘(별·푸른 안개) ○ · 강 물결 반짝임 ○ · 낮 하늘은 낮게 끌어야 지평선 위 얇은 띠로만 보임 △(카메라 최소 20° 내려다봄) · 성 PBR 명암은 툰과 차이 작음 △ · 고돗 G-0148 컷 나란히 비교는 안 함. 손잡이 realm3d.real 0 = 옛 화면, realm3d.skyTime(auto|dawn|noon|sunset|night), realm3d.waveScale 2.6, realm3d.roughness 0.8."
  }
 ]

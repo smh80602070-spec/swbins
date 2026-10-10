@@ -404,10 +404,10 @@
     camera = new t.PerspectiveCamera(FOV(), 1, 0.5, 2400);
 
     var TNg = global.DG.toon3d, LG = TNg && TNg.lightGain ? TNg.lightGain() : 1;   // 톤매핑을 켜면 빛을 올린다(toon3d.toneRenderer)
-    scene.add(new t.HemisphereLight(0xffffff, 0x4a5a3a, 0.95 * LG));
+    var hemi = new t.HemisphereLight(0xffffff, 0x4a5a3a, 0.95 * LG); scene.add(hemi);
     var sun = new t.DirectionalLight(0xfff4e0, 1.0 * LG);
     sun.position.set(-120, 200, 90);
-    scene.add(sun);
+    scene.add(sun); if (global.DG.realmSky3d) { global.DG.realmSky3d.attach(t, scene, sun, hemi); }   // W-0141 하늘 그림·그림 속 해 자리 빛·지평선 안개색(realm-sky3d.js)
 
     /* PlaneGeometry는 XY 평면에 눕고, rotation.x=-90°로 눕히면 로컬 (x,y,z)가
      * 세계 (x, z, -y)로 간다 — 로컬 y ↔ 세계 z 가 **부호가 뒤집힌다.** elevAt()은
@@ -434,7 +434,7 @@
      * — 새 좌표계·새 렌더 패스 없이 z-버퍼만으로 해안선이 선다) */
     var sea = new t.Mesh(
       new t.PlaneGeometry(GROUND_SPAN, GROUND_SPAN),
-      new t.MeshPhongMaterial({ color: 0x2f7bb0, transparent: true, opacity: 0.88, shininess: 60 })
+      (global.DG.realmWater3d && global.DG.realmWater3d.material(t, 0x2f7bb0)) || new t.MeshPhongMaterial({ color: 0x2f7bb0, transparent: true, opacity: 0.88, shininess: 60 })   // W-0141 물결(realm-water3d.js), 손잡이 0 이면 옛 판
     );
     sea.rotation.x = -Math.PI / 2;
     sea.position.y = SEA_LEVEL;
@@ -609,7 +609,7 @@
       g.rotation.y = rotY || 0;
       g.scale.setScalar(scaleH);
       if (isStatic) { g.userData.instOk = true; }
-      g2.add(g);
+      g2.add(global.DG.realmSky3d ? global.DG.realmSky3d.realify(g) : g);   // W-0141 표준(PBR) 재질 — 지도 사본만
       addShadow(x, z, scaleH * 0.4, g2);
       if (isStatic) { maybeFreezeStatic(); }
     });

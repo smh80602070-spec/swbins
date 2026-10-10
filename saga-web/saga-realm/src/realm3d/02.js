@@ -571,7 +571,7 @@
     var flat = Math.hypot(dx, dz), len = Math.hypot(flat, dy) || 0.001;
     var mkey = opt.color + ':' + opt.opacity;
     var mat = roadMats[mkey];
-    if (!mat) { mat = roadMats[mkey] = new t.MeshBasicMaterial({ color: new t.Color(opt.color), transparent: true, opacity: opt.opacity }); }
+    if (!mat) { mat = roadMats[mkey] = (opt.water && global.DG.realmWater3d && global.DG.realmWater3d.material(t, 0x3f8cbf)) || new t.MeshBasicMaterial({ color: new t.Color(opt.color), transparent: true, opacity: opt.opacity }); }   // W-0141 강은 물결
     var mesh = new t.Mesh(roadBoxGeo, mat);
     mesh.scale.set(opt.width, 0.06, len);
     mesh.position.set((p1.x + p2.x) / 2, (p1.y + p2.y) / 2 + opt.y, (p1.z + p2.z) / 2);
@@ -706,7 +706,7 @@
       var cx = worldX(city.x), cz = worldZ(city.y), gy = elevAt(cx, cz);
       g.position.set(cx, gy, cz);
       g.scale.setScalar(h);
-      dyn.add(g);
+      dyn.add(global.DG.realmSky3d ? global.DG.realmSky3d.realify(g) : g);   // W-0141
 
       var footprint = Math.max(3.2, h * 0.5);
       addShadow(cx, cz, footprint * 0.9);
@@ -822,7 +822,7 @@
         var same = fa && fa === fb;
         var water = cityData().isWater(a.id, b.id);
         if (water) {
-          addRoad(a, b, { color: '#5aa9d8', opacity: 0.75, width: 3.2, y: 0.03 });
+          addRoad(a, b, { color: '#5aa9d8', opacity: 0.75, width: 3.2, y: 0.03, water: 1 });
         } else if (same) {
           addRoad(a, b, { color: forceColor(fa), opacity: 0.6, width: 1.6, y: 0.05 });
         } else {
@@ -1010,7 +1010,7 @@
     tickActors(t);
     statCull();
 
-    renderer.render(scene, camera);
+    if (global.DG.realmWater3d) { global.DG.realmWater3d.tick(t, scene, tier()); } renderer.render(scene, camera);   // W-0141 물결 시계
     requestAnimationFrame(tick);
   }
 
