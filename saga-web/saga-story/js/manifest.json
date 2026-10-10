@@ -27,7 +27,8 @@
    "js/boss-pattern.js",
    "js/mount.js",
    "js/side.js",
-   "js/side-view.js"
+   "js/side-view.js",
+   "js/side-layers3d.js"
   ],
   [
    "js/toon3d-core.js",
@@ -94,6 +95,7 @@
    "js/mount.js",
    "js/side.js",
    "js/side-view.js",
+   "js/side-layers3d.js",
    "js/vendor/three.iife.js",
    "js/toon3d-core.js",
    "js/toon3d.js",

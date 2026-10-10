@@ -94,6 +94,7 @@ window.DG_NO_TUNE = true;
 <script src="js/mount.js"></script>
 <script src="js/side.js"></script>
 <script src="js/side-view.js"></script>
+<script src="js/side-layers3d.js"></script>
 <script src="js/vendor/three.iife.js"></script>
 <script src="js/toon3d-core.js"></script>
 <script src="js/toon3d.js"></script>
@@ -6022,6 +6023,25 @@ window.DG_NO_TUNE = true;
       var screenX = land * zz / k;   // 세계 x → 폰 가로 화면 x(CSS)
       var r = [screenX >= 110 + 24 - 0.5, SV.startClearX(1280, 800) === 0, SV.startClearX(390, 844) === 0, Math.max(80, SV.startClearX(1280, 800)) === 80, !!z];
       return r.every(Boolean) && ('폰 가로 시작 x ' + land + '(화면 ' + screenX.toFixed(0) + 'px ≥ 134) · PC·세로 80') || '실패 ' + r.join(',') + ' ' + land;
+    });
+    t('st.side-view3d: 시차 층(W-0161) — 사냥터가 쓰는 배경 지역 전부 layers.json 이 있고, 층 셋 깊이 far < mid < near < 0 < 앞 풀, mid·near 는 그 깊이 땅(0)에 앉는다', function () {
+      var V = DG.sideLayers3d, M = DG.cfg.mode2d, seen = {}, bad = [], n = 0, D = 360 / Math.tan(17.5 * Math.PI / 180);
+      Object.keys(M.region).forEach(function (k) { seen[M.region[k]] = 1; });
+      Object.keys(seen).forEach(function (rg) {
+        var x = new XMLHttpRequest(), j = null;
+        try { x.open('GET', (M.bgBase || 'assets/web2d/bg/') + rg + '.layers.json', false); x.send(); j = x.status === 200 ? JSON.parse(x.responseText) : null; } catch (e) { j = null; }
+        if (!j || !j.far || !j.mid || !j.near) { bad.push(rg + ':json'); return; }
+        var a = V.layerRect('far', j.far, 560, 720, D), b = V.layerRect('mid', j.mid, 560, 720, D), c = V.layerRect('near', j.near, 560, 720, D);
+        var ok = a.z < b.z && b.z < c.z && c.z < 0 && V.FRONT_Z > 0 && a.top > a.bot && b.top > 0 && b.bot === 0 && c.bot === 0 && c.top > 0 && a.unitW > 0 && a.f > b.f && b.f > c.f;
+        if (!ok) { bad.push(rg); } else { n++; }
+      });
+      return bad.length === 0 && n >= 7 && ('배경 지역 ' + n + '곳 · far ' + V.LAYER_Z.far + ' < mid ' + V.LAYER_Z.mid + ' < near ' + V.LAYER_Z.near + ' < 0 < 앞 풀 ' + V.FRONT_Z) || '실패 ' + n + ' ' + bad.join(',');
+    });
+    t('st.side-view3d: 시차 층(W-0161) — 손잡이 story3d.parallax 0 이면 층 없음(옛 도형 하늘·산), 1 이면 사냥터 key 로 2D 와 같은 지역', function () {
+      var V = DG.sideLayers3d, C = DG.core, k0 = C.tuned('story3d.parallax', 1), on, off, none;
+      try { C.setTune('story3d.parallax', 1); on = V.regionOf({ key: 'field' }); none = V.regionOf({ key: 'zz_none' }); C.setTune('story3d.parallax', 0); off = V.regionOf({ key: 'field' }); } finally { C.setTune('story3d.parallax', k0); }
+      var r = [on === DG.cfg.mode2d.region.field, off === null, none === null];
+      return r.every(Boolean) && ('손잡이 1 → ' + on + ' · 0 → 층 없음 · 표에 없는 사냥터 → 옛 하늘') || '실패 ' + r.join(',');
     });
     t('st.side-view: 2D 화면(W-0132) — 큰 화면은 기본 확대(1~1.6), 손잡이 1 이면 확대 없음, 풀빛 바닥의 발판 흙은 갈색', function () {
       var V = DG.sideView, C = DG.core, keep = C.tuned('side.baseZoom', 1.35), z0 = V._zoom(), r;

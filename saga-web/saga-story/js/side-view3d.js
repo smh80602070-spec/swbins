@@ -335,6 +335,38 @@
     return 0.9;
   }
 
+  /* ── W-0161 시차 층 — 깊이·자리 계산은 `side-layers3d.js`(진단이 본다), 여기는 그림만. 층 그림이 있는 장면은 그 그림이
+     대신하는 도형 산·먼 나무를 안 세우고, 인물 앞 z +36 에 낮은 풀(deco grass, 12~18px) 한 줄로 발을 살짝 가린다 ── */
+  function SL() { return global.DG.sideLayers3d; }
+  function regionOf(stg) { return SL() ? SL().regionOf(stg) : null; }
+  function PARALLAX() { return SL() ? SL().on() : false; }
+  var layerMeta = {};
+  /** 층 셋을 세운다 — layers.json 은 한 번만 받는다(비동기, 늦게 오면 그 세대만) */
+  function buildLayers(Tc, stg) {
+    var rg = regionOf(stg), gen = stageGen, base = stg.floor, D = camDist();
+    if (!rg || !global.fetch) { return; }
+    var M = global.DG.cfg.mode2d, dir = M.bgBase || 'assets/web2d/bg/';
+    function make(meta) {
+      if (gen !== stageGen || !meta) { return; }
+      ['far', 'mid', 'near'].forEach(function (name) {
+        var L = meta[name];
+        if (!L) { return; }
+        var r = SL().layerRect(name, L, base, H, D), wide = stg.width + W * 2 * r.f + 400;
+        var tx = new Tc.TextureLoader().load(dir + rg + '_' + name + '.webp');
+        tx.wrapS = Tc.MirroredRepeatWrapping; tx.repeat.x = wide / r.unitW;
+        if (Tc.SRGBColorSpace) { tx.colorSpace = Tc.SRGBColorSpace; }
+        var m = new Tc.Mesh(new Tc.PlaneGeometry(wide, Math.max(1, r.top - r.bot)),
+          new Tc.MeshBasicMaterial({ map: tx, transparent: true, depthWrite: false, fog: false, toneMapped: false }));
+        m.position.set(stg.width / 2, (r.top + r.bot) / 2, r.z);
+        m.userData.layer = name;
+        worldGroup.add(m);
+      });
+    }
+    if (layerMeta[rg]) { make(layerMeta[rg]); return; }
+    global.fetch(dir + rg + '.layers.json').then(function (q) { return q.ok ? q.json() : null; })
+      .then(function (j) { if (j) { layerMeta[rg] = j; } make(j); })['catch'](function () { /* 없으면 옛 도형 그대로 */ });
+  }
+
   /** 지형지물 — 아직 GLB 를 못 받는 자리라 도형으로 세운다(다른 판이 GLB 로 가기 전에
    *  거치던 자리와 같다). 나중에 CC0 모델을 구하면 이 함수만 바꾸면 된다 */
   function buildScenery(Tc, stg) {
@@ -348,9 +380,10 @@
     var nearMat = LM({ color: mood === 'forest' ? 0x3a6b3a
       : mood === 'cave' ? 0x352a3f : mood === 'fire' ? 0x3a1c14 : 0x6fae6f });
 
-    var gen = stageGen;
+    var gen = stageGen, layered = !!regionOf(stg);   // W-0161 — 층 그림이 있으면 산·먼 나무는 그림이 대신한다
     /* 나무(GLB 로 갈리면 tree:near/tree:far, 다는 자리는 지금 세운 원뿔 높이와 맞춘다) */
     function trunk(x, z, h, mat, far) {
+      if (layered && far) { return; }
       var holder = new Tc.Group();
       holder.position.set(x, 0, z);
       var trunkMat = LM({ color: 0x4a3524 });
@@ -378,6 +411,7 @@
       if (!up) { swapIn(holder, 'rock', x + ':' + z, h * 0.9, gen); }
     }
     function hill(x, z, r, mat) {
+      if (layered) { return; }
       var holder = new Tc.Group();
       holder.position.set(x, 0, z);
       var g = new Tc.Mesh(new Tc.SphereGeometry(r, 12, 8, 0, Math.PI * 2, 0, Math.PI / 2), mat);
@@ -504,6 +538,7 @@
       for (i = 0, m = -60; m < span; i++, m += 95) { deco(m, -30 - (i % 3) * 15, 18 + (i % 3) * 6, 'grass', grassMat); }
       for (i = 0, m = -120; m < span; i++, m += 260) { deco(m, -50, 24 + (i % 2) * 8, 'flower', grassMat); }
       for (i = 0, m = -180; m < span; i++, m += 340) { deco(m, -70, 40 + (i % 2) * 12, 'bush', bushMat); }
+      if (layered) { for (i = 0, m = -40; m < span; i++, m += 70 + (i % 3) * 25) { deco(m, SL().FRONT_Z, 12 + (i % 3) * 3, 'grass', grassMat); } }   // W-0161 앞 풀 — 발을 살짝 가린다
     } else if (mood === 'cave') {
       for (i = 0, m = -140; m < span; i++, m += 300) { deco(m, -40, 22 + (i % 3) * 8, 'moss_rock', LM({ color: 0x453a52 })); }
     }
@@ -549,13 +584,15 @@
     }
 
     buildScenery(Tc, stg);
+    buildLayers(Tc, stg);
     rebuildNpcs(Tc, stg);
     rebuildGathers(Tc, stg);
     rebuildCritters(Tc, stg);
     rebuildChest(Tc);
     buildForagePatch(Tc);
-    lastMood = stg.mood + '|' + stg.width;
+    lastMood = stageKey(stg);
   }
+  function stageKey(stg) { return stg.mood + '|' + stg.width + '|' + (stg.key || '') + '|' + H + '|' + (PARALLAX() ? 1 : 0); }
 
   /** 보물상자(PLAN 11절) — `run.chest` 가 있을 때만(사냥터마다 한 자리, 이미
    *  열었으면 `run.gathers` 처럼 알아서 숨는다) 세운다. z 는 채집물과 같은
@@ -826,8 +863,7 @@
     var Tc = three();
     var stg = run.stage, p = run.player;
 
-    var key = stg.mood + '|' + stg.width;
-    if (key !== lastMood) { rebuildStage(stg); }
+    if (stageKey(stg) !== lastMood) { rebuildStage(stg); }
 
     var camX = SV._cam();
     var D = camDist();

@@ -516,5 +516,23 @@
   "ticket": "W-0149",
   "since": "2026-10-10",
   "note": "D2: 점검(scratchpad probe149, 헤드리스 첫 사냥터 2D) — 들개 → mon_quad_02 · 정찰 드론 → mon_cons_01 시트(manifest·walk.webp) 받음. QC qc/saga-story-2d.png Claude 눈 △(가운데 가시 돋친 갈색 네발 = 새 시트, 작음) · pw-side-check w149 6장(첫 사냥터는 사람 적이 대부분). 사람형·사람 우두머리(이 판 우두머리는 전부 사람)는 그대로."
+ },
+ {
+  "id": "st.parallax3d",
+  "name": "3D 사냥터 시차 층 — 2D 층 그림(far·mid·near)을 깊이 평면 −600·−300·−40 에(원근이라 저절로 시차), 도형 산·먼 나무 대신 · 앞 풀(+36) 한 줄이 발을 살짝 가림",
+  "files": [
+   "js/side-layers3d.js",
+   "js/side-view3d.js"
+  ],
+  "tests": [
+   "st.side-view3d: 시차 층(W-0161) — 사냥터가 쓰는 배경 지역 전부 layers.json 이 있고, 층 셋 깊이 far < mid < near < 0 < 앞 풀, mid·near 는 그 깊이 땅(0)에 앉는다",
+   "st.side-view3d: 시차 층(W-0161) — 손잡이 story3d.parallax 0 이면 층 없음(옛 도형 하늘·산), 1 이면 사냥터 key 로 2D 와 같은 지역"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0161",
+  "since": "2026-10-10",
+  "note": "D2(qc+claude 2026-10-10): pw-visual-close saga-story 6/6 · 1-town·2-field-high·3-field-low Read — 노을 산 그림(far)·통나무 둑(mid)·땅 띠(near)가 3D 뒤에 깔리고 원근으로 흐름 ○ · 앞 풀이 발 아래를 살짝 가림 ○ · LOW 도 같음 ○ · 가운데 층 통나무 둑이 화면 가운데 높이로 커 보임 △(그림 자체, 2D 보다 약 40px 위). 인물 크기는 2D 확대(baseZoom, W-0132)가 3D 캔버스에도 걸려 이미 화면 약 1/6~1/7 — 배율 1.6 은 안 곱함. 손잡이 story3d.parallax 0 = 옛."
  }
 ]
