@@ -7,8 +7,11 @@
 
 방식: 뼈마다 머리 위치 이동 + 뼈 방향 회전 + 뼈 길이 비율(몸통은 어깨·골반 폭을 가로로 더함), 대상에 없는 뼈(치마·꼬리)는 가장 가까운
 공통 조상을 따른다. 옷은 법선 방향으로 살짝 부풀려 몸이 비치지 않게 한다. 경로는 abspath(Blender 가 상대경로를 드라이브 루트로 읽는다).
+K-0028 무늬: 조합표 줄에 `pattern: {slot, name}` 이 있으면 그 칸 조각의 바탕색 질감을 `saga-assets/patterns/<name>.webp` 로 합성한다
+(make_wardrobe_textures.compose 와 같은 식 — 패널 안에서 무늬 × 원래 명암, 접힘·그림자는 남는다).
 """
 import bpy, sys, os, glob, math, json
+import numpy as np
 from mathutils import Vector, Matrix
 
 a = sys.argv[sys.argv.index('--') + 1:]
@@ -214,11 +217,13 @@ def export_glb(path):
                               export_apply=False, export_image_format='AUTO', export_yup=True)
 
 
-def dress(body_dir, picks):
-    """몸 base.glb 를 불러 picks=[(조각 GLB 경로, 슬롯)] 을 이식한다. 대상 뼈대를 돌려준다."""
+def dress(body_dir, picks, got=None):
+    """몸 base.glb 를 불러 picks=[(조각 GLB 경로, 슬롯)] 을 이식한다. 대상 뼈대를 돌려준다. got={} 이면 조각 경로 → 메시 목록을 채운다."""
     tarm, _, _ = imp(os.path.join(body_dir, 'base.glb'))
     for f, slot in picks:
         sarm, meshes, new = imp(f)
+        if got is not None:
+            got[f] = meshes
         transplant(sarm, tarm, meshes, push=PUSH.get(slot, 0.002))
         for o in new:
             if o.type == 'ARMATURE':
@@ -227,6 +232,79 @@ def dress(body_dir, picks):
 
 
 PUSH = {'bottom': 0.004, 'shoes': 0.002, 'top': 0.003, 'cloth': 0.003}
+PATTERNS = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'saga-assets', 'patterns')
+
+
+def base_color_image(mat):
+    """재질의 바탕색으로 들어가는 이미지 노드 — Principled 'Base Color' 또는 무광(KHR_materials_unlit → Emission 'Color') 위로
+    몇 단계까지 거슬러 찾는다(VRoid 조각은 무광으로 들어온다)."""
+    nt = mat.node_tree
+    to = {}
+    for l in nt.links:
+        to.setdefault(l.to_node, []).append(l)
+    for n in nt.nodes:
+        want = {'BSDF_PRINCIPLED': 'Base Color', 'EMISSION': 'Color'}.get(n.type)
+        if not want:
+            continue
+        front = [l.from_node for l in to.get(n, []) if l.to_socket.name == want]
+        for _ in range(4):
+            for f in front:
+                if f.type == 'TEX_IMAGE' and f.image and f.image.size[0] > 0:
+                    return f
+            front = [l.from_node for f in front for l in to.get(f, [])]
+    return None
+
+
+def pixels(img):
+    w, h = img.size
+    a = np.empty(w * h * 4, np.float32)
+    img.pixels.foreach_get(a)
+    return a.reshape(h, w, 4)
+
+
+def compose(a, tile):
+    """make_wardrobe_textures.compose 와 같은 식(numpy, Blender 안). a=(H,W,4) 0..1, tile=(th,tw,3)."""
+    h, w = a.shape[:2]
+    rgb, al = a[..., :3], a[..., 3]
+    mask = al > 0.5 if al.min() < 0.99 else rgb.max(axis=2) > 0.05
+    lum = rgb @ np.array([0.299, 0.587, 0.114], dtype=np.float32)
+    ref = np.percentile(lum[mask], 70) if mask.any() else 1.0
+    shade = np.clip(lum / max(ref, 0.03), 0.35, 1.35)
+    shade = 0.35 + 0.65 * shade / 1.35
+    big = np.tile(tile, (h // tile.shape[0] + 1, w // tile.shape[1] + 1, 1))[:h, :w]
+    out = np.where(mask[..., None], np.clip(big * shade[..., None] * 1.15, 0, 1), rgb)
+    return np.concatenate([out, al[..., None]], axis=2)
+
+
+def apply_pattern(meshes, name):
+    """meshes 의 바탕색 질감을 무늬로 합성한 새 이미지로 바꾼다(재질·이미지는 복사 — 다른 조각과 나눠 쓰면 안 번지게). 바꾼 장 수."""
+    pat = bpy.data.images.load(os.path.join(PATTERNS, name + '.webp'))
+    done, n = {}, 0
+    for o in meshes:
+        for ms in o.material_slots:
+            m = ms.material
+            if not m or not m.use_nodes:
+                continue
+            if m.name not in done:
+                m2 = m.copy()
+                node = base_color_image(m2)
+                if node is not None:
+                    src = node.image
+                    w, h = src.size
+                    t = pat.copy()
+                    t.scale(max(256, w // 3), max(256, h // 3))   # 원래 식: 타일 = 질감의 1/3(최소 256)
+                    tile = pixels(t)[..., :3]
+                    bpy.data.images.remove(t)
+                    res = compose(pixels(src), tile)
+                    img = bpy.data.images.new('%s__%s' % (src.name, name), w, h, alpha=True)
+                    img.pixels.foreach_set(res.ravel())
+                    img.pack()
+                    node.image = img
+                    n += 1
+                done[m.name] = m2
+            ms.material = done[m.name]
+    bpy.data.images.remove(pat)
+    return n
 
 if MODE == 'pair':
     os.makedirs(os.path.dirname(out) or '.', exist_ok=True)
@@ -257,13 +335,22 @@ else:                                           # plan 모드 — 명단 299 를
         if os.path.exists(dst) and '--force' not in a:
             continue
         try:
-            picks = []
+            picks, pat_files = [], []
+            pt = e.get('pattern')
             for slot, src in e['kit'].items():
                 pj = json.load(open(os.path.join(PARTS, src, 'parts.json'), encoding='utf-8'))['parts']
                 want = ('top', 'bottom', 'cloth') if slot == 'cloth' else (slot,)   # 원피스는 그 샘플의 상의·하의 조각까지 함께(몸통 가림)
-                picks += [(os.path.join(PARTS, src, p['file']), p['slot']) for p in pj if p['slot'] in want]
+                got = [(os.path.join(PARTS, src, p['file']), p['slot']) for p in pj if p['slot'] in want]
+                picks += got
+                if pt and pt['slot'] == slot:
+                    pat_files += [f for f, _ in got]
             clear()
-            dress(os.path.join(PARTS, e['body']), picks)
+            meshes_of = {}
+            dress(os.path.join(PARTS, e['body']), picks, meshes_of)
+            if pt:
+                k = apply_pattern([m for f in pat_files for m in meshes_of.get(f, [])], pt['name'])
+                if not k:
+                    raise RuntimeError('무늬를 입힐 바탕색 질감 없음: %s' % pt)
             tmp = os.path.join(OUTDIR, '_tmp_' + e['id'] + '.glb')
             export_glb(tmp)
             os.replace(tmp, dst)

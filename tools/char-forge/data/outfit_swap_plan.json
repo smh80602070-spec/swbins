@@ -2956,6 +2956,2800 @@
     "bottom": "d",
     "shoes": "s"
    }
+  },
+  {
+   "id": "aq_yeolsa",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "n",
+    "bottom": "z",
+    "shoes": "l"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "argyle_green"
+   }
+  },
+  {
+   "id": "aq_nokju",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "x",
+    "bottom": "z",
+    "shoes": "n"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "aurora_gradient"
+   }
+  },
+  {
+   "id": "aq_gyeongbong",
+   "gender": "F",
+   "body": "a9",
+   "kit": {
+    "cloth": "s",
+    "shoes": "j"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "bamboo_green"
+   }
+  },
+  {
+   "id": "aq_sanghwa",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "x",
+    "bottom": "c",
+    "shoes": "g"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "batik_indigo"
+   }
+  },
+  {
+   "id": "aq_byeolgil",
+   "gender": "F",
+   "body": "a6",
+   "kit": {
+    "cloth": "e",
+    "shoes": "a7"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "bio_mesh_green"
+   }
+  },
+  {
+   "id": "aq_dalgu",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "n",
+    "bottom": "c",
+    "shoes": "g"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "brocade_gold"
+   }
+  },
+  {
+   "id": "aq_sapung",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "r",
+    "bottom": "z",
+    "shoes": "x"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "buffalo_plaid"
+   }
+  },
+  {
+   "id": "aq_cheongok",
+   "gender": "F",
+   "body": "a3",
+   "kit": {
+    "top": "w",
+    "bottom": "a9",
+    "shoes": "q"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "camo_green"
+   }
+  },
+  {
+   "id": "aq_saebom",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "r",
+    "bottom": "r",
+    "shoes": "l"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "canvas_beige"
+   }
+  },
+  {
+   "id": "yk_unsu",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "z",
+    "bottom": "c",
+    "shoes": "g"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "carbon_weave"
+   }
+  },
+  {
+   "id": "yk_cheonro",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "z",
+    "bottom": "r",
+    "shoes": "p"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "ceramic_armor_white"
+   }
+  },
+  {
+   "id": "yk_baekyeong",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "c",
+    "bottom": "c",
+    "shoes": "g"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "checker_bw"
+   }
+  },
+  {
+   "id": "yk_seolmae",
+   "gender": "F",
+   "body": "a10",
+   "kit": {
+    "top": "w",
+    "bottom": "a9",
+    "shoes": "f"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "circuit_neon"
+   }
+  },
+  {
+   "id": "yk_amsu",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "n",
+    "bottom": "l",
+    "shoes": "p"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "coins_maroon"
+   }
+  },
+  {
+   "id": "yk_hyangdo",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "z",
+    "bottom": "z",
+    "shoes": "x"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "corduroy_brown"
+   }
+  },
+  {
+   "id": "yk_sanyeom",
+   "gender": "F",
+   "body": "a8",
+   "kit": {
+    "top": "s",
+    "bottom": "a9",
+    "shoes": "o"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "crest_crane_gold"
+   }
+  },
+  {
+   "id": "yk_pungdeung",
+   "gender": "F",
+   "body": "a7",
+   "kit": {
+    "cloth": "m",
+    "shoes": "h"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "crest_moon_silver"
+   }
+  },
+  {
+   "id": "yk_jinbaek",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "r",
+    "bottom": "p",
+    "shoes": "z"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "crest_sun_red"
+   }
+  },
+  {
+   "id": "hq_yongpa",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "l",
+    "bottom": "l",
+    "shoes": "g"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "crest_wave_blue"
+   }
+  },
+  {
+   "id": "hq_jugwang",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "x",
+    "bottom": "p",
+    "shoes": "r"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "crimson_felt"
+   }
+  },
+  {
+   "id": "hq_mulgyeol",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "x",
+    "bottom": "p",
+    "shoes": "p"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "cyber_gradient"
+   }
+  },
+  {
+   "id": "hq_eodeok",
+   "gender": "F",
+   "body": "a2",
+   "kit": {
+    "top": "b",
+    "bottom": "b",
+    "shoes": "h"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "damask_crimson"
+   }
+  },
+  {
+   "id": "hq_sanho",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "z",
+    "bottom": "l",
+    "shoes": "z"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "data_stream_blue"
+   }
+  },
+  {
+   "id": "hq_jamsu",
+   "gender": "F",
+   "body": "a9",
+   "kit": {
+    "cloth": "u",
+    "shoes": "a10"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "denim_worn"
+   }
+  },
+  {
+   "id": "hq_dotdae",
+   "gender": "F",
+   "body": "a3",
+   "kit": {
+    "top": "d",
+    "bottom": "y",
+    "shoes": "o"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "ethnic_geo"
+   }
+  },
+  {
+   "id": "hq_haeryeong",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "p",
+    "bottom": "c",
+    "shoes": "l"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "fiber_optic_weave"
+   }
+  },
+  {
+   "id": "hq_gaebeol",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "p",
+    "bottom": "z",
+    "shoes": "p"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "floral_blue"
+   }
+  },
+  {
+   "id": "bw_cheolgi",
+   "gender": "F",
+   "body": "a6",
+   "kit": {
+    "top": "y",
+    "bottom": "j",
+    "shoes": "o"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "graphene_black"
+   }
+  },
+  {
+   "id": "bw_seolgu",
+   "gender": "F",
+   "body": "a8",
+   "kit": {
+    "top": "w",
+    "bottom": "y",
+    "shoes": "a"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "heraldic_blue_gold"
+   }
+  },
+  {
+   "id": "bw_gamu",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "g",
+    "bottom": "l",
+    "shoes": "c"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "herringbone_camel"
+   }
+  },
+  {
+   "id": "bw_sungeom",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "r",
+    "bottom": "p",
+    "shoes": "z"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "hex_plate_white"
+   }
+  },
+  {
+   "id": "bw_hwaro",
+   "gender": "F",
+   "body": "a2",
+   "kit": {
+    "cloth": "a10",
+    "shoes": "b"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "holo_iridescent"
+   }
+  },
+  {
+   "id": "bw_sangwol",
+   "gender": "F",
+   "body": "a10",
+   "kit": {
+    "top": "u",
+    "bottom": "d",
+    "shoes": "j"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "hologram_scanlines"
+   }
+  },
+  {
+   "id": "bw_gomnae",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "n",
+    "bottom": "z",
+    "shoes": "p"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "houndstooth_grey"
+   }
+  },
+  {
+   "id": "bw_yanggil",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "p",
+    "bottom": "l",
+    "shoes": "c"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "indigo_ikat"
+   }
+  },
+  {
+   "id": "bw_bitnae",
+   "gender": "F",
+   "body": "a7",
+   "kit": {
+    "cloth": "a8",
+    "shoes": "h"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "ion_glow_orange"
+   }
+  },
+  {
+   "id": "gm_geumhyeol",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "x",
+    "bottom": "r",
+    "shoes": "r"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "jade_peony_silk"
+   }
+  },
+  {
+   "id": "gm_myeongseok",
+   "gender": "F",
+   "body": "a6",
+   "kit": {
+    "top": "a",
+    "bottom": "k",
+    "shoes": "u"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "knit_cream"
+   }
+  },
+  {
+   "id": "gm_cheolbu",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "c",
+    "bottom": "c",
+    "shoes": "x"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "lace_white"
+   }
+  },
+  {
+   "id": "gm_hwangma",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "n",
+    "bottom": "r",
+    "shoes": "l"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "leather_brown"
+   }
+  },
+  {
+   "id": "gm_gaenghwa",
+   "gender": "F",
+   "body": "a10",
+   "kit": {
+    "top": "k",
+    "bottom": "y",
+    "shoes": "f"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "leather_studs"
+   }
+  },
+  {
+   "id": "gm_jeongdong",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "z",
+    "bottom": "z",
+    "shoes": "p"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "linen_stripes"
+   }
+  },
+  {
+   "id": "gm_dolbae",
+   "gender": "F",
+   "body": "a2",
+   "kit": {
+    "top": "u",
+    "bottom": "k",
+    "shoes": "o"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "liquid_metal_chrome"
+   }
+  },
+  {
+   "id": "gm_mahyang",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "v",
+    "bottom": "l",
+    "shoes": "l"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "nano_scale_blue"
+   }
+  },
+  {
+   "id": "gm_sanul",
+   "gender": "F",
+   "body": "a3",
+   "kit": {
+    "top": "a9",
+    "bottom": "b",
+    "shoes": "h"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "neon_grid_pink"
+   }
+  },
+  {
+   "id": "sn_seokhwan",
+   "gender": "F",
+   "body": "a9",
+   "kit": {
+    "top": "a6",
+    "bottom": "a",
+    "shoes": "w"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "ochre_hemp"
+   }
+  },
+  {
+   "id": "sn_milhyang",
+   "gender": "F",
+   "body": "a7",
+   "kit": {
+    "cloth": "a3",
+    "shoes": "a"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "paisley_teal"
+   }
+  },
+  {
+   "id": "sn_horang",
+   "gender": "F",
+   "body": "a8",
+   "kit": {
+    "top": "a9",
+    "bottom": "d",
+    "shoes": "u"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "pinstripe_charcoal"
+   }
+  },
+  {
+   "id": "sn_nuri",
+   "gender": "F",
+   "body": "a8",
+   "kit": {
+    "cloth": "a3",
+    "shoes": "k"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "plasma_veins_violet"
+   }
+  },
+  {
+   "id": "sn_deonggul",
+   "gender": "F",
+   "body": "a6",
+   "kit": {
+    "cloth": "s",
+    "shoes": "a7"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "polka_navy"
+   }
+  },
+  {
+   "id": "sn_gojeok",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "l",
+    "bottom": "z",
+    "shoes": "x"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "quantum_dots_gold"
+   }
+  },
+  {
+   "id": "sn_ppuri",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "g",
+    "bottom": "l",
+    "shoes": "n"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "sakura_pink"
+   }
+  },
+  {
+   "id": "sn_bitdol",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "l",
+    "bottom": "p",
+    "shoes": "n"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "scale_silver"
+   }
+  },
+  {
+   "id": "sn_saessak",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "z",
+    "bottom": "l",
+    "shoes": "r"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "sequin_black"
+   }
+  },
+  {
+   "id": "dk_gyedo",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "p",
+    "bottom": "c",
+    "shoes": "v"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "silk_red_gold"
+   }
+  },
+  {
+   "id": "dk_pungnyeon",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "p",
+    "bottom": "l",
+    "shoes": "c"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "smart_fabric_ripple"
+   }
+  },
+  {
+   "id": "dk_suro",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "p",
+    "bottom": "c",
+    "shoes": "g"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "solar_panel_dark"
+   }
+  },
+  {
+   "id": "dk_amgyeol",
+   "gender": "F",
+   "body": "a10",
+   "kit": {
+    "cloth": "a7",
+    "shoes": "o"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "starry_night"
+   }
+  },
+  {
+   "id": "dk_meari",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "p",
+    "bottom": "z",
+    "shoes": "z"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "stripes_pastel"
+   }
+  },
+  {
+   "id": "dk_gulttuk",
+   "gender": "F",
+   "body": "a3",
+   "kit": {
+    "top": "o",
+    "bottom": "a6",
+    "shoes": "s"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "sunflower"
+   }
+  },
+  {
+   "id": "dk_jeoljeong",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "c",
+    "bottom": "p",
+    "shoes": "x"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "tartan_green"
+   }
+  },
+  {
+   "id": "dk_mullae",
+   "gender": "F",
+   "body": "a9",
+   "kit": {
+    "top": "a6",
+    "bottom": "a9",
+    "shoes": "a7"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "tweed_grey"
+   }
+  },
+  {
+   "id": "dk_saneum",
+   "gender": "F",
+   "body": "a2",
+   "kit": {
+    "top": "b",
+    "bottom": "k",
+    "shoes": "j"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "velvet_purple"
+   }
+  },
+  {
+   "id": "hl_hwaseo",
+   "gender": "F",
+   "body": "a7",
+   "kit": {
+    "top": "e",
+    "bottom": "a9",
+    "shoes": "f"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "waves_teal"
+   }
+  },
+  {
+   "id": "hl_baekhwa",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "g",
+    "bottom": "c",
+    "shoes": "p"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "argyle_green"
+   }
+  },
+  {
+   "id": "hl_mukhyang",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "n",
+    "bottom": "l",
+    "shoes": "c"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "aurora_gradient"
+   }
+  },
+  {
+   "id": "hl_geumsil",
+   "gender": "F",
+   "body": "a10",
+   "kit": {
+    "top": "a3",
+    "bottom": "d",
+    "shoes": "k"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "bamboo_green"
+   }
+  },
+  {
+   "id": "hl_gyeongun",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "r",
+    "bottom": "p",
+    "shoes": "g"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "batik_indigo"
+   }
+  },
+  {
+   "id": "hl_damhwa",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "v",
+    "bottom": "p",
+    "shoes": "z"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "bio_mesh_green"
+   }
+  },
+  {
+   "id": "hl_kkotbi",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "g",
+    "bottom": "l",
+    "shoes": "p"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "brocade_gold"
+   }
+  },
+  {
+   "id": "hl_jeongwon",
+   "gender": "F",
+   "body": "a7",
+   "kit": {
+    "top": "e",
+    "bottom": "a6",
+    "shoes": "q"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "buffalo_plaid"
+   }
+  },
+  {
+   "id": "hl_noeul",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "r",
+    "bottom": "c",
+    "shoes": "n"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "camo_green"
+   }
+  },
+  {
+   "id": "nc_bitsal",
+   "gender": "F",
+   "body": "a6",
+   "kit": {
+    "top": "f",
+    "bottom": "a",
+    "shoes": "y"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "canvas_beige"
+   }
+  },
+  {
+   "id": "nc_baekdo",
+   "gender": "F",
+   "body": "a9",
+   "kit": {
+    "cloth": "e",
+    "shoes": "d"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "carbon_weave"
+   }
+  },
+  {
+   "id": "nc_hwalgi",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "v",
+    "bottom": "p",
+    "shoes": "p"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "ceramic_armor_white"
+   }
+  },
+  {
+   "id": "nc_yagyeong",
+   "gender": "F",
+   "body": "a8",
+   "kit": {
+    "cloth": "a2",
+    "shoes": "a6"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "checker_bw"
+   }
+  },
+  {
+   "id": "nc_sinho",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "n",
+    "bottom": "c",
+    "shoes": "c"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "circuit_neon"
+   }
+  },
+  {
+   "id": "nc_ullim",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "r",
+    "bottom": "p",
+    "shoes": "x"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "coins_maroon"
+   }
+  },
+  {
+   "id": "nc_geori",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "g",
+    "bottom": "r",
+    "shoes": "x"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "corduroy_brown"
+   }
+  },
+  {
+   "id": "nc_hamseong",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "n",
+    "bottom": "z",
+    "shoes": "x"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "crest_crane_gold"
+   }
+  },
+  {
+   "id": "nc_jeongmyeong",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "p",
+    "bottom": "p",
+    "shoes": "r"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "crest_moon_silver"
+   }
+  },
+  {
+   "id": "cs_cheolgil",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "l",
+    "bottom": "c",
+    "shoes": "v"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "crest_sun_red"
+   }
+  },
+  {
+   "id": "cs_gijeok",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "g",
+    "bottom": "r",
+    "shoes": "r"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "crest_wave_blue"
+   }
+  },
+  {
+   "id": "cs_yeokjang",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "r",
+    "bottom": "l",
+    "shoes": "v"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "crimson_felt"
+   }
+  },
+  {
+   "id": "cs_hwamul",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "z",
+    "bottom": "c",
+    "shoes": "p"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "cyber_gradient"
+   }
+  },
+  {
+   "id": "cs_seoktan",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "g",
+    "bottom": "c",
+    "shoes": "v"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "damask_crimson"
+   }
+  },
+  {
+   "id": "cs_gyeongjeok",
+   "gender": "F",
+   "body": "a3",
+   "kit": {
+    "top": "u",
+    "bottom": "a6",
+    "shoes": "a3"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "data_stream_blue"
+   }
+  },
+  {
+   "id": "cs_jeongbi",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "z",
+    "bottom": "p",
+    "shoes": "x"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "denim_worn"
+   }
+  },
+  {
+   "id": "cs_seungmu",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "x",
+    "bottom": "z",
+    "shoes": "p"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "ethnic_geo"
+   }
+  },
+  {
+   "id": "cs_noseon",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "p",
+    "bottom": "c",
+    "shoes": "l"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "fiber_optic_weave"
+   }
+  },
+  {
+   "id": "mh_muha",
+   "gender": "F",
+   "body": "a2",
+   "kit": {
+    "top": "k",
+    "bottom": "d",
+    "shoes": "q"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "floral_blue"
+   }
+  },
+  {
+   "id": "mh_gugeup",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "n",
+    "bottom": "p",
+    "shoes": "n"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "graphene_black"
+   }
+  },
+  {
+   "id": "mh_bungdae",
+   "gender": "F",
+   "body": "a10",
+   "kit": {
+    "top": "s",
+    "bottom": "y",
+    "shoes": "a"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "heraldic_blue_gold"
+   }
+  },
+  {
+   "id": "mh_yakseon",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "v",
+    "bottom": "z",
+    "shoes": "x"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "herringbone_camel"
+   }
+  },
+  {
+   "id": "mh_maekbak",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "r",
+    "bottom": "r",
+    "shoes": "l"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "hex_plate_white"
+   }
+  },
+  {
+   "id": "mh_sabang",
+   "gender": "F",
+   "body": "q",
+   "kit": {
+    "top": "a9",
+    "bottom": "k",
+    "shoes": "a6"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "holo_iridescent"
+   }
+  },
+  {
+   "id": "mh_onyu",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "p",
+    "bottom": "c",
+    "shoes": "r"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "hologram_scanlines"
+   }
+  },
+  {
+   "id": "mh_gangin",
+   "gender": "F",
+   "body": "a2",
+   "kit": {
+    "top": "a",
+    "bottom": "a6",
+    "shoes": "w"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "houndstooth_grey"
+   }
+  },
+  {
+   "id": "mh_ganhui",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "n",
+    "bottom": "p",
+    "shoes": "r"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "indigo_ikat"
+   }
+  },
+  {
+   "id": "js_bodo",
+   "gender": "F",
+   "body": "u",
+   "kit": {
+    "top": "f",
+    "bottom": "b",
+    "shoes": "a"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "ion_glow_orange"
+   }
+  },
+  {
+   "id": "js_hyeonjang",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "x",
+    "bottom": "z",
+    "shoes": "v"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "jade_peony_silk"
+   }
+  },
+  {
+   "id": "js_jeonpa",
+   "gender": "F",
+   "body": "a7",
+   "kit": {
+    "top": "a",
+    "bottom": "a6",
+    "shoes": "j"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "knit_cream"
+   }
+  },
+  {
+   "id": "js_eumseong",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "c",
+    "bottom": "c",
+    "shoes": "v"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "lace_white"
+   }
+  },
+  {
+   "id": "js_teukjong",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "p",
+    "bottom": "p",
+    "shoes": "r"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "leather_brown"
+   }
+  },
+  {
+   "id": "js_jamak",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "z",
+    "bottom": "l",
+    "shoes": "l"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "leather_studs"
+   }
+  },
+  {
+   "id": "js_jomyeong",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "l",
+    "bottom": "z",
+    "shoes": "x"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "linen_stripes"
+   }
+  },
+  {
+   "id": "js_dalli",
+   "gender": "F",
+   "body": "a8",
+   "kit": {
+    "cloth": "a10",
+    "shoes": "y"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "liquid_metal_chrome"
+   }
+  },
+  {
+   "id": "js_saengbang",
+   "gender": "F",
+   "body": "a9",
+   "kit": {
+    "cloth": "q",
+    "shoes": "m"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "nano_scale_blue"
+   }
+  },
+  {
+   "id": "kd_cheongram",
+   "gender": "F",
+   "body": "a3",
+   "kit": {
+    "top": "k",
+    "bottom": "a9",
+    "shoes": "y"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "neon_grid_pink"
+   }
+  },
+  {
+   "id": "kd_cheolsim",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "v",
+    "bottom": "z",
+    "shoes": "g"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "ochre_hemp"
+   }
+  },
+  {
+   "id": "kd_hoero",
+   "gender": "F",
+   "body": "a6",
+   "kit": {
+    "top": "m",
+    "bottom": "j",
+    "shoes": "u"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "paisley_teal"
+   }
+  },
+  {
+   "id": "kd_seolgye",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "g",
+    "bottom": "l",
+    "shoes": "g"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "pinstripe_charcoal"
+   }
+  },
+  {
+   "id": "kd_yongjeop",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "g",
+    "bottom": "c",
+    "shoes": "n"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "plasma_veins_violet"
+   }
+  },
+  {
+   "id": "kd_silheom",
+   "gender": "F",
+   "body": "a",
+   "kit": {
+    "top": "d",
+    "bottom": "a6",
+    "shoes": "w"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "polka_navy"
+   }
+  },
+  {
+   "id": "kd_nalgae",
+   "gender": "F",
+   "body": "a",
+   "kit": {
+    "top": "e",
+    "bottom": "k",
+    "shoes": "a10"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "quantum_dots_gold"
+   }
+  },
+  {
+   "id": "kd_seorim",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "n",
+    "bottom": "z",
+    "shoes": "g"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "sakura_pink"
+   }
+  },
+  {
+   "id": "kd_jeonji",
+   "gender": "F",
+   "body": "a3",
+   "kit": {
+    "top": "h",
+    "bottom": "d",
+    "shoes": "a10"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "scale_silver"
+   }
+  },
+  {
+   "id": "rg_jilju",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "g",
+    "bottom": "z",
+    "shoes": "c"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "sequin_black"
+   }
+  },
+  {
+   "id": "rg_suri",
+   "gender": "F",
+   "body": "a2",
+   "kit": {
+    "top": "a9",
+    "bottom": "k",
+    "shoes": "q"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "silk_red_gold"
+   }
+  },
+  {
+   "id": "rg_gyeolseung",
+   "gender": "F",
+   "body": "e",
+   "kit": {
+    "top": "k",
+    "bottom": "a9",
+    "shoes": "a7"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "smart_fabric_ripple"
+   }
+  },
+  {
+   "id": "rg_gyesan",
+   "gender": "F",
+   "body": "i",
+   "kit": {
+    "top": "q",
+    "bottom": "a",
+    "shoes": "e"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "solar_panel_dark"
+   }
+  },
+  {
+   "id": "rg_eungwon",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "r",
+    "bottom": "z",
+    "shoes": "l"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "starry_night"
+   }
+  },
+  {
+   "id": "rg_saekdong",
+   "gender": "F",
+   "body": "a9",
+   "kit": {
+    "cloth": "a3",
+    "shoes": "b"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "stripes_pastel"
+   }
+  },
+  {
+   "id": "rg_jagal",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "p",
+    "bottom": "c",
+    "shoes": "z"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "sunflower"
+   }
+  },
+  {
+   "id": "rg_singi",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "x",
+    "bottom": "z",
+    "shoes": "p"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "tartan_green"
+   }
+  },
+  {
+   "id": "rg_yeonseup",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "l",
+    "bottom": "c",
+    "shoes": "x"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "tweed_grey"
+   }
+  },
+  {
+   "id": "hb_bisang",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "x",
+    "bottom": "r",
+    "shoes": "v"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "velvet_purple"
+   }
+  },
+  {
+   "id": "hb_gwanje",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "x",
+    "bottom": "p",
+    "shoes": "z"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "waves_teal"
+   }
+  },
+  {
+   "id": "hb_sangae",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "v",
+    "bottom": "l",
+    "shoes": "z"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "argyle_green"
+   }
+  },
+  {
+   "id": "hb_gyeongro",
+   "gender": "F",
+   "body": "d",
+   "kit": {
+    "top": "a3",
+    "bottom": "a6",
+    "shoes": "a6"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "aurora_gradient"
+   }
+  },
+  {
+   "id": "hb_hwaljuro",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "v",
+    "bottom": "l",
+    "shoes": "r"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "bamboo_green"
+   }
+  },
+  {
+   "id": "hb_gisang",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "z",
+    "bottom": "z",
+    "shoes": "v"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "batik_indigo"
+   }
+  },
+  {
+   "id": "hb_seonhoe",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "z",
+    "bottom": "r",
+    "shoes": "r"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "bio_mesh_green"
+   }
+  },
+  {
+   "id": "hb_jeomgeom",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "c",
+    "bottom": "c",
+    "shoes": "z"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "brocade_gold"
+   }
+  },
+  {
+   "id": "hb_mangwon",
+   "gender": "F",
+   "body": "a10",
+   "kit": {
+    "top": "a3",
+    "bottom": "k",
+    "shoes": "m"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "buffalo_plaid"
+   }
+  },
+  {
+   "id": "ob_gongjeon",
+   "gender": "F",
+   "body": "o",
+   "kit": {
+    "top": "w",
+    "bottom": "a6",
+    "shoes": "j"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "camo_green"
+   }
+  },
+  {
+   "id": "ob_seongun",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "g",
+    "bottom": "z",
+    "shoes": "p"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "canvas_beige"
+   }
+  },
+  {
+   "id": "ob_mujung",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "r",
+    "bottom": "p",
+    "shoes": "v"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "carbon_weave"
+   }
+  },
+  {
+   "id": "ob_sanso",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "x",
+    "bottom": "c",
+    "shoes": "l"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "ceramic_armor_white"
+   }
+  },
+  {
+   "id": "ob_taeyang",
+   "gender": "F",
+   "body": "a7",
+   "kit": {
+    "top": "y",
+    "bottom": "a",
+    "shoes": "a"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "checker_bw"
+   }
+  },
+  {
+   "id": "ob_yeonryo",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "x",
+    "bottom": "p",
+    "shoes": "g"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "circuit_neon"
+   }
+  },
+  {
+   "id": "ob_tongsin",
+   "gender": "F",
+   "body": "q",
+   "kit": {
+    "top": "j",
+    "bottom": "a",
+    "shoes": "a8"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "coins_maroon"
+   }
+  },
+  {
+   "id": "ob_jungnyeok",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "c",
+    "bottom": "p",
+    "shoes": "r"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "corduroy_brown"
+   }
+  },
+  {
+   "id": "ob_byeolbit",
+   "gender": "F",
+   "body": "m",
+   "kit": {
+    "top": "m",
+    "bottom": "d",
+    "shoes": "q"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "crest_crane_gold"
+   }
+  },
+  {
+   "id": "ac_simyeon",
+   "gender": "F",
+   "body": "a8",
+   "kit": {
+    "top": "a9",
+    "bottom": "b",
+    "shoes": "m"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "crest_moon_silver"
+   }
+  },
+  {
+   "id": "ac_suap",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "c",
+    "bottom": "l",
+    "shoes": "v"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "crest_sun_red"
+   }
+  },
+  {
+   "id": "ac_haecho",
+   "gender": "F",
+   "body": "k",
+   "kit": {
+    "top": "d",
+    "bottom": "y",
+    "shoes": "w"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "crest_wave_blue"
+   }
+  },
+  {
+   "id": "ac_gipo",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "n",
+    "bottom": "p",
+    "shoes": "g"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "crimson_felt"
+   }
+  },
+  {
+   "id": "ac_balgwang",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "g",
+    "bottom": "p",
+    "shoes": "p"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "cyber_gradient"
+   }
+  },
+  {
+   "id": "ac_choeumpa",
+   "gender": "F",
+   "body": "u",
+   "kit": {
+    "top": "a",
+    "bottom": "a9",
+    "shoes": "a9"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "damask_crimson"
+   }
+  },
+  {
+   "id": "ac_sumbi",
+   "gender": "F",
+   "body": "a6",
+   "kit": {
+    "top": "y",
+    "bottom": "d",
+    "shoes": "a9"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "data_stream_blue"
+   }
+  },
+  {
+   "id": "ac_haemun",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "g",
+    "bottom": "p",
+    "shoes": "c"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "denim_worn"
+   }
+  },
+  {
+   "id": "ac_haebit",
+   "gender": "F",
+   "body": "j",
+   "kit": {
+    "top": "d",
+    "bottom": "j",
+    "shoes": "m"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "ethnic_geo"
+   }
+  },
+  {
+   "id": "ns_singyeong",
+   "gender": "F",
+   "body": "f",
+   "kit": {
+    "top": "j",
+    "bottom": "a",
+    "shoes": "a3"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "fiber_optic_weave"
+   }
+  },
+  {
+   "id": "ns_jeopsok",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "x",
+    "bottom": "l",
+    "shoes": "n"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "floral_blue"
+   }
+  },
+  {
+   "id": "ns_buho",
+   "gender": "F",
+   "body": "y",
+   "kit": {
+    "cloth": "e",
+    "shoes": "a10"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "graphene_black"
+   }
+  },
+  {
+   "id": "ns_gieok",
+   "gender": "F",
+   "body": "w",
+   "kit": {
+    "top": "a3",
+    "bottom": "a",
+    "shoes": "q"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "heraldic_blue_gold"
+   }
+  },
+  {
+   "id": "ns_hakseup",
+   "gender": "F",
+   "body": "q",
+   "kit": {
+    "top": "s",
+    "bottom": "b",
+    "shoes": "w"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "herringbone_camel"
+   }
+  },
+  {
+   "id": "ns_eungdap",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "p",
+    "bottom": "r",
+    "shoes": "r"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "hex_plate_white"
+   }
+  },
+  {
+   "id": "ns_banghwabyeok",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "x",
+    "bottom": "r",
+    "shoes": "p"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "holo_iridescent"
+   }
+  },
+  {
+   "id": "ns_hwamyeon",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "g",
+    "bottom": "r",
+    "shoes": "z"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "hologram_scanlines"
+   }
+  },
+  {
+   "id": "ns_yeongyeol",
+   "gender": "F",
+   "body": "w",
+   "kit": {
+    "top": "m",
+    "bottom": "a6",
+    "shoes": "a8"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "houndstooth_grey"
+   }
+  },
+  {
+   "id": "mr_gaecheok",
+   "gender": "F",
+   "body": "d",
+   "kit": {
+    "top": "q",
+    "bottom": "y",
+    "shoes": "a8"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "indigo_ikat"
+   }
+  },
+  {
+   "id": "mr_jeoksa",
+   "gender": "F",
+   "body": "h",
+   "kit": {
+    "top": "y",
+    "bottom": "a",
+    "shoes": "s"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "ion_glow_orange"
+   }
+  },
+  {
+   "id": "mr_sumteo",
+   "gender": "F",
+   "body": "j",
+   "kit": {
+    "cloth": "k",
+    "shoes": "i"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "jade_peony_silk"
+   }
+  },
+  {
+   "id": "mr_gwangmul",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "c",
+    "bottom": "r",
+    "shoes": "p"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "knit_cream"
+   }
+  },
+  {
+   "id": "mr_bingha",
+   "gender": "F",
+   "body": "b",
+   "kit": {
+    "top": "e",
+    "bottom": "a6",
+    "shoes": "w"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "lace_white"
+   }
+  },
+  {
+   "id": "mr_bakwi",
+   "gender": "F",
+   "body": "u",
+   "kit": {
+    "top": "u",
+    "bottom": "j",
+    "shoes": "q"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "leather_brown"
+   }
+  },
+  {
+   "id": "mr_onsil",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "r",
+    "bottom": "c",
+    "shoes": "x"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "leather_studs"
+   }
+  },
+  {
+   "id": "mr_cheolgu",
+   "gender": "F",
+   "body": "a7",
+   "kit": {
+    "top": "q",
+    "bottom": "a",
+    "shoes": "f"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "linen_stripes"
+   }
+  },
+  {
+   "id": "mr_cheotbom",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "r",
+    "bottom": "c",
+    "shoes": "c"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "liquid_metal_chrome"
+   }
+  },
+  {
+   "id": "gr_nokhwa",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "r",
+    "bottom": "c",
+    "shoes": "v"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "nano_scale_blue"
+   }
+  },
+  {
+   "id": "gr_ssiat",
+   "gender": "F",
+   "body": "i",
+   "kit": {
+    "top": "e",
+    "bottom": "a",
+    "shoes": "a10"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "neon_grid_pink"
+   }
+  },
+  {
+   "id": "gr_haetbit",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "l",
+    "bottom": "c",
+    "shoes": "z"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "ochre_hemp"
+   }
+  },
+  {
+   "id": "gr_supgil",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "x",
+    "bottom": "c",
+    "shoes": "g"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "paisley_teal"
+   }
+  },
+  {
+   "id": "gr_kkulbeol",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "n",
+    "bottom": "l",
+    "shoes": "p"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "pinstripe_charcoal"
+   }
+  },
+  {
+   "id": "gr_iseul",
+   "gender": "F",
+   "body": "a10",
+   "kit": {
+    "top": "o",
+    "bottom": "a6",
+    "shoes": "a8"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "plasma_veins_violet"
+   }
+  },
+  {
+   "id": "gr_bangpung",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "g",
+    "bottom": "r",
+    "shoes": "n"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "polka_navy"
+   }
+  },
+  {
+   "id": "gr_toyang",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "n",
+    "bottom": "r",
+    "shoes": "r"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "quantum_dots_gold"
+   }
+  },
+  {
+   "id": "gr_mojong",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "c",
+    "bottom": "c",
+    "shoes": "n"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "sakura_pink"
+   }
+  },
+  {
+   "id": "tw_cheonryu",
+   "gender": "F",
+   "body": "a3",
+   "kit": {
+    "top": "m",
+    "bottom": "b",
+    "shoes": "m"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "scale_silver"
+   }
+  },
+  {
+   "id": "tw_hoegwi",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "x",
+    "bottom": "z",
+    "shoes": "z"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "sequin_black"
+   }
+  },
+  {
+   "id": "tw_topni",
+   "gender": "F",
+   "body": "a6",
+   "kit": {
+    "top": "o",
+    "bottom": "y",
+    "shoes": "a6"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "silk_red_gold"
+   }
+  },
+  {
+   "id": "tw_jongsori",
+   "gender": "F",
+   "body": "f",
+   "kit": {
+    "top": "u",
+    "bottom": "d",
+    "shoes": "e"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "smart_fabric_ripple"
+   }
+  },
+  {
+   "id": "tw_yegyeon",
+   "gender": "F",
+   "body": "k",
+   "kit": {
+    "top": "o",
+    "bottom": "a9",
+    "shoes": "a9"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "solar_panel_dark"
+   }
+  },
+  {
+   "id": "tw_girok",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "x",
+    "bottom": "c",
+    "shoes": "z"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "starry_night"
+   }
+  },
+  {
+   "id": "tw_bunchim",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "g",
+    "bottom": "p",
+    "shoes": "v"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "stripes_pastel"
+   }
+  },
+  {
+   "id": "tw_baekya",
+   "gender": "F",
+   "body": "y",
+   "kit": {
+    "top": "a9",
+    "bottom": "d",
+    "shoes": "i"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "sunflower"
+   }
+  },
+  {
+   "id": "tw_jogak",
+   "gender": "F",
+   "body": "a9",
+   "kit": {
+    "cloth": "s",
+    "shoes": "a9"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "tartan_green"
+   }
+  },
+  {
+   "id": "fy_cheonggong",
+   "gender": "F",
+   "body": "s",
+   "kit": {
+    "cloth": "a10",
+    "shoes": "u"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "tweed_grey"
+   }
+  },
+  {
+   "id": "fy_unwon",
+   "gender": "F",
+   "body": "e",
+   "kit": {
+    "top": "a3",
+    "bottom": "d",
+    "shoes": "a2"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "velvet_purple"
+   }
+  },
+  {
+   "id": "fy_buyang",
+   "gender": "F",
+   "body": "m",
+   "kit": {
+    "top": "d",
+    "bottom": "y",
+    "shoes": "a3"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "waves_teal"
+   }
+  },
+  {
+   "id": "fy_paran",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "c",
+    "bottom": "z",
+    "shoes": "v"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "argyle_green"
+   }
+  },
+  {
+   "id": "fy_mujigae",
+   "gender": "F",
+   "body": "a2",
+   "kit": {
+    "cloth": "s",
+    "shoes": "d"
+   },
+   "pattern": {
+    "slot": "cloth",
+    "name": "aurora_gradient"
+   }
+  },
+  {
+   "id": "fy_seomgil",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "n",
+    "bottom": "l",
+    "shoes": "z"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "bamboo_green"
+   }
+  },
+  {
+   "id": "fy_ttangkkeut",
+   "gender": "F",
+   "body": "a",
+   "kit": {
+    "top": "d",
+    "bottom": "y",
+    "shoes": "a8"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "batik_indigo"
+   }
+  },
+  {
+   "id": "fy_gitteol",
+   "gender": "F",
+   "body": "a8",
+   "kit": {
+    "top": "h",
+    "bottom": "j",
+    "shoes": "a10"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "bio_mesh_green"
+   }
+  },
+  {
+   "id": "fy_baramgae",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "x",
+    "bottom": "p",
+    "shoes": "p"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "brocade_gold"
+   }
+  },
+  {
+   "id": "lg_ilwol",
+   "gender": "F",
+   "body": "o",
+   "kit": {
+    "top": "h",
+    "bottom": "k",
+    "shoes": "o"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "buffalo_plaid"
+   }
+  },
+  {
+   "id": "lg_baekgeom",
+   "gender": "F",
+   "body": "i",
+   "kit": {
+    "top": "s",
+    "bottom": "b",
+    "shoes": "e"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "camo_green"
+   }
+  },
+  {
+   "id": "lg_mugyeong",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "p",
+    "bottom": "z",
+    "shoes": "n"
+   },
+   "pattern": {
+    "slot": "top",
+    "name": "canvas_beige"
+   }
   }
  ]
 }

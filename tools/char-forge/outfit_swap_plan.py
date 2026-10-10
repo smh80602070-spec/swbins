@@ -8,15 +8,34 @@
 - K-0078: `data/hero_traits.json` 에 성별이 있는 인물(도감 105)은 그 성별을 따른다. 해시 성별과 같으면 줄 그대로,
   다르면 그 사람만 맞는 풀에서 몸(덜 쓰인 것)·옷을 다시 고른다 — 나머지 줄은 안 바뀐다(다시 굽기를 바뀐 사람만).
 - 같은 샘플 풀 안에서만 섞는다(남자 몸에 치마 원피스가 가지 않게). 시드 고정 → 다시 돌려도 같다.
+- K-0028(명단 500): **저장된 줄은 고정**, 명단에 새로 든 사람만 덧붙인다(줄 순서·시드가 흔들려 기존 299명이 바뀌지 않게,
+  `--check` 가 첫 299 줄 지문 K24_MD5 를 본다). 새 줄 — 성별 = 초상과 같은 해시(K-0027 make_late_i2i_batch 'k27g:'),
+  몸 = 그 풀에서 가장 덜 쓰인 것, 옷 = 인물 씨앗, 무늬 = `saga-assets/patterns` 64종을 차례로 한 칸(원피스면 cloth, 아니면 top)에.
+  새 샘플 a2·a3·a6~a10(VRoid 이용 조건 허용판, 여자 몸) — a7·a8·a10 은 상의 조각 하나가 드레스 전체라 원피스(cloth)로 다룬다.
 """
 import json, os, sys, random, hashlib
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PARTS = os.path.join(HERE, '_out', 'parts')
-FEMALE = list('abdefhijkmoqsuwy')
+FEMALE = list('abdefhijkmoqsuwy') + ['a2', 'a3', 'a6', 'a7', 'a8', 'a9', 'a10']   # K-0028 새 샘플(a1=e·a4=s·a5=h 와 조각이 같아 뺌)
+DRESS_TOP = {'a7', 'a8', 'a10'}      # 하의 없는 드레스 — 상의 칸 대신 원피스 칸
 MALE = list('cglnprvxz')              # t 는 재배포 불가라 뺀다
 OUT = os.path.join(HERE, 'data', 'outfit_swap_plan.json')
 TRAITS = os.path.join(HERE, 'data', 'hero_traits.json')
+PATTERNS = os.path.join(HERE, '..', '..', 'saga-assets', 'patterns')
+K24_N, K24_MD5 = 299, '2a12b23badc00813c0b67207d293075e'     # K-0024 299명 조합표 지문(이미 구운 몸 — 바뀌면 안 된다)
+
+
+def h8(s):
+    return int(hashlib.md5(s.encode()).hexdigest()[:8], 16)
+
+
+def fingerprint(rows):
+    return hashlib.md5(json.dumps(rows, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+
+
+def patterns():
+    return sorted(f[:-5] for f in os.listdir(PATTERNS) if f.endswith('.webp'))
 
 
 def load_parts():
@@ -31,12 +50,45 @@ def load_parts():
         for it in items:
             if it.get('slot') in ('top', 'bottom', 'shoes', 'cloth'):
                 slots.setdefault(it['slot'], []).append(it['file'])
+        if L in DRESS_TOP and 'top' in slots:
+            slots['cloth'] = slots.pop('top')     # outfit_swap 은 cloth 칸이면 그 샘플의 top·bottom·cloth 조각을 다 입힌다
         d[L] = slots
     return d
 
 
 def build():
+    """저장된 조합표 줄은 그대로 두고 명단에 새로 든 사람만 덧붙인다(K-0028). 조합표가 없으면 처음부터(K-0024 방식)."""
     parts = load_parts()
+    if not os.path.exists(OUT):
+        return build_k24(parts)
+    roster = json.load(open(os.path.join(HERE, 'data', 'roster.json'), encoding='utf-8'))['heroes']
+    rows = json.load(open(OUT, encoding='utf-8'))['entries']
+    have = {r['id'] for r in rows}
+    used = {(r['body'], tuple(sorted(r['kit'].items()))) for r in rows}
+    n = {}
+    for r in rows:
+        n[r['body']] = n.get(r['body'], 0) + 1
+    pats = patterns()
+    k = sum(1 for r in rows if 'pattern' in r)
+    for h in roster:
+        if h['id'] in have:
+            continue
+        g = 'F' if h8('k27g:' + h['id']) % 100 < 45 else 'M'      # 초상(K-0027)과 같은 성별
+        pool = [L for L in (MALE if g == 'M' else FEMALE) if L in parts]
+        rng = random.Random(h8('k28:' + h['id']))
+        body = min(pool, key=lambda L: (n.get(L, 0), rng.random()))
+        kit = pick_kit(rng, g, pool, parts, body, used)
+        if kit is None:
+            raise SystemExit('조합을 못 찾음: ' + h['id'])
+        used.add((body, tuple(sorted(kit.items()))))
+        n[body] = n.get(body, 0) + 1
+        rows.append({'id': h['id'], 'gender': g, 'body': body, 'kit': kit,
+                     'pattern': {'slot': 'cloth' if 'cloth' in kit else 'top', 'name': pats[k % len(pats)]}})
+        k += 1
+    return rows, parts
+
+
+def build_k24(parts):
     roster = json.load(open(os.path.join(HERE, 'data', 'roster.json'), encoding='utf-8'))['heroes']
     rng = random.Random(20261002)
     used = set()
@@ -115,6 +167,11 @@ def check(rows, parts):
                 errs.append('%s: %s 에 %s 조각 없음' % (r['id'], src, slot))
         if all(v == r['body'] for v in r['kit'].values()):
             errs.append('몸 원래 옷 ' + r['id'])
+        pt = r.get('pattern')
+        if pt and (pt['slot'] not in r['kit'] or not os.path.exists(os.path.join(PATTERNS, pt['name'] + '.webp'))):
+            errs.append('무늬 %s: %s' % (r['id'], pt))
+    if len(rows) >= K24_N and fingerprint(rows[:K24_N]) != K24_MD5:
+        errs.append('K-0024 299명 조합이 바뀜(지문 다름) — 이미 구운 몸과 어긋난다')
     return errs
 
 
@@ -132,7 +189,8 @@ if __name__ == '__main__':
     bodies = {}
     for r in rows:
         bodies[r['body']] = bodies.get(r['body'], 0) + 1
-    print('인물', len(rows), '· 몸 사용', dict(sorted(bodies.items())), '· 오류', len(errs))
+    pats = {r['pattern']['name'] for r in rows if 'pattern' in r}
+    print('인물', len(rows), '· 몸 사용', dict(sorted(bodies.items())), '· 무늬', len(pats), '종 · 오류', len(errs))
     for e in errs[:10]:
         print(' ', e)
     if '--check' not in sys.argv and not errs:
