@@ -62,6 +62,10 @@ const FLASH_MS := 80
 const POPUP_SEC := 0.6
 const POPUP_RISE_M := 0.8
 const POPUP_CRIT_SCALE := 1.4
+## G-0169 — 숫자가 적 머리 위 이름표·체력 바(+1.2m 근처)에 정확히 겹쳐 묻혔다 — 화면 기준 좌우로 번갈아 비켜 띄운다.
+const POPUP_SIDE_M := 0.8
+const POPUP_DRIFT_M := 0.25
+var _pop_side := 1.0
 const SOUND_CUE_COUNT := 3
 const Voice := preload("res://saga_core/audio/voice.gd")   # G-0111 대사 음성
 const CEL_SHADER := preload("res://saga_core/shaders/cel_toon.gdshader")
@@ -237,14 +241,23 @@ func _do_popup(target: Node3D, amount: float, crit: bool, pop_mul: float = 1.0) 
 	label.pixel_size = 0.01 * (POPUP_CRIT_SCALE if crit else 1.0) * pop_mul
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	label.no_depth_test = true
+	label.outline_size = 12   # G-0169 — 풀밭·하늘 어디서나 읽히게
+	label.outline_modulate = Color(0, 0, 0, 0.9)
+	label.render_priority = 10   # 체력 바 위에 그린다
 	## 2026-09-18 고침 — 트리 밖 노드의 global_position 대입은 Godot 4가
 	## 조용히 항등행렬 기준으로 계산한다(glb_utils.gd fit_height와 같은
 	## 함정, GO 연결 자가진단으로 처음 걸림 — scene 루트가 원점이라 지금
 	## 판들에선 우연히 값이 맞았을 뿐이다). add_child를 먼저 하면 정상.
 	scene.add_child(label)
-	label.global_position = target.global_position + Vector3(0, 1.2, 0)
+	var cam := get_viewport().get_camera_3d()
+	var right := cam.global_basis.x if cam != null else Vector3.RIGHT
+	right.y = 0.0
+	right = right.normalized() if right.length() > 0.01 else Vector3.RIGHT
+	_pop_side = -_pop_side
+	var side := right * (_pop_side * POPUP_SIDE_M)
+	label.global_position = target.global_position + Vector3(0, 0.85 + randf() * 0.25, 0) + side   # 몸 높이에서 시작해 바 옆으로 올라간다
 	var tw := label.create_tween()
-	tw.tween_property(label, "position:y", label.position.y + POPUP_RISE_M, POPUP_SEC)
+	tw.tween_property(label, "position", label.position + side.normalized() * POPUP_DRIFT_M + Vector3(0, POPUP_RISE_M, 0), POPUP_SEC)   # 올라가며 바깥으로
 	tw.parallel().tween_property(label, "modulate:a", 0.0, POPUP_SEC)
 	tw.tween_callback(label.queue_free)
 	popup_triggered.emit(amount, crit)
