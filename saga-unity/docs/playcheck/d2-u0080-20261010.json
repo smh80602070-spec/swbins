@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-10",
+  "tickets": ["U-0080 움직임 판정 촬영 — 연속 프레임 시트 도구 + 움직임 D1 Claude 눈"],
+  "how": "PlaytestShowcaseGui 에 SAGA_SHOT_SEQ(장수,간격)·SAGA_SHOT_ACT(동작 훅) — 대상마다 N 장을 가로 4칸 시트 한 장으로(칸 번호). GUI, Android 대상, 세이브 다섯 백업·cmp 복원, 판마다 한 판씩(1만리 8·2나락 3·4종횡 1·5천하 1 + 손질 뒤 재촬영). 장면 판 넷 회귀",
+  "fix": "새 Editor/PlaytestShowcaseGui.Seq.cs(partial): 대상 gamecam(메인 카메라 — 시네머신 컷 포함)·player(주인공 옆 3.4m·높이 2m, 땅 속이면 지면 위로) · 동작 walk(가상 조이스틱)·attack(FieldCombat.Attack / PlayerCombat.TriggerAttack)·party/party2(스킬 진단과 같은 모양별 동료 편성)·swap·skill:<n>·roof(지붕 남쪽에서 북으로)·bossintro(사가나락 = 진단 두목 더미, 사가종횡 = 두목 6m 앞 CheckIntro)·gesture(동료 환호)·worldmap(RealmMapState.Toggle) · 1만리는 동작 전 주인공을 FieldCombat.SafePoint 로(물가에서 시작) · 판에 없는 동작은 SKIP. 본체는 partial·두 줄 연결뿐, 기본 동작 그대로. 게임 코드 무변경",
+  "scene": ["[PlaytestHeadless] OK - 10 frames, no errors", "[PlaytestDungeonHeadless] OK - 10 frames, no errors", "[PlaytestStorySlice] OK", "[PlaytestRealmSlice] OK"],
+  "runtime_errors": 0,
+  "shots": "세션 scratchpad shots/seq_go_{walk,attack,swap,skill1..4,roof} · seq_dg_{boss,gesture,attack} · seq_st_boss · seq_rk_map (*_seq.png, 커밋 안 함)",
+  "results": [
+    { "id": "un.go.party-swap", "eye": "○", "note": "교체: 새 동료 몸·고리 효과, 옛 몸은 뒤로 물러남, 무기 새 손", "result": "D1→D2" },
+    { "id": "un.go.weapon-models", "eye": "○", "note": "걷기 내내 칼이 손에, 동료마다 제 무기가 새 손에", "result": "D1→D2" },
+    { "id": "un.go.vroid-bodies", "eye": "○", "note": "주인공 VRoid 옆 걷기 8칸 걸음새 이어짐·툰, 미끄러짐·관통 없음", "result": "D2→D3 (qc+claude)" },
+    { "id": "un.dg.weapon-models", "eye": "○", "note": "칼이 손에, 칼날이 몸통보다 가늚", "result": "D2→D3 (qc+claude)" },
+    { "id": "un.go.skill-shapes", "eye": "못 봄", "note": "교체는 보이나 스킬 모양 효과가 칸에 안 잡힘", "result": "D1 유지" },
+    { "id": "un.go.falls-roof-cam", "eye": "×", "note": "지붕 아래로 걸을 때 2~5칸 카메라가 지붕 판자 속, 주인공 가려짐", "result": "D1 유지" },
+    { "id": "un.dg.boss-intro", "eye": "△", "note": "컷 카메라 고정 ○, 두목은 진단 더미(캡슐), 곁 동료 T자세", "result": "D1 유지" },
+    { "id": "un.dg.gestures", "eye": "×", "note": "환호 표식은 뜨나 동료 몸 T자세", "result": "D1 유지" },
+    { "id": "un.st.boss-intro", "eye": "△", "note": "컷 카메라가 다가가 두목 무리를 잡음 ○, 두목 몸 T자세", "result": "D1 유지" },
+    { "id": "un.rk.actors", "eye": "못 봄", "note": "지도가 멀리 잡혀 인물이 안 보임", "result": "D1 유지" },
+    { "id": "un.rk.eras", "eye": "못 봄", "note": "같은 지도 촬영 — 표식 판별 불가", "result": "D1 유지" }
+  ],
+  "follow_up": "① 사가나락 동료 몸 T자세(몸짓·두목 컷 시트 둘 다) ② 사가종횡 두목 몸 T자세 ③ 1만리 지붕 카메라가 지붕 속으로 ④ 스킬 모양 효과 자리 촬영(효과 오브젝트 대상) ⑤ 사가천하 지도 확대 촬영",
+  "pitfall": "GUI Unity 가 종료 직전 띄운 adb(fork-server)가 출력 파이프를 붙잡아 촬영 스크립트가 끝나지 않을 수 있다 — 그 PID(부모 = 그 Unity)만 끈다"
+}

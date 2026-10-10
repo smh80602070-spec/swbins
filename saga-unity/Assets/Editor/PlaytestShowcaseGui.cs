@@ -12,9 +12,10 @@ namespace Saga.EditorTools
     /// 씬을 플레이 모드로 띄워 런타임 생성물(NPC 몸·과일나무·하늘·툰 패스)이 선 뒤, 대상마다 전용 카메라로 렌더 텍스처에 찍어 PNG 로 남긴다.
     /// 환경변수: SAGA_SHOT_SCENE(씬 경로) · SAGA_SHOT_TARGETS("type:ForestFruitTree;type:CrowdBodyAnimator;sky;npc") · SAGA_SHOT_DIR · SAGA_SHOT_MAX(종류당 장수, 기본 2) · SAGA_SHOT_INSIDE=1(카메라를 대상 경계 안 천장 아래에 — 방 가장자리 묶음용).
     /// 대상 문법: `type:<컴포넌트 클래스 이름>` · `name:<GameObject 이름 앞부분>` · `npc`(NpcIdle) · `sky`(메인 카메라 위치에서 하늘 두 방향).
+    /// 움직임 시트(U-0080): `SAGA_SHOT_SEQ`·`SAGA_SHOT_ACT` — `PlaytestShowcaseGui.Seq.cs`.
     /// 실행: `Unity.exe -projectPath . -executeMethod Saga.EditorTools.PlaytestShowcaseGui.Run` (-batchmode 없이 — 그래픽 필요). 끝나면 스스로 종료.
     /// </summary>
-    public static class PlaytestShowcaseGui
+    public static partial class PlaytestShowcaseGui
     {
         private const int Width = 1280, Height = 720;
         private const int WarmupFrames = 240;
@@ -84,9 +85,11 @@ namespace Saga.EditorTools
                 if (!_stage1)
                 {
                     _stage1 = true;
+                    if (SeqActive) { SeqBegin(); return; }   // U-0080 움직임 시트 — 다음 틱들에서 찍는다
                     ShootAll();
                     if (_wantHouse && EnterHouse()) { _stage2At = _frame + 150; return; }   // 카메라가 방 안 플레이어를 따라올 시간
                 }
+                else if (SeqActive) { if (!SeqTick()) return; }
                 else if (_wantHouse && _frame < _stage2At) return;
                 else if (_wantHouse) ShootHouse();
             }

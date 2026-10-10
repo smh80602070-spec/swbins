@@ -155,12 +155,12 @@
   "tests": [
    "PlaytestGoPartyBodies"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D1(U-0063 눈 못 봄): 교체 동작 — 정지 사진 대상 없음"
+  "note": "D2(눈 ○, U-0080 움직임 시트): docs/playcheck/d2-u0080-20261010.json — 편성 교체 8칸: 새 동료 몸이 고리 효과와 함께 서고 옛 몸(주인공)은 뒤로 물러나 멀어짐, 무기가 새 손으로 따라옴"
  },
  {
   "id": "un.go.guardian",
@@ -330,7 +330,7 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D1(U-0063 눈 못 봄): 움직임으로만 판정 — 정지 사진으로 못 봄"
+  "note": "D1(U-0080 못 봄): docs/playcheck/d2-u0080-20261010.json — party+skill:1~3·party2+skill:3 시트에서 교체(몸·고리)는 보이나 스킬 모양 효과(찌르기·돌진·장판·소환)가 칸에 안 잡힘 — 후속 후보(효과 자리 촬영)"
  },
  {
   "id": "un.go.peaks",
@@ -359,7 +359,7 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D1(U-0063 눈 못 봄): 카메라 움직임 — 정지 사진으로 못 봄"
+  "note": "D1(U-0080 ×): docs/playcheck/d2-u0080-20261010.json — 마을집 지붕 남쪽에서 북으로 걷는 게임 카메라 10칸 중 2~5칸이 지붕 판자 속만 보이고 주인공이 가려짐 — 후속 후보(지붕 카메라 당김)"
  },
  {
   "id": "un.go.elements",
@@ -611,7 +611,7 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D1(U-0063 눈 못 봄): 등장 컷 — 정지 사진으로 못 봄"
+  "note": "D1(U-0080 △): docs/playcheck/d2-u0080-20261010.json — 등장 컷 카메라는 두목 쪽으로 고정(2~8칸 안정)되나 촬영 두목은 진단 더미(캡슐)라 진짜 모습 아님, 곁의 동료 몸이 T자세(×) — 후속 후보(사가나락 동료 몸 애니)"
  },
  {
   "id": "un.dg.landmarks",
@@ -779,7 +779,7 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D1(U-0063 눈 못 봄): 몸짓 — 정지 사진으로 못 봄"
+  "note": "D1(U-0080 ×): docs/playcheck/d2-u0080-20261010.json — 동료 환호: 머리 위 표식은 뜨나 동료 몸이 8칸 내내 T자세 — 후속 후보(사가나락 동료 몸에 애니메이터·클립 없음)"
  },
  {
   "id": "un.dg.ally-sig",
@@ -1137,7 +1137,7 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D1(U-0063 눈 못 봄): 등장 컷 — 정지 사진으로 못 봄"
+  "note": "D1(U-0080 △): docs/playcheck/d2-u0080-20261010.json — 6m 안 CheckIntro 뒤 게임 카메라가 1~4칸 다가가 5~8칸 두목 무리를 안정되게 잡음(○)이나 두목 몸이 T자세(×) — 후속 후보"
  },
  {
   "id": "un.st.companions",
@@ -1379,7 +1379,7 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D1(U-0063 눈 못 봄): 시간 틈 성은 지도 표식 — 이번 촬영 대상 없음"
+  "note": "D1(U-0080 못 봄): docs/playcheck/d2-u0080-20261010.json — 위와 같은 지도 촬영, 시간 틈 성 표식 판별 불가"
  },
  {
   "id": "un.rk.battlefield",
@@ -1407,7 +1407,7 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D1(U-0063 눈 못 봄): 월드맵을 열어야 인물이 생김 — 촬영 때 지도 닫힘"
+  "note": "D1(U-0080 못 봄): docs/playcheck/d2-u0080-20261010.json — worldmap 동작으로 지도를 열어도 게임 카메라가 지도 전체를 멀리서 잡아 인물이 점으로도 안 보임 — 후속 후보(지도 확대 촬영)"
  },
  {
   "id": "un.rk.wall-tiers",
@@ -1455,12 +1455,12 @@
   "tests": [
    "PlaytestVroidSwap"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-10 qc+claude",
   "fun": {},
   "ticket": "U-0034",
   "since": "2026-10-04",
-  "note": "D2: 배치 진단 saga-unity/docs/playcheck/diag-20261005.json — 키·손 소켓·몸 없음 0 기계 확인. 걷기 모습·외곽선 그림체는 D3 사람 몫",
+  "note": "D3(qc+claude, U-0080): docs/playcheck/d2-u0080-20261010.json — 주인공 VRoid 옆에서 걷기 8칸: 다리가 번갈아 이어지는 걸음새·툰 그림체, 미끄러짐·뒤집힘·관통 없음(1칸은 순간이동 직후 공중 자세). 앞 D2: 배치 진단 diag-20261005.json",
   "human": true
  },
  {
@@ -1470,12 +1470,12 @@
   "tests": [
    "PlaytestWeaponModels"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-10 qc+claude",
   "fun": {},
   "ticket": "U-0038",
   "since": "2026-10-04",
-  "note": "D2: 배치 진단 saga-unity/docs/playcheck/diag-20261005.json — 읽힘·grip 원점·길이. 칼날 굵기·쥔 위치는 눈 필요",
+  "note": "D3(qc+claude, U-0080): docs/playcheck/d2-u0080-20261010.json — 사가나락 주인공 8칸: 금빛 칼이 손에 쥐여 있고 칼날이 몸통보다 굵지 않음. 앞 D2: 배치 진단 diag-20261005.json",
   "human": true
  },
  {
@@ -1701,12 +1701,12 @@
   "tests": [
    "PlaytestGoWeaponModel"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "U-0049",
   "since": "2026-10-05",
-  "note": "D1(U-0063 눈 못 봄): 이번 촬영은 카메라가 벽에 막힘. 10-08 사가나락 주인공 칼 쥠 ○(.utmp/shots-u0058) 이 있으나 사가만리 항목이라 D1 유지"
+  "note": "D2(눈 ○, U-0080): docs/playcheck/d2-u0080-20261010.json — 걷기 8칸 내내 큰 칼이 손에 붙어 따라오고, 교체·스킬 시트에서 동료마다 제 무기(칼·창·자루)가 새 손에 쥐임"
  },
  {
   "id": "un.go.exp-curve",
