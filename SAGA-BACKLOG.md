@@ -53,13 +53,10 @@
 ### 3.2 Godot
 | 항목 | 근거 | 처방 |
 |---|---|---|
-| 네 판이 `saga_go/` 참조(choice_prompt 29·environment_profile 13·glb_utils 8·anim_library_loader·creature_builder·vroid_body·player) | 참조 조사 | ARCH T-15 saga_core 승격 + 참조 방향 게이트 |
-| 세이브 5벌이 `_migrate` 계약 복사 · `realm_save_state.gd` 2,230줄(저장+경영 로직) | 파일 조사 | ARCH T-16 `save_base.gd` · realm 분리 |
-| `story_player.gd` 2,324줄(무예 전부 한 파일) · `characters.gd` 4,069(손 편집 데이터) | 파일 조사 | 무예를 `story_skills/*.gd` 로 · characters 는 생성물(T-11) |
-| autoload 23개 항상 로드(공통 1·GO 6·DUNGEON 12…, 10-10 확인 24개) | project.godot | 판별 autoload 를 씬 진입 시 `add_child` 하는 `GameBoot` 하나로(메모리·부팅) — 소넷 티켓 하나, 되돌리기 쉬움 |
-| `assets/generated/variants` 1,010MB(나무 한 그루 7.6MB, 1,572파일) | du | Meshopt 압축(`glb-compress`)·중복 변형 정리 → 저장소 1.25GB pack 의 큰 몫 |
-| PLAN 217KB(상한 100KB) · HISTORY 1.17MB · `ASSET_LICENSES.md` 없음(`docs/ASSET_GUIDE.md` 가 대신) | 문서 조사 | T-5 상한 · PLAN 분할 · 라이선스 표 한 파일로 |
-| 배경음 0 · 인물별 고유 모델 방식 미정 · 다른 4판 시나리오 0장 | PROJECT_STATE | §1-2 · ARCH §4.5 · 플래그십 뒤로 |
+| `characters` 명단 손 편집 데이터(R-4 로 `saga_core/data/heroes/*.gd` 다섯으로 나눔) | 파일 조사 | 생성물(T-11) — T-10 `data/heroes.json` 뒤 생성으로 |
+| autoload 23개 항상 로드(공통 1·GO 6·DUNGEON 12…, 10-10 확인 24개) | project.godot | 판별 autoload 를 씬 진입 시 `add_child` 하는 `GameBoot` 하나로(메모리·부팅) — 전역 이름 참조 4,424곳·409파일(tools 포함, 10-10 grep), 할지 사용자 결정(§8) |
+| `ASSET_LICENSES.md` 없음(`docs/ASSET_GUIDE.md` 가 대신) | 문서 조사 | 라이선스 표 한 파일로 |
+| 인물별 고유 모델 방식 미정 | PROJECT_STATE | ARCH §4.5 · 플래그십 뒤로 |
 
 ### 3.3 Unity
 | 항목 | 근거 | 처방 |
@@ -167,4 +164,4 @@ P0 1·2·3·7·8 → P1 플래그십 셋(1만리 회피·타격음, 2나락 미�
 
 **리뉴얼 10-07(페이블 R-0, 사용자 "게임성 추가·다섯 판 리뉴얼·2D 리뉴얼")**: 판마다 PLAN §4 가장 큰 구멍 하나씩 — 웹 큐 W-0101 만리 사냥 의뢰 루프(E·G) → W-0102 나락 은총·사망 카드(F) → W-0103 마을 제작대·3택(D) → W-0104 종횡 무예 3택·결과 등급(D·B) → W-0105 천하 영내 소식(E·인물) → W-0106 2D 모드 1차 → W-0107·0108 천하 격자 전술(규칙→화면). 고돗 G-0082·0083, 자체툴 K-0075·0076. 다음 R-0 묶음 = 재미표준 측정 8 을 네 판 `_test.html` 에도(QC 가 "측정 없음" 으로 센다) · 만리 E 2차(규격 10%) · 나락 주간 구조(H).
 
-**고돗 끝(10-10 정리, G-0154)**: 저장 슬롯 G-0070 · 동행 AI G-0071 · 컷신 스킵(story_quest skip_dialogue) · 성능 2단(graphics_settings) · 크래시 로그(error_log_screen) · probe_all · 가로 UI(orientation_scale 커밋) — fit_height 는 monster_body 가 씀. §4.6 셋은 Unity 몫만 남음.
+**고돗 끝(10-10 정리, G-0154)**: 저장 슬롯 G-0070 · 동행 AI G-0071 · 컷신 스킵(story_quest skip_dialogue) · 성능 2단(graphics_settings) · 크래시 로그(error_log_screen) · probe_all · 가로 UI(orientation_scale 커밋) — fit_height 는 monster_body 가 씀. §4.6 셋은 Unity 몫만 남음. · 10-10 둘째 정리(G-0178): T-15 saga_core 승격 · T-16 save_base · story_skills 분할 · characters R-4 분할 · variants 190MB · PLAN 88KB · 배경음 120 · 네 판 시나리오.
