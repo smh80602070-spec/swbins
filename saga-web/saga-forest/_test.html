@@ -116,6 +116,7 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/craft.js"></script>
 <script src="js/fs2d.js"></script>
 <script src="js/cozy2d.js"></script>
+<script src="js/cozy-cam3d.js"></script>
 <script src="js/emojicompat.js"></script>
 <script src="js/village-view.js"></script>
 <script src="js/village-view3d.js"></script>
@@ -902,6 +903,21 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
         '기본 1(부감) · 1.5→1 · -0.5→0 로 갇힘';
     });
 
+    t('village-view3d — 스타듀 고정 시점(W-0160): 손잡이 1 이면 yaw 0(정남쪽)·내려다보는 각 55°, 줌은 거리만 줄이고 각은 그대로 · 풀밭 칸만 격자', function () {
+      var CZ = DG.cozyCam3d, C = DG.core, k0 = C.tuned('village3d.cozyCam', 1), r, on1;
+      try { C.setTune('village3d.cozyCam', 1); on1 = CZ.on(); } finally { C.setTune('village3d.cozyCam', k0); }
+      var a = CZ.pose(1, 1.2), b = CZ.pose(2, 1.2), pa = Math.atan2(a.y - 1.2, a.z) * 180 / Math.PI, pb = Math.atan2(b.y - 1.2, b.z) * 180 / Math.PI;
+      var tiles = function (x, y) { return (x + y) % 2 ? 'grass' : 'path'; }, cells = CZ.gridCells(100, 100, tiles, 40, 2);
+      r = [on1 === true, a.x === 0 && a.yaw === 0 && a.z > 0, Math.abs(pa - 55) < 1e-6 && Math.abs(pb - 55) < 1e-6, Math.abs(b.dist * 2 - a.dist) < 1e-9,
+        cells.length === 12 && cells.every(function (c) { return tiles(c.x, c.y) === 'grass'; })];
+      return r.every(Boolean) && ('yaw 0 · 55° · 거리 ' + a.dist.toFixed(1) + ' → 줌 2 배 ' + b.dist.toFixed(1) + ' · 5×5 중 풀밭 12칸') || '실패 ' + r.join(',');
+    });
+    t('village-view3d — 스타듀 고정 시점(W-0160): 손잡이 village3d.cozyCam 0 이면 옛 카메라(camPose, 끌어 돌리기) 그대로', function () {
+      var CZ = DG.cozyCam3d, C = DG.core, VV3 = DG.villageView3d, k0 = C.tuned('village3d.cozyCam', 1), off;
+      try { C.setTune('village3d.cozyCam', 0); off = CZ.on(); } finally { C.setTune('village3d.cozyCam', k0); }
+      var iso = VV3.camPose(1, 0, 0.7, 6, 3.2, 10, 5), r = [off === false, Math.abs(iso.x - Math.sin(0.7) * 10) < 1e-9 && iso.y === 5];
+      return r.every(Boolean) && '손잡이 0 → 옛 camPose(끌어 돌린 0.7 rad 그대로)' || '실패 ' + r.join(',');
+    });
     t('village-view3d — camPose 는 t=0 에서 걷는 방향 뒤를 따라 돌고, t=1 에서는 걸어도 안 돈다', function () {
       var VV3 = DG.villageView3d;
       var thirdA = VV3.camPose(0, 0, 0, 6, 3.2, 10, 5);

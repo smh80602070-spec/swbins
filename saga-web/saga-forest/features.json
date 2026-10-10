@@ -788,5 +788,23 @@
   "ticket": "W-0144",
   "since": "2026-10-10",
   "note": "D2: QC qc/saga-forest-2d.png Claude 눈 ○ — 전방 말풍선이 곤충 박사 나비 위로 비켜 섬(전엔 맞닿음). QC --game saga-forest PASS."
+ },
+ {
+  "id": "fs.cozy-cam3d",
+  "name": "3D 마을 스타듀 고정 시점 — 정남쪽 위 3/4(55°)·안 돎(위 = 북)·풀밭 칸 격자(반지름 4칸, 옅은 선 0.25)",
+  "files": [
+   "js/cozy-cam3d.js",
+   "js/village-view3d.js"
+  ],
+  "tests": [
+   "village-view3d — 스타듀 고정 시점(W-0160): 손잡이 1 이면 yaw 0(정남쪽)·내려다보는 각 55°, 줌은 거리만 줄이고 각은 그대로 · 풀밭 칸만 격자",
+   "village-view3d — 스타듀 고정 시점(W-0160): 손잡이 village3d.cozyCam 0 이면 옛 카메라(camPose, 끌어 돌리기) 그대로"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0160",
+  "since": "2026-10-10",
+  "note": "D2(qc+claude 2026-10-10): pw-visual-close saga-forest 9/9 · 1-village3d Read — 길이 화면 가로·세로로 반듯(위 = 북), 풀밭 칸에만 격자 ○ · 2-sphere2d 그대로 ○ · 3-home 평면 그대로. 손잡이 village3d.cozyCam 0 = 옛(끌어 돌리기·기울이기), cozyPitch 55, cozyDist 14, cozyGrid 1."
  }
 ]

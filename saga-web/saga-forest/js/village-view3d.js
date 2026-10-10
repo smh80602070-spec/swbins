@@ -1582,7 +1582,7 @@
     var isoDist = ISO_DIST(), isoTilt = ISO_TILT();
     var radius1 = (isoDist * isoTilt) / userZoom / zoomPulse,
         height1 = (isoDist * (1 - isoTilt * 0.55)) / userZoom / zoomPulse;
-    var pos = camPose(camTiltMix, facingYaw, mouseYaw, radius0, height0, radius1, height1);
+    var CZ3 = global.DG.cozyCam3d, pos = (CZ3 && CZ3.on()) ? (mouseYaw = 0, camTiltMix = 1, CZ3.pose(userZoom * zoomPulse, PLAYER_H() * 0.75)) : camPose(camTiltMix, facingYaw, mouseYaw, radius0, height0, radius1, height1);   // W-0160 스타듀 고정 시점(cozy-cam3d.js) — 안 돌고 위 = 북
     camera.position.set(pos.x, pos.y, pos.z);
     camera.lookAt(0, PLAYER_H() * 0.75, 0);
 
@@ -2023,7 +2023,7 @@
     if (sunLight) { sunLight.castShadow = q.shadow; }
     if (player.mixer) { player.mixer.update(dt); }
     syncCamera(dt);
-    syncWalkMark();
+    syncWalkMark(); if (global.DG.cozyCam3d) { global.DG.cozyCam3d.syncGrid(three(), scene, global.DG.village, WORLD_SCALE()); }   // W-0160 풀밭 칸 격자
     syncTerrain();
     syncWaterRipple(dt);
     syncScatter(dt);
