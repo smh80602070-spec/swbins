@@ -235,14 +235,14 @@
    "tool": "outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024))",
    "model": "",
    "license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
-   "count": 598,
+   "count": 799,
    "where": [
-    "saga-assets/characters/sprites2d8/dj_doseo",
-    "saga-assets/characters/sprites2d8/dj_gapju",
-    "saga-assets/characters/sprites2d8/dj_gijang",
-    "saga-assets/characters/sprites2d8/dj_haean",
-    "saga-assets/characters/sprites2d8/dj_hopak",
-    "saga-assets/characters/sprites2d8/dj_hwanggeum"
+    "saga-assets/characters/sprites2d8/ac_balgwang",
+    "saga-assets/characters/sprites2d8/ac_choeumpa",
+    "saga-assets/characters/sprites2d8/ac_gipo",
+    "saga-assets/characters/sprites2d8/ac_haebit",
+    "saga-assets/characters/sprites2d8/ac_haecho",
+    "saga-assets/characters/sprites2d8/ac_haemun"
    ]
   },
   {
@@ -306,9 +306,10 @@
    "tool": "remote3d",
    "model": "microsoft/TRELLIS-image-large",
    "license": "MIT",
-   "count": 4,
+   "count": 8,
    "where": [
-    "saga-assets/creatures3d"
+    "saga-assets/creatures3d",
+    "saga-web/shared/assets/creatures3d"
    ]
   },
   {

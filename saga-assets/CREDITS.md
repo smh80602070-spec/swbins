@@ -28,13 +28,13 @@
 | music-gen | ACE-Step/Ace-Step1.5 (acestep-v15-turbo) | MIT (code and model weights) | 160 |
 | bake_for_rig.py --map vroid (vroid_batch.sh anim 단계, 2026-10-07) | - | CC0-1.0 (뼈대+동작만 — 메시·그림 없음. 동작 원본 Quaternius Universal Animation Library CC0 + 자체 키프레임 too | 1 |
 | outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 2000 |
-| outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024)) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 598 |
+| outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024)) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 799 |
 |  에서 옮긴 같은 파일(K-0078, 유니티 vroid-bodies 원본 자리) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 26 |
 |  에서 옮긴 같은 파일(K-0078, 유니티 vroid-bodies 원본 자리) | - | VRoid Studio 로 만든 VRM — 출처·조건은 고돗 원 자리와 같다(K-0018 배치, saga-assets/CREDITS.md VRoid 절) | 2 |
 | gen.py | Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-07 확인), 폐쇄 파생 모델 수익화만 금지 | 594 |
 | competitiongen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 21 |
 | gen.py | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1755 |
-| remote3d | microsoft/TRELLIS-image-large | MIT | 4 |
+| remote3d | microsoft/TRELLIS-image-large | MIT | 8 |
 | icon_pack.py | none | CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음) | 76 |
 | gen.py (ComfyUI) | z-image-turbo | Apache-2.0 | 36 |
 | make_map.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 195 |

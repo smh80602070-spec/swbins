@@ -1,5 +1,4 @@
 {
- "note": "K-0083 ① 마을 사람 맨손 평상 시트 — combat_sprite_plan.json 에서 무기 칸만 뺀 것(같은 몸·칸 규격). out 은 따로(전투 manifest 를 덮지 않게). 승격: promote_sprites8.py --town --write",
  "px": 128,
  "frames": 8,
  "ortho": 2.5,
@@ -12,6 +11,7 @@
   3,
   4
  ],
+ "note": "K-0083 ① 마을 사람 맨손 평상 시트 — combat_sprite_plan.json 에서 무기 칸만 뺀 것(같은 몸·칸 규격). out 은 따로(전투 manifest 를 덮지 않게). 승격: promote_sprites8.py --town --write · make_combat_sprite_plan.py 가 같이 쓴다(K-0028)",
  "clips": [
   "idle_town",
   "walk_town"
@@ -123,6 +123,207 @@
   "wd_ibnbattuta": "tools/char-forge/_out/vroid/wd_ibnbattuta/wd_ibnbattuta.glb",
   "wd_hammurabi": "tools/char-forge/_out/vroid/wd_hammurabi/wd_hammurabi.glb",
   "wd_attila": "tools/char-forge/_out/vroid/wd_attila/wd_attila.glb",
+  "aq_yeolsa": "tools/char-forge/_out/vroid/aq_yeolsa/aq_yeolsa.glb",
+  "aq_nokju": "tools/char-forge/_out/vroid/aq_nokju/aq_nokju.glb",
+  "aq_gyeongbong": "tools/char-forge/_out/vroid/aq_gyeongbong/aq_gyeongbong.glb",
+  "aq_sanghwa": "tools/char-forge/_out/vroid/aq_sanghwa/aq_sanghwa.glb",
+  "aq_byeolgil": "tools/char-forge/_out/vroid/aq_byeolgil/aq_byeolgil.glb",
+  "aq_dalgu": "tools/char-forge/_out/vroid/aq_dalgu/aq_dalgu.glb",
+  "aq_sapung": "tools/char-forge/_out/vroid/aq_sapung/aq_sapung.glb",
+  "aq_cheongok": "tools/char-forge/_out/vroid/aq_cheongok/aq_cheongok.glb",
+  "aq_saebom": "tools/char-forge/_out/vroid/aq_saebom/aq_saebom.glb",
+  "yk_unsu": "tools/char-forge/_out/vroid/yk_unsu/yk_unsu.glb",
+  "yk_cheonro": "tools/char-forge/_out/vroid/yk_cheonro/yk_cheonro.glb",
+  "yk_baekyeong": "tools/char-forge/_out/vroid/yk_baekyeong/yk_baekyeong.glb",
+  "yk_seolmae": "tools/char-forge/_out/vroid/yk_seolmae/yk_seolmae.glb",
+  "yk_amsu": "tools/char-forge/_out/vroid/yk_amsu/yk_amsu.glb",
+  "yk_hyangdo": "tools/char-forge/_out/vroid/yk_hyangdo/yk_hyangdo.glb",
+  "yk_sanyeom": "tools/char-forge/_out/vroid/yk_sanyeom/yk_sanyeom.glb",
+  "yk_pungdeung": "tools/char-forge/_out/vroid/yk_pungdeung/yk_pungdeung.glb",
+  "yk_jinbaek": "tools/char-forge/_out/vroid/yk_jinbaek/yk_jinbaek.glb",
+  "hq_yongpa": "tools/char-forge/_out/vroid/hq_yongpa/hq_yongpa.glb",
+  "hq_jugwang": "tools/char-forge/_out/vroid/hq_jugwang/hq_jugwang.glb",
+  "hq_mulgyeol": "tools/char-forge/_out/vroid/hq_mulgyeol/hq_mulgyeol.glb",
+  "hq_eodeok": "tools/char-forge/_out/vroid/hq_eodeok/hq_eodeok.glb",
+  "hq_sanho": "tools/char-forge/_out/vroid/hq_sanho/hq_sanho.glb",
+  "hq_jamsu": "tools/char-forge/_out/vroid/hq_jamsu/hq_jamsu.glb",
+  "hq_dotdae": "tools/char-forge/_out/vroid/hq_dotdae/hq_dotdae.glb",
+  "hq_haeryeong": "tools/char-forge/_out/vroid/hq_haeryeong/hq_haeryeong.glb",
+  "hq_gaebeol": "tools/char-forge/_out/vroid/hq_gaebeol/hq_gaebeol.glb",
+  "bw_cheolgi": "tools/char-forge/_out/vroid/bw_cheolgi/bw_cheolgi.glb",
+  "bw_seolgu": "tools/char-forge/_out/vroid/bw_seolgu/bw_seolgu.glb",
+  "bw_gamu": "tools/char-forge/_out/vroid/bw_gamu/bw_gamu.glb",
+  "bw_sungeom": "tools/char-forge/_out/vroid/bw_sungeom/bw_sungeom.glb",
+  "bw_hwaro": "tools/char-forge/_out/vroid/bw_hwaro/bw_hwaro.glb",
+  "bw_sangwol": "tools/char-forge/_out/vroid/bw_sangwol/bw_sangwol.glb",
+  "bw_gomnae": "tools/char-forge/_out/vroid/bw_gomnae/bw_gomnae.glb",
+  "bw_yanggil": "tools/char-forge/_out/vroid/bw_yanggil/bw_yanggil.glb",
+  "bw_bitnae": "tools/char-forge/_out/vroid/bw_bitnae/bw_bitnae.glb",
+  "gm_geumhyeol": "tools/char-forge/_out/vroid/gm_geumhyeol/gm_geumhyeol.glb",
+  "gm_myeongseok": "tools/char-forge/_out/vroid/gm_myeongseok/gm_myeongseok.glb",
+  "gm_cheolbu": "tools/char-forge/_out/vroid/gm_cheolbu/gm_cheolbu.glb",
+  "gm_hwangma": "tools/char-forge/_out/vroid/gm_hwangma/gm_hwangma.glb",
+  "gm_gaenghwa": "tools/char-forge/_out/vroid/gm_gaenghwa/gm_gaenghwa.glb",
+  "gm_jeongdong": "tools/char-forge/_out/vroid/gm_jeongdong/gm_jeongdong.glb",
+  "gm_dolbae": "tools/char-forge/_out/vroid/gm_dolbae/gm_dolbae.glb",
+  "gm_mahyang": "tools/char-forge/_out/vroid/gm_mahyang/gm_mahyang.glb",
+  "gm_sanul": "tools/char-forge/_out/vroid/gm_sanul/gm_sanul.glb",
+  "sn_seokhwan": "tools/char-forge/_out/vroid/sn_seokhwan/sn_seokhwan.glb",
+  "sn_milhyang": "tools/char-forge/_out/vroid/sn_milhyang/sn_milhyang.glb",
+  "sn_horang": "tools/char-forge/_out/vroid/sn_horang/sn_horang.glb",
+  "sn_nuri": "tools/char-forge/_out/vroid/sn_nuri/sn_nuri.glb",
+  "sn_deonggul": "tools/char-forge/_out/vroid/sn_deonggul/sn_deonggul.glb",
+  "sn_gojeok": "tools/char-forge/_out/vroid/sn_gojeok/sn_gojeok.glb",
+  "sn_ppuri": "tools/char-forge/_out/vroid/sn_ppuri/sn_ppuri.glb",
+  "sn_bitdol": "tools/char-forge/_out/vroid/sn_bitdol/sn_bitdol.glb",
+  "sn_saessak": "tools/char-forge/_out/vroid/sn_saessak/sn_saessak.glb",
+  "dk_gyedo": "tools/char-forge/_out/vroid/dk_gyedo/dk_gyedo.glb",
+  "dk_pungnyeon": "tools/char-forge/_out/vroid/dk_pungnyeon/dk_pungnyeon.glb",
+  "dk_suro": "tools/char-forge/_out/vroid/dk_suro/dk_suro.glb",
+  "dk_amgyeol": "tools/char-forge/_out/vroid/dk_amgyeol/dk_amgyeol.glb",
+  "dk_meari": "tools/char-forge/_out/vroid/dk_meari/dk_meari.glb",
+  "dk_gulttuk": "tools/char-forge/_out/vroid/dk_gulttuk/dk_gulttuk.glb",
+  "dk_jeoljeong": "tools/char-forge/_out/vroid/dk_jeoljeong/dk_jeoljeong.glb",
+  "dk_mullae": "tools/char-forge/_out/vroid/dk_mullae/dk_mullae.glb",
+  "dk_saneum": "tools/char-forge/_out/vroid/dk_saneum/dk_saneum.glb",
+  "hl_hwaseo": "tools/char-forge/_out/vroid/hl_hwaseo/hl_hwaseo.glb",
+  "hl_baekhwa": "tools/char-forge/_out/vroid/hl_baekhwa/hl_baekhwa.glb",
+  "hl_mukhyang": "tools/char-forge/_out/vroid/hl_mukhyang/hl_mukhyang.glb",
+  "hl_geumsil": "tools/char-forge/_out/vroid/hl_geumsil/hl_geumsil.glb",
+  "hl_gyeongun": "tools/char-forge/_out/vroid/hl_gyeongun/hl_gyeongun.glb",
+  "hl_damhwa": "tools/char-forge/_out/vroid/hl_damhwa/hl_damhwa.glb",
+  "hl_kkotbi": "tools/char-forge/_out/vroid/hl_kkotbi/hl_kkotbi.glb",
+  "hl_jeongwon": "tools/char-forge/_out/vroid/hl_jeongwon/hl_jeongwon.glb",
+  "hl_noeul": "tools/char-forge/_out/vroid/hl_noeul/hl_noeul.glb",
+  "nc_bitsal": "tools/char-forge/_out/vroid/nc_bitsal/nc_bitsal.glb",
+  "nc_baekdo": "tools/char-forge/_out/vroid/nc_baekdo/nc_baekdo.glb",
+  "nc_hwalgi": "tools/char-forge/_out/vroid/nc_hwalgi/nc_hwalgi.glb",
+  "nc_yagyeong": "tools/char-forge/_out/vroid/nc_yagyeong/nc_yagyeong.glb",
+  "nc_sinho": "tools/char-forge/_out/vroid/nc_sinho/nc_sinho.glb",
+  "nc_ullim": "tools/char-forge/_out/vroid/nc_ullim/nc_ullim.glb",
+  "nc_geori": "tools/char-forge/_out/vroid/nc_geori/nc_geori.glb",
+  "nc_hamseong": "tools/char-forge/_out/vroid/nc_hamseong/nc_hamseong.glb",
+  "nc_jeongmyeong": "tools/char-forge/_out/vroid/nc_jeongmyeong/nc_jeongmyeong.glb",
+  "cs_cheolgil": "tools/char-forge/_out/vroid/cs_cheolgil/cs_cheolgil.glb",
+  "cs_gijeok": "tools/char-forge/_out/vroid/cs_gijeok/cs_gijeok.glb",
+  "cs_yeokjang": "tools/char-forge/_out/vroid/cs_yeokjang/cs_yeokjang.glb",
+  "cs_hwamul": "tools/char-forge/_out/vroid/cs_hwamul/cs_hwamul.glb",
+  "cs_seoktan": "tools/char-forge/_out/vroid/cs_seoktan/cs_seoktan.glb",
+  "cs_gyeongjeok": "tools/char-forge/_out/vroid/cs_gyeongjeok/cs_gyeongjeok.glb",
+  "cs_jeongbi": "tools/char-forge/_out/vroid/cs_jeongbi/cs_jeongbi.glb",
+  "cs_seungmu": "tools/char-forge/_out/vroid/cs_seungmu/cs_seungmu.glb",
+  "cs_noseon": "tools/char-forge/_out/vroid/cs_noseon/cs_noseon.glb",
+  "mh_muha": "tools/char-forge/_out/vroid/mh_muha/mh_muha.glb",
+  "mh_gugeup": "tools/char-forge/_out/vroid/mh_gugeup/mh_gugeup.glb",
+  "mh_bungdae": "tools/char-forge/_out/vroid/mh_bungdae/mh_bungdae.glb",
+  "mh_yakseon": "tools/char-forge/_out/vroid/mh_yakseon/mh_yakseon.glb",
+  "mh_maekbak": "tools/char-forge/_out/vroid/mh_maekbak/mh_maekbak.glb",
+  "mh_sabang": "tools/char-forge/_out/vroid/mh_sabang/mh_sabang.glb",
+  "mh_onyu": "tools/char-forge/_out/vroid/mh_onyu/mh_onyu.glb",
+  "mh_gangin": "tools/char-forge/_out/vroid/mh_gangin/mh_gangin.glb",
+  "mh_ganhui": "tools/char-forge/_out/vroid/mh_ganhui/mh_ganhui.glb",
+  "js_bodo": "tools/char-forge/_out/vroid/js_bodo/js_bodo.glb",
+  "js_hyeonjang": "tools/char-forge/_out/vroid/js_hyeonjang/js_hyeonjang.glb",
+  "js_jeonpa": "tools/char-forge/_out/vroid/js_jeonpa/js_jeonpa.glb",
+  "js_eumseong": "tools/char-forge/_out/vroid/js_eumseong/js_eumseong.glb",
+  "js_teukjong": "tools/char-forge/_out/vroid/js_teukjong/js_teukjong.glb",
+  "js_jamak": "tools/char-forge/_out/vroid/js_jamak/js_jamak.glb",
+  "js_jomyeong": "tools/char-forge/_out/vroid/js_jomyeong/js_jomyeong.glb",
+  "js_dalli": "tools/char-forge/_out/vroid/js_dalli/js_dalli.glb",
+  "js_saengbang": "tools/char-forge/_out/vroid/js_saengbang/js_saengbang.glb",
+  "kd_cheongram": "tools/char-forge/_out/vroid/kd_cheongram/kd_cheongram.glb",
+  "kd_cheolsim": "tools/char-forge/_out/vroid/kd_cheolsim/kd_cheolsim.glb",
+  "kd_hoero": "tools/char-forge/_out/vroid/kd_hoero/kd_hoero.glb",
+  "kd_seolgye": "tools/char-forge/_out/vroid/kd_seolgye/kd_seolgye.glb",
+  "kd_yongjeop": "tools/char-forge/_out/vroid/kd_yongjeop/kd_yongjeop.glb",
+  "kd_silheom": "tools/char-forge/_out/vroid/kd_silheom/kd_silheom.glb",
+  "kd_nalgae": "tools/char-forge/_out/vroid/kd_nalgae/kd_nalgae.glb",
+  "kd_seorim": "tools/char-forge/_out/vroid/kd_seorim/kd_seorim.glb",
+  "kd_jeonji": "tools/char-forge/_out/vroid/kd_jeonji/kd_jeonji.glb",
+  "rg_jilju": "tools/char-forge/_out/vroid/rg_jilju/rg_jilju.glb",
+  "rg_suri": "tools/char-forge/_out/vroid/rg_suri/rg_suri.glb",
+  "rg_gyeolseung": "tools/char-forge/_out/vroid/rg_gyeolseung/rg_gyeolseung.glb",
+  "rg_gyesan": "tools/char-forge/_out/vroid/rg_gyesan/rg_gyesan.glb",
+  "rg_eungwon": "tools/char-forge/_out/vroid/rg_eungwon/rg_eungwon.glb",
+  "rg_saekdong": "tools/char-forge/_out/vroid/rg_saekdong/rg_saekdong.glb",
+  "rg_jagal": "tools/char-forge/_out/vroid/rg_jagal/rg_jagal.glb",
+  "rg_singi": "tools/char-forge/_out/vroid/rg_singi/rg_singi.glb",
+  "rg_yeonseup": "tools/char-forge/_out/vroid/rg_yeonseup/rg_yeonseup.glb",
+  "hb_bisang": "tools/char-forge/_out/vroid/hb_bisang/hb_bisang.glb",
+  "hb_gwanje": "tools/char-forge/_out/vroid/hb_gwanje/hb_gwanje.glb",
+  "hb_sangae": "tools/char-forge/_out/vroid/hb_sangae/hb_sangae.glb",
+  "hb_gyeongro": "tools/char-forge/_out/vroid/hb_gyeongro/hb_gyeongro.glb",
+  "hb_hwaljuro": "tools/char-forge/_out/vroid/hb_hwaljuro/hb_hwaljuro.glb",
+  "hb_gisang": "tools/char-forge/_out/vroid/hb_gisang/hb_gisang.glb",
+  "hb_seonhoe": "tools/char-forge/_out/vroid/hb_seonhoe/hb_seonhoe.glb",
+  "hb_jeomgeom": "tools/char-forge/_out/vroid/hb_jeomgeom/hb_jeomgeom.glb",
+  "hb_mangwon": "tools/char-forge/_out/vroid/hb_mangwon/hb_mangwon.glb",
+  "ob_gongjeon": "tools/char-forge/_out/vroid/ob_gongjeon/ob_gongjeon.glb",
+  "ob_seongun": "tools/char-forge/_out/vroid/ob_seongun/ob_seongun.glb",
+  "ob_mujung": "tools/char-forge/_out/vroid/ob_mujung/ob_mujung.glb",
+  "ob_sanso": "tools/char-forge/_out/vroid/ob_sanso/ob_sanso.glb",
+  "ob_taeyang": "tools/char-forge/_out/vroid/ob_taeyang/ob_taeyang.glb",
+  "ob_yeonryo": "tools/char-forge/_out/vroid/ob_yeonryo/ob_yeonryo.glb",
+  "ob_tongsin": "tools/char-forge/_out/vroid/ob_tongsin/ob_tongsin.glb",
+  "ob_jungnyeok": "tools/char-forge/_out/vroid/ob_jungnyeok/ob_jungnyeok.glb",
+  "ob_byeolbit": "tools/char-forge/_out/vroid/ob_byeolbit/ob_byeolbit.glb",
+  "ac_simyeon": "tools/char-forge/_out/vroid/ac_simyeon/ac_simyeon.glb",
+  "ac_suap": "tools/char-forge/_out/vroid/ac_suap/ac_suap.glb",
+  "ac_haecho": "tools/char-forge/_out/vroid/ac_haecho/ac_haecho.glb",
+  "ac_gipo": "tools/char-forge/_out/vroid/ac_gipo/ac_gipo.glb",
+  "ac_balgwang": "tools/char-forge/_out/vroid/ac_balgwang/ac_balgwang.glb",
+  "ac_choeumpa": "tools/char-forge/_out/vroid/ac_choeumpa/ac_choeumpa.glb",
+  "ac_sumbi": "tools/char-forge/_out/vroid/ac_sumbi/ac_sumbi.glb",
+  "ac_haemun": "tools/char-forge/_out/vroid/ac_haemun/ac_haemun.glb",
+  "ac_haebit": "tools/char-forge/_out/vroid/ac_haebit/ac_haebit.glb",
+  "ns_singyeong": "tools/char-forge/_out/vroid/ns_singyeong/ns_singyeong.glb",
+  "ns_jeopsok": "tools/char-forge/_out/vroid/ns_jeopsok/ns_jeopsok.glb",
+  "ns_buho": "tools/char-forge/_out/vroid/ns_buho/ns_buho.glb",
+  "ns_gieok": "tools/char-forge/_out/vroid/ns_gieok/ns_gieok.glb",
+  "ns_hakseup": "tools/char-forge/_out/vroid/ns_hakseup/ns_hakseup.glb",
+  "ns_eungdap": "tools/char-forge/_out/vroid/ns_eungdap/ns_eungdap.glb",
+  "ns_banghwabyeok": "tools/char-forge/_out/vroid/ns_banghwabyeok/ns_banghwabyeok.glb",
+  "ns_hwamyeon": "tools/char-forge/_out/vroid/ns_hwamyeon/ns_hwamyeon.glb",
+  "ns_yeongyeol": "tools/char-forge/_out/vroid/ns_yeongyeol/ns_yeongyeol.glb",
+  "mr_gaecheok": "tools/char-forge/_out/vroid/mr_gaecheok/mr_gaecheok.glb",
+  "mr_jeoksa": "tools/char-forge/_out/vroid/mr_jeoksa/mr_jeoksa.glb",
+  "mr_sumteo": "tools/char-forge/_out/vroid/mr_sumteo/mr_sumteo.glb",
+  "mr_gwangmul": "tools/char-forge/_out/vroid/mr_gwangmul/mr_gwangmul.glb",
+  "mr_bingha": "tools/char-forge/_out/vroid/mr_bingha/mr_bingha.glb",
+  "mr_bakwi": "tools/char-forge/_out/vroid/mr_bakwi/mr_bakwi.glb",
+  "mr_onsil": "tools/char-forge/_out/vroid/mr_onsil/mr_onsil.glb",
+  "mr_cheolgu": "tools/char-forge/_out/vroid/mr_cheolgu/mr_cheolgu.glb",
+  "mr_cheotbom": "tools/char-forge/_out/vroid/mr_cheotbom/mr_cheotbom.glb",
+  "gr_nokhwa": "tools/char-forge/_out/vroid/gr_nokhwa/gr_nokhwa.glb",
+  "gr_ssiat": "tools/char-forge/_out/vroid/gr_ssiat/gr_ssiat.glb",
+  "gr_haetbit": "tools/char-forge/_out/vroid/gr_haetbit/gr_haetbit.glb",
+  "gr_supgil": "tools/char-forge/_out/vroid/gr_supgil/gr_supgil.glb",
+  "gr_kkulbeol": "tools/char-forge/_out/vroid/gr_kkulbeol/gr_kkulbeol.glb",
+  "gr_iseul": "tools/char-forge/_out/vroid/gr_iseul/gr_iseul.glb",
+  "gr_bangpung": "tools/char-forge/_out/vroid/gr_bangpung/gr_bangpung.glb",
+  "gr_toyang": "tools/char-forge/_out/vroid/gr_toyang/gr_toyang.glb",
+  "gr_mojong": "tools/char-forge/_out/vroid/gr_mojong/gr_mojong.glb",
+  "tw_cheonryu": "tools/char-forge/_out/vroid/tw_cheonryu/tw_cheonryu.glb",
+  "tw_hoegwi": "tools/char-forge/_out/vroid/tw_hoegwi/tw_hoegwi.glb",
+  "tw_topni": "tools/char-forge/_out/vroid/tw_topni/tw_topni.glb",
+  "tw_jongsori": "tools/char-forge/_out/vroid/tw_jongsori/tw_jongsori.glb",
+  "tw_yegyeon": "tools/char-forge/_out/vroid/tw_yegyeon/tw_yegyeon.glb",
+  "tw_girok": "tools/char-forge/_out/vroid/tw_girok/tw_girok.glb",
+  "tw_bunchim": "tools/char-forge/_out/vroid/tw_bunchim/tw_bunchim.glb",
+  "tw_baekya": "tools/char-forge/_out/vroid/tw_baekya/tw_baekya.glb",
+  "tw_jogak": "tools/char-forge/_out/vroid/tw_jogak/tw_jogak.glb",
+  "fy_cheonggong": "tools/char-forge/_out/vroid/fy_cheonggong/fy_cheonggong.glb",
+  "fy_unwon": "tools/char-forge/_out/vroid/fy_unwon/fy_unwon.glb",
+  "fy_buyang": "tools/char-forge/_out/vroid/fy_buyang/fy_buyang.glb",
+  "fy_paran": "tools/char-forge/_out/vroid/fy_paran/fy_paran.glb",
+  "fy_mujigae": "tools/char-forge/_out/vroid/fy_mujigae/fy_mujigae.glb",
+  "fy_seomgil": "tools/char-forge/_out/vroid/fy_seomgil/fy_seomgil.glb",
+  "fy_ttangkkeut": "tools/char-forge/_out/vroid/fy_ttangkkeut/fy_ttangkkeut.glb",
+  "fy_gitteol": "tools/char-forge/_out/vroid/fy_gitteol/fy_gitteol.glb",
+  "fy_baramgae": "tools/char-forge/_out/vroid/fy_baramgae/fy_baramgae.glb",
+  "lg_ilwol": "tools/char-forge/_out/vroid/lg_ilwol/lg_ilwol.glb",
+  "lg_baekgeom": "tools/char-forge/_out/vroid/lg_baekgeom/lg_baekgeom.glb",
+  "lg_mugyeong": "tools/char-forge/_out/vroid/lg_mugyeong/lg_mugyeong.glb",
   "dj_doseo": "tools/char-forge/_out/vroid/dj_doseo/dj_doseo.glb",
   "dj_gapju": "tools/char-forge/_out/vroid/dj_gapju/dj_gapju.glb",
   "dj_gijang": "tools/char-forge/_out/vroid/dj_gijang/dj_gijang.glb",
@@ -1258,6 +1459,1815 @@
   {
    "id": "wd_attila",
    "body": "wd_attila",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "aq_yeolsa",
+   "body": "aq_yeolsa",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "aq_nokju",
+   "body": "aq_nokju",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "aq_gyeongbong",
+   "body": "aq_gyeongbong",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "aq_sanghwa",
+   "body": "aq_sanghwa",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "aq_byeolgil",
+   "body": "aq_byeolgil",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "aq_dalgu",
+   "body": "aq_dalgu",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "aq_sapung",
+   "body": "aq_sapung",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "aq_cheongok",
+   "body": "aq_cheongok",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "aq_saebom",
+   "body": "aq_saebom",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "yk_unsu",
+   "body": "yk_unsu",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "yk_cheonro",
+   "body": "yk_cheonro",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "yk_baekyeong",
+   "body": "yk_baekyeong",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "yk_seolmae",
+   "body": "yk_seolmae",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "yk_amsu",
+   "body": "yk_amsu",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "yk_hyangdo",
+   "body": "yk_hyangdo",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "yk_sanyeom",
+   "body": "yk_sanyeom",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "yk_pungdeung",
+   "body": "yk_pungdeung",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "yk_jinbaek",
+   "body": "yk_jinbaek",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hq_yongpa",
+   "body": "hq_yongpa",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hq_jugwang",
+   "body": "hq_jugwang",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hq_mulgyeol",
+   "body": "hq_mulgyeol",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hq_eodeok",
+   "body": "hq_eodeok",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hq_sanho",
+   "body": "hq_sanho",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hq_jamsu",
+   "body": "hq_jamsu",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hq_dotdae",
+   "body": "hq_dotdae",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hq_haeryeong",
+   "body": "hq_haeryeong",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hq_gaebeol",
+   "body": "hq_gaebeol",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "bw_cheolgi",
+   "body": "bw_cheolgi",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "bw_seolgu",
+   "body": "bw_seolgu",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "bw_gamu",
+   "body": "bw_gamu",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "bw_sungeom",
+   "body": "bw_sungeom",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "bw_hwaro",
+   "body": "bw_hwaro",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "bw_sangwol",
+   "body": "bw_sangwol",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "bw_gomnae",
+   "body": "bw_gomnae",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "bw_yanggil",
+   "body": "bw_yanggil",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "bw_bitnae",
+   "body": "bw_bitnae",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "gm_geumhyeol",
+   "body": "gm_geumhyeol",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "gm_myeongseok",
+   "body": "gm_myeongseok",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "gm_cheolbu",
+   "body": "gm_cheolbu",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "gm_hwangma",
+   "body": "gm_hwangma",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "gm_gaenghwa",
+   "body": "gm_gaenghwa",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "gm_jeongdong",
+   "body": "gm_jeongdong",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "gm_dolbae",
+   "body": "gm_dolbae",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "gm_mahyang",
+   "body": "gm_mahyang",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "gm_sanul",
+   "body": "gm_sanul",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "sn_seokhwan",
+   "body": "sn_seokhwan",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "sn_milhyang",
+   "body": "sn_milhyang",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "sn_horang",
+   "body": "sn_horang",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "sn_nuri",
+   "body": "sn_nuri",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "sn_deonggul",
+   "body": "sn_deonggul",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "sn_gojeok",
+   "body": "sn_gojeok",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "sn_ppuri",
+   "body": "sn_ppuri",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "sn_bitdol",
+   "body": "sn_bitdol",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "sn_saessak",
+   "body": "sn_saessak",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "dk_gyedo",
+   "body": "dk_gyedo",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "dk_pungnyeon",
+   "body": "dk_pungnyeon",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "dk_suro",
+   "body": "dk_suro",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "dk_amgyeol",
+   "body": "dk_amgyeol",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "dk_meari",
+   "body": "dk_meari",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "dk_gulttuk",
+   "body": "dk_gulttuk",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "dk_jeoljeong",
+   "body": "dk_jeoljeong",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "dk_mullae",
+   "body": "dk_mullae",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "dk_saneum",
+   "body": "dk_saneum",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hl_hwaseo",
+   "body": "hl_hwaseo",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hl_baekhwa",
+   "body": "hl_baekhwa",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hl_mukhyang",
+   "body": "hl_mukhyang",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hl_geumsil",
+   "body": "hl_geumsil",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hl_gyeongun",
+   "body": "hl_gyeongun",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hl_damhwa",
+   "body": "hl_damhwa",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hl_kkotbi",
+   "body": "hl_kkotbi",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hl_jeongwon",
+   "body": "hl_jeongwon",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hl_noeul",
+   "body": "hl_noeul",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "nc_bitsal",
+   "body": "nc_bitsal",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "nc_baekdo",
+   "body": "nc_baekdo",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "nc_hwalgi",
+   "body": "nc_hwalgi",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "nc_yagyeong",
+   "body": "nc_yagyeong",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "nc_sinho",
+   "body": "nc_sinho",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "nc_ullim",
+   "body": "nc_ullim",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "nc_geori",
+   "body": "nc_geori",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "nc_hamseong",
+   "body": "nc_hamseong",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "nc_jeongmyeong",
+   "body": "nc_jeongmyeong",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "cs_cheolgil",
+   "body": "cs_cheolgil",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "cs_gijeok",
+   "body": "cs_gijeok",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "cs_yeokjang",
+   "body": "cs_yeokjang",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "cs_hwamul",
+   "body": "cs_hwamul",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "cs_seoktan",
+   "body": "cs_seoktan",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "cs_gyeongjeok",
+   "body": "cs_gyeongjeok",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "cs_jeongbi",
+   "body": "cs_jeongbi",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "cs_seungmu",
+   "body": "cs_seungmu",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "cs_noseon",
+   "body": "cs_noseon",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "mh_muha",
+   "body": "mh_muha",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "mh_gugeup",
+   "body": "mh_gugeup",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "mh_bungdae",
+   "body": "mh_bungdae",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "mh_yakseon",
+   "body": "mh_yakseon",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "mh_maekbak",
+   "body": "mh_maekbak",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "mh_sabang",
+   "body": "mh_sabang",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "mh_onyu",
+   "body": "mh_onyu",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "mh_gangin",
+   "body": "mh_gangin",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "mh_ganhui",
+   "body": "mh_ganhui",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "js_bodo",
+   "body": "js_bodo",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "js_hyeonjang",
+   "body": "js_hyeonjang",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "js_jeonpa",
+   "body": "js_jeonpa",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "js_eumseong",
+   "body": "js_eumseong",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "js_teukjong",
+   "body": "js_teukjong",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "js_jamak",
+   "body": "js_jamak",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "js_jomyeong",
+   "body": "js_jomyeong",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "js_dalli",
+   "body": "js_dalli",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "js_saengbang",
+   "body": "js_saengbang",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "kd_cheongram",
+   "body": "kd_cheongram",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "kd_cheolsim",
+   "body": "kd_cheolsim",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "kd_hoero",
+   "body": "kd_hoero",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "kd_seolgye",
+   "body": "kd_seolgye",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "kd_yongjeop",
+   "body": "kd_yongjeop",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "kd_silheom",
+   "body": "kd_silheom",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "kd_nalgae",
+   "body": "kd_nalgae",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "kd_seorim",
+   "body": "kd_seorim",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "kd_jeonji",
+   "body": "kd_jeonji",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "rg_jilju",
+   "body": "rg_jilju",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "rg_suri",
+   "body": "rg_suri",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "rg_gyeolseung",
+   "body": "rg_gyeolseung",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "rg_gyesan",
+   "body": "rg_gyesan",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "rg_eungwon",
+   "body": "rg_eungwon",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "rg_saekdong",
+   "body": "rg_saekdong",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "rg_jagal",
+   "body": "rg_jagal",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "rg_singi",
+   "body": "rg_singi",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "rg_yeonseup",
+   "body": "rg_yeonseup",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hb_bisang",
+   "body": "hb_bisang",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hb_gwanje",
+   "body": "hb_gwanje",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hb_sangae",
+   "body": "hb_sangae",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hb_gyeongro",
+   "body": "hb_gyeongro",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hb_hwaljuro",
+   "body": "hb_hwaljuro",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hb_gisang",
+   "body": "hb_gisang",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hb_seonhoe",
+   "body": "hb_seonhoe",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hb_jeomgeom",
+   "body": "hb_jeomgeom",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "hb_mangwon",
+   "body": "hb_mangwon",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ob_gongjeon",
+   "body": "ob_gongjeon",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ob_seongun",
+   "body": "ob_seongun",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ob_mujung",
+   "body": "ob_mujung",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ob_sanso",
+   "body": "ob_sanso",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ob_taeyang",
+   "body": "ob_taeyang",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ob_yeonryo",
+   "body": "ob_yeonryo",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ob_tongsin",
+   "body": "ob_tongsin",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ob_jungnyeok",
+   "body": "ob_jungnyeok",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ob_byeolbit",
+   "body": "ob_byeolbit",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ac_simyeon",
+   "body": "ac_simyeon",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ac_suap",
+   "body": "ac_suap",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ac_haecho",
+   "body": "ac_haecho",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ac_gipo",
+   "body": "ac_gipo",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ac_balgwang",
+   "body": "ac_balgwang",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ac_choeumpa",
+   "body": "ac_choeumpa",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ac_sumbi",
+   "body": "ac_sumbi",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ac_haemun",
+   "body": "ac_haemun",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ac_haebit",
+   "body": "ac_haebit",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ns_singyeong",
+   "body": "ns_singyeong",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ns_jeopsok",
+   "body": "ns_jeopsok",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ns_buho",
+   "body": "ns_buho",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ns_gieok",
+   "body": "ns_gieok",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ns_hakseup",
+   "body": "ns_hakseup",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ns_eungdap",
+   "body": "ns_eungdap",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ns_banghwabyeok",
+   "body": "ns_banghwabyeok",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ns_hwamyeon",
+   "body": "ns_hwamyeon",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "ns_yeongyeol",
+   "body": "ns_yeongyeol",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "mr_gaecheok",
+   "body": "mr_gaecheok",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "mr_jeoksa",
+   "body": "mr_jeoksa",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "mr_sumteo",
+   "body": "mr_sumteo",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "mr_gwangmul",
+   "body": "mr_gwangmul",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "mr_bingha",
+   "body": "mr_bingha",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "mr_bakwi",
+   "body": "mr_bakwi",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "mr_onsil",
+   "body": "mr_onsil",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "mr_cheolgu",
+   "body": "mr_cheolgu",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "mr_cheotbom",
+   "body": "mr_cheotbom",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "gr_nokhwa",
+   "body": "gr_nokhwa",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "gr_ssiat",
+   "body": "gr_ssiat",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "gr_haetbit",
+   "body": "gr_haetbit",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "gr_supgil",
+   "body": "gr_supgil",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "gr_kkulbeol",
+   "body": "gr_kkulbeol",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "gr_iseul",
+   "body": "gr_iseul",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "gr_bangpung",
+   "body": "gr_bangpung",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "gr_toyang",
+   "body": "gr_toyang",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "gr_mojong",
+   "body": "gr_mojong",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "tw_cheonryu",
+   "body": "tw_cheonryu",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "tw_hoegwi",
+   "body": "tw_hoegwi",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "tw_topni",
+   "body": "tw_topni",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "tw_jongsori",
+   "body": "tw_jongsori",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "tw_yegyeon",
+   "body": "tw_yegyeon",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "tw_girok",
+   "body": "tw_girok",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "tw_bunchim",
+   "body": "tw_bunchim",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "tw_baekya",
+   "body": "tw_baekya",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "tw_jogak",
+   "body": "tw_jogak",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "fy_cheonggong",
+   "body": "fy_cheonggong",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "fy_unwon",
+   "body": "fy_unwon",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "fy_buyang",
+   "body": "fy_buyang",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "fy_paran",
+   "body": "fy_paran",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "fy_mujigae",
+   "body": "fy_mujigae",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "fy_seomgil",
+   "body": "fy_seomgil",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "fy_ttangkkeut",
+   "body": "fy_ttangkkeut",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "fy_gitteol",
+   "body": "fy_gitteol",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "fy_baramgae",
+   "body": "fy_baramgae",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "lg_ilwol",
+   "body": "lg_ilwol",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "lg_baekgeom",
+   "body": "lg_baekgeom",
+   "kind": "human",
+   "clipmap": {
+    "idle_town": "idle",
+    "walk_town": "walk"
+   }
+  },
+  {
+   "id": "lg_mugyeong",
+   "body": "lg_mugyeong",
    "kind": "human",
    "clipmap": {
     "idle_town": "idle",

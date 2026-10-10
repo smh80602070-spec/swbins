@@ -1,0 +1,42 @@
+{
+ "id": "cs_hwamul",
+ "body": "cs_hwamul",
+ "kind": "human",
+ "px": 192,
+ "frames": 8,
+ "dirs": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "clips": [
+  "idle",
+  "attack",
+  "attack2",
+  "heavy",
+  "walk",
+  "hit",
+  "death",
+  "knockdown"
+ ],
+ "ortho_m": 3.75,
+ "cam_z": 1.15,
+ "side_faces": "right",
+ "px_per_m": 51.2,
+ "license": "CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vroid, 코드 gear_sprites.py",
+ "ndir": 8,
+ "mirror": true,
+ "weapon": "staff",
+ "clipmap": {
+  "idle": "staff_idle",
+  "attack": "skill",
+  "attack2": "burst",
+  "heavy": "staff_heavy",
+  "walk": "walk",
+  "hit": "hit",
+  "death": "death",
+  "knockdown": "knockdown"
+ }
+}

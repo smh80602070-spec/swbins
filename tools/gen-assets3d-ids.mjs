@@ -28,12 +28,14 @@ function sheets8() {
 /* 2D 그림(world2d/*.webp) 중 같은 이름 GLB 가 없는 것(W-0114 — K-0083 성 세 시대·계절 나무) — spriteUrl 이 GLB 표와 함께 본다 */
 const names2d = () => { const d = path.join(SHARED, 'assets', 'world2d'), g = new Set(names('world3d')); return fs.existsSync(d) ? fs.readdirSync(d).filter(f => f.endsWith('.webp')).map(f => f.slice(0, -5)).filter(n => !g.has(n)).sort() : []; };
 /* 통일 몸 성별(W-0150) — 빌린 몸(borrowRecipe)이 성별 아는 사람에게 같은 성별 몸을 고르게. 도감 105 = char-forge hero_traits.json gender,
-   나머지(천하 194) = 그 몸 초상 프롬프트(ai-art batches/web_realm_194_i2i.json)가 1girl 로 시작하면 여(make_dungeon30_i2i.py gender 와 같은 규칙). 읽기만 */
+   나머지(천하 194) = 그 몸 초상 프롬프트(ai-art batches/web_realm_194_i2i.json)가 1girl 로 시작하면 여(make_dungeon30_i2i.py gender 와 같은 규칙), 그래도 없으면 조합표 gender(K-0028 새 201). 읽기만 */
 function heroSex() {
   const R = path.resolve(SHARED, '..', '..', 'tools'), o = {}, rd = (p) => { try { return JSON.parse(fs.readFileSync(path.join(R, p), 'utf8')); } catch (e) { return null; } };
   const tr = rd('char-forge/data/hero_traits.json'), rl = rd('ai-art/batches/web_realm_194_i2i.json');
   for (const [id, v] of Object.entries((tr && tr.heroes) || {})) { if (v.gender === 'F' || v.gender === 'M') { o[id] = v.gender === 'F' ? 'f' : 'm'; } }
   for (const it of (rl && rl.items) || []) { if (!o[it.id] && it.prompt) { o[it.id] = it.prompt.trimStart().startsWith('1girl') ? 'f' : 'm'; } }
+  const op = rd('char-forge/data/outfit_swap_plan.json');   // K-0028 새 201 = 조합표 gender(초상과 같은 해시 'k27g:')
+  for (const e of (op && op.entries) || []) { if (!o[e.id] && (e.gender === 'F' || e.gender === 'M')) { o[e.id] = e.gender === 'F' ? 'f' : 'm'; } }
   const s = {}; for (const id of names('characters3d')) { if (o[id]) { s[id] = o[id]; } }
   return s;
 }
