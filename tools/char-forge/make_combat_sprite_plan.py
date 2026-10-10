@@ -1,6 +1,6 @@
 """인물 299 무기별 8방향 2D 시트 계획표(K-0029 단계 5) — roster.json 의 인물마다 무기 한 종을 정해 bake_sprite_batch 계획을 쓴다.
 
-  py tools/char-forge/make_combat_sprite_plan.py            # → data/combat_sprite_plan.json + data/hero_weapon.json
+  py tools/char-forge/make_combat_sprite_plan.py            # → data/combat_sprite_plan.json + data/hero_weapon.json + data/town_sprite_plan.json(K-0083 맨손)
   py tools/char-forge/bake_sprite_batch.py tools/char-forge/data/combat_sprite_plan.json   # 굽기(이어하기, GPU 는 SD 와 겹치지 않게)
 
 시트 형식(웹 W-0073 이 읽는다): <id>/<역할>.webp · 8프레임 · 행 5 = 방향 d0 정면 · d1 오른쪽 앞 3/4 · d2 오른쪽 옆 · d3 오른쪽 뒤 3/4 · d4 뒤
@@ -16,6 +16,7 @@ import zlib
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROSTER = os.path.join(HERE, 'data', 'roster.json')
 PLAN = os.path.join(HERE, 'data', 'combat_sprite_plan.json')
+TOWN = os.path.join(HERE, 'data', 'town_sprite_plan.json')
 MAP = os.path.join(HERE, 'data', 'hero_weapon.json')
 
 EMOJI = {'🏹': 'bow', '🗡️': 'dagger', '⚔️': 'sword', '🪓': 'axe', '🛡️': 'sword', '🐎': 'spear', '🏇': 'spear', '🚩': 'spear', '🦅': 'bow',
@@ -78,6 +79,12 @@ def main():
     json.dump(plan, open(PLAN, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     json.dump({'note': '인물 → 2D 시트에 그린 무기(기본값, make_combat_sprite_plan.py). 게임이 바꾸면 이 표를 고쳐 그 인물만 다시 굽는다.', 'heroes': wmap},
               open(MAP, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    town = {k: plan[k] for k in ('px', 'frames', 'ortho', 'cam_z', 'ndir', 'dirs')}   # K-0083 마을 맨손 시트 — 같은 몸·칸 규격, 무기 칸만 뺀다
+    town.update(note='K-0083 ① 마을 사람 맨손 평상 시트 — combat_sprite_plan.json 에서 무기 칸만 뺀 것(같은 몸·칸 규격). out 은 따로(전투 manifest 를 덮지 않게). '
+                     '승격: promote_sprites8.py --town --write · make_combat_sprite_plan.py 가 같이 쓴다(K-0028)',
+                clips=['idle_town', 'walk_town'], out='tools/char-forge/_out/sprites8_town', bodies=plan['bodies'],
+                entries=[{'id': e['id'], 'body': e['body'], 'kind': e['kind'], 'clipmap': {'idle_town': 'idle', 'walk_town': 'walk'}} for e in ents])
+    json.dump(town, open(TOWN, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     from collections import Counter
     print('PLAN', len(ents), dict(Counter(v['weapon'] for v in wmap.values())), dict(Counter(v['why'] for v in wmap.values())))
 
