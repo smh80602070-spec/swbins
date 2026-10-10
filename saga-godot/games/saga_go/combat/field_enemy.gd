@@ -7,6 +7,7 @@ extends CharacterBody3D
 ## 여기는 몸·체력·AI·머리 위 표시만.
 
 const Elements := preload("res://games/saga_go/combat/elements.gd")
+const CombatFx := preload("res://games/saga_go/combat/combat_fx.gd")   # G-0175 쓰러질 때 불꽃
 const FeelTuning := preload("res://games/saga_go/combat/feel_tuning.gd")
 const Growth := preload("res://games/saga_go/data/growth.gd")
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
@@ -741,16 +742,38 @@ func _one_shot(want: String) -> void:
 	_anim_lock = Time.get_ticks_msec() + int(_anim.get_animation(n).length * 1000.0)
 
 ## G-0059 GLB 몸 — 쓰러진 몸을 장면에 남겨 Death 를 한 번 틀고 1.2초 뒤 치운다. 이 적은 새 몸을 지어(숨은 채) 되살아날 때 쓴다.
+## G-0175 — 예전엔 GLB 몸만 쓰러지는 동작 뒤 1.2초에 뚝 사라지고, 코드로 그린 짐승은 그 자리에서 바로 사라졌다.
+## 이제 (GLB 면 동작 DEATH_HOLD 초 뒤, 코드 짐승은 곧바로) DEATH_FADE 초 동안 줄며 가라앉고 원소 빛 불꽃이 터진다.
+const DEATH_HOLD := 0.8
+const DEATH_FADE := 0.45
+const DEATH_SINK := 0.4
+const DEATH_PUFF := Color(0.78, 0.7, 1.0)
+
 func _leave_corpse() -> void:
-	if glb_path == "" or _visual == null or not is_inside_tree() or get_tree().current_scene == null:
+	if _visual == null or not is_inside_tree() or get_tree().current_scene == null:
 		return
 	var corpse := _visual
 	var xf := corpse.global_transform
 	remove_child(corpse)
 	get_tree().current_scene.add_child(corpse)
 	corpse.global_transform = xf
-	_one_shot("death")
-	get_tree().create_timer(1.2).timeout.connect(corpse.queue_free)
+	var hold := 0.0
+	## 쓰러지는 동작이 실제로 있을 때만 기다린다(없으면 선 채로 0.8초 멈춰 보였다 — 번개살쾡이 등)
+	if glb_path != "" and _anim != null and _anim.has_animation(MonsterBody.anim_name("death")):
+		_one_shot("death")
+		hold = DEATH_HOLD
+	var col := Elements.color_of(element) if element != "" else DEATH_PUFF
+	var mid := Vector3.UP * (0.6 * float(def.get("size", 1.0)))
+	var tw := corpse.create_tween()
+	if hold > 0.0:
+		tw.tween_interval(hold)
+	tw.tween_callback(func() -> void:
+		if is_instance_valid(corpse) and corpse.is_inside_tree():
+			CombatFx.spark(corpse, corpse.global_position + mid, col, true)
+			CombatFx.element_burst(corpse, corpse.global_position, 1.3, col, 0.5, element if element != "" else CombatFx.element_of_color(col, Elements.INFO), false))
+	tw.tween_property(corpse, "scale", corpse.scale * 0.05, DEATH_FADE)
+	tw.parallel().tween_property(corpse, "global_position:y", xf.origin.y - DEATH_SINK, DEATH_FADE)
+	tw.tween_callback(corpse.queue_free)
 	_visual = _build_visual()
 	add_child(_visual)
 	_visual.global_rotation.y = xf.basis.get_euler().y

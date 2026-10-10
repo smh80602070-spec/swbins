@@ -44,6 +44,7 @@ const SHOTS := [
 	["v_bridge", "village", Vector2(5.0, 6.2), Vector3(8, 0, 0), Vector2(5.0, 7.0), -12.0, 14.0, ""],
 	["x_swing", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -24.0, 7.5, "swing3"],
 	["x_swing_late", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -24.0, 7.5, "swing8"],
+	["x_kill", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -24.0, 7.5, "killms:900"],   # G-0175 적 쓰러짐 — 쓰러진 뒤 0.9초(쓰러지는 동작 0.8초 뒤 줄어드는 한가운데)
 	["x_pdodge", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -24.0, 7.5, "pdodge"],   # G-0173 회피 성공
 	["x_tell", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -24.0, 7.5, "tell"],   # 적 공격 예고(!) 읽힘
 	["x_fxring", "ruins", "r_statue", Vector3(14, 0, -4), "r_statue", -32.0, 14.0, "fxring"],
@@ -174,6 +175,7 @@ var _dir := ""
 var _only: PackedStringArray = []
 var _lineup: Array[Node3D] = []
 var _done: Array = []
+var _kill_at := 0   # G-0175 killms — 이 시각(ms)이 되면 곧바로 찍는다
 var _close_call: Array = []   # "call:" 할 일이 연 화면 [노드, 닫는 함수]
 var _members_saved: Variant = null   # "aim" 할 일이 바꾸기 전 편성(G-0043)
 var _story_saved: Variant = null   # "ch:" 할 일이 바꾸기 전 이야기 진행(G-0040)
@@ -203,6 +205,10 @@ func _process(_delta: float) -> void:
 	if Input.mouse_mode != Input.MOUSE_MODE_VISIBLE:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_frame += 1
+	## G-0175 — "killms:<ms>": 화면 밖 창은 실행마다 fps 가 달라(약 32) 프레임으로는 시점을 못 맞춘다 — 쓰러뜨린 뒤 실제 ms 가 지나면 바로 찍는다.
+	if _kill_at > 0 and _frame < SETTLE and Time.get_ticks_msec() >= _kill_at:
+		_kill_at = 0
+		_frame = SETTLE
 	if _i < 0 or _frame > SETTLE + 2:
 		_undo()
 		_i += 1
@@ -231,6 +237,10 @@ func _process(_delta: float) -> void:
 	if String(SHOTS[_i][7]).begins_with("burst") and _frame == SETTLE - int(String(SHOTS[_i][7]).substr(5)):
 		_p.call("play_action", "burst", 0.6, 0.0)
 	## G-0152 — "walkN": 찍기 N 프레임 전에 앞으로 걷기 시작 · "stopN": 20 프레임째부터 걷다가 찍기 N 프레임 전에 뗀다
+	## G-0175 — "kill" 찍기 8 프레임 전에 곁의 적을 쓰러뜨린다(쓰러짐 연출 확인, 경험·전리품은 메모리에만)
+	if String(SHOTS[_i][7]).begins_with("killms:") and _frame == 40 and is_instance_valid(_swing_enemy):
+		_swing_enemy.call("_die")
+		_kill_at = Time.get_ticks_msec() + int(String(SHOTS[_i][7]).substr(7))
 	## G-0173 — "pdodge" 찍기 4 프레임 전에 대시하고 곧바로 곁의 적에게 맞는다(회피 성공 알림 확인)
 	if String(SHOTS[_i][7]) == "pdodge" and _frame == SETTLE - 4:
 		var fcd := get_tree().get_first_node_in_group("go_field_combat")
@@ -357,7 +367,7 @@ func _act(a: String) -> void:
 				_swing_enemy.set_physics_process(false)
 				_swing_enemy.set_process(false)
 				_p.global_position = _swing_enemy.global_position + Vector3(1.4, 0.4, 0.9)
-		"pdodge":   # G-0173 — 가장 가까운 적 곁에 서고 그 적을 멈춘다(맞는 건 찍기 직전 위에서)
+		_ when a == "pdodge" or a.begins_with("killms:"):   # G-0173·G-0175 — 가장 가까운 적 곁에 서고 그 적을 멈춘다(맞는 건 찍기 직전 위에서)
 			var bp := 1e9
 			for e in get_tree().get_nodes_in_group("field_enemy"):
 				var d := (e as Node3D).global_position.distance_to(_p.global_position)
