@@ -99,6 +99,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/event.js"></script>
 <script src="js/tactics.js"></script>
 <script src="js/tactics-view.js"></script>
+<script src="js/tactics-view3d.js"></script>
 <script src="js/data-scenario.js"></script>
 <script src="js/scenario.js"></script>
 <script src="js/cutscene.js"></script>
@@ -6360,6 +6361,26 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return r.every(Boolean) && '무늬·몸 그림·이모지 0' || '실패 ' + r.join(',');
     });
 
+    t('rk.tactics3d: 3D 전술판(W-0159) — 3D 가 없거나 손잡이 tactics3d 0 이면 2D 판 그대로(SVG 보임·캔버스 없음)', function () {
+      var V = DG.tacticsView, V3 = DG.tacticsView3d, C = DG.core, k0 = C.tuned('tactics3d', 1), r, host = document.createElement('div'); document.body.appendChild(host);
+      try {
+        var pure = [V3.want({ knob: 1, three: true, gl: true }) === true, V3.want({ knob: 0, three: true, gl: true }) === false, V3.want({ knob: 1, three: false, gl: true }) === false, V3.want({ knob: 1, three: true, gl: false }) === false];
+        C.setTune('tactics3d', 0);
+        var ids = DG.off.ofForce(DG.rtk.me()).map(function (o) { return o.id || o; }).slice(0, 2);
+        V.open(host, { seed: 3, land: 'forest', mine: ids, foes: [], foeTroops: [3000, 3000], name: function (id) { return id; } }, function () {});
+        var svg = host.querySelector('.tv-svg'), cv = host.querySelector('canvas.tv3d');
+        r = pure.concat([!!svg && svg.style.display !== 'none', !cv]);
+        V.quit(); V.go();
+      } finally { C.setTune('tactics3d', k0); host.remove(); }
+      return r.every(Boolean) && '손잡이·three·WebGL 중 하나라도 없으면 2D · 손잡이 0 에서 SVG 판·캔버스 0' || '실패 ' + r.join(',');
+    });
+    t('rk.tactics3d: 3D 전술판(W-0159) — 누른 땅 자리 → 칸 (x, y) 순수 함수: 칸 가운데 왕복·칸 경계 반올림·판 밖 null', function () {
+      var V3 = DG.tacticsView3d, cols = 8, rows = 6, ok = true, x, y, p, c;
+      for (y = 0; y < rows; y++) { for (x = 0; x < cols; x++) { p = V3.cellCenter(x, y, cols, rows); c = V3.cellOf(p.x + 0.3, p.z - 0.3, cols, rows); ok = ok && c && c.x === x && c.y === y; } }
+      var a = V3.cellCenter(0, 0, cols, rows), z = V3.cellCenter(7, 5, cols, rows);
+      var r = [ok, a.x === -3.5 && a.z === -2.5 && z.x === 3.5 && z.z === 2.5, V3.cellOf(-4.2, 0, cols, rows) === null, V3.cellOf(0, 3.1, cols, rows) === null, V3.HGT.wall > V3.HGT.forest && V3.HGT.river < 0];
+      return r.every(Boolean) && '48칸 왕복 · 모서리 칸 ±3.5/±2.5 · 판 밖 null · 높이 성벽>숲>평지>강' || '실패 ' + r.join(',');
+    });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

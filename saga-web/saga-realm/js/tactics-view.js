@@ -198,6 +198,8 @@
         '<button class="btn tiny ghost" data-tv="auto" title="남은 턴을 맡긴다">🎲 맡기기</button>' +
         '<button class="btn tiny ghost" data-tv="quit" title="무승부로 판을 닫는다(보정 0)">↩️ 물러나기</button></div>') +
       '</div>';
+    var V3 = global.DG.tacticsView3d;   // W-0159 — 3D 판(손잡이 tactics3d)이면 SVG 를 숨기고 캔버스를 올린다, 아니면 2D 그대로
+    if (V3 && v.host.querySelector) { V3.attach(v, v.host.querySelector('.tv-board')); }
   }
 
   /** 공격 컷(W-0134) — 두 장수가 좌우에서 미끄러져 마주 서고 명중·피해. 판정 결과(r)를 재생만 한다 */

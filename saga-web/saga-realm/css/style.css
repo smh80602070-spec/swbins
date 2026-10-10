@@ -1501,6 +1501,7 @@ body.sheet-open #realm3d { right: calc(min(420px, 92vw) + 20px); }
 .tv-svg { display: block; min-width: 264px; border-radius: 8px; touch-action: manipulation; }
 .tv-svg .tv-cell, .tv-svg .tv-unit { cursor: pointer; }
 .tv-svg .tv-unit.spent { opacity: .55; }
+.tv3d { display: block; max-width: 100%; border-radius: 8px; touch-action: manipulation; cursor: pointer; }   /* W-0159 3D 전술판 */
 .tv-info, .tv-log { font-size: 12px; line-height: 1.5; padding: 6px 8px; border-radius: 8px; background: rgba(255,255,255,.06); }
 .tv-log:empty { display: none; }
 .tv-acts { display: flex; gap: 8px; }

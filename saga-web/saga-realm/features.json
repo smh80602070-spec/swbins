@@ -934,5 +934,24 @@
   "ticket": "W-0141",
   "since": "2026-10-10",
   "note": "D2(qc+claude 2026-10-10): saga-web/tools/playcheck/pw-rk-sky.mjs → shots/rk-sky/sky-{noon,night}-{top,low}.png Claude 눈 — 밤 하늘(별·푸른 안개) ○ · 강 물결 반짝임 ○ · 낮 하늘은 낮게 끌어야 지평선 위 얇은 띠로만 보임 △(카메라 최소 20° 내려다봄) · 성 PBR 명암은 툰과 차이 작음 △ · 고돗 G-0148 컷 나란히 비교는 안 함. 손잡이 realm3d.real 0 = 옛 화면, realm3d.skyTime(auto|dawn|noon|sunset|night), realm3d.waveScale 2.6, realm3d.roughness 0.8."
+ },
+ {
+  "id": "rk.tactics3d",
+  "name": "전술판 3D — 8×6 격자 땅(지형 높이·타일 무늬·숲 나무·성가퀴)·갈 칸 하늘빛·장수 몸(buildHero)·부대 몸(buildTrooper)·칸마다 걷기·기록 따라 휘두름·피격·쓰러짐",
+  "files": [
+   "js/tactics-view3d.js",
+   "js/tactics-view.js",
+   "css/style.css"
+  ],
+  "tests": [
+   "rk.tactics3d: 3D 전술판(W-0159) — 3D 가 없거나 손잡이 tactics3d 0 이면 2D 판 그대로(SVG 보임·캔버스 없음)",
+   "rk.tactics3d: 3D 전술판(W-0159) — 누른 땅 자리 → 칸 (x, y) 순수 함수: 칸 가운데 왕복·칸 경계 반올림·판 밖 null"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0159",
+  "since": "2026-10-10",
+  "note": "D2(qc+claude 2026-10-10): pw-tac-check → shots/tac/w159-{pc,phone,land}-{board,cut}.png Claude 눈 — 격자·높이(성벽>숲>평지)·장수·부대 몸·진영 원판·hp 띠 ○, 고르면 카메라가 살짝 당김 ○, 공격 컷(2D 겹침)은 캔버스 위에 그대로 ○(헤드리스는 화면 찍기가 1.1초라 450ms 뒤 컷은 이미 닫혀 안 찍힌다) · 점검: 고른 장수를 3칸 옮기면 150ms 에 walk·경로 3, 2.5초 뒤 목표 칸 가운데·idle ○. 규칙(tactics.js) 변경 0. 손잡이 tactics3d 0 = 2D 판."
  }
 ]
