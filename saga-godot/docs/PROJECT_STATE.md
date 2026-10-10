@@ -41,7 +41,7 @@
 ## 테스트 상태
 
 - `godot_regress.sh` REGRESS OK(10-04, G-0021 뒤) · `probe_all` 해당 5개 fails=0.
-- GO 그리기 부담 `SAGA_PERF_PROBE=1`(창 모드·모바일 렌더러, PLAN 104-7 예산 draw call ≤260·삼각형 평균 ≤35만) — 09-24 마을 32만·포구 19만·폐허 22만. GO 자동 점검 마흔여섯은 `tools/probe_*.gd`(`SAGA_<이름>_PROBE=1`, 이름은 파일명) — 전부 fails=0.
+- GO 그리기 부담 `SAGA_PERF_PROBE=1`(창 모드·모바일 렌더러, PLAN 104-7 예산 draw call ≤260·삼각형 평균 ≤35만) — 10-10(G-0153, 그래픽 묶음 뒤) draw 평균/삼각형 평균: 마을 251/25.9만·포구 199/17.2만·폐허 218/16.9만·역 233/21.1만, 전부 예산 안. GO 자동 점검 마흔여섯은 `tools/probe_*.gd`(`SAGA_<이름>_PROBE=1`, 이름은 파일명) — 전부 fails=0.
 - 화면 촬영 `SAGA_SHOT_PROBE=1 SAGA_SHOT_DIR=<경로>`(창 모드·화면 밖, `tools/probe_shots.gd`) — 09-26 땅 뒷면·눈·안개 발견.
 - 새 스크립트는 `--check-only --script res://…` 로 먼저 문법만(자동 로드 이름 오류는 정상) — 문법 오류 판은 씬이 안 떠 timeout 까지 멈춘다.
 - 셰이더(물·하늘)는 창 모드 콘솔 exe 를 화면 밖에서 300프레임 돌려 Forward+·Mobile 오류 0(헤드리스는 셰이더를 컴파일 안 함). 미니맵 원형 셰이더(⑨)·원소 시야 막(⑬)도 창 모드 두 렌더러 오류 0(09-24).
