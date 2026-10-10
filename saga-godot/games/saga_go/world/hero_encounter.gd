@@ -50,6 +50,12 @@ var _triggered := false
 var _persuade: PersuadeRules
 var _revealed := false
 var _layer: CanvasLayer
+## G-0158 — 설득 창이 뜬 동안 카메라가 이 인물을 비춘다(이야기 대화 구도 camera_rig.talk_shot 재사용).
+## 듣는 자리를 인물 앞 TALK_NEAR m 로 잡아(트리거 반경 18m 그대로 쓰면 멀어 작다) 가까이, 겨누는 자리를 TALK_AIM_DROP m
+## 낮춰 얼굴이 화면 위쪽 — 아래에 붙인 창(ChoicePrompt dock_bottom) 위로 오게.
+const TALK_NEAR := 2.2
+const TALK_AIM_DROP := 0.6
+var _rig: Node = null
 
 func _ready() -> void:
 	add_to_group("go_heroes") # 사진 도감(photo_album.gd)이 화면 안 인물을 찾는다
@@ -87,7 +93,27 @@ func _on_body_entered(body: Node3D) -> void:
 	CodexState.discover("record", hero_id)
 	_persuade = PersuadeRules.create(_hero["trait"])
 	_revealed = int(_hero.rarity) <= 3
+	_frame_hero(body)
 	_show_round()
+
+func _frame_hero(player: Node3D) -> void:
+	_rig = player.get_node_or_null("CameraRig")
+	if _rig == null or not _rig.has_method("talk_shot"):
+		_rig = null
+		return
+	var me := global_position
+	var to_p := player.global_position - me
+	to_p.y = 0.0
+	var near := me + (to_p.normalized() * TALK_NEAR if to_p.length() > 0.1 else Vector3(0, 0, TALK_NEAR))
+	_rig.call("talk_shot", me + Vector3.DOWN * TALK_AIM_DROP, near)
+
+func _end_frame() -> void:
+	if _rig != null and is_instance_valid(_rig) and _rig.has_method("end_talk"):
+		_rig.call("end_talk")
+	_rig = null
+
+func _exit_tree() -> void:
+	_end_frame()
 
 func _trait_label(trait_key: String) -> String:
 	match trait_key:
@@ -108,7 +134,7 @@ func _show_round() -> void:
 	for a in APPEALS:
 		choices.append({"label": a.label, "cb": func() -> void: _do_appeal(a.key)})
 	choices.append({"label": "물러난다", "cb": _flee})
-	_layer = ChoicePrompt.build(self, title, choices)
+	_layer = ChoicePrompt.build(self, title, choices, _rig != null)   # G-0158 — 인물을 비추면 창은 아래로
 
 func _do_appeal(key: String) -> void:
 	var r: Dictionary = _persuade.appeal(key)
@@ -129,6 +155,7 @@ func _do_appeal(key: String) -> void:
 func _flee() -> void:
 	if _layer:
 		_layer.queue_free()
+	_end_frame()
 	Toast.show(self, "%s와(과) 인사를 나누고 헤어졌다." % _hero.name, TOAST_SEC)
 	_triggered = false
 

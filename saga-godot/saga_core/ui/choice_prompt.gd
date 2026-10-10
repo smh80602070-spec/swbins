@@ -15,8 +15,12 @@ const SEP := 12.0
 const MAX_SCREEN_FRAC := 0.85 # 단추 줄이 화면 높이의 이만큼을 넘으면 스크롤
 
 
+const BOTTOM_GAP := 40.0 # G-0158 dock_bottom 일 때 화면 아래 여백
+
+
 ## choices: Array of {"label": String, "cb": Callable}
-static func build(parent: Node, title_text: String, choices: Array) -> CanvasLayer:
+## G-0158 — dock_bottom 이면 창을 화면 아래쪽에 붙인다(인물 조우처럼 카메라가 비추는 사람을 가리지 않게). 기본은 가운데.
+static func build(parent: Node, title_text: String, choices: Array, dock_bottom := false) -> CanvasLayer:
 	var layer := CanvasLayer.new()
 	## 고를 때까지 막는 창이라 인물·요리 화면(layer 6) 위에 — 기본 1 이면 화면 뒤에 숨는다(10-06 눈 확인).
 	layer.layer = 7
@@ -48,6 +52,12 @@ static func build(parent: Node, title_text: String, choices: Array) -> CanvasLay
 	## 줄바꿈으로 키가 더 크면 가운데에서 위아래로 같이 자란다(예전엔 왼쪽 위가 고정이라 오른쪽·아래로만 밀렸다).
 	panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	panel.grow_vertical = Control.GROW_DIRECTION_BOTH
+	if dock_bottom:   # 아래에 붙이고 위로만 자란다
+		panel.anchor_top = 1.0
+		panel.anchor_bottom = 1.0
+		panel.offset_bottom = -BOTTOM_GAP
+		panel.offset_top = -BOTTOM_GAP - panel_h
+		panel.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	var bg := StyleBoxFlat.new()
 	bg.bg_color = Color(0.07, 0.06, 0.09, 0.93)
 	bg.border_color = Color(0.85, 0.7, 0.4, 0.8)

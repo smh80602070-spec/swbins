@@ -449,7 +449,7 @@ func _act(a: String) -> void:
 				_close_call = [node, parts[4]]
 
 func _own_camera(a: String) -> bool:
-	return a == "aim" or a.begins_with("dialogue:")
+	return a == "aim" or a.begins_with("dialogue:") or a.begins_with("touch:")   # G-0158 인물 조우도 대화 구도
 
 func _refresh_story_stages() -> void:
 	for g in ["go_sky_route", "go_storm_eye"]:
