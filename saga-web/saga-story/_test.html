@@ -5945,6 +5945,17 @@ window.DG_NO_TUNE = true;
         CU.banner('story', 'nope') === '' && CU.banner('story', ids[0]).indexOf('<img') === 0 && (ids.length + '장 모두 그림 · 모르는 장은 비어 있음');
     });
 
+    t('판 이름(W-0157) — 제목·PWA·계정 화면이 "4종횡 — 뛰고 썬다" 꼴이고 "사가" 가 없다', function () {
+      function get(u) { var x = new XMLHttpRequest(); x.open('GET', u, false); x.send(); return x.status === 200 ? x.responseText : ''; }
+      var html = get('index.html'), mf = {}; try { mf = JSON.parse(get('manifest.json')); } catch (e) { return 'manifest.json 못 읽음'; }
+      var title = ((/<title>([^<]*)<\/title>/.exec(html) || [])[1] || '');
+      var apple = ((/apple-mobile-web-app-title" content="([^"]*)"/.exec(html) || [])[1] || '');
+      var acc = (DG.cfg.account || {}).name || '';
+      var head = /^4[가-힣]{2} — /;
+      var all = [title, mf.name || '', mf.short_name || '', apple, acc].join(' | ');
+      return head.test(title) && head.test(mf.name || '') && mf.short_name === '4종횡' && apple === '4종횡' && acc === '4종횡' &&
+        all.indexOf('사가') < 0 && all;
+    });
     t('타이틀 키 아트(W-0050) — 계정 화면이 가로·세로 키 아트 주소를 받고, 스타일에 두 장이 들어간다', function () {
       var art = DG.cfg.account && DG.cfg.account.art;
       if (DG.account._style) { DG.account._style(); }   // W-0124 — 전엔 `showSignup && void 0`(아무 일 안 함)이라 스타일이 없으면 그냥 통과했다

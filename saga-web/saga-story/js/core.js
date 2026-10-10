@@ -427,7 +427,7 @@
   global.DG.cfg = global.DG.cfg || {};
   global.DG.cfg.account = {
     art: 'assets/store/story_key',   // 타이틀 키 아트(K-0041, W-0050)
-    name: '사가종횡',
+    name: '4종횡',
     emoji: '🏃',
     tag: '역사 인물로 노는 옆으로 걷는 액션',
     settings: true,   // 타이틀에 ⚙️ 설정 단추(ui 설정 시트를 곧장 연다)

@@ -6797,6 +6797,17 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       return a === 'x.mp3' && b === 'x.ogg' && c === 'y.ogg' && d === 'x.ogg' && Array.isArray(cfg) && /\.mp3$/.test(cfg[1]) ? 'Ogg 못 틀면 mp3 · 판 설정 [ogg, mp3]' : '실패 ' + [a, b, c, d, JSON.stringify(cfg)].join(' ');
     });
 
+    t('판 이름(W-0157) — 제목·PWA·계정 화면이 "3마을 — 모으고 나눈다" 꼴이고 "사가" 가 없다', function () {
+      function get(u) { var x = new XMLHttpRequest(); x.open('GET', u, false); x.send(); return x.status === 200 ? x.responseText : ''; }
+      var html = get('index.html'), mf = {}; try { mf = JSON.parse(get('manifest.json')); } catch (e) { return 'manifest.json 못 읽음'; }
+      var title = ((/<title>([^<]*)<\/title>/.exec(html) || [])[1] || '');
+      var apple = ((/apple-mobile-web-app-title" content="([^"]*)"/.exec(html) || [])[1] || '');
+      var acc = (DG.cfg.account || {}).name || '';
+      var head = /^3[가-힣]{2} — /;
+      var all = [title, mf.name || '', mf.short_name || '', apple, acc].join(' | ');
+      return head.test(title) && head.test(mf.name || '') && mf.short_name === '3마을' && apple === '3마을' && acc === '3마을' &&
+        all.indexOf('사가') < 0 && all;
+    });
     t('타이틀 키 아트(W-0050) — 계정 화면이 가로·세로 키 아트 주소를 받고, 스타일에 두 장이 들어간다', function () {
       var art = DG.cfg.account && DG.cfg.account.art;
       if (DG.account._style) { DG.account._style(); }   // W-0124 — 전엔 `showSignup && void 0`(아무 일 안 함)이라 스타일이 없으면 그냥 통과했다

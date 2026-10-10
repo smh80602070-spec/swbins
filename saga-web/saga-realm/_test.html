@@ -6304,6 +6304,17 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         CU.banner('realm', 'nope') === '' && CU.banner('realm', ids[0]).indexOf('<img') === 0 && (ids.length + '장 모두 그림 · 모르는 장은 비어 있음');
     });
 
+    t('판 이름(W-0157) — 제목·PWA·계정 화면이 "5천하 — 다스리고 꾀고 친다" 꼴이고 "사가" 가 없다', function () {
+      function get(u) { var x = new XMLHttpRequest(); x.open('GET', u, false); x.send(); return x.status === 200 ? x.responseText : ''; }
+      var html = get('index.html'), mf = {}; try { mf = JSON.parse(get('manifest.json')); } catch (e) { return 'manifest.json 못 읽음'; }
+      var title = ((/<title>([^<]*)<\/title>/.exec(html) || [])[1] || '');
+      var apple = ((/apple-mobile-web-app-title" content="([^"]*)"/.exec(html) || [])[1] || '');
+      var acc = (DG.cfg.account || {}).name || '';
+      var head = /^5[가-힣]{2} — /;
+      var all = [title, mf.name || '', mf.short_name || '', apple, acc].join(' | ');
+      return head.test(title) && head.test(mf.name || '') && mf.short_name === '5천하' && apple === '5천하' && acc === '5천하' &&
+        all.indexOf('사가') < 0 && all;
+    });
     t('타이틀 키 아트(W-0050) — 계정 화면이 가로·세로 키 아트 주소를 받고, 스타일에 두 장이 들어간다', function () {
       var art = DG.cfg.account && DG.cfg.account.art, st = document.getElementById('acc-style');
       if (!st) { DG.account.showSignup && void 0; }

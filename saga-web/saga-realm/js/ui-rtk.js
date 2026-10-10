@@ -1212,7 +1212,7 @@
   function renderTop() {
     var st = R().state();
     if (!st.started) {
-      els.profile.innerHTML = '<div class="p-meta"><div class="p-title">사가천하 — 다스리고 꾀고 친다</div>' +
+      els.profile.innerHTML = '<div class="p-meta"><div class="p-title">5천하 — 다스리고 꾀고 친다</div>' +
         '<div class="p-sub">세력을 고르십시오</div></div>';
       els.wallet.innerHTML = '';
       return;

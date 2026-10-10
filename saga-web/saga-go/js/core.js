@@ -425,7 +425,7 @@
   global.DG.cfg = global.DG.cfg || {};
   global.DG.cfg.account = {
     art: 'assets/store/go_key',   // 타이틀 키 아트(K-0041, W-0050)
-    name: '사가만리',
+    name: '1만리',
     emoji: '🗺️',
     tag: '역사 인물로 노는 위치기반 수집 게임',
     drawer: true   // 👤 단추를 도구 서랍(#tools-drawer) 안으로
