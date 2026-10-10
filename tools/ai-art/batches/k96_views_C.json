@@ -1,0 +1,204 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k96_views_C",
+ "kit": {
+  "spec": "creature",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "fox",
+   "seed": 3506816925,
+   "prompt": "(red fox:1.15), standing on all fours, bushy tail, pointed ears, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "여우"
+  },
+  {
+   "id": "wolf",
+   "seed": 3294091509,
+   "prompt": "(gray wolf:1.15), standing on all fours, thick fur, bushy tail, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "늑대"
+  },
+  {
+   "id": "deer",
+   "seed": 2693687861,
+   "prompt": "(roe deer:1.15), standing on all fours, slender legs, brown coat, no antlers, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "사슴"
+  },
+  {
+   "id": "stag",
+   "seed": 740655599,
+   "prompt": "(red deer stag:1.15), standing on all fours, large branching antlers, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "수사슴"
+  },
+  {
+   "id": "cow",
+   "seed": 3146332539,
+   "prompt": "(dairy cow:1.15), standing on all fours, black and white patches, small horns, no humans, all legs visible, no collar, no saddle, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "젖소"
+  },
+  {
+   "id": "cow_farm",
+   "seed": 3193881419,
+   "prompt": "(brown farm cow:1.15), standing on all fours, short horns, no humans, all legs visible, no collar, no saddle, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "누렁소"
+  },
+  {
+   "id": "bull",
+   "seed": 1753952050,
+   "prompt": "(strong bull:1.15), standing on all fours, dark brown, curved horns, no humans, all legs visible, no collar, no saddle, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "황소"
+  },
+  {
+   "id": "sheep",
+   "seed": 864349957,
+   "prompt": "(fluffy sheep:1.15), standing on all fours, white wool, black face, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "양"
+  },
+  {
+   "id": "pig",
+   "seed": 226597657,
+   "prompt": "(pink farm pig:1.15), standing on all fours, curly tail, round snout, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "돼지"
+  },
+  {
+   "id": "llama",
+   "seed": 4267599246,
+   "prompt": "(llama:1.15), standing on all fours, long neck, cream wool, upright ears, no humans, all legs visible, no collar, no saddle, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "라마"
+  },
+  {
+   "id": "alpaca",
+   "seed": 351813687,
+   "prompt": "(alpaca:1.15), standing on all fours, fluffy brown wool, short face, no humans, all legs visible, no collar, no saddle, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "알파카"
+  },
+  {
+   "id": "cat",
+   "seed": 2673740656,
+   "prompt": "(house cat:1.15), standing on all fours, orange tabby fur, tail up, no humans, all legs visible, no collar, no saddle, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "고양이"
+  },
+  {
+   "id": "shiba",
+   "seed": 4080344149,
+   "prompt": "(shiba dog:1.15), standing on all fours, tan and cream fur, curled tail, no humans, all legs visible, no collar, no saddle, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "시바견"
+  },
+  {
+   "id": "husky",
+   "seed": 2103111882,
+   "prompt": "(husky dog:1.15), standing on all fours, gray and white fur, blue eyes, no humans, all legs visible, no collar, no saddle, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "허스키"
+  },
+  {
+   "id": "pug",
+   "seed": 2076098760,
+   "prompt": "(pug dog:1.15), standing on all fours, fawn fur, wrinkled black face, curled tail, no humans, all legs visible, no collar, no saddle, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "퍼그"
+  },
+  {
+   "id": "frog",
+   "seed": 2111342279,
+   "prompt": "(green frog:1.15), sitting on ground, big eyes, bent back legs, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "개구리"
+  },
+  {
+   "id": "snake",
+   "seed": 360721538,
+   "prompt": "(green snake:1.15), coiled body, head raised, smooth scales, no humans, whole body visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "뱀"
+  },
+  {
+   "id": "worm",
+   "seed": 4089099117,
+   "prompt": "(giant earthworm:1.15), segmented pink body, curved S shape, head raised, no humans, whole body visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "지렁이"
+  },
+  {
+   "id": "pigeon",
+   "seed": 1440412928,
+   "prompt": "(gray pigeon:1.15), standing on ground, iridescent neck, wings folded, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "비둘기"
+  },
+  {
+   "id": "birb",
+   "seed": 1719245243,
+   "prompt": "(round chubby songbird:1.15), standing on ground, yellow feathers, wings folded, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "둥근 새"
+  },
+  {
+   "id": "raptor",
+   "seed": 1147725689,
+   "prompt": "(small raptor dinosaur:1.15), standing on two legs, long tail, feathered arms, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "랩터"
+  },
+  {
+   "id": "trex",
+   "seed": 2156454303,
+   "prompt": "(tyrannosaurus dinosaur:1.15), standing on two legs, big head, small arms, long tail, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "티라노"
+  },
+  {
+   "id": "triceratops",
+   "seed": 1491626442,
+   "prompt": "(triceratops dinosaur:1.15), standing on all fours, three horns, neck frill, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "트리케라톱스"
+  },
+  {
+   "id": "stegosaurus",
+   "seed": 3748715345,
+   "prompt": "(stegosaurus dinosaur:1.15), standing on all fours, back plates, spiked tail, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "스테고사우루스"
+  },
+  {
+   "id": "parasaurolophus",
+   "seed": 3365150174,
+   "prompt": "(parasaurolophus dinosaur:1.15), standing on all fours, long head crest, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "파라사우롤로푸스"
+  },
+  {
+   "id": "apatosaurus",
+   "seed": 295340028,
+   "prompt": "(long-necked sauropod dinosaur:1.15), standing on all fours, very long neck and tail, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+   "subject_ko": "목긴 공룡"
+  }
+ ],
+ "note_k96": "묶음 B 에서 배운 부정 태그(바닥 판·장식 원 → 3D 접시·공) 그대로"
+}

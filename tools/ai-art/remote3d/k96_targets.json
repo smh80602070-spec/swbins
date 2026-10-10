@@ -1,5 +1,5 @@
 {
- "note": "K-0096 대상 표 — ①CC-BY ②탈것(10-10). ③~⑤ 는 그 차례에 덧붙인다. status 있음 = 입력 그림 있음, 새로 = Z-Image 로 뽑을 것 · yaw/height = finish.py(얼굴 +Z·발 밑 원점·키 m) · judge_a = 묶음 A(10-10) 눈 판정",
+ "note": "K-0096 대상 표 — ①CC-BY ②탈것(10-10). ③ 들·집 동물·공룡 26(10-11 덧붙임) · ④⑤ 는 그 차례에. status 있음 = 입력 그림 있음, 새로 = Z-Image 로 뽑을 것 · yaw/height = finish.py(얼굴 +Z·발 밑 원점·키 m) · judge_a = 묶음 A(10-10) 눈 판정",
  "items": [
   {
    "id": "tiger",
@@ -244,6 +244,266 @@
    "height": 1.4,
    "yaw": 0,
    "judge_b": "○",
+   "rig": "quad"
+  },
+  {
+   "id": "fox",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Fox (dungeon animals_extra·forest animals·forest animals_extra·go animals·story animals·story animals_extra)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.45,
+   "rig": "quad"
+  },
+  {
+   "id": "wolf",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Wolf (dungeon animals·forest animals·go animals·story animals)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.8,
+   "rig": "quad"
+  },
+  {
+   "id": "deer",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Deer (dungeon animals·forest animals·go animals·story animals)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 1.0,
+   "rig": "quad"
+  },
+  {
+   "id": "stag",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Stag (dungeon animals_extra·forest animals_extra·go animals·story animals_extra)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 1.3,
+   "rig": "quad"
+  },
+  {
+   "id": "cow",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Cow (dungeon animals·dungeon animals_extra·forest animals_extra·go animals·story animals·story animals_extra)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 1.4,
+   "rig": "quad"
+  },
+  {
+   "id": "cow_farm",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Cow_Farm (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 1.4,
+   "rig": "quad"
+  },
+  {
+   "id": "bull",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Bull (dungeon animals_extra·forest animals_extra·go animals·story animals_extra)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 1.5,
+   "rig": "quad"
+  },
+  {
+   "id": "sheep",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Sheep (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.8,
+   "rig": "quad"
+  },
+  {
+   "id": "pig",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Pig (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.7,
+   "rig": "quad"
+  },
+  {
+   "id": "llama",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Llama (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 1.7,
+   "rig": "quad"
+  },
+  {
+   "id": "alpaca",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Alpaca (dungeon animals_extra·forest animals_extra·go animals·story animals_extra)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 1.2,
+   "rig": "quad"
+  },
+  {
+   "id": "cat",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Cat (dungeon animals·forest animals·go animals·story animals)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.3,
+   "rig": "quad"
+  },
+  {
+   "id": "shiba",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — ShibaInu (dungeon animals·forest animals·go animals·story animals)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.45,
+   "rig": "quad"
+  },
+  {
+   "id": "husky",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Husky (dungeon animals·forest animals·go animals·story animals)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.6,
+   "rig": "quad"
+  },
+  {
+   "id": "pug",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Pug (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.3,
+   "rig": "quad"
+  },
+  {
+   "id": "frog",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Frog (dungeon animals·forest animals·go animals·story animals)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.12,
+   "rig": "quad"
+  },
+  {
+   "id": "snake",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Snake·Snake_angry(색 변형 — 같은 몸) (dungeon standin·forest animals·go animals·story standin)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.3,
+   "rig": "worm"
+  },
+  {
+   "id": "worm",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Worm (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.3,
+   "rig": "worm"
+  },
+  {
+   "id": "pigeon",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Pigeon (dungeon standin·forest standin·go animals·story standin)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.3,
+   "rig": "bird"
+  },
+  {
+   "id": "birb",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Birb (dungeon standin·forest standin·go animals·story standin)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.15,
+   "rig": "bird"
+  },
+  {
+   "id": "raptor",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Velociraptor (dungeon animals_extra2·forest animals_extra2·go animals·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 0.9,
+   "rig": "bird"
+  },
+  {
+   "id": "trex",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — T_Rex·Trex (dungeon animals_extra2·forest animals_extra2·go animals·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 3.0,
+   "rig": "bird"
+  },
+  {
+   "id": "triceratops",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Triceratops (dungeon animals_extra2·forest animals_extra2·go animals·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 2.2,
+   "rig": "quad"
+  },
+  {
+   "id": "stegosaurus",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Stegosaurus (dungeon animals_extra2·forest animals_extra2·go animals·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 2.5,
+   "rig": "quad"
+  },
+  {
+   "id": "parasaurolophus",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Parasaurolophus (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 2.5,
+   "rig": "quad"
+  },
+  {
+   "id": "apatosaurus",
+   "group": "3-field",
+   "borrowed": "Quaternius CC0 — Apatosaurus (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
+   "input": "",
+   "status": "새로",
+   "note": "",
+   "height": 4.0,
    "rig": "quad"
   }
  ]

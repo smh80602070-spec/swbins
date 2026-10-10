@@ -1,0 +1,192 @@
+{
+ "name": "k96_views_C",
+ "spec": "creature",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0096 묶음 C(③ 들·집 동물 20 + 공룡 6) — TRELLIS 입력 그림, 전부 txt2img, 전신·3/4 측면·단색 배경, 한 장 = 한 종",
+ "items": [
+  {
+   "id": "fox",
+   "subject": "red fox, standing on all fours, bushy tail, pointed ears",
+   "subject_ko": "여우",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "wolf",
+   "subject": "gray wolf, standing on all fours, thick fur, bushy tail",
+   "subject_ko": "늑대",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "deer",
+   "subject": "roe deer, standing on all fours, slender legs, brown coat, no antlers",
+   "subject_ko": "사슴",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "stag",
+   "subject": "red deer stag, standing on all fours, large branching antlers",
+   "subject_ko": "수사슴",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "cow",
+   "subject": "dairy cow, standing on all fours, black and white patches, small horns",
+   "subject_ko": "젖소",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible, no collar, no saddle"
+  },
+  {
+   "id": "cow_farm",
+   "subject": "brown farm cow, standing on all fours, short horns",
+   "subject_ko": "누렁소",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible, no collar, no saddle"
+  },
+  {
+   "id": "bull",
+   "subject": "strong bull, standing on all fours, dark brown, curved horns",
+   "subject_ko": "황소",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible, no collar, no saddle"
+  },
+  {
+   "id": "sheep",
+   "subject": "fluffy sheep, standing on all fours, white wool, black face",
+   "subject_ko": "양",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "pig",
+   "subject": "pink farm pig, standing on all fours, curly tail, round snout",
+   "subject_ko": "돼지",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "llama",
+   "subject": "llama, standing on all fours, long neck, cream wool, upright ears",
+   "subject_ko": "라마",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible, no collar, no saddle"
+  },
+  {
+   "id": "alpaca",
+   "subject": "alpaca, standing on all fours, fluffy brown wool, short face",
+   "subject_ko": "알파카",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible, no collar, no saddle"
+  },
+  {
+   "id": "cat",
+   "subject": "house cat, standing on all fours, orange tabby fur, tail up",
+   "subject_ko": "고양이",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible, no collar, no saddle"
+  },
+  {
+   "id": "shiba",
+   "subject": "shiba dog, standing on all fours, tan and cream fur, curled tail",
+   "subject_ko": "시바견",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible, no collar, no saddle"
+  },
+  {
+   "id": "husky",
+   "subject": "husky dog, standing on all fours, gray and white fur, blue eyes",
+   "subject_ko": "허스키",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible, no collar, no saddle"
+  },
+  {
+   "id": "pug",
+   "subject": "pug dog, standing on all fours, fawn fur, wrinkled black face, curled tail",
+   "subject_ko": "퍼그",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible, no collar, no saddle"
+  },
+  {
+   "id": "frog",
+   "subject": "green frog, sitting on ground, big eyes, bent back legs",
+   "subject_ko": "개구리",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "snake",
+   "subject": "green snake, coiled body, head raised, smooth scales",
+   "subject_ko": "뱀",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "worm",
+   "subject": "giant earthworm, segmented pink body, curved S shape, head raised",
+   "subject_ko": "지렁이",
+   "view": "three_quarter",
+   "extra": "no humans, whole body visible"
+  },
+  {
+   "id": "pigeon",
+   "subject": "gray pigeon, standing on ground, iridescent neck, wings folded",
+   "subject_ko": "비둘기",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "birb",
+   "subject": "round chubby songbird, standing on ground, yellow feathers, wings folded",
+   "subject_ko": "둥근 새",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "raptor",
+   "subject": "small raptor dinosaur, standing on two legs, long tail, feathered arms",
+   "subject_ko": "랩터",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "trex",
+   "subject": "tyrannosaurus dinosaur, standing on two legs, big head, small arms, long tail",
+   "subject_ko": "티라노",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "triceratops",
+   "subject": "triceratops dinosaur, standing on all fours, three horns, neck frill",
+   "subject_ko": "트리케라톱스",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "stegosaurus",
+   "subject": "stegosaurus dinosaur, standing on all fours, back plates, spiked tail",
+   "subject_ko": "스테고사우루스",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "parasaurolophus",
+   "subject": "parasaurolophus dinosaur, standing on all fours, long head crest",
+   "subject_ko": "파라사우롤로푸스",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  },
+  {
+   "id": "apatosaurus",
+   "subject": "long-necked sauropod dinosaur, standing on all fours, very long neck and tail",
+   "subject_ko": "목긴 공룡",
+   "view": "three_quarter",
+   "extra": "no humans, all legs visible"
+  }
+ ]
+}
