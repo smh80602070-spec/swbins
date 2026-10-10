@@ -2,7 +2,7 @@
 # 커밋 전 자동 점검 (SAGA-DESIGN.md §8-5·§9) — Git Bash 에서 `bash tools/precheck.sh [폴더...]`
 #   1) 웹 다섯 판 js 구문 (node -c, vendor 제외)
 #   2) 바뀐 에셋 🔴 점검(tools/asset-audit --quick)
-#   3) 문서 크기 상한 (CLAUDE.md 6KB · PLAN 70KB(사가나락 90KB) · PROJECT_STATE 15KB · ARCH·BACKLOG·STATE·티켓 4KB …)
+#   3) 문서 크기 상한 (CLAUDE.md 6KB · PLAN 70KB(2나락 90KB) · PROJECT_STATE 15KB · ARCH·BACKLOG·STATE·티켓 4KB …)
 #   4) features.json 스키마 · WIP 상한(tools/wip.json, 새기능 티켓) · js/gd/cs 1500줄 넘김(tools/big-files.txt 는 봐줌) · 진단 수 감소 WARN · Godot 참조 방향
 #   (--full 이면 웹 다섯 판 _test.html 진단까지)
 # 서버·브라우저는 띄우지 않는다. _test.html 진단은 사용자가 실기 확인할 때 따로 돈다.
@@ -146,7 +146,7 @@ const cfg = JSON.parse(fs.readFileSync('tools/wip.json', 'utf8'));
 const git = a => { try { return execSync('git ' + a, { encoding: 'utf8' }).split(/\r?\n/).filter(Boolean); } catch (e) { return []; } };
 const added = git('diff --cached --name-only --diff-filter=A').filter(f => /^tasks\/(web|godot|unity|tools)\/[WGUK]-\d+\.md$/.test(f));
 if (!added.length) { console.log('ok   새 티켓 없음'); process.exit(0); }
-const NAMES = { '사가만리': 'go', '사가나락': 'dungeon', '사가마을': 'forest', '사가종횡': 'story', '사가천하': 'realm', 'GO': 'go', 'DUNGEON': 'dungeon', 'FOREST': 'forest', 'STORY': 'story', 'REALM': 'realm' };
+const NAMES = { '1만리': 'go', '2나락': 'dungeon', '3마을': 'forest', '4종횡': 'story', '5천하': 'realm', '사가만리': 'go', '사가나락': 'dungeon', '사가마을': 'forest', '사가종횡': 'story', '사가천하': 'realm', 'GO': 'go', 'DUNGEON': 'dungeon', 'FOREST': 'forest', 'STORY': 'story', 'REALM': 'realm' };
 const PRE = { go: 'go.', dungeon: 'dg.', forest: 'fs.', story: 'st.', realm: 'rk.' };
 const readJ = p => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch (e) { return []; } };
 function wip(track, game) {
@@ -173,7 +173,7 @@ for (const f of added) {
     continue;
   }
   const games = [...new Set(Object.keys(NAMES).filter(n => head.includes(n) || (txt.match(new RegExp(n, 'g')) || []).length >= 3).map(n => NAMES[n]))];
-  if (!games.length) { console.log(`FAIL ${f} 어느 판인지 둘째 줄에 없음 — '종류: 새기능 · 웹(사가천하)' 처럼 판 이름을 적는다`); bad++; continue; }
+  if (!games.length) { console.log(`FAIL ${f} 어느 판인지 둘째 줄에 없음 — '종류: 새기능 · 웹(5천하)' 처럼 판 이름을 적는다`); bad++; continue; }
   for (const g of games) {
     const n = wip(track, g), lim = cfg.flagship.includes(`${track}:${g}`) ? cfg.limit_flagship : cfg.limit;
     if (n > lim && !exempt) { console.log(`FAIL ${f} ${track}/${g} D0+D1 ${n} > ${lim} — 닫기(D1→D2→D3) 티켓이 먼저`); bad++; }

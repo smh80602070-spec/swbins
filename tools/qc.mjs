@@ -10,7 +10,7 @@
  *
  * 하는 일(웹 판마다): ① 번들·shared 사본 최신인지(bundle --check·sync-shared --check) ② 진단 러너(test-web.mjs, RESULT n/m·실패 줄·DIFF)
  *   ③ 재미 표준 8 측정(_test.html 의 "재미표준 A~H" 줄 ○△× — 없는 판은 "측정 없음" 으로 기록) ④ 2D 한 장(pw-look2d)·3D 장면(pw-visual-close,
- *   사가천하는 pw-rk-sheet 기계 확인) ⑤ features.json D0/D1(WIP)·완성도(status.mjs) ⑥ 게이트(precheck.sh)
+ *   5천하는 pw-rk-sheet 기계 확인) ⑤ features.json D0/D1(WIP)·완성도(status.mjs) ⑥ 게이트(precheck.sh)
  *   갈래 godot: probe_all.sh fails · 갈래 tools: asset-audit --quick --strict · 갈래 unity: 배치 실행은 그 PC 세션 몫이라 SKIP 으로 적는다.
  * 결과: 콘솔 표 + tools/_out/qc-last.json + tools/_out/qc/<일시>.md(이전 결과와 n/m·완성도 비교, **Claude 눈 판정 목록** = 찍힌 PNG 경로).
  *   눈 판정은 사람 몫이 아니다 — 세션이 Read 로 PNG 를 보고 ○△× 를 티켓 메모·features note 에 적는다(INTAKE §4, 사람은 재미·손맛·그림체 고르기만).

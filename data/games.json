@@ -2,11 +2,11 @@
  "_": "다섯 판 이름 정본(사용자 2026-10-07 '다섯 판 이름 변경·전체 반영'). 표시 이름만 바뀐다 — 폴더·세이브 키·앱 id·코드 식별자(saga_go·SagaGo·saga-go)는 그대로(루트 CLAUDE.md). 바꾸려면 이 표를 고치고 `py tools/rename-games.py --apply` 를 다시 돌린다(archive/·done/·HANDOFF·HISTORY 는 이력이라 옛 이름 그대로 둔다).",
  "series": { "ko": "사가", "en": "Saga", "note": "史歌 — 역사를 노래한다. 다섯 판 공통 접두" },
  "games": [
-  { "folder": "saga-go",      "code": "GO",      "name": "사가만리", "hanja": "萬里", "old": "사가고",   "en": "Saga Manri",   "port": 8791, "save": "deungyong-go",   "genre": "오픈월드 탐험·사냥 — 젤다의 전설 + 몬스터헌터(사용자 10-07)", "tagline": "걷고 만난다", "alts": ["사가유람", "사가천리행"] },
-  { "folder": "saga-dungeon", "code": "DUNGEON", "name": "사가나락", "hanja": "奈落", "old": "사가블로", "en": "Saga Narak",   "port": 8792, "save": "yeoksa-dungeon", "genre": "핵앤슬래시 던전 — 디아블로 + 엘든링(사용자 10-07)",       "tagline": "내려간다",   "alts": ["사가심연", "사가지하성"] },
-  { "folder": "saga-forest",  "code": "FOREST",  "name": "사가마을", "hanja": "—",   "old": "사가의숲", "en": "Saga Maeul",   "port": 8793, "save": "yeoksa-village", "genre": "마을 생활·채집·짓기 — 동물의숲 + 마인크래프트(사용자 10-07)", "tagline": "모으고 나눈다", "alts": ["사가터", "사가전원"] },
-  { "folder": "saga-story",   "code": "STORY",   "name": "사가종횡", "hanja": "縱橫", "old": "사가스토리", "en": "Saga Jonghoeng", "port": 8794, "save": "yeoksa-side",  "genre": "횡스크롤 액션 — 메이플스토리 + 던전앤파이터(사용자 10-07)",   "tagline": "뛰고 썬다",   "alts": ["사가협객", "사가무예록"] },
-  { "folder": "saga-realm",   "code": "REALM",   "name": "사가천하", "hanja": "天下", "old": "사가국지", "en": "Saga Cheonha", "port": 8795, "save": "saga-realm",     "genre": "전략·전술 — 코에이 삼국지 + 엑스컴(사용자 10-07)",            "tagline": "다스리고 꾀고 친다", "alts": ["사가패권", "사가열국"] }
+  { "folder": "saga-go",      "code": "GO",      "name": "1만리", "hanja": "萬里", "old": "사가고",   "en": "Saga Manri",   "port": 8791, "save": "deungyong-go",   "genre": "오픈월드 탐험·사냥 — 젤다의 전설 + 몬스터헌터(사용자 10-07)", "tagline": "걷고 만난다", "alts": ["사가유람", "사가천리행"] },
+  { "folder": "saga-dungeon", "code": "DUNGEON", "name": "2나락", "hanja": "奈落", "old": "사가블로", "en": "Saga Narak",   "port": 8792, "save": "yeoksa-dungeon", "genre": "핵앤슬래시 던전 — 디아블로 + 엘든링(사용자 10-07)",       "tagline": "내려간다",   "alts": ["사가심연", "사가지하성"] },
+  { "folder": "saga-forest",  "code": "FOREST",  "name": "3마을", "hanja": "—",   "old": "사가의숲", "en": "Saga Maeul",   "port": 8793, "save": "yeoksa-village", "genre": "마을 생활·채집·짓기 — 동물의숲 + 마인크래프트(사용자 10-07)", "tagline": "모으고 나눈다", "alts": ["사가터", "사가전원"] },
+  { "folder": "saga-story",   "code": "STORY",   "name": "4종횡", "hanja": "縱橫", "old": "사가스토리", "en": "Saga Jonghoeng", "port": 8794, "save": "yeoksa-side",  "genre": "횡스크롤 액션 — 메이플스토리 + 던전앤파이터(사용자 10-07)",   "tagline": "뛰고 썬다",   "alts": ["사가협객", "사가무예록"] },
+  { "folder": "saga-realm",   "code": "REALM",   "name": "5천하", "hanja": "天下", "old": "사가국지", "en": "Saga Cheonha", "port": 8795, "save": "saga-realm",     "genre": "전략·전술 — 코에이 삼국지 + 엑스컴(사용자 10-07)",            "tagline": "다스리고 꾀고 친다", "alts": ["사가패권", "사가열국"] }
  ],
  "rename_rules": {
   "regex": { "사가고": "사가고(?!돗)" },

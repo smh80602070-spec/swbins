@@ -25,7 +25,7 @@ const PROJECT = process.env.CF_PAGES_PROJECT || 'swbins-saga';
 const STAGE = path.join(os.tmpdir(), 'swbins-deploy');
 const DRY = process.argv.includes('--dry');
 const LIMIT_FILES = 20000, LIMIT_BYTES = 25 * 1024 * 1024;
-const GAMES = [['saga-go', '사가만리'], ['saga-dungeon', '사가나락'], ['saga-forest', '사가마을'], ['saga-story', '사가종횡'], ['saga-realm', '사가천하']];
+const GAMES = [['saga-go', '1만리'], ['saga-dungeon', '2나락'], ['saga-forest', '3마을'], ['saga-story', '4종횡'], ['saga-realm', '5천하']];
 
 const skip = (p) => /\/src\//.test(p) || p.startsWith('saga-web/tools/') || p.startsWith('saga-web/shared/build/') || /\.md$/i.test(p);
 const files = execFileSync('git', ['ls-files', '-z', 'saga-web'], { cwd: ROOT, maxBuffer: 1 << 28 }).toString('utf8').split('\0').filter((p) => p && !skip(p));

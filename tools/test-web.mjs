@@ -5,7 +5,7 @@
  *   node tools/test-web.mjs                     다섯 판 전부(all 도 같음)
  *   node tools/test-web.mjs saga-story saga-go  고른 판만
  *   --runs=N                                    판마다 N 번(기본 1). 통과·실패 이름 목록의 md5 가 다르면 DIFF
- *   --budget=ms                                 virtual-time-budget(기본 45000, 사가천하 180000)
+ *   --budget=ms                                 virtual-time-budget(기본 45000, 5천하 180000)
  *   --dump                                      크롬이 뱉은 DOM 을 tools/_out/last-<판>.html 에 저장(실패 줄 원인 볼 때)
  *
  * 종료 코드: 실패 0·DIFF 없음 → 0, 아니면 1. 결과는 tools/_out/test-web.json({판:{n,m,fails,at}}).

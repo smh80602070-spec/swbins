@@ -7,15 +7,15 @@
  *   node tools/scenario-count.mjs --write    scenario/README.md 의 <!-- scenario:begin/end --> 블록을 덮어쓴다
  *
  * 세는 규칙(트랙·판마다 장 표의 모양이 달라 규칙이 따로다)
- *   웹   사가만리      js/story.js 의 `id: 'chN'` 줄 수
+ *   웹   1만리      js/story.js 의 `id: 'chN'` 줄 수
  *        블로·숲·스토리  js/data-scenario.js 를 vm 에 돌려 DG.scenarioData.CHAPTERS.length
- *        사가천하    같은 방식, CARDS + LORD + SIDE 길이(사연 카드 사슬 + 열전 + 곁가지)
- *   고돗 사가만리      games/saga_go/data/story_chapters_*.gd 의 줄 머리 `\t{"id": "ch` 줄 수
+ *        5천하    같은 방식, CARDS + LORD + SIDE 길이(사연 카드 사슬 + 열전 + 곁가지)
+ *   고돗 1만리      games/saga_go/data/story_chapters_*.gd 의 줄 머리 `\t{"id": "ch` 줄 수
  *        나락·마을·종횡  games/<판>/data/scenario.gd 의 `const CHAPTERS := [` 블록 안 줄 머리 `\t{"id": "` 줄 수 (10-08 G-0085~0087)
- *        사가천하    같은 파일의 `const CARDS := [` 블록(이야기 카드, G-0088) — 파일이 없으면 0
- *   유니티 사가만리    Assets/Games/SagaGo/Resources/story_go.json 의 chapters 길이(U-0016 이 GoStory.cs 표를 옮김 — 10-09 바로잡음)
+ *        5천하    같은 파일의 `const CARDS := [` 블록(이야기 카드, G-0088) — 파일이 없으면 0
+ *   유니티 1만리    Assets/Games/SagaGo/Resources/story_go.json 의 chapters 길이(U-0016 이 GoStory.cs 표를 옮김 — 10-09 바로잡음)
  *        블로·숲·스토리  Resources/scenario_*.json 의 chapters 길이
- *        사가천하    Resources/scenario_realm.json 의 cards + side 길이
+ *        5천하    Resources/scenario_realm.json 의 cards + side 길이
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -24,7 +24,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const argv = process.argv.slice(2);
-const GAMES = [['go', '사가만리', 'saga-go'], ['dungeon', '사가나락', 'saga-dungeon'], ['forest', '사가마을', 'saga-forest'], ['story', '사가종횡', 'saga-story'], ['realm', '사가천하', 'saga-realm']];
+const GAMES = [['go', '1만리', 'saga-go'], ['dungeon', '2나락', 'saga-dungeon'], ['forest', '3마을', 'saga-forest'], ['story', '4종횡', 'saga-story'], ['realm', '5천하', 'saga-realm']];
 
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 const exists = (p) => fs.existsSync(path.join(ROOT, p));
