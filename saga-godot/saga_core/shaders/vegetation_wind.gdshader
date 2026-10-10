@@ -14,6 +14,9 @@ uniform float specular_value : hint_range(0.0, 1.0) = 0.5;
 // saga-godot 106장 ㊻-4 눈 전용 나무 — 위를 보는 잎·가지에 눈이 얹힌다(0 이면 예전 그대로).
 // 잎 색도 snow_amount 만큼 서늘하게 가라앉힌다(고원 침엽수가 마을 잎빛 그대로면 눈밭에서 뜬다).
 uniform float snow_amount : hint_range(0.0, 1.0) = 0.0;
+// G-0160 — 카메라에서 이만큼 안에 들어온 조각은 화면 위치 점묘로 비운다(가까울수록 더). 나무가 MultiMesh 칸이라
+// 한 그루만 숨길 수 없어서 — 대화 구도·숲 속 시점에서 수관이 화면 ¼ 을 진초록으로 덮던 것. 그림자 패스는 빛 시점 거리라 그대로.
+uniform float near_fade_m = 4.0;
 varying vec3 v_world_normal;
 
 void vertex() {
@@ -23,6 +26,18 @@ void vertex() {
 }
 
 void fragment() {
+	float cam_d = length(VERTEX);
+	if (cam_d < near_fade_m) {
+		// 안쪽 60% 는 통째로 비우고, 바깥 띠만 4×4 규칙 점묘(무작위 점묘는 모래알처럼 지글거렸다)
+		float keep = clamp((cam_d / near_fade_m - 0.6) / 0.4, 0.0, 1.0);
+		ivec2 q = ivec2(FRAGCOORD.xy) % 4;
+		int bi = q.x + q.y * 4;
+		float bayer = float((bi == 0 ? 0 : bi == 1 ? 8 : bi == 2 ? 2 : bi == 3 ? 10 : bi == 4 ? 12 : bi == 5 ? 4 : bi == 6 ? 14 : bi == 7 ? 6
+			: bi == 8 ? 3 : bi == 9 ? 11 : bi == 10 ? 1 : bi == 11 ? 9 : bi == 12 ? 15 : bi == 13 ? 7 : bi == 14 ? 13 : 5)) / 16.0;
+		if (bayer >= keep) {
+			discard;
+		}
+	}
 	vec4 tex = texture(albedo_texture, UV);
 	ALBEDO = tex.rgb;
 	if (snow_amount > 0.0) {
