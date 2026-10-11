@@ -301,7 +301,9 @@
    "note": "",
    "height": 1.4,
    "rig": "quad",
-   "judge_b": "✗ 두 마리가 겹침 → v03 다시(remote3d_in_k96c2)"
+   "judge_b": "○ yaw -30·바닥 판 자름 — 3회째(배경 미리 지움 v03)",
+   "yaw": -30,
+   "plate": true
   },
   {
    "id": "cow_farm",
@@ -329,12 +331,14 @@
    "id": "sheep",
    "group": "3-field",
    "borrowed": "Quaternius CC0 — Sheep (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
-   "input": "tools/ai-art/_out/remote3d_in_k96c2/sheep.png",
+   "input": "tools/ai-art/_out/remote3d_in_k96c4/sheep.png",
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.8,
    "rig": "quad",
-   "judge_b": "✗ 등에 검은·분홍 얼룩 → v02 다시(remote3d_in_k96c2)"
+   "judge_b": "○ 바닥 판 — 3회째 v04(배경 미리 지움)",
+   "plate": true,
+   "plate_cut": 0.05
   },
   {
    "id": "pig",
@@ -498,7 +502,9 @@
    "note": "",
    "height": 3.0,
    "rig": "bird",
-   "judge_b": "✗ 납작한 그림 판 → v02 다시(remote3d_in_k96c2)"
+   "judge_b": "△ 다리·꼬리 옆 흰 테두리 벽(스티커 테두리 그림) — 배경 미리 지움 v02",
+   "plate": true,
+   "plate_cut": 0.06
   },
   {
    "id": "triceratops",
@@ -541,13 +547,12 @@
    "id": "apatosaurus",
    "group": "3-field",
    "borrowed": "Quaternius CC0 — Apatosaurus (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
-   "input": "tools/ai-art/_out/remote3d_in_k96c/apatosaurus.png",
-   "status": "있음(txt2img)",
+   "input": "tools/ai-art/_out/remote3d_in_k96c5/apatosaurus.png",
+   "status": "있음(txt2img, 잘라냄)",
    "note": "",
    "height": 4.0,
    "rig": "quad",
-   "judge_b": "✗ 바닥 상자 옆면(청록 벽)이 남음 → 다른 그림(remote3d_in_k96c2)",
-   "plate": true
+   "judge_b": "○ 네발 새 그림 k96_views_C2 v02 오른쪽 한 마리(배경 미리 지움)"
   },
   {
    "id": "mushnub",
@@ -625,12 +630,12 @@
    "id": "monkroose",
    "group": "4-monster",
    "borrowed": "Quaternius CC0 Ultimate Monsters — Monkroose (D·F G S standin)",
-   "input": "tools/ai-art/_out/remote3d_in_k96c2/monkroose.png",
+   "input": "tools/ai-art/_out/remote3d_in_k96c4/monkroose.png",
    "status": "있음(txt2img)",
    "note": "보임: 펫",
    "height": 0.6,
-   "rig": "quad",
-   "judge_b": "✗ 납작한 그림 판 → v03 배경 미리 지워 다시"
+   "rig": "none",
+   "judge_b": "△ 꼬리 끝이 민트 원판(바닥 아님) — 3회째 v01(배경 미리 지움)"
   },
   {
    "id": "pink_slime",
@@ -676,7 +681,10 @@
    "note": "보임: 펫",
    "height": 1.0,
    "rig": "quad",
-   "judge_b": "✗ 납작한 그림 판 → v04 배경 미리 지워 다시"
+   "judge_b": "△ 바닥에 놓인 꼬리가 걷기 때 조금 꺾임 · 발밑 그림자 판 자름 — 배경 미리 지움 v04",
+   "yaw": 90,
+   "plate": true,
+   "plate_cut": 0.03
   },
   {
    "id": "dragon_evolved",
@@ -694,12 +702,12 @@
    "id": "cat_monster",
    "group": "4-monster",
    "borrowed": "Quaternius CC0 Ultimate Monsters — Cat_Monster (D·F G S standin)",
-   "input": "tools/ai-art/_out/remote3d_in_k96c2/cat_monster.png",
+   "input": "tools/ai-art/_out/remote3d_in_k96c4/cat_monster.png",
    "status": "있음(txt2img)",
    "note": "보임: 펫",
    "height": 0.6,
    "rig": "quad",
-   "judge_b": "✗ 납작한 그림 판(배경째) → v01 배경 미리 지워 다시(remote3d_in_k96c2)"
+   "judge_b": "✗ 세 번(v04·v01·v03, 배경 미리 지움 포함) 다 납작 판 — 남음: 정면 귀여운 고양이 그림이 TRELLIS 를 판으로 만듦, 3/4 몸통 그림을 새로 뽑아야"
   },
   {
    "id": "goleling",
@@ -745,7 +753,7 @@
    "note": "보임: R 장수 몸",
    "height": 1.0,
    "rig": "worm",
-   "judge_b": "✗ 납작한 그림 판 → v02 배경 미리 지워 다시"
+   "judge_b": "△ 눈이 흐려짐 — 배경 미리 지움 v02"
   },
   {
    "id": "rat",

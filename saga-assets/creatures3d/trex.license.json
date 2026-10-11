@@ -1,0 +1,44 @@
+{
+ "id": "trex",
+ "generator": "TRELLIS (microsoft/TRELLIS, Kaggle T4) — tools/ai-art/remote3d",
+ "model": "microsoft/TRELLIS-image-large",
+ "model_license": "MIT",
+ "input_image": "tools/ai-art/_out/remote3d_in_k96c2/trex.png",
+ "input_license": {
+  "id": "trex_v02",
+  "generator": "tools/ai-art/gen.py (ComfyUI)",
+  "model": "animagine-xl-4.0-opt",
+  "model_license": "CreativeML OpenRAIL++-M",
+  "prompt": "masterpiece, high score, great score, absurdres, (tyrannosaurus dinosaur:1.15), standing on two legs, big head, small arms, long tail, no humans, all legs visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+  "negative_prompt": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+  "seed": 2156454304,
+  "steps": 28,
+  "cfg_scale": 5.5,
+  "sampler": "euler_ancestral/normal",
+  "size": [
+   768,
+   768
+  ],
+  "seconds": 90.1,
+  "date": "2026-10-11",
+  "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+  "k96_pick": "trex_v02.png",
+  "judge_score": 76.7
+ },
+ "seed": 1,
+ "simplify": 0.95,
+ "texture_size": 1024,
+ "times": {
+  "gen_sec": 35,
+  "glb_sec": 32,
+  "bytes": 1588180
+ },
+ "date": "2026-10-11",
+ "note": "K-0096 자체 생성(입력 = 우리 txt2img 그림). 빌린 모델을 대신한다 — 게임 참조 바꾸기는 W 티켓.",
+ "pipeline": "remote3d/finish.py(얼굴 +Z·발 밑 원점·키 m·떨어진 조각·바닥 판 지움) → asset-forge/creature_rig.py(자체 뼈대 + 자체 키프레임 동작 7, quad·bird·worm) → glb-compress/compress.mjs(Meshopt·WebP)",
+ "yaw": 0,
+ "height_m": 3.0,
+ "replaces": "Quaternius CC0 — T_Rex·Trex (dungeon animals_extra2·forest animals_extra2·go animals·story animals_extra2)",
+ "commercial_use": true,
+ "rig": "bird"
+}
