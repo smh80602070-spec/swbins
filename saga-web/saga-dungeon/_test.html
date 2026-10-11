@@ -4668,6 +4668,14 @@ window.requestAnimationFrame = function () { return 0; };
         L.iconOf({ kind: 'item', item: { base: 'x', uniq: 'u1' } }).id === 'u1', L.hexOf(dGold, 0xd9d9e0) === 0xf0c34a && L.hexOf(dGold, 0x123456) === 0x123456 && L.hexOf(dItem, 0xd9d9e0) === 0xd9d9e0];
       return r.every(Boolean) && ('장비 ' + eq + ' · 보석 ' + gm + ' → 받침+아이콘 · 금 → 옛 상자') || '실패 ' + r.join(',');
     });
+    t('무기 몸짓·소리(W-0171) — 공격이 시작될 때만 무기 생김새·콤보 단으로 Wpn_ 자리를 정해 그 길이만큼 붙들고, 맞는 소리는 생김새마다 자체 효과음 갈래', function () {
+      var OA = DG.ownAnim, st = {}, X = DG.sfx, calls = 0, look = function () { calls++; return 'guandao'; };
+      var a0 = OA.attackSlot(st, true, 10, look, 4), a1 = OA.attackSlot(st, true, 10.2, look, 4), a2 = OA.attackSlot(st, false, 10.3, look, 4), a3 = OA.attackSlot(st, false, 11, look, 4);
+      var b0 = OA.attackSlot({}, true, 0, 'spear', 0), b1 = OA.attackSlot({}, true, 0, 'fan', 2), b2 = OA.attackSlot({}, true, 0, 'mystery', 0);
+      var r = [a0 === 'Wpn_claymore_1', a1 === a0, a2 === a0, a3 === null, calls === 1, b0 === 'Wpn_polearm_0', b1 === 'Wpn_catalyst_2', b2 === 'Wpn_sword_0',
+        X.SX_OF.halberd === 'spear' && X.SX_OF.club === 'axe', X.hitOf('sword', 0) === false];   // 진단엔 잠금 해제 전이라 소리는 안 난다 → 합성음 길
+      return r.every(Boolean) && ('관도 4타 → ' + a0 + ' · 창 → ' + b0 + ' · 부채 3단 → ' + b1) || '실패 ' + r.join(',');
+    });
     t('mode2d: 마을 맨손 시트(W-0138) — 8방향 시트 사람이 town 이면 서기·걷기를 idle_town·walk_town 으로, 공격·피격·마을 밖·3행 시트는 그대로', function () {
       var M = DG.mode2d, ids = Object.keys((DG.assets3dIds && DG.assets3dIds.hero2d8) || {}), p = ids.length ? 'vroid:' + ids[0] : '';
       if (!p) { return '실패 8방향 표 없음'; }

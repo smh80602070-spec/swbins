@@ -725,6 +725,21 @@
     /* W-0169 — 무기 몸짓 `Wpn_<무기>_<단>` 이름표·길이(초). 없는 이름이면 0 */
     COMBAT_NAMES: COMBAT.map(function (c) { return c.name; }),
     /** 처음 조립된(정지 자세) 몸에서 뼈대를 읽는다 — 실패하면 null */
+    /** 판마다 다른 무기 이름(생김새) → 몸짓 다섯 갈래 */
+    WPN_OF: { sword: 'sword', dagger: 'sword', guandao: 'claymore', axe: 'claymore', club: 'claymore', claymore: 'claymore', halberd: 'polearm', spear: 'polearm', polearm: 'polearm', bow: 'bow', gun: 'bow', fan: 'catalyst', staff: 'catalyst', brush: 'catalyst', scroll: 'catalyst', catalyst: 'catalyst' },
+    /** 공격이 새로 시작될 때(attacking 이 false→true, 또는 남은 공격 시간(수)이 다시 차오를 때) 무기·단으로 `Wpn_` 자리를 정해 그 몸짓 길이만큼 붙든다.
+     *  st = 배우마다 둘 작은 상태 객체 · now = 초 · 몸짓이 없으면 null(부르는 쪽이 옛 'attack') */
+    attackSlot: function (st, attacking, now, kind, step) {
+      if (!st) { return null; }
+      var v = attacking === true ? 1 : (+attacking || 0);   // 자동 공격이 쉬지 않고 이어지면 남은 시간이 다시 차오르는 순간이 새 공격
+      if (v > 0 && (!st.on || v > (st.v || 0) + 0.01)) {
+        var k = typeof kind === 'function' ? kind() : kind, sp = typeof step === 'function' ? step() : step;   // 함수면 공격이 시작될 때만 부른다
+        var w = this.WPN_OF[k] || 'sword', nm = 'Wpn_' + w + '_' + (((sp | 0) % 3 + 3) % 3), d = this.combatDur(nm);
+        st.slot = d ? nm : null; st.until = now + d * 0.9;
+      }
+      st.on = v > 0; st.v = v;
+      return st.slot && (now < st.until || v > 0) ? st.slot : null;   // 공격이 이어지는 동안엔 몸짓 끝 자세를 붙든다(틱이 느려 몸짓이 먼저 끝나도)
+    },
     restRig: function (root) { try { return rigFromObject3D(root); } catch (e) { return null; } },
     /** asset3d 배우(u = node.userData)에 무기 몸짓 액션을 단다 — 몸 파일(u.ownBody)마다 한 번 굽고 캐시. 자체 몸짓이 아닌 몸이면 null(부르는 쪽이 보통 공격) */
     weaponAction: function (u, slot, THREE) {

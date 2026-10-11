@@ -135,7 +135,7 @@
     var idx = (run.combo || 0) % HIT_CUES.length;
     var IT = global.DG.item, w = IT ? IT.equipped(leadId()).weapon : null;
     var look = (w && !IT.isBroken(w)) ? ((IT.baseOf(w) || {}).look) : null;
-    sfx(HIT_CUES[idx], { lpMul: WEAPON_LP_MUL[look] || 1 });
+    var S = global.DG.sfx; if (!(S && S.hitOf && S.hitOf(look || 'sword', run.combo || 0))) { sfx(HIT_CUES[idx], { lpMul: WEAPON_LP_MUL[look] || 1 }); }   // W-0171 자체 효과음 무기별, 못 내면 합성음
   }
 
   /** §5.8③ 성장 가시화 — 지금 무기 등급(0~4, 없으면 -1). `data-item.js`

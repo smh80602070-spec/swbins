@@ -1570,14 +1570,14 @@
       var animC = parts.anim;
       if (own) {
         /* 몸이 조립된 장면에서 실제 뼈를 읽어 그 몸에 맞춰 굽는다 — 몸마다 한 번(캐시). 못 만들면 UAL1 길로 되돌아간다 */
-        if (!parts.body.ownClips) { parts.body.ownClips = global.DG.ownAnim.clipsFor(model, t) || []; }
+        if (!parts.body.ownClips) { parts.body.ownRig = global.DG.ownAnim.restRig ? global.DG.ownAnim.restRig(model) : null; parts.body.ownClips = global.DG.ownAnim.clipsFor(model, t) || []; }   // W-0171 ownRig = 정지 자세 뼈대(무기 몸짓을 나중에 굽는다)
         if (parts.body.ownClips.length) {
           var oc = parts.body.ownClips, om = new t.AnimationMixer(model), oa = {}, oi;
           for (oi = 0; oi < oc.length; oi++) { oa[oc[oi].name] = om.clipAction(oc[oi]); }
           shell.userData.mixer = om;
           shell.userData.actions = oa;
           shell.userData.clipMap = mapClips(oc.map(function (a) { return a.name; }));
-          shell.userData.ownAnim = true;
+          shell.userData.ownAnim = true; shell.userData.ownBody = parts.body;   // W-0171 무기 몸짓 캐시 자리
           animC = null;                              // 아래 UAL1 길은 건너뛴다
         } else {
           own = false;
@@ -1666,13 +1666,13 @@
   function play(node, slot) {
     var u = node.userData;
     if (!u.mixer || u.anim === slot) { return false; }
-    var name = u.clipMap && u.clipMap[slot];
+    var OA = global.DG.ownAnim, name = (u.clipMap && u.clipMap[slot]) || (OA && OA.weaponAction && /^Wpn_/.test(slot) ? OA.weaponAction(u, slot, three()) || (u.clipMap && u.clipMap.attack) : null);   // W-0171 무기 몸짓
     var next = name && u.actions[name];
     if (!next) { return false; }
-    var prev = u.anim && u.clipMap[u.anim] && u.actions[u.clipMap[u.anim]];
+    var prev = u.curAct || (u.anim && u.clipMap[u.anim] && u.actions[u.clipMap[u.anim]]);   // 무기 몸짓 자리는 clipMap 에 없어 틀던 액션을 따로 든다
     next.reset().play();
-    if (prev && prev !== next) { prev.crossFadeTo(next, 0.2, false); }
-    u.anim = slot;
+    if (prev && prev !== next) { prev.crossFadeTo(next, slot.indexOf('Wpn_') === 0 ? 0.08 : 0.2, false); }
+    u.anim = slot; u.curAct = next;
     return true;
   }
 

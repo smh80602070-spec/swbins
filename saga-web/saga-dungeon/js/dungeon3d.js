@@ -2808,7 +2808,7 @@
     }
 
     var AS3 = AS();
-    var nowT = Date.now() / 1000;
+    var nowT = Date.now() / 1000, OAw = global.DG.ownAnim;   // W-0171 무기 몸짓
 
     var actorsT0 = nowMs();
     /* 나 */
@@ -2835,7 +2835,7 @@
     }
     if (AS3) {
       AS3.step(me.node.userData.mixerNode, { t: nowT, walking: !!p.walking && !mtRef,
-        anim: p.dodge ? 'dodge' : (p.atkAnim > 0 ? (p.castAnim ? 'interaction' : 'attack') : (p.walking && !mtRef ? 'walk' : 'idle')) });
+        anim: p.dodge ? 'dodge' : ((OAw && OAw.attackSlot ? OAw.attackSlot(p._wpn || (p._wpn = {}), p.castAnim ? 0 : Math.max(0, p.atkAnim || 0), nowT, function () { var IT = global.DG.item, w = IT ? IT.equipped(core.save.party[0]).weapon : null; return w && !IT.isBroken(w) ? (IT.baseOf(w) || {}).look : 'sword'; }, function () { var R = global.DG.dungeon && global.DG.dungeon.raw ? global.DG.dungeon.raw() : null; return ((R && R.combo) || 1) - 1; }) : null) || (p.atkAnim > 0 ? (p.castAnim ? 'interaction' : 'attack') : (p.walking && !mtRef ? 'walk' : 'idle'))) });   // W-0171 무기·연속 단 몸짓
       AS3.flashAllMat(ensureFlash(me.node), p.hurt, 0.28);
     }
 
@@ -3195,7 +3195,7 @@
      *  한계), 스타일/색을 고른 직후에만 이걸로 명시적으로 다시 짓는다. */
     refreshMe: function () { delete actors['me']; },
     /** 재기 — 지금 내 배우의 몸 파일·상태(사가나락 Q8 "던전에 들어가면 캐릭터가 바뀜") */
-    meBody: function () { var a = actors['me'], m = a && a.node && a.node.userData.mixerNode; return m ? { body: m.userData.body, state: m.userData.assetState, seed: meRenderParams().seed } : null; },
+    meBody: function () { var a = actors['me'], m = a && a.node && a.node.userData.mixerNode; return m ? { body: m.userData.body, state: m.userData.assetState, seed: meRenderParams().seed } : null; }, _meMix: function () { var a = actors['me']; return a && a.node ? a.node.userData.mixerNode : null; },   // W-0171 진단·촬영
     /** §56 가림 페이드 — 실측용(init() 뒤에만 의미 있다) */
     _occCounts: function () { return { fade: Object.keys(occFade).length, inst: Object.keys(occInst).length }; }
   };

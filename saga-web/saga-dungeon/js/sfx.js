@@ -508,9 +508,45 @@
   bindUnlock();
 
   global.DG = global.DG || {};
+  /* ── W-0171 자체 효과음 샘플(K-0045, saga-web/shared/audio/sfx/<id>.ogg) ──────────
+   * 합성음과 같은 WebAudio(master)로 낸다 — 소리 끔·볼륨·잠금 해제를 그대로 따른다. 처음 부를 때 받아 두고
+   * 받기 전·못 받으면 false → 부르는 쪽이 옛 합성음. 손잡이 `audio.own` 0 이면 늘 false. */
+  var sxBuf = {};
+  var SX_OF = { sword: 'sword', dagger: 'dagger', guandao: 'sword', axe: 'axe', club: 'axe', halberd: 'spear', spear: 'spear', bow: 'bow', gun: 'gun', fan: 'staff', staff: 'staff', brush: 'staff', scroll: 'staff' };
+  function sxUrl(id) {
+    var A = global.DG.assets3d, r = A && A.root ? A.root() : null;
+    return r ? r.slice(0, r.length - 'assets/'.length) + 'audio/sfx/' + id + '.ogg' : null;   // root = '…/shared/assets/'
+  }
+  function sxLoad(id) {
+    if (sxBuf[id] !== undefined || !ctx || !global.fetch) { return; }
+    var u = sxUrl(id);
+    if (!u) { return; }
+    sxBuf[id] = null;
+    global.fetch(u).then(function (r) { return r.ok ? r.arrayBuffer() : Promise.reject(r.status); })
+      .then(function (ab) { return ctx.decodeAudioData(ab); })
+      .then(function (b) { sxBuf[id] = b; }, function () { sxBuf[id] = false; });
+  }
+  function sx(id, vol) {
+    if (!core.tuned('audio.own', 1) || !enabled() || !unlocked || !ctx || !master) { return false; }
+    var b = sxBuf[id];
+    if (!b) { sxLoad(id); return false; }
+    try {
+      var src = ctx.createBufferSource(), g = ctx.createGain();
+      src.buffer = b; g.gain.value = typeof vol === 'number' ? vol : 0.9;
+      src.connect(g); g.connect(master); src.start();
+      return true;
+    } catch (e) { return false; }
+  }
+  /** 무기 생김새(look)로 맞는 소리 — i 로 _1·_2 번갈아. 두 변형을 같이 받아 둔다 */
+  function hitOf(look, i) {
+    var k = SX_OF[look] || 'sword';
+    sxLoad('sfx_' + k + '_hit_1'); sxLoad('sfx_' + k + '_hit_2');
+    return sx('sfx_' + k + '_hit_' + (1 + ((i | 0) & 1)));
+  }
+
   global.DG.sfx = {
     CUES: CUES, THEME_AMB: THEME_AMB,
-    play: play, dropCue: dropCue,
+    play: play, dropCue: dropCue, sx: sx, hitOf: hitOf, sxUrl: sxUrl, SX_OF: SX_OF,
     unlock: unlock, ready: function () { return unlocked; },
     enabled: enabled, setEnabled: setEnabled,
     volume: volume, setVolume: setVolume,
