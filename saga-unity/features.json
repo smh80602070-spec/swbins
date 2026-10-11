@@ -1937,7 +1937,7 @@
   "fun": {},
   "ticket": "U-0099",
   "since": "2026-10-11",
-  "note": "D2(U-0099): PlaytestRealmTactics OK(규칙 — 웹 tactics.js 판 셋 일치 / 화면 — 칸 변환·고르기·옮기기·물러남 복원·맡기기=AutoPlay·토글 배선) · UiLayoutCheck 0건(전술판 상태 포함) · 판 촬영 Claude 눈 ○(격자 8×6·지형 넷·장수/부대 몸·고른 칸·갈 칸·단추 셋)"
+  "note": "D2(U-0099): PlaytestRealmTactics OK(규칙 — 웹 tactics.js 판 셋 일치 / 화면 — 칸 변환·고르기·옮기기·물러남 복원·맡기기=AutoPlay·토글 배선) · UiLayoutCheck 0건(전술판 상태 포함) · 판 촬영 Claude 눈 ○(격자 8×6·지형 넷·장수/부대 몸·고른 칸·갈 칸·단추 셋) · U-0101 서고 ⚰️ 열전·명마 🩹·ko/en 28키(영어 바퀴 한글 7→0) 촬영 ○"
  },
  {
   "id": "un.fs.craft",
