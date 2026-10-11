@@ -66,6 +66,7 @@ const CUTS := [
 	["rk_autosave_flash", REALM, [["free_modal"], ["call", "AutosaveTimer", "flash", [30.0]]]],   # G-0069 자동 저장 표시
 	["rk_slots", REALM, [["free_modal"], ["call", "SaveTransfer", "open_screen", []]]],   # G-0070 슬롯 줄
 	["rk_gfx_menu", REALM, [["free_modal"], ["call", "RealmHUD/GraphicsButton/GraphicsMenu", "open_screen", []]]],
+	["go_trail", GO, [["static", "res://tools/shot_trail.gd", "stage", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 6.0]]],   # G-0195 흔적 표식·읽기 단추·미니맵 큰 짐승(메모리에서만)
 	["go_gfx_quality", GO, [["static", GFX, "set_mode", ["quality", "@tree", false]]]],
 	["go_gfx_perf", GO, [["static", GFX, "set_mode", ["performance", "@tree", false]]]],
 	["go_dialogue", GO, [["call", "StoryQuest", "open_dialogue", [[["촌장", "먹구름이 몰려오기 전에 포구 사공을 찾아가게. 길은 강을 따라 남쪽일세."], ["나", "알겠습니다."]], "@noop"]]]],   # G-0055 건너뛰기 단추

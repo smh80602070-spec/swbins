@@ -17,6 +17,8 @@ const FieldBoss := preload("res://games/saga_go/combat/field_boss.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
 signal claimed(id: String)
+## G-0195 — 보스가 쓰러질 때(꽃이 피기 전) — 사냥 의뢰(world/trail.gd)가 듣는다. enemy 는 그 보스 노드(phase·shield 를 읽는다)
+signal boss_died(id: String, enemy: Node)
 
 const BAR_W := 480.0
 
@@ -75,6 +77,7 @@ func _reapply_world_level() -> void:
 		_bosses[id].call("apply_world_level", wl)
 
 func _on_died(_e: Node, id: String) -> void:
+	boss_died.emit(id, _e)
 	## 꽃을 받을 때까지 되살아나지 않는다.
 	_bosses[id].call("hold_respawn", 1.0e9)
 	if not _blooms.has(id):

@@ -3247,5 +3247,28 @@
   "ticket": "G-0194",
   "since": "2026-10-11",
   "note": "창 모드 rk_news Claude 눈 ○ · 60달 소식 26(기준 17.3)"
+ },
+ {
+  "id": "gd.go.trail",
+  "name": "1만리 사냥 의뢰 루프 — 흔적 여섯 종(칸 해시 0.42, 네 지역 79) · 같은 날 셋 읽으면 그 지역 들판 보스가 오늘의 큰 짐승(미니맵·목표판) · 쓰러뜨리면 부위×작은 광석 4 + 중간 2",
+  "files": [
+   "games/saga_go/data/trail.gd",
+   "games/saga_go/world/trail.gd",
+   "games/saga_go/world/field_bosses.gd",
+   "games/saga_go/ui/world_map.gd",
+   "games/saga_go/world/test_village.gd",
+   "tools/probe_trail.gd"
+  ],
+  "tests": [
+   "trail",
+   "field_boss",
+   "map"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0195",
+  "since": "2026-10-11",
+  "note": "창 모드 go_trail Claude 눈 ○ · 흔적 없는 걸을 칸 52%"
  }
 ]

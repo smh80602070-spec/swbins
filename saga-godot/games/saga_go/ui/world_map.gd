@@ -414,15 +414,18 @@ func draw_quest_icon(ci: CanvasItem, at: Vector2, kind: String, s: float) -> voi
 		ci.draw_polyline(ring, col, 2.2)
 
 func is_tracked_kind(kind: String) -> bool:
-	return kind == "story" or kind == "wq_track"
+	return kind == "story" or kind == "wq_track" or kind == "trail_track"   # G-0195 쫓는 큰 짐승
 
 ## 지금 지도에 그릴 임무 표식(story_quest.map_marks) — 이야기 노드가 없으면 [].
 ## 신상을 안 켠 지역(구름)엔 맡을 수 있는 !·안 따라가는 표식을 안 그린다 — 따라가는 목표는 늘 보인다.
 func quest_marks() -> Array:
+	var out: Array = []
+	var trail := get_tree().get_first_node_in_group("go_trail")   # G-0195 — 쫓는 큰 짐승(따라가는 표식이라 늘 보임)
+	if trail != null:
+		out.append_array(trail.call("map_marks"))
 	var story := get_tree().get_first_node_in_group("go_story")
 	if story == null:
-		return []
-	var out: Array = []
+		return out
 	for mk in story.call("map_marks"):
 		if not is_tracked_kind(String(mk.kind)):
 			var rid := TestMap.region_at(mk.pos)

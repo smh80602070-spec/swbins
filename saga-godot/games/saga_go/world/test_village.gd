@@ -23,7 +23,7 @@ const CompanionFollow := preload("res://saga_core/world/companion_follow.gd")
 
 ## 점검(SAGA_*_PROBE)은 실제 세이브를 불러온 채 돌고 명단을 members 로 바꿔 끼운다 — 편성(㉝)으로 줄여 둔 자리 수가 점검을 흔들지 않게.
 const PROBES := ["ADVENTURE", "ARTIFACT", "TREASURE", "FIELD_BOSS", "SHARD", "MAP", "COOK", "STORY", "DOMAIN", "WEEKLY", "COMMISSION", "GROWTH",
-	"TALENT", "SIGHT", "TRAVERSAL", "COMBAT", "PERF", "KIT", "ELEMENT", "WEAPON", "LAYOUT", "ARCHERY", "QMAP", "FISH", "ACHIEVE", "DISPATCH", "FROST", "STORY2", "ASSIST", "LANDMARK"]
+	"TALENT", "SIGHT", "TRAVERSAL", "COMBAT", "PERF", "KIT", "ELEMENT", "WEAPON", "LAYOUT", "ARCHERY", "QMAP", "FISH", "ACHIEVE", "DISPATCH", "FROST", "STORY2", "ASSIST", "LANDMARK", "TRAIL"]
 
 static func _any_probe() -> bool:
 	for p in PROBES:
@@ -105,6 +105,12 @@ func _ready() -> void:
 	add_child(field_bosses)
 	if OS.get_environment("SAGA_FIELD_BOSS_PROBE") != "":
 		add_child(load("res://tools/probe_field_bosses.gd").new())
+	## G-0195 — 사냥 의뢰 흔적(들판 보스 뒤 — boss_died 를 듣는다)
+	var trail := preload("res://games/saga_go/world/trail.gd").new()
+	add_child(trail)
+	trail.changed.connect(_refresh_goal_board)
+	if OS.get_environment("SAGA_TRAIL_PROBE") != "":
+		add_child(load("res://tools/probe_trail.gd").new())
 	## PLAN 106장 ⑥ — 보물 상자(무리 잠금이 적의 home 을 보므로 FieldSpawner 뒤).
 	var chests := preload("res://games/saga_go/world/treasure_spawner.gd").new()
 	chests.name = "TreasureSpawner"
@@ -455,8 +461,14 @@ func _refresh_goal_board() -> void:
 		return
 	var now: String
 	var tut := get_tree().get_first_node_in_group("go_tutorial")
+	var trail_now := ""
+	var trail_node := get_tree().get_first_node_in_group("go_trail")
+	if trail_node != null:
+		trail_now = String(trail_node.call("now_line"))
 	if tut != null and bool(tut.call("active")):
 		now = String(tut.call("line"))
+	elif trail_now.begins_with("🐾 큰 짐승"):   # G-0195 — 쫓는 큰 짐승이 있으면 그게 지금 할 일
+		now = trail_now
 	elif QuestState.active_id != "" and not QuestState.done:
 		now = "사명: " + QuestState.active_name
 	else:
