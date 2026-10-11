@@ -3227,5 +3227,25 @@
   "ticket": "G-0193",
   "since": "2026-10-11",
   "note": "창 모드 dg_death_card Claude 눈 ○"
+ },
+ {
+  "id": "gd.rk.news",
+  "name": "5천하 영내 소식 — 달마다 내 성 하나에서 12종 중 하나(성마다 12%·결정적 해시), 태수 한 줄(호전이면 거친 말)+금/병/민심 3택, \"사건\" 단추",
+  "files": [
+   "games/saga_realm/data/realm_news.gd",
+   "games/saga_realm/data/realm_rules_month.gd",
+   "games/saga_realm/ui/realm_event_button.gd",
+   "tools/probe_realm_news.gd"
+  ],
+  "tests": [
+   "realm_news",
+   "realm_golden"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0194",
+  "since": "2026-10-11",
+  "note": "창 모드 rk_news Claude 눈 ○ · 60달 소식 26(기준 17.3)"
  }
 ]

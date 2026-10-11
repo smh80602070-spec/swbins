@@ -50,6 +50,7 @@ const RealmQuizData := preload("res://games/saga_realm/data/realm_quiz_data.gd")
 const RealmTraits := preload("res://games/saga_realm/data/realm_traits.gd")
 const RealmEvents := preload("res://games/saga_realm/data/realm_events.gd")
 const RealmTactics := preload("res://games/saga_realm/data/realm_tactics.gd")   # G-0182 격자 전술
+const RealmNews := preload("res://games/saga_realm/data/realm_news.gd")   # G-0194 영내 소식
 const Toast := preload("res://saga_core/ui/toast.gd")
 const SessionCard := preload("res://saga_core/ui/session_card.gd")
 const LordPortrait := preload("res://games/saga_realm/ui/lord_portrait.gd")
@@ -176,6 +177,8 @@ var _succession_shock_until: Dictionary = {}
 ## annals: id -> {year, month, where, by} — 전술판에서 쓰러져 영구히 떠난 장수의 기록(열전, 웹 save.rtk.annals).
 var officer_hurt: Dictionary = {}
 var annals: Dictionary = {}
+## G-0194 — 영내 소식(realm_news.gd) 쌓인 것: [{id, city, gov, year, month}] — "사건" 단추에서 고른다. 장수 사건(active_events)과 따로 센다.
+var news: Array = []
 
 ## **2026-09-12 추가 — 적 목표(realm_war.gd 첫 전투 슬라이스).**
 ## enemy_id -> {troops, wall, max_wall, train, tech, captured}. _init_enemies()
@@ -405,6 +408,7 @@ func start_scenario(id: String) -> void:
 	enemies_subverted = 0
 	officer_hurt = {}
 	annals = {}
+	news = []
 	_done_this_month.clear()
 	viewing_map = false
 

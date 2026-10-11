@@ -44,3 +44,18 @@ static func stage(tree: SceneTree, pick := true, cut := false, cover := false) -
 		view._cam.global_transform = TacticsView._cut_transform(an.position, tn.position)
 	elif pick:
 		view.call("pick_cell", int(me.x), int(me.y))
+
+
+## G-0194 — 영내 소식 카드(허창 풍년, 태수 = 시작 무장). 메모리에서만.
+static func news(tree: SceneTree) -> void:
+	var S: Node = tree.root.get_node("RealmSaveState")
+	S.start_scenario("194")
+	S.news = [{"id": "harvest", "city": "xuchang", "gov": "sg_zhugeliang", "year": 194, "month": 8}]
+	var btn := tree.current_scene.get_node_or_null("RealmHUD/EventButton")
+	if btn == null:
+		for n in tree.current_scene.find_children("*", "Button", true, false):
+			if n.has_method("_open_news"):
+				btn = n
+				break
+	if btn != null:
+		btn.call("_open_news", 0, {"layer": CanvasLayer.new()})

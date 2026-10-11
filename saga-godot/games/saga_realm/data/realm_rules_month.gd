@@ -92,6 +92,7 @@ func next_month() -> void:
 
 	_tick_ambitions()
 	_tick_events()
+	_tick_news()
 	_tick_succession()
 	_check_defection()
 	_run_enemy_ai()
@@ -274,6 +275,57 @@ func _grant_ambition_reward(id: String, key: String) -> void:
 ## 하나 건다(웹판 "세력당 동시 진행 체인 최대 2" — `active_events`엔 아직
 ## 도달 안 한 체인 후속도 포함되므로, 체인이 밀려 있으면 새 이벤트가 덜
 ## 뜬다는 뜻도 된다, 웹판과 같은 결).
+## G-0194 — 영내 소식. 결정적 해시(시나리오·해·달·성)로 성마다 CHANCE, 한 달에 하나, 쌓인 것은 MAX_PENDING 까지.
+## _rng 를 안 써서 사건·전투 난수열이 그대로다. 내 성 이름순으로 돌아 처음 걸린 성 하나.
+func _tick_news() -> void:
+	if news.size() >= RealmNews.MAX_PENDING or cities.is_empty():
+		return
+	var ids: Array = cities.keys()
+	ids.sort()
+	var seed := "%s|%d|%d" % [scenario_id, year, month]
+	for cid: String in ids:
+		if RealmTactics.hash01(seed, "news:" + cid) >= RealmNews.CHANCE:
+			continue
+		var pool := RealmNews.eligible(month)
+		if pool.is_empty():
+			return
+		var key: String = pool[int(floor(RealmTactics.hash01(seed, "pick:" + cid) * pool.size())) % pool.size()]
+		news.append({"id": key, "city": cid, "gov": _governor_at(cid), "year": year, "month": month})
+		var d := RealmNews.by_key(key)
+		Toast.show(self, "📰 영내 소식 — %s · %s (사건 단추)" % [String(RealmCities.any_by_id(cid).get("name", cid)), String(d.get("name", ""))], 3.0)
+		return
+
+
+## G-0194 — 소식 하나를 고른 갈래로 푼다(0 금 · 1 병 · 2 민심). 효과는 그 성의 값·금·태수 충성만, 상한은 RealmOrders.cap_of.
+func resolve_news(index: int, choice_idx: int) -> bool:
+	if index < 0 or index >= news.size():
+		return false
+	var n: Dictionary = news[index]
+	var d := RealmNews.by_key(String(n.id))
+	var choices: Array = d.get("choices", [])
+	if d.is_empty() or choice_idx < 0 or choice_idx >= choices.size():
+		return false
+	var ch: Dictionary = choices[choice_idx]
+	gold = maxi(0, gold + int(ch.get("gold", 0)))
+	var cid := String(n.city)
+	if cities.has(cid):
+		var c: Dictionary = cities[cid]
+		for k: String in ["sec", "train", "comm", "agri"]:
+			if ch.has(k):
+				c[k] = clampi(int(c.get(k, 0)) + int(ch[k]), 0, RealmOrders.cap_of(k, cid))
+		if ch.has("troops"):
+			c.troops = maxi(0, int(c.troops) + int(ch.troops))
+		if ch.has("food"):
+			c.food = maxi(0, int(c.food) + int(ch.food))
+	var gov := String(n.get("gov", ""))
+	if ch.has("loyal") and gov != "" and officer_loyal.has(gov):
+		officer_loyal[gov] = clampi(int(officer_loyal[gov]) + int(ch.loyal), 0, 100)
+	news.remove_at(index)
+	events_done["news:" + String(n.id)] = int(events_done.get("news:" + String(n.id), 0)) + 1
+	Toast.show(self, "%s %s — %s(%s)" % [String(d.get("emoji", "📰")), String(d.get("name", "")), String(ch.get("label", "")), RealmNews.AXES[choice_idx]], 3.0)
+	return true
+
+
 func _tick_events() -> void:
 	if active_events.size() >= RealmEvents.MAX_CONCURRENT or roster.is_empty():
 		return
