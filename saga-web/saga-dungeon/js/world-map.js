@@ -32,7 +32,7 @@
    * era: past(과거) · modern(현대) · future(미래) · myth(신화) — 한 지역에 둘까지.
    * bias: field3d THEME_BIAS 와 같은 모양(가중치 배수) — 'region:<key>' 로 등록한다.
    * props: 이 지역에만 서는 시대 소품(field3d/dungeon3d 가 이미 그리는 t_* 다섯) · rate 는 칸 비율.
-   * ground: 들판 땅 색. town: 이 지역에 앉는 절차 생성 마을의 성격(town.js BIOME_KEYS).
+   * ground: 들판 땅 색. town: 이 지역에 앉는 절차 생성 마을의 성격(town-gen.js BIOME_KEYS).
    */
   var REGIONS = [
     { key: 'jungwon', name: '중원 벌판', hanja: '中原', era: ['past'], emoji: '🌾',
