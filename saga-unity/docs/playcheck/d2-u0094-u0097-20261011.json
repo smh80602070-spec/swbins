@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-11",
+  "tickets": ["U-0094 5천하 영내 소식(웹 W-0105)", "U-0095 3마을 제작대·채집 손(웹 W-0103)", "U-0096 1만리 사냥 의뢰(웹 W-0101)", "U-0097 5천하 토스트가 카드 위에 겹침"],
+  "how": "U-0094 RealmNews 열둘(웹 값 그대로)·기존 사건 뒤 빈 달에·한 달 성 넷까지 굴림 · U-0095 ForestHandState(Lv.1~4·축 셋·거절 +10)·ForestWorkbench(집 밖 서쪽 서안) · U-0096 GoTrack(칸 해시 흔적·셋 → 가장 가까운 보스·강화석 +2·무기 빛 단계)·TrackField(둘레 70m·F 읽기) · U-0097 RealmToast 카드 열림이면 아래 띠",
+  "commands": [
+    "bash tools/unity-batch.sh -- Unity -batchmode -nographics -executeMethod Saga.EditorTools.PlaytestRealmSlice.Run · PlaytestForestHeadless.Run · PlaytestHeadless.Run",
+    "SAGA_SHOT_ACT=realmnews(TestCity) · craft(TestVillageForest) · track(TestVillage) · SAGA_SHOT_TARGETS=screen(+name:ForestWorkbench·name:Trace_) SAGA_SHOT_SEQ=3,20"
+  ],
+  "logs": [
+    "news OK — 굴림 0.40(기대 0.40·성 58) · 600달 소식 182·사건 116·없음 302 · 토스트 아래 띠(겹침 0, 토스트 7~43 · 카드 108~372)",
+    "craft OK — 승급 30·60·100 · 축 셋 · 상한 · 세이브 왕복·옛 세이브 · 새 것 556·101/1000 · 열매 +1 599/1000 · 제작대 창 ○",
+    "track — 흔적 7곳 · 둘레 2 · 줄 '🐾 흔적 2/3 — 길에서 흔적을 더 찾는다'"
+  ],
+  "scene": ["[PlaytestRealmSlice] OK", "[PlaytestForestHeadless] OK - 10 frames", "[PlaytestHeadless] OK - 10 frames"],
+  "runtime_errors": 0,
+  "shots": "세션 scratchpad shots_rk·rk2·rk3·fs·fs2·fs3·fs4·go — 커밋 안 함",
+  "results": [
+    { "id": "un.rk.news", "eye": "○", "note": "🌵 영내 소식 — 가뭄 걱정 · 수춘 / 본문 / 현책(용맹): 거친 말 / 세 갈래 금·훈련·치안 힌트. 첫 판 토스트 겹침 → U-0097", "result": "새 D2" },
+    { "id": "un.fs.craft", "eye": "○", "note": "창: 제작대 — 채집 손 Lv.1/4 · 배율 줄 · 열매 170 · 축 셋 · 거절. 소품: 집 밖 풀밭 서안. 첫 두 판(가구 가게 곁 = 집 안 방 속이라 벽에 박힘·거절/닫기 겹침) 고친 뒤 ○", "result": "새 D2" },
+    { "id": "un.go.track", "eye": "○", "note": "목표판 첫 줄 '🐾 흔적 2/3', 흔적 소품(색 원반+기둥 대역)이 땅 위. 무기 빛은 화면에서 못 봄(진단 단계 표만)", "result": "새 D2" },
+    { "id": "un.rk.eras", "eye": "○", "note": "U-0097 토스트가 카드 아래 띠로 비켜남(촬영 rk3) — U-0091 흠 닫힘", "result": "D2 유지" }
+  ],
+  "left": "1만리 지도에 흔적 7곳뿐(산 많음 — 지도 밖 땅·서리 고원 흔적은 후속) · 무기 빛 촬영 · 소식 열둘 글 영어 · 흔적 그림은 대역(에셋은 K 몫)"
+}

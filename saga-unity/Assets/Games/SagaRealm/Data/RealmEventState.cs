@@ -38,6 +38,8 @@ namespace Saga.Realm.Data
             RiftEcho, RiftGate, PlagueMist, PlagueCure, TombBell, TombOath,
             // PLAN.md 109-16 시나리오 카드(웹 사가천하 「천하와 균열」) — `Card.OfficerId` 가 카드 id(`RealmScenario`).
             Scenario,
+            // tasks U-0094 영내 소식(웹 W-0105) — `Card.OfficerId` 가 "소식|성" 키(`RealmNews`).
+            News,
         }
         public enum Choice { A, B, C }
 
@@ -55,7 +57,9 @@ namespace Saga.Realm.Data
             public Outcome(string message, bool ok) { Message = message; Ok = ok; }
         }
 
-        private const float MonthlyChance = 0.18f; // 웹판 5-2 "수치" 그대로.
+        private const float MonthlyChance = 0.18f;
+        /// <summary>tasks U-0094 손잡이(웹 `rtk.newsChance` 자리) — 끄면 영내 소식이 안 뜬다(옛 사건만).</summary>
+        public static bool NewsEnabled = true; // 웹판 5-2 "수치" 그대로.
         private const int ChainDelayMonths = 3; // 웹판 "체인 2~3단, 3~6달 뒤" 중 최솟값.
 
         private const float DuelWinChance = 0.65f;
@@ -178,9 +182,15 @@ namespace Saga.Realm.Data
                 return;
             }
 
-            if (UnityEngine.Random.value > MonthlyChance) return;
-            var card = PickCard();
-            if (card != null) Present(card.Value);
+            if (UnityEngine.Random.value <= MonthlyChance)
+            {
+                var card = PickCard();
+                if (card != null) { Present(card.Value); return; }
+            }
+            // tasks U-0094 영내 소식 — 기존 사건(18%)이 안 뜬 달에만, 우리 성마다 12%(한 달 한 장). 사건 빈도·퓨전 섞임은 예전 그대로.
+            if (!NewsEnabled) return;
+            string news = RealmNews.Roll(() => UnityEngine.Random.value, n => UnityEngine.Random.Range(0, n));
+            if (news != null) Present(new Card(Kind.News, news));
         }
 
         private static void Present(Card card)
@@ -240,6 +250,7 @@ namespace Saga.Realm.Data
         public static (string title, string body, string a, string b, string c) Describe(Card card)
         {
             if (card.Kind == Kind.Scenario) return RealmScenario.Describe(card.OfficerId);
+            if (card.Kind == Kind.News) return RealmNews.Describe(card.OfficerId);
             string name = OfficerName(card.OfficerId);
             string gate = IsFusion(card.Kind) ? GatewayCityName(card.Kind) : null;
             switch (card.Kind)
@@ -340,6 +351,12 @@ namespace Saga.Realm.Data
                 case Kind.WealthChance: result = ResolveWealthChance(card, choice); break;
                 case Kind.RivalTip: result = ResolveRivalTip(card, choice); break;
                 case Kind.ScholarLecture: result = ResolveScholarLecture(card, choice); break;
+                case Kind.News:
+                {
+                    var (msg, newsOk) = RealmNews.Resolve(card.OfficerId, (int)choice);
+                    result = new Outcome(msg, newsOk);
+                    break;
+                }
                 case Kind.Scenario:
                 {
                     var (message, ok) = RealmScenario.Resolve(card.OfficerId, (int)choice);

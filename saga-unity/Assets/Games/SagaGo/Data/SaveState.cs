@@ -183,6 +183,11 @@ namespace Saga.Go.Data
             // 109-14-56b 밤의 잔불 — 오늘(새벽 4시에 갈림)·이미 끈 자리(버전 그대로 — 옛 세이브는 빈 채)
             public string nightDay;
             public List<string> nightDone;
+            // tasks U-0096 사냥 의뢰 — 오늘·읽은 흔적·오늘의 큰 짐승·끝(버전 그대로 — 옛 세이브는 빈 채)
+            public string trackDay;
+            public List<string> trackRead;
+            public string trackBoss;
+            public int trackDone;
             // 109-15 탈것 — 고른 탈것 id(버전 그대로 — 옛 세이브는 안 고른 채, 탄 채로는 저장 안 함)
             public string mountSel;
             public List<int> wqSteps;
@@ -239,6 +244,7 @@ namespace Saga.Go.Data
                 frostFound = FrostState.Snapshot(), // 109-14-27a
                 areaFound = AreaState.Snapshot(), // 109-14-37
                 nightDay = NightEchoState.Day, nightDone = NightEchoState.Snapshot(), // 109-14-56b
+                trackDay = GoTrack.Day, trackRead = GoTrack.SnapshotRead(), trackBoss = GoTrack.Boss, trackDone = GoTrack.Done ? 1 : 0, // tasks U-0096
                 mountSel = GoMounts.Snapshot(), // 109-15
                 frostBossDown = FrostBossState.Defeated, // 109-14-31
                 frostBossBloom = FrostBossState.Bloom,
@@ -400,6 +406,7 @@ namespace Saga.Go.Data
             FrostBossState.Restore(data.frostBossDown, data.frostBossBloom, data.frostBossPaidAt); // 109-14-31
             AreaState.Restore(data.areaFound); // 109-14-37
             NightEchoState.Restore(data.nightDay, data.nightDone); // 109-14-56b
+            GoTrack.Restore(data.trackDay, data.trackRead, data.trackBoss, data.trackDone); // tasks U-0096
             GoMounts.Restore(data.mountSel); // 109-15
             World.GoOrbField.Instance?.Rebuild();
 

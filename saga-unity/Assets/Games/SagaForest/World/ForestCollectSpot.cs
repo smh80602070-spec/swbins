@@ -64,8 +64,8 @@ namespace Saga.Forest.World
             if (_player == null || pool == null || pool.Length == 0 || _cooldownLeft > 0f) return;
             if (Vector3.Distance(transform.position, _player.position) > GatherRadius) return;
 
-            _cooldownLeft = GatherCooldownSec;
-            string item = pool[_rng.Next(pool.Length)];
+            _cooldownLeft = GatherCooldownSec * ForestHandState.CooldownMul;   // tasks U-0095 빠른 손(Lv.1 = ×1)
+            string item = ForestHandState.PickItem(pool, ForestMuseumState.IsDiscovered, _rng);   // 눈 밝은 손이면 새 것 쪽으로(Lv.1 = 예전 그대로 균등)
             bool isNew = ForestMuseumState.Record(category, item);
 
             string key = isNew ? "museum.gather_new_toast" : "museum.gather_toast";

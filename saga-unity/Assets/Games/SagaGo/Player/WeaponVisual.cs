@@ -145,7 +145,7 @@ namespace Saga.Go.Player
             if (_blade.parent != socket) { _blade.SetParent(socket, false); if (_handle != null) _handle.SetParent(socket, false); }
 
             string name = GoWeaponModels.ModelFor(_shownId);
-            if (_model != null && _modelName == name && _model.transform.parent == socket) { SetCodeBladeShown(false); return; }
+            if (_model != null && _modelName == name && _model.transform.parent == socket) { SetCodeBladeShown(false); ApplyGlow(); return; }
             DestroyModel();
             if (WorldModels.Load(name) == null) { SetCodeBladeShown(true); return; }
             var go = WorldModels.Spawn(name, socket, 0f);
@@ -158,6 +158,31 @@ namespace Saga.Go.Player
             }
             _model = go; _modelName = name;
             SetCodeBladeShown(false);
+            ApplyGlow();
+        }
+
+        /// <summary>tasks U-0096(웹 weapon.js 빛) — 강화 5 마다 한 단 + 승급, 0~11 단계로 외곽선·테 빛 색을 어둠→금빛으로(재질 값만, 에셋 0).
+        /// 공유 재질은 안 건드리고 MaterialPropertyBlock 으로. 그 속성이 없는 셰이더는 그냥 둔다.</summary>
+        public int GlowTier { get; private set; }
+        private void ApplyGlow()
+        {
+            if (_model == null || string.IsNullOrEmpty(_shownId)) return;
+            string wid = WeaponState.Equipped(_shownId);
+            if (string.IsNullOrEmpty(wid)) return;
+            var rec = WeaponState.RecOf(wid);
+            GlowTier = Saga.Go.Data.GoTrack.GlowTier(rec.lv, rec.asc);
+            var c = Saga.Go.Data.GoTrack.GlowColor(GlowTier);
+            var mpb = new MaterialPropertyBlock();
+            foreach (var r in _model.GetComponentsInChildren<Renderer>())
+            {
+                var mat = r.sharedMaterial;
+                if (mat == null) continue;
+                r.GetPropertyBlock(mpb);
+                if (mat.HasProperty("_OutlineColor")) mpb.SetColor("_OutlineColor", c);
+                if (mat.HasProperty("_RimColor")) mpb.SetColor("_RimColor", c);
+                if (mat.HasProperty("_GlowStrength")) mpb.SetFloat("_GlowStrength", GlowTier / 11f);
+                r.SetPropertyBlock(mpb);
+            }
         }
 
         private void DestroyModel()

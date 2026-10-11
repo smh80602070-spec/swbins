@@ -540,6 +540,7 @@ namespace Saga.EditorTools
             foreach (RealmEventState.Kind kind in System.Enum.GetValues(typeof(RealmEventState.Kind)))
             {
                 if (kind == RealmEventState.Kind.Scenario) continue; // 109-16 시나리오 카드는 무장이 아니라 카드 id — `PlaytestRealmScenario` 가 따로 본다
+                if (kind == RealmEventState.Kind.News) continue; // tasks U-0094 소식 카드는 "소식|성" 키 — `PlaytestRealmNews` 가 따로 본다
                 var card = new RealmEventState.Card(kind, RealmOfficerPool.StartingOfficerId);
                 var (title, body, a, b, c) = RealmEventState.Describe(card);
                 if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(body) ||

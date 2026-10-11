@@ -133,6 +133,8 @@ namespace Saga.Go.UI
             var tut = GoTutorial.Line(); // tasks U-0013 — 첫걸음 사명이 첫 줄을 쓴다(끝나면 null)
             if (tut != null) return tut;
             if (_player == null) return "-";
+            var track = Saga.Go.Data.GoTrack.Line(_player.position); // tasks U-0096 사냥 의뢰 — 흔적 셈·큰 짐승 거리(없으면 null)
+            if (track != null) return track;
 
             float nearestDist = float.MaxValue;
             string nearestLabel = null;

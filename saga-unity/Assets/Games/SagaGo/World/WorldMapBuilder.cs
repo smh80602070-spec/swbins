@@ -43,6 +43,7 @@ namespace Saga.Go.World
             if (GetComponent<DomainField>() == null) gameObject.AddComponent<DomainField>(); // 109-14-9 숨은 터·주간 보스
             if (GetComponent<Saga.Go.UI.DomainUi>() == null) gameObject.AddComponent<Saga.Go.UI.DomainUi>();
             if (GetComponent<GuardianBloom>() == null) gameObject.AddComponent<GuardianBloom>(); // 109-14-10 들판 보스 보상 꽃
+            if (GetComponent<TrackField>() == null) gameObject.AddComponent<TrackField>(); // tasks U-0096 사냥 의뢰 흔적
             if (GetComponent<StoryField>() == null) gameObject.AddComponent<StoryField>(); // 109-14-12 이야기 임무 — 인물·기둥·제단·임무 적
             if (GetComponent<Saga.Go.UI.StoryUi>() == null) gameObject.AddComponent<Saga.Go.UI.StoryUi>(); // 추적 줄·대화 창·목록(F·O)
             if (GetComponent<FishingField>() == null) gameObject.AddComponent<FishingField>(); // 109-14-24 낚시터·물고기·찌·게시판

@@ -1902,5 +1902,56 @@
   "ticket": "U-0093",
   "since": "2026-10-11",
   "note": "D2(U-0093): docs/playcheck/d2-u0092-u0093-20261011.json — PlaytestStoryPick3 OK · 3택 창 촬영 Claude 눈 ○(고친 뒤 다시 찍음) · 판 등급 줄은 진단만(촬영 못 봄)"
+ },
+ {
+  "id": "un.rk.news",
+  "name": "U-0094 영내 소식 — 태수 한 줄 + 금·병·민심 3택(웹 W-0105 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaRealm/Data/RealmNews.cs",
+   "saga-unity/Assets/Games/SagaRealm/Data/RealmEventState.cs"
+  ],
+  "tests": [
+   "PlaytestRealmNews"
+  ],
+  "level": "D2",
+  "verified": "2026-10-11 claude",
+  "fun": {},
+  "ticket": "U-0094",
+  "since": "2026-10-11",
+  "note": "D2(U-0094·U-0097): docs/playcheck/d2-u0094-u0097-20261011.json — PlaytestRealmNews OK · 소식 카드 촬영 Claude 눈 ○ · 토스트가 카드 아래로 비켜남(U-0097)"
+ },
+ {
+  "id": "un.fs.craft",
+  "name": "U-0095 제작대 — 채집 손 승급·3택(웹 W-0103 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaForest/Data/ForestHandState.cs",
+   "saga-unity/Assets/Games/SagaForest/World/ForestWorkbench.cs"
+  ],
+  "tests": [
+   "PlaytestForestCraft"
+  ],
+  "level": "D2",
+  "verified": "2026-10-11 claude",
+  "fun": {},
+  "ticket": "U-0095",
+  "since": "2026-10-11",
+  "note": "D2(U-0095): docs/playcheck/d2-u0094-u0097-20261011.json — PlaytestForestCraft OK · 제작대 소품·창 촬영 Claude 눈 ○"
+ },
+ {
+  "id": "un.go.track",
+  "name": "U-0096 사냥 의뢰 — 흔적 셋 → 오늘의 큰 짐승 → 강화석·무기 빛(웹 W-0101 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/Data/GoTrack.cs",
+   "saga-unity/Assets/Games/SagaGo/World/TrackField.cs"
+  ],
+  "tests": [
+   "PlaytestGoTrack"
+  ],
+  "level": "D2",
+  "verified": "2026-10-11 claude",
+  "fun": {},
+  "ticket": "U-0096",
+  "since": "2026-10-11",
+  "note": "D2(U-0096): docs/playcheck/d2-u0094-u0097-20261011.json — PlaytestGoTrack OK · 흔적·목표판 줄 촬영 Claude 눈 ○ · 무기 빛은 진단 단계 표만(촬영 못 봄)"
  }
 ]

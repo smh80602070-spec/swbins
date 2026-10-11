@@ -541,6 +541,19 @@
     { "key": "visitor.bugdoc.story", "value": "I became an insect doctor because of one butterfly in my childhood. Its wing pattern wasn't in any field guide. I came to this forest looking for it, and while rewriting the guide I might end up naming that butterfly myself." },
     { "key": "visitor.traveler.story", "value": "Beep. Record: my return schedule was originally three days. But on this forest's record board I saw \"The Vanished Forest\" change to \"The Connected Forest\" for the first time. Cases of an observer changing the result are rare, so I postponed the schedule indefinitely." },
     { "key": "visitor.dokkaebi.story", "value": "Heh heh, my little ones were originally lonely wisps of the ruins. When this village's kids played with them without fear, I saw the little ones smile for the first time. As chief, no gift is greater than that." },
-    { "key": "visitor.alien.story", "value": "My mothership is a star-counting ship. But seeing people on this planet eat three meals a day, for the first time I wanted to count neighbors instead of stars. I've already sent a settlement registration signal to the mothership." }
+    { "key": "visitor.alien.story", "value": "My mothership is a star-counting ship. But seeing people on this planet eat three meals a day, for the first time I wanted to count neighbors instead of stars. I've already sent a settlement registration signal to the mothership." },
+    { "key": "hand.hint", "value": "Workbench (F)" },
+    { "key": "hand.title", "value": "Workbench — Gathering hand Lv.{0}/{1}" },
+    { "key": "hand.status", "value": "Gather cooldown ×{0:0.00} · +1 fruit {1:0}% · New finds ×{2:0.0}\nFruit {3}" },
+    { "key": "hand.upgrade", "value": "Upgrade ({0} fruit)" },
+    { "key": "hand.max", "value": "Max level" },
+    { "key": "hand.speed", "value": "Quick hand — gather cooldown ×0.8" },
+    { "key": "hand.yield", "value": "Generous hand — +1 fruit 30%" },
+    { "key": "hand.eye", "value": "Keen eye — new finds ×1.5" },
+    { "key": "hand.decline", "value": "Decline — get {0} fruit back" },
+    { "key": "hand.close", "value": "Close" },
+    { "key": "hand.why_fruit", "value": "Not enough fruit (need {0})" },
+    { "key": "hand.chosen", "value": "Gathering hand Lv.{0} — {1}" },
+    { "key": "hand.declined", "value": "Gathering hand Lv.{0} — {1} fruit returned" }
   ]
 }

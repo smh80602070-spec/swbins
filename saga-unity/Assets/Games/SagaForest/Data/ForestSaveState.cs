@@ -72,7 +72,11 @@ namespace Saga.Forest.Data
             public bool visitAskSettle;
             public string[] visitStoryDone; // 곁가지 — 눌러앉은 손님 사연을 들은 손님(버전 그대로: 옛 세이브는 null → 아직 안 들음)
             public string mountSel; // PLAN.md 109-15 — 고른 탈것(탄 채는 저장 안 함). 버전 그대로: 옛 세이브는 null → 안 고른 채.
-            public string scenarioJson; // PLAN.md 109-16 시나리오 진행. 버전 그대로: 없는 세이브(null)는 처음부터.
+            public string scenarioJson;
+            // tasks U-0095 채집 손 — 버전 그대로: 옛 세이브는 0·null·0 → Lv.1·없음.
+            public int handLv;
+            public int[] handPerks;
+            public int handPending; // PLAN.md 109-16 시나리오 진행. 버전 그대로: 없는 세이브(null)는 처음부터.
             // tasks U-0023 첫걸음 — 버전 그대로. JsonUtility 는 없는 List 를 빈 목록으로 읽으므로 `tutV`(0=없는 세이브=옛 세이브)로 가른다.
             public int tutV;
             public List<string> tutDone;
@@ -156,6 +160,9 @@ namespace Saga.Forest.Data
             data.visitStoryDone = ForestVisitors.SnapshotStories();
             data.mountSel = ForestMounts.Snapshot();
             data.scenarioJson = ForestScenario.Snapshot();
+            data.handLv = ForestHandState.Level;
+            data.handPerks = ForestHandState.SnapshotPerks();
+            data.handPending = ForestHandState.Pending ? 1 : 0;
             data.tutV = 1;
             data.tutDone = ForestTutorial.Ids();
             return JsonUtility.ToJson(data);
@@ -231,6 +238,7 @@ namespace Saga.Forest.Data
             ForestVisitors.RestoreStories(data.visitStoryDone);
             ForestMounts.Restore(data.mountSel);
             ForestScenario.Restore(data.scenarioJson);
+            ForestHandState.Restore(data.handLv, data.handPerks, data.handPending);   // tasks U-0095
             ForestTutorial.Restore(data.tutV == 0 ? ForestTutorial.AllIds() : data.tutDone); // tasks U-0023 — 없는 세이브는 옛 세이브라 전부 끝난 것으로
 
             Transform player = FindPlayer();

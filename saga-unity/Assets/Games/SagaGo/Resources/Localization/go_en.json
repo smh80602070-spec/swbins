@@ -3263,6 +3263,14 @@
     { "key": "pet.name.pt_jeolyeong", "value": "Flashing Shadow Steed" },
     { "key": "pet.desc.pt_jeolyeong", "value": "A steed that carried its endangered master to safety alone." },
     { "key": "menu.button", "value": "Menu" },
-    { "key": "menu.title", "value": "Menu" }
+    { "key": "menu.title", "value": "Menu" },
+    { "key": "track.read", "value": "Read {0} {1} ({2}/{3})" },
+    { "key": "track.hunt", "value": "Today's great beast: {0}" },
+    { "key": "track.done", "value": "Hunt request done — {0} · Ore +{1}" },
+    { "key": "track.line_hunt", "value": "🐾 Tracking the great beast — {0} {1:0}m" },
+    { "key": "track.line_read", "value": "🐾 Traces {0}/{1} — find more along the road" },
+    { "key": "track.hint", "value": "{0} {1} — press F to read" },
+    { "key": "track.boss_guardian", "value": "Watchtower Warden" },
+    { "key": "track.boss_frost", "value": "Glacier Rock-Bear King" }
   ]
 }

@@ -933,6 +933,15 @@
     { "key": "scenario.sd_tm_yeongjeom.def.label", "value": "Build a resting place in the martial yard" },
     { "key": "scenario.sd_tm_yeongjeom.def.result", "value": "With the resting place built, injured soldiers could rest" },
     { "key": "scenario.sd_tm_yeongjeom.util.label", "value": "Leave the movement records in the library" },
-    { "key": "scenario.sd_tm_yeongjeom.util.result", "value": "The movement records joined the library and took the seat beside the martial manuals" }
+    { "key": "scenario.sd_tm_yeongjeom.util.result", "value": "The movement records joined the library and took the seat beside the martial manuals" },
+    { "key": "news.title", "value": "{0} Domain news — {1} · {2}" },
+    { "key": "news.says", "value": "{0}: \"{1}\"" },
+    { "key": "news.nobody", "value": "A townsfolk" },
+    { "key": "news.hint.gold", "value": "Gold +{0}" },
+    { "key": "news.hint.troops", "value": "Troops +{0}" },
+    { "key": "news.hint.train", "value": "Training +{0}" },
+    { "key": "news.hint.sec", "value": "Order +{0}" },
+    { "key": "news.done", "value": "{0} — {1}" },
+    { "key": "news.gone", "value": "The news faded away." }
   ]
 }

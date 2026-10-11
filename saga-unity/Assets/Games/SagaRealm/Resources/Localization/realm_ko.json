@@ -933,6 +933,15 @@
     { "key": "scenario.sd_tm_yeongjeom.def.label", "value": "무예 마당에 쉼터를 세운다" },
     { "key": "scenario.sd_tm_yeongjeom.def.result", "value": "쉼터가 서자 다친 병사가 쉬어 갈 수 있게 되었다" },
     { "key": "scenario.sd_tm_yeongjeom.util.label", "value": "기동 기록을 서고에 남긴다" },
-    { "key": "scenario.sd_tm_yeongjeom.util.result", "value": "기동 기록이 서고에 꽂혀 무예서의 옆자리를 차지했다" }
+    { "key": "scenario.sd_tm_yeongjeom.util.result", "value": "기동 기록이 서고에 꽂혀 무예서의 옆자리를 차지했다" },
+    { "key": "news.title", "value": "{0} 영내 소식 — {1} · {2}" },
+    { "key": "news.says", "value": "{0}: \"{1}\"" },
+    { "key": "news.nobody", "value": "고을 사람" },
+    { "key": "news.hint.gold", "value": "금 +{0}" },
+    { "key": "news.hint.troops", "value": "병사 +{0}" },
+    { "key": "news.hint.train", "value": "훈련 +{0}" },
+    { "key": "news.hint.sec", "value": "치안 +{0}" },
+    { "key": "news.done", "value": "{0} — {1}" },
+    { "key": "news.gone", "value": "소식이 흐지부지됐다." }
   ]
 }

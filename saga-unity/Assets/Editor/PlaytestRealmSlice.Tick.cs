@@ -1229,6 +1229,8 @@ namespace Saga.EditorTools
                     if (!PlaytestRealmRound.Run()) { Fail(); return; }
                     // PLAN.md 109-13-2 지도 위 인물 — 전 성이 우리 것일 때 상한·태수 자리·재야·월드맵 배우 층.
                     if (!PlaytestRealmActors.Run()) { Fail(); return; }
+                    // tasks U-0094 영내 소식 — 금·성 값·사건 상태를 되돌린다.
+                    if (!PlaytestRealmNews.Run()) { Fail(); return; }
                     _phase = Phase.QuizCorrect;
                     break;
                 }

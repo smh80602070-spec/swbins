@@ -204,6 +204,43 @@ namespace Saga.EditorTools
                         Saga.Story.Data.StorySkillState.RestorePicks(Saga.Story.Data.StoryJobState.Level, 0, 0, 1);
                         Debug.Log($"[ShowcaseGui] pick 창 {Saga.Story.UI.StoryPickUi.Instance?.IsShowing} · 셋 {string.Join(", ", Saga.Story.UI.StoryPickUi.Instance?.Offer.Select(o => o.Key) ?? new string[0])}");
                         break;
+                    case "realmnews":   // U-0094 사가천하 — 영내 소식 카드가 뜰 때까지 달 굴림(사건 카드면 비우고 다시)
+                    {
+                        if (Object.FindFirstObjectByType<Saga.Realm.World.RealmMapViewSwitcher>() == null) { Skip(act); return; }
+                        Saga.Realm.Data.RealmScenario.Enabled = false;   // 때가 된 시나리오 카드가 먼저 뜨면 소식이 안 나온다(촬영 프로세스 안에서만)
+                        for (int i = 0; i < 300; i++)
+                        {
+                            Saga.Realm.Data.RealmEventState.ClearForTest();
+                            Saga.Realm.Data.RealmEventState.RollForMonth();
+                            var cur = Saga.Realm.Data.RealmEventState.Current;
+                            if (cur.HasValue && cur.Value.Kind == Saga.Realm.Data.RealmEventState.Kind.News) { Debug.Log($"[ShowcaseGui] realmnews {cur.Value.OfficerId}(굴림 {i + 1})"); break; }
+                        }
+                        break;
+                    }
+                    case "craft":   // U-0095 사가마을 — 주인공을 제작대 곁으로, 열매를 채워 창을 열고 승급(3택이 뜬 채)
+                    {
+                        var wb = Saga.Forest.World.ForestWorkbench.Instance;
+                        var who = GameObject.FindWithTag("Player");
+                        if (wb == null || who == null) { Skip(act); return; }
+                        Teleport(who.transform, wb.transform.position + new Vector3(0f, 0.2f, -2f));
+                        Saga.Forest.Data.ForestState.Restore(Mathf.Max(200, Saga.Forest.Data.ForestState.FruitCount));
+                        wb.Toggle();
+                        wb.PressUpgrade();
+                        Debug.Log($"[ShowcaseGui] craft 창 {wb.IsOpen} · 3택 {(wb.Offer != null ? string.Join(", ", wb.Offer) : "없음")} · Lv.{Saga.Forest.Data.ForestHandState.Level}");
+                        break;
+                    }
+                    case "track":   // U-0096 사가만리 — 첫 흔적 곁으로(3m 남쪽) 옮겨 둘레 흔적을 세우고, 둘을 읽어 목표판 줄이 "흔적 2/3" 이 되게
+                    {
+                        var tf = Saga.Go.World.TrackField.Instance;
+                        var who = GameObject.FindWithTag("Player");
+                        var traces = Saga.Go.Data.GoTrack.All;
+                        if (tf == null || who == null || traces.Count < 3) { Skip(act); return; }
+                        Teleport(who.transform, traces[0].Pos + new Vector3(0f, 1f, -3f));
+                        tf.ReadAt(traces[1].Key); tf.ReadAt(traces[2].Key);
+                        tf.Tick(traces[0].Pos);
+                        Debug.Log($"[ShowcaseGui] track 흔적 {traces.Count}곳 · 둘레 {tf.ShownCount} · 첫 흔적 {traces[0].Key} {traces[0].Kind} @ {traces[0].Pos} · 줄 {Saga.Go.Data.GoTrack.Line(traces[0].Pos)}");
+                        break;
+                    }
                     case "realmeras":
                         if (Object.FindFirstObjectByType<Saga.Realm.World.RealmMapViewSwitcher>() == null) { Skip(act); return; }
                         RealmEras();

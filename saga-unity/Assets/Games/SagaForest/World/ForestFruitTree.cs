@@ -30,6 +30,7 @@ namespace Saga.Forest.World
         private const float TreeScale = 1.0f;
         private const float GatherRadius = 2.5f;
         private const float GatherCooldownSec = 2f;
+        private static readonly System.Random HandRng = new System.Random(20260824);   // tasks U-0095 넉넉한 손 굴림(진단 씨앗 관례)
         private static string FruitName => ForestLocalization.T("fruit.name", "산딸기");
         private const float ToastSec = 3f;
 
@@ -130,9 +131,9 @@ namespace Saga.Forest.World
             if (_player == null || _cooldownLeft > 0f) return;
             if (Vector3.Distance(transform.position, _player.position) > GatherRadius) return;
 
-            _cooldownLeft = GatherCooldownSec;
-            // PLAN.md 101-2 5.6 "축제 하루"(2026-09-21) — 소원 버프가 있으면 과일 획득 ×1.5.
-            ForestState.AddFruit(Mathf.RoundToInt(1 * ForestFestivalState.FruitMultiplier));
+            _cooldownLeft = GatherCooldownSec * ForestHandState.CooldownMul;   // tasks U-0095 빠른 손(Lv.1 = ×1)
+            // PLAN.md 101-2 5.6 "축제 하루"(2026-09-21) — 소원 버프가 있으면 과일 획득 ×1.5. tasks U-0095 넉넉한 손 — 확률로 +1(Lv.1 = 0).
+            ForestState.AddFruit(Mathf.RoundToInt(1 * ForestFestivalState.FruitMultiplier) + ForestHandState.BonusFruit(HandRng));
             DialogueLabel.Instance?.Show(
                 string.Format(ForestLocalization.T("fruit.gather_toast", "나무를 흔들었다 — {0}을(를) 주웠다 (보유 {1}개)"),
                     FruitName, ForestState.FruitCount),
