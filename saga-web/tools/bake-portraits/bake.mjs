@@ -7,6 +7,7 @@
  *   node tools/bake-portraits/bake.mjs saga-dungeon --sprites=people [--only=h_x,n_y] (사람 3D 몸 → 인물별 걷기 시트 assets/sprites2d/people/*.webp)
  *   node tools/bake-portraits/bake.mjs saga-forest --sprites=animals [--only=wolf,rabbit] (들짐승 3D → 2D 지도 시트 assets/sprites2d/animals/<종류>.png)
  *   (2026-09-23 까지는 짐승 외곽선이 검은 파편으로 번져 `--tune=world3d.outline:0` 로 끄고 구웠다 — 외곽선 폭·스키닝 순서를 고쳐 이제 켜고 굽는다)
+ *   node tools/bake-portraits/bake.mjs saga-go --manifest-only   (W-0164 — 굽지 않고 assets/portraits/<hero|pet>/*_s|c.webp 를 훑어 manifest.js 에 합친다. data.js 의 id 만, 크롬 안 띄움)
  *   부가 옵션: --tune=키:값(굽는 동안 손잡이) --gl=d3d11(실제 GPU) --out=경로 --eval=파일.js(페이지 안에서 스크립트 실행)
  *
  * 그림은 **게임 자신의 `DG.portrait3d.warm()`** 이 굽는다 — 이 도구는 헤드리스 크롬(swiftshader)을
@@ -31,6 +32,40 @@ const CHROME = process.env.CHROME || 'C:/Program Files/Google/Chrome/Application
 const SQ = { w: 96, h: 96, tag: 's' }, CARD = { w: 150, h: 172, tag: 'c' };
 const QUALITY = 0.8;
 const OUT = path.resolve(opt.out || path.join(gameDir, 'assets', 'portraits'));
+/* W-0164 — 디스크만 보고 목록에 올린다(그림은 안 만든다). K 가 AI 초상을 바로 놓았을 때 쓴다 */
+if (opt['manifest-only']) {
+  const vm = await import('node:vm');
+  const win = { console }; win.window = win; win.globalThis = win;
+  let known = null;
+  try {
+    vm.runInNewContext(fs.readFileSync(path.join(gameDir, 'js', 'data.js'), 'utf8'), win);
+    const D = win.DG && win.DG.data;
+    known = { hero: new Set((D.heroes || []).map((h) => h.id)), pet: new Set((D.pets || []).map((p) => p.id)) };
+  } catch (e) { console.log('경고: data.js 를 못 읽어 디스크 파일을 전부 올린다 — ' + e.message); }
+  const mfPath = path.join(OUT, 'manifest.js');
+  let prev = { hero: { s: '', c: '' }, pet: { s: '', c: '' } };
+  if (fs.existsSync(mfPath)) { const m = fs.readFileSync(mfPath, 'utf8').match(/DG\.portraitDisk=(\{.*\});/s); if (m) prev = JSON.parse(m[1]).ids; }
+  const ids = {}, added = { hero: 0, pet: 0 };
+  for (const k of ['hero', 'pet']) {
+    ids[k] = {};
+    const dir = path.join(OUT, k), files = fs.existsSync(dir) ? fs.readdirSync(dir) : [];
+    for (const t of ['s', 'c']) {
+      const set = new Set(String((prev[k] && prev[k][t]) || '').split(',').filter(Boolean)), n0 = set.size, tail = '_' + t + '.webp';
+      for (const fn of files) {
+        if (!fn.endsWith(tail)) { continue; }
+        const id = fn.slice(0, -tail.length);
+        if (!known || known[k].has(id)) { set.add(id); }
+      }
+      ids[k][t] = [...set].sort().join(',');
+      added[k] += set.size - n0;
+      console.log(k + ' ' + t + ' ' + n0 + ' → ' + set.size);
+    }
+  }
+  fs.writeFileSync(mfPath, `/* bake-portraits 가 쓴다 — 손으로 고치지 않는다. 구운 초상 목록(s=정사각 96, c=카드 150×172). */\n(function(g){g.DG=g.DG||{};g.DG.portraitDisk=${JSON.stringify({ v: 1, base: 'assets/portraits/', ids })};})(window);\n`);
+  console.log('manifest.js 갱신(굽기 없음) — 더한 수 hero ' + added.hero + ' · pet ' + added.pet);
+  process.exit(0);
+}
+
 
 const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.glb': 'model/gltf-binary', '.gltf': 'model/gltf+json', '.bin': 'application/octet-stream', '.hdr': 'application/octet-stream', '.svg': 'image/svg+xml', '.mp3': 'audio/mpeg', '.ogg': 'audio/ogg', '.wav': 'audio/wav', '.woff2': 'font/woff2' };
 

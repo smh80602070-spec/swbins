@@ -206,6 +206,16 @@ window.requestAnimationFrame = function () { return 0; };
 
     /* ── 갈라져 나온 프로젝트로서의 조건 ─────────────── */
 
+    t('초상 목록(W-0164) — manifest 의 인물 초상이 전부 도감 인물이고, 늦게 들어온 인물(ac_balgwang)도 정사각·카드 둘 다 올라 있다', function () {
+      var M = DG.portraitDisk, H = {}, bad = [];
+      if (!M) { try { var xq = new XMLHttpRequest(); xq.open('GET', 'assets/portraits/manifest.js', false); xq.send(); var tx = xq.responseText, i0 = tx.indexOf('portraitDisk=') + 13; M = JSON.parse(tx.slice(i0, tx.lastIndexOf('};') + 1)); } catch (e) { M = null; } }   // 진단 페이지엔 안 실려 직접 읽는다
+      ((DG.data && DG.data.heroes) || []).forEach(function (h) { H[h.id] = 1; });
+      if (!M || !M.ids || !M.ids.hero) { return '실패 manifest 없음'; }
+      var s = String(M.ids.hero.s).split(','), c = String(M.ids.hero.c).split(',');
+      s.concat(c).forEach(function (id) { if (id && !H[id]) { bad.push(id); } });
+      var r = [bad.length === 0, s.indexOf('ac_balgwang') >= 0, c.indexOf('ac_balgwang') >= 0, s.length >= 500];
+      return r.every(Boolean) && ('인물 초상 ' + s.length + '·' + c.length + ' — 늦은 인물 포함') || '실패 ' + r.join(',') + ' ' + bad.slice(0, 3).join(',');
+    });
     t('voice: 대사 음성(W-0137) — 첫 터치 전엔 무음 · 1.5초 안 두 번째 외침은 무시 · 빠진 줄은 주소를 안 만든다 · 설정 끄면 무음 · 이 판 사건 넷 이상', function () {
       var V = DG.voice, clock = 1000, tb = { lines: [{ id: 'shout_01', kind: 'shout' }, { id: 'pickup_01', kind: 'pickup' }, { id: 'system_06', kind: 'system' }], assign: { hero_a: 'M1', hero_b: 'F2' }, missing: ['F2/pickup_01'] };
       var o = { unlocked: false, table: tb, base: 'v/', rand: function () { return 0; }, now: function () { return clock; } }, r = [], s = DG.core.save.settings || (DG.core.save.settings = {}), v0 = s.voice;

@@ -147,6 +147,16 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
   setTimeout(function () {
     var C = DG.core, V = DG.village, VD = DG.villageData, AU = DG.auto;
 
+    t('초상 목록(W-0164) — manifest 의 인물 초상이 전부 도감 인물이고, 늦게 들어온 인물(ac_balgwang)도 정사각·카드 둘 다 올라 있다', function () {
+      var M = DG.portraitDisk, H = {}, bad = [];
+      if (!M) { try { var xq = new XMLHttpRequest(); xq.open('GET', 'assets/portraits/manifest.js', false); xq.send(); var tx = xq.responseText, i0 = tx.indexOf('portraitDisk=') + 13; M = JSON.parse(tx.slice(i0, tx.lastIndexOf('};') + 1)); } catch (e) { M = null; } }   // 진단 페이지엔 안 실려 직접 읽는다
+      ((DG.data && DG.data.heroes) || []).forEach(function (h) { H[h.id] = 1; });
+      if (!M || !M.ids || !M.ids.hero) { return '실패 manifest 없음'; }
+      var s = String(M.ids.hero.s).split(','), c = String(M.ids.hero.c).split(',');
+      s.concat(c).forEach(function (id) { if (id && !H[id]) { bad.push(id); } });
+      var r = [bad.length === 0, s.indexOf('ac_balgwang') >= 0, c.indexOf('ac_balgwang') >= 0, s.length >= 500];
+      return r.every(Boolean) && ('인물 초상 ' + s.length + '·' + c.length + ' — 늦은 인물 포함') || '실패 ' + r.join(',') + ' ' + bad.slice(0, 3).join(',');
+    });
     t('mode2d: 마을 맨손 시트(W-0138) — 8방향 시트 사람이 town 이면 서기·걷기를 idle_town·walk_town 으로, 공격·피격·마을 밖·3행 시트는 그대로', function () {
       var M = DG.mode2d, ids = Object.keys((DG.assets3dIds && DG.assets3dIds.hero2d8) || {}), p = ids.length ? 'vroid:' + ids[0] : '';
       if (!p) { return '실패 8방향 표 없음'; }
