@@ -225,8 +225,13 @@
     mapCy += dy * h * MAP_PAN_SPEED;
     applyMapViewNow();
   }
-  function zoomMapBy(factor) {
-    mapZoom = core.clamp(mapZoom * factor, 1, MAP_ZOOM_MAX);
+  function zoomMapBy(factor) { zoomAt(factor); }
+  /** 확대 — 화면 점(x, y)을 주면 그 자리를 붙든 채(W-0177 휠), 안 주면 가운데 */
+  function zoomAt(factor, x, y) {
+    var svg = els.realm && els.realm.querySelector('.rmap'), r = svg && x !== undefined ? svg.getBoundingClientRect() : null;
+    var w = MAP_VB.w / mapZoom, h = MAP_VB.h / mapZoom, z = core.clamp(mapZoom * factor, 1, MAP_ZOOM_MAX), k = mapZoom / z;
+    if (r && r.width && r.height) { var px = mapCx - w / 2 + (x - r.left) / r.width * w, py = mapCy - h / 2 + (y - r.top) / r.height * h; mapCx = px + (mapCx - px) * k; mapCy = py + (mapCy - py) * k; }
+    mapZoom = z;
     applyMapViewNow();
   }
   /** "내 땅으로" — 내 성들의 무게중심으로 지도(2D·3D 다)를 옮기고, **내 땅의
@@ -618,8 +623,8 @@
       var moved = R().endMonth();
       renderTop(); renderMap(); renderSheet();
       /* 이정표·승리·도전 카드가 이미 떠 있으면 그 뒤에 줄을 선다. 판이 닫혔으면 끝 카드만 */
-      if (moved && moved.report && monthCardOn() && !R().state().result) { showMonthCard(moved.report); }
-      if (!R().state().result) { showEvent(); }
+      var inCard = moved && moved.report && monthCardOn() && !R().state().result && showMonthCard(moved.report);   // W-0177 고를 사연·소식은 그 카드 안 칸으로
+      if (!R().state().result && !inCard) { showEvent(); }
       return;
     }
     if (a === 'close-enc') { closeEnc(); return; }
@@ -673,7 +678,7 @@
     if (a === 'sel-order') { pickOrder = g('data-key'); renderSheet(); return; }
     if (a === 'do-order') {
       var res = R().order(openCityId, g('data-id'), pickOrder);
-      if (!res.ok) { toast(res.why); } else if (res.text) { toast(res.text); }
+      if (!res.ok) { toast(res.why); } else { if (res.text) { toast(res.text); } if (global.DG.rtkHand) { global.DG.rtkHand.pop(openCityId, pickOrder, res); } }   // W-0177 지도 위 숫자
       pickOrder = null;
     } else if (a === 'set-gov') {
       R().setGov(openCityId, g('data-id') || null);
@@ -1236,8 +1241,8 @@
       coin('🪙', core.fmt(s.gold), '금') +
       coin('🪖', core.fmt(s.troops), '병력') +
       coin('🍚', core.fmt(s.food), '군량') +
-      '<button class="btn primary next-btn" data-act="next-month"' +
-        (st.result ? ' disabled' : '') + '>▶ 다음 달</button>';
+      '<button class="btn ghost rkh-all" data-rkh-del="*" title="내 성 전부 — 이 달 안 움직인 무장에게 명령을 맡긴다"' + (st.result ? ' disabled' : '') + '>🤝 전부</button>' +   // W-0177
+      '<button class="btn primary next-btn" data-act="next-month" title="다음 달 (Enter · N)"' + (st.result ? ' disabled' : '') + '>▶ 다음 달</button>';
     var nb = els.wallet.querySelector('.next-btn');
     if (nb) { nb.addEventListener('click', function () { act('next-month', nb); }); }
   }

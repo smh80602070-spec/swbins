@@ -111,6 +111,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/realm-sky3d.js"></script>
 <script src="js/realm-water3d.js"></script>
 <script src="js/ui-rtk-sheets.js"></script>
+<script src="js/rtk-hand.js"></script>
 <script src="js/ui-rtk.js"></script>
 <script src="js/cpanel.js"></script>
 <script src="js/hud.js"></script>
@@ -4068,6 +4069,92 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         for (i = 0; i < 60; i++) { st.turn = t0 + i; if (E.newsFor(st.me)) { got++; } }
         var want = 60 * (1 - Math.pow(1 - E.newsChance(), n)) * 0.8;
         return (got >= want ? '○' : '△') + ' — 성 ' + n + ' · 60달 중 소식 ' + got + '달(기준 ≥' + want.toFixed(1) + ', 한 달 한 장 상한) · 원정 없이 내 땅에서';
+      } finally { evDone(); }
+    });
+
+    /* ── W-0177 한 달 손질(rtk-hand.js) — 맡기기·지도 숫자·Enter 다음 달·재미표준 A·B ── */
+    function rkhCity(st, n) {
+      /* 내 첫 성에 무장을 n명 이상 모으고 이 달 명령을 다 풀어 둔다 */
+      var cid = R.citiesOf(st.me)[0], extra = nonLord(st.me).filter(function (h) { return off.rec(h.id).city !== cid; });
+      for (var i = 0; R.readyAt(cid).length < n && i < extra.length; i++) { put(extra[i].id, st.me, cid); }
+      freeUp(cid);
+      return cid;
+    }
+    function rkhClear() { var U = DG.ui, g = 0; U.closeSheet(); while (document.getElementById('encounter').classList.contains('show') && g++ < 20) { U.closeEnc(); } }
+    t('rk.hand ① 남은 무장 맡기기(W-0177) — 성 하나·무장 셋 이상이면 한 번에 다 움직이고, 금 0 이면 0명 · "금 부족 n명 남음"', function () {
+      var st = evFresh(), H = DG.rtkHand;
+      try {
+        var cid = rkhCity(st, 3), n0 = R.readyAt(cid).length;
+        R.force(st.me).gold = 1e6;
+        var r = H.delegate(cid), all = n0 >= 3 && r.moved === n0 && R.readyAt(cid).length === 0;
+        freeUp(cid); R.force(st.me).gold = 0;
+        var r0 = H.delegate(cid), none = r0.moved === 0 && r0.poor && r0.left === n0;
+        return all && none && ('무장 ' + n0 + '명 → 한 번에 ' + r.moved + '명(' + r.results.map(function (x) { return x.key; }).join('·') + ') · 금 0 → ' + H.summary(r0)) ||
+          ('실패 n0=' + n0 + ' moved=' + r.moved + ' r0=' + JSON.stringify(r0));
+      } finally { evDone(); }
+    });
+    t('rk.hand ② 명령 결과 지도 숫자(W-0177) — do-order 뒤 그 성 점 위에 결과 글자(.rpop)가 서고 0.9초 뒤 사라진다', function () {
+      var st = evFresh(), U = DG.ui;
+      try {
+        var cid = rkhCity(st, 1), who = R.readyAt(cid)[0];
+        R.force(st.me).gold = 1e6;
+        U.renderMap(); U.openCity(cid); U._setOrder('sec');
+        U._act('do-order', uiBtn({ 'data-id': who.id }));
+        var el = document.querySelector('#realm .rmap .rpop[data-city="' + cid + '"]');
+        return !!el && !!el.textContent && off.rec(who.id).done && ('성 ' + cid + ' 위 "' + el.textContent + '" · 사라지기 ' + DG.rtkHand.POP_MS + 'ms') || ('실패 — 글자 요소 없음 · svg ' + !!document.querySelector('#realm .rmap') + ' · done ' + off.rec(who.id).done + ' · 시트 성 ' + U._city() + ' · toast ' + document.getElementById('toast').textContent);
+      } finally { rkhClear(); evDone(); }
+    });
+    t('rk.hand ③ Enter·N = 다음 달(W-0177) — 시트·카드가 닫혀 있으면 달 +1, 시트가 열려 있으면 안 넘어간다', function () {
+      var st = evFresh(), U = DG.ui;
+      try {
+        C.setTune('rtk.monthCard', 0); rkhClear(); U.renderTop();
+        var m0 = R.state().turn;
+        window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+        var a = R.state().turn === m0 + 1;
+        rkhClear();
+        window.dispatchEvent(new KeyboardEvent('keydown', { key: 'n' }));
+        var b = R.state().turn === m0 + 2;
+        rkhClear(); U.openCity(R.citiesOf(R.state().me)[0]);
+        window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+        var c = R.state().turn === m0 + 2;
+        return a && b && c && 'Enter +1 · N +1 · 시트 열림 → 그대로' || ('실패 ' + [a, b, c].join(','));
+      } finally { C.setTune('rtk.monthCard', null); rkhClear(); evDone(); }
+    });
+    t('rk.hand ④ 달말 카드 한 장(W-0177) — 고를 사연이 있으면 결산 카드 안 칸에 실리고 확인은 잠김, 고르면 그 자리에 결과·확인 풀림', function () {
+      var st = evFresh(), U = DG.ui, H = DG.rtkHand, enc = document.getElementById('encounter');
+      try {
+        rkhClear(); C.setTune('rtk.newsChance', 1); C.setTune('rtk.monthCard', 1);
+        var g = 0;
+        while (!E.view() && g++ < 24) { R.endMonth(); }
+        var v = E.view();
+        if (!v || (v.pre && !v.pre.done)) { return '실패 — 고를 사연이 안 섬'; }
+        var h = H.monthHtml({ year: 200, month: 1, lines: ['한 줄'], gold: { from: 1, to: 2 }, food: { from: 1, to: 1 }, troops: { from: 1, to: 1 }, cities: { from: 1, to: 1 }, next: '권고' });
+        U.closeEnc(); enc.innerHTML = '<div class="enc-card">' + h.html + '</div>'; enc.classList.add('show');
+        var ok0 = enc.querySelector('[data-rkh-ok]'), locked = !!ok0 && ok0.disabled, picks = enc.querySelectorAll('[data-rkh-pick]').length;
+        var k = v.choices.filter(function (c) { return c.ok; })[0].k, r = H.pick(k, enc);
+        var after = r.ok && !enc.querySelector('[data-rkh-pick]') && !enc.querySelector('[data-rkh-ok]').disabled && !E.view();
+        return h.withEvent && locked && picks === v.choices.length && after && ('카드 하나에 결산 + "' + v.name + '" ' + picks + '택 · 고르기 전 확인 잠김 · 고르면 풀림') ||
+          ('실패 ' + [h.withEvent, locked, picks, after].join(','));
+      } finally { rkhClear(); evDone(); }
+    });
+    t('재미표준 A 목표 보임(측정) — 부팅 직후 상단 목표 두 줄(이정표·가장 가까운 승리)이 비어 있지 않다(W-0177)', function () {
+      var st = evFresh();
+      try {
+        DG.ui.renderTop();
+        var g = [].slice.call(document.querySelectorAll('#profile .p-goal')).filter(function (x) { return x.textContent.trim().length > 4; });
+        return (g.length >= 2 ? '○' : (g.length ? '△' : '×')) + ' — 목표 ' + g.length + '줄: ' + g.map(function (x) { return x.textContent.trim().slice(0, 30); }).join(' / ');
+      } finally { evDone(); }
+    });
+    t('재미표준 B 다음 할 일(측정) — 달말 카드 데이터에 다음 달 권고(next)가 있다(W-0177)', function () {
+      evFresh(); R.setup('cao');                                 // 기본 판 — 부팅해서 처음 넘기는 달들
+      try {
+        var n = 0, played = 0, last = '';
+        for (var i = 0; i < 6; i++) {
+          var m = R.endMonth();
+          if (!m || !m.report || R.state().result || !R.citiesOf(R.state().me).length) { break; }
+          played++; if (m.report.next) { n++; last = m.report.next; }
+        }
+        return (played >= 3 && n === played ? '○' : (n ? '△' : '×')) + ' — ' + played + '달 중 권고 ' + n + '달 · 예 "' + last + '"';
       } finally { evDone(); }
     });
 

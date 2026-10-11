@@ -225,8 +225,13 @@
     mapCy += dy * h * MAP_PAN_SPEED;
     applyMapViewNow();
   }
-  function zoomMapBy(factor) {
-    mapZoom = core.clamp(mapZoom * factor, 1, MAP_ZOOM_MAX);
+  function zoomMapBy(factor) { zoomAt(factor); }
+  /** 확대 — 화면 점(x, y)을 주면 그 자리를 붙든 채(W-0177 휠), 안 주면 가운데 */
+  function zoomAt(factor, x, y) {
+    var svg = els.realm && els.realm.querySelector('.rmap'), r = svg && x !== undefined ? svg.getBoundingClientRect() : null;
+    var w = MAP_VB.w / mapZoom, h = MAP_VB.h / mapZoom, z = core.clamp(mapZoom * factor, 1, MAP_ZOOM_MAX), k = mapZoom / z;
+    if (r && r.width && r.height) { var px = mapCx - w / 2 + (x - r.left) / r.width * w, py = mapCy - h / 2 + (y - r.top) / r.height * h; mapCx = px + (mapCx - px) * k; mapCy = py + (mapCy - py) * k; }
+    mapZoom = z;
     applyMapViewNow();
   }
   /** "내 땅으로" — 내 성들의 무게중심으로 지도(2D·3D 다)를 옮기고, **내 땅의
@@ -618,8 +623,8 @@
       var moved = R().endMonth();
       renderTop(); renderMap(); renderSheet();
       /* 이정표·승리·도전 카드가 이미 떠 있으면 그 뒤에 줄을 선다. 판이 닫혔으면 끝 카드만 */
-      if (moved && moved.report && monthCardOn() && !R().state().result) { showMonthCard(moved.report); }
-      if (!R().state().result) { showEvent(); }
+      var inCard = moved && moved.report && monthCardOn() && !R().state().result && showMonthCard(moved.report);   // W-0177 고를 사연·소식은 그 카드 안 칸으로
+      if (!R().state().result && !inCard) { showEvent(); }
       return;
     }
     if (a === 'close-enc') { closeEnc(); return; }
@@ -673,7 +678,7 @@
     if (a === 'sel-order') { pickOrder = g('data-key'); renderSheet(); return; }
     if (a === 'do-order') {
       var res = R().order(openCityId, g('data-id'), pickOrder);
-      if (!res.ok) { toast(res.why); } else if (res.text) { toast(res.text); }
+      if (!res.ok) { toast(res.why); } else { if (res.text) { toast(res.text); } if (global.DG.rtkHand) { global.DG.rtkHand.pop(openCityId, pickOrder, res); } }   // W-0177 지도 위 숫자
       pickOrder = null;
     } else if (a === 'set-gov') {
       R().setGov(openCityId, g('data-id') || null);
@@ -1236,8 +1241,8 @@
       coin('🪙', core.fmt(s.gold), '금') +
       coin('🪖', core.fmt(s.troops), '병력') +
       coin('🍚', core.fmt(s.food), '군량') +
-      '<button class="btn primary next-btn" data-act="next-month"' +
-        (st.result ? ' disabled' : '') + '>▶ 다음 달</button>';
+      '<button class="btn ghost rkh-all" data-rkh-del="*" title="내 성 전부 — 이 달 안 움직인 무장에게 명령을 맡긴다"' + (st.result ? ' disabled' : '') + '>🤝 전부</button>' +   // W-0177
+      '<button class="btn primary next-btn" data-act="next-month" title="다음 달 (Enter · N)"' + (st.result ? ' disabled' : '') + '>▶ 다음 달</button>';
     var nb = els.wallet.querySelector('.next-btn');
     if (nb) { nb.addEventListener('click', function () { act('next-month', nb); }); }
   }
@@ -1350,7 +1355,7 @@
       s += '<g class="rcity' + (mine ? ' mine' : '') + '" data-city="' + d.id + '">' +
         /* 손가락이 닿는 목표 — 성 점은 화면에서 8px 남짓이라 폰에서 못 누른다.
            보이지 않는 큰 원을 하나 깔아 둔다(그림은 그대로, 손만 커진다) */
-        '<circle class="rhit" cx="' + d.x + '" cy="' + d.y + '" r="4.2"/>' +
+        '<circle class="rhit" cx="' + d.x + '" cy="' + d.y + '" r="6"/>' +   // W-0177 4.2 → 6
         '<circle cx="' + d.x + '" cy="' + d.y + '" r="' + rad.toFixed(2) + '" fill="' +
           forceColor(c.force) + '"/>' + (global.DG.map2d ? global.DG.map2d.castle(d, rad) : '') +
         (mine ? '<circle cx="' + d.x + '" cy="' + d.y + '" r="' + (rad + 1.1).toFixed(2) +
@@ -1385,7 +1390,7 @@
     }
     s += '</div>';
 
-    els.realm.innerHTML = s;
+    els.realm.innerHTML = s; if (global.DG.rtkHand) { global.DG.rtkHand.redraw(); }   // W-0177 솟는 결과 글자를 다시 그려도 잃지 않게
     syncMapControls();
   }
 
@@ -1578,28 +1583,12 @@
 
   function monthCardOn() { return core.tuned('rtk.monthCard', 1) !== 0; }
 
-  function delta(o) {
-    var d = o.to - o.from;
-    return '<b>' + core.fmt(o.to) + '</b> <span class="' + (d >= 0 ? 'good' : 'meh') + '">' + (d >= 0 ? '+' : '') + core.fmt(d) + '</span>';
-  }
-
-  /** 다음 달 카드(§5-7) — 이번 달 일어난 일 셋·재정·다음 달 권고 하나·진척. 닫으면 그대로 진행 */
+  /** 다음 달 카드(§5-7) — 이번 달 일어난 일 셋·재정·다음 달 권고 하나·진척. W-0177 부터 고를 사연·영내 소식도 같은 카드 아래 칸에
+   *  (`rtk-hand.js monthHtml` — 줄 세운 카드를 하나씩 닫던 것). 사연을 실었으면 true — 그때는 따로 showEvent 를 안 띄운다 */
   function showMonthCard(rp) {
-    var html = '<h3 style="margin:0 0 4px;font-size:18px">📅 ' + rp.year + '년 ' + rp.month + '월</h3>' +
-      '<div class="enc-hist">', i;
-    for (i = 0; i < rp.lines.length; i++) { html += (i ? '<br>' : '') + esc(rp.lines[i]); }
-    html += '</div><div class="enc-hist">🪙 ' + delta(rp.gold) + ' · 🍚 ' + delta(rp.food) + '<br>🪖 ' + delta(rp.troops) +
-      ' · 🏯 ' + delta(rp.cities) + '</div>';
-    if (rp.next) { html += '<div class="enc-hist"><b>💡 다음 달 권고</b><br>' + esc(rp.next) + '</div>'; }
-    var prog = '';
-    if (rp.milestone) { prog += '🚩 ' + rp.milestone.idx + '/' + rp.milestone.total + ' ' + esc(rp.milestone.name) + ' ' + rp.milestone.cur + '/' + rp.milestone.need + '<br>'; }
-    if (rp.victory) { prog += rp.victory.emoji + ' ' + esc(rp.victory.name) + ' ' + Math.min(100, Math.round(100 * rp.victory.pct)) + '% · ' + esc(rp.victory.note) + '<br>'; }
-    if (rp.challenge && !rp.challenge.done) {
-      prog += '🎯 도전 ' + rp.challenge.month + '/' + rp.challenge.months + '달 · 점수 ' + rp.challenge.score +
-        (rp.challenge.best ? ' · 최고 ' + rp.challenge.best : '') + '<br>';
-    }
-    if (prog) { html += '<small class="muted">' + prog + '</small>'; }
-    showEncQueued(html + '<button class="btn primary wide" data-act="close-enc">확인</button>');
+    var h = global.DG.rtkHand.monthHtml(rp);
+    showEncQueued(h.html);
+    return h.withEvent;
   }
 
   /** 주간 도전을 마친 카드 — 점수·최고 기록·공유 코드. 판은 이어진다 */
@@ -1822,7 +1811,7 @@
     closeEnc: closeEnc,
     /** 자가진단용 */
     _act: act, _tab: function () { return openTab; }, _city: function () { return openCityId; },
-    centerAt: function (x, y) { mapCx = x; mapCy = y; applyMapViewNow(); }, _setOrder: function (k) { pickOrder = k; },
+    centerAt: function (x, y) { mapCx = x; mapCy = y; applyMapViewNow(); }, _setOrder: function (k) { pickOrder = k; }, zoomAt: zoomAt, _view: function () { return { cx: mapCx, cy: mapCy, z: mapZoom }; },
     _quiz: function () { return quizCur; }
   };
 })(window);

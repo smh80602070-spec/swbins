@@ -82,7 +82,7 @@
       s += '<g class="rcity' + (mine ? ' mine' : '') + '" data-city="' + d.id + '">' +
         /* 손가락이 닿는 목표 — 성 점은 화면에서 8px 남짓이라 폰에서 못 누른다.
            보이지 않는 큰 원을 하나 깔아 둔다(그림은 그대로, 손만 커진다) */
-        '<circle class="rhit" cx="' + d.x + '" cy="' + d.y + '" r="4.2"/>' +
+        '<circle class="rhit" cx="' + d.x + '" cy="' + d.y + '" r="6"/>' +   // W-0177 4.2 → 6
         '<circle cx="' + d.x + '" cy="' + d.y + '" r="' + rad.toFixed(2) + '" fill="' +
           forceColor(c.force) + '"/>' + (global.DG.map2d ? global.DG.map2d.castle(d, rad) : '') +
         (mine ? '<circle cx="' + d.x + '" cy="' + d.y + '" r="' + (rad + 1.1).toFixed(2) +
@@ -117,7 +117,7 @@
     }
     s += '</div>';
 
-    els.realm.innerHTML = s;
+    els.realm.innerHTML = s; if (global.DG.rtkHand) { global.DG.rtkHand.redraw(); }   // W-0177 솟는 결과 글자를 다시 그려도 잃지 않게
     syncMapControls();
   }
 
@@ -310,28 +310,12 @@
 
   function monthCardOn() { return core.tuned('rtk.monthCard', 1) !== 0; }
 
-  function delta(o) {
-    var d = o.to - o.from;
-    return '<b>' + core.fmt(o.to) + '</b> <span class="' + (d >= 0 ? 'good' : 'meh') + '">' + (d >= 0 ? '+' : '') + core.fmt(d) + '</span>';
-  }
-
-  /** 다음 달 카드(§5-7) — 이번 달 일어난 일 셋·재정·다음 달 권고 하나·진척. 닫으면 그대로 진행 */
+  /** 다음 달 카드(§5-7) — 이번 달 일어난 일 셋·재정·다음 달 권고 하나·진척. W-0177 부터 고를 사연·영내 소식도 같은 카드 아래 칸에
+   *  (`rtk-hand.js monthHtml` — 줄 세운 카드를 하나씩 닫던 것). 사연을 실었으면 true — 그때는 따로 showEvent 를 안 띄운다 */
   function showMonthCard(rp) {
-    var html = '<h3 style="margin:0 0 4px;font-size:18px">📅 ' + rp.year + '년 ' + rp.month + '월</h3>' +
-      '<div class="enc-hist">', i;
-    for (i = 0; i < rp.lines.length; i++) { html += (i ? '<br>' : '') + esc(rp.lines[i]); }
-    html += '</div><div class="enc-hist">🪙 ' + delta(rp.gold) + ' · 🍚 ' + delta(rp.food) + '<br>🪖 ' + delta(rp.troops) +
-      ' · 🏯 ' + delta(rp.cities) + '</div>';
-    if (rp.next) { html += '<div class="enc-hist"><b>💡 다음 달 권고</b><br>' + esc(rp.next) + '</div>'; }
-    var prog = '';
-    if (rp.milestone) { prog += '🚩 ' + rp.milestone.idx + '/' + rp.milestone.total + ' ' + esc(rp.milestone.name) + ' ' + rp.milestone.cur + '/' + rp.milestone.need + '<br>'; }
-    if (rp.victory) { prog += rp.victory.emoji + ' ' + esc(rp.victory.name) + ' ' + Math.min(100, Math.round(100 * rp.victory.pct)) + '% · ' + esc(rp.victory.note) + '<br>'; }
-    if (rp.challenge && !rp.challenge.done) {
-      prog += '🎯 도전 ' + rp.challenge.month + '/' + rp.challenge.months + '달 · 점수 ' + rp.challenge.score +
-        (rp.challenge.best ? ' · 최고 ' + rp.challenge.best : '') + '<br>';
-    }
-    if (prog) { html += '<small class="muted">' + prog + '</small>'; }
-    showEncQueued(html + '<button class="btn primary wide" data-act="close-enc">확인</button>');
+    var h = global.DG.rtkHand.monthHtml(rp);
+    showEncQueued(h.html);
+    return h.withEvent;
   }
 
   /** 주간 도전을 마친 카드 — 점수·최고 기록·공유 코드. 판은 이어진다 */
@@ -554,7 +538,7 @@
     closeEnc: closeEnc,
     /** 자가진단용 */
     _act: act, _tab: function () { return openTab; }, _city: function () { return openCityId; },
-    centerAt: function (x, y) { mapCx = x; mapCy = y; applyMapViewNow(); }, _setOrder: function (k) { pickOrder = k; },
+    centerAt: function (x, y) { mapCx = x; mapCy = y; applyMapViewNow(); }, _setOrder: function (k) { pickOrder = k; }, zoomAt: zoomAt, _view: function () { return { cx: mapCx, cy: mapCy, z: mapZoom }; },
     _quiz: function () { return quizCur; }
   };
 })(window);

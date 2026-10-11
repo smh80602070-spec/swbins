@@ -1527,3 +1527,16 @@ body.sheet-open #realm3d { right: calc(min(420px, 92vw) + 20px); }
 @keyframes tvl { from { transform: translateX(-60%); opacity: 0; } to { transform: none; opacity: 1; } }
 @keyframes tvr { from { transform: translateX(60%); opacity: 0; } to { transform: none; opacity: 1; } }
 @keyframes tvhit { from { transform: scale(1.8); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* W-0177 한 달 손질 — 명령 결과가 성 점 위로 솟는 글자 · 달말 카드 안 사연 칸 · 상단 🤝 전부 */
+.rpop {
+  font-size: calc(3px * var(--lz, 1)); font-weight: 700; fill: #ffe08a; text-anchor: middle; pointer-events: none;
+  paint-order: stroke; stroke: rgba(8, 10, 14, .9); stroke-width: calc(.7px * var(--lz, 1));
+  animation: rpop-up .9s ease-out forwards;
+}
+@keyframes rpop-up { 0% { opacity: 0; transform: translateY(1px); } 15% { opacity: 1; } 100% { opacity: 0; transform: translateY(-5px); } }
+.rkh-ev { margin: 10px 0 6px; padding-top: 8px; border-top: 1px dashed rgba(232, 196, 106, .45); }
+.rkh-ev-h { font-size: 14px; }
+.rkh-spk { font-size: 12px; margin-top: 4px; opacity: .9; }
+.rkh-del { margin: 4px 0 8px; }
+.rkh-all { margin-right: 6px; }

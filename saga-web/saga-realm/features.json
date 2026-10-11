@@ -593,7 +593,7 @@
  },
  {
   "id": "rk.realm3d-2",
-  "name": "3D 국토 지도 — 기본 ON, 궤도 카메라, heightmap `elevAt()`, 바다 `STRAITS` 5, 소품 ~1070, 성 3등급 탑(1등급 동양풍)",
+  "name": "3D 국토 지도 — 🧊 단추로 켬(기본은 2D 전략 지도, W-0027), 궤도 카메라, heightmap `elevAt()`, 바다 `STRAITS` 5, 소품 ~1070, 성 3등급 탑(1등급 동양풍)",
   "files": [
    "js/realm3d.js",
    "js/asset3d.js"
@@ -608,7 +608,31 @@
   "ticket": null,
   "since": "2026-09-30",
   "human": true,
-  "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): 3D 국토 shots/qc/saga-realm-3dmap.png ○(성·길·강·바다, 혼잡하나 읽힘) · D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085)."
+  "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): 3D 국토 shots/qc/saga-realm-3dmap.png ○(성·길·강·바다, 혼잡하나 읽힘) · D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085). · W-0177: 이름의 \"기본 ON\" 을 실제(2D 기본, realm3d.on 0)로 고침."
+ },
+ {
+  "id": "rk.delegate",
+  "name": "한 달 손질 — 성 시트 🤝 남은 무장 맡기기(AI 명령 고르기 그대로·금 부족이면 멈춤)·상단 🤝 전부, 명령 결과 지도 위 숫자(0.9초), Enter·N 다음 달, 2D 휠 확대(커서 기준), 달말 카드 한 장(결산 + 고를 사연·소식 칸)",
+  "files": [
+   "js/rtk-hand.js",
+   "js/ui-rtk.js",
+   "js/ui-rtk-sheets.js"
+  ],
+  "tests": [
+   "rk.hand ① 남은 무장 맡기기(W-0177) — 성 하나·무장 셋 이상이면 한 번에 다 움직이고, 금 0 이면 0명 · \"금 부족 n명 남음\"",
+   "rk.hand ② 명령 결과 지도 숫자(W-0177) — do-order 뒤 그 성 점 위에 결과 글자(.rpop)가 서고 0.9초 뒤 사라진다",
+   "rk.hand ③ Enter·N = 다음 달(W-0177) — 시트·카드가 닫혀 있으면 달 +1, 시트가 열려 있으면 안 넘어간다",
+   "rk.hand ④ 달말 카드 한 장(W-0177) — 고를 사연이 있으면 결산 카드 안 칸에 실리고 확인은 잠김, 고르면 그 자리에 결과·확인 풀림"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {
+   "A": "○",
+   "B": "○"
+  },
+  "ticket": "W-0177",
+  "since": "2026-10-11",
+  "note": "D2(qc+claude 2026-10-11): 진단 넷 + 재미표준 A(목표 두 줄)·B(다음 달 권고) ○. 3D 지도엔 글자 층이 없어 결과 숫자는 2D 만(3D 는 토스트). 균형 수치 그대로 — 맡기기는 rtkAI.pickOrder·bestFor 를 사람 세력에 부를 뿐."
  },
  {
   "id": "rk.battle3d",

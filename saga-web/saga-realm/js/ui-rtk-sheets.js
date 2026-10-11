@@ -102,6 +102,10 @@
     /* 명령 */
     html += '<div class="sec"><h4>명령 <span class="muted">이 달에 쓸 수 있는 장수 ' +
       ready.length + '명</span></h4>';
+    /* W-0177 남은 무장 맡기기 — 무장마다 AI 가 고를 명령을 대신 고른다(rtk-hand.js). 금이 모자라면 거기서 멈춘다 */
+    if (ready.length && global.DG.rtkHand) {
+      html += '<button class="btn wide rkh-del" data-rkh-del="' + openCityId + '">🤝 남은 무장 ' + ready.length + '명 맡기기</button>';
+    }
     if (!ready.length) {
       html += '<div class="hint">이 성의 장수가 이 달의 명령을 다 썼습니다. ' +
         '<b>다음 달</b>로 넘기십시오.</div>';
