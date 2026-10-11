@@ -5,12 +5,14 @@ extends SceneTree
 ## ① 지는 판 셋(허창 병력 500·2000·셋째, 훈련 10·기술 100, 소패 기본 수비 — 5000 은 씨앗 20260824 에서 이겨 버려 셋째는 5000 부터 100씩 내려 처음 지는 병력): 짐 · 성 수·태수·금 그대로 · 군량 = 전 − need + 치중 · 잃은 병력 %(출진 대비·나라 전체 대비)
 ## ② 재도전: 진 달에 다시 치면 거절(이유는 병력 따라 "오백"·"장수 없음") · 그 뒤 실제로 먹힌 조작(next_month·draft·attack)만 세어 다시 ok 가 될 때까지(상한 8, 거절된 시도는 안 셈 — 화면에선 단추가 막혀 있다)
 ## ③ 회복: 같은 패배에서 매달 draft+next_month 로 출진 전 병력에 닿는 달 수(상한 24)
+## ④ 전술판(G-0182·G-0188): 같은 판 셋 × 장수 수 둘(시작 판 1명 · 3명) × 결과(자동으로 둔 실제 결과 + 강제 넷 rout·win·draw·lose) — won · 잃은 병력 % · 전사·중상 ·
+##   전사 장수가 나라 장수의 몇 % · 다음 출진까지 조작 수(장수가 없으면 "다시 못 침") · 회복 달. 전술 없는 판은 ①과 같은 값이어야 한다.
 ## FAIL 은 ①의 구조와 ②가 상한 안에 닿는지만 — %·달 수가 F 기준(비용 10~20%·조작 ≤3)을 넘으면 "F기준 밖"만 찍는다. 상태는 끝에 되돌린다.
 ## 끝에 "PROBE realm_defeat OK" 또는 "PROBE realm_defeat FAIL n".
 
 const SAVED := ["gold", "year", "month", "cities", "current_city", "roster", "found", "officer_city", "officer_loyal", "officer_growth", "officer_ambition", "enemies_subverted", "active_events", "events_done",
 	"lord_succession_enabled", "current_lord_id", "heir_id", "_succession_shock_until", "enemies", "enemy_officer_loyal", "diplomacy", "city_force", "quiz", "result", "diplomacy_peace_streak",
-	"scenario_id", "_done_this_month", "scenario_ready", "viewing_map"]
+	"scenario_id", "_done_this_month", "scenario_ready", "viewing_map", "officer_hurt", "annals"]
 const SEED := 20260824
 const TROOPS := [500, 2000]
 const TROOPS_TOP := 5000
@@ -58,9 +60,12 @@ func _total_troops() -> int:
 
 
 ## 지는 판 하나를 세운다 — 반환: 패배 직전 수치와 attack() 결과
-func _lose(troops: int) -> Dictionary:
+func _lose(troops: int, extra: Array = []) -> Dictionary:
 	_reset()
 	_fund()
+	for id: String in extra:   # ④ — 허창에 장수를 더 둔다(메모리에서만)
+		S.roster.append(id)
+		S.officer_city[id] = "xuchang"
 	S.cities.xuchang.troops = troops
 	S.cities.xuchang.train = 10
 	S.cities.xuchang.tech = 100
@@ -68,6 +73,19 @@ func _lose(troops: int) -> Dictionary:
 		"gov": S.officer_city.duplicate(), "need": Orders.food_upkeep(troops) * 2, "baggage": Orders.food_upkeep(troops)}
 	pre["at"] = S.attack("xiaopei")
 	return pre
+
+
+## ④ — 같은 시작에서 전술 보정(grid)을 실어 친다
+func _lose_grid(troops: int, extra: Array, grid: Dictionary) -> Dictionary:
+	_reset()
+	_fund()
+	for id: String in extra:
+		S.roster.append(id)
+		S.officer_city[id] = "xuchang"
+	S.cities.xuchang.troops = troops
+	S.cities.xuchang.train = 10
+	S.cities.xuchang.tech = 100
+	return {"total": _total_troops(), "at": S.attack("xiaopei", [], grid)}
 
 
 func _initialize() -> void:
@@ -141,6 +159,62 @@ func _initialize() -> void:
 		summary.append("%d: 비용 %.1f%%(출진 %.1f%%)·조작 %d·회복 %s" % [troops, pct_nation, pct_army, ops, ("%d달" % months) if reached else ">%d달" % RECOVER_CAP])
 
 	print("잰값 요약 — ", " | ".join(summary))
+
+	# ④ 전술판
+	var T: GDScript = load("res://games/saga_realm/data/realm_tactics.gd")
+	var t_summary: Array = []
+	for extra: Array in [[], ["sg_xiahoudun", "sg_zhangliao"]]:
+		for troops: int in cases:
+			# 자동 결과 — 판을 연 그 자리 그대로(attack 앞)
+			_lose(troops, extra)   # 시작 상태 맞추기만(이 attack 결과는 버림)
+			_reset()
+			_fund()
+			for id: String in extra:
+				S.roster.append(id)
+				S.officer_city[id] = "xuchang"
+			S.cities.xuchang.troops = troops
+			S.cities.xuchang.train = 10
+			S.cities.xuchang.tech = 100
+			var auto: Dictionary = S.tactics_auto("xiaopei")
+			var mine: Array = auto.get("mine", [])
+			var grids := {"auto": auto}
+			for k: String in ["rout", "win", "draw", "lose"]:
+				var o: Dictionary = T.OUT[k]
+				var g: Dictionary = T.apply({"kind": k, "winPct": o.winPct, "lossMul": o.lossMul, "fallen": mine.duplicate() if k == "lose" else [], "wounded": []}, "xiaopei")
+				g["mine"] = mine
+				grids[k] = g
+			for gk: String in ["auto", "rout", "win", "draw", "lose"]:
+				var g2: Dictionary = grids[gk]
+				var pre2 := _lose_grid(troops, extra, g2)
+				var at2: Dictionary = pre2.at
+				var left2 := int(S.cities.xuchang.troops)
+				var lost2 := troops - left2 if not bool(at2.get("won", false)) else troops - int(S.cities.get("xiaopei", {}).get("troops", 0))
+				var fallen: Array = at2.get("fallen", [])
+				var roster_before := 1 + extra.size()
+				if gk == "lose":
+					check(not at2.won and fallen.size() == mine.size() and S.annals.size() == fallen.size(), "전술 패(%d·장수 %d): 지고 판에 선 장수 %d 모두 전사·열전" % [troops, roster_before, mine.size()])
+				# 다음 출진까지 — 먹힌 조작만
+				var ops := 0
+				var can := false
+				if not bool(at2.get("won", false)):
+					while ops < RETRY_CAP:
+						var a: Dictionary = S.attack("xiaopei")
+						if a.ok:
+							ops += 1
+							can = true
+							break
+						if "오백" in String(a.get("why", "")) and S.execute_order("draft").ok:
+							pass
+						else:
+							S.next_month()
+						ops += 1
+				var line := "%s/%d명·%d: %s %s · 잃은 병력 %.1f%%(나라) · 전사 %d(장수의 %.0f%%) · 다음 출진 %s" % [gk, roster_before, troops, String(at2.get("grid", "")), "함락" if at2.get("won", false) else "짐",
+					100.0 * float(lost2) / float(pre2.total), fallen.size(), 100.0 * float(fallen.size()) / float(roster_before),
+					"—(함락)" if at2.get("won", false) else (("조작 %d" % ops) if can else "다시 못 침(장수 없음 — 등용부터)")]
+				print("  잰값 ④ ", line)
+				if gk == "auto" or gk == "lose":
+					t_summary.append(line)
+	print("잰값 요약 ④ — ", " | ".join(t_summary))
 	# 되돌리기
 	for v in SAVED:
 		S.set(v, saved[v])
