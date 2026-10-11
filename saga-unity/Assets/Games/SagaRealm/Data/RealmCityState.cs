@@ -56,6 +56,8 @@ namespace Saga.Realm.Data
         public static IReadOnlyList<Annal> Annals => _annals;
         public static bool IsHurt(string officerId) => _hurt.TryGetValue(officerId, out var m) && m > 0;
         public static int HurtMonths(string officerId) => _hurt.TryGetValue(officerId, out var m) ? m : 0;
+        /// <summary>tasks U-0098 — 격자 전술판에서 전사해 열전에 오른 장수(수색·등용·합류로 다시 들지 않는다 — R-5 리뷰).</summary>
+        public static bool IsDead(string officerId) => _annals.Exists(a => a.Id == officerId);
 
         /// <summary>tasks U-0098 — 중상 달 수(0 이하면 풂). 다친 장수는 출진·계략에서 빠진다(`RealmWarState.MarchOfficers`·`BestPlotter`).</summary>
         public static void SetHurt(string officerId, int months)
@@ -71,6 +73,7 @@ namespace Saga.Realm.Data
             RealmMounts.Equip(officerId, null); // 명단에서 빼기 전에(Mine 검사) — 탄 말이 없으면 이유만 돌아온다
             _roster.Remove(officerId);
             _officerCity.Remove(officerId);
+            _foundIds.Remove(officerId); // 찾아 둔 사람 목록에 남으면 지도 나그네·등용 후보로 되살아난다(R-5 리뷰)
             _doneThisMonth.Remove(officerId);
             _hurt.Remove(officerId);
             _annals.RemoveAll(a => a.Id == officerId);
@@ -396,7 +399,7 @@ namespace Saga.Realm.Data
             var hidden = new List<RealmOfficer>();
             foreach (var id in RealmOfficerPool.HiddenAt(CurrentCity))
             {
-                if (_foundIds.Contains(id) || _roster.Contains(id)) continue;
+                if (_foundIds.Contains(id) || _roster.Contains(id) || IsDead(id)) continue;
                 hidden.Add(RealmOfficerPool.Get(id));
             }
             if (hidden.Count == 0) return new OrderResult(true, RealmLocalization.T("order.search_none", "더 찾을 사람이 없다"));
@@ -449,7 +452,7 @@ namespace Saga.Realm.Data
         /// <summary>PLAN.md 109-5 퓨전 사연 둘째 단 — 이계 무장이 그 성에 합류한다. 이미 로스터에 있으면 false.</summary>
         public static bool JoinOfficer(string officerId, string cityId)
         {
-            if (_roster.Contains(officerId) || RealmOfficerPool.Get(officerId) == null || !_cities.ContainsKey(cityId)) return false;
+            if (_roster.Contains(officerId) || IsDead(officerId) || RealmOfficerPool.Get(officerId) == null || !_cities.ContainsKey(cityId)) return false;
             _roster.Add(officerId);
             _officerCity[officerId] = cityId;
             Changed?.Invoke();

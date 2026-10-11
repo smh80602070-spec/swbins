@@ -77,14 +77,10 @@ namespace Saga.Realm.World
 
         /* ── 열기·닫기 ── */
 
-        /// <summary>판을 연다 — 칠 수 없는 출진(목표 없음·함락·장수·병력 500·군량)이면 null(부르는 쪽이 그냥 출진해 Attack 이 이유를 말한다).
-        /// done = 끝나면 보정값, 물러나면 null. instant = 연출 없이(진단).</summary>
+        /// <summary>판을 연다 — 칠 수 없는 출진(`RealmWarState.MarchBlock`)이면 null(부르는 쪽이 그냥 출진해 Attack 이 이유를 말한다).
+        /// done = 끝나면 보정값, 아무것도 안 하고 물러나면 null(= 출진 취소). instant = 연출 없이(진단).</summary>
         public static RealmTacticsView Open(string fromCityId, string enemyId, Action<T.Bonus> done, bool instant = false)
         {
-            var city = RealmCityState.CityRecord(fromCityId);
-            if (city == null || city.Troops < 500) return null;
-            int need = Mathf.RoundToInt(city.Troops / 1000f * RealmCityState.FoodPer1000 * 2f); // RealmWarState.Attack 과 같은 문턱
-            if (city.Food < need) return null;
             var b = T.Open(fromCityId, enemyId);
             if (b == null) return null;
             Close();
@@ -166,6 +162,9 @@ namespace Saga.Realm.World
             Cam.nearClipPlane = 0.3f;
             Cam.farClipPlane = 80f;
             Cam.depth = 50f;
+            // 판이 화면을 다 덮으니 밑의 지도 카메라는 끈다 — 안 보이는 그리기 낭비(R-5 리뷰, 화질은 그대로).
+            foreach (var c in FindObjectsByType<Camera>(FindObjectsSortMode.None))
+                if (c != Cam && c.enabled) { c.enabled = false; _paused.Add(c); }
 
             // 다른 캔버스(명령·HUD·알림)와 성 카메라 입력을 멈춘다 — 판 위 클릭이 지도를 돌리거나 명령 단추를 누르지 않게.
             // 일시정지 메뉴(Esc)는 남긴다 — 숨기면 시간이 멈춘 채 메뉴가 안 보인다.
@@ -217,12 +216,39 @@ namespace Saga.Realm.World
             else if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.wasPressedThisFrame) press = Touchscreen.current.primaryTouch.position.ReadValue();
             if (!press.HasValue) return;
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return; // 단추 위
-            var ray = Cam.ScreenPointToRay(press.Value);
-            if (Mathf.Abs(ray.direction.y) < 1e-4f) return;
-            float d = (transform.position.y - ray.origin.y) / ray.direction.y;
-            if (d <= 0f) return;
-            var cell = CellOf(ray.origin + ray.direction * d - transform.position);
+            var cell = PickCell(press.Value);
             if (cell.x >= 0) Tap(cell.x, cell.y);
+        }
+
+        /// <summary>화면 점 → 칸. ① 몸 — 키 절반 자리가 화면에서 칸 너비 반 안이면 그 유닛 칸 ② 땅 — 칸마다 제 윗면 높이 평면과 만나는 점이
+        /// 그 칸 안인 것 중 카메라에 가장 가까운 칸(높이를 무시하면 몸·성벽을 누를 때 뒤 칸이 잡혔다 — R-5 리뷰). 없으면 (−1, −1).</summary>
+        public Vector2Int PickCell(Vector2 screen)
+        {
+            var o = transform.position;
+            float cellPx = (Cam.WorldToScreenPoint(o + CellCenter(1, 0)) - Cam.WorldToScreenPoint(o + CellCenter(0, 0))).magnitude;
+            float best = cellPx * 0.5f;
+            var hit = new Vector2Int(-1, -1);
+            foreach (var u in Board.Units)
+            {
+                if (u.Hp <= 0 || !_figs.TryGetValue(u.Uid, out var fig) || fig == null || !fig.gameObject.activeSelf) continue;
+                var p = Cam.WorldToScreenPoint(fig.transform.position + Vector3.up * fig.Height * 0.5f);
+                if (p.z <= 0f) continue;
+                float d = Vector2.Distance(p, screen);
+                if (d < best) { best = d; hit = new Vector2Int(u.X, u.Y); }
+            }
+            if (hit.x >= 0) return hit;
+            var ray = Cam.ScreenPointToRay(screen);
+            if (Mathf.Abs(ray.direction.y) < 1e-4f) return hit;
+            float near = float.MaxValue;
+            for (int y = 0; y < T.Rows; y++)
+                for (int x = 0; x < T.Cols; x++)
+                {
+                    float top = o.y + Height(T.CellAt(Board, x, y).Value);
+                    float d = (top - ray.origin.y) / ray.direction.y;
+                    if (d <= 0f || d >= near) continue;
+                    if (CellOf(ray.origin + ray.direction * d - o) == new Vector2Int(x, y)) { near = d; hit = new Vector2Int(x, y); }
+                }
+            return hit;
         }
 
         private void LateUpdate()
@@ -288,10 +314,15 @@ namespace Saga.Realm.World
             Play(DelegateRun(), AfterStep);
         }
 
-        /// <summary>물러남(단추) — 보정 없이 판을 닫는다(부르는 쪽은 그냥 출진).</summary>
+        /// <summary>한 번이라도 옮기거나 쳤는가(턴이 넘어갔는가).</summary>
+        public bool Engaged => Board.Turn > 1 || Board.Log.Count > 0 || Board.Units.Exists(u => u.Side == "me" && u.Moved);
+
+        /// <summary>「취소 — 물러남」 — 아무것도 안 했으면 출진 취소(콜백 null), 이미 맞붙었으면 **패**(웹 lose −25%·쓰러진 장수 그대로) —
+        /// 지는 판을 물러나서 벌칙 없이 빠져나가지 못하게(R-5 리뷰).</summary>
         public void Retreat()
         {
-            if (_closing) return;
+            if (_closing || _busy) return;
+            if (Engaged) { Board.Done = "lose"; Finish(); return; }
             Complete(null);
         }
 
@@ -528,7 +559,8 @@ namespace Saga.Realm.World
             string city = RealmEnemyCity.Get(Board.EnemyId)?.Name ?? Board.EnemyId;
             string head = string.Format(RealmLocalization.T("tactics.head", "♟️ 전술판 — {0} · {1}/{2}턴"), city, Mathf.Min(Board.Turn, T.Turns), T.Turns);
             string hint = _busy ? RealmLocalization.T("tactics.hint_busy", "움직이는 중…")
-                : Selected == null ? RealmLocalization.T("tactics.hint_pick", "파랑 원 장수를 고르세요 · 다 두면 「턴 끝」")
+                : Selected == null ? RealmLocalization.T(Engaged ? "tactics.hint_pick2" : "tactics.hint_pick",
+                    Engaged ? "파랑 원 장수를 고르세요 · 다 두면 「턴 끝」 · 이제 물러나면 패" : "파랑 원 장수를 고르세요 · 다 두면 「턴 끝」 · 지금 물러나면 출진 취소")
                 : RealmLocalization.T("tactics.hint_act", "하늘빛 칸 = 갈 곳 · 붉은 판 = 칠 적(명중 %)");
             _info.text = head + "\n" + hint;
             ClearMarks();

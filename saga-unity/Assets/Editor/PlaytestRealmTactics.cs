@@ -180,7 +180,8 @@ namespace Saga.EditorTools
                 // ⑧ 전사 · ⑨ 중상 · ⑩ 군주
                 {
                     RealmSaveState.ApplyJson(json1);
-                    string dead = tester[0], hurt = tester[1], lord = RealmOfficerPool.StartingOfficerId;
+                    string dead = tester[0], hurt = tester[1], lord = RealmWarState.Lord();
+                    if (lord == null) { Fail("군주 없음(수도 장수·시작 장수 둘 다 없음)"); lord = tester[0]; }
                     int annals0 = RealmCityState.Annals.Count;
                     var g = new U.Bonus { Kind = "lose", WinPct = -25 };
                     g.Fallen.Add(dead); g.Fallen.Add(lord); g.Wounded.Add((hurt, U.WoundMonths));
@@ -191,7 +192,9 @@ namespace Saga.EditorTools
                     var an = RealmCityState.Annals.Where(a => a.Id == dead).ToList();
                     if (an.Count != 1 || an[0].Where != enemy || an[0].Year != RealmCityState.Year || an[0].Month != RealmCityState.Month || RealmCityState.Annals.Count != annals0 + 1) Fail("열전 기록");
                     if (!RealmCityState.RosterIds.Contains(lord) || RealmCityState.HurtMonths(lord) != 3) Fail("군주는 중상 3달이어야");
-                    if (!RealmWarState.IsLord(RealmSuccessionState.FindCapitalOfficer())) Fail("수도 장수가 군주 아님");
+                    if (!RealmWarState.IsLord(lord) || RealmWarState.IsLord(tester[1])) Fail("군주 = 수도 장수 하나");
+                    // R-5 리뷰 — 전사자는 찾은 사람 목록에서 빠지고, 합류로 되살아나지 않는다
+                    if (RealmCityState.FoundIds.Contains(dead) || !RealmCityState.IsDead(dead) || RealmCityState.JoinOfficer(dead, from)) Fail("전사자가 다시 들 수 있음");
                     if (RealmCityState.HurtMonths(hurt) != 3 || !r.Message.Contains("⚰️") || !r.Message.Contains("🩹")) Fail("중상·전투 글");
 
                     // ⑪ 세이브 왕복(이 상태 그대로)
@@ -286,9 +289,36 @@ namespace Saga.EditorTools
             var dest = U.Moves(v.Board, mu.Uid).First(c => c.x != mu.X || c.y != mu.Y);
             v.Tap(dest.x, dest.y);
             if (mu.X != dest.x || mu.Y != dest.y || !mu.Moved) Fail($"옮기기 ({mu.X},{mu.Y}) ≠ ({dest.x},{dest.y})");
-            v.Retreat();
-            if (!called || got != null || V.Active != null) Fail("물러남 → 콜백 null·판 닫힘");
+            if (!v.Engaged) Fail("옮긴 뒤 Engaged 아님");
+            v.Retreat();   // 맞붙은 뒤 물러남 = 패(R-5 리뷰)
+            if (!called || got == null || got.Kind != "lose" || got.WinPct != -25 || V.Active != null) Fail($"맞붙은 뒤 물러남 → 패여야 ({got?.Kind})");
             if (EnabledRootCanvases() != canv0) Fail($"캔버스 되돌림 {EnabledRootCanvases()} ≠ {canv0}");
+            called = false; got = null;
+            v = V.Open(from, enemy, g => { called = true; got = g; }, instant: true);
+            int cams = Object.FindObjectsByType<Camera>(FindObjectsSortMode.None).Count(c => c.enabled);
+            if (cams != 1) Fail($"판이 열린 동안 켜진 카메라 {cams} ≠ 1(판 카메라만)");
+            if (v.Engaged) Fail("새 판인데 Engaged");
+            v.Retreat();   // 아무것도 안 하고 물러남 = 출진 취소(콜백 null)
+            if (!called || got != null || V.Active != null) Fail("손대기 전 물러남 → 콜백 null(취소)");
+            // 클릭 — 몸(키 절반 자리)을 누르면 그 유닛 칸, 칸 윗면 가운데를 누르면 그 칸(높이 반영)
+            v = V.Open(from, enemy, null, instant: true);
+            var fu = v.Board.Units.First(u => u.Side == "foe");
+            var fig = v.transform.Find(fu.Uid);
+            if (fig != null)
+            {
+                var sp = v.Cam.WorldToScreenPoint(fig.position + Vector3.up * 0.6f);
+                if (v.PickCell(sp) != new Vector2Int(fu.X, fu.Y)) Fail($"몸 클릭 {v.PickCell(sp)} ≠ ({fu.X},{fu.Y})");
+            }
+            for (int y = 0; y < U.Rows; y++)
+                for (int x = 0; x < U.Cols; x++)
+                {
+                    if (v.Board.Units.Exists(u => u.Hp > 0 && Mathf.Abs(u.X - x) + Mathf.Abs(u.Y - y) <= 1)) continue; // 몸 둘레는 몸 판정이 먼저
+                    if (y + 1 < U.Rows && V.Height(U.CellAt(v.Board, x, y + 1).Value) > V.Height(U.CellAt(v.Board, x, y).Value)) continue; // 카메라 쪽 앞 칸이 더 높으면(성벽) 가려진다 — 앞 칸이 잡히는 게 맞다
+                    var top = v.transform.position + V.CellCenter(x, y) + Vector3.up * V.Height(U.CellAt(v.Board, x, y).Value);
+                    var c = v.PickCell(v.Cam.WorldToScreenPoint(top));
+                    if (c != new Vector2Int(x, y)) Fail($"칸 윗면 클릭 ({x},{y}) → {c}");
+                }
+            V.Close();
 
             // ③ 맡기기 = 같은 씨앗 AutoPlay
             called = false; got = null;
@@ -299,7 +329,7 @@ namespace Saga.EditorTools
             if (!called || got == null || got.Kind != want.Kind || got.WinPct != want.WinPct || !got.Fallen.SequenceEqual(want.Fallen)) Fail($"맡기기 {got?.Kind} ≠ AutoPlay {want.Kind}");
             if (V.Active != null) Fail("맡기기 뒤 판이 안 닫힘");
 
-            // ④ 토글 배선 — 켜고 출진하면 판이 먼저 열리고, 물러나면 보정 없이 출진한다
+            // ④ 토글 배선 — 켜고 출진하면 판이 먼저 열리고, 손대기 전 물러나면 출진을 거두며, 맞붙은 뒤 물러나면 패 보정으로 출진한다
             RealmSaveState.ApplyJson(json1);
             var ui = Object.FindFirstObjectByType<Saga.Realm.UI.RealmCommandUi>();
             if (ui == null) Fail("RealmCommandUi 없음");
@@ -318,13 +348,26 @@ namespace Saga.EditorTools
                 t.GetMethod("BeginAttackFlow", Any).Invoke(ui, new object[] { enemy, true });
                 if (V.Active == null || RealmCityState.CityRecord(from).Troops != troops0) Fail("토글 켜고 출진 → 판이 먼저 열려야(아직 출진 전)");
                 V.Active?.Retreat();
-                if (V.Active != null || RealmCityState.CityRecord(from).Troops == troops0) Fail("물러난 뒤 보정 없이 출진해야(병력이 나갔어야)");
+                if (V.Active != null || RealmCityState.CityRecord(from).Troops != troops0) Fail("손대기 전 물러나면 출진을 거둬야(병력 그대로)");
+                t.GetMethod("BeginAttackFlow", Any).Invoke(ui, new object[] { enemy, true });
+                var av = V.Active;
+                if (av == null) Fail("다시 출진 → 판이 열려야");
+                else
+                {
+                    typeof(V).GetField("_instant", Any).SetValue(av, true);
+                    var mu2 = av.Board.Units.First(u => u.Side == "me");
+                    av.Tap(mu2.X, mu2.Y);
+                    var d2 = U.Moves(av.Board, mu2.Uid).First(c => c.x != mu2.X || c.y != mu2.Y);
+                    av.Tap(d2.x, d2.y);
+                    av.Retreat();
+                    if (V.Active != null || RealmCityState.CityRecord(from).Troops == troops0) Fail("맞붙은 뒤 물러나면 패 보정으로 출진해야(병력이 나갔어야)");
+                }
                 Saga.Realm.World.RealmBattlefield.Hide();
                 t.GetMethod("ToggleGrid", Any).Invoke(ui, null);
                 t.GetField("_duelEnabled", Any).SetValue(ui, duel0);
                 typeof(RealmCityState).GetProperty("CurrentCity").SetValue(null, cur0);
             }
-            m += " · 판 화면 칸 변환·고르기·옮기기·물러남·맡기기=AutoPlay·토글 배선";
+            m += " · 판 화면 칸 변환·고르기·옮기기·물러남(취소/패)·카메라 하나·클릭 높이·맡기기=AutoPlay·토글 배선";
             return ok && _ok;
         }
 

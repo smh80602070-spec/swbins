@@ -1044,12 +1044,20 @@ namespace Saga.Realm.UI
             _pendingAttackEnemyId = enemyId;
             _pendingAttackHasEnemyId = hasEnemyId;
             _pendingGrid = null;
-            // tasks U-0099 — 전술판이 켜져 있고 칠 수 있는 출진이면 판 먼저(물러나면 보정 없이 그대로 출진). 못 여는 출진은 지금 흐름이 이유를 말한다.
-            if (_gridEnabled && Saga.Realm.World.RealmTacticsView.Open(RealmCityState.CurrentCity, enemyId, g => { _pendingGrid = g; ContinueAttackFlow(); }) != null)
+            // tasks U-0099 — 전술판이 켜져 있고 칠 수 있는 출진이면 판 먼저. 아무것도 안 하고 물러나면(null) 출진을 거둔다(R-5 리뷰 — 「취소」인데 나가던 것),
+            // 맞붙은 뒤 물러나면 판이 패로 끝낸다. 못 여는 출진은 지금 흐름이 이유를 말한다.
+            if (_gridEnabled && Saga.Realm.World.RealmTacticsView.Open(RealmCityState.CurrentCity, enemyId, OnGridDone) != null)
             {
                 CloseAllPanels();
                 return;
             }
+            ContinueAttackFlow();
+        }
+
+        private void OnGridDone(RealmTactics.Bonus g)
+        {
+            if (g == null) { RealmToast.Instance?.Show(RealmLocalization.T("tactics.cancelled", "♟️ 출진을 거뒀다 — 병력·군량·장수 그대로"), 4f); return; }
+            _pendingGrid = g;
             ContinueAttackFlow();
         }
 

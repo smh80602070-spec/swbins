@@ -76,23 +76,15 @@ namespace Saga.Realm.Data
         /// (<see cref="RealmTactics.Apply"/>)의 보정값: 공 위력 ×(1+winPct/100)·받는 피해 ×lossMul·전사·중상. null 이면 지금 그대로.</summary>
         public static AttackResult Attack(string fromCityId, string enemyId = null, bool useTactic = false, float duelPowerMul = 1f, RealmTactics.Bonus grid = null)
         {
-            if (enemyId == null) enemyId = RealmEnemyCity.TargetFrom(fromCityId);
-            else if (!RealmEnemyCity.TargetsFrom(fromCityId).Contains(enemyId)) enemyId = null;
-            if (enemyId == null) return new AttackResult(false, RealmLocalization.T("war.err_no_target", "이 성에서는 칠 적국이 없습니다"));
+            string block = MarchBlock(fromCityId, ref enemyId);
+            if (block != null) return new AttackResult(false, block);
 
             var def = RealmEnemyCity.Get(enemyId);
             var enemy = _enemies[enemyId];
-            if (enemy.Captured) return new AttackResult(false, RealmLocalization.T("war.err_already_captured", "이미 함락한 성입니다"));
-
             var city = RealmCityState.CityRecord(fromCityId);
             int troops = city.Troops;
-            if (troops < 500) return new AttackResult(false, RealmLocalization.T("war.err_too_few_troops", "오백은 넘겨야 군대라 하지요"));
-
             int need = Mathf.RoundToInt(troops / 1000f * RealmCityState.FoodPer1000 * 2f);
-            if (city.Food < need) return new AttackResult(false, string.Format(RealmLocalization.T("war.err_no_food", "군량이 모자랍니다 ({0} 필요)"), need));
-
             var officers = MarchOfficers(fromCityId);
-            if (officers.Count == 0) return new AttackResult(false, RealmLocalization.T("order.err_no_officer_here", "이 성에서 명령을 쓸 수 있는 무장이 없습니다"));
 
             // 출진 — 병력 전군·군량 need만큼 미리 나간다(war.js와 같은 순서).
             city.Troops = 0;
@@ -158,6 +150,32 @@ namespace Saga.Realm.Data
             return new AttackResult(true, message, result.Won, enemyId, troops, atk.Troops, defArmy.Start, defArmy.Troops, charge);
         }
 
+        /// <summary>출진을 막는 까닭(없으면 null) — <see cref="Attack"/> 앞머리 검사 그대로(순서·글), 격자 전술판(`RealmTactics.Open`)도 이것으로
+        /// 판을 열지 정한다(R-5 리뷰 — 조건을 두 곳에 베끼지 않게). `enemyId` 는 null 이면 그 성의 목표로, 못 치는 목표면 null 로 바뀐다.</summary>
+        public static string MarchBlock(string fromCityId, ref string enemyId)
+        {
+            if (enemyId == null) enemyId = RealmEnemyCity.TargetFrom(fromCityId);
+            else if (!RealmEnemyCity.TargetsFrom(fromCityId).Contains(enemyId)) enemyId = null;
+            if (enemyId == null) return RealmLocalization.T("war.err_no_target", "이 성에서는 칠 적국이 없습니다");
+            if (_enemies[enemyId].Captured) return RealmLocalization.T("war.err_already_captured", "이미 함락한 성입니다");
+            var city = RealmCityState.CityRecord(fromCityId);
+            if (city == null) return RealmLocalization.T("war.err_no_target", "이 성에서는 칠 적국이 없습니다");
+            if (city.Troops < 500) return RealmLocalization.T("war.err_too_few_troops", "오백은 넘겨야 군대라 하지요");
+            int need = Mathf.RoundToInt(city.Troops / 1000f * RealmCityState.FoodPer1000 * 2f);
+            if (city.Food < need) return string.Format(RealmLocalization.T("war.err_no_food", "군량이 모자랍니다 ({0} 필요)"), need);
+            if (MarchOfficers(fromCityId).Count == 0)
+            {
+                // 다친 장수만 남았으면 그렇게 말한다(R-5 리뷰 — 같은 장수가 다른 명령은 내릴 수 있어 헷갈렸다).
+                int hurt = 0, months = 0;
+                foreach (var id in RealmCityState.RosterIds)
+                    if (RealmCityState.OfficerCityId(id) == fromCityId && !RealmCityState.IsOfficerDone(id) && RealmCityState.IsHurt(id)) { hurt++; months = Mathf.Max(months, RealmCityState.HurtMonths(id)); }
+                return hurt > 0
+                    ? string.Format(RealmLocalization.T("war.err_hurt", "이 성 무장은 다쳐 나갈 수 없습니다 (🩹 {0}명 · {1}달)"), hurt, months)
+                    : RealmLocalization.T("order.err_no_officer_here", "이 성에서 명령을 쓸 수 있는 무장이 없습니다");
+            }
+            return null;
+        }
+
         /// <summary>출진할 장수 — 그 성에 있고 이 달 명령을 안 썼고 다치지 않은(tasks U-0098 중상) 우리 장수, 명단 순서.
         /// <see cref="Attack"/> 와 격자 전술판(<see cref="RealmTactics.Open"/>)이 같은 목록을 쓴다.</summary>
         public static List<string> MarchOfficers(string fromCityId)
@@ -214,9 +232,17 @@ namespace Saga.Realm.Data
             }
         }
 
-        /// <summary>군주 — 판이 끝나지 않게 전사 대신 중상(웹 marchApply). 이 트랙엔 군주 칸이 없어 수도 장수·시작 장수·명단 하나뿐을 군주로 친다.</summary>
-        public static bool IsLord(string id) =>
-            id == RealmOfficerPool.StartingOfficerId || id == RealmSuccessionState.FindCapitalOfficer() || RealmCityState.RosterIds.Count <= 1;
+        /// <summary>군주 — 판이 끝나지 않게 전사 대신 중상(웹 marchApply). 이 트랙엔 군주 칸이 없어 계승(`RealmSuccessionState`)이 보는 수도 장수,
+        /// 수도가 비었으면 시작 장수(명단에 있을 때) **한 사람**만 군주로 친다(둘 다 지키면 계승 뒤 군주가 둘이 됐다 — R-5 리뷰). 명단 하나뿐이면 누구든.</summary>
+        public static string Lord()
+        {
+            string cap = RealmSuccessionState.FindCapitalOfficer();
+            if (cap != null) return cap;
+            foreach (var id in RealmCityState.RosterIds) if (id == RealmOfficerPool.StartingOfficerId) return id;
+            return null;
+        }
+
+        public static bool IsLord(string id) => RealmCityState.RosterIds.Count <= 1 || id == Lord();
 
         /// <summary>PLAN.md 101-2 5-6 "지형·진형 전술 개입" — 웹판(`saga-web/saga-realm/PLAN.md`
         /// 107행)은 지형 4종(산·숲·평야·강) 전술 4개 + 진형 수동 선택까지

@@ -405,18 +405,14 @@ namespace Saga.Realm.Data
         /* ── Unity 배선 ── */
 
         /// <summary>그 성에서 그 적 성을 칠 판을 연다 — 내 편 = Attack() 이 데려갈 장수 앞 셋, 적 = 부대 둘(병력 반씩, 셋째는 3000).
-        /// 씨앗 `적 성|달`. 칠 수 없으면 null(목표 없음·함락됨·장수 없음).</summary>
+        /// 씨앗 `적 성|달`. 칠 수 없으면 null(`RealmWarState.MarchBlock` — 목표·함락·병력·군량·장수).</summary>
         public static Board Open(string fromCityId, string enemyId = null)
         {
-            if (enemyId == null) enemyId = RealmEnemyCity.TargetFrom(fromCityId);
-            else if (!RealmEnemyCity.TargetsFrom(fromCityId).Contains(enemyId)) enemyId = null;
-            if (enemyId == null) return null;
+            if (RealmWarState.MarchBlock(fromCityId, ref enemyId) != null) return null; // Attack 이 거절할 출진은 판을 안 연다(R-5 — 조건 한 곳)
             var def = RealmEnemyCity.Get(enemyId);
             var rec = RealmWarState.Get(enemyId);
-            if (def == null || rec == null || rec.Captured) return null;
             var mine = RealmWarState.MarchOfficers(fromCityId);
-            if (mine.Count == 0) return null;
-            int n = Math.Max(1, Math.Min(2, 5 - 0));
+            const int n = 2;   // 웹 marchGrid max(1, min(2, 5 − 적 장수)) — 이 트랙 적 성엔 장수가 없어 늘 둘
             var tr = new List<int>();
             for (int k = 0; k < n; k++) tr.Add(JsRound(rec.Troops / (double)n));
             var b = MakeBoard(enemyId + "|" + RealmScenario.TurnNow, LandKey(def.Land), rec.Wall > 0);
