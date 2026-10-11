@@ -5,6 +5,7 @@ const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const Voice := preload("res://saga_core/audio/voice.gd")   # G-0111 대사 음성
 const HURT_SHAKE_M := 0.12   # G-0192 맞을 때 세계 흔들림
 const HURT_SHAKE_SEC := 0.18
+const HurtVignette := preload("res://saga_core/ui/hurt_vignette.gd")   # G-0203
 
 ## 사가종횡 플레이어 코어 — 이동·피해·상태·_physics_process. 상태 변수는 story_player_base.gd, 무예 `_cast_*` 는 story_skills_*.gd (상속 사슬, G-0007).
 
@@ -31,7 +32,13 @@ func take_damage(amount: float) -> void:
 	var guard_mul: float = (1.0 - _job_buff_guard) if _job_buff_time_left > 0.0 else 1.0
 	## PLAN 101-2 STORY ⑤(비경) — 방어 축 은사(철벽)의 dmg_taken_mult(),
 	## 회차 밖이면 boons가 비어 있어 1.0(무해).
+	var before := hp
 	hp = clampf(hp - amount * (1.0 - cut) * guard_mul * StoryLabyrinthState.dmg_taken_mult(), 0.0, max_hp)
+	## G-0203 — 붉은 숫자·몸 번쩍(흔들림은 아래 G-0192 것만) + 가장자리 붉게(맥박은 hp setter).
+	if visual != null and before > hp:
+		CombatFeel.hit(visual, before - hp, false, {"shake_mul": 0.0})
+	if is_instance_valid(_hv):
+		_hv.flash()
 	StorySaveState.note_hurt()   # G-0197 사냥터 결과 등급 — 피격 수·연속 끊김
 	## G-0192 — 맞으면 세계가 흔들린다(때릴 때의 combat_feel 0.06m·120ms 보다 세게)
 	var rig := get_tree().get_first_node_in_group("camera_rig") if is_inside_tree() else null
@@ -72,6 +79,13 @@ func _ready() -> void:
 	var mount_node := Node3D.new()
 	mount_node.set_script(load("res://saga_core/player/mount.gd"))
 	add_child(mount_node)
+	_attach_vignette.call_deferred()
+
+
+func _attach_vignette() -> void:
+	if is_inside_tree():
+		_hv = HurtVignette.attach(get_tree())
+		hp = hp # 맥박 상태 처음 맞춤(setter)
 
 
 func _physics_process(delta: float) -> void:

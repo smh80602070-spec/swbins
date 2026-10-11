@@ -59,6 +59,7 @@ const CUTS := [
 		["static", LOOT, "spawn_at", ["@scene", "@near:-2.6:-5.2", 30, false, false, 1.0]], ["static", LOOT, "spawn_at", ["@scene", "@near:0:-6.6", 30, false, false, 1.0]]]],
 	["st_offer", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_offer.gd", "stage", ["@tree"]]]],   # G-0197 레벨업 무예 3택 창
 	["st_skill_fx", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "stage", ["@tree"]]]],   # G-0201 4종횡 무예 시전 그림 — 선풍(금 원환) + 전우(파랑 물보라)·피해 숫자, 촬영 직전 시전
+	["st_hurt", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "hurt", ["@tree"]]]],   # G-0203 4종횡 내가 맞았다
 	["st_field_front", "res://games/saga_story/world/TestField.tscn", [["free_modal"]]],   # G-0187 사냥터 — 앞 층 풀·바위·큰 인물(화면 높이 약 1/7)
 	["st_forest_front", "res://games/saga_story/world/ForestHuntGround.tscn", [["free_modal"]]],   # 숲 사냥터도
 	["st_ladder", STORY_CAVE, [["near", "LadderArea", -1.4, 0.0]]],
@@ -94,6 +95,7 @@ const CUTS := [
 	["dg_skill_slots", DUNGEON, [["static", "res://tools/shot_dungeon_belt.gd", "slots", ["@tree"]], ["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", 1.0]]]],   # G-0198 무예 넉 자리 단추(Z·X·C·V) — 무장 넷을 건 첫 방
 	["dg_emp_skills", DUNGEON, [["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", 1.0]], ["static", "res://tools/shot_dungeon_belt.gd", "emp", ["@tree"]]]],   # G-0199 무장 전자 갈래 넷을 건 자리 단추 + 전자진 한 번(G-0200 분홍 원환·지지직 + 피해 숫자, 촬영 직전 시전)
 	["dg_summon", DUNGEON, [["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", 1.0]], ["static", "res://tools/shot_dungeon_belt.gd", "summon", ["@tree"]]]],   # G-0202 소환수 몸 — 군견·매·토우·분신(반투명 내 몸)이 적 곁에서 때림
+	["dg_hurt", DUNGEON, [["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", 1.0]], ["static", "res://tools/shot_dungeon_belt.gd", "hurt", ["@tree"]]]],   # G-0203 내가 맞았다 — 가장자리 붉음·붉은 숫자(체력 25% 근처 맥박)
 	["dg_fire_skills", DUNGEON, [["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", 1.0]], ["static", "res://tools/shot_dungeon_belt.gd", "fire", ["@tree"]]]],   # G-0200 폭염진(주황 원환·불씨) + 화창(궤적·불꽃)
 	["dg_story", DUNGEON, [["free_modal"]]],
 	["dg_room_wide", DUNGEON, [["free_modal"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 14.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-40.0, 0.0, 0.0)]]],   # G-0112 첫 방 전체(어두움 판정)   # G-0085 사가나락 이야기 첫 대화(새 판 — 출사표 창을 닫으면 뜬다)

@@ -32,3 +32,11 @@ static func stage(tree: SceneTree) -> void:
 		if n[0] >= CAST_AT + 4:
 			tree.process_frame.disconnect(cb[0]) # 다음 컷에서 씬이 바뀌면 p 가 지워진다
 	tree.process_frame.connect(cb[0])
+
+
+## G-0203 — 촬영 4프레임 전에 맞는다(체력 27% 에서 — 가장자리 번쩍 + 붉은 숫자 + 맥박). 플레이어가 곧 체력 주인이다.
+static func hurt(tree: SceneTree) -> void:
+	for m in tree.get_nodes_in_group("ui_modal"):
+		m.queue_free()
+	var Belt: GDScript = load("res://tools/shot_dungeon_belt.gd")
+	Belt.call("_hurt_at", tree, tree.get_first_node_in_group("player"))

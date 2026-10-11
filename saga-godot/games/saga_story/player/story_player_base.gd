@@ -275,7 +275,15 @@ var _job_buff_speed_mul := 1.0
 ## 있으므로 로드 직후 story_save_state.gd::try_load()가 hp를 새 max_hp로
 ## 채워 준다(안 그러면 이전 세션 보너스가 반영되기 전 기본치로 시작해
 ## 잠깐 어긋난다).
-var hp := StoryCombat.START_HP
+## G-0203 — 체력이 바뀌는 곳(피해·회복 무예 일곱·비경 회복)이 여럿이라 setter 한 곳에서 가장자리 맥박을 다시 본다.
+var hp := StoryCombat.START_HP:
+	set(v):
+		hp = v
+		if is_instance_valid(_hv):
+			_hv.set_low(hp > 0.0 and hp < max_hp * LOW_HP)
+const LOW_HP := 0.3 # 1만리 field_combat·2나락 player_health 와 같은 값
+## G-0203 화면 가장자리 신호(saga_core/ui/hurt_vignette.gd) — Node 라 probe_story_golden 해시(기본형 var 만)에 안 들어간다.
+var _hv: Node = null
 
 ## PLAN 101-2 STORY ⑤(비경, 2026-09-18) — StorySaveState.memory_hp_mult()가
 ## 곱한다(영구 강화 단수, 비경 밖에서도 항상 적용 — 은사와 달리 회차 한정이

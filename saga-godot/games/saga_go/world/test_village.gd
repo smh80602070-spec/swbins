@@ -37,7 +37,7 @@ func _ready() -> void:
 	add_child(preload("res://saga_core/ui/orientation_scale.gd").new())
 	add_child(preload("res://games/saga_go/world/go_bgm.gd").new())  # 배경음(G-0011) — 지역 보고 곡 고름, 곡 없으면 조용
 	add_child(preload("res://games/saga_go/ui/boss_bar.gd").new())   # G-0161 — 보스 곁이면 화면 위 보스 바
-	add_child(preload("res://games/saga_go/ui/hurt_vignette.gd").new())   # G-0171 — 내가 맞으면 가장자리 붉게·체력 낮으면 맥박
+	add_child(preload("res://saga_core/ui/hurt_vignette.gd").new())   # G-0171 — 내가 맞으면 가장자리 붉게·체력 낮으면 맥박
 	add_child(preload("res://games/saga_go/world/go_sfx.gd").new())   # G-0177 — 1만리 효과음(무기별 타격·상자·임무·요리·낚시·UI)
 	if _any_probe():
 		PartyState.party_size = PartyState.PARTY_MAX

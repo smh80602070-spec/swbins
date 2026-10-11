@@ -4,6 +4,7 @@ extends CanvasLayer
 ##   flash()        — 화면 가장자리가 FLASH_SEC 동안 붉게 번쩍(field_combat.take_damage 가 부름)
 ##   set_low(bool)  — 지금 인물 체력이 낮으면 가장자리가 PULSE_SEC 주기로 옅게 맥박(field_combat._refresh_hud 가 부름)
 ## 가운데(INNER) 는 늘 투명 — 싸우는 자리를 가리지 않는다. test_village.gd 가 단다, 그룹 go_hurt_vignette.
+## G-0203 — saga_core 로 옮김. 2나락(player_health)·4종횡(story_player)은 그룹 hurt_vignette 로 찾고, 없으면 지금 씬에 하나 붙인다(attach).
 
 const FLASH_SEC := 0.3
 const FLASH_A := 0.42
@@ -34,6 +35,7 @@ var _pulse_t := 0.0
 func _ready() -> void:
 	layer = 3
 	add_to_group("go_hurt_vignette")
+	add_to_group("hurt_vignette")
 	_rect = ColorRect.new()
 	_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -46,6 +48,16 @@ func _ready() -> void:
 	_rect.visible = false
 	add_child(_rect)
 	set_process(false)
+
+
+## 지금 씬에 하나만 — 이미 있으면 그것을, 씬이 없으면(점검 무대) null.
+static func attach(tree: SceneTree) -> Node:
+	var hv := tree.get_first_node_in_group("hurt_vignette")
+	if hv != null or tree.current_scene == null:
+		return hv
+	hv = (load("res://saga_core/ui/hurt_vignette.gd") as GDScript).new()
+	tree.current_scene.add_child(hv)
+	return hv
 
 
 func flash() -> void:

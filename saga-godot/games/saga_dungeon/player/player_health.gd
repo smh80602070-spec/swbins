@@ -25,6 +25,8 @@ signal died
 const Toast := preload("res://saga_core/ui/toast.gd")
 const LootPickup := preload("res://games/saga_dungeon/world/loot_pickup.gd")
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
+const HurtVignette := preload("res://saga_core/ui/hurt_vignette.gd")
+const LOW_HP := 0.3 # G-0203 이 밑이면 가장자리 맥박(1만리 field_combat 과 같은 값)
 
 ## PLAN 101-2 DUNGEON ②(유품, 2026-09-17) — dungeon_grave_state.gd 헤더
 ## 참고. 웹 5.2는 "노획물 전부"지만 이 슬라이스 지갑은 이미 영구 상태라
@@ -61,6 +63,23 @@ func _ready() -> void:
 	## (dungeon_run_state.gd::_sum_eff 참고) 인원이 늘 때도 다시 계산한다.
 	DungeonPartyState.party_changed.connect(recalc_max_hp)
 	recalc_max_hp()
+	## G-0203 — "내가 맞았다" 화면 신호. 씬이 다 선 뒤에 붙이고, 체력이 바뀔 때마다 맥박을 다시 본다.
+	_attach_vignette.call_deferred()
+	hp_changed.connect(func(h: float, m: float) -> void: _set_low(h, m))
+
+
+var _hv: Node = null
+
+
+func _attach_vignette() -> void:
+	if is_inside_tree():
+		_hv = HurtVignette.attach(get_tree())
+		_set_low(hp, max_hp)
+
+
+func _set_low(h: float, m: float) -> void:
+	if is_instance_valid(_hv):
+		_hv.set_low(h > 0.0 and h < m * LOW_HP)
 
 
 func recalc_max_hp() -> void:
@@ -82,6 +101,12 @@ func take_damage(amount: float, source: Node = null) -> void:
 	var dealt := amount * DungeonRunState.guard_mult()
 	last_hit = {"who": String(source.call("who_label")) if source != null and source.has_method("who_label") else "", "dmg": dealt}
 	hp = maxf(0.0, hp - dealt)
+	## G-0203 — 붉은 숫자(combat_feel 이 player 그룹이면 붉게)·몸 번쩍·멈칫·흔들림 + 가장자리 붉게(1만리 G-0171 과 같음).
+	var vis := get_parent().get_node_or_null("Visual") as Node3D
+	if vis != null:
+		CombatFeel.hit(vis, dealt, false)
+	if is_instance_valid(_hv):
+		_hv.flash()
 	hp_changed.emit(hp, max_hp)
 	if hp <= 0.0:
 		_dead = true

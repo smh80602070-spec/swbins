@@ -103,3 +103,25 @@ static func summon(tree: SceneTree) -> void:
 			print("SUMMON_DRAWS before=%d after=%d" % [draws[0], int(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME))])
 			tree.process_frame.disconnect(cb[0])
 	tree.process_frame.connect(cb[0])
+
+
+## G-0203 — 촬영 4프레임 전에 맞는다(체력 27% 로 두고 3 피해 — 가장자리 번쩍 + 붉은 숫자 + 25% 근처 맥박). 메모리에서만.
+static func hurt(tree: SceneTree) -> void:
+	for m in tree.get_nodes_in_group("ui_modal"):
+		m.queue_free()
+	_hurt_at(tree, tree.get_first_node_in_group("player_health"))
+
+
+static func _hurt_at(tree: SceneTree, ph: Node) -> void:
+	if ph == null:
+		return
+	var n := [0]
+	var cb := [Callable()]
+	cb[0] = func() -> void:
+		n[0] += 1
+		if n[0] == 86:
+			if is_instance_valid(ph):
+				ph.set("hp", float(ph.get("max_hp")) * 0.27)
+				ph.call("take_damage", 3.0)
+			tree.process_frame.disconnect(cb[0])
+	tree.process_frame.connect(cb[0])
