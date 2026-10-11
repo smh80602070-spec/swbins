@@ -60,6 +60,7 @@
    "js/net.js",
    "js/ai.js",
    "js/auto.js",
+   "js/side-hand.js",
    "js/icon.js",
    "js/ui.js",
    "js/region-icon.js",
@@ -122,6 +123,7 @@
    "js/net.js",
    "js/ai.js",
    "js/auto.js",
+   "js/side-hand.js",
    "js/ui.js",
    "js/region-icon.js",
    "js/game.js"

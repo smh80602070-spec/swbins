@@ -403,6 +403,7 @@
       ctx.fill();
     }
 
+    if (global.DG.sideHand) { global.DG.sideHand.draw(ctx, camX); }   // W-0176 옛 조각·숨은 상자
     drawMe(p);
     drawFx();
     ctx.restore();

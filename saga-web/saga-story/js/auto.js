@@ -283,7 +283,7 @@
   function update(dt) {
     if (!active()) {
       /* 완전 자동(🤖)은 꺼져 있어도 — 사냥 중이면 스킬만은 계속 알아서 나간다 */
-      if (global.DG.side.active()) { tickSkillsOnly(dt); }
+      if (global.DG.side.active() && (!global.DG.sideHand || global.DG.sideHand.autoSkillOn())) { tickSkillsOnly(dt); }   // W-0176 🌀 무예 자동을 끄면 1~8 은 손으로
       return;
     }
     if (global.DG.side.active()) { tickHunt(dt); }

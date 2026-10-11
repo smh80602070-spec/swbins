@@ -625,9 +625,9 @@
       }
 
       /* 떨어지다가 줄에 닿았을 때 ↑ 를 누르고 있으면 그대로 매달린다 */
-      if (!p.onGround && input.up) {
-        var rr = ropeAt(p.x + P_W / 2, p.y + P_H);
-        if (rr) { grab(rr); }
+      if (!p.onGround) {                      // W-0176 ↑ 를 누른 채 닿거나, 닿은 뒤 0.15초 안에 ↑ 를 눌러도 붙잡는다
+        var rr = ropeAt(p.x + P_W / 2, p.y + P_H); p.ropeT = rr ? 0.15 : Math.max(0, (p.ropeT || 0) - dt); if (rr) { p.ropeLast = rr; }
+        if (input.up && (rr || (p.ropeT > 0 && p.ropeLast))) { grab(rr || p.ropeLast); }
       }
     }
 

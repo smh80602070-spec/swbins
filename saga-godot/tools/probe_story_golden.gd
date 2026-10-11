@@ -30,7 +30,8 @@ func _snapshot(p: Node) -> Dictionary:
 	var out := {}
 	for prop in p.get_property_list():
 		## body_id(G-0030) 는 겉모습 설정이라 스킬 동작 비교에서 뺀다 — 빼면 분리 전 기준값과 같다(10-06 확인).
-		if (int(prop.usage) & PROPERTY_USAGE_SCRIPT_VARIABLE) == 0 or prop.name == "body_id":
+		## _fx_hits(G-0201) 는 그림·멈칫 횟수 손잡이라 뺀다 — 피해·쿨다운·MP 비교는 그대로.
+		if (int(prop.usage) & PROPERTY_USAGE_SCRIPT_VARIABLE) == 0 or prop.name == "body_id" or prop.name == "_fx_hits":
 			continue
 		var v: Variant = p.get(prop.name)
 		match typeof(v):

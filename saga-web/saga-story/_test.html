@@ -120,6 +120,7 @@ window.DG_NO_TUNE = true;
 <script src="js/net.js"></script>
 <script src="js/ai.js"></script>
 <script src="js/auto.js"></script>
+<script src="js/side-hand.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/region-icon.js"></script>
 <script src="js/game.js"></script>
@@ -344,7 +345,8 @@ window.DG_NO_TUNE = true;
         var s = SD.STAGES[i];
         rn.push((s.ropes || []).length);
         gn.push((s.portals || []).length);
-        if (!s.ropes || s.ropes.length < s.plats.length) { bad.push(s.key + ' 줄'); }
+        var np = s.plats.filter(function (pl) { return !(s.secret && pl[1] === s.secret.y); }).length;   // W-0176 숨은 자리 발판은 일부러 줄이 없다
+        if (!s.ropes || s.ropes.length < np) { bad.push(s.key + ' 줄'); }
         if (!s.portals || !s.portals.length) { bad.push(s.key + ' 문'); }
       }
       return bad.length === 0 && ('줄 ' + rn.join('·') + ' · 문 ' + gn.join('·'));
@@ -6092,6 +6094,89 @@ window.DG_NO_TUNE = true;
       C.setTune('side.baseZoom', 1); var z1 = V._zoom(); C.setTune('side.baseZoom', keep);
       r = [z0.base >= 1 && z0.base <= 1.6, z1.base === 1, V._dirt({ ground: '#6faf55' }) === '#8a6640', V._dirt({ ground: '#8a6b3a' }) === '#8a6b3a', V._grass({ ground: '#8a6b3a' }) === '#6f9f48'];
       return r.every(Boolean) && ('기본 확대 ' + z0.base.toFixed(2) + ' · 화면 ' + Math.round(z0.W) + '×' + Math.round(z0.H)) || '실패 ' + r.join(',');
+    });
+
+    /* ── W-0176 조작 다듬기·숨은 자리·옛 조각(side-hand.js) — 제 씨앗으로(공유 수열을 안 민다) ── */
+    function shSeed(fn) {
+      var keep = Math.random, s = 1760;
+      Math.random = function () { s = (s + 0x6D2B79F5) >>> 0; var q = s; q = Math.imul(q ^ (q >>> 15), q | 1); q ^= q + Math.imul(q ^ (q >>> 7), q | 61); return ((q ^ (q >>> 14)) >>> 0) / 4294967296; };
+      try { return fn(); } finally { Math.random = keep; }
+    }
+    function shKey(type, key) { window.dispatchEvent(new KeyboardEvent(type, { key: key })); }
+    function shField() { S.enter('field'); var run = S.raw(); run.enemies = []; run.mp = 9999; run.player.invuln = 999; return run; }
+    t('st.side 조작 ① 공격 고정 키(W-0176) — Z 를 누르고 있으면 쿨이 끝날 때마다 다시 쳐 1초에 2번 이상 · 떼면 멈춘다', function () {
+      return shSeed(function () {
+        var H = DG.sideHand, real = S.castSkill, n = 0, run = shField(), i;
+        S.castSkill = function (k) { var ok = real(k); if (ok) { n++; } return ok; };
+        try {
+          shKey('keydown', 'z');
+          for (i = 0; i < 20; i++) { S.update(0.05); H.tick(); run.mp = 9999; }
+          var held = n;
+          shKey('keyup', 'z');
+          for (i = 0; i < 20; i++) { S.update(0.05); H.tick(); }
+          var after = n - held, idx = H.attackIdx(), sk = S.barSkills()[idx];
+          return held >= 2 && after === 0 && ('1초에 ' + held + '번(' + sk.name + ' 쿨 ' + sk.cd + '초) · 뗀 뒤 0') || ('실패 held=' + held + ' after=' + after);
+        } finally { S.castSkill = real; H.attackUp(); S.leave(); }
+      });
+    });
+    t('st.side 조작 ② 회피 즉시(W-0176) — Shift keydown 그 순간 회피(무적·몸짓), 고유 조작은 C 를 길게', function () {
+      return shSeed(function () {
+        var run = shField(), p = run.player;
+        try {
+          p.dodgeCd = 0; p.dodgeAnim = 0; var x0 = p.x;
+          shKey('keydown', 'Shift');
+          var now = p.dodgeAnim > 0 && p.x !== x0;
+          shKey('keyup', 'Shift');
+          shKey('keydown', 'c'); var holding = !!p.holding; shKey('keyup', 'c');
+          return now && holding && ('keydown 프레임에 회피(' + Math.round(p.x - x0) + ' 이동) · C 로 고유 조작 시작') || ('실패 now=' + now + ' C=' + holding);
+        } finally { S.leave(); }
+      });
+    });
+    t('st.side 조작 ③ 짧은 점프(W-0176) — 점프 키를 0.05초에 떼면 최고 높이가 끝까지 뛴 것의 60% 이하', function () {
+      return shSeed(function () {
+        function peak(tap) {
+          var run = shField(), p = run.player, y0, top, i;
+          for (i = 0; i < 20; i++) { S.update(0.05); }
+          y0 = p.y; top = p.y;
+          shKey('keydown', ' ');
+          for (i = 0; i < 40; i++) {
+            if (tap && i === 1) { shKey('keyup', ' '); }
+            S.update(0.025); top = Math.min(top, p.y);
+          }
+          if (!tap) { shKey('keyup', ' '); }
+          S.leave();
+          return y0 - top;
+        }
+        var full = peak(false), tap = peak(true);
+        return full > 0 && tap / full <= 0.6 && ('끝까지 ' + Math.round(full) + ' · 짧게 ' + Math.round(tap) + '(' + Math.round(tap / full * 100) + '%) · 손잡이 side.jumpCut ' + DG.sideHand.JUMP_CUT()) || ('실패 full=' + full + ' tap=' + tap);
+      });
+    });
+    t('st.relics ① 옛 조각·숨은 자리(W-0176) — 사냥터 아홉마다 조각 셋·숨은 자리 하나, 닿으면 줍고(세이브 비트) 숨은 상자는 그 발판 위에서만 열린다', function () {
+      return shSeed(function () {
+        var H = DG.sideHand, SD = DG.sideData, keep = JSON.stringify(C.save.relics || null), hunts = SD.STAGES.filter(function (s) { return s.relics; });
+        try {
+          C.save.relics = {};
+          var run = shField(), p = run.player, stg = run.stage;
+          p.x = stg.relics[0] - S.P_W / 2; p.y = stg.floor - S.P_H; p.onGround = true;
+          var g1 = H.check();
+          p.x = stg.secret.x - S.P_W / 2; p.y = stg.floor - S.P_H;
+          var g2 = H.check();                                   // 바닥(숨은 자리 아래)에선 안 열린다
+          p.y = stg.secret.y - S.P_H; p.onGround = true; var gold0 = run.gold;
+          var g3 = H.check();
+          var info = H.stageInfo(stg);
+          S.leave();
+          var shape = hunts.length === 9 && hunts.every(function (s) { return s.relics.length === 3 && s.secret && s.plats.some(function (pl) { return pl[1] === s.secret.y && s.secret.x >= pl[0] && s.secret.x <= pl[0] + pl[2]; }); });
+          return shape && g1.join() === 'relic0' && g2.length === 0 && g3.join() === 'secret' && info.relics === 1 && info.secret && run.gold > gold0 &&
+            ('사냥터 9 × 조각 3 · 숨은 발판 · 조각 줍기 ○ · 바닥에선 안 열림 · 발판 위 상자 금 +' + (run.gold - gold0) + ' · 지도 "' + H.mapTag(stg) + '"') ||
+            ('실패 shape=' + shape + ' g=' + [g1, g2, g3].join('|'));
+        } finally { C.save.relics = JSON.parse(keep) || undefined; }
+      });
+    });
+    t('재미표준 E 사냥터 발견(측정) — 사냥터 아홉 폭을 800 구간으로 나눠 적 아닌 상호작용(채집·조각·숨은 자리·문)이 없는 구간 ≤10%(W-0176)', function () {
+      var H = DG.sideHand, cells = 0, empty = 0;
+      DG.sideData.STAGES.filter(function (s) { return !s.town && s.relics; }).forEach(function (s) { var c = H.coverage(s); cells += c.cells; empty += c.empty; });
+      var r = cells ? empty / cells : 1;
+      return (r <= 0.1 ? '○' : (r <= 0.3 ? '△' : '×')) + ' — 사냥터 9 · 800 구간 ' + cells + ' 중 빈 구간 ' + empty + '(' + Math.round(r * 100) + '%, 규격 ≤10%) · 사냥터마다 조각 3·숨은 자리 1';
     });
 
     t('런타임 에러 없음', function () {

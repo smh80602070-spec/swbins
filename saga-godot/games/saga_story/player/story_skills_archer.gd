@@ -11,6 +11,7 @@ func _cast_archer_shot() -> void:
 		return
 	_cd_archer_shot = StoryCombat.ARCHER_SHOT_CD
 	mp -= StoryCombat.ARCHER_SHOT_COST
+	_skill_fx_of("a_shot")
 	_play_anim("sprint")
 	_melee_hit(ATTACK_RANGE, StoryCombat.skill_mul(StoryCombat.ARCHER_SHOT_BASE, StoryCombat.ARCHER_SHOT_PER, lv))
 
@@ -23,6 +24,7 @@ func _cast_archer_double() -> void:
 		return
 	_cd_archer_double = StoryCombat.ARCHER_DOUBLE_CD
 	mp -= StoryCombat.ARCHER_DOUBLE_COST
+	_skill_fx_of("a_double")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.ARCHER_DOUBLE_BASE, StoryCombat.ARCHER_DOUBLE_PER, lv)
 	for i in StoryCombat.ARCHER_DOUBLE_SHOTS:
@@ -36,6 +38,7 @@ func _cast_archer_pierce() -> void:
 		return
 	_cd_archer_pierce = StoryCombat.ARCHER_PIERCE_CD
 	mp -= StoryCombat.ARCHER_PIERCE_COST
+	_skill_fx_of("a_pierce")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.ARCHER_PIERCE_BASE, StoryCombat.ARCHER_PIERCE_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.ARCHER_PIERCE_RANGE_MUL, mul)
@@ -48,6 +51,7 @@ func _cast_archer_eye() -> void:
 		return
 	_cd_archer_eye = StoryCombat.ARCHER_EYE_CD
 	mp -= StoryCombat.ARCHER_EYE_COST
+	_skill_fx_of("a_eye")
 	_job_buff_time_left = StoryCombat.ARCHER_EYE_SEC
 	_job_buff_atk_mul = StoryCombat.ARCHER_EYE_ATK_MUL
 	_job_buff_guard = 0.0
@@ -63,6 +67,7 @@ func _cast_archer_retreat() -> void:
 		return
 	_cd_archer_retreat = StoryCombat.ARCHER_RETREAT_CD
 	mp -= StoryCombat.ARCHER_RETREAT_COST
+	_skill_fx_of("a_retreat")
 	_play_anim("sprint")
 	var dist_m := StoryCombat.archer_retreat_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.ARCHER_RETREAT_BASE, StoryCombat.ARCHER_RETREAT_PER, lv))
@@ -79,6 +84,7 @@ func _cast_archer_burst() -> void:
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.ARCHER_BURST_BASE, StoryCombat.ARCHER_BURST_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.ARCHER_BURST_RANGE_MUL
+	_skill_fx_of("a_burst", range_m)
 	for enemy in get_tree().get_nodes_in_group("story_enemy"):
 		var e := enemy as Node3D
 		if e == null:
@@ -89,7 +95,7 @@ func _cast_archer_burst() -> void:
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
 		StorySaveState.note_player_hit()   # G-0197 연속 타격
-		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
+		_hit_feel(e, roll)
 
 
 ## 전우(s_rain) — 원문 effect:'rain', 사격(a_shot)과 같은 단순 정면 재해석.
@@ -99,6 +105,7 @@ func _cast_sniper_rain() -> void:
 		return
 	_cd_sniper_rain = StoryCombat.SNIPER_RAIN_CD
 	mp -= StoryCombat.SNIPER_RAIN_COST
+	_skill_fx_of("s_rain")
 	_play_anim("sprint")
 	_melee_hit(ATTACK_RANGE, StoryCombat.skill_mul(StoryCombat.SNIPER_RAIN_BASE, StoryCombat.SNIPER_RAIN_PER, lv))
 
@@ -110,6 +117,7 @@ func _cast_sniper_snipe() -> void:
 		return
 	_cd_sniper_snipe = StoryCombat.SNIPER_SNIPE_CD
 	mp -= StoryCombat.SNIPER_SNIPE_COST
+	_skill_fx_of("s_snipe")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.SNIPER_SNIPE_BASE, StoryCombat.SNIPER_SNIPE_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.SNIPER_SNIPE_RANGE_MUL, mul)
@@ -122,6 +130,7 @@ func _cast_sniper_split() -> void:
 		return
 	_cd_sniper_split = StoryCombat.SNIPER_SPLIT_CD
 	mp -= StoryCombat.SNIPER_SPLIT_COST
+	_skill_fx_of("s_split")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.SNIPER_SPLIT_BASE, StoryCombat.SNIPER_SPLIT_PER, lv)
 	for i in StoryCombat.SNIPER_SPLIT_SHOTS:
@@ -135,6 +144,7 @@ func _cast_sniper_retreat() -> void:
 		return
 	_cd_sniper_retreat = StoryCombat.SNIPER_RETREAT_CD
 	mp -= StoryCombat.SNIPER_RETREAT_COST
+	_skill_fx_of("s_retreat")
 	_play_anim("sprint")
 	var dist_m := StoryCombat.sniper_retreat_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.SNIPER_RETREAT_BASE, StoryCombat.SNIPER_RETREAT_PER, lv))
@@ -151,6 +161,7 @@ func _cast_sniper_burst() -> void:
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.SNIPER_BURST_BASE, StoryCombat.SNIPER_BURST_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.SNIPER_BURST_RANGE_MUL
+	_skill_fx_of("s_burst", range_m)
 	for enemy in get_tree().get_nodes_in_group("story_enemy"):
 		var e := enemy as Node3D
 		if e == null:
@@ -161,7 +172,7 @@ func _cast_sniper_burst() -> void:
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
 		StorySaveState.note_player_hit()   # G-0197 연속 타격
-		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
+		_hit_feel(e, roll)
 
 
 ## 시우(f_storm) — 원문 effect:'rain', 전우와 같은 단순 정면 재해석.
@@ -171,6 +182,7 @@ func _cast_flier_storm() -> void:
 		return
 	_cd_flier_storm = StoryCombat.FLIER_STORM_CD
 	mp -= StoryCombat.FLIER_STORM_COST
+	_skill_fx_of("f_storm")
 	_play_anim("sprint")
 	_melee_hit(ATTACK_RANGE, StoryCombat.skill_mul(StoryCombat.FLIER_STORM_BASE, StoryCombat.FLIER_STORM_PER, lv))
 
@@ -182,6 +194,7 @@ func _cast_flier_pierce() -> void:
 		return
 	_cd_flier_pierce = StoryCombat.FLIER_PIERCE_CD
 	mp -= StoryCombat.FLIER_PIERCE_COST
+	_skill_fx_of("f_pierce")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.FLIER_PIERCE_BASE, StoryCombat.FLIER_PIERCE_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.FLIER_PIERCE_RANGE_MUL, mul)
@@ -194,6 +207,7 @@ func _cast_flier_volley() -> void:
 		return
 	_cd_flier_volley = StoryCombat.FLIER_VOLLEY_CD
 	mp -= StoryCombat.FLIER_VOLLEY_COST
+	_skill_fx_of("f_volley")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.FLIER_VOLLEY_BASE, StoryCombat.FLIER_VOLLEY_PER, lv)
 	for i in StoryCombat.FLIER_VOLLEY_SHOTS:
@@ -207,6 +221,7 @@ func _cast_flier_focus() -> void:
 		return
 	_cd_flier_focus = StoryCombat.FLIER_FOCUS_CD
 	mp -= StoryCombat.FLIER_FOCUS_COST
+	_skill_fx_of("f_focus")
 	_job_buff_time_left = StoryCombat.FLIER_FOCUS_SEC
 	_job_buff_atk_mul = StoryCombat.FLIER_FOCUS_ATK_MUL
 	_job_buff_guard = 0.0
@@ -221,6 +236,7 @@ func _cast_flier_retreat() -> void:
 		return
 	_cd_flier_retreat = StoryCombat.FLIER_RETREAT_CD
 	mp -= StoryCombat.FLIER_RETREAT_COST
+	_skill_fx_of("f_retreat")
 	_play_anim("sprint")
 	var dist_m := StoryCombat.flier_retreat_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.FLIER_RETREAT_BASE, StoryCombat.FLIER_RETREAT_PER, lv))
@@ -237,6 +253,7 @@ func _cast_flier_burst() -> void:
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.FLIER_BURST_BASE, StoryCombat.FLIER_BURST_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.FLIER_BURST_RANGE_MUL
+	_skill_fx_of("f_burst", range_m)
 	for enemy in get_tree().get_nodes_in_group("story_enemy"):
 		var e := enemy as Node3D
 		if e == null:
@@ -247,7 +264,7 @@ func _cast_flier_burst() -> void:
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
 		StorySaveState.note_player_hit()   # G-0197 연속 타격
-		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
+		_hit_feel(e, roll)
 
 
 ## 천사우(h_tempest) — 원문 effect:'rain', 시우와 같은 단순 정면 재해석.
@@ -257,6 +274,7 @@ func _cast_falcon_tempest() -> void:
 		return
 	_cd_falcon_tempest = StoryCombat.FALCON_TEMPEST_CD
 	mp -= StoryCombat.FALCON_TEMPEST_COST
+	_skill_fx_of("h_tempest")
 	_play_anim("sprint")
 	_melee_hit(ATTACK_RANGE, StoryCombat.skill_mul(StoryCombat.FALCON_TEMPEST_BASE, StoryCombat.FALCON_TEMPEST_PER, lv))
 
@@ -268,6 +286,7 @@ func _cast_falcon_ray() -> void:
 		return
 	_cd_falcon_ray = StoryCombat.FALCON_RAY_CD
 	mp -= StoryCombat.FALCON_RAY_COST
+	_skill_fx_of("h_ray")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.FALCON_RAY_BASE, StoryCombat.FALCON_RAY_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.FALCON_RAY_RANGE_MUL, mul)
@@ -280,6 +299,7 @@ func _cast_falcon_swarm() -> void:
 		return
 	_cd_falcon_swarm = StoryCombat.FALCON_SWARM_CD
 	mp -= StoryCombat.FALCON_SWARM_COST
+	_skill_fx_of("h_swarm")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.FALCON_SWARM_BASE, StoryCombat.FALCON_SWARM_PER, lv)
 	for i in StoryCombat.FALCON_SWARM_SHOTS:
@@ -293,6 +313,7 @@ func _cast_falcon_zenith() -> void:
 		return
 	_cd_falcon_zenith = StoryCombat.FALCON_ZENITH_CD
 	mp -= StoryCombat.FALCON_ZENITH_COST
+	_skill_fx_of("h_zenith")
 	_job_buff_time_left = StoryCombat.FALCON_ZENITH_SEC
 	_job_buff_atk_mul = StoryCombat.FALCON_ZENITH_ATK_MUL
 	_job_buff_guard = 0.0
@@ -307,6 +328,7 @@ func _cast_falcon_retreat() -> void:
 		return
 	_cd_falcon_retreat = StoryCombat.FALCON_RETREAT_CD
 	mp -= StoryCombat.FALCON_RETREAT_COST
+	_skill_fx_of("h_retreat")
 	_play_anim("sprint")
 	var dist_m := StoryCombat.falcon_retreat_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.FALCON_RETREAT_BASE, StoryCombat.FALCON_RETREAT_PER, lv))
@@ -323,6 +345,7 @@ func _cast_falcon_burst() -> void:
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.FALCON_BURST_BASE, StoryCombat.FALCON_BURST_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.FALCON_BURST_RANGE_MUL
+	_skill_fx_of("h_burst", range_m)
 	for enemy in get_tree().get_nodes_in_group("story_enemy"):
 		var e := enemy as Node3D
 		if e == null:
@@ -333,6 +356,6 @@ func _cast_falcon_burst() -> void:
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
 		StorySaveState.note_player_hit()   # G-0197 연속 타격
-		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
+		_hit_feel(e, roll)
 
 

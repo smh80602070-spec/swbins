@@ -137,7 +137,9 @@
       else if (k === ' ') { S.setInput('jump', true); }
       else if (k === 'q') { S.drink(); }
       else if (k === 'e') { if (global.DG.party) { global.DG.party.cycle(); } }   // 동료 교대(§5-8)
-      else if (k === 'shift') { if (!e.repeat) { S.holdStart(); } }   // §5-1 — 길게 누르면 고유 조작
+      else if (k === 'shift') { if (!e.repeat) { S.dodge(); } }      // W-0176 누르는 순간 회피(예전엔 떼야 나갔다)
+      else if (k === 'c') { if (!e.repeat) { S.holdStart(); } }      // §5-1 길게 누르면 고유 조작 — W-0176 Shift 에서 C 로
+      else if (k === 'z' || k === 'j') { if (!e.repeat && global.DG.sideHand) { global.DG.sideHand.attackDown(); } }   // W-0176 공격 고정 키(누르고 있으면 계속)
       else if (k === 'm') { ui.toggleOverworldMap(); }
       else if (k >= '1' && k <= '8') { S.castSkill(parseInt(k, 10) - 1); }
       if ([' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].indexOf(e.key) >= 0) {
@@ -151,12 +153,15 @@
       else if (k === 'arrowright' || k === 'd' || k === km.right) { S.setInput('right', false); }
       else if (k === 'arrowup' || k === 'w' || k === km.up) { S.setInput('up', false); }
       else if (k === 'arrowdown' || k === 's' || k === km.down) { S.setInput('down', false); }
-      else if (k === 'shift') { S.holdEnd(); }
+      else if (k === 'c') { S.holdEnd(); }
+      else if (k === 'z' || k === 'j') { if (global.DG.sideHand) { global.DG.sideHand.attackUp(); } }
+      else if (k === ' ') { S.setInput('jump', false); if (global.DG.sideHand) { global.DG.sideHand.jumpRelease(); } }   // W-0176 짧게 누르면 낮게
     });
     global.addEventListener('blur', function () {
       S.setInput('left', false); S.setInput('right', false);
       S.setInput('up', false); S.setInput('down', false);
       S.cancelHold();
+      if (global.DG.sideHand) { global.DG.sideHand.attackUp(); }
     });
   }
 
@@ -283,7 +288,8 @@
                  '(줄 위에서 Space 를 누르면 손을 뗍니다)</div>' +
                '<div><b>내려서기</b> ↓ + Space — 밟고 선 발판을 빠져나갑니다</div>' +
                '<div><b>문</b> 사냥터 끝의 빛 앞에서 ↑ — 옆 사냥터로 걸어 넘어갑니다</div>' +
-               '<div><b>공격</b> 1~8 — 무엇이 놓이는지는 직업과 익힌 무예에 따릅니다</div>')) +
+               '<div><b>공격</b> Z (또는 J) — 누르고 있으면 계속 칩니다 · 다른 무예 1~8 (🌀 무예 자동이 켜져 있으면 알아서)</div>' +
+               '<div><b>회피</b> Shift — 누르는 순간 · <b>고유 조작</b> C 를 길게 · <b>점프</b> Space 를 짧게 누르면 낮게</div>')) +
           '<div><b>전직</b> Lv.10 에 무사·궁수·협객·방사 중 하나를 고릅니다 (🥋 무예). ' +
             'Lv.25 에 2차, <b>Lv.45 에 3차</b>로 오릅니다 — <b>되돌릴 수 없습니다</b></div>' +
           '<div><b>무예 점수</b> 레벨마다 3점. 무예를 올리면 세지고, ' +
@@ -391,6 +397,7 @@
     if (!(global.DG.story && global.DG.story.isOpen())) {
       global.DG.auto.update(dt);
       S.update(dt);
+      if (global.DG.sideHand) { global.DG.sideHand.tick(); }   // W-0176 Z 누르고 있기·옛 조각·숨은 자리
     }
     if (!global.DG_NO_DRAW) {
       if (global.DG.mount) { global.DG.mount.paint(); }                            // 탈것 단추(mount.js)

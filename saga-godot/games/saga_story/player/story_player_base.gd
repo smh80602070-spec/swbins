@@ -42,6 +42,15 @@ const JUMP_BUFFER_TIME := 0.12
 const StoryCombat := preload("res://games/saga_story/data/story_combat.gd")
 const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
 const BlobShadow := preload("res://saga_core/world/blob_shadow.gd")
+const CombatFx := preload("res://saga_core/combat_fx.gd")
+const StorySkillMeta := preload("res://games/saga_story/data/story_skill_meta.gd")
+## G-0201 시전 그림 색 — 웹 side-view.js 그대로: 베기·돌진 흰 · ring 금 · ghost·impact 연파랑 · rain 파랑.
+const FX_GOLD := Color8(245, 180, 69)
+const FX_BLUE := Color8(210, 230, 255)
+const FX_RAIN := Color8(150, 200, 255)
+const FX_RING_SEC := 0.4
+const FX_SELF_R := 1.2
+const HIT_QUIET := {"stop_ms": 0, "shake_mul": 0.0, "quiet": true}
 
 @onready var visual: Node3D = $Visual
 ## G-0030 — 이 판 주인공 몸(새 인물 몸 id). 장면의 빈 Visual 을 story_player._ready 가 이 몸으로 갈아 끼운다.
@@ -59,6 +68,7 @@ var fly_on := false
 
 var _current_anim := ""
 var _facing := 1.0  # +1 오른쪽, -1 왼쪽
+var _fx_hits := 0  # G-0201 이번 한 번(시전·_melee_hit)에 맞힌 수 — 첫 적만 멈칫·흔들림·소리
 var _attack_cd_left := 0.0
 var _on_rope := false
 var _rope_area: Area3D = null
@@ -305,6 +315,7 @@ func _effective_atk() -> float:
 ## 배율(연참 1.0·기탄 BOLT_MUL), range는 사거리.
 func _melee_hit(range_m: float, mul: float) -> void:
 	range_m *= StoryLabyrinthState.reach_mult()  # PLAN 101-2 STORY ⑤(비경, 장병 은사) — 18곳 전부 이 한 곳을 거친다
+	_fx_hits = 0
 	for enemy in get_tree().get_nodes_in_group("story_enemy"):
 		var e := enemy as Node3D
 		if e == null:
@@ -317,7 +328,7 @@ func _melee_hit(range_m: float, mul: float) -> void:
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
 		StorySaveState.note_player_hit()   # G-0197 연속 타격
-		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
+		_hit_feel(e, roll)
 
 
 ## 횡소(sweep) — aoe, 등 뒤도 맞는다(360도 판정, side.js effect:'aoe' 그대로
@@ -330,6 +341,7 @@ func _cast_sweep() -> void:
 	mp -= StoryCombat.SWEEP_COST
 	_play_anim("sprint")
 	var range_m := ATTACK_RANGE * StoryCombat.SWEEP_RANGE_MUL
+	_skill_fx("aoe", range_m)
 	for enemy in get_tree().get_nodes_in_group("story_enemy"):
 		var e := enemy as Node3D
 		if e == null:
@@ -340,7 +352,7 @@ func _cast_sweep() -> void:
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), StoryCombat.SWEEP_MUL)
 		e.take_damage(float(roll.dmg))
 		StorySaveState.note_player_hit()   # G-0197 연속 타격
-		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
+		_hit_feel(e, roll)
 
 
 ## 기탄(bolt) — 관통. 이 슬라이스는 투사체가 없어(적이 안 움직인다) "더
@@ -350,6 +362,7 @@ func _cast_bolt() -> void:
 		return
 	_cd_bolt = StoryCombat.BOLT_CD
 	mp -= StoryCombat.BOLT_COST
+	_skill_fx("bolt", ATTACK_RANGE * StoryCombat.BOLT_RANGE_MUL)
 	_play_anim("sprint")
 	_melee_hit(ATTACK_RANGE * StoryCombat.BOLT_RANGE_MUL, StoryCombat.BOLT_MUL)
 
@@ -361,7 +374,49 @@ func _cast_brace() -> void:
 		return
 	_cd_brace = StoryCombat.BRACE_CD
 	mp -= StoryCombat.BRACE_COST
+	_skill_fx("buff")
 	_buff_time_left = StoryCombat.BRACE_SEC
+
+
+## G-0201 — 무예 시전 그림(웹 side.js castSkill fx 의 문법, 그림은 saga_core/combat_fx.gd). 가로 판이라 앞 = ±X.
+## 장면이 없으면(점검 무대) 안 그린다 — 그림 노드는 current_scene 에 붙는다.
+func _skill_fx_of(key: String, range_m := -1.0) -> void:
+	_skill_fx(StorySkillMeta.fx_of(key), range_m)
+
+
+func _skill_fx(kind: String, range_m := -1.0) -> void:
+	_fx_hits = 0
+	if not is_inside_tree() or get_tree().current_scene == null:
+		return
+	var r := range_m if range_m > 0.0 else ATTACK_RANGE * StoryLabyrinthState.reach_mult()
+	var fwd := Vector3(_facing, 0.0, 0.0)
+	var step := Engine.get_process_frames() % 5  # 궤적 기울기만 돌린다(randi 는 피해 굴림 순서를 바꾼다)
+	match kind:
+		"melee":
+			CombatFx.slash(self, fwd, r, CombatFx.PHYSICAL, step)
+		"dash":
+			CombatFx.slash(self, fwd, r * 0.5, CombatFx.PHYSICAL, step, true)
+		"bolt", "arrow":
+			CombatFx.slash(self, fwd, 1.4, FX_BLUE, step)
+			CombatFx.spark(self, global_position + fwd * r + Vector3.UP * 0.9, FX_BLUE, kind == "bolt")
+		"volley":
+			CombatFx.slash(self, fwd, 1.4, FX_BLUE, step)
+			for t in [0.45, 0.75, 1.0]:
+				CombatFx.spark(self, global_position + fwd * r * t + Vector3.UP * 0.9, FX_BLUE)
+		"aoe":
+			CombatFx.element_burst(self, global_position, r, FX_GOLD, FX_RING_SEC, "", false)
+		"rain":
+			CombatFx.element_burst(self, global_position + fwd * r * 0.5, maxf(r * 0.6, 1.5), FX_RAIN, 0.5, "water", false)
+		"heal", "buff":
+			CombatFx.element_burst(self, global_position, FX_SELF_R, FX_GOLD, FX_RING_SEC, "grass" if kind == "heal" else "", false)
+
+
+## 맞은 적 하나 — 불꽃 + CombatFeel(둘째부터는 숫자·번쩍임만).
+func _hit_feel(e: Node3D, roll: Dictionary) -> void:
+	if is_inside_tree() and get_tree().current_scene != null:
+		CombatFx.spark(self, e.global_position + Vector3.UP * 0.9, FX_BLUE, bool(roll.crit))
+	CombatFeel.hit(e, float(roll.dmg), bool(roll.crit), {} if _fx_hits == 0 else HIT_QUIET)
+	_fx_hits += 1
 
 
 func _play_anim(anim_name: String) -> void:

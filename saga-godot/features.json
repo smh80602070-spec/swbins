@@ -3389,5 +3389,33 @@
   "ticket": "G-0200",
   "since": "2026-10-11",
   "note": "창 모드 dg_emp_skills·dg_fire_skills 가로·세로 Claude 눈 ○(분홍·주황 원환·불씨·피해 숫자) · 1만리 x_swing 궤적 그대로"
+ },
+ {
+  "id": "gd.st.skill-fx",
+  "name": "4종횡 무예 시전 그림 — 효과 종류(웹 data-job.js effect)마다 베기 궤적·금 원환·연파랑 불꽃·물보라(공용 combat_fx) + 맞은 적 불꽃(멈칫은 한 번에 첫 적만)",
+  "files": [
+   "games/saga_story/player/story_player_base.gd",
+   "games/saga_story/player/story_skills_warrior.gd",
+   "games/saga_story/player/story_skills_archer.gd",
+   "games/saga_story/player/story_skills_mage.gd",
+   "games/saga_story/player/story_skills_rogue.gd",
+   "games/saga_story/data/story_skill_meta.gd",
+   "tools/probe_story_skill_fx.gd",
+   "tools/shot_story_fx.gd"
+  ],
+  "tests": [
+   "story_skill_fx",
+   "story_golden",
+   "story_player",
+   "story_rules",
+   "story",
+   "mount_story"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0201",
+  "since": "2026-10-11",
+  "note": "창 모드 st_skill_fx 가로·세로 Claude 눈 ○(금 원환·불꽃·피해 숫자) · story_golden md5 그대로"
  }
 ]

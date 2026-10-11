@@ -10,6 +10,7 @@ func _cast_mage_fire() -> void:
 		return
 	_cd_mage_fire = StoryCombat.MAGE_FIRE_CD
 	mp -= StoryCombat.MAGE_FIRE_COST
+	_skill_fx_of("m_fire")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.MAGE_FIRE_BASE, StoryCombat.MAGE_FIRE_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.MAGE_FIRE_RANGE_MUL, mul)
@@ -25,6 +26,7 @@ func _cast_mage_bolt() -> void:
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.MAGE_BOLT_BASE, StoryCombat.MAGE_BOLT_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.MAGE_BOLT_RANGE_MUL
+	_skill_fx_of("m_bolt", range_m)
 	for enemy in get_tree().get_nodes_in_group("story_enemy"):
 		var e := enemy as Node3D
 		if e == null:
@@ -35,7 +37,7 @@ func _cast_mage_bolt() -> void:
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
 		StorySaveState.note_player_hit()   # G-0197 연속 타격
-		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
+		_hit_feel(e, roll)
 
 
 ## 치유(m_heal) — **이 포트에 처음 등장하는 effect:'heal'.** 적 판정이
@@ -47,6 +49,7 @@ func _cast_mage_heal() -> void:
 		return
 	_cd_mage_heal = StoryCombat.MAGE_HEAL_CD
 	mp -= StoryCombat.MAGE_HEAL_COST
+	_skill_fx_of("m_heal")
 	var pct := StoryCombat.skill_mul(StoryCombat.MAGE_HEAL_BASE, StoryCombat.MAGE_HEAL_PER, lv)
 	hp = clampf(hp + max_hp * pct, 0.0, max_hp)
 
@@ -59,6 +62,7 @@ func _cast_mage_talis() -> void:
 		return
 	_cd_mage_talis = StoryCombat.MAGE_TALIS_CD
 	mp -= StoryCombat.MAGE_TALIS_COST
+	_skill_fx_of("m_talis")
 	_job_buff_time_left = StoryCombat.MAGE_TALIS_SEC
 	_job_buff_atk_mul = StoryCombat.MAGE_TALIS_ATK_MUL
 	_job_buff_guard = 0.0
@@ -73,6 +77,7 @@ func _cast_mage_step() -> void:
 		return
 	_cd_mage_step = StoryCombat.MAGE_STEP_CD
 	mp -= StoryCombat.MAGE_STEP_COST
+	_skill_fx_of("m_step")
 	_play_anim("sprint")
 	var dist_m := StoryCombat.mage_step_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.MAGE_STEP_BASE, StoryCombat.MAGE_STEP_PER, lv))
@@ -87,6 +92,7 @@ func _cast_mage_orb() -> void:
 		return
 	_cd_mage_orb = StoryCombat.MAGE_ORB_CD
 	mp -= StoryCombat.MAGE_ORB_COST
+	_skill_fx_of("m_orb")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.MAGE_ORB_BASE, StoryCombat.MAGE_ORB_PER, lv)
 	for i in StoryCombat.MAGE_ORB_SHOTS:
@@ -103,6 +109,7 @@ func _cast_sage_quake() -> void:
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.SAGE_QUAKE_BASE, StoryCombat.SAGE_QUAKE_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.SAGE_QUAKE_RANGE_MUL
+	_skill_fx_of("p_quake", range_m)
 	for enemy in get_tree().get_nodes_in_group("story_enemy"):
 		var e := enemy as Node3D
 		if e == null:
@@ -113,7 +120,7 @@ func _cast_sage_quake() -> void:
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
 		StorySaveState.note_player_hit()   # G-0197 연속 타격
-		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
+		_hit_feel(e, roll)
 
 
 ## 천뢰(p_beam) — 원문 effect:'rain', s_rain과 같은 단순 정면 재해석.
@@ -123,6 +130,7 @@ func _cast_sage_beam() -> void:
 		return
 	_cd_sage_beam = StoryCombat.SAGE_BEAM_CD
 	mp -= StoryCombat.SAGE_BEAM_COST
+	_skill_fx_of("p_beam")
 	_play_anim("sprint")
 	_melee_hit(ATTACK_RANGE, StoryCombat.skill_mul(StoryCombat.SAGE_BEAM_BASE, StoryCombat.SAGE_BEAM_PER, lv))
 
@@ -133,6 +141,7 @@ func _cast_sage_ward() -> void:
 		return
 	_cd_sage_ward = StoryCombat.SAGE_WARD_CD
 	mp -= StoryCombat.SAGE_WARD_COST
+	_skill_fx_of("p_ward")
 	_job_buff_time_left = StoryCombat.SAGE_WARD_SEC
 	_job_buff_atk_mul = StoryCombat.SAGE_WARD_ATK_MUL
 	_job_buff_guard = StoryCombat.SAGE_WARD_GUARD
@@ -147,6 +156,7 @@ func _cast_sage_step() -> void:
 		return
 	_cd_sage_step = StoryCombat.SAGE_STEP_CD
 	mp -= StoryCombat.SAGE_STEP_COST
+	_skill_fx_of("p_step")
 	_play_anim("sprint")
 	var dist_m := StoryCombat.sage_step_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.SAGE_STEP_BASE, StoryCombat.SAGE_STEP_PER, lv))
@@ -161,6 +171,7 @@ func _cast_sage_orb() -> void:
 		return
 	_cd_sage_orb = StoryCombat.SAGE_ORB_CD
 	mp -= StoryCombat.SAGE_ORB_COST
+	_skill_fx_of("p_orb")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.SAGE_ORB_BASE, StoryCombat.SAGE_ORB_PER, lv)
 	for i in StoryCombat.SAGE_ORB_SHOTS:
@@ -174,6 +185,7 @@ func _cast_immortal_meteor() -> void:
 		return
 	_cd_immortal_meteor = StoryCombat.IMMORTAL_METEOR_CD
 	mp -= StoryCombat.IMMORTAL_METEOR_COST
+	_skill_fx_of("i_meteor")
 	_play_anim("sprint")
 	_melee_hit(ATTACK_RANGE, StoryCombat.skill_mul(StoryCombat.IMMORTAL_METEOR_BASE, StoryCombat.IMMORTAL_METEOR_PER, lv))
 
@@ -188,6 +200,7 @@ func _cast_immortal_abyss() -> void:
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.IMMORTAL_ABYSS_BASE, StoryCombat.IMMORTAL_ABYSS_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.IMMORTAL_ABYSS_RANGE_MUL
+	_skill_fx_of("i_abyss", range_m)
 	for enemy in get_tree().get_nodes_in_group("story_enemy"):
 		var e := enemy as Node3D
 		if e == null:
@@ -198,7 +211,7 @@ func _cast_immortal_abyss() -> void:
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
 		StorySaveState.note_player_hit()   # G-0197 연속 타격
-		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
+		_hit_feel(e, roll)
 
 
 ## 회춘(i_mend) — heal.
@@ -208,6 +221,7 @@ func _cast_immortal_mend() -> void:
 		return
 	_cd_immortal_mend = StoryCombat.IMMORTAL_MEND_CD
 	mp -= StoryCombat.IMMORTAL_MEND_COST
+	_skill_fx_of("i_mend")
 	var pct := StoryCombat.skill_mul(StoryCombat.IMMORTAL_MEND_BASE, StoryCombat.IMMORTAL_MEND_PER, lv)
 	hp = clampf(hp + max_hp * pct, 0.0, max_hp)
 
@@ -218,6 +232,7 @@ func _cast_immortal_tao() -> void:
 		return
 	_cd_immortal_tao = StoryCombat.IMMORTAL_TAO_CD
 	mp -= StoryCombat.IMMORTAL_TAO_COST
+	_skill_fx_of("i_tao")
 	_job_buff_time_left = StoryCombat.IMMORTAL_TAO_SEC
 	_job_buff_atk_mul = StoryCombat.IMMORTAL_TAO_ATK_MUL
 	_job_buff_guard = StoryCombat.IMMORTAL_TAO_GUARD
@@ -232,6 +247,7 @@ func _cast_immortal_step() -> void:
 		return
 	_cd_immortal_step = StoryCombat.IMMORTAL_STEP_CD
 	mp -= StoryCombat.IMMORTAL_STEP_COST
+	_skill_fx_of("i_step")
 	_play_anim("sprint")
 	var dist_m := StoryCombat.immortal_step_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.IMMORTAL_STEP_BASE, StoryCombat.IMMORTAL_STEP_PER, lv))
@@ -246,6 +262,7 @@ func _cast_immortal_orb() -> void:
 		return
 	_cd_immortal_orb = StoryCombat.IMMORTAL_ORB_CD
 	mp -= StoryCombat.IMMORTAL_ORB_COST
+	_skill_fx_of("i_orb")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.IMMORTAL_ORB_BASE, StoryCombat.IMMORTAL_ORB_PER, lv)
 	for i in StoryCombat.IMMORTAL_ORB_SHOTS:
@@ -259,6 +276,7 @@ func _cast_ascendant_starfall() -> void:
 		return
 	_cd_ascendant_starfall = StoryCombat.ASCENDANT_STARFALL_CD
 	mp -= StoryCombat.ASCENDANT_STARFALL_COST
+	_skill_fx_of("z_starfall")
 	_play_anim("sprint")
 	_melee_hit(ATTACK_RANGE, StoryCombat.skill_mul(StoryCombat.ASCENDANT_STARFALL_BASE, StoryCombat.ASCENDANT_STARFALL_PER, lv))
 
@@ -273,6 +291,7 @@ func _cast_ascendant_collapse() -> void:
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.ASCENDANT_COLLAPSE_BASE, StoryCombat.ASCENDANT_COLLAPSE_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.ASCENDANT_COLLAPSE_RANGE_MUL
+	_skill_fx_of("z_collapse", range_m)
 	for enemy in get_tree().get_nodes_in_group("story_enemy"):
 		var e := enemy as Node3D
 		if e == null:
@@ -283,7 +302,7 @@ func _cast_ascendant_collapse() -> void:
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
 		StorySaveState.note_player_hit()   # G-0197 연속 타격
-		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
+		_hit_feel(e, roll)
 
 
 ## 환생(z_rebirth) — heal.
@@ -293,6 +312,7 @@ func _cast_ascendant_rebirth() -> void:
 		return
 	_cd_ascendant_rebirth = StoryCombat.ASCENDANT_REBIRTH_CD
 	mp -= StoryCombat.ASCENDANT_REBIRTH_COST
+	_skill_fx_of("z_rebirth")
 	var pct := StoryCombat.skill_mul(StoryCombat.ASCENDANT_REBIRTH_BASE, StoryCombat.ASCENDANT_REBIRTH_PER, lv)
 	hp = clampf(hp + max_hp * pct, 0.0, max_hp)
 
@@ -303,6 +323,7 @@ func _cast_ascendant_eternity() -> void:
 		return
 	_cd_ascendant_eternity = StoryCombat.ASCENDANT_ETERNITY_CD
 	mp -= StoryCombat.ASCENDANT_ETERNITY_COST
+	_skill_fx_of("z_eternity")
 	_job_buff_time_left = StoryCombat.ASCENDANT_ETERNITY_SEC
 	_job_buff_atk_mul = StoryCombat.ASCENDANT_ETERNITY_ATK_MUL
 	_job_buff_guard = StoryCombat.ASCENDANT_ETERNITY_GUARD
@@ -317,6 +338,7 @@ func _cast_ascendant_step() -> void:
 		return
 	_cd_ascendant_step = StoryCombat.ASCENDANT_STEP_CD
 	mp -= StoryCombat.ASCENDANT_STEP_COST
+	_skill_fx_of("z_step")
 	_play_anim("sprint")
 	var dist_m := StoryCombat.ascendant_step_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.ASCENDANT_STEP_BASE, StoryCombat.ASCENDANT_STEP_PER, lv))
@@ -331,6 +353,7 @@ func _cast_ascendant_orb() -> void:
 		return
 	_cd_ascendant_orb = StoryCombat.ASCENDANT_ORB_CD
 	mp -= StoryCombat.ASCENDANT_ORB_COST
+	_skill_fx_of("z_orb")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.ASCENDANT_ORB_BASE, StoryCombat.ASCENDANT_ORB_PER, lv)
 	for i in StoryCombat.ASCENDANT_ORB_SHOTS:
