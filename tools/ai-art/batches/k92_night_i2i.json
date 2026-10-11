@@ -1,0 +1,36 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k92_night_i2i",
+ "note": "K-0092 ① — 3마을 2D 집·가게 밤 변종: 우리 낮 그림(world2d, 자체 공방 몸 렌더 i2i 출신)을 밑그림으로 img2img 0.5 → 낮 알파로 잘라 실루엣 어긋남 0. ② 가로등·등롱은 이미 있는 불 켜진 street_lamp_01·hanging_lantern_01·stone_lantern_01 를 쓴다(새로 안 뽑음).",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 1024,
+  "height": 1024,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, harsh outline, gritty, photorealistic, neon, people, moon, stars, fire, smoke",
+  "denoise": 0.5,
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "forest_cottage_01_night",
+   "seed": 92100000,
+   "prompt": "(small village cottage at night:1.15), warm yellow light glowing from the door and a small window, dark blue night tint, cool moonlit roof, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, harsh outline, gritty, photorealistic, neon, people, moon, stars, fire, smoke",
+   "init_image": "tools/ai-art/_out/k92_init/forest_cottage_01.png",
+   "denoise": 0.5,
+   "day": "forest_cottage_01"
+  },
+  {
+   "id": "inn_01_night",
+   "seed": 92200000,
+   "prompt": "(two-storey village inn at night:1.15), every window glowing warm yellow, lit sign board, dark blue night tint, cool moonlit roof, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, harsh outline, gritty, photorealistic, neon, people, moon, stars, fire, smoke",
+   "init_image": "tools/ai-art/_out/k92_init/inn_01.png",
+   "denoise": 0.5,
+   "day": "inn_01"
+  }
+ ]
+}

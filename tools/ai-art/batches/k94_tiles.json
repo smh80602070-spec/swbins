@@ -1,0 +1,65 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k94_tiles",
+ "kit": {
+  "spec": "tile",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, border, frame, object, character, vignette, perspective",
+  "variants": 4,
+  "tiling": false
+ },
+ "items": [
+  {
+   "id": "dungeon_gobun",
+   "seed": 947895659,
+   "prompt": "(packed brown earth floor of an ancient tomb:1.15), no humans, seamless texture, tileable, top-down, flat even lighting, no cast shadow, uniform density, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, border, frame, object, character, vignette, perspective, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "고분(古墳) 땅 타일"
+  },
+  {
+   "id": "dungeon_pyeseong",
+   "seed": 1717571490,
+   "prompt": "(cracked gray-blue castle flagstones:1.15), no humans, seamless texture, tileable, top-down, flat even lighting, no cast shadow, uniform density, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, border, frame, object, character, vignette, perspective, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "폐성(廢城) 땅 타일"
+  },
+  {
+   "id": "dungeon_sanchae",
+   "seed": 3697448329,
+   "prompt": "(grassy dirt ground with small stones:1.15), no humans, seamless texture, tileable, top-down, flat even lighting, no cast shadow, uniform density, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, border, frame, object, character, vignette, perspective, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "산채(山寨) 땅 타일"
+  },
+  {
+   "id": "dungeon_sugung",
+   "seed": 702987646,
+   "prompt": "(wet blue-green stone tiles with tiny shells:1.15), no humans, seamless texture, tileable, top-down, flat even lighting, no cast shadow, uniform density, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, border, frame, object, character, vignette, perspective, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "수궁(水宮) 땅 타일"
+  },
+  {
+   "id": "dungeon_jiokmun",
+   "seed": 1309564530,
+   "prompt": "(dark red volcanic rock with glowing cracks:1.15), no humans, seamless texture, tileable, top-down, flat even lighting, no cast shadow, uniform density, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, border, frame, object, character, vignette, perspective, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "지옥문(地獄門) 땅 타일"
+  },
+  {
+   "id": "dungeon_cheongye",
+   "seed": 2352040049,
+   "prompt": "(white cloud-stone pavement with gold veins:1.15), no humans, seamless texture, tileable, top-down, flat even lighting, no cast shadow, uniform density, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, border, frame, object, character, vignette, perspective, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "천계(天界) 땅 타일"
+  }
+ ],
+ "note_tiling": "ComfyUI SDXL tiling 깨짐(K-0090) → tiling 끄고 make_seamless"
+}

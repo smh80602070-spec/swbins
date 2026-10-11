@@ -1,0 +1,44 @@
+{
+ "model": "z-image-turbo",
+ "out": "k91_forest_tiles",
+ "note": "K-0091 ①③ — 3마을 2D 땅 새 판 견본(풀 계절 셋·흙길·모래·돌길 _v2). 평평한 견본 → make_seamless → 256px. 이음 타일(②)은 이 견본과 기존 물 타일을 코드로 합성(알파 가장자리). 배경 사실풍(DESIGN §6.0-1), 0.6 overlay 라 밝기 중간·대비 낮게.",
+ "defaults": {
+  "prompt_prefix": "",
+  "width": 1024,
+  "height": 1024,
+  "variants": 4,
+  "tiling": false
+ },
+ "items": [
+  {
+   "id": "forest_grass_spring",
+   "seed": 91100000,
+   "prompt": "A flat top-down photo-real ground texture: fresh light green spring lawn grass with a few tiny white and yellow wildflowers and small clover leaves. Seen straight from above, evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Medium brightness and gentle low contrast, natural muted colors, fine small-scale detail for a cozy farming village game ground. Uniform repeating terrain texture."
+  },
+  {
+   "id": "forest_grass_summer",
+   "seed": 91200000,
+   "prompt": "A flat top-down photo-real ground texture: dense deep green summer meadow grass, short even blades with subtle variation. Seen straight from above, evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Medium brightness and gentle low contrast, natural muted colors, fine small-scale detail for a cozy farming village game ground. Uniform repeating terrain texture."
+  },
+  {
+   "id": "forest_grass_autumn",
+   "seed": 91300000,
+   "prompt": "A flat top-down photo-real ground texture: dry yellow-green and ochre autumn grass with a few scattered small fallen orange leaves. Seen straight from above, evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Medium brightness and gentle low contrast, natural muted colors, fine small-scale detail for a cozy farming village game ground. Uniform repeating terrain texture."
+  },
+  {
+   "id": "forest_dirt_v2",
+   "seed": 91400000,
+   "prompt": "A flat top-down photo-real ground texture: packed brown dirt path with small pebbles, tiny cracks and faint cart wheel ruts. Seen straight from above, evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Medium brightness and gentle low contrast, natural muted colors, fine small-scale detail for a cozy farming village game ground. Uniform repeating terrain texture."
+  },
+  {
+   "id": "forest_sand_v2",
+   "seed": 91500000,
+   "prompt": "A flat top-down photo-real ground texture: fine pale beige beach sand with soft wind ripples and a few tiny shell fragments. Seen straight from above, evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Medium brightness and gentle low contrast, natural muted colors, fine small-scale detail for a cozy farming village game ground. Uniform repeating terrain texture."
+  },
+  {
+   "id": "forest_stone_v2",
+   "seed": 91600000,
+   "prompt": "A flat top-down photo-real ground texture: old cobblestone path of rounded gray stones of mixed sizes with dirt and moss in the gaps. Seen straight from above, evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Medium brightness and gentle low contrast, natural muted colors, fine small-scale detail for a cozy farming village game ground. Uniform repeating terrain texture."
+  }
+ ]
+}

@@ -1,0 +1,63 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k94_belt_bg",
+ "kit": {
+  "spec": "bg",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 1216,
+  "height": 640,
+  "steps": 30,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "dg_gobun_bg",
+   "seed": 3438586838,
+   "prompt": "(ancient burial mound tomb interior:1.15), earthen walls, clay burial urns, faint lantern light, warm brown earth tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "고분(古墳) 벨트 배경(한 장 → split_bg_layers 로 far·mid·near)"
+  },
+  {
+   "id": "dg_pyeseong_bg",
+   "seed": 1098941911,
+   "prompt": "(ruined castle hall:1.15), broken gray-blue stone arches, fallen banners, cold moonlight through cracks, gray-blue tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "폐성(廢城) 벨트 배경(한 장 → split_bg_layers 로 far·mid·near)"
+  },
+  {
+   "id": "dg_sanchae_bg",
+   "seed": 2674490382,
+   "prompt": "(mountain bandit fortress:1.15), wooden palisade, rope bridges, pine forest behind, green and wood tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "산채(山寨) 벨트 배경(한 장 → split_bg_layers 로 far·mid·near)"
+  },
+  {
+   "id": "dg_sugung_bg",
+   "seed": 4053430102,
+   "prompt": "(underwater palace:1.15), coral pillars, flowing seaweed, light rays from water surface, aqua blue tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "수궁(水宮) 벨트 배경(한 장 → split_bg_layers 로 far·mid·near)"
+  },
+  {
+   "id": "dg_jiokmun_bg",
+   "seed": 13901206,
+   "prompt": "(gate of the underworld:1.15), lava rivers, black volcanic rock, giant iron gate, glowing red tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "지옥문(地獄門) 벨트 배경(한 장 → split_bg_layers 로 far·mid·near)"
+  },
+  {
+   "id": "dg_cheongye_bg",
+   "seed": 3555332475,
+   "prompt": "(heavenly palace above clouds:1.15), white marble pillars, golden roofs, soft golden sky, white and gold tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "천계(天界) 벨트 배경(한 장 → split_bg_layers 로 far·mid·near)"
+  }
+ ]
+}

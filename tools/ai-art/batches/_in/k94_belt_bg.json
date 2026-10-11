@@ -1,0 +1,46 @@
+{
+ "name": "k94_belt_bg",
+ "spec": "bg",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0094 ① 테마 여섯 벨트 배경 — 한 장(1024x576)을 split_bg_layers.py 로 far·mid·near(좌우 왕복 이음). 기존 dungeon_* 배경 넷은 테마에 안 맞아(지하 묘지·기계 금고·네온 골목·돌 성채) 폐성만 stone_keep 재사용 후보 — 눈으로 정함",
+ "items": [
+  {
+   "id": "dg_gobun_bg",
+   "spec": "bg",
+   "subject": "ancient burial mound tomb interior, earthen walls, clay burial urns, faint lantern light, warm brown earth tones, wide side-scrolling view, flat ground along the bottom",
+   "subject_ko": "고분(古墳) 벨트 배경(한 장 → split_bg_layers 로 far·mid·near)"
+  },
+  {
+   "id": "dg_pyeseong_bg",
+   "spec": "bg",
+   "subject": "ruined castle hall, broken gray-blue stone arches, fallen banners, cold moonlight through cracks, gray-blue tones, wide side-scrolling view, flat ground along the bottom",
+   "subject_ko": "폐성(廢城) 벨트 배경(한 장 → split_bg_layers 로 far·mid·near)"
+  },
+  {
+   "id": "dg_sanchae_bg",
+   "spec": "bg",
+   "subject": "mountain bandit fortress, wooden palisade, rope bridges, pine forest behind, green and wood tones, wide side-scrolling view, flat ground along the bottom",
+   "subject_ko": "산채(山寨) 벨트 배경(한 장 → split_bg_layers 로 far·mid·near)"
+  },
+  {
+   "id": "dg_sugung_bg",
+   "spec": "bg",
+   "subject": "underwater palace, coral pillars, flowing seaweed, light rays from water surface, aqua blue tones, wide side-scrolling view, flat ground along the bottom",
+   "subject_ko": "수궁(水宮) 벨트 배경(한 장 → split_bg_layers 로 far·mid·near)"
+  },
+  {
+   "id": "dg_jiokmun_bg",
+   "spec": "bg",
+   "subject": "gate of the underworld, lava rivers, black volcanic rock, giant iron gate, glowing red tones, wide side-scrolling view, flat ground along the bottom",
+   "subject_ko": "지옥문(地獄門) 벨트 배경(한 장 → split_bg_layers 로 far·mid·near)"
+  },
+  {
+   "id": "dg_cheongye_bg",
+   "spec": "bg",
+   "subject": "heavenly palace above clouds, white marble pillars, golden roofs, soft golden sky, white and gold tones, wide side-scrolling view, flat ground along the bottom",
+   "subject_ko": "천계(天界) 벨트 배경(한 장 → split_bg_layers 로 far·mid·near)"
+  }
+ ]
+}

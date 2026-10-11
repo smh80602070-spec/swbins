@@ -1,0 +1,52 @@
+{
+ "name": "k94_tiles",
+ "spec": "tile",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0094 ② 테마 땅 타일 여섯 — make_seamless(tiling 금지) → 256px",
+ "items": [
+  {
+   "id": "dungeon_gobun",
+   "spec": "tile",
+   "subject": "packed brown earth floor of an ancient tomb",
+   "subject_ko": "고분(古墳) 땅 타일",
+   "extra": "no humans"
+  },
+  {
+   "id": "dungeon_pyeseong",
+   "spec": "tile",
+   "subject": "cracked gray-blue castle flagstones",
+   "subject_ko": "폐성(廢城) 땅 타일",
+   "extra": "no humans"
+  },
+  {
+   "id": "dungeon_sanchae",
+   "spec": "tile",
+   "subject": "grassy dirt ground with small stones",
+   "subject_ko": "산채(山寨) 땅 타일",
+   "extra": "no humans"
+  },
+  {
+   "id": "dungeon_sugung",
+   "spec": "tile",
+   "subject": "wet blue-green stone tiles with tiny shells",
+   "subject_ko": "수궁(水宮) 땅 타일",
+   "extra": "no humans"
+  },
+  {
+   "id": "dungeon_jiokmun",
+   "spec": "tile",
+   "subject": "dark red volcanic rock with glowing cracks",
+   "subject_ko": "지옥문(地獄門) 땅 타일",
+   "extra": "no humans"
+  },
+  {
+   "id": "dungeon_cheongye",
+   "spec": "tile",
+   "subject": "white cloud-stone pavement with gold veins",
+   "subject_ko": "천계(天界) 땅 타일",
+   "extra": "no humans"
+  }
+ ]
+}
