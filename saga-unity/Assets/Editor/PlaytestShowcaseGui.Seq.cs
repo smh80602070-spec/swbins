@@ -241,6 +241,18 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] track 흔적 {traces.Count}곳 · 둘레 {tf.ShownCount} · 첫 흔적 {traces[0].Key} {traces[0].Kind} @ {traces[0].Pos} · 줄 {Saga.Go.Data.GoTrack.Line(traces[0].Pos)}");
                         break;
                     }
+                    case "frosttrack":   // U-0103 사가만리 — 서리봉 고원 첫 흔적 곁(3m 남쪽)으로, 고원 흔적 하나를 읽어 목표판 줄이 "흔적 1/3"
+                    {
+                        var tf = Saga.Go.World.TrackField.Instance;
+                        var who = GameObject.FindWithTag("Player");
+                        var frost = Saga.Go.Data.GoTrack.All.Where(t => t.Region == Saga.Go.Data.GoFrost.RegionId).ToList();
+                        if (tf == null || who == null || frost.Count < 2) { Skip(act); return; }
+                        Teleport(who.transform, frost[0].Pos + new Vector3(0f, 1f, -3f));
+                        tf.ReadAt(frost[1].Key);
+                        tf.Tick(frost[0].Pos);
+                        Debug.Log($"[ShowcaseGui] frosttrack 고원 흔적 {frost.Count}곳 · 둘레 {tf.ShownCount} · 첫 {frost[0].Key} {frost[0].Kind} @ {frost[0].Pos} · 줄 {Saga.Go.Data.GoTrack.Line(frost[0].Pos)}");
+                        break;
+                    }
                     case "realmeras":
                         if (Object.FindFirstObjectByType<Saga.Realm.World.RealmMapViewSwitcher>() == null) { Skip(act); return; }
                         RealmEras();

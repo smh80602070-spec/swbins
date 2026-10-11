@@ -28,8 +28,26 @@ namespace Saga.EditorTools
                 // ① 자리
                 var all = GoTrack.All;
                 if (all.Count == 0) Fail("흔적이 하나도 없음");
-                foreach (var t in all) if (!GoTrack.Placeable(t.Pos)) { Fail($"{t.Key} 놓을 수 없는 땅"); break; }
+                foreach (var t in all)
+                {
+                    bool frost = t.Region == GoFrost.RegionId;
+                    if (frost ? !GoTrack.PlaceableFrost(t.Pos) : !GoTrack.Placeable(t.Pos)) { Fail($"{t.Key} 놓을 수 없는 땅"); break; }
+                    if (frost != t.Key.StartsWith("f")) { Fail($"{t.Key} 키 접두와 지역이 안 맞음"); break; }
+                }
                 if (all.Select(t => t.Key).Distinct().Count() != all.Count) Fail("칸 키 겹침");
+                // U-0103 — 마을 지도 쪽은 전과 같고(7곳, 앞에 온다), 고원에 12곳 이상·눈밭 바닥(y=0)·명소/곰왕/경계비 거리
+                var village = all.Where(t => t.Region != GoFrost.RegionId).ToList();
+                var frostAll = all.Where(t => t.Region == GoFrost.RegionId).ToList();
+                if (village.Count != 7) Fail($"마을 지도 흔적 {village.Count} ≠ 7(전과 달라짐)");
+                if (all.Take(village.Count).Any(t => t.Region == GoFrost.RegionId)) Fail("고원 흔적이 마을 흔적보다 앞에 섬");
+                if (frostAll.Count < 12) Fail($"고원 흔적 {frostAll.Count} < 12");
+                foreach (var t in frostAll)
+                {
+                    if (Mathf.Abs(t.Pos.y) > 0.001f) { Fail($"{t.Key} 높이 {t.Pos.y}"); break; }
+                    if (t.Kind != GoTrack.Kind.Foot && t.Kind != GoTrack.Kind.Claw) { Fail($"{t.Key} 고원 흔적 종류 {t.Kind}"); break; }
+                    if (Vector3.Distance(t.Pos, GoFrost.KingHome) < 20f) { Fail($"{t.Key} 곰왕 곁"); break; }
+                }
+                m += $" 마을 {village.Count}·고원 {frostAll.Count}곳 ·";
                 var h1 = GoTrack.Hash(3, -2, 17); var h2 = GoTrack.Hash(3, -2, 17);
                 if (h1 != h2 || h1 < 0f || h1 > 1f) Fail("해시가 결정적이 아님");
                 m += $" 흔적 {all.Count}곳(종류 {all.Select(t => t.Kind).Distinct().Count()})";
@@ -74,6 +92,20 @@ namespace Saga.EditorTools
                     m += " · 강화석 +2·하루 한 번·세이브·새 날";
                 }
 
+                // U-0103 고원 셋 → 곰왕 · 세이브에 고원 키
+                if (frostAll.Count >= 3)
+                {
+                    GoTrack.NowFn = () => new DateTime(2026, 10, 13, 12, 0, 0);
+                    GoTrack.Restore(null, null, null, 0);
+                    for (int i = 0; i < 3; i++) GoTrack.Read(frostAll[i].Key);
+                    if (GoTrack.Boss != GoTrack.BossFrost) Fail($"고원 셋 → 큰 짐승 {GoTrack.Boss} ≠ 곰왕");
+                    string j2 = SaveState.ToJson();
+                    GoTrack.Restore(null, null, null, 0);
+                    SaveState.ApplyJson(j2);
+                    if (GoTrack.ReadCount != 3 || !GoTrack.IsRead(frostAll[0].Key) || GoTrack.Boss != GoTrack.BossFrost) Fail("고원 키 세이브 왕복");
+                    m += $" · 고원 셋 → {GoTrack.BossName(GoTrack.BossFrost)}";
+                }
+
                 // ⑤ 무기 빛
                 int prev = -1;
                 for (int asc = 0; asc <= GoWeapons.MaxAsc; asc++)
@@ -98,6 +130,13 @@ namespace Saga.EditorTools
                     if (tf.ShownCount != shown - 1) Fail($"읽은 흔적이 안 사라짐 {shown}→{tf.ShownCount}");
                     if (GoTrack.Line(all[0].Pos) == null) Fail("하나 읽었는데 목표판 줄 없음");
                     m += $" · 들판 둘레 {shown}개·읽으면 사라짐";
+                    if (frostAll.Count > 0)
+                    {
+                        GoTrack.Restore(null, null, null, 0);
+                        tf.Tick(frostAll[0].Pos);
+                        if (tf.ShownCount == 0) Fail("고원 흔적 곁인데 아무것도 안 섬");
+                        m += $" · 고원 둘레 {tf.ShownCount}개";
+                    }
                 }
 
                 // ⑧ ko/en

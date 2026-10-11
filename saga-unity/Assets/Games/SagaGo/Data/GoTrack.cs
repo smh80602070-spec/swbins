@@ -30,6 +30,7 @@ namespace Saga.Go.Data
             { "river", new[] { Kind.Wade, Kind.Foot } },
             { "south_glade", new[] { Kind.Foot, Kind.Graze } },
             { "farmland", new[] { Kind.Graze, Kind.Twig } },
+            { GoFrost.RegionId, new[] { Kind.Foot, Kind.Claw } },   // tasks U-0103 서리봉 고원 — 곰(웹 바이옴엔 눈밭이 없어 이 트랙 몫)
         };
 
         public struct Trace { public string Key; public Vector3 Pos; public Kind Kind; public string Region; }
@@ -83,7 +84,21 @@ namespace Saga.Go.Data
             return GoWorldMap.RegionAt(gx, gy) != "village";
         }
 
-        /// <summary>지도 위 흔적 전부(늘 같다).</summary>
+        /// <summary>tasks U-0103 — 서리봉 고원(글자 지도 밖 독립 눈밭 `GoFrost`)에서 흔적을 놓을 땅: 가장자리 24m 안쪽 · 명소 반지름 +6m 밖 ·
+        /// 곰왕 20m 밖 · 경계비 10m 밖(웹 놓을 땅 결 — 길목·볼거리 위엔 안 깐다).</summary>
+        public const float FrostEdge = 24f;
+        public static bool PlaceableFrost(Vector3 p)
+        {
+            var c = GoFrost.Center;
+            if (Mathf.Abs(p.x - c.x) > GoFrost.HalfX - FrostEdge || Mathf.Abs(p.z - c.z) > GoFrost.HalfZ - FrostEdge) return false;
+            foreach (var s in GoFrost.Sites) if (Flat(p, s.Pos) < GoFrost.RadiusOf(s) + 6f) return false;
+            if (Flat(p, GoFrost.KingHome) < 20f || Flat(p, GoFrost.SteleGround) < 10f) return false;
+            return true;
+        }
+
+        private static float Flat(Vector3 a, Vector3 b) => new Vector2(a.x - b.x, a.z - b.z).magnitude;
+
+        /// <summary>지도 위 흔적 전부(늘 같다). 마을 지도 칸이 먼저, 그 뒤 서리봉 고원 칸(키 `f` 접두, U-0103).</summary>
         public static IReadOnlyList<Trace> All
         {
             get
@@ -108,6 +123,24 @@ namespace Saga.Go.Data
                             string region = GoWorldMap.RegionAt(gx, gy);
                             var kinds = ByRegion.TryGetValue(region ?? "", out var ks) ? ks : new[] { Kind.Foot, Kind.Twig };
                             _all.Add(new Trace { Key = $"{cx}_{cz}", Pos = p, Kind = kinds[Hash(cx, cz, 31) < 0.5f ? 0 : 1], Region = region });
+                            break;
+                        }
+                    }
+                // tasks U-0103 — 서리봉 고원(지도 북쪽 밖 눈밭, 바닥 윗면 y=0)에도 같은 칸 해시로. 고원에서 셋을 읽으면 가장 가까운 보스 = 곰왕.
+                var fc = GoFrost.Center;
+                int fx0 = Mathf.FloorToInt((fc.x - GoFrost.HalfX) / Cell), fx1 = Mathf.FloorToInt((fc.x + GoFrost.HalfX) / Cell);
+                int fz0 = Mathf.FloorToInt((fc.z - GoFrost.HalfZ) / Cell), fz1 = Mathf.FloorToInt((fc.z + GoFrost.HalfZ) / Cell);
+                var frostKinds = ByRegion[GoFrost.RegionId];
+                for (int cx = fx0; cx <= fx1; cx++)
+                    for (int cz = fz0; cz <= fz1; cz++)
+                    {
+                        if (Hash(cx, cz, 17) >= Share) continue;
+                        for (int k = 0; k < 3; k++)
+                        {
+                            var p = new Vector3((cx + 0.5f) * Cell + (Hash(cx, cz, 23 + 100 * k) * 2f - 1f) * Jit, 0f,
+                                                (cz + 0.5f) * Cell + (Hash(cx, cz, 29 + 100 * k) * 2f - 1f) * Jit);
+                            if (!PlaceableFrost(p)) continue;
+                            _all.Add(new Trace { Key = $"f{cx}_{cz}", Pos = p, Kind = frostKinds[Hash(cx, cz, 31) < 0.5f ? 0 : 1], Region = GoFrost.RegionId });
                             break;
                         }
                     }
