@@ -147,6 +147,12 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
   setTimeout(function () {
     var C = DG.core, V = DG.village, VD = DG.villageData, AU = DG.auto;
 
+    t('3마을 3D 밤 등불(W-0167) — 시간대로 세기: 낮 0·밤 1(저녁은 그 사이), 손잡이 village3d.lamp 0 이면 늘 0', function () {
+      var CC = DG.cozyCam3d, C = DG.core, n = CC.lampLevel(23), d = CC.lampLevel(13), e = CC.lampLevel(19), off;
+      C.setTune('village3d.lamp', 0); off = CC.lampLevel(23); C.setTune('village3d.lamp', null);
+      var r = [n === 1, d === 0, e >= 0 && e <= 1, off === 0];
+      return r.every(Boolean) && ('밤 ' + n + ' · 낮 ' + d + ' · 19시 ' + e) || '실패 ' + [n, d, e, off].join(',');
+    });
     t('초상 목록(W-0164) — manifest 의 인물 초상이 전부 도감 인물이고, 늦게 들어온 인물(ac_balgwang)도 정사각·카드 둘 다 올라 있다', function () {
       var M = DG.portraitDisk, H = {}, bad = [];
       if (!M) { try { var xq = new XMLHttpRequest(); xq.open('GET', 'assets/portraits/manifest.js', false); xq.send(); var tx = xq.responseText, i0 = tx.indexOf('portraitDisk=') + 13; M = JSON.parse(tx.slice(i0, tx.lastIndexOf('};') + 1)); } catch (e) { M = null; } }   // 진단 페이지엔 안 실려 직접 읽는다

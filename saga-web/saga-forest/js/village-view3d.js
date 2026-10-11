@@ -2023,7 +2023,7 @@
     if (sunLight) { sunLight.castShadow = q.shadow; }
     if (player.mixer) { player.mixer.update(dt); }
     syncCamera(dt);
-    syncWalkMark(); if (global.DG.cozyCam3d) { global.DG.cozyCam3d.syncGrid(three(), scene, global.DG.village, WORLD_SCALE()); }   // W-0160 풀밭 칸 격자
+    syncWalkMark(); if (global.DG.cozyCam3d) { global.DG.cozyCam3d.syncGrid(three(), scene, global.DG.village, WORLD_SCALE()); if (global.DG.cozyCam3d.syncLamp) { global.DG.cozyCam3d.syncLamp(three(), scene, global.DG.village, WORLD_SCALE()); } }   // W-0160 풀밭 칸 격자
     syncTerrain();
     syncWaterRipple(dt);
     syncScatter(dt);

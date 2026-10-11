@@ -60,6 +60,32 @@
     grid.position.set(-px * s, 0.05, -py * s);   // 인물 원점 — 세상이 나를 둘러 옮겨진다
   }
 
+  /* ── W-0167 밤 등불 — 2D 스타듀(W-0133)는 밤에 내 둘레만 덜 어둡다. 3D 도 나를 따라다니는 따뜻한 빛 원판(발밑, 가산) 하나.
+   *  인물 원점이라 빛은 늘 원점 위. 세기는 시간대(villageData.phaseOf)로 — 낮 0·새벽 0.35·저녁 0.7·밤 1.
+   *  그림자 없음·하나뿐(폰). 손잡이 village3d.lamp(1, 0 = 없음) · village3d.lampK(세기 배율 1) */
+  var LAMP_K = { day: 0, dawn: 0.35, even: 0.7, night: 1 }, lamp = null;
+  function lampLevel(hour) {
+    var VD = global.DG.villageData, ph = VD && VD.phaseOf ? VD.phaseOf(hour === undefined ? new Date().getHours() : hour).key : 'day';
+    return tuned('village3d.lamp', 1) ? (LAMP_K[ph] || 0) * tuned('village3d.lampK', 1) : 0;
+  }
+  function syncLamp(t, scene, V, s) {
+    if (!t || !scene || !V) { return; }
+    var k = lampLevel(), TILE = V.TILE || 40;
+    if (k <= 0) { if (lamp) { lamp.visible = false; } return; }
+    if (!lamp) {   // 점광은 이 마을 재질(툰)에 거의 안 먹어서 — 발밑에 따뜻한 빛 원판(가산)을 깐다
+      var c = global.document.createElement('canvas'); c.width = c.height = 128;
+      var g = c.getContext('2d'), gr = g.createRadialGradient(64, 64, 4, 64, 64, 64);
+      gr.addColorStop(0, 'rgba(255,196,120,0.9)'); gr.addColorStop(0.45, 'rgba(255,170,90,0.42)'); gr.addColorStop(1, 'rgba(255,150,70,0)');
+      g.fillStyle = gr; g.fillRect(0, 0, 128, 128);
+      lamp = new t.Mesh(new t.PlaneGeometry(1, 1), new t.MeshBasicMaterial({ map: new t.CanvasTexture(c), transparent: true, blending: t.AdditiveBlending, depthWrite: false }));
+      lamp.rotation.x = -Math.PI / 2; lamp.renderOrder = 3; lamp.frustumCulled = false; scene.add(lamp);
+    }
+    var R = 3 * TILE * s;
+    lamp.visible = true; lamp.scale.set(R * 2, R * 2, 1); lamp.position.set(0, 0.04, 0);
+    lamp.material.opacity = Math.min(1, 0.5 * k) * (0.94 + 0.06 * Math.sin(Date.now() / 260));   // 등잔불처럼 아주 조금 일렁인다
+  }
+
+
   global.DG = global.DG || {};
-  global.DG.cozyCam3d = { on: on, pose: pose, gridCells: gridCells, syncGrid: syncGrid, stats: function () { return { on: on(), grid: !!(grid && grid.visible), key: gridKey, segs: grid ? grid.geometry.attributes.position.count / 2 : 0 }; } };
+  global.DG.cozyCam3d = { on: on, pose: pose, gridCells: gridCells, syncGrid: syncGrid, syncLamp: syncLamp, lampLevel: lampLevel, stats: function () { return { on: on(), grid: !!(grid && grid.visible), key: gridKey, segs: grid ? grid.geometry.attributes.position.count / 2 : 0 }; } };
 })(window);
