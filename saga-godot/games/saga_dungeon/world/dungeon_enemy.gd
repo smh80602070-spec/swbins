@@ -63,7 +63,11 @@ const SHADE_SCALE := 10.0 / 13.0  # spawnEnemy()의 그림자 분신 r=10 그대
 const LootPickup := preload("res://games/saga_dungeon/world/loot_pickup.gd")
 const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")  # 색 캡슐 대신 GO 짐승 공방 몸(2026-09-30)
 const Toast := preload("res://saga_core/ui/toast.gd")  # "그림자가 갈라졌다" 토스트용
-const BossPattern := preload("res://games/saga_dungeon/world/boss_pattern.gd")  # G-0204 보스 패턴(예고 뒤 터짐)
+const BossPattern := preload("res://games/saga_dungeon/world/boss_pattern.gd")
+const DungeonEnemies := preload("res://games/saga_dungeon/data/dungeon_enemies.gd")  # G-0207 잡몹 명단(웹 data-enemy.js)
+## G-0207 — 웹 form → 코드 짐승 몸(creature_builder). 사람(form "")·ogre 는 도깨비꼴, toad 는 거북꼴로 대신.
+const FORM_KIND := {"": "goblin", "ogre": "goblin", "quad": "wolf", "bird": "bird", "serpent": "serpent", "dragon": "serpent", "fish": "serpent", "toad": "turtle"}
+static var _species_seq := 0 # 종 고르기 순번(전역 randi 순서를 안 바꾸려고 자체 씨앗)  # G-0204 보스 패턴(예고 뒤 터짐)
 
 ## dungeon.js ELITES 그대로(8종, 색까지 원작 값) — hp/dmg 배율 없는 항목은
 ## spawnEnemy()의 기본값(1.35/1.15)을 쓴다(아래 _init에서 처리).
@@ -82,6 +86,8 @@ const ELITES: Array[Dictionary] = [
 ## 정예(철갑 두른·호신 두른)만 이 자리를 채운다(아래 _init).
 var resist: Dictionary = {}
 var elite_key: String = ""  # dungeon.js e.elite 그대로 — 없으면 빈 문자열
+var body_kind := "" # G-0207 지은 몸 모양(점검용)
+var species: Dictionary = {} # G-0207 이 적의 종(DungeonEnemies.ENEMIES 한 줄) — 보스·그림자 분신은 빈 채
 var _elite_def: Dictionary = {}  # ELITES[i] 그대로(빠른 재조회용 캐시)
 var _is_shade: bool = false  # 그림자 분신 자신인지 — 정예 굴림·재분열을 막는다
 var _dots: Array[Dictionary] = [] # [{dps, t}] — applyElem()의 독(pois) dot과 같은 모양
@@ -134,13 +140,23 @@ func _init(floor_num: int = 1, boss: bool = false, shade: bool = false, force_el
 	var elite_chance := _elite_chance(floor_num)
 	if DungeonSigilState.has_mod("elite_double"):
 		elite_chance = minf(0.9, elite_chance * 2.0)
+	## G-0207 — 잡몹은 이 층 단계 풀에서 종 하나(층·순번 씨앗 — 같은 순서면 같은 종). 종 저항이 기본 저항.
+	if not boss and not shade:
+		var pool := DungeonEnemies.pool_for(floor_num)
+		var rng := RandomNumberGenerator.new()
+		rng.seed = floor_num * 100003 + _species_seq * 7919 + 11
+		_species_seq += 1
+		species = pool[rng.randi() % pool.size()]
+		resist = (species.get("resist", {}) as Dictionary).duplicate()
 	if not boss and not shade and (force_elite or randf() < elite_chance):
 		_elite_def = ELITES[randi() % ELITES.size()]
 		elite_key = str(_elite_def.key)
 		max_hp = roundf(max_hp * float(_elite_def.get("hp", 1.35)))
 		attack_damage = roundf(attack_damage * float(_elite_def.get("dmg", 1.15)))
 		_scale_mul = ELITE_SCALE
-		resist = (_elite_def.get("resist", {}) as Dictionary).duplicate()
+		## 정예 저항과 종 저항은 결마다 큰 쪽(G-0207 — 전엔 정예 저항만)
+		for k in (_elite_def.get("resist", {}) as Dictionary):
+			resist[k] = maxf(float(resist.get(k, 0.0)), float(_elite_def.resist[k]))
 	if shade:
 		## spawnEnemy()의 shade 갈래 — hp*0.34·dmg*0.6·r=10, 정예 배율보다
 		## 나중에 적용된다(원작도 elite 갈래 뒤에 shade 갈래가 온다).
@@ -181,10 +197,17 @@ func _ready() -> void:
 
 func _spawn_visual() -> void:
 	## enemyName()의 정예 접두처럼, 시각도 정예 색이 잡졸 색을 덮는다. 보스는 곰, 나머지는 도깨비꼴.
-	var col: Color = Color(String(_elite_def.color)) if not _elite_def.is_empty() else COLOR
-	var kind := "bear" if is_boss else "goblin"
-	_creature = CreatureBuilder.build(kind, [col, col.darkened(0.4), col.lightened(0.45)], {"enemy": true})
-	CreatureBuilder._fit(_creature, kind, 1.7 * _scale_mul)
+	var col: Color = Color(String(_elite_def.color)) if not _elite_def.is_empty() else (Color(String(species.color)) if not species.is_empty() else COLOR)
+	var form := String(species.get("form", ""))
+	var kind := "bear" if is_boss else String(FORM_KIND.get(form, "goblin"))
+	if form == "quad" and String(species.get("name", "")).contains("룡"):
+		kind = "beast" # 공룡류는 늑대보다 뭉툭한 네발짐승꼴
+	var opts := {"enemy": true}
+	if form == "dragon":
+		opts["dragon"] = true
+	body_kind = kind
+	_creature = CreatureBuilder.build(kind, [col, col.darkened(0.4), col.lightened(0.45)], opts)
+	CreatureBuilder._fit(_creature, kind, 1.7 * _scale_mul * (1.15 if form == "ogre" else 1.0))
 	add_child(_creature)
 	_play_anim("idle")
 
@@ -368,9 +391,10 @@ func thorn_reflect(dmg: float) -> float:
 func who_label() -> String:
 	if is_boss:
 		return "굴혈의 우두머리" if _hurt_by == "" else "굴혈의 우두머리(%s)" % _hurt_by
+	var who := String(species.get("name", "")) if not species.is_empty() else "%d층 도깨비" % _floor_num   # G-0207 종 이름
 	if elite_key != "":
-		return "%s 정예 도깨비" % String(_elite_def.get("name", elite_key))   # 정예 이름은 꾸밈말(가시 돋친·…)
-	return "%d층 도깨비" % _floor_num
+		return "%s %s" % [String(_elite_def.get("name", elite_key)), who]   # 정예 이름은 꾸밈말(가시 돋친 황건적)
+	return who
 
 
 func _attack_player() -> void:

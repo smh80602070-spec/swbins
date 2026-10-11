@@ -91,8 +91,12 @@ func _initialize() -> void:
 			el_stats_ok = false
 		else:
 			seen[en.elite_key] = true
+			## G-0207 — 종 저항과 정예 저항은 결마다 큰 쪽
+			var want_res: Dictionary = (en.species.get("resist", {}) as Dictionary).duplicate()
+			for k in (def.get("resist", {}) as Dictionary):
+				want_res[k] = maxf(float(want_res.get(k, 0.0)), float(def.resist[k]))
 			el_stats_ok = el_stats_ok and en.max_hp == roundf(base_hp * float(def.get("hp", 1.35))) and en.attack_damage == roundf(base_dmg * float(def.get("dmg", 1.15))) and en.hp == en.max_hp \
-				and en.resist == def.get("resist", {})
+				and en.resist == want_res
 		en.free()
 	check(el_stats_ok and seen.size() == 8, "강제 정예 400번: 항상 8종 중 하나 · 체력·공격이 그 종의 배율(없으면 1.35·1.15) · 8종이 다 나옴")
 	var pl_ok := false

@@ -153,3 +153,25 @@ static func boss_tell(tree: SceneTree) -> void:
 		if n[0] >= 69:
 			tree.process_frame.disconnect(cb[0])
 	tree.process_frame.connect(cb[0])
+
+
+## G-0207 — 잡몹 명단: 왼쪽에 1층 셋·오른쪽에 13층 셋을 세워(움직이지 않게) 종마다 다른 색·몸을 찍는다. 메모리에서만.
+static func roster(tree: SceneTree) -> void:
+	for e in tree.get_nodes_in_group("dungeon_enemy"):
+		e.queue_free()
+	for m in tree.get_nodes_in_group("ui_modal"):
+		m.queue_free()
+	tree.node_added.connect(func(n: Node) -> void:
+		var s: Script = n.get_script()
+		if s != null and s.resource_path.ends_with("talk_box.gd"):
+			n.queue_free.call_deferred())
+	var p := tree.get_first_node_in_group("player") as Node3D
+	var Enemy: GDScript = load("res://games/saga_dungeon/world/dungeon_enemy.gd")
+	var spots := [[1, Vector3(-3.2, 0, -1.0)], [1, Vector3(-2.0, 0, 1.4)], [1, Vector3(-3.6, 0, 2.6)],
+		[13, Vector3(2.6, 0, -1.2)], [13, Vector3(3.4, 0, 1.2)], [13, Vector3(1.8, 0, 2.6)]]
+	for sp in spots:
+		var e: Node3D = Enemy.new(int(sp[0]))
+		tree.current_scene.add_child(e)
+		e.global_position = p.global_position + (sp[1] as Vector3)
+		e.set_physics_process(false) # 서 있기만
+		print("ROSTER %d층 %s" % [int(sp[0]), e.call("who_label")])

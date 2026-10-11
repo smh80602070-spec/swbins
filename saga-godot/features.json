@@ -3570,5 +3570,34 @@
   "ticket": "G-0206",
   "since": "2026-10-11",
   "note": "창 모드 st_boss_sig·st_boss_groggy Claude 눈 ○(이름 띠·초록 반원·💫)"
+ },
+ {
+  "id": "gd.dg.enemy-roster",
+  "name": "2나락 잡몹 명단 134종 — 층 단계별 풀에서 이름·색·몸(코드 짐승)·저항이 다른 적(웹 data-enemy.js ENEMIES)",
+  "files": [
+   "games/saga_dungeon/data/dungeon_enemies.gd",
+   "games/saga_dungeon/world/dungeon_enemy.gd",
+   "tools/probe_dungeon_roster.gd",
+   "tools/probe_dungeon_world.gd",
+   "tools/shot_dungeon_belt.gd",
+   "tools/shot_scene.gd"
+  ],
+  "tests": [
+   "dungeon_roster",
+   "dungeon_world",
+   "dungeon_run",
+   "dungeon_grace",
+   "dungeon_melee",
+   "dungeon_slots",
+   "dungeon_boss",
+   "save_dungeon",
+   "mount_dungeon"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0207",
+  "since": "2026-10-11",
+  "note": "창 모드 dg_roster 가로·세로 Claude 눈 ○(1층·13층 여섯이 색·몸 다름)"
  }
 ]
