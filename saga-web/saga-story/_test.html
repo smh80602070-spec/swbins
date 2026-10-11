@@ -6046,6 +6046,13 @@ window.DG_NO_TUNE = true;
       var r = [sat(a.sky) < sat(L.sky) * 0.7, a.nearK === 0.6, z.sky === L.sky && z.nearK === 0.35, L.sky === 0xe8b878, a.fog === 2200 && a.amb === 0.85];
       return r.every(Boolean) && ('마을 안개 ' + L.sky.toString(16) + ' → ' + a.sky.toString(16) + ' · 시작 0.6') || '실패 ' + r.join(',');
     });
+    t('st.side-view: 3D 손맛(W-0166) — 3D 렌더 해상도 배율 = 지금 확대(0.25 단위, 낮음 등급·손잡이 0 이면 1) · 흔들림 세기는 2D 와 같은 식(3D 카메라가 같은 값을 쓴다)', function () {
+      var SV = DG.sideView, C = DG.core, eff = SV._zoom().eff, zl = SV._sharpK('low'), zh = SV._sharpK('high'), off;
+      C.setTune('story3d.sharpZoom', 0); off = SV._sharpK('high'); C.setTune('story3d.sharpZoom', null);
+      var shk = SV._shake([{ t: 'shake', big: true, life: 0.22 }]);
+      var r = [zl === 1, zh === Math.max(1, Math.round(eff * 4) / 4), off === 1, shk > 0.2];
+      return r.every(Boolean) && ('확대 ' + eff.toFixed(2) + ' → 해상도 ×' + zh + ' · 흔들림 ' + shk.toFixed(1)) || '실패 ' + r.join(',');
+    });
     t('st.side-view3d: 시차 층(W-0161) — 사냥터가 쓰는 배경 지역 전부 layers.json 이 있고, 층 셋 깊이 far < mid < near < 0 < 앞 풀, mid·near 는 그 깊이 땅(0)에 앉는다', function () {
       var V = DG.sideLayers3d, M = DG.cfg.mode2d, seen = {}, bad = [], n = 0, D = 360 / Math.tan(17.5 * Math.PI / 180);
       Object.keys(M.region).forEach(function (k) { seen[M.region[k]] = 1; });

@@ -22,6 +22,25 @@
    *  대역. `world3d.toon`(기본 1)이 켜져 있으면 `toon3d.lambertLike()`가
    *  같은 옵션으로 3단 램프 MeshToonMaterial 을 만든다. `toon3d.js` 가 아직
    *  없거나(옛 캐시) three 가 없으면(자가진단) 예전 그대로 Lambert. */
+  /** W-0166 발판 한 장 — 2D drawPlat(메이플 문법)과 같은 모양: 윗면 평평·아래로 둥글게 좁아지는 흙덩이(두께 26) + 윗면 풀 띠(7).
+   *  자리·폭은 판정 그대로(윗면 = py). 손잡이 story3d.platShape 0 = 옛 상자 */
+  function platMesh(Tc, pw, dirtMat, stg, cx, py) {
+    var g = new Tc.Group(), SVp = global.DG.sideView, T = 26, r = Math.min(9, pw / 4), sh, m;
+    if (!(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('story3d.platShape', 1) : 1) || !Tc.Shape || !Tc.ExtrudeGeometry) {
+      m = new Tc.Mesh(new Tc.BoxGeometry(pw, 16, 46), dirtMat); m.position.set(cx, py - 8, 0); m.receiveShadow = true; g.add(m); return g;
+    }
+    var hw = pw / 2;
+    sh = new Tc.Shape();
+    sh.moveTo(-hw + r, 0); sh.lineTo(hw - r, 0); sh.quadraticCurveTo(hw, 0, hw - 2, -T * 0.55);
+    sh.quadraticCurveTo(hw - 10, -T, 0, -T); sh.quadraticCurveTo(-hw + 10, -T, -hw + 2, -T * 0.55); sh.quadraticCurveTo(-hw, 0, -hw + r, 0);
+    var geo = new Tc.ExtrudeGeometry(sh, { depth: 46, bevelEnabled: false, curveSegments: 6 });
+    geo.translate(0, 0, -23);
+    var dirt = SVp && SVp._dirt ? SVp._dirt(stg) : stg.ground, grass = SVp && SVp._grass ? SVp._grass(stg) : '#6f9f48';
+    m = new Tc.Mesh(geo, LM({ color: dirt, map: dirtMat.map || null })); m.position.set(cx, py, 0); m.receiveShadow = true; g.add(m);
+    var top = new Tc.Mesh(new Tc.BoxGeometry(pw - 4, 7, 48), LM({ color: grass })); top.position.set(cx, py - 3, 0); top.receiveShadow = true; g.add(top);
+    return g;
+  }
+
   function LM(opts) {
     var TN = global.DG.toon3d;
     if (TN) { return TN.lambertLike(opts); }
@@ -218,16 +237,19 @@
     var q = quality();
     return (q === 'low' || q === 'medium' || q === 'high') ? q : autoLevel;
   }
-  var lastAppliedLevel = null;
+  var lastAppliedLevel = null, lastZk = 1;
+  /** W-0166 — 2D 와 같은 CSS 확대(side.baseZoom 1.35·보스 당김)가 3D 캔버스를 늘여 흐렸다 → 그 배율만큼 렌더 해상도를 올린다(0.25 단위, 낮음 등급은 1).
+   *  기하·덧그림 정렬은 그대로(CSS 확대는 남는다). 손잡이 story3d.sharpZoom 0 = 옛 */
+  function zoomPR(lv) { var SVk = global.DG.sideView; return SVk && SVk._sharpK ? SVk._sharpK(lv) : 1; }
   /** 등급이 실제로 바뀐 프레임에서만 렌더러를 건드린다 — 매 프레임 setPixelRatio 를
    *  부르면(값이 같아도) 내부적으로 캔버스 크기를 다시 잰다, 공짜가 아니다 */
   function applyQualityIfChanged() {
-    var lv = effectiveLevel();
-    if (lv === lastAppliedLevel || !renderer) { return; }
-    lastAppliedLevel = lv;
+    var lv = effectiveLevel(), zk = zoomPR(lv);
+    if ((lv === lastAppliedLevel && zk === lastZk) || !renderer) { return; }
+    lastAppliedLevel = lv; lastZk = zk;
     var pr = QUALITY_PRESET[lv];
     renderer.shadowMap.enabled = pr.shadow;
-    renderer.setPixelRatio(Math.min(global.devicePixelRatio || 1, pr.pixelRatio));
+    renderer.setPixelRatio(Math.min((global.devicePixelRatio || 1) * zk, pr.pixelRatio * zk, 3));   // W-0166 × 확대
     if (dirLight) { dirLight.castShadow = pr.shadow; }
   }
 
@@ -577,10 +599,7 @@
         color: stg.ground,
         map: groundTexture(stg.mood, Math.max(1, pw / TILE_WORLD), 46 / TILE_WORLD)
       });
-      var box = new Tc.Mesh(new Tc.BoxGeometry(pw, 16, 46), platMat);
-      box.position.set(pl[0] + pw / 2, py - 8, 0);
-      box.receiveShadow = true; box.castShadow = false;
-      worldGroup.add(box);
+      worldGroup.add(platMesh(Tc, pw, platMat, stg, pl[0] + pw / 2, py));   // W-0166 상자 → 흙덩이 + 풀 띠
     }
 
     buildScenery(Tc, stg);
@@ -868,8 +887,11 @@
     var camX = SV._cam();
     var D = camDist();
     var lookY = stg.floor - H / 2;
-    camera.position.set(camX + W / 2, lookY, D);
-    camera.lookAt(camX + W / 2, lookY, 0);
+    /* W-0166 — 맞을 때 세계도 흔들린다(전엔 덧그림만). 2D 덧그림과 같은 위상 · 카메라는 반대로 옮겨야 화면이 같은 쪽으로 간다 */
+    var SVs = global.DG.sideView, shk = SVs && SVs._shake && S.fx && (global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('story3d.shake', 1) : 1) ? SVs._shake(S.fx()) : 0, shx = 0, shy = 0;
+    if (shk > 0.2) { var phs = Date.now() / 18; shx = -Math.sin(phs) * shk; shy = Math.cos(phs * 1.7) * shk * 0.6; }
+    camera.position.set(camX + W / 2 + shx, lookY + shy, D);
+    camera.lookAt(camX + W / 2 + shx, lookY + shy, 0);
 
     var focusX = p.x + S.P_W / 2;
     dirLight.position.set(focusX + 260, 460, 360);
@@ -1056,6 +1078,7 @@
   global.DG = global.DG || {};
   global.DG.sideView3d = {
     init: init, draw: draw, resize: resize, ready: ready_,
+    _zoomPR: zoomPR, _platMesh: platMesh,   // W-0166 진단
     available: available, active: active, toggle: toggle,
     quality: quality, setQuality: setQuality,
     /** 진단·설정 화면용 — 'auto' 일 때 지금 실제로 도는 등급 */
