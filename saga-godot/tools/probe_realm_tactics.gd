@@ -202,6 +202,8 @@ func _initialize() -> void:
 	_reset()
 	S.cities.xuchang.troops = 2000
 	var hero := String(S.roster[0])
+	S.roster.append("sg_xunyu")   # G-0189 — 남는 장수가 있어야 전사가 그대로 선다(로스터가 비면 하나는 중상)
+	S.officer_city["sg_xunyu"] = "xuchang"
 	var at_dead: Dictionary = S.attack("xiaopei", [], _grid("lose", [hero]))
 	check(at_dead.ok and at_dead.fallen == [hero] and not (hero in S.roster) and not S.officer_city.has(hero) and S.annals.has(hero) and S.annals[hero].where == "xiaopei" and S.annals[hero].by == "bei", "전사: 로스터·배치에서 빠지고 열전에 (어디 소패 · 누구 bei)")
 	_reset()
@@ -211,6 +213,34 @@ func _initialize() -> void:
 	var lord: String = S.current_lord_id
 	S.attack("xiaopei", [], _grid("lose", [lord]))
 	check(lord in S.roster and int(S.officer_hurt.get(lord, 0)) == 3 and not S.annals.has(lord), "군주가 쓰러지면 전사 대신 중상 3달")
+	# G-0189 마지막 남은 장수는 전사 대신 중상
+	_reset()
+	S.cities.xuchang.troops = 2000
+	var only := String(S.roster[0])
+	var at_only: Dictionary = S.attack("xiaopei", [], _grid("lose", [only]))
+	check(at_only.fallen.is_empty() and at_only.hurt == [only] and only in S.roster and int(S.officer_hurt.get(only, 0)) == 3 and not S.annals.has(only), "로스터 1명이 전사 판정 → 남아서 중상 3달(열전 없음)")
+	_reset()
+	S.cities.xuchang.troops = 2000
+	for id in ["sg_xiahoudun", "sg_zhangliao"]:
+		S.roster.append(id)
+		S.officer_city[id] = "xuchang"
+	var three: Array = S.roster.duplicate()
+	var strongest := ""
+	var best := -1.0
+	for id: String in three:
+		var mgt: float = S._effective_stat(id, "might")
+		if mgt > best or (mgt == best and id < strongest):
+			best = mgt
+			strongest = id
+	var at3a: Dictionary = S.attack("xiaopei", [], _grid("lose", three))
+	check(S.roster == [strongest] and at3a.hurt == [strongest] and at3a.fallen.size() == 2 and S.annals.size() == 2, "셋 다 전사 판정 → 무력 가장 높은 %s 만 중상으로 남고 둘은 열전" % strongest)
+	_reset()
+	S.cities.xuchang.troops = 2000
+	for id in ["sg_xiahoudun", "sg_zhangliao"]:
+		S.roster.append(id)
+		S.officer_city[id] = "xuchang"
+	var at3b: Dictionary = S.attack("xiaopei", [], _grid("lose", ["sg_xiahoudun", "sg_zhangliao"]))
+	check(at3b.fallen.size() == 2 and S.roster.size() == 1 and at3b.hurt.is_empty(), "셋 중 둘 전사 → 남는 이가 있으니 그대로 둘 전사")
 	# ⑨ 중상 3달
 	_reset()
 	S.cities.xuchang.troops = 2000

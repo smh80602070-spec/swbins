@@ -192,7 +192,9 @@ func _initialize() -> void:
 				var fallen: Array = at2.get("fallen", [])
 				var roster_before := 1 + extra.size()
 				if gk == "lose":
-					check(not at2.won and fallen.size() == mine.size() and S.annals.size() == fallen.size(), "전술 패(%d·장수 %d): 지고 판에 선 장수 %d 모두 전사·열전" % [troops, roster_before, mine.size()])
+					var hurt2: Array = at2.get("hurt", [])
+					check(not at2.won and fallen.size() + hurt2.size() == mine.size() and S.annals.size() == fallen.size() and not S.roster.is_empty() and hurt2.size() == (1 if mine.size() == roster_before else 0),
+						"전술 패(%d·장수 %d): 판에 선 %d 모두 쓰러짐 — 전사 %d·중상 %d(로스터가 비면 하나는 중상, G-0189)" % [troops, roster_before, mine.size(), fallen.size(), hurt2.size()])
 				# 다음 출진까지 — 먹힌 조작만
 				var ops := 0
 				var can := false
@@ -208,8 +210,8 @@ func _initialize() -> void:
 						else:
 							S.next_month()
 						ops += 1
-				var line := "%s/%d명·%d: %s %s · 잃은 병력 %.1f%%(나라) · 전사 %d(장수의 %.0f%%) · 다음 출진 %s" % [gk, roster_before, troops, String(at2.get("grid", "")), "함락" if at2.get("won", false) else "짐",
-					100.0 * float(lost2) / float(pre2.total), fallen.size(), 100.0 * float(fallen.size()) / float(roster_before),
+				var line := "%s/%d명·%d: %s %s · 잃은 병력 %.1f%%(나라) · 전사 %d(장수의 %.0f%%)·중상 %d · 다음 출진 %s" % [gk, roster_before, troops, String(at2.get("grid", "")), "함락" if at2.get("won", false) else "짐",
+					100.0 * float(lost2) / float(pre2.total), fallen.size(), 100.0 * float(fallen.size()) / float(roster_before), (at2.get("hurt", []) as Array).size(),
 					"—(함락)" if at2.get("won", false) else (("조작 %d" % ops) if can else "다시 못 침(장수 없음 — 등용부터)")]
 				print("  잰값 ④ ", line)
 				if gk == "auto" or gk == "lose":
