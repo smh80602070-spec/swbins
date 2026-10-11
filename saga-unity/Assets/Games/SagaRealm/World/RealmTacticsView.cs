@@ -24,7 +24,7 @@ namespace Saga.Realm.World
     {
         public static readonly Vector3 Origin = new Vector3(5000f, 0f, 5000f);
         public const float StepS = 0.25f, SwingS = 0.4f, PitchDeg = 50f, Fov = 40f, CamDist = 11.5f, EndHold = 1.2f;
-        public const float OfficerHeight = 0.95f, TroopHeight = 0.66f;
+        public const float OfficerHeight = 1.35f, TroopHeight = 1.0f;   // 칸 1m — 0.95·0.66 은 촬영에서 너무 작아 읽기 어려웠다
 
         private static readonly Color Plain = Hex(0xc8b47a), Forest = Hex(0x5f8446), River = Hex(0x4f86b3), WallC = Hex(0x857563);
         private static readonly Color Me = Hex(0x3d8bd9), Foe = Hex(0xd24b3c);
@@ -236,7 +236,7 @@ namespace Saga.Realm.World
                 bool show = fig != null && fig.gameObject.activeSelf;
                 t.gameObject.SetActive(show);
                 if (!show) continue;
-                t.transform.position = fig.transform.position + Vector3.up * (u.Kind == "officer" ? 1.45f : 1.1f);
+                t.transform.position = fig.transform.position + Vector3.up * (u.Kind == "officer" ? 1.9f : 1.5f);
                 t.transform.rotation = Cam.transform.rotation;
             }
         }

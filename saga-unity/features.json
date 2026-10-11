@@ -1922,20 +1922,22 @@
  },
  {
   "id": "un.rk.tactics",
-  "name": "U-0098 격자 전술 규칙 — 8×6·3턴·엄폐·AI·결과 넷, Attack() 보정만(웹 W-0107 이식)",
+  "name": "U-0098·U-0099 격자 전술 — 규칙(8×6·3턴·엄폐·AI·결과 넷, Attack() 보정만) + 3D 판(토글·장수 몸·이동/공격 연출)(웹 W-0107·W-0159 이식)",
   "files": [
    "saga-unity/Assets/Games/SagaRealm/Data/RealmTactics.cs",
-   "saga-unity/Assets/Games/SagaRealm/Data/RealmWarState.cs"
+   "saga-unity/Assets/Games/SagaRealm/Data/RealmWarState.cs",
+   "saga-unity/Assets/Games/SagaRealm/World/RealmTacticsView.cs",
+   "saga-unity/Assets/Games/SagaRealm/UI/RealmCommandUi.cs"
   ],
   "tests": [
    "PlaytestRealmTactics"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": "2026-10-11 claude",
   "fun": {},
-  "ticket": "U-0098",
+  "ticket": "U-0099",
   "since": "2026-10-11",
-  "note": "D1: PlaytestRealmTactics OK(웹 tactics.js 판 셋과 칸·자리·대국 결과·굴림 수 같음) · 화면 없음 — 판 화면은 다음 티켓"
+  "note": "D2(U-0099): PlaytestRealmTactics OK(규칙 — 웹 tactics.js 판 셋 일치 / 화면 — 칸 변환·고르기·옮기기·물러남 복원·맡기기=AutoPlay·토글 배선) · UiLayoutCheck 0건(전술판 상태 포함) · 판 촬영 Claude 눈 ○(격자 8×6·지형 넷·장수/부대 몸·고른 칸·갈 칸·단추 셋)"
  },
  {
   "id": "un.fs.craft",

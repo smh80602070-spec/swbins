@@ -222,6 +222,42 @@ namespace Saga.EditorTools
             return _ok;
         }
 
+        /// <summary>촬영·레이아웃 점검용(U-0099) — 지금 판에서 열 수 있는 전술판을 연다(지금 성 → 장수 있는 우리 성 순).
+        /// 칠 적 성이 다 함락돼 있으면 장수 있는 성의 첫 목표를 다시 세운다(그 프로세스 안에서만 — 부르는 쪽이 세이브를 되돌린다).
+        /// 열리면 첫 내 장수를 고른 채 돌려준다.</summary>
+        public static V OpenForShot()
+        {
+            var cities = new List<string> { RealmCityState.CurrentCity };
+            foreach (var id in RealmCityState.RosterIds) { var c = RealmCityState.OfficerCityId(id); if (c != null && !cities.Contains(c)) cities.Add(c); }
+            V v = null;
+            for (int pass = 0; pass < 3 && v == null; pass++)
+            {
+                if (pass == 2) RealmCityState.NextMonth(); // 앞 점검이 이 달 장수를 다 썼으면(공격 단추) 달을 넘겨 다시
+                foreach (var c in cities)
+                {
+                    if (RealmWarState.MarchOfficers(c).Count == 0) continue;
+                    foreach (var e in RealmEnemyCity.TargetsFrom(c))
+                    {
+                        if (pass >= 1)
+                        {
+                            var s = RealmWarState.Snapshot(e);
+                            RealmWarState.Restore(e, Mathf.Max(200, s.maxWall), Mathf.Max(200, s.maxWall), 9000, 60, 300, false);
+                            var r = RealmCityState.CityRecord(c);
+                            if (r != null) RealmCityState.AdjustCity(c, troops: Mathf.Max(0, 12000 - r.Troops), food: 50000);
+                        }
+                        v = V.Open(c, e, null);
+                        if (v != null) break;
+                    }
+                    if (v != null) break;
+                }
+            }
+            if (v == null) return null;
+            var me = v.Board.Units.First(u => u.Side == "me");
+            v.Tap(me.X, me.Y);
+            Debug.Log($"[PlaytestRealmTactics] 촬영 판 {v.Board.FromCityId}→{v.Board.EnemyId} 씨앗 {v.Board.Seed} · 유닛 {v.Board.Units.Count} · 고른 {v.Selected} · 갈 칸 {v.MoveCellCount}");
+            return v;
+        }
+
         private static int EnabledRootCanvases() => Object.FindObjectsByType<Canvas>(FindObjectsSortMode.None).Count(c => c.isRootCanvas && c.enabled);
 
         private static bool ViewChecks(string json1, string from, string enemy, ref string m)

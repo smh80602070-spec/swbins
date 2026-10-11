@@ -729,12 +729,12 @@ namespace Saga.Realm.UI
             RefreshSettingsPanel();
         }
 
-        /// <summary>tasks U-0099 — 일기토 토글 아래 같은 기둥 한 칸(-692 → -804, 같은 112px 간격). 이미 있으면 그대로.</summary>
+        /// <summary>tasks U-0099 — 설정 단추 왼쪽 옆 칸(기둥은 -20~-796 으로 꽉 차 아래 칸은 16:9 에서 화면 밖, 그 아래 옆 칸들은 「다음 달」·알림 띠와 겹침 — UiLayoutCheck). 이미 있으면 그대로.</summary>
         private void EnsureGridToggle(Transform canvas)
         {
             if (_gridToggleLabel != null) return;
             var gridToggleButton = RealmUiKit.NewButton(canvas, GridToggleLabelText(),
-                new Vector2(1f, 1f), new Vector2(-110f, -804f), new Vector2(180f, 104f), ToggleGrid);
+                new Vector2(1f, 1f), new Vector2(-300f, -356f), new Vector2(180f, 104f), ToggleGrid);
             gridToggleButton.name = "Btn_GridToggle";
             _gridToggleLabel = gridToggleButton.GetComponentInChildren<TextMeshProUGUI>();
         }
