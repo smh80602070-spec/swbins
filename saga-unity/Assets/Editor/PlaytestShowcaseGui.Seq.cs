@@ -13,7 +13,7 @@ namespace Saga.EditorTools
     /// `SAGA_SHOT_ACT` — 첫 장 직전에 움직임을 일으킨다(촬영 도구 안에서만, 게임 코드 무변경 · 그 기능 진단이 이미 부르는 공개 함수만):
     /// `walk`(가상 조이스틱 앞으로) · `attack`(사가만리 FieldCombat.Attack / 사가나락 PlayerCombat.TriggerAttack) · `swap`(다음 동료로 교체) ·
     /// `skill:<n>`(n 번 동료로 교체 뒤 Skill) · `roof`(마을집 지붕 남쪽에서 북으로 걷기) · `bossintro`(사가나락 = 진단의 두목 더미, 사가종횡 = 두목 6m 앞으로) ·
-    /// `gesture`(동료 환호) · `worldmap`(사가천하 지도 열기) · `party`·`party2`(모양별 동료 편성 — 스킬 진단과 같은 동료). `realmeras`(U-0091 사가천하 — 시간 틈 사람 묻힌 성 들여 수색·훈련·지도 켬) · `realmtactics`(U-0099 전술판 열고 첫 장수 고름). 대상 `screen` = 화면 그대로 첫·끝 장(오버레이 UI 포함). 판에 없는 동작은 로그에 SKIP. 여러 개는 `+` 로(`walk+attack`).
+    /// `gesture`(동료 환호) · `worldmap`(사가천하 지도 열기) · `party`·`party2`(모양별 동료 편성 — 스킬 진단과 같은 동료). `realmeras`(U-0091 사가천하 — 시간 틈 사람 묻힌 성 들여 수색·훈련·지도 켬) · `realmtactics`(U-0099 전술판 열고 첫 장수 고름) · `realmannals`(U-0101 열전 넷 심고 서고). 대상 `screen` = 화면 그대로 첫·끝 장(오버레이 UI 포함). 판에 없는 동작은 로그에 SKIP. 여러 개는 `+` 로(`walk+attack`).
     /// </summary>
     public static partial class PlaytestShowcaseGui
     {
@@ -245,6 +245,14 @@ namespace Saga.EditorTools
                         if (Object.FindFirstObjectByType<Saga.Realm.World.RealmMapViewSwitcher>() == null) { Skip(act); return; }
                         RealmEras();
                         break;
+                    case "realmannals":   // U-0101 사가천하 — 열전 넷을 심고 서고를 연다
+                    {
+                        var ui = Object.FindFirstObjectByType<Saga.Realm.UI.RealmCommandUi>();
+                        if (ui == null) { Skip(act); return; }
+                        PlaytestRealmTactics.SeedAnnals(4);
+                        typeof(Saga.Realm.UI.RealmCommandUi).GetMethod("ToggleArchivePanel", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(ui, null);
+                        break;
+                    }
                     case "realmtactics":   // U-0099 사가천하 — 격자 전술판을 열고 첫 장수를 고른 채(갈 칸·칠 적 표시)
                         if (Object.FindFirstObjectByType<Saga.Realm.World.RealmMapViewSwitcher>() == null || PlaytestRealmTactics.OpenForShot() == null) { Skip(act); return; }
                         break;

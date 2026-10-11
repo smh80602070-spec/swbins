@@ -143,6 +143,8 @@ namespace Saga.EditorTools
 
                 // U-0099 화면 — 칸 변환 · 고르기/옮기기 · 물러남 복원 · 맡기기 = AutoPlay · 토글 배선
                 if (!ViewChecks(json1, from, enemy, ref m)) _ok = false;
+                // U-0101 열전·중상 보이기 · 전술판 글 ko/en
+                if (!RecordChecks(json1, enemy, tester, ref m)) _ok = false;
 
                 // ⑥ grid 없는 Attack = 옛 계산
                 for (int s = 1; s <= 10; s++)
@@ -259,6 +261,92 @@ namespace Saga.EditorTools
             v.Tap(me.X, me.Y);
             Debug.Log($"[PlaytestRealmTactics] 촬영 판 {v.Board.FromCityId}→{v.Board.EnemyId} 씨앗 {v.Board.Seed} · 유닛 {v.Board.Units.Count} · 고른 {v.Selected} · 갈 칸 {v.MoveCellCount}");
             return v;
+        }
+
+        /// <summary>U-0101 촬영·레이아웃 점검용 — 명단 밖 장수 n 명을 열전에 심는다(세이브는 부르는 쪽이 되돌린다).</summary>
+        public static void SeedAnnals(int n)
+        {
+            var ids = RealmOfficerPool.AllIds.Where(id => !RealmCityState.RosterIds.Contains(id)).Take(n).ToArray();
+            var where = ids.Select((id, i) => RealmEnemyCity.AllIds[i % RealmEnemyCity.AllIds.Length]).ToArray();
+            var by = where.Select(w => string.Format(RealmLocalization.T("tactics.by", "{0} 수비군"), RealmEnemyCity.Get(w)?.Name ?? w)).ToArray();
+            var years = ids.Select(_ => RealmCityState.Year).ToArray();
+            var months = ids.Select((_, i) => Mathf.Clamp(RealmCityState.Month - i, 1, 12)).ToArray();
+            RealmCityState.RestoreWarRecords(null, null, ids, where, by, years, months);
+        }
+
+        public static readonly string[] Keys =
+        {
+            "command.grid", "tactics.by", "tactics.cancelled", "tactics.delegate", "tactics.draw", "tactics.end_turn", "tactics.fallen", "tactics.head",
+            "tactics.hint_act", "tactics.hint_busy", "tactics.hint_pick", "tactics.hint_pick2", "tactics.hit", "tactics.lose", "tactics.miss", "tactics.note",
+            "tactics.note_take", "tactics.result", "tactics.retreat", "tactics.rout", "tactics.troop", "tactics.win", "tactics.wounded", "war.err_hurt",
+            "archive.annals_title", "archive.annal_row", "archive.annals_more", "mount.hurt",
+        };
+
+        private static List<string> NewTexts(Transform root, int from)
+        {
+            var list = new List<string>();
+            for (int i = from; i < root.childCount; i++)
+                foreach (var t in root.GetChild(i).GetComponentsInChildren<TMPro.TextMeshProUGUI>(true)) list.Add(t.text);
+            return list;
+        }
+
+        private static bool RecordChecks(string json1, string enemy, List<string> tester, ref string m)
+        {
+            const System.Reflection.BindingFlags Any = System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance;
+            // ① 서고 열전 — 둘을 쓰러뜨리면 제목 "2", 최근 먼저
+            RealmSaveState.ApplyJson(json1);
+            var ui = Object.FindFirstObjectByType<Saga.Realm.UI.RealmCommandUi>();
+            if (ui == null) { Fail("RealmCommandUi 없음"); return false; }
+            var t = typeof(Saga.Realm.UI.RealmCommandUi);
+            var root = (Transform)t.GetField("_archiveButtonsRoot", Any).GetValue(ui);
+            int n0 = root.childCount;
+            t.GetMethod("RefreshArchivePanel", Any).Invoke(ui, null);
+            if (NewTexts(root, n0).Any(s => s.Contains("⚰️"))) Fail("열전이 없는데 서고에 열전 절");
+            RealmCityState.RetireOfficer(tester[0], enemy, "시험 수비군 갑");
+            RealmCityState.RetireOfficer(tester[1], enemy, "시험 수비군 을");
+            n0 = root.childCount;
+            t.GetMethod("RefreshArchivePanel", Any).Invoke(ui, null);
+            var texts = NewTexts(root, n0);
+            string n1 = RealmOfficerPool.Get(tester[1])?.Name ?? tester[1], n2 = RealmOfficerPool.Get(tester[0])?.Name ?? tester[0];
+            if (texts.Count < 3 || !texts[0].Contains("⚰️") || !texts[0].Contains("2") || !texts[1].Contains(n1) || !texts[1].Contains("을") || !texts[2].Contains(n2))
+                Fail($"서고 열전 줄 [{string.Join(" | ", texts.Take(3))}]");
+            m += $" · 서고 열전 「{(texts.Count > 1 ? texts[1] : "")}」";
+
+            // ② 명마 줄 🩹 — 셋째 달에 사라짐
+            var mu = Saga.Realm.UI.RealmMountUi.Instance;
+            if (mu == null) Fail("RealmMountUi 없음");
+            else
+            {
+                var mt = typeof(Saga.Realm.UI.RealmMountUi);
+                string who = RealmCityState.RosterIds[0], nm = RealmOfficerPool.Get(who)?.Name ?? who;
+                RealmCityState.SetHurt(who, 3);
+                string Row()
+                {
+                    var rr = (Transform)mt.GetField("_rowsRoot", Any).GetValue(mu);
+                    mt.GetMethod("RefreshPanel", Any).Invoke(mu, null);   // 옛 줄은 떼어 낸 뒤 지우므로 남은 자식은 다 새 줄
+                    return NewTexts(rr, 0).FirstOrDefault(s => s.StartsWith(nm)) ?? "";
+                }
+                string r1 = Row();
+                if (!r1.Contains("🩹 3")) Fail($"명마 줄 중상 딱지 「{r1}」");
+                for (int k = 0; k < 3; k++) RealmCityState.NextMonth();
+                string r2 = Row();
+                if (r2.Contains("🩹")) Fail($"셋째 달 뒤에도 딱지 「{r2}」");
+                m += $" · 명마 「{r1}」";
+            }
+
+            // ③ ko/en 표 — 새 키 다 있고 en 값에 한글 없음
+            var ko = Resources.Load<TextAsset>("Localization/realm_ko")?.text ?? "";
+            var en = Resources.Load<TextAsset>("Localization/realm_en")?.text ?? "";
+            foreach (var k in Keys)
+            {
+                string pat = "\"key\": \"" + System.Text.RegularExpressions.Regex.Escape(k) + "\", \"value\": \"((?:[^\"\\\\]|\\\\.)*)\"";
+                var mk = System.Text.RegularExpressions.Regex.Match(ko, pat);
+                var me = System.Text.RegularExpressions.Regex.Match(en, pat);
+                if (!mk.Success || !me.Success) { Fail($"번역 키 없음 {k} (ko {mk.Success}·en {me.Success})"); continue; }
+                if (System.Text.RegularExpressions.Regex.IsMatch(me.Groups[1].Value, "[가-힣]")) Fail($"en {k} 에 한글");
+            }
+            RealmSaveState.ApplyJson(json1);
+            return _ok;
         }
 
         private static int EnabledRootCanvases() => Object.FindObjectsByType<Canvas>(FindObjectsSortMode.None).Count(c => c.isRootCanvas && c.enabled);

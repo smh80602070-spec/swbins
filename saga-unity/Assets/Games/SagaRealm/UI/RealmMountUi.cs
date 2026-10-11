@@ -149,6 +149,8 @@ namespace Saga.Realm.UI
                 var label = b.GetComponentInChildren<TextMeshProUGUI>();
                 label.fontSize = 24;
                 label.text = $"{(o != null ? o.Name : id)}  —  {HorseName(id)}";
+                int hurt = RealmCityState.HurtMonths(id); // tasks U-0101 — 전술판 중상(출진·계략 못 함)
+                if (hurt > 0) label.text += "  " + string.Format(RealmLocalization.T("mount.hurt", "🩹 {0}달"), hurt);
                 _rows.Add((id, b, label));
                 shown++;
             }

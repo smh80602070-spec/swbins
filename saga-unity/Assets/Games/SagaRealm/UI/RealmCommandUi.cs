@@ -642,6 +642,9 @@ namespace Saga.Realm.UI
                 new Vector2(300f, 70f), CloseArchivePanel);
         }
 
+        /// <summary>tasks U-0101 — 서고 맨 위 열전 줄 수(나머지는 "외 n명").</summary>
+        public const int AnnalRows = 3;
+
         private void RefreshArchivePanel()
         {
             for (int i = _archiveButtonsRoot.childCount - 1; i >= 0; i--)
@@ -649,15 +652,41 @@ namespace Saga.Realm.UI
                 Destroy(_archiveButtonsRoot.GetChild(i).gameObject);
             }
 
+            float y = -110f;
+            // tasks U-0101 열전(웹 tactics-view.js annalsHtml) — 전술판에서 쓰러진 우리 장수, 최근 먼저 AnnalRows 줄까지. 없으면 그대로.
+            var annals = RealmCityState.Annals;
+            if (annals.Count > 0)
+            {
+                RealmUiKit.NewText(_archiveButtonsRoot, string.Format(RealmLocalization.T("archive.annals_title", "⚰️ 열전 {0}명"), annals.Count), new Vector2(0.5f, 1f), new Vector2(0f, y),
+                    new Vector2(680f, 48f), 26);
+                y -= 50f;
+                int shown = 0;
+                for (int i = annals.Count - 1; i >= 0 && shown < AnnalRows; i--, shown++)
+                {
+                    var a = annals[i];
+                    string row = string.Format(RealmLocalization.T("archive.annal_row", "{0} · {1}년 {2}월 · {3} 아래 · {4}에게"),
+                        RealmOfficerPool.Get(a.Id)?.Name ?? a.Id, a.Year, a.Month, RealmEnemyCity.Get(a.Where)?.Name ?? a.Where, a.By);
+                    var t = RealmUiKit.NewText(_archiveButtonsRoot, row, new Vector2(0.5f, 1f), new Vector2(0f, y), new Vector2(680f, 44f), 21);
+                    t.color = new Color(0.86f, 0.84f, 0.8f);
+                    y -= 46f;
+                }
+                if (annals.Count > shown)
+                {
+                    RealmUiKit.NewText(_archiveButtonsRoot, string.Format(RealmLocalization.T("archive.annals_more", "외 {0}명"), annals.Count - shown), new Vector2(0.5f, 1f), new Vector2(0f, y),
+                        new Vector2(680f, 36f), 20);
+                    y -= 38f;
+                }
+                y -= 16f;
+            }
+
             var list = RealmQuizState.LearnedList();
             if (list.Count == 0)
             {
-                RealmUiKit.NewText(_archiveButtonsRoot, RealmLocalization.T("archive.empty", "아직 익힌 문제가 없다."), new Vector2(0.5f, 1f), new Vector2(0f, -120f),
+                RealmUiKit.NewText(_archiveButtonsRoot, RealmLocalization.T("archive.empty", "아직 익힌 문제가 없다."), new Vector2(0.5f, 1f), new Vector2(0f, y - 10f),
                     new Vector2(660f, 60f), 24);
                 return;
             }
 
-            float y = -110f;
             foreach (var entry in list)
             {
                 string label = string.Format(RealmLocalization.T("archive.entry_label", "[{0}] {1}"), RealmQuizData.CatName(entry.Cat), RealmQuizData.ShortQ(entry.Q));

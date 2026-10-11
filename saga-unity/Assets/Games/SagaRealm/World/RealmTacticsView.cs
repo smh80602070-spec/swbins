@@ -528,7 +528,7 @@ namespace Saga.Realm.World
             if (_closing) return;
             var o = T.OutcomeOf(Board);
             var g = T.Apply(o, Board.EnemyId);
-            _info.text = string.Format(RealmLocalization.T("tactics.result", "♟️ 전술판 {0} — 공 위력 {1}{2}%{3}"), o.Name, o.WinPct >= 0 ? "+" : "", o.WinPct,
+            _info.text = string.Format(RealmLocalization.T("tactics.result", "♟️ 전술판 {0} — 공 위력 {1}{2}%{3}"), RealmLocalization.T("tactics." + o.Kind, o.Name), o.WinPct >= 0 ? "+" : "", o.WinPct,
                 o.LossMul != 1f ? string.Format(RealmLocalization.T("tactics.note_take", " · 받는 피해 ×{0}"), o.LossMul) : "");
             ClearMarks();
             if (_instant || !isActiveAndEnabled) { Complete(g); return; }

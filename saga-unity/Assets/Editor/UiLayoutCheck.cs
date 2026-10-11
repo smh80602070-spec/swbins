@@ -425,6 +425,26 @@ namespace Saga.EditorTools
                         },
                         exit = () => { eventPanel.SetActive(false); Saga.Realm.Data.RealmEventState.ClearForTest(); },
                     });
+                    // tasks U-0101 서고 열전 — 열전 넷(셋 + "외 1명")을 심고 서고를 연다.
+                    list.Add(new UiState
+                    {
+                        name = "서고 열전",
+                        panel = true,
+                        enter = () =>
+                        {
+                            var ui = Object.FindFirstObjectByType<Saga.Realm.UI.RealmCommandUi>();
+                            if (ui == null) return false;
+                            PlaytestRealmTactics.SeedAnnals(4);
+                            Call(ui, "ToggleArchivePanel");
+                            return true;
+                        },
+                        exit = () =>
+                        {
+                            var ui = Object.FindFirstObjectByType<Saga.Realm.UI.RealmCommandUi>();
+                            if (ui != null) Call(ui, "CloseArchivePanel");
+                            Saga.Realm.Data.RealmCityState.RestoreWarRecords(null, null, null, null, null, null, null);
+                        },
+                    });
                     // tasks U-0099 격자 전술판 — 판 화면(위 안내 띠·아래 단추 셋)을 첫 장수 고른 채로. 다른 캔버스는 판이 가린다.
                     list.Add(new UiState
                     {
