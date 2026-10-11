@@ -306,7 +306,7 @@
    "tool": "remote3d",
    "model": "microsoft/TRELLIS-image-large",
    "license": "MIT",
-   "count": 129,
+   "count": 136,
    "where": [
     "saga-assets/creatures3d",
     "saga-web/shared/assets/creatures3d"
