@@ -34,7 +34,7 @@
 | gen.py | Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-07 확인), 폐쇄 파생 모델 수익화만 금지 | 594 |
 | competitiongen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 21 |
 | gen.py | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1755 |
-| remote3d | microsoft/TRELLIS-image-large | MIT | 36 |
+| remote3d | microsoft/TRELLIS-image-large | MIT | 79 |
 | icon_pack.py | none | CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음) | 76 |
 | gen.py (ComfyUI) | z-image-turbo | Apache-2.0 | 36 |
 | make_map.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 195 |
@@ -84,6 +84,6 @@
 
 ## 출처 문서(ASSET_LICENSES·ASSET_GUIDE) 요약
 
-절 261개 — 라이선스 낱말별: CC0 190, Kenney(CC0) 39, CC-BY 29, Mixamo 11, OpenRAIL 10, MIT 8, GPL 2, OFL 1
+절 259개 — 라이선스 낱말별: CC0 188, Kenney(CC0) 39, CC-BY 29, Mixamo 11, OpenRAIL 10, MIT 8, GPL 2, OFL 1
 낱말을 못 찾은 절(미상) 48개 — `credits.json` 의 `doc_sections.unknown` 참고.
 

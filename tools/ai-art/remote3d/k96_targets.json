@@ -254,7 +254,8 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.45,
-   "rig": "quad"
+   "rig": "quad",
+   "judge_b": "○"
   },
   {
    "id": "wolf",
@@ -264,7 +265,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.8,
-   "rig": "quad"
+   "rig": "quad",
+   "judge_b": "○",
+   "yaw": 90
   },
   {
    "id": "deer",
@@ -274,7 +277,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 1.0,
-   "rig": "quad"
+   "rig": "quad",
+   "judge_b": "○",
+   "yaw": 90
   },
   {
    "id": "stag",
@@ -284,17 +289,19 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 1.3,
-   "rig": "quad"
+   "rig": "quad",
+   "judge_b": "△ 뿔이 검은 덩어리(모양은 뿔)"
   },
   {
    "id": "cow",
    "group": "3-field",
    "borrowed": "Quaternius CC0 — Cow (dungeon animals·dungeon animals_extra·forest animals_extra·go animals·story animals·story animals_extra)",
-   "input": "tools/ai-art/_out/remote3d_in_k96c/cow.png",
+   "input": "tools/ai-art/_out/remote3d_in_k96c2/cow.png",
    "status": "있음(txt2img)",
    "note": "",
    "height": 1.4,
-   "rig": "quad"
+   "rig": "quad",
+   "judge_b": "✗ 두 마리가 겹침 → v03 다시(remote3d_in_k96c2)"
   },
   {
    "id": "cow_farm",
@@ -304,7 +311,8 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 1.4,
-   "rig": "quad"
+   "rig": "quad",
+   "judge_b": "○"
   },
   {
    "id": "bull",
@@ -314,17 +322,19 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 1.5,
-   "rig": "quad"
+   "rig": "quad",
+   "judge_b": "○"
   },
   {
    "id": "sheep",
    "group": "3-field",
    "borrowed": "Quaternius CC0 — Sheep (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
-   "input": "tools/ai-art/_out/remote3d_in_k96c/sheep.png",
+   "input": "tools/ai-art/_out/remote3d_in_k96c2/sheep.png",
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.8,
-   "rig": "quad"
+   "rig": "quad",
+   "judge_b": "✗ 등에 검은·분홍 얼룩 → v02 다시(remote3d_in_k96c2)"
   },
   {
    "id": "pig",
@@ -334,7 +344,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.7,
-   "rig": "quad"
+   "rig": "quad",
+   "judge_b": "○ 바닥 상자",
+   "plate": true
   },
   {
    "id": "llama",
@@ -344,7 +356,8 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 1.7,
-   "rig": "quad"
+   "rig": "quad",
+   "judge_b": "○"
   },
   {
    "id": "alpaca",
@@ -354,7 +367,8 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 1.2,
-   "rig": "quad"
+   "rig": "quad",
+   "judge_b": "○ 한쪽 옆구리 어두움"
   },
   {
    "id": "cat",
@@ -364,7 +378,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.3,
-   "rig": "quad"
+   "rig": "quad",
+   "judge_b": "○ 그림자 판",
+   "plate": true
   },
   {
    "id": "shiba",
@@ -374,7 +390,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.45,
-   "rig": "quad"
+   "rig": "quad",
+   "judge_b": "○ 바닥 상자",
+   "plate": true
   },
   {
    "id": "husky",
@@ -384,7 +402,10 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.6,
-   "rig": "quad"
+   "rig": "quad",
+   "judge_b": "△ 꼬리·그림자가 검은 덩어리",
+   "plate": true,
+   "plate_cut": 0.03
   },
   {
    "id": "pug",
@@ -394,7 +415,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.3,
-   "rig": "quad"
+   "rig": "quad",
+   "judge_b": "○",
+   "yaw": 90
   },
   {
    "id": "frog",
@@ -404,7 +427,10 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.12,
-   "rig": "quad"
+   "rig": "quad",
+   "judge_b": "△ 옆 그림자가 검은 덩어리로 남음",
+   "plate": true,
+   "plate_cut": 0.04
   },
   {
    "id": "snake",
@@ -414,7 +440,8 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.3,
-   "rig": "worm"
+   "rig": "worm",
+   "judge_b": "○"
   },
   {
    "id": "worm",
@@ -424,7 +451,10 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.3,
-   "rig": "worm"
+   "rig": "worm",
+   "judge_b": "△ 받침 자른 끝이 거침",
+   "plate": true,
+   "plate_cut": 0.08
   },
   {
    "id": "pigeon",
@@ -434,7 +464,8 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.3,
-   "rig": "bird"
+   "rig": "bird",
+   "judge_b": "○"
   },
   {
    "id": "birb",
@@ -444,7 +475,8 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.15,
-   "rig": "bird"
+   "rig": "bird",
+   "judge_b": "○"
   },
   {
    "id": "raptor",
@@ -454,17 +486,19 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.9,
-   "rig": "bird"
+   "rig": "bird",
+   "judge_b": "○"
   },
   {
    "id": "trex",
    "group": "3-field",
    "borrowed": "Quaternius CC0 — T_Rex·Trex (dungeon animals_extra2·forest animals_extra2·go animals·story animals_extra2)",
-   "input": "tools/ai-art/_out/remote3d_in_k96c/trex.png",
+   "input": "tools/ai-art/_out/remote3d_in_k96c2/trex.png",
    "status": "있음(txt2img)",
    "note": "",
    "height": 3.0,
-   "rig": "bird"
+   "rig": "bird",
+   "judge_b": "✗ 납작한 그림 판 → v02 다시(remote3d_in_k96c2)"
   },
   {
    "id": "triceratops",
@@ -474,7 +508,8 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 2.2,
-   "rig": "quad"
+   "rig": "quad",
+   "judge_b": "△ 목 장식 흐림"
   },
   {
    "id": "stegosaurus",
@@ -484,7 +519,10 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 2.5,
-   "rig": "quad"
+   "rig": "quad",
+   "judge_b": "○ 그림자 판",
+   "plate": true,
+   "plate_cut": 0.05
   },
   {
    "id": "parasaurolophus",
@@ -494,7 +532,10 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 2.5,
-   "rig": "quad"
+   "rig": "bird",
+   "judge_b": "○ 발밑 부스러기 = finish",
+   "plate": true,
+   "plate_cut": 0.07
   },
   {
    "id": "apatosaurus",
@@ -504,7 +545,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 4.0,
-   "rig": "quad"
+   "rig": "quad",
+   "judge_b": "✗ 바닥 상자 옆면(청록 벽)이 남음 → 다른 그림(remote3d_in_k96c2)",
+   "plate": true
   },
   {
    "id": "mushnub",
@@ -514,7 +557,8 @@
    "status": "있음(txt2img)",
    "note": "보임: 펫 넷 판·숲 괴물",
    "height": 0.6,
-   "rig": ""
+   "rig": "worm",
+   "judge_b": "○"
   },
   {
    "id": "dino_pet",
@@ -524,7 +568,9 @@
    "status": "있음(txt2img)",
    "note": "보임: 펫",
    "height": 0.7,
-   "rig": ""
+   "rig": "none",
+   "judge_b": "○ 흰 받침",
+   "plate": true
   },
   {
    "id": "squidle",
@@ -534,7 +580,9 @@
    "status": "있음(txt2img)",
    "note": "보임: 펫",
    "height": 0.5,
-   "rig": ""
+   "rig": "worm",
+   "judge_b": "○ 바닥 상자",
+   "plate": true
   },
   {
    "id": "glub",
@@ -544,7 +592,8 @@
    "status": "있음(txt2img)",
    "note": "보임: 펫",
    "height": 0.5,
-   "rig": ""
+   "rig": "worm",
+   "judge_b": "△ 정면이 이상(옆모습 물고기)"
   },
   {
    "id": "glub_evolved",
@@ -554,7 +603,10 @@
    "status": "있음(txt2img)",
    "note": "보임: 펫",
    "height": 0.8,
-   "rig": ""
+   "rig": "worm",
+   "judge_b": "○ 바닥 상자",
+   "plate": true,
+   "plate_cut": 0.08
   },
   {
    "id": "bunny",
@@ -564,17 +616,21 @@
    "status": "있음(txt2img)",
    "note": "보임: 펫",
    "height": 0.5,
-   "rig": ""
+   "rig": "none",
+   "judge_b": "○ 바닥 판",
+   "plate": true,
+   "plate_cut": 0.03
   },
   {
    "id": "monkroose",
    "group": "4-monster",
    "borrowed": "Quaternius CC0 Ultimate Monsters — Monkroose (D·F G S standin)",
-   "input": "tools/ai-art/_out/remote3d_in_k96d/monkroose.png",
+   "input": "tools/ai-art/_out/remote3d_in_k96c2/monkroose.png",
    "status": "있음(txt2img)",
    "note": "보임: 펫",
    "height": 0.6,
-   "rig": ""
+   "rig": "quad",
+   "judge_b": "✗ 납작한 그림 판 → v03 배경 미리 지워 다시"
   },
   {
    "id": "pink_slime",
@@ -584,7 +640,10 @@
    "status": "있음(txt2img)",
    "note": "보임: 펫",
    "height": 0.4,
-   "rig": ""
+   "rig": "worm",
+   "judge_b": "○ (받침 잘라냄)",
+   "plate": true,
+   "plate_cut": 0.08
   },
   {
    "id": "ghost",
@@ -594,7 +653,8 @@
    "status": "있음(txt2img)",
    "note": "보임: 펫·숲 손님",
    "height": 0.9,
-   "rig": ""
+   "rig": "worm",
+   "judge_b": "○"
   },
   {
    "id": "alpaking",
@@ -604,17 +664,19 @@
    "status": "있음(txt2img)",
    "note": "보임: 펫",
    "height": 1.2,
-   "rig": ""
+   "rig": "quad",
+   "judge_b": "○ 희게 바램"
   },
   {
    "id": "dragon",
    "group": "4-monster",
    "borrowed": "Quaternius CC0 Ultimate Monsters — Dragon (D·F G S standin)",
-   "input": "tools/ai-art/_out/remote3d_in_k96d/dragon.png",
+   "input": "tools/ai-art/_out/remote3d_in_k96c2/dragon.png",
    "status": "있음(txt2img)",
    "note": "보임: 펫",
    "height": 1.0,
-   "rig": ""
+   "rig": "quad",
+   "judge_b": "✗ 납작한 그림 판 → v04 배경 미리 지워 다시"
   },
   {
    "id": "dragon_evolved",
@@ -624,17 +686,20 @@
    "status": "있음(txt2img)",
    "note": "보임: D S R 펫·두목·탈것",
    "height": 2.2,
-   "rig": ""
+   "rig": "quad",
+   "judge_b": "○ 바닥 상자",
+   "plate": true
   },
   {
    "id": "cat_monster",
    "group": "4-monster",
    "borrowed": "Quaternius CC0 Ultimate Monsters — Cat_Monster (D·F G S standin)",
-   "input": "tools/ai-art/_out/remote3d_in_k96d/cat_monster.png",
+   "input": "tools/ai-art/_out/remote3d_in_k96c2/cat_monster.png",
    "status": "있음(txt2img)",
    "note": "보임: 펫",
    "height": 0.6,
-   "rig": ""
+   "rig": "quad",
+   "judge_b": "✗ 납작한 그림 판(배경째) → v01 배경 미리 지워 다시(remote3d_in_k96c2)"
   },
   {
    "id": "goleling",
@@ -644,7 +709,8 @@
    "status": "있음(txt2img)",
    "note": "보임: D S 펫",
    "height": 0.8,
-   "rig": ""
+   "rig": "none",
+   "judge_b": "○ 희게 바램"
   },
   {
    "id": "goleling_evolved",
@@ -654,7 +720,10 @@
    "status": "있음(txt2img)",
    "note": "보임: R 장수 몸",
    "height": 2.0,
-   "rig": ""
+   "rig": "none",
+   "judge_b": "○ (받침 잘라냄)",
+   "plate_cut": 0.03,
+   "plate": true
   },
   {
    "id": "hywirl",
@@ -664,17 +733,19 @@
    "status": "있음(txt2img)",
    "note": "보임: D S 펫",
    "height": 0.8,
-   "rig": ""
+   "rig": "bird",
+   "judge_b": "○"
   },
   {
    "id": "ghost_skull",
    "group": "4-monster",
    "borrowed": "Quaternius CC0 Ultimate Monsters — Ghost_Skull (D R quaternius)",
-   "input": "tools/ai-art/_out/remote3d_in_k96d/ghost_skull.png",
+   "input": "tools/ai-art/_out/remote3d_in_k96c2/ghost_skull.png",
    "status": "있음(txt2img)",
    "note": "보임: R 장수 몸",
    "height": 1.0,
-   "rig": ""
+   "rig": "worm",
+   "judge_b": "✗ 납작한 그림 판 → v02 배경 미리 지워 다시"
   },
   {
    "id": "rat",
@@ -684,7 +755,10 @@
    "status": "있음(txt2img)",
    "note": "보임: G S R 적",
    "height": 0.5,
-   "rig": ""
+   "rig": "quad",
+   "judge_b": "△ 꼬리 밑 파란 그림자 조금(plate_cut 0.05)",
+   "plate": true,
+   "plate_cut": 0.05
   },
   {
    "id": "wasp",
@@ -694,7 +768,8 @@
    "status": "있음(txt2img)",
    "note": "보임: G S R 적",
    "height": 0.6,
-   "rig": ""
+   "rig": "none",
+   "judge_b": "○"
   },
   {
    "id": "spider",
@@ -704,7 +779,8 @@
    "status": "있음(txt2img)",
    "note": "보임: R 적",
    "height": 0.7,
-   "rig": ""
+   "rig": "none",
+   "judge_b": "○"
   },
   {
    "id": "frog_brute",
@@ -714,7 +790,8 @@
    "status": "있음(txt2img)",
    "note": "보임: R 적",
    "height": 0.9,
-   "rig": ""
+   "rig": "quad",
+   "judge_b": "○"
   },
   {
    "id": "robot_drone",
@@ -724,7 +801,8 @@
    "status": "있음(txt2img)",
    "note": "보임: D G S 적",
    "height": 0.8,
-   "rig": ""
+   "rig": "none",
+   "judge_b": "○"
   },
   {
    "id": "robot_walker",
@@ -734,7 +812,8 @@
    "status": "있음(txt2img)",
    "note": "보임: F G S 적",
    "height": 1.6,
-   "rig": ""
+   "rig": "none",
+   "judge_b": "△ 옆에 검은 번짐"
   },
   {
    "id": "robot_large",
@@ -744,7 +823,8 @@
    "status": "있음(txt2img)",
    "note": "보임: D G S 적",
    "height": 2.4,
-   "rig": ""
+   "rig": "none",
+   "judge_b": "○ 등이 어두움"
   },
   {
    "id": "space_bug",
@@ -754,7 +834,8 @@
    "status": "있음(txt2img)",
    "note": "보임: 숲 드문 손님",
    "height": 0.5,
-   "rig": ""
+   "rig": "none",
+   "judge_b": "○"
   },
   {
    "id": "anglerfish",
@@ -1167,5 +1248,5 @@
    "rig": "worm"
   }
  ],
- "note_4": "④ 10-11 조사(보이는 것만): 사람 꼴 괴물(Wizard·Orc·Orc_Enemy·Yeti·Alien·Alien_2·Demon·Blue_Demon·Zombie·Giant·Skeleton 5·Ninja)은 TRELLIS 아님 — 인간형 몸은 char-forge 괴물 몸 쪽(ARCH §4.5) · 던전 적 body 는 crea: 자체 몸이 먼저라 대체 안 해도 됨(look 칸 있는 적만 예외 = 로봇 둘, 표에 있음) · Demon.gltf·Alpaking_Evolved·Armabee·Chicken·D quat Birb/Pigeon 사본은 참조 0(지워도 됨) · SlimeEnemy(CC-BY)는 ① slime 이 대신 · rig 칸은 3D 보고 정함"
+ "note_4": "④ 10-11 조사(보이는 것만): 사람 꼴 괴물(Wizard·Orc·Orc_Enemy·Yeti·Alien·Alien_2·Demon·Blue_Demon·Zombie·Giant·Skeleton 5·Ninja)은 TRELLIS 아님 — 인간형 몸은 char-forge 괴물 몸 쪽(ARCH §4.5) · 던전 적 body 는 crea: 자체 몸이 먼저라 대체 안 해도 됨(look 칸 있는 적만 예외 = 로봇 둘, 표에 있음) · Demon.gltf·Alpaking_Evolved·Armabee·Chicken·D quat Birb/Pigeon 사본은 참조 0(지워도 됨) · SlimeEnemy(CC-BY)는 ① slime 이 대신 · rig 칸은 3D 보고 정함 · rig none = 뼈 안 맞는 몸(두 발·여덟 발·로봇·날벌레) → creature_fill 루트 동작"
 }

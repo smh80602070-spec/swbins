@@ -306,7 +306,7 @@
    "tool": "remote3d",
    "model": "microsoft/TRELLIS-image-large",
    "license": "MIT",
-   "count": 36,
+   "count": 79,
    "where": [
     "saga-assets/creatures3d",
     "saga-web/shared/assets/creatures3d"
@@ -793,9 +793,9 @@
   }
  ],
  "doc_sections": {
-  "total": 261,
+  "total": 259,
   "by_license": {
-   "CC0": 190,
+   "CC0": 188,
    "MIT": 8,
    "CC-BY": 29,
    "Kenney(CC0)": 39,
