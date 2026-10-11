@@ -85,6 +85,7 @@ const CUTS := [
 	["fs_story", FOREST, []],   # G-0086 사가마을 이야기 첫 대화(새 판)
 	["dg_belt_room", DUNGEON, [["free_modal"], ["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", 1.0]]]],   # G-0185 벨트 카메라 — 첫 방 가운데(SAGA_DG_CAM=diablo 로 같이 돌리면 옛 시점)
 	["dg_belt_corridor", DUNGEON, [["free_modal"], ["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", -10.0]]]],   # 첫 통로 — 다음 방이 오른쪽
+	["dg_death_card", DUNGEON, [["free_modal"], ["static", "res://tools/shot_dungeon_belt.gd", "die", ["@tree"]]]],   # G-0193 사망 카드 세 줄 + 첫 방 은총 자리에서 다시 섬
 	["dg_story", DUNGEON, [["free_modal"]]],
 	["dg_room_wide", DUNGEON, [["free_modal"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 14.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-40.0, 0.0, 0.0)]]],   # G-0112 첫 방 전체(어두움 판정)   # G-0085 사가나락 이야기 첫 대화(새 판 — 출사표 창을 닫으면 뜬다)
 	["go_cave_dirt", GO, [["call", "CaveInterior", "enter"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 5.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-25.0, 180.0, 0.0)]]],   # G-0098 굴 안 흙 복도

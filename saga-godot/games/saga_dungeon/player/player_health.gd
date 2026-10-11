@@ -32,6 +32,8 @@ const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const GRAVE_GOLD_LOSS_PCT := 0.20
 
 var _dead := false
+## G-0193 — 사망 카드 "누구에게·무슨 피해" — 마지막으로 나를 친 것 {who, dmg}
+var last_hit := {"who": "", "dmg": 0.0}
 
 ## 이번 슬라이스엔 스탯 시스템이 없어(장비·직업 능력치 전부 제외 목록)
 ## 임의로 정한 값 — 잡졸(공격력≈5) 몇 대는 맞아도 버티는 정도를 노렸다.
@@ -74,10 +76,12 @@ func heal_by(amount: float) -> void:
 	hp_changed.emit(hp, max_hp)
 
 
-func take_damage(amount: float) -> void:
+func take_damage(amount: float, source: Node = null) -> void:
 	if _dead or amount <= 0.0:
 		return
-	hp = maxf(0.0, hp - amount * DungeonRunState.guard_mult())
+	var dealt := amount * DungeonRunState.guard_mult()
+	last_hit = {"who": String(source.call("who_label")) if source != null and source.has_method("who_label") else "", "dmg": dealt}
+	hp = maxf(0.0, hp - dealt)
 	hp_changed.emit(hp, max_hp)
 	if hp <= 0.0:
 		_dead = true
@@ -104,24 +108,38 @@ func _die_and_respawn() -> void:
 	var player: Node3D = get_parent()
 	DungeonGraveState.set_grave(player.global_position, lost_gold, lost_weapon, lost_charm)
 	LootPickup.spawn_grave_at(get_parent().get_parent(), player.global_position)
+	## G-0193 — 어디서 쓰러졌는지 적고, 마지막으로 밝힌 은총 자리로 옮긴다(유품은 쓰러진 자리에 남는다 — 되찾으러 걸어간다)
+	var grace := get_tree().get_first_node_in_group("dungeon_grace")
+	var where := String(grace.call("room_label_at", player.global_position)) if grace != null else ""
+	if grace != null:
+		player.global_position = grace.call("grace_pos")
+		if player is CharacterBody3D:
+			(player as CharacterBody3D).velocity = Vector3.ZERO
 	recalc_max_hp()
 	hp = max_hp
 	_dead = false
 	hp_changed.emit(hp, max_hp)
-	_show_death_card(lost_gold)
+	_show_death_card(lost_gold, where)
 
 
 ## 웹 5.2 "사망 화면 = 세션 카드"를 이 판의 단순 패널(ChoicePrompt)로
-## 근사했다 — 새 UI를 안 만든다. "닫기" 버튼 하나로 곧바로 계속한다.
-func _show_death_card(lost_gold: int) -> void:
+## 근사했다 — 새 UI를 안 만든다. 버튼 하나로 곧바로 계속한다(G-0193 — 이미 은총 자리에 서 있다).
+func _show_death_card(lost_gold: int, where: String = "") -> void:
 	var room: Node = get_parent().get_parent()
-	var msg := "☠️ 쓰러졌다 — 금 %d 과 무기·부적을 그 자리에 두고 되살아난다.\n💀 표식을 다시 밟으면 돌려받는다." % lost_gold
+	var msg := death_card_text(lost_gold, where, last_hit)
 	var layer_box := {}
 	var choices: Array = [{
-		"label": "계속",
+		"label": "✨ 은총에서 다시",
 		"cb": func() -> void: (layer_box["layer"] as CanvasLayer).queue_free(),
 	}]
 	layer_box["layer"] = ChoicePrompt.build(room, msg, choices)
+
+
+## G-0193 — 사망 카드 세 줄(웹 W-0102: 어디서·누구에게·무슨 피해) + 남는 것·잃은 것. 순수 함수(점검 대상)
+static func death_card_text(lost_gold: int, where: String, hit: Dictionary) -> String:
+	var who := String(hit.get("who", ""))
+	return "☠️ 쓰러졌다 — 은총 자리에서 다시 선다\n📍 어디서 — %s\n🗡 누구에게 — %s\n💥 무슨 피해 — 마지막 한 대 %d\n남는 것: 도감·인물·공적 · 잃은 것: 금 %d·무기·부적(💀 쓰러진 자리에서 되찾는다)" % [
+		where if where != "" else "알 수 없는 곳", who if who != "" else "알 수 없는 것", int(roundf(float(hit.get("dmg", 0.0)))), lost_gold]
 
 
 ## dungeon.js die()의 결사(決死) 갈래 — 정확한 "층"을 아는 자리(현재 방

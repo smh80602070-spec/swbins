@@ -345,9 +345,18 @@ func thorn_reflect(dmg: float) -> float:
 	return maxf(1.0, roundf(dmg * thorn_pct))
 
 
+## G-0193 — 사망 카드 "누구에게" 줄에 쓸 이름
+func who_label() -> String:
+	if is_boss:
+		return "굴혈의 우두머리"
+	if elite_key != "":
+		return "%s 정예 도깨비" % String(_elite_def.get("name", elite_key))   # 정예 이름은 꾸밈말(가시 돋친·…)
+	return "%d층 도깨비" % _floor_num
+
+
 func _attack_player() -> void:
 	if _player.has_node("PlayerHealth"):
-		_player.get_node("PlayerHealth").take_damage(attack_damage)
+		_player.get_node("PlayerHealth").take_damage(attack_damage, self)
 
 
 ## **저주(hex)와 "가시 돋친" 정예의 순서 근사** — 원작 strike()는 hex

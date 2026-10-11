@@ -3206,5 +3206,26 @@
   "fun": {},
   "ticket": "G-0192",
   "since": "2026-10-11"
+ },
+ {
+  "id": "gd.dg.grace",
+  "name": "2나락 은총 자리(첫 방·샘 방, 금빛 기둥) · 쓰러지면 은총에서 다시 섬(유품은 쓰러진 자리) · 사망 카드 세 줄(어디서·누구에게·무슨 피해)+남는 것",
+  "files": [
+   "games/saga_dungeon/world/grace_sites.gd",
+   "games/saga_dungeon/player/player_health.gd",
+   "games/saga_dungeon/world/dungeon_enemy.gd",
+   "games/saga_dungeon/world/test_room.gd",
+   "tools/probe_dungeon_grace.gd"
+  ],
+  "tests": [
+   "dungeon_grace",
+   "dungeon_run"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0193",
+  "since": "2026-10-11",
+  "note": "창 모드 dg_death_card Claude 눈 ○"
  }
 ]

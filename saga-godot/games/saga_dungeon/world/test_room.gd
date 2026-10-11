@@ -178,6 +178,10 @@ func _ready() -> void:
 	for rig in get_tree().get_nodes_in_group("camera_rig"):
 		if rig.has_method("set_rooms"):
 			rig.set_rooms(belt_rooms)
+	## G-0193 — 은총 자리(첫 방 + 샘 방). 쓰러지면 마지막으로 밝힌 은총에서 다시 선다(player_health.gd)
+	var grace: Node3D = load("res://games/saga_dungeon/world/grace_sites.gd").new()
+	grace.setup(_room_origin_z.duplicate(), Array(ROOM_KINDS))
+	add_child(grace)
 
 	## GO의 test_village.gd::_ready()와 같은 순서 규칙(자식이 부모보다
 	## 먼저 ready되므로 Player는 이미 트리에 있다) — 이미 클리어한 방이면
