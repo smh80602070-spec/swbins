@@ -380,6 +380,21 @@ func attack(enemy_id: String, duel_moves: Array = [], grid: Dictionary = {}) -> 
 				grid_dead.append(String(id))
 		for w: Variant in grid.get("wounded", []):
 			grid_hurt.append({"id": String(w.id), "months": int(w.months)})
+		## G-0189 — 전사로 로스터가 비면(고돗 군주는 로스터 밖이라 웹의 "군주는 중상" 보루가 없다) 무력이 가장 높은 하나는 중상으로 남긴다.
+		## 장수가 하나도 없으면 명령·수색·등용을 쓸 사람이 없어 판이 막힌다(G-0188 측정에서 찾음).
+		var left_after := 0
+		for id: String in roster:
+			if not (id in grid_dead):
+				left_after += 1
+		if left_after == 0 and not grid_dead.is_empty():
+			var keep: String = grid_dead[0]
+			for id: String in grid_dead:
+				var mi := _effective_stat(id, "might")
+				var mk := _effective_stat(keep, "might")
+				if mi > mk or (mi == mk and id < keep):
+					keep = id
+			grid_dead.erase(keep)
+			grid_hurt.append({"id": keep, "months": RealmTactics.WOUND_MONTHS})
 		var down: Array = grid_dead.duplicate()
 		for w: Dictionary in grid_hurt:
 			down.append(w.id)

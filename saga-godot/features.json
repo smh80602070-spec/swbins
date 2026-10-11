@@ -3095,5 +3095,27 @@
   "ticket": "G-0182·G-0183",
   "since": "2026-10-11",
   "note": "G-0183(10-11) 창 모드 rk_tactics·rk_tactics_wide Claude 눈 ○: 격자·지형·장수 몸·선택/이동 칸·단추 셋"
+ },
+ {
+  "id": "gd.go.landmark_read",
+  "name": "1만리 젤다 읽힘새 — 열 지역 높은 실루엣(새 여덟 80~90m 한 메시 + 성루·다층탑) · 거리 이름표(400m 밖 \"· n.nkm\") · 끌어 멀리 본 시점은 놓으면 0.6초에 기본 각",
+  "files": [
+   "games/saga_go/world/landmark_reads.gd",
+   "games/saga_go/player/camera_rig.gd",
+   "games/saga_go/world/test_village.gd",
+   "tools/probe_landmark_reads.gd",
+   "tools/probe_shots.gd"
+  ],
+  "tests": [
+   "landmark",
+   "traversal",
+   "perf"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0184",
+  "since": "2026-10-11",
+  "note": "G-0184(10-11) 창 모드 l_far_north·l_far_frost·l_far_frost_e Claude 눈 ○: 절벽 너머 첨탑·거목 실루엣과 거리 이름표(먼 실루엣은 안개로 희게 바램)"
  }
 ]

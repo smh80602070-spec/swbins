@@ -25,6 +25,12 @@ const DRAG_THRESHOLD := 10.0
 var _dragging := false
 var _drag_start := Vector2.ZERO
 var _drag_confirmed := false
+## G-0184 — 끌어서 멀리(기본보다 얕게) 본 시점은 손을 떼면 PITCH_RETURN_SEC 에 기본 각으로 돌아온다(야숨식 낮은 카메라 유지, 웹 W-0162).
+## 더 내려다본 쪽(가파름)은 그대로 둔다 — 일부러 고른 시점을 빼앗지 않게. 마우스 시점(갇힌 커서)·조준·대화 샷엔 안 건다.
+const REST_PITCH := -35.0
+const PITCH_RETURN_SEC := 0.6
+const PITCH_RETURN_MARGIN := 6.0
+var _pitch_tw: Tween
 
 ## PLAN 101-2 GO(2026-09-18, combat_feel.gd 연결) — dungeon_camera_rig.gd
 ## shake()와 같은 결. 이 노드의 `position`만 흔든다(rotation_degrees는
@@ -116,7 +122,7 @@ func _aim_settled() -> bool:
 func _ready() -> void:
 	_rest_pos = position
 	spring_arm.spring_length = DEFAULT_ZOOM
-	rotation_degrees.x = -35.0
+	rotation_degrees.x = REST_PITCH
 	add_to_group("camera_rig")
 	var visual := get_parent().get_node_or_null("Visual")
 	if visual:
@@ -301,10 +307,23 @@ func _unhandled_input(event: InputEvent) -> void:
 			_apply_drag(sd.relative, sd.position)
 
 func _begin_drag(pressed: bool, pos: Vector2) -> void:
+	var was_drag := _dragging and _drag_confirmed
 	_dragging = pressed
 	if pressed:
 		_drag_start = pos
 		_drag_confirmed = false
+		if _pitch_tw != null and _pitch_tw.is_valid():
+			_pitch_tw.kill()
+	elif was_drag and not aiming and not _talk_on:
+		var to := pitch_return_target(rotation_degrees.x)
+		if to != rotation_degrees.x:
+			_pitch_tw = create_tween()
+			_pitch_tw.tween_property(self, "rotation_degrees:x", to, PITCH_RETURN_SEC).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+
+## G-0184 — 손을 뗀 pitch 가 어디로 갈지(순수 함수, 점검 대상). 기본보다 MARGIN 넘게 얕으면 기본으로, 아니면 그대로.
+static func pitch_return_target(cur: float) -> float:
+	return REST_PITCH if cur > REST_PITCH + PITCH_RETURN_MARGIN else cur
 
 func _apply_drag(relative: Vector2, pos: Vector2) -> void:
 	if not _drag_confirmed:
