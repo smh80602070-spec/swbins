@@ -25,7 +25,7 @@ var speed_mult := 1.0
 var frozen := false
 
 ## DUNGEON의 무예 "돌진"(dash) 전용 훅 — boon_speed_sync.gd가 speed_mult를
-## 미는 것과 같은 일방 통행(games/saga_dungeon/player/skill_dash.gd 참고).
+## 미는 것과 같은 일방 통행(games/saga_dungeon/player/skill_caster.gd 의 dash 참고).
 ## dash_speed가 0이면(기본값) 아무 영향이 없다 — GO는 이 필드를 안 건드린다.
 ## player.gd 자체는 여전히 DungeonRunState를 모른다.
 var dash_dir := Vector3.ZERO

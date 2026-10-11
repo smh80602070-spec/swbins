@@ -163,6 +163,7 @@ GODOT=<콘솔 exe> bash saga-godot/tools/probe_all.sh --only=save_dungeon,save_f
 | 키 | 동작 |
 |---|---|
 | F | 공격(`dungeon_attack`) |
+| Z · X · C · V | **무예 넉 자리**(`dungeon_slot_1~4`, G-0198) — 지금 직업(쥔 무기)의 자리에 건 무예. 처음 배운 활성 무예는 빈 칸에 저절로 걸린다. 🥋 무예 창 → "자리에 걸기"로 바꾼다(이미 걸린 것이면 맞바꿈). 오른쪽 단추 넷이 같은 것(쿨다운 초) |
 | 1~4 | 물약(`potion_1~4`) |
 
 ### 사가마을 (FOREST)

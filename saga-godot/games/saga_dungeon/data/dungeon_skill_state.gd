@@ -16,8 +16,13 @@ extends Node
 
 signal skills_changed
 
+const SLOTS := 4
+
 var points: Dictionary = {}  # cls_key(String) -> unspent point(int)
 var ranks: Dictionary = {}   # skill_key(String) -> rank(int)
+## G-0198 — 무예 넉 자리(Z·X·C·V), 웹 skill.js slots() 그대로 **직업마다 따로**: cls_key -> [키 넷] ("" = 빈 칸).
+## 무기를 바꿨다 도로 쥐면 손이 그대로 살아난다.
+var slots: Dictionary = {}
 
 
 func award_point(cls_key: String) -> void:
@@ -55,17 +60,86 @@ func invest(skill_key: String) -> bool:
 	var sk := DungeonSkills.skill_by_key(skill_key)
 	ranks[skill_key] = rank_of(skill_key) + 1
 	points[str(sk.cls)] = points_for(str(sk.cls)) - 1
+	## 웹 learn() — 처음 배운 것은 빈 칸이 있으면 바로 걸어 준다(배우고도 못 쓰는 일이 없게).
+	if rank_of(skill_key) == 1:
+		auto_slot(skill_key)
 	skills_changed.emit()
 	return true
 
 
-func restore(saved_points: Dictionary, saved_ranks: Dictionary) -> void:
+## 그 직업의 넉 자리(참조 — 길이가 넷이 아니면 맞춰 준다).
+func slots_of(cls_key: String) -> Array:
+	var s: Array = slots.get(cls_key, [])
+	if s.size() != SLOTS:
+		var fixed: Array = []
+		for i in SLOTS:
+			fixed.append(str(s[i]) if i < s.size() and s[i] != null else "")
+		s = fixed
+		slots[cls_key] = s
+	return s
+
+
+## 웹 autoSlot() — 활성 무예를 그 직업의 첫 빈 칸에. 이미 걸렸거나 칸이 없으면 false.
+func auto_slot(skill_key: String) -> bool:
+	var sk := DungeonSkills.skill_by_key(skill_key)
+	if not DungeonSkills.is_active(sk):
+		return false
+	var s := slots_of(str(sk.cls))
+	if s.has(skill_key):
+		return false
+	var i := s.find("")
+	if i < 0:
+		return false
+	s[i] = skill_key
+	return true
+
+
+## 웹 setSlot() — 한 칸에 건다("" = 비우기). 이미 딴 칸에 걸린 것이면 자리를 맞바꾼다.
+## 안 배운 것·패시브·다른 직업 것은 거절.
+func set_slot(cls_key: String, idx: int, skill_key: String) -> bool:
+	if idx < 0 or idx >= SLOTS:
+		return false
+	if skill_key != "":
+		var sk := DungeonSkills.skill_by_key(skill_key)
+		if not DungeonSkills.is_active(sk) or str(sk.cls) != cls_key or rank_of(skill_key) <= 0:
+			return false
+	var s := slots_of(cls_key)
+	var was := s.find(skill_key) if skill_key != "" else -1
+	if was >= 0 and was != idx:
+		s[was] = s[idx]
+	s[idx] = skill_key
+	skills_changed.emit()
+	return true
+
+
+## 웹 equipped() — 그 직업의 넉 자리 중 지금 쓸 수 있는 것(배운 그 직업 활성 무예)만, 아니면 "".
+func equipped(cls_key: String) -> Array:
+	var out: Array = []
+	for k in slots_of(cls_key):
+		var sk := DungeonSkills.skill_by_key(str(k))
+		out.append(str(k) if DungeonSkills.is_active(sk) and str(sk.cls) == cls_key and rank_of(str(k)) > 0 else "")
+	return out
+
+
+## saved_slots 가 없으면(G-0198 전 세이브) 배운 활성 무예를 표 순서로 직업마다 빈 칸에 채운다.
+func restore(saved_points: Dictionary, saved_ranks: Dictionary, saved_slots: Variant = null) -> void:
 	points.clear()
 	for k in saved_points:
 		points[str(k)] = int(saved_points[k])
 	ranks.clear()
 	for k in saved_ranks:
 		ranks[str(k)] = int(saved_ranks[k])
+	slots.clear()
+	if typeof(saved_slots) == TYPE_DICTIONARY:
+		for c in saved_slots:
+			var arr: Variant = saved_slots[c]
+			if typeof(arr) == TYPE_ARRAY:
+				slots[str(c)] = (arr as Array).map(func(v): return str(v) if v != null else "")
+				slots_of(str(c))
+	else:
+		for sk: Dictionary in DungeonSkills.SKILLS:
+			if rank_of(str(sk.key)) > 0:
+				auto_slot(str(sk.key))
 	skills_changed.emit()
 
 

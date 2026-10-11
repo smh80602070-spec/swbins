@@ -1,6 +1,10 @@
 extends RefCounted
 class_name DungeonSkills
 
+## **G-0198(10-11) 뒤 읽는 법** — 아래 머리말의 "skill_<모양>_<직업>.gd·<…>_button.gd·입력 dungeon_skill_N" 은 옛 구조다. 사본 76·단추 76·입력 76은
+## 지우고 공용 시전기 player/skill_caster.gd(모양별 분기) + 넉 자리(DungeonSkillState.slots, Z·X·C·V, ui/skill_slot_button.gd)로 바꿨다.
+## 사본마다 달랐던 것은 표 필드로 옮겼다: `icon`(단추 이모지) · `shots`(a_multi) · `far`(w_leap 1.8). 수치·쿨다운·선행은 그대로.
+
 ## PLAN.md 51장 "장비→빌드" — 11·12장(장비 8부위)이 끝난 뒤 남은 마지막
 ## 갈래. 웹판 `data-skill.js`는 직업 다섯 × 여덟 갈래 × 세 단 = 120개
 ## 무예를 갖고 있지만, 그중 실제로 **전투 코드가 없어도(투사체·소환·
@@ -572,45 +576,45 @@ const SKILLS: Array[Dictionary] = [
 	## 궁장(弓將) br=5 row 0 — data-skill.js 그대로(cost=18은 기력이 없어
 	## 안 씀). el 없음(물리) — 위 헤더의 dash 환산 참고.
 	{ "key": "a_dashshot", "cls": "archer", "br": 5, "row": 0, "name": "질주사(疾走射)",
-		"shape": "dash", "cd": 6.0,
+		"shape": "dash", "icon": "💨", "cd": 6.0,
 		"eff": "", "v": 1.3, "grow": 0.3, "desc": "몸을 날려 스치며 벤다." },
 	## 궁장(弓將) br=3 row 0 — data-skill.js 그대로(cost=22는 기력이 없어
 	## 안 씀). r=7.65는 위 헤더의 chain 환산(260÷34) 참고. hops·el 없음(원작도
 	## 없음 → hops 기본 3, el 기본 phys).
 	{ "key": "a_chain", "cls": "archer", "br": 3, "row": 0, "name": "연환시(連環矢)",
-		"shape": "chain", "cd": 9.0, "r": 7.65,
+		"shape": "chain", "icon": "🔗", "cd": 9.0, "r": 7.65,
 		"eff": "", "v": 1.7, "grow": 0.4, "desc": "가까운 적을 꿰고 다음 적으로 튄다." },
 	## 궁장(弓將) br=0 row 0 — data-skill.js 그대로(cost=14는 기력이 없어
 	## 안 씀). el 없음(물리) — 궁장의 첫 bolt.
 	{ "key": "a_pierce", "cls": "archer", "br": 0, "row": 0, "name": "관통사(貫通射)",
-		"shape": "bolt", "cd": 3.0,
+		"shape": "bolt", "icon": "🎯", "cd": 3.0,
 		"eff": "", "v": 1.6, "grow": 0.35, "desc": "꿰뚫는 화살. 뒤의 적까지 닿는다." },
 	## 궁장(弓將) br=4 row 0 — data-skill.js 그대로(cost=20은 기력이 없어
 	## 안 씀). r=1.6은 m_smite와 같은 자릿수(swing은 원작 r을 그대로
 	## 미터로 쓴다 — 위 헤더 참고). 궁장의 첫 swing.
 	{ "key": "a_flourish", "cls": "archer", "br": 4, "row": 0, "name": "궁신무(弓身舞)",
-		"shape": "swing", "cd": 5.0, "r": 1.6,
+		"shape": "swing", "icon": "🥋", "cd": 5.0, "r": 1.6,
 		"eff": "", "v": 1.5, "grow": 0.35, "desc": "활대로 후려친다. 가까이 붙은 적에게 쓴다." },
 	## 궁장(弓將) br=1 row 0 — data-skill.js 그대로(cost=18은 기력이 없어
 	## 안 씀). el:'fire' — 궁장을 여섯 갈래(0·1·2·3·4·5) 전부 채운다.
 	{ "key": "a_fire", "cls": "archer", "br": 1, "row": 0, "name": "화시(火矢)",
-		"shape": "bolt", "cd": 4.0, "el": "fire",
+		"shape": "bolt", "icon": "🔥", "cd": 4.0, "el": "fire",
 		"eff": "", "v": 1.5, "grow": 0.4, "desc": "불붙은 화살." },
 	## 궁장(弓將) br=1 row 1 — data-skill.js 그대로(cost=22는 기력이 없어
 	## 안 씀). prereq: a_fire(같은 br row0). 궁장의 세 번째 bolt.
 	{ "key": "a_ice", "cls": "archer", "br": 1, "row": 1, "name": "빙시(氷矢)",
-		"shape": "bolt", "cd": 5.0, "el": "cold",
+		"shape": "bolt", "icon": "❄️", "cd": 5.0, "el": "cold",
 		"eff": "", "v": 1.4, "grow": 0.35, "desc": "언 화살. 맞은 적이 굼떠진다." },
 	## 무장(武將) br=0 row 0 — data-skill.js 그대로. shape/cd는 원작 값
 	## 그대로(cost=22는 기력이 없어 안 씀, kb=30은 넉백이 없어 안 씀).
 	{ "key": "w_whirl", "cls": "warrior", "br": 0, "row": 0, "name": "회전참(回轉斬)",
-		"shape": "swing", "cd": 5.0, "r": 2.3,
+		"shape": "swing", "icon": "🌀", "cd": 5.0, "r": 2.3,
 		"eff": "", "v": 1.7, "grow": 0.35, "desc": "둘레의 모든 적을 벤다." },
 	## 무장(武將) br=0 row 1 — data-skill.js 그대로(cost=28은 기력이 없어
 	## 안 씀, kb=46은 넉백 없음). prereq: w_whirl(같은 br row0). 무장의
 	## 두 번째 swing.
 	{ "key": "w_cleave", "cls": "warrior", "br": 0, "row": 1, "name": "분쇄(粉碎)",
-		"shape": "swing", "cd": 7.0, "r": 1.7,
+		"shape": "swing", "icon": "🔨", "cd": 7.0, "r": 1.7,
 		"eff": "", "v": 2.6, "grow": 0.5, "desc": "한 번에 크게 벤다." },
 	## 무장(武將) br=2 — data-skill.js 그대로.
 	{ "key": "w_tough", "cls": "warrior", "br": 2, "row": 0, "name": "단련(鍛鍊)",
@@ -623,28 +627,28 @@ const SKILLS: Array[Dictionary] = [
 	## 안 씀). r=3.82는 y_thunderdoom과 같은 환산(위 헤더 참고, 원작 r도
 	## 130으로 같다). sec(지속초)은 랭크 무관 고정.
 	{ "key": "w_intimidate", "cls": "warrior", "br": 5, "row": 0, "name": "위해(威嚇)",
-		"shape": "curse", "cd": 9.0, "r": 3.82, "sec": 5.0,
+		"shape": "curse", "icon": "📛", "cd": 9.0, "r": 3.82, "sec": 5.0,
 		"eff": "", "v": 30.0, "grow": 8.0, "desc": "노호로 적을 굼뜨고 약하게 만든다." },
 	## 무장(武將) br=1 row 0 — data-skill.js 그대로(cost=18은 기력이 없어
 	## 안 씀). el 없음(물리) — 무장의 첫 dash(skill_dash.gd 그대로 복제).
 	{ "key": "w_dash", "cls": "warrior", "br": 1, "row": 0, "name": "돌진(突進)",
-		"shape": "dash", "cd": 6.0,
+		"shape": "dash", "icon": "💨", "cd": 6.0,
 		"eff": "", "v": 1.2, "grow": 0.3, "desc": "앞으로 파고들며 벤다." },
 	## 무장(武將) br=4 row 0 — data-skill.js 그대로(cost=16은 기력이 없어
 	## 안 씀). el 없음(물리) — 무장의 첫 bolt.
 	{ "key": "w_throw", "cls": "warrior", "br": 4, "row": 0, "name": "투창(投槍)",
-		"shape": "bolt", "cd": 4.0,
+		"shape": "bolt", "icon": "🎯", "cd": 4.0,
 		"eff": "", "v": 1.6, "grow": 0.4, "desc": "창을 던진다. 곧게 나간다." },
 	## 무장(武將) br=3 row 0 — data-skill.js 그대로(cost=24는 기력이 없어
 	## 안 씀). r=7.65는 a_chain 등과 같은 환산(위 헤더 참고, 원작 r 필드
 	## 없음 → 기본 260px). el 없음(물리) — 무장의 첫 chain.
 	{ "key": "w_chain", "cls": "warrior", "br": 3, "row": 0, "name": "연환격(連環擊)",
-		"shape": "chain", "cd": 9.0, "r": 7.65,
+		"shape": "chain", "icon": "🔗", "cd": 9.0, "r": 7.65,
 		"eff": "", "v": 1.8, "grow": 0.4, "desc": "가까운 적을 치고 다음 적으로 옮겨 붙는다." },
 	## 책사(策士) br=2 — row 0(s_wave)만 passive가 아니다(위 헤더 참고).
 	## shape/cd/el은 data-skill.js 그대로(cost=30은 기력이 없어 안 씀).
 	{ "key": "s_wave", "cls": "scholar", "br": 2, "row": 0, "name": "기공파(氣功波)",
-		"shape": "bolt", "cd": 8.0, "el": "chi",
+		"shape": "bolt", "icon": "🌊", "cd": 8.0, "el": "chi",
 		"eff": "", "v": 2.2, "grow": 0.5, "desc": "꿰뚫는 기를 쏜다." },
 	{ "key": "s_wit", "cls": "scholar", "br": 2, "row": 1, "name": "명민(明敏)",
 		"eff": "mpRegen", "v": 2.0, "grow": 1.4, "desc": "기력이 빨리 찬다.(아직 기력 없음)" },
@@ -655,35 +659,35 @@ const SKILLS: Array[Dictionary] = [
 	## 받는다) — eff/world_eff_sum과는 무관해 비워 둘 필요조차 없지만
 	## 다른 shape 무예와 통일한다.
 	{ "key": "s_restore", "cls": "scholar", "br": 5, "row": 0, "name": "축기회복(蓄氣回復)",
-		"shape": "heal", "cd": 16.0,
+		"shape": "heal", "icon": "💗", "cd": 16.0,
 		"eff": "", "v": 16.0, "grow": 6.0, "desc": "기를 모아 상처를 아문다." },
 	## 책사(策士) br=3 row 0 — data-skill.js 그대로(cost=26은 기력이 없어
 	## 안 씀). r=7.65는 a_chain·m_chain과 같은 환산(원작 r 필드 없음 →
 	## 기본 260px). el:'fire'만 다르다 — chain이 세 번째로 공유하는 직업.
 	{ "key": "s_chainfire", "cls": "scholar", "br": 3, "row": 0, "name": "연쇄화염(連鎖火焰)",
-		"shape": "chain", "cd": 9.0, "r": 7.65, "el": "fire",
+		"shape": "chain", "icon": "🔗", "cd": 9.0, "r": 7.65, "el": "fire",
 		"eff": "", "v": 1.9, "grow": 0.45, "desc": "불덩이가 적 사이를 옮겨 붙는다." },
 	## 책사(策士) br=4 row 0 — data-skill.js 그대로(cost=20은 기력이 없어
 	## 안 씀). el:'lit' — 책사의 첫 dash.
 	{ "key": "s_blink", "cls": "scholar", "br": 4, "row": 0, "name": "축지(縮地)",
-		"shape": "dash", "cd": 7.0, "el": "lit",
+		"shape": "dash", "icon": "⚡", "cd": 7.0, "el": "lit",
 		"eff": "", "v": 1.3, "grow": 0.3, "desc": "번개처럼 파고든다." },
 	## 책사(策士) br=0 row 0 — data-skill.js 그대로(cost=16은 기력이 없어
 	## 안 씀). el:'fire' — 책사는 이걸로 5/6(br1만 남는다).
 	{ "key": "s_fire", "cls": "scholar", "br": 0, "row": 0, "name": "화탄(火彈)",
-		"shape": "bolt", "cd": 3.0, "el": "fire",
+		"shape": "bolt", "icon": "🔥", "cd": 3.0, "el": "fire",
 		"eff": "", "v": 1.8, "grow": 0.45, "desc": "불덩이를 던진다." },
 	## 책사(策士) br=0 row 1 — data-skill.js 그대로(cost=30은 기력이 없어
 	## 안 씀). r=3.53은 원작 120px÷BASE_REACH(34, 위 헤더 nova 환산 참고).
 	## prereq: s_fire(같은 br row0). 책사의 첫 nova.
 	{ "key": "s_blaze", "cls": "scholar", "br": 0, "row": 1, "name": "염화(炎火)",
-		"shape": "nova", "cd": 8.0, "r": 3.53, "el": "fire",
+		"shape": "nova", "icon": "🌋", "cd": 8.0, "r": 3.53, "el": "fire",
 		"eff": "", "v": 2.4, "grow": 0.55, "desc": "둘레가 불바다가 된다." },
 	## 책사(策士) br=1 row 0 — data-skill.js 그대로(cost=16은 기력이 없어
 	## 안 씀). el:'cold' — 책사를 여섯 갈래 전부 채운다(다섯 직업 전부
 	## 6/6 완성). bolt가 책사의 세 번째 갈래(br2 s_wave·br0 s_fire에 이어).
 	{ "key": "s_ice", "cls": "scholar", "br": 1, "row": 0, "name": "빙탄(氷彈)",
-		"shape": "bolt", "cd": 3.0, "el": "cold",
+		"shape": "bolt", "icon": "❄️", "cd": 3.0, "el": "cold",
 		"eff": "", "v": 1.5, "grow": 0.4, "desc": "언 덩이를 던진다." },
 	## 도독(都督) br=0 row 0 — data-skill.js 그대로(cost=34는 기력이 없어
 	## 안 씀). sec(지속초)은 랭크와 무관하게 고정(원작 그대로) — v(위력)만
@@ -695,14 +699,14 @@ const SKILLS: Array[Dictionary] = [
 	## (skill_buff.gd가 캐스팅 순간에만 이 값을 읽어 `DungeonRunState.
 	## add_temp_buff()`로 넘긴다 — 랭크 합산과 완전히 분리된 경로).
 	{ "key": "m_rally", "cls": "marshal", "br": 0, "row": 0, "name": "사기(士氣)",
-		"shape": "buff", "cd": 16.0, "sec": 6.0, "buff_eff": "atkSpdPct",
+		"shape": "buff", "icon": "🚩", "cd": 16.0, "sec": 6.0, "buff_eff": "atkSpdPct",
 		"eff": "", "v": 30.0, "grow": 8.0, "desc": "한동안 손과 발이 빨라진다." },
 	## 도독(都督) br=0 row 1 — data-skill.js 그대로(cost=30은 기력이 없어
 	## 안 씀). eff는 m_rally와 같은 이유로 비워 두고 buff_eff에 담는다
 	## (dungeon_skills.gd 헤더 참고). prereq: m_rally(같은 br row0).
 	## 도독의 두 번째 buff.
 	{ "key": "m_guard", "cls": "marshal", "br": 0, "row": 1, "name": "호신강기(護身)",
-		"shape": "buff", "cd": 14.0, "sec": 7.0, "buff_eff": "guardPct",
+		"shape": "buff", "icon": "🛡️", "cd": 14.0, "sec": 7.0, "buff_eff": "guardPct",
 		"eff": "", "v": 35.0, "grow": 8.0, "desc": "한동안 받는 피해가 준다." },
 	## 도독(都督) br=2 — data-skill.js 그대로.
 	{ "key": "m_res", "cls": "marshal", "br": 2, "row": 0, "name": "기수련(氣修)",
@@ -715,18 +719,18 @@ const SKILLS: Array[Dictionary] = [
 	## 안 씀). r=7.65는 a_chain과 같은 환산(위 헤더 참고, 원작 r 필드 없음 →
 	## 기본 260px). el:'chi'만 a_chain(phys)과 다르다.
 	{ "key": "m_chain", "cls": "marshal", "br": 3, "row": 0, "name": "연환기격(連環氣擊)",
-		"shape": "chain", "cd": 9.0, "r": 7.65, "el": "chi",
+		"shape": "chain", "icon": "🔗", "cd": 9.0, "r": 7.65, "el": "chi",
 		"eff": "", "v": 1.9, "grow": 0.4, "desc": "기를 실어 가까운 적을 연달아 친다." },
 	## 도독(都督) br=1 row 0 — data-skill.js 그대로(cost=20은 기력이 없어
 	## 안 씀). r=1.6은 w_whirl(2.3)과 같은 자릿수(swing은 이미 미터로 쓸
 	## 만한 원작 r을 그대로 쓴다 — 위 헤더 참고). 도독의 첫 swing.
 	{ "key": "m_smite", "cls": "marshal", "br": 1, "row": 0, "name": "기격(氣擊)",
-		"shape": "swing", "cd": 4.0, "r": 1.6, "el": "chi",
+		"shape": "swing", "icon": "✊", "cd": 4.0, "r": 1.6, "el": "chi",
 		"eff": "", "v": 1.9, "grow": 0.4, "desc": "기를 실어 둘레를 친다." },
 	## 도독(都督) br=4 row 0 — data-skill.js 그대로(cost=16은 기력이 없어
 	## 안 씀). el:'chi' — 도독의 첫 bolt.
 	{ "key": "m_javelin", "cls": "marshal", "br": 4, "row": 0, "name": "표창(標槍)",
-		"shape": "bolt", "cd": 4.0, "el": "chi",
+		"shape": "bolt", "icon": "🎯", "cd": 4.0, "el": "chi",
 		"eff": "", "v": 1.5, "grow": 0.35, "desc": "기를 실은 창을 던진다." },
 	## 도독(都督) br=5 row 0 — data-skill.js 그대로(cost=24는 기력이 없어
 	## 안 씀). r=1.7은 swing 원작 값 그대로 미터로(m_smite와 같은 요령).
@@ -734,13 +738,13 @@ const SKILLS: Array[Dictionary] = [
 	## (m_smite br1에 이어) — 같은 클래스가 같은 모양을 두 갈래에 갖는
 	## 첫 사례.
 	{ "key": "m_flamesaber", "cls": "marshal", "br": 5, "row": 0, "name": "화도(火刀)",
-		"shape": "swing", "cd": 6.0, "r": 1.7, "el": "fire",
+		"shape": "swing", "icon": "🔥", "cd": 6.0, "r": 1.7, "el": "fire",
 		"eff": "", "v": 1.9, "grow": 0.4, "desc": "불을 두른 칼로 둘레를 벤다." },
 	## 방사(方士) br=0 row 0 — data-skill.js 그대로(cost=26은 기력이 없어
 	## 안 씀). v/grow는 데미지가 아니라 분신 "개체 수"(round(value_at))다
 	## — 위 헤더 참고. sec(지속초)은 랭크 무관 고정.
 	{ "key": "y_shade", "cls": "mystic", "br": 0, "row": 0, "name": "분신술(分身)",
-		"shape": "summon", "cd": 12.0, "sec": 12.0,
+		"shape": "summon", "icon": "👥", "cd": 12.0, "sec": 12.0,
 		"eff": "", "v": 1.0, "grow": 1.0, "desc": "분신을 세운다. 대신 싸운다." },
 	## 방사(方士) br=2 — data-skill.js 그대로.
 	{ "key": "y_leech", "cls": "mystic", "br": 2, "row": 0, "name": "흡정(吸精)",
@@ -752,111 +756,111 @@ const SKILLS: Array[Dictionary] = [
 	## 방사(方士) br=5 row 0 — data-skill.js 그대로(cost=30은 기력이 없어
 	## 안 씀). r=3.82는 원작 130px÷BASE_REACH(34px) — 위 헤더 참고.
 	{ "key": "y_thunderdoom", "cls": "mystic", "br": 5, "row": 0, "name": "뇌쇄(雷殺)",
-		"shape": "nova", "cd": 9.0, "r": 3.82, "el": "lit",
+		"shape": "nova", "icon": "⚡", "cd": 9.0, "r": 3.82, "el": "lit",
 		"eff": "", "v": 2.2, "grow": 0.5, "desc": "벼락이 둘레에 떨어진다." },
 	## 방사(方士) br=1 row 0 — data-skill.js 그대로(cost=20은 기력이 없어
 	## 안 씀). r=3.82·sec=5.0·v=30.0은 w_intimidate와 전부 같다(원작에서도
 	## 그렇다, r 130도 동일). 방사의 첫 curse.
 	{ "key": "y_curse", "cls": "mystic", "br": 1, "row": 0, "name": "주박(呪縛)",
-		"shape": "curse", "cd": 8.0, "r": 3.82, "sec": 5.0,
+		"shape": "curse", "icon": "🕸️", "cd": 8.0, "r": 3.82, "sec": 5.0,
 		"eff": "", "v": 30.0, "grow": 8.0, "desc": "둘레의 적이 굼떠지고 더 아파한다." },
 	## 방사(方士) br=1 row 1 — data-skill.js 그대로(cost=28은 기력이 없어
 	## 안 씀). r=3.82는 원작 130px÷BASE_REACH(34)와 같은 값(w_intimidate·
 	## y_curse와 동일 자릿수). prereq: y_curse(같은 br row0). 방사의
 	## 두 번째 nova(y_thunderdoom br5에 이어).
 	{ "key": "y_wither", "cls": "mystic", "br": 1, "row": 1, "name": "고독(蠱毒)",
-		"shape": "nova", "cd": 9.0, "r": 3.82, "el": "pois",
+		"shape": "nova", "icon": "🐛", "cd": 9.0, "r": 3.82, "el": "pois",
 		"eff": "", "v": 2.2, "grow": 0.5, "desc": "독기가 둘레에 퍼진다." },
 	## 방사(方士) br=4 row 0 — data-skill.js 그대로(cost=16은 기력이 없어
 	## 안 씀). el:'chi' — 방사의 첫 bolt. 이걸로 bolt를 가진 직업이
 	## 궁장·무장·도독·방사 넷으로 는다(위 헤더 참고, 책사는 이미 별개로
 	## s_wave가 있어 다섯 다 bolt를 갖는다).
 	{ "key": "y_soulbolt", "cls": "mystic", "br": 4, "row": 0, "name": "혼탄(魂彈)",
-		"shape": "bolt", "cd": 3.0, "el": "chi",
+		"shape": "bolt", "icon": "🔮", "cd": 3.0, "el": "chi",
 		"eff": "", "v": 1.6, "grow": 0.4, "desc": "넋을 실은 기를 쏜다." },
 	## 방사(方士) br=3 row 0 — data-skill.js 그대로(cost=22는 기력이 없어
 	## 안 씀). r=7.65는 w_chain 등과 같은 환산(원작 r 필드 없음 → 기본
 	## 260px). el:'pois' — 방사의 첫 chain. 이걸로 chain이 다섯 직업 전부가
 	## 공유하는 첫 모양이 된다(위 헤더 참고).
 	{ "key": "y_chain", "cls": "mystic", "br": 3, "row": 0, "name": "독쇄(毒鎖)",
-		"shape": "chain", "cd": 9.0, "r": 7.65, "el": "pois",
+		"shape": "chain", "icon": "🔗", "cd": 9.0, "r": 7.65, "el": "pois",
 		"eff": "", "v": 1.8, "grow": 0.4, "desc": "독한 기운이 적 사이를 옮겨 붙는다." },
 	## 궁장(弓將) br=1 row 2 — data-skill.js 그대로(cost=30은 기력이 없어
 	## 안 씀). el:'lit' — prereq a_ice(같은 br row1). 궁장을 br1 3/3으로.
 	{ "key": "a_storm", "cls": "archer", "br": 1, "row": 2, "name": "뇌시(雷矢)",
-		"shape": "bolt", "cd": 8.0, "el": "lit",
+		"shape": "bolt", "icon": "⚡", "cd": 8.0, "el": "lit",
 		"eff": "", "v": 2.0, "grow": 0.55, "desc": "벼락을 실은 화살. 편차가 크다." },
 	## 무장(武將) br=0 row 2 — data-skill.js 그대로(cost=36은 기력이 없어
 	## 안 씀, kb=60은 넉백 없음). r=4.41은 위 헤더의 nova 환산(150÷34) 참고.
 	## prereq w_cleave(같은 br row1). 무장의 첫 nova. 무장을 br0 3/3으로.
 	{ "key": "w_quake", "cls": "warrior", "br": 0, "row": 2, "name": "진각(震脚)",
-		"shape": "nova", "cd": 11.0, "r": 4.41,
+		"shape": "nova", "icon": "💥", "cd": 11.0, "r": 4.41,
 		"eff": "", "v": 3.0, "grow": 0.6, "desc": "땅을 굴러 둘레를 뒤흔든다." },
 	## 책사(策士) br=0 row 2 — data-skill.js 그대로(cost=42는 기력이 없어
 	## 안 씀). r=4.71은 위 헤더의 nova 환산(160÷34) 참고. prereq s_blaze
 	## (같은 br row1). 책사의 두 번째 nova. 책사를 br0 3/3으로.
 	{ "key": "s_meteor", "cls": "scholar", "br": 0, "row": 2, "name": "유성(流星)",
-		"shape": "nova", "cd": 14.0, "r": 4.71, "el": "fire",
+		"shape": "nova", "icon": "☄️", "cd": 14.0, "r": 4.71, "el": "fire",
 		"eff": "", "v": 4.0, "grow": 0.9, "desc": "별이 떨어진다." },
 	## 도독(都督) br=0 row 2 — data-skill.js 그대로(cost=40은 기력이 없어
 	## 안 씀). eff는 m_rally·m_guard와 같은 이유로 비워 두고 buff_eff에
 	## 담는다(dungeon_skills.gd 헤더 참고). prereq m_guard(같은 br row1).
 	## 도독의 세 번째 buff. 도독을 br0 3/3으로.
 	{ "key": "m_banner", "cls": "marshal", "br": 0, "row": 2, "name": "독전(督戰)",
-		"shape": "buff", "cd": 20.0, "sec": 8.0, "buff_eff": "atkPct",
+		"shape": "buff", "icon": "🎌", "cd": 20.0, "sec": 8.0, "buff_eff": "atkPct",
 		"eff": "", "v": 40.0, "grow": 10.0, "desc": "한동안 부대의 공격이 세진다." },
 	## 궁장(弓將) br=3 row 1 — data-skill.js 그대로(cost=18은 기력이 없어
 	## 안 씀). el:'pois'. prereq a_chain(같은 br row0). 궁장의 다섯 번째 bolt.
 	{ "key": "a_venom", "cls": "archer", "br": 3, "row": 1, "name": "독시(毒矢)",
-		"shape": "bolt", "cd": 4.0, "el": "pois",
+		"shape": "bolt", "icon": "🧪", "cd": 4.0, "el": "pois",
 		"eff": "", "v": 1.4, "grow": 0.35, "desc": "독을 바른 화살. 스민 독이 계속 아프게 한다." },
 	## 무장(武將) br=1 row 1 — data-skill.js 그대로(cost=26은 기력이 없어
 	## 안 씀). far=1.8은 위 헤더의 dash 환산(DASH_DURATION=0.2*far) 참고.
 	## prereq w_dash(같은 br row0). 무장의 두 번째 dash.
 	{ "key": "w_leap", "cls": "warrior", "br": 1, "row": 1, "name": "도약(跳躍)",
-		"shape": "dash", "cd": 9.0,
+		"shape": "dash", "icon": "🦘", "cd": 9.0, "far": 1.8,
 		"eff": "", "v": 2.0, "grow": 0.45, "desc": "더 멀리 뛴다. 지나는 것을 다 벤다." },
 	## 책사(策士) br=1 row 1 — data-skill.js 그대로(cost=28은 기력이 없어
 	## 안 씀). r=3.97은 위 헤더의 nova 환산(135÷34) 참고. prereq s_ice(같은
 	## br row0). 책사의 세 번째 nova.
 	{ "key": "s_frost", "cls": "scholar", "br": 1, "row": 1, "name": "한파(寒波)",
-		"shape": "nova", "cd": 9.0, "r": 3.97, "el": "cold",
+		"shape": "nova", "icon": "🧊", "cd": 9.0, "r": 3.97, "el": "cold",
 		"eff": "", "v": 2.0, "grow": 0.5, "desc": "둘레가 얼어붙는다." },
 	## 도독(都督) br=1 row 1 — data-skill.js 그대로(cost=30은 기력이 없어
 	## 안 씀). r=4.12는 위 헤더의 nova 환산(140÷34) 참고. prereq m_smite
 	## (같은 br row0). 도독의 첫 nova.
 	{ "key": "m_ring", "cls": "marshal", "br": 1, "row": 1, "name": "기환(氣環)",
-		"shape": "nova", "cd": 9.0, "r": 4.12, "el": "chi",
+		"shape": "nova", "icon": "⭕", "cd": 9.0, "r": 4.12, "el": "chi",
 		"eff": "", "v": 2.3, "grow": 0.55, "desc": "기의 고리가 퍼진다." },
 	## 방사(方士) br=0 row 1 — data-skill.js 그대로(cost=36은 기력이 없어
 	## 안 씀). str=1.5는 skill_summon.gd가 이미 일반화해 둔 필드(위 헤더
 	## 참고). prereq y_shade(같은 br row0). 방사의 두 번째 summon.
 	{ "key": "y_horde", "cls": "mystic", "br": 0, "row": 1, "name": "음병(陰兵)",
-		"shape": "summon", "cd": 16.0, "sec": 14.0, "str": 1.5,
+		"shape": "summon", "icon": "💀", "cd": 16.0, "sec": 14.0, "str": 1.5,
 		"eff": "", "v": 2.0, "grow": 1.0, "desc": "더 많이, 더 세게 세운다." },
 	## 궁장(弓將) br=3 row 2 — data-skill.js 그대로(cost=28은 기력이 없어
 	## 안 씀). r=4.12는 위 헤더의 nova/curse 환산(140÷34) 참고. prereq
 	## a_venom(같은 br row1). 궁장의 첫 curse. 궁장을 br3 3/3으로.
 	{ "key": "a_cripple", "cls": "archer", "br": 3, "row": 2, "name": "파훼시(破毀矢)",
-		"shape": "curse", "cd": 10.0, "r": 4.12, "sec": 6.0,
+		"shape": "curse", "icon": "💢", "cd": 10.0, "r": 4.12, "sec": 6.0,
 		"eff": "", "v": 36.0, "grow": 9.0, "desc": "급소를 노려 적을 굼뜨고 약하게 만든다." },
 	## 무장(武將) br=1 row 2 — data-skill.js 그대로(cost=34는 기력이 없어
 	## 안 씀). eff는 m_rally 등과 같은 이유로 비워 두고 buff_eff에 담는다.
 	## prereq w_leap(같은 br row1). 무장의 첫 buff. 무장을 br1 3/3으로.
 	{ "key": "w_rage", "cls": "warrior", "br": 1, "row": 2, "name": "광분(狂奮)",
-		"shape": "buff", "cd": 18.0, "sec": 6.0, "buff_eff": "atkSpdPct",
+		"shape": "buff", "icon": "🔺", "cd": 18.0, "sec": 6.0, "buff_eff": "atkSpdPct",
 		"eff": "", "v": 40.0, "grow": 10.0, "desc": "한동안 손이 훨씬 빨라진다." },
 	## 책사(策士) br=1 row 2 — data-skill.js 그대로(cost=32는 기력이 없어
 	## 안 씀). el:'lit'. prereq s_frost(같은 br row1). 책사의 네 번째 bolt.
 	## 책사를 br1 3/3으로.
 	{ "key": "s_bolt", "cls": "scholar", "br": 1, "row": 2, "name": "뇌격(雷擊)",
-		"shape": "bolt", "cd": 7.0, "el": "lit",
+		"shape": "bolt", "icon": "⚡", "cd": 7.0, "el": "lit",
 		"eff": "", "v": 2.6, "grow": 0.7, "desc": "벼락을 곧게 내리꽂는다. 편차가 크다." },
 	## 도독(都督) br=1 row 2 — data-skill.js 그대로(cost=38은 기력이 없어
 	## 안 씀). prereq m_ring(같은 br row1). 도독의 첫 heal. 도독을 br1
 	## 3/3으로.
 	{ "key": "m_heal", "cls": "marshal", "br": 1, "row": 2, "name": "치유(治癒)",
-		"shape": "heal", "cd": 22.0,
+		"shape": "heal", "icon": "🌿", "cd": 22.0,
 		"eff": "", "v": 18.0, "grow": 6.0, "desc": "그 자리에서 체력을 되찾는다." },
 	## 방사(方士) br=0 row 2 — data-skill.js 그대로(cost=44는 기력이 없어
 	## 안 씀). str=4.0은 skill_summon.gd가 이미 일반화해 둔 필드. big:true는
@@ -864,188 +868,188 @@ const SKILLS: Array[Dictionary] = [
 	## row1). 방사의 세 번째 summon(v=1·grow=0, 랭크 무관 늘 1개). 방사를
 	## br0 3/3으로.
 	{ "key": "y_golem", "cls": "mystic", "br": 0, "row": 2, "name": "토우(土偶)",
-		"shape": "summon", "cd": 24.0, "sec": 20.0, "str": 4.0,
+		"shape": "summon", "icon": "🗿", "cd": 24.0, "sec": 20.0, "str": 4.0,
 		"eff": "", "v": 1.0, "grow": 0.0, "desc": "흙으로 빚은 큰 것 하나. 오래 버틴다." },
 	## 궁장(弓將) br=4 row 1 — data-skill.js 그대로(cost=28은 기력이 없어
 	## 안 씀). prereq a_flourish(같은 br row0). 궁장의 첫 buff.
 	{ "key": "a_speedy", "cls": "archer", "br": 4, "row": 1, "name": "속사태세(速射態勢)",
-		"shape": "buff", "cd": 14.0, "sec": 6.0, "buff_eff": "atkSpdPct",
+		"shape": "buff", "icon": "🏃", "cd": 14.0, "sec": 6.0, "buff_eff": "atkSpdPct",
 		"eff": "", "v": 32.0, "grow": 8.0, "desc": "한동안 손이 훨씬 빨라진다." },
 	## 무장(武將) br=3 row 1 — data-skill.js 그대로(cost=22는 기력이 없어
 	## 안 씀). el:'fire', far 없음(w_dash와 같은 0.2초). prereq w_chain
 	## (같은 br row0). 무장의 세 번째 dash.
 	{ "key": "w_blaze_dash", "cls": "warrior", "br": 3, "row": 1, "name": "화염돌진(火焰突進)",
-		"shape": "dash", "cd": 8.0, "el": "fire",
+		"shape": "dash", "icon": "🔥", "cd": 8.0, "el": "fire",
 		"eff": "", "v": 1.4, "grow": 0.35, "desc": "불을 두르고 파고든다." },
 	## 책사(策士) br=3 row 1 — data-skill.js 그대로(cost=20은 기력이 없어
 	## 안 씀, kb=24는 넉백 없음). r=1.8은 swing 원작 값 그대로 미터로.
 	## prereq s_chainfire(같은 br row0). 책사의 첫 swing.
 	{ "key": "s_fan", "cls": "scholar", "br": 3, "row": 1, "name": "선풍(扇風)",
-		"shape": "swing", "cd": 5.0, "r": 1.8, "el": "cold",
+		"shape": "swing", "icon": "🎐", "cd": 5.0, "r": 1.8, "el": "cold",
 		"eff": "", "v": 1.6, "grow": 0.35, "desc": "부채를 크게 휘둘러 둘레를 벤다." },
 	## 도독(都督) br=3 row 1 — data-skill.js 그대로(cost=26은 기력이 없어
 	## 안 씀). r=4.12는 위 헤더의 nova/curse 환산(140÷34) 참고. prereq
 	## m_chain(같은 br row0). 도독의 첫 curse.
 	{ "key": "m_press", "cls": "marshal", "br": 3, "row": 1, "name": "위압(威壓)",
-		"shape": "curse", "cd": 10.0, "r": 4.12, "sec": 6.0,
+		"shape": "curse", "icon": "📛", "cd": 10.0, "r": 4.12, "sec": 6.0,
 		"eff": "", "v": 32.0, "grow": 8.0, "desc": "위세로 적을 굼뜨고 약하게 만든다." },
 	## 방사(方士) br=1 row 2 — data-skill.js 그대로(cost=40은 기력이 없어
 	## 안 씀). r=4.71은 위 헤더의 nova/curse 환산(160÷34) 참고. prereq
 	## y_wither(같은 br row1). 방사의 두 번째 curse. 방사를 br1 3/3으로.
 	{ "key": "y_doom", "cls": "mystic", "br": 1, "row": 2, "name": "멸(滅)",
-		"shape": "curse", "cd": 18.0, "r": 4.71, "sec": 7.0,
+		"shape": "curse", "icon": "☠️", "cd": 18.0, "r": 4.71, "sec": 7.0,
 		"eff": "", "v": 55.0, "grow": 10.0, "desc": "둘레의 적이 크게 약해진다." },
 	## 궁장(弓將) br=5 row 1 — data-skill.js 그대로(cost=26은 기력이 없어
 	## 안 씀). prereq a_dashshot(같은 br row0). 궁장의 첫 heal.
 	{ "key": "a_firstaid", "cls": "archer", "br": 5, "row": 1, "name": "응급처치(應急處置)",
-		"shape": "heal", "cd": 14.0,
+		"shape": "heal", "icon": "💗", "cd": 14.0,
 		"eff": "", "v": 14.0, "grow": 5.0, "desc": "상처를 싸매 체력을 되찾는다." },
 	## 무장(武將) br=4 row 1 — data-skill.js 그대로(cost=30은 기력이 없어
 	## 안 씀). prereq w_throw(같은 br row0). 무장의 첫 heal.
 	{ "key": "w_regen", "cls": "warrior", "br": 4, "row": 1, "name": "회생(回生)",
-		"shape": "heal", "cd": 16.0,
+		"shape": "heal", "icon": "💗", "cd": 16.0,
 		"eff": "", "v": 16.0, "grow": 6.0, "desc": "상처를 다잡아 체력을 되찾는다." },
 	## 책사(策士) br=4 row 1 — data-skill.js 그대로(cost=24는 기력이 없어
 	## 안 씀). r=3.82는 위 헤더의 nova/curse 환산(130÷34) 참고. prereq
 	## s_blink(같은 br row0). 책사의 첫 curse.
 	{ "key": "s_hex", "cls": "scholar", "br": 4, "row": 1, "name": "저주(咀呪)",
-		"shape": "curse", "cd": 9.0, "r": 3.82, "sec": 5.0,
+		"shape": "curse", "icon": "🕸️", "cd": 9.0, "r": 3.82, "sec": 5.0,
 		"eff": "", "v": 30.0, "grow": 8.0, "desc": "적을 굼뜨고 약하게 만든다." },
 	## 도독(都督) br=4 row 1 — data-skill.js 그대로(cost=36은 기력이 없어
 	## 안 씀). str 필드 없음 → 기본 배율 1.0. prereq m_javelin(같은 br
 	## row0). 도독의 첫 summon.
 	{ "key": "m_reserve", "cls": "marshal", "br": 4, "row": 1, "name": "원군소환(援軍召喚)",
-		"shape": "summon", "cd": 16.0, "sec": 14.0,
+		"shape": "summon", "icon": "🛡️", "cd": 16.0, "sec": 14.0,
 		"eff": "", "v": 1.0, "grow": 1.0, "desc": "원군을 불러 대신 싸우게 한다." },
 	## 방사(方士) br=3 row 1 — data-skill.js 그대로(cost=22는 기력이 없어
 	## 안 씀, kb=20은 넉백 없음). r=1.8은 swing 원작 값 그대로 미터로.
 	## el:'chi'. prereq y_chain(같은 br row0). 방사의 첫 swing.
 	{ "key": "y_ghoststrike", "cls": "mystic", "br": 3, "row": 1, "name": "음령타(陰靈打)",
-		"shape": "swing", "cd": 6.0, "r": 1.8, "el": "chi",
+		"shape": "swing", "icon": "👻", "cd": 6.0, "r": 1.8, "el": "chi",
 		"eff": "", "v": 1.7, "grow": 0.35, "desc": "음기를 둘러 손이 닿는 대로 친다." },
 	## 궁장(弓將) br=4 row 2 — data-skill.js 그대로(cost=36은 기력이 없어
 	## 안 씀). str 필드 없음 → skill_summon.gd 기본 배율 1.0. prereq
 	## a_speedy(같은 br row1). 궁장의 첫 summon. 궁장을 br4 3/3으로.
 	{ "key": "a_hawk", "cls": "archer", "br": 4, "row": 2, "name": "응사소환(鷹使召喚)",
-		"shape": "summon", "cd": 16.0, "sec": 14.0,
+		"shape": "summon", "icon": "🦅", "cd": 16.0, "sec": 14.0,
 		"eff": "", "v": 1.0, "grow": 1.0, "desc": "매를 불러 대신 싸우게 한다." },
 	## 무장(武將) br=3 row 2 — data-skill.js 그대로(cost=40은 기력이 없어
 	## 안 씀, kb=150은 넉백 없음). r=4.41은 w_quake와 같은 환산(원작 r도
 	## 150으로 같다 — 위 헤더 nova 환산 참고). prereq w_blaze_dash(같은 br
 	## row1). 무장의 두 번째 nova. 무장을 br3 3/3으로.
 	{ "key": "w_palm", "cls": "warrior", "br": 3, "row": 2, "name": "벽력장(霹靂掌)",
-		"shape": "nova", "cd": 13.0, "r": 4.41, "el": "chi",
+		"shape": "nova", "icon": "👊", "cd": 13.0, "r": 4.41, "el": "chi",
 		"eff": "", "v": 3.2, "grow": 0.65, "desc": "기를 뻗어 둘레를 크게 친다." },
 	## 책사(策士) br=3 row 2 — data-skill.js 그대로(cost=34는 기력이 없어
 	## 안 씀). str 필드 없음 → skill_summon.gd 기본 배율 1.0. prereq
 	## s_fan(같은 br row1). 책사의 첫 summon. 책사를 br3 3/3으로.
 	{ "key": "s_spirit", "cls": "scholar", "br": 3, "row": 2, "name": "빙정소환(氷精召喚)",
-		"shape": "summon", "cd": 15.0, "sec": 13.0,
+		"shape": "summon", "icon": "❄️", "cd": 15.0, "sec": 13.0,
 		"eff": "", "v": 1.0, "grow": 1.0, "desc": "얼음 정령을 불러 대신 싸우게 한다." },
 	## 도독(都督) br=3 row 2 — data-skill.js 그대로(cost=20은 기력이 없어
 	## 안 씀). far 필드 없음 → 기본 지속시간 0.2초(w_dash와 같음). prereq
 	## m_press(같은 br row1). 도독의 첫 dash. 도독을 br3 3/3으로.
 	{ "key": "m_charge", "cls": "marshal", "br": 3, "row": 2, "name": "기신보(氣身步)",
-		"shape": "dash", "cd": 7.0, "el": "chi",
+		"shape": "dash", "icon": "💨", "cd": 7.0, "el": "chi",
 		"eff": "", "v": 1.5, "grow": 0.35, "desc": "기를 두르고 파고든다." },
 	## 방사(方士) br=3 row 2 — data-skill.js 그대로(cost=32는 기력이 없어
 	## 안 씀). eff는 m_rally 등과 같은 이유로 비워 두고 buff_eff에 담는다.
 	## prereq y_ghoststrike(같은 br row1). 방사의 첫 buff. 방사를 br3
 	## 3/3으로.
 	{ "key": "y_possess", "cls": "mystic", "br": 3, "row": 2, "name": "귀합(鬼合)",
-		"shape": "buff", "cd": 16.0, "sec": 7.0, "buff_eff": "atkPct",
+		"shape": "buff", "icon": "🕯️", "cd": 16.0, "sec": 7.0, "buff_eff": "atkPct",
 		"eff": "", "v": 35.0, "grow": 9.0, "desc": "한동안 음병의 기운이 몸에 실려 공격이 세진다." },
 	## 궁장(弓將) br=5 row 2 — data-skill.js 그대로(cost=30은 기력이 없어
 	## 안 씀). r=3.82는 y_thunderdoom과 같은 환산(원작 r도 130으로 같다 —
 	## 위 헤더 nova 환산 참고). prereq a_firstaid(같은 br row1). 궁장의
 	## 첫 nova. 궁장을 br5 3/3으로.
 	{ "key": "a_gale", "cls": "archer", "br": 5, "row": 2, "name": "기환시(氣環矢)",
-		"shape": "nova", "cd": 9.0, "r": 3.82, "el": "chi",
+		"shape": "nova", "icon": "🌀", "cd": 9.0, "r": 3.82, "el": "chi",
 		"eff": "", "v": 2.1, "grow": 0.5, "desc": "기를 실은 화살비. 시우(矢雨)와 달리 기 결이다." },
 	## 무장(武將) br=4 row 2 — data-skill.js 그대로(cost=34는 기력이 없어
 	## 안 씀). str 필드 없음 → skill_summon.gd 기본 배율 1.0. prereq
 	## w_regen(같은 br row1). 무장의 첫 summon. 무장을 br4 3/3으로.
 	{ "key": "w_hound", "cls": "warrior", "br": 4, "row": 2, "name": "군견소환(軍犬召喚)",
-		"shape": "summon", "cd": 15.0, "sec": 13.0,
+		"shape": "summon", "icon": "🐕", "cd": 15.0, "sec": 13.0,
 		"eff": "", "v": 1.0, "grow": 1.0, "desc": "군견을 풀어 대신 싸우게 한다." },
 	## 책사(策士) br=4 row 2 — data-skill.js 그대로(cost=32는 기력이 없어
 	## 안 씀). eff는 m_rally 등과 같은 이유로 비워 두고 buff_eff에 담는다.
 	## prereq s_hex(같은 br row1). 책사의 첫 buff. 책사를 br4 3/3으로.
 	{ "key": "s_insight", "cls": "scholar", "br": 4, "row": 2, "name": "심득(心得)",
-		"shape": "buff", "cd": 15.0, "sec": 7.0, "buff_eff": "skillPct",
+		"shape": "buff", "icon": "🧠", "cd": 15.0, "sec": 7.0, "buff_eff": "skillPct",
 		"eff": "", "v": 38.0, "grow": 9.0, "desc": "한동안 무예의 위력이 크게 오른다." },
 	## 도독(都督) br=4 row 2 — data-skill.js 그대로(cost=30은 기력이 없어
 	## 안 씀). prereq m_reserve(같은 br row1). 도독의 두 번째 buff
 	## (m_rally에 이어). 도독을 br4 3/3으로.
 	{ "key": "m_precision", "cls": "marshal", "br": 4, "row": 2, "name": "필중(必中)",
-		"shape": "buff", "cd": 15.0, "sec": 6.0, "buff_eff": "critPct",
+		"shape": "buff", "icon": "🎯", "cd": 15.0, "sec": 6.0, "buff_eff": "critPct",
 		"eff": "", "v": 12.0, "grow": 4.0, "desc": "한동안 급소를 정확히 노린다." },
 	## 방사(方士) br=4 row 1 — data-skill.js 그대로(cost=20은 기력이 없어
 	## 안 씀). far 필드 없음 → 기본 지속시간 0.2초(w_dash·m_charge와
 	## 같음). prereq y_soulbolt(같은 br row0). 방사의 첫 dash.
 	{ "key": "y_specter", "cls": "mystic", "br": 4, "row": 1, "name": "귀보(鬼步)",
-		"shape": "dash", "cd": 7.0, "el": "pois",
+		"shape": "dash", "icon": "👻", "cd": 7.0, "el": "pois",
 		"eff": "", "v": 1.3, "grow": 0.3, "desc": "혼백처럼 스며들어 파고든다." },
 	## 방사(方士) br=5 row 1 — data-skill.js 그대로(cost=24는 기력이 없어
 	## 안 씀, kb=22는 넉백 없음 — w_palm과 같은 판단). prereq
 	## y_thunderdoom(같은 br row0). 방사의 두 번째 swing(y_ghoststrike에
 	## 이어).
 	{ "key": "y_hellstrike", "cls": "mystic", "br": 5, "row": 1, "name": "화령타(火靈打)",
-		"shape": "swing", "cd": 6.0, "r": 1.7, "el": "fire",
+		"shape": "swing", "icon": "🔥", "cd": 6.0, "r": 1.7, "el": "fire",
 		"eff": "", "v": 1.8, "grow": 0.4, "desc": "귀화(鬼火)를 둘러 손이 닿는 대로 친다." },
 	## 무장(武將) br=5 row 1 — data-skill.js 그대로(cost=24는 기력이 없어
 	## 안 씀, kb=30은 넉백 없음). prereq w_intimidate(같은 br row0). 무장이
 	## swing을 세 갈래에 갖는 첫 사례(br0 w_whirl·w_cleave, br5
 	## w_frostcleave).
 	{ "key": "w_frostcleave", "cls": "warrior", "br": 5, "row": 1, "name": "빙인참(氷刃斬)",
-		"shape": "swing", "cd": 6.0, "r": 1.7, "el": "cold",
+		"shape": "swing", "icon": "🧊", "cd": 6.0, "r": 1.7, "el": "cold",
 		"eff": "", "v": 1.8, "grow": 0.4, "desc": "날을 얼려 벤다. 맞은 적이 굼떠진다." },
 	## 책사(策士) br=5 row 1 — data-skill.js 그대로(cost=32는 기력이 없어
 	## 안 씀). r=3.82는 y_thunderdoom·a_gale과 같은 환산(원작 r도 130으로
 	## 같다). prereq s_restore(같은 br row0). 책사의 네 번째 nova
 	## (s_blaze·s_meteor·s_frost에 이어).
 	{ "key": "s_plague", "cls": "scholar", "br": 5, "row": 1, "name": "역병(疫病)",
-		"shape": "nova", "cd": 10.0, "r": 3.82, "el": "pois",
+		"shape": "nova", "icon": "🦠", "cd": 10.0, "r": 3.82, "el": "pois",
 		"eff": "", "v": 2.1, "grow": 0.5, "desc": "둘레에 역병을 퍼뜨린다." },
 	## 도독(都督) br=5 row 1 — data-skill.js 그대로(cost=32는 기력이 없어
 	## 안 씀). r=4.12는 m_ring과 원작 r이 똑같이 140이라 같은 환산값이
 	## 그대로 나온다. prereq m_flamesaber(같은 br row0). 도독의 두 번째
 	## nova(m_ring에 이어).
 	{ "key": "m_venomfield", "cls": "marshal", "br": 5, "row": 1, "name": "독진(毒陣)",
-		"shape": "nova", "cd": 10.0, "r": 4.12, "el": "pois",
+		"shape": "nova", "icon": "☠️", "cd": 10.0, "r": 4.12, "el": "pois",
 		"eff": "", "v": 2.2, "grow": 0.5, "desc": "둘레에 독 기운을 퍼뜨린다." },
 	## 방사(方士) br=4 row 2 — data-skill.js 그대로(cost=34는 기력이 없어
 	## 안 씀). heal은 max_hp×value_at/100(skill_heal_warrior.gd와 같은
 	## 경계). prereq y_specter(같은 br row1). 방사의 첫 heal. 방사를 br4
 	## 3/3으로.
 	{ "key": "y_soulmend", "cls": "mystic", "br": 4, "row": 2, "name": "혼백치유(魂魄治癒)",
-		"shape": "heal", "cd": 18.0,
+		"shape": "heal", "icon": "💗", "cd": 18.0,
 		"eff": "", "v": 20.0, "grow": 7.0, "desc": "떠도는 기운을 모아 상처를 아문다." },
 	## 방사(方士) br=5 row 2 — data-skill.js 그대로(cost=24는 기력이 없어
 	## 안 씀). r 필드 없음 → skill_chain_mystic.gd DEFAULT_RANGE(7.65)
 	## 그대로(y_chain과 같은 경계). prereq y_hellstrike(같은 br row1).
 	## 방사의 두 번째 chain(y_chain에 이어). 방사를 br5 3/3으로.
 	{ "key": "y_frostchain", "cls": "mystic", "br": 5, "row": 2, "name": "빙쇄(氷鎖)",
-		"shape": "chain", "cd": 9.0, "el": "cold",
+		"shape": "chain", "icon": "🧊", "cd": 9.0, "el": "cold",
 		"eff": "", "v": 1.8, "grow": 0.4, "desc": "언 기운이 적 사이를 옮겨 붙는다." },
 	## 무장(武將) br=5 row 2 — data-skill.js 그대로(cost=22는 기력이 없어
 	## 안 씀). prereq w_frostcleave(같은 br row1). 무장의 두 번째 bolt
 	## (w_throw에 이어). 무장 br5를 3/3으로.
 	{ "key": "w_thunderlance", "cls": "warrior", "br": 5, "row": 2, "name": "벽력창(霹靂槍)",
-		"shape": "bolt", "cd": 6.0, "el": "lit",
+		"shape": "bolt", "icon": "⚡", "cd": 6.0, "el": "lit",
 		"eff": "", "v": 1.8, "grow": 0.45, "desc": "벼락을 실어 던진다." },
 	## 책사(策士) br=5 row 2 — data-skill.js 그대로(cost=18은 기력이 없어
 	## 안 씀). prereq s_plague(같은 br row1). 책사의 다섯 번째 bolt
 	## (s_wave·s_fire·s_ice·s_bolt에 이어). 책사 br5를 3/3으로.
 	{ "key": "s_venombolt", "cls": "scholar", "br": 5, "row": 2, "name": "독무탄(毒霧彈)",
-		"shape": "bolt", "cd": 4.0, "el": "pois",
+		"shape": "bolt", "icon": "☠️", "cd": 4.0, "el": "pois",
 		"eff": "", "v": 1.5, "grow": 0.4, "desc": "독무를 뭉쳐 던진다." },
 	## 도독(都督) br=5 row 2 — data-skill.js 그대로(cost=20은 기력이 없어
 	## 안 씀). far 필드 없음 → 기본 지속시간 0.2초(w_dash·m_charge와
 	## 같음). prereq m_venomfield(같은 br row1). 도독의 두 번째 dash
 	## (m_charge에 이어). 도독 br5를 3/3으로.
 	{ "key": "m_frostcharge", "cls": "marshal", "br": 5, "row": 2, "name": "빙보(氷步)",
-		"shape": "dash", "cd": 7.0, "el": "cold",
+		"shape": "dash", "icon": "🧊", "cd": 7.0, "el": "cold",
 		"eff": "", "v": 1.4, "grow": 0.35, "desc": "얼음을 두르고 파고든다." },
 	## 궁장(弓將) br=0 row 1 — data-skill.js 그대로(cost=24는 기력이 없어
 	## 안 씀). shots·spread는 이 슬라이스에선 skill_bolt_archer6.gd가
@@ -1053,14 +1057,14 @@ const SKILLS: Array[Dictionary] = [
 	## spread(부채꼴 산개)는 조준 방향이 없어 안 쓴다(위 헤더 참고).
 	## prereq a_pierce(같은 br row0). 궁장의 여섯 번째 bolt.
 	{ "key": "a_multi", "cls": "archer", "br": 0, "row": 1, "name": "연사(連射)",
-		"shape": "bolt", "cd": 6.0, "shots": 3, "spread": 0.34,
+		"shape": "bolt", "icon": "🏹", "cd": 6.0, "shots": 3, "spread": 0.34,
 		"eff": "", "v": 1.3, "grow": 0.3, "desc": "한 번에 셋을 쏜다." },
 	## 궁장(弓將) br=0 row 2 — data-skill.js 그대로(cost=34는 기력이 없어
 	## 안 씀). r=3.82는 y_thunderdoom·a_gale과 같은 환산(원작 r도 130으로
 	## 같다). prereq a_multi(같은 br row1). 궁장의 두 번째 nova(a_gale에
 	## 이어). 궁장 br0를 3/3으로 — 다섯 직업 전부 여섯 갈래 3/3 완주.
 	{ "key": "a_rain", "cls": "archer", "br": 0, "row": 2, "name": "시우(矢雨)",
-		"shape": "nova", "cd": 10.0, "r": 3.82,
+		"shape": "nova", "icon": "🌧️", "cd": 10.0, "r": 3.82,
 		"eff": "", "v": 2.4, "grow": 0.5, "desc": "화살비가 둘레에 쏟아진다." },
 ]
 
@@ -1070,6 +1074,11 @@ static func skill_by_key(k: String) -> Dictionary:
 		if s.key == k:
 			return s
 	return {}
+
+
+## 자리에 걸 수 있는가 — shape 가 있는 활성 무예(76). 웹 `shape:'passive'` 열넷은 여기선 shape 칸이 없다.
+static func is_active(sk: Dictionary) -> bool:
+	return sk.has("shape")
 
 
 static func skills_of(cls_key: String) -> Array[Dictionary]:

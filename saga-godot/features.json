@@ -3314,5 +3314,30 @@
   "ticket": "G-0197",
   "since": "2026-10-11",
   "note": "창 모드 st_offer Claude 눈 ○"
+ },
+ {
+  "id": "gd.dg.skill-slots",
+  "name": "2나락 무예 넉 자리(Z·X·C·V, 직업마다 따로·처음 배우면 빈 칸에·맞바꿈) + 모양별 공용 시전기(사본 76·단추 76·입력 76 정리)",
+  "files": [
+   "games/saga_dungeon/player/skill_caster.gd",
+   "games/saga_dungeon/ui/skill_slot_button.gd",
+   "games/saga_dungeon/ui/skill_button.gd",
+   "games/saga_dungeon/data/dungeon_skill_state.gd",
+   "games/saga_dungeon/data/dungeon_save_state.gd",
+   "games/saga_dungeon/data/dungeon_skills.gd",
+   "tools/probe_dungeon_slots.gd"
+  ],
+  "tests": [
+   "dungeon_slots",
+   "dungeon_skills",
+   "save_dungeon",
+   "mount_dungeon"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0198",
+  "since": "2026-10-11",
+  "note": "창 모드 dg_skill_slots 가로·세로 Claude 눈 ○(단추 넷 화면 안)"
  }
 ]
