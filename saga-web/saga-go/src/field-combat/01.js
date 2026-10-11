@@ -93,7 +93,7 @@
   function AIM_FULL() { return 1.4; }  function AIM_PART() { return 0.45; }  function AIM_FULLMUL() { return 1.25; }  function AIM_GAP() { return 0.3; }
   function ARROW_V() { return 60; }  function ARROW_RANGE() { return 45; }  function ARROW_EL_R() { return 1.2; }  function CHARGE_COST() { return K('chargeCost', 20); }
   function CHARGE_MUL() { return K('chargeMul', 1.3); }  function CHARGE_REACH() { return 3.2; }  function CHARGE_ARC() { return -0.2; }
-  function PLUNGE_R() { return 3.5; }     function PLUNGE_MUL() { return K('plungeMul', 1.2); }
+  function wpnSlot(w, step) { return K('wpnAnim', 1) ? 'Wpn_' + ({ sword: 1, claymore: 1, polearm: 1, catalyst: 1, bow: 1 }[w] ? w : 'sword') + '_' + Math.max(0, Math.min(2, step | 0)) : 'attack'; }   function wpnMs(w, step, dflt) { var OA = global.DG.ownAnim, d = OA && OA.combatDur ? OA.combatDur(wpnSlot(w, step)) : 0; return d ? Math.round(d * 1000) : dflt; }   function WPN_HOLD() { return K('finishHold', 70); }   function PLUNGE_R() { return 3.5; }     function PLUNGE_MUL() { return K('plungeMul', 1.2); }   // W-0169 3D 무기 몸짓 이름·길이·3타 마무리 멈춤(ms)
   function PLUNGE_PER_M() { return 0.1; } function PLUNGE_MAX_M() { return 15; }
   function VAPOR_MUL() { return K('vaporMul', 1.5); }
   function OVERLOAD_R() { return 4; }

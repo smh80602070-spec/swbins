@@ -793,7 +793,7 @@
     var anim = o.anim;
     var armSw = sw * 0.72;
     var lean = 0;
-    if (anim === 'attack') { armSw = Math.sin(t * 24) * 1.05; }
+    if (anim === 'attack' || (anim && anim.indexOf('Wpn_') === 0)) { armSw = Math.sin(t * 24) * 1.05; }   // W-0169 무기 몸짓 자리도 공격
     else if (anim === 'hit') { armSw = -0.42; lean = -0.16; }
     else if (anim === 'dodge') { armSw = (Math.floor(t * 8) % 2 ? 1 : -1) * 0.55; lean = 0.14; }
     /* 비전투 사건의 서 있는 몸짓(2026-09-06) — 걷지 않을 때만 뜻이 있어서

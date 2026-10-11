@@ -4672,7 +4672,7 @@ window.requestAnimationFrame = function () { return 0; };
       var M = DG.mode2d, ids = Object.keys((DG.assets3dIds && DG.assets3dIds.hero2d8) || {}), p = ids.length ? 'vroid:' + ids[0] : '';
       if (!p) { return '실패 8방향 표 없음'; }
       var r = [M.roleKey(p, 'idle', true) === 'idle_town', M.roleKey(p, 'walk', true) === 'walk_town', M.roleKey(p, 'attack', true) === 'attack', M.roleKey(p, 'hit', true) === 'hit',
-        M.roleKey(p, 'idle', false) === 'idle', M.roleKey('hero_m', 'idle', true) === 'idle', M.townRole('walk', true, true) === 'walk_town', ids.length === 299];
+        M.roleKey(p, 'idle', false) === 'idle', M.roleKey('hero_m', 'idle', true) === 'idle', M.townRole('walk', true, true) === 'walk_town', ids.length >= 299];   // W-0169 때 — 늦은 인물 시트가 더해지면 299 넘는다
       return r.every(Boolean) && ('맨손 ' + p + ' idle→idle_town · walk→walk_town · 공격·마을 밖·3행 시트 그대로 · 8방향 ' + ids.length + '명') || '실패 ' + r.join(',');
     });
     t('3D 방 밝기(W-0145) — 방 바닥·벽 물감을 흰 쪽으로 0.65·반구광 색을 밝은 회청 쪽으로 0.5(손잡이 0 = 옛), 마을 조명은 그대로', function () {

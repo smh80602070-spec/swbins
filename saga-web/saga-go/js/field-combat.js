@@ -93,7 +93,7 @@
   function AIM_FULL() { return 1.4; }  function AIM_PART() { return 0.45; }  function AIM_FULLMUL() { return 1.25; }  function AIM_GAP() { return 0.3; }
   function ARROW_V() { return 60; }  function ARROW_RANGE() { return 45; }  function ARROW_EL_R() { return 1.2; }  function CHARGE_COST() { return K('chargeCost', 20); }
   function CHARGE_MUL() { return K('chargeMul', 1.3); }  function CHARGE_REACH() { return 3.2; }  function CHARGE_ARC() { return -0.2; }
-  function PLUNGE_R() { return 3.5; }     function PLUNGE_MUL() { return K('plungeMul', 1.2); }
+  function wpnSlot(w, step) { return K('wpnAnim', 1) ? 'Wpn_' + ({ sword: 1, claymore: 1, polearm: 1, catalyst: 1, bow: 1 }[w] ? w : 'sword') + '_' + Math.max(0, Math.min(2, step | 0)) : 'attack'; }   function wpnMs(w, step, dflt) { var OA = global.DG.ownAnim, d = OA && OA.combatDur ? OA.combatDur(wpnSlot(w, step)) : 0; return d ? Math.round(d * 1000) : dflt; }   function WPN_HOLD() { return K('finishHold', 70); }   function PLUNGE_R() { return 3.5; }     function PLUNGE_MUL() { return K('plungeMul', 1.2); }   // W-0169 3D 무기 몸짓 이름·길이·3타 마무리 멈춤(ms)
   function PLUNGE_PER_M() { return 0.1; } function PLUNGE_MAX_M() { return 15; }
   function VAPOR_MUL() { return K('vaporMul', 1.5); }
   function OVERLOAD_R() { return 4; }
@@ -1101,7 +1101,7 @@
     for (var i = 0; i < hits.length; i++) { hitFoe(S, hits[i], m, m.atk * CHARGE_MUL() * infM(m), infEl(m), 'heavy'); }
     if (hits.length) { rainFollow(S, px, py); }                     // ⑲-17 뱃노래
     m.energy = Math.min(ENERGY_MAX(), m.energy + 1.5 * hits.length * (m.er || 1));
-    push(S, { t: 'heavy', x: px + dx * 1.2, y: py + dy * 1.2, r: 1.8, n: hits.length });
+    push(S, { t: 'heavy', x: px + dx * 1.2, y: py + dy * 1.2, r: 1.8, n: hits.length, w: m.wtype });
     return { ok: true, n: hits.length };
   }
 
@@ -1958,7 +1958,7 @@
         ring(e.x, e.y, 2.4, '#ffffff', 0.4);
         if (W3()) { W3().shake(0.45); W3().hold(100); } c.emit('field:break', { camp: e.camp, left: e.left });   // ㉑ 방패 한 겹 = 부위 하나(track.js)
       } else if (e.t === 'swing') {
-        if (W3()) { W3().playAnim('me', 'attack', 280); }
+        if (W3()) { W3().playAnim('me', wpnSlot(e.w, e.step), wpnMs(e.w, e.step, 280)); if (e.step === 2 && e.uid != null) { W3().hold(WPN_HOLD()); W3().shake(0.16); } }   // W-0169 무기·단마다 다른 몸짓, 3타 마무리가 맞으면 잠깐 멎는다
         if (e.ranged && e.tx != null) { ring(e.tx, e.ty, 0.8, e.el && EL[e.el] ? EL[e.el].color : '#e8e2d0', 0.25); }   // ⑲-5 서책·활
       } else if (e.t === 'skill') {
         if (e.shape === 'thrust' || e.shape === 'dash') {
@@ -1976,7 +1976,7 @@
       } else if (e.t === 'heavy') {
         ring(e.x, e.y, e.r, '#f4f1e2', 0.5);
         floatNum(pos.x, pos.y, '강공격', null, 1, true, true);
-        if (W3()) { W3().playAnim('me', 'attack', 500); W3().shake(0.2); }
+        if (W3()) { W3().playAnim('me', wpnSlot(e.w, 2), wpnMs(e.w, 2, 500)); W3().shake(0.2); if (e.n) { W3().hold(WPN_HOLD() + 20); } }   // W-0169 — 강공격 = 그 무기 마무리 몸짓
       } else if (e.t === 'tired') { floatNum(pos.x, pos.y, '기력 부족', null, 0.9, true, true); }
       else if (e.t === 'plunge') {
         ring(e.x, e.y, e.r, '#f4ecd0', 0.6); ring(e.x, e.y, e.r * 0.45, '#ffffff', 0.4);
@@ -2509,7 +2509,7 @@
   global.DG = global.DG || {};
   global.DG.fieldCombat = {
     EL: EL, FOES: FOES, ROT: ROT, SHADOW_BACK: SHADOW_BACK, RIFT_STEP: RIFT_STEP, RIFT_SLOPE: RIFT_SLOPE, riftOk: riftOk, SIEGE_PULL: SIEGE_PULL, tideMarks: tideMarks, markHit: markHit, foeAtk: foeAtk, KB_T: KB_T, knock: knock, rainFollow: rainFollow, THEMES: THEMES, ELITES: ELITES, ERA_THEMES: ERA_THEMES, ERA_ELITES: ERA_ELITES, eraOfCamp: eraOfCamp, CELL: CELL, ENERGY_MAX: ENERGY_MAX,
-    SKILL_CD: SKILL_CD, SWAP_CD: SWAP_CD, BODY: BODY, separate: separate, DODGE_COST: DODGE_COST, VAPOR_MUL: VAPOR_MUL,
+    SKILL_CD: SKILL_CD, wpnSlot: wpnSlot, wpnMs: wpnMs, SWAP_CD: SWAP_CD, BODY: BODY, separate: separate, DODGE_COST: DODGE_COST, VAPOR_MUL: VAPOR_MUL,
     /* 판정 층 — 화면 없이 굴린다(자가진단이 쓰는 문) */
     elementOf: elementOf, EL_KEYS: EL_KEYS, heavy: heavy, plunge: plunge, plungeMul: plungeMul, plungeLand: plungeLand, PLUNGE_R: PLUNGE_R(), CHARGE_COST: CHARGE_COST(), REACT: REACT, attaches: attaches, shapeOf: shapeOf, SHAPES: SHAPES, kitFor: kitFor, segDist: segDist, react: react, shieldMul: shieldMul, campAt: campAt, tierAt: tierAt, guardianAt: guardianAt, COUNTER: COUNTER,
     autoThreat: autoThreat, create: create, reparty: reparty, populate: populate, spawnCamp: spawnCamp, step: step, drain: drain,

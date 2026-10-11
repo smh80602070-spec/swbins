@@ -8786,6 +8786,24 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
     /* ── 자체 몸짓 (anim-own.js, 2026-09-20) ─────────────────────
        Mixamo 는 공개 저장소에 못 올려서 VRM 몸짓을 코드로 짰다. 렌더 없이 FK 로 잰다 — 눈으로 보는 일은 실기 몫. */
 
+    t('무기 몸짓 — 다섯 무기 × 연속 3단 = Wpn_ 15, 기본 굽기 아홉은 그대로·이름 대면 굽히고 유한, 오른손이 맞는 순간 몸 앞(−z)에 온다 · 전투가 무기·단으로 이름을 고른다 (W-0169)', function () {
+      var OA = DG.ownAnim, rig = OA.refRig(), FC = DG.fieldCombat, bad = [];
+      if (OA.COMBAT_NAMES.length !== 15 || OA.clipData(rig).length !== 9) { return false; }
+      var cl = OA.clipData(rig, OA.COMBAT_NAMES);
+      if (cl.length !== 15) { return false; }
+      cl.forEach(function (c) {
+        c.tracks.forEach(function (tr) { for (var k = 0; k < tr.values.length; k++) { if (!isFinite(tr.values[k])) { bad.push(c.name); break; } } });
+        if (Math.abs(c.duration - OA.combatDur(c.name)) > 1e-9) { bad.push(c.name + ' 길이'); }
+        var front = 9; for (var u = 0.3; u <= 0.75; u += 0.05) { var h = OA.fkAt(rig, c, u * c.duration).J_Bip_R_Hand.p; front = Math.min(front, h[2]); }
+        if (!/_bow_/.test(c.name) && front > -0.2) { bad.push(c.name + ' 손이 앞으로 안 나감 ' + front.toFixed(2)); }
+      });
+      var C = DG.core, s0 = FC.wpnSlot('polearm', 2), s1 = FC.wpnSlot('fan', 7), ms = FC.wpnMs('claymore', 2, 1);
+      C.setTune('field.wpnAnim', 0); var off = FC.wpnSlot('sword', 0); C.setTune('field.wpnAnim', null);
+      if (s0 !== 'Wpn_polearm_2' || s1 !== 'Wpn_sword_2' || ms !== 950 || off !== 'attack') { bad.push('고르기 ' + [s0, s1, ms, off].join(',')); }
+      if (bad.length) { console.warn('W-0169 무기 몸짓: ' + bad.join(' / ')); }
+      return bad.length === 0 && ('15 몸짓 · 기본 9 그대로 · 창 3단 = ' + s0);
+    });
+
     t('anim-own — 아홉 클립이 같은 뼈 전부를 움직이고, 값이 유한·단위이며, 반복 클립은 이어진다', function () {
       var OA = DG.ownAnim, rig = OA.refRig(), clips = OA.clipData(rig), i, j, bad = [];
       if (clips.length !== 9) { return false; }

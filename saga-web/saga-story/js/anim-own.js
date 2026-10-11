@@ -415,6 +415,115 @@
     return keyed([[0, BASE], [0.14, crouch], [0.24, tuck(0), 'out'], [0.72, tuck(360), 'lin'], [0.84, land], [1, stand]]);
   })();
 
+  /* ── 무기별 공격 몸짓 (W-0169) ──────────────────────────
+   * 무기 다섯(sword 한손검·claymore 큰날·polearm 창·catalyst 서책·bow 활) × 연속 공격 3단.
+   * 이름 `Wpn_<무기>_<단>` — asset3d.mapClips() 의 낱말(attack·slash·shoot…)과 안 겹치게 지었다.
+   * 기본 굽기(`clipData(rig)`)엔 안 들어간다 — 그 무기로 처음 칠 때 그 몸에 한 클립만 굽는다(`clipsFor(root, T, [이름])`).
+   * 오른팔 규약: rua.r +는 내림·−는 올림(−90 = 머리 위), rua.p −는 앞으로, rua.y +는 앞으로 감음. 두 팔 함께는 S()(왼팔 값). */
+  var LUNGE_L = legs(30, 44, 6, -12, 30, 18), STEP_L = legs(18, 30, 4, -6, 24, 12), DEEP_L = legs(42, 64, 8, -18, 36, 22);
+  var GUARD_L = { 'lua.r': -58, 'lua.p': -18, 'lla.y': -74 };          // 한손 무기일 때 왼손은 가슴 앞
+
+  /* 한손검 1타 — 오른쪽 뒤에서 왼쪽 앞으로 가로 베기 */
+  var swordA = keyed([[0, BASE],
+    [0.24, M(BASE, STEP_L, GUARD_L, { 'rua.r': 4, 'rua.p': 6, 'rua.y': -42, 'rla.y': 34, 'chest.y': -34, 'upper.y': -10, 'hips.y': -12, 'head.y': 14 })],
+    [0.40, M(BASE, LUNGE_L, GUARD_L, { 'rua.r': 10, 'rua.p': -8, 'rua.y': 96, 'rla.y': 8, 'rhand.p': 8, 'chest.y': 36, 'upper.y': 12, 'hips.y': 16, 'spine.p': 8, 'head.y': -12, 'hips.dz': -0.05 }), 'in'],
+    [0.58, M(BASE, LUNGE_L, GUARD_L, { 'rua.r': 18, 'rua.p': -4, 'rua.y': 118, 'rla.y': 16, 'chest.y': 44, 'upper.y': 14, 'hips.y': 18, 'spine.p': 9, 'head.y': -14, 'hips.dz': -0.06 }), 'out'],
+    [1, BASE]]);
+  /* 한손검 2타 — 왼 허리 아래로 감았다가 오른쪽 머리 위로 쳐 올리는 되베기 */
+  var swordB = keyed([[0, BASE],
+    [0.22, M(BASE, legs(-8, 30, -4, 20, 36, 8), GUARD_L, { 'rua.r': 62, 'rua.p': -40, 'rua.y': 70, 'rla.y': 30, 'chest.y': 38, 'upper.y': 12, 'hips.y': 14, 'spine.p': 12, 'hips.dy': -0.04 })],
+    [0.40, M(BASE, LUNGE_L, GUARD_L, { 'rua.r': -70, 'rua.p': 28, 'rua.y': 10, 'rla.y': 6, 'rhand.p': -10, 'chest.y': -30, 'upper.y': -10, 'hips.y': -14, 'spine.p': -2, 'chest.p': -4, 'hips.dz': -0.05 }), 'in'],
+    [0.58, M(BASE, LUNGE_L, GUARD_L, { 'rua.r': -84, 'rua.p': 34, 'rua.y': 4, 'rla.y': 10, 'chest.y': -36, 'upper.y': -12, 'hips.y': -16, 'chest.p': -6, 'hips.dz': -0.06 }), 'out'],
+    [1, BASE]]);
+  /* 한손검 3타(마무리) — 칼을 머리 위로 높이 들어 몸을 젖혔다가 크게 내딛어 내려찍는다 */
+  var swordC = keyed([[0, BASE],
+    [0.26, M(BASE, legs(-6, 20, -4, 14, 24, 6), GUARD_L, { 'rua.r': -112, 'rua.p': -26, 'rua.y': 20, 'rla.y': 40, 'spine.p': -8, 'chest.p': -8, 'head.p': -8, 'g': 1 })],
+    [0.34, M(BASE, legs(-6, 20, -4, 14, 24, 6), GUARD_L, { 'rua.r': -118, 'rua.p': -30, 'rua.y': 20, 'rla.y': 44, 'spine.p': -10, 'chest.p': -9, 'head.p': -9 })],
+    [0.46, M(BASE, DEEP_L, GUARD_L, { 'rua.r': 30, 'rua.p': -84, 'rua.y': 30, 'rla.y': 6, 'rhand.p': 16, 'spine.p': 24, 'chest.p': 14, 'head.p': -10, 'hips.dz': -0.12, 'hips.dy': -0.06 }), 'in'],
+    [0.70, M(BASE, DEEP_L, GUARD_L, { 'rua.r': 40, 'rua.p': -76, 'rua.y': 30, 'rla.y': 10, 'spine.p': 26, 'chest.p': 14, 'head.p': -10, 'hips.dz': -0.12, 'hips.dy': -0.07 })],
+    [1, BASE]]);
+
+  /* 큰날(두 손) — 두 팔을 같이 쓴다. 1타: 오른 어깨 위에서 비스듬히 내려치기 */
+  var clayA = keyed([[0, BASE],
+    [0.28, M(BASE, STEP_L, S('ua', 70, -30, 0), S('la', null, null, -50), { 'chest.y': -40, 'upper.y': -12, 'hips.y': -16, 'spine.p': -6, 'head.y': 14 })],
+    [0.46, M(BASE, LUNGE_L, S('ua', -30, -80, -30), S('la', null, null, -14), { 'chest.y': 30, 'upper.y': 10, 'hips.y': 14, 'spine.p': 20, 'chest.p': 10, 'hips.dz': -0.07, 'hips.dy': -0.04 }), 'in'],
+    [0.66, M(BASE, LUNGE_L, S('ua', -40, -66, -34), S('la', null, null, -16), { 'chest.y': 36, 'upper.y': 12, 'hips.y': 16, 'spine.p': 22, 'chest.p': 10, 'hips.dz': -0.08, 'hips.dy': -0.05 }), 'out'],
+    [1, BASE]]);
+  /* 큰날 2타 — 허리를 크게 틀어 가로로 휩쓸기 */
+  var clayB = keyed([[0, BASE],
+    [0.26, M(BASE, legs(10, 34, 4, 4, 34, 6), S('ua', -10, -10, 10), S('la', null, null, -30), { 'rua.y': -30, 'lua.y': 60, 'chest.y': -50, 'upper.y': -16, 'hips.y': -20, 'spine.p': 6, 'hips.dy': -0.05 })],
+    [0.46, M(BASE, LUNGE_L, S('ua', -6, -12, -40), S('la', null, null, -10), { 'rua.y': 100, 'lua.y': -30, 'chest.y': 48, 'upper.y': 16, 'hips.y': 22, 'spine.p': 10, 'hips.dz': -0.05, 'hips.dy': -0.05 }), 'in'],
+    [0.66, M(BASE, LUNGE_L, S('ua', -2, -10, -50), S('la', null, null, -12), { 'rua.y': 116, 'lua.y': -40, 'chest.y': 56, 'upper.y': 18, 'hips.y': 26, 'spine.p': 10, 'hips.dz': -0.05, 'hips.dy': -0.05 }), 'out'],
+    [1, BASE]]);
+  /* 큰날 3타(마무리) — 날을 펼친 채 한 바퀴 돌고 그 힘으로 내려찍는다(hips.y 를 −360 까지 이어 보간) */
+  var clayC = keyed([[0, BASE],
+    [0.18, M(BASE, legs(20, 46, 6, 10, 44, 8), S('ua', 4, -20, 20), S('la', null, null, -16), { 'chest.y': 30, 'hips.dy': -0.06 })],
+    [0.48, M(BASE, legs(20, 40, 6, 10, 40, 8), S('ua', 2, -20, 20), S('la', null, null, -16), { 'hips.y': -300, 'chest.y': -20, 'hips.dy': -0.05, 'g': 1 }), 'lin'],
+    [0.58, M(BASE, legs(-4, 20, 0, 12, 24, 6), S('ua', 92, -24, 0), S('la', null, null, -30), { 'hips.y': -360, 'spine.p': -8, 'chest.p': -6 })],
+    [0.70, M(BASE, DEEP_L, S('ua', -24, -86, 10), S('la', null, null, -10), { 'hips.y': -360, 'spine.p': 28, 'chest.p': 14, 'head.p': -10, 'hips.dz': -0.12, 'hips.dy': -0.08 }), 'in'],
+    [0.86, M(BASE, DEEP_L, S('ua', -30, -80, 10), S('la', null, null, -12), { 'hips.y': -360, 'spine.p': 28, 'chest.p': 14, 'hips.dz': -0.12, 'hips.dy': -0.08 })],
+    [1, M(BASE, { 'hips.y': -360 })]]);
+
+  /* 창 — 오른손이 뒤(허리), 왼손이 앞에서 자루를 받친다. 1타: 허리에서 곧게 찌르기 */
+  var SP_READY = { 'rua.r': 54, 'rua.p': 10, 'rua.y': 26, 'rla.y': 92, 'lua.r': -24, 'lua.p': -16, 'lua.y': -66, 'lla.y': -34, 'chest.y': -18, 'hips.y': -10 };
+  var spearA = keyed([[0, BASE],
+    [0.22, M(BASE, legs(-4, 24, -2, 10, 28, 6), SP_READY, { 'rua.y': 10, 'rla.y': 104, 'chest.y': -26, 'hips.dz': 0.02 })],
+    [0.38, M(BASE, LUNGE_L, { 'rua.r': 18, 'rua.p': -8, 'rua.y': 58, 'rla.y': 6, 'lua.r': -10, 'lua.y': -96, 'lla.y': -18, 'chest.y': 22, 'upper.y': 8, 'hips.y': 10, 'spine.p': 10, 'hips.dz': -0.08 }), 'in'],
+    [0.56, M(BASE, LUNGE_L, { 'rua.r': 20, 'rua.p': -6, 'rua.y': 60, 'rla.y': 8, 'lua.r': -12, 'lua.y': -94, 'lla.y': -20, 'chest.y': 24, 'upper.y': 8, 'hips.y': 10, 'spine.p': 10, 'hips.dz': -0.08 }), 'out'],
+    [1, BASE]]);
+  /* 창 2타 — 자루를 눕혀 오른쪽에서 왼쪽으로 쓸기 */
+  var spearB = keyed([[0, BASE],
+    [0.24, M(BASE, STEP_L, { 'rua.r': 30, 'rua.y': -30, 'rla.y': 40, 'lua.r': -30, 'lua.y': -20, 'lla.y': -60, 'chest.y': -40, 'upper.y': -12, 'hips.y': -14 })],
+    [0.44, M(BASE, LUNGE_L, { 'rua.r': 24, 'rua.y': 100, 'rla.y': 20, 'lua.r': -10, 'lua.y': -100, 'lla.y': -40, 'chest.y': 40, 'upper.y': 14, 'hips.y': 16, 'spine.p': 8, 'hips.dz': -0.05 }), 'in'],
+    [0.64, M(BASE, LUNGE_L, { 'rua.r': 26, 'rua.y': 110, 'rla.y': 22, 'lua.r': -12, 'lua.y': -110, 'lla.y': -40, 'chest.y': 46, 'upper.y': 14, 'hips.y': 18, 'spine.p': 8, 'hips.dz': -0.05 }), 'out'],
+    [1, BASE]]);
+  /* 창 3타(마무리) — 몸을 낮춰 모았다가 한 발 크게 뛰어들며 깊게 찌른다 */
+  var spearC = keyed([[0, BASE],
+    [0.28, M(BASE, legs(30, 80, 30, 24, 84, 30), SP_READY, { 'rua.y': 0, 'rla.y': 116, 'chest.y': -30, 'spine.p': 18, 'hips.dz': 0.04, 'g': 1 })],
+    [0.44, M(BASE, legs(54, 30, 10, -30, 20, 30), { 'rua.r': 10, 'rua.p': -6, 'rua.y': 60, 'rla.y': 2, 'lua.r': -8, 'lua.y': -98, 'lla.y': -14, 'chest.y': 26, 'upper.y': 10, 'hips.y': 12, 'spine.p': 22, 'chest.p': 8, 'hips.dz': -0.2, 'hips.dy': -0.08 }), 'in'],
+    [0.72, M(BASE, legs(54, 34, 10, -30, 22, 30), { 'rua.r': 12, 'rua.y': 60, 'rla.y': 4, 'lua.r': -10, 'lua.y': -98, 'lla.y': -16, 'chest.y': 26, 'upper.y': 10, 'hips.y': 12, 'spine.p': 22, 'chest.p': 8, 'hips.dz': -0.2, 'hips.dy': -0.08 })],
+    [1, BASE]]);
+
+  /* 서책(법구) — 손바닥을 내밀어 기운을 쏜다. 1타 오른손, 2타 왼손, 3타 두 손을 머리 위로 모았다가 앞으로 내뿜기 */
+  var cataA = keyed([[0, BASE],
+    [0.24, M(BASE, STEP_L, GUARD_L, { 'rua.r': 40, 'rua.y': 30, 'rla.y': 110, 'rhand.p': -20, 'chest.y': -24, 'hips.y': -8 })],
+    [0.40, M(BASE, STEP_L, GUARD_L, { 'rua.r': 4, 'rua.y': 62, 'rla.y': 4, 'rhand.p': -50, 'chest.y': 24, 'upper.y': 8, 'hips.y': 8, 'spine.p': 6, 'hips.dz': -0.03 }), 'in'],
+    [0.62, M(BASE, STEP_L, GUARD_L, { 'rua.r': 6, 'rua.y': 60, 'rla.y': 6, 'rhand.p': -50, 'chest.y': 24, 'upper.y': 8, 'hips.y': 8, 'spine.p': 6, 'hips.dz': -0.03 }), 'out'],
+    [1, BASE]]);
+  var cataB = keyed([[0, BASE],
+    [0.24, M(BASE, legs(-6, 24, -2, 16, 30, 6), { 'lua.r': -40, 'lua.y': -30, 'lla.y': -110, 'lhand.p': -20, 'rua.r': 60, 'rla.y': 70, 'chest.y': 24, 'hips.y': 8 })],
+    [0.40, M(BASE, legs(-6, 24, -2, 16, 30, 6), { 'lua.r': -4, 'lua.y': -62, 'lla.y': -4, 'lhand.p': -50, 'rua.r': 60, 'rla.y': 70, 'chest.y': -24, 'upper.y': -8, 'hips.y': -8, 'spine.p': 6, 'hips.dz': -0.03 }), 'in'],
+    [0.62, M(BASE, legs(-6, 24, -2, 16, 30, 6), { 'lua.r': -6, 'lua.y': -60, 'lla.y': -6, 'lhand.p': -50, 'rua.r': 60, 'rla.y': 70, 'chest.y': -24, 'upper.y': -8, 'hips.y': -8, 'spine.p': 6, 'hips.dz': -0.03 }), 'out'],
+    [1, BASE]]);
+  var cataC = keyed([[0, BASE],
+    [0.30, M(BASE, legs(-4, 14, -2, 6, 16, 4), S('ua', 120, -10, -10), S('la', null, null, -40), S('hand', null, -30), { 'spine.p': -10, 'chest.p': -8, 'head.p': -14, 'hips.dy': 0.02 })],
+    [0.40, M(BASE, legs(-4, 14, -2, 6, 16, 4), S('ua', 124, -12, -10), S('la', null, null, -44), S('hand', null, -30), { 'spine.p': -12, 'chest.p': -9, 'head.p': -15, 'hips.dy': 0.03 })],
+    [0.54, M(BASE, DEEP_L, S('ua', 2, -6, -80), S('la', null, null, -4), S('hand', null, -60), { 'spine.p': 18, 'chest.p': 8, 'head.p': -8, 'hips.dz': -0.1, 'hips.dy': -0.05 }), 'in'],
+    [0.80, M(BASE, DEEP_L, S('ua', 4, -6, -78), S('la', null, null, -6), S('hand', null, -60), { 'spine.p': 18, 'chest.p': 8, 'head.p': -8, 'hips.dz': -0.1, 'hips.dy': -0.05 })],
+    [1, BASE]]);
+
+  /* 활 — 왼 어깨를 과녁으로 돌려 서고, 왼팔은 활을 밀고 오른손이 시위를 볼까지 당겼다 놓는다 */
+  function bowPose(draw, rel, lean) {
+    return M(BASE, legs(-4, 16, -2, 8, 18, 4), {
+      'hips.y': -46, 'chest.y': -18, 'upper.y': -6, 'head.y': 58, 'neck.y': 6, 'spine.p': lean || 2,
+      'lua.r': -4, 'lua.p': -4, 'lua.y': -24, 'lla.y': -4,
+      'rua.r': -6, 'rua.p': -4, 'rua.y': 70 - 48 * draw + 30 * rel, 'rla.y': 40 + 112 * draw - 60 * rel, 'rhand.p': -10
+    });
+  }
+  var bowA = keyed([[0, BASE], [0.24, bowPose(0.2, 0)], [0.46, bowPose(1, 0), 'out'], [0.54, bowPose(0.2, 1), 'in'], [0.74, bowPose(0.1, 1)], [1, BASE]]);
+  var bowB = keyed([[0, BASE], [0.18, bowPose(0.3, 0)], [0.36, bowPose(1, 0), 'out'], [0.44, bowPose(0.2, 1), 'in'], [0.66, bowPose(0.1, 1)], [1, BASE]]);
+  var bowC = keyed([[0, BASE], [0.20, bowPose(0.2, 0)], [0.56, bowPose(1.15, 0, -6), 'out'], [0.64, bowPose(0.2, 1.2, 4), 'in'], [0.84, bowPose(0.1, 1, 4)], [1, BASE]]);
+
+  /** 무기 클립 표 — dur 은 실제 시간(초). 칠 때 맞는 순간(u≈0.4)이 누른 뒤 0.2초 안팎이 되게 */
+  var COMBAT = [
+    { name: 'Wpn_sword_0', dur: 0.5, fn: swordA }, { name: 'Wpn_sword_1', dur: 0.5, fn: swordB }, { name: 'Wpn_sword_2', dur: 0.75, fn: swordC },
+    { name: 'Wpn_claymore_0', dur: 0.6, fn: clayA }, { name: 'Wpn_claymore_1', dur: 0.6, fn: clayB }, { name: 'Wpn_claymore_2', dur: 0.95, fn: clayC },
+    { name: 'Wpn_polearm_0', dur: 0.5, fn: spearA }, { name: 'Wpn_polearm_1', dur: 0.55, fn: spearB }, { name: 'Wpn_polearm_2', dur: 0.8, fn: spearC },
+    { name: 'Wpn_catalyst_0', dur: 0.5, fn: cataA }, { name: 'Wpn_catalyst_1', dur: 0.5, fn: cataB }, { name: 'Wpn_catalyst_2', dur: 0.8, fn: cataC },
+    { name: 'Wpn_bow_0', dur: 0.6, fn: bowA }, { name: 'Wpn_bow_1', dur: 0.55, fn: bowB }, { name: 'Wpn_bow_2', dur: 0.9, fn: bowC }
+  ];
+  COMBAT.forEach(function (c) { c.loop = false; c.fps = 60; c.ground = true; c.once = true; });
+
   /** 클립 표 — 이름은 asset3d.mapClips() 가 알아보는 낱말을 담는다 */
   var CLIPS = [
     { name: 'Idle_Loop', dur: 3.2, loop: true, fps: 30, fn: idlePose, ground: true },
@@ -457,8 +566,9 @@
     for (ci = 0; ci < POSE_KEYS.length; ci++) {
       bonesOfKey(POSE_KEYS[ci]).forEach(function (nm) { if (rig.by[nm]) { animated.push(nm); } });
     }
-    for (ci = 0; ci < CLIPS.length; ci++) {
-      def = CLIPS[ci];
+    var table = only ? CLIPS.concat(COMBAT) : CLIPS;   // W-0169 — 무기 몸짓은 이름을 대 달랄 때만 굽는다
+    for (ci = 0; ci < table.length; ci++) {
+      def = table[ci];
       if (only && only.indexOf(def.name) < 0) { continue; }
       n = Math.round(def.dur * def.fps);
       var qtr = {}, times = [], ptimes = [], pvals = [];
@@ -531,12 +641,12 @@
   }
 
   /** 장면 root 의 VRM 몸에 맞춘 three AnimationClip 아홉. 못 만들면 빈 배열(그러면 호출한 쪽이 옛 길로 간다) */
-  function clipsFor(root, THREE) {
-    if (!THREE || !root) { return []; }
-    var rig;
-    try { rig = rigFromObject3D(root); } catch (e) { return []; }
+  function clipsFor(root, THREE, only, restRig) {
+    if (!THREE || (!root && !restRig)) { return []; }
+    var rig = restRig || null;   // W-0169 — 나중에 굽을 땐 처음(정지 자세)에 읽어 둔 뼈대를 준다. 몸짓이 돌던 몸을 다시 읽으면 그 자세가 "정지"가 된다
+    if (!rig) { try { rig = rigFromObject3D(root); } catch (e) { return []; } }
     if (!rig) { return []; }
-    return clipData(rig).map(function (c) {
+    return clipData(rig, only).map(function (c) {
       var tracks = c.tracks.map(function (tr) {
         return tr.kind === 'q'
           ? new THREE.QuaternionKeyframeTrack(tr.bone + '.quaternion', tr.times, tr.values)
@@ -612,6 +722,25 @@
   global.DG.ownAnim = {
     BONES: BONES, POSE_KEYS: POSE_KEYS, CLIP_NAMES: CLIPS.map(function (c) { return c.name; }),
     CLIPS: CLIPS, BASE: BASE,
+    /* W-0169 — 무기 몸짓 `Wpn_<무기>_<단>` 이름표·길이(초). 없는 이름이면 0 */
+    COMBAT_NAMES: COMBAT.map(function (c) { return c.name; }),
+    /** 처음 조립된(정지 자세) 몸에서 뼈대를 읽는다 — 실패하면 null */
+    restRig: function (root) { try { return rigFromObject3D(root); } catch (e) { return null; } },
+    /** asset3d 배우(u = node.userData)에 무기 몸짓 액션을 단다 — 몸 파일(u.ownBody)마다 한 번 굽고 캐시. 자체 몸짓이 아닌 몸이면 null(부르는 쪽이 보통 공격) */
+    weaponAction: function (u, slot, THREE) {
+      if (u.actions && u.actions[slot]) { return slot; }
+      var body = u.ownBody, def = null, i;
+      for (i = 0; i < COMBAT.length; i++) { if (COMBAT[i].name === slot) { def = COMBAT[i]; } }
+      if (!u.ownAnim || !body || !body.ownRig || !def || !THREE || !u.mixer) { return null; }
+      var wc = body.wpnClips || (body.wpnClips = {});
+      if (!wc[slot]) { wc[slot] = clipsFor(null, THREE, [slot], body.ownRig)[0] || null; }
+      if (!wc[slot]) { return null; }
+      var act = u.mixer.clipAction(wc[slot]);
+      act.setLoop(THREE.LoopOnce, 1); act.clampWhenFinished = true;
+      u.actions[slot] = act;
+      return slot;
+    },
+    combatDur: function (name) { for (var i = 0; i < COMBAT.length; i++) { if (COMBAT[i].name === name) { return COMBAT[i].dur; } } return 0; },
     makeRig: makeRig, refRig: refRig, rigFromObject3D: rigFromObject3D,
     clipData: clipData, clipsFor: clipsFor, fkAt: fkAt, frameAt: frameAt, localQuats: localQuats, worldFrom: worldFrom,
     groundPoints: groundPoints,
