@@ -18,5 +18,4 @@
 1960 saga-web/saga-go/js/ui.js
 1840 saga-web/saga-dungeon/js/town.js
 1877 saga-web/saga-story/js/ui.js
-1733 saga-web/saga-dungeon/js/asset3d.js
 1607 saga-godot/tools/probe_story.gd
