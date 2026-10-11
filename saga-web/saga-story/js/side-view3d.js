@@ -41,6 +41,16 @@
     return g;
   }
 
+  /** W-0172 — 주인공 공격 몸짓을 무기 생김새(look.weapon)·연속 횟수로(anim-own Wpn_ 15). 몸짓이 없으면 null → 옛 'attack' */
+  function wpnAtk(p) {
+    var OA = global.DG.ownAnim, S2 = global.DG.side;
+    if (!OA || !OA.attackSlot || (global.DG.core && global.DG.core.tuned && !global.DG.core.tuned('story3d.wpnAnim', 1))) { return null; }
+    var st = p._wpn || (p._wpn = {});
+    return OA.attackSlot(st, Math.max(0, p.atkCd || 0), Date.now() / 1000,
+      function () { var r = S2 && S2.meRef ? S2.meRef() : null; return r && r.look ? r.look.weapon : 'sword'; },
+      function () { st.n = (st.n || 0) + 1; return st.n - 1; });
+  }
+
   function LM(opts) {
     var TN = global.DG.toon3d;
     if (TN) { return TN.lambertLike(opts); }
@@ -771,7 +781,7 @@
       shell.userData.body = null; shell.userData.head = null;   // 이제 도형 물들임은 안 쓴다
       shell.userData.mixer = model.userData.mixer || null;
       shell.userData.actions = model.userData.actions || null;
-      shell.userData.clipMap = model.userData.clipMap || null;
+      shell.userData.clipMap = model.userData.clipMap || null; shell.userData.ownAnim = !!model.userData.ownAnim; shell.userData.ownBody = model.userData.ownBody || null; shell.userData.curAct = null;   // W-0172 무기 몸짓
       shell.userData.anim = null;
       var A = global.DG.asset3d;
       shell.userData.flashMats = A && A.ownAllMat ? A.ownAllMat(model) : null;
@@ -821,11 +831,11 @@
     var u = shell.userData;
     if (!u.mixer) { return; }
     if (u.anim !== animName) {
-      var clipName = u.clipMap && u.clipMap[animName];
+      var OAs = global.DG.ownAnim, clipName = (u.clipMap && u.clipMap[animName]) || (OAs && OAs.weaponAction && /^Wpn_/.test(animName) ? OAs.weaponAction(u, animName, three()) || (u.clipMap && u.clipMap.attack) : null);   // W-0172 무기 몸짓
       var next = clipName && u.actions[clipName];
       if (next) {
         var prevClip = u.anim && u.clipMap[u.anim];
-        var prev = prevClip && u.actions[prevClip];
+        var prev = u.curAct || (prevClip && u.actions[prevClip]);   // 무기 몸짓 자리는 clipMap 에 없어 틀던 액션을 따로 든다
         /* death는 한 번만 돌고 마지막 자세에서 멈춘다 — 나머지(걷기·공격 등)처럼
            반복되면 쓰러진 채 다시 일어서는 꼴이 되어 버린다 */
         if (animName === 'death') {
@@ -834,8 +844,8 @@
           next.setLoop(Tc0.LoopOnce);
         }
         next.reset().play();
-        if (prev && prev !== next) { prev.crossFadeTo(next, 0.2, false); }
-        u.anim = animName;
+        if (prev && prev !== next) { prev.crossFadeTo(next, animName.indexOf('Wpn_') === 0 ? 0.08 : 0.2, false); }
+        u.anim = animName; u.curAct = next;
       }
     }
     u.mixer.update(frameDt);
@@ -963,7 +973,7 @@
        보다는 위, 회피·공격보다는 아래 — 둘 다 그 자리에서 짧게 끝난다 */
     stepActor(playerMesh, (p.hurt || 0) > 0 ? 'hit' :
       ((p.dodgeAnim || 0) > 0 ? 'dodge' :
-      ((p.atkCd || 0) > 0 ? 'attack' :
+      ((p.atkCd || 0) > 0 ? (wpnAtk(p) || 'attack') :
       (((p.drinkAnim || 0) > 0 || !!run.talk) ? 'interaction' :
       (running ? 'run' : (walking ? 'walk' : 'idle'))))));
     var bob = (!playerMesh.userData.mixer && walking) ? Math.abs(Math.sin(Date.now() / 90)) * 3 : 0;
@@ -1078,7 +1088,7 @@
   global.DG = global.DG || {};
   global.DG.sideView3d = {
     init: init, draw: draw, resize: resize, ready: ready_,
-    _zoomPR: zoomPR, _platMesh: platMesh,   // W-0166 진단
+    _zoomPR: zoomPR, _platMesh: platMesh, _me: function () { return playerMesh; }, _wpnAtk: wpnAtk,   // W-0166·W-0172 진단
     available: available, active: active, toggle: toggle,
     quality: quality, setQuality: setQuality,
     /** 진단·설정 화면용 — 'auto' 일 때 지금 실제로 도는 등급 */

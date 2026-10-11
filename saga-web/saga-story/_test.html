@@ -6046,6 +6046,11 @@ window.DG_NO_TUNE = true;
       var r = [sat(a.sky) < sat(L.sky) * 0.7, a.nearK === 0.6, z.sky === L.sky && z.nearK === 0.35, L.sky === 0xe8b878, a.fog === 2200 && a.amb === 0.85];
       return r.every(Boolean) && ('마을 안개 ' + L.sky.toString(16) + ' → ' + a.sky.toString(16) + ' · 시작 0.6') || '실패 ' + r.join(',');
     });
+    t('st.sfx: 자체 타격음(W-0172) — 무기 생김새마다 자체 효과음 갈래, 잠금 해제 전엔 false(합성음 길) · 무기 몸짓 이름표(anim-own)는 생김새 → 다섯 갈래', function () {
+      var X = DG.sfx, OA = DG.ownAnim, st = {}, n = 0, a = OA.attackSlot(st, 0.4, 5, 'halberd', function () { return n++; }), b = OA.attackSlot(st, 0.45, 5.1, 'halberd', function () { return n++; });
+      var r = [X.SX_OF.halberd === 'spear', X.SX_OF.fan === 'staff', X.hitOf('sword', 0) === false, a === 'Wpn_polearm_0', b === 'Wpn_polearm_1'];
+      return r.every(Boolean) && ('극 → ' + a + ' → ' + b + ' · 소리 spear') || '실패 ' + r.join(',');
+    });
     t('st.side-view: 3D 손맛(W-0166) — 3D 렌더 해상도 배율 = 지금 확대(0.25 단위, 낮음 등급·손잡이 0 이면 1) · 흔들림 세기는 2D 와 같은 식(3D 카메라가 같은 값을 쓴다)', function () {
       var SV = DG.sideView, C = DG.core, eff = SV._zoom().eff, zl = SV._sharpK('low'), zh = SV._sharpK('high'), off;
       C.setTune('story3d.sharpZoom', 0); off = SV._sharpK('high'); C.setTune('story3d.sharpZoom', null);

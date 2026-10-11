@@ -94,7 +94,7 @@
       sfx('crit');
     } else {
       run.hitSeq = ((run.hitSeq || 0) + 1) % HIT_CUES.length;
-      sfx(HIT_CUES[run.hitSeq]);
+      var SXs = global.DG.sfx, mr = meRef(); if (!(SXs && SXs.hitOf && SXs.hitOf(mr && mr.look ? mr.look.weapon : 'sword', run.hitSeq))) { sfx(HIT_CUES[run.hitSeq]); }   // W-0172 자체 효과음 무기별, 못 내면 합성음
     }
     if (elem) { applyElem(e, elem, m); }
     if (e.hp <= 0) { kill(e); }
