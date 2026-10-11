@@ -19,7 +19,7 @@
   function ids() { return (global.DG && global.DG.assets3dIds) || { hero: [], world: [] }; }
   function set(kind) {
     if (!sets) {
-      sets = { hero: {}, world: {}, world2d: {} };   // world2d — GLB 짝 없는 2D 그림(W-0114)
+      sets = { hero: {}, world: {}, world2d: {}, creature: {} };   // creature — 자체 동물·탈것(K-0096, W-0163)   // world2d — GLB 짝 없는 2D 그림(W-0114)
       var t = ids(), k, i;
       for (k in sets) { for (i = 0; i < (t[k] || []).length; i++) { sets[k][t[k][i]] = 1; } }
     }
@@ -109,7 +109,19 @@
   function url(kind, id) {
     if (state === 'init') { probe(); }
     if (state !== 'ok' || !id || !tunedOn() || !set(kind)[id]) { return null; }
-    return root + (kind === 'hero' ? 'characters3d/' : 'world3d/') + id + '.glb';
+    return root + (kind === 'hero' ? 'characters3d/' : kind === 'creature' ? 'creatures3d/' : 'world3d/') + id + '.glb';
+  }
+
+  /** W-0163 — 빌린 동물·탈것 GLB(Poly CC-BY·Quaternius·"Charlie" 슬라임) 경로 → 자체판 `creatures3d/<id>.glb`. 짝이 없거나 공용 주소를 못 잡으면 null(부르는 쪽이 옛 경로).
+   *  짝 표는 tools/ai-art/remote3d/k96_targets.json `borrowed` 와 같다. 손잡이 `assets3d.creature` 0 = 옛 빌린 모델 */
+  var CREATURE_OF = { Tiger: 'tiger', Bear: 'bear', Panda: 'panda', Monkey: 'monkey', Boar: 'boar', Owl: 'owl', Crane: 'crane', Elephant: 'elephant',
+    Rabbit: 'rabbit', Squirrel: 'squirrel', Duck: 'duck', Bird: 'sparrow', SlimeEnemy: 'slime',
+    Horse: 'horse', White_Horse: 'horse_white', Horse_White: 'horse_white', Horse_Farm: 'horse_farm', Donkey: 'donkey', Zebra: 'zebra' };
+  function creatureFor(path) {
+    var C = global.DG && global.DG.core;
+    if (C && C.tuned && !C.tuned('assets3d.creature', 1)) { return null; }
+    var m = /(?:^|\/)(animals|animals_extra|standin|community|troops)\/([A-Za-z_]+)\.glb$/.exec(String(path || ''));
+    return m && CREATURE_OF[m[2]] ? url('creature', CREATURE_OF[m[2]]) : null;
   }
 
   global.DG = global.DG || {};
@@ -185,7 +197,7 @@
   }
 
   global.DG.assets3d = {
-    url: url, spriteUrl: spriteUrl, probe: probe, heroRecipe: heroRecipe, borrowRecipe: borrowRecipe, borrowPick: borrowPick, borrowTable: borrowTable, applyProps: applyProps,
+    url: url, spriteUrl: spriteUrl, creatureFor: creatureFor, CREATURE_OF: CREATURE_OF, probe: probe, heroRecipe: heroRecipe, borrowRecipe: borrowRecipe, borrowPick: borrowPick, borrowTable: borrowTable, applyProps: applyProps,
     has: function (kind, id) { return !!set(kind)[id]; },
     /** 진단·점검용 — 'init' | 'probing' | 'ok' | 'fail' */
     state: function () { return state; },

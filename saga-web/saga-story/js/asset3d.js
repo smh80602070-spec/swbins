@@ -365,7 +365,7 @@
 
   /** GLB 하나를 받아 캐시한다 — 같은 url 을 몇이 동시에 물어도 한 번만 받는다 */
   function acquire(url, done) {
-    var c = cache[url];
+    var A3c = global.DG.assets3d, cu = A3c && A3c.creatureFor ? A3c.creatureFor(url) : null; if (cu) { url = cu; } var c = cache[url];   // W-0163 빌린 동물·탈것 → 자체판(creatures3d)
     if (c && c.state === 'ok') { done(c); return; }
     if (c && c.state === 'fail') { done(null); return; }
     if (c) { c.waiting.push(done); return; }

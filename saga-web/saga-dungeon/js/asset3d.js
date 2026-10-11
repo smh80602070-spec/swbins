@@ -1371,7 +1371,7 @@
     }
   }
   function acquire(url, done) {
-    var c = cache[url];
+    var A3c = global.DG.assets3d, cu = A3c && A3c.creatureFor ? A3c.creatureFor(url) : null; if (cu) { url = cu; } var c = cache[url];   // W-0163 빌린 동물·탈것 → 자체판(creatures3d)
     if (c && c.state === 'ok') { done(c); return; }
     if (c && c.state === 'fail') { done(null); return; }
     if (c) { c.waiting.push(done); return; }

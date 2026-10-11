@@ -48,6 +48,7 @@ const body = `/* 생성: tools/gen-assets3d-ids.mjs — 손으로 고치지 않�
     hero: ${JSON.stringify(names('characters3d'))},
     world: ${JSON.stringify(names('world3d'))},
     world2d: ${JSON.stringify(names2d())},
+    creature: ${JSON.stringify(names('creatures3d'))},
     hero2d8: ${JSON.stringify(sheets8())},
     heroSex: ${JSON.stringify(heroSex())}
   };

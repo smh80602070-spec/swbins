@@ -409,7 +409,7 @@
   }
 
   function acquire(url, done) {
-    var c = cache[url];
+    var A3c = global.DG.assets3d, cu = A3c && A3c.creatureFor ? A3c.creatureFor(url) : null; if (cu) { url = cu; } var c = cache[url];   // W-0163 빌린 동물·탈것 → 자체판(creatures3d)
     if (c && c.state === 'ok') { done(c); return; }
     if (c && c.state === 'fail') { done(null); return; }
     if (c) { c.waiting.push(done); return; }
@@ -789,11 +789,11 @@
       u.mixer.update(sit.getClip().duration + 0.01);
     }
     g.updateMatrixWorld(true);
-    var hh = boneOf(horse, 'Hips'), hs = boneOf(horse, 'Shoulders'), mh = boneOf(man, 'Hips');
+    var hh = boneOf(horse, 'Hips'), hs = boneOf(horse, 'Shoulders') || boneOf(horse, 'Chest'), mh = boneOf(man, 'Hips');   // W-0163 자체 말 뼈는 Chest
     if (!hh || !hs || !mh) { man.position.set(0, HORSE_H * 0.5, 0); return; }
     var a = hh.getWorldPosition(new t.Vector3()), b = hs.getWorldPosition(new t.Vector3());
     var seat = a.lerp(b, 0.55);
-    seat.y += HORSE_H * 0.1;
+    seat.y += HORSE_H * (hs.name === 'Chest' ? 0.25 : 0.1);   // W-0163 자체 말은 Hips·Chest 가 몸 한가운데라 더 올린다(옛 말과 같은 0.68)
     var hip = mh.getWorldPosition(new t.Vector3());
     man.position.add(seat.sub(hip));
     man.userData.seated = true;

@@ -8814,6 +8814,13 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       return bad.length === 0 && ('15 몸짓 · 기본 9 그대로 · 창 3단 = ' + s0);
     });
 
+    t('자체 동물·탈것(W-0163) — 빌린 동물·탈것 경로가 creatures3d/<id>.glb 로 바뀌고(공용 주소가 잡혔을 때), 짝 없는 경로·손잡이 0 이면 null(옛 경로)', function () {
+      var A = DG.assets3d, C = DG.core, r0 = A.root ? A.root() : null, t = A.creatureFor('assets/models/animals/Tiger.glb'), h = A.creatureFor('assets/models/animals_extra/Horse_White.glb'), f = A.creatureFor('assets/models/animals/Fox.glb'), off;
+      C.setTune('assets3d.creature', 0); off = A.creatureFor('assets/models/animals/Tiger.glb'); C.setTune('assets3d.creature', null);
+      var ends = function (u, tail) { return !!u && u.slice(-tail.length) === tail; };
+      var r = [f === null, off === null, Object.keys(A.CREATURE_OF).length === 19, r0 ? (ends(t, 'creatures3d/tiger.glb') && ends(h, 'creatures3d/horse_white.glb')) : t === null];
+      return r.every(Boolean) && ('호랑이 → ' + (t || '(공용 주소 없음)')) || '실패 ' + r.join(',');
+    });
     t('효과음 — 자체 효과음 sx:<이름> 은 shared/audio/sfx 로 가고, 마지막에 휘두른 무기로 맞는 소리를 고른다(모르는 무기는 그대로) (W-0170)', function () {
       var A = DG.audio, r = DG.assets3d && DG.assets3d.root ? DG.assets3d.root() : null, u = A.sharedUrl('sx:sfx_crit');
       var w = A.weapon('polearm'), w2 = A.weapon('fan'); A.weapon('sword');
