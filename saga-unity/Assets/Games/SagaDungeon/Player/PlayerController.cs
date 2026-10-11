@@ -469,6 +469,7 @@ namespace Saga.Dungeon.Player
             dir.Normalize();
 
             _dodgeDir = dir;
+            Saga.Dungeon.Audio.SfxPlayer.Play("dodge"); // tasks U-0104
             _dodgeTimeLeft = DodgeDurationSec;
             _dodgeCooldownLeft = DodgeCooldownSec;
             _invulnTimeLeft = DodgeInvulnSec;

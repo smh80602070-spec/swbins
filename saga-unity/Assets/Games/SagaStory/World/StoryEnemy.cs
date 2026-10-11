@@ -337,7 +337,7 @@ namespace Saga.Story.World
         {
             var animator = _visualGo != null ? _visualGo.GetComponentInChildren<Animator>() : null;
             if (animator != null) animator.SetTrigger("Attack");
-            StoryAudio.PlaySfx(hitClip);
+            StoryAudio.PlaySfx("sword_hit", hitClip); // tasks U-0104
         }
 
         private void BuildVisual()
@@ -387,7 +387,7 @@ namespace Saga.Story.World
             if (_patternRunner == null && isBoss) _patternRunner = GetComponent<StoryBossPatternRunner>();
             if (_patternRunner != null) applied *= _patternRunner.DamageTakenMul;
             _hp -= applied;
-            StoryAudio.PlaySfx(hitClip);
+            StoryAudio.PlaySfx("sword_hit", hitClip); // tasks U-0104
 
             float height = VisualHeight;
             Vector3 popupPos = transform.position + Vector3.up * height;
@@ -423,7 +423,7 @@ namespace Saga.Story.World
             if (_dead) return;
             _dead = true;
             if (ActiveChampion == this) ActiveChampion = null;
-            StoryAudio.PlaySfx(deathClip);
+            StoryAudio.PlaySfx("death", deathClip); // tasks U-0104
             StoryLootMarker.Spawn(transform.position); // PLAN.md 101-3 F "죽음" — Destroy 전에, transform이 아직 유효할 때.
             if (!isLabyrinthEnemy)
             {

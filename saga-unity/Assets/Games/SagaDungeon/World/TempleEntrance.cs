@@ -30,7 +30,7 @@ namespace Saga.Dungeon.World
             if (_player == null || TempleState.Has(TempleFlag.Visited)) return;
             if (TempleVisuals.FlatDistance(transform.position, _player.position) > EnterRadius) return;
             TempleState.Set(TempleFlag.Visited);
-            SfxPlayer.PlayDiscovery();
+            SfxPlayer.Play("door_open"); // tasks U-0104 — 사원 입구에 들어섬.
             var cuts = DungeonCutscenes.Instance;
             if (cuts == null || !cuts.PlayArrival(ShowGoal)) ShowGoal();
         }

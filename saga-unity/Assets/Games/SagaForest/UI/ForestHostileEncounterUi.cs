@@ -92,7 +92,7 @@ namespace Saga.Forest.UI
         private void OnPress()
         {
             if (!IsActive) return;
-            ForestAudio.PlaySfx(_pressClip);
+            ForestAudio.PlaySfx("ui_click", _pressClip); // tasks U-0104
             _pressesLeft--;
             _gaugeFill.fillAmount = Mathf.Max(0f, (float)_pressesLeft / PressesToWin);
             if (_pressesLeft <= 0) Resolve(true);
@@ -112,7 +112,7 @@ namespace Saga.Forest.UI
                 _timeoutRoutine = null;
             }
             _panel.SetActive(false);
-            ForestAudio.PlaySfx(_resolveClip);
+            ForestAudio.PlaySfx(won ? "victory" : "defeat", _resolveClip); // tasks U-0104 — 밀어냄/놓침
             var cb = _onResolved;
             _onResolved = null;
             cb?.Invoke(won);

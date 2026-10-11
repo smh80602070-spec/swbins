@@ -45,12 +45,14 @@ namespace Saga.Forest.World
             ForestGatherPopup.Spawn(worldPos, label, bonus);
             ForestGatherBump.Apply(visual);
 
+            // tasks U-0104 — 자체 효과음 item_pick 먼저, 그 파일이 없을 때만 씬의 채집 클립(라운드로빈).
+            AudioClip clip = null;
             if (clips != null && clips.Length > 0)
             {
-                var clip = clips[_rrIndex % clips.Length];
+                clip = clips[_rrIndex % clips.Length];
                 _rrIndex++;
-                ForestAudio.PlaySfx(clip);
             }
+            ForestAudio.PlaySfx("item_pick", clip);
         }
 
         /// <summary>헤드리스 진단 전용 — 이전 검증의 카운터·라운드로빈 위치를

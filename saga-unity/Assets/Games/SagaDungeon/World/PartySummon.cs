@@ -110,7 +110,7 @@ namespace Saga.Dungeon.World
             _circle = Ring("SummonCircle", 3.5f, 0.12f);
             _shock = Ring("SlamShock", 1f, 0.25f);
             _shock.enabled = false;
-            SfxPlayer.PlayHeavyHit();
+            SfxPlayer.Play("summon"); // tasks U-0104 — 소환진이 열리는 순간(내려찍기 착지는 아래 강타).
         }
 
         // 마디(시작 뼈 → 끝 뼈)마다 바위 한 덩이 — 굵기는 마디 길이에 곱한다. 손·머리·발은 끝 뼈가 없어 앞 마디를 늘여 쓴다.

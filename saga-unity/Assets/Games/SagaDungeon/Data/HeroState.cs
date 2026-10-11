@@ -142,6 +142,9 @@ namespace Saga.Dungeon.Data
             return true;
         }
 
+        /// <summary>tasks U-0104 — 같은 효과음 재호출 간격(초). 피격 연타·흡혈 회복이 소리를 겹쳐 쌓지 않게.</summary>
+        public const float HurtSfxGap = 0.08f, HealSfxGap = 0.6f;
+
         /// <summary>PLAN.md 101-2 5.1 "축복 3택" 수(守) 축 — <see cref="BlessingState.DefMultiplier"/>로
         /// 나눈다(클수록 덜 맞는다, PerkState.cs의 def 곱과 같은 방향).</summary>
         public static void TakeDamage(float amount, string who = null, string how = null)
@@ -150,6 +153,7 @@ namespace Saga.Dungeon.Data
             LastHitWho = who;
             LastHitHow = how;
             Hp = Math.Max(0, Hp - RoundInt(amount / BlessingState.DefMultiplier));
+            Saga.Dungeon.Audio.SfxPlayer.Play("sword_hurt", minGap: HurtSfxGap); // tasks U-0104 — 피격(연타는 한 번).
             Hurt?.Invoke();
             if (Hp <= 0) Died?.Invoke(DropGoldAsGrave());
         }
@@ -178,6 +182,7 @@ namespace Saga.Dungeon.Data
         public static void HealBy(int amount)
         {
             if (amount <= 0 || Hp <= 0) return;
+            if (Hp < HpMax) Saga.Dungeon.Audio.SfxPlayer.Play("heal", minGap: HealSfxGap); // tasks U-0104 — 흡혈은 맞힐 때마다라 간격을 둔다.
             Hp = Math.Min(HpMax, Hp + amount);
         }
 

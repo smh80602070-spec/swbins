@@ -107,7 +107,7 @@ namespace Saga.Dungeon.World
             if (dist <= PickupRadius)
             {
                 HeroState.AddGold(_gold);
-                SfxPlayer.PlayDiscovery();
+                SfxPlayer.Play("coin"); // tasks U-0104 — 유품 금 되찾기.
                 string msg = string.Format(DungeonLocalization.T("grave.recovered", "유품을 되찾았다 — 금 {0}"), _gold);
                 DialogueLabel.Instance?.Show(msg, 3f);
                 Destroy(gameObject);

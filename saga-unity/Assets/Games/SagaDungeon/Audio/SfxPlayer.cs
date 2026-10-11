@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Saga.Dungeon.Data;
 using Saga.Core;
@@ -64,11 +65,37 @@ namespace Saga.Dungeon.Audio
             PlayBgm(bgmClip);
         }
 
-        public static void PlayHit() => Play(_hitClip);
-        public static void PlayHeavyHit() => Play(_heavyHitClip, 0.9f); // knifeSlice — chop.ogg보다 날카로워 강공격/급소 대용으로 구분.
-        public static void PlayEnemyDeath() => Play(_enemyDeathClip);
-        public static void PlayLevelUp() => Play(_levelUpClip);
-        public static void PlayDiscovery() => Play(_discoveryClip);
+        // tasks U-0104 — 다섯 함수는 이름으로 자체 효과음(K-0045 `SagaSfx`)을 먼저 쓰고, 그 이름 파일이 없을 때만 씬이 넘긴 옛 클립.
+        public static void PlayHit() => Play("sword_hit", _hitClip);
+        public static void PlayHeavyHit() => Play("crit", _heavyHitClip, 0.9f); // 강공격·급소·폭발 — 보통 맞힘과 구분.
+        public static void PlayEnemyDeath() => Play("death", _enemyDeathClip);
+        public static void PlayLevelUp() => Play("levelup", _levelUpClip);
+        public static void PlayDiscovery() => Play("chest_open", _discoveryClip);
+
+        /// <summary>tasks U-0104 — 코드가 부르는 이름 전부(진단이 `SagaSfx.Has` 로 파일 있는지 대조).</summary>
+        public static readonly string[] Used =
+        {
+            "sword_hit", "crit", "death", "levelup", "chest_open",           // 다섯 함수
+            "sword_hurt", "dodge", "heal",                                   // 새 사건 — 피격·구르기·회복
+            "door_open", "item_pick", "coin", "block", "summon", "ui_notify", "quest_done", // 뜻이 다른 부르는 곳
+        };
+
+        private static readonly Dictionary<string, float> Last = new Dictionary<string, float>();
+
+        /// <summary>tasks U-0104 — 이름으로 자체 효과음(<see cref="SagaSfx.Pick"/>, 기록은 파일 없어도 남음). 그 이름 파일이 없으면
+        /// <paramref name="fallback"/>(씬이 준 옛 클립) — 둘 다 없으면 조용히 건너뛴다. <paramref name="minGap"/> 초 안의 같은 이름 재호출은 건너뜀(피격 연타).</summary>
+        public static void Play(string name, AudioClip fallback = null, float volumeScale = 1f, float minGap = 0f)
+        {
+            if (minGap > 0f)
+            {
+                float now = Time.realtimeSinceStartup;
+                if (Last.TryGetValue(name, out float t) && now - t < minGap) return;
+                Last[name] = now;
+            }
+            Play(SagaSfx.Pick(name) ?? fallback, volumeScale);
+        }
+
+        public static void ResetForTest() => Last.Clear();
 
         private static void Play(AudioClip clip, float volumeScale = 1f)
         {

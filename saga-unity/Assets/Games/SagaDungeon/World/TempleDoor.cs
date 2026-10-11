@@ -94,7 +94,7 @@ namespace Saga.Dungeon.World
             }
             _opened = true;
             TempleState.Set(openedFlag);
-            SfxPlayer.PlayHeavyHit();
+            SfxPlayer.Play("door_open"); // tasks U-0104
             DialogueLabel.Instance?.Show(kind == TempleDoorKind.SmallKey
                 ? DungeonLocalization.T("temple.door_opened", "철컥 — 문이 열렸다")
                 : DungeonLocalization.T("temple.boss_door_opened", "철컥 — 무거운 문이 열렸다. 능묘지기가 기다린다"), 3.5f);

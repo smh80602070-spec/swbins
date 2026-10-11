@@ -171,7 +171,7 @@ namespace Saga.Dungeon.World
             bool holding = _pillarTier > PillarNone && _age < PillarHoldSec;
             if (!holding && _player != null && Vector3.Distance(_basePos, _player.position) <= PickupRadius)
             {
-                SfxPlayer.PlayDiscovery();
+                SfxPlayer.Play("item_pick"); // tasks U-0104 — 주울 때(떨어질 때 보물 소리는 위 PlayDiscovery).
                 Destroy(gameObject);
                 return;
             }

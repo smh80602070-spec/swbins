@@ -146,7 +146,7 @@ namespace Saga.Dungeon.World
             {
                 StartCoroutine(Slide(targetLocal));
             }
-            SfxPlayer.PlayHit();
+            SfxPlayer.Play("block"); // tasks U-0104 — 돌 블록 밀기.
             return true;
         }
 
@@ -171,7 +171,7 @@ namespace Saga.Dungeon.World
             if (TempleVisuals.FlatDistance(_block.localPosition, plateLocal) > PlateSnapM) return;
             SetSolvedVisual();
             TempleState.Set(solvedFlag);
-            SfxPlayer.PlayDiscovery();
+            SfxPlayer.Play("quest_done"); // tasks U-0104 — 발판 풀림.
             DialogueLabel.Instance?.Show(DungeonLocalization.T("temple.plate_pressed", "딸깍 — 발판이 눌렸다. 어딘가에서 소리가 났다"), 3.5f);
         }
 

@@ -155,7 +155,7 @@ namespace Saga.Dungeon.World
                 _revealed = true;
                 _visualRoot.gameObject.SetActive(true);
                 StartCoroutine(PopIn());
-                SfxPlayer.PlayDiscovery();
+                SfxPlayer.Play("ui_notify"); // tasks U-0104 — 상자가 나타남(여는 소리는 아래 chest_open).
                 DialogueLabel.Instance?.Show(DungeonLocalization.T("temple.chest_appeared", "✨ 어디선가 상자가 나타났다"), 3f);
             }
             if (!_revealed || _player == null) return;
@@ -196,7 +196,7 @@ namespace Saga.Dungeon.World
                     break;
             }
             TempleState.Set(openedFlag);
-            SfxPlayer.PlayLevelUp();
+            SfxPlayer.Play("chest_open"); // tasks U-0104 — 상자 열기.
             DialogueLabel.Instance?.Show(msg, ToastSec);
             StartCoroutine(OpenRoutine());
             if (_player != null)
