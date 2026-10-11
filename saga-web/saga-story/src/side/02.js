@@ -1159,7 +1159,7 @@
     travel: travel, useUp: useUp, useDown: useDown, dropThrough: dropThrough,
     grabRope: grabRope,
     ropeAt: ropeAt, portalAt: portalAt, npcAt: npcAt, talk: talk, closeTalk: closeTalk, letGo: letGo,
-    power: power, unlocked: unlocked, stages: stages, barSkills: barSkills,
+    power: power, unlocked: unlocked, stages: stages, barSkills: barSkills, attackIndexOf: attackIndexOf,
     bossReady: bossReady, bossLeft: bossLeft,
     gateInfo: gateInfo, challengeGate: challengeGate,
     /* 비경(§5-3)이 쓰는 곳 — 임시 방 갈아 끼우기·잡졸 소환·주 키 */

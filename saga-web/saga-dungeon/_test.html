@@ -1000,6 +1000,25 @@ window.requestAnimationFrame = function () { return 0; };
       var legacy = RM.isDone(m0, old) && (!m1 || m1.seg !== m0.seg || !RM.isDone(m1, old));
       return Object.keys(kinds).length === 6 && same && safe && legacy && ('길 ' + segs.length + ' · 발견거리 ' + a.length + '(예전 ≈' + Math.round(segs.length * 0.45) + ') · 여섯 종 · 결정적 · 양끝 밖 · 옛 기록 n=0');
     });
+    t('dg.road ② 길목 매복(W-0175 · R-5) — 밟으면 세이브에 남고 곁에 셋이 덮친다 · 방이 갈려 사라지면 상자 없이 다시 세우고 · 셋 다 쓰러뜨려야 상자 한 번', function () { return egSeed(function () {
+      var RM = DG.roadMarks, C = DG.core, keepT = JSON.stringify(C.save.town || {}), g0 = C.save.player.gold;
+      try {
+        C.save.town = C.save.town || {}; C.save.town.roadMarks = {}; C.save.town.roadAmbush = {};
+        var mk = { key: 'road:test:0', roadMark: true, kindKey: 'roadAmbush', name: '길목 매복', emoji: '⚔️', verb: '덮쳐 왔다', x: 5000, y: 300 };
+        RM.reward(mk, null);
+        var saved = !!C.save.town.roadAmbush[mk.key], room = { enemies: [] }, ctx = { room: room, floor: 0 }, pl = { x: 5100, y: 300 };
+        RM._stepAmbush(ctx, pl);
+        var three = room.enemies.filter(function (e) { return e.ambush === mk.key; }).length;
+        room.enemies = []; ctx.room = room;                                   // 방이 갈렸다 — 무리가 사라졌다
+        RM._stepAmbush(ctx, pl);
+        var noFree = C.save.player.gold === g0 && !!C.save.town.roadAmbush[mk.key], again = room.enemies.length === 3;
+        room.enemies.forEach(function (e) { e.hp = 0; });
+        RM._stepAmbush(ctx, pl); RM._stepAmbush(ctx, pl);
+        var paid = C.save.player.gold - g0, cleared = !C.save.town.roadAmbush[mk.key];
+        return saved && three === 3 && noFree && again && paid === RM.BOX_GOLD && cleared && ('밟음 → 세이브 · 셋 · 방 갈림 → 상자 없이 다시 셋 · 쓰러뜨림 → 금 +' + paid + ' 한 번') ||
+          ('실패 ' + [saved, three, noFree, again, paid, cleared].join(','));
+      } finally { C.save.town = JSON.parse(keepT); C.save.player.gold = g0; }
+    }); });
     t('재미표준 E 길목 발견(측정) — 모든 길을 1600 구간으로 나눠 양끝 마을 1300 밖 구간 중 발견거리 없는 구간 ≤10%(W-0175)', function () {
       var RM = DG.roadMarks, segs = DG.town.roadSegments(), cv = RM.coverage(segs, RM.build(segs));
       return (cv.rate <= 0.1 ? '○' : (cv.rate <= 0.3 ? '△' : '×')) + ' — 길 ' + segs.length + ' · 구간 ' + cv.cells + ' 중 빈 구간 ' + cv.empty + '(' + Math.round(cv.rate * 100) + '%, 규격 ≤10%) · 6400 길 = 걸어서 약 40초에 2 곳';

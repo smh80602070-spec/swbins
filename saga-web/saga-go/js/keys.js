@@ -9,7 +9,8 @@
  *   걸어가서 만나기   지도에서 46m 밖 대상을 누르면 `world.onClick` 이 'walk:meet' 를 쏜다 — 그 걸음이 이어지는 동안
  *                     46m 안에 들면 다시 안 눌러도 연다. 다른 데를 누르거나(새 walkTo) 키로 움직이면 풀린다
  *   D-패드 두 번 톡   달리기(×2.2, Shift 와 같다). 조이스틱은 ui 가 85% 넘게 밀면 스스로 run 을 넣는다
- *   카메라 따라 돌기  3D 에서 움직이는 중 + 1.5초 동안 안 끌었으면 진행 방향 뒤로 초당 90° 까지(손잡이 world.camFollow,
+ *   카메라 따라 돌기  3D 에서 누른 자리로 걷기·자동 걷기·GPS 로 움직이는 중 + 1.5초 동안 안 끌었으면 진행 방향 뒤로 초당 90° 까지
+ *                     (키·스틱은 카메라 기준이라 뺐다 — 옆걸음이 빙빙 돌았다, R-5) (손잡이 world.camFollow,
  *                     ⚙️ 설정에서 끈다). 카메라 쪽으로 걸어오는 중(135° 넘게)엔 안 돈다 — 뱅뱅 도는 것을 막는다
  *
  * 판정(만남·싸움)은 한 자도 안 바꾼다 — 버튼이 쏘던 'encounter:request'·'station:request'·'fort:request' 를 그대로 쏜다.
@@ -87,18 +88,19 @@
 
   /* ── D-패드 두 번 톡 = 달리기 ─────────────────────────── */
 
-  var DOUBLE_MS = 320, JOY_RUN = 0.85, pad = { run: false, last: {}, down: 0, bound: false };
+  var DOUBLE_MS = 320, JOY_RUN = 0.85, pad = { run: false, last: {}, ids: {}, bound: false };   // ids — 쥔 손가락(pointerId). 숫자 하나로 세면 떼는 신호를 놓칠 때 달리기가 안 풀렸다(R-5)
   /** 조이스틱 — 반지름 R 의 85% 넘게 밀었으면 달린다(ui 조이스틱이 부른다) */
   function joyRun(len, R) { return len > R * JOY_RUN; }
-  function padTap(dir, now) {
+  function padDown() { for (var k in pad.ids) { if (Object.prototype.hasOwnProperty.call(pad.ids, k)) { return true; } } return false; }
+  function padTap(dir, now, id) {
     var t = now === undefined ? Date.now() : now;
     if (t - (pad.last[dir] || -1e9) <= DOUBLE_MS) { pad.run = true; }
-    else if (!pad.down) { pad.run = false; }          // 다른 단추를 쥔 채 새로 누르면 달리기를 이어 간다
+    else if (!padDown()) { pad.run = false; }         // 다른 단추를 쥔 채 새로 누르면 달리기를 이어 간다
     pad.last[dir] = t;
-    pad.down++;
+    pad.ids[id === undefined ? dir : id] = 1;
     return pad.run;
   }
-  function padUp() { pad.down = Math.max(0, pad.down - 1); if (!pad.down) { pad.run = false; } }
+  function padUp(id) { if (id === undefined) { pad.ids = {}; } else { delete pad.ids[id]; } if (!padDown()) { pad.run = false; } }
   function bindPad() {
     if (pad.bound || !global.document) { return; }
     var el = document.getElementById('gpad');
@@ -107,10 +109,10 @@
     /* capture — ui 의 단추 손잡이(apply → setStick)보다 먼저 run 을 정한다 */
     el.addEventListener('pointerdown', function (e) {
       var b = e.target && e.target.closest && e.target.closest('[data-dir]');
-      if (b) { padTap(b.getAttribute('data-dir')); }
+      if (b) { padTap(b.getAttribute('data-dir'), undefined, e.pointerId); }
     }, true);
-    ['pointerup', 'pointercancel'].forEach(function (k) {
-      el.addEventListener(k, function (e) { if (e.target && e.target.closest && e.target.closest('[data-dir]')) { padUp(); } }, true);
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (k) {   // ui 의 단추도 pointerleave 에 놓는다 — 같은 신호로 맞춘다
+      el.addEventListener(k, function (e) { if (e.target && e.target.closest && e.target.closest('[data-dir]')) { padUp(e.pointerId); } }, true);
     });
   }
 
@@ -135,6 +137,8 @@
     var max = FOLLOW_RATE * dt;
     return Math.max(-max, Math.min(max, d));
   }
+  /** 카메라 기준이 아닌 걸음인가 — 누른 자리로 걷기·자동 걷기·GPS. 키·스틱은 카메라 기준이라 따라 돌면 옆걸음이 제자리를 빙빙 돈다(R-5) */
+  function selfDriven() { var w = W(); return w.mode !== 'keyboard' || !!(w.walkingTo && w.walkingTo()); }
   function camTick(dt) {
     var W3 = global.DG.world3d, p = pos();
     cam.t += dt;
@@ -144,7 +148,7 @@
     cam.yaw = y;
     var last = cam.last;
     cam.last = { x: p.x, y: p.y };
-    if (!last || !followOn() || cam.t - cam.dragAt < FOLLOW_IDLE) { return 0; }
+    if (!last || !followOn() || cam.t - cam.dragAt < FOLLOW_IDLE || !selfDriven()) { return 0; }
     var D = global.DG;
     if ((W().inputBlocked && W().inputBlocked()) || (D.rogueAction && D.rogueAction.active) || (W3.inBattle && W3.inBattle())) { return 0; }
     var mx = p.x - last.x, my = p.y - last.y, l = Math.hypot(mx, my);
@@ -210,6 +214,6 @@
     pending: function () { return pend; },
     /** 진단 전용 — 쏘는 길을 바꿔 끼운다(창을 실제로 안 열고 무엇을 열려 했는지만 본다). 인자 없으면 되돌린다 */
     _setEmit: function (fn) { emit = fn || function (ev, it) { C().emit(ev, it); }; },
-    _resetForTest: function () { pend = null; pad.run = false; pad.last = {}; pad.down = 0; cam.dragAt = -1e9; cam.yaw = null; cam.last = null; cam.t = 0; }
+    _resetForTest: function () { pend = null; pad.run = false; pad.last = {}; pad.ids = {}; cam.dragAt = -1e9; cam.yaw = null; cam.last = null; cam.t = 0; }
   };
 })(window);

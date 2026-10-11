@@ -172,7 +172,9 @@
     if (prog) { html += '<small class="muted">' + prog + '</small>'; }
     var v = inlineEvent();
     if (v) { html += eventHtml(v); }
-    html += '<button class="btn primary wide" data-act="close-enc" data-rkh-ok' + (v ? ' disabled' : '') + '>' + (v ? '고르면 닫힙니다' : '확인') + '</button>';
+    /* 고를 수 있는 것이 하나도 없으면(금이 모자라는 등) 잠그지 않는다 — 그대로 닫으면 사연은 세이브에 남아 다음에 다시 뜬다(R-5) */
+    var lock = !!(v && v.choices.some(function (c) { return c.ok; }));
+    html += '<button class="btn primary wide" data-act="close-enc" data-rkh-ok' + (lock ? ' disabled' : '') + '>' + (lock ? '고르면 닫힙니다' : '확인') + '</button>';
     return { html: html, withEvent: !!v };
   }
   /** 카드 안 사연 고르기 — 그 칸이 결과 글로 바뀌고 확인이 풀린다 */

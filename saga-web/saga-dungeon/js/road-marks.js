@@ -72,30 +72,42 @@
   function done() { var t = core().save.town; return (t && t.roadMarks) || {}; }
   function isDone(m, d) { return !!(d[m.id] || (m.n === 0 && d['road:' + m.seg])); }   // 옛 기록(길 하나에 한 곳)은 n=0
 
-  /* ── 매복 — 밟으면 다음 틱(ctx 가 있는 자리)에 무리를 세우고, 다 잡히면 상자 ── */
-  var ambush = [];   // { key, x, y, foes: [enemy…] | null }
-  function stepAmbush(ctx) {
-    var D = global.DG.dungeon, i;
-    for (i = ambush.length - 1; i >= 0; i--) {
-      var a = ambush[i];
-      if (!a.foes) {
-        if (!ctx || !ctx.room || !D || !D.spawnFieldRoamers) { continue; }
-        var list = ctx.room.enemies, before = list.length;
-        D.spawnFieldRoamers(1, ctx);
-        a.foes = list.slice(before, before + AMBUSH_N);
-        if (list.length > before + AMBUSH_N) { list.length = before + AMBUSH_N; }       // 한 무리 = 셋
-        a.foes.forEach(function (e) { e.ambush = a.key; });
-        if (!a.foes.length) { ambush.splice(i, 1); }                                // 들판 싸움이 꺼진 판(진단 등) — 상자 없이 끝
+  /* ── 매복 — 밟으면 그 자리에 셋이 덮치고, 셋 다 **쓰러뜨려야** 상자(R-5 리뷰 10-11) ──
+   * 진행은 세이브(`save.town.roadAmbush[key] = { x, y }`)에 둔다 — 마크는 밟는 순간 done 이라, 기억을 모듈에만 두면
+   * 새로고침·방 다시 짓기에 상자를 영영 잃었다. 무리는 방(room.enemies)에 사는 객체라 방이 갈리면 사라진다 —
+   * 그때는 잡은 것으로 치지 않고 다시 500 안에 들면 다시 세운다(예전엔 "목록에 없음"을 처치로 쳐 공짜 상자) */
+  var ambush = {};   // key → [enemy…] — 지금 방에 세운 무리(세이브 아님)
+  function pending() { var t = core().save.town; return (t && t.roadAmbush) || {}; }
+  function spawnAmbush(key, a, ctx) {
+    var D = global.DG.dungeon, list = [], k;
+    if (!D || !D._spawnEnemy || !ctx || !ctx.room) { return list; }
+    for (k = 0; k < AMBUSH_N; k++) {
+      var e = D._spawnEnemy(ctx.floor || 0, false, { x: a.x + (k - 1) * 46, y: a.y + (k % 2 ? 30 : -24) });
+      e.field = true; e.ambush = key;
+      ctx.room.enemies.push(e); list.push(e);
+    }
+    return list;
+  }
+  function stepAmbush(ctx, player) {
+    var P = pending(), key;
+    for (key in P) {
+      if (!Object.prototype.hasOwnProperty.call(P, key)) { continue; }
+      var a = P[key], foes = ambush[key];
+      var gone = !foes || !foes.length || !ctx || !ctx.room || foes.some(function (e) { return e.hp > 0 && ctx.room.enemies.indexOf(e) < 0; });
+      if (gone) {                                                       // 아직 안 세웠거나 방이 갈려 사라졌다 — 곁에 오면 다시
+        delete ambush[key];
+        if (player && Math.hypot(player.x - a.x, player.y - a.y) < ACTIVE_R) { ambush[key] = spawnAmbush(key, a, ctx); }
         continue;
       }
-      var left = a.foes.filter(function (e) { return e.hp > 0 && ctx && ctx.room && ctx.room.enemies.indexOf(e) >= 0; }).length;
-      if (left) { continue; }
-      ambush.splice(i, 1);
+      if (foes.some(function (e) { return e.hp > 0; })) { continue; }
+      delete ambush[key];
+      delete core().save.town.roadAmbush[key];
       core().save.player.gold += BOX_GOLD;
       core().gainFeat(BOX_FEAT, '길목 매복');
       core().log('📦 매복을 걷어 냈다 — 상자 · 금 +' + BOX_GOLD, 'good');
       core().emit('toast', '📦 매복을 걷어 냈다 · 🪙 +' + BOX_GOLD);
       core().emit('changed');
+      core().persist();
     }
   }
 
@@ -112,7 +124,7 @@
         room.marks.push({ key: rm.id, roadMark: true, kindKey: rm.kind.key, name: rm.kind.name, emoji: rm.kind.emoji, verb: rm.kind.verb, x: rm.x, y: rm.y });
       }
     }
-    if (ambush.length) { stepAmbush(ctx); }
+    stepAmbush(ctx, player);
   }
 
   /** 밟았다 — `js/ui.js` 가 town:mark(roadMark)에서 town.rewardRoadMark → 여기 */
@@ -130,7 +142,8 @@
       tail = got && got.ok ? '🍶 회복단 +1' : '물약 띠가 가득';
       C.gainFeat(FEAT, mark.name);
     } else if (k === 'roadAmbush') {
-      ambush.push({ key: mark.key, x: mark.x, y: mark.y, foes: null });
+      C.save.town.roadAmbush = C.save.town.roadAmbush || {};
+      C.save.town.roadAmbush[mark.key] = { x: Math.round(mark.x), y: Math.round(mark.y) };   // 다음 틱에 곁에 세운다
       tail = '다 잡으면 상자';
     } else {
       gold = k === 'roadCache' ? CACHE_GOLD : GOLD;
@@ -148,7 +161,7 @@
   global.DG.roadMarks = {
     KINDS: KINDS, STEP: STEP, SAFE_R: SAFE_R, GOLD: GOLD, CACHE_GOLD: CACHE_GOLD, BOX_GOLD: BOX_GOLD,
     build: build, coverage: coverage, all: all, isDone: isDone, tick: tick, reward: reward,
-    ambushes: function () { return ambush.slice(); },
-    _reset: function () { MARKS = null; ambush = []; }
+    ambushes: function () { return pending(); }, _stepAmbush: stepAmbush,
+    _reset: function () { MARKS = null; ambush = {}; }
   };
 })(window);

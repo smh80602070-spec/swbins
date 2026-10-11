@@ -4137,6 +4137,18 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
           ('실패 ' + [h.withEvent, locked, picks, after].join(','));
       } finally { rkhClear(); evDone(); }
     });
+    t('rk.hand ⑤ 달말 카드 — 고를 수 있는 것이 하나도 없으면(금 부족 등) 확인을 잠그지 않는다(R-5, 안 그러면 판이 멈춘다)', function () {
+      var H = DG.rtkHand, keep = E.view;
+      try {
+        E.view = function () { return { id: 'x', name: '시험 사연', emoji: '📜', text: '글', choices: [{ k: 'atk', label: 'a', hint: '', ok: false, cost: 500 }, { k: 'def', label: 'b', hint: '', ok: false }] }; };
+        var rp = { year: 200, month: 1, lines: ['한 줄'], gold: { from: 1, to: 1 }, food: { from: 1, to: 1 }, troops: { from: 1, to: 1 }, cities: { from: 1, to: 1 }, next: '' };
+        var none = H.monthHtml(rp).html;
+        E.view = function () { return { id: 'x', name: '시험 사연', emoji: '📜', text: '글', choices: [{ k: 'atk', label: 'a', hint: '', ok: true }] }; };
+        var some = H.monthHtml(rp).html;
+        var openNone = /data-rkh-ok>확인</.test(none), lockSome = /data-rkh-ok disabled/.test(some);
+        return openNone && lockSome && '고를 것 0 → 확인 열림 · 고를 것 있음 → 잠김' || ('실패 ' + [openNone, lockSome].join(','));
+      } finally { E.view = keep; }
+    });
     t('재미표준 A 목표 보임(측정) — 부팅 직후 상단 목표 두 줄(이정표·가장 가까운 승리)이 비어 있지 않다(W-0177)', function () {
       var st = evFresh();
       try {

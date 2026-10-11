@@ -6161,13 +6161,13 @@ window.DG_NO_TUNE = true;
           var g1 = H.check();
           p.x = stg.secret.x - S.P_W / 2; p.y = stg.floor - S.P_H;
           var g2 = H.check();                                   // 바닥(숨은 자리 아래)에선 안 열린다
-          p.y = stg.secret.y - S.P_H; p.onGround = true; var gold0 = run.gold;
+          p.y = stg.secret.y - S.P_H; p.onGround = true; var gold0 = C.save.player.gold;
           var g3 = H.check();
           var info = H.stageInfo(stg);
           S.leave();
           var shape = hunts.length === 9 && hunts.every(function (s) { return s.relics.length === 3 && s.secret && s.plats.some(function (pl) { return pl[1] === s.secret.y && s.secret.x >= pl[0] && s.secret.x <= pl[0] + pl[2]; }); });
-          return shape && g1.join() === 'relic0' && g2.length === 0 && g3.join() === 'secret' && info.relics === 1 && info.secret && run.gold > gold0 &&
-            ('사냥터 9 × 조각 3 · 숨은 발판 · 조각 줍기 ○ · 바닥에선 안 열림 · 발판 위 상자 금 +' + (run.gold - gold0) + ' · 지도 "' + H.mapTag(stg) + '"') ||
+          return shape && g1.join() === 'relic0' && g2.length === 0 && g3.join() === 'secret' && info.relics === 1 && info.secret && C.save.player.gold > gold0 &&
+            ('사냥터 9 × 조각 3 · 숨은 발판 · 조각 줍기 ○ · 바닥에선 안 열림 · 발판 위 상자 금 +' + (C.save.player.gold - gold0) + '(바로 지갑) · 지도 "' + H.mapTag(stg) + '"') ||
             ('실패 shape=' + shape + ' g=' + [g1, g2, g3].join('|'));
         } finally { C.save.relics = JSON.parse(keep) || undefined; }
       });

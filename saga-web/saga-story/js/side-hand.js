@@ -24,12 +24,8 @@
 
   /* ── 공격 고정 키 ─────────────────────────────────────── */
 
-  /** "공격" 자리 — side.js attackIndexOf 와 같은 셈(쿨이 가장 짧은 무예) */
-  function attackIdx() {
-    var list = S() && S().barSkills ? S().barSkills() : [], idx = -1, best = 1e9;
-    for (var i = 0; i < list.length; i++) { if (list[i].cd < best) { best = list[i].cd; idx = i; } }
-    return idx;
-  }
+  /** "공격" 자리 — side.js attackIndexOf 를 그대로(HUD 공격 단추와 같은 자리, 셈을 두 벌 두지 않는다 — R-5) */
+  function attackIdx() { var s = S(); return s && s.attackIndexOf && s.barSkills ? s.attackIndexOf(s.barSkills()) : -1; }
   var held = { attack: false };
   function attackDown() { held.attack = true; return attack(); }
   function attackUp() { held.attack = false; }
@@ -116,7 +112,8 @@
       setBit(stg.key, SECRET_BIT);
       got.push('secret');
       var g = (sc.reward && sc.reward.gold) || 0;
-      run.gold += g;
+      core().save.player.gold += g;          // 한 번뿐인 보상이라 바로 지갑에(run.gold 는 쓰러지면 반이 깎인다 — R-5)
+      core().emit('changed');
       core().emit('toast', '🎁 숨은 자리를 찾았다! 🪙+' + g);
       core().log('🎁 ' + stg.name + ' — 숨은 자리 · 금 +' + g, 'good');
     }
