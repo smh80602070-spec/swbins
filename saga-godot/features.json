@@ -3140,5 +3140,27 @@
   "ticket": "G-0185",
   "since": "2026-10-11",
   "note": "G-0185(10-11) 창 모드 dg_belt_room·dg_belt_corridor + SAGA_DG_CAM=diablo 비교 Claude 눈 ○"
+ },
+ {
+  "id": "gd.fs.plant_grid",
+  "name": "3마을 스타듀 읽힘새 — 꽃을 들면 발밑 3m 심을 칸(초록/붉음) · 심은 꽃 둘레 5×5 옅은 격자(구면 곡률 따라 휨, 한 메시)",
+  "files": [
+   "games/saga_forest/world/plant_grid_overlay.gd",
+   "games/saga_forest/world/forest_planting.gd",
+   "tools/probe_forest_plant_grid.gd",
+   "tools/shot_forest_grid.gd",
+   "tools/shot_scene.gd"
+  ],
+  "tests": [
+   "forest_plant_grid",
+   "forest_world",
+   "forest_rules"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0186",
+  "since": "2026-10-11",
+  "note": "G-0186(10-11) 창 모드 fs_plant_grid Claude 눈 ○: 휜 땅 위 격자·발밑 초록 칸"
  }
 ]

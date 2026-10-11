@@ -35,6 +35,7 @@ const CUTS := [
 		["call", "House", "_spawn_furniture_visual", [{"key": "dokja", "x": -2.0, "z": 0.6}]], ["call", "House", "_spawn_furniture_visual", [{"key": "deungjan", "x": 0.2, "z": 2.2}]]]],
 	["fs_finish_menu", FOREST, [["touch", "House", "_on_enter_house"], ["call", "House", "_open_finish_menu"]]],
 	["fs_place_menu", FOREST, [["touch", "House", "_on_enter_house"], ["call", "House", "_open_place_menu"]]],
+	["fs_plant_grid", FOREST, [["static", "res://tools/shot_forest_grid.gd", "stage", ["@tree"]]]],   # G-0186 꽃 든 채 발밑 심을 칸·심은 꽃 셋 둘레 격자(메모리에서만)
 	["fs_fishing", FOREST, [["near", "Fishing", 0.0, 5.0]]],
 	## G-0047 — 집 안: 벽지 한지·장판 마루로 놓고 가구 여섯(컷 동안만, 세이브 안 건드림)
 	["fs_room", FOREST, [["set", "/root/ForestSaveState", "wall_key", "hanji"], ["set", "/root/ForestSaveState", "floor_key", "wood"], ["touch", "House", "_on_enter_house"],

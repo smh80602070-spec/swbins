@@ -48,6 +48,17 @@ var _in_range: Dictionary = {}   # index(int) -> bool
 func _ready() -> void:
 	for i in ForestSaveState.planted.size():
 		_spawn_visual(i)
+	add_child(load("res://games/saga_forest/world/plant_grid_overlay.gd").new())   # G-0186 발밑 심을 칸·심은 꽃 둘레 격자
+
+
+## G-0186 — 심기와 칸 표시가 같은 식을 쓰게 뽑았다(규칙은 그대로: 자리 = 발 위치, 칸 = 3m 격자, 풀밭 '.' 만).
+static func cell_of(pos: Vector3) -> Vector2i:
+	var grid := ForestMap.size()
+	return Vector2i(int(floor(pos.x / ForestMap.TILE_SIZE + grid.x * 0.5)), int(floor(pos.z / ForestMap.TILE_SIZE + grid.y * 0.5)))
+
+
+static func can_plant_at(cell: Vector2i) -> bool:
+	return ForestMap.tile_at(cell.x, cell.y) == "."
 
 
 func _process(_delta: float) -> void:
@@ -67,10 +78,7 @@ func _try_plant() -> void:
 		return
 	var pos: Vector3 = (player as Node3D).global_position
 
-	var grid := ForestMap.size()
-	var gx := int(floor(pos.x / ForestMap.TILE_SIZE + grid.x * 0.5))
-	var gy := int(floor(pos.z / ForestMap.TILE_SIZE + grid.y * 0.5))
-	if ForestMap.tile_at(gx, gy) != ".":
+	if not can_plant_at(cell_of(pos)):
 		Toast.show(self, "풀밭에만 심을 수 있다.", 2.0)
 		return
 
