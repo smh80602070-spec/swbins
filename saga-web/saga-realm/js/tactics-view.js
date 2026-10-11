@@ -109,6 +109,17 @@
     return '<rect x="' + fx + '" y="' + fy + '" width="' + w + '" height="4" rx="2" fill="#0009"/>' +
       '<rect x="' + fx + '" y="' + fy + '" width="' + (w * f) + '" height="4" rx="2" fill="' + (f > 0.5 ? '#5bd16a' : (f > 0.25 ? '#e3c33f' : '#e2553f')) + '"/>';
   }
+  /** W-0168 엑스컴식 엄폐 표식 — 반 방패(숲 30)·온 방패(성벽 50). 칸 오른쪽 위 구석, 숫자는 깎이는 명중 %p. 손잡이 realm.coverMark 0 = 없음 */
+  function coverOn() { var C = global.DG.core; return !(C && C.tuned && !C.tuned('realm.coverMark', 1)); }
+  function coverSvg(cov, p, foe) {
+    if (!cov || !coverOn()) { return ''; }
+    var x = p.c * CELL + CELL - 13, y = p.r * CELL + 11, col = foe ? '#ff9a7a' : '#9fe3ff', full = cov >= 50;
+    var d = 'M' + x + ',' + (y - 8) + ' l7,3 l-1,7 q-6,6 -12,0 l-1,-7 z';
+    return '<path d="' + d + '" fill="' + (full ? col : '#0008') + '" stroke="' + col + '" stroke-width="1.6" pointer-events="none"/>' +
+      (full ? '' : '<path d="M' + x + ',' + (y - 8) + ' l7,3 l-1,7 q-3,3 -6,3 z" fill="' + col + '" pointer-events="none"/>') +
+      '<text x="' + x + '" y="' + (y + 13) + '" text-anchor="middle" font-size="8" fill="' + col + '" pointer-events="none">−' + cov + '</text>';
+  }
+
   function hitSvg(hit, p, cx) {
     if (hit == null) { return ''; }
     return '<rect x="' + (cx - 19) + '" y="' + (p.r * CELL + 1) + '" width="38" height="15" rx="4" fill="#000c"/>' +
@@ -143,11 +154,12 @@
         if (mv[x + ',' + y]) {
           s += '<rect x="' + (p.c * CELL + 3) + '" y="' + (p.r * CELL + 3) + '" width="' + (CELL - 6) + '" height="' + (CELL - 6) +
             '" rx="5" fill="#7fd0ff44" stroke="#7fd0ff" stroke-width="2" pointer-events="none"/>';
+          s += coverSvg(T().coverAt(b, x, y), p, false);   // W-0168 갈 칸의 엄폐
         }
       }
     }
     b.units.filter(function (u) { return u.hp > 0; }).sort(function (a, c) { return scr(v, a.x, a.y).r - scr(v, c.x, c.y).r; })   // 위 줄부터 — 앞 줄 몸이 뒤 줄을 가린다
-      .forEach(function (u) { s += unitSvg(v, u, rc.hits[u.uid]); });
+      .forEach(function (u) { s += unitSvg(v, u, rc.hits[u.uid]); if (rc.hits[u.uid] != null) { s += coverSvg(T().coverAt(b, u.x, u.y), scr(v, u.x, u.y), true); } });   // W-0168 노릴 적의 엄폐
     return '<svg class="tv-svg" viewBox="0 0 ' + W + ' ' + H + '" style="width:min(100%,' + (W * 1.2) + 'px);aspect-ratio:' + W + '/' + H + '">' + (art() ? defsSvg() : '') + s + '</svg>';
   }
 
@@ -347,6 +359,7 @@
   global.DG = global.DG || {};
   global.DG.tacticsView = {
     open: open, tap: tap, endTurn: endTurn, auto: auto, quit: quit, go: go, annalsHtml: annalsHtml,
+    _coverSvg: coverSvg,   // W-0168 진단
     cur: function () { return cur; }, scr: scr, brd: brd, bodyOf: bodyOf, tileHref: tileHref
   };
 })(window);

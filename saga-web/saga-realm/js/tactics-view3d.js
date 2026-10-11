@@ -132,6 +132,24 @@
     var cn = new t.Mesh(new t.ConeGeometry(0.28 * s, 0.75 * s, 7), treeMat); cn.position.set(x, h + 0.25 * s + 0.37 * s, z); boardGrp.add(cn);
   }
 
+  /** W-0168 엄폐 방패(반 30·온 50) — 칸 위에 뜨는 표지판. 갈 칸은 하늘빛, 노릴 적은 붉은빛. 손잡이 realm.coverMark 0 = 없음 */
+  var shieldTex = {};
+  function shieldSprite(cov, foe) {
+    var t = three(), key = cov + (foe ? 'f' : 'm');
+    if (!shieldTex[key]) {
+      var c = global.document.createElement('canvas'); c.width = 64; c.height = 64;
+      var g = c.getContext('2d'), col = foe ? '#ff9a7a' : '#9fe3ff', full = cov >= 50;
+      g.beginPath(); g.moveTo(32, 6); g.lineTo(54, 15); g.lineTo(51, 36); g.quadraticCurveTo(32, 60, 13, 36); g.lineTo(10, 15); g.closePath();
+      g.fillStyle = full ? col : 'rgba(0,0,0,0.55)'; g.fill(); g.lineWidth = 5; g.strokeStyle = col; g.stroke();
+      if (!full) { g.beginPath(); g.moveTo(32, 6); g.lineTo(54, 15); g.lineTo(51, 36); g.quadraticCurveTo(42, 49, 32, 52); g.closePath(); g.fillStyle = col; g.fill(); }
+      shieldTex[key] = new t.CanvasTexture(c);
+    }
+    var sp = new t.Sprite(new t.SpriteMaterial({ map: shieldTex[key], depthTest: false, transparent: true }));
+    sp.scale.set(0.42, 0.42, 1); sp.renderOrder = 11;
+    return sp;
+  }
+  function coverOn() { var C = global.DG.core; return !(C && C.tuned && !C.tuned('realm.coverMark', 1)); }
+
   /** 고른 장수의 갈 칸·고른 칸 고리 — render 마다 */
   var hiMat = null, selMat = null;
   function buildHighlights(v) {
@@ -144,6 +162,14 @@
       T().moves(b, u.uid).forEach(function (m) {
         var p = cellCenter(m.x, m.y, b.cols, b.rows), h = HGT[T().cellAt(b, m.x, m.y)] || 0;
         var q = new t.Mesh(new t.PlaneGeometry(0.86, 0.86), hiMat); q.rotation.x = -Math.PI / 2; q.position.set(p.x, h + 0.02, p.z); hiGrp.add(q);
+        var cv0 = T().coverAt(b, m.x, m.y); if (cv0 && coverOn()) { var sh0 = shieldSprite(cv0, false); sh0.position.set(p.x + 0.3, h + 0.35, p.z - 0.3); hiGrp.add(sh0); }   // W-0168
+      });
+    }
+    if (!u.acted && coverOn()) {   // W-0168 — 노릴 수 있는 적이 엄폐에 섰으면 그 머리 위 옆에
+      T().alive(b, 'foe').forEach(function (e) {
+        var ce = T().coverAt(b, e.x, e.y);
+        if (!ce || Math.abs(u.x - e.x) + Math.abs(u.y - e.y) > u.rng) { return; }
+        var pe = cellCenter(e.x, e.y, b.cols, b.rows), he = HGT[T().cellAt(b, e.x, e.y)] || 0, se = shieldSprite(ce, true); se.position.set(pe.x + 0.34, he + 1.15, pe.z); hiGrp.add(se);
       });
     }
     var sp = cellCenter(u.x, u.y, b.cols, b.rows), sh = HGT[T().cellAt(b, u.x, u.y)] || 0;
@@ -243,6 +269,12 @@
         A.lunge = { t0: nowS, to: D ? { x: D.grp.position.x, z: D.grp.position.z } : null };
         if (D) { A.grp.rotation.y = Math.atan2(D.grp.position.x - A.grp.position.x, D.grp.position.z - A.grp.position.z); }
         play(A, 'attack', nowS, true); A.animUntil = nowS + SWING_S + 0.2;
+        var ua = T().unit(b, q.a), C0 = global.DG.core;   // W-0168 — 공격자 어깨 너머로 잠깐 당긴다(1.1초, 2D 컷과 같은 길이). 손잡이 tactics3d.cutCam 0 = 안 함
+        if (D && ua && ua.side === 'me' && queue.length === 0 && !(C0 && C0.tuned && !C0.tuned('tactics3d.cutCam', 1))) {
+          var ax = A.grp.position.x, az = A.grp.position.z, ddx = D.grp.position.x - ax, ddz = D.grp.position.z - az, dl = Math.hypot(ddx, ddz) || 1;
+          ddx /= dl; ddz /= dl;
+          view.cutCam = { until: nowS + 1.1, pos: { x: ax - ddx * 1.7 - ddz * 0.7, y: 1.7, z: az - ddz * 1.7 + ddx * 0.7 }, look: { x: ax + ddx * dl * 0.6, y: 0, z: az + ddz * dl * 0.6 } };
+        }
       }
       if (D && q.hit) {
         D.shake = 0.35;
@@ -296,7 +328,7 @@
     if (!view || !cv || !cv.isConnected) { loopOn = false; return; }
     var nowS = (global.performance ? global.performance.now() : Date.now()) / 1000;
     frame(nowS);
-    var cw = view.camWant;
+    var cw = (view.cutCam && nowS < view.cutCam.until) ? view.cutCam : view.camWant;   // W-0168 공격 컷이면 그쪽
     if (cw) {
       var cp = cam.position;
       cp.x += (cw.pos.x - cp.x) * 0.15; cp.y += (cw.pos.y - cp.y) * 0.15; cp.z += (cw.pos.z - cp.z) * 0.15;
@@ -362,7 +394,7 @@
 
   global.DG = global.DG || {};
   global.DG.tacticsView3d = {
-    want: want, cellCenter: cellCenter, cellOf: cellOf, HGT: HGT, attach: attach,
+    want: want, cellCenter: cellCenter, cellOf: cellOf, HGT: HGT, attach: attach, _cutCam: function () { return view && view.cutCam ? view.cutCam : null; },   // W-0168 진단
     _actor: function (uid) { var a = actors[uid]; return a ? { x: a.grp.position.x, z: a.grp.position.z, path: a.path.length, anim: a.anim, body: !!a.model, gone: a.gone } : null; },   // 진단·점검
     stats: function () { return { why: why, on: !!R, actors: Object.keys(actors).length, bodies: Object.keys(actors).filter(function (k) { return !!actors[k].model; }).length, queue: queue.length, loop: loopOn }; }
   };

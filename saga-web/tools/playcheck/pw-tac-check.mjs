@@ -1,5 +1,5 @@
-// 사가천하 전술판(W-0134) 확인 — PC·폰 세로·가로에서 화면이 쓰는 tacticsView.open 으로 판을 열고(내 장수 셋 · 적 장수 둘 + 부대) 판·공격 컷을 찍는다.
-//   node pw-tac-check.mjs [태그]   → shots/tac/<태그>-<화면>-{board,cut}.png (서버는 스스로 빈 포트에)
+// 사가천하 전술판(W-0134) 확인 — PC·폰 세로·가로에서 화면이 쓰는 tacticsView.open 으로 판을 열고(내 장수 셋 · 적 장수 둘 + 부대) 판·고른 상태(엄폐 방패, W-0168)·공격 컷을 찍는다.
+//   node pw-tac-check.mjs [태그]   → shots/tac/<태그>-<화면>-{board,sel,cut}.png (서버는 스스로 빈 포트에)
 import net from 'node:net'; import path from 'node:path'; import fs from 'node:fs'; import { spawn } from 'node:child_process'; import { fileURLToPath } from 'node:url';
 const HERE = path.dirname(fileURLToPath(import.meta.url)), OUT = path.join(HERE, 'shots', 'tac'); fs.mkdirSync(OUT, { recursive: true });
 const port = await new Promise((res) => { const s = net.createServer(); s.listen(0, '127.0.0.1', () => { const p = s.address().port; s.close(() => res(p)); }); });
@@ -26,6 +26,8 @@ for (const V of [{ k: 'pc', w: 1280, h: 720 }, { k: 'phone', w: 390, h: 844, mob
     });
     await sleep(2500);
     await r.page.screenshot({ path: path.join(OUT, `${tag}-${V.k}-board.png`) });
+    await ev(() => { const v = DG.tacticsView.cur(), T = DG.tactics, m = T.alive(v.b, 'me'); const u = m[1] || m[0]; DG.tacticsView.tap(u.x, u.y); }); await sleep(1500);   // W-0168 — 고른 상태(갈 칸·엄폐 방패)
+    await r.page.screenshot({ path: path.join(OUT, `${tag}-${V.k}-sel.png`) });
     const cut = await ev(() => {
       const v = DG.tacticsView.cur(), T = DG.tactics, b = v.b, u = T.alive(b, 'me')[0], f = T.alive(b, 'foe')[0];
       if (!u || !f) { return 'no units'; }

@@ -6362,6 +6362,12 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return art === 'assets/store/realm_key' && (!st || (st.textContent.indexOf(art + '_h.webp') > 0 && st.textContent.indexOf(art + '_v.webp') > 0)) && ('realm 키 아트 가로·세로');
     });
 
+    t('rk.tactics: 엄폐 방패(W-0168) — 평지 0 은 표식 없음·숲 30 은 반 방패(두 겹)·성벽 50 은 온 방패, 숫자 −30·−50, 손잡이 realm.coverMark 0 이면 없음', function () {
+      var TV = DG.tacticsView, C = DG.core, p = { c: 1, r: 1 }, z = TV._coverSvg(0, p, false), h = TV._coverSvg(30, p, false), f = TV._coverSvg(50, p, true), off;
+      C.setTune('realm.coverMark', 0); off = TV._coverSvg(50, p, true); C.setTune('realm.coverMark', null);
+      var r = [z === '', (h.match(/<path/g) || []).length === 2 && h.indexOf('−30') > 0, (f.match(/<path/g) || []).length === 1 && f.indexOf('−50') > 0 && f.indexOf('#ff9a7a') > 0, off === '', DG.tactics.COVER.forest === 30 && DG.tactics.COVER.wall === 50];
+      return r.every(Boolean) && '숲 반 방패 −30 · 성벽 온 방패 −50 · 평지 없음' || '실패 ' + r.join(',');
+    });
     t('rk.tactics: 전술판 그림(W-0134) — 지형 타일 무늬·유닛 몸(부대는 진영 보병·궁병, 장수는 몸)·이모지 없음', function () {
       var V = DG.tacticsView, r;
       var inf = V.bodyOf({ kind: 'troop', side: 'me', rng: 1 }), arcF = V.bodyOf({ kind: 'troop', side: 'foe', rng: 2 }), off = V.bodyOf({ kind: 'officer', side: 'me', id: 'zz_none', rng: 1 });
