@@ -12,6 +12,11 @@
   `--check` 가 첫 299 줄 지문 K24_MD5 를 본다). 새 줄 — 성별 = 초상과 같은 해시(K-0027 make_late_i2i_batch 'k27g:'),
   몸 = 그 풀에서 가장 덜 쓰인 것, 옷 = 인물 씨앗, 무늬 = `saga-assets/patterns` 64종을 차례로 한 칸(원피스면 cloth, 아니면 top)에.
   새 샘플 a2·a3·a6~a10(VRoid 이용 조건 허용판, 여자 몸) — a7·a8·a10 은 상의 조각 하나가 드레스 전체라 원피스(cloth)로 다룬다.
+- K-0097 색·모양 고침 칸(지문에서 뺀다 — 몸·옷 조합은 그대로):
+  `tint: [{slot, match, color}, …]` = 살색 옷 조각(skin_cloth_scan.py + 무광 렌더 눈 판정: 샘플 L 윗옷 CLOTH_02 · L 바지 001_02)을 입고
+  그 칸 무늬가 없는 사람만, 살색과 먼 팔레트 8 에서 md5('k97t:'+id+칸) 로 — 같은 몸·같은 윗옷·같은 바지끼리 같은 칸 색이 안 겹치고 위아래 색도 다르게.
+  outfit_swap.py 가 그 조각만 단색 합성(명암 유지).
+  `tuck: "bottom"` = data/k97_tuck_ids.json(tuck_scan.py 쉼 자세에서 바지가 윗옷 밖으로 나온 사람) 중 윗옷이 TUCK_TOPS — 윗옷을 바지·피부 위로 밀어낸다(tuck.cover).
 """
 import json, os, sys, random, hashlib
 
@@ -24,6 +29,10 @@ OUT = os.path.join(HERE, 'data', 'outfit_swap_plan.json')
 TRAITS = os.path.join(HERE, 'data', 'hero_traits.json')
 PATTERNS = os.path.join(HERE, '..', '..', 'saga-assets', 'patterns')
 K24_N, K24_MD5 = 299, '2a12b23badc00813c0b67207d293075e'     # K-0024 299명 조합표 지문(이미 구운 몸 — 바뀌면 안 된다)
+SKIN_PART = {('top', 'l'): 'CLOTH_02', ('bottom', 'l'): '001_02'}   # K-0097 살색 조각(칸·샘플 → 조각 파일 이름에 든 글자)
+TINT = ['#26365c', '#2f5d3a', '#3a3a3e', '#5e2f5a', '#1f6b6b', '#b08a1e', '#55677a', '#6b3a26']   # 남색·짙은 초록·숯·자주·청록·겨자·회청·밤색
+TUCK_IDS = os.path.join(HERE, 'data', 'k97_tuck_ids.json')   # K-0097 단계 1b 결과(tuck_scan.py 쉼 자세 뚫림 > 0)
+TUCK_TOPS = {'x', 'w', 'g'}           # 긴 윗옷 아래 바지 — s·a6·a·k 는 치마·스타킹이 아랫단과 겹치는 것이라 밀어내기로 안 나아짐(10-11 렌더)
 
 
 def h8(s):
@@ -31,7 +40,36 @@ def h8(s):
 
 
 def fingerprint(rows):
+    """몸·옷 조합 지문 — K-0097 고침 칸(tint·tuck)은 뺀다."""
+    rows = [{k: v for k, v in r.items() if k not in ('tint', 'tuck')} for r in rows]
     return hashlib.md5(json.dumps(rows, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+
+
+def apply_k97(rows):
+    """살색 윗옷 → tint · 긴 윗옷 아래 바지 → tuck. 이미 있는 칸은 그대로(다시 돌려도 같다). 새로 단 id 목록."""
+    added = []
+    tuck_ids = set(json.load(open(TUCK_IDS, encoding='utf-8'))['ids']) if os.path.exists(TUCK_IDS) else set()
+    key = lambda r, slot, c: (r['body'], r['kit'].get('top'), r['kit'].get('bottom'), slot, c)
+    taken = {key(r, t['slot'], t['color']) for r in rows for t in r.get('tint', [])}
+    for r in rows:
+        top = r['kit'].get('top')
+        pt = r.get('pattern')
+        for (slot, src), match in sorted(SKIN_PART.items()):
+            if r['kit'].get(slot) != src or (pt and pt['slot'] == slot) or any(t['slot'] == slot for t in r.get('tint', [])):
+                continue
+            mine = {t['color'] for t in r.get('tint', [])}
+            k = h8('k97t:' + r['id'] + ('' if slot == 'top' else ':' + slot)) % len(TINT)
+            for j in range(len(TINT)):
+                c = TINT[(k + j) % len(TINT)]
+                if key(r, slot, c) not in taken and c not in mine:
+                    break
+            r.setdefault('tint', []).append({'slot': slot, 'match': match, 'color': c})
+            taken.add(key(r, slot, c))
+            added.append(r['id'])
+        if r['id'] in tuck_ids and top in TUCK_TOPS and r.get('tuck') != 'bottom':
+            r['tuck'] = 'bottom'
+            added.append(r['id'])
+    return sorted(set(added))
 
 
 def patterns():
@@ -170,6 +208,14 @@ def check(rows, parts):
         pt = r.get('pattern')
         if pt and (pt['slot'] not in r['kit'] or not os.path.exists(os.path.join(PATTERNS, pt['name'] + '.webp'))):
             errs.append('무늬 %s: %s' % (r['id'], pt))
+        for tn in r.get('tint', []):
+            if tn.get('slot') not in r['kit'] or tn.get('color') not in TINT or (pt and pt['slot'] == tn['slot']):
+                errs.append('tint %s: %s' % (r['id'], tn))
+        if r.get('tuck') not in (None, 'bottom'):
+            errs.append('tuck %s: %s' % (r['id'], r.get('tuck')))
+    tc = [(r['body'], r['kit'].get('top'), r['kit'].get('bottom'), t['slot'], t['color']) for r in rows for t in r.get('tint', [])]
+    if len(tc) != len(set(tc)):
+        errs.append('tint 색 겹침(같은 몸·같은 윗옷·같은 바지)')
     if len(rows) >= K24_N and fingerprint(rows[:K24_N]) != K24_MD5:
         errs.append('K-0024 299명 조합이 바뀜(지문 다름) — 이미 구운 몸과 어긋난다')
     return errs
@@ -181,6 +227,9 @@ if __name__ == '__main__':
         rows = json.load(open(OUT, encoding='utf-8'))['entries']
         print('검사 대상:', os.path.relpath(OUT))
     changed = apply_traits(rows, parts)
+    k97 = apply_k97(rows) if '--check' not in sys.argv else []
+    if k97:
+        print('K-0097 tint·tuck 단 인물', len(k97), ':', ','.join(k97))
     if changed:
         print('성별 표로 바뀐 인물', len(changed), ':', ','.join(changed))
         print('  → 처음 바뀐 때(이미 다시 구웠으면 무시) 굽기 산출은 옛 몸이다: _out/vroid/<id>/<id>.glb·anims_k29.ok·web/·_out/sprites/<id>·_out/sprites8/<id> 를 지우고 '

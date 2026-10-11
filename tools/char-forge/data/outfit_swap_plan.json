@@ -9,7 +9,14 @@
     "top": "l",
     "bottom": "z",
     "shoes": "r"
-   }
+   },
+   "tint": [
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#b08a1e"
+    }
+   ]
   },
   {
    "id": "sg_zhangfei",
@@ -29,7 +36,14 @@
     "top": "z",
     "bottom": "l",
     "shoes": "v"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#3a3a3e"
+    }
+   ]
   },
   {
    "id": "sg_zhugeliang",
@@ -39,7 +53,15 @@
     "top": "x",
     "bottom": "l",
     "shoes": "p"
-   }
+   },
+   "tuck": "bottom",
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#55677a"
+    }
+   ]
   },
   {
    "id": "sg_liubei",
@@ -59,7 +81,14 @@
     "top": "c",
     "bottom": "l",
     "shoes": "x"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#26365c"
+    }
+   ]
   },
   {
    "id": "sg_huangzhong",
@@ -69,7 +98,14 @@
     "top": "z",
     "bottom": "l",
     "shoes": "r"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#b08a1e"
+    }
+   ]
   },
   {
    "id": "sg_caocao",
@@ -79,7 +115,8 @@
     "top": "g",
     "bottom": "c",
     "shoes": "c"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "sg_simayi",
@@ -89,7 +126,8 @@
     "top": "g",
     "bottom": "r",
     "shoes": "l"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "sg_xiahoudun",
@@ -139,7 +177,14 @@
     "top": "l",
     "bottom": "r",
     "shoes": "x"
-   }
+   },
+   "tint": [
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#5e2f5a"
+    }
+   ]
   },
   {
    "id": "sg_luxun",
@@ -208,7 +253,14 @@
     "top": "z",
     "bottom": "l",
     "shoes": "v"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#5e2f5a"
+    }
+   ]
   },
   {
    "id": "sg_menghuo",
@@ -238,7 +290,8 @@
     "top": "x",
     "bottom": "p",
     "shoes": "n"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "kr_ganggamchan",
@@ -248,7 +301,14 @@
     "top": "l",
     "bottom": "z",
     "shoes": "x"
-   }
+   },
+   "tint": [
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#5e2f5a"
+    }
+   ]
   },
   {
    "id": "kr_kimyusin",
@@ -278,7 +338,8 @@
     "top": "g",
     "bottom": "r",
     "shoes": "c"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "kr_gwanggaeto",
@@ -288,7 +349,14 @@
     "top": "z",
     "bottom": "l",
     "shoes": "l"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#b08a1e"
+    }
+   ]
   },
   {
    "id": "kr_sejong",
@@ -298,7 +366,8 @@
     "top": "x",
     "bottom": "r",
     "shoes": "g"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "kr_jangyeongsil",
@@ -308,7 +377,15 @@
     "top": "x",
     "bottom": "l",
     "shoes": "p"
-   }
+   },
+   "tuck": "bottom",
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#5e2f5a"
+    }
+   ]
   },
   {
    "id": "kr_choemuseon",
@@ -338,7 +415,14 @@
     "top": "r",
     "bottom": "l",
     "shoes": "r"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#26365c"
+    }
+   ]
   },
   {
    "id": "kr_jeongyakyong",
@@ -398,7 +482,14 @@
     "top": "n",
     "bottom": "l",
     "shoes": "z"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#5e2f5a"
+    }
+   ]
   },
   {
    "id": "kr_wonhyo",
@@ -418,7 +509,8 @@
     "top": "x",
     "bottom": "r",
     "shoes": "n"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "kr_gwakjaeu",
@@ -457,7 +549,8 @@
     "top": "x",
     "bottom": "z",
     "shoes": "c"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "kr_hwanghui",
@@ -477,7 +570,8 @@
     "top": "x",
     "bottom": "r",
     "shoes": "x"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "jp_himiko",
@@ -487,7 +581,8 @@
     "top": "w",
     "bottom": "b",
     "shoes": "y"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "jp_taira",
@@ -497,7 +592,14 @@
     "top": "l",
     "bottom": "z",
     "shoes": "p"
-   }
+   },
+   "tint": [
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#6b3a26"
+    }
+   ]
   },
   {
    "id": "jp_yoritomo",
@@ -507,7 +609,14 @@
     "top": "r",
     "bottom": "l",
     "shoes": "v"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#26365c"
+    }
+   ]
   },
   {
    "id": "jp_yoshitsune",
@@ -517,7 +626,19 @@
     "top": "l",
     "bottom": "l",
     "shoes": "x"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#2f5d3a"
+    },
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#b08a1e"
+    }
+   ]
   },
   {
    "id": "jp_murasaki",
@@ -584,7 +705,8 @@
     "top": "x",
     "bottom": "c",
     "shoes": "z"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "jp_kenshin",
@@ -654,7 +776,8 @@
     "top": "g",
     "bottom": "c",
     "shoes": "l"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "jp_saigo",
@@ -684,7 +807,14 @@
     "top": "g",
     "bottom": "l",
     "shoes": "v"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#3a3a3e"
+    }
+   ]
   },
   {
    "id": "eu_alexander",
@@ -714,7 +844,14 @@
     "top": "l",
     "bottom": "p",
     "shoes": "c"
-   }
+   },
+   "tint": [
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#2f5d3a"
+    }
+   ]
   },
   {
    "id": "eu_joan",
@@ -744,7 +881,8 @@
     "top": "g",
     "bottom": "r",
     "shoes": "c"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "eu_augustus",
@@ -764,7 +902,14 @@
     "top": "g",
     "bottom": "l",
     "shoes": "p"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#2f5d3a"
+    }
+   ]
   },
   {
    "id": "eu_leonidas",
@@ -774,7 +919,14 @@
     "top": "l",
     "bottom": "p",
     "shoes": "n"
-   }
+   },
+   "tint": [
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#26365c"
+    }
+   ]
   },
   {
    "id": "eu_aurelius",
@@ -784,7 +936,8 @@
     "top": "x",
     "bottom": "z",
     "shoes": "c"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "eu_richard",
@@ -794,7 +947,14 @@
     "top": "n",
     "bottom": "l",
     "shoes": "p"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#55677a"
+    }
+   ]
   },
   {
    "id": "eu_william",
@@ -824,7 +984,8 @@
     "top": "g",
     "bottom": "r",
     "shoes": "l"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "eu_peter",
@@ -873,7 +1034,15 @@
     "top": "x",
     "bottom": "l",
     "shoes": "p"
-   }
+   },
+   "tuck": "bottom",
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#3a3a3e"
+    }
+   ]
   },
   {
    "id": "eu_michelangelo",
@@ -883,7 +1052,14 @@
     "top": "p",
     "bottom": "l",
     "shoes": "n"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#26365c"
+    }
+   ]
   },
   {
    "id": "eu_eleanor",
@@ -913,7 +1089,8 @@
     "top": "x",
     "bottom": "z",
     "shoes": "v"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "wd_saladin",
@@ -923,7 +1100,8 @@
     "top": "x",
     "bottom": "z",
     "shoes": "g"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "wd_suleiman",
@@ -933,7 +1111,15 @@
     "top": "x",
     "bottom": "l",
     "shoes": "v"
-   }
+   },
+   "tuck": "bottom",
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#6b3a26"
+    }
+   ]
   },
   {
    "id": "wd_ibnsina",
@@ -943,7 +1129,14 @@
     "top": "r",
     "bottom": "l",
     "shoes": "n"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#5e2f5a"
+    }
+   ]
   },
   {
    "id": "wd_genghis",
@@ -953,7 +1146,14 @@
     "top": "r",
     "bottom": "l",
     "shoes": "g"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#55677a"
+    }
+   ]
   },
   {
    "id": "wd_khubilai",
@@ -963,7 +1163,15 @@
     "top": "x",
     "bottom": "l",
     "shoes": "r"
-   }
+   },
+   "tuck": "bottom",
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#2f5d3a"
+    }
+   ]
   },
   {
    "id": "wd_mansamusa",
@@ -1013,7 +1221,8 @@
     "top": "g",
     "bottom": "r",
     "shoes": "c"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "wd_ibnbattuta",
@@ -1043,7 +1252,8 @@
     "top": "g",
     "bottom": "c",
     "shoes": "v"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "dj_doseo",
@@ -1083,7 +1293,14 @@
     "top": "c",
     "bottom": "l",
     "shoes": "r"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#5e2f5a"
+    }
+   ]
   },
   {
    "id": "dj_hopak",
@@ -1112,7 +1329,14 @@
     "top": "z",
     "bottom": "l",
     "shoes": "p"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#3a3a3e"
+    }
+   ]
   },
   {
    "id": "dj_seoncheok",
@@ -1152,7 +1376,14 @@
     "top": "c",
     "bottom": "l",
     "shoes": "x"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#5e2f5a"
+    }
+   ]
   },
   {
    "id": "fu_janhon",
@@ -1201,7 +1432,14 @@
     "top": "l",
     "bottom": "p",
     "shoes": "v"
-   }
+   },
+   "tint": [
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#55677a"
+    }
+   ]
   },
   {
    "id": "fu_yugwi",
@@ -1221,7 +1459,14 @@
     "top": "n",
     "bottom": "l",
     "shoes": "l"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#6b3a26"
+    }
+   ]
   },
   {
    "id": "jiao_banrok",
@@ -1231,7 +1476,14 @@
     "top": "l",
     "bottom": "p",
     "shoes": "v"
-   }
+   },
+   "tint": [
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#b08a1e"
+    }
+   ]
   },
   {
    "id": "jiao_botran",
@@ -1331,7 +1583,8 @@
     "top": "w",
     "bottom": "b",
     "shoes": "e"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "jp_himetsu",
@@ -1351,7 +1604,14 @@
     "top": "z",
     "bottom": "l",
     "shoes": "n"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#3a3a3e"
+    }
+   ]
   },
   {
    "id": "jp_shioji",
@@ -1361,7 +1621,8 @@
     "top": "g",
     "bottom": "c",
     "shoes": "v"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "jp_taketsumi",
@@ -1421,7 +1682,14 @@
     "top": "n",
     "bottom": "l",
     "shoes": "x"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#3a3a3e"
+    }
+   ]
   },
   {
    "id": "kr2_gokdol",
@@ -1431,7 +1699,14 @@
     "top": "p",
     "bottom": "l",
     "shoes": "c"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#55677a"
+    }
+   ]
   },
   {
    "id": "kr2_jimasol",
@@ -1441,7 +1716,14 @@
     "top": "p",
     "bottom": "l",
     "shoes": "n"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#26365c"
+    }
+   ]
   },
   {
    "id": "kr2_mokrihae",
@@ -1451,7 +1733,14 @@
     "top": "p",
     "bottom": "l",
     "shoes": "c"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#55677a"
+    }
+   ]
   },
   {
    "id": "kr2_pasodan",
@@ -1461,7 +1750,14 @@
     "top": "g",
     "bottom": "l",
     "shoes": "c"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#26365c"
+    }
+   ]
   },
   {
    "id": "kr2_seolharan",
@@ -1491,7 +1787,8 @@
     "top": "g",
     "bottom": "z",
     "shoes": "c"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "kr2_yeonuru",
@@ -1531,7 +1828,8 @@
     "top": "x",
     "bottom": "r",
     "shoes": "l"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "ly_jeonchung",
@@ -1571,7 +1869,14 @@
     "top": "l",
     "bottom": "c",
     "shoes": "n"
-   }
+   },
+   "tint": [
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#1f6b6b"
+    }
+   ]
   },
   {
    "id": "ly_sanga",
@@ -1640,7 +1945,14 @@
     "top": "r",
     "bottom": "l",
     "shoes": "g"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#6b3a26"
+    }
+   ]
   },
   {
    "id": "mb_hanpung",
@@ -1740,7 +2052,8 @@
     "top": "g",
     "bottom": "c",
     "shoes": "x"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "nh_sasin",
@@ -1760,7 +2073,8 @@
     "top": "x",
     "bottom": "c",
     "shoes": "z"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "nh_wion",
@@ -1830,7 +2144,8 @@
     "top": "x",
     "bottom": "r",
     "shoes": "z"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "nz_jeokpyo",
@@ -1897,7 +2212,19 @@
     "top": "l",
     "bottom": "l",
     "shoes": "l"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#3a3a3e"
+    },
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#5e2f5a"
+    }
+   ]
   },
   {
    "id": "rf_chengong",
@@ -1907,7 +2234,8 @@
     "top": "x",
     "bottom": "p",
     "shoes": "n"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "rf_chengpu",
@@ -1976,7 +2304,14 @@
     "top": "l",
     "bottom": "z",
     "shoes": "r"
-   }
+   },
+   "tint": [
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#26365c"
+    }
+   ]
   },
   {
    "id": "rf_guojia",
@@ -2006,7 +2341,8 @@
     "top": "x",
     "bottom": "p",
     "shoes": "x"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "rf_hansui",
@@ -2026,7 +2362,15 @@
     "top": "x",
     "bottom": "l",
     "shoes": "c"
-   }
+   },
+   "tuck": "bottom",
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#5e2f5a"
+    }
+   ]
   },
   {
    "id": "rf_huangzu",
@@ -2066,7 +2410,8 @@
     "top": "g",
     "bottom": "p",
     "shoes": "v"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "rf_jushou",
@@ -2174,7 +2519,14 @@
     "top": "l",
     "bottom": "r",
     "shoes": "l"
-   }
+   },
+   "tint": [
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#6b3a26"
+    }
+   ]
   },
   {
    "id": "rf_sunce",
@@ -2279,7 +2631,14 @@
     "top": "n",
     "bottom": "l",
     "shoes": "l"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#5e2f5a"
+    }
+   ]
   },
   {
    "id": "rf_yangsong",
@@ -2386,7 +2745,14 @@
     "top": "l",
     "bottom": "c",
     "shoes": "v"
-   }
+   },
+   "tint": [
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#b08a1e"
+    }
+   ]
   },
   {
    "id": "rf_zhoutai",
@@ -2396,7 +2762,8 @@
     "top": "x",
     "bottom": "z",
     "shoes": "r"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "ru_busaeng",
@@ -2434,7 +2801,8 @@
     "top": "g",
     "bottom": "c",
     "shoes": "r"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "ru_mangdok",
@@ -2444,7 +2812,8 @@
     "top": "w",
     "bottom": "b",
     "shoes": "h"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "ru_sanaek",
@@ -2552,7 +2921,8 @@
     "top": "x",
     "bottom": "c",
     "shoes": "r"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "sl_nakta",
@@ -2562,7 +2932,15 @@
     "top": "x",
     "bottom": "l",
     "shoes": "z"
-   }
+   },
+   "tuck": "bottom",
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#1f6b6b"
+    }
+   ]
   },
   {
    "id": "sl_wangjeong",
@@ -2600,7 +2978,8 @@
     "top": "x",
     "bottom": "r",
     "shoes": "g"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "tb_gojeon",
@@ -2610,7 +2989,8 @@
     "top": "x",
     "bottom": "r",
     "shoes": "z"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "tb_heukju",
@@ -2630,7 +3010,14 @@
     "top": "l",
     "bottom": "r",
     "shoes": "l"
-   }
+   },
+   "tint": [
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#3a3a3e"
+    }
+   ]
   },
   {
    "id": "tb_japgol",
@@ -2640,7 +3027,8 @@
     "top": "x",
     "bottom": "z",
     "shoes": "r"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "tb_jongja",
@@ -2660,7 +3048,8 @@
     "top": "g",
     "bottom": "z",
     "shoes": "z"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "tz_beonwang",
@@ -2690,7 +3079,8 @@
     "top": "g",
     "bottom": "c",
     "shoes": "c"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "tz_hangha",
@@ -2700,7 +3090,14 @@
     "top": "c",
     "bottom": "l",
     "shoes": "n"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#2f5d3a"
+    }
+   ]
   },
   {
    "id": "tz_hyanggae",
@@ -2749,7 +3146,14 @@
     "top": "l",
     "bottom": "r",
     "shoes": "n"
-   }
+   },
+   "tint": [
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#b08a1e"
+    }
+   ]
   },
   {
    "id": "xb_bonghwa",
@@ -2759,7 +3163,14 @@
     "top": "n",
     "bottom": "l",
     "shoes": "g"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#b08a1e"
+    }
+   ]
   },
   {
    "id": "xb_daein",
@@ -2798,7 +3209,8 @@
     "top": "x",
     "bottom": "c",
     "shoes": "p"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "xb_hoja",
@@ -2818,7 +3230,14 @@
     "top": "l",
     "bottom": "p",
     "shoes": "x"
-   }
+   },
+   "tint": [
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#2f5d3a"
+    }
+   ]
   },
   {
    "id": "xb_honin",
@@ -2828,7 +3247,14 @@
     "top": "g",
     "bottom": "l",
     "shoes": "x"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#1f6b6b"
+    }
+   ]
   },
   {
    "id": "xb_yong",
@@ -2867,7 +3293,14 @@
     "top": "c",
     "bottom": "l",
     "shoes": "p"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#2f5d3a"
+    }
+   ]
   },
   {
    "id": "xiyu_dansu",
@@ -2877,7 +3310,8 @@
     "top": "g",
     "bottom": "z",
     "shoes": "l"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "xiyu_gumo",
@@ -2935,7 +3369,15 @@
     "top": "x",
     "bottom": "l",
     "shoes": "g"
-   }
+   },
+   "tuck": "bottom",
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#6b3a26"
+    }
+   ]
   },
   {
    "id": "xiyu_talban",
@@ -2983,7 +3425,8 @@
    "pattern": {
     "slot": "top",
     "name": "aurora_gradient"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "aq_gyeongbong",
@@ -3010,7 +3453,8 @@
    "pattern": {
     "slot": "top",
     "name": "batik_indigo"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "aq_byeolgil",
@@ -3065,7 +3509,8 @@
    "pattern": {
     "slot": "top",
     "name": "camo_green"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "aq_saebom",
@@ -3135,7 +3580,8 @@
    "pattern": {
     "slot": "top",
     "name": "circuit_neon"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "yk_amsu",
@@ -3149,7 +3595,14 @@
    "pattern": {
     "slot": "top",
     "name": "coins_maroon"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#26365c"
+    }
+   ]
   },
   {
    "id": "yk_hyangdo",
@@ -3218,7 +3671,14 @@
    "pattern": {
     "slot": "top",
     "name": "crest_wave_blue"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#b08a1e"
+    }
+   ]
   },
   {
    "id": "hq_jugwang",
@@ -3232,7 +3692,8 @@
    "pattern": {
     "slot": "top",
     "name": "crimson_felt"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "hq_mulgyeol",
@@ -3246,7 +3707,8 @@
    "pattern": {
     "slot": "top",
     "name": "cyber_gradient"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "hq_eodeok",
@@ -3274,7 +3736,14 @@
    "pattern": {
     "slot": "top",
     "name": "data_stream_blue"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#55677a"
+    }
+   ]
   },
   {
    "id": "hq_jamsu",
@@ -3357,7 +3826,8 @@
    "pattern": {
     "slot": "top",
     "name": "heraldic_blue_gold"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "bw_gamu",
@@ -3371,7 +3841,14 @@
    "pattern": {
     "slot": "top",
     "name": "herringbone_camel"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#55677a"
+    }
+   ]
   },
   {
    "id": "bw_sungeom",
@@ -3440,7 +3917,14 @@
    "pattern": {
     "slot": "top",
     "name": "indigo_ikat"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#55677a"
+    }
+   ]
   },
   {
    "id": "bw_bitnae",
@@ -3467,7 +3951,8 @@
    "pattern": {
     "slot": "top",
     "name": "jade_peony_silk"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "gm_myeongseok",
@@ -3565,7 +4050,14 @@
    "pattern": {
     "slot": "top",
     "name": "nano_scale_blue"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#55677a"
+    }
+   ]
   },
   {
    "id": "gm_sanul",
@@ -3674,7 +4166,14 @@
    "pattern": {
     "slot": "top",
     "name": "sakura_pink"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#5e2f5a"
+    }
+   ]
   },
   {
    "id": "sn_bitdol",
@@ -3702,7 +4201,14 @@
    "pattern": {
     "slot": "top",
     "name": "sequin_black"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#26365c"
+    }
+   ]
   },
   {
    "id": "dk_gyedo",
@@ -3730,7 +4236,14 @@
    "pattern": {
     "slot": "top",
     "name": "smart_fabric_ripple"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#3a3a3e"
+    }
+   ]
   },
   {
    "id": "dk_suro",
@@ -3855,7 +4368,8 @@
    "pattern": {
     "slot": "top",
     "name": "argyle_green"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "hl_mukhyang",
@@ -3869,7 +4383,14 @@
    "pattern": {
     "slot": "top",
     "name": "aurora_gradient"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#1f6b6b"
+    }
+   ]
   },
   {
    "id": "hl_geumsil",
@@ -3925,7 +4446,14 @@
    "pattern": {
     "slot": "top",
     "name": "brocade_gold"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#3a3a3e"
+    }
+   ]
   },
   {
    "id": "hl_jeongwon",
@@ -4049,7 +4577,8 @@
    "pattern": {
     "slot": "top",
     "name": "corduroy_brown"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "nc_hamseong",
@@ -4105,7 +4634,8 @@
    "pattern": {
     "slot": "top",
     "name": "crest_wave_blue"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "cs_yeokjang",
@@ -4119,7 +4649,14 @@
    "pattern": {
     "slot": "top",
     "name": "crimson_felt"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#5e2f5a"
+    }
+   ]
   },
   {
    "id": "cs_hwamul",
@@ -4147,7 +4684,8 @@
    "pattern": {
     "slot": "top",
     "name": "damask_crimson"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "cs_gyeongjeok",
@@ -4189,7 +4727,8 @@
    "pattern": {
     "slot": "top",
     "name": "ethnic_geo"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "cs_noseon",
@@ -4357,7 +4896,8 @@
    "pattern": {
     "slot": "top",
     "name": "jade_peony_silk"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "js_jeonpa",
@@ -4413,7 +4953,14 @@
    "pattern": {
     "slot": "top",
     "name": "leather_studs"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#b08a1e"
+    }
+   ]
   },
   {
    "id": "js_jomyeong",
@@ -4509,7 +5056,14 @@
    "pattern": {
     "slot": "top",
     "name": "pinstripe_charcoal"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#2f5d3a"
+    }
+   ]
   },
   {
    "id": "kd_yongjeop",
@@ -4523,7 +5077,8 @@
    "pattern": {
     "slot": "top",
     "name": "plasma_veins_violet"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "kd_silheom",
@@ -4593,7 +5148,8 @@
    "pattern": {
     "slot": "top",
     "name": "sequin_black"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "rg_suri",
@@ -4690,7 +5246,8 @@
    "pattern": {
     "slot": "top",
     "name": "tartan_green"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "rg_yeonseup",
@@ -4718,7 +5275,8 @@
    "pattern": {
     "slot": "top",
     "name": "velvet_purple"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "hb_gwanje",
@@ -4732,7 +5290,8 @@
    "pattern": {
     "slot": "top",
     "name": "waves_teal"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "hb_sangae",
@@ -4746,7 +5305,14 @@
    "pattern": {
     "slot": "top",
     "name": "argyle_green"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#55677a"
+    }
+   ]
   },
   {
    "id": "hb_gyeongro",
@@ -4774,7 +5340,14 @@
    "pattern": {
     "slot": "top",
     "name": "bamboo_green"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#55677a"
+    }
+   ]
   },
   {
    "id": "hb_gisang",
@@ -4844,7 +5417,8 @@
    "pattern": {
     "slot": "top",
     "name": "camo_green"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "ob_seongun",
@@ -4858,7 +5432,8 @@
    "pattern": {
     "slot": "top",
     "name": "canvas_beige"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "ob_mujung",
@@ -4886,7 +5461,8 @@
    "pattern": {
     "slot": "top",
     "name": "ceramic_armor_white"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "ob_taeyang",
@@ -4914,7 +5490,8 @@
    "pattern": {
     "slot": "top",
     "name": "circuit_neon"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "ob_tongsin",
@@ -4984,7 +5561,14 @@
    "pattern": {
     "slot": "top",
     "name": "crest_sun_red"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#5e2f5a"
+    }
+   ]
   },
   {
    "id": "ac_haecho",
@@ -5026,7 +5610,8 @@
    "pattern": {
     "slot": "top",
     "name": "cyber_gradient"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "ac_choeumpa",
@@ -5068,7 +5653,8 @@
    "pattern": {
     "slot": "top",
     "name": "denim_worn"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "ac_haebit",
@@ -5110,7 +5696,15 @@
    "pattern": {
     "slot": "top",
     "name": "floral_blue"
-   }
+   },
+   "tuck": "bottom",
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#6b3a26"
+    }
+   ]
   },
   {
    "id": "ns_buho",
@@ -5179,7 +5773,8 @@
    "pattern": {
     "slot": "top",
     "name": "holo_iridescent"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "ns_hwamyeon",
@@ -5193,7 +5788,8 @@
    "pattern": {
     "slot": "top",
     "name": "hologram_scanlines"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "ns_yeongyeol",
@@ -5388,7 +5984,8 @@
    "pattern": {
     "slot": "top",
     "name": "paisley_teal"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "gr_kkulbeol",
@@ -5402,7 +5999,14 @@
    "pattern": {
     "slot": "top",
     "name": "pinstripe_charcoal"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#26365c"
+    }
+   ]
   },
   {
    "id": "gr_iseul",
@@ -5430,7 +6034,8 @@
    "pattern": {
     "slot": "top",
     "name": "polka_navy"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "gr_toyang",
@@ -5486,7 +6091,8 @@
    "pattern": {
     "slot": "top",
     "name": "sequin_black"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "tw_topni",
@@ -5542,7 +6148,8 @@
    "pattern": {
     "slot": "top",
     "name": "starry_night"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "tw_bunchim",
@@ -5556,7 +6163,8 @@
    "pattern": {
     "slot": "top",
     "name": "stripes_pastel"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "tw_baekya",
@@ -5665,7 +6273,14 @@
    "pattern": {
     "slot": "top",
     "name": "bamboo_green"
-   }
+   },
+   "tint": [
+    {
+     "slot": "bottom",
+     "match": "001_02",
+     "color": "#5e2f5a"
+    }
+   ]
   },
   {
    "id": "fy_ttangkkeut",
@@ -5707,7 +6322,8 @@
    "pattern": {
     "slot": "top",
     "name": "brocade_gold"
-   }
+   },
+   "tuck": "bottom"
   },
   {
    "id": "lg_ilwol",

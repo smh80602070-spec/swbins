@@ -9,10 +9,15 @@
 공통 조상을 따른다. 옷은 법선 방향으로 살짝 부풀려 몸이 비치지 않게 한다. 경로는 abspath(Blender 가 상대경로를 드라이브 루트로 읽는다).
 K-0028 무늬: 조합표 줄에 `pattern: {slot, name}` 이 있으면 그 칸 조각의 바탕색 질감을 `saga-assets/patterns/<name>.webp` 로 합성한다
 (make_wardrobe_textures.compose 와 같은 식 — 패널 안에서 무늬 × 원래 명암, 접힘·그림자는 남는다).
+K-0097: `tint: [{slot, match, color}, …]` = 그 칸 조각 중 파일 이름에 match 가 든 조각만 단색(1×1 무늬)으로 같은 식 합성(살색 옷 고침),
+`tuck: "bottom"` = 긴 윗옷 밖으로 나온 바지 정점을 윗옷 안쪽 면 - 3mm 로 밀어 넣는다(tuck.py, 무게는 그대로).
 """
 import bpy, sys, os, glob, math, json
 import numpy as np
 from mathutils import Vector, Matrix
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import tuck  # noqa: E402  K-0097
 
 a = sys.argv[sys.argv.index('--') + 1:]
 MODE = 'plan' if a and a[0] == '--plan' else 'pair'
@@ -276,9 +281,15 @@ def compose(a, tile):
     return np.concatenate([out, al[..., None]], axis=2)
 
 
-def apply_pattern(meshes, name):
-    """meshes 의 바탕색 질감을 무늬로 합성한 새 이미지로 바꾼다(재질·이미지는 복사 — 다른 조각과 나눠 쓰면 안 번지게). 바꾼 장 수."""
-    pat = bpy.data.images.load(os.path.join(PATTERNS, name + '.webp'))
+def apply_pattern(meshes, name, color=None):
+    """meshes 의 바탕색 질감을 무늬로 합성한 새 이미지로 바꾼다(재질·이미지는 복사 — 다른 조각과 나눠 쓰면 안 번지게). 바꾼 장 수.
+    color='#rrggbb' 면 무늬 대신 그 단색 1×1(K-0097 tint) — 무늬 webp 와 같은 sRGB 값."""
+    if color:
+        pat = bpy.data.images.new('tint_' + color[1:], 1, 1, alpha=True)
+        pat.pixels.foreach_set(np.array([int(color[i:i + 2], 16) / 255.0 for i in (1, 3, 5)] + [1.0], np.float32))
+        name = 'tint' + color[1:]
+    else:
+        pat = bpy.data.images.load(os.path.join(PATTERNS, name + '.webp'))
     done, n = {}, 0
     for o in meshes:
         for ms in o.material_slots:
@@ -291,10 +302,13 @@ def apply_pattern(meshes, name):
                 if node is not None:
                     src = node.image
                     w, h = src.size
-                    t = pat.copy()
-                    t.scale(max(256, w // 3), max(256, h // 3))   # 원래 식: 타일 = 질감의 1/3(최소 256)
-                    tile = pixels(t)[..., :3]
-                    bpy.data.images.remove(t)
+                    if color:
+                        tile = pixels(pat)[..., :3]
+                    else:
+                        t = pat.copy()
+                        t.scale(max(256, w // 3), max(256, h // 3))   # 원래 식: 타일 = 질감의 1/3(최소 256)
+                        tile = pixels(t)[..., :3]
+                        bpy.data.images.remove(t)
                     res = compose(pixels(src), tile)
                     img = bpy.data.images.new('%s__%s' % (src.name, name), w, h, alpha=True)
                     img.pixels.foreach_set(res.ravel())
@@ -337,6 +351,7 @@ else:                                           # plan 모드 — 명단 299 를
         try:
             picks, pat_files = [], []
             pt = e.get('pattern')
+            tints = [(t, []) for t in e.get('tint', [])]
             for slot, src in e['kit'].items():
                 pj = json.load(open(os.path.join(PARTS, src, 'parts.json'), encoding='utf-8'))['parts']
                 want = ('top', 'bottom', 'cloth') if slot == 'cloth' else (slot,)   # 원피스는 그 샘플의 상의·하의 조각까지 함께(몸통 가림)
@@ -344,9 +359,19 @@ else:                                           # plan 모드 — 명단 299 를
                 picks += got
                 if pt and pt['slot'] == slot:
                     pat_files += [f for f, _ in got]
+                for t, fs in tints:
+                    if t['slot'] == slot:
+                        fs += [f for f, _ in got if t.get('match', '') in os.path.basename(f)]
             clear()
             meshes_of = {}
-            dress(os.path.join(PARTS, e['body']), picks, meshes_of)
+            tarm = dress(os.path.join(PARTS, e['body']), picks, meshes_of)
+            for t, fs in tints:
+                if not apply_pattern([m for f in fs for m in meshes_of.get(f, [])], None, color=t['color']):
+                    raise RuntimeError('tint 를 입힐 바탕색 질감 없음: %s' % t)
+            if e.get('tuck') == 'bottom':
+                bpy.context.view_layer.update()
+                r = tuck.scan(tarm, [o for o in bpy.data.objects if o.type == 'MESH'], fix=True)
+                print('TUCK', e['id'], r, flush=True)
             if pt:
                 k = apply_pattern([m for f in pat_files for m in meshes_of.get(f, [])], pt['name'])
                 if not k:
