@@ -3117,5 +3117,28 @@
   "ticket": "G-0184",
   "since": "2026-10-11",
   "note": "G-0184(10-11) 창 모드 l_far_north·l_far_frost·l_far_frost_e Claude 눈 ○: 절벽 너머 첨탑·거목 실루엣과 거리 이름표(먼 실루엣은 안개로 희게 바램)"
+ },
+ {
+  "id": "gd.dg.belt_cam",
+  "name": "2나락 벨트 카메라 — 방 옆 3/4(pitch 42·yaw 90), 방이 왼→오, 방 가운데 ±2.5m 에서 멈춤·통로는 따라감(SAGA_DG_CAM=diablo 면 옛 시점)",
+  "files": [
+   "saga_core/player/dungeon_camera_rig.gd",
+   "games/saga_dungeon/player/DungeonPlayer.tscn",
+   "games/saga_dungeon/world/test_room.gd",
+   "tools/probe_dungeon_belt.gd",
+   "tools/shot_dungeon_belt.gd",
+   "tools/shot_scene.gd"
+  ],
+  "tests": [
+   "dungeon_belt",
+   "dungeon_world",
+   "mount_dungeon"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0185",
+  "since": "2026-10-11",
+  "note": "G-0185(10-11) 창 모드 dg_belt_room·dg_belt_corridor + SAGA_DG_CAM=diablo 비교 Claude 눈 ○"
  }
 ]

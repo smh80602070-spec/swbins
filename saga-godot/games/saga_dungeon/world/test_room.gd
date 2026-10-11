@@ -171,6 +171,13 @@ func _ready() -> void:
 			_spawn_corridor(origin_z + ROOM_SPACING, origin_z, i)
 		_spawn_exit_trigger(origin_z, i)
 		_exit_used.append(false)
+	## G-0185 — 벨트 카메라에 방 z 범위(방 i 는 z = −i×ROOM_SPACING ± ROOM_HALF.z, x 가운데 0)
+	var belt_rooms: Array = []
+	for oz: float in _room_origin_z:
+		belt_rooms.append({"z0": oz + ROOM_HALF.z, "z1": oz - ROOM_HALF.z, "cx": 0.0})
+	for rig in get_tree().get_nodes_in_group("camera_rig"):
+		if rig.has_method("set_rooms"):
+			rig.set_rooms(belt_rooms)
 
 	## GO의 test_village.gd::_ready()와 같은 순서 규칙(자식이 부모보다
 	## 먼저 ready되므로 Player는 이미 트리에 있다) — 이미 클리어한 방이면

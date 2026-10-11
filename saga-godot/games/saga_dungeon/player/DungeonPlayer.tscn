@@ -99,6 +99,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
 
 [node name="CameraRig" type="Node3D" parent="."]
 script = ExtResource("2")
+belt = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraRig"]
