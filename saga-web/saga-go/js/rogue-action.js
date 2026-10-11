@@ -487,9 +487,12 @@
       var df = W3.duelFoe();
       if (df) { return { x: df.x, y: df.y }; }
     }
-    var pos = core.save.player.pos;
-    return { x: pos.x, y: pos.y - 6 };
+    /* R-2(10-11) — 예전엔 매 프레임 "지금 내 자리 6m 앞"을 새로 셌다 → 다가가면 상대도 같이 물러나 영영 못 닿았다
+       (3D 무대가 없는 2D 모드·stage3d 없이 연 싸움에서 근접·🤖 자동 접근이 전부 헛걸음). 판을 열 때 한 번만 정한다 */
+    if (!fallbackFoe) { var pos = core.save.player.pos; fallbackFoe = { x: pos.x, y: pos.y - 6 }; }
+    return fallbackFoe;
   }
+  var fallbackFoe = null;
 
   function myFighter() {
     var id = core.save.party && core.save.party[0];
@@ -772,6 +775,7 @@
     if (!el) { return null; }
     cur = create(o);
     meta = o;
+    fallbackFoe = null;
     doneCb = o.onDone || null;
     lastT = null;
     el.classList.add('show');

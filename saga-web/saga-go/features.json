@@ -173,14 +173,14 @@
    "전투 손맛 — 차지 일격은 시간이 지나야 나가고, 너무 멀면 소모만 되고 헛친다",
    "전투 손맛 — 원거리 견제기는 사거리를 안 보지만 쿨다운은 본다"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-11 qc+claude",
   "fun": {
    "C": "○"
   },
   "ticket": null,
   "since": "2026-09-30",
-  "note": "D2: pw-go-close3.mjs — 결투 창 + 실제 Space 8번·D: 기세 3000→2903, 창 유지(2026-10-08). 눈 shots/qc/saga-go-duel.png △ — 이모지는 장면이 stage3d 없이 연 탓(실제 교전은 3D 무대). 실제처럼 열면 3D 무대 두 몸이 헤드리스 15초 안에 GLB 로 안 바뀌고 초록 도형 대역(느린 조립인지 미확인) — D3 아님 · PLAN §3: 미검증",
+  "note": "D3(qc+claude 2026-10-11, R-2 시트 — 사람 아님, Claude 눈·측정): playcheck/go-r2-shot.mjs ① 들판에서 토벌 판 + 🤖 자동 10초 — 속공 11·연타 회심 2·차지 1·필살 1·원거리 2 를 자동이 대신 냄, HUD 셋씩 두 줄·키 글자 ○. 찾아 고친 버그: 3D 무대 없이 연 싸움(2D 모드·stage3d 없음)에서 상대 자리가 매 프레임 \"내 자리 6m 앞\"이라 근접·자동 접근이 영영 헛걸음 → 판 열 때 한 번만 정함. 스태거는 10초 안엔 안 걸림(진단이 봄). · D2: pw-go-close3.mjs — 결투 창 + 실제 Space 8번·D: 기세 3000→2903, 창 유지(2026-10-08). 눈 shots/qc/saga-go-duel.png △ — 이모지는 장면이 stage3d 없이 연 탓(실제 교전은 3D 무대). 실제처럼 열면 3D 무대 두 몸이 헤드리스 15초 안에 GLB 로 안 바뀌고 초록 도형 대역(느린 조립인지 미확인) — D3 아님 · PLAN §3: 미검증",
   "sheet": {
    "preset": "⚔️ 교전 확인",
    "steps": [
@@ -261,12 +261,12 @@
    "지역 — 무리 꼴이 지역을 따른다(늪엔 물, 협곡엔 불)",
    "지역 — 탑에 다가가면 발견·보상 한 번, 발견한 곳으로 순간이동(키보드 모드)"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-11 qc+claude",
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "D2: saga-web/tools/playcheck/pw-go-sheet.mjs(Playwright) 10/10 — results/pw-go-sheet.json. 기계 확인. 못 잰 것: 동행 교체(새 계정 편성 1명)·성능 3단·소리",
+  "note": "D3(qc+claude 2026-10-11, R-2 시트): go-r2-shot ② 못 찾은 랜드마크 20m 앞 → \"○○ 발견! 순간이동 지점이 열렸다 (M)\" 알림·지역 이름 띠(대숲 고을 등)·지역 사명 줄 ○, 순간이동 지점 수 +1. · D2: saga-web/tools/playcheck/pw-go-sheet.mjs(Playwright) 10/10 — results/pw-go-sheet.json. 기계 확인. 못 잰 것: 동행 교체(새 계정 편성 1명)·성능 3단·소리",
   "sheet": {
    "steps": [
     "걸어서 지역 한가운데 빛기둥 랜드마크(탑) 쪽으로 간다",
@@ -485,8 +485,8 @@
    "발견 — 옛 세이브에 칸이 없어도 열린다",
    "발견 — 사건을 겪으면 사건과 기록이 함께 남는다"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-11 qc+claude",
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
@@ -498,7 +498,7 @@
    ],
    "expect": "발견 지점으로 순간이동(GPS 모드는 안 됨), 미니맵이 따라온다"
   },
-  "note": "D2: saga-web/tools/playcheck/pw-go-sheet.mjs(Playwright) 10/10 — results/pw-go-sheet.json. 기계 확인. 못 잰 것: 동행 교체(새 계정 편성 1명)·성능 3단·소리"
+  "note": "D3(qc+claude 2026-10-11, R-2 시트): go-r2-shot ③ 실제 M 키로 전체 지도 열림 ○ · 발견 지점(고향)으로 순간이동 850~1250m ○ · 닫은 뒤 미니맵 따라옴. · D2: saga-web/tools/playcheck/pw-go-sheet.mjs(Playwright) 10/10 — results/pw-go-sheet.json. 기계 확인. 못 잰 것: 동행 교체(새 계정 편성 1명)·성능 3단·소리"
  },
  {
   "id": "go.auto",
@@ -539,7 +539,7 @@
    ],
    "expect": "자동 중에도 무리를 처치하고 예고 공격을 기력으로 피한다"
   },
-  "note": "D2: saga-web/tools/playcheck/pw-go-sheet.mjs(Playwright) 10/10 — results/pw-go-sheet.json. 기계 확인. 못 잰 것: 동행 교체(새 계정 편성 1명)·성능 3단·소리"
+  "note": "D2: saga-web/tools/playcheck/pw-go-sheet.mjs(Playwright) 10/10 — results/pw-go-sheet.json. 기계 확인. 못 잰 것: 동행 교체(새 계정 편성 1명)·성능 3단·소리 · R-2(10-11) △(C): go-r2-shot ④ 무리 16m 곁에서 자동 순행 12초 — 이야기·등용·역참·성채를 꺼도 산짐승을 쫓거나 길 위 사건 카드(상인)에 멈춰 무리 처치는 못 봄 → D2 유지."
  },
  {
   "id": "go.region",
