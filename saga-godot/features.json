@@ -3339,5 +3339,27 @@
   "ticket": "G-0198",
   "since": "2026-10-11",
   "note": "창 모드 dg_skill_slots 가로·세로 Claude 눈 ○(단추 넷 화면 안)"
+ },
+ {
+  "id": "gd.dg.skill-branches8",
+  "name": "2나락 무예 일곱째·여덟째 갈래 30(웹 br6 화·빙·독·뇌·기 조합 · br7 새 원소 전자) — 직업마다 24, 전부 120(표만)",
+  "files": [
+   "games/saga_dungeon/data/dungeon_skills.gd",
+   "tools/probe_dungeon_skills.gd",
+   "tools/probe_dungeon_slots.gd"
+  ],
+  "tests": [
+   "dungeon_skills",
+   "dungeon_slots",
+   "save_dungeon",
+   "dungeon_melee",
+   "dungeon_synergy"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0199",
+  "since": "2026-10-11",
+  "note": "창 모드 dg_emp_skills 가로·세로 Claude 눈 ○(전자 자리 단추·전자진 시전 — 무예 시각 효과는 원래 없음)"
  }
 ]

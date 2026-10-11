@@ -91,6 +91,7 @@ const CUTS := [
 	["dg_belt_corridor", DUNGEON, [["free_modal"], ["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", -10.0]]]],   # 첫 통로 — 다음 방이 오른쪽
 	["dg_death_card", DUNGEON, [["free_modal"], ["static", "res://tools/shot_dungeon_belt.gd", "die", ["@tree"]]]],   # G-0193 사망 카드 세 줄 + 첫 방 은총 자리에서 다시 섬
 	["dg_skill_slots", DUNGEON, [["static", "res://tools/shot_dungeon_belt.gd", "slots", ["@tree"]], ["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", 1.0]]]],   # G-0198 무예 넉 자리 단추(Z·X·C·V) — 무장 넷을 건 첫 방
+	["dg_emp_skills", DUNGEON, [["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", 1.0]], ["static", "res://tools/shot_dungeon_belt.gd", "emp", ["@tree"]]]],   # G-0199 무장 전자 갈래 넷을 건 자리 단추 + 전자진 한 번(무예는 시각 효과가 없어 피해 숫자만)
 	["dg_story", DUNGEON, [["free_modal"]]],
 	["dg_room_wide", DUNGEON, [["free_modal"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 14.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-40.0, 0.0, 0.0)]]],   # G-0112 첫 방 전체(어두움 판정)   # G-0085 사가나락 이야기 첫 대화(새 판 — 출사표 창을 닫으면 뜬다)
 	["go_cave_dirt", GO, [["call", "CaveInterior", "enter"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 5.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-25.0, 180.0, 0.0)]]],   # G-0098 굴 안 흙 복도

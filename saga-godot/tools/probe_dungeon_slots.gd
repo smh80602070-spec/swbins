@@ -161,6 +161,26 @@ func _initialize() -> void:
 	es = reset.call()
 	check(caster.try_cast("a_chain") and lost.call(es)[0] == expect.call("a_chain") and lost.call(es).filter(func(v): return v > 0.0).size() == 3, "chain(a_chain): 첫 적 전부 · 세 번 튐 %s" % str(lost.call(es)))
 
+	# G-0199 br6·br7 30 — 공용 시전기로 하나씩 실제 시전(표만 늘려도 나간다)
+	var new_keys: Array = Skills.SKILLS.filter(func(s): return int(s.br) >= 6).map(func(s): return String(s.key))
+	var r30 := {}
+	for k in new_keys:
+		r30[k] = 1
+	SS.restore({}, r30, {})
+	var dead30: Array = []
+	for k in new_keys:
+		es = reset.call()
+		var cast_ok: bool = caster.try_cast(k)
+		for i in 8:
+			caster._physics_process(0.05)
+		var dealt: float = lost.call(es).reduce(func(a, b): return a + b, 0.0)
+		if not cast_ok or dealt <= 0.0:
+			dead30.append(k)
+	check(new_keys.size() == 30 and dead30.is_empty(), "br6·br7 30 이 다 시전되고 피해를 냄(bolt·nova·chain·swing·dash) %s" % str(dead30))
+	SS.restore({}, ranks, {})
+	es = reset.call()
+	caster.try_cast("a_chain")
+
 	# 쿨다운·입력
 	check(not caster.try_cast("a_chain") and caster.cooldown_left("a_chain") > 0.0 and caster.try_cast("s_wave"), "쿨다운은 무예 키별(a_chain 쿨 중에도 s_wave 는 나감)")
 	caster._process(100.0)

@@ -29,3 +29,24 @@ static func slots(tree: SceneTree) -> void:
 		var s: Script = n.get_script()
 		if s != null and s.resource_path.ends_with("talk_box.gd"):
 			n.queue_free.call_deferred())
+
+
+## G-0199 — 무장 전자 갈래(br7) 셋 + 화창(br6)을 넉 자리에 걸고(메모리에서만) 둘레 적에게 전자진(w_emp_nova)을 한 번 쏜다 — 피해 숫자가 찍힌다.
+static func emp(tree: SceneTree) -> void:
+	tree.root.get_node("DungeonSkillState").restore({}, {"w_emp_swing": 1, "w_emp_dash": 1, "w_emp_nova": 3, "w_firelance": 1},
+		{"warrior": ["w_emp_nova", "w_emp_swing", "w_emp_dash", "w_firelance"]})
+	tree.root.get_node("DungeonEquipmentState").equip("weapon", {}) # 맨손 = 무장(세이브에 다른 직업 무기가 있어도)
+	for m in tree.get_nodes_in_group("ui_modal"):
+		m.queue_free()
+	tree.node_added.connect(func(n: Node) -> void:
+		var s: Script = n.get_script()
+		if s != null and s.resource_path.ends_with("talk_box.gd"):
+			n.queue_free.call_deferred())
+	var p := tree.get_first_node_in_group("player") as Node3D
+	var Enemy: GDScript = load("res://games/saga_dungeon/world/dungeon_enemy.gd")
+	for off in [Vector3(2.0, 0, 0.5), Vector3(-1.8, 0, 1.2), Vector3(0.6, 0, -2.2)]:
+		var e: Node3D = Enemy.new(3)
+		tree.current_scene.add_child(e)
+		e.global_position = p.global_position + off
+	var c := tree.get_first_node_in_group("skill_caster")
+	c.call_deferred("try_slot", 0)

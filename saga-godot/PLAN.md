@@ -1849,7 +1849,7 @@ Core는 공유.
 
 Vertical Slice 이후:
 
-**2026-09-23 재검토**: 다섯 판 전체를 완료 요약(PROJECT_STATE)과 대조 — GO·DUNGEON(장비→빌드 갈래 채우기까지)·FOREST·REALM은 101~105 재작업으로 이 여섯 축이 사실상 다 닿았다(REALM은 원래 계획보다 넘치게). 실제로 비어 있던 둘: **STORY "관계"**(웹판에 참고할 설계가 없었음)는 사제 유대(`mentor_bond`, story_save_state.gd)로 첫 걸음 완료. **DUNGEON "장비→빌드"의 무예 row1/row2 깊이**(다섯 갈래는 row0만)는 아직 열려 있다 — 일부는 새 메커니즘(다중발사·소환 강화 등)이 필요해 범위를 먼저 좁혀야 한다.
+**2026-09-23 재검토**: 다섯 판 전체를 완료 요약(PROJECT_STATE)과 대조 — GO·DUNGEON(장비→빌드 갈래 채우기까지)·FOREST·REALM은 101~105 재작업으로 이 여섯 축이 사실상 다 닿았다(REALM은 원래 계획보다 넘치게). 실제로 비어 있던 둘: **STORY "관계"**(웹판에 참고할 설계가 없었음)는 사제 유대(`mentor_bond`, story_save_state.gd)로 첫 걸음 완료. **DUNGEON "장비→빌드"의 무예 깊이**는 끝났다 — 직업 5 × 갈래 8(웹 br0~7) × 단 3 = 120 이 표에 다 있고, 활성 무예는 넉 자리(Z·X·C·V)·공용 시전기(player/skill_caster.gd)로 쓴다.
 
 ### GO
 
