@@ -23,7 +23,7 @@ const CompanionFollow := preload("res://saga_core/world/companion_follow.gd")
 
 ## 점검(SAGA_*_PROBE)은 실제 세이브를 불러온 채 돌고 명단을 members 로 바꿔 끼운다 — 편성(㉝)으로 줄여 둔 자리 수가 점검을 흔들지 않게.
 const PROBES := ["ADVENTURE", "ARTIFACT", "TREASURE", "FIELD_BOSS", "SHARD", "MAP", "COOK", "STORY", "DOMAIN", "WEEKLY", "COMMISSION", "GROWTH",
-	"TALENT", "SIGHT", "TRAVERSAL", "COMBAT", "PERF", "KIT", "ELEMENT", "WEAPON", "LAYOUT", "ARCHERY", "QMAP", "FISH", "ACHIEVE", "DISPATCH", "FROST", "STORY2", "ASSIST"]
+	"TALENT", "SIGHT", "TRAVERSAL", "COMBAT", "PERF", "KIT", "ELEMENT", "WEAPON", "LAYOUT", "ARCHERY", "QMAP", "FISH", "ACHIEVE", "DISPATCH", "FROST", "STORY2", "ASSIST", "LANDMARK"]
 
 static func _any_probe() -> bool:
 	for p in PROBES:
@@ -70,6 +70,10 @@ func _ready() -> void:
 	var fork := preload("res://games/saga_go/world/region10_fork.gd").new()
 	fork.name = "Region10Fork"
 	add_child(fork)
+	## G-0184 — 열 지역 높은 실루엣·거리 이름표(야숨 "저기 보이는 곳으로", 지역들이 다 선 뒤 — 이미 있는 성루·다층탑을 이름으로 찾는다)
+	add_child(preload("res://games/saga_go/world/landmark_reads.gd").new())
+	if OS.get_environment("SAGA_LANDMARK_PROBE") != "":
+		add_child(load("res://tools/probe_landmark_reads.gd").new())
 	var era := preload("res://games/saga_go/world/era_sites.gd").new()
 	era.name = "EraSites"
 	add_child(era)

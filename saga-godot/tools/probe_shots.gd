@@ -26,6 +26,10 @@ const SETTLE := 90
 
 ## [이름, 지역, eye(칸 Vector2 또는 지점 id), eye 에 더할 m, look(칸 Vector2·지점 id·"boss:<id>"·"lineup"), 피치°, 거리 m, 할 일]
 const SHOTS := [
+	["l_far_north", "village", Vector2(5.5, 4.6), Vector3.ZERO, Vector2(5.2, -6.0), -4.0, 9.0, ""],   # G-0184 먼 컷 — 마을 광장에서 북쪽(청하 거목·서리봉 성루·세갈래 망루 이름표·거리)
+	["l_far_frost", "frost", Vector2(4.5, 3.0), Vector3.ZERO, Vector2(4.0, -6.0), -6.0, 14.0, ""],   # G-0184 서리봉 고원에서 북쪽 — 세갈래 망루 실루엣·이름표
+	["l_far_frost_e", "frost", Vector2(6.0, 4.0), Vector3.ZERO, Vector2(16.0, 2.5), -6.0, 14.0, ""],   # 동쪽 — 갈무리 첨탑
+	["l_far_east", "village", Vector2(7.5, 6.0), Vector3.ZERO, Vector2(16.0, 7.0), -4.0, 9.0, ""],   # G-0184 동쪽(갯바람 바위기둥·잠긴 궁궐 탑)
 	["v_statue", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -18.0, 9.0, ""],
 	["v_house", "village", Vector2(4.0, 5.0), Vector3(-4, 0, 18), Vector2(4.0, 5.0), -6.0, 9.0, ""],
 	["v_village_plaza", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(4.7, 5.3), -12.0, 16.0, ""],
