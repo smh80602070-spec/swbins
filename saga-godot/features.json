@@ -3517,5 +3517,33 @@
   "ticket": "G-0204",
   "since": "2026-10-11",
   "note": "창 모드 dg_boss_tell 가로·세로 Claude 눈 ○(보스 발밑 주황 원이 차오름)"
+ },
+ {
+  "id": "gd.st.boss-phases",
+  "name": "4종횡 보스 패턴전 1차 — 체력 3단계·내려찍기·낙석·지진(점프)·부하 둘·휩쓸기(초록 안전지대)·광폭, 예고는 화면 쪽으로 세운 반원·벽(웹 boss-pattern.js)",
+  "files": [
+   "games/saga_story/world/story_boss_pattern.gd",
+   "games/saga_story/world/story_enemy.gd",
+   "games/saga_story/world/story_boss_spawner.gd",
+   "saga_core/combat_tell.gd",
+   "tools/probe_story_boss.gd",
+   "tools/shot_story_fx.gd",
+   "tools/shot_scene.gd"
+  ],
+  "tests": [
+   "story_boss",
+   "story",
+   "story_rules",
+   "story_player",
+   "story_golden",
+   "hurt_signal",
+   "dungeon_boss"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0205",
+  "since": "2026-10-11",
+  "note": "창 모드 st_boss_slam·st_boss_sweep Claude 눈 ○(주황 반원·초록 안전지대 벽)"
  }
 ]

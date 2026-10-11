@@ -45,6 +45,8 @@ const StoryGearPickup := preload("res://games/saga_story/world/story_gear_pickup
 const StoryGoldPickup := preload("res://games/saga_story/world/story_gold_pickup.gd")
 const StoryEnemyShot := preload("res://games/saga_story/world/story_enemy_shot.gd")
 const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
+const StoryBossPattern := preload("res://games/saga_story/world/story_boss_pattern.gd")   # G-0205 보스 패턴전 1차
+const Toast := preload("res://saga_core/ui/toast.gd")
 
 ## 사냥터별 몸 모양(GO 짐승 공방 재사용 — 캡슐 대신). 정해진 게 없으면(비경 등) 도깨비꼴.
 const KIND_BY_STAGE := {"field": "goblin", "forest": "wolf", "cave": "beast", "gorge": "bear"}
@@ -93,6 +95,13 @@ var _champion_dmg_taken := 0.0  # 취약 배율 적용 전 원본 피해 누적(
 var _champion_shield_broken := false
 var _champion_vuln_time_left := 0.0
 
+## G-0205 — 사냥터 보스(관문 대장 제외)만 패턴전. 아래 셋은 story_boss_spawner 가 add_child 전에 넣는다.
+var boss_pattern: RefCounted = null
+var boss_name := "보스"
+var stage_width_m := 0.0
+var minion_color := COLOR
+var _bp_api: Dictionary = {}
+
 
 func _ready() -> void:
 	var base_hp: float = StoryCombat.enemy_base_hp(enemy_lv)
@@ -104,6 +113,8 @@ func _ready() -> void:
 	max_hp = hp
 	add_to_group("story_enemy")
 	_spawn_visual()
+	if is_boss and not is_champion and boss_pattern == null:
+		boss_pattern = StoryBossPattern.new(hash(stage_key) % 100000 + 13)
 
 
 func _spawn_visual() -> void:
@@ -141,11 +152,18 @@ func _physics_process(delta: float) -> void:
 	var dx: float = player.global_position.x - global_position.x
 	if _creature != null and absf(dx) > 0.1:
 		_creature.rotation.y = PI * 0.5 if dx > 0.0 else -PI * 0.5
+	## G-0205 — 패턴전은 붙어 치기와 나란히 돈다(웹 side.js 1819 — 몸통 박치기는 그대로).
+	if boss_pattern != null:
+		boss_pattern.step(self, player, delta, StoryBossPattern.is_near(self, player), _pattern_api(player))
+		if _dead:
+			return
 
 	if _attack_cd_left <= 0.0 and absf(dx) <= OVERLAP_RANGE * scale_mul:
 		_attack_cd_left = ATTACK_COOLDOWN
 		var base_dmg: float = StoryCombat.enemy_base_dmg(enemy_lv)
 		var dmg: float = base_dmg * (boss_dmg_mul if is_boss else 1.0)
+		if boss_pattern != null:
+			dmg *= boss_pattern.dmg_mul()   # G-0205 광폭
 		if is_champion:
 			dmg *= CHAMPION_DMG_MUL
 			if _champion_elapsed >= CHAMPION_ENRAGE_SEC:
@@ -155,6 +173,51 @@ func _physics_process(delta: float) -> void:
 	if is_ranged and not is_boss and _shot_cd_left <= 0.0 and absf(dx) <= StoryCombat.RANGED_RANGE_M:
 		_shot_cd_left = StoryCombat.RANGED_CD_SEC
 		_fire_shot(dx)
+
+
+## G-0205 — 패턴전이 바깥 일을 하는 길(웹 bpApi). Callable 은 한 번 만들고 값만 매 틱 갈아 넣는다.
+func _pattern_api(player: Node) -> Dictionary:
+	if _bp_api.is_empty():
+		_bp_api = {"hurt": _bp_hurt, "spawn": _spawn_minion, "toast": _bp_toast, "shake": _bp_shake, "on_ground": _bp_on_ground}
+	_bp_api.dmg = StoryCombat.enemy_base_dmg(enemy_lv) * boss_dmg_mul * boss_pattern.dmg_mul()
+	_bp_api.hp = hp
+	_bp_api.hp_max = max_hp
+	_bp_api.player_hp_max = float(player.get("max_hp")) if player.get("max_hp") != null else 100.0
+	_bp_api.name = boss_name
+	_bp_api.width = stage_width_m
+	return _bp_api
+
+
+func _bp_hurt(amount: float) -> void:
+	var p := get_tree().get_first_node_in_group("player")
+	if p != null and p.has_method("take_damage"):
+		p.take_damage(amount)
+
+
+func _bp_toast(msg: String) -> void:
+	Toast.show(self, msg, 2.5)
+
+
+func _bp_shake(amp: float, sec: float) -> void:
+	var rig := get_tree().get_first_node_in_group("camera_rig")
+	if rig != null and rig.has_method("shake"):
+		rig.shake(amp, sec)
+
+
+func _bp_on_ground() -> bool:
+	var p := get_tree().get_first_node_in_group("player")
+	return p != null and p.has_method("is_on_floor") and p.is_on_floor()
+
+
+## 부하 하나 — 사냥터 잡졸과 같은 규칙(보상·처치 수)으로 보스 곁에.
+func _spawn_minion(x: float) -> void:
+	var m := Node3D.new()
+	m.set_script(get_script())
+	m.enemy_lv = enemy_lv
+	m.enemy_color = minion_color
+	m.stage_key = stage_key
+	m.position = Vector3(clampf(x, 0.6, stage_width_m - 0.6) if stage_width_m > 0.0 else x, position.y, 0.0)
+	get_parent().add_child(m)
 
 
 ## side.js eshot 그대로: dir·spd(RANGED_SPD_M)로 날아가 RANGED_MUL만큼

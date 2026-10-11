@@ -40,3 +40,35 @@ static func hurt(tree: SceneTree) -> void:
 		m.queue_free()
 	var Belt: GDScript = load("res://tools/shot_dungeon_belt.gd")
 	Belt.call("_hurt_at", tree, tree.get_first_node_in_group("player"))
+
+
+## G-0205 — 사냥터 보스 곁에 서서 패턴 하나를 촬영 30프레임 전에 건다(내려찍기 원이 반쯤 찬 프레임 · 휩쓸기 초록 안전지대). 메모리에서만.
+static func boss_slam(tree: SceneTree) -> void:
+	_boss_kind(tree, "slam")
+
+
+static func boss_sweep(tree: SceneTree) -> void:
+	_boss_kind(tree, "sweep")
+
+
+static func _boss_kind(tree: SceneTree, kind: String) -> void:
+	for m in tree.get_nodes_in_group("ui_modal"):
+		m.queue_free()
+	var b := tree.get_first_node_in_group("story_boss") as Node3D
+	var p := tree.get_first_node_in_group("player") as Node3D
+	if b == null or p == null:
+		return
+	if b.get("boss_pattern") == null: # 이번 주 관문 대장이면 패턴이 없다 — 촬영만 하나 붙인다
+		b.set("boss_pattern", (load("res://games/saga_story/world/story_boss_pattern.gd") as GDScript).new(1))
+	b.get("boss_pattern").cd = 999.0
+	p.global_position = Vector3(b.global_position.x - 2.6, p.global_position.y, p.global_position.z)
+	var n := [0]
+	var cb := [Callable()]
+	cb[0] = func() -> void:
+		n[0] += 1
+		if n[0] == 60 and is_instance_valid(b) and is_instance_valid(p):
+			p.set("hp", float(p.get("max_hp")))
+			b.get("boss_pattern").begin(b, p, kind, b.call("_pattern_api", p))
+		if n[0] >= 60:
+			tree.process_frame.disconnect(cb[0])
+	tree.process_frame.connect(cb[0])

@@ -55,6 +55,9 @@ func _spawn_boss() -> void:
 	boss.enemy_lv = _map.enemy_lv()
 	boss.enemy_color = _map.boss_color()
 	boss.stage_key = _map.stage_key()
+	boss.boss_name = String(_map.BOSS_NAME)   # G-0205 패턴전 토스트·맵 폭·부하 색
+	boss.stage_width_m = _map.width_m()
+	boss.minion_color = _map.enemy_color()
 	var is_champion: bool = StorySaveState.champion_available(boss.stage_key)
 	boss.is_champion = is_champion
 	boss.position = Vector3(_map.boss_position_m(), GROUND_Y, 0)

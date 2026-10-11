@@ -60,6 +60,8 @@ const CUTS := [
 	["st_offer", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_offer.gd", "stage", ["@tree"]]]],   # G-0197 레벨업 무예 3택 창
 	["st_skill_fx", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "stage", ["@tree"]]]],   # G-0201 4종횡 무예 시전 그림 — 선풍(금 원환) + 전우(파랑 물보라)·피해 숫자, 촬영 직전 시전
 	["st_hurt", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "hurt", ["@tree"]]]],   # G-0203 4종횡 내가 맞았다
+	["st_boss_slam", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "boss_slam", ["@tree"]]]],   # G-0205 보스 내려찍기 예고(발밑 원이 반쯤 참)
+	["st_boss_sweep", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "boss_sweep", ["@tree"]]]],   # G-0205 휩쓸기 — 초록 안전지대
 	["st_field_front", "res://games/saga_story/world/TestField.tscn", [["free_modal"]]],   # G-0187 사냥터 — 앞 층 풀·바위·큰 인물(화면 높이 약 1/7)
 	["st_forest_front", "res://games/saga_story/world/ForestHuntGround.tscn", [["free_modal"]]],   # 숲 사냥터도
 	["st_ladder", STORY_CAVE, [["near", "LadderArea", -1.4, 0.0]]],
