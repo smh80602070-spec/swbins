@@ -5,6 +5,7 @@ extends RefCounted
 
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
+const StoryLook := preload("res://games/saga_story/data/story_look.gd")   # G-0187
 
 
 static func build(key: String, rarity_cap: int = 3) -> Node3D:
@@ -13,4 +14,6 @@ static func build(key: String, rarity_cap: int = 3) -> Node3D:
 		if int(h.rarity) <= rarity_cap:
 			pool.append(h)
 	var pick: Dictionary = pool[absi(key.hash()) % pool.size()]
-	return VroidBody.build(String(pick.id), int(pick.rarity), null, true)  # G-0022 — dex 있으면 그 몸
+	var body := VroidBody.build(String(pick.id), int(pick.rarity), null, true)  # G-0022 — dex 있으면 그 몸
+	body.scale *= StoryLook.BODY_SCALE   # G-0187 — 나·적과 같은 배율
+	return body

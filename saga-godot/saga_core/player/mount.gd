@@ -182,7 +182,7 @@ func mount(id: String) -> void:
 	for p in preload("res://saga_core/data/pets.gd").PETS:
 		if p.id == id:
 			pet = p
-	_body = CreatureBuilder.build_pet(id, float(_def.height))
+	_body = CreatureBuilder.build_pet(id, float(_def.height) * _k())
 	_body.name = "MountBody"
 	add_child(_body)
 	_anim = _body.get_node_or_null("AnimationPlayer") as AnimationPlayer
@@ -214,10 +214,14 @@ func _seat(on: bool) -> bool:
 	return false
 
 ## 기수 발 높이. 안장 자리(seat_y)가 있으면 엉덩이가 등 윗면에 닿게(몸마다 엉덩이 높이가 다르니 기수 몸에서 잰다), 없으면 예전 ride - SEAT_DROP.
+## G-0187 — 기수 그림 배율(플레이어 메타 body_scale, 4종횡 1.6 · 다른 판은 없음 = 1). 탈것 몸·안장 높이·앞뒤 자리를 같은 배율로 — 큰 기수가 탈것 속으로 꺼지지 않게.
+func _k() -> float:
+	return float(_player.get_meta("body_scale", 1.0)) if _player != null else 1.0
+
 func _ride_height(seated: bool) -> float:
 	if seated and _def.has("seat_y"):
-		return float(_def.seat_y) + SEAT_CLEAR - _rider_hips_h()
-	return float(_def.get("ride", 0.0)) - (SEAT_DROP if seated else 0.0)
+		return float(_def.seat_y) * _k() + SEAT_CLEAR - _rider_hips_h()
+	return float(_def.get("ride", 0.0)) * _k() - (SEAT_DROP if seated else 0.0)
 
 ## 기수 몸의 엉덩이 높이(발 기준, 몸 배율 포함). 뼈를 못 찾으면 0.92.
 func _rider_hips_h() -> float:
@@ -267,7 +271,7 @@ func _physics_process(delta: float) -> void:
 	var speed_h := Vector2(_player.velocity.x, _player.velocity.z).length()
 	var bob := sin(_t * (6.0 + speed_h * 0.6)) * clampf(speed_h / 12.0, 0.0, 1.0) * 0.08
 	if _body != null:
-		_body.position = Vector3(0.0, bob, -float(_def.get("seat_z", 0.0)))   # 안장이 기수 아래에 오게 몸을 앞뒤로
+		_body.position = Vector3(0.0, bob, -float(_def.get("seat_z", 0.0)) * _k())   # 안장이 기수 아래에 오게 몸을 앞뒤로
 		var fly_now: bool = _player.has_method("is_flying_now") and _player.call("is_flying_now")
 		if _anim != null:
 			## 나는 동안엔 늘 빠른 날갯짓(walk 클립), 땅에선 움직일 때만 다리 걸음.

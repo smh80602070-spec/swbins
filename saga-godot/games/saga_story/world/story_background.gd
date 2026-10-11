@@ -3,8 +3,8 @@ extends Node3D
 ## VERTICAL_SLICE_STORY.md 2절 — Background 레이어(Z 매우 음수, 큰 실루엣,
 ## 충돌 없음). 지금까지 story_terrain_builder.gd는 Midground(바닥·발판,
 ## Z=0)만 지어 뒀다 — 2절이 설계해 둔 세 겹(Background/Midground/
-## Foreground) 중 Midground만 있던 상태를 이걸로 채운다(Foreground는
-## 여전히 생략 — 2절 "있으면 좋고 없어도 완료 조건에 안 걸린다").
+## Foreground) 중 Midground만 있던 상태를 이걸로 채운다. Foreground(앞 층)는
+## G-0187 에서 붙였다(_build_foreground — 발판 앞 풀·바위 띠, 동굴은 뺌).
 ##
 ## 새 GLB를 안 받는다(PLAN.md 44장) — 이미 받아 둔 GO/FOREST 에셋
 ## (tree_oak.glb·rock_largeA.glb) 재활용. 실루엣이라 원래 텍스처 대신
@@ -21,6 +21,9 @@ extends Node3D
 
 const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
 const CaveBackdrop := preload("res://games/saga_story/world/story_cave_backdrop.gd")
+const StoryLook := preload("res://games/saga_story/data/story_look.gd")   # G-0187
+const FG_GRASS_GLB := "res://assets/world/grass_tuft_01.glb"
+const FG_ROCK_GLB := "res://assets/world/rock_small_01.glb"
 
 const TREE_GLB := "res://assets/world/tree_broadleaf_01.glb"
 const HILL_GLB := "res://assets/world/hill_01.glb"
@@ -58,10 +61,49 @@ func _ready() -> void:
 	_build_layer(TREE_GLB, TREE_COUNT, TREE_SCALE, TREE_Z, TREE_COLOR, "BackgroundTrees")
 	_build_layer(HILL_GLB, HILL_COUNT, HILL_SCALE, HILL_Z, HILL_COLOR, "BackgroundHills")
 	_build_scenery()
+	_build_foreground()
 
 
 static func _h(i: int, salt: int) -> float:
 	return fposmod(sin(float(i) * 12.9898 + float(salt) * 78.233) * 43758.5453, 1.0)
+
+
+## G-0187 — 앞 층(근경): 발판 앞 z FG_Z0~FG_Z1 에 풀 포기·작은 바위 띠(종류마다 MultiMesh 하나, 이미 있는 GLB 제 재질). 충돌·그림자 없음.
+## 원근 카메라라 카메라보다 빨리 흐르고(시차), 바닥 발판 위 인물의 발을 살짝 가린다. 높이는 GLB 실측 AABB 로 맞춘다.
+func _build_foreground() -> void:
+	var width: float = _map.width_m()
+	var x0 := -SIDE_M * 0.25
+	var x1 := width + SIDE_M * 0.25
+	for spec: Array in [[FG_GRASS_GLB, StoryLook.FG_GRASS_H, 0.0, "ForegroundGrass"], [FG_ROCK_GLB, StoryLook.FG_ROCK_H, 0.62, "ForegroundRocks"]]:
+		var mesh := GLBUtils.extract_mesh(String(spec[0]))
+		if mesh == null:
+			continue
+		var mh := maxf(0.01, mesh.get_aabb().size.y)
+		var hr: Vector2 = spec[1]
+		var xs: Array = []
+		var n := int((x1 - x0) / StoryLook.FG_STEP)
+		for i in n:
+			var id := i + 5000 + int(float(spec[2]) * 1000.0)
+			if float(spec[2]) > 0.0 and _h(id, 9) > 0.28:   # 바위는 드문드문(약 28%)
+				continue
+			var x := x0 + (float(i) + _h(id, 1)) * StoryLook.FG_STEP
+			var z := lerpf(StoryLook.FG_Z0, StoryLook.FG_Z1, _h(id, 2))
+			var s := lerpf(hr.x, hr.y, _h(id, 3)) / mh
+			var basis := Basis(Vector3.UP, _h(id, 4) * TAU).scaled(Vector3.ONE * s)
+			xs.append(Transform3D(basis, Vector3(x, GROUND_Y, z)))
+		if xs.is_empty():
+			continue
+		var mm := MultiMesh.new()
+		mm.transform_format = MultiMesh.TRANSFORM_3D
+		mm.mesh = mesh
+		mm.instance_count = xs.size()
+		for i in xs.size():
+			mm.set_instance_transform(i, xs[i])
+		var mmi := MultiMeshInstance3D.new()
+		mmi.name = String(spec[3])
+		mmi.multimesh = mm
+		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		add_child(mmi)
 
 
 func _build_scenery() -> void:

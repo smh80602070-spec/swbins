@@ -1,5 +1,6 @@
 extends StorySkillsMage
 
+const StoryLook := preload("res://games/saga_story/data/story_look.gd")   # G-0187
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const Voice := preload("res://saga_core/audio/voice.gd")   # G-0111 대사 음성
 
@@ -46,8 +47,10 @@ func mount_progress() -> int:
 
 
 func _ready() -> void:
+	set_meta("body_scale", StoryLook.BODY_SCALE)   # 탈것(mount.gd)이 읽어 탈것·안장을 같이 키운다 — 스크립트 var 가 아니라 메타(probe_story_golden 이 var 를 해시한다)
 	if body_id != "":   # G-0030 — 새 인물 몸으로
 		visual = VroidBody.wear(visual, body_id)
+		visual.scale *= StoryLook.BODY_SCALE   # G-0187 — 그림만 크게(판정 상자 그대로)
 		_anim = visual.find_child("AnimationPlayer", true, false)
 	visual.rotation.y = PI * 0.5  # 오른쪽(+X)을 보고 시작 — StoryPlayer.tscn 참고
 	_play_anim("idle")

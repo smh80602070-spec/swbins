@@ -3162,5 +3162,31 @@
   "ticket": "G-0186",
   "since": "2026-10-11",
   "note": "G-0186(10-11) 창 모드 fs_plant_grid Claude 눈 ○: 휜 땅 위 격자·발밑 초록 칸"
+ },
+ {
+  "id": "gd.st.front_layer",
+  "name": "4종횡 메이플 앞 층·큰 인물 — 발판 앞 풀·바위 띠(MultiMesh 둘, 발 살짝 가림) · 인물 그림 1.6배+카메라 12.5m(화면 높이 약 1/7, 판정 그대로) · 탈것도 같은 배율",
+  "files": [
+   "games/saga_story/data/story_look.gd",
+   "games/saga_story/world/story_background.gd",
+   "games/saga_story/world/story_camera.gd",
+   "games/saga_story/player/story_player.gd",
+   "games/saga_story/world/story_enemy.gd",
+   "games/saga_story/world/story_npc_body.gd",
+   "saga_core/player/mount.gd",
+   "tools/probe_story_background.gd",
+   "tools/shot_scene.gd"
+  ],
+  "tests": [
+   "story_background",
+   "story_golden",
+   "mount_story"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0187",
+  "since": "2026-10-11",
+  "note": "G-0187(10-11) 창 모드 st_field_front·st_forest_front·st_ladder Claude 눈 ○"
  }
 ]

@@ -39,6 +39,7 @@ extends Node3D
 ## RANGED_* 참고). 두 공격은 서로 독립된 쿨다운이라(side.js `e.cd`와
 ## `e.shotCd`가 다른 변수인 것과 같다) 한 쪽이 쿨다운 중이어도 다른 쪽은
 ## 정상 작동해야 한다 — `_physics_process()`를 그렇게 갈랐다.
+const StoryLook := preload("res://games/saga_story/data/story_look.gd")   # G-0187
 const StoryCombat := preload("res://games/saga_story/data/story_combat.gd")
 const StoryGearPickup := preload("res://games/saga_story/world/story_gear_pickup.gd")
 const StoryGoldPickup := preload("res://games/saga_story/world/story_gold_pickup.gd")
@@ -110,7 +111,7 @@ func _spawn_visual() -> void:
 	## 2026-09-30 — 색 캡슐이 몸이던 것을 짐승 공방 몸으로. 정면(+Z)이 옆(±X)을 보게 _face 가 매 틱 플레이어 쪽으로 돌린다.
 	_creature = CreatureBuilder.build(String(KIND_BY_STAGE.get(stage_key, "goblin")),
 		[enemy_color, enemy_color.darkened(0.4), enemy_color.lightened(0.45)], {"enemy": true})
-	CreatureBuilder._fit(_creature, String(KIND_BY_STAGE.get(stage_key, "goblin")), 1.6 * scale_mul)
+	CreatureBuilder._fit(_creature, String(KIND_BY_STAGE.get(stage_key, "goblin")), 1.6 * scale_mul * StoryLook.BODY_SCALE)   # G-0187 그림만 크게(아래 판정 상자는 그대로)
 	add_child(_creature)
 	var ap := _creature.get_node_or_null("AnimationPlayer") as AnimationPlayer
 	if ap != null and ap.has_animation("idle"):
