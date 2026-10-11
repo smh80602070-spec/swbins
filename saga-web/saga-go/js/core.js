@@ -327,6 +327,7 @@
       global.DG.weather && global.DG.weather.bonus,
       global.DG.perk && global.DG.perk.bonus,           // 승급 특성 補 갈래(동행 중인 인물만)
       global.DG.bond && global.DG.bond.bonus,           // 인연 결(結) — 같은 세력·시대 둘이 파티면 필살 기 +10%
+      global.DG.starchart && global.DG.starchart.bonus, // 만리 성도(W-0181) — 포획·경험·귀한 조우·기
       global.DG.prestige && global.DG.prestige.bonus,   // 확장 보관분(_expansion)
       global.DG.idle && global.DG.idle.bonus,
       global.DG.ai && global.DG.ai.bonus

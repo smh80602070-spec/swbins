@@ -140,7 +140,7 @@
   function progress(slot) {
     if (!slot) { return null; }
     var g = gradeOf(slot.g);
-    var need = g.km * 1000;
+    var need = Math.round(g.km * 1000 * (global.DG.starchart ? global.DG.starchart.egg() : 1));   // 성도(W-0181) — 발품·맨발
     var walked = core.clamp(core.save.player.distance - slot.startM, 0, need);
     return {
       grade: g, need: need, walked: walked,

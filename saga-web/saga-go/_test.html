@@ -114,6 +114,10 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/nightecho.js"></script>
 <script src="js/data-bond.js"></script>
 <script src="js/bond.js"></script>
+<script src="js/data-passive.js"></script>
+<script src="js/passive-web.js"></script>
+<script src="js/passive-web-ui.js"></script>
+<script src="js/starchart.js"></script>
 <script src="js/vendor/three.iife.js"></script>
 <script src="js/vendor/RGBELoader.js"></script>
 <script src="js/land.js"></script>
@@ -10692,6 +10696,8 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var bak = JSON.stringify(C.save), ST = DG.story;
       ST._resetForTest(); DG.fieldCombat._resetForTest();
       C.save.story = { ch: 0, step: 0 }; C.save.player.level = level || 1;
+      /* 오늘 일과를 끝난 빈 칸 하나로 붙든다 — 날마다 뽑히는 싸움 일과가 무리를 잡을 때 금을 줘서 "금 그대로" 판정이 날짜에 따라 갈렸다(W-0181, 10-12 월요일). 되돌림은 아래 스냅샷 */
+      if (DG.daily) { C.save.daily = { date: DG.daily.dayKey(), tasks: [{ key: "_test_none", got: 0, need: 1, done: true }], stamps: 0 }; }
       return { ST: ST, undo: function () {
         ST._resetForTest(); DG.fieldCombat._resetForTest();
         var snap = JSON.parse(bak);
@@ -16254,7 +16260,105 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       } finally { window.DG_NO_TUT = true; if (had) { sv.tut = old; } else { delete sv.tut; } }
     });
 
-    t('첫 10분 — 다섯 단계가 순서대로만 나아가고 끝나면 done 이 5 다', function () {
+    /* ── 만리 성도(W-0181) — 계정 하나의 패시브 그물(starchart.js · 공용 passive-web.js) ── */
+    function scWith(fn) {
+      var SCH = DG.starchart, sv = C.save, keep = { passive: sv.passive, beacons: sv.beacons, shrines: sv.shrines, gold: sv.player.gold };
+      var b = {}, i;
+      for (i = 0; i < 60; i++) { b['sc_test_' + i] = true; }   // 봉수대 60 — 점수 상한(56)까지
+      sv.passive = { start: null, taken: [] }; sv.beacons = b; SCH._reset();
+      try { return fn(SCH, SCH.api()); }
+      finally { sv.passive = keep.passive; sv.beacons = keep.beacons; sv.shrines = keep.shrines; sv.player.gold = keep.gold; SCH._reset(); }
+    }
+    function scNearest(api, key) {
+      var best = null;
+      DG.passiveDef.nodes.forEach(function (n) {
+        if (n.k === 'o' || !n.stats || !n.stats[key] || api.isTaken(n.id)) { return; }
+        var p = api.pathTo(n.id);
+        if (p && (!best || p.cost < best.cost)) { best = { id: n.id, cost: p.cost }; }
+      });
+      return best;
+    }
+
+    t('성도 — 부팅 뒤 정의 ≥300 마디 · 시작점 여섯 · 점수 = 첫 별 + 봉수대 + 사당/2 + 도감/10(상한 56)', function () {
+      var SCH = DG.starchart, sv = C.save, keepB = sv.beacons, keepS = sv.shrines, keepP = sv.passive;
+      try {
+        sv.beacons = { a: true, b: true, c: true }; sv.shrines = { x: { clears: 1 }, y: { clears: 2 }, z: { clears: 0 }, w: { clears: 3 } };
+        sv.passive = { start: null, taken: [] }; SCH._reset();
+        var p = SCH.parts(), def = DG.passiveDef, o = def.nodes.filter(function (n) { return n.k === 'o'; }).length;
+        var dexN = Object.keys((sv.dex && sv.dex.heroes) || {}).length + Object.keys((sv.dex && sv.dex.pets) || {}).length;
+        var want = Math.min(56, 1 + 3 + 1 + Math.floor(dexN / 10));
+        var ok = def.nodes.length >= 300 && o === 6 && p.beacon === 3 && p.shrine === 1 && SCH.pointsTotal() === want && SCH.api().points() === want;
+        return ok ? '마디 ' + def.nodes.length + ' · 점수 ' + want + '(도감 ' + dexN + ')' : '실패 ' + JSON.stringify(p) + ' ' + SCH.pointsTotal() + '/' + want;
+      } finally { sv.beacons = keepB; sv.shrines = keepS; sv.passive = keepP; SCH._reset(); }
+    });
+
+    t('성도 — 찍으면 이동 속도(moveSpeed)·들판 공격이 오른다', function () {
+      return scWith(function (SCH, api) {
+        api.take('o_roamer');
+        var m0 = W.moveSpeed(false), a0 = DG.fieldCombat.create(C.save.party).party[0].atk;
+        var mv = scNearest(api, 'movePct'); api.takePath(mv.id);
+        var at = scNearest(api, 'atkPct'); api.takePath(at.id);
+        var m1 = W.moveSpeed(false), a1 = DG.fieldCombat.create(C.save.party).party[0].atk;
+        return m1 > m0 && a1 > a0 ? '이동 ' + m0.toFixed(2) + ' → ' + m1.toFixed(2) + ' · 공격 ' + a0 + ' → ' + a1 : '실패 ' + m0 + '/' + m1 + ' ' + a0 + '/' + a1;
+      });
+    });
+
+    t('성도 — 되돌리면 원래대로 · 금이 든다 · 모자라면 막는다', function () {
+      return scWith(function (SCH, api) {
+        api.take('o_roamer');
+        var m0 = W.moveSpeed(false), mv = scNearest(api, 'movePct');
+        api.takePath(mv.id);
+        C.save.player.gold = 10000;
+        var g = SCH.guard('drop'), dropped = api.drop(mv.id);
+        var cost = SCH.dropCost(1), m2 = W.moveSpeed(false);
+        C.save.player.gold = 0;
+        var poor = SCH.guard('drop');
+        var ok = g === '' && dropped && Math.abs(m2 - m0) < 1e-9 && cost === 120 && !!poor;
+        return ok ? '이동 ' + m2.toFixed(2) + ' 그대로 · 한 마디 ' + cost + '금' : '실패 g=' + g + ' drop=' + dropped + ' ' + m0 + '/' + m2 + ' poor=' + poor;
+      });
+    });
+
+    t('성도 — 이웃 아닌 마디는 거절 · 시작점 하나만', function () {
+      return scWith(function (SCH, api) {
+        api.take('o_hunter');
+        var far = DG.passiveDef.nodes.filter(function (n) { return n.k === 'n' && api.why(n.id) === 'far'; })[0];
+        var ok = !api.take(far.id) && !api.take('o_scholar') && api.store.taken.length === 0 && api.start() === 'hunter';
+        return ok ? far.name + ' 거절' : '실패';
+      });
+    });
+
+    t('성도 — 세이브 왕복(save.passive 한 칸)', function () {
+      return scWith(function (SCH, api) {
+        api.take('o_sworn');
+        api.takePath(scNearest(api, 'bondPct').id);
+        var n = api.used(), b = api.sum('bondPct');
+        C.save.passive = JSON.parse(JSON.stringify(C.save.passive)); SCH._reset();
+        var a2 = SCH.api();
+        return a2 !== api && a2.used() === n && a2.sum('bondPct') === b && a2.start() === 'sworn' ? n + '마디 · 인연 +' + b + '%' : '실패';
+      });
+    });
+
+    t('성도 — 규칙 큰 그물: 조우 두 배(maxSpawns) · 등용 설득 −25% · 속전은 토벌 45초', function () {
+      return scWith(function (SCH, api) {
+        function cheapest(kid) {
+          var best = null;
+          DG.passiveDef.starts.forEach(function (s) {
+            api.reset(true); api.take('o_' + s.key);
+            var p = api.pathTo(kid);
+            if (p && (!best || p.cost < best.cost)) { best = { key: s.key, cost: p.cost }; }
+          });
+          api.reset(true); api.take('o_' + best.key);
+          return api.takePath(kid) ? best.cost : -1;
+        }
+        var s0 = W.maxSpawns(), r0 = SCH.recruit(), c1 = cheapest('k_bignet');
+        var s1 = W.maxSpawns(), r1 = SCH.recruit();
+        var c2 = cheapest('k_blitz');
+        var ok = c1 > 0 && s1 === Math.round(s0 * 2) && Math.abs(r1 / r0 - 0.75) < 1e-9 && c2 > 0 && SCH.raidSec(75) === 45 && SCH.raidAtk() >= 1.35;
+        return ok ? '조우 ' + s0 + ' → ' + s1 + ' · 설득 ×' + (r1 / r0).toFixed(2) + ' · 토벌 45초(경로 ' + c1 + '·' + c2 + '점)' : '실패 ' + [c1, s0, s1, r0, r1, c2, SCH.raidSec(75)].join(' ');
+      });
+    });
+
+    t('첫 10분 — 여섯 단계가 순서대로만 나아가고 끝나면 done 이 6 이다(W-0181 성도 1점)', function () {
       var T = DG.tut, sv = C.save, had = Object.prototype.hasOwnProperty.call(sv, 'tut'), old = sv.tut;
       var gold0 = sv.player.gold, dist0 = sv.player.distance;
       window.DG_NO_TUT = false;
@@ -16270,8 +16374,10 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         T._feed('treasure:open', { id: 'c', grade: 1 });                 // 4 상자
         var before = T.done();
         T._feed('sheet:open', { name: 'quest' });                        // 5 사명 창
-        var ok = skipped && s1 && wrong && !before && T.done() && sv.tut.done.length === 5 && T.line() === '' &&
-          sv.player.gold === gold0 + 30 * 4 + 100;
+        var before6 = T.done();
+        T._feed('star:take', { used: 1 });                               // 6 성도에 1점(W-0181)
+        var ok = skipped && s1 && wrong && !before && !before6 && T.done() && sv.tut.done.length === 6 && T.line() === '' &&
+          sv.player.gold === gold0 + 30 * 4 + 100 + 50;
         return ok && ('done ' + sv.tut.done.join('>') + ' · 금 +' + (sv.player.gold - gold0));
       } finally {
         window.DG_NO_TUT = true; sv.player.gold = gold0; sv.player.distance = dist0;

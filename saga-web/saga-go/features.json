@@ -634,7 +634,7 @@
   ],
   "tests": [
    "첫 10분 — 새 세이브면 목표판 첫 줄이 1단계 문구다",
-   "첫 10분 — 다섯 단계가 순서대로만 나아가고 끝나면 done 이 5 다"
+   "첫 10분 — 여섯 단계가 순서대로만 나아가고 끝나면 done 이 6 이다(W-0181 성도 1점)"
   ],
   "level": "D2",
   "verified": null,
@@ -857,5 +857,29 @@
   "ticket": "W-0140",
   "since": "2026-10-11",
   "note": "D2(qc+claude 2026-10-11): tools/playcheck/shots/w0140/sky-{noon,sunset,night,dawn,noon-off}.png·water-close.png ○ — 맑은 한낮 지평선 위 구름·노을 보라·밤 별하늘이 둘러섬(비·눈·안개는 옛 단색), 그림 지평선 행 0.68 을 고도 0 에(등장방형 0.5 면 구름이 땅 밑에 숨어 파랑 한 줄), 해 방향 = sky_markers sun_uv(고도 하한 22°). 물은 그림 반사·잔물결 두 겹(HIGH 만, 폰 MEDIUM 끔), 물가 거품은 손그림 강(shoreW)만 — 원반 물은 겹쳐 놓여 고리가 떠서 뺌. 인물은 툰, 건물 GLB(assets/models/buildings)만 Standard 거칠기 0.85. 예산 A/B(같은 실행): LOW 콜 +3·삼각형 +1.9k·ms 같음, HIGH ms +3%(소프트 렌더 잡음 안). 손잡이 sky3d.pano·water3d.refl·water3d.fine·water3d.foam·world3d.softBackdrop 0 = 옛 화면."
+ },
+ {
+  "id": "go.passive-web",
+  "name": "만리 성도 — PoE식 패시브 그물(마디 377·이름난 42·규칙 8, 계정 하나 → 부대 전체), 주 메뉴 「성도」",
+  "files": [
+   "js/starchart.js",
+   "js/data-passive.js",
+   "js/passive-web.js",
+   "js/passive-web-ui.js"
+  ],
+  "tests": [
+   "성도 — 부팅 뒤 정의 ≥300 마디 · 시작점 여섯 · 점수 = 첫 별 + 봉수대 + 사당/2 + 도감/10(상한 56)",
+   "성도 — 찍으면 이동 속도(moveSpeed)·들판 공격이 오른다",
+   "성도 — 되돌리면 원래대로 · 금이 든다 · 모자라면 막는다",
+   "성도 — 이웃 아닌 마디는 거절 · 시작점 하나만",
+   "성도 — 세이브 왕복(save.passive 한 칸)",
+   "성도 — 규칙 큰 그물: 조우 두 배(maxSpawns) · 등용 설득 −25% · 속전은 토벌 45초"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0181",
+  "since": "2026-10-12",
+  "note": "D2(claude 2026-10-12): saga-web/tools/playcheck/passive-shot.mjs saga-go — 주 메뉴 「성도」 단추 클릭으로 열림 · 390×844·1280×720 두 장 Read ○(제목 잘림 0). 첫 10분 안내 6단계 \"성도에 1점\". 손잡이 go.pw.*."
  }
 ]

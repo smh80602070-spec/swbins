@@ -120,11 +120,15 @@
    */
   function addHerb(id, n) {
     if (!id || !(n > 0)) { return 0; }
+    n = Math.round(n * (global.DG.starchart ? global.DG.starchart.herb() : 1));   // 성도(W-0181) — 약초 눈·무욕
+    if (!(n > 0)) { return 0; }
     st(id).herb += n;
     return n;
   }
 
   function addDust(n) {
+    if (!(n > 0)) { return 0; }
+    n = Math.round(n * (global.DG.starchart ? global.DG.starchart.herb() : 1));   // 성도(W-0181)
     if (!(n > 0)) { return 0; }
     core.save.dust = dust() + n;
     return n;

@@ -1,0 +1,88 @@
+// 1만리 만리 성도 어휘 (W-0181) → node saga-web/tools/passive-web/gen.mjs saga-go → saga-go/js/data-passive.js
+// 효과 키는 starchart.js 가 읽는 것만(이동·토벌·등용·포획·경험·조우·재료·천거장·인연·기). 계정(주인공) 하나, 부대 전체에 걸린다.
+// 키(key)를 지우면 gen 이 FAIL — 세이브가 id 를 쥔다. 이름·숫자만 고친다.
+const N = (key, name, stats, theme, desc) => ({ key, name, stats, theme, ...(desc ? { desc } : {}) });
+export default {
+  seed: 20260824,
+  starts: [
+    { key: 'wayfarer', name: '나그네', color: '#c8c8c8', center: true, theme: ['movePct', 'expPct', 'hpPct'] },
+    { key: 'roamer', name: '길손의 별', color: '#5fd0c8', theme: ['movePct', 'spawnRarePct', 'eggPct'] },
+    { key: 'hunter', name: '사냥꾼의 별', color: '#e06a4f', theme: ['atkPct', 'hpPct', 'kiPct'] },
+    { key: 'scholar', name: '책객의 별', color: '#6f8cf0', theme: ['recruitPct', 'catchPct', 'spawnRarePct'] },
+    { key: 'herbalist', name: '약초꾼의 별', color: '#8cd938', theme: ['herbPct', 'eggPct', 'catchPct'] },
+    { key: 'sworn', name: '의형의 별', color: '#f0b04f', theme: ['bondPct', 'kiPct', 'hpPct'] },
+  ],
+  small: [
+    { key: 'movePct', name: '잰걸음', stats: { movePct: 2 } },
+    { key: 'atkPct', name: '토벌 힘', stats: { atkPct: 2 } },
+    { key: 'hpPct', name: '부대 기력', stats: { hpPct: 3 } },
+    { key: 'recruitPct', name: '말솜씨', stats: { recruitPct: 3 } },
+    { key: 'catchPct', name: '올가미', stats: { catchPct: 1 } },
+    { key: 'expPct', name: '견문', stats: { expPct: 3 } },
+    { key: 'spawnRarePct', name: '귀인 운', stats: { spawnRarePct: 2 } },
+    { key: 'herbPct', name: '약초 눈', stats: { herbPct: 4 } },
+    { key: 'eggPct', name: '발품', stats: { eggPct: 2 } },
+    { key: 'bondPct', name: '정', stats: { bondPct: 4 } },
+    { key: 'kiPct', name: '기세', stats: { kiPct: 2 } },
+  ],
+  notable: [
+    // 길손
+    N('far_road', '먼 길', { movePct: 8, expPct: 4 }, 'movePct'),
+    N('pathfinder', '길눈', { movePct: 6, spawnRarePct: 4 }, 'movePct'),
+    N('dawn_walk', '새벽길', { movePct: 5, eggPct: 6 }, 'eggPct'),
+    N('milestone', '이정표', { eggPct: 10 }, 'eggPct'),
+    N('ferry', '나루 건너기', { movePct: 7, hpPct: 5 }, 'movePct'),
+    N('wind_ear', '바람 귀', { spawnRarePct: 8 }, 'spawnRarePct'),
+    N('pilgrim', '순례', { expPct: 8, eggPct: 4 }, 'eggPct'),
+    // 사냥꾼
+    N('first_blood', '첫 칼', { atkPct: 10 }, 'atkPct'),
+    N('pack_lead', '무리 몰이', { atkPct: 6, hpPct: 6 }, 'atkPct'),
+    N('tracker', '자국 읽기', { atkPct: 5, spawnRarePct: 4 }, 'atkPct'),
+    N('war_drum', '진군 북', { kiPct: 8, atkPct: 4 }, 'kiPct'),
+    N('iron_skin', '쇠가죽', { hpPct: 12 }, 'hpPct'),
+    N('trophy', '전리품', { atkPct: 5, expPct: 5 }, 'atkPct'),
+    N('second_wind', '두 번째 숨', { hpPct: 8, kiPct: 4 }, 'hpPct'),
+    // 책객
+    N('silver_tongue', '은빛 혀', { recruitPct: 12 }, 'recruitPct'),
+    N('letter_seal', '봉한 편지', { recruitPct: 6, eggPct: 5 }, 'recruitPct'),
+    N('noose', '고운 올가미', { catchPct: 5, recruitPct: 4 }, 'catchPct'),
+    N('rumor', '소문 듣기', { spawnRarePct: 6, recruitPct: 5 }, 'spawnRarePct'),
+    N('banquet', '잔치 자리', { recruitPct: 8, bondPct: 6 }, 'recruitPct'),
+    N('ledger', '인명록', { expPct: 6, catchPct: 3 }, 'catchPct'),
+    N('patron', '뒷배', { recruitPct: 7, kiPct: 4 }, 'recruitPct'),
+    // 약초꾼
+    N('herb_basket', '약초 바구니', { herbPct: 15 }, 'herbPct'),
+    N('dew', '이슬 받기', { herbPct: 8, hpPct: 4 }, 'herbPct'),
+    N('bait', '미끼 솜씨', { catchPct: 6 }, 'catchPct'),
+    N('root_dig', '뿌리 캐기', { herbPct: 10, eggPct: 4 }, 'herbPct'),
+    N('cinnabar', '붉은 가루', { herbPct: 8, expPct: 4 }, 'herbPct'),
+    N('quiet_step', '조용한 발', { catchPct: 4, spawnRarePct: 4 }, 'catchPct'),
+    N('pouch', '깊은 주머니', { herbPct: 6, eggPct: 6 }, 'eggPct'),
+    // 의형
+    N('oath', '도원 맹세', { bondPct: 15 }, 'bondPct'),
+    N('shared_cup', '한 잔 술', { bondPct: 8, recruitPct: 4 }, 'bondPct'),
+    N('brothers', '형제의 등', { hpPct: 6, bondPct: 6 }, 'bondPct'),
+    N('rally', '함께 외침', { kiPct: 10 }, 'kiPct'),
+    N('camp_fire', '모닥불', { bondPct: 6, expPct: 4 }, 'bondPct'),
+    N('shield_brother', '방패 아우', { hpPct: 8, kiPct: 4 }, 'hpPct'),
+    N('old_friend', '오랜 벗', { bondPct: 10, kiPct: 3 }, 'kiPct'),
+    // 사이·나그네
+    N('wanderer', '떠돌이 셈', { expPct: 10 }, 'expPct'),
+    N('star_reader', '별 읽기', { spawnRarePct: 6, expPct: 4 }, 'expPct'),
+    N('road_food', '길밥', { hpPct: 6, herbPct: 6 }, 'hpPct'),
+    N('market', '장터 흥정', { recruitPct: 5, herbPct: 5 }, 'herbPct'),
+    N('hero_tale', '영웅담', { expPct: 6, kiPct: 5 }, 'expPct'),
+    N('crossroads', '네거리', { movePct: 4, recruitPct: 4, catchPct: 2 }, 'movePct'),
+    N('lantern', '등불 들고', { spawnRarePct: 5, movePct: 4 }, 'spawnRarePct'),
+  ],
+  keystone: [
+    { key: 'onepath', name: '외길', rule: 'onepath', desc: '들판 싸움에 동행 한 명만 선다, 그 동료 공격·체력 +60%' },
+    { key: 'barefoot', name: '맨발', rule: 'barefoot', desc: '탈것을 못 탄다, 걷기 +25% · 천거장 걸음 −30%' },
+    { key: 'nightowl', name: '야행(夜行)', rule: 'nightowl', desc: '밤(21~4시) 등용 설득 +40%, 낮 −20%' },
+    { key: 'blitz', name: '속전(速戰)', rule: 'blitz', desc: '토벌 제한 75초 → 45초, 토벌 피해 +35%' },
+    { key: 'unbound', name: '무욕(無慾)', rule: 'unbound', desc: '영초·단사 얻는 양 −50%, 경험 +50%' },
+    { key: 'ironwall', name: '철벽 부대', rule: 'ironwall', desc: '들판에서 받는 피해 −30%, 이동 −15%' },
+    { key: 'bignet', name: '큰 그물', rule: 'bignet', desc: '지도에 깔리는 조우 두 배, 등용 설득 −25%' },
+    { key: 'windroad', name: '바람길', rule: 'windroad', desc: '날 때 속도 +30%, 지상 탈것 속도 −30%' },
+  ],
+};

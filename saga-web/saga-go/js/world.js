@@ -290,7 +290,7 @@
   /** 걷는 속도(m/초) — 손잡이 배율 × 탈것(⑲-61, 안 탔으면 1) × 달리기 */
   function moveSpeed(run) {
     var MT = global.DG.mount;
-    return speed * speedMul() * (MT && MT.speedMul ? MT.speedMul() : 1) * (run ? 2.2 : 1);
+    return speed * speedMul() * (MT && MT.speedMul ? MT.speedMul() : 1) * (run ? 2.2 : 1) * (global.DG.starchart ? global.DG.starchart.move() : 1);   // × 성도(W-0181)
   }
   function moveByKeys(dt) {
     if (mode !== 'keyboard') { return; }
@@ -850,7 +850,7 @@
   function maxSpawns() {
     var lure = global.DG.bag && global.DG.bag.lured();
     var few = global.DG.weather && global.DG.weather.fewer();
-    return Math.max(4, MAX_SPAWNS + (lure ? 6 : 0) - (few ? 3 : 0));
+    return Math.round(Math.max(4, MAX_SPAWNS + (lure ? 6 : 0) - (few ? 3 : 0)) * (global.DG.starchart ? global.DG.starchart.spawn() : 1));   // 큰 그물(성도 규칙) 두 배
   }
 
   function tickSpawns() {

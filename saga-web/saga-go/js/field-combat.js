@@ -572,13 +572,13 @@
     var g = gearMods(id), st = g.st, f4 = g.four;
     function v(k) { return st[k] || 0; }
     var base = Math.max(20, Math.round(s.might * 0.7 + s.wisdom * 0.3));
-    var hpMax = Math.round(((300 + s.command * 6) * (1 + v('hp_pct')) + v('hp')) * tl.hpMul);
+    var hpMax = Math.round(((300 + s.command * 6) * (1 + v('hp_pct')) + v('hp')) * tl.hpMul * (global.DG.starchart ? global.DG.starchart.fieldHp() : 1));   // × 성도(W-0181)
     var melee = g.type === 'sword' || g.type === 'claymore' || g.type === 'polearm';
     var rf = f4.react_fire || 0;
     return {
       id: id, name: h ? h.name : '나', el: elementOf(id), shape: shapeOf(id),
       kitS: kt ? kt.skill : null, kitB: kt ? kt.burst : null, kitL: kt ? kt.label : '', infT: 0, infMul: 1,
-      atk: Math.round((base + g.watk) * (1 + v('atk_pct')) + v('atk')),
+      atk: Math.round(((base + g.watk) * (1 + v('atk_pct')) + v('atk')) * (global.DG.starchart ? global.DG.starchart.fieldAtk() : 1)),   // × 성도(W-0181)
       hpMax: hpMax, hp: hpMax, em: s.wisdom, def: Math.round(s.command * (1 + v('def_pct')) + v('def')),
       tm: tl.tm, con: tl.con, cdMul: tl.cdMul, reactMul: tl.reactMul, c6: tl.c6, c6T: 0,
       /* ⑲-5 — 무기 종류·모양, 치명, 기력, 피해 보너스(더하기), 반응 보너스 */
@@ -610,7 +610,7 @@
   function rxB(m, kind) { return 1 + ((m.rx && m.rx[kind]) || 0); }
 
   function create(partyIds) {
-    var ids = (partyIds || []).slice(0, PARTY_MAX());
+    var ids = (partyIds || []).slice(0, (global.DG.starchart ? global.DG.starchart.partyMax(PARTY_MAX()) : PARTY_MAX()));   // 외길(성도 규칙) — 한 명
     if (!ids.length) { ids = ['_me']; }
     return {
       t: 0, party: ids.map(memberOf), active: 0, swapCd: 0,
@@ -1458,7 +1458,7 @@
   function hurt(S, f, mul) {
     var m = active(S);
     if (!m || m.down) { return; }
-    var dmg = Math.max(1, Math.round(f.atk * (mul || 1) * (1 - m.def / (m.def + 300))));   // mul — ⑲-14 공격 차례의 한 수 배수
+    var dmg = Math.max(1, Math.round(f.atk * (mul || 1) * (1 - m.def / (m.def + 300)) * (global.DG.starchart ? global.DG.starchart.take() : 1)));   // mul — ⑲-14 공격 차례의 한 수 배수 · 철벽 부대(성도)
     if (S.wardT > 0) { dmg = Math.max(1, Math.round(dmg * S.wardMul)); }   // ⑲-11 맹세·오천의 맹세
     var rockX = f.el === 'rock' ? Math.round(dmg * 0.3) : 0;   // ⑲-1 짓눌림 — 이것만으로는 안 쓰러진다
     S.calmT = 0;

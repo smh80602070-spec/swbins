@@ -91,6 +91,8 @@
     var l = LF();
     if (l && (l.onPole() || l.gliding() || l.airH() > 0 || l.onSky())) { return { ok: false, why: '지금은 탈 수 없다(오르는 중·공중·섬 위)' }; }
     if (fighting() || busy()) { return { ok: false, why: '싸우는 중엔 못 탄다' }; }
+    var SCb = global.DG.starchart && global.DG.starchart.rideBlock();   // 맨발(성도 규칙, W-0181)
+    if (SCb) { return { ok: false, why: SCb }; }
     return { ok: true };
   }
   function ride(id) {
@@ -122,7 +124,7 @@
     return nx;
   }
   /** world.js 가 곱한다 — 안 탔으면 1 */
-  function speedMul() { return riding ? K('mul', 1) * (flying() ? riding.fly : riding.mul) : 1; }
+  function speedMul() { return riding ? K('mul', 1) * (flying() ? riding.fly : riding.mul) * (global.DG.starchart ? global.DG.starchart.mountMul(flying()) : 1) : 1; }   // 바람길(성도 규칙)
   /** 오르내림 입력 — 키·단추가 준다(1 오름·-1 내림·0 멈춤). 날 수 없으면 무시(이유를 한 번 알린다) */
   function setLift(v) {
     lift = v > 0 ? 1 : (v < 0 ? -1 : 0);

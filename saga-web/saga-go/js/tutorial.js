@@ -3,7 +3,7 @@
  * ---------------------------------------------------------------
  * 새 세이브가 처음 켜질 때 "무엇을 할지"를 목표판 **첫 줄**(`ui.js goalNowText`)에 한 단계씩 띄운다.
  *
- *   걷기 50m → 인물 등용 → 짐승 포획 → 보물 상자 → 사명 창 열기
+ *   걷기 50m → 인물 등용 → 짐승 포획 → 보물 상자 → 사명 창 열기 → 성도에 1점(W-0181)
  *
  * - 순서대로만 나아간다(앞 단계 전의 뒤 단계 이벤트는 무시). 단계마다 작은 보상, 끝나면 문구가 사라진다.
  * - **옛 세이브**(`save.tut` 가 없다)는 이미 끝난 것으로 본다 — 새로 가입한 세이브만 `freshSave()` 가 `tut` 를 둔다.
@@ -21,7 +21,8 @@
     { key: 'recruit', text: '🤝 인물을 만나 등용해 보세요', on: 'dex:new', cat: 'heroes', gold: 30 },
     { key: 'catch', text: '🐾 짐승을 포획해 보세요', on: 'dex:new', cat: 'pets', gold: 30 },
     { key: 'chest', text: '📦 보물 상자를 열어 보세요', on: 'treasure:open', gold: 30 },
-    { key: 'quest', text: '🎯 사명 창을 열어 보세요', on: 'sheet:open', name: 'quest', gold: 100 }
+    { key: 'quest', text: '🎯 사명 창을 열어 보세요', on: 'sheet:open', name: 'quest', gold: 100 },
+    { key: 'star', text: '✨ 성도에 1점 찍어 보세요 — 아래 「성도」', on: 'star:take', gold: 50 }   // W-0181 만리 성도
   ];
 
   function tut() {
@@ -85,6 +86,7 @@
     core.on('dex:new', function (p) { feed('dex:new', p); });
     core.on('treasure:open', function (p) { feed('treasure:open', p); });
     core.on('sheet:open', function (p) { feed('sheet:open', p); });
+    core.on('star:take', function (p) { feed('star:take', p); });
   }
   wire();
 

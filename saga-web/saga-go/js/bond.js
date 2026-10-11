@@ -52,7 +52,7 @@
   function lvOf(id) { return rec(id).lv; }
 
   /** 성장 배율에 곱할 인연 몫 — hero.stats() 가 부른다. 인연이 없으면 1 */
-  function mulOf(id) { return 1 + STEP * lvOf(id); }
+  function mulOf(id) { return 1 + STEP * lvOf(id) * (global.DG.starchart ? global.DG.starchart.bond() : 1); }   // 인연 몫 × 성도(W-0181)
 
   function strHash(s) {
     var h = 5381;

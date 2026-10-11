@@ -445,11 +445,11 @@
       title: '⚔️ 토벌 — ' + raid.tier.name,
       foeName: raid.hero.name,
       stage3d: { kind: 'hero', ref: raid.hero },
-      foeHp: raid.hp, myAtk: pw.atk, myDef: pw.def,
+      foeHp: raid.hp, myAtk: pw.atk * (global.DG.starchart ? global.DG.starchart.raidAtk() : 1), myDef: pw.def * (global.DG.starchart ? global.DG.starchart.raidDef() : 1),   // × 성도(W-0181)
       /* PLAN §5 ③ — 75초 고정, 부위 3(갑주·병장·기마)·저스트 회피는
          `rogueAction`가 `raid:true` 일 때만 켠다(§10-Q2 "토벌만 적용",
          성채 수비대 쪽 `startFortDuel()`은 그대로 둔다) */
-      timeSec: 75, raid: true,
+      timeSec: (global.DG.starchart ? global.DG.starchart.raidSec(75) : 75), raid: true,   // 속전(성도 규칙)이면 45
       onDone: function (p) {
         /* 한 대도 못 때리고 물러났으면 격문을 쓰지 않는다 */
         if (p.fled && p.dealt <= 0) {

@@ -1,6 +1,6 @@
 // node saga-web/tools/playcheck/passive-shot.mjs <판> → shots/passive_<판>_{390,1280}.png (W-0180~)
 // 패시브 그물(공용 passive-web-ui.js) 겹창을 판 안에서 실제로 열고 몇 마디 찍은 상태 — 카드(경로 점수)·검색 표시까지 띄워 두 크기로 찍는다.
-// 판마다 여는 법은 OPEN 표(판을 잇는 티켓이 한 줄씩 더한다).
+// 판마다 여는 법은 OPEN·BOOT 표(판을 잇는 티켓이 한 줄씩 더한다).
 import { spawn } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -23,6 +23,43 @@ const OPEN = {
     var q = document.querySelector('.pwui-q'); q.value = '치명'; q.dispatchEvent(new Event('input'));
     return cls + ' · 찍음 ' + api.used() + '/' + api.points() + ' · 카드 ' + nx.id + ' ' + nx.cost + '점';
   })()`,
+  /* W-0181 — 주 메뉴 「성도」 단추를 실제로 눌러 열리는지 본 뒤, 같은 겹창을 다시 열어 카드를 띄운다 */
+  'saga-go': `(function(){
+    var C = DG.core, SC = DG.starchart, b = {}, i;
+    for (i = 0; i < 20; i++) { b['shot_' + i] = true; }
+    C.save.beacons = b; C.save.passive = { start: null, taken: [] }; SC._reset();
+    var btn = document.getElementById('btn-star'); if (btn) { btn.click(); }
+    var clicked = !!(DG.passiveWebUI && DG.passiveWebUI.isOpen());
+    var api = SC.api(); api.take('o_roamer');
+    function nearest() { var b = null; DG.passiveDef.nodes.forEach(function (n) { if (n.k !== 'n' || api.isTaken(n.id)) return; var p = api.pathTo(n.id); if (p && (!b || p.cost < b.cost)) b = { id: n.id, cost: p.cost }; }); return b; }
+    api.takePath(nearest().id); api.takePath(nearest().id);
+    var ui = SC.open(), nx = nearest();
+    ui.select(nx.id);
+    var q = document.querySelector('.pwui-q'); q.value = '이동'; q.dispatchEvent(new Event('input'));
+    return '단추 ' + (clicked ? '열림' : '안 열림') + ' · 찍음 ' + api.used() + '/' + api.points() + ' · 카드 ' + nx.id + ' ' + nx.cost + '점';
+  })()`,
+};
+/** 판마다 부팅 — 계정 만들고 이어하기 */
+const BOOT = {
+  'saga-dungeon': async (c, B) => {
+    await c.go(B + 'index.html', 5000);
+    await c.ev(`DG.account && DG.account.create && DG.account.create('경락')`);
+    await c.go(B + 'index.html', 7000);
+    await c.ev(`(function(){ var b = document.getElementById('title-continue'); if (b) b.click(); })()`);
+    await sleep(4000);
+    for (let i = 0; i < 10; i++) { await c.key('Escape', 60); await sleep(200); }
+    await c.ev(`(function(){ var cs = document.querySelectorAll('.stc-cell'); for (var i = 0; i < 3 && i < cs.length; i++) cs[i].click(); var b = document.querySelector('.stc-btn'); if (b) b.click(); })()`);
+    await sleep(2500);
+    for (let i = 0; i < 10; i++) { await c.key('Escape', 60); await sleep(200); }
+  },
+  'saga-go': async (c, B) => {
+    await c.go(B + 'index.html', 6000);
+    await c.ev(`(function(){ if (!document.getElementById('title-continue') && DG.account && DG.account.create) { DG.account.create('성도'); } })()`);
+    await c.go(B + 'index.html', 8000);
+    await c.ev(`(function(){ var b = document.getElementById('title-continue'); if (b) b.click(); })()`);
+    await sleep(4000);
+    for (let i = 0; i < 6; i++) { await c.key('Escape', 60); await sleep(200); }
+  },
 };
 if (!OPEN[GAME]) { console.log('모르는 판 ' + GAME + ' — OPEN 표에 한 줄 더할 것'); process.exit(2); }
 const PORT = 8931, srv = spawn(process.execPath, [path.join(HERE, '..', 'serve-game.mjs'), String(PORT), path.join(HERE, '..', '..', GAME)], { stdio: 'ignore' });
@@ -33,15 +70,7 @@ let fails = 0;
 try {
   await c.send('Network.setBypassServiceWorker', { bypass: true });
   const B = `http://127.0.0.1:${PORT}/`;
-  await c.go(B + 'index.html', 5000);
-  await c.ev(`DG.account && DG.account.create && DG.account.create('경락')`);
-  await c.go(B + 'index.html', 7000);
-  await c.ev(`(function(){ var b = document.getElementById('title-continue'); if (b) b.click(); })()`);
-  await sleep(4000);
-  for (let i = 0; i < 10; i++) { await c.key('Escape', 60); await sleep(200); }
-  await c.ev(`(function(){ var cs = document.querySelectorAll('.stc-cell'); for (var i = 0; i < 3 && i < cs.length; i++) cs[i].click(); var b = document.querySelector('.stc-btn'); if (b) b.click(); })()`);
-  await sleep(2500);
-  for (let i = 0; i < 10; i++) { await c.key('Escape', 60); await sleep(200); }
+  await BOOT[GAME](c, B);
   console.log('열기', await c.ev(OPEN[GAME]));
   for (const [w, h, mobile] of [[390, 844, true], [1280, 720, false]]) {
     await c.send('Emulation.setDeviceMetricsOverride', { width: w, height: h, deviceScaleFactor: 1, mobile });
@@ -55,7 +84,7 @@ try {
       var title = document.querySelector('.pwui-title'), cut = title && title.scrollWidth > title.clientWidth + 1;
       return JSON.stringify({ top: top, card: card, over: !!over, clip: clip, titleCut: !!cut, open: !!document.querySelector('.pwui') });
     })()`));
-    const bad = !lay.open || lay.over || lay.clip;
+    const bad = !lay.open || lay.over || lay.clip || lay.titleCut;
     if (bad) { fails++; }
     console.log(`${w}x${h} ${bad ? 'FAIL' : 'ok'} ${JSON.stringify(lay)}`);
     console.log('  →', await c.shot(`passive_${GAME}_${w}`));

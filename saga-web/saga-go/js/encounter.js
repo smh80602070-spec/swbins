@@ -155,7 +155,7 @@
     // 성향을 3번 다 맞히면 반드시 성공하도록(34*3=102) 하한을 잡는다
     var base = hit ? 34 + Math.random() * 14 : 8 + Math.random() * 10;
     // 부대 평균 능력치가 높으면 설득이 잘 먹힌다
-    base *= 1 + partyStatBonus(key) / 200;
+    base *= (1 + partyStatBonus(key) / 200) * (global.DG.starchart ? global.DG.starchart.recruit() : 1);   // 성도(W-0181) — 말솜씨·야행·큰 그물
     cur.favor += base;
     var appeal = null;
     for (var i = 0; i < data.appeals.length; i++) { if (data.appeals[i].key === key) { appeal = data.appeals[i]; } }
@@ -564,7 +564,7 @@
       var key = core.pick(data.appeals).key;
       var hit = key === h.trait;
       var base = hit ? 34 + Math.random() * 14 : 8 + Math.random() * 10;
-      base *= 1 + partyStatBonus(key) / 200;
+      base *= (1 + partyStatBonus(key) / 200) * (global.DG.starchart ? global.DG.starchart.recruit() : 1);   // 성도(W-0181) — 말솜씨·야행·큰 그물
       favor += base;
       if (favor >= 100) { break; }
     }
