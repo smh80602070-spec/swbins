@@ -26,6 +26,7 @@ extends Node3D
 ## DEFS는 `ForestSaveState.has_tool()`을 먼저 본다. 삽은 상인(villager_
 ## builder.gd의 npc_merchant)에게서 산다.
 
+const ForestCraft := preload("res://games/saga_forest/data/forest_craft.gd")   # G-0196 도구 갈래 덤
 const ForestMap := preload("res://games/saga_forest/data/village_map.gd")
 const TerrainBuilder := preload("res://games/saga_forest/world/forest_terrain_builder.gd")
 const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
@@ -159,6 +160,16 @@ func _gather(d: Dictionary) -> void:
 		Toast.show(self, "%s — 오늘 몫은 이미 다 썼다." % d.name, 2.0)
 		return
 	ForestSaveState.mark_gathered(d.id)
-	ForestSaveState.add_item(d.item_label, 1)
-	Toast.show(self, "%s(을)를 %s — %s +1" % [d.name, d.hint, d.item_label], 2.5)
-	CombatFeel.pickup(_roots.get(d.id), "%s +1" % d.item_label)
+	## G-0196 — 제작대에서 고른 도구 갈래(수확·풍성·손재주)의 덤. 갈래가 없으면 늘 +1 그대로.
+	var tool_key := String(ForestCraft.GATHER_TOOL.get(d.id, ""))
+	var today := ForestDay.today_key()
+	var roll := ForestCraft.gather_roll(ForestCraft.perks(ForestSaveState, tool_key), "%d|%s" % [today, d.id])
+	var n := 1 + int(roll.extra)
+	ForestSaveState.add_item(d.item_label, n)
+	var tail := ""
+	if bool(roll.again) and int(ForestSaveState.knack_used.get(d.id, -1)) != today:
+		ForestSaveState.knack_used[d.id] = today
+		ForestSaveState.used.erase(d.id)
+		tail = " · 손재주 — 오늘 한 번 더"
+	Toast.show(self, "%s(을)를 %s — %s +%d%s" % [d.name, d.hint, d.item_label, n, tail], 2.5)
+	CombatFeel.pickup(_roots.get(d.id), "%s +%d" % [d.item_label, n])

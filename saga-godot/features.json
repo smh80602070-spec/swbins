@@ -3270,5 +3270,27 @@
   "ticket": "G-0195",
   "since": "2026-10-11",
   "note": "창 모드 go_trail Claude 눈 ○ · 흔적 없는 걸을 칸 52%"
+ },
+ {
+  "id": "gd.fs.craft",
+  "name": "3마을 제작대 — 레시피 12(도구 승급 6·가구 짓기 6), 승급마다 수확/풍성/손재주 세 갈래(거절 💰100), 채집 덤",
+  "files": [
+   "games/saga_forest/data/forest_craft.gd",
+   "games/saga_forest/world/craft_bench.gd",
+   "games/saga_forest/world/gatherable_builder.gd",
+   "games/saga_forest/data/forest_save_state.gd",
+   "tools/probe_forest_craft.gd"
+  ],
+  "tests": [
+   "forest_craft",
+   "forest_rules",
+   "forest_world"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0196",
+  "since": "2026-10-11",
+  "note": "창 모드 fs_bench Claude 눈 ○"
  }
 ]

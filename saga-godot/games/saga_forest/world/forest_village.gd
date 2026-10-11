@@ -39,6 +39,7 @@ func _ready() -> void:
 	_scenario = preload("res://games/saga_forest/world/scenario_runner.gd").new()
 	_scenario.name = "ScenarioRunner"
 	add_child(_scenario)
+	add_child(preload("res://games/saga_forest/world/craft_bench.gd").new())   # G-0196 제작대(도구 승급 세 갈래·가구 짓기)
 
 	## 제외 목록 6번(계절행사 8일) — 오늘이 그 여덟 날 중 하나면 들어오자마자
 	## 안내한다(gather_label.gd가 상시 표시하는 것과 별개로, 첫 인상은

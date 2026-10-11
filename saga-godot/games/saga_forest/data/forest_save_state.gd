@@ -35,6 +35,11 @@ var items: Dictionary = {}  # item_label(String) -> count(int)
 ## prop_id(String) -> day_key(int, ForestDay.today_key()). 웹판
 ## village.js의 st().used와 같은 뜻 — "이 채집 대상을 마지막으로 쓴 날".
 var used: Dictionary = {}
+## G-0196 제작대(data/forest_craft.gd) — 도구 단계(key → lv, 없으면 바구니·잠자리채 1·삽은 산 뒤 1)·고른 갈래(key → [축]).
+var tool_lv: Dictionary = {}
+var tool_perks: Dictionary = {}
+## 손재주로 "그 자리가 오늘 한 번 더" 를 쓴 날(prop_id → 날) — 저장 안 함(하루 한 번만 다시 차게)
+var knack_used: Dictionary = {}
 
 ## 3번째 확장(제외 목록 3번 — 주민 5명 전체 + 부탁·선물) — 전부 순수
 ## 추가 필드다(모양이 바뀌는 게 아니라 새 키가 느는 것뿐, GO save_state.gd
@@ -431,6 +436,8 @@ func save() -> bool:
 		"affinity_gained_today": affinity_gained_today,
 		"heart_reward_10": heart_reward_10,
 		"tools": tools,
+		"tool_lv": tool_lv,   # G-0196
+		"tool_perks": tool_perks,
 		"museum_donated": museum_donated,
 		"museum_donated_by_cat": museum_donated_by_cat,
 		"bundles_done": bundles_done,
@@ -486,6 +493,10 @@ func try_load() -> bool:
 	heart_reward_10 = loaded_heart_reward_10 if typeof(loaded_heart_reward_10) == TYPE_DICTIONARY else {}
 	var loaded_tools: Variant = data.get("tools", {})
 	tools = loaded_tools if typeof(loaded_tools) == TYPE_DICTIONARY else {}
+	var loaded_tool_lv: Variant = data.get("tool_lv", {})   # G-0196 — 옛 세이브는 빈 값(바구니·잠자리채 Lv1·삽은 있으면 Lv1)
+	tool_lv = (loaded_tool_lv as Dictionary).duplicate(true) if typeof(loaded_tool_lv) == TYPE_DICTIONARY else {}
+	var loaded_tool_perks: Variant = data.get("tool_perks", {})
+	tool_perks = (loaded_tool_perks as Dictionary).duplicate(true) if typeof(loaded_tool_perks) == TYPE_DICTIONARY else {}
 	museum_donated = int(data.get("museum_donated", 0))
 	var loaded_museum_by_cat: Variant = data.get("museum_donated_by_cat", {})
 	museum_donated_by_cat = loaded_museum_by_cat if typeof(loaded_museum_by_cat) == TYPE_DICTIONARY else {}

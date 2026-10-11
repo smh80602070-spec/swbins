@@ -166,6 +166,7 @@ GODOT=<콘솔 exe> bash saga-godot/tools/probe_all.sh --only=save_dungeon,save_f
 | 1~4 | 물약(`potion_1~4`) |
 
 ### 사가마을 (FOREST)
+- **제작대(G-0196)**: 집 북동쪽 작업대 곁에서 [G] — 채집물로 바구니·잠자리채·삽을 Lv3 까지(올릴 때마다 수확·풍성·손재주 셋 중 하나, 거절하면 💰100), 가구 여섯을 짓는다(집 창고로 — 집 안에서 [H] 로 놓기).
 | 키 | 동작 |
 |---|---|
 | G | 채집(`forest_gather`) |
