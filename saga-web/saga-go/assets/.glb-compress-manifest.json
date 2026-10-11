@@ -35,12 +35,6 @@
     "mode": "mesh-only",
     "at": "2026-10-05T00:58:06.414Z"
   },
-  "models\\animals\\Donkey.glb": {
-    "size": 270232,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:06.950Z"
-  },
   "models\\animals\\Fox.glb": {
     "size": 238140,
     "result": "ok",
@@ -52,18 +46,6 @@
     "result": "ok",
     "mode": "mesh-only",
     "at": "2026-10-05T00:58:08.001Z"
-  },
-  "models\\animals\\Horse.glb": {
-    "size": 274264,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:08.549Z"
-  },
-  "models\\animals\\Horse_White.glb": {
-    "size": 272472,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:09.094Z"
   },
   "models\\animals\\Husky.glb": {
     "size": 228280,

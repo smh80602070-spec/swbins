@@ -91,23 +91,11 @@
     ],
     "at": "2026-10-05T00:59:06.457Z"
   },
-  "models\\animals\\Bird.glb": {
-    "size": 78744,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:59:06.967Z"
-  },
   "models\\animals\\Deer.glb": {
     "size": 236584,
     "result": "ok",
     "mode": "mesh-only",
     "at": "2026-10-05T00:59:07.606Z"
-  },
-  "models\\animals\\Duck.glb": {
-    "size": 8892,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:59:08.048Z"
   },
   "models\\animals\\Fox.glb": {
     "size": 238140,
@@ -121,23 +109,11 @@
     "mode": "mesh-only",
     "at": "2026-10-05T00:59:09.107Z"
   },
-  "models\\animals\\Rabbit.glb": {
-    "size": 112136,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:59:09.570Z"
-  },
   "models\\animals\\Snake.glb": {
     "size": 65416,
     "result": "ok",
     "mode": "mesh-only",
     "at": "2026-10-05T00:59:10.053Z"
-  },
-  "models\\animals\\Squirrel.glb": {
-    "size": 85920,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:59:10.506Z"
   },
   "models\\animals\\Wolf.glb": {
     "size": 241324,

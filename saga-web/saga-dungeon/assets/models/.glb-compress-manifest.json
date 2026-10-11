@@ -4,16 +4,6 @@
     "result": "ok",
     "at": "2026-09-07T03:12:47.593Z"
   },
-  "animals\\Bear.glb": {
-    "size": 22932,
-    "result": "ok",
-    "at": "2026-09-07T03:12:48.337Z"
-  },
-  "animals\\Boar.glb": {
-    "size": 18800,
-    "result": "ok",
-    "at": "2026-09-07T03:12:48.970Z"
-  },
   "animals\\Cat.glb": {
     "size": 38656,
     "result": "ok",
@@ -24,20 +14,10 @@
     "result": "ok",
     "at": "2026-09-07T03:12:50.366Z"
   },
-  "animals\\Crane.glb": {
-    "size": 34432,
-    "result": "ok",
-    "at": "2026-09-07T03:12:51.015Z"
-  },
   "animals\\Deer.glb": {
     "size": 236584,
     "result": "ok",
     "at": "2026-09-07T03:12:51.789Z"
-  },
-  "animals\\Elephant.glb": {
-    "size": 42752,
-    "result": "ok",
-    "at": "2026-09-07T03:12:52.502Z"
   },
   "animals\\Frog.glb": {
     "size": 140172,
@@ -54,30 +34,10 @@
     "result": "ok",
     "at": "2026-09-07T03:12:54.736Z"
   },
-  "animals\\Monkey.glb": {
-    "size": 46852,
-    "result": "ok",
-    "at": "2026-09-07T03:12:55.403Z"
-  },
-  "animals\\Owl.glb": {
-    "size": 56568,
-    "result": "ok",
-    "at": "2026-09-07T03:12:56.145Z"
-  },
-  "animals\\Panda.glb": {
-    "size": 19224,
-    "result": "ok",
-    "at": "2026-09-07T03:12:56.763Z"
-  },
   "animals\\ShibaInu.glb": {
     "size": 291524,
     "result": "ok",
     "at": "2026-09-07T03:12:57.584Z"
-  },
-  "animals\\Tiger.glb": {
-    "size": 53332,
-    "result": "ok",
-    "at": "2026-09-07T03:12:58.277Z"
   },
   "animals\\Wolf.glb": {
     "size": 241324,
