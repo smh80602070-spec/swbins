@@ -250,6 +250,34 @@ namespace Saga.Dungeon.Player
             return trail;
         }
 
+        // tasks U-0105(고돗 G-0203 짝) — "내가 맞았다" 신호: 가장자리 붉게 번쩍(공용 HurtVignette)·머리 위 붉은 숫자·작은 흔들림,
+        // 체력 30% 밑이면 가장자리 맥박(Bind). 받는 피해·무적·사망 규칙은 HeroState 그대로 — 여기선 보이기만.
+        public static readonly Color HurtNumberColor = new Color(1f, 0.3f, 0.25f); // 4종횡 StoryPlayerVitals·1만리 FieldCombat 과 같은 붉음
+        public const float HurtShakeMag = 0.03f, HurtShakeSec = 0.08f;          // PlayerCombat 맞힘 흔들림(0.05/0.08)보다 작게
+        private CameraRig _hurtRig;
+
+        private void OnEnable()
+        {
+            HeroState.Hurt += OnHeroHurt;
+            HurtVignette.Bind(HeroHpFrac, this);
+        }
+
+        private void OnDisable()
+        {
+            HeroState.Hurt -= OnHeroHurt;
+            HurtVignette.Unbind(this);
+        }
+
+        public static float HeroHpFrac() => HeroState.HpMax > 0 ? (float)HeroState.Hp / HeroState.HpMax : 1f;
+
+        private void OnHeroHurt()
+        {
+            HurtVignette.Flash();
+            if (HeroState.LastDealt > 0) DamagePopup.Spawn(transform.position + Vector3.up * 2f, HeroState.LastDealt, HurtNumberColor);
+            if (_hurtRig == null) _hurtRig = cameraRig != null ? cameraRig : GetComponentInChildren<CameraRig>();
+            if (_hurtRig != null) _hurtRig.Shake(HurtShakeMag, HurtShakeSec);
+        }
+
         private void Update() => Step(Time.deltaTime);
 
         /// <summary>한 프레임 — 진단이 시간을 건너뛰려고 직접 부른다.</summary>

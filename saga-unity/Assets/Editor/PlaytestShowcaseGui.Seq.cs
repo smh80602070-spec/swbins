@@ -13,7 +13,7 @@ namespace Saga.EditorTools
     /// `SAGA_SHOT_ACT` — 첫 장 직전에 움직임을 일으킨다(촬영 도구 안에서만, 게임 코드 무변경 · 그 기능 진단이 이미 부르는 공개 함수만):
     /// `walk`(가상 조이스틱 앞으로) · `attack`(사가만리 FieldCombat.Attack / 사가나락 PlayerCombat.TriggerAttack) · `swap`(다음 동료로 교체) ·
     /// `skill:<n>`(n 번 동료로 교체 뒤 Skill) · `roof`(마을집 지붕 남쪽에서 북으로 걷기) · `bossintro`(사가나락 = 진단의 두목 더미, 사가종횡 = 두목 6m 앞으로) ·
-    /// `gesture`(동료 환호) · `worldmap`(사가천하 지도 열기) · `party`·`party2`(모양별 동료 편성 — 스킬 진단과 같은 동료). `realmeras`(U-0091 사가천하 — 시간 틈 사람 묻힌 성 들여 수색·훈련·지도 켬) · `realmtactics`(U-0099 전술판 열고 첫 장수 고름) · `realmannals`(U-0101 열전 넷 심고 서고) · `realmzoom`(U-0102 지도 40m). 대상 `screen` = 화면 그대로 첫·끝 장(오버레이 UI 포함). 판에 없는 동작은 로그에 SKIP. 여러 개는 `+` 로(`walk+attack`).
+    /// `gesture`(동료 환호) · `worldmap`(사가천하 지도 열기) · `party`·`party2`(모양별 동료 편성 — 스킬 진단과 같은 동료). `realmeras`(U-0091 사가천하 — 시간 틈 사람 묻힌 성 들여 수색·훈련·지도 켬) · `realmtactics`(U-0099 전술판 열고 첫 장수 고름) · `realmannals`(U-0101 열전 넷 심고 서고) · `realmzoom`(U-0102 지도 40m) · `hurt`(U-0105 2나락·4종횡 — 체력 35% 에서 한 대 → 첫 장 가장자리 번쩍·붉은 숫자, 끝 장 30% 밑 맥박). 대상 `screen` = 화면 그대로 첫·끝 장(오버레이 UI 포함). 판에 없는 동작은 로그에 SKIP. 여러 개는 `+` 로(`walk+attack`).
     /// </summary>
     public static partial class PlaytestShowcaseGui
     {
@@ -279,6 +279,25 @@ namespace Saga.EditorTools
                     }
                     case "realmtactics":   // U-0099 사가천하 — 격자 전술판을 열고 첫 장수를 고른 채(갈 칸·칠 적 표시)
                         if (Object.FindFirstObjectByType<Saga.Realm.World.RealmMapViewSwitcher>() == null || PlaytestRealmTactics.OpenForShot() == null) { Skip(act); return; }
+                        break;
+                    case "hurt":   // U-0105 "내가 맞았다" — 체력 35% 로 두고 최대치 10% 한 대(→ 약 25%): 첫 장 = 가장자리 번쩍·붉은 숫자, 끝 장 = 30% 밑 맥박
+                        if (Object.FindFirstObjectByType<Saga.Dungeon.Player.PlayerController>() != null)
+                        {
+                            Saga.Dungeon.Data.DungeonScenario.AbortScene(); Saga.Dungeon.UI.DungeonScenarioUi.Instance?.Hide();
+                            typeof(Saga.Dungeon.Data.HeroState).GetProperty(nameof(Saga.Dungeon.Data.HeroState.Hp)).SetValue(null, Mathf.RoundToInt(Saga.Dungeon.Data.HeroState.HpMax * 0.35f));
+                            Saga.Dungeon.Data.HeroState.Invulnerable = false; Saga.Dungeon.Data.HeroState.DamageHold = 0;
+                            Saga.Dungeon.Data.HeroState.TakeDamage(Saga.Dungeon.Data.HeroState.HpMax * 0.1f * Saga.Dungeon.Data.BlessingState.DefMultiplier, "황건적", "근접 타격");
+                            Debug.Log($"[ShowcaseGui] hurt 2나락 {Saga.Dungeon.Data.HeroState.Hp}/{Saga.Dungeon.Data.HeroState.HpMax} −{Saga.Dungeon.Data.HeroState.LastDealt} · 번쩍 {Saga.Core.HurtVignette.FlashCount} 알파 {Saga.Core.HurtVignette.Alpha:F2}");
+                        }
+                        else if (Object.FindFirstObjectByType<Saga.Story.Player.StoryPlayerVitals>() != null)
+                        {
+                            Saga.Story.Data.StoryScenario.AbortScene(); Saga.Story.UI.StoryScenarioUi.Instance?.Hide();
+                            Saga.Story.Data.StoryPlayerHp.HoldForPick = false;
+                            Saga.Story.Data.StoryPlayerHp.SetForTest(Saga.Story.Data.StoryPlayerHp.HpMax * 0.35f);
+                            Saga.Story.Data.StoryPlayerHp.Hurt(Saga.Story.Data.StoryPlayerHp.HpMax * 0.1f);
+                            Debug.Log($"[ShowcaseGui] hurt 4종횡 {Saga.Story.Data.StoryPlayerHp.Hp:F0}/{Saga.Story.Data.StoryPlayerHp.HpMax:F0} · 번쩍 {Saga.Core.HurtVignette.FlashCount} 알파 {Saga.Core.HurtVignette.Alpha:F2}");
+                        }
+                        else { Skip(act); return; }
                         break;
                     default: Skip(act); return;
                 }

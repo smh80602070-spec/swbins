@@ -285,11 +285,20 @@ namespace Saga.Go.Combat
             PartyState.PowerChanged -= OnPowerChanged;
             if (player != null) player.PlungeLanded -= OnPlungeLanded;
             if (Instance == this) Instance = null;
+            HurtVignette.Unbind(this);
+        }
+
+        /// <summary>tasks U-0105 — 지금 나선 인물 체력 비율(없으면 1).</summary>
+        public float ActiveHpFrac()
+        {
+            var m = Active;
+            return m != null && m.MaxHp > 0f ? m.Hp / m.MaxHp : 1f;
         }
 
         private void Start()
         {
             if (GetComponent<FieldCombatHud>() == null) gameObject.AddComponent<FieldCombatHud>();
+            HurtVignette.Bind(ActiveHpFrac, this); // tasks U-0105 — 지금 나선 인물(쓰러져 바뀌면 새 인물) 체력 30% 밑이면 가장자리 맥박
         }
 
         private void OnPowerChanged(float atk, float def) => RebuildParty();
@@ -843,6 +852,7 @@ namespace Saga.Go.Combat
             _sinceHit = 0f;
             Saga.Go.Audio.GoSfx.Play("sword_hurt", 1f, 0.1f); // U-0048
             FieldDamageText.Spawn(transform.position + Vector3.up * 4f, Mathf.RoundToInt(dmg).ToString(), new Color(1f, 0.3f, 0.25f));
+            HurtVignette.Flash(); // tasks U-0105 — 가장자리 붉게 번쩍(회피 무적·굳힘으로 다 막으면 위에서 돌아가 신호 없음)
             if (player != null && player.Animator != null) player.Animator.SetTrigger("Hit");
             if (m.Down) OnMemberDown();
             else if (from != null && from.IsElemental) ApplyFoeStatus(from.Element, dmg);

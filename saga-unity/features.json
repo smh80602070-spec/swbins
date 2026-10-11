@@ -1972,5 +1972,41 @@
   "ticket": "U-0096",
   "since": "2026-10-11",
   "note": "D2(U-0096): docs/playcheck/d2-u0094-u0097-20261011.json — PlaytestGoTrack OK · 흔적·목표판 줄 촬영 Claude 눈 ○ · 무기 빛은 진단 단계 표만(촬영 못 봄) · U-0103 서리봉 고원 흔적 29곳(마을 7 그대로, 고원 셋 → 곰왕) — track OK·고원 촬영 Claude 눈 ○"
+ },
+ {
+  "id": "un.dg.hurt-signal",
+  "name": "U-0105 \"내가 맞았다\" 신호 — 가장자리 붉게 번쩍·체력 30% 밑 맥박(공용 HurtVignette)·머리 위 붉은 숫자·작은 흔들림(고돗 G-0203 짝)",
+  "files": [
+   "saga-unity/Assets/SagaCore/HurtVignette.cs",
+   "saga-unity/Assets/Games/SagaDungeon/Player/PlayerController.cs",
+   "saga-unity/Assets/Games/SagaDungeon/Data/HeroState.cs"
+  ],
+  "tests": [
+   "PlaytestHurtSignal"
+  ],
+  "level": "D2",
+  "verified": "2026-10-12 claude",
+  "fun": {},
+  "ticket": "U-0105",
+  "since": "2026-10-12",
+  "note": "D2(U-0105): PlaytestDungeonHeadless hurt OK(진짜 TakeDamage 번쩍 1·붉은 숫자 1·흔들림 0.03/0.08·무적 0·25% 맥박·50% 꺼짐) · 촬영 Claude 눈 ○ 가장자리 붉음·가운데 안 가림(번쩍/맥박 둘 다) · 붉은 숫자는 옆 카메라에서 떠오르는 붉은 글 ○(게임 카메라가 GUI 창에서 바닥만 비춰 화면 위 숫자는 못 봄 △)"
+ },
+ {
+  "id": "un.st.hurt-signal",
+  "name": "U-0105 \"내가 맞았다\" 신호 — 4종횡 가장자리 붉게 번쩍·체력 30% 밑 맥박(공용 HurtVignette, 붉은 숫자·흔들림은 기존) + 1만리 번쩍·나선 인물 맥박",
+  "files": [
+   "saga-unity/Assets/SagaCore/HurtVignette.cs",
+   "saga-unity/Assets/Games/SagaStory/Player/StoryPlayerVitals.cs",
+   "saga-unity/Assets/Games/SagaGo/Combat/FieldCombat.cs"
+  ],
+  "tests": [
+   "PlaytestHurtSignal"
+  ],
+  "level": "D2",
+  "verified": "2026-10-12 claude",
+  "fun": {},
+  "ticket": "U-0105",
+  "since": "2026-10-12",
+  "note": "D2(U-0105): PlaytestStorySlice 사슬 hurt OK(진짜 Hurt 번쩍 1·붉은 숫자 1·무적 0·25% 맥박·50% 꺼짐) · PlaytestHeadless hurt OK(1만리 ReceiveStrike 번쩍·회피 0·20% 맥박) · 촬영 Claude 눈 ○ 맞는 순간 가장자리 붉음+붉은 숫자 22·체력 56/222 맥박·가운데 안 가림 · 스토리 사슬 뒤 PartySwapTest 는 이 티켓 전부터 실패(활성 역할 2)"
  }
 ]

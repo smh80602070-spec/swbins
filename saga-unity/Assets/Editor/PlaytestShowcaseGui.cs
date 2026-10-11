@@ -81,6 +81,12 @@ namespace Saga.EditorTools
                 Saga.Go.Data.EggState.Discover(pet);
                 Debug.Log($"[ShowcaseGui] buddy {pet} {Saga.Go.Data.EggState.SetBuddy(pet)}");
             }
+            // U-0105 `hurt` — 판 첫 장면(이야기 창·컷 카메라)이 화면을 덮지 않게 진단처럼 첫 프레임에 끈다(촬영 프로세스 안에서만)
+            if (_frame == 0 && (System.Environment.GetEnvironmentVariable("SAGA_SHOT_ACT") ?? "").Contains("hurt"))
+            {
+                Saga.Dungeon.Data.DungeonTutorial.Enabled = false; Saga.Dungeon.Data.DungeonScenario.Enabled = false; Saga.Dungeon.Data.DungeonScenario.AbortScene(); Saga.Dungeon.UI.DungeonScenarioUi.Instance?.Hide();
+                Saga.Story.Data.StoryTutorial.Enabled = false; Saga.Story.Data.StoryScenario.Enabled = false; Saga.Story.Data.StoryScenario.AbortScene(); Saga.Story.UI.StoryScenarioUi.Instance?.Hide();
+            }
             // U-0056 몸 프리팹 애니메이터는 CullUpdateTransforms 라 메인 카메라 밖 몸은 자세를 안 쓴다 — 촬영 카메라가 한 프레임에 찍으면 T자세로 나온다.
             // 촬영 전 마지막 30 프레임은 전부 AlwaysAnimate 로 돌려 실제 자세가 서게 한다(게임 동작은 안 바꾼다 — 촬영 도구 안에서만).
             if (++_frame >= WarmupFrames - 30 && !_stage1)

@@ -84,6 +84,9 @@ namespace Saga.Dungeon.Data
         /// <summary>PLAN.md 109-15 — 실제로 맞았을 때(무적·0 피해 제외) 쏜다(탈것에서 저절로 내린다).</summary>
         public static event Action Hurt;
 
+        /// <summary>tasks U-0105 — 마지막 <see cref="TakeDamage"/> 가 실제로 깎은 체력(붉은 숫자용). 값·규칙은 그대로, 읽기만.</summary>
+        public static int LastDealt { get; private set; }
+
         /// <summary>PLAN.md 101-3 G "장비 가시화" — `WeaponVisual`이 무기를
         /// 다시 쥐어야 할 때만 구독(`EquipIfBetter`가 실제로 바뀔 때만
         /// 부른다 — `LeveledUp`과 같은 결).</summary>
@@ -152,7 +155,9 @@ namespace Saga.Dungeon.Data
             if (Invulnerable || DamageHold > 0 || amount <= 0f || Hp <= 0) return;
             LastHitWho = who;
             LastHitHow = how;
+            int before = Hp;
             Hp = Math.Max(0, Hp - RoundInt(amount / BlessingState.DefMultiplier));
+            LastDealt = before - Hp;
             Saga.Dungeon.Audio.SfxPlayer.Play("sword_hurt", minGap: HurtSfxGap); // tasks U-0104 — 피격(연타는 한 번).
             Hurt?.Invoke();
             if (Hp <= 0) Died?.Invoke(DropGoldAsGrave());

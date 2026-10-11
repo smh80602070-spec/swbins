@@ -31,12 +31,16 @@ namespace Saga.Story.Player
         {
             StoryPlayerHp.Hurted += OnHurt;
             StoryPlayerHp.Fell += OnFell;
+            HurtVignette.Bind(HpFrac, this); // tasks U-0105 — 체력 30% 밑이면 가장자리 맥박
         }
+
+        public static float HpFrac() => StoryPlayerHp.HpMax > 0f ? StoryPlayerHp.Hp / StoryPlayerHp.HpMax : 1f;
 
         private void OnDisable()
         {
             StoryPlayerHp.Hurted -= OnHurt;
             StoryPlayerHp.Fell -= OnFell;
+            HurtVignette.Unbind(this);
         }
 
         private void Update()
@@ -51,6 +55,7 @@ namespace Saga.Story.Player
             if (animator != null && animator.runtimeAnimatorController != null) animator.SetTrigger("Hit");
             DamagePopup.Spawn(transform.position + Vector3.up * 2f, amount, HurtColor);
             StoryCameraFollow.Instance?.Shake(0.1f, 0.18f);
+            HurtVignette.Flash(); // tasks U-0105 — 가장자리 붉게 번쩍(받아치기·무적으로 막히면 Hurted 가 안 와 신호 없음)
         }
 
         private void OnFell()
