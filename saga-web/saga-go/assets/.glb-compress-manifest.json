@@ -1,57 +1,9 @@
 {
-  "models\\animals\\Alpaca.glb": {
-    "size": 242928,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:03.837Z"
-  },
-  "models\\animals\\Birb.glb": {
-    "size": 49960,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:04.320Z"
-  },
-  "models\\animals\\Bull.glb": {
-    "size": 244192,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:04.867Z"
-  },
-  "models\\animals\\Cow.glb": {
-    "size": 243512,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:05.418Z"
-  },
-  "models\\animals\\Deer.glb": {
-    "size": 236584,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:05.959Z"
-  },
   "models\\animals\\Dolphin.glb": {
     "size": 22720,
     "result": "ok",
     "mode": "mesh-only",
     "at": "2026-10-05T00:58:06.414Z"
-  },
-  "models\\animals\\Fox.glb": {
-    "size": 238140,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:07.481Z"
-  },
-  "models\\animals\\Frog.glb": {
-    "size": 140172,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:08.001Z"
-  },
-  "models\\animals\\Husky.glb": {
-    "size": 228280,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:09.647Z"
   },
   "models\\animals\\Koi.glb": {
     "size": 53048,
@@ -65,71 +17,11 @@
     "mode": "mesh-only",
     "at": "2026-10-05T00:58:10.597Z"
   },
-  "models\\animals\\Pigeon.glb": {
-    "size": 35964,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:11.063Z"
-  },
   "models\\animals\\Shark.glb": {
     "size": 24324,
     "result": "ok",
     "mode": "mesh-only",
     "at": "2026-10-05T00:58:11.522Z"
-  },
-  "models\\animals\\ShibaInu.glb": {
-    "size": 218768,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:12.051Z"
-  },
-  "models\\animals\\Snake.glb": {
-    "size": 65416,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:12.535Z"
-  },
-  "models\\animals\\Snake_angry.glb": {
-    "size": 66676,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:13.016Z"
-  },
-  "models\\animals\\Stag.glb": {
-    "size": 232972,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:13.556Z"
-  },
-  "models\\animals\\Stegosaurus.glb": {
-    "size": 151724,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:14.066Z"
-  },
-  "models\\animals\\Trex.glb": {
-    "size": 126896,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:14.575Z"
-  },
-  "models\\animals\\Triceratops.glb": {
-    "size": 125952,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:15.070Z"
-  },
-  "models\\animals\\Velociraptor.glb": {
-    "size": 111100,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:15.554Z"
-  },
-  "models\\animals\\Wolf.glb": {
-    "size": 241324,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:58:16.079Z"
   },
   "models\\buildings\\Blacksmith.glb": {
     "size": 97444,

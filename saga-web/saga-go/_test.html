@@ -8818,10 +8818,10 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
     });
 
     t('자체 동물·탈것(W-0163) — 빌린 동물·탈것 경로가 creatures3d/<id>.glb 로 바뀌고(공용 주소가 잡혔을 때), 짝 없는 경로·손잡이 0 이면 null(옛 경로)', function () {
-      var A = DG.assets3d, C = DG.core, r0 = A.root ? A.root() : null, t = A.creatureFor('assets/models/animals/Tiger.glb'), h = A.creatureFor('assets/models/animals_extra/Horse_White.glb'), f = A.creatureFor('assets/models/animals/Fox.glb'), off;
+      var A = DG.assets3d, C = DG.core, r0 = A.root ? A.root() : null, t = A.creatureFor('assets/models/animals/Tiger.glb'), h = A.creatureFor('assets/models/animals_extra/Horse_White.glb'), f = A.creatureFor('assets/models/animals_extra2/Koi.glb'), off;   // W-0178 — 여우는 이제 짝이 있다, 짝 없는 예는 물고기(⑤ 아직)
       C.setTune('assets3d.creature', 0); off = A.creatureFor('assets/models/animals/Tiger.glb'); C.setTune('assets3d.creature', null);
       var ends = function (u, tail) { return !!u && u.slice(-tail.length) === tail; };
-      var r = [f === null, off === null, Object.keys(A.CREATURE_OF).length === 19, r0 ? (ends(t, 'creatures3d/tiger.glb') && ends(h, 'creatures3d/horse_white.glb')) : t === null];
+      var r = [f === null, off === null, Object.keys(A.CREATURE_OF).length >= 19, r0 ? (ends(t, 'creatures3d/tiger.glb') && ends(h, 'creatures3d/horse_white.glb')) : t === null];
       return r.every(Boolean) && ('호랑이 → ' + (t || '(공용 주소 없음)')) || '실패 ' + r.join(',');
     });
     t('검기 띠(W-0173) — 한손검 1타 가로·2타 반대로 비스듬·3타 세로(크게), 큰날은 더 넓고 두껍게, 창은 곧은 찌르기 띠, 서책·활은 없음 · 손잡이 field.slashFx 0 이면 안 그림', function () {
@@ -8829,6 +8829,24 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       C.setTune('field.slashFx', 0); off = S3.swing('sword', 0, 0, 0, 0); C.setTune('field.slashFx', null);
       var r = [a.kind === 'arc' && Math.abs(a.tilt) < 0.3, b.dir === -1 && b.tilt < 0, Math.abs(c.tilt - Math.PI / 2) < 1e-9 && c.r > a.r, k.r > a.r && k.w > a.w, p.kind === 'thrust' && p.r > S3.arcSpec('polearm', 0).r, q.kind === null, off === null];
       return r.every(Boolean) && '검 가로·반대·세로 · 큰날 넓게 · 창 찌르기 · 활 없음' || '실패 ' + r.join(',');
+    });
+    t('assets3d: 빌린 짐승·괴물 → 자체 creatures3d(W-0178) — 폴더·해시 이름을 가려 짝을 찾고, 괴물 팩 Cat·Frog·quaternius2 Snake 는 안 바꾼다 · 짝 68 이 다 id 표에 있고 · 동작 일곱 이름이 mapClips 자리를 다 채운다', function () {
+      var AS = DG.assets3d, ids = {}, live = !!(AS.url && AS.url('creature', 'fox')), bad = [];
+      (DG.assets3dIds.creature || []).forEach(function (x) { ids[x] = 1; });
+      var CASES = [['animals/Fox.glb', 'fox'], ['animals_extra/Cow_Farm.glb', 'cow_farm'], ['animals_extra2/T_Rex.glb', 'trex'], ['standin/Snake_angry.glb', 'snake'],
+        ['monsters/quaternius/Goleling_Evolved_d6308fbf.glb', 'goleling_evolved'], ['monsters/quaternius/Birb_05dac745.glb', 'birb'], ['monsters/quaternius2/FrogEnemy.glb', 'frog_brute'],
+        ['monsters/quaternius_dino/Velociraptor.glb', 'raptor'], ['foes/Robot_Drone.glb', 'robot_drone'], ['monsters/space/EnemySmall.glb', 'space_bug'], ['monsters/Mushnub_55c64684.glb', 'mushnub'],
+        ['monsters/quaternius/Cat_7ccb71fe.glb', null], ['monsters/quaternius/Frog_9018566d.glb', null], ['monsters/quaternius2/Snake.glb', null], ['standin/Cat_Monster.glb', null],
+        ['foes/Alien.glb', null], ['buildings/space/House_Single.glb', null], ['animals_extra2/Koi.glb', null], ['people/regular/Fox.glb', null]];
+      CASES.forEach(function (c) {
+        var got = AS.creatureFor('assets/models/' + c[0]);
+        var ok = c[1] ? (live ? !!got && got.slice(-(c[1].length + 4)) === c[1] + '.glb' : AS.CREATURE_OF[c[0].split('/').pop().replace(/(_[0-9a-f]{8})?\.glb$/, '')] === c[1]) : got === null;
+        if (!ok) { bad.push(c[0] + '→' + got); }
+      });
+      var dangling = Object.keys(AS.CREATURE_OF).filter(function (k) { return !ids[AS.CREATURE_OF[k]]; });
+      var mc = DG.asset3d.mapClips(['Idle', 'Walk', 'Run', 'Attack', 'Hit', 'Death', 'Special']), slots = ['idle', 'walk', 'run', 'attack', 'hit', 'death'].filter(function (k) { return mc[k] && !(mc.alias || {})[k]; });
+      return bad.length === 0 && dangling.length === 0 && slots.length === 6 && ('짝 ' + CASES.length + '건(' + (live ? '실제 주소' : '표만') + ') · 짝 이름 ' + Object.keys(AS.CREATURE_OF).length + ' → id 표에 다 있음 · 동작 여섯 자리 원본으로') ||
+        ('실패 ' + bad.join(' ') + ' · 표에 없음 ' + dangling.join(',') + ' · 자리 ' + slots.join(','));
     });
     /* ── W-0174 조작 한 벌 — 진단 다섯(①~④ 여기, ⑤ 재미표준 E 는 재미 표준 절) ── */
     function w174Clear(fn) {

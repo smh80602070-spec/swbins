@@ -91,36 +91,6 @@
     ],
     "at": "2026-10-05T00:59:06.457Z"
   },
-  "models\\animals\\Deer.glb": {
-    "size": 236584,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:59:07.606Z"
-  },
-  "models\\animals\\Fox.glb": {
-    "size": 238140,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:59:08.585Z"
-  },
-  "models\\animals\\Frog.glb": {
-    "size": 140172,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:59:09.107Z"
-  },
-  "models\\animals\\Snake.glb": {
-    "size": 65416,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:59:10.053Z"
-  },
-  "models\\animals\\Wolf.glb": {
-    "size": 241324,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T00:59:11.050Z"
-  },
   "models\\buildings\\kenney_parts\\chimney.glb": {
     "size": 4656,
     "result": "kept-original",
@@ -739,23 +709,5 @@
     "result": "ok",
     "mode": "mesh-only",
     "at": "2026-10-05T01:00:10.539Z"
-  },
-  "models\\standin\\Birb.glb": {
-    "size": 49960,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T01:00:11.038Z"
-  },
-  "models\\standin\\Pigeon.glb": {
-    "size": 35964,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T01:00:11.517Z"
-  },
-  "models\\standin\\Snake_angry.glb": {
-    "size": 66676,
-    "result": "ok",
-    "mode": "mesh-only",
-    "at": "2026-10-05T01:00:12.005Z"
   }
 }

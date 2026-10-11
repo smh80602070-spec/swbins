@@ -4,45 +4,10 @@
     "result": "ok",
     "at": "2026-09-07T03:12:47.593Z"
   },
-  "animals\\Cat.glb": {
-    "size": 38656,
-    "result": "ok",
-    "at": "2026-09-07T03:12:49.646Z"
-  },
-  "animals\\Cow.glb": {
-    "size": 243512,
-    "result": "ok",
-    "at": "2026-09-07T03:12:50.366Z"
-  },
-  "animals\\Deer.glb": {
-    "size": 236584,
-    "result": "ok",
-    "at": "2026-09-07T03:12:51.789Z"
-  },
-  "animals\\Frog.glb": {
-    "size": 140172,
-    "result": "ok",
-    "at": "2026-09-07T03:12:53.249Z"
-  },
-  "animals\\Husky.glb": {
-    "size": 330880,
-    "result": "ok",
-    "at": "2026-09-07T03:12:54.087Z"
-  },
   "animals\\Koi.glb": {
     "size": 53048,
     "result": "ok",
     "at": "2026-09-07T03:12:54.736Z"
-  },
-  "animals\\ShibaInu.glb": {
-    "size": 291524,
-    "result": "ok",
-    "at": "2026-09-07T03:12:57.584Z"
-  },
-  "animals\\Wolf.glb": {
-    "size": 241324,
-    "result": "ok",
-    "at": "2026-09-07T03:12:59.028Z"
   },
   "buildings\\Bell_Tower.glb": {
     "size": 135736,

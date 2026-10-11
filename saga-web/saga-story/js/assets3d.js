@@ -116,12 +116,28 @@
    *  짝 표는 tools/ai-art/remote3d/k96_targets.json `borrowed` 와 같다. 손잡이 `assets3d.creature` 0 = 옛 빌린 모델 */
   var CREATURE_OF = { Tiger: 'tiger', Bear: 'bear', Panda: 'panda', Monkey: 'monkey', Boar: 'boar', Owl: 'owl', Crane: 'crane', Elephant: 'elephant',
     Rabbit: 'rabbit', Squirrel: 'squirrel', Duck: 'duck', Bird: 'sparrow', SlimeEnemy: 'slime',
-    Horse: 'horse', White_Horse: 'horse_white', Horse_White: 'horse_white', Horse_Farm: 'horse_farm', Donkey: 'donkey', Zebra: 'zebra' };
+    Horse: 'horse', White_Horse: 'horse_white', Horse_White: 'horse_white', Horse_Farm: 'horse_farm', Donkey: 'donkey', Zebra: 'zebra',
+    /* W-0178 — K-0096 ③ 들·집 짐승·공룡 26 · ④ 괴물(Ultimate Monsters·2nd pack·로봇·우주) 24(cat_monster ✗ 는 K 산출에 없음) */
+    Fox: 'fox', Wolf: 'wolf', Deer: 'deer', Stag: 'stag', Cow: 'cow', Cow_Farm: 'cow_farm', Bull: 'bull', Sheep: 'sheep', Pig: 'pig', Llama: 'llama',
+    Alpaca: 'alpaca', Cat: 'cat', ShibaInu: 'shiba', Husky: 'husky', Pug: 'pug', Frog: 'frog', Snake: 'snake', Snake_angry: 'snake', Worm: 'worm',
+    Pigeon: 'pigeon', Birb: 'birb', Velociraptor: 'raptor', T_Rex: 'trex', Trex: 'trex', Triceratops: 'triceratops', Stegosaurus: 'stegosaurus',
+    Parasaurolophus: 'parasaurolophus', Apatosaurus: 'apatosaurus',
+    Mushnub: 'mushnub', Dino: 'dino_pet', Squidle: 'squidle', Glub: 'glub', Glub_Evolved: 'glub_evolved', Bunny: 'bunny', Monkroose: 'monkroose',
+    Pink_Slime: 'pink_slime', Ghost: 'ghost', Alpaking: 'alpaking', Dragon: 'dragon', Dragon_Evolved: 'dragon_evolved', Goleling: 'goleling',
+    Goleling_Evolved: 'goleling_evolved', Hywirl: 'hywirl', Ghost_Skull: 'ghost_skull', Rat: 'rat', Wasp: 'wasp', Spider: 'spider',
+    FrogEnemy: 'frog_brute', Robot_Drone: 'robot_drone', Robot_Walker: 'robot_walker', Robot_Large: 'robot_large', EnemySmall: 'space_bug' };
+  /** 폴더마다 같은 이름이 다른 몸인 것 — 괴물 팩(quaternius)의 Cat·Frog 는 괴물 고양이(✗ 판정)·괴물 개구리, quaternius2 의 Snake 는 괴물 뱀이라 안 바꾼다 */
+  var CREATURE_DIR_SKIP = { quaternius: { Cat: 1, Frog: 1 }, quaternius2: { Snake: 1 } };
+  /** 눈 판정(W-0178 3단계)에서 옛것보다 못한 id — 빌린 모델을 그대로 둔다(K 다시 굽기 수신함) */
+  var CREATURE_SKIP = {};
+  var CREATURE_DIRS = /(?:^|\/)(animals|animals_extra|animals_extra2|standin|community|troops|monsters|quaternius|quaternius2|quaternius_dino|robots|space|foes)\/([A-Za-z_]+?)(?:_[0-9a-f]{8})?\.glb$/;
   function creatureFor(path) {
     var C = global.DG && global.DG.core;
     if (C && C.tuned && !C.tuned('assets3d.creature', 1)) { return null; }
-    var m = /(?:^|\/)(animals|animals_extra|standin|community|troops)\/([A-Za-z_]+)\.glb$/.exec(String(path || ''));
-    return m && CREATURE_OF[m[2]] ? url('creature', CREATURE_OF[m[2]]) : null;
+    var m = CREATURE_DIRS.exec(String(path || ''));   // 괴물 팩은 이름 끝에 해시(`Goleling_51bf31d7.glb`)가 붙어 있다 — 떼고 본다
+    if (!m || (CREATURE_DIR_SKIP[m[1]] && CREATURE_DIR_SKIP[m[1]][m[2]])) { return null; }
+    var id = CREATURE_OF[m[2]];
+    return id && !CREATURE_SKIP[id] ? url('creature', id) : null;
   }
 
   global.DG = global.DG || {};
@@ -197,7 +213,7 @@
   }
 
   global.DG.assets3d = {
-    url: url, spriteUrl: spriteUrl, creatureFor: creatureFor, CREATURE_OF: CREATURE_OF, probe: probe, heroRecipe: heroRecipe, borrowRecipe: borrowRecipe, borrowPick: borrowPick, borrowTable: borrowTable, applyProps: applyProps,
+    url: url, spriteUrl: spriteUrl, creatureFor: creatureFor, CREATURE_OF: CREATURE_OF, CREATURE_SKIP: CREATURE_SKIP, CREATURE_DIR_SKIP: CREATURE_DIR_SKIP, probe: probe, heroRecipe: heroRecipe, borrowRecipe: borrowRecipe, borrowPick: borrowPick, borrowTable: borrowTable, applyProps: applyProps,
     has: function (kind, id) { return !!set(kind)[id]; },
     /** 진단·점검용 — 'init' | 'probing' | 'ok' | 'fail' */
     state: function () { return state; },

@@ -4,11 +4,6 @@
     "result": "ok",
     "at": "2026-09-07T05:11:55.724Z"
   },
-  "Apatosaurus.glb": {
-    "size": 132864,
-    "result": "ok",
-    "at": "2026-09-07T05:11:56.708Z"
-  },
   "Armored_Catfish.glb": {
     "size": 47056,
     "result": "ok",
@@ -109,11 +104,6 @@
     "result": "ok",
     "at": "2026-09-07T05:12:14.319Z"
   },
-  "Parasaurolophus.glb": {
-    "size": 116256,
-    "result": "ok",
-    "at": "2026-09-07T05:12:15.146Z"
-  },
   "Parrot_Fish.glb": {
     "size": 50948,
     "result": "ok",
@@ -144,11 +134,6 @@
     "result": "ok",
     "at": "2026-09-07T05:12:20.501Z"
   },
-  "Stegosaurus.glb": {
-    "size": 151724,
-    "result": "ok",
-    "at": "2026-09-07T05:12:21.562Z"
-  },
   "Sunfish.glb": {
     "size": 46356,
     "result": "ok",
@@ -169,11 +154,6 @@
     "result": "ok",
     "at": "2026-09-07T05:12:25.065Z"
   },
-  "Triceratops.glb": {
-    "size": 125952,
-    "result": "ok",
-    "at": "2026-09-07T05:12:25.895Z"
-  },
   "Tuna.glb": {
     "size": 55224,
     "result": "ok",
@@ -183,21 +163,6 @@
     "size": 49904,
     "result": "ok",
     "at": "2026-09-07T05:12:27.586Z"
-  },
-  "T_Rex.glb": {
-    "size": 126896,
-    "result": "ok",
-    "at": "2026-09-07T05:12:28.468Z"
-  },
-  "Velociraptor.glb": {
-    "size": 111100,
-    "result": "ok",
-    "at": "2026-09-07T05:12:29.296Z"
-  },
-  "Worm.glb": {
-    "size": 7400,
-    "result": "ok",
-    "at": "2026-09-07T05:12:30.068Z"
   },
   "Yellow_Tang.glb": {
     "size": 45936,

@@ -353,7 +353,7 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099)."
+  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). · W-0178(10-11): 빌린 들·집 짐승·공룡·괴물 50종(Quaternius) → 자체판 creatures3d 로 바꿔 끼우고(shared assets3d.creatureFor — 괴물 팩 해시 이름·폴더 예외) 빌린 GLB 지움."
  },
  {
   "id": "st.post3d",
