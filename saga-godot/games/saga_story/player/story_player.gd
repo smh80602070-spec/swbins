@@ -3,6 +3,8 @@ extends StorySkillsMage
 const StoryLook := preload("res://games/saga_story/data/story_look.gd")   # G-0187
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const Voice := preload("res://saga_core/audio/voice.gd")   # G-0111 대사 음성
+const HURT_SHAKE_M := 0.12   # G-0192 맞을 때 세계 흔들림
+const HURT_SHAKE_SEC := 0.18
 
 ## 사가종횡 플레이어 코어 — 이동·피해·상태·_physics_process. 상태 변수는 story_player_base.gd, 무예 `_cast_*` 는 story_skills_*.gd (상속 사슬, G-0007).
 
@@ -30,6 +32,10 @@ func take_damage(amount: float) -> void:
 	## PLAN 101-2 STORY ⑤(비경) — 방어 축 은사(철벽)의 dmg_taken_mult(),
 	## 회차 밖이면 boons가 비어 있어 1.0(무해).
 	hp = clampf(hp - amount * (1.0 - cut) * guard_mul * StoryLabyrinthState.dmg_taken_mult(), 0.0, max_hp)
+	## G-0192 — 맞으면 세계가 흔들린다(때릴 때의 combat_feel 0.06m·120ms 보다 세게)
+	var rig := get_tree().get_first_node_in_group("camera_rig") if is_inside_tree() else null
+	if rig != null and rig.has_method("shake"):
+		rig.shake(HURT_SHAKE_M, HURT_SHAKE_SEC)
 
 
 ## PLAN 101-2 STORY ⑤(비경) — StoryLabyrinthState가 healOnPick·healOnClear를

@@ -3188,5 +3188,23 @@
   "ticket": "G-0187",
   "since": "2026-10-11",
   "note": "G-0187(10-11) 창 모드 st_field_front·st_forest_front·st_ladder Claude 눈 ○"
+ },
+ {
+  "id": "gd.st.world_shake",
+  "name": "4종횡 세계 흔들림 — 때림 손맛 0.06m·120ms, 맞으면 0.12m·0.18초(사냥터 카메라가 camera_rig 그룹)",
+  "files": [
+   "games/saga_story/world/story_camera.gd",
+   "games/saga_story/player/story_player.gd",
+   "tools/probe_story_shake.gd"
+  ],
+  "tests": [
+   "story_shake",
+   "story_golden"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0192",
+  "since": "2026-10-11"
  }
 ]
