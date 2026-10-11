@@ -702,12 +702,13 @@
    "id": "cat_monster",
    "group": "4-monster",
    "borrowed": "Quaternius CC0 Ultimate Monsters — Cat_Monster (D·F G S standin)",
-   "input": "tools/ai-art/_out/remote3d_in_k96c4/cat_monster.png",
+   "input": "tools/ai-art/_out/remote3d_in_k96d3/cat_monster.png",
    "status": "있음(txt2img)",
    "note": "보임: 펫",
    "height": 0.6,
    "rig": "quad",
-   "judge_b": "✗ 세 번(v04·v01·v03, 배경 미리 지움 포함) 다 납작 판 — 남음: 정면 귀여운 고양이 그림이 TRELLIS 를 판으로 만듦, 3/4 몸통 그림을 새로 뽑아야"
+   "judge_b": "○ 네발 3/4 새 그림 k96_views_D2 v02(배경 미리 지움) · 뒤쪽 어두움 △",
+   "yaw": 0
   },
   {
    "id": "goleling",
