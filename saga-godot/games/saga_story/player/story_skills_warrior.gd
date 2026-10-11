@@ -13,6 +13,7 @@ func _cast_warrior_cut() -> void:
 		return
 	_cd_warrior_cut = StoryCombat.WARRIOR_CUT_CD
 	mp -= StoryCombat.WARRIOR_CUT_COST
+	_skill_fx_of("w_cut")
 	_play_anim("sprint")
 	_melee_hit(ATTACK_RANGE, StoryCombat.skill_mul(StoryCombat.WARRIOR_CUT_BASE, StoryCombat.WARRIOR_CUT_PER, lv))
 
@@ -27,6 +28,7 @@ func _cast_warrior_whirl() -> void:
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.WARRIOR_WHIRL_BASE, StoryCombat.WARRIOR_WHIRL_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.WARRIOR_WHIRL_RANGE_MUL
+	_skill_fx_of("w_whirl", range_m)
 	for enemy in get_tree().get_nodes_in_group("story_enemy"):
 		var e := enemy as Node3D
 		if e == null:
@@ -37,7 +39,7 @@ func _cast_warrior_whirl() -> void:
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
 		StorySaveState.note_player_hit()   # G-0197 연속 타격
-		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
+		_hit_feel(e, roll)
 
 
 ## 돌진(w_rush) — dash. 이 슬라이스엔 원문처럼 부드러운 이동 애니메이션을
@@ -51,6 +53,7 @@ func _cast_warrior_rush() -> void:
 		return
 	_cd_warrior_rush = StoryCombat.WARRIOR_RUSH_CD
 	mp -= StoryCombat.WARRIOR_RUSH_COST
+	_skill_fx_of("w_rush")
 	_play_anim("sprint")
 	var dist_m := StoryCombat.warrior_rush_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.WARRIOR_RUSH_BASE, StoryCombat.WARRIOR_RUSH_PER, lv))
@@ -66,6 +69,7 @@ func _cast_warrior_iron() -> void:
 		return
 	_cd_warrior_iron = StoryCombat.WARRIOR_IRON_CD
 	mp -= StoryCombat.WARRIOR_IRON_COST
+	_skill_fx_of("w_iron")
 	_job_buff_time_left = StoryCombat.WARRIOR_IRON_SEC
 	_job_buff_atk_mul = StoryCombat.WARRIOR_IRON_ATK_MUL
 	_job_buff_guard = StoryCombat.WARRIOR_IRON_GUARD
@@ -80,6 +84,7 @@ func _cast_warrior_edge() -> void:
 		return
 	_cd_warrior_edge = StoryCombat.WARRIOR_EDGE_CD
 	mp -= StoryCombat.WARRIOR_EDGE_COST
+	_skill_fx_of("w_edge")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.WARRIOR_EDGE_BASE, StoryCombat.WARRIOR_EDGE_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.WARRIOR_EDGE_RANGE_MUL, mul)
@@ -92,6 +97,7 @@ func _cast_warrior_vital() -> void:
 		return
 	_cd_warrior_vital = StoryCombat.WARRIOR_VITAL_CD
 	mp -= StoryCombat.WARRIOR_VITAL_COST
+	_skill_fx_of("w_vital")
 	var pct := StoryCombat.skill_mul(StoryCombat.WARRIOR_VITAL_BASE, StoryCombat.WARRIOR_VITAL_PER, lv)
 	hp = clampf(hp + max_hp * pct, 0.0, max_hp)
 
@@ -103,6 +109,7 @@ func _cast_general_smash() -> void:
 		return
 	_cd_general_smash = StoryCombat.GENERAL_SMASH_CD
 	mp -= StoryCombat.GENERAL_SMASH_COST
+	_skill_fx_of("g_smash")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.GENERAL_SMASH_BASE, StoryCombat.GENERAL_SMASH_PER, lv)
 	for i in StoryCombat.GENERAL_SMASH_HITS:
@@ -119,6 +126,7 @@ func _cast_general_roar() -> void:
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.GENERAL_ROAR_BASE, StoryCombat.GENERAL_ROAR_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.GENERAL_ROAR_RANGE_MUL
+	_skill_fx_of("g_roar", range_m)
 	for enemy in get_tree().get_nodes_in_group("story_enemy"):
 		var e := enemy as Node3D
 		if e == null:
@@ -129,7 +137,7 @@ func _cast_general_roar() -> void:
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
 		StorySaveState.note_player_hit()   # G-0197 연속 타격
-		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
+		_hit_feel(e, roll)
 
 
 ## 철벽(g_wall) — buff, 대미지 없음.
@@ -138,6 +146,7 @@ func _cast_general_wall() -> void:
 		return
 	_cd_general_wall = StoryCombat.GENERAL_WALL_CD
 	mp -= StoryCombat.GENERAL_WALL_COST
+	_skill_fx_of("g_wall")
 	_job_buff_time_left = StoryCombat.GENERAL_WALL_SEC
 	_job_buff_atk_mul = StoryCombat.GENERAL_WALL_ATK_MUL
 	_job_buff_guard = StoryCombat.GENERAL_WALL_GUARD
@@ -152,6 +161,7 @@ func _cast_general_edge() -> void:
 		return
 	_cd_general_edge = StoryCombat.GENERAL_EDGE_CD
 	mp -= StoryCombat.GENERAL_EDGE_COST
+	_skill_fx_of("g_edge")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.GENERAL_EDGE_BASE, StoryCombat.GENERAL_EDGE_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.GENERAL_EDGE_RANGE_MUL, mul)
@@ -164,6 +174,7 @@ func _cast_general_vital() -> void:
 		return
 	_cd_general_vital = StoryCombat.GENERAL_VITAL_CD
 	mp -= StoryCombat.GENERAL_VITAL_COST
+	_skill_fx_of("g_vital")
 	var pct := StoryCombat.skill_mul(StoryCombat.GENERAL_VITAL_BASE, StoryCombat.GENERAL_VITAL_PER, lv)
 	hp = clampf(hp + max_hp * pct, 0.0, max_hp)
 
@@ -175,6 +186,7 @@ func _cast_marshal_heaven() -> void:
 		return
 	_cd_marshal_heaven = StoryCombat.MARSHAL_HEAVEN_CD
 	mp -= StoryCombat.MARSHAL_HEAVEN_COST
+	_skill_fx_of("n_heaven")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.MARSHAL_HEAVEN_BASE, StoryCombat.MARSHAL_HEAVEN_PER, lv)
 	for i in StoryCombat.MARSHAL_HEAVEN_HITS:
@@ -191,6 +203,7 @@ func _cast_marshal_quake() -> void:
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.MARSHAL_QUAKE_BASE, StoryCombat.MARSHAL_QUAKE_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.MARSHAL_QUAKE_RANGE_MUL
+	_skill_fx_of("n_quake", range_m)
 	for enemy in get_tree().get_nodes_in_group("story_enemy"):
 		var e := enemy as Node3D
 		if e == null:
@@ -201,7 +214,7 @@ func _cast_marshal_quake() -> void:
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
 		StorySaveState.note_player_hit()   # G-0197 연속 타격
-		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
+		_hit_feel(e, roll)
 
 
 ## 철기돌격(n_charge) — dash, dist:330px.
@@ -211,6 +224,7 @@ func _cast_marshal_charge() -> void:
 		return
 	_cd_marshal_charge = StoryCombat.MARSHAL_CHARGE_CD
 	mp -= StoryCombat.MARSHAL_CHARGE_COST
+	_skill_fx_of("n_charge")
 	_play_anim("sprint")
 	var dist_m := StoryCombat.marshal_charge_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.MARSHAL_CHARGE_BASE, StoryCombat.MARSHAL_CHARGE_PER, lv))
@@ -223,6 +237,7 @@ func _cast_marshal_banner() -> void:
 		return
 	_cd_marshal_banner = StoryCombat.MARSHAL_BANNER_CD
 	mp -= StoryCombat.MARSHAL_BANNER_COST
+	_skill_fx_of("n_banner")
 	_job_buff_time_left = StoryCombat.MARSHAL_BANNER_SEC
 	_job_buff_atk_mul = StoryCombat.MARSHAL_BANNER_ATK_MUL
 	_job_buff_guard = StoryCombat.MARSHAL_BANNER_GUARD
@@ -237,6 +252,7 @@ func _cast_marshal_edge() -> void:
 		return
 	_cd_marshal_edge = StoryCombat.MARSHAL_EDGE_CD
 	mp -= StoryCombat.MARSHAL_EDGE_COST
+	_skill_fx_of("n_edge")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.MARSHAL_EDGE_BASE, StoryCombat.MARSHAL_EDGE_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.MARSHAL_EDGE_RANGE_MUL, mul)
@@ -249,6 +265,7 @@ func _cast_marshal_vital() -> void:
 		return
 	_cd_marshal_vital = StoryCombat.MARSHAL_VITAL_CD
 	mp -= StoryCombat.MARSHAL_VITAL_COST
+	_skill_fx_of("n_vital")
 	var pct := StoryCombat.skill_mul(StoryCombat.MARSHAL_VITAL_BASE, StoryCombat.MARSHAL_VITAL_PER, lv)
 	hp = clampf(hp + max_hp * pct, 0.0, max_hp)
 
@@ -260,6 +277,7 @@ func _cast_warlord_ruin() -> void:
 		return
 	_cd_warlord_ruin = StoryCombat.WARLORD_RUIN_CD
 	mp -= StoryCombat.WARLORD_RUIN_COST
+	_skill_fx_of("o_ruin")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.WARLORD_RUIN_BASE, StoryCombat.WARLORD_RUIN_PER, lv)
 	for i in StoryCombat.WARLORD_RUIN_HITS:
@@ -276,6 +294,7 @@ func _cast_warlord_tremor() -> void:
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.WARLORD_TREMOR_BASE, StoryCombat.WARLORD_TREMOR_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.WARLORD_TREMOR_RANGE_MUL
+	_skill_fx_of("o_tremor", range_m)
 	for enemy in get_tree().get_nodes_in_group("story_enemy"):
 		var e := enemy as Node3D
 		if e == null:
@@ -286,7 +305,7 @@ func _cast_warlord_tremor() -> void:
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
 		StorySaveState.note_player_hit()   # G-0197 연속 타격
-		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
+		_hit_feel(e, roll)
 
 
 ## 벽력돌(o_smite) — dash, dist:410px.
@@ -296,6 +315,7 @@ func _cast_warlord_smite() -> void:
 		return
 	_cd_warlord_smite = StoryCombat.WARLORD_SMITE_CD
 	mp -= StoryCombat.WARLORD_SMITE_COST
+	_skill_fx_of("o_smite")
 	_play_anim("sprint")
 	var dist_m := StoryCombat.warlord_smite_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.WARLORD_SMITE_BASE, StoryCombat.WARLORD_SMITE_PER, lv))
@@ -308,6 +328,7 @@ func _cast_warlord_conquer() -> void:
 		return
 	_cd_warlord_conquer = StoryCombat.WARLORD_CONQUER_CD
 	mp -= StoryCombat.WARLORD_CONQUER_COST
+	_skill_fx_of("o_conquer")
 	_job_buff_time_left = StoryCombat.WARLORD_CONQUER_SEC
 	_job_buff_atk_mul = StoryCombat.WARLORD_CONQUER_ATK_MUL
 	_job_buff_guard = StoryCombat.WARLORD_CONQUER_GUARD
@@ -322,6 +343,7 @@ func _cast_warlord_edge() -> void:
 		return
 	_cd_warlord_edge = StoryCombat.WARLORD_EDGE_CD
 	mp -= StoryCombat.WARLORD_EDGE_COST
+	_skill_fx_of("o_edge")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.WARLORD_EDGE_BASE, StoryCombat.WARLORD_EDGE_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.WARLORD_EDGE_RANGE_MUL, mul)
@@ -334,6 +356,7 @@ func _cast_warlord_vital() -> void:
 		return
 	_cd_warlord_vital = StoryCombat.WARLORD_VITAL_CD
 	mp -= StoryCombat.WARLORD_VITAL_COST
+	_skill_fx_of("o_vital")
 	var pct := StoryCombat.skill_mul(StoryCombat.WARLORD_VITAL_BASE, StoryCombat.WARLORD_VITAL_PER, lv)
 	hp = clampf(hp + max_hp * pct, 0.0, max_hp)
 

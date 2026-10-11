@@ -11,6 +11,7 @@ func _cast_rogue_twin() -> void:
 		return
 	_cd_rogue_twin = StoryCombat.ROGUE_TWIN_CD
 	mp -= StoryCombat.ROGUE_TWIN_COST
+	_skill_fx_of("r_twin")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.ROGUE_TWIN_BASE, StoryCombat.ROGUE_TWIN_PER, lv)
 	for i in StoryCombat.ROGUE_TWIN_HITS:
@@ -24,6 +25,7 @@ func _cast_rogue_knife() -> void:
 		return
 	_cd_rogue_knife = StoryCombat.ROGUE_KNIFE_CD
 	mp -= StoryCombat.ROGUE_KNIFE_COST
+	_skill_fx_of("r_knife")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.ROGUE_KNIFE_BASE, StoryCombat.ROGUE_KNIFE_PER, lv)
 	for i in StoryCombat.ROGUE_KNIFE_SHOTS:
@@ -38,6 +40,7 @@ func _cast_rogue_step() -> void:
 		return
 	_cd_rogue_step = StoryCombat.ROGUE_STEP_CD
 	mp -= StoryCombat.ROGUE_STEP_COST
+	_skill_fx_of("r_step")
 	_play_anim("sprint")
 	var dist_m := StoryCombat.rogue_step_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.ROGUE_STEP_BASE, StoryCombat.ROGUE_STEP_PER, lv))
@@ -51,6 +54,7 @@ func _cast_rogue_vital() -> void:
 		return
 	_cd_rogue_vital = StoryCombat.ROGUE_VITAL_CD
 	mp -= StoryCombat.ROGUE_VITAL_COST
+	_skill_fx_of("r_vital")
 	_job_buff_time_left = StoryCombat.ROGUE_VITAL_SEC
 	_job_buff_atk_mul = StoryCombat.ROGUE_VITAL_ATK_MUL
 	_job_buff_guard = 0.0
@@ -68,6 +72,7 @@ func _cast_rogue_whirl() -> void:
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.ROGUE_WHIRL_BASE, StoryCombat.ROGUE_WHIRL_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.ROGUE_WHIRL_RANGE_MUL
+	_skill_fx_of("r_whirl", range_m)
 	for enemy in get_tree().get_nodes_in_group("story_enemy"):
 		var e := enemy as Node3D
 		if e == null:
@@ -78,7 +83,7 @@ func _cast_rogue_whirl() -> void:
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
 		StorySaveState.note_player_hit()   # G-0197 연속 타격
-		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
+		_hit_feel(e, roll)
 
 
 ## 관통표(r_dart) — bolt. 기탄과 같은 재해석(사거리 2배).
@@ -88,6 +93,7 @@ func _cast_rogue_dart() -> void:
 		return
 	_cd_rogue_dart = StoryCombat.ROGUE_DART_CD
 	mp -= StoryCombat.ROGUE_DART_COST
+	_skill_fx_of("r_dart")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.ROGUE_DART_BASE, StoryCombat.ROGUE_DART_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.ROGUE_DART_RANGE_MUL, mul)
@@ -100,6 +106,7 @@ func _cast_assassin_storm() -> void:
 		return
 	_cd_assassin_storm = StoryCombat.ASSASSIN_STORM_CD
 	mp -= StoryCombat.ASSASSIN_STORM_COST
+	_skill_fx_of("x_storm")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.ASSASSIN_STORM_BASE, StoryCombat.ASSASSIN_STORM_PER, lv)
 	for i in StoryCombat.ASSASSIN_STORM_HITS:
@@ -113,6 +120,7 @@ func _cast_assassin_fan() -> void:
 		return
 	_cd_assassin_fan = StoryCombat.ASSASSIN_FAN_CD
 	mp -= StoryCombat.ASSASSIN_FAN_COST
+	_skill_fx_of("x_fan")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.ASSASSIN_FAN_BASE, StoryCombat.ASSASSIN_FAN_PER, lv)
 	for i in StoryCombat.ASSASSIN_FAN_SHOTS:
@@ -126,6 +134,7 @@ func _cast_assassin_shadow() -> void:
 		return
 	_cd_assassin_shadow = StoryCombat.ASSASSIN_SHADOW_CD
 	mp -= StoryCombat.ASSASSIN_SHADOW_COST
+	_skill_fx_of("x_shadow")
 	_play_anim("sprint")
 	var dist_m := StoryCombat.assassin_shadow_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.ASSASSIN_SHADOW_BASE, StoryCombat.ASSASSIN_SHADOW_PER, lv))
@@ -143,6 +152,7 @@ func _cast_assassin_whirl() -> void:
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.ASSASSIN_WHIRL_BASE, StoryCombat.ASSASSIN_WHIRL_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.ASSASSIN_WHIRL_RANGE_MUL
+	_skill_fx_of("x_whirl", range_m)
 	for enemy in get_tree().get_nodes_in_group("story_enemy"):
 		var e := enemy as Node3D
 		if e == null:
@@ -153,7 +163,7 @@ func _cast_assassin_whirl() -> void:
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
 		StorySaveState.note_player_hit()   # G-0197 연속 타격
-		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
+		_hit_feel(e, roll)
 
 
 ## 암습표(x_dart) — bolt. 관통표와 같은 재해석(사거리 2배).
@@ -163,6 +173,7 @@ func _cast_assassin_dart() -> void:
 		return
 	_cd_assassin_dart = StoryCombat.ASSASSIN_DART_CD
 	mp -= StoryCombat.ASSASSIN_DART_COST
+	_skill_fx_of("x_dart")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.ASSASSIN_DART_BASE, StoryCombat.ASSASSIN_DART_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.ASSASSIN_DART_RANGE_MUL, mul)
@@ -175,6 +186,7 @@ func _cast_wraith_blur() -> void:
 		return
 	_cd_wraith_blur = StoryCombat.WRAITH_BLUR_CD
 	mp -= StoryCombat.WRAITH_BLUR_COST
+	_skill_fx_of("v_blur")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.WRAITH_BLUR_BASE, StoryCombat.WRAITH_BLUR_PER, lv)
 	for i in StoryCombat.WRAITH_BLUR_HITS:
@@ -188,6 +200,7 @@ func _cast_wraith_petal() -> void:
 		return
 	_cd_wraith_petal = StoryCombat.WRAITH_PETAL_CD
 	mp -= StoryCombat.WRAITH_PETAL_COST
+	_skill_fx_of("v_petal")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.WRAITH_PETAL_BASE, StoryCombat.WRAITH_PETAL_PER, lv)
 	for i in StoryCombat.WRAITH_PETAL_SHOTS:
@@ -201,6 +214,7 @@ func _cast_wraith_void() -> void:
 		return
 	_cd_wraith_void = StoryCombat.WRAITH_VOID_CD
 	mp -= StoryCombat.WRAITH_VOID_COST
+	_skill_fx_of("v_void")
 	_play_anim("sprint")
 	var dist_m := StoryCombat.wraith_void_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.WRAITH_VOID_BASE, StoryCombat.WRAITH_VOID_PER, lv))
@@ -214,6 +228,7 @@ func _cast_wraith_mark() -> void:
 		return
 	_cd_wraith_mark = StoryCombat.WRAITH_MARK_CD
 	mp -= StoryCombat.WRAITH_MARK_COST
+	_skill_fx_of("v_mark")
 	_job_buff_time_left = StoryCombat.WRAITH_MARK_SEC
 	_job_buff_atk_mul = StoryCombat.WRAITH_MARK_ATK_MUL
 	_job_buff_guard = 0.0
@@ -231,6 +246,7 @@ func _cast_wraith_whirl() -> void:
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.WRAITH_WHIRL_BASE, StoryCombat.WRAITH_WHIRL_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.WRAITH_WHIRL_RANGE_MUL
+	_skill_fx_of("v_whirl", range_m)
 	for enemy in get_tree().get_nodes_in_group("story_enemy"):
 		var e := enemy as Node3D
 		if e == null:
@@ -241,7 +257,7 @@ func _cast_wraith_whirl() -> void:
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
 		StorySaveState.note_player_hit()   # G-0197 연속 타격
-		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
+		_hit_feel(e, roll)
 
 
 ## 귀표(v_dart) — bolt. 암습표와 같은 재해석(사거리 2배).
@@ -251,6 +267,7 @@ func _cast_wraith_dart() -> void:
 		return
 	_cd_wraith_dart = StoryCombat.WRAITH_DART_CD
 	mp -= StoryCombat.WRAITH_DART_COST
+	_skill_fx_of("v_dart")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.WRAITH_DART_BASE, StoryCombat.WRAITH_DART_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.WRAITH_DART_RANGE_MUL, mul)
@@ -263,6 +280,7 @@ func _cast_reaper_carve() -> void:
 		return
 	_cd_reaper_carve = StoryCombat.REAPER_CARVE_CD
 	mp -= StoryCombat.REAPER_CARVE_COST
+	_skill_fx_of("d_carve")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.REAPER_CARVE_BASE, StoryCombat.REAPER_CARVE_PER, lv)
 	for i in StoryCombat.REAPER_CARVE_HITS:
@@ -276,6 +294,7 @@ func _cast_reaper_bloom() -> void:
 		return
 	_cd_reaper_bloom = StoryCombat.REAPER_BLOOM_CD
 	mp -= StoryCombat.REAPER_BLOOM_COST
+	_skill_fx_of("d_bloom")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.REAPER_BLOOM_BASE, StoryCombat.REAPER_BLOOM_PER, lv)
 	for i in StoryCombat.REAPER_BLOOM_SHOTS:
@@ -289,6 +308,7 @@ func _cast_reaper_veil() -> void:
 		return
 	_cd_reaper_veil = StoryCombat.REAPER_VEIL_CD
 	mp -= StoryCombat.REAPER_VEIL_COST
+	_skill_fx_of("d_veil")
 	_play_anim("sprint")
 	var dist_m := StoryCombat.reaper_veil_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.REAPER_VEIL_BASE, StoryCombat.REAPER_VEIL_PER, lv))
@@ -302,6 +322,7 @@ func _cast_reaper_curse() -> void:
 		return
 	_cd_reaper_curse = StoryCombat.REAPER_CURSE_CD
 	mp -= StoryCombat.REAPER_CURSE_COST
+	_skill_fx_of("d_curse")
 	_job_buff_time_left = StoryCombat.REAPER_CURSE_SEC
 	_job_buff_atk_mul = StoryCombat.REAPER_CURSE_ATK_MUL
 	_job_buff_guard = 0.0
@@ -319,6 +340,7 @@ func _cast_reaper_whirl() -> void:
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.REAPER_WHIRL_BASE, StoryCombat.REAPER_WHIRL_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.REAPER_WHIRL_RANGE_MUL
+	_skill_fx_of("d_whirl", range_m)
 	for enemy in get_tree().get_nodes_in_group("story_enemy"):
 		var e := enemy as Node3D
 		if e == null:
@@ -329,7 +351,7 @@ func _cast_reaper_whirl() -> void:
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
 		StorySaveState.note_player_hit()   # G-0197 연속 타격
-		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
+		_hit_feel(e, roll)
 
 
 ## 명표(d_dart) — bolt. 귀표와 같은 재해석(사거리 2배).
@@ -339,6 +361,7 @@ func _cast_reaper_dart() -> void:
 		return
 	_cd_reaper_dart = StoryCombat.REAPER_DART_CD
 	mp -= StoryCombat.REAPER_DART_COST
+	_skill_fx_of("d_dart")
 	_play_anim("sprint")
 	var mul := StoryCombat.skill_mul(StoryCombat.REAPER_DART_BASE, StoryCombat.REAPER_DART_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.REAPER_DART_RANGE_MUL, mul)
