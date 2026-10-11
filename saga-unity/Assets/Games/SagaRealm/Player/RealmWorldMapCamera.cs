@@ -22,9 +22,12 @@ namespace Saga.Realm.Player
     /// </summary>
     public class RealmWorldMapCamera : MonoBehaviour
     {
-        private const float MinRadius = 120f;
-        private const float MaxRadius = 420f;
-        private const float ZoomStep = 14f;
+        // tasks U-0102 — 120m 에선 성 앞 태수·재야(키 4m)가 점뿐이었다 → 30m 까지. 확대 한 걸음 = 지금 거리의 12%(가까울수록 잘게, 최소 4m).
+        public const float MinRadius = 30f;   // 40m 에선 태수 몸이 화면 높이 7.8% — 30m 로 한 걸음 더(U-0102 진단)
+        public const float MaxRadius = 420f;
+        public const float ZoomFrac = 0.12f, MinZoomStep = 4f;
+        /// <summary>tasks U-0102 — 카메라 중심이 고른 성으로 옮겨 가는 빠르기(1/초, 지수 따라잡기).</summary>
+        public const float PivotFollow = 6f;
         private const float MinPitchRad = 0.35f;
         private const float MaxPitchRad = 1.3f;
         private const float RotateSpeedRad = 0.006f;
@@ -50,6 +53,12 @@ namespace Saga.Realm.Player
         public float DebugYaw => _yawRad;
         public float DebugPitch => _pitchRad;
         public float DebugRadius => _radius;
+        public Vector3 DebugPivot => _pivot;
+        public Camera Cam => cam;
+
+        // tasks U-0102 — 카메라가 도는 중심. 예전엔 늘 원점(지도 한가운데) → 지금 고른 성(`RealmWorldMap.CityWorldPos`)을 따라간다.
+        private Vector3 _pivot;
+        private Vector3 PivotTarget() => RealmWorldMap.CityWorldPos(RealmCityState.CurrentCity) ?? Vector3.zero;
 
         private void Awake()
         {
@@ -60,7 +69,8 @@ namespace Saga.Realm.Player
         private void OnEnable()
         {
             // 디오라마↔지도 전환으로 이 GameObject가 다시 활성화될 때마다
-            // Awake는 두 번째부터 안 돌므로 여기서도 한 번 더 맞춘다.
+            // Awake는 두 번째부터 안 돌므로 여기서도 한 번 더 맞춘다. 지도를 켜면 지금 성 위에서 시작(따라가지 않고 바로).
+            _pivot = PivotTarget();
             ApplyOrbit();
         }
 
@@ -97,6 +107,7 @@ namespace Saga.Realm.Player
                 _pitchRad = _prevPitch;
             }
             _wasFlying = flying;
+            _pivot = Vector3.Lerp(_pivot, PivotTarget(), 1f - Mathf.Exp(-PivotFollow * dt));
             ApplyOrbit();
         }
 
@@ -112,8 +123,8 @@ namespace Saga.Realm.Player
                 if (mouse.leftButton.isPressed) _lastPointerPos = pos;
 
                 float scrollY = mouse.scroll.ReadValue().y;
-                if (scrollY > 0f) Zoom(-ZoomStep);
-                else if (scrollY < 0f) Zoom(ZoomStep);
+                if (scrollY > 0f) ZoomSteps(-1);
+                else if (scrollY < 0f) ZoomSteps(1);
             }
 
             var touch = Touchscreen.current;
@@ -164,9 +175,20 @@ namespace Saga.Realm.Player
             _pitchRad = Mathf.Clamp(_pitchRad + relative.y * RotateSpeedRad * pan, MinPitchRad, MaxPitchRad);
         }
 
-        private void Zoom(float delta)
+        /// <summary>확대(−)·축소(+) n 걸음 — 한 걸음 = 지금 거리 × ZoomFrac(최소 MinZoomStep). 진단·촬영도 부른다.</summary>
+        public void ZoomSteps(int steps)
         {
-            _radius = Mathf.Clamp(_radius + delta, MinRadius, MaxRadius);
+            for (int i = 0; i < Mathf.Abs(steps); i++)
+                _radius = Mathf.Clamp(_radius + Mathf.Sign(steps) * Mathf.Max(MinZoomStep, _radius * ZoomFrac), MinRadius, MaxRadius);
+            ApplyOrbit();
+        }
+
+        /// <summary>촬영·진단 — 거리·기울기를 바로 놓는다(범위 안으로).</summary>
+        public void SetView(float radius, float pitchRad)
+        {
+            _radius = Mathf.Clamp(radius, MinRadius, MaxRadius);
+            _pitchRad = Mathf.Clamp(pitchRad, MinPitchRad, MaxPitchRad);
+            ApplyOrbit();
         }
 
         private void ApplyOrbit()
@@ -174,8 +196,8 @@ namespace Saga.Realm.Player
             float x = _radius * Mathf.Sin(_yawRad) * Mathf.Cos(_pitchRad);
             float z = _radius * Mathf.Cos(_yawRad) * Mathf.Cos(_pitchRad);
             float y = _radius * Mathf.Sin(_pitchRad);
-            transform.position = new Vector3(x, y, z);
-            transform.LookAt(Vector3.zero, Vector3.up);
+            transform.position = _pivot + new Vector3(x, y, z);
+            transform.LookAt(_pivot, Vector3.up);
         }
 
         private void TrySelectCity(Vector2 screenPos)

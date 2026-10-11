@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Saga.Realm.Data;
 
@@ -30,14 +32,62 @@ namespace Saga.Realm.World
         private static readonly Color FlagColor = new Color(0.75f, 0.7f, 0.3f);
         private static readonly Color HighlightColor = new Color(0.95f, 0.35f, 0.15f);
 
+        // tasks U-0102 성 이름표 — 기둥 위, 카메라를 보고 화면 크기가 거의 같게(글 크기 = 카메라 거리 × LabelPerMeter).
+        // 지금 성 이름은 늘, 나머지는 카메라가 LabelNearRadius 안으로 다가왔을 때만(먼 줌에서 55곳 글이 겹치지 않게).
+        public const float LabelHeight = 6f, LabelNearRadius = 160f, LabelPerMeter = 0.2f;
+        public static RealmWorldMap Instance { get; private set; }
+        private readonly List<(string cityId, TextMeshPro label)> _labels = new List<(string, TextMeshPro)>();
+        private Saga.Realm.Player.RealmWorldMapCamera _mapCam;
+        public int LabelCount => _labels.Count;
+        public int VisibleLabels { get; private set; }
+
         private void Awake()
         {
+            Instance = this;
             RealmCityState.Changed += Rebuild;
         }
 
         private void OnDestroy()
         {
+            if (Instance == this) Instance = null;
             RealmCityState.Changed -= Rebuild;
+        }
+
+        /// <summary>tasks U-0102 — 성의 월드 자리(표지와 같은 중심 `MapCenter(우리 성)` 기준, 지도 Transform 반영). 지도·성이 없으면 null. 지도 카메라 중심이 쓴다.
+        /// 중심은 매번 다시 센다 — 씬에 구운 표지로 시작하면 Play 첫 Rebuild 전이라 저장해 둔 값이 없다.</summary>
+        public static Vector3? CityWorldPos(string cityId)
+        {
+            var def = cityId != null ? RealmCityData.Get(cityId) : null;
+            if (Instance == null || def == null || !RealmCityState.OwnsCity(cityId)) return null;
+            var (cx, cy) = MapCenter(RealmCityState.ActiveCityIds);
+            return Instance.transform.TransformPoint(WorldPos(def, cx, cy));
+        }
+
+        private void LateUpdate()
+        {
+            if (_labels.Count == 0) return;
+            if (_mapCam == null) _mapCam = FindFirstObjectByType<Saga.Realm.Player.RealmWorldMapCamera>();
+            var c = _mapCam != null ? _mapCam.Cam : null;
+            if (c == null) return;
+            RefreshLabels(c, _mapCam.DebugRadius);
+        }
+
+        /// <summary>이름표 보이기·크기·방향 — LateUpdate 와 진단이 부른다.</summary>
+        public void RefreshLabels(Camera c, float radius)
+        {
+            int vis = 0;
+            foreach (var (cityId, label) in _labels)
+            {
+                if (label == null) continue;
+                bool show = cityId == RealmCityState.CurrentCity || radius <= LabelNearRadius;
+                if (label.gameObject.activeSelf != show) label.gameObject.SetActive(show);
+                if (!show) continue;
+                vis++;
+                if (label.outlineWidth < 0.2f) { label.outlineWidth = 0.22f; label.outlineColor = new Color32(0, 0, 0, 255); }
+                label.transform.rotation = c.transform.rotation;
+                label.fontSize = Mathf.Max(1.5f, Vector3.Distance(c.transform.position, label.transform.position) * LabelPerMeter);
+            }
+            VisibleLabels = vis;
         }
 
         /// <summary>edit-time 씬 빌드가 직접 부른다(RealmCityBuilder.cs와
@@ -48,6 +98,8 @@ namespace Saga.Realm.World
             {
                 DestroyImmediate(transform.GetChild(i).gameObject);
             }
+            _labels.Clear();
+            if (Application.isPlaying) Instance = this; // 꺼진 채 시작하면 Awake 가 아직 안 돌았다(U-0091) — 직접 부른 Rebuild 에서도 잡는다
 
             var cityIds = RealmCityState.ActiveCityIds;
             if (cityIds.Count == 0) return; // 씬 첫 로드 등 아직 상태가 없을 때.
@@ -119,6 +171,20 @@ namespace Saga.Realm.World
             Spawn($"Flag_{def.Id}", pole.transform, PrimitiveType.Cube,
                 new Vector3(0.5f, 0.6f, 0f), flagScale,
                 highlighted ? HighlightColor : FlagColor, addCollider: false);
+
+            // tasks U-0102 이름표 — 에디터 씬 빌드엔 안 세운다(배우와 같은 결, 씬에 저장되지 않게).
+            if (!Application.isPlaying) return;
+            var lgo = new GameObject($"Label_{def.Id}");
+            lgo.transform.SetParent(transform, false);
+            lgo.transform.localPosition = pos + new Vector3(0f, LabelHeight, 0f);
+            var t = lgo.AddComponent<TextMeshPro>();
+            t.text = def.Name;
+            t.alignment = TextAlignmentOptions.Center;
+            t.textWrappingMode = TextWrappingModes.NoWrap;
+            t.rectTransform.sizeDelta = new Vector2(30f, 6f);
+            t.color = highlighted ? new Color(1f, 0.85f, 0.55f) : Color.white;
+            t.fontSize = 24f; // 외곽선은 보일 때 RefreshLabels 가 건다 — 꺼진 지도(디오라마 보기)에서 지으면 재질이 없어 외곽선 설정이 터진다
+            _labels.Add((def.Id, t));
         }
 
         private static GameObject Spawn(string name, Transform parent, PrimitiveType type, Vector3 localPos,
