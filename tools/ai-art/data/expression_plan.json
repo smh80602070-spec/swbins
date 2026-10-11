@@ -1,0 +1,304 @@
+{
+ "note": "K-0047 — 대화 장면 표정 초상. 주역 = 지금 초상 파일이 있고 대사에 나오는 인물(4종횡 스승 16·5천하 군주·이세계 왕 6·2나락 사관 묵향 대역 1, 10-11 시나리오 조사). 1만리·3마을·4종횡 이음 등은 초상 자체가 없어 다음(새 초상 먼저). 표정 = joy·anger·sorrow·surprise(평온 = 지금 초상). 4종횡 EMOTES 짝: joy→joy, anger·fire→anger, worry→sorrow, shock→surprise, calm→지금 초상.",
+ "cast": [
+  {
+   "id": "sg_lubu",
+   "game": "saga-story",
+   "name": "패창",
+   "base": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_lubu.png",
+   "seed": 1706003698,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "kr_gyebaek",
+   "game": "saga-story",
+   "name": "결사",
+   "base": "tools/ai-art/_out/web_heroes_105_i2i/hero_kr_gyebaek.png",
+   "seed": 3466522569,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "jp_musashi",
+   "game": "saga-story",
+   "name": "이도인",
+   "base": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_musashi.png",
+   "seed": 394160184,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "eu_leonidas",
+   "game": "saga-story",
+   "name": "테살로르",
+   "base": "tools/ai-art/_out/web_heroes_105_i2i/hero_eu_leonidas.png",
+   "seed": 1646341167,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "sg_huangzhong",
+   "game": "saga-story",
+   "name": "노궁",
+   "base": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_huangzhong.png",
+   "seed": 1249309659,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "sg_taishici",
+   "game": "saga-story",
+   "name": "궁성",
+   "base": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_taishici.png",
+   "seed": 3509893072,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "jp_yoshitsune",
+   "game": "saga-story",
+   "name": "비장군",
+   "base": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_yoshitsune.png",
+   "seed": 3336580555,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "wd_genghis",
+   "game": "saga-story",
+   "name": "초원패",
+   "base": "tools/ai-art/_out/web_heroes_105_i2i/hero_wd_genghis.png",
+   "seed": 985378096,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "jp_hanzo",
+   "game": "saga-story",
+   "name": "암영조",
+   "base": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_hanzo.png",
+   "seed": 2763915240,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "sg_ganning",
+   "game": "saga-story",
+   "name": "영진",
+   "base": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_ganning.png",
+   "seed": 3748729584,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "jp_tomoegozen",
+   "game": "saga-story",
+   "name": "여무연",
+   "base": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_tomoegozen.png",
+   "seed": 2047467619,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "wd_shaka",
+   "game": "saga-story",
+   "name": "창군왕",
+   "base": "tools/ai-art/_out/web_heroes_105_i2i/hero_wd_shaka.png",
+   "seed": 2236940843,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "jp_himiko",
+   "game": "saga-story",
+   "name": "여왕영",
+   "base": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_himiko.png",
+   "seed": 3153552979,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "sg_zhugeliang",
+   "game": "saga-story",
+   "name": "현책",
+   "base": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_zhugeliang.png",
+   "seed": 2575382022,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "wd_ibnsina",
+   "game": "saga-story",
+   "name": "의철인",
+   "base": "tools/ai-art/_out/web_heroes_105_i2i/hero_wd_ibnsina.png",
+   "seed": 1081169327,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "eu_davinci",
+   "game": "saga-story",
+   "name": "마라노",
+   "base": "tools/ai-art/_out/web_heroes_105_i2i/hero_eu_davinci.png",
+   "seed": 2369919264,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "fu_jongwang",
+   "game": "saga-realm",
+   "name": "종왕",
+   "base": "tools/ai-art/_out/web_realm_194_i2i/fu_jongwang.png",
+   "seed": 3112312118,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "ru_geohae",
+   "game": "saga-realm",
+   "name": "거해",
+   "base": "tools/ai-art/_out/web_realm_194_i2i/ru_geohae.png",
+   "seed": 1780717792,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "tb_baekgi",
+   "game": "saga-realm",
+   "name": "백기",
+   "base": "tools/ai-art/_out/web_realm_194_i2i/tb_baekgi.png",
+   "seed": 3800608677,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "sg_caocao",
+   "game": "saga-realm",
+   "name": "패헌",
+   "base": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_caocao.png",
+   "seed": 1226674354,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "sg_liubei",
+   "game": "saga-realm",
+   "name": "인형",
+   "base": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_liubei.png",
+   "seed": 407118598,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "sg_sunquan",
+   "game": "saga-realm",
+   "name": "벽해",
+   "base": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_sunquan.png",
+   "seed": 202891007,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  },
+  {
+   "id": "hl_mukhyang",
+   "game": "saga-dungeon",
+   "name": "사관 묵향(도감 묵향 대역)",
+   "base": "tools/ai-art/_out/k27_late201_i2i/hl_mukhyang.png",
+   "seed": 1355207502,
+   "expressions": [
+    "joy",
+    "anger",
+    "sorrow",
+    "surprise"
+   ]
+  }
+ ]
+}

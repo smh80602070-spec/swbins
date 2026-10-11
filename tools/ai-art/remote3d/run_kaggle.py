@@ -22,8 +22,28 @@ DS, KN = 'saga-k95-input', 'saga-k95-trellis'
 ACC = 'NvidiaTeslaT4'
 
 
+# 10-11 api.kaggle.com TLS 가 네 번에 한 번꼴로 끊긴다(SSLEOFError) — 받기는 요청 수십 개라 명령째 다시 해도 못 넘는다.
+# 그래서 요청 하나하나를 다시 보낸다(HTTPAdapter.send 를 감싸 SSL·연결 오류면 최대 8번).
+_WRAP = '''
+import sys, time, requests.adapters as A
+_send = A.HTTPAdapter.send
+def send(self, req, **kw):
+    for i in range(8):
+        try:
+            return _send(self, req, **kw)
+        except (A.SSLError, A.ConnectionError):
+            if i == 7:
+                raise
+            time.sleep(2 + 2 * i)
+A.HTTPAdapter.send = send
+from kaggle.cli import main
+sys.argv = ['kaggle'] + sys.argv[1:]
+main()
+'''
+
+
 def kg(*args, check=True):
-    r = subprocess.run([sys.executable, '-m', 'kaggle', *args], capture_output=True, text=True, encoding='utf-8', errors='replace',
+    r = subprocess.run([sys.executable, '-c', _WRAP, *args], capture_output=True, text=True, encoding='utf-8', errors='replace',
                        env=dict(os.environ, PYTHONUTF8='1', PYTHONIOENCODING='utf-8'))   # 로그 받기가 cp949 로 깨진다(10-10)
     out = (r.stdout + r.stderr).strip()
     if check and r.returncode:
@@ -76,7 +96,10 @@ def main():
         st = kg('kernels', 'status', '%s/%s' % (u, KN), check=False)
         print(time.strftime('%H:%M:%S'), st[-160:], flush=True)
         low = st.lower()
-        if 'complete' in low or 'error' in low or 'cancel' in low:
+        if 'max retries' in low or 'sslerror' in low or 'connectionpool' in low:   # 망 끊김(10-11 SSLEOFError) — 커널은 계속 돈다, 다시 묻는다
+            time.sleep(60)
+            continue
+        if 'kernelworkerstatus.' in low and ('complete' in low or 'error' in low or 'cancel' in low):
             break
         time.sleep(poll)
     print(kg('kernels', 'output', '%s/%s' % (u, KN), '-p', out, '-o', check=False)[-600:])
@@ -96,7 +119,10 @@ def main():
                    'seed': 1, 'simplify': 0.95, 'texture_size': 1024, 'times': times.get('items', {}).get(iid), 'date': time.strftime('%Y-%m-%d'),
                    'note': '시험(K-0095) — 게임 폴더에 넣지 않는다'},
                   open(os.path.join(out, iid + '.license.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    print('K95_RUN 기다린 %d분 · GLB %d' % ((time.time() - t0) / 60, len(glob.glob(os.path.join(out, '*.glb')))))
+    n = len(glob.glob(os.path.join(out, '*.glb')))
+    print('K95_RUN 기다린 %d분 · GLB %d' % ((time.time() - t0) / 60, n))
+    if not n:
+        sys.exit('GLB 0 — 받기 실패면 `--no-push` 로 다시 받는다')
 
 
 if __name__ == '__main__':

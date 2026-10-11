@@ -1,0 +1,938 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k47_expr",
+ "note": "K-0047 ② — 지금 초상 i2i 원본(같은 프롬프트·씨앗)에 표정 태그만 더해 img2img 0.42 — 얼굴·옷·구도 유지, 표정만. 동일성 점검은 i2i_meta.py",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 1024,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "Euler a",
+  "negative": "",
+  "denoise": 0.42,
+  "variants": 1
+ },
+ "items": [
+  {
+   "id": "sg_lubu__joy",
+   "seed": 1706003698,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_lubu.png",
+   "denoise": 0.42,
+   "hero": "sg_lubu",
+   "expr": "joy"
+  },
+  {
+   "id": "sg_lubu__anger",
+   "seed": 1706003698,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_lubu.png",
+   "denoise": 0.42,
+   "hero": "sg_lubu",
+   "expr": "anger"
+  },
+  {
+   "id": "sg_lubu__sorrow",
+   "seed": 1706003698,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_lubu.png",
+   "denoise": 0.42,
+   "hero": "sg_lubu",
+   "expr": "sorrow"
+  },
+  {
+   "id": "sg_lubu__surprise",
+   "seed": 1706003698,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_lubu.png",
+   "denoise": 0.42,
+   "hero": "sg_lubu",
+   "expr": "surprise"
+  },
+  {
+   "id": "kr_gyebaek__joy",
+   "seed": 3466522569,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_kr_gyebaek.png",
+   "denoise": 0.42,
+   "hero": "kr_gyebaek",
+   "expr": "joy"
+  },
+  {
+   "id": "kr_gyebaek__anger",
+   "seed": 3466522569,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_kr_gyebaek.png",
+   "denoise": 0.42,
+   "hero": "kr_gyebaek",
+   "expr": "anger"
+  },
+  {
+   "id": "kr_gyebaek__sorrow",
+   "seed": 3466522569,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_kr_gyebaek.png",
+   "denoise": 0.42,
+   "hero": "kr_gyebaek",
+   "expr": "sorrow"
+  },
+  {
+   "id": "kr_gyebaek__surprise",
+   "seed": 3466522569,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_kr_gyebaek.png",
+   "denoise": 0.42,
+   "hero": "kr_gyebaek",
+   "expr": "surprise"
+  },
+  {
+   "id": "jp_musashi__joy",
+   "seed": 394160184,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, wandering swordsman, calm eyes, worn clothes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_musashi.png",
+   "denoise": 0.42,
+   "hero": "jp_musashi",
+   "expr": "joy"
+  },
+  {
+   "id": "jp_musashi__anger",
+   "seed": 394160184,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, wandering swordsman, calm eyes, worn clothes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_musashi.png",
+   "denoise": 0.42,
+   "hero": "jp_musashi",
+   "expr": "anger"
+  },
+  {
+   "id": "jp_musashi__sorrow",
+   "seed": 394160184,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, wandering swordsman, calm eyes, worn clothes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_musashi.png",
+   "denoise": 0.42,
+   "hero": "jp_musashi",
+   "expr": "sorrow"
+  },
+  {
+   "id": "jp_musashi__surprise",
+   "seed": 394160184,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, wandering swordsman, calm eyes, worn clothes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_musashi.png",
+   "denoise": 0.42,
+   "hero": "jp_musashi",
+   "expr": "surprise"
+  },
+  {
+   "id": "eu_leonidas__joy",
+   "seed": 1646341167,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, blonde hair, grey eyes, medieval european inspired clothing, tunic and cloak, ancient shield bearer, plumed bronze helmet, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_eu_leonidas.png",
+   "denoise": 0.42,
+   "hero": "eu_leonidas",
+   "expr": "joy"
+  },
+  {
+   "id": "eu_leonidas__anger",
+   "seed": 1646341167,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, blonde hair, grey eyes, medieval european inspired clothing, tunic and cloak, ancient shield bearer, plumed bronze helmet, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_eu_leonidas.png",
+   "denoise": 0.42,
+   "hero": "eu_leonidas",
+   "expr": "anger"
+  },
+  {
+   "id": "eu_leonidas__sorrow",
+   "seed": 1646341167,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, blonde hair, grey eyes, medieval european inspired clothing, tunic and cloak, ancient shield bearer, plumed bronze helmet, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_eu_leonidas.png",
+   "denoise": 0.42,
+   "hero": "eu_leonidas",
+   "expr": "sorrow"
+  },
+  {
+   "id": "eu_leonidas__surprise",
+   "seed": 1646341167,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, blonde hair, grey eyes, medieval european inspired clothing, tunic and cloak, ancient shield bearer, plumed bronze helmet, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_eu_leonidas.png",
+   "denoise": 0.42,
+   "hero": "eu_leonidas",
+   "expr": "surprise"
+  },
+  {
+   "id": "sg_huangzhong__joy",
+   "seed": 1249309659,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, elderly, wrinkles, gray beard, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_huangzhong.png",
+   "denoise": 0.42,
+   "hero": "sg_huangzhong",
+   "expr": "joy"
+  },
+  {
+   "id": "sg_huangzhong__anger",
+   "seed": 1249309659,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, elderly, wrinkles, gray beard, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_huangzhong.png",
+   "denoise": 0.42,
+   "hero": "sg_huangzhong",
+   "expr": "anger"
+  },
+  {
+   "id": "sg_huangzhong__sorrow",
+   "seed": 1249309659,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, elderly, wrinkles, gray beard, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_huangzhong.png",
+   "denoise": 0.42,
+   "hero": "sg_huangzhong",
+   "expr": "sorrow"
+  },
+  {
+   "id": "sg_huangzhong__surprise",
+   "seed": 1249309659,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, elderly, wrinkles, gray beard, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_huangzhong.png",
+   "denoise": 0.42,
+   "hero": "sg_huangzhong",
+   "expr": "surprise"
+  },
+  {
+   "id": "sg_taishici__joy",
+   "seed": 3509893072,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_taishici.png",
+   "denoise": 0.42,
+   "hero": "sg_taishici",
+   "expr": "joy"
+  },
+  {
+   "id": "sg_taishici__anger",
+   "seed": 3509893072,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_taishici.png",
+   "denoise": 0.42,
+   "hero": "sg_taishici",
+   "expr": "anger"
+  },
+  {
+   "id": "sg_taishici__sorrow",
+   "seed": 3509893072,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_taishici.png",
+   "denoise": 0.42,
+   "hero": "sg_taishici",
+   "expr": "sorrow"
+  },
+  {
+   "id": "sg_taishici__surprise",
+   "seed": 3509893072,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_taishici.png",
+   "denoise": 0.42,
+   "hero": "sg_taishici",
+   "expr": "surprise"
+  },
+  {
+   "id": "jp_yoshitsune__joy",
+   "seed": 3336580555,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_yoshitsune.png",
+   "denoise": 0.42,
+   "hero": "jp_yoshitsune",
+   "expr": "joy"
+  },
+  {
+   "id": "jp_yoshitsune__anger",
+   "seed": 3336580555,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_yoshitsune.png",
+   "denoise": 0.42,
+   "hero": "jp_yoshitsune",
+   "expr": "anger"
+  },
+  {
+   "id": "jp_yoshitsune__sorrow",
+   "seed": 3336580555,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_yoshitsune.png",
+   "denoise": 0.42,
+   "hero": "jp_yoshitsune",
+   "expr": "sorrow"
+  },
+  {
+   "id": "jp_yoshitsune__surprise",
+   "seed": 3336580555,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_yoshitsune.png",
+   "denoise": 0.42,
+   "hero": "jp_yoshitsune",
+   "expr": "surprise"
+  },
+  {
+   "id": "wd_genghis__joy",
+   "seed": 985378096,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, brown eyes, steppe khan, fur hat, layered silk deel robe, nomad rider, wind blown hair, fur collar, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_wd_genghis.png",
+   "denoise": 0.42,
+   "hero": "wd_genghis",
+   "expr": "joy"
+  },
+  {
+   "id": "wd_genghis__anger",
+   "seed": 985378096,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, brown eyes, steppe khan, fur hat, layered silk deel robe, nomad rider, wind blown hair, fur collar, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_wd_genghis.png",
+   "denoise": 0.42,
+   "hero": "wd_genghis",
+   "expr": "anger"
+  },
+  {
+   "id": "wd_genghis__sorrow",
+   "seed": 985378096,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, brown eyes, steppe khan, fur hat, layered silk deel robe, nomad rider, wind blown hair, fur collar, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_wd_genghis.png",
+   "denoise": 0.42,
+   "hero": "wd_genghis",
+   "expr": "sorrow"
+  },
+  {
+   "id": "wd_genghis__surprise",
+   "seed": 985378096,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, brown eyes, steppe khan, fur hat, layered silk deel robe, nomad rider, wind blown hair, fur collar, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_wd_genghis.png",
+   "denoise": 0.42,
+   "hero": "wd_genghis",
+   "expr": "surprise"
+  },
+  {
+   "id": "jp_hanzo__joy",
+   "seed": 2763915240,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, shadowy scout in a dark hood, sharp eyes, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_hanzo.png",
+   "denoise": 0.42,
+   "hero": "jp_hanzo",
+   "expr": "joy"
+  },
+  {
+   "id": "jp_hanzo__anger",
+   "seed": 2763915240,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, shadowy scout in a dark hood, sharp eyes, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_hanzo.png",
+   "denoise": 0.42,
+   "hero": "jp_hanzo",
+   "expr": "anger"
+  },
+  {
+   "id": "jp_hanzo__sorrow",
+   "seed": 2763915240,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, shadowy scout in a dark hood, sharp eyes, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_hanzo.png",
+   "denoise": 0.42,
+   "hero": "jp_hanzo",
+   "expr": "sorrow"
+  },
+  {
+   "id": "jp_hanzo__surprise",
+   "seed": 2763915240,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, shadowy scout in a dark hood, sharp eyes, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_hanzo.png",
+   "denoise": 0.42,
+   "hero": "jp_hanzo",
+   "expr": "surprise"
+  },
+  {
+   "id": "sg_ganning__joy",
+   "seed": 3748729584,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_ganning.png",
+   "denoise": 0.42,
+   "hero": "sg_ganning",
+   "expr": "joy"
+  },
+  {
+   "id": "sg_ganning__anger",
+   "seed": 3748729584,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_ganning.png",
+   "denoise": 0.42,
+   "hero": "sg_ganning",
+   "expr": "anger"
+  },
+  {
+   "id": "sg_ganning__sorrow",
+   "seed": 3748729584,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_ganning.png",
+   "denoise": 0.42,
+   "hero": "sg_ganning",
+   "expr": "sorrow"
+  },
+  {
+   "id": "sg_ganning__surprise",
+   "seed": 3748729584,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_ganning.png",
+   "denoise": 0.42,
+   "hero": "sg_ganning",
+   "expr": "surprise"
+  },
+  {
+   "id": "jp_tomoegozen__joy",
+   "seed": 2047467619,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, fierce female warrior, determined eyes, light armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_tomoegozen.png",
+   "denoise": 0.42,
+   "hero": "jp_tomoegozen",
+   "expr": "joy"
+  },
+  {
+   "id": "jp_tomoegozen__anger",
+   "seed": 2047467619,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, fierce female warrior, determined eyes, light armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_tomoegozen.png",
+   "denoise": 0.42,
+   "hero": "jp_tomoegozen",
+   "expr": "anger"
+  },
+  {
+   "id": "jp_tomoegozen__sorrow",
+   "seed": 2047467619,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, fierce female warrior, determined eyes, light armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_tomoegozen.png",
+   "denoise": 0.42,
+   "hero": "jp_tomoegozen",
+   "expr": "sorrow"
+  },
+  {
+   "id": "jp_tomoegozen__surprise",
+   "seed": 2047467619,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, fierce female warrior, determined eyes, light armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_tomoegozen.png",
+   "denoise": 0.42,
+   "hero": "jp_tomoegozen",
+   "expr": "surprise"
+  },
+  {
+   "id": "wd_shaka__joy",
+   "seed": 2236940843,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, dark brown hair, green eyes, african warrior chief, feather headband, cowhide shield strap, leopard fur cloak, tribal warrior, face paint, feathers, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_wd_shaka.png",
+   "denoise": 0.42,
+   "hero": "wd_shaka",
+   "expr": "joy"
+  },
+  {
+   "id": "wd_shaka__anger",
+   "seed": 2236940843,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, dark brown hair, green eyes, african warrior chief, feather headband, cowhide shield strap, leopard fur cloak, tribal warrior, face paint, feathers, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_wd_shaka.png",
+   "denoise": 0.42,
+   "hero": "wd_shaka",
+   "expr": "anger"
+  },
+  {
+   "id": "wd_shaka__sorrow",
+   "seed": 2236940843,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, dark brown hair, green eyes, african warrior chief, feather headband, cowhide shield strap, leopard fur cloak, tribal warrior, face paint, feathers, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_wd_shaka.png",
+   "denoise": 0.42,
+   "hero": "wd_shaka",
+   "expr": "sorrow"
+  },
+  {
+   "id": "wd_shaka__surprise",
+   "seed": 2236940843,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, dark brown hair, green eyes, african warrior chief, feather headband, cowhide shield strap, leopard fur cloak, tribal warrior, face paint, feathers, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_wd_shaka.png",
+   "denoise": 0.42,
+   "hero": "wd_shaka",
+   "expr": "surprise"
+  },
+  {
+   "id": "jp_himiko__joy",
+   "seed": 3153552979,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1girl, female focus, feminine, solo, upper body portrait, adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, majestic queen, crown, jewels, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_himiko.png",
+   "denoise": 0.42,
+   "hero": "jp_himiko",
+   "expr": "joy"
+  },
+  {
+   "id": "jp_himiko__anger",
+   "seed": 3153552979,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1girl, female focus, feminine, solo, upper body portrait, adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, majestic queen, crown, jewels, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_himiko.png",
+   "denoise": 0.42,
+   "hero": "jp_himiko",
+   "expr": "anger"
+  },
+  {
+   "id": "jp_himiko__sorrow",
+   "seed": 3153552979,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1girl, female focus, feminine, solo, upper body portrait, adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, majestic queen, crown, jewels, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_himiko.png",
+   "denoise": 0.42,
+   "hero": "jp_himiko",
+   "expr": "sorrow"
+  },
+  {
+   "id": "jp_himiko__surprise",
+   "seed": 3153552979,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1girl, female focus, feminine, solo, upper body portrait, adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, majestic queen, crown, jewels, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_himiko.png",
+   "denoise": 0.42,
+   "hero": "jp_himiko",
+   "expr": "surprise"
+  },
+  {
+   "id": "sg_zhugeliang__joy",
+   "seed": 2575382022,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_zhugeliang.png",
+   "denoise": 0.42,
+   "hero": "sg_zhugeliang",
+   "expr": "joy"
+  },
+  {
+   "id": "sg_zhugeliang__anger",
+   "seed": 2575382022,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_zhugeliang.png",
+   "denoise": 0.42,
+   "hero": "sg_zhugeliang",
+   "expr": "anger"
+  },
+  {
+   "id": "sg_zhugeliang__sorrow",
+   "seed": 2575382022,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_zhugeliang.png",
+   "denoise": 0.42,
+   "hero": "sg_zhugeliang",
+   "expr": "sorrow"
+  },
+  {
+   "id": "sg_zhugeliang__surprise",
+   "seed": 2575382022,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_zhugeliang.png",
+   "denoise": 0.42,
+   "hero": "sg_zhugeliang",
+   "expr": "surprise"
+  },
+  {
+   "id": "wd_ibnsina__joy",
+   "seed": 1081169327,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, mature adult, brown hair, brown eyes, persian scholar physician, turban, dark robe, thoughtful, gentle healer, herb pouch, kind eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_wd_ibnsina.png",
+   "denoise": 0.42,
+   "hero": "wd_ibnsina",
+   "expr": "joy"
+  },
+  {
+   "id": "wd_ibnsina__anger",
+   "seed": 1081169327,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, mature adult, brown hair, brown eyes, persian scholar physician, turban, dark robe, thoughtful, gentle healer, herb pouch, kind eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_wd_ibnsina.png",
+   "denoise": 0.42,
+   "hero": "wd_ibnsina",
+   "expr": "anger"
+  },
+  {
+   "id": "wd_ibnsina__sorrow",
+   "seed": 1081169327,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, mature adult, brown hair, brown eyes, persian scholar physician, turban, dark robe, thoughtful, gentle healer, herb pouch, kind eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_wd_ibnsina.png",
+   "denoise": 0.42,
+   "hero": "wd_ibnsina",
+   "expr": "sorrow"
+  },
+  {
+   "id": "wd_ibnsina__surprise",
+   "seed": 1081169327,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, mature adult, brown hair, brown eyes, persian scholar physician, turban, dark robe, thoughtful, gentle healer, herb pouch, kind eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_wd_ibnsina.png",
+   "denoise": 0.42,
+   "hero": "wd_ibnsina",
+   "expr": "surprise"
+  },
+  {
+   "id": "eu_davinci__joy",
+   "seed": 2369919264,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, blonde hair, brown eyes, medieval european inspired clothing, tunic and cloak, creative artist, paint stained fingers, curious eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_eu_davinci.png",
+   "denoise": 0.42,
+   "hero": "eu_davinci",
+   "expr": "joy"
+  },
+  {
+   "id": "eu_davinci__anger",
+   "seed": 2369919264,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, blonde hair, brown eyes, medieval european inspired clothing, tunic and cloak, creative artist, paint stained fingers, curious eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_eu_davinci.png",
+   "denoise": 0.42,
+   "hero": "eu_davinci",
+   "expr": "anger"
+  },
+  {
+   "id": "eu_davinci__sorrow",
+   "seed": 2369919264,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, blonde hair, brown eyes, medieval european inspired clothing, tunic and cloak, creative artist, paint stained fingers, curious eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_eu_davinci.png",
+   "denoise": 0.42,
+   "hero": "eu_davinci",
+   "expr": "sorrow"
+  },
+  {
+   "id": "eu_davinci__surprise",
+   "seed": 2369919264,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, blonde hair, brown eyes, medieval european inspired clothing, tunic and cloak, creative artist, paint stained fingers, curious eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_eu_davinci.png",
+   "denoise": 0.42,
+   "hero": "eu_davinci",
+   "expr": "surprise"
+  },
+  {
+   "id": "fu_jongwang__joy",
+   "seed": 3112312118,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1girl, female focus, feminine, solo, upper body portrait, young adult, blonde hair, grey eyes, fantasy celestial rift warrior, glowing cracks of light on ornate armor, star motifs, otherworldly aura, disciplined commander, sharp gaze, highly detailed ornate outfit, striking presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "init_image": "tools/ai-art/_out/web_realm_194_i2i/fu_jongwang.png",
+   "denoise": 0.42,
+   "hero": "fu_jongwang",
+   "expr": "joy"
+  },
+  {
+   "id": "fu_jongwang__anger",
+   "seed": 3112312118,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1girl, female focus, feminine, solo, upper body portrait, young adult, blonde hair, grey eyes, fantasy celestial rift warrior, glowing cracks of light on ornate armor, star motifs, otherworldly aura, disciplined commander, sharp gaze, highly detailed ornate outfit, striking presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "init_image": "tools/ai-art/_out/web_realm_194_i2i/fu_jongwang.png",
+   "denoise": 0.42,
+   "hero": "fu_jongwang",
+   "expr": "anger"
+  },
+  {
+   "id": "fu_jongwang__sorrow",
+   "seed": 3112312118,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1girl, female focus, feminine, solo, upper body portrait, young adult, blonde hair, grey eyes, fantasy celestial rift warrior, glowing cracks of light on ornate armor, star motifs, otherworldly aura, disciplined commander, sharp gaze, highly detailed ornate outfit, striking presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "init_image": "tools/ai-art/_out/web_realm_194_i2i/fu_jongwang.png",
+   "denoise": 0.42,
+   "hero": "fu_jongwang",
+   "expr": "sorrow"
+  },
+  {
+   "id": "fu_jongwang__surprise",
+   "seed": 3112312118,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1girl, female focus, feminine, solo, upper body portrait, young adult, blonde hair, grey eyes, fantasy celestial rift warrior, glowing cracks of light on ornate armor, star motifs, otherworldly aura, disciplined commander, sharp gaze, highly detailed ornate outfit, striking presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
+   "init_image": "tools/ai-art/_out/web_realm_194_i2i/fu_jongwang.png",
+   "denoise": 0.42,
+   "hero": "fu_jongwang",
+   "expr": "surprise"
+  },
+  {
+   "id": "ru_geohae__joy",
+   "seed": 1780717792,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, teal eyes, fantasy ruined kingdom knight, tattered cloak, moss covered rusted armor, pale, fierce muscular warrior, highly detailed ornate outfit, striking presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_realm_194_i2i/ru_geohae.png",
+   "denoise": 0.42,
+   "hero": "ru_geohae",
+   "expr": "joy"
+  },
+  {
+   "id": "ru_geohae__anger",
+   "seed": 1780717792,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, teal eyes, fantasy ruined kingdom knight, tattered cloak, moss covered rusted armor, pale, fierce muscular warrior, highly detailed ornate outfit, striking presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_realm_194_i2i/ru_geohae.png",
+   "denoise": 0.42,
+   "hero": "ru_geohae",
+   "expr": "anger"
+  },
+  {
+   "id": "ru_geohae__sorrow",
+   "seed": 1780717792,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, teal eyes, fantasy ruined kingdom knight, tattered cloak, moss covered rusted armor, pale, fierce muscular warrior, highly detailed ornate outfit, striking presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_realm_194_i2i/ru_geohae.png",
+   "denoise": 0.42,
+   "hero": "ru_geohae",
+   "expr": "sorrow"
+  },
+  {
+   "id": "ru_geohae__surprise",
+   "seed": 1780717792,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, teal eyes, fantasy ruined kingdom knight, tattered cloak, moss covered rusted armor, pale, fierce muscular warrior, highly detailed ornate outfit, striking presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_realm_194_i2i/ru_geohae.png",
+   "denoise": 0.42,
+   "hero": "ru_geohae",
+   "expr": "surprise"
+  },
+  {
+   "id": "tb_baekgi__joy",
+   "seed": 3800608677,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, blue eyes, fantasy tomb guardian knight, bone white ceremonial armor, pale solemn face, faint blue glow, fierce muscular warrior, highly detailed ornate outfit, striking presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_realm_194_i2i/tb_baekgi.png",
+   "denoise": 0.42,
+   "hero": "tb_baekgi",
+   "expr": "joy"
+  },
+  {
+   "id": "tb_baekgi__anger",
+   "seed": 3800608677,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, blue eyes, fantasy tomb guardian knight, bone white ceremonial armor, pale solemn face, faint blue glow, fierce muscular warrior, highly detailed ornate outfit, striking presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_realm_194_i2i/tb_baekgi.png",
+   "denoise": 0.42,
+   "hero": "tb_baekgi",
+   "expr": "anger"
+  },
+  {
+   "id": "tb_baekgi__sorrow",
+   "seed": 3800608677,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, blue eyes, fantasy tomb guardian knight, bone white ceremonial armor, pale solemn face, faint blue glow, fierce muscular warrior, highly detailed ornate outfit, striking presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_realm_194_i2i/tb_baekgi.png",
+   "denoise": 0.42,
+   "hero": "tb_baekgi",
+   "expr": "sorrow"
+  },
+  {
+   "id": "tb_baekgi__surprise",
+   "seed": 3800608677,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, blue eyes, fantasy tomb guardian knight, bone white ceremonial armor, pale solemn face, faint blue glow, fierce muscular warrior, highly detailed ornate outfit, striking presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_realm_194_i2i/tb_baekgi.png",
+   "denoise": 0.42,
+   "hero": "tb_baekgi",
+   "expr": "surprise"
+  },
+  {
+   "id": "sg_caocao__joy",
+   "seed": 1226674354,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_caocao.png",
+   "denoise": 0.42,
+   "hero": "sg_caocao",
+   "expr": "joy"
+  },
+  {
+   "id": "sg_caocao__anger",
+   "seed": 1226674354,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_caocao.png",
+   "denoise": 0.42,
+   "hero": "sg_caocao",
+   "expr": "anger"
+  },
+  {
+   "id": "sg_caocao__sorrow",
+   "seed": 1226674354,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_caocao.png",
+   "denoise": 0.42,
+   "hero": "sg_caocao",
+   "expr": "sorrow"
+  },
+  {
+   "id": "sg_caocao__surprise",
+   "seed": 1226674354,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_caocao.png",
+   "denoise": 0.42,
+   "hero": "sg_caocao",
+   "expr": "surprise"
+  },
+  {
+   "id": "sg_liubei__joy",
+   "seed": 407118598,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_liubei.png",
+   "denoise": 0.42,
+   "hero": "sg_liubei",
+   "expr": "joy"
+  },
+  {
+   "id": "sg_liubei__anger",
+   "seed": 407118598,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_liubei.png",
+   "denoise": 0.42,
+   "hero": "sg_liubei",
+   "expr": "anger"
+  },
+  {
+   "id": "sg_liubei__sorrow",
+   "seed": 407118598,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_liubei.png",
+   "denoise": 0.42,
+   "hero": "sg_liubei",
+   "expr": "sorrow"
+  },
+  {
+   "id": "sg_liubei__surprise",
+   "seed": 407118598,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_liubei.png",
+   "denoise": 0.42,
+   "hero": "sg_liubei",
+   "expr": "surprise"
+  },
+  {
+   "id": "sg_sunquan__joy",
+   "seed": 202891007,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_sunquan.png",
+   "denoise": 0.42,
+   "hero": "sg_sunquan",
+   "expr": "joy"
+  },
+  {
+   "id": "sg_sunquan__anger",
+   "seed": 202891007,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_sunquan.png",
+   "denoise": 0.42,
+   "hero": "sg_sunquan",
+   "expr": "anger"
+  },
+  {
+   "id": "sg_sunquan__sorrow",
+   "seed": 202891007,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_sunquan.png",
+   "denoise": 0.42,
+   "hero": "sg_sunquan",
+   "expr": "sorrow"
+  },
+  {
+   "id": "sg_sunquan__surprise",
+   "seed": 202891007,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_sunquan.png",
+   "denoise": 0.42,
+   "hero": "sg_sunquan",
+   "expr": "surprise"
+  },
+  {
+   "id": "hl_mukhyang__joy",
+   "seed": 1355207502,
+   "prompt": "(smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, grey eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/k27_late201_i2i/hl_mukhyang.png",
+   "denoise": 0.42,
+   "hero": "hl_mukhyang",
+   "expr": "joy"
+  },
+  {
+   "id": "hl_mukhyang__anger",
+   "seed": 1355207502,
+   "prompt": "(angry:1.2), furrowed brows, glaring, clenched teeth, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, grey eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/k27_late201_i2i/hl_mukhyang.png",
+   "denoise": 0.42,
+   "hero": "hl_mukhyang",
+   "expr": "anger"
+  },
+  {
+   "id": "hl_mukhyang__sorrow",
+   "seed": 1355207502,
+   "prompt": "(sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, grey eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/k27_late201_i2i/hl_mukhyang.png",
+   "denoise": 0.42,
+   "hero": "hl_mukhyang",
+   "expr": "sorrow"
+  },
+  {
+   "id": "hl_mukhyang__surprise",
+   "seed": 1355207502,
+   "prompt": "(surprised:1.2), wide eyes, open mouth, raised eyebrows, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, both eyes visible, adult, brown hair, grey eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, hair over eyes, hair over face, covered face, faceless, 1girl, feminine, breasts, makeup",
+   "init_image": "tools/ai-art/_out/k27_late201_i2i/hl_mukhyang.png",
+   "denoise": 0.42,
+   "hero": "hl_mukhyang",
+   "expr": "surprise"
+  }
+ ]
+}
