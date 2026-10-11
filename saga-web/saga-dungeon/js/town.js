@@ -155,102 +155,10 @@
       line: '오늘 새로 붙은 방문(榜文)이 있소이다. 살펴보시겠소?' }
   };
 
-  /**
-   * 세 시대 마을 손님(PLAN §5.20 · SAGA-DESIGN §13, 2026-09-25) — 마을마다 한 명, 볼일(시트) 없이 말만 한다.
-   * NPC_DEFS 에 안 넣는다(일곱 직군 표·몸짓 진단 그대로). 누가 서는지는 마을 id 해시(현대 둘·미래 둘 중 하나),
-   * 자리는 방을 지을 때 기존 NPC·소품·표식·스폰에서 ERA_FOLK_GAP 이상 떨어진 빈자리(`placePoints`) — 못 찾으면
-   * 그 마을은 손님 없이 넘어간다(억지로 겹치지 않는다). model 은 asset3d `folk:*`(제 몸·제 옷). 역할 이름뿐이라 실명 없음
-   */
-  var ERA_FOLK = {
-    courier: { name: '택배 기사', emoji: '📦', era: 'modern', model: 'folk:courier', color: '#6a7a4a', lines: [
-      '받는 분이 갑옷 차림이던데… 서명은 붓으로 하시더라고요.',
-      '굴혈 쪽 주소는 지도에 안 나와서 늘 헤매요.',
-      '들판에 폭주 청년들이 수레를 막아요. 가시는 길에 좀 혼내 주세요.',
-      '야장 어르신이 제 수레 바퀴를 공짜로 벼려 주셨어요.' ],
-      story: [
-        '제가 처음 배달한 짐은 주소 없는 상자였어요. 받는 사람을 못 찾아 사흘을 헤맸죠.',
-        '결국 상자를 열어 봤는데 안에는 "누군가에게 전해질 마음"이라 적힌 쪽지 한 장뿐이더라고요.',
-        '그 쪽지를 들고 다니다 이 시대까지 왔어요. 신기하게 여기선 받을 사람이 자꾸 나타나요.',
-        '어제 마을 사관님께 쪽지를 보여 드렸더니 "내 기록에도 없는 글씨네" 하셨어요. 주소가 생겼네요!' ] },
-    officeworker: { name: '출장 온 회사원', emoji: '💼', era: 'modern', model: 'folk:officeworker', color: '#3a3a4a', lines: [
-      '회의가 저 굴혈 밑에서 잡혔다는데, 농담이겠죠?',
-      '여기 비단값이면 본사에서 칭찬받겠어요.',
-      '방역복 입은 사람들이 개펄 쪽을 뒤지고 다녀요. 뭘 찾는 걸까요.',
-      '신호가 한 칸도 안 잡혀요. 봉화라도 올려야 하나.' ],
-      story: [
-        '저는 원래 본사 지시서만 따라 움직이는 사람이었어요. 출장도 지시서대로 왔죠.',
-        '그런데 도착하니 지시서에 없는 일이 하나도 안 멈추는 거예요. 굴혈에서 사람 이름이 지워지는 일 같은.',
-        '지시서를 접어 넣고 처음으로 제 판단으로 한 일이 지워진 이름 하나를 적어 두는 거였어요.',
-        '오늘 사관님이 그 이름을 기록에 올려 주셨어요. 보고서로 쓰면 한 줄일 일인데 이렇게 마음이 무겁네요.' ] },
-    timetraveler: { name: '시간 여행자', emoji: '⌛', era: 'future', model: 'folk:timetraveler', color: '#5a8aa8', lines: [
-      '제가 온 해에는 이 마을이 유리 탑 숲이었어요.',
-      '경비 보행기가 제 뒤를 따라 넘어왔나 봐요. 미안해요.',
-      '여기 무예는 우리 시대 기록에도 전설로 남아 있어요.',
-      '지옥 균열은… 우리 때까지도 안 닫혀요. 조심하세요.' ],
-      story: [
-        '제 귀환 일정은 원래 사흘이었어요. 이 시대를 관찰하고 돌아가는 일이었죠.',
-        '그런데 관찰이란 게 이상해요. 제가 보면 보는 대로 이 마을이 조금씩 바뀌더라고요.',
-        '그래서 일정을 미뤘어요. 바뀌는 걸 끝까지 보고 싶어서요. 우리 시대 기록에 이 마을은 없거든요.',
-        '어제 굴혈 이름 없는 비석 앞에서 한참 서 있었어요. 우리 시대에도 그 자리에 비석이 있어요. 이름이 없는 채로요.' ] },
-    explorer: { name: '탐사 대원', emoji: '🧑‍🚀', era: 'future', model: 'folk:explorer', color: '#c9c9d0', lines: [
-      '과거 신호가 겹쳐 잡히는 좌표예요. 흥미롭네요.',
-      '정찰 드론이 길을 잃었어요. 보이면 떨어뜨려 주세요.',
-      '강철 거신은 옛 전장 쇳물로 만든 거래요. 무섭죠?',
-      '이 시대 햇빛은 약해서 충전이 더뎌요.' ] }
-  };
-  var ERA_FOLK_KEYS = ['courier', 'timetraveler', 'officeworker', 'explorer'];   // 현대·미래가 번갈아 오게
-  var ERA_FOLK_GAP = 100;
-  function ERA_FOLK_ON() { return !core.tuned || core.tuned('dg.eraFolk', 1) ? true : false; }
-  function eraFolkKeyOf(id) {
-    var h = 2166136261, i, s = String(id || '');
-    for (i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
-    return ERA_FOLK_KEYS[(h >>> 0) % ERA_FOLK_KEYS.length];
-  }
-  /** 이 마을 손님이 설 자리(BASE 좌표) — 없으면 null. 결정적(마을 id 해시 소금) */
-  function eraFolkSpot(cfg) {
-    var avoid = [{ x: 195, y: 240 }], i, salt = 70001;
-    for (i = 0; i < cfg.npcs.length; i++) { avoid.push({ x: cfg.npcs[i].x, y: cfg.npcs[i].y }); }
-    for (i = 0; i < (cfg.decor || []).length; i++) { if (typeof cfg.decor[i].x === 'number') { avoid.push({ x: cfg.decor[i].x, y: cfg.decor[i].y }); } }
-    if (cfg.hasGate) { for (i = 0; i < MARKS.length; i++) { if (typeof MARKS[i].x === 'number') { avoid.push({ x: MARKS[i].x, y: MARKS[i].y }); } } }
-    for (i = 0; i < String(cfg.id).length; i++) { salt += String(cfg.id).charCodeAt(i) * (i + 7); }
-    var pts = placePoints(1, ERA_FOLK_GAP, avoid, salt);
-    return pts.length ? pts[0] : null;
-  }
-
-  /**
-   * 지워진 이름의 비석(정본 side_names_*) — 마을마다 하나, 밟으면 굴혈이 삼킨 이름 하나가 보이고 사관 묵향의 기록에 적힌다(마을마다 한 번 금·업적).
-   * 이름은 가상 음절 조합(실명 없음)이고 마을 id 해시로 정해 늘 같다. 자리는 손님·NPC·소품·표식에서 떨어진 빈자리(`placePoints`).
-   */
-  var NAME_STONE_NAMES = ['서하', '온유', '도윤', '해담', '가람', '이든', '나루', '다솜', '보리', '새롬', '아람', '우솔', '초록', '한결', '여울', '슬기', '미르', '별찬', '소담', '푸름', '하늬', '려온', '지안', '단비'];
-  var NAME_STONE_GOLD = 600, NAME_STONE_FEAT = 8;
-  function nameStoneNameOf(id) {
-    var h = 5381, i, s = String(id || '');
-    for (i = 0; i < s.length; i++) { h = ((h * 33) ^ s.charCodeAt(i)) >>> 0; }
-    return NAME_STONE_NAMES[h % NAME_STONE_NAMES.length];
-  }
-  function nameStoneSpot(cfg) {
-    var avoid = [{ x: 195, y: 240 }], i, salt = 90011, ef = ERA_FOLK_ON() ? eraFolkSpot(cfg) : null;
-    if (ef) { avoid.push({ x: ef.x, y: ef.y }); }
-    for (i = 0; i < cfg.npcs.length; i++) { avoid.push({ x: cfg.npcs[i].x, y: cfg.npcs[i].y }); }
-    for (i = 0; i < (cfg.decor || []).length; i++) { if (typeof cfg.decor[i].x === 'number') { avoid.push({ x: cfg.decor[i].x, y: cfg.decor[i].y }); } }
-    if (cfg.hasGate) { for (i = 0; i < MARKS.length; i++) { if (typeof MARKS[i].x === 'number') { avoid.push({ x: MARKS[i].x, y: MARKS[i].y }); } } }
-    for (i = 0; i < String(cfg.id).length; i++) { salt += String(cfg.id).charCodeAt(i) * (i + 11); }
-    var pts = placePoints(1, ERA_FOLK_GAP, avoid, salt);
-    return pts.length ? pts[0] : null;
-  }
-  /** 비석을 밟았다 — 마을마다 한 번 기록·보상. 다시 밟으면 이미 적어 둔 이름만 보인다. `ui.js` 가 `town:mark`(nameStone)에서 부른다 */
-  function rewardNameStone(mark) {
-    var sv = core.save, id = mark.townId, nm = nameStoneNameOf(id);
-    if (!sv.nameStones || typeof sv.nameStones !== 'object') { sv.nameStones = {}; }
-    if (sv.nameStones[id]) { core.emit('toast', mark.emoji + ' 비석에 새겨진 이름 — ' + nm + ' (이미 기록해 두었다)'); return false; }
-    sv.nameStones[id] = nm;
-    sv.player.gold = (sv.player.gold || 0) + NAME_STONE_GOLD;
-    core.gainFeat(NAME_STONE_FEAT, '지워진 이름');
-    core.log(mark.emoji + ' 지워진 이름 "' + nm + '" — 묵향의 기록에 적었다 · 금 +' + core.fmt(NAME_STONE_GOLD), 'good');
-    core.emit('toast', mark.emoji + ' 지워진 이름을 찾았다 — ' + nm + ' · 🪙 +' + core.fmt(NAME_STONE_GOLD) + ' (' + Object.keys(sv.nameStones).length + '번째)');
-    core.emit('changed'); core.persist();
-    return true;
-  }
+  /* 세 시대 손님·지워진 이름의 비석(§5.20) — R-4(10-11) 로 `town-folk.js` 에. 같은 이름으로 받아 둔다(자리 셈엔 MARKS·placePoints 를 넘김) */
+  var TF = global.DG.townFolk, ERA_FOLK = TF.ERA_FOLK, ERA_FOLK_ON = TF.ERA_FOLK_ON, eraFolkKeyOf = TF.eraFolkKeyOf, NAME_STONE_GOLD = TF.NAME_STONE_GOLD, nameStoneNameOf = TF.nameStoneNameOf, rewardNameStone = TF.rewardNameStone;
+  function eraFolkSpot(cfg) { return TF.eraFolkSpot(cfg, MARKS, placePoints); }
+  function nameStoneSpot(cfg) { return TF.nameStoneSpot(cfg, MARKS, placePoints); }
 
   /**
    * 표식 셋 — 사람이 아니라 **밟는 것**이다. 모루골에만 있다(원작에도 야영지가
@@ -630,82 +538,11 @@
   /** 길목 발견거리 하나를 밟았다 — `js/ui.js` 가 `town:mark`(roadMark 표시가 있는 것)에서 부른다 */
   function rewardRoadMark(mark) { var RM = global.DG.roadMarks; return RM ? RM.reward(mark, room) : null; }
 
-  /* 2026-09-10 — PLAN §60 후보 4 "필드 수집품". 길가 발견거리(위 ROAD_MARKS)와
-     달리 **길에서 벗어나야** 닿는다 — 디아4의 "릴리스 제단"처럼 정해진 자리
-     전부를 모으는 도감류 수집이다. 같은 길 선분을 기준점으로 삼되(새 좌표계를
-     안 만든다), 선분의 수직 방향으로 180~400 떨어뜨려(길 대역 TOWN_ROAD_BAND=70
-     밖) "길 옆 숲·바위 사이"에 둔다. 도감(js/ui.js DEX_COMPLETE)에 새 갈래
-     'relics'로 얹는다 — 새 도감 시스템을 만들지 않고 기존 것에 얹는다. */
-  var FIELD_RELIC_KINDS = [
-    { name: '옛 석표(石標)', emoji: '🗿' },
-    { name: '이끼 낀 종', emoji: '🔔' },
-    { name: '금 간 청동거울', emoji: '🪞' },
-    { name: '녹슨 인장', emoji: '🔏' }
-  ];
-  var FIELD_RELIC_GOLD = 20, FIELD_RELIC_FEAT = 4;
-  var FIELD_RELICS = [];
-  (function buildFieldRelics() {
-    var out = [], i, s, roll, t, dx, dz, len, bx, by, side, offR, kind;
-    for (i = 0; i < ROAD_SEGMENTS.length; i++) {
-      s = ROAD_SEGMENTS[i];
-      roll = core.hash2(i * 31 + 101, i * 37 + 103);
-      if (roll >= 0.3) { continue; }   // 길목 발견거리(45%)보다 더 드물게 — 릴리스 제단처럼 귀해야 한다
-      t = 0.3 + core.hash2(i * 41 + 7, i * 43 + 11) * 0.4;
-      dx = s.bx - s.ax; dz = s.bz - s.az;
-      len = Math.hypot(dx, dz) || 1;
-      dx /= len; dz /= len;
-      bx = s.ax + (s.bx - s.ax) * t;
-      by = s.az + (s.bz - s.az) * t;
-      side = core.hash2(i * 53 + 13, i * 59 + 17) < 0.5 ? -1 : 1;
-      offR = 180 + core.hash2(i * 61 + 19, i * 67 + 23) * 220;   // 180~400, 길 대역(70) 밖
-      kind = FIELD_RELIC_KINDS[Math.floor(core.hash2(i * 71 + 29, i * 73 + 31) * FIELD_RELIC_KINDS.length)];
-      out.push({
-        id: 'relic:' + i, kind: kind,
-        x: bx + (-dz) * offR * side, y: by + dx * offR * side
-      });
-    }
-    FIELD_RELICS = out;
-  })();
-  var FIELD_RELIC_ACTIVE_R = 500;
+  /* 들판 유적(PLAN §60 후보 4) — R-4(10-11) 로 `js/road-marks.js` 에(길목 발견거리와 같은 결·같은 길 선분). 같은 이름으로 부른다 */
   var relicMarkCd = 1;
-
-  function spawnNearbyFieldRelics() {
-    if (!room || !room.marks) { return; }
-    var found = (core.save.dex && core.save.dex.relics) || {};
-    for (var i = 0; i < FIELD_RELICS.length; i++) {
-      var fr = FIELD_RELICS[i];
-      if (found[fr.id]) { continue; }
-      if (Math.hypot(player.x - fr.x, player.y - fr.y) >= FIELD_RELIC_ACTIVE_R) { continue; }
-      var already = false, j;
-      for (j = 0; j < room.marks.length; j++) { if (room.marks[j].key === fr.id) { already = true; break; } }
-      if (already) { continue; }
-      room.marks.push({
-        key: fr.id, fieldRelic: true,
-        name: fr.kind.name, emoji: fr.kind.emoji,
-        x: fr.x, y: fr.y
-      });
-    }
-  }
-
-  /** 필드 유적 하나를 밟았다 — 도감에 등록하고 보상을 준 뒤 자리에서 치운다.
-   *  `js/ui.js` 가 `town:mark`(fieldRelic 표시가 있는 것)에서 부른다. */
-  function rewardFieldRelic(mark) {
-    if (!core.save.dex.relics) { core.save.dex.relics = {}; }
-    if (core.save.dex.relics[mark.key]) { return; }   // 이중 발동 방지
-    core.save.dex.relics[mark.key] = true;
-    var i = room.marks.indexOf(mark);
-    if (i >= 0) { room.marks.splice(i, 1); }
-    core.save.player.gold += FIELD_RELIC_GOLD;
-    core.gainFeat(FIELD_RELIC_FEAT, mark.name);
-    core.log(mark.emoji + ' ' + mark.name + ' 발견 · 금 +' + core.fmt(FIELD_RELIC_GOLD), 'good');
-    core.emit('toast', mark.emoji + ' 유적 발견 · ' + mark.name);
-    core.emit('dex:new', { cat: 'relics', id: mark.key });
-    core.emit('changed');
-  }
-
-  function dirEmoji(dir) {
-    return dir === 'N' ? '⬆️' : dir === 'S' ? '⬇️' : dir === 'E' ? '➡️' : '⬅️';
-  }
+  function spawnNearbyFieldRelics() { var RM = global.DG.roadMarks; if (RM) { RM.tickRelics(room, player); } }
+  /** 필드 유적 하나를 밟았다 — `js/ui.js` 가 `town:mark`(fieldRelic 표시가 있는 것)에서 부른다 */
+  function rewardFieldRelic(mark) { var RM = global.DG.roadMarks; if (RM) { RM.rewardRelic(mark, room); } }
 
   /* DECOR 는 그대로 두고(BASE_W·BASE_H 기준 좌표), 실제 방 크기에 맞춘 사본을
      마을마다 한 번씩만 만들어 캔다 — 순수 배경이라 정확히 맞을 필요는 없지만,
@@ -940,28 +777,8 @@
   var VISION_CHUNKS = 2;
   var lastSeenCx = null, lastSeenCz = null;
   var TOWN_DISCOVER_GOLD = 30, TOWN_DISCOVER_FEAT = 3;   // 탐험 보상(PLAN §60 후보3, 절반: 마을 첫 발견)
-  /* 2026-09-10 — PLAN §60 후보 3 나머지 절반 "포그오브워 비율 보상".
-     세계 전체 면적을 분모로 삼는 "%"는 못 쓴다 — WORLD_LIMIT(60000)
-     기준 칸(CHUNK=200) 수가 9만 개에 육박해 분모 자체가 의미가 없고,
-     들판 렌더 반경(fieldRadiusUnits)은 그래픽 등급에 따라 흔들려(2/4/6칸)
-     "고정된 분모"가 못 된다. 대신 **밝힌 칸 누적 수의 문턱(milestone)**
-     으로 간다 — "몇 %" 대신 "지도를 이만큼 밝혔다"는 감각은 같고, 구현은
-     `core.save.town.seen`(이미 있음) 길이 하나만 보면 된다. */
-  var EXPLORE_MILESTONES = [50, 150, 350, 700, 1200, 2000];
-  var EXPLORE_GOLD = 25, EXPLORE_FEAT = 2;
-  function checkExploreMilestones() {
-    if (!core.save.town || !core.save.town.seen || !core.save.player) { return; }
-    var total = 0, k;
-    for (k in core.save.town.seen) { if (Object.prototype.hasOwnProperty.call(core.save.town.seen, k)) { total++; } }
-    var got = core.save.town.exploreMilestone || 0;
-    while (got < EXPLORE_MILESTONES.length && total >= EXPLORE_MILESTONES[got]) {
-      core.save.player.gold += EXPLORE_GOLD;
-      core.gainFeat(EXPLORE_FEAT, '지도 ' + EXPLORE_MILESTONES[got] + '칸 밝힘');
-      core.emit('toast', '🗺️ 지도를 ' + EXPLORE_MILESTONES[got] + '칸 밝혔다 · 🪙 +' + EXPLORE_GOLD);
-      got++;
-    }
-    core.save.town.exploreMilestone = got;
-  }
+  /* 지도 밝힘 문턱 보상(PLAN §60 후보 3 절반) — R-4(10-11) 로 `js/road-marks.js` 에 */
+  function checkExploreMilestones() { var RM = global.DG.roadMarks; if (RM) { RM.exploreCheck(); } }
   function markSeen(x, y) {
     var F = global.DG.field3d;
     if (!F || !core.save.town) { return; }
@@ -1589,7 +1406,7 @@
     rewardFieldRelic: rewardFieldRelic,
     /** 도감 'relics' 탭(js/ui.js)이 총 개수·목록을 읽는다 — 참조 그대로 주지
      *  않는다(호출자가 실수로 고치면 세계 배치가 흔들린다). */
-    fieldRelics: function () { return FIELD_RELICS.map(function (r) { return { id: r.id, name: r.kind.name, emoji: r.kind.emoji }; }); },
+    fieldRelics: function () { var RM = global.DG.roadMarks; return (RM ? RM.relics() : []).map(function (r) { return { id: r.id, name: r.kind.name, emoji: r.kind.emoji }; }); },
     overworld: overworld,
     status: status,
     exitPointRaw: exitPointRaw,
