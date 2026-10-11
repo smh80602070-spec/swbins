@@ -3545,5 +3545,30 @@
   "ticket": "G-0205",
   "since": "2026-10-11",
   "note": "창 모드 st_boss_slam·st_boss_sweep Claude 눈 ○(주황 반원·초록 안전지대 벽)"
+ },
+ {
+  "id": "gd.st.boss-sig",
+  "name": "4종횡 보스 패턴전 2차 — 보스 넷 고유 기술(도넛·화살비·쇠뇌·불기둥 두 박자)·그로기(셋 피하면 5초·×1.5)·달려들기·관문 대장 고유 기술(4초·8초)",
+  "files": [
+   "games/saga_story/world/story_boss_pattern.gd",
+   "games/saga_story/world/story_enemy.gd",
+   "tools/probe_story_boss.gd",
+   "tools/shot_story_fx.gd",
+   "tools/shot_scene.gd"
+  ],
+  "tests": [
+   "story_boss",
+   "story",
+   "story_rules",
+   "story_player",
+   "story_golden",
+   "hurt_signal"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0206",
+  "since": "2026-10-11",
+  "note": "창 모드 st_boss_sig·st_boss_groggy Claude 눈 ○(이름 띠·초록 반원·💫)"
  }
 ]

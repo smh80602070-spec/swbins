@@ -51,6 +51,15 @@ static func boss_sweep(tree: SceneTree) -> void:
 	_boss_kind(tree, "sweep")
 
 
+## G-0206 — 황건 두목 고유 기술(도넛 — 보스 곁 초록 원만 산다) · 그로기(머리 위 💫).
+static func boss_sig(tree: SceneTree) -> void:
+	_boss_kind(tree, "ring")
+
+
+static func boss_groggy(tree: SceneTree) -> void:
+	_boss_kind(tree, "groggy")
+
+
 static func _boss_kind(tree: SceneTree, kind: String) -> void:
 	for m in tree.get_nodes_in_group("ui_modal"):
 		m.queue_free()
@@ -61,6 +70,8 @@ static func _boss_kind(tree: SceneTree, kind: String) -> void:
 	if b.get("boss_pattern") == null: # 이번 주 관문 대장이면 패턴이 없다 — 촬영만 하나 붙인다
 		b.set("boss_pattern", (load("res://games/saga_story/world/story_boss_pattern.gd") as GDScript).new(1))
 	b.get("boss_pattern").cd = 999.0
+	b.get("boss_pattern").sig_cd = 999.0
+	b.set("_charge_cd", 999.0) # 촬영 중 달려들지 않게
 	p.global_position = Vector3(b.global_position.x - 2.6, p.global_position.y, p.global_position.z)
 	var n := [0]
 	var cb := [Callable()]
@@ -68,7 +79,10 @@ static func _boss_kind(tree: SceneTree, kind: String) -> void:
 		n[0] += 1
 		if n[0] == 60 and is_instance_valid(b) and is_instance_valid(p):
 			p.set("hp", float(p.get("max_hp")))
-			b.get("boss_pattern").begin(b, p, kind, b.call("_pattern_api", p))
+			if kind == "groggy":
+				b.get("boss_pattern").groggy = 5.0
+			else:
+				b.get("boss_pattern").begin(b, p, kind, b.call("_pattern_api", p))
 		if n[0] >= 60:
 			tree.process_frame.disconnect(cb[0])
 	tree.process_frame.connect(cb[0])

@@ -47,6 +47,7 @@ const StoryEnemyShot := preload("res://games/saga_story/world/story_enemy_shot.g
 const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
 const StoryBossPattern := preload("res://games/saga_story/world/story_boss_pattern.gd")   # G-0205 보스 패턴전 1차
 const Toast := preload("res://saga_core/ui/toast.gd")
+const CombatTell := preload("res://saga_core/combat_tell.gd")   # G-0206 달려들기 예고
 
 ## 사냥터별 몸 모양(GO 짐승 공방 재사용 — 캡슐 대신). 정해진 게 없으면(비경 등) 도깨비꼴.
 const KIND_BY_STAGE := {"field": "goblin", "forest": "wolf", "cave": "beast", "gorge": "bear"}
@@ -101,6 +102,17 @@ var boss_name := "보스"
 var stage_width_m := 0.0
 var minion_color := COLOR
 var _bp_api: Dictionary = {}
+## G-0206 달려들기(웹 side.js 1802 — 보스·관문 대장 공통): 쿨 4~7초 뒤 near 면 1.1초 동안 플레이어 쪽으로 미끄러진다
+## (고돗 4종횡 적은 원래 걷지 않는다 — 돌진 중에만 움직이고 끝나면 그 자리). 속도 = 웹 spd(38+min(40, lv×2))×1.25(near)×2.6.
+const CHARGE_T := 1.1
+const CHARGE_MUL := 2.6
+const CHARGE_TELL_R := 46.0 * 0.02
+const CHARGE_WARN_SEC := 0.9
+var _charge_t := 0.0
+var _charge_cd := -1.0
+var _charge_dir := 1.0
+var _charge_rng := RandomNumberGenerator.new()
+var _groggy_label: Label3D = null
 
 
 func _ready() -> void:
@@ -113,8 +125,12 @@ func _ready() -> void:
 	max_hp = hp
 	add_to_group("story_enemy")
 	_spawn_visual()
-	if is_boss and not is_champion and boss_pattern == null:
-		boss_pattern = StoryBossPattern.new(hash(stage_key) % 100000 + 13)
+	if is_boss and boss_pattern == null:
+		## 사냥터 보스는 패턴전(G-0205), 관문 대장은 고유 기술만(G-0206 gate)
+		boss_pattern = StoryBossPattern.new(hash(stage_key) % 100000 + 13, boss_name, is_champion)
+	if is_boss:
+		_charge_rng.seed = hash(stage_key) % 100000 + 29
+		_charge_cd = 4.0 + _charge_rng.randf() * 3.0
 
 
 func _spawn_visual() -> void:
@@ -154,9 +170,22 @@ func _physics_process(delta: float) -> void:
 		_creature.rotation.y = PI * 0.5 if dx > 0.0 else -PI * 0.5
 	## G-0205 — 패턴전은 붙어 치기와 나란히 돈다(웹 side.js 1819 — 몸통 박치기는 그대로).
 	if boss_pattern != null:
-		boss_pattern.step(self, player, delta, StoryBossPattern.is_near(self, player), _pattern_api(player))
+		var near := StoryBossPattern.is_near(self, player)
+		var api := _pattern_api(player)
+		if boss_pattern.gate:
+			boss_pattern.step_sig(self, player, delta, near, api)
+		else:
+			boss_pattern.step(self, player, delta, near, api)
 		if _dead:
 			return
+		if boss_pattern.begun:
+			_charge_cd = maxf(_charge_cd, boss_pattern.t + 1.2) # 패턴이 풀릴 때까지 달려들기를 미룬다(웹 begin)
+		_show_groggy(boss_pattern.groggy > 0.0)
+		if boss_pattern.groggy > 0.0:
+			_charge_t = 0.0
+			return # 그로기 — 멈춰 선다(박치기·돌진 없음)
+	if is_boss:
+		_tick_charge(delta, player, dx)
 
 	if _attack_cd_left <= 0.0 and absf(dx) <= OVERLAP_RANGE * scale_mul:
 		_attack_cd_left = ATTACK_COOLDOWN
@@ -175,11 +204,57 @@ func _physics_process(delta: float) -> void:
 		_fire_shot(dx)
 
 
+## G-0206 달려들기 — 쿨이 다하고 보스가 나를 보면 1.1초 미끄러진다(예고: 몸 둘레 원 0.3초 + "!" 0.9초).
+func _tick_charge(delta: float, player: Node3D, dx: float) -> void:
+	if _charge_t > 0.0:
+		_charge_t -= delta
+		var spd := (38.0 + minf(40.0, enemy_lv * 2.0)) * 1.25 * CHARGE_MUL * 0.02
+		var nx := global_position.x + _charge_dir * spd * delta
+		global_position.x = clampf(nx, 0.6, stage_width_m - 0.6) if stage_width_m > 0.0 else nx
+		return
+	_charge_cd -= delta
+	var busy: bool = boss_pattern != null and boss_pattern.busy()
+	if _charge_cd <= 0.0 and not busy and StoryBossPattern.is_near(self, player):
+		_charge_t = CHARGE_T
+		_charge_cd = 5.0 + _charge_rng.randf() * 3.0
+		_charge_dir = 1.0 if dx > 0.0 else -1.0
+		var tell := CombatTell.ring(self, global_position, CHARGE_TELL_R + 0.8, 0.3, Color(1.0, 0.3, 0.2))
+		if tell != null:
+			tell.rotation.x = PI * 0.5
+		_float_mark("!", CHARGE_WARN_SEC, Color(1.0, 0.35, 0.25))
+
+
+## 머리 위 글자 표시(달려들기 "!" · 그로기 "💫").
+func _float_mark(text: String, sec: float, col: Color) -> Label3D:
+	var l := Label3D.new()
+	l.text = text
+	l.font_size = 72
+	l.pixel_size = 0.012
+	l.modulate = col
+	l.outline_size = 14
+	l.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	l.no_depth_test = true
+	add_child(l)
+	l.position = Vector3(0, 2.6 * (CHAMPION_VISUAL_SCALE if is_champion else BOSS_VISUAL_SCALE) * 0.9, 0)
+	if sec > 0.0:
+		get_tree().create_timer(sec).timeout.connect(l.queue_free)
+	return l
+
+
+func _show_groggy(on: bool) -> void:
+	if on and _groggy_label == null:
+		_groggy_label = _float_mark("💫", 0.0, Color(1.0, 0.95, 0.5))
+	elif not on and _groggy_label != null:
+		_groggy_label.queue_free()
+		_groggy_label = null
+
+
 ## G-0205 — 패턴전이 바깥 일을 하는 길(웹 bpApi). Callable 은 한 번 만들고 값만 매 틱 갈아 넣는다.
 func _pattern_api(player: Node) -> Dictionary:
 	if _bp_api.is_empty():
 		_bp_api = {"hurt": _bp_hurt, "spawn": _spawn_minion, "toast": _bp_toast, "shake": _bp_shake, "on_ground": _bp_on_ground}
-	_bp_api.dmg = StoryCombat.enemy_base_dmg(enemy_lv) * boss_dmg_mul * boss_pattern.dmg_mul()
+	_bp_api.dmg = StoryCombat.enemy_base_dmg(enemy_lv) * boss_dmg_mul * boss_pattern.dmg_mul() * (CHAMPION_DMG_MUL if is_champion else 1.0)
+	_bp_api.charging = _charge_t > 0.0
 	_bp_api.hp = hp
 	_bp_api.hp_max = max_hp
 	_bp_api.player_hp_max = float(player.get("max_hp")) if player.get("max_hp") != null else 100.0
@@ -244,6 +319,8 @@ func take_damage(amount: float) -> void:
 	if _dead or amount <= 0.0:
 		return
 	var applied := amount
+	if boss_pattern != null:
+		applied *= boss_pattern.dmg_taken_mul()   # G-0206 그로기 ×1.5
 	if is_champion:
 		if _champion_vuln_time_left > 0.0:
 			applied *= CHAMPION_SHIELD_VULN_MUL
