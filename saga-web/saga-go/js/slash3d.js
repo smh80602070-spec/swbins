@@ -44,7 +44,7 @@
     } else {
       /* 반지름 r 의 호 띠(가운데가 내 앞 +z) — RingGeometry 각은 +x 에서 시작해 반시계 */
       mesh = new T.Mesh(new T.RingGeometry((sp.r - sp.w) * K, sp.r * K, 32, 1, Math.PI / 2 - sp.span / 2, sp.span), mat);
-      mesh.rotation.x = -Math.PI / 2;
+      mesh.rotation.x = Math.PI / 2;   // +y(호 가운데) → +z(내 앞). −90° 면 등 뒤로 간다(10-11 실전 촬영에서 발견)
       var tiltG = new T.Group(); tiltG.add(mesh); tiltG.rotation.z = sp.tilt; tiltG.position.y = cy;
       if (sp.dir < 0) { tiltG.scale.x = -1; }
       grp.add(tiltG); mesh = null;

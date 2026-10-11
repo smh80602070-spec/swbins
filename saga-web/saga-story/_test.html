@@ -6061,11 +6061,11 @@ window.DG_NO_TUNE = true;
       var r = [X.SX_OF.halberd === 'spear', X.SX_OF.fan === 'staff', X.hitOf('sword', 0) === false, a === 'Wpn_polearm_0', b === 'Wpn_polearm_1'];
       return r.every(Boolean) && ('극 → ' + a + ' → ' + b + ' · 소리 spear') || '실패 ' + r.join(',');
     });
-    t('st.side-view: 3D 손맛(W-0166) — 3D 렌더 해상도 배율 = 지금 확대(0.25 단위, 낮음 등급·손잡이 0 이면 1) · 흔들림 세기는 2D 와 같은 식(3D 카메라가 같은 값을 쓴다)', function () {
-      var SV = DG.sideView, C = DG.core, eff = SV._zoom().eff, zl = SV._sharpK('low'), zh = SV._sharpK('high'), off;
+    t('st.side-view: 3D 손맛(W-0166) — 3D 렌더 해상도 배율 = 지금 확대(0.25 단위, 높음 등급만 — 낮음·보통·손잡이 0 이면 1) · 흔들림 세기는 2D 와 같은 식(3D 카메라가 같은 값을 쓴다)', function () {
+      var SV = DG.sideView, C = DG.core, eff = SV._zoom().eff, zl = SV._sharpK('low'), zm = SV._sharpK('medium'), zh = SV._sharpK('high'), off;
       C.setTune('story3d.sharpZoom', 0); off = SV._sharpK('high'); C.setTune('story3d.sharpZoom', null);
       var shk = SV._shake([{ t: 'shake', big: true, life: 0.22 }]);
-      var r = [zl === 1, zh === Math.max(1, Math.round(eff * 4) / 4), off === 1, shk > 0.2];
+      var r = [zl === 1, zm === 1, zh === Math.max(1, Math.round(eff * 4) / 4), off === 1, shk > 0.2];
       return r.every(Boolean) && ('확대 ' + eff.toFixed(2) + ' → 해상도 ×' + zh + ' · 흔들림 ' + shk.toFixed(1)) || '실패 ' + r.join(',');
     });
     t('st.side-view3d: 시차 층(W-0161) — 사냥터가 쓰는 배경 지역 전부 layers.json 이 있고, 층 셋 깊이 far < mid < near < 0 < 앞 풀, mid·near 는 그 깊이 땅(0)에 앉는다', function () {

@@ -1388,8 +1388,8 @@
     _cam: function () { return camX; }, _zoom: function () { return { base: baseZoom(), eff: effZoom(), lowK: lowK, W: W, H: H }; }, _dirt: dirtOf, _grass: grassOf, _creaFamily: creaFamily, _creaId: creaIdOf, _creaIds: CREA_IDS,   // W-0132 진단
     /** 진단용 — **흔들림의 세기는 화면 층이 정한다**(side.js 는 'shake' 한 줄만 남긴다) */
     _shake: shakeOf,
-    /** W-0166 — 3D 렌더 해상도 배율 = 지금 확대(0.25 단위). 낮음 등급·손잡이 story3d.sharpZoom 0 이면 1 (3D 파일은 진단에 안 실려 여기 둔다) */
-    _sharpK: function (lv) { var C = global.DG.core; if (lv === 'low' || (C && C.tuned && !C.tuned('story3d.sharpZoom', 1))) { return 1; } return Math.max(1, Math.round(effZoom() * 4) / 4); },
+    /** W-0166 — 3D 렌더 해상도 배율 = 지금 확대(0.25 단위). 높음 등급에서만(10-11 실측: 켜면 프레임 시간 ×1.75 — 폰 보호), 그 밖·손잡이 story3d.sharpZoom 0 이면 1 (3D 파일은 진단에 안 실려 여기 둔다) */
+    _sharpK: function (lv) { var C = global.DG.core; if (lv !== 'high' || (C && C.tuned && !C.tuned('story3d.sharpZoom', 1))) { return 1; } return Math.max(1, Math.round(effZoom() * 4) / 4); },
     shakeLevel: shakeLevel, setShakeLevel: setShakeLevel,
     /** 진단용 — 화면의 그 자리가 어느 조작인가 (폰에는 방향키가 없다) */
     _zone: function (x, y) { return readZone({ clientX: x, clientY: y }); },
