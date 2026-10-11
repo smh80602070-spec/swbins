@@ -1393,12 +1393,12 @@
   "tests": [
    "PlaytestRealmEras"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D2",
+  "verified": "2026-10-11 claude",
   "fun": {},
-  "ticket": null,
+  "ticket": "U-0091",
   "since": "2026-09-16",
-  "note": "D1(U-0080 못 봄): docs/playcheck/d2-u0080-20261010.json — 위와 같은 지도 촬영, 시간 틈 성 표식 판별 불가"
+  "note": "D2(U-0091): docs/playcheck/d2-u0091-20261011.json — 수색 글 딱지 (현대)·사연 화면 ○, 묻힌 성 둘레 재야 ○ · 흠: 토스트가 시나리오 카드 위에 겹침(후속)"
  },
  {
   "id": "un.rk.battlefield",
@@ -1421,12 +1421,12 @@
   "tests": [
    "PlaytestRealmActors"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D2",
+  "verified": "2026-10-11 claude",
   "fun": {},
-  "ticket": null,
+  "ticket": "U-0091",
   "since": "2026-09-16",
-  "note": "D1(U-0080 못 봄): docs/playcheck/d2-u0080-20261010.json — worldmap 동작으로 지도를 열어도 게임 카메라가 지도 전체를 멀리서 잡아 인물이 점으로도 안 보임 — 후속 후보(지도 확대 촬영)"
+  "note": "D2(U-0091): docs/playcheck/d2-u0091-20261011.json — 태수 칼 휘두름·재야 걷기 확대 시트 ○ · 흠: 게임 지도 카메라(120m+)로는 배우가 안 보임(후속)"
  },
  {
   "id": "un.rk.wall-tiers",

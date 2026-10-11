@@ -13,7 +13,7 @@ namespace Saga.EditorTools
     /// `SAGA_SHOT_ACT` — 첫 장 직전에 움직임을 일으킨다(촬영 도구 안에서만, 게임 코드 무변경 · 그 기능 진단이 이미 부르는 공개 함수만):
     /// `walk`(가상 조이스틱 앞으로) · `attack`(사가만리 FieldCombat.Attack / 사가나락 PlayerCombat.TriggerAttack) · `swap`(다음 동료로 교체) ·
     /// `skill:<n>`(n 번 동료로 교체 뒤 Skill) · `roof`(마을집 지붕 남쪽에서 북으로 걷기) · `bossintro`(사가나락 = 진단의 두목 더미, 사가종횡 = 두목 6m 앞으로) ·
-    /// `gesture`(동료 환호) · `worldmap`(사가천하 지도 열기) · `party`·`party2`(모양별 동료 편성 — 스킬 진단과 같은 동료). 판에 없는 동작은 로그에 SKIP. 여러 개는 `+` 로(`walk+attack`).
+    /// `gesture`(동료 환호) · `worldmap`(사가천하 지도 열기) · `party`·`party2`(모양별 동료 편성 — 스킬 진단과 같은 동료). `realmeras`(U-0091 사가천하 — 시간 틈 사람 묻힌 성 들여 수색·훈련·지도 켬). 대상 `screen` = 화면 그대로 첫·끝 장(오버레이 UI 포함). 판에 없는 동작은 로그에 SKIP. 여러 개는 `+` 로(`walk+attack`).
     /// </summary>
     public static partial class PlaytestShowcaseGui
     {
@@ -22,6 +22,7 @@ namespace Saga.EditorTools
         private static List<(string name, Transform target)> _seqTargets;
         private static List<List<Texture2D>> _seqFrames;
         private static bool _seqWalk;
+        private static bool _seqScreen;   // U-0091 `screen` 대상 — 화면 그대로(ScreenCapture, 오버레이 UI 포함)
         private static bool _kitsWas, _kitsSet;
         private static int _skillRetry = -1, _skillTries;   // U-0090 순간이동 직후엔 공중이라 Skill() 이 거절(-1) — 땅에 설 때까지 다시 쓰고 그 뒤에 찍는다   // U-0090 party 동작이 켠 GoKits.OffForTest — 시트를 다 쓰면 되돌린다
 
@@ -38,10 +39,21 @@ namespace Saga.EditorTools
 
         private static void SeqBegin()
         {
+            _seqWalk = false;
+            // 1만리 주인공은 물가(강물 속)에서 시작한다 — 지붕 말고는 진단과 같은 안전한 땅(FieldCombat.SafePoint)으로 옮겨 놓고 시작
+            var acts = System.Environment.GetEnvironmentVariable("SAGA_SHOT_ACT") ?? "";
+            var gofc = Saga.Go.Combat.FieldCombat.Instance;
+            var hero = GameObject.FindWithTag("Player");
+            if (gofc != null && hero != null && acts.Length > 0 && !acts.Contains("roof")) { Teleport(hero.transform, gofc.SafePoint); Debug.Log($"[ShowcaseGui] 주인공 → 안전한 땅 {gofc.SafePoint}"); }
+            // U-0091 동작을 대상 찾기보다 먼저 — 지도 위 배우(Actor_)처럼 동작이 켜야 생기는 것도 `name:` 대상으로 잡힌다
+            foreach (var act in acts.Split(new[] { '+' }, System.StringSplitOptions.RemoveEmptyEntries))
+                Act(act.Trim());
             _seqTargets = new List<(string, Transform)>();
+            _seqScreen = false;
             foreach (var spec in _targets)
             {
                 if (spec == "gamecam") { _seqTargets.Add(("gamecam", null)); continue; }
+                if (spec == "screen") { _seqScreen = true; continue; }   // U-0091 화면 그대로(오버레이 UI 포함) — 첫·끝 장만 따로 PNG
                 if (spec == "player")   // 주인공을 3/4 앞에서 따라간다(게임 카메라는 내려다봐 걸음새가 안 보인다)
                 {
                     var pl = GameObject.FindWithTag("Player");
@@ -54,14 +66,6 @@ namespace Saga.EditorTools
                 else _seqTargets.Add((safe, t));
             }
             _seqFrames = _seqTargets.Select(_ => new List<Texture2D>()).ToList();
-            _seqWalk = false;
-            // 1만리 주인공은 물가(강물 속)에서 시작한다 — 지붕 말고는 진단과 같은 안전한 땅(FieldCombat.SafePoint)으로 옮겨 놓고 시작
-            var acts = System.Environment.GetEnvironmentVariable("SAGA_SHOT_ACT") ?? "";
-            var gofc = Saga.Go.Combat.FieldCombat.Instance;
-            var hero = GameObject.FindWithTag("Player");
-            if (gofc != null && hero != null && acts.Length > 0 && !acts.Contains("roof")) { Teleport(hero.transform, gofc.SafePoint); Debug.Log($"[ShowcaseGui] 주인공 → 안전한 땅 {gofc.SafePoint}"); }
-            foreach (var act in (System.Environment.GetEnvironmentVariable("SAGA_SHOT_ACT") ?? "").Split(new[] { '+' }, System.StringSplitOptions.RemoveEmptyEntries))
-                Act(act.Trim());
             foreach (var a in Object.FindObjectsByType<Animator>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)) a.cullingMode = AnimatorCullingMode.AlwaysAnimate;
             _seqTaken = 0; _seqNextAt = _frame + 2;
             Debug.Log($"[ShowcaseGui] seq 시작 — 대상 {_seqTargets.Count}·{_seqN}장·{_seqGap}프레임 간격");
@@ -96,6 +100,11 @@ namespace Saga.EditorTools
                 }
                 else if (!Frame(t, out pos, out rot)) continue;
                 _seqFrames[i].Add(ShootTex(main, pos, rot));
+            }
+            if (_seqScreen && (_seqTaken == 0 || _seqTaken == _seqN - 1))
+            {
+                ScreenCapture.CaptureScreenshot(_dir + $"screen_{_seqTaken + 1}.png");   // 프레임 끝에 비동기로 쓴다(게임 창 크기 그대로)
+                Debug.Log($"[ShowcaseGui] screen_{_seqTaken + 1}.png");
             }
             _seqTaken++;
             _seqNextAt = _frame + _seqGap;
@@ -184,6 +193,10 @@ namespace Saga.EditorTools
                     case "worldmap":
                         if (!Saga.Realm.Data.RealmMapState.ViewingMap) Saga.Realm.Data.RealmMapState.Toggle();
                         break;
+                    case "realmeras":
+                        if (Object.FindFirstObjectByType<Saga.Realm.World.RealmMapViewSwitcher>() == null) { Skip(act); return; }
+                        RealmEras();
+                        break;
                     default: Skip(act); return;
                 }
                 Debug.Log($"[ShowcaseGui] act {act}");
@@ -203,6 +216,42 @@ namespace Saga.EditorTools
                 Debug.Log($"[ShowcaseGui] skill:{n} {fc.Active?.Id} → {got}(시도 {_skillTries + 1}) 모양 {fc.LastShape} · 선 효과 {Object.FindObjectsByType<Saga.Go.Combat.FieldLineFx>(FindObjectsSortMode.None).Length} · 정령 {Object.FindObjectsByType<Saga.Go.Combat.SkillSpirit>(FindObjectsSortMode.None).Length} · 장판 {fc.Zones.Count} · 갈래 끔 {Saga.Go.Combat.GoKits.OffForTest}"
                     + (got == -1 ? $" | 거절: 발 {pc?.OnFoot}({pc?.Mode}) 결투 {Saga.Go.Combat.DuelGate.Active} 낚시 {Saga.Go.World.FishingField.Busy} 쓰러짐 {fc.Active?.Down} 쿨 {fc.Active?.SkillCd:F1}" : ""));
             return got;
+        }
+
+        /// <summary>U-0091 사가천하 — 진단(PlaytestRealmEras·PlaytestRealmActors)이 쓰는 공개 함수만으로: 지도를 먼저 켜고(꺼진 지도는 Changed 를 안 듣는다)
+        /// 아직 안 들인 시간 틈 사람 하나의 묻힌 성을 들여 그 성에서 수색(그 사람이 나올 때까지 달을 넘기며) → 결과 글을 토스트로,
+        /// 새 달에 우리 첫 성에서 훈련(태수 칼 휘두름) → 지도 다시 짓기(태수·재야 배우). 상태는 촬영 프로세스 안에서만 — 세이브는 촬영 뒤 복원.</summary>
+        private static void RealmEras()
+        {
+            if (!Saga.Realm.Data.RealmMapState.ViewingMap) Saga.Realm.Data.RealmMapState.Toggle();
+            var roster = Saga.Realm.Data.RealmCityState.RosterIds;
+            var t = Saga.Realm.Data.RealmEras.TimeOfficers.FirstOrDefault(x => !roster.Contains(x.Id));
+            if (t.Id == null) { Skip("realmeras(시간 틈 사람 전원 합류)"); return; }
+            string home = Saga.Realm.Data.RealmCityState.ActiveCityIds.FirstOrDefault(c => roster.Any(id => Saga.Realm.Data.RealmCityState.OfficerCityId(id) == c));
+            var def = Saga.Realm.Data.RealmCityData.Get(t.CityId);
+            if (!Saga.Realm.Data.RealmCityState.OwnsCity(t.CityId)) Saga.Realm.Data.RealmCityState.AbsorbCity(t.CityId, 40, 0, 0, 0);
+            Saga.Realm.Data.RealmCityState.SetCurrentCity(t.CityId);
+            string found = null;
+            for (int i = 0; i < 24 && !Saga.Realm.Data.RealmCityState.FoundIds.Contains(t.Id); i++)
+            {
+                Saga.Realm.Data.RealmCityState.AddGold(200);
+                var r = Saga.Realm.Data.RealmCityState.ExecuteOrder("search");
+                Debug.Log($"[ShowcaseGui] realmeras 수색 {i + 1} — {r.Ok} {r.Message}");
+                if (Saga.Realm.Data.RealmCityState.FoundIds.Contains(t.Id)) found = r.Message;
+                else Saga.Realm.Data.RealmCityState.NextMonth();
+            }
+            Saga.Realm.Data.RealmCityState.NextMonth();
+            if (home != null)
+            {
+                Saga.Realm.Data.RealmCityState.SetCurrentCity(home);
+                Saga.Realm.Data.RealmCityState.AddGold(200);
+                var tr = Saga.Realm.Data.RealmCityState.ExecuteOrder("train");
+                Debug.Log($"[ShowcaseGui] realmeras 훈련 {home} — {tr.Ok} {tr.Message} · 태수 {Saga.Realm.Data.RealmActorPlan.GovernorOf(home)}");
+            }
+            Object.FindFirstObjectByType<Saga.Realm.World.RealmWorldMap>()?.Rebuild();
+            if (found != null) Saga.Realm.UI.RealmToast.Instance?.Show(found, 60f);
+            var plan = Saga.Realm.Data.RealmActorPlan.FromState();
+            Debug.Log($"[ShowcaseGui] realmeras {t.Id}({t.Era}) 묻힌 성 {t.CityId}({def?.Name}) 찾음 {found != null} · 배우 {string.Join(", ", plan.Select(a => $"{a.Kind}:{a.OfficerId}@{a.CityId}/{a.Clip}"))} · 이름 {Saga.Realm.Data.RealmOfficerPool.Get(t.Id)?.Name}");
         }
 
         private static void Skip(string act) => Debug.Log($"[ShowcaseGui] act {act} SKIP(이 판에 없음)");
