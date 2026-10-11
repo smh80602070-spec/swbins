@@ -4700,6 +4700,18 @@ window.requestAnimationFrame = function () { return 0; };
       var r = [k.lift === 0.65, k.amb === 0.5, off === 0, town.ambient === 1.45 && town.ambientHex === 0xe7eaed, room.ambientHex === 0x2a2f3c];
       return r.every(Boolean) && '방 물감 +0.65 · 반구 색 +0.5 · 손잡이 0 → 옛 · 마을·lightPlan 값 그대로' || '실패 ' + r.join(',');
     });
+    t('3D 마을 벨트(W-0165) — 마을은 나를 따라가는 깊이 창(440, 나는 55%) 안의 벨트: 깊이 들어가도 카메라가 따라오고 방 벨트보다 물러서며 더 내려다본다 · 손잡이 0 = 옛', function () {
+      var BC = DG.beltCam3d, C = DG.core, o = { aspect: 16 / 9, fov: 46 };
+      var near = BC.beltTown(400, 1300, 1600, 1600, o), deep = BC.beltTown(400, 400, 1600, 1600, o), room = BC.beltCam(400, 300, 700, 440, o);
+      C.setTune('dungeon3d.beltTown', 0); var off = BC.townOn(); C.setTune('dungeon3d.beltTown', null);
+      var r = [Math.abs((near.pos.z - deep.pos.z) - 900) < 1e-6, Math.abs(near.top - (1300 + 440 * 0.45 - 440)) < 1e-6, near.dist > room.dist, Math.abs(near.pitch * 180 / Math.PI - 40) < 1e-6, off === false, BC.townOn() === true];
+      return r.every(Boolean) && ('깊이 900 들어가면 카메라도 900 · 거리 ' + Math.round(near.dist) + ' > 방 ' + Math.round(room.dist)) || '실패 ' + r.join(',');
+    });
+    t('은총 빛기둥(W-0165) — 3D 가 꺼진 진단에선 세우지 않는다(null), 은총 자리는 닿은 자리를 적는다', function () {
+      var G = DG.grace, run = { floor: 3, player: { x: 77, y: 210 }, hpMax: 10, hp: 1 }, g = G.touch(run);
+      var r = [G._pillarWant() === null, !g || (g.x === 77 && g.y === 210)];
+      return r.every(Boolean) && '진단엔 기둥 없음 · 자리 (77,210)' || '실패 ' + r.join(',');
+    });
     t('3D 벨트 카메라(W-0158) — x 만 나를 따라가다 방 양 끝에서 멈추고, 높이·z·내려다보는 각은 고정, 앞벽까지 화면 안', function () {
       var BC = DG.beltCam3d, W = DN.ROOM_W, H = DN.ROOM_H, o = { aspect: 16 / 9, fov: 46, pitch: 32, dist: 340 };
       var L = BC.beltCam(40, 100, W, H, o), M = BC.beltCam(W / 2, 300, W, H, o), R = BC.beltCam(W - 40, 400, W, H, o), R2 = BC.beltCam(W - 10, 50, W, H, o);

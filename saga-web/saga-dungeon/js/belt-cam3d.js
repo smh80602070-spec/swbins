@@ -44,6 +44,20 @@
     };
   }
 
+  /** W-0165 — 마을·들판도 벨트로. 마을은 방보다 훨씬 깊어 그대로 잡으면 깊이 들어간 내가 작아진다 → 2D belt2d 처럼
+   *  **나를 따라가는 깊이 창(HWIN 440, 나는 창의 55%)** 을 방 하나로 보고 beltCam 을 부른 뒤 창의 위 끝만큼 z 를 옮긴다.
+   *  2D 와 같이 조금 물러선다(×1/0.78) · 건물에 덜 가리게 조금 더 내려다본다(beltTownPitch 40). 손잡이 dungeon3d.beltTown 0 = 옛 카메라 */
+  var HWIN = 440;
+  function townOn() { return !!tuned('dungeon3d.beltTown', 1); }
+  function beltTown(px, py, W, H, o) {
+    o = o || {};
+    var front = Math.min(H, py + HWIN * 0.45), top = front - HWIN;
+    var oo = { aspect: o.aspect, fov: o.fov, zoom: (o.zoom > 0 ? o.zoom : 1) / 0.78, gy: o.gy, dist: o.dist, pitch: o.pitch === undefined ? tuned('dungeon3d.beltTownPitch', 40) : o.pitch };
+    var c = beltCam(px, py - top, W, HWIN, oo);
+    c.pos.z += top; c.look.z += top; c.top = top;
+    return c;
+  }
+
   global.DG = global.DG || {};
-  global.DG.beltCam3d = { on: on, beltCam: beltCam };
+  global.DG.beltCam3d = { on: on, beltCam: beltCam, townOn: townOn, beltTown: beltTown, HWIN: HWIN };
 })(window);

@@ -30,7 +30,8 @@
   /** 은총에 닿았다 — 표식을 얹고 체력을 채운다 */
   function touch(run) {
     if (!on() || !normal(run)) { return null; }
-    run.grace = { floor: run.floor, roomIdx: 0 };
+    var pl = run.player;
+    run.grace = { floor: run.floor, roomIdx: 0, x: pl ? pl.x : null, y: pl ? pl.y : null };   // W-0165 — 빛기둥 자리 = 닿은 자리
     run.hp = run.hpMax;
     last = { floor: run.floor };
     return run.grace;
@@ -95,9 +96,34 @@
     });
   }
 
+  /* ── W-0165 은총 빛기둥(3D) — 은총이 있는 층의 첫 방 들머리에 금빛 기둥. 방이 바뀌면 치운다.
+   *  dungeon3d 의 addFx 문으로 장면에 더한다(3D 파일은 큰 파일이라 손대지 않는다). 손잡이 grace.pillar 0 = 없음 */
+  var pillar = null, pillarKey = '';
+  function pillarWant() {
+    var D3 = global.DG.dungeon3d, R = DN() && DN().raw ? DN().raw() : null, g = R && R.grace;
+    if (!on() || !(core.tuned ? core.tuned('grace.pillar', 1) : 1) || !D3 || !D3.active || !D3.active() || !g || R.town) { return null; }
+    if (g.floor !== R.floor || R.roomIdx !== g.roomIdx) { return null; }
+    return { key: R.floor + ':' + g.roomIdx + ':' + Math.round(g.x || 0), x: g.x != null ? g.x : 90, z: g.y != null ? g.y : 220 };
+  }
+  function pillarTick() {
+    var w = pillarWant(), D3 = global.DG.dungeon3d;
+    if (!w) { if (pillar && pillar.parent) { pillar.parent.remove(pillar); } pillar = null; pillarKey = ''; return; }
+    if (pillar && pillarKey === w.key && pillar.parent) { return; }
+    if (pillar && pillar.parent) { pillar.parent.remove(pillar); }
+    var T = D3.three && D3.three();
+    if (!T) { return; }
+    var grp = new T.Group(), mat = new T.MeshBasicMaterial({ color: 0xffd98a, transparent: true, opacity: 0.32, blending: T.AdditiveBlending, depthWrite: false, side: T.DoubleSide });
+    var col = new T.Mesh(new T.CylinderGeometry(16, 26, 280, 18, 1, true), mat); col.position.y = 140; grp.add(col);
+    var ring = new T.Mesh(new T.RingGeometry(30, 44, 32), mat.clone()); ring.rotation.x = -Math.PI / 2; ring.position.y = 2; grp.add(ring);
+    col.onBeforeRender = function () { var k = 0.5 + 0.5 * Math.sin(Date.now() / 420); mat.opacity = 0.22 + 0.16 * k; };
+    grp.position.set(w.x, 0, w.z);
+    pillar = D3.addFx(grp); pillarKey = w.key;
+  }
+
   function init() {
     if (init.done) { return; }
     init.done = true;
+    if (global.setInterval) { global.setInterval(pillarTick, 300); }   // W-0165
     core.on('dungeon:enter', onEnter);
     core.on('dungeon:floor', onFloor);
     bind();
@@ -107,7 +133,7 @@
   global.DG = global.DG || {};
   global.DG.grace = {
     on: on, normal: normal, touch: touch, howOf: howOf, decorate: decorate, cardHtml: cardHtml, btnHtml: btnHtml,
-    restartAtGrace: restartAtGrace, last: function () { return last; },
+    restartAtGrace: restartAtGrace, last: function () { return last; }, _pillarWant: pillarWant,
     /** 재미표준 F 측정 — 복귀 조작 수(카드 단추 → 시작)와 복귀 시간(즉시) */
     RESTART_TAPS: 2, RESTART_SEC: 0
   };

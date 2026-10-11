@@ -460,7 +460,7 @@
       var asp = camera.aspect || 1;
       zNow *= (asp < 1 ? Math.min(1.2, 1 / Math.max(0.7, asp)) : 1);
     }
-    var BC3 = global.DG.beltCam3d, aim = (!run.town && BC3 && BC3.on()) ? BC3.beltCam(plx, ply, W, H, { aspect: camera.aspect, fov: camera.fov, zoom: zNow, gy: meGroundY }) : camAim(plx, ply, W, H, zNow, TILT(), !!run.town, meGroundY);   // W-0158 벨트 카메라(belt-cam3d.js), 손잡이 0 = 옛
+    var BC3 = global.DG.beltCam3d, aim = (BC3 && BC3.on() && (!run.town || (BC3.townOn && BC3.townOn()))) ? BC3[run.town ? 'beltTown' : 'beltCam'](plx, ply, W, H, { aspect: camera.aspect, fov: camera.fov, zoom: zNow, gy: meGroundY }) : camAim(plx, ply, W, H, zNow, TILT(), !!run.town, meGroundY);   // W-0158 벨트 카메라(belt-cam3d.js), 손잡이 0 = 옛
     /* 2026-09-08 — 실기기 로그로 실측: 화질이 진짜로 low 로 떨어질 때(가끔
        실제로 무거운 프레임이 있어 정당하게 떨어진다) low 의 안개 거리(500)가
        사용자가 확대·축소로 물러난 실제 카메라 거리(`aim.dist`, 줌에 따라
