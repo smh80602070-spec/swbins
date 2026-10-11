@@ -316,6 +316,7 @@ func _melee_hit(range_m: float, mul: float) -> void:
 			continue  # 등 뒤는 안 맞는다(바로 겹친 자리 정도는 봐준다)
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
+		StorySaveState.note_player_hit()   # G-0197 연속 타격
 		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
 
 
@@ -338,6 +339,7 @@ func _cast_sweep() -> void:
 			continue
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), StoryCombat.SWEEP_MUL)
 		e.take_damage(float(roll.dmg))
+		StorySaveState.note_player_hit()   # G-0197 연속 타격
 		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
 
 

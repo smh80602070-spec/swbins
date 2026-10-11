@@ -73,4 +73,5 @@ func _process(_delta: float) -> void:
 		return
 	if Input.is_action_just_pressed("story_interact"):
 		StorySaveState.set_pending_spawn(arrival_x_m)
+		StorySaveState.end_run()   # G-0197 — 사냥터에서 나가면 등급(들어간 적 없으면 아무 일 없음)
 		get_tree().change_scene_to_file(target_scene)

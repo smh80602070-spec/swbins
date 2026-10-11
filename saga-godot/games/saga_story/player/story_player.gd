@@ -32,6 +32,7 @@ func take_damage(amount: float) -> void:
 	## PLAN 101-2 STORY ⑤(비경) — 방어 축 은사(철벽)의 dmg_taken_mult(),
 	## 회차 밖이면 boons가 비어 있어 1.0(무해).
 	hp = clampf(hp - amount * (1.0 - cut) * guard_mul * StoryLabyrinthState.dmg_taken_mult(), 0.0, max_hp)
+	StorySaveState.note_hurt()   # G-0197 사냥터 결과 등급 — 피격 수·연속 끊김
 	## G-0192 — 맞으면 세계가 흔들린다(때릴 때의 combat_feel 0.06m·120ms 보다 세게)
 	var rig := get_tree().get_first_node_in_group("camera_rig") if is_inside_tree() else null
 	if rig != null and rig.has_method("shake"):

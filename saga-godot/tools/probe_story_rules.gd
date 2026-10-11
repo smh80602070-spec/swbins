@@ -12,7 +12,7 @@ extends SceneTree
 const Combat := preload("res://games/saga_story/data/story_combat.gd")
 
 const SAVED_VARS := ["level", "exp", "kills", "stage_kills", "visited_stages", "talks", "bosses", "feat", "achievements", "quests_done", "repeat_progress", "daily_done_day", "mats",
-	"equipped", "gold", "job", "scroll_bonus", "scroll_left", "skills", "weekly_champion_week", "memory_fragments", "memory_tier", "mentor_bond"]
+	"equipped", "gold", "job", "scroll_bonus", "scroll_left", "skills", "weekly_champion_week", "memory_fragments", "memory_tier", "mentor_bond", "sp_cut_lv", "sp_bonus", "skill_offers", "skill_free"]
 const HUNT_MAPS := ["field", "forest", "cave", "gorge"]
 const TOWN_MAPS := ["heodo", "gangneungjin", "gisanchae", "namjeongseong", "sinya"]
 
@@ -51,6 +51,10 @@ func _fresh(S: Node, lv: int = 1, done: bool = true) -> void:
 	S.scroll_bonus = {}
 	S.scroll_left = {}
 	S.skills = {}
+	S.sp_cut_lv = 999   # G-0197 — 이 점검은 옛 규칙(레벨마다 SP)을 본다 · 3택은 probe_story_offers
+	S.sp_bonus = 0
+	S.skill_offers = []
+	S.skill_free = {}
 	S.mentor_bond = 0
 	if done:
 		_all_quests_done(S)

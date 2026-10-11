@@ -34,6 +34,7 @@ func _cast_mage_bolt() -> void:
 			continue
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
+		StorySaveState.note_player_hit()   # G-0197 연속 타격
 		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
 
 
@@ -111,6 +112,7 @@ func _cast_sage_quake() -> void:
 			continue
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
+		StorySaveState.note_player_hit()   # G-0197 연속 타격
 		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
 
 
@@ -195,6 +197,7 @@ func _cast_immortal_abyss() -> void:
 			continue
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
+		StorySaveState.note_player_hit()   # G-0197 연속 타격
 		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
 
 
@@ -279,6 +282,7 @@ func _cast_ascendant_collapse() -> void:
 			continue
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
+		StorySaveState.note_player_hit()   # G-0197 연속 타격
 		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
 
 

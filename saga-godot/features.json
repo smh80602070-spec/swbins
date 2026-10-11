@@ -3292,5 +3292,27 @@
   "ticket": "G-0196",
   "since": "2026-10-11",
   "note": "창 모드 fs_bench Claude 눈 ○"
+ },
+ {
+  "id": "gd.st.offer3",
+  "name": "4종횡 레벨업 무예 3택(유파 서로 다른 셋·공짜 +1·거절 SP+1, 옛 세이브 SP 그대로) + 사냥터 결과 등급 S·A·B·C(시간·피격·연속)",
+  "files": [
+   "games/saga_story/data/story_save_state.gd",
+   "games/saga_story/data/story_skill_meta.gd",
+   "games/saga_story/ui/skill_offer_prompt.gd",
+   "games/saga_story/world/story_field.gd",
+   "tools/probe_story_offers.gd"
+  ],
+  "tests": [
+   "story_offers",
+   "story_rules",
+   "story_golden"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0197",
+  "since": "2026-10-11",
+  "note": "창 모드 st_offer Claude 눈 ○"
  }
 ]

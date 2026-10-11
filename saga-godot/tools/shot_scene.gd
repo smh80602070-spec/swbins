@@ -57,6 +57,7 @@ const CUTS := [
 	["dg_loot", DUNGEON, [["free_modal"], ["static", LOOT, "spawn_at", ["@scene", "@near:3.2:0", 30, true, false, 1000.0]], ["static", LOOT, "spawn_at", ["@scene", "@near:-3.2:0", 30, true, false, 1000.0]],
 		["static", LOOT, "spawn_at", ["@scene", "@near:0:-3.2", 30, true, false, 1000.0]], ["static", LOOT, "spawn_at", ["@scene", "@near:2.6:-5.2", 30, false, true, 1.0]],
 		["static", LOOT, "spawn_at", ["@scene", "@near:-2.6:-5.2", 30, false, false, 1.0]], ["static", LOOT, "spawn_at", ["@scene", "@near:0:-6.6", 30, false, false, 1.0]]]],
+	["st_offer", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_offer.gd", "stage", ["@tree"]]]],   # G-0197 레벨업 무예 3택 창
 	["st_field_front", "res://games/saga_story/world/TestField.tscn", [["free_modal"]]],   # G-0187 사냥터 — 앞 층 풀·바위·큰 인물(화면 높이 약 1/7)
 	["st_forest_front", "res://games/saga_story/world/ForestHuntGround.tscn", [["free_modal"]]],   # 숲 사냥터도
 	["st_ladder", STORY_CAVE, [["near", "LadderArea", -1.4, 0.0]]],

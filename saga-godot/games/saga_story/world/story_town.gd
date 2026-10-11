@@ -18,6 +18,9 @@ func _ready() -> void:
 	## 가로 화면이면 UI 기준 크기를 바꿔 글자가 깨알만 하지 않게(saga_core/ui/orientation_scale.gd).
 	add_child(preload("res://saga_core/ui/orientation_scale.gd").new())
 	preload("res://saga_core/audio/bgm.gd").play(self, "story-town")  # 배경음(G-0013) — 곡 없으면 조용
+	add_child(preload("res://games/saga_story/ui/skill_offer_prompt.gd").new())   # G-0197 레벨업 3택
+	if not StorySaveState.last_run.is_empty():
+		Toast.show(self, StorySaveState.run_line(StorySaveState.last_run), 4.0)   # G-0197 지난 사냥 등급
 	## 자동 저장(saga_core/world/autosave_timer.gd) — 60초마다·앱 멈춤 때.
 	preload("res://saga_core/world/autosave_timer.gd").attach(self, StorySaveState.save, func() -> bool: return get_tree().get_first_node_in_group("player") != null)
 	if StorySaveState.has_pending_spawn:
@@ -29,3 +32,4 @@ func _ready() -> void:
 	var runner: Node = preload("res://games/saga_story/world/scenario_runner.gd").new()
 	runner.name = "ScenarioRunner"
 	add_child(runner)
+const Toast := preload("res://saga_core/ui/toast.gd")   # G-0197

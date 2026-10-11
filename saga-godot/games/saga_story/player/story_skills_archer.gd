@@ -88,6 +88,7 @@ func _cast_archer_burst() -> void:
 			continue
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
+		StorySaveState.note_player_hit()   # G-0197 연속 타격
 		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
 
 
@@ -159,6 +160,7 @@ func _cast_sniper_burst() -> void:
 			continue
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
+		StorySaveState.note_player_hit()   # G-0197 연속 타격
 		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
 
 
@@ -244,6 +246,7 @@ func _cast_flier_burst() -> void:
 			continue
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
+		StorySaveState.note_player_hit()   # G-0197 연속 타격
 		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
 
 
@@ -329,6 +332,7 @@ func _cast_falcon_burst() -> void:
 			continue
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
+		StorySaveState.note_player_hit()   # G-0197 연속 타격
 		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
 
 

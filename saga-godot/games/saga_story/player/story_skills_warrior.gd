@@ -36,6 +36,7 @@ func _cast_warrior_whirl() -> void:
 			continue
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
+		StorySaveState.note_player_hit()   # G-0197 연속 타격
 		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
 
 
@@ -127,6 +128,7 @@ func _cast_general_roar() -> void:
 			continue
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
+		StorySaveState.note_player_hit()   # G-0197 연속 타격
 		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
 
 
@@ -198,6 +200,7 @@ func _cast_marshal_quake() -> void:
 			continue
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
+		StorySaveState.note_player_hit()   # G-0197 연속 타격
 		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
 
 
@@ -282,6 +285,7 @@ func _cast_warlord_tremor() -> void:
 			continue
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
+		StorySaveState.note_player_hit()   # G-0197 연속 타격
 		CombatFeel.hit(e, float(roll.dmg), bool(roll.crit))
 
 

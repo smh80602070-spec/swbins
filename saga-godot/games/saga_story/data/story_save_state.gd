@@ -11,6 +11,7 @@ extends SagaSaveBase
 ## (GO/DUNGEON/FOREST와 같은 최소 범위, 1절 "제외" 목록에 없는 것은
 ## 애초에 저장할 상태 자체가 없다).
 
+const StorySkillMeta := preload("res://games/saga_story/data/story_skill_meta.gd")   # G-0197 무예 이름·유파
 const StoryCombat := preload("res://games/saga_story/data/story_combat.gd")
 const StoryLabyrinth := preload("res://games/saga_story/data/story_labyrinth.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
@@ -18,7 +19,7 @@ const Toast := preload("res://saga_core/ui/toast.gd")
 const SAVE_PATH := "user://save_story.json"
 const SaveSlots := preload("res://saga_core/data/save_slots.gd")   # G-0070 슬롯(1 = 이 파일 그대로)
 const SafeFile := preload("res://saga_core/data/safe_file.gd")  # 임시 파일 → .bak → 바꿔치기(쓰는 도중 꺼져도 직전본이 남는다)
-const SAVE_VERSION := 18  # 17→18: scenario(이야기, G-0087) · 1→2: mats, 2→3: has_weapon, 3→4: equipped, 4→5: gold, 5→6: job(1차 전직), 6→7: skills(SP 투자), 7→8: scroll_bonus/scroll_left(주문서), 8→9: bosses/feat/achievements(업적), 9→10: quests_done(사명), 10→11: stage_kills(사냥터별 킬 수 사명), 11→12: visited_stages(q_explore1), 12→13: talks(q_talk1), 13→14: repeat_progress/daily_done_day(반복/일일 사명), 14→15: weekly_champion_week(관문 대장), 15→16: memory_fragments/memory_tier(비경), 16→17: mentor_bond(사제 유대, 51장 STORY "관계" 축 첫 걸음)
+const SAVE_VERSION := 19  # 18→19: sp_cut_lv/sp_bonus/skill_offers(레벨업 3택, G-0197 — 옛 세이브는 불러온 레벨까지 SP 그대로) · 17→18: scenario(이야기, G-0087) · 1→2: mats, 2→3: has_weapon, 3→4: equipped, 4→5: gold, 5→6: job(1차 전직), 6→7: skills(SP 투자), 7→8: scroll_bonus/scroll_left(주문서), 8→9: bosses/feat/achievements(업적), 9→10: quests_done(사명), 10→11: stage_kills(사냥터별 킬 수 사명), 11→12: visited_stages(q_explore1), 12→13: talks(q_talk1), 13→14: repeat_progress/daily_done_day(반복/일일 사명), 14→15: weekly_champion_week(관문 대장), 15→16: memory_fragments/memory_tier(비경), 16→17: mentor_bond(사제 유대, 51장 STORY "관계" 축 첫 걸음)
 
 
 func save_version() -> int:
@@ -64,6 +65,20 @@ var scroll_left: Dictionary = {}  # slot(String) -> int
 ## SP 자체는 담지 않는다(sp_total()-sp_spent()의 파생값, job.js 머리말과
 ## 같은 이유: 레벨이 오르면 저절로 는다).
 var skills: Dictionary = {}
+## G-0197 — 레벨업 무예 3택(웹 W-0104 job.js 의 고돗 짝). sp_cut_lv 까지의 레벨만 SP 를 주고, 그 위 레벨은 3택 한 장씩(skill_offers).
+## 새 판은 1(Lv2 부터 3택), 옛 세이브는 불러온 레벨(지금까지의 SP 그대로). sp_bonus = 3택 거절(+1)·고를 무예가 없던 레벨(+SP_PER_LEVEL — 전직 전).
+var sp_cut_lv := 1
+var sp_bonus := 0
+var skill_offers: Array = []   # [{lv, keys:[무예 셋 — 유파가 서로 다름]}]
+var skill_free: Dictionary = {}   # key → 3택으로 공짜로 올린 단계 수(sp_spent 에서 뺀다)
+## G-0197 — 사냥터 한 판 결과(저장 안 함): 들어갈 때 begin_run, 나올 때(문·쓰러짐) end_run → last_run(마을·다음 판에서 한 번 보여 준다)
+var run_t0_ms := 0
+var run_hits := 0
+var run_combo := 0
+var run_combo_max := 0
+var _run_last_hit_ms := 0
+var last_run: Dictionary = {}
+const COMBO_GAP_MS := 2500   # 이 안에 다음 타격이면 연속
 
 ## **2026-09-13 추가 — 문(portal, 15절).** 씬을 넘나들 때 세이브 위치
 ## 대신 문이 정해 준 자리에 서게 하는 임시 값 — story_portal.gd가 넘어가기
@@ -325,10 +340,14 @@ func add_exp(amount: int) -> void:
 		return
 	exp += amount
 	var need := StoryCombat.exp_need(level)
+	var lv0 := level
 	while exp >= need:
 		exp -= need
 		level += 1
 		need = StoryCombat.exp_need(level)
+	for lv in range(lv0 + 1, level + 1):   # G-0197 — 컷 위 레벨마다 3택 한 장
+		if lv > sp_cut_lv:
+			_make_offer(lv)
 	check_achievements()
 
 
@@ -574,14 +593,16 @@ func job_grow() -> Dictionary:
 ## job.js spTotal()/spSpent()/spLeft() 그대로 — 총점은 (레벨-1)×SP_PER_LEVEL,
 ## 남은 점수는 총점에서 이미 찍은 레벨의 합을 뺀 파생값(세이브에 안 담는다).
 func sp_total() -> int:
-	return maxi(0, (level - 1) * StoryCombat.SP_PER_LEVEL)
+	return maxi(0, (mini(level, sp_cut_lv) - 1) * StoryCombat.SP_PER_LEVEL + sp_bonus)   # G-0197 — 컷 위 레벨은 SP 대신 3택
 
 
 func sp_spent() -> int:
 	var sum := 0
 	for v: Variant in skills.values():
 		sum += int(v)
-	return sum
+	for v: Variant in skill_free.values():   # G-0197 — 3택으로 올린 단계는 SP 를 안 쓴 것
+		sum -= int(v)
+	return maxi(0, sum)
 
 
 func sp_left() -> int:
@@ -613,6 +634,130 @@ func can_raise_skill(key: String) -> bool:
 		if skill_level(String(need.key)) < int(need.lv):
 			return false
 	return sp_left() > 0
+
+
+## G-0197 — SP 를 안 보는 올리기 검사(3택 고르기용) — 사슬·만렙·선행만
+func can_raise_free(key: String) -> bool:
+	var skill_job := String(StoryCombat.SKILL_JOB.get(key, ""))
+	if skill_job == "" or not StoryCombat.job_chain(job).has(skill_job):
+		return false
+	if skill_level(key) >= StoryCombat.SKILL_MAX_LEVEL:
+		return false
+	if StoryCombat.SKILL_NEED.has(key):
+		var need: Dictionary = StoryCombat.SKILL_NEED[key]
+		if skill_level(String(need.key)) < int(need.lv):
+			return false
+	return true
+
+
+## G-0197 — 그 레벨의 3택: 지금 사슬에서 올릴 수 있는 무예를 유파로 묶고, 결정적 해시(레벨·유파·무예) 순으로 유파 셋에서 하나씩. 모자라면 둘·하나·없음.
+func offer3(lv: int) -> Array:
+	var by_school := {}
+	for j: String in StoryCombat.job_chain(job):
+		for k: String in StoryCombat.JOB_SKILL_KEYS.get(j, []):
+			if can_raise_free(k):
+				var sc := StorySkillMeta.school_of(k)
+				if not by_school.has(sc):
+					by_school[sc] = []
+				(by_school[sc] as Array).append(k)
+	var schools: Array = by_school.keys()
+	schools.sort_custom(func(a: String, b: String) -> bool: return _h01("%d|%s" % [lv, a]) < _h01("%d|%s" % [lv, b]))
+	var out: Array = []
+	for sc: String in schools.slice(0, 3):
+		var ks: Array = by_school[sc]
+		ks.sort_custom(func(a: String, b: String) -> bool: return _h01("%d|%s|k" % [lv, a]) < _h01("%d|%s|k" % [lv, b]))
+		out.append(ks[0])
+	return out
+
+
+static func _h01(s: String) -> float:
+	var h := 2166136261
+	for i in s.length():
+		h = h ^ s.unicode_at(i)
+		h = (h * 16777619) & 0xFFFFFFFF
+	h = h ^ (h >> 13)
+	h = (h * 1274126177) & 0xFFFFFFFF
+	h = h ^ (h >> 16)
+	return float(h) / 4294967296.0
+
+
+func _make_offer(lv: int) -> void:
+	var keys := offer3(lv)
+	if keys.is_empty():
+		sp_bonus += StoryCombat.SP_PER_LEVEL   # 전직 전처럼 고를 무예가 없으면 SP 그대로
+	else:
+		skill_offers.append({"lv": lv, "keys": keys})
+
+
+## 3택 고르기 — 그 무예 +1(SP 안 씀). 고른 뒤 그 장은 사라진다.
+func pick_offer(index: int, key: String) -> bool:
+	if index < 0 or index >= skill_offers.size():
+		return false
+	var o: Dictionary = skill_offers[index]
+	if not (o.keys as Array).has(key) or not can_raise_free(key):
+		return false
+	skills[key] = skill_level(key) + 1
+	skill_free[key] = int(skill_free.get(key, 0)) + 1
+	skill_offers.remove_at(index)
+	check_quests()
+	return true
+
+
+## 3택 거절 — 강화 점수(SP) +1
+func decline_offer(index: int) -> bool:
+	if index < 0 or index >= skill_offers.size():
+		return false
+	skill_offers.remove_at(index)
+	sp_bonus += 1
+	return true
+
+
+## G-0197 — 사냥터 한 판 결과 등급(순수 함수): 피격(≤1 둘·≤5 하나)·최대 연속(≥15 둘·≥8 하나)·시간(≤180초 둘·≤360초 하나) 점수 합 6 = S · 4~5 = A · 2~3 = B · 0~1 = C
+static func rank_of(sec: float, hits: int, combo: int) -> String:
+	var p := 0
+	p += 2 if hits <= 1 else (1 if hits <= 5 else 0)
+	p += 2 if combo >= 15 else (1 if combo >= 8 else 0)
+	p += 2 if sec <= 180.0 else (1 if sec <= 360.0 else 0)
+	return "S" if p >= 6 else ("A" if p >= 4 else ("B" if p >= 2 else "C"))
+
+
+func begin_run() -> void:
+	run_t0_ms = Time.get_ticks_msec()
+	run_hits = 0
+	run_combo = 0
+	run_combo_max = 0
+	_run_last_hit_ms = 0
+
+
+## 내가 적을 때렸다(story_player_base 의 CombatFeel.hit 자리) — 2.5초 안 다음 타격이면 연속
+func note_player_hit() -> void:
+	var now := Time.get_ticks_msec()
+	run_combo = run_combo + 1 if now - _run_last_hit_ms <= COMBO_GAP_MS else 1
+	_run_last_hit_ms = now
+	run_combo_max = maxi(run_combo_max, run_combo)
+
+
+## 내가 맞았다(story_player.gd take_damage) — 연속이 끊긴다
+func note_hurt() -> void:
+	run_hits += 1
+	run_combo = 0
+
+
+## 사냥터를 나올 때 — last_run 에 남기고 돌려준다(들어간 적이 없으면 {})
+func end_run() -> Dictionary:
+	if run_t0_ms <= 0:
+		return {}
+	var sec := float(Time.get_ticks_msec() - run_t0_ms) / 1000.0
+	last_run = {"rank": rank_of(sec, run_hits, run_combo_max), "sec": sec, "hits": run_hits, "combo": run_combo_max}
+	run_t0_ms = 0
+	return last_run
+
+
+static func run_line(r: Dictionary) -> String:
+	if r.is_empty():
+		return ""
+	var s := int(r.sec)
+	return "⭐ 지난 사냥 등급 %s — 피격 %d · 연속 %d · %d:%02d" % [String(r.rank), int(r.hits), int(r.combo), s / 60, s % 60]
 
 
 func raise_skill(key: String) -> bool:
@@ -652,6 +797,10 @@ func save() -> bool:
 		"mentor_bond": mentor_bond,
 		"scenario": scenario,   # G-0087
 		"skills": skills,
+		"sp_cut_lv": sp_cut_lv,   # G-0197
+		"sp_bonus": sp_bonus,
+		"skill_offers": skill_offers,
+		"skill_free": skill_free,
 		"scroll_bonus": scroll_bonus,
 		"scroll_left": scroll_left,
 	}
@@ -700,6 +849,12 @@ func try_load() -> bool:
 	scenario = (loaded_scenario as Dictionary).duplicate(true) if typeof(loaded_scenario) == TYPE_DICTIONARY else {}
 	var loaded_skills: Variant = data.get("skills", {})
 	skills = loaded_skills if typeof(loaded_skills) == TYPE_DICTIONARY else {}
+	sp_cut_lv = int(data.get("sp_cut_lv", level))   # G-0197 — 옛 세이브는 불러온 레벨까지 SP 그대로
+	sp_bonus = int(data.get("sp_bonus", 0))
+	var loaded_offers: Variant = data.get("skill_offers", [])
+	skill_offers = (loaded_offers as Array).duplicate(true) if typeof(loaded_offers) == TYPE_ARRAY else []
+	var loaded_free: Variant = data.get("skill_free", {})
+	skill_free = (loaded_free as Dictionary).duplicate(true) if typeof(loaded_free) == TYPE_DICTIONARY else {}
 	var loaded_scroll_bonus: Variant = data.get("scroll_bonus", {})
 	scroll_bonus = loaded_scroll_bonus if typeof(loaded_scroll_bonus) == TYPE_DICTIONARY else {}
 	var loaded_scroll_left: Variant = data.get("scroll_left", {})

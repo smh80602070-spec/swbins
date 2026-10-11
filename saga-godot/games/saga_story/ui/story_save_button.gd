@@ -18,11 +18,14 @@ func _ready() -> void:
 func _on_pressed() -> void:
 	var ok := StorySaveState.save()
 	if ok:
-		SessionCard.show(get_tree().current_scene, "저장했다 — 이번 세션", [
+		var lines: Array[String] = [
 			"처치 +%d" % StorySaveState.session_kills_gained(),
 			"골드 +%d" % StorySaveState.session_gold_gained(),
 			"Lv.%d" % StorySaveState.level,
-		])
+		]
+		if not StorySaveState.last_run.is_empty():   # G-0197 — 지난 사냥 등급
+			lines.append(StorySaveState.run_line(StorySaveState.last_run))
+		SessionCard.show(get_tree().current_scene, "저장했다 — 이번 세션", lines)
 	else:
 		_toast("저장 실패 — 플레이어를 못 찾았다.")
 
