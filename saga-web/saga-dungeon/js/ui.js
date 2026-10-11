@@ -360,7 +360,7 @@
           global.DG.skill.setSlot(skillHero, skillSlotPick, b.getAttribute('data-key'));
           skillSlotPick = null;
         }
-      } else if (act === 'skill-respec') {
+      } else if (act === 'skill-meridian') { global.DG.meridian.open(skillHero); } else if (act === 'skill-respec') {   // 경락도(W-0180)
         var cost = global.DG.vendor.respecCost(skillHero);
         if (core.save.player.gold < cost) { toast('금이 모자랍니다'); }
         else {
@@ -1901,7 +1901,7 @@
           ? '<button class="btn tiny ghost wide" data-act="skill-respec">↺ 환원(還元) — ' +
             core.fmt(global.DG.vendor.respecCost(skillHero)) + '금에 점수를 돌려받는다</button>'
           : '') +
-        '</div></div>';
+        '</div></div>' + (global.DG.meridian ? global.DG.meridian.sheetHtml(skillHero) : '');   // 경락도(W-0180) 칸
 
     /* 네 칸 */
     var eq = SK.equipped(skillHero);

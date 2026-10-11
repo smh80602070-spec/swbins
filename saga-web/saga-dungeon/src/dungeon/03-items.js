@@ -264,7 +264,7 @@
   function refill(hpPct, mpPct, text, color) {
     if (!run) { return false; }
     var did = false;
-    if (hpPct && run.hp < run.hpMax) { healBy(run.hpMax * hpPct / 100); did = true; }
+    if (hpPct && run.hp < run.hpMax && !MR().has('diamond')) { healBy(run.hpMax * hpPct / 100); did = true; }   // 금강(경락 규칙) — 단약으로 체력이 안 찬다
     if (mpPct && run.mp < run.mpMax) {
       run.mp = Math.min(run.mpMax, run.mp + run.mpMax * mpPct / 100);
       did = true;
@@ -283,7 +283,7 @@
   function hurtPlayer(amount, el, src, how) {   // src·how — 마지막 피해(사망 카드 W-0102): 적 개체·이름, 무슨 공격
     if (!run) { return; }
     if (run.player.invuln > 0) { return; }        // 돌진 중에는 맞지 않는다
-    amount = amount * (1 - boonVal('guardPct') / 100);
+    amount = amount * (1 - (MR().has('flow') ? 0 : boonVal('guardPct')) / 100);   // 유수(경락 규칙) — 막기 없음
     if (el && el !== 'phys') { amount *= 1 - elemResOf(el) / 100; }
     if (nmHasMod('glass')) { amount *= 1.5; }   // 부적 '유리대포' 변형자(§5.3) — 받는 피해도 는다
     amount = Math.max(1, amount);

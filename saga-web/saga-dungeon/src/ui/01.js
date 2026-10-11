@@ -360,7 +360,7 @@
           global.DG.skill.setSlot(skillHero, skillSlotPick, b.getAttribute('data-key'));
           skillSlotPick = null;
         }
-      } else if (act === 'skill-respec') {
+      } else if (act === 'skill-meridian') { global.DG.meridian.open(skillHero); } else if (act === 'skill-respec') {   // 경락도(W-0180)
         var cost = global.DG.vendor.respecCost(skillHero);
         if (core.save.player.gold < cost) { toast('금이 모자랍니다'); }
         else {

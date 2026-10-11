@@ -119,6 +119,10 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/item.js"></script>
 <script src="js/hero.js"></script>
 <script src="js/skill.js"></script>
+<script src="js/data-passive.js"></script>
+<script src="js/passive-web.js"></script>
+<script src="js/passive-web-ui.js"></script>
+<script src="js/meridian.js"></script>
 <script src="js/secret.js"></script>
 <script src="js/gesture.js"></script>
 <script src="js/world-map.js"></script>
@@ -1903,6 +1907,121 @@ window.requestAnimationFrame = function () { return 0; };
       return fired && !again && run.mp === before - act.cost &&
         st2.skills[0].key === act.key &&
         (act.name + ' · 기력 -' + act.cost);
+    });
+
+    /* ── 경락도(W-0180) — 무예 나무 위의 패시브 그물(meridian.js · 공용 passive-web.js) ── */
+    function pwWith(fn) {
+      var MR = DG.meridian, keepP = C.save.party.slice(), keepPW = C.save.passive, ds = DN.state(), keepBest = ds.best;
+      var keepGold = C.save.player.gold;
+      var w = D.heroes.filter(function (h) { return SKD.classOf(h, DG.sprite.lookOf(h)).key === 'warrior'; })[0];
+      var keepLv = C.save.heroes[w.id];
+      C.save.dex.heroes[w.id] = C.save.dex.heroes[w.id] || { count: 1, firstAt: 0 };
+      C.save.party = [w.id]; C.save.heroes[w.id] = { lv: 30, exp: 0, rank: 0 }; C.save.passive = {};
+      ds.best = 90;   // 보스 점수 30 — 끝까지 모은 60점
+      try { return fn(MR, w.id, MR.api(w.id)); }
+      finally {
+        if (DN.active()) { DN.leave(); }
+        C.save.party = keepP; C.save.passive = keepPW; ds.best = keepBest; C.save.heroes[w.id] = keepLv; C.save.player.gold = keepGold;
+      }
+    }
+    /** 찍은 곳에서 stats[key] 가 있는 가장 가까운 마디 */
+    function pwNearest(api, key) {
+      var best = null;
+      DG.passiveDef.nodes.forEach(function (n) {
+        if (n.k === 'o' || !n.stats || !n.stats[key] || api.isTaken(n.id)) { return; }
+        var p = api.pathTo(n.id);
+        if (p && (!best || p.cost < best.cost)) { best = { id: n.id, cost: p.cost }; }
+      });
+      return best;
+    }
+
+    t('경락 — 부팅 뒤 정의 ≥300 마디 · 시작점 여섯 · 점수 = 레벨 + 보스층(상한 30)', function () {
+      return pwWith(function (MR, id, api) {
+        var def = DG.passiveDef, o = def.nodes.filter(function (n) { return n.k === 'o'; }).length;
+        var ok = def.nodes.length >= 300 && o === 6 && api.points() === 60 && MR.startOk(id, 'warrior') && MR.startOk(id, 'none') && !MR.startOk(id, 'archer');
+        return ok ? '마디 ' + def.nodes.length + ' · 점수 ' + api.points() : '실패 마디 ' + def.nodes.length + ' 시작 ' + o + ' 점수 ' + api.points();
+      });
+    });
+
+    t('경락 — 찍으면 공격력(atkOf)이 오른다', function () {
+      return pwWith(function (MR, id, api) {
+        api.take('o_warrior');
+        var tg = pwNearest(api, 'atkPct'), a0 = DN._atkOf();
+        api.takePath(tg.id);
+        var a1 = DN._atkOf();
+        return a1 > a0 ? tg.id + ' (' + tg.cost + '점) · 공격 ' + a0.toFixed(2) + ' → ' + a1.toFixed(2) : '실패 ' + a0 + ' → ' + a1;
+      });
+    });
+
+    t('경락 — 되돌리면 원래대로 · 던전 안에서는 못 되돌린다 · 금이 든다', function () {
+      return pwWith(function (MR, id, api) {
+        api.take('o_warrior');
+        var a0 = DN._atkOf(), tg = pwNearest(api, 'atkPct');
+        api.takePath(tg.id);
+        C.save.player.gold = 100000;
+        DN.enter({ floor: 1, mode: 'easy' });
+        var inRun = MR.guard(id, 'drop', tg.id);
+        DN.leave();
+        var outRun = MR.guard(id, 'drop', tg.id), g0 = C.save.player.gold;
+        var dropped = api.drop(tg.id);
+        C.save.player.gold -= MR.dropCost(id, 1);
+        var a2 = DN._atkOf();
+        C.save.player.gold = 0;
+        var poor = MR.guard(id, 'drop', api.store.taken[api.store.taken.length - 1] || tg.id);
+        var ok = !!inRun && outRun === '' && dropped && Math.abs(a2 - a0) < 1e-9 && g0 - MR.dropCost(id, 1) === 100000 - 600 && !!poor;
+        return ok ? '공격 ' + a2.toFixed(2) + ' 그대로 · 한 마디 600금' : '실패 in=' + inRun + ' out=' + outRun + ' drop=' + dropped + ' ' + a0 + '/' + a2 + ' poor=' + poor;
+      });
+    });
+
+    t('경락 — 이웃 아닌 마디는 거절 · 직업 아닌 시작점도 거절', function () {
+      return pwWith(function (MR, id, api) {
+        var badStart = MR.guard(id, 'start', 'o_archer');
+        api.take('o_warrior');
+        var far = DG.passiveDef.nodes.filter(function (n) { return n.k === 'n' && api.why(n.id) === 'far'; })[0];
+        var ok = !!badStart && MR.guard(id, 'start', 'o_none') === '' && !api.take(far.id) && api.store.taken.length === 0;
+        return ok ? far.name + ' 거절' : '실패';
+      });
+    });
+
+    t('경락 — 세이브 왕복(인물 기록 save.passive)', function () {
+      return pwWith(function (MR, id, api) {
+        api.take('o_warrior');
+        api.takePath(pwNearest(api, 'hpPct').id);
+        var n = api.used(), hp = api.sum('hpPct');
+        C.save.passive = JSON.parse(JSON.stringify(C.save.passive));
+        MR._reset();
+        var b = MR.api(id);
+        return b !== api && b.used() === n && b.sum('hpPct') === hp && b.start() === 'warrior' ? n + '마디 · 체력 +' + hp + '%' : '실패';
+      });
+    });
+
+    t('경락 — 규칙 일격(一擊): 치명이 없고 피해 +30%', function () {
+      var rnd = Math.random;
+      try {
+        return pwWith(function (MR, id, api) {
+          /* 일격에 가장 가까운 시작점에서(진단은 엔진을 바로 쓰므로 직업 제한 없음) */
+          var best = null;
+          DG.passiveDef.starts.forEach(function (s) {
+            api.reset(true); api.take('o_' + s.key);
+            var p = api.pathTo('k_onecut');
+            if (p && (!best || p.cost < best.cost)) { best = { key: s.key, cost: p.cost, path: p.path }; }
+          });
+          api.reset(true); api.take('o_' + best.key);
+          if (best.cost > api.left()) { return '실패 점수 모자람 ' + best.cost; }
+          best.path.slice(0, -1).forEach(function (x) { api.take(x); });
+          Math.random = function () { return 0.5; };
+          DN._forceCrit(true);
+          DN.enter({ floor: 1, mode: 'easy' });
+          var raw = DN.raw(); raw.room.enemies.length = 0;
+          var e = DN._spawnEnemy(1, false, { spawned: true, x: 300, y: 180 });
+          raw.room.enemies.push(e);
+          e.hp = 1e7; DN._strike(e, 1, 0, 'phys'); var A = 1e7 - e.hp;
+          api.take('k_onecut');
+          e.hp = 1e7; DN._strike(e, 1, 0, 'phys'); var B = 1e7 - e.hp;
+          var r = B / A;
+          return api.has('onecut') && Math.abs(r - 1.3 / 1.85) < 0.02 ? '치명 강제에도 ' + A + ' → ' + B + ' (×' + r.toFixed(3) + ', 경로 ' + best.cost + '점)' : '실패 ' + A + ' → ' + B;
+        });
+      } finally { Math.random = rnd; DN._forceCrit(null); }
     });
 
     t('무예 — 연환(chain)은 가까운 적을 치고 다음 적으로 옮겨 붙는다', function () {
@@ -7628,7 +7747,9 @@ window.requestAnimationFrame = function () { return 0; };
         if (!DG.heroSkillData.sigOf(c.id)) { DN.leave(); return null; }
         run.room.enemies.length = 0;
         run.player.x = -999; run.player.y = -999;
-        var e = DN._spawnEnemy(5, false, { spawned: true, x: c.x + 60, y: c.y });
+        /* 적 종류·정예 접두도 붙든다 — 앞 진단 수가 바뀌면 난수 순서가 밀려 저항 붙은 적이 뽑혔다(W-0180) */
+        var keepS = Math.random, e; Math.random = function () { return 0.5; };
+        try { e = DN._spawnEnemy(5, false, { spawned: true, x: c.x + 60, y: c.y }); } finally { Math.random = keepS; }
         e.hp = 1e6; e.hpMax = 1e6; e.elite = !!elite; e.boss = false; run.room.enemies.push(e);
         c.sigCd = 0; c.atkCd = 99;
         run.comboT = combo;

@@ -312,7 +312,7 @@
     /* 스킬 쿨다운 · 기력 · 무적 시간 */
     for (i = 0; i < p.cds.length; i++) { if (p.cds[i] > 0) { p.cds[i] -= dt; } }
     /* 명민·정신 같은 상시 무예가 기력 회복을 올린다 */
-    run.mp = Math.min(run.mpMax, run.mp + (MP_REGEN + boonVal('mpRegen')) * dt);
+    run.mpMax = MR().mpMax(MP_MAX); run.mp = Math.min(run.mpMax, run.mp + (MP_REGEN + boonVal('mpRegen')) * dt * MR().regen());   // 무심(경락 규칙) — 상한 반·회복 세 배
     if (p.invuln > 0) { p.invuln -= dt; }
     if (p.atkAnim > 0) { p.atkAnim -= dt; }
     if (p.heavyCd > 0) { p.heavyCd -= dt; }
@@ -934,8 +934,8 @@
     var crit = forcedCrit !== null ? forcedCrit : (Math.random() * 100 < critChance);
     /* §5.1 세계 축 — 뇌빙(빙+뇌): 슬로우된 적에게 뇌 결이 닿으면 반드시 크리 */
     if (!crit && e.slow > 0 && hasEl('lit') && hasWd('wd_cold_lit')) { crit = true; }
-    if (crit) { dmg *= 1.85; }
-    dmg *= 1 + boonVal('piercePct') / 100 * 0.5;
+    if (MR().has('onecut')) { crit = false; } if (crit) { dmg *= 1.85; }   // 일격(경락 규칙) — 치명 없음
+    dmg *= (1 + boonVal('piercePct') / 100 * 0.5) * MR().dmg(e, run, BASE_REACH);   // 경락 규칙 피해 배율(일격·독행·역린·천리안)
     /* §5.1 세계 축 — 결빙(빙+기): 슬로우된 적에게 주는 피해 +30% */
     if (e.slow > 0 && hasWd('wd_cold_chi')) { dmg *= 1.3; }
     /* §5.1 세계 축 — 빙염(화+빙): 화상과 슬로우가 겹친 적에게 +15% */
@@ -1346,8 +1346,8 @@
     var ddx = p.dirX || p.facing, ddy = p.dirY || 0;
     var dl = Math.sqrt(ddx * ddx + ddy * ddy) || 1;
     p.dodge = { t: DODGE_SEC, dx: ddx / dl, dy: ddy / dl };
-    p.invuln = Math.max(p.invuln || 0, DODGE_INVULN);
-    p.dodgeCd = DODGE_CD;
+    p.invuln = Math.max(p.invuln || 0, MR().has('ghost') ? 0 : DODGE_INVULN);   // 귀신걸음(경락 규칙) — 회피 중 무적 없음
+    p.dodgeCd = DODGE_CD * (MR().has('flow') ? MR().T('flowCd', 0.5) : 1);         // 유수(경락 규칙) — 회피 두 배로 잦게
     /* §5.8② 저스트 회피 — 창 안이면 콤보+3·슬로우 0.2초·다른 소리 */
     var justE = justDodgeTarget();
     if (justE) {

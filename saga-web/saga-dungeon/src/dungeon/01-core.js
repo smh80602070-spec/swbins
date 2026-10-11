@@ -155,7 +155,7 @@
    */
   function boonVal(key) {
     var skl = global.DG.skill;
-    var pass = skl ? skl.passive(leadId(), key) : 0;
+    var pass = (skl ? skl.passive(leadId(), key) : 0) + MR().val(leadId(), key);   // + 경락도(W-0180) 선두 인물의 그물 합
     if (!run) { return pass; }
     var sum = pass, k;
     for (k in run.boons) {
@@ -301,7 +301,7 @@
 
   /** 선두(부대 첫 인물) — 원작의 인물 하나에 해당하는 자리 */
   function leadId() { return core.save.party[0] || null; }
-
+  function MR() { return global.DG.meridian || { val: function () { return 0; }, has: function () { return false; }, elem: function (e) { return e; }, dmg: function () { return 1; }, mpMax: function (m) { return m; }, regen: function () { return 1; }, bloodMul: function () { return 0; } }; }   // 경락도(W-0180) — 규칙 셈은 meridian.js, 없는 페이지는 아무 일 없는 대역
   /** 자가진단 전용(§5.1 세계 축 검증) — 실제 장비 세공과 무관하게 원소
    *  배합을 강제한다. `null`이면 해제(실제 장비 값으로 되돌아간다). 시각·
    *  장비 의존 값을 진단에서 붙드는 다른 판의 `weather.force()`와 같은 결. */
@@ -314,7 +314,7 @@
   function elemDmgOf() {
     if (forcedElemDmg) { return forcedElemDmg; }
     var id = leadId();
-    return id ? global.DG.item.elemDamage(id) : {};
+    return id ? MR().elem(global.DG.item.elemDamage(id)) : {};   // 오행귀일(경락 규칙)이면 가장 센 원소 하나로
   }
 
   /** 지금 갑주에 박힌 원소 저항 (백분율, 상한 75) */

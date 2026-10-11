@@ -112,7 +112,7 @@
       boons: {}, choice: null, boonPicks: 0,   // 축복(§5.1) — 회차 전체 상한 8은 boonPicks로 센다
       hpMax: 0, hp: 0,
       buffs: {}, minions: [],          // 잠깐짜리 무예 · 분신 (회차 안에서만 산다)
-      mp: MP_MAX, mpMax: MP_MAX,
+      mp: MR().mpMax(MP_MAX), mpMax: MR().mpMax(MP_MAX),   // 무심(경락 규칙)이면 반
       shots: [],                          // 기공파 투사체
       foeShots: [],                       // 궁수·조총병이 쏘는 것 (몬스터 다양화)
       roomIdx: 0, rooms: [], room: null,

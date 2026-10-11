@@ -155,7 +155,7 @@
    */
   function boonVal(key) {
     var skl = global.DG.skill;
-    var pass = skl ? skl.passive(leadId(), key) : 0;
+    var pass = (skl ? skl.passive(leadId(), key) : 0) + MR().val(leadId(), key);   // + 경락도(W-0180) 선두 인물의 그물 합
     if (!run) { return pass; }
     var sum = pass, k;
     for (k in run.boons) {
@@ -301,7 +301,7 @@
 
   /** 선두(부대 첫 인물) — 원작의 인물 하나에 해당하는 자리 */
   function leadId() { return core.save.party[0] || null; }
-
+  function MR() { return global.DG.meridian || { val: function () { return 0; }, has: function () { return false; }, elem: function (e) { return e; }, dmg: function () { return 1; }, mpMax: function (m) { return m; }, regen: function () { return 1; }, bloodMul: function () { return 0; } }; }   // 경락도(W-0180) — 규칙 셈은 meridian.js, 없는 페이지는 아무 일 없는 대역
   /** 자가진단 전용(§5.1 세계 축 검증) — 실제 장비 세공과 무관하게 원소
    *  배합을 강제한다. `null`이면 해제(실제 장비 값으로 되돌아간다). 시각·
    *  장비 의존 값을 진단에서 붙드는 다른 판의 `weather.force()`와 같은 결. */
@@ -314,7 +314,7 @@
   function elemDmgOf() {
     if (forcedElemDmg) { return forcedElemDmg; }
     var id = leadId();
-    return id ? global.DG.item.elemDamage(id) : {};
+    return id ? MR().elem(global.DG.item.elemDamage(id)) : {};   // 오행귀일(경락 규칙)이면 가장 센 원소 하나로
   }
 
   /** 지금 갑주에 박힌 원소 저항 (백분율, 상한 75) */
@@ -982,7 +982,7 @@
       boons: {}, choice: null, boonPicks: 0,   // 축복(§5.1) — 회차 전체 상한 8은 boonPicks로 센다
       hpMax: 0, hp: 0,
       buffs: {}, minions: [],          // 잠깐짜리 무예 · 분신 (회차 안에서만 산다)
-      mp: MP_MAX, mpMax: MP_MAX,
+      mp: MR().mpMax(MP_MAX), mpMax: MR().mpMax(MP_MAX),   // 무심(경락 규칙)이면 반
       shots: [],                          // 기공파 투사체
       foeShots: [],                       // 궁수·조총병이 쏘는 것 (몬스터 다양화)
       roomIdx: 0, rooms: [], room: null,
@@ -1847,7 +1847,7 @@
   function refill(hpPct, mpPct, text, color) {
     if (!run) { return false; }
     var did = false;
-    if (hpPct && run.hp < run.hpMax) { healBy(run.hpMax * hpPct / 100); did = true; }
+    if (hpPct && run.hp < run.hpMax && !MR().has('diamond')) { healBy(run.hpMax * hpPct / 100); did = true; }   // 금강(경락 규칙) — 단약으로 체력이 안 찬다
     if (mpPct && run.mp < run.mpMax) {
       run.mp = Math.min(run.mpMax, run.mp + run.mpMax * mpPct / 100);
       did = true;
@@ -1866,7 +1866,7 @@
   function hurtPlayer(amount, el, src, how) {   // src·how — 마지막 피해(사망 카드 W-0102): 적 개체·이름, 무슨 공격
     if (!run) { return; }
     if (run.player.invuln > 0) { return; }        // 돌진 중에는 맞지 않는다
-    amount = amount * (1 - boonVal('guardPct') / 100);
+    amount = amount * (1 - (MR().has('flow') ? 0 : boonVal('guardPct')) / 100);   // 유수(경락 규칙) — 막기 없음
     if (el && el !== 'phys') { amount *= 1 - elemResOf(el) / 100; }
     if (nmHasMod('glass')) { amount *= 1.5; }   // 부적 '유리대포' 변형자(§5.3) — 받는 피해도 는다
     amount = Math.max(1, amount);
@@ -3022,7 +3022,7 @@
     /* 스킬 쿨다운 · 기력 · 무적 시간 */
     for (i = 0; i < p.cds.length; i++) { if (p.cds[i] > 0) { p.cds[i] -= dt; } }
     /* 명민·정신 같은 상시 무예가 기력 회복을 올린다 */
-    run.mp = Math.min(run.mpMax, run.mp + (MP_REGEN + boonVal('mpRegen')) * dt);
+    run.mpMax = MR().mpMax(MP_MAX); run.mp = Math.min(run.mpMax, run.mp + (MP_REGEN + boonVal('mpRegen')) * dt * MR().regen());   // 무심(경락 규칙) — 상한 반·회복 세 배
     if (p.invuln > 0) { p.invuln -= dt; }
     if (p.atkAnim > 0) { p.atkAnim -= dt; }
     if (p.heavyCd > 0) { p.heavyCd -= dt; }
@@ -3644,8 +3644,8 @@
     var crit = forcedCrit !== null ? forcedCrit : (Math.random() * 100 < critChance);
     /* §5.1 세계 축 — 뇌빙(빙+뇌): 슬로우된 적에게 뇌 결이 닿으면 반드시 크리 */
     if (!crit && e.slow > 0 && hasEl('lit') && hasWd('wd_cold_lit')) { crit = true; }
-    if (crit) { dmg *= 1.85; }
-    dmg *= 1 + boonVal('piercePct') / 100 * 0.5;
+    if (MR().has('onecut')) { crit = false; } if (crit) { dmg *= 1.85; }   // 일격(경락 규칙) — 치명 없음
+    dmg *= (1 + boonVal('piercePct') / 100 * 0.5) * MR().dmg(e, run, BASE_REACH);   // 경락 규칙 피해 배율(일격·독행·역린·천리안)
     /* §5.1 세계 축 — 결빙(빙+기): 슬로우된 적에게 주는 피해 +30% */
     if (e.slow > 0 && hasWd('wd_cold_chi')) { dmg *= 1.3; }
     /* §5.1 세계 축 — 빙염(화+빙): 화상과 슬로우가 겹친 적에게 +15% */
@@ -4056,8 +4056,8 @@
     var ddx = p.dirX || p.facing, ddy = p.dirY || 0;
     var dl = Math.sqrt(ddx * ddx + ddy * ddy) || 1;
     p.dodge = { t: DODGE_SEC, dx: ddx / dl, dy: ddy / dl };
-    p.invuln = Math.max(p.invuln || 0, DODGE_INVULN);
-    p.dodgeCd = DODGE_CD;
+    p.invuln = Math.max(p.invuln || 0, MR().has('ghost') ? 0 : DODGE_INVULN);   // 귀신걸음(경락 규칙) — 회피 중 무적 없음
+    p.dodgeCd = DODGE_CD * (MR().has('flow') ? MR().T('flowCd', 0.5) : 1);         // 유수(경락 규칙) — 회피 두 배로 잦게
     /* §5.8② 저스트 회피 — 창 안이면 콤보+3·슬로우 0.2초·다른 소리 */
     var justE = justDodgeTarget();
     if (justE) {
@@ -4402,8 +4402,8 @@
     /* 비결(§5.9, secret.js) — 무예 하나의 쓰임을 바꾼다(위력·기력·재냉각·결·범위·흡수) */
     var mod = secretMod(sk);
     var cost = Math.round(sk.cost * mod.cost);
-    if (p.cds[i] > 0 || run.mp < cost || p.dash) { return false; }
-    run.mp -= cost;
+    if (p.cds[i] > 0 || (MR().has('bloodcast') ? run.hp <= cost * MR().bloodMul() : run.mp < cost) || p.dash) { return false; }   // 혈공(경락 규칙) — 체력으로, 모자라면 못 쓴다
+    if (MR().has('bloodcast')) { run.hp -= cost * MR().bloodMul(); } else { run.mp -= cost; }
     p.cds[i] = sk.cd * mod.cd;
     p.atkAnim = castPoseSecOf(sk);
     p.castAnim = !MELEE_SHAPES[sk.shape];
@@ -4559,7 +4559,7 @@
    * 이 판의 전투가 통째로 달라진다. 원작의 소환수 감각 중 "대신 때린다" 만 옮겼다.
    */
   function summon(n, sec, strMul, big) {
-    if (!run) { return; }
+    if (!run || MR().has('lone')) { return; }   // 독행(경락 규칙) — 분신 없음
     if (!run.minions) { run.minions = []; }
     for (var i = 0; i < n; i++) {
       run.minions.push({
@@ -4587,7 +4587,7 @@
   }
 
   function spawnCompanion() {
-    var id = companionHeroId();
+    var id = MR().has('lone') ? null : companionHeroId();   // 독행(경락 규칙) — 동료 없음
     if (!id) { return null; }
     return {
       id: id, x: WALL + 70, y: ROOM_H * 0.5 + 34,
@@ -4849,7 +4849,7 @@
     /** 자가진단용 — 한 대만 때려 본다 (저항이 결마다 다르게 깎는지) */
     _strike: strike, _addPacks: addPacks, _cleave: cleave, _applyShape: applyShapeSkill, _pullStep: pullStep,
     /** 자가진단용 — 한 대 맞아 본다 (갑주의 원소 저항이 실제로 깎는지) */
-    _hurt: hurtPlayer,
+    _hurt: hurtPlayer, _atkOf: atkOf,   // _atkOf — 자가진단용(W-0180 경락) 한 타 공격력
     /** 자가진단용 — 적 하나를 만들어만 본다 */
     _spawnEnemy: spawnEnemy,
     /** 자가진단용 — 재료를 한 번 굴려 본다 (주옥이 얼마나 드문지는 굴려 봐야 안다) */

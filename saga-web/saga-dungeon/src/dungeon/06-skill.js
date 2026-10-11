@@ -329,8 +329,8 @@
     /* 비결(§5.9, secret.js) — 무예 하나의 쓰임을 바꾼다(위력·기력·재냉각·결·범위·흡수) */
     var mod = secretMod(sk);
     var cost = Math.round(sk.cost * mod.cost);
-    if (p.cds[i] > 0 || run.mp < cost || p.dash) { return false; }
-    run.mp -= cost;
+    if (p.cds[i] > 0 || (MR().has('bloodcast') ? run.hp <= cost * MR().bloodMul() : run.mp < cost) || p.dash) { return false; }   // 혈공(경락 규칙) — 체력으로, 모자라면 못 쓴다
+    if (MR().has('bloodcast')) { run.hp -= cost * MR().bloodMul(); } else { run.mp -= cost; }
     p.cds[i] = sk.cd * mod.cd;
     p.atkAnim = castPoseSecOf(sk);
     p.castAnim = !MELEE_SHAPES[sk.shape];
@@ -486,7 +486,7 @@
    * 이 판의 전투가 통째로 달라진다. 원작의 소환수 감각 중 "대신 때린다" 만 옮겼다.
    */
   function summon(n, sec, strMul, big) {
-    if (!run) { return; }
+    if (!run || MR().has('lone')) { return; }   // 독행(경락 규칙) — 분신 없음
     if (!run.minions) { run.minions = []; }
     for (var i = 0; i < n; i++) {
       run.minions.push({
@@ -514,7 +514,7 @@
   }
 
   function spawnCompanion() {
-    var id = companionHeroId();
+    var id = MR().has('lone') ? null : companionHeroId();   // 독행(경락 규칙) — 동료 없음
     if (!id) { return null; }
     return {
       id: id, x: WALL + 70, y: ROOM_H * 0.5 + 34,
@@ -776,7 +776,7 @@
     /** 자가진단용 — 한 대만 때려 본다 (저항이 결마다 다르게 깎는지) */
     _strike: strike, _addPacks: addPacks, _cleave: cleave, _applyShape: applyShapeSkill, _pullStep: pullStep,
     /** 자가진단용 — 한 대 맞아 본다 (갑주의 원소 저항이 실제로 깎는지) */
-    _hurt: hurtPlayer,
+    _hurt: hurtPlayer, _atkOf: atkOf,   // _atkOf — 자가진단용(W-0180 경락) 한 타 공격력
     /** 자가진단용 — 적 하나를 만들어만 본다 */
     _spawnEnemy: spawnEnemy,
     /** 자가진단용 — 재료를 한 번 굴려 본다 (주옥이 얼마나 드문지는 굴려 봐야 안다) */

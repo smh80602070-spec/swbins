@@ -129,18 +129,28 @@
         if (hitSet[i]) { ctx.lineWidth = 2.5; ctx.strokeStyle = C.hit; shape(s[0], s[1], r + 6, 'c'); ctx.stroke(); }
         if (sel === n.id) { ctx.lineWidth = 2; ctx.strokeStyle = C.sel; shape(s[0], s[1], r + 9, 'c'); ctx.stroke(); }
       }
-      // 이름(시작점·규칙은 늘, 이름난은 가까이서)
-      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      // 이름(시작점·규칙은 늘, 이름난은 가까이서) — 고른 것 > 시작점 > 규칙 > 찾은 것 > 이름난 순으로 자리 잡고, 겹치면 낮은 쪽은 생략
+      ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.lineJoin = 'round';
+      var lab = [], boxes = [], PR = { o: 1, k: 2, n: 4 };
       for (i = 0; i < N.length; i++) {
         n = N[i];
         if (n.k === 's' || (n.k === 'n' && view.z < 1.3 && sel !== n.id && !hitSet[i])) { continue; }
         s = pos[i];
         if (s[0] < -80 || s[0] > W + 80 || s[1] < -20 || s[1] > H + 20) { continue; }
-        ctx.font = (n.k === 'o' ? 'bold 13px' : '11px') + ' system-ui,-apple-system,"Malgun Gothic",sans-serif';
-        ctx.fillStyle = n.k === 'k' ? '#f0d79a' : C.text;
-        ctx.globalAlpha = stt[i] === 'no' && n.k !== 'o' ? 0.6 : 1;
-        ctx.fillText(n.name, s[0], s[1] + R[n.k] * sc + 5);
+        lab.push([sel === n.id ? 0 : (hitSet[i] && n.k === 'n' ? 3 : PR[n.k]), i]);
       }
+      lab.sort(function (p, q) { return p[0] - q[0] || p[1] - q[1]; });
+      lab.forEach(function (L) {
+        var j = L[1], nd = N[j], sp = pos[j], big = nd.k === 'o';
+        ctx.font = (big ? 'bold 13px' : '11px') + ' system-ui,-apple-system,"Malgun Gothic",sans-serif';
+        var tw = ctx.measureText(nd.name).width, ty = sp[1] + R[nd.k] * sc + 5, th = big ? 15 : 13;
+        var bx = [sp[0] - tw / 2 - 2, ty - 1, sp[0] + tw / 2 + 2, ty + th];
+        for (var q = 0; q < boxes.length; q++) { var o = boxes[q]; if (bx[0] < o[2] && bx[2] > o[0] && bx[1] < o[3] && bx[3] > o[1]) { return; } }
+        boxes.push(bx);
+        ctx.globalAlpha = stt[j] === 'no' && nd.k !== 'o' ? 0.65 : 1;
+        ctx.lineWidth = 3; ctx.strokeStyle = C.bg; ctx.strokeText(nd.name, sp[0], ty);
+        ctx.fillStyle = nd.k === 'k' ? '#f0d79a' : C.text; ctx.fillText(nd.name, sp[0], ty);
+      });
       ctx.globalAlpha = 1;
     }
 

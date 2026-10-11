@@ -970,5 +970,29 @@
   "ticket": "W-0146",
   "since": "2026-10-10",
   "note": "D2(qc+claude 2026-10-10): visual 5-gear Read — 활·검·지팡이·장갑·반지·갑옷·화살 묶음 아이콘이 바닥 위에 읽힘 ○, 금은 금빛·물약은 붉은 상자로 흰 네모 거의 0 ○ · 아이콘 표(equip 65·gem 18)에 없는 장비는 제 등급색 상자(살구색 등). 되돌림: DG.itemicon.enabled = false → 옛 상자."
+ },
+ {
+  "id": "dg.passive-web",
+  "name": "경락도 — PoE식 패시브 그물(마디 409·이름난 48·규칙 10, 인물마다, 시작점 = 직업 다섯 + 무명)",
+  "files": [
+   "js/meridian.js",
+   "js/data-passive.js",
+   "js/passive-web.js",
+   "js/passive-web-ui.js"
+  ],
+  "tests": [
+   "경락 — 부팅 뒤 정의 ≥300 마디 · 시작점 여섯 · 점수 = 레벨 + 보스층(상한 30)",
+   "경락 — 찍으면 공격력(atkOf)이 오른다",
+   "경락 — 되돌리면 원래대로 · 던전 안에서는 못 되돌린다 · 금이 든다",
+   "경락 — 이웃 아닌 마디는 거절 · 직업 아닌 시작점도 거절",
+   "경락 — 세이브 왕복(인물 기록 save.passive)",
+   "경락 — 규칙 일격(一擊): 치명이 없고 피해 +30%"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0180",
+  "since": "2026-10-12",
+  "note": "D2(claude 2026-10-12): saga-web/tools/playcheck/passive-shot.mjs saga-dungeon — 390×844·1280×720 두 장 Read ○(찍은 길 금색·경로 점선·카드 \"찍기 (경로 n점)\"·검색 표시, 겹침·잘림 0). 입구 = 무예 창 「☯ 경락도 열기」. 손잡이 dg.pw.*(bossCap·dropGold·onecut·lone·scale·scaleHp·farsightNear·flowCd·bloodMul·mindlessCap·mindlessRegen)."
  }
 ]

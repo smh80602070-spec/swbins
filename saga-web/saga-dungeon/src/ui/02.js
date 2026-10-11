@@ -610,7 +610,7 @@
           ? '<button class="btn tiny ghost wide" data-act="skill-respec">↺ 환원(還元) — ' +
             core.fmt(global.DG.vendor.respecCost(skillHero)) + '금에 점수를 돌려받는다</button>'
           : '') +
-        '</div></div>';
+        '</div></div>' + (global.DG.meridian ? global.DG.meridian.sheetHtml(skillHero) : '');   // 경락도(W-0180) 칸
 
     /* 네 칸 */
     var eq = SK.equipped(skillHero);
