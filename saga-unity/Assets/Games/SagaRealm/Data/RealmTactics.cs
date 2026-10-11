@@ -338,6 +338,14 @@ namespace Saga.Realm.Data
         /// <summary>내 턴 끝 → 적 턴.</summary>
         public static string EndTurn(Board b) => AiTurn(b);
 
+        /// <summary>내 차례를 AI 로(화면의 「맡기기」 — tasks U-0099). 뒤이어 <see cref="EndTurn"/> 을 부르면 <see cref="AutoPlay"/> 한 바퀴와 같다.</summary>
+        public static string AutoTurn(Board b)
+        {
+            if (b.Done != null) return b.Done;
+            AutoSide(b, "me");
+            return Check(b);
+        }
+
         /* ── 결과 ── */
 
         private static double HpFrac(Board b, string side)

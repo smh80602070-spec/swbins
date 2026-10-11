@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using Saga.Realm.Data;
 using U = Saga.Realm.Data.RealmTactics;
+using V = Saga.Realm.World.RealmTacticsView;
 
 namespace Saga.EditorTools
 {
@@ -140,6 +141,9 @@ namespace Saga.EditorTools
                     if (U.Auto(from, enemy) == null) Fail("Auto null");
                 }
 
+                // U-0099 화면 — 칸 변환 · 고르기/옮기기 · 물러남 복원 · 맡기기 = AutoPlay · 토글 배선
+                if (!ViewChecks(json1, from, enemy, ref m)) _ok = false;
+
                 // ⑥ grid 없는 Attack = 옛 계산
                 for (int s = 1; s <= 10; s++)
                 {
@@ -216,6 +220,76 @@ namespace Saga.EditorTools
             if (RealmCityState.Gold != gold0 || RealmCityState.RosterIds.Count != roster0) Fail("상태 되돌림");
             if (_ok) Debug.Log($"{T} OK - 웹 판 셋 같음·판 모양 200씨앗·명중·AI·결과 넷·결정성 · grid 없는 Attack = Fight 직접 · 대승/패 보정 · 전사·열전·중상 3달·군주 중상·세이브 왕복 |{m}");
             return _ok;
+        }
+
+        private static int EnabledRootCanvases() => Object.FindObjectsByType<Canvas>(FindObjectsSortMode.None).Count(c => c.isRootCanvas && c.enabled);
+
+        private static bool ViewChecks(string json1, string from, string enemy, ref string m)
+        {
+            bool ok = _ok;
+            // ① CellOf — 칸 가운데·가장자리·바깥(−1)
+            for (int y = 0; y < U.Rows; y++)
+                for (int x = 0; x < U.Cols; x++)
+                    if (V.CellOf(V.CellCenter(x, y)) != new Vector2Int(x, y)) Fail($"CellOf 가운데 ({x},{y})");
+            if (V.CellOf(V.CellCenter(7, 5) + new Vector3(0.49f, 0f, -0.49f)) != new Vector2Int(7, 5) ||
+                V.CellOf(V.CellCenter(0, 0) + new Vector3(-0.49f, 0f, 0.49f)) != new Vector2Int(0, 0)) Fail("CellOf 가장자리");
+            foreach (var p in new[] { new Vector3(-4.01f, 0f, 0f), new Vector3(4.01f, 0f, 0f), new Vector3(0f, 0f, 3.01f), new Vector3(0f, 0f, -3.01f) })
+                if (V.CellOf(p) != new Vector2Int(-1, -1)) Fail($"CellOf 바깥 {p}");
+
+            // ② 고르기·옮기기·물러남(instant)
+            RealmSaveState.ApplyJson(json1);
+            int canv0 = EnabledRootCanvases();
+            bool called = false; U.Bonus got = null;
+            var v = V.Open(from, enemy, g => { called = true; got = g; }, instant: true);
+            if (v == null) { Fail("판 Open null"); return false; }
+            if (v.FigureCount != v.Board.Units.Count) Fail($"몸 {v.FigureCount} ≠ 유닛 {v.Board.Units.Count}");
+            if (v.Cam == null || v.Cam.depth < 50f || EnabledRootCanvases() != 1 || v.PausedCount == 0) Fail($"판 카메라·캔버스 가림 (캔버스 {EnabledRootCanvases()}·멈춤 {v.PausedCount})");
+            var mu = v.Board.Units.First(u => u.Side == "me");
+            v.Tap(mu.X, mu.Y);
+            if (v.Selected != mu.Uid || v.MoveCellCount == 0) Fail($"고르기 {v.Selected} 갈 칸 {v.MoveCellCount}");
+            var dest = U.Moves(v.Board, mu.Uid).First(c => c.x != mu.X || c.y != mu.Y);
+            v.Tap(dest.x, dest.y);
+            if (mu.X != dest.x || mu.Y != dest.y || !mu.Moved) Fail($"옮기기 ({mu.X},{mu.Y}) ≠ ({dest.x},{dest.y})");
+            v.Retreat();
+            if (!called || got != null || V.Active != null) Fail("물러남 → 콜백 null·판 닫힘");
+            if (EnabledRootCanvases() != canv0) Fail($"캔버스 되돌림 {EnabledRootCanvases()} ≠ {canv0}");
+
+            // ③ 맡기기 = 같은 씨앗 AutoPlay
+            called = false; got = null;
+            v = V.Open(from, enemy, g => { called = true; got = g; }, instant: true);
+            v.PressDelegate();
+            var rb = U.Open(from, enemy);
+            var want = U.Apply(U.AutoPlay(rb), rb.EnemyId);
+            if (!called || got == null || got.Kind != want.Kind || got.WinPct != want.WinPct || !got.Fallen.SequenceEqual(want.Fallen)) Fail($"맡기기 {got?.Kind} ≠ AutoPlay {want.Kind}");
+            if (V.Active != null) Fail("맡기기 뒤 판이 안 닫힘");
+
+            // ④ 토글 배선 — 켜고 출진하면 판이 먼저 열리고, 물러나면 보정 없이 출진한다
+            RealmSaveState.ApplyJson(json1);
+            var ui = Object.FindFirstObjectByType<Saga.Realm.UI.RealmCommandUi>();
+            if (ui == null) Fail("RealmCommandUi 없음");
+            else
+            {
+                const System.Reflection.BindingFlags Any = System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance;
+                var t = typeof(Saga.Realm.UI.RealmCommandUi);
+                var label = t.GetField("_gridToggleLabel", Any).GetValue(ui) as TMPro.TextMeshProUGUI;
+                if (label == null || !label.text.Contains("♟")) Fail("전술판 토글 없음");
+                bool duel0 = (bool)t.GetField("_duelEnabled", Any).GetValue(ui);
+                t.GetField("_duelEnabled", Any).SetValue(ui, false);
+                t.GetMethod("ToggleGrid", Any).Invoke(ui, null);
+                int troops0 = RealmCityState.CityRecord(from).Troops;
+                string cur0 = RealmCityState.CurrentCity;
+                typeof(RealmCityState).GetProperty("CurrentCity").SetValue(null, from);
+                t.GetMethod("BeginAttackFlow", Any).Invoke(ui, new object[] { enemy, true });
+                if (V.Active == null || RealmCityState.CityRecord(from).Troops != troops0) Fail("토글 켜고 출진 → 판이 먼저 열려야(아직 출진 전)");
+                V.Active?.Retreat();
+                if (V.Active != null || RealmCityState.CityRecord(from).Troops == troops0) Fail("물러난 뒤 보정 없이 출진해야(병력이 나갔어야)");
+                Saga.Realm.World.RealmBattlefield.Hide();
+                t.GetMethod("ToggleGrid", Any).Invoke(ui, null);
+                t.GetField("_duelEnabled", Any).SetValue(ui, duel0);
+                typeof(RealmCityState).GetProperty("CurrentCity").SetValue(null, cur0);
+            }
+            m += " · 판 화면 칸 변환·고르기·옮기기·물러남·맡기기=AutoPlay·토글 배선";
+            return ok && _ok;
         }
 
         private static void Web(string seed, string land, bool siege, string[] mine, int[] tr,

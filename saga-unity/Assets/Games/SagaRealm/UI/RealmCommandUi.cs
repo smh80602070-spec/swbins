@@ -111,6 +111,7 @@ namespace Saga.Realm.UI
         [SerializeField] private TextMeshProUGUI _saveLabel;
         [SerializeField] private TextMeshProUGUI _tacticToggleLabel;
         [SerializeField] private TextMeshProUGUI _duelToggleLabel;
+        [SerializeField] private TextMeshProUGUI _gridToggleLabel;
 
         // PLAN.md 101-2 5-6 "지형·진형 전술 개입"(2026-09-20) — 다음 공격에
         // 전술을 쓸지 말지 켜 두는 토글. 값 자체는 위 GameObject 참조들과
@@ -123,6 +124,9 @@ namespace Saga.Realm.UI
         // 어느 적을 칠지 들고 있는 자리(null이면 TargetFrom()이 스스로
         // 고른다 — ExecuteAttack()의 옛 동작과 같다).
         private bool _duelEnabled;
+        // tasks U-0099 격자 전술판 — 켜져 있으면 출진 전에 판(`RealmTacticsView`)을 먼저 열고, 그 보정을 Attack 에 싣는다.
+        private bool _gridEnabled;
+        private RealmTactics.Bonus _pendingGrid;
         private string _pendingAttackEnemyId;
         private bool _pendingAttackHasEnemyId;
         private readonly List<string> _duelResults = new List<string>();
@@ -219,6 +223,7 @@ namespace Saga.Realm.UI
             var duelToggleButton = RealmUiKit.NewButton(canvas.transform, DuelToggleLabelText(),
                 new Vector2(1f, 1f), new Vector2(-110f, -692f), new Vector2(180f, 104f), ToggleDuel);
             _duelToggleLabel = duelToggleButton.GetComponentInChildren<TextMeshProUGUI>();
+            EnsureGridToggle(canvas.transform);
 
             BuildOrderPanel(canvas.transform);
             BuildCityPanel(canvas.transform);
@@ -715,7 +720,36 @@ namespace Saga.Realm.UI
 
         /// <summary>110 ⑤c-2c — 씬에 구운 글(빌더 = 한국어)을 지금 언어로: 표 값과 같은 글은 표로, 명령 단추("개간 (60냥)")·
         /// 전술·일기토 단추는 만들 때와 같은 식으로 다시.</summary>
-        private void Start() { RelocalizeBaked(); RefreshSettingsPanel(); }
+        private void Start()
+        {
+            // tasks U-0099 — 구운 씬엔 전술판 토글이 없다(씬 재빌드 없이) → 처음 켤 때 같은 캔버스에 짓는다.
+            var canvas = transform.Find("RealmCommandUI");
+            if (canvas != null) EnsureGridToggle(canvas);
+            RelocalizeBaked();
+            RefreshSettingsPanel();
+        }
+
+        /// <summary>tasks U-0099 — 일기토 토글 아래 같은 기둥 한 칸(-692 → -804, 같은 112px 간격). 이미 있으면 그대로.</summary>
+        private void EnsureGridToggle(Transform canvas)
+        {
+            if (_gridToggleLabel != null) return;
+            var gridToggleButton = RealmUiKit.NewButton(canvas, GridToggleLabelText(),
+                new Vector2(1f, 1f), new Vector2(-110f, -804f), new Vector2(180f, 104f), ToggleGrid);
+            gridToggleButton.name = "Btn_GridToggle";
+            _gridToggleLabel = gridToggleButton.GetComponentInChildren<TextMeshProUGUI>();
+        }
+
+        private void ToggleGrid()
+        {
+            _gridEnabled = !_gridEnabled;
+            _gridToggleLabel.text = GridToggleLabelText();
+        }
+
+        private string GridToggleLabelText()
+        {
+            string state = RealmLocalization.T(_gridEnabled ? "state.on" : "state.off");
+            return $"{RealmLocalization.T("command.grid", "♟ 전술판")}:{state}";
+        }
 
         private void RelocalizeBaked()
         {
@@ -732,6 +766,7 @@ namespace Saga.Realm.UI
                 _tacticToggleLabel.text = TacticToggleLabelText();
             }
             if (_duelToggleLabel != null) _duelToggleLabel.text = DuelToggleLabelText();
+            if (_gridToggleLabel != null) _gridToggleLabel.text = GridToggleLabelText();
             if (_orderPanel == null) return;
             // 명령 단추는 BuildOrderPanel 이 AllKeys 순서로 지었고 닫기가 마지막이다.
             var buttons = _orderPanel.GetComponentsInChildren<Button>(true);
@@ -1008,6 +1043,18 @@ namespace Saga.Realm.UI
         {
             _pendingAttackEnemyId = enemyId;
             _pendingAttackHasEnemyId = hasEnemyId;
+            _pendingGrid = null;
+            // tasks U-0099 — 전술판이 켜져 있고 칠 수 있는 출진이면 판 먼저(물러나면 보정 없이 그대로 출진). 못 여는 출진은 지금 흐름이 이유를 말한다.
+            if (_gridEnabled && Saga.Realm.World.RealmTacticsView.Open(RealmCityState.CurrentCity, enemyId, g => { _pendingGrid = g; ContinueAttackFlow(); }) != null)
+            {
+                CloseAllPanels();
+                return;
+            }
+            ContinueAttackFlow();
+        }
+
+        private void ContinueAttackFlow()
+        {
             if (_duelEnabled)
             {
                 StartDuel();
@@ -1021,8 +1068,9 @@ namespace Saga.Realm.UI
         private void FinishAttackFlow(float duelMul, string duelPrefix)
         {
             var result = _pendingAttackHasEnemyId
-                ? RealmWarState.Attack(RealmCityState.CurrentCity, _pendingAttackEnemyId, _tacticEnabled, duelMul)
-                : RealmWarState.Attack(RealmCityState.CurrentCity, useTactic: _tacticEnabled, duelPowerMul: duelMul);
+                ? RealmWarState.Attack(RealmCityState.CurrentCity, _pendingAttackEnemyId, _tacticEnabled, duelMul, _pendingGrid)
+                : RealmWarState.Attack(RealmCityState.CurrentCity, useTactic: _tacticEnabled, duelPowerMul: duelMul, grid: _pendingGrid);
+            _pendingGrid = null;
             string msg = duelPrefix != null ? duelPrefix + result.Message : result.Message;
             // PLAN.md 109-13 싸움터 땅 — 그 성의 고정 싸움터로 잠깐 컷하고, 알림 첫 줄에 싸움터 이름.
             if (Saga.Realm.World.RealmBattlefield.Show(result) != null)
