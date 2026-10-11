@@ -7,7 +7,7 @@ extends CharacterBody3D
 ## 여기는 몸·체력·AI·머리 위 표시만.
 
 const Elements := preload("res://games/saga_go/combat/elements.gd")
-const CombatFx := preload("res://games/saga_go/combat/combat_fx.gd")   # G-0175 쓰러질 때 불꽃
+const CombatFx := preload("res://saga_core/combat_fx.gd")   # G-0175 쓰러질 때 불꽃
 const FeelTuning := preload("res://games/saga_go/combat/feel_tuning.gd")
 const Growth := preload("res://games/saga_go/data/growth.gd")
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")

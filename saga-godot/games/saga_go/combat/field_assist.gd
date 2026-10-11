@@ -12,7 +12,7 @@ extends Node
 ## 안 센다. 환경 SAGA_NO_ASSIST=1 이면 끼어들지 않는다(전후 비교용). 저장할 것 없음.
 
 const Elements := preload("res://games/saga_go/combat/elements.gd")
-const CombatFx := preload("res://games/saga_go/combat/combat_fx.gd")
+const CombatFx := preload("res://saga_core/combat_fx.gd")
 
 const TICK := 0.25
 const WINDOW := 3.0 # 지금 인물이 마지막으로 친 뒤 이 초 안이면 싸우는 중

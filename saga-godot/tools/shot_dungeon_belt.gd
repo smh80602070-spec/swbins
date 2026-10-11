@@ -31,10 +31,22 @@ static func slots(tree: SceneTree) -> void:
 			n.queue_free.call_deferred())
 
 
-## G-0199 — 무장 전자 갈래(br7) 셋 + 화창(br6)을 넉 자리에 걸고(메모리에서만) 둘레 적에게 전자진(w_emp_nova)을 한 번 쏜다 — 피해 숫자가 찍힌다.
+## G-0199 — 무장 전자 갈래(br7) 셋 + 화창(br6)을 넉 자리에 걸고(메모리에서만) 둘레 적에게 전자진(w_emp_nova)을 한 번 쏜다.
+## G-0200 — 시전 그림(분홍 원환·지지직)이 0.55초라 시전을 촬영 직전(단계 뒤 CAST_AT 프레임)으로 미룬다.
 static func emp(tree: SceneTree) -> void:
-	tree.root.get_node("DungeonSkillState").restore({}, {"w_emp_swing": 1, "w_emp_dash": 1, "w_emp_nova": 3, "w_firelance": 1},
-		{"warrior": ["w_emp_nova", "w_emp_swing", "w_emp_dash", "w_firelance"]})
+	_arena(tree, {"w_emp_swing": 1, "w_emp_dash": 1, "w_emp_nova": 3, "w_firelance": 1}, ["w_emp_nova", "w_emp_swing", "w_emp_dash", "w_firelance"], [0])
+
+
+## G-0200 — 폭염진(w_blastfire, 주황 원환·불씨) 뒤에 화창(w_firelance, 궤적·불꽃) 두 자리를 잇달아.
+static func fire(tree: SceneTree) -> void:
+	_arena(tree, {"w_blastfire": 3, "w_firelance": 3}, ["w_blastfire", "w_firelance", "", ""], [0, 1])
+
+
+const CAST_AT := 80 # shot_scene 단계(30프레임째) 뒤 — 촬영(120프레임째) 10프레임 전
+
+
+static func _arena(tree: SceneTree, ranks: Dictionary, slots: Array, casts: Array) -> void:
+	tree.root.get_node("DungeonSkillState").restore({}, ranks, {"warrior": slots})
 	tree.root.get_node("DungeonEquipmentState").equip("weapon", {}) # 맨손 = 무장(세이브에 다른 직업 무기가 있어도)
 	for m in tree.get_nodes_in_group("ui_modal"):
 		m.queue_free()
@@ -48,5 +60,16 @@ static func emp(tree: SceneTree) -> void:
 		var e: Node3D = Enemy.new(3)
 		tree.current_scene.add_child(e)
 		e.global_position = p.global_position + off
+		e.hp = 5000.0 # 촬영 동안 쓰러지지 않게
+		e.max_hp = 5000.0
 	var c := tree.get_first_node_in_group("skill_caster")
-	c.call_deferred("try_slot", 0)
+	var n := [0]
+	var cb := [Callable()]
+	cb[0] = func() -> void:
+		n[0] += 1
+		for k in casts.size():
+			if n[0] == CAST_AT + 4 * k:
+				c.try_slot(int(casts[k]))
+		if n[0] >= CAST_AT + 4 * casts.size():
+			tree.process_frame.disconnect(cb[0]) # 다음 컷에서 씬이 바뀌면 c 가 지워진다
+	tree.process_frame.connect(cb[0])

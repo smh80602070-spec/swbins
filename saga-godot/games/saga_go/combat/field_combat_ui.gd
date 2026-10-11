@@ -5,7 +5,7 @@ extends Node
 ## 호출부 변경 0: 오토로드는 field_combat.gd 그대로, 여기 함수·변수는 상속으로 읽힌다.
 
 const Elements := preload("res://games/saga_go/combat/elements.gd")
-const CombatFx := preload("res://games/saga_go/combat/combat_fx.gd")
+const CombatFx := preload("res://saga_core/combat_fx.gd")
 
 var _player: CharacterBody3D = null
 var _aim_hint: Label = null

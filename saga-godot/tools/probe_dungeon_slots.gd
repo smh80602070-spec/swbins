@@ -5,6 +5,7 @@ extends SceneTree
 ## ① 자동 채움(처음 배운 활성 무예 → 빈 칸)·맞바꿈(setSlot)·패시브/안 배운 것/딴 직업 것 거절 ② 직업마다 넷 따로 — 무기를 바꾸면 시전기의 자리도 그 직업 것
 ## ③ 옛 세이브(skill_slots 없음)는 배운 활성 무예를 표 순서로 채움 · 새 세이브 slots 는 그대로 · 길이 넷 맞춤
 ## ④ 모양 아홉(bolt·swing·nova·dash·buff·heal·curse·summon·chain)+whirl·shots(a_multi 셋)·far(w_leap 0.36초)가 옛 사본과 같은 값 · 쿨다운은 무예 키별 · 입력 넷 = Z·X·C·V.
+## ⑤ G-0200 시전 손맛 — 모양 아홉마다 숫자(popup) 수 = 맞은 적 수 · 여럿 맞혀도 멈칫(hitstop) 1 · 효과 노드가 생기고 1초 안에 스스로 지워짐 · 원소→입자 표가 ELEMENTS 일곱을 다 덮음.
 ## 상태는 끝에 되돌린다. 끝에 "PROBE dungeon_slots OK" 또는 "PROBE dungeon_slots FAIL n".
 
 var fails := 0
@@ -156,10 +157,48 @@ func _initialize() -> void:
 	var cr: float = float(Skills.skill_by_key("w_intimidate").r)
 	check(caster.try_cast("w_intimidate") and es[0]._slow_mult == 0.35 and es[0]._hex_v == Skills.value_at(Skills.skill_by_key("w_intimidate"), 3) and (es[3]._hex_v == 0.0 or es[3].global_position.length() <= cr), "curse(w_intimidate): 반경 안 느려짐 0.35·약화")
 	es = reset.call()
-	var n_before := world.get_child_count()
-	check(caster.try_cast("y_shade") and world.get_child_count() - n_before == roundi(Skills.value_at(Skills.skill_by_key("y_shade"), 3)), "summon(y_shade): 분신 round(값)기")
+	var Minion: GDScript = load("res://games/saga_dungeon/world/dungeon_minion.gd")
+	var minions := func() -> int: return world.get_children().filter(func(c): return c.get_script() == Minion).size()
+	var n_before: int = minions.call()
+	check(caster.try_cast("y_shade") and minions.call() - n_before == roundi(Skills.value_at(Skills.skill_by_key("y_shade"), 3)), "summon(y_shade): 분신 round(값)기")
 	es = reset.call()
 	check(caster.try_cast("a_chain") and lost.call(es)[0] == expect.call("a_chain") and lost.call(es).filter(func(v): return v > 0.0).size() == 3, "chain(a_chain): 첫 적 전부 · 세 번 튐 %s" % str(lost.call(es)))
+
+	# ⑤ G-0200 시전 손맛(치명 끔 — 치명이면 stop_ms 0 이어도 +50ms 라 멈칫이 둘 셀 수 있다)
+	var feel: Node = root.get_node("CombatFeel")
+	var pops := [0]
+	var stops := [0]
+	feel.popup_triggered.connect(func(_a, _c): pops[0] += 1)
+	feel.hitstop_triggered.connect(func(_d): stops[0] += 1)
+	var fx_count := func() -> int: return world.get_children().filter(func(c): return c is CPUParticles3D or c is MeshInstance3D).size()
+	var fx_bad: Array = []
+	for k in ["s_wave", "a_multi", "w_whirl", "y_thunderdoom", "a_dashshot", "m_rally", "s_restore", "w_intimidate", "y_shade", "a_chain"]:
+		es = reset.call()
+		pops[0] = 0
+		stops[0] = 0
+		var ok5: bool = caster.try_cast(k)
+		for i in 8:
+			caster._physics_process(0.05)
+		var hit_n: int = lost.call(es).filter(func(v): return v > 0.0).size()
+		var fx_n: int = fx_count.call()
+		if not ok5 or pops[0] != hit_n or stops[0] != mini(hit_n, 1) or fx_n == 0:
+			fx_bad.append("%s ok=%s 맞음%d 숫자%d 멈칫%d 효과%d" % [k, ok5, hit_n, pops[0], stops[0], fx_n])
+	check(fx_bad.is_empty(), "시전 손맛: 모양 아홉(+shots·chain) 숫자 = 맞은 적 · 멈칫 시전당 1 · 효과 노드 생김 %s" % str(fx_bad))
+	es = reset.call()
+	caster.try_cast("w_whirl")
+	var fx_on: int = fx_count.call()
+	## create_timer 는 첫 프레임 delta(앞 점검이 동기로 쓴 시간)에 바로 끝난다 — 실제 시간으로 1.2초 프레임을 돌린다.
+	var t0 := Time.get_ticks_msec()
+	while Time.get_ticks_msec() - t0 < 1200:
+		await process_frame
+	check(fx_on > 0 and fx_count.call() == 0, "효과 노드는 1초 남짓 안에 스스로 지워짐 %d → %d" % [fx_on, fx_count.call()])
+	Engine.time_scale = 1.0
+	var CombatFx: GDScript = load("res://saga_core/combat_fx.gd")
+	var el_miss: Array = []
+	for e: Dictionary in load("res://games/saga_dungeon/data/dungeon_items.gd").ELEMENTS:
+		if not Caster.EL_PARTICLE.has(e.key) or not CombatFx.PARTICLES.has(Caster.EL_PARTICLE[e.key]):
+			el_miss.append(e.key)
+	check(el_miss.is_empty() and Caster.el_color({"el": "emp"}).is_equal_approx(Color("#ff4fd8")) and Caster.el_color({"el": "fire"}).is_equal_approx(Color("#e2601a")), "원소→입자 표가 ELEMENTS 일곱을 다 덮고 색은 표 그대로 %s" % str(el_miss))
 
 	# G-0199 br6·br7 30 — 공용 시전기로 하나씩 실제 시전(표만 늘려도 나간다)
 	var new_keys: Array = Skills.SKILLS.filter(func(s): return int(s.br) >= 6).map(func(s): return String(s.key))

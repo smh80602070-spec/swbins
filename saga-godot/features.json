@@ -3361,5 +3361,33 @@
   "ticket": "G-0199",
   "since": "2026-10-11",
   "note": "창 모드 dg_emp_skills 가로·세로 Claude 눈 ○(전자 자리 단추·전자진 시전 — 무예 시각 효과는 원래 없음)"
+ },
+ {
+  "id": "gd.dg.skill-fx",
+  "name": "2나락 무예 시전 손맛 — 모양 아홉마다 원소 색 원환·궤적·불꽃(combat_fx 를 saga_core 로) + 맞은 적마다 피해 숫자·번쩍임(멈칫은 시전당 한 번)",
+  "files": [
+   "games/saga_dungeon/player/skill_caster.gd",
+   "saga_core/combat_fx.gd",
+   "tools/probe_dungeon_slots.gd",
+   "tools/shot_dungeon_belt.gd",
+   "tools/shot_scene.gd"
+  ],
+  "tests": [
+   "dungeon_slots",
+   "dungeon_skills",
+   "dungeon_melee",
+   "save_dungeon",
+   "dungeon_synergy",
+   "mount_dungeon",
+   "combat",
+   "element",
+   "assist"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0200",
+  "since": "2026-10-11",
+  "note": "창 모드 dg_emp_skills·dg_fire_skills 가로·세로 Claude 눈 ○(분홍·주황 원환·불씨·피해 숫자) · 1만리 x_swing 궤적 그대로"
  }
 ]

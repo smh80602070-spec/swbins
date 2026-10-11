@@ -10,9 +10,17 @@ extends Node
 ##   bolt 가까운 적(12m 안) · swing 반경 r×사거리 배율 · nova 반경 r · dash 0.2초×far 돌진, 지나는 적 2.4m · buff 임시 은사
 ##   heal 최대 체력 % · curse 반경 r 느려짐 0.35+약화 · summon 분신 round(값)기 · chain 3번 튐(한 번마다 12% 덜) 7.65m.
 ## 기력(mp)은 이 슬라이스에 없어 sk.cost 는 안 쓴다(쿨다운만). 단이 0이면 아무 일도 안 한다.
+## G-0200 — 시전 손맛: 모양마다 원소 색 그림(saga_core/combat_fx.gd, 1만리와 같은 것) + 맞은 적마다 CombatFeel.hit(숫자·번쩍임).
+##   한 번 시전에 여럿을 맞히면 멈칫·흔들림·타격음은 첫 적 한 번만(나머지는 HIT_QUIET). 색은 DungeonItems.ELEMENTS color 그대로.
 
 const MeleeAttack := preload("res://games/saga_dungeon/player/melee_attack.gd")
 const DungeonMinion := preload("res://games/saga_dungeon/world/dungeon_minion.gd")
+const CombatFx := preload("res://saga_core/combat_fx.gd")
+## 원소 키(ELEMENTS) → combat_fx PARTICLES 키. 독은 초록 방울(water), 전자는 분홍 지지직(thunder).
+const EL_PARTICLE := {"phys": "", "fire": "fire", "cold": "ice", "lit": "thunder", "pois": "water", "chi": "wind", "emp": "thunder"}
+const RING_SEC := 0.55 # 웹 applyShapeSkill fx ring life
+const SELF_BURST_R := 1.2 # buff·heal 은 제 자리에 작게
+const HIT_QUIET := {"stop_ms": 0, "shake_mul": 0.0, "quiet": true}
 const SLOT_ACTIONS: Array[String] = ["dungeon_slot_1", "dungeon_slot_2", "dungeon_slot_3", "dungeon_slot_4"]
 const BOLT_RANGE := 12.0
 const DASH_SPEED := 620.0 * (6.0 / 148.0) # 웹 BASE_SPD(148px/s)→WALK_SPEED(6.0m/s) 환산
@@ -30,6 +38,7 @@ var _dash_left := 0.0
 var _dash_hit: Array = []
 var _dash_sk: Dictionary = {}
 var _dash_rank := 0
+var _hits := 0 # 이번 시전에서 맞힌 수 — 첫 적만 멈칫·흔들림
 @onready var _player: Node3D = get_parent()
 
 
@@ -74,6 +83,7 @@ func try_cast(skill_key: String) -> bool:
 	if not DungeonSkills.is_active(sk):
 		return false
 	var ok := false
+	_hits = 0
 	match str(sk.shape):
 		"bolt": ok = _cast_bolt(sk, rank)
 		"swing": ok = _cast_area(sk, rank, float(sk.r) * DungeonRunState.reach_mult())
@@ -81,8 +91,12 @@ func try_cast(skill_key: String) -> bool:
 		"dash": ok = _cast_dash(sk, rank)
 		"buff":
 			DungeonRunState.add_temp_buff(str(sk.buff_eff), DungeonSkills.value_at(sk, rank), float(sk.sec))
+			_burst(sk, SELF_BURST_R)
 			ok = true
-		"heal": ok = _cast_heal(sk, rank)
+		"heal":
+			ok = _cast_heal(sk, rank)
+			if ok:
+				_burst(sk, SELF_BURST_R)
 		"curse": ok = _cast_curse(sk, rank)
 		"summon": ok = _cast_summon(sk, rank)
 		"chain": ok = _cast_chain(sk, rank)
@@ -103,8 +117,13 @@ func _cast_bolt(sk: Dictionary, rank: int) -> bool:
 		return false
 	candidates.sort_custom(func(a, b): return a[0] < b[0])
 	var value := DungeonSkills.value_at(sk, rank)
+	var col := el_color(sk)
 	for i in range(mini(int(sk.get("shots", 1)), candidates.size())):
-		_strike(candidates[i][1], sk, value)
+		var enemy: Node3D = candidates[i][1]
+		var to := enemy.global_position - _player.global_position
+		CombatFx.slash(_player, to, minf(to.length(), 3.0), col, i)
+		CombatFx.spark(_player, enemy.global_position + Vector3.UP * 0.9, col)
+		_strike(enemy, sk, value)
 	return true
 
 
@@ -113,6 +132,7 @@ func _cast_area(sk: Dictionary, rank: int, radius: float) -> bool:
 	if targets.is_empty():
 		return false
 	var value := DungeonSkills.value_at(sk, rank)
+	_burst(sk, radius)
 	for enemy in targets:
 		_strike(enemy, sk, value)
 	return true
@@ -132,6 +152,7 @@ func _cast_dash(sk: Dictionary, rank: int) -> bool:
 		dir = Vector3.FORWARD
 	_player.dash_dir = dir.normalized()
 	_player.dash_speed = DASH_SPEED
+	CombatFx.slash(_player, dir, DASH_HIT_RADIUS, el_color(sk), 3, true)
 	return true
 
 
@@ -146,6 +167,7 @@ func _physics_process(delta: float) -> void:
 			continue
 		if enemy.global_position.distance_to(_player.global_position) <= DASH_HIT_RADIUS:
 			_dash_hit.append(enemy)
+			CombatFx.spark(_player, enemy.global_position + Vector3.UP * 0.9, el_color(_dash_sk))
 			_strike(enemy, _dash_sk, DungeonSkills.value_at(_dash_sk, _dash_rank))
 
 
@@ -163,6 +185,7 @@ func _cast_curse(sk: Dictionary, rank: int) -> bool:
 	if targets.is_empty():
 		return false
 	var value := DungeonSkills.value_at(sk, rank)
+	_burst(sk, float(sk.r))
 	for enemy in targets:
 		enemy.apply_elem_slow(CURSE_SLOW, float(sk.sec))
 		enemy.apply_hex(value, float(sk.sec))
@@ -180,6 +203,7 @@ func _cast_summon(sk: Dictionary, rank: int) -> bool:
 		m.mul = 0.5 * float(sk.get("str", 1.0))
 		m.global_position = _player.global_position + Vector3(
 			(randf() - 0.5) * SCATTER_X * 2.0, 0.0, (randf() - 0.5) * SCATTER_Z * 2.0)
+		CombatFx.spark(_player, m.global_position + Vector3.UP * 0.6, el_color(sk))
 	return true
 
 
@@ -193,7 +217,9 @@ func _cast_chain(sk: Dictionary, rank: int) -> bool:
 	var hops: int = int(sk.get("hops", CHAIN_HOPS))
 	var hit: Array = []
 	var hop := 0
+	var col := el_color(sk)
 	while cur != null and hop < hops:
+		CombatFx.spark(_player, (cur as Node3D).global_position + Vector3.UP * 0.9, col, hop == hops - 1)
 		_strike(cur, sk, value * (1.0 - hop * CHAIN_FALLOFF))
 		hit.append(cur)
 		cur = _nearest_to(cur.global_position, enemies, hit, chain_r)
@@ -229,7 +255,8 @@ func _strike(enemy: Node, sk: Dictionary, mult: float) -> void:
 	var pct_mult: float = DungeonRunState.atk_mult() + DungeonEquipmentState.atk_pct_bonus() / 100.0
 	var base: float = MeleeAttack.ATK_DAMAGE * pct_mult + DungeonEquipmentState.atk_flat_bonus()
 	var dmg: float = base * mult * DungeonRunState.skill_mul()
-	if randf() * 100.0 < DungeonRunState.crit_chance():
+	var is_crit := randf() * 100.0 < DungeonRunState.crit_chance()
+	if is_crit:
 		dmg *= MeleeAttack.CRIT_MULT
 	var el: String = str(sk.get("el", "phys"))
 	var res: float = float(enemy.resist_pct(el)) if enemy.has_method("resist_pct") else 0.0
@@ -238,3 +265,21 @@ func _strike(enemy: Node, sk: Dictionary, mult: float) -> void:
 	dmg = maxf(1.0, roundf(dmg))
 	if enemy.has_method("take_damage"):
 		enemy.take_damage(dmg)
+	if enemy is Node3D:
+		CombatFeel.hit(enemy, dmg, is_crit, {} if _hits == 0 else HIT_QUIET)
+		_hits += 1
+
+
+## 무예의 원소 색(ELEMENTS color, 없으면 phys).
+static func el_color(sk: Dictionary) -> Color:
+	var e := DungeonItems.elem_by_key(str(sk.get("el", "phys")))
+	return Color(str(e.get("color", "#d0c8b8")))
+
+
+static func el_particle(sk: Dictionary) -> String:
+	return str(EL_PARTICLE.get(str(sk.get("el", "phys")), ""))
+
+
+## 제 자리 원소 원환·입자(swing·nova·curse 는 판정 반경, buff·heal 은 작게).
+func _burst(sk: Dictionary, radius: float) -> void:
+	CombatFx.element_burst(_player, _player.global_position, radius, el_color(sk), RING_SEC, el_particle(sk), false)
