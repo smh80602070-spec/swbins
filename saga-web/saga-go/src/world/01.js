@@ -24,10 +24,10 @@
 
   var ZOOM = 17;
   var TILE_PX = 256;
-  var SPAWN_RADIUS = 320;     // 스폰 반경 (m)
+  var SPAWN_RADIUS = 320, SPAWN_MIN = 25;   // 스폰 반경·최소 거리 (m)
   var ENCOUNTER_RANGE = 46;   // 조우 가능 거리 (m)
   var REGION_SIZE = 576;      // 구역 한 변 (m)
-  var MAX_SPAWNS = 10;
+  var MAX_SPAWNS = 14;        // W-0174 10 → 14 — 첫 10분 집 둘레가 비었다(재미표준 E)
   var SPAWN_LIFE = 100000;
 
   var spawns = [];
@@ -821,7 +821,7 @@
   function makeSpawn() {
     var pos = core.save.player.pos;
     var ang = Math.random() * Math.PI * 2;
-    var dist = 70 + Math.random() * (SPAWN_RADIUS - 70);
+    var dist = SPAWN_MIN + Math.random() * (SPAWN_RADIUS - SPAWN_MIN);   // W-0174 70 → 25 — 기본 확대에서 하나쯤은 보이게
     /* 비 오는 날은 짐승이, 바람 부는 날은 사람이 더 많다 */
     var wb = global.DG.weather ? global.DG.weather.heroBias() : 0;
     var isHero = Math.random() < core.clamp(0.42 + wb, 0.08, 0.9);

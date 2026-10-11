@@ -562,7 +562,7 @@
           '<small style="color:' + rar.color + '">' + rar.name + ' ' + rar.label + ' · ' +
           (s.kind === 'hero' ? '등용 대상' : '포획 대상') + ' · ' + Math.round(n.dist) + 'm</small></div>' +
         (n.inRange
-          ? '<button class="btn primary" data-act="meet">만난다</button>'
+          ? '<button class="btn primary" data-act="meet">만난다 <b class="ra-k">F</b></button>'
           : approachBtn(s.x, s.y)) +
       '</div>';
   }
@@ -581,7 +581,7 @@
             '<small style="color:#e0837a">적도 ' + held.name + ' 점거 · ' +
             Math.round(ns.dist) + 'm</small></div>' +
           (ns.inRange
-            ? '<button class="btn primary" data-act="visit">맞선다</button>'
+            ? '<button class="btn primary" data-act="visit">맞선다 <b class="ra-k">F</b></button>'
             : approachBtn(st.x, st.y)) +
         '</div>';
     }
@@ -589,7 +589,7 @@
     var btn = !stt.ready
       ? '<button class="btn ghost" disabled>' + stn.leftLabel(stt.left) + '</button>'
       : (ns.inRange
-          ? '<button class="btn primary" data-act="visit">들른다</button>'
+          ? '<button class="btn primary" data-act="visit">들른다 <b class="ra-k">F</b></button>'
           : approachBtn(st.x, st.y));
     return '<div class="near-card"' + (stt.ready ? '' : ' style="opacity:.62"') + '>' +
         '<div class="near-ico" style="border-color:' + (stt.ready ? '#e8c15a' : 'rgba(150,155,165,.5)') + '">🏮</div>' +
@@ -1917,7 +1917,7 @@
       var kx = len > JOY_R ? dx / len * JOY_R : dx, ky = len > JOY_R ? dy / len * JOY_R : dy;
       knobAt(kx, ky);
       if (len < JOY_DEAD) { W.setStick(0, 0, false); return; }
-      W.setStick(dx / len, dy / len, false);
+      W.setStick(dx / len, dy / len, !!(global.DG.keys && global.DG.keys.joyRun(len, JOY_R)));   // W-0174 끝까지(85%↑) 밀면 달린다(Shift 와 같은 ×2.2)
       e.preventDefault();
     });
     function release(e) { if (e.pointerId === joyId) { reset(); } }
@@ -1930,7 +1930,7 @@
       var dx = (held.left ? -1 : 0) + (held.right ? 1 : 0);
       var dy = (held.up ? -1 : 0) + (held.down ? 1 : 0);
       var len = Math.hypot(dx, dy);
-      W.setStick(len ? dx / len : 0, len ? dy / len : 0, false);
+      W.setStick(len ? dx / len : 0, len ? dy / len : 0, !!(len && global.DG.keys && global.DG.keys.padRun()));   // W-0174 두 번 톡 = 달리기(keys.js)
     }
     var btns = padEl.querySelectorAll('button[data-dir]');
     for (var pi = 0; pi < btns.length; pi++) {

@@ -34,7 +34,7 @@
   /** 몇 미터마다 한 번 주사위를 굴리나
    * (2026-09-06, 축1 "사건 빈도가 낮다" — 420 → 300, 아래 chance 도 같이 올려
    * 실제 평균 간격이 420÷0.55≈764m 에서 300÷0.62≈484m 로 준다) */
-  function STEP() { return core.tuned('event.stepM', 300); }
+  function STEP() { return core.tuned('event.stepM', 180); }   // W-0174 300 → 180 — 평균 ≈290m 마다 사건
   /** 그 주사위에서 사건이 날 확률 */
   function CHANCE() { return core.tuned('event.chance', 0.62); }
 

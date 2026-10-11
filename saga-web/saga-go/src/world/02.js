@@ -323,8 +323,8 @@
       var fdist = Math.hypot(ftHit.x - pos.x, ftHit.y - pos.y);
       if (fdist <= ENCOUNTER_RANGE) { core.emit('fort:request', ftHit); }
       else {
-        if (mode === 'keyboard') { walkTo(ftHit.x, ftHit.y); }
-        core.emit('toast', '성채가 멉니다 · ' + Math.round(fdist) + 'm · 그쪽으로 걸어갑니다');
+        if (mode === 'keyboard') { walkTo(ftHit.x, ftHit.y); core.emit('walk:meet', { ev: 'fort:request', it: ftHit }); }   // W-0174 닿으면 저절로 연다(keys.js)
+        core.emit('toast', '성채가 멉니다 · ' + Math.round(fdist) + 'm · 걸어가서 닿으면 맞섭니다');
       }
       return;
     }
@@ -340,8 +340,8 @@
       var sdist = Math.hypot(stHit.x - pos.x, stHit.y - pos.y);
       if (sdist <= ENCOUNTER_RANGE) { core.emit('station:request', stHit); }
       else {
-        if (mode === 'keyboard') { walkTo(stHit.x, stHit.y); }
-        core.emit('toast', '역참이 멉니다 · ' + Math.round(sdist) + 'm · 그쪽으로 걸어갑니다');
+        if (mode === 'keyboard') { walkTo(stHit.x, stHit.y); core.emit('walk:meet', { ev: 'station:request', it: stHit }); }
+        core.emit('toast', '역참이 멉니다 · ' + Math.round(sdist) + 'm · 걸어가서 닿으면 들릅니다');
       }
       return;
     }
@@ -367,8 +367,8 @@
     var dist = Math.hypot(best.x - pos.x, best.y - pos.y);
     if (dist <= ENCOUNTER_RANGE) { core.emit('encounter:request', best); }
     else {
-      if (mode === 'keyboard') { walkTo(best.x, best.y); }   // 멀면 일단 그쪽으로 걷는다
-      core.emit('toast', '너무 멉니다 · ' + Math.round(dist) + 'm · 그쪽으로 걸어갑니다');
+      if (mode === 'keyboard') { walkTo(best.x, best.y); core.emit('walk:meet', { ev: 'encounter:request', it: best }); }   // 멀면 걸어가서 닿으면 만난다
+      core.emit('toast', '너무 멉니다 · ' + Math.round(dist) + 'm · 걸어가서 닿으면 만납니다');
     }
   }
 
@@ -1055,7 +1055,7 @@
     draw: draw, resize: resize, layoutLabels: layoutLabels, _makeSpawn: makeSpawn, _landTex2D: function () { return LAND_TEX_VARIANTS; },   // W-0144·W-0152·W-0154 진단
     get spawns() { return spawns; },
     removeSpawn: removeSpawn,
-    nearest: nearest, maxSpawns: maxSpawns, spawnSpecial: spawnSpecial,
+    nearest: nearest, maxSpawns: maxSpawns, MAX_SPAWNS: MAX_SPAWNS, spawnSpecial: spawnSpecial,
     /** ㉑ 반경 R 안 흔적 수(track.js) — 재미표준 E 가 상호작용 수에 더한다 */
     trackCells: function (R, x, y) { return global.DG.track ? global.DG.track.trackCells(R, x, y) : 0; },
     currentRegionKey: currentRegionKey,

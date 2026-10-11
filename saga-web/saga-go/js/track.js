@@ -24,8 +24,9 @@
   function BM() { var b = global.DG.biome; return b && b.on && b.on() ? b : null; }
   function FC() { return global.DG.fieldCombat || null; }
 
-  var CELL = 60, JIT = 20, HOME_R = 300, READ_R = 10, NEED = 3, DUST_PER_PART = 4, HUNT_ORE = 2, PARTS_MAX = 3;
-  function SHARE() { return K('share', 0.55); }   // 10-08 0.42 → 0.55 — 재미표준 E 빈칸 41% × → ≈28% △
+  var CELL = 60, JIT = 20, HOME_R = 60, READ_R = 10,   // W-0174 HOME_R 300 → 60 — 첫 10분 집 둘레가 비었다
+      NEED = 3, DUST_PER_PART = 4, HUNT_ORE = 2, PARTS_MAX = 3;
+  function SHARE() { return K('share', 0.7); }   // 10-08 0.42 → 0.55 — 빈칸 41% → ≈28% · W-0174 → 0.7(진영·보물 함께 세고 대상 14 기준, 먼 곳 ≤10%)
   function AUTO_R(gps) { return gps ? 12 : 3; }
 
   var KINDS = {
@@ -110,7 +111,7 @@
   }
 
   /**
-   * 재미표준 E 측정용 — 반경 R 안 흔적 수의 평균(고향 300m 밖 표본 열여섯 곳: 1.5km·3km 고리 × 방위 여덟).
+   * 재미표준 E 측정용 — 반경 R 안 흔적 수의 평균(먼 표본 열여섯 곳: 1.5km·3km 고리 × 방위 여덟).
    * x, y 를 주면 그 자리 하나만 센다
    */
   function trackCells(R, x, y) {

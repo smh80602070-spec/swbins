@@ -396,6 +396,7 @@
 
     global.DG.auto.update(dt);          // 자동 순행 — 조작을 대신 넣어 준다
     world.update(dt);
+    if (global.DG.keys) { global.DG.keys.tick(dt); }   // W-0174 F 만나기·걸어가서 만나기·D-패드 달리기·카메라 따라 돌기
     tickSupply();
     global.DG.letter.tick();            // 다 걸은 천거장을 연다
     global.DG.buddy.tick();             // 곁을 걷는 반려가 영초를 물어 온다

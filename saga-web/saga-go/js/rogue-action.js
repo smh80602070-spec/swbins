@@ -518,12 +518,12 @@
         '<div class="ra-tell" id="ra-tell">⚠️ 강타! 원 밖으로 물러서라</div>' +
         '<div class="ra-combo" id="ra-combo"></div>' +
         '<div class="ra-pad">' +
-          (cur.raidMode ? '<button class="btn primary" id="ra-dodge" data-ra="dodge">회피</button>' : '') +
-          '<button class="btn primary" id="ra-ult" data-ra="ult" disabled>필살</button>' +
-          '<button class="btn primary" id="ra-charge" data-ra="charge" disabled>차지 일격</button>' +
-          '<button class="btn primary" id="ra-ranged" data-ra="ranged">원거리</button>' +
+          '<button class="btn primary" id="ra-dodge" data-ra="dodge">회피' + keyTag('Space') + '</button>' +
+          '<button class="btn primary" id="ra-ult" data-ra="ult" disabled>필살' + keyTag('E') + '</button>' +
+          '<button class="btn primary" id="ra-charge" data-ra="charge" disabled>차지 일격' + keyTag('J') + '</button>' +
+          '<button class="btn primary" id="ra-ranged" data-ra="ranged">원거리' + keyTag('R') + '</button>' +
           '<button class="btn ghost' + (autoOn() ? ' on' : '') + '" id="ra-auto" data-ra="auto">🤖 자동' + (autoOn() ? ' 켜짐' : '') + '</button>' +
-          '<button class="btn ghost" id="ra-flee" data-ra="flee">물러나기</button>' +
+          '<button class="btn ghost" id="ra-flee" data-ra="flee">물러나기' + keyTag('Esc') + '</button>' +
         '</div>' +
       '</div>';
   }
@@ -577,7 +577,7 @@
     if (rb) {
       /* 사거리를 안 보는 스킬이라 다가가기 전에도 눌러도 된다 — 쿨다운만 막는다 */
       rb.disabled = cur.rangedCd > 0;
-      rb.textContent = cur.rangedCd > 0 ? '원거리 (' + cur.rangedCd.toFixed(1) + ')' : '원거리';
+      rb.innerHTML = (cur.rangedCd > 0 ? '원거리 (' + cur.rangedCd.toFixed(1) + ')' : '원거리') + keyTag('R');
     }
   }
 
@@ -652,26 +652,71 @@
       });
     }
     var dg = $('[data-ra="dodge"]');
-    if (dg) {
-      dg.addEventListener('click', function () {
-        if (!cur) { return; }
-        var r = dodge(cur);
-        if (r.ok && r.just) {
-          core.emit('duel:fx', { kind: 'justdodge', mine: true });
-          if (global.DG.ui && global.DG.ui.toast) { global.DG.ui.toast('🌟 간발! 완전히 피했다'); }
-        }
-        refresh();
-      });
-    }
+    if (dg) { dg.addEventListener('click', doDodge); }
     var f = $('[data-ra="flee"]');
-    if (f) {
-      f.addEventListener('click', function () {
-        if (!cur) { return; }
-        flee(cur);
-        finish();
-      });
-    }
+    if (f) { f.addEventListener('click', doFlee); }
   }
+  function doFlee() {
+    if (!cur) { return; }
+    flee(cur);
+    finish();
+  }
+
+  /* ── 회피(W-0174) — 토벌은 저스트 회피 판정, 야생·성채·사건은 몸을 뒤로 빼는 짧은 대시 ──────
+   * 강타는 원 밖으로 실제로 벗어나야 안 맞는다 — Space 한 번에 상대 반대쪽으로 0.3초 달린다(×2.2, 약 5m).
+   * 화면 스틱과 같은 통로(`world.setStick`)라 벽·물 판정을 그대로 탄다. 스틱은 카메라 기준이라 yaw 만큼 거꾸로 돌려 넣는다.
+   * GPS 모드는 몸을 코드로 못 움직이므로 판정(토벌 저스트)만 남는다 */
+  var DASH_SEC = 0.3, dashTimer = null, lastDodge = null;
+  function dash() {
+    var W = global.DG.world, W3 = global.DG.world3d;
+    if (!W || !W.setStick || W.mode !== 'keyboard') { return false; }
+    var pos = core.save.player.pos, fp = foePos(), dx = pos.x - fp.x, dy = pos.y - fp.y, l = Math.hypot(dx, dy) || 1;
+    var yw = (W3 && W3.yaw && W3.active && W3.active()) ? W3.yaw() : 0, cs = Math.cos(yw), sn = Math.sin(yw);
+    var ux = dx / l, uy = dy / l;
+    W.setStick(ux * cs + uy * sn, -ux * sn + uy * cs, true);
+    if (dashTimer) { clearTimeout(dashTimer); }
+    dashTimer = setTimeout(function () { dashTimer = null; W.setStick(0, 0, false); }, DASH_SEC * 1000);
+    return true;
+  }
+  function doDodge() {
+    if (!cur) { return; }
+    var r = dodge(cur), moved = dash();
+    lastDodge = { at: Date.now(), raid: !!cur.raidMode, just: !!(r.ok && r.just), dash: moved };
+    if (r.ok && r.just) {
+      core.emit('duel:fx', { kind: 'justdodge', mine: true });
+      if (global.DG.ui && global.DG.ui.toast) { global.DG.ui.toast('🌟 간발! 완전히 피했다'); }
+    }
+    refresh();
+  }
+
+  /* ── 키(W-0174) — 들 싸움과 같은 뜻: Space 회피 · E 특기(필살) · R 원거리 · J 누르고 있기 = 모으기(차지가 차는 순간 나간다) · Esc 물러나기 ──
+   * 들 싸움(field-combat)은 이 싸움 중엔 키를 안 받는다(blocked) — 그래서 같은 글자를 겹치지 않고 그대로 쓴다 */
+  var KEY_ACT = { ' ': 'dodge', e: 'ult', r: 'ranged', j: 'charge', escape: 'flee' };
+  var keysBound = false, jHeld = false;
+  function keyAct(k) {
+    var a = KEY_ACT[k];
+    if (!cur || !a) { return null; }
+    if (a === 'dodge') { doDodge(); }
+    else if (a === 'ult') { doUlt(); }
+    else if (a === 'ranged') { doRanged(); }
+    else if (a === 'charge') { jHeld = true; doCharge(); }
+    else if (a === 'flee') { doFlee(); }
+    return a;
+  }
+  function bindKeys() {
+    if (keysBound || !global.addEventListener) { return; }
+    keysBound = true;
+    global.addEventListener('keydown', function (e) {
+      var tag = e.target && e.target.tagName;
+      if (!cur || e.repeat || tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') { return; }
+      var k = (e.key || '').toLowerCase();
+      if (KEY_ACT[k]) { e.preventDefault(); keyAct(k); }
+    });
+    global.addEventListener('keyup', function (e) { if ((e.key || '').toLowerCase() === 'j') { jHeld = false; } });
+    global.addEventListener('blur', function () { jHeld = false; });
+  }
+  bindKeys();
+  function keyTag(k) { return ' <b class="ra-k">' + k + '</b>'; }
 
   function emitEvents(ev) {
     for (var i = 0; i < ev.length; i++) {
@@ -710,6 +755,7 @@
       if (cur && plan.ranged) { doRanged(); }
       if (!cur) { return; }             // 위 필살·차지·원거리로 전투가 끝났으면 finish() 가 이미 정리했다
     }
+    if (jHeld && cur.charge >= CHARGE_MAX()) { doCharge(); if (!cur) { return; } }   // W-0174 J 를 쥐고 있으면 차는 순간 나간다
     var ev = tick(cur, dt, dist);
     emitEvents(ev);
     refresh();
@@ -741,6 +787,7 @@
 
   function finish() {
     if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    jHeld = false;
     if (autoOn()) { releaseStick(); }       // 자동이 밀고 있던 스틱을 놓는다
     var p = perf(cur);
     p.folded = fold(cur);
@@ -762,7 +809,9 @@
     autoOn: autoOn, setAuto: setAuto, AUTO_REACT: AUTO_REACT,
     chargeAttack: chargeAttack, ranged: ranged, dodge: dodge,
     /* 화면 층 */
-    open: open,
+    open: open, KEY_ACT: KEY_ACT, keyAct: keyAct, lastDodge: function () { return lastDodge; },
+    /** 진단 전용(W-0174) — 화면·rAF 없이 판정 상태 하나를 "싸우는 중" 으로 끼운다(null 이면 뺀다). 키가 그 상태에 닿는지 본다 */
+    _cur: function (s) { cur = s || null; if (!s) { jHeld = false; } return cur; },
     get active() { return !!cur; }
   };
 })(window);

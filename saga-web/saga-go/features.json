@@ -13,7 +13,31 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094). 시점은 #btn-tilt 실제 클릭(2D·2.5D·3D 돌기). · 2D 조작(W-0155, qc+claude 10-10): 휠 위·핀치 벌리기·+ 키 = 2D 도 가까이(옛날엔 2D 만 반대 — 2D 줌은 배율, 3D 줌은 거리라 같은 곱이 뜻이 갈렸다). 진단 go.world 휠 방향."
+  "note": "D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094). 시점은 #btn-tilt 실제 클릭(2D·2.5D·3D 돌기). · 2D 조작(W-0155, qc+claude 10-10): 휠 위·핀치 벌리기·+ 키 = 2D 도 가까이(옛날엔 2D 만 반대 — 2D 줌은 배율, 3D 줌은 거리라 같은 곱이 뜻이 갈렸다). 진단 go.world 휠 방향. · 조작(W-0174, qc+claude 10-11): 46m 밖 대상을 누르면 걸어가서 닿으면 저절로 만난다(walk:meet → keys.js) · 대상 최소 거리 70→25m·최대 10→14."
+ },
+ {
+  "id": "go.controls",
+  "name": "조작 한 벌 — 포획·사건 싸움 키(Space 회피·E 필살·R 원거리·J 모으기·Esc), F 만나기(들 대상·역참·성채), 걸어가서 닿으면 만나기, 터치 달리기(조이스틱 85%↑·D-패드 두 번 톡), 3D 카메라 따라 돌기, 이야기 자동 걷기 T",
+  "files": [
+   "js/keys.js",
+   "js/rogue-action.js",
+   "js/world.js",
+   "js/ui.js",
+   "js/story.js"
+  ],
+  "tests": [
+   "조작 ① 포획·사건 싸움 키(W-0174) — 싸우는 중 Space keydown = 회피(토벌 저스트 판정 + 몸 빼기), E 필살·R 원거리·J 모으기·Esc 물러나기",
+   "조작 ② F 만나기(W-0174) — 46m 안에 아무것도 없으면 F 는 아무 일 없음, 30m 앞 대상이 있으면 그 만남을 연다",
+   "조작 ③ 걸어가서 만나기(W-0174) — 60m 밖 대상을 누르면(walk:meet) 걸어가다 46m 안에서 두 번째 누름 없이 연다 · 다른 데를 누르면 풀린다",
+   "조작 ④ 터치 달리기(W-0174) — 조이스틱을 90% 밀면 run, 50% 면 걷기(ui 조이스틱이 keys.joyRun 을 부른다) · D-패드 두 번 톡 = 달리기",
+   "조작 카메라 따라 돌기(W-0174) — 진행 방향 뒤로 초당 90° 까지, 이미 맞으면 0, 카메라 쪽으로 걸어오면 안 돈다 · 끄면 꺼짐"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0174",
+  "since": "2026-10-11",
+  "note": "D2(qc+claude 2026-10-11): 점검 saga-web/tools/playcheck/go-capture-shot.mjs Read — 포획 싸움 단추 셋씩 두 줄에 Space·E·J·R·Esc 글자 ○, 실제 Space 키 → 몸 뺌 3.5~8.8m ○, Esc → 싸움 닫힘 ○. 손잡이 world.camFollow(0 = 끔)·⚙️ \"카메라 따라 돌기\"·track.share 0.7."
  },
  {
   "id": "go.geo",
@@ -391,7 +415,7 @@
  },
  {
   "id": "go.event",
-  "name": "사건 11종(300m·62%, 평균 484m) / 걷기 흥",
+  "name": "사건 11종(180m·62%, 평균 290m) / 걷기 흥",
   "files": [
    "js/event.js",
    "js/ambient.js"
@@ -413,11 +437,11 @@
   "level": "D2",
   "verified": null,
   "fun": {
-   "E": "×"
+   "E": "○"
   },
   "ticket": null,
   "since": "2026-09-30",
-  "note": "D2: saga-web/tools/playcheck/pw-go-close1.mjs 8/8 — results/pw-go-close1.json(W-0087)."
+  "note": "D2: saga-web/tools/playcheck/pw-go-close1.mjs 8/8 — results/pw-go-close1.json(W-0087). · W-0174: 재미표준 E ○ — 반경 320m 60m 칸 89개에 집 둘레 ≈85.9(흔적 57·진영 7·보물 6) 빈칸 4% · 먼 곳 ≈82.1 빈칸 9%(대상 14·흔적 몫 0.7·고향 HOME_R 60·사건 stepM 180)."
  },
  {
   "id": "go.npc",

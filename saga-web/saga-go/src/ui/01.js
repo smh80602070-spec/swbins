@@ -562,7 +562,7 @@
           '<small style="color:' + rar.color + '">' + rar.name + ' ' + rar.label + ' · ' +
           (s.kind === 'hero' ? '등용 대상' : '포획 대상') + ' · ' + Math.round(n.dist) + 'm</small></div>' +
         (n.inRange
-          ? '<button class="btn primary" data-act="meet">만난다</button>'
+          ? '<button class="btn primary" data-act="meet">만난다 <b class="ra-k">F</b></button>'
           : approachBtn(s.x, s.y)) +
       '</div>';
   }
@@ -581,7 +581,7 @@
             '<small style="color:#e0837a">적도 ' + held.name + ' 점거 · ' +
             Math.round(ns.dist) + 'm</small></div>' +
           (ns.inRange
-            ? '<button class="btn primary" data-act="visit">맞선다</button>'
+            ? '<button class="btn primary" data-act="visit">맞선다 <b class="ra-k">F</b></button>'
             : approachBtn(st.x, st.y)) +
         '</div>';
     }
@@ -589,7 +589,7 @@
     var btn = !stt.ready
       ? '<button class="btn ghost" disabled>' + stn.leftLabel(stt.left) + '</button>'
       : (ns.inRange
-          ? '<button class="btn primary" data-act="visit">들른다</button>'
+          ? '<button class="btn primary" data-act="visit">들른다 <b class="ra-k">F</b></button>'
           : approachBtn(st.x, st.y));
     return '<div class="near-card"' + (stt.ready ? '' : ' style="opacity:.62"') + '>' +
         '<div class="near-ico" style="border-color:' + (stt.ready ? '#e8c15a' : 'rgba(150,155,165,.5)') + '">🏮</div>' +

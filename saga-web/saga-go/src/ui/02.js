@@ -690,7 +690,7 @@
       var kx = len > JOY_R ? dx / len * JOY_R : dx, ky = len > JOY_R ? dy / len * JOY_R : dy;
       knobAt(kx, ky);
       if (len < JOY_DEAD) { W.setStick(0, 0, false); return; }
-      W.setStick(dx / len, dy / len, false);
+      W.setStick(dx / len, dy / len, !!(global.DG.keys && global.DG.keys.joyRun(len, JOY_R)));   // W-0174 끝까지(85%↑) 밀면 달린다(Shift 와 같은 ×2.2)
       e.preventDefault();
     });
     function release(e) { if (e.pointerId === joyId) { reset(); } }
@@ -703,7 +703,7 @@
       var dx = (held.left ? -1 : 0) + (held.right ? 1 : 0);
       var dy = (held.up ? -1 : 0) + (held.down ? 1 : 0);
       var len = Math.hypot(dx, dy);
-      W.setStick(len ? dx / len : 0, len ? dy / len : 0, false);
+      W.setStick(len ? dx / len : 0, len ? dy / len : 0, !!(len && global.DG.keys && global.DG.keys.padRun()));   // W-0174 두 번 톡 = 달리기(keys.js)
     }
     var btns = padEl.querySelectorAll('button[data-dir]');
     for (var pi = 0; pi < btns.length; pi++) {

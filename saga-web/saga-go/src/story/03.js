@@ -531,7 +531,7 @@
   /** O 목록 — 장마다 끝남·지금(단계 ✓)·잠김 */
   function listHtml() {
     var s = sv(), out = '<div class="st-box"><div class="st-head"><b class="st-who">📖 이야기 임무</b><span class="st-head-btns">' +
-      (canAutoWalk() ? '<button class="btn ghost" data-st-go="1">' + (autoWalk ? '⏹ 자동 이동 끄기' : '🧭 자동 이동') + '</button>' : '') +
+      (canAutoWalk() ? '<button class="btn ghost" data-st-go="1">' + (autoWalk ? '⏹ 자동 이동 끄기' : '🧭 자동 이동') + ' <b class="ra-k">T</b></button>' : '') +
       '<button class="btn ghost" data-st-close="1" aria-label="닫기">✕</button></span></div><div class="st-scroll">';
     var doneN = 0, hidLock = 0;
     for (var c = 0; c < CHAPTERS.length; c++) {
@@ -611,7 +611,7 @@
     if (!t && autoWalk && !talk) { setAutoWalk(false); }
     if (t !== lastGo) {
       lastGo = t; b.textContent = t; b.style.display = t ? '' : 'none';
-      b.title = autoWalk ? '자동 이동 끄기' : '임무 표식까지 자동 이동';
+      b.title = autoWalk ? '자동 이동 끄기 (T)' : '임무 표식까지 자동 이동 (T)';
       b.classList.toggle('on', autoWalk);
     }
   }
@@ -795,7 +795,7 @@
       }
       if (k === 'f' && nearTalk()) { e.preventDefault(); talkStart(); }
       else if (k === 'o') { toggleList(); }
-      else if (k === 'g' && canAutoWalk() && step()) { setAutoWalk(!autoWalk); }
+      else if (k === 't' && canAutoWalk() && step()) { setAutoWalk(!autoWalk); }   // W-0174 G → T (G 는 요리 창)
       else if (k === 'escape' && listOpen) { toggleList(false); }
     });
   }

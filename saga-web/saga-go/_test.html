@@ -174,6 +174,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/track.js"></script>
 <script src="js/worldquest.js"></script>
 <script src="js/story.js"></script>
+<script src="js/keys.js"></script>
 <script src="js/skyisle.js"></script>
 <script src="js/talkface.js"></script>
 <script src="js/formation.js"></script>
@@ -8828,6 +8829,80 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var r = [a.kind === 'arc' && Math.abs(a.tilt) < 0.3, b.dir === -1 && b.tilt < 0, Math.abs(c.tilt - Math.PI / 2) < 1e-9 && c.r > a.r, k.r > a.r && k.w > a.w, p.kind === 'thrust' && p.r > S3.arcSpec('polearm', 0).r, q.kind === null, off === null];
       return r.every(Boolean) && '검 가로·반대·세로 · 큰날 넓게 · 창 찌르기 · 활 없음' || '실패 ' + r.join(',');
     });
+    /* ── W-0174 조작 한 벌 — 진단 다섯(①~④ 여기, ⑤ 재미표준 E 는 재미 표준 절) ── */
+    function w174Clear(fn) {
+      /* 역참·성채·말 걸 사람·흔적·낚시가 46m 안에 없는 자리로 옮겨 대상 목록을 비운 채 fn 을 돌리고 되돌린다 */
+      var K = DG.keys, W = DG.world, p = DG.core.save.player.pos, ox = p.x, oy = p.y, sp = W.spawns, keep = sp.slice(), got = [], i;
+      K._resetForTest(); K._setEmit(function (ev, it) { got.push([ev, it]); }); K.tick(0);
+      try {
+        sp.length = 0;
+        for (i = 0; i < 60; i++) {
+          p.x = 90000 + i * 173; p.y = -70000 + i * 97;
+          var ns = W.nearestStation(), nf = W.nearestFort();
+          if (!(ns && ns.inRange) && !(nf && nf.inRange) && !K.fTaken()) { break; }
+        }
+        return fn(got, p, sp);
+      } finally {
+        p.x = ox; p.y = oy; sp.length = 0; keep.forEach(function (s) { sp.push(s); });
+        K._setEmit(null); K._resetForTest(); W.walkTo(ox, oy); if (W.setStick) { W.setStick(0, 0, false); }
+      }
+    }
+    function w174Fake(p, dx) { var s = DG.world._makeSpawn(); s.x = p.x + dx; s.y = p.y; return s; }
+    t('조작 ① 포획·사건 싸움 키(W-0174) — 싸우는 중 Space keydown = 회피(토벌 저스트 판정 + 몸 빼기), E 필살·R 원거리·J 모으기·Esc 물러나기', function () {
+      var RA = DG.rogueAction, W = DG.world, s = RA.create({ foeHp: 1e9, myAtk: 1, myDef: 1e9, raid: true, timeSec: 9999 }), before = RA.lastDodge(), ld;
+      RA._cur(s);
+      try {
+        window.dispatchEvent(new KeyboardEvent('keydown', { key: ' ' }));
+        window.dispatchEvent(new KeyboardEvent('keyup', { key: ' ' }));
+        ld = RA.lastDodge();
+      } finally { RA._cur(null); if (W.setStick) { W.setStick(0, 0, false); } }
+      var KA = RA.KEY_ACT, ok = [!!ld && ld !== before && ld.raid === true, KA.e === 'ult' && KA.r === 'ranged' && KA.j === 'charge' && KA.escape === 'flee', RA.keyAct(' ') === null];
+      return ok.every(Boolean) && ('Space → 회피(토벌' + (ld.dash ? ' · 몸 뺌' : ' · GPS 라 판정만') + ') · E·R·J·Esc · 싸움 밖에선 키 무시') || ('실패 ' + ok.join(','));
+    });
+    t('조작 ② F 만나기(W-0174) — 46m 안에 아무것도 없으면 F 는 아무 일 없음, 30m 앞 대상이 있으면 그 만남을 연다', function () {
+      return w174Clear(function (got, p, sp) {
+        if (DG.keys.fTaken()) { return '실패 — 빈 자리를 못 찾음'; }
+        window.dispatchEvent(new KeyboardEvent('keydown', { key: 'f' })); window.dispatchEvent(new KeyboardEvent('keyup', { key: 'f' }));
+        var none = got.length === 0, fake = w174Fake(p, 30);
+        sp.push(fake);
+        window.dispatchEvent(new KeyboardEvent('keydown', { key: 'f' })); window.dispatchEvent(new KeyboardEvent('keyup', { key: 'f' }));
+        var hit = got.length === 1 && got[0][0] === 'encounter:request' && got[0][1] === fake;
+        return none && hit && ('빈 자리 F → 없음 · 30m 대상 F → ' + got[0][0]) || ('실패 none=' + none + ' got=' + got.length);
+      });
+    });
+    t('조작 ③ 걸어가서 만나기(W-0174) — 60m 밖 대상을 누르면(walk:meet) 걸어가다 46m 안에서 두 번째 누름 없이 연다 · 다른 데를 누르면 풀린다', function () {
+      return w174Clear(function (got, p, sp) {
+        var K = DG.keys, W = DG.world, C = DG.core, fake = w174Fake(p, 60), other = w174Fake(p, -70);
+        sp.push(fake); sp.push(other);
+        W.walkTo(fake.x, fake.y); C.emit('walk:meet', { ev: 'encounter:request', it: fake });   // world.onClick 이 하는 일 그대로
+        var far = K.poll() === null && got.length === 0;
+        p.x += 20;                                                                              // 40m 까지 걸었다
+        var met = K.poll() === 'encounter:request' && got.length === 1 && got[0][1] === fake;
+        W.walkTo(other.x, other.y); C.emit('walk:meet', { ev: 'encounter:request', it: other });
+        W.walkTo(p.x, p.y + 5);                                                                 // 가는 길에 다른 데를 눌렀다
+        p.x = other.x + 10;
+        var cancel = K.poll() === null && K.pending() === null && got.length === 1;
+        return far && met && cancel && '60m → 안 엶 · 40m → 엶(한 번) · 딴 데 누르면 풀림' || ('실패 ' + [far, met, cancel].join(','));
+      });
+    });
+    t('조작 ④ 터치 달리기(W-0174) — 조이스틱을 90% 밀면 run, 50% 면 걷기(ui 조이스틱이 keys.joyRun 을 부른다) · D-패드 두 번 톡 = 달리기', function () {
+      var K = DG.keys, src = funSrc('js/ui.js');
+      var wired = src.indexOf('keys.joyRun(len, JOY_R)') > 0 && src.indexOf('keys.padRun()') > 0;
+      var fast = K.joyRun(46 * 0.9, 46), slow = K.joyRun(46 * 0.5, 46);
+      K._resetForTest();
+      var one = K.padTap('up', 1000); K.padUp();
+      var two = K.padTap('up', 1200); K.padUp();
+      var late = K.padTap('up', 3000); K.padUp(); K._resetForTest();
+      var ok = [wired, fast === true, slow === false, one === false, two === true, late === false];
+      return ok.every(Boolean) && '조이스틱 90% 달림 · 50% 걷기 · 패드 두 번 톡 달림(' + K.DOUBLE_MS + 'ms 안) · ui 배선 ○' || ('실패 ' + ok.join(','));
+    });
+    t('조작 카메라 따라 돌기(W-0174) — 진행 방향 뒤로 초당 90° 까지, 이미 맞으면 0, 카메라 쪽으로 걸어오면 안 돈다 · 끄면 꺼짐', function () {
+      var K = DG.keys, st = DG.core.save.settings, keep = st.camFollow, dt = 0.1, max = K.FOLLOW_RATE * dt;
+      var right = K.followStep(0, 1, 0, dt), ahead = K.followStep(0, 0, -1, dt), back = K.followStep(0, 0, 1, dt), small = K.followStep(0, 0.05, -1, dt);
+      st.camFollow = false; var off = K.followOn(); st.camFollow = keep;
+      var ok = [Math.abs(right - max) < 1e-9, ahead === 0, back === 0, small > 0 && small < max, off === false];
+      return ok.every(Boolean) && ('오른쪽으로 걸으면 ' + (right * 180 / Math.PI).toFixed(0) + '°/0.1초 · 정면 0 · 뒤로 0 · 끄기 ○') || ('실패 ' + ok.join(','));
+    });
     t('효과음 — 자체 효과음 sx:<이름> 은 shared/audio/sfx 로 가고, 마지막에 휘두른 무기로 맞는 소리를 고른다(모르는 무기는 그대로) (W-0170)', function () {
       var A = DG.audio, r = DG.assets3d && DG.assets3d.root ? DG.assets3d.root() : null, u = A.sharedUrl('sx:sfx_crit');
       var w = A.weapon('polearm'), w2 = A.weapon('fan'); A.weapon('sword');
@@ -15990,7 +16065,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var gm = JSON.parse(k.gm); if (gm) { s.gearMat = gm; } else { delete s.gearMat; }
     }
 
-    t('go.track: 흔적 ① 자리 결정성 — 같은 칸 두 번 = 같음·고향 300m 안 0·물 위 0', function () {
+    t('go.track: 흔적 ① 자리 결정성 — 같은 칸 두 번 = 같음·고향 60m(W-0174) 안 0·물 위 0', function () {
       var TK = DG.track, terr = tkTerr(), i, j, n = 0, same = true, home = 0, wet = 0;
       for (j = -40; j <= 40; j += 2) { for (i = -40; i <= 40; i += 2) {
         var a = TK.cellAt(i, j, terr), b = TK.cellAt(i, j, terr);
@@ -16074,15 +16149,51 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         ' → 빈칸 ' + Math.round(empty * 100) + '%(1차 목표 ≤50%) · 흔적 몫 ' + DG.track.share());
     });
 
+    /** 재미표준 E 한 자리 — 반경 320m 안 상호작용 수(대상·역참 기대값 + 그 자리의 흔적·들 진영·보물). W-0174 진영·보물 더함 */
+    function funE(x, y) {
+      var R = 320, cells = Math.PI * R * R / 3600, FC = DG.fieldCombat, TR = DG.treasure, terr = function (tx, ty) { return W.terrainAt(tx, ty); }, o = {};
+      o.spawns = W.MAX_SPAWNS || 0;                         // 기본값 — 향(+6)·궂은 날(−3)은 빼고 잰다
+      o.stations = 2 * Math.PI * R * R / (576 * 576);      // 역참: 구역(576m)마다 2
+      o.tracks = DG.track ? DG.track.trackCells(R, x, y) : 0;
+      o.camps = 0;
+      if (FC && FC.campAt) {
+        for (var cy = Math.floor((y - R) / 160); cy <= Math.floor((y + R) / 160); cy++) {
+          for (var cx = Math.floor((x - R) / 160); cx <= Math.floor((x + R) / 160); cx++) {
+            var c = FC.campAt(cx, cy, terr);
+            if (c && Math.hypot(c.x - x, c.y - y) <= R) { o.camps++; }
+          }
+        }
+      }
+      var tn = TR && TR.near ? TR.near(x, y, R) : null;
+      o.treasure = tn ? tn.chests.length + tn.orbs.length : 0;
+      o.n = o.spawns + o.stations + o.tracks + o.camps + o.treasure;
+      o.empty = Math.max(0, 1 - o.n / cells); o.cells = cells;
+      return o;
+    }
+    /** 집 원점 + 먼 표본 열여섯(1.5km·3km 고리 × 방위 여덟 — track.trackCells 와 같은 자리)의 평균 */
+    function funEBoth() {
+      var home = funE(0, 0), far = { n: 0, tracks: 0, camps: 0, treasure: 0, empty: 0 }, ring, a, k = 0;
+      for (ring = 1; ring <= 2; ring++) {
+        for (a = 0; a < 8; a++) {
+          var ang = a * Math.PI / 4 + ring * 0.3, e = funE(Math.cos(ang) * 1500 * ring, Math.sin(ang) * 1500 * ring);
+          far.n += e.n; far.tracks += e.tracks; far.camps += e.camps; far.treasure += e.treasure; far.empty += e.empty; k++;
+        }
+      }
+      far.n /= k; far.tracks /= k; far.camps /= k; far.treasure /= k; far.empty /= k; far.cells = home.cells;
+      return { home: home, far: far };
+    }
+    function funELine(tag, e) {
+      return tag + ' ≈' + e.n.toFixed(1) + '개(흔적 ' + e.tracks.toFixed(1) + '·진영 ' + e.camps.toFixed(1) + '·보물 ' + e.treasure.toFixed(1) + ') 빈칸 ≈' + Math.round(e.empty * 100) + '%';
+    }
     t('재미표준 E 발견 밀도(측정)', function () {
-      var R = 320, cell = 60, cells = Math.PI * R * R / (cell * cell);
-      var spawns = W.maxSpawns ? W.maxSpawns() : 0;
-      var stations = 2 * Math.PI * R * R / (576 * 576);   // 역참: 구역(576m)마다 2
-      var tracks = W.trackCells ? W.trackCells(R) : 0;    // ㉑ 흔적(track.js) — 고향 300m 밖 표본 평균
-      var n = spawns + stations + tracks, empty = Math.max(0, 1 - n / cells);
-      var ev = DG.core.tuned('event.stepM', 300) / DG.core.tuned('event.chance', 0.62);
-      return funMark(empty <= 0.1, empty <= 0.3) + '60m 칸 ' + Math.round(cells) + '개에 상호작용 ≈' + n.toFixed(1) + '개 → 빈칸 ≈' + Math.round(empty * 100) +
-        '%(규격 ≤10%) · 흔적 ' + tracks.toFixed(1) + ' · 사건 평균 ' + Math.round(ev) + 'm';
+      var b = funEBoth(), worst = Math.max(b.home.empty, b.far.empty);
+      var ev = DG.core.tuned('event.stepM', 180) / DG.core.tuned('event.chance', 0.62);
+      return funMark(worst <= 0.1, worst <= 0.3) + '60m 칸 ' + Math.round(b.home.cells) + '개(반경 320m) — ' + funELine('집 둘레', b.home) + ' · ' + funELine('먼 곳', b.far) +
+        ' · 대상 ' + W.MAX_SPAWNS + ' · 사건 평균 ' + Math.round(ev) + 'm';
+    });
+    t('조작 ⑤ 재미표준 E 집 둘레·먼 곳 둘 다 빈칸 ≤10%(W-0174 — 첫 10분 집 둘레 300m 가 비었다)', function () {
+      var b = funEBoth(), ok = b.home.empty <= 0.1 && b.far.empty <= 0.1;
+      return ok && ('○ ' + funELine('집', b.home) + ' · ' + funELine('먼 곳', b.far)) || ('실패 ' + funELine('집', b.home) + ' · ' + funELine('먼 곳', b.far));
     });
 
     t('재미표준 F 실패와 회복(측정)', function () {
