@@ -226,6 +226,14 @@ namespace Saga.Dungeon.World
             BuildRoomContent(FirstRoomKind());
         }
 
+        /// <summary>tasks U-0092 은총(웹 W-0102 — 은총 = 층 들머리) — 이 층을 첫 방부터 다시 짓고(적 다시 섬) 주인공을 들머리에 세운다.
+        /// 들머리 층(2)보다 앞이면 방만 옮기지 않고 들머리 자리로만.</summary>
+        public void RestartFloorAtEntry()
+        {
+            if (_floor >= 2) JumpToFloor(_floor);
+            RepositionPlayerToEntry();
+        }
+
         /// <summary>"방 셸 — 티어별 마모 3단" — `_roomBuilder`가 없는 PC(에셋
         /// 미확보로 PBR 재질을 못 찾아 primitive 색상 경로로 빠진 경우)에도
         /// `SetWearTier()`가 안전하게 아무 일도 안 하니 그냥 부른다.</summary>
@@ -401,7 +409,11 @@ namespace Saga.Dungeon.World
                 case DungeonLandmarkData.LordKind: SpawnLord(); break;
                 default: SpawnFight(); break;
             }
+            RoomBuilt?.Invoke(_floor, _roomIndex);
         }
+
+        /// <summary>tasks U-0092 — 방 하나를 다 지은 뒤(층·방 번호). 은총에서 다시 선 뒤 유품을 그 방에 다시 세우는 데 쓴다.</summary>
+        public event System.Action<int, int> RoomBuilt;
 
         /// <summary>진단 — 지금 층에 그 종류 방을 바로 짓는다(문 고르기 없이).</summary>
         public void BuildRoomForTest(string kind) => BuildRoomContent(kind);

@@ -607,7 +607,7 @@ namespace Saga.Dungeon.World
                 Saga.Dungeon.Player.PlayerController.ReportDodgedStrike();
                 return;
             }
-            HeroState.TakeDamage(dmg);
+            HeroState.TakeDamage(dmg, DisplayName, DungeonLocalization.T("grave.how_strike", "근접 타격"));   // tasks U-0092 사망 카드 "누구 — 무슨 피해"
         }
 
         private void EndWindup()

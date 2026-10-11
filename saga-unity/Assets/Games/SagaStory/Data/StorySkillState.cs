@@ -35,7 +35,19 @@ namespace Saga.Story.Data
 
         public static int LevelOf(string key) => key != null && Levels.TryGetValue(key, out var lv) ? lv : 0;
 
-        public static int SpTotal => Mathf.Max(0, (StoryJobState.Level - 1) * SpPerLevel);
+        // tasks U-0093(웹 W-0104 "레벨업 무예 3택") — SP 는 <see cref="SpCutLv"/> 레벨까지만 쌓이고, 그 뒤 레벨마다 **서로 다른 유파 무예 셋 중 하나 +1**
+        // (<see cref="Pick"/>, 고른 몫은 <see cref="FreeLevels"/> 로 따로 세어 SP 에서 안 뺀다) 또는 거절(<see cref="Decline"/> = 강화 점수 +1).
+        // 고를 무예가 없는 레벨은 예전처럼 SP 2(<see cref="BonusSp"/>). SpCutLv 0 = 3택 꺼짐(옛 진단·세이브 없이 상태만 짠 경우 — 예전 그대로).
+        // 세이브는 새 판이면 1, 옛 세이브(칸 없음)는 **불러올 때의 레벨** → 옛 SP·찍은 무예가 한 점도 안 변한다(StorySaveState).
+        public static int SpCutLv { get; private set; }
+        public static int FreeLevels { get; private set; }
+        public static int BonusSp { get; private set; }
+        /// <summary>아직 안 고른 3택 장 수(레벨 하나에 한 장).</summary>
+        public static int PendingPicks { get; private set; }
+        /// <summary>3택 장이 생기거나 줄 때 — 3택 창이 듣는다.</summary>
+        public static event Action PicksChanged;
+
+        public static int SpTotal => Mathf.Max(0, (Mathf.Min(StoryJobState.Level, SpCutLv > 0 ? SpCutLv : StoryJobState.Level) - 1) * SpPerLevel + BonusSp);
 
         public static int SpSpent
         {
@@ -43,7 +55,7 @@ namespace Saga.Story.Data
             {
                 int sum = 0;
                 foreach (var kv in Levels) sum += kv.Value;
-                return sum;
+                return Mathf.Max(0, sum - FreeLevels);
             }
         }
 
@@ -68,6 +80,81 @@ namespace Saga.Story.Data
             Levels[key] = LevelOf(key) + 1;
             Changed?.Invoke();
             return true;
+        }
+
+        /// <summary>3택으로 올릴 수 있는가 — <see cref="CanRaise"/> 에서 SP 검사만 뺀 것(이유 키, 되면 null).</summary>
+        public static string CanPick(string key)
+        {
+            var sk = StorySkillData.Get(key);
+            if (sk == null) return "skill.why_unknown";
+            if (!StoryJobState.HasJob || !StoryJobState.InChain(sk.Job)) return "skill.why_other_job";
+            if (LevelOf(key) >= sk.Max) return "skill.why_maxed";
+            if (sk.Need != null && LevelOf(sk.Need) < sk.NeedLv) return "skill.why_need";
+            return null;
+        }
+
+        /// <summary>3택 — 올릴 수 있는 무예 중 **유파가 서로 다른** 셋(모자라면 둘·하나·없음, 규격 D "같은 축 둘 금지"). 유파 없는 무예는 제 키가 유파.</summary>
+        public static List<StorySkillData.Skill> Offer3(System.Random rng = null)
+        {
+            var pool = new List<StorySkillData.Skill>();
+            foreach (var sk in StorySkillData.All) if (CanPick(sk.Key) == null) pool.Add(sk);
+            for (int i = pool.Count - 1; i > 0; i--)
+            {
+                int j = rng != null ? rng.Next(i + 1) : UnityEngine.Random.Range(0, i + 1);
+                (pool[i], pool[j]) = (pool[j], pool[i]);
+            }
+            var offer = new List<StorySkillData.Skill>();
+            var schools = new HashSet<string>();
+            foreach (var sk in pool)
+            {
+                if (offer.Count >= 3) break;
+                if (schools.Add(string.IsNullOrEmpty(sk.School) ? sk.Key : sk.School)) offer.Add(sk);
+            }
+            return offer;
+        }
+
+        /// <summary>레벨이 오를 때(`StoryJobState.GainExp`) — 3택이 켜져 있고 문턱 위면 장 하나, 고를 것이 없으면 SP 2.</summary>
+        public static void OnLevelUp(int level)
+        {
+            if (SpCutLv <= 0 || level <= SpCutLv) return;
+            if (Offer3().Count == 0) BonusSp += SpPerLevel;
+            else PendingPicks++;
+            Changed?.Invoke();
+            PicksChanged?.Invoke();
+        }
+
+        /// <summary>장 하나로 그 무예 +1(SP 안 씀). 장이 없거나 못 올리면 false.</summary>
+        public static bool Pick(string key)
+        {
+            if (PendingPicks <= 0 || CanPick(key) != null) return false;
+            Levels[key] = LevelOf(key) + 1;
+            FreeLevels++;
+            PendingPicks--;
+            Changed?.Invoke();
+            PicksChanged?.Invoke();
+            return true;
+        }
+
+        /// <summary>장 하나를 거절 — 강화 점수(SP) +1. 고를 것이 아예 없어진 장은 <paramref name="nothingLeft"/> 로 SP 2.</summary>
+        public static bool Decline(bool nothingLeft = false)
+        {
+            if (PendingPicks <= 0) return false;
+            BonusSp += nothingLeft ? SpPerLevel : 1;
+            PendingPicks--;
+            Changed?.Invoke();
+            PicksChanged?.Invoke();
+            return true;
+        }
+
+        /// <summary>세이브 로드·진단 — 3택 몫. <paramref name="cutLv"/> 0 이면 3택 끔.</summary>
+        public static void RestorePicks(int cutLv, int free, int bonus, int pending)
+        {
+            SpCutLv = Mathf.Max(0, cutLv);
+            FreeLevels = Mathf.Max(0, free);
+            BonusSp = Mathf.Max(0, bonus);
+            PendingPicks = Mathf.Max(0, pending);
+            Changed?.Invoke();
+            PicksChanged?.Invoke();
         }
 
         public static float MulOf(StorySkillData.Skill sk) =>
@@ -213,6 +300,7 @@ namespace Saga.Story.Data
         {
             Levels.Clear();
             Pins.Clear();
+            SpCutLv = 0; FreeLevels = 0; BonusSp = 0; PendingPicks = 0;   // tasks U-0093 — 3택 몫은 RestorePicks 가 다시 채운다(옛 진단은 꺼진 채)
             if (pins != null)
             {
                 foreach (var key in pins)

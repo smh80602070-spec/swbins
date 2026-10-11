@@ -146,6 +146,8 @@ namespace Saga.EditorTools
                     _playerController = playerGo != null ? playerGo.GetComponent<CharacterController>() : null;
                     _storyController = playerGo != null ? playerGo.GetComponent<StoryPlayerController>() : null;
                     _ropeGo = GameObject.Find("Rope");
+                    // tasks U-0093 — 세이브 없이 뜬 새 판은 무예 3택이 켜진다(레벨업마다 창·피해 막기). 옛 단계 진단은 SP 판 그대로 돌게 끈다(3택은 PlaytestStoryPick3 몫).
+                    StorySkillState.RestorePicks(0, 0, 0, 0);
                     _rope = _ropeGo != null ? _ropeGo.GetComponent<StoryRope>() : null;
 
                     if (_player == null || _storyController == null || _rope == null || StoryEnemy.All.Count != ExpectedEnemyCount + 1)
@@ -196,6 +198,7 @@ namespace Saga.EditorTools
                     if (!PlaytestStoryMount.Run()) { Fail(); return; } // PLAN.md 109-15 탈것·비행 — 레벨·직업·체력·탈것·자리를 되돌린다.
                     if (!PlaytestStoryScenario.Run()) { Fail(); return; } // PLAN.md 109-16 시나리오 — 레벨·직업·사명·비경 조각·자리를 되돌린다.
                     if (!PlaytestStoryRound.Run()) { Fail(); return; } // tasks U-0024 회차 — 회차·세이브·최고 기록을 되돌린다.
+                    if (!PlaytestStoryPick3.Run()) { Fail(); return; } // tasks U-0093 무예 3택·판 등급 — 세이브 JSON·3택 몫을 되돌린다.
                     _enemyIndex = 0;
                     _phase = Phase.TalkNpc;
                     break;

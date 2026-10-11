@@ -70,6 +70,10 @@ namespace Saga.Dungeon.Data
         /// <summary>PLAN.md 109-10-3 시련 동안 켠다 — 쓰러져도 유품(금)을 떨구지 않는다.</summary>
         public static bool GraveSuppressed { get; set; }
 
+        /// <summary>tasks U-0092(웹 W-0102 `run.lastHit`) — 마지막으로 체력을 깎은 것(누구·무슨 피해). 출처를 안 넘긴 옛 호출이면 null — 사망 카드가 "알 수 없는 것" 으로 쓴다.</summary>
+        public static string LastHitWho { get; private set; }
+        public static string LastHitHow { get; private set; }
+
         public static event Action<int> LeveledUp;
 
         /// <summary>PLAN.md 101-2 5.2 "유품" — 인자는 <see cref="DropGoldAsGrave"/>가
@@ -140,9 +144,11 @@ namespace Saga.Dungeon.Data
 
         /// <summary>PLAN.md 101-2 5.1 "축복 3택" 수(守) 축 — <see cref="BlessingState.DefMultiplier"/>로
         /// 나눈다(클수록 덜 맞는다, PerkState.cs의 def 곱과 같은 방향).</summary>
-        public static void TakeDamage(float amount)
+        public static void TakeDamage(float amount, string who = null, string how = null)
         {
             if (Invulnerable || DamageHold > 0 || amount <= 0f || Hp <= 0) return;
+            LastHitWho = who;
+            LastHitHow = how;
             Hp = Math.Max(0, Hp - RoundInt(amount / BlessingState.DefMultiplier));
             Hurt?.Invoke();
             if (Hp <= 0) Died?.Invoke(DropGoldAsGrave());

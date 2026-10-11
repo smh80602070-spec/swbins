@@ -28,7 +28,11 @@ namespace Saga.Core
 
         private GameObject _panel;
         private TextMeshProUGUI _label;
+        private Button _action;
+        private System.Action _onAction;
         private float _closeTimer = -1f;
+        /// <summary>단추 달린 카드가 스스로 닫히기까지(누를 틈을 넉넉히 — tasks U-0092).</summary>
+        public const float ActionCloseSeconds = 15f;
 
         public bool IsShowing => _panel != null && _panel.activeSelf;
 
@@ -78,6 +82,12 @@ namespace Saga.Core
             _label.textWrappingMode = TextWrappingModes.Normal;
             _label.text = "";
 
+            // tasks U-0092 — 단추 하나(있을 때만 보임). 누르면 카드를 닫고 콜백.
+            _action = Saga.Core.SagaUi.NewButton(_panel.transform, "Action", "", new Vector2(0.5f, 0f), new Vector2(0f, 56f),
+                new Vector2(420f, 72f), Saga.Core.SagaUi.ButtonAccent, 30f);
+            _action.onClick.AddListener(PressAction);
+            _action.gameObject.SetActive(false);
+
             _panel.SetActive(false);
         }
 
@@ -92,11 +102,50 @@ namespace Saga.Core
             _panel.SetActive(true);
             _closeTimer = AutoCloseSeconds;
             SetDepthOfField(true);
+            SetAction(null, null);
+        }
+
+        /// <summary>tasks U-0092 — <see cref="Show(string, string[])"/> 에 단추 하나를 더한 판(예: 사가나락 「은총에서 다시」).
+        /// <see cref="ActionCloseSeconds"/> 뒤 스스로 닫힌다(누르지 않으면 콜백 없음).</summary>
+        public void Show(string title, string actionLabel, System.Action onAction, params string[] lines)
+        {
+            Show(title, lines);
+            if (_panel == null) return;
+            SetAction(actionLabel, onAction);
+            if (onAction != null) _closeTimer = ActionCloseSeconds;
+        }
+
+        /// <summary>단추가 떠 있는가(진단용).</summary>
+        public bool HasAction => _action != null && _action.gameObject.activeSelf;
+        public string ActionLabel => HasAction ? Saga.Core.SagaUi.Label(_action) : null;
+        public string Text => _label != null ? _label.text : "";
+
+        /// <summary>단추를 누른 것과 같다(진단·키 입력용).</summary>
+        public void PressAction()
+        {
+            var cb = _onAction;
+            Hide();
+            cb?.Invoke();
+        }
+
+        private void SetAction(string label, System.Action onAction)
+        {
+            _onAction = onAction;
+            if (_action == null) return;
+            bool on = onAction != null && !string.IsNullOrEmpty(label);
+            _action.gameObject.SetActive(on);
+            if (on) _action.GetComponentInChildren<TMP_Text>().text = label;
+            // 단추가 있으면 글을 위로 올려 겹치지 않게
+            var rect = (RectTransform)_label.transform;
+            rect.offsetMin = new Vector2(40f, on ? 120f : 40f);
+            // 단추가 있으면 판을 키워 마지막 줄이 단추에 가리지 않게(U-0092 촬영 — 넷째 줄이 단추 위로 걸쳤다)
+            ((RectTransform)_panel.transform).sizeDelta = new Vector2(760f, on ? 520f : 420f);
         }
 
         public void Hide()
         {
             _closeTimer = -1f;
+            _onAction = null;
             if (_panel != null) _panel.SetActive(false);
             SetDepthOfField(false);
         }

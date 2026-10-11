@@ -94,6 +94,11 @@ namespace Saga.Story.Data
             // 5-2 3단계(2026-09-23) "칸 고정" — 같은 이유로 버전 안 올림. 옛 세이브는 null →
             // 고정 없음(자동 배치만, 예전과 같다).
             public string[] skillPins;
+            // tasks U-0093 무예 3택(웹 W-0104) — 같은 이유로 버전 안 올림. 옛 세이브는 spCutLv 0 → 불러올 때의 레벨을 문턱으로(옛 SP 그대로).
+            public int spCutLv;
+            public int pickFree;
+            public int spBonus;
+            public int pickPending;
             // PLAN.md 109-15 탈것 — 고른 탈것(탄 채는 저장 안 함). 버전 그대로: 옛 세이브는 null → 안 고른 채.
             public string mountSel;
             // PLAN.md 109-16 시나리오 진행. 버전 그대로: 없는 세이브(null)는 레벨·전직으로 지나온 장을 끝낸 것으로(RestoreLegacy).
@@ -151,6 +156,10 @@ namespace Saga.Story.Data
                 skillKeys = skillKeys,
                 skillLevels = skillLevels,
                 skillPins = StorySkillState.SnapshotPins(),
+                spCutLv = StorySkillState.SpCutLv,
+                pickFree = StorySkillState.FreeLevels,
+                spBonus = StorySkillState.BonusSp,
+                pickPending = StorySkillState.PendingPicks,
                 mountSel = StoryMounts.Snapshot(),
                 scenarioJson = StoryScenario.Snapshot(),
             };
@@ -203,6 +212,7 @@ namespace Saga.Story.Data
             StoryLabyrinthState.Restore(data.memoryShards, data.memoryTier);
             StoryPartyState.Restore(data.partyActiveIndex);
             StorySkillState.Restore(data.skillKeys, data.skillLevels, data.skillPins);
+            StorySkillState.RestorePicks(data.spCutLv > 0 ? data.spCutLv : Mathf.Max(1, data.level), data.pickFree, data.spBonus, data.pickPending);   // tasks U-0093
             StoryMounts.Restore(data.mountSel);
             StoryTutorial.Restore(data.tutV == 0 ? StoryTutorial.AllIds() : data.tutDone); // tasks U-0020 — 없는 세이브는 옛 세이브라 전부 끝난 것으로
             StoryEras.RestoreStories(data.folkStoryIds, data.folkStoryCounts);

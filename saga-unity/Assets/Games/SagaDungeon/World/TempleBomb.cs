@@ -83,7 +83,7 @@ namespace Saga.Dungeon.World
             var playerGo = GameObject.FindWithTag("Player");
             if (playerGo != null && TempleVisuals.FlatDistance(pos, playerGo.transform.position) <= SelfRadius)
             {
-                HeroState.TakeDamage(SelfDamage);
+                HeroState.TakeDamage(SelfDamage, DungeonLocalization.T("grave.who_bomb", "사원 폭약"), DungeonLocalization.T("grave.how_bomb", "폭발에 휘말림"));   // tasks U-0092
             }
 
             HitSpark.Spawn(pos + Vector3.up * 0.4f, true);

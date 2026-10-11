@@ -655,6 +655,10 @@
     { "key": "era_folk.chrononaut.story.0", "value": "My return schedule was originally three days. I was to observe this age and go back." },
     { "key": "era_folk.chrononaut.story.1", "value": "But observing is strange. This village changes bit by bit just as I look at it." },
     { "key": "era_folk.chrononaut.story.2", "value": "So I postponed the schedule. I want to see the changes through." },
-    { "key": "era_folk.chrononaut.story.3", "value": "Yesterday an elder said \"the village has brightened since you came.\" It wasn't in my schedule, so I laughed a long while." }
+    { "key": "era_folk.chrononaut.story.3", "value": "Yesterday an elder said \"the village has brightened since you came.\" It wasn't in my schedule, so I laughed a long while." },
+    { "key": "pick.title", "value": "Level up — pick one art ({0} left)" },
+    { "key": "pick.decline", "value": "Decline — +1 boost point" },
+    { "key": "pick.done", "value": "{0} +1" },
+    { "key": "runrank.line", "value": "Run rank {0} — hits taken {1} · chain {2} · {3}:{4:00}" }
   ]
 }

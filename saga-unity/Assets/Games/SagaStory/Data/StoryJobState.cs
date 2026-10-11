@@ -39,6 +39,7 @@ namespace Saga.Story.Data
                 Exp -= StoryCombat.ExpNeed(Level);
                 Level++;
                 LeveledUp?.Invoke(Level);
+                StorySkillState.OnLevelUp(Level);   // tasks U-0093 무예 3택(구독 순서에 안 기대게 직접)
             }
         }
 

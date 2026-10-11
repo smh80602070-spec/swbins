@@ -155,7 +155,7 @@ namespace Saga.Story.UI
             }
 
             string jobName = StoryLocalization.T($"job.{StoryJobState.Job}", StoryJobState.JobDisplayName);
-            _titleLabel.text = string.Format(StoryLocalization.T("skill.panel_title", "{0} 무예 — 남은 점수 {1}"),
+            _titleLabel.text = string.Format(StoryLocalization.T("skill.panel_title", "{0} 무예 — 강화 점수 {1}"),
                 jobName, StorySkillState.SpLeft);
 
             _tab = Mathf.Clamp(_tab, 1, StoryJobState.Tier);

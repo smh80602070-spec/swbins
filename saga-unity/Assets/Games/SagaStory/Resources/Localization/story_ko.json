@@ -655,6 +655,10 @@
     { "key": "era_folk.chrononaut.story.0", "value": "제 귀환 일정은 원래 사흘이었어요. 이 시대를 관찰하고 돌아가는 일이죠." },
     { "key": "era_folk.chrononaut.story.1", "value": "그런데 관찰이란 게 이상해요. 제가 보면 보는 대로 이 마을이 조금씩 바뀌더라고요." },
     { "key": "era_folk.chrononaut.story.2", "value": "그래서 일정을 미뤘어요. 바뀌는 걸 끝까지 보고 싶어서요." },
-    { "key": "era_folk.chrononaut.story.3", "value": "어제 촌로께서 \"자네가 온 뒤로 마을이 밝아졌네\" 하셨어요. 제 일정표에 없는 말이라 한참 웃었어요." }
+    { "key": "era_folk.chrononaut.story.3", "value": "어제 촌로께서 \"자네가 온 뒤로 마을이 밝아졌네\" 하셨어요. 제 일정표에 없는 말이라 한참 웃었어요." },
+    { "key": "pick.title", "value": "레벨업 — 무예 하나를 고른다 (남은 장 {0})" },
+    { "key": "pick.decline", "value": "거절 — 강화 점수 +1" },
+    { "key": "pick.done", "value": "{0} +1" },
+    { "key": "runrank.line", "value": "이번 판 등급 {0} — 피격 {1} · 연타 {2} · {3}:{4:00}" }
   ]
 }

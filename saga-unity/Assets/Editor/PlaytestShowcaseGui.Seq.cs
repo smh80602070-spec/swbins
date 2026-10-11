@@ -193,6 +193,17 @@ namespace Saga.EditorTools
                     case "worldmap":
                         if (!Saga.Realm.Data.RealmMapState.ViewingMap) Saga.Realm.Data.RealmMapState.Toggle();
                         break;
+                    case "die":   // U-0092 사가나락 — 출처 있는 피해로 쓰러뜨려 사망 카드(세 줄·「은총에서 다시」)
+                        if (Saga.Dungeon.World.DungeonFloorRunner.Instance == null) { Skip(act); return; }
+                        Saga.Dungeon.Data.HeroState.Invulnerable = false;
+                        Saga.Dungeon.Data.HeroState.TakeDamage(Saga.Dungeon.Data.HeroState.HpMax * 10f, "황건적 두목", "근접 타격");
+                        break;
+                    case "pick":   // U-0093 사가종횡 — 전직한 Lv.12 로 두고 3택 장 하나 → 창
+                        if (Object.FindFirstObjectByType<Saga.Story.UI.StoryPickUi>() == null) { Skip(act); return; }
+                        if (!Saga.Story.Data.StoryJobState.HasJob) Saga.Story.Data.StoryJobState.Restore(Mathf.Max(12, Saga.Story.Data.StoryJobState.Level), 0f, "warrior");
+                        Saga.Story.Data.StorySkillState.RestorePicks(Saga.Story.Data.StoryJobState.Level, 0, 0, 1);
+                        Debug.Log($"[ShowcaseGui] pick 창 {Saga.Story.UI.StoryPickUi.Instance?.IsShowing} · 셋 {string.Join(", ", Saga.Story.UI.StoryPickUi.Instance?.Offer.Select(o => o.Key) ?? new string[0])}");
+                        break;
                     case "realmeras":
                         if (Object.FindFirstObjectByType<Saga.Realm.World.RealmMapViewSwitcher>() == null) { Skip(act); return; }
                         RealmEras();

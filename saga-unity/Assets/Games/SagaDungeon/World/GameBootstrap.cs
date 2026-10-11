@@ -85,7 +85,10 @@ namespace Saga.Dungeon.World
             string lostLine = lostGold > 0
                 ? string.Format(DungeonLocalization.T("grave.card_lost", "유품으로 금 {0} — 돌아가기 전에 되찾을 것"), lostGold)
                 : DungeonLocalization.T("grave.card_lost_none", "잃은 것 없음");
-            _sessionCard?.Show(DungeonLocalization.T("grave.card_title", "쓰러졌다"), lostLine);
+            // tasks U-0092(웹 W-0102) — 어디서·누구에게·무슨 피해 + 남는 것 + 「은총에서 다시」(층 들머리에서 다시 선다)
+            var lines = GraceState.DeathLines(lostLine);
+            _sessionCard?.Show(DungeonLocalization.T("grave.card_title", "쓰러졌다"),
+                DungeonLocalization.T("grace.restart", "은총에서 다시"), GraceState.RestartAtGrace, lines);
         }
 
         private void OnFloorDescended(int floor)

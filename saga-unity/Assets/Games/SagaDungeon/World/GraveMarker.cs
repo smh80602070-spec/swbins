@@ -37,10 +37,14 @@ namespace Saga.Dungeon.World
 
         private static GraveMarker _active;
 
+        /// <summary>tasks U-0092 — 지금 유품(없으면 금 0). 은총에서 다시 설 때 그 자리·금을 기억했다가 그 방에 다시 닿으면 세운다.</summary>
+        public static (Vector3 pos, int gold) Current => _active != null ? (_active.transform.position, _active._gold) : (Vector3.zero, 0);
+
         private int _gold;
         private Transform _player;
         private Transform _visual;
         private float _age;
+        private bool _armed;
 
         /// <summary>이전 유품이 있었으면 먼저 지운다(웹판 "회수 전에 다시 죽으면 옛 유품 소멸").</summary>
         public static void Spawn(Vector3 worldPos, int gold)
@@ -96,7 +100,11 @@ namespace Saga.Dungeon.World
                 _visual.Rotate(Vector3.up, SpinDegPerSec * Time.deltaTime, Space.World);
             }
 
-            if (_player != null && Vector3.Distance(transform.position, _player.position) <= PickupRadius)
+            // tasks U-0092 — 쓰러진 자리에서 그대로 일어나면 발밑 유품을 곧바로 다시 주워 유품이 뜻이 없었다(카드 촬영에서 "유품을 되찾았다" 가 바로 뜸).
+            // 한 번 반경 밖으로 벗어난 뒤에야 주울 수 있다(웹 "돌아가서 되찾는다").
+            float dist = _player != null ? Vector3.Distance(transform.position, _player.position) : float.MaxValue;
+            if (!_armed) { if (dist > PickupRadius + 0.5f) _armed = true; return; }
+            if (dist <= PickupRadius)
             {
                 HeroState.AddGold(_gold);
                 SfxPlayer.PlayDiscovery();

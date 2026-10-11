@@ -1866,5 +1866,41 @@
   "ticket": "U-0082",
   "since": "2026-10-10",
   "note": "D2(수치+눈 ○, U-0082): docs/playcheck/d2-u0082-20261010.json — 보조등 없이 마모 0단 가운데 평균 휘도 44.8(≥44, 전 ≈14)·최대 242, 1·2단 29.6·18.7(마모 색 설계, 눈 ○). 방 꾸밈 컷 보조등 없이 벽·바닥·꾸밈 읽힘, 지붕 위 컷 날림 없음"
+ },
+ {
+  "id": "un.dg.grace",
+  "name": "U-0092 은총 자리·사망 카드 세 줄·「은총에서 다시」(웹 W-0102 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaDungeon/World/GraceState.cs",
+   "saga-unity/Assets/SagaCore/SessionCard.cs",
+   "saga-unity/Assets/Games/SagaDungeon/World/GraveMarker.cs"
+  ],
+  "tests": [
+   "PlaytestDungeonGrace"
+  ],
+  "level": "D2",
+  "verified": "2026-10-11 claude",
+  "fun": {},
+  "ticket": "U-0092",
+  "since": "2026-10-11",
+  "note": "D2(U-0092): docs/playcheck/d2-u0092-u0093-20261011.json — PlaytestDungeonGrace OK · 사망 카드 네 줄+「은총에서 다시」 촬영 Claude 눈 ○(고친 뒤 다시 찍음)"
+ },
+ {
+  "id": "un.st.pick3",
+  "name": "U-0093 레벨업 무예 3택·한 판 결과 등급(웹 W-0104 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaStory/Data/StorySkillState.cs",
+   "saga-unity/Assets/Games/SagaStory/Data/StoryRunRank.cs",
+   "saga-unity/Assets/Games/SagaStory/UI/StoryPickUi.cs"
+  ],
+  "tests": [
+   "PlaytestStoryPick3"
+  ],
+  "level": "D2",
+  "verified": "2026-10-11 claude",
+  "fun": {},
+  "ticket": "U-0093",
+  "since": "2026-10-11",
+  "note": "D2(U-0093): docs/playcheck/d2-u0092-u0093-20261011.json — PlaytestStoryPick3 OK · 3택 창 촬영 Claude 눈 ○(고친 뒤 다시 찍음) · 판 등급 줄은 진단만(촬영 못 봄)"
  }
 ]

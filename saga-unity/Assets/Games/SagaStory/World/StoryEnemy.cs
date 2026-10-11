@@ -380,6 +380,7 @@ namespace Saga.Story.World
         public void TakeDamage(float amount, bool crit = false)
         {
             if (_dead || amount <= 0f) return;
+            if (!isLabyrinthEnemy) StoryRunRank.OnHit(Time.time);   // tasks U-0093 판 등급 — 연타(미궁은 따로)
             StorySummonState.OnEnemyHit(); // PLAN.md 106-10 — 소환 게이지(플레이어 +3 · 동료 +1 · 소환 자체는 0).
             float applied = _isChampion && _shieldBroken ? amount * ShieldVulnerableMul : amount;
             // PLAN.md 109-11-2 — 그로기 동안 받는 피해 ×1.5(방패 창과 곱한다).
@@ -428,6 +429,7 @@ namespace Saga.Story.World
             {
                 StoryQuestState.AddKill();
                 if (isBoss) StoryQuestState.AddBossKill();
+                StoryRunRank.OnKill(isBoss, Time.time);   // tasks U-0093 — 두목이면 판 끝
                 float expMul = _isChampion ? ChampionExpMul : 1f;
                 StoryJobState.GainExp((isBoss ? StoryCombat.BossExp : StoryCombat.GruntExp) * expMul * StoryRound.GainMul());
                 if (_isChampion)

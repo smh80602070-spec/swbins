@@ -768,6 +768,17 @@
     { "key": "era_folk.chrononaut.story.2", "value": "So I postponed the schedule. I want to see the changes through. This village isn't in my age's records." },
     { "key": "era_folk.chrononaut.story.3", "value": "Yesterday I stood a long time before the nameless stele in the Burrow. In my age too there is a stele in that spot - nameless." },
     { "key": "era_folk.story_of", "value": "story" },
-    { "key": "era_folk.story_gold", "value": "Gold +{0}" }
+    { "key": "era_folk.story_gold", "value": "Gold +{0}" },
+    { "key": "grave.how_strike", "value": "Melee strike" },
+    { "key": "grave.who_bomb", "value": "Temple bomb" },
+    { "key": "grave.how_bomb", "value": "Caught in the blast" },
+    { "key": "grace.restart", "value": "Rise at Grace" },
+    { "key": "grace.where", "value": "Floor {0} · Room {1}/{2}" },
+    { "key": "grace.where_unknown", "value": "Somewhere" },
+    { "key": "grace.who_unknown", "value": "Something unknown" },
+    { "key": "grace.how_unknown", "value": "Damage" },
+    { "key": "grace.who_how", "value": "{0} — {1}" },
+    { "key": "grace.keep", "value": "Kept: codex, heroes and merits stay" },
+    { "key": "grace.restarted", "value": "Floor {0} Grace — you rose again" }
   ]
 }

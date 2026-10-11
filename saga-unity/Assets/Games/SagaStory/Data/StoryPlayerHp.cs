@@ -34,17 +34,22 @@ namespace Saga.Story.Data
         private static float _lastMax = StoryCombat.StartHp;
 
         /// <summary>맞는다 — 무적 중이거나 이미 쓰러졌으면 false. 최소 1.</summary>
+        /// <summary>tasks U-0093 — 무예 3택 창이 떠 있는 동안 켠다(고르는 사이 맞지 않게).</summary>
+        public static bool HoldForPick { get; set; }
+
         public static bool Hurt(float amount)
         {
-            if (amount <= 0f || Invuln > 0f || Hp <= 0f) return false;
+            if (amount <= 0f || Invuln > 0f || Hp <= 0f || HoldForPick) return false;
             float n = Mathf.Max(1f, StoryBossPattern.JsRound(amount));
             Hp = Mathf.Max(0f, Hp - n);
             Invuln = HitCool;
             SinceHurt = 0f;
             Hurted?.Invoke(n);
+            StoryRunRank.OnHurt();   // tasks U-0093 판 등급 — 피격·연타 끊김
             if (Hp <= 0f)
             {
                 Falls++;
+                StoryRunRank.Finish(Time.time);   // 쓰러짐 = 판 끝
                 Fell?.Invoke();
             }
             return true;

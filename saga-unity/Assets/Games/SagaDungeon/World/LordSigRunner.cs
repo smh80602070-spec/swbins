@@ -181,7 +181,7 @@ namespace Saga.Dungeon.World
         private void Hurt(float amount)
         {
             if (HeroState.Invulnerable) return; // 구르기 무적 — 원 판정도 비킨다
-            HeroState.TakeDamage(amount);
+            HeroState.TakeDamage(amount, _lord != null ? _lord.DisplayName : null, _sig.NameKo);   // tasks U-0092 — 층 주인 이름·고유 기술 이름
             PlayerHits++;
         }
 
