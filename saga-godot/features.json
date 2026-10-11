@@ -3070,7 +3070,7 @@
  },
  {
   "id": "gd.rk.tactics",
-  "name": "사가천하 격자 전술 — 규칙(웹 tactics.js 이식, attack 셋째 인자 보정·전사·중상) + 전술판 3D(출진 상자 \"♟️ 전술판\", 8×6 지형 넷·장수 몸·이동/공격 연출·패드)",
+  "name": "사가천하 격자 전술 — 규칙(웹 tactics.js 이식, attack 셋째 인자 보정·전사·중상) + 전술판 3D(출진 상자 \"♟️ 전술판\", 8×6 지형 넷·장수 몸·이동/공격 연출·패드) · 엄폐 반/온 방패·공격 컷(G-0191) · 쓰러지면 중상 3달 기본(G-0190)",
   "files": [
    "games/saga_realm/data/realm_tactics.gd",
    "games/saga_realm/data/realm_rules_war.gd",
@@ -3092,7 +3092,7 @@
   "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": "G-0182·G-0183",
+  "ticket": "G-0182·G-0183·G-0190·G-0191",
   "since": "2026-10-11",
   "note": "G-0183(10-11) 창 모드 rk_tactics·rk_tactics_wide Claude 눈 ○: 격자·지형·장수 몸·선택/이동 칸·단추 셋"
  },

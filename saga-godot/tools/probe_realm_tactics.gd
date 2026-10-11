@@ -315,6 +315,31 @@ func _initialize() -> void:
 	view2._on_cancel()
 	await process_frame
 	check(got2.grid is Dictionary and (got2.grid as Dictionary).is_empty() and not is_instance_valid(view2), "물러나기 → 빈 보정(그냥 출진)·판 닫힘")
+	# G-0191 엄폐 방패·공격 컷
+	check(View.shield_kind(0) == "" and View.shield_kind(30) == "half" and View.shield_kind(50) == "full", "방패 종류 = 엄폐 값(0 없음 · 30 반 · 50 온)")
+	_reset()
+	S.cities.xuchang.troops = 2000
+	var tb4: Dictionary = S.tactics_board("xiaopei")
+	var me4: Dictionary = {}
+	for u: Dictionary in tb4.board.units:
+		if u.side == "me":
+			me4 = u
+			break
+	tb4.board.cells[int(me4.y) * T.COLS + int(me4.x) + 1] = "forest"   # 바로 옆 칸을 숲으로(반 방패가 떠야)
+	var v4: Node = View.open(root, "xiaopei", tb4, func(_g: Dictionary) -> void: pass, true)
+	await process_frame
+	v4.pick_cell(int(me4.x), int(me4.y))
+	var kinds := {}
+	for sh: Node in v4._shields:
+		kinds[String(sh.get_meta("kind"))] = true
+	check(v4._shields.size() >= 1 and kinds.has("half"), "장수를 고르면 숲 칸에 반 방패(방패 %d개 · %s)" % [v4._shields.size(), str(kinds.keys())])
+	View.cut_cam = false
+	var cam_before: Transform3D = v4._cam.global_transform
+	await v4._on_end_turn()
+	check(v4.cut_count == 0 and v4._cam.global_transform.is_equal_approx(cam_before), "cut_cam 끔 · instant → 적 차례에 공격해도 카메라 그대로(컷 0)")
+	View.cut_cam = true
+	v4._on_cancel()
+	await process_frame
 	S.cities.xuchang.troops = 100
 	var tb3: Dictionary = S.tactics_board("xiaopei")
 	check(not tb3.ok and "오백" in String(tb3.why) and S.attack_check("xiaopei") == String(tb3.why), "판을 열기 전에 attack 과 같은 이유로 거절(%s)" % tb3.why)

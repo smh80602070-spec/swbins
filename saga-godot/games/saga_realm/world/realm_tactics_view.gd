@@ -50,6 +50,16 @@ var _cursor := Vector2i(1, 1)
 var _busy := false
 var _closed := false
 var _foe_turn := false   # 제목 "적 차례" 표시용(규칙의 board.side 와 따로)
+## G-0191 — 엑스컴식 엄폐 방패(웹 W-0168): 장수를 고르면 갈 칸·칠 칸 중 숲(엄폐 30) = 반 방패, 성벽(50) = 온 방패를 칸 위에 띄운다.
+## 공격 컷: 칠 때 카메라가 공격자 뒤 어깨 위로 CUT_IN 초에 당겼다가 CUT_HOLD 초 뒤 제자리로. 맡기기(자동)·instant·cut_cam=false 면 안 함.
+static var cut_cam := true
+const CUT_IN := 0.25
+const CUT_HOLD := 1.1
+const SHIELD_HALF := Color(1.0, 0.78, 0.32, 0.92)
+const SHIELD_FULL := Color(0.55, 0.82, 1.0, 0.95)
+var _shields: Array = []   # 지금 떠 있는 방패 노드
+var _auto_mode := false
+var cut_count := 0         # 점검용 — 컷을 몇 번 했나
 
 
 ## 연다 — host 는 씬 안 아무 노드(토스트·트리 찾기용), tb = RealmSaveState.tactics_board() 결과, done(grid: Dictionary).
@@ -339,6 +349,52 @@ func _wait(sec: float) -> void:
 func _clear_hi() -> void:
 	for k in _hi:
 		(_hi[k] as MeshInstance3D).visible = false
+	for n in _shields:
+		if is_instance_valid(n):
+			(n as Node).queue_free()
+	_shields.clear()
+
+
+## G-0191 — 엄폐 값 → 방패 종류(순수 함수): 0 없음 · 30 반 · 50 온(웹 W-0168 과 같은 문턱)
+static func shield_kind(cover: int) -> String:
+	if cover >= 50:
+		return "full"
+	if cover >= 30:
+		return "half"
+	return ""
+
+
+func _add_shield(x: int, y: int) -> void:
+	var cover := RealmTactics.cover_at(board, x, y)
+	var kind := shield_kind(cover)
+	if kind == "":
+		return
+	var root := Node3D.new()
+	root.name = "Shield_%d_%d" % [x, y]
+	root.set_meta("kind", kind)
+	root.position = cell_center(x, y) + Vector3(0, float(TOP.get(RealmTactics.cell_at(board, x, y), 0.2)) + 0.95, 0)
+	var q := QuadMesh.new()
+	q.size = Vector2(0.5, 0.6 if kind == "full" else 0.32)
+	var mi := MeshInstance3D.new()
+	mi.mesh = q
+	var m := _mat(SHIELD_FULL if kind == "full" else SHIELD_HALF, true)
+	m.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
+	m.no_depth_test = true
+	mi.material_override = m
+	mi.position.y = 0.0 if kind == "full" else -0.14
+	root.add_child(mi)
+	var l := Label3D.new()
+	l.text = "−%d" % cover
+	l.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	l.no_depth_test = true
+	l.fixed_size = true
+	l.pixel_size = 0.001
+	l.font_size = 22
+	l.outline_size = 6
+	l.position.y = -0.45
+	root.add_child(l)
+	add_child(root)
+	_shields.append(root)
 
 
 func _show_hi(x: int, y: int, c: Color) -> void:
@@ -371,10 +427,13 @@ func _refresh() -> void:
 			for c: Dictionary in RealmTactics.moves(board, _sel):
 				if int(c.x) != int(u.x) or int(c.y) != int(u.y):
 					_show_hi(int(c.x), int(c.y), HI_MOVE)
+					_add_shield(int(c.x), int(c.y))
 		var tips: Array = []
 		for t: Dictionary in _targets_of(_sel):
 			_show_hi(int(t.x), int(t.y), HI_ATTACK)
-			tips.append("%s %d%%" % [_unit_name(t), RealmTactics.hit_chance(u, t, RealmTactics.cover_at(board, int(t.x), int(t.y)))])
+			var cv := RealmTactics.cover_at(board, int(t.x), int(t.y))
+			_add_shield(int(t.x), int(t.y))
+			tips.append("%s %d%%%s" % [_unit_name(t), RealmTactics.hit_chance(u, t, cv), (" 엄폐 −%d" % cv) if cv > 0 else ""])
 		_hint.text = "%s — 파란 칸으로 옮기고 붉은 칸을 친다%s" % [_unit_name(u), ("  (명중 " + " · ".join(tips) + ")") if not tips.is_empty() else ""]
 	else:
 		_hint.text = "내 장수를 고르세요 · 숲은 명중 −30% · 성벽은 −50% · 3턴 안에 적을 무너뜨리면 대승"
@@ -519,6 +578,11 @@ func _anim_hit(entry: Dictionary) -> void:
 	var an: Node3D = _units[a].node
 	var tn: Node3D = _units[t].node
 	_face(a, tn.position - an.position)
+	var cut := cut_cam and not instant and not _auto_mode
+	var saved := _cam.global_transform
+	if cut:
+		cut_count += 1
+		await _cut_to(_cut_transform(an.position, tn.position), CUT_IN)
 	_play(a, "attack")
 	await _wait(SWING_SEC * 0.6)
 	if bool(entry.hit):
@@ -535,6 +599,9 @@ func _anim_hit(entry: Dictionary) -> void:
 	_set_label(t)
 	await _wait(SWING_SEC * 0.4)
 	_play(a, "idle")
+	if cut:
+		await _wait(maxf(0.0, CUT_HOLD - SWING_SEC))
+		await _cut_to(saved, CUT_IN)
 	if float(_units[t].hp) <= 0.0:
 		_play(t, "death")
 		var ap: AnimationPlayer = _units[t].ap
@@ -546,6 +613,22 @@ func _anim_hit(entry: Dictionary) -> void:
 			tw2.tween_property(tn, "scale", Vector3.ONE * 0.01, 0.35)
 			await tw2.finished
 		tn.visible = false
+
+
+## G-0191 — 공격자 뒤 어깨 위(뒤 1.8m·위 2.3m·옆 0.7m)에서 대상을 보는 자리
+static func _cut_transform(a: Vector3, t: Vector3) -> Transform3D:
+	var back := Vector3(a.x - t.x, 0, a.z - t.z)
+	back = back.normalized() if back.length() > 0.01 else Vector3(0, 0, 1)
+	var side := Vector3(-back.z, 0, back.x)
+	var pos := a + back * 1.8 + Vector3(0, 2.3, 0) + side * 0.7
+	return Transform3D(Basis.IDENTITY, pos).looking_at(t + Vector3(0, 1.0, 0), Vector3.UP)
+
+
+func _cut_to(to: Transform3D, sec: float) -> void:
+	var from := _cam.global_transform
+	var tw := create_tween()
+	tw.tween_method(func(k: float) -> void: _cam.global_transform = from.interpolate_with(to, k), 0.0, 1.0, sec).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	await tw.finished
 
 
 func _do_attack(uid: String, tuid: String) -> void:
@@ -606,6 +689,7 @@ func _on_auto() -> void:
 	_busy = true
 	_sel = ""
 	_refresh()
+	_auto_mode = true   # 맡기기 — 공격 컷 안 함(웹 W-0168 "자동 모드면 안 함")
 	var snap := _snap()
 	var log0 := (board.log as Array).size()
 	RealmTactics.auto_side(board, "me")
@@ -616,6 +700,7 @@ func _on_auto() -> void:
 		await _on_end_turn()
 	else:
 		_after_action()
+	_auto_mode = false
 
 
 func _on_cancel() -> void:
