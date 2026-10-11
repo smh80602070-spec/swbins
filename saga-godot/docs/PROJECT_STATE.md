@@ -28,7 +28,7 @@
 ## 다음 작업 (우선순위)
 
 0. **그래픽 — 배경 사실화 이어서**. G-0143(바닥)·G-0144 2단계(소품·건물)는 K-0093 자체 생성 PBR 텍스처 대기 — 정본 `saga-assets/textures_real/<세트>/`(세트 grass dirt gravel rock sand snow stonewall planks plaster rooftile rust paving). 오면 그 자리에서 연결. 그동안 후보: 사가나락 동굴 바닥·벽 재질(텍스처 뒤), 얼굴·머리 텍스처 2048(사용자 확인 뒤 K).
-1. 51장 남은 것 — DUNGEON 무예 row1/row2 깊이(범위 먼저 좁힐 것).
+1. 2나락 무예 — br0~5×row0~2 90개는 다 옮겨짐(row 깊이 끝). 남은 것 = 큐 G-0198(넉 자리·공용 시전기 — 지금 단추 85 가 화면 밖까지 쌓임)·G-0199(웹 br6·br7 30).
 2. 106장 사람 몫 — 등반·활공·수영·점프 Mixamo 클립(로그인만 사람), 주역 VRoid 조형. 폭발 동작 CF_Burst 원본(dj_haean_anims.glb)은 K PC 대기.
 
 ## 알려진 오류
