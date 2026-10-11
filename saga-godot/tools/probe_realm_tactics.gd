@@ -97,7 +97,9 @@ func _initialize() -> void:
 	var saved_rng_seed: int = S._rng.seed
 	var saved_rng_state: int = S._rng.state
 
-	# ⓪ 웹 값과 맞춤
+	# ⓪ 웹 값과 맞춤 — 웹 기본(영구 전사 켬)으로 돈다. 고돗 기본은 끔(G-0190)
+	check(T.permadeath == false, "고돗 기본: 영구 전사 끔(쓰러지면 중상 3달, G-0190)")
+	T.permadeath = true
 	for h: Array in WEB_HASH:
 		check(is_equal_approx(T.hash01(h[0], h[1]), h[2]), "해시(%s, %s) = 웹 %.6f" % [h[0], h[1], h[2]])
 	for w: Array in WEB_BOARDS:
@@ -317,6 +319,7 @@ func _initialize() -> void:
 	var tb3: Dictionary = S.tactics_board("xiaopei")
 	check(not tb3.ok and "오백" in String(tb3.why) and S.attack_check("xiaopei") == String(tb3.why), "판을 열기 전에 attack 과 같은 이유로 거절(%s)" % tb3.why)
 
+	T.permadeath = false   # 고돗 기본으로
 	# 되돌리기
 	for v in SAVED:
 		S.set(v, saved[v])

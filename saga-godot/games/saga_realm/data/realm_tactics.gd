@@ -12,7 +12,7 @@ extends RefCounted
 ##   명중    clamp(65 + (atk − def)×2 − 엄폐, 10, 95) % · 피해 = atk × DMG_MUL(2) × (0.8~1.2) — 굴림은 판 씨앗 해시(난수 안 씀)
 ##   AI      닿는 적 중 명중이 가장 높은 쪽을 친다. 없으면 가장 가까운 적에게 다가가되 같은 거리면 엄폐 칸 먼저, 다가간 뒤 닿으면 친다
 ##   결과    적 전멸 = 대승(rout, 위력 +25% · 받는 피해 ×0.7) · 3턴 뒤 hp 비율(내/적) ≥ 1.5 = 승(win, +10%) · 그 밖 = 무승부(draw)
-##           · 내 전멸 = 패(lose, −25%). 쓰러진 내 장수는 영구 전사(fallen) — PERMADEATH 를 끄면 중상(wounded, 3달 출진 불가)
+##           · 내 전멸 = 패(lose, −25%). 쓰러진 내 장수는 중상(wounded, 3달 출진 불가) — permadeath 를 켜면 영구 전사(fallen, 웹 기본)
 ##
 ## **판정 두 벌 금지** — 결과는 apply() 가 돌려주는 보정값 Dictionary 뿐. 판은 저장하지 않는다.
 ## 해시·굴림 순서·반올림(floor(x+0.5) = JS Math.round)은 웹과 같아 같은 씨앗이면 같은 판·같은 결과(probe_realm_tactics 가 웹 값과 맞춰 본다).
@@ -44,7 +44,9 @@ const DIRS := [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 
 ## 손잡이(웹 rtk.tacticsDmg · rtk.permadeath)
 static var dmg_mul := 2.0
-static var permadeath := true
+## G-0190 — 고돗은 영구 전사를 기본으로 끈다(쓰러진 내 장수는 중상 3달). G-0188 측정: 전술 패 = 판에 선 장수 전원을 영영 잃어 F(패배 비용 = 진행의 10~20%)를 크게 넘었다.
+## 웹(rtk.permadeath 기본 1)과 다른 기본값 — 같은 손잡이라 켜면 웹과 같다(점검 ⓪ 웹 맞춤은 켜고 돈다).
+static var permadeath := false
 
 
 static func js_round(x: float) -> int:

@@ -61,7 +61,7 @@ func _attack(target_id: String, layer_box: Dictionary) -> void:
 	(layer_box["layer"] as CanvasLayer).queue_free()
 	var ask_box := {}
 	var choices: Array = [
-		{"label": "♟️ 전술판을 펼친다(3턴 격자 — 이기면 위력↑, 지면 위력↓ · 쓰러진 장수는 영영 떠난다)",
+		{"label": "♟️ 전술판을 펼친다(3턴 격자 — 이기면 위력↑, 지면 위력↓ · 쓰러진 장수는 3달 다친다)",
 			"cb": func() -> void: _open_tactics(target_id, ask_box)},
 		{"label": "⚔️ 일기토를 건다(3합 — 이기면 위력↑, 지면 위력↓)",
 			"cb": func() -> void: _duel_round(target_id, [])},

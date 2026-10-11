@@ -180,7 +180,8 @@ func _initialize() -> void:
 			var grids := {"auto": auto}
 			for k: String in ["rout", "win", "draw", "lose"]:
 				var o: Dictionary = T.OUT[k]
-				var g: Dictionary = T.apply({"kind": k, "winPct": o.winPct, "lossMul": o.lossMul, "fallen": mine.duplicate() if k == "lose" else [], "wounded": []}, "xiaopei")
+				var down_l: Array = mine.duplicate() if k == "lose" else []   # 강제 패 = 판에 선 장수 모두 쓰러짐 — 고돗 기본(G-0190)은 중상, 켜면 전사
+				var g: Dictionary = T.apply({"kind": k, "winPct": o.winPct, "lossMul": o.lossMul, "fallen": down_l if T.permadeath else [], "wounded": [] if T.permadeath else down_l}, "xiaopei")
 				g["mine"] = mine
 				grids[k] = g
 			for gk: String in ["auto", "rout", "win", "draw", "lose"]:
@@ -193,8 +194,8 @@ func _initialize() -> void:
 				var roster_before := 1 + extra.size()
 				if gk == "lose":
 					var hurt2: Array = at2.get("hurt", [])
-					check(not at2.won and fallen.size() + hurt2.size() == mine.size() and S.annals.size() == fallen.size() and not S.roster.is_empty() and hurt2.size() == (1 if mine.size() == roster_before else 0),
-						"전술 패(%d·장수 %d): 판에 선 %d 모두 쓰러짐 — 전사 %d·중상 %d(로스터가 비면 하나는 중상, G-0189)" % [troops, roster_before, mine.size(), fallen.size(), hurt2.size()])
+					check(not at2.won and fallen.size() + hurt2.size() == mine.size() and S.annals.size() == fallen.size() and not S.roster.is_empty() and (hurt2.size() == mine.size() if not T.permadeath else hurt2.size() == (1 if mine.size() == roster_before else 0)),
+						"전술 패(%d·장수 %d): 판에 선 %d 모두 쓰러짐 — 전사 %d·중상 %d(기본은 중상 G-0190 · 영구 전사를 켜면 로스터가 비지 않게 하나는 중상 G-0189)" % [troops, roster_before, mine.size(), fallen.size(), hurt2.size()])
 				# 다음 출진까지 — 먹힌 조작만
 				var ops := 0
 				var can := false
