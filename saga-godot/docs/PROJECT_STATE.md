@@ -17,11 +17,9 @@
 
 **공통(saga_core)**: `data/characters.gd`(인물 105, id 불변)·`data/pets.gd`(신수 11) · `ui/toast.gd`·`ui/virtual_joystick.gd`·`ui/goal_board.gd`+`ui/session_card.gd`(101-4, 목표판 3줄·마무리 카드, 다섯 판 전부 붙음)·`ui/duel_hud.gd` · `combat_feel.gd`(101-3, 다섯 판 끝, 09-20㉒ 타격음 배선, 09-21 UI 사운드(`ui()`) 신설+`session_card.gd` "닫기" 배선) · `world/world_curve_material.gd`+`shaders/curved_*`(FOREST 구면) · `world/density_report.gd`(104-5, 발견 밀도, FOREST는 반경 10m) · `shaders/cel_toon.gdshader`+`cel_shader_apply.gd`(66-2/102-3, hit_flash+아웃라인 next_pass 자동) · `world/glb_utils.gd::fit_height()`(102-1, 여전히 미호출). 렌더러 Forward+/Mobile 이중(66-1, `env_pc.tres`·`env_mobile.tres`, 102-2 값).
 
-## 현재 작업 — 중단 지점(2026-10-09)
+## 현재 작업 — 중단 지점(2026-10-11)
 
-- 10-09 닫음(줄거리는 `tasks/godot/done/` 티켓 메모가 정본): G-0116 먼 윤곽선 끄기(효과 0 — 모바일 렌더러에서 next_pass 윤곽선은 draw call 안 씀, 되돌림) · G-0117 천하 7막(시간 틈 아홉 `saga_core/data/time_folk.gd`) · G-0118 소넷 5.5 구간 감사(시트 `tasks/sheets/godot-sonnet-audit-20261009.md`) · G-0119 탈것 키 `[` `]`(사가나락 `-` `=`) · G-0120 네 판 세이브 점검 진짜 save()/try_load() · G-0121 saga_core 가 판 autoload 를 안 부르게(check_refs 검사) · G-0122 평탄 자리 Vector2i · G-0123 하늘 밤 경계 4·21시·알 굴림 횟수·mount_host 창 치움 · G-0124 이동 프리셋 1 기본 · G-0125 마을 예산 = 지역 평균 draw ≤260(probe_perf `PERF_PROBE_DONE`) · G-0126 천하 1~5막 시간 틈 사람 직접 등용 · G-0127 서리봉 새파란 그림자(고원 안에서만 주변광 하늘 몫 0.5)·눈송이 번짐 · G-0128 눈밭 결.
-- 10-09 오후 닫음: G-0129 폭발 burst 새 동작 · G-0130~0138 그래픽 손질(섬 밑동·갈림길 풀빛·그늘 채도·흙 얼룩·강가 색·흙길 띠·진흙 얼룩·PC 조이스틱 숨김) · G-0132 물 두께(되돌림) · G-0139 물 밑 비탈 · G-0140 사실적 물 · G-0141 사실적 하늘 · G-0142 사실적 풀 · G-0143 1단계(지금 텍스처로) · G-0145 인물 결(셰이더만, 다섯 판) · G-0146 길 칸 풀 · G-0147 눈밭 결 · G-0148 네 판 하늘·사가마을 연못 · G-0149 사가종횡 들판 배경.
-- 10-09 밤 닫음: G-0144 1단계(건물·소품 `prop_real.gdshader` 재질 5종 PBR — 색으로 종류, prop_toon 은 되돌리기용) · G-0150 사가종횡 동굴·미궁 배경(`story_cave_backdrop.gd` 바위 벽·천장·종유석·횃불, 동굴·미궁만 안개 어둡게) · G-0151 잠긴 도읍 석등 자리 뜸(G-0139 회귀 — 돔 바닥 U 를 둑으로 셈).
+- 닫은 티켓 줄거리는 `tasks/godot/done/` 티켓 메모가 정본(10-09 G-0116~0151 그래픽·감사·천하 7막 · 10-10~11 G-0152~0197 손확인·HUD·F 측정·전술판·웹 리뉴얼 이식). 큐에 남은 G-0143·G-0144 2단계는 둘 다 **K-0093(자체 생성 PBR 12세트) 대기**.
 - **방향(사용자 10-09, PLAN 66-2·SAGA-DESIGN §6.0-1 반영)**: 인물·몬스터는 툰 그대로, **배경(물·하늘·풀·땅·소품 재질)은 사실 쪽**. 사용자 판정 "고친거 마음에 들어"·"괜찮네" ○. 기준 네 컷 `graphics/baseline/go/`(10-09 16:17, 이후 `node tools/shot_diff.mjs graphics/baseline/go <폴더>`).
 - 보여 주기 = 같은 시간대 전후 밀어 보기 비교 페이지(Artifact https://claude.ai/artifact/2shrD5bSfk5crvfmAEk3KT, 스크래치 `gallery/index.html` 은 세션마다 사라지니 새 세션은 `Artifact read` 로 받아 이어 붙일 것). GO 컷 = `tools/probe_shots.gd`(진단 컷 d_plaza_*·d_bridge_top·할 일 hide/nograss/burstN), 다른 판 = `tools/scene_shot.tscn`(판 씬 한 장, 넷째 인자 노드 곁에 서기).
 - 이 PC Godot = WinGet Packages `Godot_v4.7.2-stable_win64_console.exe`. 전체 점검 `tools/probe_all.sh` 153개(10-10 G-0157~0174 뒤 전부 fails=0 — 세이브 user://save.json 을 비켜 두고 돌림). 러너가 도는 중엔 probe_all.sh 를 고치지 말 것.
@@ -29,10 +27,9 @@
 
 ## 다음 작업 (우선순위)
 
-0. **그래픽 — 배경 사실화 이어서**. 큐 G-0143(바닥 사진 텍스처 본작업)·G-0144 2단계(소품·건물 재질별 사진 세트)는 **자체툴 CC0 사진 PBR 텍스처 대기** — 수신함 10-09 한 줄뿐, K 티켓 아직 없음(자체툴 세션에서 티켓으로). 폴더 `assets/generated/tiles_real/` 가칭 — 다른 이름으로 와도 찾아 연결. 그동안 후보: 사가나락 동굴 바닥·벽 재질(텍스처 뒤), 얼굴·머리 텍스처 2048(용량↑ — 사용자 확인 뒤 K), 굽은 거리 콘크리트 건물(G-0144 1단계에서 변화 작음). 큐가 비면 촬영 묶음으로 다음 거리 찾기.
-1. ~~사용자 손 확인~~ 끝(G-0152, 10-10 qc+claude 셋 다 ○ — feel_tuning·rk.scenario-act1 D3, 탈것 키는 실제 `[` 입력으로 탐 확인. 컷 `probe_shots` q_*·`shot_scene` rk_act7).
-2. 51장 남은 것 — DUNGEON 무예 row1/row2 깊이(범위 먼저 좁힐 것).
-3. 106장 사람 몫 — 등반·활공·수영·점프 Mixamo 클립(로그인만 사람), 주역 VRoid 조형. 폭발 동작 CF_Burst 원본(dj_haean_anims.glb)은 K PC 대기.
+0. **그래픽 — 배경 사실화 이어서**. G-0143(바닥)·G-0144 2단계(소품·건물)는 K-0093 자체 생성 PBR 텍스처 대기 — 정본 `saga-assets/textures_real/<세트>/`(세트 grass dirt gravel rock sand snow stonewall planks plaster rooftile rust paving). 오면 그 자리에서 연결. 그동안 후보: 사가나락 동굴 바닥·벽 재질(텍스처 뒤), 얼굴·머리 텍스처 2048(사용자 확인 뒤 K).
+1. 51장 남은 것 — DUNGEON 무예 row1/row2 깊이(범위 먼저 좁힐 것).
+2. 106장 사람 몫 — 등반·활공·수영·점프 Mixamo 클립(로그인만 사람), 주역 VRoid 조형. 폭발 동작 CF_Burst 원본(dj_haean_anims.glb)은 K PC 대기.
 
 ## 알려진 오류
 
