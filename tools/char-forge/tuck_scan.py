@@ -2,8 +2,9 @@
 
   blender -b --factory-startup -P tools/char-forge/tuck_scan.py -- <GLB 폴더> <id,id|@목록파일> [--anim] [--json <out>]
 
-<GLB 폴더>/<id>.glb 를 쉼 자세로 본다. --anim 이면 <GLB 폴더>/<id>/<id>_anims.glb(vroid_batch 산출)의 Walk 를
-네 칸(1/8·3/8·5/8·7/8)에서 재고 가장 큰 값을 적는다. 줄마다 `TUCK id 아랫단 골반 본정점 뚫림`.
+<GLB 폴더>/<id>.glb 를 쉼 자세로 본다. --anim 이면 vroid_batch 산출 <GLB 폴더>/<id>/<id>.glb(몸) 에
+<id>_anims.glb(뼈·동작만, 몸 메시 없음)의 `walk` 동작을 입혀 네 칸(1/8·3/8·5/8·7/8)에서 재고 가장 큰 값을 적는다.
+줄마다 `TUCK id 아랫단 골반 본정점 뚫림`(-1 = 동작 없음).
 """
 import bpy, sys, os, json
 
@@ -17,8 +18,9 @@ ANIM = '--anim' in a
 out = a[a.index('--json') + 1] if '--json' in a else None
 rows = {}
 for i in ids:
-    path = os.path.join(d, i, i + '_anims.glb') if ANIM else os.path.join(d, i + '.glb')
-    if not os.path.exists(path):
+    path = os.path.join(d, i, i + '.glb') if ANIM else os.path.join(d, i + '.glb')
+    anims = os.path.join(d, i, i + '_anims.glb')
+    if not os.path.exists(path) or (ANIM and not os.path.exists(anims)):
         print('TUCK_MISS', i, flush=True)
         continue
     bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -26,11 +28,17 @@ for i in ids:
     sc = bpy.context.scene
     arm = next((o for o in sc.objects if o.type == 'ARMATURE'), None)
     objs = [o for o in sc.objects if o.type == 'MESH']
+    if ANIM:                                   # 동작 GLB 는 뼈·동작만 — 동작만 남기고 그 물체는 지운다
+        before = set(sc.objects)
+        bpy.ops.import_scene.gltf(filepath=anims)
+        for o in [o for o in sc.objects if o not in before]:
+            bpy.data.objects.remove(o)
     if arm is None:
         print('TUCK_NOARM', i, flush=True)
         continue
     if ANIM:
-        act = next((x for x in bpy.data.actions if x.name.startswith('Walk')), None)
+        act = next((x for x in bpy.data.actions if x.name.lower() == 'walk'), None) or \
+            next((x for x in bpy.data.actions if x.name.lower().startswith('walk')), None)
         best = None
         if act:
             arm.animation_data_create()
