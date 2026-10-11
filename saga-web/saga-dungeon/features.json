@@ -439,10 +439,11 @@
  },
  {
   "id": "dg.town-2",
-  "name": "길(격자 이웃 전부)·길목 발견거리(45%, 금14·공적1)·유적 수집품(30%, 도감 relics, 금20·공적4)·탐험 문턱 [50,150,350,700,1200,2000](금25·공적2)·마을 첫 방문 보상",
+  "name": "길(격자 이웃 전부)·길목 발견거리(1600 마다 한 곳·여섯 종 — 제단·비석·나그네 금14·공적1, 약초 덤불 회복단, 묻힌 궤짝 금30, 길목 매복 다 잡으면 상자 금40)·유적 수집품(30%, 도감 relics, 금20·공적4)·탐험 문턱 [50,150,350,700,1200,2000](금25·공적2)·마을 첫 방문 보상",
   "files": [
    "js/town.js",
-   "js/ui.js"
+   "js/ui.js",
+   "js/road-marks.js"
   ],
   "tests": [
    "이웃 마을 자산 프리페치(PLAN §28-8 후속) — 스폰 자리에서는 진짜 이웃까지 너무 멀어 아무도 안 걸린다",
@@ -452,14 +453,39 @@
    "위성 마을의 exits 데이터는 그대로다 — 갈대나루 셋(모루골+자작재+소금벌), 자작재·소금벌은 둘 (PLAN §28-3)",
    "절차 생성 마을 — 이름이 서로 안 겹치고(손으로 지은 넷 포함), 20개 이상이다",
    "절차 생성 마을 — 전부 NPC·decor 최소 간격을 지키고, 스폰 자리와도 안 겹친다",
-   "절차 생성 마을 — biome마다 지형 성향이 실제로 갈린다(forest는 숲, mountain은 바위)"
+   "절차 생성 마을 — biome마다 지형 성향이 실제로 갈린다(forest는 숲, mountain은 바위)",
+   "dg.road ① 길목 발견거리 여섯 종(W-0175) — 1600 마다·양끝 1300 밖·결정적, 매복은 밟으면 무리를 부르고 옛 기록 road:<길> 은 n=0 으로 읽는다"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {
+   "E": "○"
+  },
+  "ticket": null,
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-dg-close3.mjs 7/7 — results/pw-dg-close3.json(W-0098). 공개 fieldRelics() 엔 좌표가 없어 밟기는 town:mark 가 부르는 rewardFieldRelic 으로. 길목 발견거리·탐험 문턱은 이번엔 안 봄. · W-0175: 길목 발견거리를 js/road-marks.js 로 옮겨 1600 마다·6종(길 102 에 216 곳, 예전 ≈46) — 재미표준 E 길목 발견 ○(빈 구간 1%)."
+ },
+ {
+  "id": "dg.engage",
+  "name": "적 찍기 — 적을 짧게 누르면 쫓아가 그 적만 치고(죽거나 손으로 움직이면 놓음, 발밑 금빛 고리), 벽에 2초 막히면 걷기 목표를 버림, 강공격·회피·투장·서명 단추에 키 글자(Shift·Space·F·G)",
+  "files": [
+   "js/engage.js",
+   "js/dungeon.js",
+   "js/town.js",
+   "js/dungeon-view.js",
+   "js/dungeon3d.js"
+  ],
+  "tests": [
+   "dg.engage ① 적 찍기(W-0175) — 적 위 짧은 누름(foeAt→engage)이면 그 적을 쥐고, 사거리 안 더 가까운 적이 있어도 그 적만 친다",
+   "dg.engage ② 벽(W-0175) — 벽 쪽 대각선으로 누르면 벽을 따라 미끄러져 가고, 벽에 곧장 막혀 2초 넘게 못 가면 걷기 목표를 버린다",
+   "dg.engage ③ 키 글자(W-0175) — 강공격 Shift·회피 Space·투장 F·서명 G 단추 구석에 키 표(마우스), 손가락만인 기기는 CSS 로 뺀다"
   ],
   "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": null,
-  "since": "2026-09-30",
-  "note": "D2: saga-web/tools/playcheck/pw-dg-close3.mjs 7/7 — results/pw-dg-close3.json(W-0098). 공개 fieldRelics() 엔 좌표가 없어 밟기는 town:mark 가 부르는 rewardFieldRelic 으로. 길목 발견거리·탐험 문턱은 이번엔 안 봄."
+  "ticket": "W-0175",
+  "since": "2026-10-11",
+  "note": "D2(qc+claude 2026-10-11): 진단 셋. 찍은 적은 플레이어 객체가 아니라 WeakMap(마을 플레이어는 세이브 객체). 벽 미끄러지기는 원래 boundPlayer 가 축마다 따로 봐서 있었다 — 새로 넣은 건 2초 막힘 버림."
  },
  {
   "id": "dg.dungeon-8",

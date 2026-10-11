@@ -743,7 +743,7 @@
     ctx.beginPath();
     isoEllipse(ctx, m, pl.x, pl.y, d().status().reach + 12);
     ctx.strokeStyle = 'rgba(120,200,255,0.10)';
-    ctx.lineWidth = 1; ctx.stroke();
+    ctx.lineWidth = 1; ctx.stroke(); var egT = global.DG.engage && global.DG.engage.mark(); if (egT) { ctx.beginPath(); isoEllipse(ctx, m, egT.x, egT.y, egT.r + 10); ctx.strokeStyle = 'rgba(255,210,63,0.9)'; ctx.lineWidth = 2; ctx.stroke(); }   // W-0175 찍은 적 고리
     if (pl.rallyUntil > now) {
       ctx.beginPath();
       isoEllipse(ctx, m, pl.x, pl.y, 24 + Math.sin(now / 160) * 3);

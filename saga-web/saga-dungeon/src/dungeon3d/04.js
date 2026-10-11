@@ -229,7 +229,7 @@
     torch.distance = L.torchRange;
     torch.position.set(plx, meGroundY + 46, ply);
 
-    var moveTgt = d().moveTarget ? d().moveTarget() : null;
+    var moveTgt = (global.DG.engage && global.DG.engage.mark()) || (d().moveTarget ? d().moveTarget() : null);   // W-0175 찍은 적이 있으면 고리가 그 적 발밑에
     if (moveTgt) {
       var mtx = moveTgt.x - anc.x, mty = moveTgt.y - anc.y;
       moveMark.position.set(mtx, groundYAt(mtx, mty) + 2, mty);

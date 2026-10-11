@@ -139,18 +139,18 @@
              #dg-bottom(HUD 바, 폭 예산이 이미 390px 실측으로 빠듯하게 짜여
              있다)에 끼워 넣지 않는다 — 무대 위에 따로 띄운다. */
           '<div id="dg-actions">' +
-            '<button class="dg-skill" data-heavy title="강공격 (Shift)">' +
+            '<button class="dg-skill" data-heavy title="강공격 (Shift)"><b class="dg-sk-key dg-act-key">Shift</b>' +
               '<span class="dg-sk-e">💥</span><i class="dg-sk-cd"></i></button>' +
-            '<button class="dg-skill" data-dodge title="회피 (Space)">' +
+            '<button class="dg-skill" data-dodge title="회피 (Space)"><b class="dg-sk-key dg-act-key">Space</b>' +
               '<span class="dg-sk-e">💨</span><i class="dg-sk-cd"></i></button>' +
             /* 투장 전용 무예(2026-09-10) — 세 점을 다 갖춰야 손에 잡힌다.
                강공격·회피와 같은 자리, 셋째 자리. 못 갖췄으면 'empty'로 흐리게
                그린다(renderBottom) — 스킬 넷의 빈 칸과 같은 결. */
-            '<button class="dg-skill empty" data-setsk title="투장 무예 (F)">' +
+            '<button class="dg-skill empty" data-setsk title="투장 무예 (F)"><b class="dg-sk-key dg-act-key">F</b>' +
               '<span class="dg-sk-e">✨</span><i class="dg-sk-cd"></i></button>' +
             /* 인물별 서명 무예(2026-09-11) — 투장 무예 옆, 넷째 자리. 파일럿
                8명 밖 인물이면 계속 흐린 채(empty)로 남는다. */
-            '<button class="dg-skill empty" data-sigsk title="서명 무예 (G)">' +
+            '<button class="dg-skill empty" data-sigsk title="서명 무예 (G)"><b class="dg-sk-key dg-act-key">G</b>' +
               '<span class="dg-sk-e">🌟</span><i class="dg-sk-cd"></i></button>' +
           '</div>' +
         '</div>' +
@@ -249,7 +249,7 @@
       if (quick && moved < 12) {
         var r = cv.getBoundingClientRect();
         var p = toRoom(e.clientX - r.left, e.clientY - r.top);
-        d().moveTo(p.x, p.y);
+        var foe = global.DG.engage ? global.DG.engage.foeAt(p.x, p.y) : null; if (foe) { global.DG.engage.engage(foe); } else { d().moveTo(p.x, p.y); }   // W-0175 적을 누르면 쫓아가 친다
       }
     }
     cv.addEventListener('pointerup', release);
@@ -778,7 +778,7 @@
       var e = run.room.enemies[i];
       if (e.hp <= 0) { continue; }
       var dd = Math.hypot(e.x - run.player.x, e.y - run.player.y);
-      if (dd < bestD) { bestD = dd; best = e; }
+      if (dd < bestD || e === (global.DG.engage && global.DG.engage.targetOf(run.player))) { bestD = e === (global.DG.engage && global.DG.engage.targetOf(run.player)) ? -1 : dd; best = e; }   // W-0175 찍은 적을 먼저 보인다
     }
     if (!best || bestD > 260) { foeEl.className = ''; foeKey = ''; return; }
 
@@ -1769,7 +1769,7 @@
     ctx.beginPath();
     isoEllipse(ctx, m, pl.x, pl.y, d().status().reach + 12);
     ctx.strokeStyle = 'rgba(120,200,255,0.10)';
-    ctx.lineWidth = 1; ctx.stroke();
+    ctx.lineWidth = 1; ctx.stroke(); var egT = global.DG.engage && global.DG.engage.mark(); if (egT) { ctx.beginPath(); isoEllipse(ctx, m, egT.x, egT.y, egT.r + 10); ctx.strokeStyle = 'rgba(255,210,63,0.9)'; ctx.lineWidth = 2; ctx.stroke(); }   // W-0175 찍은 적 고리
     if (pl.rallyUntil > now) {
       ctx.beginPath();
       isoEllipse(ctx, m, pl.x, pl.y, 24 + Math.sin(now / 160) * 3);

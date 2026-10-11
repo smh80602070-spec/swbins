@@ -125,6 +125,8 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/dungeon.js"></script>
 <script src="js/mount.js"></script>
 <script src="js/town.js"></script>
+<script src="js/road-marks.js"></script>
+<script src="js/engage.js"></script>
 <script src="js/building.js"></script>
 <script src="js/ssao3d.js"></script>
 <script src="js/post3d.js"></script>
@@ -932,6 +934,75 @@ window.requestAnimationFrame = function () { return 0; };
       DN._hurt(9999, null, { ref: { name: '난입 적' } });
       var horde = grCard && !grCard.where && !grCard.restart;
       return four && shown && horde && ('어디서 「' + c.where + '」 · 누구 ' + c.who + ' · ' + c.how + ' · ' + c.keep + ' · 난입은 칸 없음');
+    });
+
+    /* ── W-0175 적 찍기·벽·키 글자·길목 발견거리 ── */
+    /** 제 씨앗으로 — 공유 수열을 안 밀게(뒤 항목 판정이 흔들린다, ownSeed 와 같은 결) */
+    function egSeed(fn) {
+      var keep = Math.random, s = 1750;
+      Math.random = function () { s = (s + 0x6D2B79F5) >>> 0; var q = s; q = Math.imul(q ^ (q >>> 15), q | 1); q ^= q + Math.imul(q ^ (q >>> 7), q | 61); return ((q ^ (q >>> 14)) >>> 0) / 4294967296; };
+      try { return fn(); } finally { Math.random = keep; }
+    }
+    function egRoom() {
+      DN.enter({ floor: 1 });
+      var raw = DN.raw(); raw.room.enemies.length = 0; raw.player.invuln = 999;
+      return raw;
+    }
+    t('dg.engage ① 적 찍기(W-0175) — 적 위 짧은 누름(foeAt→engage)이면 그 적을 쥐고, 사거리 안 더 가까운 적이 있어도 그 적만 친다', function () { return egSeed(function () {
+      var EG = DG.engage, raw = egRoom(), p = raw.player;
+      try {
+        p.x = 300; p.y = 220;
+        var a = DN._spawnEnemy(1, false, { spawned: true, x: p.x + 18, y: p.y }), b = DN._spawnEnemy(1, false, { spawned: true, x: p.x - 30, y: p.y });
+        a.hp = a.hpMax = 99999; b.hp = b.hpMax = 99999; a.cd = b.cd = 99; a.spd = b.spd = 0;
+        raw.room.enemies.push(a, b);
+        var got = EG.foeAt(b.x + 5, b.y + 3), ok1 = got === b && EG.engage(got) && EG.targetOf(p) === b;
+        for (var i = 0; i < 40; i++) { DN.update(0.05); if (!DN.raw()) { break; } }
+        var hitB = b.hp < b.hpMax, hitA = a.hp < a.hpMax;
+        DN.setInput(1, 0); var dropped = EG.targetOf(p) === null; DN.setInput(0, 0);
+        return ok1 && hitB && !hitA && dropped && ('찍은 적(30 거리) 피해 ' + (b.hpMax - b.hp) + ' · 더 가까운 적(18) 0 · 손으로 움직이면 놓음') ||
+          ('실패 ' + [ok1, hitB, !hitA, dropped].join(','));
+      } finally { DN.leave(); }
+    }); 
+    });
+    t('dg.engage ② 벽(W-0175) — 벽 쪽 대각선으로 누르면 벽을 따라 미끄러져 가고, 벽에 곧장 막혀 2초 넘게 못 가면 걷기 목표를 버린다', function () { return egSeed(function () {
+      var raw = egRoom(), p = raw.player;
+      try {
+        p.x = 200; p.y = 60;
+        DN.moveTo(260, -4000);                                     // 북동쪽 벽 너머 — y 는 막히고 x 는 간다
+        for (var i = 0; i < 10; i++) { DN.update(0.05); }
+        var slid = p.x - 200, yStuck = p.y;
+        p.x = 200; p.y = 60;
+        DN.moveTo(200, -4000);                                     // 북쪽 벽에 곧장
+        var gone = -1;
+        for (i = 0; i < 160; i++) { DN.update(0.05); if (!DN.moveTarget()) { gone = i * 0.05; break; } }
+        return slid > 0.5 && gone > 0 && ('대각선 → 벽 따라 x +' + slid.toFixed(1) + '(y ' + yStuck.toFixed(0) + ' 에 막힘) · 곧장 막힘 → ' + gone.toFixed(2) + '초에 목표 버림') ||
+          ('실패 slid=' + slid.toFixed(2) + ' gone=' + gone);
+      } finally { DN.leave(); }
+    }); 
+    });
+    t('dg.engage ③ 키 글자(W-0175) — 강공격 Shift·회피 Space·투장 F·서명 G 단추 구석에 키 표(마우스), 손가락만인 기기는 CSS 로 뺀다', function () {
+      var want = ['Shift', 'Space', 'F', 'G'], els = document.querySelectorAll('#dg-actions .dg-act-key'), src = '', got;
+      if (els.length) { got = [].map.call(els, function (e) { return e.textContent; }); }
+      else {
+        var x = new XMLHttpRequest(); x.open('GET', 'js/dungeon-view.js', false); x.send(); src = x.responseText;
+        got = want.filter(function (k) { return src.indexOf('dg-act-key">' + k + '</b>') >= 0; });
+      }
+      var c = new XMLHttpRequest(); c.open('GET', 'css/diablo.css', false); c.send();
+      var touchOff = /pointer: coarse\) \{ #dg-actions \.dg-act-key \{ display: none/.test(c.responseText);
+      return got.join() === want.join() && touchOff && ('키 ' + got.join('·') + (els.length ? '(DOM)' : '(화면 코드)') + ' · 터치 기기 숨김');
+    });
+    t('dg.road ① 길목 발견거리 여섯 종(W-0175) — 1600 마다·양끝 1300 밖·결정적, 매복은 밟으면 무리를 부르고 옛 기록 road:<길> 은 n=0 으로 읽는다', function () {
+      var RM = DG.roadMarks, segs = DG.town.roadSegments(), a = RM.build(segs), b = RM.build(segs), kinds = {};
+      a.forEach(function (m) { kinds[m.kind.key] = 1; });
+      var same = JSON.stringify(a.map(function (m) { return [m.id, Math.round(m.x), Math.round(m.y)]; })) === JSON.stringify(b.map(function (m) { return [m.id, Math.round(m.x), Math.round(m.y)]; }));
+      var safe = a.every(function (m) { var s = segs[m.seg], L = Math.hypot(s.bx - s.ax, s.bz - s.az); return m.at >= RM.SAFE_R && L - m.at >= RM.SAFE_R; });
+      var m0 = a.filter(function (m) { return m.n === 0; })[0], m1 = a.filter(function (m) { return m.n === 1; })[0], old = {}; old['road:' + m0.seg] = 1;
+      var legacy = RM.isDone(m0, old) && (!m1 || m1.seg !== m0.seg || !RM.isDone(m1, old));
+      return Object.keys(kinds).length === 6 && same && safe && legacy && ('길 ' + segs.length + ' · 발견거리 ' + a.length + '(예전 ≈' + Math.round(segs.length * 0.45) + ') · 여섯 종 · 결정적 · 양끝 밖 · 옛 기록 n=0');
+    });
+    t('재미표준 E 길목 발견(측정) — 모든 길을 1600 구간으로 나눠 양끝 마을 1300 밖 구간 중 발견거리 없는 구간 ≤10%(W-0175)', function () {
+      var RM = DG.roadMarks, segs = DG.town.roadSegments(), cv = RM.coverage(segs, RM.build(segs));
+      return (cv.rate <= 0.1 ? '○' : (cv.rate <= 0.3 ? '△' : '×')) + ' — 길 ' + segs.length + ' · 구간 ' + cv.cells + ' 중 빈 구간 ' + cv.empty + '(' + Math.round(cv.rate * 100) + '%, 규격 ≤10%) · 6400 길 = 걸어서 약 40초에 2 곳';
     });
 
     t('재미표준 F 실패와 회복(측정)', function () {

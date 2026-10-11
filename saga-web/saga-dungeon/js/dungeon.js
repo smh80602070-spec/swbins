@@ -2014,8 +2014,8 @@
 
   /* ── 진행 ─────────────────────────────────────────────── */
 
-  function setInput(dx, dy) { input.dx = dx; input.dy = dy; if (dx || dy) { target = null; } }
-  function moveTo(x, y) { target = { x: x, y: y }; }
+  function setInput(dx, dy) { input.dx = dx; input.dy = dy; if (dx || dy) { target = null; if (run && global.DG.engage) { global.DG.engage.drop(run.player); } } }   // W-0175 손으로 움직이면 찍은 적을 놓는다
+  function moveTo(x, y) { target = { x: x, y: y }; if (run && global.DG.engage) { global.DG.engage.drop(run.player); } }
 
   /* ── 방 밖 들판으로 나간다 (PLAN 4·5·6절의 나머지 절반) ─────
    * `field3d.js` 가 방 둘레에 세워 둔 세상은 여태 **눈에만 보였다** — 판정은
@@ -2859,13 +2859,13 @@
 
       /* 내 공격 — 사거리 안에서 가장 가까운 적 */
       p.atkCd -= dt;
-      var reach = reachOf();
+      var reach = reachOf(), tg = global.DG.engage ? global.DG.engage.pick(p, room.enemies) : null;   // W-0175 찍은 적이 있으면 그 적만
       var near = null, nd = 1e9;
       for (i = 0; i < room.enemies.length; i++) {
         var e = room.enemies[i];
         if (e.hp <= 0) { continue; }
         var d = dist(p, e) - e.r;
-        if (d < nd) { nd = d; near = e; }
+        if (tg ? e === tg : d < nd) { nd = d; near = e; }
       }
       if (near && nd <= reach && p.atkCd <= 0) {
         if (global.DG.mount && global.DG.mount.onAttack) { global.DG.mount.onAttack(); }   // 탈것 위에선 못 싸운다 — 자동 공격이 나갈 때 내린다
@@ -3131,7 +3131,7 @@
       boundPlayer(p, px0, py0, { corridors: run.corridors, floor: run.floor, roomIdx: run.roomIdx });
     } else {
       /* 이동 */
-      var dx = input.dx, dy = input.dy;
+      var dx = input.dx, dy = input.dy; if (!dx && !dy && global.DG.engage && global.DG.engage.targetOf(p)) { target = global.DG.engage.goal(p, room.enemies); }   // W-0175 찍은 적을 쫓는다
       if (!dx && !dy && target) {
         var tdx = target.x - p.x, tdy = target.y - p.y;
         var td = Math.sqrt(tdx * tdx + tdy * tdy);
@@ -3156,7 +3156,7 @@
          roomIdx를 안 실어 보내면 항상 undefined가 되어 매 프레임 "막힌
          것 없음"으로 새 버렸을 뻔했다(자가진단이 이 층을 안 보는 값이라
          하마터면 조용히 회귀할 뻔한 자리, PLAN §28-4 Phase 2). */
-      boundPlayer(p, px0, py0, { corridors: run.corridors, floor: run.floor, roomIdx: run.roomIdx });
+      boundPlayer(p, px0, py0, { corridors: run.corridors, floor: run.floor, roomIdx: run.roomIdx }); if (target && global.DG.engage && global.DG.engage.stuck(p, px0, py0, dt)) { target = null; }   // W-0175 2초 0.5 도 못 가면 버림
     }
     if (p.hurt > 0) { p.hurt -= dt; }
 
@@ -3204,13 +3204,13 @@
 
     /* 내 공격 — 사거리 안에서 가장 가까운 적 */
     p.atkCd -= dt;
-    var reach = reachOf();
+    var reach = reachOf(), tg = global.DG.engage ? global.DG.engage.pick(p, room.enemies) : null;   // W-0175 찍은 적이 있으면 그 적만
     var near = null, nd = 1e9;
     for (i = 0; i < room.enemies.length; i++) {
       var e = room.enemies[i];
       if (e.hp <= 0) { continue; }
       var d = dist(p, e) - e.r;
-      if (d < nd) { nd = d; near = e; }
+      if (tg ? e === tg : d < nd) { nd = d; near = e; }
     }
     if (near && nd <= reach && p.atkCd <= 0) {
       if (global.DG.mount && global.DG.mount.onAttack) { global.DG.mount.onAttack(); }

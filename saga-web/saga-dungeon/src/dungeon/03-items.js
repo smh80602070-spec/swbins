@@ -431,6 +431,6 @@
 
   /* ── 진행 ─────────────────────────────────────────────── */
 
-  function setInput(dx, dy) { input.dx = dx; input.dy = dy; if (dx || dy) { target = null; } }
-  function moveTo(x, y) { target = { x: x, y: y }; }
+  function setInput(dx, dy) { input.dx = dx; input.dy = dy; if (dx || dy) { target = null; if (run && global.DG.engage) { global.DG.engage.drop(run.player); } } }   // W-0175 손으로 움직이면 찍은 적을 놓는다
+  function moveTo(x, y) { target = { x: x, y: y }; if (run && global.DG.engage) { global.DG.engage.drop(run.player); } }
 

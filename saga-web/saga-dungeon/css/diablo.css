@@ -822,3 +822,8 @@ b, strong, .p-sub, .coin, .dg-loot, .d2-gv { font-variant-numeric: tabular-nums;
 @media (max-width: 780px) {
   body.sheet-open #dg-minimap { visibility: hidden; }
 }
+
+/* W-0175 강공격·회피·투장·서명 단추 구석 키 글자 — 스킬 넷의 dg-sk-key 와 같은 표. 손가락만인 기기는 뺀다(키보드가 없다) */
+#dg-actions .dg-skill { position: relative; }
+#dg-actions .dg-act-key { font-size: 10px; top: auto; bottom: 4px; left: 50%; transform: translateX(-50%); padding: 0 4px; border-radius: 6px; background: rgba(10, 8, 6, .78); color: #f0dca0; line-height: 13px; pointer-events: none; }
+@media (hover: none) and (pointer: coarse) { #dg-actions .dg-act-key { display: none; } }
