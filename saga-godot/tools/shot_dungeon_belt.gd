@@ -73,3 +73,33 @@ static func _arena(tree: SceneTree, ranks: Dictionary, slots: Array, casts: Arra
 		if n[0] >= CAST_AT + 4 * casts.size():
 			tree.process_frame.disconnect(cb[0]) # 다음 컷에서 씬이 바뀌면 c 가 지워진다
 	tree.process_frame.connect(cb[0])
+
+
+## G-0202 — 소환수 넷(군견·응사·토우·분신술)을 4프레임 간격으로(무예 키를 직접 — 직업 자리 확인은 건너뜀). 적은 3~4m 밖으로 옮겨 소환수가 흩어지게.
+## 사람 몸 복제 비용을 보려고 시전 전후 그리기 수를 찍는다("SUMMON_DRAWS").
+const SUMMON_AT := 40 # 촬영 50프레임 전 — 소환수가 떨어진 적에게 달려가 흩어지게
+const SUMMON_KEYS := ["w_hound", "a_hawk", "y_golem", "y_shade"]
+
+
+static func summon(tree: SceneTree) -> void:
+	_arena(tree, {"w_hound": 1, "a_hawk": 1, "y_golem": 1, "y_shade": 1}, ["", "", "", ""], [])
+	var p := tree.get_first_node_in_group("player") as Node3D
+	var far := [Vector3(3.6, 0, 1.0), Vector3(-3.4, 0, 1.8), Vector3(0.8, 0, -3.6)]
+	var es := tree.get_nodes_in_group("dungeon_enemy").slice(-3)
+	for i in es.size():
+		(es[i] as Node3D).global_position = p.global_position + far[i]
+	var c := tree.get_first_node_in_group("skill_caster")
+	var n := [0]
+	var draws := [0]
+	var cb := [Callable()]
+	cb[0] = func() -> void:
+		n[0] += 1
+		if n[0] == SUMMON_AT - 1:
+			draws[0] = int(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME))
+		for k in SUMMON_KEYS.size():
+			if n[0] == SUMMON_AT + 4 * k:
+				c.try_cast(String(SUMMON_KEYS[k]))
+		if n[0] >= SUMMON_AT + 28:
+			print("SUMMON_DRAWS before=%d after=%d" % [draws[0], int(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME))])
+			tree.process_frame.disconnect(cb[0])
+	tree.process_frame.connect(cb[0])

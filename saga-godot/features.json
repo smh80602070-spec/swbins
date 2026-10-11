@@ -3417,5 +3417,30 @@
   "ticket": "G-0201",
   "since": "2026-10-11",
   "note": "창 모드 st_skill_fx 가로·세로 Claude 눈 ○(금 원환·불꽃·피해 숫자) · story_golden md5 그대로"
+ },
+ {
+  "id": "gd.dg.summon-body",
+  "name": "2나락 소환수 몸·타격 손맛 — summon 일곱이 코드 짐승(늑대·새·여우·곰·고블린)·반투명 내 몸 분신으로 보이고, 때릴 때 한 걸음 내딛으며 불꽃·숫자",
+  "files": [
+   "games/saga_dungeon/world/dungeon_minion.gd",
+   "games/saga_dungeon/player/skill_caster.gd",
+   "tools/probe_dungeon_slots.gd",
+   "tools/shot_dungeon_belt.gd",
+   "tools/shot_scene.gd"
+  ],
+  "tests": [
+   "dungeon_slots",
+   "dungeon_skills",
+   "dungeon_melee",
+   "save_dungeon",
+   "dungeon_synergy",
+   "mount_dungeon"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0202",
+  "since": "2026-10-11",
+  "note": "창 모드 dg_summon 가로·세로 Claude 눈 ○(곰·매·반투명 분신·맞은 적 번쩍임·숫자) · 그리기 214→252(소환 넷)"
  }
 ]

@@ -198,6 +198,7 @@ func _cast_summon(sk: Dictionary, rank: int) -> bool:
 		parent = _player.get_parent()
 	for i in range(roundi(DungeonSkills.value_at(sk, rank))):
 		var m: Node3D = DungeonMinion.new()
+		m.kind_key = str(sk.key) # G-0202 몸 고르기 — _ready 전에
 		parent.add_child(m)
 		m.life_left = float(sk.sec)
 		m.mul = 0.5 * float(sk.get("str", 1.0))

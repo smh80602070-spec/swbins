@@ -5,6 +5,7 @@ extends SceneTree
 ## ① 자동 채움(처음 배운 활성 무예 → 빈 칸)·맞바꿈(setSlot)·패시브/안 배운 것/딴 직업 것 거절 ② 직업마다 넷 따로 — 무기를 바꾸면 시전기의 자리도 그 직업 것
 ## ③ 옛 세이브(skill_slots 없음)는 배운 활성 무예를 표 순서로 채움 · 새 세이브 slots 는 그대로 · 길이 넷 맞춤
 ## ④ 모양 아홉(bolt·swing·nova·dash·buff·heal·curse·summon·chain)+whirl·shots(a_multi 셋)·far(w_leap 0.36초)가 옛 사본과 같은 값 · 쿨다운은 무예 키별 · 입력 넷 = Z·X·C·V.
+## ⑥ G-0202 소환수 몸 — summon 일곱이 BODY 표에 다 있음 · 시전하면 분신마다 몸(메시) · 사람 몸 복제는 넷까지(다섯째 대역)·반투명 · 분신 한 번 때리면 숫자 +1·멈칫 0 · 수명 끝에 몸까지 사라짐.
 ## ⑤ G-0200 시전 손맛 — 모양 아홉마다 숫자(popup) 수 = 맞은 적 수 · 여럿 맞혀도 멈칫(hitstop) 1 · 효과 노드가 생기고 1초 안에 스스로 지워짐 · 원소→입자 표가 ELEMENTS 일곱을 다 덮음.
 ## 상태는 끝에 되돌린다. 끝에 "PROBE dungeon_slots OK" 또는 "PROBE dungeon_slots FAIL n".
 
@@ -199,6 +200,54 @@ func _initialize() -> void:
 		if not Caster.EL_PARTICLE.has(e.key) or not CombatFx.PARTICLES.has(Caster.EL_PARTICLE[e.key]):
 			el_miss.append(e.key)
 	check(el_miss.is_empty() and Caster.el_color({"el": "emp"}).is_equal_approx(Color("#ff4fd8")) and Caster.el_color({"el": "fire"}).is_equal_approx(Color("#e2601a")), "원소→입자 표가 ELEMENTS 일곱을 다 덮고 색은 표 그대로 %s" % str(el_miss))
+
+	# ⑥ G-0202 소환수 몸·타격(치명 끔 — reset 의 critPct -1000)
+	var summon_keys: Array = Skills.SKILLS.filter(func(s): return String(s.get("shape", "")) == "summon").map(func(s): return String(s.key))
+	check(summon_keys.size() == 7 and summon_keys.all(func(k): return Minion.BODY.has(k)), "⑥ summon 일곱이 몸 표에 다 있음 %s" % str(summon_keys))
+	var r7 := {}
+	for k in summon_keys:
+		r7[k] = 1
+	SS.restore({}, r7, {})
+	var no_body: Array = []
+	for k in summon_keys:
+		es = reset.call()
+		caster.try_cast(k)
+		var ms: Array = world.get_children().filter(func(c): return c.get_script() == Minion)
+		if ms.is_empty() or ms.any(func(m): return m.find_children("*", "MeshInstance3D", true, false).is_empty()):
+			no_body.append(k)
+	check(no_body.is_empty(), "⑥ 일곱 시전마다 분신에 몸(메시) %s" % str(no_body))
+	es = reset.call()
+	var pvis: Node3D = player.get_node("Visual") # 앞(①~④)에서 단 빈 몸 자리
+	var pmesh := MeshInstance3D.new()
+	pmesh.mesh = BoxMesh.new()
+	pvis.add_child(pmesh)
+	player.add_to_group("player") # 분신이 주인 몸을 찾는 길
+	var selfs: Array = []
+	for i in 5:
+		var sm: Node3D = Minion.new()
+		sm.kind_key = "y_shade"
+		world.add_child(sm)
+		selfs.append(sm)
+	var dup_n: int = selfs.filter(func(m): return m.is_in_group("dungeon_minion_self")).size()
+	var alpha_ok: bool = is_equal_approx((selfs[0].get_node("Body").find_children("*", "MeshInstance3D", true, false)[0] as GeometryInstance3D).transparency, Minion.SELF_ALPHA)
+	check(dup_n == 4 and alpha_ok and not selfs[4].is_in_group("dungeon_minion_self") and not selfs[4].find_children("*", "MeshInstance3D", true, false).is_empty(),
+		"⑥ 사람 몸 복제 넷(반투명 %.2f)·다섯째는 대역 몸 — 복제 %d" % [Minion.SELF_ALPHA, dup_n])
+	player.remove_from_group("player")
+	pmesh.free()
+	es = reset.call()
+	var hm: Node3D = Minion.new()
+	hm.kind_key = "w_hound"
+	world.add_child(hm)
+	pops[0] = 0
+	stops[0] = 0
+	hm._strike(es[0])
+	check(pops[0] == 1 and stops[0] == 0 and es[0].hp < 5000.0, "⑥ 분신 한 번 때림: 숫자 %d · 멈칫 %d · 피해 %.0f" % [pops[0], stops[0], 5000.0 - es[0].hp])
+	hm.life_left = 0.01
+	hm._physics_process(0.05)
+	await process_frame
+	check(not is_instance_valid(hm), "⑥ 수명 끝 = 분신·몸 사라짐")
+	Engine.time_scale = 1.0
+	SS.restore({}, ranks, {})
 
 	# G-0199 br6·br7 30 — 공용 시전기로 하나씩 실제 시전(표만 늘려도 나간다)
 	var new_keys: Array = Skills.SKILLS.filter(func(s): return int(s.br) >= 6).map(func(s): return String(s.key))
