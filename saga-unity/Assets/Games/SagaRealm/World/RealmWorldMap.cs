@@ -34,7 +34,7 @@ namespace Saga.Realm.World
 
         // tasks U-0102 성 이름표 — 기둥 위, 카메라를 보고 화면 크기가 거의 같게(글 크기 = 카메라 거리 × LabelPerMeter).
         // 지금 성 이름은 늘, 나머지는 카메라가 LabelNearRadius 안으로 다가왔을 때만(먼 줌에서 55곳 글이 겹치지 않게).
-        public const float LabelHeight = 6f, LabelNearRadius = 160f, LabelPerMeter = 0.2f;
+        public const float LabelHeight = 6f, LabelNearRadius = 160f, LabelPerMeter = 0.32f;
         public static RealmWorldMap Instance { get; private set; }
         private readonly List<(string cityId, TextMeshPro label)> _labels = new List<(string, TextMeshPro)>();
         private Saga.Realm.Player.RealmWorldMapCamera _mapCam;
@@ -45,6 +45,13 @@ namespace Saga.Realm.World
         {
             Instance = this;
             RealmCityState.Changed += Rebuild;
+        }
+
+        /// <summary>tasks U-0102 — 지도를 켤 때마다 다시 짓는다. 꺼진 채 판을 불러오면 Awake 전이라 `Changed` 를 못 들어
+        /// 씬에 구운 첫 세 성 표지만 남아 있었다(카메라가 고른 성을 보면 빈 하늘).</summary>
+        private void OnEnable()
+        {
+            if (Application.isPlaying) Rebuild();
         }
 
         private void OnDestroy()
@@ -104,10 +111,17 @@ namespace Saga.Realm.World
             var cityIds = RealmCityState.ActiveCityIds;
             if (cityIds.Count == 0) return; // 씬 첫 로드 등 아직 상태가 없을 때.
 
-            Spawn("Ground", transform, PrimitiveType.Cylinder, new Vector3(0f, -0.1f, 0f),
-                new Vector3(GroundSpan, 0.2f, GroundSpan), GroundColor, addCollider: false);
-
             var (centerX, centerY) = MapCenter(cityIds);
+            // tasks U-0102 — 땅 원판이 성을 다 덮게(끝판 55성은 중심에서 800m 넘게 퍼져 260m 원판 밖 표지가 하늘에 떠 있었다).
+            float span = GroundSpan;
+            foreach (var cityId in cityIds)
+            {
+                var d = RealmCityData.Get(cityId);
+                if (d != null) span = Mathf.Max(span, WorldPos(d, centerX, centerY).magnitude * 2f + 60f);
+            }
+            Spawn("Ground", transform, PrimitiveType.Cylinder, new Vector3(0f, -0.1f, 0f),
+                new Vector3(span, 0.2f, span), GroundColor, addCollider: false);
+
             foreach (var cityId in cityIds)
             {
                 var def = RealmCityData.Get(cityId);

@@ -252,6 +252,9 @@ namespace Saga.EditorTools
                         if (mc == null) { Skip(act); return; }
                         mc.SetView(Saga.Realm.Player.RealmWorldMapCamera.MinRadius, 0.6f);
                         mc.Tick(10f);
+                        var card = GameObject.Find("SessionCard");   // 끝난 판 세이브면 승리 카드가 한가운데를 가린다(촬영 프로세스 안에서만 숨김)
+                        if (card != null) card.SetActive(false);
+                        Debug.Log($"[ShowcaseGui] realmzoom {Saga.Realm.Data.RealmCityState.CurrentCity} 중심 {mc.DebugPivot} 거리 {mc.DebugRadius}");
                         break;
                     }
                     case "realmannals":   // U-0101 사가천하 — 열전 넷을 심고 서고를 연다

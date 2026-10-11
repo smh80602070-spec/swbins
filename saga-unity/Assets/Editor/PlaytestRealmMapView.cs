@@ -38,6 +38,15 @@ namespace Saga.EditorTools
                 var ids = RealmCityState.ActiveCityIds;
                 if (ids.Count < 2) { Fail("우리 성이 둘 미만"); return false; }
 
+                // ⓪ 켜면 다시 짓는다(꺼진 채 불러온 판의 구운 표지 셋 그대로이던 것) · 땅이 모든 성을 덮는다
+                RealmMapState.Toggle(); RealmMapState.Toggle();   // 끔 → 켬(OnEnable)
+                int markers = map.transform.Cast<Transform>().Count(c => c.name.StartsWith("Marker_") && c.gameObject.activeSelf);
+                if (markers < ids.Count) Fail($"켠 지도 표지 {markers} < 우리 성 {ids.Count}");
+                var ground = map.transform.Find("Ground");
+                float reach = ids.Max(id => { var p = RealmWorldMap.CityWorldPos(id); return p.HasValue ? new Vector2(p.Value.x - map.transform.position.x, p.Value.z - map.transform.position.z).magnitude : 0f; });
+                if (ground == null || ground.localScale.x * 0.5f < reach) Fail($"땅 반지름 {(ground != null ? ground.localScale.x * 0.5f : 0f):0} < 가장 먼 성 {reach:0}");
+                m += $" 표지 {markers}·땅 반지름 {(ground != null ? ground.localScale.x * 0.5f : 0f):0}m(가장 먼 성 {reach:0}m) ·";
+
                 // ① 켜면 지금 성 위
                 cam.enabled = false; cam.enabled = true;   // OnEnable — 바로 지금 성 위
                 for (int i = 0; i < 3; i++) cam.Tick(0.02f);
