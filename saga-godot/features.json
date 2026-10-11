@@ -3489,5 +3489,33 @@
   "fun": {},
   "ticket": "G-0203",
   "since": "2026-10-11"
+ },
+ {
+  "id": "gd.dg.boss-patterns",
+  "name": "2나락 보스 패턴 넷 — 강타(원형)·돌진(순간 접근)·관통(방향 고정 부채꼴)·연격(세 번), 바닥 예고가 차오른 뒤 터짐(웹 bossPattern, 층 단계별 무기)",
+  "files": [
+   "games/saga_dungeon/world/boss_pattern.gd",
+   "games/saga_dungeon/world/dungeon_enemy.gd",
+   "saga_core/combat_tell.gd",
+   "tools/probe_dungeon_boss.gd",
+   "tools/shot_dungeon_belt.gd",
+   "tools/shot_scene.gd"
+  ],
+  "tests": [
+   "dungeon_boss",
+   "dungeon_world",
+   "dungeon_run",
+   "dungeon_melee",
+   "dungeon_slots",
+   "hurt_signal",
+   "save_dungeon",
+   "dungeon_grace"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0204",
+  "since": "2026-10-11",
+  "note": "창 모드 dg_boss_tell 가로·세로 Claude 눈 ○(보스 발밑 주황 원이 차오름)"
  }
 ]

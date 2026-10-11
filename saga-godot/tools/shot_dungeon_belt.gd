@@ -125,3 +125,31 @@ static func _hurt_at(tree: SceneTree, ph: Node) -> void:
 				ph.call("take_damage", 3.0)
 			tree.process_frame.disconnect(cb[0])
 	tree.process_frame.connect(cb[0])
+
+
+## G-0204 — 첫 방에 보스(강타)를 세우고 예고가 반쯤 찬 프레임을 찍는다(촬영 0.35초 전에 예고 시작). 메모리에서만.
+static func boss_tell(tree: SceneTree) -> void:
+	_arena(tree, {}, ["", "", "", ""], [])
+	for e in tree.get_nodes_in_group("dungeon_enemy"):
+		e.queue_free() # 잡몹은 치운다 — 촬영 전에 쓰러지지 않게
+	var p := tree.get_first_node_in_group("player") as Node3D
+	var Enemy: GDScript = load("res://games/saga_dungeon/world/dungeon_enemy.gd")
+	var BossPattern: GDScript = load("res://games/saga_dungeon/world/boss_pattern.gd")
+	var b: Node3D = Enemy.new(3, true)
+	b.set("boss_pattern", BossPattern.new(3, "club"))
+	b.get("boss_pattern").cd = 999.0
+	tree.current_scene.add_child(b)
+	b.global_position = p.global_position + Vector3(3.6, 0, -1.4) # 평타(3.4m) 밖·강타 반경(4.46m) 안
+	b.set("hp", 99999.0)
+	var n := [0]
+	var cb := [Callable()]
+	cb[0] = func() -> void:
+		n[0] += 1
+		if n[0] == 69 and is_instance_valid(b):
+			b.get("boss_pattern").cd = 0.001
+			var ph := tree.get_first_node_in_group("player_health")
+			if ph != null:
+				ph.call("heal_by", 999.0)
+		if n[0] >= 69:
+			tree.process_frame.disconnect(cb[0])
+	tree.process_frame.connect(cb[0])

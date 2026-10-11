@@ -63,6 +63,7 @@ const SHADE_SCALE := 10.0 / 13.0  # spawnEnemy()의 그림자 분신 r=10 그대
 const LootPickup := preload("res://games/saga_dungeon/world/loot_pickup.gd")
 const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")  # 색 캡슐 대신 GO 짐승 공방 몸(2026-09-30)
 const Toast := preload("res://saga_core/ui/toast.gd")  # "그림자가 갈라졌다" 토스트용
+const BossPattern := preload("res://games/saga_dungeon/world/boss_pattern.gd")  # G-0204 보스 패턴(예고 뒤 터짐)
 
 ## dungeon.js ELITES 그대로(8종, 색까지 원작 값) — hp/dmg 배율 없는 항목은
 ## spawnEnemy()의 기본값(1.35/1.15)을 쓴다(아래 _init에서 처리).
@@ -106,6 +107,8 @@ var _anim := ""
 var _attack_cd_left := 0.0
 var _player: Node3D
 var _dead := false
+var boss_pattern: RefCounted = null # G-0204 — 보스만(잡몹·정예는 null)
+var _hurt_by := "" # 지금 맞히는 패턴 이름(사망 카드 "누구에게" 줄에 덧붙임)
 
 
 ## dungeon.js eliteChance(floor) 그대로 — 깊을수록 잦다(상한 30%).
@@ -170,6 +173,8 @@ func _ready() -> void:
 	add_to_group("dungeon_enemy")
 	if is_boss:
 		add_to_group("dungeon_boss")
+		if boss_pattern == null:
+			boss_pattern = BossPattern.new(_floor_num)
 	_player = get_tree().get_first_node_in_group("player")
 	_spawn_visual()
 
@@ -205,6 +210,20 @@ func _physics_process(delta: float) -> void:
 	var to_player: Vector3 = _player.global_position - global_position
 	to_player.y = 0
 	var dist := to_player.length()
+	## G-0204 — 보스 패턴은 평타와 나란히 돈다(웹 2966). 예고·연격 중엔 그 자리에 서고 평타를 쉰다.
+	if boss_pattern != null:
+		boss_pattern.tick(self, _player, delta, _boss_hurt)
+		if _dead:
+			return
+		if boss_pattern.busy():
+			velocity = Vector3.ZERO
+			move_and_slide()
+			_face_and_animate(to_player)
+			return
+		## 돌진은 틱 안에서 자리를 옮긴다 — 평타·쫓기는 옮긴 뒤 거리로.
+		to_player = _player.global_position - global_position
+		to_player.y = 0
+		dist = to_player.length()
 	if dist <= ATTACK_RANGE * _scale_mul:
 		velocity = Vector3.ZERO
 		if _attack_cd_left <= 0.0:
@@ -348,7 +367,7 @@ func thorn_reflect(dmg: float) -> float:
 ## G-0193 — 사망 카드 "누구에게" 줄에 쓸 이름
 func who_label() -> String:
 	if is_boss:
-		return "굴혈의 우두머리"
+		return "굴혈의 우두머리" if _hurt_by == "" else "굴혈의 우두머리(%s)" % _hurt_by
 	if elite_key != "":
 		return "%s 정예 도깨비" % String(_elite_def.get("name", elite_key))   # 정예 이름은 꾸밈말(가시 돋친·…)
 	return "%d층 도깨비" % _floor_num
@@ -357,6 +376,15 @@ func who_label() -> String:
 func _attack_player() -> void:
 	if _player.has_node("PlayerHealth"):
 		_player.get_node("PlayerHealth").take_damage(attack_damage, self)
+
+
+## G-0204 — 보스 패턴이 맞혔을 때(웹 hurtPlayer(en.dmg * MUL, …, '강타') 그대로).
+func _boss_hurt(mul: float, pattern: String) -> void:
+	if _player == null or not _player.has_node("PlayerHealth"):
+		return
+	_hurt_by = pattern
+	_player.get_node("PlayerHealth").take_damage(attack_damage * mul, self)
+	_hurt_by = ""
 
 
 ## **저주(hex)와 "가시 돋친" 정예의 순서 근사** — 원작 strike()는 hex
