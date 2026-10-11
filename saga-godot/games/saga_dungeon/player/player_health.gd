@@ -26,6 +26,7 @@ const Toast := preload("res://saga_core/ui/toast.gd")
 const LootPickup := preload("res://games/saga_dungeon/world/loot_pickup.gd")
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const HurtVignette := preload("res://saga_core/ui/hurt_vignette.gd")
+const CombatFx := preload("res://saga_core/combat_fx.gd")
 const LOW_HP := 0.3 # G-0203 이 밑이면 가장자리 맥박(1만리 field_combat 과 같은 값)
 
 ## PLAN 101-2 DUNGEON ②(유품, 2026-09-17) — dungeon_grave_state.gd 헤더
@@ -95,16 +96,22 @@ func heal_by(amount: float) -> void:
 	hp_changed.emit(hp, max_hp)
 
 
-func take_damage(amount: float, source: Node = null) -> void:
+## G-0208 — el(원소 키)이 ""·"phys" 가 아니면 장비 원소 저항만큼 깎는다(웹 hurtPlayer "if (el && el !== 'phys') amount *= 1 - elemResOf(el)/100" 그대로). 기존 호출은 기본값으로 그대로.
+func take_damage(amount: float, source: Node = null, el: String = "") -> void:
 	if _dead or amount <= 0.0:
 		return
 	var dealt := amount * DungeonRunState.guard_mult()
+	var elemental := el != "" and el != "phys"
+	if elemental:
+		dealt *= 1.0 - DungeonEquipmentState.elem_resist(el) / 100.0
 	last_hit = {"who": String(source.call("who_label")) if source != null and source.has_method("who_label") else "", "dmg": dealt}
 	hp = maxf(0.0, hp - dealt)
 	## G-0203 — 붉은 숫자(combat_feel 이 player 그룹이면 붉게)·몸 번쩍·멈칫·흔들림 + 가장자리 붉게(1만리 G-0171 과 같음).
 	var vis := get_parent().get_node_or_null("Visual") as Node3D
 	if vis != null:
 		CombatFeel.hit(vis, dealt, false)
+		if elemental:   # G-0208 — 붉은 숫자 옆에 원소 색 불꽃 하나
+			CombatFx.spark(vis, vis.global_position + Vector3.UP * 1.0, Color(String(DungeonItems.elem_by_key(el).get("color", "#ffffff"))))
 	if is_instance_valid(_hv):
 		_hv.flash()
 	hp_changed.emit(hp, max_hp)

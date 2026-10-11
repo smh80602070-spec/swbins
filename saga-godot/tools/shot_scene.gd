@@ -102,6 +102,7 @@ const CUTS := [
 	["dg_hurt", DUNGEON, [["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", 1.0]], ["static", "res://tools/shot_dungeon_belt.gd", "hurt", ["@tree"]]]],   # G-0203 내가 맞았다 — 가장자리 붉음·붉은 숫자(체력 25% 근처 맥박)
 	["dg_boss_tell", DUNGEON, [["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", 1.0]], ["static", "res://tools/shot_dungeon_belt.gd", "boss_tell", ["@tree"]]]],   # G-0204 보스 강타 예고 — 발밑 붉은 원이 반쯤 차오름
 	["dg_roster", DUNGEON, [["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", 1.0]], ["static", "res://tools/shot_dungeon_belt.gd", "roster", ["@tree"]]]],   # G-0207 잡몹 명단 — 왼쪽 1층 셋·오른쪽 13층 셋
+	["dg_ranged", DUNGEON, [["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", 1.0]], ["static", "res://tools/shot_dungeon_belt.gd", "ranged", ["@tree"]]]],   # G-0208 원거리 잡몹 — 독 궁수·불 조총병이 멀찍이 서서 쏜 화살·탄환이 날아오는 중
 	["dg_fire_skills", DUNGEON, [["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", 1.0]], ["static", "res://tools/shot_dungeon_belt.gd", "fire", ["@tree"]]]],   # G-0200 폭염진(주황 원환·불씨) + 화창(궤적·불꽃)
 	["dg_story", DUNGEON, [["free_modal"]]],
 	["dg_room_wide", DUNGEON, [["free_modal"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 14.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-40.0, 0.0, 0.0)]]],   # G-0112 첫 방 전체(어두움 판정)   # G-0085 사가나락 이야기 첫 대화(새 판 — 출사표 창을 닫으면 뜬다)

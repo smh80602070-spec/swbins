@@ -175,3 +175,30 @@ static func roster(tree: SceneTree) -> void:
 		e.global_position = p.global_position + (sp[1] as Vector3)
 		e.set_physics_process(false) # 서 있기만
 		print("ROSTER %d층 %s" % [int(sp[0]), e.call("who_label")])
+
+
+## G-0208 — 원거리 잡몹 둘(독 궁수·불 조총병)이 멀찍이 서서 쏜다. 쿨을 맞춰 찍는 프레임에 화살·탄환이 날아가는 중이게.
+static func ranged(tree: SceneTree) -> void:
+	for e in tree.get_nodes_in_group("dungeon_enemy"):
+		e.queue_free()
+	for m in tree.get_nodes_in_group("ui_modal"):
+		m.queue_free()
+	tree.node_added.connect(func(n: Node) -> void:
+		var s: Script = n.get_script()
+		if s != null and s.resource_path.ends_with("talk_box.gd"):
+			n.queue_free.call_deferred())
+	var p := tree.get_first_node_in_group("player") as Node3D
+	var Enemy: GDScript = load("res://games/saga_dungeon/world/dungeon_enemy.gd")
+	var DE: GDScript = load("res://games/saga_dungeon/data/dungeon_enemies.gd")
+	var picks := [["오랑캐 궁수", Vector3(-3.0, 0, 2.6), 1.30], ["왜군 조총병", Vector3(-2.8, 0, -3.4), 1.40]]
+	for pk in picks:
+		var e: Node3D = Enemy.new(6)
+		for sp: Dictionary in DE.ENEMIES:
+			if sp.name == pk[0]:
+				e.species = sp
+		e.elite_key = ""
+		e._elite_def = {}
+		e._scale_mul = 1.0
+		e._attack_cd_left = float(pk[2])
+		tree.current_scene.add_child(e)
+		e.global_position = p.global_position + (pk[1] as Vector3)

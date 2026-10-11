@@ -56,6 +56,14 @@ const ATTACK_COOLDOWN := 1.4  # 원작에 없는 값 — 직접 정함(위 주�
 const CHASE_SPEED := 2.4
 const DETECT_RADIUS := 9.0
 const ATTACK_RANGE := 2.0
+## G-0208 — 무기별 싸우는 법(웹 dungeon.js 적 루프, px→m 6/148). 활·지팡이는 멀찍이 멈춰 쏜다.
+const RANGED_STOP := 6.1    # RANGED_STOP 150px — 이보다 가까이 안 온다
+const RANGED_MAX := 10.5    # RANGED_MAX 260px — 이 안이면 쏜다
+const RANGED_CD_MUL := 1.4  # 쏘는 쿨 = 평타 쿨 ×1.4
+const RANGED_DETECT_MUL := 300.0 / 230.0  # AGGRO_RANGE_RANGED / AGGRO_RANGE
+const REACH_BONUS := 0.57   # spear·halberd reachBonus 14px
+const PHASE_RATE := 7.0     # en.phase += dt*7
+const DungeonShot := preload("res://games/saga_dungeon/world/dungeon_shot.gd")
 const COLOR := Color(0.788, 0.659, 0.227)  # data-enemy.js 황건적 color '#c9a83a' 그대로
 const BOSS_SCALE := 22.0 / 13.0  # dungeon.js spawnEnemy()의 r = boss?22:13 그대로
 const ELITE_SCALE := 16.0 / 13.0  # spawnEnemy()의 정예 r=16 그대로
@@ -115,6 +123,10 @@ var _player: Node3D
 var _dead := false
 var boss_pattern: RefCounted = null # G-0204 — 보스만(잡몹·정예는 null)
 var _hurt_by := "" # 지금 맞히는 패턴 이름(사망 카드 "누구에게" 줄에 덧붙임)
+var weapon := "" # G-0208 종 무기(_ready 에서 species 로) — bow·staff 원거리 · club 들썩 · axe 비틀 · spear·halberd 긴 팔
+var atk_el := "" # G-0208 종 원소 공격(없으면 "" = 물리)
+var _phase := 0.0 # 웹 en.phase — 들썩·비틀 박자
+var shots_fired := 0 # 점검용
 
 
 ## dungeon.js eliteChance(floor) 그대로 — 깊을수록 잦다(상한 30%).
@@ -147,6 +159,7 @@ func _init(floor_num: int = 1, boss: bool = false, shade: bool = false, force_el
 		rng.seed = floor_num * 100003 + _species_seq * 7919 + 11
 		_species_seq += 1
 		species = pool[rng.randi() % pool.size()]
+		_phase = rng.randf() * TAU   # G-0208 — 웹 phase: random*6.28(전역 난수는 안 씀)
 		resist = (species.get("resist", {}) as Dictionary).duplicate()
 	if not boss and not shade and (force_elite or randf() < elite_chance):
 		_elite_def = ELITES[randi() % ELITES.size()]
@@ -192,6 +205,8 @@ func _ready() -> void:
 		if boss_pattern == null:
 			boss_pattern = BossPattern.new(_floor_num)
 	_player = get_tree().get_first_node_in_group("player")
+	weapon = String(species.get("weapon", ""))
+	atk_el = String(species.get("atk_el", ""))
 	_spawn_visual()
 
 
@@ -247,7 +262,9 @@ func _physics_process(delta: float) -> void:
 		to_player = _player.global_position - global_position
 		to_player.y = 0
 		dist = to_player.length()
-	if dist <= ATTACK_RANGE * _scale_mul:
+	_phase += delta * PHASE_RATE
+	var ranged := is_ranged()
+	if dist <= melee_reach():
 		velocity = Vector3.ZERO
 		if _attack_cd_left <= 0.0:
 			## dungeon.js "en.cd = ENEMY_CD * (elite.cd||1) / chill" 그대로
@@ -255,16 +272,62 @@ func _physics_process(delta: float) -> void:
 			## 그 인자는 안 옮긴다 — 새 규칙을 안 만든다).
 			_attack_cd_left = ATTACK_COOLDOWN * float(_elite_def.get("cd", 1.0))
 			_attack_player()
-	elif dist <= DETECT_RADIUS:
-		## dungeon.js "* (elite.spd||1) * chill" 그대로 — 정예 속도 배율에
-		## 빙결 감속(_slow_mult)까지 곱한다. PLAN 101-2 DUNGEON ④(부적
-		## 던전) — "swift" 부적이 켜져 있으면 +30%를 한 번 더 곱한다.
-		var sigil_speed_mul := 1.3 if DungeonSigilState.has_mod("swift") else 1.0
-		velocity = to_player.normalized() * CHASE_SPEED * float(_elite_def.get("spd", 1.0)) * _slow_mult * sigil_speed_mul
+	elif dist <= detect_radius():
+		## G-0208 — 활·지팡이는 RANGED_STOP 안으로 안 들어오고, 사거리 안이면 쿨마다 쏜다(웹 2954~2961).
+		if ranged and dist <= RANGED_MAX and _attack_cd_left <= 0.0:
+			_attack_cd_left = ATTACK_COOLDOWN * RANGED_CD_MUL * float(_elite_def.get("cd", 1.0))
+			_shoot()
+		if ranged and dist <= RANGED_STOP:
+			velocity = Vector3.ZERO
+		else:
+			## dungeon.js "* (elite.spd||1) * chill" 그대로 — 정예 속도 배율에
+			## 빙결 감속(_slow_mult)까지 곱한다. PLAN 101-2 DUNGEON ④(부적
+			## 던전) — "swift" 부적이 켜져 있으면 +30%를 한 번 더 곱한다.
+			var sigil_speed_mul := 1.3 if DungeonSigilState.has_mod("swift") else 1.0
+			velocity = _chase_dir(to_player) * CHASE_SPEED * float(_elite_def.get("spd", 1.0)) * _slow_mult * sigil_speed_mul * _lunge()
 	else:
 		velocity = Vector3.ZERO
 	move_and_slide()
 	_face_and_animate(to_player)
+
+
+func is_ranged() -> bool:
+	return weapon == "bow" or weapon == "staff"
+
+
+## 평타 닿는 거리 — 창·미늘창은 조금 더 멀리서(웹 reachBonus)
+func melee_reach() -> float:
+	return ATTACK_RANGE * _scale_mul + (REACH_BONUS if weapon == "spear" or weapon == "halberd" else 0.0)
+
+
+## 알아채는 거리 — 원거리 종은 웹 AGGRO 비율만큼 멀리서
+func detect_radius() -> float:
+	return DETECT_RADIUS * (RANGED_DETECT_MUL if is_ranged() else 1.0)
+
+
+## 곤봉 — 들썩이며 몰아친다(웹 lunge = 1 + max(0, sin(phase*0.9))*0.7). 그 밖엔 1.
+func _lunge() -> float:
+	return 1.0 + maxf(0.0, sin(_phase * 0.9)) * 0.7 if weapon == "club" else 1.0
+
+
+## 도끼 — 걸음 방향에 수직으로 비틀거린다(웹 wob = sin(phase*0.6)*0.5). 그 밖엔 곧장.
+func _chase_dir(to_player: Vector3) -> Vector3:
+	var d := to_player.normalized()
+	if weapon != "axe":
+		return d
+	var perp := Vector3(-d.z, 0.0, d.x)
+	return (d + perp * sin(_phase * 0.6) * 0.5).normalized()
+
+
+## 웹 foeShots.push — dmg = en.dmg · el = atkEl|phys · 색 = 원소 색
+func _shoot() -> void:
+	if _player == null:
+		return
+	var el := atk_el if atk_el != "" else "phys"
+	var col := Color(String(DungeonItems.elem_by_key(el).get("color", "#d0c8b8")))
+	var up := Vector3.UP * 1.0 * _scale_mul
+	DungeonShot.fire(get_parent(), global_position + up, _player.global_position + up, attack_damage, el, col, who_label(), "화살" if weapon == "bow" else "탄환", self)
+	shots_fired += 1
 
 
 ## 몸을 플레이어 쪽으로 돌리고(걷는 중이면 walk, 아니면 idle).
@@ -399,7 +462,7 @@ func who_label() -> String:
 
 func _attack_player() -> void:
 	if _player.has_node("PlayerHealth"):
-		_player.get_node("PlayerHealth").take_damage(attack_damage, self)
+		_player.get_node("PlayerHealth").take_damage(attack_damage, self, atk_el)   # G-0208 원소 공격(없으면 "" = 물리)
 
 
 ## G-0204 — 보스 패턴이 맞혔을 때(웹 hurtPlayer(en.dmg * MUL, …, '강타') 그대로).

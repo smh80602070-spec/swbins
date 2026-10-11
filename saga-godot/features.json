@@ -3599,5 +3599,35 @@
   "ticket": "G-0207",
   "since": "2026-10-11",
   "note": "창 모드 dg_roster 가로·세로 Claude 눈 ○(1층·13층 여섯이 색·몸 다름)"
+ },
+ {
+  "id": "gd.dg.enemy-weapons",
+  "name": "2나락 잡몹 싸우는 법 — 활·지팡이는 멀찍이 멈춰 쏘고(화살·탄환), 곤봉 들썩·도끼 비틀·창 긴 팔, 원소 공격은 장비 원소 저항이 깎음(웹 dungeon.js 적 루프·foeShots)",
+  "files": [
+   "games/saga_dungeon/world/dungeon_enemy.gd",
+   "games/saga_dungeon/world/dungeon_shot.gd",
+   "games/saga_dungeon/player/player_health.gd",
+   "tools/probe_dungeon_foes.gd",
+   "tools/shot_dungeon_belt.gd",
+   "tools/shot_scene.gd"
+  ],
+  "tests": [
+   "dungeon_foes",
+   "dungeon_roster",
+   "dungeon_world",
+   "dungeon_run",
+   "dungeon_grace",
+   "dungeon_melee",
+   "dungeon_slots",
+   "dungeon_boss",
+   "hurt_signal",
+   "save_dungeon"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0208",
+  "since": "2026-10-12",
+  "note": "창 모드 dg_ranged 가로·세로 Claude 눈 ○(독 화살이 날아가는 중·조총병 손끝 불 탄환)"
  }
 ]
