@@ -8804,6 +8804,12 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       return bad.length === 0 && ('15 몸짓 · 기본 9 그대로 · 창 3단 = ' + s0);
     });
 
+    t('효과음 — 자체 효과음 sx:<이름> 은 shared/audio/sfx 로 가고, 마지막에 휘두른 무기로 맞는 소리를 고른다(모르는 무기는 그대로) (W-0170)', function () {
+      var A = DG.audio, r = DG.assets3d && DG.assets3d.root ? DG.assets3d.root() : null, u = A.sharedUrl('sx:sfx_crit');
+      var w = A.weapon('polearm'), w2 = A.weapon('fan'); A.weapon('sword');
+      var ok = [w === 'polearm', w2 === 'polearm', A.sharedUrl('hit') === null, r ? (u && u.slice(-'audio/sfx/sfx_crit.ogg'.length) === 'audio/sfx/sfx_crit.ogg') : u === null];
+      return ok.every(Boolean) && ('sx → ' + (u || '(공용 주소 없음)') + ' · 창 → spear_hit');
+    });
     t('anim-own — 아홉 클립이 같은 뼈 전부를 움직이고, 값이 유한·단위이며, 반복 클립은 이어진다', function () {
       var OA = DG.ownAnim, rig = OA.refRig(), clips = OA.clipData(rig), i, j, bad = [];
       if (clips.length !== 9) { return false; }

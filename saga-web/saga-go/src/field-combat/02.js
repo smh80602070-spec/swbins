@@ -949,12 +949,12 @@
       else if (e.t === 'shoot') { sfx('hit'); }
       else if (e.t === 'arrow') { ring(e.x, e.y, e.el ? 1.2 : 0.6, e.el && EL[e.el] ? EL[e.el].color : '#e8e2d0', 0.3); }
       else if (e.t === 'hit') {
-        sfx('hit');
+        if (!(global.DG.audio && global.DG.audio.hitFor && global.DG.audio.hitFor(!!e.crit))) { sfx('hit'); }   // W-0170 무기별 맞는 소리·치명
         floatNum(e.x, e.y, e.immune ? '면역' : String(e.dmg) + (e.crit ? '!' : ''), e.el, (e.react ? 1.3 : (e.src === 'burst' ? 1.25 : 1)) * (e.crit ? 1.25 : 1), !!e.crit);
         var w = W3();
         if (w) {
           w.playAnim('fc' + e.uid, 'hit', 260);
-          if (e.src === 'burst') { w.shake(0.5); w.hold(90); } else if (e.react) { w.shake(0.3); w.hold(60); } else { w.shake(0.12); }
+          if (e.src === 'burst') { w.shake(0.5); w.hold(90); } else if (e.react) { w.shake(0.3); w.hold(60); } else if (e.crit) { w.shake(0.22); w.hold(45); } else { w.shake(0.12); }   // W-0170 치명은 잠깐 멎는다
         }
       } else if (e.t === 'react') {
         var RI = REACT[e.kind] || { el: 'fire', r: 2 };
@@ -970,7 +970,7 @@
         ring(e.x, e.y, 2.4, '#ffffff', 0.4);
         if (W3()) { W3().shake(0.45); W3().hold(100); } c.emit('field:break', { camp: e.camp, left: e.left });   // ㉑ 방패 한 겹 = 부위 하나(track.js)
       } else if (e.t === 'swing') {
-        if (W3()) { W3().playAnim('me', wpnSlot(e.w, e.step), wpnMs(e.w, e.step, 280)); if (e.step === 2 && e.uid != null) { W3().hold(WPN_HOLD()); W3().shake(0.16); } }   // W-0169 무기·단마다 다른 몸짓, 3타 마무리가 맞으면 잠깐 멎는다
+        if (W3()) { W3().playAnim('me', wpnSlot(e.w, e.step), wpnMs(e.w, e.step, 280)); if (e.step === 2 && e.uid != null) { W3().hold(WPN_HOLD()); W3().shake(0.16); } } if (global.DG.audio && global.DG.audio.weapon) { global.DG.audio.weapon(e.w); sfx('sx:sfx_whoosh'); }   // W-0169 무기·단마다 다른 몸짓, 3타 마무리가 맞으면 잠깐 멎는다 · W-0170 휘두름 소리
         if (e.ranged && e.tx != null) { ring(e.tx, e.ty, 0.8, e.el && EL[e.el] ? EL[e.el].color : '#e8e2d0', 0.25); }   // ⑲-5 서책·활
       } else if (e.t === 'skill') {
         if (e.shape === 'thrust' || e.shape === 'dash') {
@@ -1004,14 +1004,14 @@
         if (e.kind === 'field' || e.kind === 'seed' || e.kind === 'kitzone' || e.kind === 'vortex' || e.kind === 'feast' || e.kind === 'rain') { ring(e.x, e.y, e.r, EL[e.el].color, e.kind === 'seed' ? 0.7 : 0.4); }
         else if (e.kind === 'shell') { ring(e.x, e.y, e.r, EL[e.el].color, 0.55); if (W3()) { W3().shake(0.15); } }
         else { ring(e.x, e.y, 0.9, EL[e.el].color, 0.3); if (e.tx !== undefined) { ring(e.tx, e.ty, e.r, EL[e.el].color, 0.3); } }   // echo 등 tx 없는 구역은 발밑 고리만(안 그러면 undefined 좌표로 예외)
-      } else if (e.t === 'dodge') { if (W3()) { W3().playAnim('me', 'dodge', 300); } }
+      } else if (e.t === 'dodge') { if (W3()) { W3().playAnim('me', 'dodge', 300); } sfx('sx:sfx_dodge'); }
       else if (e.t === 'tell') { if (W3()) { W3().playAnim('fc' + e.uid, 'attack', 700); } }
       else if (e.t === 'strike') { if (e.r) { ring(e.x, e.y, e.r, '#ff4d4d', 0.3); } }
       else if (e.t === 'siege') { floatNum(e.x, e.y + 1.5, '-' + e.dmg, null, 0.9, false); c.emit('field:siege', e); }   // ⑲-16 제단이 맞았다(story.js)
       else if (e.t === 'hurt' && !e.dmg) { floatNum(pos.x, pos.y, '🪨 막음', 'rock', 1, true, true); }
       else if (e.t === 'hurt') {
         floatNum(pos.x, pos.y, '-' + e.dmg, e.el, 1, false, true);
-        if (W3()) { W3().playAnim('me', 'hit', 260); W3().shake(0.25); }
+        if (W3()) { W3().playAnim('me', 'hit', 260); W3().shake(0.25); } sfx('sx:sfx_sword_hurt_' + (1 + (e.dmg & 1)));   // W-0170 내가 맞는 소리
       } else if (e.t === 'evade') { floatNum(pos.x, pos.y, '회피!', null, 1.1, true, true); }
       else if (e.t === 'swap') {
         var sm = S.party[e.idx];

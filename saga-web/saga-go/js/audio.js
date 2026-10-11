@@ -87,12 +87,20 @@
   var pool = {};    // name -> HTMLAudioElement[POOL_N]
   var rr = {};       // name -> 다음에 쓸 자리(순번)
 
+  /** W-0170 — 자체 효과음 92(K-0045, saga-web/shared/audio/sfx/<id>.ogg). 'sx:<id>' 로 부른다 — 공용 주소(assets3d)가 안 잡혔으면 null */
+  function sharedUrl(name) {
+    if (String(name).indexOf('sx:') !== 0 || !core().tuned('audio.own', 1)) { return null; }
+    var A = global.DG.assets3d, r = A && A.root ? A.root() : null;
+    return r ? r.slice(0, r.length - 'assets/'.length) + 'audio/sfx/' + name.slice(3) + '.ogg' : null;   // root = '…/shared/assets/'
+  }
+
   function bank(name) {
     if (pool[name]) { return pool[name]; }
-    if (!global.Audio || !CLIPS[name]) { return null; }
+    var su = sharedUrl(name);
+    if (!global.Audio || (!CLIPS[name] && !su)) { return null; }
     var arr = [];
     for (var i = 0; i < POOL_N; i++) {
-      var a = new Audio(BASE + CLIPS[name]);
+      var a = new Audio(su || BASE + CLIPS[name]);
       a.preload = 'none';
       if (name === 'hit') { a.playbackRate = HIT_RATES[i % HIT_RATES.length]; }
       arr.push(a);
@@ -103,9 +111,9 @@
 
   /** 이름난 효과음 하나를 낸다. 모르는 이름·오디오 미지원 기기는 조용히 넘어간다 */
   function play(name) {
-    if (!ON()) { return; }
+    if (!ON()) { return false; }
     var arr = bank(name);
-    if (!arr) { return; }
+    if (!arr) { return false; }
     var i = (rr[name] = ((rr[name] || 0) + 1) % arr.length);
     var a = arr[i];
     try {
@@ -115,6 +123,7 @@
       var p = a.play();
       if (p && p.catch) { p.catch(function () { /* 자동재생 정책 — 다음 탭부터 들린다 */ }); }
     } catch (e) { /* 무음 기기 등 */ }
+    return true;
   }
 
   function wire() {
@@ -142,8 +151,18 @@
   function setVolume(v) { core().setTune('audio.vol', Math.max(0, Math.min(1, v))); return VOL(); }
 
   global.DG = global.DG || {};
+  /* W-0170 — 들판 전투 소리: 마지막으로 휘두른 무기로 맞는 소리를 고른다(자체 효과음 _1·_2 번갈아). 못 내면 false → 부르는 쪽이 옛 'hit' */
+  var HIT_OF = { sword: 'sword', claymore: 'axe', polearm: 'spear', catalyst: 'staff', bow: 'bow' }, lastW = 'sword', alt = 0;
+  function weapon(w) { if (HIT_OF[w]) { lastW = w; } return lastW; }
+  function hitFor(crit) {
+    alt = 1 - alt;
+    var ok = play('sx:sfx_' + HIT_OF[lastW] + '_hit_' + (alt + 1));
+    if (ok && crit) { play('sx:sfx_crit'); }
+    return ok;
+  }
+
   global.DG.audio = {
-    play: play, stats: stats, CLIPS: CLIPS, HIT_RATES: HIT_RATES,
+    play: play, stats: stats, CLIPS: CLIPS, HIT_RATES: HIT_RATES, weapon: weapon, hitFor: hitFor, sharedUrl: sharedUrl,
     /** 자가진단이 라운드로빈 배속이 실제로 풀에 박혔는지 볼 수 있게 */
     bank: bank,
     enabled: ON, volume: VOL, setEnabled: setEnabled, setVolume: setVolume
