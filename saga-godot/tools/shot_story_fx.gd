@@ -86,3 +86,21 @@ static func _boss_kind(tree: SceneTree, kind: String) -> void:
 		if n[0] >= 60:
 			tree.process_frame.disconnect(cb[0])
 	tree.process_frame.connect(cb[0])
+
+
+## G-0209 — field 사냥터 잡몹 셋(서로 다른 종)이 플레이어 쪽으로 걸어온다(체력 넉넉히, 메모리에서만).
+static func roster(tree: SceneTree) -> void:
+	for m in tree.get_nodes_in_group("ui_modal"):
+		m.queue_free()
+	var p := tree.get_first_node_in_group("player") as Node3D
+	if p == null:
+		return
+	var offs := [5.0, -4.4, 6.6]
+	var es := tree.get_nodes_in_group("story_enemy").filter(func(e): return not (e.get("species") as Dictionary).is_empty())
+	for i in mini(es.size(), offs.size()):
+		var e := es[i] as Node3D
+		e.global_position = Vector3(p.global_position.x + float(offs[i]), p.global_position.y, e.global_position.z)
+		e.set("walk_dir", -signf(float(offs[i])))
+		e.set("hp", 99999.0)
+		e.set("max_hp", 99999.0)
+		print("ROSTER %s x%+.1f" % [String(e.get("species").name), float(offs[i])])

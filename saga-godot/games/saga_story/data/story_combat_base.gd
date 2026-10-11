@@ -56,6 +56,11 @@ const RANGED_RANGE_M := 7.2   # 360px * 0.02
 const RANGED_MUL := 0.8
 const RANGED_CD_SEC := 2.2
 const RANGED_LIFE_SEC := 2.4  # side.js eshot life:2.4(초 단위라 환산 불필요)
+## G-0209 — 잡몹 명단이 섞여 나오면서 조총(staff)도 쏜다: RANGED_WEAPON.staff(spd 560·range 420·mul 1.0·cd 3.2) 그대로 ×0.02.
+const RANGED_STAFF_SPD_M := 11.2
+const RANGED_STAFF_RANGE_M := 8.4
+const RANGED_STAFF_MUL := 1.0
+const RANGED_STAFF_CD_SEC := 3.2
 
 
 ## **2026-09-12 추가 — 무예 나머지 셋(횡소·기탄·기합).** VERTICAL_

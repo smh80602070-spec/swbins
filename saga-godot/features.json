@@ -3629,5 +3629,35 @@
   "ticket": "G-0208",
   "since": "2026-10-12",
   "note": "창 모드 dg_ranged 가로·세로 Claude 눈 ○(독 화살이 날아가는 중·조총병 손끝 불 탄환)"
+ },
+ {
+  "id": "gd.st.enemy-roster",
+  "name": "4종횡 잡몹 명단 32종 — 사냥터 단계 풀에서 섞여 나와 순찰하다 쫓아오고(원거리는 멈춰 쏨·조총 탄환), 잡으면 다른 자리에 또 남(웹 side.js spawnEnemy·적 루프·kill)",
+  "files": [
+   "games/saga_story/data/story_enemies.gd",
+   "games/saga_story/data/story_combat_base.gd",
+   "games/saga_story/world/story_enemy.gd",
+   "games/saga_story/world/story_enemy_spawner.gd",
+   "tools/probe_story_foes.gd",
+   "tools/shot_story_fx.gd",
+   "tools/shot_scene.gd"
+  ],
+  "tests": [
+   "story_foes",
+   "story_rules",
+   "story_boss",
+   "story_golden",
+   "story_labyrinth",
+   "story_player",
+   "story_fall",
+   "save_story",
+   "mount_story"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0209",
+  "since": "2026-10-12",
+  "note": "창 모드 st_roster 가로·세로 Claude 눈 ○(궁수 멈춰 섬·황건적·병졸 다가옴 — 세 종 색 다름)"
  }
 ]

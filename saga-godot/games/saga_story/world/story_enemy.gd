@@ -48,9 +48,21 @@ const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
 const StoryBossPattern := preload("res://games/saga_story/world/story_boss_pattern.gd")   # G-0205 보스 패턴전 1차
 const Toast := preload("res://saga_core/ui/toast.gd")
 const CombatTell := preload("res://saga_core/combat_tell.gd")   # G-0206 달려들기 예고
+const StoryEnemies := preload("res://games/saga_story/data/story_enemies.gd")   # G-0209 잡몹 명단(웹 data-enemy.js)
 
 ## 사냥터별 몸 모양(GO 짐승 공방 재사용 — 캡슐 대신). 정해진 게 없으면(비경 등) 도깨비꼴.
 const KIND_BY_STAGE := {"field": "goblin", "forest": "wolf", "cave": "beast", "gorge": "bear"}
+## G-0209 — 종(species)이 있으면 몸은 form 으로(2나락과 같은 대응 — 판끼리 참조 안 해 여기 따로). 이름에 코끼리면 뭉툭한 네발.
+const FORM_KIND := {"": "goblin", "ogre": "goblin", "quad": "wolf", "bird": "bird", "serpent": "serpent", "dragon": "serpent", "fish": "serpent", "toad": "turtle"}
+## G-0209 순찰·추격(웹 side.js 적 루프, px→m ×0.02) — species 있는 사냥터 잡몹만. 보스·관문 대장·비경·부하는 그대로 선다.
+const NEAR_X_M := 5.2        # |dx| < 260px
+const NEAR_Y_M := 1.4        # |dy| < 70px
+const FLAT_Y_M := 1.28       # 원거리 "같은 높이" 64px
+const NEAR_MUL := 1.25
+const PATROL_MUL := 0.7
+const EDGE_L_M := 0.4        # x < 20px 에서 돌아섬
+const EDGE_R_M := 0.8        # x > 폭 − 40px 에서 돌아섬
+const HOLD_M := 78.0 * 1.2 * 0.02   # REACH×1.2 보다 멀면 원거리는 멈춰 쏜다
 
 signal died
 
@@ -113,6 +125,10 @@ var _charge_cd := -1.0
 var _charge_dir := 1.0
 var _charge_rng := RandomNumberGenerator.new()
 var _groggy_label: Label3D = null
+var species: Dictionary = {} # G-0209 — 사냥터 잡몹의 종(StoryEnemies.ENEMIES 한 줄). spawner 가 add_child 전에 넣는다.
+var walk_dir := 1.0          # G-0209 — 걷는 방향(spawner 가 자체 RNG 로)
+var walking := false         # 이 틱에 걸었는지(점검·몸짓)
+var _anim := ""
 
 
 func _ready() -> void:
@@ -124,6 +140,10 @@ func _ready() -> void:
 		hp = base_hp
 	max_hp = hp
 	add_to_group("story_enemy")
+	if not species.is_empty():
+		enemy_color = Color(String(species.color))
+		var w := String(species.get("weapon", ""))
+		is_ranged = w == "bow" or w == "staff"
 	_spawn_visual()
 	if is_boss and boss_pattern == null:
 		## 사냥터 보스는 패턴전(G-0205), 관문 대장은 고유 기술만(G-0206 gate)
@@ -136,13 +156,12 @@ func _ready() -> void:
 func _spawn_visual() -> void:
 	var scale_mul: float = (CHAMPION_VISUAL_SCALE if is_champion else BOSS_VISUAL_SCALE) if is_boss else 1.0
 	## 2026-09-30 — 색 캡슐이 몸이던 것을 짐승 공방 몸으로. 정면(+Z)이 옆(±X)을 보게 _face 가 매 틱 플레이어 쪽으로 돌린다.
-	_creature = CreatureBuilder.build(String(KIND_BY_STAGE.get(stage_key, "goblin")),
+	var kind := body_kind()
+	_creature = CreatureBuilder.build(kind,
 		[enemy_color, enemy_color.darkened(0.4), enemy_color.lightened(0.45)], {"enemy": true})
-	CreatureBuilder._fit(_creature, String(KIND_BY_STAGE.get(stage_key, "goblin")), 1.6 * scale_mul * StoryLook.BODY_SCALE)   # G-0187 그림만 크게(아래 판정 상자는 그대로)
+	CreatureBuilder._fit(_creature, kind, 1.6 * scale_mul * StoryLook.BODY_SCALE)   # G-0187 그림만 크게(아래 판정 상자는 그대로)
 	add_child(_creature)
-	var ap := _creature.get_node_or_null("AnimationPlayer") as AnimationPlayer
-	if ap != null and ap.has_animation("idle"):
-		ap.play("idle")
+	_play_anim("idle")
 
 	var cs := CollisionShape3D.new()
 	var shape := CapsuleShape3D.new()
@@ -166,7 +185,12 @@ func _physics_process(delta: float) -> void:
 		return
 	var scale_mul: float = (CHAMPION_VISUAL_SCALE if is_champion else BOSS_VISUAL_SCALE) if is_boss else 1.0
 	var dx: float = player.global_position.x - global_position.x
-	if _creature != null and absf(dx) > 0.1:
+	if roams():
+		_walk(delta, player, dx)
+		dx = player.global_position.x - global_position.x
+		if _creature != null:
+			_creature.rotation.y = PI * 0.5 if walk_dir > 0.0 else -PI * 0.5
+	elif _creature != null and absf(dx) > 0.1:
 		_creature.rotation.y = PI * 0.5 if dx > 0.0 else -PI * 0.5
 	## G-0205 — 패턴전은 붙어 치기와 나란히 돈다(웹 side.js 1819 — 몸통 박치기는 그대로).
 	if boss_pattern != null:
@@ -199,9 +223,69 @@ func _physics_process(delta: float) -> void:
 				dmg *= CHAMPION_ENRAGE_DMG_MUL
 		player.take_damage(dmg)
 
-	if is_ranged and not is_boss and _shot_cd_left <= 0.0 and absf(dx) <= StoryCombat.RANGED_RANGE_M:
-		_shot_cd_left = StoryCombat.RANGED_CD_SEC
+	if is_ranged and not is_boss and _shot_cd_left <= 0.0 and absf(dx) <= shot_range():
+		_shot_cd_left = StoryCombat.RANGED_STAFF_CD_SEC if is_staff() else StoryCombat.RANGED_CD_SEC
 		_fire_shot(dx)
+
+
+## G-0209 — 몸 모양: 종이 있으면 form, 없으면 사냥터 몸(지금 그대로).
+func body_kind() -> String:
+	if species.is_empty():
+		return String(KIND_BY_STAGE.get(stage_key, "goblin"))
+	if String(species.get("name", "")).contains("코끼리"):
+		return "beast"
+	return String(FORM_KIND.get(String(species.get("form", "")), "goblin"))
+
+
+## 순찰·추격하는 잡몹인가(종이 있는 사냥터 잡몹만)
+func roams() -> bool:
+	return not species.is_empty() and not is_boss
+
+
+func is_staff() -> bool:
+	return String(species.get("weapon", "")) == "staff"
+
+
+func shot_range() -> float:
+	return StoryCombat.RANGED_STAFF_RANGE_M if is_staff() else StoryCombat.RANGED_RANGE_M
+
+
+## 웹 spd = 42 + min(50, lv×2) px/s
+func walk_speed() -> float:
+	return (42.0 + minf(50.0, enemy_lv * 2.0)) * 0.02
+
+
+## G-0209 — 웹 side.js 적 루프: near 면 플레이어 쪽으로 돌아서 ×1.25, 아니면 그 방향으로 ×0.7 순찰.
+## 원거리는 같은 높이·사거리 안·HOLD_M 보다 멀면 멈춰 선다(holding). 사냥터 끝 여백에서 돌아선다.
+func _walk(delta: float, player: Node3D, dx: float) -> void:
+	var dy: float = absf(player.global_position.y - global_position.y)
+	var near := absf(dx) < NEAR_X_M and dy < NEAR_Y_M
+	if near:
+		walk_dir = 1.0 if dx > 0.0 else -1.0
+	var holding := false
+	if is_ranged and dy < FLAT_Y_M and absf(dx) < shot_range():
+		walk_dir = 1.0 if dx > 0.0 else -1.0
+		holding = absf(dx) > HOLD_M
+	walking = not holding
+	if walking:
+		global_position.x += walk_dir * walk_speed() * (NEAR_MUL if near else PATROL_MUL) * delta
+	if stage_width_m > 0.0:
+		if global_position.x < EDGE_L_M:
+			global_position.x = EDGE_L_M
+			walk_dir = 1.0
+		elif global_position.x > stage_width_m - EDGE_R_M:
+			global_position.x = stage_width_m - EDGE_R_M
+			walk_dir = -1.0
+	_play_anim("walk" if walking else "idle")
+
+
+func _play_anim(anim: String) -> void:
+	if anim == _anim or _creature == null:
+		return
+	var ap := _creature.get_node_or_null("AnimationPlayer") as AnimationPlayer
+	if ap != null and ap.has_animation(anim):
+		ap.play(anim)
+		_anim = anim
 
 
 ## G-0206 달려들기 — 쿨이 다하고 보스가 나를 보면 1.1초 미끄러진다(예고: 몸 둘레 원 0.3초 + "!" 0.9초).
@@ -300,15 +384,16 @@ func _spawn_minion(x: float) -> void:
 ## lv 공식에서 갈라져 나온다).
 func _fire_shot(dx: float) -> void:
 	var dir: float = 1.0 if dx > 0.0 else -1.0
-	var dmg: float = StoryCombat.enemy_base_dmg(enemy_lv) * StoryCombat.RANGED_MUL
+	var staff := is_staff()   # G-0209 조총은 웹 RANGED_WEAPON.staff 값
+	var dmg: float = StoryCombat.enemy_base_dmg(enemy_lv) * (StoryCombat.RANGED_STAFF_MUL if staff else StoryCombat.RANGED_MUL)
 	var shot := Area3D.new()
 	shot.set_script(StoryEnemyShot)
-	shot.global_position = global_position + Vector3(dir * 0.5, 0.9, 0)
 	shot.dir = dir
-	shot.speed = StoryCombat.RANGED_SPD_M
+	shot.speed = StoryCombat.RANGED_STAFF_SPD_M if staff else StoryCombat.RANGED_SPD_M
 	shot.damage = dmg
 	shot.life_left = StoryCombat.RANGED_LIFE_SEC
 	get_parent().add_child(shot)
+	shot.global_position = global_position + Vector3(dir * 0.5, 0.9, 0)   # G-0209 — 트리에 넣은 뒤에(전엔 밖에서 넣어 오류·자리 틀어짐)
 
 
 ## PLAN 101-2 STORY ④후보 — 관문 대장 방패(웹판 §5-4 "등 뒤에서 누적
