@@ -2371,7 +2371,7 @@
     syncGlider(meA, LFa && LFa.gliding && LFa.gliding(), mx, my, air, h);
     /* ⑲-22 조준 중엔 몸이 겨눈 쪽을 본다 */
     var FCme = global.DG.fieldCombat, AVme = FCme && FCme.aimView ? FCme.aimView() : null;
-    if (AVme && meA.mesh) { meA.ang = Math.atan2(AVme.dx, AVme.dy); meA.node.rotation.y = meA.ang; }
+    if (AVme && meA.mesh) { meA.ang = Math.atan2(AVme.dx, AVme.dy); meA.node.rotation.y = meA.ang; } else if (faceAt && now < faceAt.until && meA.mesh) { var fdd = Math.atan2(faceAt.x - mx, faceAt.y - my) - meA.ang; meA.ang += Math.atan2(Math.sin(fdd), Math.cos(fdd)) * 0.45; meA.node.rotation.y = meA.ang; }   // W-0173 칠 때 대상 쪽으로 돈다
     /* ⑲-13 대화 — 나는 대화 상대를 돌아보고, 내 줄(고른 대답)이면 손짓·입. 깜박임은 늘(talkface.js) */
     var TSm = talkShot(), TFm = global.DG.talkface;
     var tdt = talkNow ? Math.min(0.1, Math.max(0, (now - talkNow) / 1000)) : 0;
@@ -2601,7 +2601,7 @@
    * 소품은 `battle3d.js` 가 만든다. 여기 있는 것은 **카메라가 하는 일**뿐이다 —
    * 줌인 · 흔들림 · 잠깐 멎기(hit-stop). 셋 다 화면에만 쓴다.
    */
-  var yaw = 0;             // 돌려 본 각(라디안) — 드래그로 바꾼다
+  var yaw = 0, faceAt = null;   // faceAt — W-0173 칠 때 잠깐 볼 자리 {x, y, until}             // 돌려 본 각(라디안) — 드래그로 바꾼다
   var talkNow = 0;         // ⑲-13 대화 몸짓 — 지난 프레임 시각(ms)
   /** ⑲-13 이야기 대화 중이면 연출 값(story.talkShot) — 카메라·몸짓이 읽는다 */
   function talkShot() { var S = global.DG.story; return S && S.talkShot && global.DG.talkface ? S.talkShot() : null; }
@@ -3273,7 +3273,7 @@
       while (yaw < -Math.PI) { yaw += Math.PI * 2; }
       return yaw;
     },
-    yaw: function (v) { if (v !== undefined) { yaw = v; } return yaw; },
+    yaw: function (v) { if (v !== undefined) { yaw = v; } return yaw; }, faceTo: function (x, y, ms) { faceAt = { x: x, y: y, until: (global.performance ? performance.now() : Date.now()) + (ms || 300) }; }, meAng: function () { return actors.me ? actors.me.ang || 0 : 0; },   // W-0173
     /* 전투 연출 손잡이 — `battle3d.js` 가 두드린다 (PLAN 23절) */
     battle: function (on) { battleOn = !!on; if (!on) { shakeAmp = 0; } return battleOn; },
     inBattle: function () { return battleOn; },

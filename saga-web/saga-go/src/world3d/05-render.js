@@ -480,7 +480,7 @@
       while (yaw < -Math.PI) { yaw += Math.PI * 2; }
       return yaw;
     },
-    yaw: function (v) { if (v !== undefined) { yaw = v; } return yaw; },
+    yaw: function (v) { if (v !== undefined) { yaw = v; } return yaw; }, faceTo: function (x, y, ms) { faceAt = { x: x, y: y, until: (global.performance ? performance.now() : Date.now()) + (ms || 300) }; }, meAng: function () { return actors.me ? actors.me.ang || 0 : 0; },   // W-0173
     /* 전투 연출 손잡이 — `battle3d.js` 가 두드린다 (PLAN 23절) */
     battle: function (on) { battleOn = !!on; if (!on) { shakeAmp = 0; } return battleOn; },
     inBattle: function () { return battleOn; },

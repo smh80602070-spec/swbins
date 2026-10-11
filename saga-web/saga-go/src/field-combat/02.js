@@ -970,7 +970,7 @@
         ring(e.x, e.y, 2.4, '#ffffff', 0.4);
         if (W3()) { W3().shake(0.45); W3().hold(100); } c.emit('field:break', { camp: e.camp, left: e.left });   // ㉑ 방패 한 겹 = 부위 하나(track.js)
       } else if (e.t === 'swing') {
-        if (W3()) { W3().playAnim('me', wpnSlot(e.w, e.step), wpnMs(e.w, e.step, 280)); if (e.step === 2 && e.uid != null) { W3().hold(WPN_HOLD()); W3().shake(0.16); } } if (global.DG.audio && global.DG.audio.weapon) { global.DG.audio.weapon(e.w); sfx('sx:sfx_whoosh'); }   // W-0169 무기·단마다 다른 몸짓, 3타 마무리가 맞으면 잠깐 멎는다 · W-0170 휘두름 소리
+        if (W3()) { W3().playAnim('me', wpnSlot(e.w, e.step), wpnMs(e.w, e.step, 280)); if (e.step === 2 && e.uid != null) { W3().hold(WPN_HOLD()); W3().shake(0.16); } } if (global.DG.audio && global.DG.audio.weapon) { global.DG.audio.weapon(e.w); sfx('sx:sfx_whoosh'); } var fw = W3(); if (fw && fw.faceTo && e.tx != null) { fw.faceTo(e.tx, e.ty, 350); } if (global.DG.slash3d) { global.DG.slash3d.swing(e.w, e.step, pos.x, pos.y, e.tx != null ? Math.atan2(e.tx - pos.x, e.ty - pos.y) : (fw && fw.meAng ? fw.meAng() : 0)); }   // W-0169 무기·단마다 다른 몸짓, 3타 마무리가 맞으면 잠깐 멎는다 · W-0170 휘두름 소리 · W-0173 대상 쪽으로 돌고 검기 띠
         if (e.ranged && e.tx != null) { ring(e.tx, e.ty, 0.8, e.el && EL[e.el] ? EL[e.el].color : '#e8e2d0', 0.25); }   // ⑲-5 서책·활
       } else if (e.t === 'skill') {
         if (e.shape === 'thrust' || e.shape === 'dash') {
@@ -988,7 +988,7 @@
       } else if (e.t === 'heavy') {
         ring(e.x, e.y, e.r, '#f4f1e2', 0.5);
         floatNum(pos.x, pos.y, '강공격', null, 1, true, true);
-        if (W3()) { W3().playAnim('me', wpnSlot(e.w, 2), wpnMs(e.w, 2, 500)); W3().shake(0.2); if (e.n) { W3().hold(WPN_HOLD() + 20); } }   // W-0169 — 강공격 = 그 무기 마무리 몸짓
+        if (W3()) { W3().playAnim('me', wpnSlot(e.w, 2), wpnMs(e.w, 2, 500)); W3().shake(0.2); if (e.n) { W3().hold(WPN_HOLD() + 20); } if (W3().faceTo) { W3().faceTo(e.x, e.y, 400); } if (global.DG.slash3d) { global.DG.slash3d.swing(e.w, 2, pos.x, pos.y, Math.atan2(e.x - pos.x, e.y - pos.y)); } }   // W-0169 — 강공격 = 그 무기 마무리 몸짓
       } else if (e.t === 'tired') { floatNum(pos.x, pos.y, '기력 부족', null, 0.9, true, true); }
       else if (e.t === 'plunge') {
         ring(e.x, e.y, e.r, '#f4ecd0', 0.6); ring(e.x, e.y, e.r * 0.45, '#ffffff', 0.4);

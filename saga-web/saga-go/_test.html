@@ -166,6 +166,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/duel.js"></script>
 <script src="js/rogue-action.js"></script>
 <script src="js/field-combat.js"></script>
+<script src="js/slash3d.js"></script>
 <script src="js/adventure.js"></script>
 <script src="js/treasure.js"></script>
 <script src="js/domain.js"></script>
@@ -8820,6 +8821,12 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var ends = function (u, tail) { return !!u && u.slice(-tail.length) === tail; };
       var r = [f === null, off === null, Object.keys(A.CREATURE_OF).length === 19, r0 ? (ends(t, 'creatures3d/tiger.glb') && ends(h, 'creatures3d/horse_white.glb')) : t === null];
       return r.every(Boolean) && ('호랑이 → ' + (t || '(공용 주소 없음)')) || '실패 ' + r.join(',');
+    });
+    t('검기 띠(W-0173) — 한손검 1타 가로·2타 반대로 비스듬·3타 세로(크게), 큰날은 더 넓고 두껍게, 창은 곧은 찌르기 띠, 서책·활은 없음 · 손잡이 field.slashFx 0 이면 안 그림', function () {
+      var S3 = DG.slash3d, a = S3.arcSpec('sword', 0), b = S3.arcSpec('sword', 1), c = S3.arcSpec('sword', 2), k = S3.arcSpec('claymore', 0), p = S3.arcSpec('polearm', 2), q = S3.arcSpec('bow', 0), C = DG.core, off;
+      C.setTune('field.slashFx', 0); off = S3.swing('sword', 0, 0, 0, 0); C.setTune('field.slashFx', null);
+      var r = [a.kind === 'arc' && Math.abs(a.tilt) < 0.3, b.dir === -1 && b.tilt < 0, Math.abs(c.tilt - Math.PI / 2) < 1e-9 && c.r > a.r, k.r > a.r && k.w > a.w, p.kind === 'thrust' && p.r > S3.arcSpec('polearm', 0).r, q.kind === null, off === null];
+      return r.every(Boolean) && '검 가로·반대·세로 · 큰날 넓게 · 창 찌르기 · 활 없음' || '실패 ' + r.join(',');
     });
     t('효과음 — 자체 효과음 sx:<이름> 은 shared/audio/sfx 로 가고, 마지막에 휘두른 무기로 맞는 소리를 고른다(모르는 무기는 그대로) (W-0170)', function () {
       var A = DG.audio, r = DG.assets3d && DG.assets3d.root ? DG.assets3d.root() : null, u = A.sharedUrl('sx:sfx_crit');
