@@ -462,7 +462,7 @@
         (stg.town ? ' town' : ' field');
       html += '<div class="ow-node' + cls + '">' +
         '<i>' + (stg.town ? '🏘️' : '⚔️') + '</i><b>' + esc(stg.name) + '</b>' +
-        (open ? (stg.town ? '<small>안전지대</small>' : '<small>적 Lv.' + stg.enemyLv + '</small>')
+        (open ? (stg.town ? '<small>안전지대</small>' : '<small>적 Lv.' + stg.enemyLv + (global.DG.sideHand ? global.DG.sideHand.mapTag(stg) : '') + '</small>')   // W-0176 조각·숨은 자리
               : '<small>🔒 Lv.' + stg.need + '</small>') +
         '</div>';
       if (i < OW_CHAIN.length - 1) { html += '<div class="ow-link' + (open ? ' open' : '') + '"></div>'; }

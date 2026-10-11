@@ -523,7 +523,7 @@
     if (!G || !G.keymap) { return '<div class="hint">지금 화면에서는 키를 지정할 수 없습니다</div>'; }
     var km = G.keymap(), rm = G.remapping();
     var rows = [{ a: 'up', t: '위' }, { a: 'down', t: '아래' }, { a: 'left', t: '왼쪽' }, { a: 'right', t: '오른쪽' }];
-    var h = '<div class="hint">WASD·방향키는 항상 그대로 됩니다 — 여기서는 그 옆에 더 쓸 키 하나만 고릅니다.</div>';
+    var h = '<div class="hint">WASD·방향키는 항상 그대로 됩니다 — 여기서는 그 옆에 더 쓸 키 하나만 고릅니다.</div><div class="hint">고정 키 — 공격 <b>Z</b>·<b>J</b>(누르고 있으면 계속) · 회피 <b>Shift</b> · 고유 조작 <b>C</b>(길게) · 점프 <b>Space</b>(짧게 = 낮게) · 무예 <b>1~8</b> · 탕약 <b>Q</b> · 동료 <b>E</b> · 지도 <b>M</b></div>';   // W-0176
     for (var i = 0; i < rows.length; i++) {
       var r = rows[i];
       h += '<div class="key-row"><b>' + r.t + '</b><span class="key-cur">' + esc((km[r.a] || '').toUpperCase()) + '</span>' +
@@ -880,7 +880,7 @@
       if (atkI >= 0 && st.skills[atkI]) {
         sk = st.skills[atkI];
         html += '<button class="hud-sk" data-act="s-skill" data-i="' + atkI + '" title="' +
-          esc(sk.name + ' — ' + sk.desc) + '"><b>' + sk.emoji + '</b><u></u></button>';
+          esc(sk.name + ' — ' + sk.desc + ' (Z)') + '"><b>' + sk.emoji + '</b><u></u>' + (core.touchOnly() ? '' : '<i class="hk">Z</i>') + '</button>';   // W-0176
       }
       if (pty) {
         for (i = 0; i < pty.list.length; i++) {
@@ -892,7 +892,7 @@
       html += '<button class="hud-sk potion" data-act="s-drink" title="탕약을 마신다 (Q)">' +
         '<b>🧪</b><small class="pn"></small></button>' +
         '<button class="hud-sk" id="hud-dodge" ' +
-        'title="회피 — 짧게 (Shift) · 길게 누르면 직업별 고유 조작(§5-1)">' +
+        'title="회피 (Shift) · 길게 누르면 직업별 고유 조작 (C)">' +
         '<b>💨</b><u></u><i class="hold"></i></button>' +
         '<button class="btn tiny ghost hud-out" data-act="s-leave">🚪 나온다</button>' +
         '</div></div>';

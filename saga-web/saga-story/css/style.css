@@ -1269,3 +1269,9 @@ body.cine #top, body.cine #btn-focus { visibility: hidden; }
 #mt-ride span { font-size: 20px; line-height: 1; }
 #mt-ride em { font-size: 10px; font-style: normal; opacity: .7; }
 #mt-ride:active { transform: scale(.94); }
+
+/* W-0176 공격 단추 키 글자(Z) · 🌀 무예 자동 켜짐 */
+.hud-sk { position: relative; }
+.hud-sk .hk { position: absolute; left: 3px; top: 1px; font-size: 10px; font-style: normal; font-weight: 800; opacity: .7; pointer-events: none; }
+#btn-autoskill:not(.on) { opacity: .55; filter: grayscale(.6); }
+#btn-autoskill.on { box-shadow: 0 0 0 2px rgba(126, 214, 164, .8); }
