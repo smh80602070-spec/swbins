@@ -53,7 +53,7 @@ namespace Saga.Realm.Data
             Occurred?.Invoke(msg);
         }
 
-        private static string FindCapitalOfficer()
+        public static string FindCapitalOfficer()
         {
             foreach (var id in RealmCityState.RosterIds)
             {

@@ -72,8 +72,9 @@ namespace Saga.Realm.Data
         /// 지형(<see cref="RealmLand"/>)에 맞는 전술을 골라 <see cref="RealmWar.Fight"/>
         /// 에 배율을 얹는다. PLAN.md 101-2 5-3(2026-09-20) — `duelPowerMul`은
         /// `RealmCommandUi`가 일기토 3합(<see cref="RealmDuelState"/>) 결과를
-        /// 미리 평균 내 넘겨준 배율(기본 1 — 안 쓰면 그대로).</summary>
-        public static AttackResult Attack(string fromCityId, string enemyId = null, bool useTactic = false, float duelPowerMul = 1f)
+        /// 미리 평균 내 넘겨준 배율(기본 1 — 안 쓰면 그대로). tasks U-0098 — `grid` 는 격자 전술판
+        /// (<see cref="RealmTactics.Apply"/>)의 보정값: 공 위력 ×(1+winPct/100)·받는 피해 ×lossMul·전사·중상. null 이면 지금 그대로.</summary>
+        public static AttackResult Attack(string fromCityId, string enemyId = null, bool useTactic = false, float duelPowerMul = 1f, RealmTactics.Bonus grid = null)
         {
             if (enemyId == null) enemyId = RealmEnemyCity.TargetFrom(fromCityId);
             else if (!RealmEnemyCity.TargetsFrom(fromCityId).Contains(enemyId)) enemyId = null;
@@ -90,20 +91,23 @@ namespace Saga.Realm.Data
             int need = Mathf.RoundToInt(troops / 1000f * RealmCityState.FoodPer1000 * 2f);
             if (city.Food < need) return new AttackResult(false, string.Format(RealmLocalization.T("war.err_no_food", "군량이 모자랍니다 ({0} 필요)"), need));
 
-            var officers = new List<string>();
-            foreach (var id in RealmCityState.RosterIds)
-            {
-                if (RealmCityState.OfficerCityId(id) == fromCityId && !RealmCityState.IsOfficerDone(id))
-                {
-                    officers.Add(id);
-                }
-            }
+            var officers = MarchOfficers(fromCityId);
             if (officers.Count == 0) return new AttackResult(false, RealmLocalization.T("order.err_no_officer_here", "이 성에서 명령을 쓸 수 있는 무장이 없습니다"));
 
             // 출진 — 병력 전군·군량 need만큼 미리 나간다(war.js와 같은 순서).
             city.Troops = 0;
             city.Food -= need;
             foreach (var id in officers) RealmCityState.MarkOfficerDone(id);
+
+            // tasks U-0098 격자 전술 — 판 결과를 남은 싸움에: 쓰러진·다친 장수는 빠지고, 공 위력·받는 피해 배율만 얹는다(판정은 아래 Fight 한 번).
+            string gridNote = null;
+            float takeMul = 1f;
+            if (grid != null)
+            {
+                duelPowerMul *= 1f + grid.WinPct / 100f;
+                takeMul = grid.LossMul;
+                gridNote = ApplyGrid(grid, officers, enemyId, def.Name);
+            }
 
             var atk = new RealmArmy { Troops = troops, Start = troops, Train = city.Train, Tech = city.Tech, OfficerIds = officers, Morale = 1f };
             var defArmy = new RealmArmy { Troops = enemy.Troops, Start = enemy.Troops, Train = enemy.Train, Tech = enemy.Tech, OfficerIds = new List<string>(), Morale = 1f };
@@ -112,7 +116,7 @@ namespace Saga.Realm.Data
             float firstRoundMul = 1f, defMul = 1f;
             if (useTactic) (firstRoundMul, defMul, tacticNote) = ResolveTactic(def.Land, officers);
 
-            var result = RealmWar.Fight(atk, defArmy, enemy, def.Land, firstRoundMul, defMul, duelPowerMul);
+            var result = RealmWar.Fight(atk, defArmy, enemy, def.Land, firstRoundMul, defMul, duelPowerMul, takeMul);
 
             int eaten = Mathf.RoundToInt(troops / 1000f * RealmCityState.FoodPer1000);
             int baggage = Mathf.Max(0, need - eaten);
@@ -141,6 +145,7 @@ namespace Saga.Realm.Data
             }
 
             if (tacticNote != null) message = tacticNote + " " + message;
+            if (gridNote != null) message = gridNote + " " + message;
 
             // PLAN.md 109-15 명마 — 땅 싸움(강가 ✕)에서 명마를 탄 장수가 앞장서면 한 줄 남기고, 싸움터 컷의 돌격 속도를 넘긴다.
             bool water = def.Land == RealmLand.River;
@@ -152,6 +157,66 @@ namespace Saga.Realm.Data
             Changed?.Invoke();
             return new AttackResult(true, message, result.Won, enemyId, troops, atk.Troops, defArmy.Start, defArmy.Troops, charge);
         }
+
+        /// <summary>출진할 장수 — 그 성에 있고 이 달 명령을 안 썼고 다치지 않은(tasks U-0098 중상) 우리 장수, 명단 순서.
+        /// <see cref="Attack"/> 와 격자 전술판(<see cref="RealmTactics.Open"/>)이 같은 목록을 쓴다.</summary>
+        public static List<string> MarchOfficers(string fromCityId)
+        {
+            var officers = new List<string>();
+            foreach (var id in RealmCityState.RosterIds)
+            {
+                if (RealmCityState.OfficerCityId(id) == fromCityId && !RealmCityState.IsOfficerDone(id) && !RealmCityState.IsHurt(id))
+                {
+                    officers.Add(id);
+                }
+            }
+            return officers;
+        }
+
+        /// <summary>쓰러진 장수는 군주(수도 장수·시작 장수·명단 하나뿐)면 중상, 아니면 전사(명단에서 빠지고 열전) — 웹 tactics.js marchApply.
+        /// 둘 다 남은 싸움에서 빠진다. 돌려주는 값은 전투 글 머리.</summary>
+        private static string ApplyGrid(RealmTactics.Bonus grid, List<string> officers, string enemyId, string where)
+        {
+            var hurt = new List<(string id, int months)>(grid.Wounded);
+            var dead = new List<string>();
+            foreach (var id in grid.Fallen)
+            {
+                if (IsLord(id)) hurt.Add((id, RealmTactics.WoundMonths)); else dead.Add(id);
+            }
+            string by = string.Format(RealmLocalization.T("tactics.by", "{0} 수비군"), where);
+            string note = string.Format(RealmLocalization.T("tactics.note", "♟️ 전술판 {0} — 공 위력 {1}{2}%{3} —"),
+                Kind(grid.Kind), grid.WinPct >= 0 ? "+" : "", grid.WinPct,
+                grid.LossMul != 1f ? string.Format(RealmLocalization.T("tactics.note_take", " · 받는 피해 ×{0}"), grid.LossMul) : "");
+            foreach (var id in dead)
+            {
+                string name = RealmOfficerPool.Get(id)?.Name ?? id;
+                officers.Remove(id);
+                if (RealmCityState.RetireOfficer(id, enemyId, by))
+                    note += " " + string.Format(RealmLocalization.T("tactics.fallen", "⚰️ {0} 이(가) {1} 아래에서 쓰러졌다 —"), name, where);
+            }
+            foreach (var w in hurt)
+            {
+                officers.Remove(w.id);
+                RealmCityState.SetHurt(w.id, Mathf.Max(RealmCityState.HurtMonths(w.id), w.months));
+                note += " " + string.Format(RealmLocalization.T("tactics.wounded", "🩹 {0} 이(가) 크게 다쳐 물러났다({1}달) —"), RealmOfficerPool.Get(w.id)?.Name ?? w.id, w.months);
+            }
+            return note;
+        }
+
+        private static string Kind(string kind)
+        {
+            switch (kind)
+            {
+                case "rout": return RealmLocalization.T("tactics.rout", "대승");
+                case "win": return RealmLocalization.T("tactics.win", "승");
+                case "lose": return RealmLocalization.T("tactics.lose", "패");
+                default: return RealmLocalization.T("tactics.draw", "무승부");
+            }
+        }
+
+        /// <summary>군주 — 판이 끝나지 않게 전사 대신 중상(웹 marchApply). 이 트랙엔 군주 칸이 없어 수도 장수·시작 장수·명단 하나뿐을 군주로 친다.</summary>
+        public static bool IsLord(string id) =>
+            id == RealmOfficerPool.StartingOfficerId || id == RealmSuccessionState.FindCapitalOfficer() || RealmCityState.RosterIds.Count <= 1;
 
         /// <summary>PLAN.md 101-2 5-6 "지형·진형 전술 개입" — 웹판(`saga-web/saga-realm/PLAN.md`
         /// 107행)은 지형 4종(산·숲·평야·강) 전술 4개 + 진형 수동 선택까지
@@ -227,6 +292,7 @@ namespace Saga.Realm.Data
             {
                 if (RealmCityState.OfficerCityId(id) != fromCityId) continue;
                 if (RealmCityState.IsOfficerDone(id)) continue;
+                if (RealmCityState.IsHurt(id)) continue; // tasks U-0098 중상은 계략도 못 꾸민다(웹 hurt — 출진·외교)
                 var o = RealmOfficerPool.Get(id);
                 if (o == null) continue;
                 if (best == null || o.Wisdom > best.Wisdom) best = o;

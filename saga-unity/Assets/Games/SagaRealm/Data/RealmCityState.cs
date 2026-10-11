@@ -42,7 +42,77 @@ namespace Saga.Realm.Data
             [RealmOfficerPool.StartingOfficerId] = RealmOfficerPool.StartingOfficerCityId,
         };
 
+        // tasks U-0098 격자 전술 — 중상(장수 → 남은 달, 달마다 −1)·열전(전사 기록). 세이브 칸 hurt*·annal*.
+        private static readonly Dictionary<string, int> _hurt = new Dictionary<string, int>();
+        private static readonly List<Annal> _annals = new List<Annal>();
+
+        public struct Annal
+        {
+            public string Id, Where, By;
+            public int Year, Month;
+        }
+
         public static IReadOnlyList<string> RosterIds => _roster;
+        public static IReadOnlyList<Annal> Annals => _annals;
+        public static bool IsHurt(string officerId) => _hurt.TryGetValue(officerId, out var m) && m > 0;
+        public static int HurtMonths(string officerId) => _hurt.TryGetValue(officerId, out var m) ? m : 0;
+
+        /// <summary>tasks U-0098 — 중상 달 수(0 이하면 풂). 다친 장수는 출진·계략에서 빠진다(`RealmWarState.MarchOfficers`·`BestPlotter`).</summary>
+        public static void SetHurt(string officerId, int months)
+        {
+            if (months <= 0) _hurt.Remove(officerId); else _hurt[officerId] = months;
+            Changed?.Invoke();
+        }
+
+        /// <summary>tasks U-0098 — 전사: 명단·배치·이 달 명령·중상·탄 말에서 빼고 열전에 남긴다(웹 rec.dead + annalize). 명단에 없으면 false.</summary>
+        public static bool RetireOfficer(string officerId, string where, string by)
+        {
+            if (!_roster.Contains(officerId)) return false;
+            RealmMounts.Equip(officerId, null); // 명단에서 빼기 전에(Mine 검사) — 탄 말이 없으면 이유만 돌아온다
+            _roster.Remove(officerId);
+            _officerCity.Remove(officerId);
+            _doneThisMonth.Remove(officerId);
+            _hurt.Remove(officerId);
+            _annals.RemoveAll(a => a.Id == officerId);
+            _annals.Add(new Annal { Id = officerId, Where = where ?? "", By = by ?? "", Year = Year, Month = Month });
+            Changed?.Invoke();
+            return true;
+        }
+
+        public static void SnapshotWarRecords(out string[] hurtIds, out int[] hurtMonths,
+            out string[] annalIds, out string[] annalWhere, out string[] annalBy, out int[] annalYears, out int[] annalMonths)
+        {
+            hurtIds = new string[_hurt.Count]; hurtMonths = new int[_hurt.Count];
+            int i = 0;
+            foreach (var kv in _hurt) { hurtIds[i] = kv.Key; hurtMonths[i] = kv.Value; i++; }
+            int n = _annals.Count;
+            annalIds = new string[n]; annalWhere = new string[n]; annalBy = new string[n]; annalYears = new int[n]; annalMonths = new int[n];
+            for (i = 0; i < n; i++)
+            {
+                annalIds[i] = _annals[i].Id; annalWhere[i] = _annals[i].Where; annalBy[i] = _annals[i].By;
+                annalYears[i] = _annals[i].Year; annalMonths[i] = _annals[i].Month;
+            }
+        }
+
+        /// <summary>세이브 적용 — 없는 칸(옛 세이브)은 null 이라 "다친 이·전사자 없음".</summary>
+        public static void RestoreWarRecords(string[] hurtIds, int[] hurtMonths,
+            string[] annalIds, string[] annalWhere, string[] annalBy, int[] annalYears, int[] annalMonths)
+        {
+            _hurt.Clear();
+            if (hurtIds != null && hurtMonths != null)
+                for (int i = 0; i < hurtIds.Length && i < hurtMonths.Length; i++) if (hurtMonths[i] > 0) _hurt[hurtIds[i]] = hurtMonths[i];
+            _annals.Clear();
+            if (annalIds != null)
+                for (int i = 0; i < annalIds.Length; i++)
+                    _annals.Add(new Annal
+                    {
+                        Id = annalIds[i],
+                        Where = annalWhere != null && i < annalWhere.Length ? annalWhere[i] : "",
+                        By = annalBy != null && i < annalBy.Length ? annalBy[i] : "",
+                        Year = annalYears != null && i < annalYears.Length ? annalYears[i] : 0,
+                        Month = annalMonths != null && i < annalMonths.Length ? annalMonths[i] : 0,
+                    });
+        }
         /// <summary>지금까지 "우리 성"인 곳 — 시작 셋(RealmCityData.AllCityIds)
         /// 에 함락한 성(AbsorbCity)이 더해진다. "성" 패널·정산·저장이 이
         /// 목록으로 돈다(RealmCityData.AllCityIds는 "처음부터 우리 것"만
@@ -441,6 +511,13 @@ namespace Saga.Realm.Data
             if (Month > 12) { Month = 1; Year++; }
             _doneThisMonth.Clear();
             _orderThisMonth.Clear();
+            if (_hurt.Count > 0) // tasks U-0098 중상 — 달마다 하나씩 낫는다
+            {
+                foreach (var id in new List<string>(_hurt.Keys))
+                {
+                    if (_hurt[id] <= 1) _hurt.Remove(id); else _hurt[id]--;
+                }
+            }
 
             Changed?.Invoke();
             string summary = string.Format(RealmLocalization.T("month.summary", "{0}년 {1}월 — 금 +{2}-{3}(봉록){4}"),

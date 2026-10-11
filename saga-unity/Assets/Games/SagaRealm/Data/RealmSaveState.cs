@@ -102,6 +102,11 @@ namespace Saga.Realm.Data
             public int scenarioStageSince;
             // PLAN.md 109-16b 회차 — 이번 판 회차(없으면 1). 버전 그대로.
             public int round;
+            // tasks U-0098 격자 전술 — 중상(장수·남은 달)·열전(전사 id·곳·누구에게·해·달). 버전 그대로: 옛 세이브는 null = 없음.
+            public string[] hurtIds;
+            public int[] hurtMonths;
+            public string[] annalIds, annalWhere, annalBy;
+            public int[] annalYears, annalMonths;
         }
 
         /// <summary>PlaytestRealmSlice.cs 전용 — GameBootstrap.Awake()가
@@ -192,6 +197,7 @@ namespace Saga.Realm.Data
             RealmMounts.SnapshotEq(out data.mountEqOfficers, out data.mountEqMounts);
             RealmScenario.Snapshot(out data.scenarioSeen, out data.scenarioT0, out data.scenarioTurnSeen, out data.scenarioIds, out data.scenarioKs, out data.scenarioTurns, out data.scenarioSideWho, out data.scenarioSideTurn);
             RealmScenario.SnapshotStage(out data.scenarioStageId, out data.scenarioStageTarget, out data.scenarioStageSince);
+            RealmCityState.SnapshotWarRecords(out data.hurtIds, out data.hurtMonths, out data.annalIds, out data.annalWhere, out data.annalBy, out data.annalYears, out data.annalMonths);
             return JsonUtility.ToJson(data);
         }
 
@@ -275,6 +281,7 @@ namespace Saga.Realm.Data
             RealmMounts.Restore(data.mountSel, data.mountEqOfficers, data.mountEqMounts);
             RealmScenario.Restore(data.scenarioSeen, data.scenarioT0, data.scenarioTurnSeen, data.scenarioIds, data.scenarioKs, data.scenarioTurns, data.scenarioSideWho, data.scenarioSideTurn);
             RealmScenario.RestoreStage(data.scenarioStageId, data.scenarioStageTarget, data.scenarioStageSince); // 옛 세이브(필드 없음)는 단계 없음
+            RealmCityState.RestoreWarRecords(data.hurtIds, data.hurtMonths, data.annalIds, data.annalWhere, data.annalBy, data.annalYears, data.annalMonths);
             return true;
         }
 

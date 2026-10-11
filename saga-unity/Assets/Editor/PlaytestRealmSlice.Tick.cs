@@ -1231,6 +1231,8 @@ namespace Saga.EditorTools
                     if (!PlaytestRealmActors.Run()) { Fail(); return; }
                     // tasks U-0094 영내 소식 — 금·성 값·사건 상태를 되돌린다.
                     if (!PlaytestRealmNews.Run()) { Fail(); return; }
+                    // tasks U-0098 격자 전술 규칙 — 세이브 JSON·Random 상태로 되돌린다.
+                    if (!PlaytestRealmTactics.Run()) { Fail(); return; }
                     _phase = Phase.QuizCorrect;
                     break;
                 }

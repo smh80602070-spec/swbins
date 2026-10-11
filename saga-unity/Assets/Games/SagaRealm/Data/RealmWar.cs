@@ -71,7 +71,7 @@ namespace Saga.Realm.Data
         /// `duelPowerMul`(매 합, atk 쪽) 한 자리를 더 열었다 — 셋 다
         /// 기본값 1이라 안 쓰면 war.js 그대로다.</summary>
         private static string StepRound(RealmArmy atk, RealmArmy def, RealmEnemyRecord wallRef, RealmLand land, bool sortie,
-            int round, float firstRoundPowerMul, float defPowerMul, float duelPowerMul)
+            int round, float firstRoundPowerMul, float defPowerMul, float duelPowerMul, float atkTakeMul)
         {
             float wallF = sortie
                 ? RealmCityData.DefMul(land)
@@ -80,7 +80,7 @@ namespace Saga.Realm.Data
             float ap = ArmyPower(atk, land) * (round == 0 ? firstRoundPowerMul : 1f) * duelPowerMul;
             float dp = ArmyPower(def, land) * wallF * defPowerMul;
 
-            int lossA = Mathf.RoundToInt(dp * 0.055f * (0.85f + UnityEngine.Random.value * 0.3f));
+            int lossA = Mathf.RoundToInt(dp * 0.055f * (0.85f + UnityEngine.Random.value * 0.3f) * atkTakeMul); // tasks U-0098 격자 전술 대승 ×0.7(기본 1 — ×1f 는 비트 그대로)
             int lossD = Mathf.RoundToInt(ap * 0.055f * (0.85f + UnityEngine.Random.value * 0.3f));
             atk.Troops = Mathf.Max(0, atk.Troops - lossA);
             def.Troops = Mathf.Max(0, def.Troops - lossD);
@@ -103,7 +103,7 @@ namespace Saga.Realm.Data
         /// 없어 routed와 같이 취급한다(문서 "뺀 것" 재해석). 101-2 5-6·5-3
         /// 세 배율 자리는 기본값(전부 1)이면 war.js 그대로.</summary>
         public static FightResult Fight(RealmArmy atk, RealmArmy def, RealmEnemyRecord wallRef, RealmLand land,
-            float firstRoundPowerMul = 1f, float defPowerMul = 1f, float duelPowerMul = 1f)
+            float firstRoundPowerMul = 1f, float defPowerMul = 1f, float duelPowerMul = 1f, float atkTakeMul = 1f)
         {
             bool sortie = def.Troops > atk.Troops * 0.85f;
             int wallFrom = wallRef.Wall;
@@ -111,7 +111,7 @@ namespace Saga.Realm.Data
 
             for (int r = 0; r < Rounds; r++)
             {
-                string outcome = StepRound(atk, def, wallRef, land, sortie, r, firstRoundPowerMul, defPowerMul, duelPowerMul);
+                string outcome = StepRound(atk, def, wallRef, land, sortie, r, firstRoundPowerMul, defPowerMul, duelPowerMul, atkTakeMul);
                 if (outcome == "won") { won = true; break; }
                 if (outcome == "routed") { routed = true; break; }
             }

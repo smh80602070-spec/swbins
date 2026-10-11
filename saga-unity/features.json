@@ -1921,6 +1921,23 @@
   "note": "D2(U-0094·U-0097): docs/playcheck/d2-u0094-u0097-20261011.json — PlaytestRealmNews OK · 소식 카드 촬영 Claude 눈 ○ · 토스트가 카드 아래로 비켜남(U-0097)"
  },
  {
+  "id": "un.rk.tactics",
+  "name": "U-0098 격자 전술 규칙 — 8×6·3턴·엄폐·AI·결과 넷, Attack() 보정만(웹 W-0107 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaRealm/Data/RealmTactics.cs",
+   "saga-unity/Assets/Games/SagaRealm/Data/RealmWarState.cs"
+  ],
+  "tests": [
+   "PlaytestRealmTactics"
+  ],
+  "level": "D1",
+  "verified": "2026-10-11 claude",
+  "fun": {},
+  "ticket": "U-0098",
+  "since": "2026-10-11",
+  "note": "D1: PlaytestRealmTactics OK(웹 tactics.js 판 셋과 칸·자리·대국 결과·굴림 수 같음) · 화면 없음 — 판 화면은 다음 티켓"
+ },
+ {
   "id": "un.fs.craft",
   "name": "U-0095 제작대 — 채집 손 승급·3택(웹 W-0103 이식)",
   "files": [
