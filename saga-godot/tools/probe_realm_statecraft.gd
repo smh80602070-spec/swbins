@@ -174,7 +174,7 @@ func _initialize() -> void:
 	var ok_old: bool = RS.try_load()
 	var old_empty: bool = RS.passive.get("start") == null and (RS.passive.taken as Array).is_empty()
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(RS.path_override))
-	check(ok_save and ok_load and round_ok and ok_old and old_empty and RS.SAVE_VERSION == 20, "⑥ 세이브 왕복 · 옛 19 → 빈 칸 · 버전 20")
+	check(ok_save and ok_load and round_ok and ok_old and old_empty and RS.SAVE_VERSION >= 20, "⑥ 세이브 왕복 · 옛 19 → 빈 칸 · 버전 20 이상(G-0219 에 21)")
 
 	# ⑦ 단추
 	var stage := Node.new()

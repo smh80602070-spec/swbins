@@ -3894,6 +3894,38 @@
   "note": "창 모드 realm_statecraft 가로·세로 Claude 눈 ○(HUD 단추로 연 화면 · 4년 — 남은 4/9 · 무위 카드) · 빈 경륜도 = realm_golden md5 그대로"
  },
  {
+  "id": "gd.rk.ai_statecraft",
+  "name": "5천하 AI 세력 경륜도 — AI 도 같은 377마디 그물을 달마다 성향대로(시작점·테마 이름난 마디·20마디 뒤 성향 규칙) · 점수 = 1 + 이긴 출병 + 반년마다 1(상한 56) · AI 출병·수비·성장에 걸림 · 규칙 익히면 알림(웹 W-0182 aiSpend)",
+  "files": [
+   "games/saga_realm/data/realm_ai_statecraft.gd",
+   "games/saga_realm/data/realm_state.gd",
+   "games/saga_realm/data/realm_save_state.gd",
+   "games/saga_realm/data/realm_rules_month.gd",
+   "games/saga_realm/data/realm_rules_war.gd",
+   "tools/probe_realm_ai_statecraft.gd",
+   "tools/probe_realm_golden.gd",
+   "tools/probe_realm_statecraft.gd"
+  ],
+  "tests": [
+   "realm_ai_statecraft",
+   "realm_statecraft",
+   "passive_web",
+   "realm_golden",
+   "realm_state",
+   "realm_data",
+   "realm_tactics",
+   "save_realm",
+   "scenario_realm",
+   "realm_defeat"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0219",
+  "since": "2026-10-13",
+  "note": "화면 없음(규칙 층) — 점검 8항목 · 골든 새 값 2f12de0b…(AI_ON=false 면 옛 a6992811… 그대로) · 같은 난수에서 AI 성벽 성장 342→465(×1.36)"
+ },
+ {
   "id": "gd.dg.meridian",
   "name": "2나락 경락도(經絡圖) — 409마디 패시브 그물을 직업(쥔 무기)마다·시작점 여섯 · 점수 = 첫 별 + 그 직업 무예 점수 누계 + 보스 처치(상한 60) · 능력치 합은 _sum_eff·저항 · 규칙 열(기력·회피 없는 자리는 재해석) · 무예 창 「☯ 경락도」·F2(웹 W-0180)",
   "files": [

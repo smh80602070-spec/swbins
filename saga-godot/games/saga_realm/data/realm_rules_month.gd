@@ -95,6 +95,7 @@ func next_month() -> void:
 	_tick_news()
 	_tick_succession()
 	_check_defection()
+	_run_enemy_statecraft()   # G-0219 AI 세력 경륜도 — 쌓인 점수를 성향대로(굴림 없음)
 	_run_enemy_ai()
 	_run_enemy_economy()
 	_roll_disasters()

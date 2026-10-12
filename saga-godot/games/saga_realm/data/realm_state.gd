@@ -43,6 +43,7 @@ const Characters := preload("res://saga_core/data/characters.gd")
 const RealmOrders := preload("res://games/saga_realm/data/realm_orders.gd")
 const RealmOfficerPool := preload("res://games/saga_realm/data/realm_officer_pool.gd")
 const RealmCities := preload("res://games/saga_realm/data/realm_cities.gd")
+const RealmAI := preload("res://games/saga_realm/data/realm_ai_statecraft.gd")   # G-0219 AI 세력 경륜도
 const RealmWar := preload("res://games/saga_realm/data/realm_war.gd")
 const RealmDiplo := preload("res://games/saga_realm/data/realm_diplo.gd")
 const RealmGrowth := preload("res://games/saga_realm/data/realm_growth.gd")
@@ -137,6 +138,9 @@ var _done_this_month: Dictionary = {}  # officer_id -> bool
 ## G-0216 경륜도 — 플레이어 세력의 공용 패시브 그물 세이브 칸(저장 키 "passive", 19→20). 효과는 data/realm_statecraft.gd.
 var passive: Dictionary = {"start": null, "taken": []}
 var _passive_api: RefCounted = null
+## G-0219 AI 세력 경륜도 — 세력 → {start, taken, won}(저장 키 "ai_passive", 20→21). 찍기·효과는 data/realm_ai_statecraft.gd.
+var ai_passive: Dictionary = {}
+var _ai_apis: Dictionary = {}
 
 ## **2026-09-17 추가 — PLAN 101-2 REALM ③후보(웹판 §5-1 "인물 특성·야망").**
 ## `officer_growth`와 같은 지연 초기화 패턴 — officer_id -> {k, prog, done,
@@ -435,6 +439,18 @@ func _init_quiz() -> void:
 		"learned": {}, "wrongs": {}, "total": 0, "correct": 0,
 		"streak": 0, "best_streak": 0, "lore": 0,
 	}
+
+
+## G-0219 AI 세력 경륜도 규칙 층 — 세력마다, 세이브 칸이 바뀌면(불러오기) 새로 만든다.
+func ai_passive_api(fid: String) -> RefCounted:
+	var AI: GDScript = load("res://games/saga_realm/data/realm_ai_statecraft.gd")
+	var st: Dictionary = AI.call("store", self, fid)
+	var a: RefCounted = _ai_apis.get(fid)
+	if a == null or not is_same(a.store, st):
+		var SC: GDScript = load("res://games/saga_realm/data/realm_statecraft.gd")
+		a = (load("res://saga_core/data/passive_web.gd") as GDScript).new(SC.call("definition"), st, func() -> int: return int(AI.call("points_total", self, fid)))
+		_ai_apis[fid] = a
+	return a
 
 
 ## G-0216 경륜도 규칙 층 — passive 사전이 바뀌면(불러오기) 새로 만든다.

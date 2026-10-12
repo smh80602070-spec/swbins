@@ -28,6 +28,32 @@ const AI_TROOPS_FLOOR := 500   # attack()의 "오백은 넘겨야 군대라 하�
 ##   `realm_diplo_button.gd`/`realm_plot_button.gd`가 이미 이 가드를
 ##   쓴다). 화친 중(`diplomacy[].truce_months>0`)이면 마찬가지로 쉰다
 ##   (war.js canMarch()의 diplo.blocked() 체크와 같은 자리).
+## G-0219 — 살아 있는(성이 하나라도 안 함락된) 세력마다 쌓인 경륜 점수를 찍는다. 규칙 마디를 새로 익히면 한 줄 알림.
+func _run_enemy_statecraft() -> void:
+	if not RealmAI.AI_ON:
+		return
+	var forces: Array = []
+	for enemy_id: String in enemies.keys():
+		var fid := force_of(enemy_id)
+		if fid != "" and not bool((enemies[enemy_id] as Dictionary).get("captured", false)) and not forces.has(fid):
+			forces.append(fid)
+	forces.sort()
+	var msgs: Array = []
+	for fid: String in forces:
+		var before := RealmAI.rule_name(self, fid)
+		RealmAI.spend(self, fid)
+		var after := RealmAI.rule_name(self, fid)
+		if after != "" and after != before:
+			msgs.append("🧭 %s 세력이 경륜 ◆%s 을(를) 익혔다" % [_force_label(fid), after])
+	if not msgs.is_empty():
+		Toast.show(self, "\n".join(msgs), 3.0)
+
+
+func _force_label(fid: String) -> String:
+	var h = Characters.find(String(RealmCities.FORCE_LORD.get(fid, "")))
+	return String(h.name) if h != null else fid
+
+
 func _run_enemy_ai() -> Array:
 	var messages: Array = []
 	for enemy_id: String in enemies.keys():
@@ -110,6 +136,15 @@ func _enemy_attack(enemy_id: String, e: Dictionary, target_id: String) -> String
 	}
 	if _sc("enemy_atk") != 1.0:
 		atk_army["give"] = _sc("enemy_atk")   # G-0216 청야 — 내 성을 치러 온 군 공격 ×0.8
+	## G-0219 AI 경륜도 — 출병 공격·야전/공성(철기·공성 전문)·받는 피해·성벽 깎기·일인지하. 1 이면 손 안 댐(골든 비트 그대로).
+	var afid := force_of(enemy_id)
+	for pair in [["atk", "give"], ["take", "take"], ["field", "give_field"], ["siege", "give_siege"], ["chip", "chip"]]:
+		var am := RealmAI.mul(self, afid, String(pair[0]))
+		if am != 1.0:
+			atk_army[pair[1]] = float(atk_army.get(pair[1], 1.0)) * am
+	if RealmAI.mul(self, afid, "best") != 1.0:
+		atk_army.best_command = float(atk_army.best_command) * RealmAI.mul(self, afid, "best")
+		atk_army.best_might = float(atk_army.best_might) * RealmAI.mul(self, afid, "best")
 
 	var wall := {"wall": int(c.wall), "max_wall": RealmCities.wall_cap(target_id)}
 	var land: String = String(RealmCities.any_by_id(target_id).get("land", "plain"))
@@ -119,6 +154,9 @@ func _enemy_attack(enemy_id: String, e: Dictionary, target_id: String) -> String
 	c.troops = rep.def_troops_left
 	e.troops = rep.atk_troops_left
 	enemies[enemy_id] = e
+	if rep.won and RealmAI.AI_ON and afid != "":   # G-0219 이긴 출병 = AI 경륜 점수
+		var ast: Dictionary = RealmAI.store(self, afid)
+		ast["won"] = int(ast.get("won", 0)) + 1
 
 	var enemy_name := String(enemy_def.get("name", enemy_id))
 	var city_name := String(RealmCities.any_by_id(target_id).get("name", target_id))
@@ -159,6 +197,9 @@ func _run_enemy_economy() -> void:
 		var stat_val: float = _effective_stat(officer_id, String(o.stat))
 		var crit := _rng.randf() < clampf(stat_val / 400.0, 0.03, 0.28)
 		var amount := roundi((float(o.base) + stat_val * float(o.per)) * (1.5 if crit else 1.0))
+		var gm := RealmAI.order_mul(self, force_of(enemy_id), key)   # G-0219 AI 경륜도 성장(1 이면 손 안 댐)
+		if gm != 1.0:
+			amount = roundi(float(amount) * gm)
 		match key:
 			"sec": e.sec = mini(RealmOrders.CAP_SEC, int(e.sec) + amount)
 			"wall": e.wall = mini(int(e.max_wall), int(e.wall) + amount)
@@ -409,6 +450,13 @@ func attack(enemy_id: String, duel_moves: Array = [], grid: Dictionary = {}) -> 
 		var m := _sc(String(pair[0]))
 		if m != 1.0:
 			atk[pair[1]] = float(atk.get(pair[1], 1.0)) * m
+	## G-0219 AI 경륜도(수비 쪽) — 내 give ×AI 받는 피해×AI 청야, 내 take ×AI 공격. 1 이면 손 안 댐.
+	var dfid := force_of(enemy_id)
+	var dg := RealmAI.mul(self, dfid, "take") * RealmAI.mul(self, dfid, "hit_me")
+	if dg != 1.0:
+		atk["give"] = float(atk.get("give", 1.0)) * dg
+	if RealmAI.mul(self, dfid, "def_atk") != 1.0:
+		atk["take"] = float(atk.get("take", 1.0)) * RealmAI.mul(self, dfid, "def_atk")
 	## **2026-09-12 갱신 — 이간·매수로 이름 있는 수비 무장이 생겼다.**
 	## `e.officers`(비면 예전처럼 0)를 그대로 반영한다 — 매수·이간으로
 	## 미리 빼내면 그만큼 수비가 약해진다(officer_count·best_command·
