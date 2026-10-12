@@ -38,8 +38,24 @@ namespace Saga.Go.Data
             return false;
         }
 
-        /// <summary>지금 이 자리의 발소리 지면(집 안 → 나무).</summary>
-        public static string At(Vector3 world) => InsideHouse() ? Wood : OfRegion(GoWorldMap.RegionAt(world));
+        /// <summary>U-0110 다리 널판 충돌판 폭의 절반(m) — `TerrainBuilder` 의 `Col_bridge_plank` 폭 7m.</summary>
+        public const float BridgeHalfWidth = 3.5f;
+        /// <summary>널판 윗면에서 이만큼 아래까지는 널판 위로 본다(밑으로 헤엄치는 자리는 훨씬 낮다).</summary>
+        public const float BridgeSlack = 0.6f;
+
+        /// <summary>U-0110 다리 칸('B') 널판 위인가 — 칸이 'B'·높이가 널판 윗면(바닥 + `BridgeClearance`) 근처 이상·널판 폭 안.
+        /// 널판 밑 강물·같은 칸의 널판 옆 물 위는 아니다.</summary>
+        public static bool OnBridge(Vector3 world)
+        {
+            var (gx, gy) = TestMapData.WorldToGrid(world);
+            if (TestMapData.TileAt(gx, gy) != 'B') return false;
+            float top = TestMapData.Legend['B'].Height + TestMapData.BridgeClearance;
+            if (world.y < top - BridgeSlack) return false;
+            return Mathf.Abs(world.x - TestMapData.WorldPos(gx, gy).x) <= BridgeHalfWidth + 0.5f;
+        }
+
+        /// <summary>지금 이 자리의 발소리 지면(집 안 → 나무 · 다리 널판 → 나무 · 그 밖은 지역 표).</summary>
+        public static string At(Vector3 world) => InsideHouse() || OnBridge(world) ? Wood : OfRegion(GoWorldMap.RegionAt(world));
 
         public static string StepName(string surface) => "step_" + surface;
     }
