@@ -977,5 +977,30 @@
   "ticket": "W-0159",
   "since": "2026-10-10",
   "note": "D2(qc+claude 2026-10-10): pw-tac-check → shots/tac/w159-{pc,phone,land}-{board,cut}.png Claude 눈 — 격자·높이(성벽>숲>평지)·장수·부대 몸·진영 원판·hp 띠 ○, 고르면 카메라가 살짝 당김 ○, 공격 컷(2D 겹침)은 캔버스 위에 그대로 ○(헤드리스는 화면 찍기가 1.1초라 450ms 뒤 컷은 이미 닫혀 안 찍힌다) · 점검: 고른 장수를 3칸 옮기면 150ms 에 walk·경로 3, 2.5초 뒤 목표 칸 가운데·idle ○. 규칙(tactics.js) 변경 0. 손잡이 tactics3d 0 = 2D 판."
+ },
+ {
+  "id": "rk.passive-web",
+  "name": "천하 경륜도 — PoE식 패시브 그물(마디 377·이름난 42·규칙 8, 세력마다 한 장 · AI 세력도 성향대로 찍음), 상단 「🧭」",
+  "files": [
+   "js/statecraft.js",
+   "js/data-passive.js",
+   "js/passive-web.js",
+   "js/passive-web-ui.js"
+  ],
+  "tests": [
+   "경륜도 — 정의 ≥300 마디 · 시작점 여섯 · 점수 = 1 + 처음 빼앗은 성 + 이정표 단(상한 56)",
+   "경륜도 — 찍으면 성 금 수입(goldOf)·전장 식량 생산(rts econ.stats)이 오른다",
+   "경륜도 — 찍으면 전장 내 유닛 공격(statOf)·출진 힘(war 배율)이 오르고 적 유닛은 그대로",
+   "경륜도 — 되돌리면 원래대로 · 한 마디 금 150 · 금이 모자라거나 진이 나가 있으면 막는다",
+   "경륜도 — 이웃 아닌 마디는 거절 · 시작점 하나만 · 세이브 왕복(세력 기록 passive 한 칸)",
+   "경륜도 — 규칙: 공성 전문(성벽 2배·야전 −15%) · 무위(금 0·군량 2배) · 일인지하(으뜸 하나 +50%·나머지 −10%)",
+   "경륜도 — AI 세력이 다음 달(runAll)에 점수만큼 성향대로 찍는다"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0182",
+  "since": "2026-10-12",
+  "note": "D2(qc+claude 2026-10-12): saga-web/tools/playcheck/passive-shot.mjs saga-realm → shots/passive_saga-realm_{390,1280}.png. 손잡이 rk.pw.*(cap 56·dropGold 150·aiKeyAt 20·규칙 배율). 턴제 경영(index)과 전장(rts.html)이 같은 save.rtk.forces[세력].passive 를 읽는다."
  }
 ]

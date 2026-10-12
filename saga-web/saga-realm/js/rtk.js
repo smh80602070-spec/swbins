@@ -462,7 +462,7 @@
     var sv = off.stats(officerId)[o.stat] || 0;
     /* 대성공 — 자질이 높을수록 잦다. 성과가 절반 더 붙는다 */
     var crit = Math.random() < core.clamp(sv / 400, 0.03, 0.28);
-    var amount = Math.round((o.base + sv * o.per) * (crit ? 1.5 : 1));
+    var amount = Math.round((o.base + sv * o.per) * (crit ? 1.5 : 1) * (global.DG.statecraft ? global.DG.statecraft.order(c.force, orderKey) : 1));   // 경륜도 내정·징병·축성
 
     if (orderKey === 'draft') {
       /* 징병은 인구를 깎는다 — 사람이 없으면 병사도 없다 */
@@ -556,6 +556,7 @@
     var captive = st.captives[targetId] === cityId;
     if (captive) { chance -= 0.15; }         // 잡혀 온 사람은 쉬이 굽히지 않는다
     if (mul != null && mul !== 1) { chance = core.clamp(chance * mul, 0.03, 0.95); }
+    var pwHire = global.DG.statecraft ? global.DG.statecraft.hire(c.force) : 1; if (pwHire !== 1) { chance = core.clamp(chance * pwHire, 0.03, 0.95); }   // 경륜도 등용
 
     if (Math.random() > chance) {
       core.log('🤝 ' + by.name + ' 이 ' + t.name + ' 을(를) 청했으나 거절당했다.', 'info');
@@ -612,21 +613,21 @@
   function goldOf(cityId) {
     var c = city(cityId);
     if (!c) { return 0; }
-    return Math.round(c.comm * core.tuned('rtk.goldMul', 0.55) * secMul(cityId) * govMul(cityId) * harvestMul(cityId));
+    return Math.round(c.comm * core.tuned('rtk.goldMul', 0.55) * secMul(cityId) * govMul(cityId) * harvestMul(cityId) * (global.DG.statecraft ? global.DG.statecraft.gold(c.force) : 1));   // 경륜도(W-0182)
   }
 
   /** 수확 달에 이 도시가 낳는 군량 */
   function foodOf(cityId) {
     var c = city(cityId);
     if (!c) { return 0; }
-    return Math.round(c.agri * core.tuned('rtk.foodMul', 6) * secMul(cityId) * govMul(cityId) * harvestMul(cityId));
+    return Math.round(c.agri * core.tuned('rtk.foodMul', 6) * secMul(cityId) * govMul(cityId) * harvestMul(cityId) * (global.DG.statecraft ? global.DG.statecraft.food(c.force) : 1));
   }
 
   /** 이 도시가 이 달에 먹는 군량 */
   function eatOf(cityId) {
     var c = city(cityId);
     if (!c) { return 0; }
-    return Math.round(c.troops / 1000 * FOOD_PER_1000);
+    return Math.round(c.troops / 1000 * FOOD_PER_1000 * (global.DG.statecraft ? global.DG.statecraft.eat(c.force) : 1));   // 둔전(경륜도)
   }
 
   /* ── 시장 (2026-09-09, 경제 심화) ─────────────────────────

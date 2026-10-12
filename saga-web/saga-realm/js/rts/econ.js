@@ -49,18 +49,19 @@
     var able = Math.floor(s.pop * WORKING), workers = Math.min(able, jobs), fill = jobs ? workers / jobs : 0, tax = taxOf(s), i;
     var local = 0; for (i = 0; i < houses.length; i++) { local += coverage(s, houses[i]); }
     local = houses.length ? local / houses.length : 0;
+    var pw = global.DG.statecraft ? global.DG.statecraft.rtsEcon() : null;   // 경륜도(W-0182) — 내 세력 금·군량·무위
     var starving = s.res.food < s.pop * 2, comfy = s.res.food > s.pop * 4, mods = 0;
     mods += comfy ? 8 : (starving ? -15 : 0);
-    mods += tax.h;
+    mods += tax.h + (pw ? pw.happy : 0);
     if (cap > 0 && s.pop >= cap * 0.95) { mods -= 5; }
     if (able > 0 && (able - workers) / able > 0.5) { mods -= 8; }
     var happy = clamp(50 + local + mods, 0, 100), mul = 0.8 + 0.4 * happy / 100;
-    var food = 0, gold = s.pop * tax.r - upkeep;
+    var food = 0, gold = s.pop * tax.r * (pw ? pw.tax : 1) - upkeep;
     for (id in s.buildings) {
       b = s.buildings[id]; d = D[b.t];
       if (!b.conn || d.free) { continue; }
-      if (d.food) { food += d.food * fill * mul; }
-      if (d.gold) { gold += d.gold * fill * mul; }
+      if (d.food) { food += d.food * fill * mul * (pw ? pw.food : 1); }
+      if (d.gold) { gold += d.gold * fill * mul * (pw ? pw.gold : 1); }
     }
     var army = global.DG.rts.units ? global.DG.rts.units.count(s, 0) : 0;
     food -= s.pop * EAT + army * 0.2;
@@ -70,7 +71,7 @@
       work: clamp(able > jobs ? (able - jobs) / Math.max(able, 1) : 0, 0, 1),
       food: clamp(food < 0 ? -food / Math.max(s.pop * EAT, 1) + 0.2 : (comfy ? 0 : 0.1), 0, 1)
     };
-    return { cap: cap, jobs: jobs, workers: workers, fill: fill, foodNet: food, goldNet: gold, upkeep: upkeep, happy: happy, mul: mul, tax: tax, army: army, defense: defense, demand: demand, localHappy: local, globalHappy: mods };
+    return { cap: cap, jobs: jobs, workers: workers, fill: fill, foodNet: food, goldNet: gold, upkeep: upkeep, happy: happy, mul: mul, tax: tax, army: army, defense: defense, demand: demand, localHappy: local, globalHappy: mods, grow: pw ? pw.grow : 1 };
   }
 
   /** 하루가 지났다 — s 를 고친다 */
@@ -84,7 +85,7 @@
     } else if (st.happy < 25) {
       s.pop = Math.max(0, s.pop - Math.ceil(s.pop * 0.05));
     } else if (s.pop < st.cap) {
-      s.pop = Math.min(st.cap, s.pop + Math.max(1, Math.floor((st.cap - s.pop) * 0.15 * st.happy / 50)));
+      s.pop = Math.min(st.cap, s.pop + Math.max(1, Math.floor((st.cap - s.pop) * 0.15 * st.happy / 50 * st.grow)));
     } else if (s.pop > st.cap) {
       s.pop = st.cap;
     }

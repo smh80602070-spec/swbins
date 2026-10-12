@@ -121,6 +121,7 @@
     /* 공동의 적 — 둘 다 맞닿아 있는 큰 세력이 있으면 손을 잡는다 */
     if (kind === 'ally' && commonEnemy(fromForce, toForce)) { p += 0.15; }
     if (mul != null && mul !== 1) { p *= mul; }
+    if (global.DG.statecraft) { p *= global.DG.statecraft.diplo(fromForce, neighbours(fromForce).indexOf(toForce) >= 0); }   // 경륜도 외교·원교근공
     return core.clamp(p, 0.03, 0.95);
   }
 
@@ -235,6 +236,7 @@
     if (c) { p += (60 - c.sec) / 400; }
     /* 특성(PLAN §5-1) — 거는 쪽의 교활·냉혈, 매수당하는 쪽의 탐욕·청렴 */
     p *= off.traitMul(byId, 'plot');
+    if (global.DG.statecraft) { p *= global.DG.statecraft.plot(off.rec(byId).force); }   // 경륜도 계략
     if (kind === 'bribe' && targetId) { p *= off.traitMul(targetId, 'bribed'); }
     return core.clamp(p, 0.05, 0.9);
   }
@@ -259,6 +261,7 @@
     if (c.force === r.force) { return { ok: false, why: '우리 성입니다' }; }
     if (!c.force) { return { ok: false, why: '주인 없는 성입니다' }; }
     if (f.gold < p.gold) { return { ok: false, why: '금이 모자랍니다' }; }
+    if (kind === 'fire' && global.DG.statecraft && global.DG.statecraft.fire(r.force, cityId) === 0) { return { ok: false, why: '비 오는 달 — 화공(경륜도)은 불을 못 놓는다' }; }
     /* 맞닿은 성에만 손이 닿는다 — 천 리 밖에 첩자를 두지는 못한다 */
     if (!touching(r.force, cityId)) { return { ok: false, why: '손이 닿지 않는 성입니다' }; }
 
@@ -294,7 +297,7 @@
       c.sec = core.clamp(c.sec - (10 + Math.floor(Math.random() * 12)), 0, 100);
       text = CD.find(cityId).name + ' 치안 ' + was + ' → ' + c.sec;
     } else if (kind === 'fire') {
-      var burned = Math.round(c.food * (0.25 + Math.random() * 0.3));
+      var burned = Math.round(c.food * (0.25 + Math.random() * 0.3) * (global.DG.statecraft ? global.DG.statecraft.fire(r.force, cityId) : 1));
       c.food = Math.max(0, c.food - burned);
       text = CD.find(cityId).name + ' 의 군량 ' + core.fmt(burned) + ' 이 탔다';
     } else if (kind === 'bribe') {

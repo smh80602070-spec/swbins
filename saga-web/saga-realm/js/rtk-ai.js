@@ -428,6 +428,7 @@
     for (i = 0; i < ids.length; i++) {
       if (ids[i] === R.me()) { continue; }
       if (R.state().result) { break; }
+      if (global.DG.statecraft) { global.DG.statecraft.aiSpend(ids[i]); }   // 경륜도(W-0182) — 쌓인 점수를 성향대로 찍는다
       out.push({ force: ids[i], did: runForce(ids[i]) });
     }
     return out;

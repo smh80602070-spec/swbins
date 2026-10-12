@@ -38,6 +38,24 @@ const OPEN = {
     var q = document.querySelector('.pwui-q'); q.value = '이동'; q.dispatchEvent(new Event('input'));
     return '단추 ' + (clicked ? '열림' : '안 열림') + ' · 찍음 ' + api.used() + '/' + api.points() + ' · 카드 ' + nx.id + ' ' + nx.cost + '점';
   })()`,
+  /* W-0182 — 상단 「🧭」 단추를 눌러 열리는지 본 뒤, 내 세력 경륜도를 다시 열어 카드를 띄운다 */
+  'saga-realm': `(function(){
+    var R = DG.rtk, SC = DG.statecraft;
+    if (!R.state().started) { R.setup('cao'); }
+    var f = R.force(R.me()), won = {}, i;
+    for (i = 0; i < 20; i++) { won['shot_' + i] = 1; }
+    f.passive = { start: null, taken: [], won: won }; SC._reset(); DG.core.emit('changed');
+    var btn = document.getElementById('btn-gyeong'), glow = btn ? btn.style.boxShadow : '';
+    if (btn) { btn.click(); }
+    var clicked = !!(DG.passiveWebUI && DG.passiveWebUI.isOpen());
+    var api = SC.api(R.me()); api.take('o_mokmin');
+    function nearest() { var b = null; DG.passiveDef.nodes.forEach(function (n) { if (n.k !== 'n' || api.isTaken(n.id)) return; var p = api.pathTo(n.id); if (p && (!b || p.cost < b.cost)) b = { id: n.id, cost: p.cost }; }); return b; }
+    api.takePath(nearest().id); api.takePath(nearest().id);
+    var ui = SC.open(), nx = nearest();
+    ui.select(nx.id);
+    var q = document.querySelector('.pwui-q'); q.value = '금'; q.dispatchEvent(new Event('input'));
+    return '단추 ' + (clicked ? '열림' : '안 열림') + (glow ? '(금빛 테)' : '(테 없음)') + ' · 찍음 ' + api.used() + '/' + api.points() + ' · 카드 ' + nx.id + ' ' + nx.cost + '점';
+  })()`,
 };
 /** 판마다 부팅 — 계정 만들고 이어하기 */
 const BOOT = {
@@ -59,6 +77,22 @@ const BOOT = {
     await c.ev(`(function(){ var b = document.getElementById('title-continue'); if (b) b.click(); })()`);
     await sleep(4000);
     for (let i = 0; i < 6; i++) { await c.key('Escape', 60); await sleep(200); }
+  },
+  /* 5천하 — 계정 → 이어하기 → 시나리오·세력 고르기(첫 칸) → 3D 국토 지도는 끈다(헤드리스 부하) */
+  'saga-realm': async (c, B) => {
+    await c.go(B + 'index.html', 5000);
+    await c.ev(`(function(){ if (!document.getElementById('title-continue') && DG.account && DG.account.create) { DG.account.create('경륜'); } })()`);
+    await c.go(B + 'index.html', 7000);
+    await c.ev(`(function(){ var b = document.getElementById('title-continue'); if (b) b.click(); })()`);
+    await sleep(3000);
+    for (let i = 0; i < 6; i++) { await c.key('Escape', 60); await sleep(200); }
+    await c.ev(`(function(){ var h = document.getElementById('help-ok'); if (h && h.offsetParent) h.click(); var s = document.querySelector('[data-act="pick-scen"]'); if (s) s.click(); })()`);
+    await sleep(900);
+    await c.ev(`(function(){ var f = document.querySelector('[data-act="pick-force"]'); if (f) f.click(); })()`);
+    await sleep(3000);
+    for (let i = 0; i < 8; i++) { await c.key('Escape', 60); await sleep(200); }
+    await c.ev(`(function(){ if (DG.realm3d && DG.realm3d.active && DG.realm3d.active()) { document.getElementById('btn-3d').click(); } })()`);
+    await sleep(1500);
   },
 };
 if (!OPEN[GAME]) { console.log('모르는 판 ' + GAME + ' — OPEN 표에 한 줄 더할 것'); process.exit(2); }

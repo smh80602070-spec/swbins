@@ -22,7 +22,7 @@
   function R() { return global.DG.rts; }
 
   /** 유닛의 전투 능력 — 영웅은 장수 능력(u.st), 나머지는 표 */
-  function statOf(u) { return u.st || UDEF[u.t]; }
+  function statOf(u) { var b = u.st || UDEF[u.t]; return u.team === 0 && global.DG.statecraft ? global.DG.statecraft.rtsStat(b, u.t) : b; }   // 내 유닛엔 경륜도(W-0182)
 
   /** 이 타일을 밟을 수 있나 — 물 불가·건물 불가(도로는 가능)·지도 밖 불가 */
   function walkable(s, x, y) {

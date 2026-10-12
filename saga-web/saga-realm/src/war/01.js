@@ -860,7 +860,7 @@
       else { tac = tf.tactic; atk.tacticUsed = tac.key; lines(tac.emoji + ' ' + tac.name + ' — ' + tac.desc); }
     }
     if (tac && tac.key === 'fire') {
-      var burn = Math.round(def.troops * 0.18 * 0.7);
+      var burn = Math.round(def.troops * 0.18 * 0.7 * (global.DG.statecraft ? global.DG.statecraft.fire(atk.force, toId) : 1));   // 화공(경륜도) 두 배 · 비 오는 달 0
       def.troops = Math.max(0, def.troops - burn);
       def.morale = (def.morale || 1) * 0.95;
       lines('🔥 불길이 번져 병사 ' + core.fmt(burn) + ' 이 타 죽거나 흩어졌다');
@@ -870,8 +870,8 @@
     var wallF = (sortie || water) ? land.def
       : land.def * (1 + (wallRef.wall / Math.max(1, wallRef.maxWall)) * 0.9);
 
-    var ap = armyPower(atk);
-    var dp = armyPower(def) * wallF;
+    var ap = armyPower(atk) * (global.DG.statecraft ? global.DG.statecraft.war(atk, sortie, water) : 1);   // 경륜도 공격·수비·철기·공성
+    var dp = armyPower(def) * wallF * (global.DG.statecraft ? global.DG.statecraft.war(def, sortie, water) : 1);
 
     /* 명령 개입 — 공격 쪽이 내는 피해·받는 피해에 배율을 얹는다.
        'press'(돌격)는 더 베고 더 맞고, 'hold'(수비)는 둘 다 줄인다.
@@ -897,7 +897,7 @@
 
     /* 공성추 — 성벽을 깎는다 (배로는 성벽을 못 깎는다) */
     if (!sortie && !water) {
-      wallRef.wall = Math.max(0, Math.round(wallRef.wall - atk.troops * 0.045 * land.siege));
+      wallRef.wall = Math.max(0, Math.round(wallRef.wall - atk.troops * 0.045 * land.siege * (global.DG.statecraft ? global.DG.statecraft.wallDmg(atk.force) : 1)));
     }
 
     var frame = { atk: atk.troops, def: def.troops, wall: wallRef.wall,
@@ -1030,7 +1030,7 @@
       }
     }
 
-    to.force = newForce;
+    to.force = newForce; if (global.DG.statecraft) { global.DG.statecraft.won(newForce, toId); }   // 경륜도 점수 — 성 첫 점령
     to.troops = atk.troops;
     /* 배 — 수전으로 들어갔으면 남은 배끼리 합친다(수비 배를 통째로 뺏는다).
        뭍으로 들어갔으면 성에 매인 배가 그대로 새 주인에게 간다 */
@@ -1136,12 +1136,12 @@
     var defTroops = to.troops + reliefOf(toId);
     var water = CD.isWater(fromId, toId);
     var atk = {
-      troops: troops, start: troops, train: from.train, tech: from.tech,
+      side: 'atk', force: from.force, troops: troops, start: troops, train: from.train, tech: from.tech,
       officers: officerIds, morale: 1,
       water: water, ships: water ? Math.ceil(troops / SHIP_CREW) : 0
     };
     var def = {
-      troops: defTroops, start: defTroops, train: to.train, tech: to.tech,
+      side: 'def', force: to.force, troops: defTroops, start: defTroops, train: to.train, tech: to.tech,
       officers: global.DG.off.atCity(toId, to.force).map(function (h) { return h.id; }),
       morale: 1, water: water, ships: water ? (to.ships || 0) : 0
     };

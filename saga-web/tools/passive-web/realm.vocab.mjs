@@ -1,0 +1,88 @@
+// 5천하 천하 경륜도 어휘 (W-0182) → node saga-web/tools/passive-web/gen.mjs saga-realm → saga-realm/js/data-passive.js
+// 효과 키는 statecraft.js 가 읽는 것만(금·군량·내정·징병·축성·공격·수비·등용·외교·계략·경험). 세력마다 한 장, AI 세력도 같은 그물을 찍는다.
+// 키(key)를 지우면 gen 이 FAIL — 세이브가 id 를 쥔다. 이름·숫자만 고친다.
+const N = (key, name, stats, theme, desc) => ({ key, name, stats, theme, ...(desc ? { desc } : {}) });
+export default {
+  seed: 20260824,
+  starts: [
+    { key: 'mokmin', name: '목민(牧民)', color: '#8cd938', theme: ['goldPct', 'foodPct', 'govPct'] },
+    { key: 'general', name: '장수(將帥)', color: '#e06a4f', theme: ['atkPct', 'defPct', 'troopPct'] },
+    { key: 'diplomat', name: '종횡가', color: '#6f8cf0', theme: ['diploPct', 'plotPct', 'goldPct'] },
+    { key: 'talent', name: '인재(人材)', color: '#f0b04f', theme: ['hirePct', 'expPct', 'govPct'] },
+    { key: 'schemer', name: '모사(謀士)', color: '#b07ae8', theme: ['plotPct', 'atkPct', 'expPct'] },
+    { key: 'builder', name: '축성(築城)', color: '#c8b48c', theme: ['wallPct', 'defPct', 'troopPct'] },
+  ],
+  small: [
+    { key: 'goldPct', name: '세금', stats: { goldPct: 2 } },
+    { key: 'foodPct', name: '곳간', stats: { foodPct: 3 } },
+    { key: 'govPct', name: '다스림', stats: { govPct: 3 } },
+    { key: 'troopPct', name: '모병', stats: { troopPct: 3 } },
+    { key: 'wallPct', name: '돌쌓기', stats: { wallPct: 4 } },
+    { key: 'atkPct', name: '날', stats: { atkPct: 2 } },
+    { key: 'defPct', name: '방패', stats: { defPct: 2 } },
+    { key: 'hirePct', name: '인망', stats: { hirePct: 3 } },
+    { key: 'diploPct', name: '언변', stats: { diploPct: 3 } },
+    { key: 'plotPct', name: '꾀', stats: { plotPct: 3 } },
+    { key: 'expPct', name: '배움', stats: { expPct: 4 } },
+  ],
+  notable: [
+    // 목민
+    N('wide_field', '너른 들', { foodPct: 12 }, 'foodPct'),
+    N('market_street', '저잣거리', { goldPct: 10 }, 'goldPct'),
+    N('shepherd_heart', '목민의 마음', { govPct: 10 }, 'govPct'),
+    N('waterworks', '물길 다스림', { foodPct: 8, govPct: 4 }, 'foodPct'),
+    N('tax_ledger', '세곡 장부', { goldPct: 6, foodPct: 5 }, 'goldPct'),
+    N('irrigation', '관개', { govPct: 6, foodPct: 6 }, 'govPct'),
+    N('guild_head', '시전 행수', { goldPct: 7, govPct: 4 }, 'goldPct'),
+    // 장수
+    N('vanguard', '선봉', { atkPct: 10 }, 'atkPct'),
+    N('firm_line', '굳은 진', { defPct: 10 }, 'defPct'),
+    N('banner_call', '모병 깃발', { troopPct: 12 }, 'troopPct'),
+    N('fierce_will', '맹장의 기세', { atkPct: 6, troopPct: 5 }, 'atkPct'),
+    N('iron_ring', '철통', { defPct: 6, atkPct: 4 }, 'defPct'),
+    N('drill_yard', '조련장', { troopPct: 6, defPct: 5 }, 'troopPct'),
+    N('charge_drum', '돌격 북', { atkPct: 8, expPct: 4 }, 'atkPct'),
+    // 종횡가
+    N('three_inch', '세 치 혀', { diploPct: 12 }, 'diploPct'),
+    N('pact_scroll', '맹약 문서', { diploPct: 8, goldPct: 4 }, 'diploPct'),
+    N('envoy_train', '사신 행렬', { diploPct: 6, hirePct: 4 }, 'diploPct'),
+    N('vertical', '합종', { diploPct: 10 }, 'diploPct'),
+    N('horizontal', '연횡', { diploPct: 6, plotPct: 5 }, 'plotPct'),
+    N('tribute_cart', '조공 수레', { goldPct: 6, diploPct: 5 }, 'goldPct'),
+    N('secret_letter', '밀서', { plotPct: 6, diploPct: 4 }, 'plotPct'),
+    // 인재
+    N('three_visits', '세 번 찾아감', { hirePct: 12 }, 'hirePct'),
+    N('recommend', '천거', { hirePct: 8, expPct: 4 }, 'hirePct'),
+    N('private_school', '사숙', { expPct: 12 }, 'expPct'),
+    N('talent_roll', '인재 장부', { hirePct: 6, govPct: 4 }, 'hirePct'),
+    N('master_rod', '스승의 매', { expPct: 8, atkPct: 3 }, 'expPct'),
+    N('guest_hall', '초현관', { hirePct: 10 }, 'hirePct'),
+    N('carp_gate', '등용문', { hirePct: 5, expPct: 6 }, 'expPct'),
+    // 모사
+    N('double_agent', '반간', { plotPct: 12 }, 'plotPct'),
+    N('rumor_mill', '유언비어', { plotPct: 8, diploPct: 3 }, 'plotPct'),
+    N('odd_plan', '기책', { atkPct: 6, plotPct: 5 }, 'atkPct'),
+    N('spy_web', '세작망', { plotPct: 6, expPct: 5 }, 'plotPct'),
+    N('ember', '불씨', { plotPct: 10 }, 'plotPct'),
+    N('feint', '허허실실', { defPct: 5, plotPct: 5 }, 'defPct'),
+    N('strategist_eye', '군사의 눈', { atkPct: 5, expPct: 5 }, 'expPct'),
+    // 축성
+    N('stone_pile', '돌 쌓기', { wallPct: 15 }, 'wallPct'),
+    N('moat', '해자', { wallPct: 8, defPct: 5 }, 'wallPct'),
+    N('barbican', '옹성', { defPct: 10 }, 'defPct'),
+    N('gate_guard', '성문 수비', { defPct: 6, troopPct: 4 }, 'defPct'),
+    N('brick_kiln', '벽돌 가마', { wallPct: 10, govPct: 3 }, 'wallPct'),
+    N('watchtower', '망루', { defPct: 5, wallPct: 6 }, 'wallPct'),
+    N('barracks', '병영', { troopPct: 8, wallPct: 4 }, 'troopPct'),
+  ],
+  keystone: [
+    { key: 'tunjeon', name: '둔전(屯田)', rule: 'tunjeon', desc: '병사가 먹는 군량 −50%, 징병 −30%' },
+    { key: 'cheolgi', name: '철기(鐵騎)', rule: 'cheolgi', desc: '야전 피해 +40%, 성을 칠 때·물 위 −20% · 전장 기병 공격 +40%, 보병 −20%' },
+    { key: 'wongyo', name: '원교근공', rule: 'wongyo', desc: '맞닿지 않은 세력 외교 +50%, 맞닿은 세력 −40%' },
+    { key: 'ilin', name: '일인지하', rule: 'ilin', desc: '군주 다음 으뜸 무장 하나 능력 +50%, 나머지 −10%' },
+    { key: 'gongseong', name: '공성 전문', rule: 'gongseong', desc: '성벽을 두 배로 깎는다, 야전·수전 −15%' },
+    { key: 'muwi', name: '무위(無爲)', rule: 'muwi', desc: '금 수입 0, 군량 수확·개간·상업 두 배 · 전장 세금 0, 행복 +15' },
+    { key: 'hwagong', name: '화공(火攻)', rule: 'hwagong', desc: '화계·불 전술 피해 두 배, 비 오는 달(6·7월·수해)엔 불을 못 놓는다' },
+    { key: 'cheongya', name: '청야(淸野)', rule: 'cheongya', desc: '내 땅에 진 친 적 사기가 두 배로 깎인다, 내 금·군량 −20%' },
+  ],
+};

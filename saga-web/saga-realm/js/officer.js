@@ -277,9 +277,9 @@
   function stats(id) {
     var s = global.DG.hero.stats(id);
     if (isLordId(id) && !lordAgingOn()) { return s; }   // 군주는 나이 축 전체에서 빠진다(늙지도 죽지도 않는다) — 손잡이 rtk.lordAging 을 켜면 든다(§5-8)
-    var mul = agingMul(age(id));
+    var mul = agingMul(age(id)) * (global.DG.statecraft ? global.DG.statecraft.offMul(id) : 1);   // 일인지하(경륜도)
     var bonus = ambBonusOf(id);       // 야망을 이룬 사람은 능력이 영구히 +2(PLAN §5-1) — 이 함수 한 곳에서만 얹는다
-    if (mul >= 1 && !bonus) { return s; }
+    if (mul === 1 && !bonus) { return s; }
     return {
       might: Math.max(1, Math.round(s.might * mul) + bonus),
       wisdom: Math.max(1, Math.round(s.wisdom * mul) + bonus),
@@ -504,7 +504,7 @@
   /** 경험을 준다 — 레벨이 오르면 hero.stats 가 그만큼 곱해진다 */
   function gainExp(id, amount) {
     var H = global.DG.hero;
-    amount = Math.max(0, Math.round(amount || 0));
+    amount = Math.max(0, Math.round((amount || 0) * (global.DG.statecraft ? global.DG.statecraft.exp((global.DG.rtk.state().officers[id] || {}).force) : 1)));   // 경륜도 경험
     if (!amount || !find(id)) { return { gained: 0, levels: 0 }; }
     var g = grow(id);
     if (g.lv >= H.MAX_LV) { g.exp = 0; return { gained: 0, levels: 0 }; }

@@ -91,6 +91,10 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/officer.js"></script>
 <script src="js/rtk.js"></script>
 <script src="js/milestone.js"></script>
+<script src="js/passive-web.js"></script>
+<script src="js/passive-web-ui.js"></script>
+<script src="js/data-passive.js"></script>
+<script src="js/statecraft.js"></script>
 <script src="js/mount.js"></script>
 <script src="js/war.js"></script>
 <script src="js/journey.js"></script>
@@ -6512,6 +6516,137 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var r = [ok, a.x === -3.5 && a.z === -2.5 && z.x === 3.5 && z.z === 2.5, V3.cellOf(-4.2, 0, cols, rows) === null, V3.cellOf(0, 3.1, cols, rows) === null, V3.HGT.wall > V3.HGT.forest && V3.HGT.river < 0];
       return r.every(Boolean) && '48칸 왕복 · 모서리 칸 ±3.5/±2.5 · 판 밖 null · 높이 성벽>숲>평지>강' || '실패 ' + r.join(',');
     });
+    /* ── 천하 경륜도(W-0182) — 세력마다 패시브 그물(statecraft.js · 공용 passive-web.js), AI 도 찍는다 ── */
+    function gyWith(fn) {
+      var R = DG.rtk, SCX = DG.statecraft, won = {}, i;
+      R.setup('cao');
+      for (i = 0; i < 60; i++) { won['gy_test_' + i] = 1; }   // 빼앗은 성 60 — 점수 상한(56)까지
+      R.force(R.me()).passive = { start: null, taken: [], won: won }; SCX._reset();
+      try { return fn(SCX, SCX.api(R.me()), R); }
+      finally { R.setup('cao'); SCX._reset(); }
+    }
+    function gyNearest(api, key, kind) {
+      var best = null;
+      DG.passiveDef.nodes.forEach(function (n) {
+        if (n.k === 'o' || (kind && n.k !== kind) || !n.stats || !n.stats[key] || api.isTaken(n.id)) { return; }
+        var p = api.pathTo(n.id);
+        if (p && (!best || p.cost < best.cost)) { best = { id: n.id, cost: p.cost }; }
+      });
+      return best;
+    }
+    function gyCheapest(api, kid) {
+      var best = null;
+      DG.passiveDef.starts.forEach(function (st) {
+        api.reset(true); api.take('o_' + st.key);
+        var p = api.pathTo(kid);
+        if (p && (!best || p.cost < best.cost)) { best = { key: st.key, cost: p.cost }; }
+      });
+      api.reset(true); api.take('o_' + best.key);
+      return api.takePath(kid) ? best.cost : -1;
+    }
+
+    t('경륜도 — 정의 ≥300 마디 · 시작점 여섯 · 점수 = 1 + 처음 빼앗은 성 + 이정표 단(상한 56)', function () {
+      var R = DG.rtk, SCX = DG.statecraft;
+      R.setup('cao'); SCX._reset();
+      try {
+        var def = DG.passiveDef, o = def.nodes.filter(function (n) { return n.k === 'o'; }).length, me = R.me(), p0 = SCX.pointsTotal(me);
+        var st = R.state(), foe = Object.keys(st.cities).filter(function (k) { return st.cities[k].force && st.cities[k].force !== me; })[0];
+        var first = SCX.won(me, foe), again = SCX.won(me, foe);
+        st.milestone.idx = 2;
+        var p1 = SCX.pointsTotal(me), pa = SCX.api(me).points();
+        var ok = def.nodes.length >= 300 && o === 6 && p0 === 1 && first && !again && p1 === 4 && pa === 4;
+        return ok ? '마디 ' + def.nodes.length + ' · 점수 1 → ' + p1 + '(성 1·이정표 2)' : '실패 ' + [def.nodes.length, o, p0, first, again, p1, pa].join(' ');
+      } finally { R.setup('cao'); SCX._reset(); }
+    });
+
+    t('경륜도 — 찍으면 성 금 수입(goldOf)·전장 식량 생산(rts econ.stats)이 오른다', function () {
+      return gyWith(function (SCX, api, R) {
+        var cid = R.citiesOf(R.me())[0], E = DG.rts.econ, b = rtsBase(function (s) { s.pop = 20; });
+        api.take('o_mokmin');
+        var g0 = R.goldOf(cid), f0 = E.stats(b).foodNet;
+        api.takePath(gyNearest(api, 'goldPct', 'n').id); api.takePath(gyNearest(api, 'foodPct', 'n').id);
+        var g1 = R.goldOf(cid), f1 = E.stats(b).foodNet;
+        return g1 > g0 && f1 > f0 ? '금 ' + g0 + ' → ' + g1 + ' · 전장 식량 ' + f0.toFixed(1) + ' → ' + f1.toFixed(1) : '실패 ' + [g0, g1, f0, f1].join(' ');
+      });
+    });
+
+    t('경륜도 — 찍으면 전장 내 유닛 공격(statOf)·출진 힘(war 배율)이 오르고 적 유닛은 그대로', function () {
+      return gyWith(function (SCX, api, R) {
+        var U = DG.rts.units, mine = { t: 'cavalry', team: 0 }, foe = { t: 'cavalry', team: 1 };
+        api.take('o_general');
+        var a0 = U.statOf(mine).atk, w0 = SCX.war({ side: 'atk', force: R.me() }, true, false);
+        api.takePath(gyNearest(api, 'atkPct', 'n').id);
+        var a1 = U.statOf(mine).atk, e1 = U.statOf(foe).atk, w1 = SCX.war({ side: 'atk', force: R.me() }, true, false);
+        return a1 > a0 && e1 === a0 && w0 === 1 && w1 > 1 ? '기병 공격 ' + a0 + ' → ' + a1 + ' · 출진 ×' + w1.toFixed(2) : '실패 ' + [a0, a1, e1, w0, w1].join(' ');
+      });
+    });
+
+    t('경륜도 — 되돌리면 원래대로 · 한 마디 금 150 · 금이 모자라거나 진이 나가 있으면 막는다', function () {
+      return gyWith(function (SCX, api, R) {
+        var cid = R.citiesOf(R.me())[0], f = R.force(R.me()), st = R.state();
+        api.take('o_mokmin');
+        var g0 = R.goldOf(cid), n = gyNearest(api, 'goldPct');
+        api.takePath(n.id);
+        f.gold = 10000;
+        var g = SCX.guard('drop'), dropped = api.drop(n.id), g2 = R.goldOf(cid), cost = SCX.dropCost(1);
+        st.camps.push({ id: 'gy_test', force: R.me(), to: cid, from: cid, troops: 1, officers: [] });
+        var war = SCX.guard('drop');
+        st.camps.pop();
+        f.gold = 0;
+        var poor = SCX.guard('drop');
+        var ok = g === '' && dropped && g2 === g0 && cost === 150 && !!war && !!poor;
+        return ok ? '금 ' + g2 + ' 그대로 · 한 마디 ' + cost + '금 · 진 나가 있으면 「' + war + '」' : '실패 g=' + g + ' drop=' + dropped + ' ' + g0 + '/' + g2 + ' war=' + war + ' poor=' + poor;
+      });
+    });
+
+    t('경륜도 — 이웃 아닌 마디는 거절 · 시작점 하나만 · 세이브 왕복(세력 기록 passive 한 칸)', function () {
+      return gyWith(function (SCX, api, R) {
+        api.take('o_talent');
+        var far = DG.passiveDef.nodes.filter(function (n) { return n.k === 'n' && api.why(n.id) === 'far'; })[0];
+        var rej = !api.take(far.id) && !api.take('o_builder') && api.store.taken.length === 0 && api.start() === 'talent';
+        api.takePath(gyNearest(api, 'hirePct', 'n').id);
+        var n = api.used(), h = api.sum('hirePct'), f = R.force(R.me());
+        f.passive = JSON.parse(JSON.stringify(f.passive)); SCX._reset();
+        var a2 = SCX.api(R.me());
+        var trip = a2 !== api && a2.used() === n && a2.sum('hirePct') === h && a2.start() === 'talent' && SCX.hire(R.me()) === 1 + h / 100;
+        return rej && trip ? far.name + ' 거절 · ' + n + '마디 · 등용 +' + h + '% 왕복' : '실패 ' + rej + ' ' + trip;
+      });
+    });
+
+    t('경륜도 — 규칙: 공성 전문(성벽 2배·야전 −15%) · 무위(금 0·군량 2배) · 일인지하(으뜸 하나 +50%·나머지 −10%)', function () {
+      return gyWith(function (SCX, api, R) {
+        var me = R.me(), cid = R.citiesOf(me)[0], off = DG.off;
+        var c1 = gyCheapest(api, 'k_gongseong');
+        var ws = SCX.wallDmg(me), fld = SCX.war({ side: 'atk', force: me }, true, false) / SCX.war({ side: 'atk', force: me }, false, false);
+        var c2 = gyCheapest(api, 'k_muwi');
+        var gm = R.goldOf(cid), fm = SCX.food(me);
+        api.reset(true); SCX._reset(); api = SCX.api(me);
+        var team = off.ofForce(me).filter(function (h) { return h.id !== off.lordOf(me); }).map(function (h) { return h.id; });
+        var before = team.map(function (id) { return off.stats(id).command; });
+        var c3 = gyCheapest(api, 'k_ilin');
+        var ratio = team.map(function (id, i) { return off.stats(id).command / before[i]; });
+        var up = ratio.filter(function (r) { return r > 1.3; }).length, down = ratio.filter(function (r) { return r < 0.95; }).length;
+        var ok = c1 > 0 && ws === 2 && Math.abs(fld - 0.85) < 1e-9 && c2 > 0 && gm === 0 && fm >= 2 && c3 > 0 && up === 1 && down === team.length - 1;
+        return ok ? '성벽 ×2 · 야전 ×0.85 · 무위 금 0 · 일인지하 으뜸 1·나머지 ' + down + '(경로 ' + [c1, c2, c3].join('·') + '점)' : '실패 ' + [c1, ws, fld, c2, gm, fm, c3, up, down, team.length].join(' ');
+      });
+    });
+
+    t('경륜도 — AI 세력이 다음 달(runAll)에 점수만큼 성향대로 찍는다', function () {
+      var R = DG.rtk, SCX = DG.statecraft;
+      R.setup('cao'); SCX._reset();
+      try {
+        var ai = R.liveForces().filter(function (id) { return id !== R.me(); })[0], won = {}, i;
+        for (i = 0; i < 12; i++) { won['gy_ai_' + i] = 1; }
+        R.force(ai).passive = { start: null, taken: [], won: won }; SCX._reset();
+        var pts = SCX.pointsTotal(ai), mine0 = SCX.api(R.me()).used();
+        DG.rtkAI.runAll();
+        var a = SCX.api(ai), want = SCX.aiStart(ai), theme = SCX.THEME[want];
+        var themed = a.store.taken.some(function (id) { var n = a.node(id); return n.k === 'n' && Object.keys(n.stats).some(function (k) { return theme.indexOf(k) >= 0; }); });
+        var ok = a.start() === want && a.used() >= pts && a.used() <= SCX.pointsTotal(ai) && themed && SCX.api(R.me()).used() === mine0;
+        return ok ? ai + ' — ' + want + ' 에서 ' + a.used() + '/' + pts + '점 · 테마 이름난 마디 · 내 세력은 안 찍힘' : '실패 ' + [ai, a.start(), want, a.used(), pts, themed].join(' ');
+      } finally { R.setup('cao'); SCX._reset(); }
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

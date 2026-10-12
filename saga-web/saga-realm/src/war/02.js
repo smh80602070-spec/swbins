@@ -190,7 +190,7 @@
     cp.food -= eat;
 
     /* 진이 길어질수록 사기가 깎인다 */
-    cp.morale *= CAMP_DECAY;
+    cp.morale *= global.DG.statecraft ? global.DG.statecraft.campDecay(CAMP_DECAY, to.force) : CAMP_DECAY;   // 청야(경륜도)
     if (cp.morale < CAMP_QUIT || cp.troops < CAMP_MIN) { return retreat(cp, '군이 지쳐'); }
 
     var relief = reinforce(cp.to);
