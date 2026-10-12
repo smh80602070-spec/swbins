@@ -114,7 +114,9 @@ namespace Saga.Dungeon.World
                 if (UsePbrEnvironment) foreach (Transform child in transform)
                 {
                     if (child.name.EndsWith("_Gate")) UseTiledGateMesh(child);
-                    else if (child.name.StartsWith("Wall_")) UseMetricWall(child); // 벽 상자도 메시만 면마다 미터 UV 판으로(U-0109)
+                    else if (child.name.StartsWith("Wall_")) UseMetricBox(child, MetricWallMaterial()); // 벽 상자도 메시만 면마다 미터 UV 판으로(U-0109)
+                    else if (child.name == "Ceiling") UseMetricBox(child, MetricWallMaterial()); // 천장·바닥 판(두께 1m) 옆면도(U-0112)
+                    else if (child.name == "Floor") UseMetricBox(child, MetricFloorMaterial());
                 }
                 return;
             }
@@ -144,19 +146,12 @@ namespace Saga.Dungeon.World
 
         private void RefreshEnvironmentMaterials()
         {
+            // 천장·바닥 판도 면마다 미터 UV 상자 + 반복 1 재질(U-0112 — 1m 옆면에 윗면 기준 반복이 눌리던 것)
             var floor = transform.Find("Floor");
-            if (floor != null)
-            {
-                floor.GetComponent<MeshRenderer>().sharedMaterial =
-                    EnvironmentMaterial.MakeTiled(floorMaterial, RoomWidth, RoomDepth, wearTier);
-            }
+            if (floor != null) UseMetricBox(floor, MetricFloorMaterial());
 
             var ceiling = transform.Find("Ceiling");
-            if (ceiling != null)
-            {
-                ceiling.GetComponent<MeshRenderer>().sharedMaterial =
-                    EnvironmentMaterial.MakeTiled(wallMaterial, RoomWidth, RoomDepth, wearTier);
-            }
+            if (ceiling != null) UseMetricBox(ceiling, MetricWallMaterial());
 
             foreach (Transform child in transform)
             {
@@ -167,7 +162,7 @@ namespace Saga.Dungeon.World
                 }
                 else if (child.name.StartsWith("Wall_"))
                 {
-                    UseMetricWall(child);
+                    UseMetricBox(child, MetricWallMaterial());
                 }
             }
         }
@@ -204,8 +199,7 @@ namespace Saga.Dungeon.World
             ceiling.transform.SetParent(transform, false);
             ceiling.transform.localPosition = new Vector3(0f, WallHeight, 0f);
             ceiling.transform.localScale = new Vector3(RoomWidth, 1f, RoomDepth);
-            ceiling.GetComponent<MeshRenderer>().sharedMaterial =
-                EnvironmentMaterial.MakeTiled(wallMaterial, RoomWidth, RoomDepth, wearTier);
+            UseMetricBox(ceiling.transform, MetricWallMaterial()); // PBR 경로 전용(U-0112)
             Object.DestroyImmediate(ceiling.GetComponent<Collider>());
         }
 
@@ -243,7 +237,7 @@ namespace Saga.Dungeon.World
             floor.transform.localPosition = new Vector3(0f, -0.5f, 0f);
             floor.transform.localScale = new Vector3(RoomWidth, 1f, RoomDepth);
             var renderer = floor.GetComponent<MeshRenderer>();
-            if (UsePbrEnvironment) renderer.sharedMaterial = EnvironmentMaterial.MakeTiled(floorMaterial, RoomWidth, RoomDepth, wearTier);
+            if (UsePbrEnvironment) UseMetricBox(floor.transform, MetricFloorMaterial()); // U-0112 — 1m 옆면도 같은 크기 결
             else if (roomModel != null) renderer.enabled = false; // 셸이 보여줄 자리 — 콜라이더만 남김.
             else renderer.sharedMaterial = MakeMaterial(Colors().floor);
         }
@@ -476,7 +470,7 @@ namespace Saga.Dungeon.World
             wall.transform.localPosition = pos;
             wall.transform.localScale = size;
             var renderer = wall.GetComponent<MeshRenderer>();
-            if (UsePbrEnvironment) UseMetricWall(wall.transform);
+            if (UsePbrEnvironment) UseMetricBox(wall.transform, MetricWallMaterial());
             else if (roomModel != null) renderer.enabled = false; // 셸이 보여줄 자리 — 콜라이더만 남김(문 갈라짐 후 재생성분도 포함).
             else renderer.sharedMaterial = MakeMaterial(color);
         }
@@ -486,8 +480,9 @@ namespace Saga.Dungeon.World
         public int WearTier => wearTier;
 
         // U-0109 — 벽 상자 재질은 반복 1(면 UV 가 이미 미터 단위) 한 벌을 이 방의 벽이 같이 쓴다(마모 단계가 바뀌면 새로).
-        private Material _metricWallMat;
-        private int _metricWallTier = -1;
+        // U-0112 — 천장도 이 한 벌, 바닥은 바닥 재질로 따로 한 벌.
+        private Material _metricWallMat, _metricFloorMat;
+        private int _metricWallTier = -1, _metricFloorTier = -1;
 
         private Material MetricWallMaterial()
         {
@@ -499,9 +494,20 @@ namespace Saga.Dungeon.World
             return _metricWallMat;
         }
 
+        private Material MetricFloorMaterial()
+        {
+            if (_metricFloorMat == null || _metricFloorTier != wearTier)
+            {
+                _metricFloorMat = EnvironmentMaterial.MakeTiled(floorMaterial, EnvironmentMaterial.TileMeters, EnvironmentMaterial.TileMeters, wearTier);
+                _metricFloorTier = wearTier;
+            }
+            return _metricFloorMat;
+        }
+
         /// <summary>U-0109 — 기본 Cube 는 면마다 UV 0~1 이라 옆면 기준 반복이 얇은 윗면·끝면에 눌려 줄무늬가 진다 →
-        /// 같은 자리·크기(localScale 그대로, 콜라이더 무변경)의 면마다 미터 UV 상자(`MetricBox`)로 메시만 바꾼다.</summary>
-        private void UseMetricWall(Transform wall)
+        /// 같은 자리·크기(localScale 그대로, 콜라이더 무변경)의 면마다 미터 UV 상자(`MetricBox`)로 메시만 바꾼다.
+        /// U-0112 — 벽뿐 아니라 천장·바닥 판(두께 1m)도 같은 길로(`repeat1` = 반복 1 재질).</summary>
+        private void UseMetricBox(Transform wall, Material repeat1)
         {
             var mf = wall.GetComponent<MeshFilter>();
             var r = wall.GetComponent<MeshRenderer>();
@@ -509,7 +515,7 @@ namespace Saga.Dungeon.World
             // 정적 배칭에 이미 든 벽(Play 중 마모 단계 바꿀 때)은 메시를 건드리지 않는다 — 합친 메시가 Awake 에서 바꿔 낀 MetricBox 로
             // 구워져 있고, 배칭된 렌더러의 메시를 갈면 합친 자리와 어긋날 수 있다. 재질만 바꾼다.
             if (!r.isPartOfStaticBatch) mf.sharedMesh = MetricBox.Get(wall.localScale);
-            r.sharedMaterial = MetricWallMaterial();
+            r.sharedMaterial = repeat1;
         }
 
         private static Material MakeMaterial(Color color)

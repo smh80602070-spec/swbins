@@ -77,8 +77,12 @@ namespace Saga.Dungeon.World
         {
             if (transform.childCount > 0)
             {
-                // 씬에 구운 벽은 다시 안 짓는다 — 메시만 면마다 미터 UV 상자로 바꿔 끼운다(U-0109, 방 빌더와 같은 결)
-                if (UsePbrEnvironment) foreach (Transform child in transform) if (child.name.StartsWith("Wall_")) UseMetricWall(child);
+                // 씬에 구운 벽은 다시 안 짓는다 — 메시만 면마다 미터 UV 상자로 바꿔 끼운다(U-0109, 방 빌더와 같은 결) · 천장·바닥 판도(U-0112)
+                if (UsePbrEnvironment) foreach (Transform child in transform)
+                {
+                    if (child.name.StartsWith("Wall_") || child.name == "Ceiling") UseMetricBox(child, MetricWallMaterial());
+                    else if (child.name == "Floor") UseMetricBox(child, MetricFloorMaterial());
+                }
                 return;
             }
             Build();
@@ -111,7 +115,7 @@ namespace Saga.Dungeon.World
             floor.transform.localPosition = new Vector3(0f, -0.5f, 0f);
             floor.transform.localScale = new Vector3(DoorWidth, 1f, Length);
             var renderer = floor.GetComponent<MeshRenderer>();
-            if (UsePbrEnvironment) renderer.sharedMaterial = EnvironmentMaterial.MakeTiled(floorMaterial, DoorWidth, Length);
+            if (UsePbrEnvironment) UseMetricBox(floor.transform, MetricFloorMaterial()); // U-0112 — 1m 옆면도 같은 크기 결
             else if (corridorModel != null) renderer.enabled = false; // GLB가 보여줄 자리 — 콜라이더만 남김.
             else renderer.sharedMaterial = MakeMaterial(Colors().floor);
         }
@@ -134,7 +138,7 @@ namespace Saga.Dungeon.World
             wall.transform.localPosition = pos;
             wall.transform.localScale = size;
             var renderer = wall.GetComponent<MeshRenderer>();
-            if (UsePbrEnvironment) UseMetricWall(wall.transform);
+            if (UsePbrEnvironment) UseMetricBox(wall.transform, MetricWallMaterial());
             else if (corridorModel != null) renderer.enabled = false; // GLB가 보여줄 자리 — 콜라이더만 남김.
             else renderer.sharedMaterial = MakeMaterial(color);
         }
@@ -142,18 +146,23 @@ namespace Saga.Dungeon.World
         /// <summary>U-0109 진단용 — PBR 경로인지.</summary>
         public bool UsesPbrEnvironment => UsePbrEnvironment;
 
-        private Material _metricWallMat; // 반복 1 한 벌을 이 복도의 벽이 같이 쓴다(면 UV 가 이미 미터 단위)
+        private Material _metricWallMat, _metricFloorMat; // 반복 1 한 벌씩 — 벽·천장이 같이, 바닥은 따로(면 UV 가 이미 미터 단위)
+
+        private Material MetricWallMaterial() => _metricWallMat != null ? _metricWallMat
+            : (_metricWallMat = EnvironmentMaterial.MakeTiled(wallMaterial, EnvironmentMaterial.TileMeters, EnvironmentMaterial.TileMeters));
+
+        private Material MetricFloorMaterial() => _metricFloorMat != null ? _metricFloorMat
+            : (_metricFloorMat = EnvironmentMaterial.MakeTiled(floorMaterial, EnvironmentMaterial.TileMeters, EnvironmentMaterial.TileMeters));
 
         /// <summary>U-0109 — 기본 Cube(면마다 UV 0~1) 대신 같은 자리·크기의 면마다 미터 UV 상자로 메시만 바꾼다
-        /// (localScale·콜라이더 그대로) — 얇은 윗면·끝면에 돌 결이 눌려 줄무늬 지던 것.</summary>
-        private void UseMetricWall(Transform wall)
+        /// (localScale·콜라이더 그대로) — 얇은 윗면·끝면에 돌 결이 눌려 줄무늬 지던 것. U-0112 — 천장·바닥 판(두께 1m)도.</summary>
+        private void UseMetricBox(Transform wall, Material repeat1)
         {
             var mf = wall.GetComponent<MeshFilter>();
             var r = wall.GetComponent<MeshRenderer>();
             if (mf == null || r == null) return;
             if (!r.isPartOfStaticBatch) mf.sharedMesh = MetricBox.Get(wall.localScale); // 배칭된 뒤면 메시는 그대로(방 빌더 주석)
-            if (_metricWallMat == null) _metricWallMat = EnvironmentMaterial.MakeTiled(wallMaterial, EnvironmentMaterial.TileMeters, EnvironmentMaterial.TileMeters);
-            r.sharedMaterial = _metricWallMat;
+            r.sharedMaterial = repeat1;
         }
 
         /// <summary>corridor.glb 타일 두 장을 이어 붙인다(위 클래스 주석 —
@@ -194,8 +203,7 @@ namespace Saga.Dungeon.World
             ceiling.transform.SetParent(transform, false);
             ceiling.transform.localPosition = new Vector3(0f, WallHeight, 0f);
             ceiling.transform.localScale = new Vector3(DoorWidth, 1f, Length);
-            ceiling.GetComponent<MeshRenderer>().sharedMaterial =
-                EnvironmentMaterial.MakeTiled(wallMaterial, DoorWidth, Length);
+            UseMetricBox(ceiling.transform, MetricWallMaterial()); // PBR 경로 전용(U-0112)
             Object.DestroyImmediate(ceiling.GetComponent<Collider>());
         }
 
