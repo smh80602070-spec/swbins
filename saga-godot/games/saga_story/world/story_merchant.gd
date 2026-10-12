@@ -125,6 +125,11 @@ func _scroll_offers() -> Array:
 	return out
 
 
+## G-0212 — 이동 상인 할인(StorySaveState.price_mul) 을 얹은 값. 표시·지불 둘 다 이것(웹 gear.js Math.round(price × priceMul)).
+func _price(base: int) -> int:
+	return roundi(base * StorySaveState.price_mul())
+
+
 func _open_shop() -> void:
 	var gear_offers := _gear_offers()
 	var scroll_offers := _scroll_offers()
@@ -138,13 +143,13 @@ func _open_shop() -> void:
 		var it: Dictionary = StoryCombat.GEAR_ITEMS[key]
 		var label: Dictionary = StoryCombat.SLOT_LABEL[String(it.slot)]
 		choices.append({
-			"label": "%s %s(%s) · 💰 %d" % [String(label.emoji), String(it.name), String(label.name), int(it.price)],
+			"label": "%s %s(%s) · 💰 %d" % [String(label.emoji), String(it.name), String(label.name), _price(int(it.price))],
 			"cb": func() -> void: _on_gear_picked(key, layer_box),
 		})
 	for key: String in scroll_offers:
 		var sc: Dictionary = StoryCombat.SCROLLS[key]
 		choices.append({
-			"label": "📜 %s · 💰 %d" % [String(sc.name), int(sc.price)],
+			"label": "📜 %s · 💰 %d" % [String(sc.name), _price(int(sc.price))],
 			"cb": func() -> void: _on_scroll_picked(key, layer_box),
 		})
 
@@ -162,7 +167,7 @@ func _close_shop(layer_box: Dictionary) -> void:
 func _on_gear_picked(key: String, layer_box: Dictionary) -> void:
 	_close_shop(layer_box)
 	var it: Dictionary = StoryCombat.GEAR_ITEMS[key]
-	var price := int(it.price)
+	var price := _price(int(it.price))
 	if not StorySaveState.spend_gold(price):
 		Toast.show(self, "💰 금이 모자라다 (%d / 보유 %d)" % [price, StorySaveState.gold], 2.5)
 		return
@@ -177,7 +182,7 @@ func _on_gear_picked(key: String, layer_box: Dictionary) -> void:
 func _on_scroll_picked(key: String, layer_box: Dictionary) -> void:
 	_close_shop(layer_box)
 	var sc: Dictionary = StoryCombat.SCROLLS[key]
-	var price := int(sc.price)
+	var price := _price(int(sc.price))
 	if not StorySaveState.spend_gold(price):
 		Toast.show(self, "💰 금이 모자라다 (%d / 보유 %d)" % [price, StorySaveState.gold], 2.5)
 		return

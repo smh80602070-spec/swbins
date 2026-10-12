@@ -186,3 +186,36 @@ static func events(tree: SceneTree) -> void:
 			print("EVENTS mini %s x%.1f · player x%.1f" % [String(mb.get("species").name), mb.global_position.x, p.global_position.x])
 			tree.process_frame.disconnect(cb[0])
 	tree.process_frame.connect(cb[0])
+
+
+## G-0212 — 2차 사건: 오른쪽 보물상자(닫힘) · 발밑 초록 채집 판 · 왼쪽 이동 상인(지나간 뒤 — 할인 토스트).
+## 상인은 플레이어 자리에서 발동시킨 뒤 몸만 왼쪽으로 옮긴다. 채집 🍀 토스트는 미리 끈다(상인 토스트가 남게).
+static func events2(tree: SceneTree) -> void:
+	for m in tree.get_nodes_in_group("ui_modal"):
+		m.queue_free()
+	var p := tree.get_first_node_in_group("player") as Node3D
+	var sp := tree.current_scene.get_node_or_null("EnemySpawner")
+	if p == null or sp == null:
+		return
+	p.global_position.x = 14.0
+	for e in tree.get_nodes_in_group("story_enemy"):
+		if not (e.get("species") as Dictionary).is_empty():
+			e.global_position.x = 38.0
+	for k in ["ambush", "miniboss", "rescue"]:
+		sp.set(k, {})
+	sp.set("chest", {"x": 16.4, "opened": false})
+	sp.set("forage", {"x1": 10.6, "x2": 15.8, "notified": true})
+	sp.set("merchant", {"x": 14.0, "triggered": false})
+	sp.call("_build_props")
+	var cb := [Callable()]
+	cb[0] = func() -> void:
+		if not is_instance_valid(sp):
+			tree.process_frame.disconnect(cb[0])
+			return
+		if bool((sp.get("merchant") as Dictionary).get("triggered", false)):
+			var body := sp.get("_merchant_body") as Node3D
+			if body != null:
+				body.position.x = 11.4
+			print("EVENTS2 상인 할인 · 상자 x16.4 · 채집 10.6~15.8")
+			tree.process_frame.disconnect(cb[0])
+	tree.process_frame.connect(cb[0])

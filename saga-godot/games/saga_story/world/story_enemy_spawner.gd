@@ -28,6 +28,10 @@ extends Node3D
 ## 습격 = 잡몹 셋(x±2.2, 가장자리 1.2m 안쪽) · 미니 = 잡몹 하나를 크게(boost — 마법·희귀 굴림 건너뜀, story_enemy.gd is_mini)
 ## · 구조 = 지키는 잡몹 둘(x±1.1) — 다 잡으면 사례금 (30+lv×10)×(0.8~1.2). 웹엔 그림이 없는 붙잡힌 사람은 재해석으로
 ## 몸 하나(StoryNpcBody, 사례금 때 지움). 사건으로 나온 적도 잡으면 하나 더(웹 1264). 사건은 저장 안 한다.
+## **G-0212 — 2차 셋, 굴림은 웹 순서 여섯(상자→채집→습격→미니→상인→구조).** 보물상자 22%(밟으면 금 + 장비 하나 —
+## 가방이 없어 장비는 그 자리에 떨궈 밟아 끼는 줍기로) · 채집 보너스 지역 18%(그 구간 채집 ×2, 처음 들어설 때 🍀 —
+## story_gather.gd 가 그룹 story_hunt_events 로 forage_mul_at 를 묻는다) · 이동 상인 12%(지나면 90초 상점 ×0.7 —
+## StorySaveState.merchant_until_ms, 메모리만). 웹엔 상인 그림이 없어 재해석으로 몸 하나를 세운다.
 
 @export var map_path: String = "res://games/saga_story/data/field_map.gd"
 
@@ -36,6 +40,8 @@ const StoryEnemies := preload("res://games/saga_story/data/story_enemies.gd")
 const StoryCombat := preload("res://games/saga_story/data/story_combat.gd")
 const StoryNpcBody := preload("res://games/saga_story/world/story_npc_body.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
+const StoryLook := preload("res://games/saga_story/data/story_look.gd")
+const StoryGearPickup := preload("res://games/saga_story/world/story_gear_pickup.gd")
 
 const GROUND_Y := 0.0
 const RESPAWN_CLEAR_M := 4.0
@@ -56,6 +62,20 @@ const RESCUE_R_M := 90.0 * 0.02
 const RESCUE_COUNT := 2
 const EVENT_MARGIN_M := 260.0 * 0.02   # 자리 x = 260 + r×(폭−520)px
 const EVENT_EDGE_M := 60.0 * 0.02      # 습격·지키는 잡몹은 가장자리 60px 안쪽
+## G-0212 웹 side.js 228·234~236 · side-view3d.js 626~657
+const CHEST_CHANCE := 0.22
+const CHEST_R_M := 46.0 * 0.02
+const CHEST_MARGIN_M := 200.0 * 0.02   # x = 200 + r×(폭−400)px
+const CHEST_SIZE := Vector3(0.42, 0.3, 0.3)   # 웹 h 30px 상자(0.7h×0.5h×0.5h)
+const CHEST_COLOR := Color(0.784, 0.604, 0.235)   # #c89a3c
+const FORAGE_CHANCE := 0.18
+const FORAGE_HALF_M := 130.0 * 0.02
+const FORAGE_MARGIN_M := 170.0 * 0.02  # cx = (HALF+40) + r×(폭−(HALF+40)×2)px
+const FORAGE_MUL := 2
+const FORAGE_COLOR := Color(0.549, 0.949, 0.549, 0.28)   # #8cf28c · 0.28
+const MERCHANT_CHANCE := 0.12
+const MERCHANT_R_M := 70.0 * 0.02
+const MERCHANT_DUR_SEC := 90
 
 var _map: RefCounted
 var _rng := RandomNumberGenerator.new()
@@ -69,11 +89,19 @@ var mini_enemy: Node3D = null  # 점검용
 var rescue_gold := 0           # 점검용
 var _guards: Array = []
 var _captive: Node3D = null
+var chest: Dictionary = {}     # G-0212 {x, opened}
+var forage: Dictionary = {}    # {x1, x2, notified}
+var merchant: Dictionary = {}  # {x, triggered}
+var chest_gold := 0            # 점검용
+var chest_gear := ""           # 점검용
+var _chest_node: Node3D = null
+var _merchant_body: Node3D = null
 
 
 func _ready() -> void:
 	_map = (load(map_path) as GDScript).new()
 	_rng.seed = hash(String(_map.stage_key())) % 100000 + 211
+	add_to_group("story_hunt_events")   # G-0212 채집이 배수를 묻는 곳
 	for x: float in _map.enemy_positions_m():
 		spawn_at(x)
 	if event_seed < 0:
@@ -81,18 +109,29 @@ func _ready() -> void:
 	else:
 		_ev_rng.seed = event_seed
 	var ev := roll_events(_ev_rng, float(_map.width_m()))
+	chest = ev.chest
+	forage = ev.forage
 	ambush = ev.ambush
 	miniboss = ev.miniboss
+	merchant = ev.merchant
 	rescue = ev.rescue
+	_build_props()
 
 
-## G-0211 — 웹 buildAmbush·buildMiniboss·buildRescue(그 순서, 각자 굴림 하나 + 맞으면 자리 하나).
+## G-0211·G-0212 — 웹 run 만들기(side.js 350) 순서: buildChest→ForageZone→Ambush→Miniboss→Merchant→Rescue(각자 굴림 하나 + 맞으면 자리 하나).
 static func roll_events(rng: RandomNumberGenerator, width_m: float) -> Dictionary:
-	var out := {"ambush": {}, "miniboss": {}, "rescue": {}}
+	var out := {"chest": {}, "forage": {}, "ambush": {}, "miniboss": {}, "merchant": {}, "rescue": {}}
+	if rng.randf() < CHEST_CHANCE:
+		out.chest = {"x": CHEST_MARGIN_M + rng.randf() * (width_m - CHEST_MARGIN_M * 2.0), "opened": false}
+	if rng.randf() < FORAGE_CHANCE:
+		var cx := FORAGE_MARGIN_M + rng.randf() * (width_m - FORAGE_MARGIN_M * 2.0)
+		out.forage = {"x1": cx - FORAGE_HALF_M, "x2": cx + FORAGE_HALF_M, "notified": false}
 	if rng.randf() < AMBUSH_CHANCE:
 		out.ambush = {"x": _event_x(rng, width_m), "triggered": false}
 	if rng.randf() < MINI_CHANCE:
 		out.miniboss = {"x": _event_x(rng, width_m), "triggered": false}
+	if rng.randf() < MERCHANT_CHANCE:
+		out.merchant = {"x": _event_x(rng, width_m), "triggered": false}
 	if rng.randf() < RESCUE_CHANCE:
 		out.rescue = {"x": _event_x(rng, width_m), "spawned": false, "done": false}
 	return out
@@ -102,18 +141,96 @@ static func _event_x(rng: RandomNumberGenerator, width_m: float) -> float:
 	return EVENT_MARGIN_M + rng.randf() * (width_m - EVENT_MARGIN_M * 2.0)
 
 
+## G-0212 — 상자(코드 상자, 웹 색)·채집 구간 바닥 판(옅은 초록 반투명)·이동 상인 몸을 세운다(점검이 사건을 바꾸면 다시 부른다).
+func _build_props() -> void:
+	for n in [_chest_node, _merchant_body]:
+		if n != null and is_instance_valid(n):
+			n.free()
+	_chest_node = null
+	_merchant_body = null
+	var old := get_node_or_null("ForagePatch")
+	if old != null:
+		old.free()
+	if not chest.is_empty():
+		var mi := MeshInstance3D.new()
+		mi.name = "EventChest"
+		var box := BoxMesh.new()
+		box.size = CHEST_SIZE * StoryLook.BODY_SCALE
+		mi.mesh = box
+		var mat := StandardMaterial3D.new()
+		mat.albedo_color = CHEST_COLOR
+		mi.material_override = mat
+		mi.position = Vector3(float(chest.x), GROUND_Y + box.size.y * 0.5, -0.4)
+		add_child(mi)
+		_chest_node = mi
+	if not forage.is_empty():
+		var patch := MeshInstance3D.new()
+		patch.name = "ForagePatch"
+		var plane := PlaneMesh.new()
+		plane.size = Vector2(float(forage.x2) - float(forage.x1), 3.2)   # 웹 160px 깊이
+		patch.mesh = plane
+		var pm := StandardMaterial3D.new()
+		pm.albedo_color = FORAGE_COLOR
+		pm.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		pm.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		pm.depth_draw_mode = BaseMaterial3D.DEPTH_DRAW_DISABLED
+		patch.material_override = pm
+		patch.position = Vector3((float(forage.x1) + float(forage.x2)) * 0.5, GROUND_Y + 0.03, -1.2)
+		add_child(patch)
+		## 재해석 — 고돗 들판 바닥이 이미 밝은 초록이라 판만으론 안 보인다(st_events2 촬영): 구간 양 끝에 🍀 표시
+		for edge_x: float in [float(forage.x1), float(forage.x2)]:
+			var mark := Label3D.new()
+			mark.text = "🍀"
+			mark.font_size = 64
+			mark.pixel_size = 0.01
+			mark.outline_size = 10
+			mark.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+			mark.position = Vector3(edge_x - patch.position.x, 0.5, 1.2)
+			patch.add_child(mark)
+	if not merchant.is_empty():
+		_merchant_body = StoryNpcBody.build("wander_merchant")
+		_merchant_body.position = Vector3(float(merchant.x), GROUND_Y, -0.6)
+		add_child(_merchant_body)
+
+
+## G-0212 — 그 x 의 채집 배수(채집 보너스 구간 안 2, 밖 1)
+func forage_mul_at(x: float) -> int:
+	if not forage.is_empty() and x >= float(forage.x1) and x <= float(forage.x2):
+		return FORAGE_MUL
+	return 1
+
+
 func _edge_clamp(x: float) -> float:
 	return clampf(x, EVENT_EDGE_M, float(_map.width_m()) - EVENT_EDGE_M)
 
 
 ## 웹 update() 2022~2075 — 자리를 지나면 한 번만.
 func _physics_process(_delta: float) -> void:
-	if ambush.is_empty() and miniboss.is_empty() and rescue.is_empty():
+	if chest.is_empty() and forage.is_empty() and ambush.is_empty() and miniboss.is_empty() and merchant.is_empty() and rescue.is_empty():
 		return
 	var player := get_tree().get_first_node_in_group("player") as Node3D
 	if player == null:
 		return
 	var px: float = player.global_position.x - global_position.x
+	## G-0212 채집 보너스 — 처음 들어선 순간에만 한 번 알린다(웹 1975)
+	if not forage.is_empty() and not forage.notified and px >= float(forage.x1) and px <= float(forage.x2):
+		forage.notified = true
+		Toast.show(self, "🍀 채집이 넘치는 곳이다!", 2.5)
+	## G-0212 보물상자(웹 2004) — 금은 바로, 장비는 상자 자리에 줍기로(가방 없음)
+	if not chest.is_empty() and not chest.opened and absf(float(chest.x) - px) < CHEST_R_M:
+		chest.opened = true
+		var lv := float(_map.enemy_lv())
+		chest_gold = roundi((40.0 + lv * 12.0) * (0.8 + _ev_rng.randf() * 0.6) * StoryCombat.GAIN_GOLD)
+		StorySaveState.add_gold(chest_gold)
+		var pool: Array = StoryCombat.gear_pool_for(lv)
+		chest_gear = String(pool[_ev_rng.randi() % pool.size()]) if not pool.is_empty() else ""
+		var msg := "💰 보물상자! 🪙+%d" % chest_gold
+		if chest_gear != "":
+			StoryGearPickup.spawn_at(self, Vector3(float(chest.x), GROUND_Y, 0.0), chest_gear)
+			msg += " · 📦 %s" % String(StoryCombat.item_def(chest_gear).get("name", chest_gear))
+		if _chest_node != null:
+			_chest_node.hide()
+		Toast.show(self, msg, 2.5)
 	if not ambush.is_empty() and not ambush.triggered and absf(float(ambush.x) - px) < AMBUSH_R_M:
 		ambush.triggered = true
 		for i in AMBUSH_COUNT:
@@ -123,6 +240,11 @@ func _physics_process(_delta: float) -> void:
 		miniboss.triggered = true
 		mini_enemy = spawn_at(float(miniboss.x), {"hp": MINI_HP_MUL, "dmg": MINI_DMG_MUL})
 		Toast.show(self, "👹 미니보스 %s 등장!" % String(mini_enemy.species.get("name", "")), 2.5)
+	## G-0212 이동 상인(웹 2046) — 값에만 잠깐 얹는다
+	if not merchant.is_empty() and not merchant.triggered and absf(float(merchant.x) - px) < MERCHANT_R_M:
+		merchant.triggered = true
+		StorySaveState.merchant_until_ms = Time.get_ticks_msec() + MERCHANT_DUR_SEC * 1000
+		Toast.show(self, "🛒 지나가던 상인 — %d초 동안 상점이 30%% 싸집니다!" % MERCHANT_DUR_SEC, 2.5)
 	if not rescue.is_empty() and not rescue.spawned and absf(float(rescue.x) - px) < RESCUE_R_M:
 		rescue.spawned = true
 		for i in RESCUE_COUNT:

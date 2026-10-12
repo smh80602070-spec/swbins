@@ -59,11 +59,16 @@ func _gather() -> void:
 	_visual.hide()
 	_area.set_deferred("monitoring", false)
 
-	StorySaveState.add_mat(kind)
+	## G-0212 채집 보너스 지역(웹 side.js 1993 — 그 구간 안이면 ×2) — 사냥터 사건은 spawner 가 든다(그룹 story_hunt_events)
+	var gain := 1
+	var ev := get_tree().get_first_node_in_group("story_hunt_events") as Node3D
+	if ev != null:
+		gain = ev.forage_mul_at(global_position.x - ev.global_position.x)
+	StorySaveState.add_mat(kind, gain)
 	var info: Dictionary = StoryCombat.GATHER_INFO.get(kind, {})
 	var label := String(info.get("name", kind))
 	var emoji := String(info.get("emoji", ""))
-	Toast.show(self, "%s %s +1" % [emoji, label], 2.0)
+	Toast.show(self, "%s %s +%d%s" % [emoji, label, gain, " 🍀" if gain > 1 else ""], 2.0)
 
 	get_tree().create_timer(StoryCombat.GATHER_RESPAWN_SEC).timeout.connect(_respawn)
 

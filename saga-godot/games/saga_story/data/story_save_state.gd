@@ -46,6 +46,9 @@ var _checking_quests := false  # check_quests()가 보상으로 add_gold()를 �
 var mats: Dictionary = {}  # side.js s.mats[kind] 그대로 — 필드 채집(들꽃 등) 누적
 var equipped: Dictionary = {}  # slot(String) -> gear key(String), StoryCombat.item_def() 참고(밑감·고유 둘 다)
 var gold := 0  # side.js core.save.player.gold 그대로 — 상인(story_merchant.gd)이 쓴다
+## G-0212 이동 상인 할인(웹 gear.js priceMul·MERCHANT_DISCOUNT) — 끝나는 시각(엔진 ms). 메모리만(save() 사전에 안 넣음 — 세이브 키 불변).
+const MERCHANT_DISCOUNT := 0.7
+var merchant_until_ms := 0
 var job := "none"  # data-job.js JOBS key — StoryCombat.JOBS_TIER1 참고, 한 번 정하면 안 바뀐다(전직 트리 첫 걸음)
 
 ## **2026-09-13 추가(같은 날 더 더, 주문서) — gear.js `it.atk/it.def/it.hp`
@@ -238,6 +241,11 @@ func gathered_total() -> int:
 
 func gather_quest_done() -> bool:
 	return gathered_total() >= 15
+
+
+## G-0212 — 상점 값 배수(이동 상인 할인이 남아 있으면 0.7)
+func price_mul() -> float:
+	return MERCHANT_DISCOUNT if Time.get_ticks_msec() < merchant_until_ms else 1.0
 
 
 func add_gold(n: int) -> void:
