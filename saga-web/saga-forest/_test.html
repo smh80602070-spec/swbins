@@ -7087,15 +7087,15 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
         var r = [];
         api.take('o_artisan'); r.push(wsRule(api, 'miser'), wsRule(api, 'bighand'));
         var sm = WS.sellMul() / (1 + WS.sum('sellPct') / 100), cost = WS.cost(1000) / Math.max(0.5, 1 - WS.sum('buyPct') / 100);
-        var need = WS.need(10), fee = WS.craftFee();
+        var need = WS.need(10), fee = WS.craftFee(); var fr = VD.RECIPES.filter(function (x) { return x.kind === 'furn'; })[0]; Object.keys(fr.need).forEach(function (k2) { V.state().bag[k2] = 99; }); C.save.player.gold = 0; var feeBlock = !DG.craft.can(fr).ok; C.save.player.gold = 500; var feeOk = DG.craft.can(fr).ok;
         C.save.passive = { start: null, taken: [] }; WS._reset(); api = WS.api();
         api.take('o_socialite'); r.push(wsRule(api, 'villagelove'), wsRule(api, 'barehand'));
         Math.random = function () { return 0.99; };
         var h = WS.heart(1), hneg = WS.heart(-2), blocked = DG.parcel ? DG.parcel.take('plain', 'space') : { kind: 'no' };
         var walk = WS.walk() / (1 + WS.sum('walkPct') / 100), bare = WS.noTool();
-        var ok = r.every(Boolean) && Math.abs(sm - 1.25) < 1e-9 && Math.abs(cost - 1250) < 1 && need === 7 && fee === 200 &&
+        var ok = r.every(Boolean) && Math.abs(sm - 1.25) < 1e-9 && Math.abs(cost - 1250) < 1 && need === 7 && fee === 200 && feeBlock && feeOk &&
           h === 2 && hneg === -2 && blocked.kind === 'no' && Math.abs(walk - 0.85) < 1e-9 && bare && !V.state().delivery.carrying;
-        return ok && ('구두쇠 ×' + sm + '·사는 값 ×' + (cost / 1000) + ' · 재료 10→' + need + '·삯 ' + fee + ' · 하트 1→' + h + ' · 택배 "' + blocked.text + '" · 걸음 ×' + walk.toFixed(2));
+        return ok && ('구두쇠 ×' + sm + '·사는 값 ×' + (cost / 1000) + ' · 재료 10→' + need + '·삯 ' + fee + '(0벨이면 못 지음)' + ' · 하트 1→' + h + ' · 택배 "' + blocked.text + '" · 걸음 ×' + walk.toFixed(2));
       });
     });
 

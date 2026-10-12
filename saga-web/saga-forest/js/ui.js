@@ -898,7 +898,7 @@
           (got
             ? '<button class="btn tiny ghost" disabled>가지고 있음</button>'
             : '<button class="btn tiny primary" data-act="v-buytool" data-id="' + k +
-              '">산다 (🪙 ' + core.fmt(t.price) + ')</button>') +
+              '">산다 (🪙 ' + core.fmt(global.DG.workshop ? global.DG.workshop.cost(t.price) : t.price) + ')</button>') +
         '</div></div>';
     }
     html += '</div>';
@@ -914,7 +914,7 @@
           Hm.stockCount(f.key) + '</small></div>' +
         '<div class="bagtools">' +
           '<button class="btn tiny primary" data-act="v-buyfurn" data-id="' + f.key +
-            '">산다 (🪙 ' + core.fmt(f.price) + ')</button>' +
+            '">산다 (🪙 ' + core.fmt(global.DG.workshop ? global.DG.workshop.cost(f.price) : f.price) + ')</button>' +
         '</div></div>';
     }
     html += '<small class="muted">오늘 것은 오늘뿐입니다. 산 가구는 창고로 들어가고, ' +
@@ -932,7 +932,7 @@
           (got
             ? '<button class="btn tiny ghost" disabled>가지고 있음</button>'
             : '<button class="btn tiny primary" data-act="v-buyfin" data-kind="' + e[0] +
-              '" data-id="' + e[1].key + '">산다 (🪙 ' + core.fmt(e[1].price) + ')</button>') +
+              '" data-id="' + e[1].key + '">산다 (🪙 ' + core.fmt(global.DG.workshop ? global.DG.workshop.cost(e[1].price) : e[1].price) + ')</button>') +
         '</div></div>';
     });
     html += '<small class="muted">산 것은 🏠 집 시트에서 갈아 끼웁니다. ' +
@@ -1686,7 +1686,7 @@
               : (e.it.unlock
                   ? '<button class="btn tiny ghost" disabled>🔒 배달 ' + e.it.at + '건</button>'
                   : '<button class="btn tiny" data-act="v-wbuy" data-kind="' + p.part.key +
-                    '" data-id="' + e.it.key + '">짓는다 (🪙 ' + core.fmt(e.it.price) + ')</button>')) +
+                    '" data-id="' + e.it.key + '">짓는다 (🪙 ' + core.fmt(global.DG.workshop ? global.DG.workshop.cost(e.it.price) : e.it.price) + ')</button>')) +
           '</div></div>';
       }
       html += '</div>';

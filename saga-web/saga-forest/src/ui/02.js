@@ -470,7 +470,7 @@
               : (e.it.unlock
                   ? '<button class="btn tiny ghost" disabled>🔒 배달 ' + e.it.at + '건</button>'
                   : '<button class="btn tiny" data-act="v-wbuy" data-kind="' + p.part.key +
-                    '" data-id="' + e.it.key + '">짓는다 (🪙 ' + core.fmt(e.it.price) + ')</button>')) +
+                    '" data-id="' + e.it.key + '">짓는다 (🪙 ' + core.fmt(global.DG.workshop ? global.DG.workshop.cost(e.it.price) : e.it.price) + ')</button>')) +
           '</div></div>';
       }
       html += '</div>';

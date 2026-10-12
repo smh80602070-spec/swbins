@@ -100,6 +100,7 @@
     for (var k in r.need) {
       if (r.need.hasOwnProperty(k) && V().bagCount(k) < needOf(r, k)) { return { ok: false, why: '재료가 모자란다' }; }
     }
+    if (global.DG.workshop && (core.save.player.gold || 0) < global.DG.workshop.craftFee()) { return { ok: false, why: '삯이 모자란다 (손 큰 장인 ' + global.DG.workshop.craftFee() + '벨)' }; }   // 솜씨도(W-0184)
     return { ok: true };
   }
   /** 짓는다 — 재료를 쓰고 결과를 낸다. 도구 승급이면 3택이 선다(pending) */
