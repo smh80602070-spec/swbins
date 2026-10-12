@@ -5,7 +5,7 @@ extends Node
 ##   SAGA_TUTORIAL_PROBE=1 "$GODOT" --headless --path saga-godot res://games/saga_go/world/TestVillage.tscn
 ##
 ## ① 새 세이브(tut 비어 있음) 목표판 첫 줄 = 첫 사명 ② 다섯 사명을 실제 경로(걷기·등반 / 동행 등용 / 상자 opened 신호 /
-## 필드 전투 reacted 신호 / 세이브 파일 쓰기)로 차례로 → 줄이 n/5 로 바뀜 ③ 다 하면 평소 줄로 돌아감 ④ 세이브에 "tut" 가 실림
+## 필드 전투 reacted 신호 / 세이브 파일 쓰기)로 차례로 → 줄이 n/6 로 바뀜 ③ 다 하면 평소 줄로 돌아감 ④ 세이브에 "tut" 가 실림
 ## ⑤ "tut" 없는 옛 세이브를 불러오면 전부 완료. 끝에 TUTORIAL_PROBE_DONE fails=N. 상태는 끝에 되돌린다.
 
 const Data := preload("res://games/saga_go/data/tutorial.gd")
@@ -61,7 +61,7 @@ func _run() -> void:
 	tn.call("reset_for_test")
 
 	# ① 새 세이브
-	_check("start", tn.call("active") and _board().begins_with("🎯 첫걸음 0/5 둘러보기"), _board())
+	_check("start", tn.call("active") and _board().begins_with("🎯 첫걸음 0/6 둘러보기"), _board())
 
 	# ② 다섯 사명
 	tn.call("_check")  # 시작 자리·세이브 시각 기록
@@ -70,11 +70,11 @@ func _run() -> void:
 	_p.set("mode", GoPlayer.Mode.GROUND)
 	_p.global_position = saved_pos + Vector3(25, 0, 0)
 	tn.call("_check")
-	_check("move", PartyState.tut == ["move"] and _board().begins_with("🎯 첫걸음 1/5 동행 만나기"), _board())
+	_check("move", PartyState.tut == ["move"] and _board().begins_with("🎯 첫걸음 1/6 동행 만나기"), _board())
 
 	PartyState.members.append("probe_member")
 	tn.call("_check")
-	_check("recruit", PartyState.tut.has("recruit") and _board().begins_with("🎯 첫걸음 2/5 상자 열기"), _board())
+	_check("recruit", PartyState.tut.has("recruit") and _board().begins_with("🎯 첫걸음 2/6 상자 열기"), _board())
 
 	var chest_src := GDScript.new()
 	chest_src.source_code = "extends Node3D\nsignal opened(chest)\n"
@@ -85,17 +85,26 @@ func _run() -> void:
 	add_child(chest)
 	tn.call("_check")  # 새 상자에 신호 연결
 	chest.emit_signal("opened", chest)
-	_check("chest", PartyState.tut.has("chest") and _board().begins_with("🎯 첫걸음 3/5 원소 맞부딪치기"), _board())
+	_check("chest", PartyState.tut.has("chest") and _board().begins_with("🎯 첫걸음 3/6 원소 맞부딪치기"), _board())
 
 	var fc := get_tree().get_first_node_in_group("go_field_combat")
 	_check("field_combat 있음", fc != null, str(fc))
 	if fc != null:
 		fc.emit_signal("reacted", "melt")
-	_check("react", PartyState.tut.has("react") and _board().begins_with("🎯 첫걸음 4/5 기록 남기기"), _board())
+	_check("react", PartyState.tut.has("react") and _board().begins_with("🎯 첫걸음 4/6 기록 남기기"), _board())
 
 	SaveState.save()  # 임시 파일에 씀 — 수정 시각이 시작(없음)보다 늦다
 	tn.call("_check")
-	_check("save", PartyState.tut.has("save") and PartyState.tut.size() == 5, str(PartyState.tut))
+	_check("save", PartyState.tut.has("save") and PartyState.tut.size() == 5 and _board().begins_with("🎯 첫걸음 5/6 성도에 1점"), str(PartyState.tut))
+	## G-0215 — 성도에 한 점 찍으면 여섯째도 끝(PartyState.passive_api 가 찍힐 때 go_tutorial 에 알린다)
+	var saved_passive: Dictionary = PartyState.passive.duplicate(true)
+	PartyState.passive = {"start": null, "taken": []}
+	var api: RefCounted = PartyState.passive_api()
+	api.take("o_wayfarer")
+	api.take(api.neighbors("o_wayfarer")[0])
+	_check("star", PartyState.tut.has("star") and PartyState.tut.size() == 6, str(PartyState.tut))
+	PartyState.passive = saved_passive
+	PartyState._passive_api = null
 
 	# ③ 다 했으면 평소 줄
 	_check("done_board", not bool(tn.call("active")) and not _board().contains("첫걸음"), _board())
@@ -103,7 +112,7 @@ func _run() -> void:
 	# ④ 세이브에 tut
 	SaveState.save()
 	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(TMP))
-	_check("saved_tut", typeof(parsed) == TYPE_DICTIONARY and (parsed as Dictionary).get("tut", []).size() == 5, "")
+	_check("saved_tut", typeof(parsed) == TYPE_DICTIONARY and (parsed as Dictionary).get("tut", []).size() == 6, "")
 
 	# ⑤ 옛 세이브(tut 없음)
 	if typeof(parsed) == TYPE_DICTIONARY:

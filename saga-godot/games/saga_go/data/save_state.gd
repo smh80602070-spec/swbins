@@ -64,6 +64,7 @@ func save() -> bool:
 		"cycle": PartyState.cycle,
 		"tips": PartyState.tips,
 		"tut": PartyState.tut,
+		"passive": PartyState.passive,   # G-0215 성도
 		"hunt": PartyState.hunt,
 		"trail": PartyState.trail,   # G-0195
 		"weekly_goals": PartyState.weekly_goals,
@@ -165,6 +166,10 @@ func try_load() -> bool:
 	## tut(2026-10-01 첫걸음 사명) — 키가 없는 옛 세이브는 다 한 것으로 본다(새 세이브만 사명이 뜬다).
 	var tu: Variant = data.get("tut", null)
 	PartyState.tut = (tu as Array).duplicate() if typeof(tu) == TYPE_ARRAY else preload("res://games/saga_go/data/tutorial.gd").ids()
+	## passive(G-0215 성도) — 없으면 빈 칸
+	var pw: Variant = data.get("passive", null)
+	PartyState.passive = (pw as Dictionary).duplicate(true) if typeof(pw) == TYPE_DICTIONARY and (pw as Dictionary).has("taken") else {"start": null, "taken": []}
+	PartyState._passive_api = null
 	## hunt(2026-09-30 사냥 기록) — 없으면 빈 사전(기록 없음).
 	var hn: Variant = data.get("hunt", {})
 	PartyState.hunt = (hn as Dictionary).duplicate(true) if typeof(hn) == TYPE_DICTIONARY else {}

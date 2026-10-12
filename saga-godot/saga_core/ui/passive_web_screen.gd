@@ -3,7 +3,7 @@ extends CanvasLayer
 ## G-0213 공용 패시브 그물 화면 — 웹 saga-web/shared/js/passive-web-ui.js(W-0179) 의 고돗판.
 ## 규칙은 saga_core/data/passive_web.gd(api), 정의·효과 글은 판이 넘긴다(saga_core 는 games 를 안 부른다).
 ##
-##   PassiveWebScreen.open(parent, api, {title, fmt: Callable(stats)->String, gate: Callable(id)->String, on_drop: Callable(id), on_close: Callable})
+##   PassiveWebScreen.open(parent, api, {title, fmt: Callable(stats)->String, desc: Callable(node)->String, gate: Callable(id)->String, on_drop: Callable(id), on_close: Callable})
 ##
 ## 끌어 옮기기·휠/두 손가락 확대(0.4~3) · 찍은 마디 금색 · 지금 찍을 수 있는 이웃 밝게 · 나머지 흐림 · 시작점은 정의 색.
 ## 마디를 누르면 아래 카드(이름·효과·까닭·"찍기 (경로 n점)"/"되돌리기"), 위 줄은 제목·남은 점수·검색칸·✕.
@@ -143,6 +143,8 @@ func select(id: String) -> void:
 		var top := board.size.y - 16.0 - 140.0
 		if p.y > top - 24.0:
 			board.pan.y -= p.y - (top - 48.0)
+		if p.x < 40.0 or p.x > board.size.x - 40.0:   # 세로 화면에서 바깥 고리가 옆으로 잘림(go_starchart 촬영)
+			board.pan.x -= p.x - clampf(p.x, 80.0, board.size.x - 80.0)
 	board.queue_redraw()
 
 
@@ -169,8 +171,10 @@ func _fill_card() -> void:
 	var st: Dictionary = nd.get("stats", {})
 	if not st.is_empty():
 		lines.append(String(fmt.call(st)) if fmt.is_valid() else _plain_stats(st))
-	if nd.has("desc"):
-		lines.append(String(nd.desc))
+	var desc_fn: Callable = opts.get("desc", Callable())   # 판이 다시 해석한 규칙 글을 덮어쓴다
+	var desc := String(desc_fn.call(nd)) if desc_fn.is_valid() else String(nd.get("desc", ""))
+	if desc != "":
+		lines.append(desc)
 	var state: String = api.state(id)
 	var gate := _gate(id)
 	if state == "taken":

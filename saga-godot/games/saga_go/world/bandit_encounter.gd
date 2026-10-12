@@ -326,7 +326,8 @@ func _start_fight() -> void:
 	## PLAN 106장 ③ — 결투 중엔 들판 전투(field_combat.gd)가 입력·피해를 안 받는다.
 	add_to_group("duel_active")
 	var foe_hp := maxf(1.0, roundf(foe_power * foe_hp_mul))
-	_duel = DuelRules.create(foe_hp, PartyState.atk, PartyState.def, time_sec, is_raid)
+	var gs := preload("res://games/saga_go/data/go_starchart.gd")   # G-0215 성도 — 토벌이면 공격 배수(속전 ×1.35 포함)·제한 시간(속전 45초)
+	_duel = DuelRules.create(foe_hp, PartyState.atk * (gs.mul("raid_atk") if is_raid else 1.0), PartyState.def, gs.raid_sec(time_sec) if is_raid else time_sec, is_raid)
 	_pre_stagger_count = 0
 	_combat_layer.show()
 	_refresh_combat_ui()

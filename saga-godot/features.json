@@ -3811,5 +3811,51 @@
   "ticket": "G-0214",
   "since": "2026-10-12",
   "note": "창 모드 st_constellation 가로·세로 Claude 눈 ○(HUD 단추로 연 화면 · Lv.40 무사 — 남은 23/39 · 비연 카드 \"점수가 모자란다\") · 빈 성좌는 배수 1(golden md5 그대로)"
+ },
+ {
+  "id": "gd.go.starchart",
+  "name": "1만리 성도(星圖) — 377마디 패시브 그물·시작점 여섯 · 점수 = 첫 별 + 모험 등급 + 도감 종/10(상한 56) · 동료 공격·체력·이동·설득·알·채집·펫 우정·포획·경험·결투 기 · 규칙 여덟(외길·맨발·야행·속전·무욕·철벽 부대·큰 그물·바람길) · 메뉴 「✨ 성도」·F2 · 첫걸음 여섯째 \"성도에 1점\"(웹 W-0181)",
+  "files": [
+   "games/saga_go/data/go_starchart.gd",
+   "games/saga_go/data/passive_def.json",
+   "games/saga_go/world/starchart_entry.gd",
+   "games/saga_go/data/party_state.gd",
+   "games/saga_go/data/save_state.gd",
+   "games/saga_go/combat/field_combat.gd",
+   "games/saga_go/data/persuade_rules.gd",
+   "games/saga_go/data/eggs.gd",
+   "games/saga_go/world/gathering.gd",
+   "games/saga_go/world/pet_encounter.gd",
+   "games/saga_go/data/duel_rules.gd",
+   "games/saga_go/world/bandit_encounter.gd",
+   "games/saga_go/player/go_player.gd",
+   "games/saga_go/world/hud_menu.gd",
+   "games/saga_go/data/tutorial.gd",
+   "tools/probe_go_starchart.gd",
+   "tools/probe_tutorial.gd",
+   "tools/shot_go_star.gd",
+   "tools/shot_scene.gd"
+  ],
+  "tests": [
+   "go_starchart",
+   "passive_web",
+   "combat",
+   "party",
+   "eggs",
+   "mount",
+   "duel",
+   "tutorial",
+   "codex",
+   "savemove",
+   "autosave",
+   "heroes",
+   "story_constellation"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0215",
+  "since": "2026-10-12",
+  "note": "창 모드 go_starchart 가로·세로 Claude 눈 ○(메뉴 입구로 연 화면 · 등급 30 — 남은 27/31 · 맨발 카드 \"알 걸음 −30%\") · 빈 성도 = 배수 1"
  }
 ]

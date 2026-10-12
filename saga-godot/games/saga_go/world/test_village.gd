@@ -283,6 +283,9 @@ func _ready() -> void:
 	var help := preload("res://games/saga_go/world/help_guide.gd").new()
 	help.name = "HelpGuide"
 	add_child(help)
+	var star := preload("res://games/saga_go/world/starchart_entry.gd").new()   # G-0215 성도 입구(메뉴·F2)
+	star.name = "StarchartEntry"
+	add_child(star)
 	## 첫걸음 사명(G-0012) — 새 세이브 목표판 첫 줄. 판정은 world/tutorial.gd.
 	var tut := preload("res://games/saga_go/world/tutorial.gd").new()
 	tut.name = "Tutorial"

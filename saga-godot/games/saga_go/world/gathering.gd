@@ -99,8 +99,10 @@ func pick(id: String) -> bool:
 	var n: Node3D = _nodes[id]
 	var item: String = n.get_meta("item")
 	PartyState.gather_t[id] = Cooking.now()
-	PartyState.add_items({item: 1})
-	CombatFeel.pickup(n, "%s +1" % Cooking.GATHER[item].name)
+	var got := preload("res://games/saga_go/data/go_starchart.gd").herb_count(1)   # G-0215 성도 채집(무욕 ×0.5 — 0 이면 빈손)
+	if got > 0:
+		PartyState.add_items({item: got})
+	CombatFeel.pickup(n, "%s +%d" % [Cooking.GATHER[item].name, got])
 	if Cooking.is_special(item):
 		Toast.show(self, "특산물 %s — 가진 것 %d (인물 돌파에 쓴다)" % [Cooking.GATHER[item].name, PartyState.count(item)], 2.2)
 	_nodes.erase(id)

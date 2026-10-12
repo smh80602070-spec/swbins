@@ -116,6 +116,20 @@ var cycle: int = 0
 var tips: Array = []
 ## 2026-10-01 첫걸음 사명(G-0012) — 끝낸 사명 id 목록(data/tutorial.gd). 저장 키 "tut". 새 세이브는 빈 목록에서 시작.
 var tut: Array = []
+## G-0215 성도(星圖) — 공용 패시브 그물의 세이브 칸(저장 키 "passive", 기본 빈 칸이라 SAVE_VERSION 그대로). 효과는 data/go_starchart.gd.
+var passive: Dictionary = {"start": null, "taken": []}
+var _passive_api: RefCounted = null
+
+
+## 성도 규칙 층 — passive 사전이 바뀌면(불러오기) 새로 만든다. 찍으면 첫걸음 사명 "star" 를 끝낸다.
+func passive_api() -> RefCounted:
+	if _passive_api == null or not is_same(_passive_api.store, passive):
+		var GS: GDScript = load("res://games/saga_go/data/go_starchart.gd")
+		_passive_api = (load("res://saga_core/data/passive_web.gd") as GDScript).new(GS.call("definition"), passive, func() -> int: return int(GS.call("points_total")))
+		_passive_api.changed.connect(func() -> void:
+			if is_inside_tree() and not (passive.taken as Array).is_empty():
+				get_tree().call_group("go_tutorial", "complete", "star"))
+	return _passive_api
 ## 2026-09-30 사냥 기록 — {"kills": {종: 마릿수}, "claimed": {종: 받은 단계 수}}. 필드만 더해 SAVE_VERSION 그대로.
 ## world/hunt_log.gd 가 읽고 쓴다(규칙은 data/hunt.gd).
 var hunt: Dictionary = {}
@@ -278,7 +292,7 @@ func recruit(id: String) -> void:
 func add_exp(amount: float) -> void:
 	if amount <= 0.0:
 		return
-	exp += amount * Weather.exp_bonus_mul() * (1.0 + _support_bonus()) * (1.0 + buddy_bonus("exp")) * (1.0 + 0.05 * float(cycle))
+	exp += amount * Weather.exp_bonus_mul() * (1.0 + _support_bonus()) * (1.0 + buddy_bonus("exp")) * (1.0 + 0.05 * float(cycle)) * preload("res://games/saga_go/data/go_starchart.gd").mul("exp")   # G-0215 성도 경험
 	var old_level := level
 	_recompute()
 	power_changed.emit(atk, def)
@@ -624,6 +638,11 @@ func stat(id: String, key: String) -> float:
 	for set_id in counts:
 		if int(counts[set_id]) >= 2:
 			v += float((Artifacts.SETS[set_id]["2"] as Dictionary).get(key, 0.0))
+	## G-0215 성도 — 동료 공격·체력 배수를 비율 옵션 합에 얹는다(한 곳 — 들판 싸움 max_hp_of·char_atk 가 다 여기서 읽는다)
+	if key == "atk_pct":
+		v += preload("res://games/saga_go/data/go_starchart.gd").mul("atk") - 1.0
+	elif key == "hp_pct":
+		v += preload("res://games/saga_go/data/go_starchart.gd").mul("hp") - 1.0
 	return v + food_stat(key)
 
 ## 음식 버프(106장 ⑱) — 명단 전체에 같은 값. 계열마다 하나라 key 가 겹칠 일은 드물지만 더해 둔다.

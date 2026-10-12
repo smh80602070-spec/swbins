@@ -39,6 +39,7 @@ func appeal(key: String) -> Dictionary:
 		return {"ok": false}
 	var hit := key == hero_trait
 	var base: float = (HIT_MIN + randf() * HIT_RANGE) if hit else (MISS_MIN + randf() * MISS_RANGE)
+	base *= preload("res://games/saga_go/data/go_starchart.gd").recruit_mul()   # G-0215 성도 설득(야행·큰 그물) — 굴림 뒤에 곱만
 	favor += base
 	var this_round := round_num
 	round_num += 1

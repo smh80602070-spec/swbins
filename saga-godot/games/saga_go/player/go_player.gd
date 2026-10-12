@@ -270,7 +270,8 @@ func _tick_ground(delta: float, move_dir: Vector3) -> void:
 	if aiming:
 		move_dir = Vector3.ZERO
 	var running := Input.is_action_pressed("run") and not _exhausted and stamina > 0.0 and move_dir.length() > 0.05
-	var speed := (RUN_SPEED if running else WALK_SPEED) * speed_mult * mount_speed_mul
+	var gs := preload("res://games/saga_go/data/go_starchart.gd")   # G-0215 성도 이동(맨발·철벽 부대) · 바람길 땅 탈것
+	var speed := (RUN_SPEED if running else WALK_SPEED) * speed_mult * mount_speed_mul * gs.mul("move") * (gs.mount_mul(false) if mounted else 1.0)
 	if _action_t > 0.0:
 		speed *= _action_move
 		running = false
@@ -334,7 +335,7 @@ func _tick_air(delta: float, move_dir: Vector3) -> void:
 		return
 	_coyote -= delta
 
-	var speed := WALK_SPEED * speed_mult
+	var speed := WALK_SPEED * speed_mult * preload("res://games/saga_go/data/go_starchart.gd").mul("move")   # G-0215
 	var hv := Vector2(velocity.x, velocity.z)
 	if hv.length() > speed:
 		speed = hv.length() # 달리다 뛰면 그 속도를 이어 간다
@@ -398,13 +399,15 @@ func is_flying_now() -> bool:
 
 ## 탈것 잠금 — 이야기 장(PartyState.story.ch).
 func mount_chapter() -> int:
+	if preload("res://games/saga_go/data/go_starchart.gd").has_rule("barefoot"):
+		return -1   # G-0215 맨발 — 탈것을 못 탄다(잠금 장이 0 밑이면 열린 탈것이 없다)
 	return int(PartyState.story.get("ch", 0))
 
 func _tick_fly(delta: float, move_dir: Vector3) -> void:
 	if not mounted:
 		_set_mode(Mode.AIR)
 		return
-	var fspeed := mount_fly_speed if mount_fly_speed > 0.0 else 14.0
+	var fspeed := (mount_fly_speed if mount_fly_speed > 0.0 else 14.0) * preload("res://games/saga_go/data/go_starchart.gd").mount_mul(true)   # G-0215 바람길
 	if move_dir.length() > 0.05:
 		_face(move_dir, delta * FLY_TURN * 0.25)
 	var dir := move_dir if move_dir.length() > 0.05 else Vector3.ZERO

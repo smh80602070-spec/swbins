@@ -96,7 +96,7 @@ static func roll(source: String, key: String) -> Array[String]:
 	var out: Array[String] = []
 	var rows: Array = SOURCES.get(source, [])
 	for i in rows.size():
-		var chance: float = rows[i][0]
+		var chance: float = minf(1.0, float(rows[i][0]) * preload("res://games/saga_go/data/go_starchart.gd").mul("egg_find"))   # G-0215 귀한 조우·큰 그물 → 알 얻을 확률
 		var r := float(_h("%s|%s|%d" % [source, key, i]) % 1000) / 1000.0
 		if r < chance:
 			out.append(String(rows[i][1]))
@@ -159,7 +159,7 @@ static func walk(meters: float) -> Array:
 	var keep: Array = []
 	for e in s.inc as Array:
 		e.walked = float(e.walked) + meters
-		if float(e.walked) >= float(tier(String(e.tier)).get("need", 1e9)):
+		if float(e.walked) >= float(tier(String(e.tier)).get("need", 1e9)) * preload("res://games/saga_go/data/go_starchart.gd").mul("egg_walk"):   # G-0215 알 걸음(맨발)
 			done.append(e)
 		else:
 			keep.append(e)
@@ -176,7 +176,7 @@ static func walk(meters: float) -> Array:
 	if String(s.buddy) != "":
 		if not s.has("friend"):
 			s["friend"] = {}
-		(s.friend as Dictionary)[String(s.buddy)] = float((s.friend as Dictionary).get(String(s.buddy), 0.0)) + meters
+		(s.friend as Dictionary)[String(s.buddy)] = float((s.friend as Dictionary).get(String(s.buddy), 0.0)) + meters * preload("res://games/saga_go/data/go_starchart.gd").mul("bond")   # G-0215 인연 → 펫 우정
 		s.buddy_m = float(s.buddy_m) + meters
 		while float(s.buddy_m) >= BUDDY_M:
 			s.buddy_m = float(s.buddy_m) - BUDDY_M

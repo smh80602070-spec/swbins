@@ -123,7 +123,7 @@ func act(kind: String) -> Dictionary:
 		return {"ok": false, "kind": "quick", "reason": "cd"}
 	var dmg := roundf(my_atk * QUICK_MUL * (0.9 + randf() * 0.2))
 	cd = QUICK_CD
-	ki = minf(KI_MAX, ki + QUICK_KI)
+	ki = minf(KI_MAX, ki + QUICK_KI * preload("res://games/saga_go/data/go_starchart.gd").mul("ki"))   # G-0215 성도 기
 	hp -= dmg
 	dealt += dmg
 	hits += 1
@@ -169,7 +169,7 @@ func step(dt: float) -> Array:
 			if dodged:
 				if just_dodged:
 					heavy = 0.0
-					ki = minf(KI_MAX, ki + KI_MAX * JUST_DODGE_KI_BONUS)
+					ki = minf(KI_MAX, ki + KI_MAX * JUST_DODGE_KI_BONUS * preload("res://games/saga_go/data/go_starchart.gd").mul("ki"))
 				else:
 					heavy = roundf(heavy * DODGE_CUT)
 			morale -= heavy

@@ -32,6 +32,7 @@ const ENTRIES := [
 	["go_eggs", "신수 알 (I)"],
 	["go_homestead", "쉼터 마당 (T)"],
 	["go_cycle", "별배 재출항 (N)"],
+	["go_starchart", "✨ 성도 (F2)"],   # G-0215
 	["go_save_transfer", "세이브 옮기기"],   # G-0035
 	["go_graphics", "화질·성능"],   # G-0054
 	["go_help", "도움말 (F1)"],

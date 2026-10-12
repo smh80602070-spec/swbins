@@ -32,6 +32,7 @@ const Kits := preload("res://games/saga_go/data/kits.gd")
 const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
 const AimedShot := preload("res://games/saga_go/combat/aimed_shot.gd")
 const FeelTuning := preload("res://games/saga_go/combat/feel_tuning.gd")
+const GoStarchart := preload("res://games/saga_go/data/go_starchart.gd")   # G-0215 성도
 const FieldAssist := preload("res://games/saga_go/combat/field_assist.gd")
 const Voice := preload("res://saga_core/audio/voice.gd")   # G-0111 대사 음성
 
@@ -269,7 +270,7 @@ func roster() -> Array[String]:
 	## 106장 ㉝ 편성 — 나 + PartyState.party()(members 앞 party_size 명).
 	var r: Array[String] = ["self"]
 	for id in PartyState.party():
-		if r.size() >= ROSTER_MAX:
+		if r.size() >= 1 + GoStarchart.party_cap(ROSTER_MAX - 1):   # G-0215 외길 — 동행 한 명만
 			break
 		if not r.has(id):
 			r.append(id)
@@ -1321,7 +1322,7 @@ func take_damage(amount: float, source: Node) -> void:
 		_dodge_success()
 		return
 	var d := PartyState.char_def(active_id())
-	var dmg := amount * FeelTuning.enemy_dmg_mul * (1.0 - d / (d + 120.0))
+	var dmg := amount * FeelTuning.enemy_dmg_mul * (1.0 - d / (d + 120.0)) * GoStarchart.mul("take")   # G-0215 철벽 부대
 	if _guard_t > 0.0:
 		dmg *= _guard_mul # 106장 ㉔ 오천의 맹세
 	## 보호막이 먼저 받는다 — 다 막으면 원소 효과(화상·젖음·감전)도 안 든다.

@@ -95,7 +95,7 @@ func _show_prompt() -> void:
 ## 도구·은사 계열, DUNGEON 은사처럼 이 판엔 없는 시스템) catchBase만
 ## 남는다 — 값을 새로 지어내지 않고 있는 항만 옮긴 것이다.
 func _attempt_catch() -> void:
-	if randf() < float(_pet.catch_base):
+	if randf() < float(_pet.catch_base) * preload("res://games/saga_go/data/go_starchart.gd").mul("catch"):   # G-0215 성도 포획
 		_caught()
 	else:
 		_escaped()
