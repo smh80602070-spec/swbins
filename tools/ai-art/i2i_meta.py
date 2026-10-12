@@ -9,6 +9,13 @@ REL = {'hero': 'tools/char-forge/_out/hero', 'realm': 'tools/char-forge/_out/rea
 
 
 def base_meta(init_image, denoise):
+    lp = os.path.splitext(os.path.join(HERE, '..', '..', init_image))[0] + '.license.json'
+    if os.path.exists(lp):        # 밑그림이 몸 렌더가 아니라 AI 그림(K-0047 표정 ← 도감 초상) — 그 그림의 출처를 물려받는다
+        b = json.load(open(lp, encoding='utf-8'))
+        m = {'mode': 'img2img', 'init_image': init_image.replace('\\', '/'), 'denoise': float(denoise),
+             'init_model': b.get('model', ''), 'init_model_license': b.get('model_license', '')}
+        m.update({k: b[k] for k in ('base_body', 'base_license', 'base_inputs') if k in b})
+        return m
     name = os.path.splitext(os.path.basename(init_image))[0]      # busts/hero_<id>.png -> hero_<id>
     sub, d = next(((s, h) for s, h in HEROES if os.path.exists(os.path.join(h, name + '.glb'))), HEROES[0])
     m = {'mode': 'img2img', 'init_image': f'tools/ai-art/_out/busts{"_realm" if sub == "realm" else ""}/{name}.png', 'denoise': float(denoise),
