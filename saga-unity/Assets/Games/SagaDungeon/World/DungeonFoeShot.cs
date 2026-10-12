@@ -38,11 +38,9 @@ namespace Saga.Dungeon.World
             Object.Destroy(col);
             go.transform.position = from;
             go.transform.localScale = Vector3.one * 0.22f;
-            var mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "FoeShot (generated)" };
-            mat.color = color;
-            mat.EnableKeyword("_EMISSION");
-            mat.SetColor("_EmissionColor", color * 0.8f);
-            go.GetComponent<MeshRenderer>().sharedMaterial = mat;
+            go.GetComponent<MeshRenderer>().sharedMaterial = MaterialFor(color);
+            // 방 내용 밑에 붙인다 — 방 갈이·층 내려가기·은총 재시작이 적과 함께 지운다(새 방에서 옛 탄에 맞지 않게, R-5).
+            if (room != null) go.transform.SetParent(room, true);
             var shot = go.AddComponent<DungeonFoeShot>();
             shot._dir = dir.normalized;
             shot._life = DungeonFoeRoster.ShotLife;
@@ -56,19 +54,36 @@ namespace Saga.Dungeon.World
             return shot;
         }
 
+        // 색마다 재질 하나를 돌려 쓴다(탄마다 만들면 버려진 재질이 쌓인다 — R-5).
+        private static readonly Dictionary<Color, Material> _mats = new Dictionary<Color, Material>();
+        private static Material MaterialFor(Color color)
+        {
+            if (_mats.TryGetValue(color, out var mat) && mat != null) return mat;
+            mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "FoeShot (generated)" };
+            mat.color = color;
+            mat.EnableKeyword("_EMISSION");
+            mat.SetColor("_EmissionColor", color * 0.8f);
+            _mats[color] = mat;
+            return mat;
+        }
+
         private void Update() => Tick(Time.deltaTime);
 
         public void Tick(float dt)
         {
             if (_done) return;
             _life -= dt;
-            transform.position += _dir * DungeonFoeRoster.ShotSpeed * dt;
+            Vector3 p0 = transform.position;
+            float step = DungeonFoeRoster.ShotSpeed * dt;
+            transform.position += _dir * step;
             Vector3 p = transform.position;
             if (_target != null)
             {
-                Vector3 d = _target.position - p;
-                float dy = d.y;
+                // 이번 걸음 선분에서 대상에 가장 가까운 점으로 잰다 — 프레임이 튀어 한 걸음이 길어도 뚫고 지나가지 않게(R-5).
+                Vector3 d = _target.position - p0;
+                float dy = _target.position.y - p.y;
                 d.y = 0f;
+                d -= _dir * Mathf.Clamp(Vector3.Dot(d, _dir), 0f, step);
                 if (d.magnitude <= DungeonFoeRoster.ShotHitRadius && dy > -2.2f && dy < 0.6f)
                 {
                     if (HeroState.Invulnerable) Saga.Dungeon.Player.PlayerController.ReportDodgedStrike();

@@ -199,6 +199,11 @@ namespace Saga.EditorTools
                 var s3 = DungeonFoeShot.Fire(b.transform.position + Vector3.up * 1.1f, playerGo.transform.position + new Vector3(0f, 0f, 30f), 5f, "진단", "화살", playerGo.transform, null, Color.white);
                 for (int i = 0; i < 60 && !s3.Done; i++) s3.Tick(0.05f);
                 if (!s3.Done || HeroState.Hp != HeroState.HpMax) Fail("빗나간 투사체가 맞거나 안 사라짐");
+                // 프레임이 튀어 한 걸음(0.5초 = 5.4m)이 내 몸을 건너뛰어도 맞음(R-5 — 걸음 선분으로 잰다)
+                var s4 = DungeonFoeShot.Fire(b.transform.position + Vector3.up * 1.1f, playerGo.transform.position, 5f, "진단", "화살", playerGo.transform, null, Color.white);
+                for (int i = 0; i < 6 && !s4.Done; i++) s4.Tick(0.5f);
+                if (!s4.Done || HeroState.Hp >= HeroState.HpMax) Fail($"긴 걸음 투사체가 뚫고 지나감(체력 {HeroState.Hp}/{HeroState.HpMax})");
+                SetProp(nameof(HeroState.Hp), HeroState.HpMax);
             }
             finally
             {

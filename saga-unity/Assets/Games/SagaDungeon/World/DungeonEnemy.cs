@@ -640,8 +640,12 @@ namespace Saga.Dungeon.World
             if (_rangedWindup)
             {
                 _rangedWindup = false;
-                FireShot();
-                return;
+                // 예비동작 중에 도발당하면 탄 대신 도발한 이에게 근접(UsesRanged 와 같은 규칙 — R-5).
+                if (!IsTaunted)
+                {
+                    FireShot();
+                    return;
+                }
             }
             if (dist > StrikeReach) return;
             if (IsTaunted)
