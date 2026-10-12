@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-12",
+  "tickets": ["U-0112 2나락 문 위·벽 밑 가로 띠 줄무늬 — 천장·바닥 판도 MetricBox(U-0109 후속)", "U-0109 2나락 벽 윗면·끝면 줄무늬 — 벽 상자 MetricBox"],
+  "how": "PlaytestDungeonHeadless(walls·slabs) + ShowcaseGui 전후 촬영(TestDungeon, name:EraDecor_;name:Wall_North_, 세이브 다섯 치운 채) Claude 눈 · 띠·면 정체는 촬영 프로세스에 임시 픽 로그(렌더러 경계 교차, 커밋 안 함)로 이름 확인",
+  "fix": "DungeonRoomBuilder·DungeonCorridorBuilder: UseMetricWall → UseMetricBox(t, repeat1) — 벽·천장 = 벽 재질 반복 1 한 벌, 바닥 = 바닥 재질 반복 1 한 벌. BuildFloor·BuildCeiling·Refresh(마모)·Awake 구운 판(PBR 경로만). 아틀라스·색 경로 그대로",
+  "scene": ["[PlaytestDungeonHeadless] walls OK - PBR 빌더 34(방 17) 벽 136 · 정적 배칭에 든 벽 136", "[PlaytestDungeonHeadless] walls slabs OK - 천장·바닥 판 68(배칭 68) 윗면·옆면 +X·+Z UV 폭 = 월드 m/2 · 반복 (1,1) · 마모 뒤도", "[PlaytestDungeonHeadless] OK - 10 frames, no errors"],
+  "runtime_errors": 0,
+  "before": "scratchpad/u0112/shots-before/nameEraDecor_0~2·nameWallNorth_0~2 — 벽 위 띠(Ceiling 옆면, y 4~4.5 벽 위로 나옴)·벽 밑 띠(Floor 옆면, y -1~0) 가로 줄무늬",
+  "after": "scratchpad/u0112/shots-after/nameEraDecor_0~2·nameWallNorth_0~2",
+  "results": [
+    { "id": "un.dg.wall-top-band", "eye": "○", "note": "벽 위 띠(Room·Town2 등 Ceiling 옆면)에 벽과 같은 크기 돌 결, 가로 늘어짐 없음", "result": "흠 풀림", "date": "2026-10-12" },
+    { "id": "un.dg.wall-bottom-band", "eye": "○", "note": "벽 밑 띠(Floor 옆면)에 바닥 자갈 결, 줄무늬 없음", "result": "흠 풀림", "date": "2026-10-12" },
+    { "id": "un.dg.wall-end-face", "eye": "○(U-0109)", "note": "문 옆 벽 조각 끝면 세로 늘어짐 → 돌 결(U-0109 촬영, 10-12)", "result": "흠 풀림", "date": "2026-10-12" }
+  ],
+  "left": "nameWallNorth_0 가운데 상자 왼쪽 갈색 면 = 방 동쪽 벽 조각(Wall_East_N) 바깥 +X 면 — 이미 MetricBox(UV 3.17×2), 카메라가 그 면 평면에서 1.8m 떨어져 약 7° 비스듬히 봐서 밉맵 흐림(이방성 필터 없음 — Mobile 품질 Per Texture), 갈색은 +X 면에 닿는 따뜻한 빛. UV 흠 아님 → 후속 후보(돌 텍스처 aniso, K 몫) · 촬영은 방 바깥(높이 3.5m)에서 바깥 벽을 봄"
+}
