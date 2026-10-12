@@ -396,14 +396,33 @@ namespace Saga.EditorTools
             if (cc != null) cc.enabled = true;
         }
 
-        /// <summary>사가나락 — 진단(PlaytestDungeonBossIntro)과 같은 두목 더미를 주인공 앞 4m 에 세우고 다른 적은 끈다 → 첫 Tick 이 등장 컷을 연다.</summary>
+        /// <summary>사가나락 — 층 두목(`DungeonFloorRunner.SpawnSolo`)과 같은 몸(EliteModel)·색·크기 2·월드 보스로 주인공 앞 4m 에 세우고 다른 적은 끈다 → 첫 Tick 이 등장 컷을 연다.
+        /// 러너·몸이 없는 PC 는 진단(PlaytestDungeonBossIntro)과 같은 더미로 되돌아간다(tasks U-0114).</summary>
         private static void DungeonBossIntro()
         {
             var pl = GameObject.FindWithTag("Player");
             foreach (var e in new List<Saga.Dungeon.World.DungeonEnemy>(Saga.Dungeon.World.DungeonEnemy.Active)) if (e != null) e.gameObject.SetActive(false);
             Saga.Dungeon.World.DungeonEnemy.ResetIntroSeenForTest();
-            var dummy = typeof(PlaytestDungeonBossIntro).GetMethod("Dummy", BindingFlags.NonPublic | BindingFlags.Static);
-            var boss = (Saga.Dungeon.World.DungeonEnemy)dummy.Invoke(null, new object[] { pl.transform.position + pl.transform.forward * 4f, "황건적 두목", true, true, 2f, false });
+            var pos = pl.transform.position + pl.transform.forward * 4f;
+            var runner = Object.FindFirstObjectByType<Saga.Dungeon.World.DungeonFloorRunner>();
+            var model = runner != null ? runner.EliteModel : null;
+            Saga.Dungeon.World.DungeonEnemy boss;
+            if (model != null)
+            {
+                var go = new GameObject("ShowcaseFloorBoss");
+                go.SetActive(false);
+                go.transform.position = pos;
+                boss = go.AddComponent<Saga.Dungeon.World.DungeonEnemy>();
+                boss.SetSpawnContext("showcase", model);
+                boss.ConfigureCombat(500f, 0f, 0, 0, null, null, true, "황건적 두목", new Color(0.45f, 0.08f, 0.08f), 2f, true);
+                go.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("[ShowcaseGui] bossintro: elite model 없음 — 더미");
+                var dummy = typeof(PlaytestDungeonBossIntro).GetMethod("Dummy", BindingFlags.NonPublic | BindingFlags.Static);
+                boss = (Saga.Dungeon.World.DungeonEnemy)dummy.Invoke(null, new object[] { pos, "황건적 두목", true, true, 2f, false });
+            }
             boss.Tick(0.01f);
         }
 

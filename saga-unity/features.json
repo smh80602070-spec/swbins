@@ -619,12 +619,12 @@
   "tests": [
    "PlaytestDungeonBossIntro"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D2",
+  "verified": "2026-10-13 claude",
   "fun": {},
-  "ticket": null,
+  "ticket": "U-0114",
   "since": "2026-09-16",
-  "note": "D1(U-0080 △ · U-0087 동료 몸은 풀림): docs/playcheck/d2-u0080-20261010.json — 등장 컷 카메라는 두목 쪽으로 고정(2~8칸 안정)되나 촬영 두목은 진단 더미(캡슐)라 진짜 모습 아님. 곁의 동료 몸 T자세는 U-0087(컨트롤러 복구)로 풀림 — 남은 것 = 진짜 두목 몸 촬영"
+  "note": "D2(U-0114): docs/playcheck/d2-u0114-20261013.json — 촬영 bossintro 가 층 두목과 같은 몸(EliteModel)·색·크기 2·월드 보스로. Claude 눈 ○ 넓은 샷(어깨 너머) 붉은 사람 몸 팔 내린 서기 → 가까운 샷 올려다보기 포효 자세, 캡슐·T자세 없음, 이름표 '황건적 두목'·'75초 안에 쓰러뜨려라'·건너뛰기. 흠(후속 후보): 넓은 샷에서 두목 어깨 위가 화면 위·낮은 천장에 잘림(시험 씬 시작 자리), 가까운 샷 어두움"
  },
  {
   "id": "un.dg.landmarks",

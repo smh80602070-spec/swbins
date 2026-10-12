@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-13",
+  "tickets": ["U-0114 2나락 층 두목 등장 컷을 진짜 두목 몸으로 촬영 — 촬영 bossintro 더미 → eliteModel"],
+  "how": "PlaytestDungeonHeadless(회귀) + ShowcaseGui GUI 촬영 두 판(TestDungeon, gamecam, ACT=bossintro, SEQ=8,6 · 확인용 gamecam;screen SEQ=8,30), 세이브 다섯 치운 채 · Claude 눈",
+  "fix": "Editor/PlaytestShowcaseGui.Seq.cs DungeonBossIntro: 씬 DungeonFloorRunner.EliteModel 로 비활성 GO 에 DungeonEnemy → SetSpawnContext(\"showcase\", model) → ConfigureCombat(500,0,…, 황건적 두목, (0.45,0.08,0.08), 2, 월드 보스) → 주인공 앞 4m 활성 → Tick. 러너·몸 없으면 진단 더미 + 로그 '[ShowcaseGui] bossintro: elite model 없음 — 더미'. 게임 코드·진단 무변경",
+  "scene": ["[PlaytestDungeonHeadless] cut camera live OK - t=3.68 실제 카메라가 CutCam_BossClose 에(0.00m)·포효 신호", "[PlaytestDungeonHeadless] OK - 10 frames, no errors"],
+  "runtime_errors": 0,
+  "shots": "세션 scratchpad shots1/gamecam_seq(8,6) · shots/gamecam_seq(8,30)·screen_1·screen_8 — 커밋 안 함. 로그에 '더미' 줄 없음",
+  "results": [
+    { "id": "un.dg.boss-intro", "eye": "○", "note": "1칸 컷 시작 벽 → 2~6칸 어깨 너머 넓은 샷: 붉은 상체·검은 바지 사람 몸, 팔 내린 서기, 다가가는 돌리 · 7~8칸 가까운 샷 발치에서 올려다봄: 몸을 숙이고 팔 든 포효 자세 · screen_8 레터박스·이름표 '황건적 두목'·'층 끝의 우두머리 — 75초 안에 쓰러뜨려라'·건너뛰기. 캡슐·T자세 없음", "result": "D1 → D2", "date": "2026-10-13" }
+  ],
+  "left": "넓은 샷에서 두목(크기 2, 약 3.8m) 어깨 위가 화면 위·낮은 천장에 잘림 — 시험 씬 시작 복도 자리라 실제 두목 방과 다를 수 있음(조준 높이 h×0.55~0.65) · 가까운 샷이 어두움 → 후속 후보"
+}
