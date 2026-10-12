@@ -170,7 +170,7 @@
         openDetail(b.getAttribute('data-kind') || 'hero', id);
         return;
       }
-      if (act === 'ow-open') { openOverworldMap(); return; }
+      if (act === 'ow-open') { openOverworldMap(); return; } if (act === 'star-open' && global.DG.constellation) { global.DG.constellation.open(); return; }
       if (act === 'ow-close') { closeOverworldMap(); return; }
       if (act === 'key-remap') {
         var G0 = global.DG.game;

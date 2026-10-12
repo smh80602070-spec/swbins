@@ -134,7 +134,7 @@
       (me.key !== 'none'
         ? '<div class="btn-row"><button class="btn ghost" data-act="j-reset">🔄 전직을 되돌린다</button></div>'
         : '') +
-      '</div></div>';
+      '</div></div>' + (global.DG.constellation ? global.DG.constellation.sheetHtml() : '');   // 사방 성좌(W-0183)
 
     /* 고유 조작 + 스승(§5-1) — 회피를 길게 눌러 쓰는 조작 하나와, 1~4차 전직마다
        하나씩 만난 스승 넷. 스승 중 하나라도 도감(등용)에 있으면 수치가 오른다. */

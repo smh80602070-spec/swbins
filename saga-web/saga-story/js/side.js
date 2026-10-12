@@ -59,7 +59,7 @@
      **이 셋만 때릴 때마다 손잡이를 읽는다.** 다른 규칙 값은 켜질 때 한 번 읽지만
      (그래야 한 판 안에서 물리가 안 흔들린다), 이 셋은 어드민에서 눌러 보며 맞추는
      수라 곧바로 들어야 값이 있다. 한 번 더 읽는 값이 그만큼 싸기도 하다. */
-  function critRate() { return core.tuned('crit.rate', 0.15); }   // 급소가 터질 확률
+  function critRate() { return core.tuned('crit.rate', 0.15) + (global.DG.constellation ? global.DG.constellation.crit() : 0); }   // 급소가 터질 확률
   function critMul() { return core.tuned('crit.mul', 1.6); }      // 그때 곱하는 값
   function knockPow() { return core.tuned('hit.knock', 62); }     // 맞은 적이 밀리는 힘
 
@@ -152,10 +152,10 @@
     var g = gearBonus(), jb = jobGrow();
     var RM = global.DG.rift;   // 비경(§5-3) 기억 조각 강화 — 없으면 1배
     return {
-      atk: Math.max(4, Math.round(atk) + g.atk + jb.atk),
-      hp: Math.round((Math.round(hp) + g.hp + jb.hp) * (RM ? RM.memHpMul() : 1)),
+      atk: Math.max(4, Math.round((Math.round(atk) + g.atk + jb.atk) * (global.DG.constellation ? global.DG.constellation.atk() : 1))),   // 성좌도(W-0183)
+      hp: Math.round((Math.round(hp) + g.hp + jb.hp) * (RM ? RM.memHpMul() : 1) * (global.DG.constellation ? global.DG.constellation.hp() : 1)),
       def: g.def,
-      mp: MP_MAX + jb.mp,
+      mp: Math.round((MP_MAX + jb.mp) * (global.DG.constellation ? global.DG.constellation.mp() : 1)),
       bare: { atk: Math.max(4, Math.round(atk)), hp: Math.round(hp) }
     };
   }
@@ -908,7 +908,7 @@
     if (p.onGround || p.coyoteT > 0) {
       p.coyoteT = 0;
       if (input.down && dropThrough()) { return true; }
-      p.vy = -JUMP * (global.DG.mount ? global.DG.mount.jumpMul() : 1);
+      p.vy = -JUMP * (global.DG.mount ? global.DG.mount.jumpMul() : 1) * (global.DG.constellation ? global.DG.constellation.jump() : 1);
       p.onGround = false;
       sfx('jump');
       return true;
@@ -926,7 +926,7 @@
       sfx('jump');
       return true;
     }
-    p.jumpBufferT = JUMP_BUFFER;
+    if (global.DG.constellation && global.DG.constellation.blink(p, run.stage.width)) { fx.push({ t: 'dash', x: p.x - 20, y: p.y, w: P_W + 40, h: P_H, life: 0.18 }); sfx('dodge'); return true; } p.jumpBufferT = JUMP_BUFFER;   // 비연(성좌도) — 공중 점프 = 순간 이동
     return false;
   }
 
@@ -939,7 +939,7 @@
     if (p.climb || p.dodgeCd > 0) { return false; }
     /* 유파(§5-2) — 띠에 dash 계열 유파 세트(2 이상)가 있으면 회피가 더 자주 돈다 */
     var J = global.DG.job;
-    p.dodgeCd = DODGE_COOL * (J ? J.dodgeCdMul() : 1) * (run.rm ? 1 - run.rm.dodge : 1);
+    p.dodgeCd = DODGE_COOL * (J ? J.dodgeCdMul() : 1) * (run.rm ? 1 - run.rm.dodge : 1) * (global.DG.constellation ? global.DG.constellation.dodgeCd() : 1);
     var from = p.x, dir = input.left ? -1 : (input.right ? 1 : p.facing);
     p.x = core.clamp(p.x + DODGE_DIST * dir, 0, run.stage.width - P_W);
     p.dropThru = 0;
@@ -1130,7 +1130,7 @@
     if (e.bp && e.bp.groggy > 0 && global.DG.bossPattern) { dmg *= global.DG.bossPattern.dmgTakenMul(e); }
     dmg = Math.max(1, Math.round(dmg));
     e.hp -= dmg;
-    if (rm && rm.leech) { run.hp = Math.min(run.hpMax, run.hp + dmg * rm.leech); }
+    if (rm && rm.leech) { run.hp = Math.min(run.hpMax, run.hp + dmg * rm.leech); } if (global.DG.constellation) { run.mp = Math.min(run.mpMax, run.mp + global.DG.constellation.mpHit(run.mpMax)); }   // 마력 흡수(성좌도)
     e.hurt = HURT_FLASH;
     /* 관문 대장(§5-4) 방패 — **등 뒤**(e.dir 이 가리키는 반대쪽)에서 낸 피해만 쌓는다.
        e.dir 은 패턴 실행 중(update() 의 근접 판정, patternT>0)엔 얼어붙어 있어
@@ -1292,12 +1292,12 @@
     var b = buffOn();
     if (b && b.guard) { cut = Math.min(0.85, cut + b.guard); }   // 철갑 같은 것
     if (run.rm && run.rm.guard) { cut = Math.min(0.85, cut + run.rm.guard); }   // 철벽(§5-3)
-    run.hp -= Math.max(1, Math.round(amount * (1 - cut))); if (global.DG.runRank) { global.DG.runRank.onHurt(); }   // W-0104 피격 수
+    run.hp -= Math.max(1, Math.round(amount * (1 - cut) * (global.DG.constellation ? global.DG.constellation.take() : 1))); if (global.DG.runRank) { global.DG.runRank.onHurt(); }   // W-0104 피격 수
     sfx('hurt');
     fx.push({ t: 'ouch', x: p.x, y: p.y, life: 0.45 });
     fx.push({ t: 'shake', x: p.x, y: p.y, life: 0.18, big: false });
     p.hurt = 0.3;
-    if (global.DG.mount && global.DG.mount.onHurt) { global.DG.mount.onHurt(); }      // 맞으면 내린다
+    if (global.DG.mount && global.DG.mount.onHurt && !(global.DG.constellation && global.DG.constellation.keepMount())) { global.DG.mount.onHurt(); }      // 맞으면 내린다
     p.invuln = HIT_COOL + (run.rm ? run.rm.invuln : 0);
     if (run.hp <= 0) {
       /* 불굴(§5-3) — 비경에서 한 번은 일어선다 */
@@ -1382,7 +1382,7 @@
     if (!sk) { return false; }
     if (p.cds[i] > 0 || run.mp < sk.cost) { return false; }
     run.mp -= sk.cost;
-    p.cds[i] = sk.cd;
+    p.cds[i] = sk.cd * (global.DG.constellation ? global.DG.constellation.cd() : 1);
     return castBody(sk, 0);
   }
 
@@ -1415,7 +1415,7 @@
     }
 
     if (eff === 'melee') {
-      var hits = sk.hits || 1;
+      var hits = (sk.hits || 1) + (global.DG.constellation ? global.DG.constellation.hits() : 0);
       var box = hitBox();
       fx.push({ t: 'slash', x: box.x, y: box.y, w: box.w, h: box.h, dir: p.facing, life: 0.16 });
       for (j = 0; j < run.enemies.length; j++) {
@@ -1599,7 +1599,7 @@
       p.invuln = Math.max(p.invuln, p.shadowT);   // 이동이 끝나는 순간과 무적이 함께 끝난다
     }
     var bf = buffOn();
-    run.mp = Math.min(run.mpMax, run.mp + MP_REGEN * (bf ? bf.regen : 1) * (run.rm ? 1 + run.rm.mp : 1) * dt);
+    run.mp = Math.min(run.mpMax, run.mp + MP_REGEN * (bf ? bf.regen : 1) * (run.rm ? 1 + run.rm.mp : 1) * (global.DG.constellation ? global.DG.constellation.regen() : 1) * dt);
     if (run.rm && run.rm.regen) { run.hp = Math.min(run.hpMax, run.hp + run.hpMax * run.rm.regen * dt); }   // 회복 축복(§5-3)
     if (p.invuln > 0) { p.invuln -= dt; }
     if (p.hurt > 0) { p.hurt -= dt; }
@@ -1645,7 +1645,7 @@
       }
       var moveMul = p.rollT > 0 ? ROLL_MUL :
         (p.wallKickT > 0 ? (WALL_KICK_VX / SPEED) : (p.shadowT > 0 ? SIG_SHADOW_MUL : 1));
-      p.x = core.clamp(p.x + p.vx * SPEED * mul * moveMul * (run.rm ? 1 + run.rm.speed : 1) * dt, 0, stg.width - P_W);
+      p.x = core.clamp(p.x + p.vx * SPEED * mul * moveMul * (run.rm ? 1 + run.rm.speed : 1) * (global.DG.constellation ? global.DG.constellation.move() : 1) * dt, 0, stg.width - P_W);
       if (p.vx) { p.phase += dt * 9; }
 
       /* 중력 · 발판 */
@@ -1687,7 +1687,7 @@
         if (p.jumpBufferT > 0) {
           /* 점프 버퍼(§5-5) — 착지 직전 눌러 둔 입력을 여기서 그대로 이어 쓴다 */
           p.jumpBufferT = 0; p.rollT = 0;
-          p.vy = -JUMP * (MTs ? MTs.jumpMul() : 1); p.onGround = false;
+          p.vy = -JUMP * (MTs ? MTs.jumpMul() : 1) * (global.DG.constellation ? global.DG.constellation.jump() : 1); p.onGround = false;
           sfx('jump');
         }
       }

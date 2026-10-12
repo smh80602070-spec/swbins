@@ -59,7 +59,7 @@
      **이 셋만 때릴 때마다 손잡이를 읽는다.** 다른 규칙 값은 켜질 때 한 번 읽지만
      (그래야 한 판 안에서 물리가 안 흔들린다), 이 셋은 어드민에서 눌러 보며 맞추는
      수라 곧바로 들어야 값이 있다. 한 번 더 읽는 값이 그만큼 싸기도 하다. */
-  function critRate() { return core.tuned('crit.rate', 0.15); }   // 급소가 터질 확률
+  function critRate() { return core.tuned('crit.rate', 0.15) + (global.DG.constellation ? global.DG.constellation.crit() : 0); }   // 급소가 터질 확률
   function critMul() { return core.tuned('crit.mul', 1.6); }      // 그때 곱하는 값
   function knockPow() { return core.tuned('hit.knock', 62); }     // 맞은 적이 밀리는 힘
 
@@ -152,10 +152,10 @@
     var g = gearBonus(), jb = jobGrow();
     var RM = global.DG.rift;   // 비경(§5-3) 기억 조각 강화 — 없으면 1배
     return {
-      atk: Math.max(4, Math.round(atk) + g.atk + jb.atk),
-      hp: Math.round((Math.round(hp) + g.hp + jb.hp) * (RM ? RM.memHpMul() : 1)),
+      atk: Math.max(4, Math.round((Math.round(atk) + g.atk + jb.atk) * (global.DG.constellation ? global.DG.constellation.atk() : 1))),   // 성좌도(W-0183)
+      hp: Math.round((Math.round(hp) + g.hp + jb.hp) * (RM ? RM.memHpMul() : 1) * (global.DG.constellation ? global.DG.constellation.hp() : 1)),
       def: g.def,
-      mp: MP_MAX + jb.mp,
+      mp: Math.round((MP_MAX + jb.mp) * (global.DG.constellation ? global.DG.constellation.mp() : 1)),
       bare: { atk: Math.max(4, Math.round(atk)), hp: Math.round(hp) }
     };
   }
@@ -908,7 +908,7 @@
     if (p.onGround || p.coyoteT > 0) {
       p.coyoteT = 0;
       if (input.down && dropThrough()) { return true; }
-      p.vy = -JUMP * (global.DG.mount ? global.DG.mount.jumpMul() : 1);
+      p.vy = -JUMP * (global.DG.mount ? global.DG.mount.jumpMul() : 1) * (global.DG.constellation ? global.DG.constellation.jump() : 1);
       p.onGround = false;
       sfx('jump');
       return true;
@@ -926,7 +926,7 @@
       sfx('jump');
       return true;
     }
-    p.jumpBufferT = JUMP_BUFFER;
+    if (global.DG.constellation && global.DG.constellation.blink(p, run.stage.width)) { fx.push({ t: 'dash', x: p.x - 20, y: p.y, w: P_W + 40, h: P_H, life: 0.18 }); sfx('dodge'); return true; } p.jumpBufferT = JUMP_BUFFER;   // 비연(성좌도) — 공중 점프 = 순간 이동
     return false;
   }
 
@@ -939,7 +939,7 @@
     if (p.climb || p.dodgeCd > 0) { return false; }
     /* 유파(§5-2) — 띠에 dash 계열 유파 세트(2 이상)가 있으면 회피가 더 자주 돈다 */
     var J = global.DG.job;
-    p.dodgeCd = DODGE_COOL * (J ? J.dodgeCdMul() : 1) * (run.rm ? 1 - run.rm.dodge : 1);
+    p.dodgeCd = DODGE_COOL * (J ? J.dodgeCdMul() : 1) * (run.rm ? 1 - run.rm.dodge : 1) * (global.DG.constellation ? global.DG.constellation.dodgeCd() : 1);
     var from = p.x, dir = input.left ? -1 : (input.right ? 1 : p.facing);
     p.x = core.clamp(p.x + DODGE_DIST * dir, 0, run.stage.width - P_W);
     p.dropThru = 0;

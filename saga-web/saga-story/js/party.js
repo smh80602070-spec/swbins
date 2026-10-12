@@ -76,7 +76,7 @@
     var rn = run(), ids = core.save.party.slice(0, MAX), k;
     if (!rn) { return; }
     rn.pty = null;
-    if (ids.length < 2) { return; }
+    if (ids.length < 2 || (global.DG.constellation && global.DG.constellation.solo())) { return; }   // 홀로서기(성좌도)
     rn.pty = { ids: ids, hp: [], hpMax: [], dead: [], i: 0, cd: 0 };
     for (k = 0; k < ids.length; k++) {
       rn.pty.dead.push(false);

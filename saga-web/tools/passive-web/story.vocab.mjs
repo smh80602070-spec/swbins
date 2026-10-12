@@ -1,0 +1,87 @@
+// 4종횡 사방 성좌도 어휘 (W-0183) → node saga-web/tools/passive-web/gen.mjs saga-story → saga-story/js/data-passive.js
+// 효과 키는 constellation.js 가 읽는 것만(공격·체력·마나·급소·이동·점프·회피·무예 재사용·드롭·경험·받는 피해). 캐릭터(프로필)마다 한 장.
+// 시작점 = 가운데 무명 + 직업 계열 넷(무사·궁수·협객·방사 — data-job.js 1차 전직 넷). 키를 지우면 gen 이 FAIL — 세이브가 id 를 쥔다.
+const N = (key, name, stats, theme, desc) => ({ key, name, stats, theme, ...(desc ? { desc } : {}) });
+export default {
+  seed: 20260824,
+  starts: [
+    { key: 'none', name: '무명의 별', color: '#c8c8c8', center: true, theme: ['atkPct', 'hpPct', 'movePct'] },
+    { key: 'warrior', name: '무사의 별', color: '#e06a4f', theme: ['hpPct', 'guardPct', 'atkPct'] },
+    { key: 'archer', name: '궁수의 별', color: '#8cd938', theme: ['critPct', 'jumpPct', 'atkPct'] },
+    { key: 'rogue', name: '협객의 별', color: '#b07ae8', theme: ['movePct', 'dodgePct', 'critPct'] },
+    { key: 'mage', name: '방사의 별', color: '#6f8cf0', theme: ['mpPct', 'cdPct', 'expPct'] },
+  ],
+  small: [
+    { key: 'atkPct', name: '힘', stats: { atkPct: 2 } },
+    { key: 'hpPct', name: '기력', stats: { hpPct: 3 } },
+    { key: 'mpPct', name: '내공', stats: { mpPct: 4 } },
+    { key: 'critPct', name: '급소 눈', stats: { critPct: 1 } },
+    { key: 'movePct', name: '발놀림', stats: { movePct: 2 } },
+    { key: 'jumpPct', name: '도약', stats: { jumpPct: 2 } },
+    { key: 'dodgePct', name: '몸놀림', stats: { dodgePct: 3 } },
+    { key: 'cdPct', name: '호흡', stats: { cdPct: 2 } },
+    { key: 'dropPct', name: '줍는 손', stats: { dropPct: 4 } },
+    { key: 'expPct', name: '깨달음', stats: { expPct: 3 } },
+    { key: 'guardPct', name: '맷집', stats: { guardPct: 1 } },
+  ],
+  notable: [
+    // 무명(가운데)
+    N('first_step', '첫걸음', { movePct: 6, atkPct: 4 }, 'movePct'),
+    N('rice_ball', '주먹밥', { hpPct: 10 }, 'hpPct'),
+    N('stray_blade', '떠돌이 칼', { atkPct: 8 }, 'atkPct'),
+    N('road_luck', '길에서 주운 복', { dropPct: 12 }, 'dropPct'),
+    N('lesson', '어깨너머', { expPct: 10 }, 'expPct'),
+    N('second_breath', '두 번째 숨', { hpPct: 6, mpPct: 6 }, 'hpPct'),
+    N('market_eye', '장터 눈썰미', { dropPct: 8, expPct: 4 }, 'dropPct'),
+    N('wanderer', '방랑', { movePct: 5, jumpPct: 4 }, 'movePct'),
+    // 무사
+    N('iron_body', '쇠몸', { hpPct: 12 }, 'hpPct'),
+    N('stand_firm', '버팀', { guardPct: 6 }, 'guardPct'),
+    N('heavy_blade', '무거운 칼', { atkPct: 10 }, 'atkPct'),
+    N('battle_cry', '기합 소리', { atkPct: 5, hpPct: 6 }, 'atkPct'),
+    N('scar', '흉터', { guardPct: 4, hpPct: 5 }, 'guardPct'),
+    N('war_rhythm', '싸움 장단', { cdPct: 6, atkPct: 4 }, 'cdPct'),
+    N('shield_wall', '방패 벽', { guardPct: 5, dodgePct: 6 }, 'guardPct'),
+    N('veteran', '노병', { hpPct: 8, expPct: 4 }, 'hpPct'),
+    // 궁수
+    N('hawk_eye', '매의 눈', { critPct: 5 }, 'critPct'),
+    N('high_ground', '높은 자리', { jumpPct: 10 }, 'jumpPct'),
+    N('draw_full', '만작', { atkPct: 8, critPct: 2 }, 'atkPct'),
+    N('wind_read', '바람 읽기', { critPct: 3, jumpPct: 5 }, 'critPct'),
+    N('quiver', '넉넉한 화살통', { cdPct: 6, mpPct: 4 }, 'cdPct'),
+    N('leap_shot', '뛰며 쏘기', { jumpPct: 6, atkPct: 4 }, 'jumpPct'),
+    N('vital_point', '숨구멍', { critPct: 4, atkPct: 3 }, 'critPct'),
+    N('tree_top', '나무 끝', { jumpPct: 8, movePct: 3 }, 'jumpPct'),
+    // 협객
+    N('swift_feet', '날랜 발', { movePct: 10 }, 'movePct'),
+    N('slip', '빠져나가기', { dodgePct: 12 }, 'dodgePct'),
+    N('backstab', '등 뒤', { critPct: 4, atkPct: 3 }, 'critPct'),
+    N('pickpocket', '소매치기', { dropPct: 10, movePct: 3 }, 'dropPct'),
+    N('shadow_step', '그림자 걸음', { dodgePct: 6, movePct: 5 }, 'dodgePct'),
+    N('quick_hand', '빠른 손', { cdPct: 5, critPct: 2 }, 'cdPct'),
+    N('rooftop', '지붕 위', { jumpPct: 6, dodgePct: 5 }, 'dodgePct'),
+    N('knife_rain', '비수 비', { atkPct: 6, critPct: 2 }, 'atkPct'),
+    // 방사
+    N('deep_well', '깊은 샘', { mpPct: 15 }, 'mpPct'),
+    N('flow', '기의 흐름', { cdPct: 8 }, 'cdPct'),
+    N('scripture', '경전', { expPct: 12 }, 'expPct'),
+    N('talisman', '부적', { mpPct: 8, guardPct: 3 }, 'mpPct'),
+    N('star_gaze', '별보기', { expPct: 6, cdPct: 4 }, 'expPct'),
+    N('elixir', '단약', { hpPct: 6, mpPct: 6 }, 'mpPct'),
+    N('spell_edge', '술법의 날', { atkPct: 6, cdPct: 3 }, 'cdPct'),
+    N('cloud_walk', '구름 걸음', { jumpPct: 5, mpPct: 5 }, 'mpPct'),
+    // 사이
+    N('hunter_luck', '사냥 운', { dropPct: 6, critPct: 2 }, 'dropPct'),
+    N('old_master', '옛 스승', { expPct: 6, atkPct: 4 }, 'expPct'),
+  ],
+  keystone: [
+    { key: 'biyeon', name: '비연(飛燕)', rule: 'biyeon', desc: '공중에서 점프 = 보는 쪽으로 짧은 순간 이동(0.6초마다)' },
+    { key: 'cheolgak', name: '철각(鐵脚)', rule: 'cheolgak', desc: '점프 높이 −30%, 받는 피해 −20%, 맞아도 탈것에서 안 떨어진다' },
+    { key: 'jilpung', name: '질풍(疾風)', rule: 'jilpung', desc: '이동 +25%, 체력 −20%' },
+    { key: 'hanbang', name: '한 방', rule: 'hanbang', desc: '무예 재사용 대기 +40%, 공격 +60%' },
+    { key: 'yeonta', name: '연타(連打)', rule: 'yeonta', desc: '공격 −25%, 근접 무예 타수 +1' },
+    { key: 'manadrink', name: '마력 흡수', rule: 'manadrink', desc: '때릴 때마다 최대 마나 5% 가 찬다, 마나가 저절로 차지 않는다' },
+    { key: 'hunteye', name: '사냥꾼의 눈', rule: 'hunteye', desc: '장비·비급 드롭 +40%, 경험 −20%' },
+    { key: 'lone', name: '홀로서기', rule: 'lone', desc: '동료 교대 없이 혼자 선다, 공격 +25%' },
+  ],
+};

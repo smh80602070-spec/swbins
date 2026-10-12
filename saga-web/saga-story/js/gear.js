@@ -367,8 +367,9 @@
    */
   function rollDrop(lv, boss) {
     var r = Math.random();
-    var gearRate = Math.min(1, (boss ? 0.9 : 0.035) * DROP_MUL);
-    var scrollRate = Math.min(1 - gearRate, (boss ? 0.7 : 0.05) * DROP_MUL);
+    var pwDrop = global.DG.constellation ? global.DG.constellation.drop() : 1;   // 성좌도(W-0183) 드롭·사냥꾼의 눈
+    var gearRate = Math.min(1, (boss ? 0.9 : 0.035) * DROP_MUL * pwDrop);
+    var scrollRate = Math.min(1 - gearRate, (boss ? 0.7 : 0.05) * DROP_MUL * pwDrop);
     if (r < gearRate) {
       var pool = GD.poolFor(lv);
       var picked = core.pick(pool);

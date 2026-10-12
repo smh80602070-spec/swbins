@@ -56,6 +56,22 @@ const OPEN = {
     var q = document.querySelector('.pwui-q'); q.value = '금'; q.dispatchEvent(new Event('input'));
     return '단추 ' + (clicked ? '열림' : '안 열림') + (glow ? '(금빛 테)' : '(테 없음)') + ' · 찍음 ' + api.used() + '/' + api.points() + ' · 카드 ' + nx.id + ' ' + nx.cost + '점';
   })()`,
+  /* W-0183 — 무사로 전직, 무예 창의 「✨ 성좌도 열기」 단추를 실제로 눌러 열리는지 본 뒤 카드를 띄운다 */
+  'saga-story': `(function(){
+    var C = DG.core, CS = DG.constellation, J = DG.job;
+    C.save.player.level = 30; C.save.job = 'none'; J.join('warrior');
+    C.save.passive = { start: null, taken: [] }; CS._reset();
+    DG.ui.openSheet('job');
+    var btn = document.querySelector('#sheet-body [data-act="star-open"]'); if (btn) { btn.click(); }
+    var clicked = !!(DG.passiveWebUI && DG.passiveWebUI.isOpen());
+    var api = CS.api(); api.take('o_warrior');
+    function nearest() { var b = null; DG.passiveDef.nodes.forEach(function (n) { if (n.k !== 'n' || api.isTaken(n.id)) return; var p = api.pathTo(n.id); if (p && (!b || p.cost < b.cost)) b = { id: n.id, cost: p.cost }; }); return b; }
+    api.takePath(nearest().id); api.takePath(nearest().id);
+    var ui = CS.open(), nx = nearest();
+    ui.select(nx.id);
+    var q = document.querySelector('.pwui-q'); q.value = '이동'; q.dispatchEvent(new Event('input'));
+    return '단추 ' + (btn ? (clicked ? '열림' : '안 열림') : '없음') + ' · 찍음 ' + api.used() + '/' + api.points() + ' · 카드 ' + nx.id + ' ' + nx.cost + '점';
+  })()`,
 };
 /** 판마다 부팅 — 계정 만들고 이어하기 */
 const BOOT = {
@@ -93,6 +109,14 @@ const BOOT = {
     for (let i = 0; i < 8; i++) { await c.key('Escape', 60); await sleep(200); }
     await c.ev(`(function(){ if (DG.realm3d && DG.realm3d.active && DG.realm3d.active()) { document.getElementById('btn-3d').click(); } })()`);
     await sleep(1500);
+  },
+  'saga-story': async (c, B) => {
+    await c.go(B + 'index.html', 6000);
+    await c.ev(`(function(){ if (!document.getElementById('title-continue') && DG.account && DG.account.create) { DG.account.create('성좌'); } })()`);
+    await c.go(B + 'index.html', 8000);
+    await c.ev(`(function(){ var b = document.getElementById('title-continue'); if (b) b.click(); })()`);
+    await sleep(4000);
+    for (let i = 0; i < 6; i++) { await c.key('Escape', 60); await sleep(200); }
   },
 };
 if (!OPEN[GAME]) { console.log('모르는 판 ' + GAME + ' — OPEN 표에 한 줄 더할 것'); process.exit(2); }

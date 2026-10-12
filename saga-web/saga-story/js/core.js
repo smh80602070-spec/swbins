@@ -315,7 +315,8 @@
       global.DG.dungeon && global.DG.dungeon.boonEffect,
       global.DG.prestige && global.DG.prestige.bonus,
       global.DG.idle && global.DG.idle.bonus,
-      global.DG.ai && global.DG.ai.bonus
+      global.DG.ai && global.DG.ai.bonus,
+      global.DG.constellation && global.DG.constellation.bonus   // 사방 성좌도(W-0183) — 경험
     ];
     for (var si = 0; si < srcs.length; si++) {
       if (!srcs[si]) { continue; }

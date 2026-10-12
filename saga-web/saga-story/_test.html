@@ -104,6 +104,10 @@ window.DG_NO_TUNE = true;
 <script src="js/portrait3d.js"></script>
 <script src="js/gear.js"></script>
 <script src="js/job.js"></script>
+<script src="js/passive-web.js"></script>
+<script src="js/passive-web-ui.js"></script>
+<script src="js/data-passive.js"></script>
+<script src="js/constellation.js"></script>
 <script src="js/runrank.js"></script>
 <script src="js/levelpick.js"></script>
 <script src="js/quest.js"></script>
@@ -6177,6 +6181,145 @@ window.DG_NO_TUNE = true;
       DG.sideData.STAGES.filter(function (s) { return !s.town && s.relics; }).forEach(function (s) { var c = H.coverage(s); cells += c.cells; empty += c.empty; });
       var r = cells ? empty / cells : 1;
       return (r <= 0.1 ? '○' : (r <= 0.3 ? '△' : '×')) + ' — 사냥터 9 · 800 구간 ' + cells + ' 중 빈 구간 ' + empty + '(' + Math.round(r * 100) + '%, 규격 ≤10%) · 사냥터마다 조각 3·숨은 자리 1';
+    });
+
+    /* ── 사방 성좌도(W-0183) — 캐릭터마다 패시브 그물(constellation.js · 공용 passive-web.js) ── */
+    function csWith(fn) {
+      var CS = DG.constellation, sv = C.save, keep = JSON.stringify({ passive: sv.passive || null, lv: sv.player.level, gold: sv.player.gold, job: sv.job, gw: (sv.side && sv.side.gateWeek) || null });
+      sv.passive = { start: null, taken: [] }; sv.player.level = 57; CS._reset();   // 레벨 57 = 점수 56(상한)
+      try { return fn(CS, CS.api()); }
+      finally {
+        if (S.raw()) { S.leave(); }
+        var k = JSON.parse(keep);
+        sv.passive = k.passive || undefined; sv.player.level = k.lv; sv.player.gold = k.gold; sv.job = k.job; if (sv.side) { sv.side.gateWeek = k.gw || {}; }
+        CS._reset();
+      }
+    }
+    function csNearest(api, key, kind) {
+      var best = null;
+      DG.passiveDef.nodes.forEach(function (n) {
+        if (n.k === 'o' || (kind && n.k !== kind) || !n.stats || !n.stats[key] || api.isTaken(n.id)) { return; }
+        var p = api.pathTo(n.id);
+        if (p && (!best || p.cost < best.cost)) { best = { id: n.id, cost: p.cost }; }
+      });
+      return best;
+    }
+    function csCheapest(api, kid) {
+      var best = null;
+      DG.passiveDef.starts.forEach(function (st) {
+        api.reset(true); api.take('o_' + st.key);
+        var p = api.pathTo(kid);
+        if (p && (!best || p.cost < best.cost)) { best = { key: st.key, cost: p.cost }; }
+      });
+      api.reset(true); api.take('o_' + best.key);
+      return api.takePath(kid) ? best.cost : -1;
+    }
+    /** 땅 위에서 → 를 0.5초 누른 거리 */
+    function csRun() {
+      var run = shField(), p = run.player, stg = run.stage;
+      p.x = 200; p.y = stg.floor - S.P_H; p.vy = 0; p.onGround = true; p.climb = null;
+      S.setInput('right', true);
+      for (var i = 0; i < 10; i++) { S.update(0.05); }
+      S.setInput('right', false);
+      var dx = p.x - 200;
+      S.leave();
+      return dx;
+    }
+
+    t('성좌도 — 정의 ≥300 마디 · 시작점 다섯(무명 + 직업 계열 넷) · 점수 = (레벨−1) + 관문 대장 첫 승리(상한 56)', function () {
+      return csWith(function (CS, api) {
+        var def = DG.passiveDef, o = def.nodes.filter(function (n) { return n.k === 'o'; }).length;
+        C.save.player.level = 11; C.save.side.gateWeek = { sinya: 'x', heodo: 'y' };
+        var p1 = CS.pointsTotal(), pa = api.points();
+        C.save.player.level = 120;
+        var p2 = CS.pointsTotal();
+        var ok = def.nodes.length >= 300 && o === 5 && p1 === 12 && pa === 12 && p2 === 56;
+        return ok ? '마디 ' + def.nodes.length + ' · Lv.11+대장 2 = ' + p1 + '점 · 상한 ' + p2 : '실패 ' + [def.nodes.length, o, p1, pa, p2].join(' ');
+      });
+    });
+
+    t('성좌도 — 찍으면 공격(power.atk — atkOf 줄기)·땅 위 이동 거리가 오른다', function () {
+      return csWith(function (CS, api) {
+        api.take('o_none');
+        var a0 = S.power().atk, d0 = csRun();
+        api.takePath(csNearest(api, 'atkPct', 'n').id); api.takePath(csNearest(api, 'movePct', 'n').id);
+        var a1 = S.power().atk, d1 = csRun();
+        return a1 > a0 && d1 > d0 ? '공격 ' + a0 + ' → ' + a1 + ' · 0.5초 이동 ' + Math.round(d0) + ' → ' + Math.round(d1) : '실패 ' + [a0, a1, d0, d1].join(' ');
+      });
+    });
+
+    t('성좌도 — 되돌리면 원래대로 · 한 마디 금 200 · 사냥터에선 막고 마을·밖에선 되며 금이 모자라면 막는다', function () {
+      return csWith(function (CS, api) {
+        api.take('o_none');
+        var a0 = S.power().atk, n = csNearest(api, 'atkPct');
+        api.takePath(n.id);
+        C.save.player.gold = 10000;
+        shField();
+        var inField = CS.guard('drop', n.id);
+        S.leave();
+        var g = CS.guard('drop', n.id), dropped = api.drop(n.id), a2 = S.power().atk, cost = CS.dropCost(1);
+        C.save.player.gold = 0;
+        var poor = CS.guard('drop', n.id);
+        var ok = !!inField && g === '' && dropped && a2 === a0 && cost === 200 && !!poor;
+        return ok ? '공격 ' + a2 + ' 그대로 · 한 마디 ' + cost + '금 · 사냥터 「' + inField + '」' : '실패 field=' + inField + ' g=' + g + ' ' + a0 + '/' + a2 + ' poor=' + poor;
+      });
+    });
+
+    t('성좌도 — 이웃 아닌 마디는 거절 · 첫 점은 무명이나 지금 직업 계열만 · 세이브 왕복(save.passive 한 칸)', function () {
+      return csWith(function (CS, api) {
+        C.save.job = 'archer';
+        var gs = [CS.guard('start', 'o_warrior'), CS.guard('start', 'o_archer'), CS.guard('start', 'o_none')];
+        api.take('o_archer');
+        var far = DG.passiveDef.nodes.filter(function (n) { return n.k === 'n' && api.why(n.id) === 'far'; })[0];
+        var rej = !api.take(far.id) && !api.take('o_mage') && api.store.taken.length === 0 && api.start() === 'archer';
+        api.takePath(csNearest(api, 'critPct', 'n').id);
+        var n = api.used(), cr = api.sum('critPct');
+        C.save.passive = JSON.parse(JSON.stringify(C.save.passive)); CS._reset();
+        var a2 = CS.api();
+        var trip = a2 !== api && a2.used() === n && a2.sum('critPct') === cr && a2.start() === 'archer' && Math.abs(CS.crit() - cr / 100) < 1e-9;
+        var ok = !!gs[0] && gs[1] === '' && gs[2] === '' && rej && trip;
+        return ok ? '무사 별 거절 · ' + far.name + ' 거절 · ' + n + '마디 · 급소 +' + cr + '%p 왕복' : '실패 ' + JSON.stringify(gs) + ' ' + rej + ' ' + trip;
+      });
+    });
+
+    t('성좌도 — 규칙 비연: 공중 점프가 보는 쪽 순간 이동으로 바뀐다(0.6초에 한 번) · 땅 점프는 그대로', function () {
+      return csWith(function (CS, api) {
+        function air(run) { var p = run.player; p.x = 600; p.y = run.stage.floor - 300; p.vy = 0; p.onGround = false; p.coyoteT = 0; p.climb = null; p.facing = 1; p.blinkAt = 0; return p; }
+        var run = shField(), p = air(run), j0 = S.jump(), x0 = p.x;
+        S.leave();
+        var cost = csCheapest(api, 'k_biyeon');
+        run = shField(); p = air(run);
+        var j1 = S.jump(), x1 = p.x, j2 = S.jump(), x2 = p.x;
+        p.y = run.stage.floor - S.P_H; p.onGround = true;
+        var g = S.jump(), up = p.vy < 0;
+        S.leave();
+        var ok = cost > 0 && j0 === false && x0 === 600 && j1 === true && x1 === 730 && j2 === false && x2 === 730 && g === true && up;
+        return ok ? '없을 땐 점프 버퍼 · 비연 ' + (x1 - 600) + 'px 순간 이동 · 곧바로 또는 안 됨 · 땅 점프 그대로(경로 ' + cost + '점)' : '실패 ' + [cost, j0, x0, j1, x1, j2, x2, g, up].join(' ');
+      });
+    });
+
+    t('성좌도 — 규칙 질풍(이동 ×1.25·체력 ×0.8) · 한 방(무예 재사용 ×1.4·공격 ×1.6) · 연타(타수 +1) · 사냥꾼의 눈(드롭 ×1.4·경험 −20%)', function () {
+      return csWith(function (CS, api) {
+        var hp0 = S.power().hp, c1 = csCheapest(api, 'k_jilpung'), mv = CS.move() / (1 + CS.sum('movePct') / 100), hpR = S.power().hp / hp0;
+        var c2 = csCheapest(api, 'k_hanbang'), cdR = CS.cd() / Math.max(0.5, 1 - CS.sum('cdPct') / 100), atR = CS.atk() / (1 + CS.sum('atkPct') / 100);
+        var c3 = csCheapest(api, 'k_yeonta'), hits = CS.hits();
+        var c4 = csCheapest(api, 'k_hunteye'), dr = CS.drop() / (1 + CS.sum('dropPct') / 100), ex = C.effect('expPct') - CS.sum('expPct');
+        api.reset(true); var none = CS.move() === 1 && CS.cd() === 1 && CS.hits() === 0 && CS.drop() === 1;
+        var ok = c1 > 0 && Math.abs(mv - 1.25) < 1e-9 && hpR < 0.85 && c2 > 0 && Math.abs(cdR - 1.4) < 1e-9 && Math.abs(atR - 1.6) < 1e-9 && c3 > 0 && hits === 1 && c4 > 0 && Math.abs(dr - 1.4) < 1e-9 && ex <= -20 && none;
+        return ok ? '질풍 ×1.25·체력 ×' + hpR.toFixed(2) + ' · 한 방 재사용 ×1.4·공격 ×1.6 · 연타 +1 · 눈 드롭 ×1.4·경험 ' + ex + '%' : '실패 ' + [c1, mv, hpR, c2, cdR, atR, c3, hits, c4, dr, ex, none].join(' ');
+      });
+    });
+
+    t('성좌도 — 무예 창에 성좌 카드(남은 점수·열기 단추)가 있고 단추가 겹창을 연다', function () {
+      return csWith(function (CS, api) {
+        DG.ui.openSheet('job');
+        var body = document.getElementById('sheet-body'), btn = body && body.querySelector('[data-act="star-open"]'), card = body && /사방 성좌/.test(body.textContent);
+        if (btn) { btn.click(); }
+        var open = !!(DG.passiveWebUI && DG.passiveWebUI.isOpen());
+        if (open) { DG.passiveWebUI.close(); }
+        DG.ui.closeSheet();
+        return card && btn && open ? '무예 창 카드 · 「성좌도 열기」 → 겹창' : '실패 card=' + card + ' btn=' + !!btn + ' open=' + open;
+      });
     });
 
     t('런타임 에러 없음', function () {
