@@ -41,6 +41,7 @@ namespace Saga.EditorTools
         private static int _framesSeen;
         private static bool _origEnterPlayModeOptionsEnabled;
         private static EnterPlayModeOptions _origEnterPlayModeOptions;
+        private static bool _origSuppressAutoSave; // tasks U-0111
 
         private enum Phase
         {
@@ -115,6 +116,7 @@ namespace Saga.EditorTools
                 EditorApplication.playModeStateChanged -= OnStateChanged;
                 EditorSettings.enterPlayModeOptionsEnabled = _origEnterPlayModeOptionsEnabled;
                 EditorSettings.enterPlayModeOptions = _origEnterPlayModeOptions;
+                SagaFlow.SuppressAutoSave = _origSuppressAutoSave; // 플레이 끝 자동 저장(OnApplicationQuit)이 지난 뒤라 되돌려도 된다(tasks U-0111)
 
                 bool ok = !_hadError && _phase == Phase.Done;
                 Debug.Log(ok
@@ -176,6 +178,10 @@ namespace Saga.EditorTools
                     StoryLabyrinthState.Restore(0, 0);
                     StorySkillState.Restore(null, null); // 101-2 5-2 1단계 — 위와 같은 이유.
                     StoryPartyState.Restore(0); // 위와 같은 이유 — 지난 세이브의 교대 역할(호법 2 등)이 PartySwapTest 전제(기본 0)를 깸(tasks U-0107).
+                    // 에디터는 플레이 모드를 끝낼 때도 SagaFlowRunner.OnApplicationQuit → SaveCurrent("quit") 를 부른다 —
+                    // SaveLoad finally 가 원본을 되돌린 뒤 진단 상태로 다시 덮지 않게 진단 동안 자동 저장을 막는다(EnteredEditMode 에서 되돌림, tasks U-0111).
+                    _origSuppressAutoSave = SagaFlow.SuppressAutoSave;
+                    SagaFlow.SuppressAutoSave = true;
                     // PLAN.md 109-16 — 새 판 첫 장면(허창 들판의 두목)이 다른 진단 앞에서 상자를 열지 않게 끈다. 시나리오 진단이 스스로 켜고 되돌린다.
                     StoryScenario.Enabled = false; StoryScenario.AbortScene(); StoryScenarioUi.Instance?.Hide();
                     Saga.Story.Data.StoryTutorial.Enabled = false; // tasks U-0020 — 목표판 진단이 첫 줄을 "지금 —" 로 기대한다
@@ -1044,7 +1050,8 @@ namespace Saga.EditorTools
                         string savedJson = System.IO.File.ReadAllText(storySavePath);
                         string oldFormatJson = System.Text.RegularExpressions.Regex.Replace(savedJson,
                             ",\"skillKeys\":\\[[^\\]]*\\],\"skillLevels\":\\[[^\\]]*\\](,\"skillPins\":\\[[^\\]]*\\])?", "");
-                        if (oldFormatJson == savedJson || oldFormatJson.Contains("skill"))
+                        // 키 이름으로만 본다 — 실제 세이브의 tutDone 에 길잡이 단계 id "skill" 이 들어 있다(tasks U-0111).
+                        if (oldFormatJson == savedJson || System.Text.RegularExpressions.Regex.IsMatch(oldFormatJson, "\"skill(Keys|Levels|Pins)\""))
                         {
                             Debug.LogError($"[PlaytestStorySlice] 옛 형식 흉내 JSON을 못 만듦(정규식 불일치) — {savedJson}");
                             Fail();
