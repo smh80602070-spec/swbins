@@ -61,6 +61,7 @@
   function effZoom() { return viewZoom * baseZoom() * (1 + bossZoomK * BOSS_ZOOM_EXTRA); }
   function applyZoomTransform() {
     var t = 'scale(' + effZoom().toFixed(3) + ')', run = S && S.raw ? S.raw() : null, fl = run && run.stage ? run.stage.floor : 560;
+    if (fl > H) { fl = H * 0.75; }   /* W-0188 폰 가로 3D(lowK 1·키 390) — 바닥 선이 논리 화면 밖이라 옛 식이 기준점을 수천 px 아래로 풀어 화면이 통째로 위로 밀렸다(두목 확대 때). 3D 카메라는 바닥을 가운데께 두니 그 근처를 기준으로 */
     var z = effZoom(), want = Math.min(fl, H * 0.8), oy = Math.abs(1 - z) < 1e-3 ? fl : (want - fl * z) / (1 - z);   // 바닥 선이 화면의 want 자리에 오게 기준점(px)을 푼다
     zoomOy = oy;
     var org = '50% ' + Math.round(oy / lowK) + 'px';   // 기준점은 CSS 픽셀(논리 ÷ lowK)
@@ -297,7 +298,7 @@
       ctx.clearRect(0, 0, W, H);
     } else {
       /* 하늘·뒷배경 — 2D 층 그림(K-0020)이 있으면 그것, 없으면(받는 중·자료 없음) 옛 도형 */
-      var M2 = global.DG.mode2d, M2c = (global.DG.cfg && global.DG.cfg.mode2d) || {}, rg = (M2c.region || {})[stg.key], tl = (M2c.tile || {})[stg.mood || 'sky'];
+      var M2 = global.DG.mode2d, M2c = (global.DG.cfg && global.DG.cfg.mode2d) || {}, rg = (M2c.region || {})[stg.gateOf || stg.key], tl = (M2c.tile || {})[stg.mood || 'sky'];
       if (!(M2 && rg && M2.drawBg(ctx, { region: rg, camX: camX, W: W, H: H, base: stg.floor, only: null }))) {
         var g = ctx.createLinearGradient(0, 0, 0, H);
         g.addColorStop(0, stg.sky[0]);

@@ -169,7 +169,7 @@
       sg.bosses = (sg.bosses || 0) + 1;
       sg.gateWeek[e.gateKey] = gateWeekKey();     // 이겼다 — 이번 주는 다시 안 나온다
       run.boss = null;
-      run.gateT = 0;
+      run.gateT = 0; run.gateBackT = run.stage.gateArena && global.DG.gateArena ? global.DG.gateArena.BACK : 0;   // W-0188 관문 자리면 몇 초 뒤 그 마을로
       core.gainFeat(30 + lv * 4, '관문 대장');
       grantGateReward(e);
       core.emit('changed');
@@ -485,6 +485,7 @@
     }
     /* 동료 교대(§5-8) — 교대 쿨을 깎고, 막 나온 인물의 서명 1발을 여기서(타격 반복문 밖) 쏜다 */
     if (run.pty && global.DG.party) { global.DG.party.tick(dt); }
+    if (run.gateBackT > 0 && (run.gateBackT -= dt) <= 0 && run.stage.gateArena && global.DG.gateArena) { global.DG.gateArena.home(run); }   // W-0188 관문 대장을 이긴 뒤 → 마을
     var p = run.player, stg = run.stage, i;
 
     /* 관문 대장(§5-4) 제한 시간 — 넘기면 그 자리에서 광폭화(공격 ×1.5), 실패로 끝나진 않는다 */

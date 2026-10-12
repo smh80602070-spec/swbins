@@ -19,7 +19,7 @@
   /** 이 사냥터의 2D 배경 지역(2D side-view 와 같은 표) — 손잡이 0 이거나 표에 없으면 null */
   function regionOf(stg) {
     var M = global.DG.cfg && global.DG.cfg.mode2d;
-    return on() && stg && M && M.region ? (M.region[stg.key] || null) : null;
+    return on() && stg && M && M.region ? (M.region[stg.gateOf || stg.key] || null)   /* W-0188 관문 자리는 그 마을 그림 */ : null;
   }
   /** 층 하나의 세계 사각형. L = layers.json 의 한 층, base = 땅 선(화면 y = stg.floor), H = 화면 키, D = 카메라 거리(Z=0 에서 1:1) */
   function layerRect(name, L, base, H, D) {

@@ -822,7 +822,7 @@
         (e.open ? '' : ' (Lv.' + e.ref.need + ' 부터)') + '</button>';
       if (gi2 && gi2.ready) {
         html += '<button class="btn tiny ghost wide" data-act="s-gate" data-stage="' + e.ref.key + '">' +
-          '🏯 ' + esc(gi2.name) + ' 도전</button>';
+          '⚔️ 관문으로 나가 ' + esc(gi2.name) + ' 와(과) 겨룬다</button>';
       }
     }
     if (RF && RF.available().ok) {
@@ -1072,7 +1072,7 @@
         gateLine = '<div class="stat-row"><span class="muted">🏯 ' + esc(gi.name) + '</span>' +
           '<span style="color:' + (gi.ready ? '#e8c15a' : 'inherit') + '">' + gstate + '</span></div>';
         gateBtn = gi.ready
-          ? '<button class="btn wide" data-act="s-gate" data-stage="' + e.ref.key + '">🏯 관문 대장에 도전</button>'
+          ? '<button class="btn wide" data-act="s-gate" data-stage="' + e.ref.key + '">⚔️ 관문으로 나가 대장과 겨룬다</button>'
           : '';
       }
       html += '<div class="card">' +

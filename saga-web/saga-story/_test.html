@@ -113,6 +113,7 @@ window.DG_NO_TUNE = true;
 <script src="js/quest.js"></script>
 <script src="js/tutorial.js"></script>
 <script src="js/rift.js"></script>
+<script src="js/gate-arena.js"></script>
 <script src="js/story.js"></script>
 <script src="js/scenario.js"></script>
 <script src="js/cutscene.js"></script>
@@ -4688,6 +4689,70 @@ window.DG_NO_TUNE = true;
       return !!(firstUniq && frag1 === frag0 + 3 && scrollGot && rotated) &&
         ('고유 O · 기억 조각 +3 O · 주문서 O · 부위 순환(' +
          (firstUniq && G.defOf(firstUniq).slot) + '→' + (secondUniq && G.defOf(secondUniq).slot) + ')');
+    });
+
+    /* ── 관문 자리(W-0188) — 관문 대장은 마을(안전지대) 안이 아니라 그 마을 문 밖 임시 판에서만 선다 ── */
+    t('관문 자리(W-0188) — 대장 문 → 관문 자리(town false·NPC 0·두목 하나·왼쪽 문이 그 마을로) · 세이브 stage 는 마을', function () {
+      var S = DG.side;
+      if (S.active()) { S.leave(); }
+      ensureParty();
+      C.save.player.level = 10;
+      C.save.side.gateWeek = {}; C.save.side.gateDay = {};
+      S.enter('heodo');
+      var ok = S.challengeGate('sinya');
+      var run = S.raw(), stg = run && run.stage;
+      var gates = run ? run.enemies.filter(function (e) { return e.gate; }) : [];
+      var res = [ok, stg && stg.key, stg && stg.town, stg && stg.gateArena, stg && stg.gateOf, run && run.npcs.length, run && run.enemies.length, gates.length,
+        stg && stg.portals.length === 1 && stg.portals[0][1] === 'sinya', S.state().stage];
+      S.leave();
+      var good = ok && res[1] === 'gate-sinya' && res[2] === false && res[3] === true && res[4] === 'sinya' && res[5] === 0 && res[6] === 1 && res[7] === 1 && res[8] && res[9] === 'sinya';
+      return good ? stg.name + ' · 두목 ' + gates[0].ref.name + ' 하나 · 문 → 신야성' : '실패 ' + res.join(' ');
+    });
+
+    t('관문 자리(W-0188) — 마을 다섯 어디서도 적 0(들어가 1초 돌려도) · 마을에서 대장 문을 눌러도 두목은 마을 밖에', function () {
+      var S = DG.side, SD = DG.sideData, lv0 = C.save.player.level, bad = [], n = 0;
+      if (S.active()) { S.leave(); }
+      ensureParty();
+      C.save.player.level = 99;
+      SD.STAGES.filter(function (x) { return x.gateBoss; }).forEach(function (town) {
+        C.save.side.gateWeek = {}; C.save.side.gateDay = {};
+        S.enter(town.key);
+        for (var i = 0; i < 20; i++) { S.update(0.05); }
+        var run = S.raw();
+        if (!run || run.stage.key !== town.key || !run.stage.town || run.enemies.length || run.boss) { bad.push(town.key + ' 안 ' + (run && run.enemies.length)); }
+        S.challengeGate(town.key);
+        run = S.raw();
+        if (!run || run.stage.town || !run.stage.gateArena || !run.boss || !run.boss.gate) { bad.push(town.key + ' 대장 문 ' + (run && run.stage.key)); }
+        n++;
+        S.leave();
+      });
+      C.save.player.level = lv0;
+      return n === 5 && !bad.length ? '마을 ' + n + '곳 적 0 · 대장은 전부 관문 자리' : '실패 ' + n + ' ' + bad.join(' | ');
+    });
+
+    t('관문 자리(W-0188) — 이긴 뒤 몇 초면 떨군 것을 줍고 그 마을로 돌아온다(gateWeek 기록) · 나갔다 다시 서면 그 마을', function () {
+      var S = DG.side, GA = DG.gateArena;
+      if (S.active()) { S.leave(); }
+      ensureParty();
+      C.save.player.level = 10;
+      C.save.side.gateWeek = {}; C.save.side.gateDay = {};
+      S.challengeGate('heodo');
+      var run = S.raw(), p = run.player, e = run.boss, pot0 = C.save.side.potions;
+      e.hp = 1; e.dir = 1;
+      p.x = e.x - 400; p.y = e.y; p.facing = 1;
+      e.x = p.x + 10; p.cds[0] = 0; run.mp = run.mpMax;
+      S.castSkill(0);
+      var won = C.save.side.gateWeek.heodo != null, mid = S.raw().stage.key;
+      for (var i = 0; i < Math.ceil((GA.BACK + 1.5) / 0.05); i++) { S.update(0.05); if (!S.raw()) { break; } }
+      var r2 = S.raw(), back = r2 && r2.stage.key === 'heodo' && r2.stage.town === true && S.state().stage === 'heodo';
+      var pots = C.save.side.potions - pot0;
+      S.leave();
+      C.save.side.gateDay = {}; C.save.side.gateWeek = {};
+      S.challengeGate('gangneungjin');
+      S.leave(); S.resume();
+      var r3 = S.raw(), home = r3 && r3.stage.key === 'gangneungjin' && r3.stage.town && !r3.boss;
+      S.leave();
+      return won && mid === 'gate-heodo' && back && pots >= 1 && home ? '이김 → ' + GA.BACK + '초 뒤 허도 · 탕약 +' + pots + ' 주움 · 나갔다 다시 서면 강릉진' : '실패 ' + [won, mid, back, pots, home].join(' ');
     });
 
     /* ── 비경(PLAN §5-3, 2026-09-22) ─────────────────────────

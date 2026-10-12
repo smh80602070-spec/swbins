@@ -267,7 +267,7 @@
   /** 랜덤 이벤트(PLAN 11절) — 사냥터에 걸어 들어갈 때마다 낮은 확률로 상자가
    *  하나 생긴다. 마을엔 안 둔다(싸울 일이 없는 곳이라 어울리지 않는다) */
   function buildChest(stg) {
-    if (stg.town || stg.rift || Math.random() >= CHEST_CHANCE) { return null; }
+    if (stg.town || stg.rift || stg.gateArena || Math.random() >= CHEST_CHANCE) { return null; }
     return { x: 200 + Math.random() * (stg.width - 400), opened: false };
   }
 
@@ -277,7 +277,7 @@
    *  `FORAGE_MUL`배 더 나오게, 판정 하나만 덧붙인다(update() 참고).
    *  마을엔 안 둔다(채집 자리 자체가 없다) */
   function buildForageZone(stg) {
-    if (stg.town || stg.rift || Math.random() >= FORAGE_CHANCE) { return null; }
+    if (stg.town || stg.rift || stg.gateArena || Math.random() >= FORAGE_CHANCE) { return null; }
     var cx = FORAGE_HALF + 40 + Math.random() * (stg.width - (FORAGE_HALF + 40) * 2);
     return { x1: cx - FORAGE_HALF, x2: cx + FORAGE_HALF, notified: false };
   }
@@ -287,7 +287,7 @@
    *  `AMBUSH_COUNT`마리가 한꺼번에 나타난다(update() 참고) — 자리만 여기서 뽑는다.
    *  마을엔 안 둔다(싸울 일이 없는 곳) */
   function buildAmbush(stg) {
-    if (stg.town || stg.rift || Math.random() >= AMBUSH_CHANCE) { return null; }
+    if (stg.town || stg.rift || stg.gateArena || Math.random() >= AMBUSH_CHANCE) { return null; }
     return { x: 260 + Math.random() * (stg.width - 520), triggered: false };
   }
 
@@ -295,7 +295,7 @@
    *  자리가 하나 생긴다. 지나면 잡졸 하나가 그 자리에서 크게 불려 나온다
    *  (update() 참고) — 진짜 보스(spawnBoss)와 달리 쿨타임·전용 UI가 없다 */
   function buildMiniboss(stg) {
-    if (stg.town || stg.rift || Math.random() >= MINI_CHANCE) { return null; }
+    if (stg.town || stg.rift || stg.gateArena || Math.random() >= MINI_CHANCE) { return null; }
     return { x: 260 + Math.random() * (stg.width - 520), triggered: false };
   }
 
@@ -303,7 +303,7 @@
    *  확률로 마주치는 자리가 하나 생긴다. 지나면 `MERCHANT_DUR`초 동안 상점
    *  (🏪, 어디서든 연다)이 싸진다 — 자리를 옮기는 게 아니라 값에만 붙는다 */
   function buildMerchant(stg) {
-    if (stg.town || stg.rift || Math.random() >= MERCHANT_CHANCE) { return null; }
+    if (stg.town || stg.rift || stg.gateArena || Math.random() >= MERCHANT_CHANCE) { return null; }
     return { x: 260 + Math.random() * (stg.width - 520), triggered: false };
   }
 
@@ -311,7 +311,7 @@
    *  사람 자리가 하나 생긴다. 가까이 가면 지키던 잡졸이 나타나고(update()),
    *  그 잡졸을 다 잡으면 사례금을 받는다 */
   function buildRescue(stg) {
-    if (stg.town || stg.rift || Math.random() >= RESCUE_CHANCE) { return null; }
+    if (stg.town || stg.rift || stg.gateArena || Math.random() >= RESCUE_CHANCE) { return null; }
     return { x: 260 + Math.random() * (stg.width - 520), spawned: false, done: false };
   }
 
@@ -717,11 +717,10 @@
   /** 마을에서 관문 대장에게 도전한다 — HUD 의 "대장 문" 단추가 부른다 */
   function challengeGate(key) {
     if (!gateReady(key)) { return false; }
-    /* 시트 목록(어디서든 접근)에서 눌러도 되게 — 그 마을에 없으면 먼저 들어간다.
-       기존 field 보스가 enter() 끝에서 저절로 기다리는 것과 달리, 마을은
-       spawn:0(안전지대)라 여기서 명시적으로 불러야만 나온다 */
-    if (!run || run.stage.key !== key) { enter(key); }
-    if (!run || run.stage.key !== key || run.boss) { return false; }
+    /* W-0188 마을(안전지대)이 아니라 그 마을 문 밖 관문 자리(gate-arena.js)에서만 선다 — 지거나 나가면 세이브 stage 인 그 마을로 */
+    if ((run && run.boss) || !unlocked(key) || !global.DG.gateArena || !core.save.party.length) { return false; }
+    if (run && run.rift && global.DG.rift) { global.DG.rift.onEnd('leave'); }
+    if (!placeIn(global.DG.gateArena.make(key))) { return false; } st().stage = key;
     var stg = run.stage;
     var ed = global.DG.enemyData;
     var ref = ed ? ed.bossByName(stg.gateBoss.name) : { name: stg.gateBoss.name, kind: 'human', color: '#7a3a3a' };
