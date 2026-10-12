@@ -60,3 +60,43 @@ static func pool_for(lv: float) -> Array[Dictionary]:
 		if int(e.tier) == t:
 			out.append(e)
 	return out if not out.is_empty() else ENEMIES
+
+
+## G-0210 — 세 시대 적(웹 data-side.js ERA_ENEMIES 8, 2026-10-12 같은 꼴로 옮김 — 3D model 칸은 뺌). 사냥터 잡몹의 ERA_SHARE 가 여기서.
+## 무기 없는 짐승은 weapon "" — 정찰 드론(staff)=탄환·강철 거신(halberd)=탱커는 웹 규칙 그대로 무기로 가른다.
+const ERA_SHARE := 0.4
+const ERA_ENEMIES: Array[Dictionary] = [
+	{"name": "잿빛 떼쥐", "kind": "beast", "color": "#6a6a6a", "form": "quad", "weapon": "", "tier": 1, "era": "modern"},
+	{"name": "정찰 드론", "kind": "beast", "color": "#8a9aa8", "form": "bird", "weapon": "staff", "tier": 1, "era": "future"},
+	{"name": "벼락 말벌", "kind": "beast", "color": "#d8b030", "form": "bird", "weapon": "", "tier": 2, "era": "modern"},
+	{"name": "경비 보행기", "kind": "human", "color": "#7a8a9a", "form": "", "weapon": "club", "tier": 2, "era": "future"},
+	{"name": "떠도는 망자", "kind": "human", "color": "#5a7a5a", "form": "", "weapon": "club", "tier": 3, "era": "modern"},
+	{"name": "별바다 손님", "kind": "beast", "color": "#6ac08a", "form": "ogre", "weapon": "", "tier": 3, "era": "future"},
+	{"name": "진압 특공대", "kind": "human", "color": "#3a3a44", "form": "", "weapon": "staff", "tier": 4, "era": "modern"},
+	{"name": "강철 거신", "kind": "beast", "color": "#9a6a4a", "form": "ogre", "weapon": "halberd", "tier": 4, "era": "future"},
+]
+
+
+## 웹 eraPoolFor(tierOf(lv)) — 그 단계 시대 적, 없으면 가까운 아래 단계
+static func era_pool_for(lv: float) -> Array[Dictionary]:
+	for t in range(tier_of(lv), 0, -1):
+		var out: Array[Dictionary] = []
+		for e: Dictionary in ERA_ENEMIES:
+			if int(e.tier) == t:
+				out.append(e)
+		if not out.is_empty():
+			return out
+	return []
+
+
+## 웹 enemyRole — 활·조총 ranged · 이름 "기병" dash · "코끼리"·미늘창 tank · 나머지 melee(마법형은 spawner 가 melee 에서 굴린다)
+static func role_of(sp: Dictionary) -> String:
+	var w := String(sp.get("weapon", ""))
+	var n := String(sp.get("name", ""))
+	if w == "bow" or w == "staff":
+		return "ranged"
+	if n.contains("기병"):
+		return "dash"
+	if n.contains("코끼리") or w == "halberd":
+		return "tank"
+	return "melee"

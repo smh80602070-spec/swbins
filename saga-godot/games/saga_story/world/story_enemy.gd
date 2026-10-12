@@ -63,6 +63,21 @@ const PATROL_MUL := 0.7
 const EDGE_L_M := 0.4        # x < 20px 에서 돌아섬
 const EDGE_R_M := 0.8        # x > 폭 − 40px 에서 돌아섬
 const HOLD_M := 78.0 * 1.2 * 0.02   # REACH×1.2 보다 멀면 원거리는 멈춰 쏜다
+## G-0210 역할(웹 side.js enemyRole·spawnEnemy) — role 은 spawner 가 add_child 전에(없으면 종으로 판정, 마법형은 spawner 굴림만).
+## 고돗 4종횡엔 넉백이 없어 웹 탱커의 "안 밀림"은 해당 없음.
+const TANK_HP_MUL := 2.2
+const TANK_SPD_MUL := 0.6
+const TANK_DMG_MUL := 0.85
+const MAGIC_HP_MUL := 0.85
+const MAGIC_RANGE_M := 340.0 * 0.02
+const MAGIC_CD := 2.2
+const MAGIC_SPD_M := 260.0 * 0.02
+const MAGIC_DMG_MUL := 1.15
+const MAGIC_LIFE := 2.6
+const MAGIC_COLOR := Color(0.72, 0.4, 1.0)
+const RARE_HP_MUL := 3.2
+const RARE_DMG_MUL := 1.35
+const RARE_GAIN_MUL := 4.0
 
 signal died
 
@@ -129,6 +144,14 @@ var species: Dictionary = {} # G-0209 — 사냥터 잡몹의 종(StoryEnemies.E
 var walk_dir := 1.0          # G-0209 — 걷는 방향(spawner 가 자체 RNG 로)
 var walking := false         # 이 틱에 걸었는지(점검·몸짓)
 var _anim := ""
+var role := ""               # G-0210 — ranged|dash|tank|melee|magic(spawner 가 넣음, 비면 종으로)
+var is_rare := false         # G-0210 — 희귀형(spawner 굴림)
+var role_seed := 0           # G-0210 — 돌진 쿨·마법 쿨 흔들림용(spawner RNG 에서 — 전역 randf 안 씀)
+var shots_fired := 0         # 점검용
+var _role_rng := RandomNumberGenerator.new()
+var _dash_t := 0.0
+var _dash_cd := 0.0
+var _dash_dir := 1.0
 
 
 func _ready() -> void:
@@ -138,13 +161,23 @@ func _ready() -> void:
 		add_to_group("story_boss")
 	else:
 		hp = base_hp
-	max_hp = hp
 	add_to_group("story_enemy")
 	if not species.is_empty():
 		enemy_color = Color(String(species.color))
 		var w := String(species.get("weapon", ""))
 		is_ranged = w == "bow" or w == "staff"
+		if role == "":
+			role = StoryEnemies.role_of(species)
+		_role_rng.seed = role_seed
+		if role == "dash":
+			_dash_cd = 3.0 + _role_rng.randf() * 2.0
+		if not is_boss:
+			hp *= hp_mul()
+	max_hp = hp
 	_spawn_visual()
+	if is_rare and roams():
+		_float_mark("✨", 0.0, Color(1.0, 0.9, 0.4))
+		Toast.show(self, "✨ 희귀 %s 등장!" % String(species.get("name", "")), 2.5)
 	if is_boss and boss_pattern == null:
 		## 사냥터 보스는 패턴전(G-0205), 관문 대장은 고유 기술만(G-0206 gate)
 		boss_pattern = StoryBossPattern.new(hash(stage_key) % 100000 + 13, boss_name, is_champion)
@@ -214,7 +247,7 @@ func _physics_process(delta: float) -> void:
 	if _attack_cd_left <= 0.0 and absf(dx) <= OVERLAP_RANGE * scale_mul:
 		_attack_cd_left = ATTACK_COOLDOWN
 		var base_dmg: float = StoryCombat.enemy_base_dmg(enemy_lv)
-		var dmg: float = base_dmg * (boss_dmg_mul if is_boss else 1.0)
+		var dmg: float = base_dmg * (boss_dmg_mul if is_boss else dmg_mul())
 		if boss_pattern != null:
 			dmg *= boss_pattern.dmg_mul()   # G-0205 광폭
 		if is_champion:
@@ -226,6 +259,28 @@ func _physics_process(delta: float) -> void:
 	if is_ranged and not is_boss and _shot_cd_left <= 0.0 and absf(dx) <= shot_range():
 		_shot_cd_left = StoryCombat.RANGED_STAFF_CD_SEC if is_staff() else StoryCombat.RANGED_CD_SEC
 		_fire_shot(dx)
+	## G-0210 마법형 — 높이를 안 가리고 사거리 안이면 쏜다(첫 발은 바로 — 웹 shotCd 0)
+	if role == "magic" and roams() and _shot_cd_left <= 0.0 and absf(dx) < MAGIC_RANGE_M:
+		_shot_cd_left = MAGIC_CD * (0.8 + _role_rng.randf() * 0.4)
+		_fire_magic(dx)
+
+
+## G-0210 — 역할·희귀 배수(보스·부하·비경은 role ""·희귀 아님 = 1)
+func hp_mul() -> float:
+	var m := 1.0
+	if role == "tank":
+		m *= TANK_HP_MUL
+	elif role == "magic":
+		m *= MAGIC_HP_MUL
+	return m * (RARE_HP_MUL if is_rare else 1.0)
+
+
+func dmg_mul() -> float:
+	return (TANK_DMG_MUL if role == "tank" else 1.0) * (RARE_DMG_MUL if is_rare else 1.0)
+
+
+func dashing() -> bool:
+	return _dash_t > 0.0
 
 
 ## G-0209 — 몸 모양: 종이 있으면 form, 없으면 사냥터 몸(지금 그대로).
@@ -250,9 +305,9 @@ func shot_range() -> float:
 	return StoryCombat.RANGED_STAFF_RANGE_M if is_staff() else StoryCombat.RANGED_RANGE_M
 
 
-## 웹 spd = 42 + min(50, lv×2) px/s
+## 웹 spd = 42 + min(50, lv×2) px/s (탱커 ×0.6)
 func walk_speed() -> float:
-	return (42.0 + minf(50.0, enemy_lv * 2.0)) * 0.02
+	return (42.0 + minf(50.0, enemy_lv * 2.0)) * 0.02 * (TANK_SPD_MUL if role == "tank" else 1.0)
 
 
 ## G-0209 — 웹 side.js 적 루프: near 면 플레이어 쪽으로 돌아서 ×1.25, 아니면 그 방향으로 ×0.7 순찰.
@@ -266,16 +321,35 @@ func _walk(delta: float, player: Node3D, dx: float) -> void:
 	if is_ranged and dy < FLAT_Y_M and absf(dx) < shot_range():
 		walk_dir = 1.0 if dx > 0.0 else -1.0
 		holding = absf(dx) > HOLD_M
+	elif role == "magic" and absf(dx) < MAGIC_RANGE_M:   # G-0210 마법형은 높이를 안 가린다
+		walk_dir = 1.0 if dx > 0.0 else -1.0
+		holding = absf(dx) > HOLD_M
+	## G-0210 돌진형(웹 1803 — 보스 달려들기를 빌림): 쿨 다하고 near 면 1.1초 ×2.6(방향 고정), 다음 쿨 5~8초
+	var mul: float = NEAR_MUL if near else PATROL_MUL
+	if role == "dash":
+		if _dash_t > 0.0:
+			_dash_t -= delta
+			walk_dir = _dash_dir
+			mul *= CHARGE_MUL
+		else:
+			_dash_cd -= delta
+			if _dash_cd <= 0.0 and near:
+				_dash_t = CHARGE_T
+				_dash_cd = 5.0 + _role_rng.randf() * 3.0
+				_dash_dir = walk_dir
+				_charge_tell()
 	walking = not holding
 	if walking:
-		global_position.x += walk_dir * walk_speed() * (NEAR_MUL if near else PATROL_MUL) * delta
+		global_position.x += walk_dir * walk_speed() * mul * delta
 	if stage_width_m > 0.0:
 		if global_position.x < EDGE_L_M:
 			global_position.x = EDGE_L_M
 			walk_dir = 1.0
+			_dash_t = 0.0
 		elif global_position.x > stage_width_m - EDGE_R_M:
 			global_position.x = stage_width_m - EDGE_R_M
 			walk_dir = -1.0
+			_dash_t = 0.0
 	_play_anim("walk" if walking else "idle")
 
 
@@ -302,10 +376,15 @@ func _tick_charge(delta: float, player: Node3D, dx: float) -> void:
 		_charge_t = CHARGE_T
 		_charge_cd = 5.0 + _charge_rng.randf() * 3.0
 		_charge_dir = 1.0 if dx > 0.0 else -1.0
-		var tell := CombatTell.ring(self, global_position, CHARGE_TELL_R + 0.8, 0.3, Color(1.0, 0.3, 0.2))
-		if tell != null:
-			tell.rotation.x = PI * 0.5
-		_float_mark("!", CHARGE_WARN_SEC, Color(1.0, 0.35, 0.25))
+		_charge_tell()
+
+
+## 달려들기 예고(보스·돌진형 잡몹 공통) — 몸 둘레 원 0.3초 + "!" 0.9초
+func _charge_tell() -> void:
+	var tell := CombatTell.ring(self, global_position, CHARGE_TELL_R + 0.8, 0.3, Color(1.0, 0.3, 0.2))
+	if tell != null:
+		tell.rotation.x = PI * 0.5
+	_float_mark("!", CHARGE_WARN_SEC, Color(1.0, 0.35, 0.25))
 
 
 ## 머리 위 글자 표시(달려들기 "!" · 그로기 "💫").
@@ -319,7 +398,8 @@ func _float_mark(text: String, sec: float, col: Color) -> Label3D:
 	l.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	l.no_depth_test = true
 	add_child(l)
-	l.position = Vector3(0, 2.6 * (CHAMPION_VISUAL_SCALE if is_champion else BOSS_VISUAL_SCALE) * 0.9, 0)
+	var head: float = (CHAMPION_VISUAL_SCALE if is_champion else BOSS_VISUAL_SCALE) if is_boss else 1.25   # G-0210 잡몹은 제 키 위
+	l.position = Vector3(0, 2.6 * head * 0.9, 0)
 	if sec > 0.0:
 		get_tree().create_timer(sec).timeout.connect(l.queue_free)
 	return l
@@ -385,7 +465,8 @@ func _spawn_minion(x: float) -> void:
 func _fire_shot(dx: float) -> void:
 	var dir: float = 1.0 if dx > 0.0 else -1.0
 	var staff := is_staff()   # G-0209 조총은 웹 RANGED_WEAPON.staff 값
-	var dmg: float = StoryCombat.enemy_base_dmg(enemy_lv) * (StoryCombat.RANGED_STAFF_MUL if staff else StoryCombat.RANGED_MUL)
+	var dmg: float = StoryCombat.enemy_base_dmg(enemy_lv) * (StoryCombat.RANGED_STAFF_MUL if staff else StoryCombat.RANGED_MUL) * dmg_mul()
+	shots_fired += 1
 	var shot := Area3D.new()
 	shot.set_script(StoryEnemyShot)
 	shot.dir = dir
@@ -394,6 +475,22 @@ func _fire_shot(dx: float) -> void:
 	shot.life_left = StoryCombat.RANGED_LIFE_SEC
 	get_parent().add_child(shot)
 	shot.global_position = global_position + Vector3(dir * 0.5, 0.9, 0)   # G-0209 — 트리에 넣은 뒤에(전엔 밖에서 넣어 오류·자리 틀어짐)
+
+
+## G-0210 마법형 구슬 — 웹 eshot {spd 260, dmg×1.15, homing, life 2.6}, 보라(코드 메시)
+func _fire_magic(dx: float) -> void:
+	var dir: float = 1.0 if dx > 0.0 else -1.0
+	shots_fired += 1
+	var shot := Area3D.new()
+	shot.set_script(StoryEnemyShot)
+	shot.dir = dir
+	shot.speed = MAGIC_SPD_M
+	shot.damage = StoryCombat.enemy_base_dmg(enemy_lv) * dmg_mul() * MAGIC_DMG_MUL
+	shot.life_left = MAGIC_LIFE
+	shot.homing = true
+	shot.color = MAGIC_COLOR
+	get_parent().add_child(shot)
+	shot.global_position = global_position + Vector3(dir * 0.32, 0.84, 0)
 
 
 ## PLAN 101-2 STORY ④후보 — 관문 대장 방패(웹판 §5-4 "등 뒤에서 누적
@@ -432,9 +529,10 @@ func _die() -> void:
 	## PLAN 51장 STORY "관계" 축(사제 유대, story_save_state.gd 헤더 참고) —
 	## 잡졸 1·보스 8·관문 대장 20(보스이자 챔피언이라 둘 다 더함).
 	StorySaveState.add_mentor_bond((8 if is_boss else 1) + (12 if is_champion else 0))
-	var reward_mul: float = CHAMPION_EXP_MUL if is_champion else 1.0
+	var rare_mul: float = RARE_GAIN_MUL if is_rare else 1.0   # G-0210 웹 1181·1204 희귀 ×4
+	var reward_mul: float = (CHAMPION_EXP_MUL if is_champion else 1.0) * rare_mul
 	StorySaveState.add_exp(roundi(StoryCombat.enemy_exp(is_boss, enemy_lv) * reward_mul))
-	var gold_mul: float = CHAMPION_GOLD_MUL if is_champion else 1.0
+	var gold_mul: float = (CHAMPION_GOLD_MUL if is_champion else 1.0) * rare_mul
 	StoryGoldPickup.spawn_at(get_parent(), global_position + Vector3(-0.4, 0, 0.4), roundi(StoryCombat.roll_gold(is_boss, enemy_lv) * gold_mul))
 	_maybe_drop_gear()
 	queue_free()

@@ -64,6 +64,7 @@ const CUTS := [
 	["st_boss_sweep", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "boss_sweep", ["@tree"]]]],   # G-0205 휩쓸기 — 초록 안전지대
 	["st_boss_sig", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "boss_sig", ["@tree"]]]],   # G-0206 황건 두목 도넛(보스 곁 초록 원)
 	["st_roster", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "roster", ["@tree"]]]],   # G-0209 4종횡 잡몹 명단 — 다른 종 셋이 플레이어 쪽으로 걸어옴
+	["st_roles", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "roles", ["@tree"]]]],   # G-0210 역할 — 돌진형 "!"·마법형 보라 구슬·희귀 ✨
 	["st_boss_groggy", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "boss_groggy", ["@tree"]]]],   # G-0206 그로기 💫
 	["st_field_front", "res://games/saga_story/world/TestField.tscn", [["free_modal"]]],   # G-0187 사냥터 — 앞 층 풀·바위·큰 인물(화면 높이 약 1/7)
 	["st_forest_front", "res://games/saga_story/world/ForestHuntGround.tscn", [["free_modal"]]],   # 숲 사냥터도

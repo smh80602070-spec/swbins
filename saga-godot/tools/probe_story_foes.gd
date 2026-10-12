@@ -113,11 +113,11 @@ func _initialize() -> void:
 		var lv: float = float(sp._map.enemy_lv())
 		var names := {}
 		for e in roamers(sp):
-			in_pool = in_pool and int(e.species.tier) == SE.tier_of(lv)
+			in_pool = in_pool and int(e.species.tier) == SE.tier_of(lv)   # G-0210 시대 적도 그 단계(ERA 는 단계마다 둘)
 			names[String(e.species.name)] = true
 			all_names[String(e.species.name)] = true
 			var w := String(e.species.weapon)
-			looks_ok = looks_ok and e.enemy_color.is_equal_approx(Color(String(e.species.color))) and e.is_ranged == (w == "bow" or w == "staff") and e.body_kind() == (("beast" if String(e.species.name).contains("코끼리") else "wolf") if String(e.species.form) == "quad" else "goblin")
+			looks_ok = looks_ok and e.enemy_color.is_equal_approx(Color(String(e.species.color))) and e.is_ranged == (w == "bow" or w == "staff") and e.body_kind() == ("beast" if String(e.species.name).contains("코끼리") else String(Enemy.FORM_KIND.get(String(e.species.form), "goblin")))
 		mixed = mixed or names.size() >= 2
 		print("    %s lv%d: %s" % [key, int(lv), str(names.keys())])
 		sp.free()

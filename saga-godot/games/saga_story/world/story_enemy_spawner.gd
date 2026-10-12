@@ -31,6 +31,8 @@ const StoryEnemies := preload("res://games/saga_story/data/story_enemies.gd")
 const GROUND_Y := 0.0
 const RESPAWN_CLEAR_M := 4.0
 const RESPAWN_TRIES := 5
+const MAGIC_CHANCE := 0.12   # G-0210 웹 side.js MAGIC_CHANCE
+const RARE_CHANCE := 0.07    # G-0210 웹 side.js RARE_CHANCE
 
 var _map: RefCounted
 var _rng := RandomNumberGenerator.new()
@@ -45,12 +47,24 @@ func _ready() -> void:
 
 
 ## 자리 x 에 잡몹 하나 — 종은 이 사냥터 단계 풀에서, 걷는 방향도 같은 RNG 로.
+## G-0210 — 웹 enemyRef·spawnEnemy 굴림 순서 그대로(전부 이 RNG): 시대 적(40%, 그 단계 ERA 풀) → 종 → 방향
+## → 마법형(근접만 12%) → 희귀형(7%) → 역할 RNG 씨앗.
 func spawn_at(x: float) -> Node3D:
-	var pool := StoryEnemies.pool_for(float(_map.enemy_lv()))
+	var lv := float(_map.enemy_lv())
+	var pool := StoryEnemies.pool_for(lv)
+	var era := StoryEnemies.era_pool_for(lv)
+	if not era.is_empty() and _rng.randf() < StoryEnemies.ERA_SHARE:
+		pool = era
 	var enemy := Node3D.new()
 	enemy.set_script(StoryEnemyScene)
 	enemy.species = pool[_rng.randi() % pool.size()]
 	enemy.walk_dir = 1.0 if _rng.randf() < 0.5 else -1.0
+	var role := StoryEnemies.role_of(enemy.species)
+	if role == "melee" and _rng.randf() < MAGIC_CHANCE:
+		role = "magic"
+	enemy.role = role
+	enemy.is_rare = _rng.randf() < RARE_CHANCE
+	enemy.role_seed = _rng.randi()
 	enemy.enemy_lv = _map.enemy_lv()
 	enemy.enemy_color = _map.enemy_color()
 	enemy.is_ranged = _map.enemy_is_ranged()

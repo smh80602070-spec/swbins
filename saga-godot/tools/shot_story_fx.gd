@@ -104,3 +104,36 @@ static func roster(tree: SceneTree) -> void:
 		e.set("hp", 99999.0)
 		e.set("max_hp", 99999.0)
 		print("ROSTER %s x%+.1f" % [String(e.get("species").name), float(offs[i])])
+
+
+## G-0210 — 역할: 오른쪽 돌진형이 "!" 띄우고 달려드는 중 · 왼쪽 마법형이 멈춰 서서 쏜 보라 구슬이 날아오는 중 · 멀리 희귀 ✨.
+## 컷 단계는 30프레임째, 촬영은 120프레임째 — 쿨을 0.9·1.0초로 맞춰 찍을 때 둘 다 한창이게.
+static func roles(tree: SceneTree) -> void:
+	for m in tree.get_nodes_in_group("ui_modal"):
+		m.queue_free()
+	var p := tree.get_first_node_in_group("player") as Node3D
+	if p == null:
+		return
+	var es := tree.get_nodes_in_group("story_enemy").filter(func(e): return not (e.get("species") as Dictionary).is_empty())
+	p.global_position.x = 10.0   # 처음 자리(x 2)는 왼쪽 끝이라 마법형이 끝 여백에 붙는다
+	var plan := [[5.0, "dash"], [-4.6, "magic"], [7.8, "rare"]]
+	for i in mini(es.size(), plan.size()):
+		var e := es[i] as Node3D
+		var off: float = plan[i][0]
+		e.global_position = Vector3(p.global_position.x + off, p.global_position.y, e.global_position.z)
+		e.set("walk_dir", -signf(off))
+		e.set("hp", 99999.0)
+		e.set("max_hp", 99999.0)
+		match String(plan[i][1]):
+			"dash":
+				e.set("is_ranged", false)
+				e.set("role", "dash")
+				e.set("_dash_cd", 0.9)
+			"magic":
+				e.set("is_ranged", false)
+				e.set("role", "magic")
+				e.set("_shot_cd_left", 1.0)
+			"rare":
+				e.set("is_rare", true)
+				e.call("_float_mark", "✨", 0.0, Color(1.0, 0.9, 0.4))
+		print("ROLES %s %s x%+.1f" % [plan[i][1], String(e.get("species").name), off])

@@ -3659,5 +3659,37 @@
   "ticket": "G-0209",
   "since": "2026-10-12",
   "note": "창 모드 st_roster 가로·세로 Claude 눈 ○(궁수 멈춰 섬·황건적·병졸 다가옴 — 세 종 색 다름)"
+ },
+ {
+  "id": "gd.st.enemy-roles",
+  "name": "4종횡 잡몹 2차 — 역할 넷(기병 돌진 \"!\"·코끼리/미늘창 탱커·근접 12% 마법형 높이 따라오는 보라 구슬·원거리)·희귀형 7%(✨·토스트·보상 ×4)·세 시대 적 40%(웹 side.js enemyRole·spawnEnemy·data-side.js ERA_ENEMIES)",
+  "files": [
+   "games/saga_story/data/story_enemies.gd",
+   "games/saga_story/world/story_enemy.gd",
+   "games/saga_story/world/story_enemy_spawner.gd",
+   "games/saga_story/world/story_enemy_shot.gd",
+   "tools/probe_story_roles.gd",
+   "tools/probe_story_foes.gd",
+   "tools/shot_story_fx.gd",
+   "tools/shot_scene.gd"
+  ],
+  "tests": [
+   "story_roles",
+   "story_foes",
+   "story_rules",
+   "story_boss",
+   "story_golden",
+   "story_labyrinth",
+   "story_player",
+   "story_fall",
+   "save_story",
+   "mount_story"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0210",
+  "since": "2026-10-12",
+  "note": "창 모드 st_roles 가로·세로 Claude 눈 ○(돌진형 \"!\"·마법형이 멈춰 서서 쏜 보라 구슬·희귀 들개 ✨ — 세로는 들개 ✨ 가 오른쪽 끝에 잘림)"
  }
 ]
