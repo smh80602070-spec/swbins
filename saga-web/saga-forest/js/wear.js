@@ -63,10 +63,11 @@
     if (!it) { return { kind: 'no', text: '없는 물건입니다' }; }
     if (owned(part, key)) { return { kind: 'no', text: '이미 옷장에 있습니다' }; }
     if (it.unlock === 'deliver') { return { kind: 'no', text: '🔒 배달 ' + it.at + '건을 채우면 옷장에 듭니다' }; }
-    if (core.save.player.gold < it.price) {
-      return { kind: 'no', text: '금이 모자랍니다 (🪙 ' + core.fmt(it.price) + ')' };
+    var ip = global.DG.workshop ? global.DG.workshop.cost(it.price) : it.price;   // 솜씨도 사는 값(W-0184)
+    if (core.save.player.gold < ip) {
+      return { kind: 'no', text: '금이 모자랍니다 (🪙 ' + core.fmt(ip) + ')' };
     }
-    core.save.player.gold -= it.price;
+    core.save.player.gold -= ip;
     st().owned[part + ':' + key] = true;
     core.gainFeat(2, '옷');
     core.log('🧵 ' + it.name + ' 을(를) 지었다 (🪙 -' + core.fmt(it.price) + ')', 'info');

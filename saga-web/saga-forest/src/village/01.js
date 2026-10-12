@@ -25,7 +25,7 @@
 
   /* 걸음 배속만 **매번 읽는다** — 어드민에서 돌리면 곧바로 듣는다.
      나머지 손잡이는 모듈이 켜질 때 한 번 읽으므로 새로고침이 필요하다 */
-  function speedMul() { return core.tuned('walk.speedMul', 1); }
+  function speedMul() { return core.tuned('walk.speedMul', 1) * (global.DG.workshop ? global.DG.workshop.walk() : 1); }   // 솜씨도 걸음(W-0184)
 
   var player = { x: W * TILE * 0.5, y: H * TILE * 0.55, vx: 0, vy: 0,
                  facing: 1, phase: 0, walking: false };
@@ -989,7 +989,7 @@
         if (j === i || props[j].kind !== 'flower') { continue; }
         if (Math.hypot(props[j].x - p.x, props[j].y - p.y) <= HYBRID_NEAR) { near++; }
       }
-      p.hybrid = near > 0 && core.hash2(Math.round(p.x), Math.round(p.y)) > 0.45;
+      p.hybrid = near > 0 && core.hash2(Math.round(p.x), Math.round(p.y)) > (global.DG.workshop ? global.DG.workshop.hybridCut() : 0.45);   // 솜씨도 꽃 교배
     }
   }
 

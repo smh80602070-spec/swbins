@@ -10,10 +10,10 @@
     var t = VD.TOOLS[key];
     if (!t) { return { kind: 'no', text: '없는 물건입니다' }; }
     if (hasTool(key)) { return { kind: 'no', text: '이미 가지고 있습니다' }; }
-    if (core.save.player.gold < t.price) {
-      return { kind: 'no', text: '금이 모자랍니다 (🪙 ' + core.fmt(t.price) + ')' };
+    var tp = global.DG.workshop ? global.DG.workshop.cost(t.price) : t.price; /* 솜씨도 사는 값 */ if (core.save.player.gold < tp) {
+      return { kind: 'no', text: '금이 모자랍니다 (🪙 ' + core.fmt(tp) + ')' };
     }
-    core.save.player.gold -= t.price;
+    core.save.player.gold -= tp;
     st().tools[key] = true;
     core.log(t.emoji + ' ' + t.name + ' 을(를) 샀다 — ' + t.desc, 'good');
     core.emit('changed');
@@ -30,7 +30,7 @@
     s.bag[key] -= n;
     var mul = global.DG.town ? global.DG.town.priceMul(it.cat) : 1;
     var lv = shopLevel();
-    var gold = Math.round(it.price * n * mul * lv.bonus);
+    var gold = Math.round(it.price * n * mul * lv.bonus * (global.DG.workshop ? global.DG.workshop.sellMul() : 1));   // 솜씨도 파는 값
     core.save.player.gold += gold;
     s.sold += n;
     s.soldGold = (s.soldGold || 0) + gold;         // 전방이 자라는 기준

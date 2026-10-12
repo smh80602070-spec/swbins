@@ -132,10 +132,11 @@
     if (!today || today.key !== key) {
       return { kind: 'no', text: f.name + '은(는) 오늘 들어오지 않았습니다' };
     }
-    if (core.save.player.gold < f.price) {
-      return { kind: 'no', text: '금이 모자랍니다 (🪙 ' + core.fmt(f.price) + ')' };
+    var fp = wsCost(f.price);
+    if (core.save.player.gold < fp) {
+      return { kind: 'no', text: '금이 모자랍니다 (🪙 ' + core.fmt(fp) + ')' };
     }
-    core.save.player.gold -= f.price;
+    core.save.player.gold -= fp;
     ownedMap(kind)[key] = true;
     core.log('🎨 ' + word + ' ' + f.name + ' 을(를) 샀다 (🪙 -' + core.fmt(f.price) + ')', 'info');
     core.emit('changed');
@@ -158,16 +159,19 @@
   function wallNow() { return VD().wall(st().wall); }
   function floorNow() { return VD().floor(st().floor); }
 
+  /** 사는 값 — 솜씨도 알뜰·구두쇠(W-0184) */
+  function wsCost(p) { return global.DG.workshop ? global.DG.workshop.cost(p) : p; }
   function buy(key) {
     var f = VD().furn(key);
     if (!f) { return { kind: 'no', text: '없는 물건입니다' }; }
     var today = shopToday();
     var listed = today.filter(function (x) { return x.key === key; }).length > 0;
     if (!listed) { return { kind: 'no', text: f.name + '은(는) 오늘 들어오지 않았습니다' }; }
-    if (core.save.player.gold < f.price) {
-      return { kind: 'no', text: '금이 모자랍니다 (🪙 ' + core.fmt(f.price) + ')' };
+    var fp = wsCost(f.price);
+    if (core.save.player.gold < fp) {
+      return { kind: 'no', text: '금이 모자랍니다 (🪙 ' + core.fmt(fp) + ')' };
     }
-    core.save.player.gold -= f.price;
+    core.save.player.gold -= fp;
     stockAdd(key, 1);
     core.log('🪑 ' + f.name + ' 을(를) 샀다 (🪙 -' + core.fmt(f.price) + ')', 'info');
     core.emit('changed');

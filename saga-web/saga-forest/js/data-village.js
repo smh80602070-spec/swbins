@@ -968,7 +968,7 @@
       return inSeason(it, key) && inWeather(it, wk);
     });
     if (!list.length) { list = all; }
-    var total = 0, i, CR = tool && global.DG.craft, wt = function (it) { return CR ? CR.weight(it, tool) : it.w; };
+    var total = 0, i, CR = tool && global.DG.craft, wt = function (it) { var w0 = CR ? CR.weight(it, tool) : it.w; return global.DG.workshop && it.w > 0 && it.w <= 20 ? w0 * global.DG.workshop.rareMul(cat) : w0; };   // 솜씨도 드문 것
     for (i = 0; i < list.length; i++) { total += wt(list[i]); }
     var r = Math.random() * total;
     for (i = 0; i < list.length; i++) {
@@ -1017,6 +1017,7 @@
       var f = PHASES.filter(function (x) { return x.key === k; });
       if (f[0]) { return f[0]; }
     }
+    if (global.DG.workshop) { hour = global.DG.workshop.hourShift(hour); }   // 솜씨도 새벽형(W-0184)
     var p = PHASES[PHASES.length - 1];
     for (var i = 0; i < PHASES.length; i++) { if (hour >= PHASES[i].from) { p = PHASES[i]; } }
     return hour < PHASES[0].from ? PHASES[PHASES.length - 1] : p;

@@ -180,7 +180,7 @@
        종류를 넘기면 그 소포를 곧바로 받는다(시트의 버튼·진단) */
     var PC = global.DG.parcel;
     if (PC) {
-      if (kind) { return PC.take(kind, dest); }
+      if (global.DG.workshop && global.DG.workshop.parcelBlock()) { return { kind: 'no', text: '🏡 마을 사랑 — 다른 마을 택배는 받지 않습니다' }; } if (kind) { return PC.take(kind, dest); }
       core.emit('village:open', 'parcel');
       return { kind: 'open', text: '택배 접수대', place: 'parcel' };
     }
@@ -712,7 +712,7 @@
 
   function castLine(prop) {
     fishing = { propId: prop.id, biteAt: Date.now() + CAST_MIN + Math.random() * CAST_VAR, ends: 0 };
-    fishing.ends = fishing.biteAt + BITE_WINDOW;
+    fishing.ends = fishing.biteAt + BITE_WINDOW * (global.DG.workshop ? global.DG.workshop.fishWin() : 1);   // 솜씨도 입질 창
     core.emit('village:fish', { state: 'cast' });
     return { kind: 'cast', text: '🎣 찌를 던졌다 — 입질을 기다린다' };
   }
@@ -734,14 +734,14 @@
     }
     var got = VD.pick('fish');
     if (!got) { return null; }
-    bagAdd(got, 1);
+    var fishN = global.DG.workshop ? global.DG.workshop.fishN(1) : 1; /* 솜씨도 올빼미 */ bagAdd(got, fishN);
     core.gainFeat(1, '낚시');
     core.gainExp(8);
     core.log(got.emoji + ' ' + got.name + ' 을 낚았다', 'good');
     core.emit('village:fish', { state: 'catch', item: got });
     core.emit('changed');
     core.persist();
-    return { kind: 'gather', text: got.emoji + ' ' + got.name + ' ×1', item: got };
+    return { kind: 'gather', text: got.emoji + ' ' + got.name + ' ×' + fishN, item: got };
   }
 
   /** 시간이 지나 입질을 놓쳤으면 줄을 거둔다 (update 가 부른다) */
@@ -854,7 +854,7 @@
         core.emit('village:open', 'town');
         return { kind: 'open', text: def.name, place: 'town' };
       }
-      core.emit('village:open', prop.kind);         // 전방·게시판·우편함은 화면이 받는다
+      if (prop.kind === 'shop' && global.DG.workshop && global.DG.workshop.shopClosed()) { return { kind: 'no', text: '🦉 올빼미 — 새벽엔 전방이 아직 닫혀 있습니다' }; } core.emit('village:open', prop.kind);         // 전방·게시판·우편함은 화면이 받는다
       return { kind: 'open', text: def.name, place: prop.kind };
     }
     if (spent(prop)) {
@@ -866,7 +866,7 @@
       if (sh) { return sh; }
     }
     /* 도구가 있어야 손이 가는 것 — 갈라진 자리엔 삽이 든다 */
-    if (def.tool && !hasTool(def.tool)) {
+    if (def.tool && !hasTool(def.tool) && !(global.DG.workshop && global.DG.workshop.noTool())) {   // 솜씨도 맨손
       var td = VD.TOOLS[def.tool];
       return { kind: 'no', text: td.emoji + ' ' + td.name + ' 이(가) 없습니다 — 전방에서 살 수 있습니다' };
     }
@@ -877,7 +877,7 @@
     var bonus = streak > 0 && streak % 3 === 0;         // 리듬 보너스 — 3연속마다
     var n = 1 + (Math.random() < 0.25 ? 1 : 0) + (bonus ? 1 : 0) + (CRg ? CRg.bonusN(def.tool) : 0) +   // '수확' 축
             (global.DG.festival && global.DG.festival.gatherBoost() && Math.random() < 0.5 ? 1 : 0);   // 칠석 소원의 답례(PLAN §5.6)
-    bagAdd(got, n);
+    if (global.DG.workshop) { n = global.DG.workshop.gatherN(n, prop.kind); } /* 솜씨도 채집 수 */ bagAdd(got, n);
     if (def.reset) { st().used[prop.id] = st().day; }
     core.gainFeat(1, '채집');
     core.gainExp(6);
@@ -1035,7 +1035,7 @@
   function bumpHeart(id, delta) {
     var s = st(), r = heartRec(id);
     if (r.gainDay !== s.day) { r.gainDay = s.day; r.gained = 0; }
-    var applied = delta;
+    if (global.DG.workshop) { delta = global.DG.workshop.heart(delta); } /* 솜씨도 하트 */ var applied = delta;
     if (delta > 0) {
       applied = Math.max(0, Math.min(delta, HEART_DAILY_CAP - r.gained));
       r.gained += applied;

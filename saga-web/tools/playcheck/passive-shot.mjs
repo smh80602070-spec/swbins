@@ -72,6 +72,21 @@ const OPEN = {
     var q = document.querySelector('.pwui-q'); q.value = '이동'; q.dispatchEvent(new Event('input'));
     return '단추 ' + (btn ? (clicked ? '열림' : '안 열림') : '없음') + ' · 찍음 ' + api.used() + '/' + api.points() + ' · 카드 ' + nx.id + ' ' + nx.cost + '점';
   })()`,
+  /* W-0184 — 독 「더보기」 안 「🌿 솜씨」 단추를 실제로 눌러 열리는지 본 뒤 카드를 띄운다(점수는 도감 60종 = 1 + 20) */
+  'saga-forest': `(function(){
+    var C = DG.core, WS = DG.workshop, s = DG.village.state(), i;
+    for (i = 0; i < 60; i++) { s.caught['shot_' + i] = 1; }
+    C.save.passive = { start: null, taken: [] }; WS._reset();
+    var btn = document.getElementById('btn-skill'); if (btn) { btn.click(); }
+    var clicked = !!(DG.passiveWebUI && DG.passiveWebUI.isOpen());
+    var api = WS.api(); api.take('o_angler');
+    function nearest() { var b = null; DG.passiveDef.nodes.forEach(function (n) { if (n.k !== 'n' || api.isTaken(n.id)) return; var p = api.pathTo(n.id); if (p && (!b || p.cost < b.cost)) b = { id: n.id, cost: p.cost }; }); return b; }
+    api.takePath(nearest().id); api.takePath(nearest().id);
+    var ui = WS.open(), nx = nearest();
+    ui.select(nx.id);
+    var q = document.querySelector('.pwui-q'); q.value = '하트'; q.dispatchEvent(new Event('input'));
+    return '단추 ' + (btn ? (clicked ? '열림' : '안 열림') : '없음') + ' · 찍음 ' + api.used() + '/' + api.points() + ' · 카드 ' + nx.id + ' ' + nx.cost + '점';
+  })()`,
 };
 /** 판마다 부팅 — 계정 만들고 이어하기 */
 const BOOT = {
@@ -113,6 +128,14 @@ const BOOT = {
   'saga-story': async (c, B) => {
     await c.go(B + 'index.html', 6000);
     await c.ev(`(function(){ if (!document.getElementById('title-continue') && DG.account && DG.account.create) { DG.account.create('성좌'); } })()`);
+    await c.go(B + 'index.html', 8000);
+    await c.ev(`(function(){ var b = document.getElementById('title-continue'); if (b) b.click(); })()`);
+    await sleep(4000);
+    for (let i = 0; i < 6; i++) { await c.key('Escape', 60); await sleep(200); }
+  },
+  'saga-forest': async (c, B) => {
+    await c.go(B + 'index.html', 6000);
+    await c.ev(`(function(){ if (!document.getElementById('title-continue') && DG.account && DG.account.create) { DG.account.create('솜씨'); } })()`);
     await c.go(B + 'index.html', 8000);
     await c.ev(`(function(){ var b = document.getElementById('title-continue'); if (b) b.click(); })()`);
     await sleep(4000);

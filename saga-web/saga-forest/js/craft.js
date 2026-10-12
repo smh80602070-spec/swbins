@@ -71,6 +71,8 @@
 
   /* ── 레시피 ───────────────────────────────────────────── */
 
+  /** 재료 수 — 솜씨도 손 큰 장인이면 줄어든다(W-0184) */
+  function needOf(r, k) { return global.DG.workshop ? global.DG.workshop.need(r.need[k]) : r.need[k]; }
   function recipe(key) { return VD().RECIPES.filter(function (r) { return r.key === key; })[0] || null; }
   function nameOf(r) {
     if (r.kind === 'tool') { var T = VD().TOOLS[r.tool]; return T.emoji + ' ' + T.name + ' Lv' + r.lv; }
@@ -80,7 +82,7 @@
   function needText(r) {
     return Object.keys(r.need).map(function (k) {
       var it = VD().item(k);
-      return (it ? it.emoji + it.name : k) + ' ' + V().bagCount(k) + '/' + r.need[k];
+      return (it ? it.emoji + it.name : k) + ' ' + V().bagCount(k) + '/' + needOf(r, k);
     }).join(' · ');
   }
   /** 지을 수 있나 — { ok, why } */
@@ -96,7 +98,7 @@
       if (cs().pending) { return { ok: false, why: '앞 승급의 3택을 먼저 고른다' }; }
     }
     for (var k in r.need) {
-      if (r.need.hasOwnProperty(k) && V().bagCount(k) < r.need[k]) { return { ok: false, why: '재료가 모자란다' }; }
+      if (r.need.hasOwnProperty(k) && V().bagCount(k) < needOf(r, k)) { return { ok: false, why: '재료가 모자란다' }; }
     }
     return { ok: true };
   }
@@ -106,7 +108,9 @@
     var c = can(r);
     if (!c.ok) { return { ok: false, why: c.why }; }
     var bag = st().bag, k;
-    for (k in r.need) { if (r.need.hasOwnProperty(k)) { bag[k] -= r.need[k]; } }
+    for (k in r.need) { if (r.need.hasOwnProperty(k)) { bag[k] -= needOf(r, k); } }
+    var WSc = global.DG.workshop;   // 솜씨도 — 손 큰 장인 삯 · 아낌(첫 재료 하나 돌려받기)
+    if (WSc) { core.save.player.gold -= WSc.craftFee(); for (k in r.need) { if (r.need.hasOwnProperty(k)) { if (WSc.refund()) { bag[k] += 1; } break; } } }
     var C = cs(), text;
     C.made = (C.made || 0) + 1;
     if (r.kind === 'tool') {

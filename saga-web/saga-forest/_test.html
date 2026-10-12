@@ -115,6 +115,10 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/wear.js"></script>
 <script src="js/terrain.js"></script>
 <script src="js/craft.js"></script>
+<script src="js/passive-web.js"></script>
+<script src="js/passive-web-ui.js"></script>
+<script src="js/data-passive.js"></script>
+<script src="js/workshop.js"></script>
 <script src="js/fs2d.js"></script>
 <script src="js/cozy2d.js"></script>
 <script src="js/cozy-cam3d.js"></script>
@@ -6984,6 +6988,135 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
         return Math.abs(pn.timeMul - 0.8) < 1e-9 && pn.extraP === 0 && ps.rareMul === 1.5 && rare === 13.5 && common === 40 && free &&
           ('잠자리채 timeMul ' + pn.timeMul + ' · 삽 드문 무게 9→' + rare + '·흔한 40→' + common + ' · 자재 한 칸 씀');
       } finally { crBack(k); }
+    });
+
+    /* ── W-0184 마을살이 솜씨도 (`workshop.js` · 공용 passive-web.js) — 싸움 수치 없음, 하루 손만 바뀐다 ── */
+    function wsWith(fn) {
+      var WS = DG.workshop, s = V.state(), keep = JSON.stringify({ passive: C.save.passive || null, gold: C.save.player.gold, tools: s.tools, caught: s.caught, hearts: s.hearts, bag: s.bag, craft: s.craft || null, delivery: s.delivery || null });
+      var inside0 = V.inside, rnd = Math.random;
+      C.save.passive = { start: null, taken: [] }; s.caught = {}; s.hearts = {}; s.tools = {}; WS._reset();
+      var i; for (i = 0; i < 400; i++) { s.caught['ws_' + i] = 1; }   // 도감 400종 → 점수 상한(56)까지
+      try { return fn(WS, WS.api(), s); }
+      finally {
+        V.inside = inside0; Math.random = rnd; C.setTune('time.phase', null);
+        var o = JSON.parse(keep);
+        if (o.passive) { C.save.passive = o.passive; } else { delete C.save.passive; }
+        C.save.player.gold = o.gold; s.tools = o.tools; s.caught = o.caught; s.hearts = o.hearts; s.bag = o.bag;
+        if (o.craft) { s.craft = o.craft; } else { delete s.craft; }
+        if (o.delivery) { s.delivery = o.delivery; } else { delete s.delivery; }
+        WS._reset();
+      }
+    }
+    /** 이름난 마디 key 를 길째 찍는다(시작점은 먼저 정해 둔다) */
+    function wsTake(api, nk) { return api.takePath('n_' + nk) || api.take('n_' + nk); }
+    function wsRule(api, rk) { return api.takePath('k_' + rk) || api.take('k_' + rk); }
+
+    t('fs.workshop: 솜씨도 ① 정의 ≥300 마디 · 시작점 여섯(채집꾼·낚시꾼·벌레박사·장인·꾸밈이·마당발) · 점수 = 1 + 도구 승급 + 도감/3 + 하트 문턱(상한 56)', function () {
+      var D = DG.passiveDef, WS = DG.workshop, s = V.state(), keep = JSON.stringify({ tools: s.tools, caught: s.caught, hearts: s.hearts });
+      try {
+        s.tools = { net: { lv: 3, perks: [] }, spade: { lv: 2, perks: [] } }; s.caught = { a: 1, b: 2, c: 1, d: 1, e: 0, f: 1, g: 1 }; s.hearts = { h1: { h: 5 }, h2: { h: 10 }, h3: { h: 2 } };
+        var p = WS.parts(), total = WS.pointsTotal();
+        var starts = D.starts.map(function (x) { return x.key; }).join();
+        var ok = D.nodes.length >= 300 && D.starts.length === 6 && starts === 'gatherer,angler,bugdoc,artisan,decorator,socialite' &&
+          p.first === 1 && p.tool === 3 && p.dex === 2 && p.heart === 6 && total === 12;
+        s.caught = {}; for (var i = 0; i < 400; i++) { s.caught['x' + i] = 1; }
+        var cap = WS.pointsTotal();
+        return ok && cap === 56 && ('마디 ' + D.nodes.length + ' · 시작점 ' + D.starts.length + ' · 점수 1+' + p.tool + '+' + p.dex + '+' + p.heart + ' = ' + total + ' · 상한 ' + cap + '(' + (cap / D.nodes.length * 100).toFixed(1) + '%)');
+      } finally { var o = JSON.parse(keep); s.tools = o.tools; s.caught = o.caught; s.hearts = o.hearts; }
+    });
+
+    t('fs.workshop: 솜씨도 ② 찍으면 채집 하나 더 확률(gatherN)·파는 값(sell)이 오른다', function () {
+      return wsWith(function (WS, api, s) {
+        api.take('o_gatherer');
+        Math.random = function () { return 0.01; };
+        var g0 = WS.gatherN(1, 'flower');
+        s.bag.apple = 2; var it = VD.item('apple'); var gold0 = C.save.player.gold; V.sell('apple', 1); var sold0 = C.save.player.gold - gold0;
+        wsTake(api, 'basket'); wsTake(api, 'fruit_luck');
+        var g1 = WS.gatherN(1, 'flower'), gold1 = C.save.player.gold; V.sell('apple', 1); var sold1 = C.save.player.gold - gold1;
+        Math.random = function () { return 0.99; };
+        var g2 = WS.gatherN(1, 'flower');
+        return g0 === 1 && g1 === 2 && g2 === 1 && sold1 > sold0 && it &&
+          ('채집 확률 ' + WS.sum('gatherPct') + '% → 1→' + g1 + ' · 사과 판 값 ' + sold0 + '→' + sold1 + '(파는 값 +' + WS.sum('sellPct') + '%)');
+      });
+    });
+
+    t('fs.workshop: 솜씨도 ③ 되돌리기 — 집 밖에선 막고, 집 안에선 하루 한 번 무료·그 뒤 한 마디 300벨, 벨이 모자라면 막는다', function () {
+      return wsWith(function (WS, api) {
+        api.take('o_angler'); wsTake(api, 'still_water');
+        var tk = C.save.passive.taken, n0 = api.used();
+        V.inside = function () { return false; };
+        var out = WS.guard('drop');
+        V.inside = function () { return true; };
+        C.save.player.gold = 1000; C.save.passive.freeDay = null;
+        var c1 = WS.dropCost(1), g1 = WS.guard('drop'); if (!g1 && api.drop(tk[tk.length - 1])) { WS._after('drop'); }
+        var gold1 = C.save.player.gold, c2 = WS.dropCost(1), g2 = WS.guard('drop'); if (!g2 && api.drop(tk[tk.length - 1])) { WS._after('drop'); }
+        var gold2 = C.save.player.gold;
+        C.save.player.gold = 10; var g3 = WS.guard('drop');
+        return out && c1 === 0 && !g1 && gold1 === 1000 && c2 === 300 && !g2 && gold2 === 700 && api.used() === n0 - 2 && g3 &&
+          ('밖 "' + out + '" · 첫 되돌리기 무료 · 다음 300벨(' + gold1 + '→' + gold2 + ') · 모자람 "' + g3 + '"');
+      });
+    });
+
+    t('fs.workshop: 솜씨도 ④ 이웃 아닌 마디는 거절 · 세이브 왕복(save.passive 한 칸)', function () {
+      return wsWith(function (WS, api) {
+        api.take('o_bugdoc');
+        var far = DG.passiveDef.nodes.filter(function (n) { return n.k === 's' && !api.canTake(n.id) && !api.isTaken(n.id); })[0];
+        var refused = !api.take(far.id);
+        wsTake(api, 'quiet_step');
+        var saved = JSON.parse(JSON.stringify(C.save.passive)), n = api.used();
+        C.save.passive = saved; WS._reset();
+        var api2 = WS.api();
+        return refused && n > 0 && api2.used() === n && api2.start() === 'bugdoc' && api2.isTaken('n_quiet_step') &&
+          ('먼 마디 ' + far.id + ' 거절 · 찍은 ' + n + ' → 왕복 ' + api2.used() + ' · 시작 ' + api2.start());
+      });
+    });
+
+    t('fs.workshop: 솜씨도 ⑤ 규칙 새벽형 — 4시가 밤 → 새벽, 6시가 새벽 → 낮(하루가 2시간 일찍 열린다)', function () {
+      return wsWith(function (WS, api) {
+        C.setTune('time.phase', null);
+        var b4 = VD.phaseOf(4).key, b6 = VD.phaseOf(6).key, b12 = VD.phaseOf(12).key;
+        api.take('o_gatherer'); var ok = wsRule(api, 'dawn');
+        var a4 = VD.phaseOf(4).key, a6 = VD.phaseOf(6).key, a12 = VD.phaseOf(12).key, a21 = VD.phaseOf(21).key;
+        return ok && b4 === 'night' && b6 === 'dawn' && a4 === 'dawn' && a6 === 'day' && b12 === a12 && a21 === 'night' &&
+          ('4시 ' + b4 + '→' + a4 + ' · 6시 ' + b6 + '→' + a6 + ' · 낮·밤 나머지 그대로');
+      });
+    });
+
+    t('fs.workshop: 솜씨도 ⑥ 규칙 구두쇠(판매·사는 값 ×1.25) · 마을 사랑(하트 ×2·택배 막힘) · 맨손(도구 없이·걸음 ×0.85) · 손 큰 장인(재료 −30%·삯 200)', function () {
+      return wsWith(function (WS, api) {
+        var r = [];
+        api.take('o_artisan'); r.push(wsRule(api, 'miser'), wsRule(api, 'bighand'));
+        var sm = WS.sellMul() / (1 + WS.sum('sellPct') / 100), cost = WS.cost(1000) / Math.max(0.5, 1 - WS.sum('buyPct') / 100);
+        var need = WS.need(10), fee = WS.craftFee();
+        C.save.passive = { start: null, taken: [] }; WS._reset(); api = WS.api();
+        api.take('o_socialite'); r.push(wsRule(api, 'villagelove'), wsRule(api, 'barehand'));
+        Math.random = function () { return 0.99; };
+        var h = WS.heart(1), hneg = WS.heart(-2), blocked = DG.parcel ? DG.parcel.take('plain', 'space') : { kind: 'no' };
+        var walk = WS.walk() / (1 + WS.sum('walkPct') / 100), bare = WS.noTool();
+        var ok = r.every(Boolean) && Math.abs(sm - 1.25) < 1e-9 && Math.abs(cost - 1250) < 1 && need === 7 && fee === 200 &&
+          h === 2 && hneg === -2 && blocked.kind === 'no' && Math.abs(walk - 0.85) < 1e-9 && bare && !V.state().delivery.carrying;
+        return ok && ('구두쇠 ×' + sm + '·사는 값 ×' + (cost / 1000) + ' · 재료 10→' + need + '·삯 ' + fee + ' · 하트 1→' + h + ' · 택배 "' + blocked.text + '" · 걸음 ×' + walk.toFixed(2));
+      });
+    });
+
+    t('fs.workshop: 솜씨도 ⑦ 규칙 한 우물(물고기 드문 것 ×2·다른 채집 절반) · 올빼미(밤 두 마리·새벽 전방 닫힘) · 정원사(교배 문턱↓·나무 하나 덜) · 「솜씨」 단추가 겹창을 연다', function () {
+      return wsWith(function (WS, api) {
+        var r = [];
+        api.take('o_angler'); r.push(wsRule(api, 'onewell'), wsRule(api, 'owl'));
+        Math.random = function () { return 0.99; };
+        var rf = WS.rareMul('fish') / WS.rareMul('bug'), g = WS.gatherN(3, 'flower');
+        C.setTune('time.phase', 'night'); var fn = WS.fishN(1);
+        C.setTune('time.phase', 'dawn'); var closed = WS.shopClosed();
+        C.setTune('time.phase', 'day'); var open = !WS.shopClosed(), fd = WS.fishN(1);
+        C.save.passive = { start: null, taken: [] }; WS._reset(); api = WS.api();
+        var cut0 = WS.hybridCut();
+        api.take('o_decorator'); r.push(wsRule(api, 'gardener'));
+        var cut1 = WS.hybridCut(), tree = WS.gatherN(2, 'tree');
+        var b = document.getElementById('btn-skill'), made = !b; if (made) { b = document.createElement('button'); b.id = 'btn-skill'; document.body.appendChild(b); WS.wire(); } b.click();
+        var opened = !!(DG.passiveWebUI && DG.passiveWebUI.isOpen()); if (opened) { DG.passiveWebUI.close(); } if (made) { b.remove(); }
+        return r.every(Boolean) && Math.abs(rf - 2) < 1e-9 && g === 2 && fn === 2 && fd === 1 && closed && open && cut0 === 0.45 && cut1 < cut0 && tree === 1 && b && opened &&
+          ('물고기 드문 것 ×' + rf + ' · 꽃 3→' + g + ' · 밤 물고기 ' + fn + ' · 새벽 전방 닫힘 · 교배 문턱 ' + cut0 + '→' + cut1.toFixed(2) + ' · 나무 2→' + tree + ' · 단추 열림');
+      });
     });
 
     t('fs.cozy2d: 2D 마을 스타듀식(W-0133) — 배율 기본 1.35·손잡이 0 이면 1, 지평선 자리 그대로·투영 왕복, 땅 덧칠은 좌표 해시(같은 칸 같은 무늬·Math.random 안 먹음), 흙길 가장자리 풀·물가 거품, 시간대 빛 색, 손잡이 곧바로', function () {

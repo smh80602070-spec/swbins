@@ -1,0 +1,90 @@
+// 3마을 마을살이 솜씨도 어휘 (W-0184) → node saga-web/tools/passive-web/gen.mjs saga-forest → saga-forest/js/data-passive.js
+// 효과 키는 workshop.js 가 읽는 것만(채집·낚시 입질·벌레·드문 것·판매가·사는 값·하트·걸음·재료 아낌·꽃 교배). 싸움·경영 수치는 없다.
+// 시작점 = 생활 갈래 여섯(채집꾼·낚시꾼·벌레박사·장인·꾸밈이·마당발), 가운데는 없다. 키를 지우면 gen 이 FAIL — 세이브가 id 를 쥔다.
+const N = (key, name, stats, theme, desc) => ({ key, name, stats, theme, ...(desc ? { desc } : {}) });
+export default {
+  seed: 20260824,
+  starts: [
+    { key: 'gatherer', name: '채집꾼', color: '#8cd938', theme: ['gatherPct', 'rarePct', 'walkPct'] },
+    { key: 'angler', name: '낚시꾼', color: '#4fa8e0', theme: ['fishPct', 'rarePct', 'sellPct'] },
+    { key: 'bugdoc', name: '벌레박사', color: '#e0c34f', theme: ['bugPct', 'rarePct', 'walkPct'] },
+    { key: 'artisan', name: '장인', color: '#c87a4a', theme: ['craftPct', 'sellPct', 'buyPct'] },
+    { key: 'decorator', name: '꾸밈이', color: '#e07ab0', theme: ['flowerPct', 'buyPct', 'walkPct'] },
+    { key: 'socialite', name: '마당발', color: '#b07ae8', theme: ['heartPct', 'sellPct', 'walkPct'] },
+  ],
+  small: [
+    { key: 'gatherPct', name: '부지런한 손', stats: { gatherPct: 3 } },
+    { key: 'fishPct', name: '찌 보는 눈', stats: { fishPct: 5 } },
+    { key: 'bugPct', name: '살금 손', stats: { bugPct: 3 } },
+    { key: 'rarePct', name: '눈썰미', stats: { rarePct: 4 } },
+    { key: 'sellPct', name: '흥정', stats: { sellPct: 2 } },
+    { key: 'buyPct', name: '알뜰', stats: { buyPct: 2 } },
+    { key: 'heartPct', name: '살가움', stats: { heartPct: 4 } },
+    { key: 'walkPct', name: '가벼운 발', stats: { walkPct: 2 } },
+    { key: 'craftPct', name: '아낌', stats: { craftPct: 4 } },
+    { key: 'flowerPct', name: '꽃손', stats: { flowerPct: 4 } },
+  ],
+  notable: [
+    // 채집꾼
+    N('basket', '큰 바구니', { gatherPct: 10 }, 'gatherPct'),
+    N('forager', '산나물 눈', { rarePct: 10, gatherPct: 4 }, 'rarePct'),
+    N('early_pick', '이슬 따기', { gatherPct: 6, walkPct: 4 }, 'gatherPct'),
+    N('ore_nose', '광맥 냄새', { rarePct: 12 }, 'rarePct'),
+    N('shell_walk', '갯벌 걸음', { walkPct: 6, gatherPct: 5 }, 'walkPct'),
+    N('fruit_luck', '열매 복', { gatherPct: 8, sellPct: 4 }, 'gatherPct'),
+    N('root_dig', '뿌리 캐기', { gatherPct: 6, rarePct: 6 }, 'rarePct'),
+    // 낚시꾼
+    N('still_water', '잔잔한 물', { fishPct: 15 }, 'fishPct'),
+    N('big_one', '월척', { rarePct: 10, fishPct: 5 }, 'rarePct'),
+    N('patience', '기다림', { fishPct: 12, heartPct: 4 }, 'fishPct'),
+    N('fish_market', '어물전', { sellPct: 8 }, 'sellPct'),
+    N('bait_box', '미끼통', { fishPct: 8, rarePct: 5 }, 'fishPct'),
+    N('river_song', '물가 노래', { fishPct: 6, walkPct: 4 }, 'fishPct'),
+    N('salt_dry', '소금 말리기', { sellPct: 5, fishPct: 6 }, 'sellPct'),
+    // 벌레박사
+    N('quiet_step', '숨죽인 발', { bugPct: 10 }, 'bugPct'),
+    N('wing_eye', '날개 보는 눈', { rarePct: 10, bugPct: 4 }, 'rarePct'),
+    N('net_wrist', '채 손목', { bugPct: 8, walkPct: 4 }, 'bugPct'),
+    N('cicada_song', '매미 소리', { bugPct: 6, heartPct: 4 }, 'bugPct'),
+    N('beetle_box', '딱정벌레 상자', { sellPct: 6, bugPct: 5 }, 'sellPct'),
+    N('field_note', '관찰 일지', { rarePct: 8, bugPct: 4 }, 'rarePct'),
+    N('dusk_watch', '해거름 지킴', { bugPct: 7, walkPct: 3 }, 'walkPct'),
+    // 장인
+    N('spare_cut', '자투리 쓰기', { craftPct: 12 }, 'craftPct'),
+    N('fine_hand', '고운 손끝', { craftPct: 8, sellPct: 4 }, 'craftPct'),
+    N('guild_price', '장인 값', { sellPct: 8 }, 'sellPct'),
+    N('bulk_buy', '도매', { buyPct: 8 }, 'buyPct'),
+    N('whetstone', '숫돌', { craftPct: 6, gatherPct: 4 }, 'craftPct'),
+    N('workbench', '손때 묻은 대', { craftPct: 8, buyPct: 3 }, 'craftPct'),
+    N('ledger', '장부', { sellPct: 5, buyPct: 4 }, 'buyPct'),
+    // 꾸밈이
+    N('flower_bed', '꽃밭', { flowerPct: 12 }, 'flowerPct'),
+    N('cross_pollen', '꽃가루 나르기', { flowerPct: 8, rarePct: 4 }, 'flowerPct'),
+    N('bargain_eye', '떨이 눈', { buyPct: 8 }, 'buyPct'),
+    N('garden_path', '꽃길', { walkPct: 8 }, 'walkPct'),
+    N('wallpaper', '도배 솜씨', { buyPct: 5, flowerPct: 4 }, 'buyPct'),
+    N('seed_pouch', '씨앗 주머니', { flowerPct: 8, gatherPct: 4 }, 'flowerPct'),
+    N('stroll', '산책', { walkPct: 6, heartPct: 4 }, 'walkPct'),
+    // 마당발
+    N('warm_word', '따뜻한 말', { heartPct: 12 }, 'heartPct'),
+    N('gift_eye', '선물 고르는 눈', { heartPct: 8, sellPct: 3 }, 'heartPct'),
+    N('town_crier', '소식통', { heartPct: 6, walkPct: 5 }, 'heartPct'),
+    N('neighbor_deal', '이웃 값', { sellPct: 6, buyPct: 4 }, 'sellPct'),
+    N('tea_time', '찻자리', { heartPct: 10 }, 'heartPct'),
+    N('errand_feet', '심부름 발', { walkPct: 8, heartPct: 3 }, 'walkPct'),
+    N('festival_heart', '잔치 마음', { heartPct: 6, gatherPct: 4 }, 'heartPct'),
+    // 사이
+    N('seasonal', '철 따라', { rarePct: 6, gatherPct: 4 }, 'rarePct'),
+    N('market_day', '장날', { sellPct: 6, buyPct: 3 }, 'sellPct'),
+  ],
+  keystone: [
+    { key: 'dawn', name: '새벽형', rule: 'dawn', desc: '하루가 2시간 일찍 열린다(새벽 3시부터 새벽빛, 6시부터 낮) — 밤이 그만큼 짧다' },
+    { key: 'owl', name: '올빼미', rule: 'owl', desc: '밤에 잡은 벌레·물고기가 두 마리씩, 대신 새벽엔 전방이 아직 닫혀 있다' },
+    { key: 'barehand', name: '맨손', rule: 'barehand', desc: '삽·잠자리채 없이도 캐고 잡는다, 대신 걸음 −15%' },
+    { key: 'onewell', name: '한 우물', rule: 'onewell', desc: '낚시 드문 것 2배, 낚시 말고 채집은 절반(최소 1)' },
+    { key: 'bighand', name: '손 큰 장인', rule: 'bighand', desc: '제작 재료 −30%, 대신 지을 때마다 삯 200' },
+    { key: 'miser', name: '구두쇠', rule: 'miser', desc: '파는 값 +25%, 사는 값도 +25%' },
+    { key: 'villagelove', name: '마을 사랑', rule: 'villagelove', desc: '이웃 하트가 두 배로 오른다, 다른 마을 택배는 받지 않는다' },
+    { key: 'gardener', name: '정원사', rule: 'gardener', desc: '꽃 교배 2배, 나무 열매는 하나 덜(최소 1)' },
+  ],
+};

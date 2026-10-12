@@ -94,6 +94,7 @@
   function take(kind, destKey) {
     var d = rec();
     if (d.carrying) { return { kind: 'no', text: '이미 소포를 갖고 있습니다 — 먼저 가져다 주세요' }; }
+    if (global.DG.workshop && global.DG.workshop.parcelBlock()) { return { kind: 'no', text: '🏡 마을 사랑 — 다른 마을 택배는 받지 않습니다' }; }   // 솜씨도(W-0184)
     kind = kind || 'plain'; destKey = destKey || 'space';
     if (!VD().PARCEL_KINDS[kind] || !destInfo(destKey)) { return { kind: 'no', text: '그 소포는 받을 수 없습니다' }; }
     d.carrying = true; d.kind = kind; d.dest = destKey; d.since = Date.now(); d.broken = false;

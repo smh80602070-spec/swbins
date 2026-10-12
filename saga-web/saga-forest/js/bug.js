@@ -265,7 +265,7 @@
   /** 휘두른다 */
   function swing(b) {
     if (!b) { return null; }
-    if (!hasNet()) {
+    if (!hasNet() && !(global.DG.workshop && global.DG.workshop.noTool())) {   // 솜씨도 맨손
       return { kind: 'no', text: '🥅 잠자리채가 없습니다 — 전방에서 살 수 있습니다' };
     }
     var idx = bugs.indexOf(b);
@@ -273,6 +273,7 @@
     bugs.splice(idx, 1);
     var it = VD().item(b.key);
     var nb = 1 + (global.DG.craft ? global.DG.craft.bonusN('net') : 0);   // 잠자리채 '수확' 축
+    if (global.DG.workshop) { nb = global.DG.workshop.bugN(nb); }   // 솜씨도 벌레 수·올빼미
     V().bagAdd(it, nb);
     core.gainFeat(2, '곤충');
     core.gainExp(10);
