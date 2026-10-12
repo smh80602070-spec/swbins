@@ -122,7 +122,7 @@
     caveRoom: caveRoom, caveDoor: caveDoor, caveChests: caveChests, chestOpened: chestOpened,
     caveBossChest: caveBossChest, bossUnlocked: bossUnlocked,
     sneaking: sneaking, toggleSneak: toggleSneak, setAutoSneak: setAutoSneak,
-    buyTool: buyTool, hasTool: hasTool,
+    buyTool: buyTool, hasTool: hasTool, caughtCatCount: caughtCatCount,
     rollDay: rollDay, today: today, status: status, state: st,
     /** 오늘의 일과판(§5.1) */
     taskList: taskList, weeklyTaskInfo: weeklyTaskInfo, checkTasks: checkTasks, counterOf: counterOf,

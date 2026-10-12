@@ -3,7 +3,8 @@
   "id": "fs.village",
   "name": "마을 생성·좌표 해시·숲 고리·바이옴",
   "files": [
-   "js/village.js"
+   "js/village.js",
+   "js/village-tasks.js"
   ],
   "tests": [
    "마을이 만들어졌다 — 땅·사물·주민"
