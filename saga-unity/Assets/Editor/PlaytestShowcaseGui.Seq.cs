@@ -13,6 +13,7 @@ namespace Saga.EditorTools
     /// `SAGA_SHOT_ACT` — 첫 장 직전에 움직임을 일으킨다(촬영 도구 안에서만, 게임 코드 무변경 · 그 기능 진단이 이미 부르는 공개 함수만):
     /// `walk`(가상 조이스틱 앞으로) · `attack`(사가만리 FieldCombat.Attack / 사가나락 PlayerCombat.TriggerAttack) · `swap`(다음 동료로 교체) ·
     /// `skill:<n>`(n 번 동료로 교체 뒤 Skill) · `roof`(마을집 지붕 남쪽에서 북으로 걷기) · `bossintro`(사가나락 = 진단의 두목 더미, 사가종횡 = 두목 6m 앞으로) ·
+    /// `bossroom`(U-0115 사가나락 — 러너가 진짜 두목 방을 짓고 주인공을 두목 9m 밖에 세워 걸려 들어가게, 8m 달려듦·컷은 게임이 연다) ·
     /// `gesture`(동료 환호) · `worldmap`(사가천하 지도 열기) · `party`·`party2`(모양별 동료 편성 — 스킬 진단과 같은 동료). `realmeras`(U-0091 사가천하 — 시간 틈 사람 묻힌 성 들여 수색·훈련·지도 켬) · `realmtactics`(U-0099 전술판 열고 첫 장수 고름) · `realmannals`(U-0101 열전 넷 심고 서고) · `realmzoom`(U-0102 지도 40m) · `hurt`(U-0105 2나락·4종횡 — 체력 35% 에서 한 대 → 첫 장 가장자리 번쩍·붉은 숫자, 끝 장 30% 밑 맥박). 대상 `screen` = 화면 그대로 첫·끝 장(오버레이 UI 포함). 판에 없는 동작은 로그에 SKIP. 여러 개는 `+` 로(`walk+attack`).
     /// </summary>
     public static partial class PlaytestShowcaseGui
@@ -75,6 +76,7 @@ namespace Saga.EditorTools
         private static bool SeqTick()
         {
             if (_seqWalk) SetJoystick(new Vector2(0f, 1f));
+            if (_approachBoss != null) ApproachTick();
             if (_skillRetry >= 0)
             {
                 if (TrySkill(_skillRetry) == -1 && ++_skillTries < 120) { _seqNextAt = _frame + 2; return false; }
@@ -186,6 +188,9 @@ namespace Saga.EditorTools
                         if (Saga.Dungeon.Cinematics.DungeonCutscenes.Instance != null) DungeonBossIntro();
                         else if (Saga.Story.Cinematics.StoryCutscenes.Instance != null) StoryBossIntro();
                         else { Skip(act); return; }
+                        break;
+                    case "bossroom":   // U-0115 2나락 — 진짜 두목 방(BuildRoomForTest("boss"))·진짜 달려듦(8m)으로 컷을 연다(Tick 직접 안 부름)
+                        if (Saga.Dungeon.Cinematics.DungeonCutscenes.Instance == null || !DungeonBossRoom()) { Skip(act); return; }
                         break;
                     case "gesture":
                         if (!Saga.Dungeon.Data.GestureState.Start(Saga.Dungeon.Data.GestureState.AllyKey, Saga.Dungeon.Data.GestureState.Kind.Cheer, Time.time)) { Skip(act); return; }
@@ -424,6 +429,56 @@ namespace Saga.EditorTools
                 boss = (Saga.Dungeon.World.DungeonEnemy)dummy.Invoke(null, new object[] { pos, "황건적 두목", true, true, 2f, false });
             }
             boss.Tick(0.01f);
+        }
+
+        private static Transform _approachBoss;   // U-0115 bossroom — 컷이 열릴 때까지 주인공을 이 두목 쪽으로 걸린다
+        private static int _approachSteps;
+
+        /// <summary>사가나락 — 다른 적을 끄고 러너가 진짜 두목 방을 짓게 한 뒤(`Enemy_Floor_Boss`·호위 둘), 주인공을 두목에서 방 안쪽으로 9m
+        /// (방 경계 안에서 안 되면 되는 만큼, 최소 8.2m)에 두목을 보게 세운다. 컷은 게임이 연다 — `ApproachTick` 이 주인공을 두목 쪽으로 걸려
+        /// aggroRadius 8m 안에 드는 순간 `DungeonEnemy` 가 스스로 달려듦·등장 컷(tasks U-0115).</summary>
+        private static bool DungeonBossRoom()
+        {
+            var pl = GameObject.FindWithTag("Player");
+            var runner = Object.FindFirstObjectByType<Saga.Dungeon.World.DungeonFloorRunner>();
+            if (pl == null || runner == null) return false;
+            foreach (var e in new List<Saga.Dungeon.World.DungeonEnemy>(Saga.Dungeon.World.DungeonEnemy.Active)) if (e != null) e.gameObject.SetActive(false);
+            runner.BuildRoomForTest("boss");
+            var boss = Saga.Dungeon.World.DungeonEnemy.Active.FirstOrDefault(e => e != null && e.gameObject.activeInHierarchy && e.name == "Enemy_Floor_Boss");
+            if (boss == null) return false;
+            var rt = runner.transform;
+            Vector3 b = boss.transform.position;
+            Vector3 dir = rt.position - b; dir.y = 0f;
+            dir = dir.sqrMagnitude > 0.01f ? dir.normalized : -rt.right;
+            float half = Saga.Dungeon.World.DungeonRoomBuilder.RoomWidth * 0.5f - 0.8f;   // 방 20×20 — 벽 안쪽 0.8m 여유
+            bool Inside(Vector3 q) { var l = rt.InverseTransformPoint(q); return Mathf.Abs(l.x) <= half && Mathf.Abs(l.z) <= half; }
+            float dist = 9f;
+            while (dist > 8.2f && !Inside(b + dir * dist)) dist -= 0.1f;
+            Vector3 p = b + dir * dist; p.y = b.y;
+            Teleport(pl.transform, p);
+            pl.transform.rotation = Quaternion.LookRotation(-dir, Vector3.up);
+            Saga.Dungeon.World.DungeonEnemy.ResetIntroSeenForTest();
+            _approachBoss = boss.transform; _approachSteps = 0;
+            Debug.Log($"[ShowcaseGui] bossroom 두목 {b} · 주인공 {p} · {dist:0.0}m · 호위 {Saga.Dungeon.World.DungeonEnemy.Active.Count(e => e != null && e.gameObject.activeInHierarchy) - 1}");
+            return true;
+        }
+
+        /// <summary>U-0115 — 컷이 열릴 때까지 한 틱 0.06m 씩 두목 쪽으로(CharacterController.Move). 열리면 멈추고 그때 거리를 남긴다.</summary>
+        private static void ApproachTick()
+        {
+            var pl = GameObject.FindWithTag("Player");
+            if (pl == null) { _approachBoss = null; return; }
+            Vector3 d = _approachBoss.position - pl.transform.position; d.y = 0f;
+            if (Saga.Dungeon.Cinematics.DungeonCutscenes.Playing || ++_approachSteps > 400)
+            {
+                Debug.Log($"[ShowcaseGui] bossroom {(Saga.Dungeon.Cinematics.DungeonCutscenes.Playing ? "컷 열림" : "컷 안 열림(시간 초과)")} — 두목까지 {d.magnitude:0.00}m · {_approachSteps}틱");
+                _approachBoss = null;
+                return;
+            }
+            var cc = pl.GetComponent<CharacterController>();
+            Vector3 step = d.normalized * 0.06f;
+            if (cc != null && cc.enabled) cc.Move(step); else pl.transform.position += step;
+            pl.transform.rotation = Quaternion.LookRotation(d.normalized, Vector3.up);
         }
 
         /// <summary>사가종횡 — 진단(PlaytestStoryBossIntro)처럼 두목 6m 앞으로 옮겨 CheckIntro.</summary>

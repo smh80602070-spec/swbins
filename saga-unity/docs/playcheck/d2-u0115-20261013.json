@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-13",
+  "tickets": ["U-0115 2나락 층 두목 등장 컷 — 진짜 두목 방·진짜 달려듦(8m)으로 찍어 U-0114 흠 둘 가리기"],
+  "how": "PlaytestDungeonHeadless(회귀) + ShowcaseGui GUI 촬영 두 판(TestDungeon, gamecam;screen, ACT=bossroom, SEQ=8,30 · 12,50), 세이브 다섯 치운 채 · Claude 눈",
+  "fix": "Editor/PlaytestShowcaseGui.Seq.cs 새 동작 bossroom: 다른 적 끔 → 러너 BuildRoomForTest(\"boss\") → Enemy_Floor_Boss(호위 둘)에서 방 안쪽 9m 에 주인공(두목 봄) → ResetIntroSeenForTest → 한 틱 0.06m 씩 걸어 들어가 게임이 8m 달려듦·컷을 엶(Tick 직접 안 부름). 게임 코드 무변경 — 컷 구도(DungeonCutscenes) 안 고침",
+  "scene": ["[PlaytestDungeonHeadless] boss intro OK - … 가까운 샷 5.4m · 컷 3번(두목 2·살수 1)", "[PlaytestDungeonHeadless] cut camera live OK - t=3.59 실제 카메라가 CutCam_BossClose 에(0.00m)·포효 신호", "[PlaytestDungeonHeadless] OK - 10 frames, no errors"],
+  "runtime_errors": 0,
+  "shots": "세션 scratchpad u0115_shots1(8,30 — 프레임이 빨라 넓은 샷까지만)·u0115_shots2(12,50 — 컷 전부) — 커밋 안 함. 로그 '컷 열림 — 두목까지 7.98m · 17틱'",
+  "results": [
+    { "id": "un.dg.boss-intro", "eye": "○", "note": "넓은 샷(3~6칸): 주인공 왼쪽 아래 어깨 너머, 두목 머리끝까지 다 들어오고 위로 천장 띠가 남음 · 호위 둘 양옆 · 가까운 샷(7~12칸): 얼굴·붉은 윗몸·도끼 알아봄, 배경은 천장 아닌 방 벽 · screen_12 이름표 '황건적 두목'·부제·건너뛰기. 흠 둘 = 촬영 자리 탓(시작 복도·4m 앞) → 구도 무변경", "result": "D2 유지", "date": "2026-10-13" }
+  ],
+  "left": "실제 화면(screen_12)은 렌더 텍스처 시트보다 어둡다(얼굴은 밝고 몸은 어둑, 실루엣은 보임)"
+}
