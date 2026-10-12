@@ -16,7 +16,7 @@ namespace Saga.EditorTools
     /// ① <see cref="RunBatch"/>(`-executeMethod …PlaytestGoSfxMove.RunBatch`, 장면 없이): 지역 → 지면 표(전 지역·서리봉·독립 땅·모르는 id) · 무기 종류 다섯 → 타격음 이름 ·
     ///    <see cref="FootstepSfx"/> 규칙(걷기·달리기 박자·멈춤 0·프레임이 느려도 같은 걸음 수·공중 누적 0·착지 소리·짧은 뜀은 착지 없음·입수 한 번·탈것 위 무음) · 새 이름 전부가 정본 `saga-assets/sfx/` 에 실제로 있다.
     /// ② <see cref="Run"/>(`PlaytestHeadless` 가 효과음 진단 앞에 부른다, 장면 안): 진짜 `TakeHit` 이 활성 인물 무기 종류의 `&lt;kind&gt;_hit` 를 부르고,
-    ///    진짜 `PlayerController.Step` 으로 걸으면 `step_&lt;지면&gt;`·점프하면 `jump`. 소리 파일이 없어도(K-0076) 기록(`SagaSfx.History`)은 남는다.
+    ///    진짜 `PlayerController.Step` 으로 걸으면 `step_&lt;지면&gt;`·점프하면 `jump` · U-0110 다리 널판 위를 걸으면 `step_wood`(표는 ①에서 다리 칸 점검). 소리 파일이 없어도(K-0076) 기록(`SagaSfx.History`)은 남는다.
     /// </summary>
     public static class PlaytestGoSfxMove
     {
@@ -58,6 +58,39 @@ namespace Saga.EditorTools
             PlaytestKit.Check(GoSurface.All.Length == 6 && GoSurface.All.Distinct().Count() == 6, "지면 여섯이 아님");
             PlaytestKit.Check(GoSurface.StepName("grass") == "step_grass", "걸음 이름 규칙");
             PlaytestKit.Check(GoWorldMap.Regions.Select(r => GoSurface.OfRegion(r.Id)).Distinct().Count() >= 4, "일곱 지역의 지면이 4종 미만(표가 무의미)");
+            CheckBridgeTable();
+        }
+
+        /// <summary>U-0110 다리 칸('B') 널판 위만 나무 — 널판 밑 물·같은 칸 널판 옆·이웃 강 칸은 지역 표 그대로.</summary>
+        private static void CheckBridgeTable()
+        {
+            PlaytestKit.Check(TestMapData.TileAt(3, 5) == 'B', $"다리 칸 (3,5) 이 'B' 가 아님({TestMapData.TileAt(3, 5)})");
+            Vector3 c = TestMapData.WorldPos(3, 5);
+            float top = TestMapData.Legend['B'].Height + TestMapData.BridgeClearance;
+            string Region(Vector3 p) => GoSurface.OfRegion(GoWorldMap.RegionAt(p));
+            void Yes(Vector3 p, string what) => PlaytestKit.Check(GoSurface.OnBridge(p) && GoSurface.At(p) == GoSurface.Wood, $"{what} {p} 이 다리 나무가 아님(At {GoSurface.At(p)})");
+            void No(Vector3 p, string what) => PlaytestKit.Check(!GoSurface.OnBridge(p) && GoSurface.At(p) == Region(p), $"{what} {p} 이 다리로 잡힘(At {GoSurface.At(p)}, 지역 {Region(p)})");
+            Yes(new Vector3(c.x, top, c.z), "다리 가운데 널판 윗면");
+            Yes(new Vector3(c.x, top + 0.05f, c.z), "널판 위 발");
+            Yes(new Vector3(c.x + 2.5f, top, c.z + 20f), "널판 북쪽 끝 가장자리");
+            Yes(new Vector3(c.x - 2.5f, top, c.z - 20f), "널판 남쪽 끝 가장자리");
+            No(new Vector3(c.x, TestMapData.Legend['B'].Height, c.z), "같은 xz 옛 바닥 높이(−1)");
+            No(new Vector3(c.x, TestMapData.RiverBedHeight, c.z), "같은 xz 강바닥");
+            No(new Vector3(c.x, TestMapData.WaterSurfaceHeight - 1f, c.z), "널판 밑 헤엄 높이");
+            No(new Vector3(c.x + 12f, top, c.z), "같은 칸 널판 옆 물 위");
+            Vector3 n = TestMapData.WorldPos(2, 5);
+            No(new Vector3(n.x, top, n.z), "이웃 강 칸 (2,5) 널판 높이");
+            // 다리 아닌 칸은 전부 옛 표 그대로(집 밖이면 At == 지역 표)
+            int same = 0, total = 0;
+            for (int y = 0; y < TestMapData.RowCount; y++)
+                for (int x = 0; x < TestMapData.Cols; x++)
+                {
+                    if (TestMapData.TileAt(x, y) == 'B') continue;
+                    Vector3 p = TestMapData.WorldPos(x, y) + Vector3.up * (TestMapData.GroundHeight(x, y) + 0.05f);
+                    total++; if (GoSurface.At(p) == Region(p)) same++;
+                }
+            PlaytestKit.Check(same == total, $"다리 아닌 칸 {total - same}/{total} 의 지면이 지역 표와 다름");
+            PlaytestKit.Check(!GoSurface.InsideHouse(), "장면 없이 집 안으로 잡힘");
         }
 
         private static void CheckHitNames()
@@ -204,6 +237,42 @@ namespace Saga.EditorTools
             else parts.Add("진짜 점프 jump");
             for (int i = 0; i < 60; i++) pc.Step(0.05f); // 내려앉기(착지음은 기록만 — 파일 없이도 남음)
             if (SagaSfx.History.Contains("land")) parts.Add("착지 land");
+            CheckBridgeWalk(pc, parts);
+        }
+
+        /// <summary>U-0110 플레이어를 다리 가운데 널판 위에 놓고 진짜 `Step` 으로 북쪽(+z, 널판 길이 방향) 2초 → `step_wood`. 끝나면 원래 자리로.</summary>
+        private static void CheckBridgeWalk(PlayerController pc, List<string> parts)
+        {
+            if (GoMounts.Riding != null) { Fail("탈것을 탄 채라 다리 걷기를 못 봄"); return; }
+            Vector3 orig = pc.transform.position;
+            Vector3 c = TestMapData.WorldPos(3, 5);
+            float top = TestMapData.Legend['B'].Height + TestMapData.BridgeClearance;
+            try
+            {
+                pc.Teleport(new Vector3(c.x, top + 0.05f, c.z - 6f));
+                pc.SetTestInput(Vector2.zero, false);
+                for (int i = 0; i < 10; i++) pc.Step(0.05f); // 널판에 붙음
+                if (pc.Mode != PlayerController.MoveMode.Ground) { Fail($"다리 널판 위에서 땅 모드가 아님({pc.Mode}, y {pc.transform.position.y:0.00})"); return; }
+                SagaSfx.ResetForTest(); GoSfx.ResetForTest();
+                pc.Footsteps.Reset();
+                int c0 = pc.Footsteps.StepCount;
+                pc.SetTestInput(new Vector2(0f, 1f), false);
+                for (int i = 0; i < 40; i++) pc.Step(0.05f);
+                pc.SetTestInput(Vector2.zero, false);
+                pc.Step(0.05f);
+                Vector3 end = pc.transform.position;
+                int walked = pc.Footsteps.StepCount - c0;
+                if (walked == 0) Fail($"다리 위 2초 걸었는데 걸음 소리가 없음(끝 {end})");
+                else if (pc.Footsteps.LastSurface != GoSurface.Wood) Fail($"다리 위 걸음 지면이 {pc.Footsteps.LastSurface}(기대 wood, 끝 {end})");
+                else if (!SagaSfx.History.Contains(GoSurface.StepName(GoSurface.Wood))) Fail($"다리 위 걸음 기록에 step_wood 없음({string.Join(",", SagaSfx.History)})");
+                else if (!GoSurface.OnBridge(end)) Fail($"2초 뒤 널판 밖({end})");
+                else parts.Add($"다리 위 걷기 2초 {walked}걸음 step_wood({end.z - c.z + 6f:0.0}m)");
+            }
+            finally
+            {
+                pc.SetTestInput(Vector2.zero, false);
+                pc.Teleport(orig);
+            }
         }
 
         private static void Fail(string msg)
