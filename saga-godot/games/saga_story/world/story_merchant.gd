@@ -142,15 +142,17 @@ func _open_shop() -> void:
 	for key: String in gear_offers:
 		var it: Dictionary = StoryCombat.GEAR_ITEMS[key]
 		var label: Dictionary = StoryCombat.SLOT_LABEL[String(it.slot)]
+		var shown := _price(int(it.price))   # G-0212 리뷰 — 연 순간 값으로 묶는다(고르는 사이 할인이 끝나도 보인 값 그대로)
 		choices.append({
-			"label": "%s %s(%s) · 💰 %d" % [String(label.emoji), String(it.name), String(label.name), _price(int(it.price))],
-			"cb": func() -> void: _on_gear_picked(key, layer_box),
+			"label": "%s %s(%s) · 💰 %d" % [String(label.emoji), String(it.name), String(label.name), shown],
+			"cb": func() -> void: _on_gear_picked(key, layer_box, shown),
 		})
 	for key: String in scroll_offers:
 		var sc: Dictionary = StoryCombat.SCROLLS[key]
+		var shown := _price(int(sc.price))
 		choices.append({
-			"label": "📜 %s · 💰 %d" % [String(sc.name), _price(int(sc.price))],
-			"cb": func() -> void: _on_scroll_picked(key, layer_box),
+			"label": "📜 %s · 💰 %d" % [String(sc.name), shown],
+			"cb": func() -> void: _on_scroll_picked(key, layer_box, shown),
 		})
 
 	_shop_open = true
@@ -164,10 +166,10 @@ func _close_shop(layer_box: Dictionary) -> void:
 	_shop_open = false
 
 
-func _on_gear_picked(key: String, layer_box: Dictionary) -> void:
+func _on_gear_picked(key: String, layer_box: Dictionary, shown := -1) -> void:
 	_close_shop(layer_box)
 	var it: Dictionary = StoryCombat.GEAR_ITEMS[key]
-	var price := _price(int(it.price))
+	var price := shown if shown >= 0 else _price(int(it.price))
 	if not StorySaveState.spend_gold(price):
 		Toast.show(self, "💰 금이 모자라다 (%d / 보유 %d)" % [price, StorySaveState.gold], 2.5)
 		return
@@ -179,10 +181,10 @@ func _on_gear_picked(key: String, layer_box: Dictionary) -> void:
 ## 물건(uid)에 골라 쓰지만, 이 포트엔 가방도 물건 인스턴스도 없다 — 무기
 ## 주문서는 무기 슬롯, 방어구 주문서는 지금 낀 방어구 슬롯(ARMOR_SLOTS
 ## 아홉 곳) 중 아직 업횟이 남은 곳을 무작위로 골라 붓는다.
-func _on_scroll_picked(key: String, layer_box: Dictionary) -> void:
+func _on_scroll_picked(key: String, layer_box: Dictionary, shown := -1) -> void:
 	_close_shop(layer_box)
 	var sc: Dictionary = StoryCombat.SCROLLS[key]
-	var price := _price(int(sc.price))
+	var price := shown if shown >= 0 else _price(int(sc.price))
 	if not StorySaveState.spend_gold(price):
 		Toast.show(self, "💰 금이 모자라다 (%d / 보유 %d)" % [price, StorySaveState.gold], 2.5)
 		return

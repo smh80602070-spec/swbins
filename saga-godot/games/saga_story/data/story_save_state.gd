@@ -824,6 +824,7 @@ func try_load() -> bool:
 		return false
 	var data: Dictionary = migrated
 
+	merchant_until_ms = 0   # G-0212 리뷰 — 할인은 세이브 밖이라 다른 진행을 불러오면 끊는다
 	level = int(data.get("level", 1))
 	exp = int(data.get("exp", 0))
 	kills = int(data.get("kills", 0))

@@ -288,6 +288,14 @@ func _initialize() -> void:
 		and not chest_box.visible and once_c and toast_c == "💰 보물상자! 🪙+%d · 📦 %s" % [cg, item_name],
 		"⑦ 상자 R 밖(1.0m) 닫힘 · R 안(0.8m) 금 +%d(42~73) · 장비 %s 줍기 하나(풀 안) · 상자 숨음 · 한 번만 · 토스트 \"%s\"" % [cg, key, toast_c])
 	ss.gold = gc0
+	## R-5 리뷰 — 지금 낀 바로 그 키는 상자 후보에서 빠진다(같은 걸 다시 끼면 주문서 강화가 지워짐)
+	var eq_save: Dictionary = ss.equipped.duplicate()
+	var kq: String = SC.gear_pool_for(1.0)[0]
+	ss.equipped[String(SC.GEAR_ITEMS[kq].slot)] = kq
+	var cp: Array = Spawner.chest_pool(1.0)
+	ss.equipped = eq_save
+	check(not cp.has(kq) and cp.size() == SC.gear_pool_for(1.0).size() - 1,
+		"⑦ 낀 %s 는 상자 후보에서 빠짐(%d → %d)" % [kq, SC.gear_pool_for(1.0).size(), cp.size()])
 	sp.free()
 
 	# ⑧ 채집 보너스 지역 (G-0212)
@@ -370,10 +378,20 @@ func _initialize() -> void:
 	var sb := save_src.find("func save() -> bool:")
 	var save_body := save_src.substr(sb, save_src.find("\nfunc ", sb + 10) - sb)
 	check(quiet_m and mbody != null and sp.merchant.triggered and left_ms > 89000 and left_ms <= 90000
-		and toast_m == "🛒 지나가던 상인 — 90초 동안 상점이 30% 싸집니다!",
+		and toast_m == "🛒 지나가던 상인 — 90초 동안 상점이 30% 싸집니다! · K: 물목",
 		"⑨ 상인 몸 · R 밖(1.5m) 그대로 · R 안(1.3m) 할인 %.1f초 · 토스트 \"%s\"" % [left_ms / 1000.0, toast_m])
 	check(shown == roundi(base * 0.7) and paid == shown and is_equal_approx(after, 1.0) and not save_body.contains("merchant"),
 		"⑨ 상점 %s 값 %d → 표시 %d·지불 %d(×0.7) · 시각 지나면 ×%.1f · save() 에 상인 키 없음" % [gk, base, shown, paid, after])
+	## R-5 리뷰 — 이동 상인은 그 자리 상점 · 고른 값은 연 순간 값 · 불러오면 할인 끊김
+	var gp0: int = ss.gold
+	ss.gold = 999999
+	shop._on_gear_picked(gk, {}, 50)
+	var paid_locked: int = 999999 - ss.gold
+	ss.gold = gp0
+	ss.equipped = old_eq
+	var load_body := save_src.substr(save_src.find("func try_load() -> bool:"), 600)
+	check(mbody.get_script() == Merchant and mbody.has_method("_open_shop") and paid_locked == 50 and load_body.contains("merchant_until_ms = 0"),
+		"⑨ 이동 상인 = 그 자리 상점(K) · 보인 값 50 그대로 냄(%d) · try_load 가 할인을 끊음" % paid_locked)
 	ss.merchant_until_ms = 0
 	shop.free()
 	sp.free()

@@ -31,7 +31,8 @@ extends Node3D
 ## **G-0212 — 2차 셋, 굴림은 웹 순서 여섯(상자→채집→습격→미니→상인→구조).** 보물상자 22%(밟으면 금 + 장비 하나 —
 ## 가방이 없어 장비는 그 자리에 떨궈 밟아 끼는 줍기로) · 채집 보너스 지역 18%(그 구간 채집 ×2, 처음 들어설 때 🍀 —
 ## story_gather.gd 가 그룹 story_hunt_events 로 forage_mul_at 를 묻는다) · 이동 상인 12%(지나면 90초 상점 ×0.7 —
-## StorySaveState.merchant_until_ms, 메모리만). 웹엔 상인 그림이 없어 재해석으로 몸 하나를 세운다.
+## StorySaveState.merchant_until_ms, 메모리만). 웹은 🏪 를 어디서든 열지만 고돗 상점은 마을(허도)에만 있어 90초 안에 못 닿는다 —
+## 재해석: 이동 상인을 그 자리의 상점(story_merchant.gd, K 로 물목)으로 세운다(R-5 리뷰).
 
 @export var map_path: String = "res://games/saga_story/data/field_map.gd"
 
@@ -42,6 +43,7 @@ const StoryNpcBody := preload("res://games/saga_story/world/story_npc_body.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const StoryLook := preload("res://games/saga_story/data/story_look.gd")
 const StoryGearPickup := preload("res://games/saga_story/world/story_gear_pickup.gd")
+const StoryMerchant := preload("res://games/saga_story/world/story_merchant.gd")
 
 const GROUND_Y := 0.0
 const RESPAWN_CLEAR_M := 4.0
@@ -141,7 +143,8 @@ static func _event_x(rng: RandomNumberGenerator, width_m: float) -> float:
 	return EVENT_MARGIN_M + rng.randf() * (width_m - EVENT_MARGIN_M * 2.0)
 
 
-## G-0212 — 상자(코드 상자, 웹 색)·채집 구간 바닥 판(옅은 초록 반투명)·이동 상인 몸을 세운다(점검이 사건을 바꾸면 다시 부른다).
+## G-0212 — 상자(코드 상자, 웹 색)·채집 구간 바닥 판(옅은 초록 반투명)·이동 상인을 세운다. 점검·촬영이 사건을 바꾸면 다시 부르는데,
+## 이 셋만 다시 세운다(구조의 사람 몸·지키는 잡몹·미니는 발동 때 생기니 발동 전에 바꿀 것).
 func _build_props() -> void:
 	for n in [_chest_node, _merchant_body]:
 		if n != null and is_instance_valid(n):
@@ -188,9 +191,16 @@ func _build_props() -> void:
 			mark.position = Vector3(edge_x - patch.position.x, 0.5, 1.2)
 			patch.add_child(mark)
 	if not merchant.is_empty():
-		_merchant_body = StoryNpcBody.build("wander_merchant")
+		_merchant_body = Node3D.new()
+		_merchant_body.name = "WanderMerchant"
+		_merchant_body.set_script(StoryMerchant)
 		_merchant_body.position = Vector3(float(merchant.x), GROUND_Y, -0.6)
 		add_child(_merchant_body)
+
+
+## G-0212 상자 장비 후보 — R-5 리뷰: 적 드롭(_maybe_drop_gear)처럼 지금 낀 바로 그 키는 뺀다(같은 걸 다시 끼면 주문서 강화가 지워진다)
+static func chest_pool(lv: float) -> Array:
+	return StoryCombat.gear_pool_for(lv).filter(func(k): return String(StorySaveState.equipped.get(String(StoryCombat.GEAR_ITEMS[k].slot), "")) != k)
 
 
 ## G-0212 — 그 x 의 채집 배수(채집 보너스 구간 안 2, 밖 1)
@@ -205,8 +215,15 @@ func _edge_clamp(x: float) -> float:
 
 
 ## 웹 update() 2022~2075 — 자리를 지나면 한 번만.
+## 아직 발동할 사건이 남았나(R-5 리뷰 — 다 끝나면 매 틱 플레이어 찾기·검사를 안 한다)
+func _pending() -> bool:
+	return (not chest.is_empty() and not chest.opened) or (not forage.is_empty() and not forage.notified) \
+		or (not ambush.is_empty() and not ambush.triggered) or (not miniboss.is_empty() and not miniboss.triggered) \
+		or (not merchant.is_empty() and not merchant.triggered) or (not rescue.is_empty() and not rescue.done)
+
+
 func _physics_process(_delta: float) -> void:
-	if chest.is_empty() and forage.is_empty() and ambush.is_empty() and miniboss.is_empty() and merchant.is_empty() and rescue.is_empty():
+	if not _pending():
 		return
 	var player := get_tree().get_first_node_in_group("player") as Node3D
 	if player == null:
@@ -222,7 +239,7 @@ func _physics_process(_delta: float) -> void:
 		var lv := float(_map.enemy_lv())
 		chest_gold = roundi((40.0 + lv * 12.0) * (0.8 + _ev_rng.randf() * 0.6) * StoryCombat.GAIN_GOLD)
 		StorySaveState.add_gold(chest_gold)
-		var pool: Array = StoryCombat.gear_pool_for(lv)
+		var pool: Array = chest_pool(lv)
 		chest_gear = String(pool[_ev_rng.randi() % pool.size()]) if not pool.is_empty() else ""
 		var msg := "💰 보물상자! 🪙+%d" % chest_gold
 		if chest_gear != "":
@@ -244,7 +261,7 @@ func _physics_process(_delta: float) -> void:
 	if not merchant.is_empty() and not merchant.triggered and absf(float(merchant.x) - px) < MERCHANT_R_M:
 		merchant.triggered = true
 		StorySaveState.merchant_until_ms = Time.get_ticks_msec() + MERCHANT_DUR_SEC * 1000
-		Toast.show(self, "🛒 지나가던 상인 — %d초 동안 상점이 30%% 싸집니다!" % MERCHANT_DUR_SEC, 2.5)
+		Toast.show(self, "🛒 지나가던 상인 — %d초 동안 상점이 30%% 싸집니다! · K: 물목" % MERCHANT_DUR_SEC, 2.5)   # 그 자리 상점 안내를 덮으니 합침
 	if not rescue.is_empty() and not rescue.spawned and absf(float(rescue.x) - px) < RESCUE_R_M:
 		rescue.spawned = true
 		for i in RESCUE_COUNT:
