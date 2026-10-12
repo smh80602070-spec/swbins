@@ -292,7 +292,7 @@
    "tool": "gen.py",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 1755,
+   "count": 1757,
    "where": [
     "saga-assets/competition",
     "saga-assets/icons/license",
@@ -328,11 +328,12 @@
    "tool": "gen.py (ComfyUI)",
    "model": "z-image-turbo",
    "license": "Apache-2.0",
-   "count": 47,
+   "count": 58,
    "where": [
     "saga-assets/land-go",
     "saga-assets/web2d/tile",
-    "saga-web/saga-go/assets/textures/land_c"
+    "saga-web/saga-go/assets/textures/land_c",
+    "saga-web/shared/assets/web2d/tile"
    ]
   },
   {
