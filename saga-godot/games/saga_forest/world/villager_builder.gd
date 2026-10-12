@@ -24,6 +24,7 @@ extends Node3D
 ## 나머지(angler·merchant·explorer·wanderer)의 부탁은 웹판 그대로(문구·
 ## 보상 금액도 같다) — 필요한 채집물이 이미 이 슬라이스에 다 있다.
 
+const Workshop := preload("res://games/saga_forest/data/forest_workshop.gd")   # G-0218 솜씨도
 const ForestMap := preload("res://games/saga_forest/data/village_map.gd")
 const TerrainBuilder := preload("res://games/saga_forest/world/forest_terrain_builder.gd")
 const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.gd")
@@ -284,7 +285,7 @@ func _open_interact_menu(v: Dictionary) -> void:
 		var tool: Dictionary = v.sells_tool
 		if not ForestSaveState.has_tool(tool.key):
 			choices.append({
-				"label": "%s 사기 (💰%d)" % [tool.name, tool.price],
+				"label": "%s 사기 (💰%d)" % [tool.name, Workshop.cost(int(tool.price))],   # G-0218 사는 값
 				"cb": func() -> void: _buy_tool(v, tool, layer_box),
 			})
 
@@ -312,7 +313,7 @@ func _open_interact_menu(v: Dictionary) -> void:
 		## 상단 주석 참고). 오늘이 그 갈래의 행사날이면 값이 오른다.
 		for cat in SELL_BASE_PRICE:
 			if ForestSaveState.item_count(cat) > 0:
-				var unit: int = int(round(float(SELL_BASE_PRICE[cat]) * ForestFestival.price_mul(cat)))
+				var unit: int = Workshop.sell_unit(int(round(float(SELL_BASE_PRICE[cat]) * ForestFestival.price_mul(cat))))   # G-0218 파는 값·구두쇠
 				choices.append({
 					"label": "%s 팔기 (%d개, 개당 💰%d)" % [cat, ForestSaveState.item_count(cat), unit],
 					"cb": func() -> void: _sell_items(v, cat, unit, layer_box),
@@ -384,10 +385,11 @@ static func _add_heart_row(layer: CanvasLayer, heart: int) -> void:
 
 func _buy_tool(v: Dictionary, tool: Dictionary, layer_box: Dictionary) -> void:
 	(layer_box["layer"] as CanvasLayer).queue_free()
-	if ForestSaveState.buy_tool(tool.key, int(tool.price)):
+	var price := Workshop.cost(int(tool.price))   # G-0218 사는 값
+	if ForestSaveState.buy_tool(tool.key, price):
 		Toast.show(self, "%s 에게서 %s 을(를) 샀다." % [v.name, tool.name], LINE_SHOW_SEC)
 	else:
-		Toast.show(self, "골드가 모자란다 (💰%d 필요)" % int(tool.price), 2.5)
+		Toast.show(self, "골드가 모자란다 (💰%d 필요)" % price, 2.5)
 
 
 func _trade_turnip(v: Dictionary, buying: bool, layer_box: Dictionary) -> void:
@@ -439,10 +441,10 @@ func _open_wear_part_menu(v: Dictionary, part: Dictionary, outer_layer_box: Dict
 		elif owned:
 			label = "%s 입기" % it.name
 		else:
-			label = "%s 사기 (💰%d)" % [it.name, int(it.price)]
+			label = "%s 사기 (💰%d)" % [it.name, Workshop.cost(int(it.price))]   # G-0218 사는 값
 		choices.append({
 			"label": label,
-			"cb": func() -> void: _choose_wear(v, part.key, it.key, int(it.price), layer_box),
+			"cb": func() -> void: _choose_wear(v, part.key, it.key, Workshop.cost(int(it.price)), layer_box),
 		})
 	layer_box["layer"] = ChoicePrompt.build(self, part.name, choices)
 

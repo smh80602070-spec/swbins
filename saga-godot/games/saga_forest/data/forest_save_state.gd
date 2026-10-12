@@ -16,6 +16,7 @@ extends SagaSaveBase
 ## _migrate_step()에 옛 fruit_count 하나를 items["과일"]로 옮기는 경로를
 ## 처음으로 채웠다.
 
+const Workshop := preload("res://games/saga_forest/data/forest_workshop.gd")   # G-0218 솜씨도
 const SAVE_PATH := "user://save_forest.json"
 const SaveSlots := preload("res://saga_core/data/save_slots.gd")   # G-0070 슬롯(1 = 이 파일 그대로)
 const SafeFile := preload("res://saga_core/data/safe_file.gd")  # 임시 파일 → .bak → 바꿔치기(쓰는 도중 꺼져도 직전본이 남는다)
@@ -77,6 +78,24 @@ var museum_donated := 0     # 사고에 기증한 누적 개수(종 수가 아�
 var museum_donated_by_cat: Dictionary = {}  # item_label(String) -> int
 ## G-0086 이야기 진행(data/scenario.gd fresh() 모양). 순수 추가 필드, 버전 안 올림.
 var scenario: Dictionary = {}
+## G-0218 솜씨도 — {start, taken, freeDay}(공용 패시브 그물 saga_core/data/passive_web.gd 의 세이브 칸). 효과는 data/forest_workshop.gd. 순수 추가 필드, 버전 안 올림.
+var passive: Dictionary = {"start": null, "taken": []}
+var _passive_api: RefCounted = null
+
+
+## 솜씨도 규칙 층 — passive 사전이 바뀌면(불러오기) 새로 만든다. 찍으면 걸음을 다시 맞춘다.
+func passive_api() -> RefCounted:
+	if _passive_api == null or not is_same(_passive_api.store, passive):
+		_passive_api = (load("res://saga_core/data/passive_web.gd") as GDScript).new(Workshop.definition(), passive, func() -> int: return Workshop.points_total())
+		_passive_api.changed.connect(sync_walk)
+	return _passive_api
+
+
+## 걸음 배수(솜씨도 walkPct·맨손)를 플레이어 speed_mult 에 — 3마을은 이 필드를 다른 데서 안 쓴다
+func sync_walk() -> void:
+	var p := _find_player()
+	if p != null and "speed_mult" in p:
+		p.set("speed_mult", Workshop.walk())
 var bundles_done: Dictionary = {}           # item_label(String) -> true(그 번들 완성)
 var village_bundle_grand_reward := false    # 웹판 "6개 완성 → 평가 상한 해제+깃발"의
                                              # 재해석 보상(사례금+깃발 장식)을 한 번만 준다
@@ -238,6 +257,7 @@ func mark_talked(npc_id: String) -> void:
 ## 리셋). 0~10 범위로 상시 clamp(§5.4 "인물별 heart 0~10"). 실제로 적용된
 ## 양을 돌려준다 — 상한에 걸려 일부만 들어간 경우를 호출부가 알 수 있게.
 func gain_affinity(npc_id: String, amount: int) -> int:
+	amount = Workshop.heart(amount)   # G-0218 마을 사랑 두 배·하트 하나 더(하루 상한은 그대로)
 	var today := ForestDay.today_key()
 	if int(affinity_day.get(npc_id, -1)) != today:
 		affinity_day[npc_id] = today
@@ -456,6 +476,7 @@ func save() -> bool:
 		"home_tier": home_tier,
 		"home_debt": home_debt,
 		"scenario": scenario,   # G-0086
+		"passive": passive,   # G-0218 솜씨도
 	}
 	return SafeFile.write_text(save_path(), JSON.stringify(data))
 
@@ -528,6 +549,12 @@ func try_load() -> bool:
 	home_debt = int(data.get("home_debt", 0))
 	var loaded_scenario: Variant = data.get("scenario", {})   # G-0086 — 없으면(옛 세이브) 봄 1장부터
 	scenario = (loaded_scenario as Dictionary).duplicate(true) if typeof(loaded_scenario) == TYPE_DICTIONARY else {}
+	var loaded_passive: Variant = data.get("passive", {})   # G-0218 — 없으면(옛 세이브) 빈 솜씨도
+	passive = (loaded_passive as Dictionary).duplicate(true) if typeof(loaded_passive) == TYPE_DICTIONARY else {}
+	if not passive.has("taken"):
+		passive = {"start": null, "taken": []}
+	_passive_api = null
+	sync_walk.call_deferred()
 
 	var pos: Array = data.get("player_pos", [])
 	if pos.size() != 3:

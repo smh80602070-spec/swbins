@@ -20,6 +20,7 @@ extends RefCounted
 ## 가 들고 있다(사고팔기 트랜잭션도 거기서 처리) — 계산과 상태를 분리해
 ## 둔 GO의 TimeOfDay.gd/season.gd와 같은 경계.
 
+const Workshop := preload("res://games/saga_forest/data/forest_workshop.gd")   # G-0218 솜씨도
 const BASE := 100
 const UNIT := 10
 const MAX_BUY := 900
@@ -38,7 +39,7 @@ static func force_morning(is_morning: Variant) -> void:
 static func is_morning() -> bool:
 	if _forced_morning != null:
 		return _forced_morning
-	return int(Time.get_time_dict_from_system()["hour"]) < 12
+	return int(Time.get_time_dict_from_system()["hour"]) < Workshop.morning_end()   # G-0218 새벽형 — 14시까지
 
 
 static func half() -> int:

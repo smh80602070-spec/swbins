@@ -17,6 +17,7 @@ extends Node3D
 ## 입질 타이밍은 세계 배치가 아니라 순간의 반응 게임이라 결정적 해시를
 ## 안 쓴다 — 웹판도 여기만은 Math.random()을 그대로 쓴다.
 
+const Workshop := preload("res://games/saga_forest/data/forest_workshop.gd")   # G-0218 솜씨도
 const ForestMap := preload("res://games/saga_forest/data/village_map.gd")
 const TerrainBuilder := preload("res://games/saga_forest/world/forest_terrain_builder.gd")
 const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.gd")
@@ -174,7 +175,7 @@ func _on_press() -> void:
 func _cast() -> void:
 	var now := Time.get_ticks_msec()
 	_bite_at_ms = now + CAST_MIN_MS + (randi() % (CAST_VAR_MS + 1))
-	_ends_at_ms = _bite_at_ms + BITE_WINDOW_MS
+	_ends_at_ms = _bite_at_ms + roundi(BITE_WINDOW_MS * Workshop.fish_win_mul())   # G-0218 입질 창
 	_bite_notified = false
 	_state = State.LINE_OUT
 	Toast.show(self, "🎣 찌를 던졌다 — 입질을 기다린다", 2.0)
@@ -190,6 +191,7 @@ func _hook() -> void:
 	elif late:
 		Toast.show(self, "늦었다 — 놓쳤다", 2.0)
 	else:
-		ForestSaveState.add_item(FISH_ITEM_LABEL, 1)
-		Toast.show(self, "🐟 낚았다 — %s +1" % FISH_ITEM_LABEL, 2.5)
-		CombatFeel.pickup(self, "%s +1" % FISH_ITEM_LABEL)
+		var n := Workshop.fish_n()   # G-0218 한 우물·올빼미
+		ForestSaveState.add_item(FISH_ITEM_LABEL, n)
+		Toast.show(self, "🐟 낚았다 — %s +%d" % [FISH_ITEM_LABEL, n], 2.5)
+		CombatFeel.pickup(self, "%s +%d" % [FISH_ITEM_LABEL, n])

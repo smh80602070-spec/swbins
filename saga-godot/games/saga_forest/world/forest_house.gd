@@ -12,6 +12,7 @@ extends Node3D
 ## 구멍이 없다 — 이 집은 실제로 들어가야 해서 남쪽 벽 가운데를 비우고
 ## (문틀 없이 뚫린 개구부, 프로토타입 수준) 충돌도 그 자리만 비운다.
 
+const Workshop := preload("res://games/saga_forest/data/forest_workshop.gd")   # G-0218 솜씨도
 const ForestMap := preload("res://games/saga_forest/data/village_map.gd")
 const TerrainBuilder := preload("res://games/saga_forest/world/forest_terrain_builder.gd")
 const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
@@ -102,6 +103,11 @@ var _wall_mat: StandardMaterial3D = null
 var _in_finish_shop := false
 var _interior_node: Node3D = null
 var _player_indoors := false
+
+
+func is_player_indoors() -> bool:
+	return _player_indoors
+
 var _home_items_synced := false
 var _applied_wall := ""   # G-0047 — 무늬는 키가 바뀔 때만 바꾼다(_apply_finish_visuals 가 매 프레임 불린다)
 var _applied_floor := ""
@@ -118,6 +124,7 @@ var _half_z := 0.0
 
 
 func _ready() -> void:
+	add_to_group("forest_house")   # G-0218 — 솜씨도 되돌리기는 집 안에서만(is_player_indoors)
 	_build_exterior()
 	_build_interior()
 
@@ -438,7 +445,7 @@ func _open_finish_menu() -> void:
 		if not ForestSaveState.owns_finish(kind, String(today.key)):
 			var word := "벽지" if kind == "wall" else "장판"
 			choices.append({
-				"label": "%s %s 사기 (💰%d)" % [word, today.name, int(today.price)],
+				"label": "%s %s 사기 (💰%d)" % [word, today.name, Workshop.cost(int(today.price))],   # G-0218 사는 값
 				"cb": func() -> void: _buy_finish(kind, today, layer_box),
 			})
 
@@ -459,9 +466,9 @@ func _open_finish_menu() -> void:
 
 	## FOREST 콘텐츠 확장 1호(가구) — 오늘 전방에 들어온 가구 넉 점(웹판
 	## home.js shopToday() 그대로, 날짜 해시라 하루 한 벌).
-	for f: Dictionary in ForestHome.daily_shop(day):
+	for f: Dictionary in ([] if Workshop.shop_closed() else ForestHome.daily_shop(day)):   # G-0218 올빼미 — 새벽엔 진열 없음
 		choices.append({
-			"label": "🪑 %s 사기 (💰%d)" % [f.name, int(f.price)],
+			"label": "🪑 %s 사기 (💰%d)" % [f.name, Workshop.cost(int(f.price))],
 			"cb": func() -> void: _buy_furniture(f, layer_box),
 		})
 	if not ForestSaveState.home_stock.is_empty():
@@ -493,10 +500,11 @@ func _open_finish_menu() -> void:
 
 func _buy_furniture(f: Dictionary, layer_box: Dictionary) -> void:
 	(layer_box["layer"] as CanvasLayer).queue_free()
-	if ForestSaveState.gold < int(f.price):
-		Toast.show(self, "골드가 모자란다 (💰%d 필요)" % int(f.price), 2.5)
+	var price := Workshop.cost(int(f.price))   # G-0218 사는 값
+	if ForestSaveState.gold < price:
+		Toast.show(self, "골드가 모자란다 (💰%d 필요)" % price, 2.5)
 		return
-	ForestSaveState.gold -= int(f.price)
+	ForestSaveState.gold -= price
 	ForestSaveState.home_stock_add(String(f.key), 1)
 	Toast.show(self, "🪑 %s 을(를) 샀다 — 창고에 들었다([H]로 놓을 수 있다)." % f.name, 3.0)
 
@@ -541,10 +549,11 @@ func _repay_home_debt(layer_box: Dictionary) -> void:
 
 func _buy_finish(kind: String, f: Dictionary, layer_box: Dictionary) -> void:
 	(layer_box["layer"] as CanvasLayer).queue_free()
-	if ForestSaveState.buy_finish(kind, String(f.key), int(f.price)):
+	var price := Workshop.cost(int(f.price))   # G-0218 사는 값
+	if ForestSaveState.buy_finish(kind, String(f.key), price):
 		Toast.show(self, "🎨 %s 을(를) 샀다 — 집 시트에서 갈아 끼운다." % f.name, 3.0)
 	else:
-		Toast.show(self, "골드가 모자란다 (💰%d 필요)" % int(f.price), 2.5)
+		Toast.show(self, "골드가 모자란다 (💰%d 필요)" % price, 2.5)
 
 
 func _set_finish(kind: String, key: String, layer_box: Dictionary) -> void:

@@ -3933,5 +3933,45 @@
   "ticket": "G-0217",
   "since": "2026-10-13",
   "note": "창 모드 dg_meridian 가로·세로 Claude 눈 ○(무예 창 단추로 연 화면 · 무장 점수 21 — 무장의 문→일격 21마디 · 일격 카드) · 빈 경락도 = 배수 1(기존 점검 그대로)"
+ },
+ {
+  "id": "gd.fs.workshop",
+  "name": "3마을 솜씨도 — 392마디 패시브 그물·시작점 여섯 · 점수 = 첫 날 + 도구 승급 + 기증/5 + 하트 문턱(상한 56) · 채집·낚시·사고팔기·하트·걸음·제작·꽃 · 규칙 여덟(시간대·택배 없는 자리는 재해석) · HUD 「🌿 솜씨」·F2(웹 W-0184)",
+  "files": [
+   "games/saga_forest/data/forest_workshop.gd",
+   "games/saga_forest/data/passive_def.json",
+   "games/saga_forest/data/forest_save_state.gd",
+   "games/saga_forest/data/forest_craft.gd",
+   "games/saga_forest/data/forest_turnip.gd",
+   "games/saga_forest/world/gatherable_builder.gd",
+   "games/saga_forest/world/fishing_spot.gd",
+   "games/saga_forest/world/forest_planting.gd",
+   "games/saga_forest/world/villager_builder.gd",
+   "games/saga_forest/world/forest_house.gd",
+   "games/saga_forest/ui/workshop_button.gd",
+   "games/saga_forest/ui/ForestHUD.tscn",
+   "tools/probe_forest_workshop.gd",
+   "tools/shot_forest_workshop.gd",
+   "tools/shot_scene.gd"
+  ],
+  "tests": [
+   "forest_workshop",
+   "passive_web",
+   "forest_craft",
+   "forest_rules",
+   "forest_hearts",
+   "forest_furniture",
+   "forest_gear",
+   "forest_plant_grid",
+   "save_forest",
+   "scenario_forest",
+   "mount_forest"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0218",
+  "since": "2026-10-13",
+  "note": "창 모드 fs_workshop 가로·세로 Claude 눈 ○(HUD 단추로 연 화면 · 점수 50 — 장인→손 큰 장인 33마디 · 손 큰 장인 카드) · 빈 솜씨도 = 기존 수치(굴림 순서 그대로)"
  }
 ]

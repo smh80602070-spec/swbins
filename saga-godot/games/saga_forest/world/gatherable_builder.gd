@@ -26,6 +26,7 @@ extends Node3D
 ## DEFS는 `ForestSaveState.has_tool()`을 먼저 본다. 삽은 상인(villager_
 ## builder.gd의 npc_merchant)에게서 산다.
 
+const Workshop := preload("res://games/saga_forest/data/forest_workshop.gd")   # G-0218 솜씨도
 const ForestCraft := preload("res://games/saga_forest/data/forest_craft.gd")   # G-0196 도구 갈래 덤
 const ForestMap := preload("res://games/saga_forest/data/village_map.gd")
 const TerrainBuilder := preload("res://games/saga_forest/world/forest_terrain_builder.gd")
@@ -138,7 +139,7 @@ func _on_entered(body: Node3D, d: Dictionary) -> void:
 	if not body.is_in_group("player"):
 		return
 	_in_range[d.id] = true
-	if d.tool != "" and not ForestSaveState.has_tool(d.tool):
+	if d.tool != "" and not ForestSaveState.has_tool(d.tool) and not Workshop.no_tool():   # G-0218 맨손
 		Toast.show(self, "%s — %s이(가) 있어야 한다." % [d.name, TOOL_NAMES.get(d.tool, d.tool)], 2.5)
 		return
 	if ForestSaveState.can_gather(d.id):
@@ -153,7 +154,7 @@ func _on_exited(body: Node3D, d: Dictionary) -> void:
 
 
 func _gather(d: Dictionary) -> void:
-	if d.tool != "" and not ForestSaveState.has_tool(d.tool):
+	if d.tool != "" and not ForestSaveState.has_tool(d.tool) and not Workshop.no_tool():   # G-0218 맨손
 		Toast.show(self, "%s — %s이(가) 있어야 한다." % [d.name, TOOL_NAMES.get(d.tool, d.tool)], 2.5)
 		return
 	if not ForestSaveState.can_gather(d.id):
@@ -163,8 +164,8 @@ func _gather(d: Dictionary) -> void:
 	## G-0196 — 제작대에서 고른 도구 갈래(수확·풍성·손재주)의 덤. 갈래가 없으면 늘 +1 그대로.
 	var tool_key := String(ForestCraft.GATHER_TOOL.get(d.id, ""))
 	var today := ForestDay.today_key()
-	var roll := ForestCraft.gather_roll(ForestCraft.perks(ForestSaveState, tool_key), "%d|%s" % [today, d.id])
-	var n := 1 + int(roll.extra)
+	var roll := ForestCraft.gather_roll(ForestCraft.perks(ForestSaveState, tool_key), "%d|%s" % [today, d.id], Workshop.bounty_add())
+	var n := Workshop.gather_n(String(d.id), 1 + int(roll.extra))   # G-0218 솜씨도(덤 굴림 뒤에 따로)
 	ForestSaveState.add_item(d.item_label, n)
 	var tail := ""
 	if bool(roll.again) and int(ForestSaveState.knack_used.get(d.id, -1)) != today:

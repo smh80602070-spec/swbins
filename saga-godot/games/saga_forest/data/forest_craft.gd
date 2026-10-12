@@ -9,6 +9,7 @@ extends RefCounted
 ## 레시피 12 = 도구 승급 6(셋 × Lv2·3) + 가구 짓기 6(forest_home.gd FURNITURE 중 여섯 — 사는 길은 그대로). 재료는 전부 지금 채집되는 품목만.
 ## 웹과 다른 것: 울타리·징검다리 둘은 고돗 마을에 바깥 놓기 자리가 없어 가구 둘로 바꿨다.
 
+const Workshop := preload("res://games/saga_forest/data/forest_workshop.gd")   # G-0218 솜씨도
 const AXES := ["harvest", "bounty", "knack"]
 const AXIS_NAMES := {"harvest": "수확 — 30% 확률로 하나 더", "bounty": "풍성 — 8% 확률로 셋 더", "knack": "손재주 — 25% 확률로 그 자리가 오늘 한 번 더"}
 const AXIS_SHORT := {"harvest": "수확", "bounty": "풍성", "knack": "손재주"}
@@ -88,8 +89,11 @@ static func why_not(F: Node, r: Dictionary) -> String:
 		if cur != int(r.lv) - 1:
 			return "지금 Lv%d" % cur
 	for label: String in (r.need as Dictionary).keys():
-		if F.item_count(label) < int(r.need[label]):
-			return "%s 모자람(%d/%d)" % [label, F.item_count(label), int(r.need[label])]
+		var n := Workshop.need(int(r.need[label]))   # G-0218 손 큰 장인 ×0.7
+		if F.item_count(label) < n:
+			return "%s 모자람(%d/%d)" % [label, F.item_count(label), n]
+	if int(F.gold) < Workshop.craft_fee():
+		return "삯이 모자란다(손 큰 장인 %d)" % Workshop.craft_fee()
 	return ""
 
 
@@ -100,9 +104,13 @@ static func make(F: Node, key: String) -> Dictionary:
 	if why != "":
 		return {"ok": false, "why": why, "tool": ""}
 	for label: String in (r.need as Dictionary).keys():
-		F.items[label] = F.item_count(label) - int(r.need[label])
+		F.items[label] = F.item_count(label) - Workshop.need(int(r.need[label]))
 		if int(F.items[label]) <= 0:
 			F.items.erase(label)
+	F.gold = int(F.gold) - Workshop.craft_fee()   # G-0218 손 큰 장인 삯
+	if Workshop.refund() > 0:   # G-0218 아낌 — 첫 재료 하나 돌려받음
+		var first: String = (r.need as Dictionary).keys()[0]
+		F.items[first] = F.item_count(first) + 1
 	if String(r.kind) == "tool":
 		F.tool_lv[String(r.tool)] = int(r.lv)
 		return {"ok": true, "why": "", "tool": String(r.tool)}
@@ -126,14 +134,16 @@ static func decline(F: Node) -> void:
 
 
 ## 채집 한 번의 덤 — {extra, again}. seed = "날|자리"(같은 날 같은 자리는 같은 결과)
-static func gather_roll(p: Array, seed: String) -> Dictionary:
+## G-0218 — bounty_add = 솜씨도 rarePct 몫(풍성 갈래가 없어도 산다, 기본 0 = 옛 그대로)
+static func gather_roll(p: Array, seed: String, bounty_add := 0.0) -> Dictionary:
 	var h := p.count("harvest")
 	var b := p.count("bounty")
 	var k := p.count("knack")
 	var extra := 0
 	if h > 0 and hash01(seed, "harvest") < minf(HARVEST_P * h, HARVEST_MAX):
 		extra += 1
-	if b > 0 and hash01(seed, "bounty") < minf(BOUNTY_P * b, BOUNTY_MAX):
+	var bp := minf(BOUNTY_P * b, BOUNTY_MAX) + bounty_add
+	if bp > 0.0 and hash01(seed, "bounty") < bp:
 		extra += 3
 	var again := k > 0 and hash01(seed, "knack") < minf(KNACK_P * k, KNACK_MAX)
 	return {"extra": extra, "again": again}

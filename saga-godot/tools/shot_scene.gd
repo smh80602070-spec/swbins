@@ -112,6 +112,7 @@ const CUTS := [
 	["dg_roster", DUNGEON, [["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", 1.0]], ["static", "res://tools/shot_dungeon_belt.gd", "roster", ["@tree"]]]],   # G-0207 잡몹 명단 — 왼쪽 1층 셋·오른쪽 13층 셋
 	["dg_ranged", DUNGEON, [["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", 1.0]], ["static", "res://tools/shot_dungeon_belt.gd", "ranged", ["@tree"]]]],   # G-0208 원거리 잡몹 — 독 궁수·불 조총병이 멀찍이 서서 쏜 화살·탄환이 날아오는 중
 	["dg_fire_skills", DUNGEON, [["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", 1.0]], ["static", "res://tools/shot_dungeon_belt.gd", "fire", ["@tree"]]]],   # G-0200 폭염진(주황 원환·불씨) + 화창(궤적·불꽃)
+	["fs_workshop", FOREST, [["free_modal"], ["static", "res://tools/shot_forest_workshop.gd", "open", ["@tree"]]]],   # G-0218 3마을 솜씨도 — HUD 단추로 연 화면·손 큰 장인 카드
 	["dg_meridian", DUNGEON, [["free_modal"], ["static", "res://tools/shot_dungeon_meridian.gd", "open", ["@tree"]]]],   # G-0217 2나락 경락도 — 무예 창 단추로 연 화면·일격 카드
 	["dg_story", DUNGEON, [["free_modal"]]],
 	["dg_room_wide", DUNGEON, [["free_modal"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 14.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-40.0, 0.0, 0.0)]]],   # G-0112 첫 방 전체(어두움 판정)   # G-0085 사가나락 이야기 첫 대화(새 판 — 출사표 창을 닫으면 뜬다)

@@ -22,6 +22,7 @@ extends Node3D
 ## 정신을 옮긴 것. 판정은 여전히 결정적 자리 해시 하나뿐(주사위를 두 번
 ## 굴리지 않는다) — 문턱만 둘(HYBRID_ROLL·HYBRID2_ROLL)이라 결과가 갈린다.
 
+const Workshop := preload("res://games/saga_forest/data/forest_workshop.gd")   # G-0218 솜씨도
 const ForestMap := preload("res://games/saga_forest/data/village_map.gd")
 const TerrainBuilder := preload("res://games/saga_forest/world/forest_terrain_builder.gd")
 const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.gd")
@@ -95,9 +96,9 @@ func _try_plant() -> void:
 
 	var roll := _hash2(int(round(pos.x)), int(round(pos.z)))
 	var tier := 0
-	if near_best_tier >= 1 and roll > HYBRID2_ROLL:
+	if near_best_tier >= 1 and roll > Workshop.hybrid_cut(HYBRID2_ROLL):   # G-0218 꽃 교배·정원사
 		tier = 2
-	elif near > 0 and roll > HYBRID_ROLL:
+	elif near > 0 and roll > Workshop.hybrid_cut(HYBRID_ROLL):
 		tier = 1
 
 	ForestSaveState.items[ITEM_LABEL_NORMAL] = ForestSaveState.item_count(ITEM_LABEL_NORMAL) - 1
