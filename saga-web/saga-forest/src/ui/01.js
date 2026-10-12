@@ -681,7 +681,7 @@
     var key, html;
     if (f.type === 'bug') {
       var bref = f.obj.ref;
-      var net = global.DG.bug.hasNet();
+      var net = global.DG.bug.hasNet() || !!(global.DG.workshop && global.DG.workshop.noTool());   // 솜씨도 맨손(W-0184)
       key = 'g|' + f.obj.id + '|' + net;
       html = '<div class="focus-card">' +
         '<span class="fc-ico">' + bref.emoji + '</span>' +
