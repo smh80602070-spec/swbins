@@ -2027,5 +2027,22 @@
   "ticket": "U-0106",
   "since": "2026-10-12",
   "note": "D2(U-0106): PlaytestDungeonHeadless foes OK(표 18·단계 4/4/5/5·무기 7·과거 잡졸 43 = 명단 종 14·활 탄 맞음 −7/무적 회피·창 +0.58·정예/명소 갈래 없음)·사슬 OK · 촬영 Claude 눈 ○ 궁수 선 채 탄 날아감 · 화면 이름표 △(2나락 적 이름표 없음) · 짐승 116 은 U-0100 뒤"
+ },
+ {
+  "id": "un.dg.foe-card",
+  "name": "U-0108 2나락 대상 적 카드 — 화면 위 가운데 한 장에 락온한 적(없으면 10.8m 안 가장 가까운 적) 이름·체력 막대, 정예 푸른·두목 노란 이름(웹 dungeon-view.js renderFoe #d2-foe 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaDungeon/UI/DungeonFoeCard.cs",
+   "saga-unity/Assets/Games/SagaDungeon/World/GameBootstrap.cs"
+  ],
+  "tests": [
+   "PlaytestDungeonFoeCard"
+  ],
+  "level": "D2",
+  "verified": "2026-10-12 claude",
+  "fun": {},
+  "ticket": "U-0108",
+  "since": "2026-10-12",
+  "note": "D2(U-0108): PlaytestDungeonHeadless foecard OK(빈 자리 숨김·5m 보임 글자 5·채움 1→0.70·12m 숨김·락온 9m 먼저·정예 #6f6fff·두목 #ffff64)·사슬 OK · UiLayoutCheck 대상 적 카드 0건(ko/en) · 촬영 dgranged Claude 눈 ○ 목표 줄 밑 '오랑캐 궁수'·붉은 막대, 겹침 없음"
  }
 ]
