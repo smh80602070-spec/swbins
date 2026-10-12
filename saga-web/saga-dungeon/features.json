@@ -994,5 +994,24 @@
   "ticket": "W-0180",
   "since": "2026-10-12",
   "note": "D2(claude 2026-10-12): saga-web/tools/playcheck/passive-shot.mjs saga-dungeon — 390×844·1280×720 두 장 Read ○(찍은 길 금색·경로 점선·카드 \"찍기 (경로 n점)\"·검색 표시, 겹침·잘림 0). 입구 = 무예 창 「☯ 경락도 열기」. 손잡이 dg.pw.*(bossCap·dropGold·onecut·lone·scale·scaleHp·farsightNear·flowCd·bloodMul·mindlessCap·mindlessRegen)."
+ },
+ {
+  "id": "dg.mobile-cam",
+  "name": "폰 세로 마을 카메라(하단 HUD 위로 앞벽) · 폰 자연물 표(실사 → 옛 저다각형)",
+  "files": [
+   "js/belt-cam3d.js",
+   "js/asset3d.js",
+   "js/dungeon3d.js"
+  ],
+  "tests": [
+   "dg.mobile-cam: 세로 마을 카메라(W-0186) — 폰 세로(390×844)에서 마을 앞 끝·가운데·깊은 곳 어디서든 내 머리께가 화면 세로 25~68%(하단 HUD 위) · 가로·손잡이 0 은 옛 그대로",
+   "dg.mobile-cam: 폰 자연물 표(W-0186) — asset3d.light 1 이면 나무·고목·바위·덤불·통나무가 실사 대신 옛 저다각형 · 이 진단 창(터치 없음)은 실사 그대로"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0186",
+  "since": "2026-10-12",
+  "note": "D2(claude 2026-10-12): saga-web/tools/playcheck/dg-mobile.mjs(390×844 터치) 세로 마을 네 방향 걷기 머리 자리 0.64~0.73 → 0.29~0.45(25~68% 안) · 앞 끝 사진 ○(캐릭터 화면 가운데, 마을 경계가 HUD 위). 던전 첫 방 GLB 1,405KB(실사 바위·고목 4) → 718KB(실사 0). 마을은 동작 묶음 UAL1 1.9MB·인물 몸 개당 ~600KB 가 대부분 — K 수신함. 손잡이 dungeon3d.townSafeBottom 0.42·townFollowPortrait·asset3d.light."
  }
 ]

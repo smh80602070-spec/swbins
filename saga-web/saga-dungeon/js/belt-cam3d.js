@@ -36,7 +36,9 @@
     var hw = k * d * asp / 2;                                // 바라보는 깊이에서 보이는 폭의 절반
     var cx = W <= 2 * (hw - 30) ? W / 2 : Math.max(hw - 30, Math.min(W - hw + 30, px));   // 양 끝 벽은 30 만큼 보인다
     var camY = d * Math.sin(pitch);
-    var camZ = H + 20 + camY / Math.tan(pitch + fov / 2);   // 화면 아래 끝 = 앞벽 + 20
+    /* 앞벽을 놓는 화면 줄 — s = 1 이면 화면 아래 끝(옛). W-0186 세로 마을은 하단 HUD(조이스틱·띠) 위로 올린다(o.bottomS) */
+    var s = o.bottomS > 0 && o.bottomS < 1 ? o.bottomS : 1;
+    var camZ = H + 20 + camY / Math.tan(pitch + Math.atan(s * Math.tan(fov / 2)));   // 그 줄 = 앞벽 + 20
     return {
       pos: { x: cx, y: camY + gy, z: camZ },
       look: { x: cx, y: gy, z: camZ - d * Math.cos(pitch) },
@@ -49,15 +51,22 @@
    *  2D 와 같이 조금 물러선다(×1/0.78) · 건물에 덜 가리게 조금 더 내려다본다(beltTownPitch 40). 손잡이 dungeon3d.beltTown 0 = 옛 카메라 */
   var HWIN = 440;
   function townOn() { return !!tuned('dungeon3d.beltTown', 1); }
+  /** W-0186 — 세로 화면(aspect < 1) 마을에서 화면 아래 몇 할을 HUD 가 덮나. 그만큼 앞벽(=내가 끝까지 내려갈 수 있는 줄)을 올린다.
+   *  손잡이 dungeon3d.townSafeBottom(0.42) · dungeon3d.townFollowPortrait 0 = 옛(화면 아래 끝) */
+  function safeS(aspect) {
+    if (!(aspect > 0 && aspect < 1) || !tuned('dungeon3d.townFollowPortrait', 1)) { return 1; }
+    var f = Math.max(0, Math.min(0.5, tuned('dungeon3d.townSafeBottom', 0.42)));
+    return 1 - 2 * f;   // 화면 아래 f 를 빼고 남은 아래 끝(화면 가운데 0 · 아래 끝 1 기준)
+  }
   function beltTown(px, py, W, H, o) {
     o = o || {};
     var front = Math.min(H, py + HWIN * 0.45), top = front - HWIN;
-    var oo = { aspect: o.aspect, fov: o.fov, zoom: (o.zoom > 0 ? o.zoom : 1) / 0.78, gy: o.gy, dist: o.dist, pitch: o.pitch === undefined ? tuned('dungeon3d.beltTownPitch', 40) : o.pitch };
+    var oo = { aspect: o.aspect, fov: o.fov, zoom: (o.zoom > 0 ? o.zoom : 1) / 0.78, gy: o.gy, dist: o.dist, pitch: o.pitch === undefined ? tuned('dungeon3d.beltTownPitch', 40) : o.pitch, bottomS: safeS(o.aspect) };
     var c = beltCam(px, py - top, W, HWIN, oo);
     c.pos.z += top; c.look.z += top; c.top = top;
     return c;
   }
 
   global.DG = global.DG || {};
-  global.DG.beltCam3d = { on: on, beltCam: beltCam, townOn: townOn, beltTown: beltTown, HWIN: HWIN };
+  global.DG.beltCam3d = { on: on, beltCam: beltCam, townOn: townOn, beltTown: beltTown, safeS: safeS, HWIN: HWIN };
 })(window);

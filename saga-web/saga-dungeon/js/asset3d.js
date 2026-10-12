@@ -629,8 +629,19 @@
   function lookup(kind) {   // W-0147 — 'crea:<id>' = 자체툴 몬스터 몸(통일 world 표 · 2D 시트·초상과 같은 monsterPortrait.idOf id), 없으면 null
     var A3 = global.DG.assets3d, cu = /^crea:/.test(kind) && A3 && A3.url ? A3.url('world', kind.slice(5)) : null, mk = 'monster:' + kind;
     if (cu || /^crea:/.test(kind)) { return cu ? { key: kind, url: cu } : null; }
-    return REG[kind] ? { key: kind, url: REG[kind] } : (REG[mk] ? { key: mk, url: REG[mk] } : null);
+    return REG[kind] ? { key: kind, url: lightOf(kind, REG[kind]) } : (REG[mk] ? { key: mk, url: REG[mk] } : null);
   }
+  /* W-0186 — 폰(터치 + 짧은 변 ≤ 500px)이면 실사 자연물(나무 2.4MB·바위 300~600KB)을 옛 저다각형 표(NATURE_STYLIZED)로 — 1만리 W-0185 와 같은 규칙.
+     표가 실사(realistic/)를 가리킬 때만 바꾼다(편집기로 갈아 낀 것은 그대로). 창이 열릴 때 한 번 정함. 손잡이 asset3d.light 1 = 늘 · 0 = 안 씀 · 그 밖 = 자동 */
+  var lightAuto = null;
+  function light() {
+    var k = tuned('asset3d.light', 'auto');
+    if (k === 1 || k === '1') { return true; }
+    if (k === 0 || k === '0') { return false; }
+    if (lightAuto === null) { var n = global.navigator || {}, w = global.innerWidth || 0, h = global.innerHeight || 0; lightAuto = !!((('ontouchstart' in global) || n.maxTouchPoints > 0) && w > 0 && h > 0 && Math.min(w, h) <= 500); }
+    return lightAuto;
+  }
+  function lightOf(kind, url) { return NATURE_STYLIZED[kind] && light() && JSON.stringify(url).indexOf('/realistic/') >= 0 ? NATURE_STYLIZED[kind] : url; }
 
   function strHash(s) {
     var h = 0, i;
@@ -1342,7 +1353,7 @@
 
   global.DG = global.DG || {};
   global.DG.asset3d = {
-    REG: REG, register: register, lookup: lookup, urlOf: urlOf, wants: wants, oneOf: oneOf,
+    REG: REG, register: register, lookup: lookup, urlOf: urlOf, wants: wants, oneOf: oneOf, light: light, _lightReset: function () { lightAuto = null; }, NATURE_STYLIZED: NATURE_STYLIZED,
     FIXED_HERO: FIXED_HERO, fixedRecipe: fixedRecipe,
     normName: normName, score: score, mapClips: mapClips, SLOTS: SLOTS, fit: fit,
     ready: function () { return !!three(); }, hasLoader: function () { return !!loader(); },

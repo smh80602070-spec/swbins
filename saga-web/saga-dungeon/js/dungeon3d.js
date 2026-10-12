@@ -3174,7 +3174,7 @@
     fieldKey: function () { return fieldKey; },
     three: function () { return T; },
     addFx: function (n) { if (fxGroup && n) { fxGroup.add(n); } return n; },
-    camNode: function () { return camera; },
+    camNode: function () { return camera; }, _meScreen: function () { var a = actors['me']; if (!a || !a.node || !camera || !T) { return null; } var v = new T.Vector3(); a.node.getWorldPosition(v); v.y += 30; v.project(camera); return { x: Math.round((v.x + 1) * 500) / 1000, y: Math.round((1 - v.y) * 500) / 1000 }; },   // W-0186 진단 — 내 머리께의 화면 자리(0~1)
     /** 손잡이 — 이 판에는 어드민이 없어 콘솔·데모가 두드린다 */
     set: set, tuned: tuned, _roomLight: function () { return { lift: tuned('dungeon3d.roomLift', 0.65), amb: tuned('dungeon3d.roomAmb', 0.5) }; },   // W-0145 진단
     stats: stats,

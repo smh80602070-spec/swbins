@@ -4919,6 +4919,39 @@ window.requestAnimationFrame = function () { return 0; };
       var r = [Math.abs((near.pos.z - deep.pos.z) - 900) < 1e-6, Math.abs(near.top - (1300 + 440 * 0.45 - 440)) < 1e-6, near.dist > room.dist, Math.abs(near.pitch * 180 / Math.PI - 40) < 1e-6, off === false, BC.townOn() === true];
       return r.every(Boolean) && ('깊이 900 들어가면 카메라도 900 · 거리 ' + Math.round(near.dist) + ' > 방 ' + Math.round(room.dist)) || '실패 ' + r.join(',');
     });
+    t('dg.mobile-cam: 세로 마을 카메라(W-0186) — 폰 세로(390×844)에서 마을 앞 끝·가운데·깊은 곳 어디서든 내 머리께가 화면 세로 25~68%(하단 HUD 위) · 가로·손잡이 0 은 옛 그대로', function () {
+      var BC = DG.beltCam3d, C = DG.core, W = 1600, H = 1600, fovDeg = 46;
+      /* 카메라 위치·바라보는 점으로 한 점의 화면 세로 자리(0 위 ~ 1 아래)를 셈 — x 는 카메라 가운데 줄 */
+      function yFrac(c, py, aspect) {
+        var vx = c.look.y - c.pos.y, vz = c.look.z - c.pos.z, n = Math.hypot(vx, vz); vx /= n; vz /= n;
+        var ry = (c.look.y + 30) - c.pos.y, rz = py - c.pos.z;
+        var uy = -vz, uz = vx; if (uy < 0) { uy = -uy; uz = -uz; }   // 화면 위쪽 = 바라보는 방향에 수직이고 y 가 + 인 쪽
+        var fwd = ry * vx + rz * vz, up = ry * uy + rz * uz;
+        var k = Math.tan(fovDeg * Math.PI / 360);
+        return 0.5 - 0.5 * (up / fwd) / k;
+      }
+      var P = 390 / 844, L = 16 / 9, rows = [], ok = true;
+      [H, H - 300, 800, 300].forEach(function (py) {
+        var c = BC.beltTown(400, py, W, H, { aspect: P, fov: fovDeg });
+        var y = yFrac(c, py, P); rows.push(py + ':' + y.toFixed(2)); if (!(y >= 0.25 && y <= 0.68)) { ok = false; }
+      });
+      var landNew = BC.beltTown(400, H, W, H, { aspect: L, fov: fovDeg });
+      C.setTune('dungeon3d.townFollowPortrait', 0); var offS = BC.safeS(P), oldP = BC.beltTown(400, H, W, H, { aspect: P, fov: fovDeg }); C.setTune('dungeon3d.townFollowPortrait', null);
+      var yOld = yFrac(oldP, H, P);
+      var r = [ok, BC.safeS(L) === 1, offS === 1, yOld > 0.68, Math.abs(BC.safeS(P) - 0.16) < 1e-9, landNew.pos.z === BC.beltTown(400, H, W, H, { aspect: L, fov: fovDeg }).pos.z];
+      return r.every(Boolean) && ('세로 머리 자리 ' + rows.join(' · ') + ' (옛 앞 끝 ' + yOld.toFixed(2) + ') · 가로 그대로') || '실패 ' + r.join(',') + ' ' + rows.join(' ');
+    });
+
+    t('dg.mobile-cam: 폰 자연물 표(W-0186) — asset3d.light 1 이면 나무·고목·바위·덤불·통나무가 실사 대신 옛 저다각형 · 이 진단 창(터치 없음)은 실사 그대로', function () {
+      var A = DG.asset3d, C = DG.core, kinds = ['tree', 'tree_dead', 'rock', 'bush', 'log'], keep = C.tuned('asset3d.light', 'auto'), real = [], on, pc;
+      try {
+        C.setTune('asset3d.light', null); A._lightReset(); pc = !A.light() && JSON.stringify(A.lookup('tree').url).indexOf('/realistic/') >= 0;
+        C.setTune('asset3d.light', 1); A._lightReset(); on = A.light();
+        kinds.forEach(function (k) { var u = A.urlOf(k, 'seed-' + k); if (!u || u.indexOf('/realistic/') >= 0) { real.push(k + ':' + u); } });
+      } finally { C.setTune('asset3d.light', keep === 'auto' ? null : keep); A._lightReset(); }
+      return on && pc && real.length === 0 && ('폰 표: 다섯 가지 모두 저다각형 · 진단 창은 실사') || '실패 ' + [on, pc, real.join(' ')].join(' / ');
+    });
+
     t('은총 빛기둥(W-0165) — 3D 가 꺼진 진단에선 세우지 않는다(null), 은총 자리는 닿은 자리를 적는다', function () {
       var G = DG.grace, run = { floor: 3, player: { x: 77, y: 210 }, hpMax: 10, hp: 1 }, g = G.touch(run);
       var r = [G._pillarWant() === null, !g || (g.x === 77 && g.y === 210)];
