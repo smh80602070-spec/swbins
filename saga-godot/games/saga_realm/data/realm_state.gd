@@ -134,6 +134,9 @@ var officer_loyal: Dictionary = {RealmOfficerPool.STARTING_OFFICER: RealmDiplo.b
 ## lv=1·rank=0(배율 1.0)이라 기존 값과 다르지 않다.
 var officer_growth: Dictionary = {}
 var _done_this_month: Dictionary = {}  # officer_id -> bool
+## G-0216 경륜도 — 플레이어 세력의 공용 패시브 그물 세이브 칸(저장 키 "passive", 19→20). 효과는 data/realm_statecraft.gd.
+var passive: Dictionary = {"start": null, "taken": []}
+var _passive_api: RefCounted = null
 
 ## **2026-09-17 추가 — PLAN 101-2 REALM ③후보(웹판 §5-1 "인물 특성·야망").**
 ## `officer_growth`와 같은 지연 초기화 패턴 — officer_id -> {k, prog, done,
@@ -434,3 +437,19 @@ func _init_quiz() -> void:
 	}
 
 
+## G-0216 경륜도 규칙 층 — passive 사전이 바뀌면(불러오기) 새로 만든다.
+func passive_api() -> RefCounted:
+	if _passive_api == null or not is_same(_passive_api.store, passive):
+		var SC: GDScript = load("res://games/saga_realm/data/realm_statecraft.gd")
+		_passive_api = (load("res://saga_core/data/passive_web.gd") as GDScript).new(SC.call("definition"), passive, func() -> int: return int(SC.call("points_total")))
+	return _passive_api
+
+
+## G-0216 경륜도 배수 하나(빈 경륜도면 1 — 곱하는 자리는 1 이 아닐 때만 손대 golden 이 비트 그대로)
+func _sc(key: String) -> float:
+	return float((load("res://games/saga_realm/data/realm_statecraft.gd") as GDScript).call("mul", key))
+
+
+func _sc_apply(v: int, key: String) -> int:
+	var m := _sc(key)
+	return v if m == 1.0 else roundi(float(v) * m)

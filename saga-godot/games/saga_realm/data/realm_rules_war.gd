@@ -108,6 +108,8 @@ func _enemy_attack(enemy_id: String, e: Dictionary, target_id: String) -> String
 		"troops": int(e.troops), "start": int(e.troops), "train": int(e.train), "tech": int(e.tech),
 		"best_command": atk_best_command, "best_might": atk_best_might, "officer_count": atk_officers.size(),
 	}
+	if _sc("enemy_atk") != 1.0:
+		atk_army["give"] = _sc("enemy_atk")   # G-0216 청야 — 내 성을 치러 온 군 공격 ×0.8
 
 	var wall := {"wall": int(c.wall), "max_wall": RealmCities.wall_cap(target_id)}
 	var land: String = String(RealmCities.any_by_id(target_id).get("land", "plain"))
@@ -402,6 +404,11 @@ func attack(enemy_id: String, duel_moves: Array = [], grid: Dictionary = {}) -> 
 			atk.best_command = 0.0
 			atk.best_might = 0.0
 			atk.officer_count = 0
+	## G-0216 경륜도 — 출병 공격·받는 피해·야전/공성(철기·공성 전문)·성벽 깎기(공성 전문). 1 이면 손 안 댐(golden 비트 그대로).
+	for pair in [["atk", "give"], ["take", "take"], ["field", "give_field"], ["siege", "give_siege"], ["chip", "chip"]]:
+		var m := _sc(String(pair[0]))
+		if m != 1.0:
+			atk[pair[1]] = float(atk.get(pair[1], 1.0)) * m
 	## **2026-09-12 갱신 — 이간·매수로 이름 있는 수비 무장이 생겼다.**
 	## `e.officers`(비면 예전처럼 0)를 그대로 반영한다 — 매수·이간으로
 	## 미리 빼내면 그만큼 수비가 약해진다(officer_count·best_command·
@@ -648,6 +655,15 @@ func envoy_truce(enemy_id: String, debate_mul: float = 1.0) -> Dictionary:
 	var dip: Dictionary = diplomacy.get(force_id, {"relation": RealmDiplo.DEFAULT_RELATION, "truce_months": 0})
 	var chance := RealmDiplo.truce_chance(_effective_stat(officer_id, "wisdom"), int(dip.relation), ENVOY_GOLD)
 	chance = clampf(chance * debate_mul, 0.03, 0.95)
+	## G-0216 외교 — 원교근공은 맞닿은 세력 ×0.6·안 맞닿은 ×1.5(맞닿음 = 우리 성 하나라도 그 성과 이웃)
+	var near := false
+	for cid: String in RealmCities.playable_ids():
+		if RealmCities.is_adjacent(cid, enemy_id):
+			near = true
+			break
+	var dm: float = (load("res://games/saga_realm/data/realm_statecraft.gd") as GDScript).call("diplo_mul", near)
+	if dm != 1.0:
+		chance = clampf(chance * dm, 0.03, 0.95)
 
 	var accepted := _rng.randf() <= chance
 	if accepted:
@@ -721,6 +737,7 @@ func plot(kind: String, enemy_id: String) -> Dictionary:
 		enemies[enemy_id] = e
 	elif kind == "fire":
 		var burned := roundi(float(e.food) * (RealmDiplo.FOOD_BURN_BASE + _rng.randf() * RealmDiplo.FOOD_BURN_RANGE))
+		burned = mini(int(e.food), _sc_apply(burned, "fire"))   # G-0216 화공 ×2
 		e.food = maxi(0, int(e.food) - burned)
 		result["burned"] = burned
 		enemies[enemy_id] = e
@@ -818,6 +835,8 @@ func _plot_check(kind: String, enemy_id: String) -> Dictionary:
 			break
 	if not touching:
 		return {"ok": false, "why": "손이 닿지 않는 성입니다"}
+	if kind == "fire" and (load("res://games/saga_realm/data/realm_statecraft.gd") as GDScript).call("fire_blocked", month, String(e.get("disaster", "")) == "flood"):
+		return {"ok": false, "why": "화공 — 비 오는 달엔 불을 못 놓는다"}   # G-0216
 
 	if gold < int(plot_def.gold):
 		return {"ok": false, "why": "금이 모자랍니다"}
@@ -862,6 +881,9 @@ func _plot_check(kind: String, enemy_id: String) -> Dictionary:
 		_:
 			chance = RealmDiplo.plot_chance(mine_wisdom, guard_wisdom, sec)
 
+	var pm := _sc("plot")   # G-0216 계략
+	if pm != 1.0:
+		chance = clampf(chance * pm, 0.03, 0.95)
 	return {
 		"ok": true, "officer_id": officer_id, "force_id": force_id,
 		"e": e, "dip": dip, "chance": chance, "target_id": target_id,

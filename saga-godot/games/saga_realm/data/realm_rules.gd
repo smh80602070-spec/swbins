@@ -29,7 +29,11 @@ func _effective_stat(id: String, stat_key: String) -> float:
 	var g: Dictionary = officer_growth.get(id, {"lv": 1, "rank": 0})
 	var mul := base * RealmGrowth.grow_mul(int(g.get("lv", 1)), int(g.get("rank", 0)))
 	var bonus: Dictionary = g.get("bonus", {})
-	return mul + float(bonus.get(stat_key, 0))
+	var total := mul + float(bonus.get(stat_key, 0))
+	var SC: GDScript = load("res://games/saga_realm/data/realm_statecraft.gd")
+	if SC.call("has_rule", "ilin") and roster.has(id):   # G-0216 일인지하 — 으뜸 무장 ×1.5·나머지 ×0.9(내 무장만)
+		total *= float(SC.call("officer_mul", self, id))
+	return total
 
 
 ## 야망 달성 보상("능력 +2 영구") — `officer_growth[id].bonus[stat_key]`에
@@ -45,6 +49,8 @@ func _add_growth_bonus(id: String, stat_key: String, amount: int) -> void:
 ## 경험을 준다 — 레벨이 오르면 _effective_stat()가 그만큼 곱해진다.
 ## officer.js gainExp() 그대로.
 func gain_exp(id: String, amount: int) -> Dictionary:
+	if roster.has(id):
+		amount = _sc_apply(amount, "exp")   # G-0216 무장 경험
 	if amount <= 0 or Characters.find(id) == null:
 		return {"gained": 0, "levels": 0}
 	var g := _growth(id)
@@ -155,6 +161,9 @@ func _roll_amount(o: Dictionary, officer_id: String) -> Dictionary:
 	var stat_val: float = _effective_stat(officer_id, String(o.stat))
 	var crit := _rng.randf() < clampf(stat_val / 400.0, 0.03, 0.28)
 	var amount := roundi((float(o.base) + stat_val * float(o.per)) * (1.5 if crit else 1.0))
+	var om: float = (load("res://games/saga_realm/data/realm_statecraft.gd") as GDScript).call("order_mul", String(o.get("key", "")))   # G-0216 개간·상업·축성·징병
+	if om != 1.0:
+		amount = roundi(float(amount) * om)
 	return {"amount": amount, "crit": crit}
 
 
@@ -234,6 +243,9 @@ func _do_hire(officer_id: String, debate_mul: float = 1.0) -> Dictionary:
 	if String(by.trait) == String(t.trait):
 		chance += 0.10
 	chance = clampf(chance * debate_mul, 0.05, 0.9)
+	var hm := _sc("hire")   # G-0216 등용
+	if hm != 1.0:
+		chance = clampf(chance * hm, 0.05, 0.9)
 
 	if _rng.randf() > chance:
 		return {"ok": true, "hired": "", "chance": chance}

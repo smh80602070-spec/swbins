@@ -3857,5 +3857,40 @@
   "ticket": "G-0215",
   "since": "2026-10-12",
   "note": "창 모드 go_starchart 가로·세로 Claude 눈 ○(메뉴 입구로 연 화면 · 등급 30 — 남은 27/31 · 맨발 카드 \"알 걸음 −30%\") · 빈 성도 = 배수 1"
+ },
+ {
+  "id": "gd.rk.statecraft",
+  "name": "5천하 경륜도(經綸圖) — 플레이어 세력 377마디 패시브 그물·시작점 여섯 · 점수 = 첫 별 + 빼앗은 성 + 반년마다 1(상한 56) · 금·수확·내정·징병·등용·외교·계략·전투·경험 · 규칙 여덟 · HUD 「🧭 경륜」·F2(웹 W-0182 — AI 세력 경륜도는 다음 후보)",
+  "files": [
+   "games/saga_realm/data/realm_statecraft.gd",
+   "games/saga_realm/data/passive_def.json",
+   "games/saga_realm/ui/statecraft_button.gd",
+   "games/saga_realm/ui/RealmHUD.tscn",
+   "games/saga_realm/data/realm_state.gd",
+   "games/saga_realm/data/realm_rules.gd",
+   "games/saga_realm/data/realm_rules_war.gd",
+   "games/saga_realm/data/realm_rules_month.gd",
+   "games/saga_realm/data/realm_war.gd",
+   "games/saga_realm/data/realm_save_state.gd",
+   "tools/probe_realm_statecraft.gd",
+   "tools/shot_realm_star.gd",
+   "tools/shot_scene.gd"
+  ],
+  "tests": [
+   "realm_statecraft",
+   "passive_web",
+   "realm_golden",
+   "realm_state",
+   "realm_data",
+   "realm_tactics",
+   "save_realm",
+   "scenario_realm"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0216",
+  "since": "2026-10-12",
+  "note": "창 모드 realm_statecraft 가로·세로 Claude 눈 ○(HUD 단추로 연 화면 · 4년 — 남은 4/9 · 무위 카드) · 빈 경륜도 = realm_golden md5 그대로"
  }
 ]

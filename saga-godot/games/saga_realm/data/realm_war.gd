@@ -58,7 +58,8 @@ static func step_round(atk: Dictionary, def: Dictionary, wall: Dictionary,
 		wall_f = land_def * (1.0 + float(wall.wall) / maxf(1.0, float(wall.max_wall)) * 0.9)
 
 	var ap := army_power(int(atk.troops), int(atk.train), int(atk.tech),
-		float(atk.best_command), float(atk.best_might), int(atk.officer_count)) * float(atk.get("give", 1.0))
+		float(atk.best_command), float(atk.best_might), int(atk.officer_count)) * float(atk.get("give", 1.0)) \
+		* float(atk.get("give_field", 1.0) if sortie else atk.get("give_siege", 1.0))   # G-0216 경륜도 철기·공성 전문(없으면 1)
 	var dp := army_power(int(def.troops), int(def.train), int(def.tech),
 		float(def.best_command), float(def.best_might), int(def.officer_count)) * wall_f
 
@@ -68,7 +69,7 @@ static func step_round(atk: Dictionary, def: Dictionary, wall: Dictionary,
 	def.troops = maxi(0, int(def.troops) - loss_d)
 
 	if not sortie:
-		wall.wall = maxi(0, roundi(float(wall.wall) - float(atk.troops) * 0.045 * land_siege))
+		wall.wall = maxi(0, roundi(float(wall.wall) - float(atk.troops) * 0.045 * land_siege * float(atk.get("chip", 1.0))))   # G-0216 공성 전문 ×2
 
 	var outcome := ""
 	if int(def.troops) <= 0:

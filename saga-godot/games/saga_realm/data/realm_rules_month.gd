@@ -36,12 +36,12 @@ func next_month() -> void:
 
 		income += RealmOrders.gold_income(int(c.comm), mul, int(c.sec), harvest_mul)
 		if harvest:
-			c.food = int(c.food) + RealmOrders.food_income(int(c.agri), mul, int(c.sec), harvest_mul)
+			c.food = int(c.food) + _sc_apply(RealmOrders.food_income(int(c.agri), mul, int(c.sec), harvest_mul), "food")   # G-0216 수확(무위·청야)
 
 		## rtk.js settleMonth() "군량이 떨어지면 병사가 흩어진다" — 병력이
 		## 생긴 이상(징병) 매달 군량을 먹는다는 것까지는 옮겨야 징병이 군량과
 		## 관계 없는 죽은 숫자가 되지 않는다. troops=0이면 food_upkeep도 0.
-		c.food = int(c.food) - RealmOrders.food_upkeep(int(c.troops))
+		c.food = int(c.food) - _sc_apply(RealmOrders.food_upkeep(int(c.troops)), "eat")   # G-0216 둔전
 		if int(c.food) < 0:
 			var lost := mini(int(c.troops), roundi(-float(c.food) / float(RealmOrders.FOOD_PER_1000) * 1000.0))
 			c.troops = int(c.troops) - lost
@@ -72,7 +72,7 @@ func next_month() -> void:
 				c.d_left = 0
 
 	var upkeep := roster.size() * RealmOrders.UPKEEP_PER_OFFICER
-	gold = maxi(0, gold + income - upkeep)
+	gold = maxi(0, gold + _sc_apply(income, "gold") - upkeep)   # G-0216 금 수입(무위 0·청야)
 
 	## diplo.js monthly() — 화친이 달마다 한 달씩 닳는다. 0에서 멈춘다(원작은
 	## 다 닳으면 키 자체를 지우는데, 이 슬라이스는 항상 값이 있는 Dictionary로
