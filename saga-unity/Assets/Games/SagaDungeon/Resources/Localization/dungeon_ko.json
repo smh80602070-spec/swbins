@@ -798,6 +798,7 @@
     { "key": "grace.how_unknown", "value": "피해" },
     { "key": "grace.who_how", "value": "{0} — {1}" },
     { "key": "grace.keep", "value": "남는 것: 도감·인물·공적은 그대로" },
-    { "key": "grace.restarted", "value": "제 {0}층 은총 — 다시 일어섰다" }
+    { "key": "grace.restarted", "value": "제 {0}층 은총 — 다시 일어섰다" },
+    { "key": "foe.elite_prefix", "value": "정예 " }
   ]
 }

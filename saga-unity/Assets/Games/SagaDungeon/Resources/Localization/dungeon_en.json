@@ -798,6 +798,7 @@
     { "key": "grace.how_unknown", "value": "Damage" },
     { "key": "grace.who_how", "value": "{0} — {1}" },
     { "key": "grace.keep", "value": "Kept: codex, heroes and merits stay" },
-    { "key": "grace.restarted", "value": "Floor {0} Grace — you rose again" }
+    { "key": "grace.restarted", "value": "Floor {0} Grace — you rose again" },
+    { "key": "foe.elite_prefix", "value": "Elite " }
   ]
 }

@@ -50,6 +50,7 @@ namespace Saga.Dungeon.World
             _sessionCard = Object.FindFirstObjectByType<SessionCard>();
             // PLAN.md 109-10 비결 패널 — Play 때 짓는다(씬 재빌드 없이, 공격 버튼이 이미 있는 뒤라 딱지도 붙는다).
             if (Object.FindFirstObjectByType<SecretPanelUi>() == null) new GameObject("SecretPanelUI").AddComponent<SecretPanelUi>();
+            DungeonFoeCard.Install(); // tasks U-0108 대상 적 카드 — 화면 위 가운데에 락온/가까운 적 이름·체력(웹 #d2-foe, Play 때 짓는다).
             TrialRunner.Install(); // PLAN.md 109-10-3 시련 — 난입 방에 러너, 난입 표식 곁에 표식, 단계 카드(Play 때, 씬 재빌드 없이).
             DungeonBgmScene.Attach(gameObject); // tasks U-0021 — 장면별 곡(town·field·battle, 파일 없으면 폴백)
             DungeonRegionTracker.Install(); // PLAN.md 109-10-4 지역 아홉 — 들어섬 배너·바닥 땅빛(Play 때, 씬 재빌드 없이).

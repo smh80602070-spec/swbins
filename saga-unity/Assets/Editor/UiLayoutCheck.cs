@@ -724,6 +724,31 @@ namespace Saga.EditorTools
                 },
                 exit = () => Saga.Dungeon.UI.TrialCardUi.Instance?.Close(),
             });
+            // tasks U-0108 대상 적 카드 — 가장 긴 종 이름의 정예 잡졸을 주인공 5m 앞에 세워 카드를 켠다(늘 있는 HUD 와 겹치면 안 되니 화면 전체를 잰다).
+            GameObject cardFoe = null;
+            list.Add(new UiState
+            {
+                name = "대상 적 카드",
+                enter = () =>
+                {
+                    var player = GameObject.FindWithTag("Player");
+                    var card = Saga.Dungeon.UI.DungeonFoeCard.Instance;
+                    if (player == null || card == null) return false;
+                    var longest = Saga.Dungeon.Data.DungeonFoeRoster.All.OrderByDescending(f => f.NameKo.Length).First();
+                    Vector3 fwd = player.transform.forward; fwd.y = 0f; fwd = fwd.sqrMagnitude > 1e-4f ? fwd.normalized : Vector3.forward;
+                    cardFoe = new GameObject("UiCheckFoeCardDummy");
+                    cardFoe.SetActive(false);
+                    cardFoe.transform.position = player.transform.position + fwd * 5f;
+                    var e = cardFoe.AddComponent<Saga.Dungeon.World.DungeonEnemy>();
+                    e.SetSpawnContext("uicheck_foecard", null);
+                    e.ConfigureCombat(100000f, 0f, 0, 0, null, null, false, longest.NameKo, longest.Color, 1f);
+                    e.MarkElite();
+                    cardFoe.SetActive(true); // 피해 0 — 다가와도 해가 없다(카드는 거리 안 산 적을 계속 올린다)
+                    card.Refresh(player.transform.position, e);
+                    return card.IsShown;
+                },
+                exit = () => { if (cardFoe != null) Object.Destroy(cardFoe); cardFoe = null; },
+            });
             // 지역 배너 — 서서히 떠서 머문다. 이름 가장 긴 지역으로.
             int announced = -1;
             list.Add(new UiState
