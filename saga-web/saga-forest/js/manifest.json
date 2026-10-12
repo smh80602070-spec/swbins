@@ -64,6 +64,7 @@
    "js/net.js",
    "js/ai.js",
    "js/auto.js",
+   "js/ui-detail.js",
    "js/ui.js",
    "js/perf.js",
    "js/game.js"
@@ -133,6 +134,7 @@
    "js/net.js",
    "js/ai.js",
    "js/auto.js",
+   "js/ui-detail.js",
    "js/ui.js",
    "js/game.js"
   ]

@@ -21,7 +21,6 @@
 
   var els = {};
   var openTab = null;          // 열려 있는 시트 이름 (null 이면 닫힘)
-  var openDetailRef = null;    // 열려 있는 상세 화면 { kind, id }
   var mapRefreshTimer = null;  // 전체지도가 열려 있는 동안만 도는 위치 갱신 틈
 
   function hero() { return global.DG.hero; }
@@ -122,7 +121,7 @@
     global.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') {
         if (els['dock-more'] && els['dock-more'].classList.contains('show')) { closeMore(); return; }
-        if (openDetailRef) { closeDetail(); return; }
+        if (UD().isOpen()) { closeDetail(); return; }
         if (openTab) { closeSheet(); }
         return;
       }

@@ -541,7 +541,8 @@
   "id": "fs.ui",
   "name": "전체지도(M키·🗺️)",
   "files": [
-   "js/ui.js"
+   "js/ui.js",
+   "js/ui-detail.js"
   ],
   "tests": [
    "시트 6개와 손이 닿는 카드가 그려진다",
