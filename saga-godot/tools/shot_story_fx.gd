@@ -137,3 +137,52 @@ static func roles(tree: SceneTree) -> void:
 				e.set("is_rare", true)
 				e.call("_float_mark", "✨", 0.0, Color(1.0, 0.9, 0.4))
 		print("ROLES %s %s x%+.1f" % [plan[i][1], String(e.get("species").name), off])
+
+
+## G-0211 — 우연 사건: 왼쪽에 붙잡힌 사람 + 지키는 둘(먼저 발동) · 오른쪽에 큰 미니보스(나중에 발동 — 토스트가 위에 남게).
+## 사건은 플레이어 자리에서 발동시킨 뒤 자리만 옮기고 멈춰 세운다(그 자리를 지난 셈 — 걸어와 플레이어를 덮지 않게). 처음 셋은 멀리 치운다.
+static func events(tree: SceneTree) -> void:
+	for m in tree.get_nodes_in_group("ui_modal"):
+		m.queue_free()
+	var p := tree.get_first_node_in_group("player") as Node3D
+	var sp := tree.current_scene.get_node_or_null("EnemySpawner")
+	if p == null or sp == null:
+		return
+	p.global_position.x = 14.0
+	for e in tree.get_nodes_in_group("story_enemy"):
+		if not (e.get("species") as Dictionary).is_empty():
+			e.global_position.x = 38.0
+	sp.set("ambush", {})
+	sp.set("miniboss", {})
+	sp.set("rescue", {"x": 14.0, "spawned": false, "done": false})
+	var step := [0]   # 0 = 지키는 둘 기다림 · 1 = 미니 기다림 — 사건은 물리 틱에 나오니 프레임 수 말고 나올 때까지
+	var cb := [Callable()]
+	cb[0] = func() -> void:
+		if not is_instance_valid(sp) or not is_instance_valid(p):
+			tree.process_frame.disconnect(cb[0])
+			return
+		if step[0] == 0 and (sp.get("_guards") as Array).size() == 2:
+			step[0] = 1
+			var cx := p.global_position.x - 3.0
+			var cap := sp.get("_captive") as Node3D
+			if cap != null:
+				cap.position.x = cx
+			var gs: Array = sp.get("_guards")
+			for i in gs.size():
+				gs[i].global_position.x = cx + (float(i) - 0.5) * 2.2
+				gs[i].process_mode = Node.PROCESS_MODE_DISABLED
+				gs[i].set("hp", 99999.0)
+				gs[i].set("max_hp", 99999.0)
+			sp.set("miniboss", {"x": p.global_position.x, "triggered": false})
+		elif step[0] == 1 and sp.get("mini_enemy") != null:
+			var mb := sp.get("mini_enemy") as Node3D
+			mb.global_position.x = p.global_position.x + 3.2
+			mb.process_mode = Node.PROCESS_MODE_DISABLED
+			var body := mb.get("_creature") as Node3D
+			if body != null:
+				body.rotation.y = -PI * 0.5   # 플레이어 쪽(왼쪽)을 본다
+			mb.set("hp", 99999.0)
+			mb.set("max_hp", 99999.0)
+			print("EVENTS mini %s x%.1f · player x%.1f" % [String(mb.get("species").name), mb.global_position.x, p.global_position.x])
+			tree.process_frame.disconnect(cb[0])
+	tree.process_frame.connect(cb[0])

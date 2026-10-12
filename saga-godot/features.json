@@ -3691,5 +3691,35 @@
   "ticket": "G-0210",
   "since": "2026-10-12",
   "note": "창 모드 st_roles 가로·세로 Claude 눈 ○(돌진형 \"!\"·마법형이 멈춰 서서 쏜 보라 구슬·희귀 들개 ✨ — 세로는 들개 ✨ 가 오른쪽 끝에 잘림)"
+ },
+ {
+  "id": "gd.st.hunt-events",
+  "name": "4종횡 사냥터 우연 사건 1차 — 들어갈 때마다 습격 15%(셋 한꺼번에·🚨)·미니보스 9%(잡몹 하나 체력 ×7·공격 ×1.7·보상 ×8·몸 1.25·👹)·붙잡힌 사람 10%(지키는 둘을 다 잡으면 사례금·🙏)(웹 side.js PLAN 11절)",
+  "files": [
+   "games/saga_story/world/story_enemy_spawner.gd",
+   "games/saga_story/world/story_enemy.gd",
+   "tools/probe_story_events.gd",
+   "tools/shot_story_fx.gd",
+   "tools/shot_scene.gd"
+  ],
+  "tests": [
+   "story_events",
+   "story_roles",
+   "story_foes",
+   "story_rules",
+   "story_boss",
+   "story_golden",
+   "story_labyrinth",
+   "story_player",
+   "story_fall",
+   "save_story",
+   "mount_story"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0211",
+  "since": "2026-10-12",
+  "note": "창 모드 st_events 가로·세로 Claude 눈 ○(지키는 도깨비·새 사이 붙잡힌 사람 · 오른쪽 큰 미니보스 들개 · 토스트 \"👹 미니보스 들개 등장!\") — 붙잡힌 표시(밧줄 등)는 없음"
  }
 ]

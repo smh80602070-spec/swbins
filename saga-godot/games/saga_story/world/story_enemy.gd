@@ -78,6 +78,9 @@ const MAGIC_COLOR := Color(0.72, 0.4, 1.0)
 const RARE_HP_MUL := 3.2
 const RARE_DMG_MUL := 1.35
 const RARE_GAIN_MUL := 4.0
+## G-0211 미니보스(웹 side.js 224 — 체력·공격 배수는 spawner boost 로) · 미니·희귀 몸 1.25배(웹 side-view.js 1029, 판정 상자는 그대로)
+const MINI_GAIN_MUL := 8.0
+const BIG_LOOK_MUL := 1.25
 
 signal died
 
@@ -147,6 +150,10 @@ var _anim := ""
 var role := ""               # G-0210 — ranged|dash|tank|melee|magic(spawner 가 넣음, 비면 종으로)
 var is_rare := false         # G-0210 — 희귀형(spawner 굴림)
 var role_seed := 0           # G-0210 — 돌진 쿨·마법 쿨 흔들림용(spawner RNG 에서 — 전역 randf 안 씀)
+var is_mini := false         # G-0211 — 미니보스(spawner boost). is_boss 는 false 그대로(보스 처치 수·사제 유대 불변)
+var mini_hp_mul := 1.0
+var mini_dmg_mul := 1.0
+var guard := false           # G-0211 — 붙잡힌 사람을 지키는 잡몹(spawner 가 다 잡혔나 본다)
 var shots_fired := 0         # 점검용
 var _role_rng := RandomNumberGenerator.new()
 var _dash_t := 0.0
@@ -192,7 +199,8 @@ func _spawn_visual() -> void:
 	var kind := body_kind()
 	_creature = CreatureBuilder.build(kind,
 		[enemy_color, enemy_color.darkened(0.4), enemy_color.lightened(0.45)], {"enemy": true})
-	CreatureBuilder._fit(_creature, kind, 1.6 * scale_mul * StoryLook.BODY_SCALE)   # G-0187 그림만 크게(아래 판정 상자는 그대로)
+	var look_mul: float = BIG_LOOK_MUL if (is_mini or is_rare) and not is_boss else 1.0   # G-0211
+	CreatureBuilder._fit(_creature, kind, 1.6 * scale_mul * look_mul * StoryLook.BODY_SCALE)   # G-0187 그림만 크게(아래 판정 상자는 그대로)
 	add_child(_creature)
 	_play_anim("idle")
 
@@ -272,11 +280,11 @@ func hp_mul() -> float:
 		m *= TANK_HP_MUL
 	elif role == "magic":
 		m *= MAGIC_HP_MUL
-	return m * (RARE_HP_MUL if is_rare else 1.0)
+	return m * (RARE_HP_MUL if is_rare else 1.0) * (mini_hp_mul if is_mini else 1.0)
 
 
 func dmg_mul() -> float:
-	return (TANK_DMG_MUL if role == "tank" else 1.0) * (RARE_DMG_MUL if is_rare else 1.0)
+	return (TANK_DMG_MUL if role == "tank" else 1.0) * (RARE_DMG_MUL if is_rare else 1.0) * (mini_dmg_mul if is_mini else 1.0)
 
 
 func dashing() -> bool:
@@ -529,7 +537,7 @@ func _die() -> void:
 	## PLAN 51장 STORY "관계" 축(사제 유대, story_save_state.gd 헤더 참고) —
 	## 잡졸 1·보스 8·관문 대장 20(보스이자 챔피언이라 둘 다 더함).
 	StorySaveState.add_mentor_bond((8 if is_boss else 1) + (12 if is_champion else 0))
-	var rare_mul: float = RARE_GAIN_MUL if is_rare else 1.0   # G-0210 웹 1181·1204 희귀 ×4
+	var rare_mul: float = RARE_GAIN_MUL if is_rare else (MINI_GAIN_MUL if is_mini else 1.0)   # G-0210 웹 1181·1204 희귀 ×4 · G-0211 미니 ×8
 	var reward_mul: float = (CHAMPION_EXP_MUL if is_champion else 1.0) * rare_mul
 	StorySaveState.add_exp(roundi(StoryCombat.enemy_exp(is_boss, enemy_lv) * reward_mul))
 	var gold_mul: float = (CHAMPION_GOLD_MUL if is_champion else 1.0) * rare_mul
@@ -553,14 +561,15 @@ func _maybe_drop_gear() -> void:
 		return
 	## 관문 대장은 웹판 "고유 장비 1 확정"을 그대로 좁혀 드롭 확률을 100%로
 	## 올린다(고유로 바뀌는지는 아래 UNIQUE_CHANCE 굴림이 그대로 가른다).
-	var chance: float = 1.0 if is_champion else (StoryCombat.GEAR_DROP_CHANCE_BOSS if is_boss else StoryCombat.GEAR_DROP_CHANCE_GRUNT)
+	var bossy := is_boss or is_mini   # G-0211 웹 1198 rollDrop(lv, boss || mini) — 미니는 드롭·고유 굴림만 보스처럼
+	var chance: float = 1.0 if is_champion else (StoryCombat.GEAR_DROP_CHANCE_BOSS if bossy else StoryCombat.GEAR_DROP_CHANCE_GRUNT)
 	if randf() < chance:
 		var picked: String = pool[randi() % pool.size()]
 		## **2026-09-13 추가(같은 날 더 더, 고유) — gear.js rollDrop() 그대로:
 		## 보스가 tier4 밑감(need==20)을 떨굴 때만, 그것도 UNIQUE_CHANCE(16%)
 		## 로 이름 있는 물건으로 바뀐다. 그 부위에 고유가 없으면(UNIQUE_ITEMS에
 		## 항목이 없으면) unique_for_base()가 ""를 줘 그냥 밑감 그대로 나간다.
-		if is_boss and int(StoryCombat.GEAR_ITEMS[picked].need) == 20 and randf() < StoryCombat.UNIQUE_CHANCE:
+		if bossy and int(StoryCombat.GEAR_ITEMS[picked].need) == 20 and randf() < StoryCombat.UNIQUE_CHANCE:
 			var uniq: String = StoryCombat.unique_for_base(picked)
 			if uniq != "":
 				picked = uniq
