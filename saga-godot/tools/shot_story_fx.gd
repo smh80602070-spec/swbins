@@ -219,3 +219,18 @@ static func events2(tree: SceneTree) -> void:
 			print("EVENTS2 상인 할인 · 상자 x16.4 · 채집 10.6~15.8")
 			tree.process_frame.disconnect(cb[0])
 	tree.process_frame.connect(cb[0])
+
+
+## G-0213 — 공용 패시브 그물 화면: 4종횡 정의로 열고 무사 시작 → 이름난 마디까지 찍은 뒤 규칙 마디(비연) 카드를 연 상태(주황 테 = 찍을 길).
+static func passive(tree: SceneTree) -> void:
+	for m in tree.get_nodes_in_group("ui_modal"):
+		m.queue_free()
+	var PW: GDScript = load("res://saga_core/data/passive_web.gd")
+	var d: Dictionary = PW.call("load_def", "res://games/saga_story/data/passive_def.json")
+	var st := {}
+	var api: RefCounted = PW.new(d, st, func() -> int: return 60)
+	api.call("take", "o_warrior")
+	api.call("take_path", "n_war_rhythm")
+	var scr: CanvasLayer = (load("res://saga_core/ui/passive_web_screen.gd") as GDScript).call("open", tree.current_scene, api, {"title": "✨ 사방 성좌(점검)"})
+	scr.call("select", "k_biyeon")
+	print("PASSIVE 찍음 %d · 남은 %d" % [(st.taken as Array).size(), int(api.call("left"))])

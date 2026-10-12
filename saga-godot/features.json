@@ -3753,5 +3753,30 @@
   "ticket": "G-0212",
   "since": "2026-10-12",
   "note": "창 모드 st_events2 가로·세로 Claude 눈 ○(이동 상인 몸·할인 토스트 · 오른쪽 금빛 상자 · 채집 구간 양 끝 🍀) — 초록 판 자체는 밝은 들판에서 거의 안 보여 🍀 표시를 더함"
+ },
+ {
+  "id": "gd.core.passive-web",
+  "name": "공용 패시브 그물(PoE식 광범위 패시브 나무) 엔진 — 찍기·되돌리기(BFS)·경로·합·규칙·낡은 세이브 정리(웹 passive-web.js 그대로) + 화면(끌기·확대·검색·카드, 바뀔 때만 그림) + 웹 정의 옮기기(passive_from_web.mjs) — 판 연결은 G-0214~",
+  "files": [
+   "saga_core/data/passive_web.gd",
+   "saga_core/ui/passive_web_screen.gd",
+   "tools/passive_from_web.mjs",
+   "games/saga_story/data/passive_def.json",
+   "tools/probe_passive_web.gd",
+   "tools/shot_story_fx.gd",
+   "tools/shot_scene.gd"
+  ],
+  "tests": [
+   "passive_web",
+   "story_events",
+   "story_player",
+   "save_story"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0213",
+  "since": "2026-10-12",
+  "note": "웹 엔진과 같은 정의·store 로 경로 비용 다섯·비연 뒤 합이 같음(probe ⑥⑦) · 창 모드 pw_screen 가로·세로 Claude 눈 ○ — 아직 어느 판도 안 씀(D1)"
  }
 ]
