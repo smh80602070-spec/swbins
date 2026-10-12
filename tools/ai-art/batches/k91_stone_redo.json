@@ -1,0 +1,24 @@
+{
+ "model": "z-image-turbo",
+ "out": "k91_stone_redo",
+ "note": "K-0091 ③ 돌길 다시 — 10-12 첫 판 4장이 모두 원근 시점(멀수록 돌 작음·부채꼴 포석)이라 타일 반복이 깨짐. 정수직·같은 크기 돌·부채꼴 금지. 고른 것 → pack_picked tile → forest_stone_v2.",
+ "defaults": {
+  "prompt_prefix": "",
+  "width": 1024,
+  "height": 1024,
+  "variants": 4,
+  "tiling": false
+ },
+ "items": [
+  {
+   "id": "forest_stone_v2r",
+   "seed": 91700000,
+   "prompt": "An orthographic flat scan of an old fieldstone path, camera pointing straight down at exactly 90 degrees, no perspective, no vanishing point. Irregular rounded gray stones all roughly the same size everywhere from the top edge to the bottom edge, randomly placed (not in rows, not in arcs, no fan pattern), with brown dirt and small moss tufts in the gaps. Evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Medium brightness and gentle low contrast, natural muted colors, fine small-scale detail. Uniform repeating terrain texture."
+  },
+  {
+   "id": "forest_stone_v2s",
+   "seed": 91710000,
+   "prompt": "A flat orthographic texture swatch of a worn cobblestone village lane seen from directly overhead like a satellite photo, no perspective at all, every stone the same small size across the whole image. Rounded weathered gray and beige stones in a random packing, not arranged in rows or curves, thin dirt and moss lines between them. Soft even overcast light, no shadows, no horizon, no objects, no border, fills the frame edge to edge. Medium brightness, low contrast, natural muted colors. Uniform repeating terrain texture."
+  }
+ ]
+}
