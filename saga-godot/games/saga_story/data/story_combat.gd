@@ -810,9 +810,16 @@ const ASCENDANT_ORB_PER := 0.2
 const ASCENDANT_ORB_SHOTS := 8
 
 
+## G-0214 — 성좌 급소 보탬. 점검(SceneTree)이 이 파일을 preload 할 땐 autoload 이름이 아직 없어 이름으로 안 부르고 트리에서 찾는다.
+static func _passive_crit() -> float:
+	var ml := Engine.get_main_loop() as SceneTree
+	var ss: Node = ml.root.get_node_or_null("StorySaveState") if ml != null else null
+	return float(ss.call("passive_fx", "crit")) if ss != null else 0.0
+
+
 ## side.js 883줄대 hit() 그대로: atk*(mul||1)*(0.88~1.12)*(crit?1.6:1).
 static func roll_damage(atk: float, mul: float = 1.0) -> Dictionary:
-	var crit: bool = randf() < CRIT_RATE
+	var crit: bool = randf() < CRIT_RATE + _passive_crit()   # G-0214 성좌 급소(+합/100, 비면 0 — 굴림 순서 그대로)
 	var variance: float = 0.88 + randf() * 0.24
 	var dmg: float = atk * mul * variance * (CRIT_MUL if crit else 1.0)
 	return {"dmg": dmg, "crit": crit}

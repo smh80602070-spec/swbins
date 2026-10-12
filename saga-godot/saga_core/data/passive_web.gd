@@ -20,6 +20,7 @@ var _by_id: Dictionary = {}   # id → 번호
 var _start_of: Dictionary = {}  # 시작점 key → 번호
 var _taken_set: Dictionary = {}
 var _sums = null
+var rev := 0   # G-0214 — 바뀔 때마다 +1(판이 효과 배수를 이걸로 캐시한다 — 매 틱 has()·sum() 안 돌게)
 
 
 ## 정의 JSON 을 읽는다(간선 번호는 JSON 에서 실수로 오니 정수로). 없으면 빈 사전.
@@ -90,6 +91,7 @@ func is_taken(id: String) -> bool:
 
 func _fire() -> void:
 	_rebuild()
+	rev += 1
 	changed.emit()
 
 

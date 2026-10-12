@@ -234,3 +234,24 @@ static func passive(tree: SceneTree) -> void:
 	var scr: CanvasLayer = (load("res://saga_core/ui/passive_web_screen.gd") as GDScript).call("open", tree.current_scene, api, {"title": "✨ 사방 성좌(점검)"})
 	scr.call("select", "k_biyeon")
 	print("PASSIVE 찍음 %d · 남은 %d" % [(st.taken as Array).size(), int(api.call("left"))])
+
+
+## G-0214 — 4종횡 사방 성좌도: HUD 「✨ 성좌」 단추로 연 화면(무사·Lv.40 — 무사의 별에서 이름난 마디까지 찍고 비연 카드를 연 상태). 메모리만, 저장 안 함.
+static func constellation(tree: SceneTree) -> void:
+	for m in tree.get_nodes_in_group("ui_modal"):
+		m.queue_free()
+	var S: Node = tree.root.get_node("StorySaveState")
+	S.set("level", 40)
+	S.set("job", "warrior")
+	S.set("passive", {"start": null, "taken": []})
+	var api: RefCounted = S.call("passive_api")
+	api.call("take", "o_warrior")
+	api.call("take_path", "n_war_rhythm")
+	var btn := tree.current_scene.find_child("ConstellationButton", true, false)
+	if btn == null:
+		print("CONSTELLATION 단추 없음")
+		return
+	var scr: CanvasLayer = btn.call("open_screen")
+	if scr != null:
+		scr.call("select", "k_biyeon")
+	print("CONSTELLATION 단추 「%s」 · 찍음 %d · 남은 %d" % [btn.get("text"), (S.get("passive").taken as Array).size(), int(api.call("left"))])

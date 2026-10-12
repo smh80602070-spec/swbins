@@ -33,7 +33,7 @@ func take_damage(amount: float) -> void:
 	## PLAN 101-2 STORY ⑤(비경) — 방어 축 은사(철벽)의 dmg_taken_mult(),
 	## 회차 밖이면 boons가 비어 있어 1.0(무해).
 	var before := hp
-	hp = clampf(hp - amount * (1.0 - cut) * guard_mul * StoryLabyrinthState.dmg_taken_mult(), 0.0, max_hp)
+	hp = clampf(hp - amount * (1.0 - cut) * guard_mul * StoryLabyrinthState.dmg_taken_mult() * StoryConstellation.mul("take"), 0.0, max_hp)   # G-0214 받는 피해
 	## G-0203 — 붉은 숫자·몸 번쩍(흔들림은 아래 G-0192 것만) + 가장자리 붉게(맥박은 hp setter).
 	if visual != null and before > hp:
 		CombatFeel.hit(visual, before - hp, false, {"shake_mul": 0.0})
@@ -90,106 +90,108 @@ func _attach_vignette() -> void:
 
 func _physics_process(delta: float) -> void:
 	_attack_cd_left = maxf(0.0, _attack_cd_left - delta)
-	_cd_sweep = maxf(0.0, _cd_sweep - delta)
-	_cd_bolt = maxf(0.0, _cd_bolt - delta)
-	_cd_brace = maxf(0.0, _cd_brace - delta)
+	## G-0214 무예 재사용 — 성좌 배수만큼 쿨이 빨리(늦게) 돈다(시전 자리 수십 곳을 안 건드리고 이 한 곳에서)
+	var cd_delta := delta / StoryConstellation.mul("cd")
+	_cd_sweep = maxf(0.0, _cd_sweep - cd_delta)
+	_cd_bolt = maxf(0.0, _cd_bolt - cd_delta)
+	_cd_brace = maxf(0.0, _cd_brace - cd_delta)
 	_buff_time_left = maxf(0.0, _buff_time_left - delta)
-	_cd_warrior_cut = maxf(0.0, _cd_warrior_cut - delta)
-	_cd_warrior_whirl = maxf(0.0, _cd_warrior_whirl - delta)
-	_cd_warrior_rush = maxf(0.0, _cd_warrior_rush - delta)
-	_cd_warrior_iron = maxf(0.0, _cd_warrior_iron - delta)
-	_cd_archer_shot = maxf(0.0, _cd_archer_shot - delta)
-	_cd_archer_double = maxf(0.0, _cd_archer_double - delta)
-	_cd_archer_pierce = maxf(0.0, _cd_archer_pierce - delta)
-	_cd_archer_eye = maxf(0.0, _cd_archer_eye - delta)
-	_cd_rogue_twin = maxf(0.0, _cd_rogue_twin - delta)
-	_cd_rogue_knife = maxf(0.0, _cd_rogue_knife - delta)
-	_cd_rogue_step = maxf(0.0, _cd_rogue_step - delta)
-	_cd_rogue_vital = maxf(0.0, _cd_rogue_vital - delta)
+	_cd_warrior_cut = maxf(0.0, _cd_warrior_cut - cd_delta)
+	_cd_warrior_whirl = maxf(0.0, _cd_warrior_whirl - cd_delta)
+	_cd_warrior_rush = maxf(0.0, _cd_warrior_rush - cd_delta)
+	_cd_warrior_iron = maxf(0.0, _cd_warrior_iron - cd_delta)
+	_cd_archer_shot = maxf(0.0, _cd_archer_shot - cd_delta)
+	_cd_archer_double = maxf(0.0, _cd_archer_double - cd_delta)
+	_cd_archer_pierce = maxf(0.0, _cd_archer_pierce - cd_delta)
+	_cd_archer_eye = maxf(0.0, _cd_archer_eye - cd_delta)
+	_cd_rogue_twin = maxf(0.0, _cd_rogue_twin - cd_delta)
+	_cd_rogue_knife = maxf(0.0, _cd_rogue_knife - cd_delta)
+	_cd_rogue_step = maxf(0.0, _cd_rogue_step - cd_delta)
+	_cd_rogue_vital = maxf(0.0, _cd_rogue_vital - cd_delta)
 	_invuln_time_left = maxf(0.0, _invuln_time_left - delta)
 	_dash_cd_left = maxf(0.0, _dash_cd_left - delta)
 	_signature_cd_left = maxf(0.0, _signature_cd_left - delta)
 	_parry_time_left = maxf(0.0, _parry_time_left - delta)
-	_cd_mage_fire = maxf(0.0, _cd_mage_fire - delta)
-	_cd_mage_bolt = maxf(0.0, _cd_mage_bolt - delta)
-	_cd_mage_heal = maxf(0.0, _cd_mage_heal - delta)
-	_cd_mage_talis = maxf(0.0, _cd_mage_talis - delta)
-	_cd_general_smash = maxf(0.0, _cd_general_smash - delta)
-	_cd_general_roar = maxf(0.0, _cd_general_roar - delta)
-	_cd_general_wall = maxf(0.0, _cd_general_wall - delta)
-	_cd_sniper_rain = maxf(0.0, _cd_sniper_rain - delta)
-	_cd_sniper_snipe = maxf(0.0, _cd_sniper_snipe - delta)
-	_cd_sniper_split = maxf(0.0, _cd_sniper_split - delta)
-	_cd_assassin_storm = maxf(0.0, _cd_assassin_storm - delta)
-	_cd_assassin_fan = maxf(0.0, _cd_assassin_fan - delta)
-	_cd_assassin_shadow = maxf(0.0, _cd_assassin_shadow - delta)
-	_cd_sage_quake = maxf(0.0, _cd_sage_quake - delta)
-	_cd_sage_beam = maxf(0.0, _cd_sage_beam - delta)
-	_cd_sage_ward = maxf(0.0, _cd_sage_ward - delta)
-	_cd_warrior_edge = maxf(0.0, _cd_warrior_edge - delta)
-	_cd_warrior_vital = maxf(0.0, _cd_warrior_vital - delta)
-	_cd_archer_retreat = maxf(0.0, _cd_archer_retreat - delta)
-	_cd_archer_burst = maxf(0.0, _cd_archer_burst - delta)
-	_cd_rogue_whirl = maxf(0.0, _cd_rogue_whirl - delta)
-	_cd_rogue_dart = maxf(0.0, _cd_rogue_dart - delta)
-	_cd_mage_step = maxf(0.0, _cd_mage_step - delta)
-	_cd_mage_orb = maxf(0.0, _cd_mage_orb - delta)
-	_cd_general_edge = maxf(0.0, _cd_general_edge - delta)
-	_cd_general_vital = maxf(0.0, _cd_general_vital - delta)
-	_cd_sniper_retreat = maxf(0.0, _cd_sniper_retreat - delta)
-	_cd_sniper_burst = maxf(0.0, _cd_sniper_burst - delta)
-	_cd_assassin_whirl = maxf(0.0, _cd_assassin_whirl - delta)
-	_cd_assassin_dart = maxf(0.0, _cd_assassin_dart - delta)
-	_cd_sage_step = maxf(0.0, _cd_sage_step - delta)
-	_cd_sage_orb = maxf(0.0, _cd_sage_orb - delta)
-	_cd_marshal_heaven = maxf(0.0, _cd_marshal_heaven - delta)
-	_cd_marshal_quake = maxf(0.0, _cd_marshal_quake - delta)
-	_cd_marshal_charge = maxf(0.0, _cd_marshal_charge - delta)
-	_cd_marshal_banner = maxf(0.0, _cd_marshal_banner - delta)
-	_cd_marshal_edge = maxf(0.0, _cd_marshal_edge - delta)
-	_cd_marshal_vital = maxf(0.0, _cd_marshal_vital - delta)
-	_cd_flier_storm = maxf(0.0, _cd_flier_storm - delta)
-	_cd_flier_pierce = maxf(0.0, _cd_flier_pierce - delta)
-	_cd_flier_volley = maxf(0.0, _cd_flier_volley - delta)
-	_cd_flier_focus = maxf(0.0, _cd_flier_focus - delta)
-	_cd_flier_retreat = maxf(0.0, _cd_flier_retreat - delta)
-	_cd_flier_burst = maxf(0.0, _cd_flier_burst - delta)
-	_cd_wraith_blur = maxf(0.0, _cd_wraith_blur - delta)
-	_cd_wraith_petal = maxf(0.0, _cd_wraith_petal - delta)
-	_cd_wraith_void = maxf(0.0, _cd_wraith_void - delta)
-	_cd_wraith_mark = maxf(0.0, _cd_wraith_mark - delta)
-	_cd_wraith_whirl = maxf(0.0, _cd_wraith_whirl - delta)
-	_cd_wraith_dart = maxf(0.0, _cd_wraith_dart - delta)
-	_cd_immortal_meteor = maxf(0.0, _cd_immortal_meteor - delta)
-	_cd_immortal_abyss = maxf(0.0, _cd_immortal_abyss - delta)
-	_cd_immortal_mend = maxf(0.0, _cd_immortal_mend - delta)
-	_cd_immortal_tao = maxf(0.0, _cd_immortal_tao - delta)
-	_cd_immortal_step = maxf(0.0, _cd_immortal_step - delta)
-	_cd_immortal_orb = maxf(0.0, _cd_immortal_orb - delta)
-	_cd_warlord_ruin = maxf(0.0, _cd_warlord_ruin - delta)
-	_cd_warlord_tremor = maxf(0.0, _cd_warlord_tremor - delta)
-	_cd_warlord_smite = maxf(0.0, _cd_warlord_smite - delta)
-	_cd_warlord_conquer = maxf(0.0, _cd_warlord_conquer - delta)
-	_cd_warlord_edge = maxf(0.0, _cd_warlord_edge - delta)
-	_cd_warlord_vital = maxf(0.0, _cd_warlord_vital - delta)
-	_cd_falcon_tempest = maxf(0.0, _cd_falcon_tempest - delta)
-	_cd_falcon_ray = maxf(0.0, _cd_falcon_ray - delta)
-	_cd_falcon_swarm = maxf(0.0, _cd_falcon_swarm - delta)
-	_cd_falcon_zenith = maxf(0.0, _cd_falcon_zenith - delta)
-	_cd_falcon_retreat = maxf(0.0, _cd_falcon_retreat - delta)
-	_cd_falcon_burst = maxf(0.0, _cd_falcon_burst - delta)
-	_cd_reaper_carve = maxf(0.0, _cd_reaper_carve - delta)
-	_cd_reaper_bloom = maxf(0.0, _cd_reaper_bloom - delta)
-	_cd_reaper_veil = maxf(0.0, _cd_reaper_veil - delta)
-	_cd_reaper_curse = maxf(0.0, _cd_reaper_curse - delta)
-	_cd_reaper_whirl = maxf(0.0, _cd_reaper_whirl - delta)
-	_cd_reaper_dart = maxf(0.0, _cd_reaper_dart - delta)
-	_cd_ascendant_starfall = maxf(0.0, _cd_ascendant_starfall - delta)
-	_cd_ascendant_collapse = maxf(0.0, _cd_ascendant_collapse - delta)
-	_cd_ascendant_rebirth = maxf(0.0, _cd_ascendant_rebirth - delta)
-	_cd_ascendant_eternity = maxf(0.0, _cd_ascendant_eternity - delta)
-	_cd_ascendant_step = maxf(0.0, _cd_ascendant_step - delta)
-	_cd_ascendant_orb = maxf(0.0, _cd_ascendant_orb - delta)
+	_cd_mage_fire = maxf(0.0, _cd_mage_fire - cd_delta)
+	_cd_mage_bolt = maxf(0.0, _cd_mage_bolt - cd_delta)
+	_cd_mage_heal = maxf(0.0, _cd_mage_heal - cd_delta)
+	_cd_mage_talis = maxf(0.0, _cd_mage_talis - cd_delta)
+	_cd_general_smash = maxf(0.0, _cd_general_smash - cd_delta)
+	_cd_general_roar = maxf(0.0, _cd_general_roar - cd_delta)
+	_cd_general_wall = maxf(0.0, _cd_general_wall - cd_delta)
+	_cd_sniper_rain = maxf(0.0, _cd_sniper_rain - cd_delta)
+	_cd_sniper_snipe = maxf(0.0, _cd_sniper_snipe - cd_delta)
+	_cd_sniper_split = maxf(0.0, _cd_sniper_split - cd_delta)
+	_cd_assassin_storm = maxf(0.0, _cd_assassin_storm - cd_delta)
+	_cd_assassin_fan = maxf(0.0, _cd_assassin_fan - cd_delta)
+	_cd_assassin_shadow = maxf(0.0, _cd_assassin_shadow - cd_delta)
+	_cd_sage_quake = maxf(0.0, _cd_sage_quake - cd_delta)
+	_cd_sage_beam = maxf(0.0, _cd_sage_beam - cd_delta)
+	_cd_sage_ward = maxf(0.0, _cd_sage_ward - cd_delta)
+	_cd_warrior_edge = maxf(0.0, _cd_warrior_edge - cd_delta)
+	_cd_warrior_vital = maxf(0.0, _cd_warrior_vital - cd_delta)
+	_cd_archer_retreat = maxf(0.0, _cd_archer_retreat - cd_delta)
+	_cd_archer_burst = maxf(0.0, _cd_archer_burst - cd_delta)
+	_cd_rogue_whirl = maxf(0.0, _cd_rogue_whirl - cd_delta)
+	_cd_rogue_dart = maxf(0.0, _cd_rogue_dart - cd_delta)
+	_cd_mage_step = maxf(0.0, _cd_mage_step - cd_delta)
+	_cd_mage_orb = maxf(0.0, _cd_mage_orb - cd_delta)
+	_cd_general_edge = maxf(0.0, _cd_general_edge - cd_delta)
+	_cd_general_vital = maxf(0.0, _cd_general_vital - cd_delta)
+	_cd_sniper_retreat = maxf(0.0, _cd_sniper_retreat - cd_delta)
+	_cd_sniper_burst = maxf(0.0, _cd_sniper_burst - cd_delta)
+	_cd_assassin_whirl = maxf(0.0, _cd_assassin_whirl - cd_delta)
+	_cd_assassin_dart = maxf(0.0, _cd_assassin_dart - cd_delta)
+	_cd_sage_step = maxf(0.0, _cd_sage_step - cd_delta)
+	_cd_sage_orb = maxf(0.0, _cd_sage_orb - cd_delta)
+	_cd_marshal_heaven = maxf(0.0, _cd_marshal_heaven - cd_delta)
+	_cd_marshal_quake = maxf(0.0, _cd_marshal_quake - cd_delta)
+	_cd_marshal_charge = maxf(0.0, _cd_marshal_charge - cd_delta)
+	_cd_marshal_banner = maxf(0.0, _cd_marshal_banner - cd_delta)
+	_cd_marshal_edge = maxf(0.0, _cd_marshal_edge - cd_delta)
+	_cd_marshal_vital = maxf(0.0, _cd_marshal_vital - cd_delta)
+	_cd_flier_storm = maxf(0.0, _cd_flier_storm - cd_delta)
+	_cd_flier_pierce = maxf(0.0, _cd_flier_pierce - cd_delta)
+	_cd_flier_volley = maxf(0.0, _cd_flier_volley - cd_delta)
+	_cd_flier_focus = maxf(0.0, _cd_flier_focus - cd_delta)
+	_cd_flier_retreat = maxf(0.0, _cd_flier_retreat - cd_delta)
+	_cd_flier_burst = maxf(0.0, _cd_flier_burst - cd_delta)
+	_cd_wraith_blur = maxf(0.0, _cd_wraith_blur - cd_delta)
+	_cd_wraith_petal = maxf(0.0, _cd_wraith_petal - cd_delta)
+	_cd_wraith_void = maxf(0.0, _cd_wraith_void - cd_delta)
+	_cd_wraith_mark = maxf(0.0, _cd_wraith_mark - cd_delta)
+	_cd_wraith_whirl = maxf(0.0, _cd_wraith_whirl - cd_delta)
+	_cd_wraith_dart = maxf(0.0, _cd_wraith_dart - cd_delta)
+	_cd_immortal_meteor = maxf(0.0, _cd_immortal_meteor - cd_delta)
+	_cd_immortal_abyss = maxf(0.0, _cd_immortal_abyss - cd_delta)
+	_cd_immortal_mend = maxf(0.0, _cd_immortal_mend - cd_delta)
+	_cd_immortal_tao = maxf(0.0, _cd_immortal_tao - cd_delta)
+	_cd_immortal_step = maxf(0.0, _cd_immortal_step - cd_delta)
+	_cd_immortal_orb = maxf(0.0, _cd_immortal_orb - cd_delta)
+	_cd_warlord_ruin = maxf(0.0, _cd_warlord_ruin - cd_delta)
+	_cd_warlord_tremor = maxf(0.0, _cd_warlord_tremor - cd_delta)
+	_cd_warlord_smite = maxf(0.0, _cd_warlord_smite - cd_delta)
+	_cd_warlord_conquer = maxf(0.0, _cd_warlord_conquer - cd_delta)
+	_cd_warlord_edge = maxf(0.0, _cd_warlord_edge - cd_delta)
+	_cd_warlord_vital = maxf(0.0, _cd_warlord_vital - cd_delta)
+	_cd_falcon_tempest = maxf(0.0, _cd_falcon_tempest - cd_delta)
+	_cd_falcon_ray = maxf(0.0, _cd_falcon_ray - cd_delta)
+	_cd_falcon_swarm = maxf(0.0, _cd_falcon_swarm - cd_delta)
+	_cd_falcon_zenith = maxf(0.0, _cd_falcon_zenith - cd_delta)
+	_cd_falcon_retreat = maxf(0.0, _cd_falcon_retreat - cd_delta)
+	_cd_falcon_burst = maxf(0.0, _cd_falcon_burst - cd_delta)
+	_cd_reaper_carve = maxf(0.0, _cd_reaper_carve - cd_delta)
+	_cd_reaper_bloom = maxf(0.0, _cd_reaper_bloom - cd_delta)
+	_cd_reaper_veil = maxf(0.0, _cd_reaper_veil - cd_delta)
+	_cd_reaper_curse = maxf(0.0, _cd_reaper_curse - cd_delta)
+	_cd_reaper_whirl = maxf(0.0, _cd_reaper_whirl - cd_delta)
+	_cd_reaper_dart = maxf(0.0, _cd_reaper_dart - cd_delta)
+	_cd_ascendant_starfall = maxf(0.0, _cd_ascendant_starfall - cd_delta)
+	_cd_ascendant_collapse = maxf(0.0, _cd_ascendant_collapse - cd_delta)
+	_cd_ascendant_rebirth = maxf(0.0, _cd_ascendant_rebirth - cd_delta)
+	_cd_ascendant_eternity = maxf(0.0, _cd_ascendant_eternity - cd_delta)
+	_cd_ascendant_step = maxf(0.0, _cd_ascendant_step - cd_delta)
+	_cd_ascendant_orb = maxf(0.0, _cd_ascendant_orb - cd_delta)
 	_job_buff_time_left = maxf(0.0, _job_buff_time_left - delta)
 	## m_talis(부적)·p_ward(호신부)가 걸려 있으면 mp 회복이 배로 빨라진다
 	## (side.js MP_REGEN*bf.regen과 같은 자리) — 다른 job 버프는 regen이
@@ -493,12 +495,15 @@ func _walk(delta: float) -> void:
 	if Input.is_action_just_pressed("jump"):
 		_jump_buffer_left = JUMP_BUFFER_TIME
 	if _jump_buffer_left > 0.0 and _coyote_time_left > 0.0:
-		velocity.y = JUMP_SPEED * mount_jump_mul
+		velocity.y = JUMP_SPEED * mount_jump_mul * StoryConstellation.mul("jump")   # G-0214 점프
 		_jump_buffer_left = 0.0
 		_coyote_time_left = 0.0
 	elif is_on_floor():
 		velocity.y = 0.0
 	_jump_buffer_left = maxf(0.0, _jump_buffer_left - delta)
+	## G-0214 비연 — 공중에서 점프 = 보는 쪽으로 2.6m 순간 이동(0.6초마다, 웹 jump())
+	if Input.is_action_just_pressed("jump") and not is_on_floor() and _coyote_time_left <= 0.0:
+		_try_blink()
 
 	_try_dash()
 	_try_signature(delta)
@@ -510,7 +515,8 @@ func _walk(delta: float) -> void:
 		* (_job_buff_speed_mul if _job_buff_time_left > 0.0 else 1.0) \
 		* (StoryCombat.ARCHER_DRAW_MOVE_MUL if _archer_charging else 1.0) \
 		* StoryLabyrinthState.move_speed_mult() \
-		* mount_speed_mul  # PLAN 101-2 STORY ⑤(비경, 질주 은사) · 탈것
+		* mount_speed_mul \
+		* StoryConstellation.mul("move")  # PLAN 101-2 STORY ⑤(비경, 질주 은사) · 탈것 · G-0214 이동
 	velocity.x = axis * speed
 
 	if absf(axis) > 0.05:
@@ -531,11 +537,19 @@ func _try_dash() -> void:
 	if Input.is_action_just_pressed("story_dash"):
 		_do_dash()
 
+## G-0214 비연 한 번(규칙이 없거나 쿨 중이면 안 함) — 입력과 떼어 점검이 바로 부른다.
+func _try_blink() -> bool:
+	if not StoryConstellation.has_rule("biyeon") or not StoryConstellation.blink_ready():   # 쿨은 성좌 쪽에(플레이어 var 를 늘리면 golden 해시가 바뀐다)
+		return false
+	global_position.x += StoryConstellation.BLINK_M * _facing
+	return true
+
+
 ## 대시 한 번(쿨다운 중이면 안 함) — 입력과 떼어 점검이 바로 부른다(G-0118).
 func _do_dash() -> void:
 	if _dash_cd_left > 0.0:
 		return
-	_dash_cd_left = DASH_COOLDOWN
+	_dash_cd_left = DASH_COOLDOWN * StoryConstellation.mul("dodge")   # G-0214 회피 재사용
 	global_position.x += DASH_DIST_M * _facing
 	_invuln_time_left = maxf(_invuln_time_left, DASH_INVULN_SEC)
 
@@ -669,6 +683,8 @@ func _attack() -> void:
 	_attack_cd_left = ATTACK_COOLDOWN / StoryLabyrinthState.atk_speed_mult()
 	_play_anim("sprint")  # 전용 공격 애니메이션이 없어 임시로 빌림(재해석, 실기 확인 때 다시 볼 것)
 	_melee_hit(ATTACK_RANGE, 1.0)
+	if StoryConstellation.has_rule("yeonta"):   # G-0214 연타 — 타수 +1(공격 ×0.75 는 성좌 공격 배수에)
+		_melee_hit(ATTACK_RANGE, 1.0)
 	Voice.say("shout")   # G-0111 — 가끔 외침
 
 

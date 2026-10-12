@@ -40,6 +40,7 @@ const COYOTE_TIME := 0.1
 const JUMP_BUFFER_TIME := 0.12
 
 const StoryCombat := preload("res://games/saga_story/data/story_combat.gd")
+const StoryConstellation := preload("res://games/saga_story/data/story_constellation.gd")   # G-0214 사방 성좌도
 const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
 const BlobShadow := preload("res://saga_core/world/blob_shadow.gd")
 const CombatFx := preload("res://saga_core/combat_fx.gd")
@@ -289,11 +290,11 @@ var _hv: Node = null
 ## 곱한다(영구 강화 단수, 비경 밖에서도 항상 적용 — 은사와 달리 회차 한정이
 ## 아니다). 기존 합(START_HP+장비+전직)에 곱하는 자리라 다른 계산은 안 건드린다.
 var max_hp: float:
-	get: return (StoryCombat.START_HP + float(StorySaveState.gear_totals().hp) + float(StorySaveState.job_grow().hp)) * StorySaveState.memory_hp_mult()
+	get: return (StoryCombat.START_HP + float(StorySaveState.gear_totals().hp) + float(StorySaveState.job_grow().hp)) * StorySaveState.memory_hp_mult() * StoryConstellation.mul("hp")   # G-0214
 
 ## 방사(mage) 전직의 jb.mp(+40)를 반영한 MP 최대치 — mp_bar.gd가 폴링한다.
 var max_mp: float:
-	get: return StoryCombat.MP_MAX + float(StorySaveState.job_grow().mp)
+	get: return (StoryCombat.MP_MAX + float(StorySaveState.job_grow().mp)) * StoryConstellation.mul("mp")   # G-0214
 
 
 ## side.js power()의 atk = round(might*0.9+wisdom*0.3) + gearBonus().atk +
@@ -316,6 +317,7 @@ func _effective_atk() -> float:
 		atk *= _signature_next_mul
 		_signature_next_mul = 1.0
 	atk *= StoryLabyrinthState.atk_mult()  # PLAN 101-2 STORY ⑤(비경, 맹공 은사) — 기본 공격·무예 전부 이 한 곳을 거친다
+	atk *= StoryConstellation.mul("atk")   # G-0214 사방 성좌도(곱만 — 다음 공격 배율처럼 소비하지 않는다)
 	return atk
 
 
@@ -335,6 +337,8 @@ func _melee_hit(range_m: float, mul: float) -> void:
 			continue  # 등 뒤는 안 맞는다(바로 겹친 자리 정도는 봐준다)
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
+		if StoryConstellation.has_rule("manadrink"):   # G-0214 마력 흡수 — 맞힐 때마다 최대 마나 5%
+			mp = minf(max_mp, mp + max_mp * StoryConstellation.MANA_HIT)
 		StorySaveState.note_player_hit()   # G-0197 연속 타격
 		_hit_feel(e, roll)
 

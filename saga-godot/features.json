@@ -3772,11 +3772,44 @@
    "story_player",
    "save_story"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0213",
   "since": "2026-10-12",
-  "note": "웹 엔진과 같은 정의·store 로 경로 비용 다섯·비연 뒤 합이 같음(probe ⑥⑦) · 창 모드 pw_screen 가로·세로 Claude 눈 ○ — 아직 어느 판도 안 씀(D1)"
+  "note": "웹 엔진과 같은 정의·store 로 경로 비용 다섯·비연 뒤 합이 같음(probe ⑥⑦) · 창 모드 pw_screen 가로·세로 Claude 눈 ○ — 아직 어느 판도 안 씀(D1) · G-0214 에서 4종횡이 써서 D2"
+ },
+ {
+  "id": "gd.st.constellation",
+  "name": "4종횡 사방 성좌도 — 391마디 패시브 그물(레벨마다 1점+관문 대장 첫 승리, 상한 56) · 공격·체력·마나·급소·이동·점프·회피/무예 재사용·받는 피해·드롭·경험 11 효과 · 규칙 8(비연 순간 이동·철각·질풍·한 방·연타·마력 흡수·사냥꾼의 눈·홀로서기) · HUD 「✨ 성좌」·L · 되돌리기 마을에서 금 200(웹 W-0183)",
+  "files": [
+   "games/saga_story/data/story_constellation.gd",
+   "games/saga_story/ui/constellation_button.gd",
+   "games/saga_story/data/story_save_state.gd",
+   "games/saga_story/player/story_player.gd",
+   "games/saga_story/player/story_player_base.gd",
+   "games/saga_story/data/story_combat.gd",
+   "games/saga_story/world/story_enemy.gd",
+   "games/saga_story/ui/StoryHUD.tscn",
+   "tools/probe_story_constellation.gd",
+   "tools/shot_story_fx.gd",
+   "tools/shot_scene.gd"
+  ],
+  "tests": [
+   "story_constellation",
+   "passive_web",
+   "story_player",
+   "story_golden",
+   "story_rules",
+   "story_events",
+   "save_story",
+   "mount_story"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0214",
+  "since": "2026-10-12",
+  "note": "창 모드 st_constellation 가로·세로 Claude 눈 ○(HUD 단추로 연 화면 · Lv.40 무사 — 남은 23/39 · 비연 카드 \"점수가 모자란다\") · 빈 성좌는 배수 1(golden md5 그대로)"
  }
 ]

@@ -563,6 +563,7 @@ func _maybe_drop_gear() -> void:
 	## 올린다(고유로 바뀌는지는 아래 UNIQUE_CHANCE 굴림이 그대로 가른다).
 	var bossy := is_boss or is_mini   # G-0211 웹 1198 rollDrop(lv, boss || mini) — 미니는 드롭·고유 굴림만 보스처럼
 	var chance: float = 1.0 if is_champion else (StoryCombat.GEAR_DROP_CHANCE_BOSS if bossy else StoryCombat.GEAR_DROP_CHANCE_GRUNT)
+	chance = minf(1.0, chance * float(StorySaveState.passive_fx("drop")))   # G-0214 성좌 드롭
 	if randf() < chance:
 		var picked: String = pool[randi() % pool.size()]
 		## **2026-09-13 추가(같은 날 더 더, 고유) — gear.js rollDrop() 그대로:

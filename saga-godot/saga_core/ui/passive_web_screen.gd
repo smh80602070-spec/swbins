@@ -3,7 +3,7 @@ extends CanvasLayer
 ## G-0213 공용 패시브 그물 화면 — 웹 saga-web/shared/js/passive-web-ui.js(W-0179) 의 고돗판.
 ## 규칙은 saga_core/data/passive_web.gd(api), 정의·효과 글은 판이 넘긴다(saga_core 는 games 를 안 부른다).
 ##
-##   PassiveWebScreen.open(parent, api, {title, fmt: Callable(stats)->String, gate: Callable(id)->String, on_close: Callable})
+##   PassiveWebScreen.open(parent, api, {title, fmt: Callable(stats)->String, gate: Callable(id)->String, on_drop: Callable(id), on_close: Callable})
 ##
 ## 끌어 옮기기·휠/두 손가락 확대(0.4~3) · 찍은 마디 금색 · 지금 찍을 수 있는 이웃 밝게 · 나머지 흐림 · 시작점은 정의 색.
 ## 마디를 누르면 아래 카드(이름·효과·까닭·"찍기 (경로 n점)"/"되돌리기"), 위 줄은 제목·남은 점수·검색칸·✕.
@@ -215,7 +215,10 @@ func _on_card_btn() -> void:
 	if id == "":
 		return
 	if api.state(id) == "taken":
-		api.drop(id)
+		if api.drop(id):
+			var cb: Callable = opts.get("on_drop", Callable())   # 판이 되돌리기 값을 받는다(4종횡 금 200 등)
+			if cb.is_valid():
+				cb.call(id)
 	else:
 		api.take_path(id)
 

@@ -68,6 +68,7 @@ const CUTS := [
 	["st_events", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "events", ["@tree"]]]],   # G-0211 우연 사건 — 붙잡힌 사람·지키는 둘 + 큰 미니보스·토스트
 	["st_events2", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "events2", ["@tree"]]]],   # G-0212 우연 사건 2차 — 보물상자·초록 채집 판·이동 상인·할인 토스트
 	["pw_screen", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "passive", ["@tree"]]]],   # G-0213 공용 패시브 그물 화면(4종횡 정의) — 금빛 길·주황 테 경로·규칙 마디 카드
+	["st_constellation", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "constellation", ["@tree"]]]],   # G-0214 4종횡 사방 성좌도 — HUD 단추로 연 화면·비연 카드
 	["st_boss_groggy", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "boss_groggy", ["@tree"]]]],   # G-0206 그로기 💫
 	["st_field_front", "res://games/saga_story/world/TestField.tscn", [["free_modal"]]],   # G-0187 사냥터 — 앞 층 풀·바위·큰 인물(화면 높이 약 1/7)
 	["st_forest_front", "res://games/saga_story/world/ForestHuntGround.tscn", [["free_modal"]]],   # 숲 사냥터도
