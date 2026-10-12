@@ -75,7 +75,12 @@ namespace Saga.Dungeon.World
 
         private void Awake()
         {
-            if (transform.childCount > 0) return;
+            if (transform.childCount > 0)
+            {
+                // 씬에 구운 벽은 다시 안 짓는다 — 메시만 면마다 미터 UV 상자로 바꿔 끼운다(U-0109, 방 빌더와 같은 결)
+                if (UsePbrEnvironment) foreach (Transform child in transform) if (child.name.StartsWith("Wall_")) UseMetricWall(child);
+                return;
+            }
             Build();
         }
 
@@ -129,9 +134,26 @@ namespace Saga.Dungeon.World
             wall.transform.localPosition = pos;
             wall.transform.localScale = size;
             var renderer = wall.GetComponent<MeshRenderer>();
-            if (UsePbrEnvironment) renderer.sharedMaterial = EnvironmentMaterial.MakeTiled(wallMaterial, Mathf.Max(size.x, size.z), size.y);
+            if (UsePbrEnvironment) UseMetricWall(wall.transform);
             else if (corridorModel != null) renderer.enabled = false; // GLB가 보여줄 자리 — 콜라이더만 남김.
             else renderer.sharedMaterial = MakeMaterial(color);
+        }
+
+        /// <summary>U-0109 진단용 — PBR 경로인지.</summary>
+        public bool UsesPbrEnvironment => UsePbrEnvironment;
+
+        private Material _metricWallMat; // 반복 1 한 벌을 이 복도의 벽이 같이 쓴다(면 UV 가 이미 미터 단위)
+
+        /// <summary>U-0109 — 기본 Cube(면마다 UV 0~1) 대신 같은 자리·크기의 면마다 미터 UV 상자로 메시만 바꾼다
+        /// (localScale·콜라이더 그대로) — 얇은 윗면·끝면에 돌 결이 눌려 줄무늬 지던 것.</summary>
+        private void UseMetricWall(Transform wall)
+        {
+            var mf = wall.GetComponent<MeshFilter>();
+            var r = wall.GetComponent<MeshRenderer>();
+            if (mf == null || r == null) return;
+            if (!r.isPartOfStaticBatch) mf.sharedMesh = MetricBox.Get(wall.localScale); // 배칭된 뒤면 메시는 그대로(방 빌더 주석)
+            if (_metricWallMat == null) _metricWallMat = EnvironmentMaterial.MakeTiled(wallMaterial, EnvironmentMaterial.TileMeters, EnvironmentMaterial.TileMeters);
+            r.sharedMaterial = _metricWallMat;
         }
 
         /// <summary>corridor.glb 타일 두 장을 이어 붙인다(위 클래스 주석 —

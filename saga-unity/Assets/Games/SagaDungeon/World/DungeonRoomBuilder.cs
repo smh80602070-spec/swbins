@@ -111,7 +111,11 @@ namespace Saga.Dungeon.World
             if (transform.childCount > 0)
             {
                 // 씬에 구운 아치는 빌더가 다시 안 짓는다 — 메시만 타일 UV 판으로 바꿔 끼운다(U-0069)
-                if (UsePbrEnvironment) foreach (Transform child in transform) if (child.name.EndsWith("_Gate")) UseTiledGateMesh(child);
+                if (UsePbrEnvironment) foreach (Transform child in transform)
+                {
+                    if (child.name.EndsWith("_Gate")) UseTiledGateMesh(child);
+                    else if (child.name.StartsWith("Wall_")) UseMetricWall(child); // 벽 상자도 메시만 면마다 미터 UV 판으로(U-0109)
+                }
                 return;
             }
             Build();
@@ -163,9 +167,7 @@ namespace Saga.Dungeon.World
                 }
                 else if (child.name.StartsWith("Wall_"))
                 {
-                    var size = child.localScale;
-                    child.GetComponent<MeshRenderer>().sharedMaterial =
-                        EnvironmentMaterial.MakeTiled(wallMaterial, Mathf.Max(size.x, size.z), size.y, wearTier);
+                    UseMetricWall(child);
                 }
             }
         }
@@ -474,9 +476,40 @@ namespace Saga.Dungeon.World
             wall.transform.localPosition = pos;
             wall.transform.localScale = size;
             var renderer = wall.GetComponent<MeshRenderer>();
-            if (UsePbrEnvironment) renderer.sharedMaterial = EnvironmentMaterial.MakeTiled(wallMaterial, Mathf.Max(size.x, size.z), size.y, wearTier);
+            if (UsePbrEnvironment) UseMetricWall(wall.transform);
             else if (roomModel != null) renderer.enabled = false; // 셸이 보여줄 자리 — 콜라이더만 남김(문 갈라짐 후 재생성분도 포함).
             else renderer.sharedMaterial = MakeMaterial(color);
+        }
+
+        /// <summary>U-0109 진단용 — PBR 경로인지·지금 마모 단계.</summary>
+        public bool UsesPbrEnvironment => UsePbrEnvironment;
+        public int WearTier => wearTier;
+
+        // U-0109 — 벽 상자 재질은 반복 1(면 UV 가 이미 미터 단위) 한 벌을 이 방의 벽이 같이 쓴다(마모 단계가 바뀌면 새로).
+        private Material _metricWallMat;
+        private int _metricWallTier = -1;
+
+        private Material MetricWallMaterial()
+        {
+            if (_metricWallMat == null || _metricWallTier != wearTier)
+            {
+                _metricWallMat = EnvironmentMaterial.MakeTiled(wallMaterial, EnvironmentMaterial.TileMeters, EnvironmentMaterial.TileMeters, wearTier);
+                _metricWallTier = wearTier;
+            }
+            return _metricWallMat;
+        }
+
+        /// <summary>U-0109 — 기본 Cube 는 면마다 UV 0~1 이라 옆면 기준 반복이 얇은 윗면·끝면에 눌려 줄무늬가 진다 →
+        /// 같은 자리·크기(localScale 그대로, 콜라이더 무변경)의 면마다 미터 UV 상자(`MetricBox`)로 메시만 바꾼다.</summary>
+        private void UseMetricWall(Transform wall)
+        {
+            var mf = wall.GetComponent<MeshFilter>();
+            var r = wall.GetComponent<MeshRenderer>();
+            if (mf == null || r == null) return;
+            // 정적 배칭에 이미 든 벽(Play 중 마모 단계 바꿀 때)은 메시를 건드리지 않는다 — 합친 메시가 Awake 에서 바꿔 낀 MetricBox 로
+            // 구워져 있고, 배칭된 렌더러의 메시를 갈면 합친 자리와 어긋날 수 있다. 재질만 바꾼다.
+            if (!r.isPartOfStaticBatch) mf.sharedMesh = MetricBox.Get(wall.localScale);
+            r.sharedMaterial = MetricWallMaterial();
         }
 
         private static Material MakeMaterial(Color color)
