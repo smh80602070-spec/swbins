@@ -62,6 +62,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 })(20260824);
 </script>
 <script src="js/errlog.js"></script>
+<script src="js/boot-guard.js"></script>
 <script src="js/data.js"></script>
 <script src="js/data-city.js"></script>
 <script src="js/data-force.js"></script>
@@ -131,6 +132,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/rts/art.js"></script>
 <script src="js/rts/state.js"></script>
 <script src="js/rts/tactics.js"></script>
+<script src="js/_oldsaves.js"></script>
 <script src="js/game.js"></script>
 <script>
 (function () {
@@ -6645,6 +6647,38 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         var ok = a.start() === want && a.used() >= pts && a.used() <= SCX.pointsTotal(ai) && themed && SCX.api(R.me()).used() === mine0;
         return ok ? ai + ' — ' + want + ' 에서 ' + a.used() + '/' + pts + '점 · 테마 이름난 마디 · 내 세력은 안 찍힘' : '실패 ' + [ai, a.start(), want, a.used(), pts, themed].join(' ');
       } finally { R.setup('cao'); SCX._reset(); }
+    });
+
+    t('부팅 지킴(W-0187) — 옛 세이브 넷(09-20·10-01·10-07·10-11) 불러오기 → 여섯 시트 → 다음 달 → 경륜도, 예외 0', function () {
+      var O = window.DG_OLD_SAVES || {}, tags = Object.keys(O), bad = [], seen = [];
+      try {
+        tags.forEach(function (tag) {
+          var step = 'load';
+          try {
+            localStorage.setItem(C.SAVE_KEY, JSON.stringify(O[tag]));
+            if (!C.load()) { throw new Error('load false'); }
+            step = 'state'; var st = R.state();
+            if (!st.started || st.me !== 'cao' || !R.citiesOf('cao').length) { throw new Error('판 아님 ' + st.started + ' ' + st.me); }
+            ['city', 'officers', 'camp', 'diplo', 'school', 'log'].forEach(function (sh) { step = sh; DG.ui.openSheet(sh); });
+            step = 'close'; DG.ui.closeSheet();
+            step = 'month'; var ym = st.year * 12 + st.month; R.endMonth();
+            if (R.state().year * 12 + R.state().month !== ym + 1) { throw new Error('달이 안 넘어감'); }
+            step = 'gyeong'; if (DG.statecraft) { DG.statecraft._reset && DG.statecraft._reset(); DG.statecraft.api(R.me()).used(); }
+            seen.push(tag + ' ' + st.year + '.' + st.month);
+          } catch (e) { bad.push(tag + '@' + step + ': ' + e.message); }
+        });
+      } finally { C.reset(); C.save.heroes = {}; R.setup('cao'); if (DG.statecraft && DG.statecraft._reset) { DG.statecraft._reset(); } }
+      return tags.length === 4 && !bad.length ? seen.join(' · ') : '실패 ' + tags.length + '개 · ' + bad.join(' | ');
+    });
+
+    t('부팅 지킴(W-0187) — 순수: 백업 키 <키>.bak-YYYYMMDD-HHMM · 프로필 목록 → 세이브 키 · 부팅 뒤 첫 오류만', function () {
+      var G = DG.bootGuard, d = new Date(2026, 9, 3, 7, 5);
+      var k = G.bakKey('saga-realm/save/pabc', d) === 'saga-realm/save/pabc.bak-20261003-0705';
+      var s1 = G.saveKeyOf(JSON.stringify({ list: [{ id: 'pabc' }], cur: 'pabc' })) === 'saga-realm/save/pabc' && G.saveKeyOf(null) === null && G.saveKeyOf('{깨짐') === null && G.saveKeyOf('{"list":[]}') === null;
+      var log = [{ kind: 'error', t: 5, msg: '옛 것' }, { kind: 'rejection', t: 120, msg: '모델 못 받음' }, { kind: 'error', t: 150, msg: 'x is undefined\n  at y', src: 'js/ui-rtk.js' }];
+      var f1 = G.firstError([], log, 100), f2 = G.firstError([{ kind: 'error', t: 110, msg: 'Unexpected token', src: 'http://a/dist/app.js', line: 3 }], log, 100), f3 = G.firstError([], log.slice(0, 2), 100);
+      var ok = k && s1 && f1 === 'x is undefined (ui-rtk.js)' && f2 === 'Unexpected token (app.js:3)' && f3 === null && !document.getElementById('boot-guard');
+      return ok ? '백업 키 · 세이브 키 · 첫 오류 「' + f2 + '」 · 진단엔 띠 없음' : '실패 ' + [k, s1, f1, f2, f3].join(' ');
     });
 
     t('런타임 에러 없음', function () {

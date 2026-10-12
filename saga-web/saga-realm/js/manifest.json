@@ -70,6 +70,7 @@
  "test": [
   [
    "js/errlog.js",
+   "js/boot-guard.js",
    "js/data.js",
    "js/data-city.js",
    "js/data-force.js",
@@ -139,6 +140,7 @@
    "js/rts/art.js",
    "js/rts/state.js",
    "js/rts/tactics.js",
+   "js/_oldsaves.js",
    "js/game.js"
   ]
  ],

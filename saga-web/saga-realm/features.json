@@ -1002,5 +1002,25 @@
   "ticket": "W-0182",
   "since": "2026-10-12",
   "note": "D2(qc+claude 2026-10-12): saga-web/tools/playcheck/passive-shot.mjs saga-realm → shots/passive_saga-realm_{390,1280}.png. 손잡이 rk.pw.*(cap 56·dropGold 150·aiKeyAt 20·규칙 배율). 턴제 경영(index)과 전장(rts.html)이 같은 save.rtk.forces[세력].passive 를 읽는다."
+ },
+ {
+  "id": "rk.boot-guard",
+  "name": "부팅 지킴 — 시작이 막히면 화면 맨 위 띠에 까닭(첫 오류 한 줄)과 [세이브 내려받기]·[이 프로필 새로 시작(백업 남김)]·「캐시 비우기」, 번들보다 먼저 따로 실림",
+  "files": [
+   "js/boot-guard.js",
+   "index.html",
+   "sw.js",
+   "js/_oldsaves.js"
+  ],
+  "tests": [
+   "부팅 지킴(W-0187) — 옛 세이브 넷(09-20·10-01·10-07·10-11) 불러오기 → 여섯 시트 → 다음 달 → 경륜도, 예외 0",
+   "부팅 지킴(W-0187) — 순수: 백업 키 <키>.bak-YYYYMMDD-HHMM · 프로필 목록 → 세이브 키 · 부팅 뒤 첫 오류만"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0187",
+  "since": "2026-10-13",
+  "note": "D2(claude 2026-10-13): 폰 흉내(390×844·CPU ×4·Fast 4G)로 옛 세이브 다섯(09-13·09-20·10-01·10-07·10-11 판에서 만든 것)·새 프로필 → 이어하기 → 지도, 띠 0·예외 0 ○ · ui.init 을 일부러 던지게 한 판 → 타이틀 없이 빈 화면이던 자리에 띠·단추 ○(shots/w0187_boot_1011.png) · 새로 시작 → 세이브가 <키>.bak-<날짜> 로 그대로 옮겨짐 ○. 사용자 폰 원인은 미확정 — 띠 글을 받으면 다음 티켓."
  }
 ]
