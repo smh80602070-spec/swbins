@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-13",
+  "tickets": [
+    "U-0116 날씨 눈·안개 촬영 — 1만리·3마을·4종횡 SAGA_WEATHER=snow/fog 12시"
+  ],
+  "how": "ShowcaseGui GUI 촬영 일곱 판(gamecam;screen, SEQ=4,30, SAGA_SHOT_HOUR=12, 1만리 맑음 비교 포함) + 숫자 고친 뒤 다시 찍기 셋, 세이브 다섯 치운 채 · Claude 눈",
+  "fix": "SagaCore/SkyWeather.cs 숫자만 — 눈 초당 260→400·방출 높이 카메라 위 14→6m·수명 9→10·크기 0.16~0.26→0.3~0.45·최대 3200→4800(내려다보는 카메라에 사라질 때만 보이던 것), 안개 덩이 알파 0.14→0.22",
+  "scene": [
+    "[PlaytestSkyWeather] OK",
+    "[PlaytestHeadless] OK - 10 frames, no errors"
+  ],
+  "runtime_errors": 0,
+  "shots": "세션 scratchpad u0116_* — 커밋 안 함",
+  "results": [
+    {
+      "id": "un.go.sky-weather",
+      "scene": "1만리 TestVillage",
+      "snow": "× → ○ (흰 점이 화면 곳곳, 칸마다 자리 바뀜)",
+      "fog": "○ 약하게 (먼 들판 띠가 맑음보다 뿌옇다)"
+    },
+    {
+      "id": "un.go.sky-weather",
+      "scene": "3마을 TestVillageForest",
+      "snow": "× (숫자 고친 뒤 다시 안 찍음 — 3판 상한)",
+      "fog": "△ (62° 내려다봐 먼 데가 없어 맑음과 같음, 덩이 안 보임)"
+    },
+    {
+      "id": "un.go.sky-weather",
+      "scene": "4종횡 TestField",
+      "snow": "× (흐린 잿빛 하늘은 됨, 숫자 고친 뒤에도 점 없음 — 원인 미상)",
+      "fog": "× → △ (씬 안개 꺼짐, 덩이는 땅에 옅은 얼룩 정도)"
+    }
+  ],
+  "result": "D2 유지",
+  "left": "4종횡 눈 입자 안 보임(코드 조사) · 3마을 눈 다시 촬영"
+}

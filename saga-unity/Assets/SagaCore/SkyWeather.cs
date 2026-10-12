@@ -45,7 +45,7 @@ namespace Saga.Core
             new Weather { Kind = Kind.Rain, NameKo = "비", NameEn = "Rain", FogMul = 1.6f, Tint = new Color(0.85f, 0.90f, 1.00f), CloudAlpha = 1.00f, WindMul = 1.5f, Rain = 800f },
             new Weather { Kind = Kind.Wind, NameKo = "바람", NameEn = "Windy", FogMul = 0.8f, Tint = new Color(1.00f, 1.00f, 1.00f), CloudAlpha = 0.55f, WindMul = 4f },
             new Weather { Kind = Kind.Fog, NameKo = "안개", NameEn = "Fog", FogMul = 2.4f, Tint = new Color(0.90f, 0.90f, 0.92f), CloudAlpha = 0.50f, WindMul = 0.5f, Fog = 5f },
-            new Weather { Kind = Kind.Snow, NameKo = "눈", NameEn = "Snow", FogMul = 1.2f, Tint = new Color(1.02f, 1.02f, 1.08f), CloudAlpha = 0.90f, WindMul = 1f, Snow = 260f },
+            new Weather { Kind = Kind.Snow, NameKo = "눈", NameEn = "Snow", FogMul = 1.2f, Tint = new Color(1.02f, 1.02f, 1.08f), CloudAlpha = 0.90f, WindMul = 1f, Snow = 400f },
         };
 
         public const long SpanMs = 3L * 60 * 60 * 1000;
@@ -199,10 +199,10 @@ namespace Saga.Core
                 _layers[i] = go.transform; _layerMats[i] = mat;
             }
             _rain = BuildParticles("Rain", "Sky/fx_rain", new Vector3(30f, 0.5f, 30f), new Vector3(0f, 16f, 0f), 0.8f, 0.22f, 0.3f, 1600, true);
-            _snow = BuildParticles("Snow", "Sky/fx_snow", new Vector3(40f, 0.5f, 40f), new Vector3(0f, 14f, 0f), 9f, 0.16f, 0.26f, 3200, false);
+            _snow = BuildParticles("Snow", "Sky/fx_snow", new Vector3(40f, 0.5f, 40f), new Vector3(0f, 6f, 0f), 10f, 0.3f, 0.45f, 4800, false);   // U-0116 촬영: 위 14m 에선 내려다보는 카메라(1만리 35°·3마을 62°)에 사라질 때만 보여 6m·10초(카메라 밑 12m 까지)·크게
             _fog = BuildParticles("FogPuff", "Sky/fx_fog", new Vector3(50f, 6f, 50f), new Vector3(0f, 2f, 0f), 14f, 18f, 28f, 120, false);
             if (_rain != null) { var rm = _rain.main; rm.startColor = new ParticleSystem.MinMaxGradient(new Color(0.85f, 0.92f, 1f, 0.8f)); }
-            if (_fog != null) { var fm = _fog.main; fm.startColor = new ParticleSystem.MinMaxGradient(new Color(1f, 1f, 1f, 0.14f)); }
+            if (_fog != null) { var fm = _fog.main; fm.startColor = new ParticleSystem.MinMaxGradient(new Color(1f, 1f, 1f, 0.22f)); }   // U-0116 0.14 는 덩이가 안 보임
             if (_snow != null) { var v = _snow.velocityOverLifetime; v.y = new ParticleSystem.MinMaxCurve(-1.8f); }
             if (_rain != null) { var v = _rain.velocityOverLifetime; v.y = new ParticleSystem.MinMaxCurve(-32f); }
         }
