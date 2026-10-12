@@ -3,7 +3,8 @@
 // ② ~/.claude/settings.json 에 SessionStart·Stop 훅을 건다(이미 있으면 그대로, 멱등)
 // ④ QC(10-07): qc-guard.js 도 복사해 Stop 에 건다 — "실기 확인 대기" 로 끝내려 하면 tools/qc.mjs 를 돌리게(사용자 "실기 요청할 때 자동으로"). 설정 폴더는 CLAUDE_CONFIG_DIR 우선.
 // ③ K-0079: statusline.js·ctx-guard.js 도 복사하고 ctx-guard 를 UserPromptSubmit·PostToolUse·Stop 에 건다(문맥 70% 넘기기).
-//    상태줄 설정(statusLine)이 비어 있을 때만 이 statusline.js 로 잡는다(다른 상태줄이면 문맥 % 파일이 안 생겨 훅이 아무것도 안 한다)
+//    상태줄 설정(statusLine)이 비었거나 옛 bash 판(statusline-command.sh — 이 statusline.js 가 그것을 옮긴 것)일 때 이 statusline.js 로 잡는다
+//    (K-0098: 다른 상태줄이면 훅이 transcript usage 로 문맥 % 를 셈한다). K-0098 부터 ctx-guard 는 백그라운드로 안 넘기고 같은 창에서 이어 간다.
 // 되돌리기: node tools/claude-home/install.js --uninstall (훅만 빼고 파일은 둔다)
 'use strict';
 const fs = require('fs');
@@ -52,7 +53,7 @@ for (const { mark, events, command } of HOOKS) {
     }
   }
 }
-if (!uninstall && !s.statusLine) { s.statusLine = { type: 'command', command: nodeCmd('statusline.js') }; changed = true; }
+if (!uninstall && (!s.statusLine || /statusline-command.sh/.test(String(s.statusLine.command || '')))) { s.statusLine = { type: 'command', command: nodeCmd('statusline.js') }; changed = true; }
 if (!Object.keys(s.hooks).length) delete s.hooks;
 
 if (changed) {

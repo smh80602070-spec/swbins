@@ -24,11 +24,14 @@ http://127.0.0.1:8798                                                   # 상태
 - 모델: 무인 티켓 세션은 **Opus 5.5**(`--model claude-opus-5-5` 기본 — 10-07 사용자 "소넷 5.5는 너무 무식해", 소넷 폐지). R-0(티켓 쓰기)·막힌 티켓도 Opus 5.5 또는 페이블. 데몬 옵션을 바꾸면 데몬을 다시 켜야 적용된다(node 끄고 `install-startup.ps1 -StartNow`). 비용: Opus 는 소넷보다 비싸니 `--budget-usd` 상한을 그대로 두면 티켓 하나가 더 일찍 끊길 수 있다 — 끊기면 상한을 사용자에게 묻는다.
 - 비용: 티켓당 `--max-budget-usd`(기본 20) 상한. 세션은 문맥 로드(CLAUDE.md·메모리·훅)만으로 0.5달러를 넘는다(10-05 실측, 자가 시험은 하이쿠·3달러). 매일 갈래당 1~2 티켓이면 하루 ≤ 갈래 수 × 2 × 20 달러가 천장.
 
-## 문맥 70% 넘기기 (K-0079)
+## 같은 창 자동 이어하기 · 문맥 70% 멈춤 (K-0098, K-0079 갈음)
 
-대화 세션(VS Code 등)이 문맥 70% 를 넘으면 단계 체크포인트를 커밋하고 멈추고, autorun 데몬이 **같은 갈래**로 새 `claude -p "<갈래> 이어해"` 를 띄운다. 창 자체는 바깥에서 못 닫는다 — 이어지는 건 백그라운드 세션(로그 `_log/`).
+켜 둔 대화 세션(VS Code 창)에서 `<갈래> 이어해` 를 한 번 치면, 티켓을 끝내고 멈추려 할 때 Stop 훅이 **같은 창·같은 대화**에 다음 "이어해" 를 돌려 넣는다. 문맥 70% 면 체크포인트 커밋 후 그 창에서 멈춘다(새 대화에서 다시 "이어해" 는 사람이). 백그라운드로 넘기지 않는다.
 
-- 설치: `node tools/claude-home/install.js`(멱등) — `statusline.js`·`ctx-guard.js` 를 `~/.claude` 로 복사, ctx-guard 를 UserPromptSubmit·PostToolUse·Stop 에 건다. 상태줄 정본은 `tools/claude-home/statusline.js`.
-- 흐름: 상태줄이 문맥 % 를 `tools/autorun/_ctx/<session>.json`(git 밖)에 쓴다 → 프롬프트가 "<갈래> 이어해" 면 갈래 기록 → 70% 넘으면 지시 한 번(도구 뒤·프롬프트 때, 못 봤으면 Stop 을 한 번 막고) → 그 뒤 멈추면 `POST /api/run?branch=<갈래>`(실행 중이면 한 개 줄 세움).
-- 끄기: `SAGA_CTX_GUARD=0` · 문턱 `SAGA_CTX_LIMIT`(기본 70) · 데몬 포트 `SAGA_AUTORUN_PORT`. 갈래 모르는 세션·저장소 밖 세션(`C:\link` 등)은 아무것도 안 한다.
-- **한계**: run.mjs 는 트리가 더러우면 안 돈다(남의 세션 보호) — 다른 세션 미커밋 파일이 있으면 넘김이 exit 3 으로 끝난다(`_ctx` 의 `sent` 에 데몬 답, `_log` 에 이유). 데몬 코드를 바꾸면 데몬을 다시 켜야 `?branch=` 가 먹는다(옛 데몬은 자기 갈래로 한 번 돈다).
+- 설치: `node tools/claude-home/install.js`(멱등) — `ctx-guard.js`·`statusline.js` 를 `~/.claude` 로 복사, ctx-guard 를 UserPromptSubmit·PostToolUse·Stop 에 건다. 상태줄이 옛 `statusline-command.sh` 면 같은 모양의 `statusline.js` 로 바꾼다. 새로 연 창부터 확실히 먹는다.
+- 이어 가는 때: 그 턴이 "이어해"(또는 훅의 이어하기)로 시작 · 갈래 잠금 주인 · 문맥 < 70% · 마지막 말이 질문·`⏸` 아님 · 그 턴에 **자기 갈래 티켓 번호(W-/G-/U-/K-NNNN) 커밋**이 생김. 하나라도 아니면 그냥 멈춘다. 상한 `SAGA_LOOP_MAX`(30).
+- 멈추는 때: 권한 창·선택지 질문(원래 기다림) · 글로 질문 · `⏸ 멈춤: <이유>` · 커밋 없이 끝남 · 사용자가 다른 말을 침(그 창은 손으로 돈다) · 70%.
+- 여러 창: 상태는 세션마다 `_ctx/<session>.json`. 갈래 잠금 `_ctx/lane-<갈래>.lock`(20분 소식 없으면 풀림, 70% 멈춤 때 풂) — 같은 갈래를 두 번째 창에서 치면 "다른 창이 돌리는 중" 알림만 받고 안 이어 간다. 다른 갈래 창의 커밋으로는 안 이어 간다.
+- 문맥 %: 상태줄이 `_ctx/<session>.pct` 에 쓴다(15분 안 것). 없으면 transcript 끝의 usage ÷ 창 크기(`.pct` 의 size → `SAGA_CTX_WINDOW` → 1000000(이 PC Opus 5.5 창)).
+- 끄기: 이어하기만 `tools/autorun/_ctx/LOOP-OFF` 파일(바로 먹음) 또는 `SAGA_LOOP=0` · 전부 `SAGA_CTX_GUARD=0` · 문턱 `SAGA_CTX_LIMIT`(70) · 훅 빼기 `install.js --uninstall`. 저장소 밖 세션(`C:\link` 등)·갈래 모르는 세션은 아무것도 안 한다.
+- 데몬 `POST /api/run?branch=`(K-0079 넘김 입구)는 남아 있지만 훅은 더 부르지 않는다.

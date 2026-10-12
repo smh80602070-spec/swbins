@@ -7,7 +7,7 @@
 // 정본 = 저장소 tools/claude-home/statusline.js — install.js 가 ~/.claude 로 복사한다.
 // K-0079: saga 저장소(위로 tools/autorun/run.mjs 가 있는 곳) 안 세션이면 문맥 % 를 tools/autorun/_ctx/<session>.pct 에 남긴다
 // (훅 상태 <session>.json 과 파일을 나눈다 — 읽고 고쳐 쓰다 서로 덮어쓰지 않게)
-// (훅 ctx-guard.js 가 읽는다 — 훅 입력엔 문맥 % 가 없다). 쓰기 실패해도 상태줄은 그대로 그린다.
+// (훅 ctx-guard.js 가 읽는다 — 훅 입력엔 문맥 % 가 없다. K-0098: 창 크기 size 도 — 상태줄이 없을 때 훅이 transcript usage 로 셈할 분모). 쓰기 실패해도 상태줄은 그대로 그린다.
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -56,14 +56,14 @@ function sagaRoot(dir) {
   return '';
 }
 
-function writeCtx(cwd, sid, pct, model) {
+function writeCtx(cwd, sid, pct, model, size) {
   try {
     if (!cwd || !sid || !/^[\w-]{8,80}$/.test(sid)) return;
     const root = sagaRoot(cwd);
     if (!root) return;
     const dir = path.join(root, 'tools', 'autorun', '_ctx');
     fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(path.join(dir, sid + '.pct'), JSON.stringify({ pct, model: model || '', ts: Date.now() }));
+    fs.writeFileSync(path.join(dir, sid + '.pct'), JSON.stringify({ pct, size: Number(size) || 0, model: model || '', ts: Date.now() }));
   } catch (e) { /* 상태줄은 계속 */ }
 }
 
@@ -113,7 +113,7 @@ function render(input) {
     const tok = (Number(get('context_window.total_input_tokens')) || 0) +
                 (Number(get('context_window.total_output_tokens')) || 0);
     parts.push(`CTX:[${bar(pct)}] ${fmtTokens(tok)}/${fmtTokens(get('context_window.context_window_size'))}(${pct}%)`);
-    writeCtx(cwd, get('session_id'), pct, get('model.id'));
+    writeCtx(cwd, get('session_id'), pct, get('model.id'), get('context_window.context_window_size'));
   } else {
     parts.push('CTX:--');
   }
