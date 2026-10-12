@@ -56,8 +56,7 @@ namespace Saga.Realm.World
         private readonly List<Behaviour> _paused = new List<Behaviour>();
         private Canvas _canvas;
         private TextMeshProUGUI _info;
-        private static readonly Dictionary<Color, Material> Mats = new Dictionary<Color, Material>();
-        private static Mesh _cone;
+        private const float Smooth = 0.12f; // 재질 매끈함(RealmPrims 캐시 열쇠 — tasks U-0113)
 
         private static Color Hex(int rgb) => new Color(((rgb >> 16) & 255) / 255f, ((rgb >> 8) & 255) / 255f, (rgb & 255) / 255f);
 
@@ -603,59 +602,9 @@ namespace Saga.Realm.World
         }
 
         private GameObject Spawn(string name, PrimitiveType type, Vector3 localPos, Vector3 scale, Color color, Transform parent = null)
-        {
-            var go = GameObject.CreatePrimitive(type);
-            go.name = name;
-            go.transform.SetParent(parent != null ? parent : transform, false);
-            go.transform.localPosition = localPos;
-            go.transform.localScale = scale;
-            var col = go.GetComponent<Collider>();
-            if (col != null) { if (Application.isPlaying) Destroy(col); else DestroyImmediate(col); }
-            go.GetComponent<MeshRenderer>().sharedMaterial = Mat(color);
-            return go;
-        }
+            => RealmPrims.Prim(name, type, parent != null ? parent : transform, localPos, scale, color, Smooth);
 
         private void Cone(string name, Vector3 localPos, float radius, float height, Color color)
-        {
-            var go = new GameObject(name);
-            go.transform.SetParent(transform, false);
-            go.transform.localPosition = localPos;
-            go.transform.localScale = new Vector3(radius, height, radius);
-            go.AddComponent<MeshFilter>().sharedMesh = ConeMesh();
-            go.AddComponent<MeshRenderer>().sharedMaterial = Mat(color);
-        }
-
-        private static Material Mat(Color c)
-        {
-            c.a = 1f;
-            if (Mats.TryGetValue(c, out var m) && m != null) return m;
-            m = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "Tactics (generated)", color = c };
-            m.SetFloat("_Smoothness", 0.12f);
-            Mats[c] = m;
-            return m;
-        }
-
-        private static Mesh ConeMesh()
-        {
-            if (_cone != null) return _cone;
-            const int n = 8;
-            var v = new List<Vector3>();
-            var tri = new List<int>();
-            for (int i = 0; i < n; i++)
-            {
-                float a0 = i * Mathf.PI * 2f / n, a1 = (i + 1) * Mathf.PI * 2f / n;
-                int b = v.Count;
-                v.Add(new Vector3(Mathf.Cos(a0), 0f, Mathf.Sin(a0)));
-                v.Add(new Vector3(0f, 1f, 0f));
-                v.Add(new Vector3(Mathf.Cos(a1), 0f, Mathf.Sin(a1)));
-                tri.Add(b); tri.Add(b + 1); tri.Add(b + 2);
-            }
-            _cone = new Mesh { name = "TacticsCone" };
-            _cone.SetVertices(v);
-            _cone.SetTriangles(tri, 0);
-            _cone.RecalculateNormals();
-            _cone.RecalculateBounds();
-            return _cone;
-        }
+            => RealmPrims.ConeObj(name, transform, localPos, radius, height, color, Smooth);
     }
 }

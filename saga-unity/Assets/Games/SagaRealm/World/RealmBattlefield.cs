@@ -46,8 +46,7 @@ namespace Saga.Realm.World
         private readonly List<Vector3> _atkHome = new List<Vector3>();
         private readonly List<Vector3> _defHome = new List<Vector3>();
         private float _t;
-        private static readonly Dictionary<Color, Material> Mats = new Dictionary<Color, Material>();
-        private static Mesh _cone;
+        private const float Smooth = 0.15f; // 재질 매끈함(RealmPrims 캐시 열쇠 — tasks U-0113)
 
         private static readonly Color AtkColor = new Color(0.22f, 0.4f, 0.78f);
         private static readonly Color DefColor = new Color(0.72f, 0.2f, 0.16f);
@@ -253,60 +252,9 @@ namespace Saga.Realm.World
         }
 
         private GameObject Spawn(string name, PrimitiveType type, Vector3 localPos, Vector3 scale, Color color, Transform parent = null)
-        {
-            var go = GameObject.CreatePrimitive(type);
-            go.name = name;
-            go.transform.SetParent(parent != null ? parent : transform, false);
-            go.transform.localPosition = localPos;
-            go.transform.localScale = scale;
-            var col = go.GetComponent<Collider>();
-            if (col != null) { if (Application.isPlaying) Destroy(col); else DestroyImmediate(col); }
-            go.GetComponent<MeshRenderer>().sharedMaterial = Mat(color);
-            return go;
-        }
+            => RealmPrims.Prim(name, type, parent != null ? parent : transform, localPos, scale, color, Smooth);
 
         private void Cone(string name, Vector3 localPos, float radius, float height, Color color)
-        {
-            var go = new GameObject(name);
-            go.transform.SetParent(transform, false);
-            go.transform.localPosition = localPos;
-            go.transform.localScale = new Vector3(radius, height, radius);
-            go.AddComponent<MeshFilter>().sharedMesh = ConeMesh();
-            go.AddComponent<MeshRenderer>().sharedMaterial = Mat(color);
-        }
-
-        private static Material Mat(Color c)
-        {
-            c.a = 1f;
-            if (Mats.TryGetValue(c, out var m) && m != null) return m;
-            m = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "Battlefield (generated)", color = c };
-            m.SetFloat("_Smoothness", 0.15f);
-            Mats[c] = m;
-            return m;
-        }
-
-        /// <summary>밑 반지름 1·높이 1 여덟모 뿔(봉우리·풀·결정).</summary>
-        private static Mesh ConeMesh()
-        {
-            if (_cone != null) return _cone;
-            const int n = 8;
-            var v = new List<Vector3>();
-            var tri = new List<int>();
-            for (int i = 0; i < n; i++)
-            {
-                float a0 = i * Mathf.PI * 2f / n, a1 = (i + 1) * Mathf.PI * 2f / n;
-                int b = v.Count;
-                v.Add(new Vector3(Mathf.Cos(a0), 0f, Mathf.Sin(a0)));
-                v.Add(new Vector3(0f, 1f, 0f));
-                v.Add(new Vector3(Mathf.Cos(a1), 0f, Mathf.Sin(a1)));
-                tri.Add(b); tri.Add(b + 1); tri.Add(b + 2);
-            }
-            _cone = new Mesh { name = "BattlefieldCone" };
-            _cone.SetVertices(v);
-            _cone.SetTriangles(tri, 0);
-            _cone.RecalculateNormals();
-            _cone.RecalculateBounds();
-            return _cone;
-        }
+            => RealmPrims.ConeObj(name, transform, localPos, radius, height, color, Smooth);
     }
 }

@@ -32,7 +32,7 @@ namespace Saga.Realm.World
         private Vector3 _basePos;
         private float _poseT;
         private bool _inUpdate;
-        private static readonly Dictionary<Color, Material> Mats = new Dictionary<Color, Material>();
+        private const float Smooth = 0.25f; // 대역 재질 매끈함(RealmPrims 캐시 열쇠 — tasks U-0113)
 
         // 사실 몸
         private Animator _anim;
@@ -360,28 +360,8 @@ namespace Saga.Realm.World
         private static float Strike(float c) => c < 0.7f ? 1f - Mathf.SmoothStep(0f, 1f, c / 0.7f) : (c - 0.7f) / 0.3f;
 
         private static GameObject Part(string name, PrimitiveType type, Transform parent, Vector3 pos, Vector3 scale, Color color)
-        {
-            var go = GameObject.CreatePrimitive(type);
-            go.name = name;
-            go.transform.SetParent(parent, false);
-            go.transform.localPosition = pos;
-            go.transform.localScale = scale;
-            var col = go.GetComponent<Collider>();
-            if (col != null) Kill(col);
-            color.a = 1f;
-            if (!Mats.TryGetValue(color, out var m) || m == null)
-            {
-                m = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "Figure (generated)", color = color };
-                m.SetFloat("_Smoothness", 0.25f);
-                Mats[color] = m;
-            }
-            go.GetComponent<MeshRenderer>().sharedMaterial = m;
-            return go;
-        }
+            => RealmPrims.Prim(name, type, parent, pos, scale, color, Smooth);
 
-        private static void Kill(Object o)
-        {
-            if (Application.isPlaying) Destroy(o); else DestroyImmediate(o);
-        }
+        private static void Kill(Object o) => RealmPrims.Kill(o);
     }
 }
