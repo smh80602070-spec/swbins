@@ -12,6 +12,7 @@ extends Node
 
 func _ready() -> void:
 	DungeonRunState.boons_changed.connect(_sync)
+	DungeonEquipmentState.weapon_changed.connect(_sync)   # G-0217 — 무기를 바꾸면 직업 경락도가 바뀐다
 	_sync()
 
 

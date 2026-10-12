@@ -40,6 +40,24 @@ var player_pos := Vector3.ZERO
 var hero_resolved: Array[bool] = []
 ## G-0085 이야기 진행(data/scenario.gd fresh() 모양 — 장 차례·단계·처치/보스/구출 합계·끝낸 장 id). 순수 추가 필드, 버전 안 올림.
 var scenario: Dictionary = {}
+## G-0217 경락도 — 직업키 → {start, taken}(공용 패시브 그물 saga_core/data/passive_web.gd 의 세이브 칸). 효과는 data/dungeon_meridian.gd. 순수 추가 필드, 버전 안 올림.
+var passive: Dictionary = {}
+var _passive_apis: Dictionary = {}
+const Meridian := preload("res://games/saga_dungeon/data/dungeon_meridian.gd")
+
+
+## 그 직업(빈 칸이면 지금 낀 무기)의 경락도 규칙 층 — 세이브 칸이 바뀌면(불러오기) 새로 만든다. 찍으면 boons_changed(체력·이동 다시 셈).
+func passive_api(cls: String = "") -> RefCounted:
+	if cls == "":
+		cls = DungeonItems.class_key_for_weapon(DungeonEquipmentState.weapon)
+	if typeof(passive.get(cls)) != TYPE_DICTIONARY:
+		passive[cls] = {"start": null, "taken": []}
+	var a: RefCounted = _passive_apis.get(cls)
+	if a == null or not is_same(a.store, passive[cls]):
+		a = (load("res://saga_core/data/passive_web.gd") as GDScript).new(Meridian.definition(), passive[cls], func() -> int: return Meridian.points_total(cls))
+		a.changed.connect(func() -> void: DungeonRunState.boons_changed.emit())
+		_passive_apis[cls] = a
+	return a
 
 
 func is_room_cleared(index: int) -> bool:
@@ -130,6 +148,7 @@ func save(player: Node3D) -> void:
 		## 슬롯 두 번 보상 안 함"이 계속 유지된다).
 		"worldboss_last_slot": DungeonWorldBossState.last_rewarded_slot,
 		"scenario": scenario,   # G-0085
+		"passive": passive,   # G-0217 경락도
 	}
 	SafeFile.write_text(save_path(), JSON.stringify(data))
 
@@ -159,6 +178,9 @@ func try_load() -> bool:
 
 	var sc: Variant = data.get("scenario", {})   # G-0085 — 없으면(옛 세이브) 1장부터
 	scenario = (sc as Dictionary).duplicate(true) if sc is Dictionary else {}
+	var pv: Variant = data.get("passive", {})   # G-0217 — 없으면(옛 세이브) 빈 경락도
+	passive = (pv as Dictionary).duplicate(true) if pv is Dictionary else {}
+	_passive_apis = {}
 
 	var p: Variant = data.get("player_pos", [0.0, 0.0, 0.0])
 	if not (p is Array) or p.size() < 3:

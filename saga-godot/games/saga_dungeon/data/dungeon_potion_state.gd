@@ -13,6 +13,7 @@ extends Node
 
 signal belt_changed
 
+const Meridian := preload("res://games/saga_dungeon/data/dungeon_meridian.gd")   # G-0217 경락도
 const SLOTS := 4
 const STACK := 4
 
@@ -74,6 +75,8 @@ func use(slot: int) -> Dictionary:
 	if found.is_empty():
 		return {"ok": false, "reason": "off"}
 	var health: Node = found[0]
+	if Meridian.has_rule("diamond"):   # G-0217 금강(경락 규칙) — 단약으로 체력이 안 찬다(한 알 아낀다)
+		return {"ok": false, "reason": "diamond"}
 	if health.hp >= health.max_hp:
 		return {"ok": false, "reason": "full"}
 	var pct: float = grade_of(int(row.g)).pct

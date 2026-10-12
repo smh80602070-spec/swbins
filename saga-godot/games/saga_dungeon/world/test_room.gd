@@ -15,6 +15,7 @@ extends Node3D
 ## (실측 4.0x4.05x4.0, 바닥 중앙 피벗 — 측정 스크립트로 확인)로 잇는다.
 ## 방 사이를 오갈 때 씬 전환이 전혀 없다 — 문을 지나면 그냥 다음 방이다.
 
+const Meridian := preload("res://games/saga_dungeon/data/dungeon_meridian.gd")   # G-0217 경락도
 const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
 const DungeonEnemy := preload("res://games/saga_dungeon/world/dungeon_enemy.gd")
 const DungeonHeroEncounter := preload("res://games/saga_dungeon/world/dungeon_hero_encounter.gd")
@@ -526,6 +527,7 @@ func _finish_exit(body: Node3D, room_index: int, is_final: bool) -> void:
 	## 직업에 점 하나를 준다(dungeon_skill_state.gd 헤더 참고).
 	var cls_key := DungeonItems.class_key_for_weapon(DungeonEquipmentState.weapon)
 	DungeonSkillState.award_point(cls_key)
+	Meridian.on_room_clear(get_tree())   # G-0217 경락도 방마다 회복(healOnFloor)
 	DungeonSaveState.mark_room_cleared(room_index)
 	## PLAN 101-2 DUNGEON ④(부적 던전, 2026-09-17) — 이 슬라이스의 "클리어"
 	## = 마지막 방(is_final)에 부적을 켠 채로 닿았을 때(dungeon_sigil_

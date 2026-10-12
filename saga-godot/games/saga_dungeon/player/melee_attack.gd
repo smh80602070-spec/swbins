@@ -32,6 +32,7 @@ extends Node
 ## "타격 한 곳"이라 `saga_core/combat_feel.gd`의 5요소(hitstop·흔들림·
 ## 플래시·숫자 팝·타격음)를 여기서 잇는다(`CombatFeel.hit()`).
 
+const Meridian := preload("res://games/saga_dungeon/data/dungeon_meridian.gd")   # G-0217 경락도
 const Voice := preload("res://saga_core/audio/voice.gd")   # G-0111 대사 음성
 const ATK_COOLDOWN := 0.55 # 웹판 BASE_ATK_CD 그대로
 const ATK_DAMAGE := 9.0
@@ -74,8 +75,11 @@ func _strike(enemy: Node) -> void:
 	var pct_mult: float = DungeonRunState.atk_mult() + DungeonEquipmentState.atk_pct_bonus() / 100.0
 	var dmg: float = ATK_DAMAGE * pct_mult + DungeonEquipmentState.atk_flat_bonus()
 	var is_crit := randf() * 100.0 < DungeonRunState.crit_chance()
+	if is_crit and Meridian.has_rule("onecut"):   # G-0217 일격(경락 규칙) — 치명 없음(굴림 순서는 그대로)
+		is_crit = false
 	if is_crit:
 		dmg *= CRIT_MULT
+	dmg *= Meridian.hit_mul(get_tree(), enemy, _player)   # G-0217 경락 규칙 피해 배수(일격·독행·역린·천리안·관통)
 	## dungeon.js strike()의 "res = resistOf(e,'phys'); if (res>0) dmg *= 1-res/100"
 	## 그대로 — 정예 "철갑 두른"이 붙기 전엔 어떤 몬스터에도 resist.phys가
 	## 없어(0으로 조회됨) 지금까지는 이 자리를 안 타도 결과가 같았다.
@@ -114,7 +118,7 @@ func _strike(enemy: Node) -> void:
 ## SYNERGIES)를 여기 얹었다. dmgs.is_empty() 가드는 시너지 검사가 젬을 하나도
 ## 안 박은 채로도 매 타격 돌게 하지 않으려는 것뿐(기존 동작은 그대로).
 func _apply_elemental(enemy: Node) -> void:
-	var dmgs := DungeonEquipmentState.elem_damage()
+	var dmgs := Meridian.elem(DungeonEquipmentState.elem_damage())   # G-0217 오행귀일 — 가장 센 원소 하나로
 	if dmgs.is_empty():
 		return
 	var death_pos: Vector3 = enemy.global_position

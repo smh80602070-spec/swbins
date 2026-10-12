@@ -22,6 +22,8 @@ extends Node
 
 signal boons_changed
 
+const Meridian := preload("res://games/saga_dungeon/data/dungeon_meridian.gd")   # G-0217 경락도
+
 var boons: Dictionary = {} # key(String) -> count(int)
 
 ## PLAN.md 51장 "장비→빌드" — 무예 "buff"(사기 등)의 잠깐짜리 효과.
@@ -132,7 +134,8 @@ func _sum_eff(eff_key: String) -> float:
 		if not b.is_empty() and b.eff.has(eff_key):
 			total += float(b.eff[eff_key]) * int(boons[key])
 	total += DungeonEquipmentState.world_eff_sum(eff_key)
-	total += DungeonPartyState.world_eff_sum(eff_key)
+	if not Meridian.has_rule("lone"):   # G-0217 독행(경락 규칙) — 동료 능력치 없음
+		total += DungeonPartyState.world_eff_sum(eff_key)
 	total += DungeonSkillState.world_eff_sum(eff_key)
 	## PLAN 101-2 DUNGEON ④(부적 던전, 2026-09-17) — "유리대포" 모드가
 	## 뽑힌 부적이 켜져 있을 때만 atkPct/guardPct에 반응(dungeon_sigil_
@@ -142,6 +145,7 @@ func _sum_eff(eff_key: String) -> float:
 	## 한정" 즉석 3택(run_boons)이 반응한다(dungeon_horde_state.gd 참고).
 	## 일곱 번째 자리, 난입이 꺼져 있으면 0.
 	total += DungeonHordeState.world_eff_sum(eff_key)
+	total += Meridian.val(eff_key)   # G-0217 경락도 — 지금 직업 그물의 능력치 합(여덟 번째 자리)
 	var buf: Dictionary = _temp_buffs.get(eff_key, {})
 	if not buf.is_empty() and Time.get_ticks_msec() < int(buf.until_msec):
 		total += float(buf.v)
@@ -169,7 +173,7 @@ func hp_mult() -> float:
 
 
 func guard_mult() -> float:
-	return 1.0 - _sum_eff("guardPct") / 100.0
+	return Meridian.take_mul(1.0 - _sum_eff("guardPct") / 100.0)   # G-0217 유수·귀신걸음(경락 규칙)
 
 
 func crit_chance() -> float:

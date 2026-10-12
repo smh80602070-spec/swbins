@@ -3892,5 +3892,46 @@
   "ticket": "G-0216",
   "since": "2026-10-12",
   "note": "창 모드 realm_statecraft 가로·세로 Claude 눈 ○(HUD 단추로 연 화면 · 4년 — 남은 4/9 · 무위 카드) · 빈 경륜도 = realm_golden md5 그대로"
+ },
+ {
+  "id": "gd.dg.meridian",
+  "name": "2나락 경락도(經絡圖) — 409마디 패시브 그물을 직업(쥔 무기)마다·시작점 여섯 · 점수 = 첫 별 + 그 직업 무예 점수 누계 + 보스 처치(상한 60) · 능력치 합은 _sum_eff·저항 · 규칙 열(기력·회피 없는 자리는 재해석) · 무예 창 「☯ 경락도」·F2(웹 W-0180)",
+  "files": [
+   "games/saga_dungeon/data/dungeon_meridian.gd",
+   "games/saga_dungeon/data/passive_def.json",
+   "games/saga_dungeon/data/dungeon_save_state.gd",
+   "games/saga_dungeon/data/dungeon_run_state.gd",
+   "games/saga_dungeon/data/dungeon_equipment_state.gd",
+   "games/saga_dungeon/data/dungeon_potion_state.gd",
+   "games/saga_dungeon/player/melee_attack.gd",
+   "games/saga_dungeon/player/skill_caster.gd",
+   "games/saga_dungeon/player/boon_speed_sync.gd",
+   "games/saga_dungeon/world/test_room.gd",
+   "games/saga_dungeon/ui/skill_button.gd",
+   "tools/probe_dungeon_meridian.gd",
+   "tools/shot_dungeon_meridian.gd",
+   "tools/shot_scene.gd"
+  ],
+  "tests": [
+   "dungeon_meridian",
+   "passive_web",
+   "dungeon_run",
+   "dungeon_melee",
+   "dungeon_skills",
+   "dungeon_slots",
+   "dungeon_belt",
+   "dungeon_boons",
+   "dungeon_gear",
+   "dungeon_grace",
+   "save_dungeon",
+   "scenario_dungeon",
+   "mount_dungeon"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0217",
+  "since": "2026-10-13",
+  "note": "창 모드 dg_meridian 가로·세로 Claude 눈 ○(무예 창 단추로 연 화면 · 무장 점수 21 — 무장의 문→일격 21마디 · 일격 카드) · 빈 경락도 = 배수 1(기존 점검 그대로)"
  }
 ]

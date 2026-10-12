@@ -7,13 +7,46 @@ extends Button
 ## 하나를 투자한다.
 ## G-0198 — 맨 위 "🎯 자리에 걸기"로 배운 활성 무예를 Z·X·C·V 넉 자리 중 하나에 건다(이미 걸린 것이면 맞바꿈, 웹 setSlot).
 ## 이 흐름의 창 둘(무예 고르기·자리 고르기)은 고르면 스스로 닫힌다.
+## G-0217 — 둘째 줄 "☯ 경락도"(키 F2, 액션 dungeon_meridian 은 실행 때 단다)가 공용 패시브 그물 화면을 지금 직업 경락도로 연다.
 
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
+const Screen := preload("res://saga_core/ui/passive_web_screen.gd")
+const Meridian := preload("res://games/saga_dungeon/data/dungeon_meridian.gd")
+
+var meridian_open := false
 
 
 func _ready() -> void:
 	pressed.connect(_on_pressed)
+	if not InputMap.has_action("dungeon_meridian"):
+		InputMap.add_action("dungeon_meridian")
+		var ev := InputEventKey.new()
+		ev.physical_keycode = KEY_F2
+		InputMap.action_add_event("dungeon_meridian", ev)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("dungeon_meridian") and not meridian_open:
+		open_meridian()
+		get_viewport().set_input_as_handled()
+
+
+## 경락도 화면 — 보이는 창(ui_modal)이 있으면 안 연다
+func open_meridian() -> CanvasLayer:
+	if meridian_open or get_tree().get_nodes_in_group("ui_modal").any(func(n): return n is CanvasLayer and (n as CanvasLayer).visible):
+		return null
+	var api: RefCounted = DungeonSaveState.passive_api()
+	var cls_name := DungeonItems.class_name_for_weapon(DungeonEquipmentState.weapon)
+	meridian_open = true
+	return Screen.open(get_tree().current_scene, api, {
+		"title": "☯ 경락도 — %s" % cls_name,
+		"fmt": func(st: Dictionary) -> String: return Meridian.fmt(st),
+		"desc": func(nd: Dictionary) -> String: return Meridian.desc(nd),
+		"gate": func(id: String) -> String: return Meridian.gate(get_tree(), id),
+		"on_drop": func(_id: String) -> void: Meridian.pay_drop(),
+		"on_close": func() -> void: meridian_open = false,
+	})
 
 
 func _on_pressed() -> void:
@@ -24,6 +57,12 @@ func _on_pressed() -> void:
 	var choices: Array = []
 	var box: Array = []
 	choices.append({"label": "🎯 자리에 걸기 — 지금 %s" % _slots_text(cls_key), "cb": _pick_skill.bind(cls_key, box)})
+	var mapi: RefCounted = DungeonSaveState.passive_api(cls_key)
+	choices.append({"label": "☯ 경락도 — 남은 경락 점수 %d / %d (F2)" % [mapi.left(), mapi.points()], "cb": func() -> void:
+		if not box.is_empty() and is_instance_valid(box[0]):
+			(box[0] as CanvasLayer).visible = false   # queue_free 는 프레임 끝 — 숨겨야 open_meridian 의 ui_modal 막음에 안 걸린다
+		_close(box)
+		open_meridian()})
 	for sk: Dictionary in DungeonSkills.skills_of(cls_key):
 		var rank := DungeonSkillState.rank_of(str(sk.key))
 		choices.append({

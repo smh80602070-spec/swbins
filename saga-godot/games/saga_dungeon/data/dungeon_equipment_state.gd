@@ -26,6 +26,7 @@ extends Node
 ##
 ## project.godot [autoload]에 DungeonEquipmentState로 등록.
 
+const Meridian := preload("res://games/saga_dungeon/data/dungeon_meridian.gd")   # G-0217 경락도
 const SLOT_NAMES: Array[String] = [
 	"weapon", "armor", "helm", "glove", "boot", "ring", "neck", "charm",
 ]
@@ -306,6 +307,7 @@ func elem_resist(el: String) -> float:
 	for e: Dictionary in _affix_and_socket_effects():
 		if e.kind == "elres" and str(e.el) == el:
 			total += float(e.v)
+	total += Meridian.add("allResPct")   # G-0217 경락도 모든 저항
 	return clampf(total, 0.0, DungeonItems.RESIST_CAP)
 
 

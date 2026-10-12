@@ -13,6 +13,7 @@ extends Node
 ## G-0200 — 시전 손맛: 모양마다 원소 색 그림(saga_core/combat_fx.gd, 1만리와 같은 것) + 맞은 적마다 CombatFeel.hit(숫자·번쩍임).
 ##   한 번 시전에 여럿을 맞히면 멈칫·흔들림·타격음은 첫 적 한 번만(나머지는 HIT_QUIET). 색은 DungeonItems.ELEMENTS color 그대로.
 
+const Meridian := preload("res://games/saga_dungeon/data/dungeon_meridian.gd")   # G-0217 경락도
 const MeleeAttack := preload("res://games/saga_dungeon/player/melee_attack.gd")
 const DungeonMinion := preload("res://games/saga_dungeon/world/dungeon_minion.gd")
 const CombatFx := preload("res://saga_core/combat_fx.gd")
@@ -83,14 +84,18 @@ func try_cast(skill_key: String) -> bool:
 	if not DungeonSkills.is_active(sk):
 		return false
 	var ok := false
+	var blood := Meridian.blood_cost(get_tree())   # G-0217 혈공(경락 규칙) — 무예마다 최대 체력 5%, 모자라면 못 쓴다
+	var ph: Node = get_tree().get_first_node_in_group("player_health") if blood > 0.0 else null
+	if ph != null and float(ph.hp) <= blood:
+		return false
 	_hits = 0
 	match str(sk.shape):
 		"bolt": ok = _cast_bolt(sk, rank)
-		"swing": ok = _cast_area(sk, rank, float(sk.r) * DungeonRunState.reach_mult())
+		"swing": ok = _cast_area(sk, rank, float(sk.r) * DungeonRunState.reach_mult() * (1.0 + Meridian.add("swingRangePct") / 100.0))
 		"nova": ok = _cast_area(sk, rank, float(sk.r))
 		"dash": ok = _cast_dash(sk, rank)
 		"buff":
-			DungeonRunState.add_temp_buff(str(sk.buff_eff), DungeonSkills.value_at(sk, rank), float(sk.sec))
+			DungeonRunState.add_temp_buff(str(sk.buff_eff), DungeonSkills.value_at(sk, rank), float(sk.sec) * (1.0 + Meridian.add("buffDurPct") / 100.0))
 			_burst(sk, SELF_BURST_R)
 			ok = true
 		"heal":
@@ -101,7 +106,10 @@ func try_cast(skill_key: String) -> bool:
 		"summon": ok = _cast_summon(sk, rank)
 		"chain": ok = _cast_chain(sk, rank)
 	if ok:
-		_cd[skill_key] = float(sk.cd)
+		_cd[skill_key] = float(sk.cd) * Meridian.mul("cd")   # G-0217 기력·혈공·무심(경락)
+		if ph != null:
+			ph.hp = maxf(1.0, float(ph.hp) - blood)
+			ph.hp_changed.emit(ph.hp, ph.max_hp)
 	return ok
 
 
@@ -118,7 +126,7 @@ func _cast_bolt(sk: Dictionary, rank: int) -> bool:
 	candidates.sort_custom(func(a, b): return a[0] < b[0])
 	var value := DungeonSkills.value_at(sk, rank)
 	var col := el_color(sk)
-	for i in range(mini(int(sk.get("shots", 1)), candidates.size())):
+	for i in range(mini(int(sk.get("shots", 1)) + int(Meridian.add("boltShotAdd")), candidates.size())):
 		var enemy: Node3D = candidates[i][1]
 		var to := enemy.global_position - _player.global_position
 		CombatFx.slash(_player, to, minf(to.length(), 3.0), col, i)
@@ -141,7 +149,7 @@ func _cast_area(sk: Dictionary, rank: int, radius: float) -> bool:
 func _cast_dash(sk: Dictionary, rank: int) -> bool:
 	if _dash_left > 0.0:
 		return false
-	_dash_left = DASH_DURATION * float(sk.get("far", 1.0))
+	_dash_left = DASH_DURATION * float(sk.get("far", 1.0)) * Meridian.mul("dash")   # G-0217 유수(경락) ×1.5
 	_dash_hit.clear()
 	_dash_sk = sk
 	_dash_rank = rank
@@ -176,7 +184,7 @@ func _cast_heal(sk: Dictionary, rank: int) -> bool:
 	if found.is_empty():
 		return false
 	var ph: Node = found[0]
-	ph.heal_by(float(ph.max_hp) * DungeonSkills.value_at(sk, rank) / 100.0)
+	ph.heal_by(float(ph.max_hp) * DungeonSkills.value_at(sk, rank) / 100.0 * (1.0 + Meridian.add("healBonusPct") / 100.0))
 	return true
 
 
@@ -187,16 +195,19 @@ func _cast_curse(sk: Dictionary, rank: int) -> bool:
 	var value := DungeonSkills.value_at(sk, rank)
 	_burst(sk, float(sk.r))
 	for enemy in targets:
-		enemy.apply_elem_slow(CURSE_SLOW, float(sk.sec))
-		enemy.apply_hex(value, float(sk.sec))
+		var sec := float(sk.sec) * (1.0 + Meridian.add("curseDurPct") / 100.0)   # G-0217 저주 길이
+		enemy.apply_elem_slow(CURSE_SLOW, sec)
+		enemy.apply_hex(value, sec)
 	return true
 
 
 func _cast_summon(sk: Dictionary, rank: int) -> bool:
+	if Meridian.has_rule("lone"):   # G-0217 독행(경락 규칙) — 분신 없음
+		return false
 	var parent := get_tree().current_scene
 	if parent == null:
 		parent = _player.get_parent()
-	for i in range(roundi(DungeonSkills.value_at(sk, rank))):
+	for i in range(roundi(DungeonSkills.value_at(sk, rank)) + int(Meridian.add("summonCountAdd"))):
 		var m: Node3D = DungeonMinion.new()
 		m.kind_key = str(sk.key) # G-0202 몸 고르기 — _ready 전에
 		parent.add_child(m)
@@ -215,7 +226,7 @@ func _cast_chain(sk: Dictionary, rank: int) -> bool:
 		return false
 	var value := DungeonSkills.value_at(sk, rank)
 	var chain_r: float = float(sk.get("r", CHAIN_RANGE))
-	var hops: int = int(sk.get("hops", CHAIN_HOPS))
+	var hops: int = int(sk.get("hops", CHAIN_HOPS)) + int(Meridian.add("chainHopsAdd"))
 	var hit: Array = []
 	var hop := 0
 	var col := el_color(sk)
@@ -257,8 +268,11 @@ func _strike(enemy: Node, sk: Dictionary, mult: float) -> void:
 	var base: float = MeleeAttack.ATK_DAMAGE * pct_mult + DungeonEquipmentState.atk_flat_bonus()
 	var dmg: float = base * mult * DungeonRunState.skill_mul()
 	var is_crit := randf() * 100.0 < DungeonRunState.crit_chance()
+	if is_crit and Meridian.has_rule("onecut"):   # G-0217 일격 — 치명 없음(굴림 순서는 그대로)
+		is_crit = false
 	if is_crit:
 		dmg *= MeleeAttack.CRIT_MULT
+	dmg *= Meridian.hit_mul(get_tree(), enemy, _player) * Meridian.mul("skill")   # G-0217 경락 규칙(무심 무예 ×0.7)
 	var el: String = str(sk.get("el", "phys"))
 	var res: float = float(enemy.resist_pct(el)) if enemy.has_method("resist_pct") else 0.0
 	if res > 0.0:
