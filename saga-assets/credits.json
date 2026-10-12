@@ -292,7 +292,7 @@
    "tool": "gen.py",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 1757,
+   "count": 1759,
    "where": [
     "saga-assets/competition",
     "saga-assets/icons/license",
@@ -365,14 +365,14 @@
    "tool": "gen.py (ComfyUI)",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 42,
+   "count": 60,
    "where": [
     "saga-assets/portraits-mount",
+    "saga-assets/web2d/bg",
     "saga-assets/web2d/moving/beast_big",
     "saga-assets/web2d/moving/beast_dog",
     "saga-assets/web2d/moving/villager_b",
-    "saga-assets/world/sprite",
-    "saga-web/saga-go/assets/portraits/mount"
+    "saga-assets/world/sprite"
    ]
   },
   {

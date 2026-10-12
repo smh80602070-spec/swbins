@@ -1,0 +1,44 @@
+{
+ "model": "z-image-turbo",
+ "out": "k94_tiles_redo",
+ "note": "K-0094 ② 타일 다시 — 10-12 첫 판(animagine·그림체 C) 24장 대부분 원근 장면·빛줄기·파스텔로 테마색이 안 갈림 → K-0091 처럼 Z-Image 평평한 견본, 테마색 분명히. 고른 것 → pack_picked tile → dungeon_<테마>.webp.",
+ "defaults": {
+  "prompt_prefix": "",
+  "width": 1024,
+  "height": 1024,
+  "variants": 4,
+  "tiling": false
+ },
+ "items": [
+  {
+   "id": "dungeon_gobun",
+   "seed": 94100000,
+   "prompt": "A flat top-down ground texture of an ancient tomb floor: packed warm brown earth and clay with small pebbles and faint cracks, ochre and umber tones. Seen straight from above at exactly 90 degrees, no perspective, evenly lit, no shadows, no light rays, no sun beams, no horizon, no objects, no border, fills the entire frame edge to edge. Soft hand-painted game art style with gentle brush shading, medium brightness, low contrast. Uniform repeating terrain texture."
+  },
+  {
+   "id": "dungeon_pyeseong",
+   "seed": 94110000,
+   "prompt": "A flat top-down ground texture of a ruined castle floor: cracked cold gray-blue flagstones of similar size with thin dark gaps and a little dust, slate blue-gray tones. Seen straight from above at exactly 90 degrees, no perspective, evenly lit, no shadows, no light rays, no sun beams, no horizon, no objects, no border, fills the entire frame edge to edge. Soft hand-painted game art style with gentle brush shading, medium brightness, low contrast. Uniform repeating terrain texture."
+  },
+  {
+   "id": "dungeon_sanchae",
+   "seed": 94120000,
+   "prompt": "A flat top-down ground texture of a mountain fortress yard: patchy green grass mixed with brown dirt and small gray stones, fresh green and earth tones. Seen straight from above at exactly 90 degrees, no perspective, evenly lit, no shadows, no light rays, no sun beams, no horizon, no objects, no border, fills the entire frame edge to edge. Soft hand-painted game art style with gentle brush shading, medium brightness, low contrast. Uniform repeating terrain texture."
+  },
+  {
+   "id": "dungeon_sugung",
+   "seed": 94130000,
+   "prompt": "A flat top-down ground texture of an underwater palace floor: wet smooth aqua and teal stone tiles of irregular shape with tiny white shells and sand in the gaps, sea-green and turquoise tones. Seen straight from above at exactly 90 degrees, no perspective, evenly lit, no shadows, no light rays, no sun beams, no horizon, no objects, no border, fills the entire frame edge to edge. Soft hand-painted game art style with gentle brush shading, medium brightness, low contrast. Uniform repeating terrain texture."
+  },
+  {
+   "id": "dungeon_jiokmun",
+   "seed": 94140000,
+   "prompt": "A flat top-down ground texture of the underworld gate floor: dark black-red volcanic rock surface with thin glowing orange cracks, deep crimson and charcoal tones. Seen straight from above at exactly 90 degrees, no perspective, evenly lit, no shadows, no light rays, no sun beams, no horizon, no objects, no border, fills the entire frame edge to edge. Soft hand-painted game art style with gentle brush shading, medium brightness, low contrast. Uniform repeating terrain texture."
+  },
+  {
+   "id": "dungeon_cheongye",
+   "seed": 94150000,
+   "prompt": "A flat top-down ground texture of a heavenly palace floor: smooth white marble paving stones of similar size with thin gold veins between them, white, ivory and pale gold tones. Seen straight from above at exactly 90 degrees, no perspective, evenly lit, no shadows, no light rays, no sun beams, no horizon, no objects, no border, fills the entire frame edge to edge. Soft hand-painted game art style with gentle brush shading, medium brightness, low contrast. Uniform repeating terrain texture."
+  }
+ ]
+}
