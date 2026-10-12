@@ -82,7 +82,7 @@ namespace Saga.EditorTools
                 Debug.Log($"[ShowcaseGui] buddy {pet} {Saga.Go.Data.EggState.SetBuddy(pet)}");
             }
             // U-0105 `hurt` — 판 첫 장면(이야기 창·컷 카메라)이 화면을 덮지 않게 진단처럼 첫 프레임에 끈다(촬영 프로세스 안에서만)
-            if (_frame == 0 && (System.Environment.GetEnvironmentVariable("SAGA_SHOT_ACT") ?? "").Contains("hurt"))
+            if (_frame == 0 && ((System.Environment.GetEnvironmentVariable("SAGA_SHOT_ACT") ?? "").Contains("hurt") || (System.Environment.GetEnvironmentVariable("SAGA_SHOT_ACT") ?? "").Contains("dgranged")))
             {
                 Saga.Dungeon.Data.DungeonTutorial.Enabled = false; Saga.Dungeon.Data.DungeonScenario.Enabled = false; Saga.Dungeon.Data.DungeonScenario.AbortScene(); Saga.Dungeon.UI.DungeonScenarioUi.Instance?.Hide();
                 Saga.Story.Data.StoryTutorial.Enabled = false; Saga.Story.Data.StoryScenario.Enabled = false; Saga.Story.Data.StoryScenario.AbortScene(); Saga.Story.UI.StoryScenarioUi.Instance?.Hide();

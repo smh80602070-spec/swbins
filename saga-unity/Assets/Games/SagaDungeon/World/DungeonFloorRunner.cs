@@ -454,7 +454,7 @@ namespace Saga.Dungeon.World
         private GameObject SpawnGrunt(Vector3 localOffset, int fightSlot, float minionDelay = -1f)
         {
             DungeonEra era = _landmark >= 0 ? DungeonEra.Past : DungeonEras.GruntEra(_floor, _roomIndex, fightSlot);
-            if (era == DungeonEra.Past) return SpawnGrunt(localOffset, minionDelay);
+            if (era == DungeonEra.Past) return SpawnGrunt(localOffset, minionDelay, _landmark >= 0 ? -1 : fightSlot);
             bool minion = minionDelay >= 0f;
             var foe = DungeonEras.FoeFor(_floor, era);
             int k = EraFoeIndex(foe.Body);
@@ -481,9 +481,13 @@ namespace Saga.Dungeon.World
         /// <summary>PLAN.md 109-10-10 — 졸개 보상은 절반(웹 "드롭 ½"), 적어도 1.</summary>
         private static int MinionReward(int v, bool minion) => minion ? Mathf.Max(1, Mathf.RoundToInt(v * DungeonHunt.MinionRewardMul)) : v;
 
-        private GameObject SpawnGrunt(Vector3 localOffset, float minionDelay = -1f)
+        /// <summary><paramref name="foeSlot"/> ≥ 0 이면(보통 층 전투방 잡졸·그 졸개) tasks U-0106 명단에서 층·방·자리 해시로 종 — 이름·색·무기.
+        /// 호위·호령 졸개·명소 잡졸(-1)은 옛 황건적/명소 이름 그대로, 무기 갈래 없음.</summary>
+        private GameObject SpawnGrunt(Vector3 localOffset, float minionDelay = -1f, int foeSlot = -1)
         {
             bool minion = minionDelay >= 0f;
+            bool roster = foeSlot >= 0 && _landmark < 0;
+            var foe = roster ? DungeonFoeRoster.Pick(_floor, _roomIndex, foeSlot) : default;
             var go = new GameObject("Enemy_Floor_Grunt");
             go.SetActive(false);
             go.transform.SetParent(_contentRoot, false);
@@ -495,8 +499,11 @@ namespace Saga.Dungeon.World
                 DungeonFormulas.EnemyHp(_floor, false) * SigilState.EnemyHpMultiplier(_floor) * (minion ? DungeonHunt.MinionHpMul : 1f),
                 DungeonFormulas.EnemyDmg(_floor, false) * SigilState.EnemyDamageMultiplier(_floor) * (minion ? DungeonHunt.MinionDmgMul : 1f),
                 MinionReward(DungeonFormulas.RewardExp(_floor, false), minion), MinionReward(DungeonFormulas.RewardGold(_floor, false), minion),
-                minion ? null : "wp_axe", null, false, _landmark >= 0 ? DungeonLandmarkData.GruntName(_landmark) : "황건적",
-                new Color(0.72f, 0.64f, 0.3f), minion ? DungeonHunt.MinionScale : 1f);
+                minion ? null : "wp_axe", null, false, roster ? foe.NameKo : _landmark >= 0 ? DungeonLandmarkData.GruntName(_landmark) : "황건적",
+                roster ? foe.Color : new Color(0.72f, 0.64f, 0.3f), minion ? DungeonHunt.MinionScale : 1f);
+            if (roster)
+                enemy.SetWeapon(foe.Weapon, DungeonFoeRoster.PhaseSeed(_floor, _roomIndex, foeSlot,
+                    Mathf.RoundToInt(localOffset.x * 10f) * 997 + Mathf.RoundToInt(localOffset.z * 10f)));
             go.SetActive(true);
             if (minion) enemy.MarkMinion(minionDelay);
             return go;

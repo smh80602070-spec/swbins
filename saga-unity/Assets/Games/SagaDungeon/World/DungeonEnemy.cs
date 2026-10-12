@@ -92,6 +92,13 @@ namespace Saga.Dungeon.World
             ["해골 졸개"] = "enemy.region_skeleton_grunt", // PLAN.md 109-10-6 사냥터 신화 잡졸
         };
 
+        // tasks U-0106 — 과거 잡졸 명단 18종(황건적은 위 enemy.grunt 그대로).
+        static DungeonEnemy()
+        {
+            for (int i = 0; i < DungeonFoeRoster.All.Length; i++)
+                if (!DisplayNameKeys.ContainsKey(DungeonFoeRoster.All[i].NameKo)) DisplayNameKeys[DungeonFoeRoster.All[i].NameKo] = DungeonFoeRoster.Keys[i];
+        }
+
         /// <summary>진단 — 표시 이름 → 번역 키 표에 있나.</summary>
         public static bool HasDisplayNameKey(string name) => DisplayNameKeys.ContainsKey(name);
 
@@ -246,7 +253,21 @@ namespace Saga.Dungeon.World
         public bool IsWindingUp => _state == State.Windup;
         /// <summary>달려들거나 전조 중 — 배경음이 전투 곡으로 바뀌는 기준(tasks U-0021).</summary>
         public bool IsEngaged => _state == State.Chase || _state == State.Windup;
-        public float StrikeReach => attackRange * StrikeReachMul;
+        public float StrikeReach => attackRange * StrikeReachMul + DungeonFoeRoster.ReachOf(_weapon);
+
+        // tasks U-0106 — 과거 잡졸의 무기 갈래(층 진행기가 종으로 건다). None 이면 옛 동작 그대로.
+        private FoeWeapon _weapon = FoeWeapon.None;
+        private float _phase;
+        private bool _rangedWindup;
+        public FoeWeapon Weapon => _weapon;
+        public bool IsRangedWindup => _state == State.Windup && _rangedWindup;
+        /// <summary>Awake 앞뒤 어느 때나 — 처음 위상은 개체마다 해시로 다르게(도끼 흔들림·곤봉 들썩임이 한 박자에 안 맞게).</summary>
+        public void SetWeapon(FoeWeapon weapon, float phase)
+        {
+            _weapon = weapon;
+            _phase = phase;
+        }
+        private bool UsesRanged => DungeonFoeRoster.IsRanged(_weapon) && !IsTaunted;
         public bool IsTaunted => _tauntLeft > 0f && _taunter != null && _taunter.IsUp;
 
         /// <summary>PLAN.md 106-6 — `AllyFighter.OrderTaunt()` 가 반경 안 적에게 건다.</summary>
@@ -500,17 +521,36 @@ namespace Saga.Dungeon.World
             }
 
             // Chase
+            _phase += dt * DungeonFoeRoster.PhaseRate;
+            bool ranged = UsesRanged;
             if (dist > attackRange)
             {
-                Vector3 dir = target.position - transform.position;
-                dir.y = 0f;
-                if (dir.sqrMagnitude > 0.0001f)
+                // tasks U-0106 — 활·지팡이는 6.25m 안이면 더 안 다가오고 선 채 겨눈다(붙으면 아래 평타 그대로).
+                if (ranged && dist <= DungeonFoeRoster.RangedStop)
                 {
-                    dir.Normalize();
-                    transform.position += dir * chaseSpeed * dt;
-                    transform.rotation = Quaternion.LookRotation(dir);
+                    _animator?.SetFloat("Speed", 0f);
+                    Face(target);
                 }
-                _animator?.SetFloat("Speed", 1f);
+                else
+                {
+                    Vector3 dir = target.position - transform.position;
+                    dir.y = 0f;
+                    if (dir.sqrMagnitude > 0.0001f)
+                    {
+                        dir.Normalize();
+                        Vector3 move = dir;
+                        float wob = DungeonFoeRoster.WobOf(_weapon, _phase); // 도끼 — 옆으로 흔들리며
+                        if (wob != 0f) move = (dir + new Vector3(-dir.z, 0f, dir.x) * wob).normalized;
+                        transform.position += move * chaseSpeed * DungeonFoeRoster.LungeOf(_weapon, _phase) * dt; // 곤봉 — 들썩이며 몰아침
+                        transform.rotation = Quaternion.LookRotation(dir);
+                    }
+                    _animator?.SetFloat("Speed", 1f);
+                }
+                if (ranged)
+                {
+                    _attackCooldown -= dt;
+                    if (_attackCooldown <= 0f && dist <= DungeonFoeRoster.RangedMax) BeginWindup(true);
+                }
             }
             else
             {
@@ -564,9 +604,10 @@ namespace Saga.Dungeon.World
 
         /// <summary>PLAN.md 106-1 — 예비동작 시작. 공격 클립은 여기서 틀어
         /// 휘두르는 동작이 판정 순간에 닿게 한다.</summary>
-        private void BeginWindup()
+        private void BeginWindup(bool ranged = false)
         {
             _state = State.Windup;
+            _rangedWindup = ranged;
             _windupTotal = isBoss ? BossWindupSec : WindupSec;
             _windupLeft = _windupTotal;
             _warnHot = false;
@@ -586,7 +627,7 @@ namespace Saga.Dungeon.World
                 _warnHot = true;
                 if (_visualGo != null) CharacterVisual.Tint(_visualGo, WarnColor);
             }
-            SetWarnRingRadius(Mathf.Lerp(0.3f, StrikeReach, progress));
+            SetWarnRingRadius(Mathf.Lerp(0.3f, _rangedWindup ? RangedRingMax : StrikeReach, progress));
             if (_windupLeft <= 0f) ResolveStrike(dist);
         }
 
@@ -596,6 +637,12 @@ namespace Saga.Dungeon.World
         {
             EndWindup();
             _attackCooldown = Mathf.Max(MinRecoverSec, attackInterval - _windupTotal);
+            if (_rangedWindup)
+            {
+                _rangedWindup = false;
+                FireShot();
+                return;
+            }
             if (dist > StrikeReach) return;
             if (IsTaunted)
             {
@@ -608,6 +655,26 @@ namespace Saga.Dungeon.World
                 return;
             }
             HeroState.TakeDamage(dmg, DisplayName, DungeonLocalization.T("grave.how_strike", "근접 타격"));   // tasks U-0092 사망 카드 "누구 — 무슨 피해"
+        }
+
+        // tasks U-0106 — 원거리 예비동작은 발밑 고리를 작게만(판정이 내 둘레가 아니라 날아가는 탄이라).
+        private const float RangedRingMax = 0.6f;
+        private static readonly Color ArrowColor = new Color(0.86f, 0.74f, 0.48f);
+        private static readonly Color BulletColor = new Color(1f, 0.82f, 0.35f);
+        public static Func<Transform> ShotTargetOverride; // 진단 — null 이면 쫓는 대상
+
+        /// <summary>tasks U-0106 — 피할 수 있는 투사체 하나(웹 쿨 ×1.4). 가슴 높이에서 지금 대상 쪽으로.</summary>
+        private void FireShot()
+        {
+            _attackCooldown *= DungeonFoeRoster.RangedCooldownMul;
+            if (_player == null) return;
+            bool bow = _weapon == FoeWeapon.Bow;
+            Vector3 from = transform.position + Vector3.up * 1.1f;
+            Transform to = ShotTargetOverride?.Invoke() ?? _player;
+            DungeonFoeShot.Fire(from, to.position + Vector3.up * 1.1f, dmg, DisplayName,
+                bow ? DungeonLocalization.T("grave.how_arrow", "화살") : DungeonLocalization.T("grave.how_bullet", "탄환"),
+                _player, transform.parent, bow ? ArrowColor : BulletColor);
+            SfxPlayer.Play("whoosh", null, bow ? 0.7f : 0.9f, 0.08f); // 자체 효과음(U-0104) — 없으면 조용히
         }
 
         private void EndWindup()

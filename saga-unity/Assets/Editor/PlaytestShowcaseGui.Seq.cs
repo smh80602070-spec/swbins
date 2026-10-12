@@ -280,6 +280,28 @@ namespace Saga.EditorTools
                     case "realmtactics":   // U-0099 사가천하 — 격자 전술판을 열고 첫 장수를 고른 채(갈 칸·칠 적 표시)
                         if (Object.FindFirstObjectByType<Saga.Realm.World.RealmMapViewSwitcher>() == null || PlaytestRealmTactics.OpenForShot() == null) { Skip(act); return; }
                         break;
+                    case "dgranged":   // U-0106 2나락 — 명단 첫 활 잡졸을 주인공 앞 7m 에 세워 겨눔 → 쏨, 탄이 날아오는 중부터 찍는다(촬영 프로세스 안에서만)
+                    {
+                        var pc = Object.FindFirstObjectByType<Saga.Dungeon.Player.PlayerController>();
+                        var runner = Object.FindFirstObjectByType<Saga.Dungeon.World.DungeonFloorRunner>();
+                        if (pc == null) { Skip(act); return; }
+                        Saga.Dungeon.Data.DungeonScenario.AbortScene(); Saga.Dungeon.UI.DungeonScenarioUi.Instance?.Hide();
+                        Saga.Dungeon.Data.HeroState.Invulnerable = false; Saga.Dungeon.Data.HeroState.DamageHold = 0;
+                        var foe = Saga.Dungeon.Data.DungeonFoeRoster.All.First(f => f.Weapon == Saga.Dungeon.Data.FoeWeapon.Bow);
+                        Vector3 fwd = pc.transform.forward; fwd.y = 0f; fwd = fwd.sqrMagnitude > 1e-4f ? fwd.normalized : Vector3.forward;
+                        var go = new GameObject("Enemy_FoeArcher");
+                        go.SetActive(false);
+                        go.transform.position = pc.transform.position + fwd * 7f;
+                        var e = go.AddComponent<Saga.Dungeon.World.DungeonEnemy>();
+                        e.SetSpawnContext("shot_ranged", runner != null ? runner.GruntModel : null);
+                        e.ConfigureCombat(500f, 1f, 1, 1, null, null, false, foe.NameKo, foe.Color, 1f);
+                        e.SetWeapon(foe.Weapon, 0f);
+                        go.SetActive(true);
+                        for (int i = 0; i < 20 && Saga.Dungeon.World.DungeonFoeShot.Active.Count == 0; i++) e.Tick(0.05f);
+                        foreach (var s in Saga.Dungeon.World.DungeonFoeShot.Active) s.Tick(0.12f);
+                        Debug.Log($"[ShowcaseGui] dgranged {foe.NameKo}({foe.Weapon}) @ {go.transform.position} · 탄 {Saga.Dungeon.World.DungeonFoeShot.Active.Count} · 이름 {e.DisplayName}");
+                        break;
+                    }
                     case "hurt":   // U-0105 "내가 맞았다" — 체력 35% 로 두고 최대치 10% 한 대(→ 약 25%): 첫 장 = 가장자리 번쩍·붉은 숫자, 끝 장 = 30% 밑 맥박
                         if (Object.FindFirstObjectByType<Saga.Dungeon.Player.PlayerController>() != null)
                         {

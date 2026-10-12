@@ -182,7 +182,7 @@ namespace Saga.EditorTools
                     {
                         var want = DungeonEras.GruntEra(f, runner.RoomIndex, i);
                         string name = list[i].DisplayNameRaw;
-                        if (want == DungeonEra.Past) { if (name != "황건적") Fail($"{f}층 잡졸 {i} 과거인데 \"{name}\""); continue; }
+                        if (want == DungeonEra.Past) { string past = DungeonFoeRoster.Pick(f, runner.RoomIndex, i).NameKo; if (name != past) Fail($"{f}층 잡졸 {i} 과거인데 \"{name}\" ≠ {past}"); continue; } // tasks U-0106 명단
                         var foe = DungeonEras.FoeFor(f, want);
                         if (name != foe.NameKo) { Fail($"{f}층 잡졸 {i} \"{name}\" ≠ {foe.NameKo}"); continue; }
                         eraSeen++;

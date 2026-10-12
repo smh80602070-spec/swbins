@@ -154,6 +154,7 @@ namespace Saga.EditorTools
                 if (!PlaytestDungeonMount.Run()) _hadError = true; // PLAN.md 109-15 탈것·비행 — 레벨·탈것·자리·세이브 상태를 되돌린다.
                 if (!PlaytestDungeonScenario.Run()) _hadError = true; // PLAN.md 109-16 시나리오 — 진행·영웅·지역 사연·명소 기록을 되돌린다.
                 if (!PlaytestDungeonGrace.Run()) _hadError = true; // tasks U-0092 은총·사망 카드 — 영웅·층·방 번호·자리·카드를 되돌린다.
+                if (!PlaytestDungeonFoes.Run()) _hadError = true; // tasks U-0106 잡졸 명단 18·무기별 싸우는 법(활 멈춰 쏘기·창 사거리) — 층·영웅·도감·자리를 되돌린다.
                 if (!PlaytestHurtSignal.Run("PlaytestDungeonHeadless", "dg")) _hadError = true; // tasks U-0105 "내가 맞았다" 신호 — 진짜 TakeDamage 번쩍·붉은 숫자·흔들림·맥박(체력·무적·피격자 되돌림)
                 CheckTemple(); // PLAN.md 106-2 — 플레이어를 순간이동시키므로 맨 끝(finally 에서 되돌린다).
                 StartCutCameraProbe(); // PLAN.md 106-3 — 6·8프레임째에 이어서 본다.
