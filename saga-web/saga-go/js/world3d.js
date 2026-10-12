@@ -44,7 +44,7 @@
   function TILE_SPAN() { return core.tuned('world3d.tileSpan', 3); }      // 타일 반경(장)
   /** 버거우면 스스로 깎는 배수 (`perf.js`) — 없으면 1 이라 예전과 같다 */
   function PF(key) { var P = global.DG.perf; return P ? P.mul(key) : 1; }
-  function PROP_R() { return core.tuned('world3d.propRadius', 260) * PF('radius'); }
+  function PROP_R() { return core.tuned('world3d.propRadius', 260) * PF('radius'); }   /* W-0185 픽셀 비율 상한 — 폰 표(prop3d.light)면 1, 아니면 1.5(§6.1) */ function PR_CAP() { var P3 = global.DG.prop3d; return core.tuned('world3d.pixelCap', P3 && P3.light && P3.light() ? 1 : 1.5); }
   /* 부수는 반경 — 짓는 반경(R)보다 크게 잡아 경계에서 왕복해도 짓고 부수고를
      되풀이하지 않는다 (PLAN 42절 ACTIVE/VISIBLE/UNLOAD) */
   function PROP_UR(R) { return R * core.tuned('world3d.unloadRadius', 1.4); }
@@ -197,7 +197,7 @@
         preserveDrawingBuffer: !!global.DG_3D_PRESERVE
       });
       /* SAGA-DESIGN §6.1 "저비용 통일" — 픽셀 비율 상한 1.5(옛 2는 폰에서 과잉 렌더) */
-      renderer.setPixelRatio(Math.min(global.devicePixelRatio || 1, 1.5));
+      renderer.setPixelRatio(Math.min(global.devicePixelRatio || 1, PR_CAP()));
       renderer.outputColorSpace = T.SRGBColorSpace;
       /* 디버그: 그림자·안개를 끊어 원인을 좁힐 수 있게 (DG_3D_DEBUG) */
       if (!(global.DG_3D_DEBUG || {}).noShadow) {

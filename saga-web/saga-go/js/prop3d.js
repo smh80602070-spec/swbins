@@ -51,6 +51,23 @@
     return tier !== 'LOW';
   }
 
+  /** W-0185 — 폰(터치 + 짧은 변 ≤ 500px)이거나 설정에서 "낮음"을 못박았으면 실사 대신 옛 저다각형 표(LIGHT_REG)를 쓴다.
+   *  실사 나무 하나가 2.4MB·바위가 300KB 안팎인데 같은 자리의 옛 모델은 3~40KB 다. 등급(perf)처럼 프레임 따라 오르내리지 않고
+   *  창이 열릴 때 기기로 한 번 정한다 — 오르내리면 같은 자리 모델을 두 벌 받는다. 손잡이 `prop3d.light` 1 = 늘 · 0 = 안 씀 · 그 밖 = 자동 */
+  function phoneLike() {
+    var n = global.navigator || {}, w = global.innerWidth || 0, h = global.innerHeight || 0;
+    var touch = !!(('ontouchstart' in global) || (n.maxTouchPoints > 0));
+    return touch && w > 0 && h > 0 && Math.min(w, h) <= 500;
+  }
+  var lightAuto = null;
+  function LIGHT() {
+    var k = core().tuned('prop3d.light', 'auto');
+    if (k === 1 || k === '1') { return true; }
+    if (k === 0 || k === '0') { return false; }
+    if (lightAuto === null) { lightAuto = phoneLike() || (!core().tuned('perf.auto', 1) && core().tuned('perf.startTier', '') === 'LOW'); }
+    return lightAuto;
+  }
+
   /** 이 소품이 그림자를 지나 — 나무와 집만 진다. 풀·바위까지 지면 그림자 지도가 넘친다 */
   function casts(name) {
     return name === 'tree' || name === 'pine' || name === 'house' || name === 'tower' ||
@@ -296,6 +313,24 @@
   };
   Object.keys(FUSION).forEach(function (k) { REG['zp_' + k] = { all: [FUS + FUSION[k].f + '.glb'] }; });
 
+  /* W-0185 — 폰 표. 실사(realistic/) 자리만 옛 저다각형(*_STYLIZED, 위 "되돌림 자리")으로 — 새 파일 없음.
+     옛 사원(3.6MB 사진측량)은 같은 자리 옛 정자로 */
+  var LIGHT_REG = {
+    tree: { all: TREE_STYLIZED, autumn: TREE_AUTUMN_STYLIZED, winter: TREE_WINTER_STYLIZED },
+    pine: { all: PINE_STYLIZED }, rock: { all: ROCK_STYLIZED }, grass: { all: [BASE + 'Grass_2.glb'].concat(BUSH_STYLIZED) },
+    house: { all: HOUSE_STYLIZED }, tower: { all: TOWER_STYLIZED }, peak: { all: PEAK_STYLIZED }, lamp: { all: LAMP_STYLIZED },
+    shrine: { all: SHRINE_STYLIZED }, cave: { all: CAVE_STYLIZED }, ruin: { all: RUIN_STYLIZED }, well: { all: WELL_STYLIZED },
+    market: { all: MARKET_STYLIZED }, rice: { all: RICE_STYLIZED }, bridge: { all: BRIDGE_STYLIZED }, temple: { all: SHRINE_STYLIZED }
+  };
+  /** 이 이름의 표 — 가벼운 표를 쓰는 중이고 지금 표가 실사(realistic/)면 LIGHT_REG, 아니면 REG(시대 표 등 갈아 끼운 것은 그대로) */
+  function regOf(name) {
+    var e = REG[name];
+    if (!e || !LIGHT() || !LIGHT_REG[name]) { return e; }
+    var l = e.all || [], real = false, i;
+    for (i = 0; i < l.length; i++) { if (String(l[i]).indexOf('/realistic/') >= 0) { real = true; } }
+    return real ? LIGHT_REG[name] : e;
+  }
+
   function register(name, season, urls) {
     if (!name) { return REG; }
     if (!urls) { delete REG[name]; return REG; }
@@ -358,7 +393,7 @@
   function pick(name, gx, gy, sk, era) {
     if (!ON()) { return null; }
     if ((name === 'house' || name === 'tower') && !houseOn()) { return null; }
-    var e = REG[name];
+    var e = regOf(name);   // W-0185 폰 표
     if (!e) { return null; }
     var key = sk || seasonKey();
     var list = byEra(e, e[key] && e[key].length ? e[key] : e.all, era);
@@ -682,7 +717,7 @@
     var out = [], sk = seasonKey(), i, k, s, e, list, j;
     for (i = 0; i < EAGER_KIND.length; i++) {
       k = EAGER_KIND[i];
-      e = REG[k];
+      e = regOf(k);   // W-0185 폰 표
       if (!e) { continue; }
       for (s in e) {
         if (!e.hasOwnProperty(s)) { continue; }
@@ -721,7 +756,7 @@
   global.DG.prop3d = {
     REG: REG, register: register,
     /* 값을 내는 함수 — three 없이도 돈다 (자가진단이 이것만 따로 본다) */
-    pick: pick, byEra: byEra, eraOfUrl: eraOfUrl, urls: urls, eagerUrls: eagerUrls, seasonKey: seasonKey, seasonTintHex: seasonTintHex,
+    pick: pick, light: LIGHT, LIGHT_REG: LIGHT_REG, _lightReset: function () { lightAuto = null; }, byEra: byEra, eraOfUrl: eraOfUrl, urls: urls, eagerUrls: eagerUrls, seasonKey: seasonKey, seasonTintHex: seasonTintHex,
     ready: ready, casts: casts, PALETTE: PALETTE, snapPalette: snapPalette,
     houseOn: houseOn, heightMul: heightMul, FUSION: FUSION, footprint: footprint,
     /* 그림 층 */
