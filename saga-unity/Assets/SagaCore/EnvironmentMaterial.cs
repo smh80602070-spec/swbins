@@ -12,7 +12,7 @@ namespace Saga.Core
     /// </summary>
     public static class EnvironmentMaterial
     {
-        private const float TileMeters = 2f;
+        public const float TileMeters = 2f; // U-0109 MetricBox 도 이 값으로 면 UV 를 만든다
 
         // PLAN.md 103-1 "DUNGEON 방 셸 — 티어별 마모 3단"(2026-09-22) — 새 텍스처
         // 없이 톤만 어둡게·거칠게 눌러 "낡음"을 표현한다(GO `LandmarksBuilder`의
