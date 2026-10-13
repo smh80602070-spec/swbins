@@ -854,7 +854,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.25,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "armored_catfish",
@@ -864,7 +866,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.1,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "betta",
@@ -872,9 +876,11 @@
    "borrowed": "Quaternius CC0 — Betta (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
    "input": "tools/ai-art/_out/remote3d_in_k96e_orig/betta.png",
    "status": "있음(txt2img)",
-   "note": "",
+   "note": "10-13 시트 △ 지느러미 얇음",
    "height": 0.08,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "△"
   },
   {
    "id": "black_lionfish",
@@ -882,9 +888,11 @@
    "borrowed": "Quaternius CC0 — Black_Lion_Fish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
    "input": "tools/ai-art/_out/remote3d_in_k96e_orig/black_lionfish.png",
    "status": "있음(txt2img)",
-   "note": "",
+   "note": "10-13 시트 △ 지느러미 너덜",
    "height": 0.2,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "△"
   },
   {
    "id": "blobfish",
@@ -894,7 +902,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.12,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "blue_goldfish",
@@ -902,9 +912,11 @@
    "borrowed": "Quaternius CC0 — Blue_Goldfish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
    "input": "tools/ai-art/_out/remote3d_in_k96e_orig/blue_goldfish.png",
    "status": "있음(txt2img)",
-   "note": "",
+   "note": "10-13 시트 △ 지느러미 너덜",
    "height": 0.08,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "△"
   },
   {
    "id": "blue_tang",
@@ -914,7 +926,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.12,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "butterflyfish",
@@ -924,7 +938,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.1,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "cardinalfish",
@@ -934,7 +950,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.07,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "clownfish",
@@ -944,7 +962,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.06,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "coral_grouper",
@@ -952,9 +972,11 @@
    "borrowed": "Quaternius CC0 — Coral_Grouper (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
    "input": "tools/ai-art/_out/remote3d_in_k96e_orig/coral_grouper.png",
    "status": "있음(txt2img)",
-   "note": "",
+   "note": "10-13 시트 △ 지느러미 너덜",
    "height": 0.2,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "△"
   },
   {
    "id": "cowfish",
@@ -964,7 +986,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.08,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "flatfish",
@@ -974,7 +998,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.05,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "flowerhorn",
@@ -984,7 +1010,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.15,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "goblin_shark",
@@ -994,7 +1022,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.35,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "goldfish",
@@ -1004,7 +1034,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.07,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "humphead",
@@ -1014,7 +1046,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.4,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "koi",
@@ -1024,7 +1058,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.12,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "lionfish",
@@ -1032,9 +1068,11 @@
    "borrowed": "Quaternius CC0 — Lionfish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
    "input": "tools/ai-art/_out/remote3d_in_k96e_orig/lionfish.png",
    "status": "있음(txt2img)",
-   "note": "",
+   "note": "10-13 시트 △ 지느러미 너덜",
    "height": 0.18,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "△"
   },
   {
    "id": "mandarinfish",
@@ -1044,7 +1082,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.05,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "moorish_idol",
@@ -1054,7 +1094,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.18,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "parrotfish",
@@ -1064,7 +1106,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.2,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "piranha",
@@ -1074,7 +1118,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.12,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "puffer",
@@ -1082,9 +1128,11 @@
    "borrowed": "Quaternius CC0 — Puffer (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
    "input": "tools/ai-art/_out/remote3d_in_k96e_orig/puffer.png",
    "status": "있음(txt2img)",
-   "note": "",
+   "note": "10-13 시트 ✗ 둥근 몸이 납작 판",
    "height": 0.15,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "✗"
   },
   {
    "id": "red_snapper",
@@ -1094,7 +1142,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.2,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "royal_gramma",
@@ -1104,7 +1154,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.05,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "shark",
@@ -1114,7 +1166,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.5,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "sunfish",
@@ -1124,7 +1178,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 1.5,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "swordfish",
@@ -1134,7 +1190,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.4,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "tang",
@@ -1144,7 +1202,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.12,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "tetra",
@@ -1154,7 +1214,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.03,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "tuna",
@@ -1164,7 +1226,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.4,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "turbot",
@@ -1174,7 +1238,10 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.06,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "plate": true,
+   "judge_b": "○"
   },
   {
    "id": "yellow_tang",
@@ -1184,7 +1251,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.12,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "zebra_clownfish",
@@ -1194,7 +1263,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.06,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "whale",
@@ -1202,9 +1273,11 @@
    "borrowed": "Quaternius CC0 — Whale (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
    "input": "tools/ai-art/_out/remote3d_in_k96e_orig/whale.png",
    "status": "있음(txt2img)",
-   "note": "",
+   "note": "10-13 시트 ✗ 고리 모양으로 뭉개짐",
    "height": 3.0,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "✗"
   },
   {
    "id": "dolphin",
@@ -1212,9 +1285,11 @@
    "borrowed": "Quaternius CC0 — Dolphin (dungeon animals_extra·forest animals_extra·go animals·story animals_extra)",
    "input": "tools/ai-art/_out/remote3d_in_k96e_orig/dolphin.png",
    "status": "있음(txt2img)",
-   "note": "",
+   "note": "10-13 시트 △ 뛰는 자세",
    "height": 0.6,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "△"
   },
   {
    "id": "manta_ray",
@@ -1224,7 +1299,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.4,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   },
   {
    "id": "fish_a",
@@ -1232,9 +1309,11 @@
    "borrowed": "Quaternius CC0 — Fish1 (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
    "input": "tools/ai-art/_out/remote3d_in_k96e_orig/fish_a.png",
    "status": "있음(txt2img)",
-   "note": "",
+   "note": "10-13 시트 ✗ 몸이 휜 뛰는 자세(헤엄 동작 안 맞음)",
    "height": 0.08,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "✗"
   },
   {
    "id": "fish_b",
@@ -1244,7 +1323,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.08,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": -90,
+   "judge_b": "○"
   },
   {
    "id": "fish_c",
@@ -1254,7 +1335,9 @@
    "status": "있음(txt2img)",
    "note": "",
    "height": 0.08,
-   "rig": "worm"
+   "rig": "worm",
+   "yaw": 0,
+   "judge_b": "○"
   }
  ],
  "note_4": "④ 10-11 조사(보이는 것만): 사람 꼴 괴물(Wizard·Orc·Orc_Enemy·Yeti·Alien·Alien_2·Demon·Blue_Demon·Zombie·Giant·Skeleton 5·Ninja)은 TRELLIS 아님 — 인간형 몸은 char-forge 괴물 몸 쪽(ARCH §4.5) · 던전 적 body 는 crea: 자체 몸이 먼저라 대체 안 해도 됨(look 칸 있는 적만 예외 = 로봇 둘, 표에 있음) · Demon.gltf·Alpaking_Evolved·Armabee·Chicken·D quat Birb/Pigeon 사본은 참조 0(지워도 됨) · SlimeEnemy(CC-BY)는 ① slime 이 대신 · rig 칸은 3D 보고 정함 · rig none = 뼈 안 맞는 몸(두 발·여덟 발·로봇·날벌레) → creature_fill 루트 동작"

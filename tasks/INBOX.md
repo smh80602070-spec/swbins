@@ -14,3 +14,5 @@
 - [ ] 10-13 · (K-0049 자체툴 넘김) · 움직이는 대화 초상 주역 23 놓임 — `saga-web/<판>/assets/portraits/live/<id>/live.json`(base 위 parts 상자에 프레임 패치, blink·talk·breath·sway 규격은 `tools/ai-art/split_portrait_layers.py` 머리말). 대화창이 이걸 재생하게 · 웹
 - [ ] 10-13 · (K-0049 자체툴 넘김 — Claude 눈) · `ru_geohae`·`tb_baekgi` 몸이 여성형(긴 머리·드레스)인데 도감 초상은 남자 — 조합표 body·kit 을 남자 몸으로 다시 배정 + 다시 굽기(새 K) · 자체툴
 - [ ] 10-13 · (G-0220 고돗 넘김) · K-0047 표정 초상 92·K-0049 움직이는 초상 23 을 고돗에도 놓아 달라 — `saga-godot/assets/portraits/{expr,live/<id>}/`(웹과 같은 파일·live.json, .import·출처 포함, asset-place.json 에 고돗 대상 셋) · 자체툴
+- [ ] 10-13 · (K-0096 자체툴 넘김) · 물고기 38 자체판 `shared/assets/creatures3d/<id>.glb`(뼈 worm·동작 7) — W-0178 처럼 빌린 Quaternius 물고기 바꿔 끼우기(`k96_targets.json` 5-fish) · 웹
+- [ ] 10-13 · (K-0096 자체툴 넘김) · 물고기 ✗ 3(whale·puffer·fish_a) 그림 다시 → Kaggle 다시(빌린 것 남음) · 자체툴
