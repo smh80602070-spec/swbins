@@ -734,6 +734,83 @@
    ]
   },
   {
+   "id": "portraits-live-story",
+   "src": "saga-assets/portraits-live",
+   "recursive": true,
+   "include": [
+    "*.webp",
+    "*.json"
+   ],
+   "note": "K-0049 움직이는 대화 초상(VRoid 표정 키 반신 렌더 → 바탕 + 눈·입 패치 + live.json, 사람마다 폴더) — 주역 cast(tools/ai-art/data/live_portrait_plan.json)의 game 이 이 판인 16명만",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-story/assets/portraits/live",
+     "only": [
+      "sg_lubu",
+      "kr_gyebaek",
+      "jp_musashi",
+      "eu_leonidas",
+      "sg_huangzhong",
+      "sg_taishici",
+      "jp_yoshitsune",
+      "wd_genghis",
+      "jp_hanzo",
+      "sg_ganning",
+      "jp_tomoegozen",
+      "wd_shaka",
+      "jp_himiko",
+      "sg_zhugeliang",
+      "wd_ibnsina",
+      "eu_davinci"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "portraits-live-realm",
+   "src": "saga-assets/portraits-live",
+   "recursive": true,
+   "include": [
+    "*.webp",
+    "*.json"
+   ],
+   "note": "K-0049 움직이는 대화 초상(VRoid 표정 키 반신 렌더 → 바탕 + 눈·입 패치 + live.json, 사람마다 폴더) — 주역 cast(tools/ai-art/data/live_portrait_plan.json)의 game 이 이 판인 6명만",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-realm/assets/portraits/live",
+     "only": [
+      "fu_jongwang",
+      "ru_geohae",
+      "tb_baekgi",
+      "sg_caocao",
+      "sg_liubei",
+      "sg_sunquan"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "portraits-live-dungeon",
+   "src": "saga-assets/portraits-live",
+   "recursive": true,
+   "include": [
+    "*.webp",
+    "*.json"
+   ],
+   "note": "K-0049 움직이는 대화 초상(VRoid 표정 키 반신 렌더 → 바탕 + 눈·입 패치 + live.json, 사람마다 폴더) — 주역 cast(tools/ai-art/data/live_portrait_plan.json)의 game 이 이 판인 1명만",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-dungeon/assets/portraits/live",
+     "only": [
+      "hl_mukhyang"
+     ]
+    }
+   ]
+  },
+  {
    "id": "ui-skin",
    "src": "saga-assets/ui",
    "recursive": true,

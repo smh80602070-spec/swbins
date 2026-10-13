@@ -1,0 +1,97 @@
+{
+ "note": "K-0049 움직이는 대화 초상 — 주역 23(표정 초상 K-0047 cast 와 같은 명단, game 도 같음). 10-13 시범 10명(sg_lubu·kr_gyebaek·jp_musashi·jp_tomoegozen·jp_himiko·sg_zhugeliang·fu_jongwang·sg_caocao·sg_liubei·hl_mukhyang) Claude 눈 ○ 뒤 23 으로. 도감 전원은 별도. 몸 = tools/char-forge/_out/vroid/<id>/<id>.glb",
+ "cast": [
+  {
+   "id": "sg_lubu",
+   "game": "saga-story"
+  },
+  {
+   "id": "kr_gyebaek",
+   "game": "saga-story"
+  },
+  {
+   "id": "jp_musashi",
+   "game": "saga-story"
+  },
+  {
+   "id": "eu_leonidas",
+   "game": "saga-story"
+  },
+  {
+   "id": "sg_huangzhong",
+   "game": "saga-story"
+  },
+  {
+   "id": "sg_taishici",
+   "game": "saga-story"
+  },
+  {
+   "id": "jp_yoshitsune",
+   "game": "saga-story"
+  },
+  {
+   "id": "wd_genghis",
+   "game": "saga-story"
+  },
+  {
+   "id": "jp_hanzo",
+   "game": "saga-story"
+  },
+  {
+   "id": "sg_ganning",
+   "game": "saga-story"
+  },
+  {
+   "id": "jp_tomoegozen",
+   "game": "saga-story"
+  },
+  {
+   "id": "wd_shaka",
+   "game": "saga-story"
+  },
+  {
+   "id": "jp_himiko",
+   "game": "saga-story"
+  },
+  {
+   "id": "sg_zhugeliang",
+   "game": "saga-story"
+  },
+  {
+   "id": "wd_ibnsina",
+   "game": "saga-story"
+  },
+  {
+   "id": "eu_davinci",
+   "game": "saga-story"
+  },
+  {
+   "id": "fu_jongwang",
+   "game": "saga-realm"
+  },
+  {
+   "id": "ru_geohae",
+   "game": "saga-realm"
+  },
+  {
+   "id": "tb_baekgi",
+   "game": "saga-realm"
+  },
+  {
+   "id": "sg_caocao",
+   "game": "saga-realm"
+  },
+  {
+   "id": "sg_liubei",
+   "game": "saga-realm"
+  },
+  {
+   "id": "sg_sunquan",
+   "game": "saga-realm"
+  },
+  {
+   "id": "hl_mukhyang",
+   "game": "saga-dungeon"
+  }
+ ]
+}

@@ -1,0 +1,67 @@
+{
+ "id": "sg_huangzhong",
+ "size": [
+  768,
+  1024
+ ],
+ "base": "base.webp",
+ "parts": {
+  "eye": {
+   "box": [
+    257,
+    373,
+    520,
+    475
+   ],
+   "frames": {
+    "blink_half": "blink_half.webp",
+    "blink": "blink.webp"
+   }
+  },
+  "mouth": {
+   "box": [
+    282,
+    506,
+    485,
+    609
+   ],
+   "frames": {
+    "mouth_half": "mouth_half.webp",
+    "mouth_a": "mouth_a.webp",
+    "mouth_o": "mouth_o.webp"
+   }
+  }
+ },
+ "motion": {
+  "blink": {
+   "seq": [
+    "blink_half",
+    "blink",
+    "blink_half"
+   ],
+   "frame_ms": 60,
+   "every_s": [
+    3,
+    6
+   ]
+  },
+  "talk": {
+   "seq": [
+    "mouth_half",
+    "mouth_a",
+    "mouth_half",
+    "mouth_o"
+   ],
+   "frame_ms": 110
+  },
+  "breath": {
+   "amp": 0.006,
+   "period_s": 3.6
+  },
+  "sway": {
+   "deg": 1.2,
+   "period_s": 5.0,
+   "pivot_y": 0.78
+  }
+ }
+}
