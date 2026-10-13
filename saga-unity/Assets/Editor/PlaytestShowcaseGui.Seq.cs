@@ -14,7 +14,7 @@ namespace Saga.EditorTools
     /// `walk`(가상 조이스틱 앞으로) · `attack`(사가만리 FieldCombat.Attack / 사가나락 PlayerCombat.TriggerAttack) · `swap`(다음 동료로 교체) ·
     /// `skill:<n>`(n 번 동료로 교체 뒤 Skill) · `roof`(마을집 지붕 남쪽에서 북으로 걷기) · `bossintro`(사가나락 = 진단의 두목 더미, 사가종횡 = 두목 6m 앞으로) ·
     /// `bossroom`(U-0115 사가나락 — 러너가 진짜 두목 방을 짓고 주인공을 두목 9m 밖에 세워 걸려 들어가게, 8m 달려듦·컷은 게임이 연다) ·
-    /// `gesture`(동료 환호) · `worldmap`(사가천하 지도 열기) · `party`·`party2`(모양별 동료 편성 — 스킬 진단과 같은 동료). `realmeras`(U-0091 사가천하 — 시간 틈 사람 묻힌 성 들여 수색·훈련·지도 켬) · `realmtactics`(U-0099 전술판 열고 첫 장수 고름) · `realmannals`(U-0101 열전 넷 심고 서고) · `realmzoom`(U-0102 지도 40m) · `hurt`(U-0105 2나락·4종횡 — 체력 35% 에서 한 대 → 첫 장 가장자리 번쩍·붉은 숫자, 끝 장 30% 밑 맥박) · `weatherprobe`(U-0117 — 장마다 날씨 입자 상태 한 줄 로그: 카메라·뿌리 위치·눈 입자 수/방출·보임·레이어·timeScale) · `weaponglow:<n>`(U-0120 1만리 — 주인공 무기 기록을 빛 단계 n 이 되는 강화·벼림으로 두고, `gamecam` 을 무기 곁 1.8m 에서 무기로). 대상 `screen` = 화면 그대로 첫·끝 장(오버레이 UI 포함). 판에 없는 동작은 로그에 SKIP. 여러 개는 `+` 로(`walk+attack`).
+    /// `gesture`(동료 환호) · `worldmap`(사가천하 지도 열기) · `party`·`party2`(모양별 동료 편성 — 스킬 진단과 같은 동료). `realmeras`(U-0091 사가천하 — 시간 틈 사람 묻힌 성 들여 수색·훈련·지도 켬) · `realmtactics`(U-0099 전술판 열고 첫 장수 고름) · `realmannals`(U-0101 열전 넷 심고 서고) · `realmzoom`(U-0102 지도 40m) · `hurt`(U-0105 2나락·4종횡 — 체력 35% 에서 한 대 → 첫 장 가장자리 번쩍·붉은 숫자, 끝 장 30% 밑 맥박) · `weatherprobe`(U-0117 — 장마다 날씨 입자 상태 한 줄 로그: 카메라·뿌리 위치·눈 입자 수/방출·보임·레이어·timeScale) · `weaponglow:<n>`(U-0120 1만리 — 주인공 무기 기록을 빛 단계 n 이 되는 강화·벼림으로 두고, `gamecam` 을 무기 곁 1.8m 에서 무기로 — U-0121 장마다·`swap` 뒤에도 숫자 한 줄). 대상 `screen` = 화면 그대로 첫·끝 장(오버레이 UI 포함). 판에 없는 동작은 로그에 SKIP. 여러 개는 `+` 로(`walk+attack`).
     /// </summary>
     public static partial class PlaytestShowcaseGui
     {
@@ -87,6 +87,7 @@ namespace Saga.EditorTools
             }
             if (_frame < _seqNextAt) return false;
             if (_wxProbe) WeatherProbe();
+            if (_wpnCam != null) GlowLog($"장 {_seqTaken + 1}");   // U-0121 장마다 무기 빛 숫자(교체 뒤 외곽선이 0 이 아닌지)
             var main = Camera.main;
             for (int i = 0; i < _seqTargets.Count; i++)
             {
@@ -171,6 +172,7 @@ namespace Saga.EditorTools
                         if (fc == null || fc.Party.Count < 2) { Skip(act); return; }
                         fc.TickTimers(Saga.Go.Combat.FieldCombat.SwapCooldownSec + 0.05f);
                         fc.Swap((fc.ActiveIndex + 1) % fc.Party.Count);
+                        if (_wpnCam != null) GlowLog($"swap → 칸 {fc.ActiveIndex}");   // U-0121 교체 뒤 무기 빛 숫자
                         break;
                     case "skill":
                         if (fc == null || !int.TryParse(act.Substring(6), out int n) || n >= fc.Party.Count) { Skip(act); return; }
@@ -364,6 +366,15 @@ namespace Saga.EditorTools
             wv.RefreshModel(who);
             _wpnCam = wv;
             var rec = Saga.Go.Data.WeaponState.RecOf(w.Id);
+            GlowLog($"요청 {n} · {w.Id}★{w.Rarity} Lv.{rec.lv} 벼림 {rec.asc}");
+            return wv.ModelInstance != null;
+        }
+
+        /// <summary>U-0120·0121 — 지금 손 무기(첫 렌더러)의 빛 블록 숫자 한 줄. 교체 뒤·장마다 다시 불러 외곽선이 꺼지지 않았는지 본다.</summary>
+        private static void GlowLog(string tag)
+        {
+            var wv = _wpnCam;
+            if (wv == null) return;
             string shader = "-", ow = "-", rim = "-", rs = "-", rp = "-", scl = "-";
             int rn = 0;
             if (wv.ModelInstance != null)
@@ -383,8 +394,7 @@ namespace Saga.EditorTools
                     scl = r.transform.lossyScale.x.ToString("F3");
                 }
             }
-            Debug.Log($"[ShowcaseGui] weaponglow tier={wv.GlowTier} shader={shader} outlineW={ow} rim={rim} rimS={rs} rimP={rp} scale={scl} — 요청 {n} · {w.Id}★{w.Rarity} Lv.{rec.lv} 벼림 {rec.asc} · 모델 {wv.ModelName} 렌더러 {rn}");
-            return wv.ModelInstance != null;
+            Debug.Log($"[ShowcaseGui] weaponglow tier={wv.GlowTier} shader={shader} outlineW={ow} rim={rim} rimS={rs} rimP={rp} scale={scl} — {tag} · 모델 {wv.ModelName} 렌더러 {rn}");
         }
 
         /// <summary>U-0120 — 게임 카메라 대신 무기 곁 1.8m(주인공 몸 반대쪽·조금 앞·조금 위)에서 무기 가운데를 본다.</summary>

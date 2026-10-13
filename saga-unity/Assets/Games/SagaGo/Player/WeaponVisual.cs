@@ -166,6 +166,8 @@ namespace Saga.Go.Player
         public int GlowTier { get; private set; }
         /// <summary>U-0120 단계 1 → 11 외곽선 월드 두께(m)·림 세기·림 폭(작을수록 넓다) — 촬영으로 정함.</summary>
         private const float GlowOutlineMin = 0.004f, GlowOutlineMax = 0.012f, GlowRimMin = 0.5f, GlowRimMax = 1.4f, GlowRimPowMin = 3.5f, GlowRimPowMax = 2f;
+        /// <summary>U-0121 — 몸 틴트 지우기(`CharacterVisual.ClearTint`, 빈 블록)가 손 무기 블록까지 덮은 뒤 빛만 다시 칠한다(모델은 그대로).</summary>
+        public void ReapplyGlow() => ApplyGlow();
         private void ApplyGlow()
         {
             if (_model == null || string.IsNullOrEmpty(_shownId)) return;

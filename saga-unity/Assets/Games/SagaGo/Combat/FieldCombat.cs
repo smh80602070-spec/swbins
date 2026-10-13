@@ -1012,6 +1012,9 @@ namespace Saga.Go.Combat
             bool ownBody = _bodies != null && _bodies.Show(Active.Id, motion);
             if (ActiveIndex == 0 || ownBody) CharacterVisual.ClearTint(player.Visual.gameObject);
             else CharacterVisual.Tint(player.Visual.gameObject, Color.Lerp(Color.white, GoElements.ColorOf(Active.Element), 0.35f));
+            // U-0121 — Show 안의 Shown → WeaponVisual.ApplyGlow 뒤에 ClearTint(빈 블록)가 손 무기 블록까지 지웠다(교체·되돌림 뒤 outlineW 0) → 빛만 다시
+            var wv = player.GetComponent<WeaponVisual>();
+            if (wv != null) wv.ReapplyGlow();
         }
 
         private FieldEnemy Nearest(float radius)

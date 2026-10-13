@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-13",
+  "tickets": [
+    "U-0121 1만리 동료 교체 뒤 무기 빛 꺼짐 — ApplyLook ClearTint 뒤 다시 칠함"
+  ],
+  "how": "ShowcaseGui GUI 촬영(TestVillage, gamecam;screen, SEQ=4,30, SAGA_SHOT_HOUR=12, SAGA_SHOT_ACT=partywise+weaponglow:11+swap+swap — 동료 하나(sg_caocao) 편성·주인공 무기 11 단계·동료로 교체·주인공으로 되돌림, swap 뒤·장마다 weaponglow 숫자 한 줄), 세이브 다섯 치운 채 · Claude 눈",
+  "probe": {
+    "before (고치기 전)": "설정 tier=11 outlineW=0.0072 rim=#FFC83A rimS=1.40 → swap 칸1(동료 wpn_sword_common) outlineW=0 rim=#FFF2D9 → swap 칸0(주인공 wpn_sword_rare) tier=11 outlineW=0.0000 rim=#FFF2D9 rimS=0.30 rimP=4.50(재질 기본값 — 빛 꺼짐), 장 1~4 같음",
+    "after (고친 뒤)": "swap 칸1 tier=0 outlineW=0 rim=#14120F(0 단계 색) → swap 칸0 tier=11 outlineW=0.0072 rim=#FFC83A rimS=1.40 rimP=2.00, 장 1~4 같음"
+  },
+  "cause": "FieldCombat.ApplyLook — PartyBodies.Show → Shown → WeaponVisual.ApplyGlow 뒤 CharacterVisual.ClearTint(빈 블록)가 손 무기 렌더러까지 덮음(로그로 확정)",
+  "fix": "WeaponVisual.ReapplyGlow()(공개 한 줄) · ApplyLook 틴트/지우기 뒤 player.GetComponent<WeaponVisual>()?.ReapplyGlow() · ClearTint·CharacterVisual 무변경",
+  "scene": [
+    "[PlaytestHeadless] track OK",
+    "[PlaytestHeadless] OK - 10 frames, no errors",
+    "error CS 0"
+  ],
+  "runtime_errors": 0,
+  "shots": "세션 scratchpad u121-b(전)·u121-c(후) — 커밋 안 함",
+  "results": [
+    {
+      "id": "un.go.track",
+      "scene": "1만리 TestVillage",
+      "weapon_glow_after_swap": "○ — 전: 되돌린 주인공 칼날 푸른 잿빛(금빛 없음) / 후: 네 칸 모두 칼날 가장자리·면 금빛, 주인공 몸·떠나는 동료 몸엔 금빛 없음"
+    }
+  ],
+  "result": "D2 유지 — 교체 뒤 무기 빛 유지 ○"
+}
