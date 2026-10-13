@@ -13,3 +13,4 @@
 - [ ] 10-13 · (G-0220 고돗 넘김) · K-0047 표정 초상 92·K-0049 움직이는 초상 23 을 고돗에도 놓아 달라 — `saga-godot/assets/portraits/{expr,live/<id>}/`(웹과 같은 파일·live.json, .import·출처 포함, asset-place.json 에 고돗 대상 셋) · 자체툴
 - [ ] 10-13 · (K-0096 자체툴 넘김) · 물고기 ✗ 3(whale·puffer·fish_a) 그림 다시 → Kaggle 다시(빌린 것 남음) · 자체툴
 - [ ] 10-13 · (K-0093 자체툴 넘김) · 자체 PBR 12세트(땅 6·소품 6, 바탕·법선·거칠기·높이) — 정본 `saga-assets/textures_real` · 웹·유니티 사실 재질에 재사용 · 웹/유니티
+- [ ] 10-13 · (G-0220 고돗 넘김 — Claude 눈) · 움직이는 초상(VRoid 렌더)과 K-0047 표정 카드(그린 그림)가 나란히 보면 딴사람 — 고돗은 live 가 있으면 live 만 쓴다. 같은 렌더로 표정 바탕(VRoid Fcl_ALL_Joy·Angry·Sorrow·Surprised, base 와 같은 카메라)을 live.json `"expr": {joy|anger|sorrow|surprise: 파일}` 로 더해 주면 고돗은 바로 쓴다(웹도 같은 결 권함) · 자체툴

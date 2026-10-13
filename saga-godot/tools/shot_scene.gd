@@ -57,6 +57,8 @@ const CUTS := [
 	["dg_loot", DUNGEON, [["free_modal"], ["static", LOOT, "spawn_at", ["@scene", "@near:3.2:0", 30, true, false, 1000.0]], ["static", LOOT, "spawn_at", ["@scene", "@near:-3.2:0", 30, true, false, 1000.0]],
 		["static", LOOT, "spawn_at", ["@scene", "@near:0:-3.2", 30, true, false, 1000.0]], ["static", LOOT, "spawn_at", ["@scene", "@near:2.6:-5.2", 30, false, true, 1.0]],
 		["static", LOOT, "spawn_at", ["@scene", "@near:-2.6:-5.2", 30, false, false, 1.0]], ["static", LOOT, "spawn_at", ["@scene", "@near:0:-6.6", 30, false, false, 1.0]]]],
+	["st_talk_portrait", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_talk_portrait.gd", "open", ["@tree", ""]]]],   # G-0220 대화 초상(움직이는 초상)
+	["st_talk_joy", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_talk_portrait.gd", "open", ["@tree", "joy"]]]],   # G-0220 대화 초상(표정 카드 기쁨)
 	["st_offer", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_offer.gd", "stage", ["@tree"]]]],   # G-0197 레벨업 무예 3택 창
 	["st_skill_fx", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "stage", ["@tree"]]]],   # G-0201 4종횡 무예 시전 그림 — 선풍(금 원환) + 전우(파랑 물보라)·피해 숫자, 촬영 직전 시전
 	["st_hurt", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "hurt", ["@tree"]]]],   # G-0203 4종횡 내가 맞았다

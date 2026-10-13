@@ -138,10 +138,15 @@ func champion_id() -> String:
 
 
 func names() -> Dictionary:
-	var sid := strategist_id()
-	var lord_id := sid if sid != "" else RealmSaveState.current_lord_id
+	var lord_id := advisor_id()
 	var nb := neighbor_city()
 	return {"책사": _display(lord_id), "이웃": _display(RealmSaveState.lord_of(nb)) if nb != "" else "이웃 군주", "맹장": _display(champion_id())}
+
+
+## 카드·설전 글의 {책사} — 책사가 없으면 군주(G-0220 초상도 이 사람)
+func advisor_id() -> String:
+	var sid := strategist_id()
+	return sid if sid != "" else String(RealmSaveState.current_lord_id)
 
 
 static func _display(id: String) -> String:
@@ -240,7 +245,7 @@ func open_card() -> void:
 	var opts: Array = []
 	for o: Dictionary in c.choices:
 		opts.append({"key": String(o.k), "label": "%s — %s" % [String(o.label), String(o.hint)]})
-	TalkBox.open(get_parent(), "📖 %s" % Scenario.ACT_NAMES.get(int(c.act), ""), [[head, Scenario.fill(Scenario.card_text(c, RealmSaveState.result, st.get("picks", {})), nm)]], _on_card_pick,
+	TalkBox.open(get_parent(), "📖 %s" % Scenario.ACT_NAMES.get(int(c.act), ""), [[head, Scenario.fill(Scenario.card_text(c, RealmSaveState.result, st.get("picks", {})), nm), {"id": advisor_id()}]], _on_card_pick,
 		{"prompt": "어떻게 할 것인가", "options": opts})
 
 
@@ -272,7 +277,7 @@ func _start_debate(card_id: String, stage: Dictionary, nm: Dictionary) -> void:
 	_debate_card = card_id
 	_debate_qs = RealmSaveState.debate_draw(RealmSaveState.envoy_officer())
 	_debate_picks = []
-	TalkBox.open(get_parent(), "🗣️ " + String(stage.title), [["🗣️ " + String(stage.title), Scenario.fill(String(stage.intro), nm)]], _on_debate_intro)
+	TalkBox.open(get_parent(), "🗣️ " + String(stage.title), [["🗣️ " + String(stage.title), Scenario.fill(String(stage.intro), nm), {"id": advisor_id()}]], _on_debate_intro)
 
 
 func _on_debate_intro(_a: String) -> void:
@@ -312,7 +317,7 @@ func _duel_ask(last: String) -> void:
 	var head := "%s 대 %s" % [String(nm["맹장"]), String(stage.get("foe", "상대"))]
 	var body := (last + "\n") if last != "" else ""
 	body += "%d수째 — 어떤 수를 낼까" % _duel_round
-	TalkBox.open(get_parent(), "⚔️ 일기토 %d수" % _duel_round, [["⚔️ " + head, body]], _duel_pick, {"prompt": "", "options": opts})
+	TalkBox.open(get_parent(), "⚔️ 일기토 %d수" % _duel_round, [["⚔️ " + head, body, {"id": champion_id()}]], _duel_pick, {"prompt": "", "options": opts})
 
 
 func _duel_pick(move: String) -> void:

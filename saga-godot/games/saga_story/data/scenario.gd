@@ -402,6 +402,22 @@ static func lines_of(scene: String) -> Array:
 	return SCENES.get(scene, SCENES_P4.get(scene, []))
 
 
+## G-0220 — 웹 대사 감정 칸(data/story_emotes.json, tools/story_emotes_from_web.mjs 생성물). 글 앞 12자가 다르면 "".
+const EMOTES_PATH := "res://games/saga_story/data/story_emotes.json"
+static var _emotes: Dictionary = {}
+
+
+static func emote_at(scene: String, i: int, text: String) -> String:
+	if _emotes.is_empty():
+		var d: Variant = JSON.parse_string(FileAccess.get_file_as_string(EMOTES_PATH))
+		_emotes = d if typeof(d) == TYPE_DICTIONARY else {"_from": ""}
+	var rows: Array = _emotes.get(scene, [])
+	if i < 0 or i >= rows.size():
+		return ""
+	var r: Array = rows[i]
+	return String(r[0]) if text.begins_with(String(r[1])) else ""
+
+
 ## 고르기 id 의 첫 답(답이 없는 옛 세이브).
 static func first_answer(choice_id: String) -> String:
 	for k in CHOICES:

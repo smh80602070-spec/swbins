@@ -1,7 +1,7 @@
 extends CanvasLayer
 ## G-0086 — 이야기 대화 창(다섯 판 공용). 사가나락·사가마을 장 엔진(games/<판>/world/scenario_runner.gd)이 부른다.
 ##   TalkBox.open(부모, 제목, 줄들, 끝 콜백, 고르기)
-##     줄들   [[말한 이 표시 이름, 말], …]
+##     줄들   [[말한 이 표시 이름, 말], …] — 셋째 칸(선택) {"id": 인물 id, "emote": 웹 감정} 이면 초상(G-0220, 놓인 사람만)
 ##     끝     func(답: String) — 끝 줄 뒤 닫힐 때(고르기가 있으면 고른 key, 없으면 "")
 ##     고르기 {"prompt": 물음, "options": [{"key", "label"}, …]} — 끝 줄에서 "다음" 대신 단추로
 ## 열린 동안 게임을 멈춘다(이미 멈춰 있었으면 그대로 두고 닫을 때도 안 푼다). ui_modal 그룹(다른 선택 창과 겹치지 않게).
@@ -16,6 +16,12 @@ var _paused_by_me := false
 var _name_label: Label
 var _text_label: Label
 var _buttons: HFlowContainer   # 단추가 길면 다음 줄로(사가천하 카드 고르기 셋)
+var _frame: PanelContainer   # G-0220 초상 틀(창 왼쪽 위에 선다) — 초상이 없는 줄이면 숨김
+var _portrait: Control
+
+const LivePortrait := preload("res://saga_core/ui/live_portrait.gd")
+## 초상 높이 = 화면 높이 × (가로 0.34 · 세로 0.2) · 비율 3:4(live 그림과 같음)
+const PORTRAIT_H := {"land": 0.34, "port": 0.2}
 
 
 static func open(parent: Node, title: String, lines: Array, on_done: Callable, choice: Dictionary = {}) -> CanvasLayer:
@@ -76,6 +82,24 @@ func _build() -> void:
 	v.add_child(_buttons)
 	panel.add_child(v)
 	add_child(panel)
+	_frame = PanelContainer.new()
+	var fb := box.duplicate() as StyleBoxFlat
+	fb.set_content_margin_all(3)
+	_frame.add_theme_stylebox_override("panel", fb)
+	var vs := get_viewport().get_visible_rect().size if get_viewport() else Vector2(1280, 720)
+	var ph := vs.y * float(PORTRAIT_H.land if vs.x >= vs.y else PORTRAIT_H.port)
+	_frame.anchor_left = 0.05
+	_frame.anchor_right = 0.05
+	_frame.anchor_top = 0.7
+	_frame.anchor_bottom = 0.7
+	_frame.offset_top = -ph - 6.0
+	_frame.offset_right = ph * 0.75
+	_frame.offset_bottom = -6.0
+	_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_frame.visible = false
+	_portrait = LivePortrait.new()
+	_frame.add_child(_portrait)
+	add_child(_frame)
 
 
 func _button(text: String, cb: Callable) -> Button:
@@ -92,6 +116,7 @@ func _show() -> void:
 	var line: Array = _lines[_i] if _i < _lines.size() else ["", ""]
 	_name_label.text = String(line[0])
 	_text_label.text = String(line[1])
+	_show_portrait(line)
 	for c in _buttons.get_children():
 		c.queue_free()
 	var last := _i >= _lines.size() - 1
@@ -107,6 +132,19 @@ func _show() -> void:
 			first.grab_focus()
 	else:
 		_button("닫기 ✓" if last else "다음 ▶", next_line).grab_focus()
+
+
+## G-0220 — 셋째 칸 인물의 초상이 놓여 있으면 띄우고 글 길이만큼 입을 움직인다.
+func _show_portrait(line: Array) -> void:
+	var meta: Dictionary = line[2] if line.size() > 2 and typeof(line[2]) == TYPE_DICTIONARY else {}
+	var shown: bool = _portrait.call("setup", String(meta.get("id", "")), String(meta.get("emote", "")))
+	_frame.visible = shown
+	if shown:
+		_portrait.call("talk", clampf(String(line[1]).length() * 0.06, 0.6, 3.5))
+
+
+func portrait_id() -> String:
+	return String(_portrait.get("id")) if _frame.visible else ""
 
 
 ## 다음 줄(끝 줄이면 닫음 — 고르기가 있으면 pick 으로만 닫힌다).

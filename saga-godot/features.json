@@ -3926,6 +3926,35 @@
   "note": "화면 없음(규칙 층) — 점검 8항목 · 골든 새 값 2f12de0b…(AI_ON=false 면 옛 a6992811… 그대로) · 같은 난수에서 AI 성벽 성장 342→465(×1.36)"
  },
  {
+  "id": "gd.core.talk_portrait",
+  "name": "대화 초상 — 다섯 판 공용 대화창에 주역 23의 움직이는 초상(K-0049 live.json: 깜빡임·말하는 입·숨·고개) · 한 사람 한 그림체(그린 표정 카드는 움직이는 초상 없는 사람만) · 4종횡 웹 대사 감정 칸 이식(story_emotes.json)",
+  "files": [
+   "saga_core/ui/live_portrait.gd",
+   "saga_core/ui/talk_box.gd",
+   "games/saga_story/data/scenario.gd",
+   "games/saga_story/data/story_emotes.json",
+   "games/saga_story/world/scenario_runner.gd",
+   "games/saga_dungeon/world/scenario_runner.gd",
+   "games/saga_realm/world/scenario_runner.gd",
+   "tools/story_emotes_from_web.mjs",
+   "tools/probe_talk_portrait.gd",
+   "tools/shot_talk_portrait.gd"
+  ],
+  "tests": [
+   "talk_portrait",
+   "scenario_story",
+   "scenario_realm",
+   "scenario_dungeon",
+   "scenario_forest"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0220",
+  "since": "2026-10-13",
+  "note": "코드 끝 — 그림은 자체툴 고돗 배치 전(놓인 주역 0/23, 그동안 지금 모양). 촬영 st_talk_portrait 가로·세로 ○(웹 초상을 user:// 에 베껴). 놓이면 실제 그림으로 다시 찍어 D2"
+ },
+ {
   "id": "gd.dg.meridian",
   "name": "2나락 경락도(經絡圖) — 409마디 패시브 그물을 직업(쥔 무기)마다·시작점 여섯 · 점수 = 첫 별 + 그 직업 무예 점수 누계 + 보스 처치(상한 60) · 능력치 합은 _sum_eff·저항 · 규칙 열(기력·회피 없는 자리는 재해석) · 무예 창 「☯ 경락도」·F2(웹 W-0180)",
   "files": [

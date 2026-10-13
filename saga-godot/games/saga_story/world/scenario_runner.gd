@@ -101,9 +101,16 @@ func open_talk() -> void:
 	var mentor := _mentor_name()
 	var nxt := StoryCombat.job_next(StorySaveState.job)
 	var mentor_next := String(StoryCombat.mentor_of(nxt).get("name", "")) if nxt != "" else mentor
+	## G-0220 초상 — 스승은 도감 id, 감정은 웹 대사(story_emotes.json)
+	var mentor_id := String(StoryCombat.mentor_of(StorySaveState.job).get("id", "")) if mentor != "" else ""
+	var mentor_next_id := String(StoryCombat.mentor_of(nxt).get("id", "")) if nxt != "" else mentor_id
 	var lines: Array = []
+	var idx := 0
 	for l: Array in Scenario.lines_of(scene):
-		lines.append([Scenario.speaker(String(l[0]), mentor_next if String(l[0]) == "mentor+" else mentor), String(l[1])])
+		var who := String(l[0])
+		var pid := mentor_next_id if who == "mentor+" else (mentor_id if who == "mentor" else "")
+		lines.append([Scenario.speaker(who, mentor_next if who == "mentor+" else mentor), String(l[1]), {"id": pid, "emote": Scenario.emote_at(scene, idx, String(l[1]))}])
+		idx += 1
 	var ch := Scenario.chapter(st)
 	_talk_scene = scene
 	_layer = TalkBox.open(get_parent(), "📜 %d부 %d장 · %s" % [Scenario.part(ch), int(ch.get("no", 0)), String(ch.get("title", ""))], lines, _on_talk_done,

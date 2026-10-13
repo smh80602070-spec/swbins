@@ -16,6 +16,8 @@ const Toast := preload("res://saga_core/ui/toast.gd")
 const TalkBox := preload("res://saga_core/ui/talk_box.gd")
 
 const CHECK_SEC := 0.3
+## G-0220 대화 초상 — 대사 화자 → 도감 id(초상이 놓인 사람만 뜬다)
+const PORTRAIT := {"mukhyang": "hl_mukhyang"}
 const RESCUE_RADIUS := 1.8
 
 var st: Dictionary = {}
@@ -238,7 +240,7 @@ func open_talk() -> void:
 		return
 	var lines: Array = []
 	for l: Array in Scenario.SCENES.get(scene, []):
-		lines.append([Scenario.speaker(String(l[0])), String(l[1])])
+		lines.append([Scenario.speaker(String(l[0])), String(l[1]), {"id": String(PORTRAIT.get(String(l[0]), ""))}])   # G-0220 초상
 	var ch := Scenario.chapter(st)
 	var choice := {}
 	if Scenario.CHOICES.has(scene):
