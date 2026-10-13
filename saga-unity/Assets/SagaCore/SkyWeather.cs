@@ -155,6 +155,7 @@ namespace Saga.Core
             var go = new GameObject("SkyWeather");
             var sw = go.AddComponent<SkyWeather>();
             sw._cam = cam;
+            if (cam != null) go.transform.position = cam.transform.position;   // U-0117 미리 채운 눈(월드 좌표)이 원점 말고 카메라 둘레에 생기게
             Instance = sw; // 편집 모드(배치 진단)는 Awake 가 안 돌아 여기서도 적는다
             sw.Build();
             sw.Refresh();
@@ -291,14 +292,19 @@ namespace Saga.Core
                     float a = Mathf.Clamp01(w.CloudAlpha * (1f - 0.12f * i));
                     _layerMats[i].color = new Color(tod.r, tod.g, tod.b, a);
                 }
-            SetRate(_rain, w.Rain); SetRate(_snow, w.Snow); SetRate(_fog, w.Fog);
+            SetRate(_rain, w.Rain); SetRate(_snow, w.Snow, true); SetRate(_fog, w.Fog);
             ApplyFog(w, season);
         }
 
-        private static void SetRate(ParticleSystem ps, float rate)
+        /// <param name="fill">U-0117 — 0 에서 켜질 때 수명만큼 미리 돌려 채운다. 눈은 카메라 위 6m 에서 초당 1.8m 로 내려 빈 하늘에서 시작하면
+        /// 화면에 닿기까지 3~5초가 걸린다(촬영 로그: 4종횡 첫 장 입자 699 · 1만리 2006, 안정 4000 — 4종횡은 200fps 라 첫 장까지 1.7초뿐).</param>
+        private static void SetRate(ParticleSystem ps, float rate, bool fill = false)
         {
             if (ps == null) return;
-            var em = ps.emission; em.rateOverTime = rate;
+            var em = ps.emission;
+            bool wasOff = em.rateOverTime.constant <= 0f;
+            em.rateOverTime = rate;
+            if (fill && wasOff && rate > 0f) { ps.Simulate(ps.main.startLifetime.constantMax, true, true); ps.Play(); }
         }
 
         /// <summary>시간대별 구름 색(새벽·노을은 붉게, 밤은 어둡게).</summary>

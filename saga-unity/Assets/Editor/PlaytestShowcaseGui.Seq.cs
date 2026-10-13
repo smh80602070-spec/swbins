@@ -14,7 +14,7 @@ namespace Saga.EditorTools
     /// `walk`(가상 조이스틱 앞으로) · `attack`(사가만리 FieldCombat.Attack / 사가나락 PlayerCombat.TriggerAttack) · `swap`(다음 동료로 교체) ·
     /// `skill:<n>`(n 번 동료로 교체 뒤 Skill) · `roof`(마을집 지붕 남쪽에서 북으로 걷기) · `bossintro`(사가나락 = 진단의 두목 더미, 사가종횡 = 두목 6m 앞으로) ·
     /// `bossroom`(U-0115 사가나락 — 러너가 진짜 두목 방을 짓고 주인공을 두목 9m 밖에 세워 걸려 들어가게, 8m 달려듦·컷은 게임이 연다) ·
-    /// `gesture`(동료 환호) · `worldmap`(사가천하 지도 열기) · `party`·`party2`(모양별 동료 편성 — 스킬 진단과 같은 동료). `realmeras`(U-0091 사가천하 — 시간 틈 사람 묻힌 성 들여 수색·훈련·지도 켬) · `realmtactics`(U-0099 전술판 열고 첫 장수 고름) · `realmannals`(U-0101 열전 넷 심고 서고) · `realmzoom`(U-0102 지도 40m) · `hurt`(U-0105 2나락·4종횡 — 체력 35% 에서 한 대 → 첫 장 가장자리 번쩍·붉은 숫자, 끝 장 30% 밑 맥박). 대상 `screen` = 화면 그대로 첫·끝 장(오버레이 UI 포함). 판에 없는 동작은 로그에 SKIP. 여러 개는 `+` 로(`walk+attack`).
+    /// `gesture`(동료 환호) · `worldmap`(사가천하 지도 열기) · `party`·`party2`(모양별 동료 편성 — 스킬 진단과 같은 동료). `realmeras`(U-0091 사가천하 — 시간 틈 사람 묻힌 성 들여 수색·훈련·지도 켬) · `realmtactics`(U-0099 전술판 열고 첫 장수 고름) · `realmannals`(U-0101 열전 넷 심고 서고) · `realmzoom`(U-0102 지도 40m) · `hurt`(U-0105 2나락·4종횡 — 체력 35% 에서 한 대 → 첫 장 가장자리 번쩍·붉은 숫자, 끝 장 30% 밑 맥박) · `weatherprobe`(U-0117 — 장마다 날씨 입자 상태 한 줄 로그: 카메라·뿌리 위치·눈 입자 수/방출·보임·레이어·timeScale). 대상 `screen` = 화면 그대로 첫·끝 장(오버레이 UI 포함). 판에 없는 동작은 로그에 SKIP. 여러 개는 `+` 로(`walk+attack`).
     /// </summary>
     public static partial class PlaytestShowcaseGui
     {
@@ -23,6 +23,7 @@ namespace Saga.EditorTools
         private static List<(string name, Transform target)> _seqTargets;
         private static List<List<Texture2D>> _seqFrames;
         private static bool _seqWalk;
+        private static bool _wxProbe;   // U-0117 weatherprobe — 장마다 WeatherProbe() 한 줄
         private static bool _seqScreen;   // U-0091 `screen` 대상 — 화면 그대로(ScreenCapture, 오버레이 UI 포함)
         private static bool _kitsWas, _kitsSet;
         private static int _skillRetry = -1, _skillTries;   // U-0090 순간이동 직후엔 공중이라 Skill() 이 거절(-1) — 땅에 설 때까지 다시 쓰고 그 뒤에 찍는다   // U-0090 party 동작이 켠 GoKits.OffForTest — 시트를 다 쓰면 되돌린다
@@ -40,7 +41,7 @@ namespace Saga.EditorTools
 
         private static void SeqBegin()
         {
-            _seqWalk = false;
+            _seqWalk = false; _wxProbe = false;
             // 1만리 주인공은 물가(강물 속)에서 시작한다 — 지붕 말고는 진단과 같은 안전한 땅(FieldCombat.SafePoint)으로 옮겨 놓고 시작
             var acts = System.Environment.GetEnvironmentVariable("SAGA_SHOT_ACT") ?? "";
             var gofc = Saga.Go.Combat.FieldCombat.Instance;
@@ -84,6 +85,7 @@ namespace Saga.EditorTools
                 _seqNextAt = _frame + 1;
             }
             if (_frame < _seqNextAt) return false;
+            if (_wxProbe) WeatherProbe();
             var main = Camera.main;
             for (int i = 0; i < _seqTargets.Count; i++)
             {
@@ -326,11 +328,30 @@ namespace Saga.EditorTools
                         }
                         else { Skip(act); return; }
                         break;
+                    case "weatherprobe": _wxProbe = true; WeatherProbe(); break;   // U-0117 4종횡 눈 안 보임 — 촬영 프로세스 안에서 입자 상태를 숫자로
                     default: Skip(act); return;
                 }
                 Debug.Log($"[ShowcaseGui] act {act}");
             }
             catch (System.Exception e) { Debug.Log($"[ShowcaseGui] act {act} SKIP — {e.GetType().Name}: {e.Message}"); }
+        }
+
+        /// <summary>U-0117 — 날씨 입자 상태 한 줄(게임 코드에 공개 칸 안 만듦: SkyWeather.Instance 아래 `Fx_Snow` 를 이름으로).</summary>
+        private static void WeatherProbe()
+        {
+            var m = Camera.main; var gc = GameCam();
+            string cam = m == null ? "null" : $"{m.name}@{m.transform.position:F1} on={m.isActiveAndEnabled} near={m.nearClipPlane:F2} far={m.farClipPlane:F0}";
+            string g = gc == null ? "null" : gc == m ? "=main" : $"{gc.name}@{gc.transform.position:F1}";
+            var sw = Saga.Core.SkyWeather.Instance;
+            if (sw == null) { Debug.Log($"[ShowcaseGui] weatherprobe cam={cam} gc={g} root=null ts={Time.timeScale:F2}"); return; }
+            var st = sw.transform.Find("Fx_Snow");
+            var ps = st != null ? st.GetComponent<ParticleSystem>() : null;
+            var r = st != null ? st.GetComponent<ParticleSystemRenderer>() : null;
+            int layer = st != null ? st.gameObject.layer : -1;
+            bool inMask = m != null && layer >= 0 && (m.cullingMask & (1 << layer)) != 0;
+            string snow = ps == null ? "null" : $"{ps.particleCount}/{sw.SnowRate:F0} play={ps.isPlaying} act={st.gameObject.activeInHierarchy} at={st.position:F1}";
+            string vis = r == null ? "null" : $"{r.isVisible} en={r.enabled} b={r.bounds.center:F1}~{r.bounds.size:F1}";
+            Debug.Log($"[ShowcaseGui] weatherprobe cam={cam} gc={g} root={sw.transform.position:F1} kind={sw.Kind} snow={snow} vis={vis} layer={layer}∈mask={inMask} ts={Time.timeScale:F2} dt={Time.deltaTime:F3} sky={(m != null ? m.clearFlags.ToString() : "-")}");
         }
 
         /// <summary>U-0090 — n 번 동료로 스킬. 결과·모양·만든 효과 수를 로그(거절이면 이유 칸도).</summary>
