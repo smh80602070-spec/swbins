@@ -96,20 +96,34 @@
     var c = hsl((slot - 1) / TINT_N, 0.55, Math.min(0.62, 0.14 + L * 1.05));
     return [Math.round(r + (c[0] * 255 - r) * w), Math.round(g + (c[1] * 255 - g) * w), Math.round(b + (c[2] * 255 - b) * w)];
   }
-  /** RGBA 화소 배열을 제자리에서 바꾼다 — 바뀐 화소 수 */
-  function tintData(d, slot, k) {
-    var n = 0, i, p;
+  /** 세로 무게(W-0195) — 순수. 몸(위 끝 top ~ 아래 끝 bot, 칸 안 행)에서 머리(위 HEAD)·허리(WAIST) 아래는 low, 그 사이 윗옷만 1, 경계는 BAND 만큼 부드럽게.
+   *  옷 색 칸이 머리카락·윗옷·하의·신발을 다 같은 색으로 칠해 온몸이 한 빛 실루엣이 되던 것(방문객 회색 원피스 + 올리브 레깅스 → 보라 한 빛) — 윗옷만 칸 색 */
+  var HEAD = 0.16, WAIST = 0.45, BAND = 0.08;
+  function tintRowW(y, top, bot, low) {
+    if (!(bot > top) || low === undefined || low === null || low >= 1) { return 1; }
+    var t = (y - top) / (bot - top), h = HEAD - BAND / 2, a = WAIST - BAND / 2;
+    if (t <= h) { return low; }
+    if (t < h + BAND) { return low + (1 - low) * (t - h) / BAND; }
+    return t <= a ? 1 : t >= a + BAND ? low : 1 + (low - 1) * (t - a) / BAND;
+  }
+  /** RGBA 화소 배열을 제자리에서 바꾼다 — 바뀐 화소 수. P(칸 폭)·low 를 주면 세로 무게(몸 위·아래 끝은 알파로 잰다) */
+  function tintData(d, slot, k, P, low) {
+    var n = 0, i, p, top = -1, bot = -1, row, wy = 1, lastRow = -1;
+    if (P > 0 && low !== undefined && low < 1) {
+      for (i = 3; i < d.length; i += 4) { if (d[i] >= 8) { row = Math.floor((i >> 2) / P); if (top < 0) { top = row; } bot = row; } }
+    }
     for (i = 0; i < d.length; i += 4) {
       if (d[i + 3] < 8) { continue; }
-      p = tintPx(d[i], d[i + 1], d[i + 2], slot, k);
+      if (top >= 0) { row = Math.floor((i >> 2) / P); if (row !== lastRow) { wy = tintRowW(row, top, bot, low); lastRow = row; } }
+      p = tintPx(d[i], d[i + 1], d[i + 2], slot, (k === undefined ? 1 : k) * wy);
       if (p[0] !== d[i] || p[1] !== d[i + 1] || p[2] !== d[i + 2]) { d[i] = p[0]; d[i + 1] = p[1]; d[i + 2] = p[2]; n++; }
     }
     return n;
   }
   var tints = {}, tintPxSum = 0, TINT_CAP = 12e6;   // 칸 캐시 — 화소 합이 상한(≈48MB)을 넘으면 비우고 다시 칠한다
   /** 시트 한 칸(sx, sy, P)을 칸 색으로 칠한 캔버스 — 못 하면(캔버스 없음·읽기 막힘) null → 원본 그대로 */
-  function tintCell(e, key, sx, sy, P, slot, k) {
-    var ck = key + '~' + slot + '@' + k + '|' + sx + ',' + sy, c = tints[ck];
+  function tintCell(e, key, sx, sy, P, slot, k, low) {
+    var ck = key + '~' + slot + '@' + k + '/' + low + '|' + sx + ',' + sy, c = tints[ck];
     if (c !== undefined) { return c; }
     if (tintPxSum > TINT_CAP) { tints = {}; tintPxSum = 0; }
     c = null;
@@ -120,7 +134,7 @@
         var g = cv.getContext('2d');
         g.drawImage(e.img, sx, sy, P, P, 0, 0, P, P);
         var im = g.getImageData(0, 0, P, P);
-        tintData(im.data, slot, k);
+        tintData(im.data, slot, k, P, low);
         g.putImageData(im, 0, 0);
         c = cv; tintPxSum += P * P;
       }
@@ -261,7 +275,8 @@
     ctx.imageSmoothingEnabled = true;
     if (d.flip) { ctx.translate(o.x, 0); ctx.scale(-1, 1); ctx.translate(-o.x, 0); }
     var slot = tintOf(o.pool), Co = global.DG && global.DG.core, tk = slot && Co && Co.tuned ? Math.min(1, Math.max(0, +Co.tuned('mode2d.borrowTint', 1))) : 1;
-    var cell = slot && tk > 0 ? tintCell(e, bare(o.pool) + '/' + role + (eight ? '#8' : ''), f * P, d.row * P, P, slot, tk) : null;
+    var tl = slot && Co && Co.tuned ? Math.min(1, Math.max(0, +Co.tuned('mode2d.borrowTintLow', 0.25))) : 1;   // W-0195 허리 아래 세기(1 = 옛 온몸)
+    var cell = slot && tk > 0 ? tintCell(e, bare(o.pool) + '/' + role + (eight ? '#8' : ''), f * P, d.row * P, P, slot, tk, tl) : null;
     if (cell) { ctx.drawImage(cell, 0, 0, P, P, o.x - w / 2, o.y - h * foot, w, h); }
     else { ctx.drawImage(e.img, f * P, d.row * P, P, P, o.x - w / 2, o.y - h * foot, w, h); }
     ctx.restore();
@@ -501,7 +516,7 @@
     tileOk: function (id) { var t = tiles[id]; return t ? t.ok : null; },
     FRAMES: FRAMES, PX: PX, FPS: FPS,
     isOn: isOn, pick: pick, vroidPick: vroidPick, face: face, actT: actT, actInfo: actInfo, dirOf8: dirOf8, roleOf: roleOf, roleKey: roleKey, townRole: townRole, sheet8: sheet8, beastOf: beastOf, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
-    draw: draw, preload: preload, loadIndex: loadIndex, tintSlot: tintSlot, tintPx: tintPx, tintData: tintData, tintOf: tintOf, bare: bare,
+    draw: draw, preload: preload, loadIndex: loadIndex, tintSlot: tintSlot, tintPx: tintPx, tintData: tintData, tintRowW: tintRowW, tintOf: tintOf, bare: bare,
     drawStill: drawStill, stillPose: stillPose, isStill: isStill,
     stillLoaded: function (pool, view) { var e = stills[pool + '/' + view]; return e ? e.ok : null; },
     /** 진단용 — 그 풀·동작 이미지를 받았나(true/false), 아직 안 불렀으면 null */

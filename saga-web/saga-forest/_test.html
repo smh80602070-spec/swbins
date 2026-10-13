@@ -161,6 +161,14 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       var r = [n === 1, d === 0, e >= 0 && e <= 1, off === 0];
       return r.every(Boolean) && ('밤 ' + n + ' · 낮 ' + d + ' · 19시 ' + e) || '실패 ' + [n, d, e, off].join(',');
     });
+    t('빌린 몸 옷 색 세로 무게(W-0195) — 머리·허리 아래는 low(0.25)만, 윗옷만 칸 색 · low 1 이면 옛 온몸 · 몸 위·아래 끝은 알파로 잼', function () {
+      var M = DG.mode2d, w = M.tintRowW, a = w(0, 0, 100, 0.25) === 0.25 && w(30, 0, 100, 0.25) === 1 && w(100, 0, 100, 0.25) === 0.25 && w(45, 0, 100, 0.25) < 1 && w(45, 0, 100, 0.25) > 0.25 && w(90, 0, 100, 1) === 1 && w(5, 3, 3, 0.25) === 1;
+      function col(low) { var d = new Uint8ClampedArray(2 * 20 * 4), i; for (i = 0; i < d.length; i += 4) { var row = Math.floor((i >> 2) / 2); d[i] = d[i + 1] = d[i + 2] = 90; d[i + 3] = row < 2 || row > 17 ? 0 : 255; } M.tintData(d, 9, 1, 2, low); return d; }
+      var nw = col(0.25), od = col(1), top = 4 * 2 * 7, bot = 4 * 2 * 16, dTop = Math.abs(nw[top] - 90) + Math.abs(nw[top + 2] - 90), dBot = Math.abs(nw[bot] - 90) + Math.abs(nw[bot + 2] - 90), oBot = Math.abs(od[bot] - 90) + Math.abs(od[bot + 2] - 90);
+      var b = dTop > 40 && dBot < dTop * 0.5 && oBot > dBot && nw[0 + 3] === 0;
+      return a && b ? '허리 위 바뀜 ' + dTop + ' · 아래 ' + dBot + '(옛 ' + oBot + ')' : '실패 ' + [a, dTop, dBot, oBot].join(' ');
+    });
+
     t('2D 나의 몸(W-0190) — 나는 차림 꼬리(#coat/head/dye/cape) 없이 인물 id 로 시트를 고른다(빌린 몸·옷 색 칸으로 안 감) · 주민은 그대로 · 192 칸 인물의 마을 시트(128 칸)는 그림 폭으로 자른다', function () {
       var A2 = DG.actor2d, s1 = A2.seedOf('me', { id: 'jiao_banrok#leather/topknot/none/off' }), s2 = A2.seedOf('adult', { id: 'r1#x' }), s3 = A2.seedOf('me', null, null);
       var M = DG.mode2d, A = DG.assets3d, live = !!(A && A.state && A.state() === 'ok' && A.has('hero', 'jiao_banrok')), p = live ? M.pick('me', s1) : 'vroid:jiao_banrok';
