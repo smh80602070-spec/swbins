@@ -237,13 +237,39 @@ namespace Saga.Core
                 col.color = new ParticleSystem.MinMaxGradient(g);
             }
             var r = go.GetComponent<ParticleSystemRenderer>();
-            r.sharedMaterial = new Material(Shader.Find("Sprites/Default")) { name = "Weather " + name + " (generated)", mainTexture = tex };
+            r.sharedMaterial = (name == "FogPuff" ? SoftPuffMaterial(tex) : null) ?? new Material(Shader.Find("Sprites/Default")) { name = "Weather " + name + " (generated)", mainTexture = tex };
             r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             r.receiveShadows = false;
             if (stretch) { r.renderMode = ParticleSystemRenderMode.Stretch; r.lengthScale = 8f; r.velocityScale = 0.02f; }
             else r.renderMode = ParticleSystemRenderMode.Billboard;
             ps.Play();
             return ps;
+        }
+
+        /// <summary>U-0119 — 안개 덩이만 URP 소프트 파티클(`Particles/Unlit`, 투명 알파 블렌드, 정점색 곱). `Sprites/Default` 는 깊이를 안 봐
+        /// 18~28m 판이 땅을 뚫는 자리가 둥근 선으로 잘렸다(U-0118 3마을). 깊이 텍스처는 URP 자산이 이미 켬(`m_RequireDepthTexture: 1`).
+        /// 판 픽셀과 그 뒤 땅의 거리가 0→SoftFarFade m 사이면 알파가 0→1 로 오른다. 셰이더가 없으면 null(호출부가 `Sprites/Default`).</summary>
+        public const float SoftFarFade = 3f;
+        private static Material SoftPuffMaterial(Texture2D tex)
+        {
+            var sh = Shader.Find("Universal Render Pipeline/Particles/Unlit");
+            if (sh == null) { Debug.LogWarning("[SkyWeather] URP Particles/Unlit 없음 — 안개 덩이는 Sprites/Default(땅 닿는 선 생김)"); return null; }
+            var m = new Material(sh) { name = "Weather FogPuff soft (generated)" };
+            m.SetTexture("_BaseMap", tex); m.mainTexture = tex;
+            m.SetColor("_BaseColor", Color.white);
+            m.SetFloat("_Surface", 1f); m.SetFloat("_Blend", 0f); m.SetFloat("_ColorMode", 0f); m.SetFloat("_Cull", 0f); m.SetFloat("_AlphaClip", 0f);
+            m.SetFloat("_SrcBlend", (float)UnityEngine.Rendering.BlendMode.SrcAlpha); m.SetFloat("_DstBlend", (float)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            m.SetFloat("_SrcBlendAlpha", (float)UnityEngine.Rendering.BlendMode.One); m.SetFloat("_DstBlendAlpha", (float)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            m.SetFloat("_ZWrite", 0f);
+            m.SetOverrideTag("RenderType", "Transparent");
+            m.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            m.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+            m.SetFloat("_SoftParticlesEnabled", 1f);
+            m.SetFloat("_SoftParticlesNearFadeDistance", 0f); m.SetFloat("_SoftParticlesFarFadeDistance", SoftFarFade);
+            m.SetVector("_SoftParticleFadeParams", new Vector4(0f, 1f / SoftFarFade, 0f, 0f));   // URP ParticleGUI 와 같은 꼴(x near, y 1/(far-near))
+            m.EnableKeyword("_SOFTPARTICLES_ON");
+            m.SetFloat("_CameraFadingEnabled", 0f);   // 카메라 가까이 페이드(_FADING_ON)는 안 씀 — 소프트 계산은 _SOFTPARTICLES_ON 만으로 돈다
+            return m;
         }
 
         /// <summary>열린 원통(위아래 뚜껑 없음) — u 는 둘레를 uRepeat 번 감는다. 재질이 양면이라 안쪽에서 보인다.</summary>
