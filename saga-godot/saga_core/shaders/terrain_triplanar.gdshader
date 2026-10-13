@@ -154,6 +154,19 @@ void fragment() {
 	detail_albedo = mix(detail_albedo, vec3(dot(detail_albedo, vec3(0.3, 0.59, 0.11)) * 1.55), hue_desat * (1.0 - stone_w) * (1.0 - smoothstep(4.0, 8.0, world_pos.y)));
 	vec3 detail_normal = normalize(grass_n * grass_w + dirt_n * dirt_w + stone_n * stone_w);
 	float detail_rough = (grass_r * grass_w + dirt_r * dirt_w + stone_r * stone_w) / wsum;
+	// G-0226 — 가파른 면(절벽·절벽 위 바위)은 바위 결을 크게 한 번 더(약 11m 반복) 읽어 섞는다 — 한 장 2.5m 결은 멀리서 밉맵으로 뭉개져
+	// 회색 다면체 판으로 보였다(10-13 점검 v_cliff_close). 법선도 큰 결을 더해 삼각형마다 평평한 면이 덜 보이게. 평지는 steep_d 0 이라 그대로.
+	float steep_d = smoothstep(0.45, 0.8, slope);
+	if (steep_d > 0.01) {
+		float big_scale = tile_scale * 0.22;
+		vec3 rock_big = _triplanar(stone_albedo, world_pos, world_normal, big_scale).rgb * pow(stone_gain, vec3(1.0 - photo_color));
+		vec3 n_big = _triplanar(stone_normal, world_pos, world_normal, big_scale).rgb * 2.0 - 1.0;
+		vec3 rock_mix = mix(stone_a, rock_big, 0.55);
+		float rl = dot(rock_mix, vec3(0.333));
+		rock_mix = max(rock_mix * (1.0 + (rl - 0.45) * 0.6 / max(rl, 0.05)), vec3(0.0));   // 결 명암 대비를 키운다(밝은 결은 더 밝게·어두운 틈은 더 어둡게)
+		detail_albedo = mix(detail_albedo, rock_mix, steep_d);
+		detail_normal = normalize(mix(detail_normal, normalize(stone_n * 0.8 + n_big * 2.4), steep_d));
+	}
 
 	// 2026-09-30 — 봉우리 굴곡(칸 윗면)의 가파른 비탈은 아래 절벽 무늬(판·틈)는 받는데 빛깔은 산 윗면 풀빛 정점색 그대로라,
 	// 절벽 사이사이 연두빛 반투명 조각으로 보였다(창 모드 s_port). 가파를수록 절벽 빛깔(terrain_builder CLIFF_COLOR 와 같은 값)로.
@@ -184,9 +197,9 @@ void fragment() {
 		float crack = 1.0 - smoothstep(cw, cw * 2.2, vc.y - vc.x);
 		// 틈은 절반쯤만 — 나머지 경계는 면 기울기 차이로만 갈린다.
 		crack *= smoothstep(0.35, 0.65, _value_noise(fp * 0.18 + vec2(vc.z * 5.0, 0.0)));
-		float slab = mix(0.72, 1.12, vc.z);
+		float slab = mix(0.84, 1.08, vc.z);   // G-0226 — 판 밝기 폭을 줄여 사진 결이 앞서게(0.72~1.12 는 판마다 단색 패널로 읽혔다)
 		vec3 slab_tint = mix(vec3(1.06, 0.97, 0.86), vec3(0.9, 0.95, 1.02), fract(vc.z * 7.3));
-		ALBEDO = mix(ALBEDO, ALBEDO * 0.88 * slab * slab_tint * (1.0 - crack * 0.65), cliff);
+		ALBEDO = mix(ALBEDO, ALBEDO * 0.92 * slab * slab_tint * (1.0 - crack * 0.45), cliff);
 		vec3 tilt = vec3(fract(vc.z * 13.1) - 0.5, fract(vc.z * 5.7) * 0.8 - 0.25, fract(vc.z * 29.3) - 0.5) * 1.2;
 		NORMAL = normalize(NORMAL + (VIEW_MATRIX * vec4(tilt, 0.0)).xyz * cliff);
 	}
@@ -201,7 +214,8 @@ void fragment() {
 	float moss = cliff * smoothstep(0.55, 0.72, mpatch + ny * 0.12) * mix(0.1, 1.0, ledge);
 	ALBEDO = mix(ALBEDO, vec3(0.16, 0.27, 0.1) * (0.85 + 0.3 * n1), moss * 0.6);
 	// G-0143 — 멀수록 법선 결을 줄인다(밉맵으로 뭉개진 법선이 멀리서 반짝이는 잡음이 됐다).
-	NORMAL_MAP = mix(vec3(0.0, 0.0, 1.0), detail_normal, 1.0 - smoothstep(25.0, 90.0, cam_dist) * 0.7) * 0.5 + 0.5;
+	// G-0226 — 절벽은 큰 결 법선이라 멀리서도 덜 반짝인다 → 거리로 덜 줄인다
+	NORMAL_MAP = mix(vec3(0.0, 0.0, 1.0), detail_normal, 1.0 - smoothstep(25.0, 90.0, cam_dist) * 0.7 * (1.0 - steep_d * 0.6)) * 0.5 + 0.5;
 	ROUGHNESS = detail_rough;
 	// 모래 표시 — 풀 텍스처 대신 모래색에 흙결만 옅게(평평한 모래밭).
 	// 정점색은 sRGB 로 적은 값이라(풀·흙은 어두운 텍스처와 곱해져 맞았다) 그대로 칠하는 모래는 선형으로 — 안 그러면 한 단 허옇게 뜬다.
