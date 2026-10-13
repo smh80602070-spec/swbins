@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-13",
+  "tickets": [
+    "U-0117 4종횡 눈 입자 안 보이는 원인 — weatherprobe 로 가려 SkyWeather 그 자리만 + 3마을 눈 다시 찍기"
+  ],
+  "how": "ShowcaseGui GUI 촬영(gamecam;screen, SEQ=4,30, SAGA_WEATHER=snow, SAGA_SHOT_HOUR=12, SAGA_SHOT_ACT=weatherprobe) 4종횡·1만리 비교 → 고친 뒤 4종횡 1판·3마을 1판, 세이브 다섯 치운 채 · Claude 눈",
+  "probe": {
+    "4종횡 고치기 전": "cam=StoryCamera, 뿌리 같은 자리, vis=True, layer0∈mask, ts=1 — 입자 699/안정 4000(아래 끝 y2.5, 카메라 y2.7), dt 0.005(200fps — 첫 장까지 약 1.7초)",
+    "1만리 비교": "입자 2006, dt 0.02(첫 장까지 약 5초)",
+    "4종횡 고친 뒤": "첫 장부터 4000/400, 입자 높이 -10~9",
+    "3마을": "4000/400, 카메라 y13.3, 입자 높이 0.8~19.8"
+  },
+  "cause": "카메라·시간·레이어 아님 — 눈이 빈 하늘(카메라 위 6m)에서 시작해 초당 1.8m 로 내려와 화면 가운데까지 3~5초, 4종횡은 프레임이 빨라 그 전에 찍힘(PNG: 위 구석 몇 점뿐)",
+  "fix": "SagaCore/SkyWeather.cs — 눈 방출이 0→켜질 때 수명만큼 Simulate 로 미리 채움 · Install 때 날씨 뿌리를 카메라 자리에(미리 채운 월드 좌표 입자가 원점에 생기지 않게)",
+  "scene": [
+    "[PlaytestSkyWeather] OK",
+    "[PlaytestHeadless] OK - 10 frames, no errors",
+    "[PlaytestStorySlice] OK - killed 10 grunts + boss"
+  ],
+  "runtime_errors": 0,
+  "shots": "세션 scratchpad u0117_* — 커밋 안 함",
+  "results": [
+    { "id": "un.go.sky-weather", "scene": "4종횡 TestField", "snow": "× → ○ (하늘·땅 화면 전체에 작은 흰 점, 칸마다 자리 바뀜, screen_1 부터)" },
+    { "id": "un.go.sky-weather", "scene": "3마을 TestVillageForest", "snow": "○ (풀밭 곳곳 흰 점, 가까운 큰 송이도, 칸마다 자리 바뀜)" }
+  ],
+  "result": "D2 유지",
+  "left": ""
+}
