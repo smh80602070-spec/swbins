@@ -161,6 +161,14 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       var r = [n === 1, d === 0, e >= 0 && e <= 1, off === 0];
       return r.every(Boolean) && ('밤 ' + n + ' · 낮 ' + d + ' · 19시 ' + e) || '실패 ' + [n, d, e, off].join(',');
     });
+    t('2D 나의 몸(W-0190) — 나는 차림 꼬리(#coat/head/dye/cape) 없이 인물 id 로 시트를 고른다(빌린 몸·옷 색 칸으로 안 감) · 주민은 그대로 · 192 칸 인물의 마을 시트(128 칸)는 그림 폭으로 자른다', function () {
+      var A2 = DG.actor2d, s1 = A2.seedOf('me', { id: 'jiao_banrok#leather/topknot/none/off' }), s2 = A2.seedOf('adult', { id: 'r1#x' }), s3 = A2.seedOf('me', null, null);
+      var M = DG.mode2d, A = DG.assets3d, live = !!(A && A.state && A.state() === 'ok' && A.has('hero', 'jiao_banrok')), p = live ? M.pick('me', s1) : 'vroid:jiao_banrok';
+      var c1 = M.cell8([192, 1.15], 1024), c2 = M.cell8([192, 1.15], 1536), c3 = M.cell8([128, 0.95], 0), cc = c1[0] === 128 && c1[1] === 0.95 && c2[0] === 192 && c2[1] === 1.15 && c3[0] === 128 && c3[1] === 0.95;
+      var ok = cc && s1 === 'jiao_banrok' && s2 === 'r1#x' && s3 === 'me' && p === 'vroid:jiao_banrok';
+      return ok ? '나 → ' + s1 + (live ? ' · 풀 ' + p : ' (시트 표 미적재 — 씨앗만)') : '실패 ' + [s1, s2, s3, p, c1, c2, c3].join(' ');
+    });
+
     t('3D⇄2D 단추(W-0189) — index 상단 줄에서 ⋯ 밖 붙박이(손쓰기 ✋ 는 ⋯ 안으로)·처음 글자 🧊3D, 3D 기본(village3d.on 1) 그대로', function () {
       var x = new XMLHttpRequest(); x.open('GET', 'index.html', false); x.send();
       var d = new DOMParser().parseFromString(x.responseText, 'text/html'), b = d.getElementById('btn-3d'), more = d.getElementById('top-more'), hand = d.getElementById('btn-do');

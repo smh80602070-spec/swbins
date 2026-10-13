@@ -175,6 +175,14 @@
   }
   /** W-0138 — 마을 맨손 시트(K-0083 ①): 8방향 시트를 가진 사람(hero2d8, 299 전부 idle_town·walk_town 있음)이 o.town 이면
    *  서기·걷기를 맨손 그림으로. 순수(진단이 본다) — 그 밖(공격·피격, 3행 시트, 짐승)은 roleOf 그대로 */
+  /** 8방향 칸 크기·카메라 높이 [P, camZ] — 순수. 표(hero2d8)는 싸움 시트 기준인데, 192 칸 인물(318/500)의 마을 시트(idle_town·walk_town)는
+   *  128 칸으로 구워져(1024×640) 192 로 자르면 몸이 칸 밖으로 밀리고 이웃 프레임이 끼거나 비었다(W-0190). 받은 그림 폭(natW)으로 고친다 */
+  var CAMZ = { 128: 0.95, 192: 1.15 };
+  function cell8(s8, natW) {
+    var P = s8[0], cz = s8[1], q = natW > 0 ? natW / FRAMES : P;
+    if (q !== P && q > 0) { cz = CAMZ[q] || cz * q / P; P = q; }
+    return [P, cz];
+  }
   function townRole(role, eight, town) { return town && eight && (role === 'idle' || role === 'walk') ? role + '_town' : role; }
   /** 이 풀·동작·마을 여부로 고를 시트 열쇠(받기 전 판단, 진단용) */
   function roleKey(pool, clip, town) { var e8 = !!sheet8(pool); return townRole(roleOf(clip, e8), e8, town); }
@@ -245,9 +253,9 @@
       if (!(base && base.ok)) { return false; }
       e = base; role = 'idle';
     }
-    var P = eight ? s8[0] : PX, d = eight ? dirOf8(o.dirX, o.dirY, o.facing) : dirOf(o.facing), f = (o.t !== undefined && o.t !== null) ? Math.min(FRAMES - 1, Math.max(0, Math.floor(o.t * FRAMES))) : frameAt(role, o.ms || 0);
+    var c8 = eight ? cell8(s8, e.img && e.img.naturalWidth) : null, P = eight ? c8[0] : PX, d = eight ? dirOf8(o.dirX, o.dirY, o.facing) : dirOf(o.facing), f = (o.t !== undefined && o.t !== null) ? Math.min(FRAMES - 1, Math.max(0, Math.floor(o.t * FRAMES))) : frameAt(role, o.ms || 0);
     var cf = C(), vr = (isVroid(o.pool) || cr) && cf.vroid2d, ph = vr ? (vr.h || 85) : (cf.poolH || {})[o.pool], sc = (ph ? (cf.targetH || 62) / ph : (cf.scale || 1)) * (o.scale || 1) * (cr ? cr.k : 1), w = P * sc, h = P * sc;   // 몬스터는 사람 시트 배율 × 찍은 폭 비(W-0129)
-    var foot = cr ? cr.foot : eight ? (P / 2 + s8[1] * PPM + 1.5) / P : ((vr && vr.foot) || cf.foot || 0.87);   // 8방향 칸: 가운데 + 카메라 높이(실측 114/128·156/192 와 ±1px)
+    var foot = cr ? cr.foot : eight ? (P / 2 + c8[1] * PPM + 1.5) / P : ((vr && vr.foot) || cf.foot || 0.87);   // 8방향 칸: 가운데 + 카메라 높이(실측 114/128·156/192 와 ±1px)
     ctx.save();
     if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
     ctx.imageSmoothingEnabled = true;
@@ -482,7 +490,7 @@
 
   global.DG = global.DG || {};
   global.DG.mode2d = {
-    isCrea: isCrea, creaPool: creaPool, creaFit: creaFit,   // W-0129 몬스터 2D 시트
+    isCrea: isCrea, creaPool: creaPool, creaFit: creaFit, cell8: cell8,   // W-0129 몬스터 2D 시트
     drawSprite: drawSprite, drawKind: drawKind, hasKind: hasKind, spriteReady: function (id) { return !!spriteOf(id); },
     fillIso: fillIso,
     interiorUrls: interiorUrls,

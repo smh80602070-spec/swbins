@@ -7,11 +7,18 @@
 (function (global) {
   'use strict';
 
+  /** 풀 고르는 씨앗 — 순수. 나(me)의 ref.id 는 '<인물>#<차림>'(wear.sig — 옛 스탬프 캐시 열쇠)라 그대로 넘기면 제 시트를 못 찾고
+   *  빌린 몸 + 옷 색 칸으로 갔다(W-0190: 주인공이 한 색 실루엣). 3D(village-view3d buildPlayer)처럼 인물 id 로 고른다 */
+  function seedOf(role, ref, key) {
+    var id = (ref && (ref.id || ref.name)) || key || role;
+    return role === 'me' ? String(id).split('#')[0] || role : id;
+  }
+
   /** role = 'adult'|'kid'|'me', ref = 도감 인물({id}), (x,y) = 발 밑 가운데, s = 스탬프 배율(몸 높이 ≈ 40·s px), o = { facing, moving, phase, now } */
   function draw(ctx, role, ref, key, x, y, s, o) {
     var M = global.DG.mode2d;
     if (!M) { return false; }
-    var pool = M.pick(role, (ref && (ref.id || ref.name)) || key || role);
+    var pool = M.pick(role, seedOf(role, ref, key));
     if (!pool) { return false; }
     o = o || {};
     var tH = (global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.targetH) || 40;
@@ -19,5 +26,5 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.actor2d = { draw: draw };
+  global.DG.actor2d = { draw: draw, seedOf: seedOf };
 })(window);
