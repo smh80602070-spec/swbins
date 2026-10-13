@@ -1,0 +1,14 @@
+{
+ "grass": "grass_v01.png",
+ "dirt": "dirt_v01.png",
+ "gravel": "gravel_v01.png",
+ "rock": "rock_v02.png",
+ "sand": "sand_v01.png",
+ "snow": "snow_v04.png",
+ "stonewall": "stonewall_v03.png",
+ "planks": "planks_v02.png",
+ "plaster": "plaster_v01.png",
+ "rooftile": "rooftile_v02.png",
+ "rust": "rust_v01.png",
+ "paving": "paving_v03.png"
+}

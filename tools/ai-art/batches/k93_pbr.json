@@ -1,0 +1,74 @@
+{
+ "model": "z-image-turbo",
+ "out": "k93_pbr",
+ "note": "K-0093 자체 생성 PBR 12세트 견본 — 땅 6(위에서)·소품 6(정면). 남의 사진·스캔 0. 이음매 → pbr_from_albedo.py · 1024²(2048 은 480초 넘어 중단, 1152 는 장당 4분+ — 10-13) — 경계 자르기 세트는 hi ≈ 910(늘리지 않음)",
+ "defaults": {
+  "prompt_prefix": "",
+  "width": 1024,
+  "height": 1024,
+  "variants": 4,
+  "tiling": false
+ },
+ "items": [
+  {
+   "id": "grass",
+   "seed": 93000000,
+   "prompt": "An orthographic flat scan of short green lawn grass with a little dark soil showing between the blades, camera pointing straight down at exactly 90 degrees, no perspective, no vanishing point, every element the same size from the top edge to the bottom edge. Evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Natural realistic colors, medium brightness, fine detail. Uniform repeating PBR material texture."
+  },
+  {
+   "id": "dirt",
+   "seed": 93010000,
+   "prompt": "An orthographic flat scan of packed brown earth ground with small pebbles and fine cracks, camera pointing straight down at exactly 90 degrees, no perspective, no vanishing point, every element the same size from the top edge to the bottom edge. Evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Natural realistic colors, medium brightness, fine detail. Uniform repeating PBR material texture."
+  },
+  {
+   "id": "gravel",
+   "seed": 93020000,
+   "prompt": "An orthographic flat scan of loose gray and brown gravel, small rounded stones of similar size randomly packed, camera pointing straight down at exactly 90 degrees, no perspective, no vanishing point, every element the same size from the top edge to the bottom edge. Evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Natural realistic colors, medium brightness, fine detail. Uniform repeating PBR material texture."
+  },
+  {
+   "id": "rock",
+   "seed": 93030000,
+   "prompt": "An orthographic flat scan of rough weathered gray rock surface with cracks and lichen spots, camera pointing straight down at exactly 90 degrees, no perspective, no vanishing point, every element the same size from the top edge to the bottom edge. Evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Natural realistic colors, medium brightness, fine detail. Uniform repeating PBR material texture."
+  },
+  {
+   "id": "sand",
+   "seed": 93040000,
+   "prompt": "An orthographic flat scan of fine beige beach sand with gentle ripples, camera pointing straight down at exactly 90 degrees, no perspective, no vanishing point, every element the same size from the top edge to the bottom edge. Evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Natural realistic colors, medium brightness, fine detail. Uniform repeating PBR material texture."
+  },
+  {
+   "id": "snow",
+   "seed": 93050000,
+   "prompt": "An orthographic flat scan of fresh white snow ground with soft small bumps, camera pointing straight down at exactly 90 degrees, no perspective, no vanishing point, every element the same size from the top edge to the bottom edge. Evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Natural realistic colors, medium brightness, fine detail. Uniform repeating PBR material texture."
+  },
+  {
+   "id": "stonewall",
+   "seed": 93060000,
+   "prompt": "An orthographic flat frontal scan of a rough stone masonry wall of irregular gray stones with mortar joints, camera perfectly perpendicular to the surface, no perspective, no vanishing point, every element the same size across the whole image. Evenly lit with soft diffuse light, no shadows, no objects, no border, fills the entire frame edge to edge. Natural realistic colors, medium brightness, fine detail. Uniform repeating PBR material texture."
+  },
+  {
+   "id": "planks",
+   "seed": 93070000,
+   "prompt": "An orthographic flat frontal scan of weathered wooden floor planks running vertically, parallel boards of equal width with visible grain and small gaps, camera perfectly perpendicular to the surface, no perspective, no vanishing point, every element the same size across the whole image. Evenly lit with soft diffuse light, no shadows, no objects, no border, fills the entire frame edge to edge. Natural realistic colors, medium brightness, fine detail. Uniform repeating PBR material texture."
+  },
+  {
+   "id": "plaster",
+   "seed": 93080000,
+   "prompt": "An orthographic flat frontal scan of an old off-white plaster wall with subtle stains and hairline cracks, camera perfectly perpendicular to the surface, no perspective, no vanishing point, every element the same size across the whole image. Evenly lit with soft diffuse light, no shadows, no objects, no border, fills the entire frame edge to edge. Natural realistic colors, medium brightness, fine detail. Uniform repeating PBR material texture."
+  },
+  {
+   "id": "rooftile",
+   "seed": 93090000,
+   "prompt": "An orthographic flat frontal scan of dark gray-brown clay roof tiles in regular overlapping rows, camera perfectly perpendicular to the surface, no perspective, no vanishing point, every element the same size across the whole image. Evenly lit with soft diffuse light, no shadows, no objects, no border, fills the entire frame edge to edge. Natural realistic colors, medium brightness, fine detail. Uniform repeating PBR material texture."
+  },
+  {
+   "id": "rust",
+   "seed": 93100000,
+   "prompt": "An orthographic flat frontal scan of a rusted steel plate with orange-brown corrosion and flaking paint, camera perfectly perpendicular to the surface, no perspective, no vanishing point, every element the same size across the whole image. Evenly lit with soft diffuse light, no shadows, no objects, no border, fills the entire frame edge to edge. Natural realistic colors, medium brightness, fine detail. Uniform repeating PBR material texture."
+  },
+  {
+   "id": "paving",
+   "seed": 93110000,
+   "prompt": "An orthographic flat scan of square gray concrete paving stones of equal size in a straight grid with thin joints, camera pointing straight down at exactly 90 degrees, no perspective, no vanishing point, every element the same size from the top edge to the bottom edge. Evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Natural realistic colors, medium brightness, fine detail. Uniform repeating PBR material texture."
+  }
+ ]
+}
