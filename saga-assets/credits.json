@@ -328,7 +328,7 @@
    "tool": "gen.py (ComfyUI)",
    "model": "z-image-turbo",
    "license": "Apache-2.0",
-   "count": 58,
+   "count": 72,
    "where": [
     "saga-assets/land-go",
     "saga-assets/web2d/tile",
@@ -365,14 +365,14 @@
    "tool": "gen.py (ComfyUI)",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 60,
+   "count": 170,
    "where": [
+    "saga-assets/portraits-expr",
     "saga-assets/portraits-mount",
     "saga-assets/web2d/bg",
     "saga-assets/web2d/moving/beast_big",
     "saga-assets/web2d/moving/beast_dog",
-    "saga-assets/web2d/moving/villager_b",
-    "saga-assets/world/sprite"
+    "saga-assets/web2d/moving/villager_b"
    ]
   },
   {

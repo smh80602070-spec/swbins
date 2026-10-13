@@ -1,0 +1,42 @@
+{
+ "id": "jp_musashi__sorrow_c",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, (sad:1.2), teary eyes, downcast eyes, frowning, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, wandering swordsman, calm eyes, worn clothes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+ "negative_prompt": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+ "seed": 394160184,
+ "steps": 28,
+ "cfg_scale": 5.0,
+ "sampler": "euler_ancestral/normal",
+ "size": [
+  300,
+  344
+ ],
+ "seconds": 148.2,
+ "date": "2026-10-12",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "mode": "img2img",
+ "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_musashi.png",
+ "denoise": 0.42,
+ "init_model": "animagine-xl-4.0-opt",
+ "init_model_license": "CreativeML OpenRAIL++-M",
+ "base_body": "tools/char-forge/_out/hero/hero_jp_musashi.glb",
+ "base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+ "base_inputs": [
+  "mpfb 2.0.17: base.obj · targets · rig.game_engine",
+  "ual1_standard: Unreal Engine/AL_Standard.fbx",
+  "makehuman_system_assets: young_asian_male/young_asian_male.mhmat",
+  "makehuman_system_assets: high-poly/high-poly.mhclo",
+  "makehuman_system_assets: eyebrow010/eyebrow010.mhclo",
+  "makehuman_system_assets: eyelashes03/eyelashes03.mhclo",
+  "makehuman_system_assets: teeth_base/teeth_base.mhclo",
+  "makehuman_system_assets: ponytail01/ponytail01.mhclo",
+  "makehuman_system_assets: cf_hakama_e6dfcc_4d453a/cf_hakama_e6dfcc_4d453a.mhclo",
+  "makehuman_system_assets: toigo_mj_cloth_shoes/toigo_mj_cloth_shoes.mhclo"
+ ],
+ "hero": "jp_musashi",
+ "expr": "sorrow",
+ "game": "saga-story",
+ "packed": "tools/ai-art/pack_expr_portraits.py (CARD_BOX [34, 24, 734, 827] → 300x344, 판 first)"
+}

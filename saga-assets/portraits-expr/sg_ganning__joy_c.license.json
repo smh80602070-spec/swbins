@@ -1,0 +1,42 @@
+{
+ "id": "sg_ganning__joy_c",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, (smiling:1.2), happy, bright eyes, open mouth smile, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+ "negative_prompt": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+ "seed": 3748729584,
+ "steps": 28,
+ "cfg_scale": 5.0,
+ "sampler": "euler_ancestral/normal",
+ "size": [
+  300,
+  344
+ ],
+ "seconds": 144.2,
+ "date": "2026-10-12",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "mode": "img2img",
+ "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_ganning.png",
+ "denoise": 0.42,
+ "init_model": "animagine-xl-4.0-opt",
+ "init_model_license": "CreativeML OpenRAIL++-M",
+ "base_body": "tools/char-forge/_out/hero/hero_sg_ganning.glb",
+ "base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+ "base_inputs": [
+  "mpfb 2.0.17: base.obj · targets · rig.game_engine",
+  "ual1_standard: Unreal Engine/AL_Standard.fbx",
+  "makehuman_system_assets: young_asian_male/young_asian_male.mhmat",
+  "makehuman_system_assets: high-poly/high-poly.mhclo",
+  "makehuman_system_assets: eyebrow008/eyebrow008.mhclo",
+  "makehuman_system_assets: eyelashes01/eyelashes01.mhclo",
+  "makehuman_system_assets: teeth_base/teeth_base.mhclo",
+  "makehuman_system_assets: cf_warrior_robe_823128/cf_warrior_robe_823128.mhclo",
+  "makehuman_system_assets: rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo",
+  "makehuman_system_assets: cf_sangtu_bun/cf_sangtu_bun.mhclo"
+ ],
+ "hero": "sg_ganning",
+ "expr": "joy",
+ "game": "saga-story",
+ "packed": "tools/ai-art/pack_expr_portraits.py (CARD_BOX [34, 24, 734, 827] → 300x344, 판 first)"
+}

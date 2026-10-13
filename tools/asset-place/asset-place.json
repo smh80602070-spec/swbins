@@ -672,6 +672,68 @@
    "targets": []
   },
   {
+   "id": "portraits-expr-story",
+   "src": "saga-assets/portraits-expr",
+   "include": [
+    "sg_lubu__*_c.webp",
+    "kr_gyebaek__*_c.webp",
+    "jp_musashi__*_c.webp",
+    "eu_leonidas__*_c.webp",
+    "sg_huangzhong__*_c.webp",
+    "sg_taishici__*_c.webp",
+    "jp_yoshitsune__*_c.webp",
+    "wd_genghis__*_c.webp",
+    "jp_hanzo__*_c.webp",
+    "sg_ganning__*_c.webp",
+    "jp_tomoegozen__*_c.webp",
+    "wd_shaka__*_c.webp",
+    "jp_himiko__*_c.webp",
+    "sg_zhugeliang__*_c.webp",
+    "wd_ibnsina__*_c.webp",
+    "eu_davinci__*_c.webp"
+   ],
+   "note": "K-0047 표정 초상(기쁨·분노·슬픔·놀람, 카드 300x344 _c) — 주역 cast(tools/ai-art/data/expression_plan.json)의 game 이 이 판인 16명만. 평온 = 도감 초상 그대로",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-story/assets/portraits/expr"
+    }
+   ]
+  },
+  {
+   "id": "portraits-expr-realm",
+   "src": "saga-assets/portraits-expr",
+   "include": [
+    "fu_jongwang__*_c.webp",
+    "ru_geohae__*_c.webp",
+    "tb_baekgi__*_c.webp",
+    "sg_caocao__*_c.webp",
+    "sg_liubei__*_c.webp",
+    "sg_sunquan__*_c.webp"
+   ],
+   "note": "K-0047 표정 초상(기쁨·분노·슬픔·놀람, 카드 300x344 _c) — 주역 cast(tools/ai-art/data/expression_plan.json)의 game 이 이 판인 6명만. 평온 = 도감 초상 그대로",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-realm/assets/portraits/expr"
+    }
+   ]
+  },
+  {
+   "id": "portraits-expr-dungeon",
+   "src": "saga-assets/portraits-expr",
+   "include": [
+    "hl_mukhyang__*_c.webp"
+   ],
+   "note": "K-0047 표정 초상(기쁨·분노·슬픔·놀람, 카드 300x344 _c) — 주역 cast(tools/ai-art/data/expression_plan.json)의 game 이 이 판인 1명만. 평온 = 도감 초상 그대로",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-dungeon/assets/portraits/expr"
+    }
+   ]
+  },
+  {
    "id": "ui-skin",
    "src": "saga-assets/ui",
    "recursive": true,
