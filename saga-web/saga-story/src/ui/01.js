@@ -1008,9 +1008,9 @@
     }
     if (who === 'me') {
       var me = global.DG.side.meRef();
-      face = pt('hero', me, 72); name = me.name;
+      face = global.DG.storyFace ? global.DG.storyFace.face(me.id, ln[1], pt('hero', me, 72)) : pt('hero', me, 72); name = me.name;   // W-0192 감정별 표정
     } else if (mentor) {
-      face = pt('hero', mentor, 72); name = mentor.name;
+      face = global.DG.storyFace ? global.DG.storyFace.face(mentor.id, ln[1], pt('hero', mentor, 72)) : pt('hero', mentor, 72); name = mentor.name;
     } else {
       var npc = SD.NPC_TALK[who] || (SCD && SCD.CAST[who]) || { name: '?', emoji: '💬' };
       face = '<span class="story-emoji">' + npc.emoji + '</span>'; name = npc.name;

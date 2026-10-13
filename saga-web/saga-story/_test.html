@@ -115,6 +115,7 @@ window.DG_NO_TUNE = true;
 <script src="js/rift.js"></script>
 <script src="js/gate-arena.js"></script>
 <script src="js/story.js"></script>
+<script src="js/story-face.js"></script>
 <script src="js/scenario.js"></script>
 <script src="js/cutscene.js"></script>
 <script src="js/party.js"></script>
@@ -3669,6 +3670,16 @@ window.DG_NO_TUNE = true;
         if (bad.length) { throw new Error(bad.join(', ')); }
         return '손님 넷 · 네 토막 순서대로 · 끝에 🪙 ' + SD.GUEST_STORY_GOLD + ' 한 번 · 그 뒤엔 예전 대사';
       } finally { st.guestStory = JSON.parse(keep) || undefined; C.save.player.gold = gold0; S.raw().talk = null; S.travel(before); S.raw().player.invuln = 0; }
+    });
+
+    t('대화창 표정 초상(W-0192, K-0047) — 스승 16명 = 표정 그림 16명 · 감정 짝(fire→anger·worry→sorrow·shock→surprise, calm 은 지금 초상) · 16명 밖은 그대로 · 그림 파일이 있다', function () {
+      var F = DG.storyFace, M = DG.jobData.MENTORS, all = [], miss = [];
+      Object.keys(M).forEach(function (k) { all = all.concat(M[k]); });
+      var cover = all.length === 16 && all.every(function (id) { return F.IDS.indexOf(id) >= 0; });
+      var m1 = F.exprSrc('sg_lubu', 'fire') === 'assets/portraits/expr/sg_lubu__anger_c.webp' && F.exprSrc('sg_lubu', 'worry').indexOf('__sorrow_c') > 0 && F.exprSrc('sg_lubu', 'shock').indexOf('__surprise_c') > 0 && F.exprSrc('sg_lubu', 'joy').indexOf('__joy_c') > 0;
+      var m2 = F.exprSrc('sg_lubu', 'calm') === null && F.exprSrc('nobody', 'joy') === null && F.face('nobody', 'joy', '<i>x</i>') === '<i>x</i>' && F.face('sg_lubu', 'joy', '<i>x</i>').indexOf('story-fb') > 0;
+      ['joy', 'anger', 'sorrow', 'surprise'].forEach(function (e) { F.IDS.forEach(function (id) { if (e !== 'joy' && id !== 'sg_lubu' && id !== 'jp_himiko') { return; } try { var x = new XMLHttpRequest(); x.open('GET', 'assets/portraits/expr/' + id + '__' + e + '_c.webp', false); x.send(); if (x.status !== 200) { miss.push(id + '__' + e); } } catch (er) { miss.push(id + ' ' + er.message); } }); });
+      return cover && m1 && m2 && !miss.length ? '스승 ' + all.length + ' · 짝 fire→anger · 파일 확인 ' + (16 + 6) + '장' : '실패 ' + [cover, m1, m2, miss.join(',')].join(' ');
     });
 
     t('시나리오 표 — 장·장면·인물이 서로 맞고, 장마다 과거·현대·미래가 셋 다 있다', function () {

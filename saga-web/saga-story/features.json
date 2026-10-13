@@ -629,5 +629,23 @@
   "ticket": "W-0188",
   "since": "2026-10-13",
   "note": "D2(claude 2026-10-13): 대장 문 → gate-<마을> 관문 앞(폭 900·발판·사람 0·왼쪽 문 → 마을, 그림은 그 마을 것) · 이기면 3초 뒤 떨군 것 줍고 마을로 · 지거나 나가면 그 마을. 촬영 shots/w0188_gate_pc.png ○(두목 체력 막대·「↑ 신야성」 문) · 폰 가로(844×390) 3D 에서 두목 확대가 화면을 위로 304px 밀던 기존 버그(applyZoomTransform 기준점) 고침 → w0188_gate_phone.png 그림 꽉 참 ○. 헤드리스 폰 3D 는 마을에서도 인물 몸이 안 찍힘(모델 81개 있음) — 이번 변경과 무관, 실기 확인 몫."
+ },
+ {
+  "id": "side.story-expr",
+  "name": "대화창 표정 초상 — 스승 16명이 말할 때 줄 감정에 맞춰 기쁨·분노·슬픔·놀람 얼굴(K-0047, fire→분노·worry→슬픔·shock→놀람, 평온은 지금 초상)",
+  "files": [
+   "js/story-face.js",
+   "js/ui.js",
+   "css/style.css"
+  ],
+  "tests": [
+   "대화창 표정 초상(W-0192, K-0047) — 스승 16명 = 표정 그림 16명 · 감정 짝(fire→anger·worry→sorrow·shock→surprise, calm 은 지금 초상) · 16명 밖은 그대로 · 그림 파일이 있다"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0192",
+  "since": "2026-10-13",
+  "note": "D2(claude 2026-10-13): 헤드리스 phone·pc 에서 무사 갈래 스승(패창) 다섯 줄(calm·fire·worry·shock·joy) 대화창 잘라 찍기 Read ○ — 같은 얼굴·투구, 결의 = 이 악묾·불안 = 찡그림·기쁨 = 웃음, 72px 칸 자리가 평온 정사각 초상과 같음(object-position 50% 16% = SQ_BOX 를 카드 안에서 잰 자리). 그림 못 받으면 숨겨 둔 지금 초상으로."
  }
 ]
