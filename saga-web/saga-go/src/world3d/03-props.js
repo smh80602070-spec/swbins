@@ -245,7 +245,7 @@
         out.push({ t: 'scare', x: cs.x, z: cs.z, h: 2.2 });
       }
     } else {                                   // grass — 빈 들
-      n = Math.round((h1(gx * 41, gy * 23) * 3) * dens * core.tuned('world3d.grassMul', 4));   // W-0200 빈 들 풀포기 ×4(48m 칸에 0~3 포기라 땅이 비었다)
+      n = Math.round((h1(gx * 41, gy * 23) * 3) * dens * (PF('prop') > 0.3 ? core.tuned('world3d.grassMul', 4) : 1));   // W-0200 빈 들 풀포기 ×4(48m 칸에 0~3 포기라 땅이 비었다) — LOW(prop 0.25)는 옛 무게 그대로
       for (i = 0; i < n; i++) {
         var gs = spot(i + 100);
         out.push({ t: 'grass', x: gs.x, z: gs.z, h: 0.7 + h1(gx + i, gy - i) * 0.6 });

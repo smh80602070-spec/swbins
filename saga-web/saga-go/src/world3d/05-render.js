@@ -238,7 +238,7 @@
   function syncLight(dt) {
     var L = lightingAt(forcedMs === null ? undefined : forcedMs, weatherKey());
     lightNow = L;
-    var pos = core.save.player.pos; if (global.DG.ground3d) { global.DG.ground3d.ridge(scene); global.DG.ground3d.follow(pos, scene.fog && scene.fog.color ? scene.fog.color.getHex() : null, L.bg); }   /* W-0200 먼 산 고리 */ if (global.DG.skypano3d) { global.DG.skypano3d.apply(L, { three: T, scene: scene, camera: camera, pos: pos, dark: eventDark }); }   // W-0140 그린 하늘·그 해 자리·지평선 색(skypano3d.js)
+    var pos = core.save.player.pos; if (global.DG.ground3d) { global.DG.ground3d.ridge(scene); global.DG.ground3d.follow(pos, scene.fog && scene.fog.color ? scene.fog.color.getHex() : null, L.bg); global.DG.ground3d.turf(scene, pos); }   /* W-0200 먼 산 고리·발밑 잔풀 */ if (global.DG.skypano3d) { global.DG.skypano3d.apply(L, { three: T, scene: scene, camera: camera, pos: pos, dark: eventDark }); }   // W-0140 그린 하늘·그 해 자리·지평선 색(skypano3d.js)
     /* 해는 늘 플레이어 곁을 따라다닌다 — 그림자 상자를 좁게 유지하려고.
        높이·방위만 시각이 정한다 */
     sun.position.set(pos.x + L.sun.x, L.sun.y, pos.y + L.sun.z);

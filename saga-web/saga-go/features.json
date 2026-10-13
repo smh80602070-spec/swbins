@@ -966,5 +966,25 @@
   "ticket": "W-0199",
   "since": "2026-10-14",
   "note": "D2(claude 2026-10-14): go-light.mjs(HIGH 고정) 한낮 옛/새 Read · 밝기 잼 그늘 벽 85→71·땅 133→127(대비 1.56→1.79배)·밤 같음 ○. 몸 castShadow 20 메시. 사람 몸은 MeshBasic(무광)이라 빛 변화 0 — W-0201 몫. 헤드리스 자동 등급 LOW 면 그림자·목조 집 꺼짐(회색 상자 집 = LOW 단순 소품)."
+ },
+ {
+  "id": "go.ground3d-near",
+  "name": "3D 가까운 땅 결(자체 PBR 바위 밝기 잔결 2.2m·얼룩 7m, 18~46m 에서 사라짐) · 먼 산 고리 640·850m 두 겹 · 빈 들 풀덤불 ×4 · 발밑 잔풀(풀 칸 40m, InstancedMesh 하나 — MEDIUM 26m, LOW 없음)",
+  "files": [
+   "js/ground3d.js",
+   "src/world3d/02-ground.js",
+   "src/world3d/03-props.js",
+   "src/world3d/05-render.js",
+   "assets/textures/land/real_rock_512.webp"
+  ],
+  "tests": [
+   "3D 땅 — 가까운 결은 18m 안 가득·46m 밖 0, 먼 산 고리 높이가 겹마다 범위 안·고리 둘레가 이어진다, 빈 들 풀 ×4·발밑 잔풀은 풀 칸 40m 안만 (W-0200)"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0200",
+  "since": "2026-10-14",
+  "note": "D2(claude 2026-10-14): tmp/go-grass.mjs 들판 정오 옛(w200_grass_old)/새(w200_turf_new3) Read — 옛은 빈 들(칸 ×4 만으로는 차이 거의 없음), 새는 발밑부터 잔풀 ○ · LOW(w200_turf_low) 잔풀 없음·fps 11=11 ○ · qc 1-world3d·2-close 마을 바닥 결·지평선 산 ○. 잎은 앞뒤 두 장(DoubleSide 는 뒷면이 검었다). 손잡이 world3d.detail·turf·turfR·grassMul · sky3d.ridge."
  }
 ]

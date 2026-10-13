@@ -6,7 +6,8 @@
  *                      카메라에서 멀어지면(near~far) 사라진다. 잔결(detailRep 2.2m)만이면 11m 뒤 카메라에서 픽셀보다 작아 평균색이 돼 큰 얼룩(detailMacro 7m)을 겹친다. 색은 아래 칸 그림 그대로라 풀·흙·모래 어디에 깔려도 결만 생긴다.
  *   ridge(scene)       600~850m 고리에 절차 산 실루엣 두 겹(노이즈 높이) — 안개색에 섞어 지평선만 가린다.
  *   follow(pos, fogHex) 고리를 나를 따라 옮기고 안개색으로 물들인다(매 프레임 — 값 대입뿐).
- * 손잡이: world3d.detail(1 켬)·detailAmt 0.6·detailNear 18·detailFar 46·detailRep 2.2·detailMacro 7(m) · sky3d.ridge(1 켬)
+ *   turf(scene, pos)   나 둘레 풀 칸에 잔풀(1.5m 칸마다 한 포기, InstancedMesh 하나) — 5m 움직일 때만 다시 깐다.
+ * 손잡이: world3d.detail(1 켬)·detailAmt 0.6·detailNear 18·detailFar 46·detailRep 2.2·detailMacro 7(m) · sky3d.ridge(1 켬) · world3d.turf(1 켬)·turfR 40(m, MEDIUM ×0.65, LOW 없음)
  */
 (function (global) {
   'use strict';
@@ -116,6 +117,82 @@
     }
   }
 
+  /* ── 발밑 잔풀 ─────────────────────────────────────────
+     칸(48m)마다 세우는 풀덤불은 ×4 해도 0~12 포기라 들이 비어 보였다(옛/새 촬영 차이 거의 없음).
+     나 둘레만 1.5m 칸마다 한 포기씩 — InstancedMesh 하나, 5m 움직일 때만 다시 깐다. HIGH 40m · MEDIUM 26m · LOW 없음 */
+  var TURF_STEP = 1.5;
+  function TURF_R() {
+    var P = global.DG.perf, m = P && P.mul ? P.mul('prop') : 1;
+    if (!+tn('world3d.turf', 1) || m < 0.3) { return 0; }
+    return +tn('world3d.turfR', 40) * (m >= 1 ? 1 : 0.65);
+  }
+  /** 순수 — (cx,cz) 둘레 R 안 잔풀 자리. isGrass(x,z) 참인 곳만, 칸마다 6할 · s = 크기(가장자리 1/4 에서 줄어 둥근 테가 안 보이게) */
+  function turfSpots(cx, cz, R, isGrass, cap) {
+    var out = [], st = TURF_STEP, i0 = Math.floor((cx - R) / st), i1 = Math.ceil((cx + R) / st), j0 = Math.floor((cz - R) / st), j1 = Math.ceil((cz + R) / st), i, j;
+    for (i = i0; i <= i1; i++) {
+      for (j = j0; j <= j1; j++) {
+        if (h1(i * 1.7, j * 3.1) > 0.6) { continue; }
+        var x = (i + h1(i, j + 5)) * st, z = (j + h1(i + 9, j)) * st, d = Math.hypot(x - cx, z - cz);
+        if (d > R || !isGrass(x, z)) { continue; }
+        var e = d / R, edge = e < 0.75 ? 1 : Math.max(0.15, 1 - (e - 0.75) / 0.25);
+        out.push({ x: x, z: z, s: (0.6 + h1(i + 3, j + 7) * 0.7) * edge, r: h1(i + 11, j + 13) * 6.283, c: h1(i + 5, j + 2) });
+        if (out.length >= cap) { return out; }
+      }
+    }
+    return out;
+  }
+  /** 다섯 잎 한 포기 — 밑은 어둡고 끝은 밝게(정점색), 법선은 위로(땅과 같은 빛을 받게) · 잎 한 장 = 삼각형 앞뒤 둘 */
+  function bladeGeo() {
+    var t = T(), pos = [], col = [], nor = [], k;
+    for (k = 0; k < 5; k++) {
+      var a = k / 5 * Math.PI * 2 + 0.3, ca = Math.cos(a), sa = Math.sin(a), w = 0.07, h = 0.5 + (k % 3) * 0.17, ln = 0.24 * h, bx = ca * 0.06, bz = sa * 0.06;
+      var L0 = [bx + sa * w, 0, bz - ca * w], R0 = [bx - sa * w, 0, bz + ca * w], TP = [bx + ca * ln, h, bz + sa * ln];
+      pos.push.apply(pos, L0.concat(R0, TP, R0, L0, TP));   // 앞뒤 두 장 — DoubleSide 는 뒷면 법선을 아래로 뒤집어 한쪽이 검었다
+      col.push(0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 1, 1, 1, 0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 1, 1, 1);
+      for (var nn = 0; nn < 6; nn++) { nor.push(0, 1, 0); }
+    }
+    var g = new t.BufferGeometry();
+    g.setAttribute('position', new t.Float32BufferAttribute(pos, 3));
+    g.setAttribute('color', new t.Float32BufferAttribute(col, 3));
+    g.setAttribute('normal', new t.Float32BufferAttribute(nor, 3));
+    return g;
+  }
+  var turfMesh = null, turfAt = null, turfCells = {}, TURF_CAP = 1800;
+  function cellGrass(x, z) {
+    var gx = Math.floor(x / 48), gy = Math.floor(z / 48), k = gx + ':' + gy;
+    if (!(k in turfCells)) {
+      var W = global.DG.world, FR = global.DG.frost;
+      turfCells[k] = !!(W && W.terrainAt && W.terrainAt(gx, gy) === 'grass') && !(FR && FR.treeSnow && FR.treeSnow((gx + 0.5) * 48, (gy + 0.5) * 48) > 0);
+    }
+    return turfCells[k];
+  }
+  function turf(scene, pos) {
+    var R = TURF_R();
+    if (!scene || !pos || !T()) { return 0; }
+    if (!R) { if (turfMesh) { turfMesh.visible = false; } return 0; }
+    var t = T();
+    if (!turfMesh) {
+      turfMesh = new t.InstancedMesh(bladeGeo(), new t.MeshLambertMaterial({ color: 0xffffff, vertexColors: true }), TURF_CAP);
+      turfMesh.name = 'turf3d'; turfMesh.frustumCulled = false; turfMesh.receiveShadow = true; turfMesh.count = 0;
+    }
+    if (turfMesh.parent !== scene) { scene.add(turfMesh); turfAt = null; }
+    turfMesh.visible = true;
+    if (turfAt && turfAt.R === R && Math.hypot(pos.x - turfAt.x, pos.y - turfAt.y) < 5) { return turfMesh.count; }
+    turfAt = { x: pos.x, y: pos.y, R: R };
+    if (Object.keys(turfCells).length > 400) { turfCells = {}; }
+    var sp = turfSpots(pos.x, pos.y, R, cellGrass, TURF_CAP), RL = global.DG.relief3d, m4 = new t.Matrix4(), q = new t.Quaternion(), up = new t.Vector3(0, 1, 0), v = new t.Vector3(), sc = new t.Vector3(), c = new t.Color(), lo = new t.Color(0x5e9c2e), hi = new t.Color(0x9cc94a), i;
+    for (i = 0; i < sp.length; i++) {
+      var p = sp[i];
+      q.setFromAxisAngle(up, p.r); v.set(p.x, RL && RL.heightAt ? RL.heightAt(p.x, p.z) : 0, p.z); sc.set(p.s, p.s * (0.8 + p.c * 0.5), p.s);
+      turfMesh.setMatrixAt(i, m4.compose(v, q, sc));
+      turfMesh.setColorAt(i, c.copy(lo).lerp(hi, p.c));
+    }
+    turfMesh.count = sp.length;
+    turfMesh.instanceMatrix.needsUpdate = true;
+    if (turfMesh.instanceColor) { turfMesh.instanceColor.needsUpdate = true; }
+    return sp.length;
+  }
+
   global.DG = global.DG || {};
-  global.DG.ground3d = { detail: detail, weightAt: weightAt, ridge: ridge, ridgeH: ridgeH, follow: follow };
+  global.DG.ground3d = { detail: detail, weightAt: weightAt, ridge: ridge, ridgeH: ridgeH, follow: follow, turf: turf, turfSpots: turfSpots };
 })(window);
