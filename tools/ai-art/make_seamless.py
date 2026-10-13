@@ -46,6 +46,58 @@ def seamless(im, size, band=0.28, flatten=0.0):
     return img.crop((q, q, q + size, q + size))
 
 
+def rectify_ground(im, y1, size=640):
+    """K-0091 — 원근 땅 사진(위로 갈수록 작아지는 돌)을 내려다본 평면으로 편다(호모그래피).
+    땅 평면·지평선이 그림 위 h/2 위라 보고(아래 끝 크기 : 맨 위 크기 ≈ 3 : 1), 행 y1 부터 아래 끝까지를
+    땅 위 정사각으로 본다 — 사다리꼴 위 변 반폭 = (y1 + h/2)/3·(w/h). y1 이 클수록 세로를 더 늘린다(돌이 둥글어질 때까지 눈으로)."""
+    im = im.convert('RGB')
+    w, h = im.size
+    x0 = w / 2 - (y1 + h / 2) / 3 * (w / h)
+    quad = [(x0, y1), (w - x0, y1), (w, h), (0, h)]
+    out = [(0, 0), (size, 0), (size, size), (0, size)]
+    A, b = [], []
+    for (u, v), (x, y) in zip(out, quad):   # 출력 → 입력
+        A.append([u, v, 1, 0, 0, 0, -x * u, -x * v]); b.append(x)
+        A.append([0, 0, 0, u, v, 1, -y * u, -y * v]); b.append(y)
+    c = np.linalg.solve(np.array(A, float), np.array(b, float))
+    return im.transform((size, size), Image.PERSPECTIVE, tuple(c), Image.BICUBIC)
+
+
+def cutseam(im, band=0.125):
+    """K-0091 — 최소 오차 경계 자르기(이미지 퀼팅)로 주기 타일. 낱알 무늬(조약돌)는 seamless 의 띠 섞기가
+    반투명 겹친 돌(고스팅)을 만든다 → 띠에서 '오른쪽 끝의 연속'과 '원래 왼쪽'을 행마다 차이가 가장 작은 길로
+    잘라 붙인다(섞지 않음). 정사각 S 에서 N = S/(1+band), 띠 B = S - N. 결과 N×N(크기 줄이기는 wrap_resize)."""
+    a = np.asarray(im.convert('RGB'), dtype=np.float32)
+    s = min(a.shape[:2])
+    n = int(round(s / (1 + band)))
+    bw = s - n
+    a = a[:s, :s]
+
+    def cut_mask(err):
+        E = err.copy()
+        for y in range(1, E.shape[0]):
+            p = E[y - 1]
+            E[y] += np.minimum(np.minimum(np.r_[np.inf, p[:-1]], p), np.r_[p[1:], np.inf])
+        cut = np.zeros(E.shape[0], int)
+        cut[-1] = int(np.argmin(E[-1]))
+        for y in range(E.shape[0] - 2, -1, -1):
+            c = cut[y + 1]
+            lo = max(0, c - 1)
+            cut[y] = lo + int(np.argmin(E[y, lo:c + 2]))
+        return np.arange(E.shape[1])[None, :] < cut[:, None]
+
+    def wrap_x(I):
+        A, O = I[:, n:n + bw], I[:, :bw]
+        m = cut_mask(((A - O) ** 2).sum(2))
+        T = I[:, :n].copy()
+        T[:, :bw][m] = A[m]
+        return T
+
+    t = wrap_x(a)
+    t = wrap_x(t.transpose(1, 0, 2)).transpose(1, 0, 2)
+    return Image.fromarray(np.clip(t, 0, 255).astype(np.uint8))
+
+
 def main():
     src = sys.argv[1]
     dst = sys.argv[2] if len(sys.argv) > 2 and not sys.argv[2].startswith('--') else os.path.join(src, '_seamless')
