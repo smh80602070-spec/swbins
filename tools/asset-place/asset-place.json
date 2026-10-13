@@ -697,6 +697,13 @@
     {
      "track": "web",
      "dir": "saga-web/saga-story/assets/portraits/expr"
+    },
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/portraits/expr",
+     "sidecar": [
+      ".import"
+     ]
     }
    ]
   },
@@ -716,6 +723,13 @@
     {
      "track": "web",
      "dir": "saga-web/saga-realm/assets/portraits/expr"
+    },
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/portraits/expr",
+     "sidecar": [
+      ".import"
+     ]
     }
    ]
   },
@@ -730,6 +744,13 @@
     {
      "track": "web",
      "dir": "saga-web/saga-dungeon/assets/portraits/expr"
+    },
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/portraits/expr",
+     "sidecar": [
+      ".import"
+     ]
     }
    ]
   },
@@ -764,6 +785,31 @@
       "wd_ibnsina",
       "eu_davinci"
      ]
+    },
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/portraits/live",
+     "only": [
+      "sg_lubu",
+      "kr_gyebaek",
+      "jp_musashi",
+      "eu_leonidas",
+      "sg_huangzhong",
+      "sg_taishici",
+      "jp_yoshitsune",
+      "wd_genghis",
+      "jp_hanzo",
+      "sg_ganning",
+      "jp_tomoegozen",
+      "wd_shaka",
+      "jp_himiko",
+      "sg_zhugeliang",
+      "wd_ibnsina",
+      "eu_davinci"
+     ],
+     "sidecar": [
+      ".import"
+     ]
     }
    ]
   },
@@ -788,6 +834,21 @@
       "sg_liubei",
       "sg_sunquan"
      ]
+    },
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/portraits/live",
+     "only": [
+      "fu_jongwang",
+      "ru_geohae",
+      "tb_baekgi",
+      "sg_caocao",
+      "sg_liubei",
+      "sg_sunquan"
+     ],
+     "sidecar": [
+      ".import"
+     ]
     }
    ]
   },
@@ -806,6 +867,16 @@
      "dir": "saga-web/saga-dungeon/assets/portraits/live",
      "only": [
       "hl_mukhyang"
+     ]
+    },
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/portraits/live",
+     "only": [
+      "hl_mukhyang"
+     ],
+     "sidecar": [
+      ".import"
      ]
     }
    ]
