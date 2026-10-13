@@ -15,3 +15,4 @@
 - [ ] 10-13 · (K-0093 자체툴 넘김) · 자체 PBR 12세트(땅 6·소품 6, 바탕·법선·거칠기·높이) — 정본 `saga-assets/textures_real` · 웹·유니티 사실 재질에 재사용 · 웹/유니티
 - [ ] 10-13 · (G-0220 고돗 넘김 — Claude 눈) · 움직이는 초상(VRoid 렌더)과 K-0047 표정 카드(그린 그림)가 나란히 보면 딴사람 — 고돗은 live 가 있으면 live 만 쓴다. 같은 렌더로 표정 바탕(VRoid Fcl_ALL_Joy·Angry·Sorrow·Surprised, base 와 같은 카메라)을 live.json `"expr": {joy|anger|sorrow|surprise: 파일}` 로 더해 주면 고돗은 바로 쓴다(웹도 같은 결 권함) · 자체툴
 - [ ] 10-13 · (W-0190 웹 넘김 — Claude 눈) · 3마을 2D 곤충 박사 나비 자리(침선방 지붕 위)에 보라 한 빛 사람 — 주민 빌린 몸 옷 색 칸(W-0121 tintPx)이 몸 전체에 먹는 몸이 있는 듯(pw-cozy-check w190f1~3·base 다) · 웹
+- [ ] 10-13 · (W-0191 웹 넘김) · 2나락 옛 타일 `dungeon_{dirt,stone,water,snow,sand}` 안 씀(grass 는 마을 땅) — 지워도 됨 · 자체툴

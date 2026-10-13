@@ -49,7 +49,9 @@ const check = process.argv.includes('--check');
 /** 판 폴더 단독 서버(run.bat)는 `../shared` 를 못 읽는다 — 2D 모드 배경·타일(K-0020)은 그 판 접두어 파일만 판 폴더로 복사한다(W-0019).
  *  정본 shared/assets/web2d/{bg,tile}/ · 접두어 = 판 이름(go_·dungeon_·forest_·story_·realm_) · 출처 .license.json 은 정본에만 둔다 */
 const PREFIX = { 'saga-go': 'go_', 'saga-dungeon': 'dungeon_', 'saga-forest': 'forest_', 'saga-story': 'story_', 'saga-realm': 'realm_' };
-const ASSET_GAMES = { 'saga-story': ['assets/web2d/bg', 'assets/web2d/tile'], 'saga-go': ['assets/web2d/tile'], 'saga-dungeon': ['assets/web2d/tile'], 'saga-forest': ['assets/web2d/tile'], 'saga-realm': ['assets/web2d/tile'] };   // 판 → 그 판이 쓰는 폴더만(1만리는 위에서 본 지도라 층 배경 없음)   // 배선이 끝난 판만(안 쓰는 판에 용량을 안 싣는다) — 판을 배선할 때마다 추가
+const ASSET_GAMES = { 'saga-story': ['assets/web2d/bg', 'assets/web2d/tile'], 'saga-go': ['assets/web2d/tile'], 'saga-dungeon': ['assets/web2d/bg', 'assets/web2d/tile'], 'saga-forest': ['assets/web2d/tile'], 'saga-realm': ['assets/web2d/tile'] };   // 판 → 그 판이 쓰는 폴더만(1만리는 위에서 본 지도라 층 배경 없음)   // 배선이 끝난 판만(안 쓰는 판에 용량을 안 싣는다) — 판을 배선할 때마다 추가
+/** 층 배경만 접두어가 다른 판(W-0191 — 2나락 던전 테마 배경 K-0094 는 dg_<테마>, 옛 dungeon_* 배경 넷은 안 씀) */
+const BG_PREFIX = { 'saga-dungeon': 'dg_' };
 /** 아이템 아이콘(W-0025) — 이름 표 `itemicon-ids.js` 에 오른 그림 중 **그 판 것만** `<판>/assets/icons/icon64/` 로 복사한다(판 폴더 단독 서버가 `../shared` 를 못 읽는다).
  *  정본 shared/assets/icons/icon64/ · 출처(license/)는 정본에만 둔다. 표는 gen-itemicon-ids.mjs 가 만든다 */
 function iconNames(g) {
@@ -114,7 +116,7 @@ for (const g of Object.keys(ASSET_GAMES)) {
     const dir = path.join(WEB, 'shared', d);
     if (!fs.existsSync(dir)) continue;
     for (const f of fs.readdirSync(dir)) {
-      if (!f.startsWith(PREFIX[g]) || f.endsWith('.license.json')) continue;
+      if (!f.startsWith((d.endsWith('/bg') && BG_PREFIX[g]) || PREFIX[g]) || f.endsWith('.license.json')) continue;
       total++;
       const from = path.join(dir, f), to = path.join(WEB, g, d, f);
       if (fs.existsSync(to) && fs.readFileSync(to).equals(fs.readFileSync(from))) continue;

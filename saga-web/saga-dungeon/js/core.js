@@ -486,8 +486,11 @@
     tileBase: 'assets/web2d/tile/',
     /** 마을 건물 2D 스프라이트(K-0017 `world2d`, W-0024) — 장식 종류(town.js) → { id|ids, h:1 }. 키는 장식의 h(방 좌표)×확대로 정해져 h 는 1. 짝 없는 종류(대장간·마구간·방앗간)는 안 그림 */
     prop2d: { house: { ids: ['eu_house_01', 'hanok_01', 'chinese_hall_01'], h: 1 }, well: { id: 'well_01', h: 1 }, inn: { id: 'inn_01', h: 1 }, belltower: { id: 'stone_tower_01', h: 1 } },
-    /** 층 테마 이름(data-dungeon THEMES) → 2D 바닥 타일(K-0020 `dungeon_*`) — 층 색은 타일 위에 얹힌다 */
-    tile: { '고분(古墳)': 'dungeon_dirt', '폐성(廢城)': 'dungeon_stone', '산채(山寨)': 'dungeon_grass', '수궁(水宮)': 'dungeon_water', '지옥문(地獄門)': 'dungeon_stone', '천계(天界)': 'dungeon_snow' },
+    /** 층 테마 이름(data-dungeon THEMES) → 2D 바닥 타일 — 테마마다 한 장(K-0094, W-0191: 다진 흙·깨진 돌·풀흙·젖은 돌·검붉은 돌·구름 돌). 층 색은 타일 위에 얹힌다.
+     *  마을·들판은 제 테마 이름(모루골 따위)이라 이 표에 없어 dungeon_grass 그대로(belt2d townStage) */
+    tile: { '고분(古墳)': 'dungeon_gobun', '폐성(廢城)': 'dungeon_pyeseong', '산채(山寨)': 'dungeon_sanchae', '수궁(水宮)': 'dungeon_sugung', '지옥문(地獄門)': 'dungeon_jiokmun', '천계(天界)': 'dungeon_cheongye' },
+    /** 층 테마 → 벨트 방 뒷벽 시차 배경(원·중·근, K-0094 `dg_<테마>`, W-0191) — belt2d 가 그림이 서면 벽색·줄눈 대신 이걸 그린다 */
+    beltBg: { '고분(古墳)': 'dg_gobun', '폐성(廢城)': 'dg_pyeseong', '산채(山寨)': 'dg_sanchae', '수궁(水宮)': 'dg_sugung', '지옥문(地獄門)': 'dg_jiokmun', '천계(天界)': 'dg_cheongye' },
     targetH: 40,                                 // 던전 2D 의 사람형 몸 높이 기준(px, dungeon-view bodyH 40·s 와 같은 단위 — 호출이 배수를 곱한다)
     foot: 0.87,
     /** 2D 모드인가 — 3D 가 안 서 있을 때(= 아이소 2D 그림) */

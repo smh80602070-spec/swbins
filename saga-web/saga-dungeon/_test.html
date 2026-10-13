@@ -8552,6 +8552,16 @@ window.requestAnimationFrame = function () { return 0; };
       return r[0] === 0 && r[1] === 1 && ('들어설 때 0번 · 다시 오면 1번') || '실패 ' + r.join(',');
     });
 
+    t('2D 던전 방 테마 배경·타일(W-0191, K-0094) — 여섯 테마 모두 시차 배경 dg_<테마>(원·중·근 층 표가 판 폴더에 있음)·바닥 타일 dungeon_<테마>(같은 로마자)', function () {
+      var cf = DG.cfg.mode2d, th = DG.dungeonData.THEMES, bad = [], n = 0;
+      th.forEach(function (t0) {
+        var bg = cf.beltBg && cf.beltBg[t0.name], tl = cf.tile && cf.tile[t0.name], r = bg && bg.slice(3);
+        if (!bg || bg.indexOf('dg_') !== 0 || tl !== 'dungeon_' + r) { bad.push(t0.name + ':' + bg + '/' + tl); return; }
+        try { var x = new XMLHttpRequest(); x.open('GET', 'assets/web2d/bg/' + bg + '.layers.json', false); x.send(); var j = x.status === 200 ? JSON.parse(x.responseText) : null; if (j && j.far && j.mid && j.near) { n++; } else { bad.push(bg + ' 층 표 ' + x.status); } } catch (e) { bad.push(bg + ' ' + e.message); }
+      });
+      return th.length === 6 && !bad.length ? '테마 ' + th.length + ' · 층 표 ' + n + ' · 예 ' + cf.beltBg[th[0].name] + '/' + cf.tile[th[0].name] : '실패 ' + bad.join(' ');
+    });
+
     t('dg.belt2d: 던파식 벨트 2D(W-0128) — 투영 왕복·카메라가 방 끝에서 멈춤·마을 손잡이 0 이면 제외·폰 폭 배율', function () {
       var B = DG.belt2d, cv = { clientWidth: 1280, clientHeight: 720 }, px = 300;
       var D = { ROOM_W: 700, ROOM_H: 440, raw: function () { return { player: { x: px, y: 200 } }; } };
