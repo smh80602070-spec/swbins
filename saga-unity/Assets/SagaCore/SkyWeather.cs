@@ -130,7 +130,7 @@ namespace Saga.Core
         private Material[] _layerMats = new Material[3];
         private ParticleSystem _rain, _snow, _fog;
         private bool _fogCaptured;
-        private float _fogBaseDensity;
+        private float _fogBaseDensity, _fogWeatherDensity;
         private Color _fogBaseColor;
         private float _windMul = 1f;
 
@@ -292,7 +292,8 @@ namespace Saga.Core
                     float a = Mathf.Clamp01(w.CloudAlpha * (1f - 0.12f * i));
                     _layerMats[i].color = new Color(tod.r, tod.g, tod.b, a);
                 }
-            SetRate(_rain, w.Rain); SetRate(_snow, w.Snow, true); SetRate(_fog, w.Fog);
+            PlaceFogPuffs();   // U-0118 미리 채운 덩이도 땅 위에 생기게(채우기 전에)
+            SetRate(_rain, w.Rain); SetRate(_snow, w.Snow, true); SetRate(_fog, w.Fog, true);
             ApplyFog(w, season);
         }
 
@@ -323,7 +324,8 @@ namespace Saga.Core
         {
             if (!RenderSettings.fog) return;
             if (!_fogCaptured) { _fogBaseDensity = RenderSettings.fogDensity; _fogBaseColor = RenderSettings.fogColor; _fogCaptured = true; }
-            RenderSettings.fogDensity = _fogBaseDensity * w.FogMul;
+            _fogWeatherDensity = _fogBaseDensity * w.FogMul;
+            RenderSettings.fogDensity = _fogWeatherDensity;
             RenderSettings.fogColor = new Color(
                 Mathf.Clamp01(_fogBaseColor.r * w.Tint.r * s.Ambient.r),
                 Mathf.Clamp01(_fogBaseColor.g * w.Tint.g * s.Ambient.g),
@@ -336,10 +338,46 @@ namespace Saga.Core
             RenderSettings.fogDensity = _fogBaseDensity; RenderSettings.fogColor = _fogBaseColor; _fogCaptured = false;
         }
 
+        /// <summary>U-0118 — 덩이 방출 상자를 카메라 아래 땅 + 2m 에(월드 시뮬이라 상자만 옮기면 된다). 땅을 못 찾으면 뿌리 + 2m.
+        /// 3마을 촬영 로그: 카메라 y13.3 → 덩이 y15.3(카메라 위)이라 내려다보는 화면에 하나도 안 들어왔다.</summary>
+        private void PlaceFogPuffs()
+        {
+            if (_fog == null) return;
+            var t = _fog.transform;
+            if (_cam != null && Physics.Raycast(_cam.transform.position, Vector3.down, out var hit, 60f, ~0, QueryTriggerInteraction.Ignore))
+                t.position = new Vector3(_cam.transform.position.x, hit.point.y + 2f, _cam.transform.position.z);
+            else t.localPosition = new Vector3(0f, 2f, 0f);
+        }
+
+        /// <summary>U-0118 — 안개 날씨에 카메라가 내려다볼 때(pitch ≥ 50°, 3마을 62°)만 농도 하한: 시선 중앙의 땅까지 거리 d 에서 안개 30%
+        /// (지수² `sqrt(-ln 0.7)/d`). 촬영: 3마을 d≈15m 에서 날씨 농도 0.0084 → 안개 1.4% 라 맑음과 같았다. 1만리 35°·4종횡(옆, 씬 안개 꺼짐)은 안 걸린다.</summary>
+        public const float LookDownPitch = 50f, LookDownFogAt = 0.30f;
+        private void LookDownFogFloor()
+        {
+            if (!_fogCaptured || !RenderSettings.fog || Kind != SkyWeatherRules.Kind.Fog || _cam == null) return;
+            float dens = _fogWeatherDensity;
+            var ct = _cam.transform;
+            float pitch = Vector3.Angle(Vector3.ProjectOnPlane(ct.forward, Vector3.up), ct.forward) * (ct.forward.y < 0f ? 1f : -1f);
+            if (pitch >= LookDownPitch)
+            {
+                float d = Physics.Raycast(ct.position, ct.forward, out var hit, 80f, ~0, QueryTriggerInteraction.Ignore) ? hit.distance : 0f;
+                if (d < 1f) { float h = transform.position.y - _fog.transform.position.y + 2f; d = h > 1f ? h / Mathf.Sin(pitch * Mathf.Deg2Rad) : 0f; }
+                if (d >= 1f)
+                {
+                    float k = -Mathf.Log(1f - LookDownFogAt);
+                    float floor = RenderSettings.fogMode == FogMode.ExponentialSquared ? Mathf.Sqrt(k) / d : RenderSettings.fogMode == FogMode.Exponential ? k / d : 0f;
+                    dens = Mathf.Max(dens, floor);
+                }
+            }
+            RenderSettings.fogDensity = dens;
+        }
+
         private void LateUpdate()
         {
             if (_cam == null) _cam = Camera.main;
             if (_cam != null) transform.position = _cam.transform.position;
+            PlaceFogPuffs();
+            LookDownFogFloor();
             for (int i = 0; i < 3; i++)
                 if (_layers[i] != null) _layers[i].Rotate(0f, SpinDegPerSec[i] * _windMul * Time.deltaTime, 0f, Space.World);
         }

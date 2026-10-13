@@ -351,7 +351,12 @@ namespace Saga.EditorTools
             bool inMask = m != null && layer >= 0 && (m.cullingMask & (1 << layer)) != 0;
             string snow = ps == null ? "null" : $"{ps.particleCount}/{sw.SnowRate:F0} play={ps.isPlaying} act={st.gameObject.activeInHierarchy} at={st.position:F1}";
             string vis = r == null ? "null" : $"{r.isVisible} en={r.enabled} b={r.bounds.center:F1}~{r.bounds.size:F1}";
-            Debug.Log($"[ShowcaseGui] weatherprobe cam={cam} gc={g} root={sw.transform.position:F1} kind={sw.Kind} snow={snow} vis={vis} layer={layer}∈mask={inMask} ts={Time.timeScale:F2} dt={Time.deltaTime:F3} sky={(m != null ? m.clearFlags.ToString() : "-")}");
+            // U-0118 — 안개 칸: 씬 안개(켜짐/모드/농도) · 덩이 입자 수@방출 상자 월드 높이 · 카메라 내려다보는 각
+            var ft = sw.transform.Find("Fx_FogPuff");
+            var fps = ft != null ? ft.GetComponent<ParticleSystem>() : null;
+            string puff = fps == null ? "null" : $"{fps.particleCount}@{ft.position.y:F1}";
+            string fog = $"fog={RenderSettings.fog}/{RenderSettings.fogMode}/{RenderSettings.fogDensity:F4} puff={puff} pitch={(m != null ? m.transform.eulerAngles.x : -1f):F0}";
+            Debug.Log($"[ShowcaseGui] weatherprobe cam={cam} gc={g} root={sw.transform.position:F1} kind={sw.Kind} snow={snow} vis={vis} layer={layer}∈mask={inMask} ts={Time.timeScale:F2} dt={Time.deltaTime:F3} sky={(m != null ? m.clearFlags.ToString() : "-")} {fog}");
         }
 
         /// <summary>U-0090 — n 번 동료로 스킬. 결과·모양·만든 효과 수를 로그(거절이면 이유 칸도).</summary>

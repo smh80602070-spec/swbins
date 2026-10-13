@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-13",
+  "tickets": [
+    "U-0118 3마을 안개 날씨가 맑음과 같다 — 덩이를 땅 높이에·미리 채움·내려다볼 때 농도 하한"
+  ],
+  "how": "ShowcaseGui GUI 촬영(gamecam;screen, SEQ=4,30, SAGA_SHOT_HOUR=12, SAGA_SHOT_ACT=weatherprobe + 안개 칸) 3마을 안개 고치기 전·뒤, 3마을 맑음 비교, 1만리·4종횡 안개 회귀, 세이브 다섯 치운 채 · Claude 눈",
+  "probe": {
+    "3마을 고치기 전": "cam=PlayerCamera y13.3 pitch 62 · fog=ExponentialSquared/0.0084 · puff=18~25@y15.3(카메라 위 2m)",
+    "3마을 고친 뒤": "fog=0.0446 · puff=70@y2.0(첫 장부터, 땅+2m)",
+    "3마을 맑음": "fog=0.0021 · puff=0",
+    "1만리 안개": "pitch 35 → 하한 안 걸림 · fog=0.0084 · puff=70@y2.1",
+    "4종횡 안개": "pitch 0 · 씬 안개 꺼짐(fog=False) · puff=70@y4.7"
+  },
+  "fix": "SagaCore/SkyWeather.cs — ① 안개 덩이도 SetRate fill(미리 채움) ② PlaceFogPuffs: 방출 상자를 카메라 아래 땅(Raycast 60m)+2m, 못 찾으면 뿌리+2m ③ LookDownFogFloor: 안개 날씨·pitch≥50°만 시선 중앙 땅 거리 d 에서 안개 30%(지수² sqrt(-ln0.7)/d) 하한",
+  "scene": [
+    "[PlaytestSkyWeather] OK",
+    "[PlaytestHeadless] OK - 10 frames, no errors",
+    "[PlaytestStorySlice] OK - killed 10 grunts + boss"
+  ],
+  "runtime_errors": 0,
+  "shots": "세션 scratchpad shots_* — 커밋 안 함",
+  "results": [
+    { "id": "un.go.sky-weather", "scene": "3마을 TestVillageForest", "fog": "△ → ○ (맑음 판보다 풀밭·먼 인물이 뿌옇고 덩이 겹이 보임, 집·주인공 알아봄) · 흠: 덩이 가장자리가 땅과 만나는 호 줄" },
+    { "id": "un.go.sky-weather", "scene": "3마을 TestVillageForest", "clear": "○ (선명, 비교용)" },
+    { "id": "un.go.sky-weather", "scene": "1만리 TestVillage", "fog": "○ (먼 군중 쪽 뿌연 띠, 가까운 인물 선명 — U-0116 ○ 약하게보다 나쁘지 않음)" },
+    { "id": "un.go.sky-weather", "scene": "4종횡 TestField", "fog": "△ (판 아래쪽 잿빛 덩이, 판·인물 알아봄 — 하얗게 뭉개지지 않음)" }
+  ],
+  "result": "D2 유지",
+  "left": "덩이 빌보드가 땅과 만나는 호 줄(소프트 파티클 아님)"
+}
