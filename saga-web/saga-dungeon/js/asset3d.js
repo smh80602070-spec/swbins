@@ -1294,11 +1294,12 @@
   function step(node, o) {
     if (!node || !node.userData || !node.userData.mixer) { return false; }
     var u = node.userData;
-    var want = (o && o.anim) || ((o && o.walking) ? 'walk' : 'idle');
-    play(node, want);
-    var t = (o && o.t) || 0;
-    var dt = u.lastT === undefined ? 0 : Math.max(0, Math.min(0.25, t - u.lastT));
-    u.lastT = t;
+    var want = o && o.anim, OA = global.DG.ownAnim, t = (o && o.t) || 0, dt = u.lastT === undefined ? 0 : Math.max(0, Math.min(0.25, t - u.lastT));
+    /* W-0197 — 몸이 실제 움직인 거리(키/초)로 걷기·달리기·클립 빠르기(옛: 늘 걷기 1배속 — 발이 미끄러졌다) */
+    var g = OA && OA.gaitOf && node.matrixWorld ? OA.gaitOf(u, null, node.matrixWorld.elements, dt) : null;
+    if (!want) { want = (o && o.walking) ? (g ? g.slot : 'walk') : 'idle'; }
+    play(node, want); u.lastT = t;
+    u.mixer.timeScale = !(o && o.anim) && o && o.walking && g ? g.rate : 1;
     u.mixer.update(dt);
     return true;
   }

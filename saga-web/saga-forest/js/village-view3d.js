@@ -1408,11 +1408,11 @@
     var targetYaw = facingYaw;
     if (moved > MOVE_EPS() * (1 / 60)) {
       targetYaw = Math.atan2(dx, dy);
-      if (actionTimer <= 0) { playAction(player, 'walk'); }
+      if (actionTimer <= 0) { var OAg = global.DG.ownAnim, gg = OAg && OAg.gaitOf && player.clipMap ? OAg.gaitOf(player, dt > 0 ? moved / dt * WORLD_SCALE() / PLAYER_H() : 0) : { slot: 'walk', rate: 1 }; playAction(player, gg.slot); if (player.mixer) { player.mixer.timeScale = gg.rate; } }   // W-0197 키/초로 걷기·달리기·빠르기
     } else if (actionTimer <= 0) {
-      playAction(player, 'idle');
+      playAction(player, 'idle'); if (player.mixer) { player.mixer.timeScale = 1; }
     }
-    if (actionTimer > 0) { actionTimer = Math.max(0, actionTimer - dt); }
+    if (actionTimer > 0) { actionTimer = Math.max(0, actionTimer - dt); if (player.mixer) { player.mixer.timeScale = 1; } }
     lastPX = px; lastPY = py;
     /* 목표각으로 한 프레임 만에 스냅하지 않고 부드럽게 돈다 — 카메라(camPose)도
        이 같은 facingYaw 를 물려 쓰므로 몸과 시점이 같이, 같은 속도로 돈다 */

@@ -2142,11 +2142,11 @@
           var diff = want - a.ang;
           while (diff > Math.PI) { diff -= Math.PI * 2; }
           while (diff < -Math.PI) { diff += Math.PI * 2; }
-          a.ang += diff * 0.22;                 // 홱 돌지 않고 미끄러지듯 돈다
-        }
+          a.ang += diff * 0.22; a.turnD = diff; // 홱 돌지 않고 미끄러지듯 돈다 · W-0197 기울기용 도는 양
+        } else { a.turnD = 0; }
       }
       a.lx = x; a.ly = y;
-      a.node.rotation.y = a.ang;
+      a.node.rotation.y = a.ang; if (a === actors.me) { var LN = core.tuned('anim3d.lean', 8) * Math.PI / 180, lt = walk && LN > 0 ? Math.max(-LN, Math.min(LN, -(a.turnD || 0) * 2.2)) : 0; a.lean = (a.lean || 0) + (lt - (a.lean || 0)) * 0.15; a.node.rotation.z = a.lean; }   // W-0197 도는 쪽으로 기울기(anim3d.lean 도, 0 끔)
       /* 교전 몸짓(`playAnim`) 이 걸려 있으면 그 자리 이름을 준다 — 끝나면
          (`animUntil` 지나면) 도로 걷기/서기로 돌아간다. 클립이 없으면
          `asset3d.play` 가 조용히 실패하니 여기서 따로 안 가른다 */

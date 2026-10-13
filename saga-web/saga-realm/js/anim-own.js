@@ -724,6 +724,31 @@
     CLIPS: CLIPS, BASE: BASE,
     /* W-0169 — 무기 몸짓 `Wpn_<무기>_<단>` 이름표·길이(초). 없는 이름이면 0 */
     COMBAT_NAMES: COMBAT.map(function (c) { return c.name; }),
+    /** W-0197 — 걸음새: 몸 높이당 이동 속도(hps, 키/초) → { slot: 'walk'|'run', rate: 클립 빠르기 } — 순수(손잡이만 읽음).
+     *  클립 본래 빠르기 = 걷기 0.82 키/초(1.4m/s ÷ 1.7m)·달리기 2.9(5m/s ÷ 1.7m). rate 를 0.6~1.7 로 묶어 다리가 미친 듯 돌지 않게 */
+    gait: function (hps, hasRun) {
+      var C = global.DG.core, tn = function (k, d) { var v = C && C.tuned ? +C.tuned(k, d) : d; return isFinite(v) && v > 0 ? v : d; };
+      var v = Math.max(0, +hps || 0), run = hasRun !== false && v >= tn('anim3d.runFrom', 1.4);
+      var r = v / (run ? tn('anim3d.runHps', 2.9) : tn('anim3d.walkHps', 0.82));
+      return { slot: run ? 'run' : 'walk', rate: Math.max(0.6, Math.min(1.7, r)) };
+    },
+    /** W-0197 — 몸(정규화 키 1 을 키운 shell)의 지난 프레임과의 이동으로 키/초를 잰다. st = 배우마다 둘 작은 객체 · m = matrixWorld.elements · dt 초.
+     *  순간이동(40 키/초 넘음)은 버리고 지수 평활(0.1초 남짓) */
+    hpsOf: function (st, m, dt) {
+      if (!st || !m) { return 0; }
+      var x = m[12], z = m[14], sy = Math.hypot(m[4], m[5], m[6]) || 1, raw = null;
+      if (st.x !== undefined && dt > 0) { raw = Math.hypot(x - st.x, z - st.z) / dt / sy; }
+      st.x = x; st.z = z;
+      if (raw !== null && raw < 40) { st.v = st.v === undefined ? raw : st.v + (raw - st.v) * Math.min(1, dt * 10); }
+      return st.v || 0;
+    },
+    /** W-0197 — 배우 ent(clipMap 을 가진 userData·player)의 걸음새: 평활한 키/초로 gait. 달리기 칸이 걷기 클립 대체(FALLBACK)면 없는 셈.
+     *  dt 를 주면 ent.gaitSt 와 m(matrixWorld.elements)으로 직접 잰다(hps 자리는 null) */
+    gaitOf: function (ent, hps, m, dt) {
+      var cm = ent && ent.clipMap, v;
+      if (m) { v = this.hpsOf(ent.gaitSt || (ent.gaitSt = {}), m, dt); } else { v = ent.gaitV || 0; if (hps < 40) { v += ((+hps || 0) - v) * 0.25; } ent.gaitV = v; }
+      return this.gait(v, !!(cm && cm.run && cm.run !== cm.walk));
+    },
     /** 처음 조립된(정지 자세) 몸에서 뼈대를 읽는다 — 실패하면 null */
     /** 판마다 다른 무기 이름(생김새) → 몸짓 다섯 갈래 */
     WPN_OF: { sword: 'sword', dagger: 'sword', guandao: 'claymore', axe: 'claymore', club: 'claymore', claymore: 'claymore', halberd: 'polearm', spear: 'polearm', polearm: 'polearm', bow: 'bow', gun: 'bow', fan: 'catalyst', staff: 'catalyst', brush: 'catalyst', scroll: 'catalyst', catalyst: 'catalyst' },
