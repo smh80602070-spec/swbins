@@ -8958,6 +8958,12 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var ok = [w === 'polearm', w2 === 'polearm', A.sharedUrl('hit') === null, r ? (u && u.slice(-'audio/sfx/sfx_crit.ogg'.length) === 'audio/sfx/sfx_crit.ogg') : u === null];
       return ok.every(Boolean) && ('sx → ' + (u || '(공용 주소 없음)') + ' · 창 → spear_hit');
     });
+    t('3D 빛 — 한낮은 하늘빛/해 0.35~0.55(그늘 대비), 한밤은 옛 밝기 그대로(대비 손잡이는 낮에만) (W-0199)', function () {
+      var d = new Date(); d.setHours(12, 0, 0, 0); var n = new Date(); n.setHours(22, 0, 0, 0);
+      var L = DG.world3d.lightingAt(d.getTime(), 'clear'), N = DG.world3d.lightingAt(n.getTime(), 'clear'), r = L.hemi.intensity / L.sun.intensity;
+      var ok = [r >= 0.35 && r <= 0.55, N.hemi.intensity >= 1.9, N.sun.intensity >= 1.69, L.sun.intensity + L.hemi.intensity >= 3.6];
+      return ok.every(Boolean) && ('한낮 하늘빛/해 ' + r.toFixed(2) + ' (해 ' + L.sun.intensity.toFixed(2) + ' · 하늘 ' + L.hemi.intensity.toFixed(2) + ') · 밤 하늘 ' + N.hemi.intensity.toFixed(2));
+    });
     t('3D 카메라 — 기본은 어깨 너머(몸 3.4m 가 화면 ≈1/4: 뒤 9~14m·내려봄 8~16°), 휠로 물러나면 옛 24m 쯤까지, 2.5D 는 그대로 (W-0198)', function () {
       var A = DG.world3d.camAim, p = { x: 0, y: 0 }, a = A(p, 2, null, null, 1, false, 0), far = A(p, 2, null, null, 2.2, false, 0), m1 = A(p, 1, null, null, 1, false, 0);
       var back = Math.hypot(a.pos.x - p.x, a.pos.z - p.y), pitch = Math.atan2(a.pos.y - a.look.y, Math.hypot(a.pos.x - a.look.x, a.pos.z - a.look.z)) * 180 / Math.PI;

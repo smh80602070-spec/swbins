@@ -1426,7 +1426,7 @@
     /* W-0197 — 부르는 쪽(world3d 04-actors)이 속도를 안 넘겨 늘 걷기 1배속이었다: 몸이 실제 움직인 거리(키/초)로 걷기·달리기·클립 빠르기 */
     var g = OA && OA.gaitOf && node.matrixWorld ? OA.gaitOf(u, null, node.matrixWorld.elements, dt) : null;
     if (!want) { want = (o && o.walking) ? (g ? g.slot : 'walk') : 'idle'; }
-    play(node, want); u.lastT = t;
+    play(node, want); u.lastT = t; if (!((u.shN = (u.shN || 0) + 1) % 30)) { node.traverse(function (m) { if (m.isMesh && !(m.material && m.material.side === 1)) { m.castShadow = true; } }); }   // W-0199 몸은 진짜 그림자(옷·재질 갈림 뒤에도 — 30번에 한 번, 외곽선 뒷면 껍질 빼고, 꺼진 등급은 renderer 가 끔)
     u.mixer.timeScale = !(o && o.anim) && o && o.walking && g ? g.rate : 1;
     u.mixer.update(dt);
     return true;

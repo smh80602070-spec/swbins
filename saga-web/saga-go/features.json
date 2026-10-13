@@ -947,5 +947,24 @@
   "ticket": "W-0198",
   "since": "2026-10-14",
   "note": "D2(claude 2026-10-14): go-gait.mjs cam_new2(1280×720 몸 ≈180px = 1/4, 조우 카드에 안 가림)·cam_phone2(390×844 몸 ≈1/6) Read ○ · qc 1-world3d·2-close Read ○(×0.7 당김은 발이 카드 뒤). 시선 2.6 → 1.6 으로 내려 몸을 화면 가운데로. 손잡이 world3d.cam3dBack·cam3dUp·cam3dLook·cam3dAhead."
+ },
+ {
+  "id": "go.light3d-contrast",
+  "name": "3D 빛 그늘 대비 — 낮일수록 해↑·하늘빛↓(한낮 하늘/해 1.18 → 0.53, 밤 그대로) · 가까운 3D 보기 그림자 상자 ±45 · 움직이는 몸 진짜 그림자·발밑 원판 0.16",
+  "files": [
+   "js/world3d-light.js",
+   "src/world3d/05-render.js",
+   "src/world3d/04-actors.js",
+   "js/asset3d.js"
+  ],
+  "tests": [
+   "3D 빛 — 한낮은 하늘빛/해 0.35~0.55(그늘 대비), 한밤은 옛 밝기 그대로(대비 손잡이는 낮에만) (W-0199)"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0199",
+  "since": "2026-10-14",
+  "note": "D2(claude 2026-10-14): go-light.mjs(HIGH 고정) 한낮 옛/새 Read · 밝기 잼 그늘 벽 85→71·땅 133→127(대비 1.56→1.79배)·밤 같음 ○. 몸 castShadow 20 메시. 사람 몸은 MeshBasic(무광)이라 빛 변화 0 — W-0201 몫. 헤드리스 자동 등급 LOW 면 그림자·목조 집 꺼짐(회색 상자 집 = LOW 단순 소품)."
  }
 ]

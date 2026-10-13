@@ -20,7 +20,7 @@
   function groundShadow() {
     if (!shadowGeo) {
       shadowGeo = new T.CircleGeometry(1, 18);
-      shadowMat = new T.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.34, depthWrite: false });
+      shadowMat = new T.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.16, depthWrite: false });   // W-0199 그림자 켜진 기본 — 꺼지면 syncShadow 가 0.34
     }
     var m = new T.Mesh(shadowGeo, shadowMat);
     m.rotation.x = -Math.PI / 2;

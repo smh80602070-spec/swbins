@@ -229,7 +229,7 @@
     var want = zoom < 4 && !(global.DG_3D_DEBUG || {}).noShadow && (!P || P.shadowOk());
     if (want === shadowOn) { return; }
     shadowOn = want;
-    renderer.shadowMap.enabled = want;
+    renderer.shadowMap.enabled = want; if (shadowMat) { shadowMat.opacity = want ? 0.16 : 0.34; }   // W-0199 진짜 그림자가 있으면 발밑 원판은 접지 그늘만
     scene.traverse(function (o) {
       if (o.isMesh && o.material) { o.material.needsUpdate = true; }
     });
@@ -243,7 +243,7 @@
        높이·방위만 시각이 정한다 */
     sun.position.set(pos.x + L.sun.x, L.sun.y, pos.y + L.sun.z);
     sun.target.position.set(pos.x, 0, pos.y);
-    sun.target.updateMatrixWorld();
+    sun.target.updateMatrixWorld(); var Wl = global.DG.world || {}, shR = Wl.tiltMode === 2 && Wl.zoom3d < 2.5 ? core.tuned('light3d.shadowNear', 45) : 140; if (sun.shadow.camera.right !== shR) { var sc0 = sun.shadow.camera; sc0.left = sc0.bottom = -shR; sc0.right = sc0.top = shR; sc0.updateProjectionMatrix(); }   // W-0199 가까운 3D 보기면 그림자 상자를 좁혀 사람 그림자를 선명하게(1024² 에 ±140 은 0.27m/칸)
     sun.color.setHex(L.sun.hex);
     sun.intensity = L.sun.intensity;
     sky.color.setHex(L.hemi.sky);
