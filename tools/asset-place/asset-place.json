@@ -1226,6 +1226,25 @@
      "dir": "saga-web/shared/assets/creatures3d"
     }
    ]
+  },
+  {
+   "id": "textures-real-unity",
+   "src": "tools/ai-art/_out/k99_png",
+   "recursive": true,
+   "include": [
+    "*.png",
+    "*.license.json"
+   ],
+   "note": "K-0099 자체 PBR 12세트(K-0093) 유니티판 — pbr_from_albedo.py --png 로 만든 무손실 PNG(바탕·법선·거칠기·높이 × hi·512, 70MB). 원본은 _out(정본 바탕색에서 다시 만듦 — 정본에 맵을 또 두지 않는다). .meta 는 patch_unity_pbr.py 로 법선·선형 설정",
+   "targets": [
+    {
+     "track": "unity",
+     "dir": "saga-unity/Assets/Art/TexturesReal",
+     "sidecar": [
+      ".meta"
+     ]
+    }
+   ]
   }
  ]
 }

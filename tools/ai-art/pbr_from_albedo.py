@@ -4,6 +4,7 @@
     고른 견본  tools/ai-art/data/k93_picks.json {"<세트>": "<_out/k93_pbr 의 png 이름>"}
     정본       saga-assets/textures_real/<세트>/<세트>_color.png · <세트>.license.json
     고돗       saga-godot/assets/generated/tiles_real/<세트>_{hi,512}{,_n,_r,_h}.webp (q90)
+    --png <폴더>  유니티용 무손실 PNG(<폴더>/<세트>/<세트>_{hi,512}{,_n,_r,_h}.png + license, K-0099) — 고돗·정본은 안 씀
     --sheet    세트마다 한 줄(바탕·법선·거칠기·높이 + 2×2 타일) 눈 판정용 · --check 쓰지 않고 이음매·크기만
 
 이음매: 낱알 무늬(자갈·돌벽·기와·포장·판자)는 make_seamless.cutseam(경계 자르기 — 띠 섞기는 낱알을 반투명 겹침),
@@ -17,6 +18,7 @@ hi = 이음매 처리한 그대로(띠 섞기 1024 · 경계 자르기 ≈ 910 �
 """
 import json
 import os
+import shutil
 import sys
 
 import numpy as np
@@ -101,6 +103,7 @@ def main():
     picks = json.load(open(PICKS, encoding='utf-8'))
     sets = a[a.index('--sets') + 1].split(',') if '--sets' in a else list(SETS)
     write = '--check' not in a
+    png_dir = os.path.abspath(a[a.index('--png') + 1]) if '--png' in a else None
     rows, bad, total = [], [], 0
     for name in sets:
         src = os.path.join(SRC, picks[name])
@@ -112,6 +115,19 @@ def main():
         m = maps(name, color)
         print('PBR %-10s %s %s %dpx seam %.2f edge %.2f %s' % (name, picks[name], SETS[name]['seam'], size, sr, er, 'OK' if ok else 'FAIL'))
         (rows if ok else bad).append((name, m))
+        if png_dir and ok:          # K-0099 유니티 — 같은 맵을 무손실 PNG 로(유니티 임포터는 WebP 를 못 읽음), 고돗·정본은 안 건드림
+            d = os.path.join(png_dir, name)
+            os.makedirs(d, exist_ok=True)
+            for suf, im in m.items():
+                for tag, px in (('hi', size), ('512', 512)):
+                    out = im if px == size else wrap_resize(im.convert('RGB'), px)
+                    if suf in ('_r', '_h'):
+                        out = out.convert('L')
+                    q = os.path.join(d, '%s_%s%s.png' % (name, tag, suf))
+                    out.save(q, optimize=True)
+                    total += os.path.getsize(q)
+            shutil.copy(os.path.join(CANON, name, name + '.license.json'), os.path.join(d, name + '.license.json'))
+            continue
         if not write or not ok:
             continue
         cd = os.path.join(CANON, name)
