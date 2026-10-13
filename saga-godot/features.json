@@ -3997,6 +3997,26 @@
   "note": "전후 같은 시간대 여섯 컷(17:29·17:30) Claude 눈 — 종루 탑·서리봉 성벽·하늘 나루 디딤돌 돌벽 결 ○ · 굽은 거리·갈림길 고을 집은 이 재질이 아님(그대로) · 모양은 상자(모델은 K) · SAGA_PROP_OLD=1 옛 한 벌"
  },
  {
+  "id": "gd.go.real_house",
+  "name": "1만리 마을 집 사실 재질 — 셀 정점색·검은 외곽선 → house_real(부품 종류별 자체 PBR: 받침 돌벽·벽 회벽·뼈대 널판·지붕 기와, 빛깔은 정점색) · 집끼리 재질 하나 공유",
+  "files": [
+   "saga_core/shaders/house_real.gdshader",
+   "games/saga_go/world/house_builder.gd"
+  ],
+  "tests": [
+   "go_house",
+   "village",
+   "perf",
+   "toon_look"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0221",
+  "since": "2026-10-13",
+  "note": "같은 시간대 전후(19:26·19:28) 가로 넷·세로 하나 Claude 눈 ○ — 기와 줄·돌 받침·나무 결 · 지붕 윤기가 멀리서 허옇게 바래 SPECULAR 낮춤 · 밤 창빛 그대로 · SAGA_HOUSE_OLD=1 옛 재질 · 신상(waypoints)은 옛 셀 그대로"
+ },
+ {
   "id": "gd.dg.meridian",
   "name": "2나락 경락도(經絡圖) — 409마디 패시브 그물을 직업(쥔 무기)마다·시작점 여섯 · 점수 = 첫 별 + 그 직업 무예 점수 누계 + 보스 처치(상한 60) · 능력치 합은 _sum_eff·저항 · 규칙 열(기력·회피 없는 자리는 재해석) · 무예 창 「☯ 경락도」·F2(웹 W-0180)",
   "files": [

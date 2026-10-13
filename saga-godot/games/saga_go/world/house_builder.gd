@@ -9,6 +9,12 @@ extends RefCounted
 const SHADER := preload("res://saga_core/shaders/cel_vertex_color.gdshader")
 const OUTLINE := preload("res://saga_core/shaders/cel_outline.gdshader")
 const GLOW_SHADER := preload("res://saga_core/shaders/night_glow.gdshader")
+## G-0221 — 자체 PBR(K-0093 tiles_real)이 있으면 집은 house_real(부품 종류별 돌벽·회벽·널판·기와 결, 외곽선 없음). 종류는 정점 UV.x(색 상수로 붙임).
+## SAGA_HOUSE_OLD=1 이면 옛 셀 정점색 + 외곽선(전후 촬영). 신상(waypoints.gd add_mesh)은 늘 옛 재질.
+const REAL_SHADER := preload("res://saga_core/shaders/house_real.gdshader")
+const REAL_DIR := "res://assets/generated/tiles_real/"
+const REAL_SET := {"stone": "stonewall", "plaster": "plaster", "wood": "planks", "roof": "rooftile"}
+static var _real_mat: ShaderMaterial = null
 
 const STONE := Color(0.62, 0.6, 0.56)
 const PLASTER := Color(0.95, 0.91, 0.82)
@@ -21,6 +27,7 @@ const FLOWERS := [Color(0.92, 0.32, 0.36), Color(0.98, 0.78, 0.3), Color(0.72, 0
 var _v := PackedVector3Array()
 var _n := PackedVector3Array()
 var _c := PackedColorArray()
+var _uv := PackedVector2Array()   # G-0221 x = 부품 종류(0 기타 · 1 돌 · 2 회벽 · 3 나무 · 4 지붕)
 var _i := PackedInt32Array()
 ## 밤에 켜지는 유리(창·등롱) — 따로 모아 공유 재질(glow_material) 하나로 그린다.
 var _glow = null
@@ -42,7 +49,36 @@ static func set_night(amount: float) -> void:
 static func build(footprint: Vector3, variant: int) -> MeshInstance3D:
 	var b = new()
 	b._house(footprint, variant)
-	return b.to_instance("HouseBody", 0.04)
+	return b.to_instance("HouseBody", 0.04, true)
+
+
+## G-0221 — 집 공유 재질(자체 PBR 이 없거나 SAGA_HOUSE_OLD 면 null).
+static func real_material() -> ShaderMaterial:
+	if _real_mat == null:
+		if not ResourceLoader.exists(REAL_DIR + "plaster_hi.webp") or OS.get_environment("SAGA_HOUSE_OLD") != "":
+			return null
+		_real_mat = ShaderMaterial.new()
+		_real_mat.shader = REAL_SHADER
+		for k: String in REAL_SET:
+			_real_mat.set_shader_parameter(k + "_tex", load(REAL_DIR + String(REAL_SET[k]) + "_hi.webp"))
+			_real_mat.set_shader_parameter(k + "_n", load(REAL_DIR + String(REAL_SET[k]) + "_hi_n.webp"))
+	return _real_mat
+
+
+## 색 상수 → 부품 종류(house_real 이 고를 결)
+static func kind_of(c: Color) -> float:
+	for s in [STONE, STONE.darkened(0.15)]:
+		if c.is_equal_approx(s):
+			return 1.0
+	if c.is_equal_approx(PLASTER):
+		return 2.0
+	for s in [WOOD, DOOR, WOOD.lightened(0.15)]:
+		if c.is_equal_approx(s):
+			return 3.0
+	for r: Color in ROOFS:
+		if c.is_equal_approx(r) or c.is_equal_approx(r.darkened(0.3)):
+			return 4.0
+	return 0.0
 
 
 ## 다른 코드 모형(신상 — waypoints.gd)도 부품을 여기 모아 메시 하나로 합친다.
@@ -50,7 +86,7 @@ func add_mesh(m: Mesh, xf: Transform3D, color: Color) -> void:
 	_append(m, xf, color)
 
 
-func to_instance(node_name: String, outline_thickness: float) -> MeshInstance3D:
+func to_instance(node_name: String, outline_thickness: float, real := false) -> MeshInstance3D:
 	var mi := MeshInstance3D.new()
 	mi.name = node_name
 	mi.mesh = _commit()
@@ -61,6 +97,9 @@ func to_instance(node_name: String, outline_thickness: float) -> MeshInstance3D:
 		g.material_override = glow_material()
 		g.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		mi.add_child(g)
+	if real and real_material() != null:
+		mi.material_override = real_material()
+		return mi
 	var mat := ShaderMaterial.new()
 	mat.shader = SHADER
 	var o := ShaderMaterial.new()
@@ -163,10 +202,12 @@ func _append(m: Mesh, xf: Transform3D, color: Color) -> void:
 	var idx: PackedInt32Array = arr[Mesh.ARRAY_INDEX]
 	var base := _v.size()
 	var lin := color.srgb_to_linear()
+	var kind := kind_of(color)
 	for k in verts.size():
 		_v.append(xf * verts[k])
 		_n.append((xf.basis * norms[k]).normalized())
 		_c.append(lin)
+		_uv.append(Vector2(kind, 0.0))
 	for k in idx:
 		_i.append(base + k)
 
@@ -177,6 +218,7 @@ func _commit() -> ArrayMesh:
 	arr[Mesh.ARRAY_VERTEX] = _v
 	arr[Mesh.ARRAY_NORMAL] = _n
 	arr[Mesh.ARRAY_COLOR] = _c
+	arr[Mesh.ARRAY_TEX_UV] = _uv
 	arr[Mesh.ARRAY_INDEX] = _i
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
