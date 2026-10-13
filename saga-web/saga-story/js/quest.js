@@ -209,7 +209,7 @@
    *  세는 방법이 kill·gather 와 다르다: 같은 곳을 두 번 밟아도 늘지 않아야 해서
    *  집합(record.visited)에 넣어 두고 그 크기를 잰다. */
   function onStage(run) {
-    if (!run || !run.stage) { return; }
+    if (!run || !run.stage || run.stage.gateArena) { return; }   // R-5 관문 자리(임시 판)는 「밟은 곳」이 아니다
     var key = run.stage.key;
     session.visited[key] = true;
     for (var i = 0; i < QD.QUESTS.length; i++) {

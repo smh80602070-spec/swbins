@@ -40,6 +40,12 @@
     d = d || new Date();
     return key + '.bak-' + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + '-' + pad(d.getHours()) + pad(d.getMinutes());
   }
+  /** 순수 — 비어 있는 백업 키(R-5: 같은 분에 두 번 누르면 원본 백업을 덮어썼다) — 있으면 -2, -3 … */
+  function bakFree(key, has, d) {
+    var b = bakKey(key, d), k = b, n = 2;
+    while (has(k) && n < 100) { k = b + '-' + n++; }
+    return k;
+  }
 
   /** 순수 — 프로필 목록 글(JSON)에서 지금 프로필의 세이브 키. 없으면 null */
   function saveKeyOf(accountsRaw) {
@@ -57,6 +63,8 @@
       e = logList[i];
       if (e && e.kind === 'error' && (e.t || 0) >= since) { all.push(e); }
     }
+    /* R-5 교차 출처 "Script error."(출처 없음) — 인앱 브라우저가 끼운 남의 스크립트라 부팅 실패가 아니다 */
+    all = all.filter(function (x) { return !(/^Script error.?$/i.test(String(x.msg || '')) && !x.src); });
     if (!all.length) { return null; }
     all.sort(function (a, b) { return (a.t || 0) - (b.t || 0); });
     e = all[0];
@@ -101,7 +109,7 @@
     if (!confirm('이 프로필을 새로 시작할까요?\n지금 세이브는 지우지 않고 백업 칸으로 옮겨 둡니다.')) { return; }
     try {
       var raw = localStorage.getItem(key);
-      if (raw) { localStorage.setItem(bakKey(key), raw); localStorage.removeItem(key); }
+      if (raw) { localStorage.setItem(bakFree(key, function (k) { return localStorage.getItem(k) !== null; }), raw); localStorage.removeItem(key); }
     } catch (e) {
       alert('저장소에 쓰지 못했습니다 — 먼저 [세이브 내려받기]로 받아 두세요.');
       return;
@@ -170,11 +178,11 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.bootGuard = { bakKey: bakKey, saveKeyOf: saveKeyOf, firstError: firstError, HOLD_MS: HOLD_MS, DARK_MS: DARK_MS };
+  global.DG.bootGuard = { bakKey: bakKey, bakFree: bakFree, saveKeyOf: saveKeyOf, firstError: firstError, HOLD_MS: HOLD_MS, DARK_MS: DARK_MS };
 
   if (global.DG_NO_ACCOUNT || !global.addEventListener) { return; }   // 자가진단 — 순수 함수만
   global.addEventListener('error', function (ev) {
-    if (done || (ev && ev.target && ev.target !== global)) { return; }   // 그림·소리 못 받음(자원 오류)은 부팅 실패가 아니다
+    if (done || shown || (ev && ev.target && ev.target !== global)) { return; }   // R-5 띠가 선 뒤엔 안 쌓는다(매 프레임 예외면 끝없이 컸다)   // 그림·소리 못 받음(자원 오류)은 부팅 실패가 아니다
     own.push({ kind: 'error', t: Date.now(), msg: (ev && ev.message) || '오류', src: (ev && ev.filename) || '', line: (ev && ev.lineno) || 0 });
   });
   global.addEventListener('load', function () { loadedAt = Date.now(); });

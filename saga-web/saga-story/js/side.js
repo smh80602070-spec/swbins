@@ -718,9 +718,9 @@
   function challengeGate(key) {
     if (!gateReady(key)) { return false; }
     /* W-0188 마을(안전지대)이 아니라 그 마을 문 밖 관문 자리(gate-arena.js)에서만 선다 — 지거나 나가면 세이브 stage 인 그 마을로 */
-    if ((run && run.boss) || !unlocked(key) || !global.DG.gateArena || !core.save.party.length) { return false; }
-    if (run && run.rift && global.DG.rift) { global.DG.rift.onEnd('leave'); }
-    if (!placeIn(global.DG.gateArena.make(key))) { return false; } st().stage = key;
+    if ((run && run.boss && run.boss.gate) || !unlocked(key) || !global.DG.gateArena || !core.save.party.length) { return false; }   // R-5 들판 두목은 막지 않는다(자리를 옮기면 그냥 사라졌다 다음에 다시)
+    if (run && run.rift && global.DG.rift) { global.DG.rift.onEnd('leave'); run = null; }   // R-5 비경 run(rift 표시·축복)을 같은 run 으로 옮기면 대장 처치가 비경 분기로 샜다 — enter() 처럼 새 run
+    if (!placeIn(global.DG.gateArena.make(key))) { return false; } st().stage = key; run.gateSweeps = 0;
     var stg = run.stage;
     var ed = global.DG.enemyData;
     var ref = ed ? ed.bossByName(stg.gateBoss.name) : { name: stg.gateBoss.name, kind: 'human', color: '#7a3a3a' };

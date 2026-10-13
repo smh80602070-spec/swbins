@@ -16,3 +16,4 @@
 - [ ] 10-13 · (G-0220 고돗 넘김) · K-0047 표정 초상 92·K-0049 움직이는 초상 23 을 고돗에도 놓아 달라 — `saga-godot/assets/portraits/{expr,live/<id>}/`(웹과 같은 파일·live.json, .import·출처 포함, asset-place.json 에 고돗 대상 셋) · 자체툴
 - [ ] 10-13 · (K-0096 자체툴 넘김) · 물고기 38 자체판 `shared/assets/creatures3d/<id>.glb`(뼈 worm·동작 7) — W-0178 처럼 빌린 Quaternius 물고기 바꿔 끼우기(`k96_targets.json` 5-fish) · 웹
 - [ ] 10-13 · (K-0096 자체툴 넘김) · 물고기 ✗ 3(whale·puffer·fish_a) 그림 다시 → Kaggle 다시(빌린 것 남음) · 자체툴
+- [ ] 10-13 · (웹 R-5 넘김 — Claude 눈) · 3마을 2D 에서 주인공(나)이 몸에 따라 파랑·청록·풀무늬 한 색 실루엣으로 나온다(새 프로필 pw-cozy-check base·r5·r5b 세 번 다, W-0142 전 HEAD 에서도) — 옷 색칠(W-0121 tint 칸)이 몸 전체에 먹는 듯 · 웹

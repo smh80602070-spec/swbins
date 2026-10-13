@@ -6677,8 +6677,10 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var s1 = G.saveKeyOf(JSON.stringify({ list: [{ id: 'pabc' }], cur: 'pabc' })) === 'saga-realm/save/pabc' && G.saveKeyOf(null) === null && G.saveKeyOf('{깨짐') === null && G.saveKeyOf('{"list":[]}') === null;
       var log = [{ kind: 'error', t: 5, msg: '옛 것' }, { kind: 'rejection', t: 120, msg: '모델 못 받음' }, { kind: 'error', t: 150, msg: 'x is undefined\n  at y', src: 'js/ui-rtk.js' }];
       var f1 = G.firstError([], log, 100), f2 = G.firstError([{ kind: 'error', t: 110, msg: 'Unexpected token', src: 'http://a/dist/app.js', line: 3 }], log, 100), f3 = G.firstError([], log.slice(0, 2), 100);
-      var ok = k && s1 && f1 === 'x is undefined (ui-rtk.js)' && f2 === 'Unexpected token (app.js:3)' && f3 === null && !document.getElementById('boot-guard');
-      return ok ? '백업 키 · 세이브 키 · 첫 오류 「' + f2 + '」 · 진단엔 띠 없음' : '실패 ' + [k, s1, f1, f2, f3].join(' ');
+      var have = { 'saga-realm/save/pabc.bak-20261003-0705': 1, 'saga-realm/save/pabc.bak-20261003-0705-2': 1 }, bf = G.bakFree('saga-realm/save/pabc', function (x) { return !!have[x]; }, d) === 'saga-realm/save/pabc.bak-20261003-0705-3' && G.bakFree('a', function () { return false; }, d) === 'a.bak-20261003-0705';
+      var f4 = G.firstError([{ kind: 'error', t: 120, msg: 'Script error.', src: '' }], [], 100);   // R-5 교차 출처 오류는 거른다
+      var ok = k && s1 && bf && f4 === null && f1 === 'x is undefined (ui-rtk.js)' && f2 === 'Unexpected token (app.js:3)' && f3 === null && !document.getElementById('boot-guard');
+      return ok ? '백업 키(겹치면 -2·-3) · 세이브 키 · 첫 오류 「' + f2 + '」(Script error. 거름) · 진단엔 띠 없음' : '실패 ' + [k, s1, bf, f4, f1, f2, f3].join(' ');
     });
 
     t('런타임 에러 없음', function () {

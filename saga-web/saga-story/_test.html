@@ -4755,6 +4755,37 @@ window.DG_NO_TUNE = true;
       return won && mid === 'gate-heodo' && back && pots >= 1 && home ? '이김 → ' + GA.BACK + '초 뒤 허도 · 탕약 +' + pots + ' 주움 · 나갔다 다시 서면 강릉진' : '실패 ' + [won, mid, back, pots, home].join(' ');
     });
 
+    t('관문 자리(R-5) — 비경 run 에서 도전하면 새 run(rift 표시·축복 없음) · 들판 두목이 있어도 도전 · 가방이 가득 차 못 주운 것이 있으면 마을로 안 넘어간다', function () {
+      var S = DG.side, GA = DG.gateArena, GG = DG.gear, put0 = GG.put, make0 = GG.make, res = [];
+      if (S.active()) { S.leave(); }
+      ensureParty();
+      C.save.player.level = 10;
+      C.save.side.gateWeek = {}; C.save.side.gateDay = {};
+      S.enter('heodo');
+      var r0 = S.raw(); r0.rift = true; r0.rm = { hpUp: 0.5 };
+      var ok1 = S.challengeGate('sinya'), r1 = S.raw();
+      res.push(ok1 && r1 !== r0 && !r1.rift && !r1.rm && r1.stage.gateArena === true);
+      S.leave();
+      C.save.side.gateWeek = {}; C.save.side.gateDay = {};
+      S.enter('heodo');
+      S.raw().boss = { gate: false, hp: 10, x: 0, y: 0, ref: { name: '들판 두목' } };
+      var ok2 = S.challengeGate('heodo'), r2 = S.raw();
+      res.push(ok2 && r2.boss && r2.boss.gate === true);
+      try {
+        GG.put = function () { return false; }; GG.make = function () { return {}; };
+        var e = r2.boss, p = r2.player;
+        e.hp = 1; e.dir = 1; p.x = e.x - 400; p.y = e.y; p.facing = 1; e.x = p.x + 10; p.cds[0] = 0; r2.mp = r2.mpMax;
+        S.castSkill(0);
+        r2.drops.push({ kind: 'gear', key: 'x', x: p.x + 300, y: r2.stage.floor - 12, vy: 0 });
+        for (var i = 0; i < Math.ceil((GA.BACK + 0.4 * 4 + 1) / 0.05); i++) { S.update(0.05); }
+        var r3 = S.raw();
+        res.push(r3 && r3.stage.key === 'gate-heodo' && r3.drops.some(function (d) { return d.kind === 'gear'; }));
+      } finally { GG.put = put0; GG.make = make0; }
+      S.leave();
+      C.save.side.gateDay = {}; C.save.side.gateWeek = {};
+      return res.every(Boolean) ? '비경 → 새 run · 들판 두목 있어도 관문 대장 · 못 주운 장비 남으면 관문 앞에 머묾' : '실패 ' + res.join(',');
+    });
+
     /* ── 비경(PLAN §5-3, 2026-09-22) ─────────────────────────
      * 5층 노드 지도 + 축복 3택 + 기억 조각. 판정은 사냥터 엔진 그대로라 여기서는 흐름(지도·축복·
      * 층·죽음·클리어)과 축복이 엔진에 실제로 걸리는지를 본다. 지도·후보는 씨앗으로만 정해진다. */

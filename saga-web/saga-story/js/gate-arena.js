@@ -19,6 +19,7 @@
   var WIDTH = 900;
   var BACK = 3;          // 이긴 뒤 마을로 돌아가기까지(초) — 쓰러지는 몸·보상 알림을 볼 틈
   var SWEEP = 0.4;       // 떨군 것을 발밑으로 모은 뒤 줍기까지
+  var TRIES = 3;         // 그래도 남으면(가방 가득) 자동 복귀를 멈춘다 — 마을로 넘어가면 떨군 것이 사라진다
 
   function make(key) {
     var town = global.DG.sideData.stage(key);
@@ -33,17 +34,21 @@
 
   function home(run) {
     var S = global.DG.side, p = run.player;
-    if (run.drops.length && !run.gateSwept) {
-      run.gateSwept = true;
-      for (var i = 0; i < run.drops.length; i++) {
+    if (run.drops.length) {
+      if ((run.gateSweeps = (run.gateSweeps || 0) + 1) > TRIES) {
+        run.gateSweeps = 0;
+        global.DG.core.emit('toast', '📦 가방이 가득 차 못 주운 것이 남았습니다 — 정리하고 왼쪽 문으로 돌아가세요');
+        return false;
+      }
+      for (var i = 0; i < run.drops.length; i++) {   // 지금 발 높이로 — 뛰거나 날고 있어도 닿게(R-5)
         run.drops[i].x = p.x + S.P_W / 2;
-        run.drops[i].y = run.stage.floor - 12;
+        run.drops[i].y = Math.min(run.stage.floor, p.y + S.P_H) - 12;
         run.drops[i].vy = 0;
       }
       run.gateBackT = SWEEP;
       return false;
     }
-    run.gateSwept = false;
+    run.gateSweeps = 0;
     return S.travel(run.stage.gateOf);
   }
 

@@ -210,7 +210,7 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
         ids2('path', [G, D, D, D, D, D, D, D], 'winter') === '',
         ids2('stone', [G, G, G, G, G, G, G, G]) === '',
         ids2('path', [G, D, G, D, G, D, D, D]) === ids2('path', [G, D, G, D, G, D, D, D]),
-        /forest_grass_spring\.webp$/.test(Z.tileSrc('grass', 'spring') || '') && /forest_snow\.webp$/.test(Z.tileSrc('grass_dark', 'winter') || '') && Z.tileSrc('path', 'spring') === null
+        /forest_grass_spring\.webp$/.test(Z.tileSrc('grass', 'spring') || '') && /forest_snow\.webp$/.test(Z.tileSrc('grass_dark', 'winter') || '') && Z.tileSrc('path', 'spring') === null && Z.tileSrc('grass_rocky', 'spring') === null
       ];
       return r.every(Boolean) ? '파일 ' + ids.length + '장 · 조각 고르기 ' + (r.length - 2) + '경우 결정적' : '실패 ' + r.join(',') + ' 없음 ' + miss.join(',');
     });

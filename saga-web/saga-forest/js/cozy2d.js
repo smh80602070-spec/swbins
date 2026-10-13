@@ -131,9 +131,10 @@
       if (o.tileAt && (it.kind === 'path' || it.kind === 'sand' || it.kind === 'stone' || it.kind === 'floor' || it.kind === 'water')) {
         var rr = rims(it.kind, o.tileAt(it.tx, it.ty - 1), o.tileAt(it.tx + 1, it.ty), o.tileAt(it.tx, it.ty + 1), o.tileAt(it.tx - 1, it.ty));
         sm = seamPick(it.kind, nb8(o.tileAt, it.tx, it.ty), key); done = {};
-        for (j = 0; j < sm.length; j++) {   // W-0142 이음 타일 — 그림이 서 있는 변만 옛 도형을 끈다
-          if (!seamImg(sm[j].id)) { continue; }
-          seams.push({ it: it, s: sm[j], col: grassCol(sm[j].g, it.tx + sm[j].dx, it.ty + sm[j].dy), gsrc: tileSrc(sm[j].g, key) });
+        for (j = 0; j < sm.length; j++) {   // W-0142 이음 타일 — 구운 조각이 선 변만 옛 도형을 끈다(R-5: 풀 무늬를 못 받으면 옛 톱니 그대로)
+          var cv = seamTint(sm[j].id, grassCol(sm[j].g, it.tx + sm[j].dx, it.ty + sm[j].dy), tileSrc(sm[j].g, key), sm[j].corner !== undefined);
+          if (!cv) { continue; }
+          seams.push({ it: it, s: sm[j], cv: cv });
           if (sm[j].side !== undefined) { done[sm[j].side] = 1; }
         }
         for (j = 0; j < rr.length; j++) {
@@ -293,7 +294,7 @@
   /* ── W-0142 K 산출 배선 ───────────────────────────────── */
   /** 풀 칸의 계절 타일 주소 — 2D 모드·표에 있을 때만, 아니면 null(옛 표) */
   function tileSrc(kind, seKey) {
-    var m = M(), id = isGrass(kind) && m.tileSeason && m.tileSeason[seKey];
+    var m = M(), id = isGrass(kind) && m.tile && m.tile[kind] === m.tile.grass && m.tileSeason && m.tileSeason[seKey];   // R-5 풀 그림을 쓰는 칸만(바위 지대 grass_rocky 는 돌길 그대로)
     if (!id || !m2on()) { return null; }
     return (m.tileBase || 'assets/web2d/tile/') + id + '.webp';
   }
@@ -341,8 +342,7 @@
   /** 돌림 r(시계 방향 90°×r) — 그림 왼위·오른위·왼아래가 칸의 어느 꼭짓점(0~1)에 가나 */
   var ROT = [[[0, 0], [1, 0], [0, 1]], [[1, 0], [1, 1], [0, 0]], [[1, 1], [0, 1], [1, 0]], [[0, 1], [0, 0], [1, 1]]];
   function drawSeam(ctx, e, P, T) {
-    var cv = seamTint(e.s.id, e.col, e.gsrc, e.s.corner !== undefined), R = ROT[e.s.rot], it = e.it;
-    if (!cv) { return; }
+    var cv = e.cv, R = ROT[e.s.rot], it = e.it;
     var ax = R[0][0], ay = R[0][1], bx = ax + (R[1][0] - ax) * cv.u, by = ay + (R[1][1] - ay) * cv.u, cx = ax + (R[2][0] - ax) * cv.v, cy = ay + (R[2][1] - ay) * cv.v;
     var a = P((it.tx + ax) * T, (it.ty + ay) * T), b = P((it.tx + bx) * T, (it.ty + by) * T), c = P((it.tx + cx) * T, (it.ty + cy) * T);
     ctx.save();
@@ -351,7 +351,15 @@
     ctx.restore();
   }
 
-  function isNight() { var VD = global.DG && global.DG.villageData; return !!(VD && VD.phaseOf && VD.phaseOf(new Date().getHours()).key === 'night'); }
+  /* 밤인가 — 소품마다 불리니 1초에 한 번만 센다(R-5: 소품마다 new Date) */
+  var nightAt = -1e9, nightV = false;
+  function isNight() {
+    var t = Date.now(), VD;
+    if (t - nightAt < 1000) { return nightV; }
+    nightAt = t; VD = global.DG && global.DG.villageData;
+    nightV = !!(VD && VD.phaseOf && VD.phaseOf(new Date(t).getHours()).key === 'night');
+    return nightV;
+  }
   /** 소품 그림 id — 밤이고 밤 변종이 있으면 그것, 아니면 낮 id */
   function propId(kind, night) {
     var p = M().prop2d && M().prop2d[kind];
