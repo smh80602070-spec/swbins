@@ -1971,7 +1971,7 @@
   "fun": {},
   "ticket": "U-0096",
   "since": "2026-10-11",
-  "note": "D2(U-0096): docs/playcheck/d2-u0094-u0097-20261011.json — PlaytestGoTrack OK · 흔적·목표판 줄 촬영 Claude 눈 ○ · 무기 빛은 진단 단계 표만(촬영 못 봄) · U-0103 서리봉 고원 흔적 29곳(마을 7 그대로, 고원 셋 → 곰왕) — track OK·고원 촬영 Claude 눈 ○"
+  "note": "D2(U-0096): docs/playcheck/d2-u0094-u0097-20261011.json — PlaytestGoTrack OK · 흔적·목표판 줄 촬영 Claude 눈 ○ · 무기 빛은 진단 단계 표만(촬영 못 봄) · U-0103 서리봉 고원 흔적 29곳(마을 7 그대로, 고원 셋 → 곰왕) — track OK·고원 촬영 Claude 눈 ○ · U-0120 무기 빛 촬영 ○(d2-u0120-20261013 — 0 대 11, CelToon 외곽선 0 이라 림만 △ → ApplyGlow 단계≥1 외곽선 월드 0.004→0.012m·림 세기 0.5→1.4·폭 3.5→2)"
  },
  {
   "id": "un.dg.hurt-signal",

@@ -14,7 +14,7 @@ namespace Saga.EditorTools
     /// `walk`(가상 조이스틱 앞으로) · `attack`(사가만리 FieldCombat.Attack / 사가나락 PlayerCombat.TriggerAttack) · `swap`(다음 동료로 교체) ·
     /// `skill:<n>`(n 번 동료로 교체 뒤 Skill) · `roof`(마을집 지붕 남쪽에서 북으로 걷기) · `bossintro`(사가나락 = 진단의 두목 더미, 사가종횡 = 두목 6m 앞으로) ·
     /// `bossroom`(U-0115 사가나락 — 러너가 진짜 두목 방을 짓고 주인공을 두목 9m 밖에 세워 걸려 들어가게, 8m 달려듦·컷은 게임이 연다) ·
-    /// `gesture`(동료 환호) · `worldmap`(사가천하 지도 열기) · `party`·`party2`(모양별 동료 편성 — 스킬 진단과 같은 동료). `realmeras`(U-0091 사가천하 — 시간 틈 사람 묻힌 성 들여 수색·훈련·지도 켬) · `realmtactics`(U-0099 전술판 열고 첫 장수 고름) · `realmannals`(U-0101 열전 넷 심고 서고) · `realmzoom`(U-0102 지도 40m) · `hurt`(U-0105 2나락·4종횡 — 체력 35% 에서 한 대 → 첫 장 가장자리 번쩍·붉은 숫자, 끝 장 30% 밑 맥박) · `weatherprobe`(U-0117 — 장마다 날씨 입자 상태 한 줄 로그: 카메라·뿌리 위치·눈 입자 수/방출·보임·레이어·timeScale). 대상 `screen` = 화면 그대로 첫·끝 장(오버레이 UI 포함). 판에 없는 동작은 로그에 SKIP. 여러 개는 `+` 로(`walk+attack`).
+    /// `gesture`(동료 환호) · `worldmap`(사가천하 지도 열기) · `party`·`party2`(모양별 동료 편성 — 스킬 진단과 같은 동료). `realmeras`(U-0091 사가천하 — 시간 틈 사람 묻힌 성 들여 수색·훈련·지도 켬) · `realmtactics`(U-0099 전술판 열고 첫 장수 고름) · `realmannals`(U-0101 열전 넷 심고 서고) · `realmzoom`(U-0102 지도 40m) · `hurt`(U-0105 2나락·4종횡 — 체력 35% 에서 한 대 → 첫 장 가장자리 번쩍·붉은 숫자, 끝 장 30% 밑 맥박) · `weatherprobe`(U-0117 — 장마다 날씨 입자 상태 한 줄 로그: 카메라·뿌리 위치·눈 입자 수/방출·보임·레이어·timeScale) · `weaponglow:<n>`(U-0120 1만리 — 주인공 무기 기록을 빛 단계 n 이 되는 강화·벼림으로 두고, `gamecam` 을 무기 곁 1.8m 에서 무기로). 대상 `screen` = 화면 그대로 첫·끝 장(오버레이 UI 포함). 판에 없는 동작은 로그에 SKIP. 여러 개는 `+` 로(`walk+attack`).
     /// </summary>
     public static partial class PlaytestShowcaseGui
     {
@@ -24,6 +24,7 @@ namespace Saga.EditorTools
         private static List<List<Texture2D>> _seqFrames;
         private static bool _seqWalk;
         private static bool _wxProbe;   // U-0117 weatherprobe — 장마다 WeatherProbe() 한 줄
+        private static Saga.Go.Player.WeaponVisual _wpnCam;   // U-0120 weaponglow — gamecam 을 이 무기 곁에서
         private static bool _seqScreen;   // U-0091 `screen` 대상 — 화면 그대로(ScreenCapture, 오버레이 UI 포함)
         private static bool _kitsWas, _kitsSet;
         private static int _skillRetry = -1, _skillTries;   // U-0090 순간이동 직후엔 공중이라 Skill() 이 거절(-1) — 땅에 설 때까지 다시 쓰고 그 뒤에 찍는다   // U-0090 party 동작이 켠 GoKits.OffForTest — 시트를 다 쓰면 되돌린다
@@ -41,7 +42,7 @@ namespace Saga.EditorTools
 
         private static void SeqBegin()
         {
-            _seqWalk = false; _wxProbe = false;
+            _seqWalk = false; _wxProbe = false; _wpnCam = null;
             // 1만리 주인공은 물가(강물 속)에서 시작한다 — 지붕 말고는 진단과 같은 안전한 땅(FieldCombat.SafePoint)으로 옮겨 놓고 시작
             var acts = System.Environment.GetEnvironmentVariable("SAGA_SHOT_ACT") ?? "";
             var gofc = Saga.Go.Combat.FieldCombat.Instance;
@@ -91,7 +92,7 @@ namespace Saga.EditorTools
             {
                 var (name, t) = _seqTargets[i];
                 Vector3 pos; Quaternion rot;
-                if (t == null) { var c = GameCam(); if (c == null) continue; pos = c.transform.position; rot = c.transform.rotation; _seqFrames[i].Add(ShootTex(c, pos, rot)); continue; }
+                if (t == null) { var c = GameCam(); if (c == null) continue; pos = c.transform.position; rot = c.transform.rotation; if (_wpnCam != null) WeaponCam(ref pos, ref rot); _seqFrames[i].Add(ShootTex(c, pos, rot)); continue; }
                 if (main == null) continue;
                 if (name == "player")
                 {
@@ -328,12 +329,79 @@ namespace Saga.EditorTools
                         }
                         else { Skip(act); return; }
                         break;
-                    case "weatherprobe": _wxProbe = true; WeatherProbe(); break;   // U-0117 4종횡 눈 안 보임 — 촬영 프로세스 안에서 입자 상태를 숫자로
+                    case "weatherprobe": _wxProbe = true; WeatherProbe(); break;
+                    case "weaponglow": if (!WeaponGlow(act)) { Skip(act); return; } break;   // U-0120 1만리 무기 빛 단계 n — 기록을 그 단계로, 무기 곁에서 찍는다   // U-0117 4종횡 눈 안 보임 — 촬영 프로세스 안에서 입자 상태를 숫자로
                     default: Skip(act); return;
                 }
                 Debug.Log($"[ShowcaseGui] act {act}");
             }
             catch (System.Exception e) { Debug.Log($"[ShowcaseGui] act {act} SKIP — {e.GetType().Name}: {e.Message}"); }
+        }
+
+        /// <summary>U-0120 — 주인공 장착 무기 기록을 빛 단계 n(`GoTrack.GlowTier` = 강화/5 + 벼림)이 되게 둔다. 공개 `WeaponState.Restore`(스냅숏 + 이 무기 한 줄)만 쓴다 —
+        /// Restore 가 `Changed` 를 쏴 `WeaponVisual` 이 다시 칠한다. 무기는 주인공 종류의 희귀도 2 이상 중 가장 낮은 것(두 판 같은 모델).</summary>
+        private static bool WeaponGlow(string act)
+        {
+            var parts = act.Split(':');
+            if (parts.Length < 2 || !int.TryParse(parts[1], out int n)) return false;
+            n = Mathf.Clamp(n, 0, 11);
+            var hero = GameObject.FindWithTag("Player");
+            var wv = hero != null ? hero.GetComponent<Saga.Go.Player.WeaponVisual>() : null;
+            if (wv == null) return false;
+            const string who = "hero";
+            var type = Saga.Go.Data.GoWeapons.TypeOf(who);
+            var cands = Saga.Go.Data.GoWeapons.All.Where(x => x.Type == type && x.Rarity > 1).OrderBy(x => x.Rarity).ToList();
+            if (cands.Count == 0) return false;
+            var w = cands[0];
+            // 강화 상한(Cap = 10 + 4×벼림) 안에서 lv/5 + asc = n: asc ≥ (5n − 10)/9
+            int asc = Mathf.Clamp(Mathf.CeilToInt((5f * n - 10f) / 9f), 0, Saga.Go.Data.GoWeapons.MaxAsc);
+            int lv = Mathf.Clamp(5 * (n - asc), 1, Saga.Go.Data.GoWeapons.MaxLv);
+            var inv = Saga.Go.Data.WeaponState.SnapshotInv().Where(e => e.wid != w.Id).ToList();
+            inv.Add(new Saga.Go.Data.WeaponState.InvEntry { wid = w.Id, lv = lv, asc = asc, refine = 1 });
+            var eq = Saga.Go.Data.WeaponState.SnapshotEquip().Where(e => e.hero != who).ToList();
+            eq.Add(new Saga.Go.Data.WeaponState.EquipEntry { hero = who, wid = w.Id });
+            Saga.Go.Data.WeaponState.Restore(inv, eq, Saga.Go.Data.WeaponState.Ore);
+            wv.RefreshModel(who);
+            _wpnCam = wv;
+            var rec = Saga.Go.Data.WeaponState.RecOf(w.Id);
+            string shader = "-", ow = "-", rim = "-", rs = "-", rp = "-", scl = "-";
+            int rn = 0;
+            if (wv.ModelInstance != null)
+            {
+                var mpb = new MaterialPropertyBlock();
+                foreach (var r in wv.ModelInstance.GetComponentsInChildren<Renderer>())
+                {
+                    var m = r.sharedMaterial; if (m == null) continue;
+                    rn++;
+                    if (rn > 1) continue;
+                    r.GetPropertyBlock(mpb);
+                    shader = m.shader != null ? m.shader.name : "null";
+                    if (m.HasProperty("_OutlineWidth")) ow = (mpb.HasFloat("_OutlineWidth") ? mpb.GetFloat("_OutlineWidth") : m.GetFloat("_OutlineWidth")).ToString("F4");
+                    if (m.HasProperty("_RimColor")) { var c = mpb.HasColor("_RimColor") ? mpb.GetColor("_RimColor") : m.GetColor("_RimColor"); rim = "#" + ColorUtility.ToHtmlStringRGB(c); }
+                    if (m.HasProperty("_RimStrength")) rs = (mpb.HasFloat("_RimStrength") ? mpb.GetFloat("_RimStrength") : m.GetFloat("_RimStrength")).ToString("F2");
+                    if (m.HasProperty("_RimPower")) rp = (mpb.HasFloat("_RimPower") ? mpb.GetFloat("_RimPower") : m.GetFloat("_RimPower")).ToString("F2");
+                    scl = r.transform.lossyScale.x.ToString("F3");
+                }
+            }
+            Debug.Log($"[ShowcaseGui] weaponglow tier={wv.GlowTier} shader={shader} outlineW={ow} rim={rim} rimS={rs} rimP={rp} scale={scl} — 요청 {n} · {w.Id}★{w.Rarity} Lv.{rec.lv} 벼림 {rec.asc} · 모델 {wv.ModelName} 렌더러 {rn}");
+            return wv.ModelInstance != null;
+        }
+
+        /// <summary>U-0120 — 게임 카메라 대신 무기 곁 1.8m(주인공 몸 반대쪽·조금 앞·조금 위)에서 무기 가운데를 본다.</summary>
+        private static void WeaponCam(ref Vector3 pos, ref Quaternion rot)
+        {
+            var model = _wpnCam.ModelInstance;
+            if (model == null) return;
+            Bounds b = default; bool any = false;
+            foreach (var r in model.GetComponentsInChildren<Renderer>()) { if (!any) { b = r.bounds; any = true; } else b.Encapsulate(r.bounds); }
+            if (!any) return;
+            var body = _wpnCam.transform;
+            var side = b.center - body.position; side.y = 0f;
+            if (side.sqrMagnitude < 0.04f) side = body.right;
+            var dir = (side.normalized + body.forward * 0.6f).normalized;
+            pos = b.center + dir * 1.8f + Vector3.up * 0.4f;
+            if (Physics.Raycast(pos + Vector3.up * 60f, Vector3.down, out var hit, 120f, ~0, QueryTriggerInteraction.Ignore) && hit.point.y + 0.5f > pos.y) pos.y = hit.point.y + 0.5f;
+            rot = Quaternion.LookRotation(b.center - pos, Vector3.up);
         }
 
         /// <summary>U-0117 — 날씨 입자 상태 한 줄(게임 코드에 공개 칸 안 만듦: SkyWeather.Instance 아래 `Fx_Snow` 를 이름으로).</summary>

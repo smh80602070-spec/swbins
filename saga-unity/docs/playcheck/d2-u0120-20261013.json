@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-13",
+  "tickets": [
+    "U-0120 1만리 무기 빛 촬영 — 강화 단계 0 과 11 비교, 안 보이면 툰 외곽선·림 값"
+  ],
+  "how": "ShowcaseGui GUI 촬영(TestVillage, gamecam;screen, SEQ=4,30, SAGA_SHOT_HOUR=12, SAGA_SHOT_ACT=weaponglow:0 / weaponglow:11 — 공개 WeaponState.Restore 로 주인공 w_sword_3★3 을 Lv.1 벼림 0 / Lv.30 벼림 5, gamecam 을 무기 곁 1.8m), 세이브 다섯 치운 채 · Claude 눈(무기 자리를 2배 확대해 나란히)",
+  "probe": {
+    "before 0": "shader=Saga/CelToon outlineW=0.0000 rim=#14120F rimS=0.30 rimP=4.50 scale=1.662 · 모델 wpn_sword_rare 렌더러 1",
+    "before 11": "shader=Saga/CelToon outlineW=0.0000 rim=#FFC83A rimS=0.30 rimP=4.50",
+    "after 0": "outlineW=0.0000 rim=#14120F rimS=0.30 rimP=4.50 (지금과 같음)",
+    "after 11": "outlineW=0.0072(월드 0.012m ÷ 1.662) rim=#FFC83A rimS=1.40 rimP=2.00"
+  },
+  "before": "△ — 외곽선 두께 0·정점 알파 1 이라 차이는 림 색뿐, 11 에서 칼날 한쪽 가장자리만 살짝 밝음(한눈에 안 보임)",
+  "fix": "Games/SagaGo/Player/WeaponVisual.cs ApplyGlow — MaterialPropertyBlock 만: 단계 ≥ 1 이면 _OutlineWidth = 월드 0.004→0.012m ÷ lossyScale, _RimStrength 0.5→1.4, _RimPower 3.5→2(단계 비례), 단계 0 은 재질 값. 첫 판 월드 0.02m 는 칼날이 금빛 판처럼 두꺼워 0.012m 로 줄임(고친 뒤 2판)",
+  "scene": [
+    "[PlaytestHeadless] track OK (무기 빛 단계 포함)",
+    "[PlaytestHeadless] OK - 10 frames, no errors"
+  ],
+  "runtime_errors": 0,
+  "shots": "세션 scratchpad shots_u120_* — 커밋 안 함",
+  "results": [
+    { "id": "un.go.track", "scene": "1만리 TestVillage", "weapon_glow": "○ (0 = 잿빛 칼날 그대로, 11 = 칼날 가장자리·면이 금빛, 네 칸 깜박임 없음, 몸·머리 안 칠함, 화면 그대로도 손에 금빛 점)" }
+  ],
+  "result": "D2 유지 — 무기 빛 촬영 ○",
+  "left": "편성 교체 때 FieldCombat 의 CharacterVisual.ClearTint/Tint 가 손 무기 블록까지 덮을 수 있음(순서 확인 — 후속 후보)"
+}

@@ -164,6 +164,8 @@ namespace Saga.Go.Player
         /// <summary>tasks U-0096(웹 weapon.js 빛) — 강화 5 마다 한 단 + 승급, 0~11 단계로 외곽선·테 빛 색을 어둠→금빛으로(재질 값만, 에셋 0).
         /// 공유 재질은 안 건드리고 MaterialPropertyBlock 으로. 그 속성이 없는 셰이더는 그냥 둔다.</summary>
         public int GlowTier { get; private set; }
+        /// <summary>U-0120 단계 1 → 11 외곽선 월드 두께(m)·림 세기·림 폭(작을수록 넓다) — 촬영으로 정함.</summary>
+        private const float GlowOutlineMin = 0.004f, GlowOutlineMax = 0.012f, GlowRimMin = 0.5f, GlowRimMax = 1.4f, GlowRimPowMin = 3.5f, GlowRimPowMax = 2f;
         private void ApplyGlow()
         {
             if (_model == null || string.IsNullOrEmpty(_shownId)) return;
@@ -181,6 +183,12 @@ namespace Saga.Go.Player
                 if (mat.HasProperty("_OutlineColor")) mpb.SetColor("_OutlineColor", c);
                 if (mat.HasProperty("_RimColor")) mpb.SetColor("_RimColor", c);
                 if (mat.HasProperty("_GlowStrength")) mpb.SetFloat("_GlowStrength", GlowTier / 11f);
+                // U-0120 — 손 무기 CelToon 은 외곽선 두께 기본 0·정점 알파 1 이라 위 셋만으론 림 색 차이뿐(촬영 △). 단계 ≥ 1 이면 금빛 쪽 외곽선(월드 두께 → 물체 공간)과
+                // 넓고 센 림을 켠다. 단계 0 은 재질 값 그대로(지금과 같음 — 블록에 남은 옛 값도 재질 값으로 덮는다).
+                float k = GlowTier / 11f, sc = Mathf.Max(1e-4f, r.transform.lossyScale.x);
+                if (mat.HasProperty("_OutlineWidth")) mpb.SetFloat("_OutlineWidth", GlowTier > 0 ? Mathf.Lerp(GlowOutlineMin, GlowOutlineMax, k) / sc : mat.GetFloat("_OutlineWidth"));
+                if (mat.HasProperty("_RimStrength")) mpb.SetFloat("_RimStrength", GlowTier > 0 ? Mathf.Lerp(GlowRimMin, GlowRimMax, k) : mat.GetFloat("_RimStrength"));
+                if (mat.HasProperty("_RimPower")) mpb.SetFloat("_RimPower", GlowTier > 0 ? Mathf.Lerp(GlowRimPowMin, GlowRimPowMax, k) : mat.GetFloat("_RimPower"));
                 r.SetPropertyBlock(mpb);
             }
         }
