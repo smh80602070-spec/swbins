@@ -499,7 +499,7 @@
              한 칸이 30m 남짓 — 지형 격자(48m)보다 촘촘해 경사가 살아난다 */
           var seg = RELIEF_ON() ? RELIEF_SEG() : 1;
           var geo = new T.PlaneGeometry(span, span, seg, seg);
-          var mat = new T.MeshLambertMaterial({ color: 0x1a1f28 });
+          var mat = new T.MeshLambertMaterial({ color: 0x1a1f28 }); if (global.DG.ground3d) { global.DG.ground3d.detail(mat); }   // W-0200 가까운 땅 결
           mesh = new T.Mesh(geo, mat);
           mesh.rotation.x = -Math.PI / 2;           // 눕힌다
           mesh.receiveShadow = true;

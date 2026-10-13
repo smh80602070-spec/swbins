@@ -4,6 +4,8 @@
 >
 > **W-0194(2026-10-13) — 빌린 물고기 3D(Quaternius CC0)를 지웠다.** `animals_extra2/` 물고기 34종(Puffer 만 남김)·`animals_extra/` Dolphin·MantaRay·Shark·`animals/` Koi(1만리는 Shark·Dolphin 도) — 게임은 자체 생성판 `shared/assets/creatures3d/<id>.glb`(K-0096 ⑤)를 쓴다. 남은 빌린 물고기 = Puffer·Whale·Fish1(자체판 없음)·Fish2·Fish3(자체판이 three 에서 안 보여 `CREATURE_SKIP`, K 다시 굽기). 아래 표의 지운 파일 이름은 옛 기록이다.
 
+> **W-0200(2026-10-14) — 자체 생성 바위 결 한 장.** `textures/land/real_rock_512.webp`(+`.license.json`) = K-0093 자체 PBR(z-image-turbo Apache-2.0, `tools/ai-art`) 고돗 `tiles_real/rock_512.webp` 복사 — 3D 가까운 땅 결(밝기만). 바깥 에셋 아님.
+
 새 `PLAN.md` **8절**이 시킨 대로, 이 폴더에 넣은 **바깥에서 가져온 에셋**의 출처와
 라이선스를 여기 한곳에 적는다. **여기 없는 파일은 이 폴더에 두지 않는다.**
 

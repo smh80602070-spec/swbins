@@ -144,6 +144,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/post3d.js"></script>
 <script src="js/world3d-light.js"></script>
 <script src="js/skypano3d.js"></script>
+<script src="js/ground3d.js"></script>
 <script src="js/world3d.js"></script>
 <script src="js/encounter.js"></script>
 <script src="js/encounter3d.js"></script>
@@ -2991,7 +2992,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       for (i = 0; i < 40; i++) {
         town += R3.propPlan('town', i, 3).length;
         /* 땅 전용 퓨전 소품(⑰, 들·숲 칸 16%)은 제 진단이 따로 잰다 — 여기는 들의 자연 잡물만 */
-        grass += R3.propPlan('grass', i, 3).filter(function (q) { return q.t.indexOf('zp_') !== 0; }).length;
+        grass += R3.propPlan('grass', i, 3).filter(function (q) { return q.t.indexOf('zp_') !== 0 && q.t !== 'grass'; }).length;   // W-0200 풀포기(×4)는 땅 덮개라 뺀다 — 바위·나무 등 잡물만
       }
       return town > grass * 3 && ('40칸에 마을 ' + town + ' · 들 ' + grass);
     });
@@ -8957,6 +8958,13 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var w = A.weapon('polearm'), w2 = A.weapon('fan'); A.weapon('sword');
       var ok = [w === 'polearm', w2 === 'polearm', A.sharedUrl('hit') === null, r ? (u && u.slice(-'audio/sfx/sfx_crit.ogg'.length) === 'audio/sfx/sfx_crit.ogg') : u === null];
       return ok.every(Boolean) && ('sx → ' + (u || '(공용 주소 없음)') + ' · 창 → spear_hit');
+    });
+    t('3D 땅 — 가까운 결은 18m 안 가득·46m 밖 0, 먼 산 고리 높이가 겹마다 범위 안·고리 둘레가 이어진다, 빈 들 풀 ×4 (W-0200)', function () {
+      var G = DG.ground3d, w0 = G.weightAt(5, 0.45, 18, 46), w1 = G.weightAt(32, 0.45, 18, 46), w2 = G.weightAt(60, 0.45, 18, 46), i, lo = 1e9, hi = -1e9, hh;
+      for (i = 0; i < 360; i++) { hh = G.ridgeH(i / 360 * Math.PI * 2, 1); lo = Math.min(lo, hh); hi = Math.max(hi, hh); }
+      var seam = Math.abs(G.ridgeH(0, 0) - G.ridgeH(Math.PI * 2, 0)), pp = DG.world3d.propPlan('grass', 3, 5, false, 1).filter(function (o) { return o.t === 'grass'; }).length;
+      var ok = [w0 === 0.45, w1 > 0 && w1 < 0.45, w2 === 0, lo >= 70 && hi <= 220, seam < 25, pp >= 0];
+      return ok.every(Boolean) && ('결 5m ' + w0 + ' · 32m ' + w1.toFixed(2) + ' · 60m 0 · 먼 산 ' + lo.toFixed(0) + '~' + hi.toFixed(0) + 'm · 풀 ' + pp);
     });
     t('3D 빛 — 한낮은 하늘빛/해 0.35~0.55(그늘 대비), 한밤은 옛 밝기 그대로(대비 손잡이는 낮에만) (W-0199)', function () {
       var d = new Date(); d.setHours(12, 0, 0, 0); var n = new Date(); n.setHours(22, 0, 0, 0);
