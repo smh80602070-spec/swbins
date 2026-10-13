@@ -10,7 +10,6 @@
 - [ ] 10-12 · (W-0185 웹 넘김) · 1만리 폰 들판 15초에 받는 GLB 13.8MB 중 대부분이 인물·괴물 몸(saga-web/saga-go/assets/characters3d·creatures3d — 예 ru_doksi 948KB·tz_hyanggae 819KB·monkroose 614KB·panda 590KB). 소품은 폰 표로 7.5MB→0.8MB 줄였다. 몸 GLB 압축(meshopt·텍스처 축소, tools/glb-compress)이나 폰용 가벼운 몸 한 벌 · 자체툴
 - [ ] 10-12 · (W-0186 웹 넘김) · 2나락 폰 마을에 들어가면 받는 GLB 의 대부분이 동작 묶음 assets/models/anim/UAL1_Standard.glb(1.9MB)와 인물 몸 characters3d/*(개당 ~600KB, 마을 사람마다). 압축(meshopt·텍스처 축소, tools/glb-compress)이나 폰용 동작 묶음(쓰는 클립만) · 자체툴
 - [ ] 10-13 · (K-0093 자체툴 넘김) · 자체 PBR 12세트(땅 6·소품 6, 바탕·법선·거칠기·높이) — 정본 `saga-assets/textures_real` · 웹·유니티 사실 재질에 재사용 · 웹/유니티
-- [ ] 10-13 · (W-0190 웹 넘김 — Claude 눈) · 3마을 2D 곤충 박사 나비 자리(침선방 지붕 위)에 보라 한 빛 사람 — 주민 빌린 몸 옷 색 칸(W-0121 tintPx)이 몸 전체에 먹는 몸이 있는 듯(pw-cozy-check w190f1~3·base 다) · 웹
 - [ ] 10-13 · (W-0191 웹 넘김) · 2나락 옛 타일 `dungeon_{dirt,stone,water,snow,sand}` 안 씀(grass 는 마을 땅) — 지워도 됨 · 자체툴
 - [ ] 10-13 · (고돗 그래픽 점검 넘김 — 사용자 "그래픽부터 점검해서 티켓 만들어", 시트 `tasks/sheets/godot-graphics-audit-20261013.md`) · 고돗 화면에서 모델 몫 넷: ① 나무 = 정육면체 잎 덩이(1만리 숲·3마을 둘레·4종횡 뒤 숲) → 잎 카드·층진 잎 자체 나무 ② 괴물 몸 장난감 다면체 ③ 떠 있는 섬 로우폴리 ④ 2나락 방 벽·바닥 GLB(빌린 킷) → K-0094 테마 타일·자체 방을 고돗에도 · 자체툴
 - [ ] 10-13 · (W-0194 웹 넘김) · 물고기 `fish_b`·`fish_c` 자체판이 three 에서 안 보임(creature-sheet 빈 칸) — 다시 굽기, 그때까지 Fish2·Fish3 빌린 것 · 자체툴
