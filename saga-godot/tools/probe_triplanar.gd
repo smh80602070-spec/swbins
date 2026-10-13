@@ -62,6 +62,8 @@ func _run() -> void:
 	var mesh_ok := true
 	var shared_ok := true
 	var real_ok := true
+	var snow_ok := true
+	var snow_regions := 0
 	var bad := ""
 	var first_tex := {}
 	for t in terrains:
@@ -89,6 +91,12 @@ func _run() -> void:
 				tex_ok = false
 				bad += " %s:%s 가 다른 종류와 같은 그림" % [t.region_id, p]
 			seen[tx] = true
+			## G-0228 — 눈 지역(snow_slot 1)은 흙 칸에 눈 세트를 끼우니 흙 칸은 공유 검사에서 뺀다(아래 snow_slot 항목이 따로 본다)
+			var snow_slot := float(mat.get_shader_parameter("snow_slot")) if mat.get_shader_parameter("snow_slot") != null else 0.0
+			if snow_slot > 0.5 and p.begins_with("dirt_"):
+				if not (tx.resource_path.contains("snow_hi")):
+					snow_ok = false
+				continue
 			if first_tex.has(p) and first_tex[p] != tx:
 				shared_ok = false
 			first_tex[p] = tx
@@ -99,6 +107,8 @@ func _run() -> void:
 					real_ok = false
 			if not is_equal_approx(float(mat.get_shader_parameter("use_height")), 1.0) or not is_equal_approx(float(mat.get_shader_parameter("photo_color")), TerrainBuilder.PHOTO_COLOR):
 				real_ok = false
+		if mat.get_shader_parameter("snow_slot") != null and float(mat.get_shader_parameter("snow_slot")) > 0.5:
+			snow_regions += 1
 		var want: float = float(TerrainBuilder.REGION_TEX_DESAT.get(String(t.region_id), 0.0))
 		if not is_equal_approx(float(mat.get_shader_parameter("hue_desat")), want):
 			desat_ok = false
@@ -115,6 +125,7 @@ func _run() -> void:
 	_check("shader_material", shader_ok, "모든 Ground 가 terrain_triplanar.gdshader" + bad)
 	_check("uniforms_exist", uniforms_ok, "코드가 주는 파라미터 10개가 전부 셰이더 uniform 에 있다")
 	_check("textures", tex_ok and shared_ok, "질감 9장 정사각 512 이상 · 종류끼리 다른 그림 · 지역끼리 같은 질감 공유")
+	_check("snow_slot", snow_ok and (snow_regions >= 1 or not ResourceLoader.exists(TerrainBuilder.REAL_DIR + "snow_hi.webp")), "눈 지역 %d 곳은 흙 칸 = 자체 PBR 눈 세트(G-0228)" % snow_regions)
 	_check("real_pbr", real_ok, "자체 PBR 세트가 있으면 높이 맵 셋·높이 섞기·빛깔 맞춤 %.2f(G-0143)" % TerrainBuilder.PHOTO_COLOR)
 	_check("hue_desat", desat_ok, str(TerrainBuilder.REGION_TEX_DESAT))
 	_check("mesh_format", mesh_ok, "정점색·CUSTOM0·삼각형 있음")

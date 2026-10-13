@@ -31,6 +31,9 @@ uniform vec3 grass_gain = vec3(1.0);
 uniform vec3 dirt_gain = vec3(1.0);
 uniform vec3 stone_gain = vec3(1.0);
 uniform float photo_color : hint_range(0.0, 1.0) = 1.0;
+// G-0228 — 눈 지역(서리봉)은 흙 칸(dirt_*)에 자체 PBR 눈 세트를 끼운다(샘플러를 늘리지 않으려고 — 지금 12). 1 이면 흙 얼룩은 끄고
+// 그 결을 눈·얼음 결로 쓴다(빛깔은 지금 눈·얼음 식 그대로, 사진은 밝기 결·법선만).
+uniform float snow_slot : hint_range(0.0, 1.0) = 0.0;
 uniform float tile_scale : hint_range(0.05, 2.0) = 0.4; // 텍스처 반복 밀도(1/m)
 uniform float patch_scale : hint_range(0.02, 1.0) = 0.12; // 얼룩 크기
 uniform vec3 dry_tint = vec3(1.18, 1.03, 0.62); // G-0137 풀빛 큰 얼룩(누렇게 바랜 풀) — 정점색에 곱한다
@@ -122,7 +125,7 @@ void fragment() {
 	// G-0134 — 경계 폭 0.2(0.55~0.75)는 얼룩 대부분이 풀·흙 반반이라 흐린 진흙 자국이었다. 좁은 경계 + n2 로 가장자리 흔들기 = 또렷한 흙자리.
 	// G-0137 — 흙 얼룩(상한 0.5)은 풀·흙 반반이라 올리브 진흙, 확실한 흙(0.85)으로 하면 맨흙 밭이었다 → 흙은 아주 옅게만,
 	// 들판 변화는 같은 큰 노이즈로 풀빛을 누렇게 흔드는 쪽(원신식 들판 — 맨흙은 길·마당에만).
-	float dirt_w = smoothstep(0.72, 0.8, n1 + (n2 - 0.5) * 0.14) * 0.18;
+	float dirt_w = smoothstep(0.72, 0.8, n1 + (n2 - 0.5) * 0.14) * 0.18 * (1.0 - snow_slot);
 	float dry_w = smoothstep(0.45, 0.8, n1 + (n2 - 0.5) * 0.1) * 0.55;
 	// 2026-09-28 — 평지의 돌 얼룩은 0.5 → 0.15: 풀밭 위 잿빛 얼룩이 멀리서 안개 덩어리처럼 보였다(창 모드 촬영). 경사 돌은 아래서 그대로.
 	float stone_w = smoothstep(0.6, 0.8, n2) * 0.15;
@@ -249,6 +252,11 @@ void fragment() {
 	snow *= mix(vec3(0.72, 0.8, 0.96), vec3(1.0), smoothstep(0.25, 0.7, drift)) * mix(0.9, 1.03, drift2);
 	vec2 gl = world_pos.xz * 3.0;
 	float glint = step(0.985, _hash(floor(gl))) * (1.0 - smoothstep(0.1, 0.22, length(fract(gl) - 0.5)));
+	// G-0228 — 눈 사진 결(흙 칸에 끼운 눈 세트)의 밝기 비 — 흰 판이 아니라 다져진 눈결·작은 굴곡
+	float snow_lum = dot(dirt_a, vec3(0.333));
+	float snow_avg = max(dot(textureLod(dirt_albedo, vec2(0.5), 10.0).rgb, vec3(0.333)), 0.05);
+	float snow_detail = 1.0 + clamp((snow_lum / snow_avg - 1.0) * 3.0, -0.35, 0.25) * snow_slot;   // 눈 사진은 결이 옅어(밝기 차 작음) 세 배로 키운다
+	snow *= snow_detail;
 	ALBEDO = mix(ALBEDO, snow, snow_w);
 	EMISSION += vec3(0.9, 0.95, 1.0) * glint * snow_w * 0.7;
 	ROUGHNESS = mix(ROUGHNESS, 0.75, snow_w);
@@ -259,7 +267,10 @@ void fragment() {
 	vec3 ice = mix(COLOR.rgb * 0.7, vec3(0.5, 0.6, 0.7), 0.25) * (0.88 + 0.12 * n1);
 	ice = mix(ice, COLOR.rgb * vec3(0.55, 0.8, 0.85), smoothstep(0.55, 0.85, n2) * 0.45);
 	ice = mix(ice, vec3(0.72, 0.78, 0.85), max(crack1, crack2 * 0.6) * 0.75);
+	ice *= mix(1.0, snow_lum / snow_avg, 0.35 * snow_slot);   // G-0228 얼음 아래 서리 결(옅게)
 	ALBEDO = mix(ALBEDO, ice, ice_w);
 	ROUGHNESS = mix(ROUGHNESS, 0.12, ice_w);
 	NORMAL_MAP = mix(NORMAL_MAP, vec3(0.5, 0.5, 1.0), max(ice_w, snow_w * 0.3));
+	// G-0228 — 눈 세트면 눈 법선 결을 눈 위에(얼음은 매끈하게 두고 옅게만)
+	NORMAL_MAP = mix(NORMAL_MAP, mix(vec3(0.0, 0.0, 1.0), normalize(dirt_n), 0.6) * 0.5 + 0.5, snow_slot * max(snow_w * 0.8, ice_w * 0.2));
 }
