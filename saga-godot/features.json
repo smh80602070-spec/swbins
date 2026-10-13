@@ -4060,6 +4060,27 @@
   "note": "전후 같은 시간대(19:58) 가로 셋·세로 하나 Claude 눈 ○ — 평지는 흙 결이 안 보여 자갈로 · 이동·공격 칸 표시 그대로 읽힘 · 세로 화면은 판 양옆이 잘림(카메라, 이전부터 — 후속 후보) · SAGA_REALM_OLD=1 옛 판"
  },
  {
+  "id": "gd.dg.dark_rooms",
+  "name": "2나락 방 분위기 — 공용 하늘·안개(회녹 허공) 대신 나락 전용 환경: 검은 바탕·따뜻한 주변광·검은 안개·SDFGI 끔 + 횃불 느린 깜빡임",
+  "files": [
+   "saga_core/world/environment_profile.gd",
+   "games/saga_dungeon/world/test_room.gd",
+   "games/saga_dungeon/world/torch_flicker.gd"
+  ],
+  "tests": [
+   "dungeon_belt",
+   "dungeon_world",
+   "dungeon_run",
+   "perf"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0224",
+  "since": "2026-10-13",
+  "note": "전후 Claude 눈: 첫 판 주변광 0.6 은 방·적이 묻혀 × → 1.5 로 ○(가로 넷·세로 하나 — 적·보스·예고 부채꼴 읽힘) · 바닥은 어둑 △ · SAGA_DUNGEON_OLD=1 옛 하늘"
+ },
+ {
   "id": "gd.dg.meridian",
   "name": "2나락 경락도(經絡圖) — 409마디 패시브 그물을 직업(쥔 무기)마다·시작점 여섯 · 점수 = 첫 별 + 그 직업 무예 점수 누계 + 보스 처치(상한 60) · 능력치 합은 _sum_eff·저항 · 규칙 열(기력·회피 없는 자리는 재해석) · 무예 창 「☯ 경락도」·F2(웹 W-0180)",
   "files": [

@@ -337,6 +337,11 @@ func _spawn_torch(origin_z: float) -> void:
 	torch.omni_range = 14.0
 	torch.shadow_enabled = true
 	add_child(torch)
+	if OS.get_environment("SAGA_DUNGEON_OLD") == "":   # G-0224 느린 깜빡임
+		var f := Node.new()
+		f.name = "Flicker"
+		f.set_script(load("res://games/saga_dungeon/world/torch_flicker.gd"))
+		torch.add_child(f)
 
 
 ## 벽 넷 중 북쪽(-z, 출구)은 항상 틈을 남긴다. 남쪽(+z)은 첫 방(입구가

@@ -26,6 +26,14 @@ const TOON_SKY_SCENE_PREFIX := "res://games/saga_go/"  # check_refs:allow — �
 const GO_FOG_DENSITY := 0.0013
 const GO_FOG_COLOR := Color(0.66, 0.8, 0.95)
 const GO_EXPOSURE := 0.88
+## G-0224 — 2나락 던전 방은 다섯 판 공용 하늘·안개(회녹)를 써서 방 바깥이 회색 허공이었다(10-13 점검 dg_belt_room).
+## 나락 씬이면 복제본을 지하로: 검은 바탕 · 하늘 대신 따뜻한 어둑한 주변광 · 안개색 거의 검정 · SDFGI 끔(방 안, 하늘이 없다).
+## 밝기는 방마다 횃불(test_room._spawn_torch)이 맡는다. SAGA_DUNGEON_OLD=1 이면 예전 그대로(전후 촬영).
+const DUNGEON_SCENE_PREFIX := "res://games/saga_dungeon/"   # check_refs:allow — 경로 판별 문자열
+const DUNGEON_BG := Color(0.015, 0.013, 0.012)
+const DUNGEON_AMBIENT := Color(0.62, 0.56, 0.5)
+const DUNGEON_AMBIENT_ENERGY := 1.5   # 0.6 은 방·적이 어둠에 묻혔다(10-13 전후) — 바탕만 검고 방 안은 읽히게
+const DUNGEON_FOG := Color(0.035, 0.03, 0.028)
 
 
 func _ready() -> void:
@@ -38,6 +46,18 @@ func _ready() -> void:
 func _pick_environment() -> void:
 	var base := ENV_MOBILE if (OS.has_feature("mobile") or OS.has_feature("web")) else ENV_PC
 	var scene_path := owner.scene_file_path if owner != null else ""
+	if scene_path.begins_with(DUNGEON_SCENE_PREFIX) and OS.get_environment("SAGA_DUNGEON_OLD") == "":
+		var de := base.duplicate() as Environment
+		de.background_mode = Environment.BG_COLOR
+		de.background_color = DUNGEON_BG
+		de.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+		de.ambient_light_color = DUNGEON_AMBIENT
+		de.ambient_light_energy = DUNGEON_AMBIENT_ENERGY
+		de.fog_light_color = DUNGEON_FOG
+		de.fog_sky_affect = 0.0
+		de.sdfgi_enabled = false
+		environment = de
+		return
 	if not scene_path.begins_with(TOON_SKY_SCENE_PREFIX):
 		environment = base
 		## G-0148 — 다른 네 판의 바깥 씬도 사실적 하늘(사용자 "다섯판 모두"). 안개·노출·톤은 그 판 값 그대로, 하늘만 바꾼다.
