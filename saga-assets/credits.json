@@ -221,7 +221,7 @@
    "tool": "outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024)",
    "model": "",
    "license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
-   "count": 2046,
+   "count": 2069,
    "where": [
     "saga-assets/characters/sprites2d/ac_balgwang",
     "saga-assets/characters/sprites2d/ac_choeumpa",
@@ -306,9 +306,10 @@
    "tool": "remote3d",
    "model": "microsoft/TRELLIS-image-large",
    "license": "MIT",
-   "count": 214,
+   "count": 217,
    "where": [
     "saga-assets/creatures3d",
+    "saga-unity/Assets/Art/CreaturesSelf",
     "saga-web/shared/assets/creatures3d"
    ]
   },
@@ -328,7 +329,7 @@
    "tool": "gen.py (ComfyUI)",
    "model": "z-image-turbo",
    "license": "Apache-2.0",
-   "count": 84,
+   "count": 106,
    "where": [
     "saga-assets/land-go",
     "saga-assets/textures_real/dirt",
@@ -616,7 +617,7 @@
    "tool": "gen.py",
    "model": "sd_xl_base_1.0",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 72,
+   "count": 62,
    "where": [
     "saga-assets/web2d/rts",
     "saga-assets/web2d/tile",
