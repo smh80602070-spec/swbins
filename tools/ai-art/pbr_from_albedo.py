@@ -12,7 +12,7 @@ hi = 이음매 처리한 그대로(띠 섞기 1024 · 경계 자르기 ≈ 910 �
 맵(세트별 손잡이는 아래 SETS 한 표):
   높이   = 밝기 고역(감싼 가우스 빼기, 반경 size/24) → 0~1 · invert 면 뒤집음(밝은 게 홈인 재질)
   법선   = 높이 기울기(np.roll 로 감싸 이음매 유지) × strength, OpenGL Y+(초록 = 위)
-  거칠기 = base ± var × (0.5 − 높이)(홈이 더 거칠다), 0.05~1
+  거칠기 = base + var × 2 × (0.5 − 높이) → base ± var(홈이 더 거칠다), 0.05~1
 검사: pack_patterns64 잣대 — seam_ratio ≤ 3.0 · edge_ratio ≤ 1.6 (바탕색 hi).
 """
 import json
@@ -26,7 +26,7 @@ from scipy import ndimage
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
 sys.path.insert(0, HERE)
-from make_seamless import seamless, cutseam  # noqa: E402
+from make_seamless import seamless, cutseam, flatten_light  # noqa: E402
 from pack_web2d import wrap_resize  # noqa: E402
 from pack_patterns64 import seam_ratio, edge_ratio  # noqa: E402
 
@@ -55,10 +55,7 @@ HI = 1024          # 1024² 견본(2048 은 480초·1152 는 장당 4분+ 10-13)
 
 
 def flatten(img, k=FLATTEN):
-    a = np.asarray(img, dtype=np.float32)
-    n = a.shape[0]
-    low = np.stack([ndimage.gaussian_filter(a[..., c], n / 10, mode='wrap') for c in range(3)], -1)
-    return Image.fromarray(np.clip(a - k * (low - low.mean((0, 1))), 0, 255).astype(np.uint8))
+    return Image.fromarray(np.clip(flatten_light(np.asarray(img, dtype=np.float32), k), 0, 255).astype(np.uint8))
 
 
 def tile_color(name, img):

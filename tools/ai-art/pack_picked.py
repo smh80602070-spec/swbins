@@ -2,9 +2,10 @@
 
   py tools/ai-art/pack_picked.py bg   <후보 png> <출력 폴더> <이름>
       → <이름>_{far,mid,near}.webp + 각 .license.json + <이름>.layers.json (split_bg_layers 와 같은 층·좌우 왕복 이음)
-  py tools/ai-art/pack_picked.py tile <후보 png> <출력 webp> [--px 256] [--rectify Y1] [--cut]
+  py tools/ai-art/pack_picked.py tile <후보 png> <출력 webp> [--px 256] [--rectify Y1] [--cut] [--flatten K]
       → 이음매 없는 타일(make_seamless.seamless → 감싸 줄이기) + .license.json · 이음 검사 실패면 멈춤
       --rectify Y1 원근 땅 사진을 평면으로 편 뒤(rectify_ground) · --cut 띠 섞기 대신 경계 자르기(cutseam, 조약돌 등 낱알 무늬)
+      --flatten K  큰 조명 얼룩 걷기(0~1, 기본 0 — 반복 격자 얼룩이 보이면 0.7)
 
 license = 후보 그림의 gen.py license + picked·derived 칸. 놓기는 그 다음 place.py(또는 티켓이 정한 자리로 복사).
 """
@@ -17,7 +18,8 @@ from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import split_bg_layers as SL  # noqa: E402
-from make_seamless import seamless, rectify_ground, cutseam  # noqa: E402
+import numpy as np  # noqa: E402
+from make_seamless import seamless, rectify_ground, cutseam, flatten_light  # noqa: E402
 from pack_web2d import lic_of, save_lic, wrap_resize, seam_ok  # noqa: E402
 
 
@@ -36,7 +38,7 @@ def bg(src, outdir, name):
     print('PACK_BG', name, outdir)
 
 
-def tile(src, dst, px, rectify=None, cut=False):
+def tile(src, dst, px, rectify=None, cut=False, flat=0.0):
     im = Image.open(src).convert('RGB')
     how = []
     if rectify is not None:
@@ -48,6 +50,9 @@ def tile(src, dst, px, rectify=None, cut=False):
     else:
         im = seamless(im, max(px, 512))
         how.append('seamless(4판 띠 섞기)')
+    if flat:
+        im = Image.fromarray(np.clip(flatten_light(np.asarray(im, dtype=np.float32), flat), 0, 255).astype(np.uint8))
+        how.append('flatten %.2f' % flat)
     t = wrap_resize(im, px)
     if not seam_ok(t):
         sys.exit('이음 검사 실패: ' + src)
@@ -66,7 +71,8 @@ def main():
         bg(a[1], a[2], a[3])
     elif a[0] == 'tile':
         tile(a[1], a[2], int(a[a.index('--px') + 1]) if '--px' in a else 256,
-             int(a[a.index('--rectify') + 1]) if '--rectify' in a else None, '--cut' in a)
+             int(a[a.index('--rectify') + 1]) if '--rectify' in a else None, '--cut' in a,
+             float(a[a.index('--flatten') + 1]) if '--flatten' in a else 0.0)
     else:
         sys.exit(__doc__)
 

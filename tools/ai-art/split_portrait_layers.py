@@ -7,11 +7,13 @@
     --check  쓰지 않고 합성 차이·용량만 잰다
 
 부위 = 그 부위 프레임들과 base 의 픽셀 차이(> 24/765)를 넓히고(15px) 흐린(4px) 알파. 입 모양 키는 눈썹도 조금 움직여서
-입 부위는 차이 상자의 아래 2/3 만 쓴다. 검증: 바탕 + 패치 = 원 프레임(평균 차 ≤ 2%) · 사람마다 ≤ 0.6MB.
+입 부위는 눈 부위(조금 더 넓힌 것)를 뺀 차이만 쓴다. 검증: 바탕 + 패치 = 원 프레임(부위 상자 안 평균 차 ≤ 2%) · 사람마다 ≤ 0.6MB
+— 통과한 사람만 쓴다. 몸 출처(web3d license)가 없으면 멈춘다.
 재생(각 갈래): live.json 의 parts[부위].box 자리에 frames 의 그림을 얹는다. 깜빡임 = blink.seq 를 frame_ms 씩, every_s 범위
 무작위 간격(게임 씨앗) · 말하기 = talk.seq 를 frame_ms 씩 되풀이(말 끝나면 base) · 숨쉬기 = 그림 전체를 아래 끝 기준 세로
 1+amp 배로 period_s 주기 · 고개 = 목(pivot_y) 기준 ±deg 기울임 period_s 주기. 앞머리 흔들림 층은 아직 없다(단계 3 판정 뒤).
 """
+import io
 import json
 import os
 import sys
@@ -35,24 +37,24 @@ def frame(hid, f):
     return Image.open(os.path.join(FR, '%s__%s.png' % (hid, f))).convert('RGB')
 
 
-def split(hid, write):
+def split(hid):
+    """프레임 → (쓸 그림들, live.json, 부위 상자 안 합성 차이 %, 용량). 쓰지는 않는다 — 검사를 지난 것만 main 이 쓴다."""
     base = frame(hid, 'base')
     B = np.asarray(base).astype(np.int16)
-    out = os.path.join(DEST, hid)
     files = {'base.webp': base}
     meta = {'id': hid, 'size': list(base.size), 'base': 'base.webp', 'parts': {}, 'motion': MOTION}
-    diffs = {}
-    for g, frames in GROUPS.items():
+    diffs, taken = {}, np.zeros(B.shape[:2], bool)
+    for g, frames in GROUPS.items():          # eye 먼저 — 입 모양 키가 눈썹도 움직이면 그 자리는 이미 eye 몫
         ims = {f: frame(hid, f) for f in frames}
         m = np.zeros(B.shape[:2], bool)
         for im in ims.values():
             m |= np.abs(np.asarray(im).astype(np.int16) - B).sum(2) > 24
-        ys, xs = np.nonzero(m)
-        if not len(ys):
+        m &= ~taken
+        if not m.any():
             raise SystemExit('부위 차이 없음: %s %s' % (hid, g))
-        if g == 'mouth':
-            m[:ys.min() + (ys.max() - ys.min()) // 3] = False
-        mk = Image.fromarray((m * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(15)).filter(ImageFilter.GaussianBlur(4))
+        grown = Image.fromarray((m * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(15))
+        taken |= np.asarray(grown.filter(ImageFilter.MaxFilter(11))) > 0
+        mk = grown.filter(ImageFilter.GaussianBlur(4))
         ys, xs = np.nonzero(np.asarray(mk) > 0)
         box = [int(xs.min()), int(ys.min()), int(xs.max()) + 1, int(ys.max()) + 1]
         meta['parts'][g] = {'box': box, 'frames': {}}
@@ -65,23 +67,31 @@ def split(hid, write):
             meta['parts'][g]['frames'][f] = name
             comp = base.copy()
             comp.paste(patch, box[:2], patch)
-            diffs[f] = float(np.abs(np.asarray(comp).astype(np.int16) - np.asarray(im).astype(np.int16)).mean() / 255 * 100)
+            a = np.asarray(comp.crop(box)).astype(np.int16)
+            b = np.asarray(im.crop(box)).astype(np.int16)
+            diffs[f] = float(np.abs(a - b).mean() / 255 * 100)   # 부위 상자 안에서 — 전체 평균이면 틀린 패치도 묻힌다
     size = 0
-    if write:
-        os.makedirs(out, exist_ok=True)
     for name, im in files.items():
-        p = os.path.join(out if write else os.path.join(HERE, '_out', 'live_check'), name)
-        os.makedirs(os.path.dirname(p), exist_ok=True)
-        im.save(p, 'WEBP', quality=88 if name == 'base.webp' else 90, method=6)
-        size += os.path.getsize(p)
-    if write:
-        json.dump(meta, open(os.path.join(out, 'live.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-        src = os.path.join(ROOT, 'saga-assets', 'characters', 'web3d', hid + '.license.json')
-        lic = json.load(open(src, encoding='utf-8')) if os.path.exists(src) else {}
-        lic.update({'id': hid + '_live', 'derived': 'tools/ai-art/render_live_frames.py(VRoid 표정 키 반신 렌더) → split_portrait_layers.py (K-0049)',
-                    'base_glb': 'saga-assets/characters/web3d/%s.glb' % hid})
-        json.dump(lic, open(os.path.join(out, hid + '.license.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    return meta, diffs, size
+        buf = io.BytesIO()
+        im.save(buf, 'WEBP', quality=88 if name == 'base.webp' else 90, method=6)
+        files[name] = buf.getvalue()
+        size += len(files[name])
+    return files, meta, diffs, size
+
+
+def write(hid, files, meta):
+    src = os.path.join(ROOT, 'saga-assets', 'characters', 'web3d', hid + '.license.json')
+    if not os.path.exists(src):
+        raise SystemExit('몸 출처 없음(먼저 web3d 정본): %s' % src)
+    out = os.path.join(DEST, hid)
+    os.makedirs(out, exist_ok=True)
+    for name, data in files.items():
+        open(os.path.join(out, name), 'wb').write(data)
+    json.dump(meta, open(os.path.join(out, 'live.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    lic = json.load(open(src, encoding='utf-8'))
+    lic.update({'id': hid + '_live', 'derived': 'tools/ai-art/render_live_frames.py(VRoid 표정 키 반신 렌더) → split_portrait_layers.py (K-0049)',
+                'base_glb': 'saga-assets/characters/web3d/%s.glb' % hid})
+    json.dump(lic, open(os.path.join(out, hid + '.license.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 
 
 def sheet(rows, dst):
@@ -111,15 +121,17 @@ def main():
     sys.stdout.reconfigure(encoding='utf-8')
     plan = json.load(open(os.path.join(HERE, a[a.index('--plan') + 1]) if '--plan' in a else os.path.join(HERE, 'data', 'live_portrait_plan.json'), encoding='utf-8'))
     ids = a[a.index('--ids') + 1].split(',') if '--ids' in a else [c['id'] for c in plan['cast']]
-    write = '--check' not in a
+    do_write = '--check' not in a
     rows, bad = [], []
     for hid in ids:
-        meta, diffs, size = split(hid, write)
+        files, meta, diffs, size = split(hid)
         worst = max(diffs.values())
         ok = worst <= 2.0 and size <= LIMIT
+        if ok and do_write:
+            write(hid, files, meta)
         print('LIVE_SPLIT %-16s 차이 최대 %.3f%% · %dKB %s' % (hid, worst, size // 1024, 'OK' if ok else 'FAIL'))
         (rows if ok else bad).append((hid, meta))
-    if '--sheet' in a and write:
+    if '--sheet' in a and do_write:
         sheet(rows, a[a.index('--sheet') + 1])
     print('LIVE_SPLIT 끝 %d/%d' % (len(rows), len(ids)))
     sys.exit(1 if bad else 0)

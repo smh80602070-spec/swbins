@@ -71,6 +71,8 @@ for hid in ids:
     keys = {}
     for o in objs:
         if o.type == 'MESH' and o.data.shape_keys:
+            if o.data.shape_keys.animation_data:   # 쉼 동작에 깜빡임 같은 표정 키가 들어 있으면 손으로 넣은 값을 덮는다
+                o.data.shape_keys.animation_data_clear()
             for kb in o.data.shape_keys.key_blocks:
                 keys.setdefault(kb.name, []).append(kb)
     miss = sorted({n for v in FRAMES.values() for n in v} - set(keys))
@@ -88,3 +90,4 @@ for hid in ids:
     for o in list(bpy.data.objects):
         if o not in before:
             bpy.data.objects.remove(o, do_unlink=True)
+    bpy.data.orphans_purge(do_local_ids=True, do_linked_ids=True, do_recursive=True)   # 메시·재질·그림·동작이 사람마다 쌓이지 않게(RAM)

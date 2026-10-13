@@ -35,9 +35,7 @@ def seamless(im, size, band=0.28, flatten=0.0):
     v = f[:, None, None]
     out = (1 - u) * (1 - v) * a + u * (1 - v) * H + (1 - u) * v * V + u * v * B
     if flatten:   # 큰 조명 얼룩(주름 그늘·빛 번짐)을 걷는다 — 반복하면 얼룩이 격자로 보인다(무늬 K-0088)
-        from scipy import ndimage
-        low = np.stack([ndimage.gaussian_filter(out[..., c], n / 10, mode='wrap') for c in range(3)], -1)
-        out = out - flatten * (low - low.mean((0, 1)))
+        out = flatten_light(out, flatten)
     pad = 8
     big = np.pad(out, ((pad, pad), (pad, pad), (0, 0)), mode='wrap')
     img = Image.fromarray(np.clip(big, 0, 255).astype(np.uint8))
@@ -46,12 +44,22 @@ def seamless(im, size, band=0.28, flatten=0.0):
     return img.crop((q, q, q + size, q + size))
 
 
+def flatten_light(a, k):
+    """감싼 큰 가우스(반경 n/10)로 잰 조명 얼룩을 k 만큼 걷는다. a = float 배열(H×W×3, 주기 타일). seamless·pbr_from_albedo·pack_picked 공용."""
+    from scipy import ndimage
+    n = a.shape[0]
+    low = np.stack([ndimage.gaussian_filter(a[..., c], n / 10, mode='wrap') for c in range(3)], -1)
+    return a - k * (low - low.mean((0, 1)))
+
+
 def rectify_ground(im, y1, size=640):
     """K-0091 — 원근 땅 사진(위로 갈수록 작아지는 돌)을 내려다본 평면으로 편다(호모그래피).
     땅 평면·지평선이 그림 위 h/2 위라 보고(아래 끝 크기 : 맨 위 크기 ≈ 3 : 1), 행 y1 부터 아래 끝까지를
     땅 위 정사각으로 본다 — 사다리꼴 위 변 반폭 = (y1 + h/2)/3·(w/h). y1 이 클수록 세로를 더 늘린다(돌이 둥글어질 때까지 눈으로)."""
     im = im.convert('RGB')
     w, h = im.size
+    if not 0 <= y1 < h * 0.9:
+        raise ValueError('rectify y1 은 0 이상 그림 높이(%d)의 90%% 미만이어야 한다: %s' % (h, y1))
     x0 = w / 2 - (y1 + h / 2) / 3 * (w / h)
     quad = [(x0, y1), (w - x0, y1), (w, h), (0, h)]
     out = [(0, 0), (size, 0), (size, size), (0, size)]
@@ -69,7 +77,10 @@ def cutseam(im, band=0.125):
     잘라 붙인다(섞지 않음). 정사각 S 에서 N ≈ S/(1+band)(줄눈 피해 고름), 띠 B = S - N. 결과 N×N(크기 줄이기는 wrap_resize)."""
     a = np.asarray(im.convert('RGB'), dtype=np.float32)
     s = min(a.shape[:2])
-    a = a[:s, :s]
+    if s < 64:
+        raise ValueError('cutseam 입력이 너무 작다: %dpx' % s)
+    oy, ox = (a.shape[0] - s) // 2, (a.shape[1] - s) // 2   # seamless 와 같은 가운데 정사각
+    a = a[oy:oy + s, ox:ox + s]
     # 타일 끝(n-1 → n)이 격자 줄눈 위에 놓이면 테두리 차가 커 보인다 → band 근처에서 열·행 이웃 차가 가장 작은 n
     dx = np.abs(np.diff(a, axis=1)).mean((0, 2))
     dy = np.abs(np.diff(a, axis=0)).mean((1, 2))
