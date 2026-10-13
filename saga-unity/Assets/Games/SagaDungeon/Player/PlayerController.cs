@@ -150,12 +150,21 @@ namespace Saga.Dungeon.Player
             Mode = HeightAboveGround() < 0.2f ? MoveMode.Ground : MoveMode.Air;
         }
 
+        private static readonly RaycastHit[] _groundHits = new RaycastHit[8];
+
         public float HeightAboveGround()
         {
+            // 제 몸(CharacterController 등 내 트랜스폼 아래 충돌체)은 뺀다 — autoSyncTransforms 꺼짐이면 CC 물리 자세가 옛 자리에 남아 높이 ~0 이 나왔다(U-0122·U-0123).
             Vector3 origin = transform.position + Vector3.up * 0.3f;
-            if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, 100f, ~0, QueryTriggerInteraction.Ignore))
-                return hit.distance - 0.3f;
-            return 100f;
+            int n = Physics.RaycastNonAlloc(origin, Vector3.down, _groundHits, 100f, ~0, QueryTriggerInteraction.Ignore);
+            float best = float.MaxValue;
+            for (int i = 0; i < n; i++)
+            {
+                var c = _groundHits[i].collider;
+                if (c == null || c.transform.IsChildOf(transform)) continue;
+                if (_groundHits[i].distance < best) best = _groundHits[i].distance;
+            }
+            return best < float.MaxValue ? best - 0.3f : 100f;
         }
 
         /// <summary>Maria 배정 때만 non-null(위 클래스 주석 참고) — null이면
