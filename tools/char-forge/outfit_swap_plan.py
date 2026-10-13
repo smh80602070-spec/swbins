@@ -27,8 +27,10 @@ DRESS_TOP = {'a7', 'a8', 'a10'}      # 하의 없는 드레스 — 상의 칸 �
 MALE = list('cglnprvxz')              # t 는 재배포 불가라 뺀다
 OUT = os.path.join(HERE, 'data', 'outfit_swap_plan.json')
 TRAITS = os.path.join(HERE, 'data', 'hero_traits.json')
+LIMB_COVER = os.path.join(HERE, 'data', 'limb_cover.json')   # K-0101 팔다리 덮개(limb_cover_scan.py) — 피부 지운 몸에 그 자리를 안 덮는 옷이 가지 않게
+REALM_I2I = os.path.join(HERE, '..', 'ai-art', 'batches', 'web_realm_194_i2i.json')   # K-0101 — 5천하 194 초상 성별('1girl' 로 시작하면 여자, 웹 heroSex 와 같은 규칙)
 PATTERNS = os.path.join(HERE, '..', '..', 'saga-assets', 'patterns')
-K24_N, K24_MD5 = 299, '2a12b23badc00813c0b67207d293075e'     # K-0024 299명 조합표 지문(이미 구운 몸 — 바뀌면 안 된다)
+K24_N, K24_MD5 = 299, '7f9a99879f964dd775a0d462eedd3f43'     # K-0101 성별 79명 바로잡은 뒤(옛 2a12b23b, 팔다리 구멍 거름) · K-0024 299명 조합표 지문(이미 구운 몸 — 바뀌면 안 된다)
 SKIN_PART = {('top', 'l'): 'CLOTH_02', ('bottom', 'l'): '001_02'}   # K-0097 살색 조각(칸·샘플 → 조각 파일 이름에 든 글자)
 TINT = ['#26365c', '#2f5d3a', '#3a3a3e', '#5e2f5a', '#1f6b6b', '#b08a1e', '#55677a', '#6b3a26']   # 남색·짙은 초록·숯·자주·청록·겨자·회청·밤색
 TUCK_IDS = os.path.join(HERE, 'data', 'k97_tuck_ids.json')   # K-0097 단계 1b 결과(tuck_scan.py 쉼 자세 뚫림 > 0)
@@ -45,7 +47,7 @@ def fingerprint(rows):
     return hashlib.md5(json.dumps(rows, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
 
 
-def apply_k97(rows):
+def apply_k97(rows, skip_tuck=()):
     """살색 윗옷 → tint · 긴 윗옷 아래 바지 → tuck. 이미 있는 칸은 그대로(다시 돌려도 같다). 새로 단 id 목록."""
     added = []
     tuck_ids = set(json.load(open(TUCK_IDS, encoding='utf-8'))['ids']) if os.path.exists(TUCK_IDS) else set()
@@ -66,7 +68,7 @@ def apply_k97(rows):
             r.setdefault('tint', []).append({'slot': slot, 'match': match, 'color': c})
             taken.add(key(r, slot, c))
             added.append(r['id'])
-        if r['id'] in tuck_ids and top in TUCK_TOPS and r.get('tuck') != 'bottom':
+        if r['id'] in tuck_ids and r['id'] not in skip_tuck and top in TUCK_TOPS and r.get('tuck') != 'bottom':   # 바뀐 몸은 옛 스캔을 안 믿는다
             r['tuck'] = 'bottom'
             added.append(r['id'])
     return sorted(set(added))
@@ -145,8 +147,37 @@ def build_k24(parts):
     return rows, parts
 
 
-def pick_kit(rng, g, pool, parts, body, used):
-    """옷 고르기 규칙 한 곳 — 겹치는 조합·몸 원래 옷 그대로·세 칸 중 둘 이상이 원래 옷이면 다시(500번까지). 못 찾으면 None."""
+def limb_holes(body, kit, cover=None):
+    """팔다리 구멍 칸 수 {뼈: n} — 몸 피부도 입힌 조각도 안 덮는 칸(K-0101). 원피스 칸은 outfit_swap 처럼 그 샘플의 상·하의 조각까지."""
+    cover = cover if cover is not None else load_cover()
+    if not cover or body not in cover:
+        return {}
+    out = {}
+    for b, skin in cover[body]['base'].items():
+        m = [c == '1' for c in skin]
+        for slot, src in kit.items():
+            want = ('top', 'bottom', 'cloth') if slot == 'cloth' else (slot,)
+            for f, bins in cover.get(src, {}).items():
+                if f.split('__')[0] in want:
+                    m = [x or c == '1' for x, c in zip(m, bins.get(b, ''))]
+        n = m.count(False)
+        if n:
+            out[b.replace('J_Bip_', '')] = n
+    return out
+
+
+_COVER = []
+
+
+def load_cover():
+    if not _COVER:
+        _COVER.append(json.load(open(LIMB_COVER, encoding='utf-8'))['bins'] if os.path.exists(LIMB_COVER) else {})
+    return _COVER[0]
+
+
+def pick_kit(rng, g, pool, parts, body, used, ok=None):
+    """옷 고르기 규칙 한 곳 — 겹치는 조합·몸 원래 옷 그대로·세 칸 중 둘 이상이 원래 옷이면 다시(500번까지). 못 찾으면 None.
+    ok(body, kit) 가 거짓이면 다시(K-0101 팔다리 구멍)."""
     for _ in range(500):
         dress = [L for L in pool if 'cloth' in parts[L]]
         if dress and rng.random() < 0.3 and g == 'F':
@@ -160,6 +191,8 @@ def pick_kit(rng, g, pool, parts, body, used):
             continue
         if 'cloth' not in kit and sum(v == body for v in kit.values()) > 1:
             continue
+        if ok and not ok(body, kit):
+            continue
         return kit
     return None
 
@@ -169,10 +202,15 @@ def apply_traits(rows, parts):
     if not os.path.exists(TRAITS):
         return []
     tr = json.load(open(TRAITS, encoding='utf-8'))['heroes']
+    realm = {}
+    if os.path.exists(REALM_I2I):   # K-0101: 도감 105 밖(5천하 194)은 초상 성별을 따른다 — 해시 성별 79명이 초상과 달라 반대 성별 몸이었다
+        for it in json.load(open(REALM_I2I, encoding='utf-8'))['items']:
+            if it.get('prompt'):
+                realm[it['id']] = 'F' if it['prompt'].lstrip().startswith('1girl') else 'M'
     used = {(r['body'], tuple(sorted(r['kit'].items()))) for r in rows}
     changed = []
     for r in rows:
-        g = tr.get(r['id'], {}).get('gender')
+        g = tr.get(r['id'], {}).get('gender') or realm.get(r['id'])
         if g not in ('M', 'F') or g == r['gender']:
             continue
         pool = [L for L in (MALE if g == 'M' else FEMALE) if L in parts]
@@ -181,13 +219,19 @@ def apply_traits(rows, parts):
         for q in rows:
             if q['body'] in n:
                 n[q['body']] += 1
-        body = min(pool, key=lambda L: (n[L], rng.random()))
         used.discard((r['body'], tuple(sorted(r['kit'].items()))))
-        kit = pick_kit(rng, g, pool, parts, body, used)
+        kit = None
+        for body in sorted(pool, key=lambda L: (n[L], rng.random())):   # 덜 쓰인 몸부터, 구멍 없는 옷이 나올 때까지(K-0101)
+            kit = pick_kit(rng, g, pool, parts, body, used, ok=lambda b, k: not limb_holes(b, k) and not (k.get('bottom') == 'l' and k.get('top') != 'l'))
+            # ↑ L 바지(001_02)는 허벅지 중간부터만 덮는 조각 — L 윗옷 없이는 허벅지 맨살(K-0097 수신함, K-0101 에서 새 줄만 거름)
+            if kit:
+                break
         if kit is None:
             raise SystemExit('조합을 못 찾음(성별 표): ' + r['id'])
         used.add((body, tuple(sorted(kit.items()))))
         r.update(gender=g, body=body, kit=kit)
+        r.pop('tint', None)      # 옛 옷 기준 표시 — apply_k97 이 새 옷으로 다시 단다
+        r.pop('tuck', None)
         changed.append(r['id'])
     return changed
 
@@ -216,6 +260,9 @@ def check(rows, parts):
     tc = [(r['body'], r['kit'].get('top'), r['kit'].get('bottom'), t['slot'], t['color']) for r in rows for t in r.get('tint', [])]
     if len(tc) != len(set(tc)):
         errs.append('tint 색 겹침(같은 몸·같은 윗옷·같은 바지)')
+    holed = [r['id'] for r in rows if limb_holes(r['body'], r['kit'])]
+    if holed:   # 경고만 — 이미 구운 기존 줄(K-0024·K-0028)은 다시 굽기 티켓 몫
+        print('경고 팔다리 구멍 조합 %d명(limb_cover.json) — 예: %s' % (len(holed), ','.join(holed[:6])))
     if len(rows) >= K24_N and fingerprint(rows[:K24_N]) != K24_MD5:
         errs.append('K-0024 299명 조합이 바뀜(지문 다름) — 이미 구운 몸과 어긋난다')
     return errs
@@ -227,7 +274,7 @@ if __name__ == '__main__':
         rows = json.load(open(OUT, encoding='utf-8'))['entries']
         print('검사 대상:', os.path.relpath(OUT))
     changed = apply_traits(rows, parts)
-    k97 = apply_k97(rows) if '--check' not in sys.argv else []
+    k97 = apply_k97(rows, set(changed)) if '--check' not in sys.argv else []
     if k97:
         print('K-0097 tint·tuck 단 인물', len(k97), ':', ','.join(k97))
     if changed:
