@@ -12,6 +12,9 @@ uniform int material_kind = 0; // 0 돌 · 1 나무 · 2 회벽 · 3 칠한 판 
 uniform sampler2D detail_tex : source_color, filter_linear_mipmap, repeat_enable;
 uniform sampler2D detail_normal : hint_normal, filter_linear_mipmap, repeat_enable;
 uniform float detail_scale = 0.45;
+// G-0144 — 자체 PBR 세트(K-0093 tiles_real: 돌벽·널판·회벽·쇠녹)가 재질 종류마다 오면 1 — 결 세기·법선을 사진 세트 표로, 나무 결 노이즈는 끄고 거칠기 맵을 섞는다.
+uniform float real_set : hint_range(0.0, 1.0) = 0.0;
+uniform sampler2D detail_rough : filter_linear_mipmap, repeat_enable;
 uniform float edge_width = 0.06;
 instance uniform vec3 box_half = vec3(0.0);
 
@@ -19,6 +22,8 @@ const float K_DETAIL[5] = float[5](0.85, 0.18, 0.5, 0.12, 0.1);   // 바탕 결 
 const float K_NORMAL[5] = float[5](1.0, 0.35, 0.45, 0.2, 0.15);   // 법선 세기
 const float K_ROUGH[5] = float[5](0.9, 0.72, 0.95, 0.55, 0.5);
 const float K_METAL[5] = float[5](0.0, 0.0, 0.0, 0.0, 0.4);
+const float K_DETAIL_REAL[5] = float[5](0.9, 0.7, 0.55, 0.3, 0.35);
+const float K_NORMAL_REAL[5] = float[5](1.0, 0.75, 0.55, 0.35, 0.4);
 const float K_WEAR[5] = float[5](1.1, 1.12, 1.06, 1.0, 1.25);     // 모서리 닳음 밝기(칠한 판은 아래에서 회색으로 벗김)
 
 varying vec3 lpos;
@@ -62,11 +67,11 @@ void fragment() {
 	vec3 t = texture(detail_tex, uv).rgb;
 	float lum = dot(t, vec3(0.299, 0.587, 0.114));
 	float avg = dot(textureLod(detail_tex, vec2(0.5), 10.0).rgb, vec3(0.299, 0.587, 0.114));
-	float detail = mix(1.0, lum / max(avg, 0.05), K_DETAIL[k]);
-	vec2 tn = (texture(detail_normal, uv).xy * 2.0 - 1.0) * K_NORMAL[k];
+	float detail = mix(1.0, lum / max(avg, 0.05), mix(K_DETAIL[k], K_DETAIL_REAL[k], real_set));
+	vec2 tn = (texture(detail_normal, uv).xy * 2.0 - 1.0) * mix(K_NORMAL[k], K_NORMAL_REAL[k], real_set);
 
 	// 나무: 상자의 긴 축을 따라 결·널 이음(가로 0.28m)
-	if (k == 1) {
+	if (k == 1 && real_set < 0.5) {
 		vec3 bh = max(box_half, vec3(0.01));
 		vec3 along = (bh.y >= bh.x && bh.y >= bh.z) ? vec3(0.0, 1.0, 0.0) : (bh.x >= bh.z ? vec3(1.0, 0.0, 0.0) : vec3(0.0, 0.0, 1.0));
 		if (abs(dot(along, ax)) > 0.5) along = ua; // 마구리 면
@@ -115,7 +120,8 @@ void fragment() {
 	}
 	ALBEDO = clamp(col * grime, vec3(0.0), vec3(1.0));
 	METALLIC = K_METAL[k] * (1.0 - edge * 0.3);
-	ROUGHNESS = clamp(K_ROUGH[k] + (1.0 - grime) * 0.3 - edge * 0.12 + (lum - avg) * 0.2, 0.05, 1.0);
+	float base_rough = mix(K_ROUGH[k], mix(K_ROUGH[k], texture(detail_rough, uv).r, 0.6), real_set);
+	ROUGHNESS = clamp(base_rough + (1.0 - grime) * 0.3 - edge * 0.12 + (lum - avg) * 0.2, 0.05, 1.0);
 
 	// 하늘 가림: 옆면은 하늘을 반만 보고 아래로 갈수록 더 가린다 — 주변광에만(해 받는 면은 그대로) → 해 쪽·그늘 쪽 면 대비
 	AO = clamp(mix(0.62, 1.0, max(lnrm.y, 0.0)) * mix(0.8, 1.0, grime), 0.0, 1.0);

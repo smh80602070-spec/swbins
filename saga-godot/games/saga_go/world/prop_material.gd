@@ -7,7 +7,10 @@ extends RefCounted
 ## 발광·유리·금속처럼 재질을 뒤에서 고쳐 쓰는 부품은 각 지역의 _mat()/_glow()/_glass() 를 그대로 쓴다.
 
 const SHADER := preload("res://saga_core/shaders/prop_real.gdshader")
-## 사진 PBR 세트(자체툴 K, tiles_real/)가 오면 재질 종류별로 갈아끼운다 — 그 전엔 돌 512 한 벌.
+## 자체 PBR 세트(K-0093 tiles_real/)가 놓여 있으면 재질 종류마다 그 세트(G-0144) — 없으면 돌 512 한 벌. SAGA_PROP_OLD=1 이면 옛 한 벌(전후 촬영).
+## 칠한 판은 칠한 널(널판 결을 옅게), 쇠는 쇠녹 결을 옅게 — 빛깔은 늘 tint(색 표 그대로), 사진은 밝기 결·법선·거칠기만.
+const REAL_DIR := "res://assets/generated/tiles_real/"
+const REAL_SET := {0: "stonewall", 1: "planks", 2: "plaster", 3: "planks", 4: "rust"}
 const DETAIL := preload("res://assets/generated/tiles/stone_512.png")
 const DETAIL_N := preload("res://assets/generated/tiles/stone_512_n.png")
 
@@ -40,8 +43,17 @@ static func for_color(c: Color) -> ShaderMaterial:
 	m.shader = SHADER
 	m.set_shader_parameter("tint", c)
 	m.set_shader_parameter("material_kind", kind_for(c))
-	m.set_shader_parameter("detail_tex", DETAIL)
-	m.set_shader_parameter("detail_normal", DETAIL_N)
+	var kind := kind_for(c)
+	var real := ResourceLoader.exists(REAL_DIR + String(REAL_SET[kind]) + "_hi.webp") and OS.get_environment("SAGA_PROP_OLD") == ""
+	if real:
+		var base := REAL_DIR + String(REAL_SET[kind]) + "_hi"
+		m.set_shader_parameter("detail_tex", load(base + ".webp"))
+		m.set_shader_parameter("detail_normal", load(base + "_n.webp"))
+		m.set_shader_parameter("detail_rough", load(base + "_r.webp"))
+	else:
+		m.set_shader_parameter("detail_tex", DETAIL)
+		m.set_shader_parameter("detail_normal", DETAIL_N)
+	m.set_shader_parameter("real_set", 1.0 if real else 0.0)
 	_cache[key] = m
 	return m
 
