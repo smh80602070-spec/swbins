@@ -15,6 +15,7 @@ const Toast := preload("res://saga_core/ui/toast.gd")
 @export var label_text: String = "문"
 
 const SIZE := Vector3(1.4, 2.6, 1.6)
+const RealPbr := preload("res://saga_core/world/real_pbr.gd")
 
 var _player_in_range := false
 
@@ -25,6 +26,29 @@ func _ready() -> void:
 
 
 func _spawn_visual() -> void:
+	## G-0222 — 보라 발광 상자가 임시물로 보였다(10-13 점검): 돌기둥 둘 + 들보(자체 PBR 돌벽) + 안쪽 빛 막. 크기·충돌 범위(SIZE)는 그대로.
+	if RealPbr.available("stonewall") and OS.get_environment("SAGA_STORY_OLD") == "":
+		var pw := 0.32
+		for sx in [-1.0, 1.0]:
+			_stone_box(Vector3(sx * (SIZE.x * 0.5 - pw * 0.5), SIZE.y * 0.5, 0), Vector3(pw, SIZE.y, pw + 0.1), Color(0.62, 0.6, 0.56))
+		_stone_box(Vector3(0, SIZE.y + 0.14, 0), Vector3(SIZE.x + 0.36, 0.28, pw + 0.2), Color(0.62, 0.6, 0.56))
+		var veil := MeshInstance3D.new()
+		var q := QuadMesh.new()
+		q.size = Vector2(SIZE.x - pw * 2.0, SIZE.y - 0.05)
+		veil.mesh = q
+		veil.position = Vector3(0, SIZE.y * 0.5, 0)
+		var vm := StandardMaterial3D.new()
+		vm.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		vm.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		vm.cull_mode = BaseMaterial3D.CULL_DISABLED
+		vm.albedo_color = Color(0.55, 0.32, 0.85, 0.7)
+		vm.emission_enabled = true
+		vm.emission = Color(0.55, 0.32, 0.85)
+		vm.emission_energy_multiplier = 1.2
+		veil.material_override = vm
+		veil.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		add_child(veil)
+		return
 	var mi := MeshInstance3D.new()
 	var mesh := BoxMesh.new()
 	mesh.size = SIZE
@@ -36,6 +60,16 @@ func _spawn_visual() -> void:
 	mat.emission = Color(0.55, 0.32, 0.85)
 	mat.emission_energy_multiplier = 0.6
 	mi.material_override = mat
+	add_child(mi)
+
+
+func _stone_box(pos: Vector3, size: Vector3, tint: Color) -> void:
+	var mi := MeshInstance3D.new()
+	var m := BoxMesh.new()
+	m.size = size
+	mi.mesh = m
+	mi.position = pos
+	RealPbr.apply_box(mi, size, "stonewall", 0, tint, 0.6)
 	add_child(mi)
 
 

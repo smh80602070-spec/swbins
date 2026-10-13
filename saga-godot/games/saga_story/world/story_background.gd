@@ -43,6 +43,9 @@ var _map: RefCounted
 
 ## G-0149 — 사실 쪽 여러 겹 배경(사용자 10-09 "사가종횡은 배경이 화면이 있어야 겠네"). 동굴·미궁 씬은 안 짓는다.
 const GRASS_TEX := preload("res://assets/generated/tiles/grass_512.png")
+## G-0222 — 자체 PBR 풀(K-0093)이 있으면 그것 + 1만리 바닥(G-0143)과 같은 빛깔 맞춤(옛 평균/새 평균 ^ (1−0.35), 선형).
+const REAL_GRASS := "res://assets/generated/tiles_real/grass_hi.webp"
+const REAL_GRASS_GAIN := Vector3(1.255, 1.738, 1.326)
 const SIDE_M := 160.0            # 지도 양옆으로 더 까는 너비(카메라가 끝에 서도 화면 끝까지)
 const GROUND_Y := -0.35          # 발판 윗면(0) 바로 아래 — 발판이 들판 위에 놓인 꼴
 const GROUND_NEAR := 14.0        # 카메라(z +16) 바로 앞까지
@@ -120,6 +123,10 @@ func _build_scenery() -> void:
 	var gm := StandardMaterial3D.new()
 	gm.albedo_texture = GRASS_TEX
 	gm.albedo_color = Color(0.5, 0.62, 0.4)   # 0.62,0.78,0.5 는 화면 아래 절반이 쨍한 연두 판이었다
+	if ResourceLoader.exists(REAL_GRASS) and OS.get_environment("SAGA_STORY_OLD") == "":
+		gm.albedo_texture = load(REAL_GRASS)
+		var lin := gm.albedo_color.srgb_to_linear()
+		gm.albedo_color = Color(lin.r * REAL_GRASS_GAIN.x, lin.g * REAL_GRASS_GAIN.y, lin.b * REAL_GRASS_GAIN.z).linear_to_srgb()
 	gm.uv1_triplanar = true
 	gm.uv1_world_triplanar = true
 	gm.uv1_scale = Vector3(0.25, 0.25, 0.25)

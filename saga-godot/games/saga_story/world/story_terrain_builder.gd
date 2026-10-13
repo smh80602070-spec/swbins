@@ -28,6 +28,10 @@ const PLAT_COLOR := Color(0.55, 0.42, 0.28)
 const ROPE_COLOR := Color(0.6, 0.5, 0.35)
 const LADDER_COLOR := Color(0.42, 0.32, 0.2)  # 사다리 — 줄보다 짙은 목재색
 const WALL_HEIGHT := 20.0
+## G-0222 — 단색 상자였던 바닥 띠·발판에 자체 PBR(K-0093) 결: 바닥 윗면 얇은 판(풀·흙·바위 — ground_color 빛깔로 고름) + 옆면 흙, 발판 널판.
+## 세트가 없거나 SAGA_STORY_OLD=1 이면 예전 단색. 빛깔은 늘 ground_color·PLAT_COLOR(prop_real 은 결만 얹는다).
+const RealPbr := preload("res://saga_core/world/real_pbr.gd")
+const TOP_THICK := 0.06
 
 var _map: RefCounted
 
@@ -46,15 +50,39 @@ func _ready() -> void:
 
 func _build_ground() -> void:
 	var width: float = _map.width_m()
-	_build_box(width * 0.5, -PLATFORM_THICKNESS * 0.5, width, PLATFORM_THICKNESS, ground_color, "Ground")
+	var body := _build_box(width * 0.5, -PLATFORM_THICKNESS * 0.5, width, PLATFORM_THICKNESS, ground_color, "Ground", "dirt", 0, Color(0.38, 0.29, 0.2) if _top_set(ground_color) == "grass" else ground_color.darkened(0.25))   # 옆면 = 흙(풀빛 옆면은 연두 띠로 떴다)
+	if body != null and _real():
+		## 윗면 판(충돌 없음) — 풀빛 땅이면 풀, 갈색이면 흙, 그 밖(동굴)은 바위
+		var top := MeshInstance3D.new()
+		top.name = "GroundTop"
+		var m := BoxMesh.new()
+		m.size = Vector3(width + 0.04, TOP_THICK, PLATFORM_DEPTH + 0.04)
+		top.mesh = m
+		top.position = Vector3(0, PLATFORM_THICKNESS * 0.5 - TOP_THICK * 0.5 + 0.01, 0)
+		## ground_color 그대로면 결 위로도 쨍한 연두 판이었다(10-13 전후) — 채도 ×0.8·밝기 ×0.55 로 뒤 들판(풀 사진 × 색)과 잇는다
+		var tc := Color.from_hsv(ground_color.h, ground_color.s * 0.8, ground_color.v * 0.55)
+		RealPbr.apply_box(top, m.size, _top_set(ground_color), 0, tc, 0.4)
+		body.add_child(top)
+
+
+static func _top_set(c: Color) -> String:
+	if c.g > c.r and c.g > c.b:
+		return "grass"
+	if c.r > c.g and c.g > c.b:
+		return "dirt"
+	return "rock"
+
+
+static func _real() -> bool:
+	return RealPbr.available("planks") and OS.get_environment("SAGA_STORY_OLD") == ""
 
 
 func _build_platform(p: Dictionary) -> void:
 	var w: float = float(p.half_w) * 2.0
-	_build_box(float(p.x), float(p.height) - PLATFORM_THICKNESS * 0.5, w, PLATFORM_THICKNESS, PLAT_COLOR, "Platform")
+	_build_box(float(p.x), float(p.height) - PLATFORM_THICKNESS * 0.5, w, PLATFORM_THICKNESS, PLAT_COLOR, "Platform", "planks", 1, PLAT_COLOR)
 
 
-func _build_box(center_x: float, center_y: float, width: float, thickness: float, color: Color, name_: String) -> void:
+func _build_box(center_x: float, center_y: float, width: float, thickness: float, color: Color, name_: String, real_set := "", real_kind := 0, real_tint := Color.WHITE) -> StaticBody3D:
 	var body := StaticBody3D.new()
 	body.name = name_
 	body.position = Vector3(center_x, center_y, 0)
@@ -64,9 +92,10 @@ func _build_box(center_x: float, center_y: float, width: float, thickness: float
 	var box := BoxMesh.new()
 	box.size = Vector3(width, thickness, PLATFORM_DEPTH)
 	mi.mesh = box
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = color
-	mi.material_override = mat
+	if real_set == "" or not _real() or not RealPbr.apply_box(mi, box.size, real_set, real_kind, real_tint):
+		var mat := StandardMaterial3D.new()
+		mat.albedo_color = color
+		mi.material_override = mat
 	body.add_child(mi)
 
 	var cs := CollisionShape3D.new()
@@ -74,6 +103,7 @@ func _build_box(center_x: float, center_y: float, width: float, thickness: float
 	shape.size = box.size
 	cs.shape = shape
 	body.add_child(cs)
+	return body
 
 
 ## 웹판 field.ropes 다섯(rope 넷+ladder 하나) — 오르내리는 동안 옆으로
