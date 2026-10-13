@@ -96,3 +96,7 @@
 - [x] W-0192 · 10-13 · (K-0047 자체툴 넘김) · 주역 23 표정 초상 `<판>/assets/portraits/expr/<id>__<표정>_c.webp` 놓임 — 4종횡 `renderStoryBox` emote 짝으로 갈아 끼우기 · 웹
 - [x] W-0193 · 10-13 · (K-0049 자체툴 넘김) · 움직이는 대화 초상 주역 23 `<판>/assets/portraits/live/<id>/live.json` 놓임(규격 `split_portrait_layers.py` 머리말) — 대화창 재생 · 웹
 - [x] W-0194 · 10-13 · (K-0096 자체툴 넘김) · 물고기 38 자체판 `shared/assets/creatures3d/<id>.glb`(뼈 worm·동작 7) — W-0178 처럼 빌린 Quaternius 물고기 바꿔 끼우기(`k96_targets.json` 5-fish) · 웹
+- [x] 10-13 · (K-0049 자체툴 넘김 — Claude 눈) · `ru_geohae`·`tb_baekgi` 몸이 여성형(긴 머리·드레스)인데 도감 초상은 남자 — 조합표 body·kit 을 남자 몸으로 다시 배정 + 다시 굽기(새 K) · 자체툴 → K-0101
+- [x] 10-13 · (G-0220 고돗 넘김) · K-0047 표정 초상 92·K-0049 움직이는 초상 23 을 고돗에도 놓아 달라 — `saga-godot/assets/portraits/{expr,live/<id>}/`(웹과 같은 파일·live.json, .import·출처 포함, asset-place.json 에 고돗 대상 셋) · 자체툴 → K-0100
+- [x] 10-13 · (K-0096 자체툴 넘김) · 물고기 ✗ 3(whale·puffer·fish_a) 그림 다시 → Kaggle 다시(빌린 것 남음) · 자체툴 → K-0102
+- [x] 10-13 · (G-0220 고돗 넘김 — Claude 눈) · 움직이는 초상(VRoid 렌더)과 K-0047 표정 카드(그린 그림)가 나란히 보면 딴사람 — 고돗은 live 가 있으면 live 만 쓴다. 같은 렌더로 표정 바탕(VRoid Fcl_ALL_Joy·Angry·Sorrow·Surprised, base 와 같은 카메라)을 live.json `"expr": {joy|anger|sorrow|surprise: 파일}` 로 더해 주면 고돗은 바로 쓴다(웹도 같은 결 권함) · 자체툴 → K-0100

@@ -9,10 +9,7 @@
 - [ ] 10-12 · (U-0104 유니티 넘김) · 네 판(2나락·3마을·4종횡·5천하) 효과음은 이제 자체 92종(`SagaSfx`)을 이름으로 먼저 쓰고, 빌린 Kenney 클립(`saga-unity/Assets/Art/Audio/Kenney_*`)은 씬 필드(GameBootstrap·ForestHostileEncounterUi·ForestCollectSpot/FruitTree·StoryEnemy·RealmCommandUi 등)가 아직 가리켜 **대체용으로만** 남음 → 씬 재빌드 때 그 필드·파일 걷기(1만리 옛 Kenney 필드 포함) · 유니티
 - [ ] 10-12 · (W-0185 웹 넘김) · 1만리 폰 들판 15초에 받는 GLB 13.8MB 중 대부분이 인물·괴물 몸(saga-web/saga-go/assets/characters3d·creatures3d — 예 ru_doksi 948KB·tz_hyanggae 819KB·monkroose 614KB·panda 590KB). 소품은 폰 표로 7.5MB→0.8MB 줄였다. 몸 GLB 압축(meshopt·텍스처 축소, tools/glb-compress)이나 폰용 가벼운 몸 한 벌 · 자체툴
 - [ ] 10-12 · (W-0186 웹 넘김) · 2나락 폰 마을에 들어가면 받는 GLB 의 대부분이 동작 묶음 assets/models/anim/UAL1_Standard.glb(1.9MB)와 인물 몸 characters3d/*(개당 ~600KB, 마을 사람마다). 압축(meshopt·텍스처 축소, tools/glb-compress)이나 폰용 동작 묶음(쓰는 클립만) · 자체툴
-- [x] 10-13 · (K-0049 자체툴 넘김 — Claude 눈) · `ru_geohae`·`tb_baekgi` 몸이 여성형(긴 머리·드레스)인데 도감 초상은 남자 — 조합표 body·kit 을 남자 몸으로 다시 배정 + 다시 굽기(새 K) · 자체툴 → K-0101
-- [x] 10-13 · (G-0220 고돗 넘김) · K-0047 표정 초상 92·K-0049 움직이는 초상 23 을 고돗에도 놓아 달라 — `saga-godot/assets/portraits/{expr,live/<id>}/`(웹과 같은 파일·live.json, .import·출처 포함, asset-place.json 에 고돗 대상 셋) · 자체툴 → K-0100
-- [x] 10-13 · (K-0096 자체툴 넘김) · 물고기 ✗ 3(whale·puffer·fish_a) 그림 다시 → Kaggle 다시(빌린 것 남음) · 자체툴 → K-0102
 - [ ] 10-13 · (K-0093 자체툴 넘김) · 자체 PBR 12세트(땅 6·소품 6, 바탕·법선·거칠기·높이) — 정본 `saga-assets/textures_real` · 웹·유니티 사실 재질에 재사용 · 웹/유니티
-- [x] 10-13 · (G-0220 고돗 넘김 — Claude 눈) · 움직이는 초상(VRoid 렌더)과 K-0047 표정 카드(그린 그림)가 나란히 보면 딴사람 — 고돗은 live 가 있으면 live 만 쓴다. 같은 렌더로 표정 바탕(VRoid Fcl_ALL_Joy·Angry·Sorrow·Surprised, base 와 같은 카메라)을 live.json `"expr": {joy|anger|sorrow|surprise: 파일}` 로 더해 주면 고돗은 바로 쓴다(웹도 같은 결 권함) · 자체툴 → K-0100
 - [ ] 10-13 · (W-0190 웹 넘김 — Claude 눈) · 3마을 2D 곤충 박사 나비 자리(침선방 지붕 위)에 보라 한 빛 사람 — 주민 빌린 몸 옷 색 칸(W-0121 tintPx)이 몸 전체에 먹는 몸이 있는 듯(pw-cozy-check w190f1~3·base 다) · 웹
 - [ ] 10-13 · (W-0191 웹 넘김) · 2나락 옛 타일 `dungeon_{dirt,stone,water,snow,sand}` 안 씀(grass 는 마을 땅) — 지워도 됨 · 자체툴
+- [ ] 10-13 · (고돗 그래픽 점검 넘김 — 사용자 "그래픽부터 점검해서 티켓 만들어", 시트 `tasks/sheets/godot-graphics-audit-20261013.md`) · 고돗 화면에서 모델 몫 넷: ① 나무 = 정육면체 잎 덩이(1만리 숲·3마을 둘레·4종횡 뒤 숲) → 잎 카드·층진 잎 자체 나무 ② 괴물 몸 장난감 다면체 ③ 떠 있는 섬 로우폴리 ④ 2나락 방 벽·바닥 GLB(빌린 킷) → K-0094 테마 타일·자체 방을 고돗에도 · 자체툴
