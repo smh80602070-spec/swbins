@@ -4,7 +4,7 @@
 import { open, sleep } from './pw.mjs';
 
 const tag = process.argv[2] || 'gait';
-const r = await open('saga-go', { w: 1280, h: 720 });
+const r = await open('saga-go', { w: +(process.env.GW || 1280), h: +(process.env.GH || 720) });   // W-0198 폰 세로: GW=390 GH=844
 const { page } = r;
 const ev = (fn, arg) => page.evaluate(fn, arg);
 const probe = () => ev(() => {
@@ -20,6 +20,7 @@ try {
   await ev(() => { const b = document.getElementById('title-continue'); if (b) { b.click(); } });
   await sleep(6000);
   for (let i = 0; i < 12; i++) { const k = await ev(() => !!(DG.scenario && DG.scenario.isOpen && DG.scenario.isOpen())); if (!k) { break; } await page.keyboard.press('Escape'); await sleep(250); }
+  await page.screenshot({ path: `shots/${tag}_idle.jpg`, type: 'jpeg', quality: 80 });   // 처음 선 자리(qc 1-world3d 와 같은 씨앗)
   out.w3 = await ev(() => !!(DG.world3d && DG.world3d.active && DG.world3d.active()));
   await page.mouse.click(640, 200); await sleep(300);
   out.idle = await probe();

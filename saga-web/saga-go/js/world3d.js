@@ -2809,7 +2809,7 @@
    */
   var CAM_HIGH_MUL = [2.27, 1.33, 0.80];    // 카메라 높이 배수
   var CAM_BACK_MUL = [0.05, 0.40, 0.60];    // 뒤로 물러나는 거리 배수
-  var CAM_AHEAD = [0, 3, 5];                // 시선을 앞으로 던지는 거리(m)
+  var CAM_AHEAD = [0, 3, 5]; function CAM3D_BACK() { return core.tuned('world3d.cam3dBack', 11); } function CAM3D_UP() { return core.tuned('world3d.cam3dUp', 5); } function CAM3D_LOOK() { return core.tuned('world3d.cam3dLook', 1.6); } function CAM3D_AHEAD() { return core.tuned('world3d.cam3dAhead', 2); }   // 시선을 앞으로 던지는 거리(m) · W-0198 3D 는 손잡이(어깨 너머 — 몸 ≈ 화면 1/4, 사용자 10-14 "RPG 처럼")
 
   /** 조우 무대 — 대상 앞 몇 미터에 서서 눈높이로 본다 (원작의 포획 화면).
       거리는 **상대 키에 비례**한다: 사람과 뿔낙지를 같은 자리에서 보면
@@ -2880,8 +2880,8 @@
     }
     /* 멀리 물러날수록 **더 내려다본다** — 거리와 높이를 같은 비율로 늘리면
        지평선만 잔뜩 보이고 발밑이 안 보인다 */
-    var back = CAM_DIST() * CAM_BACK_MUL[mode] * z;
-    var high = CAM_HIGH() * CAM_HIGH_MUL[mode] * Math.pow(z, 1.12);
+    var back = mode === 2 ? CAM3D_BACK() * z : CAM_DIST() * CAM_BACK_MUL[mode] * z;   // W-0198 3D 는 휠로 물러나면(z≈2.2) 옛 24m·12m 쯤
+    var high = mode === 2 ? CAM3D_UP() * Math.pow(z, 1.3) : CAM_HIGH() * CAM_HIGH_MUL[mode] * Math.pow(z, 1.12);
     if (focus) {
       /* 나와 대상 사이를 본다. 카메라는 **내 뒤 옆쪽**에 서서 둘을 한 화면에 담는다 */
       var dx = focus.x - pos.x, dy = focus.y - pos.y;
@@ -2901,10 +2901,10 @@
        보는 곳은 그대로 내 앞이라, 돌려도 **내가 화면 한가운데** 남는다 */
     var cs = Math.cos(yw), sn = Math.sin(yw);
     var ax = 0, az = back;                       // 안 돌렸을 때 카메라가 서는 자리
-    var ahead = CAM_AHEAD[mode];
+    var ahead = mode === 2 ? CAM3D_AHEAD() : CAM_AHEAD[mode];
     return {
       pos: { x: pos.x + ax * cs - az * sn, y: high, z: pos.y + ax * sn + az * cs },
-      look: { x: pos.x + ahead * sn, y: mode === 0 ? 0.5 : 2.4, z: pos.y - ahead * cs }
+      look: { x: pos.x + ahead * sn, y: mode === 0 ? 0.5 : (mode === 2 ? CAM3D_LOOK() : 2.4), z: pos.y - ahead * cs }
     };
   }
 
@@ -2961,7 +2961,7 @@
     /* ⑲-22 활 조준 — 오른 어깨 너머에서 겨눈 쪽을 본다(대화·조우 무대가 먼저) */
     var FCv = global.DG.fieldCombat, AV = !TS && !stageAt && FCv && FCv.aimView ? FCv.aimView() : null;
     var aim = TS ? global.DG.talkface.talkAim(TS.spk, TS.lst, ACTOR_H()) : (AV ? aimCam(pos, AV, ACTOR_H()) : camAim(pos, W.tiltMode, focusLive(), stageAt,
-      stageAt ? 1 : W.zoom3d, battleOn, stageAt ? 0 : yaw, duelFoe)); if (!TS && !AV && !stageAt && !duelFoe && !focusLive() && global.DG.landmark3d) { aim = global.DG.landmark3d.apply(aim); }   // W-0162 멀리 보기(기본 구도만)
+      stageAt ? 1 : W.zoom3d * (global.DG.mount && global.DG.mount.flying && global.DG.mount.flying() ? 2.2 : 1), battleOn, stageAt ? 0 : yaw, duelFoe)); if (!TS && !AV && !stageAt && !duelFoe && !focusLive() && global.DG.landmark3d) { aim = global.DG.landmark3d.apply(aim); }   // W-0162 멀리 보기(기본 구도만)
     /* **카메라와 시선도 땅을 따라 오른다.** 안 그러면 산에 오를 때 카메라가
        제자리에 남아 땅이 화면을 덮고, 골짜기에서는 하늘만 보인다.
        `camAim` 은 평면 기준으로 값을 내므로 여기서 땅 높이만 얹는다 —

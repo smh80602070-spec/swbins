@@ -931,5 +931,21 @@
   "ticket": "W-0197",
   "since": "2026-10-14",
   "note": "D2(claude 2026-10-14): playcheck go-gait.mjs — 걷기 0.94 키/초 walk ×1.15 · Shift 달리기 2.07 run ×0.71(Run_Loop 실제로 나옴) · 멈춤 idle ×1 · 왼쪽 틀기 기울기 −3.1° · shots/gait_new_run0~3 Read ○ 팔 굽힌 달리기 자세. 같은 고침 2나락 asset3d.step·3마을 주인공(village-view3d). 손잡이 anim3d.walkHps 0.82·runHps 2.9·runFrom 1.4·lean 8."
+ },
+ {
+  "id": "go.cam3d-shoulder",
+  "name": "3D 기본 카메라 어깨 너머 — 뒤 11m·위 5m·시선 1.6m(몸 3.4m 가 화면 ≈1/4), 휠로 물러나면 옛 24m, 비행 중 ×2.2",
+  "files": [
+   "src/world3d/05-render.js"
+  ],
+  "tests": [
+   "3D 카메라 — 기본은 어깨 너머(몸 3.4m 가 화면 ≈1/4: 뒤 9~14m·내려봄 8~16°), 휠로 물러나면 옛 24m 쯤까지, 2.5D 는 그대로 (W-0198)"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0198",
+  "since": "2026-10-14",
+  "note": "D2(claude 2026-10-14): go-gait.mjs cam_new2(1280×720 몸 ≈180px = 1/4, 조우 카드에 안 가림)·cam_phone2(390×844 몸 ≈1/6) Read ○ · qc 1-world3d·2-close Read ○(×0.7 당김은 발이 카드 뒤). 시선 2.6 → 1.6 으로 내려 몸을 화면 가운데로. 손잡이 world3d.cam3dBack·cam3dUp·cam3dLook·cam3dAhead."
  }
 ]
