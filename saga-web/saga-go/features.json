@@ -899,5 +899,19 @@
   "ticket": "W-0185",
   "since": "2026-10-12",
   "note": "D2(claude 2026-10-12): mobile-probe saga-go --play(390×844·Fast 4G·CPU×4, 들판 15초) 소품 GLB 17개 7,568KB(실사 14) → 25개 844KB(실사 2 — asset3d 역참·등롱, 범위 밖). 남은 무게는 인물·괴물 GLB(개당 0.6~1MB) — K 수신함. 손잡이 prop3d.light(1·0·자동)·world3d.pixelCap. perf.js 세 등급(HIGH·MEDIUM·LOW)은 원래 있었다(R-0 의 \"품질 단 없음\" 은 틀림)."
+ },
+ {
+  "id": "go.hero-cloth",
+  "name": "3D 주인공 윗옷 색 — 무광(MeshBasic) 화면에서 살색 덩어리로 보이던 샘플 L 윗옷(연어색)을 K-0097 이 다시 구워 놓음(코드 무변경)",
+  "files": [
+   "../shared/assets/characters3d/fu_seonghon.glb"
+  ],
+  "tests": [],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0143",
+  "since": "2026-10-13",
+  "note": "D2(claude 2026-10-13): qc saga-go visual 1-world3d·2-close Read ○ — 주인공(QC 씨앗 선두 fu_seonghon) 윗옷이 흰 바탕 푸른 무늬·보라 띠, 상체 살색 덩어리 0. 원인 = 에셋 무늬(N00_007_03_Tops_01_CLOTH_02 연어색), 코드 아님(W-0143 메모)."
  }
 ]
