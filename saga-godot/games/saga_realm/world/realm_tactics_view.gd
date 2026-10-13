@@ -14,6 +14,10 @@ const RealmTactics := preload("res://games/saga_realm/data/realm_tactics.gd")
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
+## G-0223 — 보드게임 시제품처럼 보이던 판(베이지 단색 칸·회색 상자 성벽·원뿔 나무)을 자체 PBR(K-0093)로: 칸 지형마다 결, 성벽 돌벽 + 여장,
+## 판 틀 널판, 숲 나무 = 줄기 + 잎 덩이 셋, 강 = 매끈한 물빛. 빛깔은 웹과 같은 COL 그대로(결만 사진). SAGA_REALM_OLD=1 이면 예전 판.
+const RealPbr := preload("res://saga_core/world/real_pbr.gd")
+const REAL_SET := {"plain": "gravel", "forest": "grass", "wall": "stonewall"}
 
 const ORIGIN := Vector3(3000.0, 0.0, 0.0)   # 성 화면(원점 둘레)과 겹치지 않는 자리
 const CELL := 2.0
@@ -117,15 +121,20 @@ func _mat(c: Color, unshaded := false) -> StandardMaterial3D:
 	return m
 
 
-func _box(size: Vector3, pos: Vector3, c: Color) -> MeshInstance3D:
+func _box(size: Vector3, pos: Vector3, c: Color, real_set := "", real_kind := 0) -> MeshInstance3D:
 	var mi := MeshInstance3D.new()
 	var bm := BoxMesh.new()
 	bm.size = size
 	mi.mesh = bm
-	mi.material_override = _mat(c)
+	if real_set == "" or not _real() or not RealPbr.apply_box(mi, size, real_set, real_kind, c):
+		mi.material_override = _mat(c)
 	mi.position = pos
 	add_child(mi)
 	return mi
+
+
+static func _real() -> bool:
+	return RealPbr.available("stonewall") and OS.get_environment("SAGA_REALM_OLD") == ""
 
 
 func _build_ground() -> void:
@@ -134,9 +143,11 @@ func _build_ground() -> void:
 	pm.size = Vector2(80, 80)
 	field.mesh = pm
 	field.material_override = _mat(Color("5d6b42"))
+	if _real():
+		field.material_override = RealPbr.material("grass", 0, Color("5d6b42"))
 	field.position = ORIGIN + Vector3(0, -0.3, 0)
 	add_child(field)
-	_box(Vector3(RealmTactics.COLS * CELL + 0.6, 0.5, RealmTactics.ROWS * CELL + 0.6), ORIGIN + Vector3(0, -0.2, 0), Color("3b3326"))   # 판 테두리(웹 frame)
+	_box(Vector3(RealmTactics.COLS * CELL + 0.6, 0.5, RealmTactics.ROWS * CELL + 0.6), ORIGIN + Vector3(0, -0.2, 0), Color("3b3326"), "planks", 1)   # 판 테두리(웹 frame)
 
 
 func _build_cells() -> void:
@@ -148,8 +159,35 @@ func _build_cells() -> void:
 			var top: float = TOP.get(t, 0.2)
 			var c := cell_center(x, y)
 			var h := top + 0.25
-			_box(Vector3(CELL - 0.06, h, CELL - 0.06), c + Vector3(0, top - h * 0.5, 0), COL.get(t, COL.plain))
-			if t == "forest":   # 원뿔 나무 둘(코드 도형)
+			var cell_box := _box(Vector3(CELL - 0.06, h, CELL - 0.06), c + Vector3(0, top - h * 0.5, 0), COL.get(t, COL.plain), String(REAL_SET.get(t, "")))
+			if _real() and t == "river":   # 매끈한 물빛(결 없이 반사)
+				var wm := _mat(COL.river)
+				wm.roughness = 0.08
+				wm.metallic = 0.15
+				cell_box.material_override = wm
+			if _real() and t == "wall":   # 여장 — 윗면 네 변에 낮은 돌 덩이
+				for k in 4:
+					var along := (-0.7 + 0.47 * k)
+					for e in [Vector3(along, 0, -0.78), Vector3(along, 0, 0.78), Vector3(-0.78, 0, along), Vector3(0.78, 0, along)]:
+						if k % 2 == 0:
+							_box(Vector3(0.3, 0.3, 0.3), c + e + Vector3(0, top + 0.15, 0), COL.wall, "stonewall")
+			if _real() and t == "forest":   # 나무 둘 = 줄기 + 크기 다른 잎 덩이 셋
+				for k in 2:
+					var off := Vector3(-0.45 + 0.9 * k, 0, -0.35 + 0.7 * ((x + y + k) % 2))
+					_box(Vector3(0.16, 0.7, 0.16), c + off + Vector3(0, top + 0.35, 0), Color("5a4127"), "planks", 1)
+					for b in 3:
+						var leaf_ball := MeshInstance3D.new()
+						var sm := SphereMesh.new()
+						var r := 0.42 - 0.08 * b
+						sm.radius = r
+						sm.height = r * 1.8
+						sm.radial_segments = 16
+						sm.rings = 8
+						leaf_ball.mesh = sm
+						leaf_ball.material_override = RealPbr.material("grass", 0, Color("2f5a2c").lightened(0.06 * b), 1.4)
+						leaf_ball.position = c + off + Vector3(0.12 * ((b + k) % 3 - 1), top + 0.85 + 0.32 * b, 0.1 * (b % 2))
+						add_child(leaf_ball)
+			elif t == "forest":   # 원뿔 나무 둘(코드 도형)
 				for k in 2:
 					var off := Vector3(-0.45 + 0.9 * k, 0, -0.35 + 0.7 * ((x + y + k) % 2))
 					var tr := MeshInstance3D.new()
