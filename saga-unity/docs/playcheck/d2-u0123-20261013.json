@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-13",
+  "tickets": [
+    "U-0123 2나락 PlayerController.HeightAboveGround 발밑 레이가 제 CharacterController 를 맞히지 않게 (U-0122 선행)"
+  ],
+  "how": "Saga.EditorTools.PlaytestDungeonHeadless.Run 배치(unity-batch.sh, -quit 없음, </dev/null), 진단마다 세이브 다섯 백업·md5·치움 → 되돌림·md5 같음 · 화면 촬영 없음",
+  "fix": "HeightAboveGround — Physics.RaycastNonAlloc(_groundHits[8]) 로 바꾸고 hit.collider.transform.IsChildOf(transform) 인 것(제 몸)을 뺀 가장 가까운 distance - 0.3f, 없으면 100f · 원점·거리·마스크 ~0·트리거 무시 무변경",
+  "diag": {
+    "before": { "ok_lines": 54, "error_cs": 0, "exception": 0 },
+    "after": { "ok_lines": 54, "error_cs": 0, "exception": 0, "ok_list_diff": "cut camera live t=3.69→3.65 숫자만" }
+  },
+  "step4_tmp_destroyimmediate": {
+    "what": "Games/SagaDungeon 19파일 26곳 Destroy(x.GetComponent<Collider>()) → Object.DestroyImmediate(...) 임시 치환(커밋 안 함, 되돌림)",
+    "ok_lines": 54,
+    "mount": "OK",
+    "dragon_rise_0_4s_m": 2.08,
+    "dragon_rise_note": "진단 PlaytestDungeonMount 에 임시 로그 한 줄로 잼(되돌림) — U-0122 실패 때 0.36m, 기대 1.5~2.5m",
+    "error_cs": 0,
+    "exception": 0,
+    "reverted": "git checkout -- 19파일 + PlaytestDungeonMount.cs, SagaDungeon 미커밋 diff 0(PlayerController.cs 는 커밋 5369e2092 하나)"
+  },
+  "saves_md5_same": true,
+  "wall_probe_note": "ProbeWall(616행)은 DungeonClimbable 만 받아 CC 는 이미 걸러짐 — 손대지 않음",
+  "precheck": "PRECHECK_PATHS=PlayerController.cs → PRECHECK OK",
+  "result": "등급 변화 없음 — 진단 54→54, U-0122 2나락 mount 선행 원인 해소(재개 근거)"
+}
