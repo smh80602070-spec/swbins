@@ -19,4 +19,4 @@
 | 1 | [U-0122](U-0122.md) 도형 충돌체 늦게 지우던 85곳 → 공용 Colliders.Strip(바로 지움) | 정리·버그 | 대기(U-0123 끝 — 다시 실행) |
 | 2 | [U-0085](U-0085.md) 사실 소품·건물·나무 ④ — 툰 패스를 인물에만, 재질별 PBR(1단계) | 그래픽 | 대기(1단계 끝 D2 · 2단계 K-0099 유니티 배치) — K-0099 끝(`Art/TexturesReal/` 96+.meta) |
 | 3 | [U-0084](U-0084.md) 사실 땅 ③ — 땅 셰이더 PBR 명암(1단계), 사진 텍스처는 K-0093 뒤 | 그래픽 | 대기(1단계 끝 D2 · 2단계 K-0099 유니티 배치) — K-0099 끝(`Art/TexturesReal/` 96+.meta) |
-| 4 | [U-0100](U-0100.md) 1만리 짐승 몸 셋 자체판으로 — 빌린 Quaternius Fox·Birb·Snake → creatures3d | 통합 | 대기(자체툴 유니티판 GLB 배치 — 수신함 "U-0100 유니티 넘김") |
+| 4 | [U-0100](U-0100.md) 1만리 짐승 몸 셋 자체판으로 — 빌린 Quaternius Fox·Birb·Snake → creatures3d | 통합 | 대기 풀림 — K-0103 끝(10-14, `Art/CreaturesSelf/` GLB 3·license 3·.meta 7, 확장 없음·JPEG·동작 7) |

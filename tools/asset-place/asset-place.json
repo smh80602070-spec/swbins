@@ -1245,6 +1245,24 @@
      ]
     }
    ]
+  },
+  {
+   "id": "creatures3d-unity",
+   "src": "tools/glb-compress/_out/k103_unity",
+   "include": [
+    "*.glb",
+    "*.license.json"
+   ],
+   "note": "K-0103 자체 짐승 몸 fox·birb·snake(K-0096 정본 creatures3d) 유니티판 — decode.mjs --glb --only 로 Meshopt·양자화·WebP 를 푼 한 파일 GLB(JPEG q90, 뼈·동작 7 그대로). glTFast 6.14 가 meshopt·WebP 를 못 읽어서. 원본은 _out(정본에서 다시 만듦). 쓰는 곳 U-0100",
+   "targets": [
+    {
+     "track": "unity",
+     "dir": "saga-unity/Assets/Art/CreaturesSelf",
+     "sidecar": [
+      ".meta"
+     ]
+    }
+   ]
   }
  ]
 }

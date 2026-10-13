@@ -8,8 +8,10 @@
  *   ① Meshopt 디코드(읽을 때 자동)  ② 양자화 → float(dequantize)  ③ 텍스처 WebP → JPEG(불투명) / PNG(알파가 실제로 쓰인 것)
  * 뼈대·메시 조각·재질·크기는 그대로(모양을 안 건드린다). 원본(웹판)은 바꾸지 않는다.
  *
- * 사용법: node decode.mjs <웹 GLB 폴더> <출력 폴더> [--jpeg-q 90] [--force]
+ * 사용법: node decode.mjs <웹 GLB 폴더> <출력 폴더> [--jpeg-q 90] [--force] [--glb] [--only a,b]
  *   출력 폴더에 <id>.gltf + <id>.bin + tex/<해시>.jpg|png(공용) + .license.json 복사(출처 그대로, `engine: true` 표시) 를 만든다. 이미 있으면 건너뜀(--force 로 다시).
+ *   --glb  (K-0103) .gltf 대신 텍스처를 품은 한 파일 <id>.glb — 짐승처럼 몸마다 텍스처가 달라 공용 tex 이득이 없을 때(유니티 CreaturesSelf).
+ *   --only 그 id 만(쉼표).
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -23,9 +25,12 @@ const args = process.argv.slice(2);
 const force = args.includes('--force');
 const qi = args.indexOf('--jpeg-q');
 const Q = qi >= 0 ? Number(args[qi + 1]) : 90;
-const pos = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--jpeg-q');
+const glb = args.includes('--glb');
+const oi = args.indexOf('--only');
+const only = oi >= 0 ? new Set(args[oi + 1].split(',')) : null;
+const pos = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--jpeg-q' && args[i - 1] !== '--only');
 if (pos.length < 2) {
-  console.error('사용법: node decode.mjs <웹 GLB 폴더> <출력 폴더> [--jpeg-q 90] [--force]');
+  console.error('사용법: node decode.mjs <웹 GLB 폴더> <출력 폴더> [--jpeg-q 90] [--force] [--glb] [--only a,b]');
   process.exit(1);
 }
 const [src, dst] = pos.map((p) => path.resolve(p));
@@ -43,10 +48,10 @@ async function alphaUsed(buf) {
   return a.min < 250;                                  // 알파 채널에 실제로 투명한 픽셀이 있다
 }
 
-const files = fs.readdirSync(src).filter((f) => f.endsWith('.glb')).sort();
+const files = fs.readdirSync(src).filter((f) => f.endsWith('.glb') && (!only || only.has(f.slice(0, -4)))).sort();
 let done = 0, skipped = 0, bytesIn = 0, bytesOut = 0, failed = 0;
 for (const f of files) {
-  const out = path.join(dst, f.replace(/\.glb$/, '.gltf'));
+  const out = path.join(dst, glb ? f : f.replace(/\.glb$/, '.gltf'));
   if (fs.existsSync(out) && !force) { skipped++; continue; }
   try {
     const doc = await io.read(path.join(src, f));
