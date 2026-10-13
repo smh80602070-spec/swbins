@@ -115,6 +115,7 @@ window.DG_NO_TUNE = true;
 <script src="js/rift.js"></script>
 <script src="js/gate-arena.js"></script>
 <script src="js/story.js"></script>
+<script src="js/live-portrait.js"></script>
 <script src="js/story-face.js"></script>
 <script src="js/scenario.js"></script>
 <script src="js/cutscene.js"></script>
@@ -3680,6 +3681,18 @@ window.DG_NO_TUNE = true;
       var m2 = F.exprSrc('sg_lubu', 'calm') === null && F.exprSrc('nobody', 'joy') === null && F.face('nobody', 'joy', '<i>x</i>') === '<i>x</i>' && F.face('sg_lubu', 'joy', '<i>x</i>').indexOf('story-fb') > 0;
       ['joy', 'anger', 'sorrow', 'surprise'].forEach(function (e) { F.IDS.forEach(function (id) { if (e !== 'joy' && id !== 'sg_lubu' && id !== 'jp_himiko') { return; } try { var x = new XMLHttpRequest(); x.open('GET', 'assets/portraits/expr/' + id + '__' + e + '_c.webp', false); x.send(); if (x.status !== 200) { miss.push(id + '__' + e); } } catch (er) { miss.push(id + ' ' + er.message); } }); });
       return cover && m1 && m2 && !miss.length ? '스승 ' + all.length + ' · 짝 fire→anger · 파일 확인 ' + (16 + 6) + '장' : '실패 ' + [cover, m1, m2, miss.join(',')].join(' ');
+    });
+
+    t('움직이는 초상(W-0193, K-0049) — t=0 은 바탕만 · 깜빡임 구간에 눈 프레임 차례 · 말하는 동안 입 차례(끝나면 바탕) · 숨·고개 범위 · 평온 줄만 캔버스, 대화창이 닫히면 루프 멈춤 · live.json 이 있다', function () {
+      var L = DG.livePortrait, F = DG.storyFace, sp = { motion: { blink: { seq: ['blink_half', 'blink', 'blink_half'], frame_ms: 60, every_s: [3, 6] }, talk: { seq: ['mouth_half', 'mouth_a', 'mouth_half', 'mouth_o'], frame_ms: 110 }, breath: { amp: 0.006, period_s: 3.6 }, sway: { deg: 1.2, period_s: 5, pivot_y: 0.78 } } };
+      var f0 = L.liveFrame(sp, 0, { blinkAt: 1000 }), f1 = L.liveFrame(sp, 1070, { blinkAt: 1000 }), f2 = L.liveFrame(sp, 1190, { blinkAt: 1000 });
+      var k0 = L.liveFrame(sp, 0, { blinkAt: null, talkFrom: 0, talkTo: 500 }), k1 = L.liveFrame(sp, 230, { blinkAt: null, talkFrom: 0, talkTo: 500 }), k2 = L.liveFrame(sp, 600, { blinkAt: null, talkFrom: 0, talkTo: 500 });
+      var a = f0.eye === null && f0.mouth === null && f1.eye === 'blink' && f2.eye === null && k0.mouth === 'mouth_half' && k1.mouth === 'mouth_half' && k2.mouth === null;
+      var b = L.liveFrame(sp, 900, {}).scaleY <= 1.006 && L.liveFrame(sp, 900, {}).scaleY >= 1 && Math.abs(L.liveFrame(sp, 1250, {}).deg) <= 1.2 && L.nextBlink(sp, 0, 0) === 3000 && L.nextBlink(sp, 0, 1) === 6000 && L.talkMs('가나다') === 500;
+      var h1 = F.face('sg_lubu', 'calm', '<i>x</i>', '말'), h2 = F.face('sg_lubu', 'joy', '<i>x</i>', '말'), c = h1.indexOf('data-live="sg_lubu"') > 0 && h1.indexOf('story-fb') > 0 && h2.indexOf('story-live') < 0 && F.face('nobody', 'calm', '<i>x</i>') === '<i>x</i>';
+      var x = new XMLHttpRequest(); x.open('GET', 'assets/portraits/live/sg_lubu/live.json', false); x.send(); var j = x.status === 200 ? JSON.parse(x.responseText) : null;
+      var d = document.createElement('div'); d.innerHTML = h1; document.body.appendChild(d); L.scan(); var on = L.active() >= 1; d.remove();
+      return a && b && c && j && j.parts && j.parts.eye && on ? '깜빡임·입·숨 · 평온 줄 캔버스 · live.json 부위 ' + Object.keys(j.parts).join('·') : '실패 ' + [a, b, c, !!j, on].join(' ');
     });
 
     t('시나리오 표 — 장·장면·인물이 서로 맞고, 장마다 과거·현대·미래가 셋 다 있다', function () {

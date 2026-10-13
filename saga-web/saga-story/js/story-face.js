@@ -29,11 +29,11 @@
     EXPR.forEach(function (e) { var im = new global.Image(); im.src = BASE + id + '__' + e + '_c.webp'; });
   }
 
-  /** 얼굴 칸 HTML — 표정이 있으면 그 그림(못 받으면 숨겨 둔 지금 초상으로 바꿔 끼움), 없으면 fallback 그대로 */
-  function face(id, emote, fallback) {
+  /** 얼굴 칸 HTML — 표정이 있으면 그 그림(못 받으면 숨겨 둔 지금 초상으로 바꿔 끼움), 평온 줄은 움직이는 초상(W-0193, live-portrait.js — 대사 text 동안 입), 없으면 fallback 그대로 */
+  function face(id, emote, fallback, text) {
     preload(id);
-    var src = exprSrc(id, emote);
-    if (!src) { return fallback; }
+    var src = exprSrc(id, emote), LP = global.DG.livePortrait, lv;
+    if (!src) { lv = LP && LP.has(id) ? LP.html(id, text, fallback) : null; return lv || fallback; }
     return '<img class="pt story-expr" alt="" src="' + src + '" onerror="var f=this.nextElementSibling;if(f){f.hidden=false;}this.remove();">' +
       '<span class="story-fb" hidden>' + fallback + '</span>';
   }

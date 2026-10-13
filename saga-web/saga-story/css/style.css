@@ -1194,7 +1194,8 @@ body.cine::after { bottom: 0; }
 .story-card.me { flex-direction: row-reverse; text-align: right; }
 .story-face { position: relative; flex: none; }
 .story-face .pt { width: 72px; height: 72px; border-radius: 14px; }
-.story-face .story-expr { object-fit: cover; object-position: 50% 16%; }   /* W-0192 표정 카드(300×344)를 평온 정사각 초상과 같은 자리로 */
+.story-face .story-expr { object-fit: cover; object-position: 50% 16%; }
+.story-face .story-live { width: 104px; height: 119px; display: block; }   /* W-0193 움직이는 초상 — 72px 로는 깜빡임·입이 안 읽혀 카드 비(150:172)로 키움 */   /* W-0192 표정 카드(300×344)를 평온 정사각 초상과 같은 자리로 */
 .story-emoji { display: block; width: 72px; height: 72px; line-height: 72px; text-align: center; font-size: 44px; }
 .story-mark { position: absolute; top: -8px; right: -8px; font-style: normal; font-size: 22px; }
 .story-say { flex: 1; min-width: 0; }
