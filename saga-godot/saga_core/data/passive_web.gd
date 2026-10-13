@@ -197,9 +197,30 @@ func path_to(id: String) -> Dictionary:
 	var t: int = _by_id[id]
 	if String(_nodes[t].k) == "o":
 		return {"path": [id], "cost": 0} if store.start == null else {}
-	var s := _start_idx()
-	if s < 0:
+	if _start_idx() < 0:
 		return {}
+	var prev := _bfs(t)
+	return _trace(prev, t) if prev.has(t) else {}
+
+
+## 닿는 안 찍은 마디(시작점 후보 빼고) 전부의 비용 — {id: cost}. 너비 우선 한 번 — 마디마다 path_to(...).cost 와 같은 값.
+func cost_map() -> Dictionary:
+	var out := {}
+	if _start_idx() < 0:
+		return out
+	var prev := _bfs(-1)
+	var depth := {}
+	for i: int in prev:   # 사전은 넣은 차례 = 너비 우선 차례라 앞 번호가 먼저 나온다
+		var p: int = prev[i]
+		depth[i] = 0 if p == -1 else int(depth[p]) + 1
+		if p != -1:
+			out[String(_nodes[i].id)] = depth[i]
+	return out
+
+
+## 찍은 곳 전부에서 너비 우선 — {마디 번호: 앞 번호(-1 = 찍은 곳)}. stop 에 닿으면 멈춘다(-1 = 끝까지).
+func _bfs(stop: int) -> Dictionary:
+	var s := _start_idx()
 	var prev := {s: -1}
 	var q: Array = [s]
 	for tid in store.taken:
@@ -210,15 +231,17 @@ func path_to(id: String) -> Dictionary:
 	while head < q.size():
 		var i: int = q[head]
 		head += 1
-		if i == t:
+		if i == stop:
 			break
 		for nb: int in _adj[i]:
 			if prev.has(nb) or String(_nodes[nb].k) == "o":
 				continue
 			prev[nb] = i
 			q.append(nb)
-	if not prev.has(t):
-		return {}
+	return prev
+
+
+func _trace(prev: Dictionary, t: int) -> Dictionary:
 	var path: Array = []
 	var k := t
 	while int(prev[k]) != -1:

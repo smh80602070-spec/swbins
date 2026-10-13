@@ -82,18 +82,19 @@ static func spend(rs: Object, fid: String) -> int:
 		if target.is_empty():
 			var best: Dictionary = {}
 			var best_t: Dictionary = {}
+			var costs: Dictionary = a.cost_map()   # 너비 우선 한 번(마디마다 path_to 면 달 넘김이 0.1~0.5초 멎는다)
 			for nd: Dictionary in a.def.nodes:
-				if String(nd.k) != "n" or a.is_taken(String(nd.id)):
+				var nid := String(nd.id)
+				if String(nd.k) != "n" or not costs.has(nid):
 					continue
-				var p: Dictionary = a.path_to(String(nd.id))
-				if p.is_empty():
-					continue
+				var c := int(costs[nid])
 				var themed := (nd.get("stats", {}) as Dictionary).keys().any(func(k): return theme.has(k))
-				if themed and (best_t.is_empty() or int(p.cost) < int(best_t.cost)):
-					best_t = p
-				if best.is_empty() or int(p.cost) < int(best.cost):
-					best = p
-			target = best_t if not best_t.is_empty() else best
+				if themed and (best_t.is_empty() or c < int(best_t.cost)):
+					best_t = {"id": nid, "cost": c}
+				if best.is_empty() or c < int(best.cost):
+					best = {"id": nid, "cost": c}
+			var pick: Dictionary = best_t if not best_t.is_empty() else best
+			target = a.path_to(String(pick.id)) if not pick.is_empty() else {}
 		if target.is_empty() or (target.path as Array).is_empty():
 			break
 		var took := 0
