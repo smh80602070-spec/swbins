@@ -10,12 +10,18 @@
  *   ground(ctx,list,o)     village-view drawGround 의 가까운 칸 목록 위에 위 둘을 그린다
  *   lightSpec(key)         시간대 빛(새벽 연노랑·낮 맑음·저녁 주황·밤 남색 곱하기 + 밤엔 내 둘레 등불) — 시간대는 실제 시계(phaseOf)
  *   light(ctx,ph,W,H,me,Z) 그 빛을 덮는다 — 그렸으면 true(village-view 의 옛 시간대 빛 대신)
+ * W-0142 K 산출 배선(cfg.mode2d 의 tileSeason·seam·prop2d.night·lit — 그림이 아직 안 왔으면 옛 도형 그대로):
+ *   tileSrc(kind,seKey)    풀 칸의 계절 타일 주소(없으면 null → 옛 표)
+ *   seamPick(kind,nb8,seKey) 맨땅 칸 둘레 풀 → 이음 조각 [{id, rot, side|corner}] (순수 — 변 rot 0~3 = 북·동·남·서, 모서리 0~3 = 북서·북동·남동·남서)
+ *   propId(kind,night)     그 소품의 낮/밤 그림 id · lit(kind,x,y,k) 밤이면 창·등불 자리를 이 프레임 빛 목록에(light 가 더해 그린다)
  * 공용 Math.random 은 먹지 않는다. 그림(에셋)은 만들지 않는다 — 도형만.
  */
 (function (global) {
   'use strict';
 
   function C() { return global.DG && global.DG.core; }
+  function M() { return (global.DG && global.DG.cfg && global.DG.cfg.mode2d) || {}; }
+  function m2on() { var m = global.DG && global.DG.mode2d; return !!(m && m.isOn && m.isOn()); }
   function on() { var c = C(); return !!(c && c.tuned ? c.tuned('village.cozy2d', 1) : 1); }
   function wantZoom() {
     if (!on()) { return 1; }
@@ -99,6 +105,7 @@
   /** 가까운 칸 목록 위에 덧칠 — o = { project, T, se, zoom, tileAt, tiles } · list[i] = { kind, tx, ty, a0 } */
   function ground(ctx, list, o) {
     sync();
+    glowQ.length = 0;   // W-0142 밤 빛 목록은 프레임마다 새로(소품이 다시 채운다)
     if (!on() || !list || !list.length) { return; }
     var P = o.project, T = o.T, se = o.se || {}, Z = o.zoom || 1, key = se.key || 'summer';
     /* 풀색 — 맨풀은 village-view 처럼 바둑판((x+y) 짝수 grass · 홀수 grass2), 숲 고리 풀은 제 색(계절 안 탐) */
@@ -107,8 +114,8 @@
       return (o.tiles && o.tiles[k] && o.tiles[k].color) || se.grass || '#63b04a';
     };
     var DX = [0, 1, 0, -1], DY = [-1, 0, 1, 0];
-    var bladeD = {}, bladeL = {}, flowers = [], pebbles = [], snows = [], specksD = [], fringes = {}, foams = [];
-    var i, j, it, sp, q, p, bk;
+    var bladeD = {}, bladeL = {}, flowers = [], pebbles = [], snows = [], specksD = [], fringes = {}, foams = [], seams = [];
+    var i, j, it, sp, q, p, bk, sm, done;
     for (i = 0; i < list.length; i++) {
       it = list[i];
       if (!it.a0 || it.a0.a < -0.8) { continue; }   // 먼 줄은 몇 픽셀 — 덧칠하면 지저분하다
@@ -123,7 +130,14 @@
       }
       if (o.tileAt && (it.kind === 'path' || it.kind === 'sand' || it.kind === 'stone' || it.kind === 'floor' || it.kind === 'water')) {
         var rr = rims(it.kind, o.tileAt(it.tx, it.ty - 1), o.tileAt(it.tx + 1, it.ty), o.tileAt(it.tx, it.ty + 1), o.tileAt(it.tx - 1, it.ty));
+        sm = seamPick(it.kind, nb8(o.tileAt, it.tx, it.ty), key); done = {};
+        for (j = 0; j < sm.length; j++) {   // W-0142 이음 타일 — 그림이 서 있는 변만 옛 도형을 끈다
+          if (!seamImg(sm[j].id)) { continue; }
+          seams.push({ it: it, s: sm[j], col: grassCol(sm[j].g, it.tx + sm[j].dx, it.ty + sm[j].dy), gsrc: tileSrc(sm[j].g, key) });
+          if (sm[j].side !== undefined) { done[sm[j].side] = 1; }
+        }
         for (j = 0; j < rr.length; j++) {
+          if (done[rr[j].side]) { continue; }
           if (rr[j].t === 'grass') { bk = grassCol(rr[j].g, it.tx + DX[rr[j].side], it.ty + DY[rr[j].side]); (fringes[bk] = fringes[bk] || []).push({ tx: it.tx, ty: it.ty, side: rr[j].side }); }
           else { foams.push({ tx: it.tx, ty: it.ty, side: rr[j].side }); }
         }
@@ -131,6 +145,8 @@
     }
     ctx.save();
     ctx.lineCap = 'round';
+    /* W-0142 이음 타일 — 맨땅 칸 위에 풀 가장자리 조각을 돌려 얹는다(옆 풀 색 + 같은 덧씌움이라 이웃 칸과 이어진다) */
+    for (i = 0; i < seams.length; i++) { drawSeam(ctx, seams[i], P, T); }
     /* 흙길 가장자리 — 옆 풀이 톱니처럼 넘어온다(칸마다 이빨 다섯, 높이는 해시) */
     var fk, f, n, a, b, t0, t1, ax, ay, bx, by, inx, iny;
     for (fk in fringes) {
@@ -267,12 +283,145 @@
       g.addColorStop(0, L.glow); g.addColorStop(1, 'rgba(255,190,110,0)');
       ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
     }
+    if (ph.key === 'night' && glowQ.length) { drawGlows(ctx); }   // W-0142 창·등불 — 어둡게 덮은 뒤 더한다
     var lay = layer(ph.key, L, W, H);
     if (lay) { ctx.drawImage(lay, 0, 0, W, H); }
     ctx.restore();
     return true;
   }
 
+  /* ── W-0142 K 산출 배선 ───────────────────────────────── */
+  /** 풀 칸의 계절 타일 주소 — 2D 모드·표에 있을 때만, 아니면 null(옛 표) */
+  function tileSrc(kind, seKey) {
+    var m = M(), id = isGrass(kind) && m.tileSeason && m.tileSeason[seKey];
+    if (!id || !m2on()) { return null; }
+    return (m.tileBase || 'assets/web2d/tile/') + id + '.webp';
+  }
+  /** 여덟 이웃 [북, 동, 남, 서, 북동, 남동, 남서, 북서] */
+  function nb8(at, x, y) { return [at(x, y - 1), at(x + 1, y), at(x, y + 1), at(x - 1, y), at(x + 1, y - 1), at(x + 1, y + 1), at(x - 1, y + 1), at(x - 1, y - 1)]; }
+  var SDX = [0, 1, 0, -1], SDY = [-1, 0, 1, 0], CDX = [-1, 1, 1, -1], CDY = [-1, -1, 1, 1], CNB = [7, 4, 5, 6];   // 모서리 0~3 = 북서·북동·남동·남서 → nb8 칸
+  /** 맨땅 칸(kind) 둘레 풀 → 이음 조각. 변: 그 변 이웃이 풀. 모서리: 대각 이웃만 풀(맞닿은 두 변은 풀 아님). 겨울은 없음(눈 이음 그림이 없다) */
+  function seamPick(kind, nb, seKey) {
+    var tab = M().seam, v = tab && tab['grass|' + kind], out = [], r, a, b;
+    if (!v || seKey === 'winter' || !nb) { return out; }
+    for (r = 0; r < 4; r++) { if (isGrass(nb[r])) { out.push({ id: 'forest_edge_' + v, rot: r, side: r, g: nb[r], dx: SDX[r], dy: SDY[r] }); } }
+    for (r = 0; r < 4; r++) {
+      a = (r + 3) % 4; b = r;   // 모서리 r 에 맞닿은 두 변: 북서 = 서·북, 북동 = 북·동, 남동 = 동·남, 남서 = 남·서
+      if (isGrass(nb[CNB[r]]) && !isGrass(nb[a]) && !isGrass(nb[b])) { out.push({ id: 'forest_corner_' + v, rot: r, corner: r, g: nb[CNB[r]], dx: CDX[r], dy: CDY[r] }); }
+    }
+    return out;
+  }
+  var imgs = {};
+  function imgAt(url) {
+    if (!url || typeof Image === 'undefined') { return null; }
+    var e = imgs[url];
+    if (!e) { e = imgs[url] = { img: new Image(), ok: false }; e.img.onload = function () { e.ok = true; }; e.img.src = url; }
+    return e.ok ? e.img : null;
+  }
+  function seamImg(id) { return m2on() ? imgAt((M().tileBase || 'assets/web2d/tile/') + id + '.webp') : null; }
+  /** 이음 조각이 칸을 덮는 깊이(1 = 그림 그대로 — 풀이 칸 ⅓ 을 먹어 한 칸 흙길이 실처럼 가늘어진다) */
+  function seamDepth() { var c = C(), d = c && c.tuned ? c.tuned('village.seamDepth', 0.5) : 0.5; return Math.max(0.2, Math.min(1, Number(d) || 0.5)); }
+  /* 조각 → 한 번 구운 캔버스: 이웃 풀 칸과 **같은 밑색 + 같은 계절 풀 무늬(overlay 0.6)** 에 조각 알파만 빌린다(조각 무늬는 여름 풀이라 그대로 쓰면 가을·봄에 혼자 푸르다).
+     깊이 d — 변은 세로만, 모서리는 가로세로 다 d 배로 줄인 알파 */
+  var seamCv = {}, seamCvN = 0;
+  function seamTint(id, col, gsrc, corner) {
+    var d = seamDepth(), k = id + '|' + col + '|' + gsrc + '|' + d, c = seamCv[k], img = seamImg(id), gimg = imgAt(gsrc), g, w, h;
+    if (c || !img || typeof document === 'undefined') { return c || null; }
+    if (gsrc && !gimg) { return null; }   // 풀 무늬를 기다린다(그동안 옛 톱니가 아니라 그냥 빈 변 — 한두 프레임)
+    if (seamCvN > 96) { seamCv = {}; seamCvN = 0; }
+    w = img.naturalWidth; h = img.naturalHeight;
+    c = document.createElement('canvas'); c.width = Math.max(1, Math.round(corner ? w * d : w)); c.height = Math.max(1, Math.round(h * d)); g = c.getContext('2d');
+    g.fillStyle = col; g.fillRect(0, 0, c.width, c.height);
+    if (gimg) { g.globalCompositeOperation = 'overlay'; g.globalAlpha = 0.6; g.drawImage(gimg, 0, 0, w, h); }
+    g.globalCompositeOperation = 'destination-in'; g.globalAlpha = 1; g.drawImage(img, 0, 0, c.width, c.height);
+    c.u = c.width / w; c.v = d;   // 칸에서 차지하는 비율
+    seamCv[k] = c; seamCvN++;
+    return c;
+  }
+  /** 돌림 r(시계 방향 90°×r) — 그림 왼위·오른위·왼아래가 칸의 어느 꼭짓점(0~1)에 가나 */
+  var ROT = [[[0, 0], [1, 0], [0, 1]], [[1, 0], [1, 1], [0, 0]], [[1, 1], [0, 1], [1, 0]], [[0, 1], [0, 0], [1, 1]]];
+  function drawSeam(ctx, e, P, T) {
+    var cv = seamTint(e.s.id, e.col, e.gsrc, e.s.corner !== undefined), R = ROT[e.s.rot], it = e.it;
+    if (!cv) { return; }
+    var ax = R[0][0], ay = R[0][1], bx = ax + (R[1][0] - ax) * cv.u, by = ay + (R[1][1] - ay) * cv.u, cx = ax + (R[2][0] - ax) * cv.v, cy = ay + (R[2][1] - ay) * cv.v;
+    var a = P((it.tx + ax) * T, (it.ty + ay) * T), b = P((it.tx + bx) * T, (it.ty + by) * T), c = P((it.tx + cx) * T, (it.ty + cy) * T);
+    ctx.save();
+    ctx.transform((b.x - a.x) / cv.width, (b.y - a.y) / cv.width, (c.x - a.x) / cv.height, (c.y - a.y) / cv.height, a.x, a.y);
+    ctx.drawImage(cv, 0, 0);
+    ctx.restore();
+  }
+
+  function isNight() { var VD = global.DG && global.DG.villageData; return !!(VD && VD.phaseOf && VD.phaseOf(new Date().getHours()).key === 'night'); }
+  /** 소품 그림 id — 밤이고 밤 변종이 있으면 그것, 아니면 낮 id */
+  function propId(kind, night) {
+    var p = M().prop2d && M().prop2d[kind];
+    if (!p) { return null; }
+    var day = p.day || p.id;
+    return night && p.night ? p.night : day;
+  }
+  /* prop2d 의 id 를 밤엔 밤 변종으로 — mode2d.drawKind 가 p.id 를 읽는다(공용 파일은 안 고침).
+     밤 그림이 아직 안 섰으면 낮 그림(빈 프레임·옛 도형 깜빡임 없게) */
+  (function wireNight() {
+    var t = M().prop2d, k;
+    if (!t) { return; }
+    for (k in t) {
+      if (!Object.prototype.hasOwnProperty.call(t, k) || !t[k].night || t[k].day) { continue; }
+      (function (p, kind) {
+        p.day = p.id;
+        Object.defineProperty(p, 'id', { enumerable: true, configurable: true, get: function () {
+          if (!on() || !isNight()) { return p.day; }
+          var md = global.DG.mode2d;
+          return md && md.spriteReady && md.spriteReady(p.night) ? p.night : p.day;
+        } });
+      })(t[k], k);
+    }
+  })();
+
+  /* 밤 빛 목록 — 소품을 그릴 때 채우고(lit) light() 가 더해 그린다 */
+  var glowQ = [], boxes = {};
+  function boxOf(id) {
+    var e = boxes[id], A = global.DG && global.DG.assets3d, u;
+    if (e) { return e.box; }
+    u = A && A.spriteUrl && A.spriteUrl(id);
+    if (!u || typeof Image === 'undefined' || typeof document === 'undefined') { return null; }
+    e = boxes[id] = { box: null, img: new Image() };
+    e.img.onload = function () {   // mode2d 와 같은 자름(알파 있는 범위) — 그 상자 안 좌표로 옮긴다
+      try {
+        var im = e.img, w = im.naturalWidth, h = im.naturalHeight, c = document.createElement('canvas'), g, d, x, y, x0 = w, y0 = h, x1 = -1, y1 = -1;
+        c.width = w; c.height = h; g = c.getContext('2d'); g.drawImage(im, 0, 0); d = g.getImageData(0, 0, w, h).data;
+        for (y = 0; y < h; y++) { for (x = 0; x < w; x++) { if (d[(y * w + x) * 4 + 3] > 16) { if (x < x0) { x0 = x; } if (x > x1) { x1 = x; } if (y < y0) { y0 = y; } if (y > y1) { y1 = y; } } } }
+        e.box = x1 >= 0 ? { sx: x0, sy: y0, sw: x1 - x0 + 1, sh: y1 - y0 + 1 } : { sx: 0, sy: 0, sw: w, sh: h };
+      } catch (err) { e.box = { sx: 0, sy: 0, sw: e.img.naturalWidth, sh: e.img.naturalHeight }; }
+    };
+    e.img.src = u;
+    return null;
+  }
+  /** 그림 픽셀 점들 → 화면 점(발 밑 가운데 x,y · 키 h) — 순수 */
+  function litPoints(pts, box, x, y, h) {
+    var w = h * box.sw / box.sh, out = [], i;
+    for (i = 0; i < pts.length; i++) { out.push({ x: x - w / 2 + (pts[i][0] - box.sx) / box.sw * w, y: y - h + (pts[i][1] - box.sy) / box.sh * h, r: pts[i][2] * h / box.sh }); }
+    return out;
+  }
+  function lit(kind, x, y, k) {
+    if (!on() || !isNight()) { return 0; }
+    var p = M().prop2d && M().prop2d[kind], day = p && (p.day || p.id), pts = day && M().lit && M().lit[day], box;
+    if (!pts || !(box = boxOf(day))) { return 0; }
+    var add = litPoints(pts, box, x, y, p.h * (k || 1));
+    for (var i = 0; i < add.length && glowQ.length < 200; i++) { glowQ.push(add[i]); }
+    return add.length;
+  }
+  function drawGlows(ctx) {
+    ctx.globalCompositeOperation = 'lighter';
+    for (var i = 0; i < glowQ.length; i++) {
+      var q = glowQ[i], r = Math.max(4, q.r * 2.4), g = ctx.createRadialGradient(q.x, q.y, 0, q.x, q.y, r * 3);
+      g.addColorStop(0, 'rgba(255,214,140,0.85)'); g.addColorStop(1 / 3, 'rgba(255,170,80,0.32)'); g.addColorStop(1, 'rgba(255,150,60,0)');
+      ctx.fillStyle = g; ctx.fillRect(q.x - r * 3, q.y - r * 3, r * 6, r * 6);
+    }
+    ctx.globalCompositeOperation = 'source-over';
+    glowQ.length = 0;
+  }
+
   global.DG = global.DG || {};
-  global.DG.cozy2d = { on: on, zoomMul: zoomMul, wantZoom: wantZoom, sync: sync, specks: specks, rims: rims, ground: ground, lightSpec: lightSpec, light: light, _hash: hh };
+  global.DG.cozy2d = { on: on, zoomMul: zoomMul, wantZoom: wantZoom, sync: sync, specks: specks, rims: rims, ground: ground, lightSpec: lightSpec, light: light, _hash: hh,
+    tileSrc: tileSrc, seamPick: seamPick, seamDepth: seamDepth, nb8: nb8, propId: propId, lit: lit, litPoints: litPoints, ROT: ROT, _glows: function () { return glowQ.length; } };
 })(window);

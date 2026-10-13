@@ -189,6 +189,44 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
         if (tip0 === undefined) { delete C.save.settings.tip2d; } else { C.save.settings.tip2d = tip0; }
       }
     });
+    t('2D 땅 이음(W-0142) — 계절 풀·_v2 땅·이음 조각 파일이 다 있고, 맨땅 둘레 풀 → 조각 고르기가 결정적(변 = 그 쪽 풀·모서리 = 대각만 풀·겨울·돌길은 없음)', function () {
+      var Z = DG.cozy2d, m = DG.cfg.mode2d, base = m.tileBase, miss = [], ids = [], k;
+      function has(u) { var x = new XMLHttpRequest(); x.open('GET', u, false); x.send(); return x.status === 200; }
+      for (k in m.tileSeason) { ids.push(m.tileSeason[k]); }
+      ['path', 'sand', 'stone'].forEach(function (kk) { ids.push(m.tile[kk]); });
+      for (k in m.seam) { ids.push('forest_edge_' + m.seam[k], 'forest_corner_' + m.seam[k]); }
+      ids.filter(function (v, i) { return ids.indexOf(v) === i; }).forEach(function (id) { if (!has(base + id + '.webp')) { miss.push(id); } });
+      var G = 'grass', D = 'path', none = [D, D, D, D, D, D, D, D];
+      function ids2(kind, nb, se) { return Z.seamPick(kind, nb, se || 'summer').map(function (q) { return q.id.replace('forest_', '') + '@' + q.rot; }).join(','); }
+      var r = [
+        miss.length === 0,
+        ids2('path', none) === '',
+        ids2('path', [G, D, D, D, D, D, D, D]) === 'edge_grass_dirt@0',
+        ids2('path', [D, 'grass_meadow', G, D, D, D, D, D]) === 'edge_grass_dirt@1,edge_grass_dirt@2',
+        ids2('path', [D, D, D, D, D, D, D, G]) === 'corner_grass_dirt@0',
+        ids2('path', [G, D, D, D, D, D, D, G]) === 'edge_grass_dirt@0',
+        ids2('sand', [D, D, D, G, D, G, D, D]) === 'edge_grass_sand@3,corner_grass_sand@2',
+        ids2('water', [G, D, D, D, D, D, D, D]) === 'edge_grass_water@0',
+        ids2('path', [G, D, D, D, D, D, D, D], 'winter') === '',
+        ids2('stone', [G, G, G, G, G, G, G, G]) === '',
+        ids2('path', [G, D, G, D, G, D, D, D]) === ids2('path', [G, D, G, D, G, D, D, D]),
+        /forest_grass_spring\.webp$/.test(Z.tileSrc('grass', 'spring') || '') && /forest_snow\.webp$/.test(Z.tileSrc('grass_dark', 'winter') || '') && Z.tileSrc('path', 'spring') === null
+      ];
+      return r.every(Boolean) ? '파일 ' + ids.length + '장 · 조각 고르기 ' + (r.length - 2) + '경우 결정적' : '실패 ' + r.join(',') + ' 없음 ' + miss.join(',');
+    });
+    t('2D 밤 소품(W-0142) — 집·가게는 밤에 _night 변종(낮엔 낮 그림), 우체통은 변종이 없어 그대로 · 불빛 자리 표는 소품 그림 id 와 맞고 그림 픽셀 → 화면 점이 맞다', function () {
+      var Z = DG.cozy2d, m = DG.cfg.mode2d, miss = [];
+      function has(u) { var x = new XMLHttpRequest(); x.open('GET', u, false); x.send(); return x.status === 200; }
+      ['home', 'shop'].forEach(function (k) { var n = m.prop2d[k].night; if (!n || JSON.stringify(DG.assets3dIds || {}).indexOf(n) < 0) { miss.push(k); } /* 진단 서버는 판 폴더만 내준다 — 밤 그림은 공용 에셋 id 목록(assets3d-ids)으로 */ });
+      var days = Object.keys(m.prop2d).map(function (k) { return Z.propId(k, false); });
+      var litOk = Object.keys(m.lit).every(function (id) { return days.indexOf(id) >= 0 && m.lit[id].every(function (q) { return q.length === 3 && q[0] >= 0 && q[0] < 256 && q[1] >= 0 && q[1] < 256 && q[2] > 0; }); });
+      var pt = Z.litPoints([[128, 128, 10]], { sx: 0, sy: 0, sw: 256, sh: 256 }, 100, 200, 128)[0];
+      var r = [miss.length === 0,
+        Z.propId('home', true) === 'forest_cottage_01_night', Z.propId('shop', true) === 'inn_01_night', Z.propId('mail', true) === 'mailbox_01',
+        Z.propId('home', false) === 'forest_cottage_01', Z.propId('shop', false) === 'inn_01', Z.propId('nope', true) === null,
+        litOk, pt.x === 100 && pt.y === 136 && pt.r === 5];
+      return r.every(Boolean) ? '밤 집·가게 변종 · 우체통 그대로 · 불빛 ' + Object.keys(m.lit).length + '종 ' + Object.keys(m.lit).reduce(function (a, k) { return a + m.lit[k].length; }, 0) + '자리' : '실패 ' + r.join(',') + ' ' + miss.join(',');
+    });
     t('초상 목록(W-0164) — manifest 의 인물 초상이 전부 도감 인물이고, 늦게 들어온 인물(ac_balgwang)도 정사각·카드 둘 다 올라 있다', function () {
       var M = DG.portraitDisk, H = {}, bad = [];
       if (!M) { try { var xq = new XMLHttpRequest(); xq.open('GET', 'assets/portraits/manifest.js', false); xq.send(); var tx = xq.responseText, i0 = tx.indexOf('portraitDisk=') + 13; M = JSON.parse(tx.slice(i0, tx.lastIndexOf('};') + 1)); } catch (e) { M = null; } }   // 진단 페이지엔 안 실려 직접 읽는다

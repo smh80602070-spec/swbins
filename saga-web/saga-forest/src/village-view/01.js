@@ -541,7 +541,7 @@
   };
   var tileImgCache = {};
   function tileImg(kind, se) {
-    var M2 = global.DG.mode2d, src = (M2 && M2.tileUrl(se && se.key === 'winter' && kind.indexOf('grass') === 0 ? 'snow' : kind)) || TILE_IMG_SRC[kind] || TILE_IMG_SRC.grass;   // 2D 모드면 K-0020 타일(겨울엔 풀 → 눈)
+    var M2 = global.DG.mode2d, Z2 = global.DG.cozy2d, src = (Z2 && Z2.tileSrc(kind, se && se.key)) || (M2 && M2.tileUrl(se && se.key === 'winter' && kind.indexOf('grass') === 0 ? 'snow' : kind)) || TILE_IMG_SRC[kind] || TILE_IMG_SRC.grass;   // 2D 모드면 K-0020 타일(겨울엔 풀 → 눈) · W-0142 풀은 계절 타일(K-0091)
     var im = tileImgCache[src];
     if (!im) { im = new Image(); im.src = src; tileImgCache[src] = im; }
     return im;
@@ -1247,7 +1247,7 @@
    * 원작의 그 빨간 깃발이다. 우편함까지 걸어가 열어 봐야 아는 건 불친절하다.
    */
   function kindK(kind, k) { return kind === 'shop' ? k * (1 + global.DG.village.shopLevel().n * 0.10) : (kind === 'home' && global.DG.home ? k * (1 + global.DG.home.state().tier * 0.12) : k); }   // W-0124 통일 스프라이트가 그려지면 switch 를 건너뛰어 가게 크기 성장·집 등급·편지 깃발이 사라졌다(d59440063)
-  function kindOver(kind, x, y, k, now) { if (kind === 'mail') { mailFlag(x, y, k, now, global.DG.mail ? global.DG.mail.unread() : 0); } return true; }
+  function kindOver(kind, x, y, k, now) { if (kind === 'mail') { mailFlag(x, y, k, now, global.DG.mail ? global.DG.mail.unread() : 0); } if (global.DG.cozy2d) { global.DG.cozy2d.lit(kind, x, y, kindK(kind, k)); } return true; }   // W-0142 밤 창·등불 자리를 빛 목록에
   function drawMailbox(x, y, k, now) {
     var n = global.DG.mail ? global.DG.mail.unread() : 0;
     shadow(x, y + 2 * k, 10 * k, 4 * k);

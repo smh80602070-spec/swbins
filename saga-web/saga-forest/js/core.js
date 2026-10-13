@@ -440,9 +440,20 @@
     base: 'assets/sprites2d_sheets/',
     tileBase: 'assets/web2d/tile/',
     /** 마을 건물·지물 2D 스프라이트(K-0017 `world2d`, 3D 와 같은 id) — 종류 → { id, h(px, 확대 1) }. 못 받으면 옛 도형 */
-    prop2d: { home: { id: 'forest_cottage_01', h: 74 }, shop: { id: 'inn_01', h: 90 }, mail: { id: 'mailbox_01', h: 30 } },
-    /** 땅 종류(data-village TILES) → 2D 바닥 타일(K-0020 `forest_*`) — `snow` 는 겨울의 풀 칸 */
-    tile: { grass: 'forest_grass', grass_meadow: 'forest_grass', grass_dark: 'forest_grass', grass_mush: 'forest_grass', grass_rocky: 'forest_stone', path: 'forest_dirt', sand: 'forest_sand', water: 'forest_water', stone: 'forest_stone', floor: 'forest_dirt', snow: 'forest_snow' },
+    /*  night = 밤 변종(K-0092, 같은 크기·알파 — cozy2d 가 밤에만 바꿔 그린다) · lantern = 마을 석등(옛 🏮) */
+    prop2d: { home: { id: 'forest_cottage_01', night: 'forest_cottage_01_night', h: 74 }, shop: { id: 'inn_01', night: 'inn_01_night', h: 90 }, mail: { id: 'mailbox_01', h: 30 }, lantern: { id: 'stone_lantern_01', h: 40 } },
+    /** 밤 불빛 자리(W-0142) — 소품 그림(256px) 픽셀 [x, y, 반지름], K-0092 tools/ai-art/data/night_lights.json 에서 옮김 */
+    lit: {
+      forest_cottage_01: [[78, 160, 9], [38, 161, 8]],
+      inn_01: [[86, 137, 6], [164, 158, 7], [92, 201, 11], [66, 182, 5], [108, 201, 4], [185, 199, 7]],
+      stone_lantern_01: [[128, 110, 22]]
+    },
+    /** 땅 종류(data-village TILES) → 2D 바닥 타일(K-0020 `forest_*`, K-0091 `_v2`) — `snow` 는 겨울의 풀 칸 */
+    tile: { grass: 'forest_grass', grass_meadow: 'forest_grass', grass_dark: 'forest_grass', grass_mush: 'forest_grass', grass_rocky: 'forest_stone_v2', path: 'forest_dirt_v2', sand: 'forest_sand_v2', water: 'forest_water', stone: 'forest_stone_v2', floor: 'forest_dirt_v2', snow: 'forest_snow' },
+    /** 풀 칸의 계절 타일(K-0091) — 없는 계절은 위 tile 표 */
+    tileSeason: { spring: 'forest_grass_spring', summer: 'forest_grass_summer', autumn: 'forest_grass_autumn', winter: 'forest_snow' },
+    /** 이음 타일(K-0091) — '풀|맨땅' → forest_edge_<값>(위 가장자리 기준)·forest_corner_<값>(왼쪽 위 모서리 기준), 맨땅 칸 위에 돌려 얹는다 */
+    seam: { 'grass|path': 'grass_dirt', 'grass|floor': 'grass_dirt', 'grass|sand': 'grass_sand', 'grass|water': 'grass_water' },
     targetH: 40,                                 // 스탬프 s=1 일 때 몸 높이(px) — actor2d 가 s 를 배수로 곱한다
     foot: 0.87,
     /** 2D 모드인가 — 3D 마을이 안 서 있을 때(구면 투영 2D 그림) */
