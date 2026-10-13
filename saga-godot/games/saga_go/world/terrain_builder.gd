@@ -441,6 +441,7 @@ func _build() -> void:
 	## terrain_triplanar.gdshader(정점색·지형 판정은 그대로, 경사면은 돌).
 	var mat := ShaderMaterial.new()
 	mat.shader = load("res://saga_core/shaders/terrain_triplanar.gdshader")
+	mat.set_meta("region_id", region_id)
 	_set_ground_textures(mat)
 	mat.set_shader_parameter("hue_desat", float(REGION_TEX_DESAT.get(region_id, 0.0)))
 
@@ -459,6 +460,14 @@ const REAL_GAIN := {"grass": Vector3(1.418, 2.341, 1.544), "dirt": Vector3(0.636
 const PHOTO_COLOR := 0.35
 
 
+static func _is_snow_region(mat: ShaderMaterial) -> bool:
+	var rid := String(mat.get_meta("region_id", ""))
+	for row in TestMap.rows_of(rid):
+		if String(row).contains("N") or String(row).contains("I"):
+			return true
+	return false
+
+
 static func _set_ground_textures(mat: ShaderMaterial) -> void:
 	var real := ResourceLoader.exists(REAL_DIR + "grass_hi.webp") and OS.get_environment("SAGA_GROUND_OLD") == ""
 	for k: String in REAL_SETS:
@@ -474,6 +483,14 @@ static func _set_ground_textures(mat: ShaderMaterial) -> void:
 			mat.set_shader_parameter(k + "_albedo", load(old + ".png"))
 			mat.set_shader_parameter(k + "_normal", load(old + "_n.png"))
 			mat.set_shader_parameter(k + "_rough", load(old + "_r.png"))
+	## G-0228 — 눈 지역(지도에 눈 N·얼음 I 칸)이면 흙 칸에 자체 PBR 눈 세트(샘플러 수 그대로). SAGA_SNOW_OLD=1 이면 안 한다.
+	if real and _is_snow_region(mat) and ResourceLoader.exists(REAL_DIR + "snow_hi.webp") and OS.get_environment("SAGA_SNOW_OLD") == "":
+		mat.set_shader_parameter("dirt_albedo", load(REAL_DIR + "snow_hi.webp"))
+		mat.set_shader_parameter("dirt_normal", load(REAL_DIR + "snow_hi_n.webp"))
+		mat.set_shader_parameter("dirt_rough", load(REAL_DIR + "snow_hi_r.webp"))
+		mat.set_shader_parameter("dirt_height", load(REAL_DIR + "snow_hi_h.webp"))
+		mat.set_shader_parameter("dirt_gain", Vector3.ONE)
+		mat.set_shader_parameter("snow_slot", 1.0)
 	var pc := OS.get_environment("SAGA_PHOTO_COLOR")
 	mat.set_shader_parameter("use_height", 1.0 if real else 0.0)
 	mat.set_shader_parameter("photo_color", (float(pc) if pc != "" else PHOTO_COLOR) if real else 1.0)

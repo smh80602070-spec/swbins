@@ -491,16 +491,16 @@
    *  쓴다. sand·water 는 이번엔 안 건드렸다(맞는 CC0 사진이 저장소에 없다 —
    *  다음에 손볼 때는 이 자리부터, 물은 어차피 위에 파동·반사 셰이더가
    *  덧입혀져 기본 그림 비중이 작다) */
-  var TILE_TEX_SRC = {
-    grass: 'assets/textures/land/grass.webp',
-    grass_meadow: 'assets/textures/land/grass.webp',
-    grass_dark: 'assets/textures/land/grass.webp',
-    grass_mush: 'assets/textures/land/grass.webp',
-    grass_rocky: 'assets/textures/land/grass.webp',
-    path: 'assets/textures/land/dirt.webp',
+  var TILE_TEX_SRC = {   // W-0196 — 위 빌린 CC0 사진을 자체 생성 PBR(K-0093 saga-assets/textures_real, 바탕색만)로: 풀 grass · 흙길 dirt · 돌 paving
+    grass: 'assets/textures/land/real_grass.webp',
+    grass_meadow: 'assets/textures/land/real_grass.webp',
+    grass_dark: 'assets/textures/land/real_grass.webp',
+    grass_mush: 'assets/textures/land/real_grass.webp',
+    grass_rocky: 'assets/textures/land/real_grass.webp',
+    path: 'assets/textures/land/real_dirt.webp',
     sand: 'assets/sprites2d/tile_sand.png',
     water: 'assets/sprites2d/tile_water.png',
-    stone: 'assets/textures/land/stone.webp'
+    stone: 'assets/textures/land/real_paving.webp'
   };
   var tileTexCache = {};
   function tileTexture(kind) {

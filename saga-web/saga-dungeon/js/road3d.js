@@ -29,7 +29,7 @@
   var T = null;
   function three() { if (!T) { T = global.THREE || null; } return T; }
 
-  var TEX_URL = 'assets/textures/land/dirt.webp';
+  var TEX_URL = 'assets/textures/land/real_dirt.webp';   // W-0196 자체 PBR(K-0093)
   var tex = null;
   function loadTex() {
     if (tex) { return tex; }

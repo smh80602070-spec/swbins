@@ -169,6 +169,13 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       return a && b ? '허리 위 바뀜 ' + dTop + ' · 아래 ' + dBot + '(옛 ' + oBot + ')' : '실패 ' + [a, dTop, dBot, oBot].join(' ');
     });
 
+    t('3D 땅 자체 재질(W-0196, K-0093) — 마을 3D 타일 표가 real_grass·real_dirt·real_paving 을 쓰고 파일이 있다 · 옛 빌린 사진 주소 없음', function () {
+      var get = function (u) { try { var x = new XMLHttpRequest(); x.open('GET', u, false); x.send(); return x.status === 200 ? x.responseText : null; } catch (e) { return null; } };
+      var FILES = ["assets/textures/land/real_grass.webp","assets/textures/land/real_dirt.webp","assets/textures/land/real_paving.webp"], miss = FILES.filter(function (u) { return !get(u); });
+      var src = ["js/village-view3d.js"].map(get).join('\n'), olds = ["assets/textures/land/grass.webp","assets/textures/land/dirt.webp","assets/textures/land/stone.webp"].filter(function (o) { return new RegExp("['\"]" + o.replace(/[.]/g, '\\.') + "['\"]").test(src); });
+      return !miss.length && !olds.length ? '자체 재질 ' + FILES.length + '장 · 옛 사진 주소 0' : '실패 없는 파일:' + miss.join(',') + ' 옛:' + olds.join(',');
+    });
+
     t('2D 나의 몸(W-0190) — 나는 차림 꼬리(#coat/head/dye/cape) 없이 인물 id 로 시트를 고른다(빌린 몸·옷 색 칸으로 안 감) · 주민은 그대로 · 192 칸 인물의 마을 시트(128 칸)는 그림 폭으로 자른다', function () {
       var A2 = DG.actor2d, s1 = A2.seedOf('me', { id: 'jiao_banrok#leather/topknot/none/off' }), s2 = A2.seedOf('adult', { id: 'r1#x' }), s3 = A2.seedOf('me', null, null);
       var M = DG.mode2d, A = DG.assets3d, live = !!(A && A.state && A.state() === 'ok' && A.has('hero', 'jiao_banrok')), p = live ? M.pick('me', s1) : 'vroid:jiao_banrok';

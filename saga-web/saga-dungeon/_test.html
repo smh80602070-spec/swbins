@@ -8552,6 +8552,13 @@ window.requestAnimationFrame = function () { return 0; };
       return r[0] === 0 && r[1] === 1 && ('들어설 때 0번 · 다시 오면 1번') || '실패 ' + r.join(',');
     });
 
+    t('3D 던전·들판 자체 재질(W-0196, K-0093) — 방 바닥·벽·들판·길이 real_* 를 쓰고 파일이 있다 · 옛 Poly Haven·ambientCG 주소 없음', function () {
+      var get = function (u) { try { var x = new XMLHttpRequest(); x.open('GET', u, false); x.send(); return x.status === 200 ? x.responseText : null; } catch (e) { return null; } };
+      var FILES = ["assets/textures/dungeon/real_rock.webp","assets/textures/dungeon/real_stonewall.webp","assets/textures/dungeon/real_gravel.webp","assets/textures/land/real_grass.webp","assets/textures/land/real_dirt.webp","assets/textures/land/real_rock.webp"], miss = FILES.filter(function (u) { return !get(u); });
+      var src = ["js/dungeon3d.js","js/terrain3d.js","js/road3d.js"].map(get).join('\n'), olds = ["assets/textures/dungeon/floor_stone.webp","assets/textures/dungeon/wall_stone.webp","grass.webp","dirt.webp","stone.webp","assets/textures/land/dirt.webp"].filter(function (o) { return new RegExp("['\"]" + o.replace(/[.]/g, '\\.') + "['\"]").test(src); });
+      return !miss.length && !olds.length ? '자체 재질 ' + FILES.length + '장 · 옛 사진 주소 0' : '실패 없는 파일:' + miss.join(',') + ' 옛:' + olds.join(',');
+    });
+
     t('2D 던전 방 테마 배경·타일(W-0191, K-0094) — 여섯 테마 모두 시차 배경 dg_<테마>(원·중·근 층 표가 판 폴더에 있음)·바닥 타일 dungeon_<테마>(같은 로마자)', function () {
       var cf = DG.cfg.mode2d, th = DG.dungeonData.THEMES, bad = [], n = 0;
       th.forEach(function (t0) {
