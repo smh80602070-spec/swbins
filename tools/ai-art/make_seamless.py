@@ -66,35 +66,44 @@ def rectify_ground(im, y1, size=640):
 def cutseam(im, band=0.125):
     """K-0091 — 최소 오차 경계 자르기(이미지 퀼팅)로 주기 타일. 낱알 무늬(조약돌)는 seamless 의 띠 섞기가
     반투명 겹친 돌(고스팅)을 만든다 → 띠에서 '오른쪽 끝의 연속'과 '원래 왼쪽'을 행마다 차이가 가장 작은 길로
-    잘라 붙인다(섞지 않음). 정사각 S 에서 N = S/(1+band), 띠 B = S - N. 결과 N×N(크기 줄이기는 wrap_resize)."""
+    잘라 붙인다(섞지 않음). 정사각 S 에서 N ≈ S/(1+band)(줄눈 피해 고름), 띠 B = S - N. 결과 N×N(크기 줄이기는 wrap_resize)."""
     a = np.asarray(im.convert('RGB'), dtype=np.float32)
     s = min(a.shape[:2])
-    n = int(round(s / (1 + band)))
-    bw = s - n
     a = a[:s, :s]
+    # 타일 끝(n-1 → n)이 격자 줄눈 위에 놓이면 테두리 차가 커 보인다 → band 근처에서 열·행 이웃 차가 가장 작은 n
+    dx = np.abs(np.diff(a, axis=1)).mean((0, 2))
+    dy = np.abs(np.diff(a, axis=0)).mean((1, 2))
+    lo, hi = int(s / (1 + band * 1.5)), int(s / (1 + band * 0.7))
+    n = lo + int(np.argmin(dx[lo - 1:hi - 1] + dy[lo - 1:hi - 1]))
+    bw = s - n
 
-    def cut_mask(err):
+    def cut_mask(err, ring=False):   # ring: 첫 행과 끝 행이 같은 자리에서 자른다(모서리 띠에서 좌우 테두리가 안 끊기게)
         E = err.copy()
+        if ring:
+            c0 = int(np.argmin(err[0] + err[-1]))
+            E[0] = np.where(np.arange(E.shape[1]) == c0, E[0], np.inf)
         for y in range(1, E.shape[0]):
             p = E[y - 1]
             E[y] += np.minimum(np.minimum(np.r_[np.inf, p[:-1]], p), np.r_[p[1:], np.inf])
         cut = np.zeros(E.shape[0], int)
-        cut[-1] = int(np.argmin(E[-1]))
+        cut[-1] = c0 if ring else int(np.argmin(E[-1]))
         for y in range(E.shape[0] - 2, -1, -1):
             c = cut[y + 1]
             lo = max(0, c - 1)
             cut[y] = lo + int(np.argmin(E[y, lo:c + 2]))
         return np.arange(E.shape[1])[None, :] < cut[:, None]
 
-    def wrap_x(I):
+    def wrap_x(I, ring=False):
         A, O = I[:, n:n + bw], I[:, :bw]
-        m = cut_mask(((A - O) ** 2).sum(2))
+        err = ((A - O) ** 2).sum(2)
+        err[:, 0] = 1e12   # 첫 열은 반드시 '이어지는 쪽' — 0 에서 자르면 그 행은 테두리가 끊긴다
+        m = cut_mask(err, ring)
         T = I[:, :n].copy()
         T[:, :bw][m] = A[m]
         return T
 
     t = wrap_x(a)
-    t = wrap_x(t.transpose(1, 0, 2)).transpose(1, 0, 2)
+    t = wrap_x(t.transpose(1, 0, 2), ring=True).transpose(1, 0, 2)
     return Image.fromarray(np.clip(t, 0, 255).astype(np.uint8))
 
 
