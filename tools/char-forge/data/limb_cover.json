@@ -1,0 +1,2885 @@
+{
+"bins": {
+"a": {
+"base": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"bottom__N00_001_02_Bottoms_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11110000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11110000"
+},
+"shoes__N00_001_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_005_01_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "10000000",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "10000000"
+}
+},
+"a1": {
+"base": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00111111",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00111111",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000011",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000011",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00011000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00001110",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "01111100",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00111100",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00111110",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111100",
+"J_Bip_L_UpperLeg": "11100000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111100",
+"J_Bip_R_UpperLeg": "11100000"
+},
+"top__N00_002_03_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11100000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11100000"
+},
+"top__N00_007_01_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+}
+},
+"a10": {
+"base": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"shoes__N00_001_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_03_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111100",
+"J_Bip_L_UpperLeg": "11111000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111100",
+"J_Bip_R_UpperLeg": "11111000"
+}
+},
+"a2": {
+"base": {
+"J_Bip_L_LowerArm": "11000000",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11000000",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000111",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000111",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "11000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11100000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11100000"
+},
+"top__N00_002_03_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11100000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11100000"
+},
+"top__N00_002_03_Tops_01_CLOTH_04.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+}
+},
+"a3": {
+"base": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "11111110",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "11111110",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "10001111",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "10001111",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000011",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000011",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "10000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "10000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_03_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11100000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "10000000"
+}
+},
+"a4": {
+"accessory__N00_007_01_Accessory_Tie_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"accessory__N00_007_01_Accessory_Tie_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"base": {
+"J_Bip_L_LowerArm": "00001111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00001111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "11111110",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11000000"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111110"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_04_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "11100000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "11100000"
+},
+"top__N00_005_01_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "11100000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "11000000"
+},
+"top__N00_007_03_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11111100",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11111100"
+},
+"top__N00_007_03_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000011",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111000",
+"J_Bip_L_UpperLeg": "11111110",
+"J_Bip_R_LowerArm": "00000011",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111000",
+"J_Bip_R_UpperLeg": "11111110"
+},
+"top__N00_007_03_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_03_Tops_01_CLOTH_04.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "10000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11000000"
+}
+},
+"a5": {
+"base": {
+"J_Bip_L_LowerArm": "00001111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00001111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000011",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000011",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111100",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111100"
+},
+"top__N00_007_01_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11111110",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11111110"
+},
+"top__N00_007_01_Tops_01_CLOTH_04.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "10000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+}
+},
+"a6": {
+"base": {
+"J_Bip_L_LowerArm": "00011111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00011111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"bottom__N00_001_01_Bottoms_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"shoes__N00_002_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11111110",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11111100"
+},
+"top__N00_007_01_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11000111",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11000111",
+"J_Bip_R_UpperLeg": "00000000"
+}
+},
+"a7": {
+"base": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000001",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000001",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"shoes__N00_003_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_03_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "11111101",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "11111101"
+},
+"top__N00_007_01_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "11100000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "11100000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "00000000"
+}
+},
+"a8": {
+"base": {
+"J_Bip_L_LowerArm": "00011111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00011111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"shoes__N00_001_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"top__N00_007_01_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11100000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11100000",
+"J_Bip_R_UpperLeg": "11111111"
+}
+},
+"a9": {
+"base": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00011111",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00011111",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"bottom__N00_001_03_Bottoms_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11110000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11110000"
+},
+"shoes__N00_001_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "00000000"
+}
+},
+"b": {
+"base": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"bottom__N00_001_03_Bottoms_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11110000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11110000"
+},
+"shoes__N00_005_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11100000",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11100000"
+}
+},
+"c": {
+"base": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "10011111",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "10011111",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"bottom__N00_001_02_Bottoms_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "11111110",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "11111110",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"shoes__N00_006_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_03_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "10000000",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "10000000"
+}
+},
+"d": {
+"accessory__Accessory_FoxTail_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"base": {
+"J_Bip_L_LowerArm": "00011111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00011111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"bottom__N00_001_02_Bottoms_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000011",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000011",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11110000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11110000"
+},
+"top__N00_002_03_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11100000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11100000"
+},
+"top__N00_002_03_Tops_01_CLOTH_04.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11100000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11100000"
+},
+"top__N00_002_03_Tops_01_CLOTH_05.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "10000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "00000000"
+}
+},
+"e": {
+"accessory__Accessory_RabbitEar_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"accessory__Accessory_RabbitTail_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"base": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00111111",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00111111",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000011",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000011",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00011000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00001110",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "01111100",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00111100",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00111110",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111100",
+"J_Bip_L_UpperLeg": "11000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111100",
+"J_Bip_R_UpperLeg": "11000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11100000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11100000"
+},
+"top__N00_007_01_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+}
+},
+"f": {
+"accessory__Accessory_CatEar_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"accessory__Accessory_CatEar_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"accessory__Accessory_FoxTail_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"base": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00111000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00111000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11110000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11110000"
+},
+"top__N00_002_03_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111100",
+"J_Bip_L_UpperLeg": "10000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111100",
+"J_Bip_R_UpperLeg": "10000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_04.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11110000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11110000"
+},
+"top__N00_007_01_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000011",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000011",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+}
+},
+"g": {
+"base": {
+"J_Bip_L_LowerArm": "00011111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00011111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "10000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "10000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "10000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000111",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "10000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000111"
+},
+"shoes__N00_004_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_005_01_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11110000",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11110000"
+},
+"top__N00_007_01_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111100",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111100"
+},
+"top__N00_007_01_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "01111100"
+}
+},
+"h": {
+"accessory__Accessory_CatEar_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"accessory__Accessory_CatEar_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"accessory__Accessory_CatTail_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"base": {
+"J_Bip_L_LowerArm": "00000111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00000111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000011",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000011",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11111110",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11111110"
+},
+"top__N00_007_01_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111100",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111100"
+},
+"top__N00_007_01_Tops_01_CLOTH_04.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "10000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+}
+},
+"i": {
+"accessory__Accessory_RabbitTail_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"base": {
+"J_Bip_L_LowerArm": "01111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "01111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111100",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111100"
+},
+"top__N00_002_03_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "11110000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "11110000"
+},
+"top__N00_002_03_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "10000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "01111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11100000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "01111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+}
+},
+"j": {
+"accessory__Accessory_CatEar_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"accessory__Accessory_CatEar_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"accessory__Accessory_FoxTail_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"base": {
+"J_Bip_L_LowerArm": "01111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "01111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"bottom__N00_001_02_Bottoms_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "11110000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "11110000"
+},
+"top__N00_002_03_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11110000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11110000"
+},
+"top__N00_002_03_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11110100",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11110100"
+},
+"top__N00_007_01_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11000000",
+"J_Bip_R_UpperLeg": "00000000"
+}
+},
+"k": {
+"base": {
+"J_Bip_L_LowerArm": "00011111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "11111110",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00011111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "11111110",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"bottom__N00_001_02_Bottoms_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00111111",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"bottom__N00_003_01_Bottoms_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11011000"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000011",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000011",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "01111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "01111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_03_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_03_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_03_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "10000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+}
+},
+"l": {
+"base": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000011",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000011",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"bottom__N00_001_02_Bottoms_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00011111",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00011111"
+},
+"bottom__N00_003_01_Bottoms_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11110000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11110000"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "01111100"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000011",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000011",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "11111000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "11111000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_03_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_03_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_03_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "10000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+}
+},
+"m": {
+"base": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "10011111",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "10011111",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "11111000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000001",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "01111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000011",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000011",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111000"
+},
+"top__N00_002_03_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111100",
+"J_Bip_L_UpperLeg": "11000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111100",
+"J_Bip_R_UpperLeg": "11000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "10000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "10000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_04.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111000"
+}
+},
+"n": {
+"accessory__Accessory_RabbitEar_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"accessory__Accessory_RabbitTail_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"base": {
+"J_Bip_L_LowerArm": "00011111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00011111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111110",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111110"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00001110",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00001110"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "11110000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "11110000"
+}
+},
+"o": {
+"base": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00011111",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00011111",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00001111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00001111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00001110",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00001110",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_01_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111100",
+"J_Bip_L_UpperLeg": "11111100",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111100",
+"J_Bip_R_UpperLeg": "11111100"
+},
+"top__N00_002_03_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"top__N00_007_01_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+}
+},
+"p": {
+"base": {
+"J_Bip_L_LowerArm": "00011111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00011111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"bottom__N00_001_02_Bottoms_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000011",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11100000",
+"J_Bip_R_LowerArm": "00000011",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11110000"
+},
+"top__N00_007_01_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11100000",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11110000"
+}
+},
+"q": {
+"base": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "01111000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "01111000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00001110"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00111100",
+"J_Bip_L_UpperLeg": "11100000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00111100",
+"J_Bip_R_UpperLeg": "11100000"
+},
+"top__N00_002_03_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_03_Tops_01_CLOTH_04.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "11100000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "11100000"
+}
+},
+"r": {
+"accessory__Accessory_FoxTail_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"accessory__Accessory_RabbitEar_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"accessory__Accessory_RabbitEar_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"base": {
+"J_Bip_L_LowerArm": "00011111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00011111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"bottom__N00_001_02_Bottoms_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11111110",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11111110"
+},
+"top__N00_007_01_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000011",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000011",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_04.glb": {
+"J_Bip_L_LowerArm": "00000011",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111110",
+"J_Bip_R_LowerArm": "00000011",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111110"
+}
+},
+"s": {
+"accessory__N00_007_01_Accessory_Tie_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"accessory__N00_007_01_Accessory_Tie_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"base": {
+"J_Bip_L_LowerArm": "00001111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00001111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "11111110",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11000000"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111110"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_04_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "11100000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "11100000"
+},
+"top__N00_005_01_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "11100000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "11000000"
+},
+"top__N00_007_03_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000011",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111000",
+"J_Bip_L_UpperLeg": "11111110",
+"J_Bip_R_LowerArm": "00000011",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111000",
+"J_Bip_R_UpperLeg": "11111110"
+},
+"top__N00_007_03_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11111100",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11111100"
+},
+"top__N00_007_03_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_03_Tops_01_CLOTH_04.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "10000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11000000"
+}
+},
+"u": {
+"accessory__Accessory_CatEar_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"accessory__Accessory_CatTail_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111110",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111110"
+},
+"base": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_01_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "11000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "11000000"
+},
+"top__N00_002_01_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11100000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11100000"
+},
+"top__N00_002_01_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_01_Tops_01_CLOTH_04.glb": {
+"J_Bip_L_LowerArm": "00000111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_002_01_Tops_01_CLOTH_05.glb": {
+"J_Bip_L_LowerArm": "00000011",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000011",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+}
+},
+"v": {
+"base": {
+"J_Bip_L_LowerArm": "00011111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00011111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"cloth__N00_010_01_Onepiece_00_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "11110000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "11110000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_008_01_Shoes_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00111000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00111000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11000000",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11000000"
+},
+"top__N00_007_03_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "10000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "10000000"
+},
+"top__N00_007_03_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11110000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11110000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_03_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "10000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "10000000"
+}
+},
+"w": {
+"base": {
+"J_Bip_L_LowerArm": "00000001",
+"J_Bip_L_LowerLeg": "00000111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000001",
+"J_Bip_R_LowerLeg": "00000111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_002_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_003_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"top__N00_007_01_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_04.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+}
+},
+"x": {
+"base": {
+"J_Bip_L_LowerArm": "00000001",
+"J_Bip_L_LowerLeg": "00000111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000001",
+"J_Bip_R_LowerLeg": "00000111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"shoes__N00_002_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"top__N00_007_01_Tops_01_CLOTH_03.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+}
+},
+"y": {
+"accessory__N00_007_02_Accessory_Tie_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"base": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000011",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000011",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"bottom__N00_001_03_Bottoms_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111000"
+},
+"shoes__N00_001_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "10000000",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "10000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_02_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "00000000"
+}
+},
+"z": {
+"accessory__N00_007_01_Accessory_Tie_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"base": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000011",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000011",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"bottom__N00_001_01_Bottoms_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "11111111",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "11111111",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "11111111",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "11111111"
+},
+"shoes__N00_004_01_Shoes_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000001",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000001",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_01.glb": {
+"J_Bip_L_LowerArm": "11111111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "11111111",
+"J_Bip_L_UpperLeg": "11000000",
+"J_Bip_R_LowerArm": "11111111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "11111111",
+"J_Bip_R_UpperLeg": "11000000"
+},
+"top__N00_007_01_Tops_01_CLOTH_02.glb": {
+"J_Bip_L_LowerArm": "00000000",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "00000000",
+"J_Bip_L_UpperLeg": "00000000",
+"J_Bip_R_LowerArm": "00000000",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "00000000",
+"J_Bip_R_UpperLeg": "00000000"
+},
+"top__N00_007_02_Tops_01_CLOTH.glb": {
+"J_Bip_L_LowerArm": "00011111",
+"J_Bip_L_LowerLeg": "00000000",
+"J_Bip_L_UpperArm": "10000000",
+"J_Bip_L_UpperLeg": "11000000",
+"J_Bip_R_LowerArm": "00011111",
+"J_Bip_R_LowerLeg": "00000000",
+"J_Bip_R_UpperArm": "10000000",
+"J_Bip_R_UpperLeg": "11000000"
+}
+}
+},
+"note": "\uc0dd\uc131: limb_cover_scan.py (K-0101) \u2014 \uc190\uc73c\ub85c \uace0\uce58\uc9c0 \uc54a\ub294\ub2e4"
+}

@@ -1277,12 +1277,12 @@
   },
   {
    "id": "dj_gijang",
-   "gender": "F",
-   "body": "w",
+   "gender": "M",
+   "body": "n",
    "kit": {
-    "top": "i",
-    "bottom": "d",
-    "shoes": "j"
+    "top": "z",
+    "bottom": "p",
+    "shoes": "x"
    }
   },
   {
@@ -1304,21 +1304,21 @@
   },
   {
    "id": "dj_hopak",
-   "gender": "M",
-   "body": "v",
+   "gender": "F",
+   "body": "w",
    "kit": {
-    "top": "p",
-    "bottom": "p",
-    "shoes": "p"
+    "cloth": "a3",
+    "shoes": "j"
    }
   },
   {
    "id": "dj_hwanggeum",
-   "gender": "F",
-   "body": "h",
+   "gender": "M",
+   "body": "v",
    "kit": {
-    "cloth": "s",
-    "shoes": "o"
+    "top": "x",
+    "bottom": "r",
+    "shoes": "r"
    }
   },
   {
@@ -1340,32 +1340,32 @@
   },
   {
    "id": "dj_seoncheok",
-   "gender": "M",
-   "body": "l",
+   "gender": "F",
+   "body": "h",
    "kit": {
-    "top": "n",
-    "bottom": "z",
-    "shoes": "g"
+    "top": "k",
+    "bottom": "d",
+    "shoes": "h"
    }
   },
   {
    "id": "dj_yuri",
-   "gender": "F",
-   "body": "s",
+   "gender": "M",
+   "body": "l",
    "kit": {
-    "top": "j",
-    "bottom": "a",
-    "shoes": "j"
+    "top": "z",
+    "bottom": "r",
+    "shoes": "r"
    }
   },
   {
    "id": "fu_gangma",
-   "gender": "F",
-   "body": "e",
+   "gender": "M",
+   "body": "g",
    "kit": {
-    "top": "u",
-    "bottom": "d",
-    "shoes": "b"
+    "top": "z",
+    "bottom": "r",
+    "shoes": "v"
    }
   },
   {
@@ -1406,40 +1406,33 @@
   },
   {
    "id": "fu_myeongje",
-   "gender": "F",
-   "body": "k",
+   "gender": "M",
+   "body": "r",
    "kit": {
-    "top": "k",
-    "bottom": "d",
-    "shoes": "y"
+    "top": "c",
+    "bottom": "z",
+    "shoes": "p"
    }
   },
   {
    "id": "fu_noejang",
-   "gender": "F",
-   "body": "y",
+   "gender": "M",
+   "body": "v",
    "kit": {
-    "top": "f",
-    "bottom": "y",
-    "shoes": "o"
+    "top": "z",
+    "bottom": "p",
+    "shoes": "n"
    }
   },
   {
    "id": "fu_seonghon",
-   "gender": "M",
-   "body": "x",
+   "gender": "F",
+   "body": "s",
    "kit": {
-    "top": "l",
-    "bottom": "p",
-    "shoes": "v"
-   },
-   "tint": [
-    {
-     "slot": "top",
-     "match": "CLOTH_02",
-     "color": "#55677a"
-    }
-   ]
+    "top": "y",
+    "bottom": "k",
+    "shoes": "f"
+   }
   },
   {
    "id": "fu_yugwi",
@@ -1470,60 +1463,60 @@
   },
   {
    "id": "jiao_banrok",
+   "gender": "F",
+   "body": "y",
+   "kit": {
+    "top": "e",
+    "bottom": "a6",
+    "shoes": "k"
+   }
+  },
+  {
+   "id": "jiao_botran",
    "gender": "M",
-   "body": "g",
+   "body": "x",
+   "kit": {
+    "top": "r",
+    "bottom": "z",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "jiao_dinggo",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "z",
+    "bottom": "c",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "jiao_hoangmi",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "x",
+    "bottom": "r",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "jiao_jinja",
+   "gender": "M",
+   "body": "c",
    "kit": {
     "top": "l",
     "bottom": "p",
-    "shoes": "v"
+    "shoes": "g"
    },
    "tint": [
     {
      "slot": "top",
      "match": "CLOTH_02",
-     "color": "#b08a1e"
+     "color": "#26365c"
     }
    ]
-  },
-  {
-   "id": "jiao_botran",
-   "gender": "F",
-   "body": "i",
-   "kit": {
-    "top": "a",
-    "bottom": "a",
-    "shoes": "w"
-   }
-  },
-  {
-   "id": "jiao_dinggo",
-   "gender": "F",
-   "body": "u",
-   "kit": {
-    "top": "j",
-    "bottom": "d",
-    "shoes": "m"
-   }
-  },
-  {
-   "id": "jiao_hoangmi",
-   "gender": "F",
-   "body": "f",
-   "kit": {
-    "top": "h",
-    "bottom": "j",
-    "shoes": "u"
-   }
-  },
-  {
-   "id": "jiao_jinja",
-   "gender": "F",
-   "body": "q",
-   "kit": {
-    "top": "y",
-    "bottom": "b",
-    "shoes": "q"
-   }
   },
   {
    "id": "jiao_luyan",
@@ -1537,13 +1530,20 @@
   },
   {
    "id": "jiao_madang",
-   "gender": "F",
-   "body": "d",
+   "gender": "M",
+   "body": "x",
    "kit": {
-    "top": "i",
-    "bottom": "a",
-    "shoes": "a"
-   }
+    "top": "l",
+    "bottom": "p",
+    "shoes": "z"
+   },
+   "tint": [
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#26365c"
+    }
+   ]
   },
   {
    "id": "jiao_muya",
@@ -1567,33 +1567,31 @@
   },
   {
    "id": "jp_asahime",
-   "gender": "M",
-   "body": "p",
+   "gender": "F",
+   "body": "e",
    "kit": {
-    "top": "z",
-    "bottom": "c",
-    "shoes": "n"
+    "cloth": "a10",
+    "shoes": "u"
    }
   },
   {
    "id": "jp_hikoyama",
-   "gender": "F",
-   "body": "a",
+   "gender": "M",
+   "body": "p",
    "kit": {
-    "top": "w",
-    "bottom": "b",
-    "shoes": "e"
-   },
-   "tuck": "bottom"
+    "top": "c",
+    "bottom": "z",
+    "shoes": "p"
+   }
   },
   {
    "id": "jp_himetsu",
-   "gender": "M",
-   "body": "l",
+   "gender": "F",
+   "body": "k",
    "kit": {
-    "top": "r",
-    "bottom": "z",
-    "shoes": "c"
+    "top": "i",
+    "bottom": "d",
+    "shoes": "a7"
    }
   },
   {
@@ -1626,22 +1624,22 @@
   },
   {
    "id": "jp_taketsumi",
-   "gender": "F",
-   "body": "j",
+   "gender": "M",
+   "body": "l",
    "kit": {
-    "top": "k",
-    "bottom": "b",
-    "shoes": "k"
+    "top": "z",
+    "bottom": "p",
+    "shoes": "g"
    }
   },
   {
    "id": "jp_tamakiri",
-   "gender": "F",
-   "body": "w",
+   "gender": "M",
+   "body": "g",
    "kit": {
-    "top": "k",
-    "bottom": "j",
-    "shoes": "k"
+    "top": "z",
+    "bottom": "c",
+    "shoes": "l"
    }
   },
   {
@@ -1666,12 +1664,12 @@
   },
   {
    "id": "kr2_ajinsa",
-   "gender": "F",
-   "body": "s",
+   "gender": "M",
+   "body": "l",
    "kit": {
-    "top": "k",
-    "bottom": "d",
-    "shoes": "a"
+    "top": "g",
+    "bottom": "p",
+    "shoes": "g"
    }
   },
   {
@@ -1693,20 +1691,13 @@
   },
   {
    "id": "kr2_gokdol",
-   "gender": "M",
-   "body": "g",
+   "gender": "F",
+   "body": "s",
    "kit": {
-    "top": "p",
-    "bottom": "l",
-    "shoes": "c"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#55677a"
-    }
-   ]
+    "top": "i",
+    "bottom": "d",
+    "shoes": "w"
+   }
   },
   {
    "id": "kr2_jimasol",
@@ -1880,22 +1871,22 @@
   },
   {
    "id": "ly_sanga",
-   "gender": "F",
-   "body": "k",
+   "gender": "M",
+   "body": "g",
    "kit": {
-    "top": "f",
-    "bottom": "y",
-    "shoes": "y"
+    "top": "v",
+    "bottom": "z",
+    "shoes": "x"
    }
   },
   {
    "id": "ly_sangnim",
-   "gender": "F",
-   "body": "y",
+   "gender": "M",
+   "body": "r",
    "kit": {
-    "top": "o",
-    "bottom": "a",
-    "shoes": "y"
+    "top": "c",
+    "bottom": "p",
+    "shoes": "p"
    }
   },
   {
@@ -1920,21 +1911,29 @@
   },
   {
    "id": "mb_cheolgak",
-   "gender": "F",
-   "body": "u",
+   "gender": "M",
+   "body": "z",
    "kit": {
-    "top": "b",
-    "bottom": "k",
-    "shoes": "y"
-   }
+    "top": "l",
+    "bottom": "r",
+    "shoes": "x"
+   },
+   "tint": [
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#b08a1e"
+    }
+   ]
   },
   {
    "id": "mb_gangho",
-   "gender": "F",
-   "body": "f",
+   "gender": "M",
+   "body": "l",
    "kit": {
-    "cloth": "e",
-    "shoes": "k"
+    "top": "g",
+    "bottom": "z",
+    "shoes": "g"
    }
   },
   {
@@ -1956,32 +1955,30 @@
   },
   {
    "id": "mb_hanpung",
-   "gender": "M",
-   "body": "c",
+   "gender": "F",
+   "body": "u",
    "kit": {
-    "top": "n",
-    "bottom": "c",
-    "shoes": "n"
+    "cloth": "q",
+    "shoes": "a"
    }
   },
   {
    "id": "mb_hoja",
-   "gender": "M",
-   "body": "x",
+   "gender": "F",
+   "body": "f",
    "kit": {
-    "top": "z",
-    "bottom": "z",
-    "shoes": "n"
+    "top": "j",
+    "bottom": "j",
+    "shoes": "o"
    }
   },
   {
    "id": "mb_hwangto",
-   "gender": "M",
-   "body": "r",
+   "gender": "F",
+   "body": "d",
    "kit": {
-    "top": "v",
-    "bottom": "c",
-    "shoes": "g"
+    "cloth": "s",
+    "shoes": "q"
    }
   },
   {
@@ -2057,12 +2054,11 @@
   },
   {
    "id": "nh_sasin",
-   "gender": "M",
-   "body": "l",
+   "gender": "F",
+   "body": "a",
    "kit": {
-    "top": "c",
-    "bottom": "p",
-    "shoes": "g"
+    "cloth": "u",
+    "shoes": "k"
    }
   },
   {
@@ -2078,32 +2074,31 @@
   },
   {
    "id": "nh_wion",
-   "gender": "F",
-   "body": "m",
+   "gender": "M",
+   "body": "c",
    "kit": {
-    "top": "w",
-    "bottom": "j",
-    "shoes": "j"
+    "top": "r",
+    "bottom": "r",
+    "shoes": "c"
    }
   },
   {
    "id": "nh_yeombun",
-   "gender": "M",
-   "body": "x",
+   "gender": "F",
+   "body": "w",
    "kit": {
-    "top": "v",
-    "bottom": "p",
-    "shoes": "g"
+    "cloth": "a3",
+    "shoes": "q"
    }
   },
   {
    "id": "nz_ahyang",
-   "gender": "F",
-   "body": "a",
+   "gender": "M",
+   "body": "x",
    "kit": {
-    "top": "o",
-    "bottom": "y",
-    "shoes": "u"
+    "top": "x",
+    "bottom": "z",
+    "shoes": "n"
    }
   },
   {
@@ -2118,12 +2113,12 @@
   },
   {
    "id": "nz_geumsang",
-   "gender": "F",
-   "body": "j",
+   "gender": "M",
+   "body": "x",
    "kit": {
-    "top": "o",
-    "bottom": "a",
-    "shoes": "j"
+    "top": "v",
+    "bottom": "r",
+    "shoes": "r"
    }
   },
   {
@@ -2178,30 +2173,32 @@
   },
   {
    "id": "nz_unhwa",
-   "gender": "F",
-   "body": "s",
+   "gender": "M",
+   "body": "g",
    "kit": {
-    "cloth": "m",
-    "shoes": "u"
+    "top": "v",
+    "bottom": "z",
+    "shoes": "v"
    }
   },
   {
    "id": "rf_caimao",
-   "gender": "F",
-   "body": "e",
+   "gender": "M",
+   "body": "n",
    "kit": {
-    "cloth": "k",
-    "shoes": "h"
+    "top": "n",
+    "bottom": "c",
+    "shoes": "r"
    }
   },
   {
    "id": "rf_caohong",
-   "gender": "F",
-   "body": "o",
+   "gender": "M",
+   "body": "x",
    "kit": {
-    "top": "u",
-    "bottom": "y",
-    "shoes": "f"
+    "top": "r",
+    "bottom": "r",
+    "shoes": "g"
    }
   },
   {
@@ -2249,11 +2246,12 @@
   },
   {
    "id": "rf_chengyu",
-   "gender": "F",
-   "body": "b",
+   "gender": "M",
+   "body": "c",
    "kit": {
-    "cloth": "e",
-    "shoes": "j"
+    "top": "v",
+    "bottom": "z",
+    "shoes": "r"
    }
   },
   {
@@ -2268,12 +2266,12 @@
   },
   {
    "id": "rf_fazheng",
-   "gender": "F",
-   "body": "k",
+   "gender": "M",
+   "body": "l",
    "kit": {
-    "top": "e",
-    "bottom": "y",
-    "shoes": "k"
+    "top": "n",
+    "bottom": "r",
+    "shoes": "g"
    }
   },
   {
@@ -2315,22 +2313,21 @@
   },
   {
    "id": "rf_guojia",
-   "gender": "M",
-   "body": "n",
+   "gender": "F",
+   "body": "j",
    "kit": {
-    "top": "c",
-    "bottom": "z",
-    "shoes": "n"
+    "top": "i",
+    "bottom": "a",
+    "shoes": "a8"
    }
   },
   {
    "id": "rf_guosi",
-   "gender": "M",
-   "body": "g",
+   "gender": "F",
+   "body": "k",
    "kit": {
-    "top": "z",
-    "bottom": "c",
-    "shoes": "x"
+    "cloth": "a7",
+    "shoes": "d"
    }
   },
   {
@@ -2374,22 +2371,22 @@
   },
   {
    "id": "rf_huangzu",
-   "gender": "F",
-   "body": "i",
+   "gender": "M",
+   "body": "r",
    "kit": {
-    "top": "e",
-    "bottom": "d",
-    "shoes": "b"
+    "top": "x",
+    "bottom": "r",
+    "shoes": "z"
    }
   },
   {
    "id": "rf_jianyong",
-   "gender": "F",
-   "body": "u",
+   "gender": "M",
+   "body": "n",
    "kit": {
-    "top": "y",
-    "bottom": "d",
-    "shoes": "b"
+    "top": "z",
+    "bottom": "p",
+    "shoes": "l"
    }
   },
   {
@@ -2424,12 +2421,11 @@
   },
   {
    "id": "rf_kongrong",
-   "gender": "M",
-   "body": "x",
+   "gender": "F",
+   "body": "u",
    "kit": {
-    "top": "p",
-    "bottom": "r",
-    "shoes": "g"
+    "cloth": "u",
+    "shoes": "d"
    }
   },
   {
@@ -2464,11 +2460,12 @@
   },
   {
    "id": "rf_liubiao",
-   "gender": "F",
-   "body": "d",
+   "gender": "M",
+   "body": "x",
    "kit": {
-    "cloth": "m",
-    "shoes": "u"
+    "top": "p",
+    "bottom": "r",
+    "shoes": "l"
    }
   },
   {
@@ -2493,12 +2490,12 @@
   },
   {
    "id": "rf_mizhu",
-   "gender": "F",
-   "body": "a",
+   "gender": "M",
+   "body": "g",
    "kit": {
-    "top": "w",
-    "bottom": "d",
-    "shoes": "u"
+    "top": "z",
+    "bottom": "r",
+    "shoes": "l"
    }
   },
   {
@@ -2513,20 +2510,13 @@
   },
   {
    "id": "rf_shenpei",
-   "gender": "M",
-   "body": "v",
+   "gender": "F",
+   "body": "a",
    "kit": {
-    "top": "l",
-    "bottom": "r",
-    "shoes": "l"
-   },
-   "tint": [
-    {
-     "slot": "top",
-     "match": "CLOTH_02",
-     "color": "#6b3a26"
-    }
-   ]
+    "top": "s",
+    "bottom": "k",
+    "shoes": "h"
+   }
   },
   {
    "id": "rf_sunce",
@@ -2540,13 +2530,20 @@
   },
   {
    "id": "rf_tianfeng",
-   "gender": "F",
-   "body": "j",
+   "gender": "M",
+   "body": "v",
    "kit": {
-    "top": "y",
-    "bottom": "j",
-    "shoes": "s"
-   }
+    "top": "l",
+    "bottom": "r",
+    "shoes": "z"
+   },
+   "tint": [
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#1f6b6b"
+    }
+   ]
   },
   {
    "id": "rf_wenchou",
@@ -2559,11 +2556,12 @@
   },
   {
    "id": "rf_wenpin",
-   "gender": "F",
-   "body": "h",
+   "gender": "M",
+   "body": "v",
    "kit": {
-    "cloth": "u",
-    "shoes": "m"
+    "top": "p",
+    "bottom": "p",
+    "shoes": "p"
    }
   },
   {
@@ -2607,20 +2605,22 @@
   },
   {
    "id": "rf_yangang",
-   "gender": "F",
-   "body": "o",
+   "gender": "M",
+   "body": "p",
    "kit": {
-    "cloth": "k",
-    "shoes": "b"
+    "top": "g",
+    "bottom": "z",
+    "shoes": "r"
    }
   },
   {
    "id": "rf_yanghong",
-   "gender": "F",
-   "body": "b",
+   "gender": "M",
+   "body": "r",
    "kit": {
-    "cloth": "e",
-    "shoes": "k"
+    "top": "r",
+    "bottom": "z",
+    "shoes": "c"
    }
   },
   {
@@ -2642,11 +2642,12 @@
   },
   {
    "id": "rf_yangsong",
-   "gender": "F",
-   "body": "k",
+   "gender": "M",
+   "body": "z",
    "kit": {
-    "cloth": "u",
-    "shoes": "w"
+    "top": "z",
+    "bottom": "r",
+    "shoes": "n"
    }
   },
   {
@@ -2671,40 +2672,49 @@
   },
   {
    "id": "rf_yuanshao",
-   "gender": "F",
-   "body": "i",
+   "gender": "M",
+   "body": "l",
    "kit": {
-    "cloth": "e",
-    "shoes": "m"
+    "top": "v",
+    "bottom": "c",
+    "shoes": "z"
    }
   },
   {
    "id": "rf_yuanshu",
-   "gender": "F",
-   "body": "u",
+   "gender": "M",
+   "body": "x",
    "kit": {
-    "cloth": "m",
-    "shoes": "a"
+    "top": "v",
+    "bottom": "r",
+    "shoes": "z"
    }
   },
   {
    "id": "rf_yuejin",
-   "gender": "F",
-   "body": "f",
+   "gender": "M",
+   "body": "g",
    "kit": {
-    "top": "k",
-    "bottom": "b",
-    "shoes": "y"
-   }
+    "top": "l",
+    "bottom": "p",
+    "shoes": "g"
+   },
+   "tint": [
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#3a3a3e"
+    }
+   ]
   },
   {
    "id": "rf_yujin",
-   "gender": "F",
-   "body": "q",
+   "gender": "M",
+   "body": "n",
    "kit": {
-    "top": "j",
-    "bottom": "y",
-    "shoes": "o"
+    "top": "x",
+    "bottom": "p",
+    "shoes": "g"
    }
   },
   {
@@ -2739,31 +2749,22 @@
   },
   {
    "id": "rf_zhangren",
-   "gender": "M",
-   "body": "v",
+   "gender": "F",
+   "body": "b",
    "kit": {
-    "top": "l",
-    "bottom": "c",
-    "shoes": "v"
-   },
-   "tint": [
-    {
-     "slot": "top",
-     "match": "CLOTH_02",
-     "color": "#b08a1e"
-    }
-   ]
+    "cloth": "m",
+    "shoes": "h"
+   }
   },
   {
    "id": "rf_zhoutai",
-   "gender": "M",
-   "body": "p",
+   "gender": "F",
+   "body": "u",
    "kit": {
-    "top": "x",
-    "bottom": "z",
-    "shoes": "r"
-   },
-   "tuck": "bottom"
+    "top": "a2",
+    "bottom": "j",
+    "shoes": "a7"
+   }
   },
   {
    "id": "ru_busaeng",
@@ -2786,11 +2787,12 @@
   },
   {
    "id": "ru_geohae",
-   "gender": "F",
-   "body": "m",
+   "gender": "M",
+   "body": "p",
    "kit": {
-    "cloth": "u",
-    "shoes": "f"
+    "top": "z",
+    "bottom": "c",
+    "shoes": "x"
    }
   },
   {
@@ -2806,14 +2808,13 @@
   },
   {
    "id": "ru_mangdok",
-   "gender": "F",
-   "body": "a",
+   "gender": "M",
+   "body": "v",
    "kit": {
-    "top": "w",
-    "bottom": "b",
-    "shoes": "h"
-   },
-   "tuck": "bottom"
+    "top": "z",
+    "bottom": "z",
+    "shoes": "v"
+   }
   },
   {
    "id": "ru_sanaek",
@@ -2846,21 +2847,22 @@
   },
   {
    "id": "ru_wadok",
-   "gender": "F",
-   "body": "h",
+   "gender": "M",
+   "body": "c",
    "kit": {
-    "cloth": "e",
-    "shoes": "s"
+    "top": "c",
+    "bottom": "z",
+    "shoes": "n"
    }
   },
   {
    "id": "sl_cheonsan",
-   "gender": "F",
-   "body": "s",
+   "gender": "M",
+   "body": "v",
    "kit": {
-    "top": "e",
-    "bottom": "d",
-    "shoes": "a"
+    "top": "v",
+    "bottom": "c",
+    "shoes": "z"
    }
   },
   {
@@ -2915,14 +2917,13 @@
   },
   {
    "id": "sl_josang",
-   "gender": "M",
-   "body": "z",
+   "gender": "F",
+   "body": "h",
    "kit": {
-    "top": "x",
-    "bottom": "c",
-    "shoes": "r"
-   },
-   "tuck": "bottom"
+    "top": "w",
+    "bottom": "k",
+    "shoes": "q"
+   }
   },
   {
    "id": "sl_nakta",
@@ -2953,21 +2954,22 @@
   },
   {
    "id": "tb_amseup",
-   "gender": "F",
-   "body": "k",
+   "gender": "M",
+   "body": "z",
    "kit": {
-    "cloth": "q",
-    "shoes": "b"
+    "top": "p",
+    "bottom": "p",
+    "shoes": "z"
    }
   },
   {
    "id": "tb_baekgi",
-   "gender": "F",
-   "body": "y",
+   "gender": "M",
+   "body": "p",
    "kit": {
-    "top": "b",
-    "bottom": "y",
-    "shoes": "j"
+    "top": "p",
+    "bottom": "c",
+    "shoes": "g"
    }
   },
   {
@@ -2994,12 +2996,12 @@
   },
   {
    "id": "tb_heukju",
-   "gender": "M",
-   "body": "c",
+   "gender": "F",
+   "body": "k",
    "kit": {
-    "top": "n",
-    "bottom": "r",
-    "shoes": "n"
+    "top": "a6",
+    "bottom": "d",
+    "shoes": "b"
    }
   },
   {
@@ -3032,12 +3034,12 @@
   },
   {
    "id": "tb_jongja",
-   "gender": "M",
-   "body": "n",
+   "gender": "F",
+   "body": "f",
    "kit": {
-    "top": "z",
-    "bottom": "c",
-    "shoes": "l"
+    "top": "h",
+    "bottom": "b",
+    "shoes": "a2"
    }
   },
   {
@@ -3063,12 +3065,12 @@
   },
   {
    "id": "tz_daehacheon",
-   "gender": "F",
-   "body": "i",
+   "gender": "M",
+   "body": "n",
    "kit": {
-    "top": "f",
-    "bottom": "d",
-    "shoes": "e"
+    "top": "z",
+    "bottom": "z",
+    "shoes": "p"
    }
   },
   {
@@ -3101,12 +3103,12 @@
   },
   {
    "id": "tz_hyanggae",
-   "gender": "F",
-   "body": "u",
+   "gender": "M",
+   "body": "c",
    "kit": {
-    "top": "m",
-    "bottom": "d",
-    "shoes": "w"
+    "top": "z",
+    "bottom": "r",
+    "shoes": "v"
    }
   },
   {
@@ -3121,21 +3123,21 @@
   },
   {
    "id": "tz_sawi",
-   "gender": "F",
-   "body": "f",
+   "gender": "M",
+   "body": "z",
    "kit": {
-    "cloth": "m",
-    "shoes": "q"
+    "top": "v",
+    "bottom": "z",
+    "shoes": "l"
    }
   },
   {
    "id": "tz_seoksang",
-   "gender": "M",
-   "body": "c",
+   "gender": "F",
+   "body": "i",
    "kit": {
-    "top": "p",
-    "bottom": "r",
-    "shoes": "x"
+    "cloth": "a8",
+    "shoes": "b"
    }
   },
   {
@@ -3174,21 +3176,22 @@
   },
   {
    "id": "xb_daein",
-   "gender": "F",
-   "body": "q",
+   "gender": "M",
+   "body": "c",
    "kit": {
-    "cloth": "k",
-    "shoes": "q"
+    "top": "n",
+    "bottom": "c",
+    "shoes": "n"
    }
   },
   {
    "id": "xb_eoryang",
-   "gender": "F",
-   "body": "d",
+   "gender": "M",
+   "body": "c",
    "kit": {
-    "top": "q",
-    "bottom": "d",
-    "shoes": "w"
+    "top": "x",
+    "bottom": "z",
+    "shoes": "l"
    }
   },
   {
@@ -3258,12 +3261,12 @@
   },
   {
    "id": "xb_yong",
-   "gender": "F",
-   "body": "m",
+   "gender": "M",
+   "body": "r",
    "kit": {
-    "top": "j",
-    "bottom": "j",
-    "shoes": "h"
+    "top": "x",
+    "bottom": "c",
+    "shoes": "r"
    }
   },
   {
@@ -3278,11 +3281,12 @@
   },
   {
    "id": "xiyu_cheonma",
-   "gender": "F",
-   "body": "a",
+   "gender": "M",
+   "body": "p",
    "kit": {
-    "cloth": "q",
-    "shoes": "s"
+    "top": "z",
+    "bottom": "r",
+    "shoes": "x"
    }
   },
   {
@@ -3315,30 +3319,31 @@
   },
   {
    "id": "xiyu_gumo",
-   "gender": "M",
-   "body": "r",
+   "gender": "F",
+   "body": "a",
    "kit": {
-    "top": "c",
-    "bottom": "r",
-    "shoes": "g"
+    "cloth": "u",
+    "shoes": "a"
    }
   },
   {
    "id": "xiyu_gyoha",
-   "gender": "F",
-   "body": "j",
+   "gender": "M",
+   "body": "r",
    "kit": {
-    "cloth": "q",
-    "shoes": "b"
+    "top": "p",
+    "bottom": "c",
+    "shoes": "v"
    }
   },
   {
    "id": "xiyu_jeongcheon",
-   "gender": "F",
-   "body": "w",
+   "gender": "M",
+   "body": "n",
    "kit": {
-    "cloth": "q",
-    "shoes": "j"
+    "top": "n",
+    "bottom": "c",
+    "shoes": "x"
    }
   },
   {
@@ -3391,12 +3396,12 @@
   },
   {
    "id": "xiyu_yeoje",
-   "gender": "F",
-   "body": "e",
+   "gender": "M",
+   "body": "g",
    "kit": {
-    "top": "i",
-    "bottom": "d",
-    "shoes": "s"
+    "top": "c",
+    "bottom": "p",
+    "shoes": "p"
    }
   },
   {
