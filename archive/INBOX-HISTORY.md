@@ -92,3 +92,7 @@
 - [x] W-0188 · 10-12 · "4번은 마을에서 보스사냥?" · 4종횡 — 답 "마을에 두목이 나옴(버그)" — 관문 대장(§5-4)이 마을 지도 안에서 싸움(side.js challengeGate) · 웹/4종횡
 - [x] W-0187 · 10-12 · "5번은 링크가 안들어가짐" · 5천하 — 공개 주소·허브 링크·rts.html 모두 200, 폰 흉내로 가입→이어하기→지도까지 들어감(예외 0). 답 "첫 페이지의 5천하 카드" — 폰 흉내 터치로도 열림, 옛 세이브·캐시 의심 · 웹/5천하
 - [x] W-0190 · 10-13 · (웹 R-5 넘김 — Claude 눈) · 3마을 2D 에서 주인공(나)이 몸에 따라 파랑·청록·풀무늬 한 색 실루엣으로 나온다(새 프로필 pw-cozy-check base·r5·r5b 세 번 다, W-0142 전 HEAD 에서도) — 옷 색칠(W-0121 tint 칸)이 몸 전체에 먹는 듯 · 웹
+- [x] W-0191 · 10-13 · (K-0094 자체툴 넘김) · 2나락 테마 여섯 배경 `dg_<테마>`·타일 `dungeon_<테마>` 놓임 — `core.js` beltBg·tile 표에 붙이기(파일 표 `tasks/tools/done/K-0094.md`) · 웹
+- [x] W-0192 · 10-13 · (K-0047 자체툴 넘김) · 주역 23 표정 초상 `<판>/assets/portraits/expr/<id>__<표정>_c.webp` 놓임 — 4종횡 `renderStoryBox` emote 짝으로 갈아 끼우기 · 웹
+- [x] W-0193 · 10-13 · (K-0049 자체툴 넘김) · 움직이는 대화 초상 주역 23 `<판>/assets/portraits/live/<id>/live.json` 놓임(규격 `split_portrait_layers.py` 머리말) — 대화창 재생 · 웹
+- [x] W-0194 · 10-13 · (K-0096 자체툴 넘김) · 물고기 38 자체판 `shared/assets/creatures3d/<id>.glb`(뼈 worm·동작 7) — W-0178 처럼 빌린 Quaternius 물고기 바꿔 끼우기(`k96_targets.json` 5-fish) · 웹
