@@ -161,6 +161,34 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       var r = [n === 1, d === 0, e >= 0 && e <= 1, off === 0];
       return r.every(Boolean) && ('밤 ' + n + ' · 낮 ' + d + ' · 19시 ' + e) || '실패 ' + [n, d, e, off].join(',');
     });
+    t('3D⇄2D 단추(W-0189) — index 상단 줄에서 ⋯ 밖 붙박이(손쓰기 ✋ 는 ⋯ 안으로)·처음 글자 🧊3D, 3D 기본(village3d.on 1) 그대로', function () {
+      var x = new XMLHttpRequest(); x.open('GET', 'index.html', false); x.send();
+      var d = new DOMParser().parseFromString(x.responseText, 'text/html'), b = d.getElementById('btn-3d'), more = d.getElementById('top-more'), hand = d.getElementById('btn-do');
+      var tools = d.querySelector('#top .tools'), fixed = tools ? Array.prototype.filter.call(tools.children, function (e) { return e.tagName === 'BUTTON'; }).map(function (e) { return e.id; }) : [];
+      var r = [!!b && !!more, b && !more.contains(b) && b.parentNode === tools, !!hand && more.contains(hand), b && /3D/.test(b.textContent), DG.villageView3d.on() === true, fixed.length <= 3];
+      return r.every(Boolean) ? '붙박이 ' + fixed.join('·') + ' · 글자 ' + b.textContent : '실패 ' + r.join(',') + ' ' + fixed.join(',');
+    });
+    t('3D⇄2D 단추(W-0189) — 누르면 village3d.on 이 뒤집히고 글자가 지금 모드(🧊3D/🧊2D)·토스트 「2D 마을로 바꿨습니다 — 🧊 로 다시 3D」, 첫 안내 거품은 한 번만(settings.tip2d)', function () {
+      var C = DG.core, on = 1, toasts = [], tip0 = C.save.settings.tip2d, b = document.createElement('button'), host = document.createElement('div'), toast0 = DG.ui.toast;
+      var fake = { available: function () { return true; }, on: function () { return !!on; }, toggle: function () { on = on ? 0 : 1; return !!on; } };
+      delete C.save.settings.tip2d;
+      host.appendChild(b); document.body.appendChild(host);
+      DG.ui.toast = function (m) { toasts.push(m); };
+      try {
+        DG.game._wire3d(b, fake);
+        var t0 = b.textContent, tip = document.getElementById('tip-2d'), tipShown = !!tip && host.contains(tip);
+        b.click(); var t1 = b.textContent, on1 = on, cls1 = b.classList.contains('on');
+        b.click(); var t2 = b.textContent, on2 = on;
+        var seen = C.save.settings.tip2d === 1 && !document.getElementById('tip-2d');
+        var b2 = document.createElement('button'); host.appendChild(b2); DG.game._wire3d(b2, fake);
+        var again = !!document.getElementById('tip-2d');
+        var r = [t0 === '🧊3D', tipShown, t1 === '🧊2D' && on1 === 0 && !cls1, t2 === '🧊3D' && on2 === 1, toasts[0] === '2D 마을로 바꿨습니다 — 🧊 로 다시 3D', /다시 2D/.test(toasts[1] || ''), seen, !again];
+        return r.every(Boolean) ? t0 + ' → ' + t1 + ' → ' + t2 + ' · 거품 한 번' : '실패 ' + r.join(',') + ' ' + [t0, t1, t2].join('/') + ' ' + toasts.join(' | ');
+      } finally {
+        DG.ui.toast = toast0; document.body.removeChild(host);
+        if (tip0 === undefined) { delete C.save.settings.tip2d; } else { C.save.settings.tip2d = tip0; }
+      }
+    });
     t('초상 목록(W-0164) — manifest 의 인물 초상이 전부 도감 인물이고, 늦게 들어온 인물(ac_balgwang)도 정사각·카드 둘 다 올라 있다', function () {
       var M = DG.portraitDisk, H = {}, bad = [];
       if (!M) { try { var xq = new XMLHttpRequest(); xq.open('GET', 'assets/portraits/manifest.js', false); xq.send(); var tx = xq.responseText, i0 = tx.indexOf('portraitDisk=') + 13; M = JSON.parse(tx.slice(i0, tx.lastIndexOf('};') + 1)); } catch (e) { M = null; } }   // 진단 페이지엔 안 실려 직접 읽는다

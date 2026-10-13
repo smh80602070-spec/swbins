@@ -32,18 +32,18 @@ try{if(location.protocol!=='file:'&&/\/index\.html$/.test(location.pathname))his
   <button data-dir="right">▶</button>
 </div>
 
-<!-- 상단: 프로필 · 재화 · 도구 — 자동·손쓰기만 붙박이, 나머지는 더보기 뒤로
-     (사가종횡·사가천하와 같은 결) -->
+<!-- 상단: 프로필 · 재화 · 도구 — 자동·3D⇄2D 만 붙박이, 나머지는 더보기 뒤로
+     (사가종횡·사가천하와 같은 결). W-0189 ✋ 는 하단 손 카드·Space 가 있어 더보기 안으로 -->
 <div id="top">
   <div class="glass profile" id="profile"></div>
   <div class="tools">
     <button class="icon-btn" id="btn-auto" title="자동 마을살이 (대신 모으고 나눠 준다)">🤖</button>
-    <button class="icon-btn" id="btn-do" title="손을 쓴다 (Space)">✋</button>
+    <button class="icon-btn mode on" id="btn-3d" title="지금 3D 마을 — 눌러서 2D(둥근 마을)로">🧊3D</button>
     <button class="icon-btn" id="btn-more" title="더보기">⋯</button>
     <div id="top-more">
+      <button class="icon-btn" id="btn-do" title="손을 쓴다 (Space)">✋</button>
       <button class="icon-btn" id="btn-sneak" title="살금살금 (Shift) — 벌레가 달아나지 않습니다">🐾</button>
     <button class="icon-btn" id="btn-sound" title="소리 (발소리·낚시·계절 등, 절차적 생성 — 아직 실기 미확인)">🔊</button>
-      <button class="icon-btn" id="btn-3d" title="3D 로 걷기 (실험, 세로로 드래그하면 부감⇄어깨너머)">🧊</button>
       <button class="icon-btn" id="btn-camview" title="3D 시점 (어깨너머 ↔ 3/4 부감 쿼터뷰)">🎥</button>
       <button class="icon-btn" id="btn-help" title="도움말">❔</button>
       <a class="icon-btn" id="btn-admin" href="_admin.html" target="_blank" rel="noopener" title="어드민 (QA · 손잡이)">🛠️</a>

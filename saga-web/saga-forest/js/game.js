@@ -60,9 +60,55 @@
     global.addEventListener('blur', function () { core.persist(); }); // 포커스만 잃어도 저장
   }
 
+  /* W-0189 3D⇄2D 단추 — ⋯ 밖 붙박이, 지금 모드를 글자로. 3D 가 기본(village3d.on 1) 그대로 */
+  function sync3d(btn, on) {
+    btn.textContent = on ? '🧊3D' : '🧊2D';
+    btn.classList.toggle('on', on);
+    btn.title = on ? '지금 3D 마을 — 눌러서 2D(둥근 마을)로' : '지금 2D 마을 — 눌러서 3D 로';
+  }
+  function wire3d(btn, VV3) {
+    if (!VV3.available()) { btn.style.display = 'none'; return false; }
+    sync3d(btn, VV3.on());
+    btn.addEventListener('click', function () {
+      var on = VV3.toggle();
+      sync3d(btn, on);
+      core.persist();
+      ui.toast(on ? '3D 마을로 바꿨습니다 — 🧊 로 다시 2D' : '2D 마을로 바꿨습니다 — 🧊 로 다시 3D');
+    });
+    /* 어드민·손잡이(setTune)로 바뀌어도 글자가 따라오게 — 1초마다 비교만 */
+    global.setInterval(function () {
+      if (VV3.on() !== btn.classList.contains('on')) { sync3d(btn, VV3.on()); }
+      var tip = !VV3.on() && document.getElementById('tip-2d');
+      if (tip) { tip.click(); }   // 이미 2D 면 "2D 로도…" 거품은 닫는다(본 것으로)
+    }, 1000);
+    tip2d(btn, VV3);
+    return true;
+  }
+  /** 첫 실행 한 번만 "2D 로도 볼 수 있어요" 거품 — 세이브 settings.tip2d(새 키 없음).
+   *  제목 화면이 덮고 있을 수 있어 첫 손댐부터 10초 뒤 저절로 닫힌다 */
+  function tip2d(btn, VV3) {
+    var st = core.save.settings || (core.save.settings = {});
+    if (st.tip2d || !VV3.on() || !btn.parentNode) { return null; }
+    var tip = document.createElement('div');
+    tip.id = 'tip-2d';
+    tip.textContent = '2D 로도 볼 수 있어요 — 🧊 를 누르면 바뀝니다';
+    btn.parentNode.appendChild(tip);
+    var done = function () {
+      if (!tip.parentNode) { return; }
+      tip.parentNode.removeChild(tip);
+      st.tip2d = 1;
+      core.persist();
+    };
+    var first = function () { document.removeEventListener('pointerdown', first, true); global.setTimeout(done, 10000); };
+    tip.addEventListener('click', done);
+    btn.addEventListener('click', done);
+    document.addEventListener('pointerdown', first, true);
+    return tip;
+  }
+
   function bindTopbar() {
-    /* "더보기" — 살금살금·3D·시점·도움말·어드민·리셋은 자주 안 쓰니
-       접어 둔다(사가종횡·사가천하와 같은 결). 자동·손쓰기만 붙박이로 남는다 */
+    /* "더보기" — 손쓰기·살금살금·시점·도움말·어드민·리셋은 자주 안 쓰니
+       접어 둔다(사가종횡·사가천하와 같은 결). 자동·3D⇄2D 만 붙박이로 남는다(W-0189) */
     var moreBtn = document.getElementById('btn-more');
     var more = document.getElementById('top-more');
     if (moreBtn && more) {
@@ -126,16 +172,7 @@
     }
 
     var btn3d = document.getElementById('btn-3d');
-    if (btn3d && global.DG.villageView3d) {
-      var VV3 = global.DG.villageView3d;
-      if (!VV3.available()) { btn3d.style.display = 'none'; }
-      btn3d.classList.toggle('on', VV3.active());
-      btn3d.addEventListener('click', function () {
-        var on = VV3.toggle();
-        btn3d.classList.toggle('on', on);
-        core.persist();
-      });
-    }
+    if (btn3d && global.DG.villageView3d) { wire3d(btn3d, global.DG.villageView3d); }
 
     /* 3D 시점 — 어깨너머(0) ↔ 3/4 부감/쿼터뷰(1) 을 한 번에 뒤집는다. 세로 드래그로도
        그 사이를 이을 수 있지만(camTiltMix 연속값), 실기기에서 드래그 감이 잡히기 전에
@@ -271,7 +308,7 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.game = { boot: boot, start: start, loopGate: loopGate, wakeLoop: wakeLoop, _park: function (v) { parkedLoop = !!v; }, _parked: function () { return parkedLoop; } };
+  global.DG.game = { boot: boot, start: start, loopGate: loopGate, wakeLoop: wakeLoop, _wire3d: wire3d, _park: function (v) { parkedLoop = !!v; }, _parked: function () { return parkedLoop; } };
 
   /** 진입 — **가입(프로필)이 정해진 뒤에** 게임을 켠다.
    *  account.gate() 가 세이브 키를 정하고 start() 를 돌린다. */
