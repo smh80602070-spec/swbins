@@ -883,7 +883,7 @@
   "fun": {},
   "ticket": "W-0147",
   "since": "2026-10-10",
-  "note": "D2: 첫 방 점검(헤드리스, 응답 목록) — mon_spir_01·02·mon_cons_02·04 GLB 를 받고 옛 짐승 GLB 0, QC visual-20261007 2-room·4-next 몸 실패 0(glb 74·68). Claude 눈 △: 청록 각진 몸이 서지만 방이 어두워 작게 보임(밝기는 W-0145). 사람형 적·사람 우두머리는 그대로. mon_sp_* 24 는 idOf 짝 표에 없어 안 씀(2D 와 같음). · W-0178(10-11): 빌린 들·집 짐승·공룡·괴물 50종(Quaternius) → 자체판 creatures3d 로 바꿔 끼우고(shared assets3d.creatureFor — 괴물 팩 해시 이름·폴더 예외) 빌린 GLB 지움."
+  "note": "D2: 첫 방 점검(헤드리스, 응답 목록) — mon_spir_01·02·mon_cons_02·04 GLB 를 받고 옛 짐승 GLB 0, QC visual-20261007 2-room·4-next 몸 실패 0(glb 74·68). Claude 눈 △: 청록 각진 몸이 서지만 방이 어두워 작게 보임(밝기는 W-0145). 사람형 적·사람 우두머리는 그대로. mon_sp_* 24 는 idOf 짝 표에 없어 안 씀(2D 와 같음). · W-0178(10-11): 빌린 들·집 짐승·공룡·괴물 50종(Quaternius) → 자체판 creatures3d 로 바꿔 끼우고(shared assets3d.creatureFor — 괴물 팩 해시 이름·폴더 예외) 빌린 GLB 지움. · W-0194(10-13): 빌린 물고기 36종(Quaternius CC0, 파일 151) → 자체판 creatures3d(K-0096 ⑤) · Fish2·Fish3 은 새 몸이 안 보여 CREATURE_SKIP, Puffer·Whale·Fish1 은 자체판 없음 — 다섯은 빌린 것 그대로."
  },
  {
   "id": "dg.belt2d-town",

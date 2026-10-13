@@ -125,11 +125,19 @@
     Mushnub: 'mushnub', Dino: 'dino_pet', Squidle: 'squidle', Glub: 'glub', Glub_Evolved: 'glub_evolved', Bunny: 'bunny', Monkroose: 'monkroose',
     Pink_Slime: 'pink_slime', Ghost: 'ghost', Alpaking: 'alpaking', Dragon: 'dragon', Dragon_Evolved: 'dragon_evolved', Goleling: 'goleling',
     Goleling_Evolved: 'goleling_evolved', Hywirl: 'hywirl', Ghost_Skull: 'ghost_skull', Rat: 'rat', Wasp: 'wasp', Spider: 'spider',
-    FrogEnemy: 'frog_brute', Robot_Drone: 'robot_drone', Robot_Walker: 'robot_walker', Robot_Large: 'robot_large', EnemySmall: 'space_bug' };
+    FrogEnemy: 'frog_brute', Robot_Drone: 'robot_drone', Robot_Walker: 'robot_walker', Robot_Large: 'robot_large', EnemySmall: 'space_bug',
+    /* W-0194 — K-0096 ⑤ 물고기 38(뼈 worm·동작 7). Koi 는 animals·animals_extra2 같은 몸, Shark 는 두 폴더 다른 몸이지만 둘 다 상어. ✗ 셋(Puffer·Whale·Fish1)은 K 산출이 없어 빌린 것 그대로 */
+    Anglerfish: 'anglerfish', Armored_Catfish: 'armored_catfish', Betta: 'betta', Black_Lion_Fish: 'black_lionfish', Blobfish: 'blobfish',
+    Blue_Goldfish: 'blue_goldfish', Blue_Tang: 'blue_tang', Butterfly_Fish: 'butterflyfish', Cardinal_Fish: 'cardinalfish',
+    Clownfish: 'clownfish', Coral_Grouper: 'coral_grouper', Cowfish: 'cowfish', Flatfish: 'flatfish', Flower_Horn: 'flowerhorn',
+    Goblin_Shark: 'goblin_shark', Goldfish: 'goldfish', Humphead: 'humphead', Koi: 'koi', Lionfish: 'lionfish', Mandarin_Fish: 'mandarinfish',
+    Moorish_Idol: 'moorish_idol', Parrot_Fish: 'parrotfish', Piranha: 'piranha', Red_Snapper: 'red_snapper', Royal_Gramma: 'royal_gramma',
+    Shark: 'shark', Sunfish: 'sunfish', Swordfish: 'swordfish', Tang: 'tang', Tetra: 'tetra', Tuna: 'tuna', Turbot: 'turbot',
+    Yellow_Tang: 'yellow_tang', Zebra_Clown_Fish: 'zebra_clownfish', Dolphin: 'dolphin', MantaRay: 'manta_ray', Fish2: 'fish_b', Fish3: 'fish_c' };
   /** 폴더마다 같은 이름이 다른 몸인 것 — 괴물 팩(quaternius)의 Cat·Frog 는 괴물 고양이(✗ 판정)·괴물 개구리, quaternius2 의 Snake 는 괴물 뱀이라 안 바꾼다 */
   var CREATURE_DIR_SKIP = { quaternius: { Cat: 1, Frog: 1 }, quaternius2: { Snake: 1 } };
   /** 눈 판정(W-0178 3단계)에서 옛것보다 못한 id — 빌린 모델을 그대로 둔다(K 다시 굽기 수신함) */
-  var CREATURE_SKIP = {};
+  var CREATURE_SKIP = { fish_b: 1, fish_c: 1 };   // W-0194 — 새 몸이 three 에서 안 보임(빈 칸, 키 1.00) → Fish2·Fish3 빌린 것 유지, K 다시 굽기(수신함)
   var CREATURE_DIRS = /(?:^|\/)(animals|animals_extra|animals_extra2|standin|community|troops|monsters|quaternius|quaternius2|quaternius_dino|robots|space|foes)\/([A-Za-z_]+?)(?:_[0-9a-f]{8})?\.glb$/;
   function creatureFor(path) {
     var C = global.DG && global.DG.core;

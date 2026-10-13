@@ -1,9 +1,4 @@
 {
-  "Dolphin.glb": {
-    "size": 22720,
-    "result": "ok",
-    "at": "2026-09-07T04:51:04.303Z"
-  },
   "Fish1.glb": {
     "size": 22856,
     "result": "ok",
@@ -18,16 +13,6 @@
     "size": 22716,
     "result": "ok",
     "at": "2026-09-07T04:51:07.154Z"
-  },
-  "MantaRay.glb": {
-    "size": 32568,
-    "result": "ok",
-    "at": "2026-09-07T04:51:10.877Z"
-  },
-  "Shark.glb": {
-    "size": 24324,
-    "result": "ok",
-    "at": "2026-09-07T04:51:12.815Z"
   },
   "Whale.glb": {
     "size": 24800,
