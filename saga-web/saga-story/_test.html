@@ -3689,7 +3689,9 @@ window.DG_NO_TUNE = true;
       var k0 = L.liveFrame(sp, 0, { blinkAt: null, talkFrom: 0, talkTo: 500 }), k1 = L.liveFrame(sp, 230, { blinkAt: null, talkFrom: 0, talkTo: 500 }), k2 = L.liveFrame(sp, 600, { blinkAt: null, talkFrom: 0, talkTo: 500 });
       var a = f0.eye === null && f0.mouth === null && f1.eye === 'blink' && f2.eye === null && k0.mouth === 'mouth_half' && k1.mouth === 'mouth_half' && k2.mouth === null;
       var b = L.liveFrame(sp, 900, {}).scaleY <= 1.006 && L.liveFrame(sp, 900, {}).scaleY >= 1 && Math.abs(L.liveFrame(sp, 1250, {}).deg) <= 1.2 && L.nextBlink(sp, 0, 0) === 3000 && L.nextBlink(sp, 0, 1) === 6000 && L.talkMs('가나다') === 500;
-      var h1 = F.face('sg_lubu', 'calm', '<i>x</i>', '말'), h2 = F.face('sg_lubu', 'joy', '<i>x</i>', '말'), c = h1.indexOf('data-live="sg_lubu"') > 0 && h1.indexOf('story-fb') > 0 && h2.indexOf('story-live') < 0 && F.face('nobody', 'calm', '<i>x</i>') === '<i>x</i>';
+      var h0 = F.face('sg_lubu', 'calm', '<i>x</i>', '말'); DG.core.setTune('story.livePortrait', 1);   // R-5 기본 꺼짐(얼굴이 다른 그림) — 켜고 잰다
+      var h1 = F.face('sg_lubu', 'calm', '<i>x</i>', '말'), h2 = F.face('sg_lubu', 'joy', '<i>x</i>', '말'); DG.core.setTune('story.livePortrait', null); var off0 = h0 === '<i>x</i>' && !L.on();
+      var c = off0 && h1.indexOf('data-live="sg_lubu"') > 0 && h1.indexOf(' hidden></canvas><span class="story-fb">') > 0 && h2.indexOf('story-live') < 0 && F.face('nobody', 'calm', '<i>x</i>') === '<i>x</i>';
       var x = new XMLHttpRequest(); x.open('GET', 'assets/portraits/live/sg_lubu/live.json', false); x.send(); var j = x.status === 200 ? JSON.parse(x.responseText) : null;
       var d = document.createElement('div'); d.innerHTML = h1; document.body.appendChild(d); L.scan(); var on = L.active() >= 1; d.remove();
       return a && b && c && j && j.parts && j.parts.eye && on ? '깜빡임·입·숨 · 평온 줄 캔버스 · live.json 부위 ' + Object.keys(j.parts).join('·') : '실패 ' + [a, b, c, !!j, on].join(' ');

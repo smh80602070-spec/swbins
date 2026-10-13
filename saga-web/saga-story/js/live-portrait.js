@@ -40,6 +40,9 @@
   var IDS = ['eu_davinci', 'eu_leonidas', 'jp_hanzo', 'jp_himiko', 'jp_musashi', 'jp_tomoegozen', 'jp_yoshitsune', 'kr_gyebaek',
     'sg_ganning', 'sg_huangzhong', 'sg_lubu', 'sg_taishici', 'sg_zhugeliang', 'wd_genghis', 'wd_ibnsina', 'wd_shaka'];
   function has(id) { return IDS.indexOf(id) >= 0; }
+  /** 켜져 있나 — R-5(10-13): K-0049 바탕이 VRoid 몸 렌더라 대화창의 다른 초상(AI 그림·표정)과 **얼굴이 다른 사람**이다
+   *  (노궁 = 교복 소년 ↔ 희끗한 장수). 같은 그림으로 다시 만들 때까지 기본 꺼 둠 — 손잡이 story.livePortrait 1 이면 켬 */
+  function on() { var C = global.DG && global.DG.core; return !!(C && C.tuned && +C.tuned('story.livePortrait', 0) > 0); }
 
   /** 한 사람 그림을 받는다(한 번만) — 다 받으면 ok, 하나라도 못 받으면 fail(→ 캔버스를 걷고 숨겨 둔 정지 초상) */
   function load(id) {
@@ -96,13 +99,14 @@
       if (!mt.cv.isConnected) { return false; }
       var p = people[mt.id];
       if (p && p.fail) { swapBack(mt.cv); return false; }
+      if (p && p.ok && mt.cv.hidden) { mt.cv.hidden = false; var fb = mt.cv.nextElementSibling; if (fb) { fb.hidden = true; } }   // R-5 다 받으면 정지 초상과 바꿔 낌
       drawOne(mt, now);
       return true;
     });
     frames++;
     if (mounts.length) { raf = global.requestAnimationFrame(tick); }
   }
-  /** 못 받았으면 캔버스를 걷고 숨겨 둔 정지 초상을 꺼낸다 */
+  /** 못 받았으면 캔버스를 걷고 정지 초상을 보인다 */
   function swapBack(cv) { var f = cv.nextElementSibling; if (f && f.hidden) { f.hidden = false; } if (cv.parentNode) { cv.parentNode.removeChild(cv); } }
 
   /** 문서의 아직 안 붙은 `canvas[data-live]` 를 붙인다(story-face 가 대화창 HTML 을 쓴 직후 부른다) */
@@ -111,7 +115,7 @@
     var list = global.document.querySelectorAll('canvas[data-live]:not([data-live-on])'), i, cv, dpr = global.devicePixelRatio || 1;
     for (i = 0; i < list.length; i++) {
       cv = list[i]; cv.setAttribute('data-live-on', '1');
-      cv.width = Math.round((cv.clientWidth || 104) * dpr); cv.height = Math.round((cv.clientHeight || 119) * dpr);
+      cv.width = Math.round(104 * dpr); cv.height = Math.round(119 * dpr);   // R-5 숨긴 채 붙이므로 clientWidth 가 0 — CSS .story-live 크기와 같게
       var id = cv.getAttribute('data-live'), now = Date.now(), tm = +cv.getAttribute('data-talk') || 0;
       load(id);
       mounts.push({ cv: cv, id: id, talkFrom: now, talkTo: now + tm, blinkAt: null, seed: (id.length * 7919 + now) % 233280 });
@@ -119,17 +123,18 @@
     if (mounts.length && !raf && global.requestAnimationFrame) { raf = global.requestAnimationFrame(tick); }
   }
 
-  /** 얼굴 칸 HTML — 이 사람이 살아 있는 초상이 있고 그림을 아직 못 받은 게 아니면 캔버스(+ 숨긴 정지 초상), 아니면 null */
+  /** 얼굴 칸 HTML — 이 사람이 살아 있는 초상이 있고 그림을 아직 못 받은 게 아니면 캔버스(+ 정지 초상), 아니면 null.
+   *  R-5: 처음 받는 동안 칸이 비어 보였다 → 캔버스는 숨긴 채, 정지 초상을 보이다가 다 받으면 바꿔 낀다 */
   function html(id, text, fallback) {
     var p = load(id);
     if (!p || p.fail) { return null; }
     if (global.setTimeout) { global.setTimeout(scan, 0); }
-    return '<canvas class="pt story-live" data-live="' + id + '" data-talk="' + talkMs(text) + '"></canvas><span class="story-fb" hidden>' + fallback + '</span>';
+    return '<canvas class="pt story-live" data-live="' + id + '" data-talk="' + talkMs(text) + '" hidden></canvas><span class="story-fb">' + fallback + '</span>';
   }
 
   global.DG = global.DG || {};
   global.DG.livePortrait = {
-    liveFrame: liveFrame, nextBlink: nextBlink, talkMs: talkMs, has: has, html: html, scan: scan, IDS: IDS,
+    liveFrame: liveFrame, nextBlink: nextBlink, talkMs: talkMs, has: has, on: on, html: html, scan: scan, IDS: IDS,
     active: function () { return mounts.length; }, _blinkNow: function () { var t = Date.now(); mounts.forEach(function (m) { m.blinkAt = t; }); },   // 촬영·진단용 — 지금 깜빡임
     running: function () { return !!raf; }, _frames: function () { return frames; }
   };

@@ -33,7 +33,7 @@
   function face(id, emote, fallback, text) {
     preload(id);
     var src = exprSrc(id, emote), LP = global.DG.livePortrait, lv;
-    if (!src) { lv = LP && LP.has(id) ? LP.html(id, text, fallback) : null; return lv || fallback; }
+    if (!src) { lv = LP && LP.on() && LP.has(id) ? LP.html(id, text, fallback) : null; return lv || fallback; }
     return '<img class="pt story-expr" alt="" src="' + src + '" onerror="var f=this.nextElementSibling;if(f){f.hidden=false;}this.remove();">' +
       '<span class="story-fb" hidden>' + fallback + '</span>';
   }
