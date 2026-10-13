@@ -61,6 +61,7 @@ func _run() -> void:
 	var desat_ok := true
 	var mesh_ok := true
 	var shared_ok := true
+	var real_ok := true
 	var bad := ""
 	var first_tex := {}
 	for t in terrains:
@@ -80,7 +81,7 @@ func _run() -> void:
 		var seen := {}
 		for p in TEX_PARAMS:
 			var tx := mat.get_shader_parameter(p) as Texture2D
-			if tx == null or tx.get_width() != 512 or tx.get_height() != 512:
+			if tx == null or tx.get_width() < 512 or tx.get_width() != tx.get_height():   # G-0143 — 옛 tilegen 512 또는 자체 PBR 1024
 				tex_ok = false
 				bad += " %s:질감 %s" % [t.region_id, p]
 				continue
@@ -91,6 +92,13 @@ func _run() -> void:
 			if first_tex.has(p) and first_tex[p] != tx:
 				shared_ok = false
 			first_tex[p] = tx
+		## G-0143 — 자체 PBR 세트가 놓여 있으면 높이 맵 셋·높이 섞기·빛깔 맞춤(PHOTO_COLOR)
+		if ResourceLoader.exists(TerrainBuilder.REAL_DIR + "grass_hi.webp"):
+			for hp in ["grass_height", "dirt_height", "stone_height"]:
+				if mat.get_shader_parameter(hp) == null:
+					real_ok = false
+			if not is_equal_approx(float(mat.get_shader_parameter("use_height")), 1.0) or not is_equal_approx(float(mat.get_shader_parameter("photo_color")), TerrainBuilder.PHOTO_COLOR):
+				real_ok = false
 		var want: float = float(TerrainBuilder.REGION_TEX_DESAT.get(String(t.region_id), 0.0))
 		if not is_equal_approx(float(mat.get_shader_parameter("hue_desat")), want):
 			desat_ok = false
@@ -106,7 +114,8 @@ func _run() -> void:
 			bad += " %s:메시" % t.region_id
 	_check("shader_material", shader_ok, "모든 Ground 가 terrain_triplanar.gdshader" + bad)
 	_check("uniforms_exist", uniforms_ok, "코드가 주는 파라미터 10개가 전부 셰이더 uniform 에 있다")
-	_check("textures", tex_ok and shared_ok, "질감 9장 512×512 · 종류끼리 다른 그림 · 지역끼리 같은 질감 공유")
+	_check("textures", tex_ok and shared_ok, "질감 9장 정사각 512 이상 · 종류끼리 다른 그림 · 지역끼리 같은 질감 공유")
+	_check("real_pbr", real_ok, "자체 PBR 세트가 있으면 높이 맵 셋·높이 섞기·빛깔 맞춤 %.2f(G-0143)" % TerrainBuilder.PHOTO_COLOR)
 	_check("hue_desat", desat_ok, str(TerrainBuilder.REGION_TEX_DESAT))
 	_check("mesh_format", mesh_ok, "정점색·CUSTOM0·삼각형 있음")
 

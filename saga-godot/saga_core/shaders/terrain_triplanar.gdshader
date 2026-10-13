@@ -21,6 +21,16 @@ uniform sampler2D stone_albedo : source_color;
 uniform sampler2D stone_normal : hint_normal;
 uniform sampler2D stone_rough;
 
+// G-0143 — 자체 PBR 세트(K-0093 tiles_real: 바탕·법선·거칠기·높이 1024)를 쓸 때. 높이 맵이 없으면(옛 tilegen 세트) 텍스처 밝기를 높이로.
+uniform sampler2D grass_height;
+uniform sampler2D dirt_height;
+uniform sampler2D stone_height;
+uniform float use_height : hint_range(0.0, 1.0) = 0.0;
+// 사진 세트 빛깔 맞춤 — 세트마다 옛 세트 평균 빛깔로 옮기는 곱(선형). photo_color 1 이면 사진 빛깔 그대로, 0 이면 옛 빛깔에 사진 결만.
+uniform vec3 grass_gain = vec3(1.0);
+uniform vec3 dirt_gain = vec3(1.0);
+uniform vec3 stone_gain = vec3(1.0);
+uniform float photo_color : hint_range(0.0, 1.0) = 1.0;
 uniform float tile_scale : hint_range(0.05, 2.0) = 0.4; // 텍스처 반복 밀도(1/m)
 uniform float patch_scale : hint_range(0.02, 1.0) = 0.12; // 얼룩 크기
 uniform vec3 dry_tint = vec3(1.18, 1.03, 0.62); // G-0137 풀빛 큰 얼룩(누렇게 바랜 풀) — 정점색에 곱한다
@@ -95,6 +105,9 @@ void fragment() {
 	vec3 grass_a = _triplanar(grass_albedo, world_pos, world_normal, tile_scale).rgb;
 	vec3 dirt_a = _triplanar(dirt_albedo, world_pos, world_normal, tile_scale).rgb;
 	vec3 stone_a = _triplanar(stone_albedo, world_pos, world_normal, tile_scale).rgb;
+	grass_a *= pow(grass_gain, vec3(1.0 - photo_color));
+	dirt_a *= pow(dirt_gain, vec3(1.0 - photo_color));
+	stone_a *= pow(stone_gain, vec3(1.0 - photo_color));
 	// 텍스처 색([0,1])을 탄젠트 공간 벡터([-1,1])로 되돌려야 가중 평균이
 	// 뜻이 있다 — [0,1] 그대로 블렌드하면 방향이 아니라 색을 섞는 꼴이 된다.
 	vec3 grass_n = _triplanar(grass_normal, world_pos, world_normal, tile_scale).rgb * 2.0 - 1.0;
@@ -121,9 +134,11 @@ void fragment() {
 	float grass_w = max(0.05, 1.0 - dirt_w - stone_w);
 	// G-0143 — 높이 기반 섞기: 텍스처 밝기를 높이로 보고(돌·흙 알갱이 윗면이 밝다) 섞는 경계에서 높은 쪽이 이긴다 —
 	// 부드러운 번짐 대신 돌 틈에 풀·흙이 차는 실제 경계. 한 종류만 있는 곳(평지 풀밭)은 그대로.
-	float hg = dot(grass_a, vec3(0.333)) + grass_w;
-	float hd = dot(dirt_a, vec3(0.333)) + dirt_w;
-	float hs = dot(stone_a, vec3(0.333)) * 1.2 + stone_w;
+	// 높이 맵이 있으면 그것으로(위에서 내려다보는 xz 한 장만 — 이 메시는 거의 위를 본다).
+	vec2 hp = world_pos.xz * tile_scale;
+	float hg = mix(dot(grass_a, vec3(0.333)), texture(grass_height, hp).r * 0.6, use_height) + grass_w;
+	float hd = mix(dot(dirt_a, vec3(0.333)), texture(dirt_height, hp).r * 0.6, use_height) + dirt_w;
+	float hs = mix(dot(stone_a, vec3(0.333)) * 1.2, texture(stone_height, hp).r * 0.75, use_height) + stone_w;
 	float hmax = max(hg, max(hd, hs)) - 0.18;
 	grass_w = max(hg - hmax, 0.0) * step(0.001, grass_w) + 0.0001;
 	dirt_w = max(hd - hmax, 0.0) * step(0.001, dirt_w);
@@ -133,7 +148,7 @@ void fragment() {
 	float cam_dist = length(world_pos - CAMERA_POSITION_WORLD);
 	float far_mix = smoothstep(12.0, 60.0, cam_dist) * 0.55;
 	vec2 rp = mat2(vec2(0.8, -0.6), vec2(0.6, 0.8)) * world_pos.xz * tile_scale * 0.23;
-	grass_a = mix(grass_a, texture(grass_albedo, rp).rgb, far_mix);
+	grass_a = mix(grass_a, texture(grass_albedo, rp).rgb * pow(grass_gain, vec3(1.0 - photo_color)), far_mix);
 
 	vec3 detail_albedo = (grass_a * grass_w + dirt_a * dirt_w + stone_a * stone_w) / wsum;
 	detail_albedo = mix(detail_albedo, vec3(dot(detail_albedo, vec3(0.3, 0.59, 0.11)) * 1.55), hue_desat * (1.0 - stone_w) * (1.0 - smoothstep(4.0, 8.0, world_pos.y)));

@@ -441,15 +441,7 @@ func _build() -> void:
 	## terrain_triplanar.gdshader(정점색·지형 판정은 그대로, 경사면은 돌).
 	var mat := ShaderMaterial.new()
 	mat.shader = load("res://saga_core/shaders/terrain_triplanar.gdshader")
-	mat.set_shader_parameter("grass_albedo", load("res://assets/generated/tiles/grass_512.png"))
-	mat.set_shader_parameter("grass_normal", load("res://assets/generated/tiles/grass_512_n.png"))
-	mat.set_shader_parameter("grass_rough", load("res://assets/generated/tiles/grass_512_r.png"))
-	mat.set_shader_parameter("dirt_albedo", load("res://assets/generated/tiles/dirt_512.png"))
-	mat.set_shader_parameter("dirt_normal", load("res://assets/generated/tiles/dirt_512_n.png"))
-	mat.set_shader_parameter("dirt_rough", load("res://assets/generated/tiles/dirt_512_r.png"))
-	mat.set_shader_parameter("stone_albedo", load("res://assets/generated/tiles/stone_512.png"))
-	mat.set_shader_parameter("stone_normal", load("res://assets/generated/tiles/stone_512_n.png"))
-	mat.set_shader_parameter("stone_rough", load("res://assets/generated/tiles/stone_512_r.png"))
+	_set_ground_textures(mat)
 	mat.set_shader_parameter("hue_desat", float(REGION_TEX_DESAT.get(region_id, 0.0)))
 
 	var mi := MeshInstance3D.new()
@@ -457,6 +449,35 @@ func _build() -> void:
 	mi.name = "Ground"
 	mi.material_override = mat
 	add_child(mi)
+
+## G-0143 — 자체 PBR 세트(K-0093 tiles_real 1024: 풀·흙·바위 + 높이)가 놓여 있으면 그것, 없으면 옛 tilegen 512 세 장.
+## 사진 세트는 옛 세트보다 어둡고 덜 푸르다 — REAL_GAIN(옛 평균 / 새 평균, 선형)을 PHOTO_COLOR 만큼 덜 걸어 지금 들판 빛깔을 지킨다.
+## 환경변수 SAGA_PHOTO_COLOR(0~1)로 비교 촬영. SAGA_GROUND_OLD=1 이면 옛 세트(전후 촬영).
+const REAL_DIR := "res://assets/generated/tiles_real/"
+const REAL_SETS := {"grass": "grass", "dirt": "dirt", "stone": "rock"}
+const REAL_GAIN := {"grass": Vector3(1.418, 2.341, 1.544), "dirt": Vector3(0.636, 0.546, 0.295), "stone": Vector3(0.946, 0.875, 0.768)}
+const PHOTO_COLOR := 0.35
+
+
+static func _set_ground_textures(mat: ShaderMaterial) -> void:
+	var real := ResourceLoader.exists(REAL_DIR + "grass_hi.webp") and OS.get_environment("SAGA_GROUND_OLD") == ""
+	for k: String in REAL_SETS:
+		if real:
+			var base := REAL_DIR + String(REAL_SETS[k]) + "_hi"
+			mat.set_shader_parameter(k + "_albedo", load(base + ".webp"))
+			mat.set_shader_parameter(k + "_normal", load(base + "_n.webp"))
+			mat.set_shader_parameter(k + "_rough", load(base + "_r.webp"))
+			mat.set_shader_parameter(k + "_height", load(base + "_h.webp"))
+			mat.set_shader_parameter(k + "_gain", REAL_GAIN[k])
+		else:
+			var old := "res://assets/generated/tiles/%s_512" % k
+			mat.set_shader_parameter(k + "_albedo", load(old + ".png"))
+			mat.set_shader_parameter(k + "_normal", load(old + "_n.png"))
+			mat.set_shader_parameter(k + "_rough", load(old + "_r.png"))
+	var pc := OS.get_environment("SAGA_PHOTO_COLOR")
+	mat.set_shader_parameter("use_height", 1.0 if real else 0.0)
+	mat.set_shader_parameter("photo_color", (float(pc) if pc != "" else PHOTO_COLOR) if real else 1.0)
+
 
 ## 칸 하나를 SUB×SUB 조각으로 나눠 그린다. (u,v)는 칸 안의 상대 위치.
 ## 법선은 높이 함수의 차분으로 직접 구한다(generate_normals 를 쓰면 절벽

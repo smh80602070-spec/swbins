@@ -3955,6 +3955,28 @@
   "note": "코드 끝 — 그림은 자체툴 고돗 배치 전(놓인 주역 0/23, 그동안 지금 모양). 촬영 st_talk_portrait 가로·세로 ○(웹 초상을 user:// 에 베껴). 놓이면 실제 그림으로 다시 찍어 D2"
  },
  {
+  "id": "gd.go.real_ground",
+  "name": "1만리 사실적 바닥 — 지형 셰이더가 자체 PBR 세트(K-0093 풀·흙·바위 1024 + 높이 맵)로, 높이 맵 섞기(돌 틈에 풀·흙) · 사진 빛깔 맞춤 0.35(지금 들판 빛깔 + 사진 결) · 먼 반복 감추기·법선 거리 줄임",
+  "files": [
+   "saga_core/shaders/terrain_triplanar.gdshader",
+   "games/saga_go/world/terrain_builder.gd",
+   "tools/probe_triplanar.gd"
+  ],
+  "tests": [
+   "triplanar",
+   "toon_look",
+   "frost",
+   "village",
+   "perf"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0143",
+  "since": "2026-10-13",
+  "note": "전후 같은 시간대 여덟 컷(17:08·17:11) Claude 눈 ○ — 들판 풀이 사진처럼 읽힘, 사진 빛깔 1.0 은 올리브로 칙칙해 0.35 · 모래·눈은 그대로(표시 칸이 덮음) · SAGA_GROUND_OLD=1 옛 세트 · SAGA_PHOTO_COLOR 비교"
+ },
+ {
   "id": "gd.dg.meridian",
   "name": "2나락 경락도(經絡圖) — 409마디 패시브 그물을 직업(쥔 무기)마다·시작점 여섯 · 점수 = 첫 별 + 그 직업 무예 점수 누계 + 보스 처치(상한 60) · 능력치 합은 _sum_eff·저항 · 규칙 열(기력·회피 없는 자리는 재해석) · 무예 창 「☯ 경락도」·F2(웹 W-0180)",
   "files": [
