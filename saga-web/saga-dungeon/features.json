@@ -1030,5 +1030,23 @@
   "ticket": "W-0191",
   "since": "2026-10-13",
   "note": "D2(claude 2026-10-13): pw-belt-check w191 --floors=1,6,11,16,21,26 pc·phone Read ○ — 테마마다 뒷벽 그림·색이 갈림(흙빛 홀·회청 성·초록 산·물빛 산호 궁·붉은 용암 문·흰금 구름 누각), 바닥선이 바닥 띠 위 끝과 맞음, 처음·오른쪽 끝 두 장에서 층이 흐름(시차). 폰 세로는 먼 층이 위 절반을 채움. 마을·들판은 제 테마 이름이라 그대로(qc 2d ○). △ 고분 배경이 밝아 어두운 바닥과 대비가 큼."
+ },
+ {
+  "id": "dg.tex3d-real",
+  "name": "3D 던전 방 바닥·벽·들판 자체 재질 — 바닥 바위·판석·자갈, 벽 돌벽·바위, 들판 풀·흙·바위(K-0093 PBR 바탕색), 빌린 Poly Haven·ambientCG 사진 없음",
+  "files": [
+   "js/dungeon3d.js",
+   "js/terrain3d.js",
+   "js/road3d.js"
+  ],
+  "tests": [
+   "3D 던전·들판 자체 재질(W-0196, K-0093) — 방 바닥·벽·들판·길이 real_* 를 쓰고 파일이 있다 · 옛 Poly Haven·ambientCG 주소 없음"
+  ],
+  "note": "D2(claude 2026-10-13): qc 2-room·4-next·1-town 옛/새 Read ○ — 바닥 자갈·뒷벽 돌벽 결이 뚜렷하고 층 테마 색이 그대로 입혀짐, 마을 바닥 바위 자연스러움. qc PASS.",
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0196",
+  "since": "2026-10-13"
  }
 ]

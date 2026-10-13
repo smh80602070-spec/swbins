@@ -133,7 +133,7 @@
     if (!t) { return null; }
     var key = (hex >>> 0).toString(16);
     if (matCache[key]) { return matCache[key]; }
-    var grass = loadTex('grass.webp'), dirt = loadTex('dirt.webp'), stone = loadTex('stone.webp');
+    var grass = loadTex('real_grass.webp'), dirt = loadTex('real_dirt.webp'), stone = loadTex('real_rock.webp');   // W-0196 자체 PBR(K-0093)
     if (!grass || !dirt || !stone) { return null; }
     var TN = global.DG.toon3d;
     var m = new t.MeshToonMaterial({ color: new t.Color(hex), gradientMap: TN ? TN.ramp() : null });

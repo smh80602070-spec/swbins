@@ -707,10 +707,10 @@
    *  같은 그림 하나만 반복되면 층 테마 색만 다를 뿐 다 같은 방으로 보인다.
    *  나무·바위처럼 **여러 장 중 방 씨앗으로 하나씩** 고르게 늘렸다(새 판정
    *  없음 — `buildClutter`가 귀퉁이 소품을 고르는 것과 같은 요령). */
-  var FLOOR_TEX = ['assets/textures/dungeon/floor_stone.webp',
-    'assets/textures/dungeon/floor_stone_2.webp', 'assets/textures/dungeon/floor_stone_3.webp'];
-  var WALL_TEX = ['assets/textures/dungeon/wall_stone.webp',
-    'assets/textures/dungeon/wall_stone_2.webp', 'assets/textures/dungeon/wall_stone_3.webp'];
+  var FLOOR_TEX = ['assets/textures/dungeon/real_rock.webp',   // W-0196 — Poly Haven 사진 여섯 → 자체 PBR(K-0093, 바탕색만): 바닥 바위·판석·자갈, 벽 돌벽·돌벽·바위(회벽은 무늬가 없어 뺌)
+    'assets/textures/dungeon/real_stonewall.webp', 'assets/textures/dungeon/real_gravel.webp'];
+  var WALL_TEX = ['assets/textures/dungeon/real_stonewall.webp',
+    'assets/textures/dungeon/real_stonewall.webp', 'assets/textures/dungeon/real_rock.webp'];
   function pickTex(list, run, salt) {
     var F = global.DG.field3d;
     if (!F) { return list[0]; }

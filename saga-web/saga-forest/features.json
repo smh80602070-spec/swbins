@@ -939,5 +939,21 @@
   "ticket": "W-0195",
   "since": "2026-10-13",
   "note": "D2(claude 2026-10-13): 빌린 몸 여섯(곤충 박사 ns_yeongyeol~9 등) 옛/새 나란히 Read ○ — 보라 한 빛이던 방문객이 어두운 머리·보라 윗도리·회색 치마·어두운 다리로 갈림, 다른 몸도 윗옷 색만 남고 하의·머리 제 색. pw-cozy-check w195b phone-day ○ · qc 3마을 PASS. 손잡이 mode2d.borrowTintLow(기본 0.25, 1 = 옛 온몸)."
+ },
+ {
+  "id": "fs.ground3d-real",
+  "name": "3D 마을 땅 자체 재질 — 풀·흙길·돌 타일이 자체 생성 PBR(K-0093 grass·dirt·paving, 바탕색), 빌린 ambientCG·Poly Haven 사진 없음",
+  "files": [
+   "js/village-view3d.js"
+  ],
+  "tests": [
+   "3D 땅 자체 재질(W-0196, K-0093) — 마을 3D 타일 표가 real_grass·real_dirt·real_paving 을 쓰고 파일이 있다 · 옛 빌린 사진 주소 없음"
+  ],
+  "note": "D2(claude 2026-10-13): qc 1-village3d 옛/새 Read — 풀 ○(결 비슷), △ 흙길이 무늬 없는 평평한 흙(K-0093 dirt 가 밋밋 — 수신함 K). qc PASS.",
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0196",
+  "since": "2026-10-13"
  }
 ]

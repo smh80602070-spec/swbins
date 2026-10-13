@@ -3,6 +3,8 @@
 > **W-0163(2026-10-11) — 빌린 동물·탈것 3D 를 지웠다.** Poly by Google(Tiger·Bear·Panda·Monkey·Boar·Owl·Crane·Elephant·Rabbit·Squirrel·Duck·Sparrow)·"Charlie" `SlimeEnemy`·Quaternius 말(Horse·White_Horse/Horse_White·Horse_Farm·Donkey·Zebra)·`Mesh_Crow` **GLB 파일은 이 판에 없다** — 게임은 자체 생성판 `saga-web/shared/assets/creatures3d/<id>.glb`(K-0096, 출처는 같은 폴더 `*.license.json`)를 쓴다(`assets3d.creatureFor`). 아래 그 모델들의 출처 표기는 **그 모델로 구웠던 2D 파생물(`beast_*.png`·스프라이트 시트 등)이 남아 있는 동안만** 유지한다 — 자체판으로 다시 구우면 지운다.
 >
 > **W-0194(2026-10-13) — 빌린 물고기 3D(Quaternius CC0)를 지웠다.** `animals_extra2/` 물고기 34종(Puffer 만 남김)·`animals_extra/` Dolphin·MantaRay·Shark·`animals/` Koi(1만리는 Shark·Dolphin 도) — 게임은 자체 생성판 `shared/assets/creatures3d/<id>.glb`(K-0096 ⑤)를 쓴다. 남은 빌린 물고기 = Puffer·Whale·Fish1(자체판 없음)·Fish2·Fish3(자체판이 three 에서 안 보여 `CREATURE_SKIP`, K 다시 굽기). 아래 표의 지운 파일 이름은 옛 기록이다.
+>
+> **W-0196(2026-10-13) — 3D 땅·던전 돌의 빌린 사진 재질을 지웠다.** ambientCG Grass005·Ground081 · Poly Haven 돌바닥·돌벽(`textures/land/{grass,dirt,stone}.webp`·`textures/dungeon/{floor,wall}_stone*.webp`) → 자체 생성 PBR(K-0093 `saga-assets/textures_real`, 같은 폴더 `real_<세트>.webp` + `.license.json`). 아래 표의 그 파일 이름은 옛 기록이다.
 
 `PLAN.md` 32절이 시킨 대로, 이 폴더에 넣은 **바깥에서 가져온 에셋**의 출처와
 라이선스를 여기 한곳에 적는다. **여기 없는 파일은 이 폴더에 두지 않는다.**
