@@ -4081,6 +4081,28 @@
   "note": "전후 Claude 눈: 첫 판 주변광 0.6 은 방·적이 묻혀 × → 1.5 로 ○(가로 넷·세로 하나 — 적·보스·예고 부채꼴 읽힘) · 바닥은 어둑 △ · SAGA_DUNGEON_OLD=1 옛 하늘"
  },
  {
+  "id": "gd.fs.real_ground",
+  "name": "3마을 구면 땅 사실 재질 — 옛 512 흐린 얼룩 → 자체 PBR 풀·흙·바위 + 높이 섞기 + 빛깔 맞춤(1만리와 같은 식), 흙·돌 얼룩 0.45 · 무늬 없는 집 안 벽·바닥은 회벽·널판 결",
+  "files": [
+   "saga_core/shaders/curved_triplanar.gdshader",
+   "saga_core/world/world_curve_material.gd",
+   "games/saga_forest/world/forest_house.gd"
+  ],
+  "tests": [
+   "forest_terrain",
+   "forest_world",
+   "forest_furniture",
+   "forest_plant_grid",
+   "perf"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0225",
+  "since": "2026-10-13",
+  "note": "전후 Claude 눈: fs_villager·fs_plant_grid 가로 + fs_plant_grid 세로 — 보라·갈색 물감 얼룩 → 사진 풀 ○ · 집 안 기본은 이미 무늬(나무 벽·체크 바닥)라 변화 없음(점검 시트 오판) · SAGA_FOREST_OLD=1 옛 땅"
+ },
+ {
   "id": "gd.dg.meridian",
   "name": "2나락 경락도(經絡圖) — 409마디 패시브 그물을 직업(쥔 무기)마다·시작점 여섯 · 점수 = 첫 별 + 그 직업 무예 점수 누계 + 보스 처치(상한 60) · 능력치 합은 _sum_eff·저항 · 규칙 열(기력·회피 없는 자리는 재해석) · 무예 창 「☯ 경락도」·F2(웹 W-0180)",
   "files": [

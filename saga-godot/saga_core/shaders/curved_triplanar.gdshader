@@ -22,6 +22,16 @@ uniform sampler2D stone_albedo : source_color;
 uniform sampler2D stone_normal : hint_normal;
 uniform sampler2D stone_rough;
 
+// G-0225 — 자체 PBR 세트(K-0093)일 때: 높이 맵 섞기·세트별 빛깔 맞춤(1만리 terrain_triplanar G-0143 과 같은 식). 옛 세트면 use_height 0·gain 1.
+uniform sampler2D grass_height;
+uniform sampler2D dirt_height;
+uniform sampler2D stone_height;
+uniform float use_height : hint_range(0.0, 1.0) = 0.0;
+uniform vec3 grass_gain = vec3(1.0);
+uniform vec3 dirt_gain = vec3(1.0);
+uniform vec3 stone_gain = vec3(1.0);
+uniform float photo_color : hint_range(0.0, 1.0) = 1.0;
+uniform float blotch : hint_range(0.0, 1.0) = 1.0;   // 흙·돌 얼룩 세기(사진 세트에선 줄인다 — 흐린 물감 얼룩)
 uniform float tile_scale : hint_range(0.05, 2.0) = 0.4;
 uniform float patch_scale : hint_range(0.02, 1.0) = 0.12;
 
@@ -62,6 +72,9 @@ void fragment() {
 	vec3 grass_a = _triplanar(grass_albedo, world_pos, world_normal, tile_scale).rgb;
 	vec3 dirt_a = _triplanar(dirt_albedo, world_pos, world_normal, tile_scale).rgb;
 	vec3 stone_a = _triplanar(stone_albedo, world_pos, world_normal, tile_scale).rgb;
+	grass_a *= pow(grass_gain, vec3(1.0 - photo_color));
+	dirt_a *= pow(dirt_gain, vec3(1.0 - photo_color));
+	stone_a *= pow(stone_gain, vec3(1.0 - photo_color));
 	vec3 grass_n = _triplanar(grass_normal, world_pos, world_normal, tile_scale).rgb * 2.0 - 1.0;
 	vec3 dirt_n = _triplanar(dirt_normal, world_pos, world_normal, tile_scale).rgb * 2.0 - 1.0;
 	vec3 stone_n = _triplanar(stone_normal, world_pos, world_normal, tile_scale).rgb * 2.0 - 1.0;
@@ -71,9 +84,18 @@ void fragment() {
 
 	float n1 = _value_noise(world_pos.xz * patch_scale);
 	float n2 = _value_noise(world_pos.xz * patch_scale * 3.7 + vec2(11.0, 5.0));
-	float dirt_w = smoothstep(0.55, 0.75, n1) * 0.6;
-	float stone_w = smoothstep(0.6, 0.8, n2) * 0.5;
+	float dirt_w = smoothstep(0.55, 0.75, n1) * 0.6 * blotch;
+	float stone_w = smoothstep(0.6, 0.8, n2) * 0.5 * blotch;
 	float grass_w = max(0.05, 1.0 - dirt_w - stone_w);
+	// G-0225 — 높이 기반 섞기(높은 쪽이 이긴다 — 경계가 번지지 않고 틈에 차듯). use_height 0 이면 예전 가중 그대로.
+	vec2 hp = world_pos.xz * tile_scale;
+	float hg = texture(grass_height, hp).r * 0.6 + grass_w;
+	float hd = texture(dirt_height, hp).r * 0.6 + dirt_w;
+	float hs = texture(stone_height, hp).r * 0.75 + stone_w;
+	float hmax = max(hg, max(hd, hs)) - 0.18;
+	grass_w = mix(grass_w, max(hg - hmax, 0.0) * step(0.001, grass_w) + 0.0001, use_height);
+	dirt_w = mix(dirt_w, max(hd - hmax, 0.0) * step(0.001, dirt_w), use_height);
+	stone_w = mix(stone_w, max(hs - hmax, 0.0) * step(0.001, stone_w), use_height);
 	float wsum = grass_w + dirt_w + stone_w;
 
 	vec3 detail_albedo = (grass_a * grass_w + dirt_a * dirt_w + stone_a * stone_w) / wsum;

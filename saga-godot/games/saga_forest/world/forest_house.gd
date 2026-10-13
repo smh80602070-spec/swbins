@@ -377,20 +377,54 @@ func _apply_finish_visuals() -> void:
 		return
 	if ForestSaveState.wall_key != _applied_wall:
 		_applied_wall = ForestSaveState.wall_key
-		_dress(_wall_mat, WALL_PATTERN.get(_applied_wall, []), Color(String(_wall_by_key(_applied_wall).c)))
+		_dress(_wall_mat, WALL_PATTERN.get(_applied_wall, []), Color(String(_wall_by_key(_applied_wall).c)), "plaster")
 	if ForestSaveState.floor_key != _applied_floor:
 		_applied_floor = ForestSaveState.floor_key
-		_dress(_floor_mat, FLOOR_PATTERN.get(_applied_floor, []), Color(String(_floor_by_key(_applied_floor).a)))
+		_dress(_floor_mat, FLOOR_PATTERN.get(_applied_floor, []), Color(String(_floor_by_key(_applied_floor).a)), "planks")
 
 
 ## G-0047 — 무늬가 있으면 텍스처(삼면 투영)+색 곱, 없거나 안 열리면 옛 단색.
-static func _dress(mat: StandardMaterial3D, pat: Array, flat: Color) -> void:
+## G-0225 — 무늬 없는 기본 벽·바닥은 자체 PBR 결(벽 plaster · 바닥 planks, K-0093) — 색은 그대로(사진 평균으로 나눠 곱한다). SAGA_FOREST_OLD=1 이면 옛 단색.
+static func _dress(mat: StandardMaterial3D, pat: Array, flat: Color, real_set := "") -> void:
 	var tex: Texture2D = _pattern(String(pat[0])) if not pat.is_empty() else null
 	mat.albedo_texture = tex
 	mat.albedo_color = (pat[1] as Color) if tex != null else flat
 	mat.uv1_triplanar = tex != null
 	mat.uv1_world_triplanar = tex != null
 	mat.uv1_scale = Vector3.ONE * PATTERN_SCALE
+	mat.normal_enabled = false
+	if tex == null and real_set != "" and OS.get_environment("SAGA_FOREST_OLD") == "":
+		var base := REAL_DIR + real_set + "_hi"
+		if ResourceLoader.exists(base + ".webp"):
+			var rt: Texture2D = load(base + ".webp")
+			var avg := _tex_mean(base + ".webp", rt)
+			mat.albedo_texture = rt
+			mat.albedo_color = Color(flat.r / maxf(avg.r, 0.05), flat.g / maxf(avg.g, 0.05), flat.b / maxf(avg.b, 0.05))
+			mat.normal_enabled = true
+			mat.normal_texture = load(base + "_n.webp")
+			mat.normal_scale = 0.6
+			mat.uv1_triplanar = true
+			mat.uv1_world_triplanar = true
+			mat.uv1_scale = Vector3.ONE * REAL_SCALE
+
+
+const REAL_DIR := "res://assets/generated/tiles_real/"
+const REAL_SCALE := 0.45
+static var _mean_cache := {}
+
+
+## 사진 한 장의 평균 빛깔(한 번만 센다) — 색을 그대로 두려고 나눌 값
+static func _tex_mean(key: String, t: Texture2D) -> Color:
+	if not _mean_cache.has(key):
+		var im := t.get_image()
+		if im == null:
+			_mean_cache[key] = Color(1, 1, 1)
+		else:
+			if im.is_compressed():
+				im.decompress()
+			im.resize(1, 1, Image.INTERPOLATE_BILINEAR)
+			_mean_cache[key] = im.get_pixel(0, 0)
+	return _mean_cache[key]
 
 
 static func _pattern(name: String) -> Texture2D:

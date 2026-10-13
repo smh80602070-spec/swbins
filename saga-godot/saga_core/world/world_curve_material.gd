@@ -132,13 +132,30 @@ static func triplanar_material(curve_amount: float) -> ShaderMaterial:
 	var mat := ShaderMaterial.new()
 	mat.shader = TRIPLANAR_SHADER
 	mat.set_shader_parameter("curve_amount", curve_amount)
-	mat.set_shader_parameter("grass_albedo", load("res://assets/generated/tiles/grass_512.png"))
-	mat.set_shader_parameter("grass_normal", load("res://assets/generated/tiles/grass_512_n.png"))
-	mat.set_shader_parameter("grass_rough", load("res://assets/generated/tiles/grass_512_r.png"))
-	mat.set_shader_parameter("dirt_albedo", load("res://assets/generated/tiles/dirt_512.png"))
-	mat.set_shader_parameter("dirt_normal", load("res://assets/generated/tiles/dirt_512_n.png"))
-	mat.set_shader_parameter("dirt_rough", load("res://assets/generated/tiles/dirt_512_r.png"))
-	mat.set_shader_parameter("stone_albedo", load("res://assets/generated/tiles/stone_512.png"))
-	mat.set_shader_parameter("stone_normal", load("res://assets/generated/tiles/stone_512_n.png"))
-	mat.set_shader_parameter("stone_rough", load("res://assets/generated/tiles/stone_512_r.png"))
+	## G-0225 — 자체 PBR(K-0093 tiles_real)이 있으면 풀·흙·바위 _hi + 높이 + 빛깔 맞춤(1만리 terrain_builder REAL_GAIN 과 같은 값 — 판끼리 참조 금지라 여기 둔다).
+	## 사진 세트에선 흙·돌 얼룩을 줄인다(BLOTCH_REAL). SAGA_FOREST_OLD=1 이면 옛 512.
+	var real := ResourceLoader.exists(REAL_DIR + "grass_hi.webp") and OS.get_environment("SAGA_FOREST_OLD") == ""
+	for k: String in REAL_SETS:
+		if real:
+			var base := REAL_DIR + String(REAL_SETS[k]) + "_hi"
+			mat.set_shader_parameter(k + "_albedo", load(base + ".webp"))
+			mat.set_shader_parameter(k + "_normal", load(base + "_n.webp"))
+			mat.set_shader_parameter(k + "_rough", load(base + "_r.webp"))
+			mat.set_shader_parameter(k + "_height", load(base + "_h.webp"))
+			mat.set_shader_parameter(k + "_gain", REAL_GAIN[k])
+		else:
+			var old := "res://assets/generated/tiles/%s_512" % k
+			mat.set_shader_parameter(k + "_albedo", load(old + ".png"))
+			mat.set_shader_parameter(k + "_normal", load(old + "_n.png"))
+			mat.set_shader_parameter(k + "_rough", load(old + "_r.png"))
+	mat.set_shader_parameter("use_height", 1.0 if real else 0.0)
+	mat.set_shader_parameter("photo_color", PHOTO_COLOR if real else 1.0)
+	mat.set_shader_parameter("blotch", BLOTCH_REAL if real else 1.0)
 	return mat
+
+
+const REAL_DIR := "res://assets/generated/tiles_real/"
+const REAL_SETS := {"grass": "grass", "dirt": "dirt", "stone": "rock"}
+const REAL_GAIN := {"grass": Vector3(1.418, 2.341, 1.544), "dirt": Vector3(0.636, 0.546, 0.295), "stone": Vector3(0.946, 0.875, 0.768)}
+const PHOTO_COLOR := 0.35
+const BLOTCH_REAL := 0.45
