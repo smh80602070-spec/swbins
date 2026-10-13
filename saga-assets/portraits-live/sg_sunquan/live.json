@@ -63,5 +63,17 @@
    "period_s": 5.0,
    "pivot_y": 0.78
   }
- }
+ },
+ "expr": {
+  "joy": "expr_joy.webp",
+  "anger": "expr_anger.webp",
+  "sorrow": "expr_sorrow.webp",
+  "surprise": "expr_surprise.webp"
+ },
+ "face_box": [
+  215,
+  312,
+  556,
+  666
+ ]
 }

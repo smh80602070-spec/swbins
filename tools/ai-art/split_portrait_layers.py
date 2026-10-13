@@ -11,7 +11,8 @@
 — 통과한 사람만 쓴다. 몸 출처(web3d license)가 없으면 멈춘다.
 재생(각 갈래): live.json 의 parts[부위].box 자리에 frames 의 그림을 얹는다. 깜빡임 = blink.seq 를 frame_ms 씩, every_s 범위
 무작위 간격(게임 씨앗) · 말하기 = talk.seq 를 frame_ms 씩 되풀이(말 끝나면 base) · 숨쉬기 = 그림 전체를 아래 끝 기준 세로
-1+amp 배로 period_s 주기 · 고개 = 목(pivot_y) 기준 ±deg 기울임 period_s 주기. 앞머리 흔들림 층은 아직 없다(단계 3 판정 뒤).
+1+amp 배로 period_s 주기 · 고개 = 목(pivot_y) 기준 ±deg 기울임 period_s 주기 ·
+표정(K-0100) = expr[표정] 그림을 base 대신 쓰고 그 위에 깜빡임·입 패치는 그대로 얹는다(같은 렌더라 자리가 맞다). 표정 검사 = face_box 밖 평균 차 ≤ 1%. 앞머리 흔들림 층은 아직 없다(단계 3 판정 뒤).
 """
 import io
 import json
@@ -26,6 +27,7 @@ ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
 FR = os.path.join(HERE, '_out', 'live_frames')
 DEST = os.path.join(ROOT, 'saga-assets', 'portraits-live')
 GROUPS = {'eye': ['blink_half', 'blink'], 'mouth': ['mouth_half', 'mouth_a', 'mouth_o']}
+EXPR = ['joy', 'anger', 'sorrow', 'surprise']     # K-0100 — live.json "expr": {표정: 통째 바탕 그림}
 MOTION = {'blink': {'seq': ['blink_half', 'blink', 'blink_half'], 'frame_ms': 60, 'every_s': [3, 6]},
           'talk': {'seq': ['mouth_half', 'mouth_a', 'mouth_half', 'mouth_o'], 'frame_ms': 110},
           'breath': {'amp': 0.006, 'period_s': 3.6},
@@ -70,6 +72,21 @@ def split(hid):
             a = np.asarray(comp.crop(box)).astype(np.int16)
             b = np.asarray(im.crop(box)).astype(np.int16)
             diffs[f] = float(np.abs(a - b).mean() / 255 * 100)   # 부위 상자 안에서 — 전체 평균이면 틀린 패치도 묻힌다
+    # K-0100 표정 바탕 — 같은 렌더의 얼굴 전체 키(통째 그림). 얼굴(눈·입 상자를 넓힌 것) 밖은 base 와 같아야 한다
+    (ex0, ey0, ex1, ey1), (mx0, my0, mx1, my1) = meta['parts']['eye']['box'], meta['parts']['mouth']['box']
+    pad = 60
+    face = (max(0, min(ex0, mx0) - pad), max(0, min(ey0, my0) - pad), max(ex1, mx1) + pad, max(ey1, my1) + pad)
+    out_face = np.ones(B.shape[:2], bool)
+    out_face[face[1]:face[3], face[0]:face[2]] = False
+    meta['expr'] = {}
+    for e in EXPR:
+        im = frame(hid, 'expr_' + e)
+        d = np.abs(np.asarray(im).astype(np.int16) - B).sum(2) / 3
+        diffs['expr_' + e + '_밖'] = float(d[out_face].mean() / 255 * 100) * 2   # 기준 1% → 2% 칸에 맞춰 두 배로 적는다
+        name = 'expr_%s.webp' % e
+        files[name] = im
+        meta['expr'][e] = name
+    meta['face_box'] = list(face)
     size = 0
     for name, im in files.items():
         buf = io.BytesIO()

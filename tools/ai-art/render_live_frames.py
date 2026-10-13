@@ -3,7 +3,7 @@
   "/c/Program Files/Blender Foundation/Blender 5.2/blender.exe" -b --factory-startup -P tools/ai-art/render_live_frames.py -- <출력폴더> <id,id,…>
   몸 = tools/char-forge/_out/vroid/<id>/<id>.glb(K-0024·K-0097 굽기 산출, VRM 표정 키 Fcl_* 가 남아 있다)
 
-한 사람 = <id>__<프레임>.png 여섯(768x1024, render_busts.py 와 같은 틀). 이미 있으면 그 사람은 건너뛴다.
+한 사람 = <id>__<프레임>.png 열(입·눈 여섯 + 표정 넷, 768x1024, render_busts.py 와 같은 틀). 이미 있으면 그 사람은 건너뛴다.
 바뀌는 건 표정 키 값뿐이라 프레임끼리 픽셀이 부위 밖에서 똑같다 → split_portrait_layers.py 가 차이로 부위를 잘라낸다.
 단계 1 시험(10-13): AI 그림체 입히기(같은 씨앗 i2i)는 눈이 다 안 감기고 머리카락 결이 프레임마다 달라 버림 — 3D 렌더 그대로 쓴다.
 Unity·다른 Blender 배치·ComfyUI 와 동시에 돌리지 않는다.
@@ -18,6 +18,11 @@ FRAMES = {                       # 프레임 → 표정 키 값(나머지 Fcl_* 
     'mouth_half': {'Fcl_MTH_A': 0.4},
     'mouth_a': {'Fcl_MTH_A': 1.0},
     'mouth_o': {'Fcl_MTH_O': 1.0},
+    # K-0100 표정 바탕(같은 렌더 — 그린 표정 카드와 섞으면 딴사람, G-0220): 얼굴 전체 키
+    'expr_joy': {'Fcl_ALL_Joy': 1.0},
+    'expr_anger': {'Fcl_ALL_Angry': 1.0, 'Fcl_BRW_Angry': 1.0, 'Fcl_EYE_Angry': 0.5},     # ALL 만이면 평소와 거의 같다(10-13 눈) — 눈썹·눈을 겹친다
+    'expr_sorrow': {'Fcl_ALL_Sorrow': 1.0, 'Fcl_BRW_Sorrow': 1.0, 'Fcl_EYE_Sorrow': 0.5},
+    'expr_surprise': {'Fcl_ALL_Surprised': 1.0},
 }
 
 a = sys.argv[sys.argv.index('--') + 1:]
