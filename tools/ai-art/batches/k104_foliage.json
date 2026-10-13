@@ -1,0 +1,54 @@
+{
+ "model": "z-image-turbo",
+ "out": "k104_foliage",
+ "note": "K-0104 사실 들풀 잎 카드 결 — 흰 바탕 낱장(matte → tools/world-forge/foliage_atlas.py 가 2048 아틀라스 4×2 칸 512×1024). 남의 사진·스캔 0. 세로 832×1216(MAX_PIXELS 안)",
+ "defaults": {
+  "prompt_prefix": "",
+  "width": 832,
+  "height": 1216,
+  "variants": 4,
+  "tiling": false
+ },
+ "items": [
+  {
+   "id": "leaf_broad",
+   "seed": 104000000,
+   "prompt": "A botanical studio photograph of a single dense leafy branch spray cut from a broadleaf garden shrub, many overlapping fresh green oval leaves of varied sizes filling a rounded upright shape, isolated on a pure white background, flat even soft light, no shadow, no pot, no ground, no text, the whole spray visible with white margin on every side, natural realistic colors, sharp fine detail."
+  },
+  {
+   "id": "leaf_small",
+   "seed": 104010000,
+   "prompt": "A botanical studio photograph of a single bushy twig cluster of a small-leaved evergreen hedge plant, hundreds of tiny dark green glossy leaves packed into a rounded upright clump, isolated on a pure white background, flat even soft light, no shadow, no pot, no ground, no text, the whole clump visible with white margin on every side, natural realistic colors, sharp fine detail."
+  },
+  {
+   "id": "grass_blades",
+   "seed": 104020000,
+   "prompt": "A botanical studio photograph of one upright tuft of long thin wild meadow grass blades growing from a single base point at the bottom center and fanning outward, fresh green with a few yellowed tips, isolated on a pure white background, flat even soft light, no shadow, no soil, no roots, no text, the whole tuft visible with white margin on every side, natural realistic colors, sharp fine detail."
+  },
+  {
+   "id": "grass_seed",
+   "seed": 104030000,
+   "prompt": "A botanical studio photograph of one upright bunch of tall wild grass stems with feathery seed heads at the tips, growing from a single base point at the bottom center, pale green and straw colors, isolated on a pure white background, flat even soft light, no shadow, no soil, no roots, no text, the whole bunch visible with white margin on every side, natural realistic colors, sharp fine detail."
+  },
+  {
+   "id": "flower_white",
+   "seed": 104040000,
+   "prompt": "A botanical studio photograph of one upright cluster of small white wild daisy flowers with yellow centers on thin green stems with a few narrow leaves, growing from a single base point at the bottom center, isolated on a pure white background, flat even soft light, no shadow, no soil, no vase, no text, the whole cluster visible with white margin on every side, natural realistic colors, sharp fine detail."
+  },
+  {
+   "id": "flower_yellow",
+   "seed": 104050000,
+   "prompt": "A botanical studio photograph of one upright cluster of small glossy yellow five-petal meadow wildflowers on thin branching green stems with a few lobed leaves, growing from a single base point at the bottom center, isolated on a pure white background, flat even soft light, no shadow, no soil, no vase, no text, the whole cluster visible with white margin on every side, natural realistic colors, sharp fine detail."
+  },
+  {
+   "id": "flower_purple",
+   "seed": 104060000,
+   "prompt": "A botanical studio photograph of one upright cluster of slender purple wildflower spikes and small violet bell flowers on thin green stems with narrow leaves, growing from a single base point at the bottom center, isolated on a pure white background, flat even soft light, no shadow, no soil, no vase, no text, the whole cluster visible with white margin on every side, natural realistic colors, sharp fine detail."
+  },
+  {
+   "id": "fern_frond",
+   "seed": 104070000,
+   "prompt": "A botanical studio photograph of a single fresh green fern frond seen flat from the front, the stem starting at the bottom center and the frond tapering to a point at the top, many evenly spaced pinnate leaflets on both sides, isolated on a pure white background, flat even soft light, no shadow, no soil, no text, the whole frond visible with white margin on every side, natural realistic colors, sharp fine detail."
+  }
+ ]
+}
