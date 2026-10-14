@@ -498,7 +498,7 @@
 
     var spent = V.spent(prop);
     var big = prop.kind === 'shop' || prop.kind === 'school' ||
-              prop.kind === 'home' || prop.kind === 'museum' || prop.kind === 'tailor';
+              prop.kind === 'home' || prop.kind === 'museum' || prop.kind === 'tailor';   var t2 = big && global.DG.mode2d && global.DG.mode2d.hasKind(prop.kind) ? global.DG.cfg.mode2d.prop2d[prop.kind] : null, tagDrop = t2 && t2.top ? Math.max(0, 104 - (t2.h * (256 - t2.top) / 256 + 35)) : 0;   // W-0220 그림 위가 빈 건물(서당·사고·침선방)은 이름표를 보이는 지붕 쪽으로 내린다
     /* 바람 — 자리마다 위상을 달리해 한꺼번에 흔들리지 않게 한다 */
     var sway = Math.sin(now / 1350 + prop.x * 0.021 + prop.y * 0.013) * 0.045;
 
@@ -550,10 +550,10 @@
     if (f && f.type === 'prop' && f.obj.id === prop.id) {
       ring(p.x, p.y + 3 * k, k, spent ? 'rgba(190,190,190,.55)' : 'rgba(255,206,92,.95)');
       bubble(spent ? def.name + ' (오늘 몫 끝)' : def.name + ' — ' + def.hint + ' [' + core.actHint() + ']',
-        p.x, p.y - (big ? 118 : 74) * k, spent ? '#7a7a7a' : '#8a5a10',
+        p.x, p.y - (big ? 118 - tagDrop : 74) * k, spent ? '#7a7a7a' : '#8a5a10',
         spent ? '#e9e9e9' : '#fff0c9');
     } else if (big) {
-      bubble(def.name, p.x, p.y - 104 * k, '#54402c', '#f7ecd8');
+      bubble(def.name, p.x, p.y - (104 - tagDrop) * k, '#54402c', '#f7ecd8');
     }
   }
 
