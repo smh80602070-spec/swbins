@@ -281,18 +281,6 @@
 
   /* ── 지면 ─────────────────────────────────────────────── */
 
-  function tileTexture(img) {
-    if (!img || !img.ready) { return null; }
-    var key = img.src;
-    if (texCache[key]) { return texCache[key]; }
-    var tex = new T.Texture(img);
-    tex.colorSpace = T.SRGBColorSpace;
-    tex.anisotropy = 4;
-    tex.needsUpdate = true;
-    texCache[key] = tex;
-    return tex;
-  }
-
   /* ── 손으로 그린 땅을 지면에 칠한다 ─────────────────
    * 여태 이 땅(`land.js`)은 **사물로만** 드러났다 — 판교 지도 위에 하북 마을의
    * 기와집이 서 있는 꼴이었다. 지면 그림 자체를 맞춘다.
@@ -825,14 +813,9 @@
         mesh.position.set(corner.x + span / 2, -0.02, corner.y + span / 2);
         liftTile(mesh, corner.x, corner.y, span);
 
-        var img = W.getTile(tx, ty, W.ZOOM);
-        /* 이 땅과 겹치는 자리(손으로 그린 땅)는 여전히 실제 지도와 섞어 칠한다.
-           그 밖의 **거의 모든 자리**(절차적 세계)는 `terrainTexture` 가 실제
-           지도 대신 이 칸이 무슨 땅인지(`terrainAt`)로 실사 소재를 깐다
-           (2026-09-04, "지형·배치가 어색하다" 감사). `img` 는 그래도 받아
-           둔다 — `tilesUsable()`(= `mapped`)가 물 렌더링 갈림길에 여전히 쓴다 */
-        var tex = landTexture(key, corner.x, corner.y, span, img) ||
-          terrainTexture(W, corner.x, corner.y, span) || tileTexture(img);
+        /* 그림은 제 손으로 칠한 땅(landTexture)·지형 재질(terrainTexture) — OSM 타일은 안 받는다(W-0207) */
+        var tex = landTexture(key, corner.x, corner.y, span) ||
+          terrainTexture(W, corner.x, corner.y, span);
         if (tex) {
           if (mesh.material.map !== tex) {
             mesh.material.map = tex;

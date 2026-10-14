@@ -16651,9 +16651,9 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       } finally { DG.cfg.vroidPattern = saveCfg; P.list = saveList; P.loader = saveLoader; }
     });
 
-    t('지도 타일 주소(W-0059) — 키가 필요한 CARTO 가 아니라 키 없는 OSM 표준 타일 주소가 나오고, 한 장은 z/x/y 로 정확히 채워진다', function () {
-      var u = DG.world.tileUrl(111812, 50833, 17);
-      return u === 'https://tile.openstreetmap.org/17/111812/50833.png' && u.indexOf('cartocdn') < 0 && u.indexOf('{') < 0 && ('OSM z/x/y 주소');
+    t('지도 타일 서버 안 씀(W-0207, 옛 W-0059 OSM 주소) — 타일 주소·받기 없음, "지도 받았나" 는 늘 거짓(땅은 지형 재질)', function () {
+      var W = DG.world, u = W.tileUrl(111812, 50833, 17), g = W.getTile(111812, 50833, 17);
+      return u === null && g === null && W.tilesUsable() === false && '타일 주소·받기 없음' || '실패 ' + [u, g, W.tilesUsable()].join(',');
     });
 
     t('판 이름(W-0157) — 제목·PWA·계정 화면이 "1만리 — 걷고 만난다" 꼴이고 "사가" 가 없다', function () {

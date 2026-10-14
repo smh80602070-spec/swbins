@@ -468,39 +468,12 @@
 
   /* ── 지도 타일 ────────────────────────────────────────── */
 
-  var tiles = {};              // "z/x/y" → Image
-  var tileFail = 0, tileOk = 0;
-  /* 지도 타일 주소 한 곳(W-0059) — 2026-10 CARTO 가 키 없는 공개 타일을 막아 "API KEY REQUIRED" 자리표시 그림(2049B)만 준다.
-     키 없이 실제 지도를 주는 OpenStreetMap 표준 타일로 옮겼다(@2x 는 없다 — 256px 한 종류). 다른 서버로 바꿀 땐 이 줄만:
-     {z}{x}{y}. 과하게 받으면 막힐 수 있다(OSM 이용 정책) — 화면 둘레 몇십 장만 받고 sw.js 가 캐시한다. */
-  var TILE_URL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
-
-  function tileUrl(x, y, z) {
-    return TILE_URL.replace('{z}', z).replace('{x}', x).replace('{y}', y);
-  }
-
-  function getTile(x, y, z) {
-    var key = z + '/' + x + '/' + y;
-    var t = tiles[key];
-    if (t) { return t; }
-    var img = new Image();
-    /* 3D 렌더러(world3d.js)가 이 이미지를 **WebGL 텍스처**로 올린다.
-       cross-origin 이미지는 crossOrigin 없이는 텍스처로 못 쓴다(SecurityError).
-       2D 캔버스 쪽에는 아무 영향이 없다. */
-    img.crossOrigin = 'anonymous';
-    img.decoding = 'async';
-    img.onload = function () { img.ready = true; tileOk++; };
-    img.onerror = function () { img.failed = true; tileFail++; };
-    img.src = tileUrl(x, y, z);
-    tiles[key] = img;
-    // 캐시가 너무 커지면 오래된 것부터 버린다
-    var ks = Object.keys(tiles);
-    if (ks.length > 500) { for (var i = 0; i < 120; i++) { delete tiles[ks[i]]; } }
-    return img;
-  }
-
-  /** 타일을 한 장도 못 받은 상태면 프로시저럴 지형으로 폴백 */
-  function tilesUsable() { return !(tileFail > 6 && tileOk === 0); }
+  /* 지도 타일 — **OpenStreetMap 타일 서버를 안 쓴다**(W-0207, 사용자 10-14). 2D 는 들판(field2d)·절차 지형(drawFallback), 3D 땅은
+     지형 재질(terrainTexture·landTexture)이라 그림으로는 이미 안 쓰고 있었다 — 받기만 하던 헛일·이용 정책 문제(429)를 없앤다.
+     부르는 쪽이 그대로 돌게 이름만 남긴다: 주소·그림 없음, "지도 받았나" 는 늘 거짓. (W-0059 의 CARTO → OSM 이력은 archive) */
+  function tileUrl() { return null; }
+  function getTile() { return null; }
+  function tilesUsable() { return false; }
 
   /* ── 프로시저럴 폴백 지형 ─────────────────────────────── */
 

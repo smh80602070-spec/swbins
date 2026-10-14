@@ -281,18 +281,6 @@
 
   /* ── 지면 ─────────────────────────────────────────────── */
 
-  function tileTexture(img) {
-    if (!img || !img.ready) { return null; }
-    var key = img.src;
-    if (texCache[key]) { return texCache[key]; }
-    var tex = new T.Texture(img);
-    tex.colorSpace = T.SRGBColorSpace;
-    tex.anisotropy = 4;
-    tex.needsUpdate = true;
-    texCache[key] = tex;
-    return tex;
-  }
-
   /* ── 손으로 그린 땅을 지면에 칠한다 ─────────────────
    * 여태 이 땅(`land.js`)은 **사물로만** 드러났다 — 판교 지도 위에 하북 마을의
    * 기와집이 서 있는 꼴이었다. 지면 그림 자체를 맞춘다.

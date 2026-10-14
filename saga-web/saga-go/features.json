@@ -1052,5 +1052,24 @@
   "ticket": "W-0206",
   "since": "2026-10-14",
   "note": "D2(claude 2026-10-14): creature-sheet 새 whale·puffer·fish_a·fish_b·fish_c 제 모습 ○(옛 빌린 몸은 뼈 배율 100 이라 시트에서 점 — 도구 한계). W-0194 의 fish_b·c \"빈 칸\"은 CREATURE_DIRS [A-Za-z_] 가 Fish2·Fish3 을 못 읽어 새 쪽도 빌린 몸을 받은 오판 — SKIP 비움. 지움 20 GLB 0.64MB · 2나락 압축 목록 5 키."
+ },
+ {
+  "id": "go.no-osm-tiles",
+  "name": "OpenStreetMap 타일 서버 안 씀 — 받기·주소 지움(2D 늘 들판·절차 지형, 3D 땅은 지형 재질) · OSM 데이터(Overpass)·출처 표기는 그대로",
+  "files": [
+   "src/world/01.js",
+   "src/world/02.js",
+   "src/world3d/02-ground.js",
+   "src/world3d/01-core.js"
+  ],
+  "tests": [
+   "지도 타일 서버 안 씀(W-0207, 옛 W-0059 OSM 주소) — 타일 주소·받기 없음, \"지도 받았나\" 는 늘 거짓(땅은 지형 재질)"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0207",
+  "since": "2026-10-14",
+  "note": "D2(claude 2026-10-14): tmp/go-net.mjs 3D 걷기·2D 전환 동안 외부 요청 = overpass-api.de 2 · tile.openstreetmap.org 0 ○ · qc 1-world3d·2D 한 장 Read — 땅 그대로 ○."
  }
 ]

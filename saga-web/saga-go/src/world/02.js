@@ -395,26 +395,7 @@
     var camX = pos.x - g.ox / sc;      // 지면 좌상단이 가리키는 월드 좌표
     var camY = pos.y - g.oy / sc;
 
-    /* 지도 타일 — 타일 자체는 늘 원래 zoom(ZOOM)레벨로 받아 둔다(다시 받아올
-       필요가 없게). camZoom2d 는 그리는 크기만 늘이거나 줄인다 */
-    if (tilesUsable() && !(global.DG.field2d && global.DG.field2d.on())) {   // W-0130 — 게임 타일 들판(field2d)이면 OSM 그림 대신 땅 종류 타일
-      var cz = camZoom2d(), dTile = TILE_PX * cz;
-      var ll = worldToLatLng(camX, camY);
-      var px = latLngToPixel(ll.lat, ll.lng);
-      var t0x = Math.floor(px.x / TILE_PX), t0y = Math.floor(px.y / TILE_PX);
-      var cols = Math.ceil(g.GW / dTile) + 2, rows = Math.ceil(g.GH / dTile) + 2;
-      for (var ty = 0; ty < rows; ty++) {
-        for (var tx = 0; tx < cols; tx++) {
-          var TX = t0x + tx, TY = t0y + ty;
-          var img = getTile(TX, TY, ZOOM);
-          var dx = (TX * TILE_PX - px.x) * cz, dy = (TY * TILE_PX - px.y) * cz;
-          if (img.ready) { gCtx.drawImage(img, dx, dy, dTile, dTile); }
-          else { gCtx.fillStyle = '#1a1d24'; gCtx.fillRect(dx, dy, dTile, dTile); }
-        }
-      }
-    } else {
-      drawFallback(gCtx, camX, camY, g.GW, g.GH, sc);
-    }
+    drawFallback(gCtx, camX, camY, g.GW, g.GH, sc);   // W-0207 — OSM 타일 안 씀: 늘 들판(field2d)·절차 지형
 
     /* 구역 경계선 — 지도에 결을 주는 옅은 격자 (소유 개념은 없다) */
     var r0x = Math.floor(camX / REGION_SIZE), r1x = Math.ceil((camX + g.GW / sc) / REGION_SIZE);

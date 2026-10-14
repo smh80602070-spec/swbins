@@ -468,39 +468,12 @@
 
   /* ── 지도 타일 ────────────────────────────────────────── */
 
-  var tiles = {};              // "z/x/y" → Image
-  var tileFail = 0, tileOk = 0;
-  /* 지도 타일 주소 한 곳(W-0059) — 2026-10 CARTO 가 키 없는 공개 타일을 막아 "API KEY REQUIRED" 자리표시 그림(2049B)만 준다.
-     키 없이 실제 지도를 주는 OpenStreetMap 표준 타일로 옮겼다(@2x 는 없다 — 256px 한 종류). 다른 서버로 바꿀 땐 이 줄만:
-     {z}{x}{y}. 과하게 받으면 막힐 수 있다(OSM 이용 정책) — 화면 둘레 몇십 장만 받고 sw.js 가 캐시한다. */
-  var TILE_URL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
-
-  function tileUrl(x, y, z) {
-    return TILE_URL.replace('{z}', z).replace('{x}', x).replace('{y}', y);
-  }
-
-  function getTile(x, y, z) {
-    var key = z + '/' + x + '/' + y;
-    var t = tiles[key];
-    if (t) { return t; }
-    var img = new Image();
-    /* 3D 렌더러(world3d.js)가 이 이미지를 **WebGL 텍스처**로 올린다.
-       cross-origin 이미지는 crossOrigin 없이는 텍스처로 못 쓴다(SecurityError).
-       2D 캔버스 쪽에는 아무 영향이 없다. */
-    img.crossOrigin = 'anonymous';
-    img.decoding = 'async';
-    img.onload = function () { img.ready = true; tileOk++; };
-    img.onerror = function () { img.failed = true; tileFail++; };
-    img.src = tileUrl(x, y, z);
-    tiles[key] = img;
-    // 캐시가 너무 커지면 오래된 것부터 버린다
-    var ks = Object.keys(tiles);
-    if (ks.length > 500) { for (var i = 0; i < 120; i++) { delete tiles[ks[i]]; } }
-    return img;
-  }
-
-  /** 타일을 한 장도 못 받은 상태면 프로시저럴 지형으로 폴백 */
-  function tilesUsable() { return !(tileFail > 6 && tileOk === 0); }
+  /* 지도 타일 — **OpenStreetMap 타일 서버를 안 쓴다**(W-0207, 사용자 10-14). 2D 는 들판(field2d)·절차 지형(drawFallback), 3D 땅은
+     지형 재질(terrainTexture·landTexture)이라 그림으로는 이미 안 쓰고 있었다 — 받기만 하던 헛일·이용 정책 문제(429)를 없앤다.
+     부르는 쪽이 그대로 돌게 이름만 남긴다: 주소·그림 없음, "지도 받았나" 는 늘 거짓. (W-0059 의 CARTO → OSM 이력은 archive) */
+  function tileUrl() { return null; }
+  function getTile() { return null; }
+  function tilesUsable() { return false; }
 
   /* ── 프로시저럴 폴백 지형 ─────────────────────────────── */
 
@@ -1374,26 +1347,7 @@
     var camX = pos.x - g.ox / sc;      // 지면 좌상단이 가리키는 월드 좌표
     var camY = pos.y - g.oy / sc;
 
-    /* 지도 타일 — 타일 자체는 늘 원래 zoom(ZOOM)레벨로 받아 둔다(다시 받아올
-       필요가 없게). camZoom2d 는 그리는 크기만 늘이거나 줄인다 */
-    if (tilesUsable() && !(global.DG.field2d && global.DG.field2d.on())) {   // W-0130 — 게임 타일 들판(field2d)이면 OSM 그림 대신 땅 종류 타일
-      var cz = camZoom2d(), dTile = TILE_PX * cz;
-      var ll = worldToLatLng(camX, camY);
-      var px = latLngToPixel(ll.lat, ll.lng);
-      var t0x = Math.floor(px.x / TILE_PX), t0y = Math.floor(px.y / TILE_PX);
-      var cols = Math.ceil(g.GW / dTile) + 2, rows = Math.ceil(g.GH / dTile) + 2;
-      for (var ty = 0; ty < rows; ty++) {
-        for (var tx = 0; tx < cols; tx++) {
-          var TX = t0x + tx, TY = t0y + ty;
-          var img = getTile(TX, TY, ZOOM);
-          var dx = (TX * TILE_PX - px.x) * cz, dy = (TY * TILE_PX - px.y) * cz;
-          if (img.ready) { gCtx.drawImage(img, dx, dy, dTile, dTile); }
-          else { gCtx.fillStyle = '#1a1d24'; gCtx.fillRect(dx, dy, dTile, dTile); }
-        }
-      }
-    } else {
-      drawFallback(gCtx, camX, camY, g.GW, g.GH, sc);
-    }
+    drawFallback(gCtx, camX, camY, g.GW, g.GH, sc);   // W-0207 — OSM 타일 안 씀: 늘 들판(field2d)·절차 지형
 
     /* 구역 경계선 — 지도에 결을 주는 옅은 격자 (소유 개념은 없다) */
     var r0x = Math.floor(camX / REGION_SIZE), r1x = Math.ceil((camX + g.GW / sc) / REGION_SIZE);
