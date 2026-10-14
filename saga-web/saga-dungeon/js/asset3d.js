@@ -1359,7 +1359,7 @@
     FIXED_HERO: FIXED_HERO, fixedRecipe: fixedRecipe,
     normName: normName, score: score, mapClips: mapClips, SLOTS: SLOTS, fit: fit,
     ready: function () { return !!three(); }, hasLoader: function () { return !!loader(); },
-    DEFAULTS: DEFAULTS, restore: restore, heroRecipe: heroRecipe, ANIM_SRC: ANIM_SRC,
+    DEFAULTS: DEFAULTS, restore: restore, heroRecipe: heroRecipe, ANIM_SRC: ANIM_SRC, ownAnimOf: function (rec) { return !!(rec && !rec.anim && wantsOwnAnim(rec.body)); },   // W-0213 buildHero 의 own 과 같은 식
     build: build, buildHero: buildHero, step: step, play: play, rawScene: rawScene, tick: tick,
     ownAllMat: ownAllMat, flashAllMat: flashAllMat,
     tuned: tuned, set: set, stats: stats, isActorAsset: isActorAsset, isSwayAsset: isSwayAsset,

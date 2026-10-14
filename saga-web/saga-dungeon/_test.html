@@ -7417,6 +7417,12 @@ window.requestAnimationFrame = function () { return 0; };
       return seeds.length >= 36 && heroAnime && off && A.fixedRecipe('산적') && ('사람 적·보스·마을 사람 ' + seeds.length + ' · 몸 ' + Object.keys(used).length + ' 모두 다름 · 도감 인물은 VRoid');
     });
 
+    t('미리 받기 동작 묶음(W-0213) — 자체 몸짓 몸(characters3d·VRM) 레시피는 ownAnimOf 참이라 UAL1 을 안 받고, world3d.ownAnim 0 이면 거짓(옛 길)', function () {
+      var A = DG.asset3d, h = DG.data.heroes.find(function (x) { var r = A.heroRecipe(x.id); return r && (r.body.indexOf('characters3d') >= 0 || r.body.indexOf('people/anime') >= 0); }), r = h && A.heroRecipe(h.id), on, off;
+      if (!r || !DG.ownAnim) { return '자체 몸짓 몸 없음 — 건너뜀'; }
+      on = A.ownAnimOf(r); A.set('world3d.ownAnim', 0); off = A.ownAnimOf(r); A.set('world3d.ownAnim', null);
+      return on === true && off === false && A.ownAnimOf({ body: r.body, anim: 'x.glb' }) === false && (h.id + ' 몸 → UAL1 안 받음');
+    });
     t('시대 손님 사연(정본 side_visitors) — 택배 기사·출장 회사원·시간 여행자는 닿을 때마다 사연 한 토막씩, 끝에 금 한 번, 그 뒤엔 예전 대사', function () {
       var T = DG.town, sv = C.save, keep = JSON.stringify(sv.folkStory || null), gold0 = sv.player.gold, bad = [];
       try {

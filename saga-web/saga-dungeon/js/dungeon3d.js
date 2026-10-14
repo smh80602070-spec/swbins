@@ -1672,7 +1672,7 @@
       AS3.rawScene(rec.body, noop);
       if (rec.outfit) { AS3.rawScene(rec.outfit, noop); }
       if (rec.hair) { AS3.rawScene(rec.hair, noop); }
-      AS3.rawScene(rec.anim || AS3.ANIM_SRC, noop);
+      if (!(AS3.ownAnimOf && AS3.ownAnimOf(rec))) { AS3.rawScene(rec.anim || AS3.ANIM_SRC, noop); }   // W-0213 자체 몸짓 몸은 UAL1(1.9MB)을 안 쓴다
     }
     touch(meRenderParams().seed);
     var ns = (run.room && run.room.npcs) || [];
