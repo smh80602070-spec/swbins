@@ -1045,7 +1045,7 @@
   "tests": [
    "3D 던전·들판 자체 재질(W-0196, K-0093) — 방 바닥·벽·들판·길이 real_* 를 쓰고 파일이 있다 · 옛 Poly Haven·ambientCG 주소 없음"
   ],
-  "note": "D2(claude 2026-10-13): qc 2-room·4-next·1-town 옛/새 Read ○ — 바닥 자갈·뒷벽 돌벽 결이 뚜렷하고 층 테마 색이 그대로 입혀짐, 마을 바닥 바위 자연스러움. qc PASS.",
+  "note": "D2(claude 2026-10-13): qc 2-room·4-next·1-town 옛/새 Read ○ — 바닥 자갈·뒷벽 돌벽 결이 뚜렷하고 층 테마 색이 그대로 입혀짐, 마을 바닥 바위 자연스러움. qc PASS. · W-0217(10-15): 흙 real_dirt 를 K-0108 새 판으로(md5 a89e06b0) — qc 1-town Read ○ 갈라진 흙 결, 반복 안 보임.",
   "level": "D2",
   "verified": null,
   "fun": {},

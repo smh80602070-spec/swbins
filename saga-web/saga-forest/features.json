@@ -950,7 +950,7 @@
   "tests": [
    "3D 땅 자체 재질(W-0196, K-0093) — 마을 3D 타일 표가 real_grass·real_dirt·real_paving 을 쓰고 파일이 있다 · 옛 빌린 사진 주소 없음"
   ],
-  "note": "D2(claude 2026-10-13): qc 1-village3d 옛/새 Read — 풀 ○(결 비슷), △ 흙길이 무늬 없는 평평한 흙(K-0093 dirt 가 밋밋 — 수신함 K). qc PASS.",
+  "note": "D2(claude 2026-10-13): qc 1-village3d 옛/새 Read — 풀 ○(결 비슷), △ 흙길이 무늬 없는 평평한 흙(K-0093 dirt 가 밋밋 — 수신함 K). qc PASS. · W-0217(10-15): 흙 real_dirt 를 K-0108 결 있는 새 판으로 다시 복사(md5 a89e06b0) — qc 1-village3d Read ○ 흙덩이·자갈 결(가로 길 흙덩이 간격 옅게 되풀이).",
   "level": "D2",
   "verified": null,
   "fun": {},
