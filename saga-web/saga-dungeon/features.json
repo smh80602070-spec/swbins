@@ -614,6 +614,7 @@
   "name": "3D: 방·들판·인스턴싱 초목·가림 페이드·품질 AUTO(1.5s 쿨다운)·SSAO·후처리",
   "files": [
    "js/dungeon3d.js",
+   "js/dungeon3d-plan.js",
    "js/field3d.js",
    "js/field-instance.js",
    "js/post3d.js",
