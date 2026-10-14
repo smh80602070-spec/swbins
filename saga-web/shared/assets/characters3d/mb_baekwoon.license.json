@@ -5,14 +5,14 @@
  "commercial_use": true,
  "source_samples": [
   "AvatarSample_P",
-  "AvatarSample_V",
+  "AvatarSample_R",
   "AvatarSample_Z"
  ],
  "body": "AvatarSample_P",
  "kit": {
-  "top": "v",
-  "bottom": "z",
+  "top": "p",
+  "bottom": "r",
   "shoes": "z"
  },
- "note": "옷·몸 조각을 샘플 25벌 사이에서 이식한 인물. 얼굴·머리는 샘플 그대로(약간 다르게만, 사용자 2026-10-02)."
+ "note": "옷·몸 조각을 샘플 사이에서 이식한 인물. 얼굴·머리는 샘플 그대로(약간 다르게만, 사용자 2026-10-02)."
 }

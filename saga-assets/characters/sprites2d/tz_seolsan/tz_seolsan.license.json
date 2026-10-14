@@ -4,14 +4,14 @@
  "license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
  "commercial_use": true,
  "source_samples": [
-  "AvatarSample_L",
+  "AvatarSample_C",
   "AvatarSample_N",
   "AvatarSample_R",
   "AvatarSample_X"
  ],
  "body": "AvatarSample_X",
  "kit": {
-  "top": "l",
+  "top": "c",
   "bottom": "r",
   "shoes": "n"
  },
