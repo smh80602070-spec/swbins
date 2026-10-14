@@ -8854,6 +8854,13 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var ok = [w0 === 0.45, w1 > 0 && w1 < 0.45, w2 === 0, lo >= 70 && hi <= 220, seam < 25, pp >= 0, ta.length > 900 && ta.length < 1800, tn.length === 0, ta.every(function (q) { return Math.hypot(q.x, q.z) <= 40 && q.s > 0; }), th.every(function (q) { return q.x > 0; }) && th.length > ta.length * 0.35 && th.length < ta.length * 0.65];
       return ok.every(Boolean) && ('결 5m ' + w0 + ' · 32m ' + w1.toFixed(2) + ' · 60m 0 · 먼 산 ' + lo.toFixed(0) + '~' + hi.toFixed(0) + 'm · 풀 ' + pp + ' · 잔풀 40m ' + ta.length + '(반쪽 풀 ' + th.length + ')');
     });
+    t('3D 잔풀 — 여름 색은 옛 값 그대로·가을은 다르고, 바람이 맑음보다 크게 흔들고, 흔들림 손잡이 0 이면 멎는다, 가을 들 땅만 계절 색 덮어 칠하기 (W-0209)', function () {
+      var G = DG.ground3d, su = G.turfPal('summer'), au = G.turfPal('autumn'), no = G.turfPal('없는 철'), wd = G.turfSway('wind'), cl = G.turfSway('clear'), off;
+      DG.core.setTune('world3d.sway', 0); off = G.turfSway('wind'); DG.core.setTune('world3d.sway', null);
+      DG.core.setTune('world3d.turfSeason', 0); var au0 = G.turfPal('autumn'); DG.core.setTune('world3d.turfSeason', null);
+      var ok = [su.lo === 0x5e9c2e, su.hi === 0x9cc94a, au.lo !== su.lo && au.hi !== su.hi, no.lo === su.lo, wd > cl && cl > 0, off === 0, au0.lo === su.lo, !!G.seasonPaint('grass', 'autumn'), G.seasonPaint('grass', 'summer') === null, G.seasonPaint('road', 'autumn') === null];
+      return ok.every(Boolean) && ('가을 ' + au.hi.toString(16) + ' · 바람 ' + wd.toFixed(3) + ' > 맑음 ' + cl.toFixed(3));
+    });
     t('3D 빛 — 한낮은 하늘빛/해 0.35~0.55(그늘 대비), 한밤은 옛 밝기 그대로(대비 손잡이는 낮에만) (W-0199)', function () {
       var d = new Date(); d.setHours(12, 0, 0, 0); var n = new Date(); n.setHours(22, 0, 0, 0);
       var L = DG.world3d.lightingAt(d.getTime(), 'clear'), N = DG.world3d.lightingAt(n.getTime(), 'clear'), r = L.hemi.intensity / L.sun.intensity;

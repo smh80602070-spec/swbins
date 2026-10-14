@@ -7,7 +7,7 @@
  *   ridge(scene)       600~850m 고리에 절차 산 실루엣 두 겹(노이즈 높이) — 안개색에 섞어 지평선만 가린다.
  *   follow(pos, fogHex) 고리를 나를 따라 옮기고 안개색으로 물들인다(매 프레임 — 값 대입뿐).
  *   turf(scene, pos)   나 둘레 풀 칸에 잔풀(1.5m 칸마다 한 포기, InstancedMesh 하나) — 5m 움직일 때만 다시 깐다.
- * 손잡이: world3d.detail(1 켬)·detailAmt 0.6·detailNear 18·detailFar 46·detailRep 2.2·detailMacro 7(m) · sky3d.ridge(1 켬) · world3d.turf(1 켬)·turfR 40(m, MEDIUM ×0.65, LOW 없음)
+ * 손잡이: world3d.detail(1 켬)·detailAmt 0.6·detailNear 18·detailFar 46·detailRep 2.2·detailMacro 7(m) · sky3d.ridge(1 켬) · world3d.turf(1 켬)·turfR 40(m, MEDIUM ×0.65, LOW 없음) · world3d.turfSeason(1 — 계절 색, W-0209)·turfSway 0.07(바람 ×2.2·비 ×1.4, world3d.sway 0 이면 멈춤)
  */
 (function (global) {
   'use strict';
@@ -158,6 +158,36 @@
     g.setAttribute('normal', new t.Float32BufferAttribute(nor, 3));
     return g;
   }
+  /** W-0209 순수 — 계절 열쇠 → 잔풀 밑·끝 색. 여름 = W-0200 옛 값 그대로 · 손잡이 world3d.turfSeason 0 이면 늘 여름 */
+  var TURF_PAL = { spring: [0x67a238, 0xb2d65e], summer: [0x5e9c2e, 0x9cc94a], autumn: [0x8a7a32, 0xc9b25c], winter: [0x76806c, 0xb3baa6] };
+  function turfPal(key) { var p = (+tn('world3d.turfSeason', 1) && TURF_PAL[key]) || TURF_PAL.summer; return { lo: p[0], hi: p[1] }; }
+  function seasonKey() { var S = global.DG.season; return S && S.now ? S.now().key : 'summer'; }
+  /** W-0209 순수 — 천후 열쇠 → 잔풀 흔들림 폭(정점 높이 배율). world3d.sway 0 이면 0 */
+  function turfSway(wx) {
+    if (!+tn('world3d.sway', 1)) { return 0; }
+    return Math.max(0, +tn('world3d.turfSway', 0.07) || 0) * (wx === 'wind' ? 2.2 : (wx === 'rain' ? 1.4 : 1));
+  }
+  /** W-0209 — 땅 그림(world3d terrainTexture)이 칸 무늬 위에 계절 색을 얹는 법. 봄·가을·겨울 들·논밭만 덮어 칠하기(손잡이 world3d.seasonGround 0.5),
+   *  그 밖(여름·길·숲·산·물·계절 꺼짐)은 null — 옛 곱하기 30% 그대로 */
+  function seasonPaint(kind, key) {
+    var S = global.DG.season, a = +tn('world3d.seasonGround', 0.5) || 0;
+    key = key || (S && S.on && S.on() ? seasonKey() : 'summer');
+    return (kind === 'grass' || kind === 'farm') && key !== 'summer' && TURF_PAL[key] && a > 0 ? { a: Math.min(1, a), op: 'source-over' } : null;
+  }
+  var swayU = null;
+  function swayTurf(mat) {
+    swayU = { uT: { value: 0 }, uA: { value: 0 } };
+    mat.onBeforeCompile = function (sh) {
+      sh.uniforms.uTfT = swayU.uT; sh.uniforms.uTfA = swayU.uA;
+      sh.vertexShader = 'uniform float uTfT;\nuniform float uTfA;\n' + sh.vertexShader.replace('#include <begin_vertex>',
+        '#include <begin_vertex>\n' +
+        '#ifdef USE_INSTANCING\n  float tfPh = dot(instanceMatrix[3].xz, vec2(0.37, 0.53));\n#else\n  float tfPh = 0.0;\n#endif\n' +
+        '  float tfL = transformed.y * transformed.y * uTfA;\n' +   // 밑동은 그대로, 끝일수록 크게
+        '  transformed.x += (sin(uTfT * 2.1 + tfPh) + 0.35 * sin(uTfT * 5.3 + tfPh * 1.7)) * tfL;\n' +
+        '  transformed.z += cos(uTfT * 1.7 + tfPh) * tfL * 0.6;\n');
+    };
+    mat.customProgramCacheKey = function () { return 'turf-sway'; };
+  }
   var turfMesh = null, turfAt = null, turfCells = {}, TURF_CAP = 1800;
   function cellGrass(x, z) {
     var gx = Math.floor(x / 48), gy = Math.floor(z / 48), k = gx + ':' + gy;
@@ -173,15 +203,19 @@
     if (!R) { if (turfMesh) { turfMesh.visible = false; } return 0; }
     var t = T();
     if (!turfMesh) {
-      turfMesh = new t.InstancedMesh(bladeGeo(), new t.MeshLambertMaterial({ color: 0xffffff, vertexColors: true }), TURF_CAP);
+      var tm = new t.MeshLambertMaterial({ color: 0xffffff, vertexColors: true }); swayTurf(tm);
+      turfMesh = new t.InstancedMesh(bladeGeo(), tm, TURF_CAP);
       turfMesh.name = 'turf3d'; turfMesh.frustumCulled = false; turfMesh.receiveShadow = true; turfMesh.count = 0;
     }
     if (turfMesh.parent !== scene) { scene.add(turfMesh); turfAt = null; }
     turfMesh.visible = true;
-    if (turfAt && turfAt.R === R && Math.hypot(pos.x - turfAt.x, pos.y - turfAt.y) < 5) { return turfMesh.count; }
-    turfAt = { x: pos.x, y: pos.y, R: R };
+    var WX = global.DG.weather, now = global.performance ? global.performance.now() : Date.now();   // W-0209 바람 — 값 대입뿐(매 프레임)
+    swayU.uT.value = (now / 1000) % 1000; swayU.uA.value = turfSway(WX && WX.current ? (WX.current() || {}).key : '');
+    var sk = seasonKey();
+    if (turfAt && turfAt.R === R && turfAt.sk === sk && Math.hypot(pos.x - turfAt.x, pos.y - turfAt.y) < 5) { return turfMesh.count; }
+    turfAt = { x: pos.x, y: pos.y, R: R, sk: sk };   // W-0209 계절이 바뀌면 서 있어도 다시 깐다(색)
     if (Object.keys(turfCells).length > 400) { turfCells = {}; }
-    var sp = turfSpots(pos.x, pos.y, R, cellGrass, TURF_CAP), RL = global.DG.relief3d, m4 = new t.Matrix4(), q = new t.Quaternion(), up = new t.Vector3(0, 1, 0), v = new t.Vector3(), sc = new t.Vector3(), c = new t.Color(), lo = new t.Color(0x5e9c2e), hi = new t.Color(0x9cc94a), i;
+    var pal = turfPal(sk), sp = turfSpots(pos.x, pos.y, R, cellGrass, TURF_CAP), RL = global.DG.relief3d, m4 = new t.Matrix4(), q = new t.Quaternion(), up = new t.Vector3(0, 1, 0), v = new t.Vector3(), sc = new t.Vector3(), c = new t.Color(), lo = new t.Color(pal.lo), hi = new t.Color(pal.hi), i;
     for (i = 0; i < sp.length; i++) {
       var p = sp[i];
       q.setFromAxisAngle(up, p.r); v.set(p.x, RL && RL.heightAt ? RL.heightAt(p.x, p.z) : 0, p.z); sc.set(p.s, p.s * (0.8 + p.c * 0.5), p.s);
@@ -195,5 +229,5 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.ground3d = { detail: detail, weightAt: weightAt, ridge: ridge, ridgeH: ridgeH, follow: follow, turf: turf, turfSpots: turfSpots };
+  global.DG.ground3d = { detail: detail, weightAt: weightAt, ridge: ridge, ridgeH: ridgeH, follow: follow, turf: turf, turfSpots: turfSpots, turfPal: turfPal, turfSway: turfSway, seasonPaint: seasonPaint };
 })(window);

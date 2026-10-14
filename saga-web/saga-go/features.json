@@ -976,14 +976,15 @@
    "assets/textures/land/real_rock_512.webp"
   ],
   "tests": [
-   "3D 땅 — 가까운 결은 18m 안 가득·46m 밖 0, 먼 산 고리 높이가 겹마다 범위 안·고리 둘레가 이어진다, 빈 들 풀 ×4·발밑 잔풀은 풀 칸 40m 안만 (W-0200)"
+   "3D 땅 — 가까운 결은 18m 안 가득·46m 밖 0, 먼 산 고리 높이가 겹마다 범위 안·고리 둘레가 이어진다, 빈 들 풀 ×4·발밑 잔풀은 풀 칸 40m 안만 (W-0200)",
+   "3D 잔풀 — 여름 색은 옛 값 그대로·가을은 다르고, 바람이 맑음보다 크게 흔들고, 흔들림 손잡이 0 이면 멎는다, 가을 들 땅만 계절 색 덮어 칠하기 (W-0209)"
   ],
   "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0200",
   "since": "2026-10-14",
-  "note": "D2(claude 2026-10-14): tmp/go-grass.mjs 들판 정오 옛(w200_grass_old)/새(w200_turf_new3) Read — 옛은 빈 들(칸 ×4 만으로는 차이 거의 없음), 새는 발밑부터 잔풀 ○ · LOW(w200_turf_low) 잔풀 없음·fps 11=11 ○ · qc 1-world3d·2-close 마을 바닥 결·지평선 산 ○. 잎은 앞뒤 두 장(DoubleSide 는 뒷면이 검었다). 손잡이 world3d.detail·turf·turfR·grassMul · sky3d.ridge."
+  "note": "W-0209(claude 10-14): 잔풀 계절 색(봄·가을·겨울, 여름은 옛 값)·바람에 흔들림(world3d.turfSway 0.07, 바람 ×2.2·비 ×1.4) · 봄·가을·겨울 들·논밭 땅은 계절 색 덮어 칠하기 0.5(world3d.seasonGround — 곱하기 30% 로는 가을에도 초록) — go-turf.mjs turf_summer/turf_autumn Read 가을 땅·풀 누런빛 어울림 ○ · tmp/turf-diff 0.25초 사이 움직인 픽셀 끔 64·맑음 2828·바람 5000 ○ · D2(claude 2026-10-14): tmp/go-grass.mjs 들판 정오 옛(w200_grass_old)/새(w200_turf_new3) Read — 옛은 빈 들(칸 ×4 만으로는 차이 거의 없음), 새는 발밑부터 잔풀 ○ · LOW(w200_turf_low) 잔풀 없음·fps 11=11 ○ · qc 1-world3d·2-close 마을 바닥 결·지평선 산 ○. 잎은 앞뒤 두 장(DoubleSide 는 뒷면이 검었다). 손잡이 world3d.detail·turf·turfR·grassMul · sky3d.ridge."
  },
  {
   "id": "go.vroid-body-shade",
