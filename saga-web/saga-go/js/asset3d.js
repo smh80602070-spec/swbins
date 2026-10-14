@@ -637,7 +637,7 @@
     var v = oneOf(heroPool(h.url), ref);
     return (v && typeof v === 'object' && v.body) ? v : null;
   }
-  function wants(kind, ref) { return GLB_ON() && !!urlOf(kind, ref); }   /* W-0212 폰(prop3d.light 자동)이면 지도 배우(world3d 가 withLazy 로 세움)의 몸 GLB 를 곁(asset3d.lazyR m)에 올 때 받는다 — 건물·초상·소품은 바로 */ var lazyScope = false; function withLazy(fn) { lazyScope = true; try { return fn(); } finally { lazyScope = false; } } function LAZY(kind) { if (!lazyScope || kind === 'station' || kind === 'fort' || kind === 'landmark') { return false; } var k = core().tuned('asset3d.lazy', 'auto'); if (k === 1 || k === '1') { return true; } if (k === 0 || k === '0') { return false; } var P = global.DG.prop3d; return !!(P && P.light && P.light()); } function wake(n) { var w = n && n.userData && n.userData.wake; if (w) { n.userData.wake = null; w(); } return !!w; }
+  function wants(kind, ref) { return GLB_ON() && !!urlOf(kind, ref); }   /* W-0212 폰(prop3d.light 자동)이면 지도 배우(world3d 가 withLazy 로 세움)의 몸 GLB 를 곁(asset3d.lazyR m)에 올 때 받는다 — 건물·초상·소품은 바로 */ var lazyScope = false; function withLazy(fn) { var keep = lazyScope; lazyScope = true; try { return fn(); } finally { lazyScope = keep; } } function LAZY(kind) { if (!lazyScope || kind === 'station' || kind === 'fort' || kind === 'landmark') { return false; } var k = core().tuned('asset3d.lazy', 'auto'); if (k === 1 || k === '1') { return true; } if (k === 0 || k === '0') { return false; } var P = global.DG.prop3d; return !!(P && P.light && P.light()); } function wake(n) { var w = n && n.userData && n.userData.wake; if (w) { n.userData.wake = null; w(); } return !!w; }
 
   /** 이 배우는 무엇으로 설까 — 'glb' · 'shape' · 'primitive'. 순수 함수다 */
   function chain(kind, ref) {
