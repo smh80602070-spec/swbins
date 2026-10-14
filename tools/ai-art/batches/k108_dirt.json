@@ -1,0 +1,24 @@
+{
+ "model": "z-image-turbo",
+ "out": "k108_dirt",
+ "note": "K-0108 결 있는 흙(K-0093 dirt 명암 표준편차 10.9 → 기준 ≥ 18). 남의 사진·스캔 0. 이음매 → pbr_from_albedo.py",
+ "defaults": {
+  "prompt_prefix": "",
+  "width": 1024,
+  "height": 1024,
+  "variants": 4,
+  "tiling": false
+ },
+ "items": [
+  {
+   "id": "dirt_a",
+   "seed": 108010000,
+   "prompt": "An orthographic flat scan of a rough brown dirt path: packed earth scattered with many small and medium pebbles of mixed sizes, dry hairline cracks, scuffed footprints and faint shallow ruts, a few darker damp patches and tiny dry grass bits, strong visible grain and contrast, camera pointing straight down at exactly 90 degrees, no perspective, no vanishing point, every element the same size from the top edge to the bottom edge. Evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Natural realistic colors, medium brightness, fine detail. Uniform repeating PBR material texture."
+  },
+  {
+   "id": "dirt_b",
+   "seed": 108020000,
+   "prompt": "An orthographic flat scan of uneven natural soil ground: crumbly dark and light brown earth clumps, coarse sand grains, scattered gravel stones, dried mud cracks and small hollows, irregular patches of moist darker soil, rich detailed texture with clear light and dark variation, camera pointing straight down at exactly 90 degrees, no perspective, no vanishing point, every element the same size from the top edge to the bottom edge. Evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Natural realistic colors, medium brightness, fine detail. Uniform repeating PBR material texture."
+  }
+ ]
+}
