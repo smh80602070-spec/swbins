@@ -4916,6 +4916,14 @@ window.requestAnimationFrame = function () { return 0; };
       var r = [k.lift === 0.65, k.amb === 0.5, off === 0, town.ambient === 1.45 && town.ambientHex === 0xe7eaed, room.ambientHex === 0x2a2f3c];
       return r.every(Boolean) && '방 물감 +0.65 · 반구 색 +0.5 · 손잡이 0 → 옛 · 마을·lightPlan 값 그대로' || '실패 ' + r.join(',');
     });
+    t('3D 마을 표식 모델(W-0219) — 결사비 = stele_01·난입 = banner_pole_01(world 표에 있음)·역참·굴혈은 이 표 밖 · 손잡이 dg3d.markGlb 0 = 옛 상자 비석(null)', function () {
+      var D3 = DG.dungeon3d, C = DG.core, W = {}, off;
+      ((DG.assets3dIds && DG.assets3dIds.world) || []).forEach(function (x) { W[x] = 1; });
+      var v = D3.markModel('vow'), h = D3.markModel('horde');
+      C.setTune('dg3d.markGlb', 0); try { off = D3.markModel('vow'); } finally { C.setTune('dg3d.markGlb', null); }
+      var r = [!!v && v.id === 'stele_01' && W.stele_01 === 1, !!h && h.id === 'banner_pole_01' && W.banner_pole_01 === 1, v.h > 34 && v.h < 47 && h.h > 34 && h.h < 47, D3.markModel('waypoint') === null && D3.markModel('gate') === null, off === null];
+      return r.every(Boolean) ? '결사비 ' + v.id + ' 키 ' + v.h + ' · 난입 ' + h.id + ' 키 ' + h.h + ' · 손잡이 0 = 옛 비석' : '실패 ' + r.join(',');
+    });
     t('3D 마을 빛·표식(W-0202) — 하늘빛 ≈ 키의 0.45(그늘 대비)·해 받는 바닥(하늘빛+키)은 옛보다 안 어둡고 3.1 안(블룸)·해 NW · 손잡이 0 = 옛 · 던전 방 빛은 그대로', function () {
       var D3 = DG.dungeon3d, C = DG.core, n = D3.lightPlan(1, 'town', 0.45), o, r0 = D3.lightPlan(3, 'fight', 0.45), r1;
       try { C.setTune('dg3d.contrast', 0); o = D3.lightPlan(1, 'town', 0.45); r1 = D3.lightPlan(3, 'fight', 0.45); } finally { C.setTune('dg3d.contrast', null); }

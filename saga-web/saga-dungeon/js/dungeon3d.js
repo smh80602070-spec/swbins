@@ -1627,7 +1627,7 @@
   }
 
   /** asset3d — 사가만리와 같은 것을 쓴다(사가나락 4단계, `assets/ASSET_LICENSES.md`) */
-  function AS() { return global.DG.asset3d; } function MARK_GLB() { return !!+tuned('dg3d.markGlb', 1); }   // W-0202 마을 역참 이정표 모델, 0 = 옛 상자 (난입 모닥불+깃발은 위에서 보면 불꽃이 흰 덩이·깃발은 안 보여 옛 비석 그대로)
+  function AS() { return global.DG.asset3d; } function MARK_GLB() { return !!+tuned('dg3d.markGlb', 1); } var MARK_MODEL = { vow: { id: 'stele_01', h: 40 }, horde: { id: 'banner_pole_01', h: 44 } }; function markModel(k) { return MARK_GLB() && MARK_MODEL[k] || null; }   // W-0219 결사비·난입 모델(world 표 id·키 — 옛 비석 34·역참 47 사이), 손잡이 0 = null   // W-0202 마을 역참 이정표 모델, 0 = 옛 상자 (난입 모닥불+깃발은 위에서 보면 불꽃이 흰 덩이·깃발은 안 보여 옛 비석 그대로)
   /** 몸짓(§5.16, `gesture.js`) — 손잡이 dungeon.gesture 가 0 이면 plan 이 늘 base 를 돌려준다 */
   function GS() { return global.DG.gesture; }
 
@@ -2210,8 +2210,8 @@
         box(g, 0, 20, 0, 6, 40, 6, 0x5c4632, 'flat', true);
         box(g, 0, 34, 0, 26, 8, 3, glow, 'glow', false);
       } else {
-        box(g, 0, 17, 0, 16, 34, 8, 0x6a6a75, 'flat', true);     // 비석
-        box(g, 0, 36, 0, 12, 4, 10, glow, 'glow', false);
+        var stShape = function () { var sg = new T.Group(); box(sg, 0, 17, 0, 16, 34, 8, 0x6a6a75, 'flat', true); box(sg, 0, 36, 0, 12, 4, 10, glow, 'glow', false); return sg; }; var mm = markModel(mkey), AS3s = mm ? AS() : null, st = AS3s ? AS3s.build('crea:' + mm.id, 'mark:' + mkey, mm.h, null, stShape) : stShape();   // W-0219 결사비 = 자체 비석 stele_01 · 난입 = 깃대 banner_pole_01(world 표, lookup 'crea:') — 못 받거나 dg3d.markGlb 0 이면 옛 상자 비석
+        st.userData.cast = true; g.add(st); if (AS3s) { box(g, 0, 5.4, 0, 34, 0.8, 34, glow, 'glow', false); }   // 표식 색은 발판 위 빛 판이 낸다(역참과 같은 꼴)
       }
       var mr = box(g, 0, 0.8, 0, 56, 1.6, 56, glow, 'glow', false);
       mr.visible = false;
@@ -2998,7 +2998,7 @@
     init: init, resize: resize, render: render,
     available: available, active: active, wanted: wanted,
     /* 값을 내는 함수 — three 없이도 돈다(자가진단이 이것만 따로 본다) */
-    camAim: camAim, userZoom: USERZOOM, lightPlan: lightPlan,
+    camAim: camAim, userZoom: USERZOOM, lightPlan: lightPlan, markModel: markModel,
     /** PLAN §7.1-2 — 앵커가 바뀐 프레임의 카메라 옮기기(순수 함수, 진단용) */
     _rebaseCam: rebaseCam,
     /** PLAN 19절 — 그래픽 품질 AUTO. ms 평균 → 등급의 순수 매핑(진단용) */

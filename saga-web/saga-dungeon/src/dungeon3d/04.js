@@ -593,7 +593,7 @@
     init: init, resize: resize, render: render,
     available: available, active: active, wanted: wanted,
     /* 값을 내는 함수 — three 없이도 돈다(자가진단이 이것만 따로 본다) */
-    camAim: camAim, userZoom: USERZOOM, lightPlan: lightPlan,
+    camAim: camAim, userZoom: USERZOOM, lightPlan: lightPlan, markModel: markModel,
     /** PLAN §7.1-2 — 앵커가 바뀐 프레임의 카메라 옮기기(순수 함수, 진단용) */
     _rebaseCam: rebaseCam,
     /** PLAN 19절 — 그래픽 품질 AUTO. ms 평균 → 등급의 순수 매핑(진단용) */
