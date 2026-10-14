@@ -33,10 +33,10 @@ try {
   check('go.world 지도 — 구역 이름 30·같은 칸은 늘 같은 이름, 시점 단추를 누르면 2D·2.5D·3D 셋을 돌아 처음으로, 곁에 스폰이 있다',
     w0.names === 30 && w0.same && w0.near && modes.size === 3 && tilts[3].replace(/\s.*$/, '') === tilts[0].replace(/\s.*$/, ''), JSON.stringify({ w0, tilts }));
 
-  /* go.geo — OSM 태그 → 땅 갈래, 층 순서 6, 칸 열쇠가 늘 같다, 원점 땅이 갈래를 낸다(그물 없이 land→geo→해시) */
-  const g = await ev(() => { var G = DG.geo, k = G.kindOfTags, rk = G.regionKeyOf; return { order: G.LAYER_ORDER, water: k({ natural: 'water' }), forest: k({ landuse: 'forest' }), road: k({ highway: 'primary' }), key: rk ? [String(rk(37.5, 127)), String(rk(37.5, 127))] : null, t0: DG.world.terrainAt(0, 0), t1: DG.world.terrainAt(40, -30) }; });
-  check('go.geo 실제 지형 — OSM 태그가 물·숲·길로 갈리고, 층 순서 6, 칸 열쇠가 늘 같고, 그물 없이도 원점 땅 갈래가 나온다',
-    g.order.length === 6 && g.water === 'water' && g.forest === 'forest' && g.road === 'road' && (!g.key || g.key[0] === g.key[1]) && !!g.t0 && !!g.t1, JSON.stringify(g));
+  /* go.geo — W-0208 에서 실제 지형(geo.js, OSM)은 지웠다: DG.geo 가 없고, 땅 갈래는 손그림 땅·해시만으로 늘 같게 나온다 */
+  const g = await ev(() => ({ geo: !!DG.geo, t0: DG.world.terrainAt(0, 0), t1: DG.world.terrainAt(40, -30), again: DG.world.terrainAt(40, -30) }));
+  check('go.geo 땅 갈래 — 실제 지형(OSM) 없이(DG.geo 없음) 원점·먼 칸 땅 갈래가 나오고 같은 칸은 늘 같다',
+    !g.geo && !!g.t0 && !!g.t1 && g.t1 === g.again, JSON.stringify(g));
 
   /* go.land — 하북 손그림 땅 검사 0건, 갈래 세기, 손으로 놓은 소품이 그 칸에서 나온다 */
   /* 하북 땅엔 손으로 놓은 소품이 아직 0개(맵 편집기가 놓을 자리만 있다) — 편집기가 넣는 꼴 그대로 한 점 놓아 그 칸에서 나오는지 보고 치운다 */

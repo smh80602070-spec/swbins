@@ -81,7 +81,8 @@
 
   var ring = null;
   function ridge(scene) {
-    if (ring || !scene || !RIDGE_ON() || !T()) { return ring; }
+    if (ring) { if (scene && ring.parent !== scene) { scene.add(ring); } return ring; }   // 씬을 다시 지으면 옛 씬에 남지 않게
+    if (!scene || !RIDGE_ON() || !T()) { return ring; }
     var t = T(), g = new t.Group(), SEG = 180;
     for (var L = 0; L < 2; L++) {
       var R = L ? 850 : 640, pos = [], idx = [], i;

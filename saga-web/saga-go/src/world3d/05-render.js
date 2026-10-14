@@ -160,6 +160,9 @@
   }
   var occlT = 1, occlAcc = 9, occlRects = [], occlCell = null;
 
+  /** 카메라 배율 — 비행 중 ×2.2 는 가까운 3D(시점 2)에서만(2D·2.5D 는 이미 멀다) · 그림자 상자도 이 값을 본다 */
+  function camZoom(W) { return (W.zoom3d || 1) * (W.tiltMode === 2 && global.DG.mount && global.DG.mount.flying && global.DG.mount.flying() ? 2.2 : 1); }
+
   function syncCamera(W, dt) {
     var pos = core.save.player.pos;
     /* ⑲-13 이야기 대화 — 듣는 이 어깨 너머에서 말하는 이 얼굴을 본다(talkface.talkAim). 끝나면 아래 보통 구도로 따라 돌아온다 */
@@ -168,7 +171,7 @@
     /* ⑲-22 활 조준 — 오른 어깨 너머에서 겨눈 쪽을 본다(대화·조우 무대가 먼저) */
     var FCv = global.DG.fieldCombat, AV = !TS && !stageAt && FCv && FCv.aimView ? FCv.aimView() : null;
     var aim = TS ? global.DG.talkface.talkAim(TS.spk, TS.lst, ACTOR_H()) : (AV ? aimCam(pos, AV, ACTOR_H()) : camAim(pos, W.tiltMode, focusLive(), stageAt,
-      stageAt ? 1 : W.zoom3d * (global.DG.mount && global.DG.mount.flying && global.DG.mount.flying() ? 2.2 : 1), battleOn, stageAt ? 0 : yaw, duelFoe)); if (!TS && !AV && !stageAt && !duelFoe && !focusLive() && global.DG.landmark3d) { aim = global.DG.landmark3d.apply(aim); }   // W-0162 멀리 보기(기본 구도만)
+      stageAt ? 1 : camZoom(W), battleOn, stageAt ? 0 : yaw, duelFoe)); if (!TS && !AV && !stageAt && !duelFoe && !focusLive() && global.DG.landmark3d) { aim = global.DG.landmark3d.apply(aim); }   // W-0162 멀리 보기(기본 구도만)
     /* **카메라와 시선도 땅을 따라 오른다.** 안 그러면 산에 오를 때 카메라가
        제자리에 남아 땅이 화면을 덮고, 골짜기에서는 하늘만 보인다.
        `camAim` 은 평면 기준으로 값을 내므로 여기서 땅 높이만 얹는다 —
@@ -243,7 +246,7 @@
        높이·방위만 시각이 정한다 */
     sun.position.set(pos.x + L.sun.x, L.sun.y, pos.y + L.sun.z);
     sun.target.position.set(pos.x, 0, pos.y);
-    sun.target.updateMatrixWorld(); var Wl = global.DG.world || {}, shR = Wl.tiltMode === 2 && Wl.zoom3d < 2.5 ? core.tuned('light3d.shadowNear', 45) : 140; if (sun.shadow.camera.right !== shR) { var sc0 = sun.shadow.camera; sc0.left = sc0.bottom = -shR; sc0.right = sc0.top = shR; sc0.updateProjectionMatrix(); }   // W-0199 가까운 3D 보기면 그림자 상자를 좁혀 사람 그림자를 선명하게(1024² 에 ±140 은 0.27m/칸)
+    sun.target.updateMatrixWorld(); var Wl = global.DG.world || {}, shR = Wl.tiltMode === 2 && camZoom(Wl) < 2.5 ? core.tuned('light3d.shadowNear', 45) : 140; if (sun.shadow.camera.right !== shR) { var sc0 = sun.shadow.camera; sc0.left = sc0.bottom = -shR; sc0.right = sc0.top = shR; sc0.updateProjectionMatrix(); }   // W-0199 가까운 3D 보기면 그림자 상자를 좁혀 사람 그림자를 선명하게(1024² 에 ±140 은 0.27m/칸)
     sun.color.setHex(L.sun.hex);
     sun.intensity = L.sun.intensity;
     sky.color.setHex(L.hemi.sky);

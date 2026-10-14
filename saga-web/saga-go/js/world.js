@@ -1837,7 +1837,7 @@
     ctx.fillStyle = 'rgba(0,0,0,0.30)';
     ctx.fill();
 
-    if (!(global.DG.actor2d && global.DG.actor2d.human(ctx, n.p, null, p.x, p.y, z * 1.05, { facing: n.x < 0 ? -1 : 1, moving: n.walking, phase: n.phase, now: now, wx: n.x, wy: n.y, ppu: scale() * p.s, pk: 'npc:' + (n.id || (n.p && n.p.id) || n.phase) }))) sp.stamp(ctx, {
+    if (!(global.DG.actor2d && global.DG.actor2d.human(ctx, n.p, null, p.x, p.y, z * 1.05, { facing: n.x < 0 ? -1 : 1, moving: n.walking, phase: n.phase, now: now, wx: n.x, wy: n.y, ppu: scale() * p.s, pk: 'npc:' + (n.id || ((n.p && n.p.id) || '') + ':' + n.phase) }))) sp.stamp(ctx, {
       kind: 'human', ref: n.p,
       x: p.x, y: p.y, s: z * 1.05, facing: n.x < 0 ? -1 : 1,
       phase: n.phase, walking: n.walking,

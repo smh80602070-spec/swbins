@@ -8873,6 +8873,13 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var ok = [w.slot === 'walk', Math.abs(w.rate - 0.6 / 0.82) < 0.01, r.slot === 'run', Math.abs(r.rate - 2.35 / 2.9) < 0.01, f.rate === 1.7, nr.slot === 'walk', nr.rate === 1.7, Math.abs(v1 - 2.35) < 0.01, v2 === v1, gw.slot === 'walk'];
       return ok.every(Boolean) && ('0.6 키/초 걷기 ×' + w.rate.toFixed(2) + ' · 2.35 달리기 ×' + r.rate.toFixed(2) + ' · 9 → ×1.7');
     });
+    t('3D 걸음새 되돌이 — 달리던 몸은 문턱 0.85 배 아래로 떨어져야 걷기로(문턱 곁에서 프레임마다 뒤집히지 않게) (R-5 W-0197)', function () {
+      var OA = DG.ownAnim, ent = { clipMap: { walk: 'W', run: 'R' } }, seq = [], i, v = [1.0, 1.5, 1.35, 1.45, 1.36, 1.0], flips = 0;
+      for (i = 0; i < v.length; i++) { ent.gaitV = v[i]; seq.push(OA.gaitOf(ent, 99).slot); }   // hps 99 는 순간이동으로 버려져 gaitV 그대로
+      for (i = 1; i < seq.length; i++) { if (seq[i] !== seq[i - 1]) { flips++; } }
+      var ok = [seq.join(',') === 'walk,run,run,run,run,walk', flips === 2, OA.gait(1.35).slot === 'walk', OA.gait(1.35, true, true).slot === 'run'];
+      return ok.every(Boolean) && seq.join('→');
+    });
     t('anim-own — 아홉 클립이 같은 뼈 전부를 움직이고, 값이 유한·단위이며, 반복 클립은 이어진다', function () {
       var OA = DG.ownAnim, rig = OA.refRig(), clips = OA.clipData(rig), i, j, bad = [];
       if (clips.length !== 9) { return false; }

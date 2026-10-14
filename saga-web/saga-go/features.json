@@ -53,7 +53,7 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094). OSM 그물 요청에 기대지 않고 태그 분류·칸 열쇠·원점 땅 갈래만 봄. PLAN §3: 미확인 · W-0208: geo.js(OSM Overpass) 지움 — 남은 건 손그림 땅"
+  "note": "D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094). OSM 그물 요청에 기대지 않고 태그 분류·칸 열쇠·원점 땅 갈래만 봄. PLAN §3: 미확인 · W-0208: geo.js(OSM Overpass) 지움 — 남은 건 손그림 땅 · R-5(10-14): pw-go-close2 go.geo 를 DG.geo 없음·땅 갈래 같음으로 바꿔 8/8"
  },
  {
   "id": "go.land",

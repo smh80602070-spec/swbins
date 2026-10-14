@@ -726,9 +726,9 @@
     COMBAT_NAMES: COMBAT.map(function (c) { return c.name; }),
     /** W-0197 — 걸음새: 몸 높이당 이동 속도(hps, 키/초) → { slot: 'walk'|'run', rate: 클립 빠르기 } — 순수(손잡이만 읽음).
      *  클립 본래 빠르기 = 걷기 0.82 키/초(1.4m/s ÷ 1.7m)·달리기 2.9(5m/s ÷ 1.7m). rate 를 0.6~1.7 로 묶어 다리가 미친 듯 돌지 않게 */
-    gait: function (hps, hasRun) {
+    gait: function (hps, hasRun, wasRun) {
       var C = global.DG.core, tn = function (k, d) { var v = C && C.tuned ? +C.tuned(k, d) : d; return isFinite(v) && v > 0 ? v : d; };
-      var v = Math.max(0, +hps || 0), run = hasRun !== false && v >= tn('anim3d.runFrom', 1.4);
+      var v = Math.max(0, +hps || 0), run = hasRun !== false && v >= tn('anim3d.runFrom', 1.4) * (wasRun ? 0.85 : 1);   // 되돌이 — 문턱 곁에서 걷기↔달리기가 프레임마다 뒤집히지 않게
       var r = v / (run ? tn('anim3d.runHps', 2.9) : tn('anim3d.walkHps', 0.82));
       return { slot: run ? 'run' : 'walk', rate: Math.max(0.6, Math.min(1.7, r)) };
     },
@@ -747,7 +747,8 @@
     gaitOf: function (ent, hps, m, dt) {
       var cm = ent && ent.clipMap, v;
       if (m) { v = this.hpsOf(ent.gaitSt || (ent.gaitSt = {}), m, dt); } else { v = ent.gaitV || 0; if (hps < 40) { v += ((+hps || 0) - v) * 0.25; } ent.gaitV = v; }
-      return this.gait(v, !!(cm && cm.run && cm.run !== cm.walk));
+      var g = this.gait(v, !!(cm && cm.run && cm.run !== cm.walk), ent.gaitRun); ent.gaitRun = g.slot === 'run';
+      return g;
     },
     /** 처음 조립된(정지 자세) 몸에서 뼈대를 읽는다 — 실패하면 null */
     /** 판마다 다른 무기 이름(생김새) → 몸짓 다섯 갈래 */
