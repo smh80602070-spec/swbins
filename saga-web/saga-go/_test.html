@@ -8750,14 +8750,14 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         ['monsters/quaternius_dino/Velociraptor.glb', 'raptor'], ['foes/Robot_Drone.glb', 'robot_drone'], ['monsters/space/EnemySmall.glb', 'space_bug'], ['monsters/Mushnub_55c64684.glb', 'mushnub'],
         ['monsters/quaternius/Cat_7ccb71fe.glb', null], ['monsters/quaternius/Frog_9018566d.glb', null], ['monsters/quaternius2/Snake.glb', null], ['standin/Cat_Monster.glb', null],
         ['foes/Alien.glb', null], ['buildings/space/House_Single.glb', null], ['animals_extra2/Puffer.glb', 'puffer'], ['animals_extra/Whale.glb', 'whale'], ['animals_extra/Fish1.glb', 'fish_a'],   // W-0206 ['people/regular/Fox.glb', null],
-        /* W-0194 물고기 38 — Koi 두 폴더·상어 두 몸 · Fish2·Fish3 는 새 몸이 안 보여 SKIP(빌린 것) */
-        ['animals_extra2/Koi.glb', 'koi'], ['animals/Koi.glb', 'koi'], ['animals_extra/Shark.glb', 'shark'], ['animals_extra2/Shark.glb', 'shark'], ['animals_extra/MantaRay.glb', 'manta_ray'], ['animals_extra2/Zebra_Clown_Fish.glb', 'zebra_clownfish'], ['animals_extra/Fish2.glb', 'fish_b'], ['animals_extra/Fish3.glb', 'fish_c']];   // W-0206 — 숫자 이름도 짝(옛 null 은 정규식이 못 읽어서였다)
+        /* W-0194 물고기 38 — Koi 두 폴더·상어 두 몸(W-0216 animals_extra2 Shark = 백상아리 great_white) · Fish2·Fish3 는 새 몸이 안 보여 SKIP(빌린 것) */
+        ['animals_extra2/Koi.glb', 'koi'], ['animals/Koi.glb', 'koi'], ['animals_extra/Shark.glb', 'shark'], ['animals_extra2/Shark.glb', 'great_white'], ['animals/Shark.glb', 'shark'], ['animals_extra/MantaRay.glb', 'manta_ray'], ['animals_extra2/Zebra_Clown_Fish.glb', 'zebra_clownfish'], ['animals_extra/Fish2.glb', 'fish_b'], ['animals_extra/Fish3.glb', 'fish_c']];   // W-0206 — 숫자 이름도 짝(옛 null 은 정규식이 못 읽어서였다)
       CASES.forEach(function (c) {
         var got = AS.creatureFor('assets/models/' + c[0]);
-        var ok = c[1] ? (live ? !!got && got.slice(-(c[1].length + 4)) === c[1] + '.glb' : AS.CREATURE_OF[c[0].split('/').pop().replace(/(_[0-9a-f]{8})?\.glb$/, '')] === c[1]) : got === null;
+        var ok = c[1] ? (live ? !!got && got.slice(-(c[1].length + 4)) === c[1] + '.glb' : (function (p) { var d = p[p.length - 2], n = p[p.length - 1].replace(/(_[0-9a-f]{8})?\.glb$/, ''); return ((AS.CREATURE_DIR_OF[d] || {})[n] || AS.CREATURE_OF[n]) === c[1]; })(c[0].split('/'))) : got === null;
         if (!ok) { bad.push(c[0] + '→' + got); }
       });
-      var dangling = Object.keys(AS.CREATURE_OF).filter(function (k) { return !ids[AS.CREATURE_OF[k]]; });
+      var dangling = Object.keys(AS.CREATURE_OF).filter(function (k) { return !ids[AS.CREATURE_OF[k]]; }).concat(Object.keys(AS.CREATURE_DIR_OF).reduce(function (a, d) { return a.concat(Object.keys(AS.CREATURE_DIR_OF[d]).map(function (n) { return AS.CREATURE_DIR_OF[d][n]; })); }, []).filter(function (id) { return !ids[id]; }));   // W-0216 폴더별 짝도
       var mc = DG.asset3d.mapClips(['Idle', 'Walk', 'Run', 'Attack', 'Hit', 'Death', 'Special']), slots = ['idle', 'walk', 'run', 'attack', 'hit', 'death'].filter(function (k) { return mc[k] && !(mc.alias || {})[k]; });
       return bad.length === 0 && dangling.length === 0 && slots.length === 6 && ('짝 ' + CASES.length + '건(' + (live ? '실제 주소' : '표만') + ') · 짝 이름 ' + Object.keys(AS.CREATURE_OF).length + ' → id 표에 다 있음 · 동작 여섯 자리 원본으로') ||
         ('실패 ' + bad.join(' ') + ' · 표에 없음 ' + dangling.join(',') + ' · 자리 ' + slots.join(','));

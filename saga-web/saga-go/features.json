@@ -138,7 +138,7 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). · W-0178(10-11): 빌린 들·집 짐승·공룡·괴물 50종(Quaternius) → 자체판 creatures3d 로 바꿔 끼우고(shared assets3d.creatureFor — 괴물 팩 해시 이름·폴더 예외) 빌린 GLB 지움. · W-0194(10-13): 빌린 물고기 36종(Quaternius CC0, 파일 151) → 자체판 creatures3d(K-0096 ⑤) · Fish2·Fish3 은 새 몸이 안 보여 CREATURE_SKIP, Puffer·Whale·Fish1 은 자체판 없음 — 다섯은 빌린 것 그대로."
+  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). · W-0178(10-11): 빌린 들·집 짐승·공룡·괴물 50종(Quaternius) → 자체판 creatures3d 로 바꿔 끼우고(shared assets3d.creatureFor — 괴물 팩 해시 이름·폴더 예외) 빌린 GLB 지움. · W-0194(10-13): 빌린 물고기 36종(Quaternius CC0, 파일 151) → 자체판 creatures3d(K-0096 ⑤) · Fish2·Fish3 은 새 몸이 안 보여 CREATURE_SKIP, Puffer·Whale·Fish1 은 자체판 없음 — 다섯은 빌린 것 그대로. · W-0216(10-15): 백상아리 pt_shark_2(animals_extra2/Shark)가 상어와 같은 몸 shark 를 받던 것 → 폴더별 짝 CREATURE_DIR_OF 로 자체 great_white(K-0109) · 나란히 촬영 다른 몸 ○."
  },
  {
   "id": "go.encounter",

@@ -136,6 +136,8 @@
     Yellow_Tang: 'yellow_tang', Zebra_Clown_Fish: 'zebra_clownfish', Dolphin: 'dolphin', MantaRay: 'manta_ray', Fish2: 'fish_b', Fish3: 'fish_c', Whale: 'whale', Puffer: 'puffer', Fish1: 'fish_a' };
   /** 폴더마다 같은 이름이 다른 몸인 것 — 괴물 팩(quaternius)의 Cat·Frog 는 괴물 고양이(✗ 판정)·괴물 개구리, quaternius2 의 Snake 는 괴물 뱀이라 안 바꾼다 */
   var CREATURE_DIR_SKIP = { quaternius: { Cat: 1, Frog: 1 }, quaternius2: { Snake: 1 } };
+  /** W-0216 — 폴더마다 같은 이름이 다른 짝인 것(CREATURE_OF 보다 먼저) — animals_extra2 의 Shark 는 백상아리(pt_shark_2, K-0109 great_white) */
+  var CREATURE_DIR_OF = { animals_extra2: { Shark: 'great_white' } };
   /** 눈 판정(W-0178 3단계)에서 옛것보다 못한 id — 빌린 모델을 그대로 둔다(K 다시 굽기 수신함) */
   var CREATURE_SKIP = {};   // W-0206 — W-0194 의 fish_b·fish_c "빈 칸"은 CREATURE_DIRS 가 숫자 이름(Fish2·Fish3)을 못 읽어 새 쪽도 빌린 몸을 받은 것이었다(새 몸은 멀쩡)   // W-0194 — 새 몸이 three 에서 안 보임(빈 칸, 키 1.00) → Fish2·Fish3 빌린 것 유지, K 다시 굽기(수신함)
   var CREATURE_DIRS = /(?:^|\/)(animals|animals_extra|animals_extra2|standin|community|troops|monsters|quaternius|quaternius2|quaternius_dino|robots|space|foes)\/([A-Za-z_][A-Za-z0-9_]*?)(?:_[0-9a-f]{8})?\.glb$/;   // W-0206 이름에 숫자 허용(옛 [A-Za-z_] 라 Fish1·Fish2·Fish3 이 짝을 못 찾았다)
@@ -144,7 +146,7 @@
     if (C && C.tuned && !C.tuned('assets3d.creature', 1)) { return null; }
     var m = CREATURE_DIRS.exec(String(path || ''));   // 괴물 팩은 이름 끝에 해시(`Goleling_51bf31d7.glb`)가 붙어 있다 — 떼고 본다
     if (!m || (CREATURE_DIR_SKIP[m[1]] && CREATURE_DIR_SKIP[m[1]][m[2]])) { return null; }
-    var id = CREATURE_OF[m[2]];
+    var id = (CREATURE_DIR_OF[m[1]] && CREATURE_DIR_OF[m[1]][m[2]]) || CREATURE_OF[m[2]];
     return id && !CREATURE_SKIP[id] ? url('creature', id) : null;
   }
 
@@ -221,7 +223,7 @@
   }
 
   global.DG.assets3d = {
-    url: url, spriteUrl: spriteUrl, creatureFor: creatureFor, CREATURE_OF: CREATURE_OF, CREATURE_SKIP: CREATURE_SKIP, CREATURE_DIR_SKIP: CREATURE_DIR_SKIP, probe: probe, heroRecipe: heroRecipe, borrowRecipe: borrowRecipe, borrowPick: borrowPick, borrowTable: borrowTable, applyProps: applyProps,
+    url: url, spriteUrl: spriteUrl, creatureFor: creatureFor, CREATURE_OF: CREATURE_OF, CREATURE_DIR_OF: CREATURE_DIR_OF, CREATURE_SKIP: CREATURE_SKIP, CREATURE_DIR_SKIP: CREATURE_DIR_SKIP, probe: probe, heroRecipe: heroRecipe, borrowRecipe: borrowRecipe, borrowPick: borrowPick, borrowTable: borrowTable, applyProps: applyProps,
     has: function (kind, id) { return !!set(kind)[id]; },
     /** 진단·점검용 — 'init' | 'probing' | 'ok' | 'fail' */
     state: function () { return state; },
