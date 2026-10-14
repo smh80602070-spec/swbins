@@ -7,7 +7,7 @@
  *   ridge(scene)       600~850m 고리에 절차 산 실루엣 두 겹(노이즈 높이) — 안개색에 섞어 지평선만 가린다.
  *   follow(pos, fogHex) 고리를 나를 따라 옮기고 안개색으로 물들인다(매 프레임 — 값 대입뿐).
  *   turf(scene, pos)   나 둘레 풀 칸에 잔풀(1.5m 칸마다 한 포기, InstancedMesh 하나) — 5m 움직일 때만 다시 깐다.
- * 손잡이: world3d.detail(1 켬)·detailAmt 0.6·detailNear 18·detailFar 46·detailRep 2.2·detailMacro 7(m) · sky3d.ridge(1 켬) · world3d.turf(1 켬)·turfR 40(m, MEDIUM ×0.65, LOW 없음) · world3d.turfSeason(1, W-0209)·turfSway 0.07·seasonGround 0.5 · world3d.windMul(1 — 바람 ×2.2·비 ×1.4, W-0210) · world3d.turfSeason(1 — 계절 색, W-0209)·turfSway 0.07(바람 ×2.2·비 ×1.4, world3d.sway 0 이면 멈춤)
+ * 손잡이: world3d.detail(1 켬)·detailAmt 0.6·detailNear 18·detailFar 46·detailRep 2.2·detailMacro 7(m) · sky3d.ridge(1 켬) · world3d.turf(1 켬)·turfR 40(m, MEDIUM ×0.65, LOW 없음) · world3d.turfSeason(1, W-0209)·turfSway 0.07·seasonGround 0.5 · world3d.windMul(1 — 바람 ×2.2·비 ×1.4, W-0210)
  */
 (function (global) {
   'use strict';
@@ -164,7 +164,13 @@
   function seasonKey() { var S = global.DG.season; return S && S.now ? S.now().key : 'summer'; }
   /** W-0210 순수 — 천후 열쇠 → 흔들림 배율(바람 2.2·비 1.4·그 밖 1). 잔풀과 도형 나무·풀덤불(world3d SWAY_AMT)이 같이 쓴다 · 손잡이 world3d.windMul 0 이면 늘 1 */
   function windMul(wx) { return +tn('world3d.windMul', 1) ? (wx === 'wind' ? 2.2 : (wx === 'rain' ? 1.4 : 1)) : 1; }
-  function windNow() { var WX = global.DG.weather, c = WX && WX.current ? WX.current() : null; return c ? c.key : ''; }
+  var windMemo = { k: null, v: '' };
+  function windNow() {
+    var WX = global.DG.weather; if (!WX || !WX.current) { return ''; }
+    var k = (WX.forced ? WX.forced.key : '-') + ':' + Math.floor(Date.now() / 10000);   // 천후는 3시간 칸 — 10초에 한 번 다시 물어도 충분, 강제는 바로
+    if (windMemo.k !== k) { var c = WX.current(); windMemo = { k: k, v: c ? c.key : '' }; }
+    return windMemo.v;
+  }
   /** W-0209 순수 — 천후 열쇠 → 잔풀 흔들림 폭(정점 높이 배율). world3d.sway 0 이면 0 */
   function turfSway(wx) {
     if (!+tn('world3d.sway', 1)) { return 0; }
@@ -213,7 +219,7 @@
     if (turfMesh.parent !== scene) { scene.add(turfMesh); turfAt = null; }
     turfMesh.visible = true;
     var now = global.performance ? global.performance.now() : Date.now();   // W-0209 바람 — 값 대입뿐(매 프레임)
-    swayU.uT.value = (now / 1000) % 1000; swayU.uA.value = turfSway(windNow());
+    swayU.uT.value = (now / 1000) % 3600; swayU.uA.value = turfSway(windNow());
     var sk = seasonKey();
     if (turfAt && turfAt.R === R && turfAt.sk === sk && Math.hypot(pos.x - turfAt.x, pos.y - turfAt.y) < 5) { return turfMesh.count; }
     turfAt = { x: pos.x, y: pos.y, R: R, sk: sk };   // W-0209 계절이 바뀌면 서 있어도 다시 깐다(색)

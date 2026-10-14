@@ -35,6 +35,14 @@
     return seasonMemo.c[kind];
   }
   function rgbOf(kind) { return seasonRgb(kind) || KCOL[kind]; }
+  /** 잔결 점 두 색 — 계절이면 섞은 바탕을 밝게(×1.3)·어둡게(×0.5), 아니면 옛 SPECK */
+  function speckOf(kind) {
+    var c = seasonRgb(kind), m = seasonMemo, f;
+    if (!c) { return SPECK[kind]; }
+    if (!m.s) { m.s = {}; }
+    if (!m.s[kind]) { f = function (k, al) { return 'rgba(' + Math.min(255, Math.round(c[0] * k)) + ',' + Math.min(255, Math.round(c[1] * k)) + ',' + Math.min(255, Math.round(c[2] * k)) + ',' + al + ')'; }; m.s[kind] = [f(1.3, 0.55), f(0.5, 0.5)]; }
+    return m.s[kind];
+  }
   function color(kind) { var c = seasonRgb(kind); return c ? 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')' : (BASE[kind] || '#5f9f48'); }
   /** 잔결 색(밝은 점·어두운 점) */
   var SPECK = { grass: ['rgba(140,200,90,0.55)', 'rgba(40,90,30,0.5)'], forest: ['rgba(90,140,70,0.45)', 'rgba(20,45,18,0.55)'], mount: ['rgba(190,185,170,0.5)', 'rgba(70,66,58,0.5)'], road: ['rgba(235,210,160,0.6)', 'rgba(140,105,65,0.45)'], farm: ['rgba(170,130,80,0.5)', 'rgba(90,60,30,0.5)'], water: ['rgba(200,235,250,0.45)', 'rgba(30,90,130,0.4)'], town: ['rgba(215,212,205,0.5)', 'rgba(110,108,104,0.45)'] };
@@ -84,7 +92,7 @@
 
   /** 칸 잔결 — 좌표 해시 점(풀·흙·돌 알갱이), 마을은 포장 줄눈, 물은 잔물결 줄 */
   function texture(ctx, kind, tx, ty, sx, sy, T) {
-    var sp = SPECK[kind], i, r, x, y;
+    var sp = speckOf(kind), i, r, x, y;
     if (!sp) { return; }
     if (kind === 'town') {
       ctx.strokeStyle = 'rgba(90,88,84,0.28)'; ctx.lineWidth = Math.max(1, T * 0.012);
