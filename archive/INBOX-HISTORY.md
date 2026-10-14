@@ -103,3 +103,4 @@
 - [x] W-0195 · 10-13 · (W-0190 웹 넘김 — Claude 눈) · 3마을 2D 곤충 박사 나비 자리(침선방 지붕 위)에 보라 한 빛 사람 — 주민 빌린 몸 옷 색 칸(W-0121 tintPx)이 몸 전체에 먹는 몸이 있는 듯(pw-cozy-check w190f1~3·base 다) · 웹
 - [x] 10-11 · (U-0100 유니티 넘김) · creatures3d fox·birb·snake 를 유니티에 배치해 달라 — 정본 GLB 는 `EXT_meshopt_compression`·`EXT_texture_webp` 라 유니티 glTFast 6.14 가 못 읽음(meshopt 패키지 없음·WebP 미지원) → 유니티판(meshopt·WebP 없이 PNG, 뼈·동작 7 그대로) + `.license.json` 을 `saga-unity/Assets/Art/CreaturesSelf/` 에(`tools/asset-place/asset-place.json` `creatures3d` 에 unity 대상 — 지금은 web 하나). 놓이면 U-0100 이 굽기 배선·빌린 GLB 걷기 · 자체툴 → K-0103
 - [x] 10-13 · (W-0191 웹 넘김) · 2나락 옛 타일 `dungeon_{dirt,stone,water,snow,sand}` 안 씀(grass 는 마을 땅) — 지워도 됨 · 자체툴 → K-0107
+- [x] 10-14 · (W-0197 웹 넘김) · K-0101 몸 dj_hopak·nh_yeombun GLB 가 바깥 tex/*.webp 를 가리키는데 파일 없음(qc 3D 오류) · 자체툴 → K-0101 이미 고침(0954e9532 빠졌던 공용 tex 14 — 18장 다 origin 에 있음, 10-14 확인)
