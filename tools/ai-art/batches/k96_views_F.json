@@ -1,0 +1,43 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k96_views_F",
+ "kit": {
+  "spec": "creature",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature",
+  "variants": 4
+ },
+ "note_k96": "K-0102 ⑤ ✗ 3 다시(10-14) — whale 곧은 몸·꼬리 수평, puffer 부푼 공 3/4, fish_a 곧게 헤엄 · 모델은 E 와 같게(정본 물고기 38 과 같은 화풍)",
+ "items": [
+  {
+   "id": "whale",
+   "seed": 2980568845,
+   "prompt": "(whale:1.15), long straight streamlined body, (body straight and level:1.2), horizontal tail flukes, small dorsal fin, gliding forward, no water, (three-quarter side view:1.2), whole body visible, single fish, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature, curved body, arched body, jumping, breaching, splash, water spray, coiled, ring shape, sticker, white outline",
+   "subject_ko": "Whale"
+  },
+  {
+   "id": "puffer",
+   "seed": 4217689177,
+   "prompt": "(pufferfish:1.15), (inflated round ball body:1.25), plump spherical volume, small fins, short tail, no water, (three-quarter view from the front side:1.2), whole body visible, single fish, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature, flat body, side view, front view, sticker, white outline, spikes everywhere",
+   "subject_ko": "Puffer"
+  },
+  {
+   "id": "fish_a",
+   "seed": 301885288,
+   "prompt": "(small river fish:1.15), silver scales, simple fins, (straight body swimming horizontally:1.25), no water, (three-quarter side view:1.2), whole body visible, single fish, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature, jumping, leaping, curved body, arched body, bent body, splash, sticker, white outline",
+   "subject_ko": "Fish1"
+  }
+ ]
+}
