@@ -80,6 +80,7 @@
   "name": "3D 렌더·배우·소품·높낮이·물·하늘·SSAO·후처리",
   "files": [
    "js/world3d.js",
+   "js/world3d-plan.js",
    "js/actor3d.js",
    "js/prop3d.js",
    "js/relief3d.js",
