@@ -1003,5 +1003,22 @@
   "ticket": "W-0201",
   "since": "2026-10-14",
   "note": "D2(claude 2026-10-14): go-mats.mjs 내 몸 MeshBasic 20 → MeshToon+림 20·VRoid 외곽선 11 · go-light.mjs(HIGH) 몸 칸 밝기 한낮·노을·밤 옛 163·159·154(빛 무관) → 새 139·108·104(밤에도 땅 67 보다 밝음) ○ · qc 1-world3d·2-close Read ○."
+ },
+ {
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0204",
+  "since": "2026-10-14",
+  "id": "go.cam2d-close",
+  "name": "2D 카메라 가까이 — 들판 확대 1.7 → 2.0, 몸이 확대를 따름(bodyK = 확대 1~2.5) · 나 60 → 120px/720",
+  "files": [
+   "js/field2d.js",
+   "src/world/02.js"
+  ],
+  "tests": [
+   "2D 카메라 가까이(W-0204) — 들판 확대 2.0 을 몸도 따름: 나 1.25·48·min(2.5, 확대) = 120px(옛 60) 이 100~140"
+  ],
+  "note": "D2(claude 2026-10-14): pw-look2d map 새 w204_new_saga-go Read — 사람·짐승 커짐(주민·영웅 101~110px), 이름표도 함께 커짐 ○ · 폰 세로 120px ○."
  }
 ]

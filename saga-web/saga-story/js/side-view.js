@@ -43,18 +43,20 @@
     return Math.hypot(a.x - b.x, a.y - b.y);
   }
   /** W-0132 — 기본 배율(드래곤즈 크라운처럼 인물을 크게). 화면 키 600 미만(폰 가로)은 줄인다 — 바닥 선(floor 560)이 화면 밖이었다(옛 버그). 손잡이 side.baseZoom */
-  function baseZoom() {
-    var C = global.DG.core, k = C && C.tuned ? +C.tuned('side.baseZoom', 1.35) : 1.35;
-    return H >= 600 ? Math.max(1, Math.min(1.6, k, H / 520)) : 1;   // 키가 낮은 2D 는 resize 가 논리 높이 650 으로 그린다
+  function baseZoom(hh) {   // hh = 화면 키(진단 — 없으면 지금 캔버스)
+    var H = hh || H0();
+    var C = global.DG.core, k = C && C.tuned ? +C.tuned('side.baseZoom', 1.9) : 1.9;   // W-0204 1.35 → 1.9(몸 81 → ≈114px/720 — RPG 처럼 1/6)
+    return H >= 600 ? Math.max(1, Math.min(2.4, k, H / 300)) : 1;   // 키가 낮은 2D 는 resize 가 논리 높이 650 으로 그린다
   }
   /** W-0155 — 폰 가로(키 500 아래·폭 780 넘음)면 시작 자리를 ◀▶ 조작판 오른쪽 끝 + 24px 뒤로(세계 좌표). 화면 x = 세계 x × 배율 ÷ lowK.
       조작판이 보이면 실제 끝을, 안 보이면 가로 CSS 값(14 + 44·2 + 8 = 110). PC·세로는 0(= 옛 80 그대로) */
+  function H0() { return H; }
   function startClearX(iw, ih) {
     iw = iw || global.innerWidth || 0; ih = ih || global.innerHeight || 0;
     if (!(ih && ih <= 500 && iw > 780 && iw > ih)) { return 0; }
     var pl = global.document && global.document.querySelector('#touchpad.show .pad-l'), r = pl && pl.getBoundingClientRect(), edge = r && r.right > 0 ? r.right : 110;
-    var C = global.DG.core, tk = C && C.tuned ? +C.tuned('side.baseZoom', 1.35) : 1.35, k = ih < 600 ? 650 / ih : 1, h = ih * k;
-    var z = viewZoom * (h >= 600 ? Math.max(1, Math.min(1.6, tk, h / 520)) : 1);
+    var C = global.DG.core, tk = C && C.tuned ? +C.tuned('side.baseZoom', 1.9) : 1.9, k = ih < 600 ? 650 / ih : 1, h = ih * k;
+    var z = viewZoom * (h >= 600 ? Math.max(1, Math.min(2.4, tk, h / 300)) : 1);
     return Math.ceil((edge + 24) * k / z);
   }
   /** 화면에 실제로 곱하는 배율 — 사람 줌 × 기본 × 보스 */
@@ -186,9 +188,9 @@
    * 않는 자리였다. 가운데를 좁게(22%) 잡은 것은 걷다가 잘못 눌리지 않게 하려는 것이다.
    */
   function readZone(e) {
-    var r = cv.getBoundingClientRect();
-    /* r.width/height 를 쓴다(W/H 가 아니라) — 확대(viewZoom) 로 캔버스가 화면에서
-       실제로 차지하는 상자가 커지거나 작아져도 존 경계가 그대로 4:5:1... 비율을 지킨다 */
+    var r = { left: cv.offsetLeft, top: cv.offsetTop, width: cv.offsetWidth || 1, height: cv.offsetHeight || 1 };   // W-0204 확대 전 상자(캔버스 = 창) — getBoundingClientRect 는 CSS scale(배율)이 걸린 상자라 배율 1.9 에선 화면 위쪽 탭이 ↓ 로 읽혔다
+    /* 창 기준 비율(4.5:5.5 세로, 가운데 22%) — 확대(baseZoom·viewZoom)는 CSS scale 이라 레이아웃 상자(offset*)는 그대로다.
+       사람이 누르는 곳은 늘 창이므로 존도 창 비율로 나눈다(W/H 논리 크기가 아니라) */
     var x = e.clientX - r.left, y = e.clientY - r.top;
     if (y < r.height * 0.45) { return 'up'; }
     if (x > r.width * 0.39 && x < r.width * 0.61) { return 'down'; }
@@ -1386,7 +1388,7 @@
 
   global.DG = global.DG || {};
   global.DG.sideView = {
-    init: init, draw: draw, resize: resize, miniBox: miniBox, startClearX: startClearX,   // W-0155 시작 자리
+    init: init, draw: draw, resize: resize, miniBox: miniBox, startClearX: startClearX, baseZoom: baseZoom,   // W-0155 시작 자리
     _cam: function () { return camX; }, _zoom: function () { return { base: baseZoom(), eff: effZoom(), lowK: lowK, W: W, H: H }; }, _dirt: dirtOf, _grass: grassOf, _creaFamily: creaFamily, _creaId: creaIdOf, _creaIds: CREA_IDS,   // W-0132 진단
     /** 진단용 — **흔들림의 세기는 화면 층이 정한다**(side.js 는 'shake' 한 줄만 남긴다) */
     _shake: shakeOf,

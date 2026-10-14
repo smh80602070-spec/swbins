@@ -1821,10 +1821,12 @@
       'center', z);
   }
 
+  /** W-0204 2D 몸 배율 — 확대(camZoom2d, 2D 들판 확대 포함)를 몸도 따른다(옛: 땅만 커지고 사람은 60px 그대로), 1~2.5 */
+  function bodyK() { return core.clamp(camZoom2d(), 1, 2.5); }
   function drawSpawn(s, u, v, now, pos, wsc) {   // wsc = 세계 배율(W-0203 보폭 — 안의 scale 은 지역 숫자라 scale() 을 못 부른다)
     var p = project(u, v);
     if (p.s < 0.25 || p.y < -80 || p.y > geom.H + 80) { return; }
-    var z = core.clamp(p.s, 0.5, 1.6);
+    var z = core.clamp(p.s, 0.5, 1.6) * bodyK();   // W-0204
     var age = (now - s.bornAt) / SPAWN_LIFE;
     var near = Math.hypot(s.x - pos.x, s.y - pos.y) <= ENCOUNTER_RANGE;
     var sp = global.DG.sprite;
@@ -1877,7 +1879,7 @@
   function drawNpc(n, u, v, now) {
     var p = project(u, v);
     if (p.s < 0.25 || p.y < -80 || p.y > geom.H + 80) { return; }
-    var z = core.clamp(p.s, 0.5, 1.6);
+    var z = core.clamp(p.s, 0.5, 1.6) * bodyK();   // W-0204
     var sp = global.DG.sprite;
     var talkR = core.tuned('npc.talkRadius', 14);
     var near = n.dist <= talkR;
@@ -2004,10 +2006,10 @@
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    if (!(global.DG.actor2d && global.DG.actor2d.human(ctx, lead, 'player', X, Y, geom.mode === 2 ? 1.5 : 1.25, { facing: player.facing, dirX: player.dirX, dirY: player.dirY, moving: moving, phase: player.phase, now: now, wx: core.save.player.pos.x, wy: core.save.player.pos.y, ppu: sc || scale() }))) sp.stamp(ctx, {
+    if (!(global.DG.actor2d && global.DG.actor2d.human(ctx, lead, 'player', X, Y, (geom.mode === 2 ? 1.5 : 1.25) * bodyK(), { facing: player.facing, dirX: player.dirX, dirY: player.dirY, moving: moving, phase: player.phase, now: now, wx: core.save.player.pos.x, wy: core.save.player.pos.y, ppu: sc || scale() }))) sp.stamp(ctx, {
       kind: 'human', ref: lead, key: lead ? null : 'player',
       // 3D 는 카메라가 낮아 캐릭터를 조금 더 크게 (원작 느낌)
-      x: X, y: Y, s: geom.mode === 2 ? 1.5 : 1.25,
+      x: X, y: Y, s: (geom.mode === 2 ? 1.5 : 1.25) * bodyK(),
       facing: player.facing, phase: player.phase, walking: moving,
       color: lead ? data.faction(lead.faction).color : '#3f6f9f',
       look: lead ? sp.lookOf(lead) : { weapon: 'sword', helm: 'gat', armor: 'robe', cape: true },

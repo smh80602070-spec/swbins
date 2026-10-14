@@ -8971,6 +8971,10 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var ok = [w === 'polearm', w2 === 'polearm', A.sharedUrl('hit') === null, r ? (u && u.slice(-'audio/sfx/sfx_crit.ogg'.length) === 'audio/sfx/sfx_crit.ogg') : u === null];
       return ok.every(Boolean) && ('sx → ' + (u || '(공용 주소 없음)') + ' · 창 → spear_hit');
     });
+    t('2D 카메라 가까이(W-0204) — 들판 확대 2.0 을 몸도 따름: 나 1.25·48·min(2.5, 확대) = 120px(옛 60) 이 100~140', function () {
+      var zm = DG.field2d.zoomMul(), body = 1.25 * 48 * Math.min(2.5, Math.max(1, zm));
+      return zm === 2 && body >= 100 && body <= 140 && ('확대 ' + zm + ' · 몸 ' + Math.round(body) + 'px') || '실패 ' + zm + ' · ' + body;
+    });
     t('3D 땅 — 가까운 결은 18m 안 가득·46m 밖 0, 먼 산 고리 높이가 겹마다 범위 안·고리 둘레가 이어진다, 빈 들 풀 ×4·발밑 잔풀은 풀 칸 40m 안만 (W-0200)', function () {
       var G = DG.ground3d, w0 = G.weightAt(5, 0.45, 18, 46), w1 = G.weightAt(32, 0.45, 18, 46), w2 = G.weightAt(60, 0.45, 18, 46), i, lo = 1e9, hi = -1e9, hh;
       for (i = 0; i < 360; i++) { hh = G.ridgeH(i / 360 * Math.PI * 2, 1); lo = Math.min(lo, hh); hi = Math.max(hi, hh); }

@@ -25,7 +25,7 @@
   function on() { var c = C(); return !!(c && c.tuned ? c.tuned('village.cozy2d', 1) : 1); }
   function wantZoom() {
     if (!on()) { return 1; }
-    var c = C(), z = c && c.tuned ? c.tuned('village.cozyZoom', 1.35) : 1.35;
+    var c = C(), z = c && c.tuned ? c.tuned('village.cozyZoom', 2.1) : 2.1;   // W-0204 1.35 → 2.1(몸 75 → ≈117px/720 — RPG 처럼 1/6)
     return Math.max(0.6, Math.min(2.5, Number(z) || 1));
   }
   var usedZ = null;   // village-view resize() 가 마지막으로 쓴 배율

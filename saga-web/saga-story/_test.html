@@ -152,6 +152,10 @@ window.DG_NO_TUNE = true;
   setTimeout(function () {
     var C = DG.core, S = DG.side, SD = DG.sideData, AU = DG.auto;
 
+    t('2D 카메라 가까이(W-0204) — 720 화면 기본 배율 1.9 → 몸(P_H·1.12·배율) 100~140px(옛 1.35 → 81) · 키 600 아래는 1 그대로', function () {
+      var SV = DG.sideView, S = DG.side, z = SV.baseZoom(720), body = S.P_H * 1.12 * z, low = SV.baseZoom(500);
+      return Math.abs(z - 1.9) < 1e-9 && body >= 100 && body <= 140 && low === 1 && ('배율 ' + z + ' · 몸 ' + Math.round(body) + 'px') || '실패 ' + z + ' · ' + body + ' · ' + low;
+    });
     t('초상 목록(W-0164) — manifest 의 인물 초상이 전부 도감 인물이고, 늦게 들어온 인물(ac_balgwang)도 정사각·카드 둘 다 올라 있다', function () {
       var M = DG.portraitDisk, H = {}, bad = [];
       if (!M) { try { var xq = new XMLHttpRequest(); xq.open('GET', 'assets/portraits/manifest.js', false); xq.send(); var tx = xq.responseText, i0 = tx.indexOf('portraitDisk=') + 13; M = JSON.parse(tx.slice(i0, tx.lastIndexOf('};') + 1)); } catch (e) { M = null; } }   // 진단 페이지엔 안 실려 직접 읽는다
@@ -2550,7 +2554,7 @@ window.DG_NO_TUNE = true;
       var edgeL = Z(w * 0.30, h * 0.8), edgeR = Z(w * 0.70, h * 0.8);
       return up === 'up' && lf === 'left' && dn === 'down' && rt === 'right' &&
         edgeL === 'left' && edgeR === 'right' &&
-        (up + '·' + lf + '·' + dn + '·' + rt);
+        (up + '·' + lf + '·' + dn + '·' + rt) || ('실패 ' + [up, lf, dn, rt, edgeL, edgeR].join(',') + ' · ' + w + '×' + h);
     });
 
     t('손가락 안내는 키보드 기기에서 예전 문구 그대로다', function () {
@@ -6185,7 +6189,7 @@ window.DG_NO_TUNE = true;
     });
     t('st.side-view: 시작 자리(W-0155) — 폰 가로(844×390)는 ◀▶ 조작판 끝 + 24px 뒤(화면 x), PC·세로는 옛 80', function () {
       var SV = DG.sideView, land = SV.startClearX(844, 390), z = SV._zoom(), k = 650 / 390;
-      var tk = +DG.core.tuned('side.baseZoom', 1.35), zz = Math.max(1, Math.min(1.6, tk, 650 / 520));
+      var tk = +DG.core.tuned('side.baseZoom', 1.9), zz = Math.max(1, Math.min(2.4, tk, 650 / 300));   // W-0204 기본 1.9·상한 2.4·H/300
       var screenX = land * zz / k;   // 세계 x → 폰 가로 화면 x(CSS)
       var r = [screenX >= 110 + 24 - 0.5, SV.startClearX(1280, 800) === 0, SV.startClearX(390, 844) === 0, Math.max(80, SV.startClearX(1280, 800)) === 80, !!z];
       return r.every(Boolean) && ('폰 가로 시작 x ' + land + '(화면 ' + screenX.toFixed(0) + 'px ≥ 134) · PC·세로 80') || '실패 ' + r.join(',') + ' ' + land;
@@ -6227,10 +6231,10 @@ window.DG_NO_TUNE = true;
       var r = [on === DG.cfg.mode2d.region.field, off === null, none === null];
       return r.every(Boolean) && ('손잡이 1 → ' + on + ' · 0 → 층 없음 · 표에 없는 사냥터 → 옛 하늘') || '실패 ' + r.join(',');
     });
-    t('st.side-view: 2D 화면(W-0132) — 큰 화면은 기본 확대(1~1.6), 손잡이 1 이면 확대 없음, 풀빛 바닥의 발판 흙은 갈색', function () {
-      var V = DG.sideView, C = DG.core, keep = C.tuned('side.baseZoom', 1.35), z0 = V._zoom(), r;
-      C.setTune('side.baseZoom', 1); var z1 = V._zoom(); C.setTune('side.baseZoom', keep);
-      r = [z0.base >= 1 && z0.base <= 1.6, z1.base === 1, V._dirt({ ground: '#6faf55' }) === '#8a6640', V._dirt({ ground: '#8a6b3a' }) === '#8a6b3a', V._grass({ ground: '#8a6b3a' }) === '#6f9f48'];
+    t('st.side-view: 2D 화면(W-0132) — 큰 화면은 기본 확대(1~2.4, W-0204), 손잡이 1 이면 확대 없음, 풀빛 바닥의 발판 흙은 갈색', function () {
+      var V = DG.sideView, C = DG.core, keep = C.tuned('side.baseZoom', ''), z0 = V._zoom(), r;
+      C.setTune('side.baseZoom', 1); var z1 = V._zoom(); C.setTune('side.baseZoom', keep === '' ? null : keep);   // W-0204 옛 기본(1.35)을 손잡이에 박아 두고 끝나던 것 — 없던 손잡이는 지운다
+      r = [z0.base >= 1 && z0.base <= 2.4, z1.base === 1, V._dirt({ ground: '#6faf55' }) === '#8a6640', V._dirt({ ground: '#8a6b3a' }) === '#8a6b3a', V._grass({ ground: '#8a6b3a' }) === '#6f9f48'];
       return r.every(Boolean) && ('기본 확대 ' + z0.base.toFixed(2) + ' · 화면 ' + Math.round(z0.W) + '×' + Math.round(z0.H)) || '실패 ' + r.join(',');
     });
 

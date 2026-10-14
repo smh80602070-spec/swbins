@@ -6,7 +6,7 @@
 import { open, sleep } from './pw.mjs';
 
 const [game, dest, scene] = [process.argv[2] || 'saga-story', process.argv[3] || 'look2d.png', process.argv[4]];
-const r = await open(game, { w: 1280, h: 720 });
+const r = await open(game, { w: +(process.env.GW || 1280), h: +(process.env.GH || 720) });   // W-0204 폰 세로는 GW=390 GH=844
 const { page } = r;
 const ev = (fn, arg) => page.evaluate(fn, arg);
 const skip = async () => { for (let i = 0; i < 14; i++) { const open1 = await ev(() => !!((DG.scenario && DG.scenario.isOpen && DG.scenario.isOpen()) || (DG.story && DG.story.isOpen && DG.story.isOpen()))); if (!open1) { break; } await page.keyboard.press('Escape'); await sleep(250); } };
@@ -63,7 +63,8 @@ try {
     if (game === 'saga-forest') { await ev(() => DG.village.setJoy(0, 0)); } else { await page.keyboard.up('w'); }
     console.log('걷기 위상', JSON.stringify(await ev(() => { const a = window.__w203 || [], n = a.length; if (n < 2) { return { n }; } let cyc = 0; for (let i = 1; i < n; i++) { const d = a[i].s - a[i - 1].s; cyc += d < -0.5 ? d + 1 : Math.max(0, d); } const sec = (a[n - 1].t - a[0].t) / 1000; return { n, sec: +sec.toFixed(2), hz: +(cyc / sec).toFixed(2), frames: [...new Set(a.slice(-12).map((x) => Math.floor(x.s * 8)))] }; })));
   }
+  const body = await ev(() => new Promise((res) => { const M = DG.mode2d, p0 = M.pace, seen = {}; M.pace = function (k, x, y, u, bp) { seen[k] = Math.round(bp); return p0.apply(this, arguments); }; setTimeout(() => { M.pace = p0; const ks = Object.keys(seen); res({ me: seen.player || seen.me || seen['me:in'] || null, others: ks.filter((k) => !/^(player|me|me:in)$/.test(k)).slice(0, 4).map((k) => seen[k]) }); }, 1200); }));   // W-0204 몸 px(pace 가 받는 bodyPx — 보폭 쓰는 배우만)
   const info = await ev(() => ({ w: innerWidth, h: innerHeight }));
   await page.screenshot(dest.endsWith('.jpg') ? { path: dest, type: 'jpeg', quality: 72 } : { path: dest });
-  console.log('저장', dest, JSON.stringify(info), r.errors.length ? 'errors ' + JSON.stringify(r.errors.slice(0, 3)) : '');
+  console.log('저장', dest, JSON.stringify(info), '몸px', JSON.stringify(body), r.errors.length ? 'errors ' + JSON.stringify(r.errors.slice(0, 3)) : '');
 } finally { await r.close(); }
