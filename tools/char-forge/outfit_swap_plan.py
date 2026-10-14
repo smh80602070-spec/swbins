@@ -3,6 +3,7 @@
     py tools/char-forge/outfit_swap_plan.py            # data/outfit_swap_plan.json 을 쓴다
     py tools/char-forge/outfit_swap_plan.py --check    # 겹침·조각 존재·몸 원래 옷 그대로가 아닌지 검사만
     py tools/char-forge/outfit_swap_plan.py --fix-holes   # K-0105 기존 줄 중 팔다리 구멍·L 바지 짝 없는 줄만 다시 고른다 → _out/k105_ids.txt
+    py tools/char-forge/outfit_swap_plan.py --fix-dups    # K-0105 신발만 다른 묶음(같은 몸·윗옷·바지·원피스·무늬)의 둘째부터 다시 고른다 → _out/k105b_ids.txt
 
 - 조각 목록은 `_out/parts/<샘플>/parts.json`(export_parts_all.sh). 슬롯: top · bottom · shoes · cloth(원피스: 상·하의 대신).
 - 성별은 명단에 없어 id 해시로 정한다(근거 없는 값). 풀은 unity_bodies_plan 과 같다.
@@ -31,7 +32,7 @@ TRAITS = os.path.join(HERE, 'data', 'hero_traits.json')
 LIMB_COVER = os.path.join(HERE, 'data', 'limb_cover.json')   # K-0101 팔다리 덮개(limb_cover_scan.py) — 피부 지운 몸에 그 자리를 안 덮는 옷이 가지 않게
 REALM_I2I = os.path.join(HERE, '..', 'ai-art', 'batches', 'web_realm_194_i2i.json')   # K-0101 — 5천하 194 초상 성별('1girl' 로 시작하면 여자, 웹 heroSex 와 같은 규칙)
 PATTERNS = os.path.join(HERE, '..', '..', 'saga-assets', 'patterns')
-K24_N, K24_MD5 = 299, 'a6a4f2f7c4c8b5b8ebbd7928b669721e'     # K-0105 팔다리 구멍·L 바지 97명(첫 299 안 50명) 다시 고른 뒤(옛 7f9a9987 = K-0101) · K-0024 299명 조합표 지문(이미 구운 몸 — 바뀌면 안 된다)
+K24_N, K24_MD5 = 299, '9d88163b834b4f8af8a48ff70c7fec2f'     # K-0105 팔다리 구멍·L 바지 97명 + 신발만 다른 45명 다시 고른 뒤(옛 a6a4f2f7 · 7f9a9987 = K-0101) · K-0024 299명 조합표 지문(이미 구운 몸 — 바뀌면 안 된다)
 SKIN_PART = {('top', 'l'): 'CLOTH_02', ('bottom', 'l'): '001_02'}   # K-0097 살색 조각(칸·샘플 → 조각 파일 이름에 든 글자)
 TINT = ['#26365c', '#2f5d3a', '#3a3a3e', '#5e2f5a', '#1f6b6b', '#b08a1e', '#55677a', '#6b3a26']   # 남색·짙은 초록·숯·자주·청록·겨자·회청·밤색
 TUCK_IDS = os.path.join(HERE, 'data', 'k97_tuck_ids.json')   # K-0097 단계 1b 결과(tuck_scan.py 쉼 자세 뚫림 > 0)
@@ -203,18 +204,23 @@ def bad_fit(body, kit):
     return bool(limb_holes(body, kit)) or (kit.get('bottom') == 'l' and kit.get('top') != 'l')
 
 
-def fix_holes(rows, parts):
+def fix_holes(rows, parts, dups=False):
     """K-0105 — 이미 구운 줄 중 bad_fit 인 줄만 다시 고른다(성별·id 그대로). 같은 몸 먼저, 안 되면 같은 성별 덜 쓰인 몸.
     씨앗 'k105'+id. 무늬 칸은 새 옷에 맞춘다(원피스면 cloth, 아니면 top). 바뀐 id 목록.
-    신발만 다른 조합(같은 몸·같은 윗옷·바지·원피스)도 거른다 — 색·신발만 다르면 같은 사람으로 보인다(10-14 첫 시트 nz_jeokpyo·rf_wenchou)."""
+    신발만 다른 조합(같은 몸·같은 윗옷·바지·원피스·무늬)도 거른다 — 색·신발만 다르면 같은 사람으로 보인다(10-14 첫 시트 nz_jeokpyo·rf_wenchou)."""
     used = {(r['body'], tuple(sorted(r['kit'].items()))) for r in rows}
-    look = lambda b_, k_: (b_, tuple(sorted((s, v) for s, v in k_.items() if s != 'shoes')))
+    # 생김새 = 몸 + 신발 뺀 옷 + 무늬(무늬가 다르면 옷 프린트가 달라 다른 사람). 무늬 없이 세면 남자(몸 9종) 348명 > 거름 통과 조합 328 이라 못 맞춘다(10-14)
+    look = lambda b_, k_, r_: (b_, tuple(sorted((s, v) for s, v in k_.items() if s != 'shoes')), (r_.get('pattern') or {}).get('name'))
     looks = {}
     for r in rows:
-        looks[look(r['body'], r['kit'])] = looks.get(look(r['body'], r['kit']), 0) + 1
+        looks[look(r['body'], r['kit'], r)] = looks.get(look(r['body'], r['kit'], r), 0) + 1
     changed = []
+    seen = set()
     for r in rows:
-        if not bad_fit(r['body'], r['kit']):
+        lk = look(r['body'], r['kit'], r)
+        dup = dups and lk in seen     # 신발만 다른 묶음 — 줄 순서로 첫 사람만 남긴다(사용자 10-14 "신발만 다른 것도 다시 골라")
+        seen.add(lk)
+        if not dup and not bad_fit(r['body'], r['kit']):
             continue
         pool = [L for L in (MALE if r['gender'] == 'M' else FEMALE) if L in parts]
         rng = random.Random(int(hashlib.md5(('k105' + r['id']).encode()).hexdigest(), 16))
@@ -223,16 +229,17 @@ def fix_holes(rows, parts):
             if q['body'] in n:
                 n[q['body']] += 1
         used.discard((r['body'], tuple(sorted(r['kit'].items()))))
-        looks[look(r['body'], r['kit'])] -= 1
+        looks[look(r['body'], r['kit'], r)] -= 1
         kit = None
         for body in [r['body']] + sorted((L for L in pool if L != r['body']), key=lambda L: (n[L], rng.random())):
-            kit = pick_kit(rng, r['gender'], pool, parts, body, used, ok=lambda b_, k_: not bad_fit(b_, k_) and not looks.get(look(b_, k_)))
+            okf = lambda b_, k_: not bad_fit(b_, k_) and not looks.get(look(b_, k_, r))
+            kit = pick_kit(rng, r['gender'], pool, parts, body, used, ok=okf) or scan_kit(rng, r['gender'], pool, parts, body, used, okf)
             if kit:
                 break
         if kit is None:
             raise SystemExit('조합을 못 찾음(K-0105): ' + r['id'])
         used.add((body, tuple(sorted(kit.items()))))
-        looks[look(body, kit)] = looks.get(look(body, kit), 0) + 1
+        looks[look(body, kit, r)] = looks.get(look(body, kit, r), 0) + 1
         r.update(body=body, kit=kit)
         if 'pattern' in r:
             r['pattern']['slot'] = 'cloth' if 'cloth' in kit else 'top'
@@ -240,6 +247,25 @@ def fix_holes(rows, parts):
         r.pop('tuck', None)
         changed.append(r['id'])
     return changed
+
+
+def scan_kit(rng, g, pool, parts, body, used, ok):
+    """pick_kit 이 500번 안에 못 찾을 때(남자 몸 9종이라 조합이 많이 쓰임) — 가능한 조합 전부를 씨앗 순서로 섞어 pick_kit 과 같은 규칙으로 훑는다."""
+    tops = [L for L in pool if 'top' in parts[L]]
+    bots = [L for L in pool if 'bottom' in parts[L]]
+    shoes = [L for L in pool if 'shoes' in parts[L]]
+    cands = [{'top': t, 'bottom': bt, 'shoes': s} for t in tops for bt in bots for s in shoes]
+    if g == 'F':
+        cands += [{'cloth': c, 'shoes': s} for c in pool if 'cloth' in parts[c] for s in shoes]
+    rng.shuffle(cands)
+    for kit in cands:
+        if (body, tuple(sorted(kit.items()))) in used or all(v == body for v in kit.values()):
+            continue
+        if 'cloth' not in kit and sum(v == body for v in kit.values()) > 1:
+            continue
+        if ok(body, kit):
+            return kit
+    return None
 
 
 def apply_traits(rows, parts):
@@ -318,10 +344,20 @@ if __name__ == '__main__':
         rows = json.load(open(OUT, encoding='utf-8'))['entries']
         print('검사 대상:', os.path.relpath(OUT))
     changed = apply_traits(rows, parts)
-    fixed = fix_holes(rows, parts) if '--fix-holes' in sys.argv else []
+    fixed = fix_holes(rows, parts, dups='--fix-dups' in sys.argv) if ('--fix-holes' in sys.argv or '--fix-dups' in sys.argv) else []
     if fixed:
-        print('K-0105 팔다리 구멍·L 바지 다시 고른 인물', len(fixed))
-        open(os.path.join(HERE, '_out', 'k105_ids.txt'), 'w', encoding='utf-8').write(','.join(fixed))
+        print('K-0105 다시 고른 인물', len(fixed))
+        open(os.path.join(HERE, '_out', 'k105b_ids.txt' if '--fix-dups' in sys.argv else 'k105_ids.txt'), 'w', encoding='utf-8').write(','.join(fixed))
+        if os.path.exists(TUCK_IDS) and '--check' not in sys.argv:   # 옷이 바뀐 사람의 옛 tuck 스캔은 버린다 — 남기면 다음 실행 때 새 옷에 tuck 이 붙는다
+            raw = open(TUCK_IDS, 'rb').read().decode('utf-8')
+            tk = json.loads(raw)
+            gone = [i for i in tk['ids'] if i in fixed]
+            if gone:
+                tk['ids'] = [i for i in tk['ids'] if i not in fixed]
+                tk['poke'] = {k: v for k, v in tk.get('poke', {}).items() if k not in fixed}
+                txt = json.dumps(tk, ensure_ascii=False, indent=1) + '\n'
+                open(TUCK_IDS, 'wb').write((txt.replace('\n', '\r\n') if '\r\n' in raw else txt).encode('utf-8'))
+                print('tuck 스캔에서 뺌(옷 바뀜)', len(gone), ':', ','.join(gone))
     k97 = apply_k97(rows, set(changed) | set(fixed)) if '--check' not in sys.argv else []
     if k97:
         print('K-0097 tint·tuck 단 인물', len(k97), ':', ','.join(k97))
