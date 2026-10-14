@@ -1046,7 +1046,8 @@
     if (!b || !ld.parse) { plain(); return; }
     b.then(function (buf) {
       if (!buf) { plain(); return; }
-      try { ld.parse(buf, url.slice(0, url.lastIndexOf('/') + 1), ok, function () { plain(); }); } catch (e) { plain(); }
+      var got = false;   // R-5 — ok 안에서 던지면 GLTFLoader 가 onError 로 돌린다: 그땐 옛 길로 다시 받지 않는다(ok 두 번·inflight 두 번 감소)
+      try { ld.parse(buf, url.slice(0, url.lastIndexOf('/') + 1), function (g) { got = true; ok(g); }, function () { if (!got) { plain(); } }); } catch (e) { if (!got) { plain(); } }
     });
   }
   function acquire(url, done) {
