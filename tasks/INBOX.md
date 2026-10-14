@@ -4,7 +4,6 @@
 - [ ] 10-10 · "에셋을 아직도 생성 안해서 쓰는 곳이 있어? 생성툴로는 역부족이야? 에셋을 남에꺼 안쓰고 싶어서" · 빌린 에셋(Poly Haven 사진 재질 24·ambientCG·Poly by Google CC-BY 동물·Kenney/Quaternius/KayKit 킷·VRoid 샘플 A·OFL 글꼴·Lucide) 전부 자체 생성으로 — K-0093(CC0 사진 PBR) 은 자체 PBR 생성판으로 다시 쓰고, world-forge sources.json 24 → 자체 재질, 웹 asset3d 빌린 참조 → 자체 모델(W) · 자체툴/웹/고돗/유니티 — **일부 처리 10-10**: K-0093 자체 생성판으로 다시 씀 · 동물·탈것 K-0096 진행 · 남은 것 = world-forge sources.json 24(건물 다시 굽기, 새 K 동결 뒤)·킷·글꼴·아이콘
 - [ ] 10-10 · (W-0162 웹 세션 넘김) · K-0028 새 인물 201 은 성별 자료가 없다 — `tools/gen-assets3d-ids.mjs` heroSex 가 hero_traits.json·i2i 프롬프트에서 299/500 만 잡는다(빌린 몸 고르기는 성별 아는 몸만 써서 동작은 정상). 새 201 의 성별을 정본(hero_traits 또는 promote 메타)에 넣어 달라 — 웹 진단 "영웅 === 299"·"성별 표 = 영웅 수" 는 W-0162 때 >= 299 로 풀어 둠
 - [ ] 10-11 · (W-0163 웹 세션 넘김) · 빌린 동물·탈것 3D(Poly CC-BY·Quaternius 말·SlimeEnemy)는 다섯 판에서 지웠지만 **그 모델로 구운 2D 파생물**(`beast_*.png`·마을 들짐승 시트 `sprites2d/animals/*`·몬스터 시트 등)이 남아 CC-BY 표기가 아직 필요하다 — 자체판 `shared/assets/creatures3d` 로 다시 구워 바꾸면(K) 다섯 판 ASSET_LICENSES 의 그 출처 절·W-0163 머리 단락을 지울 수 있다 · 자체툴(K)/웹
-- [ ] 10-11 · (K-0097 자체툴 넘김 — Claude 눈) · 샘플 L 바지(001_02)는 허벅지 중간부터만 덮는 조각(원래 L 의 긴 윗옷이 위를 가림)이라, 다른 샘플의 짧은 윗옷과 짝지은 인물(무늬 없는 60명, 예 sg_machao)은 허벅지 맨살이 드러난다 — K-0097 은 색만 고침(kit 못 바꿈). 고치려면 그 짝을 금하는 조합 규칙 + 다시 굽기(새 K) · 자체툴 → K-0105
 - [ ] 10-12 · (U-0104 유니티 넘김) · 네 판(2나락·3마을·4종횡·5천하) 효과음은 이제 자체 92종(`SagaSfx`)을 이름으로 먼저 쓰고, 빌린 Kenney 클립(`saga-unity/Assets/Art/Audio/Kenney_*`)은 씬 필드(GameBootstrap·ForestHostileEncounterUi·ForestCollectSpot/FruitTree·StoryEnemy·RealmCommandUi 등)가 아직 가리켜 **대체용으로만** 남음 → 씬 재빌드 때 그 필드·파일 걷기(1만리 옛 Kenney 필드 포함) · 유니티
 - [ ] 10-12 · (W-0185 웹 넘김) · 1만리 폰 들판 15초에 받는 GLB 13.8MB 중 대부분이 인물·괴물 몸(saga-web/saga-go/assets/characters3d·creatures3d — 예 ru_doksi 948KB·tz_hyanggae 819KB·monkroose 614KB·panda 590KB). 소품은 폰 표로 7.5MB→0.8MB 줄였다. 몸 GLB 압축(meshopt·텍스처 축소, tools/glb-compress)이나 폰용 가벼운 몸 한 벌 · 자체툴 → K-0106
 - [ ] 10-12 · (W-0186 웹 넘김) · 2나락 폰 마을에 들어가면 받는 GLB 의 대부분이 동작 묶음 assets/models/anim/UAL1_Standard.glb(1.9MB)와 인물 몸 characters3d/*(개당 ~600KB, 마을 사람마다). 압축(meshopt·텍스처 축소, tools/glb-compress)이나 폰용 동작 묶음(쓰는 클립만) · 자체툴 → K-0106
@@ -12,7 +11,6 @@
 - [ ] 10-13 · (고돗 그래픽 점검 넘김 — 사용자 "그래픽부터 점검해서 티켓 만들어", 시트 `tasks/sheets/godot-graphics-audit-20261013.md`) · 고돗 화면에서 모델 몫 넷: ① 나무 = 정육면체 잎 덩이(1만리 숲·3마을 둘레·4종횡 뒤 숲) → 잎 카드·층진 잎 자체 나무 ② 괴물 몸 장난감 다면체 ③ 떠 있는 섬 로우폴리 ④ 2나락 방 벽·바닥 GLB(빌린 킷) → K-0094 테마 타일·자체 방을 고돗에도 · 자체툴
 - [ ] 10-13 · (웹 R-5 넘김) · K-0049 움직이는 초상이 VRoid 렌더라 대화 초상(AI)과 다른 사람 — 같은 AI 초상에서 다시(웹은 꺼 둠) · 자체툴
 - [ ] 10-13 · (W-0194 R-5 넘김) · 상어 펫 shark·shark_2 가 자체판 shark 하나라 같은 몸 — shark_2 용 다른 상어 · 자체툴
-- [ ] 10-13 · (K-0101 자체툴 넘김 — Claude 눈) · 이미 구운 인물 41명이 팔다리 구멍 조합(피부 지운 VRoid 몸 + 그 자리를 안 덮는 옷 — 예 nz_jeokpyo 몸 w + 원피스 q: 윗팔·허벅지가 비어 보임, sg_diaochan 등) — `outfit_swap_plan.py` 경고 명단을 `limb_holes` 로 다시 골라 다시 굽기(새 K) · 자체툴 → K-0105
 - [ ] 10-13 · (W-0196 넘김) · K-0093 `dirt` 무늬 없어 3D 흙길 밋밋 — 결 있는 흙 · 자체툴
 - [ ] 10-14 · (K-0106 넘김 — 사용자 결정) · 폰용 몸 LOD 이득 작음(파일 0.83배·저장소 +200MB) — (가) 안 함·폰 용량은 W (나) 원본 대신 (다) 일부만, 추천 (가)(K-0106 메모) · 사용자/웹
 - [ ] 10-14 · (웹 R-0) · 3마을 2D 건물 school·museum·tailor 그림·새 땅 · 1만리 3D 집 · 2D 시트 다시 굽기(W-0197 뒤) · 자체툴
