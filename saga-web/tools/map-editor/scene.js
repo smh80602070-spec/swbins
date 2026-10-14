@@ -17,7 +17,7 @@
   var GAME = (/^\/g\/([a-z0-9-]+)\//.exec(location.pathname) || [])[1] || 'saga-go';
   /* 게임과 같은 순서로 부른다(index.html 의 순서에서 이 화면에 필요한 것만) */
   var SCRIPTS = {
-    'saga-go': ['js/vendor/three.iife.js', 'js/core.js', 'js/perf.js', 'js/season.js', 'js/weather.js', 'js/land.js',
+    'saga-go': ['js/vendor/three.iife.js', 'js/core.js', 'js/perf.js', 'js/season.js', 'js/weather.js', 'js/land.js', 'js/world-terrain.js',
                 'js/world.js', 'js/prop3d.js', 'js/relief3d.js', 'js/world3d-plan.js', 'js/world3d.js']
   };
   var GRID = 48;

@@ -13,7 +13,7 @@
 1977 saga-web/saga-forest/js/ui.js
 1987 saga-web/saga-forest/js/village-view3d.js
 2117 saga-web/saga-dungeon/js/dungeon-view.js
-2114 saga-web/saga-go/js/world.js
+1921 saga-web/saga-go/js/world.js
 2003 saga-web/saga-realm/js/realm3d.js
 1790 saga-web/saga-go/js/ui.js
 1679 saga-web/saga-story/js/ui.js

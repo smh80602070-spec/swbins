@@ -3,7 +3,8 @@
   "id": "go.world",
   "name": "지도·스폰·시점 3모드·구역 이름 30",
   "files": [
-   "js/world.js"
+   "js/world.js",
+   "js/world-terrain.js"
   ],
   "tests": [
    "지형 결정성(같은 좌표=같은 지형)"
