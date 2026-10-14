@@ -470,6 +470,8 @@
    "include": [
     "*.glb",
     "*.webp",
+    "*.png",
+    "*.jpg",
     "*.license.json"
    ],
    "note": "K-0024 인물 299 웹 경량 3D(Meshopt·WebP, 텍스처는 tex/<해시>.webp 공용 450장, GLB 옆 tex/ 와 같이 놓을 것) — 3D 원본·동작 GLB 는 용량 정책으로 로컬 전용(_out/vroid, 조합표로 재생성)",
