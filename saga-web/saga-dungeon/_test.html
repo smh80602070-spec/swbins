@@ -7417,6 +7417,17 @@ window.requestAnimationFrame = function () { return 0; };
       return seeds.length >= 36 && heroAnime && off && A.fixedRecipe('산적') && ('사람 적·보스·마을 사람 ' + seeds.length + ' · 몸 ' + Object.keys(used).length + ' 모두 다름 · 도감 인물은 VRoid');
     });
 
+    t('폰 마을 낮은 줄(W-0214) — lazyNpc 1 이면 withLazy 안 받기는 낮은 줄에 서고, 높은 쪽이 같은 파일을 부르면 올라가며, lazyNpc 0 이면 늘 높은 줄', function () {
+      var A = DG.asset3d, seed = 'npc:__w214_' + Date.now(), u = 'assets/models/__w214_' + Date.now() + '.glb', u2 = u.replace('.glb', 'b.glb'), r;
+      try {
+        A.set('asset3d.lazyNpc', 1);
+        A.withLazy(function () { A.rawScene(u, function () {}); }); var inLow = A.lowQueue().indexOf(u) >= 0;
+        A.rawScene(u, function () {}); var promoted = A.lowQueue().indexOf(u) < 0;
+        A.set('asset3d.lazyNpc', 0); A.withLazy(function () { A.rawScene(u2, function () {}); }); var never = A.lowQueue().indexOf(u2) < 0;
+        r = [inLow, promoted, never, A.lazyNpc() === false];
+      } finally { A.set('asset3d.lazyNpc', null); }
+      return r.every(Boolean) && '낮은 줄 → 높은 쪽이 부르면 올림 · 0 이면 늘 높은 줄' || '실패 ' + r.join(',');
+    });
     t('미리 받기 동작 묶음(W-0213) — 자체 몸짓 몸(characters3d·VRM) 레시피는 ownAnimOf 참이라 UAL1 을 안 받고, world3d.ownAnim 0 이면 거짓(옛 길)', function () {
       var A = DG.asset3d, h = DG.data.heroes.find(function (x) { var r = A.heroRecipe(x.id); return r && (r.body.indexOf('characters3d') >= 0 || r.body.indexOf('people/anime') >= 0); }), r = h && A.heroRecipe(h.id), on, off;
       if (!r || !DG.ownAnim) { return '자체 몸짓 몸 없음 — 건너뜀'; }

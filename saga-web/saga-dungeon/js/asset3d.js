@@ -965,9 +965,23 @@
   var MAX_INFLIGHT = 3;
   var inflight = 0;
   var startQ = [];
+  /* W-0214 — 폰(light())이면 마을 사람 몸(withLazy 안에서 부른 받기)은 **낮은 줄**: 높은 줄(건물·나무·내 몸·동료)이 빈 지
+     LOW_GAP ms 가 지나야 시작한다. 4G 폰에서 주민 몸 아홉(각 ~600KB)이 먼저 줄을 차지해 45초가 지나도 건물이 상자였다.
+     같은 파일을 높은 쪽이 다시 부르면 높은 줄로 올린다. 손잡이 asset3d.lazyNpc(auto = 폰 · 1 · 0) */
+  var lowQ = [], lowScope = false, lastHi = 0, lowTimer = null, LOW_GAP = 1500, lowSince = 0, LOW_MAX = 15000;   // LOW_MAX — 높은 쪽이 계속 이어져도 이만큼 지나면 푼다
+  function LAZY_NPC() { var k = tuned('asset3d.lazyNpc', 'auto'); if (k === 1 || k === '1') { return true; } if (k === 0 || k === '0') { return false; } return light(); }
+  function nowMs() { return (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now(); }
+  function withLazy(fn) { var keep = lowScope; lowScope = LAZY_NPC(); if (lowScope) { lastHi = Math.max(lastHi, nowMs()); } try { return fn(); } finally { lowScope = keep; } }
+  function lowReady() {
+    if (!lowQ.length) { return false; }
+    var now = nowMs(), wait = Math.min(LOW_GAP - (now - lastHi), LOW_MAX - (now - lowSince));
+    if (wait <= 0) { return true; }
+    if (!lowTimer && typeof setTimeout !== 'undefined') { lowTimer = setTimeout(function () { lowTimer = null; pump(); }, wait + 20); }
+    return false;
+  }
   function pump() {
-    while (inflight < MAX_INFLIGHT && startQ.length) {
-      var url = startQ.shift();
+    while (inflight < MAX_INFLIGHT && (startQ.length || lowReady())) {
+      var url = startQ.length ? startQ.shift() : lowQ.shift();
       var c = cache[url];
       if (!c || c.state !== 'queued') { continue; }
       var ld = loader();
@@ -1013,9 +1027,9 @@
     var A3c = global.DG.assets3d, cu = A3c && A3c.creatureFor ? A3c.creatureFor(url) : null; if (cu) { url = cu; } var c = cache[url];   // W-0163 빌린 동물·탈것 → 자체판(creatures3d)
     if (c && c.state === 'ok') { done(c); return; }
     if (c && c.state === 'fail') { done(null); return; }
-    if (c) { c.waiting.push(done); return; }
-    c = cache[url] = { state: 'queued', waiting: [done] };
-    startQ.push(url);
+    if (c) { c.waiting.push(done); if (!lowScope && c.low && c.state === 'queued') { var li = lowQ.indexOf(url); if (li >= 0) { lowQ.splice(li, 1); } c.low = false; startQ.push(url); lastHi = nowMs(); pump(); } return; }   // W-0214 높은 쪽이 부르면 올린다
+    c = cache[url] = { state: 'queued', waiting: [done], low: lowScope };
+    if (lowScope) { if (!lowQ.length) { lowSince = nowMs(); } lowQ.push(url); } else { startQ.push(url); lastHi = nowMs(); }
     pump();
   }
   function flush(c, arg) { var w = c.waiting; c.waiting = []; for (var i = 0; i < w.length; i++) { w[i](arg); } }
@@ -1359,7 +1373,7 @@
     FIXED_HERO: FIXED_HERO, fixedRecipe: fixedRecipe,
     normName: normName, score: score, mapClips: mapClips, SLOTS: SLOTS, fit: fit,
     ready: function () { return !!three(); }, hasLoader: function () { return !!loader(); },
-    DEFAULTS: DEFAULTS, restore: restore, heroRecipe: heroRecipe, ANIM_SRC: ANIM_SRC, ownAnimOf: function (rec) { return !!(rec && !rec.anim && wantsOwnAnim(rec.body)); },   // W-0213 buildHero 의 own 과 같은 식
+    DEFAULTS: DEFAULTS, restore: restore, heroRecipe: heroRecipe, ANIM_SRC: ANIM_SRC, withLazy: withLazy, lazyNpc: LAZY_NPC, lowQueue: function () { return lowQ.slice(); }, qState: function () { var n = nowMs(); return { inflight: inflight, start: startQ.length, low: lowQ.length, hiAgo: Math.round(n - lastHi), lowAgo: lowQ.length ? Math.round(n - lowSince) : null, timer: !!lowTimer, loading: Object.keys(cache).filter(function (u) { return cache[u].state === 'load'; }).map(function (u) { return u.split('/').slice(-2).join('/'); }), next: startQ.slice(0, 4).map(function (u) { return u.split('/').slice(-2).join('/'); }) }; }, ownAnimOf: function (rec) { return !!(rec && !rec.anim && wantsOwnAnim(rec.body)); },   // W-0213 buildHero 의 own 과 같은 식
     build: build, buildHero: buildHero, step: step, play: play, rawScene: rawScene, tick: tick,
     ownAllMat: ownAllMat, flashAllMat: flashAllMat,
     tuned: tuned, set: set, stats: stats, isActorAsset: isActorAsset, isSwayAsset: isSwayAsset,

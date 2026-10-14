@@ -53,6 +53,7 @@ for (const g of GAMES) {
       await sleep(2500);
       await c.ev(`(function(){ var cs = document.querySelectorAll('#starter-host .stc-cell'); if (!cs.length) { return 0; } for (var i = 0; i < 3 && i < cs.length; i++) { cs[i].click(); } var b = document.querySelector('#starter-host .stc-btn'); if (b) { b.click(); } return cs.length; })()`);
       await sleep(+(process.env.PLAY_MS || 15000));   // PLAY_MS 로 늘려 늦게 오는 것까지(W-0214)
+      if (process.env.PROBE_EVAL) { console.log('   eval:', await c.ev(process.env.PROBE_EVAL)); }   // 끝에 한 식 재기(예: JSON.stringify(DG.asset3d.qState()))
       for (let i = 0; i < 4; i++) { await c.key('Escape', 60); await sleep(200); }
     }
     const res = JSON.parse(await c.ev(`JSON.stringify(performance.getEntriesByType('resource').map(function (r) { return [r.name.replace(location.origin, ''), r.transferSize || r.encodedBodySize || 0, Math.round(r.duration)]; }))`));

@@ -113,7 +113,7 @@
     }
     touch(meRenderParams().seed);
     var ns = (run.room && run.room.npcs) || [];
-    for (var i = 0; i < ns.length; i++) { if (!ns[i].model) { touch('npc:' + (ns[i].key || '')); } }   // 제 몸 손님(§5.20)은 사람 창고를 안 당긴다
+    var touchNpcs = function () { for (var i = 0; i < ns.length; i++) { if (!ns[i].model) { touch('npc:' + (ns[i].key || '')); } } }; if (AS3.withLazy) { AS3.withLazy(touchNpcs); } else { touchNpcs(); }   // W-0214 폰: 주민 몸은 낮은 줄   // 제 몸 손님(§5.20)은 사람 창고를 안 당긴다
   }
 
   /** 지역 진입 전 미리 로드(PLAN 39절 나머지 절반) — 들길(exit_*) 표식에
@@ -609,9 +609,9 @@
          **이 사람 고유의 옷 빛깔**로 물들인다(town.js 의 뜻 그대로) */
       var nc = hexOf(ref && ref.color, 0x8a6f4e);
       /* 세 시대 손님(§5.20)은 제 몸(`folk:*`, 제 클립·제 옷) — 물들이지 않는다 */
-      var body = AS3 && ref && ref.model ? AS3.build(ref.model, 'npc:' + ref.key, 40, null, function () { return npcShape(nc); }) :
+      var mkNpc = function () { return AS3 && ref && ref.model ? AS3.build(ref.model, 'npc:' + ref.key, 40, null, function () { return npcShape(nc); }) :
         AS3 ? AS3.buildHero('npc:' + ((ref && ref.key) || ''), 40, ref && ref.color,
-        function () { return npcShape(nc); }) : npcShape(nc);
+        function () { return npcShape(nc); }) : npcShape(nc); }, body = AS3 && AS3.withLazy ? AS3.withLazy(mkNpc) : mkNpc();   // W-0214 폰: 주민 몸은 낮은 줄
       g.add(body);
       g.userData.mixerNode = body;
       /* 발밑 고리 — 말이 걸리는 거리에 들어서면 켜진다 */
