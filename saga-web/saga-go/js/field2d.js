@@ -20,7 +20,22 @@
   var KCOL = { grass: [95, 159, 72], forest: [63, 110, 54], mount: [139, 134, 120], road: [202, 168, 119], town: [169, 166, 158], farm: [141, 108, 64], water: [62, 143, 178] };
   /** 땅 종류 바탕색 — 젤다 「신들의 트라이포스」 들판 팔레트(맑고 부드러운 중간 톤) */
   var BASE = { grass: '#5f9f48', forest: '#3f6e36', mount: '#8b8678', road: '#caa877', town: '#a9a69e', farm: '#8d6c40', water: '#3e8fb2' };
-  function color(kind) { return BASE[kind] || '#5f9f48'; }
+  /** W-0211 — 봄·가을·겨울 들(grass)·논밭(farm)은 계절 색을 섞는다(3D ground3d.seasonPaint 와 같은 규칙). 손잡이 world.field2dSeason 0.5 ·
+   *  여름·계절 꺼짐·손잡이 0 = null(옛 BASE·KCOL). 계절 열쇠로 캐시 — 칸마다 섞기 계산 안 함 */
+  var seasonMemo = { k: null, c: {} };
+  function seasonRgb(kind) {
+    var S = global.DG.season, C = core(), a = C && C.tuned ? +C.tuned('world.field2dSeason', 0.5) : 0.5, s, mk, hx, b, t;
+    if ((kind !== 'grass' && kind !== 'farm') || !S || !S.on || !S.on() || !(a > 0)) { return null; }
+    s = S.now(); if (!s || s.key === 'summer') { return null; }
+    mk = s.key + ':' + a; if (seasonMemo.k !== mk) { seasonMemo = { k: mk, c: {} }; }
+    if (!seasonMemo.c[kind]) {
+      hx = parseInt(String(kind === 'farm' ? s.field : s.grass).replace('#', ''), 16); b = KCOL[kind]; t = Math.min(1, a);
+      seasonMemo.c[kind] = [Math.round(b[0] + (((hx >> 16) & 255) - b[0]) * t), Math.round(b[1] + (((hx >> 8) & 255) - b[1]) * t), Math.round(b[2] + ((hx & 255) - b[2]) * t)];
+    }
+    return seasonMemo.c[kind];
+  }
+  function rgbOf(kind) { return seasonRgb(kind) || KCOL[kind]; }
+  function color(kind) { var c = seasonRgb(kind); return c ? 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')' : (BASE[kind] || '#5f9f48'); }
   /** 잔결 색(밝은 점·어두운 점) */
   var SPECK = { grass: ['rgba(140,200,90,0.55)', 'rgba(40,90,30,0.5)'], forest: ['rgba(90,140,70,0.45)', 'rgba(20,45,18,0.55)'], mount: ['rgba(190,185,170,0.5)', 'rgba(70,66,58,0.5)'], road: ['rgba(235,210,160,0.6)', 'rgba(140,105,65,0.45)'], farm: ['rgba(170,130,80,0.5)', 'rgba(90,60,30,0.5)'], water: ['rgba(200,235,250,0.45)', 'rgba(30,90,130,0.4)'], town: ['rgba(215,212,205,0.5)', 'rgba(110,108,104,0.45)'] };
   function core() { return global.DG.core; }
@@ -92,7 +107,7 @@
   /** 이웃(nb) 색을 이 칸 변(x0,y0 에서 안쪽 방향 dx,dy)으로 번지게 — 칸 폭의 35% */
   function blend(ctx, me, nb, x0, y0, dx, dy, Tw, Th) {
     if (me === nb || !KCOL[nb]) { return; }
-    var c = KCOL[nb], d = (dx ? Tw : Th) * 0.35, g = ctx.createLinearGradient(x0, y0, x0 + dx * d, y0 + dy * d);
+    var c = rgbOf(nb), d = (dx ? Tw : Th) * 0.35, g = ctx.createLinearGradient(x0, y0, x0 + dx * d, y0 + dy * d);
     g.addColorStop(0, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0.55)'); g.addColorStop(1, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0)');
     ctx.fillStyle = g;
     if (dx) { ctx.fillRect(dx > 0 ? x0 : x0 - d, y0, d, Th); } else { ctx.fillRect(x0, dy > 0 ? y0 : y0 - d, Tw, d); }
@@ -137,5 +152,5 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.field2d = { CELL: CELL, color: color, BASE: BASE, zoomMul: zoomMul, KCOL: KCOL, on: on, h01: h01, PROPS: PROPS, propsAt: propsAt, edgeColor: edgeColor, decorate: decorate };
+  global.DG.field2d = { CELL: CELL, color: color, BASE: BASE, zoomMul: zoomMul, KCOL: KCOL, on: on, h01: h01, PROPS: PROPS, propsAt: propsAt, edgeColor: edgeColor, decorate: decorate, seasonRgb: seasonRgb };
 })(typeof window !== 'undefined' ? window : this);

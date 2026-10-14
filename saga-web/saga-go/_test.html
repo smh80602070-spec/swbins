@@ -16687,6 +16687,16 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var r = [shown.length === 4, ys.join() === [155, 170, 185, 200].sort().join(), near.alpha === 1 && near.y === 200, far.alpha === 1 && far.y === 200, L([]).length === 0];
       return r.every(Boolean) && ('보임 4 · 숨김 2 · y ' + ys.join('/')) || '실패 ' + r.join(',') + ' ' + JSON.stringify(six);
     });
+    t('go.field2d: 2D 들판 계절 색 — 여름 들은 옛 바탕색 그대로, 가을 들·논밭은 다르고, 길은 가을에도 그대로, 손잡이 0 이면 옛 값 (W-0211)', function () {
+      var F = DG.field2d, S = DG.season, r;
+      try {
+        S.force('summer'); var su = F.color('grass'), sr = F.seasonRgb('grass');
+        S.force('autumn'); var au = F.color('grass'), af = F.color('farm'), ar = F.color('road');
+        DG.core.setTune('world.field2dSeason', 0); var a0 = F.color('grass'); DG.core.setTune('world.field2dSeason', null);
+        r = [su === F.BASE.grass, sr === null, S.on() ? (au !== F.BASE.grass && af !== F.BASE.farm) : au === F.BASE.grass, ar === F.BASE.road, a0 === F.BASE.grass];
+      } finally { S.force(null); DG.core.setTune('world.field2dSeason', null); }
+      return r.every(Boolean) && ('가을 들 ' + au + ' · 논밭 ' + af) || '실패 ' + r.join(',');
+    });
     t('go.field2d: 2D 들판(W-0130) — 소품은 좌표 해시로 늘 같고, 숲엔 나무·물가엔 거품, 2D 일 때만 카메라 ×1.7', function () {
       var F = DG.field2d, W = DG.world, st = C.save.settings, keep = st.tilt, r;
       try {
