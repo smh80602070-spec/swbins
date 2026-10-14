@@ -24,6 +24,7 @@ for (const g of GAMES) {
     await c.send('Network.setBypassServiceWorker', { bypass: true });
     await c.send('Network.emulateNetworkConditions', { offline: false, latency: 60, downloadThroughput: 1125000, uploadThroughput: 93750 });
     await c.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+    if (process.env.PROBE_INIT) { await c.send('Page.addScriptToEvaluateOnNewDocument', { source: process.env.PROBE_INIT }); }   // 페이지보다 먼저 돌 한 토막(예: fetch 감시)
     await c.send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 2, mobile: true });
     await c.send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 });
     await c.send('Page.addScriptToEvaluateOnNewDocument', { source: 'try { performance.setResourceTimingBufferSize(5000); } catch (e) {}' });
