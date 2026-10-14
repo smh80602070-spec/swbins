@@ -8861,6 +8861,12 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var ok = [su.lo === 0x5e9c2e, su.hi === 0x9cc94a, au.lo !== su.lo && au.hi !== su.hi, no.lo === su.lo, wd > cl && cl > 0, off === 0, au0.lo === su.lo, !!G.seasonPaint('grass', 'autumn'), G.seasonPaint('grass', 'summer') === null, G.seasonPaint('road', 'autumn') === null];
       return ok.every(Boolean) && ('가을 ' + au.hi.toString(16) + ' · 바람 ' + wd.toFixed(3) + ' > 맑음 ' + cl.toFixed(3));
     });
+    t('3D 흔들림 — 바람 천후면 도형 나무·풀덤불 폭이 맑음보다 크고, windMul 손잡이 0 이면 같다 (W-0210)', function () {
+      var R3 = DG.world3d, WX = DG.weather, cl, wd, flat;
+      WX.force('clear'); cl = R3.swayAmt(); WX.force('wind'); wd = R3.swayAmt();
+      DG.core.setTune('world3d.windMul', 0); flat = R3.swayAmt(); DG.core.setTune('world3d.windMul', null); WX.force(null);
+      return wd > cl * 2 && Math.abs(flat - cl) < 1e-9 && cl > 0 && ('맑음 ' + cl.toFixed(3) + ' · 바람 ' + wd.toFixed(3));
+    });
     t('3D 빛 — 한낮은 하늘빛/해 0.35~0.55(그늘 대비), 한밤은 옛 밝기 그대로(대비 손잡이는 낮에만) (W-0199)', function () {
       var d = new Date(); d.setHours(12, 0, 0, 0); var n = new Date(); n.setHours(22, 0, 0, 0);
       var L = DG.world3d.lightingAt(d.getTime(), 'clear'), N = DG.world3d.lightingAt(n.getTime(), 'clear'), r = L.hemi.intensity / L.sun.intensity;

@@ -56,7 +56,7 @@
   /** 잎·풀이 바람에 흔들릴까(PLAN 44절) — 0 이면 정지 화면(느린 기기용) */
   function SWAY_ON() { return core.tuned('world3d.sway', 1) ? true : false; }
   /** 흔들리는 폭(정점 좌표 배율) — 크면 과장되게 흔든다 */
-  function SWAY_AMT() { return core.tuned('world3d.swayAmt', 0.06); }
+  function SWAY_AMT() { var G = global.DG.ground3d; return core.tuned('world3d.swayAmt', 0.06) * (G && G.windMul ? G.windMul(G.windNow()) : 1); }   // W-0210 바람 천후면 더 흔든다(잔풀과 같은 배율)
   /** 등롱·사당 불이 일렁일까(PLAN 44절 "불꽃") — 0 이면 고정 밝기 */
   function FLAME_ON() { return core.tuned('world3d.flame', 1) ? true : false; }
   /** 일렁이는 폭(emissiveIntensity 배율) */
