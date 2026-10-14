@@ -7417,6 +7417,17 @@ window.requestAnimationFrame = function () { return 0; };
       return seeds.length >= 36 && heroAnime && off && A.fixedRecipe('산적') && ('사람 적·보스·마을 사람 ' + seeds.length + ' · 몸 ' + Object.keys(used).length + ' 모두 다름 · 도감 인물은 VRoid');
     });
 
+    t('받기·조립 겹치기(W-0215) — prefetchBytes 1 이면 줄 앞 몇 개는 바이트를 미리 받기 시작하고, 0 이면 안 한다', function () {
+      var A = DG.asset3d, st = Date.now(), us = [0, 1, 2, 3, 4, 5, 6, 7].map(function (i) { return 'assets/models/__w215_' + st + '_' + i + '.glb'; }), r;
+      try {
+        A.set('asset3d.prefetchBytes', 1); A.set('asset3d.prefetchN', 4);
+        us.forEach(function (u) { A.rawScene(u, function () {}); });
+        var pre = A.prefetchState().filter(function (n) { return n.indexOf('__w215_' + st) === 0; }).length;
+        A.set('asset3d.prefetchBytes', 0); var off = A.prefetchOn();
+        r = [pre >= 1 && pre <= 4, off === false];
+      } finally { A.set('asset3d.prefetchBytes', null); A.set('asset3d.prefetchN', null); }
+      return r.every(Boolean) && ('줄 앞 바이트 미리 받기 ' + pre + '개 · 0 이면 끔') || '실패 ' + r.join(',') + ' pre=' + pre;
+    });
     t('폰 마을 낮은 줄(W-0214) — lazyNpc 1 이면 withLazy 안 받기는 낮은 줄에 서고, 높은 쪽이 같은 파일을 부르면 올라가며, lazyNpc 0 이면 늘 높은 줄', function () {
       var A = DG.asset3d, seed = 'npc:__w214_' + Date.now(), u = 'assets/models/__w214_' + Date.now() + '.glb', u2 = u.replace('.glb', 'b.glb'), r;
       try {

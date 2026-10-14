@@ -989,7 +989,7 @@
       c.state = 'load';
       inflight++;
       (function (url, c) {
-        ld.load(url, function (gltf) {
+        startLoad(ld, url, function (gltf) {
           /* 2026-09-08 — "사가나락 끊김" 추적. dungeon3d.js의 render()·
              game.js의 loop() 다섯 구간을 다 재도 여전히 dt=150~450ms대
              튐이 그 안 어디에도 안 잡혔다(합쳐도 몇~수십 ms) — GLTFLoader의
@@ -1015,13 +1015,39 @@
           if (ms > 15 && typeof console !== 'undefined') {
             console.log('[던전 GLB 도착후처리]', 'ms=' + ms.toFixed(1) + ' waiting=' + waitN + ' url=' + url);
           }
-        }, null, function () {
+        }, function () {
           inflight--;
           c.state = 'fail'; flush(c, null);
           pump();
         });
       })(url, c);
     }
+    prefetchAhead();
+  }
+  /* W-0215 — 받기와 조립 겹치기. 폰(느린 CPU)은 GLB 하나 조립(parse)에 1~6초가 걸리는데 그동안 칸을 쥐어 다음 받기가 늦게 나갔다.
+     줄 앞 prefetchN 개는 바이트를 미리 받아 두고(bytes), 칸이 나면 그 바이트로 곧장 parse — 받기 실패·parse 실패면 옛 ld.load.
+     손잡이 asset3d.prefetchBytes(auto = 폰 표 light() · 1 · 0)·asset3d.prefetchN(4) */
+  var bytes = {};
+  function PREF_ON() { var k = tuned('asset3d.prefetchBytes', 'auto'); if (k === 1 || k === '1') { return true; } if (k === 0 || k === '0') { return false; } return light(); }
+  function prefetchAhead() {
+    if (!PREF_ON() || typeof fetch === 'undefined') { return; }
+    var want = +tuned('asset3d.prefetchN', 4) || 0, n = 0, i, u, c;
+    for (i = 0; i < startQ.length && n < want; i++) {
+      u = startQ[i]; c = cache[u];
+      if (!c || c.state !== 'queued') { continue; }
+      n++;
+      if (!bytes[u]) { bytes[u] = fetch(u).then(function (r) { return r.ok ? r.arrayBuffer() : null; })['catch'](function () { return null; }); }
+    }
+  }
+  function startLoad(ld, url, ok, bad) {
+    var b = bytes[url];
+    delete bytes[url];
+    var plain = function () { ld.load(url, ok, null, bad); };
+    if (!b || !ld.parse) { plain(); return; }
+    b.then(function (buf) {
+      if (!buf) { plain(); return; }
+      try { ld.parse(buf, url.slice(0, url.lastIndexOf('/') + 1), ok, function () { plain(); }); } catch (e) { plain(); }
+    });
   }
   function acquire(url, done) {
     var A3c = global.DG.assets3d, cu = A3c && A3c.creatureFor ? A3c.creatureFor(url) : null; if (cu) { url = cu; } var c = cache[url];   // W-0163 빌린 동물·탈것 → 자체판(creatures3d)
@@ -1373,7 +1399,7 @@
     FIXED_HERO: FIXED_HERO, fixedRecipe: fixedRecipe,
     normName: normName, score: score, mapClips: mapClips, SLOTS: SLOTS, fit: fit,
     ready: function () { return !!three(); }, hasLoader: function () { return !!loader(); },
-    DEFAULTS: DEFAULTS, restore: restore, heroRecipe: heroRecipe, ANIM_SRC: ANIM_SRC, withLazy: withLazy, lazyNpc: LAZY_NPC, lowQueue: function () { return lowQ.slice(); }, qState: function () { var n = nowMs(); return { inflight: inflight, start: startQ.length, low: lowQ.length, hiAgo: Math.round(n - lastHi), lowAgo: lowQ.length ? Math.round(n - lowSince) : null, timer: !!lowTimer, loading: Object.keys(cache).filter(function (u) { return cache[u].state === 'load'; }).map(function (u) { return u.split('/').slice(-2).join('/'); }), next: startQ.slice(0, 4).map(function (u) { return u.split('/').slice(-2).join('/'); }) }; }, ownAnimOf: function (rec) { return !!(rec && !rec.anim && wantsOwnAnim(rec.body)); },   // W-0213 buildHero 의 own 과 같은 식
+    DEFAULTS: DEFAULTS, restore: restore, heroRecipe: heroRecipe, ANIM_SRC: ANIM_SRC, withLazy: withLazy, lazyNpc: LAZY_NPC, lowQueue: function () { return lowQ.slice(); }, prefetchState: function () { return Object.keys(bytes).map(function (u) { return u.split('/').pop(); }); }, prefetchOn: PREF_ON, qState: function () { var n = nowMs(); return { inflight: inflight, start: startQ.length, low: lowQ.length, hiAgo: Math.round(n - lastHi), lowAgo: lowQ.length ? Math.round(n - lowSince) : null, timer: !!lowTimer, loading: Object.keys(cache).filter(function (u) { return cache[u].state === 'load'; }).map(function (u) { return u.split('/').slice(-2).join('/'); }), next: startQ.slice(0, 4).map(function (u) { return u.split('/').slice(-2).join('/'); }) }; }, ownAnimOf: function (rec) { return !!(rec && !rec.anim && wantsOwnAnim(rec.body)); },   // W-0213 buildHero 의 own 과 같은 식
     build: build, buildHero: buildHero, step: step, play: play, rawScene: rawScene, tick: tick,
     ownAllMat: ownAllMat, flashAllMat: flashAllMat,
     tuned: tuned, set: set, stats: stats, isActorAsset: isActorAsset, isSwayAsset: isSwayAsset,
