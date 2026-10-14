@@ -21,7 +21,6 @@
 
   var els = {};
   var openTab = null;          // 열려 있는 시트 이름 (null 이면 닫힘)
-  var openDetailRef = null;    // 열려 있는 상세 화면 { kind, id }
 
   function hero() { return global.DG.hero; }
   function net() { return global.DG.net; }
@@ -106,7 +105,7 @@
     els.scrim.addEventListener('click', closeSheet);
     global.addEventListener('keydown', function (e) {
       if (e.key !== 'Escape') { return; }
-      if (openDetailRef) { closeDetail(); return; }
+      if (UD().isOpen()) { closeDetail(); return; }
       if (owmapHost().classList.contains('show')) { closeOverworldMap(); return; }
       if (openTab) { closeSheet(); }
     });

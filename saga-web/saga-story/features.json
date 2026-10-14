@@ -396,7 +396,8 @@
   "id": "st.ui",
   "name": "UI(사가만리 tools-drawer 패턴 통일, 세로/가로, ⛶, 설정 시트: 효과음·진동·음량)",
   "files": [
-   "js/ui.js"
+   "js/ui.js",
+   "js/ui-detail.js"
   ],
   "tests": [
    "업적 시트가 그려지고 이름이 보인다",
