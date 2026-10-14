@@ -23,6 +23,7 @@
    "js/rogue-action.js",
    "js/world.js",
    "js/ui.js",
+   "js/ui-near.js",
    "js/story.js"
   ],
   "tests": [
