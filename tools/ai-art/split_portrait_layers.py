@@ -1,6 +1,8 @@
 """K-0049 — 움직이는 대화 초상: 표정 키 프레임(render_live_frames.py) → 바탕 한 장 + 부위 패치(알파, 잘린 상자) + live.json.
 
-  py tools/ai-art/split_portrait_layers.py [--plan data/live_portrait_plan.json] [--ids a,b] [--sheet <png>] [--check]
+  py tools/ai-art/split_portrait_layers.py [--plan data/live_portrait_plan.json] [--ids a,b] [--sheet <png>] [--check] [--frames <폴더>]
+    --frames 프레임 폴더(기본 _out/live_frames = VRoid 렌더). K-0110: AI 대화 초상 인페인트 프레임 폴더 — 그 폴더에 <id>__base.license.json 이 있으면
+             출처를 그것으로 적는다(몸 web3d 대신)
     프레임   tools/ai-art/_out/live_frames/<id>__<프레임>.png
     정본     saga-assets/portraits-live/<id>/  base.webp · <프레임>.webp(blink_half·blink·mouth_half·mouth_a·mouth_o) · live.json · <id>.license.json
     --sheet  미리보기(사람마다 정지컷 다섯: 평소·눈 감음·입 벌림·숨 들이쉼·고개 기울임)
@@ -97,7 +99,8 @@ def split(hid):
 
 
 def write(hid, files, meta):
-    src = os.path.join(ROOT, 'saga-assets', 'characters', 'web3d', hid + '.license.json')
+    ai = os.path.join(FR, hid + '__base.license.json')   # K-0110 AI 초상 프레임
+    src = ai if os.path.exists(ai) else os.path.join(ROOT, 'saga-assets', 'characters', 'web3d', hid + '.license.json')
     if not os.path.exists(src):
         raise SystemExit('몸 출처 없음(먼저 web3d 정본): %s' % src)
     out = os.path.join(DEST, hid)
@@ -106,8 +109,11 @@ def write(hid, files, meta):
         open(os.path.join(out, name), 'wb').write(data)
     json.dump(meta, open(os.path.join(out, 'live.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     lic = json.load(open(src, encoding='utf-8'))
-    lic.update({'id': hid + '_live', 'derived': 'tools/ai-art/render_live_frames.py(VRoid 표정 키 반신 렌더) → split_portrait_layers.py (K-0049)',
-                'base_glb': 'saga-assets/characters/web3d/%s.glb' % hid})
+    if src == ai:
+        lic.update({'id': hid + '_live', 'derived': 'AI 대화 초상(K-0047 원본) → gen.py 마스크 인페인트(눈·입·표정, 마스크 밖 원본 픽셀) → split_portrait_layers.py (K-0110)'})
+    else:
+        lic.update({'id': hid + '_live', 'derived': 'tools/ai-art/render_live_frames.py(VRoid 표정 키 반신 렌더) → split_portrait_layers.py (K-0049)',
+                    'base_glb': 'saga-assets/characters/web3d/%s.glb' % hid})
     json.dump(lic, open(os.path.join(out, hid + '.license.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 
 
@@ -134,8 +140,11 @@ def sheet(rows, dst):
 
 
 def main():
+    global FR
     a = sys.argv[1:]
     sys.stdout.reconfigure(encoding='utf-8')
+    if '--frames' in a:
+        FR = os.path.abspath(a[a.index('--frames') + 1])
     plan = json.load(open(os.path.join(HERE, a[a.index('--plan') + 1]) if '--plan' in a else os.path.join(HERE, 'data', 'live_portrait_plan.json'), encoding='utf-8'))
     ids = a[a.index('--ids') + 1].split(',') if '--ids' in a else [c['id'] for c in plan['cast']]
     do_write = '--check' not in a

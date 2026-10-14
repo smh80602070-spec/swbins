@@ -1,0 +1,51 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k110_inpaint",
+ "note": "K-0110 ⓐ' 완전 감음 d0.95 씨앗 셋",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 1024,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "Euler a",
+  "negative": "",
+  "denoise": 0.42,
+  "variants": 1
+ },
+ "items": [
+  {
+   "id": "sg_lubu__blink__s1",
+   "seed": 1706003799,
+   "prompt": "(both eyes closed:1.6), sleeping, peaceful closed eyes, eyelashes down, calm, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup, wink, one eye closed, open eyes",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_lubu.png",
+   "denoise": 0.95,
+   "hero": "sg_lubu",
+   "frame": "blink",
+   "mask_image": "tools/ai-art/_out/k110_masks/sg_lubu__eye.png"
+  },
+  {
+   "id": "sg_lubu__blink__s2",
+   "seed": 1706003900,
+   "prompt": "(both eyes closed:1.6), sleeping, peaceful closed eyes, eyelashes down, calm, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup, wink, one eye closed, open eyes",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_lubu.png",
+   "denoise": 0.95,
+   "hero": "sg_lubu",
+   "frame": "blink",
+   "mask_image": "tools/ai-art/_out/k110_masks/sg_lubu__eye.png"
+  },
+  {
+   "id": "sg_lubu__blink__s3",
+   "seed": 1706004001,
+   "prompt": "(both eyes closed:1.6), sleeping, peaceful closed eyes, eyelashes down, calm, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup, wink, one eye closed, open eyes",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_sg_lubu.png",
+   "denoise": 0.95,
+   "hero": "sg_lubu",
+   "frame": "blink",
+   "mask_image": "tools/ai-art/_out/k110_masks/sg_lubu__eye.png"
+  }
+ ]
+}
