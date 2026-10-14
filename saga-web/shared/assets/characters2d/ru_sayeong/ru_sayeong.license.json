@@ -6,12 +6,12 @@
  "source_samples": [
   "AvatarSample_E",
   "AvatarSample_J",
-  "AvatarSample_Q"
+  "AvatarSample_S"
  ],
  "body": "AvatarSample_J",
  "kit": {
-  "cloth": "e",
-  "shoes": "q"
+  "cloth": "s",
+  "shoes": "e"
  },
- "note": "옷·몸 조각을 샘플 25벌 사이에서 이식한 인물. 얼굴·머리는 샘플 그대로(약간 다르게만, 사용자 2026-10-02)."
+ "note": "옷·몸 조각을 샘플 사이에서 이식한 인물. 얼굴·머리는 샘플 그대로(약간 다르게만, 사용자 2026-10-02)."
 }
