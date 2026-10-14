@@ -33,33 +33,25 @@
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "z",
-    "bottom": "l",
-    "shoes": "v"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#3a3a3e"
-    }
-   ]
+    "top": "v",
+    "bottom": "r",
+    "shoes": "r"
+   }
   },
   {
    "id": "sg_zhugeliang",
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "x",
-    "bottom": "l",
-    "shoes": "p"
+    "top": "l",
+    "bottom": "p",
+    "shoes": "l"
    },
-   "tuck": "bottom",
    "tint": [
     {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#55677a"
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#6b3a26"
     }
    ]
   },
@@ -78,34 +70,20 @@
    "gender": "M",
    "body": "z",
    "kit": {
-    "top": "c",
-    "bottom": "l",
-    "shoes": "x"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#26365c"
-    }
-   ]
+    "top": "p",
+    "bottom": "z",
+    "shoes": "n"
+   }
   },
   {
    "id": "sg_huangzhong",
    "gender": "M",
    "body": "z",
    "kit": {
-    "top": "z",
-    "bottom": "l",
-    "shoes": "r"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#b08a1e"
-    }
-   ]
+    "top": "c",
+    "bottom": "p",
+    "shoes": "v"
+   }
   },
   {
    "id": "sg_caocao",
@@ -231,8 +209,9 @@
    "gender": "F",
    "body": "k",
    "kit": {
-    "cloth": "m",
-    "shoes": "s"
+    "top": "w",
+    "bottom": "a",
+    "shoes": "a2"
    }
   },
   {
@@ -250,17 +229,10 @@
    "gender": "M",
    "body": "g",
    "kit": {
-    "top": "z",
-    "bottom": "l",
-    "shoes": "v"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#5e2f5a"
-    }
-   ]
+    "top": "v",
+    "bottom": "c",
+    "shoes": "p"
+   }
   },
   {
    "id": "sg_menghuo",
@@ -346,15 +318,20 @@
    "gender": "M",
    "body": "p",
    "kit": {
-    "top": "z",
+    "top": "l",
     "bottom": "l",
-    "shoes": "l"
+    "shoes": "z"
    },
    "tint": [
     {
      "slot": "bottom",
      "match": "001_02",
      "color": "#b08a1e"
+    },
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#6b3a26"
     }
    ]
   },
@@ -374,18 +351,10 @@
    "gender": "M",
    "body": "g",
    "kit": {
-    "top": "x",
-    "bottom": "l",
-    "shoes": "p"
-   },
-   "tuck": "bottom",
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#5e2f5a"
-    }
-   ]
+    "top": "z",
+    "bottom": "p",
+    "shoes": "g"
+   }
   },
   {
    "id": "kr_choemuseon",
@@ -413,16 +382,9 @@
    "body": "n",
    "kit": {
     "top": "r",
-    "bottom": "l",
-    "shoes": "r"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#26365c"
-    }
-   ]
+    "bottom": "r",
+    "shoes": "l"
+   }
   },
   {
    "id": "kr_jeongyakyong",
@@ -479,17 +441,10 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "n",
-    "bottom": "l",
-    "shoes": "z"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#5e2f5a"
-    }
-   ]
+    "top": "v",
+    "bottom": "p",
+    "shoes": "p"
+   }
   },
   {
    "id": "kr_wonhyo",
@@ -606,17 +561,10 @@
    "gender": "M",
    "body": "x",
    "kit": {
-    "top": "r",
-    "bottom": "l",
-    "shoes": "v"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#26365c"
-    }
-   ]
+    "top": "n",
+    "bottom": "c",
+    "shoes": "x"
+   }
   },
   {
    "id": "jp_yoshitsune",
@@ -804,17 +752,10 @@
    "gender": "M",
    "body": "x",
    "kit": {
-    "top": "g",
-    "bottom": "l",
-    "shoes": "v"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#3a3a3e"
-    }
-   ]
+    "top": "c",
+    "bottom": "c",
+    "shoes": "p"
+   }
   },
   {
    "id": "eu_alexander",
@@ -899,17 +840,10 @@
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "g",
-    "bottom": "l",
-    "shoes": "p"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#2f5d3a"
-    }
-   ]
+    "top": "c",
+    "bottom": "z",
+    "shoes": "v"
+   }
   },
   {
    "id": "eu_leonidas",
@@ -944,17 +878,10 @@
    "gender": "M",
    "body": "r",
    "kit": {
-    "top": "n",
-    "bottom": "l",
-    "shoes": "p"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#55677a"
-    }
-   ]
+    "top": "c",
+    "bottom": "r",
+    "shoes": "v"
+   }
   },
   {
    "id": "eu_william",
@@ -1031,15 +958,14 @@
    "gender": "M",
    "body": "r",
    "kit": {
-    "top": "x",
-    "bottom": "l",
-    "shoes": "p"
+    "top": "l",
+    "bottom": "p",
+    "shoes": "r"
    },
-   "tuck": "bottom",
    "tint": [
     {
-     "slot": "bottom",
-     "match": "001_02",
+     "slot": "top",
+     "match": "CLOTH_02",
      "color": "#3a3a3e"
     }
    ]
@@ -1049,15 +975,15 @@
    "gender": "M",
    "body": "p",
    "kit": {
-    "top": "p",
-    "bottom": "l",
-    "shoes": "n"
+    "top": "l",
+    "bottom": "r",
+    "shoes": "g"
    },
    "tint": [
     {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#26365c"
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#3a3a3e"
     }
    ]
   },
@@ -1066,9 +992,9 @@
    "gender": "F",
    "body": "i",
    "kit": {
-    "top": "o",
+    "top": "j",
     "bottom": "d",
-    "shoes": "i"
+    "shoes": "a7"
    }
   },
   {
@@ -1108,70 +1034,40 @@
    "gender": "M",
    "body": "c",
    "kit": {
-    "top": "x",
-    "bottom": "l",
+    "top": "n",
+    "bottom": "r",
     "shoes": "v"
-   },
-   "tuck": "bottom",
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#6b3a26"
-    }
-   ]
+   }
   },
   {
    "id": "wd_ibnsina",
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "r",
-    "bottom": "l",
-    "shoes": "n"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#5e2f5a"
-    }
-   ]
+    "top": "p",
+    "bottom": "z",
+    "shoes": "l"
+   }
   },
   {
    "id": "wd_genghis",
    "gender": "M",
    "body": "p",
    "kit": {
-    "top": "r",
-    "bottom": "l",
-    "shoes": "g"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#55677a"
-    }
-   ]
+    "top": "n",
+    "bottom": "c",
+    "shoes": "x"
+   }
   },
   {
    "id": "wd_khubilai",
    "gender": "M",
    "body": "l",
    "kit": {
-    "top": "x",
-    "bottom": "l",
-    "shoes": "r"
-   },
-   "tuck": "bottom",
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#2f5d3a"
-    }
-   ]
+    "top": "c",
+    "bottom": "c",
+    "shoes": "p"
+   }
   },
   {
    "id": "wd_mansamusa",
@@ -1290,15 +1186,20 @@
    "gender": "M",
    "body": "z",
    "kit": {
-    "top": "c",
+    "top": "l",
     "bottom": "l",
-    "shoes": "r"
+    "shoes": "p"
    },
    "tint": [
     {
      "slot": "bottom",
      "match": "001_02",
      "color": "#5e2f5a"
+    },
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#1f6b6b"
     }
    ]
   },
@@ -1326,14 +1227,14 @@
    "gender": "M",
    "body": "p",
    "kit": {
-    "top": "z",
-    "bottom": "l",
-    "shoes": "p"
+    "top": "l",
+    "bottom": "z",
+    "shoes": "z"
    },
    "tint": [
     {
-     "slot": "bottom",
-     "match": "001_02",
+     "slot": "top",
+     "match": "CLOTH_02",
      "color": "#3a3a3e"
     }
    ]
@@ -1373,17 +1274,10 @@
    "gender": "M",
    "body": "c",
    "kit": {
-    "top": "c",
-    "bottom": "l",
-    "shoes": "x"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#5e2f5a"
-    }
-   ]
+    "top": "z",
+    "bottom": "p",
+    "shoes": "z"
+   }
   },
   {
    "id": "fu_janhon",
@@ -1449,15 +1343,15 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "n",
-    "bottom": "l",
-    "shoes": "l"
+    "top": "l",
+    "bottom": "c",
+    "shoes": "g"
    },
    "tint": [
     {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#6b3a26"
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#b08a1e"
     }
    ]
   },
@@ -1599,15 +1493,20 @@
    "gender": "M",
    "body": "c",
    "kit": {
-    "top": "z",
+    "top": "l",
     "bottom": "l",
-    "shoes": "n"
+    "shoes": "r"
    },
    "tint": [
     {
      "slot": "bottom",
      "match": "001_02",
      "color": "#3a3a3e"
+    },
+    {
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#26365c"
     }
    ]
   },
@@ -1677,15 +1576,15 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "n",
-    "bottom": "l",
-    "shoes": "x"
+    "top": "l",
+    "bottom": "z",
+    "shoes": "z"
    },
    "tint": [
     {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#3a3a3e"
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#6b3a26"
     }
    ]
   },
@@ -1704,51 +1603,30 @@
    "gender": "M",
    "body": "z",
    "kit": {
-    "top": "p",
-    "bottom": "l",
-    "shoes": "n"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#26365c"
-    }
-   ]
+    "top": "v",
+    "bottom": "c",
+    "shoes": "c"
+   }
   },
   {
    "id": "kr2_mokrihae",
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "p",
-    "bottom": "l",
-    "shoes": "c"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#55677a"
-    }
-   ]
+    "top": "r",
+    "bottom": "z",
+    "shoes": "l"
+   }
   },
   {
    "id": "kr2_pasodan",
    "gender": "M",
    "body": "p",
    "kit": {
-    "top": "g",
-    "bottom": "l",
-    "shoes": "c"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#26365c"
-    }
-   ]
+    "top": "n",
+    "bottom": "r",
+    "shoes": "z"
+   }
   },
   {
    "id": "kr2_seolharan",
@@ -1894,9 +1772,9 @@
    "gender": "F",
    "body": "i",
    "kit": {
-    "top": "f",
-    "bottom": "j",
-    "shoes": "s"
+    "top": "b",
+    "bottom": "b",
+    "shoes": "a7"
    }
   },
   {
@@ -1942,16 +1820,9 @@
    "body": "l",
    "kit": {
     "top": "r",
-    "bottom": "l",
+    "bottom": "c",
     "shoes": "g"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#6b3a26"
-    }
-   ]
+   }
   },
   {
    "id": "mb_hanpung",
@@ -2147,8 +2018,8 @@
    "gender": "F",
    "body": "w",
    "kit": {
-    "cloth": "q",
-    "shoes": "u"
+    "cloth": "k",
+    "shoes": "a8"
    }
   },
   {
@@ -2289,9 +2160,8 @@
    "gender": "F",
    "body": "y",
    "kit": {
-    "top": "u",
-    "bottom": "d",
-    "shoes": "m"
+    "cloth": "a7",
+    "shoes": "j"
    }
   },
   {
@@ -2356,18 +2226,10 @@
    "gender": "M",
    "body": "p",
    "kit": {
-    "top": "x",
-    "bottom": "l",
-    "shoes": "c"
-   },
-   "tuck": "bottom",
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#5e2f5a"
-    }
-   ]
+    "top": "v",
+    "bottom": "r",
+    "shoes": "z"
+   }
   },
   {
    "id": "rf_huangzu",
@@ -2550,8 +2412,9 @@
    "gender": "F",
    "body": "w",
    "kit": {
-    "cloth": "s",
-    "shoes": "b"
+    "top": "d",
+    "bottom": "a6",
+    "shoes": "m"
    }
   },
   {
@@ -2569,8 +2432,9 @@
    "gender": "F",
    "body": "s",
    "kit": {
-    "cloth": "m",
-    "shoes": "w"
+    "top": "a6",
+    "bottom": "k",
+    "shoes": "y"
    }
   },
   {
@@ -2578,9 +2442,9 @@
    "gender": "F",
    "body": "e",
    "kit": {
-    "top": "u",
-    "bottom": "y",
-    "shoes": "d"
+    "top": "a6",
+    "bottom": "k",
+    "shoes": "e"
    }
   },
   {
@@ -2628,17 +2492,10 @@
    "gender": "M",
    "body": "x",
    "kit": {
-    "top": "n",
-    "bottom": "l",
+    "top": "z",
+    "bottom": "r",
     "shoes": "l"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#5e2f5a"
-    }
-   ]
+   }
   },
   {
    "id": "rf_yangsong",
@@ -2665,9 +2522,9 @@
    "gender": "F",
    "body": "y",
    "kit": {
-    "top": "u",
-    "bottom": "y",
-    "shoes": "f"
+    "top": "m",
+    "bottom": "b",
+    "shoes": "a8"
    }
   },
   {
@@ -2781,8 +2638,8 @@
    "gender": "F",
    "body": "d",
    "kit": {
-    "cloth": "m",
-    "shoes": "f"
+    "cloth": "k",
+    "shoes": "u"
    }
   },
   {
@@ -2831,8 +2688,8 @@
    "gender": "F",
    "body": "j",
    "kit": {
-    "cloth": "e",
-    "shoes": "q"
+    "cloth": "s",
+    "shoes": "e"
    }
   },
   {
@@ -2840,9 +2697,9 @@
    "gender": "F",
    "body": "w",
    "kit": {
-    "top": "y",
-    "bottom": "y",
-    "shoes": "k"
+    "top": "w",
+    "bottom": "b",
+    "shoes": "a3"
    }
   },
   {
@@ -2930,18 +2787,10 @@
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "x",
-    "bottom": "l",
-    "shoes": "z"
-   },
-   "tuck": "bottom",
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#1f6b6b"
-    }
-   ]
+    "top": "p",
+    "bottom": "r",
+    "shoes": "p"
+   }
   },
   {
    "id": "sl_wangjeong",
@@ -3089,15 +2938,15 @@
    "gender": "M",
    "body": "p",
    "kit": {
-    "top": "c",
-    "bottom": "l",
-    "shoes": "n"
+    "top": "l",
+    "bottom": "c",
+    "shoes": "g"
    },
    "tint": [
     {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#2f5d3a"
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#5e2f5a"
     }
    ]
   },
@@ -3162,17 +3011,10 @@
    "gender": "M",
    "body": "r",
    "kit": {
-    "top": "n",
-    "bottom": "l",
-    "shoes": "g"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#b08a1e"
-    }
-   ]
+    "top": "g",
+    "bottom": "z",
+    "shoes": "n"
+   }
   },
   {
    "id": "xb_daein",
@@ -3248,16 +3090,9 @@
    "body": "p",
    "kit": {
     "top": "g",
-    "bottom": "l",
-    "shoes": "x"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#1f6b6b"
-    }
-   ]
+    "bottom": "r",
+    "shoes": "n"
+   }
   },
   {
    "id": "xb_yong",
@@ -3294,17 +3129,10 @@
    "gender": "M",
    "body": "c",
    "kit": {
-    "top": "c",
-    "bottom": "l",
-    "shoes": "p"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#2f5d3a"
-    }
-   ]
+    "top": "r",
+    "bottom": "z",
+    "shoes": "z"
+   }
   },
   {
    "id": "xiyu_dansu",
@@ -3351,8 +3179,7 @@
    "gender": "F",
    "body": "h",
    "kit": {
-    "top": "u",
-    "bottom": "k",
+    "cloth": "a8",
     "shoes": "q"
    }
   },
@@ -3371,16 +3198,15 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "x",
-    "bottom": "l",
-    "shoes": "g"
+    "top": "l",
+    "bottom": "r",
+    "shoes": "l"
    },
-   "tuck": "bottom",
    "tint": [
     {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#6b3a26"
+     "slot": "top",
+     "match": "CLOTH_02",
+     "color": "#55677a"
     }
    ]
   },
@@ -3466,8 +3292,8 @@
    "gender": "F",
    "body": "a6",
    "kit": {
-    "cloth": "e",
-    "shoes": "a7"
+    "cloth": "a3",
+    "shoes": "q"
    },
    "pattern": {
     "slot": "cloth",
@@ -3593,21 +3419,14 @@
    "gender": "M",
    "body": "p",
    "kit": {
-    "top": "n",
-    "bottom": "l",
-    "shoes": "p"
+    "top": "r",
+    "bottom": "p",
+    "shoes": "v"
    },
    "pattern": {
     "slot": "top",
     "name": "coins_maroon"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#26365c"
-    }
-   ]
+   }
   },
   {
    "id": "yk_hyangdo",
@@ -3642,11 +3461,12 @@
    "gender": "F",
    "body": "a7",
    "kit": {
-    "cloth": "m",
-    "shoes": "h"
+    "top": "k",
+    "bottom": "k",
+    "shoes": "w"
    },
    "pattern": {
-    "slot": "cloth",
+    "slot": "top",
     "name": "crest_moon_silver"
    }
   },
@@ -3734,32 +3554,26 @@
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "z",
-    "bottom": "l",
-    "shoes": "z"
+    "top": "n",
+    "bottom": "p",
+    "shoes": "c"
    },
    "pattern": {
     "slot": "top",
     "name": "data_stream_blue"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#55677a"
-    }
-   ]
+   }
   },
   {
    "id": "hq_jamsu",
    "gender": "F",
    "body": "a9",
    "kit": {
-    "cloth": "u",
-    "shoes": "a10"
+    "top": "s",
+    "bottom": "a9",
+    "shoes": "k"
    },
    "pattern": {
-    "slot": "cloth",
+    "slot": "top",
     "name": "denim_worn"
    }
   },
@@ -3840,20 +3654,13 @@
    "body": "g",
    "kit": {
     "top": "g",
-    "bottom": "l",
-    "shoes": "c"
+    "bottom": "c",
+    "shoes": "n"
    },
    "pattern": {
     "slot": "top",
     "name": "herringbone_camel"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#55677a"
-    }
-   ]
+   }
   },
   {
    "id": "bw_sungeom",
@@ -3874,11 +3681,12 @@
    "gender": "F",
    "body": "a2",
    "kit": {
-    "cloth": "a10",
-    "shoes": "b"
+    "top": "s",
+    "bottom": "a9",
+    "shoes": "y"
    },
    "pattern": {
-    "slot": "cloth",
+    "slot": "top",
     "name": "holo_iridescent"
    }
   },
@@ -3915,21 +3723,14 @@
    "gender": "M",
    "body": "l",
    "kit": {
-    "top": "p",
-    "bottom": "l",
-    "shoes": "c"
+    "top": "l",
+    "bottom": "r",
+    "shoes": "n"
    },
    "pattern": {
     "slot": "top",
     "name": "indigo_ikat"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#55677a"
-    }
-   ]
+   }
   },
   {
    "id": "bw_bitnae",
@@ -4034,9 +3835,9 @@
    "gender": "F",
    "body": "a2",
    "kit": {
-    "top": "u",
-    "bottom": "k",
-    "shoes": "o"
+    "top": "b",
+    "bottom": "a9",
+    "shoes": "d"
    },
    "pattern": {
     "slot": "top",
@@ -4049,29 +3850,22 @@
    "body": "c",
    "kit": {
     "top": "v",
-    "bottom": "l",
-    "shoes": "l"
+    "bottom": "c",
+    "shoes": "r"
    },
    "pattern": {
     "slot": "top",
     "name": "nano_scale_blue"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#55677a"
-    }
-   ]
+   }
   },
   {
    "id": "gm_sanul",
    "gender": "F",
    "body": "a3",
    "kit": {
-    "top": "a9",
-    "bottom": "b",
-    "shoes": "h"
+    "top": "h",
+    "bottom": "j",
+    "shoes": "a6"
    },
    "pattern": {
     "slot": "top",
@@ -4110,9 +3904,9 @@
    "gender": "F",
    "body": "a8",
    "kit": {
-    "top": "a9",
-    "bottom": "d",
-    "shoes": "u"
+    "top": "b",
+    "bottom": "a",
+    "shoes": "a7"
    },
    "pattern": {
     "slot": "top",
@@ -4164,21 +3958,14 @@
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "g",
-    "bottom": "l",
+    "top": "c",
+    "bottom": "r",
     "shoes": "n"
    },
    "pattern": {
     "slot": "top",
     "name": "sakura_pink"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#5e2f5a"
-    }
-   ]
+   }
   },
   {
    "id": "sn_bitdol",
@@ -4199,21 +3986,14 @@
    "gender": "M",
    "body": "r",
    "kit": {
-    "top": "z",
-    "bottom": "l",
-    "shoes": "r"
+    "top": "p",
+    "bottom": "p",
+    "shoes": "c"
    },
    "pattern": {
     "slot": "top",
     "name": "sequin_black"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#26365c"
-    }
-   ]
+   }
   },
   {
    "id": "dk_gyedo",
@@ -4234,21 +4014,14 @@
    "gender": "M",
    "body": "c",
    "kit": {
-    "top": "p",
-    "bottom": "l",
+    "top": "v",
+    "bottom": "r",
     "shoes": "c"
    },
    "pattern": {
     "slot": "top",
     "name": "smart_fabric_ripple"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#3a3a3e"
-    }
-   ]
+   }
   },
   {
    "id": "dk_suro",
@@ -4296,9 +4069,9 @@
    "gender": "F",
    "body": "a3",
    "kit": {
-    "top": "o",
-    "bottom": "a6",
-    "shoes": "s"
+    "top": "a6",
+    "bottom": "y",
+    "shoes": "k"
    },
    "pattern": {
     "slot": "top",
@@ -4352,9 +4125,9 @@
    "gender": "F",
    "body": "a7",
    "kit": {
-    "top": "e",
-    "bottom": "a9",
-    "shoes": "f"
+    "top": "h",
+    "bottom": "j",
+    "shoes": "k"
    },
    "pattern": {
     "slot": "top",
@@ -4381,21 +4154,14 @@
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "n",
-    "bottom": "l",
-    "shoes": "c"
+    "top": "g",
+    "bottom": "z",
+    "shoes": "l"
    },
    "pattern": {
     "slot": "top",
     "name": "aurora_gradient"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#1f6b6b"
-    }
-   ]
+   }
   },
   {
    "id": "hl_geumsil",
@@ -4444,30 +4210,23 @@
    "gender": "M",
    "body": "p",
    "kit": {
-    "top": "g",
-    "bottom": "l",
-    "shoes": "p"
+    "top": "p",
+    "bottom": "z",
+    "shoes": "l"
    },
    "pattern": {
     "slot": "top",
     "name": "brocade_gold"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#3a3a3e"
-    }
-   ]
+   }
   },
   {
    "id": "hl_jeongwon",
    "gender": "F",
    "body": "a7",
    "kit": {
-    "top": "e",
-    "bottom": "a6",
-    "shoes": "q"
+    "top": "a6",
+    "bottom": "j",
+    "shoes": "y"
    },
    "pattern": {
     "slot": "top",
@@ -4493,9 +4252,9 @@
    "gender": "F",
    "body": "a6",
    "kit": {
-    "top": "f",
+    "top": "i",
     "bottom": "a",
-    "shoes": "y"
+    "shoes": "w"
    },
    "pattern": {
     "slot": "top",
@@ -4534,11 +4293,12 @@
    "gender": "F",
    "body": "a8",
    "kit": {
-    "cloth": "a2",
-    "shoes": "a6"
+    "top": "y",
+    "bottom": "a",
+    "shoes": "w"
    },
    "pattern": {
-    "slot": "cloth",
+    "slot": "top",
     "name": "checker_bw"
    }
   },
@@ -4647,21 +4407,14 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "r",
-    "bottom": "l",
-    "shoes": "v"
+    "top": "v",
+    "bottom": "c",
+    "shoes": "g"
    },
    "pattern": {
     "slot": "top",
     "name": "crimson_felt"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#5e2f5a"
-    }
-   ]
+   }
   },
   {
    "id": "cs_hwamul",
@@ -4697,9 +4450,9 @@
    "gender": "F",
    "body": "a3",
    "kit": {
-    "top": "u",
-    "bottom": "a6",
-    "shoes": "a3"
+    "top": "a",
+    "bottom": "j",
+    "shoes": "s"
    },
    "pattern": {
     "slot": "top",
@@ -4951,21 +4704,14 @@
    "gender": "M",
    "body": "g",
    "kit": {
-    "top": "z",
-    "bottom": "l",
-    "shoes": "l"
+    "top": "x",
+    "bottom": "z",
+    "shoes": "z"
    },
    "pattern": {
     "slot": "top",
     "name": "leather_studs"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#b08a1e"
-    }
-   ]
+   }
   },
   {
    "id": "js_jomyeong",
@@ -4986,11 +4732,12 @@
    "gender": "F",
    "body": "a8",
    "kit": {
-    "cloth": "a10",
-    "shoes": "y"
+    "top": "h",
+    "bottom": "y",
+    "shoes": "a9"
    },
    "pattern": {
-    "slot": "cloth",
+    "slot": "top",
     "name": "liquid_metal_chrome"
    }
   },
@@ -5040,9 +4787,9 @@
    "gender": "F",
    "body": "a6",
    "kit": {
-    "top": "m",
-    "bottom": "j",
-    "shoes": "u"
+    "top": "d",
+    "bottom": "a9",
+    "shoes": "a10"
    },
    "pattern": {
     "slot": "top",
@@ -5054,21 +4801,14 @@
    "gender": "M",
    "body": "c",
    "kit": {
-    "top": "g",
-    "bottom": "l",
-    "shoes": "g"
+    "top": "n",
+    "bottom": "p",
+    "shoes": "l"
    },
    "pattern": {
     "slot": "top",
     "name": "pinstripe_charcoal"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#2f5d3a"
-    }
-   ]
+   }
   },
   {
    "id": "kd_yongjeop",
@@ -5161,12 +4901,11 @@
    "gender": "F",
    "body": "a2",
    "kit": {
-    "top": "a9",
-    "bottom": "k",
-    "shoes": "q"
+    "cloth": "a2",
+    "shoes": "a8"
    },
    "pattern": {
-    "slot": "top",
+    "slot": "cloth",
     "name": "silk_red_gold"
    }
   },
@@ -5189,9 +4928,9 @@
    "gender": "F",
    "body": "i",
    "kit": {
-    "top": "q",
-    "bottom": "a",
-    "shoes": "e"
+    "top": "k",
+    "bottom": "a6",
+    "shoes": "q"
    },
    "pattern": {
     "slot": "top",
@@ -5303,30 +5042,23 @@
    "gender": "M",
    "body": "v",
    "kit": {
-    "top": "v",
-    "bottom": "l",
-    "shoes": "z"
+    "top": "n",
+    "bottom": "r",
+    "shoes": "v"
    },
    "pattern": {
     "slot": "top",
     "name": "argyle_green"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#55677a"
-    }
-   ]
+   }
   },
   {
    "id": "hb_gyeongro",
    "gender": "F",
    "body": "d",
    "kit": {
-    "top": "a3",
-    "bottom": "a6",
-    "shoes": "a6"
+    "top": "y",
+    "bottom": "y",
+    "shoes": "u"
    },
    "pattern": {
     "slot": "top",
@@ -5338,21 +5070,14 @@
    "gender": "M",
    "body": "z",
    "kit": {
-    "top": "v",
-    "bottom": "l",
-    "shoes": "r"
+    "top": "x",
+    "bottom": "c",
+    "shoes": "p"
    },
    "pattern": {
     "slot": "top",
     "name": "bamboo_green"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#55677a"
-    }
-   ]
+   }
   },
   {
    "id": "hb_gisang",
@@ -5545,9 +5270,9 @@
    "gender": "F",
    "body": "a8",
    "kit": {
-    "top": "a9",
-    "bottom": "b",
-    "shoes": "m"
+    "top": "h",
+    "bottom": "a",
+    "shoes": "e"
    },
    "pattern": {
     "slot": "top",
@@ -5559,21 +5284,14 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "c",
-    "bottom": "l",
-    "shoes": "v"
+    "top": "g",
+    "bottom": "c",
+    "shoes": "p"
    },
    "pattern": {
     "slot": "top",
     "name": "crest_sun_red"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#5e2f5a"
-    }
-   ]
+   }
   },
   {
    "id": "ac_haecho",
@@ -5694,22 +5412,14 @@
    "gender": "M",
    "body": "r",
    "kit": {
-    "top": "x",
-    "bottom": "l",
-    "shoes": "n"
+    "top": "l",
+    "bottom": "r",
+    "shoes": "l"
    },
    "pattern": {
     "slot": "top",
     "name": "floral_blue"
-   },
-   "tuck": "bottom",
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#6b3a26"
-    }
-   ]
+   }
   },
   {
    "id": "ns_buho",
@@ -5729,9 +5439,9 @@
    "gender": "F",
    "body": "w",
    "kit": {
-    "top": "a3",
-    "bottom": "a",
-    "shoes": "q"
+    "top": "a",
+    "bottom": "a6",
+    "shoes": "a"
    },
    "pattern": {
     "slot": "top",
@@ -5801,9 +5511,9 @@
    "gender": "F",
    "body": "w",
    "kit": {
-    "top": "m",
-    "bottom": "a6",
-    "shoes": "a8"
+    "top": "w",
+    "bottom": "a9",
+    "shoes": "a9"
    },
    "pattern": {
     "slot": "top",
@@ -5815,9 +5525,9 @@
    "gender": "F",
    "body": "d",
    "kit": {
-    "top": "q",
+    "top": "a6",
     "bottom": "y",
-    "shoes": "a8"
+    "shoes": "y"
    },
    "pattern": {
     "slot": "top",
@@ -5912,12 +5622,11 @@
    "gender": "F",
    "body": "a7",
    "kit": {
-    "top": "q",
-    "bottom": "a",
-    "shoes": "f"
+    "cloth": "a7",
+    "shoes": "o"
    },
    "pattern": {
-    "slot": "top",
+    "slot": "cloth",
     "name": "linen_stripes"
    }
   },
@@ -5954,12 +5663,11 @@
    "gender": "F",
    "body": "i",
    "kit": {
-    "top": "e",
-    "bottom": "a",
-    "shoes": "a10"
+    "cloth": "k",
+    "shoes": "k"
    },
    "pattern": {
-    "slot": "top",
+    "slot": "cloth",
     "name": "neon_grid_pink"
    }
   },
@@ -5997,9 +5705,9 @@
    "gender": "M",
    "body": "n",
    "kit": {
-    "top": "n",
+    "top": "l",
     "bottom": "l",
-    "shoes": "p"
+    "shoes": "c"
    },
    "pattern": {
     "slot": "top",
@@ -6075,9 +5783,9 @@
    "gender": "F",
    "body": "a3",
    "kit": {
-    "top": "m",
+    "top": "a",
     "bottom": "b",
-    "shoes": "m"
+    "shoes": "q"
    },
    "pattern": {
     "slot": "top",
@@ -6104,9 +5812,9 @@
    "gender": "F",
    "body": "a6",
    "kit": {
-    "top": "o",
-    "bottom": "y",
-    "shoes": "a6"
+    "top": "j",
+    "bottom": "d",
+    "shoes": "o"
    },
    "pattern": {
     "slot": "top",
@@ -6132,9 +5840,9 @@
    "gender": "F",
    "body": "k",
    "kit": {
-    "top": "o",
-    "bottom": "a9",
-    "shoes": "a9"
+    "top": "b",
+    "bottom": "a6",
+    "shoes": "b"
    },
    "pattern": {
     "slot": "top",
@@ -6203,11 +5911,12 @@
    "gender": "F",
    "body": "s",
    "kit": {
-    "cloth": "a10",
-    "shoes": "u"
+    "top": "y",
+    "bottom": "d",
+    "shoes": "a7"
    },
    "pattern": {
-    "slot": "cloth",
+    "slot": "top",
     "name": "tweed_grey"
    }
   },
@@ -6271,21 +5980,14 @@
    "gender": "M",
    "body": "z",
    "kit": {
-    "top": "n",
-    "bottom": "l",
-    "shoes": "z"
+    "top": "g",
+    "bottom": "r",
+    "shoes": "c"
    },
    "pattern": {
     "slot": "top",
     "name": "bamboo_green"
-   },
-   "tint": [
-    {
-     "slot": "bottom",
-     "match": "001_02",
-     "color": "#5e2f5a"
-    }
-   ]
+   }
   },
   {
    "id": "fy_ttangkkeut",

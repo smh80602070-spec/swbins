@@ -2,6 +2,7 @@
 
     py tools/char-forge/outfit_swap_plan.py            # data/outfit_swap_plan.json 을 쓴다
     py tools/char-forge/outfit_swap_plan.py --check    # 겹침·조각 존재·몸 원래 옷 그대로가 아닌지 검사만
+    py tools/char-forge/outfit_swap_plan.py --fix-holes   # K-0105 기존 줄 중 팔다리 구멍·L 바지 짝 없는 줄만 다시 고른다 → _out/k105_ids.txt
 
 - 조각 목록은 `_out/parts/<샘플>/parts.json`(export_parts_all.sh). 슬롯: top · bottom · shoes · cloth(원피스: 상·하의 대신).
 - 성별은 명단에 없어 id 해시로 정한다(근거 없는 값). 풀은 unity_bodies_plan 과 같다.
@@ -30,7 +31,7 @@ TRAITS = os.path.join(HERE, 'data', 'hero_traits.json')
 LIMB_COVER = os.path.join(HERE, 'data', 'limb_cover.json')   # K-0101 팔다리 덮개(limb_cover_scan.py) — 피부 지운 몸에 그 자리를 안 덮는 옷이 가지 않게
 REALM_I2I = os.path.join(HERE, '..', 'ai-art', 'batches', 'web_realm_194_i2i.json')   # K-0101 — 5천하 194 초상 성별('1girl' 로 시작하면 여자, 웹 heroSex 와 같은 규칙)
 PATTERNS = os.path.join(HERE, '..', '..', 'saga-assets', 'patterns')
-K24_N, K24_MD5 = 299, '7f9a99879f964dd775a0d462eedd3f43'     # K-0101 성별 79명 바로잡은 뒤(옛 2a12b23b, 팔다리 구멍 거름) · K-0024 299명 조합표 지문(이미 구운 몸 — 바뀌면 안 된다)
+K24_N, K24_MD5 = 299, 'a6a4f2f7c4c8b5b8ebbd7928b669721e'     # K-0105 팔다리 구멍·L 바지 97명(첫 299 안 50명) 다시 고른 뒤(옛 7f9a9987 = K-0101) · K-0024 299명 조합표 지문(이미 구운 몸 — 바뀌면 안 된다)
 SKIN_PART = {('top', 'l'): 'CLOTH_02', ('bottom', 'l'): '001_02'}   # K-0097 살색 조각(칸·샘플 → 조각 파일 이름에 든 글자)
 TINT = ['#26365c', '#2f5d3a', '#3a3a3e', '#5e2f5a', '#1f6b6b', '#b08a1e', '#55677a', '#6b3a26']   # 남색·짙은 초록·숯·자주·청록·겨자·회청·밤색
 TUCK_IDS = os.path.join(HERE, 'data', 'k97_tuck_ids.json')   # K-0097 단계 1b 결과(tuck_scan.py 쉼 자세 뚫림 > 0)
@@ -197,6 +198,50 @@ def pick_kit(rng, g, pool, parts, body, used, ok=None):
     return None
 
 
+def bad_fit(body, kit):
+    """K-0101 거름 — 팔다리 구멍이 있거나, L 바지(001_02, 허벅지 중간부터만 덮는 조각)를 L 윗옷 없이 입음."""
+    return bool(limb_holes(body, kit)) or (kit.get('bottom') == 'l' and kit.get('top') != 'l')
+
+
+def fix_holes(rows, parts):
+    """K-0105 — 이미 구운 줄 중 bad_fit 인 줄만 다시 고른다(성별·id 그대로). 같은 몸 먼저, 안 되면 같은 성별 덜 쓰인 몸.
+    씨앗 'k105'+id. 무늬 칸은 새 옷에 맞춘다(원피스면 cloth, 아니면 top). 바뀐 id 목록.
+    신발만 다른 조합(같은 몸·같은 윗옷·바지·원피스)도 거른다 — 색·신발만 다르면 같은 사람으로 보인다(10-14 첫 시트 nz_jeokpyo·rf_wenchou)."""
+    used = {(r['body'], tuple(sorted(r['kit'].items()))) for r in rows}
+    look = lambda b_, k_: (b_, tuple(sorted((s, v) for s, v in k_.items() if s != 'shoes')))
+    looks = {}
+    for r in rows:
+        looks[look(r['body'], r['kit'])] = looks.get(look(r['body'], r['kit']), 0) + 1
+    changed = []
+    for r in rows:
+        if not bad_fit(r['body'], r['kit']):
+            continue
+        pool = [L for L in (MALE if r['gender'] == 'M' else FEMALE) if L in parts]
+        rng = random.Random(int(hashlib.md5(('k105' + r['id']).encode()).hexdigest(), 16))
+        n = {L: 0 for L in pool}
+        for q in rows:
+            if q['body'] in n:
+                n[q['body']] += 1
+        used.discard((r['body'], tuple(sorted(r['kit'].items()))))
+        looks[look(r['body'], r['kit'])] -= 1
+        kit = None
+        for body in [r['body']] + sorted((L for L in pool if L != r['body']), key=lambda L: (n[L], rng.random())):
+            kit = pick_kit(rng, r['gender'], pool, parts, body, used, ok=lambda b_, k_: not bad_fit(b_, k_) and not looks.get(look(b_, k_)))
+            if kit:
+                break
+        if kit is None:
+            raise SystemExit('조합을 못 찾음(K-0105): ' + r['id'])
+        used.add((body, tuple(sorted(kit.items()))))
+        looks[look(body, kit)] = looks.get(look(body, kit), 0) + 1
+        r.update(body=body, kit=kit)
+        if 'pattern' in r:
+            r['pattern']['slot'] = 'cloth' if 'cloth' in kit else 'top'
+        r.pop('tint', None)      # 옛 옷 기준 표시 — apply_k97 이 새 옷으로 다시 단다
+        r.pop('tuck', None)
+        changed.append(r['id'])
+    return changed
+
+
 def apply_traits(rows, parts):
     """hero_traits.json 성별과 다른 줄만 다시 고른다(K-0078). 바뀐 id 목록을 돌려준다."""
     if not os.path.exists(TRAITS):
@@ -222,8 +267,7 @@ def apply_traits(rows, parts):
         used.discard((r['body'], tuple(sorted(r['kit'].items()))))
         kit = None
         for body in sorted(pool, key=lambda L: (n[L], rng.random())):   # 덜 쓰인 몸부터, 구멍 없는 옷이 나올 때까지(K-0101)
-            kit = pick_kit(rng, g, pool, parts, body, used, ok=lambda b, k: not limb_holes(b, k) and not (k.get('bottom') == 'l' and k.get('top') != 'l'))
-            # ↑ L 바지(001_02)는 허벅지 중간부터만 덮는 조각 — L 윗옷 없이는 허벅지 맨살(K-0097 수신함, K-0101 에서 새 줄만 거름)
+            kit = pick_kit(rng, g, pool, parts, body, used, ok=lambda b, k: not bad_fit(b, k))   # 팔다리 구멍·L 바지 짝(K-0101)
             if kit:
                 break
         if kit is None:
@@ -260,9 +304,9 @@ def check(rows, parts):
     tc = [(r['body'], r['kit'].get('top'), r['kit'].get('bottom'), t['slot'], t['color']) for r in rows for t in r.get('tint', [])]
     if len(tc) != len(set(tc)):
         errs.append('tint 색 겹침(같은 몸·같은 윗옷·같은 바지)')
-    holed = [r['id'] for r in rows if limb_holes(r['body'], r['kit'])]
-    if holed:   # 경고만 — 이미 구운 기존 줄(K-0024·K-0028)은 다시 굽기 티켓 몫
-        print('경고 팔다리 구멍 조합 %d명(limb_cover.json) — 예: %s' % (len(holed), ','.join(holed[:6])))
+    holed = [r['id'] for r in rows if bad_fit(r['body'], r['kit'])]
+    if holed:   # 경고만 — 이미 구운 기존 줄은 --fix-holes(K-0105) 로 다시 고르고 다시 굽는다
+        print('경고 팔다리 구멍·L 바지 짝 없는 조합 %d명(limb_cover.json) — 예: %s' % (len(holed), ','.join(holed[:6])))
     if len(rows) >= K24_N and fingerprint(rows[:K24_N]) != K24_MD5:
         errs.append('K-0024 299명 조합이 바뀜(지문 다름) — 이미 구운 몸과 어긋난다')
     return errs
@@ -274,7 +318,11 @@ if __name__ == '__main__':
         rows = json.load(open(OUT, encoding='utf-8'))['entries']
         print('검사 대상:', os.path.relpath(OUT))
     changed = apply_traits(rows, parts)
-    k97 = apply_k97(rows, set(changed)) if '--check' not in sys.argv else []
+    fixed = fix_holes(rows, parts) if '--fix-holes' in sys.argv else []
+    if fixed:
+        print('K-0105 팔다리 구멍·L 바지 다시 고른 인물', len(fixed))
+        open(os.path.join(HERE, '_out', 'k105_ids.txt'), 'w', encoding='utf-8').write(','.join(fixed))
+    k97 = apply_k97(rows, set(changed) | set(fixed)) if '--check' not in sys.argv else []
     if k97:
         print('K-0097 tint·tuck 단 인물', len(k97), ':', ','.join(k97))
     if changed:
