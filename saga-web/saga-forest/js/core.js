@@ -441,12 +441,19 @@
     tileBase: 'assets/web2d/tile/',
     /** 마을 건물·지물 2D 스프라이트(K-0017 `world2d`, 3D 와 같은 id) — 종류 → { id, h(px, 확대 1) }. 못 받으면 옛 도형 */
     /*  night = 밤 변종(K-0092, 같은 크기·알파 — cozy2d 가 밤에만 바꿔 그린다) · lantern = 마을 석등(옛 🏮) */
-    prop2d: { home: { id: 'forest_cottage_01', night: 'forest_cottage_01_night', h: 74 }, shop: { id: 'inn_01', night: 'inn_01_night', h: 90 }, mail: { id: 'mailbox_01', h: 30 }, lantern: { id: 'stone_lantern_01', h: 40 } },
+    prop2d: { home: { id: 'forest_cottage_01', night: 'forest_cottage_01_night', h: 74 }, shop: { id: 'inn_01', night: 'inn_01_night', h: 90 },
+      /* W-0218 서당·사고·침선방(K-0111 — 옛 drawHanok 도형 셋) · h 는 집 74·가게 90 사이, 옛 비율 사고 > 서당 > 침선방 */
+      school: { id: 'hanok_01', night: 'hanok_01_night', h: 80 }, museum: { id: 'chinese_hall_01', night: 'chinese_hall_01_night', h: 86 }, tailor: { id: 'jp_minka_01', night: 'jp_minka_01_night', h: 76 },
+      mail: { id: 'mailbox_01', h: 30 }, lantern: { id: 'stone_lantern_01', h: 40 } },
     /** 밤 불빛 자리(W-0142) — 소품 그림(256px) 픽셀 [x, y, 반지름], K-0092 tools/ai-art/data/night_lights.json 에서 옮김 */
     lit: {
       forest_cottage_01: [[78, 160, 9], [38, 161, 8]],
       inn_01: [[86, 137, 6], [164, 158, 7], [92, 201, 11], [66, 182, 5], [108, 201, 4], [185, 199, 7]],
-      stone_lantern_01: [[128, 110, 22]]
+      stone_lantern_01: [[128, 110, 22]],
+      /* W-0218 — night_lights.json 사각·타원 → 가운데·반지름(√(가로×세로)/2 + 1, 4~12) */
+      hanok_01: [[47, 167, 11], [73, 189, 12], [111, 207, 12], [136, 219, 12], [206, 196, 12]],
+      chinese_hall_01: [[49, 175, 5], [90, 202, 8], [138, 217, 5], [171, 215, 6], [206, 196, 7]],
+      jp_minka_01: [[72, 204, 12], [100, 215, 12], [161, 228, 10], [209, 204, 10]]
     },
     /** 땅 종류(data-village TILES) → 2D 바닥 타일(K-0020 `forest_*`, K-0091 `_v2`) — `snow` 는 겨울의 풀 칸 */
     tile: { grass: 'forest_grass', grass_meadow: 'forest_grass', grass_dark: 'forest_grass', grass_mush: 'forest_grass', grass_rocky: 'forest_stone_v2', path: 'forest_dirt_v2', sand: 'forest_sand_v2', water: 'forest_water', stone: 'forest_stone_v2', floor: 'forest_dirt_v2', snow: 'forest_snow' },

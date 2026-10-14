@@ -241,13 +241,14 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
     t('2D 밤 소품(W-0142) — 집·가게는 밤에 _night 변종(낮엔 낮 그림), 우체통은 변종이 없어 그대로 · 불빛 자리 표는 소품 그림 id 와 맞고 그림 픽셀 → 화면 점이 맞다', function () {
       var Z = DG.cozy2d, m = DG.cfg.mode2d, miss = [];
       function has(u) { var x = new XMLHttpRequest(); x.open('GET', u, false); x.send(); return x.status === 200; }
-      ['home', 'shop'].forEach(function (k) { var n = m.prop2d[k].night; if (!n || JSON.stringify(DG.assets3dIds || {}).indexOf(n) < 0) { miss.push(k); } /* 진단 서버는 판 폴더만 내준다 — 밤 그림은 공용 에셋 id 목록(assets3d-ids)으로 */ });
+      ['home', 'shop', 'school', 'museum', 'tailor'].forEach(function (k) { var n = m.prop2d[k].night; if (!n || JSON.stringify(DG.assets3dIds || {}).indexOf(n) < 0) { miss.push(k); } /* 진단 서버는 판 폴더만 내준다 — 밤 그림은 공용 에셋 id 목록(assets3d-ids)으로 */ });
       var days = Object.keys(m.prop2d).map(function (k) { return Z.propId(k, false); });
       var litOk = Object.keys(m.lit).every(function (id) { return days.indexOf(id) >= 0 && m.lit[id].every(function (q) { return q.length === 3 && q[0] >= 0 && q[0] < 256 && q[1] >= 0 && q[1] < 256 && q[2] > 0; }); });
       var pt = Z.litPoints([[128, 128, 10]], { sx: 0, sy: 0, sw: 256, sh: 256 }, 100, 200, 128)[0];
       var r = [miss.length === 0,
         Z.propId('home', true) === 'forest_cottage_01_night', Z.propId('shop', true) === 'inn_01_night', Z.propId('mail', true) === 'mailbox_01',
         Z.propId('home', false) === 'forest_cottage_01', Z.propId('shop', false) === 'inn_01', Z.propId('nope', true) === null,
+        Z.propId('school', true) === 'hanok_01_night', Z.propId('museum', true) === 'chinese_hall_01_night', Z.propId('tailor', false) === 'jp_minka_01',   // W-0218
         litOk, pt.x === 100 && pt.y === 136 && pt.r === 5];
       return r.every(Boolean) ? '밤 집·가게 변종 · 우체통 그대로 · 불빛 ' + Object.keys(m.lit).length + '종 ' + Object.keys(m.lit).reduce(function (a, k) { return a + m.lit[k].length; }, 0) + '자리' : '실패 ' + r.join(',') + ' ' + miss.join(',');
     });

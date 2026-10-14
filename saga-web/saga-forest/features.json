@@ -909,7 +909,7 @@
   "note": "D2(claude 2026-10-13): pw-cozy-check w0142 pc·phone·land × day·night 여섯 장 Read ○ — 낮: 흙길 가장자리 풀이 이웃 가을 풀과 같은 색으로 물결(조각 무늬는 여름 풀이라 그대로면 혼자 푸름 → 이웃 칸 밑색 + 같은 계절 풀 overlay 에 조각 알파만), 깊이 손잡이 village.seamDepth 0.5(1 이면 한 칸 길이 실처럼 가늘다) · 밤: 여관·오두막 _night + 창 불빛 번짐. qc 2d·2-sphere2d ○. 그림이 안 왔으면 옛 톱니·거품·낮 그림."
  },
  {
-  "id": "fs.me2d-body",
+  "id": "fs.me2d-body · W-0218(10-15): 서당 hanok_01(h 80)·사고 chinese_hall_01(86)·침선방 jp_minka_01(76) + _night·불빛 — 사고·침선방 낮·밤 촬영 Read ○(서로 다른 건물·밤 창 불빛 자리 맞음), 서당은 새 마을에 없어 진단만.",
   "name": "2D 마을 나의 몸 — 대장 인물 제 시트(차림 꼬리 #coat/head/dye/cape 를 떼고 고름, 3D 와 같은 몸) · 192 칸 인물의 마을 시트(128 칸)를 그림 폭으로 잘라 온몸",
   "files": [
    "js/actor2d.js",
