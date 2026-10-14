@@ -1660,21 +1660,21 @@
     tagQ.length = 0; for (var k = 0; k < items.length; k++) { items[k].draw(); } flushTags();   // W-0144 — 이름표는 몸을 다 그린 뒤 겹침을 풀어 한 번에
   }
 
-  /* W-0144 — 이름표 겹침 풀기(순수). items [{x, y, w, h, dist}] → 각 줄에 y(옮긴 자리)·alpha. 가까운 것부터 제자리, 겹치면 위로 h+2 씩
-     한 자리에 셋까지, 그래도 겹치면 숨김(alpha 0) — 가장 가까운 것은 늘 보인다 */
+  /* W-0144 — 이름표 겹침 풀기(순수). items [{x, y, w, h, dist, pri}] → 각 줄에 y(옮긴 자리)·oy(원래)·alpha·lead. 우선(pri 큰 것) → 가까운 것 순으로 제자리,
+     겹치면 위로 h+2 씩 넷째 자리까지(W-0205, 옛 셋), 그래도 겹치면 숨김(alpha 0) — 첫째는 늘 보인다. 둘째 단 넘게 밀리면 lead(머리와 잇는 가는 선) */
   var tagQ = [];
   function layoutLabels(items) {
-    var order = items.slice().sort(function (a, b) { return (a.dist || 0) - (b.dist || 0); }), placed = [], i, s, y;
+    var order = items.slice().sort(function (a, b) { return ((b.pri || 0) - (a.pri || 0)) || ((a.dist || 0) - (b.dist || 0)); }), placed = [], i, s, y;
     for (i = 0; i < order.length; i++) {
       var it = order[i], hit = function (q) { return Math.abs(q.x - it.x) * 2 < q.w + it.w && Math.abs(q.y - y) < (q.h + it.h) / 2; };
-      for (s = 0, it.alpha = 0; s < 3 && !it.alpha; s++) { y = it.y - s * (it.h + 2); if (i === 0 || !placed.some(hit)) { it.y = y; it.alpha = 1; placed.push(it); } }
+      for (s = 0, it.alpha = 0, it.oy = it.oy === undefined ? it.y : it.oy; s < 4 && !it.alpha; s++) { y = it.oy - s * (it.h + 2); if (i === 0 || !placed.some(hit)) { it.y = y; it.alpha = 1; it.lead = s >= 2; placed.push(it); } }
     }
     return items;
   }
   function flushTags() {
     ctx.textAlign = 'center';
-    tagQ.forEach(function (q) { ctx.font = '600 ' + q.px + 'px system-ui, sans-serif'; q.w = ctx.measureText(q.t).width + 4; q.h = q.px + 2; });
-    layoutLabels(tagQ).forEach(function (q) { if (!q.alpha) { return; } ctx.globalAlpha = q.ga || 1; ctx.font = '600 ' + q.px + 'px system-ui, sans-serif'; ctx.fillStyle = q.shade; ctx.fillText(q.t, q.x + 1, q.y + 1); ctx.fillStyle = q.fill; ctx.fillText(q.t, q.x, q.y); });
+    tagQ.forEach(function (q) { ctx.font = '600 ' + q.px + 'px system-ui, sans-serif'; q.w = ctx.measureText(q.t).width + 4; q.h = q.px + 5; });   // W-0205 줄 사이 여유(옛 +2 — 붙어 보였다)
+    layoutLabels(tagQ).forEach(function (q) { if (!q.alpha) { return; } ctx.globalAlpha = q.ga || 1; if (q.lead) { ctx.strokeStyle = q.shade; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(q.x, q.y + 3); ctx.lineTo(q.x, q.oy - q.h * 0.7); ctx.stroke(); } ctx.font = '600 ' + q.px + 'px system-ui, sans-serif'; ctx.fillStyle = q.shade; ctx.fillText(q.t, q.x + 1, q.y + 1); ctx.fillStyle = q.fill; ctx.fillText(q.t, q.x, q.y); });
     ctx.textAlign = 'left'; ctx.globalAlpha = 1; tagQ.length = 0;
   }
 
@@ -1867,7 +1867,7 @@
       t: now
     });
 
-    if (p.s > 0.45) { tagQ.push({ t: s.ref.name, x: p.x, y: p.y - bodyH * 1.12 - 6 * z, px: Math.round(11 * z), shade: 'rgba(0,0,0,0.62)', fill: near ? '#fff' : 'rgba(255,255,255,0.78)', dist: Math.hypot(s.x - pos.x, s.y - pos.y), ga: ctx.globalAlpha }); }   // W-0144 — flushTags 가 그린다
+    if (p.s > 0.45) { tagQ.push({ t: s.ref.name, x: p.x, y: p.y - bodyH * 1.12 - 6 * z, px: Math.round(11 * Math.min(z, 1.4)), shade: 'rgba(0,0,0,0.62)', fill: near ? '#fff' : 'rgba(255,255,255,0.78)', dist: Math.hypot(s.x - pos.x, s.y - pos.y), pri: near ? 3 : 1, ga: ctx.globalAlpha }); }   // W-0144 — flushTags 가 그린다 · W-0205 글자는 몸 배율(bodyK)을 1.4 까지만 · 우선 가까운 영웅 > 영웅 > 가까운 주민 > 주민
     ctx.globalAlpha = 1;
   }
 
@@ -1902,7 +1902,7 @@
       t: now
     });
 
-    if (p.s > 0.45) { tagQ.push({ t: n.p.name, x: p.x, y: p.y - bodyH * 1.10 - 5 * z, px: Math.round(10 * z), shade: 'rgba(0,0,0,0.55)', fill: near ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.42)', dist: n.dist }); }   // W-0144
+    if (p.s > 0.45) { tagQ.push({ t: n.p.name, x: p.x, y: p.y - bodyH * 1.10 - 5 * z, px: Math.round(10 * Math.min(z, 1.4)), shade: 'rgba(0,0,0,0.55)', fill: near ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.7)', dist: n.dist, pri: near ? 2 : 0 }); }   // W-0144 · W-0205 먼 주민 0.42 → 0.7(밝은 돌바닥에서 안 읽혔다)
   }
 
   /**

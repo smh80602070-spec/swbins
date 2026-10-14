@@ -1403,11 +1403,11 @@
    * 말풍선 — 원작의 그 둥근 이름표.
    * 화면에 글자를 그냥 얹지 않는다. 흰 판에 얹고 아래에 꼬리를 단다.
    */
-  /* W-0144 — 말풍선 겹침 풀기(순수). rects = 이 프레임에 이미 그린 자리(draw() 첫머리에서 비움). 겹치면 위로 h+2 씩 셋째 자리까지,
+  /* W-0144 — 말풍선 겹침 풀기(순수). rects = 이 프레임에 이미 그린 자리(draw() 첫머리에서 비움). 겹치면 위로 h+2 씩 넷째 자리까지(W-0205, 옛 셋 — 둘째 단 넘게 밀리면 머리와 가는 선),
      그래도 겹치면 null(숨김) — 행동 안내(keep, 글에 [키])는 안 숨기고 마지막 자리에 */
   var bubbleRects = [];
   function bubbleSlot(rects, x, y, w, h, keep) {
-    for (var s = 0, ny; s < 3; s++) { ny = y - s * (h + 2); if (!rects.some(function (q) { return Math.abs(q.x - x) * 2 < q.w + w && Math.abs(q.y - ny) < h; })) { rects.push({ x: x, y: ny, w: w }); return ny; } }
+    for (var s = 0, ny; s < 4; s++) { ny = y - s * (h + 2); if (!rects.some(function (q) { return Math.abs(q.x - x) * 2 < q.w + w && Math.abs(q.y - ny) < h; })) { rects.push({ x: x, y: ny, w: w }); return ny; } }
     return keep ? (rects.push({ x: x, y: ny, w: w }), ny) : null;
   }
   function bubble(text, x, y, fg, bg) {
@@ -1415,7 +1415,7 @@
     ctx.font = '700 12.5px "Malgun Gothic", system-ui';
     var w = ctx.measureText(text).width + 18;
     var h = 21, rr = h * 0.5;
-    y = bubbleSlot(bubbleRects, x, y, w, h + 6, String(text).indexOf('[') >= 0);
+    var y0 = y; y = bubbleSlot(bubbleRects, x, y, w, h + 6, String(text).indexOf('[') >= 0);
     if (y === null) { ctx.restore(); return; }
     var l = x - w * 0.5, t = y - h * 0.5;
     ctx.beginPath();
@@ -1429,7 +1429,7 @@
     ctx.fillStyle = bg || '#ffffff';
     ctx.fill();
 
-    ctx.fillStyle = fg || '#39414c';
+    ctx.fillStyle = fg || '#39414c'; if (y !== null && y0 - y > 2 * (h + 8) - 1) { ctx.save(); ctx.strokeStyle = 'rgba(57,65,76,0.55)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x, t + h + 6); ctx.lineTo(x, y0 + h * 0.5); ctx.stroke(); ctx.restore(); }   // W-0205 많이 밀린 말풍선은 원래 자리(머리)와 잇는다
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(text, x, y + 0.5);

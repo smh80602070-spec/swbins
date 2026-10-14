@@ -8971,6 +8971,12 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var ok = [w === 'polearm', w2 === 'polearm', A.sharedUrl('hit') === null, r ? (u && u.slice(-'audio/sfx/sfx_crit.ogg'.length) === 'audio/sfx/sfx_crit.ogg') : u === null];
       return ok.every(Boolean) && ('sx → ' + (u || '(공용 주소 없음)') + ' · 창 → spear_hit');
     });
+    t('2D 이름표 비키기(W-0205) — 한 점에 이름표 5개: 넷째 단까지 위로 밀려 넷이 보이고 서로 안 겹침·하나 생략, 우선 높은 것이 제자리, 둘째 단 넘게 밀린 것은 머리와 잇는 선', function () {
+      var L = [0, 1, 2, 3, 4].map(function (i) { return { x: 100, y: 200, w: 60, h: 14, dist: i, pri: i === 4 ? 3 : 0 }; }), out = DG.world.layoutLabels(L), shown = out.filter(function (q) { return q.alpha; }), ov = 0, a, b;
+      for (a = 0; a < shown.length; a++) { for (b = a + 1; b < shown.length; b++) { if (Math.abs(shown[a].y - shown[b].y) < 14) { ov++; } } }
+      var r = [shown.length === 4, ov === 0, L[4].y === 200 && L[4].alpha === 1, shown.filter(function (q) { return q.lead; }).length === 2, shown.every(function (q) { return q.oy === 200; })];
+      return r.every(Boolean) && ('보임 ' + shown.length + '/5 · 겹침 0 · 선 2') || '실패 ' + r.join(',');
+    });
     t('2D 카메라 가까이(W-0204) — 들판 확대 2.0 을 몸도 따름: 나 1.25·48·min(2.5, 확대) = 120px(옛 60) 이 100~140', function () {
       var zm = DG.field2d.zoomMul(), body = 1.25 * 48 * Math.min(2.5, Math.max(1, zm));
       return zm === 2 && body >= 100 && body <= 140 && ('확대 ' + zm + ' · 몸 ' + Math.round(body) + 'px') || '실패 ' + zm + ' · ' + body;
@@ -16789,12 +16795,12 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '휠 위 → 2D 배율 커짐 · 3D 거리 줄어듦 · 휠 아래로 제자리' : ('실패 ' + bad.join(','));
     });
-    t('go.world: 2D 이름표 겹침(W-0144) — 같은 점 여섯은 셋이 위로 비켜 서고 셋은 숨김, 가장 가까운 것은 제자리·보임, 떨어진 것은 안 건드림', function () {
+    t('go.world: 2D 이름표 겹침(W-0144) — 같은 점 여섯은 넷이 위로 비켜 서고 둘은 숨김(W-0205 넷째 단), 가장 가까운 것은 제자리·보임, 떨어진 것은 안 건드림', function () {
       var L = DG.world.layoutLabels, six = [5, 1, 4, 2, 6, 3].map(function (d) { return { x: 100, y: 200, w: 60, h: 13, dist: d }; }), far = { x: 400, y: 200, w: 60, h: 13, dist: 9 };
       L(six.concat([far]));
       var shown = six.filter(function (q) { return q.alpha === 1; }), ys = shown.map(function (q) { return q.y; }).sort(), near = six.filter(function (q) { return q.dist === 1; })[0];
-      var r = [shown.length === 3, ys.join() === [170, 185, 200].sort().join(), near.alpha === 1 && near.y === 200, far.alpha === 1 && far.y === 200, L([]).length === 0];
-      return r.every(Boolean) && ('보임 3 · 숨김 3 · y ' + ys.join('/')) || '실패 ' + r.join(',') + ' ' + JSON.stringify(six);
+      var r = [shown.length === 4, ys.join() === [155, 170, 185, 200].sort().join(), near.alpha === 1 && near.y === 200, far.alpha === 1 && far.y === 200, L([]).length === 0];
+      return r.every(Boolean) && ('보임 4 · 숨김 2 · y ' + ys.join('/')) || '실패 ' + r.join(',') + ' ' + JSON.stringify(six);
     });
     t('go.field2d: 2D 들판(W-0130) — 소품은 좌표 해시로 늘 같고, 숲엔 나무·물가엔 거품, 2D 일 때만 카메라 ×1.7', function () {
       var F = DG.field2d, W = DG.world, st = C.save.settings, keep = st.tilt, r;

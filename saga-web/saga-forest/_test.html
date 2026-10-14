@@ -409,13 +409,13 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       var r = [allW, key0, got.length === 11, oldOk, clips];
       return r.every(Boolean) && ('신수 ' + got.length + '/11 새 몸 · 다른 펫은 옛 표 · 클립 다섯') || '실패 ' + r.join(',') + ' ' + bad.join(',');
     });
-    t('말풍선 겹침(W-0144) — 같은 점 여섯은 셋이 위로 비켜 서고 나머지는 숨김, 행동 안내([키])는 안 숨김, 떨어진 것은 제자리', function () {
+    t('말풍선 겹침(W-0144) — 같은 점 여섯은 넷이 위로 비켜 서고 나머지는 숨김(W-0205 넷째 자리), 행동 안내([키])는 안 숨김, 떨어진 것은 제자리', function () {
       var S = DG.villageView._bubbleSlot, rects = [], ys = [], i, y;
       for (i = 0; i < 6; i++) { ys.push(S(rects, 100, 200, 80, 27, false)); }
       var keep = S(rects, 100, 200, 80, 27, true), far = S(rects, 400, 200, 80, 27, false);
       var shown = ys.filter(function (v) { return v !== null; });
-      var r = [shown.join() === '200,171,142', ys.slice(3).every(function (v) { return v === null; }), keep === 142, far === 200];
-      return r.every(Boolean) && ('보임 ' + shown.join('/') + ' · 숨김 3 · 안내 ' + keep) || '실패 ' + r.join(',') + ' ' + JSON.stringify(ys);
+      var r = [shown.join() === '200,171,142,113', ys.slice(4).every(function (v) { return v === null; }), keep === 113, far === 200];
+      return r.every(Boolean) && ('보임 ' + shown.join('/') + ' · 숨김 2 · 안내 ' + keep) || '실패 ' + r.join(',') + ' ' + JSON.stringify(ys);
     });
     t('mapClips — 이름이 뒤섞인 클립도 자리(idle·walk·attack…)를 찾아낸다', function () {
       var A3 = DG.asset3d;
@@ -1255,6 +1255,11 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       return VV3.waterRippleCount() === 0 && '아직 안 지음(init 전)';
     });
 
+    t('2D 말풍선 비키기(W-0205) — 한 점에 말풍선 5개: 넷째 자리까지 위로(옛 셋), 다섯째는 숨김·행동 안내([키])는 안 숨김', function () {
+      var S = DG.villageView._bubbleSlot, rects = [], ys = [0, 1, 2, 3, 4].map(function () { return S(rects, 100, 200, 60, 27, false); }), k = S(rects, 100, 200, 60, 27, true);
+      var r = [ys[0] === 200, ys[3] === 200 - 3 * 29, ys[4] === null, k !== null];
+      return r.every(Boolean) && ('자리 ' + ys.slice(0, 4).join('·') + ' · 다섯째 숨김 · 안내 ' + k) || '실패 ' + r.join(',') + ' ' + ys.join(',');
+    });
     t('2D 카메라 가까이(W-0204) — 1280×720 기본 화면에서 내 몸 ≈ 48·(720/620)·cozyZoom 이 100~140px(화면 1/6, 옛 75) · 손잡이 village.cozyZoom', function () {
       var z = DG.cozy2d.wantZoom(), body = 48 * Math.min(1.7, Math.max(0.82, 720 / 620)) * z;
       return z === 2.1 && body >= 100 && body <= 140 && ('cozyZoom ' + z + ' · 몸 ' + Math.round(body) + 'px') || '실패 ' + z + ' · ' + body;
