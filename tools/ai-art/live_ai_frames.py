@@ -1,5 +1,5 @@
 """K-0110 — AI 대화 초상 인페인트 결과(batches/k110_ai_live.json → _out/k110_ai_live)를 split_portrait_layers.py 가 읽는 프레임 폴더로 모은다.
-  py tools/ai-art/live_ai_frames.py [--picks tools/ai-art/data/live_ai_blink_picks.json] [--out tools/ai-art/_out/live_frames_ai] [--sheet <png>]
+  py tools/ai-art/live_ai_frames.py [--picks tools/ai-art/data/live_ai_blink_picks.json] [--out tools/ai-art/_out/live_frames_ai] [--sheet <png> [--ids a,b]]
 프레임: base = K-0047 원본(init_image) · blink = 고른 씨앗(blink_s0|s1) · blink_half · mouth_a·half·o · expr_<표정> — `<id>__<프레임>.png`
 출처: `<id>__base.license.json` = 원본 license + 인페인트 배치 이름(split 이 이 파일이 있으면 AI 출처로 적는다).
 --sheet 사람마다 [원본 | blink_s0 | blink_s1] 얼굴 띠(고르기용).
@@ -33,7 +33,10 @@ def main():
     sheet = arg('--sheet')
     if sheet:
         rows = []
+        only = arg('--ids', '').split(',') if arg('--ids') else None
         for h in init:
+            if only and h not in only:
+                continue
             if not all(os.path.exists(os.path.join(SRC, '%s__blink_s%d.png' % (h, k))) for k in (0, 1)):
                 continue
             e = boxes[h]['eye']
