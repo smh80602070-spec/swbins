@@ -25,7 +25,8 @@
    "js/ui.js",
    "js/ui-near.js",
    "js/story.js",
-   "js/story-chapters.js"
+   "js/story-chapters.js",
+   "js/story-chapters-b.js"
   ],
   "tests": [
    "조작 ① 포획·사건 싸움 키(W-0174) — 싸우는 중 Space keydown = 회피(토벌 저스트 판정 + 몸 빼기), E 필살·R 원거리·J 모으기·Esc 물러나기",
