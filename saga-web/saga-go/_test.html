@@ -8860,6 +8860,19 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var ok = [w0 === 0.45, w1 > 0 && w1 < 0.45, w2 === 0, lo >= 70 && hi <= 220, seam < 25, pp >= 0, ta.length > 900 && ta.length < 1800, tn.length === 0, ta.every(function (q) { return Math.hypot(q.x, q.z) <= 40 && q.s > 0; }), th.every(function (q) { return q.x > 0; }) && th.length > ta.length * 0.35 && th.length < ta.length * 0.65];
       return ok.every(Boolean) && ('결 5m ' + w0 + ' · 32m ' + w1.toFixed(2) + ' · 60m 0 · 먼 산 ' + lo.toFixed(0) + '~' + hi.toFixed(0) + 'm · 풀 ' + pp + ' · 잔풀 40m ' + ta.length + '(반쪽 풀 ' + th.length + ')');
     });
+    t('폰 몸 늦게 받기 — lazy 1 이면 지도 배우(withLazy)의 몸은 받기 전(wake 있음)·wake 한 번만 · lazy 0 이거나 지도 밖(초상·소품) build 는 바로 (W-0212)', function () {
+      var A = DG.asset3d, p = DG.data.pets.find(function (x) { return A.wants('pet', x); }) || DG.data.pets[0], r;
+      if (!A.ready()) { return '3D 없음 — 건너뜀'; }
+      try {
+        DG.core.setTune('asset3d.lazy', 1);
+        var a = A.withLazy(function () { return A.build('pet', p); }), b = A.build('pet', p), st = a && a.userData.assetState;
+        var hadWake = !!(a && a.userData.wake), w1 = A.wake(a), w2 = A.wake(a);
+        DG.core.setTune('asset3d.lazy', 0);
+        var c = A.withLazy(function () { return A.build('pet', p); });
+        r = [hadWake, st === 'shape', w1 === true, w2 === false, !(b && b.userData.wake), !(c && c.userData.wake), A.lazy('station') === false];
+      } finally { DG.core.setTune('asset3d.lazy', null); }
+      return r.every(Boolean) && ('지도 배우 미룸 → 깨움 한 번 · 초상·소품·lazy 0 은 바로') || '실패 ' + r.join(',');
+    });
     t('3D 잔풀 — 여름 색은 옛 값 그대로·가을은 다르고, 바람이 맑음보다 크게 흔들고, 흔들림 손잡이 0 이면 멎는다, 가을 들 땅만 계절 색 덮어 칠하기 (W-0209)', function () {
       var G = DG.ground3d, su = G.turfPal('summer'), au = G.turfPal('autumn'), no = G.turfPal('없는 철'), wd = G.turfSway('wind'), cl = G.turfSway('clear'), off;
       DG.core.setTune('world3d.sway', 0); off = G.turfSway('wind'); DG.core.setTune('world3d.sway', null);

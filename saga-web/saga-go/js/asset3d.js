@@ -637,7 +637,7 @@
     var v = oneOf(heroPool(h.url), ref);
     return (v && typeof v === 'object' && v.body) ? v : null;
   }
-  function wants(kind, ref) { return GLB_ON() && !!urlOf(kind, ref); }
+  function wants(kind, ref) { return GLB_ON() && !!urlOf(kind, ref); }   /* W-0212 폰(prop3d.light 자동)이면 지도 배우(world3d 가 withLazy 로 세움)의 몸 GLB 를 곁(asset3d.lazyR m)에 올 때 받는다 — 건물·초상·소품은 바로 */ var lazyScope = false; function withLazy(fn) { lazyScope = true; try { return fn(); } finally { lazyScope = false; } } function LAZY(kind) { if (!lazyScope || kind === 'station' || kind === 'fort' || kind === 'landmark') { return false; } var k = core().tuned('asset3d.lazy', 'auto'); if (k === 1 || k === '1') { return true; } if (k === 0 || k === '0') { return false; } var P = global.DG.prop3d; return !!(P && P.light && P.light()); } function wake(n) { var w = n && n.userData && n.userData.wake; if (w) { n.userData.wake = null; w(); } return !!w; }
 
   /** 이 배우는 무엇으로 설까 — 'glb' · 'shape' · 'primitive'. 순수 함수다 */
   function chain(kind, ref) {
@@ -1272,7 +1272,7 @@
     var parts = {}, pending = 4;
     var own = !rec.anim && wantsOwnAnim(rec.body);   // VRM 몸 → 자체 몸짓(UAL1 을 받으러 가지 않는다)
     function onOne() { pending--; if (pending === 0) { assemble(); } }
-    acquire(rec.body, function (c) { parts.body = c; onOne(); });
+    function go() { acquire(rec.body, function (c) { parts.body = c; onOne(); });
     /* outfit·hair 는 조합형(옛 Quaternius) 레시피에만 있다 — QRPG 몸(통짜 스킨)은
        둘 다 없으니 헛수고로 받으러 가지 않고 바로 다음 칸으로 넘어간다 */
     if (rec.outfit) { acquire(rec.outfit, function (c) { parts.outfit = c; onOne(); }); } else { onOne(); }
@@ -1280,7 +1280,7 @@
     /* QRPG는 몸 파일 자체에 클립이 있다 — `rec.anim` 이 `rec.body` 와 같은 파일이면
        같은 캐시를 다시 받아 그 클립을 그대로 쓴다. 옛 조합형은 `rec.anim` 이 없어
        공용 ANIM_SRC(UAL) 로 몸짓을 옮겨 입는다 */
-    if (own) { onOne(); } else { acquire(rec.anim || ANIM_SRC, function (c) { parts.anim = c; onOne(); }); }
+    if (own) { onOne(); } else { acquire(rec.anim || ANIM_SRC, function (c) { parts.anim = c; onOne(); }); } } if (LAZY('hero')) { shell.userData.wake = go; } else { go(); }
 
     function assemble() {
       if (!parts.body) { shell.userData.assetState = 'fail'; return; }
@@ -1382,7 +1382,7 @@
     shell.userData.assetState = 'shape';
     built++;
 
-    acquire(url, function (c) {
+    var go = function () { acquire(url, function (c) {
       if (!c) { shell.userData.assetState = 'fail'; return; }
       var model;
       try {
@@ -1411,7 +1411,7 @@
         shell.userData.clipMap = c.map;
         shell.userData.anim = null;
       }
-    });
+    }); }; if (LAZY(kind)) { shell.userData.wake = go; } else { go(); }
     return shell;
   }
 
@@ -1472,7 +1472,7 @@
   global.DG.asset3d = {
     /* 표 — three 없이도 돈다 */
     REG: REG, register: register, keysFor: keysFor, lookup: lookup, urlOf: urlOf, isBackdrop: isBackdrop, shadeOne: shadeOne,
-    wants: wants, chain: chain, SLOTS: SLOTS,
+    wants: wants, chain: chain, SLOTS: SLOTS, lazy: LAZY, wake: wake, withLazy: withLazy,
     /* 이름·크기 맞추기 — 순수 함수 */
     normName: normName, score: score, mapClips: mapClips, fit: fit,
     heightMul: heightMul, markOf: markOf,

@@ -892,9 +892,11 @@
   "name": "폰 표 — 폰(터치·짧은 변 ≤500px)이나 설정 \"낮음\"이면 실사 소품 대신 옛 저다각형·픽셀 비율 1",
   "files": [
    "js/prop3d.js",
-   "js/world3d.js"
+   "js/world3d.js",
+   "js/asset3d.js"
   ],
   "tests": [
+   "폰 몸 늦게 받기 — lazy 1 이면 지도 배우(withLazy)의 몸은 받기 전(wake 있음)·wake 한 번만 · lazy 0 이거나 지도 밖(초상·소품) build 는 바로 (W-0212)",
    "go.mobile-light: 폰 표(W-0185) — prop3d.light 1 이면 실사(realistic/) 자리가 옛 저다각형으로 · 미리 받기에도 실사 0 · 철·같은 자리 규칙 그대로",
    "go.mobile-light: 자동 판정(W-0185) — 이 진단 창(터치 없음)은 폰 표 안 씀 = PC 화면 그대로"
   ],
@@ -903,7 +905,7 @@
   "fun": {},
   "ticket": "W-0185",
   "since": "2026-10-12",
-  "note": "D2(claude 2026-10-12): mobile-probe saga-go --play(390×844·Fast 4G·CPU×4, 들판 15초) 소품 GLB 17개 7,568KB(실사 14) → 25개 844KB(실사 2 — asset3d 역참·등롱, 범위 밖). 남은 무게는 인물·괴물 GLB(개당 0.6~1MB) — K 수신함. 손잡이 prop3d.light(1·0·자동)·world3d.pixelCap. perf.js 세 등급(HIGH·MEDIUM·LOW)은 원래 있었다(R-0 의 \"품질 단 없음\" 은 틀림)."
+  "note": "W-0212(claude 10-14): 폰(prop3d.light 자동)이면 지도 배우 몸 GLB 를 곁 60m(asset3d.lazyR)에 올 때 받음(asset3d.lazy·withLazy·wake, world3d placeActor) — mobile-probe saga-go --local --play 받은 22,460KB → 16,405KB · GLB 58개 14,124KB → 46개 8,081KB · 예외 0 · 폰 화면 Read 곁 짐승 몸 ○. 초상·소품(요리·보물·등롱)은 바로 받음 · D2(claude 2026-10-12): mobile-probe saga-go --play(390×844·Fast 4G·CPU×4, 들판 15초) 소품 GLB 17개 7,568KB(실사 14) → 25개 844KB(실사 2 — asset3d 역참·등롱, 범위 밖). 남은 무게는 인물·괴물 GLB(개당 0.6~1MB) — K 수신함. 손잡이 prop3d.light(1·0·자동)·world3d.pixelCap. perf.js 세 등급(HIGH·MEDIUM·LOW)은 원래 있었다(R-0 의 \"품질 단 없음\" 은 틀림)."
  },
  {
   "id": "go.hero-cloth",

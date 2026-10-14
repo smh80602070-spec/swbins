@@ -1,575 +1,208 @@
 {
  "script": "pw-visual-close.mjs",
- "pass": 10,
- "total": 10,
+ "pass": 6,
+ "total": 6,
  "scenes": [
   {
-   "game": "saga-dungeon",
-   "key": "1-town",
-   "title": "오픈월드 마을·들판 3D",
+   "game": "saga-go",
+   "key": "1-world3d",
+   "title": "마을 3D(등 뒤 카메라)",
    "feats": [
-    "dg.dungeon3d"
+    "go.world3d",
+    "go.asset3d"
    ],
-   "file": "shots/visual-20261007/saga-dungeon-1-town.png",
+   "file": "shots/visual-20261007/saga-go-1-world3d.png",
    "px": {
-    "mean": 38,
-    "std": 19.2,
-    "bins": 166
+    "mean": 117.5,
+    "std": 36.9,
+    "bins": 338
    },
    "metrics": {
-    "s": {
-     "ready": true,
-     "failed": false,
-     "wanted": true,
-     "town": true,
-     "drawn": 348,
-     "actors": 12,
-     "room": "town:undefined:c:sec0",
-     "floor": 0,
-     "cam": "390,280,841",
-     "fx": {
-      "ready": true,
-      "shake": 0,
-      "drawn": 0,
-      "frames": 137,
-      "tex": 0,
-      "num": {
-       "made": 0,
-       "used": 0,
-       "cap": 40,
-       "peak": 0,
-       "dropped": 0
-      },
-      "text": {
-       "made": 0,
-       "used": 0,
-       "cap": 14,
-       "peak": 0,
-       "dropped": 0
-      },
-      "ring": {
-       "made": 0,
-       "used": 0,
-       "cap": 36,
-       "peak": 0,
-       "dropped": 0
-      },
-      "wall": {
-       "made": 0,
-       "used": 0,
-       "cap": 6,
-       "peak": 0,
-       "dropped": 0
-      },
-      "slash": {
-       "made": 0,
-       "used": 0,
-       "cap": 20,
-       "peak": 0,
-       "dropped": 0
-      },
-      "burst": {
-       "made": 0,
-       "used": 0,
-       "cap": 8,
-       "peak": 0,
-       "dropped": 0
-      },
-      "trail": {
-       "made": 0,
-       "used": 0,
-       "cap": 24,
-       "peak": 0,
-       "dropped": 0
-      }
-     },
-     "quality": "low",
-     "perfEma": 487,
-     "shadow": false
+    "on": true,
+    "tilt": 2,
+    "gl": {
+     "calls": 188,
+     "tris": 409287,
+     "geos": 186,
+     "texs": 232,
+     "progs": 93,
+     "w": 1280,
+     "h": 720,
+     "dpr": 1
     },
-    "active": true,
     "me": {
-     "body": "../shared/assets/characters3d/sl_hosang.glb",
-     "state": "glb",
-     "seed": "me:0"
-    },
-    "look": {
-     "weapon": "sword",
-     "helm": "none",
-     "armor": "none"
-    },
-    "bodies": {
-     "glb": 39,
-     "shape": 0,
-     "fail": 0
+     "visible": true
     }
    }
   },
   {
-   "game": "saga-dungeon",
-   "key": "2-room",
-   "title": "던전 첫 방 3D(장비 없음)",
+   "game": "saga-go",
+   "key": "2-close",
+   "title": "인물 가까이(휠로 당김)",
    "feats": [
-    "dg.dungeon3d",
-    "dg.dungeon3d-2"
+    "go.asset3d",
+    "go.world3d"
    ],
-   "file": "shots/visual-20261007/saga-dungeon-2-room.png",
+   "file": "shots/visual-20261007/saga-go-2-close.png",
    "px": {
-    "mean": 34.2,
-    "std": 38.2,
-    "bins": 345
+    "mean": 115.5,
+    "std": 37.1,
+    "bins": 384
    },
    "metrics": {
-    "s": {
-     "ready": true,
-     "failed": false,
-     "wanted": true,
-     "town": false,
-     "drawn": 744,
-     "actors": 31,
-     "room": "1:0:o:sec0",
-     "floor": 1,
-     "cam": "227,180,586",
-     "fx": {
-      "ready": true,
-      "shake": 0,
-      "drawn": 57,
-      "frames": 235,
-      "tex": 14,
-      "num": {
-       "made": 12,
-       "used": 12,
-       "cap": 40,
-       "peak": 12,
-       "dropped": 0
-      },
-      "text": {
-       "made": 14,
-       "used": 12,
-       "cap": 14,
-       "peak": 14,
-       "dropped": 48
-      },
-      "ring": {
-       "made": 13,
-       "used": 13,
-       "cap": 36,
-       "peak": 13,
-       "dropped": 0
-      },
-      "wall": {
-       "made": 0,
-       "used": 0,
-       "cap": 6,
-       "peak": 0,
-       "dropped": 0
-      },
-      "slash": {
-       "made": 12,
-       "used": 12,
-       "cap": 20,
-       "peak": 12,
-       "dropped": 0
-      },
-      "burst": {
-       "made": 8,
-       "used": 8,
-       "cap": 8,
-       "peak": 8,
-       "dropped": 12
-      },
-      "trail": {
-       "made": 0,
-       "used": 0,
-       "cap": 24,
-       "peak": 0,
-       "dropped": 0
-      }
-     },
-     "quality": "low",
-     "perfEma": 318.6,
-     "shadow": false
+    "on": true,
+    "tilt": 2,
+    "gl": {
+     "calls": 183,
+     "tris": 391027,
+     "geos": 187,
+     "texs": 232,
+     "progs": 93,
+     "w": 1280,
+     "h": 720,
+     "dpr": 1
     },
-    "active": true,
     "me": {
-     "body": "../shared/assets/characters3d/sl_hosang.glb",
-     "state": "glb",
-     "seed": "me:0"
+     "visible": true
     },
-    "look": {
-     "weapon": "sword",
-     "helm": "none",
-     "armor": "none"
+    "zoom": 0.7
+   }
+  },
+  {
+   "game": "saga-go",
+   "key": "3-duel",
+   "title": "결투(실시간 전투) 화면",
+   "feats": [
+    "go.rogue-action"
+   ],
+   "file": "shots/visual-20261007/saga-go-3-duel.png",
+   "px": {
+    "mean": 42.7,
+    "std": 22,
+    "bins": 122
+   },
+   "metrics": {
+    "on": true,
+    "tilt": 2,
+    "gl": {
+     "calls": 191,
+     "tris": 393341,
+     "geos": 188,
+     "texs": 232,
+     "progs": 93,
+     "w": 1280,
+     "h": 720,
+     "dpr": 1
     },
-    "bodies": {
-     "glb": 76,
-     "shape": 0,
-     "fail": 0
+    "me": {
+     "visible": true
     }
    }
   },
   {
-   "game": "saga-dungeon",
-   "key": "3-door",
-   "title": "문 통로 넘어가는 중(forage)",
+   "game": "saga-go",
+   "key": "4-burst",
+   "title": "전투 연출 알갱이(불꽃·검기·흙먼지)",
    "feats": [
-    "dg.dungeon-2"
+    "go.battle3d"
    ],
-   "file": "shots/visual-20261007/saga-dungeon-3-door.png",
+   "file": "shots/visual-20261007/saga-go-4-burst.png",
    "px": {
-    "mean": 28.3,
-    "std": 27.9,
-    "bins": 226
+    "mean": 117.9,
+    "std": 36.2,
+    "bins": 306
    },
    "metrics": {
-    "s": {
-     "ready": true,
-     "failed": false,
-     "wanted": true,
-     "town": false,
-     "drawn": 386,
-     "actors": 2,
-     "room": "1:1:c:sec0:fg0p0",
-     "floor": 1,
-     "cam": "227,180,586",
-     "fx": {
-      "ready": true,
-      "shake": 0,
-      "drawn": 12,
-      "frames": 245,
-      "tex": 14,
-      "num": {
-       "made": 12,
-       "used": 12,
-       "cap": 40,
-       "peak": 12,
-       "dropped": 0
-      },
-      "text": {
-       "made": 14,
-       "used": 0,
-       "cap": 14,
-       "peak": 14,
-       "dropped": 48
-      },
-      "ring": {
-       "made": 13,
-       "used": 0,
-       "cap": 36,
-       "peak": 13,
-       "dropped": 0
-      },
-      "wall": {
-       "made": 0,
-       "used": 0,
-       "cap": 6,
-       "peak": 0,
-       "dropped": 0
-      },
-      "slash": {
-       "made": 12,
-       "used": 0,
-       "cap": 20,
-       "peak": 12,
-       "dropped": 0
-      },
-      "burst": {
-       "made": 8,
-       "used": 0,
-       "cap": 8,
-       "peak": 8,
-       "dropped": 48
-      },
-      "trail": {
-       "made": 0,
-       "used": 0,
-       "cap": 24,
-       "peak": 0,
-       "dropped": 0
-      }
-     },
-     "quality": "low",
-     "perfEma": 318.6,
-     "shadow": false
+    "on": true,
+    "tilt": 2,
+    "gl": {
+     "calls": 217,
+     "tris": 412261,
+     "geos": 189,
+     "texs": 232,
+     "progs": 93,
+     "w": 1280,
+     "h": 720,
+     "dpr": 1
     },
-    "active": true,
     "me": {
-     "body": "../shared/assets/characters3d/sl_hosang.glb",
-     "state": "glb",
-     "seed": "me:0"
+     "visible": true
     },
-    "look": {
-     "weapon": "sword",
-     "helm": "none",
-     "armor": "none"
+    "burst": {
+     "n": 27,
+     "on": true
     },
-    "bodies": {
-     "glb": 4,
-     "shape": 48,
-     "fail": 0
-    },
-    "door": {
-     "kind": "forage",
-     "doors": 2,
-     "from": 0,
-     "to": 1
+    "stats": {
+     "on": true,
+     "live": true,
+     "pool": 27,
+     "cap": 48,
+     "alive": 26,
+     "battle": false,
+     "shake": 0
     }
    }
   },
   {
-   "game": "saga-dungeon",
-   "key": "4-next",
-   "title": "다음 방 도착",
+   "game": "saga-go",
+   "key": "5-2d",
+   "title": "3D 끔(2D 캔버스로 되돌림)",
    "feats": [
-    "dg.dungeon-2",
-    "dg.dungeon3d"
+    "go.world3d"
    ],
-   "file": "shots/visual-20261007/saga-dungeon-4-next.png",
+   "file": "shots/visual-20261007/saga-go-5-2d.png",
    "px": {
-    "mean": 26.6,
-    "std": 26.8,
-    "bins": 214
+    "mean": 106.1,
+    "std": 40.9,
+    "bins": 375
    },
    "metrics": {
-    "s": {
-     "ready": true,
-     "failed": false,
-     "wanted": true,
-     "town": false,
-     "drawn": 458,
-     "actors": 2,
-     "room": "1:1:c:sec0:fg0p0",
-     "floor": 1,
-     "cam": "227,180,586",
-     "fx": {
-      "ready": true,
-      "shake": 0,
-      "drawn": 0,
-      "frames": 305,
-      "tex": 14,
-      "num": {
-       "made": 12,
-       "used": 0,
-       "cap": 40,
-       "peak": 12,
-       "dropped": 0
-      },
-      "text": {
-       "made": 14,
-       "used": 0,
-       "cap": 14,
-       "peak": 14,
-       "dropped": 48
-      },
-      "ring": {
-       "made": 13,
-       "used": 0,
-       "cap": 36,
-       "peak": 13,
-       "dropped": 0
-      },
-      "wall": {
-       "made": 0,
-       "used": 0,
-       "cap": 6,
-       "peak": 0,
-       "dropped": 0
-      },
-      "slash": {
-       "made": 12,
-       "used": 0,
-       "cap": 20,
-       "peak": 12,
-       "dropped": 0
-      },
-      "burst": {
-       "made": 8,
-       "used": 0,
-       "cap": 8,
-       "peak": 8,
-       "dropped": 48
-      },
-      "trail": {
-       "made": 0,
-       "used": 0,
-       "cap": 24,
-       "peak": 0,
-       "dropped": 0
-      }
-     },
-     "quality": "low",
-     "perfEma": 242.6,
-     "shadow": false
+    "on": false,
+    "tilt": 2,
+    "gl": {
+     "calls": 190,
+     "tris": 411195,
+     "geos": 189,
+     "texs": 232,
+     "progs": 93,
+     "w": 1280,
+     "h": 720,
+     "dpr": 1
     },
-    "active": true,
     "me": {
-     "body": "../shared/assets/characters3d/sl_hosang.glb",
-     "state": "glb",
-     "seed": "me:0"
-    },
-    "look": {
-     "weapon": "sword",
-     "helm": "none",
-     "armor": "none"
-    },
-    "bodies": {
-     "glb": 52,
-     "shape": 0,
-     "fail": 0
-    }
-   }
-  },
-  {
-   "game": "saga-dungeon",
-   "key": "5-gear",
-   "title": "명품 한 벌 입은 몸(휠로 당김)",
-   "feats": [
-    "dg.dungeon3d-2"
-   ],
-   "file": "shots/visual-20261007/saga-dungeon-5-gear.png",
-   "px": {
-    "mean": 35.3,
-    "std": 34.6,
-    "bins": 282
-   },
-   "metrics": {
-    "s": {
-     "ready": true,
-     "failed": false,
-     "wanted": true,
-     "town": false,
-     "drawn": 387,
-     "actors": 20,
-     "room": "1:0:c:sec0",
-     "floor": 1,
-     "cam": "132,114,540",
-     "fx": {
-      "ready": true,
-      "shake": 0,
-      "drawn": 0,
-      "frames": 390,
-      "tex": 18,
-      "num": {
-       "made": 4,
-       "used": 0,
-       "cap": 40,
-       "peak": 4,
-       "dropped": 0
-      },
-      "text": {
-       "made": 8,
-       "used": 0,
-       "cap": 14,
-       "peak": 8,
-       "dropped": 0
-      },
-      "ring": {
-       "made": 4,
-       "used": 0,
-       "cap": 36,
-       "peak": 4,
-       "dropped": 0
-      },
-      "wall": {
-       "made": 0,
-       "used": 0,
-       "cap": 6,
-       "peak": 0,
-       "dropped": 0
-      },
-      "slash": {
-       "made": 3,
-       "used": 0,
-       "cap": 20,
-       "peak": 3,
-       "dropped": 0
-      },
-      "burst": {
-       "made": 4,
-       "used": 0,
-       "cap": 8,
-       "peak": 4,
-       "dropped": 0
-      },
-      "trail": {
-       "made": 0,
-       "used": 0,
-       "cap": 24,
-       "peak": 0,
-       "dropped": 0
-      }
-     },
-     "quality": "low",
-     "perfEma": 327.4,
-     "shadow": false
-    },
-    "active": true,
-    "me": {
-     "body": "../shared/assets/characters3d/sl_hosang.glb",
-     "state": "glb",
-     "seed": "me:0"
-    },
-    "look": {
-     "weapon": "lance_e",
-     "helm": "helmet",
-     "armor": "plate"
-    },
-    "bodies": {
-     "glb": 59,
-     "shape": 2,
-     "fail": 0
+     "visible": true
     }
    }
   }
  ],
  "checks": [
   {
-   "name": "장면 saga-dungeon 1-town 오픈월드 마을·들판 3D — 화면이 단색이 아니다",
+   "name": "장면 saga-go 1-world3d 마을 3D(등 뒤 카메라) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":38,\"std\":19.2,\"bins\":166},\"metrics\":{\"s\":{\"ready\":true,\"failed\":false,\"wanted\":true,\"town\":true,\"drawn\":348,\"actors\":12,\"room\":\"town:undefined:c:sec0\",\"floor\":0,\"cam\":\"390,280,841\",\"fx\":{\"ready\":true,\"shake\":0,\"drawn\":0,\"frames\":137,\"tex\":0,\"num\":{\"made\":0,\"used\":0,\"cap\":40,\"peak\":0,\"dropped\":0},\"text\":{\"made\":0,\"used\":0,\"cap\":14,\"peak\":0,\"dropped\":0},\"ring\":{\"made\":0,\"used\":0,\"cap\":36,\"peak\":0,\"dropped\":0},\"wall\":{\"made\":0,\"used\":0,\"cap\":6,\"peak\":0,\"dropped\":0},\"slash\":{\"made\":0,\"used\":0,\"cap\":20,\"peak\":0,\"dropped\":0},\"burst\":{\"made\":0,\"used\":0,\"cap\":8,\"peak\":0,\"dropped\":0},\"trail\":{\"made\":0,\"used\":0,\"cap\":24,\"peak\":0,\"dropped\":0}},\"quality\":\"low\",\"perfEma\":487,\"shadow\":false},\"active\":true,\"me\":{\"body\":\"../shared/assets/characters3d/sl_hosang.glb\",\"state\":\"glb\",\"seed\":\"me:0\"},\"look\":{\"weapon\":\"sword\",\"helm\":\"none\",\"armor\":\"none\"},\"bodies\":{\"glb\":39,\"shape\":0,\"fail\":0}}}"
+   "detail": "{\"px\":{\"mean\":117.5,\"std\":36.9,\"bins\":338},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":188,\"tris\":409287,\"geos\":186,\"texs\":232,\"progs\":93,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true}}}"
   },
   {
-   "name": "사가나락 굴혈에 들어간다",
+   "name": "장면 saga-go 2-close 인물 가까이(휠로 당김) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": ""
+   "detail": "{\"px\":{\"mean\":115.5,\"std\":37.1,\"bins\":384},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":183,\"tris\":391027,\"geos\":187,\"texs\":232,\"progs\":93,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true},\"zoom\":0.7}}"
   },
   {
-   "name": "장면 saga-dungeon 2-room 던전 첫 방 3D(장비 없음) — 화면이 단색이 아니다",
+   "name": "장면 saga-go 3-duel 결투(실시간 전투) 화면 — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":34.2,\"std\":38.2,\"bins\":345},\"metrics\":{\"s\":{\"ready\":true,\"failed\":false,\"wanted\":true,\"town\":false,\"drawn\":744,\"actors\":31,\"room\":\"1:0:o:sec0\",\"floor\":1,\"cam\":\"227,180,586\",\"fx\":{\"ready\":true,\"shake\":0,\"drawn\":57,\"frames\":235,\"tex\":14,\"num\":{\"made\":12,\"used\":12,\"cap\":40,\"peak\":12,\"dropped\":0},\"text\":{\"made\":14,\"used\":12,\"cap\":14,\"peak\":14,\"dropped\":48},\"ring\":{\"made\":13,\"used\":13,\"cap\":36,\"peak\":13,\"dropped\":0},\"wall\":{\"made\":0,\"used\":0,\"cap\":6,\"peak\":0,\"dropped\":0},\"slash\":{\"made\":12,\"used\":12,\"cap\":20,\"peak\":12,\"dropped\":0},\"burst\":{\"made\":8,\"used\":8,\"cap\":8,\"peak\":8,\"dropped\":12},\"trail\":{\"made\":0,\"used\":0,\"cap\":24,\"peak\":0,\"dropped\":0}},\"quality\":\"low\",\"perfEma\":318.6,\"shadow\":false},\"active\":true,\"me\":{\"body\":\"../shared/assets/characters3d/sl_hosang.glb\",\"state\":\"glb\",\"seed\":\"me:0\"},\"look\":{\"weapon\":\"sword\",\"helm\":\"none\",\"armor\":\"none\"},\"bodies\":{\"glb\":76,\"shape\":0,\"fail\":0}}}"
+   "detail": "{\"px\":{\"mean\":42.7,\"std\":22,\"bins\":122},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":191,\"tris\":393341,\"geos\":188,\"texs\":232,\"progs\":93,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true}}}"
   },
   {
-   "name": "장면 saga-dungeon 3-door 문 통로 넘어가는 중(forage) — 화면이 단색이 아니다",
+   "name": "장면 saga-go 4-burst 전투 연출 알갱이(불꽃·검기·흙먼지) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":28.3,\"std\":27.9,\"bins\":226},\"metrics\":{\"s\":{\"ready\":true,\"failed\":false,\"wanted\":true,\"town\":false,\"drawn\":386,\"actors\":2,\"room\":\"1:1:c:sec0:fg0p0\",\"floor\":1,\"cam\":\"227,180,586\",\"fx\":{\"ready\":true,\"shake\":0,\"drawn\":12,\"frames\":245,\"tex\":14,\"num\":{\"made\":12,\"used\":12,\"cap\":40,\"peak\":12,\"dropped\":0},\"text\":{\"made\":14,\"used\":0,\"cap\":14,\"peak\":14,\"dropped\":48},\"ring\":{\"made\":13,\"used\":0,\"cap\":36,\"peak\":13,\"dropped\":0},\"wall\":{\"made\":0,\"used\":0,\"cap\":6,\"peak\":0,\"dropped\":0},\"slash\":{\"made\":12,\"used\":0,\"cap\":20,\"peak\":12,\"dropped\":0},\"burst\":{\"made\":8,\"used\":0,\"cap\":8,\"peak\":8,\"dropped\":48},\"trail\":{\"made\":0,\"used\":0,\"cap\":24,\"peak\":0,\"dropped\":0}},\"quality\":\"low\",\"perfEma\":318.6,\"shadow\":false},\"active\":true,\"me\":{\"body\":\"../shared/assets/characters3d/sl_hosang.glb\",\"state\":\"glb\",\"seed\":\"me:0\"},\"look\":{\"weapon\":\"sword\",\"helm\":\"none\",\"armor\":\"none\"},\"bodies\":{\"glb\":4,\"shape\":48,\"fail\":0},\"door\":{\"kind\":\"forage\",\"doors\":2,\"from\":0,\"to\":1}}}"
+   "detail": "{\"px\":{\"mean\":117.9,\"std\":36.2,\"bins\":306},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":217,\"tris\":412261,\"geos\":189,\"texs\":232,\"progs\":93,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true},\"burst\":{\"n\":27,\"on\":true},\"stats\":{\"on\":true,\"live\":true,\"pool\":27,\"cap\":48,\"alive\":26,\"battle\":false,\"shake\":0}}}"
   },
   {
-   "name": "장면 saga-dungeon 4-next 다음 방 도착 — 화면이 단색이 아니다",
+   "name": "장면 saga-go 5-2d 3D 끔(2D 캔버스로 되돌림) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":26.6,\"std\":26.8,\"bins\":214},\"metrics\":{\"s\":{\"ready\":true,\"failed\":false,\"wanted\":true,\"town\":false,\"drawn\":458,\"actors\":2,\"room\":\"1:1:c:sec0:fg0p0\",\"floor\":1,\"cam\":\"227,180,586\",\"fx\":{\"ready\":true,\"shake\":0,\"drawn\":0,\"frames\":305,\"tex\":14,\"num\":{\"made\":12,\"used\":0,\"cap\":40,\"peak\":12,\"dropped\":0},\"text\":{\"made\":14,\"used\":0,\"cap\":14,\"peak\":14,\"dropped\":48},\"ring\":{\"made\":13,\"used\":0,\"cap\":36,\"peak\":13,\"dropped\":0},\"wall\":{\"made\":0,\"used\":0,\"cap\":6,\"peak\":0,\"dropped\":0},\"slash\":{\"made\":12,\"used\":0,\"cap\":20,\"peak\":12,\"dropped\":0},\"burst\":{\"made\":8,\"used\":0,\"cap\":8,\"peak\":8,\"dropped\":48},\"trail\":{\"made\":0,\"used\":0,\"cap\":24,\"peak\":0,\"dropped\":0}},\"quality\":\"low\",\"perfEma\":242.6,\"shadow\":false},\"active\":true,\"me\":{\"body\":\"../shared/assets/characters3d/sl_hosang.glb\",\"state\":\"glb\",\"seed\":\"me:0\"},\"look\":{\"weapon\":\"sword\",\"helm\":\"none\",\"armor\":\"none\"},\"bodies\":{\"glb\":52,\"shape\":0,\"fail\":0}}}"
+   "detail": "{\"px\":{\"mean\":106.1,\"std\":40.9,\"bins\":375},\"metrics\":{\"on\":false,\"tilt\":2,\"gl\":{\"calls\":190,\"tris\":411195,\"geos\":189,\"texs\":232,\"progs\":93,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true}}}"
   },
   {
-   "name": "사가나락 프리셋 뒤 굴혈에 들어간다",
-   "ok": true,
-   "detail": ""
-  },
-  {
-   "name": "장면 saga-dungeon 5-gear 명품 한 벌 입은 몸(휠로 당김) — 화면이 단색이 아니다",
-   "ok": true,
-   "detail": "{\"px\":{\"mean\":35.3,\"std\":34.6,\"bins\":282},\"metrics\":{\"s\":{\"ready\":true,\"failed\":false,\"wanted\":true,\"town\":false,\"drawn\":387,\"actors\":20,\"room\":\"1:0:c:sec0\",\"floor\":1,\"cam\":\"132,114,540\",\"fx\":{\"ready\":true,\"shake\":0,\"drawn\":0,\"frames\":390,\"tex\":18,\"num\":{\"made\":4,\"used\":0,\"cap\":40,\"peak\":4,\"dropped\":0},\"text\":{\"made\":8,\"used\":0,\"cap\":14,\"peak\":8,\"dropped\":0},\"ring\":{\"made\":4,\"used\":0,\"cap\":36,\"peak\":4,\"dropped\":0},\"wall\":{\"made\":0,\"used\":0,\"cap\":6,\"peak\":0,\"dropped\":0},\"slash\":{\"made\":3,\"used\":0,\"cap\":20,\"peak\":3,\"dropped\":0},\"burst\":{\"made\":4,\"used\":0,\"cap\":8,\"peak\":4,\"dropped\":0},\"trail\":{\"made\":0,\"used\":0,\"cap\":24,\"peak\":0,\"dropped\":0}},\"quality\":\"low\",\"perfEma\":327.4,\"shadow\":false},\"active\":true,\"me\":{\"body\":\"../shared/assets/characters3d/sl_hosang.glb\",\"state\":\"glb\",\"seed\":\"me:0\"},\"look\":{\"weapon\":\"lance_e\",\"helm\":\"helmet\",\"armor\":\"plate\"},\"bodies\":{\"glb\":59,\"shape\":2,\"fail\":0}}}"
-  },
-  {
-   "name": "사가나락 몸 GLB 실패 0 — 장면마다 assetState fail 이 없다",
-   "ok": true,
-   "detail": "[{\"glb\":39,\"shape\":0,\"fail\":0},{\"glb\":76,\"shape\":0,\"fail\":0},{\"glb\":4,\"shape\":48,\"fail\":0},{\"glb\":52,\"shape\":0,\"fail\":0},{\"glb\":59,\"shape\":2,\"fail\":0}]"
-  },
-  {
-   "name": "사가나락 장비를 입으면 겉모습 값(look 데이터)이 바뀐다 — 그림은 5-gear 를 눈으로(W-0100: 사람 GLB 몸엔 갑주·투구 안 그림)",
-   "ok": true,
-   "detail": "{\"before\":{\"weapon\":\"sword\",\"helm\":\"none\",\"armor\":\"none\"},\"after\":{\"weapon\":\"lance_e\",\"helm\":\"helmet\",\"armor\":\"plate\"}}"
-  },
-  {
-   "name": "사가나락 페이지 예외·console.error 없음",
+   "name": "사가만리 페이지 예외·console.error 없음",
    "ok": true,
    "detail": ""
   }

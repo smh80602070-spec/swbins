@@ -43,7 +43,7 @@
     var A = global.DG.actor3d;
     var node = null, mesh = false;
     if (MESH_ON() && A && A.ready()) {
-      node = A.build(kind === 'building' ? (ref.key === 'wall' ? 'fort' : (ref.key === 'landmark' ? 'landmark' : 'station')) : kind, ref);
+      var AS3L = global.DG.asset3d, mk3 = function () { return A.build(kind === 'building' ? (ref.key === 'wall' ? 'fort' : (ref.key === 'landmark' ? 'landmark' : 'station')) : kind, ref); }; node = AS3L && AS3L.withLazy ? AS3L.withLazy(mk3) : mk3();   // W-0212 지도 배우만 늦게 받기
       mesh = !!node;
     }
     if (!node) {
@@ -82,7 +82,7 @@
     return Math.min(FAR_MAX, Math.pow(d / FAR_NEAR, 0.85));
   }
 
-  function placeActor(a, x, y, h, bob, walk, phase, now) {
+  function placeActor(a, x, y, h, bob, walk, phase, now) { var pp0 = a.node.userData.wake ? core.save.player.pos : null; if (pp0 && Math.hypot(x - pp0.x, y - pp0.y) < core.tuned('asset3d.lazyR', 60)) { global.DG.asset3d.wake(a.node); }   // W-0212 폰: 곁에 오면 몸 GLB 를 받는다
     /* **땅에 앉힌다.** 땅이 굽었으므로 y=0 에 세우면 산에서는 발이 묻히고
        골짜기에서는 허공에 뜬다(PLAN 14절) */
     var gy0 = groundY(x, y) + skyLift(x, y, a.sky);        // ⑲-20 섬 층이면 섬 윗면
