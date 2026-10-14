@@ -1048,5 +1048,22 @@
   "fun": {},
   "ticket": "W-0196",
   "since": "2026-10-13"
+ },
+ {
+  "id": "dg.vroid-body-shade",
+  "name": "3D 인물 몸 셰이딩 한 길 — 자체툴 characters3d 몸(무광 MeshBasic)도 공용 vroid-variant.shade 로 툰 3단·림·VRoid 외곽선·얼굴 그림자, 법선 없이 구운 몸은 법선 계산",
+  "files": [
+   "js/vroid-variant.js",
+   "js/toon3d-core.js"
+  ],
+  "tests": [
+   "3D 인물 몸(characters3d) — 빛 안 받는 재질이 툰 3단 램프·림으로, VRoid 외곽선 길(판 외곽선 겹침 없음), 법선 없이 구운 몸은 법선을 채움, 정면 돌리기는 옛 VRM 만 (W-0201)"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0201",
+  "since": "2026-10-14",
+  "note": "D2(claude 2026-10-14): qc 1-town·2-room·5-gear Read — 사람 몸이 장면 빛(빛기둥·횃불)을 받음 ○, 어두운 마을은 사람도 함께 어두워짐(형체는 읽힘) △."
  }
 ]

@@ -986,5 +986,22 @@
   "ticket": "W-0200",
   "since": "2026-10-14",
   "note": "D2(claude 2026-10-14): tmp/go-grass.mjs 들판 정오 옛(w200_grass_old)/새(w200_turf_new3) Read — 옛은 빈 들(칸 ×4 만으로는 차이 거의 없음), 새는 발밑부터 잔풀 ○ · LOW(w200_turf_low) 잔풀 없음·fps 11=11 ○ · qc 1-world3d·2-close 마을 바닥 결·지평선 산 ○. 잎은 앞뒤 두 장(DoubleSide 는 뒷면이 검었다). 손잡이 world3d.detail·turf·turfR·grassMul · sky3d.ridge."
+ },
+ {
+  "id": "go.vroid-body-shade",
+  "name": "3D 인물 몸 셰이딩 한 길 — 자체툴 characters3d 몸(무광 MeshBasic)도 공용 vroid-variant.shade 로 툰 3단·림·VRoid 외곽선·얼굴 그림자, 법선 없이 구운 몸은 법선 계산",
+  "files": [
+   "js/vroid-variant.js",
+   "js/toon3d-core.js"
+  ],
+  "tests": [
+   "3D 인물 몸(characters3d) — 빛 안 받는 재질이 툰 3단 램프·림으로, VRoid 외곽선 길(판 외곽선 겹침 없음), 법선 없이 구운 몸은 법선을 채움, 정면 돌리기는 옛 VRM 만 (W-0201)"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0201",
+  "since": "2026-10-14",
+  "note": "D2(claude 2026-10-14): go-mats.mjs 내 몸 MeshBasic 20 → MeshToon+림 20·VRoid 외곽선 11 · go-light.mjs(HIGH) 몸 칸 밝기 한낮·노을·밤 옛 163·159·154(빛 무관) → 새 139·108·104(밤에도 땅 67 보다 밝음) ○ · qc 1-world3d·2-close Read ○."
  }
 ]

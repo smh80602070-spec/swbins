@@ -1022,5 +1022,22 @@
   "ticket": "W-0187",
   "since": "2026-10-13",
   "note": "D2(claude 2026-10-13): 폰 흉내(390×844·CPU ×4·Fast 4G)로 옛 세이브 다섯(09-13·09-20·10-01·10-07·10-11 판에서 만든 것)·새 프로필 → 이어하기 → 지도, 띠 0·예외 0 ○ · ui.init 을 일부러 던지게 한 판 → 타이틀 없이 빈 화면이던 자리에 띠·단추 ○(shots/w0187_boot_1011.png) · 새로 시작 → 세이브가 <키>.bak-<날짜> 로 그대로 옮겨짐 ○. 사용자 폰 원인은 미확정 — 띠 글을 받으면 다음 티켓."
+ },
+ {
+  "id": "rk.vroid-body-shade",
+  "name": "3D 인물 몸 셰이딩 한 길 — 자체툴 characters3d 몸(무광 MeshBasic)도 공용 vroid-variant.shade 로 툰 3단·림·VRoid 외곽선·얼굴 그림자, 법선 없이 구운 몸은 법선 계산",
+  "files": [
+   "js/vroid-variant.js",
+   "js/toon3d-core.js"
+  ],
+  "tests": [
+   "3D 인물 몸(characters3d) — 빛 안 받는 재질이 툰 3단 램프·림으로, VRoid 외곽선 길(판 외곽선 겹침 없음), 법선 없이 구운 몸은 법선을 채움, 정면 돌리기는 옛 VRM 만 (W-0201)"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0201",
+  "since": "2026-10-14",
+  "note": "D2(claude 2026-10-14): qc 3D 장면 칸 없음 — 진단(W-0201 줄)만 · 몸 길은 다섯 판 공용 vroid-variant.shade."
  }
 ]

@@ -5252,6 +5252,18 @@ window.DG_NO_TUNE = true;
       return inj && rimKept && keyOk && offOk && '머리 재질에만 띠 셰이더 · 림과 함께 · 캐시 키 분리 · 손잡이 0 이면 없음';
     });
 
+    t('3D 인물 몸(characters3d) — 빛 안 받는 재질이 툰 3단 램프·림으로, VRoid 외곽선 길(판 외곽선 겹침 없음), 법선 없이 구운 몸은 법선을 채움, 정면 돌리기는 옛 VRM 만 (W-0201)', function () {
+      /* W-0201 — 자체툴이 VRoid 에서 구운 인물 몸 characters3d/<영웅>.glb 는 unlit(MeshBasic)인데 shade 가 /people/anime/ 만 봐서 다섯 판 사람이 빛·그늘 0 이었다 */
+      var V = DG.vroidVariant, TH = window.THREE, TN = DG.toon3d;
+      if (!TH || !TN || (TN.TOON_ON && !TN.TOON_ON())) { return '툰 꺼짐·three 없음 — 건너뜀'; }
+      var root = new TH.Group(), hips = new TH.Bone(); hips.name = 'J_Bip_C_Hips'; root.add(hips); root.updateMatrixWorld(true);
+      var m = new TH.SkinnedMesh(new TH.BoxGeometry(0.4, 1.6, 0.3), new TH.MeshBasicMaterial({ name: 'N00_000_00_Body_00_SKIN (Instance)' }));
+      root.add(m); m.bind(new TH.Skeleton([hips])); m.geometry.deleteAttribute('normal');   // 3마을 판 몸처럼 법선 없이 구운 GLB
+      var n = V.shade(root, 'assets/characters3d/hero_x.glb'), mat = m.material, lines = root.children.filter(function (c) { return /_outline$/.test(c.name); }).length;
+      var ok = [n === 1, !!mat.isMeshToonMaterial, mat.gradientMap === TN.ramp(), !(TN.RIM_ON && TN.RIM_ON()) || mat.userData.rimApplied === true, m.userData._toonOutline === true,
+        V.isVroidBody('assets/characters3d/a.glb') && !V.isVroid('assets/characters3d/a.glb'), V.shade(new TH.Group(), 'assets/world3d/house.glb') === 0, !!m.geometry.attributes.normal];
+      return ok.every(Boolean) && ('몸 ' + mat.type + ' · 림 ' + !!mat.userData.rimApplied + ' · 외곽선 ' + lines);
+    });
     t('vroid-variant — shade: VRM 의 빛 안 받는 재질을 툰으로(이름 유지 → 색 변형이 먹는다), 얼굴에만 머리뼈 기준 얼굴 그림자', function () {
       /* 2026-09-23 "고품질 셀 셰이딩급" — VRM(unlit → MeshBasic)이 네 판에서 명암 없이 평면으로 떴고, 사가마을은 툰 재질에
          이름이 안 옮겨져 색 변형이 한 칸도 안 먹었다. 실제 GLB 처럼 MeshBasic + 뼈대로 조립해 잰다 */

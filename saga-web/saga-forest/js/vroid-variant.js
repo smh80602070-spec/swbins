@@ -236,6 +236,9 @@
 
   /** 이 몸이 VRoid(경로에 /people/anime/) 인가 — 다른 몸(QRPG·MPFB)에는 안 건다 */
   function isVroid(url) { return typeof url === 'string' && url.indexOf('/people/anime/') >= 0; }
+  /** W-0201 셰이딩 대상 — 옛 VRM 넷 + 자체툴이 VRoid 에서 구운 인물 몸 `characters3d/<영웅>.glb`(재질 이름이 VRoid 그대로, unlit → MeshBasic).
+   *  전엔 isVroid 만 봐서 다섯 판 인물 몸이 전부 무광(빛·그늘 0)이었다. 정면 돌리기(faceFront)·색 변형은 isVroid 그대로 */
+  function isVroidBody(url) { return isVroid(url) || (typeof url === 'string' && url.indexOf('characters3d/') >= 0); }
 
   /**
    * 2026-09-20 — **정면을 +Z 로 맞춘다.** 이 저장소의 VRM(`/people/anime/`) 넷은 전부 VRM 0.x 라 정면이 **-Z** 다
@@ -593,12 +596,14 @@
   /** @returns 바꾼 재질 수. VRoid 가 아니거나 three·toon3d 가 없으면 0(자가진단에서도 안전) */
   function shade(root, url) {
     var t = global.THREE, TN = global.DG && global.DG.toon3d;
-    if (!t || !root || !root.traverse || !isVroid(url)) { return 0; }
+    if (!t || !root || !root.traverse || !isVroidBody(url)) { return 0; }
     var toon = !!(TN && TN.toonify && (!TN.TOON_ON || TN.TOON_ON()));
     var n = 0, faces = [];
     root.traverse(function (o) {
       if (!o.isMesh || !o.material) { return; }
       var isArr = Array.isArray(o.material), mats = isArr ? o.material : [o.material];
+      /* W-0201 — 판 폴더 characters3d 몸(3마을 등)은 무광 전용으로 구워 법선이 아예 없다. 빛 받는 재질로 바꾸면 법선 0 이라 새까맣다 → 여기서 한 번 계산(원본 씬, 복제본과 나눠 씀) */
+      if (o.geometry && o.geometry.attributes && o.geometry.attributes.position && !o.geometry.attributes.normal && mats.some(function (m) { return m && m.isMeshBasicMaterial; })) { o.geometry.computeVertexNormals(); }
       var out = mats.map(function (m) {
         if (!m || !m.isMeshBasicMaterial) { return m; }
         var nm = toon ? TN.toonify(m) : new t.MeshLambertMaterial({
@@ -632,7 +637,7 @@
     return n;
   }
 
-  global.DG.vroidVariant = { N: N, HAIR: HAIR, CLOTH: CLOTH, EYE: EYE, pick: pick, rawPick: rawPick, apply: apply, isVroid: isVroid, faceFront: faceFront, hash: hash,
+  global.DG.vroidVariant = { N: N, HAIR: HAIR, CLOTH: CLOTH, EYE: EYE, pick: pick, rawPick: rawPick, apply: apply, isVroid: isVroid, isVroidBody: isVroidBody, faceFront: faceFront, hash: hash,
     shade: shade, faceFrame: faceFrame, FACE_RE: FACE_RE,
     /* 옷 무늬(W-0020) — 순수 함수·진단용 갈아 끼우는 자리 */
     patPick: patPick, patWear: patWear, patLoad: patLoad,
