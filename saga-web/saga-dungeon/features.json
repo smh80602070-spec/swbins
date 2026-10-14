@@ -254,7 +254,8 @@
   "name": "강공격(2.6×, cd 1.3)·회피(0.22s 무적, cd 0.9)",
   "files": [
    "js/dungeon.js",
-   "js/dungeon-view.js"
+   "js/dungeon-view.js",
+   "js/dungeon-view-fx.js"
   ],
   "tests": [
    "저스트 회피 — 0.15s 창 안 회피는 콤보 +3 이고 밖은 0 (§5.8②)",
