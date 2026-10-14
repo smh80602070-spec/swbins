@@ -142,6 +142,12 @@ def workflow(item, model, d, seed, dry=False):
         g['9'] = {'class_type': 'ImageScale', 'inputs': {'image': ['8', 0], 'upscale_method': 'lanczos', 'width': w, 'height': h, 'crop': 'center'}}
         g['10'] = {'class_type': 'VAEEncode', 'inputs': {'pixels': ['9', 0], 'vae': vae_ref}}
         latent = ['10', 0]
+        if item.get('mask_image'):        # K-0110 인페인트: 마스크(흰 곳 = 다시 그림, 회색 = 번짐) 안만 다시 그리고 밖은 밑그림 픽셀 그대로
+            g['16'] = {'class_type': 'LoadImage', 'inputs': {'image': 'dry.png' if dry else upload(item['mask_image'])}}
+            g['17'] = {'class_type': 'ImageScale', 'inputs': {'image': ['16', 0], 'upscale_method': 'bilinear', 'width': w, 'height': h, 'crop': 'center'}}
+            g['18'] = {'class_type': 'ImageToMask', 'inputs': {'image': ['17', 0], 'channel': 'red'}}
+            g['19'] = {'class_type': 'SetLatentNoiseMask', 'inputs': {'samples': latent, 'mask': ['18', 0]}}
+            latent = ['19', 0]
     else:
         g['10'] = {'class_type': latent_cls, 'inputs': {'width': w, 'height': h, 'batch_size': 1}}
         latent = ['10', 0]
@@ -158,9 +164,14 @@ def workflow(item, model, d, seed, dry=False):
         last = ['13', 0]
     # 타일 디코드: 한 번에 풀면 1MP fp 디코드가 2~3GB 를 먹어 8GB 에서 UNet 이 쫓겨나고 다음 장에 다시 올라온다(장당 +60~70초, 10-08 실측)
     g['14'] = {'class_type': 'VAEDecodeTiled', 'inputs': {'samples': last, 'vae': vae_ref, 'tile_size': 512, 'overlap': 64, 'temporal_size': 64, 'temporal_overlap': 8}}
-    g['15'] = {'class_type': 'SaveImage', 'inputs': {'images': ['14', 0], 'filename_prefix': 'saga/' + re.sub(r'[^A-Za-z0-9_-]', '_', item['id'])}}
+    out = ['14', 0]
+    if init and item.get('mask_image'):
+        g['20'] = {'class_type': 'ImageCompositeMasked', 'inputs': {'destination': ['9', 0], 'source': out, 'x': 0, 'y': 0, 'resize_source': False, 'mask': ['18', 0]}}
+        out = ['20', 0]
+    g['15'] = {'class_type': 'SaveImage', 'inputs': {'images': out, 'filename_prefix': 'saga/' + re.sub(r'[^A-Za-z0-9_-]', '_', item['id'])}}
     settings = {'prompt': prompt, 'negative_prompt': neg, 'seed': seed, 'steps': steps, 'cfg_scale': cfg, 'sampler': f'{sampler}/{scheduler}',
-                'size': [w, h], 'tiling': tiling, 'hr': hr if hr > 1.0 and not init else 0, 'denoise': denoise if init else None}
+                'size': [w, h], 'tiling': tiling, 'hr': hr if hr > 1.0 and not init else 0, 'denoise': denoise if init else None,
+                'mask_image': item.get('mask_image') if init else None}
     return g, settings
 
 

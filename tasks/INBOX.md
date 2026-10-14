@@ -13,5 +13,4 @@
 - [ ] 10-14 · (웹 R-0) · 2나락 마을 3D 촬영(tmp/dg-town-shot.mjs): 표식 결사비·난입이 아직 도형 비석+빛 상자(03.js 625~) · 마을·들 소품이 빌린 킷(Quaternius·KayKit 천막·모닥불·표지판·건물) — 자체 모델 오면 웹은 표 바꿔 끼우기만 · 자체툴 — **10-14 K 조사**: 표식용 자체 모델 이미 웹에 있음(`shared/assets/world3d` stele_01·banner_pole_01·brazier_01·torch_stand_01) → 표식은 웹 표만 · 빌린 킷 소품 대체는 4행과 한 K 로
 - [ ] 10-14 · (K-0108 끝) · 자체 PBR dirt 새 결(명암 10.9→24.8) — 웹 real_dirt.webp 를 고돗 tiles_real/dirt_hi.webp 에서 다시 복사(W-0196 길) · 웹
 - [ ] 10-14 · (K-0109 끝) · 백상아리 자체 3D `creatures3d/great_white`(worm·동작 7) — 1만리 펫 pt_shark_2 를 shark 대신 great_white 로 바꿔 끼우기 · 웹
-- [ ] 10-14 · (K-0110 관문 ✗·ⓐ 잘라 붙이기 시제품도 ✗ — 사용자 결정) · AI 초상 움직이는 초상: ⓐ' 인페인트 도구 새로(큼) ⓑ VRoid 유지 ⓒ 숨·고개만(바로 됨) — K-0110 메모 · 사용자/자체툴
 - [ ] 10-14 · (K-0111 끝) · 3마을 prop2d 에 school `hanok_01`·museum `chinese_hall_01`·tailor `jp_minka_01`(+ `_night`, h 는 home 74·shop 90 사이로) — drawHanok 도형 대신 · 웹
