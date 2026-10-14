@@ -90,6 +90,7 @@
    "js/tutorial.js",
    "js/auto.js",
    "js/icon.js",
+   "js/ui-shop.js",
    "js/ui.js",
    "js/perf.js",
    "js/game.js"
@@ -184,6 +185,7 @@
    "js/cutscene.js",
    "js/tutorial.js",
    "js/auto.js",
+   "js/ui-shop.js",
    "js/ui.js",
    "js/game.js"
   ]

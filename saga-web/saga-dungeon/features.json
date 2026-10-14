@@ -225,7 +225,8 @@
   "name": "행상·투전·연단",
   "files": [
    "js/vendor.js",
-   "js/forge.js"
+   "js/forge.js",
+   "js/ui-shop.js"
   ],
   "tests": [
    "행상 — 단약은 재고가 떨어지지 않고 등급이 깊이를 탄다",
