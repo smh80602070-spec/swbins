@@ -7,7 +7,7 @@
  *   node tools/scenario-count.mjs --write    scenario/README.md 의 <!-- scenario:begin/end --> 블록을 덮어쓴다
  *
  * 세는 규칙(트랙·판마다 장 표의 모양이 달라 규칙이 따로다)
- *   웹   1만리      js/story.js 의 `id: 'chN'` 줄 수
+ *   웹   1만리      js/story-chapters.js 의 `id: 'chN'` 줄 수
  *        블로·숲·스토리  js/data-scenario.js 를 vm 에 돌려 DG.scenarioData.CHAPTERS.length
  *        5천하    같은 방식, CARDS + LORD + SIDE 길이(사연 카드 사슬 + 열전 + 곁가지)
  *   고돗 1만리      games/saga_go/data/story_chapters_*.gd 의 줄 머리 `\t{"id": "ch` 줄 수
@@ -40,7 +40,7 @@ function webScenarioData(folder) {
 }
 
 const web = (key, folder) => tryCount(() => {
-  if (key === 'go') return countRe(read('saga-web/saga-go/js/story.js'), /\bid: 'ch\d+'/g);
+  if (key === 'go') return countRe(read('saga-web/saga-go/js/story-chapters.js'), /\bid: 'ch\d+'/g);
   const d = webScenarioData(folder);
   if (key === 'realm') return d.CARDS.length + d.LORD.length + d.SIDE.length;
   return d.CHAPTERS.length;
