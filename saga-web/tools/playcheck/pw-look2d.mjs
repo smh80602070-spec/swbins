@@ -1,6 +1,6 @@
 // 2D 모드 확인 그림 — 판마다 새 계정으로 들어가 2D 로 돌리고 한 장 찍는다(W-0019~0024). 사용자가 "보여줘" 했을 때만 쓴다.
 //   node pw-look2d.mjs <판 폴더> <저장 경로.png> [장면]
-//   saga-story [field|cave|gorge] · saga-go [map|near|enc] · saga-forest [village|home|night] · saga-dungeon [town|room|deep] · saga-realm [map|near]
+//   saga-story [field|cave|gorge] · saga-go [map|near|enc|walk] · saga-forest [village|home|night|walk] · saga-dungeon [town|room|deep] · saga-realm [map|near]
 //   (W-0106 — 판마다 장면 2~3: 가까이·조우 카드·집 안·밤·던전 방·깊은 층·지도 확대)
 // 서버: node serve.mjs C:/swbins/saga-web 8871 (돌리는 쪽이 띄우고 끈다). 크롬은 전용 새 프로필, 끝나면 스스로 닫는다.
 import { open, sleep } from './pw.mjs';
@@ -54,6 +54,14 @@ try {
     if (scene === 'near') { await page.mouse.move(640, 360); for (let i = 0; i < 4; i++) { await page.mouse.wheel(0, -400); await sleep(250); } }   // 휠로 당겨 인물·집 크기 비율을 본다
     if (scene === 'enc') { await ev(() => { const s = DG.world.spawns[0]; if (s && DG.encounter && DG.encounter.open) { DG.encounter.open(s); } }); }
     await sleep(2000);
+  }
+  if (scene === 'walk') {   // W-0203 걷는 중 0.1초 간격 4장(나 둘레) — <저장>_1~4 · 디딘 발이 땅에 머무는 동안 몸이 나아가나
+    await ev(() => { const M = DG.mode2d, o0 = M.draw; window.__w203 = []; M.draw = function (c, o) { if (o && o.stride != null && /walk/.test(o.clip || '')) { window.__w203.push({ t: performance.now(), s: o.stride, sc: o.scale }); } return o0.apply(this, arguments); }; });   // 걷기 위상 기록(재기)
+    if (game === 'saga-forest') { await ev(() => DG.village.setJoy(1, 0)); } else { await page.keyboard.down('w'); }
+    await sleep(1200);
+    for (let i = 1; i <= 4; i++) { await page.screenshot({ path: dest.replace(/(\.\w+)$/, '_' + i + '$1'), clip: { x: 520, y: 240, width: 240, height: 220 } }); await sleep(100); }
+    if (game === 'saga-forest') { await ev(() => DG.village.setJoy(0, 0)); } else { await page.keyboard.up('w'); }
+    console.log('걷기 위상', JSON.stringify(await ev(() => { const a = window.__w203 || [], n = a.length; if (n < 2) { return { n }; } let cyc = 0; for (let i = 1; i < n; i++) { const d = a[i].s - a[i - 1].s; cyc += d < -0.5 ? d + 1 : Math.max(0, d); } const sec = (a[n - 1].t - a[0].t) / 1000; return { n, sec: +sec.toFixed(2), hz: +(cyc / sec).toFixed(2), frames: [...new Set(a.slice(-12).map((x) => Math.floor(x.s * 8)))] }; })));
   }
   const info = await ev(() => ({ w: innerWidth, h: innerHeight }));
   await page.screenshot(dest.endsWith('.jpg') ? { path: dest, type: 'jpeg', quality: 72 } : { path: dest });

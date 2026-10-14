@@ -157,6 +157,22 @@
     return ONCE[clip] ? Math.min(FRAMES - 1, i) : i % FRAMES;
   }
 
+  /* ── 걸음 = 보폭(W-0203) ─────────────────────────────────
+     걷기 8칸을 시계(10fps, 속도 무관)로 넘기면 3마을은 다리가 느려 미끄러지고 1만리는 제자리걸음이었다. 키(배우)마다 땅 위를
+     움직인 화면 거리를 쌓아 위상을 낸다 — 두 발 한 바퀴 = 몸 높이 × strideK. 세계 좌표를 받으니 카메라가 나를 따라가도(화면 위치 고정) 맞다 */
+  var paces = {}, paceN = 0;
+  function tuneOf(k, d) { var Cc = global.DG && global.DG.core, v = Cc && Cc.tuned ? Cc.tuned(k, d) : d; return +v; }
+  /** → 걷기 위상 0~1. wx·wy 세계 좌표, ppu 화면 px/세계 단위, bodyPx 화면 몸 높이, ms 지금. 몸 높이 3배 넘게 뛰면 순간이동이라 안 쌓는다.
+   *  빠르기 묶음: strideMaxHz(한 바퀴/초, 넘으면 다리 깜박임) · strideMinHz(화면 속도가 아주 느린 1만리도 걷는 티) */
+  function pace(key, wx, wy, ppu, bodyPx, ms) {
+    var body = Math.max(1, +bodyPx || 1), cyc = Math.max(0.2, tuneOf('mode2d.strideK', 0.9)) * body, now = +ms || 0, s = paces[key];
+    if (!s) { if (++paceN % 200 === 0) { for (var k in paces) { if (now - paces[k].ms > 10000) { delete paces[k]; } } } s = paces[key] = { x: wx, y: wy, acc: 0, ms: now }; return 0; }
+    var d = Math.hypot(wx - s.x, wy - s.y) * (+ppu || 1), dt = Math.max(0, Math.min(0.25, (now - s.ms) / 1000));
+    s.x = wx; s.y = wy; s.ms = now;
+    if (d > 0 && d <= 3 * body) { s.acc += Math.max(tuneOf('mode2d.strideMinHz', 0.6) * cyc * dt, Math.min(tuneOf('mode2d.strideMaxHz', 3.2) * cyc * dt, d)); }
+    return (s.acc / cyc) % 1;
+  }
+
   /** 움직인 쪽 → 보는 쪽(W-0073 단계 1) — 세로가 가로보다 확실히 크면 'front'(화면 아래로)·'back'(위로), 아니면 좌우 side(±1).
    *  (dx, dy) 는 마지막 이동 방향(멈춰도 남겨 둔 값) — 위로 걷다 서면 뒷모습 그대로. 둘 다 0 이면 side */
   function face(dx, dy, side) {
@@ -267,7 +283,7 @@
       if (!(base && base.ok)) { return false; }
       e = base; role = 'idle';
     }
-    var c8 = eight ? cell8(s8, e.img && e.img.naturalWidth) : null, P = eight ? c8[0] : PX, d = eight ? dirOf8(o.dirX, o.dirY, o.facing) : dirOf(o.facing), f = (o.t !== undefined && o.t !== null) ? Math.min(FRAMES - 1, Math.max(0, Math.floor(o.t * FRAMES))) : frameAt(role, o.ms || 0);
+    var c8 = eight ? cell8(s8, e.img && e.img.naturalWidth) : null, P = eight ? c8[0] : PX, d = eight ? dirOf8(o.dirX, o.dirY, o.facing) : dirOf(o.facing), f = (o.t !== undefined && o.t !== null) ? Math.min(FRAMES - 1, Math.max(0, Math.floor(o.t * FRAMES))) : (o.stride !== undefined && o.stride !== null && /walk|run/.test(role)) ? Math.floor(o.stride * FRAMES) % FRAMES : frameAt(role, o.ms || 0);   // W-0203 걷기는 보폭 위상
     var cf = C(), vr = (isVroid(o.pool) || cr) && cf.vroid2d, ph = vr ? (vr.h || 85) : (cf.poolH || {})[o.pool], sc = (ph ? (cf.targetH || 62) / ph : (cf.scale || 1)) * (o.scale || 1) * (cr ? cr.k : 1), w = P * sc, h = P * sc;   // 몬스터는 사람 시트 배율 × 찍은 폭 비(W-0129)
     var foot = cr ? cr.foot : eight ? (P / 2 + c8[1] * PPM + 1.5) / P : ((vr && vr.foot) || cf.foot || 0.87);   // 8방향 칸: 가운데 + 카메라 높이(실측 114/128·156/192 와 ±1px)
     ctx.save();
@@ -302,10 +318,10 @@
     return e;
   }
   /** 동작·시각 → 몸짓 { dx(몸 높이 비율·앞으로), dy(위로 −), rot(라디안), sx, sy, alpha } — 순수 함수 */
-  function stillPose(clip, ms) {
+  function stillPose(clip, ms, stride) {
     var p = { dx: 0, dy: 0, rot: 0, sx: 1, sy: 1, alpha: 1 }, t = Math.max(0, ms || 0), a, k;
     if (clip === 'walk') {
-      a = t / 1000 * Math.PI * 2 * 2.2; k = Math.abs(Math.sin(a));
+      a = (stride !== undefined && stride !== null) ? stride * Math.PI * 2 : t / 1000 * Math.PI * 2 * 2.2; k = Math.abs(Math.sin(a));   // W-0203 한 바퀴(두 발) = 출렁 두 번
       p.dy = -0.035 * k; p.rot = Math.sin(a) * 0.05; p.sy = 1 + 0.02 * k; p.sx = 1 - 0.015 * k;
     } else if (clip === 'attack') {
       k = Math.sin(Math.min(1, t / 450) * Math.PI);
@@ -328,7 +344,7 @@
     if (e.fail && d.row !== 1) { e = getStill(o.pool, 'side'); }
     if (!e.ok) { return false; }
     var cf = C(), bodyH = (cf.targetH || 62) * (o.scale || 1), sc = bodyH / SBODY, w = SPX * sc, h = SPX * sc;
-    var ps = stillPose(o.clip || 'idle', o.ms || 0);
+    var ps = stillPose(o.clip || 'idle', o.ms || 0, o.stride);
     ctx.save();
     ctx.globalAlpha = (o.alpha !== undefined ? o.alpha : 1) * ps.alpha;
     ctx.imageSmoothingEnabled = true;
@@ -517,7 +533,7 @@
     FRAMES: FRAMES, PX: PX, FPS: FPS,
     isOn: isOn, pick: pick, vroidPick: vroidPick, face: face, actT: actT, actInfo: actInfo, dirOf8: dirOf8, roleOf: roleOf, roleKey: roleKey, townRole: townRole, sheet8: sheet8, beastOf: beastOf, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
     draw: draw, preload: preload, loadIndex: loadIndex, tintSlot: tintSlot, tintPx: tintPx, tintData: tintData, tintRowW: tintRowW, tintOf: tintOf, bare: bare,
-    drawStill: drawStill, stillPose: stillPose, isStill: isStill,
+    drawStill: drawStill, stillPose: stillPose, isStill: isStill, pace: pace,
     stillLoaded: function (pool, view) { var e = stills[pool + '/' + view]; return e ? e.ok : null; },
     /** 진단용 — 그 풀·동작 이미지를 받았나(true/false), 아직 안 불렀으면 null */
     loaded: function (pool, clip) { var e = imgs[bare(pool) + '/' + clip]; return e ? e.ok : null; },

@@ -7,7 +7,7 @@
 (function (global) {
   'use strict';
 
-  /** role = 'me'|'ally'|'npc', ref = 도감 인물, (x,y) = 발 밑 가운데, s = 스탬프 배율, o = { facing(1|-1), walking, now, phase } */
+  /** role = 'me'|'ally'|'npc', ref = 도감 인물, (x,y) = 발 밑 가운데, s = 스탬프 배율, o = { facing(1|-1), walking, now, phase, wx, wy, ppu, pk(W-0203 보폭) } */
   function draw(ctx, role, ref, x, y, s, o) {
     var M = global.DG.mode2d;
     if (!M) { return false; }
@@ -19,7 +19,7 @@
     var ai = at !== null && M.actInfo ? M.actInfo(key + ':atk') : null, atkClip = (o.cast || (ai && ai.dur >= 0.3)) ? 'heavy' : (ai && ai.n % 2 === 0 ? 'attack2' : 'attack');   // 강공격 0.38초·스킬 = heavy, 평타는 연타 번갈아
     var clip = ht !== null ? 'hit' : (at !== null ? atkClip : (o.walking ? 'walk' : 'idle'));
     var TW = global.DG.town, town = role === 'npc' || !!(TW && TW.active && TW.active());   // W-0138 — 마을 사람·마을에 선 나/동행은 맨손 서기·걷기(공격·피격은 그대로)
-    return M.draw(ctx, { pool: pool, clip: clip, t: ht !== null ? ht : at, facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: (o.now || Date.now()) + (o.phase || 0) * 160, x: x, y: y, scale: s * 40 * 1.2 / tH, town: town });
+    return M.draw(ctx, { pool: pool, clip: clip, t: ht !== null ? ht : at, facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: (o.now || Date.now()) + (o.phase || 0) * 160, x: x, y: y, scale: s * 40 * 1.2 / tH, town: town, stride: (o.wx != null && M.pace) ? M.pace(o.pk || key, o.wx, o.wy, o.ppu, s * 48, o.now || Date.now()) : null });
   }
 
   global.DG = global.DG || {};

@@ -8247,6 +8247,16 @@ window.requestAnimationFrame = function () { return 0; };
 
     /* ── 2D 모드 시트(W-0019, shared/js/mode2d.js) — 순수 함수만. 이미지는 안 받는다(진단은 파일을 못 믿는다) ─── */
 
+    t('2D 걸음 = 보폭(W-0203) — 몸 100px 면 90px 걸어 한 바퀴(strideK 0.9) · 멈추면 그대로 · 몸 3배 넘는 순간이동은 안 쌓음 · 빠르기는 0.6~3.2 바퀴/초로 묶음 · stillPose 도 위상을 따름', function () {
+      var M = DG.mode2d, k = 'w0203:' + Math.random(), ms = 1000, i, t;
+      M.pace(k, 0, 0, 1, 100, ms);
+      for (i = 1; i <= 4; i++) { ms += 50; t = M.pace(k, i * 10, 0, 1, 100, ms); }
+      var four = t, still = M.pace(k, 40, 0, 1, 100, ms += 50), jump = M.pace(k, 400, 0, 1, 100, ms += 50);
+      var fast = M.pace(k, 480, 0, 1, 100, ms += 50) - jump, slow = M.pace(k, 481, 0, 1, 100, ms += 50) - (jump + fast);
+      var p0 = M.stillPose('walk', 0, 0.25), p1 = M.stillPose('walk', 0, 0.5);
+      var r = [Math.abs(four - 40 / 90) < 1e-9, still === four, jump === four, Math.abs(fast - 14.4 / 90) < 1e-9, Math.abs(slow - 2.7 / 90) < 1e-9, p0.dy < -0.03, Math.abs(p1.dy) < 1e-9];
+      return r.every(Boolean) && ('40px → ' + four.toFixed(3) + ' 바퀴 · 80px/0.05초 → ' + fast.toFixed(3) + '(묶음) · 1px → ' + slow.toFixed(3) + '(최소)') || '실패 ' + r.join(',');
+    });
     t('2D 시트 — 프레임 계산: 반복 동작(idle·walk)은 돌고, 한 번 동작(attack·hit·death)은 마지막 프레임에 머문다', function () {
       var M = DG.mode2d;
       var loop = M.frameAt('walk', 0) === 0 && M.frameAt('walk', 1000 / M.FPS.walk) === 1 && M.frameAt('walk', 1000 / M.FPS.walk * M.FRAMES) === 0;

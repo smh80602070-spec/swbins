@@ -7,7 +7,7 @@
 (function (global) {
   'use strict';
 
-  /** ref = 도감 인물(없으면 key), (x,y) = 발 밑 가운데, s = 스탬프 배율(몸 높이 ≈ 40·s px), o = { facing, moving, phase, now } */
+  /** ref = 도감 인물(없으면 key), (x,y) = 발 밑 가운데, s = 스탬프 배율(몸 높이 ≈ 40·s px), o = { facing, moving, phase, now, wx, wy, ppu, pk(W-0203 보폭 — 세계 좌표·화면 px/단위·배우 열쇠) } */
   function human(ctx, ref, key, x, y, s, o) {
     var M = global.DG.mode2d;
     if (!M) { return false; }
@@ -16,7 +16,7 @@
     o = o || {};
     var clip = o.moving ? 'walk' : 'idle';
     var tH = (global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.targetH) || 40;
-    return M.draw(ctx, { pool: pool, clip: clip, facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: (o.now || Date.now()) + (o.phase || 0) * 160, x: x, y: y, scale: s * 40 * 1.2 / tH });
+    return M.draw(ctx, { pool: pool, clip: clip, facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: (o.now || Date.now()) + (o.phase || 0) * 160, x: x, y: y, scale: s * 40 * 1.2 / tH, stride: (o.wx != null && M.pace) ? M.pace(o.pk || key || pool, o.wx, o.wy, o.ppu, s * 48, o.now || Date.now()) : null });
   }
 
   global.DG = global.DG || {};

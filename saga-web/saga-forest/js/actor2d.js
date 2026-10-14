@@ -14,7 +14,7 @@
     return role === 'me' ? String(id).split('#')[0] || role : id;
   }
 
-  /** role = 'adult'|'kid'|'me', ref = 도감 인물({id}), (x,y) = 발 밑 가운데, s = 스탬프 배율(몸 높이 ≈ 40·s px), o = { facing, moving, phase, now } */
+  /** role = 'adult'|'kid'|'me', ref = 도감 인물({id}), (x,y) = 발 밑 가운데, s = 스탬프 배율(몸 높이 ≈ 40·s px), o = { facing, moving, phase, now, wx, wy, ppu, pk(W-0203 보폭) } */
   function draw(ctx, role, ref, key, x, y, s, o) {
     var M = global.DG.mode2d;
     if (!M) { return false; }
@@ -22,7 +22,7 @@
     if (!pool) { return false; }
     o = o || {};
     var tH = (global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.targetH) || 40;
-    return M.draw(ctx, { pool: pool, clip: o.moving ? 'walk' : 'idle', facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: (o.now || Date.now()) + (o.phase || 0) * 160, x: x, y: y, scale: s * 40 * 1.2 / tH, town: true });   // W-0138 — 마을은 싸움이 없다: 맨손 서기·걷기 시트
+    return M.draw(ctx, { pool: pool, clip: o.moving ? 'walk' : 'idle', facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: (o.now || Date.now()) + (o.phase || 0) * 160, x: x, y: y, scale: s * 40 * 1.2 / tH, town: true, stride: (o.wx != null && M.pace) ? M.pace(o.pk || key || role + ':' + seedOf(role, ref, key), o.wx, o.wy, o.ppu, s * 48, o.now || Date.now()) : null });   // W-0138 — 마을은 싸움이 없다: 맨손 서기·걷기 시트
   }
 
   global.DG = global.DG || {};

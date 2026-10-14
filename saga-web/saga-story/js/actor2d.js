@@ -6,7 +6,7 @@
 (function (global) {
   'use strict';
 
-  /** ref = 내 인물(도감), (x,y) = 발 밑 가운데, h = 몸 높이(px), o = { facing(1|-1), walking, now } */
+  /** ref = 내 인물(도감), (x,y) = 발 밑 가운데, h = 몸 높이(px), o = { facing(1|-1), walking, now, wx, wy, ppu(W-0203 보폭) } */
   function me(ctx, ref, x, y, h, o) {
     var M = global.DG.mode2d;
     if (!M) { return false; }
@@ -15,7 +15,7 @@
     o = o || {};
     var tH = (global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.targetH) || 62;
     var ht = M.actT ? M.actT('me:hit', o.hurt) : null, at = M.actT ? M.actT('me:atk', o.atk) : null;   // W-0073 단계 4 — 맞음 > 공격 > 걷기 > 서기
-    return M.draw(ctx, { pool: pool, clip: ht !== null ? 'hit' : (at !== null ? 'attack' : (o.walking ? 'walk' : 'idle')), t: ht !== null ? ht : at, facing: o.facing, ms: o.now || Date.now(), x: x, y: y, scale: h / tH });
+    return M.draw(ctx, { pool: pool, clip: ht !== null ? 'hit' : (at !== null ? 'attack' : (o.walking ? 'walk' : 'idle')), t: ht !== null ? ht : at, facing: o.facing, ms: o.now || Date.now(), x: x, y: y, scale: h / tH, stride: (o.wx != null && M.pace) ? M.pace('me', o.wx, o.wy, o.ppu, h, o.now || Date.now()) : null });
   }
 
   global.DG = global.DG || {};
