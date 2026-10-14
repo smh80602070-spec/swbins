@@ -1255,6 +1255,11 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       return VV3.waterRippleCount() === 0 && '아직 안 지음(init 전)';
     });
 
+    t('village-view3d — 낮 그늘 대비(W-0202): 낮만 해 +0.75·하늘빛 −0.11 → 하늘빛/해 0.35~0.55, 새벽·저녁·밤은 그대로, 손잡이 0 = 옛 · 위에서 보는 카메라 거리 7(옛 14)', function () {
+      var VV3 = DG.villageView3d, L = VV3.phaseLight(), d = VV3.dayLight('day', 1), nt = VV3.dayLight('night', 1), off = VV3.dayLight('day', 0), q = (L.hemi.day + d.hemi) / (L.sun.day.intensity + d.sun), P = DG.cozyCam3d.pose(1, 0);
+      var r = [q >= 0.35 && q <= 0.55, nt.sun === 0 && nt.hemi === 0, off.sun === 0 && off.hemi === 0, Math.abs(P.dist - 7) < 1e-9];
+      return r.every(Boolean) && ('낮 하늘빛/해 ' + q.toFixed(2) + ' · 카메라 ' + P.dist) || '실패 ' + r.join(',');
+    });
     t('village-view3d — skyDark 는 시간대·날씨를 곱한다 — 맑은 날은 시간대 값 그대로, 비 오면 더 어둡다', function () {
       var VV3 = DG.villageView3d;
       var dayClear = VV3.skyDark('day', 'clear');

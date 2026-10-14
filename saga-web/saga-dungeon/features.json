@@ -1065,5 +1065,24 @@
   "ticket": "W-0201",
   "since": "2026-10-14",
   "note": "D2(claude 2026-10-14): qc 1-town·2-room·5-gear Read — 사람 몸이 장면 빛(빛기둥·횃불)을 받음 ○, 어두운 마을은 사람도 함께 어두워짐(형체는 읽힘) △."
+ },
+ {
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0202",
+  "since": "2026-10-14",
+  "id": "dg.town3d-light",
+  "name": "3D 마을 그늘 대비(하늘빛 ≈ 키의 0.45, 해 NW 45°·55°) · 집·우물·사람 GLB 그림자 · 역참 상자 → 이정표 모델",
+  "files": [
+   "src/dungeon3d/01.js",
+   "src/dungeon3d/03.js",
+   "src/dungeon3d/04.js",
+   "js/asset3d.js"
+  ],
+  "tests": [
+   "3D 마을 빛·표식(W-0202) — 하늘빛 ≈ 키의 0.45(그늘 대비)·해 받는 바닥(하늘빛+키)은 옛보다 안 어둡고 3.1 안(블룸)·해 NW · 손잡이 0 = 옛 · 던전 방 빛은 그대로"
+  ],
+  "note": "D2(claude 2026-10-14): tmp/dg-town-shot.mjs(HIGH) 옛 w202_dg_old2 / 새 w202_dg_new2 Read — 집·우물·사람 그림자가 생김 ○, 해 받는 바닥 47→52, 역참 이정표 ○. 난입 모닥불+깃발은 위에서 보면 불꽃 흰 덩이·깃발 안 보여 옛 비석 그대로. 손잡이 dg3d.contrast·markGlb."
  }
 ]

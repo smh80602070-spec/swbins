@@ -22,7 +22,7 @@
 
   /** 카메라 자리(인물 원점 기준) — zoomDiv 가 클수록 가깝다(사람 줌 × 낚시 당김) */
   function pose(zoomDiv, lookY) {
-    var p = tuned('village3d.cozyPitch', 55) * Math.PI / 180, d = tuned('village3d.cozyDist', 14) / (zoomDiv > 0 ? zoomDiv : 1);
+    var p = tuned('village3d.cozyPitch', 55) * Math.PI / 180, d = tuned('village3d.cozyDist', 7) / (zoomDiv > 0 ? zoomDiv : 1);   // W-0202 14 → 7 — 위에서 본 몸이 화면 높이 1/13 이라 사람이 점이었다(휠 줌은 그대로)
     return { x: 0, y: (lookY || 0) + Math.sin(p) * d, z: Math.cos(p) * d, yaw: 0, pitch: p, dist: d };
   }
 

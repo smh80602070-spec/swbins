@@ -4908,9 +4908,17 @@ window.requestAnimationFrame = function () { return 0; };
     t('3D 방 밝기(W-0145) — 방 바닥·벽 물감을 흰 쪽으로 0.65·반구광 색을 밝은 회청 쪽으로 0.5(손잡이 0 = 옛), 마을 조명은 그대로', function () {
       var D3 = DG.dungeon3d, C = DG.core, k = D3._roomLight(), k1 = C.tuned('dungeon3d.roomLift', 0.65), off;
       try { C.setTune('dungeon3d.roomLift', 0); off = D3._roomLight().lift; } finally { C.setTune('dungeon3d.roomLift', k1); }
-      var town = D3.lightPlan(1, 'town', 0.45), room = D3.lightPlan(1, 'fight', 0.45);
+      var town, room = D3.lightPlan(1, 'fight', 0.45);
+      try { C.setTune('dg3d.contrast', 0); town = D3.lightPlan(1, 'town', 0.45); } finally { C.setTune('dg3d.contrast', null); }   // W-0202 마을 그늘 대비 손잡이 0 = 이 시험이 보던 옛 마을 빛
       var r = [k.lift === 0.65, k.amb === 0.5, off === 0, town.ambient === 1.45 && town.ambientHex === 0xe7eaed, room.ambientHex === 0x2a2f3c];
       return r.every(Boolean) && '방 물감 +0.65 · 반구 색 +0.5 · 손잡이 0 → 옛 · 마을·lightPlan 값 그대로' || '실패 ' + r.join(',');
+    });
+    t('3D 마을 빛·표식(W-0202) — 하늘빛 ≈ 키의 0.45(그늘 대비)·해 받는 바닥(하늘빛+키)은 옛보다 안 어둡고 3.1 안(블룸)·해 NW · 손잡이 0 = 옛 · 던전 방 빛은 그대로', function () {
+      var D3 = DG.dungeon3d, C = DG.core, n = D3.lightPlan(1, 'town', 0.45), o, r0 = D3.lightPlan(3, 'fight', 0.45), r1;
+      try { C.setTune('dg3d.contrast', 0); o = D3.lightPlan(1, 'town', 0.45); r1 = D3.lightPlan(3, 'fight', 0.45); } finally { C.setTune('dg3d.contrast', null); }
+      var q = n.ambient / n.keyIntensity, lit = n.ambient + n.keyIntensity;
+      var r = [q >= 0.35 && q <= 0.55, lit >= o.ambient + o.keyIntensity && lit <= 3.1, n.keyNW === true, o.ambient === 1.45 && o.keyIntensity === 1.25 && !o.keyNW, r0.ambient === r1.ambient && r0.keyIntensity === r1.keyIntensity, C.tuned('dg3d.markGlb', 1) === 1];
+      return r.every(Boolean) && ('하늘빛/키 ' + q.toFixed(2) + ' · 해 받는 바닥 ' + lit.toFixed(2) + ' (옛 2.70)') || '실패 ' + r.join(',');
     });
     t('3D 마을 벨트(W-0165) — 마을은 나를 따라가는 깊이 창(440, 나는 55%) 안의 벨트: 깊이 들어가도 카메라가 따라오고 방 벨트보다 물러서며 더 내려다본다 · 손잡이 0 = 옛', function () {
       var BC = DG.beltCam3d, C = DG.core, o = { aspect: 16 / 9, fov: 46 };

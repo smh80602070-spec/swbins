@@ -539,7 +539,7 @@
     even:  { color: 0xff8a4a, intensity: 0.6 },
     night: { color: 0x8fa8ff, intensity: 0.2 }   // W-0145 0.12→0.2 — 밤 마을이 거의 검었다(평균 19/255)
   };
-  var PHASE_HEMI = { dawn: 0.55, day: 0.9, even: 0.7, night: 0.7 };   // W-0112 저녁 0.6→0.7 · W-0145 밤 0.3→0.7(손잡이 village3d.nightHemi — 0.45 는 평균 24, 0.7 은 29.7 로 풀밭까지 읽힘. 하늘·안개는 PHASE_DARK 0.28 그대로라 밤으로 보인다)
+  function dayLight(ph, ck) { var k = ph === 'day' ? Math.max(0, Math.min(1.5, +ck || 0)) : 0; return { sun: 0.75 * k, hemi: -0.11 * k }; }   /* W-0202 낮 그늘 대비(1만리 W-0199 — 하늘빛 ≈ 해의 0.45): 낮 해 1.0·하늘빛 0.9 라 면마다 밝기가 같아 밋밋했다. 낮만 해 +0.75·하늘빛 −0.11(손잡이 village3d.contrast, 0 = 옛), 밤·새벽·저녁은 그대로 */ var PHASE_HEMI = { dawn: 0.55, day: 0.9, even: 0.7, night: 0.7 };   // W-0112 저녁 0.6→0.7 · W-0145 밤 0.3→0.7(손잡이 village3d.nightHemi — 0.45 는 평균 24, 0.7 은 29.7 로 풀밭까지 읽힘. 하늘·안개는 PHASE_DARK 0.28 그대로라 밤으로 보인다)
   /** 날씨(PLAN 21절)도 하늘을 더 어둡히고 안개를 짙힌다(fog near/far 를 좁힌다) —
    *  clear 는 기준값(1) 그대로, cloud/rain/snow 순으로 점점 짙어진다 */
   var WEATHER_DARK = { clear: 1, cloud: 0.85, rain: 0.75, snow: 0.82 };   // W-0112 비 0.6→0.75 — 저녁×비가 0.36 까지 곱해져 마을이 안 읽혔다
@@ -606,8 +606,8 @@
       skyDome.material.uniforms.topColor.value.setHex(darken(c, 0.55));
     }
     var sunCfg = PHASE_SUN[ph] || PHASE_SUN.day;
-    if (sunLight) { sunLight.color.setHex(sunCfg.color); sunLight.intensity = sunCfg.intensity * (WEATHER_DARK[wk] != null ? WEATHER_DARK[wk] : 1); }
-    if (hemiLight) { hemiLight.intensity = (ph === 'night' ? C().tuned('village3d.nightHemi', PHASE_HEMI.night) : PHASE_HEMI[ph] != null ? PHASE_HEMI[ph] : 0.9) * (WEATHER_DARK[wk] != null ? WEATHER_DARK[wk] : 1); }
+    var dl = dayLight(ph, C().tuned('village3d.contrast', 1)); if (sunLight) { sunLight.color.setHex(sunCfg.color); sunLight.intensity = (sunCfg.intensity + dl.sun) * (WEATHER_DARK[wk] != null ? WEATHER_DARK[wk] : 1); }
+    if (hemiLight) { hemiLight.intensity = ((ph === 'night' ? C().tuned('village3d.nightHemi', PHASE_HEMI.night) : PHASE_HEMI[ph] != null ? PHASE_HEMI[ph] : 0.9) + dl.hemi) * (WEATHER_DARK[wk] != null ? WEATHER_DARK[wk] : 1); }
   }
 
   /** 비/눈은 날씨 키가 그대로, 반딧불이(PLAN 22절)는 맑은 밤에만 — 순수 함수라 scene 없이도 확인된다 */
@@ -1921,7 +1921,7 @@
     /** 진단 전용 — 지금 하늘·안개에 먹인 바이옴 색 표 */
     fogColors: function () { return FOG_COLOR; },
     /** 진단 전용 — PLAN 40절 PHASE 5 Day/Night: 시간대별 밝기·조명 표, hex 어둡히기 순수 함수 */
-    phaseLight: function () { return { dark: PHASE_DARK, sun: PHASE_SUN, hemi: PHASE_HEMI }; },
+    phaseLight: function () { return { dark: PHASE_DARK, sun: PHASE_SUN, hemi: PHASE_HEMI }; }, dayLight: dayLight,
     darken: darken,
     /** 진단 전용 — PLAN 40절 PHASE 5 Weather/Ambient: 날씨→파티클, 밤 반딧불이, 낙하 감기(모두 순수 함수) */
     weatherShows: weatherShows,

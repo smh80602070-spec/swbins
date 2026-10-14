@@ -482,9 +482,9 @@
          또 오면 이 수치가 범인 후보 1순위) — 대신 들판 바닥에 무늬를
          입혀(아래 `groundTex`) 노출이 밀려도 "흰 판"이 아니라 "밝은 땅"으로
          읽히게 같이 손봤다. */
-      return {
-        ambient: 1.45, ambientHex: 0xe7eaed,   // W-0111 — 1.05/0.95 는 물리 조명 기준 마을 평균 밝기 15/255
-        keyIntensity: 1.25, keyHex: 0xecf0f3,
+      var ck = Math.max(0, Math.min(1.5, +tuned('dg3d.contrast', 1) || 0)); return {   // W-0202 그늘 대비(1만리 W-0199 — 하늘빛 ≈ 키의 0.45): 옛 1.45·1.25(비 1.16)라 그늘이 없었다. 해 받는 바닥(하늘빛+키)은 2.7 → 3.0 만(밝기 재신고·블룸 문턱 — 바닥 회색 ≈50), 그늘 쪽만 낮춘다. 0 = 옛
+        ambient: 1.45 - 0.52 * ck, ambientHex: 0xe7eaed,   // W-0111 — 1.05/0.95 는 물리 조명 기준 마을 평균 밝기 15/255
+        keyIntensity: 1.25 + 0.82 * ck, keyHex: 0xecf0f3, keyNW: ck > 0,
         torchIntensity: 0, torchHex: 0xffc070, torchRange: 420,
         fog: { near: 1400, far: 3200 },
         bgHex: 0xaeb4ba, boss: false, deep: 0, town: true
@@ -1126,7 +1126,7 @@
         };
         var hnode = AS3h ? AS3h.build('house', 'town:' + o.x + ':' + o.y,
           o.h * 1.3, null, houseShape) : houseShape();
-        hnode.position.set(o.x, 0, o.y);
+        hnode.position.set(o.x, 0, o.y); hnode.userData.cast = true;   // W-0202 마을 집 그림자(도형 대역과 같게)
         wallGroup.add(hnode);
       } else if (o.t === 'well') {
         var AS3w = AS();
@@ -1137,7 +1137,7 @@
         };
         var wenode = AS3w ? AS3w.build('well', 'town:' + o.x + ':' + o.y,
           o.h, null, wellShape) : wellShape();
-        wenode.position.set(o.x, 0, o.y);
+        wenode.position.set(o.x, 0, o.y); wenode.userData.cast = true;
         wallGroup.add(wenode);
       } else if (o.t === 'blacksmith') {
         var AS3b = AS();

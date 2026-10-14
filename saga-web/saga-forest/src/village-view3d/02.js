@@ -775,7 +775,7 @@
     /** 진단 전용 — 지금 하늘·안개에 먹인 바이옴 색 표 */
     fogColors: function () { return FOG_COLOR; },
     /** 진단 전용 — PLAN 40절 PHASE 5 Day/Night: 시간대별 밝기·조명 표, hex 어둡히기 순수 함수 */
-    phaseLight: function () { return { dark: PHASE_DARK, sun: PHASE_SUN, hemi: PHASE_HEMI }; },
+    phaseLight: function () { return { dark: PHASE_DARK, sun: PHASE_SUN, hemi: PHASE_HEMI }; }, dayLight: dayLight,
     darken: darken,
     /** 진단 전용 — PLAN 40절 PHASE 5 Weather/Ambient: 날씨→파티클, 밤 반딧불이, 낙하 감기(모두 순수 함수) */
     weatherShows: weatherShows,

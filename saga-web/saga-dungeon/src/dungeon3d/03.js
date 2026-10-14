@@ -64,7 +64,7 @@
   }
 
   /** asset3d — 사가만리와 같은 것을 쓴다(사가나락 4단계, `assets/ASSET_LICENSES.md`) */
-  function AS() { return global.DG.asset3d; }
+  function AS() { return global.DG.asset3d; } function MARK_GLB() { return !!+tuned('dg3d.markGlb', 1); }   // W-0202 마을 역참 이정표 모델, 0 = 옛 상자 (난입 모닥불+깃발은 위에서 보면 불꽃이 흰 덩이·깃발은 안 보여 옛 비석 그대로)
   /** 몸짓(§5.16, `gesture.js`) — 손잡이 dungeon.gesture 가 0 이면 plan 이 늘 base 를 돌려준다 */
   function GS() { return global.DG.gesture; }
 
@@ -639,8 +639,8 @@
         box(g, 0, 4, 0, 30, 3, 30, 0x000000, 'flat', false);
         box(g, 0, 6, 0, 22, 1.5, 22, glow, 'glow', false);
       } else if (mkey === 'waypoint') {
-        box(g, 0, 12, 0, 20, 20, 20, 0x2a3a4a, 'flat', true);
-        box(g, 0, 25, 0, 26, 4, 26, glow, 'glow', false);
+        var wpShape = function () { var sg = new T.Group(); box(sg, 0, 12, 0, 20, 20, 20, 0x2a3a4a, 'flat', true); box(sg, 0, 25, 0, 26, 4, 26, glow, 'glow', false); return sg; }, AS3w = MARK_GLB() ? AS() : null, wp = AS3w ? AS3w.build('post', 'mark:' + mkey, 47, null, wpShape) : wpShape();   // W-0202 맨 상자(20³) → 있는 이정표 모델(못 받으면 옛 상자 — build 의 대역)
+        wp.userData.cast = true; g.add(wp); if (AS3w) { box(g, 0, 5.4, 0, 34, 0.8, 34, glow, 'glow', false); }   // 파란빛은 발판 위 빛 판이 낸다
       } else if (isExit) {
         /* 들길(오버월드, PLAN 28-1절) — 비석이 아니라 **팻말**이다.
            장대 하나에 판을 얹어 "여기서 다른 마을로" 라는 느낌을 준다. */

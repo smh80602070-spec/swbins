@@ -1279,6 +1279,7 @@
         while (shell.children.length) { shell.remove(shell.children[0]); }
         shell.add(model);
         shell.userData.assetState = 'glb';
+        if (shell.userData.cast) { model.traverse(function (m) { if (m.isMesh && !(m.material && m.material.side === 1)) { m.castShadow = true; } }); }   // W-0202 부른 쪽이 cast 를 달면(마을 집·우물·표식) 모델도 그림자 — 도형 대역은 이미 드리운다
         if (c.clips && c.clips.length) {
           var mx = new t.AnimationMixer(model);
           var acts = {}, i;
@@ -1298,7 +1299,7 @@
     /* W-0197 — 몸이 실제 움직인 거리(키/초)로 걷기·달리기·클립 빠르기(옛: 늘 걷기 1배속 — 발이 미끄러졌다) */
     var g = OA && OA.gaitOf && node.matrixWorld ? OA.gaitOf(u, null, node.matrixWorld.elements, dt) : null;
     if (!want) { want = (o && o.walking) ? (g ? g.slot : 'walk') : 'idle'; }
-    play(node, want); u.lastT = t;
+    play(node, want); u.lastT = t; if (!((u.shN = (u.shN || 0) + 1) % 30)) { node.traverse(function (m) { if (m.isMesh && !(m.material && m.material.side === 1)) { m.castShadow = true; } }); }   // W-0202 몸도 진짜 그림자(1만리 W-0199 그대로 — 30번에 한 번, 외곽선 뒷면 껍질 빼고, 그림자 꺼진 등급은 renderer 가 끔)
     u.mixer.timeScale = !(o && o.anim) && o && o.walking && g ? g.rate : 1;
     u.mixer.update(dt);
     return true;

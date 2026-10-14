@@ -190,7 +190,7 @@
        둘레에 두면, 들판 어디를 걷든 그 자리는 늘 상자 안이라 이 문제가
        안 생긴다. 빛과 과녁 사이의 상대 위치(각도)는 그대로 유지한다. */
     key.target.position.set(p0x, 0, p0y);
-    key.position.set(p0x + (W * 0.3 - W / 2), 260, p0y + (H * 0.1 - H / 2));
+    if (L.keyNW) { key.position.set(p0x - 129, 260, p0y - 129); } else { key.position.set(p0x + (W * 0.3 - W / 2), 260, p0y + (H * 0.1 - H / 2)); }   // W-0202 마을 해 = 아트 바이블 NW 45°·고도 55°(SAGA-DESIGN §6.0-4) — 260 높이에 수평 182
     key.target.updateMatrixWorld();
     /* 맞으면 · 위태로우면 바탕과 안개가 붉어진다 (3단계) */
     var FX = global.DG.fx3d;

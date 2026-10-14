@@ -482,9 +482,9 @@
          또 오면 이 수치가 범인 후보 1순위) — 대신 들판 바닥에 무늬를
          입혀(아래 `groundTex`) 노출이 밀려도 "흰 판"이 아니라 "밝은 땅"으로
          읽히게 같이 손봤다. */
-      return {
-        ambient: 1.45, ambientHex: 0xe7eaed,   // W-0111 — 1.05/0.95 는 물리 조명 기준 마을 평균 밝기 15/255
-        keyIntensity: 1.25, keyHex: 0xecf0f3,
+      var ck = Math.max(0, Math.min(1.5, +tuned('dg3d.contrast', 1) || 0)); return {   // W-0202 그늘 대비(1만리 W-0199 — 하늘빛 ≈ 키의 0.45): 옛 1.45·1.25(비 1.16)라 그늘이 없었다. 해 받는 바닥(하늘빛+키)은 2.7 → 3.0 만(밝기 재신고·블룸 문턱 — 바닥 회색 ≈50), 그늘 쪽만 낮춘다. 0 = 옛
+        ambient: 1.45 - 0.52 * ck, ambientHex: 0xe7eaed,   // W-0111 — 1.05/0.95 는 물리 조명 기준 마을 평균 밝기 15/255
+        keyIntensity: 1.25 + 0.82 * ck, keyHex: 0xecf0f3, keyNW: ck > 0,
         torchIntensity: 0, torchHex: 0xffc070, torchRange: 420,
         fog: { near: 1400, far: 3200 },
         bgHex: 0xaeb4ba, boss: false, deep: 0, town: true
@@ -1126,7 +1126,7 @@
         };
         var hnode = AS3h ? AS3h.build('house', 'town:' + o.x + ':' + o.y,
           o.h * 1.3, null, houseShape) : houseShape();
-        hnode.position.set(o.x, 0, o.y);
+        hnode.position.set(o.x, 0, o.y); hnode.userData.cast = true;   // W-0202 마을 집 그림자(도형 대역과 같게)
         wallGroup.add(hnode);
       } else if (o.t === 'well') {
         var AS3w = AS();
@@ -1137,7 +1137,7 @@
         };
         var wenode = AS3w ? AS3w.build('well', 'town:' + o.x + ':' + o.y,
           o.h, null, wellShape) : wellShape();
-        wenode.position.set(o.x, 0, o.y);
+        wenode.position.set(o.x, 0, o.y); wenode.userData.cast = true;
         wallGroup.add(wenode);
       } else if (o.t === 'blacksmith') {
         var AS3b = AS();
@@ -1789,7 +1789,7 @@
   }
 
   /** asset3d — 사가만리와 같은 것을 쓴다(사가나락 4단계, `assets/ASSET_LICENSES.md`) */
-  function AS() { return global.DG.asset3d; }
+  function AS() { return global.DG.asset3d; } function MARK_GLB() { return !!+tuned('dg3d.markGlb', 1); }   // W-0202 마을 역참 이정표 모델, 0 = 옛 상자 (난입 모닥불+깃발은 위에서 보면 불꽃이 흰 덩이·깃발은 안 보여 옛 비석 그대로)
   /** 몸짓(§5.16, `gesture.js`) — 손잡이 dungeon.gesture 가 0 이면 plan 이 늘 base 를 돌려준다 */
   function GS() { return global.DG.gesture; }
 
@@ -2364,8 +2364,8 @@
         box(g, 0, 4, 0, 30, 3, 30, 0x000000, 'flat', false);
         box(g, 0, 6, 0, 22, 1.5, 22, glow, 'glow', false);
       } else if (mkey === 'waypoint') {
-        box(g, 0, 12, 0, 20, 20, 20, 0x2a3a4a, 'flat', true);
-        box(g, 0, 25, 0, 26, 4, 26, glow, 'glow', false);
+        var wpShape = function () { var sg = new T.Group(); box(sg, 0, 12, 0, 20, 20, 20, 0x2a3a4a, 'flat', true); box(sg, 0, 25, 0, 26, 4, 26, glow, 'glow', false); return sg; }, AS3w = MARK_GLB() ? AS() : null, wp = AS3w ? AS3w.build('post', 'mark:' + mkey, 47, null, wpShape) : wpShape();   // W-0202 맨 상자(20³) → 있는 이정표 모델(못 받으면 옛 상자 — build 의 대역)
+        wp.userData.cast = true; g.add(wp); if (AS3w) { box(g, 0, 5.4, 0, 34, 0.8, 34, glow, 'glow', false); }   // 파란빛은 발판 위 빛 판이 낸다
       } else if (isExit) {
         /* 들길(오버월드, PLAN 28-1절) — 비석이 아니라 **팻말**이다.
            장대 하나에 판을 얹어 "여기서 다른 마을로" 라는 느낌을 준다. */
@@ -2757,7 +2757,7 @@
        둘레에 두면, 들판 어디를 걷든 그 자리는 늘 상자 안이라 이 문제가
        안 생긴다. 빛과 과녁 사이의 상대 위치(각도)는 그대로 유지한다. */
     key.target.position.set(p0x, 0, p0y);
-    key.position.set(p0x + (W * 0.3 - W / 2), 260, p0y + (H * 0.1 - H / 2));
+    if (L.keyNW) { key.position.set(p0x - 129, 260, p0y - 129); } else { key.position.set(p0x + (W * 0.3 - W / 2), 260, p0y + (H * 0.1 - H / 2)); }   // W-0202 마을 해 = 아트 바이블 NW 45°·고도 55°(SAGA-DESIGN §6.0-4) — 260 높이에 수평 182
     key.target.updateMatrixWorld();
     /* 맞으면 · 위태로우면 바탕과 안개가 붉어진다 (3단계) */
     var FX = global.DG.fx3d;

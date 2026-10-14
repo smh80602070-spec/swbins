@@ -972,5 +972,23 @@
   "ticket": "W-0201",
   "since": "2026-10-14",
   "note": "D2(claude 2026-10-14): qc 1-village3d 옛/새(w201-old) Read — 처음엔 이 판 몸 GLB 에 법선이 없어 새까만 실루엣 ×(툰·림·외곽선 다 꺼도 검음 — fs-body-state.mjs 로 nor:false 확인) → shade 가 법선 계산 → 색·명암 ○."
+ },
+ {
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0202",
+  "since": "2026-10-14",
+  "id": "fs.village3d-daycam",
+  "name": "3D 낮 그늘 대비(해 +0.75·하늘빛 −0.11 → 하늘빛/해 0.45) · 위에서 보는 카메라 거리 14 → 7(몸 ≈ 화면 1/7)",
+  "files": [
+   "src/village-view3d/01.js",
+   "src/village-view3d/02.js",
+   "js/cozy-cam3d.js"
+  ],
+  "tests": [
+   "village-view3d — 낮 그늘 대비(W-0202): 낮만 해 +0.75·하늘빛 −0.11 → 하늘빛/해 0.35~0.55, 새벽·저녁·밤은 그대로, 손잡이 0 = 옛 · 위에서 보는 카메라 거리 7(옛 14)"
+  ],
+  "note": "D2(claude 2026-10-14): tmp/fs-tune-shot.mjs 낮 옛 w202_fs_day_old7 / 새 w202_fs_day_new2 — 풀 38→44·길 51→60·몸 47→56, 몸 ≈105px(1/7) ○. 밤은 재 보니 땅 41(낮의 0.8)·등불 원판이라 그대로. 초록 격자는 W-0160 심을 칸(cozyGrid 0 이면 줄 0) — 타일 이음매 아님."
  }
 ]
