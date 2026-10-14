@@ -34,6 +34,8 @@ def main():
     if sheet:
         rows = []
         for h in init:
+            if not all(os.path.exists(os.path.join(SRC, '%s__blink_s%d.png' % (h, k))) for k in (0, 1)):
+                continue
             e = boxes[h]['eye']
             crop = (max(0, e[0] - 60), max(0, e[1] - 60), min(768, e[2] + 60), min(1024, e[3] + 60))
             ims = [Image.open(os.path.join(ROOT, init[h])).convert('RGB')] + \
@@ -47,7 +49,7 @@ def main():
                 s.paste(im, (k * 300, y))
             y += r[0].height + 4
         s.save(sheet)
-        print('SHEET', sheet, list(init))
+        print("SHEET", sheet, len(rows), "/", len(init))
         return
     picks = json.load(open(os.path.join(ROOT, arg('--picks', 'tools/ai-art/data/live_ai_blink_picks.json')), encoding='utf-8'))['picks']
     out = os.path.join(ROOT, arg('--out', 'tools/ai-art/_out/live_frames_ai'))
