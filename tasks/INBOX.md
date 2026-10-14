@@ -14,3 +14,4 @@
 - [ ] 10-14 · (K-0108 끝) · 자체 PBR dirt 새 결(명암 10.9→24.8) — 웹 real_dirt.webp 를 고돗 tiles_real/dirt_hi.webp 에서 다시 복사(W-0196 길) · 웹
 - [ ] 10-14 · (K-0109 끝) · 백상아리 자체 3D `creatures3d/great_white`(worm·동작 7) — 1만리 펫 pt_shark_2 를 shark 대신 great_white 로 바꿔 끼우기 · 웹
 - [ ] 10-14 · (K-0110 관문 ✗ — 사용자 결정) · AI 초상 i2i 는 같은 사람 유지 ○지만 그림 전체가 다시 그려지고(밖 차 2.5~5%) 눈 감음이 윙크 꼴 — ⓐ 상자만 따는 합성+인페인트 ⓑ VRoid 렌더 유지 ⓒ 숨·고개만, 추천 ⓐ(K-0110 메모) · 사용자/자체툴
+- [ ] 10-14 · (K-0111 끝) · 3마을 prop2d 에 school `hanok_01`·museum `chinese_hall_01`·tailor `jp_minka_01`(+ `_night`, h 는 home 74·shop 90 사이로) — drawHanok 도형 대신 · 웹

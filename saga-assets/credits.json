@@ -292,7 +292,7 @@
    "tool": "gen.py",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 1759,
+   "count": 1762,
    "where": [
     "saga-assets/competition",
     "saga-assets/icons/license",
@@ -306,7 +306,7 @@
    "tool": "remote3d",
    "model": "microsoft/TRELLIS-image-large",
    "license": "MIT",
-   "count": 224,
+   "count": 225,
    "where": [
     "saga-assets/creatures3d",
     "saga-unity/Assets/Art/CreaturesSelf",
