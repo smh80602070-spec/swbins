@@ -49,6 +49,9 @@ for (const g of GAMES) {
       await c.ev(`(function(){ var i = document.querySelector('input[type=text], input:not([type])'), b = Array.prototype.slice.call(document.querySelectorAll('button')).filter(function (x) { return x.offsetParent && /시작/.test(x.textContent); })[0]; if (i && b) { i.value = '폰'; i.dispatchEvent(new Event('input')); b.click(); } return 1; })()`);
       await sleep(3000);
       await c.ev(`(function(){ var b = document.getElementById('title-continue'); if (b && b.offsetParent) { b.click(); } return 1; })()`);
+      /* 2나락 출사표(셋 고르기) — 있으면 앞 셋을 골라 「출사」(W-0213 · 없으면 그냥 지나감) */
+      await sleep(2500);
+      await c.ev(`(function(){ var cs = document.querySelectorAll('#starter-host .stc-cell'); if (!cs.length) { return 0; } for (var i = 0; i < 3 && i < cs.length; i++) { cs[i].click(); } var b = document.querySelector('#starter-host .stc-btn'); if (b) { b.click(); } return cs.length; })()`);
       await sleep(15000);
       for (let i = 0; i < 4; i++) { await c.key('Escape', 60); await sleep(200); }
     }
