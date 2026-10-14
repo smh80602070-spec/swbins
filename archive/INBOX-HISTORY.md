@@ -105,3 +105,4 @@
 - [x] 10-13 · (W-0191 웹 넘김) · 2나락 옛 타일 `dungeon_{dirt,stone,water,snow,sand}` 안 씀(grass 는 마을 땅) — 지워도 됨 · 자체툴 → K-0107
 - [x] 10-14 · (W-0197 웹 넘김) · K-0101 몸 dj_hopak·nh_yeombun GLB 가 바깥 tex/*.webp 를 가리키는데 파일 없음(qc 3D 오류) · 자체툴 → K-0101 이미 고침(0954e9532 빠졌던 공용 tex 14 — 18장 다 origin 에 있음, 10-14 확인)
 - [x] 10-14 · (K-0102 끝) · whale·puffer·fish_a 자체판 shared/creatures3d — 빌린 Whale·Puffer·Fish1 교체 · 웹 → W-0206
+- [x] 10-13 · (W-0194 웹 넘김) · 물고기 `fish_b`·`fish_c` 자체판이 three 에서 안 보임(creature-sheet 빈 칸) — 다시 굽기, 그때까지 Fish2·Fish3 빌린 것 · ~~자체툴~~ → **웹**(10-14 K 조사: 정본·웹 사본 koi 와 같은 꼴·정상 → 다시 굽기 헛일, 시트 '키 1.00' = Box3 빈 상자 — three 쪽 의심) → W-0206: 오판(짝 정규식이 숫자 이름을 못 읽어 새 쪽도 빌린 몸) — 다시 굽기 불필요, 자체판 그대로 씀

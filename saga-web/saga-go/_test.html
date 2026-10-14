@@ -8859,7 +8859,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
     });
 
     t('자체 동물·탈것(W-0163) — 빌린 동물·탈것 경로가 creatures3d/<id>.glb 로 바뀌고(공용 주소가 잡혔을 때), 짝 없는 경로·손잡이 0 이면 null(옛 경로)', function () {
-      var A = DG.assets3d, C = DG.core, r0 = A.root ? A.root() : null, t = A.creatureFor('assets/models/animals/Tiger.glb'), h = A.creatureFor('assets/models/animals_extra/Horse_White.glb'), f = A.creatureFor('assets/models/animals_extra2/Puffer.glb'), off;   // W-0178 — 여우는 이제 짝이 있다, 짝 없는 예는 물고기(⑤ 아직)
+      var A = DG.assets3d, C = DG.core, r0 = A.root ? A.root() : null, t = A.creatureFor('assets/models/animals/Tiger.glb'), h = A.creatureFor('assets/models/animals_extra/Horse_White.glb'), f = A.creatureFor('assets/models/monsters/quaternius/Cat_7ccb71fe.glb'), off;   // W-0178 — 여우는 이제 짝이 있다 · W-0206 물고기도 다 짝이 생겨 짝 없는 예는 괴물 고양이(CREATURE_DIR_SKIP)
       C.setTune('assets3d.creature', 0); off = A.creatureFor('assets/models/animals/Tiger.glb'); C.setTune('assets3d.creature', null);
       var ends = function (u, tail) { return !!u && u.slice(-tail.length) === tail; };
       var r = [f === null, off === null, Object.keys(A.CREATURE_OF).length >= 19, r0 ? (ends(t, 'creatures3d/tiger.glb') && ends(h, 'creatures3d/horse_white.glb')) : t === null];
@@ -8878,9 +8878,9 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         ['monsters/quaternius/Goleling_Evolved_d6308fbf.glb', 'goleling_evolved'], ['monsters/quaternius/Birb_05dac745.glb', 'birb'], ['monsters/quaternius2/FrogEnemy.glb', 'frog_brute'],
         ['monsters/quaternius_dino/Velociraptor.glb', 'raptor'], ['foes/Robot_Drone.glb', 'robot_drone'], ['monsters/space/EnemySmall.glb', 'space_bug'], ['monsters/Mushnub_55c64684.glb', 'mushnub'],
         ['monsters/quaternius/Cat_7ccb71fe.glb', null], ['monsters/quaternius/Frog_9018566d.glb', null], ['monsters/quaternius2/Snake.glb', null], ['standin/Cat_Monster.glb', null],
-        ['foes/Alien.glb', null], ['buildings/space/House_Single.glb', null], ['animals_extra2/Puffer.glb', null], ['people/regular/Fox.glb', null],
+        ['foes/Alien.glb', null], ['buildings/space/House_Single.glb', null], ['animals_extra2/Puffer.glb', 'puffer'], ['animals_extra/Whale.glb', 'whale'], ['animals_extra/Fish1.glb', 'fish_a'],   // W-0206 ['people/regular/Fox.glb', null],
         /* W-0194 물고기 38 — Koi 두 폴더·상어 두 몸 · Fish2·Fish3 는 새 몸이 안 보여 SKIP(빌린 것) */
-        ['animals_extra2/Koi.glb', 'koi'], ['animals/Koi.glb', 'koi'], ['animals_extra/Shark.glb', 'shark'], ['animals_extra2/Shark.glb', 'shark'], ['animals_extra/MantaRay.glb', 'manta_ray'], ['animals_extra2/Zebra_Clown_Fish.glb', 'zebra_clownfish'], ['animals_extra/Fish2.glb', null], ['animals_extra/Fish3.glb', null]];
+        ['animals_extra2/Koi.glb', 'koi'], ['animals/Koi.glb', 'koi'], ['animals_extra/Shark.glb', 'shark'], ['animals_extra2/Shark.glb', 'shark'], ['animals_extra/MantaRay.glb', 'manta_ray'], ['animals_extra2/Zebra_Clown_Fish.glb', 'zebra_clownfish'], ['animals_extra/Fish2.glb', 'fish_b'], ['animals_extra/Fish3.glb', 'fish_c']];   // W-0206 — 숫자 이름도 짝(옛 null 은 정규식이 못 읽어서였다)
       CASES.forEach(function (c) {
         var got = AS.creatureFor('assets/models/' + c[0]);
         var ok = c[1] ? (live ? !!got && got.slice(-(c[1].length + 4)) === c[1] + '.glb' : AS.CREATURE_OF[c[0].split('/').pop().replace(/(_[0-9a-f]{8})?\.glb$/, '')] === c[1]) : got === null;

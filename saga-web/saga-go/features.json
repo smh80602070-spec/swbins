@@ -1036,5 +1036,21 @@
    "2D 이름표 비키기(W-0205) — 한 점에 이름표 5개: 넷째 단까지 위로 밀려 넷이 보이고 서로 안 겹침·하나 생략, 우선 높은 것이 제자리, 둘째 단 넘게 밀린 것은 머리와 잇는 선"
   ],
   "note": "D2(claude 2026-10-14): pw-look2d near(×4.4) 옛 w205_old_go_near / 새 w205_new_go_near2 Read — 옛은 글자 ≈24px 로 커져(W-0204 bodyK) 이름표끼리·몸과 겹치고 먼 주민 글자가 돌바닥에 묻힘, 새는 15px·0.7 로 다 읽힘 ○(떠돌이 상인·대장장이 두 줄은 바짝 붙음 △)."
+ },
+ {
+  "id": "go.creature-fish-own",
+  "name": "빌린 물고기 마지막 다섯(Whale·Puffer·Fish1·Fish2·Fish3) → 자체판 whale·puffer·fish_a·fish_b·fish_c · 짝 정규식이 숫자 이름을 읽게 · 빌린 GLB 20(네 판) 지움",
+  "files": [
+   "js/assets3d.js"
+  ],
+  "tests": [
+   "assets3d: 빌린 짐승·괴물 → 자체 creatures3d(W-0178) — 폴더·해시 이름을 가려 짝을 찾고, 괴물 팩 Cat·Frog·quaternius2 Snake 는 안 바꾼다 · 짝 68 이 다 id 표에 있고 · 동작 일곱 이름이 mapClips 자리를 다 채운다"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0206",
+  "since": "2026-10-14",
+  "note": "D2(claude 2026-10-14): creature-sheet 새 whale·puffer·fish_a·fish_b·fish_c 제 모습 ○(옛 빌린 몸은 뼈 배율 100 이라 시트에서 점 — 도구 한계). W-0194 의 fish_b·c \"빈 칸\"은 CREATURE_DIRS [A-Za-z_] 가 Fish2·Fish3 을 못 읽어 새 쪽도 빌린 몸을 받은 오판 — SKIP 비움. 지움 20 GLB 0.64MB · 2나락 압축 목록 5 키."
  }
 ]
