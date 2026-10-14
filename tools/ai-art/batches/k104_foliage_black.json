@@ -1,0 +1,24 @@
+{
+ "model": "z-image-turbo",
+ "out": "k104_foliage",
+ "note": "K-0104 다시(10-14) — 흰 꽃잎·사진식 바닥 그림자가 흰 바탕 키로 안 갈려 검은 바탕으로. foliage_atlas.py 가 바탕 색을 모서리에서 읽는다",
+ "defaults": {
+  "prompt_prefix": "",
+  "width": 832,
+  "height": 1216,
+  "variants": 4,
+  "tiling": false
+ },
+ "items": [
+  {
+   "id": "flower_white_blk",
+   "seed": 104040500,
+   "prompt": "A botanical studio photograph of one upright cluster of small white wild daisy flowers with yellow centers on thin green stems with a few narrow leaves, growing from a single base point at the bottom center, isolated on a pure solid black background, flat even soft light, no shadow, no soil, no vase, no text, the whole cluster visible with black margin on every side, natural realistic colors, sharp fine detail."
+  },
+  {
+   "id": "fern_frond_blk",
+   "seed": 104070500,
+   "prompt": "A botanical studio photograph of a single fresh green fern frond seen flat from the front, the stem starting at the bottom center and the frond tapering to a point at the top, many evenly spaced pinnate leaflets on both sides, isolated on a pure solid black background, flat even soft light, no shadow, no soil, no text, the whole frond visible with black margin on every side, natural realistic colors, sharp fine detail."
+  }
+ ]
+}

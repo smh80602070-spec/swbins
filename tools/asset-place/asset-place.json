@@ -177,6 +177,25 @@
    ]
   },
   {
+   "id": "world-foliage",
+   "src": "saga-assets/world/foliage",
+   "include": [
+    "*.gltf",
+    "*.bin",
+    "*.png",
+    "*.license.json"
+   ],
+   "targets": [
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/world/foliage",
+     "sidecar": [
+      ".import"
+     ]
+    }
+   ]
+  },
+  {
    "id": "pets3d",
    "src": "saga-assets/pets3d",
    "include": [

@@ -3,3 +3,5 @@ competition
 web2d/realm-ui
 # textures_real — K-0093 고돗·K-0099 유니티 배치 끝, 화면 배선은 U-0084·U-0085(유니티)·고돗 티켓 대기. 2026-10-13 K-0099
 textures_real
+# world/foliage — K-0104 고돗 배치 끝(assets/world/foliage), 화면 배선은 G-0227(고돗 큐 1번). 2026-10-14 K-0104
+world/foliage

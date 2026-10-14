@@ -1,0 +1,193 @@
+{
+ "id": "foliage_atlas",
+ "generator": "tools/world-forge/foliage_atlas.py",
+ "ticket": "K-0104",
+ "license": "자체 생성(Z-Image-Turbo Apache-2.0 출력, 상업 허용) — 남의 사진·스캔 0",
+ "commercial_use": true,
+ "inputs": [
+  {
+   "slot": "leaf_broad",
+   "file": "tools/ai-art/_out/k104_foliage/leaf_broad_v03.png",
+   "license": {
+    "id": "leaf_broad_v03",
+    "generator": "tools/ai-art/gen.py (ComfyUI)",
+    "model": "z-image-turbo",
+    "model_license": "Apache-2.0",
+    "prompt": "A botanical studio photograph of a single dense leafy branch spray cut from a broadleaf garden shrub, many overlapping fresh green oval leaves of varied sizes filling a rounded upright shape, isolated on a pure white background, flat even soft light, no shadow, no pot, no ground, no text, the whole spray visible with white margin on every side, natural realistic colors, sharp fine detail.",
+    "negative_prompt": "",
+    "seed": 104000002,
+    "steps": 8,
+    "cfg_scale": 1.0,
+    "sampler": "res_multistep/simple",
+    "size": [
+     832,
+     1216
+    ],
+    "seconds": 50.0,
+    "date": "2026-10-14",
+    "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안."
+   }
+  },
+  {
+   "slot": "leaf_small",
+   "file": "tools/ai-art/_out/k104_foliage/leaf_small_v02.png",
+   "license": {
+    "id": "leaf_small_v02",
+    "generator": "tools/ai-art/gen.py (ComfyUI)",
+    "model": "z-image-turbo",
+    "model_license": "Apache-2.0",
+    "prompt": "A botanical studio photograph of a single bushy twig cluster of a small-leaved evergreen hedge plant, hundreds of tiny dark green glossy leaves packed into a rounded upright clump, isolated on a pure white background, flat even soft light, no shadow, no pot, no ground, no text, the whole clump visible with white margin on every side, natural realistic colors, sharp fine detail.",
+    "negative_prompt": "",
+    "seed": 104010001,
+    "steps": 8,
+    "cfg_scale": 1.0,
+    "sampler": "res_multistep/simple",
+    "size": [
+     832,
+     1216
+    ],
+    "seconds": 50.1,
+    "date": "2026-10-14",
+    "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안."
+   }
+  },
+  {
+   "slot": "grass_blades",
+   "file": "tools/ai-art/_out/k104_foliage/grass_blades_v03.png",
+   "license": {
+    "id": "grass_blades_v03",
+    "generator": "tools/ai-art/gen.py (ComfyUI)",
+    "model": "z-image-turbo",
+    "model_license": "Apache-2.0",
+    "prompt": "A botanical studio photograph of one upright tuft of long thin wild meadow grass blades growing from a single base point at the bottom center and fanning outward, fresh green with a few yellowed tips, isolated on a pure white background, flat even soft light, no shadow, no soil, no roots, no text, the whole tuft visible with white margin on every side, natural realistic colors, sharp fine detail.",
+    "negative_prompt": "",
+    "seed": 104020002,
+    "steps": 8,
+    "cfg_scale": 1.0,
+    "sampler": "res_multistep/simple",
+    "size": [
+     832,
+     1216
+    ],
+    "seconds": 50.1,
+    "date": "2026-10-14",
+    "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안."
+   }
+  },
+  {
+   "slot": "grass_seed",
+   "file": "tools/ai-art/_out/k104_foliage/grass_seed_v01.png",
+   "license": {
+    "id": "grass_seed_v01",
+    "generator": "tools/ai-art/gen.py (ComfyUI)",
+    "model": "z-image-turbo",
+    "model_license": "Apache-2.0",
+    "prompt": "A botanical studio photograph of one upright bunch of tall wild grass stems with feathery seed heads at the tips, growing from a single base point at the bottom center, pale green and straw colors, isolated on a pure white background, flat even soft light, no shadow, no soil, no roots, no text, the whole bunch visible with white margin on every side, natural realistic colors, sharp fine detail.",
+    "negative_prompt": "",
+    "seed": 104030000,
+    "steps": 8,
+    "cfg_scale": 1.0,
+    "sampler": "res_multistep/simple",
+    "size": [
+     832,
+     1216
+    ],
+    "seconds": 122.1,
+    "date": "2026-10-14",
+    "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안."
+   }
+  },
+  {
+   "slot": "flower_white",
+   "file": "tools/ai-art/_out/k104_foliage/flower_white_blk_v01.png",
+   "license": {
+    "id": "flower_white_blk_v01",
+    "generator": "tools/ai-art/gen.py (ComfyUI)",
+    "model": "z-image-turbo",
+    "model_license": "Apache-2.0",
+    "prompt": "A botanical studio photograph of one upright cluster of small white wild daisy flowers with yellow centers on thin green stems with a few narrow leaves, growing from a single base point at the bottom center, isolated on a pure solid black background, flat even soft light, no shadow, no soil, no vase, no text, the whole cluster visible with black margin on every side, natural realistic colors, sharp fine detail.",
+    "negative_prompt": "",
+    "seed": 104040500,
+    "steps": 8,
+    "cfg_scale": 1.0,
+    "sampler": "res_multistep/simple",
+    "size": [
+     832,
+     1216
+    ],
+    "seconds": 148.3,
+    "date": "2026-10-14",
+    "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안."
+   }
+  },
+  {
+   "slot": "flower_yellow",
+   "file": "tools/ai-art/_out/k104_foliage/flower_yellow_v01.png",
+   "license": {
+    "id": "flower_yellow_v01",
+    "generator": "tools/ai-art/gen.py (ComfyUI)",
+    "model": "z-image-turbo",
+    "model_license": "Apache-2.0",
+    "prompt": "A botanical studio photograph of one upright cluster of small glossy yellow five-petal meadow wildflowers on thin branching green stems with a few lobed leaves, growing from a single base point at the bottom center, isolated on a pure white background, flat even soft light, no shadow, no soil, no vase, no text, the whole cluster visible with white margin on every side, natural realistic colors, sharp fine detail.",
+    "negative_prompt": "",
+    "seed": 104050000,
+    "steps": 8,
+    "cfg_scale": 1.0,
+    "sampler": "res_multistep/simple",
+    "size": [
+     832,
+     1216
+    ],
+    "seconds": 128.2,
+    "date": "2026-10-14",
+    "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안."
+   }
+  },
+  {
+   "slot": "flower_purple",
+   "file": "tools/ai-art/_out/k104_foliage/flower_purple_v04.png",
+   "license": {
+    "id": "flower_purple_v04",
+    "generator": "tools/ai-art/gen.py (ComfyUI)",
+    "model": "z-image-turbo",
+    "model_license": "Apache-2.0",
+    "prompt": "A botanical studio photograph of one upright cluster of slender purple wildflower spikes and small violet bell flowers on thin green stems with narrow leaves, growing from a single base point at the bottom center, isolated on a pure white background, flat even soft light, no shadow, no soil, no vase, no text, the whole cluster visible with white margin on every side, natural realistic colors, sharp fine detail.",
+    "negative_prompt": "",
+    "seed": 104060003,
+    "steps": 8,
+    "cfg_scale": 1.0,
+    "sampler": "res_multistep/simple",
+    "size": [
+     832,
+     1216
+    ],
+    "seconds": 50.1,
+    "date": "2026-10-14",
+    "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안."
+   }
+  },
+  {
+   "slot": "fern_frond",
+   "file": "tools/ai-art/_out/k104_foliage/fern_frond_blk_v02.png",
+   "license": {
+    "id": "fern_frond_blk_v02",
+    "generator": "tools/ai-art/gen.py (ComfyUI)",
+    "model": "z-image-turbo",
+    "model_license": "Apache-2.0",
+    "prompt": "A botanical studio photograph of a single fresh green fern frond seen flat from the front, the stem starting at the bottom center and the frond tapering to a point at the top, many evenly spaced pinnate leaflets on both sides, isolated on a pure solid black background, flat even soft light, no shadow, no soil, no text, the whole frond visible with black margin on every side, natural realistic colors, sharp fine detail.",
+    "negative_prompt": "",
+    "seed": 104070501,
+    "steps": 8,
+    "cfg_scale": 1.0,
+    "sampler": "res_multistep/simple",
+    "size": [
+     832,
+     1216
+    ],
+    "seconds": 50.2,
+    "date": "2026-10-14",
+    "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안."
+   }
+  }
+ ]
+}

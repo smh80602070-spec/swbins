@@ -1,0 +1,27 @@
+{
+ "id": "bush_leafy_01",
+ "generator": "tools/world-forge/build_foliage.py",
+ "ticket": "K-0104",
+ "blender": "5.2.1 LTS",
+ "license": "자체 생성 — 형태는 전부 코드, 결은 자체 아틀라스(Z-Image-Turbo 출력 · foliage_atlas.py)",
+ "commercial_use": true,
+ "inputs": [
+  "saga-assets/world/foliage/_atlas/foliage_atlas.png"
+ ],
+ "atlas_inputs": [
+  "tools/ai-art/_out/k104_foliage/leaf_broad_v03.png",
+  "tools/ai-art/_out/k104_foliage/leaf_small_v02.png",
+  "tools/ai-art/_out/k104_foliage/grass_blades_v03.png",
+  "tools/ai-art/_out/k104_foliage/grass_seed_v01.png",
+  "tools/ai-art/_out/k104_foliage/flower_white_blk_v01.png",
+  "tools/ai-art/_out/k104_foliage/flower_yellow_v01.png",
+  "tools/ai-art/_out/k104_foliage/flower_purple_v04.png",
+  "tools/ai-art/_out/k104_foliage/fern_frond_blk_v02.png"
+ ],
+ "size_m": [
+  1.19,
+  1.05,
+  0.97
+ ],
+ "tris": 140
+}

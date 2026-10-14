@@ -676,6 +676,24 @@
    ]
   },
   {
+   "tool": "foliage_atlas.py",
+   "model": "",
+   "license": "자체 생성(Z-Image-Turbo Apache-2.0 출력, 상업 허용) — 남의 사진·스캔 0",
+   "count": 1,
+   "where": [
+    "saga-assets/world/foliage/_atlas"
+   ]
+  },
+  {
+   "tool": "build_foliage.py",
+   "model": "",
+   "license": "자체 생성 — 형태는 전부 코드, 결은 자체 아틀라스(Z-Image-Turbo 출력 · foliage_atlas.py)",
+   "count": 7,
+   "where": [
+    "saga-assets/world/foliage"
+   ]
+  },
+  {
    "tool": "build_terrain.py",
    "model": "",
    "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 높이맵은 전부 코드 — 값 잡음 fbm + 모양 함수 + 간단한 침식)",

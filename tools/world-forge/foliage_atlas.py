@@ -1,11 +1,13 @@
-"""K-0104 사실 들풀 아틀라스 — 흰 바탕 낱장 8장(ai-art 배치 k104_foliage, 자체 생성)을 알파로 따서 2048² 한 장(4×2 칸, 512×1024)에 앉힌다.
+"""K-0104 사실 들풀 아틀라스 — 흰(또는 검은) 바탕 낱장 8장(ai-art 배치 k104_foliage·k104_foliage_black, 자체 생성)을 알파로 따서 2048² 한 장(4×2 칸, 512×1024)에 앉힌다.
 
   py tools/world-forge/foliage_atlas.py [--picks tools/world-forge/data/k104_picks.json] [--out saga-assets/world/foliage/_atlas] [--sheet <png>]
 
 picks = {"<칸 id>": "<고른 그림 경로>"}. 칸은 아래 SLOTS 순서(빌더 build_foliage.py 가 같은 이름으로 찾는다).
 산출: foliage_atlas.png(RGBA, 투명 칸은 가까운 색으로 번져 채움 — 밉맵 테두리 흰 띠 막기)·foliage_atlas_n.png(밝기 → 높이 → 법선)·
 foliage_atlas.json(칸마다 내용 UV 사각형·가로세로 비)·foliage_atlas.license.json.
-배경 따기: 잎·풀·고사리 = 전역 색 키(잎 사이 막힌 흰 틈까지), 꽃 = matte2(가장자리에서 이어진 흰색만 — 흰 꽃잎은 남긴다).
+배경 따기: 전부 전역 색 키 — 바탕 색은 모서리에서 읽는다(흰·검은 바탕 둘 다). 잎·줄기 사이 막힌 바탕까지 지운다(matte2 는 7000px 넘는 막힌 바탕을 남겼다).
+색 차이는 lo 부터 물체, 무채색 밝기 차이는 40 넘어야 물체(사진식 바닥 그림자 10~35 는 바탕). 흰 꽃잎·짙은 연녹 그림자는 흰 바탕으로 안 갈려
+흰 꽃·고사리는 검은 바탕으로 다시 뽑는다(10-14 첫 시트 — 줄기 사이 흰 덩이·고사리 흰 테).
 """
 import json
 import os
@@ -16,11 +18,8 @@ from PIL import Image, ImageFilter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
-sys.path.insert(0, os.path.join(ROOT, 'tools', 'ai-art'))
-import matte_util as MU  # noqa: E402
 
 SLOTS = ['leaf_broad', 'leaf_small', 'grass_blades', 'grass_seed', 'flower_white', 'flower_yellow', 'flower_purple', 'fern_frond']
-GLOBAL_KEY = {'leaf_broad', 'leaf_small', 'grass_blades', 'grass_seed', 'fern_frond'}
 W, H, CW, CH, PAD = 2048, 2048, 512, 1024, 6
 
 
@@ -30,13 +29,15 @@ def arg(k, d=None):
 
 
 def global_key(im, lo=18, hi=60):
-    """흰 바탕 거리로 알파 — 거리 lo 이하 투명, hi 이상 불투명, 사이는 부드럽게. 잎 사이 막힌 틈도 지운다."""
+    """바탕 색 거리로 알파 — 색은 lo 이하 투명·hi 이상 불투명, 무채색 밝기 차이는 40~100. 잎 사이 막힌 틈도 지운다."""
     a = np.asarray(im.convert('RGB')).astype(np.float32)
     h, w = a.shape[:2]
     bg = np.median(np.concatenate([a[:6].reshape(-1, 3), a[-6:].reshape(-1, 3), a[:, :6].reshape(-1, 3), a[:, -6:].reshape(-1, 3)]), axis=0)
-    dist = np.abs(a - bg).max(axis=2)
-    al = np.clip((dist - lo) / (hi - lo), 0, 1)
-    # 반투명 가장자리의 흰 번짐 빼기: 색 = (색 - 바탕 * (1 - 알파)) / 알파
+    shade = np.abs(a - bg).max(axis=2)                          # 바탕과 밝기 차이(흰 바탕 = 어두운 만큼, 검은 바탕 = 밝은 만큼)
+    chroma = np.clip(a.max(axis=2) - a.min(axis=2) - (bg.max() - bg.min()), 0, None)   # 바탕보다 색이 짙은 만큼(밝은 무채색 번짐은 0)
+    # 무채색으로 조금 다른 것(사진의 바닥 그림자 10~35)은 바탕 — 밝기는 40 넘어야 물체, 색은 lo 부터(10-14 고사리 흰 테)
+    al = np.maximum(np.clip((chroma - lo) / (hi - lo), 0, 1), np.clip((shade - 40) / 60, 0, 1))
+    # 반투명 가장자리의 바탕 번짐 빼기: 색 = (색 - 바탕 * (1 - 알파)) / 알파
     k = np.maximum(al, 1e-3)[..., None]
     rgb = np.clip((a - bg * (1 - k)) / k, 0, 255)
     out = np.dstack([rgb, al * 255]).astype(np.uint8)
@@ -45,7 +46,7 @@ def global_key(im, lo=18, hi=60):
 
 def cut(sid, path):
     im = Image.open(path)
-    rgba = global_key(im) if sid in GLOBAL_KEY else MU.matte2(im)
+    rgba = global_key(im)
     al = np.asarray(rgba.getchannel('A'))
     ys, xs = np.nonzero(al > 8)
     if not len(xs):

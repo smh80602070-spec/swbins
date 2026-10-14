@@ -65,6 +65,8 @@
 | rtsai.py transitions | - | CreativeML OpenRAIL++-M — 코드 합성(경계 마스크) + 고른 AI 타일 rts_hill_1 (sd_xl_base_1.0) | 24 |
 | rtsai.py transitions | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) — 코드 합성(경계 마스크) + 고른 AI 타일 rts_water_1 (-) | 24 |
 | retile_uv.py --unit 4.4 (K-0089) | - | CC0-1.0 (Kenney Modular Cave Kit gate.glb 모양 그대로 + 자체 상자 투영 UV) | 2 |
+| foliage_atlas.py | - | 자체 생성(Z-Image-Turbo Apache-2.0 출력, 상업 허용) — 남의 사진·스캔 0 | 1 |
+| build_foliage.py | - | 자체 생성 — 형태는 전부 코드, 결은 자체 아틀라스(Z-Image-Turbo 출력 · foliage_atlas.py) | 7 |
 | build_terrain.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 높이맵은 전부 코드 — 값 잡음 fbm + 모양 함수 + 간단한 침식) | 70 |
 | build_equip.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드) | 435 |
 | build_village.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드) | 90 |

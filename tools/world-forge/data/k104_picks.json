@@ -1,0 +1,11 @@
+{
+  "_note": "K-0104 눈 고름(10-14 Claude) — 후보 4장씩 중, 흰 꽃·고사리는 검은 바탕 다시(k104_foliage_black)",
+  "leaf_broad": "tools/ai-art/_out/k104_foliage/leaf_broad_v03.png",
+  "leaf_small": "tools/ai-art/_out/k104_foliage/leaf_small_v02.png",
+  "grass_blades": "tools/ai-art/_out/k104_foliage/grass_blades_v03.png",
+  "grass_seed": "tools/ai-art/_out/k104_foliage/grass_seed_v01.png",
+  "flower_white": "tools/ai-art/_out/k104_foliage/flower_white_blk_v01.png",
+  "flower_yellow": "tools/ai-art/_out/k104_foliage/flower_yellow_v01.png",
+  "flower_purple": "tools/ai-art/_out/k104_foliage/flower_purple_v04.png",
+  "fern_frond": "tools/ai-art/_out/k104_foliage/fern_frond_blk_v02.png"
+}
