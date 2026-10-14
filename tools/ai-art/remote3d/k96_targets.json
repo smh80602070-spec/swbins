@@ -1171,6 +1171,18 @@
    "judge_b": "○"
   },
   {
+   "id": "great_white",
+   "group": "5-fish",
+   "borrowed": "Quaternius CC0 — Shark (animals_extra2 몫 — 1만리 펫 pt_shark_2 백상아리, K-0109)",
+   "input": "tools/ai-art/_out/remote3d_in_k109_orig/great_white.png",
+   "status": "있음(txt2img)",
+   "note": "10-14 K-0109 새 줄(k109_views v02) 시트 ○ 얼굴 90° 칸 → yaw -90",
+   "height": 1.0,
+   "rig": "worm",
+   "yaw": -90,
+   "judge_b": "○"
+  },
+  {
    "id": "sunfish",
    "group": "5-fish",
    "borrowed": "Quaternius CC0 — Sunfish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
