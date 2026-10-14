@@ -465,7 +465,8 @@
   "name": "2D 구면 투영·집 안 평면·캔버스 그림(상자 등)",
   "files": [
    "js/village-view.js",
-   "js/bug-paint.js"
+   "js/bug-paint.js",
+   "js/village-sky.js"
   ],
   "tests": [
    "2D 들짐승 — 희귀 괴물까지 모두 그림 시트(늑대·토끼·오리·뱀·포자괴물·성간충은 3D 모델을 구운 것), emoji 아님 (CHARACTER_UNIQUENESS ⑤)",
