@@ -5,14 +5,15 @@
  "commercial_use": true,
  "source_samples": [
   "AvatarSample_C",
-  "AvatarSample_G",
-  "AvatarSample_L"
+  "AvatarSample_L",
+  "AvatarSample_N",
+  "AvatarSample_P"
  ],
  "body": "AvatarSample_C",
  "kit": {
-  "top": "g",
-  "bottom": "l",
-  "shoes": "g"
+  "top": "n",
+  "bottom": "p",
+  "shoes": "l"
  },
  "note": "옷·몸 조각을 샘플 사이에서 이식한 인물. 얼굴·머리는 샘플 그대로(약간 다르게만, 사용자 2026-10-02). K-0028: 무늬 한 칸 합성(outfit_swap.py). 8방향 무기 시트: 무기 bow(절차 생성 모형, 자체)·동작 bow_1, bow_heavy, bow_idle, death, hit, knockdown, walk(CC0 UAL + 자체 CF_*).",
  "pattern": {
