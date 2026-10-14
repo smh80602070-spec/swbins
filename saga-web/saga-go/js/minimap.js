@@ -215,7 +215,7 @@
     }
 
     /* 이름난 자리 — 숨은 것은 도감에 도장이 찍힌 뒤에만.
-       손으로 그린 땅(land) 뿐 아니라 실제 지형(geo.js, 실제 지명)도 합친다 */
+       손으로 그린 땅(land)의 지명만(W-0208 — 실제 지명 geo.js 는 지웠다) */
     if (L && L.places) {
       var ps = L.places();
       for (i = 0; i < ps.length; i++) {
@@ -224,11 +224,6 @@
         if (p.hidden && !(X && X.has && X.has('place', p.id))) { continue; }
         put('place', p.x, p.y, p.name, true);
       }
-    }
-    var G = global.DG.geo;
-    if (G && G.places) {
-      var gs = G.places();
-      for (i = 0; i < gs.length; i++) { put('place', gs[i].x, gs[i].y, gs[i].name, true); }
     }
 
     /* 봉수대(PLAN §5①) — 27개는 세 나라에 흩어져 있어(수백~수천 km) `project()`

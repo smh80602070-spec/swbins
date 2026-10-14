@@ -565,11 +565,10 @@
   /**
    * 이 격자가 무슨 땅이냐. **그리는 데만 쓴다** — 스폰·거리·조우는 이 값을 안 본다.
    *
-   * 원래는 좌표를 넣으면 답이 나오는 **무한한 해시**뿐이었다. 지금은 세 겹이다 —
-   * **손으로 그린 땅**(`land.js`, 원점 둘레 1km) → **실제 지형**(`geo.js`,
-   * OpenStreetMap, 2026-09-05 "지도가 허접하다" 사용자 지적으로 추가) →
-   * 그래도 안 정해지면(오프라인이거나 아직 못 받아 온 자리) 여태 하던 대로
-   * 좌표 해시가 답한다. 아무 레이어도 없거나 다 꺼져 있으면 이 함수는
+   * 원래는 좌표를 넣으면 답이 나오는 **무한한 해시**뿐이었다. 지금은 —
+   * **손으로 그린 땅**(`land.js`, 원점 둘레 1km) → 지형 설계(`landform`)·좌표 해시.
+   * (2026-09-05 에 넣었던 실제 지형 `geo.js`(OpenStreetMap Overpass)는 W-0208 에서 지웠다 —
+   * 사용자 "에셋으로 다 할거임": 외부 지도 서비스 0) 아무 레이어도 없거나 다 꺼져 있으면 이 함수는
    * 예전과 한 글자도 다르지 않다.
    *
    * 2026-09-04 — 여태 길(`tx%7===0‖ty%9===0`)이 **세상 전체에 무조건** 섰다.
@@ -596,13 +595,6 @@
     if (R) {
       var authored = R.terrainAt(tx, ty);
       if (authored) { return authored; }
-    }
-    /* 손으로 그린 땅 밖은 실제 지형(geo.js, OpenStreetMap)이 있으면 그쪽을
-       쓴다 — 아직 안 받아 왔으면(또는 꺼져 있으면) null 이라 밑의 노이즈가 그대로 답한다 */
-    var G = global.DG.geo;
-    if (G) {
-      var real = G.terrainAt(tx, ty);
-      if (real) { return real; }
     }
     var h = terrainNoise(tx, ty), band = bandFor(tx, ty);
     if (band.clear) { return 'grass'; }          // 지역 랜드마크 둘레는 비운다(§5 ⑩)
@@ -2004,9 +1996,7 @@
     metersPerPixel: metersPerPixel, scale: scale,
     getTile: getTile, tileUrl: tileUrl, tilesUsable: tilesUsable,
     latLngToPixel: latLngToPixel, worldToLatLng: worldToLatLng,
-    /* `geo.js`(실제 지형)가 Overpass 응답을 세계 좌표로 바꿀 때 쓴다 —
-       2026-09-05, 여태 여기 빠져 있어 실제 fetch가 매번 "toWorld is not a
-       function"으로 조용히 실패하고 있었다(HTTP는 200이었는데도) */
+    /* 위경도 ↔ 세계 좌표(GPS 걸음·진단). 옛 geo.js(W-0208 에서 지움)도 썼다 */
     latLngToWorld: latLngToWorld,
     useKeyboard: useKeyboard, useGeo: useGeo,
     setStick: setStick, walkTo: walkTo, moveSpeed: moveSpeed, walkingTo: walkingTo, inputBlocked: inputBlocked, camRot: camRot,

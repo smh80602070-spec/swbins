@@ -11,10 +11,8 @@
  *       사내 http 주소로 폰에서 열면 홈 화면 추가는 되지만 이 캐시는 동작하지 않는다.
  */
 
-var VERSION = 'go-v6.72.117';
+var VERSION = 'go-v6.72.118';
 var APP_CACHE = 'dg-app-' + VERSION;
-var TILE_CACHE = 'dg-tiles-v1';
-var TILE_MAX = 500;
 
 /* index.html 이 부르는 스크립트가 여기 다 있어야 오프라인에서 게임이 돈다.
    파일을 늘렸으면 **VERSION 도 같이 올릴 것** — 안 올리면 옛 캐시가 계속 나온다.
@@ -49,50 +47,19 @@ self.addEventListener('activate', function (e) {
   e.waitUntil(
     caches.keys().then(function (keys) {
       return Promise.all(keys.map(function (k) {
-        if (k !== APP_CACHE && k !== TILE_CACHE) { return caches['delete'](k); }
+        if (k !== APP_CACHE) { return caches['delete'](k); }
         return null;
       }));
     }).then(function () { return self.clients.claim(); })
   );
 });
 
-/** 타일 캐시가 무한히 늘지 않게 오래된 것부터 버린다 */
-function trimTiles() {
-  caches.open(TILE_CACHE).then(function (c) {
-    c.keys().then(function (ks) {
-      if (ks.length <= TILE_MAX) { return; }
-      for (var i = 0; i < ks.length - TILE_MAX; i++) { c['delete'](ks[i]); }
-    });
-  });
-}
-
-var tileHits = 0;
-
 self.addEventListener('fetch', function (e) {
   var req = e.request;
   if (req.method !== 'GET') { return; }
   var url = new URL(req.url);
 
-  // 지도 타일 — 있으면 캐시, 없으면 받아서 넣어 둔다
-  if (/basemaps\.cartocdn\.com|tile\.openstreetmap|tiles\./.test(url.host)) {
-    e.respondWith(
-      caches.open(TILE_CACHE).then(function (c) {
-        return c.match(req).then(function (hit) {
-          if (hit) { return hit; }
-          return fetch(req).then(function (res) {
-            if (res && (res.ok || res.type === 'opaque')) {
-              c.put(req, res.clone());
-              if (++tileHits % 40 === 0) { trimTiles(); }
-            }
-            return res;
-          })['catch'](function () {
-            return new Response('', { status: 504, statusText: '타일을 받지 못했습니다' });
-          });
-        });
-      })
-    );
-    return;
-  }
+  // (W-0208 — 지도 타일 갈래는 지웠다: 외부 지도 서비스를 안 쓴다. 옛 dg-tiles 캐시는 activate 가 지운다)
 
   // AI 프록시는 절대 캐시하지 않는다 (온라인 모드 전용)
   if (url.pathname.indexOf('/dg-ai/') === 0) { return; }
@@ -125,7 +92,5 @@ self.addEventListener('message', function (e) {
   var d = e.data || {};
   if (d.type === 'version' && e.source) {
     e.source.postMessage({ type: 'version', version: VERSION });
-  } else if (d.type === 'clear-tiles') {
-    caches['delete'](TILE_CACHE);
   }
 });

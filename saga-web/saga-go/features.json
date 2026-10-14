@@ -41,13 +41,11 @@
  },
  {
   "id": "go.geo",
-  "name": "실제 지형(OSM) / 손그림 땅 1km",
+  "name": "손그림 땅 1km(실제 지형 OSM 은 W-0208 에서 지움)",
   "files": [
-   "js/geo.js",
    "js/land.js"
   ],
   "tests": [
-   "지형(geo) — world.terrainAt 레이어 순서: 손그림 땅 > 실제 지형 > 해시",
    "땅 — 길이 하나로 이어진다 (다리를 길로 친다)"
   ],
   "level": "D2",
@@ -55,7 +53,7 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094). OSM 그물 요청에 기대지 않고 태그 분류·칸 열쇠·원점 땅 갈래만 봄. PLAN §3: 미확인"
+  "note": "D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094). OSM 그물 요청에 기대지 않고 태그 분류·칸 열쇠·원점 땅 갈래만 봄. PLAN §3: 미확인 · W-0208: geo.js(OSM Overpass) 지움 — 남은 건 손그림 땅"
  },
  {
   "id": "go.land",
@@ -1071,5 +1069,24 @@
   "ticket": "W-0207",
   "since": "2026-10-14",
   "note": "D2(claude 2026-10-14): tmp/go-net.mjs 3D 걷기·2D 전환 동안 외부 요청 = overpass-api.de 2 · tile.openstreetmap.org 0 ○ · qc 1-world3d·2D 한 장 Read — 땅 그대로 ○."
+ },
+ {
+  "id": "go.no-map-service",
+  "name": "외부 지도 서비스 0 — OSM 데이터(Overpass, geo.js) 지움·출처 표기 지움·sw 지도 타일 캐시 지움(다섯 판)",
+  "files": [
+   "src/world/01.js",
+   "js/minimap.js",
+   "index.html",
+   "sw.js"
+  ],
+  "tests": [
+   "좌표 — world.latLngToWorld 가 실제로 내보내져 있고 worldToLatLng 과 서로 되돌아온다"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0208",
+  "since": "2026-10-14",
+  "note": "D2(claude 2026-10-14): tmp/go-net.mjs 외부 호스트 0 · qc 1-world3d·2D 한 장 Read — 지형·화면 그대로, 아래 출처 표기 없음 ○."
  }
 ]
