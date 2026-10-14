@@ -306,7 +306,7 @@
    "tool": "remote3d",
    "model": "microsoft/TRELLIS-image-large",
    "license": "MIT",
-   "count": 217,
+   "count": 220,
    "where": [
     "saga-assets/creatures3d",
     "saga-unity/Assets/Art/CreaturesSelf",
@@ -688,9 +688,10 @@
    "tool": "build_foliage.py",
    "model": "",
    "license": "자체 생성 — 형태는 전부 코드, 결은 자체 아틀라스(Z-Image-Turbo 출력 · foliage_atlas.py)",
-   "count": 7,
+   "count": 14,
    "where": [
-    "saga-assets/world/foliage"
+    "saga-assets/world/foliage",
+    "saga-godot/assets/world/foliage"
    ]
   },
   {

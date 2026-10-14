@@ -1126,13 +1126,13 @@
    "id": "puffer",
    "group": "5-fish",
    "borrowed": "Quaternius CC0 — Puffer (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
-   "input": "tools/ai-art/_out/remote3d_in_k96e_orig/puffer.png",
+   "input": "tools/ai-art/_out/remote3d_in_k102_orig/puffer.png",
    "status": "있음(txt2img)",
-   "note": "10-13 시트 ✗ 둥근 몸이 납작 판",
+   "note": "10-14 K-0102 다시(F v04 공 몸) 시트 ○ 둥근 몸",
    "height": 0.15,
    "rig": "worm",
    "yaw": 0,
-   "judge_b": "✗"
+   "judge_b": "○"
   },
   {
    "id": "red_snapper",
@@ -1271,13 +1271,13 @@
    "id": "whale",
    "group": "5-fish",
    "borrowed": "Quaternius CC0 — Whale (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
-   "input": "tools/ai-art/_out/remote3d_in_k96e_orig/whale.png",
+   "input": "tools/ai-art/_out/remote3d_in_k102_orig/whale.png",
    "status": "있음(txt2img)",
-   "note": "10-13 시트 ✗ 고리 모양으로 뭉개짐",
+   "note": "10-14 K-0102 다시(F v01 곧은 몸) 시트 ○",
    "height": 3.0,
    "rig": "worm",
    "yaw": 0,
-   "judge_b": "✗"
+   "judge_b": "○"
   },
   {
    "id": "dolphin",
@@ -1307,13 +1307,13 @@
    "id": "fish_a",
    "group": "5-fish",
    "borrowed": "Quaternius CC0 — Fish1 (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
-   "input": "tools/ai-art/_out/remote3d_in_k96e_orig/fish_a.png",
+   "input": "tools/ai-art/_out/remote3d_in_k102_orig/fish_a.png",
    "status": "있음(txt2img)",
-   "note": "10-13 시트 ✗ 몸이 휜 뛰는 자세(헤엄 동작 안 맞음)",
+   "note": "10-14 K-0102 다시(F v03 곧게 헤엄) 시트 ○",
    "height": 0.08,
    "rig": "worm",
    "yaw": 0,
-   "judge_b": "✗"
+   "judge_b": "○"
   },
   {
    "id": "fish_b",
