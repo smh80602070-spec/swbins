@@ -1,20 +1,39 @@
 {
  "id": "jp_yoshitsune_live",
- "generator": "tools/char-forge/outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024)",
- "license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
- "commercial_use": true,
- "source_samples": [
-  "AvatarSample_G",
-  "AvatarSample_L",
-  "AvatarSample_X"
+ "generator": "tools/ai-art/gen.py",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, 1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+ "negative_prompt": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup",
+ "seed": 3336580555,
+ "steps": 28,
+ "cfg_scale": 5.0,
+ "sampler": "Euler a",
+ "size": [
+  768,
+  1024
  ],
- "body": "AvatarSample_G",
- "kit": {
-  "top": "l",
-  "bottom": "l",
-  "shoes": "x"
- },
- "note": "옷·몸 조각을 샘플 사이에서 이식한 인물. 얼굴·머리는 샘플 그대로(약간 다르게만, 사용자 2026-10-02).",
- "derived": "tools/ai-art/render_live_frames.py(VRoid 표정 키 반신 렌더) → split_portrait_layers.py (K-0049)",
- "base_glb": "saga-assets/characters/web3d/jp_yoshitsune.glb"
+ "seconds": 70.0,
+ "date": "2026-09-29",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "mode": "img2img",
+ "init_image": "tools/ai-art/_out/busts/hero_jp_yoshitsune.png",
+ "denoise": 0.55,
+ "base_body": "tools/char-forge/_out/hero/hero_jp_yoshitsune.glb",
+ "base_license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+ "base_inputs": [
+  "mpfb 2.0.17: base.obj · targets · rig.game_engine",
+  "ual1_standard: Unreal Engine/AL_Standard.fbx",
+  "makehuman_system_assets: young_asian_male/young_asian_male.mhmat",
+  "makehuman_system_assets: high-poly/high-poly.mhclo",
+  "makehuman_system_assets: eyebrow011/eyebrow011.mhclo",
+  "makehuman_system_assets: eyelashes03/eyelashes03.mhclo",
+  "makehuman_system_assets: teeth_base/teeth_base.mhclo",
+  "makehuman_system_assets: cf_gusoku_f5f4ef_26262e/cf_gusoku_f5f4ef_26262e.mhclo",
+  "makehuman_system_assets: rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo",
+  "makehuman_system_assets: cf_kabuto_f5f4ef/cf_kabuto_f5f4ef.mhclo"
+ ],
+ "live_frames": "tools/ai-art/batches/k110_ai_live.json(마스크 인페인트) · blink 씨앗 s0",
+ "ticket": "K-0110",
+ "derived": "AI 대화 초상(K-0047 원본) → gen.py 마스크 인페인트(눈·입·표정, 마스크 밖 원본 픽셀) → split_portrait_layers.py (K-0110)"
 }

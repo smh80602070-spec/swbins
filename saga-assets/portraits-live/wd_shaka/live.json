@@ -8,10 +8,10 @@
  "parts": {
   "eye": {
    "box": [
-    273,
-    364,
-    480,
-    449
+    102,
+    450,
+    311,
+    524
    ],
    "frames": {
     "blink_half": "blink_half.webp",
@@ -20,10 +20,10 @@
   },
   "mouth": {
    "box": [
-    278,
-    480,
-    490,
-    583
+    129,
+    558,
+    283,
+    666
    ],
    "frames": {
     "mouth_half": "mouth_half.webp",
@@ -71,9 +71,9 @@
   "surprise": "expr_surprise.webp"
  },
  "face_box": [
-  213,
-  304,
-  550,
-  643
+  42,
+  390,
+  371,
+  726
  ]
 }
