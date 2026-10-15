@@ -15,7 +15,7 @@
    "px": {
     "mean": 44.3,
     "std": 20.5,
-    "bins": 270
+    "bins": 269
    },
    "metrics": {
     "active": true,
@@ -33,9 +33,9 @@
    ],
    "file": "shots/visual-20261007/saga-forest-2-sphere2d.png",
    "px": {
-    "mean": 123.8,
+    "mean": 123.9,
     "std": 42.8,
-    "bins": 494
+    "bins": 500
    },
    "metrics": {
     "active": false,
@@ -97,12 +97,12 @@
   {
    "name": "장면 saga-forest 1-village3d 3D 마을 — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":44.3,\"std\":20.5,\"bins\":270},\"metrics\":{\"active\":true,\"inst\":9,\"scatter\":73,\"indoors\":false}}"
+   "detail": "{\"px\":{\"mean\":44.3,\"std\":20.5,\"bins\":269},\"metrics\":{\"active\":true,\"inst\":9,\"scatter\":73,\"indoors\":false}}"
   },
   {
    "name": "장면 saga-forest 2-sphere2d 2D 구면 투영 마을 — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":123.8,\"std\":42.8,\"bins\":494},\"metrics\":{\"active\":false,\"inst\":9,\"scatter\":73,\"indoors\":false}}"
+   "detail": "{\"px\":{\"mean\":123.9,\"std\":42.8,\"bins\":500},\"metrics\":{\"active\":false,\"inst\":9,\"scatter\":73,\"indoors\":false}}"
   },
   {
    "name": "장면 saga-forest 3-home 집 안 평면(안 휨) — 화면이 단색이 아니다",

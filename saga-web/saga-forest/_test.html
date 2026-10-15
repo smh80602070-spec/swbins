@@ -128,6 +128,7 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/bug-paint.js"></script>
 <script src="js/village-sky.js"></script>
 <script src="js/village-props2d.js"></script>
+<script src="js/village-flag.js"></script>
 <script src="js/village-view.js"></script>
 <script src="js/village3d-kinds.js"></script>
 <script src="js/village-view3d.js"></script>
@@ -6876,6 +6877,12 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       DG.ui.openSheet('town'); a = host(); DG.ui.closeSheet(); DG.ui.openSheet('map'); b = host(); DG.ui.closeSheet();
       var t1 = DG.uiTown.viewTown(), t2 = DG.uiTown.viewMap();
       return typeof t1 === 'string' && t1.length > 80 && typeof t2 === 'string' && t2.length > 80 && a.length > 80 && b.length > 80 && ('게시판 ' + t1.length + '자 · 지도 ' + t2.length + '자 · 시트 ' + a.length + '/' + b.length) || ('실패 ' + [t1 && t1.length, t2 && t2.length, a.length, b.length].join(','));
+    });
+    t('마을 기 그림(R-4 village-flag.js) — 무늬 여덟 다 깃발 그림(data URL)이 되고 서로 다르다', function () {
+      var VDx = DG.villageData, VV = DG.villageView, bg = VDx.FLAG_BGS[0].key, fg = VDx.FLAG_FGS[0].key, seen = {}, bad = [];
+      VDx.FLAG_SYMS.forEach(function (sy) { var u = VV.flagIconOf(bg, fg, sy.key, 42); if (typeof u !== 'string' || u.indexOf('data:image/png') !== 0 || u.length < 200) { bad.push(sy.key); } seen[u] = 1; });
+      var n = VDx.FLAG_SYMS.length, uniq = Object.keys(seen).length;
+      return bad.length === 0 && uniq === n && ('무늬 ' + n + ' → 그림 ' + uniq + '장 다 다름') || ('실패 ' + bad.join(',') + ' 다름 ' + uniq + '/' + n);
     });
     t('2D 지물 — prop2d 표의 id 는 전부 world3d 지물이고, 못 받았으면(시험 전) drawKind 는 false(옛 도형)·그리기 호출 0', function () {
       var M = DG.mode2d, t = DG.cfg.mode2d.prop2d, bad = [], calls = 0;
