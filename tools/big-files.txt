@@ -10,7 +10,7 @@
 2407 saga-web/saga-go/js/field-combat.js
 1817 saga-web/saga-realm/js/ui-rtk.js
 2246 saga-web/saga-story/js/side.js
-1977 saga-web/saga-forest/js/ui.js
+1673 saga-web/saga-forest/js/ui.js
 1987 saga-web/saga-forest/js/village-view3d.js
 1888 saga-web/saga-dungeon/js/dungeon-view.js
 1921 saga-web/saga-go/js/world.js

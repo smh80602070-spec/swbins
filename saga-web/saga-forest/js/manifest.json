@@ -68,6 +68,7 @@
    "js/ai.js",
    "js/auto.js",
    "js/ui-detail.js",
+   "js/ui-town.js",
    "js/ui.js",
    "js/perf.js",
    "js/game.js"
@@ -141,6 +142,7 @@
    "js/ai.js",
    "js/auto.js",
    "js/ui-detail.js",
+   "js/ui-town.js",
    "js/ui.js",
    "js/game.js"
   ]

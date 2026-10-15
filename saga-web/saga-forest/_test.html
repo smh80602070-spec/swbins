@@ -134,6 +134,7 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/ai.js"></script>
 <script src="js/auto.js"></script>
 <script src="js/ui-detail.js"></script>
+<script src="js/ui-town.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/game.js"></script>
 <script>
@@ -6869,6 +6870,12 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       return bad.length === 0 && ids.hero.length >= 299 && ids.world.length === 42 && A.has('hero', 'sg_guanyu') && pre && ('영웅 ' + ids.hero.length + ' · 지물 ' + ids.world.length + ' · 등록 표 ' + Object.keys(reg).length + '칸') || bad.join(',') || '표/폴백 불일치';
     });
 
+    t('마을·지도 시트(R-4 ui-town.js) — openSheet 로 연 게시판·전체지도가 그려진다(시트 몸에 글이 찬다)', function () {
+      var host = function () { var e = document.getElementById('sheet') || document.querySelector('.sheet'); return e ? e.innerHTML : ''; }, a, b;
+      DG.ui.openSheet('town'); a = host(); DG.ui.closeSheet(); DG.ui.openSheet('map'); b = host(); DG.ui.closeSheet();
+      var t1 = DG.uiTown.viewTown(), t2 = DG.uiTown.viewMap();
+      return typeof t1 === 'string' && t1.length > 80 && typeof t2 === 'string' && t2.length > 80 && a.length > 80 && b.length > 80 && ('게시판 ' + t1.length + '자 · 지도 ' + t2.length + '자 · 시트 ' + a.length + '/' + b.length) || ('실패 ' + [t1 && t1.length, t2 && t2.length, a.length, b.length].join(','));
+    });
     t('2D 지물 — prop2d 표의 id 는 전부 world3d 지물이고, 못 받았으면(시험 전) drawKind 는 false(옛 도형)·그리기 호출 0', function () {
       var M = DG.mode2d, t = DG.cfg.mode2d.prop2d, bad = [], calls = 0;
       Object.keys(t).forEach(function (k) { if (!DG.assets3d.has('world', t[k].id) || (t[k].top != null && !(t[k].top >= 0 && t[k].top < 256))) { bad.push(k); } });   // W-0220 top = 그림 위 빈 줄
