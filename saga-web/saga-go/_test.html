@@ -16282,8 +16282,17 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
     t('재미표준 F 실패와 회복(측정)', function () {
       if (!DG.drop) { return '× — DG.drop 없음'; }
       var pct = DG.drop.pct(), mins = DG.drop.lifeMs() / 60000;
-      return funMark(pct >= 0.1 && pct <= 0.2 && mins <= 2, pct > 0) + '패배 비용 ' + Math.round(pct * 100) + '%(규격 10~20%) · 회수 제한 ' + mins +
-        '분(규격 회복 ≤2분) · 상한 ' + DG.drop.cap() + ' · 회수 반경 ' + DG.drop.radiusM() + 'm';
+      /* W-0247 — 옛 측정은 회수 "제한"(10분 창)을 회복 고리 길이(규격 ≤2분)와 견줬다. 회복 고리 = 떨어뜨린 자리 400m 안에서 한 번 이기기 —
+         이제 들판 무리를 쓰러뜨려도 된다(들판 무리는 내 둘레 activeR 200m 안에 늘 선다). 실제로 지고(lose) → 들판 무리 토벌(clear) → 되찾는지 굴린다 */
+      var C9 = DG.core, FC9 = DG.fieldCombat, keepG = C9.save.player.gold, keepD = JSON.stringify(C9.save.drops || []), keepF = JSON.stringify(C9.save.field || null), lost = null, back = false, g1 = 0;
+      try {
+        C9.save.player.gold = 1000; C9.save.drops = []; lost = DG.drop.lose();
+        g1 = C9.save.player.gold;
+        if (lost && FC9 && FC9._handle) { FC9._handle([{ t: 'clear', camp: 'zz_w247', tier: 1, kind: 'plain', x: 0, y: 0 }], C9.save.player.pos); }
+        back = !!lost && (C9.save.drops || []).length === 0 && C9.save.player.gold >= g1 + lost.gold;
+      } finally { C9.save.player.gold = keepG; C9.save.drops = JSON.parse(keepD); if (keepF === 'null') { delete C9.save.field; } else { C9.save.field = JSON.parse(keepF); } }
+      return funMark(pct >= 0.1 && pct <= 0.2 && back && DG.drop.radiusM() >= 200, pct > 0) + '패배 비용 ' + Math.round(pct * 100) + '%(규격 10~20%, 금만 — 도감·인물·인연·비석 그대로) · 회복 고리: 400m 안에서 한 번 이기기 — 들판 무리 토벌로 되찾음 ' +
+        (back ? '○(🪙 ' + lost.gold + ')' : '×') + ' · 들판 무리는 내 둘레 200m 안 · 회수 창 ' + mins + '분';
     });
 
     t('재미표준 G 성장 가시화(측정)', function () {

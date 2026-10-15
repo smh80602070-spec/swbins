@@ -1073,7 +1073,7 @@
         toast('🛡️ ' + (rc ? rc.name + ' ' : '') + '수호자 토벌!' + (again ? '' : ' 금 +' + gg + ' · 단사 +' + gd) + ' — 🌸 보상 꽃이 피었다');
         c.log('🛡️ 지역 수호자 토벌' + (rc ? ' — ' + rc.name : '') + ' (등급 ' + e.tier + ') — 금 +' + gg, 'battle');
         sfx('reward');
-        c.emit('field:guard', { region: rk, tier: e.tier });
+        c.emit('field:guard', { region: rk, tier: e.tier }); if (global.DG.drop && global.DG.drop.win) { global.DG.drop.win(); }   // W-0247
         c.persist();
       } else if (e.t === 'clear') {
         var fs = fieldSave();
@@ -1085,7 +1085,7 @@
         var label = e.kind === 'boss' ? '우두머리' : (e.kind === 'elite' ? '정예 무리' : '무리');
         toast('⚔️ ' + label + ' 토벌! 금 +' + bonus + ' · 단사 +' + cd);
         c.log('⚔️ 들판 ' + label + ' 토벌 (등급 ' + e.tier + ') — 금 +' + bonus, 'battle');
-        sfx('reward');
+        sfx('reward'); if (global.DG.drop && global.DG.drop.win) { global.DG.drop.win(); }   // W-0247 들판 무리를 쓰러뜨려도 떨어진 짐을 되찾는다(들판에서 진 짐을 들판에서 — 회복 고리 ≤2분)
         c.emit('field:clear', e);
         c.persist();
       }
