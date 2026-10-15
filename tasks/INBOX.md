@@ -13,3 +13,4 @@
 - [ ] 10-14 · (웹 R-0) · 2나락 마을 3D 촬영(tmp/dg-town-shot.mjs): 표식 결사비·난입이 아직 도형 비석+빛 상자(03.js 625~) · 마을·들 소품이 빌린 킷(Quaternius·KayKit 천막·모닥불·표지판·건물) — 자체 모델 오면 웹은 표 바꿔 끼우기만 · 자체툴 — **10-14 K 조사**: 표식용 자체 모델 이미 웹에 있음(`shared/assets/world3d` stele_01·banner_pole_01·brazier_01·torch_stand_01) → 표식은 웹 표만 · 빌린 킷 소품 대체는 4행과 한 K 로 — **R-0 10-15 → W-0219**(표식 몫, 킷 소품은 K 그대로)
 - [ ] 10-15 · (K-0110 넘김) · 움직이는 초상 23 = 대화 초상과 같은 AI 그림, `assets/portraits/live` place 됨 — 꺼 뒀으면 켜도 됨 · 웹
 - [ ] 10-15 · (K-0110 넘김) · 같은 AI 움직이는 초상이 `saga-godot/assets/portraits/live` 에도 — 켜도 됨 · 고돗
+- [ ] 10-15 · (K-0086 넘김) · 사실 몸 verify 통과 — U-0036 B·U-0037 B 씬 재빌드 R-0 가능 · 유니티
