@@ -42,6 +42,7 @@ const FILES = [
   ['js/itemicon-ids.js', 'js/itemicon-ids.js'],   // W-0025 — 아이템 아이콘 이름 표(생성물: tools/gen-itemicon-ids.mjs)
   ['js/itemicon.js', 'js/itemicon.js'],
   ['js/toon3d.js', 'js/toon3d.js', ['saga-go', 'saga-dungeon']],
+  ['css/ui-kit.css', 'css/ui-kit.css', ['saga-go']],   // W-0252 공용 창 틀(메뉴 UI 갈아엎기) — 판을 입히는 티켓(W-0254·0255)이 판을 더한다
   ['js/icon.js', 'js/icon.js', ['saga-go', 'saga-dungeon', 'saga-story']],   // R-4 — UI 아이콘(Lucide) 세 벌이 코드 같고 표만 추려 있던 것 → 합집합 표   // 3째 칸 = 이 판들에만(없으면 다섯 판 전부)
 ];
 const check = process.argv.includes('--check');
@@ -97,6 +98,22 @@ for (const g of Object.keys(EXTRA_DIRS)) {
       fs.copyFileSync(from, to);
       copied++;
     }
+  }
+}
+/** W-0252 창 틀 색 옷 — 정본 shared/assets/ui/<짧은 이름>/*.png(K-0040 9-slice) → <판>/assets/ui/ (ui-kit.css 가 판 폴더 기준 상대 경로로 읽는다, 출처 .license.json 은 정본에만).
+ *  ui-kit 를 실은 판만 — W-0254·0255 가 판을 더한다 */
+const UI_SKIN = { 'saga-go': 'go' };
+for (const g of Object.keys(UI_SKIN)) {
+  const dir = path.join(WEB, 'shared', 'assets', 'ui', UI_SKIN[g]);
+  for (const f of fs.readdirSync(dir)) {
+    if (!f.endsWith('.png')) continue;
+    total++;
+    const from = path.join(dir, f), to = path.join(WEB, g, 'assets', 'ui', f);
+    if (fs.existsSync(to) && fs.readFileSync(to).equals(fs.readFileSync(from))) continue;
+    if (check) { console.log(`DIFF ${g}/assets/ui/${f} ≠ shared/assets/ui/${UI_SKIN[g]}/${f}`); bad++; continue; }
+    fs.mkdirSync(path.dirname(to), { recursive: true });
+    fs.copyFileSync(from, to);
+    copied++;
   }
 }
 for (const g of Object.keys(EXTRA_TILES)) {
