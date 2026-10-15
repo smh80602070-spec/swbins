@@ -397,6 +397,7 @@
   }
   global.DG = global.DG || {};
   global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.menu = { keep: ['city', 'officers', 'camp', 'diplo'] };   // W-0254 ☰ 메뉴 화면 — 독엔 이 넷 + ☰, 학당·기록은 메뉴 격자
   global.DG.cfg.account = {
     art: 'assets/store/realm_key',   // 타이틀 키 아트(K-0041, W-0050)
     name: '5천하',
