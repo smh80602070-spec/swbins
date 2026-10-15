@@ -2237,7 +2237,7 @@
     gateInfo: gateInfo, challengeGate: challengeGate,
     /* 비경(§5-3)이 쓰는 곳 — 임시 방 갈아 끼우기·잡졸 소환·주 키 */
     placeIn: placeIn, spawnEnemy: spawnEnemy, weekKey: gateWeekKey, castSwap: castSwap,
-    status: status, state: st, meRef: meRef,
+    status: status, state: st, meRef: meRef, _hurtMe: hurtMe,   // 자가진단용(W-0223 재미표준 F) — 맞는 길 그대로
     /** 화면 전용 — 상태를 직접 읽는다 (쓰지는 말 것) */
     raw: function () { return run; },
     baseHpOf: baseHpOf,

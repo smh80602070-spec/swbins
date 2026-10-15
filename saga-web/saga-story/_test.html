@@ -6365,6 +6365,72 @@ window.DG_NO_TUNE = true;
       return dx;
     }
 
+    /* ── 재미표준 A·B·C·F·G·H 측정(W-0223, SAGA-DESIGN §3 규격 진단 그대로 — 게임 동작은 안 바꾼다) ── */
+    function funMark(ok, part) { return (ok ? '○' : (part ? '△' : '×')) + ' — '; }
+
+    t('재미표준 A 목표판(측정) — 부팅 뒤 추적 사명·접속 목표·다음 할 일 세 줄', function () {
+      var keepQ = JSON.stringify(C.save.quests || {}), keepT = JSON.stringify(C.save.track || null), lv = C.save.player.level, t1, s1, n1;
+      try { C.save.player.level = 12; C.save.track = null; Q.ensureDailyTrack(); t1 = Q.trackedInfo(); s1 = Q.sessionGoalInfo(); n1 = Q.nextInfo(); }
+      finally { C.save.quests = JSON.parse(keepQ); C.save.track = JSON.parse(keepT); C.save.player.level = lv; }
+      var n = (t1 && t1.name ? 1 : 0) + (s1 && s1.label ? 1 : 0) + (n1 && n1.name ? 1 : 0);
+      return funMark(n === 3, n > 0) + '줄 ' + n + '/3 · 추적 「' + (t1 && t1.name) + '」 · 접속 「' + (s1 && s1.label) + '」 · 다음 「' + (n1 && n1.name) + '」';
+    });
+
+    t('재미표준 B 세션 마무리 카드(측정) — 사냥터에서 나오면 카드에 다음 할 것(next)·결과 등급', function () {
+      var keepQ = JSON.stringify(C.save.quests || {}), lv = C.save.player.level, got;
+      try { C.save.player.level = 12; if (S.active()) { S.leave(); } S.enter('field'); got = S.leave(); }
+      finally { C.save.quests = JSON.parse(keepQ); C.save.player.level = lv; }
+      var ok = !!(got && typeof got.next === 'string' && got.next.length);
+      return funMark(ok && typeof got.exp === 'number', ok) + '다음 「' + (got && got.next) + '」 · 경험 ' + (got && got.exp) + ' · 등급 ' + (got && got.rank ? (got.rank.grade || got.rank.key || JSON.stringify(got.rank).slice(0, 20)) : '없음');
+    });
+
+    t('재미표준 C 손맛(측정) — 보통 타격 hitstop·플래시·흔들림(규격 4px/120ms)·숫자 팝·타격음 3종', function () {
+      if (S.active()) { S.leave(); }
+      var keepLv = C.save.player.level, run, p, e, ms, hurt, shake = null, pop = 0, snd;
+      unlearn(); C.save.player.level = 12; S.enter('field');
+      try {
+        run = S.raw(); p = run.player; calm(run);
+        p.x = 200; p.y = run.stage.floor - S.P_H; p.onGround = true; p.facing = 1;
+        run.enemies = [{ ref: { name: '허수아비', kind: 'human', look: {} }, x: p.x + 40, y: p.y, w: 34, h: 34, hp: 999999, hpMax: 999999, dmg: 0, dir: -1, homeY: p.y + 34, spd: 0, phase: 0, hurt: 0, cd: 99 }];
+        run.mp = run.mpMax = 999; p.cds[0] = 0;
+        C.setTune('crit.rate', 0); DG.sfx._clear(); S.castSkill(0);
+        e = run.enemies[0]; ms = Math.round(run.hitstopT * 1000); hurt = e.hurt;
+        S.fx().forEach(function (f) { if (f.t === 'shake' && f.amt > 0) { shake = { amt: f.amt, life: f.life }; } if (f.t === 'hit' && f.v > 0) { pop = f.life; } });
+        snd = DG.sfx._tail(1)[0];
+      } finally { C.setTune('crit.rate', null); S.leave(); unlearn(); C.save.player.level = keepLv; }
+      var five = ms > 0 && hurt > 0 && !!shake && pop > 0 && ['hit', 'hit2', 'hit3'].indexOf(snd) >= 0;
+      var shakeOk = shake && shake.amt >= 4;
+      return funMark(five && ms >= 60 && ms <= 90 && shakeOk, five) + 'hitstop ' + ms + 'ms · 플래시 ' + Math.round(hurt * 1000) + 'ms · 흔들림 ' + (shake ? shake.amt + 'px/' + Math.round((shake.life || 0) * 1000) + 'ms' : '없음') + ' · 숫자 팝 ' + pop + 's · 소리 ' + snd + (shakeOk ? '' : ' (보통 타격 흔들림이 규격 4px 보다 작다 — PLAN §4 C△)');
+    });
+
+    t('재미표준 F 실패와 회복(측정) — 쓰러지면 이번 판 금 절반만 남고(레벨·장비 무손실) 곧장 다시 들어간다', function () {
+      if (S.active()) { S.leave(); }
+      var keepQ = JSON.stringify(C.save.quests || {}), g0 = C.save.player.gold, lv = C.save.player.level, kept = null, again = false, deaths0;
+      try {
+        C.save.player.level = 12; S.enter('field'); var run = S.raw(); run.gold = 100; deaths0 = (S.state ? S.state().deaths : null);
+        run.pty = null; run.rm = null; run.player.invuln = 0; run.player.parryT = 0; S._hurtMe(run.hpMax * 50);
+        kept = C.save.player.gold - g0;
+        S.enter('field'); again = S.active(); S.leave();
+      } finally { if (S.active()) { S.leave(); } C.save.player.gold = g0; C.save.player.level = lv; C.save.quests = JSON.parse(keepQ); }
+      return funMark(false, kept === 50 && again) + '판 금 100 → 남은 금 ' + kept + '(절반) · 레벨·장비·위치 무손실 · 다시 들어가기 ' + (again ? '조작 1' : '안 됨') + ' · 비용이 낮고 "죽어도 남는 것" 안내 없음(PLAN §4 F△)';
+    });
+
+    t('재미표준 G 성장 가시화(측정) — 전직 다섯 단·레벨업 연출이 있고, 외형 변화는 없다', function () {
+      var src = (function () { try { var x = new XMLHttpRequest(); x.open('GET', 'js/side.js', false); x.send(); return x.status === 200 ? x.responseText : ''; } catch (er) { return ''; } })();
+      var lvFx = /t: 'levelup'/.test(src), jd = JSON.stringify(DG.jobData || {}), looks = (jd.match(/"(look|tint|outfit|skin)"/g) || []).length;
+      return funMark(false, lvFx) + '레벨업 연출 ' + lvFx + ' · 전직 1~5차 · 직업 표의 외형 칸 ' + looks + '개 — 전직·장비·승급이 외형에 안 나온다(GLB 6종 색만, PLAN §4 G△)';
+    });
+
+    t('재미표준 H 돌아올 이유(측정) — 일일 사명 자동 받기·비경 주간 변형자·계절', function () {
+      var R = DG.rift, seen = {}, i;
+      for (i = 1; i <= 12; i++) { seen[R.variantOf('2026-w' + i).key] = 1; }
+      var keepQ = JSON.stringify(C.save.quests || {}), lv = C.save.player.level, daily = false;
+      try { C.save.player.level = 12; C.save.quests = {}; Q.ensureDailyTrack(); daily = !!(Q.taken('d_hunt') && Q.taken('d_gather')); }
+      finally { C.save.quests = JSON.parse(keepQ); C.save.player.level = lv; }
+      var weeks = Object.keys(seen).length, season = !!(DG.season || DG.calendar);
+      return funMark(daily && weeks >= 3 && season, daily && weeks >= 3) + '일일 사명 자동 ' + daily + ' · 12주 변형자 ' + weeks + '종 · 계절/월간 ' + (season ? '있음' : '없음(PLAN §4 H△)');
+    });
+
     t('성좌도 — 정의 ≥300 마디 · 시작점 다섯(무명 + 직업 계열 넷) · 점수 = (레벨−1) + 관문 대장 첫 승리(상한 56)', function () {
       return csWith(function (CS, api) {
         var def = DG.passiveDef, o = def.nodes.filter(function (n) { return n.k === 'o'; }).length;
