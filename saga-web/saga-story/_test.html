@@ -6421,7 +6421,23 @@ window.DG_NO_TUNE = true;
     t('재미표준 G 성장 가시화(측정) — 전직 다섯 단·레벨업 연출이 있고, 외형 변화는 없다', function () {
       var src = (function () { try { var x = new XMLHttpRequest(); x.open('GET', 'js/side.js', false); x.send(); return x.status === 200 ? x.responseText : ''; } catch (er) { return ''; } })();
       var lvFx = /t: 'levelup'/.test(src), jd = JSON.stringify(DG.jobData || {}), looks = (jd.match(/"(look|tint|outfit|skin)"/g) || []).length;
-      return funMark(false, lvFx) + '레벨업 연출 ' + lvFx + ' · 전직 1~5차 · 직업 표의 외형 칸 ' + looks + '개 — 전직·장비·승급이 외형에 안 나온다(GLB 6종 색만, PLAN §4 G△)';
+      /* W-0246 — 전직은 이미 옷 빛깔에 갈래 색을 단마다 12% 섞는다(toon3d.jobLook, tier×0.12 상한 0.6) + 발밑 전직 표식(side-view3d tierDeco):
+         1차 가는 고리 · 2차 굵게 · 3차 안쪽 빛 · 4차 바깥 고리 · 5차 별 여섯. 단마다 표식 조각 수가 늘어나는지 센다 */
+      var TN = DG.toon3d, V3 = DG.sideView3d, T3 = window.THREE, tint = [], deco = [];
+      if (TN && TN.jobLook && DG.jobData && DG.jobData.JOBS) {
+        var tiers = {}; DG.jobData.JOBS.forEach(function (j) { if (j.tier && !tiers[j.tier]) { tiers[j.tier] = j.key; } });
+        [1, 2, 3, 4, 5].forEach(function (t) { if (tiers[t]) { tint.push(TN.jobLook('#808080', tiers[t]).color); } });
+      }
+      var tdFn = V3 && V3._tierDeco ? V3._tierDeco : null;
+      if (!tdFn) {   // 진단 페이지엔 3D 화면 파일이 안 실린다 — 원본에서 그 함수만 꺼내 실제 THREE 로 돌린다
+        var s3 = (function () { try { var x = new XMLHttpRequest(); x.open('GET', 'js/side-view3d.js', false); x.send(); return x.status === 200 ? x.responseText : ''; } catch (er) { return ''; } })();
+        var mt = /function tierDeco\(Tc, mesh, tier, color\) \{[\s\S]*?\r?\n  \}\r?\n/.exec(s3);
+        if (mt) { try { tdFn = new Function('return ' + mt[0])(); } catch (er2) { tdFn = null; } }
+      }
+      if (tdFn && T3) { [1, 2, 3, 4, 5].forEach(function (t) { var m = new T3.Group(); tdFn(T3, m, t, 0x6fa8ff); deco.push(m.userData.tierDeco ? m.userData.tierDeco.children.length : 0); }); }
+      var tintGrow = tint.length >= 3 && tint.every(function (c, i) { return i === 0 || c !== tint[i - 1]; });
+      var decoGrow = deco.length === 5 && deco[0] >= 1 && deco[2] > deco[1] && deco[3] > deco[2] && deco[4] > deco[3];
+      return funMark(lvFx && (tintGrow || !TN) && (decoGrow || !T3), lvFx) + '레벨업 연출 ' + lvFx + ' · 전직 단마다 옷 빛깔 ' + (tintGrow ? '바뀜' : (TN ? '안 바뀜' : '잴 수 없음')) + ' · 발밑 전직 표식 조각 ' + (T3 ? deco.join('/') : 'three 없음') + ' (장비 겉모습은 몸 그림 K)';
     });
 
     t('재미표준 H 돌아올 이유(측정) — 일일 사명 자동 받기·비경 주간 변형자·계절', function () {

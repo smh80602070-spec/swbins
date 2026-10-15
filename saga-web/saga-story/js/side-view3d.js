@@ -762,6 +762,21 @@
    * @param color  이 배우의 원래 빛깔 — 도형 표면·사람 GLB 옷의 물들임에 쓴다.
    *               짐승은 제 털빛이 맞으므로 안 물들인다
    */
+  /** W-0246 전직 단계가 보이게(재미표준 G — 옷 빛깔 12%/단만으론 잘 안 보였다) — 주인공 발밑에 갈래 색 + 금빛 표식:
+   *  1차 가는 고리 · 2차 굵게 · 3차 안쪽 빛 · 4차 바깥 고리 · 5차 별 여섯. 몸은 전직마다 새로 지어지므로(meKey 에 단계) 지을 때 한 번 붙인다 */
+  function tierDeco(Tc, mesh, tier, color) {
+    if (!mesh || !(tier > 0)) { return null; }
+    var g = new Tc.Group(), c = new Tc.Color(color || 0xe8c25a).lerp(new Tc.Color(0xe8c25a), 0.45), i;
+    var mat = new Tc.MeshBasicMaterial({ color: c, transparent: true, opacity: 0.85, depthWrite: false, side: Tc.DoubleSide });
+    g.add(new Tc.Mesh(new Tc.RingGeometry(18, 20.5 + 1.2 * Math.min(tier, 2), 40), mat));
+    if (tier >= 3) { g.add(new Tc.Mesh(new Tc.CircleGeometry(17.5, 40), new Tc.MeshBasicMaterial({ color: c, transparent: true, opacity: 0.18, depthWrite: false }))); }
+    if (tier >= 4) { g.add(new Tc.Mesh(new Tc.RingGeometry(24, 25.6, 40), mat)); }
+    if (tier >= 5) { for (i = 0; i < 6; i++) { var st = new Tc.Mesh(new Tc.CircleGeometry(1.8, 5), mat); st.position.set(Math.cos(i * Math.PI / 3) * 29, Math.sin(i * Math.PI / 3) * 29, 0); g.add(st); } }
+    g.rotation.x = -Math.PI / 2; g.position.y = 0.6; g.userData.tierDeco = tier;
+    mesh.add(g); mesh.userData.tierDeco = g;
+    return g;
+  }
+
   function actorShell(Tc, kind, color, boss, seed, big, model) {
     var shell = new Tc.Group();
     var prim = humanoid(Tc, color, boss);
@@ -918,7 +933,7 @@
         /* 같은 인물의 전직(빛깔만 바뀜) — 새 몸은 화면 밖에서 조립하고, GLB 가 도착하면(못 받으면 4초 뒤)
            그때 바꿔 낀다. 바로 치우면 캡슐이 한 번 비쳤다(2026-09-23 HANDOFF "이어서 6" 흠) */
         if (pendingMesh && pendingMeshId !== meKey) { disposeDeep(pendingMesh); pendingMesh = null; }
-        if (!pendingMesh) { pendingMesh = actorShell(Tc, 'human', look.css, false, meRef.id, false); pendingMeshId = meKey; pendingT = now; }
+        if (!pendingMesh) { pendingMesh = actorShell(Tc, 'human', look.css, false, meRef.id, false); tierDeco(Tc, pendingMesh, look.tier, look.color); pendingMeshId = meKey; pendingT = now; }   // W-0246
         if (pendingMesh.userData.glb || now - pendingT > 4) {
           actorGroup.remove(playerMesh); disposeDeep(playerMesh);
           playerMesh = pendingMesh; playerMeshId = meKey; actorGroup.add(playerMesh);
@@ -930,7 +945,7 @@
       }
     }
     if (!playerMesh) {
-      playerMesh = actorShell(Tc, 'human', look.css, false, meRef.id, false);
+      playerMesh = actorShell(Tc, 'human', look.css, false, meRef.id, false); tierDeco(Tc, playerMesh, look.tier, look.color);   // W-0246
       playerMeshId = meKey;
       actorGroup.add(playerMesh);
     }
@@ -1089,6 +1104,7 @@
   global.DG.sideView3d = {
     init: init, draw: draw, resize: resize, ready: ready_,
     _zoomPR: zoomPR, _platMesh: platMesh, _me: function () { return playerMesh; }, _wpnAtk: wpnAtk,   // W-0166·W-0172 진단
+    _tierDeco: tierDeco,   // W-0246 진단
     available: available, active: active, toggle: toggle,
     quality: quality, setQuality: setQuality,
     /** 진단·설정 화면용 — 'auto' 일 때 지금 실제로 도는 등급 */
