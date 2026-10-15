@@ -117,6 +117,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/realm-sky3d.js"></script>
 <script src="js/realm-water3d.js"></script>
 <script src="js/ui-rtk-sheets.js"></script>
+<script src="js/live-portrait.js"></script>
 <script src="js/rtk-hand.js"></script>
 <script src="js/ui-rtk.js"></script>
 <script src="js/cpanel.js"></script>
@@ -4270,6 +4271,18 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var ok = !!got && html.indexOf('재기') >= 0 && cn && html.indexOf(cn) >= 0 && ln && html.indexOf(ln) >= 0 && html.indexOf('한 번') >= 0 && html.indexOf('close-enc') >= 0;
       if (!ok) { throw new Error('카드 ' + JSON.stringify({ got: !!got, cn: cn, ln: ln, len: html.length })); }
       return '카드 ○ — ' + cn + ' · ' + ln + ' 외 ' + (got.with || []).length + '명';
+    });
+    t('W-0251 움직이는 초상(5천하) — 군주 여섯은 상세 시트 얼굴이 캔버스(받기 전 정지 초상) · 말 없음 · 손잡이 0 이면 끔 · live.json 받힘', function () {
+      var L = DG.livePortrait, ui = funSrc('js/ui-rtk.js');
+      if (!L) { throw new Error('live-portrait.js 안 실림'); }
+      var h1 = L.html('sg_caocao', '', '<i>x</i>'), six = L.IDS.length === 6 && L.IDS.every(function (id) { return !!DG.off.find(id); });
+      DG.core.setTune('realm.livePortrait', 0); var off0 = !L.on(); DG.core.setTune('realm.livePortrait', null);
+      var c = h1 && h1.indexOf('data-live="sg_caocao"') > 0 && h1.indexOf('data-talk="0"') > 0 && h1.indexOf(' hidden></canvas><span class="story-fb"><i>x</i></span>') > 0 && L.on() && !L.has('nobody');
+      var wired = /LP\.has\(ref\.id\) && LP\.on\(\) \? LP\.html\(ref\.id, ''/.test(ui);
+      var x = new XMLHttpRequest(); x.open('GET', 'assets/portraits/live/sg_caocao/live.json', false); x.send(); var j = x.status === 200 ? JSON.parse(x.responseText) : null;
+      var ok = c && six && off0 && wired && j && j.parts && j.parts.eye;
+      if (!ok) { throw new Error('실패 ' + JSON.stringify({ c: !!c, six: six, off0: off0, wired: wired, j: !!j })); }
+      return '여섯 ' + L.IDS.join('·') + ' · 부위 ' + Object.keys(j.parts).join('·');
     });
     t('재미표준 G 성장 가시화(측정) — 힘이 오르면 보이는 것: 성 그림 단계 · 무장 성장', function () {
       var t2 = (DG.cfg.mode2d && DG.cfg.mode2d.prop2d) || {}, ids = ['city:s', 'city:m', 'city:l'].map(function (k) { return t2[k] && t2[k].id; }), uniq = {};

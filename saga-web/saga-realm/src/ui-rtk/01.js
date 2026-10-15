@@ -171,8 +171,8 @@
   function ptBig(ref, w, h) {
     w = w || 200; h = h || 224;
     var p = p3src(ref, w, h, function () { return global.DG.sprite.portraitCard('hero', ref, w, h); });
-    return '<img class="pt" alt=""' + p3tag(ref, w, h) + p.done + ' src="' +
-      p.src + '">';
+    var img = '<img class="pt" alt=""' + p3tag(ref, w, h) + p.done + ' src="' + p.src + '">', LP = global.DG.livePortrait, lv = LP && ref && LP.has(ref.id) && LP.on() ? LP.html(ref.id, '', img) : null;
+    return lv || img;   /* W-0251 군주 여섯은 움직이는 초상(K-0110) — 받기 전엔 정지 초상 */
   }
 
   function forceColor(id) {
