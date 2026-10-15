@@ -788,7 +788,7 @@
   "note": "D2: saga-web/tools/playcheck/pw-dg-close3.mjs 7/7 — results/pw-dg-close3.json(W-0098). · 2D 1차(W-0106, 10-08): ○3/3 — 마을 목표판이 폭을 다 덮던 것 고침(#goals 460px), 에셋 흠 K-0083"
  },
  {
-  "id": "dg.dungeon-9",
+  "id": "dg.dungeon-9 · W-0221(10-15): 재미표준 측정 A~H 다 잼 — A○(세 줄) B○(next) C△(흔들림 보통 1.5, 규격 4) D○(은사 셋·축 중복 0/100) E○ F○ G△(상품~명품은 테두리색뿐) H○(날짜·주 바뀌면 새로 참).",
   "name": "은총 자리(층 들머리)·사망 카드(어디서·누구·무슨 피해·남는 것)·「은총에서 다시」 한 번 재시작",
   "files": [
    "js/grace.js",

@@ -341,6 +341,8 @@
     _bump: bump,
     /** 자가진단용 — 세이브 자리를 직접 들여다본다 */
     _state: S,
+    /** 자가진단용(W-0221 재미표준 B) — 세션 카드 데이터를 사건 없이 만들어 본다(부른 쪽이 save.goals 를 되돌린다) */
+    _buildCard: buildCard,
     /** 자가진단용 — 후보 표(순서가 곧 idx 매핑) */
     _pools: { now: NOW_POOL, session: SESSION_POOL, weekly: WEEKLY_POOL }
   };

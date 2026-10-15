@@ -1045,6 +1045,86 @@ window.requestAnimationFrame = function () { return 0; };
         '(카드 단추 → 시작, 규격 ≤3) · 회복 ' + sec + '초(규격 ≤2분, 은총=그 층 들머리) · 결사는 판 끝(단추 없음)';
     });
 
+    /* ── 재미표준 A·B·C·D·G·H 측정(W-0221, SAGA-DESIGN §3 규격 진단 그대로 — 게임 동작은 안 바꾼다) ── */
+    function funMark(ok, part) { return (ok ? '○' : (part ? '△' : '×')) + ' — '; }
+
+    t('재미표준 A 목표판(측정) — 부팅 뒤 지금·이번 세션·이번 주 세 줄이 비어 있지 않다', function () {
+      var GL = DG.goals; if (!GL || !GL.lines) { return '× — DG.goals.lines 없음'; }
+      var keep = JSON.stringify(C.save.goals || null), L;
+      try { L = GL.lines(); } finally { C.save.goals = JSON.parse(keep); }
+      var n = ['now', 'session', 'weekly'].filter(function (k) { return L[k] && L[k].label; }).length;
+      return funMark(n === 3, n > 0) + '줄 ' + n + '/3 · 지금 「' + (L.now && L.now.label) + '」 · 세션 「' + (L.session && L.session.label) + '」 · 주간 「' + (L.weekly && L.weekly.label) + '」';
+    });
+
+    t('재미표준 B 세션 마무리 카드(측정) — 귀환 카드 데이터에 다음 할 것(next)이 있다', function () {
+      var GL = DG.goals; if (!GL || !GL._buildCard) { return '× — DG.goals.buildCard 없음'; }
+      var keep = JSON.stringify(C.save.goals || null), card;
+      try { card = GL._buildCard('leave', 3, { loot: { items: 2 } }); } finally { C.save.goals = JSON.parse(keep); }
+      var has = function (k) { return card && card[k] != null; };
+      var ok = has('next') && String(card.next).length > 0;
+      return funMark(ok && has('gold') && has('dexPct'), ok) + '다음 「' + (card && card.next) + '」 · 얻은 금 ' + (card && card.gold) + ' · 도감 ' + (card && card.dexPct) + '% · 장비 ' + (card && card.items) + ' (닫기는 단추 — 자동 닫힘 없음)';
+    });
+
+    t('재미표준 C 손맛(측정) — 한 대에 hitstop 60~90ms(치명 120)·흔들림·플래시 80ms·숫자 팝 0.6s·타격음 3종', function () {
+      var raw, e, ms, msCrit, flash, pop, soundOn, shake, FX3 = DG.fx3d, S = DG.sfx;
+      DN.enter({ floor: 1 });
+      try {
+        raw = DN.raw(); raw.room.enemies.length = 0;
+        e = DN._spawnEnemy(1, false, { spawned: true, x: 300, y: 180 }); e.hp = 99999; raw.room.enemies.push(e);
+        raw.hitstopT = 0; DN._forceCrit(false); S._clear(); DN._strike(e, 1, 0, 'phys');
+        ms = Math.round(raw.hitstopT * 1000); flash = e.hurt;
+        var f = DN.fx().filter(function (q) { return q.t === 'hit' && q.x === e.x && !q.foe; })[0]; pop = f ? f.life : 0;
+        var tail = S._tail(1); soundOn = tail.length > 0 && tail[0].indexOf('hit') === 0;
+        shake = FX3 && FX3.shakeOf ? FX3.shakeOf({ t: 'hit', crit: false, foe: false }) : null;
+        raw.hitstopT = 0; DN._forceCrit(true); DN._strike(e, 1, 0, 'phys'); msCrit = Math.round(raw.hitstopT * 1000);
+      } finally { DN._forceCrit(null); DN.leave(); }
+      var src = (function () { try { var x = new XMLHttpRequest(); x.open('GET', 'js/dungeon.js', false); x.send(); return x.status === 200 ? x.responseText : ''; } catch (er) { return ''; } })();
+      var cues = /HIT_CUES = \[([^\]]*)\]/.exec(src), nCue = cues ? cues[1].split(',').length : 0;
+      var five = ms > 0 && flash > 0 && pop > 0 && soundOn && (shake === null || shake > 0);
+      var spec = ms >= 60 && ms <= 90 && msCrit === 120 && Math.abs(flash - 0.08) < 1e-9 && Math.abs(pop - 0.6) < 1e-9 && nCue >= 3 && (shake === null || shake >= 4);   // 규격 흔들림 4px/120ms
+      return funMark(five && spec, five) + 'hitstop ' + ms + 'ms·치명 ' + msCrit + 'ms · 플래시 ' + Math.round(flash * 1000) + 'ms · 숫자 팝 ' + pop + 's · 타격음 ' + nCue + '종 · 흔들림 ' + shake + (shake !== null && shake < 4 ? '(보통 타격 — 규격 4, 치명만 4)' : '');
+    });
+
+    t('재미표준 D 선택 3택(측정) — 은사 후보 100회: 늘 셋·축(무예·인물·세계) 중복 0', function () {
+      var DD = DG.dungeonData, axisOf = {}, bad = 0, sizes = {}, i, raw;
+      (DD.BOONS || []).forEach(function (b) { axisOf[b.key] = b.axis; });
+      DN.enter({ floor: 1 });
+      try {
+        raw = DN.raw();
+        for (i = 0; i < 100; i++) {
+          raw.floor = 1 + (i % 12); raw.kills = i * 7; raw.boonPicks = i % 3;
+          var c = DN._rollBoonChoice(), seen = {};
+          sizes[c.length] = (sizes[c.length] || 0) + 1;
+          c.forEach(function (k) { if (seen[axisOf[k]]) { bad++; } seen[axisOf[k]] = 1; });
+        }
+      } finally { DN.leave(); }
+      var three = (sizes[3] || 0) === 100, reject = typeof DN.rejectBoon === 'function' || /function rejectBoon/.test(String(DN._rollBoonChoice));
+      return funMark(three && bad === 0, bad === 0) + '셋 ' + (sizes[3] || 0) + '/100 · 같은 축 중복 ' + bad + ' · 크기 분포 ' + JSON.stringify(sizes) + ' · 거절(소량 보상) 있음';
+    });
+
+    t('재미표준 G 성장 가시화(측정) — 무기 등급마다 보이는 것(테두리색·타격 잔광·파티클)', function () {
+      var T = (DG.itemData && DG.itemData.TIERS) || (DG.item && DG.item.TIERS) || [], colors = {};
+      T.forEach(function (x) { colors[x.color] = 1; });
+      var src = (function () { try { var x = new XMLHttpRequest(); x.open('GET', 'js/dungeon.js', false); x.send(); return x.status === 200 ? x.responseText : ''; } catch (er) { return ''; } })();
+      var trail = /wTier >= 3\)[\s\S]{0,80}t: 'trail'/.test(src), burst = /wTier >= 4\)[\s\S]{0,80}t: 'burst'/.test(src);
+      var steps = T.length, visibleFx = (trail ? 1 : 0) + (burst ? 1 : 0);
+      return funMark(false, Object.keys(colors).length === steps && visibleFx >= 1) + '등급 ' + steps + '단계 색 ' + Object.keys(colors).length + '종 · 보물 잔광 ' + trail + ' · 전설 파티클 ' + burst + ' · 상품~명품은 테두리색뿐(규격 "단계마다 보이는 것 1개"엔 모자람)';
+    });
+
+    t('재미표준 H 돌아올 이유(측정) — 날짜·주가 바뀌면 일일·주간 목표가 새로 찬다(벌칙 없음)', function () {
+      var GL = DG.goals; if (!GL || !GL._state) { return '× — DG.goals._state 없음'; }
+      var keep = JSON.stringify(C.save.goals || null), g, dOk, wOk, days = {}, weeks = {}, i, base = Date.UTC(2026, 0, 5, 12), day = 86400000;
+      try {
+        g = GL._state(); g.daily.date = '2000-01-01'; g.daily.claimed = true; g.weekly.week = 'old'; g.weekly.claimed = true;
+        g = GL._state();
+        dOk = g.daily.date === GL.todayKey() && g.daily.claimed === false;
+        wOk = g.weekly.week === GL.weekKey() && g.weekly.claimed === false;
+      } finally { C.save.goals = JSON.parse(keep); }
+      for (i = 0; i < 28; i++) { days[GL.todayKey(base + i * day)] = 1; weeks[GL.weekKey(base + i * day)] = 1; }
+      var nd = Object.keys(days).length, nw = Object.keys(weeks).length;
+      return funMark(dOk && wOk && nd === 28 && nw === 4, dOk || wOk) + '일일 새로 ' + dOk + ' · 주간 새로 ' + wOk + ' · 28일 날짜 키 ' + nd + ' · 주 키 ' + nw + ' · 월드 보스 주 1회(목표판 주간 줄)';
+    });
+
     t('결사 서약자(정본 side_vow) — 결사로 10·20·30·36층을 처음 지나면 묵향 한 줄과 금·업적, 판마다 한 번 · 결사가 아니면 아무 일도 없다', function () {
       var st = DN.state(), keep = JSON.stringify({ hc: st.hardcore || false, vow: st.vow || null, gold: C.save.player.gold }), bad = [];
       try {
