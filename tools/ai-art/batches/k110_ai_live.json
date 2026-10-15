@@ -1137,6 +1137,28 @@
    "frame": "blink_s1"
   },
   {
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard, wink, one eye closed, open eyes",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_tomoegozen.png",
+   "hero": "jp_tomoegozen",
+   "id": "jp_tomoegozen__blink_s2",
+   "seed": 2047467821,
+   "prompt": "(both eyes closed:1.6), sleeping, peaceful closed eyes, eyelashes down, 1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, fierce female warrior, determined eyes, light armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "mask_image": "tools/ai-art/_out/k110_masks/jp_tomoegozen__eye.png",
+   "denoise": 0.95,
+   "frame": "blink_s2"
+  },
+  {
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard, wink, one eye closed, open eyes",
+   "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_tomoegozen.png",
+   "hero": "jp_tomoegozen",
+   "id": "jp_tomoegozen__blink_s3",
+   "seed": 2047467922,
+   "prompt": "(both eyes closed:1.6), sleeping, peaceful closed eyes, eyelashes down, 1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, fierce female warrior, determined eyes, light armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "mask_image": "tools/ai-art/_out/k110_masks/jp_tomoegozen__eye.png",
+   "denoise": 0.95,
+   "frame": "blink_s3"
+  },
+  {
    "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard",
    "init_image": "tools/ai-art/_out/web_heroes_105_i2i/hero_jp_tomoegozen.png",
    "hero": "jp_tomoegozen",

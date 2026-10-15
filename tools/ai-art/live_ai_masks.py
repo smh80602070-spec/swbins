@@ -3,7 +3,7 @@
 규칙(10-15): 상자를 PAD 만큼 넓힌 네모를 흐림 8 → 상자 안은 완전 흰색(255), 밖으로 ~20px 번짐.
   옛 마스크(상자 네모를 그대로 흐림 8)는 흰 곳이 상자 안쪽 20px 로 줄어 눈 높이 50px 상자면 가는 띠뿐 → 감음·표정 약함(무사시 ✗).
   입은 아래로 더(벌린 턱 자리) · face(표정) = 눈썹까지 올린 눈 타원 + 입 네모(얼굴 네모 전체는 투구·흉터가 생김).
-  eye(깜빡임, d0.95)는 눈마다 타원 하나(상자 왼 42%·오른 42%, 가운데 콧등 뺌, 흐림 6 · 한 눈만 보이면 상자 json `eye_ellipses` 로 직접) — 네모+PAD 20 은 콧등·얼굴 윤곽까지 다시 그려 눈썹·코가 옮겨짐(황충 ✗).
+  eye(깜빡임, d0.95)는 눈마다 타원 하나(상자 왼 42%·오른 42%+눈꼬리 14px, 가운데 콧등 뺌(6px 은 눈꼬리 속눈썹이 남아 반쯤 뜸 — 토모에), 흐림 6 · 한 눈만 보이면 상자 json `eye_ellipses` 로 직접) — 네모+PAD 20 은 콧등·얼굴 윤곽까지 다시 그려 눈썹·코가 옮겨짐(황충 ✗).
   py tools/ai-art/live_ai_masks.py --parts eye <id> ...   # 부위만
 쓰기는 임시 파일 → os.replace(사슬이 그림마다 마스크를 다시 읽는다).
 """
@@ -38,7 +38,7 @@ def eye_mask(box, ells=None):
     d = ImageDraw.Draw(im)
     x0, y0, x1, y1 = box
     w = x1 - x0
-    for e in ells or [(x0 - 6, y0 - 4, x0 + 0.42 * w, y1 + 6), (x0 + 0.58 * w, y0 - 4, x1 + 6, y1 + 6)]:
+    for e in ells or [(x0 - 14, y0 - 4, x0 + 0.42 * w, y1 + 6), (x0 + 0.58 * w, y0 - 4, x1 + 14, y1 + 6)]:
         d.ellipse(tuple(e), fill=255)
     return im.filter(ImageFilter.GaussianBlur(6)).convert('RGB')
 
@@ -49,7 +49,7 @@ def face_mask(b):
     d = ImageDraw.Draw(im)
     x0, y0, x1, y1 = b['eye']
     w = x1 - x0
-    for e in b.get('eye_ellipses') or [(x0 - 6, y0 - 4, x0 + 0.42 * w, y1 + 6), (x0 + 0.58 * w, y0 - 4, x1 + 6, y1 + 6)]:
+    for e in b.get('eye_ellipses') or [(x0 - 14, y0 - 4, x0 + 0.42 * w, y1 + 6), (x0 + 0.58 * w, y0 - 4, x1 + 14, y1 + 6)]:
         d.ellipse((e[0], e[1] - 35, e[2], e[3]), fill=255)
     m, pd = b['mouth'], PAD['mouth']
     d.rectangle((m[0] - pd[0], m[1] - pd[1], m[2] + pd[2], m[3] + pd[3]), fill=255)
