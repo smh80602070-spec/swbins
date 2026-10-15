@@ -500,8 +500,8 @@
       (kind === 'win' ? '👑 천하통일' : '🏳️ 멸망') + '</h3>' +
       '<small class="muted">' + st.year + '년 ' + st.month + '월. ' +
       (kind === 'win' ? '온 땅의 성이 모두 한 깃발 아래 들었습니다.'
-                      : '성을 모두 잃었습니다. 처음부터(↺) 다시 시작할 수 있습니다.') +
-      '</small><button class="btn primary wide" data-act="close-enc">확인</button>');
+                      : '성을 모두 잃었습니다. 새 판으로 바로 다시 고릅니다 — 회차·주간 도전 최고 기록은 남습니다.') +
+      '</small>' + (kind === 'win' ? '' : '<button class="btn primary wide" data-act="back-scen">🔁 새 판</button>') + '<button class="btn ' + (kind === 'win' ? 'primary' : 'ghost') + ' wide" data-act="close-enc">' + (kind === 'win' ? '확인' : '지도 보기') + '</button>');
   }
 
   function showHelp() {
