@@ -4208,6 +4208,16 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var dur = h.until - h.at, ok = h.at > 0 && Math.abs(dur - 0.07) < 0.001 && c1 === c2 && a.shake === 0.12 && a.flashEnd > 0 && /^tac_hit[012]$/.test(t1) && /tac_hit[012],tac_kill/.test(t2);
       return ok && ('멈춤 ' + Math.round(dur * 1000) + 'ms(시계 그대로) · 흔들림 ' + a.shake + '초 · 빛 끝 +' + Math.round((a.flashEnd - h.at) * 1000) + 'ms · 소리 ' + t1 + ' → ' + t2) || ('실패 ' + JSON.stringify({ h: h, c: [c1, c2], a: a, t1: t1, t2: t2 }));
     });
+    t('관직이 보인다(W-0234) — 관직 0 은 장식 없음 · 1 금테 · 3 깃발 · 5 금테 두 겹(3D) · 2D 칸 위 ★ 관직 수', function () {
+      var V3 = DG.tacticsView3d, V = DG.tacticsView, t3 = window.THREE;
+      if (!V3 || !V3._rank || !t3) { return '△ — three 없음(3D 장식은 못 잼)'; }
+      var cnt = function (rk) { var g = new t3.Group(); V3._rank.rankDeco(t3, g, rk, 0x3d8bd9); return g.children.length; };
+      var n = [1, 2, 3, 4, 5].map(cnt), ok = n[0] === 1 && n[1] === 1 && n[2] === 3 && n[4] === 4;
+      var C0 = DG.core, hs = C0.save.heroes, old = hs.zz_rank_t; hs.zz_rank_t = { lv: 1, exp: 0, rank: 4 };
+      var r4 = V3._rank.rankOf('zz_rank_t'), r0 = V3._rank.rankOf('zz_none_t'); if (old === undefined) { delete hs.zz_rank_t; } else { hs.zz_rank_t = old; }
+      return ok && r4 === 4 && r0 === 0 && !hs.zz_none_t && ('장식 개수 관직1~5 = ' + n.join('/') + ' · 관직 읽기 4 · 없는 장수 0(빈 칸 안 만듦)') || ('실패 ' + n.join('/') + ' r4=' + r4 + ' r0=' + r0);
+    });
+
     t('재미표준 D 선택 3택(측정) — 영내 소식 세 갈래가 늘 서로 다른 축(금 util·병 atk·민심 def), 100장 굴려 같은 축 중복 0', function () {
       var ND = DG.newsData; if (!ND) { return '× — newsData 없음'; }
       var dup = 0, miss = 0, n = 0, i, it, seen, k;   // 난수 안 씀(다른 진단 수열을 안 흔든다) — 표를 차례로 100장

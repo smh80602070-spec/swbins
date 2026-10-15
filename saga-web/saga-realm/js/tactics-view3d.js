@@ -209,15 +209,29 @@
     grp.position.set(p.x, HGT[T().cellAt(b, u.x, u.y)] || 0, p.z);
     grp.rotation.y = a.face;
     unitGrp.add(grp);
-    var A = A3(), O = global.DG.off;
+    var A = A3(), O = global.DG.off, rk = u.kind === 'officer' ? rankOf(u.id) : 0;
+    if (rk) { rankDeco(t, grp, rk, col); }
     function put(m, sc) {
       if (!m || a.gone) { return; }
-      m.scale.setScalar(sc); grp.remove(stub); grp.add(m); a.model = m;
+      m.scale.setScalar(sc * (1 + 0.035 * rk));   // W-0234 관직 한 단마다 몸 3.5% 크게 grp.remove(stub); grp.add(m); a.model = m;
     }
     if (A && u.kind === 'officer' && A.buildHero && O && O.find && O.find(u.id)) { A.buildHero(O.find(u.id), col, function (m) { put(m, 1.05); }); }
     else if (A && A.buildTrooper) { A.buildTrooper('inf', col, function (m) { put(m, 0.78); }); }
     actors[u.uid] = a;
     return a;
+  }
+
+  /* ── 관직이 보이게(W-0234, 재미표준 G — 무장 성장이 숫자·배지뿐이었다) — 관직 0~5: 1 금테 · 2 금테 굵게 · 3 등 뒤 진영 깃발 ·
+     4 깃발 크게 · 5 금테 두 겹. 판정 없음(화면만). 읽기만 — officer.grow 는 빈 칸을 만들어 쓰므로 save.heroes 를 직접 본다 */
+  function rankOf(id) { var C0 = C(), m = C0 && C0.save && C0.save.heroes, g = m && m[id]; return g ? Math.max(0, Math.min(5, g.rank | 0)) : 0; }
+  function rankDeco(t, grp, rk, col) {
+    var gold = new t.MeshBasicMaterial({ color: 0xe0b84a }), ring = new t.Mesh(new t.TorusGeometry(0.37, 0.018 + 0.008 * Math.min(rk, 2), 6, 28), gold);
+    ring.rotation.x = -Math.PI / 2; ring.position.y = 0.03; grp.add(ring);
+    if (rk >= 5) { var r2 = new t.Mesh(new t.TorusGeometry(0.44, 0.02, 6, 28), gold); r2.rotation.x = -Math.PI / 2; r2.position.y = 0.03; grp.add(r2); }
+    if (rk >= 3) {
+      var fh = rk >= 4 ? 1.7 : 1.35, pole = new t.Mesh(new t.CylinderGeometry(0.012, 0.012, fh, 5), gold), flag = new t.Mesh(new t.PlaneGeometry(0.26, 0.34), new t.MeshBasicMaterial({ color: col, side: t.DoubleSide }));
+      pole.position.set(-0.22, fh / 2, -0.18); flag.position.set(-0.22 - 0.13, fh - 0.2, -0.18); grp.add(pole); grp.add(flag);
+    }
   }
 
   /** 판 자료 → 배우 목표(걷기 길·공격 차례) */
@@ -423,6 +437,7 @@
   global.DG.tacticsView3d = {
     want: want, cellCenter: cellCenter, cellOf: cellOf, HGT: HGT, attach: attach, _cutCam: function () { return view && view.cutCam ? view.cutCam : null; },   // W-0168 진단
     _actor: function (uid) { var a = actors[uid]; return a ? { x: a.grp.position.x, z: a.grp.position.z, path: a.path.length, anim: a.anim, body: !!a.model, gone: a.gone } : null; },   // 진단·점검
+    _rank: { rankOf: rankOf, rankDeco: rankDeco },   // W-0234 진단
     _hit: { clockS: clockS, hitstop: hitstop, impact: impact, setFlash: setFlash, hs: function () { return { at: hs.at, until: hs.until, off: hs.off }; } },   // W-0230 진단
     stats: function () { return { why: why, on: !!R, actors: Object.keys(actors).length, bodies: Object.keys(actors).filter(function (k) { return !!actors[k].model; }).length, queue: queue.length, loop: loopOn }; }
   };
