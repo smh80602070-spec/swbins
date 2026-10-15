@@ -288,8 +288,8 @@
   }
 
   /** 걷는 속도(m/초) — 손잡이 배율 × 탈것(⑲-61, 안 탔으면 1) × 달리기 */
-  function moveSpeed(run) {   // W-0226 — 2D(평면·2.5D)는 화면 몸 높이/초로(field2d.walkMps) · 3D·들판 전투 중엔 8m/초(판정 그대로)
-    var MT = global.DG.mount, W3s = global.DG.world3d, F2s = global.DG.field2d, FCs = global.DG.fieldCombat, b = speed; if (F2s && F2s.walkMps && geom && !(W3s && W3s.active && W3s.active()) && !(FCs && FCs.engaged && FCs.state && FCs.engaged(FCs.state()))) { b = F2s.walkMps((geom.mode === 2 ? 1.5 : 1.25) * bodyK() * 48 / scale(), speed); } credit2d = speed / b;
+  function moveSpeed(run) {   // W-0226 — 2D(평면·2.5D)는 화면 몸 높이/초로(field2d.walkMps), 3D 는 8m/초 · W-0233 들판 전투도 2D 배율로 돌아 싸움 중에도 그대로
+    var MT = global.DG.mount, W3s = global.DG.world3d, F2s = global.DG.field2d, FCs = global.DG.fieldCombat, b = speed; if (F2s && F2s.walkMps && geom && !(W3s && W3s.active && W3s.active())) { b = F2s.walkMps((geom.mode === 2 ? 1.5 : 1.25) * bodyK() * 48 / scale(), speed); } credit2d = speed / b;
     return b * speedMul() * (MT && MT.speedMul ? MT.speedMul() : 1) * (run ? 2.2 : 1) * (global.DG.starchart ? global.DG.starchart.move() : 1);   // × 성도(W-0181)
   }
   function moveByKeys(dt) {
@@ -1740,13 +1740,13 @@
     var z = core.clamp(p.s, 0.5, 1.6);
     var sp = global.DG.sprite, EL = global.DG.fieldCombat.EL, an2 = global.DG.fieldCombat.anim2d ? global.DG.fieldCombat.anim2d('fc' + fo.uid) : null, ph2 = an2 ? 1 - an2.left / an2.dur : 0, fa2 = !an2 ? { dx: 0, dy: 0, k: 1, a: 1 } : an2.clip === 'hit' ? { dx: Math.sin(ph2 * 9.4) * 4 * z, dy: 0, k: 0.96, a: (ph2 * 10 | 0) % 2 ? 0.45 : 1 } : { dx: 0, dy: -Math.sin(Math.min(1, ph2) * Math.PI) * 8 * z, k: 1 + 0.12 * Math.sin(Math.min(1, ph2) * Math.PI), a: 1 }; ctx.globalAlpha = fa2.a;
     ctx.beginPath();
-    ctx.ellipse(p.x, p.y, 12 * z * fo.h, 5 * z * fo.h, 0, 0, Math.PI * 2);
+    ctx.ellipse(p.x, p.y, 12 * z * fo.h * bodyK(), 5 * z * fo.h * bodyK(), 0, 0, Math.PI * 2);   // W-0233 적 몸도 나처럼 bodyK
     ctx.strokeStyle = fo.el ? EL[fo.el].color : '#d9534f';
     ctx.lineWidth = 2;
     ctx.stroke();
     sp.stamp(ctx, {
       kind: 'beast', ref: fo.ref,
-      x: p.x + fa2.dx, y: p.y + fa2.dy, s: z * 1.25 * fo.h * fa2.k, facing: 1, phase: fo.phase, walking: fo.moving,   // W-0224 덮치기·맞음
+      x: p.x + fa2.dx, y: p.y + fa2.dy, s: z * 1.25 * fo.h * fa2.k * bodyK(), facing: 1, phase: fo.phase, walking: fo.moving,   // W-0224 덮치기·맞음
       color: sp.beastColorOf(fo.ref), form: sp.beastFormOf(fo.ref), t: now
     }); ctx.globalAlpha = 1;
   }

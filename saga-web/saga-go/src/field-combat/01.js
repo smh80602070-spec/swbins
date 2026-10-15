@@ -32,7 +32,7 @@
 
   function core() { return global.DG.core; }
   function data() { return global.DG.data; }
-  function K(key, def) { return core().tuned('field.' + key, def); }
+  function K(key, def) { return core().tuned('field.' + key, def); }   /* W-0233 2D 판정 배율 KDV — 2D(평면·2.5D)는 몸(≈57m)이 3D 사람(1.7m)의 수십 배라 미터 거리로 싸우면 적이 발밑에 겹쳤다. 거리·빠르기만 ×KDV(시간 상수 그대로), 3D·진단(DG_NO_DRAW)은 1. 상한 손잡이 field.kd2dMax 12(무리 간격). KDk = 키트의 거리 칸(reach·r·ahead·pull·knock·len·w·back·range·inner) ×KDV 사본 */ var KDV = 1, KDT = null, KDKEYS = ['reach', 'r', 'ahead', 'pull', 'knock', 'len', 'w', 'back', 'range', 'inner']; function KD0() { if (KDT) { return KDT; } if (global.DG_NO_DRAW) { return 1; } var Wk = global.DG.world, bk = Wk && Wk.body2dM ? Wk.body2dM() : null; return bk ? Math.max(1, Math.min(K('kd2dMax', 12), bk / 1.7)) : 1; } function KDk(o) { if (!o || KDV === 1) { return o; } var c = {}, k; for (k in o) { if (o.hasOwnProperty(k)) { c[k] = o[k]; } } KDKEYS.forEach(function (n) { if (typeof c[n] === 'number') { c[n] *= KDV; } }); return c; }
 
   /* ── 원소 ─────────────────────────────────────────────── */
   var EL = {
@@ -66,49 +66,49 @@
 
   function on() { return K('on', 1) ? true : false; }
   function PARTY_MAX() { return 4; }
-  function REACH() { return K('reach', 3.2); }           // 기본 공격 사거리(m)
-  function LUNGE_R() { return K('lungeR', 6); }          // 이 안이면 한 걸음 파고들며 친다
+  function REACH() { return K('reach', 3.2) * KDV; }           // 기본 공격 사거리(m)
+  function LUNGE_R() { return K('lungeR', 6) * KDV; }          // 이 안이면 한 걸음 파고들며 친다
   /* 2026-09-28 실기 Q6 "캐릭터가 너무 가까움·모션이 안 보임" — 거리를 몸 한가운데끼리 재서 적이 코앞 1.6m 까지
      파고들었는데, 화면의 적 몸은 키 3.4m×h 로 서 길이가 5~8m(멧돼지 5.7·곰 7.8)라 캐릭터가 적 몸속에 묻혔다.
      적마다 몸 반지름을 두고 멈춤·사거리·맞힘을 **몸 가장자리**에서 잰다. 0 이면 옛 한가운데 거리 */
-  function BODY(f) { var F = f && FOES[f.kind]; return F ? (F.h || 1) * K('bodyMul', 1.6) : 0; }
-  function SKILL_R() { return K('skillR', 4.5); }
-  function SKILL_AIM() { return K('skillAim', 8); }      // 스킬이 적을 겨누는 거리
+  function BODY(f) { var F = f && FOES[f.kind]; return F ? (F.h || 1) * K('bodyMul', 1.6) * KDV : 0; }
+  function SKILL_R() { return K('skillR', 4.5) * KDV; }
+  function SKILL_AIM() { return K('skillAim', 8) * KDV; }      // 스킬이 적을 겨누는 거리
   function SKILL_CD() { return K('skillCd', 7); }
   function SKILL_MUL() { return K('skillMul', 2.2); }
-  function BURST_R() { return K('burstR', 7); }
+  function BURST_R() { return K('burstR', 7) * KDV; }
   function BURST_CD() { return K('burstCd', 12); }
   function BURST_MUL() { return K('burstMul', 4.5); }
   function ENERGY_MAX() { return 60; }
   function STA_MAX() { return 100; }
   function DODGE_COST() { return K('dodgeCost', 20); }
   function DODGE_IFRAME() { return K('dodgeIframe', 0.35); }
-  function DASH_M() { return K('dashM', 3.6); }
+  function DASH_M() { return K('dashM', 3.6) * KDV; }
   function DASH_T() { return 0.18; }
   function SWAP_CD() { return K('swapCd', 1); }
   /* ⑲-2 강공격·낙하 공격 — saga-godot PLAN 106 ⑧ 칸(둘 다 물리, 깨뜨림을 낸다) */
   function CHARGE_HOLD() { return 0.4; }
   /* ⑲-22 조준 사격 */
-  function AIM_R() { return 40; }  function AIM_CONE() { return 0.16; }  function AIM_TURN() { return 2.4; }
+  function AIM_R() { return 40 * KDV; }  function AIM_CONE() { return 0.16; }  function AIM_TURN() { return 2.4; }
   function AIM_FULL() { return 1.4; }  function AIM_PART() { return 0.45; }  function AIM_FULLMUL() { return 1.25; }  function AIM_GAP() { return 0.3; }
-  function ARROW_V() { return 60; }  function ARROW_RANGE() { return 45; }  function ARROW_EL_R() { return 1.2; }  function CHARGE_COST() { return K('chargeCost', 20); }
-  function CHARGE_MUL() { return K('chargeMul', 1.3); }  function CHARGE_REACH() { return 3.2; }  function CHARGE_ARC() { return -0.2; }
+  function ARROW_V() { return 60 * KDV; }  function ARROW_RANGE() { return 45 * KDV; }  function ARROW_EL_R() { return 1.2 * KDV; }  function CHARGE_COST() { return K('chargeCost', 20); }
+  function CHARGE_MUL() { return K('chargeMul', 1.3); }  function CHARGE_REACH() { return 3.2 * KDV; }  function CHARGE_ARC() { return -0.2; }
   /* W-0224 2D 몸짓 기록 — 3D(W3().playAnim)와 같은 순간에 남긴다(2D 화면엔 W3 가 없다). actor2d·drawFieldFoe 가 anim2d(key) 로 읽는다 */ var A2M = {}; function A2(k, clip, ms) { A2M[k] = { clip: clip, end: Date.now() + ms, dur: ms / 1000 }; } function anim2d(k) { var a = A2M[k]; if (!a) { return null; } var left = (a.end - Date.now()) / 1000; if (left <= 0) { delete A2M[k]; return null; } return { clip: a.clip, left: left, dur: a.dur }; } function wpnSlot(w, step) { return K('wpnAnim', 1) ? 'Wpn_' + ({ sword: 1, claymore: 1, polearm: 1, catalyst: 1, bow: 1 }[w] ? w : 'sword') + '_' + Math.max(0, Math.min(2, step | 0)) : 'attack'; }   function wpnMs(w, step, dflt) { var OA = global.DG.ownAnim, d = OA && OA.combatDur ? OA.combatDur(wpnSlot(w, step)) : 0; return d ? Math.round(d * 1000) : dflt; }   function WPN_HOLD() { return K('finishHold', 70); }   function PLUNGE_R() { return 3.5; }     function PLUNGE_MUL() { return K('plungeMul', 1.2); }   // W-0169 3D 무기 몸짓 이름·길이·3타 마무리 멈춤(ms)
   function PLUNGE_PER_M() { return 0.1; } function PLUNGE_MAX_M() { return 15; }
   function VAPOR_MUL() { return K('vaporMul', 1.5); }
-  function OVERLOAD_R() { return 4; }
+  function OVERLOAD_R() { return 4 * KDV; }
   function OVERLOAD_MUL() { return K('overloadMul', 1.2); }
-  function CHARGED_R() { return 3; }
+  function CHARGED_R() { return 3 * KDV; }
   function CHARGED_MUL() { return K('chargedMul', 0.45); }
   function AURA_T() { return 7; }
   /* ⑲-1 새 반응 수치 — saga-godot PLAN 106 ⑭ 칸 그대로 */
   function MELT_MUL() { return K('meltMul', 1.5); }
   function FROZEN_T() { return 2.5; }
   function SHATTER_MUL() { return 1.5; }
-  function SUPER_R() { return 3; }       function SUPER_MUL() { return 0.5; }   function SUPER_T() { return 8; }   function SUPER_PHYS() { return 1.4; }
-  function SWIRL_R() { return 4; }       function SWIRL_MUL() { return 0.6; }
+  function SUPER_R() { return 3 * KDV; }       function SUPER_MUL() { return 0.5; }   function SUPER_T() { return 8; }   function SUPER_PHYS() { return 1.4; }
+  function SWIRL_R() { return 4 * KDV; }       function SWIRL_MUL() { return 0.6; }
   function CRYSTAL_HP() { return 0.2; }  function CRYSTAL_T() { return 15; }
-  function BLOOM_R() { return 3; }       function BLOOM_T() { return 1.5; }     function BLOOM_MUL() { return 1.5; }
+  function BLOOM_R() { return 3 * KDV; }       function BLOOM_T() { return 1.5; }     function BLOOM_MUL() { return 1.5; }
   function BURN_N() { return 8; }        function BURN_EVERY() { return 0.5; }  function BURN_MUL() { return 0.2; }
   function QUICK_T() { return 8; }       function QUICK_MUL() { return 1.25; }
   function SHIELD_STUN() { return 2; }
@@ -116,8 +116,8 @@
   function PHYS_SHIELD() { return 0.4; }
   var PHYS_SHIELD_BY = { rock: 1.0 };      // 바위 방패는 물리로도 제대로 깎인다
   function COUNTER_MUL() { return 2.5; }
-  function AGGRO_R() { return K('aggroR', 12); }
-  function LEASH_R() { return K('leashR', 34); }
+  function AGGRO_R() { return K('aggroR', 12) * KDV; }
+  function LEASH_R() { return K('leashR', 34) * KDV; }
   function CALM_REGEN() { return 4; }       // 이만큼 조용하면 체력이 돈다
   function REVIVE_CALM() { return K('reviveCalm', 15); }
   function HP_BASE() { return K('hpBase', 520); }
@@ -160,8 +160,8 @@
   function shapeOf(id) { return id === '_me' ? 'circle' : SHAPE_KEYS[Math.floor(hs(id + '#shape') * 4) % 4]; }
   function THRUST_LEN() { return 8; }  function THRUST_W() { return 1.6; }  function THRUST_MUL() { return K('thrustMul', 2.8); }
   function DASH_LEN() { return 6; }    function DASH_W() { return 1.8; }    function DASH_MUL() { return K('dashMul', 2.4); }
-  function FIELD_R() { return 4; }     function FIELD_T() { return 5; }     function FIELD_MUL() { return K('fieldMul', 0.6); }
-  function SUMMON_T() { return 8; }    function SUMMON_EVERY() { return 1.5; }  function SUMMON_R() { return 7; }  function SUMMON_MUL() { return K('summonMul', 0.9); }
+  function FIELD_R() { return 4 * KDV; }     function FIELD_T() { return 5; }     function FIELD_MUL() { return K('fieldMul', 0.6); }
+  function SUMMON_T() { return 8; }    function SUMMON_EVERY() { return 1.5; }  function SUMMON_R() { return 7 * KDV; }  function SUMMON_MUL() { return K('summonMul', 0.9); }
   /** 점 (x,y) 에서 선분 (ax,ay)-(bx,by) 까지 거리 */
   function segDist(x, y, ax, ay, bx, by) {
     var vx = bx - ax, vy = by - ay, L2 = vx * vx + vy * vy;
@@ -207,7 +207,7 @@
   /** ⑲-16 밀물 원 넷(⑲-30 틈새 질주는 kind 'rift' — 다섯) — 가면(fx,fy)에서 나(px,py) 쪽으로 from m 부터 gap 간격 */
   function tideMarks(fx, fy, px, py, kind) {
     var T = ROT[kind || 'tide'], dx = px - fx, dy = py - fy, dl = Math.hypot(dx, dy) || 1, out = [];
-    for (var i = 0; i < T.n; i++) { var s = T.from + T.gap * i; out.push({ x: fx + dx / dl * s, y: fy + dy / dl * s }); }
+    for (var i = 0; i < T.n; i++) { var s = (T.from + T.gap * i) * KDV; out.push({ x: fx + dx / dl * s, y: fy + dy / dl * s }); }
     return out;
   }
   /** ⑲-30 틈새 질주 끝 — 줄 끝(x,y)으로 옮겨도 되나(비탈은 되고 벼랑은 안 된다). 높이를 모르면 된다 */
@@ -456,12 +456,12 @@
     var rf = f4.react_fire || 0;
     return {
       id: id, name: h ? h.name : '나', el: elementOf(id), shape: shapeOf(id),
-      kitS: kt ? kt.skill : null, kitB: kt ? kt.burst : null, kitL: kt ? kt.label : '', infT: 0, infMul: 1,
+      kitS: kt ? KDk(kt.skill) : null, kitB: kt ? KDk(kt.burst) : null, kitL: kt ? kt.label : '', infT: 0, infMul: 1,
       atk: Math.round(((base + g.watk) * (1 + v('atk_pct')) + v('atk')) * (global.DG.starchart ? global.DG.starchart.fieldAtk() : 1)),   // × 성도(W-0181)
       hpMax: hpMax, hp: hpMax, em: s.wisdom, def: Math.round(s.command * (1 + v('def_pct')) + v('def')),
       tm: tl.tm, con: tl.con, cdMul: tl.cdMul, reactMul: tl.reactMul, c6: tl.c6, c6T: 0,
       /* ⑲-5 — 무기 종류·모양, 치명, 기력, 피해 보너스(더하기), 반응 보너스 */
-      wtype: g.type, kit: g.kit, wid: g.wid,
+      wtype: g.type, kit: KDk(g.kit), wid: g.wid,
       cr: g.wid ? 0.05 + v('crit_rate') : 0, cdm: 0.5 + v('crit_dmg'), er: 1 + v('energy'),
       dmgB: {
         n: (g.pas === 'n' ? g.pasV : 0) + (melee ? (f4.normal_melee || 0) : 0),
@@ -549,7 +549,7 @@
     for (var i = 0; i < c.foes.length; i++) {
       var F = FOES[c.foes[i].kind], m = tierMul(c.tier);
       var uid = ++S.uid;
-      var hx = c.x + c.foes[i].dx, hy = c.y + c.foes[i].dy;
+      var hx = c.x + c.foes[i].dx * KDV, hy = c.y + c.foes[i].dy * KDV;   // W-0233 무리 안 자리도 2D 배율
       var layers = F.shields ? F.shields.slice() : (F.shield ? [F.shield] : []);
       var shieldMax = layers.length ? Math.round(SHIELD_BASE() * F.sh * m) : 0;
       S.foes[uid] = {

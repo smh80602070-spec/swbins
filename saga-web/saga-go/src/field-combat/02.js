@@ -56,7 +56,7 @@
     push(S, { t: 'shoot', x: px, y: py, tx: tx, ty: ty, full: full, el: full ? m.el : null });
     return { ok: true, full: full, lock: lk ? lk.kind : null };
   }
-  function foeR(f) { return Math.max(0.6, ((FOES[f.kind] && FOES[f.kind].h) || 1) * 0.55); }
+  function foeR(f) { return Math.max(0.6, ((FOES[f.kind] && FOES[f.kind].h) || 1) * 0.55) * KDV; }
   /** 화살이 적에 박힌다 — 충전이면 원소 ×1.25, 모르는 적(쉬는 중)이면 급소, 덜 찼으면 물리 ×0.45 */
   function arrowHit(S, r, f) {
     var m = r.m, weak = r.full && f.st === 'idle';
@@ -160,9 +160,9 @@
       hits = foesWithin(S, cx, cy, FIELD_R());          // 기력 셈에만 — 피해는 zone 틱(바로 첫 틱)이 준다
       ev = { x: cx, y: cy, r: FIELD_R() };
     } else if (sh === 'summon') {
-      S.zones.push({ kind: 'summon', x: px + dx * 1.5, y: py + dy * 1.5, r: SUMMON_R(), t: SUMMON_T(), next: 0, el: m.el, atk: m.atk, em: m.em, uid: m.id, tm: m.tm, reactMul: m.reactMul, m: m });
+      S.zones.push({ kind: 'summon', x: px + dx * 1.5 * KDV, y: py + dy * 1.5 * KDV, r: SUMMON_R(), t: SUMMON_T(), next: 0, el: m.el, atk: m.atk, em: m.em, uid: m.id, tm: m.tm, reactMul: m.reactMul, m: m });
       hits = aim ? [aim] : [];
-      ev = { x: px + dx * 1.5, y: py + dy * 1.5, r: SUMMON_R() };
+      ev = { x: px + dx * 1.5 * KDV, y: py + dy * 1.5 * KDV, r: SUMMON_R() };
     } else {
       hits = foesWithin(S, cx, cy, SKILL_R());
       for (i = 0; i < hits.length; i++) { hitFoe(S, hits[i], m, m.atk * SKILL_MUL(), m.el, 'skill'); }
@@ -226,8 +226,8 @@
     if (dl < 1e-6) { dx = S.lastDx || 0; dy = S.lastDy || 1; dl = Math.hypot(dx, dy) || 1; }
     dx /= dl; dy /= dl;
     if (k.type === 'dash') {
-      var go = aim ? Math.min(k.len, Math.max(0, far - BODY(aim) - 1.2)) : k.len, bx = px + dx * go, by = py + dy * go;
-      hits = living(S).filter(function (f) { return segDist(f.x, f.y, px, py, bx + dx * 1.2, by + dy * 1.2) <= k.w + BODY(f); });
+      var go = aim ? Math.min(k.len, Math.max(0, far - BODY(aim) - 1.2 * KDV)) : k.len, bx = px + dx * go, by = py + dy * go;
+      hits = living(S).filter(function (f) { return segDist(f.x, f.y, px, py, bx + dx * 1.2 * KDV, by + dy * 1.2 * KDV) <= k.w + BODY(f); });
       for (i = 0; i < hits.length; i++) { hitFoe(S, hits[i], m, m.atk * k.mul, m.el, 'skill'); }
       S.dash = { vx: dx * go / DASH_T(), vy: dy * go / DASH_T(), t: DASH_T() };
       S.iframe = Math.max(S.iframe, 0.3);
@@ -263,12 +263,12 @@
       /* ⑲-17 부채 바람 — 앞 r 부채꼴(내적 arc 이상)을 치고 나에게서 먼 쪽으로 밀어낸다. 회복은 kitExtras(heal) */
       hits = living(S).filter(function (f) {
         var fx = f.x - px, fy = f.y - py, d = Math.hypot(fx, fy);
-        return d <= k.r && (d < 0.5 || (fx * dx + fy * dy) / d >= k.arc);
+        return d <= k.r && (d < 0.5 * KDV || (fx * dx + fy * dy) / d >= k.arc);
       });
       for (i = 0; i < hits.length; i++) {
         hitFoe(S, hits[i], m, m.atk * k.mul, m.el, 'skill');
         var gl = Math.hypot(hits[i].x - px, hits[i].y - py);
-        knock(hits[i], gl > 0.5 ? (hits[i].x - px) / gl : dx, gl > 0.5 ? (hits[i].y - py) / gl : dy, k.knock);
+        knock(hits[i], gl > 0.5 * KDV ? (hits[i].x - px) / gl : dx, gl > 0.5 * KDV ? (hits[i].y - py) / gl : dy, k.knock);
       }
       ev = { x: px + dx * k.r * 0.5, y: py + dy * k.r * 0.5, r: k.r * 0.5 };
     } else if (k.type === 'updraft') {
@@ -277,7 +277,7 @@
       for (i = 0; i < hits.length; i++) {
         hitFoe(S, hits[i], m, m.atk * k.mul, m.el, 'skill');
         var ul = Math.hypot(hits[i].x - px, hits[i].y - py);
-        if (ul > 1.2) { knock(hits[i], (px - hits[i].x) / ul, (py - hits[i].y) / ul, Math.min(k.pull, ul - 1.2)); }
+        if (ul > 1.2 * KDV) { knock(hits[i], (px - hits[i].x) / ul, (py - hits[i].y) / ul, Math.min(k.pull, ul - 1.2 * KDV)); }
       }
       var LFu = global.DG.landform;
       S.lifted = !!(LFu && LFu.launch && LFu.launch(k.lift));
@@ -323,7 +323,7 @@
         .sort(function (a, b) { return Math.hypot(a.x - px, a.y - py) - Math.hypot(b.x - px, b.y - py); });
       var marked = near.filter(function (f) { return f.markT > 0; }), tgs = marked.length ? marked : near.slice(0, 2), e2;
       for (i = 0; i < tgs.length; i++) {
-        for (e2 = 1; e2 <= k.n; e2++) { S.zones.push({ kind: 'echo', uid: tgs[i].uid, x: tgs[i].x, y: tgs[i].y, r: 1.2, t: k.every * e2, el: m.el, m: m, mul: k.emul }); }
+        for (e2 = 1; e2 <= k.n; e2++) { S.zones.push({ kind: 'echo', uid: tgs[i].uid, x: tgs[i].x, y: tgs[i].y, r: 1.2 * KDV, t: k.every * e2, el: m.el, m: m, mul: k.emul }); }
       }
     }
     else if (k.type === 'haste') {
@@ -378,10 +378,10 @@
       }
       if (z.kind === 'vortex' && dt > 0) {
         /* ⑲-11 소용돌이 — 둘레 r+2 의 적을 늘 가운데로 끈다 */
-        var vs = foesWithin(S, z.x, z.y, z.r + 2);
+        var vs = foesWithin(S, z.x, z.y, z.r + 2 * KDV);
         for (k = 0; k < vs.length; k++) {
           var vd = Math.hypot(z.x - vs[k].x, z.y - vs[k].y);
-          if (vd > 0.6) { var pl = Math.min(vd - 0.5, z.pull * dt); vs[k].x += (z.x - vs[k].x) / vd * pl; vs[k].y += (z.y - vs[k].y) / vd * pl; }
+          if (vd > 0.6 * KDV) { var pl = Math.min(vd - 0.5 * KDV, z.pull * dt); vs[k].x += (z.x - vs[k].x) / vd * pl; vs[k].y += (z.y - vs[k].y) / vd * pl; }
         }
       }
       if (z.next <= 1e-9 && z.t > 1e-9) {
@@ -630,13 +630,13 @@
       if (f.st !== 'return' && f.st !== 'idle' && home > LEASH_R()) { f.st = 'return'; f.mark = null; }
       if (f.st === 'idle') {
         f.wa += dt * 0.35;
-        var tx = f.hx + Math.cos(f.wa) * 2.2, ty = f.hy + Math.sin(f.wa * 0.8) * 2.2;
-        moveToward(f, tx, ty, 1.1 * dt);
+        var tx = f.hx + Math.cos(f.wa) * 2.2 * KDV, ty = f.hy + Math.sin(f.wa * 0.8) * 2.2 * KDV;
+        moveToward(f, tx, ty, 1.1 * KDV * dt);
         if ((d < AGGRO_R() || f.siege) && !allDown(S)) { f.st = 'chase'; push(S, { t: 'aggro', uid: f.uid, camp: f.camp }); }
       } else if (f.st === 'return') {
         f.calmReturn = Math.max(0, f.calmReturn - dt);
-        moveToward(f, f.hx, f.hy, F.spd * 1.2 * dt);
-        if (Math.hypot(f.x - f.hx, f.y - f.hy) < 0.6) {
+        moveToward(f, f.hx, f.hy, F.spd * KDV * 1.2 * dt);
+        if (Math.hypot(f.x - f.hx, f.y - f.hy) < 0.6 * KDV) {
           f.st = 'idle'; f.hp = f.hpMax; f.shield = f.shieldMax; f.aura = null; f.shockN = 0;
           f.frozenT = 0; f.physT = 0; f.quickT = 0; f.burnN = 0;
           f.layer = 0; f.shEl = (f.layers && f.layers[0]) || f.shEl;
@@ -645,27 +645,27 @@
         S.calmT = Math.min(S.calmT, 0);
         /* ⑲-14 공격 차례(rot)가 있으면 이번 수의 reach·wind·r 을 쓴다 */
         var AT = F.rot ? F.rot[(f.rotI || 0) % F.rot.length] : F.type, RT = F.rot ? ROT[AT] : F;
-        var want = AT === 'shadow' ? 0 : (AT === 'spit' ? RT.reach * 0.85 : RT.reach * 0.8);
+        var want = AT === 'shadow' ? 0 : (AT === 'spit' ? RT.reach * KDV * 0.85 : RT.reach * KDV * 0.8);
         /* ⑲-16 지킬 것 — 내가 SIEGE_PULL 밖이면 제단이 과녁(제단 몸 둘레만큼 덜 다가간다) */
-        var sg = f.siege && d > SIEGE_PULL ? f.siege : null;
-        var gx = sg ? sg.x : px, gy = sg ? sg.y : py, gd = (sg ? Math.max(0, Math.hypot(f.x - gx, f.y - gy) - SIEGE_BODY) : d) - (AT === 'shadow' ? 0 : BODY(f));
-        if (gd > want && AT !== 'shadow') { moveToward(f, gx, gy, F.spd * dt); }
+        var sg = f.siege && d > SIEGE_PULL * KDV ? f.siege : null;
+        var gx = sg ? sg.x : px, gy = sg ? sg.y : py, gd = (sg ? Math.max(0, Math.hypot(f.x - gx, f.y - gy) - SIEGE_BODY * KDV) : d) - (AT === 'shadow' ? 0 : BODY(f));
+        if (gd > want && AT !== 'shadow') { moveToward(f, gx, gy, F.spd * KDV * dt); }
         f.cd -= dt;
-        if (gd <= RT.reach && f.cd <= 0 && !allDown(S)) {
+        if (gd <= RT.reach * KDV && f.cd <= 0 && !allDown(S)) {
           f.st = 'wind'; f.stT = RT.wind; f.atkT = AT; f.atkSiege = !!sg;
           if (AT === 'shadow') {
             /* 나를 지나 등 뒤로 — 오던 쪽의 반대편 SHADOW_BACK m 에 붙어 제 둘레를 친다 */
             var sdx = px - f.x, sdy = py - f.y, sdl = Math.hypot(sdx, sdy) || 1;
-            f.x = px + sdx / sdl * SHADOW_BACK; f.y = py + sdy / sdl * SHADOW_BACK;
+            f.x = px + sdx / sdl * SHADOW_BACK * KDV; f.y = py + sdy / sdl * SHADOW_BACK * KDV;
             push(S, { t: 'blink', uid: f.uid, x: f.x, y: f.y });
           }
           if (AT === 'tide' || AT === 'rift') {
             var tl = tideMarks(f.x, f.y, gx, gy, AT);
-            f.mark = { x: tl[0].x, y: tl[0].y, r: RT.r, t: RT.wind, list: tl };
+            f.mark = { x: tl[0].x, y: tl[0].y, r: RT.r * KDV, t: RT.wind, list: tl };
           } else {
-            f.mark = AT === 'spit' ? { x: gx, y: gy, r: RT.r, t: RT.wind }
-              : (AT === 'halo' ? { x: f.x, y: f.y, r: RT.r, inner: RT.inner, t: RT.wind }
-                : (AT === 'slam' || AT === 'shadow' ? { x: f.x, y: f.y, r: RT.r, t: RT.wind } : null));
+            f.mark = AT === 'spit' ? { x: gx, y: gy, r: RT.r * KDV, t: RT.wind }
+              : (AT === 'halo' ? { x: f.x, y: f.y, r: RT.r * KDV, inner: RT.inner * KDV, t: RT.wind }
+                : (AT === 'slam' || AT === 'shadow' ? { x: f.x, y: f.y, r: RT.r * KDV, t: RT.wind } : null));
           }
           push(S, { t: 'tell', uid: f.uid, type: AT === 'shadow' || AT === 'tide' || AT === 'halo' || AT === 'rift' ? 'slam' : AT, x: f.x, y: f.y });
         }
@@ -675,12 +675,12 @@
         if (f.stT <= 0) {
           var WT = f.atkT || F.type, WR = F.rot ? ROT[WT] : F;
           /* ⑲-16 제단을 노린 코앞 한 대는 나를 안 친다(원 예고는 누구든 맞는다) */
-          var inHit = f.mark ? markHit(f.mark, px, py, 0) : (!f.atkSiege && d - BODY(f) <= WR.reach + 0.6);
+          var inHit = f.mark ? markHit(f.mark, px, py, 0) : (!f.atkSiege && d - BODY(f) <= (WR.reach + 0.6) * KDV);
           if (inHit && S.iframe <= 0) { hurt(S, f, WR.mul); }
           else if (inHit) { push(S, { t: 'evade', uid: f.uid }); }
           if (f.atkSiege && f.siege) {
             var sx = f.siege.x, sy = f.siege.y;
-            if (f.mark ? markHit(f.mark, sx, sy, SIEGE_BODY) : Math.hypot(f.x - sx, f.y - sy) <= WR.reach + 0.6 + SIEGE_BODY) {
+            if (f.mark ? markHit(f.mark, sx, sy, SIEGE_BODY * KDV) : Math.hypot(f.x - sx, f.y - sy) <= (WR.reach + 0.6 + SIEGE_BODY) * KDV) {
               push(S, { t: 'siege', uid: f.uid, camp: f.camp, x: sx, y: sy, dmg: Math.max(1, Math.round(f.atk * (WR.mul || 1))) });
             }
           }
@@ -766,7 +766,7 @@
     for (var i = 0; i < L.length; i++) {
       var f = L[i], d = Math.hypot(f.x - px, f.y - py);
       if (d > COMBAT_R || (f.st !== 'chase' && f.st !== 'wind' && f.st !== 'recover')) { continue; }
-      if (f.siege && d > SIEGE_PULL) { continue; }
+      if (f.siege && d > SIEGE_PULL * KDV) { continue; }
       return true;
     }
     return false;
@@ -852,7 +852,7 @@
       var f = L[i];
       if (f.st !== 'wind' || f.stT > DODGE_IFRAME() * 0.7) { continue; }
       var F = FOES[f.kind], WT = f.atkT || F.type, WR = F.rot ? ROT[WT] : F;
-      if (f.mark ? markHit(f.mark, px, py, 0) : (!f.atkSiege && Math.hypot(f.x - px, f.y - py) - BODY(f) <= WR.reach + 0.6)) { return f; }
+      if (f.mark ? markHit(f.mark, px, py, 0) : (!f.atkSiege && Math.hypot(f.x - px, f.y - py) - BODY(f) <= (WR.reach + 0.6) * KDV)) { return f; }
     }
     return null;
   }
@@ -887,7 +887,7 @@
   }
 
   function tick(dt) {
-    if (!on() || !core() || !core().save) { hide(); return; }
+    if (!on() || !core() || !core().save) { hide(); return; } var kd1 = KD0(); if (kd1 !== KDV) { KDV = kd1; refAcc = 9; }   // W-0233 2D/3D·확대가 바뀌면 키트 사본을 바로 다시
     ensureState();
     var pos = core().save.player.pos;
     popAcc += dt; refAcc += dt;
@@ -959,7 +959,7 @@
       } else if (e.t === 'react') {
         var RI = REACT[e.kind] || { el: 'fire', r: 2 };
         floatNum(e.x, e.y, e.name + '!', RI.el, 1.5, true);
-        ring(e.x, e.y, RI.r || 1.8, e.kind === 'overload' ? '#ffb347' : EL[RI.el].color, 0.45);
+        ring(e.x, e.y, (RI.r || 1.8) * KDV, e.kind === 'overload' ? '#ffb347' : EL[RI.el].color, 0.45);
         if (global.DG.daily) { global.DG.daily.progress('react'); }   // ⑲-8 일일 의뢰(깨뜨림·번개싹 포함)
         c.emit('field:react', { kind: e.kind });                       // ⑲-25 업적(반응·가짓수)
         if (e.kind === 'crystallize') { toast('🪨 굳힘 보호막 — 명단이 ' + (S.guard ? S.guard.hp : 0) + ' 만큼 막는다(15초)'); }

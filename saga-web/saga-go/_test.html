@@ -1016,6 +1016,21 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         ('서리번개 옆 ' + sc + ' → 물리 100 이 ' + r.dmg + ' · 회오리 옆 ' + sw + '·불 옮겨 붙음 · 풍·암 맨몸엔 안 붙음');
     });
 
+    t('2D 들판 전투 척도(W-0233) — 배율 12 면 거리 ×12: 12배 먼(18m) 도깨비가 같은 시간 안에 덮쳐 와 때리고, 내 평타·몸·사거리·키트가 ×12 · 풀면 1(3D 숫자 그대로)', function () {
+      var FC = DG.fieldCombat, k1 = FC.kd(), kd = FC._kdForTest(12), out = {};
+      try {
+        var S = fcState(), f = fcFoe(S, 'imp', 18, 0), got = null, i, m = S.party[0];
+        f.st = 'chase'; f.cd = 0;
+        for (i = 0; i < 60 && !got; i++) { FC.step(S, 0.05, { px: 0, py: 0, blocked: false }); fcEv(S, 'hurt').forEach(function (e) { got = e; }); }
+        out.t = +(i * 0.05).toFixed(2); out.gap = +Math.hypot(f.x, f.y).toFixed(1);
+        S.atkCd = 0; var a = FC.attack(S, 0, 0); out.hit = !!(a && !a.miss);
+        out.kit = m.kit && m.kit.reach ? +(m.kit.reach).toFixed(1) : (m.kit && m.kit.range ? +(m.kit.range).toFixed(1) : null);
+        out.ok = kd === 12 && !!got && out.t <= 3 && out.hit && out.gap > 12;
+      } finally { FC._kdForTest(null); }
+      var back = FC.kd();
+      return out.ok && back === 1 && k1 === 1 && ('배율 ' + kd + ' · 18m 도깨비가 ' + out.t + '초에 때림(거리 ' + out.gap + 'm 에서 멈춤) · 내 평타 닿음 · 무기 사거리 ' + out.kit + 'm · 풀면 ' + back) || ('실패 ' + JSON.stringify({ k1: k1, kd: kd, back: back, out: out }));
+    });
+
     t('들판 전투 ⑲-1 — 굳힘 보호막: 지금 인물 최대 체력 20%·15초, 피해를 먼저 막고 다 막으면 원소 효과(화상)도 없다', function () {
       var FC = DG.fieldCombat, S = fcState(), a = fcFoe(S, 'bear', 10, 0), m = S.party[0];
       a.aura = 'water'; a.auraT = 5;

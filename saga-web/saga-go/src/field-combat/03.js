@@ -409,7 +409,7 @@
     guardBack: guardBack, duelCamp: duelCamp, canChallenge: canChallenge, challenge: challenge, duelSpawn: duelSpawn,
     /* 런타임 */
     init: init, tick: tick, act: act, live: live, leadId: leadId,
-    state: function () { return S; },
+    state: function () { return S; }, _kdForTest: function (v) { KDT = v || null; KDV = KD0(); if (S) { refreshStats(); } return KDV; }, kd: function () { return KDV; },   // W-0233
     _setStateForTest: function (st) { S = st; },
     _resetForTest: function () { S = null; partyKey = ''; popAcc = 9; }
   };
