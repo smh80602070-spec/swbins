@@ -95,6 +95,7 @@
    "js/icon.js",
    "js/ui-shop.js",
    "js/ui.js",
+   "js/ui-detail.js",
    "js/perf.js",
    "js/game.js"
   ]
@@ -193,6 +194,7 @@
    "js/auto.js",
    "js/ui-shop.js",
    "js/ui.js",
+   "js/ui-detail.js",
    "js/game.js"
   ]
  ],

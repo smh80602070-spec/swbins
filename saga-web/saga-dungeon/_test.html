@@ -175,6 +175,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/auto.js"></script>
 <script src="js/ui-shop.js"></script>
 <script src="js/ui.js"></script>
+<script src="js/ui-detail.js"></script>
 <script src="js/game.js"></script>
 <script>
 /* 자가진단 — 헤드리스에서도 돈다 (rAF 가 아니라 setTimeout 을 쓴다).
@@ -4455,6 +4456,12 @@ window.requestAnimationFrame = function () { return 0; };
       var html = document.getElementById('detail').innerHTML;
       DG.ui.closeDetail();
       return html.indexOf('승급') >= 0 && '상세 + 승급 버튼';
+    });
+
+    t('펫 상세·열림 상태(R-4 ui-detail.js) — 펫 상세가 그려지고 isOpen 이 열고 닫음을 따른다(Esc 가 이것을 본다)', function () {
+      var U = DG.uiDetail, pid = (DG.data.pets || [])[0] && DG.data.pets[0].id, html, o1, o2;
+      DG.ui.openDetail('pet', pid); o1 = U.isOpen(); html = document.getElementById('detail').innerHTML; DG.ui.closeDetail(); o2 = U.isOpen();
+      return !!pid && o1 === true && o2 === false && html.indexOf('장착 보정') >= 0 && ('펫 ' + pid + ' 상세 · 열림 ' + o1 + ' → 닫힘 ' + o2) || ('실패 ' + pid + ' ' + o1 + ' ' + o2);
     });
 
     /* ── 주옥(珠玉) — 원작의 주얼 ─────────────────────── */

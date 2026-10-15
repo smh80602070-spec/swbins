@@ -22,7 +22,7 @@
   var els = {};
   var openTab = null;          // 열려 있는 시트 이름 (null 이면 닫힘)
   var dexEra = 'all';          // 도감 인물 era 필터(§5.7 시대 퓨전) — 'all'|'past'|'modern'|'future'
-  var openDetailRef = null;    // 열려 있는 상세 화면 { kind, id }
+  /* 열려 있는 상세 { kind, id } 는 ui-detail.js(R-4) — UD().isOpen() */
 
   function hero() { return global.DG.hero; }
   function net() { return global.DG.net; }
@@ -122,7 +122,7 @@
       }
       if (e.key !== 'Escape') { return; }
       if (els['dock-more'] && els['dock-more'].classList.contains('show')) { closeMore(); return; }
-      if (openDetailRef) { closeDetail(); return; }
+      if (UD().isOpen()) { closeDetail(); return; }
       if (openTab) { closeSheet(); }
     });
 
