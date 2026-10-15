@@ -9,14 +9,14 @@
   {
    "id": "hero_m_front",
    "seed": 1084864906,
-   "subject": "1boy, adult man, adventurer, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, hood down, face visible, cloak hanging straight down close to the body, wide shot",
+   "subject": "1boy, male focus, adult man, adventurer, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, hood down, face visible, cloak hanging straight down close to the body, wide shot",
    "subject_ko": "주인공 남 — 어른 모험가",
    "view": "front"
   },
   {
    "id": "hero_m_side",
    "seed": 1084864906,
-   "subject": "1boy, adult man, adventurer, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, hood down, face visible, cloak hanging straight down close to the body, wide shot",
+   "subject": "1boy, male focus, adult man, adventurer, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, hood down, face visible, cloak hanging straight down close to the body, wide shot",
    "subject_ko": "주인공 남 — 어른 모험가",
    "view": "side",
    "extra": "facing right"
@@ -24,7 +24,7 @@
   {
    "id": "hero_m_back",
    "seed": 1084864906,
-   "subject": "1boy, adult man, adventurer, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, hood down, face visible, cloak hanging straight down close to the body, wide shot",
+   "subject": "1boy, male focus, adult man, adventurer, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, hood down, face visible, cloak hanging straight down close to the body, wide shot",
    "subject_ko": "주인공 남 — 어른 모험가",
    "view": "back"
   },
@@ -53,14 +53,14 @@
   {
    "id": "villager_a_front",
    "seed": 2269847450,
-   "subject": "1boy, old man, villager, white hair, white beard, beige long robe, wooden walking stick, no backpack, wide shot",
+   "subject": "1boy, male focus, old man, villager, white hair, white beard, beige long robe, wooden walking stick, no backpack, wide shot",
    "subject_ko": "마을 노인",
    "view": "front"
   },
   {
    "id": "villager_a_side",
    "seed": 2269847450,
-   "subject": "1boy, old man, villager, white hair, white beard, beige long robe, wooden walking stick, no backpack, wide shot",
+   "subject": "1boy, male focus, old man, villager, white hair, white beard, beige long robe, wooden walking stick, no backpack, wide shot",
    "subject_ko": "마을 노인",
    "view": "side",
    "extra": "facing right"
@@ -68,21 +68,21 @@
   {
    "id": "villager_a_back",
    "seed": 2269847450,
-   "subject": "1boy, old man, villager, white hair, white beard, beige long robe, wooden walking stick, no backpack, wide shot",
+   "subject": "1boy, male focus, old man, villager, white hair, white beard, beige long robe, wooden walking stick, no backpack, wide shot",
    "subject_ko": "마을 노인",
    "view": "back"
   },
   {
    "id": "villager_b_front",
    "seed": 3165622442,
-   "subject": "1boy, young adult man, villager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, wide shot",
+   "subject": "1boy, male focus, young adult man, villager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, wide shot",
    "subject_ko": "마을 젊은이(어른)",
    "view": "front"
   },
   {
    "id": "villager_b_side",
    "seed": 3165622442,
-   "subject": "1boy, young adult man, villager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, wide shot",
+   "subject": "1boy, male focus, young adult man, villager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, wide shot",
    "subject_ko": "마을 젊은이(어른)",
    "view": "side",
    "extra": "facing right"
@@ -90,7 +90,7 @@
   {
    "id": "villager_b_back",
    "seed": 3165622442,
-   "subject": "1boy, young adult man, villager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, wide shot",
+   "subject": "1boy, male focus, young adult man, villager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, wide shot",
    "subject_ko": "마을 젊은이(어른)",
    "view": "back"
   },
@@ -119,14 +119,14 @@
   {
    "id": "companion_warrior_front",
    "seed": 2617693365,
-   "subject": "1boy, adult man, armored warrior, full blue steel plate armor with helmet, large blue shield, red cloth tabard, sword at the belt, wide shot",
+   "subject": "1boy, male focus, adult man, armored warrior, full blue steel plate armor with helmet, large blue shield, red cloth tabard, sword at the belt, wide shot",
    "subject_ko": "동행 전사",
    "view": "front"
   },
   {
    "id": "companion_warrior_side",
    "seed": 2617693365,
-   "subject": "1boy, adult man, armored warrior, full blue steel plate armor with helmet, large blue shield, red cloth tabard, sword at the belt, wide shot",
+   "subject": "1boy, male focus, adult man, armored warrior, full blue steel plate armor with helmet, large blue shield, red cloth tabard, sword at the belt, wide shot",
    "subject_ko": "동행 전사",
    "view": "side",
    "extra": "facing right"
@@ -134,7 +134,7 @@
   {
    "id": "companion_warrior_back",
    "seed": 2617693365,
-   "subject": "1boy, adult man, armored warrior, full blue steel plate armor with helmet, large blue shield, red cloth tabard, sword at the belt, wide shot",
+   "subject": "1boy, male focus, adult man, armored warrior, full blue steel plate armor with helmet, large blue shield, red cloth tabard, sword at the belt, wide shot",
    "subject_ko": "동행 전사",
    "view": "back"
   },

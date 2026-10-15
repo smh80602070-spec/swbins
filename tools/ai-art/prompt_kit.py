@@ -68,9 +68,11 @@ SPECS = {  # 규격 블록 — 구도·배경·크기·샘플러·부정어. 크
                       neg='text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow',
                       w=640, h=896, steps=30, cfg=6.0, view='three_quarter'),
     # K-0112 2D 한 장 대역 사람 8등신 — 세로로 긴 판(≤0.8MP)·어른 몸 태그를 주제 바로 뒤(body)에 둬 앞쪽 힘을 받게
-    'character_tall': dict(body='adult, tall, long legs, slender, small head, eight heads tall',
+    #   시험 1(10-15): "small head·slender·eight heads tall" 은 10~12등신·얼굴 빈 실루엣·병사 하이힐 드레스로 넘침 → 빼고 얼굴·체격 낱말로
+    #   시험 2(10-16): mature·long legs 는 Danbooru 에서 여성 쪽 태그라 병사 4장 중 3장이 여자 → 빼고 남자 풀 입력에 male focus
+    'character_tall': dict(body='adult, tall, realistic body proportions, detailed face',
                            block='solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow',
-                           neg='text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed',
+                           neg='text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes',
                            w=640, h=1152, steps=30, cfg=6.0, view='front'),
     'portrait': dict(block='1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background',
                      neg='text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body',
