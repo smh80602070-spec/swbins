@@ -7138,8 +7138,20 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
         s.stung = null; before = BG.stung();
         s.stung = s.day; after = BG.stung();
         var tomorrow = (function () { var d = s.day; s.day = d + 1; var r = BG.stung(); s.day = d; return r; })();
-        var leave = !!(DG.mail && (DG.mail.leaveWarn || DG.mail.leaving));
-        return funMark(false, !before && after && !tomorrow) + '쏘임 비용 = 그날 걸음 ×0.8(진행 손실 없음) · 다시 하기 조작 0 · 다음 날 풀림 ' + !tomorrow + ' · 평가 낮으면 주민이 떠남 — 경고·회복 고리 표시 ' + (leave ? '있음' : '없음') + '(PLAN §4 △)';
+        /* W-0243 — 옛 측정은 없는 이름(leaveWarn·leaving)을 찾아 "없음" 이었다. 실제 고리: 떠날 뜻 편지(NOTICE_DAYS 일 예고) →
+           그날 부탁을 들어주기 전엔 못 붙잡고 → 들어준 뒤 말을 걸면 붙잡힌다(mail.leavingOf·keep). 세이브는 되돌린다 */
+        var M = DG.mail, rid = s.residents && s.residents[0], warn = null, k1 = null, k2 = null;
+        if (M && M.leavingOf && M.keep && rid) {
+          var keepAll = JSON.stringify({ leaving: s.leaving || {}, requests: s.requests || {}, friend: s.friend || {}, moveIn: s.moveIn || {} }), keepP = JSON.stringify(DG.core.save.player);
+          try {
+            s.leaving = s.leaving || {}; s.requests = s.requests || {};
+            s.leaving[rid] = s.day + M.NOTICE_DAYS; warn = M.leavingOf(rid);
+            s.requests[rid] = { done: false }; k1 = M.keep(rid);
+            s.requests[rid] = { done: true }; k2 = M.keep(rid);
+          } finally { var ka = JSON.parse(keepAll); s.leaving = ka.leaving; s.requests = ka.requests; s.friend = ka.friend; s.moveIn = ka.moveIn; DG.core.save.player = JSON.parse(keepP); }
+        }
+        var leave = !!(warn && warn.left === M.NOTICE_DAYS && k1 && k1.kind === 'no' && k2 && k2.kind === 'keep');
+        return funMark(!before && after && !tomorrow && leave, !before && after && !tomorrow) + '쏘임 비용 = 그날 걸음 ×0.8(진행 손실 없음) · 다시 하기 조작 0 · 다음 날 풀림 ' + !tomorrow + ' · 이사 고리 ' + (leave ? '○(떠날 뜻 ' + M.NOTICE_DAYS + '일 예고 편지 → 부탁 전엔 못 붙잡음 → 부탁 뒤 붙잡음)' : '×(' + JSON.stringify({ warn: warn, k1: k1 && k1.kind, k2: k2 && k2.kind }) + ')');
       } finally { s.stung = keep; }
     });
 

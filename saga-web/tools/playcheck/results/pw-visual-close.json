@@ -1,132 +1,82 @@
 {
  "script": "pw-visual-close.mjs",
- "pass": 6,
- "total": 6,
+ "pass": 9,
+ "total": 9,
  "scenes": [
   {
-   "game": "saga-story",
-   "key": "1-town",
-   "title": "마을 3D 배경(HIGH)",
+   "game": "saga-forest",
+   "key": "1-village3d",
+   "title": "3D 마을",
    "feats": [
-    "st.side-view3d",
-    "st.asset3d"
+    "fs.village-view3d",
+    "fs.asset3d"
    ],
-   "file": "shots/visual-20261007/saga-story-1-town.png",
+   "file": "shots/visual-20261007/saga-forest-1-village3d.png",
    "px": {
-    "mean": 44.7,
-    "std": 25.9,
-    "bins": 247
+    "mean": 51.3,
+    "std": 25.1,
+    "bins": 225
    },
    "metrics": {
     "active": true,
-    "q": "high",
-    "level": "high",
-    "post": {
-     "ready": true,
-     "failed": false,
-     "frames": 14,
-     "on": true,
-     "tier": "HIGH",
-     "tone": "neutral",
-     "size": "2560x1440",
-     "msaa": 4,
-     "mips": 4,
-     "exposure": 1,
-     "bloom": 0.234,
-     "ao": "12표본 1280x720",
-     "sat": 1,
-     "temp": 0
-    },
-    "stage": "sinya"
+    "inst": 9,
+    "scatter": 73,
+    "indoors": false
    }
   },
   {
-   "game": "saga-story",
-   "key": "2-field-high",
-   "title": "첫 사냥터 3D(HIGH 후처리)",
+   "game": "saga-forest",
+   "key": "2-sphere2d",
+   "title": "2D 구면 투영 마을",
    "feats": [
-    "st.side-view3d",
-    "st.asset3d",
-    "st.post3d"
+    "fs.village-view"
    ],
-   "file": "shots/visual-20261007/saga-story-2-field-high.png",
+   "file": "shots/visual-20261007/saga-forest-2-sphere2d.png",
    "px": {
-    "mean": 46.7,
-    "std": 25.6,
-    "bins": 291
+    "mean": 102.9,
+    "std": 35.3,
+    "bins": 323
    },
    "metrics": {
-    "active": true,
-    "q": "high",
-    "level": "high",
-    "post": {
-     "ready": true,
-     "failed": false,
-     "frames": 25,
-     "on": true,
-     "tier": "HIGH",
-     "tone": "neutral",
-     "size": "2560x1440",
-     "msaa": 4,
-     "mips": 4,
-     "exposure": 1,
-     "bloom": 0.234,
-     "ao": "12표본 1280x720",
-     "sat": 1,
-     "temp": 0
-    },
-    "stage": "field",
-    "k": "field"
+    "active": false,
+    "inst": 9,
+    "scatter": 73,
+    "indoors": false
    }
   },
   {
-   "game": "saga-story",
-   "key": "3-field-low",
-   "title": "같은 사냥터(LOW 후처리)",
+   "game": "saga-forest",
+   "key": "3-home",
+   "title": "집 안 평면(안 휨)",
    "feats": [
-    "st.post3d"
+    "fs.village-view"
    ],
-   "file": "shots/visual-20261007/saga-story-3-field-low.png",
+   "file": "shots/visual-20261007/saga-forest-3-home.png",
    "px": {
-    "mean": 55.1,
-    "std": 25.7,
-    "bins": 310
+    "mean": 88.6,
+    "std": 64.5,
+    "bins": 182
    },
    "metrics": {
-    "active": true,
-    "q": "low",
-    "level": "low",
-    "post": {
-     "ready": true,
-     "failed": false,
-     "frames": 35,
-     "on": false,
-     "tier": "LOW",
-     "tone": "neutral",
-     "size": "-",
-     "msaa": "-",
-     "mips": 0,
-     "exposure": 1,
-     "bloom": 0.234,
-     "ao": "off",
-     "sat": 1,
-     "temp": 0
-    },
-    "stage": "field"
+    "active": false,
+    "inst": 9,
+    "scatter": 73,
+    "indoors": true
    }
   },
   {
-   "game": "saga-story",
+   "game": "saga-forest",
    "key": "4-portrait",
-   "title": "3D 초상 판(영웅·사슴·구미호)",
+   "title": "3D 초상 판(영웅·펫)",
    "feats": [
-    "st.portrait3d"
+    "fs.portrait3d",
+    "fs.asset3d"
    ],
-   "file": "shots/visual-20261007/saga-story-4-portrait.png",
+   "file": "shots/visual-20261007/saga-forest-4-portrait.png",
    "px": {
-    "mean": 49.6,
-    "std": 31.1,
-    "bins": 415
+    "mean": 49.8,
+    "std": 31.3,
+    "bins": 369
    },
    "metrics": {
     "asked": 12,
@@ -145,32 +95,47 @@
  ],
  "checks": [
   {
-   "name": "장면 saga-story 1-town 마을 3D 배경(HIGH) — 화면이 단색이 아니다",
+   "name": "장면 saga-forest 1-village3d 3D 마을 — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":44.7,\"std\":25.9,\"bins\":247},\"metrics\":{\"active\":true,\"q\":\"high\",\"level\":\"high\",\"post\":{\"ready\":true,\"failed\":false,\"frames\":14,\"on\":true,\"tier\":\"HIGH\",\"tone\":\"neutral\",\"size\":\"2560x1440\",\"msaa\":4,\"mips\":4,\"exposure\":1,\"bloom\":0.234,\"ao\":\"12표본 1280x720\",\"sat\":1,\"temp\":0},\"stage\":\"sinya\"}}"
+   "detail": "{\"px\":{\"mean\":51.3,\"std\":25.1,\"bins\":225},\"metrics\":{\"active\":true,\"inst\":9,\"scatter\":73,\"indoors\":false}}"
   },
   {
-   "name": "장면 saga-story 2-field-high 첫 사냥터 3D(HIGH 후처리) — 화면이 단색이 아니다",
+   "name": "장면 saga-forest 2-sphere2d 2D 구면 투영 마을 — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":46.7,\"std\":25.6,\"bins\":291},\"metrics\":{\"active\":true,\"q\":\"high\",\"level\":\"high\",\"post\":{\"ready\":true,\"failed\":false,\"frames\":25,\"on\":true,\"tier\":\"HIGH\",\"tone\":\"neutral\",\"size\":\"2560x1440\",\"msaa\":4,\"mips\":4,\"exposure\":1,\"bloom\":0.234,\"ao\":\"12표본 1280x720\",\"sat\":1,\"temp\":0},\"stage\":\"field\",\"k\":\"field\"}}"
+   "detail": "{\"px\":{\"mean\":102.9,\"std\":35.3,\"bins\":323},\"metrics\":{\"active\":false,\"inst\":9,\"scatter\":73,\"indoors\":false}}"
   },
   {
-   "name": "장면 saga-story 3-field-low 같은 사냥터(LOW 후처리) — 화면이 단색이 아니다",
+   "name": "장면 saga-forest 3-home 집 안 평면(안 휨) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":55.1,\"std\":25.7,\"bins\":310},\"metrics\":{\"active\":true,\"q\":\"low\",\"level\":\"low\",\"post\":{\"ready\":true,\"failed\":false,\"frames\":35,\"on\":false,\"tier\":\"LOW\",\"tone\":\"neutral\",\"size\":\"-\",\"msaa\":\"-\",\"mips\":0,\"exposure\":1,\"bloom\":0.234,\"ao\":\"off\",\"sat\":1,\"temp\":0},\"stage\":\"field\"}}"
+   "detail": "{\"px\":{\"mean\":88.6,\"std\":64.5,\"bins\":182},\"metrics\":{\"active\":false,\"inst\":9,\"scatter\":73,\"indoors\":true}}"
   },
   {
-   "name": "장면 saga-story 4-portrait 3D 초상 판(영웅·사슴·구미호) — 화면이 단색이 아니다",
+   "name": "장면 saga-forest 4-portrait 3D 초상 판(영웅·펫) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":49.6,\"std\":31.1,\"bins\":415},\"metrics\":{\"asked\":12,\"got\":12,\"stats\":{\"on\":true,\"ready\":true,\"failed\":false,\"made\":12,\"gaveUp\":0,\"cached\":12,\"pending\":0}}}"
+   "detail": "{\"px\":{\"mean\":49.8,\"std\":31.3,\"bins\":369},\"metrics\":{\"asked\":12,\"got\":12,\"stats\":{\"on\":true,\"ready\":true,\"failed\":false,\"made\":12,\"gaveUp\":0,\"cached\":12,\"pending\":0}}}"
   },
   {
-   "name": "사가종횡 초상 — 굽기를 청한 것 중 반 넘게 그림이 나온다",
+   "name": "사가마을 초상 — 굽기를 청한 것 중 반 넘게 그림이 나온다",
    "ok": true,
    "detail": "{\"asked\":12,\"got\":12,\"stats\":{\"on\":true,\"ready\":true,\"failed\":false,\"made\":12,\"gaveUp\":0,\"cached\":12,\"pending\":0}}"
   },
   {
-   "name": "사가종횡 페이지 예외·console.error 없음",
+   "name": "fs.auto 자동 순행 — 🤖 단추로 켜면 스스로 할 일을 잡고(doing), 다시 누르면 꺼진다",
+   "ok": true,
+   "detail": "{\"a0\":false,\"a1\":{\"on\":true,\"doing\":\"🌳 꽃 으로 (38)\"},\"a2\":false}"
+  },
+  {
+   "name": "사가마을 페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "fs.admin 어드민 — 🔍 점검이 모두 통과, 프리셋 단추를 누르면 세이브가 바뀐다",
+   "ok": true,
+   "detail": "{\"out\":\"모두 통과 — 9항목✔ 따로 만든 칸으로 옮겨 연다 — yeoksa-village/save/_admintes\",\"presets\":15,\"changed\":true}"
+  },
+  {
+   "name": "사가마을 어드민 페이지 예외 없음",
    "ok": true,
    "detail": ""
   }
