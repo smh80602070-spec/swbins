@@ -109,6 +109,7 @@ window.DG_NO_TUNE = true;
 <script src="js/data-passive.js"></script>
 <script src="js/constellation.js"></script>
 <script src="js/runrank.js"></script>
+<script src="js/monthly.js"></script>
 <script src="js/levelpick.js"></script>
 <script src="js/quest.js"></script>
 <script src="js/tutorial.js"></script>
@@ -6429,8 +6430,19 @@ window.DG_NO_TUNE = true;
       var keepQ = JSON.stringify(C.save.quests || {}), lv = C.save.player.level, daily = false;
       try { C.save.player.level = 12; C.save.quests = {}; Q.ensureDailyTrack(); daily = !!(Q.taken('d_hunt') && Q.taken('d_gather')); }
       finally { C.save.quests = JSON.parse(keepQ); C.save.player.level = lv; }
-      var weeks = Object.keys(seen).length, season = !!(DG.season || DG.calendar);
-      return funMark(daily && weeks >= 3 && season, daily && weeks >= 3) + '일일 사명 자동 ' + daily + ' · 12주 변형자 ' + weeks + '종 · 계절/월간 ' + (season ? '있음' : '없음(PLAN §4 H△)');
+      var weeks = Object.keys(seen).length, MO = DG.monthly, mo = null;   // W-0242 달 사명 — 달마다 바뀌는 사냥터·채우면 달 문장, 지난달 셈은 새로
+      if (MO) {
+        var keepS = JSON.stringify(C.save.side || {}), d1 = new Date(2026, 9, 3), d2 = new Date(2026, 10, 2), k1 = MO.keyOf(d1), f1 = MO.featuredOf(k1), i2;
+        try {
+          C.save.side = C.save.side || {}; delete C.save.side.monthly;
+          var a1 = MO.onKill(f1, d1), a0 = MO.onKill(f1 === 'field' ? 'forest' : 'field', d1), v1 = MO.view(d1);
+          for (i2 = 0; i2 < MO.TARGET(); i2++) { MO.onKill(f1, d1); }
+          var v2 = MO.view(d1), v3 = MO.view(d2); MO.onKill('field', d2); var v4 = MO.view(d2);
+          mo = { two: a1 === 2 && a0 === 1 && v1.n === 3, done: v2.done && v2.badges === 1, fresh: v3.n === 0 && !v3.done && v3.badges === 1 && v4.n >= 1, keys: k1 + '→' + MO.keyOf(d2), feat: v1.featuredName };
+        } finally { C.save.side = JSON.parse(keepS); }
+      }
+      var season = !!(mo && mo.two && mo.done && mo.fresh);
+      return funMark(daily && weeks >= 3 && season, daily && weeks >= 3) + '일일 사명 자동 ' + daily + ' · 12주 변형자 ' + weeks + '종 · 달 사명 ' + (season ? '○(' + mo.keys + ' · 이달의 사냥터 ' + mo.feat + ' 두 배 · 채우면 달 문장 · 새 달은 새로)' : (mo ? '틀림 ' + JSON.stringify(mo) : '없음(PLAN §4 H△)'));
     });
 
     t('성좌도 — 정의 ≥300 마디 · 시작점 다섯(무명 + 직업 계열 넷) · 점수 = (레벨−1) + 관문 대장 첫 승리(상한 56)', function () {

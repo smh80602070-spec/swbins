@@ -440,7 +440,7 @@
     html += '<div class="stat-row"><span>사냥터</span><b>' + esc(g.stage || '-') + '</b></div>' +
       '<div class="stat-row"><span>잡은 수</span><b>' + (g.kills || 0) + '마리</b></div>' +
       '<div class="stat-row"><span>경험치</span><b>' + core.fmt(g.exp || 0) + '</b></div>' +
-      '<div class="stat-row"><span>금</span><b>🪙 ' + core.fmt(g.gold || 0) + '</b></div>';
+      '<div class="stat-row"><span>금</span><b>🪙 ' + core.fmt(g.gold || 0) + '</b></div>' + (global.DG.monthly ? '<div class="stat-row"><span>🌙 달 사명</span><b>' + esc(global.DG.monthly.line().replace('🌙 달 사명 ', '')) + '</b></div>' : '');   // W-0242
     if (g.gear) { html += '<div class="stat-row"><span>주운 장비</span><b>📦 ' + g.gear + '</b></div>'; }
     if (g.rift) {
       html += '<div class="stat-row"><span>🌀 비경</span><b>' +
