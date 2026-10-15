@@ -119,13 +119,15 @@
    *  8.525m). sweep은 이 제약이 없어(다른 자가진단이 순서를 안 본다)
    *  1.55→**2.45**(비율 2.15→1.13)까지 그대로 밀었다. 세 값 다 여전히
    *  사람이 걸으며 판단할 몫이다 — 너무 타이트하면 `_admin.html`의
-   *  `rogueAction.heavyRange`(공통 배율)로 전체를 한 번에 낮출 수 있다. */
+   *  `rogueAction.heavyRange`(공통 배율)로 전체를 한 번에 낮출 수 있다.
+   *  2026-10-15 W-0235: 재미표준 C 회피 여유(예고초 − (반경 − 3m)/8m/s)가 charge 0.10초·sweep 0.18초로 사람 반응(≈0.25초)보다
+   *  짧았다 — 반경(순서)은 그대로 두고 예고만 charge ×0.75→0.93(여유 0.30)·sweep ×1.35→1.45(0.29). heavy 0.41 그대로. */
   function foeMoves() {
     var Dl = D();
     return [
       { key: 'heavy', label: '⚠️ 강타! 원 밖으로 물러서라', tellSec: Dl.TELL_SEC, range: HEAVY_RANGE() * 1.55, dmgMul: Dl.HEAVY_MUL },
-      { key: 'charge', label: '⚠️ 돌진! 훨씬 멀리 물러서라', tellSec: Dl.TELL_SEC * 0.75, range: HEAVY_RANGE() * 1.6, dmgMul: Dl.HEAVY_MUL * 1.25 },
-      { key: 'sweep', label: '⚠️ 휩쓸기! 넉넉히 물러서라', tellSec: Dl.TELL_SEC * 1.35, range: HEAVY_RANGE() * 2.45, dmgMul: Dl.HEAVY_MUL * 0.7 }
+      { key: 'charge', label: '⚠️ 돌진! 훨씬 멀리 물러서라', tellSec: Dl.TELL_SEC * 0.93, range: HEAVY_RANGE() * 1.6, dmgMul: Dl.HEAVY_MUL * 1.25 },
+      { key: 'sweep', label: '⚠️ 휩쓸기! 넉넉히 물러서라', tellSec: Dl.TELL_SEC * 1.45, range: HEAVY_RANGE() * 2.45, dmgMul: Dl.HEAVY_MUL * 0.7 }
     ];
   }
   function moveByKey(key) {
