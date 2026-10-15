@@ -27,13 +27,14 @@
     wall: { id: 'wall_piece_01', k: 1.1 }
   };
 
-  /** 유닛 → 몸(한 장 모드 풀) — K-0061 AI 몸 `rts_inf|arc|cav_ally|enemy`(팀 0 아군·1 적). 영웅은 장수 id 해시로 hero_m/hero_f */
+  /** 유닛 → 몸(한 장 모드 풀) — K-0061 AI 몸 `rts_inf|arc|cav_ally|enemy`(팀 0 아군·1 적). 영웅은 제 VRoid 2D 시트(W-0227 — 한 장 hero_m/f 는
+   *  5~6등신이라 8등신 인물과 어긋났다, 사용자 10-15), 공용 에셋을 못 받았으면 장수 id 해시로 hero_m/hero_f */
   var UNIT_AI = { soldier: 'rts_inf', archer: 'rts_arc', cavalry: 'rts_cav' };
   var HERO_POOLS = ['hero_m', 'hero_f'];
   var BODY_TILES = { soldier: 1.7, archer: 1.7, cavalry: 1.9, hero: 2.1 };
 
   function poolOf(u) {
-    if (u.t === 'hero') { return HERO_POOLS[M() ? M().hashOf(u.hid || u.id) % HERO_POOLS.length : 0]; }
+    if (u.t === 'hero') { var vp = M() && M().vroidPick ? M().vroidPick('human', u.hid || u.id) : null; if (vp) { return vp; } return HERO_POOLS[M() ? M().hashOf(u.hid || u.id) % HERO_POOLS.length : 0]; }
     return UNIT_AI[u.t] ? UNIT_AI[u.t] + (u.team === 1 ? '_enemy' : '_ally') : null;
   }
 

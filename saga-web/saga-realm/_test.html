@@ -930,7 +930,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var still = DG.cfg.mode2d.still || {}, pools = []; Object.keys(A.UNIT_AI).forEach(function (u) { pools.push(A.UNIT_AI[u] + '_ally', A.UNIT_AI[u] + '_enemy'); }); pools = pools.concat(A.HERO_POOLS);
       var allStill = pools.every(function (p) { return !!still[p]; });
       var h1 = A.poolOf({ t: 'hero', hid: 'sg_guanyu', id: 1 }), h2 = A.poolOf({ t: 'hero', hid: 'sg_guanyu', id: 9 });
-      return bad.length === 0 && missing.length === 0 && allStill && h1 === h2 && A.HERO_POOLS.indexOf(h1) >= 0 && A.poolOf({ t: 'soldier', team: 0 }) === 'rts_inf_ally' && A.poolOf({ t: 'archer', team: 1 }) === 'rts_arc_enemy' && A.poolOf({ t: 'cavalry', team: 0 }) === 'rts_cav_ally' && ('건물 ' + Object.keys(A.BUILDINGS).length + '종 그림 · 유닛 몸 ' + pools.length + '칸 한 장 모드');
+      return bad.length === 0 && missing.length === 0 && allStill && h1 === h2 && (A.HERO_POOLS.indexOf(h1) >= 0 || String(h1).indexOf('vroid:') === 0) && A.poolOf({ t: 'soldier', team: 0 }) === 'rts_inf_ally' && A.poolOf({ t: 'archer', team: 1 }) === 'rts_arc_enemy' && A.poolOf({ t: 'cavalry', team: 0 }) === 'rts_cav_ally' && ('건물 ' + Object.keys(A.BUILDINGS).length + '종 그림 · 유닛 몸 ' + pools.length + '칸 한 장 모드');
     });
 
     t('RTS 경계 조각(W-0047) — 풀 칸의 이웃에 따라 변·안쪽 구석·바깥 구석 조각을 고르고, 적 기지는 체력 단계별로 다른 그림이다', function () {

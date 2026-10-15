@@ -32,17 +32,17 @@
   {
    "name": "외교 — 이웃 세력에 조공 사절을 보내면 금이 나가고 우호가 오른다",
    "ok": true,
-   "detail": "{\"to\":\"jue\",\"res\":{\"ok\":true,\"done\":true,\"relation\":45,\"up\":5},\"g0\":5178,\"g1\":4478,\"rel0\":40,\"rel1\":45}"
+   "detail": "{\"to\":\"jue\",\"res\":{\"ok\":true,\"done\":true,\"relation\":47,\"up\":5},\"g0\":5178,\"g1\":4478,\"rel0\":42,\"rel1\":47}"
   },
   {
    "name": "출진 — 맞닿은 적 성으로 출진하면 전투가 치러져 승패·손실이 나오고 출진한 성의 병력이 줄어든다",
    "ok": true,
-   "detail": "{\"ok\":true,\"won\":false,\"lossA\":667,\"lossD\":262,\"troopsFrom\":[5444,4777]}"
+   "detail": "{\"ok\":true,\"won\":false,\"lossA\":864,\"lossD\":80,\"troopsFrom\":[5444,4580]}"
   },
   {
    "name": "개입형 전투 — 출진하면 합마다 명령을 물어 오고(돌격·수비) 끝에 보고가 나온다",
    "ok": true,
-   "detail": "{\"ok\":true,\"intro\":true,\"prompts\":1,\"rounds\":1,\"cmds\":[\"press\"],\"hasReport\":true,\"ms\":206}"
+   "detail": "{\"ok\":true,\"intro\":true,\"prompts\":1,\"rounds\":1,\"cmds\":[\"press\"],\"hasReport\":true,\"ms\":304}"
   },
   {
    "name": "무장 — 공과 금을 갖추면 승진해 관직이 한 단 오르고 금이 들고 충성이 오른다",
@@ -52,7 +52,7 @@
   {
    "name": "전략 화면 틀 — #cpanel 은 realm/window.png, 독 단추는 btn_normal, 배너는 popup·성 열기는 tab_on 9-slice 그림을 입고 그림이 다 온다(W-0088)",
    "ok": true,
-   "detail": "{\"fr\":{\"cpanel\":\"url(\\\"http://127.0.0.1:7413/shared/assets/ui/realm/window.png\\\")\",\"dock\":\"url(\\\"http://127.0.0.1:7413/shared/assets/ui/realm/btn_normal.png\\\")\",\"banner\":\"url(\\\"http://127.0.0.1:7413/shared/assets/ui/realm/popup.png\\\")\",\"open\":\"url(\\\"http://127.0.0.1:7413/shared/assets/ui/realm/tab_on.png\\\")\",\"status\":[200,200,200,200]},\"uiMiss\":[]}"
+   "detail": "{\"fr\":{\"cpanel\":\"url(\\\"http://127.0.0.1:10611/shared/assets/ui/realm/window.png\\\")\",\"dock\":\"url(\\\"http://127.0.0.1:10611/shared/assets/ui/realm/btn_normal.png\\\")\",\"banner\":\"url(\\\"http://127.0.0.1:10611/shared/assets/ui/realm/popup.png\\\")\",\"open\":\"url(\\\"http://127.0.0.1:10611/shared/assets/ui/realm/tab_on.png\\\")\",\"status\":[200,200,200,200]},\"uiMiss\":[]}"
   }
  ]
 }

@@ -451,6 +451,7 @@
     on: function () { var R3 = global.DG.realm3d; return !(R3 && R3.active && R3.active()); },
     tileBase: 'assets/web2d/tile/',
     still: { rts_inf_ally: 1, rts_inf_enemy: 1, rts_arc_ally: 1, rts_arc_enemy: 1, rts_cav_ally: 1, rts_cav_enemy: 1, hero_m: 1, hero_f: 1 },   // 한 장 모드 풀(W-0043·W-0047) — RTS 유닛 몸: K-0061 AI 몸(팀별) + 영웅
+    vroid2d: { kinds: ['human'], h: 85, foot: 0.89 },   // W-0227 — RTS 영웅은 제 VRoid 2D 시트(8등신 쪽, 1만리와 같은 값). 공용 에셋을 못 받으면 아래 한 장 hero_m/f
     tile: { plain: 'realm_grass', hill: 'realm_dirt', mount: 'realm_stone', river: 'realm_water' },
     prop2d: { 'city:s': { id: 'silkroad_house_01', era: 'city_s_' }, 'city:m': { id: 'chinese_hall_01', era: 'city_m_' }, 'city:l': { id: 'stone_tower_01', era: 'city_l_' } },
     /* 성 그림 시대(W-0114, K-0083 ②) — 판 전체 시대 상태가 없어 성마다 정한다(퓨전: 과거·현대·미래가 한 지도에).

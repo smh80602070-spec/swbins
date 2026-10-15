@@ -14,3 +14,4 @@
 - [x] 10-14 · (K-0108 끝) · 자체 PBR dirt 새 결(명암 10.9→24.8) — 웹 real_dirt.webp 를 고돗 tiles_real/dirt_hi.webp 에서 다시 복사(W-0196 길) · 웹 — **R-0 10-15 → W-0217**
 - [x] 10-14 · (K-0109 끝) · 백상아리 자체 3D `creatures3d/great_white`(worm·동작 7) — 1만리 펫 pt_shark_2 를 shark 대신 great_white 로 바꿔 끼우기 · 웹 — **R-0 10-15 → W-0216**
 - [x] 10-14 · (K-0111 끝) · 3마을 prop2d 에 school `hanok_01`·museum `chinese_hall_01`·tailor `jp_minka_01`(+ `_night`, h 는 home 74·shop 90 사이로) — drawHanok 도형 대신 · 웹 — **R-0 10-15 → W-0218**
+- [ ] 10-15 · (W-0227 웹 넘김) · 2D 사람 대역 그림이 8등신 아님(사용자 "2d판은 다섯판 모두 8등신") — 한 장 hero_m≈6·hero_f≈5·villager_b/c 아이≈4(어른 자리)·companion_*·rts_inf/arc/cav≈5(5천하 병사 늘 보임)·Kenney human_* 16px≈2·2나락 people/f_*≈4 · 사람 적이 고블린·오크 시트(2나락 foe2d.js:20·4종횡 side-view.js:1029) · VRoid 시트도 ≈7 — 8등신 새 그림·굽기 비율 · 자체툴
