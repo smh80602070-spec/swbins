@@ -13,9 +13,9 @@
    ],
    "file": "shots/visual-20261007/saga-forest-1-village3d.png",
    "px": {
-    "mean": 51.3,
-    "std": 25.1,
-    "bins": 225
+    "mean": 49.5,
+    "std": 24.3,
+    "bins": 222
    },
    "metrics": {
     "active": true,
@@ -33,9 +33,9 @@
    ],
    "file": "shots/visual-20261007/saga-forest-2-sphere2d.png",
    "px": {
-    "mean": 102.9,
-    "std": 35.3,
-    "bins": 323
+    "mean": 103.1,
+    "std": 35.2,
+    "bins": 321
    },
    "metrics": {
     "active": false,
@@ -97,12 +97,12 @@
   {
    "name": "장면 saga-forest 1-village3d 3D 마을 — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":51.3,\"std\":25.1,\"bins\":225},\"metrics\":{\"active\":true,\"inst\":9,\"scatter\":73,\"indoors\":false}}"
+   "detail": "{\"px\":{\"mean\":49.5,\"std\":24.3,\"bins\":222},\"metrics\":{\"active\":true,\"inst\":9,\"scatter\":73,\"indoors\":false}}"
   },
   {
    "name": "장면 saga-forest 2-sphere2d 2D 구면 투영 마을 — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":102.9,\"std\":35.3,\"bins\":323},\"metrics\":{\"active\":false,\"inst\":9,\"scatter\":73,\"indoors\":false}}"
+   "detail": "{\"px\":{\"mean\":103.1,\"std\":35.2,\"bins\":321},\"metrics\":{\"active\":false,\"inst\":9,\"scatter\":73,\"indoors\":false}}"
   },
   {
    "name": "장면 saga-forest 3-home 집 안 평면(안 휨) — 화면이 단색이 아니다",
@@ -122,7 +122,7 @@
   {
    "name": "fs.auto 자동 순행 — 🤖 단추로 켜면 스스로 할 일을 잡고(doing), 다시 누르면 꺼진다",
    "ok": true,
-   "detail": "{\"a0\":false,\"a1\":{\"on\":true,\"doing\":\"🌳 꽃 으로 (38)\"},\"a2\":false}"
+   "detail": "{\"a0\":false,\"a1\":{\"on\":true,\"doing\":\"🌳 소나무 으로 (59)\"},\"a2\":false}"
   },
   {
    "name": "사가마을 페이지 예외·console.error 없음",
