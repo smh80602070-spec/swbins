@@ -19,7 +19,7 @@
     if (act && M.actT) { var ak = 'me:' + (act.clip === 'hit' ? 'hit' : 'atk'); actT = M.actT(ak, act.left); var ai = M.actInfo ? M.actInfo(ak) : null; clip = act.clip === 'hit' ? 'hit' : (act.clip === 'heavy' ? 'heavy' : (ai && ai.n % 2 === 0 ? 'attack2' : 'attack')); }
     else if (key === 'player' && M.actT) { M.actT('me:atk', 0); M.actT('me:hit', 0); }
     var tH = (global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.targetH) || 40;
-    return M.draw(ctx, { pool: pool, clip: clip, t: actT, facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: (o.now || Date.now()) + (o.phase || 0) * 160, x: x, y: y, scale: s * 40 * 1.2 / tH, stride: (o.wx != null && M.pace) ? M.pace(o.pk || key || pool, o.wx, o.wy, o.ppu, s * 48, o.now || Date.now()) : null });
+    return M.draw(ctx, { pool: pool, clip: clip, t: actT, facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: (o.now || Date.now()) + (o.phase || 0) * 160, x: x, y: y, scale: s * 40 * 1.2 / tH, stride: (o.wx != null && M.pace) ? M.pace(o.pk || key || pool, o.wx, o.wy, o.ppu, s * 48 * (global.DG.field2d && global.DG.field2d.strideMul ? global.DG.field2d.strideMul() : 1), o.now || Date.now()) : null });
   }
 
   global.DG = global.DG || {};

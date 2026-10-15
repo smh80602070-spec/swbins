@@ -16039,6 +16039,12 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       return ok && ('평타 ' + r.swing.clip + ' · 강공격 ' + r.heavy.clip + ' · 맞음 ' + r.hurt.clip + ' · 적 맞음 ' + r.foeHit.clip + ' · 적 덮치기 ' + r.tell.clip + ' ' + r.tell.left.toFixed(2) + '초') || ('실패 ' + JSON.stringify(r));
     });
 
+    t('2D 걷기 빠르기(W-0226) — 화면 몸 높이/초로(젤다식 1.8 몸/초) · 3D 빠르기보다 느려지지 않음 · 몸 높이 모르면 옛 빠르기 · 보폭 한 바퀴 ≈ 1.3 몸', function () {
+      var F = DG.field2d, base = DG.world.baseSpeed, bodyM = 57, v = F && F.walkMps ? F.walkMps(bodyM, base) : 0, k = F && F.strideMul ? F.strideMul() : 0;
+      var ok = v / bodyM > 1.7 && v / bodyM < 1.9 && F.walkMps(0, base) === base && F.walkMps(1, base) === base && k * 0.9 > 1.2 && k * 0.9 < 1.4;
+      return ok && ('몸 ' + bodyM + 'm → ' + v.toFixed(0) + 'm/초(' + (v / bodyM).toFixed(2) + ' 몸/초, 3D ' + base + ') · 한 바퀴 ' + (k * 0.9).toFixed(2) + ' 몸') || ('실패 v=' + v + ' k=' + k);
+    });
+
     t('재미표준 C 손맛(측정)', function () {
       var b = funSrc('js/battle3d.js');
       if (!b) { return '△ — 원본을 못 읽음(file:// 이면 정상)'; }

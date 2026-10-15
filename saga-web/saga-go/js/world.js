@@ -38,7 +38,7 @@
    * 걸어가는 데 25초쯤 걸려 조우를 고르는 맛도 남는다.
    * GPS 모드(useGeo)는 실제 위치를 쓰므로 이 값과 무관하다.
    */
-  var speed = 8;
+  var speed = 8, credit2d = 1;   // credit2d — W-0226 걸은 거리 셈 배율(2D 가 빨라진 만큼 나눠 시간당 보상은 3D 와 같게)
 
   /**
    * 걸음 배속 — **눈으로 확인하려고 두는 손잡이**다. 반려(1~5km)·천거장(2~10km)처럼
@@ -153,7 +153,7 @@
       var w = latLngToWorld(p.coords.latitude, p.coords.longitude);
       var pos = core.save.player.pos;
       var d = Math.hypot(w.x - pos.x, w.y - pos.y);
-      if (d < 500) { core.save.player.distance += d; }   // 튐 방지
+      if (d < 500) { core.save.player.distance += d; } credit2d = 1;   // 튐 방지 · GPS 는 실제 걸음 그대로
       pos.x = w.x; pos.y = w.y;
     }, function (err) {
       mode = 'keyboard';
@@ -288,9 +288,9 @@
   }
 
   /** 걷는 속도(m/초) — 손잡이 배율 × 탈것(⑲-61, 안 탔으면 1) × 달리기 */
-  function moveSpeed(run) {
-    var MT = global.DG.mount;
-    return speed * speedMul() * (MT && MT.speedMul ? MT.speedMul() : 1) * (run ? 2.2 : 1) * (global.DG.starchart ? global.DG.starchart.move() : 1);   // × 성도(W-0181)
+  function moveSpeed(run) {   // W-0226 — 2D(평면·2.5D)는 화면 몸 높이/초로(field2d.walkMps) · 3D·들판 전투 중엔 8m/초(판정 그대로)
+    var MT = global.DG.mount, W3s = global.DG.world3d, F2s = global.DG.field2d, FCs = global.DG.fieldCombat, b = speed; if (F2s && F2s.walkMps && geom && !(W3s && W3s.active && W3s.active()) && !(FCs && FCs.engaged && FCs.state && FCs.engaged(FCs.state()))) { b = F2s.walkMps((geom.mode === 2 ? 1.5 : 1.25) * bodyK() * 48 / scale(), speed); } credit2d = speed / b;
+    return b * speedMul() * (MT && MT.speedMul ? MT.speedMul() : 1) * (run ? 2.2 : 1) * (global.DG.starchart ? global.DG.starchart.move() : 1);   // × 성도(W-0181)
   }
   function moveByKeys(dt) {
     if (mode !== 'keyboard') { return; }
@@ -345,7 +345,7 @@
          제자리걸음만 치는 것처럼 보인다(자동 순행도 이 길로 온다) */
       walkTarget = null;
     }
-    core.save.player.distance += moved;
+    core.save.player.distance += moved * credit2d;
   }
 
   /** 화면 스틱 입력 (-1~1). touch 쪽에서 넣어 준다 */
@@ -385,7 +385,7 @@
       player.phase += dt * (4.2 + player.speed * 0.10);
       // 일정 거리마다 좌우 번갈아 발자국을 남긴다
       player.footAcc += dist;
-      if (player.footAcc >= 6) {
+      if (player.footAcc >= (credit2d < 1 ? 2.7 / credit2d : 6)) {   // W-0226 2D 는 반 보폭마다
         player.footAcc = 0;
         player.footSide = -player.footSide;
         var ang = Math.atan2(player.vy, player.vx) + Math.PI / 2;

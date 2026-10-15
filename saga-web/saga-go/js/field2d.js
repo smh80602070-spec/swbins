@@ -160,5 +160,18 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.field2d = { CELL: CELL, color: color, BASE: BASE, zoomMul: zoomMul, KCOL: KCOL, on: on, h01: h01, PROPS: PROPS, propsAt: propsAt, edgeColor: edgeColor, decorate: decorate, seasonRgb: seasonRgb };
+  /** W-0226 — 2D(평면·2.5D) 걷기 빠르기(m/초). 2D 는 몸(≈120px)이 지도 칸(48m ≈ 100px)만 해서 3D 빠르기(8m/초)면 화면에선
+   *  0.15 몸/초 — 제자리걸음처럼 기어갔다(사용자 10-15 "넘 느리고 자연스럽지 않다 · 젤다처럼"). 화면 몸 높이/초로 맞춘다 —
+   *  손잡이 world.walk2dBps 1.8(젤다 「신들의 트라이포스」 걸음 ≈ 2~3 몸/초, 달리기 ×2.2 ≈ 4). bodyM = 화면 몸 높이를 미터로,
+   *  base = 3D 빠르기 — 그보다 느려지진 않고, 손잡이 0 이면 base(옛 걸음). 순수 */
+  function walkMps(bodyM, base) {
+    var C = core(), bps = C && C.tuned ? +C.tuned('world.walk2dBps', 1.8) : 1.8;
+    if (!(bodyM > 0) || !(bps > 0)) { return base; }
+    return Math.max(base, bps * bodyM);
+  }
+  /** W-0226 — 걷기 시트 한 바퀴(두 발) 길이 배율. 공용 mode2d.strideK 0.9 몸은 빨라진 2D 걸음엔 종종걸음 — 1만리 2D 는 ×1.45(≈1.3 몸,
+   *  1.8 몸/초면 한 바퀴 1.4번/초 ≈ 걸음 2.8/초). 손잡이 world.stride2d */
+  function strideMul() { var C = core(); return C && C.tuned ? Math.max(0.3, +C.tuned('world.stride2d', 1.45)) : 1.45; }
+
+  global.DG.field2d = { walkMps: walkMps, strideMul: strideMul, CELL: CELL, color: color, BASE: BASE, zoomMul: zoomMul, KCOL: KCOL, on: on, h01: h01, PROPS: PROPS, propsAt: propsAt, edgeColor: edgeColor, decorate: decorate, seasonRgb: seasonRgb };
 })(typeof window !== 'undefined' ? window : this);
