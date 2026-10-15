@@ -1,7 +1,7 @@
 {
  "script": "pw-visual-close.mjs",
- "pass": 7,
- "total": 8,
+ "pass": 9,
+ "total": 9,
  "scenes": [
   {
    "game": "saga-forest",
@@ -15,7 +15,7 @@
    "px": {
     "mean": 44.3,
     "std": 20.5,
-    "bins": 265
+    "bins": 270
    },
    "metrics": {
     "active": true,
@@ -33,9 +33,9 @@
    ],
    "file": "shots/visual-20261007/saga-forest-2-sphere2d.png",
    "px": {
-    "mean": 124.1,
+    "mean": 123.8,
     "std": 42.8,
-    "bins": 502
+    "bins": 494
    },
    "metrics": {
     "active": false,
@@ -55,7 +55,7 @@
    "px": {
     "mean": 84.4,
     "std": 74.1,
-    "bins": 181
+    "bins": 180
    },
    "metrics": {
     "active": false,
@@ -97,17 +97,17 @@
   {
    "name": "장면 saga-forest 1-village3d 3D 마을 — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":44.3,\"std\":20.5,\"bins\":265},\"metrics\":{\"active\":true,\"inst\":9,\"scatter\":73,\"indoors\":false}}"
+   "detail": "{\"px\":{\"mean\":44.3,\"std\":20.5,\"bins\":270},\"metrics\":{\"active\":true,\"inst\":9,\"scatter\":73,\"indoors\":false}}"
   },
   {
    "name": "장면 saga-forest 2-sphere2d 2D 구면 투영 마을 — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":124.1,\"std\":42.8,\"bins\":502},\"metrics\":{\"active\":false,\"inst\":9,\"scatter\":73,\"indoors\":false}}"
+   "detail": "{\"px\":{\"mean\":123.8,\"std\":42.8,\"bins\":494},\"metrics\":{\"active\":false,\"inst\":9,\"scatter\":73,\"indoors\":false}}"
   },
   {
    "name": "장면 saga-forest 3-home 집 안 평면(안 휨) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":84.4,\"std\":74.1,\"bins\":181},\"metrics\":{\"active\":false,\"inst\":9,\"scatter\":73,\"indoors\":true}}"
+   "detail": "{\"px\":{\"mean\":84.4,\"std\":74.1,\"bins\":180},\"metrics\":{\"active\":false,\"inst\":9,\"scatter\":73,\"indoors\":true}}"
   },
   {
    "name": "장면 saga-forest 4-portrait 3D 초상 판(영웅·펫) — 화면이 단색이 아니다",
@@ -130,8 +130,13 @@
    "detail": ""
   },
   {
-   "name": "사가마을 어드민 예외 — locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.preset').last()\u001b[22m\n",
-   "ok": false,
+   "name": "fs.admin 어드민 — 🔍 점검이 모두 통과, 프리셋 단추를 누르면 세이브가 바뀐다",
+   "ok": true,
+   "detail": "{\"out\":\"모두 통과 — 9항목✔ 따로 만든 칸으로 옮겨 연다 — yeoksa-village/save/_admintes\",\"presets\":15,\"changed\":true}"
+  },
+  {
+   "name": "사가마을 어드민 페이지 예외 없음",
+   "ok": true,
    "detail": ""
   }
  ]
