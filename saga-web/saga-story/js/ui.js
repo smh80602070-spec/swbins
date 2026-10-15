@@ -435,7 +435,7 @@
     var g = sessionCardData || {};
     var html = '';
     if (g.dead) {
-      html += '<div class="hint">💀 쓰러졌습니다 — 주운 금은 절반만 남았습니다.</div>';
+      html += '<div class="hint dead-keep">💀 쓰러졌습니다 — 잃은 것: 이번 판 금 ' + core.fmt(g.lost || 0) + '(절반)뿐<br><b>남은 것</b>: ' + esc((g.keep || ['레벨', '장비']).join(' · ')) + ' 그대로 — 마을에서 바로 다시 나갑니다</div>';   // W-0241
     }
     html += '<div class="stat-row"><span>사냥터</span><b>' + esc(g.stage || '-') + '</b></div>' +
       '<div class="stat-row"><span>잡은 수</span><b>' + (g.kills || 0) + '마리</b></div>' +

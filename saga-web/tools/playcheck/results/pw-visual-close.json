@@ -15,7 +15,7 @@
    "px": {
     "mean": 44.7,
     "std": 25.9,
-    "bins": 248
+    "bins": 249
    },
    "metrics": {
     "active": true,
@@ -24,7 +24,7 @@
     "post": {
      "ready": true,
      "failed": false,
-     "frames": 13,
+     "frames": 14,
      "on": true,
      "tier": "HIGH",
      "tone": "neutral",
@@ -53,7 +53,7 @@
    "px": {
     "mean": 46.7,
     "std": 25.6,
-    "bins": 292
+    "bins": 291
    },
    "metrics": {
     "active": true,
@@ -62,7 +62,7 @@
     "post": {
      "ready": true,
      "failed": false,
-     "frames": 24,
+     "frames": 25,
      "on": true,
      "tier": "HIGH",
      "tone": "neutral",
@@ -90,7 +90,7 @@
    "px": {
     "mean": 55.1,
     "std": 25.8,
-    "bins": 311
+    "bins": 307
    },
    "metrics": {
     "active": true,
@@ -99,7 +99,7 @@
     "post": {
      "ready": true,
      "failed": false,
-     "frames": 34,
+     "frames": 35,
      "on": false,
      "tier": "LOW",
      "tone": "neutral",
@@ -147,17 +147,17 @@
   {
    "name": "장면 saga-story 1-town 마을 3D 배경(HIGH) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":44.7,\"std\":25.9,\"bins\":248},\"metrics\":{\"active\":true,\"q\":\"high\",\"level\":\"high\",\"post\":{\"ready\":true,\"failed\":false,\"frames\":13,\"on\":true,\"tier\":\"HIGH\",\"tone\":\"neutral\",\"size\":\"2560x1440\",\"msaa\":4,\"mips\":4,\"exposure\":1,\"bloom\":0.234,\"ao\":\"12표본 1280x720\",\"sat\":1,\"temp\":0},\"stage\":\"sinya\"}}"
+   "detail": "{\"px\":{\"mean\":44.7,\"std\":25.9,\"bins\":249},\"metrics\":{\"active\":true,\"q\":\"high\",\"level\":\"high\",\"post\":{\"ready\":true,\"failed\":false,\"frames\":14,\"on\":true,\"tier\":\"HIGH\",\"tone\":\"neutral\",\"size\":\"2560x1440\",\"msaa\":4,\"mips\":4,\"exposure\":1,\"bloom\":0.234,\"ao\":\"12표본 1280x720\",\"sat\":1,\"temp\":0},\"stage\":\"sinya\"}}"
   },
   {
    "name": "장면 saga-story 2-field-high 첫 사냥터 3D(HIGH 후처리) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":46.7,\"std\":25.6,\"bins\":292},\"metrics\":{\"active\":true,\"q\":\"high\",\"level\":\"high\",\"post\":{\"ready\":true,\"failed\":false,\"frames\":24,\"on\":true,\"tier\":\"HIGH\",\"tone\":\"neutral\",\"size\":\"2560x1440\",\"msaa\":4,\"mips\":4,\"exposure\":1,\"bloom\":0.234,\"ao\":\"12표본 1280x720\",\"sat\":1,\"temp\":0},\"stage\":\"field\",\"k\":\"field\"}}"
+   "detail": "{\"px\":{\"mean\":46.7,\"std\":25.6,\"bins\":291},\"metrics\":{\"active\":true,\"q\":\"high\",\"level\":\"high\",\"post\":{\"ready\":true,\"failed\":false,\"frames\":25,\"on\":true,\"tier\":\"HIGH\",\"tone\":\"neutral\",\"size\":\"2560x1440\",\"msaa\":4,\"mips\":4,\"exposure\":1,\"bloom\":0.234,\"ao\":\"12표본 1280x720\",\"sat\":1,\"temp\":0},\"stage\":\"field\",\"k\":\"field\"}}"
   },
   {
    "name": "장면 saga-story 3-field-low 같은 사냥터(LOW 후처리) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":55.1,\"std\":25.8,\"bins\":311},\"metrics\":{\"active\":true,\"q\":\"low\",\"level\":\"low\",\"post\":{\"ready\":true,\"failed\":false,\"frames\":34,\"on\":false,\"tier\":\"LOW\",\"tone\":\"neutral\",\"size\":\"-\",\"msaa\":\"-\",\"mips\":0,\"exposure\":1,\"bloom\":0.234,\"ao\":\"off\",\"sat\":1,\"temp\":0},\"stage\":\"field\"}}"
+   "detail": "{\"px\":{\"mean\":55.1,\"std\":25.8,\"bins\":307},\"metrics\":{\"active\":true,\"q\":\"low\",\"level\":\"low\",\"post\":{\"ready\":true,\"failed\":false,\"frames\":35,\"on\":false,\"tier\":\"LOW\",\"tone\":\"neutral\",\"size\":\"-\",\"msaa\":\"-\",\"mips\":0,\"exposure\":1,\"bloom\":0.234,\"ao\":\"off\",\"sat\":1,\"temp\":0},\"stage\":\"field\"}}"
   },
   {
    "name": "장면 saga-story 4-portrait 3D 초상 판(영웅·사슴·구미호) — 화면이 단색이 아니다",

@@ -246,7 +246,7 @@
     core.log('💀 ' + stg.name + ' 에서 쓰러졌다 — 주운 금은 절반만 남는다', 'bad');
     core.save.player.gold += goldKept;
     var got = {
-      dead: true, stage: stg.name, gold: goldKept, kills: run.kills,
+      dead: true, stage: stg.name, gold: goldKept, kills: run.kills, lost: (run.gold || 0) - goldKept, keep: ['레벨·경험', '장비', '전직·성좌', '업적·도감'],   // W-0241 잃은 것·남은 것(재미표준 F)
       exp: run.expGained, gear: run.gearFound,
       feat: achieveDoneCount() - run.feat0,
       next: Q ? Q.nextTodo() : null,

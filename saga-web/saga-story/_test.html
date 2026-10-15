@@ -6408,11 +6408,13 @@ window.DG_NO_TUNE = true;
       var keepQ = JSON.stringify(C.save.quests || {}), g0 = C.save.player.gold, lv = C.save.player.level, kept = null, again = false, deaths0;
       try {
         C.save.player.level = 12; S.enter('field'); var run = S.raw(); run.gold = 100; deaths0 = (S.state ? S.state().deaths : null);
-        run.pty = null; run.rm = null; run.player.invuln = 0; run.player.parryT = 0; S._hurtMe(run.hpMax * 50);
+        var endEv = null, endOn = true, endFn = function (e) { if (endOn) { endEv = e; } }; C.on('side:end', endFn);   // W-0241 쓰러짐 카드 자료(잃은 것·남은 것)
+        run.pty = null; run.rm = null; run.player.invuln = 0; run.player.parryT = 0; S._hurtMe(run.hpMax * 50); endOn = false;
         kept = C.save.player.gold - g0;
         S.enter('field'); again = S.active(); S.leave();
       } finally { if (S.active()) { S.leave(); } C.save.player.gold = g0; C.save.player.level = lv; C.save.quests = JSON.parse(keepQ); }
-      return funMark(false, kept === 50 && again) + '판 금 100 → 남은 금 ' + kept + '(절반) · 레벨·장비·위치 무손실 · 다시 들어가기 ' + (again ? '조작 1' : '안 됨') + ' · 비용이 낮고 "죽어도 남는 것" 안내 없음(PLAN §4 F△)';
+      var told = !!endEv && endEv.dead && endEv.lost === 50 && (endEv.keep || []).length >= 4;
+      return funMark(kept === 50 && again && told, kept === 50 && again) + '판 금 100 → 남은 금 ' + kept + '(절반 — 잃는 건 이번 판 주운 금뿐) · 레벨·장비·위치 무손실 · 다시 들어가기 ' + (again ? '조작 1' : '안 됨') + ' · 쓰러짐 카드 ' + (told ? '잃은 것 ' + endEv.lost + ' · 남은 것 ' + endEv.keep.join('/') : '안내 없음') + (told ? '' : ' · 비용이 낮고 "죽어도 남는 것" 안내 없음(PLAN §4 F△)');
     });
 
     t('재미표준 G 성장 가시화(측정) — 전직 다섯 단·레벨업 연출이 있고, 외형 변화는 없다', function () {
