@@ -1058,7 +1058,7 @@
   /* ── 인물 · 펫 상세 — js/ui-detail.js(R-4). 같은 이름 한 줄 넘김 · growth·buddy 는 시트도 써서 여기 남김 ─────── */
   function growth() { return global.DG.growth || null; }
   function buddy() { return global.DG.buddy || null; }
-  function UD() { return global.DG.uiDetail.setup({ $: $, esc: esc, els: els, hero: hero, net: net, ico: ico, distLabel: distLabel, p3src: p3src, p3tag: p3tag }); }
+  var udH = null; function UD() { return global.DG.uiDetail.setup(udH || (udH = { $: $, esc: esc, els: els, hero: hero, net: net, ico: ico, distLabel: distLabel, p3src: p3src, p3tag: p3tag, growth: growth, buddy: buddy })); }
   function detailHost() { return UD().host(); }
   function openDetail(kind, id) { UD().open(kind, id); }
   function closeDetail() { UD().close(); }

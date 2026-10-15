@@ -1047,7 +1047,7 @@
     b.then(function (buf) {
       if (!buf) { plain(); return; }
       var got = false;   // R-5 — ok 안에서 던지면 GLTFLoader 가 onError 로 돌린다: 그땐 옛 길로 다시 받지 않는다(ok 두 번·inflight 두 번 감소)
-      try { ld.parse(buf, url.slice(0, url.lastIndexOf('/') + 1), function (g) { got = true; ok(g); }, function () { if (!got) { plain(); } }); } catch (e) { if (!got) { plain(); } }
+      try { ld.parse(buf, url.slice(0, url.lastIndexOf('/') + 1), function (g) { got = true; ok(g); }, function (e) { if (!got) { plain(); } else { if (typeof console !== 'undefined') { console.warn('[던전 GLB 후처리 오류]', url, e); } if (bad) { bad(e); } } }); } catch (e) { if (!got) { plain(); } }   // R-5(2) — ok 안 예외는 옛 ld.load 길처럼 bad 로(대기자 깨움·pump)
     });
   }
   function acquire(url, done) {

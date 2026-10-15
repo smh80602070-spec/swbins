@@ -631,6 +631,6 @@
 
   /* ── HUD (상단·적·아래·고르기) — js/dungeon-view-hud.js(R-4). 같은 이름 한 줄 넘김 ───────── */
   var hudBind = null;
-  function HUD() { return global.DG.dungeonViewHud.bind(hudBind || (hudBind = { d: d, setTip: setTip, show: show, view: function () { return { hud: hud, choiceEl: choiceEl, bottomEl: bottomEl, foeEl: foeEl, actionsEl: actionsEl, shown: shown, keys: keys }; } })); }
+  function HUD() { return global.DG.dungeonViewHud.bind(hudBind || (hudBind = { d: d, setTip: setTip, show: show, view: function () { var v = hudBind.v || (hudBind.v = {}); v.hud = hud; v.choiceEl = choiceEl; v.bottomEl = bottomEl; v.foeEl = foeEl; v.actionsEl = actionsEl; v.shown = shown; v.keys = keys; return v; } })); }
   function renderHud() { return HUD().renderHud.apply(null, arguments); } function renderFoe() { return HUD().renderFoe.apply(null, arguments); } function renderBottom() { return HUD().renderBottom.apply(null, arguments); } function renderChoice() { return HUD().renderChoice.apply(null, arguments); }
 

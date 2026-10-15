@@ -88,7 +88,7 @@
 
 
   /* ── 마을 (게시판 · 깃대) · 전체지도 — js/ui-town.js(R-4). 같은 이름 한 줄 넘김 ───────────── */
-  function UT() { return global.DG.uiTown.setup({ esc: esc }); }
+  var utH = null; function UT() { return global.DG.uiTown.setup(utH || (utH = { esc: esc })); }
   function viewTown() { return UT().viewTown(); }
   function viewMap() { return UT().viewMap(); }
 

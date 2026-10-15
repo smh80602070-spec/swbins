@@ -498,7 +498,7 @@
 
     var spent = V.spent(prop);
     var big = prop.kind === 'shop' || prop.kind === 'school' ||
-              prop.kind === 'home' || prop.kind === 'museum' || prop.kind === 'tailor';   var t2 = big && global.DG.mode2d && global.DG.mode2d.hasKind(prop.kind) ? global.DG.cfg.mode2d.prop2d[prop.kind] : null, tagDrop = t2 && t2.top ? Math.max(0, 104 - (t2.h * (256 - t2.top) / 256 + 35)) : 0;   // W-0220 그림 위가 빈 건물(서당·사고·침선방)은 이름표를 보이는 지붕 쪽으로 내린다
+              prop.kind === 'home' || prop.kind === 'museum' || prop.kind === 'tailor';   var t2 = big && global.DG.mode2d && global.DG.mode2d.hasKind(prop.kind) ? global.DG.cfg.mode2d.prop2d[prop.kind] : null, tagDrop = t2 && t2.top && global.DG.mode2d.spriteReady && global.DG.mode2d.spriteReady(t2.id) ? Math.max(0, 104 - (t2.h * (256 - t2.top) / 256 + 35)) : 0;   // W-0220 그림 위가 빈 건물(서당·사고·침선방)은 이름표를 보이는 지붕 쪽으로 내린다
     /* 바람 — 자리마다 위상을 달리해 한꺼번에 흔들리지 않게 한다 */
     var sway = Math.sin(now / 1350 + prop.x * 0.021 + prop.y * 0.013) * 0.045;
 

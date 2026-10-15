@@ -1981,7 +1981,7 @@
         box(g, 0, 20, 0, 6, 40, 6, 0x5c4632, 'flat', true);
         box(g, 0, 34, 0, 26, 8, 3, glow, 'glow', false);
       } else {
-        var stShape = function () { var sg = new T.Group(); box(sg, 0, 17, 0, 16, 34, 8, 0x6a6a75, 'flat', true); box(sg, 0, 36, 0, 12, 4, 10, glow, 'glow', false); return sg; }; var mm = markModel(mkey), AS3s = mm ? AS() : null, st = AS3s ? AS3s.build('crea:' + mm.id, 'mark:' + mkey, mm.h, null, stShape) : stShape();   // W-0219 결사비 = 자체 비석 stele_01 · 난입 = 깃대 banner_pole_01(world 표, lookup 'crea:') — 못 받거나 dg3d.markGlb 0 이면 옛 상자 비석
+        var stShape = function (cap) { var sg = new T.Group(); box(sg, 0, 17, 0, 16, 34, 8, 0x6a6a75, 'flat', true); if (cap) { box(sg, 0, 36, 0, 12, 4, 10, glow, 'glow', false); } return sg; }; var mm = markModel(mkey), AS3s = mm ? AS() : null, st = AS3s ? AS3s.build('crea:' + mm.id, 'mark:' + mkey, mm.h, null, stShape) : stShape(true);   // W-0219 결사비 = 자체 비석 stele_01 · 난입 = 깃대 banner_pole_01(world 표, lookup 'crea:') — 못 받거나 dg3d.markGlb 0 이면 옛 상자 비석
         st.userData.cast = true; g.add(st); if (AS3s) { box(g, 0, 5.4, 0, 34, 0.8, 34, glow, 'glow', false); }   // 표식 색은 발판 위 빛 판이 낸다(역참과 같은 꼴)
       }
       var mr = box(g, 0, 0.8, 0, 56, 1.6, 56, glow, 'glow', false);

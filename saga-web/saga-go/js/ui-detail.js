@@ -10,20 +10,18 @@
 
   var core = global.DG.core;
   var data = global.DG.data;
-  var $, esc, els, hero, net, ico, distLabel, p3src, p3tag;
+  var $, esc, els, hero, net, ico, distLabel, p3src, p3tag, growth, buddy;
   var openDetailRef = null;    // 열려 있는 상세 화면 { kind, id }
   var api = null;
   function setup(h) {
-    $ = h.$; esc = h.esc; els = h.els; hero = h.hero; net = h.net; ico = h.ico; distLabel = h.distLabel; p3src = h.p3src; p3tag = h.p3tag;
+    $ = h.$; esc = h.esc; els = h.els; hero = h.hero; net = h.net; ico = h.ico; distLabel = h.distLabel; p3src = h.p3src; p3tag = h.p3tag; growth = h.growth; buddy = h.buddy;
     return api;
   }
 
 
   /** 연성·승화 모듈 (이 판에만 있는 축이라 없을 수도 있다고 보고 쓴다) */
-  function growth() { return global.DG.growth || null; }
 
   /** 반려 모듈 — 위와 같은 이유로 있으면 쓴다 */
-  function buddy() { return global.DG.buddy || null; }
 
   function detailHost() {
     var el = $('detail');

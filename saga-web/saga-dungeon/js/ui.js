@@ -2058,7 +2058,7 @@
 
 
   /* ── 인물 · 펫 상세 — js/ui-detail.js(R-4). 같은 이름 한 줄 넘김 ───────────────── */
-  function UD() { return global.DG.uiDetail.setup({ $: $, esc: esc, els: els, hero: hero, net: net, eraIcon: eraIcon, p3src: p3src, p3tag: p3tag }); }
+  var udH = null; function UD() { return global.DG.uiDetail.setup(udH || (udH = { $: $, esc: esc, els: els, hero: hero, net: net, eraIcon: eraIcon, p3src: p3src, p3tag: p3tag })); }
   function detailHost() { return UD().host(); }
   function openDetail(kind, id) { UD().open(kind, id); }
   function closeDetail() { UD().close(); }
