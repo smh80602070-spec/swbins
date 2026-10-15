@@ -410,6 +410,7 @@
   'use strict';
   global.DG = global.DG || {};
   global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.menu = { keep: ['bag', 'map'] };   // W-0255 ☰ 메뉴 화면 — 옛 붙박이 그대로 가방·지도 + ☰(옛 더보기 자리), 나머지는 메뉴 격자
   global.DG.cfg.account = {
     art: 'assets/store/forest_key',   // 타이틀 키 아트(K-0041, W-0050)
     name: '3마을',

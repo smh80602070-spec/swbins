@@ -118,7 +118,6 @@ b, strong, .p-sub, .coin, .dg-loot, .d2-gv { font-variant-numeric: tabular-nums;
  */
 .glass,
 .card,
-#sheet,
 .pcard,
 .dg-card,
 .sp-in,
@@ -137,7 +136,7 @@ b, strong, .p-sub, .coin, .dg-loot, .d2-gv { font-variant-numeric: tabular-nums;
 }
 
 /* 돌 결 — 아주 옅은 세로 줄. 그림 없이 결만 만든다 */
-.card, #sheet, #dg-hud {
+.card, #dg-hud {
   background-image:
     repeating-linear-gradient(92deg,
       rgba(255, 255, 255, 0.014) 0 2px, rgba(0, 0, 0, 0.05) 2px 5px),
@@ -169,9 +168,10 @@ b, strong, .p-sub, .coin, .dg-loot, .d2-gv { font-variant-numeric: tabular-nums;
 
 /* ── 3. 버튼 — 돌 슬래브 ─────────────────────────────────── */
 
+/* W-0255 — .btn·독 단추·#sheet 의 틀(9-slice)은 공용 ui-kit.css(2나락 적색 옷)가 맡는다. 여기선 글꼴만, 슬래브는 아이콘 단추에만 */
 .btn,
-.icon-btn,
-#dock button {
+#dock button { font-family: var(--d2-serif); letter-spacing: 0.05em; }
+.icon-btn {
   border-radius: 2px !important;
   font-family: var(--d2-serif);
   letter-spacing: 0.05em;
@@ -184,9 +184,7 @@ b, strong, .p-sub, .coin, .dg-loot, .d2-gv { font-variant-numeric: tabular-nums;
     0 2px 6px rgba(0, 0, 0, 0.6) !important;
   transition: filter .12s, box-shadow .12s;
 }
-.btn:hover:not(:disabled),
-.icon-btn:hover,
-#dock button:hover {
+.icon-btn:hover {
   transform: none !important;
   filter: brightness(1.35);
   border-color: var(--d2-brass-l) !important;
@@ -202,13 +200,12 @@ b, strong, .p-sub, .coin, .dg-loot, .d2-gv { font-variant-numeric: tabular-nums;
   text-shadow: 0 0 8px rgba(255, 224, 150, 0.45), 0 1px 0 #000;
 }
 .btn.ghost { background: rgba(0, 0, 0, 0.4) !important; }
-.icon-btn.on,
-#dock button.on {
+.icon-btn.on {
   background: linear-gradient(180deg, #7d6228, #4a3714) !important;
   border-color: #c9a556 !important;
 }
-.icon-btn.on span, #dock button.on span,
-.icon-btn.on small, #dock button.on small { color: #f3e5bb !important; }
+.icon-btn.on span,
+.icon-btn.on small { color: #f3e5bb !important; }
 
 /* 독(하단 우측)은 원작에 없는 것이라 최소한으로만 남긴다 */
 #dock button small { font-family: var(--d2-serif); letter-spacing: 0; }

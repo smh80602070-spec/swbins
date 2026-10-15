@@ -1,0 +1,127 @@
+/* 사가 다섯 판 공용 창 틀 — W-0252 (정본 shared/css/ui-kit.css → tools/sync-shared.mjs 가 판마다 css/ui-kit.css 로 복사)
+ *
+ * 다섯 판은 창 마크업이 같다(#sheet·.sheet-head·#sheet-close·#encounter .enc-card·#detail .dt-card·#dock button·.btn).
+ * 이 파일이 그 **틀**(모서리·여백·글자·눌림)을 한 벌로 정하고, 판마다 다른 건 **색 옷**뿐이다 —
+ * 9-slice 그림 `assets/ui/*.png`(K-0040, 정본 shared/assets/ui/<판>/ — 같은 이름 다른 색, sync 가 판 폴더로 복사, 규격 ui_parts.json).
+ * 그래서 같은 이 파일이 판마다 제 색으로 입혀진다. 각 판 style.css **뒤**에 싣는다(같은 특이도면 뒤가 이긴다).
+ *
+ * 규칙: 레이아웃(자리·크기)은 안 바꾼다 — 겉옷만. border-image-width 를 border-width 보다 크게 줘서 그림이 안쪽 여백 위에 그려지게
+ * (테두리 두께가 그대로라 자리가 안 밀린다). 원래 배경은 남겨 두어 그림을 못 받아도 창이 비지 않는다.
+ * 8px 격자 · 글꼴 본문 하나 + 숫자 고정폭(tabular-nums).
+ */
+
+:root {
+  --ui-window:  url(../assets/ui/window.png);
+  --ui-popup:   url(../assets/ui/popup.png);
+  --ui-card:    url(../assets/ui/card.png);
+  --ui-btn:     url(../assets/ui/btn_normal.png);
+  --ui-btn-hv:  url(../assets/ui/btn_hover.png);
+  --ui-btn-dn:  url(../assets/ui/btn_pressed.png);
+  --ui-btn-off: url(../assets/ui/btn_disabled.png);
+  --ui-tab-on:  url(../assets/ui/tab_on.png);
+  --ui-tab-off: url(../assets/ui/tab_off.png);
+  /* 모서리 — 색 옷 그림의 모서리(192px 그림에 ~6px, 반 크기로 그린다)와 맞춘다. 판 안의 카드·줄도 같은 결로 */
+  --r-lg: 12px;
+  --r-md: 10px;
+  --r-sm: 8px;
+}
+
+body { font-variant-numeric: tabular-nums; }
+
+/* ── 시트(오른쪽에서 밀려 나오는 창) ── */
+#sheet {
+  border-radius: var(--r-sm);
+  border-image: var(--ui-window) 32 fill / 16px stretch;
+}
+.sheet-head {
+  padding: 16px 16px 8px 24px;
+  border-bottom: 0;
+  background: linear-gradient(90deg, transparent, var(--gold-soft) 18%, var(--gold-soft) 82%, transparent) bottom / 100% 1px no-repeat;
+}
+.sheet-head h3 { font-size: 16px; letter-spacing: 0; }
+#sheet-body { padding: 16px 24px 24px; }
+
+/* ── 모달 카드(조우·결과·안내) · 인물 상세 ── */
+.enc-card, .dt-card {
+  border-radius: var(--r-sm);
+  border-image: var(--ui-popup) 36 fill / 18px stretch;
+  padding: 24px;
+}
+
+/* ── 단추 ── */
+.btn {
+  border-radius: var(--r-sm);
+  border-image: var(--ui-btn) 24 fill / 12px stretch;
+  min-height: 40px;
+}
+.btn:hover:not(:disabled) { filter: none; border-image-source: var(--ui-btn-hv); }
+.btn:active:not(:disabled) { border-image-source: var(--ui-btn-dn); }
+.btn:disabled { opacity: 1; color: var(--ink-faint); border-image-source: var(--ui-btn-off); }
+.btn.primary { border-image: none; border-radius: var(--r-sm); }   /* 할 일 단추는 금빛 그대로 — 색 옷 위에서 한눈에 */
+.btn.primary:hover:not(:disabled) { filter: brightness(1.12); }
+.btn.ghost { border-image: none; }
+.btn.tiny { min-height: 0; border-image-width: 8px; border-radius: 6px; }
+
+/* ── 아래 독(메뉴 단추) ── */
+#dock button {
+  border-radius: var(--r-md);
+  border-image: var(--ui-btn) 24 fill / 14px stretch;
+}
+#dock button:hover { border-image-source: var(--ui-btn-hv); }
+#dock button.on { border-image-source: var(--ui-btn-dn); background: var(--glass); box-shadow: var(--shadow), inset 0 0 0 2px var(--gold); }
+#dock button.on span, #dock button.on small { color: var(--gold); }
+
+/* ── 닫기 단추(시트·상세) ── */
+#sheet-close, .dt-x {
+  width: 40px; height: 40px; border-radius: 50%; font-size: 15px;
+}
+
+/* ── ☰ 메뉴 화면(W-0253, shared/js/menu-grid.js) — 독엔 cfg.menu.keep 만, 나머지는 여기 격자로 ── */
+#dock button[data-menu-only] { display: none; }
+#btn-menu { position: relative; }
+#btn-menu.mg-alert::after { content: ''; position: absolute; top: 6px; right: 8px; width: 9px; height: 9px; border-radius: 50%; background: var(--bad); box-shadow: 0 0 0 2px rgba(0, 0, 0, .5); }
+#menu-grid {
+  position: fixed; inset: 0; z-index: 38; display: none;
+  align-items: center; justify-content: center; padding: 24px;
+  background: rgba(6, 8, 12, .62);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+#menu-grid.show { display: flex; animation: fade .18s ease-out; }
+.mg-panel {
+  width: min(760px, 100%); max-height: calc(100vh - 48px); overflow-y: auto; padding: 24px;
+  background: rgba(24, 27, 34, .94); border: 1px solid var(--glass-br); border-radius: var(--r-sm);
+  border-image: var(--ui-popup) 36 fill / 18px stretch;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .6);
+}
+.mg-head { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+.mg-head h3 { margin: 0; font-size: 18px; }
+.mg-head small { flex: 1; }
+.mg-x { width: 40px; height: 40px; border-radius: 50%; font-size: 15px; }
+.mg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 8px; }
+/* 칸 — card 그림은 안쪽 초상 틀이 있어 칸엔 btn 그림(눌림·밝힘이 같은 결) */
+.mg-cell {
+  position: relative; min-height: 104px; padding: 16px 8px;
+  display: grid; place-items: center; align-content: center; gap: 8px;
+  color: var(--ink); font-family: inherit; cursor: pointer;
+  background: rgba(255, 255, 255, .05); border: 1px solid var(--glass-br); border-radius: var(--r-sm);
+  border-image: var(--ui-btn) 24 fill / 14px stretch;
+}
+.mg-cell span { font-size: 30px; line-height: 1; }
+.mg-cell span svg { width: 30px; height: 30px; }
+.mg-cell small { font-size: 13px; font-weight: 600; color: var(--ink); }
+.mg-cell:hover, .mg-cell:focus-visible { outline: none; border-image-source: var(--ui-btn-hv); box-shadow: inset 0 0 0 2px var(--gold); }
+.mg-cell.on { box-shadow: inset 0 0 0 2px var(--gold); }
+.mg-cell:disabled { opacity: .45; cursor: not-allowed; }
+.mg-cell.badge::after { content: attr(data-badge); position: absolute; top: 8px; right: 10px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 9px; background: var(--bad); color: #fff; font-size: 11px; font-weight: 700; display: grid; place-items: center; }
+.mg-cell i.badge {
+  position: absolute; top: 8px; right: 10px; font-style: normal;
+  min-width: 17px; height: 17px; padding: 0 4px; border-radius: 9px;
+  background: var(--bad); color: #fff; font-size: 11px; font-weight: 700;
+  display: grid; place-items: center;
+}
+@media (max-width: 600px) {
+  #menu-grid { padding: 16px; }
+  .mg-panel { padding: 16px; }
+  .mg-grid { grid-template-columns: repeat(3, 1fr); }
+  .mg-cell { min-height: 96px; }
+}

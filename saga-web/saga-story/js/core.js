@@ -426,6 +426,7 @@
   'use strict';
   global.DG = global.DG || {};
   global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.menu = { keep: ['field', 'bag', 'job', 'story'] };   // W-0255 ☰ 메뉴 화면 — 독엔 이 넷 + ☰, 나머지는 메뉴 격자
   global.DG.cfg.account = {
     art: 'assets/store/story_key',   // 타이틀 키 아트(K-0041, W-0050)
     name: '4종횡',

@@ -15,29 +15,40 @@
   function cfg() { return global.DG && global.DG.cfg && global.DG.cfg.menu; }
   function keyOf(b) { return b.getAttribute('data-sheet') || b.id || ''; }
   function dockButtons() { var d = doc.getElementById('dock'); return d ? [].slice.call(d.querySelectorAll('button')).filter(function (b) { return b !== btn; }) : []; }
+  function shown(b) { return b.style.display !== 'none' && !b.hidden; }   // 아직 안 열린 칸(3마을 공사 — syncDock 이 인라인으로 숨김)은 격자에도 안 낸다
 
   /** 다른 창이 열려 있나 — 그때 Esc 는 그 창 몫이다(시트·조우·상세·큰 지도·패시브 그물·이야기 대화) */
   function otherOpen() {
-    if (doc.querySelector('#sheet.show, #encounter.show, #detail.show, #overworld-map.show, #top-more.show')) { return true; }   // #top-more = 좁은 화면 도구 서랍
+    if (doc.querySelector('#sheet.show, #encounter.show, #detail.show, #overworld-map.show, #top-more.show, #tools-drawer.show')) { return true; }   // #top-more·#tools-drawer = 좁은 화면 도구 서랍
     var D = global.DG || {};
+    if (D.minimap && D.minimap.isBig && D.minimap.isBig()) { return true; }   // 2나락 큰 지도(M)
     return !!((D.passiveWebUI && D.passiveWebUI.isOpen && D.passiveWebUI.isOpen()) || (D.scenario && D.scenario.isOpen && D.scenario.isOpen()) || (D.story && D.story.isOpen && D.story.isOpen()));
   }
 
   function isOpen() { return !!(root && root.classList.contains('show')); }
 
   function build() {
-    var grid = root.querySelector('.mg-grid'), list = dockButtons(), i;
+    var grid = root.querySelector('.mg-grid'), list = dockButtons().filter(shown), i;
     grid.innerHTML = '';
     for (i = 0; i < list.length; i++) {
       var b = list[i], c = doc.createElement('button');
       c.type = 'button'; c.className = 'mg-cell' + (b.classList.contains('on') ? ' on' : '');
       c.setAttribute('data-for', keyOf(b)); c.innerHTML = b.innerHTML;
+      if (b.classList.contains('badge') && b.getAttribute('data-badge')) { c.classList.add('badge'); c.setAttribute('data-badge', b.getAttribute('data-badge')); }   // 뱃지를 단추 클래스로 다는 판(3마을 편지)
       if (b.title) { c.title = b.title; }
       if (b.disabled) { c.disabled = true; }
       c.addEventListener('click', (function (src) { return function () { close(); src.click(); }; })(b));
       grid.appendChild(c);
     }
     return list.length;
+  }
+
+  /** 독에서 접힌 단추에 뱃지가 있거나 켜져(.on) 있으면 ☰ 에 알림 점·켜짐 — 접었다고 안 읽은 편지가 안 보이면 안 된다 */
+  function sync() {
+    if (!btn) { return; }
+    var hid = dockButtons().filter(function (b) { return b.hasAttribute('data-menu-only') && shown(b); });
+    btn.classList.toggle('mg-alert', hid.some(function (b) { return b.classList.contains('badge') || !!b.querySelector('i.badge, .badge, .dot'); }));
+    btn.classList.toggle('on', hid.some(function (b) { return b.classList.contains('on'); }));
   }
 
   function open() { if (!root) { return 0; } var n = build(); root.classList.add('show'); var f = root.querySelector('.mg-cell'); if (f) { f.focus(); } return n; }
@@ -65,6 +76,8 @@
     btn.innerHTML = '<span>☰</span><small>메뉴</small>';
     btn.addEventListener('click', toggle);
     dock.appendChild(btn);
+    if (global.MutationObserver) { new global.MutationObserver(sync).observe(dock, { subtree: true, childList: true, attributes: true, attributeFilter: ['class', 'data-badge', 'style'] }); }
+    sync();
     root = doc.createElement('div');
     root.id = 'menu-grid';
     root.innerHTML = '<div class="mg-panel" role="dialog" aria-label="메뉴"><div class="mg-head"><h3>메뉴</h3><small class="muted">Esc 로 닫기</small><button type="button" class="icon-btn sm mg-x" title="닫기">✕</button></div><div class="mg-grid"></div></div>';
@@ -90,5 +103,5 @@
   if (doc.readyState === 'loading') { doc.addEventListener('DOMContentLoaded', init); } else { setTimeout(init, 0); }
 
   global.DG = global.DG || {};
-  global.DG.menuGrid = { init: init, open: open, close: close, isOpen: isOpen, _otherOpen: otherOpen, _reset: reset };
+  global.DG.menuGrid = { init: init, open: open, close: close, isOpen: isOpen, _otherOpen: otherOpen, _reset: reset, _sync: sync };
 })(window);

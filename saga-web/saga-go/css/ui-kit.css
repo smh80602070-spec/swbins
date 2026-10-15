@@ -78,6 +78,8 @@ body { font-variant-numeric: tabular-nums; }
 
 /* ── ☰ 메뉴 화면(W-0253, shared/js/menu-grid.js) — 독엔 cfg.menu.keep 만, 나머지는 여기 격자로 ── */
 #dock button[data-menu-only] { display: none; }
+#btn-menu { position: relative; }
+#btn-menu.mg-alert::after { content: ''; position: absolute; top: 6px; right: 8px; width: 9px; height: 9px; border-radius: 50%; background: var(--bad); box-shadow: 0 0 0 2px rgba(0, 0, 0, .5); }
 #menu-grid {
   position: fixed; inset: 0; z-index: 38; display: none;
   align-items: center; justify-content: center; padding: 24px;
@@ -110,6 +112,7 @@ body { font-variant-numeric: tabular-nums; }
 .mg-cell:hover, .mg-cell:focus-visible { outline: none; border-image-source: var(--ui-btn-hv); box-shadow: inset 0 0 0 2px var(--gold); }
 .mg-cell.on { box-shadow: inset 0 0 0 2px var(--gold); }
 .mg-cell:disabled { opacity: .45; cursor: not-allowed; }
+.mg-cell.badge::after { content: attr(data-badge); position: absolute; top: 8px; right: 10px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 9px; background: var(--bad); color: #fff; font-size: 11px; font-weight: 700; display: grid; place-items: center; }
 .mg-cell i.badge {
   position: absolute; top: 8px; right: 10px; font-style: normal;
   min-width: 17px; height: 17px; padding: 0 4px; border-radius: 9px;

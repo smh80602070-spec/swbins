@@ -731,7 +731,7 @@
     set: function (o) { if (o && typeof o.folded === 'boolean') { folded = o.folded; } apply(); draw(); },
     reset: function () { folded = false; },
     /* 전체 지도(자동지도) — M키/🧭가 부른다 */
-    openBig: openBig, closeBig: closeBig, toggleBig: toggleBig,
+    openBig: openBig, closeBig: closeBig, toggleBig: toggleBig, isBig: function () { return bigOn; },   // isBig — W-0255 ☰ 메뉴 화면이 Esc 를 양보할지 본다
     /** 자가진단용 — 순수 계산만(캔버스 없이) */
     _bigLayout: bigLayout,
     _smallWorldTiles: smallWorldTiles,

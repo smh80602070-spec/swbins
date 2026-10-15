@@ -8,6 +8,7 @@ try{if(location.protocol!=='file:'&&/\/index\.html$/.test(location.pathname))his
 <meta name="theme-color" content="#7ec8e8">
 <title>3마을 — 모으고 나눈다</title>
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/ui-kit.css">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icons/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -59,25 +60,22 @@ try{if(location.protocol!=='file:'&&/\/index\.html$/.test(location.pathname))his
 <!-- 하단 중앙: 손이 닿는 것 -->
 <div id="focusbar"></div>
 
-<!-- 우하단: 액션 독 — 가방·지도만 붙박이, 나머지는 "더보기" 뒤로
-     (사가종횡·사가천하와 같은 결) -->
+<!-- 우하단: 액션 독 — 가방·지도만 붙박이, 나머지는 ☰ 메뉴 화면(W-0255 js/menu-grid.js · core.js cfg.menu.keep)
+     — 단추는 여기 그대로 두고(숨김) 메뉴 격자가 읽어 간다 -->
 <nav id="dock">
-  <div id="dock-more">
-    <button data-sheet="folks"><span>🏡</span><small>주민</small></button>
-    <button data-sheet="home"><span>🏠</span><small>집</small></button>
-    <button data-sheet="mail"><span>📮</span><small>편지</small></button>
-    <!-- 공사 — 개토패를 사기 전에는 숨어 있다 (ui.js 의 syncDock) -->
-    <button data-sheet="build" style="display:none"><span>🪧</span><small>공사</small></button>
-    <button data-sheet="dex"><span>📖</span><small>도감</small></button>
-    <button id="btn-skill" title="마을살이 솜씨도"><span>🌿</span><small>솜씨</small></button>
-    <button data-sheet="log"><span>📜</span><small>기록</small></button>
-    <button data-sheet="keys"><span>⌨️</span><small>키설정</small></button>
-    <button data-sheet="settings"><span>⚙️</span><small>설정</small></button>
-  </div>
+  <button data-sheet="folks"><span>🏡</span><small>주민</small></button>
+  <button data-sheet="home"><span>🏠</span><small>집</small></button>
+  <button data-sheet="mail"><span>📮</span><small>편지</small></button>
+  <!-- 공사 — 개토패를 사기 전에는 숨어 있다 (ui.js 의 syncDock) -->
+  <button data-sheet="build" style="display:none"><span>🪧</span><small>공사</small></button>
+  <button data-sheet="dex"><span>📖</span><small>도감</small></button>
+  <button id="btn-skill" title="마을살이 솜씨도"><span>🌿</span><small>솜씨</small></button>
+  <button data-sheet="log"><span>📜</span><small>기록</small></button>
+  <button data-sheet="keys"><span>⌨️</span><small>키설정</small></button>
+  <button data-sheet="settings"><span>⚙️</span><small>설정</small></button>
   <button data-sheet="bag"><span>🎒</span><small>가방</small></button>
   <!-- 전체지도 — 구면 마을을 펼쳐서 보는 M키식 토글 (PLAN 34-1절) -->
   <button data-sheet="map"><span>🗺️</span><small>지도</small></button>
-  <button id="dock-more-btn"><span>⋯</span><small>더보기</small></button>
 </nav>
 
 <!-- 슬라이드 시트 -->

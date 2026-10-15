@@ -39,7 +39,8 @@ async function closeAll(page) {
     document.querySelectorAll('#encounter .enc-card [data-act="close-enc"], #help-ok, .dt-x').forEach((b) => { if (b.offsetParent) { b.click(); } });
     const e = document.getElementById('encounter'); if (e) { e.classList.remove('show'); }
     const m = document.getElementById('menu-grid'); if (m && m.classList.contains('show')) { m.classList.remove('show'); }
-    if (DG.passiveWebUI && DG.passiveWebUI.isOpen()) { DG.passiveWebUI.close(); }   // 성도·경락도 같은 패시브 그물 창(독 단추가 시트 대신 연다)
+    if (DG.passiveWebUI && DG.passiveWebUI.isOpen()) { DG.passiveWebUI.close(); }
+    if (DG.minimap && DG.minimap.closeBig) { DG.minimap.closeBig(); }   // 2나락 오버월드 단추 = 큰 지도   // 성도·경락도 같은 패시브 그물 창(독 단추가 시트 대신 연다)
   });
   await sleep(350);
 }

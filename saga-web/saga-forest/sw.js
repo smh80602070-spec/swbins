@@ -11,7 +11,7 @@
  *       사내 http 주소로 폰에서 열면 홈 화면 추가는 되지만 이 캐시는 동작하지 않는다.
  */
 
-var VERSION = 'village-v0.136.112';
+var VERSION = 'village-v0.136.113';
 var APP_CACHE = 'yv-app-' + VERSION;
 
 /* index.html 이 부르는 스크립트가 여기 다 있어야 오프라인에서 게임이 돈다.
@@ -22,6 +22,7 @@ var SHELL = [
   './dist/app.js',
   './manifest.json',
   './css/style.css',
+  './css/ui-kit.css',   // W-0255 공용 창 틀
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png'
