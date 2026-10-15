@@ -1,0 +1,154 @@
+{
+ "name": "k112_rts",
+ "spec": "character_tall",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0112 5천하 RTS 병사 6풀 — rtsai.py UNITS(그림체 B)를 그림체 C·8등신으로. 기병은 말이 넓어 880×880.",
+ "items": [
+  {
+   "id": "rts_inf_ally_front",
+   "seed": 4121404235,
+   "subject": "1boy, adult man, foot soldier, round iron helmet, spear, round wooden shield, leather armor, blue and white clothing, blue cloth, wide shot",
+   "subject_ko": "5천하 RTS 보병 아군",
+   "view": "front"
+  },
+  {
+   "id": "rts_inf_ally_side",
+   "seed": 4121404235,
+   "subject": "1boy, adult man, foot soldier, round iron helmet, spear, round wooden shield, leather armor, blue and white clothing, blue cloth, wide shot",
+   "subject_ko": "5천하 RTS 보병 아군",
+   "view": "side",
+   "extra": "facing right"
+  },
+  {
+   "id": "rts_inf_ally_back",
+   "seed": 4121404235,
+   "subject": "1boy, adult man, foot soldier, round iron helmet, spear, round wooden shield, leather armor, blue and white clothing, blue cloth, wide shot",
+   "subject_ko": "5천하 RTS 보병 아군",
+   "view": "back"
+  },
+  {
+   "id": "rts_inf_enemy_front",
+   "seed": 1789719957,
+   "subject": "1boy, adult man, foot soldier, round iron helmet, spear, round wooden shield, leather armor, dark crimson and black clothing, crimson cloth, wide shot",
+   "subject_ko": "5천하 RTS 보병 적군",
+   "view": "front"
+  },
+  {
+   "id": "rts_inf_enemy_side",
+   "seed": 1789719957,
+   "subject": "1boy, adult man, foot soldier, round iron helmet, spear, round wooden shield, leather armor, dark crimson and black clothing, crimson cloth, wide shot",
+   "subject_ko": "5천하 RTS 보병 적군",
+   "view": "side",
+   "extra": "facing right"
+  },
+  {
+   "id": "rts_inf_enemy_back",
+   "seed": 1789719957,
+   "subject": "1boy, adult man, foot soldier, round iron helmet, spear, round wooden shield, leather armor, dark crimson and black clothing, crimson cloth, wide shot",
+   "subject_ko": "5천하 RTS 보병 적군",
+   "view": "back"
+  },
+  {
+   "id": "rts_arc_ally_front",
+   "seed": 3861400287,
+   "subject": "1boy, adult man, archer soldier, hooded, longbow, quiver of arrows on the back, light leather armor, blue and white clothing, blue cloth, wide shot",
+   "subject_ko": "5천하 RTS 궁병 아군",
+   "view": "front"
+  },
+  {
+   "id": "rts_arc_ally_side",
+   "seed": 3861400287,
+   "subject": "1boy, adult man, archer soldier, hooded, longbow, quiver of arrows on the back, light leather armor, blue and white clothing, blue cloth, wide shot",
+   "subject_ko": "5천하 RTS 궁병 아군",
+   "view": "side",
+   "extra": "facing right"
+  },
+  {
+   "id": "rts_arc_ally_back",
+   "seed": 3861400287,
+   "subject": "1boy, adult man, archer soldier, hooded, longbow, quiver of arrows on the back, light leather armor, blue and white clothing, blue cloth, wide shot",
+   "subject_ko": "5천하 RTS 궁병 아군",
+   "view": "back"
+  },
+  {
+   "id": "rts_arc_enemy_front",
+   "seed": 2368072034,
+   "subject": "1boy, adult man, archer soldier, hooded, longbow, quiver of arrows on the back, light leather armor, dark crimson and black clothing, crimson cloth, wide shot",
+   "subject_ko": "5천하 RTS 궁병 적군",
+   "view": "front"
+  },
+  {
+   "id": "rts_arc_enemy_side",
+   "seed": 2368072034,
+   "subject": "1boy, adult man, archer soldier, hooded, longbow, quiver of arrows on the back, light leather armor, dark crimson and black clothing, crimson cloth, wide shot",
+   "subject_ko": "5천하 RTS 궁병 적군",
+   "view": "side",
+   "extra": "facing right"
+  },
+  {
+   "id": "rts_arc_enemy_back",
+   "seed": 2368072034,
+   "subject": "1boy, adult man, archer soldier, hooded, longbow, quiver of arrows on the back, light leather armor, dark crimson and black clothing, crimson cloth, wide shot",
+   "subject_ko": "5천하 RTS 궁병 적군",
+   "view": "back"
+  },
+  {
+   "id": "rts_cav_ally_front",
+   "seed": 319267551,
+   "subject": "1boy, adult man, cavalry rider sitting on a brown horse, steel helmet, long lance, blue and white clothing, blue cloth horse cloth, full horse and rider visible, wide shot",
+   "subject_ko": "5천하 RTS 기병 아군",
+   "view": "front",
+   "width": 880,
+   "height": 880
+  },
+  {
+   "id": "rts_cav_ally_side",
+   "seed": 319267551,
+   "subject": "1boy, adult man, cavalry rider sitting on a brown horse, steel helmet, long lance, blue and white clothing, blue cloth horse cloth, full horse and rider visible, wide shot",
+   "subject_ko": "5천하 RTS 기병 아군",
+   "view": "side",
+   "extra": "facing right",
+   "width": 880,
+   "height": 880
+  },
+  {
+   "id": "rts_cav_ally_back",
+   "seed": 319267551,
+   "subject": "1boy, adult man, cavalry rider sitting on a brown horse, steel helmet, long lance, blue and white clothing, blue cloth horse cloth, full horse and rider visible, wide shot",
+   "subject_ko": "5천하 RTS 기병 아군",
+   "view": "back",
+   "width": 880,
+   "height": 880
+  },
+  {
+   "id": "rts_cav_enemy_front",
+   "seed": 3938343726,
+   "subject": "1boy, adult man, cavalry rider sitting on a brown horse, steel helmet, long lance, dark crimson and black clothing, crimson cloth horse cloth, full horse and rider visible, wide shot",
+   "subject_ko": "5천하 RTS 기병 적군",
+   "view": "front",
+   "width": 880,
+   "height": 880
+  },
+  {
+   "id": "rts_cav_enemy_side",
+   "seed": 3938343726,
+   "subject": "1boy, adult man, cavalry rider sitting on a brown horse, steel helmet, long lance, dark crimson and black clothing, crimson cloth horse cloth, full horse and rider visible, wide shot",
+   "subject_ko": "5천하 RTS 기병 적군",
+   "view": "side",
+   "extra": "facing right",
+   "width": 880,
+   "height": 880
+  },
+  {
+   "id": "rts_cav_enemy_back",
+   "seed": 3938343726,
+   "subject": "1boy, adult man, cavalry rider sitting on a brown horse, steel helmet, long lance, dark crimson and black clothing, crimson cloth horse cloth, full horse and rider visible, wide shot",
+   "subject_ko": "5천하 RTS 기병 적군",
+   "view": "back",
+   "width": 880,
+   "height": 880
+  }
+ ]
+}

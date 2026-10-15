@@ -67,6 +67,11 @@ SPECS = {  # 규격 블록 — 구도·배경·크기·샘플러·부정어. 크
     'character': dict(block='1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow',
                       neg='text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow',
                       w=640, h=896, steps=30, cfg=6.0, view='three_quarter'),
+    # K-0112 2D 한 장 대역 사람 8등신 — 세로로 긴 판(≤0.8MP)·어른 몸 태그를 주제 바로 뒤(body)에 둬 앞쪽 힘을 받게
+    'character_tall': dict(body='adult, tall, long legs, slender, small head, eight heads tall',
+                           block='solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow',
+                           neg='text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed',
+                           w=640, h=1152, steps=30, cfg=6.0, view='front'),
     'portrait': dict(block='1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background',
                      neg='text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body',
                      w=640, h=896, steps=30, cfg=6.0, view='front'),
@@ -93,7 +98,7 @@ def compose(item, spec, style, model):
     subj = f'({first.strip()}:1.15)' + (', ' + rest.strip() if rest.strip() else '')   # 규칙 5 — 첫 태그만 살짝
     view = VIEWS.get(item.get('view') or sp['view'] or '', '')
     color = item.get('palette') or st['color']
-    parts = [subj, item.get('extra', ''), view, sp['block'], st['line'], st['shade'], color, st['light']]
+    parts = [subj, sp.get('body', ''), item.get('extra', ''), view, sp['block'], st['line'], st['shade'], color, st['light']]
     prompt = ', '.join(p for p in parts if p)
     neg = sp['neg'] + ', ' + st['neg']
     return prompt, neg

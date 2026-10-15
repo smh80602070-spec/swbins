@@ -1,0 +1,189 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k112_people",
+ "kit": {
+  "spec": "character_tall",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 640,
+  "height": 1152,
+  "steps": 30,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "hero_m_front",
+   "seed": 1084864906,
+   "prompt": "(1boy:1.15), adult man, adventurer, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, hood down, face visible, cloak hanging straight down close to the body, wide shot, adult, tall, long legs, slender, small head, eight heads tall, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "주인공 남 — 어른 모험가"
+  },
+  {
+   "id": "hero_m_side",
+   "seed": 1084864906,
+   "prompt": "(1boy:1.15), adult man, adventurer, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, hood down, face visible, cloak hanging straight down close to the body, wide shot, adult, tall, long legs, slender, small head, eight heads tall, facing right, side view, from side, full profile, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "주인공 남 — 어른 모험가"
+  },
+  {
+   "id": "hero_m_back",
+   "seed": 1084864906,
+   "prompt": "(1boy:1.15), adult man, adventurer, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, hood down, face visible, cloak hanging straight down close to the body, wide shot, adult, tall, long legs, slender, small head, eight heads tall, from behind, back view, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "주인공 남 — 어른 모험가"
+  },
+  {
+   "id": "hero_f_front",
+   "seed": 1274345558,
+   "prompt": "(1girl:1.15), adult woman, adventurer, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, hood down, face visible, wide shot, adult, tall, long legs, slender, small head, eight heads tall, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "주인공 여 — 어른 모험가"
+  },
+  {
+   "id": "hero_f_side",
+   "seed": 1274345558,
+   "prompt": "(1girl:1.15), adult woman, adventurer, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, hood down, face visible, wide shot, adult, tall, long legs, slender, small head, eight heads tall, facing right, side view, from side, full profile, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "주인공 여 — 어른 모험가"
+  },
+  {
+   "id": "hero_f_back",
+   "seed": 1274345558,
+   "prompt": "(1girl:1.15), adult woman, adventurer, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, hood down, face visible, wide shot, adult, tall, long legs, slender, small head, eight heads tall, from behind, back view, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "주인공 여 — 어른 모험가"
+  },
+  {
+   "id": "villager_a_front",
+   "seed": 2269847450,
+   "prompt": "(1boy:1.15), old man, villager, white hair, white beard, beige long robe, wooden walking stick, no backpack, wide shot, adult, tall, long legs, slender, small head, eight heads tall, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "마을 노인"
+  },
+  {
+   "id": "villager_a_side",
+   "seed": 2269847450,
+   "prompt": "(1boy:1.15), old man, villager, white hair, white beard, beige long robe, wooden walking stick, no backpack, wide shot, adult, tall, long legs, slender, small head, eight heads tall, facing right, side view, from side, full profile, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "마을 노인"
+  },
+  {
+   "id": "villager_a_back",
+   "seed": 2269847450,
+   "prompt": "(1boy:1.15), old man, villager, white hair, white beard, beige long robe, wooden walking stick, no backpack, wide shot, adult, tall, long legs, slender, small head, eight heads tall, from behind, back view, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "마을 노인"
+  },
+  {
+   "id": "villager_b_front",
+   "seed": 3165622442,
+   "prompt": "(1boy:1.15), young adult man, villager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, wide shot, adult, tall, long legs, slender, small head, eight heads tall, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "마을 젊은이(어른)"
+  },
+  {
+   "id": "villager_b_side",
+   "seed": 3165622442,
+   "prompt": "(1boy:1.15), young adult man, villager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, wide shot, adult, tall, long legs, slender, small head, eight heads tall, facing right, side view, from side, full profile, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "마을 젊은이(어른)"
+  },
+  {
+   "id": "villager_b_back",
+   "seed": 3165622442,
+   "prompt": "(1boy:1.15), young adult man, villager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, wide shot, adult, tall, long legs, slender, small head, eight heads tall, from behind, back view, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "마을 젊은이(어른)"
+  },
+  {
+   "id": "villager_c_front",
+   "seed": 3759792482,
+   "prompt": "(1girl:1.15), young adult woman, villager, short brown bob hair, straw hat, cream dress with red trim, brown shoes, wide shot, adult, tall, long legs, slender, small head, eight heads tall, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "마을 아가씨(어른)"
+  },
+  {
+   "id": "villager_c_side",
+   "seed": 3759792482,
+   "prompt": "(1girl:1.15), young adult woman, villager, short brown bob hair, straw hat, cream dress with red trim, brown shoes, wide shot, adult, tall, long legs, slender, small head, eight heads tall, facing right, side view, from side, full profile, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "마을 아가씨(어른)"
+  },
+  {
+   "id": "villager_c_back",
+   "seed": 3759792482,
+   "prompt": "(1girl:1.15), young adult woman, villager, short brown bob hair, straw hat, cream dress with red trim, brown shoes, wide shot, adult, tall, long legs, slender, small head, eight heads tall, from behind, back view, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "마을 아가씨(어른)"
+  },
+  {
+   "id": "companion_warrior_front",
+   "seed": 2617693365,
+   "prompt": "(1boy:1.15), adult man, armored warrior, full blue steel plate armor with helmet, large blue shield, red cloth tabard, sword at the belt, wide shot, adult, tall, long legs, slender, small head, eight heads tall, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "동행 전사"
+  },
+  {
+   "id": "companion_warrior_side",
+   "seed": 2617693365,
+   "prompt": "(1boy:1.15), adult man, armored warrior, full blue steel plate armor with helmet, large blue shield, red cloth tabard, sword at the belt, wide shot, adult, tall, long legs, slender, small head, eight heads tall, facing right, side view, from side, full profile, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "동행 전사"
+  },
+  {
+   "id": "companion_warrior_back",
+   "seed": 2617693365,
+   "prompt": "(1boy:1.15), adult man, armored warrior, full blue steel plate armor with helmet, large blue shield, red cloth tabard, sword at the belt, wide shot, adult, tall, long legs, slender, small head, eight heads tall, from behind, back view, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "동행 전사"
+  },
+  {
+   "id": "companion_archer_front",
+   "seed": 1087706923,
+   "prompt": "(1girl:1.15), adult woman, archer, dark green hooded cloak, brown leather outfit, quiver of arrows on the back, holding a shortbow in one hand, hood down, face visible, wide shot, adult, tall, long legs, slender, small head, eight heads tall, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "동행 궁수"
+  },
+  {
+   "id": "companion_archer_side",
+   "seed": 1087706923,
+   "prompt": "(1girl:1.15), adult woman, archer, dark green hooded cloak, brown leather outfit, quiver of arrows on the back, holding a shortbow in one hand, hood down, face visible, wide shot, adult, tall, long legs, slender, small head, eight heads tall, facing right, side view, from side, full profile, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "동행 궁수"
+  },
+  {
+   "id": "companion_archer_back",
+   "seed": 1087706923,
+   "prompt": "(1girl:1.15), adult woman, archer, dark green hooded cloak, brown leather outfit, quiver of arrows on the back, holding a shortbow in one hand, hood down, face visible, wide shot, adult, tall, long legs, slender, small head, eight heads tall, from behind, back view, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "동행 궁수"
+  },
+  {
+   "id": "companion_mage_front",
+   "seed": 3222299833,
+   "prompt": "(1girl:1.15), adult woman, mage, small blue pointed wizard hat, long blue robe with gold trim, wooden staff, face visible, wide shot, adult, tall, long legs, slender, small head, eight heads tall, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "동행 마법사"
+  },
+  {
+   "id": "companion_mage_side",
+   "seed": 3222299833,
+   "prompt": "(1girl:1.15), adult woman, mage, small blue pointed wizard hat, long blue robe with gold trim, wooden staff, face visible, wide shot, adult, tall, long legs, slender, small head, eight heads tall, facing right, side view, from side, full profile, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "동행 마법사"
+  },
+  {
+   "id": "companion_mage_back",
+   "seed": 3222299833,
+   "prompt": "(1girl:1.15), adult woman, mage, small blue pointed wizard hat, long blue robe with gold trim, wooden staff, face visible, wide shot, adult, tall, long legs, slender, small head, eight heads tall, from behind, back view, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "동행 마법사"
+  }
+ ]
+}

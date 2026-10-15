@@ -1,0 +1,186 @@
+{
+ "name": "k112_people",
+ "spec": "character_tall",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0112 2D 한 장 대역 사람 8풀 8등신(moving2d_C 의 옷·색 그대로, 아이·소년 → 어른). 같은 풀 세 방향은 씨앗 하나(시점 낱말만 다름).",
+ "items": [
+  {
+   "id": "hero_m_front",
+   "seed": 1084864906,
+   "subject": "1boy, adult man, adventurer, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, hood down, face visible, cloak hanging straight down close to the body, wide shot",
+   "subject_ko": "주인공 남 — 어른 모험가",
+   "view": "front"
+  },
+  {
+   "id": "hero_m_side",
+   "seed": 1084864906,
+   "subject": "1boy, adult man, adventurer, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, hood down, face visible, cloak hanging straight down close to the body, wide shot",
+   "subject_ko": "주인공 남 — 어른 모험가",
+   "view": "side",
+   "extra": "facing right"
+  },
+  {
+   "id": "hero_m_back",
+   "seed": 1084864906,
+   "subject": "1boy, adult man, adventurer, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, hood down, face visible, cloak hanging straight down close to the body, wide shot",
+   "subject_ko": "주인공 남 — 어른 모험가",
+   "view": "back"
+  },
+  {
+   "id": "hero_f_front",
+   "seed": 1274345558,
+   "subject": "1girl, adult woman, adventurer, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, hood down, face visible, wide shot",
+   "subject_ko": "주인공 여 — 어른 모험가",
+   "view": "front"
+  },
+  {
+   "id": "hero_f_side",
+   "seed": 1274345558,
+   "subject": "1girl, adult woman, adventurer, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, hood down, face visible, wide shot",
+   "subject_ko": "주인공 여 — 어른 모험가",
+   "view": "side",
+   "extra": "facing right"
+  },
+  {
+   "id": "hero_f_back",
+   "seed": 1274345558,
+   "subject": "1girl, adult woman, adventurer, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, hood down, face visible, wide shot",
+   "subject_ko": "주인공 여 — 어른 모험가",
+   "view": "back"
+  },
+  {
+   "id": "villager_a_front",
+   "seed": 2269847450,
+   "subject": "1boy, old man, villager, white hair, white beard, beige long robe, wooden walking stick, no backpack, wide shot",
+   "subject_ko": "마을 노인",
+   "view": "front"
+  },
+  {
+   "id": "villager_a_side",
+   "seed": 2269847450,
+   "subject": "1boy, old man, villager, white hair, white beard, beige long robe, wooden walking stick, no backpack, wide shot",
+   "subject_ko": "마을 노인",
+   "view": "side",
+   "extra": "facing right"
+  },
+  {
+   "id": "villager_a_back",
+   "seed": 2269847450,
+   "subject": "1boy, old man, villager, white hair, white beard, beige long robe, wooden walking stick, no backpack, wide shot",
+   "subject_ko": "마을 노인",
+   "view": "back"
+  },
+  {
+   "id": "villager_b_front",
+   "seed": 3165622442,
+   "subject": "1boy, young adult man, villager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, wide shot",
+   "subject_ko": "마을 젊은이(어른)",
+   "view": "front"
+  },
+  {
+   "id": "villager_b_side",
+   "seed": 3165622442,
+   "subject": "1boy, young adult man, villager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, wide shot",
+   "subject_ko": "마을 젊은이(어른)",
+   "view": "side",
+   "extra": "facing right"
+  },
+  {
+   "id": "villager_b_back",
+   "seed": 3165622442,
+   "subject": "1boy, young adult man, villager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, wide shot",
+   "subject_ko": "마을 젊은이(어른)",
+   "view": "back"
+  },
+  {
+   "id": "villager_c_front",
+   "seed": 3759792482,
+   "subject": "1girl, young adult woman, villager, short brown bob hair, straw hat, cream dress with red trim, brown shoes, wide shot",
+   "subject_ko": "마을 아가씨(어른)",
+   "view": "front"
+  },
+  {
+   "id": "villager_c_side",
+   "seed": 3759792482,
+   "subject": "1girl, young adult woman, villager, short brown bob hair, straw hat, cream dress with red trim, brown shoes, wide shot",
+   "subject_ko": "마을 아가씨(어른)",
+   "view": "side",
+   "extra": "facing right"
+  },
+  {
+   "id": "villager_c_back",
+   "seed": 3759792482,
+   "subject": "1girl, young adult woman, villager, short brown bob hair, straw hat, cream dress with red trim, brown shoes, wide shot",
+   "subject_ko": "마을 아가씨(어른)",
+   "view": "back"
+  },
+  {
+   "id": "companion_warrior_front",
+   "seed": 2617693365,
+   "subject": "1boy, adult man, armored warrior, full blue steel plate armor with helmet, large blue shield, red cloth tabard, sword at the belt, wide shot",
+   "subject_ko": "동행 전사",
+   "view": "front"
+  },
+  {
+   "id": "companion_warrior_side",
+   "seed": 2617693365,
+   "subject": "1boy, adult man, armored warrior, full blue steel plate armor with helmet, large blue shield, red cloth tabard, sword at the belt, wide shot",
+   "subject_ko": "동행 전사",
+   "view": "side",
+   "extra": "facing right"
+  },
+  {
+   "id": "companion_warrior_back",
+   "seed": 2617693365,
+   "subject": "1boy, adult man, armored warrior, full blue steel plate armor with helmet, large blue shield, red cloth tabard, sword at the belt, wide shot",
+   "subject_ko": "동행 전사",
+   "view": "back"
+  },
+  {
+   "id": "companion_archer_front",
+   "seed": 1087706923,
+   "subject": "1girl, adult woman, archer, dark green hooded cloak, brown leather outfit, quiver of arrows on the back, holding a shortbow in one hand, hood down, face visible, wide shot",
+   "subject_ko": "동행 궁수",
+   "view": "front"
+  },
+  {
+   "id": "companion_archer_side",
+   "seed": 1087706923,
+   "subject": "1girl, adult woman, archer, dark green hooded cloak, brown leather outfit, quiver of arrows on the back, holding a shortbow in one hand, hood down, face visible, wide shot",
+   "subject_ko": "동행 궁수",
+   "view": "side",
+   "extra": "facing right"
+  },
+  {
+   "id": "companion_archer_back",
+   "seed": 1087706923,
+   "subject": "1girl, adult woman, archer, dark green hooded cloak, brown leather outfit, quiver of arrows on the back, holding a shortbow in one hand, hood down, face visible, wide shot",
+   "subject_ko": "동행 궁수",
+   "view": "back"
+  },
+  {
+   "id": "companion_mage_front",
+   "seed": 3222299833,
+   "subject": "1girl, adult woman, mage, small blue pointed wizard hat, long blue robe with gold trim, wooden staff, face visible, wide shot",
+   "subject_ko": "동행 마법사",
+   "view": "front"
+  },
+  {
+   "id": "companion_mage_side",
+   "seed": 3222299833,
+   "subject": "1girl, adult woman, mage, small blue pointed wizard hat, long blue robe with gold trim, wooden staff, face visible, wide shot",
+   "subject_ko": "동행 마법사",
+   "view": "side",
+   "extra": "facing right"
+  },
+  {
+   "id": "companion_mage_back",
+   "seed": 3222299833,
+   "subject": "1girl, adult woman, mage, small blue pointed wizard hat, long blue robe with gold trim, wooden staff, face visible, wide shot",
+   "subject_ko": "동행 마법사",
+   "view": "back"
+  }
+ ]
+}
