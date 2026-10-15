@@ -80,6 +80,19 @@ for cid, views in chars.items():
                 if comp.sum() >= 0.012 * hh * ww and (xs.max() - xs.min()) >= 0.25 * ww and (ys.max() - ys.min()) <= 0.35 * hh:
                     alpha0[comp] = 0
             im.putalpha(Image.fromarray(alpha0))
+        if os.environ.get('MATTE_BGHOLES'):   # K-0112: 다리·팔 사이에 갇힌 배경색 틈 — 위 두 모서리 배경색과 가까운(≤ 값) 덩어리가 그림의 0.15% 넘으면 지운다
+            src_rgb = np.asarray(Image.open(os.path.join(src, f)).convert('RGB')).astype(np.int16)
+            hh, ww = src_rgb.shape[:2]
+            corners = np.concatenate([src_rgb[:12, :12].reshape(-1, 3), src_rgb[:12, -12:].reshape(-1, 3)])
+            bgc = np.median(corners, axis=0)
+            cand = (np.abs(src_rgb - bgc).max(axis=2) <= int(os.environ.get('MATTE_BGHOLES'))) & (np.asarray(im.getchannel('A')) > 0)
+            lab3, n3 = ndimage.label(cand)
+            if n3:
+                sizes3 = ndimage.sum(np.ones_like(lab3), lab3, range(1, n3 + 1))
+                big = [i + 1 for i, z in enumerate(sizes3) if z >= 0.0015 * hh * ww]
+                alpha0 = np.asarray(im.getchannel('A')).astype(np.uint8).copy()
+                alpha0[np.isin(lab3, big)] = 0
+                im.putalpha(Image.fromarray(alpha0))
         # 떠 있는 작은 조각(화살 끝·먼지·점) 정리: 가장 큰 덩어리의 2% 미만인 덩어리는 지운다
         al = np.asarray(im.getchannel('A')).astype(np.uint8)
         lab, n = ndimage.label(al > 24, structure=np.ones((3, 3)))
