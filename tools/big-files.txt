@@ -13,6 +13,6 @@
 1673 saga-web/saga-forest/js/ui.js
 1987 saga-web/saga-forest/js/village-view3d.js
 1921 saga-web/saga-go/js/world.js
-2003 saga-web/saga-realm/js/realm3d.js
+1887 saga-web/saga-realm/js/realm3d.js
 1679 saga-web/saga-story/js/ui.js
 1607 saga-godot/tools/probe_story.gd
