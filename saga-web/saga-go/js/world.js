@@ -427,8 +427,8 @@
   }
 
   /** 야생 인물·펫이 제자리 주변을 어슬렁거린다 */
-  function wanderSpawns(dt) {
-    var pos = core.save.player.pos, now = Date.now();
+  function wanderSpawns(dt) {   // W-0228 — 2D(평면·2.5D)는 빠르기·반경을 화면 몸 높이로(field2d.wander) — 15m·2.6m/초는 2D 에서 32px 안에서 5px/초라 서 있는 것 같았다
+    var pos = core.save.player.pos, now = Date.now(), W3w = global.DG.world3d, F2w = global.DG.field2d, w2 = F2w && F2w.wander && geom && !(W3w && W3w.active && W3w.active()) ? F2w.wander((geom.mode === 2 ? 1.5 : 1.25) * bodyK() * 48 / scale()) : null;
     for (var i = 0; i < spawns.length; i++) {
       var s = spawns[i];
       var near = Math.hypot(s.x - pos.x, s.y - pos.y) <= ENCOUNTER_RANGE;
@@ -452,12 +452,12 @@
         s.pause = 500 + Math.random() * 2600;
         s.moving = false;
         var ang = Math.random() * Math.PI * 2;
-        var rad = Math.random() * WANDER_R;
+        var rad = Math.random() * (w2 ? Math.max(WANDER_R, w2.r) : WANDER_R);
         s.tx = s.homeX + Math.cos(ang) * rad;
         s.ty = s.homeY + Math.sin(ang) * rad;
         continue;
       }
-      var step = WANDER_SPEED * dt;
+      var step = (w2 ? Math.max(WANDER_SPEED, w2.v) : WANDER_SPEED) * dt;
       s.x += dx / d * step;
       s.y += dy / d * step;
       s.moving = true;

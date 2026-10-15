@@ -6442,8 +6442,9 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         maxOff = Math.max(maxOff, Math.hypot(s0.x - s0.homeX, s0.y - s0.homeY));
       }
       W.removeSpawn(88881);
-      return moved > 3 && maxOff < 22 &&
-        ('이동 ' + moved.toFixed(1) + 'm · 집에서 최대 ' + maxOff.toFixed(1) + 'm');
+      var lim = 22 + (DG.field2d && DG.field2d.wander && W.scale ? DG.field2d.wander(150 / W.scale()).r : 0);   // W-0228 2D 는 반경이 화면 몸 높이로(위 한도 = 몸 150px)
+      return moved > 3 && maxOff < lim &&
+        ('이동 ' + moved.toFixed(1) + 'm · 집에서 최대 ' + maxOff.toFixed(1) + 'm(한도 ' + lim.toFixed(0) + ')');
     });
 
     t('플레이어가 움직이면 걸음·발자국이 생긴다', function () {
@@ -16043,6 +16044,12 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var F = DG.field2d, base = DG.world.baseSpeed, bodyM = 57, v = F && F.walkMps ? F.walkMps(bodyM, base) : 0, k = F && F.strideMul ? F.strideMul() : 0;
       var ok = v / bodyM > 1.7 && v / bodyM < 1.9 && F.walkMps(0, base) === base && F.walkMps(1, base) === base && k * 0.9 > 1.2 && k * 0.9 < 1.4;
       return ok && ('몸 ' + bodyM + 'm → ' + v.toFixed(0) + 'm/초(' + (v / bodyM).toFixed(2) + ' 몸/초, 3D ' + base + ') · 한 바퀴 ' + (k * 0.9).toFixed(2) + ' 몸') || ('실패 v=' + v + ' k=' + k);
+    });
+
+    t('2D 떠돌이 어슬렁(W-0228) — 화면 몸 높이로 빠르기 0.7 몸/초·반경 1.6 몸 · 몸 높이 모르면 null', function () {
+      var F = DG.field2d, w = F && F.wander ? F.wander(57) : null;
+      var ok = w && Math.abs(w.v / 57 - 0.7) < 0.05 && Math.abs(w.r / 57 - 1.6) < 0.05 && F.wander(0) === null;
+      return ok && ('몸 57m → ' + w.v.toFixed(0) + 'm/초 · 반경 ' + w.r.toFixed(0) + 'm(3D 2.6m/초·15m)') || ('실패 ' + JSON.stringify(w));
     });
 
     t('재미표준 C 손맛(측정)', function () {

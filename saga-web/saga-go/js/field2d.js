@@ -171,7 +171,14 @@
   }
   /** W-0226 — 걷기 시트 한 바퀴(두 발) 길이 배율. 공용 mode2d.strideK 0.9 몸은 빨라진 2D 걸음엔 종종걸음 — 1만리 2D 는 ×1.45(≈1.3 몸,
    *  1.8 몸/초면 한 바퀴 1.4번/초 ≈ 걸음 2.8/초). 손잡이 world.stride2d */
+  /** W-0228 — 2D 떠돌이(야생 인물·펫) 어슬렁거림 = { v 빠르기 m/초, r 반경 m } — 화면 몸 높이로: 손잡이 world.wander2dBps 0.7 몸/초·
+   *  world.wander2dR 1.6 몸(3D 값 15m·2.6m/초보다 작아지진 않게 부른 쪽이 max). bodyM ≤ 0 이면 null — 순수 */
+  function wander(bodyM) {
+    var C = core(), t = function (k, d) { return C && C.tuned ? +C.tuned(k, d) : d; };
+    if (!(bodyM > 0)) { return null; }
+    return { v: Math.max(0, t('world.wander2dBps', 0.7)) * bodyM, r: Math.max(0, t('world.wander2dR', 1.6)) * bodyM };
+  }
   function strideMul() { var C = core(); return C && C.tuned ? Math.max(0.3, +C.tuned('world.stride2d', 1.45)) : 1.45; }
 
-  global.DG.field2d = { walkMps: walkMps, strideMul: strideMul, CELL: CELL, color: color, BASE: BASE, zoomMul: zoomMul, KCOL: KCOL, on: on, h01: h01, PROPS: PROPS, propsAt: propsAt, edgeColor: edgeColor, decorate: decorate, seasonRgb: seasonRgb };
+  global.DG.field2d = { walkMps: walkMps, strideMul: strideMul, wander: wander, CELL: CELL, color: color, BASE: BASE, zoomMul: zoomMul, KCOL: KCOL, on: on, h01: h01, PROPS: PROPS, propsAt: propsAt, edgeColor: edgeColor, decorate: decorate, seasonRgb: seasonRgb };
 })(typeof window !== 'undefined' ? window : this);
