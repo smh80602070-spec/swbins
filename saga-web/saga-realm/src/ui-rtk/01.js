@@ -530,7 +530,7 @@
     core.on('rtk:camp', function () { syncDock(); });
     core.on('rtk:end', function (kind) { showEnd(kind); });
     core.on('rtk:milestone', function (list) { showMilestone(list); });
-    core.on('rtk:victory', function (card) { showVictory(card); });
+    core.on('rtk:victory', function (card) { showVictory(card); }); core.on('rtk:comeback', function (e) { showComeback(e); });
     core.on('rtk:challenge', function (res) { showChallenge(res); });
 
     if (!R().state().started) { showScenPick(); }

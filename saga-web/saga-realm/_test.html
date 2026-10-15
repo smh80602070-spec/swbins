@@ -4255,6 +4255,22 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return funMark(rise && ops <= 3, mid || ops <= 3) + '멸망 → 재기 ' + (rise ? '○(한 번 — 성 1·금 그대로, 둘째 멸망은 끝)' : '×(' + JSON.stringify({ cb: !!cb, r1: r1, n1: n1, r2: r2 }) + ')') + ' · 끝난 뒤 다시 ' + ops + '조작(' + (direct ? '🔁 새 판 · 시나리오 · 깃발' : '끝 카드 단추 ' + btns + ' · ↺ · 확인 창 · 시나리오 · 깃발') + ', 규격 ≤3) · ' +
         (wipes ? '세이브 통째 지움(남는 것 0)' : '세이브 안 지움 — 남는 것 ' + (keeps ? '회차·주간 도전 최고 기록' : '없음')) + ' · 중간 실패(성 잃고 되찾기) ' + (mid ? '있음' : '없음');
     });
+    t('W-0249 재기 카드 — 재기가 일어나면 카드(성·군주·한 번뿐)가 뜬다', function () {
+      var R = DG.rtk, ui = DG.ui, got = null, html = '';
+      if (!ui || !ui._comebackHtml || typeof R.comeback !== 'function') { return '건너뜀(UI 없음)'; }
+      var live = true; C.on('rtk:comeback', function (e) { if (live) { got = e; } });
+      evFresh();
+      try {
+        var st = R.state();
+        R.citiesOf(st.me).forEach(function (c) { st.cities[c].force = null; });
+        R.checkResult();
+        if (got) { html = ui._comebackHtml(got); }
+      } finally { live = false; evDone(); }
+      var cn = got ? (DG.cityData.find(got.city) || {}).name : '', ln = got ? (DG.off.find(got.lord) || {}).name : '';
+      var ok = !!got && html.indexOf('재기') >= 0 && cn && html.indexOf(cn) >= 0 && ln && html.indexOf(ln) >= 0 && html.indexOf('한 번') >= 0 && html.indexOf('close-enc') >= 0;
+      if (!ok) { throw new Error('카드 ' + JSON.stringify({ got: !!got, cn: cn, ln: ln, len: html.length })); }
+      return '카드 ○ — ' + cn + ' · ' + ln + ' 외 ' + (got.with || []).length + '명';
+    });
     t('재미표준 G 성장 가시화(측정) — 힘이 오르면 보이는 것: 성 그림 단계 · 무장 성장', function () {
       var t2 = (DG.cfg.mode2d && DG.cfg.mode2d.prop2d) || {}, ids = ['city:s', 'city:m', 'city:l'].map(function (k) { return t2[k] && t2[k].id; }), uniq = {};
       ids.forEach(function (x) { if (x) { uniq[x] = 1; } });

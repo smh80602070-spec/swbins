@@ -530,7 +530,7 @@
     core.on('rtk:camp', function () { syncDock(); });
     core.on('rtk:end', function (kind) { showEnd(kind); });
     core.on('rtk:milestone', function (list) { showMilestone(list); });
-    core.on('rtk:victory', function (card) { showVictory(card); });
+    core.on('rtk:victory', function (card) { showVictory(card); }); core.on('rtk:comeback', function (e) { showComeback(e); });
     core.on('rtk:challenge', function (res) { showChallenge(res); });
 
     if (!R().state().started) { showScenPick(); }
@@ -1691,7 +1691,7 @@
       : '<button class="btn primary wide" data-act="close-enc">이어하기</button>' + nrBtn + '<button class="btn wide" data-act="back-scen">새 판</button>');
   }
 
-  function showVictory(card) { showEncQueued(resultHtml(card, false)); }
+  function showVictory(card) { showEncQueued(resultHtml(card, false)); } function comebackHtml(e) { /* W-0249 재기 카드 — 토스트·로그만 스쳐 가던 재기(W-0248)를 한 장으로: 성·함께 나온 사람·받은 것·한 번뿐·첫 수 */ var off = global.DG.off, c = (e && CD.find(e.city)) || {}, ids = e ? [e.lord].concat(e.with || []) : [], row = function (id, i) { var h = off.find(id), s = off.stats ? off.stats(id) : null; return h ? '<div>' + (i ? '⛓️ ' : '👑 ') + '<b>' + esc(h.name) + '</b>' + (s ? ' <small class="muted">무 ' + s.might + ' · 지 ' + s.wisdom + ' · 통 ' + s.command + '</small>' : '') + (i ? ' <small class="muted">— 갇혀 있다 함께 빠져나옴</small>' : '') + '</div>' : ''; }; return '<div style="text-align:center"><div class="enc-big">🔥</div><h3 style="margin:6px 0 2px;font-size:20px;color:var(--gold)">재기 — ' + esc(c.name || (e && e.city) || '') + '에서 다시 일어서다</h3><small class="muted">성을 모두 잃었으나 판은 끝나지 않았습니다 · 재기는 판마다 한 번뿐</small></div><div class="enc-hist">' + ids.map(row).join('') + '</div><div class="enc-hist"><span class="good">🏯 성 1 · 병력 1,000 · 군량 2,000 · 성벽 반</span><br>🪙 금고·명부는 그대로<br><span style="color:var(--bad)">⚠ 다시 성을 모두 잃으면 그때는 끝</span></div><small class="muted">첫 수 — 징병으로 병력을 채우고, 성에 포로가 있으면 등용으로 사람을 늘리십시오</small><button class="btn primary wide" data-act="close-enc">다시 일어선다</button>'; } function showComeback(e) { centerOnMine(); showEncQueued(comebackHtml(e)); }
 
   /** 먼저 **판(시나리오)** 을 고른다 */
   function showScenPick() {
@@ -1808,7 +1808,7 @@
     renderTop: renderTop, renderMap: renderMap, renderSheet: renderSheet,
     showScenPick: showScenPick, showForcePick: showForcePick,
     showHelp: showHelp, showBattle: showBattle, showMilestone: showMilestone, showEvent: showEvent,
-    closeEnc: closeEnc,
+    closeEnc: closeEnc, _comebackHtml: comebackHtml,   // W-0249 진단
     /** 자가진단용 */
     _act: act, _tab: function () { return openTab; }, _city: function () { return openCityId; },
     centerAt: function (x, y) { mapCx = x; mapCy = y; applyMapViewNow(); }, _setOrder: function (k) { pickOrder = k; }, zoomAt: zoomAt, _view: function () { return { cx: mapCx, cy: mapCy, z: mapZoom }; },
