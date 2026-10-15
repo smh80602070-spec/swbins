@@ -178,7 +178,9 @@
     if (!(bodyM > 0)) { return null; }
     return { v: Math.max(0, t('world.wander2dBps', 0.7)) * bodyM, r: Math.max(0, t('world.wander2dR', 1.6)) * bodyM };
   }
+  /** W-0232 — 2D 마을 사람 걸음(m/초) = 손잡이 world.npc2dBps 0.6 × 몸 높이(m). bodyM ≤ 0 이면 0 — 순수 */
+  function npcMps(bodyM) { var C = core(), b = C && C.tuned ? +C.tuned('world.npc2dBps', 0.6) : 0.6; return bodyM > 0 && b > 0 ? b * bodyM : 0; }
   function strideMul() { var C = core(); return C && C.tuned ? Math.max(0.3, +C.tuned('world.stride2d', 1.45)) : 1.45; }
 
-  global.DG.field2d = { walkMps: walkMps, strideMul: strideMul, wander: wander, CELL: CELL, color: color, BASE: BASE, zoomMul: zoomMul, KCOL: KCOL, on: on, h01: h01, PROPS: PROPS, propsAt: propsAt, edgeColor: edgeColor, decorate: decorate, seasonRgb: seasonRgb };
+  global.DG.field2d = { walkMps: walkMps, strideMul: strideMul, wander: wander, npcMps: npcMps, CELL: CELL, color: color, BASE: BASE, zoomMul: zoomMul, KCOL: KCOL, on: on, h01: h01, PROPS: PROPS, propsAt: propsAt, edgeColor: edgeColor, decorate: decorate, seasonRgb: seasonRgb };
 })(typeof window !== 'undefined' ? window : this);

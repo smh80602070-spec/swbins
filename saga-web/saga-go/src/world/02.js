@@ -1067,7 +1067,7 @@
       core.save.player.pos.x = 0; core.save.player.pos.y = 0;
     },
     get speedMul() { return speedMul(); },
-    get baseSpeed() { return speed; },
+    get baseSpeed() { return speed; }, body2dM: function () { var W3b = global.DG.world3d; return geom && !(W3b && W3b.active && W3b.active()) ? (geom.mode === 2 ? 1.5 : 1.25) * bodyK() * 48 / scale() : null; },   // W-0232 2D 화면 몸 높이(m) — 3D 면 null
     get tilt() { return tiltOn(); },
     get tiltMode() { return tiltMode(); },
     /** 지금 실제로 화면을 그리는 게 WebGL 3D 렌더러인가 — 이게 켜져 있으면

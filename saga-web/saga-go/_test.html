@@ -3577,9 +3577,12 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
     });
 
     t('주민 — 자리를 옮기는 동안은 걷는다 (순간이동하지 않는다)', function () {
+      C.setTune('world.npc2dBps', 0);                          // W-0232 — 걸음 빠르기 3D 값(1.15m/초)으로 잰다(2D 몸 높이 걸음은 따로 진단)
+      try {
       var s = NP.segAt(NP.find('npc_soldier'), atT(10, 1));
       var a = NP.posAt('npc_soldier', atT(10, 1), 'clear');   // 막 떠났다
       var b = NP.posAt('npc_soldier', atT(14), 'clear');      // 도착해 있다
+      } finally { C.setTune('world.npc2dBps', null); }
       var from = LD.place('gate_n'), to = LD.place('ridge');
       var dA = Math.hypot(a.x - from.x, a.y - from.y);
       var dB = Math.hypot(b.x - to.x, b.y - to.y);
@@ -16044,6 +16047,12 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var F = DG.field2d, base = DG.world.baseSpeed, bodyM = 57, v = F && F.walkMps ? F.walkMps(bodyM, base) : 0, k = F && F.strideMul ? F.strideMul() : 0;
       var ok = v / bodyM > 1.7 && v / bodyM < 1.9 && F.walkMps(0, base) === base && F.walkMps(1, base) === base && k * 0.9 > 1.2 && k * 0.9 < 1.4;
       return ok && ('몸 ' + bodyM + 'm → ' + v.toFixed(0) + 'm/초(' + (v / bodyM).toFixed(2) + ' 몸/초, 3D ' + base + ') · 한 바퀴 ' + (k * 0.9).toFixed(2) + ' 몸') || ('실패 v=' + v + ' k=' + k);
+    });
+
+    t('2D 마을 사람 걸음(W-0232) — 화면 몸 높이로 0.6 몸/초 · 3D 걸음(1.15m/초)보다 느려지지 않음 · 몸 높이 모르면 0', function () {
+      var F = DG.field2d, v = F && F.npcMps ? F.npcMps(57) : -1, b = DG.world.body2dM ? DG.world.body2dM() : 'none';
+      var ok = Math.abs(v / 57 - 0.6) < 0.02 && F.npcMps(0) === 0 && b !== 'none';
+      return ok && ('몸 57m → ' + v.toFixed(0) + 'm/초 · 지금 화면 몸 ' + (b === null ? '3D(null)' : b.toFixed(0) + 'm')) || ('실패 v=' + v + ' b=' + b);
     });
 
     t('2D 떠돌이 어슬렁(W-0228) — 화면 몸 높이로 빠르기 0.7 몸/초·반경 1.6 몸 · 몸 높이 모르면 null', function () {

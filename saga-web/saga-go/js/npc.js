@@ -34,7 +34,12 @@
   /** 같은 사람이 다시 말 걸기까지(초) */
   function TALK_GAP() { return core().tuned('npc.talkGapSec', 45); }
   /** 걷는 빠르기(m/s) — 사람이 걷는 속도다. 이 값으로 구간 시간이 정해진다 */
-  function WALK() { return core().tuned('npc.walkMps', 1.15); }
+  /* W-0232 — 2D(평면·2.5D)는 화면 몸 높이/초로(field2d.npcMps, 손잡이 world.npc2dBps 0.6). 1.15m/초는 2D 에서 2.4px/초라 서 있는 것 같았다.
+     일과 구간 시간(need)이 짧아져 일찍 닿아 서 있을 뿐 — 같은 시점이면 같은 t 에 같은 답(순수)은 그대로 */
+  function WALK() {
+    var base = core().tuned('npc.walkMps', 1.15), W = global.DG.world, F2 = global.DG.field2d, b = W && W.body2dM ? W.body2dM() : null;
+    return b && F2 && F2.npcMps ? Math.max(base, F2.npcMps(b)) : base;
+  }
 
   /* ── 열 사람 ──────────────────────────────────────────
    * `PLAN.md` 47절이 적어 둔 그대로다. 실제 역사 인물이 아니라 **이 마을 사람**이라,
