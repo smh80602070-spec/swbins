@@ -43,12 +43,15 @@ def eye_mask(box, ells=None):
     return im.filter(ImageFilter.GaussianBlur(6)).convert('RGB')
 
 
-def eye_side_mask(box, side):
+def eye_side_mask(box, side, ells=None):
     # 두 단계 깜빡임: 한 눈만 감긴 결과를 밑그림으로 다른 눈만 다시 그림(무사시 — 올려다보는 각도라 두 눈을 한 번에 못 감김)
     im = Image.new('L', (W, H), 0)
     x0, y0, x1, y1 = box
     w = x1 - x0
-    e = (x0 - 14, y0 - 4, x0 + 0.42 * w, y1 + 6) if side == 'l' else (x0 + 0.58 * w, y0 - 4, x1 + 14, y1 + 6)
+    if ells:                                    # 직접 짚은 타원이 있으면 그중 왼쪽·오른쪽 것(하나면 그것)
+        e = tuple(sorted(ells, key=lambda t: t[0])[0 if side == 'l' else -1])
+    else:
+        e = (x0 - 14, y0 - 4, x0 + 0.42 * w, y1 + 6) if side == 'l' else (x0 + 0.58 * w, y0 - 4, x1 + 14, y1 + 6)
     ImageDraw.Draw(im).ellipse(e, fill=255)
     return im.filter(ImageFilter.GaussianBlur(6)).convert('RGB')
 
@@ -88,7 +91,7 @@ def main():
             elif part in ('eye_l', 'eye_r'):
                 if not parts or part not in parts:
                     continue                        # 한 눈 마스크는 --parts 로 부를 때만
-                im = eye_side_mask(box, part[-1])
+                im = eye_side_mask(box, part[-1], boxes[h].get('eye_ellipses'))
             elif part == 'face':
                 im = face_mask(boxes[h])
             else:
