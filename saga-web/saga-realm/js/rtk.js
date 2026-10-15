@@ -885,8 +885,8 @@
   function comeback(st) {
     var off = global.DG.off, lord = off && off.lordOf ? off.lordOf(st.me) : null;
     if (st.comeback || st.challenge || !core.tuned('rtk.comeback', 1) || !lord || (off.isDead && off.isDead(lord))) { return null; }
-    var best = null, bestT = Infinity, k, c, lordsAt = {};
-    for (k in st.forces) { if (Object.prototype.hasOwnProperty.call(st.forces, k)) { var lo = off.lordOf(k), lr = lo ? off.rec(lo) : null; if (lr && lr.city) { lordsAt[lr.city] = 1; } } }
+    var best = null, bestT = Infinity, k, c, lordsAt = {}, lordIds = {};
+    for (k in st.forces) { if (Object.prototype.hasOwnProperty.call(st.forces, k)) { var lo = off.lordOf(k), lr = lo ? off.rec(lo) : null; if (lo) { lordIds[lo] = 1; } if (lr && lr.city) { lordsAt[lr.city] = 1; } } }
     for (k in st.cities) {
       if (!Object.prototype.hasOwnProperty.call(st.cities, k)) { continue; }
       c = st.cities[k];
@@ -896,15 +896,17 @@
     }
     if (!best) { return null; }
     c = st.cities[best];
-    var oldF = c.force, here = off.atCity(best), i, back = [];
-    for (i = 0; i < here.length; i++) {
-      var hid = here[i].id || here[i];
-      var to = oldF ? citiesOf(oldF).filter(function (x) { return x !== best; })[0] : null;
-      off.placeAt(hid, to || best, to ? oldF : null);
-    }
-    var caps = Object.keys(st.captives || {}).filter(function (id) { return id !== lord && !(off.isDead && off.isDead(id)); })
+    var oldF = c.force, here = oldF ? off.atCity(best, oldF) : [], i, back = [];   // 그 세력 무장만 — 포로·숨은 재야는 그 자리(빈 성이면 아무도 안 옮긴다)
+    var to = oldF ? citiesOf(oldF).filter(function (x) { return x !== best; })[0] : null;
+    for (i = 0; i < here.length; i++) { off.placeAt(here[i].id || here[i], to || best, to ? oldF : null); }
+    var caps = Object.keys(st.captives || {}).filter(function (id) { return id !== lord && !lordIds[id] && !(off.isDead && off.isDead(id)); })   // 남의 군주는 안 데려간다(lordOf 꼬임)
       .sort(function (a, b) { return (off.power ? off.power(b) - off.power(a) : 0) || (a < b ? -1 : 1); }).slice(0, 2);
-    [lord].concat(caps).forEach(function (id) { if (st.captives) { delete st.captives[id]; } off.placeAt(id, best, st.me); var r = off.rec(id); r.loyal = Math.max(r.loyal || 0, id === lord ? 100 : 60); back.push(id); });
+    var outs = (st.camps || []).concat(st.journeys || []);
+    [lord].concat(caps).forEach(function (id) {
+      if (st.captives) { delete st.captives[id]; }
+      outs.forEach(function (o) { var j = o.officers ? o.officers.indexOf(id) : -1; if (j >= 0) { o.officers.splice(j, 1); } });   // 진중·원정 중 멸망 — 두 곳에 서지 않게
+      off.placeAt(id, best, st.me); var r = off.rec(id); r.camp = null; r.journey = null; r.loyal = Math.max(r.loyal || 0, id === lord ? 100 : 60); back.push(id);
+    });
     c.force = st.me; c.gov = lord; c.troops = 1000; c.food = Math.max(c.food || 0, 2000); c.wall = Math.max(1, Math.round((c.maxWall || c.wall || 2) / 2));
     st.comeback = { year: st.year, month: st.month, city: best };
     var cn = (CD.find(best) || {}).name || best, nm = function (id) { var h = off.find(id); return h ? h.name : id; };

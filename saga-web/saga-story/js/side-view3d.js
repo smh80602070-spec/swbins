@@ -791,7 +791,8 @@
     var heightPx = (boss ? 1.9 : (big ? 1.3 : 1)) * 58;   // 도형 사람의 정수리 높이(50*scale)와 얼추 맞춘다
     function swapActorIn(model) {
       if (!model) { return; }   // GLB 를 못 받았다 — 도형 그대로 남는다
-      while (shell.children.length) { var sc = shell.children[0]; disposeDeep(sc); shell.remove(sc); }
+      var keep = shell.userData.tierDeco || null;   // 전직 표식은 몸이 늦게 와도 남긴다(W-0246 리뷰)
+      for (var ci = shell.children.length - 1; ci >= 0; ci--) { var sc = shell.children[ci]; if (sc === keep) { continue; } disposeDeep(sc); shell.remove(sc); }
       shell.add(model);
       shell.userData.body = null; shell.userData.head = null;   // 이제 도형 물들임은 안 쓴다
       shell.userData.mixer = model.userData.mixer || null;
