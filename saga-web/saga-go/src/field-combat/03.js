@@ -19,14 +19,14 @@
         '<button class="fc-btn fc-skill" data-fc="skill"><span>스킬</span><em>E</em><i class="fc-cd"></i></button>' +
         '<button class="fc-btn fc-dodge" data-fc="dodge"><span>회피</span><em>␣</em></button>' +
         '<button class="fc-btn fc-atk" data-fc="attack"><span>⚔️</span><em>J</em></button>' +
-        '<button class="fc-btn fc-aim" data-fc="aim" style="display:none"><span>🎯</span><em>R</em></button>' +
+        '<button class="fc-btn fc-aim" data-fc="aim" style="display:none"><span>🎯</span><em>R</em></button>' + '<button class="fc-btn fc-auto" data-fc="auto" title="자동 사냥 — 다가가 싸운다"><span>🤖 자동</span></button>' +
       '</div>';
     var btns = hudEl.querySelectorAll('[data-fc]');
     for (var i = 0; i < btns.length; i++) {
       (function (b) {
         b.addEventListener('pointerdown', function (ev) {
           ev.preventDefault(); ev.stopPropagation();
-          var k = b.getAttribute('data-fc'), r = act(k);
+          var k = b.getAttribute('data-fc'), r = k === 'auto' ? toggleAuto() : act(k);   // W-0236
           if (k === 'attack' && !(r && r.plunge)) { holdStart(); }                // ⑲-2 누르고 있으면 강공격
         });
         if (b.getAttribute('data-fc') === 'attack') {
@@ -37,7 +37,7 @@
     numLayer = document.createElement('div');
     numLayer.className = 'fc-nums';
     hudEl.appendChild(numLayer);
-    partyKeyPainted = '';
+    partyKeyPainted = ''; paintAuto();
   }
 
   var partyKeyPainted = '';
@@ -409,7 +409,7 @@
     guardBack: guardBack, duelCamp: duelCamp, canChallenge: canChallenge, challenge: challenge, duelSpawn: duelSpawn,
     /* 런타임 */
     init: init, tick: tick, act: act, live: live, leadId: leadId,
-    state: function () { return S; }, _kdForTest: function (v) { KDT = v || null; KDV = KD0(); if (S) { refreshStats(); } return KDV; }, kd: function () { return KDV; },   // W-0233
+    state: function () { return S; }, autoOn: autoOn, toggleAuto: toggleAuto, _autoFight: function (pos) { return autoFight(pos); }, _kdForTest: function (v) { KDT = v || null; KDV = KD0(); if (S) { refreshStats(); } return KDV; }, kd: function () { return KDV; },   // W-0233   // W-0236 자동 사냥 · W-0233 배율
     _setStateForTest: function (st) { S = st; },
     _resetForTest: function () { S = null; partyKey = ''; popAcc = 9; }
   };

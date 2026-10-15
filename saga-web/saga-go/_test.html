@@ -1016,6 +1016,20 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         ('서리번개 옆 ' + sc + ' → 물리 100 이 ' + r.dmg + ' · 회오리 옆 ' + sw + '·불 옮겨 붙음 · 풍·암 맨몸엔 안 붙음');
     });
 
+    t('들판 자동 사냥(W-0236) — 🤖 단추가 save.settings.autoBattle 을 켜고 끈다 · 켜면 사거리 밖 적에게 걸어간다(world.walkTo, 적 몸 가장자리 + 사거리 7할) · 키보드 아니면(GPS) 안 걷는다', function () {
+      var FC = DG.fieldCombat, W = DG.world, st = C.save.settings = C.save.settings || {}, old = st.autoBattle, w0 = W.walkTo, prev = FC.state(), calls = [], r = {};
+      try {
+        st.autoBattle = false; FC.toggleAuto(); r.on = st.autoBattle; FC.toggleAuto(); r.off = st.autoBattle;
+        var S2 = fcState(), f = fcFoe(S2, 'imp', 30, 0), m = S2.party[0];
+        m.skillCd = 99; m.energy = 0; FC._setStateForTest(S2);
+        W.walkTo = function (x, y, run) { calls.push({ x: x, y: y, run: run }); };
+        FC._autoFight({ x: 0, y: 0 }); r.mode = W.mode;
+        r.call = calls[0] || null;
+      } finally { W.walkTo = w0; FC._setStateForTest(prev); st.autoBattle = old; }
+      var ok = r.on === true && r.off === false && (r.mode !== 'keyboard' ? !r.call : (!!r.call && r.call.x > 20 && r.call.x < 30 && Math.abs(r.call.y) < 0.01 && r.call.run === false));
+      return ok && ('토글 켜짐→꺼짐 · 30m 도깨비에게 ' + (r.call ? r.call.x.toFixed(1) + 'm 자리로 걸어감' : '(GPS 라 안 걸음)') + ' · 입력 ' + r.mode) || ('실패 ' + JSON.stringify(r));
+    });
+
     t('2D 들판 전투 척도(W-0233) — 배율 12 면 거리 ×12: 12배 먼(18m) 도깨비가 같은 시간 안에 덮쳐 와 때리고, 내 평타·몸·사거리·키트가 ×12 · 풀면 1(3D 숫자 그대로)', function () {
       var FC = DG.fieldCombat, k1 = FC.kd(), kd = FC._kdForTest(12), out = {};
       try {

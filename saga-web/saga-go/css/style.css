@@ -1691,6 +1691,8 @@ body.fc-on #dock, body.fc-on #near { display: none !important; }
 #field-hud .fc-dodge { right: 4px; bottom: 96px; width: 54px; height: 54px; }
 #field-hud .fc-aim { right: 7px; bottom: 160px; width: 48px; height: 48px; font-size: 20px; }   /* ⑲-22 활 조준 — 회피 위 */
 #field-hud .fc-aim.ready { box-shadow: 0 0 0 2px #ffd24a inset; }
+#field-hud .fc-auto { right: 146px; bottom: 116px; width: 52px; height: 52px; font-size: 10px; line-height: 1.1; }   /* W-0236 자동 사냥 — 폭발 왼쪽 위 */
+#field-hud .fc-auto.on { box-shadow: 0 0 0 2px #7fe0a0 inset; background: rgba(60,140,90,.55); }
 #field-hud .fc-cd, #field-hud .fc-fill { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; }
 #field-hud .fc-cd { background: rgba(0,0,0,.55); }
 #field-hud .fc-fill { background: var(--el); opacity: .35; }

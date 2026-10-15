@@ -1708,9 +1708,9 @@
   /** 자동 전투 — 🤖 자동 전투를 켰거나, 자동 순행 중이면(AI 가 걷는데 싸움만 사람에게 맡길 수는 없다) */
   function autoOn() {
     var sv = core().save, st = sv.settings;
-    return !!((st && st.autoBattle) || (sv.auto && sv.auto.on));
+    return !!((st && st.autoBattle) || (sv.auto && sv.auto.on) || (st && st.autoBattle == null && touchDev()));   // W-0236 터치 기기는 정하기 전엔 켜짐
   }
-
+  /* W-0236 🤖 자동 사냥(사용자 10-15 "모바일에서는 자동 사냥이 필요") — 들판 전투 단추로 켜고 끈다(결투 🤖 와 같은 save.settings.autoBattle). 켜면 공격·스킬·폭발·회피에 더해 사거리 밖 적에게 다가간다 */ function touchDev() { return !!(('ontouchstart' in global) || (global.navigator && global.navigator.maxTouchPoints > 0)); } function toggleAuto() { var sv = core().save; sv.settings = sv.settings || {}; sv.settings.autoBattle = !autoOn(); if (!sv.settings.autoBattle) { var Wq = global.DG.world; if (Wq && Wq.walkingTo && Wq.walkingTo() && Wq.walkTo) { Wq.walkTo(sv.player.pos.x, sv.player.pos.y, false); } } core().persist(); paintAuto(); return null; } function paintAuto() { var b = hudEl && hudEl.querySelector('[data-fc="auto"]'), on2 = autoOn(); if (b && b._on !== on2) { b._on = on2; b.classList.toggle('on', on2); b.querySelector('span').textContent = on2 ? '🤖 켜짐' : '🤖 자동'; } }
   /** 자동 회피(2026-09-28 실기 Q6) — 🤖 는 예고(붉은 원·코앞 휘두름)를 하나도 안 피해 혼자면 보통 무리에도 거의 쓰러졌다.
       나를 칠 공격이 막 떨어지려 할 때(무적 시간 안) 기력이 있으면 그 자리에서 비켜 난다. 매 프레임 본다 */
   function autoThreat(S, px, py) {
@@ -1745,16 +1745,16 @@
     var m = active(S);
     if (!m || m.down) { return; }
     var n = nearestFoe(S, pos.x, pos.y, SKILL_AIM());
-    if (!n) { return; }
+    if (!n) { var far = nearestFoe(S, pos.x, pos.y, LEASH_R()); if (far) { autoApproach(pos, far); } return; }   // W-0236 조준 밖이면 쫓는 거리 안 적에게 다가간다
     if (m.energy >= ENERGY_MAX() && foesWithin(S, pos.x, pos.y, BURST_R()).length >= 2) { act('burst'); return; }
     if (m.skillCd <= 0) { act('skill'); return; }
     /* ⑲-2 얼어 있는 적이 곁에 있으면 강공격으로 깬다 */
     if (n.frozenT > 0 && S.stamina >= CHARGE_COST() && Math.hypot(n.x - pos.x, n.y - pos.y) <= CHARGE_REACH()) { act('heavy'); return; }
-    if (Math.hypot(n.x - pos.x, n.y - pos.y) <= LUNGE_R()) { act('attack'); }
+    if (Math.hypot(n.x - pos.x, n.y - pos.y) <= LUNGE_R()) { act('attack'); } else { autoApproach(pos, n); }
   }
-
+  /** W-0236 자동 사냥 — 사거리 밖 적이면 그 적의 몸 가장자리 + 사거리 7할 자리로 걸어간다(탭 이동과 같은 길 world.walkTo — 손으로 움직이면 그쪽이 먼저). GPS 는 몸을 못 움직여 안 함 */ function autoApproach(pos, n) { var W = global.DG.world; if (!W || !W.walkTo || W.mode !== 'keyboard' || S.dash) { return false; } var dx = pos.x - n.x, dy = pos.y - n.y, d = Math.hypot(dx, dy) || 1, keep = BODY(n) + REACH() * 0.7; W.walkTo(n.x + dx / d * keep, n.y + dy / d * keep, false); return true; }
   function tick(dt) {
-    if (!on() || !core() || !core().save) { hide(); return; } var kd1 = KD0(); if (kd1 !== KDV) { KDV = kd1; refAcc = 9; }   // W-0233 2D/3D·확대가 바뀌면 키트 사본을 바로 다시
+    if (!on() || !core() || !core().save) { hide(); return; } var kd1 = KD0(); if (kd1 !== KDV) { KDV = kd1; refAcc = 9; } paintAuto();   // W-0236 단추 켜짐 표시(결투 🤖·자동 순행에서 바뀌어도) · W-0233 2D/3D·확대가 바뀌면 키트 사본을 바로 다시
     ensureState();
     var pos = core().save.player.pos;
     popAcc += dt; refAcc += dt;
@@ -2010,14 +2010,14 @@
         '<button class="fc-btn fc-skill" data-fc="skill"><span>스킬</span><em>E</em><i class="fc-cd"></i></button>' +
         '<button class="fc-btn fc-dodge" data-fc="dodge"><span>회피</span><em>␣</em></button>' +
         '<button class="fc-btn fc-atk" data-fc="attack"><span>⚔️</span><em>J</em></button>' +
-        '<button class="fc-btn fc-aim" data-fc="aim" style="display:none"><span>🎯</span><em>R</em></button>' +
+        '<button class="fc-btn fc-aim" data-fc="aim" style="display:none"><span>🎯</span><em>R</em></button>' + '<button class="fc-btn fc-auto" data-fc="auto" title="자동 사냥 — 다가가 싸운다"><span>🤖 자동</span></button>' +
       '</div>';
     var btns = hudEl.querySelectorAll('[data-fc]');
     for (var i = 0; i < btns.length; i++) {
       (function (b) {
         b.addEventListener('pointerdown', function (ev) {
           ev.preventDefault(); ev.stopPropagation();
-          var k = b.getAttribute('data-fc'), r = act(k);
+          var k = b.getAttribute('data-fc'), r = k === 'auto' ? toggleAuto() : act(k);   // W-0236
           if (k === 'attack' && !(r && r.plunge)) { holdStart(); }                // ⑲-2 누르고 있으면 강공격
         });
         if (b.getAttribute('data-fc') === 'attack') {
@@ -2028,7 +2028,7 @@
     numLayer = document.createElement('div');
     numLayer.className = 'fc-nums';
     hudEl.appendChild(numLayer);
-    partyKeyPainted = '';
+    partyKeyPainted = ''; paintAuto();
   }
 
   var partyKeyPainted = '';
@@ -2400,7 +2400,7 @@
     guardBack: guardBack, duelCamp: duelCamp, canChallenge: canChallenge, challenge: challenge, duelSpawn: duelSpawn,
     /* 런타임 */
     init: init, tick: tick, act: act, live: live, leadId: leadId,
-    state: function () { return S; }, _kdForTest: function (v) { KDT = v || null; KDV = KD0(); if (S) { refreshStats(); } return KDV; }, kd: function () { return KDV; },   // W-0233
+    state: function () { return S; }, autoOn: autoOn, toggleAuto: toggleAuto, _autoFight: function (pos) { return autoFight(pos); }, _kdForTest: function (v) { KDT = v || null; KDV = KD0(); if (S) { refreshStats(); } return KDV; }, kd: function () { return KDV; },   // W-0233   // W-0236 자동 사냥 · W-0233 배율
     _setStateForTest: function (st) { S = st; },
     _resetForTest: function () { S = null; partyKey = ''; popAcc = 9; }
   };
