@@ -1106,9 +1106,9 @@ window.requestAnimationFrame = function () { return 0; };
       var T = (DG.itemData && DG.itemData.TIERS) || (DG.item && DG.item.TIERS) || [], colors = {};
       T.forEach(function (x) { colors[x.color] = 1; });
       var src = (function () { try { var x = new XMLHttpRequest(); x.open('GET', 'js/dungeon.js', false); x.send(); return x.status === 200 ? x.responseText : ''; } catch (er) { return ''; } })();
-      var trail = /wTier >= 3\)[\s\S]{0,80}t: 'trail'/.test(src), burst = /wTier >= 4\)[\s\S]{0,80}t: 'burst'/.test(src);
-      var steps = T.length, visibleFx = (trail ? 1 : 0) + (burst ? 1 : 0);
-      return funMark(false, Object.keys(colors).length === steps && visibleFx >= 1) + '등급 ' + steps + '단계 색 ' + Object.keys(colors).length + '종 · 보물 잔광 ' + trail + ' · 전설 파티클 ' + burst + ' · 상품~명품은 테두리색뿐(규격 "단계마다 보이는 것 1개"엔 모자람)';
+      var trail = /wTier >= 1\)[\s\S]{0,240}t: 'trail'/.test(src), lifes = /life: \[0, ([0-9.]+), ([0-9.]+), ([0-9.]+), ([0-9.]+)\]\[Math\.min\(4, wTier\)\]/.exec(src), burst = /wTier >= 4\)[\s\S]{0,80}t: 'burst'/.test(src);   // W-0239 양품부터 잔광, 단마다 길이
+      var steps = T.length, visibleFx = (trail ? 1 : 0) + (burst ? 1 : 0), grow = !!lifes && +lifes[1] > 0 && +lifes[2] > +lifes[1] && +lifes[3] > +lifes[2] && +lifes[4] > +lifes[3];
+      return funMark(Object.keys(colors).length === steps && trail && grow && burst, Object.keys(colors).length === steps && visibleFx >= 1) + '등급 ' + steps + '단계 색 ' + Object.keys(colors).length + '종 · 양품부터 등급 색 잔광 ' + trail + (lifes ? '(' + lifes.slice(1).join('·') + '초)' : '') + ' · 전설 파티클 ' + burst + (grow ? '' : ' · 상품~명품은 테두리색뿐(규격 "단계마다 보이는 것 1개"엔 모자람)');
     });
 
     t('재미표준 H 돌아올 이유(측정) — 날짜·주가 바뀌면 일일·주간 목표가 새로 찬다(벌칙 없음)', function () {

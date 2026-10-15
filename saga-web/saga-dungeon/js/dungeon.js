@@ -3509,9 +3509,9 @@
     /* §5.8③ 성장 가시화 — 보물(3) 이상 무기는 때릴 때마다 잔광, 전설(4)은
        파티클(burst)도 하나 더 — 새 3D 지오메트리 없이 기존 fx 표만 재사용 */
     var wTier = weaponTierOf();
-    if (wTier >= 3) {
-      fx.push({ t: 'trail', x: e.x, y: e.y - e.r * 0.4, life: wTier >= 4 ? 0.3 : 0.22,
-        color: wTier >= 4 ? '#c7a76c' : '#00c000' });
+    if (wTier >= 1) {   // W-0238 이후 W-0239 — 양품(1)부터 등급 색 잔광, 단마다 길어진다(0.12·0.16·0.22·0.3초 — 재미표준 G 1단계마다 하나)
+      fx.push({ t: 'trail', x: e.x, y: e.y - e.r * 0.4, life: [0, 0.12, 0.16, 0.22, 0.3][Math.min(4, wTier)],
+        color: ['#d0c8b8', '#6f6fff', '#ffff64', '#00c000', '#c7a76c'][Math.min(4, wTier)] });
     }
     if (wTier >= 4) {
       fx.push({ t: 'burst', x: e.x, y: e.y - e.r * 0.4, life: 0.3, color: '#c7a76c',
