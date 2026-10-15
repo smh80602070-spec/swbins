@@ -196,6 +196,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/ai.js"></script>
 <script src="js/auto.js"></script>
 <script src="js/party-sheet.js"></script>
+<script src="js/ui-me.js"></script>
 <script src="js/ui-near.js"></script>
 <script src="js/ui-detail.js"></script>
 <script src="js/ui.js"></script>
@@ -6664,6 +6665,14 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
     });
 
     /* ── 상세 화면 ─────────────────────────────────────── */
+
+    t('나 시트(W-0225) — 프로필·선두 장비(무기·보패 다섯 칸)·동행마다 한 줄, 줄은 그 인물 상세로 이어진다', function () {
+      var C = DG.core, keepP = C.save.party.slice(), ids = D.heroes.slice(0, 2).map(function (h) { return h.id; }), keepDex = JSON.stringify(C.save.dex.heroes), html;
+      try { ids.forEach(function (id) { C.save.dex.heroes[id] = C.save.dex.heroes[id] || { at: 1 }; }); C.save.party = ids.slice(); DG.ui.openSheet('me'); html = document.getElementById('sheet-body').innerHTML; DG.ui.closeSheet(); }
+      finally { C.save.party = keepP; C.save.dex.heroes = JSON.parse(keepDex); }
+      var rows = (html.match(/class="me-row"/g) || []).length, ok = html.indexOf('내 프로필') >= 0 && html.indexOf('무기') >= 0 && html.indexOf('보패') >= 0 && rows === 2 && html.indexOf('data-act="detail"') >= 0;
+      return ok && ('프로필 · 선두 장비 · 동행 ' + rows + '줄 · 상세로 이어짐') || ('실패 rows=' + rows + ' len=' + html.length);
+    });
 
     t('인물 상세 화면이 열린다', function () {
       var h = D.heroes[0];

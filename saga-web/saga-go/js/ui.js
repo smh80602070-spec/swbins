@@ -70,7 +70,7 @@
       if (openTab === name) { closeSheet(); } else { openSheet(name); }
     });
     els.profile.addEventListener('click', function (e) {
-      if (!e.target.closest('[data-act="open-quest"]')) { return; }
+      if (!e.target.closest('[data-act="open-quest"]')) { openSheet('me'); return; }   // W-0225 프로필 칸 = "나" 시트
       openSheet('quest');
     });
     els['sheet-close'].addEventListener('click', closeSheet);
@@ -312,7 +312,7 @@
   /* ── 시트 ─────────────────────────────────────────────── */
 
   var SHEET_TITLE = {
-    quest: '📋 사명', party: '👤 동행', bag: '🎒 행낭', letters: '✉️ 천거장',
+    me: '🧭 나', quest: '📋 사명', party: '👤 동행', bag: '🎒 행낭', letters: '✉️ 천거장',
     dex: '📖 도감', oracle: '🔮 사관', log: '📜 기록', keys: '⌨️ 키설정',
     settings: '⚙️ 설정'
   };
@@ -404,7 +404,7 @@
 
   function renderSheet() {
     if (!openTab) { return; }
-    var v = openTab === 'quest' ? viewQuest() : openTab === 'party' ? global.DG.partySheet.view({ esc: esc, pt: pt, titleOf: titleOf, advText: advText, presetStrip: presetStrip, buddy: buddy })   // 동행(W-0092) — js/party-sheet.js
+    var v = openTab === 'me' ? global.DG.meSheet.view({ esc: esc, pt: pt, titleOf: titleOf, advText: advText }) : openTab === 'quest' ? viewQuest() : openTab === 'party' ? global.DG.partySheet.view({ esc: esc, pt: pt, titleOf: titleOf, advText: advText, presetStrip: presetStrip, buddy: buddy })   // 동행(W-0092) — js/party-sheet.js
           : openTab === 'bag' ? viewBag()
           : openTab === 'letters' ? viewLetters()
           : openTab === 'dex' ? viewDex()

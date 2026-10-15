@@ -2056,3 +2056,10 @@ body.fs-on #dock, body.fs-on #near { display: none !important; }
 /* 지도 출처 표기(W-0059, OSM 타일 조건) — 맨 아래 가운데, 눌리는 단추 밑에 깔릴 만큼 작게 */
 /* 프로필 카드 안 <small>(튜토리얼 "(1/5)")이 브라우저 기본 0.8배로 9px 대로 떨어졌다 — 바닥 11px(W-0093, 사가천하 strategy.css 와 같은 줄) */
 :where(#profile) small { font-size: max(11px, .8em); }
+
+/* W-0225 "나" 시트 — 초상 + 글 한 줄 단추 */
+.me-lead, .me-row { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 6px 8px; margin: 4px 0; color: inherit; font: inherit; cursor: pointer; }
+.me-lead img, .me-row img { border-radius: 8px; flex: none; object-fit: cover; }
+.me-lead img { width: 64px; height: 64px; }
+.me-row img { width: 36px; height: 36px; }
+.me-lead:hover, .me-row:hover { background: rgba(255,255,255,0.09); }
