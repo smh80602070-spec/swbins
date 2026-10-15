@@ -3713,8 +3713,9 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         !!enc.querySelector('[data-act="back-scen"]');
       DG.ui.closeEnc();
       R.setup('cao'); FD.use('194');
-      return scen === FD.SCENARIOS.length && chal.length === 1 && cardTxt.indexOf('이번 주 도전') >= 0 && flags === 13 && title.indexOf('이번 주 도전') >= 0 &&
-        started && card && ('판 ' + scen + '장 + 도전 1장 · 깃발 ' + flags + ' · 60달 결과 카드(공유 코드)');
+      var dayTxt = chal.length > 1 ? chal[1].textContent : '';   // W-0244 둘째 = 오늘의 도전
+      return scen === FD.SCENARIOS.length && chal.length === 2 && cardTxt.indexOf('이번 주 도전') >= 0 && dayTxt.indexOf('오늘의 도전') >= 0 && flags === 13 && title.indexOf('이번 주 도전') >= 0 &&
+        started && card && ('판 ' + scen + '장 + 도전 2장(주간·오늘) · 깃발 ' + flags + ' · 60달 결과 카드(공유 코드)');
     });
 
     t('도전 — 옛 세이브(도전·최고 기록 칸 없음)도 안 터진다', function () {
@@ -4252,8 +4253,16 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
     t('재미표준 H 돌아올 이유(측정) — 날짜를 바꾸면 주간 도전 씨앗이 바뀐다 · 일일·월간', function () {
       var a = R.challengeWeek(new Date(2026, 9, 12)), b = R.challengeWeek(new Date(2026, 9, 14)), c = R.challengeWeek(new Date(2026, 9, 19));
       var weekly = a.key === b.key && a.seed === b.seed && a.key !== c.key && a.seed !== c.seed;
-      var daily = typeof R.challengeDay === 'function' || typeof R.dailyGoal === 'function';
-      return funMark(weekly && daily, weekly) + '주간 도전 ' + (weekly ? '○(' + a.key + ' → ' + c.key + ')' : '×') + ' · 일일 ' + (daily ? '있음' : '없음(턴제)') + ' · 월간 = 달말 카드(B)';
+      /* W-0244 오늘의 도전 — 같은 날 같은 씨앗·다음 날 다른 씨앗·주간 열쇠와 안 겹침 · 세우면 12달 판(daily) · 판은 되돌린다 */
+      var daily = false, dinfo = '';
+      if (typeof R.challengeDay === 'function') {
+        var d1 = R.challengeDay(new Date(2026, 9, 15, 8)), d2 = R.challengeDay(new Date(2026, 9, 15, 23)), d3 = R.challengeDay(new Date(2026, 9, 16, 8)), ch = null;
+        evFresh();
+        try { ch = R.setupChallenge(R.state().me || 'cao', new Date(2026, 9, 15), true); } finally { evDone(); }
+        daily = d1.key === d2.key && d1.seed === d2.seed && d1.key !== d3.key && d1.seed !== d3.seed && d1.key !== a.key && !!ch && ch.daily === true && ch.months === R.DAILY_MONTHS && ch.week === d1.key;
+        dinfo = d1.key + ' → ' + d3.key + ' · ' + (ch ? ch.months : '?') + '달 판';
+      }
+      return funMark(weekly && daily, weekly) + '주간 도전 ' + (weekly ? '○(' + a.key + ' → ' + c.key + ')' : '×') + ' · 오늘의 도전 ' + (daily ? '○(' + dinfo + ')' : '없음(턴제)') + ' · 월간 = 달말 카드(B)';
     });
 
     function isStageEnd(k) { return /_end$/.test(k) && !!DG.scenarioData && !!DG.scenarioData.STAGES[k.slice(0, -4)]; }

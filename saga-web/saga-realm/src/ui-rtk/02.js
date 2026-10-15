@@ -321,7 +321,7 @@
   /** 주간 도전을 마친 카드 — 점수·최고 기록·공유 코드. 판은 이어진다 */
   function showChallenge(res) {
     showEncQueued('<div style="text-align:center"><div class="enc-big">🎯</div>' +
-      '<h3 style="margin:6px 0 2px;font-size:20px;color:var(--gold)">이번 주 도전 ' + (res.how === 'lose' ? '— 멸망' : '끝') + '</h3>' +
+      '<h3 style="margin:6px 0 2px;font-size:20px;color:var(--gold)">' + (res.daily ? '오늘의 도전 ' : '이번 주 도전 ') + (res.how === 'lose' ? '— 멸망' : '끝') + '</h3>' +
       '<small class="muted">' + esc(res.week) + ' · ' + res.months + '달째</small></div>' +
       '<div class="enc-hist"><b>점수 ' + res.score + '</b>' + (res.isBest ? ' <span class="good">최고 기록!</span>' : '') +
       '<br>이 주 최고 ' + res.best + '점<br><small class="muted">공유 코드 ' + esc(res.code) + '</small></div>' +
@@ -441,7 +441,7 @@
       '<b>🎯 이번 주 도전 · ' + esc(wk.key) + ' <span class="stars chal">★★★</span></b>' +
       '<small class="muted">무작위 판 · ' + R().CHALLENGE_MONTHS + '달 뒤 점수(성×10 + 무장 + 보물×20)</small>' +
       '<small class="muted">' + (best ? '내 최고 ' + best + '점' : '아직 기록이 없습니다') + ' · 같은 주엔 누구나 같은 판입니다</small>' +
-      '</button>';
+      '</button>' + (R().challengeDay ? (function () { var dk = R().challengeDay(), db = R().bests()[dk.key]; return '<button class="fcard wide-card" data-act="pick-challenge" data-kind="day"><b>📅 오늘의 도전 · ' + esc(dk.key.slice(1)) + ' <span class="stars chal">★★</span></b><small class="muted">무작위 판 · ' + R().DAILY_MONTHS + '달 뒤 점수(성×10 + 무장 + 보물×20) — 날마다 새 판</small><small class="muted">' + (db ? '오늘 최고 ' + db + '점' : '오늘 기록이 없습니다') + ' · 놓쳐도 잃는 것 없음</small></button>'; })() : '');   // W-0244
     showEnc(html + '</div>');
   }
 
@@ -449,7 +449,7 @@
     var sc = FD.scenario(scenId || pickScen);
     pickScen = sc.id;
     FD.use(sc.id);               // 이 화면이 보여 줄 표를 그 시나리오 것으로 갈아 끼운다
-    var html = '<h3 style="margin:0 0 2px;font-size:19px">' + (pickChallenge ? '🎯 이번 주 도전 — 어느 깃발로' : '삼국지 ' + sc.year + '년 — ' + esc(sc.name)) + '</h3>' +
+    var html = '<h3 style="margin:0 0 2px;font-size:19px">' + (pickChallenge ? (pickChallenge === 'day' ? '📅 오늘의 도전' : '🎯 이번 주 도전') + ' — 어느 깃발로' : '삼국지 ' + sc.year + '년 — ' + esc(sc.name)) + '</h3>' +
       '<small class="muted">' + esc(sc.desc) + ' 성이 적을수록 어렵습니다.</small>' +
       '<button class="btn tiny ghost" data-act="back-scen" style="margin:8px 0 0">↩ 다른 해</button>' +
       '<div class="fpick">';

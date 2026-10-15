@@ -1066,6 +1066,9 @@
    *    (새 판을 세우면 rtk 칸이 비워져 최고 기록은 rtk 밖에 둔다 — PLAN 초안의 `challenge.best` 대신). 서버 없음.
    *    60달을 채우면 한 번만 끝내고 판은 이어진다. 그 전에 판이 닫히면(멸망·정복) 그 자리에서 끝낸다. */
   var CHALLENGE_MONTHS = 60;
+  /* W-0244 오늘의 도전(재미표준 H "일일 1개 · 3분") — 주간 도전과 같은 무작위 판·같은 점수, 씨앗만 그날(로컬 날짜), 12달 짧은 판.
+     열쇠 'D2026-10-15'(주간 '2026-W42' 와 안 겹친다) — 최고 기록도 같은 rtkBest 에 따로. 놓쳐도 잃는 것 없음 */
+  var DAILY_MONTHS = 12;
 
   /** ISO 8601 주 — { year, week }. 월요일에 시작하고, 그 해 첫 목요일이 든 주가 1주 */
   function isoWeek(d) {
@@ -1081,6 +1084,13 @@
     var w = isoWeek(date || new Date());
     var key = w.year + '-W' + (w.week < 10 ? '0' : '') + w.week;
     return { key: key, seed: (Math.imul(w.year * 100 + w.week, 2654435761) >>> 0) || 1 };
+  }
+
+  /** 그 날짜의 오늘의 도전 — { key: 'D2026-10-15', seed } (같은 날은 늘 같은 씨앗) — 순수 */
+  function challengeDay(date) {
+    var d = date || new Date(), y = d.getFullYear(), m = d.getMonth() + 1, dd = d.getDate();
+    var key = 'D' + y + '-' + (m < 10 ? '0' : '') + m + '-' + (dd < 10 ? '0' : '') + dd;
+    return { key: key, seed: (Math.imul(y * 10000 + m * 100 + dd, 2246822519) >>> 0) || 1 };
   }
 
   function heldRelics(forceId) {
@@ -1104,12 +1114,12 @@
     return core.save.rtkBest;
   }
 
-  /** 이번 주 도전으로 새 판을 세운다 — 무작위 판(chaos)을 그 주의 씨앗으로 */
-  function setupChallenge(meId, date) {
-    var wk = challengeWeek(date);
+  /** 이번 주 도전으로 새 판을 세운다 — 무작위 판(chaos)을 그 주의 씨앗으로. daily 면 오늘의 도전(그날 씨앗·12달, W-0244) */
+  function setupChallenge(meId, date, daily) {
+    var wk = daily ? challengeDay(date) : challengeWeek(date);
     setup(meId, 'chaos', wk.seed);
     var st = state();
-    st.challenge = { week: wk.key, seed: wk.seed, months: CHALLENGE_MONTHS, done: false, score: null };
+    st.challenge = { week: wk.key, seed: wk.seed, months: daily ? DAILY_MONTHS : CHALLENGE_MONTHS, done: false, score: null, daily: !!daily };
     core.persist();
     return st.challenge;
   }
@@ -1213,9 +1223,9 @@
     ch.score = how === 'lose' ? 0 : challengeScore(st.me);
     var b = bests(), prev = b[ch.week] || 0, isBest = ch.score > prev;
     if (isBest) { b[ch.week] = ch.score; }
-    var out = { week: ch.week, score: ch.score, best: b[ch.week] || 0, isBest: isBest, how: how,
+    var out = { week: ch.week, daily: !!ch.daily, score: ch.score, best: b[ch.week] || 0, isBest: isBest, how: how,
       months: st.turn || 0, code: challengeCode(ch, ch.score) };
-    core.log('🎯 이번 주 도전 (' + ch.week + ') — 점수 ' + ch.score + (isBest ? ' · 최고 기록!' : ''), 'good');
+    core.log((ch.daily ? '📅 오늘의 도전 (' : '🎯 이번 주 도전 (') + ch.week + ') — 점수 ' + ch.score + (isBest ? ' · 최고 기록!' : ''), 'good');
     core.emit('rtk:challenge', out);
     return out;
   }
@@ -1233,7 +1243,7 @@
     var st = state();
     if (!st.started || !st.challenge) { return null; }
     var ch = st.challenge;
-    return { week: ch.week, month: Math.min(st.turn || 0, ch.months), months: ch.months, done: !!ch.done,
+    return { week: ch.week, daily: !!ch.daily, month: Math.min(st.turn || 0, ch.months), months: ch.months, done: !!ch.done,
       score: ch.done ? ch.score : challengeScore(st.me), best: bests()[ch.week] || 0, code: ch.done ? challengeCode(ch, ch.score) : '' };
   }
 
@@ -1370,7 +1380,7 @@
     setup: setup, scatterFree: scatterFree,
     challengeWeek: challengeWeek, challengeScore: challengeScore, challengeView: challengeView, setupChallenge: setupChallenge,
     tickChallenge: tickChallenge, monthReport: monthReport, snapshot: snapshot, recommend: recommend, isoWeek: isoWeek,
-    CHALLENGE_MONTHS: CHALLENGE_MONTHS, bests: bests,
+    CHALLENGE_MONTHS: CHALLENGE_MONTHS, bests: bests, DAILY_MONTHS: DAILY_MONTHS, challengeDay: challengeDay,
     roundNo: roundNo, canNextRound: canNextRound, roundPreview: roundPreview, nextRound: nextRound, roundBest: roundBest, ROUND_MAX: ROUND_MAX,
     VICTORY: VICTORY, victoryKinds: victoryKinds, victoryProgress: victoryProgress, victoryNext: victoryNext,
     victoryDone: function (k) { return victoryDone(state(), k); }, resultCard: resultCard, tickVictories: tickVictories,

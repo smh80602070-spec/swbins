@@ -166,7 +166,7 @@
     if (rp.milestone) { prog += '🚩 ' + rp.milestone.idx + '/' + rp.milestone.total + ' ' + esc(rp.milestone.name) + ' ' + rp.milestone.cur + '/' + rp.milestone.need + '<br>'; }
     if (rp.victory) { prog += rp.victory.emoji + ' ' + esc(rp.victory.name) + ' ' + Math.min(100, Math.round(100 * rp.victory.pct)) + '% · ' + esc(rp.victory.note) + '<br>'; }
     if (rp.challenge && !rp.challenge.done) {
-      prog += '🎯 도전 ' + rp.challenge.month + '/' + rp.challenge.months + '달 · 점수 ' + rp.challenge.score +
+      prog += (rp.challenge.daily ? '📅 오늘 도전 ' : '🎯 도전 ') + rp.challenge.month + '/' + rp.challenge.months + '달 · 점수 ' + rp.challenge.score +
         (rp.challenge.best ? ' · 최고 ' + rp.challenge.best : '') + '<br>';
     }
     if (prog) { html += '<small class="muted">' + prog + '</small>'; }

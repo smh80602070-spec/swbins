@@ -81,7 +81,7 @@
     setup: setup, scatterFree: scatterFree,
     challengeWeek: challengeWeek, challengeScore: challengeScore, challengeView: challengeView, setupChallenge: setupChallenge,
     tickChallenge: tickChallenge, monthReport: monthReport, snapshot: snapshot, recommend: recommend, isoWeek: isoWeek,
-    CHALLENGE_MONTHS: CHALLENGE_MONTHS, bests: bests,
+    CHALLENGE_MONTHS: CHALLENGE_MONTHS, bests: bests, DAILY_MONTHS: DAILY_MONTHS, challengeDay: challengeDay,
     roundNo: roundNo, canNextRound: canNextRound, roundPreview: roundPreview, nextRound: nextRound, roundBest: roundBest, ROUND_MAX: ROUND_MAX,
     VICTORY: VICTORY, victoryKinds: victoryKinds, victoryProgress: victoryProgress, victoryNext: victoryNext,
     victoryDone: function (k) { return victoryDone(state(), k); }, resultCard: resultCard, tickVictories: tickVictories,

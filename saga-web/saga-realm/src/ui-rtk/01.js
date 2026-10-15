@@ -557,7 +557,7 @@
     }
     if (a === 'pick-challenge') {
       pickScen = 'chaos';
-      pickChallenge = true;
+      pickChallenge = g('data-kind') === 'day' ? 'day' : true;   // W-0244 오늘의 도전
       showForcePick('chaos');
       return;
     }
@@ -601,7 +601,7 @@
       return;
     }
     if (a === 'pick-force') {
-      if (pickChallenge) { R().setupChallenge(g('data-id')); pickChallenge = false; }
+      if (pickChallenge) { R().setupChallenge(g('data-id'), null, pickChallenge === 'day'); pickChallenge = false; }
       else { R().setup(g('data-id'), pickScen); }
       closeEnc();
       centerOnMine();
