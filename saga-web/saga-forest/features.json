@@ -728,7 +728,7 @@
   "note": "D2: saga-web/tools/playcheck/pw-fs-craft.mjs 4/4 — results/pw-fs-craft.json(W-0103). 제작대 곁 실제 ␣ → 창 → 「짓기」 실제 클릭 → 3택 실제 클릭. Claude 눈: 제작대 창 ○·3택 창 ○·3D 제작대(Bench_1) 보임 ○."
  },
  {
-  "id": "fs.cozy2d",
+  "id": "fs.cozy2d · W-0222(10-15): 재미표준 측정 A~H 다 잼 — A○ B○ C○ D○ E○ F△(쏘임 걸음 ×0.8·주민 떠남 경고 고리 없음) G△(번들·관계 단계 없음) H○.",
   "name": "2D 마을 스타듀식 — 큰 인물(배율 ×1.35, 구 반지름 같은 비로 줄여 지평선 그대로)·풀 결·꽃 점·흙길 가장자리·물가 거품·시간대 곱하기 빛·밤 등불",
   "files": [
    "js/cozy2d.js",

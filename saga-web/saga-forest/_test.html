@@ -7090,6 +7090,73 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       return (three === 100 && dup === 0 ? '○' : '×') + ' — 100회: 후보 셋 ' + three + ' · 같은 축 중복 ' + dup + ' · 축 ' + CR.AXIS_KEYS.join('·') + ' · 거절 🪙 ' + CR.DECLINE_GOLD;
     });
 
+    /* ── 재미표준 A·B·C·E·F·G·H 측정(W-0222, SAGA-DESIGN §3 규격 진단 그대로 — 게임 동작은 안 바꾼다) ── */
+    function funMark(ok, part) { return (ok ? '○' : (part ? '△' : '×')) + ' — '; }
+
+    t('재미표준 A 목표판(측정) — 부팅 뒤 오늘의 일과 세 줄 + 이번 주 한 줄', function () {
+      var list = V.taskList() || [], w = V.weeklyTaskInfo ? V.weeklyTaskInfo() : null;
+      var n = list.filter(function (x) { return x.name && x.need > 0; }).length;
+      return funMark(n === 3 && !!w, n > 0) + '오늘 ' + n + '줄(' + list.map(function (x) { return x.name; }).join(' · ') + ') · 이번 주 ' + (w ? '「' + w.name + '」 ' + w.got + '/' + w.need : '없음');
+    });
+
+    t('재미표준 B 세션 마무리 카드(측정) — 하루가 넘어가면 어제 요약 카드에 다음 할 것(next)', function () {
+      var s = V.state(), keep = { day: s.day, dayMark: JSON.parse(JSON.stringify(s.dayMark || {})), dayLog: s.dayLog, tasks: JSON.parse(JSON.stringify(s.tasks || null)) }, info;
+      try { s.day = V.today() - 1; V.rollDay(); info = V.dayLogInfo(); }
+      finally { s.day = keep.day; s.dayMark = keep.dayMark; s.dayLog = keep.dayLog; s.tasks = keep.tasks; }
+      var ok = !!(info && info.next);
+      return funMark(ok, !!info) + '다음 「' + (info && info.next) + '」 · 한 번 보면 다시 안 뜸(dayLogSeen)';
+    });
+
+    t('재미표준 C 손맛(측정, 채집형) — 3연속 리듬 보너스·쉬면 끊김·채집음 3종 라운드로빈', function () {
+      var raw = V.raw(), s = V.state(), S = DG.sfx, keep = { x: raw.player.x, y: raw.player.y, used: s.used, streak: s.gatherStreak, at: s.gatherStreakAt }, bonuses = [], cues = {}, i;
+      var tree = raw.props.filter(function (p) { return p.kind === 'tree'; })[0];
+      try {
+        raw.player.x = tree.x; raw.player.y = tree.y; s.gatherStreak = 0; s.gatherStreakAt = 0;
+        for (i = 0; i < 20 && bonuses.length < 6; i++) {
+          s.used = {}; clearBees();
+          var r = V.interact();
+          if (r && r.kind === 'gather') { bonuses.push(!!r.bonus); var tl = S && S._tail ? S._tail(1) : []; if (tl[0] && /^gather_[abc]$/.test(tl[0])) { cues[tl[0]] = 1; } }
+        }
+      } finally { raw.player.x = keep.x; raw.player.y = keep.y; s.used = keep.used; s.gatherStreak = keep.streak; s.gatherStreakAt = keep.at; clearBees(); }
+      var rhythm = bonuses.length === 6 && bonuses[2] && bonuses[5] && !bonuses[0] && !bonuses[3];
+      var nCue = Object.keys(cues).length;
+      return funMark(rhythm && nCue >= 3, rhythm || nCue >= 2) + '채집 ' + bonuses.length + '번 · 보너스 ' + bonuses.map(function (b) { return b ? '★' : '·'; }).join('') + ' · 채집음 ' + nCue + '종(' + Object.keys(cues).join(',') + ')';
+    });
+
+    t('재미표준 E 발견 밀도(측정) — 훑은 60m 칸 중 만남 없는 칸 ≤10% · 종류 넷 이상', function () {
+      var G = DG.grid; if (!G || !G.cells) { return '× — DG.grid 없음'; }
+      var list = G.cells(), seen = {};
+      list.forEach(function (c) { seen[c.kind] = 1; });
+      var empty = (G.scanned() - list.length) / G.scanned(), kinds = Object.keys(seen).length, spirits = DG.spirit && DG.spirit.SPOTS ? DG.spirit.SPOTS.length : null;
+      return funMark(empty <= 0.1 && kinds >= 4, empty <= 0.3) + '칸 ' + list.length + '/' + G.scanned() + ' · 빈 칸 ' + Math.round(empty * 100) + '%(규격 ≤10%) · 종류 ' + kinds + (spirits ? ' · 정령 ' + spirits : '') + ' · 바깥 고리(마을 밖 먼 숲) 사건 밀도는 따로 안 잼';
+    });
+
+    t('재미표준 F 실패와 회복(측정) — 벌에 쏘이면 그날 걸음 0.8·바로 이어 함(조작 0)·다음 날 회복', function () {
+      var s = V.state(), BG = DG.bug, keep = s.stung, before, after;
+      if (!BG || !BG.stung) { return '× — DG.bug 없음'; }
+      try {
+        s.stung = null; before = BG.stung();
+        s.stung = s.day; after = BG.stung();
+        var tomorrow = (function () { var d = s.day; s.day = d + 1; var r = BG.stung(); s.day = d; return r; })();
+        var leave = !!(DG.mail && (DG.mail.leaveWarn || DG.mail.leaving));
+        return funMark(false, !before && after && !tomorrow) + '쏘임 비용 = 그날 걸음 ×0.8(진행 손실 없음) · 다시 하기 조작 0 · 다음 날 풀림 ' + !tomorrow + ' · 평가 낮으면 주민이 떠남 — 경고·회복 고리 표시 ' + (leave ? '있음' : '없음') + '(PLAN §4 △)';
+      } finally { s.stung = keep; }
+    });
+
+    t('재미표준 G 성장 가시화(측정) — 집 등급·가게 단계가 마을 그림 크기로 보인다', function () {
+      var HT = (VD.HOME_TIERS || []).length, sl = V.shopLevel ? V.shopLevel() : null, steps;
+      var homeGrow = HT > 1, shopGrow = !!(sl && (sl.next || sl.n > 0));
+      steps = (homeGrow ? 1 : 0) + (shopGrow ? 1 : 0);
+      return funMark(false, steps === 2) + '집 등급 ' + HT + '단계(그림 크기 +12%/단계) · 가게 ' + (sl ? sl.name : '?') + '(팔수록 그림 크기 +10%/단계) · 옷·깃발·박물관도 보임 · 없음: 수집이 마을을 바꾸는 사슬(번들)·관계 단계(PLAN §4 △)';
+    });
+
+    t('재미표준 H 돌아올 이유(측정) — 날마다 다른 일과 셋·이번 주 하나·계절 행사', function () {
+      var VDx = DG.villageData, uniq = {}, d;
+      for (d = 0; d < 28; d++) { uniq[VDx.pickDayTasks(19000 + d).map(function (x) { return x.key; }).join(',')] = 1; }
+      var kinds = Object.keys(uniq).length, w = V.weeklyTaskInfo ? V.weeklyTaskInfo() : null, fest = (VDx.FESTIVALS || VDx.EVENTS || []).length;
+      return funMark(kinds >= 7 && !!w, kinds >= 2) + '28일 일과 조합 ' + kinds + '가지 · 이번 주 ' + (w ? '있음' : '없음') + ' · 행사 ' + fest + ' · 놓쳐도 벌칙 없음';
+    });
+
     t('fs.craft: 제작대 ③ 승급 → 3택이 서고, 거절하면 벨 +100·다음 승급 때 다시 · 고르면 그 축이 도구에 남는다', function () {
       var CR = DG.craft, k = crKeep(), s = V.state();
       try {
