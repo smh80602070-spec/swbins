@@ -4215,7 +4215,9 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var n = [1, 2, 3, 4, 5].map(cnt), ok = n[0] === 1 && n[1] === 1 && n[2] === 3 && n[4] === 4;
       var C0 = DG.core, hs = C0.save.heroes, old = hs.zz_rank_t; hs.zz_rank_t = { lv: 1, exp: 0, rank: 4 };
       var r4 = V3._rank.rankOf('zz_rank_t'), r0 = V3._rank.rankOf('zz_none_t'); if (old === undefined) { delete hs.zz_rank_t; } else { hs.zz_rank_t = old; }
-      return ok && r4 === 4 && r0 === 0 && !hs.zz_none_t && ('장식 개수 관직1~5 = ' + n.join('/') + ' · 관직 읽기 4 · 없는 장수 0(빈 칸 안 만듦)') || ('실패 ' + n.join('/') + ' r4=' + r4 + ' r0=' + r0);
+      /* R-5 10-15 — 몸 붙이는 문장(grp.add·a.model)이 // 주석 뒤로 밀려 3D 몸이 하나도 안 붙었다. 원본 put 줄에서 주석 앞에 있는지 본다 */
+      var src = funSrc('js/tactics-view3d.js'), putOk = !src || /setScalar\(sc \* \(1 \+ 0\.035 \* rk\)\);[^\n]*?a\.model = m;[^\n]*\/\//.test(src) && !/\/\/[^\n]*grp\.add\(m\)/.test(src);
+      return ok && putOk && r4 === 4 && r0 === 0 && !hs.zz_none_t && ('장식 개수 관직1~5 = ' + n.join('/') + ' · 관직 읽기 4 · 없는 장수 0(빈 칸 안 만듦) · 몸 붙이기 ' + (src ? '주석 밖' : '원본 못 읽음')) || ('실패 ' + n.join('/') + ' r4=' + r4 + ' r0=' + r0 + ' put=' + putOk);
     });
 
     t('재미표준 D 선택 3택(측정) — 영내 소식 세 갈래가 늘 서로 다른 축(금 util·병 atk·민심 def), 100장 굴려 같은 축 중복 0', function () {

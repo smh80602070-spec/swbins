@@ -213,7 +213,7 @@
     if (rk) { rankDeco(t, grp, rk, col); }
     function put(m, sc) {
       if (!m || a.gone) { return; }
-      m.scale.setScalar(sc * (1 + 0.035 * rk));   // W-0234 관직 한 단마다 몸 3.5% 크게 grp.remove(stub); grp.add(m); a.model = m;
+      m.scale.setScalar(sc * (1 + 0.035 * rk)); grp.remove(stub); grp.add(m); a.model = m; a.fm = null;   // W-0234 관직 한 단마다 몸 3.5% 크게 · 몸이 오면 번쩍임 재질을 다시 뗀다
     }
     if (A && u.kind === 'officer' && A.buildHero && O && O.find && O.find(u.id)) { A.buildHero(O.find(u.id), col, function (m) { put(m, 1.05); }); }
     else if (A && A.buildTrooper) { A.buildTrooper('inf', col, function (m) { put(m, 0.78); }); }
@@ -277,10 +277,10 @@
   /** 몸 재질을 처음 맞을 때 한 번만 떼어 낸다(다른 몸과 같이 쓰는 재질이라) — 원래 빛 색을 기억 */
   function flashMats(a) {
     if (a.fm) { return a.fm; }
-    a.fm = [];
+    a.fm = []; var TN = global.DG.toon3d;
     (a.model || a.stub).traverse(function (o) {
       if (!o.isMesh || !o.material || Array.isArray(o.material)) { return; }
-      var m = o.material.clone(); o.material = m;
+      var m = TN && TN.cloneMat ? TN.cloneMat(o.material) : o.material.clone(); o.material = m;   // 림·얼굴 셰이더(onBeforeCompile)까지 옮긴다 — 맨 clone 은 툰이 빠진다
       if (m.emissive) { m.userData.e0 = m.emissive.clone(); a.fm.push(m); }
     });
     return a.fm;

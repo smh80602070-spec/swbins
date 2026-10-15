@@ -84,7 +84,7 @@
 
   function paint(dt) {
     var pp = core().save.player.pos, TR = global.DG.treasure;
-    var show = engaged(S) || !!nearestFoe(S, pp.x, pp.y, 22) || !!(TR && TR.wantsHud && TR.wantsHud(pp.x, pp.y)) || !!S.aim;   // ⑲-3 석등 곁에서도 스킬을 쓰게
+    var show = engaged(S) || !!nearestFoe(S, pp.x, pp.y, 22 * KDV) || !!(TR && TR.wantsHud && TR.wantsHud(pp.x, pp.y)) || !!S.aim;   // ⑲-3 석등 곁에서도 스킬을 쓰게
     if (!hudEl) { buildHud(); }
     hudEl.classList.toggle('show', show);
     document.body.classList.toggle('fc-on', show);

@@ -13,7 +13,7 @@
     var a = S.aim, best = null, bs = Infinity, L = aimCands(S, px, py), cc = Math.cos(AIM_CONE());
     for (var i = 0; i < L.length; i++) {
       var c = L[i], dx = c.x - px, dy = c.y - py, d = Math.hypot(dx, dy);
-      if (d < 1 || d > AIM_R()) { continue; }
+      if (d < 1 * KDV || d > AIM_R()) { continue; }
       var cs = (dx * a.dx + dy * a.dy) / d;
       if (cs < cc) { continue; }
       var sc = Math.acos(Math.min(1, cs)) * 20 + d * 0.01;
@@ -108,7 +108,7 @@
     dx /= dl; dy /= dl;
     var hits = living(S).filter(function (f) {
       var fx = f.x - px, fy = f.y - py, d = Math.hypot(fx, fy);
-      return d - BODY(f) <= CHARGE_REACH() && (d < 0.5 || (fx * dx + fy * dy) / d >= CHARGE_ARC());
+      return d - BODY(f) <= CHARGE_REACH() && (d < 0.5 * KDV || (fx * dx + fy * dy) / d >= CHARGE_ARC());
     });
     for (var i = 0; i < hits.length; i++) { hitFoe(S, hits[i], m, m.atk * CHARGE_MUL() * infM(m), infEl(m), 'heavy'); }
     if (hits.length) { rainFollow(S, px, py); }                     // ⑲-17 뱃노래
@@ -144,13 +144,13 @@
     dx /= dl; dy /= dl;
     if (sh === 'thrust') {
       var ex = px + dx * THRUST_LEN(), ey = py + dy * THRUST_LEN();
-      hits = living(S).filter(function (f) { return segDist(f.x, f.y, px, py, ex, ey) <= THRUST_W(); });
+      hits = living(S).filter(function (f) { return segDist(f.x, f.y, px, py, ex, ey) <= THRUST_W() + (KDV > 1 ? BODY(f) : 0); });   // W-0233 2D 는 몸 가장자리까지(3D 는 옛 그대로)
       for (i = 0; i < hits.length; i++) { hitFoe(S, hits[i], m, m.atk * THRUST_MUL(), m.el, 'skill'); }
       ev = { x: ex, y: ey, x0: px, y0: py, r: THRUST_W() };
     } else if (sh === 'dash') {
-      var go = aim ? Math.min(DASH_LEN(), Math.max(0, dl - 1.2)) : DASH_LEN();
+      var go = aim ? Math.min(DASH_LEN(), Math.max(0, dl - 1.2 * KDV - (KDV > 1 ? BODY(aim) : 0))) : DASH_LEN();
       var bx = px + dx * go, by = py + dy * go;
-      hits = living(S).filter(function (f) { return segDist(f.x, f.y, px, py, bx + dx * 1.2, by + dy * 1.2) <= DASH_W(); });
+      hits = living(S).filter(function (f) { return segDist(f.x, f.y, px, py, bx + dx * 1.2 * KDV, by + dy * 1.2 * KDV) <= DASH_W() + (KDV > 1 ? BODY(f) : 0); });
       for (i = 0; i < hits.length; i++) { hitFoe(S, hits[i], m, m.atk * DASH_MUL(), m.el, 'skill'); }
       S.dash = { vx: dx * go / DASH_T(), vy: dy * go / DASH_T(), t: DASH_T() };
       S.iframe = Math.max(S.iframe, 0.3);
@@ -235,7 +235,7 @@
     } else if (k.type === 'shells') {
       var tg = living(S).filter(function (f) { return Math.hypot(f.x - px, f.y - py) <= k.reach; })
         .sort(function (a, b) { return Math.hypot(a.x - px, a.y - py) - Math.hypot(b.x - px, b.y - py); }).slice(0, k.n);
-      var spots = tg.length ? tg.map(function (f) { return { x: f.x, y: f.y }; }) : [{ x: px + dx * 8, y: py + dy * 8 }];
+      var spots = tg.length ? tg.map(function (f) { return { x: f.x, y: f.y }; }) : [{ x: px + dx * 8 * KDV, y: py + dy * 8 * KDV }];
       for (i = 0; i < spots.length; i++) {
         S.zones.push({ kind: 'shell', x: spots[i].x, y: spots[i].y, r: k.r, t: k.delay, el: m.el, m: m, mul: k.mul });
       }
@@ -330,7 +330,7 @@
       S.hasteT = k.sec;
       for (i = 0; i < S.party.length; i++) { var o = S.party[i]; if (o !== m && !o.down) { o.energy = Math.min(ENERGY_MAX(), o.energy + k.energy * (o.er || 1)); } }
     } else if (k.type === 'vortex') {
-      var n = nearestFoe(S, px, py, 12), dx = n ? n.x - px : (S.lastDx || 0), dy = n ? n.y - py : (S.lastDy || 1), dl = Math.hypot(dx, dy) || 1;
+      var n = nearestFoe(S, px, py, 12 * KDV), dx = n ? n.x - px : (S.lastDx || 0), dy = n ? n.y - py : (S.lastDy || 1), dl = Math.hypot(dx, dy) || 1;
       S.zones.push({ kind: 'vortex', x: px + dx / dl * k.ahead, y: py + dy / dl * k.ahead, r: k.r, t: k.sec, next: k.every, every: k.every,
         mul: k.tick, pull: k.pull, el: m.el, atk: m.atk, m: m });
     }
@@ -447,7 +447,7 @@
     if (S.stamina < dc || allDown(S)) { return { ok: false }; }
     if (dx || dy) { S.lastDx = dx; S.lastDy = dy; }
     if (!dx && !dy) {
-      var n = nearestFoe(S, px || 0, py || 0, 30);
+      var n = nearestFoe(S, px || 0, py || 0, 30 * KDV);
       if (n) { dx = (px || 0) - n.x; dy = (py || 0) - n.y; } else { dy = 1; }
     }
     var len = Math.hypot(dx, dy) || 1;

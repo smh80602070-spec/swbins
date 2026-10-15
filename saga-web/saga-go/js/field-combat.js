@@ -93,7 +93,7 @@
   function AIM_FULL() { return 1.4; }  function AIM_PART() { return 0.45; }  function AIM_FULLMUL() { return 1.25; }  function AIM_GAP() { return 0.3; }
   function ARROW_V() { return 60 * KDV; }  function ARROW_RANGE() { return 45 * KDV; }  function ARROW_EL_R() { return 1.2 * KDV; }  function CHARGE_COST() { return K('chargeCost', 20); }
   function CHARGE_MUL() { return K('chargeMul', 1.3); }  function CHARGE_REACH() { return 3.2 * KDV; }  function CHARGE_ARC() { return -0.2; }
-  /* W-0224 2D 몸짓 기록 — 3D(W3().playAnim)와 같은 순간에 남긴다(2D 화면엔 W3 가 없다). actor2d·drawFieldFoe 가 anim2d(key) 로 읽는다 */ var A2M = {}; function A2(k, clip, ms) { A2M[k] = { clip: clip, end: Date.now() + ms, dur: ms / 1000 }; } function anim2d(k) { var a = A2M[k]; if (!a) { return null; } var left = (a.end - Date.now()) / 1000; if (left <= 0) { delete A2M[k]; return null; } return { clip: a.clip, left: left, dur: a.dur }; } function wpnSlot(w, step) { return K('wpnAnim', 1) ? 'Wpn_' + ({ sword: 1, claymore: 1, polearm: 1, catalyst: 1, bow: 1 }[w] ? w : 'sword') + '_' + Math.max(0, Math.min(2, step | 0)) : 'attack'; }   function wpnMs(w, step, dflt) { var OA = global.DG.ownAnim, d = OA && OA.combatDur ? OA.combatDur(wpnSlot(w, step)) : 0; return d ? Math.round(d * 1000) : dflt; }   function WPN_HOLD() { return K('finishHold', 70); }   function PLUNGE_R() { return 3.5; }     function PLUNGE_MUL() { return K('plungeMul', 1.2); }   // W-0169 3D 무기 몸짓 이름·길이·3타 마무리 멈춤(ms)
+  /* W-0224 2D 몸짓 기록 — 3D(W3().playAnim)와 같은 순간에 남긴다(2D 화면엔 W3 가 없다). actor2d·drawFieldFoe 가 anim2d(key) 로 읽는다 */ var A2M = {}; function A2(k, clip, ms) { A2M[k] = { clip: clip, end: Date.now() + ms, dur: ms / 1000 }; } function anim2d(k) { var a = A2M[k]; if (!a) { return null; } var left = (a.end - Date.now()) / 1000; if (left <= 0) { delete A2M[k]; return null; } return { clip: a.clip, left: left, dur: a.dur }; } function wpnSlot(w, step) { return K('wpnAnim', 1) ? 'Wpn_' + ({ sword: 1, claymore: 1, polearm: 1, catalyst: 1, bow: 1 }[w] ? w : 'sword') + '_' + Math.max(0, Math.min(2, step | 0)) : 'attack'; }   function wpnMs(w, step, dflt) { var OA = global.DG.ownAnim, d = OA && OA.combatDur ? OA.combatDur(wpnSlot(w, step)) : 0; return d ? Math.round(d * 1000) : dflt; }   function WPN_HOLD() { return K('finishHold', 70); }   function PLUNGE_R() { return 3.5 * KDV; }     function PLUNGE_MUL() { return K('plungeMul', 1.2); }   // W-0169 3D 무기 몸짓 이름·길이·3타 마무리 멈춤(ms)
   function PLUNGE_PER_M() { return 0.1; } function PLUNGE_MAX_M() { return 15; }
   function VAPOR_MUL() { return K('vaporMul', 1.5); }
   function OVERLOAD_R() { return 4 * KDV; }
@@ -158,8 +158,8 @@
   };
   var SHAPE_KEYS = ['thrust', 'dash', 'field', 'summon'];
   function shapeOf(id) { return id === '_me' ? 'circle' : SHAPE_KEYS[Math.floor(hs(id + '#shape') * 4) % 4]; }
-  function THRUST_LEN() { return 8; }  function THRUST_W() { return 1.6; }  function THRUST_MUL() { return K('thrustMul', 2.8); }
-  function DASH_LEN() { return 6; }    function DASH_W() { return 1.8; }    function DASH_MUL() { return K('dashMul', 2.4); }
+  function THRUST_LEN() { return 8 * KDV; }  function THRUST_W() { return 1.6 * KDV; }  function THRUST_MUL() { return K('thrustMul', 2.8); }
+  function DASH_LEN() { return 6 * KDV; }    function DASH_W() { return 1.8 * KDV; }    function DASH_MUL() { return K('dashMul', 2.4); }
   function FIELD_R() { return 4 * KDV; }     function FIELD_T() { return 5; }     function FIELD_MUL() { return K('fieldMul', 0.6); }
   function SUMMON_T() { return 8; }    function SUMMON_EVERY() { return 1.5; }  function SUMMON_R() { return 7 * KDV; }  function SUMMON_MUL() { return K('summonMul', 0.9); }
   /** 점 (x,y) 에서 선분 (ax,ay)-(bx,by) 까지 거리 */
@@ -801,7 +801,7 @@
           for (i = 0; i < near.length; i++) {
             var g = near[i];
             var ang = Math.atan2(g.y - f.y, g.x - f.x);
-            if (g !== f) { g.x += Math.cos(ang) * 2.5; g.y += Math.sin(ang) * 2.5; }
+            if (g !== f) { g.x += Math.cos(ang) * 2.5 * KDV; g.y += Math.sin(ang) * 2.5 * KDV; }
             wake(g);
             rawHit(S, g, od);
           }
@@ -880,7 +880,7 @@
     var a = S.aim, best = null, bs = Infinity, L = aimCands(S, px, py), cc = Math.cos(AIM_CONE());
     for (var i = 0; i < L.length; i++) {
       var c = L[i], dx = c.x - px, dy = c.y - py, d = Math.hypot(dx, dy);
-      if (d < 1 || d > AIM_R()) { continue; }
+      if (d < 1 * KDV || d > AIM_R()) { continue; }
       var cs = (dx * a.dx + dy * a.dy) / d;
       if (cs < cc) { continue; }
       var sc = Math.acos(Math.min(1, cs)) * 20 + d * 0.01;
@@ -975,7 +975,7 @@
     dx /= dl; dy /= dl;
     var hits = living(S).filter(function (f) {
       var fx = f.x - px, fy = f.y - py, d = Math.hypot(fx, fy);
-      return d - BODY(f) <= CHARGE_REACH() && (d < 0.5 || (fx * dx + fy * dy) / d >= CHARGE_ARC());
+      return d - BODY(f) <= CHARGE_REACH() && (d < 0.5 * KDV || (fx * dx + fy * dy) / d >= CHARGE_ARC());
     });
     for (var i = 0; i < hits.length; i++) { hitFoe(S, hits[i], m, m.atk * CHARGE_MUL() * infM(m), infEl(m), 'heavy'); }
     if (hits.length) { rainFollow(S, px, py); }                     // ⑲-17 뱃노래
@@ -1011,13 +1011,13 @@
     dx /= dl; dy /= dl;
     if (sh === 'thrust') {
       var ex = px + dx * THRUST_LEN(), ey = py + dy * THRUST_LEN();
-      hits = living(S).filter(function (f) { return segDist(f.x, f.y, px, py, ex, ey) <= THRUST_W(); });
+      hits = living(S).filter(function (f) { return segDist(f.x, f.y, px, py, ex, ey) <= THRUST_W() + (KDV > 1 ? BODY(f) : 0); });   // W-0233 2D 는 몸 가장자리까지(3D 는 옛 그대로)
       for (i = 0; i < hits.length; i++) { hitFoe(S, hits[i], m, m.atk * THRUST_MUL(), m.el, 'skill'); }
       ev = { x: ex, y: ey, x0: px, y0: py, r: THRUST_W() };
     } else if (sh === 'dash') {
-      var go = aim ? Math.min(DASH_LEN(), Math.max(0, dl - 1.2)) : DASH_LEN();
+      var go = aim ? Math.min(DASH_LEN(), Math.max(0, dl - 1.2 * KDV - (KDV > 1 ? BODY(aim) : 0))) : DASH_LEN();
       var bx = px + dx * go, by = py + dy * go;
-      hits = living(S).filter(function (f) { return segDist(f.x, f.y, px, py, bx + dx * 1.2, by + dy * 1.2) <= DASH_W(); });
+      hits = living(S).filter(function (f) { return segDist(f.x, f.y, px, py, bx + dx * 1.2 * KDV, by + dy * 1.2 * KDV) <= DASH_W() + (KDV > 1 ? BODY(f) : 0); });
       for (i = 0; i < hits.length; i++) { hitFoe(S, hits[i], m, m.atk * DASH_MUL(), m.el, 'skill'); }
       S.dash = { vx: dx * go / DASH_T(), vy: dy * go / DASH_T(), t: DASH_T() };
       S.iframe = Math.max(S.iframe, 0.3);
@@ -1102,7 +1102,7 @@
     } else if (k.type === 'shells') {
       var tg = living(S).filter(function (f) { return Math.hypot(f.x - px, f.y - py) <= k.reach; })
         .sort(function (a, b) { return Math.hypot(a.x - px, a.y - py) - Math.hypot(b.x - px, b.y - py); }).slice(0, k.n);
-      var spots = tg.length ? tg.map(function (f) { return { x: f.x, y: f.y }; }) : [{ x: px + dx * 8, y: py + dy * 8 }];
+      var spots = tg.length ? tg.map(function (f) { return { x: f.x, y: f.y }; }) : [{ x: px + dx * 8 * KDV, y: py + dy * 8 * KDV }];
       for (i = 0; i < spots.length; i++) {
         S.zones.push({ kind: 'shell', x: spots[i].x, y: spots[i].y, r: k.r, t: k.delay, el: m.el, m: m, mul: k.mul });
       }
@@ -1197,7 +1197,7 @@
       S.hasteT = k.sec;
       for (i = 0; i < S.party.length; i++) { var o = S.party[i]; if (o !== m && !o.down) { o.energy = Math.min(ENERGY_MAX(), o.energy + k.energy * (o.er || 1)); } }
     } else if (k.type === 'vortex') {
-      var n = nearestFoe(S, px, py, 12), dx = n ? n.x - px : (S.lastDx || 0), dy = n ? n.y - py : (S.lastDy || 1), dl = Math.hypot(dx, dy) || 1;
+      var n = nearestFoe(S, px, py, 12 * KDV), dx = n ? n.x - px : (S.lastDx || 0), dy = n ? n.y - py : (S.lastDy || 1), dl = Math.hypot(dx, dy) || 1;
       S.zones.push({ kind: 'vortex', x: px + dx / dl * k.ahead, y: py + dy / dl * k.ahead, r: k.r, t: k.sec, next: k.every, every: k.every,
         mul: k.tick, pull: k.pull, el: m.el, atk: m.atk, m: m });
     }
@@ -1314,7 +1314,7 @@
     if (S.stamina < dc || allDown(S)) { return { ok: false }; }
     if (dx || dy) { S.lastDx = dx; S.lastDy = dy; }
     if (!dx && !dy) {
-      var n = nearestFoe(S, px || 0, py || 0, 30);
+      var n = nearestFoe(S, px || 0, py || 0, 30 * KDV);
       if (n) { dx = (px || 0) - n.x; dy = (py || 0) - n.y; } else { dy = 1; }
     }
     var len = Math.hypot(dx, dy) || 1;
@@ -2075,7 +2075,7 @@
 
   function paint(dt) {
     var pp = core().save.player.pos, TR = global.DG.treasure;
-    var show = engaged(S) || !!nearestFoe(S, pp.x, pp.y, 22) || !!(TR && TR.wantsHud && TR.wantsHud(pp.x, pp.y)) || !!S.aim;   // ⑲-3 석등 곁에서도 스킬을 쓰게
+    var show = engaged(S) || !!nearestFoe(S, pp.x, pp.y, 22 * KDV) || !!(TR && TR.wantsHud && TR.wantsHud(pp.x, pp.y)) || !!S.aim;   // ⑲-3 석등 곁에서도 스킬을 쓰게
     if (!hudEl) { buildHud(); }
     hudEl.classList.toggle('show', show);
     document.body.classList.toggle('fc-on', show);
