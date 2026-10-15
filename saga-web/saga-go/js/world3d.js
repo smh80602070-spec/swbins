@@ -1376,7 +1376,7 @@
     m.rotation.x = -Math.PI / 2;
     return m;
   }
-
+  /* W-0237 승급이 보이게(재미표준 G — 승급·연성이 글자(별)뿐이었다) — 나·동행 발밑 그림자 원에 금테: 승급 1 가는 테 · 2 굵게 · 3 안쪽 금빛 · 4 바깥 테 하나 더 · 5 별 여섯. 읽기만(save.heroes), 바뀔 때만 다시 짓는다 */ function rankDeco(a, id) { var hs = core.save && core.save.heroes, g = id && hs ? hs[id] : null, rk = g ? Math.max(0, Math.min(5, g.rank | 0)) : 0; if (!a || a.rk === rk) { return; } a.rk = rk; if (a.rkM) { a.shadow.remove(a.rkM); a.rkM = null; } if (!rk) { return; } var grp = new T.Group(), mat = new T.MeshBasicMaterial({ color: 0xe8c25a, transparent: true, opacity: 0.85, depthWrite: false, side: T.DoubleSide }), i; grp.add(new T.Mesh(new T.RingGeometry(1.08, 1.15 + 0.04 * Math.min(rk, 2), 40), mat)); if (rk >= 3) { grp.add(new T.Mesh(new T.CircleGeometry(1.06, 40), new T.MeshBasicMaterial({ color: 0xffe08a, transparent: true, opacity: 0.2, depthWrite: false }))); } if (rk >= 4) { grp.add(new T.Mesh(new T.RingGeometry(1.34, 1.42, 40), mat)); } if (rk >= 5) { for (i = 0; i < 6; i++) { var st = new T.Mesh(new T.CircleGeometry(0.09, 5), mat); st.position.set(Math.cos(i * Math.PI / 3) * 1.62, Math.sin(i * Math.PI / 3) * 1.62, 0); grp.add(st); } } grp.position.z = 0.003; a.shadow.add(grp); a.rkM = grp; }
   /** 배우 하나 — 있으면 쓰고 없으면 만든다 */
   /** 같은 자리(key)에 다른 사람이 서야 하면 옛 배우를 치운다 — actorOf 는 key 로만 캐시한다 */
   function dropActorIfNot(key, who) {
@@ -1508,7 +1508,7 @@
       if (allyRef) {
         dropActorIfNot('ally', allyRef.id);
         var aa = actorOf('ally', 'hero', allyRef, 96);
-        aa.who = allyRef.id; aa.sky = meSky();
+        aa.who = allyRef.id; rankDeco(aa, allyRef.id); aa.sky = meSky();
         var atx = duelFoe ? pos.x + sideX * 1.5 : pos.x + backX * 2.2 + sideX * 0.9;
         var aty = duelFoe ? pos.y + sideY * 1.5 : pos.y + backY * 2.2 + sideY * 0.9;
         var af = followPos(aa, atx, aty, duelFoe ? 0.12 : 0.06);
@@ -1630,7 +1630,7 @@
     lastLead = meRef.id;
     dropActorIfNot('me', meRef.id);
     var meA = actorOf('me', 'hero', meRef, 96);
-    meA.who = meRef.id;
+    meA.who = meRef.id; rankDeco(meA, meRef.id);   // W-0237
     var mot = W.motion;
     var h = ACTOR_H();
     var walking = mot.speed > 1.5;

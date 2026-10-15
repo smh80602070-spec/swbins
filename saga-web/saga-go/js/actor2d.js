@@ -19,9 +19,20 @@
     if (act && M.actT) { var ak = 'me:' + (act.clip === 'hit' ? 'hit' : 'atk'); actT = M.actT(ak, act.left); var ai = M.actInfo ? M.actInfo(ak) : null; clip = act.clip === 'hit' ? 'hit' : (act.clip === 'heavy' ? 'heavy' : (ai && ai.n % 2 === 0 ? 'attack2' : 'attack')); }
     else if (key === 'player' && M.actT) { M.actT('me:atk', 0); M.actT('me:hit', 0); }
     var tH = (global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.targetH) || 40;
-    return M.draw(ctx, { pool: pool, clip: clip, t: actT, facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: (o.now || Date.now()) + (o.phase || 0) * 160, x: x, y: y, scale: s * 40 * 1.2 / tH, stride: (o.wx != null && M.pace) ? M.pace(o.pk || key || pool, o.wx, o.wy, o.ppu, s * 48 * (global.DG.field2d && global.DG.field2d.strideMul ? global.DG.field2d.strideMul() : 1), o.now || Date.now()) : null });
+    var drawn = M.draw(ctx, { pool: pool, clip: clip, t: actT, facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: (o.now || Date.now()) + (o.phase || 0) * 160, x: x, y: y, scale: s * 40 * 1.2 / tH, stride: (o.wx != null && M.pace) ? M.pace(o.pk || key || pool, o.wx, o.wy, o.ppu, s * 48 * (global.DG.field2d && global.DG.field2d.strideMul ? global.DG.field2d.strideMul() : 1), o.now || Date.now()) : null });
+    if (drawn && key === 'player') { rankStars(ctx, ref, x, y, s); }
+    return drawn;
+  }
+
+  /** W-0237 승급 별 — 2D 의 나(선두) 머리 위에 승급 1~5 만큼 금빛 ★(3D 는 발밑 금테). 읽기만(save.heroes) */
+  function rankStars(ctx, ref, x, y, s) {
+    var C = global.DG.core, hs = C && C.save && C.save.heroes, g = ref && ref.id && hs ? hs[ref.id] : null, rk = g ? Math.max(0, Math.min(5, g.rank | 0)) : 0;
+    if (!rk) { return 0; }
+    ctx.save(); ctx.font = 'bold ' + Math.round(Math.max(10, s * 6)) + 'px sans-serif'; ctx.textAlign = 'center'; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(0,0,0,.6)'; ctx.fillStyle = '#e8c25a';
+    var t = new Array(rk + 1).join('★'), ty = y - s * 48 * 1.12; ctx.strokeText(t, x, ty); ctx.fillText(t, x, ty); ctx.restore();
+    return rk;
   }
 
   global.DG = global.DG || {};
-  global.DG.actor2d = { human: human };
+  global.DG.actor2d = { human: human, rankStars: rankStars };
 })(window);

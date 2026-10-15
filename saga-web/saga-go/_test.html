@@ -16290,8 +16290,13 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var R = D.rarity, k, colors = {}, n = 0;
       for (k in R) { if (Object.prototype.hasOwnProperty.call(R, k)) { n++; colors[R[k].color] = 1; } }
       var distinct = Object.keys(colors).length;
-      return funMark(false, distinct === n && n === 5) + '등급 ' + n + '단계 색 ' + distinct + '종(서로 다름 ' + (distinct === n ? '예' : '아니오') +
-        ') · 승급·연성은 글자(별)뿐, 동행 아바타 외형 변화는 PLAN §4 기준 없음';
+      /* W-0237 — 승급 1~5 가 3D 발밑 금테(world3d rankDeco)·2D 머리 위 ★(actor2d.rankStars)로 보인다 */
+      var w3 = funSrc('js/world3d.js'), rk3 = /function rankDeco\(a, id\)/.test(w3) && /rankDeco\(meA, meRef\.id\)/.test(w3) && /rankDeco\(aa, allyRef\.id\)/.test(w3);
+      var A2 = DG.actor2d, hs = C.save.heroes, rk2 = 0, cv = document.createElement('canvas').getContext('2d');
+      if (A2 && A2.rankStars && cv) { var o2 = hs.zz_rk; hs.zz_rk = { lv: 1, exp: 0, rank: 3 }; rk2 = A2.rankStars(cv, { id: 'zz_rk' }, 50, 100, 1); if (o2 === undefined) { delete hs.zz_rk; } else { hs.zz_rk = o2; } }
+      var vis = (rk3 || !w3) && rk2 === 3;
+      return funMark(distinct === n && n === 5 && vis, distinct === n && n === 5) + '등급 ' + n + '단계 색 ' + distinct + '종(서로 다름 ' + (distinct === n ? '예' : '아니오') +
+        ') · 승급 겉모습 3D 금테 ' + (w3 ? (rk3 ? '○' : '×') : '원본 못 읽음') + ' · 2D ★ ' + (rk2 === 3 ? '○(승급 3 → ★3)' : '×');
     });
 
     t('재미표준 H 돌아올 이유(측정)', function () {
