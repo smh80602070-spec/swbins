@@ -253,6 +253,31 @@
     return out;
   }
 
+  /* ── 맞는 순간(W-0229 재미표준 C△ → W-0230) — hitstop(보통 70ms·쓰러뜨림 120ms) 동안 판 시계를 멈추고, 맞은 몸을 80ms 붉게,
+     흔들림 120ms, 타격음(sfx tac:hit 세 음 돌림). 판정은 그대로 — 화면만. 손잡이 tactics3d.hitstop 0 이면 멈춤 없음 */
+  var hs = { at: 0, until: 0, off: 0 };
+  function realS() { return (global.performance ? global.performance.now() : Date.now()) / 1000; }
+  /** 판 시계(초) — hitstop 동안은 멈춘 자리 그대로 */
+  function clockS() { var r = realS(); if (hs.at && r >= hs.until) { hs.off += hs.until - hs.at; hs.at = 0; } return (hs.at || r) - hs.off; }
+  function hitstop(sec) { var r = realS(), C0 = C(); if (hs.at || !(sec > 0) || (C0 && C0.tuned && !C0.tuned('tactics3d.hitstop', 1))) { return; } hs.at = r; hs.until = r + sec; }
+  /** 몸 재질을 처음 맞을 때 한 번만 떼어 낸다(다른 몸과 같이 쓰는 재질이라) — 원래 빛 색을 기억 */
+  function flashMats(a) {
+    if (a.fm) { return a.fm; }
+    a.fm = [];
+    (a.model || a.stub).traverse(function (o) {
+      if (!o.isMesh || !o.material || Array.isArray(o.material)) { return; }
+      var m = o.material.clone(); o.material = m;
+      if (m.emissive) { m.userData.e0 = m.emissive.clone(); a.fm.push(m); }
+    });
+    return a.fm;
+  }
+  function setFlash(a, k) { var L = flashMats(a), i, e; for (i = 0; i < L.length; i++) { e = L[i].userData.e0; L[i].emissive.setRGB(e.r + (1 - e.r) * k, e.g + (0.15 - e.g) * k, e.b + (0.1 - e.b) * k); } }
+  function impact(a) {
+    hitstop(a.impactKill ? 0.12 : 0.07);
+    a.shake = 0.12; a.flashEnd = realS() + 0.08 + (hs.at ? hs.until - hs.at : 0);
+    var C0 = C(); if (C0 && C0.emit) { C0.emit('tac:hit', { kill: !!a.impactKill }); }
+  }
+
   function play(a, slot, nowS, force) {
     a.anim = slot;
     if (a.model && A3() && A3().step) { A3().step(a.model, { anim: slot, t: nowS, force: force }); }
@@ -277,7 +302,7 @@
         }
       }
       if (D && q.hit) {
-        D.shake = 0.35;
+        D.impactAt = nowS + SWING_S * 0.6; D.impactKill = !!q.dead;   // W-0230 맞는 순간 = 휘두름 6할
         if (q.dead) { D.dying = nowS + SWING_S * 0.6; } else { D.hitAt = nowS + SWING_S * 0.6; }
       }
     }
@@ -302,7 +327,9 @@
       if (a.anim === 'attack' && nowS > a.animUntil && !a.dying) { play(a, 'idle', nowS); }
       if (a.hitAt && nowS >= a.hitAt) { a.hitAt = 0; play(a, 'hit', nowS, true); a.animUntil = nowS + 0.5; }
       if (a.anim === 'hit' && nowS > a.animUntil) { play(a, 'idle', nowS); }
-      if (a.shake > 0) { a.shake = Math.max(0, a.shake - dt); var sh = Math.sin(nowS * 70) * 0.05 * (a.shake / 0.35); (a.model || a.stub).position.x = sh; }
+      if (a.impactAt && nowS >= a.impactAt) { a.impactAt = 0; impact(a); }
+      if (a.flashEnd) { var fk = Math.min(1, Math.max(0, (a.flashEnd - realS()) / 0.08)); setFlash(a, fk); if (!(fk > 0)) { a.flashEnd = 0; } }
+      if (a.shake > 0) { a.shake = Math.max(0, a.shake - dt); var sh = Math.sin(nowS * 90) * 0.06 * (a.shake / 0.12); (a.model || a.stub).position.x = sh; }   // W-0230 120ms(옛 0.35초)
       /* 쓰러짐 */
       if (a.dying && nowS >= a.dying) {
         if (a.anim !== 'death') { play(a, 'death', nowS, true); a.goneAt = nowS + 1.4; if (!a.model) { a.stub.rotation.z = Math.PI / 2; } a.tag.visible = false; }
@@ -326,7 +353,7 @@
   function loop() {
     if (!loopOn) { return; }
     if (!view || !cv || !cv.isConnected) { loopOn = false; return; }
-    var nowS = (global.performance ? global.performance.now() : Date.now()) / 1000;
+    var nowS = clockS();
     frame(nowS);
     var cw = (view.cutCam && nowS < view.cutCam.until) ? view.cutCam : view.camWant;   // W-0168 공격 컷이면 그쪽
     if (cw) {
@@ -357,7 +384,7 @@
     if (svg) { svg.style.display = 'none'; }
     boardEl.insertBefore(cv, boardEl.firstChild);
     size(boardEl, v);
-    var nowS = (global.performance ? global.performance.now() : Date.now()) / 1000;
+    var nowS = clockS();
     if (builtFor !== v.b) {
       builtFor = v.b; buildBoard(v.b);
       cam.position.set(0, 9, 9);
@@ -396,6 +423,7 @@
   global.DG.tacticsView3d = {
     want: want, cellCenter: cellCenter, cellOf: cellOf, HGT: HGT, attach: attach, _cutCam: function () { return view && view.cutCam ? view.cutCam : null; },   // W-0168 진단
     _actor: function (uid) { var a = actors[uid]; return a ? { x: a.grp.position.x, z: a.grp.position.z, path: a.path.length, anim: a.anim, body: !!a.model, gone: a.gone } : null; },   // 진단·점검
+    _hit: { clockS: clockS, hitstop: hitstop, impact: impact, setFlash: setFlash, hs: function () { return { at: hs.at, until: hs.until, off: hs.off }; } },   // W-0230 진단
     stats: function () { return { why: why, on: !!R, actors: Object.keys(actors).length, bodies: Object.keys(actors).filter(function (k) { return !!actors[k].model; }).length, queue: queue.length, loop: loopOn }; }
   };
 })(window);

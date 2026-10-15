@@ -32,27 +32,27 @@
   {
    "name": "외교 — 이웃 세력에 조공 사절을 보내면 금이 나가고 우호가 오른다",
    "ok": true,
-   "detail": "{\"to\":\"jue\",\"res\":{\"ok\":true,\"done\":true,\"relation\":35,\"up\":5},\"g0\":5178,\"g1\":4478,\"rel0\":30,\"rel1\":35}"
+   "detail": "{\"to\":\"jue\",\"res\":{\"ok\":true,\"done\":true,\"relation\":45,\"up\":5},\"g0\":5178,\"g1\":4478,\"rel0\":40,\"rel1\":45}"
   },
   {
    "name": "출진 — 맞닿은 적 성으로 출진하면 전투가 치러져 승패·손실이 나오고 출진한 성의 병력이 줄어든다",
    "ok": true,
-   "detail": "{\"ok\":true,\"won\":false,\"lossA\":802,\"lossD\":119,\"troopsFrom\":[1481,679]}"
+   "detail": "{\"ok\":true,\"won\":false,\"lossA\":679,\"lossD\":256,\"troopsFrom\":[5444,4765]}"
   },
   {
    "name": "개입형 전투 — 출진하면 합마다 명령을 물어 오고(돌격·수비) 끝에 보고가 나온다",
    "ok": true,
-   "detail": "{\"ok\":true,\"intro\":true,\"prompts\":1,\"rounds\":1,\"cmds\":[\"press\"],\"hasReport\":true,\"ms\":244}"
+   "detail": "{\"ok\":true,\"intro\":true,\"prompts\":1,\"rounds\":1,\"cmds\":[\"press\"],\"hasReport\":true,\"ms\":197}"
   },
   {
    "name": "무장 — 공과 금을 갖추면 승진해 관직이 한 단 오르고 금이 들고 충성이 오른다",
    "ok": true,
-   "detail": "{\"id\":\"sg_huangzhong\",\"rank\":[0,1],\"cost\":{\"feats\":20,\"gold\":300},\"g\":[5805,5505],\"loyal\":[56,68],\"name\":\"교위(校尉)\",\"res\":true,\"earlyWhy\":\"공이 모자랍니다 (0/20)\"}"
+   "detail": "{\"id\":\"sg_huangzhong\",\"rank\":[0,1],\"cost\":{\"feats\":20,\"gold\":300},\"g\":[6144,5844],\"loyal\":[57,69],\"name\":\"교위(校尉)\",\"res\":true,\"earlyWhy\":\"공이 모자랍니다 (0/20)\"}"
   },
   {
    "name": "전략 화면 틀 — #cpanel 은 realm/window.png, 독 단추는 btn_normal, 배너는 popup·성 열기는 tab_on 9-slice 그림을 입고 그림이 다 온다(W-0088)",
    "ok": true,
-   "detail": "{\"fr\":{\"cpanel\":\"url(\\\"http://127.0.0.1:11146/shared/assets/ui/realm/window.png\\\")\",\"dock\":\"url(\\\"http://127.0.0.1:11146/shared/assets/ui/realm/btn_normal.png\\\")\",\"banner\":\"url(\\\"http://127.0.0.1:11146/shared/assets/ui/realm/popup.png\\\")\",\"open\":\"url(\\\"http://127.0.0.1:11146/shared/assets/ui/realm/tab_on.png\\\")\",\"status\":[200,200,200,200]},\"uiMiss\":[]}"
+   "detail": "{\"fr\":{\"cpanel\":\"url(\\\"http://127.0.0.1:11541/shared/assets/ui/realm/window.png\\\")\",\"dock\":\"url(\\\"http://127.0.0.1:11541/shared/assets/ui/realm/btn_normal.png\\\")\",\"banner\":\"url(\\\"http://127.0.0.1:11541/shared/assets/ui/realm/popup.png\\\")\",\"open\":\"url(\\\"http://127.0.0.1:11541/shared/assets/ui/realm/tab_on.png\\\")\",\"status\":[200,200,200,200]},\"uiMiss\":[]}"
   }
  ]
 }

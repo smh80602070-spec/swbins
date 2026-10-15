@@ -53,6 +53,11 @@
        달리 둔탁하게 부딪히는 느낌으로 갈랐다 */
     round_clash:   { gap: 0.35, l: [{ v: 'noise', dur: 0.14, lp: 650, lp2: 180, gain: 0.09 },
                                     { v: 'tone', f: 170, f2: 85, dur: 0.16, wave: 'sawtooth', gain: 0.07 }] },
+    /* W-0230 — 전장(격자) 한 방. 셋을 돌려 같은 소리가 겹쳐 들리지 않게(재미표준 C 타격음 3종 라운드로빈) — 짧고 높은 쇳소리 + 둔탁한 몸 */
+    tac_hit0: { gap: 0.04, l: [{ v: 'noise', dur: 0.07, lp: 2400, lp2: 600, gain: 0.08 }, { v: 'tone', f: 260, f2: 120, dur: 0.1, wave: 'square', gain: 0.06 }] },
+    tac_hit1: { gap: 0.04, l: [{ v: 'noise', dur: 0.07, lp: 2900, lp2: 700, gain: 0.08 }, { v: 'tone', f: 300, f2: 140, dur: 0.1, wave: 'square', gain: 0.06 }] },
+    tac_hit2: { gap: 0.04, l: [{ v: 'noise', dur: 0.07, lp: 2000, lp2: 520, gain: 0.08 }, { v: 'tone', f: 225, f2: 105, dur: 0.1, wave: 'square', gain: 0.06 }] },
+    tac_kill: { gap: 0.2, l: [{ v: 'noise', dur: 0.18, lp: 900, lp2: 160, gain: 0.11 }, { v: 'tone', f: 180, f2: 60, dur: 0.24, wave: 'sawtooth', gain: 0.08 }] },
     /* 2026-09-10 — 성벽이 실제로 한 칸 무너지는 순간(합마다는 아니고, 그 중
        성벽이 실제로 깎인 합만). 'round_clash'보다 낮고 오래 끄는 소리로 갈랐다 */
     wall_break:    { gap: 0.6, l: [{ v: 'noise', dur: 0.22, lp: 350, lp2: 90, gain: 0.13 },
@@ -298,6 +303,9 @@
   });
 
   core.on('rtk:fallen', function () { play('fallen'); });
+
+  var tacN = 0;   // W-0230 전장 타격음 돌림 번호
+  core.on('tac:hit', function (e) { play('tac_hit' + (tacN++ % 3)); if (e && e.kill) { play('tac_kill'); } });
 
   core.on('rtk:end', function (kind) { play(kind === 'win' ? 'victory' : 'defeat'); });
 

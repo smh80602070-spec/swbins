@@ -4186,7 +4186,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
     t('재미표준 C 손맛(측정) — 전장 한 방에 hitstop·흔들림·피격 플래시·숫자 팝·타격음 다섯이 나는가', function () {
       var v3 = funSrc('js/tactics-view3d.js'), v2 = funSrc('js/tactics-view.js'), sx = funSrc('js/sfx.js'), b3 = funSrc('js/battle3d.js');
       if (!v3 || !v2) { return '△ — 원본을 못 읽음(file:// 이면 정상)'; }
-      var shake = /D\.shake = ([0-9.]+)/.exec(v3), pop = /c\.at > (\d+)/.exec(v2);
+      var shake = /a\.shake = ([0-9.]+)/.exec(v3), pop = /c\.at > (\d+)/.exec(v2);
       var el = {
         hitstop: /hitstop|hold\(/.test(v3) || /hitstop|hold\(/.test(v2),
         shake: !!shake,
@@ -4198,6 +4198,15 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return funMark(n === 5, n >= 2) + '전장(격자) 한 방 ' + n + '/5 — ' + Object.keys(el).map(function (k) { return k + (el[k] ? '○' : '×'); }).join(' ') +
         ' · 흔들림 ' + (shake ? shake[1] + '초(규격 120ms·4px)' : '없음') + ' · 숫자 ' + (pop ? pop[1] + 'ms 컷(규격 팝 0.6s)' : '없음') +
         ' · 성 공방 3D(battle3d) 플래시 ' + (/flashMats/.test(b3) ? '있음' : '없음');
+    });
+    t('전장 맞는 순간(W-0230) — impact 가 hitstop 70ms·흔들림 120ms·붉은 빛 80ms·타격음(세 음 돌림, 쓰러뜨리면 한 겹 더)을 낸다 · 멈춘 동안 판 시계가 안 간다', function () {
+      var H = DG.tacticsView3d && DG.tacticsView3d._hit, SX = DG.sfx;
+      if (!H || !SX || !SX._tail) { return '× — _hit·sfx 없음'; }
+      var a = { impactKill: false }, k = { impactKill: true };
+      H.impact(a); var h = H.hs(), c1 = H.clockS(), c2 = H.clockS(), t1 = SX._tail(1)[0];
+      H.impact(k); var t2 = SX._tail(2).join(',');
+      var dur = h.until - h.at, ok = h.at > 0 && Math.abs(dur - 0.07) < 0.001 && c1 === c2 && a.shake === 0.12 && a.flashEnd > 0 && /^tac_hit[012]$/.test(t1) && /tac_hit[012],tac_kill/.test(t2);
+      return ok && ('멈춤 ' + Math.round(dur * 1000) + 'ms(시계 그대로) · 흔들림 ' + a.shake + '초 · 빛 끝 +' + Math.round((a.flashEnd - h.at) * 1000) + 'ms · 소리 ' + t1 + ' → ' + t2) || ('실패 ' + JSON.stringify({ h: h, c: [c1, c2], a: a, t1: t1, t2: t2 }));
     });
     t('재미표준 D 선택 3택(측정) — 영내 소식 세 갈래가 늘 서로 다른 축(금 util·병 atk·민심 def), 100장 굴려 같은 축 중복 0', function () {
       var ND = DG.newsData; if (!ND) { return '× — newsData 없음'; }

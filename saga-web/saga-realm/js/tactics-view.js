@@ -253,6 +253,7 @@
     if (here && here.side === 'me') { v.sel = here.uid; render(); return; }
     if (here && here.side === 'foe' && sel) {
       var r = T().attack(b, sel.uid, here.uid);
+      if (r.ok && r.hit && !(global.DG.tacticsView3d && global.DG.tacticsView3d.want()) && global.DG.core && global.DG.core.emit) { global.DG.core.emit('tac:hit', { kill: !!r.killed }); }   // W-0230 2D 판도 타격음(3D 는 맞는 순간에)
       if (r.ok) { v.cut = { a: sel, t: here, r: r, at: Date.now() }; setTimeout(function () { if (cur === v) { v.cut = null; render(); } }, 1150); settle(); }
       render();
       return;
