@@ -40,9 +40,9 @@
   var IDS = ['eu_davinci', 'eu_leonidas', 'jp_hanzo', 'jp_himiko', 'jp_musashi', 'jp_tomoegozen', 'jp_yoshitsune', 'kr_gyebaek',
     'sg_ganning', 'sg_huangzhong', 'sg_lubu', 'sg_taishici', 'sg_zhugeliang', 'wd_genghis', 'wd_ibnsina', 'wd_shaka'];
   function has(id) { return IDS.indexOf(id) >= 0; }
-  /** 켜져 있나 — R-5(10-13): K-0049 바탕이 VRoid 몸 렌더라 대화창의 다른 초상(AI 그림·표정)과 **얼굴이 다른 사람**이다
-   *  (노궁 = 교복 소년 ↔ 희끗한 장수). 같은 그림으로 다시 만들 때까지 기본 꺼 둠 — 손잡이 story.livePortrait 1 이면 켬 */
-  function on() { var C = global.DG && global.DG.core; return !!(C && C.tuned && +C.tuned('story.livePortrait', 0) > 0); }
+  /** 켜져 있나 — R-5(10-13)에 K-0049 바탕(VRoid 렌더)이 대화 초상과 다른 사람이라 꺼 뒀다가, K-0110 이 같은 AI 초상 인페인트로
+   *  바꿔(카드 자르기 평균 차 1.1~1.7/255, W-0250) 기본 켬 — 손잡이 story.livePortrait 0 이면 끔 */
+  function on() { var C = global.DG && global.DG.core; return !!(C && C.tuned && +C.tuned('story.livePortrait', 1) > 0); }
 
   /** 한 사람 그림을 받는다(한 번만) — 다 받으면 ok, 하나라도 못 받으면 fail(→ 캔버스를 걷고 숨겨 둔 정지 초상) */
   function load(id) {
