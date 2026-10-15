@@ -4239,9 +4239,21 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var confirmReset = /confirm\(/.test(gm) && /core\.reset\(\)/.test(gm), wipes = !direct && /모두 사라집니다/.test(gm), keeps = typeof R.roundBest === 'function' && typeof R.challengeView === 'function';
       var ops = direct ? 1 + 2 : btns + 1 + (confirmReset ? 1 : 0) + 2;   // 새 판 → 시나리오 → 깃발 (옛: 끝 카드 확인 → ↺ → 확인 창 → 시나리오 → 깃발)
       var mid = typeof R.citiesOf === 'function';          // 성 하나 잃고 되찾는 중간 실패는 판 안에서 돈다
-      /* ○ 는 비용 10~20%(판 하나를 통째로 잃지 않음)까지 — 지금은 멸망 = 판 하나 끝이라 조작·남는 것이 맞아도 △ */
-      return funMark(false, mid || ops <= 3) + '멸망 → 다시 ' + ops + '조작(' + (direct ? '🔁 새 판 · 시나리오 · 깃발' : '끝 카드 단추 ' + btns + ' · ↺ · 확인 창 · 시나리오 · 깃발') + ', 규격 ≤3) · ' +
-        (wipes ? '세이브 통째 지움(남는 것 0)' : '세이브 안 지움 — 남는 것 ' + (keeps ? '회차·주간 도전 최고 기록' : '없음')) + ' · 판 하나는 통째로 잃음(규격 비용 10~20% 아님) · 중간 실패(성 잃고 되찾기) ' + (mid ? '있음' : '없음');
+      /* W-0248 재기 — 판마다 한 번, 마지막 성을 잃으면 군주가 포로 둘과 빠져나와 약한 성에서 다시 일어선다(금·명부 그대로).
+         실제로 성을 다 비워 checkResult 를 굴린다: 첫 멸망 → 재기(성 1·판 이어짐), 둘째 멸망 → 끝 */
+      var cb = null, r1 = null, r2 = null, n1 = 0, gold0 = 0, gold1 = 0;
+      if (typeof R.comeback === 'function') {
+        evFresh();
+        try {
+          var st9 = R.state(); gold0 = st9.forces[st9.me] ? st9.forces[st9.me].gold : 0;
+          R.citiesOf(st9.me).forEach(function (c) { st9.cities[c].force = null; });
+          var keepFC = st9.cities; r1 = R.checkResult(); cb = st9.comeback || null; n1 = R.citiesOf(st9.me).length; gold1 = st9.forces[st9.me] ? st9.forces[st9.me].gold : 0;
+          R.citiesOf(st9.me).forEach(function (c) { st9.cities[c].force = null; }); r2 = R.checkResult();
+        } finally { evDone(); }
+      }
+      var rise = !!cb && !r1 && n1 === 1 && r2 === 'lose' && gold1 === gold0;
+      return funMark(rise && ops <= 3, mid || ops <= 3) + '멸망 → 재기 ' + (rise ? '○(한 번 — 성 1·금 그대로, 둘째 멸망은 끝)' : '×(' + JSON.stringify({ cb: !!cb, r1: r1, n1: n1, r2: r2 }) + ')') + ' · 끝난 뒤 다시 ' + ops + '조작(' + (direct ? '🔁 새 판 · 시나리오 · 깃발' : '끝 카드 단추 ' + btns + ' · ↺ · 확인 창 · 시나리오 · 깃발') + ', 규격 ≤3) · ' +
+        (wipes ? '세이브 통째 지움(남는 것 0)' : '세이브 안 지움 — 남는 것 ' + (keeps ? '회차·주간 도전 최고 기록' : '없음')) + ' · 중간 실패(성 잃고 되찾기) ' + (mid ? '있음' : '없음');
     });
     t('재미표준 G 성장 가시화(측정) — 힘이 오르면 보이는 것: 성 그림 단계 · 무장 성장', function () {
       var t2 = (DG.cfg.mode2d && DG.cfg.mode2d.prop2d) || {}, ids = ['city:s', 'city:m', 'city:l'].map(function (k) { return t2[k] && t2[k].id; }), uniq = {};

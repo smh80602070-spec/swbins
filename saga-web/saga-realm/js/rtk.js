@@ -243,7 +243,7 @@
     st.started = true;
     st.year = sc.year || START_YEAR; st.month = 1; st.turn = 0;
     st.me = meId; st.result = null;
-    st.victories = []; st.pactStreak = 0; st.topStreak = 0; st.challenge = null;
+    st.victories = []; st.pactStreak = 0; st.topStreak = 0; st.challenge = null; st.comeback = null;   // W-0248 재기는 판마다 한 번
     st.round = rd ? rd.n : 1;                        // 회차(§5-14) — 새 판은 1회차, nextRound() 는 +1
     st.events = null; st.rel = {};                   // 사연·관계(§5-2) — 새 판은 이어받지 않는다(event.js 가 필요할 때 채운다)
     st.cities = {}; st.forces = {}; st.officers = {}; st.captives = {};
@@ -877,10 +877,48 @@
 
   /* ── 승패 ─────────────────────────────────────────────── */
 
+  /* ── 재기(W-0248, 재미표준 F — 멸망 = 판 통째였다) ──────────────────────
+   * 판마다 **한 번**: 마지막 성을 잃으면 군주가 포로 가운데 능력 높은 둘과 빠져나와, 빈 성이 있으면 그곳을,
+   * 없으면 다른 세력 성 중 병력이 가장 적은 곳(그 세력 군주가 없는 성)을 차지한다. 병력 1,000·군량 2,000·성벽 반.
+   * 그 성에 있던 남의 무장은 제 세력 다른 성으로 물러난다(없으면 재야). 금은 그대로. 두 번째 멸망은 그대로 끝.
+   * 도전 판(주간·오늘)엔 없다(점수 겨루기). 세이브 `save.rtk.comeback = { year, month, city }`(이번 판). 손잡이 rtk.comeback 0 이면 옛 규칙. */
+  function comeback(st) {
+    var off = global.DG.off, lord = off && off.lordOf ? off.lordOf(st.me) : null;
+    if (st.comeback || st.challenge || !core.tuned('rtk.comeback', 1) || !lord || (off.isDead && off.isDead(lord))) { return null; }
+    var best = null, bestT = Infinity, k, c, lordsAt = {};
+    for (k in st.forces) { if (Object.prototype.hasOwnProperty.call(st.forces, k)) { var lo = off.lordOf(k), lr = lo ? off.rec(lo) : null; if (lr && lr.city) { lordsAt[lr.city] = 1; } } }
+    for (k in st.cities) {
+      if (!Object.prototype.hasOwnProperty.call(st.cities, k)) { continue; }
+      c = st.cities[k];
+      if (c.force === st.me || lordsAt[k]) { continue; }
+      var t = c.force ? (c.troops || 0) : -1;               // 빈 성이 먼저
+      if (t < bestT || (t === bestT && k < best)) { bestT = t; best = k; }
+    }
+    if (!best) { return null; }
+    c = st.cities[best];
+    var oldF = c.force, here = off.atCity(best), i, back = [];
+    for (i = 0; i < here.length; i++) {
+      var hid = here[i].id || here[i];
+      var to = oldF ? citiesOf(oldF).filter(function (x) { return x !== best; })[0] : null;
+      off.placeAt(hid, to || best, to ? oldF : null);
+    }
+    var caps = Object.keys(st.captives || {}).filter(function (id) { return id !== lord && !(off.isDead && off.isDead(id)); })
+      .sort(function (a, b) { return (off.power ? off.power(b) - off.power(a) : 0) || (a < b ? -1 : 1); }).slice(0, 2);
+    [lord].concat(caps).forEach(function (id) { if (st.captives) { delete st.captives[id]; } off.placeAt(id, best, st.me); var r = off.rec(id); r.loyal = Math.max(r.loyal || 0, id === lord ? 100 : 60); back.push(id); });
+    c.force = st.me; c.gov = lord; c.troops = 1000; c.food = Math.max(c.food || 0, 2000); c.wall = Math.max(1, Math.round((c.maxWall || c.wall || 2) / 2));
+    st.comeback = { year: st.year, month: st.month, city: best };
+    var cn = (CD.find(best) || {}).name || best, nm = function (id) { var h = off.find(id); return h ? h.name : id; };
+    core.log('🔥 재기 — 성을 모두 잃었으나 ' + nm(lord) + (caps.length ? '이(가) ' + caps.map(nm).join('·') + '와(과)' : '이(가)') + ' 빠져나와 ' + cn + '에서 다시 일어섰다(한 번뿐).', 'warn');
+    core.emit('rtk:comeback', { city: best, lord: lord, with: caps });
+    core.emit('toast', '🔥 재기 — ' + cn + '에서 다시 일어섰다');
+    return st.comeback;
+  }
+
   function checkResult() {
     var st = state();
     if (st.result) { return st.result; }
     var mine = citiesOf(st.me);
+    if (!mine.length && comeback(st)) { mine = citiesOf(st.me); }
     if (!mine.length) {
       st.result = 'lose';
       finalizeChallenge(st, 'lose');
@@ -1380,7 +1418,7 @@
     setup: setup, scatterFree: scatterFree,
     challengeWeek: challengeWeek, challengeScore: challengeScore, challengeView: challengeView, setupChallenge: setupChallenge,
     tickChallenge: tickChallenge, monthReport: monthReport, snapshot: snapshot, recommend: recommend, isoWeek: isoWeek,
-    CHALLENGE_MONTHS: CHALLENGE_MONTHS, bests: bests, DAILY_MONTHS: DAILY_MONTHS, challengeDay: challengeDay,
+    CHALLENGE_MONTHS: CHALLENGE_MONTHS, bests: bests, comeback: comeback, DAILY_MONTHS: DAILY_MONTHS, challengeDay: challengeDay,
     roundNo: roundNo, canNextRound: canNextRound, roundPreview: roundPreview, nextRound: nextRound, roundBest: roundBest, ROUND_MAX: ROUND_MAX,
     VICTORY: VICTORY, victoryKinds: victoryKinds, victoryProgress: victoryProgress, victoryNext: victoryNext,
     victoryDone: function (k) { return victoryDone(state(), k); }, resultCard: resultCard, tickVictories: tickVictories,
