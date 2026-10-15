@@ -4,7 +4,7 @@
   옛 마스크(상자 네모를 그대로 흐림 8)는 흰 곳이 상자 안쪽 20px 로 줄어 눈 높이 50px 상자면 가는 띠뿐 → 감음·표정 약함(무사시 ✗).
   입은 아래로 더(벌린 턱 자리) · face(표정) = 눈썹까지 올린 눈 타원 + 입 네모(얼굴 네모 전체는 투구·흉터가 생김).
   eye(깜빡임, d0.95)는 눈마다 타원 하나(상자 왼 42%·오른 42%+눈꼬리 14px, 가운데 콧등 뺌(6px 은 눈꼬리 속눈썹이 남아 반쯤 뜸 — 토모에), 흐림 6 · 한 눈만 보이면 상자 json `eye_ellipses` 로 직접) — 네모+PAD 20 은 콧등·얼굴 윤곽까지 다시 그려 눈썹·코가 옮겨짐(황충 ✗).
-  py tools/ai-art/live_ai_masks.py --parts eye <id> ...   # 부위만
+  py tools/ai-art/live_ai_masks.py --parts eye <id> ...   # 부위만 (eye_l·eye_r = 한 눈만, 두 단계 깜빡임용)
 쓰기는 임시 파일 → os.replace(사슬이 그림마다 마스크를 다시 읽는다).
 """
 import json
@@ -23,7 +23,7 @@ PAD = {'eye': (20, 20, 20, 20), 'mouth': (20, 16, 20, 30), 'face': (20, 20, 20, 
 def regions(b):
     e, m = b['eye'], b['mouth']
     face = [min(e[0], m[0]) - 20, e[1] - 45, max(e[2], m[2]) + 20, m[3] + 10]
-    return {'eye': e, 'mouth': m, 'face': face}
+    return {'eye': e, 'mouth': m, 'face': face, 'eye_l': e, 'eye_r': e}
 
 
 def mask(box, pad):
@@ -40,6 +40,16 @@ def eye_mask(box, ells=None):
     w = x1 - x0
     for e in ells or [(x0 - 14, y0 - 4, x0 + 0.42 * w, y1 + 6), (x0 + 0.58 * w, y0 - 4, x1 + 14, y1 + 6)]:
         d.ellipse(tuple(e), fill=255)
+    return im.filter(ImageFilter.GaussianBlur(6)).convert('RGB')
+
+
+def eye_side_mask(box, side):
+    # 두 단계 깜빡임: 한 눈만 감긴 결과를 밑그림으로 다른 눈만 다시 그림(무사시 — 올려다보는 각도라 두 눈을 한 번에 못 감김)
+    im = Image.new('L', (W, H), 0)
+    x0, y0, x1, y1 = box
+    w = x1 - x0
+    e = (x0 - 14, y0 - 4, x0 + 0.42 * w, y1 + 6) if side == 'l' else (x0 + 0.58 * w, y0 - 4, x1 + 14, y1 + 6)
+    ImageDraw.Draw(im).ellipse(e, fill=255)
     return im.filter(ImageFilter.GaussianBlur(6)).convert('RGB')
 
 
@@ -75,6 +85,10 @@ def main():
             tmp = p + '.tmp.png'
             if part == 'eye':
                 im = eye_mask(box, boxes[h].get('eye_ellipses'))
+            elif part in ('eye_l', 'eye_r'):
+                if not parts or part not in parts:
+                    continue                        # 한 눈 마스크는 --parts 로 부를 때만
+                im = eye_side_mask(box, part[-1])
             elif part == 'face':
                 im = face_mask(boxes[h])
             else:
