@@ -201,6 +201,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/ui-near.js"></script>
 <script src="js/ui-detail.js"></script>
 <script src="js/ui.js"></script>
+<script src="js/menu-grid.js"></script>
 <script src="js/game.js"></script>
 <script>
 /* 자가진단 — 헤드리스에서 게임 로직이 실제로 도는지 확인한다.
@@ -16039,6 +16040,28 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       catch (e) { return false; }
     }
 
+    t('W-0253 ☰ 메뉴 화면 — 1만리 cfg 넷 · 독 단추 접기 · 격자 칸 = 독 단추 · 칸 누르면 원래 단추 · Esc 는 다른 창이 열려 있으면 그쪽 몫', function () {
+      var M = DG.menuGrid, keep = (DG.cfg.menu || {}).keep || [];
+      if (!M) { return '실패 menu-grid.js 안 실림'; }
+      var dock = document.createElement('nav'), hit = [], keys = ['me', 'quest', 'party', 'bag', 'dex', 'log', 'settings'], i;
+      var real = document.getElementById('dock'); M._reset(); if (real) { real.id = 'dock-real'; }
+      dock.id = 'dock';
+      for (i = 0; i < keys.length; i++) { var b = document.createElement('button'); b.setAttribute('data-sheet', keys[i]); b.innerHTML = '<span>·</span><small>' + keys[i] + '</small>'; b.onclick = (function (k) { return function () { hit.push(k); }; })(keys[i]); dock.appendChild(b); }
+      var star = document.createElement('button'); star.id = 'btn-star'; star.innerHTML = '<span>★</span><small>성도</small>'; star.onclick = function () { hit.push('star'); }; dock.appendChild(star);
+      document.body.appendChild(dock);
+      var sh = null;
+      try {
+        var inited = M.init(), hidden = dock.querySelectorAll('button[data-menu-only]').length, menuBtn = document.getElementById('btn-menu');
+        var n = M.open(), cells = document.querySelectorAll('#menu-grid .mg-cell'), opened = M.isOpen();
+        if (cells[5]) { cells[5].click(); } var clicked = hit.join(','), closedByCell = !M.isOpen();
+        var pre = M._otherOpen(); window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' })); var escOpen = M.isOpen() === !pre;   // 진단 판에 이야기 창 등이 열려 있으면 Esc 는 그쪽 몫
+        if (!M.isOpen()) { M.open(); } window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' })); var escClose = !M.isOpen();
+        sh = document.createElement('aside'); sh.id = 'sheet'; sh.className = 'show'; document.body.appendChild(sh);
+        window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' })); var yield1 = !M.isOpen();
+        var ok = keep.length === 4 && inited && menuBtn && hidden === keys.length + 1 - 4 && n === keys.length + 1 && cells.length === n && opened && clicked === 'log' && closedByCell && escOpen && escClose && yield1;
+        return ok ? '독 ' + keep.join('·') + ' + ☰ · 접은 ' + hidden + ' · 칸 ' + n + ' · Esc ' + (pre ? '(다른 창 열림 → 양보)' : '열고') + ' 닫음 · 시트 열리면 양보' : '실패 ' + JSON.stringify({ keep: keep.length, inited: inited, menuBtn: !!menuBtn, hidden: hidden, n: n, cells: cells.length, opened: opened, clicked: clicked, closedByCell: closedByCell, escOpen: escOpen, escClose: escClose, yield1: yield1 });
+      } finally { M._reset(); dock.remove(); if (sh) { sh.remove(); } if (real) { real.id = 'dock'; M.init(); } }
+    });
     t('재미표준 A 목표판(측정)', function () {
       var now = DG.ui && DG.ui.goalNowText ? DG.ui.goalNowText() : '';
       var sess = DG.daily && DG.daily.firstUndone ? DG.daily.firstUndone() : null;

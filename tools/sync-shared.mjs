@@ -42,7 +42,8 @@ const FILES = [
   ['js/itemicon-ids.js', 'js/itemicon-ids.js'],   // W-0025 — 아이템 아이콘 이름 표(생성물: tools/gen-itemicon-ids.mjs)
   ['js/itemicon.js', 'js/itemicon.js'],
   ['js/toon3d.js', 'js/toon3d.js', ['saga-go', 'saga-dungeon']],
-  ['css/ui-kit.css', 'css/ui-kit.css', ['saga-go']],   // W-0252 공용 창 틀(메뉴 UI 갈아엎기) — 판을 입히는 티켓(W-0254·0255)이 판을 더한다
+  ['css/ui-kit.css', 'css/ui-kit.css', ['saga-go']],
+  ['js/menu-grid.js', 'js/menu-grid.js', ['saga-go']],   // W-0253 ☰ 메뉴 화면 — 판 core.js 에 DG.cfg.menu.keep 이 있어야 켜진다   // W-0252 공용 창 틀(메뉴 UI 갈아엎기) — 판을 입히는 티켓(W-0254·0255)이 판을 더한다
   ['js/icon.js', 'js/icon.js', ['saga-go', 'saga-dungeon', 'saga-story']],   // R-4 — UI 아이콘(Lucide) 세 벌이 코드 같고 표만 추려 있던 것 → 합집합 표   // 3째 칸 = 이 판들에만(없으면 다섯 판 전부)
 ];
 const check = process.argv.includes('--check');
