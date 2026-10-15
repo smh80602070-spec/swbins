@@ -950,7 +950,7 @@
       else if (e.t === 'arrow') { ring(e.x, e.y, e.el ? 1.2 : 0.6, e.el && EL[e.el] ? EL[e.el].color : '#e8e2d0', 0.3); }
       else if (e.t === 'hit') {
         if (!(global.DG.audio && global.DG.audio.hitFor && global.DG.audio.hitFor(!!e.crit))) { sfx('hit'); }   // W-0170 무기별 맞는 소리·치명
-        floatNum(e.x, e.y, e.immune ? '면역' : String(e.dmg) + (e.crit ? '!' : ''), e.el, (e.react ? 1.3 : (e.src === 'burst' ? 1.25 : 1)) * (e.crit ? 1.25 : 1), !!e.crit);
+        A2('fc' + e.uid, 'hit', 260); floatNum(e.x, e.y, e.immune ? '면역' : String(e.dmg) + (e.crit ? '!' : ''), e.el, (e.react ? 1.3 : (e.src === 'burst' ? 1.25 : 1)) * (e.crit ? 1.25 : 1), !!e.crit);
         var w = W3();
         if (w) {
           w.playAnim('fc' + e.uid, 'hit', 260);
@@ -970,7 +970,7 @@
         ring(e.x, e.y, 2.4, '#ffffff', 0.4);
         if (W3()) { W3().shake(0.45); W3().hold(100); } c.emit('field:break', { camp: e.camp, left: e.left });   // ㉑ 방패 한 겹 = 부위 하나(track.js)
       } else if (e.t === 'swing') {
-        if (W3()) { W3().playAnim('me', wpnSlot(e.w, e.step), wpnMs(e.w, e.step, 280)); if (e.step === 2 && e.uid != null) { W3().hold(WPN_HOLD()); W3().shake(0.16); } } if (global.DG.audio && global.DG.audio.weapon) { global.DG.audio.weapon(e.w); sfx('sx:sfx_whoosh'); } var fw = W3(); if (fw && fw.faceTo && e.tx != null) { fw.faceTo(e.tx, e.ty, 350); } if (global.DG.slash3d) { global.DG.slash3d.swing(e.w, e.step, pos.x, pos.y, e.tx != null ? Math.atan2(e.tx - pos.x, e.ty - pos.y) : (fw && fw.meAng ? fw.meAng() : 0)); }   // W-0169 무기·단마다 다른 몸짓, 3타 마무리가 맞으면 잠깐 멎는다 · W-0170 휘두름 소리 · W-0173 대상 쪽으로 돌고 검기 띠
+        A2('me', e.step === 2 ? 'heavy' : 'attack', wpnMs(e.w, e.step, 280)); if (W3()) { W3().playAnim('me', wpnSlot(e.w, e.step), wpnMs(e.w, e.step, 280)); if (e.step === 2 && e.uid != null) { W3().hold(WPN_HOLD()); W3().shake(0.16); } } if (global.DG.audio && global.DG.audio.weapon) { global.DG.audio.weapon(e.w); sfx('sx:sfx_whoosh'); } var fw = W3(); if (fw && fw.faceTo && e.tx != null) { fw.faceTo(e.tx, e.ty, 350); } if (global.DG.slash3d) { global.DG.slash3d.swing(e.w, e.step, pos.x, pos.y, e.tx != null ? Math.atan2(e.tx - pos.x, e.ty - pos.y) : (fw && fw.meAng ? fw.meAng() : 0)); }   // W-0169 무기·단마다 다른 몸짓, 3타 마무리가 맞으면 잠깐 멎는다 · W-0170 휘두름 소리 · W-0173 대상 쪽으로 돌고 검기 띠
         if (e.ranged && e.tx != null) { ring(e.tx, e.ty, 0.8, e.el && EL[e.el] ? EL[e.el].color : '#e8e2d0', 0.25); }   // ⑲-5 서책·활
       } else if (e.t === 'skill') {
         if (e.shape === 'thrust' || e.shape === 'dash') {
@@ -984,16 +984,16 @@
         }
         if (e.name) { floatNum(pos.x, pos.y, EL[e.el].icon + ' ' + e.name, e.el, 0.95, true, true); }       // ⑲-11 고유·갈래
         else if (e.shape && e.shape !== 'circle') { floatNum(pos.x, pos.y, SHAPES[e.shape].icon + ' ' + SHAPES[e.shape].name, e.el, 0.9, true, true); }
-        if (W3()) { W3().playAnim('me', 'attack', 380); }
+        A2('me', 'heavy', 380); if (W3()) { W3().playAnim('me', 'attack', 380); }
       } else if (e.t === 'heavy') {
         ring(e.x, e.y, e.r, '#f4f1e2', 0.5);
         floatNum(pos.x, pos.y, '강공격', null, 1, true, true);
-        if (W3()) { W3().playAnim('me', wpnSlot(e.w, 2), wpnMs(e.w, 2, 500)); W3().shake(0.2); if (e.n) { W3().hold(WPN_HOLD() + 20); } if (W3().faceTo) { W3().faceTo(e.x, e.y, 400); } if (global.DG.slash3d) { global.DG.slash3d.swing(e.w, 2, pos.x, pos.y, Math.atan2(e.x - pos.x, e.y - pos.y)); } }   // W-0169 — 강공격 = 그 무기 마무리 몸짓
+        A2('me', 'heavy', wpnMs(e.w, 2, 500)); if (W3()) { W3().playAnim('me', wpnSlot(e.w, 2), wpnMs(e.w, 2, 500)); W3().shake(0.2); if (e.n) { W3().hold(WPN_HOLD() + 20); } if (W3().faceTo) { W3().faceTo(e.x, e.y, 400); } if (global.DG.slash3d) { global.DG.slash3d.swing(e.w, 2, pos.x, pos.y, Math.atan2(e.x - pos.x, e.y - pos.y)); } }   // W-0169 — 강공격 = 그 무기 마무리 몸짓
       } else if (e.t === 'tired') { floatNum(pos.x, pos.y, '기력 부족', null, 0.9, true, true); }
       else if (e.t === 'plunge') {
         ring(e.x, e.y, e.r, '#f4ecd0', 0.6); ring(e.x, e.y, e.r * 0.45, '#ffffff', 0.4);
         floatNum(pos.x, pos.y, '낙하 공격 ×' + e.mul.toFixed(1), null, 1.2, true, true);
-        if (W3()) { W3().playAnim('me', 'attack', 420); W3().shake(0.45); W3().hold(90); }
+        A2('me', 'heavy', 420); if (W3()) { W3().playAnim('me', 'attack', 420); W3().shake(0.45); W3().hold(90); }
         sfx('hit');
       } else if (e.t === 'burst') {
         ring(e.x, e.y, e.r, EL[e.el].color, 0.8);
@@ -1005,13 +1005,13 @@
         else if (e.kind === 'shell') { ring(e.x, e.y, e.r, EL[e.el].color, 0.55); if (W3()) { W3().shake(0.15); } }
         else { ring(e.x, e.y, 0.9, EL[e.el].color, 0.3); if (e.tx !== undefined) { ring(e.tx, e.ty, e.r, EL[e.el].color, 0.3); } }   // echo 등 tx 없는 구역은 발밑 고리만(안 그러면 undefined 좌표로 예외)
       } else if (e.t === 'dodge') { if (W3()) { W3().playAnim('me', 'dodge', 300); } sfx('sx:sfx_dodge'); }
-      else if (e.t === 'tell') { if (W3()) { W3().playAnim('fc' + e.uid, 'attack', 700); } }
+      else if (e.t === 'tell') { A2('fc' + e.uid, 'attack', 700); if (W3()) { W3().playAnim('fc' + e.uid, 'attack', 700); } }
       else if (e.t === 'strike') { if (e.r) { ring(e.x, e.y, e.r, '#ff4d4d', 0.3); } }
       else if (e.t === 'siege') { floatNum(e.x, e.y + 1.5, '-' + e.dmg, null, 0.9, false); c.emit('field:siege', e); }   // ⑲-16 제단이 맞았다(story.js)
       else if (e.t === 'hurt' && !e.dmg) { floatNum(pos.x, pos.y, '🪨 막음', 'rock', 1, true, true); }
       else if (e.t === 'hurt') {
         floatNum(pos.x, pos.y, '-' + e.dmg, e.el, 1, false, true);
-        if (W3()) { W3().playAnim('me', 'hit', 260); W3().shake(0.25); } sfx('sx:sfx_sword_hurt_' + (1 + (e.dmg & 1)));   // W-0170 내가 맞는 소리
+        A2('me', 'hit', 260); if (W3()) { W3().playAnim('me', 'hit', 260); W3().shake(0.25); } sfx('sx:sfx_sword_hurt_' + (1 + (e.dmg & 1)));   // W-0170 내가 맞는 소리
       } else if (e.t === 'evade') { floatNum(pos.x, pos.y, '회피!', null, 1.1, true, true); }
       else if (e.t === 'swap') {
         var sm = S.party[e.idx];

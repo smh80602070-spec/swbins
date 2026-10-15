@@ -16019,6 +16019,17 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         ' · 닫힘 ' + (secs ? secs + '초' : '타이머 없음');
     });
 
+    t('2D 전투 몸짓(W-0224) — 평타·강공격·맞음·적 맞음·적 덮치기가 2D 기록(anim2d)에 남고 시간이 지나면 풀린다(3D 가 없어도)', function () {
+      var FC = DG.fieldCombat, pos = { x: 0, y: 0 }, r = {};
+      FC._handle([{ t: 'swing', w: 'sword', step: 0, x: 0, y: 0 }], pos); r.swing = FC.anim2d('me');
+      FC._handle([{ t: 'swing', w: 'sword', step: 2, x: 0, y: 0 }], pos); r.heavy = FC.anim2d('me');
+      FC._handle([{ t: 'hurt', dmg: 3 }], pos); r.hurt = FC.anim2d('me');
+      FC._handle([{ t: 'hit', uid: 9901, x: 0, y: 0, dmg: 5 }], pos); r.foeHit = FC.anim2d('fc9901');
+      FC._handle([{ t: 'tell', uid: 9902 }], pos); r.tell = FC.anim2d('fc9902');
+      var ok = r.swing && r.swing.clip === 'attack' && r.heavy && r.heavy.clip === 'heavy' && r.hurt && r.hurt.clip === 'hit' && r.foeHit && r.foeHit.clip === 'hit' && r.tell && r.tell.clip === 'attack' && r.tell.left > 0.5;
+      return ok && ('평타 ' + r.swing.clip + ' · 강공격 ' + r.heavy.clip + ' · 맞음 ' + r.hurt.clip + ' · 적 맞음 ' + r.foeHit.clip + ' · 적 덮치기 ' + r.tell.clip + ' ' + r.tell.left.toFixed(2) + '초') || ('실패 ' + JSON.stringify(r));
+    });
+
     t('재미표준 C 손맛(측정)', function () {
       var b = funSrc('js/battle3d.js');
       if (!b) { return '△ — 원본을 못 읽음(file:// 이면 정상)'; }
