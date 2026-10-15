@@ -196,6 +196,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/auto.js"></script>
 <script src="js/party-sheet.js"></script>
 <script src="js/ui-near.js"></script>
+<script src="js/ui-detail.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/game.js"></script>
 <script>
@@ -6671,6 +6672,11 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       DG.ui.closeDetail();
       return html.indexOf(h.name) >= 0 && html.indexOf(h.hanja) >= 0 &&
         html.indexOf('승급') >= 0 && ('초상 · 한자 · 능력치 · 승급 버튼 렌더 (' + html.length + '자)');
+    });
+
+    t('상세 열림 상태(R-4 ui-detail.js) — isOpen 이 열고 닫음을 따른다(Esc 가 이것을 본다)', function () {
+      var U = DG.uiDetail, h = D.heroes[0], o1, o2; DG.ui.openDetail('hero', h.id); o1 = U.isOpen(); DG.ui.closeDetail(); o2 = U.isOpen();
+      return o1 === true && o2 === false && ('열림 ' + o1 + ' → 닫힘 ' + o2) || ('실패 ' + o1 + ' ' + o2);
     });
 
     t('미획득 인물은 열전이 가려진다', function () {

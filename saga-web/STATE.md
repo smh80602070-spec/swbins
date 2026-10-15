@@ -1,11 +1,11 @@
-<!-- 생성: tools/status.mjs · 2026-10-15 00:57Z — 손으로 고치지 않는다(덮어쓴다) -->
+<!-- 생성: tools/status.mjs · 2026-10-15 01:05Z — 손으로 고치지 않는다(덮어쓴다) -->
 # saga-web 상태
 
 완성도 = 끝 ÷ 전체(끝 = 사람 몫 아님 D2+ · 사람 몫 human:true 는 D3+) · WIP = D0+D1(10 초과 시 `초과`) · 등급 규칙 SAGA-ARCH §3.1
 
 | 판 | 기능 | D0 | D1 | D2 | 끝 | 완성도 | 사람 몫 | WIP | 초과 | 러너 n/m | 표시 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| saga-go | 49 | 0 | 2 | 40 | 47 | 95.9% | 5(미확인 0) | 2 | - | 911/911 | - |
+| saga-go | 49 | 0 | 2 | 40 | 47 | 95.9% | 5(미확인 0) | 2 | - | 912/912 | - |
 | saga-dungeon | 49 | 0 | 0 | 46 | 48 | 98% | 4(미확인 1) | 0 | - | 518/518 | - |
 | saga-forest | 46 | 0 | 0 | 43 | 46 | 100% | 3(미확인 0) | 0 | - | 450/450 | - |
 | saga-story | 30 | 0 | 1 | 26 | 29 | 96.7% | 3(미확인 0) | 1 | - | 320/320 | - |
@@ -27,4 +27,4 @@
 - 2003 — saga-web/saga-realm/js/realm3d.js
 - 1987 — saga-web/saga-forest/js/village-view3d.js
 - 1977 — saga-web/saga-forest/js/ui.js
-- … 외 7개(`node tools/status.mjs --big`)
+- … 외 6개(`node tools/status.mjs --big`)

@@ -136,6 +136,7 @@
    "js/auto.js",
    "js/party-sheet.js",
    "js/ui-near.js",
+   "js/ui-detail.js",
    "js/ui.js",
    "js/game.js"
   ]
@@ -275,6 +276,7 @@
    "js/auto.js",
    "js/party-sheet.js",
    "js/ui-near.js",
+   "js/ui-detail.js",
    "js/ui.js",
    "js/game.js"
   ]
