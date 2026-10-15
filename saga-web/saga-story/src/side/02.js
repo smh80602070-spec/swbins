@@ -84,11 +84,11 @@
     fx.push({ t: 'hit', x: e.x + e.w / 2, y: e.y, v: dmg, life: 0.6, crit: crit });
     /* 손맛 표준(§5-7) — hitstop 은 한 대 맞을 때마다 걸린다(dt 를 낮춰 이
        프레임의 물리·쿨다운이 같이 늦춰진다, update() 머리 참고). 흔들림은
-       이제 **모든 타격**에 걸린다(2px/80ms) — 급소·거함타(100 이상)는 그
-       위에 더 크게(8px/220ms·3.6px/180ms, 예전 그대로). */
+       이제 **모든 타격**에 걸린다 — W-0240(10-15) 재미표준 C 규격 4px/120ms 로(옛 2px/80ms), 거함타(100 이상) 5px/160ms(옛 3.6/180),
+       급소 8px/220ms 그대로. */
     run.hitstopT = Math.max(run.hitstopT || 0, e.boss ? HITSTOP_BOSS : (crit ? HITSTOP_CRIT : HITSTOP_NORMAL)); if (global.DG.runRank) { global.DG.runRank.onHit(); }   // W-0104 콤보
-    var shAmt = crit ? 8 : (dmg >= 100 ? 3.6 : 2);
-    var shSpan = crit ? 0.22 : (dmg >= 100 ? 0.18 : 0.08);
+    var shAmt = crit ? 8 : (dmg >= 100 ? 5 : 4);
+    var shSpan = crit ? 0.22 : (dmg >= 100 ? 0.16 : 0.12);
     fx.push({ t: 'shake', x: e.x, y: e.y, life: shSpan, span: shSpan, amt: shAmt, big: crit });
     if (crit) {
       sfx('crit');
