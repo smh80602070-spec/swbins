@@ -45,7 +45,7 @@
 | 자체 제작 도구 | `tools/` · 별도 저장소 | 인물 몸·괴물·소품·땅 재질·초상·소리를 로컬에서 생성(`tools/ai-art`·`char-forge`·`world-forge`·`asset-forge`) |
 
 <!-- status:begin -->
-웹 다섯 판 기능 등록부 현황(`node tools/status.mjs` 가 덮어씀 · 2026-10-15 05:13Z):
+웹 다섯 판 기능 등록부 현황(`node tools/status.mjs` 가 덮어씀 · 2026-10-15 05:26Z):
 
 | 판 | 기능 | D0 | D1 | D2 | 끝 | 완성도 | 사람 몫 | WIP | 초과 | 러너 n/m | 표시 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
@@ -53,7 +53,7 @@
 | saga-dungeon | 49 | 0 | 0 | 46 | 48 | 98% | 4(미확인 1) | 0 | - | 524/524 | - |
 | saga-forest | 46 | 0 | 0 | 43 | 46 | 100% | 3(미확인 0) | 0 | - | 459/459 | - |
 | saga-story | 30 | 0 | 1 | 26 | 29 | 96.7% | 3(미확인 0) | 1 | - | 326/326 | - |
-| saga-realm | 45 | 0 | 0 | 39 | 45 | 100% | 6(미확인 0) | 0 | - | 376/376 | - |
+| saga-realm | 45 | 0 | 0 | 39 | 45 | 100% | 6(미확인 0) | 0 | - | 381/381 | - |
 <!-- status:end -->
 
 트랙마다 상세 상태는 `saga-web/STATE.md`·`saga-godot/docs/PROJECT_STATE.md`·`saga-unity/docs/PROJECT_STATE.md` 에 있습니다.

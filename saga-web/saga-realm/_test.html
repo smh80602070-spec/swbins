@@ -4177,6 +4177,61 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { evDone(); }
     });
 
+    /* ── W-0229 재미표준 C·D·F·G·H 측정(SAGA-DESIGN §3 규격 그대로 — 게임 동작은 안 바꾼다) ── */
+    function funMark(ok, part) { return (ok ? '○' : (part ? '△' : '×')) + ' — '; }
+    function funSrc(path) {
+      try { var x = new XMLHttpRequest(); x.open('GET', path, false); x.send(); return x.status === 200 ? x.responseText : ''; }
+      catch (e) { return ''; }
+    }
+    t('재미표준 C 손맛(측정) — 전장 한 방에 hitstop·흔들림·피격 플래시·숫자 팝·타격음 다섯이 나는가', function () {
+      var v3 = funSrc('js/tactics-view3d.js'), v2 = funSrc('js/tactics-view.js'), sx = funSrc('js/sfx.js'), b3 = funSrc('js/battle3d.js');
+      if (!v3 || !v2) { return '△ — 원본을 못 읽음(file:// 이면 정상)'; }
+      var shake = /D\.shake = ([0-9.]+)/.exec(v3), pop = /c\.at > (\d+)/.exec(v2);
+      var el = {
+        hitstop: /hitstop|hold\(/.test(v3) || /hitstop|hold\(/.test(v2),
+        shake: !!shake,
+        flash: /flash/i.test(v3),
+        pop: !!pop && /'−' \+ c\.r\.dmg/.test(v2),
+        sfx: /tactics|tac:/.test(sx)
+      };
+      var n = Object.keys(el).filter(function (k) { return el[k]; }).length;
+      return funMark(n === 5, n >= 2) + '전장(격자) 한 방 ' + n + '/5 — ' + Object.keys(el).map(function (k) { return k + (el[k] ? '○' : '×'); }).join(' ') +
+        ' · 흔들림 ' + (shake ? shake[1] + '초(규격 120ms·4px)' : '없음') + ' · 숫자 ' + (pop ? pop[1] + 'ms 컷(규격 팝 0.6s)' : '없음') +
+        ' · 성 공방 3D(battle3d) 플래시 ' + (/flashMats/.test(b3) ? '있음' : '없음');
+    });
+    t('재미표준 D 선택 3택(측정) — 영내 소식 세 갈래가 늘 서로 다른 축(금 util·병 atk·민심 def), 100장 굴려 같은 축 중복 0', function () {
+      var ND = DG.newsData; if (!ND) { return '× — newsData 없음'; }
+      var dup = 0, miss = 0, n = 0, i, it, seen, k;   // 난수 안 씀(다른 진단 수열을 안 흔든다) — 표를 차례로 100장
+      for (i = 0; i < 100; i++) {
+        it = ND.NEWS[(i * 7) % ND.NEWS.length]; n++; seen = {};
+        for (k = 0; k < ND.AXES.length; k++) { if (!it[ND.AXES[k]] || !it[ND.AXES[k]].label) { miss++; } if (seen[ND.AXES[k]]) { dup++; } seen[ND.AXES[k]] = 1; }
+      }
+      var ok = ND.AXES.length === 3 && dup === 0 && miss === 0;
+      return funMark(ok, dup === 0) + n + '장 · 축 ' + ND.AXES.join('/') + ' · 중복 ' + dup + ' · 빈 갈래 ' + miss + ' (내정 명령 10 은 금만 들어 트레이드오프 없음 — PLAN §4 D)';
+    });
+    t('재미표준 F 실패와 회복(측정) — 멸망 뒤 다시 하기까지 조작 수(규격 ≤3) · 죽어도 남는 것', function () {
+      var ui = funSrc('js/ui-rtk.js'), gm = funSrc('js/game.js');
+      if (!ui || !gm) { return '△ — 원본을 못 읽음(file:// 이면 정상)'; }
+      var end = /function showEnd[\s\S]*?\n  \}/.exec(ui), btns = end ? (end[0].match(/<button/g) || []).length : 0;
+      var confirmReset = /confirm\(/.test(gm) && /core\.reset\(\)/.test(gm), wipes = /모두 사라집니다/.test(gm);
+      var ops = btns + 1 + (confirmReset ? 1 : 0) + 1;   // 끝 카드 확인 → ↺ → 확인 창 → 시나리오 시작
+      var mid = typeof R.citiesOf === 'function';          // 성 하나 잃고 되찾는 중간 실패는 판 안에서 돈다
+      return funMark(ops <= 3 && !wipes, mid) + '멸망 → 다시 ' + ops + '조작(끝 카드 단추 ' + btns + ' · ↺ · 확인 창 · 시작) · ' + (wipes ? '세이브 통째 지움(남는 것 0 — 회차는 이겼을 때만)' : '남는 것 있음') + ' · 중간 실패(성 잃고 되찾기) ' + (mid ? '있음' : '없음');
+    });
+    t('재미표준 G 성장 가시화(측정) — 힘이 오르면 보이는 것: 성 그림 단계 · 무장 성장', function () {
+      var t2 = (DG.cfg.mode2d && DG.cfg.mode2d.prop2d) || {}, ids = ['city:s', 'city:m', 'city:l'].map(function (k) { return t2[k] && t2[k].id; }), uniq = {};
+      ids.forEach(function (x) { if (x) { uniq[x] = 1; } });
+      var cityOk = Object.keys(uniq).length === 3, tv = funSrc('js/tactics-view.js') + funSrc('js/tactics-view3d.js');
+      var officerVis = /rank|lv|promote|관직/i.test(tv.replace(/\/\/[^\n]*/g, ''));
+      return funMark(cityOk && officerVis, cityOk || officerVis) + '성 병력 단계 그림 ' + Object.keys(uniq).length + '종(' + ids.join('·') + ') · 무장 성장(Lv·관직) 전장 모습 ' + (officerVis ? '있음' : '없음 — 숫자·배지뿐');
+    });
+    t('재미표준 H 돌아올 이유(측정) — 날짜를 바꾸면 주간 도전 씨앗이 바뀐다 · 일일·월간', function () {
+      var a = R.challengeWeek(new Date(2026, 9, 12)), b = R.challengeWeek(new Date(2026, 9, 14)), c = R.challengeWeek(new Date(2026, 9, 19));
+      var weekly = a.key === b.key && a.seed === b.seed && a.key !== c.key && a.seed !== c.seed;
+      var daily = typeof R.challengeDay === 'function' || typeof R.dailyGoal === 'function';
+      return funMark(weekly && daily, weekly) + '주간 도전 ' + (weekly ? '○(' + a.key + ' → ' + c.key + ')' : '×') + ' · 일일 ' + (daily ? '있음' : '없음(턴제)') + ' · 월간 = 달말 카드(B)';
+    });
+
     function isStageEnd(k) { return /_end$/.test(k) && !!DG.scenarioData && !!DG.scenarioData.STAGES[k.slice(0, -4)]; }
 
     t('사연 표 — 열다섯 사연 + 체인 일곱(퓨전 셋·둘째 단 셋 포함), 모두 세 갈래(공세·신중·수단, 중복 0)이고 신중은 값이 안 든다', function () {
