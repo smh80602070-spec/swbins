@@ -1,6 +1,6 @@
 {
  "id": "boss_10",
- "generator": "tools/ai-art/gen.py",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
  "model": "animagine-xl-4.0-opt",
  "model_license": "CreativeML OpenRAIL++-M",
  "prompt": "masterpiece, high score, great score, absurdres, (giant mossy ghost spirit:1.15), crown of ice spikes, glowing red eyes, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
@@ -8,20 +8,21 @@
  "seed": 20273820,
  "steps": 28,
  "cfg_scale": 5.5,
- "sampler": "Euler a",
+ "sampler": "euler_ancestral/normal",
  "size": [
   768,
   768
  ],
- "seconds": 25.3,
- "date": "2026-10-06",
+ "seconds": 78.1,
+ "date": "2026-10-16",
  "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
  "mode": "img2img",
- "init_image": "tools/ai-art/_out/busts/boss_10.png",
+ "init_image": "tools/ai-art/_out/monster_init/boss_10.png (K-0113 자체 PBR 몸 렌더)",
  "denoise": 0.62,
- "base_body": "saga-assets/world/toon/boss_10.glb",
- "base_license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
- "picked_candidate": "monster_dex_C/boss_10_v02.png",
+ "k113_group": "portraits-monster",
+ "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+ "redo_of": "saga-assets/portraits-monster/boss_10.license.json",
+ "picked_candidate": "k113_regen/boss_10_v01.png",
  "sizes": {
   "s": [
    192,
@@ -32,12 +33,5 @@
    344
   ]
  },
- "packed_by": "tools/ai-art/make_monster_dex.py pack",
- "base_inputs": [
-  "polyhaven: aerial_rocks_02",
-  "polyhaven: bitumen",
-  "polyhaven: coast_sand_rocks_02",
-  "polyhaven: corrugated_iron",
-  "polyhaven: white_stucco"
- ]
+ "packed_by": "tools/ai-art/make_monster_dex.py pack"
 }

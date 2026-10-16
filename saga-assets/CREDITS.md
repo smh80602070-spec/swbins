@@ -33,21 +33,21 @@
 |  에서 옮긴 같은 파일(K-0078, 유니티 vroid-bodies 원본 자리) | - | VRoid Studio 로 만든 VRM — 출처·조건은 고돗 원 자리와 같다(K-0018 배치, saga-assets/CREDITS.md VRoid 절) | 2 |
 | gen.py | Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-07 확인), 폐쇄 파생 모델 수익화만 금지 | 594 |
 | competitiongen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 21 |
-| gen.py | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1751 |
+| gen.py | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1699 |
 | remote3d | microsoft/TRELLIS-image-large | MIT | 225 |
 | icon_pack.py | none | CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음) | 76 |
 | gen.py (ComfyUI) | z-image-turbo | Apache-2.0 | 110 |
 | make_map.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 195 |
-| build_monster.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 134 |
-| gen.py (ComfyUI) | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 253 |
+| build_monster.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 335 |
+| gen.py (ComfyUI) | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 305 |
 | raritygen.py | - | CC0-1.0 (코드 생성 — 외부 입력 없음) | 60 |
 | region_hero.py | - | CC0-1.0 (자체 생성 형태, 재질은 단색·CC0) | 12 |
 | region_hero.py | - | CC0-1.0 (배치표 — 자체 생성 데이터, 조각·재질은 각각 CC0) | 12 |
 | region_hero.py (HERO_SKY 파노라마 굽기) | - | CC0-1.0 (자체 생성) | 30 |
-| region_hero.py(자료 정리) | - | 자체 생성 — Z-Image-Turbo(Apache-2.0) 견본 → pbr_from_albedo.py (K-0093·K-0113), 남의 사진 0 | 12 |
-| build_prop.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 41 |
-| build_building.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0)) | 39 |
-| build_vehicle.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 14 |
+| region_hero.py(자료 정리) | - | 자체 생성 — Z-Image-Turbo(Apache-2.0) 견본 → pbr_from_albedo.py (K-0093·K-0113), 남의 사진 0 | 36 |
+| build_prop.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 108 |
+| build_building.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0)) | 105 |
+| build_vehicle.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 37 |
 | region_hero.py village | - | CC0-1.0 (배치표 — 자체 생성 데이터, 조각·재질은 각각 CC0) | 3 |
 | sfxset.py | - | CC0-1.0 (코드 합성 — 외부 입력 없음) | 280 |
 | sfxmoss.py(시작점·길이 맞춘 판으로 채점) | OpenMOSS-Team/MOSS-SoundEffect-v2.0 | Apache-2.0 (모델·코드) — AI 생성, 원작 효과음 모사 없음 | 88 |
@@ -67,27 +67,14 @@
 | retile_uv.py --unit 4.4 (K-0089) | - | CC0-1.0 (Kenney Modular Cave Kit gate.glb 모양 그대로 + 자체 상자 투영 UV) | 2 |
 | foliage_atlas.py | - | 자체 생성(Z-Image-Turbo Apache-2.0 출력, 상업 허용) — 남의 사진·스캔 0 | 1 |
 | build_foliage.py | - | 자체 생성 — 형태는 전부 코드, 결은 자체 아틀라스(Z-Image-Turbo 출력 · foliage_atlas.py) | 14 |
-| build_terrain.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 높이맵은 전부 코드 — 값 잡음 fbm + 모양 함수 + 간단한 침식) | 30 |
-| build_equip.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 174 |
-| build_village.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 36 |
-| build_interior.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 104 |
-| build_nature.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 48 |
-| build_field.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 96 |
-| build_kit.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 10 |
-| build_weapon.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 54 |
-| region_hero.py(자료 정리) | - | CC0-1.0 (Poly Haven, https://polyhaven.com/license) | 24 |
-| build_prop.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드) | 67 |
-| build_building.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0) | 66 |
-| build_vehicle.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드) | 23 |
-| build_equip.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드) | 261 |
-| build_village.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드) | 54 |
-| build_interior.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드) | 156 |
-| build_monster.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드) | 201 |
-| build_nature.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드) | 72 |
-| build_field.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드) | 144 |
-| build_terrain.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 높이맵은 전부 코드 — 값 잡음 fbm + 모양 함수 + 간단한 침식) | 40 |
-| build_kit.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드) | 20 |
-| build_weapon.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드) | 81 |
+| build_terrain.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 높이맵은 전부 코드 — 값 잡음 fbm + 모양 함수 + 간단한 침식) | 70 |
+| build_equip.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 435 |
+| build_village.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 90 |
+| build_interior.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 260 |
+| build_nature.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 120 |
+| build_field.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 240 |
+| build_kit.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 30 |
+| build_weapon.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 135 |
 | build_real.py | - | CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다) | 166 |
 | gen.py | Illustrious-XL-v2.0 | CreativeML OpenRAIL-M (HF 태그, 버전별 재확인 필요) | 10 |
 

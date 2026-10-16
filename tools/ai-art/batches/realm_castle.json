@@ -22,7 +22,7 @@
     "mode": "img2img",
     "init_image": "castle_s.png (정본 지물 스프라이트 콜라주 밑그림)",
     "denoise": 0.6,
-    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질) · AI 그림체 B"
+    "init_license": "CC0-1.0 (코드 형태 + 자체 PBR 재질 K-0113) · AI 그림체 B"
    }
   },
   {
@@ -36,7 +36,35 @@
     "mode": "img2img",
     "init_image": "castle_s.png (정본 지물 스프라이트 콜라주 밑그림)",
     "denoise": 0.64,
-    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질) · AI 그림체 B"
+    "init_license": "CC0-1.0 (코드 형태 + 자체 PBR 재질 K-0113) · AI 그림체 B"
+   }
+  },
+  {
+   "id": "castle_s_3",
+   "seed": 3147562573,
+   "prompt": "small fortified village outpost, wooden palisade walls, one small watchtower, thatched roofs, no flags, no banners, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\realm_castle_init\\castle_s.png",
+   "denoise": 0.6799999999999999,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "castle_s.png (정본 지물 스프라이트 콜라주 밑그림)",
+    "denoise": 0.6799999999999999,
+    "init_license": "CC0-1.0 (코드 형태 + 자체 PBR 재질 K-0113) · AI 그림체 B"
+   }
+  },
+  {
+   "id": "castle_s_4",
+   "seed": 3923757059,
+   "prompt": "small fortified village outpost, wooden palisade walls, one small watchtower, thatched roofs, no flags, no banners, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\realm_castle_init\\castle_s.png",
+   "denoise": 0.72,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "castle_s.png (정본 지물 스프라이트 콜라주 밑그림)",
+    "denoise": 0.72,
+    "init_license": "CC0-1.0 (코드 형태 + 자체 PBR 재질 K-0113) · AI 그림체 B"
    }
   },
   {
@@ -50,7 +78,7 @@
     "mode": "img2img",
     "init_image": "castle_m.png (정본 지물 스프라이트 콜라주 밑그림)",
     "denoise": 0.6,
-    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질) · AI 그림체 B"
+    "init_license": "CC0-1.0 (코드 형태 + 자체 PBR 재질 K-0113) · AI 그림체 B"
    }
   },
   {
@@ -64,7 +92,35 @@
     "mode": "img2img",
     "init_image": "castle_m.png (정본 지물 스프라이트 콜라주 밑그림)",
     "denoise": 0.64,
-    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질) · AI 그림체 B"
+    "init_license": "CC0-1.0 (코드 형태 + 자체 PBR 재질 K-0113) · AI 그림체 B"
+   }
+  },
+  {
+   "id": "castle_m_3",
+   "seed": 2106395985,
+   "prompt": "medium stone castle, towers and curtain wall, tiled roofs, central keep, no flags, no banners, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\realm_castle_init\\castle_m.png",
+   "denoise": 0.6799999999999999,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "castle_m.png (정본 지물 스프라이트 콜라주 밑그림)",
+    "denoise": 0.6799999999999999,
+    "init_license": "CC0-1.0 (코드 형태 + 자체 PBR 재질 K-0113) · AI 그림체 B"
+   }
+  },
+  {
+   "id": "castle_m_4",
+   "seed": 3325591773,
+   "prompt": "medium stone castle, towers and curtain wall, tiled roofs, central keep, no flags, no banners, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\realm_castle_init\\castle_m.png",
+   "denoise": 0.72,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "castle_m.png (정본 지물 스프라이트 콜라주 밑그림)",
+    "denoise": 0.72,
+    "init_license": "CC0-1.0 (코드 형태 + 자체 PBR 재질 K-0113) · AI 그림체 B"
    }
   },
   {
@@ -78,7 +134,7 @@
     "mode": "img2img",
     "init_image": "castle_l.png (정본 지물 스프라이트 콜라주 밑그림)",
     "denoise": 0.6,
-    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질) · AI 그림체 B"
+    "init_license": "CC0-1.0 (코드 형태 + 자체 PBR 재질 K-0113) · AI 그림체 B"
    }
   },
   {
@@ -92,7 +148,35 @@
     "mode": "img2img",
     "init_image": "castle_l.png (정본 지물 스프라이트 콜라주 밑그림)",
     "denoise": 0.64,
-    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질) · AI 그림체 B"
+    "init_license": "CC0-1.0 (코드 형태 + 자체 PBR 재질 K-0113) · AI 그림체 B"
+   }
+  },
+  {
+   "id": "castle_l_3",
+   "seed": 1142445778,
+   "prompt": "grand walled fortress city, tall multi-layered stone ramparts, many towers, large palace roofs, no flags, no banners, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\realm_castle_init\\castle_l.png",
+   "denoise": 0.6799999999999999,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "castle_l.png (정본 지물 스프라이트 콜라주 밑그림)",
+    "denoise": 0.6799999999999999,
+    "init_license": "CC0-1.0 (코드 형태 + 자체 PBR 재질 K-0113) · AI 그림체 B"
+   }
+  },
+  {
+   "id": "castle_l_4",
+   "seed": 1470755090,
+   "prompt": "grand walled fortress city, tall multi-layered stone ramparts, many towers, large palace roofs, no flags, no banners, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\realm_castle_init\\castle_l.png",
+   "denoise": 0.72,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "castle_l.png (정본 지물 스프라이트 콜라주 밑그림)",
+    "denoise": 0.72,
+    "init_license": "CC0-1.0 (코드 형태 + 자체 PBR 재질 K-0113) · AI 그림체 B"
    }
   }
  ]
