@@ -106,6 +106,7 @@
   function buildBoard(b) {
     var t = three(), x, y;
     clear(boardGrp); clear(unitGrp); actors = {}; queue = []; logSeen = b.log.length;
+    boardSeq++;
     var mats = {};
     for (y = 0; y < b.rows; y++) {
       for (x = 0; x < b.cols; x++) {
@@ -115,17 +116,38 @@
         m.position.set(p.x, (h - 0.6) / 2, p.z);
         m.userData.cell = { x: x, y: y };
         boardGrp.add(m);
-        if (k === 'forest') { tree(p.x - 0.22, h, p.z - 0.18, 0.55); tree(p.x + 0.24, h, p.z + 0.16, 0.42); }
-        if (k === 'wall') {
-          for (var i = 0; i < 3; i++) { var c = new t.Mesh(new t.BoxGeometry(0.2, 0.18, 0.2), mats.wall); c.position.set(p.x - 0.33 + i * 0.33, h + 0.09, p.z - 0.38); boardGrp.add(c); }
-        }
+        if (k === 'forest') { tree(p.x - 0.22, h, p.z - 0.18, 0.55, x + ':' + y + 'a'); tree(p.x + 0.24, h, p.z + 0.16, 0.42, x + ':' + y + 'b'); }
+        if (k === 'wall') { wallTop(p.x, h, p.z, mats.wall, x + ':' + y); }
       }
     }
     var frame = new t.Mesh(new t.BoxGeometry(b.cols + 0.3, 0.5, b.rows + 0.3), new t.MeshLambertMaterial({ color: 0x3b3326 }));
     frame.position.y = -0.36; boardGrp.add(frame);
   }
+  /* W-0264 — 숲 나무·성벽 톱니는 판 표(cfg.assets3d.reg 'tree'·'wall')의 자체 world3d 를 먼저, 표에 없거나 못 받으면 예전 도형(원뿔·상자) */
+  var boardSeq = 0;
+  function ownProp(key, id, put, fallback) {
+    var A = A3(), seq = boardSeq;
+    if (!A || !A.lookup || !A.lookup(key, { id: id })) { fallback(); return; }
+    A.build(key, { id: id }, function (g) {
+      if (seq !== boardSeq) { return; }
+      if (!g) { fallback(); return; }
+      put(g); boardGrp.add(g);
+    });
+  }
+  function wallTop(x, h, z, mat, id) {
+    ownProp('wall', 'tv:wall:' + id, function (g) {
+      var w = (g.userData.span && g.userData.span.w) || 1, sc = Math.min(0.97 / w, 0.45);
+      g.scale.setScalar(sc); g.position.set(x, h, z - 0.3);
+    }, function () {
+      var t = three();
+      for (var i = 0; i < 3; i++) { var c = new t.Mesh(new t.BoxGeometry(0.2, 0.18, 0.2), mat); c.position.set(x - 0.33 + i * 0.33, h + 0.09, z - 0.38); boardGrp.add(c); }
+    });
+  }
   var treeMat = null, trunkMat = null;
-  function tree(x, h, z, s) {
+  function tree(x, h, z, s, id) {
+    ownProp('tree', 'tv:tree:' + id, function (g) { g.scale.setScalar(s * 1.15); g.position.set(x, h, z); g.rotation.y = x * 1.7 + z; }, function () { treeCone(x, h, z, s); });
+  }
+  function treeCone(x, h, z, s) {
     var t = three();
     if (!treeMat) { treeMat = new t.MeshLambertMaterial({ color: 0x2f5a2c }); trunkMat = new t.MeshLambertMaterial({ color: 0x5a4127 }); }
     var tr = new t.Mesh(new t.CylinderGeometry(0.04 * s * 2, 0.05 * s * 2, 0.25 * s, 6), trunkMat); tr.position.set(x, h + 0.12 * s, z); boardGrp.add(tr);
