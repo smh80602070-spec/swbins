@@ -1,4 +1,4 @@
-"""world-forge 자연 소품 — 나무·덤불·풀·꽃·바위·통나무·버섯·언덕·산을 코드로 만든다 (K-0052). 재질만 Poly Haven CC0 사진.
+"""world-forge 자연 소품 — 나무·덤불·풀·꽃·바위·통나무·버섯·언덕·산을 코드로 만든다 (K-0052). 재질만 자체 PBR(K-0113).
 
   blender -b --factory-startup -P tools/world-forge/build_nature.py -- --id tree_pine_01 --out <절대>/tree_pine_01.glb [--style toon]
   blender -b --factory-startup -P tools/world-forge/build_nature.py -- --all --out-dir <절대 폴더> [--style toon]

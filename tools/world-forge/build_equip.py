@@ -1,4 +1,4 @@
-"""world-forge 장비 외형 조각 — 갑옷 54(시대 3 × 등급 3 × 슬롯 6) + 악세사리 30 (K-0037). 재질만 Poly Haven CC0 사진.
+"""world-forge 장비 외형 조각 — 갑옷 54(시대 3 × 등급 3 × 슬롯 6) + 악세사리 30 (K-0037). 재질만 자체 PBR(K-0113).
 
   blender -b --factory-startup -P tools/world-forge/build_equip.py -- --id eq_past_2_chest --out <절대>/eq_past_2_chest.glb [--style toon]
   blender -b --factory-startup -P tools/world-forge/build_equip.py -- --all --out-dir <절대 폴더> [--style toon]
@@ -732,8 +732,8 @@ def build_scene(pid, out, style):
     bpy.context.view_layer.objects.active = ob
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
     W.export_glb(objs, out, int(os.environ.get('WF_TOON_PX', '256')) if style == 'toon' else 1024, 'JPEG' if style == 'toon' else 'AUTO')
-    lic = {'id': pid, 'generator': BP.GENERATOR, 'blender': bpy.app.version_string, 'style': style, 'license': 'CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)',
-           'inputs': sorted(f'polyhaven: {m}' for m in C.mats), 'size_m': size, 'tris': tris, 'nodes': [n[0] for n in NODES],
+    lic = {'id': pid, 'generator': BP.GENERATOR, 'blender': bpy.app.version_string, 'style': style, 'license': 'CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)',
+           'inputs': sorted(f'self-pbr: {m}' for m in C.mats), 'size_m': size, 'tris': tris, 'nodes': [n[0] for n in NODES],
            'origin': '붙일 뼈의 머리(T-자세 기준 몸, 인물 앞 = Blender -Y)'}
     lic.update(meta)
     json.dump(lic, open(os.path.splitext(out)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

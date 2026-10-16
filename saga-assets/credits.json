@@ -221,7 +221,7 @@
    "tool": "outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024)",
    "model": "",
    "license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
-   "count": 2069,
+   "count": 2000,
    "where": [
     "saga-assets/characters/sprites2d/ac_balgwang",
     "saga-assets/characters/sprites2d/ac_choeumpa",
@@ -292,14 +292,14 @@
    "tool": "gen.py",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 1762,
+   "count": 1751,
    "where": [
     "saga-assets/competition",
     "saga-assets/icons/license",
-    "saga-assets/portraits-monster",
-    "saga-assets/web2d/moving/beast_big",
-    "saga-assets/web2d/moving/beast_bird",
-    "saga-assets/web2d/moving/beast_dog"
+    "saga-assets/portraits-live/eu_davinci",
+    "saga-assets/portraits-live/eu_leonidas",
+    "saga-assets/portraits-live/fu_jongwang",
+    "saga-assets/portraits-live/jp_hanzo"
    ]
   },
   {
@@ -329,14 +329,14 @@
    "tool": "gen.py (ComfyUI)",
    "model": "z-image-turbo",
    "license": "Apache-2.0",
-   "count": 106,
+   "count": 110,
    "where": [
     "saga-assets/land-go",
+    "saga-assets/textures_real/brick",
+    "saga-assets/textures_real/concrete",
+    "saga-assets/textures_real/corrugated",
     "saga-assets/textures_real/dirt",
-    "saga-assets/textures_real/grass",
-    "saga-assets/textures_real/gravel",
-    "saga-assets/textures_real/paving",
-    "saga-assets/textures_real/planks"
+    "saga-assets/textures_real/grass"
    ]
   },
   {
@@ -353,29 +353,26 @@
   {
    "tool": "build_monster.py",
    "model": "",
-   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
-   "count": 335,
+   "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+   "count": 134,
    "where": [
     "saga-assets/pets3d",
     "saga-assets/world/toon",
-    "saga-assets/world/web",
-    "saga-godot/assets/world",
-    "saga-unity/Assets/SagaCore/Resources/World",
-    "saga-web/shared/assets/world3d"
+    "saga-assets/world/web"
    ]
   },
   {
    "tool": "gen.py (ComfyUI)",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 170,
+   "count": 253,
    "where": [
     "saga-assets/portraits-expr",
+    "saga-assets/portraits-live/hl_mukhyang",
     "saga-assets/portraits-mount",
     "saga-assets/web2d/bg",
     "saga-assets/web2d/moving/beast_big",
-    "saga-assets/web2d/moving/beast_dog",
-    "saga-assets/web2d/moving/villager_b"
+    "saga-assets/web2d/moving/beast_dog"
    ]
   },
   {
@@ -434,57 +431,47 @@
   {
    "tool": "region_hero.py(자료 정리)",
    "model": "",
-   "license": "CC0-1.0 (Poly Haven, https://polyhaven.com/license)",
-   "count": 36,
+   "license": "자체 생성 — Z-Image-Turbo(Apache-2.0) 견본 → pbr_from_albedo.py (K-0093·K-0113), 남의 사진 0",
+   "count": 12,
    "where": [
     "saga-assets/regions/crossroads/tex",
     "saga-assets/regions/frost_peak/tex",
     "saga-assets/regions/galaxy_ferry/tex",
     "saga-assets/regions/time_rift/tex",
-    "saga-assets/regions/village/tex",
-    "saga-godot/assets/regions/crossroads/tex"
+    "saga-assets/regions/village/tex"
    ]
   },
   {
    "tool": "build_prop.py",
    "model": "",
-   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
-   "count": 108,
+   "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+   "count": 41,
    "where": [
     "saga-assets/regions/pieces",
     "saga-assets/world/toon",
-    "saga-assets/world/web",
-    "saga-godot/assets/regions/pieces",
-    "saga-godot/assets/world",
-    "saga-unity/Assets/SagaCore/Resources/Regions/Pieces"
+    "saga-assets/world/web"
    ]
   },
   {
    "tool": "build_building.py",
    "model": "",
-   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0)",
-   "count": 105,
+   "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0))",
+   "count": 39,
    "where": [
     "saga-assets/regions/pieces",
     "saga-assets/world/toon",
-    "saga-assets/world/web",
-    "saga-godot/assets/regions/pieces",
-    "saga-godot/assets/world",
-    "saga-unity/Assets/SagaCore/Resources/Regions/Pieces"
+    "saga-assets/world/web"
    ]
   },
   {
    "tool": "build_vehicle.py",
    "model": "",
-   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
-   "count": 37,
+   "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+   "count": 14,
    "where": [
     "saga-assets/regions/pieces",
     "saga-assets/world/toon",
-    "saga-assets/world/web",
-    "saga-godot/assets/regions/pieces",
-    "saga-godot/assets/world",
-    "saga-unity/Assets/SagaCore/Resources/Regions/Pieces"
+    "saga-assets/world/web"
    ]
   },
   {
@@ -697,25 +684,142 @@
   {
    "tool": "build_terrain.py",
    "model": "",
-   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 높이맵은 전부 코드 — 값 잡음 fbm + 모양 함수 + 간단한 침식)",
-   "count": 70,
+   "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 높이맵은 전부 코드 — 값 잡음 fbm + 모양 함수 + 간단한 침식)",
+   "count": 30,
    "where": [
     "saga-assets/world/sprite",
     "saga-assets/world/toon",
-    "saga-assets/world/web",
+    "saga-assets/world/web"
+   ]
+  },
+  {
+   "tool": "build_equip.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+   "count": 174,
+   "where": [
+    "saga-assets/world/toon",
+    "saga-assets/world/web"
+   ]
+  },
+  {
+   "tool": "build_village.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+   "count": 36,
+   "where": [
+    "saga-assets/world/toon",
+    "saga-assets/world/web"
+   ]
+  },
+  {
+   "tool": "build_interior.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+   "count": 104,
+   "where": [
+    "saga-assets/world/toon",
+    "saga-assets/world/web"
+   ]
+  },
+  {
+   "tool": "build_nature.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+   "count": 48,
+   "where": [
+    "saga-assets/world/toon",
+    "saga-assets/world/web"
+   ]
+  },
+  {
+   "tool": "build_field.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+   "count": 96,
+   "where": [
+    "saga-assets/world/toon",
+    "saga-assets/world/web"
+   ]
+  },
+  {
+   "tool": "build_kit.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+   "count": 10,
+   "where": [
+    "saga-assets/world/toon"
+   ]
+  },
+  {
+   "tool": "build_weapon.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+   "count": 54,
+   "where": [
+    "saga-assets/world/toon",
+    "saga-assets/world/web"
+   ]
+  },
+  {
+   "tool": "region_hero.py(자료 정리)",
+   "model": "",
+   "license": "CC0-1.0 (Poly Haven, https://polyhaven.com/license)",
+   "count": 24,
+   "where": [
+    "saga-godot/assets/regions/crossroads/tex",
+    "saga-godot/assets/regions/frost_peak/tex",
+    "saga-godot/assets/regions/galaxy_ferry/tex",
+    "saga-godot/assets/regions/time_rift/tex",
+    "saga-godot/assets/regions/village/tex",
+    "saga-unity/Assets/SagaCore/Resources/Regions/Crossroads/tex"
+   ]
+  },
+  {
+   "tool": "build_prop.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+   "count": 67,
+   "where": [
+    "saga-godot/assets/regions/pieces",
     "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/Regions/Pieces",
     "saga-unity/Assets/SagaCore/Resources/World",
-    "saga-web/shared/assets/world2d"
+    "saga-web/shared/assets/world3d"
+   ]
+  },
+  {
+   "tool": "build_building.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0)",
+   "count": 66,
+   "where": [
+    "saga-godot/assets/regions/pieces",
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/Regions/Pieces",
+    "saga-unity/Assets/SagaCore/Resources/World",
+    "saga-web/shared/assets/world3d"
+   ]
+  },
+  {
+   "tool": "build_vehicle.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+   "count": 23,
+   "where": [
+    "saga-godot/assets/regions/pieces",
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/Regions/Pieces",
+    "saga-unity/Assets/SagaCore/Resources/World",
+    "saga-web/shared/assets/world3d"
    ]
   },
   {
    "tool": "build_equip.py",
    "model": "",
    "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
-   "count": 435,
+   "count": 261,
    "where": [
-    "saga-assets/world/toon",
-    "saga-assets/world/web",
     "saga-godot/assets/world",
     "saga-unity/Assets/SagaCore/Resources/World",
     "saga-web/shared/assets/world3d"
@@ -725,10 +829,8 @@
    "tool": "build_village.py",
    "model": "",
    "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
-   "count": 90,
+   "count": 54,
    "where": [
-    "saga-assets/world/toon",
-    "saga-assets/world/web",
     "saga-godot/assets/world",
     "saga-unity/Assets/SagaCore/Resources/World",
     "saga-web/shared/assets/world3d"
@@ -738,10 +840,19 @@
    "tool": "build_interior.py",
    "model": "",
    "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
-   "count": 260,
+   "count": 156,
    "where": [
-    "saga-assets/world/toon",
-    "saga-assets/world/web",
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/World",
+    "saga-web/shared/assets/world3d"
+   ]
+  },
+  {
+   "tool": "build_monster.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+   "count": 201,
+   "where": [
     "saga-godot/assets/world",
     "saga-unity/Assets/SagaCore/Resources/World",
     "saga-web/shared/assets/world3d"
@@ -751,10 +862,8 @@
    "tool": "build_nature.py",
    "model": "",
    "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
-   "count": 120,
+   "count": 72,
    "where": [
-    "saga-assets/world/toon",
-    "saga-assets/world/web",
     "saga-godot/assets/world",
     "saga-unity/Assets/SagaCore/Resources/World",
     "saga-web/shared/assets/world3d"
@@ -764,12 +873,22 @@
    "tool": "build_field.py",
    "model": "",
    "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
-   "count": 240,
+   "count": 144,
    "where": [
-    "saga-assets/world/toon",
-    "saga-assets/world/web",
     "saga-godot/assets/world",
     "saga-unity/Assets/SagaCore/Resources/World",
+    "saga-web/shared/assets/world3d"
+   ]
+  },
+  {
+   "tool": "build_terrain.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 높이맵은 전부 코드 — 값 잡음 fbm + 모양 함수 + 간단한 침식)",
+   "count": 40,
+   "where": [
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/World",
+    "saga-web/shared/assets/world2d",
     "saga-web/shared/assets/world3d"
    ]
   },
@@ -777,9 +896,8 @@
    "tool": "build_kit.py",
    "model": "",
    "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
-   "count": 30,
+   "count": 20,
    "where": [
-    "saga-assets/world/toon",
     "saga-godot/assets/world",
     "saga-unity/Assets/SagaCore/Resources/World"
    ]
@@ -788,10 +906,8 @@
    "tool": "build_weapon.py",
    "model": "",
    "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
-   "count": 135,
+   "count": 81,
    "where": [
-    "saga-assets/world/toon",
-    "saga-assets/world/web",
     "saga-godot/assets/world",
     "saga-unity/Assets/SagaCore/Resources/World",
     "saga-web/shared/assets/world3d"

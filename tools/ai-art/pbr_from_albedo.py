@@ -51,6 +51,11 @@ SETS = {
     'rooftile':  dict(seam='cut',   strength=4.0, invert=False, rough=(0.65, 0.15), flat=1.0),   # △ 엇갈린 줄은 세로 줄눈이 없어 자른 자리에 세로 줄(띠 섞기는 이음 검사 실패 4.0, 10-13)
     'rust':      dict(seam='blend', strength=2.0, invert=False, rough=(0.70, 0.20)),
     'paving':    dict(seam='cut',   strength=3.5, invert=False, rough=(0.80, 0.12)),
+    # K-0113 world-forge 재질(Poly Haven 대체) 새 4세트
+    'concrete':  dict(seam='blend', strength=1.5, invert=False, rough=(0.85, 0.08)),
+    'brick':     dict(seam='cut',   strength=3.5, invert=False, rough=(0.80, 0.12)),
+    'thatch':    dict(seam='blend', strength=3.0, invert=False, rough=(0.90, 0.08)),
+    'corrugated': dict(seam='blend', strength=3.0, invert=False, rough=(0.55, 0.20)),
 }
 FLATTEN = 0.7
 HI = 1024          # 1024² 견본(2048 은 480초·1152 는 장당 4분+ 10-13) — 이보다 크면 줄이기만

@@ -1,4 +1,4 @@
-"""world-forge 건물 실내(3D) — 건물 12종마다 들어가는 방 한 칸(room 12) + 실내 물건(furniture 40) (K-0026). 재질만 Poly Haven CC0 사진.
+"""world-forge 건물 실내(3D) — 건물 12종마다 들어가는 방 한 칸(room 12) + 실내 물건(furniture 40) (K-0026). 재질만 자체 PBR(K-0113).
 
   blender -b --factory-startup -P tools/world-forge/build_interior.py -- --id int_inn_01 --out <절대>/int_inn_01.glb [--style toon]
   blender -b --factory-startup -P tools/world-forge/build_interior.py -- --all --out-dir <절대 폴더> [--style toon]
@@ -629,8 +629,8 @@ def build_scene(pid, out, style):
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
     W.export_glb(objs, out, int(os.environ.get('WF_TOON_PX', '256')) if style == 'toon' else 1024, 'JPEG' if style == 'toon' else 'AUTO')
     lic = {'id': pid, 'generator': BP.GENERATOR, 'blender': bpy.app.version_string, 'style': style,
-           'license': 'CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)',
-           'inputs': sorted(f'polyhaven: {m}' for m in C.mats), 'size_m': size, 'tris': tris, 'nodes': [n[0] for n in NODES]}
+           'license': 'CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)',
+           'inputs': sorted(f'self-pbr: {m}' for m in C.mats), 'size_m': size, 'tris': tris, 'nodes': [n[0] for n in NODES]}
     json.dump(lic, open(os.path.splitext(out)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     kb = os.path.getsize(out) // 1024
     lim = 2500 if (pid in ROOMS or pid in BIG) else 1500

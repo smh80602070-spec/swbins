@@ -5,7 +5,7 @@
   blender -b --factory-startup -P tools/world-forge/build_foliage.py -- --list
 
 산출 = <id>.gltf + <id>.bin + 같은 폴더 공용 foliage_atlas.png·foliage_atlas_n.png. 원점 = 바닥 가운데, 미터, z 위. 카드 = 네모 한 장(양면 재질), 법선은 덤불 = 덩어리 바깥, 풀·꽃 = 위로 기울여 뒷면이 까맣지 않게.
-build_nature.py 의 bush_01·grass_tuft_01(정육면체 잎·Poly Haven 재질)은 그대로 두고 새 id 만 만든다. 삼각형 덤불 ≤ 1500 · 풀·꽃 ≤ 600.
+build_nature.py 의 bush_01·grass_tuft_01(정육면체 잎·자체 PBR 재질)은 그대로 두고 새 id 만 만든다. 삼각형 덤불 ≤ 1500 · 풀·꽃 ≤ 600.
 """
 import json
 import math

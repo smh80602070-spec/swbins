@@ -1,0 +1,21 @@
+{
+ "id": "brick",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "An orthographic flat frontal scan of a red clay brick wall in running bond with light gray mortar joints, slightly uneven worn bricks, camera perfectly perpendicular to the surface, no perspective, no vanishing point, every element the same size across the whole image. Evenly lit with soft diffuse light, no shadows, no objects, no border, fills the entire frame edge to edge. Natural realistic colors, medium brightness, fine detail. Uniform repeating PBR material texture.",
+ "negative_prompt": "",
+ "seed": 113010001,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  904,
+  904
+ ],
+ "seconds": 54.0,
+ "date": "2026-10-16",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "picked": "brick_v02.png",
+ "derived": "tools/ai-art/pbr_from_albedo.py — make_seamless.cutseam + flatten 0.7 → 법선·거칠기·높이(자체 코드) → 고돗 tiles_real hi 904·512 WebP q90"
+}

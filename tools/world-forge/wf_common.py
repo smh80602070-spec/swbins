@@ -1,4 +1,4 @@
-"""world-forge 공용 — 재질(Poly Haven PBR 세트)·bmesh 도우미. Blender 헤드리스 안에서 쓴다.
+"""world-forge 공용 — 재질(자체 PBR 세트)·bmesh 도우미. Blender 헤드리스 안에서 쓴다.
 
 좌표: 미터, x = 오른쪽, y = 앞(+)·뒤(-), z = 위. 벽 좌표계 (u 따라, d 바깥 깊이, v 높이).
 """
@@ -11,13 +11,13 @@ import bmesh
 from mathutils import Vector
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.join(HERE, '_src', 'polyhaven')
+SRC = os.path.join(HERE, '_src', 'self')
 _ROLE = {}
 
 
 def sources():
     if not _ROLE:
-        _ROLE.update(json.load(open(os.path.join(HERE, 'sources.json'), encoding='utf-8'))['items'])
+        _ROLE.update(json.load(open(os.path.join(HERE, 'self_sources.json'), encoding='utf-8'))['items'])
     return _ROLE
 
 
@@ -32,14 +32,14 @@ def set_style(mode):
 def _image(fn, colorspace):
     p = os.path.join(SRC, fn)
     if not os.path.exists(p):
-        raise SystemExit(f'재질 사진 없음 {p} — py tools/world-forge/fetch_sources.py')
+        raise SystemExit(f'재질 그림 없음 {p} — py tools/world-forge/make_self_src.py')
     im = bpy.data.images.load(p, check_existing=True)
     im.colorspace_settings.name = colorspace
     return im
 
 
 def pbr_material(tid, tile_m=2.0, tint=None, rough_mul=1.0, name=None, gain=1.0, sat=1.0):
-    """Poly Haven 재질 세트 → 원리 재질(밝기·거칠기·노멀). tint = 헥스, 곱해 색을 바꾼다. UV 는 미터 단위(tile_m 미터 = 그림 한 장)."""
+    """자체 PBR 재질 세트 → 원리 재질(밝기·거칠기·노멀). tint = 헥스, 곱해 색을 바꾼다. UV 는 미터 단위(tile_m 미터 = 그림 한 장)."""
     key = (tid, tint, rough_mul, name, gain, sat)
     if key in _mat_cache:
         return _mat_cache[key]

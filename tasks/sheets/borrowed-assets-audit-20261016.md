@@ -8,7 +8,7 @@
 ## 남은 빌린 것
 | # | 무엇 | 어디 | 규모 | 상태 |
 |---|---|---|---|---|
-| 1 | Poly Haven 재질 사진 29종(세계 GLB 의 결) | 정본 world·regions ≈940 · 고돗 ≈810 · 유니티 ≈400 · 웹 shared ≈530 파일 | 큼 | **K-0113 작성됨** |
+| 1 | Poly Haven 재질 사진 29종(세계 GLB 의 결) | 정본 world·regions ≈940 · 고돗 ≈810 · 유니티 ≈400 · 웹 shared ≈530 파일 | 큼 | **끝 K-0113 10-16**(polyhaven 0) |
 | 2 | 웹 3D 사람 — OpenGameArt `oga_ultimate`·`oga_knight` 43 · poly.pizza `polypizza_*` 47 · KayKit 모험가 5 · `universal_base` 2 | 2나락 `models/people` | 97 GLB, **쓰임** | 티켓 없음 |
 | 3 | 웹 3D 사람 — Quaternius RPG 6 | 다섯 판 `models/people/quaternius_rpg` | 30 GLB, 쓰임 | 티켓 없음 |
 | 4 | 웹 3D 괴물 — Quaternius·cute·2 · KayKit 해골 | 2나락 40 · 5천하 14 | 54 GLB, 쓰임 | 티켓 없음 |
@@ -20,6 +20,8 @@
 | 10 | 유니티 — Poly Haven 스캔 소품 `Art/Props/PolyHaven` 181 · 재질 `Art/Environment/PBR` 27 · Quaternius 식물 9 · Kenney 효과음 6 · 짐승 Fox·Snake·Birb(출처 확인 필요) · LiberationSans | `saga-unity/Assets` | ≈230 | Kenney 소리는 수신함 10-12 |
 | 11 | 고돗 — 옷장 VRoid `AvatarSample_A` 96(공식 샘플, 허용판 교체는 K-0088 사람 몫) · 던전 문틀 Kenney 모양(K-0089) · 나무 정육면체 잎·괴물 다면체·섬·방(수신함 10-13) | `saga-godot/assets` | — | 수신함 |
 | 12 | 글꼴(OFL Noto·Nanum·Liberation)·Lucide 아이콘(1만리 `js/icon.js`) | 웹·유니티 | — | 수신함 10-10 남은 몫 |
+| 13 | 몬스터 초상 32 — 옛 몸(Poly Haven 재질) 렌더를 밑그림으로 i2i(0.62) | `saga-assets/portraits-monster` | 32 | 새 몸으로 다시 그릴지 |
+| 14 | char-forge 옷 결 사진(Poly Haven, `tools/char-forge/sources.json` "polyhaven") | 인물 공방 | — | 티켓 없음 |
 
 ## 추천 순서(R-0 가 티켓으로)
 ① K-0113(재질 — 세 트랙 공통, 가장 큼) ② 9 지우기(W, 위험 0) ③ 2·3·4 웹 사람·괴물 → 자체 몸(VRoid 조합·world-forge 괴물·TRELLIS 몸 이미 있음, W 배선) ④ 5·6 웹 건물·자연 → world-forge 세트(K-0113 뒤) ⑤ 10 유니티 ⑥ 8·12.

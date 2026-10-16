@@ -1,7 +1,8 @@
 {
  "id": "snow",
  "generator": "tools/world-forge/region_hero.py(자료 정리)",
- "source": "Poly Haven snow_02 (diff 2k → 1024px, 채도 +18%)",
- "license": "CC0-1.0 (Poly Haven, https://polyhaven.com/license)",
- "commercial_use": true
+ "source": "self-pbr snow_02 → 세트 snow (자체 PBR 1024px, 채도 +18%)",
+ "license": "자체 생성 — Z-Image-Turbo(Apache-2.0) 견본 → pbr_from_albedo.py (K-0093·K-0113), 남의 사진 0",
+ "commercial_use": true,
+ "material_id": "snow_02"
 }

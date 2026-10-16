@@ -1,4 +1,4 @@
-"""world-forge 마을·장터 소품 + 던전 방 키트 — 좌판·낮은 돌담·표지판·상자·통·천막·모닥불 장작·벤치·손수레, 기둥·벽 토막·궤·항아리·제단 받침·창살 문 (K-0053). 재질만 Poly Haven CC0 사진.
+"""world-forge 마을·장터 소품 + 던전 방 키트 — 좌판·낮은 돌담·표지판·상자·통·천막·모닥불 장작·벤치·손수레, 기둥·벽 토막·궤·항아리·제단 받침·창살 문 (K-0053). 재질만 자체 PBR(K-0113).
 
   blender -b --factory-startup -P tools/world-forge/build_village.py -- --id market_stall_01 --out <절대>/market_stall_01.glb [--style toon]
   blender -b --factory-startup -P tools/world-forge/build_village.py -- --all --out-dir <절대 폴더> [--style toon]

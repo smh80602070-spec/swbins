@@ -1,0 +1,34 @@
+{
+ "model": "z-image-turbo",
+ "out": "k93_pbr",
+ "note": "K-0113 자체 PBR 새 4세트 견본(world-forge 재질 Poly Haven 대체) — k93_pbr.json 과 같은 틀·크기, 출력도 같은 폴더(pbr_from_albedo 가 _out/k93_pbr 에서 고른 그림을 읽는다).",
+ "defaults": {
+  "prompt_prefix": "",
+  "width": 1024,
+  "height": 1024,
+  "variants": 4,
+  "tiling": false
+ },
+ "items": [
+  {
+   "id": "concrete",
+   "seed": 113000000,
+   "prompt": "An orthographic flat frontal scan of a weathered gray cast concrete wall with faint formwork marks, small air holes and subtle stains, camera perfectly perpendicular to the surface, no perspective, no vanishing point, every element the same size across the whole image. Evenly lit with soft diffuse light, no shadows, no objects, no border, fills the entire frame edge to edge. Natural realistic colors, medium brightness, fine detail. Uniform repeating PBR material texture."
+  },
+  {
+   "id": "brick",
+   "seed": 113010000,
+   "prompt": "An orthographic flat frontal scan of a red clay brick wall in running bond with light gray mortar joints, slightly uneven worn bricks, camera perfectly perpendicular to the surface, no perspective, no vanishing point, every element the same size across the whole image. Evenly lit with soft diffuse light, no shadows, no objects, no border, fills the entire frame edge to edge. Natural realistic colors, medium brightness, fine detail. Uniform repeating PBR material texture."
+  },
+  {
+   "id": "thatch",
+   "seed": 113020000,
+   "prompt": "An orthographic flat frontal scan of a thatched roof of dry golden-brown straw bundles laid in dense overlapping layers, camera perfectly perpendicular to the surface, no perspective, no vanishing point, every element the same size across the whole image. Evenly lit with soft diffuse light, no shadows, no objects, no border, fills the entire frame edge to edge. Natural realistic colors, medium brightness, fine detail. Uniform repeating PBR material texture."
+  },
+  {
+   "id": "corrugated",
+   "seed": 113030000,
+   "prompt": "An orthographic flat frontal scan of a corrugated galvanized iron sheet with evenly spaced vertical ridges, dull gray metal with light rust spots, camera perfectly perpendicular to the surface, no perspective, no vanishing point, every element the same size across the whole image. Evenly lit with soft diffuse light, no shadows, no objects, no border, fills the entire frame edge to edge. Natural realistic colors, medium brightness, fine detail. Uniform repeating PBR material texture."
+  }
+ ]
+}

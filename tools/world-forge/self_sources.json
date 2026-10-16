@@ -1,0 +1,238 @@
+{
+ "license": "자체 생성 — Z-Image-Turbo(Apache-2.0) 견본 → pbr_from_albedo.py(K-0093·K-0113). 남의 사진 0",
+ "note": "K-0113 — 키 = 빌더가 쓰는 옛 재질 id(바꾸지 않음), set = saga-assets/textures_real/<세트>, gain = 옛 사진 평균색 ÷ 세트 평균색(make_self_src.py --gain 이 잼)",
+ "items": {
+  "aerial_grass_rock": {
+   "set": "grass",
+   "gain": [
+    1.342,
+    0.989,
+    0.696
+   ]
+  },
+  "aerial_rocks_02": {
+   "set": "rock",
+   "gain": [
+    0.765,
+    0.645,
+    0.365
+   ]
+  },
+  "beam_wall_01": {
+   "set": "planks",
+   "gain": [
+    0.831,
+    0.911,
+    0.895
+   ]
+  },
+  "beige_wall_001": {
+   "set": "plaster",
+   "gain": [
+    0.674,
+    0.619,
+    0.564
+   ]
+  },
+  "bitumen": {
+   "set": "concrete",
+   "gain": [
+    0.304,
+    0.282,
+    0.27
+   ]
+  },
+  "black_painted_planks": {
+   "set": "planks",
+   "gain": [
+    0.25,
+    0.25,
+    0.268
+   ]
+  },
+  "brown_mud": {
+   "set": "dirt",
+   "gain": [
+    0.831,
+    0.953,
+    1.071
+   ]
+  },
+  "brown_planks_03": {
+   "set": "planks",
+   "gain": [
+    0.638,
+    0.694,
+    0.75
+   ]
+  },
+  "castle_brick_02_red": {
+   "set": "brick",
+   "gain": [
+    0.724,
+    0.88,
+    0.895
+   ]
+  },
+  "castle_wall_slates": {
+   "set": "stonewall",
+   "gain": [
+    1.04,
+    0.939,
+    0.762
+   ]
+  },
+  "clay_plaster": {
+   "set": "plaster",
+   "gain": [
+    0.489,
+    0.398,
+    0.281
+   ]
+  },
+  "clay_roof_tiles": {
+   "set": "rooftile",
+   "gain": [
+    0.984,
+    0.621,
+    0.357
+   ]
+  },
+  "clean_pebbles": {
+   "set": "gravel",
+   "gain": [
+    1.246,
+    1.172,
+    1.109
+   ]
+  },
+  "cliff_side": {
+   "set": "rock",
+   "gain": [
+    0.863,
+    0.575,
+    0.345
+   ]
+  },
+  "coast_sand_03": {
+   "set": "sand",
+   "gain": [
+    0.567,
+    0.574,
+    0.555
+   ]
+  },
+  "coast_sand_rocks_02": {
+   "set": "rock",
+   "gain": [
+    0.521,
+    0.476,
+    0.315
+   ]
+  },
+  "coated_pine": {
+   "set": "planks",
+   "gain": [
+    0.621,
+    0.396,
+    0.25
+   ]
+  },
+  "cobblestone_floor_01": {
+   "set": "paving",
+   "gain": [
+    0.866,
+    0.791,
+    0.68
+   ]
+  },
+  "concrete_wall_001": {
+   "set": "concrete",
+   "gain": [
+    0.762,
+    0.74,
+    0.701
+   ]
+  },
+  "corrugated_iron": {
+   "set": "corrugated",
+   "gain": [
+    1.289,
+    1.27,
+    1.188
+   ]
+  },
+  "dry_ground_01": {
+   "set": "dirt",
+   "gain": [
+    1.166,
+    1.344,
+    1.496
+   ]
+  },
+  "forest_ground_04": {
+   "set": "dirt",
+   "gain": [
+    0.939,
+    0.992,
+    0.959
+   ]
+  },
+  "grey_plaster": {
+   "set": "plaster",
+   "gain": [
+    0.599,
+    0.593,
+    0.548
+   ]
+  },
+  "grey_roof_tiles": {
+   "set": "rooftile",
+   "gain": [
+    1.066,
+    1.111,
+    0.963
+   ]
+  },
+  "japanese_stone_wall": {
+   "set": "stonewall",
+   "gain": [
+    0.934,
+    0.893,
+    0.832
+   ]
+  },
+  "roof_slates_02": {
+   "set": "rooftile",
+   "gain": [
+    1.586,
+    1.617,
+    1.508
+   ]
+  },
+  "snow_02": {
+   "set": "snow",
+   "gain": [
+    0.782,
+    0.742,
+    0.723
+   ]
+  },
+  "thatch_roof_angled": {
+   "set": "thatch",
+   "gain": [
+    0.496,
+    0.596,
+    0.818
+   ]
+  },
+  "white_stucco": {
+   "set": "plaster",
+   "gain": [
+    0.92,
+    0.932,
+    0.976
+   ]
+  }
+ }
+}

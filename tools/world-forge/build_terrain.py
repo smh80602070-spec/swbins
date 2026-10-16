@@ -1,4 +1,4 @@
-"""world-forge 지형 조각 — 16×16m 높이맵 조각 10종을 코드로 (K-0017 단계 2). 재질만 Poly Haven CC0.
+"""world-forge 지형 조각 — 16×16m 높이맵 조각 10종을 코드로 (K-0017 단계 2). 재질만 자체 PBR(K-0113).
 
   blender -b --factory-startup -P tools/world-forge/build_terrain.py -- --id river_bend_01 --out <절대경로>/river_bend_01.glb [--style toon]
   blender -b --factory-startup -P tools/world-forge/build_terrain.py -- --all --out-dir <절대경로> [--style toon]
@@ -217,8 +217,8 @@ def build(pid, out, style):
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
     W.export_glb([ob], out, int(os.environ.get('WF_TOON_PX', '256')) if style == 'toon' else 1024, 'JPEG' if style == 'toon' else 'AUTO')
     lic = {'id': pid, 'generator': 'tools/world-forge/build_terrain.py', 'blender': bpy.app.version_string, 'style': style,
-           'license': 'CC0-1.0 (재질 사진 전부 Poly Haven CC0, 높이맵은 전부 코드 — 값 잡음 fbm + 모양 함수 + 간단한 침식)',
-           'inputs': sorted(f'polyhaven: {m}' for m in C.mats), 'size_m': size, 'tris': tris, 'grid': N}
+           'license': 'CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 높이맵은 전부 코드 — 값 잡음 fbm + 모양 함수 + 간단한 침식)',
+           'inputs': sorted(f'self-pbr: {m}' for m in C.mats), 'size_m': size, 'tris': tris, 'grid': N}
     json.dump(lic, open(os.path.splitext(out)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     kb = os.path.getsize(out) // 1024
     print('WORLDFORGE', json.dumps({'id': pid, 'tris': tris, 'size_m': size, 'kb': kb, 'ok': tris <= TRIS_MAX and (style != 'toon' or kb <= 512)}))

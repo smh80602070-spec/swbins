@@ -1,4 +1,4 @@
-"""world-forge 무기 세트 — 검·창·도끼·단검·활·지팡이·총·방패·장갑 9종 × 등급 3(보통·희귀·전설) = 27벌 (K-0030). 재질만 Poly Haven CC0 사진.
+"""world-forge 무기 세트 — 검·창·도끼·단검·활·지팡이·총·방패·장갑 9종 × 등급 3(보통·희귀·전설) = 27벌 (K-0030). 재질만 자체 PBR(K-0113).
 
   blender -b --factory-startup -P tools/world-forge/build_weapon.py -- --id wpn_sword_rare --out <절대>/wpn_sword_rare.glb [--style toon]
   blender -b --factory-startup -P tools/world-forge/build_weapon.py -- --all --out-dir <절대 폴더> [--style toon]
@@ -424,7 +424,7 @@ def build_scene(pid, out, style):
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
     W.export_glb(objs, out, int(os.environ.get('WF_TOON_PX', '256')) if style == 'toon' else 1024, 'JPEG' if style == 'toon' else 'AUTO')
     lic = {'id': pid, 'generator': BP.GENERATOR, 'blender': bpy.app.version_string, 'style': style, 'kind': kind, 'grade': grade, 'hand': HAND.get(kind, 'R'),
-           'license': 'CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)', 'inputs': sorted(f'polyhaven: {m}' for m in C.mats),
+           'license': 'CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)', 'inputs': sorted(f'self-pbr: {m}' for m in C.mats),
            'size_m': size, 'tris': tris, 'nodes': [n[0] for n in NODES]}
     json.dump(lic, open(os.path.splitext(out)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     kb = os.path.getsize(out) // 1024

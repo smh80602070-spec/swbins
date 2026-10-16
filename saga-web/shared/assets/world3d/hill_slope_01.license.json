@@ -3,10 +3,10 @@
  "generator": "tools/world-forge/build_terrain.py",
  "blender": "5.2.1 LTS",
  "style": "toon",
- "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 높이맵은 전부 코드 — 값 잡음 fbm + 모양 함수 + 간단한 침식)",
+ "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 높이맵은 전부 코드 — 값 잡음 fbm + 모양 함수 + 간단한 침식)",
  "inputs": [
-  "polyhaven: castle_wall_slates",
-  "polyhaven: forest_ground_04"
+  "self-pbr: castle_wall_slates",
+  "self-pbr: forest_ground_04"
  ],
  "size_m": [
   16.0,

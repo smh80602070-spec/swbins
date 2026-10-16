@@ -367,8 +367,8 @@ def build(rc, out):
     W.export_glb([ob], out, int(os.environ.get('WF_TOON_PX', '256')) if arg('--style', 'real') == 'toon' else int(rc.get('tex_max', 1024)),
                  'JPEG' if arg('--style', 'real') == 'toon' else 'AUTO')
     lic = {'id': rc['id'], 'generator': 'tools/world-forge/build_building.py', 'blender': bpy.app.version_string,
-           'license': 'CC0-1.0 (재질 사진 전부 Poly Haven CC0)',
-           'inputs': sorted({f'polyhaven: {m.name}' for m in ob.data.materials}),
+           'license': 'CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0))',
+           'inputs': sorted({f'self-pbr: {m.name}' for m in ob.data.materials}),
            'size_m': [w, d, round(top, 2)], 'tris': tris}
     json.dump(lic, open(os.path.splitext(out)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print('WORLDFORGE', json.dumps({'id': rc['id'], 'tris': tris, 'size_m': lic['size_m']}))

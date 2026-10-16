@@ -15,7 +15,7 @@ from mathutils import Vector
 a = sys.argv[sys.argv.index('--') + 1:]
 REGION, OUT = a[0], os.path.abspath(a[1])
 SAMPLES = int(a[2]) if len(a) > 2 else 48
-PBR = len(a) > 3 and a[3] == 'pbr'      # 사실 재질·사실 건물 모드(Poly Haven PBR 땅 + 공방 real GLB)
+PBR = len(a) > 3 and a[3] == 'pbr'      # 사실 재질·사실 건물 모드(자체 PBR 땅 + 공방 real GLB)
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 TOON = os.path.join(ROOT, 'saga-assets', 'world', 'toon')
 rng = random.Random(20261003)
@@ -42,13 +42,13 @@ sc.view_settings.view_transform = 'AgX' if 'AgX' in [x.identifier for x in sc.vi
 
 import json as _json
 from collections import OrderedDict
-PH = os.path.join(ROOT, 'tools', 'world-forge', '_src', 'polyhaven')
+PH = os.path.join(ROOT, 'tools', 'world-forge', '_src', 'self')
 REAL = os.path.join(ROOT, 'tools', 'world-forge', '_out')
 _PHIDX = None
 
 
 def pbr_mat(tid, tile=4.0, tint=None, rough_mul=1.0, name=None, sat=1.0):
-    """Poly Haven 재질 세트를 월드 위치 기준 평면 투영으로 깐다(땅·길용). tile = 그림 한 장이 덮는 미터."""
+    """자체 PBR 재질 세트를 월드 위치 기준 평면 투영으로 깐다(땅·길용). tile = 그림 한 장이 덮는 미터."""
     global _PHIDX
     if _PHIDX is None:
         _PHIDX = _json.load(open(os.path.join(PH, 'index.json'), encoding='utf-8'))

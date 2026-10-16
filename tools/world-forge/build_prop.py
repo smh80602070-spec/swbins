@@ -1,4 +1,4 @@
-"""world-forge 지물 — 우물·가로등·울타리·비석 같은 작은 물건을 코드로 만든다 (K-0017 단계 2). 재질만 Poly Haven CC0 사진.
+"""world-forge 지물 — 우물·가로등·울타리·비석 같은 작은 물건을 코드로 만든다 (K-0017 단계 2). 재질만 자체 PBR(K-0113).
 
   blender -b --factory-startup -P tools/world-forge/build_prop.py -- --id well_01 --out tools/world-forge/_out/set/well_01.glb [--style toon]
   blender -b --factory-startup -P tools/world-forge/build_prop.py -- --all --out-dir tools/world-forge/_out/set [--style toon]
@@ -19,6 +19,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import wf_common as W  # noqa: E402
 
 TRIS_MAX = 5000
+GENERATOR = 'tools/world-forge/build_prop.py'
 A = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
 
 
@@ -318,8 +319,8 @@ def build(pid, out, style):
     W.export_glb([ob], out, int(os.environ.get('WF_TOON_PX', '256')) if style == 'toon' else 1024, 'JPEG' if style == 'toon' else 'AUTO')
     size = [round(hi[i] - lo[i], 2) for i in range(3)]
     lic = {'id': pid, 'generator': GENERATOR, 'blender': bpy.app.version_string, 'style': style,
-           'license': 'CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)',
-           'inputs': sorted(f'polyhaven: {m}' for m in C.mats), 'size_m': size, 'tris': tris}
+           'license': 'CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)',
+           'inputs': sorted(f'self-pbr: {m}' for m in C.mats), 'size_m': size, 'tris': tris}
     json.dump(lic, open(os.path.splitext(out)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     kb = os.path.getsize(out) // 1024
     print('WORLDFORGE', json.dumps({'id': pid, 'tris': tris, 'size_m': size, 'kb': kb, 'ok': tris <= TRIS_MAX and (style != 'toon' or kb <= 512)}))

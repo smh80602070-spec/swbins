@@ -2,14 +2,14 @@
  "id": "jp_minka_01",
  "generator": "tools/world-forge/build_building.py",
  "blender": "5.2.1 LTS",
- "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0)",
+ "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0))",
  "inputs": [
-  "polyhaven: base",
-  "polyhaven: door",
-  "polyhaven: glass",
-  "polyhaven: roof",
-  "polyhaven: trim",
-  "polyhaven: wall"
+  "self-pbr: base",
+  "self-pbr: door",
+  "self-pbr: glass",
+  "self-pbr: roof",
+  "self-pbr: trim",
+  "self-pbr: wall"
  ],
  "size_m": [
   9.5,

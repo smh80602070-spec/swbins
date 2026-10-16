@@ -1,6 +1,6 @@
 # world-forge — 세계 자산 공방 (지형·지물·건물·탈것)
 
-char-forge(인물)의 짝. **레시피(JSON) 한 벌 = 자산 하나**, 형태는 전부 코드가 만들고 재질만 Poly Haven CC0 사진(`sources.json` 24종)을 쓴다.
+char-forge(인물)의 짝. **레시피(JSON) 한 벌 = 자산 하나**, 형태는 전부 코드, 재질은 **자체 PBR**(`self_sources.json` 29 id → `saga-assets/textures_real` 15세트, K-0093·K-0113) — 남의 사진 0.
 Blender 헤드리스 — 사람 클릭 0회. 결과는 `tools/world-forge/_out/`(gitignore), 게임에 넣는 파일만 각 트랙 폴더로 복사.
 
 ## 범위 (2026-09-29 사용자 "프로젝트마다 다섯 판 다 추가")
@@ -15,8 +15,8 @@ Blender 헤드리스 — 사람 클릭 0회. 결과는 `tools/world-forge/_out/`
 | 사가천하 | 성벽·성문·궁·서역 도시 |
 
 ## 지금 있는 것 (첫 조각, 2026-09-29)
-- `fetch_sources.py` — 재질 24종 받기(md5 검사). `py tools/world-forge/fetch_sources.py`
-- `wf_common.py` — PBR 재질(Poly Haven 세트)·bmesh 도우미·GLB 내보내기
+- `make_self_src.py` — 재질 준비(K-0113): 자체 PBR → `_src/self/`(id 별 바탕색 = 세트 × 옛 색 배율, 법선·거칠기). 새 PC 는 이것 한 번. 지역 바닥 `region_tex_self.py` · 다시 굽기 `rebuild_world.sh` → `rebuild_compare.py --write`
+- `wf_common.py` — PBR 재질(자체 세트)·bmesh 도우미·GLB 내보내기
 - `build_building.py` — 건물 레시피 → `.glb`(벽 패널 구멍·창·문·층 띠·기둥·박공/모임/평 지붕·굴뚝)
 - `preview.py` — 세 방향 미리보기 렌더
 - **트랙별 출력** — 같은 레시피에서: `--style real`(기본, Unity 사실 PBR GLB) · `--style toon`(Godot cel_toon: 노멀·거칠기 없이 바탕색 256px·채도 +18%, GLB 0.5MB) · `render_sprite.py`(웹: 등각 투명 PNG, `--az`·`--el`·`--size`)

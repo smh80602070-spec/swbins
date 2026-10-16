@@ -10,5 +10,9 @@
  "plaster": "plaster_v01.png",
  "rooftile": "rooftile_v02.png",
  "rust": "rust_v01.png",
- "paving": "paving_v03.png"
+ "paving": "paving_v03.png",
+ "concrete": "concrete_v02.png",
+ "brick": "brick_v02.png",
+ "thatch": "thatch_v02.png",
+ "corrugated": "corrugated_v02.png"
 }
