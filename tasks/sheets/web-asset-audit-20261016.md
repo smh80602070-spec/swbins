@@ -38,6 +38,9 @@
 ## E. 안 쓰는 빌린 파일(참조 0, 배치 표에도 없음) → 웹이 지움
 1만리 `sprites2d/portrait/serious` 18(EverFace)·`portrait/cute` 3(nonemo)·`assets/_wip/vitruvian-test` · 2나락 Quaternius 건물 9(House_1~4·Blacksmith·Mill·Stable·Well·Bell_Tower)·Mountain_1/2·Tex_Crow · 5천하 `buildings/asian_parts` 2 → W-0259
 
+## 자체툴 재고 시트와 맞춤(10-16 같은 날)
+[borrowed-assets-audit-20261016](borrowed-assets-audit-20261016.md) — 2·3·4(웹 3D 사람·괴물, 데모 장면 net-log 엔 덜 잡힘) → **W-0266** · 9(안 쓰는 옛 파일 ≈500) → **W-0259 에 더함**(Kenney 사람 30 은 웹 조사와 엇갈림 — 지우기 전 확인) · 1(Poly Haven 재질) → K-0113 · 7·8·12 → 수신함 그대로.
+
 ## 그 밖
 - 404 둘(favicon.ico·`_shared/…/altar_01.license.json` — 판 단독 서버용 경로를 먼저 두드리는 설계, 해 없음)
 - 감사 ⚪unref 20(2D 시트 hit.webp — 동적 경로, 오탐)
