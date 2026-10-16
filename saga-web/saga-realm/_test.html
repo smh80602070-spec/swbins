@@ -113,6 +113,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/quiz.js"></script>
 <script src="js/net.js"></script>
 <script src="js/ai.js"></script>
+<script src="js/realm3d-plan.js"></script>
 <script src="js/realm3d.js"></script>
 <script src="js/realm3d-strait.js"></script>
 <script src="js/realm-sky3d.js"></script>
@@ -5285,6 +5286,11 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return ok && (E.MAX + 5) + '건 넣어 ' + arr.length + '건 남음(오래된 것부터 밀림)';
     });
 
+    t('배우 계획(R-4 realm3d-plan.js) — realm3d 가 같은 상수·같은 함수를 쓴다(몸짓 표 열 가지·전투 연출 같은 값)', function () {
+      var P = DG.realm3dPlan, R3 = DG.realm3d, beatSame = !R3 || !R3.battleBeat || JSON.stringify(R3.battleBeat('win', 1.2)) === JSON.stringify(P.battleBeat('win', 1.2));
+      var ok = P && Object.keys(P.ORDER_GESTURES).length >= 10 && P.GESTURE_ON < P.GESTURE_EVERY && P.BATTLE_MAX > 0 && beatSame;
+      return ok && ('몸짓 ' + Object.keys(P.ORDER_GESTURES).length + ' · 전투 연출 같음') || ('실패 ' + JSON.stringify({ g: P && Object.keys(P.ORDER_GESTURES).length, beatSame: beatSame }));
+    });
     t('realm3d — elevAt·straitFactor·isSea 순수 함수 (SAGA-DESIGN §7-2 3D 진단 공백)', function () {
       var R3 = DG.realm3d, CD = DG.cityData;
       if (!R3 || typeof R3.straitFactor !== 'function' || !CD) { return false; }
