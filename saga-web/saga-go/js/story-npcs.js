@@ -1,5 +1,5 @@
 /**
- * 1만리 이야기 인물 표(NPCS)·이야기 동료 표(MEMBERS·MEMBER_TIME). story.js 에서 떼어 냄(R-4).
+ * 1만리 이야기 인물 표(NPCS)·이야기 동료 표(MEMBERS·MEMBER_TIME)·이름 붙은 자리(SPOTS). story.js 에서 떼어 냄(R-4).
  * ---------------------------------------------------------------
  * 순수 데이터 — NPCS 는 자리 상수 열둘(AMBER_THIEF_PATH·BANDI_CAVE·BAWOO_GATE·BAWOO_LAKE·CAPTAIN_PATH·DAREUM_SHIP·HARAM_FORT·HARAM_OBS·HARAM_SHIP·SEED_DRONE_PATH·THIEF_PATH·VAULT_DRONE_PATH)을 story.js 가 build(P) 로 넘긴다.
  * 세계 임무 인물 합치기·NPC_KEYS·hookFind 는 story.js 에 그대로. 꼴은 story.js 머리 주석.
@@ -237,6 +237,60 @@
   var MEMBER_TIME = { story_scholar: '현대', story_wanderer: '과거', story_elder: '과거', story_ferryman: '과거', story_haesol: '현대', story_haram: '현대', story_dareum: '과거',
     story_dodam: '현대', story_hanbyeol: '미래', story_mulsae: '과거', story_haneul: '현대', story_chorong: '현대', story_haemi: '미래', story_byeori: '과거', story_narae: '현대', story_sodam: '과거' };
 
+  /* ⑲-14 이름 붙은 자리 — 옛길·둘째 제단은 솔숲 고개 탑 곁, 봉우리는 ⑰ 정상(peakSpot) */
+  var SPOTS = { road: { zone: 'solryeong', off: [-26, -46] }, altar2: { zone: 'solryeong', off: [40, -70] }, peak: { peak: true }, cape: { cape: true },
+    isle: { isle: true }, dock: { zone: 'galdae', off: [-12, -17] }, sky: { sky: true },
+    /* ⑲-28 서리봉 고원 — frost.js 가운데(탑)·명소. 고원이 꺼져 있으면 자리 없음 */
+    fr_center: { frost: 'center' }, fr_stele: { frost: 'stele' }, fr_obs: { frost: 'obs' }, fr_ship: { frost: 'ship' }, fr_fort: { frost: 'fort' },
+    fr_lake: { frost: 'lake' }, fr_cave: { frost: 'cave' },
+    /* ⑲-58 9부 굳은 거리(amber.js) — 명소 가운데(am: 명소 id·crystal0~2·light0~3) + 단계·인물 칸의 off */
+    am_pass: { am: 'pass' }, am_cross: { am: 'cross' }, am_clock: { am: 'clock' }, am_market: { am: 'market' }, am_tower: { am: 'tower' }, am_statue: { am: 'statue' },
+    am_crystal0: { am: 'crystal0' }, am_crystal1: { am: 'crystal1' }, am_crystal2: { am: 'crystal2' },
+    /* ⑲-61 10부 갈무리 벌(vault.js) — 명소 가운데(vt: 명소 id·case0~4·haemi·deep·core·door) + 단계·인물 칸의 off */
+    vt_pass: { vt: 'pass' }, vt_vault: { vt: 'vault' }, vt_pylon0: { vt: 'pylon0' }, vt_pylon1: { vt: 'pylon1' }, vt_granary: { vt: 'granary' }, vt_yard: { vt: 'yard' }, vt_statue: { vt: 'statue' },
+    /* ⑲-65 11부 세갈래 고을(fork.js) — 명소 가운데(fk: 명소 id·lat0~2·pass·arrive) + 단계·인물 칸의 off */
+    fk_gate: { fk: 'gate' }, fk_junction: { fk: 'junction' }, fk_forge: { fk: 'forge' }, fk_works: { fk: 'works' }, fk_loco: { fk: 'loco' }, fk_tower: { fk: 'tower' }, fk_statue: { fk: 'statue' },
+    fk_lat0: { fk: 'lat0' }, fk_lat1: { fk: 'lat1' }, fk_lat2: { fk: 'lat2' }, fk_pass: { fk: 'pass' }, fk_arrive: { fk: 'arrive' },
+    vt_pylons: { vt: 'pylons' }, vt_core: { vt: 'core' }, vt_door: { vt: 'door' }, vt_haemi: { vt: 'haemi' }, vt_deep: { vt: 'deep' },
+    vt_case0: { vt: 'case0' }, vt_case1: { vt: 'case1' }, vt_case2: { vt: 'case2' }, vt_case3: { vt: 'case3' }, vt_case4: { vt: 'case4' },
+    /* ⑲-53 8부 반디 자리 = 고향 촌장 동쪽(촌장 zone home off [-22,16] 에서 10m) */
+    home_bandi: { zone: 'home', off: [-12, 16] },
+    /* ⑲-34 3부 시대 명소(era-sites.js) — 갈대 나루 물가 녹슨 조선소. 명소가 꺼져 있으면 자리 없음 */
+    yard: { era: 'yard' }, yard_daon: { era: 'daon' }, yard_fight: { era: 'fight' }, yard_weld: { era: 'weld' }, yard_bandi: { era: 'bandi' }, crane: { era: 'crane' },
+    /* ⑲-35 옛 성터 언덕 곁 시간 틈 관측소 — 땅 가운데·가온·시간 기둥·관측대 위(반디·가운데) */
+    obs: { era: 'obs' }, obs_gaon: { era: 'gaon' }, obs_draft: { era: 'draft' }, obs_deck: { era: 'deck' }, obs_bandi: { era: 'obs_bandi' },
+    /* ⑲-36 고향 남쪽 옛 역참 터 — 마당 가운데·달음·여우불 무리·구미호 */
+    station: { era: 'station' }, st_dareum: { era: 'st_dareum' }, st_fight: { era: 'st_fight' }, st_duel: { era: 'st_duel' },
+    /* ⑲-38 은하 나루(skyport.js) — 명소 자리(skyport) 또는 나루 틀 자리(port) */
+    sp_gate: { skyport: 'gate' }, sp_port: { skyport: 'port' }, sp_ara: { port: 'ara' }, sp_bandi: { port: 'bandi' }, sp_fight: { port: 'fight' }, sp_altar: { port: 'altar' },
+    /* ⑲-39 옛 절터·종각(skyport SITE_PARTS) — 쓰러진 종(작은 발견 bell) 곁 무리·이무기·한결·반디 */
+    sp_temple: { skyport: 'temple' }, sp_belfry: { port: 'belfry' }, sp_hangyeol: { port: 'hangyeol' }, sp_tp_bandi: { port: 'tp_bandi' },
+    sp_bell_fight: { port: 'bell_fight' }, sp_bell_duel: { port: 'bell_duel' }, sp_hg_bell: { port: 'hg_bell' }, sp_bell_bandi: { port: 'bell_bandi' },
+    /* ⑲-40 은하역·태양광 밭 — 도담·반디·선로 끝·막차·밭 무리·변전함 */
+    sp_station: { skyport: 'station' }, sp_dodam: { port: 'dodam' }, sp_st_bandi: { port: 'st_bandi' }, sp_dodam_end: { port: 'dodam_end' },
+    sp_train: { port: 'train' }, sp_farm_fight: { port: 'farm_fight' }, sp_substation: { port: 'substation' },
+    /* ⑲-42 틈새 갈림길(crossing.js) — 명소 자리(crossing) 또는 이야기 자리(cr) */
+    cr_clock: { crossing: 'clock' }, cr_steps: { crossing: 'steps' }, cr_arrive: { cr: 'arrive' }, cr_dodam: { cr: 'dodam' }, cr_bandi: { cr: 'bandi' },
+    cr_hanbyeol: { cr: 'hanbyeol' }, cr_fork: { cr: 'fork' }, cr_ck_bandi: { cr: 'ck_bandi' }, cr_st_foot: { cr: 'st_foot' }, cr_st_bandi: { cr: 'st_bandi' },
+    cr_st_duel: { cr: 'st_duel' }, cr_st_hanbyeol: { cr: 'st_hanbyeol' },
+    /* ⑲-43 갈림길 끝 섬 위(crossing RIFT_PARTS) — 단계·인물 칸에 sky 를 함께 준다 */
+    cr_rift: { cr: 'rift' }, cr_rift_arrive: { cr: 'rift_arrive' }, cr_rift_hanbyeol: { cr: 'rift_hanbyeol' }, cr_rift_bandi: { cr: 'rift_bandi' }, cr_rift_dodam: { cr: 'rift_dodam' },
+    /* ⑲-45 은하 나루 별배 곁 · 잠긴 도읍(sunken.js) — 명소 자리(sunken) 또는 이야기 자리(sk) */
+    sp_hb_port: { port: 'hb_port' }, sk_sand: { sk: 'sand' }, sk_sand_hanbyeol: { sk: 'sand_hanbyeol' }, sk_sand_bandi: { sk: 'sand_bandi' }, sk_lab_front: { sk: 'lab_front' },
+    sk_dock: { sk: 'dock' }, sk_yeoul: { sk: 'yeoul' }, sk_plinth: { sk: 'plinth' }, sk_plinth_yeoul: { sk: 'plinth_yeoul' }, sk_plinth_bandi: { sk: 'plinth_bandi' },
+    /* ⑲-46 곁채 앞·빛 돔 문 앞·돔 안 */
+    sk_annex_mulsae: { sk: 'annex_mulsae' }, sk_dome_front: { sk: 'dome_front' }, sk_front_mulsae: { sk: 'front_mulsae' }, sk_front_yeoul: { sk: 'front_yeoul' },
+    sk_front_bandi: { sk: 'front_bandi' }, sk_dome_duel: { sk: 'dome_duel' }, sk_in_mulsae: { sk: 'in_mulsae' }, sk_in_yeoul: { sk: 'in_yeoul' }, sk_in_bandi: { sk: 'in_bandi' },
+    /* ⑲-47 옛 등대(명소)·등대 발치·기록실 앞 */
+    sk_light: { sunken: 'lighthouse' }, sk_light_bandi: { sk: 'light_bandi' }, sk_parang: { sk: 'parang' },
+    /* ⑲-49 구름 위 항로(skyroute.js) — 섬 가운데(sr: 섬 id) 또는 이야기 자리. 단계·인물 칸에 sky 를 함께 준다 */
+    sr_shrine: { sr: 'shrine' }, sr_shrine_land: { sr: 'shrine_land' }, sr_saebyeok: { sr: 'saebyeok' }, sr_hanbyeol: { sr: 'hanbyeol' }, sr_bandi: { sr: 'bandi' },
+    /* ⑲-50 비행선 잔해 섬 — 섬 가운데·하늬·반디·비행선 기관 */
+    sr_wreck: { sr: 'wreck' }, sr_haneul: { sr: 'haneul' }, sr_wreck_bandi: { sr: 'wreck_bandi' }, sr_wreck_engine: { sr: 'wreck_engine' },
+    /* ⑲-51 궤도 정거장 조각 — 섬 가운데·장치 셋·가면 그림자·보스 자리·하늬·반디 */
+    sr_orbit: { sr: 'orbit' }, sr_seed_se: { sr: 'seed_se' }, sr_seed_n: { sr: 'seed_n' }, sr_seed_sw: { sr: 'seed_sw' }, sr_gamyeon: { sr: 'gamyeon' },
+    sr_orbit_duel: { sr: 'orbit_duel' }, sr_orbit_haneul: { sr: 'orbit_haneul' }, sr_orbit_bandi: { sr: 'orbit_bandi' } };
+
   global.DG = global.DG || {};
-  global.DG.storyNpcs = { build: build, MEMBERS: MEMBERS, MEMBER_TIME: MEMBER_TIME };
+  global.DG.storyNpcs = { build: build, MEMBERS: MEMBERS, MEMBER_TIME: MEMBER_TIME, SPOTS: SPOTS };
 })(typeof window !== 'undefined' ? window : this);
