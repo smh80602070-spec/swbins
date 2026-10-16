@@ -21,13 +21,14 @@
 | 도구 | 하는 일 |
 |---|---|
 | `tools/asset-forge/` | 파이썬 절차 생성 — `palette`(팔레트 스냅) · `kitbash`(부품 조립) · `procgen`(바위·나무·소품) · `tilegen`(시임리스 타일) · `spritegen`(아이콘) · `sfxgen`(효과음) · `vroid_face_bake_project`(VRoid 얼굴 재베이크) |
-| `tools/glb-compress/` | `compress.mjs` Meshopt+WebP 압축(처리 기록 manifest) · `vrm-slim.mjs` VRM 모프 떼기 · `seam-simplify.mjs` 사진측량 UV 조각 모델 줄이기 · `join-parts.mjs` 부품 따로인 GLB 를 재질별 한 덩이로(그리기 호출 줄이기) |
+| `tools/glb-compress/` | `creature_fix.py` 짐승 GLB 재질(metallic 0)·결 밝기를 입력 그림에 맞춤(K-0133, meshopt 바이트 보존·멱등) · `compress.mjs` Meshopt+WebP 압축(처리 기록 manifest) · `vrm-slim.mjs` VRM 모프 떼기 · `seam-simplify.mjs` 사진측량 UV 조각 모델 줄이기 · `join-parts.mjs` 부품 따로인 GLB 를 재질별 한 덩이로(그리기 호출 줄이기) |
 | `tools/obj-split/` | OBJ 쪼개기 |
 | `saga-unity/tools/dedupe_forge_textures.py` | 공방 몸 텍스처 중복 합치기 — 내용·가져오기 설정이 같은 그림을 하나로(화질 변화 0, 드라이런 기본, Unity 끄고, `--apply`) |
 | `tools/mixamo_automation/` | Mixamo 모션 받기(`fetch.mjs --dest`) — 원본은 로컬 전용(.gitignore) |
 | `tools/char-forge/` | 자체 인물 공방(Blender 헤드리스 + CC0) — 레시피 → `.glb`/`.fbx`(`build.py`)·파일 검증(`verify.py`)·팩 받기(`fetch_sources.py`)·기존 뼈대에 동작 굽기(`bake_for_rig.py`)·**VRoid 주역 들이기 `vroid_intake.sh <vrm> <id>`** |
 | `tools/world-forge/` | 파이썬+Blender 헤드리스 지형·지물·건물·탈것 에셋 만들기(트랙별 결과 한 레시피에서) — 3D 세계 자산 |
-| `tools/ai-art/` | 로컬 ComfyUI(swbins3, Z-Image·Illustrious·Animagine, 상업 허용)로 초상·배경·바닥 타일·무늬 그림 만들기 — `gen.py` 배치 + `.license.json`, 2D 모드 배경 층 분리·이음매 타일 포함 |
+| `tools/asset-forge/creature_rig.py` · `render_glb_check.py` | 정적 몸에 자체 뼈대·동작 7 심기(quad·bird·worm, 다리뼈 = 높이별 정점 수 판정 K-0133) · Blender Cycles CPU 눈 판정 렌더(기준구·`Walk 0.3` 식 자세). 54종 다시 심기 한 명령 `tools/ai-art/remote3d/rerig.py` |
+| `tools/ai-art/` | 로컬 ComfyUI(swbins3, Z-Image·Illustrious·Animagine, 상업 허용)로 초상·배경·바닥 타일·무늬 그림 만들기 — `gen.py` 배치 + `.license.json`, 2D 모드 배경 층 분리·이음매 타일 포함 · UI 기호 아이콘은 코드 실루엣 `make_ui_icons.py`(K-0118, SD 는 기호를 단추로 그림) |
 | `saga-web/tools/playcheck/` | 웹 판을 헤드리스 크롬(CDP)으로 실제 조작해 보는 플레이 점검 |
 | `saga-web/tools/bake-portraits/` | 도감·카드 초상을 webp 로 미리 굽기 |
 | `saga-web/saga-go/tools/bake-icons/` | 짐승·건물 2D 지도 아이콘 굽기 |

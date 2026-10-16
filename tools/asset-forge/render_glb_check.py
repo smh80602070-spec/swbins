@@ -1,5 +1,6 @@
 """GLB 눈 판정 렌더 — Blender 로 3/4 시점·3점 조명 한 장(Cycles CPU, GPU 는 SD 사슬에 양보).
-  "/c/Program Files/Blender Foundation/Blender 5.2/blender.exe" -b --python tools/asset-forge/render_glb_check.py -- <a.glb> <out.png> [크기=512]
+  "/c/Program Files/Blender Foundation/Blender 5.2/blender.exe" -b --python tools/asset-forge/render_glb_check.py -- <a.glb> <out.png> [크기=512] [동작이름 위상0~1]
+  동작이름(Walk 등)과 위상을 주면 그 클립의 그 시점 자세로 찍는다(리깅 판정용).
 메시옵트(EXT_meshopt_compression) GLB 는 Blender 가 못 읽는다 — 압축 전 GLB(tools/_out/creature_rig/k96/ 등)를 준다.
 """
 import math
@@ -10,11 +11,27 @@ import bpy
 from mathutils import Vector
 
 src, out = sys.argv[sys.argv.index('--') + 1:][:2]
-size = int(sys.argv[sys.argv.index('--') + 3]) if len(sys.argv) > sys.argv.index('--') + 3 else 512
+rest = sys.argv[sys.argv.index('--') + 3:]
+size = int(rest[0]) if rest else 512
+action, phase = (rest[1], float(rest[2])) if len(rest) >= 3 else (None, 0.0)
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.gltf(filepath=os.path.abspath(src))
 meshes = [o for o in bpy.data.objects if o.type == 'MESH']
+if action:
+    act = next((a for a in bpy.data.actions if a.name == action or a.name.startswith(action)), None)
+    if act is None:
+        print('ACTION_NOT_FOUND', action, [a.name for a in bpy.data.actions])
+    else:
+        for o in bpy.data.objects:
+            if o.type == 'ARMATURE':
+                o.animation_data_create()
+                for tr in o.animation_data.nla_tracks:
+                    tr.mute = True
+                o.animation_data.action = act
+        f0, f1 = act.frame_range
+        bpy.context.scene.frame_set(int(round(f0 + (f1 - f0) * phase)))
+        bpy.context.view_layer.update()
 lo = Vector((1e9, 1e9, 1e9))
 hi = Vector((-1e9, -1e9, -1e9))
 for o in meshes:

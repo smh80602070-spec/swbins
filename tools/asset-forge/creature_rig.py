@@ -57,6 +57,24 @@ def _front_sign(V, H):
     return -1 if ext_f >= ext_b else 1
 
 
+
+def _body_bottom(V, z0, H, fallback):
+    """몸이 시작하는 높이 — 2.5% 높이 칸마다 정점 수를 세어, 발(아래 10%) 위에서 처음으로 몸 구간(40~80%) 중앙값의 절반을 넘는 칸(두 칸 연속).
+    K-0133: 옛 판정(폭이 0.6×최대폭 넘는 첫 높이)은 학의 발가락·원숭이의 늘어진 팔에 속아 다리뼈가 바닥 10% 토막이 됐다(걸을 때 발목만 꺾임)."""
+    n = 40
+    c = [0] * n
+    for v in V:
+        k = min(n - 1, max(0, int((v.z - z0) / H * n)))
+        c[k] += 1
+    body = sorted(c[int(0.4 * n):int(0.8 * n)])
+    if not body:
+        return fallback
+    lvl = body[len(body) // 2] * 0.5
+    for k in range(4, n - 1):
+        if c[k] >= lvl and c[k + 1] >= lvl:
+            return z0 + H * k / n
+    return fallback
+
 def _quad_layout(V):
     H = max(v.z for v in V)
     s = 1 if os.environ.get('CREATURE_FRONT') == '+Y' else -1   # glTF 관례(+Z 앞 = Blender -Y). 10-06 자동 판정(_front_sign)은 멧돼지·코끼리·판다를 뒤집어 틀렸다 — 예외 종만 CREATURE_FRONT=+Y
@@ -94,7 +112,7 @@ def _quad_layout(V):
     back = [v for v in V if v.y > Y1 - 0.08 * L]
     head_z = sum(v.z for v in front) / len(front)
     tail_z = sum(v.z for v in back) / len(back)
-    return dict(H=H, L=L, Y0=Y0, Y1=Y1, legs=legs, yF=yF, yB=yB, belly=belly, spine_z=spine_z,
+    return dict(H=H, L=L, Y0=Y0, Y1=Y1, legs=legs, yF=yF, yB=yB, belly=belly, spine_z=spine_z, body_bottom=_body_bottom(V, 0.0, H, belly + 0.08 * H),
                 head_z=head_z, tail_z=tail_z, flip=s > 0)
 
 
@@ -122,7 +140,7 @@ def _build_arm(lay):
     bone('Chest', P(0, yc, lay['spine_z']), P(0, lay['yF'], lay['spine_z']), 'Hips')
     bone('Head', P(0, lay['yF'], (lay['spine_z'] + lay['head_z']) / 2), P(0, lay['Y0'], lay['head_z']), 'Chest')
     bone('Tail', P(0, lay['yB'], lay['spine_z']), P(0, lay['Y1'], lay['tail_z']), 'Hips')
-    leg_top = lay['belly'] + 0.08 * H
+    leg_top = max(lay['belly'] + 0.08 * H, lay['body_bottom'])
     knee = leg_top * 0.48
     for k, (c, r) in lay['legs'].items():
         par = 'Chest' if k[0] == 'F' else 'Hips'
@@ -291,13 +309,7 @@ def bird_rig(ob):
     Y0, Y1 = min(v.y for v in V), max(v.y for v in V)
     L = Y1 - Y0
     xm = max(abs(v.x) for v in V)
-    leg_top = z0 + 0.06 * Hh                     # 몸 밑 = 아래에서 위로 가며 폭이 처음 넓어지는 높이
-    for k in range(1, 18):
-        zb = z0 + Hh * k / 20
-        sl = [abs(v.x) for v in V if abs(v.z - zb) < Hh * 0.025]
-        if sl and max(sl) > 0.6 * xm:
-            leg_top = zb
-            break
+    leg_top = _body_bottom(V, z0, Hh, z0 + 0.06 * Hh)   # 몸 밑(K-0133: 정점 수 판정 — 폭 판정은 발가락에 속았다)
     body = [v for v in V if v.z > leg_top and Y0 + 0.2 * L < v.y < Y1 - 0.2 * L] or V
     zc = sum(v.z for v in body) / len(body)
     yf, yb = _pct([v.y for v in body], 0.15), _pct([v.y for v in body], 0.85)
