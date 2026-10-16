@@ -1409,6 +1409,7 @@
     fieldRelics: function () { var RM = global.DG.roadMarks; return (RM ? RM.relics() : []).map(function (r) { return { id: r.id, name: r.kind.name, emoji: r.kind.emoji }; }); },
     overworld: overworld,
     status: status,
+    me: function () { return player ? { x: player.x, y: player.y } : null; },   // W-0270 플레이 QC 가 내 자리를 읽는다
     exitPointRaw: exitPointRaw,
     /** PLAN §28-8(2026-09-06, 오픈월드 A안) — 세계 앵커·활성 마을 판정.
      *  자가진단·Phase 2(자동지도) 가 읽는다. anchorOf 는 참조 그대로 주지

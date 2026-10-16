@@ -142,6 +142,7 @@
    "js/ui-detail.js",
    "js/ui.js",
    "js/menu-grid.js",
+   "js/ops-client.js",
    "js/game.js"
   ]
  ],

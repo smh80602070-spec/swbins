@@ -7,6 +7,7 @@
  *   node tools/qc.mjs --branch web|godot|unity|tools   갈래 단위(autorun 이 티켓 세션 뒤에 부른다)
  *   --full        진단 3회(DIFF 검사)·3D 장면 촬영 전부·에셋 감사·Godot probe 까지
  *   --no-shots    촬영(playwright) 생략          --godot   Godot probe_all 도(exe 는 GODOT 환경변수 또는 스크래치패드에서 찾음)
+ *   --play        플레이 QC 만(W-0270 — pw-play.mjs: 판마다 PC·폰으로 키·끌기·터치 이동 · ☰ 창 닫은 뒤 이동 · HUD 겹침 · 새로 고침 이어하기). 기본 실행에 든다(--no-shots 면 생략)
  *   --deploy      배포 확인만(W-0258 — 공개 Pages 주소에서 가입→시작→☰→새로 고침, pw-deploy.mjs). --branch web·--full 엔 늘 든다
  *
  * 하는 일(웹 판마다): ① 번들·shared 사본 최신인지(bundle --check·sync-shared --check) ② 진단 러너(test-web.mjs, RESULT n/m·실패 줄·DIFF)
@@ -35,7 +36,7 @@ const FUN = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 const argv = process.argv.slice(2);
 const has = (f) => argv.includes(f);
 const val = (f) => { const i = argv.indexOf(f); return i >= 0 ? argv[i + 1] : null; };
-const full = has('--full'), noShots = has('--no-shots'), deployOnly = has('--deploy');
+const full = has('--full'), noShots = has('--no-shots'), deployOnly = has('--deploy'), playOnly = has('--play');
 const branch = val('--branch');
 let games = val('--game') ? val('--game').split(',') : GAMES;
 if (branch && branch !== 'web') games = [];
@@ -151,6 +152,22 @@ async function checkShots() {
   stopServer();
 }
 
+/* ── ④-3 플레이 QC(W-0270) — 로컬 서버에서 판마다 PC(1280×720)·폰(390×844 터치)으로 사람처럼 조작: 키 4방향·끌기/터치 이동, ☰ 창 닫은 뒤 이동, HUD 겹침(WARN), 새로 고침 이어하기, 판별 덤. 결과 results/pw-play.json ── */
+async function checkPlay() {
+  if (noShots || !games.length) return;
+  const b = await serve();
+  const r = run(process.execPath, ['pw-play.mjs', ...games, '--base', b], { cwd: PLAY, timeout: 30 * 60 * 1000 });
+  const j = readJson(path.join(PLAY, 'results', 'pw-play.json'), null);
+  if (!j) { row('플레이', games.map(nm).join('·'), 'FAIL', 'pw-play 결과 없음 ' + (r.out.trim().split('\n').pop() || ''), r.sec); return; }
+  for (const g of games) {
+    for (const x of (j.runs || []).filter((x) => x.game === g)) {
+      const dev = x.device === 'phone' ? '폰' : 'PC';
+      const bad = x.checks.filter((c) => !c.ok && !c.skip), warn = x.checks.filter((c) => c.ok && c.warn);
+      row('플레이', nm(g) + ' ' + dev, bad.length ? 'FAIL' : (warn.length ? 'WARN' : 'PASS'), (bad.length ? '× ' + bad.map((c) => c.name + '(' + c.detail.slice(0, 60) + ')').join(' | ') : '') + (warn.length ? (bad.length ? ' · ' : '') + '△ ' + warn.map((c) => c.name + '(' + c.detail.slice(0, 50) + ')').join(' | ') : '') || x.checks.length + '항목', r.sec / (j.runs.length || 1));
+    }
+  }
+}
+
 /* ── ④-2 배포 확인(W-0258) — 로컬 서버가 아니라 공개 Pages 주소를 서비스 워커 켠 채 실제 클릭으로. 이 PC 네트워크 기준(사용자 기기 차단은 못 잡음) ── */
 function checkDeploy() {
   if (!games.length) return;
@@ -255,9 +272,11 @@ function report() {
   try {
     console.log(`QC 시작 — 갈래 ${branch || 'web'} · 판 ${games.map(nm).join('·') || '-'} · ${full ? 'full' : 'quick'}${noShots ? ' · 촬영 생략' : ''}`);
     if (deployOnly) { checkDeploy(); return; }
+    if (playOnly) { await checkPlay(); stopServer(); return; }
     checkBundles();
     checkTests();
     await checkShots();
+    await checkPlay();
     if (branch === 'web' || (full && !branch)) checkDeploy();
     checkStatus();
     if (branch === 'godot' || has('--godot') || (full && !branch)) checkGodot();

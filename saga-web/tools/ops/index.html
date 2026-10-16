@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>사가 운영 콘솔</title>
+<style>
+  :root { --bg: #15130f; --panel: #1f1b15; --line: #4a3d2a; --gold: #d9b56b; --ink: #efe6d2; --muted: #9c927f; --ok: #5fb376; --bad: #d4615c; --warn: #d8a650; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.5 -apple-system, "Malgun Gothic", sans-serif; }
+  header { display: flex; align-items: center; gap: 16px; padding: 10px 16px; border-bottom: 1px solid var(--line); background: var(--panel); position: sticky; top: 0; }
+  header h1 { margin: 0; font-size: 17px; color: var(--gold); }
+  nav button { background: transparent; color: var(--muted); border: 1px solid transparent; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+  nav button.on { color: var(--gold); border-color: var(--line); background: #2a241b; }
+  main { padding: 16px; max-width: 1200px; margin: 0 auto; }
+  section { display: none; } section.on { display: block; }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 16px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 12px; }
+  .ok { color: var(--ok); } .bad { color: var(--bad); } .warn { color: var(--warn); } .muted { color: var(--muted); }
+  a { color: var(--gold); } .links a { margin-right: 8px; font-size: 12px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; margin-bottom: 12px; }
+  .card h2 { margin: 0 0 8px; font-size: 15px; color: var(--gold); }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 6px 0; }
+  input[type=text], input[type=date], textarea, select { background: #0f0d0a; color: var(--ink); border: 1px solid var(--line); border-radius: 4px; padding: 5px 8px; font: inherit; }
+  textarea { width: 100%; min-height: 140px; font-family: Consolas, monospace; font-size: 12px; }
+  button.act { background: #3a3025; color: var(--ink); border: 1px solid var(--gold); border-radius: 5px; padding: 5px 12px; cursor: pointer; }
+  button.act.danger { border-color: var(--bad); }
+  pre { background: #0f0d0a; border: 1px solid var(--line); border-radius: 6px; padding: 10px; max-height: 420px; overflow: auto; font-size: 12px; white-space: pre-wrap; }
+  .shots img { width: 160px; border: 1px solid var(--line); margin: 2px; }
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 12px; border: 1px solid var(--line); margin-right: 4px; }
+  small { color: var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <h1>사가 운영 콘솔</h1>
+  <nav>
+    <button data-tab="status" class="on">현황</button>
+    <button data-tab="live">라이브옵스</button>
+    <button data-tab="support">지원</button>
+    <button data-tab="run">실행</button>
+  </nav>
+  <small id="at"></small>
+</header>
+<main>
+  <section id="status" class="on">
+    <div class="card">
+      <h2>다섯 판 <button class="act" onclick="loadOverview()">새로 읽기</button></h2>
+      <table id="ov"><thead><tr><th>판</th><th>로컬 버전</th><th>배포</th><th>번들</th><th>완성도</th><th>QC</th><th>플레이 QC</th><th>바로가기</th></tr></thead><tbody></tbody></table>
+      <div id="qcsum" class="muted"></div>
+    </div>
+    <div class="card"><h2>플레이 QC 사진</h2><div id="shots" class="shots muted">없음</div></div>
+    <div class="card"><h2>이 도구가 못 하는 것(서버가 있어야 함)</h2>
+      <p class="muted">계정·세이브 동기화 · 결제 · 실시간 지표 · 플레이어별 조치 · 치트 감지. 지금은 정적 호스팅(브라우저 저장소)이라 운영 = live.json(공지·점검·최소 버전·이벤트) 배포 + 사용자가 보낸 JSON 읽기. 게임 쪽 <code>DG.ops.track()</code> 버퍼는 서버가 생기면 보내는 한 줄만 바꾼다.</p>
+    </div>
+  </section>
+
+  <section id="live">
+    <div class="card"><h2>공지</h2>
+      <table id="notices"><thead><tr><th>id</th><th>제목</th><th>본문</th><th>기간</th><th>판</th><th></th></tr></thead><tbody></tbody></table>
+      <div class="row">
+        <input type="text" id="n-id" placeholder="id(예: 2026-10-17-update)" size="22">
+        <input type="text" id="n-title" placeholder="제목" size="20">
+        <input type="text" id="n-body" placeholder="본문" size="40">
+        <input type="date" id="n-from"> ~ <input type="date" id="n-to">
+        <select id="n-games" multiple size="1" title="비우면 다섯 판 전부"></select>
+        <button class="act" onclick="addNotice()">추가</button>
+      </div>
+    </div>
+    <div class="card"><h2>점검</h2>
+      <div class="row"><label><input type="checkbox" id="m-on"> 점검 중</label> <input type="text" id="m-msg" placeholder="안내 문구" size="50"> <select id="m-games" multiple size="1"></select></div>
+    </div>
+    <div class="card"><h2>최소 버전 <small>(이보다 낮은 판에 "새 버전 — 새로 고침" 띠. 로컬 버전 단추로 채운다)</small></h2><div id="minv" class="row"></div></div>
+    <div class="card"><h2>이벤트 <small>(기간·배율 자리 — 판 적용은 판 티켓 몫)</small></h2>
+      <table id="events"><thead><tr><th>id</th><th>이름</th><th>기간</th><th>판</th><th>tunes</th><th></th></tr></thead><tbody></tbody></table>
+      <div class="row"><input type="text" id="e-id" placeholder="id" size="14"><input type="text" id="e-name" placeholder="이름" size="18"><input type="date" id="e-from"> ~ <input type="date" id="e-to"><input type="text" id="e-tunes" placeholder='{"xp":1.5}' size="22"><button class="act" onclick="addEvent()">추가</button></div>
+    </div>
+    <div class="row"><button class="act" onclick="saveLive()">live.json 저장</button> <span id="live-msg" class="muted"></span></div>
+    <p class="muted">저장은 로컬 파일(saga-web/shared/ops/live.json)만 바꾼다. 사용자에게 닿으려면 커밋·푸시(bash tools/push.sh) → Pages 배포 몇 분.</p>
+  </section>
+
+  <section id="support">
+    <div class="card"><h2>사용자가 보낸 JSON 읽기 <small>(_admin "세이브 내보내기" · "오류 기록" · DG.ops.dump())</small></h2>
+      <textarea id="sup-in" placeholder="여기에 붙여넣기"></textarea>
+      <div class="row"><button class="act" onclick="inspect()">읽기</button><span id="sup-kind" class="muted"></span></div>
+      <div id="sup-out"></div>
+    </div>
+  </section>
+
+  <section id="run">
+    <div class="card"><h2>돌리기 <small>(한 번에 하나)</small></h2>
+      <div class="row">
+        <select id="run-games" multiple size="5"></select>
+        <button class="act" onclick="startRun('qc')">QC(tools/qc.mjs)</button>
+        <button class="act" onclick="startRun('play')">플레이 QC(pw-play)</button>
+        <button class="act" onclick="startRun('deploy')">배포 확인(pw-deploy)</button>
+        <span id="run-msg" class="muted"></span>
+      </div>
+      <pre id="run-log">…</pre>
+    </div>
+  </section>
+</main>
+<script>
+const GAMES = [['saga-go', '1만리'], ['saga-dungeon', '2나락'], ['saga-forest', '3마을'], ['saga-story', '4종횡'], ['saga-realm', '5천하']];
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const nm = (id) => (GAMES.find((g) => g[0] === id) || [id, id])[1];
+let OV = null, LIVE = null;
+document.querySelectorAll('nav button').forEach((b) => b.addEventListener('click', () => { document.querySelectorAll('nav button').forEach((x) => x.classList.toggle('on', x === b)); document.querySelectorAll('main section').forEach((s) => s.classList.toggle('on', s.id === b.dataset.tab)); }));
+for (const sel of ['#n-games', '#m-games', '#run-games']) { $(sel).innerHTML = GAMES.map((g) => `<option value="${g[0]}">${g[1]}</option>`).join(''); }
+
+async function loadOverview() {
+  const o = OV = await (await fetch('/api/overview')).json();
+  $('#at').textContent = '읽음 ' + o.at.replace('T', ' ').slice(0, 19);
+  $('#ov tbody').innerHTML = o.games.map((g) => {
+    const dep = g.deployed ? `<span class="${g.deployed.same ? 'ok' : 'warn'}">${g.deployed.same ? '같음' : '다름 ' + esc(g.deployed.version)}</span><br><small>${esc((g.deployed.at || '').slice(0, 16))}</small>` : '<span class="muted">-</span>';
+    const qc = g.qc ? `<span class="${g.qc.fail.length ? 'bad' : g.qc.warn.length ? 'warn' : 'ok'}">${g.qc.fail.length ? 'FAIL ' + esc(g.qc.fail.join(',')) : g.qc.warn.length ? 'WARN ' + esc(g.qc.warn.join(',')) : (g.qc.rows ? 'PASS' : '-')}</span>` : '<span class="muted">-</span>';
+    const pl = g.play ? g.play.runs.map((r) => `<span class="${r.ok ? 'ok' : 'bad'}">${r.device} ${r.ok ? '○' : '× ' + esc(r.fails.join(' / '))}</span>${r.warns.length ? ' <small>△' + esc(r.warns.join(',')) + '</small>' : ''}`).join('<br>') : '<span class="muted">-</span>';
+    return `<tr><td><b>${g.name}</b><br><small>${g.id}</small></td><td>${esc(g.localVersion)}</td><td>${dep}</td><td class="${g.bundleFresh ? 'ok' : 'bad'}">${g.bundleFresh ? '최신' : '낡음'}</td><td>${g.features.done}/${g.features.total}<br><small>D0 ${g.features.d0} · D1 ${g.features.d1} · 사람 ${g.features.human}</small></td><td>${qc}</td><td>${pl}</td><td class="links"><a href="${g.links.local}" target="_blank">로컬</a><a href="${g.links.admin}" target="_blank">어드민</a><a href="${g.links.demo}" target="_blank">데모</a><a href="${g.links.pages}" target="_blank">공개</a></td></tr>`;
+  }).join('');
+  $('#qcsum').textContent = o.qc ? `마지막 QC ${o.qc.at.replace('T', ' ').slice(0, 16)} · ${o.qc.verdict} · ${o.qc.args} · ${o.qc.sec}초` : 'QC 결과 없음';
+  const shots = o.games.flatMap((g) => g.play ? g.play.runs.flatMap((r) => r.shots.map((s) => ({ s, t: g.name + ' ' + r.device }))) : []);
+  $('#shots').innerHTML = shots.length ? shots.map((x) => `<a href="/shots/${x.s}" target="_blank" title="${esc(x.t)}"><img src="/shots/${x.s}" loading="lazy"></a>`).join('') : '없음(플레이 QC 를 돌리면 생긴다)';
+  $('#minv').innerHTML = o.games.map((g) => `<label>${g.name} <input type="text" id="mv-${g.id}" size="18" placeholder="${esc(g.localVersion)}"></label> <button class="act" onclick="$('#mv-${g.id}').value='${esc(g.localVersion)}'">로컬로</button>`).join(' ');
+  if (LIVE) { fillLive(); }
+}
+async function loadLive() { LIVE = await (await fetch('/api/live')).json(); fillLive(); }
+function fillLive() {
+  $('#notices tbody').innerHTML = (LIVE.notices || []).map((n, i) => `<tr><td>${esc(n.id)}</td><td>${esc(n.title)}</td><td>${esc(n.body)}</td><td>${esc(n.from || '')}~${esc(n.to || '')}</td><td>${(n.games || []).map(nm).join(',') || '전부'}</td><td><button class="act danger" onclick="LIVE.notices.splice(${i},1);fillLive()">지움</button></td></tr>`).join('') || '<tr><td colspan="6" class="muted">없음</td></tr>';
+  $('#events tbody').innerHTML = (LIVE.events || []).map((e, i) => `<tr><td>${esc(e.id)}</td><td>${esc(e.name)}</td><td>${esc(e.from || '')}~${esc(e.to || '')}</td><td>${(e.games || []).map(nm).join(',') || '전부'}</td><td>${esc(JSON.stringify(e.tunes || {}))}</td><td><button class="act danger" onclick="LIVE.events.splice(${i},1);fillLive()">지움</button></td></tr>`).join('') || '<tr><td colspan="6" class="muted">없음</td></tr>';
+  const m = LIVE.maintenance || {}; $('#m-on').checked = !!m.on; $('#m-msg').value = m.msg || '';
+  [...$('#m-games').options].forEach((o) => { o.selected = (m.games || []).includes(o.value); });
+  for (const g of GAMES) { const el = $('#mv-' + g[0]); if (el) { el.value = (LIVE.minVersion || {})[g[0]] || ''; } }
+}
+const selected = (sel) => [...$(sel).selectedOptions].map((o) => o.value);
+function addNotice() { const id = $('#n-id').value.trim(), title = $('#n-title').value.trim(); if (!id || !title) { alert('id·제목이 필요합니다'); return; } LIVE.notices.push({ id, title, body: $('#n-body').value, from: $('#n-from').value || undefined, to: $('#n-to').value || undefined, games: selected('#n-games') }); fillLive(); }
+function addEvent() { let tunes = {}; try { tunes = JSON.parse($('#e-tunes').value || '{}'); } catch (e) { alert('tunes 는 JSON'); return; } const id = $('#e-id').value.trim(); if (!id) { alert('id 필요'); return; } (LIVE.events = LIVE.events || []).push({ id, name: $('#e-name').value, from: $('#e-from').value || undefined, to: $('#e-to').value || undefined, games: [], tunes }); fillLive(); }
+async function saveLive() {
+  LIVE.maintenance = { on: $('#m-on').checked, msg: $('#m-msg').value, games: selected('#m-games') };
+  LIVE.minVersion = {}; for (const g of GAMES) { const v = ($('#mv-' + g[0]) || {}).value; if (v && v.trim()) { LIVE.minVersion[g[0]] = v.trim(); } }
+  const r = await (await fetch('/api/live', { method: 'PUT', body: JSON.stringify(LIVE) })).json();
+  $('#live-msg').textContent = r.ok ? r.note : '실패: ' + r.why; if (r.ok) { LIVE = r.live; fillLive(); }
+}
+/* 지원 — 붙여넣은 JSON 을 꼴로 가려 요약 */
+function inspect() {
+  let j; try { j = JSON.parse($('#sup-in').value); } catch (e) { $('#sup-kind').textContent = 'JSON 아님: ' + e.message; return; }
+  const out = [];
+  const walk = (o, p, depth) => { if (depth > 2 || !o || typeof o !== 'object') { return; } for (const k of Object.keys(o)) { const v = o[k]; const t = Array.isArray(v) ? `배열 ${v.length}` : v && typeof v === 'object' ? `객체 ${Object.keys(v).length}키` : typeof v === 'string' ? `"${v.slice(0, 40)}"` : String(v); if (/^(level|lv|gold|money|hp|name|v|version|ver|turn|round|day|floor|profile|id|exp|xp|stage|chapter)$/i.test(k) || depth === 0) { out.push([p + k, t]); } walk(v, p + k + '.', depth + 1); } };
+  let kind = '세이브(또는 알 수 없는 객체)';
+  if (Array.isArray(j) && j.length && j[0] && (j[0].msg || j[0].stack || j[0].message)) { kind = '오류 기록 ' + j.length + '건'; $('#sup-out').innerHTML = '<table><thead><tr><th>시각</th><th>메시지</th><th>파일</th><th>스택</th></tr></thead><tbody>' + j.slice(0, 50).map((e) => `<tr><td>${esc(new Date(e.t || e.time || 0).toLocaleString())}</td><td>${esc(e.msg || e.message)}</td><td>${esc(e.file || e.src || '')}:${esc(e.line || '')}</td><td><small>${esc(String(e.stack || '').slice(0, 300))}</small></td></tr>`).join('') + '</tbody></table>'; $('#sup-kind').textContent = kind; return; }
+  if (j && j.track && Array.isArray(j.track)) { kind = 'ops.track ' + j.track.length + '건 (' + nm(j.game) + ')'; $('#sup-out').innerHTML = '<table><thead><tr><th>시각</th><th>이벤트</th><th>데이터</th></tr></thead><tbody>' + j.track.slice(-100).reverse().map((e) => `<tr><td>${esc(new Date(e.t).toLocaleString())}</td><td>${esc(e.ev)}</td><td><small>${esc(JSON.stringify(e.d))}</small></td></tr>`).join('') + '</tbody></table>'; $('#sup-kind').textContent = kind; return; }
+  walk(j, '', 0);
+  $('#sup-kind').textContent = kind + ' · ' + JSON.stringify(j).length.toLocaleString() + '자';
+  $('#sup-out').innerHTML = '<table><thead><tr><th>키</th><th>값</th></tr></thead><tbody>' + out.slice(0, 120).map(([k, v]) => `<tr><td>${esc(k)}</td><td><small>${esc(v)}</small></td></tr>`).join('') + '</tbody></table>';
+}
+/* 실행 */
+let logTimer = null;
+async function startRun(cmd) {
+  const r = await (await fetch('/api/run', { method: 'POST', body: JSON.stringify({ cmd, games: selected('#run-games') }) })).json();
+  $('#run-msg').textContent = r.ok ? '시작: ' + r.cmd : '안 됨: ' + r.why;
+  if (r.ok) { pollLog(); }
+}
+async function pollLog() {
+  const r = await (await fetch('/api/run/log')).json();
+  $('#run-log').textContent = (r.cmd ? `[${r.cmd} · ${r.running ? '도는 중' : '끝'}]\n` : '') + r.lines.join('\n');
+  $('#run-log').scrollTop = 1e9;
+  clearTimeout(logTimer); if (r.running) { logTimer = setTimeout(pollLog, 2000); } else if (r.cmd) { loadOverview(); }
+}
+loadOverview(); loadLive(); pollLog();
+</script>
+</body>
+</html>

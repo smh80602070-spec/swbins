@@ -39,6 +39,12 @@
 </div>
 
 <div class="card">
+  <h2>운영 콘솔 <span class="status" id="st-8802">확인 중…</span></h2>
+  <p><b>상용 운영 자리(W-0271).</b> 다섯 판 버전·배포·번들·완성도·QC·플레이 QC 현황, 라이브옵스(공지·점검·최소 버전·이벤트 → <code>shared/ops/live.json</code>, 다섯 판이 부팅 때 읽는다), 사용자가 보낸 세이브·오류·track JSON 읽기, QC·플레이 QC·배포 확인 돌리기. 푸시는 안 한다.</p>
+  <a class="open" href="http://127.0.0.1:8802/" target="_blank" rel="noopener">열기 → :8802</a>
+</div>
+
+<div class="card">
   <h2>사가 엔진 <span class="status" id="st-8801">확인 중…</span></h2>
   <p><b>코드 없이 3D 게임을 만든다.</b> 장면·개체·컴포넌트·이벤트(언제→조건→행동)를 칸으로 짜면 게임이 된다. <b>별도 저장소 <a href="https://github.com/smh8627-jpg/swbins4">swbins4</a> 로 떼어냈다</b> — 이 저장소 옆(<code>..\swbins4</code>)에 받아 두면 <code>run-tools.bat</code> 이 같이 켜고, 다섯 판 모델도 에셋 묶음으로 붙여 준다. 한 폴더로 내보낸다.
      전투 스타일 넷(간단·오픈월드 RPG식·오픈월드 모험식·JRPG식)·시점 다섯(1인칭·3인칭·쿼터뷰·옆·고정)·saga-godot 시스템(시간·날씨·상자·채집·낚시·퀘스트·도감·거점·스킬 …). 예제 틀 아홉.</p>
@@ -67,6 +73,7 @@ function check(port, id) {
 check(8799, 'st-8799');
 check(8800, 'st-8800');
 check(8801, 'st-8801');
+check(8802, 'st-8802');
 </script>
 </body>
 </html>

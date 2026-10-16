@@ -99,6 +99,7 @@
    "js/ui-shop.js",
    "js/ui.js",
    "js/menu-grid.js",
+   "js/ops-client.js",
    "js/ui-detail.js",
    "js/ui-quest.js",
    "js/perf.js",

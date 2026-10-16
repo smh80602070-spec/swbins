@@ -66,6 +66,7 @@
    "js/rtk-hand.js",
    "js/ui-rtk.js",
    "js/menu-grid.js",
+   "js/ops-client.js",
    "js/cpanel.js",
    "js/hud.js",
    "js/perf.js",

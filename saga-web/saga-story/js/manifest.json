@@ -75,6 +75,7 @@
    "js/ui-job.js",
    "js/ui.js",
    "js/menu-grid.js",
+   "js/ops-client.js",
    "js/region-icon.js",
    "js/perf.js",
    "js/game.js"

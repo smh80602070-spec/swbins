@@ -7,6 +7,7 @@ REM 그때 다섯 판 assets 를 에셋 묶음으로 붙여(SAGA_ENGINE_LIBS) �
 cd /d "%~dp0"
 start "content-editor :8799" cmd /k "cd /d "%~dp0content-editor" && node server.js"
 start "map-editor :8800" cmd /k "cd /d "%~dp0map-editor" && node server.js"
+start "ops :8802" cmd /k "cd /d "%~dp0ops" && node ops.mjs"
 set "ENGINE=%~dp0..\..\..\swbins4"
 if exist "%ENGINE%\server.js" (
   set "SAGA_ENGINE_LIBS=saga-go=%~dp0..\saga-go\assets;saga-forest=%~dp0..\saga-forest\assets;saga-story=%~dp0..\saga-story\assets;saga-realm=%~dp0..\saga-realm\assets;saga-dungeon=%~dp0..\saga-dungeon\assets"
