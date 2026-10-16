@@ -26,6 +26,13 @@ async function enter(pg, { create }) {
   await pg.evaluate(() => { var b = document.getElementById('title-continue'); if (b) { b.click(); } });
   await sleep(3000);
 }
+/** 독 단추 열기 — 독에 보이면 그대로, ☰ 메뉴로 접힌 것(W-0254 cfg.menu.keep 밖, 학당·기록 등)은 ☰ 를 열고 격자 칸을 누른다 */
+async function dockOpen(key) {
+  const d = page.locator('#dock [data-sheet="' + key + '"]');
+  if (await d.isVisible()) { await d.click(); return; }
+  await page.locator('#btn-menu').click(); await sleep(400);
+  await page.locator('.mg-cell[data-for="' + key + '"]').click();
+}
 const vb = () => ev(() => { var s = document.querySelector('svg.rmap'); return s ? s.getAttribute('viewBox') : null; });
 const HELPERS = () => {
   window.__own = function (cid, troops) { var R = DG.rtk, c = R.city(cid); c.force = R.me(); c.troops = troops; c.food = Math.max(c.food, 200000); c.train = 80; c.tech = 300; return c; };
@@ -82,7 +89,7 @@ try {
   check('rk.ui-rtk 지도 — 마우스로 끌면 viewBox 가 옮겨 가고, ➕ 를 누르면 창이 좁아진다(확대)', v0 && v1 !== v0 && w(v2) < w(v1), JSON.stringify({ v0, v1, v2 }));
 
   /* rk.quiz — 학당: 정답이면 progress 가 오르고, 오답은 wrongList 에 든다 */
-  await page.locator('#dock [data-sheet="school"]').click(); await sleep(600);
+  await dockOpen('school'); await sleep(600);
   await page.locator('[data-act="q-start"]').first().click(); await sleep(500);
   const pickChoice = (want) => ev((good) => {
     var q = document.querySelector('.qq').textContent, ref = DG.quizData.BANK.find((b) => b.q === q);
@@ -140,7 +147,7 @@ try {
 
   /* rk.city3d — 내 성 창(🏯)을 열면 성 안 3D 캔버스가 그려지고 콘솔 오류가 늘지 않는다 */
   const e0 = r.errors.length;
-  await page.locator('#dock [data-sheet="city"]').click(); await sleep(2500);
+  await dockOpen('city'); await sleep(2500);
   const ct = await ev(() => { var c = document.getElementById('city3d'), b = c && c.getBoundingClientRect(); return { avail: DG.city3d.available(), w: b ? Math.round(b.width) : 0, h: b ? Math.round(b.height) : 0, inSheet: !!(c && c.closest('#sheet')), tab: document.getElementById('sheet').getAttribute('data-tab') }; });
   check('rk.city3d 성 안 3D — 성 창을 열면 성 안 캔버스가 그려지고(크기>0) 콘솔 오류가 늘지 않는다', ct.avail && ct.w > 0 && ct.h > 0 && ct.tab === 'city' && r.errors.length === e0, JSON.stringify({ ct, newErr: r.errors.slice(e0, e0 + 2) }));
   await ev(() => { DG.ui.closeSheet(); }); await sleep(300);
@@ -190,7 +197,8 @@ try {
     const mb = page.locator('#sheet [data-act="march"][data-to="' + b0.to + '"]').first();
     await mb.scrollIntoViewIfNeeded(); await mb.click(); await sleep(400);
     await page.locator('[data-act="ask-ok"]').first().click();
-    for (let i = 0; i < 20; i++) { await sleep(1000); b1 = await ev(() => { var c = document.getElementById('battle3d'), v = DG.battle3d.armyView(); return { canvas: !!c, w: c ? Math.round(c.getBoundingClientRect().width) : 0, view: v && { a: v.a.n, d: v.d.n } }; }); if (b1.view && b1.view.a > 0) { break; } }
+    const duelAuto = page.locator('[data-act="duel-pick"][data-pick="auto"], [data-act="duel-go"]').first();   // 출진 앞 🤺 일기토 카드 — 남은 합은 맡기고, 승부가 나면 ▶ 전황으로
+    for (let i = 0; i < 30; i++) { if (await duelAuto.isVisible().catch(() => false)) { await duelAuto.click().catch(() => {}); } await sleep(1000); b1 = await ev(() => { var c = document.getElementById('battle3d'), v = DG.battle3d.armyView(); return { canvas: !!c, w: c ? Math.round(c.getBoundingClientRect().width) : 0, view: v && { a: v.a.n, d: v.d.n } }; }); if (b1.view && b1.view.a > 0) { break; } }
     await page.screenshot({ path: 'shots/qc/saga-realm-battle3d.png' }).catch(() => {});   // Claude 눈 판정(qc+claude)
     const rb = page.locator('[data-act="bat-cmd"][data-cmd="retreat"]').first();   // 퇴각 단추는 명령 차례에만 보인다 — 없으면 그냥 둔다
     if (await rb.isVisible().catch(() => false)) { await rb.click().catch(() => {}); await sleep(1500); }
