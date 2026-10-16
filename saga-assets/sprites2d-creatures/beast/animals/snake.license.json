@@ -1,0 +1,7 @@
+{
+ "id": "snake",
+ "generator": "tools/world-forge/beast2d_rebake.py --sheets (Blender render_sheet.py, Idle·Run 4컷)",
+ "source": "self: creatures3d/snake",
+ "license": "CC0-1.0 (자체 3D 몸 렌더 — 외부 입력 없음, 몸 출처는 creatures3d license)",
+ "ticket": "K-0114"
+}

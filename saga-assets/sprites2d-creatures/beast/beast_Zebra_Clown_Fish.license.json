@@ -1,0 +1,7 @@
+{
+ "id": "beast_Zebra_Clown_Fish",
+ "generator": "tools/world-forge/beast2d_rebake.py (Blender render_sprite.py)",
+ "source": "self: creatures3d/zebra_clownfish",
+ "license": "CC0-1.0 (자체 3D 몸 렌더 — 외부 입력 없음, 몸 출처는 creatures3d license)",
+ "ticket": "K-0114"
+}

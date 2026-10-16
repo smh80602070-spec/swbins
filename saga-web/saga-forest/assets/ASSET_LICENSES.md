@@ -1097,6 +1097,7 @@ Quaternius "Ultimate Monsters"(CC0, 사가나락 `assets/models/monsters/quatern
 | `saga-forest-town.ogg` | 1 | `saga-assets/bgm` | music-gen · ACE-Step/Ace-Step1.5 (acestep-v15-turbo) | MIT |
 | `cutscene/*` | 12 | `saga-assets/cutscene` | gen.py · Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0 |
 | `icons/icon64/*` | 131 | `saga-assets/icons/icon64` | gen.py · animagine-xl-4.0-opt, icon_pack.py · none | CreativeML OpenRAIL++-M, CC0-1.0 |
+| `sprites2d/animals/*` | 11 | `saga-assets/sprites2d-creatures/beast/animals` | beast2d_rebake.py --sheets (Blender render_sheet.py, Idle·Run 4컷) | CC0-1.0 |
 | `sprites2d_sheets/pool_basef_child_116/*` | 6 | `saga-assets/sprites2d/pool_basef_child_116` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
 | `sprites2d_sheets/pool_basem_elder_105/*` | 6 | `saga-assets/sprites2d/pool_basem_elder_105` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
 | `sprites2d_sheets/pool_f_elder_137/*` | 6 | `saga-assets/sprites2d/pool_f_elder_137` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |

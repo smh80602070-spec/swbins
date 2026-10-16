@@ -1401,6 +1401,7 @@ VRoid 샘플(pixiv VRoid Project, VRM 1.0 — 상업·재배포·개작 허용, 
 |---|---|---|---|---|
 | `audio/bgm/*` | 2 | `saga-assets/bgm` | music-gen · ACE-Step/Ace-Step1.5 (acestep-v15-turbo) | MIT |
 | `icons/icon64/*` | 22 | `saga-assets/icons/icon64` | gen.py · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `sprites2d/*_x2.png`, `beast_Alpaca.png`, `beast_Alpaking.png`, `beast_Anglerfish.png`, `beast_Apatosaurus.png`, `beast_Armored_Catfish.png`, `beast_Bear.png`, `beast_Betta.png`, `beast_Birb.png`, `beast_Black_Lion_Fish.png`, `beast_Blobfish.png`, `beast_Blue_Goldfish.png`, `beast_Blue_Tang.png`, 외 89 | 103 | `saga-assets/sprites2d-creatures/beast` | beast2d_rebake.py (Blender render_sprite.py) | CC0-1.0 |
 | `sprites2d_sheets/pool_e_demon_128/*` | 6 | `saga-assets/sprites2d/pool_e_demon_128` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
 | `sprites2d_sheets/pool_e_undead_127/*` | 6 | `saga-assets/sprites2d/pool_e_undead_127` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
 | `sprites2d_sheets/pool_f_human_139/*` | 6 | `saga-assets/sprites2d/pool_f_human_139` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |

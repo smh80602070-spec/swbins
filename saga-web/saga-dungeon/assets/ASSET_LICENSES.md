@@ -1955,6 +1955,7 @@ Orc·Demon 은 Ultimate Monsters). 사용자 결정("사가만리처럼 대역 �
 | `icons/icon64/*` | 93 | `saga-assets/icons/icon64` | gen.py · animagine-xl-4.0-opt, icon_pack.py · none | CreativeML OpenRAIL++-M, CC0-1.0 |
 | `portraits-monster/*` | 32 | `saga-assets/portraits-monster` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
 | `rarity/*` | 4 | `saga-assets/rarity` | raritygen.py | CC0-1.0 |
+| `sprites2d/*.png`, `beast_Manta_ray.png` | 16 | `saga-assets/sprites2d-creatures/beast` | beast2d_rebake.py (Blender render_sprite.py) | CC0-1.0 |
 | `sprites2d_sheets/pool_basem_demon_104/*` | 6 | `saga-assets/sprites2d/pool_basem_demon_104` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
 | `sprites2d_sheets/pool_d_goblin_118/*` | 6 | `saga-assets/sprites2d/pool_d_goblin_118` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
 | `sprites2d_sheets/pool_e_orc_125/*` | 6 | `saga-assets/sprites2d/pool_e_orc_125` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |

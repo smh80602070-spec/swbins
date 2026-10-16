@@ -53,6 +53,8 @@
 | sfxmoss.py(시작점·길이 맞춘 판으로 채점) | OpenMOSS-Team/MOSS-SoundEffect-v2.0 | Apache-2.0 (모델·코드) — AI 생성, 원작 효과음 모사 없음 | 88 |
 | make_sky.py | - | CC0-1.0 (코드 생성 — 외부 입력 없음) | 30 |
 | make_ibl.py | Illustrious-XL-v2.0 | 자체 하늘 그림(saga-assets/sky/sky_noon_present.webp)에서 코드로 — 그 그림의 라이선스를 따른다 | 3 |
+| beast2d_rebake.py --sheets (Blender render_sheet.py, Idle·Run 4컷) | - | CC0-1.0 (자체 3D 몸 렌더 — 외부 입력 없음, 몸 출처는 creatures3d license) | 11 |
+| beast2d_rebake.py (Blender render_sprite.py) | - | CC0-1.0 (자체 3D 몸 렌더 — 외부 입력 없음, 몸 출처는 creatures3d license) | 103 |
 | uigen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 285 |
 | vfxgen.py | - | CC0-1.0 (코드 생성 — 외부 입력 없음) | 120 |
 | voiceplan.py | Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign · Qwen/Qwen3-TTS-12Hz-1.7B-Base | Apache-2.0 (모델·코드) — 목소리는 글 설명으로 만든 것, 실존 인물·배우 목소리 모사 없음 | 2356 |
@@ -86,6 +88,6 @@
 
 ## 출처 문서(ASSET_LICENSES·ASSET_GUIDE) 요약
 
-절 259개 — 라이선스 낱말별: CC0 188, Kenney(CC0) 39, CC-BY 29, Mixamo 11, OpenRAIL 10, MIT 8, GPL 2, OFL 1
+절 264개 — 라이선스 낱말별: CC0 193, Kenney(CC0) 39, CC-BY 29, OpenRAIL 15, MIT 13, Mixamo 11, Apache-2.0 3, GPL 2, OFL 2
 낱말을 못 찾은 절(미상) 48개 — `credits.json` 의 `doc_sections.unknown` 참고.
 

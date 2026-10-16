@@ -1,0 +1,771 @@
+{
+ "note": "K-0114 1만리 지도 스탬프 짐승 2D(옛 = bake-beasts.mjs 로 빌린 3D 를 구운 것) → 자체 creatures3d. 2나락·3마을은 아래 단계(구도가 다름) · sheets = 3마을 들짐승 시트(village-view.js ANIMAL_SPRITE 칸 크기, 4줄×4컷 — render_sheet.py)",
+ "az": 90,
+ "el": 12,
+ "rows": [
+  {
+   "name": "Alien",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Alien.png",
+   "id": null,
+   "out": "beast_Alien.png",
+   "why": "사람꼴 괴물 — 자체 몸 없음(K-0120 대역·K-0122)"
+  },
+  {
+   "name": "Alien_2",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Alien_2.png",
+   "id": null,
+   "out": "beast_Alien_2.png",
+   "why": "사람꼴 괴물 — 자체 몸 없음(K-0120 대역·K-0122)"
+  },
+  {
+   "name": "Alpaca",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Alpaca.png",
+   "id": "alpaca",
+   "out": "beast_Alpaca.png"
+  },
+  {
+   "name": "Alpaking",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Alpaking.png",
+   "id": "alpaking",
+   "out": "beast_Alpaking.png"
+  },
+  {
+   "name": "Anglerfish",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Anglerfish.png",
+   "id": "anglerfish",
+   "out": "beast_Anglerfish.png"
+  },
+  {
+   "name": "Apatosaurus",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Apatosaurus.png",
+   "id": "apatosaurus",
+   "out": "beast_Apatosaurus.png"
+  },
+  {
+   "name": "Armored_Catfish",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Armored_Catfish.png",
+   "id": "armored_catfish",
+   "out": "beast_Armored_Catfish.png"
+  },
+  {
+   "name": "Bear",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Bear.png",
+   "id": "bear",
+   "out": "beast_Bear.png"
+  },
+  {
+   "name": "Betta",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Betta.png",
+   "id": "betta",
+   "out": "beast_Betta.png"
+  },
+  {
+   "name": "Birb",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Birb.png",
+   "id": "birb",
+   "out": "beast_Birb.png"
+  },
+  {
+   "name": "Black_Lion_Fish",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Black_Lion_Fish.png",
+   "id": "black_lionfish",
+   "out": "beast_Black_Lion_Fish.png"
+  },
+  {
+   "name": "Blobfish",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Blobfish.png",
+   "id": "blobfish",
+   "out": "beast_Blobfish.png"
+  },
+  {
+   "name": "BlueDemon",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_BlueDemon.png",
+   "id": null,
+   "out": "beast_BlueDemon.png",
+   "why": "사람꼴 괴물 — 자체 몸 없음(K-0120 대역·K-0122)"
+  },
+  {
+   "name": "Blue_Goldfish",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Blue_Goldfish.png",
+   "id": "blue_goldfish",
+   "out": "beast_Blue_Goldfish.png"
+  },
+  {
+   "name": "Blue_Tang",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Blue_Tang.png",
+   "id": "blue_tang",
+   "out": "beast_Blue_Tang.png"
+  },
+  {
+   "name": "Boar",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Boar.png",
+   "id": "boar",
+   "out": "beast_Boar.png"
+  },
+  {
+   "name": "Bull",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Bull.png",
+   "id": "bull",
+   "out": "beast_Bull.png"
+  },
+  {
+   "name": "Bunny",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Bunny.png",
+   "id": "bunny",
+   "out": "beast_Bunny.png"
+  },
+  {
+   "name": "Butterfly_Fish",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Butterfly_Fish.png",
+   "id": "butterflyfish",
+   "out": "beast_Butterfly_Fish.png"
+  },
+  {
+   "name": "Cardinal_Fish",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Cardinal_Fish.png",
+   "id": "cardinalfish",
+   "out": "beast_Cardinal_Fish.png"
+  },
+  {
+   "name": "Cat",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Cat.png",
+   "id": "cat",
+   "out": "beast_Cat.png"
+  },
+  {
+   "name": "Cat_Monster",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Cat_Monster.png",
+   "id": "cat_monster",
+   "out": "beast_Cat_Monster.png"
+  },
+  {
+   "name": "Clownfish",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Clownfish.png",
+   "id": "clownfish",
+   "out": "beast_Clownfish.png"
+  },
+  {
+   "name": "Coral_Grouper",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Coral_Grouper.png",
+   "id": "coral_grouper",
+   "out": "beast_Coral_Grouper.png"
+  },
+  {
+   "name": "Cow",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Cow.png",
+   "id": "cow",
+   "out": "beast_Cow.png"
+  },
+  {
+   "name": "Cow_Farm",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Cow_Farm.png",
+   "id": "cow_farm",
+   "out": "beast_Cow_Farm.png"
+  },
+  {
+   "name": "Cowfish",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Cowfish.png",
+   "id": "cowfish",
+   "out": "beast_Cowfish.png"
+  },
+  {
+   "name": "Crane",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Crane.png",
+   "id": "crane",
+   "out": "beast_Crane.png"
+  },
+  {
+   "name": "Deer",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Deer.png",
+   "id": "deer",
+   "out": "beast_Deer.png"
+  },
+  {
+   "name": "Demon",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Demon.png",
+   "id": null,
+   "out": "beast_Demon.png",
+   "why": "사람꼴 괴물 — 자체 몸 없음(K-0120 대역·K-0122)"
+  },
+  {
+   "name": "Dino",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Dino.png",
+   "id": "dino_pet",
+   "out": "beast_Dino.png"
+  },
+  {
+   "name": "Dolphin",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Dolphin.png",
+   "id": "dolphin",
+   "out": "beast_Dolphin.png"
+  },
+  {
+   "name": "Donkey",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Donkey.png",
+   "id": "donkey",
+   "out": "beast_Donkey.png"
+  },
+  {
+   "name": "Dragon",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Dragon.png",
+   "id": "dragon",
+   "out": "beast_Dragon.png"
+  },
+  {
+   "name": "Dragon_Evolved",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Dragon_Evolved.png",
+   "id": "dragon_evolved",
+   "out": "beast_Dragon_Evolved.png"
+  },
+  {
+   "name": "Elephant",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Elephant.png",
+   "id": "elephant",
+   "out": "beast_Elephant.png"
+  },
+  {
+   "name": "Fish1",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Fish1.png",
+   "id": "fish_a",
+   "out": "beast_Fish1.png"
+  },
+  {
+   "name": "Fish2",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Fish2.png",
+   "id": "fish_b",
+   "out": "beast_Fish2.png"
+  },
+  {
+   "name": "Fish3",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Fish3.png",
+   "id": "fish_c",
+   "out": "beast_Fish3.png"
+  },
+  {
+   "name": "Flatfish",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Flatfish.png",
+   "id": "flatfish",
+   "out": "beast_Flatfish.png"
+  },
+  {
+   "name": "Flower_Horn",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Flower_Horn.png",
+   "id": "flowerhorn",
+   "out": "beast_Flower_Horn.png"
+  },
+  {
+   "name": "Fox",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Fox.png",
+   "id": "fox",
+   "out": "beast_Fox.png"
+  },
+  {
+   "name": "Frog",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Frog.png",
+   "id": "frog",
+   "out": "beast_Frog.png"
+  },
+  {
+   "name": "Ghost",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Ghost.png",
+   "id": "ghost",
+   "out": "beast_Ghost.png"
+  },
+  {
+   "name": "Glub",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Glub.png",
+   "id": "glub",
+   "out": "beast_Glub.png"
+  },
+  {
+   "name": "Glub_Evolved",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Glub_Evolved.png",
+   "id": "glub_evolved",
+   "out": "beast_Glub_Evolved.png"
+  },
+  {
+   "name": "Goblin_Shark",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Goblin_Shark.png",
+   "id": "goblin_shark",
+   "out": "beast_Goblin_Shark.png"
+  },
+  {
+   "name": "Goldfish",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Goldfish.png",
+   "id": "goldfish",
+   "out": "beast_Goldfish.png"
+  },
+  {
+   "name": "Goleling",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Goleling.png",
+   "id": "goleling",
+   "out": "beast_Goleling.png"
+  },
+  {
+   "name": "Horse",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Horse.png",
+   "id": "horse",
+   "out": "beast_Horse.png"
+  },
+  {
+   "name": "Horse_Farm",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Horse_Farm.png",
+   "id": "horse_farm",
+   "out": "beast_Horse_Farm.png"
+  },
+  {
+   "name": "Horse_White",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Horse_White.png",
+   "id": "horse_white",
+   "out": "beast_Horse_White.png"
+  },
+  {
+   "name": "Humphead",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Humphead.png",
+   "id": "humphead",
+   "out": "beast_Humphead.png"
+  },
+  {
+   "name": "Husky",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Husky.png",
+   "id": "husky",
+   "out": "beast_Husky.png"
+  },
+  {
+   "name": "Hywirl",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Hywirl.png",
+   "id": "hywirl",
+   "out": "beast_Hywirl.png"
+  },
+  {
+   "name": "Koi",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Koi.png",
+   "id": "koi",
+   "out": "beast_Koi.png"
+  },
+  {
+   "name": "Koi_x2",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Koi_x2.png",
+   "id": "koi",
+   "out": "beast_Koi_x2.png"
+  },
+  {
+   "name": "Lionfish",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Lionfish.png",
+   "id": "lionfish",
+   "out": "beast_Lionfish.png"
+  },
+  {
+   "name": "Llama",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Llama.png",
+   "id": "llama",
+   "out": "beast_Llama.png"
+  },
+  {
+   "name": "Mandarin_Fish",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Mandarin_Fish.png",
+   "id": "mandarinfish",
+   "out": "beast_Mandarin_Fish.png"
+  },
+  {
+   "name": "Manta_ray",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Manta_ray.png",
+   "id": "manta_ray",
+   "out": "beast_Manta_ray.png"
+  },
+  {
+   "name": "Monkey",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Monkey.png",
+   "id": "monkey",
+   "out": "beast_Monkey.png"
+  },
+  {
+   "name": "Monkroose",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Monkroose.png",
+   "id": "monkroose",
+   "out": "beast_Monkroose.png"
+  },
+  {
+   "name": "Moorish_Idol",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Moorish_Idol.png",
+   "id": "moorish_idol",
+   "out": "beast_Moorish_Idol.png"
+  },
+  {
+   "name": "Mushnub",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Mushnub.png",
+   "id": "mushnub",
+   "out": "beast_Mushnub.png"
+  },
+  {
+   "name": "Orc",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Orc.png",
+   "id": null,
+   "out": "beast_Orc.png",
+   "why": "사람꼴 괴물 — 자체 몸 없음(K-0120 대역·K-0122)"
+  },
+  {
+   "name": "Owl",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Owl.png",
+   "id": "owl",
+   "out": "beast_Owl.png"
+  },
+  {
+   "name": "Panda",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Panda.png",
+   "id": "panda",
+   "out": "beast_Panda.png"
+  },
+  {
+   "name": "Parasaurolophus",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Parasaurolophus.png",
+   "id": "parasaurolophus",
+   "out": "beast_Parasaurolophus.png"
+  },
+  {
+   "name": "Parrot_Fish",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Parrot_Fish.png",
+   "id": "parrotfish",
+   "out": "beast_Parrot_Fish.png"
+  },
+  {
+   "name": "Pig",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Pig.png",
+   "id": "pig",
+   "out": "beast_Pig.png"
+  },
+  {
+   "name": "Pigeon",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Pigeon.png",
+   "id": "pigeon",
+   "out": "beast_Pigeon.png"
+  },
+  {
+   "name": "Pink_Slime",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Pink_Slime.png",
+   "id": "pink_slime",
+   "out": "beast_Pink_Slime.png"
+  },
+  {
+   "name": "Piranha",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Piranha.png",
+   "id": "piranha",
+   "out": "beast_Piranha.png"
+  },
+  {
+   "name": "Puffer",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Puffer.png",
+   "id": "puffer",
+   "out": "beast_Puffer.png"
+  },
+  {
+   "name": "Pug",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Pug.png",
+   "id": "pug",
+   "out": "beast_Pug.png"
+  },
+  {
+   "name": "Rat",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Rat.png",
+   "id": "rat",
+   "out": "beast_Rat.png"
+  },
+  {
+   "name": "Red_Snapper",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Red_Snapper.png",
+   "id": "red_snapper",
+   "out": "beast_Red_Snapper.png"
+  },
+  {
+   "name": "Robot_Drone",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Robot_Drone.png",
+   "id": "robot_drone",
+   "out": "beast_Robot_Drone.png"
+  },
+  {
+   "name": "Robot_Large",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Robot_Large.png",
+   "id": "robot_large",
+   "out": "beast_Robot_Large.png"
+  },
+  {
+   "name": "Robot_Walker",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Robot_Walker.png",
+   "id": "robot_walker",
+   "out": "beast_Robot_Walker.png"
+  },
+  {
+   "name": "Royal_Gramma",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Royal_Gramma.png",
+   "id": "royal_gramma",
+   "out": "beast_Royal_Gramma.png"
+  },
+  {
+   "name": "Shark",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Shark.png",
+   "id": "shark",
+   "out": "beast_Shark.png"
+  },
+  {
+   "name": "Shark_x2",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Shark_x2.png",
+   "id": "great_white",
+   "out": "beast_Shark_x2.png"
+  },
+  {
+   "name": "Sheep",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Sheep.png",
+   "id": "sheep",
+   "out": "beast_Sheep.png"
+  },
+  {
+   "name": "ShibaInu",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_ShibaInu.png",
+   "id": "shiba",
+   "out": "beast_ShibaInu.png"
+  },
+  {
+   "name": "Snake",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Snake.png",
+   "id": "snake",
+   "out": "beast_Snake.png"
+  },
+  {
+   "name": "Snake_angry",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Snake_angry.png",
+   "id": "snake",
+   "out": "beast_Snake_angry.png"
+  },
+  {
+   "name": "Squidle",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Squidle.png",
+   "id": "squidle",
+   "out": "beast_Squidle.png"
+  },
+  {
+   "name": "Stag",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Stag.png",
+   "id": "stag",
+   "out": "beast_Stag.png"
+  },
+  {
+   "name": "Stegosaurus",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Stegosaurus.png",
+   "id": "stegosaurus",
+   "out": "beast_Stegosaurus.png"
+  },
+  {
+   "name": "Sunfish",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Sunfish.png",
+   "id": "sunfish",
+   "out": "beast_Sunfish.png"
+  },
+  {
+   "name": "Swordfish",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Swordfish.png",
+   "id": "swordfish",
+   "out": "beast_Swordfish.png"
+  },
+  {
+   "name": "Tang",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Tang.png",
+   "id": "tang",
+   "out": "beast_Tang.png"
+  },
+  {
+   "name": "Tetra",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Tetra.png",
+   "id": "tetra",
+   "out": "beast_Tetra.png"
+  },
+  {
+   "name": "Tiger",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Tiger.png",
+   "id": "tiger",
+   "out": "beast_Tiger.png"
+  },
+  {
+   "name": "Trex",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Trex.png",
+   "id": "trex",
+   "out": "beast_Trex.png"
+  },
+  {
+   "name": "Triceratops",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Triceratops.png",
+   "id": "triceratops",
+   "out": "beast_Triceratops.png"
+  },
+  {
+   "name": "Tuna",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Tuna.png",
+   "id": "tuna",
+   "out": "beast_Tuna.png"
+  },
+  {
+   "name": "Turbot",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Turbot.png",
+   "id": "turbot",
+   "out": "beast_Turbot.png"
+  },
+  {
+   "name": "Velociraptor",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Velociraptor.png",
+   "id": "raptor",
+   "out": "beast_Velociraptor.png"
+  },
+  {
+   "name": "Wasp",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Wasp.png",
+   "id": "wasp",
+   "out": "beast_Wasp.png"
+  },
+  {
+   "name": "Whale",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Whale.png",
+   "id": "whale",
+   "out": "beast_Whale.png"
+  },
+  {
+   "name": "Wizard",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Wizard.png",
+   "id": null,
+   "out": "beast_Wizard.png",
+   "why": "사람꼴 괴물 — 자체 몸 없음(K-0120 대역·K-0122)"
+  },
+  {
+   "name": "Wolf",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Wolf.png",
+   "id": "wolf",
+   "out": "beast_Wolf.png"
+  },
+  {
+   "name": "Worm",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Worm.png",
+   "id": "worm",
+   "out": "beast_Worm.png"
+  },
+  {
+   "name": "Yellow_Tang",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Yellow_Tang.png",
+   "id": "yellow_tang",
+   "out": "beast_Yellow_Tang.png"
+  },
+  {
+   "name": "Yeti",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Yeti.png",
+   "id": null,
+   "out": "beast_Yeti.png",
+   "why": "사람꼴 괴물 — 자체 몸 없음(K-0120 대역·K-0122)"
+  },
+  {
+   "name": "Zebra",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Zebra.png",
+   "id": "zebra",
+   "out": "beast_Zebra.png"
+  },
+  {
+   "name": "Zebra_Clown_Fish",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Zebra_Clown_Fish.png",
+   "id": "zebra_clownfish",
+   "out": "beast_Zebra_Clown_Fish.png"
+  },
+  {
+   "name": "Zombie",
+   "old": "saga-web/saga-go/assets/sprites2d/beast_Zombie.png",
+   "id": null,
+   "out": "beast_Zombie.png",
+   "why": "사람꼴 괴물 — 자체 몸 없음(K-0120 대역·K-0122)"
+  }
+ ],
+ "sheets": [
+  {
+   "name": "deer",
+   "old": "saga-web/saga-forest/assets/sprites2d/animals/deer.png",
+   "id": "deer",
+   "cw": 41,
+   "ch": 33,
+   "out": "animals/deer.png"
+  },
+  {
+   "name": "fox",
+   "old": "saga-web/saga-forest/assets/sprites2d/animals/fox.png",
+   "id": "fox",
+   "cw": 35,
+   "ch": 32,
+   "out": "animals/fox.png"
+  },
+  {
+   "name": "squirrel",
+   "old": "saga-web/saga-forest/assets/sprites2d/animals/squirrel.png",
+   "id": "squirrel",
+   "cw": 30,
+   "ch": 28,
+   "out": "animals/squirrel.png"
+  },
+  {
+   "name": "frog",
+   "old": "saga-web/saga-forest/assets/sprites2d/animals/frog.png",
+   "id": "frog",
+   "cw": 24,
+   "ch": 21,
+   "out": "animals/frog.png"
+  },
+  {
+   "name": "bird",
+   "old": "saga-web/saga-forest/assets/sprites2d/animals/bird.png",
+   "id": "sparrow",
+   "cw": 28,
+   "ch": 24,
+   "out": "animals/bird.png"
+  },
+  {
+   "name": "wolf",
+   "old": "saga-web/saga-forest/assets/sprites2d/animals/wolf.png",
+   "id": "wolf",
+   "cw": 44,
+   "ch": 36,
+   "out": "animals/wolf.png"
+  },
+  {
+   "name": "rabbit",
+   "old": "saga-web/saga-forest/assets/sprites2d/animals/rabbit.png",
+   "id": "rabbit",
+   "cw": 44,
+   "ch": 36,
+   "out": "animals/rabbit.png"
+  },
+  {
+   "name": "duck",
+   "old": "saga-web/saga-forest/assets/sprites2d/animals/duck.png",
+   "id": "duck",
+   "cw": 44,
+   "ch": 36,
+   "out": "animals/duck.png"
+  },
+  {
+   "name": "snake",
+   "old": "saga-web/saga-forest/assets/sprites2d/animals/snake.png",
+   "id": "snake",
+   "cw": 44,
+   "ch": 36,
+   "out": "animals/snake.png"
+  },
+  {
+   "name": "mushnub",
+   "old": "saga-web/saga-forest/assets/sprites2d/animals/mushnub.png",
+   "id": "mushnub",
+   "cw": 44,
+   "ch": 36,
+   "out": "animals/mushnub.png"
+  },
+  {
+   "name": "spacebug",
+   "old": "saga-web/saga-forest/assets/sprites2d/animals/spacebug.png",
+   "id": "space_bug",
+   "cw": 44,
+   "ch": 36,
+   "out": "animals/spacebug.png"
+  }
+ ]
+}

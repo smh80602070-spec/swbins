@@ -1323,6 +1323,56 @@
      ]
     }
    ]
+  },
+  {
+   "id": "beast2d-web",
+   "src": "saga-assets/sprites2d-creatures/beast",
+   "include": [
+    "beast_*.png"
+   ],
+   "note": "K-0114 짐승 2D 지도 스탬프·펫 그림(96px 옆모습) — 옛 bake-beasts.mjs(빌린 Quaternius·Poly 몸) → 자체 creatures3d 렌더(beast2d_rebake.py). 사람꼴 괴물 8(Alien·Alien_2·BlueDemon·Demon·Orc·Wizard·Yeti·Zombie)은 자체 몸이 없어 옛 그림 그대로(K-0120·K-0122). 2나락은 같은 그림 16장(sprite.js PET_IMG)",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-go/assets/sprites2d"
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-dungeon/assets/sprites2d",
+     "rename": {
+      "beast_Alpaca.png": "beast_Alpaca.png",
+      "beast_Bull.png": "beast_Bull.png",
+      "beast_Cow.png": "beast_Cow.png",
+      "beast_Dolphin.png": "beast_Dolphin.png",
+      "beast_Donkey.png": "beast_Donkey.png",
+      "beast_Fox.png": "beast_Fox.png",
+      "beast_Horse.png": "beast_Horse.png",
+      "beast_Horse_White.png": "beast_Horse_White.png",
+      "beast_Koi.png": "beast_Koi.png",
+      "beast_Manta_ray.png": "beast_Manta_ray.png",
+      "beast_Shark.png": "beast_Shark.png",
+      "beast_Stag.png": "beast_Stag.png",
+      "beast_Stegosaurus.png": "beast_Stegosaurus.png",
+      "beast_Trex.png": "beast_Trex.png",
+      "beast_Triceratops.png": "beast_Triceratops.png",
+      "beast_Velociraptor.png": "beast_Velociraptor.png"
+     }
+    }
+   ]
+  },
+  {
+   "id": "beast2d-forest-sheets",
+   "src": "saga-assets/sprites2d-creatures/beast/animals",
+   "include": [
+    "*.png"
+   ],
+   "note": "K-0114 3마을 들짐승 동작 시트 11(4줄 서기·달리기 × 왼·오른, 4컷, 칸 크기 = village-view.js ANIMAL_SPRITE) — 자체 creatures3d Idle·Run 클립(render_sheet.py). 옛 = OGA 2D 5 + 빌린 3D 구운 것 6",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-forest/assets/sprites2d/animals"
+    }
+   ]
   }
  ]
 }

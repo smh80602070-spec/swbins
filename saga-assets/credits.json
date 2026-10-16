@@ -547,6 +547,24 @@
    ]
   },
   {
+   "tool": "beast2d_rebake.py --sheets (Blender render_sheet.py, Idle·Run 4컷)",
+   "model": "",
+   "license": "CC0-1.0 (자체 3D 몸 렌더 — 외부 입력 없음, 몸 출처는 creatures3d license)",
+   "count": 11,
+   "where": [
+    "saga-assets/sprites2d-creatures/beast/animals"
+   ]
+  },
+  {
+   "tool": "beast2d_rebake.py (Blender render_sprite.py)",
+   "model": "",
+   "license": "CC0-1.0 (자체 3D 몸 렌더 — 외부 입력 없음, 몸 출처는 creatures3d license)",
+   "count": 103,
+   "where": [
+    "saga-assets/sprites2d-creatures/beast"
+   ]
+  },
+  {
    "tool": "uigen.py",
    "model": "",
    "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
@@ -817,16 +835,17 @@
   }
  ],
  "doc_sections": {
-  "total": 259,
+  "total": 264,
   "by_license": {
-   "CC0": 188,
-   "MIT": 8,
+   "CC0": 193,
+   "MIT": 13,
    "CC-BY": 29,
    "Kenney(CC0)": 39,
    "Mixamo": 11,
    "GPL": 2,
-   "OpenRAIL": 10,
-   "OFL": 1
+   "OpenRAIL": 15,
+   "Apache-2.0": 3,
+   "OFL": 2
   },
   "unknown": [
    {

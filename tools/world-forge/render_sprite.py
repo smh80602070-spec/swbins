@@ -16,8 +16,21 @@ size, az, el = opt('--size', 512), opt('--az', 45.0), opt('--el', 30.0)
 bpy.ops.wm.read_factory_settings(use_empty=True)
 sc = bpy.context.scene
 bpy.ops.import_scene.gltf(filepath=model)
+if '--tight' in a:  # glTF 가져오기가 뼈 표시 모양으로 만드는 Icosphere(2m)가 작은 몸의 틀을 키운다(K-0114) — 뼈 모양 물체는 지운다
+    shapes = {pb.custom_shape for o in bpy.data.objects if o.type == 'ARMATURE' for pb in o.pose.bones if pb.custom_shape}
+    for o in shapes:
+        bpy.data.objects.remove(o, do_unlink=True)
 objs = [o for o in bpy.data.objects if o.type == 'MESH']
-pts = [o.matrix_world @ Vector(c) for o in objs for c in o.bound_box]
+if '--tight' in a:  # 뼈로 움직인 뒤 실제 정점으로 잰다(K-0114 — 뼈대 배율이 큰 몸은 bound_box 가 수십 배 커서 그림이 점이 된다)
+    dg = bpy.context.evaluated_depsgraph_get()
+    pts = []
+    for o in objs:
+        oe = o.evaluated_get(dg)
+        me = oe.to_mesh()
+        pts += [oe.matrix_world @ v.co for v in me.vertices]
+        oe.to_mesh_clear()
+else:
+    pts = [o.matrix_world @ Vector(c) for o in objs for c in o.bound_box]
 lo = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)))
 hi = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
 ctr = (lo + hi) / 2
