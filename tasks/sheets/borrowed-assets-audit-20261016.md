@@ -20,7 +20,7 @@
 | 10 | 유니티 — Poly Haven 스캔 소품 `Art/Props/PolyHaven` 181 · 재질 `Art/Environment/PBR` 27 · Quaternius 식물 9 · Kenney 효과음 6 · 짐승 Fox·Snake·Birb(출처 확인 필요) · LiberationSans | `saga-unity/Assets` | ≈230 | Kenney 소리는 수신함 10-12 |
 | 11 | 고돗 — **Quaternius Stylized Nature 68(`assets/vegetation`·`rocks`, 씬 배치됨)** · **KayKit 무기 4(`assets/weapons`)** · 옷장 VRoid `AvatarSample_A` 96(공식 샘플, 허용판 교체는 K-0088 사람 몫) · 던전 문틀 Kenney 모양(K-0089) · 나무 정육면체 잎·괴물 다면체·섬·방(수신함 10-13) | `saga-godot/assets` | — | 수신함 |
 | 12 | 글꼴(OFL Noto·Nanum·Liberation)·Lucide 아이콘(1만리 `js/icon.js`) | 웹·유니티 | — | 수신함 10-10 남은 몫 |
-| 13 | 옛 몸 렌더 밑그림 AI 그림 49 — 몬스터 초상 32·탈것 용 1·RTS 건물 7·도시 9 | portraits-monster·mount·web2d/rts·world/sprite | 49 | K-0113 후속 다시 그림 |
+| 13 | 옛 몸 렌더 밑그림 AI 그림 49 — 몬스터 초상 32·탈것 용 1·RTS 건물 7·도시 9 | portraits-monster·mount·web2d/rts·world/sprite | 49 | **끝 10-16**(+ 5천하 성 3) |
 | 14 | char-forge 옷 결 사진(Poly Haven, `tools/char-forge/sources.json` "polyhaven") | 인물 공방 | 출하물 0(유니티 `Art/CharactersForge` 는 license 166 만 남고 몸은 이미 지움) | 도구만 — 남은 license 정리 |
 
 ## 추천 순서(R-0 가 티켓으로)

@@ -342,11 +342,11 @@ def castle_init():
 def castle_batch():
     items = []
     for k, subj in CASTLE.items():
-        for c in (1, 2):
+        for c in (1, 2, 3, 4):
             sd = int(hashlib.md5(f'castle:{k}:{c}'.encode()).hexdigest()[:8], 16)
             items.append({'id': f'castle_{k}_{c}', 'seed': sd, 'prompt': f'{subj}, three-quarter view from above, {STYLE}', 'negative': NEG,
                           'init_image': os.path.join(HERE, '_out', 'realm_castle_init', f'castle_{k}.png'), 'denoise': 0.6 + 0.04 * (c - 1),
-                          'meta': {'mode': 'img2img', 'init_image': f'castle_{k}.png (정본 지물 스프라이트 콜라주 밑그림)', 'denoise': 0.6 + 0.04 * (c - 1), 'init_license': 'CC0-1.0 (코드 형태 + Poly Haven CC0 재질) · AI 그림체 B'}})
+                          'meta': {'mode': 'img2img', 'init_image': f'castle_{k}.png (정본 지물 스프라이트 콜라주 밑그림)', 'denoise': 0.6 + 0.04 * (c - 1), 'init_license': 'CC0-1.0 (코드 형태 + 자체 PBR 재질 K-0113) · AI 그림체 B'}})
     batch = {'model': 'animagine-xl-4.0-opt', 'out': 'realm_castle_i2i',
              'defaults': {'prompt_prefix': 'masterpiece, high score, great score, absurdres', 'width': 768, 'height': 768, 'steps': 28, 'cfg': 5.5, 'sampler': 'Euler a', 'negative': NEG},
              'items': items}
