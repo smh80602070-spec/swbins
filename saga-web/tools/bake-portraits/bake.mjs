@@ -27,6 +27,7 @@ import os from 'node:os';
 
 const args = process.argv.slice(2);
 const gameDir = path.resolve(args.find(a => !a.startsWith('--')) || '.');
+const SHARED_DIR = path.resolve(gameDir, '..', 'shared');
 const opt = Object.fromEntries(args.filter(a => a.startsWith('--')).map(a => { const [k, v] = a.slice(2).split('='); return [k, v === undefined ? true : v]; }));
 const CHROME = process.env.CHROME || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const SQ = { w: 96, h: 96, tag: 's' }, CARD = { w: 150, h: 172, tag: 'c' };
@@ -72,8 +73,11 @@ const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; cha
 const server = http.createServer((req, res) => {
   let p = decodeURIComponent(req.url.split('?')[0]);
   if (p.endsWith('/')) p += 'index.html';
-  const f = path.join(gameDir, p);
-  if (!f.startsWith(gameDir) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); res.end(); return; }
+  // /_shared/… 는 saga-web/shared/… 로 잇는다(serve-game.mjs 와 같다 — 통일 3D 에셋 creatures3d·world3d 등, K-0114 넘김)
+  let base = gameDir, sub = p;
+  if (p.startsWith('/_shared/')) { base = SHARED_DIR; sub = p.slice('/_shared'.length); }
+  const f = path.join(base, sub);
+  if ((f !== base && !f.startsWith(base + path.sep)) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); res.end(); return; }
   res.writeHead(200, { 'Content-Type': MIME[path.extname(f).toLowerCase()] || 'application/octet-stream' });
   fs.createReadStream(f).pipe(res);
 });

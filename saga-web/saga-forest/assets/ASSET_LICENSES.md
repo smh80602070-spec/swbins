@@ -82,50 +82,9 @@
 |---|---|---|
 | `Fox.glb` | `animals_pack` | 여우 |
 
-## Poly by Google — 토끼·다람쥐·오리·새 (poly.pizza 경유, 2026-09-09)
+## saga-go 에서 옮긴 모델 (2026-09-09~11)
 
-PLAN 16절 "아직 못 찾은 CC0"였던 넷을 채웠다 — `data-village.js`의 `ANIMALS`
-에 새 kind로 등록(사슴·여우·늑대와 나란히, 숲 배경 짐승용). 위 Quaternius·
-saga-go 쪽과 달리 이 넷은 **저작자 표시가 필요한 CC-BY 3.0**이다(`saga-dungeon`이
-이미 Tiger·Bear 등 일곱 마리를 이 경로로 받아 둔 것과 같은 출처).
-
-| 항목 | |
-|---|---|
-| **만든 이** | Poly by Google |
-| **라이선스** | **CC-BY 3.0** — 저작자 표시 필요 |
-| **받은 곳** | `poly.pizza`(Google Poly 아카이브 미러), `static.poly.pizza/<uuid>.glb` 직접 다운로드, 로그인 불필요 |
-
-| 파일 | poly.pizza | 이 판에서 쓰는 곳 |
-|---|---|---|
-| `models/animals/Rabbit.glb`("Cottontail rabbit") | `/m/3vvONbRCuEF` | **토끼**(`rabbit`) |
-| `models/animals/Squirrel.glb` | `/m/2WqY_AFEn-M` | **다람쥐**(`squirrel`) |
-| `models/animals/Duck.glb` | `/m/6HpauUCfIAb` | **오리**(`duck`) |
-| `models/animals/Bird.glb`("Sparrow") | `/m/eVTHotZ9Bc_` | **새**(`bird`) |
-
-> **Cottontail rabbit · Squirrel · Duck · Sparrow** — © **Poly by Google**,
-> [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/). `poly.pizza`를
-> 거쳐 받았다. 크기만 맞추었고 형상은 그대로다.
-
-**용량 손질** — 받은 그대로는 텍스처가(Rabbit·Squirrel·Bird) 2048×2048 PNG라
-3.8MB/2.0MB/2.3MB였다. `gltf-transform`으로 `resize`(768px) →
-`jpeg --formats png`(품질 85, **`--formats png` 를 안 주면 조용히 아무것도
-안 바뀐다** — 기본값이 "이미 jpeg인 텍스처만 다시 압축"이라 원본 PNG를
-그냥 지나친다, 이번에 직접 겪었다)로 줄였다 — Rabbit 3.82MB→157KB,
-Squirrel 2.02MB→126KB, Bird 2.27MB→101KB. Duck 은 텍스처가 아예 없어(단색
-버텍스 컬러, 27KB) 그대로 뒀다. 지오메트리는 넷 다 가벼워(수천 정점)
-심플리파이 없이 텍스처만 줄였다. 넷 다 애니메이션 클립이 없다(원본
-자체에 없음).
-
-**2026-09-10 바로 위 문단 정정 — "클립이 있든 없든 화면상 차이는 없다"는
-더 이상 안 맞다.** `Deer.glb`·`Fox.glb`·`Wolf.glb`(Quaternius)엔 실제로
-Idle·Walk 등 클립이 열둘 넘게 있는데(직접 GLB 를 열어 확인), 그동안
-`village-view3d.js`의 스캐터 렌더러가 짐승을 나무·바위처럼 정지 오브젝트로만
-세워(mixer 를 안 만들었다, `hero`만 재생했다) 있는 클립을 안 썼다 —
-"움직이는 모션을 더 자연스럽게" 요청으로 `asset3d.js`의 `buildGeneric()`이
-원본에 클립이 있으면 `hero`와 같은 결로 mixer·actions 를 실어 주게 고쳐서
-이제 사슴·여우·늑대도 걸을 때 실제로 다리가 움직인다(`syncScatter()`가
-매 프레임 재생). **토끼·다람쥐·오리·새 넷은 여전히 원본 자체에 클립이
-없어 정지 모형 그대로다** — 이건 자산의 한계지 렌더러 탓이 아니다.
+옛 Poly by Google(CC-BY 3.0) 토끼·다람쥐·오리·새 모델 절은 그 모델과 구운 그림이 이 판에서 다 없어져 지웠다(W-0269 — 들짐승 2D 는 아래 "들짐승 2D 시트 11" 절, 자체 렌더).
 
 ### 넣은 파일 — saga-go 에서 그대로 옮긴 것 (**md5 동일**, 새로 받지 않았다)
 
@@ -282,41 +241,6 @@ Google(위 78절)에서 따로 구해 이미 채웠다. 2D 쪽(동물 정지 초
 지도 위 걷는 그림)은 아래 "OpenGameArt — Seasons of Forest Animal Pack"
 절 참고 — 사슴·여우·다람쥐·개구리·새 다섯만 채웠고, 늑대·토끼·오리·뱀
 넷은 2026-09-10 시점에도 맞는 CC0 를 못 찾았다.
-
----
-
-## OpenGameArt — Seasons of Forest Animal Pack, 무료 샘플 (`assets/sprites2d/animals/`, 2026-09-10)
-
-| 항목 | |
-|---|---|
-| **만든 이** | inkbubi (<https://inkbubi.itch.io/seasons-of-forest-animal-pack>의 무료 샘플) |
-| **라이선스** | **CC0 1.0 Universal** (퍼블릭 도메인 헌정) — 받은 zip 안 `license.txt`에
-  "This work has been dedicated to the public domain under the Creative Commons
-  CC0 license. No credit is required, but it's appreciated." 라고 명시 |
-| **저작자 표시** | 필요 없다. 그래도 적어 둔다 |
-| **재배포** | 허용된다 — 이 무료 샘플만 CC0 다(유료 정식판은 라이선스가 다르다,
-  이 판에는 무료 샘플만 받았다) |
-| **받은 곳** | <https://opengameart.org/content/free-sample-16x16-pixel-forest-animal-pack-%E2%80%93-top-down-rpg-style> —
-  `seasons_of_forest_animal_pack_free_v1.zip` |
-
-원본은 여우(fox)·암사슴(doe)·올빼미(owl)·다람쥐(squirle)·개구리(frog) 다섯 종을
-idle·run 애니메이션으로 4방향(전·후·좌·우)씩 준다. 이 게임은 `a.facing`이
-좌/우(-1/1)만 추적해서 **좌·우 두 방향만** 골라 받았다 — 직접 PIL 로 종별
-아틀라스 한 장씩(4행: idleLeft·idleRight·runLeft·runRight × 최대 4열)으로
-다시 구웠다(원본 앞/뒤 프레임은 안 옮겼다).
-
-| 원본 폴더 | 이 판의 kind(`VD.ANIMALS`) | 파일 |
-|---|---|---|
-| `doe` | `deer`(사슴) | `deer.png` |
-| `fox` | `fox`(여우) | `fox.png` |
-| `squirle` | `squirrel`(다람쥐) | `squirrel.png` |
-| `frog` | `frog`(개구리) | `frog.png` |
-| `owl` | `bird`(새) — 올빼미가 참새 등 다른 새를 대신한다 | `bird.png` |
-
-`village-view.js`의 `drawAnimal()`이 `ANIMAL_SPRITE` 표에 있는 다섯 종만 이
-아틀라스로 그린다 — 나머지 넷(늑대·토끼·오리·뱀)은 표에 없어 그대로 emoji
-fallback을 탄다(자동, 새 분기 없음). 이미지가 아직 안 실렸으면(첫 프레임)
-같은 fallback을 잠깐 탄다.
 
 ---
 
@@ -1058,11 +982,10 @@ Quaternius "Ultimate Monsters"(CC0, 사가나락 `assets/models/monsters/quatern
 | 묵방울·어둑귀·눈머리·겹날주머니·고깔도사 | Pink_Slime·Ghost·Yeti·Glub_Evolved·Wizard |
 | 누렁날개·노을용·물이무기·별손님·복고양이 | Alpaking·Dragon·Snake_angry·Alien_2(두발 외계인 — 방울형 Alien 은 사가만리 들판 적과 같은 파일이라 피함)·Cat(괴물 고양이) |
 
-## 들짐승 2D 시트 여섯 — 3D 모델을 옆에서 구운 것 (2026-09-25, `assets/sprites2d/animals/`)
+## 들짐승 2D 시트 11 (`assets/sprites2d/animals/`) — 2026-10-16 자체 렌더(K-0114)
 
-`wolf`·`snake`·`mushnub`·`spacebug`.png 는 각 3D 모델(Quaternius CC0 — 위 절들)을, `rabbit`·`duck`.png 는 **Poly by Google**
-"Cottontail rabbit"·"Duck"(CC-BY 3.0, 위 절)을 `tools/bake-portraits/bake.mjs saga-forest --sprites=animals` 로 구운 파생 그림이다.
-> **rabbit.png · duck.png** — © **Poly by Google**, [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/) 모델에서 렌더. **저작자 표시 필요** — 이 문구가 그 표시다.
+사슴·여우·늑대·다람쥐·새·토끼·오리·개구리·뱀·버섯·우주벌레 11장은 자체 `creatures3d` 몸을 Blender `render_sheet.py`(Idle·Run 4컷)로 구운 시트다(`saga-assets/sprites2d-creatures/beast/animals`). 출처·도구·모델은 맨 아래 "자체 산출 사본 (자동)" 절과 정본 옆 `license.json` 이 정본이다.
+옛 OpenGameArt "Seasons of Forest" 원화·Poly by Google(CC-BY 3.0) 모델에서 구운 그림은 더 없어 그 절들을 지웠다(W-0269) — 이 판에 저작자 표시가 필요한 짐승 그림이 남지 않는다.
 
 ## AI 생성 도감 초상 (2026-09-29)
 | 항목 | 내용 |

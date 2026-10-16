@@ -1847,20 +1847,9 @@ VRoid Studio 공식 CC0 샘플 AvatarSample_A/B/C(github.com/madjin/vrm-samples,
 것이 없고**, 이 그림은 파생물이므로 각 모델의 라이선스가 그대로 따른다: VRoid 몸(`people/anime/`)·Quaternius·KayKit·OGA 사람은 위 해당 절,
 poly.pizza 의 CC-BY 몸은 **위 절의 저작자 표시를 그대로 이행**한다. 모델을 바꾸면 이 절과 위 절을 같이 본다.
 
-## 도감(펫) 초상 — 3D 굽기가 안 되는 91종을 사가만리 `beast_*.png` 16장으로 일부 채움 (2026-09-22)
+## 도감(펫) 초상 — 사가만리 `beast_*.png` 16장으로 일부 채움 (2026-09-22) — 2026-10-16 자체 렌더로 바뀜(K-0114)
 
-`assets/portraits/pet/`(14종, 위 "도감(펫) 초상 실사화" 절)와 `asset3d.js` REG 에 없어 3D 굽기 자체가 안 되는 나머지
-91종(SAGA-HANDOFF·이 판 `HANDOFF.md` 2026-09-22 절 — `bake-portraits --kind=pet` 210회 재시도 중 신규분 0회 성공)은
-여태 절차적 `beast()` 그림뿐이었다. 그중 **종이 실제로 겹치는 16종**만 `saga-go/assets/sprites2d/beast_*.png`(CC0, 원본
-출처는 `../saga-go/assets/ASSET_LICENSES.md` "짐승 도감(펫) 지도 스탬프" 절의 Quaternius GLB 들 — 재배포 조건 없음)을
-**그대로 md5 동일 복사**해 썼다: `beast_Fox`·`Dolphin`·`Shark`·`Manta_ray`·`Stag`·`Horse_White`·`Horse`·`Donkey`·`Cow`·
-`Bull`·`Stegosaurus`·`Trex`·`Triceratops`·`Velociraptor`·`Koi`·`Alpaca`. 사가만리는 형태(form)별 여럿 중 해시로 아무거나
-고르지만(배경 채움용), 이 판 펫은 이름이 있는 특정 종이라 **종 이름이 실제로 맞는 자리에만** 못 박아 썼다(`PET_IMG`,
-`js/sprite.js`) — 예: `pt_shark_2`(백상아리)·`pt_horse_farm`(짐말)처럼 정확히 겹치는 파일이 없는 근연종은 같은 계열
-그림을 재사용(상어·말)하고, 안 맞는 종(물고기 대다수·신수·포켓몬 오마주)은 그대로 절차적 그림에 남겼다. 96×96 PNG라
-장당 3~8KB, 16장 합쳐 76KB. 도감 목록(`portrait()`)·상세화면(`portraitCard()`) 양쪽 다 `diabloize()` 후처리를 그대로
-건다(이 판 공통 화풍). 남은 75종(신수 11·포켓몬 16·안 맞는 물고기 등 48)은 여전히 절차적 그림 — 재도전하려면 이 절과
-`HANDOFF.md` 2026-09-22 절을 같이 본다.
+3D 굽기가 안 되는 펫 중 종이 겹치는 16종에 쓰는 `sprites2d/beast_*.png` 16장은 1만리와 같은 자체 렌더(`saga-assets/sprites2d-creatures/beast`, creatures3d 몸)다. 출처·도구·모델은 맨 아래 "자체 산출 사본 (자동)" 절과 정본 옆 `license.json` 이 정본이다.
 
 ## Poly Haven — HDRI 환경광 (`assets/hdri/alps_field_1k.hdr`)
 

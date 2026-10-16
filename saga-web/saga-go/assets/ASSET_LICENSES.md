@@ -1224,24 +1224,14 @@ VRoid Studio 공식 CC0 샘플 AvatarSample_A/B/C(github.com/madjin/vrm-samples,
 표정 모프 타깃(54~57개)을 떼고 같은 재질 프리미티브를 합쳤다(정점·뼈·재질·텍스처는 그대로, 용량 25MB → 11MB,
 캐릭터당 드로우콜 90~135 → 14~19). 다섯 판 복사본은 같은 파일(md5 동일)이다.
 
-## 짐승 2D 그림 (`assets/sprites2d/beast_*.png`, 32장) — 위 3D 모델을 구운 파생물
+## 짐승 2D 그림 (`assets/sprites2d/beast_*.png`) — 2026-10-16 자체 렌더로 다시 구움(K-0114)
 
-`tools/bake-icons`(헤드리스 굽기)가 이 판 3D 모델을 그대로 찍어 만든 그림이다 — 새로 받은 바깥 에셋은 없다.
-**원본 모델의 라이선스(전부 CC0)가 그대로 따른다.** `js/sprite.js` 의 `beastImgOf()`·`BG_BEAST_FILE` 가 쓴다.
+`beast_*.png` 111장 중 103장은 자체 `shared/assets/creatures3d` 몸을 Blender 로 구운 그림(`saga-assets/sprites2d-creatures/beast`)으로 바뀌었다. 출처·도구·모델은 맨 아래 "자체 산출 사본 (자동)" 절과 정본 옆 `license.json` 이 정본이다.
+옛 3D 파생물로 **남은 8장**(사람꼴 괴물 — 자체 몸 없음, K-0120·K-0122 대기): `beast_Alien`·`beast_Alien_2`·`beast_BlueDemon`·`beast_Demon`·`beast_Orc`·`beast_Wizard`·`beast_Yeti`·`beast_Zombie` — 원본은 Quaternius `Ultimate Monsters`·들판 적 `models/foes/`(CC0, 위 절들)를 `tools/bake-icons/bake-beasts.mjs` 로 구운 파생 그림이라 원본 라이선스(CC0)를 따른다.
 
-| 그림 | 원본 모델 | 원본 묶음(이 문서 위 절) |
-|---|---|---|
-| `beast_{Deer,Wolf,Cow,Koi,Pigeon,Birb}.png` | `models/animals/` 같은 이름 | Quaternius 들짐승 다섯 종 + 까치 |
-| `beast_{Alpaca,Bull,Donkey,Fox,Husky,ShibaInu,Stag,Horse,Horse_White}.png` | 〃 | Quaternius `animals_pack` |
-| `beast_{Frog,Snake,Snake_angry}.png` | 〃 | Quaternius `easy_enemies_pack` |
-| `beast_{Trex,Triceratops,Stegosaurus,Velociraptor}.png` | 〃 | Quaternius `dinosaurs_pack` |
-| `beast_{Shark,Dolphin,Manta_ray}.png` | 〃 | Quaternius `fish_pack` |
-| `beast_{Orc,Demon,BlueDemon}.png` | `Orc.gltf`·`Demon.gltf`·`BlueDemon.gltf`(오우거 형태 절) | Quaternius `Ultimate Monsters` |
+같은 도구로 구운 **성채 지도 마커**(`building_Watchtower.png`·`building_Tower.png`·`building_PointyTower.png` ← `models/buildings/` 같은 이름 GLB, CC0)도 같은 결이다.
 
-같은 도구로 구운 **성채 지도 마커**도 같은 결이다 — `building_Watchtower.png`(성채 1등급)·`building_Tower.png`·`building_PointyTower.png`(2등급) ← `models/buildings/` 같은 이름 GLB(위 건물 표, CC0), `building_tower_round.png`(3등급) ← `models/buildings/realistic/tower_round.glb`(Poly Haven `modular_fort_01`, CC0), `building_Inn.png` ← `Inn.glb`(역참 줄 참고). 2026-09-23 부터 역참 지도 마커는 `building_tower_ruin.png` ← `models/buildings/realistic/tower_ruin.glb`(위 역참 줄의 실사 스캔, CC0) — `building_Inn.png` 은 되돌림 자리로 남김.
-
-2026-09-23 `tools/asset-audit` 이 "출처 문서에 이름이 없다"로 잡아 채웠다(그림은 09-06~07 에 들어왔다).
-
+옛 "다시 굽기·늘림(09-23)"·"지도 스탬프 추가(09-25)" 절은 그 그림이 다 위로 바뀌어 지웠다(W-0269).
 
 ## 도감 펫 종마다 제 모델 — 사가나락에서 옮김 (2026-09-23)
 
@@ -1255,12 +1245,6 @@ VRoid Studio 공식 CC0 샘플 AvatarSample_A/B/C(github.com/madjin/vrm-samples,
 
 > © **Quaternius**, CC0 (Public Domain). 저작자 표시 불필요. 공룡 넷(Stegosaurus·Triceratops·Velociraptor·T_Rex)은 이 판 `animals/` 에 이미 있어 안 옮겼다.
 
-
-## 짐승 2D 그림 다시 굽기·늘림 (2026-09-23) — 위 "짐승 2D 그림" 절의 파생물 규칙 그대로
-
-`tools/bake-icons/bake-beasts.mjs`(`view=pet` 옆 3/4 구도)로 기존 28장을 다시 굽고, "도감 펫 종마다 제 모델" 절에서 옮긴 모델 57개를
-더 구워 모두 85장. 원본은 전부 이 문서에 적힌 CC0 GLB(Quaternius 계열)이고 `_x2` 는 `models/animals_extra2/` 쪽 같은 이름 모델이다.
-파일: `beast_Alpaca.png`·`beast_Anglerfish.png`·`beast_Apatosaurus.png`·`beast_Armored_Catfish.png`·`beast_Bear.png`·`beast_Betta.png`·`beast_Birb.png`·`beast_Black_Lion_Fish.png`·`beast_Blobfish.png`·`beast_BlueDemon.png`·`beast_Blue_Goldfish.png`·`beast_Blue_Tang.png`·`beast_Boar.png`·`beast_Bull.png`·`beast_Butterfly_Fish.png`·`beast_Cardinal_Fish.png`·`beast_Cat.png`·`beast_Clownfish.png`·`beast_Coral_Grouper.png`·`beast_Cow.png`·`beast_Cow_Farm.png`·`beast_Cowfish.png`·`beast_Crane.png`·`beast_Deer.png`·`beast_Demon.png`·`beast_Dolphin.png`·`beast_Donkey.png`·`beast_Fish1.png`·`beast_Fish2.png`·`beast_Fish3.png`·`beast_Flatfish.png`·`beast_Flower_Horn.png`·`beast_Fox.png`·`beast_Frog.png`·`beast_Goblin_Shark.png`·`beast_Goldfish.png`·`beast_Horse.png`·`beast_Horse_Farm.png`·`beast_Horse_White.png`·`beast_Humphead.png`·`beast_Husky.png`·`beast_Koi.png`·`beast_Koi_x2.png`·`beast_Lionfish.png`·`beast_Llama.png`·`beast_Mandarin_Fish.png`·`beast_Manta_ray.png`·`beast_Monkey.png`·`beast_Moorish_Idol.png`·`beast_Orc.png`·`beast_Owl.png`·`beast_Panda.png`·`beast_Parasaurolophus.png`·`beast_Parrot_Fish.png`·`beast_Pig.png`·`beast_Pigeon.png`·`beast_Piranha.png`·`beast_Puffer.png`·`beast_Pug.png`·`beast_Red_Snapper.png`·`beast_Royal_Gramma.png`·`beast_Shark.png`·`beast_Shark_x2.png`·`beast_Sheep.png`·`beast_ShibaInu.png`·`beast_Snake.png`·`beast_Snake_angry.png`·`beast_Stag.png`·`beast_Stegosaurus.png`·`beast_Sunfish.png`·`beast_Swordfish.png`·`beast_Tang.png`·`beast_Tetra.png`·`beast_Tiger.png`·`beast_Trex.png`·`beast_Triceratops.png`·`beast_Tuna.png`·`beast_Turbot.png`·`beast_Velociraptor.png`·`beast_Whale.png`·`beast_Wolf.png`·`beast_Worm.png`·`beast_Yellow_Tang.png`·`beast_Zebra.png`·`beast_Zebra_Clown_Fish.png`
 
 ## Quaternius — 땅 전용 퓨전 소품 서른셋 (2026-09-24, `models/fusion/`, PLAN §5 ⑰ 넷째)
 
@@ -1324,11 +1308,6 @@ Quaternius "Ultimate Monsters"(CC0, 사가나락 `assets/models/monsters/quatern
 | 삿갓동이·뿔도롱·뿔낙지·날주머니·방아토끼·이끼잔나비 | Mushnub·Dino·Squidle·Glub·Bunny·Monkroose |
 | 묵방울·어둑귀·눈머리·겹날주머니·고깔도사 | Pink_Slime·Ghost·Yeti·Glub_Evolved·Wizard |
 | 누렁날개·노을용·물이무기·별손님·복고양이 | Alpaking·Dragon·Snake_angry·Alien_2(두발 외계인 — 방울형 Alien 은 사가만리 들판 적과 같은 파일이라 피함)·Cat(괴물 고양이) |
-
-## 지도 스탬프 추가 — 들판 적·별손님 (2026-09-25, `assets/sprites2d/beast_*.png`)
-
-`beast_Rat`·`Wasp`·`Zombie`·`Robot_Drone`·`Robot_Walker`·`Robot_Large`(들판 적 `assets/models/foes/`, Quaternius CC0)·
-`beast_Alien_2`(별손님, Ultimate Monsters CC0)를 `tools/bake-icons/bake-beasts.mjs` 로 구운 파생 그림. 절차 펫은 이미 있던 땅짐승 그림 스물셋을 쓴다.
 
 ## 보물 상자 (`models/props/Chest.glb`, PLAN §5 ⑲-3, 2026-09-25)
 
