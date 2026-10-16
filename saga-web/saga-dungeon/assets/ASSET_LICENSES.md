@@ -100,7 +100,7 @@ UAL1 몸짓이 필요 없다. 아래 조합형은 `HERO_RECIPES_FALLBACK` 으로
 | `models/props/Arch.glb` | **기둥**(`pillar`) — 무너진 아치로 대신한다 |
 | `models/props/Wall.glb` | **무너진 벽**(`wall`) |
 | `models/props/Temple.glb` | **제단**(`altar`) — `saga-go`가 "사당" 후보로 적어 둔 그것 |
-| `models/nature/Mountain_1·2.glb` | **절벽**(`cliff`) |
+| `models/nature/Mountain_1·2.glb` | **절벽**(`cliff`) | — **10-16 W-0259 지움(코드 참조 0)**
 | `models/props/Mine.glb` | **동굴 입구**(`cavemouth`) — `saga-go`가 "광산 어귀"로 적어 둔 그것 |
 | `models/buildings/MarketStand_1.glb` | **행상 좌판**(`stall`) |
 
@@ -156,13 +156,13 @@ UAL1 몸짓이 필요 없다. 아래 조합형은 `HERO_RECIPES_FALLBACK` 으로
 
 | 파일 | 이 판에서 쓰는 곳 |
 |---|---|
-| `models/buildings/House_1·2·3·4.glb` | **집**(`house`) — 넷을 자리 씨앗으로 섞어 세운다 |
+| `models/buildings/House_1·2·3·4.glb` | **집**(`house`) — 넷을 자리 씨앗으로 섞어 세운다 | — **10-16 W-0259 지움(코드 참조 0)**
 | `models/buildings/Well.glb` | **우물**(`well`) — 마을 한복판 |
-| `models/buildings/Blacksmith.glb` | **대장간**(`blacksmith`) — 야장(冶匠) NPC 뒤에 |
+| `models/buildings/Blacksmith.glb` | **대장간**(`blacksmith`) — 야장(冶匠) NPC 뒤에 | — **10-16 W-0259 지움(코드 참조 0)**
 | `models/buildings/Inn.glb` | **여관**(`inn`) — 갈대나루(나루터). `saga-go`가 이미 받아 둔 것을 옮겼다 |
 | `models/buildings/Stable.glb` | **마방**(`stable`) — 자작재(산길). 2026-09-04, 같은 `medieval_village_pack`에서 새로 받았다 |
 | `models/buildings/Mill.glb` | **방앗간**(`mill`) — 소금벌(염전). 2026-09-04, 같은 팩. 염전 전용 CC0 에셋은 못 찾아 대신한다 |
-| ~~`models/buildings/Bell_Tower.glb`~~ | **탑**(`belltower`) — 2026-09-04(이어서) `models/buildings/realistic/tower_round.glb`로 교체됨. 아래 새 절 참고. 옛 파일은 지우지 않았다(되돌림 자리) |
+| ~~`models/buildings/Bell_Tower.glb`~~ | **탑**(`belltower`) — 2026-09-04(이어서) `models/buildings/realistic/tower_round.glb`로 교체됨. 아래 새 절 참고. 옛 파일은 지우지 않았다(되돌림 자리) | — **10-16 W-0259 지움(코드 참조 0)**
 
 **위성 마을 셋이 왜 서로 다른 건물을 받았나.** 처음엔(2026-09-04 앞선 커밋)
 셋 다 집+우물뿐이라 "빈 방"은 면했어도 테마(나루터·산길·염전)가 안 살았다.
@@ -495,7 +495,7 @@ Monkey 5.6MB→382KB, Owl 2.7MB→399KB, Crane 1.07MB→239KB, Bear 720KB→160K
 |---|---|---|---|
 | `Deer.glb` | `saga-go/assets/models/animals/Deer.glb` | Quaternius | CC0 |
 | `Koi.glb` | `saga-go/assets/models/animals/Koi.glb` | `cute_fish_pack`(saga-go가 이미 씀) | saga-go 문서에 별도 라이선스 절이 없다 — 재확인이 필요하면 `saga-go/HANDOFF.md` 참고. 이미 공개 저장소에 떠 있는 파일을 그대로 옮긴 것이다 |
-| `Mesh_Crow.gltf`+`.bin`, `Tex_Crow.webp` | `saga-go/assets/models/animals/` | **Poly by Google** | **CC-BY 3.0** — `saga-go/assets/ASSET_LICENSES.md` "Poly by Google — 까치" 절의 그 문구를 그대로 적용한다 |
+| `Mesh_Crow.gltf`+`.bin`, `Tex_Crow.webp` | `saga-go/assets/models/animals/` | **Poly by Google** | **CC-BY 3.0** — `saga-go/assets/ASSET_LICENSES.md` "Poly by Google — 까치" 절의 그 문구를 그대로 적용한다 | — **10-16 W-0259 지움(코드 참조 0)**
 | `Frog.glb` | GitHub `trebeljahr/quaternius-showcase` `public/glb/easy_enemies_pack/Frog.glb`(이 판의 Wolf·Cow·Deer와 같은 미러) | Quaternius | CC0 |
 
 ### 펫 → 모델 대응표 (`js/asset3d.js`의 `pet:*`, `js/portrait3d.js`의 `PET_ASSET`)

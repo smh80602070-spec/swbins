@@ -299,7 +299,7 @@ sword_attack·hit·death…). `_RM`(root motion 포함) 이 아니라 **기본�
 
 ---
 
-## EverFace — 초상 "진지한" 얼굴 (`assets/sprites2d/portrait/serious/`)
+## EverFace — 초상 "진지한" 얼굴 (`assets/sprites2d/portrait/serious/`) — **10-16 W-0259 지움(코드 참조 0)**
 
 | 항목 | |
 |---|---|
@@ -313,7 +313,7 @@ sword_attack·hit·death…). `_RM`(root motion 포함) 이 아니라 **기본�
 아래 "귀여운" 조합형과 달리 **한 장을 그대로 쓴다** — 층층이 쌓지 않는다.
 파일 이름은 `face_00.png` ~ `face_17.png`(시트를 24px 씩 그대로 자른 것).
 
-## nonemo's Character Pack — 초상 "귀여운" 얼굴 (`assets/sprites2d/portrait/cute/`)
+## nonemo's Character Pack — 초상 "귀여운" 얼굴 (`assets/sprites2d/portrait/cute/`) — **10-16 W-0259 지움(코드 참조 0)**
 
 | 항목 | |
 |---|---|

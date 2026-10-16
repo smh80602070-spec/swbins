@@ -189,7 +189,7 @@ SAGA WEB.md 19절 "4K 텍스처 금지"에 정면으로 걸리던 자리였고, 
 
 ---
 
-## EverFace · nonemo — 초상 스프라이트 (`sprites2d/portrait/`)
+## EverFace · nonemo — 초상 스프라이트 (`sprites2d/portrait/`) — **10-16 W-0259 지움(코드 참조 0)**
 
 `js/portrait3d.js`가 조각을 얹어 합성. **PNG** — 아직 WebP로 안 옮겼다(낱장이
 1~20KB로 이미 작아 우선순위가 낮다)

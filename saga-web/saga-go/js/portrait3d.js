@@ -11,9 +11,8 @@
  *   3. 조명이 인물 **뒤**(-Z)에서 비춰 사실상 역광이었다
  * saga-go 는 `.dt-portrait`(`ui.js`)가 이미 150×172 로 알맞게 구워 달라고
  * 하고 있어 2번은 원래 없던 문제다. 1·3 번만 고쳐 다시 3D 로 돌아간다.
- * EverFace/nonemo 그림 조각(`assets/sprites2d/portrait/`)은 지우지 않았다 —
- * `icon.js` 등 다른 자리가 쓸 수도 있고, three 가 없는 자리의 되돌아가는
- * 길은 여전히 `sprite.portrait`/`sprite.portraitCard`(캔버스 도형)다.
+ * EverFace/nonemo 그림 조각(옛 `assets/sprites2d/portrait/`)은 10-16 W-0259 에서 지웠다(코드 참조 0 — 빌린 그림 안 씀).
+ * three 가 없는 자리의 되돌아가는 길은 여전히 `sprite.portrait`/`sprite.portraitCard`(캔버스 도형)다.
  *
  *   of(kind, ref, w, h)    다 구웠으면 dataURL, 아니면 null (동기)
  *   warm(kind, ref, w, h)  굽기 시작한다. 되면 `sweep()` 이 화면을 갈아 끼운다
