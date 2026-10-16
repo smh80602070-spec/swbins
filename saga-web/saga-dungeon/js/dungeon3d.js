@@ -2032,7 +2032,7 @@
     var col = ref && ref.boss ? 0x9a3a3a : (eliteDef ? hexOf(eliteDef.color, 0x8a5cc0) :
       hexOf(enemyDef && enemyDef.color, 0x6a6a75));
     var hh = r * (ref && ref.boss ? 2.6 : 1.9);
-    var isBeast = !!(enemyDef && enemyDef.kind === 'beast');
+    var isBeast = !!(enemyDef && enemyDef.kind === 'beast') && !/^era_(punk|hazmat|swat)$/.test(enemyDef.body || '');   // W-0266 세 시대 사람 적은 사람 형 길(VRoid 빌린 몸) — 옛 poly.pizza 몸 대신. 로봇 셋은 creatureFor 가 자체 creatures3d 로
     var foeBody;
     if (AS3 && isBeast) {
       /* 짐승 형 적 — data-enemy.js 의 `body` 필드로 실제 GLB 를 고른다(없으면

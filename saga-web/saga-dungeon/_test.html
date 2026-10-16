@@ -1074,6 +1074,15 @@ window.requestAnimationFrame = function () { return 0; };
         return '독 ' + (keep || '(없음)') + ' + ☰ · 접은 ' + hidden + ' · 칸 ' + n + '(숨은 칸 뺌) · 뱃지 → ☰ 점 · Esc ' + (pre ? '(다른 창 열림 → 양보)' : '열고') + ' 닫음';
       } finally { M._reset(); dock.remove(); if (sh) { sh.remove(); } if (real) { real.id = 'dock'; M.init(); } }
     });
+    t('W-0266 짐승형 적 몸 — 도감의 짐승형 적(보통·시대·보스)이 전부 자체 몸 계열(crea:boss_*·mon_*)을 받는다(옛 빌린 몸은 공용 주소를 못 잡을 때 되돌림만)', function () {
+      var E = DG.enemyData, MP = DG.monsterPortrait, bossSet = {}, arr = [], miss = [];
+      (E.bosses || []).forEach(function (b) { var r = typeof b === 'string' ? E.byName[b] : b; if (r) { bossSet[r.name] = 1; } });
+      [].concat(E.enemies || [], E.eraEnemies || [], E.bosses || []).forEach(function (x) { var r = typeof x === 'string' ? E.byName[x] : x; if (r && r.kind === 'beast') { arr.push(r); } });
+      var ERA = { era_punk: 'hero', era_hazmat: 'hero', era_swat: 'hero', era_drone: 'Robot_Drone', era_walker: 'Robot_Walker', era_hulk: 'Robot_Large' };   // 사람 셋 = 사람 형 길(VRoid) · 로봇 셋 = creatureFor 짝(자체 creatures3d)
+      arr.forEach(function (r) { var e = ERA[r.body]; if (e === 'hero' || (e && DG.assets3d.CREATURE_OF[e]) || MP.idOf(r, !!bossSet[r.name])) { return; } miss.push(r.name); });
+      if (arr.length < 100 || miss.length) { throw new Error(JSON.stringify({ n: arr.length, miss: miss })); }
+      return '짐승형 적 ' + arr.length + ' 전부 자체 계열 몸';
+    });
     t('W-0261 자체 에셋 — 판별 표(cfg.assets3d.reg)의 world3d id 가 전부 있다 · 얹은 뒤 asset3d 표에 빌린 KayKit·Quaternius·실사 경로가 안 남는다 · 3D HDR 은 자체 하늘', function () {
       var reg = (DG.cfg.assets3d || {}).reg || {}, A = DG.assets3d, miss = [], n = 0, k, i;
       for (k in reg) { if (Object.prototype.hasOwnProperty.call(reg, k)) { for (i = 0; i < reg[k].length; i++) { n++; if (!A.has('world', reg[k][i])) { miss.push(reg[k][i]); } } } }
