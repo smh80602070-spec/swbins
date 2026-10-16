@@ -593,10 +593,13 @@
    *  텍스처(`map`)는 그대로 물려받고 `color` 만 곱해 GPU 는 같은 그림을 쓰되
    *  픽셀셰이더 단계에서 색만 걸러진다 — 새 텍스처를 안 만드니 가볍다 */
   function tintedOf(mat, url, hex) {
-    var key = url + ':' + hex;
+    var key = url + ':' + hex + ':' + mat.uuid;   // W-0260 — 재질이 여럿인 GLB(자체 나무 = 줄기+잎 넷)는 조각마다 따로(전엔 url 만이라 전부 첫 재질 = 판자 줄기로 칠해졌다)
     if (tintCache[key]) { return tintCache[key]; }
-    var m = mat.clone();
-    m.color = (mat.color ? mat.color.clone() : new (three()).Color(0xffffff)).multiply(new (three()).Color(hex));
+    var m = mat.clone(), T = three(), c = mat.color ? mat.color.clone() : new T.Color(0xffffff);
+    if (String(url).indexOf('world3d/') >= 0) {   // W-0260 자체 나무 — 잎 무늬가 초록 텍스처라 곱하면 검게 죽는다: 줄기(planks)는 그대로, 잎만 무늬를 떼고 밝힌 계절색 단색
+      if (!/plank|bark|trunk/i.test(mat.name || '')) { c.setHex(hex); c.setRGB(Math.min(1, c.r * 1.4), Math.min(1, c.g * 1.4), Math.min(1, c.b * 1.4)); m.map = null; }
+      m.color = c;
+    } else { m.color = c.multiply(new T.Color(hex)); }
     tintCache[key] = m;
     return m;
   }

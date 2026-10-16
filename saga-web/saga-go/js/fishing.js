@@ -469,10 +469,16 @@
     if (sp.board) {
       var wood = new T3.MeshLambertMaterial({ color: 0x7a5a3a }), paper = new T3.MeshLambertMaterial({ color: 0xe8dcc0 });
       var bx = sp.board.x, by = sp.board.y, bgy = gy(w, bx, by), yaw = Math.atan2(sp.dx, sp.dy);
-      var bg = new T3.Group();
-      [-0.7, 0.7].forEach(function (ox) { var post = new T3.Mesh(new T3.BoxGeometry(0.12, 1.8, 0.12), wood); post.position.set(ox, 0.9, 0); bg.add(post); });
-      var plank = new T3.Mesh(new T3.BoxGeometry(1.7, 0.9, 0.08), wood); plank.position.set(0, 1.35, 0); bg.add(plank);
-      var note = new T3.Mesh(new T3.BoxGeometry(1.3, 0.6, 0.02), paper); note.position.set(0, 1.35, 0.05); bg.add(note);
+      var shape = function () {
+        var sg = new T3.Group();
+        [-0.7, 0.7].forEach(function (ox) { var post = new T3.Mesh(new T3.BoxGeometry(0.12, 1.8, 0.12), wood); post.position.set(ox, 0.9, 0); sg.add(post); });
+        var plank = new T3.Mesh(new T3.BoxGeometry(1.7, 0.9, 0.08), wood); plank.position.set(0, 1.35, 0); sg.add(plank);
+        var note = new T3.Mesh(new T3.BoxGeometry(1.3, 0.6, 0.02), paper); note.position.set(0, 1.35, 0.05); sg.add(note);
+        return sg;
+      };
+      /* W-0260 — 판 표 'board'(자체 world3d notice_board_01)가 있으면 그 모델(키 1 → 1.8m), 받기 전·못 받으면 옛 말뚝 판 */
+      var A3 = global.DG.asset3d, bg = A3 && A3.build ? A3.build('board', { id: 'fishing-board' }, function () { var sg = shape(); sg.scale.setScalar(1 / 1.8); return sg; }) : null;
+      if (bg) { bg.scale.setScalar(1.8); } else { bg = shape(); }
       bg.position.set(bx, bgy, by); bg.rotation.y = yaw;
       o.root.add(bg);
     }

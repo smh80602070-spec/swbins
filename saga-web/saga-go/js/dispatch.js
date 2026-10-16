@@ -218,10 +218,16 @@
   function W3() { var w = global.DG.world3d; return w && w.active && w.active() ? w : null; }
   function buildBoard(w, T3, b) {
     var wood = new T3.MeshLambertMaterial({ color: 0x6b4a2e }), paper = new T3.MeshLambertMaterial({ color: 0xdfe8f0 });
-    var g = new T3.Group();
-    [-0.6, 0.6].forEach(function (ox) { var post = new T3.Mesh(new T3.BoxGeometry(0.12, 1.7, 0.12), wood); post.position.set(ox, 0.85, 0); g.add(post); });
-    var plank = new T3.Mesh(new T3.BoxGeometry(1.5, 0.85, 0.08), wood); plank.position.set(0, 1.3, 0); g.add(plank);
-    var map = new T3.Mesh(new T3.BoxGeometry(1.1, 0.55, 0.02), paper); map.position.set(0, 1.3, 0.05); g.add(map);
+    var shape = function () {
+      var sg = new T3.Group();
+      [-0.6, 0.6].forEach(function (ox) { var post = new T3.Mesh(new T3.BoxGeometry(0.12, 1.7, 0.12), wood); post.position.set(ox, 0.85, 0); sg.add(post); });
+      var plank = new T3.Mesh(new T3.BoxGeometry(1.5, 0.85, 0.08), wood); plank.position.set(0, 1.3, 0); sg.add(plank);
+      var map = new T3.Mesh(new T3.BoxGeometry(1.1, 0.55, 0.02), paper); map.position.set(0, 1.3, 0.05); sg.add(map);
+      return sg;
+    };
+    /* W-0260 — 판 표 'board'(자체 world3d notice_board_01)가 있으면 그 모델(키 1 → 1.7m), 받기 전·못 받으면 옛 말뚝 판 */
+    var A3 = global.DG.asset3d, g = A3 && A3.build ? A3.build('board', { id: 'dispatch-board' }, function () { var sg = shape(); sg.scale.setScalar(1 / 1.7); return sg; }) : null;
+    if (g) { g.scale.setScalar(1.7); } else { g = shape(); }
     g.position.set(b.x, w.groundY ? w.groundY(b.x, b.y) : 0, b.y);
     g.rotation.y = Math.PI / 2;
     w.addFx(g);

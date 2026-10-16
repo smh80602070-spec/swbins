@@ -16062,6 +16062,17 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         return ok ? '독 ' + keep.join('·') + ' + ☰ · 접은 ' + hidden + ' · 칸 ' + n + ' · Esc ' + (pre ? '(다른 창 열림 → 양보)' : '열고') + ' 닫음 · 시트 열리면 양보' : '실패 ' + JSON.stringify({ keep: keep.length, inited: inited, menuBtn: !!menuBtn, hidden: hidden, n: n, cells: cells.length, opened: opened, clicked: clicked, closedByCell: closedByCell, escOpen: escOpen, escClose: escClose, yield1: yield1 });
       } finally { M._reset(); dock.remove(); if (sh) { sh.remove(); } if (real) { real.id = 'dock'; M.init(); } }
     });
+    t('W-0260 자체 에셋 — 판별 표(cfg.assets3d.prop·reg)의 world3d id 가 전부 있다 · 얹은 뒤 prop3d 표(철마다 칸 포함)·asset3d 표에 빌린 실사·Quaternius 경로가 안 남는다', function () {
+      var c = DG.cfg.assets3d || {}, A = DG.assets3d, miss = [], n = 0, k, i, tbl = [c.prop || {}, c.reg || {}];
+      tbl.forEach(function (T) { for (k in T) { if (Object.prototype.hasOwnProperty.call(T, k)) { for (i = 0; i < T[k].length; i++) { n++; if (!A.has('world', T[k][i])) { miss.push(T[k][i]); } } } } });
+      var live = !!(A.url && A.url('world', 'altar_01')), got = live ? A.applyProps() : 0;
+      var P = DG.prop3d.register(), R3 = DG.asset3d.REG, left = [], bad = new RegExp('/(realistic|nature|buildings|props|fusion)/');
+      Object.keys(c.prop || {}).forEach(function (nm) { var e = P[nm] || {}; Object.keys(e).forEach(function (sk) { if (sk !== '_base' && [].concat(e[sk]).some(function (u) { return bad.test(u); })) { left.push(nm + '.' + sk); } }); });
+      Object.keys(c.reg || {}).forEach(function (key) { if ([].concat(R3[key] || []).some(function (u) { return bad.test(u); })) { left.push(key); } });
+      var ok = !miss.length && n >= 40 && (!live || (!left.length && got >= 30));
+      if (!ok) { throw new Error(JSON.stringify({ miss: miss, left: left, n: n, live: live, got: got, st: A.state() })); }
+      return '표 ' + n + '칸 전부 world3d 에 있음 · prop ' + Object.keys(c.prop).length + '·reg ' + Object.keys(c.reg).length + (live ? ' 이름에 빌린 경로 0' : ' (공용 주소 못 잡음 — 표만)');
+    });
     t('재미표준 A 목표판(측정)', function () {
       var now = DG.ui && DG.ui.goalNowText ? DG.ui.goalNowText() : '';
       var sess = DG.daily && DG.daily.firstUndone ? DG.daily.firstUndone() : null;

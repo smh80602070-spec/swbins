@@ -98,7 +98,12 @@
       if (!t.hasOwnProperty(name)) { continue; }
       list = t[name]; urls = [];
       for (i = 0; i < list.length; i++) { var u = url('world', list[i]); if (u) { urls.push(u); } }
-      if (urls.length) { P3.register(name, 'all', urls); n++; }
+      if (urls.length) {
+        P3.register(name, 'all', urls); n++;
+        /* W-0260 — 철마다 따로 든 칸(사가만리 나무 autumn·winter)도 같은 목록으로 — 'all' 만 바꾸면 가을·겨울에 옛 빌린 GLB 가 돌아온다 */
+        var e = P3.register()[name];
+        if (e) { ['spring', 'summer', 'autumn', 'winter'].forEach(function (sk) { if (e[sk]) { P3.register(name, sk, urls); } }); }
+      }
     }
     if (n && P3.preload) { P3.preload(); }
     return n;

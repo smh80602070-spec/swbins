@@ -499,7 +499,15 @@
   global.DG.cfg = global.DG.cfg || {};
   global.DG.cfg.assets3d = {
     /* 통일 3D 에셋(W-0021, shared/assets/world3d) — prop3d 소품 이름 → 그 판 9칸 id. 마을은 과거·현대·미래 한 자리라 집·등롱을 시대 섞어 쓴다 */
-    prop: { house: ['eu_house_01', 'modern_block_01', 'future_dome_01'], lamp: ['street_lamp_01', 'signal_pylon_01'], well: ['well_01'] },
+    prop: { house: ['eu_house_01', 'modern_block_01', 'future_dome_01'], lamp: ['street_lamp_01', 'signal_pylon_01', 'stone_lantern_01'], well: ['well_01'],
+      /* W-0260 — 남은 빌린 실사(Poly Haven·Sketchfab 스캔)·Quaternius 들판 소품도 자체로(감사 tasks/sheets/web-asset-audit-20261016.md §A). 나무는 가을·겨울 칸도 같은 목록(색은 tintedOf) */
+      tree: ['tree_broadleaf_01', 'tree_broadleaf_02', 'tree_broadleaf_03'], pine: ['tree_pine_01', 'tree_pine_02', 'tree_pine_03'], rock: ['rock_large_01', 'rock_large_02', 'rock_small_01', 'rock_moss_01'],
+      grass: ['grass_tuft_01', 'grass_tuft_02', 'bush_01', 'bush_02'], tower: ['stone_tower_01'], peak: ['mountain_01'], shrine: ['altar_01'], market: ['market_stall_01'], bridge: ['rock_moss_01'], rice: ['wheat_growing_01'],
+      zp_bonfire: ['campfire_logs_01'], zp_cauldron: ['kitchen_pot_01'] },
+    /* W-0260 — asset3d 키(성채 등급·지역 랜드마크·역참·석등·솥·상자·채집물·제단) → 자체 world3d. 표에 없는 키(옛 Quaternius)는 그대로 */
+    reg: { 'fort:t1': ['stone_tower_01'], 'fort:t2': ['dungeon_gate_01'], 'fort:t3': ['chinese_hall_01'], 'fort': ['stone_tower_01'], 'station': ['inn_01'],
+      'landmark:plain': ['stone_tower_01'], 'landmark:bamboo': ['chinese_hall_01'], 'landmark:canyon': ['rock_outcrop_01'], 'landmark:marsh': ['forest_cottage_01'], 'landmark:ruins': ['rubble_pillar_01'],
+      'lantern': ['stone_lantern_01'], 'cook:pot': ['kitchen_pot_01'], 'cook:fire': ['campfire_logs_01'], 'chest': ['chest_01'], 'gather:mushroom': ['mushroom_01'], 'gather:flower': ['flower_patch_01'], 'gather:rock': ['rock_small_01'], 'domain:altar': ['altar_base_01'], 'board': ['notice_board_01'] },   // board = 낚시터·파견 게시판(fishing·dispatch, 못 받으면 옛 말뚝 판)
     /* 빌린 몸(W-0074, shared/js/assets3d.js borrowRecipe) — 제 몸이 없는 사람(주민·이야기·세계 임무·절차 인물·땅 사람)은 시대 구분 없이
        옛 몸(VRoid 샘플·OGA·Quaternius·folk) 대신 도감과 안 겹치는 VRoid 통일 몸을 입는다(사용자 10-06 "인물은 모두 교체").
        named 는 서로 다른 몸, skip 은 사람이 아닌 것(드론·말 — pet 몸) */
@@ -515,6 +523,6 @@
     }
   };
   /* W-0119 — 통일 소품의 시대(prop3d.byEra). 집·등롱·우물은 그 자리 땅의 시대 것만 선다 — 고향·안쪽 땅(과거)은 옛 집, 바깥 폐도시·신도시는 빌딩·돔(PLAN ⑱ "시작점 300m 안은 과거"와 같은 결) */
-  global.DG.cfg.prop3dEra = { eu_house_01: 'past', modern_block_01: 'modern', future_dome_01: 'future', street_lamp_01: 'modern', signal_pylon_01: 'future', well_01: 'past' };
+  global.DG.cfg.prop3dEra = { eu_house_01: 'past', modern_block_01: 'modern', future_dome_01: 'future', street_lamp_01: 'modern', signal_pylon_01: 'future', well_01: 'past', stone_lantern_01: 'past' };   // W-0260 — 과거 땅 등롱도 자체 석등(옛 _base 실사 나무 등롱으로 안 돌아감)
   global.DG.cfg.vroidPattern = { base: '../shared/assets/patterns/', repeat: 3 };   // 무늬는 판 폴더가 아니라 shared 에만 있다(W-0071) — 기준 주소 시험이 끝나기 전에 받아도 404 가 안 나게
 })(window);
