@@ -571,6 +571,8 @@
     'pet': [ANI + 'Deer.glb', ANI + 'Wolf.glb', ANI + 'Fox.glb']
   };
 
+  /* W-0262 — 엇맞춤으로 남의 자리를 빌려 쓰던 것(비석=이끼 바위·솥=우물·병=풀·상자=우체통·도깨비불=횃불·축제 줄=통나무)의 제 키. 판 표(cfg.assets3d.reg)가 자체 world3d 를 얹고, 못 얹으면 옛 자리 그대로 */
+  DEFAULTS.stele = DEFAULTS['rock:moss']; DEFAULTS.pot = DEFAULTS.well; DEFAULTS.bottle = DEFAULTS.plant; DEFAULTS.chest = DEFAULTS['building:mail']; DEFAULTS.wisp = DEFAULTS.lantern; DEFAULTS.rope = DEFAULTS.log;
   var REG = {};
   function restore() {
     var k;

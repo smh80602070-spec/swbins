@@ -505,7 +505,7 @@
   var tileTexCache = {};
   function tileTexture(kind) {
     var t = three();
-    var src = TILE_TEX_SRC[kind];
+    var A3 = global.DG.assets3d, src = ((kind === 'sand' || kind === 'water') && A3 && A3.root && A3.root() ? A3.root() + 'web2d/tile/forest_' + kind + '.webp' : null) || TILE_TEX_SRC[kind];   // W-0262 모래·물 = 공용 자체 web2d 타일(못 잡으면 옛 Kenney)
     if (!src || !t) { return null; }
     if (tileTexCache[src]) { return tileTexCache[src]; }
     var tex = new t.TextureLoader().load(src);
@@ -998,12 +998,12 @@
    *  에만 물려 반사·PBR 조명만 사실적으로 만든다. 실패해도(HDR 못 받음 등) 그냥
    *  옛 HemisphereLight+DirectionalLight 만으로 돈다 — 여기서도 "안 되면 조용히
    *  넘어간다" 원칙을 지킨다 */
-  var HDRI_SRC = 'assets/hdri/alps_field_1k.hdr';
+  var HDRI_SRC = '../shared/assets/sky/ibl_noon_present_1k.hdr'; function hdriSrc() { var A = global.DG.assets3d; return (A && A.root && A.root()) ? A.root() + 'sky/ibl_noon_present_1k.hdr' : HDRI_SRC; }   // W-0262 빌린 사진 HDR 대신 공용 자체 하늘 IBL(1만리·2나락과 같음)
   function loadEnvironment(t) {
     if (!t.RGBELoader || !renderer) { return; }
     var pmrem = new t.PMREMGenerator(renderer);
     pmrem.compileEquirectangularShader();
-    new t.RGBELoader().load(HDRI_SRC, function (hdr) {
+    new t.RGBELoader().load(hdriSrc(), function (hdr) {
       var envMap = pmrem.fromEquirectangular(hdr).texture;
       if (scene) { scene.environment = envMap; }
       hdr.dispose();

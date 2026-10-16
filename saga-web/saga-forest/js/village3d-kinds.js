@@ -20,16 +20,16 @@
     /* 번들 시설(PLAN §5.3) — 새 GLB 없이 이미 등록된 키를 빌린다. 석비는 이끼 낀 선돌,
        반딧불이 정원은 덤불(밤엔 fireflyBoost 파티클이 위에 얹힌다). 조개 길은 소품이
        아니라 땅(`village.js` tileAt 의 모래)이다 */
-    stele: 'rock:moss', fireflyplot: 'bush',
+    stele: 'stele', fireflyplot: 'bush',   // W-0262 석비 = 제 키 stele(자체 stele_01, 못 받으면 옛 이끼 바위)
     /* 숲의 정령(PLAN §5.5) — 안 푼 터는 횃불(밤에 눈에 띄게), 푼 터는 꽃 한 송이 자국 */
     spiritmark: 'lantern', spiritdone: 'flower',
     /* 발견 밀도 격자(PLAN §5.5 ①) — 새 GLB 없이 기존 키를 빌린다: 상자=작은 상자, 병=풀 한 포기, 채집터=이끼 바위, 야영=천막+불 */
     oldpost: 'building:mail', starpost: 'lantern', rubble: 'rock:moss', rebuilt: 'gazebo',
     /* 축제 하루(PLAN §5.6) — 새 GLB 없이 기존 키: 안내판=표지판, 달집=모닥불, 줄=통나무, 솥=우물, 등롱=등 */
-    festboard: 'building:board', festfire: 'campfire', festrope: 'log', festpot: 'well', festlantern: 'lantern',
+    festboard: 'building:board', festfire: 'campfire', festrope: 'rope', festpot: 'pot', festlantern: 'lantern',   // W-0262 줄·솥 = 제 키(banner_pole_01·kitchen_pot_01)
     /* 방문객 조각(§5.9) — 새 GLB 없이: 나침반 조각=작은 상자, 도깨비불=등(밤에 빛난다) */
-    visitcompass: 'building:mail', visitwisp: 'lantern', visitkid: 'bush', visitufo: 'building:mail', visitparcel: 'crate',
-    gridchest: 'building:mail', gridbottle: 'plant', gridnode: 'rock:moss', gridcamp: 'tent', gridfire: 'campfire',
+    visitcompass: 'chest', visitwisp: 'wisp', visitkid: 'bush', visitufo: 'chest', visitparcel: 'crate',   // W-0262 상자·도깨비불 = 제 키(chest_01·hanging_lantern_01)
+    gridchest: 'chest', gridbottle: 'bottle', gridnode: 'rock:moss', gridcamp: 'tent', gridfire: 'campfire',   // 병 = vase_tall_01
     /* 다리(2026-09-09) — asset3d.js 에 진작 등록만 되어 있던 'bridge' 를
        처음 쓴다(village.js 의 새 BRIDGE_TY 크로싱) */
     bridge: 'bridge',

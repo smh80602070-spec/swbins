@@ -352,8 +352,9 @@
     floor: 'assets/sprites2d/tile_floor.png'
   };
   var tileImgCache = {};
+  function ownTile(kind) { var A3 = global.DG.assets3d; return (kind === 'sand' || kind === 'water') && A3 && A3.root && A3.root() ? A3.root() + 'web2d/tile/forest_' + kind + '.webp' : null; }   // W-0262 모래·물 = 공용 자체 web2d 타일
   function tileImg(kind, se) {
-    var M2 = global.DG.mode2d, Z2 = global.DG.cozy2d, src = (Z2 && Z2.tileSrc(kind, se && se.key)) || (M2 && M2.tileUrl(se && se.key === 'winter' && kind.indexOf('grass') === 0 ? 'snow' : kind)) || TILE_IMG_SRC[kind] || TILE_IMG_SRC.grass;   // 2D 모드면 K-0020 타일(겨울엔 풀 → 눈) · W-0142 풀은 계절 타일(K-0091)
+    var M2 = global.DG.mode2d, Z2 = global.DG.cozy2d, src = (Z2 && Z2.tileSrc(kind, se && se.key)) || (M2 && M2.tileUrl(se && se.key === 'winter' && kind.indexOf('grass') === 0 ? 'snow' : kind)) || ownTile(kind) || TILE_IMG_SRC[kind] || TILE_IMG_SRC.grass;   // 2D 모드면 K-0020 타일(겨울엔 풀 → 눈) · W-0142 풀은 계절 타일(K-0091)
     var im = tileImgCache[src];
     if (!im) { im = new Image(); im.src = src; tileImgCache[src] = im; }
     return im;

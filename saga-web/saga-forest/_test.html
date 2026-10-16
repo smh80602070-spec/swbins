@@ -3773,9 +3773,9 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
         ('무리 ' + herds.length + '곳 × 3 · 표지 ' + marks.length + ' · 만남 갈래 표 ' + G.KINDS.length);
     });
 
-    t('번들 시설 — 석비·반딧불이 정원이 3D 에도 선다(표에 든 기존 asset3d 키)', function () {
+    t('번들 시설 — 석비·반딧불이 정원이 3D 에도 선다(석비는 W-0262 제 키 stele — 자체 stele_01, 못 받으면 옛 이끼 바위)', function () {
       var V3 = DG.villageView3d, a = V3.scatterOf('stele'), b = V3.scatterOf('fireflyplot');
-      return !!a && !!b && a.asset === 'rock:moss' && b.asset === 'bush' && a.h > 0 && b.h > 0 &&
+      return !!a && !!b && a.asset === 'stele' && !!DG.asset3d.lookup('stele') && b.asset === 'bush' && a.h > 0 && b.h > 0 &&
         V3.scatterOf('bench') !== null && V3.scatterOf('없는kind') === null &&
         ('석비→' + a.asset + '(' + a.h + 'm) · 정원→' + b.asset + '(' + b.h + 'm)');
     });
@@ -7118,6 +7118,17 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
         if (!ok) { throw new Error(JSON.stringify({ keep: keep, inited: inited, hidden: hidden, n: n, alert0: alert0, alert1: alert1, badgeCell: !!badgeCell, clicked: clicked, closedByCell: closedByCell, escOpen: escOpen, escClose: escClose, yield1: yield1 })); }
         return '독 ' + (keep || '(없음)') + ' + ☰ · 접은 ' + hidden + ' · 칸 ' + n + '(숨은 칸 뺌) · 뱃지 → ☰ 점 · Esc ' + (pre ? '(다른 창 열림 → 양보)' : '열고') + ' 닫음';
       } finally { M._reset(); dock.remove(); if (sh) { sh.remove(); } if (real) { real.id = 'dock'; M.init(); } }
+    });
+    t('W-0262 자체 에셋 — 판별 표(cfg.assets3d.reg)의 world3d id 가 전부 있다 · 엇맞춤 자리(석비·솥·병·상자·도깨비불·축제 줄)가 제 키 · 얹은 뒤 빌린 경로가 안 남는다(가을 나무 빼고) · HDR 자체 하늘', function () {
+      var reg = (DG.cfg.assets3d || {}).reg || {}, A = DG.assets3d, miss = [], n = 0, k, i, SK = DG.village3dKinds.SCATTER_KIND;
+      for (k in reg) { if (Object.prototype.hasOwnProperty.call(reg, k)) { for (i = 0; i < reg[k].length; i++) { n++; if (!A.has('world', reg[k][i])) { miss.push(reg[k][i]); } } } }
+      var own = SK.stele === 'stele' && SK.festpot === 'pot' && SK.gridbottle === 'bottle' && SK.gridchest === 'chest' && SK.visitwisp === 'wisp' && SK.festrope === 'rope';
+      var live = !!(A.url && A.url('world', 'altar_01')), got = live ? A.applyProps() : 0, left = [], bad = new RegExp('models/(nature|props|buildings)/');
+      Object.keys(reg).forEach(function (key) { var hit = DG.asset3d.lookup(key); if (hit && [].concat(hit.url || []).some(function (u) { return bad.test(u); })) { left.push(key); } });
+      var src = (function () { try { var x = new XMLHttpRequest(); x.open('GET', 'js/village-view3d.js', false); x.send(); return x.status === 200 ? x.responseText : ''; } catch (er) { return ''; } })(), skyOk = !src || (src.indexOf('alps_field') < 0 && src.indexOf('ibl_noon_present_1k.hdr') >= 0);
+      var ok = !miss.length && n >= 40 && own && skyOk && (!live || (!left.length && got >= 1));
+      if (!ok) { throw new Error(JSON.stringify({ miss: miss, left: left, n: n, own: own, live: live, got: got, skyOk: skyOk })); }
+      return '표 ' + n + '칸 전부 world3d 에 있음 · 엇맞춤 여섯 제 키 · HDR 자체 하늘' + (live ? ' · 얹은 뒤 빌린 경로 0' : ' (공용 주소 못 잡음 — 표만)');
     });
     t('재미표준 A 목표판(측정) — 부팅 뒤 오늘의 일과 세 줄 + 이번 주 한 줄', function () {
       var list = V.taskList() || [], w = V.weeklyTaskInfo ? V.weeklyTaskInfo() : null;
