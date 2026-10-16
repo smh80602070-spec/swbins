@@ -125,3 +125,12 @@ body { font-variant-numeric: tabular-nums; }
   .mg-grid { grid-template-columns: repeat(3, 1fr); }
   .mg-cell { min-height: 96px; }
 }
+
+/* ── 첫 화면(W-0256, shared/js/account.js — 이어하기·다른 이름으로·설정) ──
+   account 가 문서에 넣는 <style> 이 뒤에 오고 border 단축 속성이 border-image 를 지우므로 #acc-host 로 특이도를 올린다 */
+#acc-host .acc-card { border-radius: var(--r-sm); border-image: var(--ui-popup) 36 fill / 18px stretch; }
+#acc-host .acc-btn { border-image: var(--ui-btn) 24 fill / 12px stretch; }
+#acc-host .acc-btn:hover { border-image-source: var(--ui-btn-hv); }
+#acc-host .acc-btn:active { border-image-source: var(--ui-btn-dn); }
+#acc-host .acc-btn.primary { border-image: none; }
+#acc-host .acc-btn.tiny { border-image-width: 8px; }

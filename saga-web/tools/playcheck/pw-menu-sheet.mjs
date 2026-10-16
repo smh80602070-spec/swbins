@@ -19,6 +19,7 @@ async function enter(r) {
   await page.goto(r.url('index.html')); await sleep(1500);
   await ev(() => { DG.account.create('확인'); });
   await page.goto(r.url('index.html')); await sleep(2500);
+  r.titleShot = await page.screenshot();   // W-0256 첫 화면(이어하기·다른 이름으로·설정)
   await ev(() => { const b = document.getElementById('title-continue'); if (b) { b.click(); } });
   await sleep(2500);
   for (let i = 0; i < 14; i++) { const o = await ev(() => !!((DG.scenario && DG.scenario.isOpen && DG.scenario.isOpen()) || (DG.story && DG.story.isOpen && DG.story.isOpen()))); if (!o) { break; } await page.keyboard.press('Escape'); await sleep(250); }
@@ -51,7 +52,8 @@ async function run(kind) {
   const { page } = r, shots = [];
   try {
     await enter(r);
-    const n = await page.evaluate(() => document.querySelectorAll('#dock button').length);
+    if (r.titleShot) { shots.push({ label: '첫 화면', buf: r.titleShot }); }
+    const n = process.env.TITLE_ONLY ? 0 : await page.evaluate(() => document.querySelectorAll('#dock button').length);   // TITLE_ONLY=1 — 첫 화면만(W-0256)
     for (let i = 0; i < n; i++) {
       await closeAll(page);
       const label = await page.evaluate((k) => { const b = document.querySelectorAll('#dock button')[k]; const s = b.querySelector('small'); const t = (s ? s.textContent : b.title || b.id || '?').trim(); b.click(); return t; }, i);
