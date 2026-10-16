@@ -18,10 +18,10 @@
 | 8 | 1만리 효과음 7(OpenGameArt RPG Sound Pack·100 CC0 SFX) | `saga-go/assets/audio/sfx` | 7, 쓰임(이름) — 자체 효과음과 md5 다름 | 티켓 없음 |
 | 9 | 안 쓰는 옛 파일 — Kenney 사람 30(2나락)·Kenney 집 조각 13(3마을)·`people/regular` 9×5·`people/anime` 대부분·`sprites2d` 대부분(Kenney·EverFace·nonemo 초상) | 웹 다섯 판 | ≈500 | **지우기만** — 티켓 없음 |
 | 10 | 유니티 — Poly Haven 스캔 소품 `Art/Props/PolyHaven` 181 · 재질 `Art/Environment/PBR` 27 · Quaternius 식물 9 · Kenney 효과음 6 · 짐승 Fox·Snake·Birb(출처 확인 필요) · LiberationSans | `saga-unity/Assets` | ≈230 | Kenney 소리는 수신함 10-12 |
-| 11 | 고돗 — 옷장 VRoid `AvatarSample_A` 96(공식 샘플, 허용판 교체는 K-0088 사람 몫) · 던전 문틀 Kenney 모양(K-0089) · 나무 정육면체 잎·괴물 다면체·섬·방(수신함 10-13) | `saga-godot/assets` | — | 수신함 |
+| 11 | 고돗 — **Quaternius Stylized Nature 68(`assets/vegetation`·`rocks`, 씬 배치됨)** · **KayKit 무기 4(`assets/weapons`)** · 옷장 VRoid `AvatarSample_A` 96(공식 샘플, 허용판 교체는 K-0088 사람 몫) · 던전 문틀 Kenney 모양(K-0089) · 나무 정육면체 잎·괴물 다면체·섬·방(수신함 10-13) | `saga-godot/assets` | — | 수신함 |
 | 12 | 글꼴(OFL Noto·Nanum·Liberation)·Lucide 아이콘(1만리 `js/icon.js`) | 웹·유니티 | — | 수신함 10-10 남은 몫 |
-| 13 | 몬스터 초상 32 — 옛 몸(Poly Haven 재질) 렌더를 밑그림으로 i2i(0.62) | `saga-assets/portraits-monster` | 32 | 새 몸으로 다시 그릴지 |
-| 14 | char-forge 옷 결 사진(Poly Haven, `tools/char-forge/sources.json` "polyhaven") | 인물 공방 | — | 티켓 없음 |
+| 13 | 옛 몸 렌더 밑그림 AI 그림 49 — 몬스터 초상 32·탈것 용 1·RTS 건물 7·도시 9 | portraits-monster·mount·web2d/rts·world/sprite | 49 | K-0113 후속 다시 그림 |
+| 14 | char-forge 옷 결 사진(Poly Haven, `tools/char-forge/sources.json` "polyhaven") | 인물 공방 | 출하물 0(유니티 `Art/CharactersForge` 는 license 166 만 남고 몸은 이미 지움) | 도구만 — 남은 license 정리 |
 
 ## 추천 순서(R-0 가 티켓으로)
 ① K-0113(재질 — 세 트랙 공통, 가장 큼) ② 9 지우기(W, 위험 0) ③ 2·3·4 웹 사람·괴물 → 자체 몸(VRoid 조합·world-forge 괴물·TRELLIS 몸 이미 있음, W 배선) ④ 5·6 웹 건물·자연 → world-forge 세트(K-0113 뒤) ⑤ 10 유니티 ⑥ 8·12.

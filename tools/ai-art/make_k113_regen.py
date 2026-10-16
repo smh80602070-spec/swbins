@@ -39,7 +39,7 @@ for group, pat, init in GROUPS:
                                'redo_of': os.path.relpath(lp, ROOT).replace(os.sep, '/')}})
 json.dump({'model': 'animagine-xl-4.0-opt', 'out': 'k113_regen',
            'note': 'K-0113 — 옛 밑그림(Poly Haven 재질 몸)으로 그린 AI 그림을 같은 씨앗·프롬프트로 새 밑그림에서 다시',
-           'defaults': {'prompt_prefix': '', 'width': 768, 'height': 768, 'sampler': 'Euler a', 'variants': 1},
+           'defaults': {'prompt_prefix': '', 'width': 768, 'height': 768, 'sampler': 'Euler a', 'variants': 4},
            'items': items}, open(os.path.join(HERE, 'batches', 'k113_regen.json'), 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
 from collections import Counter
 print('K113_REGEN', len(items), dict(Counter(i['meta']['k113_group'] for i in items)))
