@@ -92,7 +92,8 @@
    *  같은 파일은 브라우저가 다시 내려받지 않는다 */
   function groundTexture(mood, repeatX, repeatY) {
     var t = three();
-    var src = GROUND_TEX_SRC[mood] || GROUND_TEX_SRC.sky;
+    var A3 = global.DG.assets3d, own = A3 && A3.root && A3.root() ? A3.root() + 'web2d/tile/story_' + ({ forest: 'dirt', cave: 'stone', fire: 'stone' }[mood] || 'grass') + '.webp' : null;   // W-0263 바닥 = 공용 자체 web2d 타일(못 잡으면 옛 Kenney)
+    var src = own || GROUND_TEX_SRC[mood] || GROUND_TEX_SRC.sky;
     if (!t) { return null; }
     var tex = new t.TextureLoader().load(src);
     tex.magFilter = t.NearestFilter;
@@ -467,17 +468,19 @@
     /** 횃불(PLAN 22절) — 동굴·마을에 세운다. 도형(자루+불머리)은 예산과 무관하게
      *  항상 서고, 실제 PointLight 만 torchBudget 이 남았을 때 켠다 */
     function torch(x, z, h) {
-      var holder = new Tc.Group();
+      var holder = new Tc.Group(), body = new Tc.Group();
       holder.position.set(x, 0, z);
       var pole = new Tc.Mesh(new Tc.CylinderGeometry(2.4, 2.4, h * 0.75, 5),
         LM({ color: 0x3a2a1a }));
       pole.position.set(0, h * 0.38, 0);
-      holder.add(pole);
+      body.add(pole);
       var head = new Tc.Mesh(new Tc.ConeGeometry(h * 0.18, h * 0.32, 6),
         new Tc.MeshBasicMaterial({ color: 0xffab54 }));
       head.position.set(0, h * 0.75 + h * 0.16, 0);
-      holder.add(head);
+      body.add(head);
+      holder.add(body);
       worldGroup.add(holder);
+      swapIn(body, 'torch', x + ':' + z, h * 1.1, gen);   // W-0263 몸만 자체 torch_stand_01(판 표), 불빛(아래 PointLight)은 holder 에 남는다
       if (torchBudget > 0) {
         torchBudget--;
         var lt = new Tc.PointLight(0xffab54, 1.5, h * 10, 2);

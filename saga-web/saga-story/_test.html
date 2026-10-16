@@ -6395,6 +6395,16 @@ window.DG_NO_TUNE = true;
         return '독 ' + (keep || '(없음)') + ' + ☰ · 접은 ' + hidden + ' · 칸 ' + n + '(숨은 칸 뺌) · 뱃지 → ☰ 점 · Esc ' + (pre ? '(다른 창 열림 → 양보)' : '열고') + ' 닫음';
       } finally { M._reset(); dock.remove(); if (sh) { sh.remove(); } if (real) { real.id = 'dock'; M.init(); } }
     });
+    t('W-0263 자체 에셋 — 판별 표(cfg.assets3d.reg)의 world3d id 가 전부 있다 · 얹은 뒤 빌린 Quaternius 경로가 안 남는다 · 횃불 몸도 표를 부른다', function () {
+      var reg = (DG.cfg.assets3d || {}).reg || {}, A = DG.assets3d, miss = [], n = 0, k, i;
+      for (k in reg) { if (Object.prototype.hasOwnProperty.call(reg, k)) { for (i = 0; i < reg[k].length; i++) { n++; if (!A.has('world', reg[k][i])) { miss.push(reg[k][i]); } } } }
+      var live = !!(A.url && A.url('world', 'altar_01')), got = live ? A.applyProps() : 0, left = [], bad = new RegExp('models/(nature|props|buildings)/');
+      Object.keys(reg).forEach(function (key) { var hit = DG.asset3d.lookup(key); if (hit && [].concat(hit.url || []).some(function (u) { return typeof u === 'string' && bad.test(u); })) { left.push(key); } });
+      var src = (function () { try { var x = new XMLHttpRequest(); x.open('GET', 'js/side-view3d.js', false); x.send(); return x.status === 200 ? x.responseText : ''; } catch (er) { return ''; } })(), torchOk = !src || src.indexOf("swapIn(body, 'torch'") >= 0;
+      var ok = !miss.length && n >= 18 && torchOk && (!live || (!left.length && got >= 1));
+      if (!ok) { throw new Error(JSON.stringify({ miss: miss, left: left, n: n, live: live, got: got, torchOk: torchOk })); }
+      return '표 ' + n + '칸 전부 world3d 에 있음 · 횃불 몸 표' + (live ? ' · 얹은 뒤 빌린 경로 0' : ' (공용 주소 못 잡음 — 표만)');
+    });
     t('재미표준 A 목표판(측정) — 부팅 뒤 추적 사명·접속 목표·다음 할 일 세 줄', function () {
       var keepQ = JSON.stringify(C.save.quests || {}), keepT = JSON.stringify(C.save.track || null), lv = C.save.player.level, t1, s1, n1;
       try { C.save.player.level = 12; C.save.track = null; Q.ensureDailyTrack(); t1 = Q.trackedInfo(); s1 = Q.sessionGoalInfo(); n1 = Q.nextInfo(); }

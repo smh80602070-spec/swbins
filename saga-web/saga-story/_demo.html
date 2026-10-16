@@ -137,6 +137,7 @@ window.DG_NO_ACCOUNT = true;
 <script>
 /* 세이브 보호 — 루프가 주기적으로 persist() 한다. 데모 상태로 덮이지 않게 막는다. */
 DG.core.persist = function () {};
+if (DG.assets3d && DG.assets3d.applyProps) { DG.assets3d.applyProps(); }   // W-0263 — 데모는 장면을 부팅 뒤 바로 그린다: 판별 자체 world3d 표를 먼저 얹어야 실제 게임과 같은 GLB 를 받는다(net-log, 다른 판과 같음)
 
 /* 데모에서 터진 예외는 제목과 화면에 남긴다 (스크린샷만 보면 죽은 걸 모른다) */
 window.addEventListener('error', function (e) {
