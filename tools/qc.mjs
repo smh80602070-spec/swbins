@@ -7,6 +7,7 @@
  *   node tools/qc.mjs --branch web|godot|unity|tools   갈래 단위(autorun 이 티켓 세션 뒤에 부른다)
  *   --full        진단 3회(DIFF 검사)·3D 장면 촬영 전부·에셋 감사·Godot probe 까지
  *   --no-shots    촬영(playwright) 생략          --godot   Godot probe_all 도(exe 는 GODOT 환경변수 또는 스크래치패드에서 찾음)
+ *   --deploy      배포 확인만(W-0258 — 공개 Pages 주소에서 가입→시작→☰→새로 고침, pw-deploy.mjs). --branch web·--full 엔 늘 든다
  *
  * 하는 일(웹 판마다): ① 번들·shared 사본 최신인지(bundle --check·sync-shared --check) ② 진단 러너(test-web.mjs, RESULT n/m·실패 줄·DIFF)
  *   ③ 재미 표준 8 측정(_test.html 의 "재미표준 A~H" 줄 ○△× — 없는 판은 "측정 없음" 으로 기록) ④ 2D 한 장(pw-look2d)·3D 장면(pw-visual-close,
@@ -34,7 +35,7 @@ const FUN = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 const argv = process.argv.slice(2);
 const has = (f) => argv.includes(f);
 const val = (f) => { const i = argv.indexOf(f); return i >= 0 ? argv[i + 1] : null; };
-const full = has('--full'), noShots = has('--no-shots');
+const full = has('--full'), noShots = has('--no-shots'), deployOnly = has('--deploy');
 const branch = val('--branch');
 let games = val('--game') ? val('--game').split(',') : GAMES;
 if (branch && branch !== 'web') games = [];
@@ -150,6 +151,22 @@ async function checkShots() {
   stopServer();
 }
 
+/* ── ④-2 배포 확인(W-0258) — 로컬 서버가 아니라 공개 Pages 주소를 서비스 워커 켠 채 실제 클릭으로. 이 PC 네트워크 기준(사용자 기기 차단은 못 잡음) ── */
+function checkDeploy() {
+  if (!games.length) return;
+  const r = run(process.execPath, ['pw-deploy.mjs', ...games], { cwd: PLAY, timeout: 20 * 60 * 1000 });
+  const j = readJson(path.join(PLAY, 'results', 'pw-deploy.json'), null);
+  if (!j) { row('배포 확인', games.map(nm).join('·'), 'FAIL', 'pw-deploy 결과 없음 ' + (r.out.trim().split('\n').pop() || ''), r.sec); return; }
+  for (const x of j.games) {
+    const failed = x.steps.filter((t) => !t.ok).map((t) => t.name + (t.why ? '(' + t.why + ')' : ''));
+    const why = [failed.length ? '× ' + failed.join(', ') : '', x.errors.length ? '오류 ' + x.errors.slice(0, 2).join(' | ') : '', x.bad.length ? x.bad.slice(0, 2).join(' | ') : ''].filter(Boolean).join(' · ');
+    const st = !x.ok ? 'FAIL' : (x.sameVersion ? 'PASS' : 'WARN');
+    row('배포 확인', nm(x.game), st, x.ok ? (x.sameVersion ? '가입→시작→☰→새로 고침 ○ · 배포 ' + x.deployed : '흐름 ○ · 배포 버전 ' + x.deployed + ' ≠ 로컬 ' + x.local + '(푸시 뒤 배포 지연이면 몇 분 뒤 다시)') : why, null);
+    const shot = path.join(PLAY, 'shots', 'deploy', x.game + '.png');
+    if (fs.existsSync(shot)) eyes.push({ game: x.game, what: '배포 주소 마지막 화면', file: path.relative(ROOT, shot) });
+  }
+}
+
 /* ── ⑤ 상태(완성도·WIP) ── */
 function checkStatus() {
   if (!games.length) return null;
@@ -237,9 +254,11 @@ function report() {
 (async () => {
   try {
     console.log(`QC 시작 — 갈래 ${branch || 'web'} · 판 ${games.map(nm).join('·') || '-'} · ${full ? 'full' : 'quick'}${noShots ? ' · 촬영 생략' : ''}`);
+    if (deployOnly) { checkDeploy(); return; }
     checkBundles();
     checkTests();
     await checkShots();
+    if (branch === 'web' || (full && !branch)) checkDeploy();
     checkStatus();
     if (branch === 'godot' || has('--godot') || (full && !branch)) checkGodot();
     if (branch === 'tools' || full) checkAssets();
