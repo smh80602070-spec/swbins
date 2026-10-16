@@ -139,6 +139,7 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/auto.js"></script>
 <script src="js/ui-detail.js"></script>
 <script src="js/ui-town.js"></script>
+<script src="js/ui-shops.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/menu-grid.js"></script>
 <script src="js/game.js"></script>
@@ -6880,6 +6881,13 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       DG.ui.openSheet('town'); a = host(); DG.ui.closeSheet(); DG.ui.openSheet('map'); b = host(); DG.ui.closeSheet();
       var t1 = DG.uiTown.viewTown(), t2 = DG.uiTown.viewMap();
       return typeof t1 === 'string' && t1.length > 80 && typeof t2 === 'string' && t2.length > 80 && a.length > 80 && b.length > 80 && ('게시판 ' + t1.length + '자 · 지도 ' + t2.length + '자 · 시트 ' + a.length + '/' + b.length) || ('실패 ' + [t1 && t1.length, t2 && t2.length, a.length, b.length].join(','));
+    });
+    t('소포·침선방·사고 시트(R-4 ui-shops.js) — openSheet 로 연 침선방·사고·택배가 그려진다(시트 몸에 글이 찬다)', function () {
+      var host = function () { var e = document.getElementById('sheet') || document.querySelector('.sheet'); return e ? e.innerHTML : ''; }, got = {};
+      ['wear', 'museum', 'parcel'].forEach(function (k) { DG.ui.openSheet(k); got[k] = host().length; DG.ui.closeSheet(); });
+      var w = DG.uiShops.viewWear(), m = DG.uiShops.viewMuseum(), p = DG.uiShops.viewParcel(), c = DG.uiShops.parcelChip();
+      var ok = [w, m, p].every(function (x) { return typeof x === 'string' && x.length > 80; }) && typeof c === 'string' && got.wear > 80 && got.museum > 80 && got.parcel > 80;
+      return ok && ('침선방 ' + w.length + '자 · 사고 ' + m.length + '자 · 택배 ' + p.length + '자 · 시트 ' + got.wear + '/' + got.museum + '/' + got.parcel) || ('실패 ' + JSON.stringify(got));
     });
     t('마을 기 그림(R-4 village-flag.js) — 무늬 여덟 다 깃발 그림(data URL)이 되고 서로 다르다', function () {
       var VDx = DG.villageData, VV = DG.villageView, bg = VDx.FLAG_BGS[0].key, fg = VDx.FLAG_FGS[0].key, seen = {}, bad = [];

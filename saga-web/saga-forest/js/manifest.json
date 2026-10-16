@@ -72,6 +72,7 @@
    "js/auto.js",
    "js/ui-detail.js",
    "js/ui-town.js",
+   "js/ui-shops.js",
    "js/ui.js",
    "js/menu-grid.js",
    "js/perf.js",
@@ -150,6 +151,7 @@
    "js/auto.js",
    "js/ui-detail.js",
    "js/ui-town.js",
+   "js/ui-shops.js",
    "js/ui.js",
    "js/menu-grid.js",
    "js/game.js"
