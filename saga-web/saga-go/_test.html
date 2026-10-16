@@ -1022,13 +1022,15 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var FC = DG.fieldCombat, W = DG.world, st = C.save.settings = C.save.settings || {}, old = st.autoBattle, w0 = W.walkTo, prev = FC.state(), calls = [], r = {};
       try {
         st.autoBattle = false; FC.toggleAuto(); r.on = st.autoBattle; FC.toggleAuto(); r.off = st.autoBattle;
-        var S2 = fcState(), f = fcFoe(S2, 'imp', 30, 0), m = S2.party[0];
+        var S2 = fcState(), f = fcFoe(S2, 'imp', 30, 0), m = S2.party[0]; f.st = 'chase';   // R-5 — 깨어 싸우는 적만 쫓는다(잠든 무리는 안 깨움)
         m.skillCd = 99; m.energy = 0; FC._setStateForTest(S2);
         W.walkTo = function (x, y, run) { calls.push({ x: x, y: y, run: run }); };
         FC._autoFight({ x: 0, y: 0 }); r.mode = W.mode;
         r.call = calls[0] || null;
+        var S3 = fcState(), g = fcFoe(S3, 'rex', 0, 0), m3 = S3.party[0], kd = FC.kd(), keep = (Math.hypot(g.x, g.y) || 0); m3.skillCd = 99; m3.energy = 0; g.st = 'chase'; g.x = 0; g.y = 0; FC._setStateForTest(S3); calls.length = 0;
+        var BODYg = 2.4 * 1.6 * kd, sp = { x: -(BODYg + 3.2 * kd * 0.7), y: 0 }; S3.atkCd = 0; FC._autoFight(sp); r.bigWalk = calls.length; r.bigCombo = S3.combo;   // R-5 — 큰 적(키 2.4↑) 곁 다가선 자리에서 친다(전엔 LUNGE_R 밖이라 제자리 걸음만)
       } finally { W.walkTo = w0; FC._setStateForTest(prev); st.autoBattle = old; }
-      var ok = r.on === true && r.off === false && (r.mode !== 'keyboard' ? !r.call : (!!r.call && r.call.x > 20 && r.call.x < 30 && Math.abs(r.call.y) < 0.01 && r.call.run === false));
+      var ok = r.on === true && r.off === false && r.bigWalk === 0 && r.bigCombo > 0 && (r.mode !== 'keyboard' ? !r.call : (!!r.call && r.call.x > 20 && r.call.x < 30 && Math.abs(r.call.y) < 0.01 && r.call.run === false));
       return ok && ('토글 켜짐→꺼짐 · 30m 도깨비에게 ' + (r.call ? r.call.x.toFixed(1) + 'm 자리로 걸어감' : '(GPS 라 안 걸음)') + ' · 입력 ' + r.mode) || ('실패 ' + JSON.stringify(r));
     });
 

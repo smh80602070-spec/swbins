@@ -843,7 +843,7 @@
     var sv = core().save, st = sv.settings;
     return !!((st && st.autoBattle) || (sv.auto && sv.auto.on) || (st && st.autoBattle == null && touchDev()));   // W-0236 터치 기기는 정하기 전엔 켜짐
   }
-  /* W-0236 🤖 자동 사냥(사용자 10-15 "모바일에서는 자동 사냥이 필요") — 들판 전투 단추로 켜고 끈다(결투 🤖 와 같은 save.settings.autoBattle). 켜면 공격·스킬·폭발·회피에 더해 사거리 밖 적에게 다가간다 */ function touchDev() { return !!(('ontouchstart' in global) || (global.navigator && global.navigator.maxTouchPoints > 0)); } function toggleAuto() { var sv = core().save; sv.settings = sv.settings || {}; sv.settings.autoBattle = !autoOn(); if (!sv.settings.autoBattle) { var Wq = global.DG.world; if (Wq && Wq.walkingTo && Wq.walkingTo() && Wq.walkTo) { Wq.walkTo(sv.player.pos.x, sv.player.pos.y, false); } } core().persist(); paintAuto(); return null; } function paintAuto() { var b = hudEl && hudEl.querySelector('[data-fc="auto"]'), on2 = autoOn(); if (b && b._on !== on2) { b._on = on2; b.classList.toggle('on', on2); b.querySelector('span').textContent = on2 ? '🤖 켜짐' : '🤖 자동'; } }
+  /* W-0236 🤖 자동 사냥(사용자 10-15 "모바일에서는 자동 사냥이 필요") — 들판 전투 단추로 켜고 끈다(결투 🤖 와 같은 save.settings.autoBattle). 켜면 공격·스킬·폭발·회피에 더해 사거리 밖 적에게 다가간다 */ function touchDev() { return !!(('ontouchstart' in global) || (global.navigator && global.navigator.maxTouchPoints > 0)); } function toggleAuto() { var sv = core().save; if (sv.auto && sv.auto.on) { toast('🤖 자동 순행 중엔 늘 자동 전투입니다 — 순행을 끄면 고를 수 있습니다'); return null; } sv.settings = sv.settings || {}; sv.settings.autoBattle = !autoOn(); if (!sv.settings.autoBattle) { var Wq = global.DG.world; if (Wq && Wq.walkingTo && Wq.walkingTo() && Wq.walkTo) { Wq.walkTo(sv.player.pos.x, sv.player.pos.y, false); } } core().persist(); paintAuto(); return null; } function paintAuto() { var b = hudEl && (hudEl._autoBtn || (hudEl._autoBtn = hudEl.querySelector('[data-fc="auto"]'))), on2 = autoOn(); if (b && b._on !== on2) { b._on = on2; b.classList.toggle('on', on2); b.querySelector('span').textContent = on2 ? '🤖 켜짐' : '🤖 자동'; } }
   /** 자동 회피(2026-09-28 실기 Q6) — 🤖 는 예고(붉은 원·코앞 휘두름)를 하나도 안 피해 혼자면 보통 무리에도 거의 쓰러졌다.
       나를 칠 공격이 막 떨어지려 할 때(무적 시간 안) 기력이 있으면 그 자리에서 비켜 난다. 매 프레임 본다 */
   function autoThreat(S, px, py) {
@@ -878,14 +878,14 @@
     var m = active(S);
     if (!m || m.down) { return; }
     var n = nearestFoe(S, pos.x, pos.y, SKILL_AIM());
-    if (!n) { var far = nearestFoe(S, pos.x, pos.y, LEASH_R()); if (far) { autoApproach(pos, far); } return; }   // W-0236 조준 밖이면 쫓는 거리 안 적에게 다가간다
+    var kit = m.kit || SWORD_KIT, rr = kit.range || (kit === SWORD_KIT || m.wtype === 'sword' ? REACH() : kit.reach); if (!n) { var far = nearestAwake(pos.x, pos.y, LEASH_R()); if (far) { autoApproach(pos, far, rr); } return; }   // W-0236 조준 밖이면 쫓는 거리 안 적에게 다가간다 · R-5 잠든·돌아가는 무리는 안 깨운다
     if (m.energy >= ENERGY_MAX() && foesWithin(S, pos.x, pos.y, BURST_R()).length >= 2) { act('burst'); return; }
     if (m.skillCd <= 0) { act('skill'); return; }
     /* ⑲-2 얼어 있는 적이 곁에 있으면 강공격으로 깬다 */
     if (n.frozenT > 0 && S.stamina >= CHARGE_COST() && Math.hypot(n.x - pos.x, n.y - pos.y) <= CHARGE_REACH()) { act('heavy'); return; }
-    if (Math.hypot(n.x - pos.x, n.y - pos.y) <= LUNGE_R()) { act('attack'); } else { autoApproach(pos, n); }
+    var cd0 = Math.hypot(n.x - pos.x, n.y - pos.y); if (kit.range ? cd0 - BODY(n) <= kit.range : (cd0 <= LUNGE_R() || cd0 - BODY(n) <= rr)) { act('attack'); } else { autoApproach(pos, n, rr); }   // R-5 — 큰 적(키 2.4↑)은 다가선 자리(몸 가장자리+사거리 7할)가 LUNGE_R 밖이라 영영 안 쳤다: 가장자리 거리로
   }
-  /** W-0236 자동 사냥 — 사거리 밖 적이면 그 적의 몸 가장자리 + 사거리 7할 자리로 걸어간다(탭 이동과 같은 길 world.walkTo — 손으로 움직이면 그쪽이 먼저). GPS 는 몸을 못 움직여 안 함 */ function autoApproach(pos, n) { var W = global.DG.world; if (!W || !W.walkTo || W.mode !== 'keyboard' || S.dash) { return false; } var dx = pos.x - n.x, dy = pos.y - n.y, d = Math.hypot(dx, dy) || 1, keep = BODY(n) + REACH() * 0.7; W.walkTo(n.x + dx / d * keep, n.y + dy / d * keep, false); return true; }
+  /** W-0236 자동 사냥 — 사거리 밖 적이면 그 적의 몸 가장자리 + 사거리 7할 자리로 걸어간다(탭 이동과 같은 길 world.walkTo — 손으로 움직이면 그쪽이 먼저). GPS 는 몸을 못 움직여 안 함 */ function autoApproach(pos, n, rr) { var W = global.DG.world; if (!W || !W.walkTo || W.mode !== 'keyboard' || S.dash) { return false; } var dx = pos.x - n.x, dy = pos.y - n.y, d = Math.hypot(dx, dy) || 1, keep = BODY(n) + (rr || REACH()) * 0.7; W.walkTo(n.x + dx / d * keep, n.y + dy / d * keep, false); S.autoWalk = true; return true; } function nearestAwake(px, py, r) { var best = null, bd = r, L = living(S), i, d; for (i = 0; i < L.length; i++) { if (L[i].st === 'idle' || L[i].st === 'return') { continue; } d = Math.max(0, Math.hypot(L[i].x - px, L[i].y - py) - BODY(L[i])); if (d <= bd) { bd = d; best = L[i]; } } return best; } /** R-5 — 깨어 싸우는 적(쫓기·휘두르기 등)만. 잠든(idle)·제자리로 돌아가는(return) 무리는 자동 사냥이 깨우러 가지 않는다 */
   function tick(dt) {
     if (!on() || !core() || !core().save) { hide(); return; } var kd1 = KD0(); if (kd1 !== KDV) { KDV = kd1; refAcc = 9; } paintAuto();   // W-0236 단추 켜짐 표시(결투 🤖·자동 순행에서 바뀌어도) · W-0233 2D/3D·확대가 바뀌면 키트 사본을 바로 다시
     ensureState();
@@ -906,7 +906,7 @@
     var Wm = global.DG.world, mv = Wm && Wm.motion;
     if (mv && mv.speed > 1.5 && (mv.vx || mv.vy)) { S.lastDx = mv.vx; S.lastDy = mv.vy; }
     step(S, dt, { px: pos.x, py: pos.y, blocked: bl });
-    if (!bl && autoOn() && engaged(S)) {
+    if (S.autoWalk && !(autoOn() && engaged(S))) { S.autoWalk = false; var Ww = global.DG.world; if (Ww && Ww.walkingTo && Ww.walkingTo() && Ww.walkTo && !(core().save.auto && core().save.auto.on)) { Ww.walkTo(pos.x, pos.y, false); } } if (!bl && autoOn() && engaged(S)) {   // R-5 — 싸움이 끝나거나 자동을 끄면 자동 사냥이 건 걸음을 거둔다(자동 순행 걸음은 그대로)
       lastAuto += dt;
       /* 2026-09-28 실기 Q6 "너무 오래 걸림" — 0.3초마다만 눌러 칼 3타(0.34초 박자)의 절반을 놓쳤다(초당 46 피해,
          손으로 연타하면 159). 공격 쿨이 풀리는 그 프레임에도 누른다 */
