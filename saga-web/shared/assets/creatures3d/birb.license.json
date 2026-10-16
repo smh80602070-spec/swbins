@@ -40,5 +40,6 @@
  "height_m": 0.15,
  "replaces": "Quaternius CC0 — Birb (dungeon standin·forest standin·go animals·story standin)",
  "commercial_use": true,
- "rig": "bird"
+ "rig": "bird",
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c\\birb.glb) · 결 평균(여백 제외) [144, 126, 113] → [217, 212, 204] (입력 전경 [222, 217, 214])"
 }

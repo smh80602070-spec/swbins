@@ -40,5 +40,6 @@
  "height_m": 1.0,
  "replaces": "Poly by Google CC-BY 3.0 — Tiger.glb (dungeon·forest·go·story animals/)",
  "commercial_use": true,
- "rig": "quad"
+ "rig": "quad",
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\_out\\creature_rig\\k96\\tiger.glb) · 결 평균(여백 제외) [144, 108, 75] → [160, 123, 95] (입력 전경 [156, 119, 95])"
 }

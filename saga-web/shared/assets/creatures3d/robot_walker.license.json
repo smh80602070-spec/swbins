@@ -39,5 +39,6 @@
  "yaw": 0,
  "height_m": 1.6,
  "replaces": "Quaternius CC0 (robots·space) — Robot_Walker (D robots·F G S foes)",
- "commercial_use": true
+ "commercial_use": true,
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_d\\robot_walker.glb) · 결 평균(여백 제외) [100, 93, 106] → [117, 111, 132] (입력 전경 [117, 111, 132])"
 }

@@ -40,5 +40,6 @@
  "height_m": 1.3,
  "replaces": "Quaternius CC0 — Donkey.glb",
  "commercial_use": true,
- "rig": "quad"
+ "rig": "quad",
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\_out\\creature_rig\\k96\\donkey.glb) · 결 평균(여백 제외) [132, 121, 114] → [165, 157, 152] (입력 전경 [166, 159, 154])"
 }

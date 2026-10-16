@@ -38,5 +38,6 @@
  "height_m": 1.0,
  "replaces": "Quaternius CC0 — Shark (animals_extra2 몫 — 1만리 펫 pt_shark_2 백상아리, K-0109)",
  "commercial_use": true,
- "rig": "worm"
+ "rig": "worm",
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k109\\great_white.glb) · 결 평균(여백 제외) [152, 164, 172] → [192, 201, 214] (입력 전경 [192, 201, 214])"
 }

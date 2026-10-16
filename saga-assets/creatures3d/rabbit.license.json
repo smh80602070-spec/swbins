@@ -40,5 +40,6 @@
  "height_m": 0.35,
  "replaces": "Poly CC-BY — Rabbit.glb (forest animals/)",
  "commercial_use": true,
- "rig": "quad"
+ "rig": "quad",
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\_out\\creature_rig\\k96\\rabbit.glb) · 결 평균(여백 제외) [120, 104, 102] → [196, 184, 177] (입력 전경 [204, 188, 180])"
 }

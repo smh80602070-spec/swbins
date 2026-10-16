@@ -40,5 +40,6 @@
  "height_m": 0.6,
  "replaces": "Poly by Google CC-BY 3.0 — Monkey.glb (dungeon·forest·go·story animals/)",
  "commercial_use": true,
- "rig": "quad"
+ "rig": "quad",
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\_out\\creature_rig\\k96\\monkey.glb) · 결 평균(여백 제외) [82, 67, 57] → [161, 139, 123] (입력 전경 [167, 142, 126])"
 }

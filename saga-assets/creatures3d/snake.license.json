@@ -40,5 +40,6 @@
  "height_m": 0.3,
  "replaces": "Quaternius CC0 — Snake·Snake_angry(색 변형 — 같은 몸) (dungeon standin·forest animals·go animals·story standin)",
  "commercial_use": true,
- "rig": "worm"
+ "rig": "worm",
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c\\snake.glb) · 결 평균(여백 제외) [177, 156, 153] → [206, 206, 182] (입력 전경 [211, 211, 182])"
 }

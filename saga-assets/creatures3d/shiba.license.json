@@ -40,5 +40,6 @@
  "height_m": 0.45,
  "replaces": "Quaternius CC0 — ShibaInu (dungeon animals·forest animals·go animals·story animals)",
  "commercial_use": true,
- "rig": "quad"
+ "rig": "quad",
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c\\shiba.glb) · 결 평균(여백 제외) [160, 143, 127] → [218, 211, 190] (입력 전경 [239, 219, 194])"
 }

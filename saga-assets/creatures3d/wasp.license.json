@@ -39,5 +39,6 @@
  "yaw": 0,
  "height_m": 0.6,
  "replaces": "Quaternius CC0 (2nd pack) — Wasp (D R quaternius2·G S foes)",
- "commercial_use": true
+ "commercial_use": true,
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_d\\wasp.glb) · 결 평균(여백 제외) [85, 69, 63] → [152, 133, 131] (입력 전경 [168, 144, 138])"
 }

@@ -40,5 +40,6 @@
  "height_m": 1.6,
  "replaces": "Quaternius CC0 — horse_farm (animals_extra·go animals·realm troops)",
  "commercial_use": true,
- "rig": "quad"
+ "rig": "quad",
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\_out\\creature_rig\\k96\\horse_farm.glb) · 결 평균(여백 제외) [82, 73, 70] → [133, 123, 121] (입력 전경 [137, 128, 127])"
 }

@@ -40,5 +40,6 @@
  "height_m": 0.07,
  "replaces": "Quaternius CC0 — Cardinal_Fish (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
  "commercial_use": true,
- "rig": "worm"
+ "rig": "worm",
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_e\\cardinalfish.glb) · 결 평균(여백 제외) [160, 117, 115] → [226, 157, 155] (입력 전경 [227, 158, 156])"
 }

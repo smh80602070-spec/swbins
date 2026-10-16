@@ -38,5 +38,6 @@
  "height_m": 3.0,
  "replaces": "Quaternius CC0 — Whale (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
  "commercial_use": true,
- "rig": "worm"
+ "rig": "worm",
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k102\\whale.glb) · 결 평균(여백 제외) [132, 145, 158] → [203, 203, 216] (입력 전경 [206, 204, 217])"
 }

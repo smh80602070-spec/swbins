@@ -40,5 +40,6 @@
  "height_m": 1.4,
  "replaces": "Quaternius CC0 — Cow_Farm (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
  "commercial_use": true,
- "rig": "quad"
+ "rig": "quad",
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c\\cow_farm.glb) · 결 평균(여백 제외) [118, 104, 101] → [176, 157, 153] (입력 전경 [183, 162, 158])"
 }

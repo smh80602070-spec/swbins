@@ -40,5 +40,6 @@
  "height_m": 0.8,
  "replaces": "Quaternius CC0 — Sheep (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
  "commercial_use": true,
- "rig": "quad"
+ "rig": "quad",
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c2\\sheep.glb) · 결 평균(여백 제외) [154, 163, 177] → [174, 171, 192] (입력 전경 [174, 171, 195])"
 }

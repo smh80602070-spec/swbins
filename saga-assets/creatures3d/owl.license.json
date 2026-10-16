@@ -40,5 +40,6 @@
  "height_m": 0.5,
  "replaces": "Poly by Google CC-BY 3.0 — Owl.glb (dungeon·forest·go·story animals/)",
  "commercial_use": true,
- "rig": "bird"
+ "rig": "bird",
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\_out\\creature_rig\\k96\\owl.glb) · 결 평균(여백 제외) [150, 132, 127] → [213, 189, 180] (입력 전경 [217, 194, 185])"
 }
