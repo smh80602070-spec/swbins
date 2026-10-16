@@ -132,6 +132,7 @@ window.DG_NO_TUNE = true;
 <script src="js/side-hand.js"></script>
 <script src="js/ui-detail.js"></script>
 <script src="js/ui-rift.js"></script>
+<script src="js/ui-job.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/menu-grid.js"></script>
 <script src="js/region-icon.js"></script>
@@ -6412,6 +6413,13 @@ window.DG_NO_TUNE = true;
       var U = DG.uiRift, entry = U.viewRiftEntry(), keys = Object.keys(U.RIFT_AXIS), one = DG.riftData && DG.riftData.BOONS ? U.riftBoonLine(Object.keys(DG.riftData.BOONS)[0]) : '-';
       var ok = typeof entry === 'string' && entry.length > 40 && a.length > 80 && keys.length === 3 && typeof one === 'string';
       return ok && ('시트 ' + a.length + '자 · 문 앞 ' + entry.length + '자 · 축 ' + keys.length) || ('실패 ' + JSON.stringify({ a: a.length, e: entry && entry.length, one: one }));
+    });
+    t('무예 시트(R-4 ui-job.js) — job 시트로 연 무예 창이 그려지고, 같은 이름 viewJob 이 글을 낸다', function () {
+      var host = function () { var e = document.getElementById('sheet') || document.querySelector('.sheet'); return e ? e.innerHTML : ''; };
+      DG.ui.openSheet('job'); var a = host(); DG.ui.closeSheet();
+      var h = DG.uiJob.viewJob();
+      var ok = typeof h === 'string' && h.length > 200 && h.indexOf('무예') >= 0 && a.length > 200;
+      return ok && ('시트 ' + a.length + '자 · 무예 ' + h.length + '자') || ('실패 ' + JSON.stringify({ a: a.length, h: h && h.length }));
     });
     t('재미표준 A 목표판(측정) — 부팅 뒤 추적 사명·접속 목표·다음 할 일 세 줄', function () {
       var keepQ = JSON.stringify(C.save.quests || {}), keepT = JSON.stringify(C.save.track || null), lv = C.save.player.level, t1, s1, n1;
