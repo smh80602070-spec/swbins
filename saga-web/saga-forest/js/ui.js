@@ -1010,68 +1010,6 @@
     return html;
   }
 
-  /* ── 순무 장 ──────────────────────────────────────────────
-   * 원작에서 유일하게 값이 오르내리는 자리다. 앞일은 보여 주지 않는다 —
-   * 지나간 칸만 적어 두고, 팔 때를 고르는 것은 사람 몫이다.
-   */
-  function viewTurnip() {
-    var T = global.DG.turnip, stt = T.status();
-    var html = '<div class="sec"><h4>🥬 순무 장</h4><div class="card">';
-
-    if (stt.open) {
-      html += '<div class="stat-row"><span>오늘 살 값</span><b>🪙 ' + stt.buyPrice +
-          ' / 개</b></div>' +
-        '<small class="muted">순무 장은 <b>일요일 오전</b>에만 섭니다. ' +
-        '한 주에 ' + stt.MAX_BUY + '개까지, 열 개 묶음으로 삽니다.</small>' +
-        '<div class="bagtools">';
-      [10, 50, 100, 300].forEach(function (n) {
-        var can = core.save.player.gold >= stt.buyPrice * n;
-        html += '<button class="btn tiny ' + (can ? 'primary' : 'ghost') + '"' +
-          (can ? '' : ' disabled') + ' data-act="v-tbuy" data-n="' + n + '">' +
-          n + '개 (🪙 ' + core.fmt(stt.buyPrice * n) + ')</button>';
-      });
-      html += '</div>';
-    } else if (stt.dow === 0) {
-      html += '<small class="muted">순무 장은 <b>일요일 오전</b>에만 섭니다 — 오늘은 지났습니다. ' +
-        '일요일에는 전방이 순무를 받지도 않습니다.</small>';
-    } else {
-      html += '<div class="stat-row"><span>지금 시세</span><b>🪙 ' + stt.price + ' / 개</b></div>' +
-        '<small class="muted">시세는 <b>하루 두 번</b>(오전·오후) 바뀝니다. ' +
-        '다음 일요일이 오면 가진 순무는 썩습니다.</small>';
-    }
-    html += '</div>';
-
-    if (stt.have) {
-      var val = stt.rotten ? T.ROT_PRICE * stt.have : stt.value;
-      var gain = val - stt.cost;
-      html += '<div class="card' + (stt.rotten ? '' : ' hi') + '">' +
-        '<div class="gearname">🥬 가진 순무 ' + stt.have + '개' +
-          (stt.rotten ? ' <small class="muted">— 썩었습니다</small>' : '') + '</div>' +
-        '<div class="stat-row"><span>산 값</span><b>🪙 ' + stt.bought + ' / 개</b></div>' +
-        '<div class="stat-row"><span>지금 팔면</span><b>🪙 ' + core.fmt(val) +
-          ' (' + (gain >= 0 ? '+' : '') + core.fmt(gain) + ')</b></div>' +
-        '<button class="btn ' + (gain >= 0 ? 'primary' : '') + ' wide" data-act="v-tsell">' +
-          '🥬 다 판다</button>' +
-        (stt.rotten ? '<small class="muted">썩은 것은 개당 🪙 ' + T.ROT_PRICE +
-          ' 에나 나갑니다. 처분해야 새로 살 수 있습니다.</small>' : '') +
-        '</div>';
-    }
-
-    /* 이번 주 지나간 시세 */
-    if (stt.dow !== 0) {
-      html += '<div class="card"><div class="gearname">이번 주 시세</div>' +
-        '<div class="bagtools">';
-      stt.table.forEach(function (c) {
-        html += '<span class="chip' + (c.now ? ' on' : '') + '">' + c.label + ' ' +
-          (c.price === null ? '—' : '🪙 ' + c.price) + '</span>';
-      });
-      html += '</div><small class="muted">앞일은 적히지 않습니다. ' +
-        '팔 때를 고르는 것이 이 놀이입니다.</small></div>';
-    }
-    html += '</div>';
-    return html;
-  }
-
   /** 지금 곁에 있는 주민 (선물을 건넬 수 있는 사람) */
   function nearFolk() {
     var V = global.DG.village;
@@ -1307,9 +1245,9 @@
   function viewTown() { return UT().viewTown(); }
   function viewMap() { return UT().viewMap(); }
 
-  /* ── 소포 접수대 · 침선방 · 사고 — js/ui-shops.js(R-4). 같은 이름 한 줄 넘김 ───────────── */
+  /* ── 소포 접수대 · 침선방 · 사고 · 순무 장 — js/ui-shops.js(R-4). 같은 이름 한 줄 넘김 ───────────── */
   var usH = null; function US() { return global.DG.uiShops.setup(usH || (usH = { esc: esc, ico: ico, gradeTag: gradeTag, dexBar: dexBar })); }
-  function viewParcel() { return US().viewParcel(); } function parcelChip() { return US().parcelChip(); } function viewWear() { return US().viewWear(); } function viewMuseum() { return US().viewMuseum(); }
+  function viewParcel() { return US().viewParcel(); } function parcelChip() { return US().parcelChip(); } function viewWear() { return US().viewWear(); } function viewMuseum() { return US().viewMuseum(); } function viewTurnip() { return US().viewTurnip(); }
 
   /* ── 도감 ─────────────────────────────────────────────── */
 

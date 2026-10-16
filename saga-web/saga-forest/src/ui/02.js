@@ -92,9 +92,9 @@
   function viewTown() { return UT().viewTown(); }
   function viewMap() { return UT().viewMap(); }
 
-  /* ── 소포 접수대 · 침선방 · 사고 — js/ui-shops.js(R-4). 같은 이름 한 줄 넘김 ───────────── */
+  /* ── 소포 접수대 · 침선방 · 사고 · 순무 장 — js/ui-shops.js(R-4). 같은 이름 한 줄 넘김 ───────────── */
   var usH = null; function US() { return global.DG.uiShops.setup(usH || (usH = { esc: esc, ico: ico, gradeTag: gradeTag, dexBar: dexBar })); }
-  function viewParcel() { return US().viewParcel(); } function parcelChip() { return US().parcelChip(); } function viewWear() { return US().viewWear(); } function viewMuseum() { return US().viewMuseum(); }
+  function viewParcel() { return US().viewParcel(); } function parcelChip() { return US().parcelChip(); } function viewWear() { return US().viewWear(); } function viewMuseum() { return US().viewMuseum(); } function viewTurnip() { return US().viewTurnip(); }
 
   /* ── 도감 ─────────────────────────────────────────────── */
 
