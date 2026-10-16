@@ -53,6 +53,7 @@ async function run(kind) {
   try {
     await enter(r);
     if (r.titleShot) { shots.push({ label: '첫 화면', buf: r.titleShot }); }
+    await closeAll(page); await sleep(500); shots.push({ label: 'HUD', buf: await page.screenshot() });   // W-0257 창 없이 늘 떠 있는 것
     const n = process.env.TITLE_ONLY ? 0 : await page.evaluate(() => document.querySelectorAll('#dock button').length);   // TITLE_ONLY=1 — 첫 화면만(W-0256)
     for (let i = 0; i < n; i++) {
       await closeAll(page);
