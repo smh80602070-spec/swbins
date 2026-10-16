@@ -131,6 +131,7 @@ window.DG_NO_TUNE = true;
 <script src="js/auto.js"></script>
 <script src="js/side-hand.js"></script>
 <script src="js/ui-detail.js"></script>
+<script src="js/ui-rift.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/menu-grid.js"></script>
 <script src="js/region-icon.js"></script>
@@ -6404,6 +6405,13 @@ window.DG_NO_TUNE = true;
       var ok = !miss.length && n >= 18 && torchOk && (!live || (!left.length && got >= 1));
       if (!ok) { throw new Error(JSON.stringify({ miss: miss, left: left, n: n, live: live, got: got, torchOk: torchOk })); }
       return '표 ' + n + '칸 전부 world3d 에 있음 · 횃불 몸 표' + (live ? ' · 얹은 뒤 빌린 경로 0' : ' (공용 주소 못 잡음 — 표만)');
+    });
+    t('비경 시트(R-4 ui-rift.js) — rift 시트로 연 비경 문 앞이 그려지고, 같은 이름 그리기(문 앞·축복 한 줄)가 글을 낸다', function () {
+      var host = function () { var e = document.getElementById('sheet') || document.querySelector('.sheet'); return e ? e.innerHTML : ''; };
+      DG.ui.openSheet('rift'); var a = host(); DG.ui.closeSheet();
+      var U = DG.uiRift, entry = U.viewRiftEntry(), keys = Object.keys(U.RIFT_AXIS), one = DG.riftData && DG.riftData.BOONS ? U.riftBoonLine(Object.keys(DG.riftData.BOONS)[0]) : '-';
+      var ok = typeof entry === 'string' && entry.length > 40 && a.length > 80 && keys.length === 3 && typeof one === 'string';
+      return ok && ('시트 ' + a.length + '자 · 문 앞 ' + entry.length + '자 · 축 ' + keys.length) || ('실패 ' + JSON.stringify({ a: a.length, e: entry && entry.length, one: one }));
     });
     t('재미표준 A 목표판(측정) — 부팅 뒤 추적 사명·접속 목표·다음 할 일 세 줄', function () {
       var keepQ = JSON.stringify(C.save.quests || {}), keepT = JSON.stringify(C.save.track || null), lv = C.save.player.level, t1, s1, n1;
