@@ -31,7 +31,29 @@ const ADAPT = {
   'saga-go': {
     pos: () => { const p = DG.core.save.player.pos; return p ? { x: p.x, y: p.y } : null; },
     minMove: 0.5, touch: 'joy:#gjoy', drag: 'none',   // 1만리는 끌기가 걷기가 아니다(클릭 이동·조이스틱)
-    extra: [{ name: '클릭 이동(walkingTo)', run: async (c) => { await c.clearIntro(); const a = await c.pos(); const [x, y] = c.center(0.42); const top = await c.topAt(x, y); await c.page.mouse.move(x, y); await sleep(200); await c.page.mouse.click(x, y); await sleep(2500); const t = await c.ev(() => !!(DG.world.walkingTo && DG.world.walkingTo())); const d = c.dist(a, await c.pos()); return { ok: d > 0.5 || t, detail: `이동 ${d.toFixed(2)} 목표 ${t} @${top}` }; } }]
+    extra: [{ name: '클릭 이동(빈 땅 → 걷기 · 짐승 → 만남)', run: async (c) => {
+      /* W-0273 — 누른 자리에 짐승이 있으면 가까울 땐 만남(전투), 멀면 그쪽으로 걷는다(world.js onClick). 둘 다 정상 반응.
+         빈 땅을 먼저 찾아 누르고(여러 자리), 끝내 짐승만 걸리면 만남도 ○ 로 친다 */
+      await c.clearIntro();
+      await c.ev(() => { window.__pwEv = []; if (!window.__pwEvOn) { window.__pwEvOn = 1; DG.core.on('encounter:request', () => window.__pwEv.push('만남')); } });
+      const W = c.phone ? 390 : 1280, H = c.phone ? 844 : 720;
+      const pts = [[0.5, 0.42], [0.3, 0.5], [0.7, 0.5], [0.5, 0.6], [0.25, 0.35], [0.75, 0.35]];
+      const tried = [];
+      for (const [fx, fy] of pts) {
+        const x = Math.round(W * fx), y = Math.round(H * fy);
+        const top = await c.topAt(x, y);
+        if (!/^(#map|canvas)/.test(top)) { tried.push(top); continue; }
+        await c.ev(() => { window.__pwEv = []; const e = document.querySelector('#encounter.show'); if (e) { e.classList.remove('show'); } });
+        const a = await c.pos();
+        await c.page.mouse.move(x, y); await sleep(150); await c.page.mouse.click(x, y); await sleep(400);
+        const r = await c.ev(() => ({ w: !!(DG.world.walkingTo && DG.world.walkingTo()), ev: window.__pwEv.slice().concat(document.querySelector('#encounter.show, #rogue-hud.show, #duel.show') ? ['만남 화면'] : []) }));
+        if (r.w) { await sleep(2000); const d = c.dist(a, await c.pos()); return { ok: d > 0.5, detail: `걷기 ${d.toFixed(1)} @${x},${y}` }; }
+        if (r.ev.length) { tried.push('만남@' + x + ',' + y); return { ok: true, detail: '짐승을 눌러 만남(정상 반응) · ' + tried.join(' ') }; }
+        tried.push('무반응@' + x + ',' + y);
+      }
+      const met = tried.some((t) => t.startsWith('만남'));
+      return { ok: met, detail: (met ? '빈 땅 못 찾음 — 짐승 눌러 만남(정상) · ' : '반응 없음 · ') + tried.join(' ') };
+    } }]
   },
   'saga-dungeon': {
     pos: () => { const T = DG.town; if (T && T.active() && T.me) { return T.me(); } const r = DG.dungeon.raw(); return r && r.player ? { x: r.player.x, y: r.player.y } : null; },
