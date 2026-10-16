@@ -439,7 +439,14 @@
   global.DG.cfg = global.DG.cfg || {};
   global.DG.cfg.assets3d = {
     /* 통일 3D 에셋(W-0021, shared/assets/world3d) — asset3d 키 → 그 판 9칸 id. 있는 자리만: 사당·성벽·횃불(화로)·집 */
-    reg: { 'temple': ['chinese_hall_01'], 'wall': ['city_wall_segment_01'], 'torch': ['brazier_01'], 'house': ['silkroad_house_01'] },
+    reg: { 'temple': ['chinese_hall_01'], 'wall': ['city_wall_segment_01'], 'torch': ['brazier_01'], 'house': ['silkroad_house_01'],
+      /* W-0264 — 남은 빌린 Quaternius·2나락 복사본도 자체로(감사 tasks/sheets/web-asset-audit-20261016.md): 성 단계는 2D 지도(W-0023 city:s/m/l)와 같은 셋 */
+      'city:t1': ['silkroad_house_01'], 'city:t2': ['chinese_hall_01'], 'city:t3': ['stone_tower_01'], 'city': ['chinese_hall_01'], 'mount': ['mountain_01'],
+      'tree': ['tree_broadleaf_01', 'tree_broadleaf_02', 'tree_pine_01'], 'rock': ['rock_large_01', 'rock_small_01'], 'bush': ['bush_01', 'bush_02'], 'grass': ['grass_tuft_01'], 'flower': ['flower_patch_01'],
+      'market': ['market_stall_01'], 'well': ['well_01'], 'log': ['log_01'], 'tent': ['tent_large_01'],
+      'wpn:sword': ['wpn_sword_common'], 'wpn:spear': ['wpn_spear_common'], 'wpn:axe': ['wpn_axe_common'], 'wpn:bow': ['wpn_bow_common'], 'wpn:staff': ['wpn_staff_common'],
+      'gear:helmet': ['eq_past_1_head'], 'gear:crown': ['acc_crown'], 'gear:gapju': ['eq_past_2_head'],
+      'edge:mound': ['hill_01'], 'edge:dune': ['dune_01'], 'edge:peak': ['rock_outcrop_01'], 'edge:rubble': ['rubble_wall_01'], 'edge:grave': ['stele_01'], 'edge:grass': ['grass_tuft_01', 'grass_tuft_02'], 'edge:reed': ['reed_clump_01'] },   // 전장 가장자리(battle3d EDGE_H)   // 몽둥이·두루마리·붓(CC-BY)은 자체 짝이 없어 옛 길(K 몫)
     /* 빌린 몸(W-0074, shared/js/assets3d.js borrowRecipe) — 제 몸이 없는 사람(시간 틈 무장 아홉·도시 군중)도 시대 구분 없이 VRoid 통일 몸.
        이 판은 도감 105 + 장수 194 = 299 전부가 판 인물이라 pool: 'all'(얼굴이 장수와 겹친다 — NPC 몸이 더 오면 풀린다). named 는 서로 다른 몸 */
     borrow: {

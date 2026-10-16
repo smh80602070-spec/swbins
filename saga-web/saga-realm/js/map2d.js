@@ -2,6 +2,7 @@
  * 사가천하 2D 국토 지도 꾸밈 (W-0023) — `renderMap()`(src/ui-rtk/02.js)이 부르는 SVG 조각 둘:
  *   terrain(cities)   지도 밑에 깔 지형 바닥(`<defs>` 무늬 + 바탕 + 성 둘레 땅 종류별 번짐) — K-0020 `realm_*` 타일
  *   castle(d, rad)    성 점 위에 얹는 성 그림(`<image>`) — K-0017 `world2d` 스프라이트, 병력(rad) 단계로 고른다
+ *   provLabels(cities) 지방 이름 붓글씨(K-0060 `assets/realm-ui/prov_<지방>.png`, W-0264) — 그 지방 성들의 가운데에 옅게
  * 둘 다 **2D 모드(3D 가 안 서 있음)이고 자료를 받았을 때만** 문자열을 돌려주고, 아니면 빈 문자열 — 지도는 옛 모양 그대로(오류 0).
  * 판 설정 `DG.cfg.mode2d`: `tile`(땅 종류 land → 타일 id)·`prop2d`(`city:s|m|l` → { id }). 주소는 `mode2d.tileUrl`·`assets3d.spriteUrl`.
  * 성 점(`rhit`·병력 점)은 그대로 둔다 — 손가락 목표와 병력 크기 표시라서. 그림은 `pointer-events:none`.
@@ -103,6 +104,22 @@
       '" width="' + hh.toFixed(2) + '" height="' + hh.toFixed(2) + '"/>';
   }
 
+  /** 지방 이름 붓글씨 — 지방(`prov`)마다 성들의 가운데 한 장(256×96 그림, 지도 단위 폭 PROV_W). 2D 모드에서만, 성·길 밑에 깐다 */
+  var PROV_W = 20;
+  function provLabels(cities) {
+    var m = M();
+    if (!m || !m.isOn()) { return ''; }
+    var sum = {}, k, i, d, s = '';
+    for (i = 0; i < cities.length; i++) { d = cities[i]; if (!d.prov) { continue; } k = sum[d.prov] || (sum[d.prov] = { x: 0, y: 0, n: 0 }); k.x += d.x; k.y += d.y; k.n++; }
+    var h = PROV_W * 96 / 256;
+    for (k in sum) {
+      if (!Object.prototype.hasOwnProperty.call(sum, k)) { continue; }
+      var cx = sum[k].x / sum[k].n, cy = sum[k].y / sum[k].n;
+      s += '<image class="rprov" pointer-events="none" href="assets/realm-ui/prov_' + k + '.png" x="' + (cx - PROV_W / 2).toFixed(1) + '" y="' + (cy - h / 2 + 7).toFixed(1) + '" width="' + PROV_W + '" height="' + h.toFixed(1) + '"/>';
+    }
+    return '<g class="rprovs" pointer-events="none">' + s + '</g>';
+  }
+
   global.DG = global.DG || {};
-  global.DG.map2d = { terrain: terrain, territory: territory, castle: castle, _reset: function () { settled = false; } };
+  global.DG.map2d = { terrain: terrain, territory: territory, castle: castle, provLabels: provLabels, _reset: function () { settled = false; } };
 })(typeof window !== 'undefined' ? window : this);

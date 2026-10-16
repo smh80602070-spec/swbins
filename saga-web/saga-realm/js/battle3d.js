@@ -742,6 +742,8 @@
   var PROP_COLOR = { grass: 0x9dbb62, mound: 0x9ab872, reed: 0x7fa65a, peak: 0x8a8f86, dune: 0xd4b77a,
     crystal: 0xb89cff, rubble: 0x7a766c, grave: 0x9a9e94 };
   function battleLook(cityId, water) { return global.DG.cityData.battleLook(cityId, water); }
+  /** W-0264 자체 모델로 바꿀 가장자리 소품 — 키 1 모델을 이 높이로(예전 도형과 같은 크기). crystal 은 자체 짝이 없어 도형 그대로 */
+  var EDGE_H = { mound: 1.1, dune: 0.6, peak: 2.6, rubble: 0.8, grave: 1.0, grass: 0.9, reed: 1.1 };
   function propMesh(t, P) {
     var col = PROP_COLOR[P.kind] || 0x8a8a80, TN = global.DG.toon3d;
     var mat = TN ? TN.lambertLike({ color: col }) : new t.MeshLambertMaterial({ color: col });
@@ -798,7 +800,18 @@
       sw.rotation.x = -Math.PI / 2; sw.position.set(0, 0.02, 7.6);
       dyn.add(sw);
     }
-    look.props.forEach(function (P) { dyn.add(propMesh(t, P)); });
+    /* W-0264 — 가장자리 소품은 판별 표(cfg.assets3d.reg 의 'edge:<종류>')에 자체 world3d 가 있으면 그 모델(키 EDGE_H 로 맞춤), 없거나 못 받으면 예전 도형 */
+    look.props.forEach(function (P) {
+      var A = asset3d(), key = 'edge:' + P.kind;
+      if (!EDGE_H[P.kind] || !A || !A.lookup || !A.lookup(key, { id: key })) { dyn.add(propMesh(t, P)); return; }
+      A.build(key, { id: key + ':' + P.x.toFixed(1) + ':' + P.z.toFixed(1) }, function (g) {
+        if (seq !== rebuildSeq || !dyn) { return; }
+        if (!g) { dyn.add(propMesh(t, P)); return; }
+        g.position.set(P.x, 0, P.z); g.rotation.y = P.x * 0.7;
+        if (P.kind === 'dune') { g.scale.set(P.s * 1.6, P.s * EDGE_H.dune, P.s); } else { g.scale.setScalar(P.s * EDGE_H[P.kind]); }
+        dyn.add(g);
+      });
+    });
 
     asset3d().build('city:' + tier, { id: rep.to + ':battle', tint: ownerCol, flag: ownerCol }, function (g) {
       if (seq !== rebuildSeq || !g || !dyn) { return; }

@@ -79,7 +79,7 @@ body.sheet-open #minimap { display: none; }
     --sg-lacquer: linear-gradient(180deg, rgba(38, 29, 20, .93), rgba(17, 13, 10, .93));
     --sg-trim: rgba(216, 181, 106, .55);
     --sg-trim-soft: rgba(216, 181, 106, .22);
-    --sg-serif: "Noto Serif KR", "Nanum Myeongjo", "Batang", "AppleMyungjo", serif;
+    --sg-serif: "SagaSerif", "Noto Serif KR", "Nanum Myeongjo", "Batang", "AppleMyungjo", serif;   /* W-0264 — K-0060 서체 서브셋(아래 @font-face) 먼저 */
   }
   #minimap {
     background: var(--sg-lacquer); border-color: var(--sg-trim);
@@ -95,3 +95,8 @@ body.sheet-open #minimap { display: none; }
   .cp-open { background: none; border-style: solid; border-image: var(--ui-tab-on) 14 fill / 14px stretch; }
   #realm .rmap { background: radial-gradient(ellipse at 50% 45%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, .55) 100%); }
 }
+
+/* W-0264 — K-0060 세리프 서체 서브셋(Noto Serif KR, OFL — assets/realm-ui/OFL-NotoSerif.txt). 없는 글자는 다음 글꼴로 넘어간다 */
+@font-face { font-family: "SagaSerif"; src: url(../assets/realm-ui/strategy-serif.woff2) format("woff2"); font-display: swap; }
+/* 지방 붓글씨(map2d.provLabels) — 지도 바닥 글씨라 옅게 */
+.rmap .rprov { opacity: calc(.42 * var(--lz, 1)); }   /* --lz = 확대^-0.6 — 확대할수록 옅게(바닥 글씨가 화면을 덮지 않게) */

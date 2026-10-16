@@ -4307,6 +4307,16 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         return '독 ' + keep.join('·') + ' + ☰ · 접은 ' + hidden + ' · 칸 ' + n + ' · Esc ' + (pre ? '(다른 창 열림 → 양보)' : '열고') + ' 닫음';
       } finally { M._reset(); dock.remove(); if (sh) { sh.remove(); } if (real) { real.id = 'dock'; M.init(); } }
     });
+    t('W-0264 자체 에셋 — 판별 표(cfg.assets3d.reg)의 world3d id 가 전부 실제로 있다 · 지방 붓글씨 28장이 2D 지도에 깔리고 파일이 있다', function () {
+      var reg = (DG.cfg.assets3d || {}).reg || {}, A = DG.assets3d, miss = [], n = 0, k, i;
+      for (k in reg) { if (Object.prototype.hasOwnProperty.call(reg, k)) { for (i = 0; i < reg[k].length; i++) { n++; if (!A.has('world', reg[k][i])) { miss.push(reg[k][i]); } } } }
+      var provs = {}; DG.cityData.CITIES.forEach(function (d) { if (d.prov) { provs[d.prov] = 1; } });
+      var M = DG.map2d, on = DG.mode2d && DG.mode2d.isOn && DG.mode2d.isOn(), svg = M && M.provLabels ? M.provLabels(DG.cityData.CITIES) : '', imgs = (svg.match(/class="rprov"/g) || []).length;
+      var bad = Object.keys(provs).filter(function (k2) { var x = new XMLHttpRequest(); x.open('GET', 'assets/realm-ui/prov_' + k2 + '.png', false); try { x.send(); } catch (e) { return true; } return x.status !== 200; });
+      var ok = !miss.length && n >= 25 && Object.keys(provs).length === 28 && !bad.length && (!on || imgs === 28);
+      if (!ok) { throw new Error(JSON.stringify({ miss: miss, n: n, provs: Object.keys(provs).length, bad: bad, on: on, imgs: imgs })); }
+      return '표 ' + n + '칸 전부 world3d 에 있음 · 지방 28 붓글씨 파일 ○ · 2D 지도 ' + (on ? imgs + '장' : '(2D 꺼짐 — 그림 수 생략)');
+    });
     t('재미표준 G 성장 가시화(측정) — 힘이 오르면 보이는 것: 성 그림 단계 · 무장 성장', function () {
       var t2 = (DG.cfg.mode2d && DG.cfg.mode2d.prop2d) || {}, ids = ['city:s', 'city:m', 'city:l'].map(function (k) { return t2[k] && t2[k].id; }), uniq = {};
       ids.forEach(function (x) { if (x) { uniq[x] = 1; } });

@@ -141,6 +141,7 @@ window.DG_NO_ACCOUNT = true;
   R.setup('cao');
   DG.ui.init();
 
+  if (DG.assets3d && DG.assets3d.applyProps) { DG.assets3d.applyProps(); }   // W-0264 — 데모는 장면을 부팅 이벤트보다 먼저 그린다: 판별 자체 world3d 표를 먼저 얹어야 실제 게임과 같은 GLB 를 받는다(net-log)
   var scene = (location.hash || '#map').slice(1);
 
   function freeUp(cityId) {

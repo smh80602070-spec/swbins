@@ -63,7 +63,11 @@
   }
 
   function whenLoaded(f) {
-    if (!global.document || global.document.readyState === 'complete') { setTimeout(f, 0); } else { global.addEventListener('load', f); }
+    if (!global.document || global.document.readyState === 'complete') { setTimeout(f, 0); return; }
+    /* W-0264 — load(그림까지 다 받은 뒤)만 기다리면 판 부팅(DOMContentLoaded)이 3D 지도·소품을 먼저 지어 옛 빌린 GLB 를 받았다(5천하 성벽·창).
+       같은 DOMContentLoaded 에 먼저 걸어(등록 순서) 부팅 전에 얹고, 뒤 묶음을 async 로 싣는 판을 위해 load 에 한 번 더(다시 얹어도 같은 표) */
+    if (global.document.readyState === 'loading') { global.document.addEventListener('DOMContentLoaded', f); }
+    global.addEventListener('load', f);
   }
 
   /**
