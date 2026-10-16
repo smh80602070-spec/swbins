@@ -325,8 +325,8 @@
       pdnode.rotation.y = ((Math.round(p.x) + Math.round(p.z)) % 360) * Math.PI / 180;
       g.add(pdnode);
     } else if (p.t === 'reed') {
-      /* 갈대는 이 판에 GLB 가 없다(위 §6.4) — 도형 그대로, 그래서 늘 흔들린다 */
-      box(g, p.x, y + p.h / 2, p.z, 3, p.h, 3, 0x3f5a34, 'sway', false);
+      var AS3r = AS(), reedShape = function () { var sg = new T.Group(); box(sg, 0, p.h / 2, 0, 3, p.h, 3, 0x3f5a34, 'sway', false); return sg; }, rdnode = AS3r ? AS3r.build('reed', seed + ':' + Math.round(p.x) + ':' + Math.round(p.z), p.h * 1.4, null, reedShape) : reedShape();   // W-0261 갈대 = 판 표 'reed'(reed_clump_01), 못 받으면 옛 흔들리는 도형
+      rdnode.position.set(p.x, y, p.z); g.add(rdnode);
     } else if (p.t === 'cavemouth') {
       /* 동굴 입구 — 사가만리가 이미 "광산 어귀"로 적어 둔 그 Mine 을 세운다 */
       var caveShape = function () {

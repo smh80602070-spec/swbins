@@ -374,12 +374,12 @@
    *  물려 PBR·Lambert 재질의 반사 성분만 사실적으로 만든다. HDR 을 못 받아도
    *  (오프라인 등) 그냥 옛 HemisphereLight+DirectionalLight+횃불만으로
    *  조용히 돈다. */
-  var HDRI_SRC = 'assets/hdri/alps_field_1k.hdr';
+  var HDRI_SRC = '../shared/assets/sky/ibl_noon_present_1k.hdr'; function hdriSrc() { var A = global.DG.assets3d; return (A && A.root && A.root()) ? A.root() + 'sky/ibl_noon_present_1k.hdr' : HDRI_SRC; }
   function loadEnvironment() {
     if (!T.RGBELoader || !renderer) { return; }
     var pmrem = new T.PMREMGenerator(renderer);
     pmrem.compileEquirectangularShader();
-    new T.RGBELoader().load(HDRI_SRC, function (hdr) {
+    new T.RGBELoader().load(hdriSrc(), function (hdr) {
       var envMap = pmrem.fromEquirectangular(hdr).texture;
       if (scene) { scene.environment = envMap; }
       hdr.dispose();
@@ -801,27 +801,25 @@
       chnode.position.set(r.chest.x, 0, r.chest.y);
       wallGroup.add(chnode);
     }
+    var poiProp = function (key, id, x, y, h, w, d, col) { var A = AS(), sh = function () { var sg = new T.Group(); box(sg, 0, h / 2, 0, w, h, d, col, 'flat', true); return sg; }, n = A ? A.build(key, 'poi:' + id + ':' + x + ':' + y, h, null, sh) : sh(); n.position.set(x, 0, y); wallGroup.add(n); };   // W-0261 방 소품 바닥 돌 = 판 표 'dg:*'·'altar' 자체 world3d, 못 받으면 옛 상자(빛 상자 = 상태 신호는 그대로)
     if (r && r.grave) {
-      /* 유품(§5.2) — 마을 서약비('vow' 표식, 위 buildActor)와 같은 비석
-         도형을 재사용한다(PLAN 원문 "비석 GLB 재사용"). 회수했어도(taken)
-         플레이어가 이 방을 떠나기 전까지는 자리를 남겨 둔다 — 방금 밟은
-         자리가 지워지면 "됐다"는 확인이 안 서 보인다. */
-      box(wallGroup, r.grave.x, 17, r.grave.y, 16, 34, 8, 0x6a6a75, 'flat', true);
+      /* 유품(§5.2) — 비석. 회수했어도(taken) 이 방을 떠나기 전까지는 자리를 남긴다(방금 밟은 자리가 지워지면 "됐다"가 안 보인다) */
+      poiProp('dg:grave', 'grave', r.grave.x, r.grave.y, 34, 16, 8, 0x6a6a75);
       box(wallGroup, r.grave.x, 36, r.grave.y, 12, 4, 10,
         r.grave.taken ? 0x555b66 : 0xe06565, 'glow', false);
     }
     if (r && r.well && !r.well.used) {
-      box(wallGroup, r.well.x, 11, r.well.y, 30, 22, 30, 0x555b66, 'flat', true);
+      poiProp('dg:well', 'well', r.well.x, r.well.y, 22, 30, 30, 0x555b66);
       box(wallGroup, r.well.x, 22, r.well.y, 22, 2, 22, 0x3aa9c9, 'glow', false);
     }
     if (r && r.shrine && !r.shrine.used) {
-      box(wallGroup, r.shrine.x, 16, r.shrine.y, 18, 32, 18, 0x6a5c8c, 'flat', true);
+      poiProp('altar', 'shrine', r.shrine.x, r.shrine.y, 32, 18, 18, 0x6a5c8c);
       box(wallGroup, r.shrine.x, 34, r.shrine.y, 10, 10, 10, 0xc9a3ff, 'glow', false);
     }
     if (r && r.vein && !r.vein.used) {
       /* 채광방(POI: Cave) — 돌무더기에 박힌 광맥. 상자·우물·사당과 같은
          "바닥에 박힌 소품" 요령이다 */
-      box(wallGroup, r.vein.x, 8, r.vein.y, 34, 16, 30, mix(stone, 0x000000, 0.3), 'flat', true);
+      poiProp('dg:vein', 'vein', r.vein.x, r.vein.y, 16, 34, 30, mix(stone, 0x000000, 0.3));
       box(wallGroup, r.vein.x - 6, 13, r.vein.y + 4, 8, 8, 8, 0x7ee091, 'glow', false);
       box(wallGroup, r.vein.x + 7, 12, r.vein.y - 3, 7, 7, 7, 0xe8c15a, 'glow', false);
     }
@@ -856,7 +854,7 @@
       var pods3 = r.puzzle.pods;
       for (var pzk = 0; pzk < pods3.length; pzk++) {
         var pod3 = pods3[pzk];
-        box(wallGroup, pod3.x, 5, pod3.y, 22, 10, 22, mix(stone, 0xffffff, 0.1), 'flat', true);
+        poiProp('dg:pod', 'pod' + pzk, pod3.x, pod3.y, 10, 22, 22, mix(stone, 0xffffff, 0.1));
         box(wallGroup, pod3.x, 12, pod3.y, 9, 9, 9,
           pod3.lit ? 0xe8c15a : 0x555b66, pod3.lit ? 'glow' : 'flat', false);
       }
@@ -1419,8 +1417,8 @@
       pdnode.rotation.y = ((Math.round(p.x) + Math.round(p.z)) % 360) * Math.PI / 180;
       g.add(pdnode);
     } else if (p.t === 'reed') {
-      /* 갈대는 이 판에 GLB 가 없다(위 §6.4) — 도형 그대로, 그래서 늘 흔들린다 */
-      box(g, p.x, y + p.h / 2, p.z, 3, p.h, 3, 0x3f5a34, 'sway', false);
+      var AS3r = AS(), reedShape = function () { var sg = new T.Group(); box(sg, 0, p.h / 2, 0, 3, p.h, 3, 0x3f5a34, 'sway', false); return sg; }, rdnode = AS3r ? AS3r.build('reed', seed + ':' + Math.round(p.x) + ':' + Math.round(p.z), p.h * 1.4, null, reedShape) : reedShape();   // W-0261 갈대 = 판 표 'reed'(reed_clump_01), 못 받으면 옛 흔들리는 도형
+      rdnode.position.set(p.x, y, p.z); g.add(rdnode);
     } else if (p.t === 'cavemouth') {
       /* 동굴 입구 — 사가만리가 이미 "광산 어귀"로 적어 둔 그 Mine 을 세운다 */
       var caveShape = function () {

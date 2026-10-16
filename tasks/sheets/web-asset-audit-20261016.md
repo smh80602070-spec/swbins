@@ -35,6 +35,7 @@
 7. 사람 몸이 VRoid 공식 샘플 바탕(characters3d 500·2D 렌더 8500) — 고유 모델은 미착수(메모리 project_vroid_all_characters)
 8. 1만리 효과음 7(OGA)·Ogg 못 트는 브라우저용 mp3 BGM(OGA) — 자체 SFX 92종으로
 9. (W-0260) 1만리 이야기 지역 표지 12곳(frost 비행선·crossing·skyport·sunken·amber 호박 결정·stormeye 매듭·vault 진열장·fork 격자 빛틀·skyroute·skyisle 하늘섬·era-sites 선대·nightecho 보랏불) — 고유 조형이라 world3d 에 짝이 없어 코드 도형 유지. 자체 모델로 바꾸려면 K 가 지역별 세트(≈12) 제작. 게시판 둘(낚시터·파견)은 notice_board_01 로 바꿈
+10. (W-0261) 2나락 몽둥이(weapons/club — 자체 wpn_* 에 몽둥이 없음)·두루마리·부채·붓·방앗간(hexagon/windmill) — 짝 없어 옛 빌린 경로. 괴물 Green_Spiky_Blob 은 W-0266(몸) 몫
 
 ## E. 안 쓰는 빌린 파일(참조 0, 배치 표에도 없음) → 웹이 지움
 1만리 `sprites2d/portrait/serious` 18(EverFace)·`portrait/cute` 3(nonemo)·`assets/_wip/vitruvian-test` · 2나락 Quaternius 건물 9(House_1~4·Blacksmith·Mill·Stable·Well·Bell_Tower)·Mountain_1/2·Tex_Crow · 5천하 `buildings/asian_parts` 2 → W-0259
