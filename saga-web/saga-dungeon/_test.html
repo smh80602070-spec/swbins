@@ -162,6 +162,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/dungeon-view-hud.js"></script>
 <script src="js/dungeon-view.js"></script>
 <script src="js/monster-portrait.js"></script>
+<script src="js/live-portrait.js"></script>
 <script src="js/minimap.js"></script>
 <script src="js/net.js"></script>
 <script src="js/ai.js"></script>
@@ -1073,6 +1074,13 @@ window.requestAnimationFrame = function () { return 0; };
         if (!ok) { throw new Error(JSON.stringify({ keep: keep, inited: inited, hidden: hidden, n: n, alert0: alert0, alert1: alert1, badgeCell: !!badgeCell, clicked: clicked, closedByCell: closedByCell, escOpen: escOpen, escClose: escClose, yield1: yield1 })); }
         return '독 ' + (keep || '(없음)') + ' + ☰ · 접은 ' + hidden + ' · 칸 ' + n + '(숨은 칸 뺌) · 뱃지 → ☰ 점 · Esc ' + (pre ? '(다른 창 열림 → 양보)' : '열고') + ' 닫음';
       } finally { M._reset(); dock.remove(); if (sh) { sh.remove(); } if (real) { real.id = 'dock'; M.init(); } }
+    });
+    t('W-0265 사관 묵향 움직이는 초상 — 대화 출연진 id · live.json·바탕 그림이 있다 · 대화창 얼굴 칸이 캔버스(+평온 초상)를 낸다', function () {
+      var LP = DG.livePortrait, c = DG.scenarioData.CAST.mukhyang, x = new XMLHttpRequest(), y = new XMLHttpRequest();
+      x.open('GET', 'assets/portraits/live/hl_mukhyang/live.json', false); x.send(); y.open('GET', 'assets/portraits/hero/hl_mukhyang_c.webp', false); y.send();
+      var h = LP && LP.html('hl_mukhyang', '기록을 펼칩니다', '<img>'), ok = c && c.id === 'hl_mukhyang' && LP.has('hl_mukhyang') && x.status === 200 && y.status === 200 && (!h || (h.indexOf('data-live="hl_mukhyang"') >= 0 && Number((h.match(/data-talk="([0-9]+)"/) || [0, 0])[1]) > 0));   // 받기 길(fetch)이 없는 진단 환경이면 h 는 null — 그때는 파일·표만
+      if (!ok) { throw new Error(JSON.stringify({ id: c && c.id, has: LP && LP.has('hl_mukhyang'), live: x.status, still: y.status, h: (h || '').slice(0, 120) })); }
+      return '묵향 출연진 id · live.json ○ · ' + (h ? '대화창 캔버스(말하는 입 ' + (h.match(/data-talk="([0-9]+)"/) || [0, 0])[1] + 'ms)' : '(받기 길 없음 — 파일·표만)');
     });
     t('W-0266 짐승형 적 몸 — 도감의 짐승형 적(보통·시대·보스)이 전부 자체 몸 계열(crea:boss_*·mon_*)을 받는다(옛 빌린 몸은 공용 주소를 못 잡을 때 되돌림만)', function () {
       var E = DG.enemyData, MP = DG.monsterPortrait, bossSet = {}, arr = [], miss = [];

@@ -317,6 +317,8 @@ small.muted { display: block; margin-top: 7px; font-size: 11px; }
 .brow .bi { width: 26px; height: 26px; }
 .enc-big { height: 96px; display: grid; place-items: center; }
 .enc-big .pt { height: 96px; width: 96px; }
+.enc-expr { display: block; width: 104px; height: 119px; margin: 0 auto 4px; border-radius: 12px; object-fit: cover; border: 2px solid var(--gold); }   /* W-0265 군주 표정(카드 비 150:172) */
+.chal-banner { display: block; width: 100%; height: 34px; object-fit: cover; border-radius: 6px; margin-bottom: 4px; opacity: .9; } .chal-medal { width: 22px; height: 22px; vertical-align: -5px; margin-right: 3px; }   /* W-0265 도전 카드 배너·최고 기록 메달(K-0050) */
 .enc-icon { overflow: hidden; }
 .pc-emoji, .near-ico { overflow: hidden; }
 

@@ -1666,8 +1666,8 @@
   }
 
   /** 결과 카드(§5-5) — 걸린 달·성·인물 다섯·기록 셋·다음 도전. 이룬 승리는 이어하기가 기본이고 새 판은 단추로 */
-  function resultHtml(card, over) {
-    var html = '<div style="text-align:center"><div class="enc-big">' + card.emoji + '</div>' +
+  var EXPR_IDS = { fu_jongwang: 1, ru_geohae: 1, sg_caocao: 1, sg_liubei: 1, sg_sunquan: 1, tb_baekgi: 1 }; function exprFace(id, emo) { return id && EXPR_IDS[id] ? '<img class="enc-expr" alt="" src="assets/portraits/expr/' + id + '__' + emo + '_c.webp" onerror="this.remove()">' : ''; } function myLord() { var o = off(), me = R().state().me; return o && o.lordOf ? o.lordOf(me) : null; } function compImg(name, cls) { var A3 = global.DG.assets3d, r = A3 && A3.root && A3.root(); return r ? '<img class="' + cls + '" alt="" src="' + r + 'competition/' + name + '.png" onerror="this.remove()">' : ''; } function medalOf(best) { return best ? compImg(best >= 300 ? 'medal_1' : (best >= 150 ? 'medal_2' : 'medal_3'), 'chal-medal') : ''; } function resultHtml(card, over) {   // W-0265 K-0047 군주 여섯 표정(대사에 감정 줄이 없어 사건 고정: 승리·통일 joy · 멸망 sorrow · 재기 anger, 그림 없는 군주는 빈칸) · K-0050 경쟁 그림(공용 competition/ — 도전 배너·최고 기록 메달)
+    var html = '<div style="text-align:center">' + exprFace(myLord(), 'joy') + '<div class="enc-big">' + card.emoji + '</div>' +
       '<h3 style="margin:6px 0 2px;font-size:20px;color:var(--gold)">' + esc(card.name) + '</h3>' +
       '<small class="muted">' + card.year + '년 ' + card.mon + '월 · 시작부터 ' + card.month + '달째' +
       (over ? '' : ' · 판은 이어집니다') + '</small></div>' +
@@ -1691,7 +1691,7 @@
       : '<button class="btn primary wide" data-act="close-enc">이어하기</button>' + nrBtn + '<button class="btn wide" data-act="back-scen">새 판</button>');
   }
 
-  function showVictory(card) { showEncQueued(resultHtml(card, false)); } function comebackHtml(e) { /* W-0249 재기 카드 — 토스트·로그만 스쳐 가던 재기(W-0248)를 한 장으로: 성·함께 나온 사람·받은 것·한 번뿐·첫 수 */ var off = global.DG.off, c = (e && CD.find(e.city)) || {}, ids = e ? [e.lord].concat(e.with || []) : [], row = function (id, i) { var h = off.find(id), s = off.stats ? off.stats(id) : null; return h ? '<div>' + (i ? '⛓️ ' : '👑 ') + '<b>' + esc(h.name) + '</b>' + (s ? ' <small class="muted">무 ' + s.might + ' · 지 ' + s.wisdom + ' · 통 ' + s.command + '</small>' : '') + (i ? ' <small class="muted">— 갇혀 있다 함께 빠져나옴</small>' : '') + '</div>' : ''; }; return '<div style="text-align:center"><div class="enc-big">🔥</div><h3 style="margin:6px 0 2px;font-size:20px;color:var(--gold)">재기 — ' + esc(c.name || (e && e.city) || '') + '에서 다시 일어서다</h3><small class="muted">성을 모두 잃었으나 판은 끝나지 않았습니다 · 재기는 판마다 한 번뿐</small></div><div class="enc-hist">' + ids.map(row).join('') + '</div><div class="enc-hist"><span class="good">🏯 성 1 · 병력 1,000 · 군량 2,000 · 성벽 반</span><br>🪙 금고·명부는 그대로<br><span style="color:var(--bad)">⚠ 다시 성을 모두 잃으면 그때는 끝</span></div><small class="muted">첫 수 — 징병으로 병력을 채우고, 성에 포로가 있으면 등용으로 사람을 늘리십시오</small><button class="btn primary wide" data-act="close-enc">다시 일어선다</button>'; } function showComeback(e) { centerOnMine(); showEncQueued(comebackHtml(e)); }
+  function showVictory(card) { showEncQueued(resultHtml(card, false)); } function comebackHtml(e) { /* W-0249 재기 카드 — 토스트·로그만 스쳐 가던 재기(W-0248)를 한 장으로: 성·함께 나온 사람·받은 것·한 번뿐·첫 수 */ var off = global.DG.off, c = (e && CD.find(e.city)) || {}, ids = e ? [e.lord].concat(e.with || []) : [], row = function (id, i) { var h = off.find(id), s = off.stats ? off.stats(id) : null; return h ? '<div>' + (i ? '⛓️ ' : '👑 ') + '<b>' + esc(h.name) + '</b>' + (s ? ' <small class="muted">무 ' + s.might + ' · 지 ' + s.wisdom + ' · 통 ' + s.command + '</small>' : '') + (i ? ' <small class="muted">— 갇혀 있다 함께 빠져나옴</small>' : '') + '</div>' : ''; }; return '<div style="text-align:center">' + exprFace(e && e.lord, 'anger') + '<div class="enc-big">🔥</div><h3 style="margin:6px 0 2px;font-size:20px;color:var(--gold)">재기 — ' + esc(c.name || (e && e.city) || '') + '에서 다시 일어서다</h3><small class="muted">성을 모두 잃었으나 판은 끝나지 않았습니다 · 재기는 판마다 한 번뿐</small></div><div class="enc-hist">' + ids.map(row).join('') + '</div><div class="enc-hist"><span class="good">🏯 성 1 · 병력 1,000 · 군량 2,000 · 성벽 반</span><br>🪙 금고·명부는 그대로<br><span style="color:var(--bad)">⚠ 다시 성을 모두 잃으면 그때는 끝</span></div><small class="muted">첫 수 — 징병으로 병력을 채우고, 성에 포로가 있으면 등용으로 사람을 늘리십시오</small><button class="btn primary wide" data-act="close-enc">다시 일어선다</button>'; } function showComeback(e) { centerOnMine(); showEncQueued(comebackHtml(e)); }
 
   /** 먼저 **판(시나리오)** 을 고른다 */
   function showScenPick() {
@@ -1710,11 +1710,11 @@
     }
     /* §5-7 — 일곱 번째 카드: 이번 주 도전(무작위 판을 그 주의 씨앗으로, 60달 점수) */
     var wk = R().challengeWeek(), best = R().bests()[wk.key];
-    html += '<button class="fcard wide-card" data-act="pick-challenge">' +
-      '<b>🎯 이번 주 도전 · ' + esc(wk.key) + ' <span class="stars chal">★★★</span></b>' +
+    html += '<button class="fcard wide-card" data-act="pick-challenge">' + compImg('banner_weekly', 'chal-banner') +
+      '<b>' + medalOf(best) + '🎯 이번 주 도전 · ' + esc(wk.key) + ' <span class="stars chal">★★★</span></b>' +
       '<small class="muted">무작위 판 · ' + R().CHALLENGE_MONTHS + '달 뒤 점수(성×10 + 무장 + 보물×20)</small>' +
       '<small class="muted">' + (best ? '내 최고 ' + best + '점' : '아직 기록이 없습니다') + ' · 같은 주엔 누구나 같은 판입니다</small>' +
-      '</button>' + (R().challengeDay ? (function () { var dk = R().challengeDay(), db = R().bests()[dk.key]; return '<button class="fcard wide-card" data-act="pick-challenge" data-kind="day"><b>📅 오늘의 도전 · ' + esc(dk.key.slice(1)) + ' <span class="stars chal">★★</span></b><small class="muted">무작위 판 · ' + R().DAILY_MONTHS + '달 뒤 점수(성×10 + 무장 + 보물×20) — 날마다 새 판</small><small class="muted">' + (db ? '오늘 최고 ' + db + '점' : '오늘 기록이 없습니다') + ' · 놓쳐도 잃는 것 없음</small></button>'; })() : '');   // W-0244
+      '</button>' + (R().challengeDay ? (function () { var dk = R().challengeDay(), db = R().bests()[dk.key]; return '<button class="fcard wide-card" data-act="pick-challenge" data-kind="day">' + compImg('banner_daily', 'chal-banner') + '<b>' + medalOf(db) + '📅 오늘의 도전 · ' + esc(dk.key.slice(1)) + ' <span class="stars chal">★★</span></b><small class="muted">무작위 판 · ' + R().DAILY_MONTHS + '달 뒤 점수(성×10 + 무장 + 보물×20) — 날마다 새 판</small><small class="muted">' + (db ? '오늘 최고 ' + db + '점' : '오늘 기록이 없습니다') + ' · 놓쳐도 잃는 것 없음</small></button>'; })() : '');   // W-0244
     showEnc(html + '</div>');
   }
 
@@ -1769,7 +1769,7 @@
   function showEnd(kind) {
     var st = R().state();
     if (kind === 'win') { showEnc(resultHtml(R().resultCard('conquest'), true)); return; }
-    showEnc('<h3 style="margin:0 0 6px;font-size:20px">' +
+    showEnc((kind === 'win' ? '' : '<div style="text-align:center">' + exprFace(myLord(), 'sorrow') + '</div>') + '<h3 style="margin:0 0 6px;font-size:20px">' +
       (kind === 'win' ? '👑 천하통일' : '🏳️ 멸망') + '</h3>' +
       '<small class="muted">' + st.year + '년 ' + st.month + '월. ' +
       (kind === 'win' ? '온 땅의 성이 모두 한 깃발 아래 들었습니다.'
@@ -1808,7 +1808,7 @@
     renderTop: renderTop, renderMap: renderMap, renderSheet: renderSheet,
     showScenPick: showScenPick, showForcePick: showForcePick,
     showHelp: showHelp, showBattle: showBattle, showMilestone: showMilestone, showEvent: showEvent,
-    closeEnc: closeEnc, _comebackHtml: comebackHtml,   // W-0249 진단
+    closeEnc: closeEnc, _comebackHtml: comebackHtml, _exprFace: exprFace, _medalOf: medalOf,   // W-0249·W-0265 진단
     /** 자가진단용 */
     _act: act, _tab: function () { return openTab; }, _city: function () { return openCityId; },
     centerAt: function (x, y) { mapCx = x; mapCy = y; applyMapViewNow(); }, _setOrder: function (k) { pickOrder = k; }, zoomAt: zoomAt, _view: function () { return { cx: mapCx, cy: mapCy, z: mapZoom }; },

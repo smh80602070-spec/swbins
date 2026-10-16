@@ -158,6 +158,7 @@ a.icon-btn { display: flex; align-items: center; justify-content: center; text-d
   background: var(--glass, rgba(14,16,24,.9)); border: 1px solid var(--glass-br, rgba(255,255,255,.18)); box-shadow: var(--shadow, 0 6px 24px rgba(0,0,0,.5)); }
 .scn-card.me { flex-direction: row-reverse; text-align: right; }
 .scn-face { flex: none; width: 56px; height: 56px; line-height: 56px; text-align: center; font-size: 38px; }
+.scn-face.pt-face { width: 60px; height: 69px; line-height: normal; font-size: 0; } .scn-face.pt-face .pt, .scn-face.pt-face canvas { width: 60px; height: 69px; border-radius: 8px; object-fit: cover; display: block; }   /* W-0265 묵향 얼굴(카드 비 150:172) */
 .scn-say { flex: 1; min-width: 0; }
 .scn-say b { display: block; font-size: 13px; margin-bottom: 4px; color: #f0e2c8; }
 .scn-say p { margin: 0 0 4px; font-size: 14px; line-height: 1.55; }

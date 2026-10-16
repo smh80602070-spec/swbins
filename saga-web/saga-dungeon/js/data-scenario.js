@@ -26,7 +26,7 @@
   'use strict';
 
   var CAST = {
-    mukhyang: { name: '사관 묵향',        emoji: '📜' },
+    mukhyang: { name: '사관 묵향',        emoji: '📜', id: 'hl_mukhyang' },   // W-0265 id = 대화창 얼굴(움직이는 초상·평온 초상)
     gyogyo:   { name: '교두',             emoji: '🥋' },
     yeoldusi: { name: '시간 여행자 열두시', emoji: '⌛' },
     guard:    { name: '벌판 역참지기',    emoji: '🏮' },

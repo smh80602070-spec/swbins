@@ -225,6 +225,12 @@
 
   function esc2(t) { return String(t).replace(/[&<>"]/g, function (m) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]; }); }
 
+  /** W-0265 대화창 얼굴 — 도감 id 가 있는 인물(사관 묵향)은 움직이는 초상(K-0110, 말하는 동안 입), 못 받으면 평온 초상, 그것도 없으면 이모지 */
+  function faceOf(npc, text) {
+    if (!npc.id) { return npc.emoji; }
+    var still = '<img class="pt" alt="" src="assets/portraits/hero/' + npc.id + '_c.webp" onerror="this.style.visibility=\'hidden\'">', LP = global.DG.livePortrait;
+    return (LP && LP.has(npc.id) && LP.on() && LP.html(npc.id, text, still)) || still;
+  }
   function paint() {
     var e = boxEl();
     if (!e) { return; }
@@ -232,7 +238,7 @@
     if (!cur) { e.classList.remove('show'); e.innerHTML = ''; document.body.classList.remove('scn-open'); return; }
     var ln = cur.lines[cur.i], who = ln[0], npc = who === 'me' ? { name: leaderName(), emoji: '🧑' } : (CD().CAST[who] || { name: '?', emoji: '💬' });
     e.innerHTML = '<div class="scn-title">' + esc2(cur.title) + '</div>' +
-      '<div class="scn-card' + (who === 'me' ? ' me' : '') + '"><div class="scn-face">' + npc.emoji + '</div>' +
+      '<div class="scn-card' + (who === 'me' ? ' me' : '') + '"><div class="scn-face' + (npc.id ? ' pt-face' : '') + '">' + faceOf(npc, ln[1]) + '</div>' +
       '<div class="scn-say"><b>' + esc2(npc.name) + '</b><p>' + esc2(ln[1]) + '</p>' +
       (cur.pick
         ? '<div class="scn-pick"><small class="muted">' + esc2(cur.choice.prompt || '고른다') + '</small>' +
