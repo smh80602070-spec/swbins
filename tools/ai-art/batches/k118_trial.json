@@ -1,0 +1,63 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k118_trial",
+ "kit": {
+  "spec": "icon",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "ui_compass",
+   "seed": 1532378182,
+   "prompt": "(brass compass:1.15), needle, simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide compass 자리"
+  },
+  {
+   "id": "ui_mail",
+   "seed": 760592517,
+   "prompt": "(sealed envelope:1.15), red wax seal, simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide mail 자리"
+  },
+  {
+   "id": "ui_x",
+   "seed": 1581970377,
+   "prompt": "(red cross mark x symbol:1.15), simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide x 자리"
+  },
+  {
+   "id": "job_st_flier",
+   "seed": 416826946,
+   "prompt": "(hawk:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 비장(飛將)"
+  },
+  {
+   "id": "sk_dg_s_fire",
+   "seed": 798640990,
+   "prompt": "(flames:1.15), paper talisman, fire, burning, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 화탄(火彈)"
+  },
+  {
+   "id": "sk_dg_y_horde",
+   "seed": 3741385396,
+   "prompt": "(skull:1.15), ghostly blue spirit flame, summoning circle glowing, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 음병(陰兵)"
+  }
+ ]
+}

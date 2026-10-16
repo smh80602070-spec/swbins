@@ -1,0 +1,434 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k118_ui",
+ "kit": {
+  "spec": "icon",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "ui_award",
+   "seed": 1003673805,
+   "prompt": "(award rosette ribbon:1.15), gold medal center, simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide award 자리"
+  },
+  {
+   "id": "ui_backpack",
+   "seed": 3706115700,
+   "prompt": "(leather backpack:1.15), buckles, simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide backpack 자리"
+  },
+  {
+   "id": "ui_book_open",
+   "seed": 3424754988,
+   "prompt": "(open old book:1.15), pages, simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide book-open 자리"
+  },
+  {
+   "id": "ui_bot",
+   "seed": 494909963,
+   "prompt": "(small round robot head:1.15), antenna, simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide bot 자리"
+  },
+  {
+   "id": "ui_box",
+   "seed": 3417373291,
+   "prompt": "(wooden crate:1.15), iron corners, simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide box 자리"
+  },
+  {
+   "id": "ui_circle_question_mark",
+   "seed": 4015224247,
+   "prompt": "(question mark sign:1.15), round wooden plaque, simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide circle-question-mark 자리"
+  },
+  {
+   "id": "ui_clipboard_list",
+   "seed": 613537074,
+   "prompt": "(clipboard with checklist paper:1.15), simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide clipboard-list 자리"
+  },
+  {
+   "id": "ui_coins",
+   "seed": 340340532,
+   "prompt": "(stack of gold coins:1.15), simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide coins 자리"
+  },
+  {
+   "id": "ui_compass",
+   "seed": 1532378182,
+   "prompt": "(brass compass:1.15), needle, simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide compass 자리"
+  },
+  {
+   "id": "ui_ellipsis",
+   "seed": 2568625394,
+   "prompt": "(three round golden beads in a row:1.15), simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide ellipsis 자리"
+  },
+  {
+   "id": "ui_flag",
+   "seed": 326374755,
+   "prompt": "(small red flag on pole:1.15), simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide flag 자리"
+  },
+  {
+   "id": "ui_footprints",
+   "seed": 1284601069,
+   "prompt": "(pair of footprints in sand:1.15), simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide footprints 자리"
+  },
+  {
+   "id": "ui_ham",
+   "seed": 3528571155,
+   "prompt": "(roasted meat on bone:1.15), simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide ham 자리"
+  },
+  {
+   "id": "ui_hammer",
+   "seed": 3801125771,
+   "prompt": "(blacksmith hammer:1.15), simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide hammer 자리"
+  },
+  {
+   "id": "ui_mail",
+   "seed": 760592517,
+   "prompt": "(sealed envelope:1.15), red wax seal, simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide mail 자리"
+  },
+  {
+   "id": "ui_map",
+   "seed": 2661499270,
+   "prompt": "(folded paper map:1.15), red route line, simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide map 자리"
+  },
+  {
+   "id": "ui_medal",
+   "seed": 3503891461,
+   "prompt": "(medal with ribbon:1.15), simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide medal 자리"
+  },
+  {
+   "id": "ui_palette",
+   "seed": 965163134,
+   "prompt": "(painter palette:1.15), brush, simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide palette 자리"
+  },
+  {
+   "id": "ui_rotate_ccw",
+   "seed": 2512389709,
+   "prompt": "(curved circular arrow symbol:1.15), simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide rotate-ccw 자리"
+  },
+  {
+   "id": "ui_satellite_dish",
+   "seed": 919139544,
+   "prompt": "(satellite dish antenna:1.15), simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide satellite-dish 자리"
+  },
+  {
+   "id": "ui_scroll",
+   "seed": 2319914982,
+   "prompt": "(rolled paper scroll:1.15), wooden rods, simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide scroll 자리"
+  },
+  {
+   "id": "ui_scroll_text",
+   "seed": 1578250733,
+   "prompt": "(open paper scroll with writing:1.15), simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide scroll-text 자리"
+  },
+  {
+   "id": "ui_sparkles",
+   "seed": 735549518,
+   "prompt": "(sparkling stars:1.15), glitter, simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide sparkles 자리"
+  },
+  {
+   "id": "ui_store",
+   "seed": 2923474719,
+   "prompt": "(small market stall:1.15), striped awning, simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide store 자리"
+  },
+  {
+   "id": "ui_swords",
+   "seed": 2992584908,
+   "prompt": "(two crossed swords:1.15), simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide swords 자리"
+  },
+  {
+   "id": "ui_user",
+   "seed": 751660087,
+   "prompt": "(hooded cloak on wooden mannequin bust:1.15), simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide user 자리"
+  },
+  {
+   "id": "ui_wrench",
+   "seed": 3701267757,
+   "prompt": "(iron wrench:1.15), simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide wrench 자리"
+  },
+  {
+   "id": "ui_x",
+   "seed": 1581970377,
+   "prompt": "(red cross mark x symbol:1.15), simple bold shape, minimal detail, readable at small size, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "Lucide x 자리"
+  },
+  {
+   "id": "map_battle",
+   "seed": 989146113,
+   "prompt": "(two crossed swords:1.15), battle marker, simple bold shape, minimal detail, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 지도 표식 battle"
+  },
+  {
+   "id": "map_port",
+   "seed": 2766741402,
+   "prompt": "(iron anchor:1.15), rope, simple bold shape, minimal detail, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 지도 표식 port"
+  },
+  {
+   "id": "map_camp",
+   "seed": 1632458121,
+   "prompt": "(canvas army tent:1.15), small flag, simple bold shape, minimal detail, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 지도 표식 camp"
+  },
+  {
+   "id": "map_guard",
+   "seed": 3731823488,
+   "prompt": "(round shield:1.15), fortress emblem, simple bold shape, minimal detail, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 지도 표식 guard"
+  },
+  {
+   "id": "map_flag",
+   "seed": 1568990173,
+   "prompt": "(red war banner on spear pole:1.15), simple bold shape, minimal detail, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 지도 표식 flag"
+  },
+  {
+   "id": "job_dg_archer",
+   "seed": 3403946310,
+   "prompt": "(bow and arrow:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 직업 궁장"
+  },
+  {
+   "id": "job_dg_warrior",
+   "seed": 2923316359,
+   "prompt": "(crossed swords:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 직업 무장"
+  },
+  {
+   "id": "job_dg_scholar",
+   "seed": 1892525078,
+   "prompt": "(folding fan:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 직업 책사"
+  },
+  {
+   "id": "job_dg_marshal",
+   "seed": 687223804,
+   "prompt": "(red war flag:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 직업 도독"
+  },
+  {
+   "id": "job_dg_mystic",
+   "seed": 962275004,
+   "prompt": "(yin yang symbol:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 직업 방사"
+  },
+  {
+   "id": "job_st_none",
+   "seed": 1636526470,
+   "prompt": "(walking staff:1.15), straw sandals, class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 무명(無名)"
+  },
+  {
+   "id": "job_st_warrior",
+   "seed": 4137980349,
+   "prompt": "(crossed swords:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 무사(武士)"
+  },
+  {
+   "id": "job_st_archer",
+   "seed": 2959759360,
+   "prompt": "(bow and arrow:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 궁수(弓手)"
+  },
+  {
+   "id": "job_st_rogue",
+   "seed": 3724801694,
+   "prompt": "(dagger:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 협객(俠客)"
+  },
+  {
+   "id": "job_st_mage",
+   "seed": 978330289,
+   "prompt": "(crystal ball:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 방사(方士)"
+  },
+  {
+   "id": "job_st_general",
+   "seed": 2795758069,
+   "prompt": "(shield:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 장군(將軍)"
+  },
+  {
+   "id": "job_st_sniper",
+   "seed": 1569877478,
+   "prompt": "(bullseye target pierced:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 신궁(神弓)"
+  },
+  {
+   "id": "job_st_assassin",
+   "seed": 1451623062,
+   "prompt": "(shadow mask:1.15), kunai, class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 자객(刺客)"
+  },
+  {
+   "id": "job_st_sage",
+   "seed": 1036436376,
+   "prompt": "(yin yang symbol:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 도사(道士)"
+  },
+  {
+   "id": "job_st_marshal",
+   "seed": 360484084,
+   "prompt": "(military medal:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 원수(元帥)"
+  },
+  {
+   "id": "job_st_flier",
+   "seed": 416826946,
+   "prompt": "(hawk:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 비장(飛將)"
+  },
+  {
+   "id": "job_st_wraith",
+   "seed": 2773956583,
+   "prompt": "(dark moon:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 귀영(鬼影)"
+  },
+  {
+   "id": "job_st_immortal",
+   "seed": 2464439037,
+   "prompt": "(wizard hat:1.15), staff, class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 진인(眞人)"
+  },
+  {
+   "id": "job_st_warlord",
+   "seed": 1394743088,
+   "prompt": "(trident:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 전신(戰神)"
+  },
+  {
+   "id": "job_st_falcon",
+   "seed": 723651721,
+   "prompt": "(starry galaxy:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 궁성(弓聖)"
+  },
+  {
+   "id": "job_st_reaper",
+   "seed": 306022457,
+   "prompt": "(golden crown:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 명왕(冥王)"
+  },
+  {
+   "id": "job_st_ascendant",
+   "seed": 1790845213,
+   "prompt": "(shooting star:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 천존(天尊)"
+  },
+  {
+   "id": "job_st_godwar",
+   "seed": 1949993798,
+   "prompt": "(rosette emblem:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 군신(軍神)"
+  },
+  {
+   "id": "job_st_skybow",
+   "seed": 606395226,
+   "prompt": "(rainbow arc:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 천궁(天弓)"
+  },
+  {
+   "id": "job_st_noshadow",
+   "seed": 4207980324,
+   "prompt": "(fading dotted outline:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 무영(無影)"
+  },
+  {
+   "id": "job_st_voidsage",
+   "seed": 1485862559,
+   "prompt": "(ringed planet:1.15), class emblem, ornate badge, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 직업 태허(太虛)"
+  }
+ ]
+}

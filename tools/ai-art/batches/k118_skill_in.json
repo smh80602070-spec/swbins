@@ -1,0 +1,1130 @@
+{
+ "name": "k118_skill",
+ "out": "k118_skill",
+ "spec": "icon",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 2,
+ "items": [
+  {
+   "id": "sk_dg_a_pierce",
+   "subject": "bullseye target pierced, arrow, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 관통사(貫通射)"
+  },
+  {
+   "id": "sk_dg_a_multi",
+   "subject": "bow and arrow, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 연사(連射)"
+  },
+  {
+   "id": "sk_dg_a_rain",
+   "subject": "rain of arrows from sky, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 시우(矢雨)"
+  },
+  {
+   "id": "sk_dg_a_fire",
+   "subject": "flames, arrow, fire, burning, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 화시(火矢)"
+  },
+  {
+   "id": "sk_dg_a_ice",
+   "subject": "snowflake ice crystal, arrow, ice, frost, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 빙시(氷矢)"
+  },
+  {
+   "id": "sk_dg_a_storm",
+   "subject": "lightning bolt, arrow, lightning, electric sparks, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 뇌시(雷矢)"
+  },
+  {
+   "id": "sk_dg_a_eye",
+   "subject": "hawk eye glowing, round emblem medallion, magic skill icon",
+   "subject_ko": "2나락 스킬 매의 눈(鷹眼)"
+  },
+  {
+   "id": "sk_dg_a_reach",
+   "subject": "long bow, round emblem medallion, magic skill icon",
+   "subject_ko": "2나락 스킬 장궁(長弓)"
+  },
+  {
+   "id": "sk_dg_a_swift",
+   "subject": "gust of wind trail, round emblem medallion, magic skill icon",
+   "subject_ko": "2나락 스킬 질보(疾步)"
+  },
+  {
+   "id": "sk_dg_w_whirl",
+   "subject": "whirlwind spiral, sword, crescent slash arc, magic skill icon",
+   "subject_ko": "2나락 스킬 회전참(回轉斬)"
+  },
+  {
+   "id": "sk_dg_w_cleave",
+   "subject": "heavy war hammer, sword, crescent slash arc, magic skill icon",
+   "subject_ko": "2나락 스킬 분쇄(粉碎)"
+  },
+  {
+   "id": "sk_dg_w_quake",
+   "subject": "explosion burst, sword, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 진각(震脚)"
+  },
+  {
+   "id": "sk_dg_w_dash",
+   "subject": "gust of wind trail, sword, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "2나락 스킬 돌진(突進)"
+  },
+  {
+   "id": "sk_dg_w_leap",
+   "subject": "leaping motion arc, sword, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "2나락 스킬 도약(跳躍)"
+  },
+  {
+   "id": "sk_dg_w_rage",
+   "subject": "red rage aura, rising aura, upward glow, magic skill icon",
+   "subject_ko": "2나락 스킬 광분(狂奮)"
+  },
+  {
+   "id": "sk_dg_w_tough",
+   "subject": "shield, round emblem medallion, magic skill icon",
+   "subject_ko": "2나락 스킬 단련(鍛鍊)"
+  },
+  {
+   "id": "sk_dg_w_mastery",
+   "subject": "crossed swords, round emblem medallion, magic skill icon",
+   "subject_ko": "2나락 스킬 병기술(兵器術)"
+  },
+  {
+   "id": "sk_dg_w_second",
+   "subject": "blood drop, ghostly blue spirit flame, round emblem medallion, magic skill icon",
+   "subject_ko": "2나락 스킬 이혼대법(離魂)"
+  },
+  {
+   "id": "sk_dg_s_fire",
+   "subject": "flames, paper talisman, fire, burning, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 화탄(火彈)"
+  },
+  {
+   "id": "sk_dg_s_blaze",
+   "subject": "volcano eruption, paper talisman, fire, burning, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 염화(炎火)"
+  },
+  {
+   "id": "sk_dg_s_meteor",
+   "subject": "falling meteor, paper talisman, radiant starlight, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 유성(流星)"
+  },
+  {
+   "id": "sk_dg_s_ice",
+   "subject": "snowflake ice crystal, paper talisman, ice, frost, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 빙탄(氷彈)"
+  },
+  {
+   "id": "sk_dg_s_frost",
+   "subject": "ice block shards, paper talisman, ice, frost, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 한파(寒波)"
+  },
+  {
+   "id": "sk_dg_s_bolt",
+   "subject": "lightning bolt, paper talisman, lightning, electric sparks, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 뇌격(雷擊)"
+  },
+  {
+   "id": "sk_dg_s_wave",
+   "subject": "water wave, paper talisman, golden qi aura, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 기공파(氣功波)"
+  },
+  {
+   "id": "sk_dg_s_wit",
+   "subject": "glowing crystal mind orb, round emblem medallion, magic skill icon",
+   "subject_ko": "2나락 스킬 명민(明敏)"
+  },
+  {
+   "id": "sk_dg_s_focus",
+   "subject": "bullseye target pierced, round emblem medallion, magic skill icon",
+   "subject_ko": "2나락 스킬 집중(集中)"
+  },
+  {
+   "id": "sk_dg_m_rally",
+   "subject": "red war flag, golden qi aura, rising aura, upward glow, magic skill icon",
+   "subject_ko": "2나락 스킬 사기(士氣)"
+  },
+  {
+   "id": "sk_dg_m_guard",
+   "subject": "shield, rising aura, upward glow, magic skill icon",
+   "subject_ko": "2나락 스킬 호신강기(護身)"
+  },
+  {
+   "id": "sk_dg_m_banner",
+   "subject": "crossed war banners, rising aura, upward glow, magic skill icon",
+   "subject_ko": "2나락 스킬 독전(督戰)"
+  },
+  {
+   "id": "sk_dg_m_smite",
+   "subject": "armored gauntlet fist, spear, golden qi aura, crescent slash arc, magic skill icon",
+   "subject_ko": "2나락 스킬 기격(氣擊)"
+  },
+  {
+   "id": "sk_dg_m_ring",
+   "subject": "glowing energy ring, spear, golden qi aura, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 기환(氣環)"
+  },
+  {
+   "id": "sk_dg_m_heal",
+   "subject": "healing herb leaves, soft healing light, sparkles, magic skill icon",
+   "subject_ko": "2나락 스킬 치유(治癒)"
+  },
+  {
+   "id": "sk_dg_m_res",
+   "subject": "yin yang symbol, golden qi aura, round emblem medallion, magic skill icon",
+   "subject_ko": "2나락 스킬 기수련(氣修)"
+  },
+  {
+   "id": "sk_dg_m_wall",
+   "subject": "stone brick wall, round emblem medallion, magic skill icon",
+   "subject_ko": "2나락 스킬 철벽(鐵壁)"
+  },
+  {
+   "id": "sk_dg_m_lead",
+   "subject": "golden crown, round emblem medallion, magic skill icon",
+   "subject_ko": "2나락 스킬 통솔(統率)"
+  },
+  {
+   "id": "sk_dg_y_shade",
+   "subject": "two shadow silhouettes, mirror image, summoning circle glowing, magic skill icon",
+   "subject_ko": "2나락 스킬 분신술(分身)"
+  },
+  {
+   "id": "sk_dg_y_horde",
+   "subject": "skull, ghostly blue spirit flame, summoning circle glowing, magic skill icon",
+   "subject_ko": "2나락 스킬 음병(陰兵)"
+  },
+  {
+   "id": "sk_dg_y_golem",
+   "subject": "clay golem statue, summoning circle glowing, magic skill icon",
+   "subject_ko": "2나락 스킬 토우(土偶)"
+  },
+  {
+   "id": "sk_dg_y_curse",
+   "subject": "spider web binding, dark binding sigil, magic skill icon",
+   "subject_ko": "2나락 스킬 주박(呪縛)"
+  },
+  {
+   "id": "sk_dg_y_wither",
+   "subject": "poison caterpillar, paper talisman, green poison mist, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 고독(蠱毒)"
+  },
+  {
+   "id": "sk_dg_y_doom",
+   "subject": "skull and crossbones poison, dark binding sigil, magic skill icon",
+   "subject_ko": "2나락 스킬 멸(滅)"
+  },
+  {
+   "id": "sk_dg_y_leech",
+   "subject": "blood drop, round emblem medallion, magic skill icon",
+   "subject_ko": "2나락 스킬 흡정(吸精)"
+  },
+  {
+   "id": "sk_dg_y_hex",
+   "subject": "crystal ball, round emblem medallion, magic skill icon",
+   "subject_ko": "2나락 스킬 주술(呪術)"
+  },
+  {
+   "id": "sk_dg_y_spirit",
+   "subject": "sparkles, round emblem medallion, magic skill icon",
+   "subject_ko": "2나락 스킬 정신(精神)"
+  },
+  {
+   "id": "sk_dg_a_chain",
+   "subject": "chain links, arrow, energy arcs jumping between points, magic skill icon",
+   "subject_ko": "2나락 스킬 연환시(連環矢)"
+  },
+  {
+   "id": "sk_dg_a_venom",
+   "subject": "poison vial, arrow, green poison mist, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 독시(毒矢)"
+  },
+  {
+   "id": "sk_dg_a_cripple",
+   "subject": "cracked impact mark, dark binding sigil, magic skill icon",
+   "subject_ko": "2나락 스킬 파훼시(破毀矢)"
+  },
+  {
+   "id": "sk_dg_w_chain",
+   "subject": "chain links, sword, energy arcs jumping between points, magic skill icon",
+   "subject_ko": "2나락 스킬 연환격(連環擊)"
+  },
+  {
+   "id": "sk_dg_w_blaze_dash",
+   "subject": "flames, sword, fire, burning, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "2나락 스킬 화염돌진(火焰突進)"
+  },
+  {
+   "id": "sk_dg_w_palm",
+   "subject": "gauntlet punch, sword, lightning, electric sparks, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 벽력장(霹靂掌)"
+  },
+  {
+   "id": "sk_dg_s_chainfire",
+   "subject": "chain links, paper talisman, fire, burning, energy arcs jumping between points, magic skill icon",
+   "subject_ko": "2나락 스킬 연쇄화염(連鎖火焰)"
+  },
+  {
+   "id": "sk_dg_s_fan",
+   "subject": "folding fan, paper talisman, swirling wind, crescent slash arc, magic skill icon",
+   "subject_ko": "2나락 스킬 선풍(扇風)"
+  },
+  {
+   "id": "sk_dg_s_spirit",
+   "subject": "snowflake ice crystal, ice, frost, summoning circle glowing, magic skill icon",
+   "subject_ko": "2나락 스킬 빙정소환(氷精召喚)"
+  },
+  {
+   "id": "sk_dg_m_chain",
+   "subject": "chain links, spear, golden qi aura, energy arcs jumping between points, magic skill icon",
+   "subject_ko": "2나락 스킬 연환기격(連環氣擊)"
+  },
+  {
+   "id": "sk_dg_m_press",
+   "subject": "roaring tiger emblem, dark binding sigil, magic skill icon",
+   "subject_ko": "2나락 스킬 위압(威壓)"
+  },
+  {
+   "id": "sk_dg_m_charge",
+   "subject": "gust of wind trail, spear, golden qi aura, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "2나락 스킬 기신보(氣身步)"
+  },
+  {
+   "id": "sk_dg_y_chain",
+   "subject": "chain links, paper talisman, green poison mist, energy arcs jumping between points, magic skill icon",
+   "subject_ko": "2나락 스킬 독쇄(毒鎖)"
+  },
+  {
+   "id": "sk_dg_y_ghoststrike",
+   "subject": "ghost wisp, paper talisman, ghostly blue spirit flame, crescent slash arc, magic skill icon",
+   "subject_ko": "2나락 스킬 음령타(陰靈打)"
+  },
+  {
+   "id": "sk_dg_y_possess",
+   "subject": "candle flame, ghostly blue spirit flame, rising aura, upward glow, magic skill icon",
+   "subject_ko": "2나락 스킬 귀합(鬼合)"
+  },
+  {
+   "id": "sk_dg_a_flourish",
+   "subject": "staff spin, arrow, crescent slash arc, magic skill icon",
+   "subject_ko": "2나락 스킬 궁신무(弓身舞)"
+  },
+  {
+   "id": "sk_dg_a_speedy",
+   "subject": "winged boots, rising aura, upward glow, magic skill icon",
+   "subject_ko": "2나락 스킬 속사태세(速射態勢)"
+  },
+  {
+   "id": "sk_dg_a_hawk",
+   "subject": "hawk, summoning circle glowing, magic skill icon",
+   "subject_ko": "2나락 스킬 응사소환(鷹使召喚)"
+  },
+  {
+   "id": "sk_dg_w_throw",
+   "subject": "bullseye target pierced, sword, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 투창(投槍)"
+  },
+  {
+   "id": "sk_dg_w_regen",
+   "subject": "glowing heart, soft healing light, sparkles, magic skill icon",
+   "subject_ko": "2나락 스킬 회생(回生)"
+  },
+  {
+   "id": "sk_dg_w_hound",
+   "subject": "war hound, summoning circle glowing, magic skill icon",
+   "subject_ko": "2나락 스킬 군견소환(軍犬召喚)"
+  },
+  {
+   "id": "sk_dg_s_blink",
+   "subject": "lightning bolt, paper talisman, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "2나락 스킬 축지(縮地)"
+  },
+  {
+   "id": "sk_dg_s_hex",
+   "subject": "spider web binding, dark binding sigil, magic skill icon",
+   "subject_ko": "2나락 스킬 저주(咀呪)"
+  },
+  {
+   "id": "sk_dg_s_insight",
+   "subject": "glowing crystal mind orb, rising aura, upward glow, magic skill icon",
+   "subject_ko": "2나락 스킬 심득(心得)"
+  },
+  {
+   "id": "sk_dg_m_javelin",
+   "subject": "bullseye target pierced, spear, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 표창(標槍)"
+  },
+  {
+   "id": "sk_dg_m_reserve",
+   "subject": "shield, summoning circle glowing, magic skill icon",
+   "subject_ko": "2나락 스킬 원군소환(援軍召喚)"
+  },
+  {
+   "id": "sk_dg_m_precision",
+   "subject": "bullseye target pierced, rising aura, upward glow, magic skill icon",
+   "subject_ko": "2나락 스킬 필중(必中)"
+  },
+  {
+   "id": "sk_dg_y_soulbolt",
+   "subject": "crystal ball, paper talisman, ghostly blue spirit flame, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 혼탄(魂彈)"
+  },
+  {
+   "id": "sk_dg_y_specter",
+   "subject": "ghost wisp, paper talisman, ghostly blue spirit flame, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "2나락 스킬 귀보(鬼步)"
+  },
+  {
+   "id": "sk_dg_y_soulmend",
+   "subject": "glowing heart, ghostly blue spirit flame, soft healing light, sparkles, magic skill icon",
+   "subject_ko": "2나락 스킬 혼백치유(魂魄治癒)"
+  },
+  {
+   "id": "sk_dg_a_dashshot",
+   "subject": "gust of wind trail, arrow, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "2나락 스킬 질주사(疾走射)"
+  },
+  {
+   "id": "sk_dg_a_firstaid",
+   "subject": "glowing heart, soft healing light, sparkles, magic skill icon",
+   "subject_ko": "2나락 스킬 응급처치(應急處置)"
+  },
+  {
+   "id": "sk_dg_a_gale",
+   "subject": "whirlwind spiral, arrow, golden qi aura, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 기환시(氣環矢)"
+  },
+  {
+   "id": "sk_dg_w_intimidate",
+   "subject": "roaring tiger emblem, dark binding sigil, magic skill icon",
+   "subject_ko": "2나락 스킬 위해(威嚇)"
+  },
+  {
+   "id": "sk_dg_w_frostcleave",
+   "subject": "ice block shards, sword, ice, frost, crescent slash arc, magic skill icon",
+   "subject_ko": "2나락 스킬 빙인참(氷刃斬)"
+  },
+  {
+   "id": "sk_dg_w_thunderlance",
+   "subject": "lightning bolt, sword, lightning, electric sparks, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 벽력창(霹靂槍)"
+  },
+  {
+   "id": "sk_dg_s_restore",
+   "subject": "glowing heart, golden qi aura, soft healing light, sparkles, magic skill icon",
+   "subject_ko": "2나락 스킬 축기회복(蓄氣回復)"
+  },
+  {
+   "id": "sk_dg_s_plague",
+   "subject": "plague spores, paper talisman, green poison mist, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 역병(疫病)"
+  },
+  {
+   "id": "sk_dg_s_venombolt",
+   "subject": "skull and crossbones poison, paper talisman, green poison mist, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 독무탄(毒霧彈)"
+  },
+  {
+   "id": "sk_dg_m_flamesaber",
+   "subject": "flames, spear, fire, burning, crescent slash arc, magic skill icon",
+   "subject_ko": "2나락 스킬 화도(火刀)"
+  },
+  {
+   "id": "sk_dg_m_venomfield",
+   "subject": "skull and crossbones poison, spear, green poison mist, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 독진(毒陣)"
+  },
+  {
+   "id": "sk_dg_m_frostcharge",
+   "subject": "ice block shards, spear, ice, frost, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "2나락 스킬 빙보(氷步)"
+  },
+  {
+   "id": "sk_dg_y_thunderdoom",
+   "subject": "lightning bolt, paper talisman, lightning, electric sparks, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 뇌쇄(雷殺)"
+  },
+  {
+   "id": "sk_dg_y_hellstrike",
+   "subject": "flames, paper talisman, fire, burning, crescent slash arc, magic skill icon",
+   "subject_ko": "2나락 스킬 화령타(火靈打)"
+  },
+  {
+   "id": "sk_dg_y_frostchain",
+   "subject": "ice block shards, paper talisman, ice, frost, energy arcs jumping between points, magic skill icon",
+   "subject_ko": "2나락 스킬 빙쇄(氷鎖)"
+  },
+  {
+   "id": "sk_dg_a_emp_bolt",
+   "subject": "violet energy orb, arrow, futuristic violet neon energy, sci-fi, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 전자시(電子矢)"
+  },
+  {
+   "id": "sk_dg_a_emp_nova",
+   "subject": "explosion burst, arrow, futuristic violet neon energy, sci-fi, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 전자충격파(電子衝擊波)"
+  },
+  {
+   "id": "sk_dg_a_emp_chain",
+   "subject": "satellite, arrow, energy arcs jumping between points, magic skill icon",
+   "subject_ko": "2나락 스킬 궤도연환시(軌道連環矢)"
+  },
+  {
+   "id": "sk_dg_w_emp_swing",
+   "subject": "violet energy orb, sword, futuristic violet neon energy, sci-fi, crescent slash arc, magic skill icon",
+   "subject_ko": "2나락 스킬 전자인(電子刃)"
+  },
+  {
+   "id": "sk_dg_w_emp_dash",
+   "subject": "lightning bolt, sword, futuristic violet neon energy, sci-fi, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "2나락 스킬 광속돌격(光速突擊)"
+  },
+  {
+   "id": "sk_dg_w_emp_nova",
+   "subject": "explosion burst, sword, futuristic violet neon energy, sci-fi, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 전자진(電子陣)"
+  },
+  {
+   "id": "sk_dg_s_emp_bolt",
+   "subject": "violet energy orb, paper talisman, futuristic violet neon energy, sci-fi, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 입자탄(粒子彈)"
+  },
+  {
+   "id": "sk_dg_s_emp_nova",
+   "subject": "black hole vortex, paper talisman, futuristic violet neon energy, sci-fi, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 특이점(特異點)"
+  },
+  {
+   "id": "sk_dg_s_emp_chain",
+   "subject": "chain links, paper talisman, futuristic violet neon energy, sci-fi, energy arcs jumping between points, magic skill icon",
+   "subject_ko": "2나락 스킬 양자쇄(量子鎖)"
+  },
+  {
+   "id": "sk_dg_m_emp_swing",
+   "subject": "violet energy orb, spear, futuristic violet neon energy, sci-fi, crescent slash arc, magic skill icon",
+   "subject_ko": "2나락 스킬 전자검(電子劍)"
+  },
+  {
+   "id": "sk_dg_m_emp_bolt",
+   "subject": "satellite, spear, futuristic violet neon energy, sci-fi, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 위성포(衛星砲)"
+  },
+  {
+   "id": "sk_dg_m_emp_nova",
+   "subject": "explosion burst, spear, futuristic violet neon energy, sci-fi, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 전자결계(電磁結界)"
+  },
+  {
+   "id": "sk_dg_y_emp_chain",
+   "subject": "antenna signal waves, paper talisman, futuristic violet neon energy, sci-fi, energy arcs jumping between points, magic skill icon",
+   "subject_ko": "2나락 스킬 유령신호(幽靈信號)"
+  },
+  {
+   "id": "sk_dg_y_emp_bolt",
+   "subject": "violet energy orb, paper talisman, futuristic violet neon energy, sci-fi, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 환영입자탄(幻影粒子彈)"
+  },
+  {
+   "id": "sk_dg_y_emp_nova",
+   "subject": "whirlwind spiral, paper talisman, futuristic violet neon energy, sci-fi, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 차원진동(次元振動)"
+  },
+  {
+   "id": "sk_dg_a_flamedance",
+   "subject": "flames, arrow, fire, burning, crescent slash arc, magic skill icon",
+   "subject_ko": "2나락 스킬 염인무(炎刃舞)"
+  },
+  {
+   "id": "sk_dg_a_venomchain",
+   "subject": "chain links, arrow, green poison mist, energy arcs jumping between points, magic skill icon",
+   "subject_ko": "2나락 스킬 독쇄시(毒鎖矢)"
+  },
+  {
+   "id": "sk_dg_a_firerain",
+   "subject": "volcano eruption, arrow, fire, burning, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 화우(火雨)"
+  },
+  {
+   "id": "sk_dg_w_blastfire",
+   "subject": "volcano eruption, sword, fire, burning, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 폭염진(爆炎陣)"
+  },
+  {
+   "id": "sk_dg_w_firelance",
+   "subject": "flames, sword, fire, burning, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 화창(火槍)"
+  },
+  {
+   "id": "sk_dg_w_frostchain",
+   "subject": "chain links, sword, ice, frost, energy arcs jumping between points, magic skill icon",
+   "subject_ko": "2나락 스킬 빙격연환(氷擊連環)"
+  },
+  {
+   "id": "sk_dg_s_thundercage",
+   "subject": "lightning bolt, paper talisman, lightning, electric sparks, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 뇌옥(雷獄)"
+  },
+  {
+   "id": "sk_dg_s_flamefan",
+   "subject": "folding fan, paper talisman, fire, burning, crescent slash arc, magic skill icon",
+   "subject_ko": "2나락 스킬 화선(火扇)"
+  },
+  {
+   "id": "sk_dg_s_chichain",
+   "subject": "chain links, paper talisman, golden qi aura, energy arcs jumping between points, magic skill icon",
+   "subject_ko": "2나락 스킬 기쇄(氣鎖)"
+  },
+  {
+   "id": "sk_dg_m_firestrike",
+   "subject": "flames, spear, fire, burning, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 화표(火標)"
+  },
+  {
+   "id": "sk_dg_m_firestorm",
+   "subject": "volcano eruption, spear, fire, burning, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 화진(火陣)"
+  },
+  {
+   "id": "sk_dg_m_frostblade",
+   "subject": "ice block shards, spear, ice, frost, crescent slash arc, magic skill icon",
+   "subject_ko": "2나락 스킬 빙인(氷刃)"
+  },
+  {
+   "id": "sk_dg_y_poisonbolt",
+   "subject": "skull and crossbones poison, paper talisman, green poison mist, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 독혼탄(毒魂彈)"
+  },
+  {
+   "id": "sk_dg_y_frostspirit",
+   "subject": "ice block shards, paper talisman, ice, frost, crescent slash arc, magic skill icon",
+   "subject_ko": "2나락 스킬 빙령타(氷靈打)"
+  },
+  {
+   "id": "sk_dg_y_infernoring",
+   "subject": "volcano eruption, paper talisman, fire, burning, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "2나락 스킬 화염귀진(火焰鬼陣)"
+  },
+  {
+   "id": "sk_st_slash",
+   "subject": "crossed swords, crescent slash arc, magic skill icon",
+   "subject_ko": "4종횡 스킬 연참(連斬)"
+  },
+  {
+   "id": "sk_st_sweep",
+   "subject": "whirlwind spiral, sword, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "4종횡 스킬 횡소(橫掃)"
+  },
+  {
+   "id": "sk_st_bolt",
+   "subject": "diamond crystal, sword, golden qi aura, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "4종횡 스킬 기탄(氣彈)"
+  },
+  {
+   "id": "sk_st_brace",
+   "subject": "flames, golden qi aura, rising aura, upward glow, magic skill icon",
+   "subject_ko": "4종횡 스킬 기합(氣合)"
+  },
+  {
+   "id": "sk_st_w_cut",
+   "subject": "dagger, sword, crescent slash arc, magic skill icon",
+   "subject_ko": "4종횡 스킬 참격(斬擊)"
+  },
+  {
+   "id": "sk_st_w_whirl",
+   "subject": "tornado, sword, swirling wind, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "4종횡 스킬 선풍(旋風)"
+  },
+  {
+   "id": "sk_st_w_rush",
+   "subject": "gust of wind trail, sword, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "4종횡 스킬 돌진(突進)"
+  },
+  {
+   "id": "sk_st_w_iron",
+   "subject": "shield, rising aura, upward glow, magic skill icon",
+   "subject_ko": "4종횡 스킬 철갑(鐵甲)"
+  },
+  {
+   "id": "sk_st_w_edge",
+   "subject": "water wave, sword, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "4종횡 스킬 파공검(破空劍)"
+  },
+  {
+   "id": "sk_st_w_vital",
+   "subject": "green glowing heart, golden qi aura, soft healing light, sparkles, magic skill icon",
+   "subject_ko": "4종횡 스킬 생기결(生氣訣)"
+  },
+  {
+   "id": "sk_st_g_smash",
+   "subject": "explosion burst, sword, crescent slash arc, magic skill icon",
+   "subject_ko": "4종횡 스킬 패왕격(霸王擊)"
+  },
+  {
+   "id": "sk_st_g_roar",
+   "subject": "war horn, sword, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "4종횡 스킬 함성(喊聲)"
+  },
+  {
+   "id": "sk_st_g_wall",
+   "subject": "stone brick wall, rising aura, upward glow, magic skill icon",
+   "subject_ko": "4종횡 스킬 철벽(鐵壁)"
+  },
+  {
+   "id": "sk_st_g_edge",
+   "subject": "water wave, sword, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "4종횡 스킬 벽공검(劈空劍)"
+  },
+  {
+   "id": "sk_st_g_vital",
+   "subject": "green glowing heart, radiant starlight, soft healing light, sparkles, magic skill icon",
+   "subject_ko": "4종횡 스킬 회천결(回天訣)"
+  },
+  {
+   "id": "sk_st_n_heaven",
+   "subject": "falling meteor, spear, radiant starlight, crescent slash arc, magic skill icon",
+   "subject_ko": "4종횡 스킬 천붕격(天崩擊)"
+  },
+  {
+   "id": "sk_st_n_quake",
+   "subject": "cracked impact mark, spear, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "4종횡 스킬 진각(震脚)"
+  },
+  {
+   "id": "sk_st_n_charge",
+   "subject": "galloping horse, spear, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "4종횡 스킬 철기돌격(鐵騎突擊)"
+  },
+  {
+   "id": "sk_st_n_banner",
+   "subject": "red war flag, rising aura, upward glow, magic skill icon",
+   "subject_ko": "4종횡 스킬 대장기(大將旗)"
+  },
+  {
+   "id": "sk_st_n_edge",
+   "subject": "water wave, spear, radiant starlight, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "4종횡 스킬 천단검(天斷劍)"
+  },
+  {
+   "id": "sk_st_n_vital",
+   "subject": "green glowing heart, soft healing light, sparkles, magic skill icon",
+   "subject_ko": "4종횡 스킬 불사결(不死訣)"
+  },
+  {
+   "id": "sk_st_o_ruin",
+   "subject": "cracked impact mark, halberd, crescent slash arc, magic skill icon",
+   "subject_ko": "4종횡 스킬 파멸격(破滅擊)"
+  },
+  {
+   "id": "sk_st_o_tremor",
+   "subject": "volcano eruption, halberd, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "4종횡 스킬 지열(地裂)"
+  },
+  {
+   "id": "sk_st_o_smite",
+   "subject": "lightning bolt, halberd, lightning, electric sparks, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "4종횡 스킬 벽력돌(霹靂突)"
+  },
+  {
+   "id": "sk_st_o_conquer",
+   "subject": "red war flag, radiant starlight, rising aura, upward glow, magic skill icon",
+   "subject_ko": "4종횡 스킬 패천기(覇天旗)"
+  },
+  {
+   "id": "sk_st_o_edge",
+   "subject": "water wave, halberd, radiant starlight, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "4종횡 스킬 파천검(破天劍)"
+  },
+  {
+   "id": "sk_st_o_vital",
+   "subject": "green glowing heart, soft healing light, sparkles, magic skill icon",
+   "subject_ko": "4종횡 스킬 재생결(再生訣)"
+  },
+  {
+   "id": "sk_st_a_shot",
+   "subject": "bow and arrow, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "4종횡 스킬 사격(射擊)"
+  },
+  {
+   "id": "sk_st_a_double",
+   "subject": "bullseye target pierced, arrow, several projectiles spread, magic skill icon",
+   "subject_ko": "4종횡 스킬 연사(連射)"
+  },
+  {
+   "id": "sk_st_a_pierce",
+   "subject": "arrow, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "4종횡 스킬 관통시(貫通矢)"
+  },
+  {
+   "id": "sk_st_a_eye",
+   "subject": "hawk, rising aura, upward glow, magic skill icon",
+   "subject_ko": "4종횡 스킬 응안(鷹眼)"
+  },
+  {
+   "id": "sk_st_a_retreat",
+   "subject": "winged boots, arrow, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "4종횡 스킬 퇴보사(退步射)"
+  },
+  {
+   "id": "sk_st_a_burst",
+   "subject": "dizzy stars, arrow, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "4종횡 스킬 환시(環矢)"
+  },
+  {
+   "id": "sk_st_s_rain",
+   "subject": "rain of arrows from sky, falling from above, many streaks, magic skill icon",
+   "subject_ko": "4종횡 스킬 전우(箭雨)"
+  },
+  {
+   "id": "sk_st_s_snipe",
+   "subject": "telescope, arrow, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "4종횡 스킬 일점사(一點射)"
+  },
+  {
+   "id": "sk_st_s_split",
+   "subject": "carp streamer, arrow, several projectiles spread, magic skill icon",
+   "subject_ko": "4종횡 스킬 분시(分矢)"
+  },
+  {
+   "id": "sk_st_s_retreat",
+   "subject": "winged boots, arrow, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "4종횡 스킬 활보사(闊步射)"
+  },
+  {
+   "id": "sk_st_s_burst",
+   "subject": "dizzy stars, arrow, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "4종횡 스킬 광환시(廣環矢)"
+  },
+  {
+   "id": "sk_st_f_storm",
+   "subject": "thunder storm cloud, arrow, falling from above, many streaks, magic skill icon",
+   "subject_ko": "4종횡 스킬 시우(矢雨)"
+  },
+  {
+   "id": "sk_st_f_pierce",
+   "subject": "shooting star, arrow, radiant starlight, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "4종횡 스킬 파천시(破天矢)"
+  },
+  {
+   "id": "sk_st_f_volley",
+   "subject": "fireworks, arrow, several projectiles spread, magic skill icon",
+   "subject_ko": "4종횡 스킬 만시(萬矢)"
+  },
+  {
+   "id": "sk_st_f_focus",
+   "subject": "evil eye amulet, rising aura, upward glow, magic skill icon",
+   "subject_ko": "4종횡 스킬 정심(定心)"
+  },
+  {
+   "id": "sk_st_f_retreat",
+   "subject": "winged boots, arrow, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "4종횡 스킬 답공사(踏空射)"
+  },
+  {
+   "id": "sk_st_f_burst",
+   "subject": "dizzy stars, arrow, radiant starlight, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "4종횡 스킬 천환시(天環矢)"
+  },
+  {
+   "id": "sk_st_h_tempest",
+   "subject": "thunder storm cloud, arrow, radiant starlight, falling from above, many streaks, magic skill icon",
+   "subject_ko": "4종횡 스킬 천사우(天射雨)"
+  },
+  {
+   "id": "sk_st_h_ray",
+   "subject": "sparkles, arrow, radiant starlight, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "4종횡 스킬 광시(光矢)"
+  },
+  {
+   "id": "sk_st_h_swarm",
+   "subject": "fireworks, arrow, several projectiles spread, magic skill icon",
+   "subject_ko": "4종횡 스킬 십이시(十二矢)"
+  },
+  {
+   "id": "sk_st_h_zenith",
+   "subject": "shooting star, radiant starlight, rising aura, upward glow, magic skill icon",
+   "subject_ko": "4종횡 스킬 궁천합(弓天合)"
+  },
+  {
+   "id": "sk_st_h_retreat",
+   "subject": "winged boots, arrow, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "4종횡 스킬 익보사(翼步射)"
+  },
+  {
+   "id": "sk_st_h_burst",
+   "subject": "dizzy stars, arrow, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "4종횡 스킬 극환시(極環矢)"
+  },
+  {
+   "id": "sk_st_r_twin",
+   "subject": "lightning bolt, throwing knife, crescent slash arc, magic skill icon",
+   "subject_ko": "4종횡 스킬 쌍참(雙斬)"
+  },
+  {
+   "id": "sk_st_r_knife",
+   "subject": "throwing knife, several projectiles spread, magic skill icon",
+   "subject_ko": "4종횡 스킬 비도(飛刀)"
+  },
+  {
+   "id": "sk_st_r_step",
+   "subject": "footprints, throwing knife, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "4종횡 스킬 은신보(隱身步)"
+  },
+  {
+   "id": "sk_st_r_vital",
+   "subject": "flower playing card, rising aura, upward glow, magic skill icon",
+   "subject_ko": "4종횡 스킬 급소(急所)"
+  },
+  {
+   "id": "sk_st_r_whirl",
+   "subject": "spinning kick motion arc, throwing knife, swirling wind, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "4종횡 스킬 선풍각(旋風脚)"
+  },
+  {
+   "id": "sk_st_r_dart",
+   "subject": "bullseye target pierced, throwing knife, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "4종횡 스킬 관통표(貫通鏢)"
+  },
+  {
+   "id": "sk_st_x_storm",
+   "subject": "whirlwind spiral, throwing knife, crescent slash arc, magic skill icon",
+   "subject_ko": "4종횡 스킬 난무(亂舞)"
+  },
+  {
+   "id": "sk_st_x_fan",
+   "subject": "sparkler burst, throwing knife, radiant starlight, several projectiles spread, magic skill icon",
+   "subject_ko": "4종횡 스킬 만천화우(滿天花雨)"
+  },
+  {
+   "id": "sk_st_x_shadow",
+   "subject": "shadow mask, throwing knife, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "4종횡 스킬 그림자밟기"
+  },
+  {
+   "id": "sk_st_x_whirl",
+   "subject": "spinning kick motion arc, throwing knife, swirling wind, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "4종횡 스킬 질풍각(疾風脚)"
+  },
+  {
+   "id": "sk_st_x_dart",
+   "subject": "bullseye target pierced, throwing knife, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "4종횡 스킬 암습표(暗襲鏢)"
+  },
+  {
+   "id": "sk_st_v_blur",
+   "subject": "two shadow silhouettes, mirror image, throwing knife, crescent slash arc, magic skill icon",
+   "subject_ko": "4종횡 스킬 잔영(殘影)"
+  },
+  {
+   "id": "sk_st_v_petal",
+   "subject": "cherry blossoms, throwing knife, several projectiles spread, magic skill icon",
+   "subject_ko": "4종횡 스킬 낙화(落花)"
+  },
+  {
+   "id": "sk_st_v_void",
+   "subject": "mist fog, throwing knife, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "4종횡 스킬 허공답보(虛空踏步)"
+  },
+  {
+   "id": "sk_st_v_mark",
+   "subject": "skull, ghostly blue spirit flame, rising aura, upward glow, magic skill icon",
+   "subject_ko": "4종횡 스킬 사혼(死魂)"
+  },
+  {
+   "id": "sk_st_v_whirl",
+   "subject": "spinning kick motion arc, throwing knife, swirling wind, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "4종횡 스킬 광풍각(狂風脚)"
+  },
+  {
+   "id": "sk_st_v_dart",
+   "subject": "bullseye target pierced, throwing knife, ghostly blue spirit flame, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "4종횡 스킬 귀표(鬼鏢)"
+  },
+  {
+   "id": "sk_st_d_carve",
+   "subject": "throwing knife, crescent slash arc, magic skill icon",
+   "subject_ko": "4종횡 스킬 팔도(八刀)"
+  },
+  {
+   "id": "sk_st_d_bloom",
+   "subject": "red flower, throwing knife, several projectiles spread, magic skill icon",
+   "subject_ko": "4종횡 스킬 구화만개(九花滿開)"
+  },
+  {
+   "id": "sk_st_d_veil",
+   "subject": "coffin, throwing knife, ghostly blue spirit flame, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "4종횡 스킬 명계보(冥界步)"
+  },
+  {
+   "id": "sk_st_d_curse",
+   "subject": "golden crown, ghostly blue spirit flame, rising aura, upward glow, magic skill icon",
+   "subject_ko": "4종횡 스킬 명왕부(冥王符)"
+  },
+  {
+   "id": "sk_st_d_whirl",
+   "subject": "spinning kick motion arc, throwing knife, swirling wind, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "4종횡 스킬 절명풍(絶命風)"
+  },
+  {
+   "id": "sk_st_d_dart",
+   "subject": "bullseye target pierced, throwing knife, ghostly blue spirit flame, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "4종횡 스킬 명표(冥鏢)"
+  },
+  {
+   "id": "sk_st_m_fire",
+   "subject": "flames, paper talisman, fire, burning, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "4종횡 스킬 화구(火球)"
+  },
+  {
+   "id": "sk_st_m_bolt",
+   "subject": "lightning bolt, paper talisman, lightning, electric sparks, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "4종횡 스킬 뇌전(雷電)"
+  },
+  {
+   "id": "sk_st_m_heal",
+   "subject": "green glowing heart, soft healing light, sparkles, magic skill icon",
+   "subject_ko": "4종횡 스킬 치유(治癒)"
+  },
+  {
+   "id": "sk_st_m_talis",
+   "subject": "prayer beads, rising aura, upward glow, magic skill icon",
+   "subject_ko": "4종횡 스킬 부적(符籍)"
+  },
+  {
+   "id": "sk_st_m_step",
+   "subject": "whirlwind spiral, paper talisman, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "4종횡 스킬 축지(縮地)"
+  },
+  {
+   "id": "sk_st_m_orb",
+   "subject": "blue energy orb, paper talisman, several projectiles spread, magic skill icon",
+   "subject_ko": "4종횡 스킬 마탄(魔彈)"
+  },
+  {
+   "id": "sk_st_p_quake",
+   "subject": "volcano eruption, paper talisman, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "4종횡 스킬 지진(地震)"
+  },
+  {
+   "id": "sk_st_p_beam",
+   "subject": "lightning cloud, paper talisman, lightning, electric sparks, falling from above, many streaks, magic skill icon",
+   "subject_ko": "4종횡 스킬 천뢰(天雷)"
+  },
+  {
+   "id": "sk_st_p_ward",
+   "subject": "red paper talisman, rising aura, upward glow, magic skill icon",
+   "subject_ko": "4종횡 스킬 호신부(護身符)"
+  },
+  {
+   "id": "sk_st_p_step",
+   "subject": "whirlwind spiral, paper talisman, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "4종횡 스킬 축지술(縮地術)"
+  },
+  {
+   "id": "sk_st_p_orb",
+   "subject": "blue energy orb, paper talisman, several projectiles spread, magic skill icon",
+   "subject_ko": "4종횡 스킬 연환탄(連環彈)"
+  },
+  {
+   "id": "sk_st_i_meteor",
+   "subject": "dizzy stars, paper talisman, radiant starlight, falling from above, many streaks, magic skill icon",
+   "subject_ko": "4종횡 스킬 유성(流星)"
+  },
+  {
+   "id": "sk_st_i_abyss",
+   "subject": "volcano eruption, paper talisman, radiant starlight, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "4종횡 스킬 천붕지열(天崩地裂)"
+  },
+  {
+   "id": "sk_st_i_mend",
+   "subject": "healing herb leaves, soft healing light, sparkles, magic skill icon",
+   "subject_ko": "4종횡 스킬 회춘(回春)"
+  },
+  {
+   "id": "sk_st_i_tao",
+   "subject": "yin yang symbol, rising aura, upward glow, magic skill icon",
+   "subject_ko": "4종횡 스킬 태극(太極)"
+  },
+  {
+   "id": "sk_st_i_step",
+   "subject": "whirlwind spiral, paper talisman, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "4종횡 스킬 이형보(移形步)"
+  },
+  {
+   "id": "sk_st_i_orb",
+   "subject": "blue energy orb, paper talisman, radiant starlight, several projectiles spread, magic skill icon",
+   "subject_ko": "4종횡 스킬 유성탄(流星彈)"
+  },
+  {
+   "id": "sk_st_z_starfall",
+   "subject": "dizzy stars, paper talisman, radiant starlight, falling from above, many streaks, magic skill icon",
+   "subject_ko": "4종횡 스킬 낙성우(落星雨)"
+  },
+  {
+   "id": "sk_st_z_collapse",
+   "subject": "starry galaxy, paper talisman, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "4종횡 스킬 건곤붕(乾坤崩)"
+  },
+  {
+   "id": "sk_st_z_rebirth",
+   "subject": "healing herb leaves, soft healing light, sparkles, magic skill icon",
+   "subject_ko": "4종횡 스킬 환생(還生)"
+  },
+  {
+   "id": "sk_st_z_eternity",
+   "subject": "shooting star, rising aura, upward glow, magic skill icon",
+   "subject_ko": "4종횡 스킬 무극(無極)"
+  },
+  {
+   "id": "sk_st_z_step",
+   "subject": "whirlwind spiral, paper talisman, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "4종횡 스킬 신행보(神行步)"
+  },
+  {
+   "id": "sk_st_z_orb",
+   "subject": "blue energy orb, paper talisman, radiant starlight, several projectiles spread, magic skill icon",
+   "subject_ko": "4종횡 스킬 성라탄(星羅彈)"
+  },
+  {
+   "id": "sk_st_p_wrath",
+   "subject": "falling meteor, halberd, radiant starlight, crescent slash arc, magic skill icon",
+   "subject_ko": "4종횡 스킬 천멸격(天滅擊)"
+  },
+  {
+   "id": "sk_st_p_banner",
+   "subject": "rosette emblem, rising aura, upward glow, magic skill icon",
+   "subject_ko": "4종횡 스킬 군신강림(軍神降臨)"
+  },
+  {
+   "id": "sk_st_p_stars",
+   "subject": "starry galaxy, arrow, radiant starlight, several projectiles spread, magic skill icon",
+   "subject_ko": "4종횡 스킬 성궁만천(星弓滿天)"
+  },
+  {
+   "id": "sk_st_p_sun",
+   "subject": "blazing sun, arrow, radiant starlight, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "4종횡 스킬 일월시(日月矢)"
+  },
+  {
+   "id": "sk_st_p_afterimage",
+   "subject": "fading dotted outline, throwing knife, crescent slash arc, magic skill icon",
+   "subject_ko": "4종횡 스킬 무영참(無影斬)"
+  },
+  {
+   "id": "sk_st_p_gate",
+   "subject": "spirit gate door, throwing knife, ghostly blue spirit flame, speed lines, forward dash trail, magic skill icon",
+   "subject_ko": "4종횡 스킬 유명문(幽冥門)"
+  },
+  {
+   "id": "sk_st_p_void",
+   "subject": "dark moon, paper talisman, radial burst ring, shockwave, magic skill icon",
+   "subject_ko": "4종횡 스킬 태허붕(太虛崩)"
+  },
+  {
+   "id": "sk_st_p_all",
+   "subject": "sprout, soft healing light, sparkles, magic skill icon",
+   "subject_ko": "4종횡 스킬 만상환생(萬象還生)"
+  }
+ ]
+}

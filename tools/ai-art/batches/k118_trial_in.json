@@ -1,0 +1,43 @@
+{
+ "name": "k118_trial",
+ "out": "k118_trial",
+ "spec": "icon",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "items": [
+  {
+   "id": "ui_compass",
+   "subject": "brass compass, needle",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide compass 자리"
+  },
+  {
+   "id": "ui_mail",
+   "subject": "sealed envelope, red wax seal",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide mail 자리"
+  },
+  {
+   "id": "ui_x",
+   "subject": "red cross mark x symbol",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide x 자리"
+  },
+  {
+   "id": "job_st_flier",
+   "subject": "hawk, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 비장(飛將)"
+  },
+  {
+   "id": "sk_dg_s_fire",
+   "subject": "flames, paper talisman, fire, burning, flying projectile, motion streak, magic skill icon",
+   "subject_ko": "2나락 스킬 화탄(火彈)"
+  },
+  {
+   "id": "sk_dg_y_horde",
+   "subject": "skull, ghostly blue spirit flame, summoning circle glowing, magic skill icon",
+   "subject_ko": "2나락 스킬 음병(陰兵)"
+  }
+ ]
+}

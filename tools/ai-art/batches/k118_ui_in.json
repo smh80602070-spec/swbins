@@ -1,0 +1,338 @@
+{
+ "name": "k118_ui",
+ "out": "k118_ui",
+ "spec": "icon",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "items": [
+  {
+   "id": "ui_award",
+   "subject": "award rosette ribbon, gold medal center",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide award 자리"
+  },
+  {
+   "id": "ui_backpack",
+   "subject": "leather backpack, buckles",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide backpack 자리"
+  },
+  {
+   "id": "ui_book_open",
+   "subject": "open old book, pages",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide book-open 자리"
+  },
+  {
+   "id": "ui_bot",
+   "subject": "small round robot head, antenna",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide bot 자리"
+  },
+  {
+   "id": "ui_box",
+   "subject": "wooden crate, iron corners",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide box 자리"
+  },
+  {
+   "id": "ui_circle_question_mark",
+   "subject": "question mark sign, round wooden plaque",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide circle-question-mark 자리"
+  },
+  {
+   "id": "ui_clipboard_list",
+   "subject": "clipboard with checklist paper",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide clipboard-list 자리"
+  },
+  {
+   "id": "ui_coins",
+   "subject": "stack of gold coins",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide coins 자리"
+  },
+  {
+   "id": "ui_compass",
+   "subject": "brass compass, needle",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide compass 자리"
+  },
+  {
+   "id": "ui_ellipsis",
+   "subject": "three round golden beads in a row",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide ellipsis 자리"
+  },
+  {
+   "id": "ui_flag",
+   "subject": "small red flag on pole",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide flag 자리"
+  },
+  {
+   "id": "ui_footprints",
+   "subject": "pair of footprints in sand",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide footprints 자리"
+  },
+  {
+   "id": "ui_ham",
+   "subject": "roasted meat on bone",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide ham 자리"
+  },
+  {
+   "id": "ui_hammer",
+   "subject": "blacksmith hammer",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide hammer 자리"
+  },
+  {
+   "id": "ui_mail",
+   "subject": "sealed envelope, red wax seal",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide mail 자리"
+  },
+  {
+   "id": "ui_map",
+   "subject": "folded paper map, red route line",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide map 자리"
+  },
+  {
+   "id": "ui_medal",
+   "subject": "medal with ribbon",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide medal 자리"
+  },
+  {
+   "id": "ui_palette",
+   "subject": "painter palette, brush",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide palette 자리"
+  },
+  {
+   "id": "ui_rotate_ccw",
+   "subject": "curved circular arrow symbol",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide rotate-ccw 자리"
+  },
+  {
+   "id": "ui_satellite_dish",
+   "subject": "satellite dish antenna",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide satellite-dish 자리"
+  },
+  {
+   "id": "ui_scroll",
+   "subject": "rolled paper scroll, wooden rods",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide scroll 자리"
+  },
+  {
+   "id": "ui_scroll_text",
+   "subject": "open paper scroll with writing",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide scroll-text 자리"
+  },
+  {
+   "id": "ui_sparkles",
+   "subject": "sparkling stars, glitter",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide sparkles 자리"
+  },
+  {
+   "id": "ui_store",
+   "subject": "small market stall, striped awning",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide store 자리"
+  },
+  {
+   "id": "ui_swords",
+   "subject": "two crossed swords",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide swords 자리"
+  },
+  {
+   "id": "ui_user",
+   "subject": "hooded cloak on wooden mannequin bust",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide user 자리"
+  },
+  {
+   "id": "ui_wrench",
+   "subject": "iron wrench",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide wrench 자리"
+  },
+  {
+   "id": "ui_x",
+   "subject": "red cross mark x symbol",
+   "extra": "simple bold shape, minimal detail, readable at small size",
+   "subject_ko": "Lucide x 자리"
+  },
+  {
+   "id": "map_battle",
+   "subject": "two crossed swords, battle marker",
+   "extra": "simple bold shape, minimal detail",
+   "subject_ko": "5천하 지도 표식 battle"
+  },
+  {
+   "id": "map_port",
+   "subject": "iron anchor, rope",
+   "extra": "simple bold shape, minimal detail",
+   "subject_ko": "5천하 지도 표식 port"
+  },
+  {
+   "id": "map_camp",
+   "subject": "canvas army tent, small flag",
+   "extra": "simple bold shape, minimal detail",
+   "subject_ko": "5천하 지도 표식 camp"
+  },
+  {
+   "id": "map_guard",
+   "subject": "round shield, fortress emblem",
+   "extra": "simple bold shape, minimal detail",
+   "subject_ko": "5천하 지도 표식 guard"
+  },
+  {
+   "id": "map_flag",
+   "subject": "red war banner on spear pole",
+   "extra": "simple bold shape, minimal detail",
+   "subject_ko": "5천하 지도 표식 flag"
+  },
+  {
+   "id": "job_dg_archer",
+   "subject": "bow and arrow, class emblem, ornate badge",
+   "subject_ko": "2나락 직업 궁장"
+  },
+  {
+   "id": "job_dg_warrior",
+   "subject": "crossed swords, class emblem, ornate badge",
+   "subject_ko": "2나락 직업 무장"
+  },
+  {
+   "id": "job_dg_scholar",
+   "subject": "folding fan, class emblem, ornate badge",
+   "subject_ko": "2나락 직업 책사"
+  },
+  {
+   "id": "job_dg_marshal",
+   "subject": "red war flag, class emblem, ornate badge",
+   "subject_ko": "2나락 직업 도독"
+  },
+  {
+   "id": "job_dg_mystic",
+   "subject": "yin yang symbol, class emblem, ornate badge",
+   "subject_ko": "2나락 직업 방사"
+  },
+  {
+   "id": "job_st_none",
+   "subject": "walking staff, straw sandals, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 무명(無名)"
+  },
+  {
+   "id": "job_st_warrior",
+   "subject": "crossed swords, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 무사(武士)"
+  },
+  {
+   "id": "job_st_archer",
+   "subject": "bow and arrow, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 궁수(弓手)"
+  },
+  {
+   "id": "job_st_rogue",
+   "subject": "dagger, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 협객(俠客)"
+  },
+  {
+   "id": "job_st_mage",
+   "subject": "crystal ball, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 방사(方士)"
+  },
+  {
+   "id": "job_st_general",
+   "subject": "shield, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 장군(將軍)"
+  },
+  {
+   "id": "job_st_sniper",
+   "subject": "bullseye target pierced, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 신궁(神弓)"
+  },
+  {
+   "id": "job_st_assassin",
+   "subject": "shadow mask, kunai, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 자객(刺客)"
+  },
+  {
+   "id": "job_st_sage",
+   "subject": "yin yang symbol, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 도사(道士)"
+  },
+  {
+   "id": "job_st_marshal",
+   "subject": "military medal, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 원수(元帥)"
+  },
+  {
+   "id": "job_st_flier",
+   "subject": "hawk, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 비장(飛將)"
+  },
+  {
+   "id": "job_st_wraith",
+   "subject": "dark moon, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 귀영(鬼影)"
+  },
+  {
+   "id": "job_st_immortal",
+   "subject": "wizard hat, staff, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 진인(眞人)"
+  },
+  {
+   "id": "job_st_warlord",
+   "subject": "trident, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 전신(戰神)"
+  },
+  {
+   "id": "job_st_falcon",
+   "subject": "starry galaxy, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 궁성(弓聖)"
+  },
+  {
+   "id": "job_st_reaper",
+   "subject": "golden crown, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 명왕(冥王)"
+  },
+  {
+   "id": "job_st_ascendant",
+   "subject": "shooting star, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 천존(天尊)"
+  },
+  {
+   "id": "job_st_godwar",
+   "subject": "rosette emblem, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 군신(軍神)"
+  },
+  {
+   "id": "job_st_skybow",
+   "subject": "rainbow arc, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 천궁(天弓)"
+  },
+  {
+   "id": "job_st_noshadow",
+   "subject": "fading dotted outline, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 무영(無影)"
+  },
+  {
+   "id": "job_st_voidsage",
+   "subject": "ringed planet, class emblem, ornate badge",
+   "subject_ko": "4종횡 직업 태허(太虛)"
+  }
+ ]
+}
