@@ -127,10 +127,11 @@
   var boardSeq = 0;
   function ownProp(key, id, put, fallback) {
     var A = A3(), seq = boardSeq;
-    if (!A || !A.lookup || !A.lookup(key, { id: id })) { fallback(); return; }
+    var hit = A && A.lookup ? A.lookup(key, { id: id }) : null;
+    if (!hit || JSON.stringify(hit.url).indexOf('world3d/') < 0) { fallback(); return; }   // R-5 — 표가 옛 빌린 DEFAULTS(Quaternius)면 도형
     A.build(key, { id: id }, function (g) {
       if (seq !== boardSeq) { return; }
-      if (!g) { fallback(); return; }
+      if (!g || !g.userData.span) { fallback(); return; }   // R-5 — 못 받으면 asset3d 가 회색 상자(primitive, span 없음)를 준다 → 옛 원뿔·톱니
       put(g); boardGrp.add(g);
     });
   }

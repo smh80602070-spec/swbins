@@ -508,7 +508,7 @@
     var A3 = global.DG.assets3d, src = ((kind === 'sand' || kind === 'water') && A3 && A3.root && A3.root() ? A3.root() + 'web2d/tile/forest_' + kind + '.webp' : null) || TILE_TEX_SRC[kind];   // W-0262 모래·물 = 공용 자체 web2d 타일(못 잡으면 옛 Kenney)
     if (!src || !t) { return null; }
     if (tileTexCache[src]) { return tileTexCache[src]; }
-    var tex = new t.TextureLoader().load(src);
+    var tex = new t.TextureLoader().load(src, undefined, undefined, function () { var old = TILE_TEX_SRC[kind]; if (old && old !== src) { new t.TextureLoader().load(old, function (o) { tex.image = o.image; tex.needsUpdate = true; }); } });   // R-5 — 자체 모래·물 404 면 옛 Kenney
     /* 예전엔 도트그림 보존용 NearestFilter 였는데, 이제 대부분 실사
        사진이라 LinearFilter + 밉맵으로 부드럽게 — 남은 sand·water 픽셀
        그림도 워낙 작아(16x16) 흐려져 보여도 눈에 띄지 않는다 */

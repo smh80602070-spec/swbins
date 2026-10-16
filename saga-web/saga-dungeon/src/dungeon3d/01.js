@@ -801,7 +801,7 @@
       chnode.position.set(r.chest.x, 0, r.chest.y);
       wallGroup.add(chnode);
     }
-    var poiProp = function (key, id, x, y, h, w, d, col) { var A = AS(), sh = function () { var sg = new T.Group(); box(sg, 0, h / 2, 0, w, h, d, col, 'flat', true); return sg; }, n = A ? A.build(key, 'poi:' + id + ':' + x + ':' + y, h, null, sh) : sh(); n.position.set(x, 0, y); wallGroup.add(n); };   // W-0261 방 소품 바닥 돌 = 판 표 'dg:*'·'altar' 자체 world3d, 못 받으면 옛 상자(빛 상자 = 상태 신호는 그대로)
+    var poiProp = function (key, id, x, y, h, w, d, col) { var A = AS(), sh = function () { var sg = new T.Group(); box(sg, 0, h / 2, 0, w, h, d, col, 'flat', true); return sg; }, n = A ? A.build(key, 'poi:' + id + ':' + x + ':' + y, h, null, sh) : sh(); n.userData.cast = true; n.position.set(x, 0, y); wallGroup.add(n); };   // W-0261 방 소품 바닥 돌 = 판 표 'dg:*'·'altar' 자체 world3d, 못 받으면 옛 상자(빛 상자 = 상태 신호는 그대로)
     if (r && r.grave) {
       /* 유품(§5.2) — 비석. 회수했어도(taken) 이 방을 떠나기 전까지는 자리를 남긴다(방금 밟은 자리가 지워지면 "됐다"가 안 보인다) */
       poiProp('dg:grave', 'grave', r.grave.x, r.grave.y, 34, 16, 8, 0x6a6a75);

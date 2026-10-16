@@ -95,9 +95,9 @@
     var A3 = global.DG.assets3d, own = A3 && A3.root && A3.root() ? A3.root() + 'web2d/tile/story_' + ({ forest: 'dirt', cave: 'stone', fire: 'stone' }[mood] || 'grass') + '.webp' : null;   // W-0263 바닥 = 공용 자체 web2d 타일(못 잡으면 옛 Kenney)
     var src = own || GROUND_TEX_SRC[mood] || GROUND_TEX_SRC.sky;
     if (!t) { return null; }
-    var tex = new t.TextureLoader().load(src);
-    tex.magFilter = t.NearestFilter;
-    tex.minFilter = t.NearestFilter;
+    var old = GROUND_TEX_SRC[mood] || GROUND_TEX_SRC.sky, tex = new t.TextureLoader().load(src, undefined, undefined, function () { if (src !== old) { new t.TextureLoader().load(old, function (o) { tex.image = o.image; tex.magFilter = tex.minFilter = t.NearestFilter; tex.generateMipmaps = false; tex.needsUpdate = true; }); } });   // R-5 — 자체 타일 404 면 옛 Kenney
+    tex.magFilter = own ? t.LinearFilter : t.NearestFilter;   // R-5 — 256px 자체 타일은 부드럽게+밉맵(16px 도트만 Nearest)
+    tex.minFilter = own ? t.LinearMipmapLinearFilter : t.NearestFilter;
     tex.wrapS = tex.wrapT = t.RepeatWrapping;
     if (t.SRGBColorSpace) { tex.colorSpace = t.SRGBColorSpace; }
     tex.repeat.set(repeatX, repeatY);
