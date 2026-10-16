@@ -1,0 +1,159 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k112_rts2",
+ "kit": {
+  "spec": "character_tall",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 640,
+  "height": 1152,
+  "steps": 30,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "rts_inf_ally_front",
+   "seed": 4121404235,
+   "prompt": "(1boy:1.15), male focus, adult man, foot soldier, round iron helmet, spear, round wooden shield, leather armor, blue and white clothing, blue cloth, long legs, wide shot, adult, tall, realistic body proportions, detailed face, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 RTS 보병 아군"
+  },
+  {
+   "id": "rts_inf_ally_side",
+   "seed": 4121404235,
+   "prompt": "(1boy:1.15), male focus, adult man, foot soldier, round iron helmet, spear, round wooden shield, leather armor, blue and white clothing, blue cloth, long legs, wide shot, adult, tall, realistic body proportions, detailed face, facing right, side view, from side, full profile, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 RTS 보병 아군"
+  },
+  {
+   "id": "rts_inf_ally_back",
+   "seed": 4121404235,
+   "prompt": "(1boy:1.15), male focus, adult man, foot soldier, round iron helmet, spear, round wooden shield, leather armor, blue and white clothing, blue cloth, long legs, wide shot, adult, tall, realistic body proportions, detailed face, from behind, back view, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 RTS 보병 아군"
+  },
+  {
+   "id": "rts_inf_enemy_front",
+   "seed": 1789719957,
+   "prompt": "(1boy:1.15), male focus, adult man, foot soldier, round iron helmet, spear, round wooden shield, leather armor, dark crimson and black clothing, crimson cloth, long legs, wide shot, adult, tall, realistic body proportions, detailed face, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 RTS 보병 적군"
+  },
+  {
+   "id": "rts_inf_enemy_side",
+   "seed": 1789719957,
+   "prompt": "(1boy:1.15), male focus, adult man, foot soldier, round iron helmet, spear, round wooden shield, leather armor, dark crimson and black clothing, crimson cloth, long legs, wide shot, adult, tall, realistic body proportions, detailed face, facing right, side view, from side, full profile, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 RTS 보병 적군"
+  },
+  {
+   "id": "rts_inf_enemy_back",
+   "seed": 1789719957,
+   "prompt": "(1boy:1.15), male focus, adult man, foot soldier, round iron helmet, spear, round wooden shield, leather armor, dark crimson and black clothing, crimson cloth, long legs, wide shot, adult, tall, realistic body proportions, detailed face, from behind, back view, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 RTS 보병 적군"
+  },
+  {
+   "id": "rts_arc_ally_front",
+   "seed": 3861400287,
+   "prompt": "(1boy:1.15), male focus, adult man, archer soldier, hooded, longbow, quiver of arrows on the back, light leather armor, blue and white clothing, blue cloth, long legs, wide shot, adult, tall, realistic body proportions, detailed face, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 RTS 궁병 아군"
+  },
+  {
+   "id": "rts_arc_ally_side",
+   "seed": 3861400287,
+   "prompt": "(1boy:1.15), male focus, adult man, archer soldier, hooded, longbow, quiver of arrows on the back, light leather armor, blue and white clothing, blue cloth, long legs, wide shot, adult, tall, realistic body proportions, detailed face, facing right, side view, from side, full profile, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 RTS 궁병 아군"
+  },
+  {
+   "id": "rts_arc_ally_back",
+   "seed": 3861400287,
+   "prompt": "(1boy:1.15), male focus, adult man, archer soldier, hooded, longbow, quiver of arrows on the back, light leather armor, blue and white clothing, blue cloth, long legs, wide shot, adult, tall, realistic body proportions, detailed face, from behind, back view, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 RTS 궁병 아군"
+  },
+  {
+   "id": "rts_arc_enemy_front",
+   "seed": 2368072034,
+   "prompt": "(1boy:1.15), male focus, adult man, archer soldier, hooded, longbow, quiver of arrows on the back, light leather armor, dark crimson and black clothing, crimson cloth, long legs, wide shot, adult, tall, realistic body proportions, detailed face, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 RTS 궁병 적군"
+  },
+  {
+   "id": "rts_arc_enemy_side",
+   "seed": 2368072034,
+   "prompt": "(1boy:1.15), male focus, adult man, archer soldier, hooded, longbow, quiver of arrows on the back, light leather armor, dark crimson and black clothing, crimson cloth, long legs, wide shot, adult, tall, realistic body proportions, detailed face, facing right, side view, from side, full profile, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 RTS 궁병 적군"
+  },
+  {
+   "id": "rts_arc_enemy_back",
+   "seed": 2368072034,
+   "prompt": "(1boy:1.15), male focus, adult man, archer soldier, hooded, longbow, quiver of arrows on the back, light leather armor, dark crimson and black clothing, crimson cloth, long legs, wide shot, adult, tall, realistic body proportions, detailed face, from behind, back view, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 RTS 궁병 적군"
+  },
+  {
+   "id": "rts_cav_ally_front",
+   "seed": 319267551,
+   "prompt": "(1boy:1.15), male focus, adult man, cavalry rider sitting on a brown horse, steel helmet, long lance, blue and white clothing, blue cloth horse cloth, full horse and rider visible, long legs, wide shot, adult, tall, realistic body proportions, detailed face, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 RTS 기병 아군",
+   "width": 880,
+   "height": 880
+  },
+  {
+   "id": "rts_cav_ally_side",
+   "seed": 319267551,
+   "prompt": "(1boy:1.15), male focus, adult man, cavalry rider sitting on a brown horse, steel helmet, long lance, blue and white clothing, blue cloth horse cloth, full horse and rider visible, long legs, wide shot, adult, tall, realistic body proportions, detailed face, facing right, side view, from side, full profile, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 RTS 기병 아군",
+   "width": 880,
+   "height": 880
+  },
+  {
+   "id": "rts_cav_ally_back",
+   "seed": 319267551,
+   "prompt": "(1boy:1.15), male focus, adult man, cavalry rider sitting on a brown horse, steel helmet, long lance, blue and white clothing, blue cloth horse cloth, full horse and rider visible, long legs, wide shot, adult, tall, realistic body proportions, detailed face, from behind, back view, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 RTS 기병 아군",
+   "width": 880,
+   "height": 880
+  },
+  {
+   "id": "rts_cav_enemy_front",
+   "seed": 3938343726,
+   "prompt": "(1boy:1.15), male focus, adult man, cavalry rider sitting on a brown horse, steel helmet, long lance, dark crimson and black clothing, crimson cloth horse cloth, full horse and rider visible, long legs, wide shot, adult, tall, realistic body proportions, detailed face, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 RTS 기병 적군",
+   "width": 880,
+   "height": 880
+  },
+  {
+   "id": "rts_cav_enemy_side",
+   "seed": 3938343726,
+   "prompt": "(1boy:1.15), male focus, adult man, cavalry rider sitting on a brown horse, steel helmet, long lance, dark crimson and black clothing, crimson cloth horse cloth, full horse and rider visible, long legs, wide shot, adult, tall, realistic body proportions, detailed face, facing right, side view, from side, full profile, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 RTS 기병 적군",
+   "width": 880,
+   "height": 880
+  },
+  {
+   "id": "rts_cav_enemy_back",
+   "seed": 3938343726,
+   "prompt": "(1boy:1.15), male focus, adult man, cavalry rider sitting on a brown horse, steel helmet, long lance, dark crimson and black clothing, crimson cloth horse cloth, full horse and rider visible, long legs, wide shot, adult, tall, realistic body proportions, detailed face, from behind, back view, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 RTS 기병 적군",
+   "width": 880,
+   "height": 880
+  }
+ ]
+}
