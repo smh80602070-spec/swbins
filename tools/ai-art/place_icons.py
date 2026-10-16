@@ -6,7 +6,7 @@
   content/<키>.png           알맹이만(투명) — 등급이 바뀌는 곳(무기 희귀도)에서 틀을 따로 얹을 때
   frames/grade0~4.png        등급 틀 128px
   license/<키>.license.json  항목마다 출처(AI = gen.py 기록, 코드 생성 = icon_pack.py CC0)
-  map.json                   "<판>:<종류>:<id>" → {key, grade, mode, name} (판·종류 이름은 인벤토리와 같다 — 사가만리 특산물·성유물처럼 id 가 겹쳐서 종류까지 넣는다)
+  map.json                   "<판>:<종류>:<id>" → {key, grade, mode, name} · K-0118 UI 아이콘은 "shared:ui:<lucide>"·"<판>:skill|job:<id>"·"saga-realm:mapmark:<뜻>"(group 칸) (판·종류 이름은 인벤토리와 같다 — 사가만리 특산물·성유물처럼 id 가 겹쳐서 종류까지 넣는다)
 이름 정책: 표시 글자(name)는 각 판 데이터의 가명 그대로 읽어 온다 — 여기서 새로 짓지 않는다.
 """
 import datetime
@@ -84,11 +84,50 @@ for e in plan['entries']:
         continue
     key = e['key']
     mp[k] = {'key': key, 'grade': grade_of[key], 'mode': e['mode'], 'name': e['name']}
+# ── K-0118 UI 아이콘(ui·skill·job·mapmark) ──
+# 그림이 있는 곳: _out/k118_pack_ui(make_ui_icons.py 코드 생성 28) · _out/k118_pack(icon_pack.py — SD 그림체 C, 판정기가 고른 1장).
+# 둘 다 로컬 생성물이라 다른 PC 엔 없다 → 표(map.json)는 **정본 폴더에 그림이 있는 키**로 만든다(여기서 다시 돌려도 안 빠진다).
+K118 = json.load(open(os.path.join(HERE, 'data', 'k118_ui_icons.json'), encoding='utf-8'))['items']
+K118_PICK = os.path.join(HERE, '_out', 'k118_pick')
+for src, mode in ((os.path.join(HERE, '_out', 'k118_pack_ui'), 'code'), (os.path.join(HERE, '_out', 'k118_pack'), 'ai')):
+    if not os.path.isdir(src):
+        continue
+    for it in K118:
+        key = it['id']
+        if not os.path.exists(os.path.join(src, 'icon128' if mode == 'code' else 'icon', key + '_g0.png')):
+            continue
+        for sub, dst in (('icon128' if mode == 'code' else 'icon', 'icon128'), ('icon64', 'icon64')):
+            shutil.copyfile(os.path.join(src, sub, key + '_g0.png'), os.path.join(out, dst, key + '_g0.png'))
+        c = os.path.join(src, 'content', key + '.png')
+        if os.path.exists(c):
+            shutil.copyfile(c, os.path.join(out, 'content', key + '.png'))
+        lic = None
+        for cand in (os.path.join(src, key + '.license.json'), os.path.join(K118_PICK, key + '.license.json')):
+            if os.path.exists(cand):
+                lic = json.load(open(cand, encoding='utf-8'))
+                break
+        if lic is None and mode == 'ai':
+            import glob as _g
+            hits = sorted(_g.glob(os.path.join(K118_PICK, key + '_v*.license.json')))
+            lic = json.load(open(hits[0], encoding='utf-8')) if hits else {'license': 'UNKNOWN — 출처 파일 없음'}
+        lic['id'] = key
+        lic['ticket'] = 'K-0118'
+        lic['placed_by'] = 'tools/ai-art/place_icons.py'
+        json.dump(lic, open(os.path.join(out, 'license', key + '.license.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+k118_n = 0
+for it in K118:
+    key = it['id']
+    if not os.path.exists(os.path.join(out, 'icon128', key + '_g0.png')):
+        continue
+    k = '%s:%s:%s' % (it['game'], it['kind'], it['src'])
+    mp[k] = {'key': key, 'grade': 0, 'mode': 'code' if it['group'] == 'ui' else 'ai', 'name': it['name'], 'group': it['group']}
+    k118_n += 1
+
 doc = {'note': 'tools/ai-art/place_icons.py 가 만든 표 — 손으로 고치지 않는다. K-0035. 키 = 그림 한 장(같은 물건은 한 키를 함께 쓴다), skip = 상태 값이라 그림 없음.',
        'date': today, 'size': {'icon128': 128, 'icon64': 64}, 'grades': {'0': '보통', '1': '마법', '2': '희귀', '3': '세트', '4': '유니크'},
-       'counts': {'entries': len(mp), 'keys': len(grade_of), 'skip': sum(1 for v in mp.values() if v['mode'] == 'skip')},
+       'counts': {'entries': len(mp), 'keys': len(grade_of) + k118_n, 'skip': sum(1 for v in mp.values() if v['mode'] == 'skip'), 'k118': k118_n},
        'entries': mp}
 json.dump(doc, open(os.path.join(out, 'map.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 bad = sorted(k for k, v in report.items() if not v['ok'])
-print('놓음 %d키 · 항목 %d · 빠진 파일 %d · 점검 실패(놓긴 함) %s' % (len(grade_of), len(mp), len(missing), bad))
+print('놓음 %d키 · K-0118 %d/%d · 항목 %d · 빠진 파일 %d · 점검 실패(놓긴 함) %s' % (len(grade_of), k118_n, len(K118), len(mp), len(missing), bad))
 sys.exit(1 if missing else 0)

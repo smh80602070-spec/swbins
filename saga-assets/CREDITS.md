@@ -5,7 +5,7 @@
 ## 필수 표기 (저작자 표시)
 
 - AvatarSample_A — pixiv VRoid Project (VRM `creditNotation: required`)
-- © Poly by Google, CC-BY 3.0 <https://creativecommons.org/licenses/by/3.0/> — Bear.glb("Black bear"), Boar.glb, Crane.glb("Sandhill crane"), Elephant, Elephant (`models/standin/Elephant.glb`), Elephant.glb, Mesh_Crow.gltf+.bin, Tex_Crow.webp, Monkey.glb, Owl.glb, Paint Brush, Panda.glb, Pond, Tiger.glb, fan · brush(공유), rabbit.png · duck.png
+- © Poly by Google, CC-BY 3.0 <https://creativecommons.org/licenses/by/3.0/> — Bear.glb("Black bear"), Boar.glb, Crane.glb("Sandhill crane"), Elephant, Elephant (`models/standin/Elephant.glb`), Elephant.glb, Mesh_Crow.gltf+.bin, Tex_Crow.webp, Monkey.glb, Owl.glb, Paint Brush, Panda.glb, Pond, Tiger.glb, fan · brush(공유)
 - © CreativeTechLab, CC-BY 3.0 — Helmet, helmet
 - © Michael Fuchs, CC-BY 3.0 — Viking Helmet, gapju(대역: Viking Helmet)
 - © (개인 업로더, poly.pizza), CC-BY 3.0 — cape
@@ -36,6 +36,7 @@
 | gen.py | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1699 |
 | remote3d | microsoft/TRELLIS-image-large | MIT | 225 |
 | icon_pack.py | none | CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음) | 76 |
+| make_ui_icons.py | none | CC0-1.0 (코드 생성 — 24격자 기하 도형, 외부 그림·Lucide 경로 없음) | 28 |
 | gen.py (ComfyUI) | z-image-turbo | Apache-2.0 | 110 |
 | make_map.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 195 |
 | build_monster.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 335 |
@@ -88,6 +89,6 @@
 
 ## 출처 문서(ASSET_LICENSES·ASSET_GUIDE) 요약
 
-절 264개 — 라이선스 낱말별: CC0 193, Kenney(CC0) 39, CC-BY 29, OpenRAIL 15, MIT 13, Mixamo 11, Apache-2.0 3, GPL 2, OFL 2
-낱말을 못 찾은 절(미상) 48개 — `credits.json` 의 `doc_sections.unknown` 참고.
+절 261개 — 라이선스 낱말별: CC0 187, Kenney(CC0) 39, CC-BY 29, OpenRAIL 15, MIT 13, Mixamo 11, Apache-2.0 3, GPL 2, OFL 2
+낱말을 못 찾은 절(미상) 49개 — `credits.json` 의 `doc_sections.unknown` 참고.
 

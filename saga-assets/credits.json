@@ -19,8 +19,7 @@
     "Panda.glb",
     "Pond",
     "Tiger.glb",
-    "fan · brush(공유)",
-    "rabbit.png · duck.png"
+    "fan · brush(공유)"
    ],
    "where": [
     "saga-web/saga-dungeon/assets/ASSET_LICENSES.md",
@@ -106,8 +105,7 @@
   {
    "text": "| **라이선스** | **CC-BY 3.0** — 저작자 표시 필요 |",
    "where": [
-    "saga-web/saga-dungeon/assets/ASSET_LICENSES.md",
-    "saga-web/saga-forest/assets/ASSET_LICENSES.md"
+    "saga-web/saga-dungeon/assets/ASSET_LICENSES.md"
    ]
   },
   {
@@ -323,6 +321,15 @@
     "saga-godot/assets/icons/license",
     "saga-unity/Assets/SagaCore/Resources/Icons/license",
     "saga-web/shared/assets/icons/license"
+   ]
+  },
+  {
+   "tool": "make_ui_icons.py",
+   "model": "none",
+   "license": "CC0-1.0 (코드 생성 — 24격자 기하 도형, 외부 그림·Lucide 경로 없음)",
+   "count": 28,
+   "where": [
+    "saga-assets/icons/license"
    ]
   },
   {
@@ -835,9 +842,9 @@
   }
  ],
  "doc_sections": {
-  "total": 264,
+  "total": 261,
   "by_license": {
-   "CC0": 193,
+   "CC0": 187,
    "MIT": 13,
    "CC-BY": 29,
    "Kenney(CC0)": 39,
@@ -931,6 +938,11 @@
    {
     "doc": "saga-web/saga-dungeon/assets/ASSET_LICENSES.md",
     "section": "VRM 애니메 아바타 가공 (2026-09-20)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-dungeon/assets/ASSET_LICENSES.md",
+    "section": "도감(펫) 초상 — 사가만리 `beast_*.png` 16장으로 일부 채움 (2026-09-22) — 2026-10-16 자체 렌더로 바뀜(K-0114)",
     "licenses": []
    },
    {

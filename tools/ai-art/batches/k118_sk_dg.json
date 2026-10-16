@@ -1,0 +1,861 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k118_sk_dg",
+ "kit": {
+  "spec": "icon",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery",
+  "variants": 2
+ },
+ "items": [
+  {
+   "id": "sk_dg_a_pierce",
+   "seed": 1023764114,
+   "prompt": "(bullseye target pierced:1.15), arrow, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 관통사(貫通射)"
+  },
+  {
+   "id": "sk_dg_a_multi",
+   "seed": 4048403064,
+   "prompt": "(bow and arrow:1.15), flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 연사(連射)"
+  },
+  {
+   "id": "sk_dg_a_rain",
+   "seed": 3977031286,
+   "prompt": "(rain of arrows from sky:1.15), radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 시우(矢雨)"
+  },
+  {
+   "id": "sk_dg_a_fire",
+   "seed": 1939887599,
+   "prompt": "(flames:1.15), arrow, fire, burning, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 화시(火矢)"
+  },
+  {
+   "id": "sk_dg_a_ice",
+   "seed": 1079760164,
+   "prompt": "(snowflake ice crystal:1.15), arrow, ice, frost, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 빙시(氷矢)"
+  },
+  {
+   "id": "sk_dg_a_storm",
+   "seed": 2063137161,
+   "prompt": "(lightning bolt:1.15), arrow, lightning, electric sparks, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 뇌시(雷矢)"
+  },
+  {
+   "id": "sk_dg_a_eye",
+   "seed": 1833011489,
+   "prompt": "(hawk eye glowing:1.15), round emblem medallion, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 매의 눈(鷹眼)"
+  },
+  {
+   "id": "sk_dg_a_reach",
+   "seed": 19710511,
+   "prompt": "(long bow:1.15), round emblem medallion, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 장궁(長弓)"
+  },
+  {
+   "id": "sk_dg_a_swift",
+   "seed": 3094844311,
+   "prompt": "(gust of wind trail:1.15), round emblem medallion, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 질보(疾步)"
+  },
+  {
+   "id": "sk_dg_w_whirl",
+   "seed": 1824724971,
+   "prompt": "(whirlwind spiral:1.15), sword, crescent slash arc, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 회전참(回轉斬)"
+  },
+  {
+   "id": "sk_dg_w_cleave",
+   "seed": 1007386560,
+   "prompt": "(heavy war hammer:1.15), sword, crescent slash arc, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 분쇄(粉碎)"
+  },
+  {
+   "id": "sk_dg_w_quake",
+   "seed": 4069952389,
+   "prompt": "(explosion burst:1.15), sword, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 진각(震脚)"
+  },
+  {
+   "id": "sk_dg_w_dash",
+   "seed": 2638193728,
+   "prompt": "(gust of wind trail:1.15), sword, speed lines, forward dash trail, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 돌진(突進)"
+  },
+  {
+   "id": "sk_dg_w_leap",
+   "seed": 98857736,
+   "prompt": "(leaping motion arc:1.15), sword, speed lines, forward dash trail, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 도약(跳躍)"
+  },
+  {
+   "id": "sk_dg_w_rage",
+   "seed": 2140318857,
+   "prompt": "(red rage aura:1.15), rising aura, upward glow, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 광분(狂奮)"
+  },
+  {
+   "id": "sk_dg_w_tough",
+   "seed": 835721740,
+   "prompt": "(shield:1.15), round emblem medallion, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 단련(鍛鍊)"
+  },
+  {
+   "id": "sk_dg_w_mastery",
+   "seed": 1126671123,
+   "prompt": "(crossed swords:1.15), round emblem medallion, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 병기술(兵器術)"
+  },
+  {
+   "id": "sk_dg_w_second",
+   "seed": 1707531853,
+   "prompt": "(blood drop:1.15), ghostly blue spirit flame, round emblem medallion, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 이혼대법(離魂)"
+  },
+  {
+   "id": "sk_dg_s_fire",
+   "seed": 798640990,
+   "prompt": "(flames:1.15), paper talisman, fire, burning, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 화탄(火彈)"
+  },
+  {
+   "id": "sk_dg_s_blaze",
+   "seed": 496285981,
+   "prompt": "(volcano eruption:1.15), paper talisman, fire, burning, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 염화(炎火)"
+  },
+  {
+   "id": "sk_dg_s_meteor",
+   "seed": 2329396809,
+   "prompt": "(falling meteor:1.15), paper talisman, radiant starlight, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 유성(流星)"
+  },
+  {
+   "id": "sk_dg_s_ice",
+   "seed": 2962742593,
+   "prompt": "(snowflake ice crystal:1.15), paper talisman, ice, frost, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 빙탄(氷彈)"
+  },
+  {
+   "id": "sk_dg_s_frost",
+   "seed": 240538389,
+   "prompt": "(ice block shards:1.15), paper talisman, ice, frost, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 한파(寒波)"
+  },
+  {
+   "id": "sk_dg_s_bolt",
+   "seed": 2623925352,
+   "prompt": "(lightning bolt:1.15), paper talisman, lightning, electric sparks, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 뇌격(雷擊)"
+  },
+  {
+   "id": "sk_dg_s_wave",
+   "seed": 1614736329,
+   "prompt": "(water wave:1.15), paper talisman, golden qi aura, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 기공파(氣功波)"
+  },
+  {
+   "id": "sk_dg_s_wit",
+   "seed": 3450483554,
+   "prompt": "(glowing crystal mind orb:1.15), round emblem medallion, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 명민(明敏)"
+  },
+  {
+   "id": "sk_dg_s_focus",
+   "seed": 1550752116,
+   "prompt": "(bullseye target pierced:1.15), round emblem medallion, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 집중(集中)"
+  },
+  {
+   "id": "sk_dg_m_rally",
+   "seed": 704261903,
+   "prompt": "(red war flag:1.15), golden qi aura, rising aura, upward glow, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 사기(士氣)"
+  },
+  {
+   "id": "sk_dg_m_guard",
+   "seed": 602338848,
+   "prompt": "(shield:1.15), rising aura, upward glow, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 호신강기(護身)"
+  },
+  {
+   "id": "sk_dg_m_banner",
+   "seed": 200445519,
+   "prompt": "(crossed war banners:1.15), rising aura, upward glow, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 독전(督戰)"
+  },
+  {
+   "id": "sk_dg_m_smite",
+   "seed": 3683271108,
+   "prompt": "(armored gauntlet fist:1.15), spear, golden qi aura, crescent slash arc, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 기격(氣擊)"
+  },
+  {
+   "id": "sk_dg_m_ring",
+   "seed": 3612885392,
+   "prompt": "(glowing energy ring:1.15), spear, golden qi aura, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 기환(氣環)"
+  },
+  {
+   "id": "sk_dg_m_heal",
+   "seed": 3822431348,
+   "prompt": "(healing herb leaves:1.15), soft healing light, sparkles, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 치유(治癒)"
+  },
+  {
+   "id": "sk_dg_m_res",
+   "seed": 1888194727,
+   "prompt": "(yin yang symbol:1.15), golden qi aura, round emblem medallion, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 기수련(氣修)"
+  },
+  {
+   "id": "sk_dg_m_wall",
+   "seed": 3344734078,
+   "prompt": "(stone brick wall:1.15), round emblem medallion, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 철벽(鐵壁)"
+  },
+  {
+   "id": "sk_dg_m_lead",
+   "seed": 2427679355,
+   "prompt": "(golden crown:1.15), round emblem medallion, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 통솔(統率)"
+  },
+  {
+   "id": "sk_dg_y_shade",
+   "seed": 2399409788,
+   "prompt": "(two shadow silhouettes:1.15), mirror image, summoning circle glowing, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 분신술(分身)"
+  },
+  {
+   "id": "sk_dg_y_horde",
+   "seed": 3741385396,
+   "prompt": "(skull:1.15), ghostly blue spirit flame, summoning circle glowing, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 음병(陰兵)"
+  },
+  {
+   "id": "sk_dg_y_golem",
+   "seed": 668658206,
+   "prompt": "(clay golem statue:1.15), summoning circle glowing, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 토우(土偶)"
+  },
+  {
+   "id": "sk_dg_y_curse",
+   "seed": 2041568807,
+   "prompt": "(spider web binding:1.15), dark binding sigil, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 주박(呪縛)"
+  },
+  {
+   "id": "sk_dg_y_wither",
+   "seed": 2764210182,
+   "prompt": "(poison caterpillar:1.15), paper talisman, green poison mist, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 고독(蠱毒)"
+  },
+  {
+   "id": "sk_dg_y_doom",
+   "seed": 3976328797,
+   "prompt": "(skull and crossbones poison:1.15), dark binding sigil, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 멸(滅)"
+  },
+  {
+   "id": "sk_dg_y_leech",
+   "seed": 2132040060,
+   "prompt": "(blood drop:1.15), round emblem medallion, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 흡정(吸精)"
+  },
+  {
+   "id": "sk_dg_y_hex",
+   "seed": 117939655,
+   "prompt": "(crystal ball:1.15), round emblem medallion, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 주술(呪術)"
+  },
+  {
+   "id": "sk_dg_y_spirit",
+   "seed": 3830941381,
+   "prompt": "(sparkles:1.15), round emblem medallion, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 정신(精神)"
+  },
+  {
+   "id": "sk_dg_a_chain",
+   "seed": 2578675183,
+   "prompt": "(chain links:1.15), arrow, energy arcs jumping between points, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 연환시(連環矢)"
+  },
+  {
+   "id": "sk_dg_a_venom",
+   "seed": 1622738681,
+   "prompt": "(poison vial:1.15), arrow, green poison mist, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 독시(毒矢)"
+  },
+  {
+   "id": "sk_dg_a_cripple",
+   "seed": 3377096001,
+   "prompt": "(cracked impact mark:1.15), dark binding sigil, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 파훼시(破毀矢)"
+  },
+  {
+   "id": "sk_dg_w_chain",
+   "seed": 302133709,
+   "prompt": "(chain links:1.15), sword, energy arcs jumping between points, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 연환격(連環擊)"
+  },
+  {
+   "id": "sk_dg_w_blaze_dash",
+   "seed": 4261344416,
+   "prompt": "(flames:1.15), sword, fire, burning, speed lines, forward dash trail, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 화염돌진(火焰突進)"
+  },
+  {
+   "id": "sk_dg_w_palm",
+   "seed": 3871830478,
+   "prompt": "(gauntlet punch:1.15), sword, lightning, electric sparks, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 벽력장(霹靂掌)"
+  },
+  {
+   "id": "sk_dg_s_chainfire",
+   "seed": 4085316064,
+   "prompt": "(chain links:1.15), paper talisman, fire, burning, energy arcs jumping between points, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 연쇄화염(連鎖火焰)"
+  },
+  {
+   "id": "sk_dg_s_fan",
+   "seed": 3447306817,
+   "prompt": "(folding fan:1.15), paper talisman, swirling wind, crescent slash arc, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 선풍(扇風)"
+  },
+  {
+   "id": "sk_dg_s_spirit",
+   "seed": 1087960050,
+   "prompt": "(snowflake ice crystal:1.15), ice, frost, summoning circle glowing, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 빙정소환(氷精召喚)"
+  },
+  {
+   "id": "sk_dg_m_chain",
+   "seed": 3632923373,
+   "prompt": "(chain links:1.15), spear, golden qi aura, energy arcs jumping between points, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 연환기격(連環氣擊)"
+  },
+  {
+   "id": "sk_dg_m_press",
+   "seed": 1606464431,
+   "prompt": "(roaring tiger emblem:1.15), dark binding sigil, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 위압(威壓)"
+  },
+  {
+   "id": "sk_dg_m_charge",
+   "seed": 3455987233,
+   "prompt": "(gust of wind trail:1.15), spear, golden qi aura, speed lines, forward dash trail, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 기신보(氣身步)"
+  },
+  {
+   "id": "sk_dg_y_chain",
+   "seed": 3488362345,
+   "prompt": "(chain links:1.15), paper talisman, green poison mist, energy arcs jumping between points, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 독쇄(毒鎖)"
+  },
+  {
+   "id": "sk_dg_y_ghoststrike",
+   "seed": 910051157,
+   "prompt": "(ghost wisp:1.15), paper talisman, ghostly blue spirit flame, crescent slash arc, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 음령타(陰靈打)"
+  },
+  {
+   "id": "sk_dg_y_possess",
+   "seed": 3376637305,
+   "prompt": "(candle flame:1.15), ghostly blue spirit flame, rising aura, upward glow, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 귀합(鬼合)"
+  },
+  {
+   "id": "sk_dg_a_flourish",
+   "seed": 2074481939,
+   "prompt": "(staff spin:1.15), arrow, crescent slash arc, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 궁신무(弓身舞)"
+  },
+  {
+   "id": "sk_dg_a_speedy",
+   "seed": 3188162608,
+   "prompt": "(winged boots:1.15), rising aura, upward glow, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 속사태세(速射態勢)"
+  },
+  {
+   "id": "sk_dg_a_hawk",
+   "seed": 3531702114,
+   "prompt": "(hawk:1.15), summoning circle glowing, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 응사소환(鷹使召喚)"
+  },
+  {
+   "id": "sk_dg_w_throw",
+   "seed": 910714393,
+   "prompt": "(bullseye target pierced:1.15), sword, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 투창(投槍)"
+  },
+  {
+   "id": "sk_dg_w_regen",
+   "seed": 2342545247,
+   "prompt": "(glowing heart:1.15), soft healing light, sparkles, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 회생(回生)"
+  },
+  {
+   "id": "sk_dg_w_hound",
+   "seed": 2710160922,
+   "prompt": "(war hound:1.15), summoning circle glowing, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 군견소환(軍犬召喚)"
+  },
+  {
+   "id": "sk_dg_s_blink",
+   "seed": 2139076177,
+   "prompt": "(lightning bolt:1.15), paper talisman, speed lines, forward dash trail, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 축지(縮地)"
+  },
+  {
+   "id": "sk_dg_s_hex",
+   "seed": 2506414995,
+   "prompt": "(spider web binding:1.15), dark binding sigil, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 저주(咀呪)"
+  },
+  {
+   "id": "sk_dg_s_insight",
+   "seed": 2293705315,
+   "prompt": "(glowing crystal mind orb:1.15), rising aura, upward glow, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 심득(心得)"
+  },
+  {
+   "id": "sk_dg_m_javelin",
+   "seed": 1482582280,
+   "prompt": "(bullseye target pierced:1.15), spear, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 표창(標槍)"
+  },
+  {
+   "id": "sk_dg_m_reserve",
+   "seed": 2885681675,
+   "prompt": "(shield:1.15), summoning circle glowing, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 원군소환(援軍召喚)"
+  },
+  {
+   "id": "sk_dg_m_precision",
+   "seed": 8708389,
+   "prompt": "(bullseye target pierced:1.15), rising aura, upward glow, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 필중(必中)"
+  },
+  {
+   "id": "sk_dg_y_soulbolt",
+   "seed": 1953545373,
+   "prompt": "(crystal ball:1.15), paper talisman, ghostly blue spirit flame, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 혼탄(魂彈)"
+  },
+  {
+   "id": "sk_dg_y_specter",
+   "seed": 3038360140,
+   "prompt": "(ghost wisp:1.15), paper talisman, ghostly blue spirit flame, speed lines, forward dash trail, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 귀보(鬼步)"
+  },
+  {
+   "id": "sk_dg_y_soulmend",
+   "seed": 532605896,
+   "prompt": "(glowing heart:1.15), ghostly blue spirit flame, soft healing light, sparkles, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 혼백치유(魂魄治癒)"
+  },
+  {
+   "id": "sk_dg_a_dashshot",
+   "seed": 1858371724,
+   "prompt": "(gust of wind trail:1.15), arrow, speed lines, forward dash trail, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 질주사(疾走射)"
+  },
+  {
+   "id": "sk_dg_a_firstaid",
+   "seed": 239233003,
+   "prompt": "(glowing heart:1.15), soft healing light, sparkles, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 응급처치(應急處置)"
+  },
+  {
+   "id": "sk_dg_a_gale",
+   "seed": 2722817279,
+   "prompt": "(whirlwind spiral:1.15), arrow, golden qi aura, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 기환시(氣環矢)"
+  },
+  {
+   "id": "sk_dg_w_intimidate",
+   "seed": 2124386963,
+   "prompt": "(roaring tiger emblem:1.15), dark binding sigil, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 위해(威嚇)"
+  },
+  {
+   "id": "sk_dg_w_frostcleave",
+   "seed": 1207323461,
+   "prompt": "(ice block shards:1.15), sword, ice, frost, crescent slash arc, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 빙인참(氷刃斬)"
+  },
+  {
+   "id": "sk_dg_w_thunderlance",
+   "seed": 2622441895,
+   "prompt": "(lightning bolt:1.15), sword, lightning, electric sparks, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 벽력창(霹靂槍)"
+  },
+  {
+   "id": "sk_dg_s_restore",
+   "seed": 3356050080,
+   "prompt": "(glowing heart:1.15), golden qi aura, soft healing light, sparkles, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 축기회복(蓄氣回復)"
+  },
+  {
+   "id": "sk_dg_s_plague",
+   "seed": 1844315166,
+   "prompt": "(plague spores:1.15), paper talisman, green poison mist, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 역병(疫病)"
+  },
+  {
+   "id": "sk_dg_s_venombolt",
+   "seed": 3191567898,
+   "prompt": "(skull and crossbones poison:1.15), paper talisman, green poison mist, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 독무탄(毒霧彈)"
+  },
+  {
+   "id": "sk_dg_m_flamesaber",
+   "seed": 1103293182,
+   "prompt": "(flames:1.15), spear, fire, burning, crescent slash arc, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 화도(火刀)"
+  },
+  {
+   "id": "sk_dg_m_venomfield",
+   "seed": 545635758,
+   "prompt": "(skull and crossbones poison:1.15), spear, green poison mist, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 독진(毒陣)"
+  },
+  {
+   "id": "sk_dg_m_frostcharge",
+   "seed": 3639918948,
+   "prompt": "(ice block shards:1.15), spear, ice, frost, speed lines, forward dash trail, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 빙보(氷步)"
+  },
+  {
+   "id": "sk_dg_y_thunderdoom",
+   "seed": 1961038477,
+   "prompt": "(lightning bolt:1.15), paper talisman, lightning, electric sparks, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 뇌쇄(雷殺)"
+  },
+  {
+   "id": "sk_dg_y_hellstrike",
+   "seed": 2768415371,
+   "prompt": "(flames:1.15), paper talisman, fire, burning, crescent slash arc, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 화령타(火靈打)"
+  },
+  {
+   "id": "sk_dg_y_frostchain",
+   "seed": 3520566896,
+   "prompt": "(ice block shards:1.15), paper talisman, ice, frost, energy arcs jumping between points, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 빙쇄(氷鎖)"
+  },
+  {
+   "id": "sk_dg_a_emp_bolt",
+   "seed": 1141602952,
+   "prompt": "(violet energy orb:1.15), arrow, futuristic violet neon energy, sci-fi, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 전자시(電子矢)"
+  },
+  {
+   "id": "sk_dg_a_emp_nova",
+   "seed": 3006452737,
+   "prompt": "(explosion burst:1.15), arrow, futuristic violet neon energy, sci-fi, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 전자충격파(電子衝擊波)"
+  },
+  {
+   "id": "sk_dg_a_emp_chain",
+   "seed": 2521283937,
+   "prompt": "(satellite:1.15), arrow, energy arcs jumping between points, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 궤도연환시(軌道連環矢)"
+  },
+  {
+   "id": "sk_dg_w_emp_swing",
+   "seed": 1586982116,
+   "prompt": "(violet energy orb:1.15), sword, futuristic violet neon energy, sci-fi, crescent slash arc, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 전자인(電子刃)"
+  },
+  {
+   "id": "sk_dg_w_emp_dash",
+   "seed": 1836767750,
+   "prompt": "(lightning bolt:1.15), sword, futuristic violet neon energy, sci-fi, speed lines, forward dash trail, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 광속돌격(光速突擊)"
+  },
+  {
+   "id": "sk_dg_w_emp_nova",
+   "seed": 823183189,
+   "prompt": "(explosion burst:1.15), sword, futuristic violet neon energy, sci-fi, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 전자진(電子陣)"
+  },
+  {
+   "id": "sk_dg_s_emp_bolt",
+   "seed": 1288887072,
+   "prompt": "(violet energy orb:1.15), paper talisman, futuristic violet neon energy, sci-fi, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 입자탄(粒子彈)"
+  },
+  {
+   "id": "sk_dg_s_emp_nova",
+   "seed": 2644948028,
+   "prompt": "(black hole vortex:1.15), paper talisman, futuristic violet neon energy, sci-fi, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 특이점(特異點)"
+  },
+  {
+   "id": "sk_dg_s_emp_chain",
+   "seed": 4007256328,
+   "prompt": "(chain links:1.15), paper talisman, futuristic violet neon energy, sci-fi, energy arcs jumping between points, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 양자쇄(量子鎖)"
+  },
+  {
+   "id": "sk_dg_m_emp_swing",
+   "seed": 2534757612,
+   "prompt": "(violet energy orb:1.15), spear, futuristic violet neon energy, sci-fi, crescent slash arc, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 전자검(電子劍)"
+  },
+  {
+   "id": "sk_dg_m_emp_bolt",
+   "seed": 3154242853,
+   "prompt": "(satellite:1.15), spear, futuristic violet neon energy, sci-fi, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 위성포(衛星砲)"
+  },
+  {
+   "id": "sk_dg_m_emp_nova",
+   "seed": 3658199510,
+   "prompt": "(explosion burst:1.15), spear, futuristic violet neon energy, sci-fi, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 전자결계(電磁結界)"
+  },
+  {
+   "id": "sk_dg_y_emp_chain",
+   "seed": 3467109482,
+   "prompt": "(antenna signal waves:1.15), paper talisman, futuristic violet neon energy, sci-fi, energy arcs jumping between points, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 유령신호(幽靈信號)"
+  },
+  {
+   "id": "sk_dg_y_emp_bolt",
+   "seed": 1018422648,
+   "prompt": "(violet energy orb:1.15), paper talisman, futuristic violet neon energy, sci-fi, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 환영입자탄(幻影粒子彈)"
+  },
+  {
+   "id": "sk_dg_y_emp_nova",
+   "seed": 4096172283,
+   "prompt": "(whirlwind spiral:1.15), paper talisman, futuristic violet neon energy, sci-fi, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 차원진동(次元振動)"
+  },
+  {
+   "id": "sk_dg_a_flamedance",
+   "seed": 3298971145,
+   "prompt": "(flames:1.15), arrow, fire, burning, crescent slash arc, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 염인무(炎刃舞)"
+  },
+  {
+   "id": "sk_dg_a_venomchain",
+   "seed": 2073747552,
+   "prompt": "(chain links:1.15), arrow, green poison mist, energy arcs jumping between points, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 독쇄시(毒鎖矢)"
+  },
+  {
+   "id": "sk_dg_a_firerain",
+   "seed": 1691247830,
+   "prompt": "(volcano eruption:1.15), arrow, fire, burning, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 화우(火雨)"
+  },
+  {
+   "id": "sk_dg_w_blastfire",
+   "seed": 3327060498,
+   "prompt": "(volcano eruption:1.15), sword, fire, burning, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 폭염진(爆炎陣)"
+  },
+  {
+   "id": "sk_dg_w_firelance",
+   "seed": 2911647144,
+   "prompt": "(flames:1.15), sword, fire, burning, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 화창(火槍)"
+  },
+  {
+   "id": "sk_dg_w_frostchain",
+   "seed": 2675330662,
+   "prompt": "(chain links:1.15), sword, ice, frost, energy arcs jumping between points, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 빙격연환(氷擊連環)"
+  },
+  {
+   "id": "sk_dg_s_thundercage",
+   "seed": 2769491705,
+   "prompt": "(lightning bolt:1.15), paper talisman, lightning, electric sparks, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 뇌옥(雷獄)"
+  },
+  {
+   "id": "sk_dg_s_flamefan",
+   "seed": 4179076984,
+   "prompt": "(folding fan:1.15), paper talisman, fire, burning, crescent slash arc, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 화선(火扇)"
+  },
+  {
+   "id": "sk_dg_s_chichain",
+   "seed": 1031429684,
+   "prompt": "(chain links:1.15), paper talisman, golden qi aura, energy arcs jumping between points, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 기쇄(氣鎖)"
+  },
+  {
+   "id": "sk_dg_m_firestrike",
+   "seed": 1820162220,
+   "prompt": "(flames:1.15), spear, fire, burning, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 화표(火標)"
+  },
+  {
+   "id": "sk_dg_m_firestorm",
+   "seed": 2966462310,
+   "prompt": "(volcano eruption:1.15), spear, fire, burning, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 화진(火陣)"
+  },
+  {
+   "id": "sk_dg_m_frostblade",
+   "seed": 1383253909,
+   "prompt": "(ice block shards:1.15), spear, ice, frost, crescent slash arc, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 빙인(氷刃)"
+  },
+  {
+   "id": "sk_dg_y_poisonbolt",
+   "seed": 2248760790,
+   "prompt": "(skull and crossbones poison:1.15), paper talisman, green poison mist, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 독혼탄(毒魂彈)"
+  },
+  {
+   "id": "sk_dg_y_frostspirit",
+   "seed": 385036255,
+   "prompt": "(ice block shards:1.15), paper talisman, ice, frost, crescent slash arc, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 빙령타(氷靈打)"
+  },
+  {
+   "id": "sk_dg_y_infernoring",
+   "seed": 4060695154,
+   "prompt": "(volcano eruption:1.15), paper talisman, fire, burning, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 화염귀진(火焰鬼陣)"
+  }
+ ]
+}

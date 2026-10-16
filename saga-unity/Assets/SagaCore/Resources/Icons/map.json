@@ -1,6 +1,6 @@
 {
  "note": "tools/ai-art/place_icons.py 가 만든 표 — 손으로 고치지 않는다. K-0035. 키 = 그림 한 장(같은 물건은 한 키를 함께 쓴다), skip = 상태 값이라 그림 없음.",
- "date": "2026-10-03",
+ "date": "2026-10-17",
  "size": {
   "icon128": 128,
   "icon64": 64
@@ -13,9 +13,10 @@
   "4": "유니크"
  },
  "counts": {
-  "entries": 353,
-  "keys": 325,
-  "skip": 4
+  "entries": 381,
+  "keys": 353,
+  "skip": 4,
+  "k118": 28
  },
  "entries": {
   "saga-dungeon:equip:w_hwando": {
@@ -2127,6 +2128,202 @@
    "grade": 2,
    "mode": "ai",
    "name": "갯바람 작살"
+  },
+  "shared:ui:award": {
+   "key": "ui_award",
+   "grade": 0,
+   "mode": "code",
+   "name": "award",
+   "group": "ui"
+  },
+  "shared:ui:backpack": {
+   "key": "ui_backpack",
+   "grade": 0,
+   "mode": "code",
+   "name": "backpack",
+   "group": "ui"
+  },
+  "shared:ui:book-open": {
+   "key": "ui_book_open",
+   "grade": 0,
+   "mode": "code",
+   "name": "book-open",
+   "group": "ui"
+  },
+  "shared:ui:bot": {
+   "key": "ui_bot",
+   "grade": 0,
+   "mode": "code",
+   "name": "bot",
+   "group": "ui"
+  },
+  "shared:ui:box": {
+   "key": "ui_box",
+   "grade": 0,
+   "mode": "code",
+   "name": "box",
+   "group": "ui"
+  },
+  "shared:ui:circle-question-mark": {
+   "key": "ui_circle_question_mark",
+   "grade": 0,
+   "mode": "code",
+   "name": "circle-question-mark",
+   "group": "ui"
+  },
+  "shared:ui:clipboard-list": {
+   "key": "ui_clipboard_list",
+   "grade": 0,
+   "mode": "code",
+   "name": "clipboard-list",
+   "group": "ui"
+  },
+  "shared:ui:coins": {
+   "key": "ui_coins",
+   "grade": 0,
+   "mode": "code",
+   "name": "coins",
+   "group": "ui"
+  },
+  "shared:ui:compass": {
+   "key": "ui_compass",
+   "grade": 0,
+   "mode": "code",
+   "name": "compass",
+   "group": "ui"
+  },
+  "shared:ui:ellipsis": {
+   "key": "ui_ellipsis",
+   "grade": 0,
+   "mode": "code",
+   "name": "ellipsis",
+   "group": "ui"
+  },
+  "shared:ui:flag": {
+   "key": "ui_flag",
+   "grade": 0,
+   "mode": "code",
+   "name": "flag",
+   "group": "ui"
+  },
+  "shared:ui:footprints": {
+   "key": "ui_footprints",
+   "grade": 0,
+   "mode": "code",
+   "name": "footprints",
+   "group": "ui"
+  },
+  "shared:ui:ham": {
+   "key": "ui_ham",
+   "grade": 0,
+   "mode": "code",
+   "name": "ham",
+   "group": "ui"
+  },
+  "shared:ui:hammer": {
+   "key": "ui_hammer",
+   "grade": 0,
+   "mode": "code",
+   "name": "hammer",
+   "group": "ui"
+  },
+  "shared:ui:mail": {
+   "key": "ui_mail",
+   "grade": 0,
+   "mode": "code",
+   "name": "mail",
+   "group": "ui"
+  },
+  "shared:ui:map": {
+   "key": "ui_map",
+   "grade": 0,
+   "mode": "code",
+   "name": "map",
+   "group": "ui"
+  },
+  "shared:ui:medal": {
+   "key": "ui_medal",
+   "grade": 0,
+   "mode": "code",
+   "name": "medal",
+   "group": "ui"
+  },
+  "shared:ui:palette": {
+   "key": "ui_palette",
+   "grade": 0,
+   "mode": "code",
+   "name": "palette",
+   "group": "ui"
+  },
+  "shared:ui:rotate-ccw": {
+   "key": "ui_rotate_ccw",
+   "grade": 0,
+   "mode": "code",
+   "name": "rotate-ccw",
+   "group": "ui"
+  },
+  "shared:ui:satellite-dish": {
+   "key": "ui_satellite_dish",
+   "grade": 0,
+   "mode": "code",
+   "name": "satellite-dish",
+   "group": "ui"
+  },
+  "shared:ui:scroll": {
+   "key": "ui_scroll",
+   "grade": 0,
+   "mode": "code",
+   "name": "scroll",
+   "group": "ui"
+  },
+  "shared:ui:scroll-text": {
+   "key": "ui_scroll_text",
+   "grade": 0,
+   "mode": "code",
+   "name": "scroll-text",
+   "group": "ui"
+  },
+  "shared:ui:sparkles": {
+   "key": "ui_sparkles",
+   "grade": 0,
+   "mode": "code",
+   "name": "sparkles",
+   "group": "ui"
+  },
+  "shared:ui:store": {
+   "key": "ui_store",
+   "grade": 0,
+   "mode": "code",
+   "name": "store",
+   "group": "ui"
+  },
+  "shared:ui:swords": {
+   "key": "ui_swords",
+   "grade": 0,
+   "mode": "code",
+   "name": "swords",
+   "group": "ui"
+  },
+  "shared:ui:user": {
+   "key": "ui_user",
+   "grade": 0,
+   "mode": "code",
+   "name": "user",
+   "group": "ui"
+  },
+  "shared:ui:wrench": {
+   "key": "ui_wrench",
+   "grade": 0,
+   "mode": "code",
+   "name": "wrench",
+   "group": "ui"
+  },
+  "shared:ui:x": {
+   "key": "ui_x",
+   "grade": 0,
+   "mode": "code",
+   "name": "x",
+   "group": "ui"
   }
  }
 }

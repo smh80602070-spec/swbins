@@ -112,28 +112,28 @@ def main():
     ui, sk = [], []
     for k, v in UI.items():
         ui.append({'id': 'ui_' + k.replace('-', '_'), 'subject': v, 'extra': 'simple bold shape, minimal detail, readable at small size',
-                   'subject_ko': f'Lucide {k} 자리', 'group': 'ui'})
+                   'subject_ko': f'Lucide {k} 자리', 'group': 'ui', 'game': 'shared', 'kind': 'ui', 'src': k, 'name': k})
     for k, v in MAP.items():
-        ui.append({'id': 'map_' + k, 'subject': v, 'extra': 'simple bold shape, minimal detail', 'subject_ko': f'5천하 지도 표식 {k}', 'group': 'mapmark'})
+        ui.append({'id': 'map_' + k, 'subject': v, 'extra': 'simple bold shape, minimal detail', 'subject_ko': f'5천하 지도 표식 {k}', 'group': 'mapmark', 'game': 'saga-realm', 'kind': 'mapmark', 'src': k, 'name': k})
     for c in d['dg_classes']:
-        ui.append({'id': 'job_dg_' + c['id'], 'subject': motif(c['emoji'], miss) + ', class emblem, ornate badge', 'subject_ko': f"2나락 직업 {c['name']}", 'group': 'job'})
+        ui.append({'id': 'job_dg_' + c['id'], 'subject': motif(c['emoji'], miss) + ', class emblem, ornate badge', 'subject_ko': f"2나락 직업 {c['name']}", 'group': 'job', 'game': 'saga-dungeon', 'kind': 'job', 'src': c['id'], 'name': c['name']})
     for j in d['st_jobs']:
-        ui.append({'id': 'job_st_' + j['id'], 'subject': motif(j['emoji'], miss) + ', class emblem, ornate badge', 'subject_ko': f"4종횡 직업 {j['name']}", 'group': 'job'})
+        ui.append({'id': 'job_st_' + j['id'], 'subject': motif(j['emoji'], miss) + ', class emblem, ornate badge', 'subject_ko': f"4종횡 직업 {j['name']}", 'group': 'job', 'game': 'saga-story', 'kind': 'job', 'src': j['id'], 'name': j['name']})
     for s in d['dg_skills']:
         w = DG_WEAPON.get(s['id'].split('_')[0], '')
         sk.append({'id': 'sk_dg_' + s['id'], 'subject': skill_subject(motif(s['emoji'], miss), s['shape'], w, element(s['name'])),
-                   'subject_ko': f"2나락 스킬 {s['name']}", 'group': 'skill'})
+                   'subject_ko': f"2나락 스킬 {s['name']}", 'group': 'skill', 'game': 'saga-dungeon', 'kind': 'skill', 'src': s['id'], 'name': s['name']})
     for s in d['st_skills']:
         w = ST_LINE.get(s['job'], '')
         sk.append({'id': 'sk_st_' + s['id'], 'subject': skill_subject(motif(s['emoji'], miss), s['shape'], w, element(s['name'])),
-                   'subject_ko': f"4종횡 스킬 {s['name']}", 'group': 'skill'})
+                   'subject_ko': f"4종횡 스킬 {s['name']}", 'group': 'skill', 'game': 'saga-story', 'kind': 'skill', 'src': s['id'], 'name': s['name']})
     ids = [x['id'] for x in ui + sk]
     assert len(ids) == len(set(ids)), 'id 겹침'
     json.dump({'note': 'K-0118 UI 아이콘 목록 — make_k118_list.py 가 판 데이터에서 만든다(손으로 고치지 않음)', 'count': len(ids),
                'items': ui + sk}, open(os.path.join(HERE, 'data', 'k118_ui_icons.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     for name, items, nv in (('k118_ui', ui, 4), ('k118_skill', sk, 2)):
         json.dump({'name': name, 'out': name, 'spec': 'icon', 'style': 'C', 'model': 'animagine-xl-4.0-opt', 'variants': nv,
-                   'items': [{k: v for k, v in it.items() if k != 'group'} for it in items]},
+                   'items': [{k: v for k, v in it.items() if k not in ('group', 'game', 'kind', 'src', 'name')} for it in items]},
                   open(os.path.join(HERE, 'batches', name + '_in.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print(f'K-0118 목록 {len(ids)} (ui·지도·직업 {len(ui)} · 스킬 {len(sk)}) · 모르는 이모지 {len(miss)}: {" ".join(sorted(miss))}')
 
