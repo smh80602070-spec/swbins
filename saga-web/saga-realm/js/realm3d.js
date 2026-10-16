@@ -483,9 +483,9 @@
   function addProp(kind, id, x, z, scaleH, rotY, seq, grp) {
     var g2 = grp || dyn;
     var isStatic = g2 === statGrp;
-    if (isStatic) { statPending++; }
+    if (isStatic) { ST().pend(1); }
     asset3d().build(kind, { id: id }, function (g) {
-      if (isStatic) { statPending--; }
+      if (isStatic) { ST().pend(-1); }
       if (!g) { if (isStatic) { maybeFreezeStatic(); } return; }
       if (isStatic) { if (!statGrp) { return; } }
       else if (seq !== rebuildSeq || !dyn) { return; }
@@ -499,133 +499,10 @@
     });
   }
 
-  /* 발열(2026-09-24 "핸드폰 불남") — 정적 소품(나무·바위·집·우물… 약 1,070개)은 저마다 GLB 사본이라 부품마다 따로
-     그렸다(그리기 호출 수천 번/프레임). 모두 도착하면 **같은 지오메트리·같은 재질 값**끼리 InstancedMesh 하나로 묶는다 —
-     자리·크기·돌림은 원래 행렬 그대로라 그림은 똑같다. 스킨·셰이더 덧대기·빛·스프라이트가 든 것은 안 묶고 그대로 둔다.
-     손잡이 `realm3d.staticInst`(기본 1, 0 이면 예전 그대로) */
-  var statPending = 0, statFrozen = false, statInst = [];
-  function STATIC_INST() { return C().tuned('realm3d.staticInst', 1) ? true : false; }
-  function maybeFreezeStatic() {
-    if (statPending > 0 || !staticBuilt || statFrozen) { return; }
-    freezeStatic();
-  }
-  function hexOrNo(c) { return c && c.getHex ? c.getHex() : -1; }
-  function uuidOrNo(x) { return x ? x.uuid : '-'; }
-  /** 재질 값의 지문 — 이 값이 같으면 보이는 모습이 같다 */
-  function matSig(m) {
-    return [m.type, hexOrNo(m.color), hexOrNo(m.emissive), uuidOrNo(m.map), uuidOrNo(m.gradientMap), uuidOrNo(m.alphaMap),
-      m.transparent ? 1 : 0, m.opacity, m.alphaTest, m.side, m.vertexColors ? 1 : 0, m.flatShading ? 1 : 0,
-      m.depthWrite ? 1 : 0, m.fog ? 1 : 0, m.wireframe ? 1 : 0].join(',');
-  }
-  function freezeStatic() {
-    var t = three();
-    if (!t || !statGrp || !STATIC_INST() || !t.InstancedMesh) { return; }
-    statFrozen = true;
-    statGrp.updateMatrixWorld(true);
-    var inv = new t.Matrix4().copy(statGrp.matrixWorld).invert();
-    var groups = {}, order = [], roots = [], own = Object.prototype.hasOwnProperty;
-    statGrp.children.slice().forEach(function (root) {
-      if (!root.userData || !root.userData.instOk) { return; }
-      var ok = true, list = [];
-      root.traverse(function (o) {
-        if (!ok) { return; }
-        if (o.isSkinnedMesh || o.isInstancedMesh || o.isLight || o.isSprite || o.isPoints || o.isLine) { ok = false; return; }
-        if (!o.isMesh) { return; }
-        var m = o.material;
-        if (!m || Array.isArray(m) || m.isShaderMaterial || own.call(m, 'onBeforeCompile') || !o.geometry || o.geometry.morphAttributes && Object.keys(o.geometry.morphAttributes).length) { ok = false; return; }
-        if (!o.visible) { return; }
-        list.push(o);
-      });
-      if (!ok || !list.length) { return; }
-      list.forEach(function (o) {
-        var k = o.geometry.uuid + '|' + matSig(o.material) + '|' + (o.castShadow ? 1 : 0) + (o.receiveShadow ? 1 : 0) + '|' + o.renderOrder;
-        var g = groups[k];
-        if (!g) { g = groups[k] = { geo: o.geometry, mat: o.material, cast: o.castShadow, recv: o.receiveShadow, ro: o.renderOrder, mats: [] }; order.push(k); }
-        g.mats.push(new t.Matrix4().multiplyMatrices(inv, o.matrixWorld));
-      });
-      roots.push(root);
-    });
-    order.forEach(function (k) {
-      var g = groups[k], im = new t.InstancedMesh(g.geo, g.mat, g.mats.length), i;
-      for (i = 0; i < g.mats.length; i++) { im.setMatrixAt(i, g.mats[i]); }
-      im.instanceMatrix.needsUpdate = true;
-      im.castShadow = g.cast; im.receiveShadow = g.recv; im.renderOrder = g.ro;
-      /* 덩이 하나가 지도 끝에서 끝까지 흩어져 있어 덩이째 자르기(경계 구)는 늘 "보임"이다 — 폰 점검(2026-09-25)에서
-         삼각형 575만 중 시야 안 38만. 자리마다 행렬·월드 구를 따로 적어 두고 `statCull` 이 카메라가 움직일 때만
-         시야(안개 끝 안) 자리를 앞쪽에 채운다. 그림자 지도를 받는 덩이(castShadow)는 안 자른다 */
-      if (!g.geo.boundingSphere) { g.geo.computeBoundingSphere(); }
-      var bs = g.geo.boundingSphere, all = new Float32Array(g.mats.length * 16), sph = new Float32Array(g.mats.length * 4);
-      var cw = new t.Vector3(), ws = new t.Vector3();
-      for (i = 0; i < g.mats.length; i++) {
-        var mw = new t.Matrix4().multiplyMatrices(statGrp.matrixWorld, g.mats[i]);
-        g.mats[i].toArray(all, i * 16);
-        cw.copy(bs.center).applyMatrix4(mw);
-        ws.setFromMatrixScale(mw);
-        sph[i * 4] = cw.x; sph[i * 4 + 1] = cw.y; sph[i * 4 + 2] = cw.z;
-        sph[i * 4 + 3] = bs.radius * Math.max(ws.x, ws.y, ws.z);
-      }
-      im.frustumCulled = false;
-      im.userData.cull = { all: all, sph: sph, n: g.mats.length };
-      im.userData.staticInst = true;
-      statGrp.add(im);
-      statInst.push(im);
-    });
-    roots.forEach(function (r) { statGrp.remove(r); });
-    statFreezeStats = { props: roots.length, meshes: order.reduce(function (s, k) { return s + groups[k].mats.length; }, 0), draws: order.length };
-    statCullPV = null;     // 다음 프레임에 한 번 자른다
-  }
-  var statFreezeStats = null;
-
-  /** 묶은 정적 소품을 자리마다 자른다 — 카메라 시야 밖·안개 끝 너머(안개 색뿐)만 뺀다. 그림은 그대로다 */
-  var statCullPV = null, statCullFr = null, statCullNow = null, statCullStat = { all: 0, drawn: 0, runs: 0 };
-  function statCull() {
-    if (!statInst.length) { return; }
-    var t = three();
-    if (!statCullFr) { statCullFr = new t.Frustum(); statCullNow = new t.Matrix4(); }
-    camera.updateMatrixWorld();
-    statCullNow.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
-    var fog = scene.fog && scene.fog.isFog ? scene.fog.far : 0;
-    if (statCullPV && statCullPV.equals(statCullNow) && statCullStat.fog === fog) { return; }
-    if (!statCullPV) { statCullPV = new t.Matrix4(); }
-    statCullPV.copy(statCullNow);
-    statCullStat.fog = fog;
-    statCullFr.setFromProjectionMatrix(statCullNow);
-    var pl = statCullFr.planes, cx = camera.position.x, cy = camera.position.y, cz = camera.position.z;
-    var shadowOn = !!(renderer.shadowMap && renderer.shadowMap.enabled);
-    var all = 0, drawn = 0;
-    for (var k = 0; k < statInst.length; k++) {
-      var im = statInst[k], U = im.userData.cull;
-      if (!U) { continue; }
-      all += U.n;
-      if (shadowOn && im.castShadow) {
-        if (im.count !== U.n) { im.instanceMatrix.array.set(U.all); im.count = U.n; im.instanceMatrix.needsUpdate = true; }
-        drawn += U.n; continue;
-      }
-      var arr = im.instanceMatrix.array, sp = U.sph, j = 0;
-      for (var i = 0; i < U.n; i++) {
-        var x = sp[i * 4], y = sp[i * 4 + 1], z = sp[i * 4 + 2], r = sp[i * 4 + 3], out = false;
-        for (var q = 0; q < 6; q++) {
-          var nn = pl[q].normal;
-          if (nn.x * x + nn.y * y + nn.z * z + pl[q].constant < -r) { out = true; break; }
-        }
-        if (out) { continue; }
-        if (fog) {
-          var dx = x - cx, dy = y - cy, dz = z - cz, lim = fog + r;
-          if (dx * dx + dy * dy + dz * dz > lim * lim) { continue; }
-        }
-        arr.set(U.all.subarray(i * 16, i * 16 + 16), j * 16);
-        j++;
-      }
-      im.count = j;
-      if (j) {
-        var ia = im.instanceMatrix;
-        if (ia.clearUpdateRanges) { ia.clearUpdateRanges(); ia.addUpdateRange(0, j * 16); }
-        ia.needsUpdate = true;
-      }
-      drawn += j;
-    }
-    statCullStat.all = all; statCullStat.drawn = drawn; statCullStat.runs++;
-  }
+  /* 발열 — 정적 소품 묶기(InstancedMesh)·자리 자르기는 js/realm3d-static.js(R-4). 도착 대기 수·묶음·자르기 통계는 그 파일이 갖는다 */
+  var stEnv = {}; function stE() { stEnv.statGrp = statGrp; stEnv.staticBuilt = staticBuilt; stEnv.camera = camera; stEnv.scene = scene; stEnv.renderer = renderer; return stEnv; }
+  var stH = null; function ST() { return global.DG.realm3dStatic.setup(stH || (stH = { three: three, C: C, env: stE })); }
+  function maybeFreezeStatic() { ST().maybeFreezeStatic(); } function statCull() { ST().statCull(); } function matSig(m) { return ST().matSig(m); }
 
   /** 성 둘레 잔장식 — 우물 · 횃불 두 개. 3등급 대성은 성벽 · 시장 · 사찰까지
    *  더해 "이 나라의 큰 성" 임이 한눈에 보이도록 한다.
@@ -776,42 +653,8 @@
     }
   }
 
-  /** 원정 하나가 경로 위 지금 어디쯤 있는가(화면 x·y) — `ui-rtk.js` 의
-   *  `journeyPos()` 와 같은 구간별 실거리 보간이다(두 파일이 같은 값을
-   *  따로 계산한다 — 2D·3D 가 별 모듈이라 공유할 자리가 마땅치 않다) */
-  /*  `elapsed`(선택)를 주면 `j.monthsElapsed` 대신 그 값(소수 가능)으로 잰다 —
-   *  배우가 지난달 자리→이번 달 자리로 길을 따라 걷는 보간(PLAN §5-10 ①)이
-   *  같은 함수를 쓴다. 안 주면 예전 그대로다 */
-  function journeyPos(j, elapsed) {
-    var CDx = cityData();
-    var path = j.path, i;
-    if (!path || path.length < 2) {
-      var only = path && CDx.find(path[0]);
-      return only ? { x: only.x, y: only.y } : null;
-    }
-    var el = (elapsed === undefined || elapsed === null) ? (j.monthsElapsed || 0) : elapsed;
-    var frac = clamp(el / (j.monthsTotal || 1), 0, 0.999);
-    var segs = [], total = 0;
-    for (i = 0; i < path.length - 1; i++) {
-      var a = CDx.find(path[i]), b = CDx.find(path[i + 1]);
-      if (!a || !b) { continue; }
-      var len = Math.hypot(a.x - b.x, a.y - b.y);
-      segs.push({ a: a, b: b, len: len });
-      total += len;
-    }
-    if (!segs.length) { return null; }
-    if (!total) { return { x: segs[0].a.x, y: segs[0].a.y }; }
-    var target = frac * total, acc = 0;
-    for (i = 0; i < segs.length; i++) {
-      if (acc + segs[i].len >= target || i === segs.length - 1) {
-        var sf = segs[i].len > 0 ? clamp((target - acc) / segs[i].len, 0, 1) : 0;
-        return { x: segs[i].a.x + (segs[i].b.x - segs[i].a.x) * sf,
-                 y: segs[i].a.y + (segs[i].b.y - segs[i].a.y) * sf };
-      }
-      acc += segs[i].len;
-    }
-    return { x: segs[segs.length - 1].b.x, y: segs[segs.length - 1].b.y };
-  }
+  /** 원정이 경로 위 지금 어디쯤(화면 x·y) — 순수 함수, js/realm3d-plan.js(R-4). elapsed(소수 달) 를 주면 그 값으로 잰다 */
+  function journeyPos(j, elapsed) { return RP().journeyPos(j, elapsed); }
 
   /** 가고 있는 원정 — 경로 위 지금 자리에 깃발 하나(2D 지도의 🚩 마커와 같은
    *  자리, 2026-09-04). GLB 소품 없이 이모지 스프라이트로 충분하다(재해
@@ -844,7 +687,7 @@
 
   /* 배우 계획(원정 앞장·병종·몸짓 표·떠돌이·싸움 자리·태수 후보·걷기 보간) — js/realm3d-plan.js(R-4). 같은 이름 한 줄 넘김 */
   var RP0 = global.DG.realm3dPlan, ORDER_GESTURES = RP0.ORDER_GESTURES, GESTURE_EVERY = RP0.GESTURE_EVERY, GESTURE_ON = RP0.GESTURE_ON, WANDER_MAX = RP0.WANDER_MAX, WANDER_REACH = RP0.WANDER_REACH, WANDER_PERIOD = RP0.WANDER_PERIOD, BATTLE_MAX = RP0.BATTLE_MAX, BOUT_S = RP0.BOUT_S;
-  var rpH = null; function RP() { return RP0.setup(rpH || (rpH = { asset3d: asset3d, ACTORS_ON: ACTORS_ON, journeyPos: journeyPos, W: W, clamp: clamp, R: R, cityData: cityData, hashOf: hashOf, cityTier: cityTier, WORLD_SCALE: WORLD_SCALE, ACTOR_MAX: ACTOR_MAX, TIER_H: TIER_H })); }
+  var rpH = null; function RP() { return RP0.setup(rpH || (rpH = { asset3d: asset3d, ACTORS_ON: ACTORS_ON, W: W, clamp: clamp, R: R, cityData: cityData, hashOf: hashOf, cityTier: cityTier, WORLD_SCALE: WORLD_SCALE, ACTOR_MAX: ACTOR_MAX, TIER_H: TIER_H })); }
   function leaderOf(ids) { return RP().leaderOf(ids); } function soldierTypes(n, mix) { return RP().soldierTypes(n, mix); } function actorPlan(st, opt) { return RP().actorPlan(st, opt); } function wanderPlan(st, opt) { return RP().wanderPlan(st, opt); } function wanderPos(a, s) { return RP().wanderPos(a, s); }
   function battlePlan(st, opt) { return RP().battlePlan(st, opt); } function battleBeat(result, s) { return RP().battleBeat(result, s); } function governorPlan(st, opt) { return RP().governorPlan(st, opt); } function actorPos(a, frac, fromEl) { return RP().actorPos(a, frac, fromEl); }
 
@@ -1380,7 +1223,7 @@
    *  시나리오·세력이 바뀌어도 안 바뀌므로 다시 지을 이유가 없다. */
   function buildStaticOnce() {
     if (staticBuilt || !statGrp) { return; }
-    statPending++;                      // 다 부르기 전에 묶이지 않게(동기로 떨어지는 도형 소품이 있다)
+    ST().pend(1);                       // 다 부르기 전에 묶이지 않게(동기로 떨어지는 도형 소품이 있다)
     staticBuilt = true;
     var cities = cityData().CITIES, i;
     for (i = 0; i < cities.length; i++) {
@@ -1392,7 +1235,7 @@
       riverPond(city, 0, statGrp);
     }
     scatterField(0, statGrp);
-    statPending--;
+    ST().pend(-1);
     maybeFreezeStatic();
   }
 
@@ -1617,8 +1460,8 @@
     available: available,
     active: active,
     /** 진단 — 정적 소품 묶기 결과 {props, meshes, draws} (아직이면 null)·순수 재질 지문 */
-    staticInstStats: function () { return statFreezeStats; },
-    staticCullStats: function () { return { all: statCullStat.all, drawn: statCullStat.drawn, runs: statCullStat.runs }; }, _matSig: matSig, _tickGapMs: tickGapMs,
+    staticInstStats: function () { return ST().stats(); },
+    staticCullStats: function () { return ST().cullStats(); }, _matSig: matSig, _tickGapMs: tickGapMs,
     init: init,
     toggle: toggle,
     rebuild: rebuild,

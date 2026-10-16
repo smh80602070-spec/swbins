@@ -16,7 +16,7 @@
 
   /* 배우 계획(원정 앞장·병종·몸짓 표·떠돌이·싸움 자리·태수 후보·걷기 보간) — js/realm3d-plan.js(R-4). 같은 이름 한 줄 넘김 */
   var RP0 = global.DG.realm3dPlan, ORDER_GESTURES = RP0.ORDER_GESTURES, GESTURE_EVERY = RP0.GESTURE_EVERY, GESTURE_ON = RP0.GESTURE_ON, WANDER_MAX = RP0.WANDER_MAX, WANDER_REACH = RP0.WANDER_REACH, WANDER_PERIOD = RP0.WANDER_PERIOD, BATTLE_MAX = RP0.BATTLE_MAX, BOUT_S = RP0.BOUT_S;
-  var rpH = null; function RP() { return RP0.setup(rpH || (rpH = { asset3d: asset3d, ACTORS_ON: ACTORS_ON, journeyPos: journeyPos, W: W, clamp: clamp, R: R, cityData: cityData, hashOf: hashOf, cityTier: cityTier, WORLD_SCALE: WORLD_SCALE, ACTOR_MAX: ACTOR_MAX, TIER_H: TIER_H })); }
+  var rpH = null; function RP() { return RP0.setup(rpH || (rpH = { asset3d: asset3d, ACTORS_ON: ACTORS_ON, W: W, clamp: clamp, R: R, cityData: cityData, hashOf: hashOf, cityTier: cityTier, WORLD_SCALE: WORLD_SCALE, ACTOR_MAX: ACTOR_MAX, TIER_H: TIER_H })); }
   function leaderOf(ids) { return RP().leaderOf(ids); } function soldierTypes(n, mix) { return RP().soldierTypes(n, mix); } function actorPlan(st, opt) { return RP().actorPlan(st, opt); } function wanderPlan(st, opt) { return RP().wanderPlan(st, opt); } function wanderPos(a, s) { return RP().wanderPos(a, s); }
   function battlePlan(st, opt) { return RP().battlePlan(st, opt); } function battleBeat(result, s) { return RP().battleBeat(result, s); } function governorPlan(st, opt) { return RP().governorPlan(st, opt); } function actorPos(a, frac, fromEl) { return RP().actorPos(a, frac, fromEl); }
 
@@ -552,7 +552,7 @@
    *  시나리오·세력이 바뀌어도 안 바뀌므로 다시 지을 이유가 없다. */
   function buildStaticOnce() {
     if (staticBuilt || !statGrp) { return; }
-    statPending++;                      // 다 부르기 전에 묶이지 않게(동기로 떨어지는 도형 소품이 있다)
+    ST().pend(1);                       // 다 부르기 전에 묶이지 않게(동기로 떨어지는 도형 소품이 있다)
     staticBuilt = true;
     var cities = cityData().CITIES, i;
     for (i = 0; i < cities.length; i++) {
@@ -564,7 +564,7 @@
       riverPond(city, 0, statGrp);
     }
     scatterField(0, statGrp);
-    statPending--;
+    ST().pend(-1);
     maybeFreezeStatic();
   }
 
@@ -789,8 +789,8 @@
     available: available,
     active: active,
     /** 진단 — 정적 소품 묶기 결과 {props, meshes, draws} (아직이면 null)·순수 재질 지문 */
-    staticInstStats: function () { return statFreezeStats; },
-    staticCullStats: function () { return { all: statCullStat.all, drawn: statCullStat.drawn, runs: statCullStat.runs }; }, _matSig: matSig, _tickGapMs: tickGapMs,
+    staticInstStats: function () { return ST().stats(); },
+    staticCullStats: function () { return ST().cullStats(); }, _matSig: matSig, _tickGapMs: tickGapMs,
     init: init,
     toggle: toggle,
     rebuild: rebuild,

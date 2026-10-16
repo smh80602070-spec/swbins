@@ -1,15 +1,15 @@
 /**
  * 5천하 지도 위 배우 계획(PLAN §5-10) — 원정 앞장·병종·태수 몸짓 표·떠돌이·싸움 자리·태수 후보·걷기 보간. realm3d.js 에서 떼어 냄(R-4, 줄 수 상한).
  * ---------------------------------------------------------------
- * 대부분 순수 함수다. realm3d.js 가 `setup({ asset3d, ACTORS_ON, journeyPos, W, clamp, R, cityData, hashOf, cityTier, WORLD_SCALE, ACTOR_MAX, TIER_H })` 로 손잡이를 넘기고 같은 이름으로 부른다.
+ * 대부분 순수 함수다. realm3d.js 가 `setup({ asset3d, ACTORS_ON, W, clamp, R, cityData, hashOf, cityTier, WORLD_SCALE, ACTOR_MAX, TIER_H })` 로 손잡이를 넘기고 같은 이름으로 부른다.
  * 상수(ORDER_GESTURES·GESTURE_*·WANDER_*·BATTLE_MAX·BOUT_S)는 realm3d.js 가 이 파일에서 읽어 같은 이름으로 둔다(이 파일이 먼저 실린다).
  */
 (function (global) {
   'use strict';
 
-  var asset3d, ACTORS_ON, journeyPos, W, clamp, R, cityData, hashOf, cityTier, WORLD_SCALE, ACTOR_MAX, TIER_H;
+  var asset3d, ACTORS_ON, W, clamp, R, cityData, hashOf, cityTier, WORLD_SCALE, ACTOR_MAX, TIER_H;
   var api = null;
-  function setup(h) { asset3d = h.asset3d; ACTORS_ON = h.ACTORS_ON; journeyPos = h.journeyPos; W = h.W; clamp = h.clamp; R = h.R; cityData = h.cityData; hashOf = h.hashOf; cityTier = h.cityTier; WORLD_SCALE = h.WORLD_SCALE; ACTOR_MAX = h.ACTOR_MAX; TIER_H = h.TIER_H; return api; }
+  function setup(h) { asset3d = h.asset3d; ACTORS_ON = h.ACTORS_ON; W = h.W; clamp = h.clamp; R = h.R; cityData = h.cityData; hashOf = h.hashOf; cityTier = h.cityTier; WORLD_SCALE = h.WORLD_SCALE; ACTOR_MAX = h.ACTOR_MAX; TIER_H = h.TIER_H; return api; }
 
   /** 원정 무장 중 통솔이 가장 높은 사람이 앞장선다(같으면 목록 앞사람) */
   function leaderOf(ids) {
@@ -247,7 +247,44 @@
     return journeyPos({ path: a.path, monthsTotal: a.total }, el);
   }
 
-  api = { setup: setup, leaderOf: leaderOf, soldierTypes: soldierTypes, actorPlan: actorPlan, wanderPlan: wanderPlan, wanderPos: wanderPos, battlePlan: battlePlan, battleBeat: battleBeat, governorPlan: governorPlan, actorPos: actorPos,
+  /** 원정 하나가 경로 위 지금 어디쯤 있는가(화면 x·y) — `ui-rtk.js` 의
+   *  `journeyPos()` 와 같은 구간별 실거리 보간이다(두 파일이 같은 값을
+   *  따로 계산한다 — 2D·3D 가 별 모듈이라 공유할 자리가 마땅치 않다) */
+  /*  `elapsed`(선택)를 주면 `j.monthsElapsed` 대신 그 값(소수 가능)으로 잰다 —
+   *  배우가 지난달 자리→이번 달 자리로 길을 따라 걷는 보간(PLAN §5-10 ①)이
+   *  같은 함수를 쓴다. 안 주면 예전 그대로다 */
+  function journeyPos(j, elapsed) {
+    var CDx = cityData();
+    var path = j.path, i;
+    if (!path || path.length < 2) {
+      var only = path && CDx.find(path[0]);
+      return only ? { x: only.x, y: only.y } : null;
+    }
+    var el = (elapsed === undefined || elapsed === null) ? (j.monthsElapsed || 0) : elapsed;
+    var frac = clamp(el / (j.monthsTotal || 1), 0, 0.999);
+    var segs = [], total = 0;
+    for (i = 0; i < path.length - 1; i++) {
+      var a = CDx.find(path[i]), b = CDx.find(path[i + 1]);
+      if (!a || !b) { continue; }
+      var len = Math.hypot(a.x - b.x, a.y - b.y);
+      segs.push({ a: a, b: b, len: len });
+      total += len;
+    }
+    if (!segs.length) { return null; }
+    if (!total) { return { x: segs[0].a.x, y: segs[0].a.y }; }
+    var target = frac * total, acc = 0;
+    for (i = 0; i < segs.length; i++) {
+      if (acc + segs[i].len >= target || i === segs.length - 1) {
+        var sf = segs[i].len > 0 ? clamp((target - acc) / segs[i].len, 0, 1) : 0;
+        return { x: segs[i].a.x + (segs[i].b.x - segs[i].a.x) * sf,
+                 y: segs[i].a.y + (segs[i].b.y - segs[i].a.y) * sf };
+      }
+      acc += segs[i].len;
+    }
+    return { x: segs[segs.length - 1].b.x, y: segs[segs.length - 1].b.y };
+  }
+
+  api = { setup: setup, journeyPos: journeyPos, leaderOf: leaderOf, soldierTypes: soldierTypes, actorPlan: actorPlan, wanderPlan: wanderPlan, wanderPos: wanderPos, battlePlan: battlePlan, battleBeat: battleBeat, governorPlan: governorPlan, actorPos: actorPos,
     ORDER_GESTURES: ORDER_GESTURES, GESTURE_EVERY: GESTURE_EVERY, GESTURE_ON: GESTURE_ON, WANDER_MAX: WANDER_MAX, WANDER_REACH: WANDER_REACH, WANDER_PERIOD: WANDER_PERIOD, BATTLE_MAX: BATTLE_MAX, BOUT_S: BOUT_S };
   global.DG = global.DG || {};
   global.DG.realm3dPlan = api;
