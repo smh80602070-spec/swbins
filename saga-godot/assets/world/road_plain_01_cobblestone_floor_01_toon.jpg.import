@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6b4wkdlid5j2"
+uid="uid://drrly12wgs8ox"
 path.s3tc="res://.godot/imported/road_plain_01_cobblestone_floor_01_toon.jpg-dbb9c0c67eb9be98824eb73883e45980.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "a6a3ee0151abe0338ccb26c40b31723f"
+"md5": "b5049c8b3361e5b26d984889b4fb056a"
 }
 
 [deps]

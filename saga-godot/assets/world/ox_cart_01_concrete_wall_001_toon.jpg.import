@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5nm141wmr53g"
+uid="uid://totfynwvmdmq"
 path.s3tc="res://.godot/imported/ox_cart_01_concrete_wall_001_toon.jpg-e5ce911233f223f89c70a31bfad3d019.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "38d819b949304c5506e65d765fd5a206"
+"md5": "14622ba9feddc59cda1c8abb6dafc7e6"
 }
 
 [deps]

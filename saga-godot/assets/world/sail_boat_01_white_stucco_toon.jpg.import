@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://braih3gys7t2q"
+uid="uid://cs8jr0wywf8a2"
 path.s3tc="res://.godot/imported/sail_boat_01_white_stucco_toon.jpg-8a84ab0c618b716c082eb5ab34ec0cf4.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "ef40507c5c5da78009b33fe0dc302667"
+"md5": "ddbbc8785e125f113971b14566b03dfc"
 }
 
 [deps]

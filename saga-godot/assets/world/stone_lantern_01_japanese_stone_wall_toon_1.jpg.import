@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://decnbcol3f7fy"
+uid="uid://bgd6c6icjfih5"
 path.s3tc="res://.godot/imported/stone_lantern_01_japanese_stone_wall_toon_1.jpg-4f6a7567d88435d88420a8e84a759a0e.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "0a21e5ddd1f4e59a0862a28a31618d21"
+"md5": "b3244652af5c5d69825c7c20bbc05578"
 }
 
 [deps]

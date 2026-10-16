@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cmiuewyop2dkc"
+uid="uid://3tyj0vryygvl"
 path.s3tc="res://.godot/imported/mushroom_01_white_stucco_toon_1.jpg-44341ad2190c623da7761f4266246f9b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "ef5e5eba208b56ed7946f77e07bad7ef"
+"md5": "ab6714c8d2e4aee00d7067ed4097bf86"
 }
 
 [deps]

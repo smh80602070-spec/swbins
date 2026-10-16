@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://en4t2yv0248d"
+uid="uid://dk0s8q71q4qyv"
 path.s3tc="res://.godot/imported/modern_block_01_black_painted_planks_toon.jpg-f864ed3e0dc6cb4976663e1726639ce1.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "5f9b7468a0279517dacae8162a67963a"
+"md5": "e7635d67eff378e2924402c66c1a3ded"
 }
 
 [deps]

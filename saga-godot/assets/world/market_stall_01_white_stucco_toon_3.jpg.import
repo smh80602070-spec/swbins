@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bidn6xjgh40qs"
+uid="uid://bdmqcni6d1wbl"
 path.s3tc="res://.godot/imported/market_stall_01_white_stucco_toon_3.jpg-43de31619badda25365cb158dfb582c4.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "2b8704d03337d136fcabb989e81e65ad"
+"md5": "6c8bd9e4c4ffa34cc932d11eacb968d3"
 }
 
 [deps]

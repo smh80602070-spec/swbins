@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://oht771r0d1np"
+uid="uid://bl0pnfdkqid6s"
 path.s3tc="res://.godot/imported/jar_01_clay_plaster_toon_1.jpg-65570e0683786965f60c6c26b4ffef3a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "675fa9ecde7a6be01949a3ddc2156abe"
+"md5": "ebfafa7e4ed32433b50802c52c1a647c"
 }
 
 [deps]

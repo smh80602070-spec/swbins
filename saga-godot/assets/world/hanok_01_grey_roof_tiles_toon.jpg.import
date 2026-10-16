@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bic84d7cxwql0"
+uid="uid://cmm0sjyam4icv"
 path.s3tc="res://.godot/imported/hanok_01_grey_roof_tiles_toon.jpg-ad937fd7bfdec4d9eb92737133d00008.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "ce7c38ded311bc629bb80dccdf1808a9"
+"md5": "da5231225f1eeb591a507ccd4b1a1a5d"
 }
 
 [deps]

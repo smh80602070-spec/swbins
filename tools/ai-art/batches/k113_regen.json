@@ -1,0 +1,896 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k113_regen",
+ "note": "K-0113 — 옛 밑그림(Poly Haven 재질 몸)으로 그린 AI 그림을 같은 씨앗·프롬프트로 새 밑그림에서 다시",
+ "defaults": {
+  "prompt_prefix": "",
+  "width": 768,
+  "height": 768,
+  "sampler": "Euler a",
+  "variants": 1
+ },
+ "items": [
+  {
+   "id": "boss_01",
+   "seed": 20272947,
+   "prompt": "masterpiece, high score, great score, absurdres, (giant brown bull beast:1.15), curved horns, black spiked armor plates, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\boss_01.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/boss_01.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/boss_01.license.json"
+   }
+  },
+  {
+   "id": "boss_02",
+   "seed": 20273046,
+   "prompt": "masterpiece, high score, great score, absurdres, (giant mossy wolf beast:1.15), crown of black spikes, glowing eyes, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\boss_02.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/boss_02.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/boss_02.license.json"
+   }
+  },
+  {
+   "id": "boss_03",
+   "seed": 20273140,
+   "prompt": "masterpiece, high score, great score, absurdres, (giant brown boar beast:1.15), tusks, glowing purple rune stripes, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\boss_03.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/boss_03.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/boss_03.license.json"
+   }
+  },
+  {
+   "id": "boss_04",
+   "seed": 20273237,
+   "prompt": "masterpiece, high score, great score, absurdres, (giant blue gray wyvern:1.15), black horn crown, spread membrane wings, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\boss_04.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/boss_04.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/boss_04.license.json"
+   }
+  },
+  {
+   "id": "boss_05",
+   "seed": 20273335,
+   "prompt": "masterpiece, high score, great score, absurdres, (giant brown bat creature:1.15), wide spread membrane wings, spiked armor plates, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\boss_05.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/boss_05.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/boss_05.license.json"
+   }
+  },
+  {
+   "id": "boss_06",
+   "seed": 20273432,
+   "prompt": "masterpiece, high score, great score, absurdres, (giant mossy horned worm:1.15), crown of black spikes, fangs, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\boss_06.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/boss_06.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/boss_06.license.json"
+   }
+  },
+  {
+   "id": "boss_07",
+   "seed": 20273530,
+   "prompt": "masterpiece, high score, great score, absurdres, (giant dark cobra:1.15), glowing orange rune bands, raised hood, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\boss_07.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/boss_07.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/boss_07.license.json"
+   }
+  },
+  {
+   "id": "boss_08",
+   "seed": 20273627,
+   "prompt": "masterpiece, high score, great score, absurdres, (giant stone golem robot:1.15), heavy armor plates, glowing purple core, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\boss_08.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/boss_08.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/boss_08.license.json"
+   }
+  },
+  {
+   "id": "boss_09",
+   "seed": 20273724,
+   "prompt": "masterpiece, high score, great score, absurdres, (giant tracked turret machine:1.15), glowing cyan runes, cannons, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\boss_09.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/boss_09.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/boss_09.license.json"
+   }
+  },
+  {
+   "id": "boss_10",
+   "seed": 20273820,
+   "prompt": "masterpiece, high score, great score, absurdres, (giant mossy ghost spirit:1.15), crown of ice spikes, glowing red eyes, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\boss_10.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/boss_10.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/boss_10.license.json"
+   }
+  },
+  {
+   "id": "boss_11",
+   "seed": 20273916,
+   "prompt": "masterpiece, high score, great score, absurdres, (giant crystal spirit orb:1.15), cyan crystal wings, glowing red core, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\boss_11.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/boss_11.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/boss_11.license.json"
+   }
+  },
+  {
+   "id": "boss_12",
+   "seed": 20274014,
+   "prompt": "masterpiece, high score, great score, absurdres, (giant slate gray cat beast:1.15), spiked armor plates, long tail, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\boss_12.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/boss_12.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/boss_12.license.json"
+   }
+  },
+  {
+   "id": "mon_cons_01",
+   "seed": 20272172,
+   "prompt": "masterpiece, high score, great score, absurdres, (blocky stone golem robot:1.15), glowing purple chest core, antenna, metal limbs, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_cons_01.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_cons_01.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_cons_01.license.json"
+   }
+  },
+  {
+   "id": "mon_cons_02",
+   "seed": 20272267,
+   "prompt": "masterpiece, high score, great score, absurdres, (mechanical spider:1.15), long thin metal legs, glowing cyan eyes, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_cons_02.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_cons_02.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_cons_02.license.json"
+   }
+  },
+  {
+   "id": "mon_cons_03",
+   "seed": 20272365,
+   "prompt": "masterpiece, high score, great score, absurdres, (tracked turret machine:1.15), cannon barrels, tank treads, purple armor, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_cons_03.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_cons_03.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_cons_03.license.json"
+   }
+  },
+  {
+   "id": "mon_cons_04",
+   "seed": 20272462,
+   "prompt": "masterpiece, high score, great score, absurdres, (floating spiked metal orb:1.15), blue gray, antenna, small claws, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_cons_04.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_cons_04.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_cons_04.license.json"
+   }
+  },
+  {
+   "id": "mon_quad_01",
+   "seed": 20271006,
+   "prompt": "masterpiece, high score, great score, absurdres, (gray-blue wolf beast:1.15), dark stripes, small spikes on back, glowing yellow eyes, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_quad_01.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_quad_01.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_quad_01.license.json"
+   }
+  },
+  {
+   "id": "mon_quad_02",
+   "seed": 20271106,
+   "prompt": "masterpiece, high score, great score, absurdres, (brown boar beast:1.15), tusks, spikes on back, glowing cyan eyes, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_quad_02.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_quad_02.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_quad_02.license.json"
+   }
+  },
+  {
+   "id": "mon_quad_03",
+   "seed": 20271202,
+   "prompt": "masterpiece, high score, great score, absurdres, (white spotted cat beast:1.15), long tail, small horn, glowing cyan eyes, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_quad_03.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_quad_03.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_quad_03.license.json"
+   }
+  },
+  {
+   "id": "mon_quad_04",
+   "seed": 20271300,
+   "prompt": "masterpiece, high score, great score, absurdres, (tan brown bull beast:1.15), curved horns, spikes on back, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_quad_04.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_quad_04.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_quad_04.license.json"
+   }
+  },
+  {
+   "id": "mon_serp_01",
+   "seed": 20271785,
+   "prompt": "masterpiece, high score, great score, absurdres, (olive green viper:1.15), fangs, forked tongue, glowing red eyes, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_serp_01.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_serp_01.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_serp_01.license.json"
+   }
+  },
+  {
+   "id": "mon_serp_02",
+   "seed": 20271882,
+   "prompt": "masterpiece, high score, great score, absurdres, (brown cobra:1.15), raised hood, fangs, glowing red eyes, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_serp_02.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_serp_02.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_serp_02.license.json"
+   }
+  },
+  {
+   "id": "mon_serp_03",
+   "seed": 20271978,
+   "prompt": "masterpiece, high score, great score, absurdres, (reddish brown horned worm creature:1.15), spikes along back, segmented body, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_serp_03.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_serp_03.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_serp_03.license.json"
+   }
+  },
+  {
+   "id": "mon_serp_04",
+   "seed": 20272074,
+   "prompt": "masterpiece, high score, great score, absurdres, (tan rattlesnake:1.15), coiled body, rattle tail, fangs, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_serp_04.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_serp_04.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_serp_04.license.json"
+   }
+  },
+  {
+   "id": "mon_spir_01",
+   "seed": 20272560,
+   "prompt": "masterpiece, high score, great score, absurdres, (pink flame spirit:1.15), flickering flame body, glowing yellow eyes, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_spir_01.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_spir_01.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_spir_01.license.json"
+   }
+  },
+  {
+   "id": "mon_spir_02",
+   "seed": 20272657,
+   "prompt": "masterpiece, high score, great score, absurdres, (pink ghost:1.15), cat ears, ragged hem, glowing red eyes, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_spir_02.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_spir_02.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_spir_02.license.json"
+   }
+  },
+  {
+   "id": "mon_spir_03",
+   "seed": 20272752,
+   "prompt": "masterpiece, high score, great score, absurdres, (orange crystal spirit:1.15), floating gem core, cyan crystal shards, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_spir_03.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_spir_03.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_spir_03.license.json"
+   }
+  },
+  {
+   "id": "mon_spir_04",
+   "seed": 20272849,
+   "prompt": "masterpiece, high score, great score, absurdres, (mint jellyfish spirit:1.15), translucent bell, long tentacles, glowing eyes, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_spir_04.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_spir_04.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_spir_04.license.json"
+   }
+  },
+  {
+   "id": "mon_wing_01",
+   "seed": 20271394,
+   "prompt": "masterpiece, high score, great score, absurdres, (brown bird beast:1.15), broad wings, sharp beak, glowing yellow eyes, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_wing_01.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_wing_01.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_wing_01.license.json"
+   }
+  },
+  {
+   "id": "mon_wing_02",
+   "seed": 20271492,
+   "prompt": "masterpiece, high score, great score, absurdres, (gray-blue bat creature:1.15), wide spread membrane wings, big pointed ears, glowing cyan eyes, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_wing_02.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_wing_02.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_wing_02.license.json"
+   }
+  },
+  {
+   "id": "mon_wing_03",
+   "seed": 20271591,
+   "prompt": "masterpiece, high score, great score, absurdres, (white snowy owl creature standing upright:1.15), wings folded at sides, ear tufts, big glowing yellow eyes, small beak, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_wing_03.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_wing_03.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_wing_03.license.json"
+   }
+  },
+  {
+   "id": "mon_wing_04",
+   "seed": 20271685,
+   "prompt": "masterpiece, high score, great score, absurdres, (olive green wyvern:1.15), dark membrane wings, curved horns, long tail, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\monster_init\\mon_wing_04.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-monster",
+    "init_image": "tools/ai-art/_out/monster_init/mon_wing_04.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-monster/mon_wing_04.license.json"
+   }
+  },
+  {
+   "id": "mt_dragon",
+   "seed": 20271250,
+   "prompt": "masterpiece, high score, great score, absurdres, (teal blue-green eastern dragon:1.15), long serpentine body, small horns, golden saddle with tassels on its back, reins, cloud wisps, no humans, mount, riding animal, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\mount_init\\mt_dragon.png",
+   "denoise": 0.62,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.62,
+    "k113_group": "portraits-mount",
+    "init_image": "tools/ai-art/_out/mount_init/mt_dragon.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/portraits-mount/mt_dragon.license.json"
+   }
+  },
+  {
+   "id": "rts_enemy_base_a",
+   "seed": 3809157139,
+   "prompt": "masterpiece, high score, great score, absurdres, dark black stone fortress, four spiked towers with black pointed roofs, red glowing braziers at the gate, menacing, no flags, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\rts_bld_init_k113\\rts_enemy_base_a.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.65,
+    "k113_group": "web2d-rts",
+    "init_image": "tools/ai-art/_out/rts_bld_init_k113/rts_enemy_base_a.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/web2d/rts/rts_enemy_base_a.license.json"
+   }
+  },
+  {
+   "id": "rts_enemy_base_b",
+   "seed": 3011367289,
+   "prompt": "masterpiece, high score, great score, absurdres, dark black stone fortress, cracked walls, one broken tower, rubble and holes, damaged, no flags, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\rts_bld_init_k113\\rts_enemy_base_b.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.65,
+    "k113_group": "web2d-rts",
+    "init_image": "tools/ai-art/_out/rts_bld_init_k113/rts_enemy_base_b.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/web2d/rts/rts_enemy_base_b.license.json"
+   }
+  },
+  {
+   "id": "rts_enemy_base_c",
+   "seed": 320120268,
+   "prompt": "masterpiece, high score, great score, absurdres, ruined burning black stone fortress, collapsed walls, orange fire and flames, smoke, no flags, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\rts_bld_init_k113\\rts_enemy_base_c.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.65,
+    "k113_group": "web2d-rts",
+    "init_image": "tools/ai-art/_out/rts_bld_init_k113/rts_enemy_base_c.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/web2d/rts/rts_enemy_base_c.license.json"
+   }
+  },
+  {
+   "id": "rts_field_01",
+   "seed": 640596827,
+   "prompt": "masterpiece, high score, great score, absurdres, fenced farm field with rows of golden wheat and green crops, wooden fence, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\rts_bld_init_k113\\rts_field_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.65,
+    "k113_group": "web2d-rts",
+    "init_image": "tools/ai-art/_out/rts_bld_init_k113/rts_field_01.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/web2d/rts/rts_field_01.license.json"
+   }
+  },
+  {
+   "id": "rts_fortress_01",
+   "seed": 1229779186,
+   "prompt": "masterpiece, high score, great score, absurdres, stone castle keep, four corner towers with red roofs, central hall, wooden gate, no flags, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\rts_bld_init_k113\\rts_fortress_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.65,
+    "k113_group": "web2d-rts",
+    "init_image": "tools/ai-art/_out/rts_bld_init_k113/rts_fortress_01.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/web2d/rts/rts_fortress_01.license.json"
+   }
+  },
+  {
+   "id": "rts_wall_corner_01",
+   "seed": 1308191164,
+   "prompt": "masterpiece, high score, great score, absurdres, stone fortress wall corner with round tower and battlements, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\rts_bld_init_k113\\rts_wall_corner_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.65,
+    "k113_group": "web2d-rts",
+    "init_image": "tools/ai-art/_out/rts_bld_init_k113/rts_wall_corner_01.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/web2d/rts/rts_wall_corner_01.license.json"
+   }
+  },
+  {
+   "id": "rts_workshop_01",
+   "seed": 1390533611,
+   "prompt": "masterpiece, high score, great score, absurdres, village craftsman workshop, wooden hall with red tiled roof, chimney, anvil and stacked firewood in front, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\rts_bld_init_k113\\rts_workshop_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.65,
+    "k113_group": "web2d-rts",
+    "init_image": "tools/ai-art/_out/rts_bld_init_k113/rts_workshop_01.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/web2d/rts/rts_workshop_01.license.json"
+   }
+  },
+  {
+   "id": "city_l_future",
+   "seed": 746009283,
+   "prompt": "masterpiece, high score, great score, absurdres, (grand walled capital city:1.15), double walls, six towers, large palace hall, many houses, futuristic, white panels, glowing cyan lines, domes, crystal spires, miniature map icon, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init_k113\\rts_city_l_future.png",
+   "denoise": 0.6,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.6,
+    "k113_group": "world-sprite-city",
+    "init_image": "tools/ai-art/_out/k83_init_k113/rts_city_l_future.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/world/sprite/city_l_future.license.json"
+   }
+  },
+  {
+   "id": "city_l_past",
+   "seed": 191995597,
+   "prompt": "masterpiece, high score, great score, absurdres, (grand walled capital city:1.15), double walls, six towers, large palace hall, many houses, ancient east asian style, stone walls, red clay tile roofs, miniature map icon, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init_k113\\rts_city_l_past.png",
+   "denoise": 0.6,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.6,
+    "k113_group": "world-sprite-city",
+    "init_image": "tools/ai-art/_out/k83_init_k113/rts_city_l_past.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/world/sprite/city_l_past.license.json"
+   }
+  },
+  {
+   "id": "city_l_present",
+   "seed": 1658908739,
+   "prompt": "masterpiece, high score, great score, absurdres, (grand walled capital city:1.15), double walls, six towers, large palace hall, many houses, modern era, concrete walls, flat roofs, office blocks, glass windows, miniature map icon, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init_k113\\rts_city_l_present.png",
+   "denoise": 0.6,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.6,
+    "k113_group": "world-sprite-city",
+    "init_image": "tools/ai-art/_out/k83_init_k113/rts_city_l_present.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/world/sprite/city_l_present.license.json"
+   }
+  },
+  {
+   "id": "city_m_future",
+   "seed": 319168428,
+   "prompt": "masterpiece, high score, great score, absurdres, (walled castle town:1.15), high walls, gatehouse, four corner towers, main keep, futuristic, white panels, glowing cyan lines, domes, crystal spires, miniature map icon, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init_k113\\rts_city_m_future.png",
+   "denoise": 0.6,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.6,
+    "k113_group": "world-sprite-city",
+    "init_image": "tools/ai-art/_out/k83_init_k113/rts_city_m_future.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/world/sprite/city_m_future.license.json"
+   }
+  },
+  {
+   "id": "city_m_past",
+   "seed": 520616010,
+   "prompt": "masterpiece, high score, great score, absurdres, (walled castle town:1.15), high walls, gatehouse, four corner towers, main keep, ancient east asian style, stone walls, red clay tile roofs, miniature map icon, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init_k113\\rts_city_m_past.png",
+   "denoise": 0.6,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.6,
+    "k113_group": "world-sprite-city",
+    "init_image": "tools/ai-art/_out/k83_init_k113/rts_city_m_past.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/world/sprite/city_m_past.license.json"
+   }
+  },
+  {
+   "id": "city_m_present",
+   "seed": 1048599877,
+   "prompt": "masterpiece, high score, great score, absurdres, (walled castle town:1.15), high walls, gatehouse, four corner towers, main keep, modern era, concrete walls, flat roofs, office blocks, glass windows, miniature map icon, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init_k113\\rts_city_m_present.png",
+   "denoise": 0.6,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.6,
+    "k113_group": "world-sprite-city",
+    "init_image": "tools/ai-art/_out/k83_init_k113/rts_city_m_present.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/world/sprite/city_m_present.license.json"
+   }
+  },
+  {
+   "id": "city_s_future",
+   "seed": 733355091,
+   "prompt": "masterpiece, high score, great score, absurdres, (small walled village:1.15), low stone wall around three houses, futuristic, white panels, glowing cyan lines, domes, crystal spires, miniature map icon, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init_k113\\rts_city_s_future.png",
+   "denoise": 0.6,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.6,
+    "k113_group": "world-sprite-city",
+    "init_image": "tools/ai-art/_out/k83_init_k113/rts_city_s_future.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/world/sprite/city_s_future.license.json"
+   }
+  },
+  {
+   "id": "city_s_past",
+   "seed": 2615687588,
+   "prompt": "masterpiece, high score, great score, absurdres, (small walled village:1.15), low stone wall around three houses, ancient east asian style, stone walls, red clay tile roofs, miniature map icon, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init_k113\\rts_city_s_past.png",
+   "denoise": 0.6,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.6,
+    "k113_group": "world-sprite-city",
+    "init_image": "tools/ai-art/_out/k83_init_k113/rts_city_s_past.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/world/sprite/city_s_past.license.json"
+   }
+  },
+  {
+   "id": "city_s_present",
+   "seed": 3625835827,
+   "prompt": "masterpiece, high score, great score, absurdres, (small walled village:1.15), low stone wall around three houses, modern era, concrete walls, flat roofs, office blocks, glass windows, miniature map icon, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "steps": 28,
+   "cfg": 5.5,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k83_init_k113\\rts_city_s_present.png",
+   "denoise": 0.6,
+   "meta": {
+    "mode": "img2img",
+    "denoise": 0.6,
+    "k113_group": "world-sprite-city",
+    "init_image": "tools/ai-art/_out/k83_init_k113/rts_city_s_present.png (K-0113 자체 PBR 몸 렌더)",
+    "base_license": "CC0-1.0 (world-forge 형태 코드 + 자체 PBR 재질 K-0093·K-0113, 남의 사진 0)",
+    "redo_of": "saga-assets/world/sprite/city_s_present.license.json"
+   }
+  }
+ ]
+}

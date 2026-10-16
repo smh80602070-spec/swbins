@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cputgfndnqfmc"
+uid="uid://dhcw6fssmfq57"
 path.s3tc="res://.godot/imported/loot_dagger_g3_brown_planks_03_toon.jpg-9c9d8fcee36e6dd6822edf1cff4fa93c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "4f8a183281fa58df015dfc398b48feab"
+"md5": "ddb6aba6835574db6349f88cc564d76d"
 }
 
 [deps]

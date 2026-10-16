@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctop1op4ej7ut"
+uid="uid://78ecexjabcr2"
 path.s3tc="res://.godot/imported/cave_corridor_01_limestone_coast_sand_rocks_02_toon_1.jpg-fe53eb1341f23cd0ecb24b27f2619e2f.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "566cdcba0da55d135212a2dccaf2547e"
+"md5": "efe9bee106a0e60ca4f6e9cdaee05acb"
 }
 
 [deps]

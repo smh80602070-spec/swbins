@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://depx4yugjin8v"
+uid="uid://bime1cxxm624m"
 path.s3tc="res://.godot/imported/pond_01_brown_mud_toon.jpg-7398fbb77116b0df2663a6e2312fff67.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "6c78e4db7fdda84e12177a10a90d2c88"
+"md5": "355312bf26b39637ca34d9940c05f944"
 }
 
 [deps]

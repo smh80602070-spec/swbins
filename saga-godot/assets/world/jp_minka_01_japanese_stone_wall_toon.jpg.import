@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jof6qtxjeff2"
+uid="uid://xqvvlddhu5d4"
 path.s3tc="res://.godot/imported/jp_minka_01_japanese_stone_wall_toon.jpg-6262216ec73c07ce1d9eda475b81ee7d.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "a19ff79c3ed988678afc5e16479f57ac"
+"md5": "0ff84fac3237d9a127a946dacddbf13e"
 }
 
 [deps]

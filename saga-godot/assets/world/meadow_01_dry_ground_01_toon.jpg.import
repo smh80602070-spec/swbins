@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6tbwouc4ab53"
+uid="uid://dyvdrmw381gbf"
 path.s3tc="res://.godot/imported/meadow_01_dry_ground_01_toon.jpg-35dbddda459df61453b6fb026104c62c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "bb25e571f58c32a503ba60ac963c5c7f"
+"md5": "2dcec2d6ef8d0edf08780ed30ca23209"
 }
 
 [deps]

@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bflt24yg6vtvj"
+uid="uid://de86l307o5ok"
 path.s3tc="res://.godot/imported/jp_minka_01_white_stucco_toon.jpg-f40f9a901df70fecc240946097816deb.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "3ccf6f3d89245bbffe9d140d1bd192d9"
+"md5": "06343fcd2e19406cb01cbdb96efa5b4a"
 }
 
 [deps]

@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3pdrloiybfu0"
+uid="uid://b3qnsu2lpdt4p"
 path.s3tc="res://.godot/imported/loot_staff_g0_brown_planks_03_toon.jpg-b7b5a8a1f21b69c8d43d858dd6631794.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "1c9ee2b6b9b4e971d98e7788d3efbc21"
+"md5": "9cca0db5aaad5af5ee2b5166d1a7548b"
 }
 
 [deps]

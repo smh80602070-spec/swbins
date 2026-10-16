@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5ccjcdcu7ge0"
+uid="uid://1e64ec1oaa1t"
 path.s3tc="res://.godot/imported/handcart_01_brown_planks_03_toon.jpg-d93831180bc0848713f8c72b8dddbf61.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "46e5ca2d86c6a55b78ef63ef30f77137"
+"md5": "5d09f2068ca2da9f9a39198114f2f69e"
 }
 
 [deps]

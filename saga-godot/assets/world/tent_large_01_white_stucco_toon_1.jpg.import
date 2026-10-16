@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mpse0rdij8rt"
+uid="uid://dbp8cukwaka5q"
 path.s3tc="res://.godot/imported/tent_large_01_white_stucco_toon_1.jpg-52cae8493dc0734e060c9039fbd766a7.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "2b8704d03337d136fcabb989e81e65ad"
+"md5": "6c8bd9e4c4ffa34cc932d11eacb968d3"
 }
 
 [deps]

@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bno1mfsaapaft"
+uid="uid://c353seu3k68v6"
 path.s3tc="res://.godot/imported/crate_stack_01_black_painted_planks_toon.jpg-7647af7e508d037e7c0e261fcc05bfe2.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "72c8dd877799fbff2b4cac9bcdf1a3af"
+"md5": "2eefb842471d9be28a9ff871b6732c4c"
 }
 
 [deps]

@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://plkhaoa6mapb"
+uid="uid://bxuv7pomyq0xi"
 path.s3tc="res://.godot/imported/signpost_01_black_painted_planks_toon.jpg-dc991388315ead3bd76c05dba264edd4.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "72c8dd877799fbff2b4cac9bcdf1a3af"
+"md5": "2eefb842471d9be28a9ff871b6732c4c"
 }
 
 [deps]

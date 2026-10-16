@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2o1cxt0dll0j"
+uid="uid://bh4uxlt1tleu2"
 path.s3tc="res://.godot/imported/dune_01_dry_ground_01_toon.jpg-d2767bc62921ed07f5d08247b343a75d.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "411f3168385ee78ab2b5afbf8a954ebd"
+"md5": "d9f2cb44c1c3468036d1142d7d22f4a2"
 }
 
 [deps]

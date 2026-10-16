@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dajb3jggfcwr6"
+uid="uid://dtv4vmxa41qgw"
 path.s3tc="res://.godot/imported/tree_broadleaf_02_brown_planks_03_toon.jpg-8e357734395500b910b126c0bed9977d.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "75a7d6581d1260eddcde3644e420eebe"
+"md5": "4db635e7725f3a13832604e2f3655da2"
 }
 
 [deps]

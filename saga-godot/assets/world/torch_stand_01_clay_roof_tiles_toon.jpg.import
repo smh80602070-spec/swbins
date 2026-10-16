@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://50tskl8rsyw2"
+uid="uid://5ujapc01gpve"
 path.s3tc="res://.godot/imported/torch_stand_01_clay_roof_tiles_toon.jpg-8559865e1ea292fd869958a3c324f14e.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "7d39e16d10c360f4bc4f0f6e78ba453b"
+"md5": "bdd9b94031ba21464dcf82d6ef3643fd"
 }
 
 [deps]

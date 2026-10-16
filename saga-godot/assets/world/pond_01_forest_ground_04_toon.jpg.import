@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://58tcs0xnu1h3"
+uid="uid://b6mhf5md4hxsa"
 path.s3tc="res://.godot/imported/pond_01_forest_ground_04_toon.jpg-fdbb5fb4dbc9f4999210f6524b79c8a4.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "22b0a56e474a5aa6613ede4765465a8c"
+"md5": "979661e008fbfb208aaf766b1443d42b"
 }
 
 [deps]

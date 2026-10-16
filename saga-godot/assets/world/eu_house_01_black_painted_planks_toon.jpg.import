@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ci8dh7tyi4jo6"
+uid="uid://c42nf3ikapfgc"
 path.s3tc="res://.godot/imported/eu_house_01_black_painted_planks_toon.jpg-c42c19e78f94bf08f609de0c94f6c5ea.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "72c8dd877799fbff2b4cac9bcdf1a3af"
+"md5": "2eefb842471d9be28a9ff871b6732c4c"
 }
 
 [deps]

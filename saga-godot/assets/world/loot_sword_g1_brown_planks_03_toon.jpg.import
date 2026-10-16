@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cl1du6et2lckc"
+uid="uid://760a236ik1ih"
 path.s3tc="res://.godot/imported/loot_sword_g1_brown_planks_03_toon.jpg-5694d9d763b2c4a8976f5d7242c1c0b1.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "c8bdfb9ef36c473df0fa3aaaa6d73861"
+"md5": "54b9c4a12511bb47cd2f174a47bc15cf"
 }
 
 [deps]

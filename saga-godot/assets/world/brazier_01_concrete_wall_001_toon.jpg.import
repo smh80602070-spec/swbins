@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://3wef1ygswhmr"
+uid="uid://bcwjgcgbxvi0y"
 path.s3tc="res://.godot/imported/brazier_01_concrete_wall_001_toon.jpg-ef2f33173600d6c79441a2e7f0f87b96.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "21f40b19fe14e66b172f4f3a409ffe41"
+"md5": "7630ec3d25021ae203c9d269aca01e93"
 }
 
 [deps]

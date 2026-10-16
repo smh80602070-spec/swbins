@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cs5qajbdq484k"
+uid="uid://b3knj27v8yxhy"
 path.s3tc="res://.godot/imported/bush_01_white_stucco_toon_2.jpg-1bbb1141d5bc9271676f066dabaea439.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "b243298ff3b164b46ee4f8389ddf0eb3"
+"md5": "44582d2c19481f73a81ce0b8c5134c9c"
 }
 
 [deps]

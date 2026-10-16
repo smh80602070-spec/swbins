@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://sr3ujlxkvhej"
+uid="uid://73a2s4je8mv6"
 path.s3tc="res://.godot/imported/signal_pylon_01_white_stucco_toon.jpg-f47f2ba4bc6917805cc2f5d1255b0ce0.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "81ff33a954f41d1e6c60786a3e19af51"
+"md5": "64880d0a8cb02400118fd9c0ecb6b2bb"
 }
 
 [deps]

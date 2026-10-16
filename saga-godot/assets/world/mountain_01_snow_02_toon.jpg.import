@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dy1apyt7fhesb"
+uid="uid://cgq2sv1hq8snd"
 path.s3tc="res://.godot/imported/mountain_01_snow_02_toon.jpg-9ecad3d637e06c4d40db36c63d39fd6c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "ea4e0fd45c662cbc5c116a0587853315"
+"md5": "67c1ed7c4703273df5a62201e4b7ce48"
 }
 
 [deps]

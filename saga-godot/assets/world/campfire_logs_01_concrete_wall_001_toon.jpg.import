@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bl54wugal42h6"
+uid="uid://4cdag26kkao8"
 path.s3tc="res://.godot/imported/campfire_logs_01_concrete_wall_001_toon.jpg-8acb19b877e1726c575db1a5b263509c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "daa81a75effd9ef7bf86b64636d89701"
+"md5": "25fe9f5742a6e468a634eec6de7c8f06"
 }
 
 [deps]

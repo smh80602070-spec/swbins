@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b38dkr25wlj67"
+uid="uid://c77f7hs6rike8"
 path.s3tc="res://.godot/imported/tree_broadleaf_02_white_stucco_toon_4.jpg-769902fc4519c8ee4e771437fd9f3b92.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "a42902f13bbbb31ebbe8fd8f78fdc1cd"
+"md5": "2dff8c2f7dc5f1e7f913f389268dfac4"
 }
 
 [deps]

@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d15uqoa6mofjb"
+uid="uid://brsnfrilqmkgd"
 path.s3tc="res://.godot/imported/dungeon_gate_01_black_painted_planks_toon.jpg-afd62569362005805d2a76b8cee5c3c4.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "a1042e490984e462a89539ccf030b7a9"
+"md5": "fefdeef96ab642037f90d9f299970899"
 }
 
 [deps]

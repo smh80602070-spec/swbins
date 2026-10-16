@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgjmpja8c3hep"
+uid="uid://deriuu7s25qqw"
 path.s3tc="res://.godot/imported/log_01_coated_pine_toon.jpg-ba35873fa6ae7bdb1d8b4b95f06204f0.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "b51d2d383cb9410ebd097e20ea0e94bd"
+"md5": "0b5ef7e3a4664d180a35889bdec73661"
 }
 
 [deps]

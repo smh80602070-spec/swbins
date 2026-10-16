@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://iapasrmk0jec"
+uid="uid://dh7rvon5q5ugk"
 path.s3tc="res://.godot/imported/haystack_01_thatch_roof_angled_toon.jpg-39b34a8a62aa61f41a191e7688fee26c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "aa54bb1502b0c0cfe57c5d63d14f3985"
+"md5": "eb1ad08741d09c75f66b20bd732d4c8c"
 }
 
 [deps]

@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blsjbbxoc23l6"
+uid="uid://6mn2yg2e8vqp"
 path.s3tc="res://.godot/imported/reed_clump_01_white_stucco_toon_2.jpg-43df8df561ef4d54b4ac29a96553ddab.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "8d10e68ac585a6927762a7d1523df9de"
+"md5": "18924f4692b7157b78a5b8223bb9233b"
 }
 
 [deps]

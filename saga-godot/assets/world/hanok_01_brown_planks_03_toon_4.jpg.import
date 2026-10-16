@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c36da4vht0hkr"
+uid="uid://cqb516i4uxlu3"
 path.s3tc="res://.godot/imported/hanok_01_brown_planks_03_toon_4.jpg-a4513c16c754d5c08e13a3884c605497.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "f33ddf6e0a74111248e98a9e5b0cbdf1"
+"md5": "efaae86ca2a289b22278628b9931774b"
 }
 
 [deps]

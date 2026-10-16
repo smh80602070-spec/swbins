@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cq51l2y1ovnuj"
+uid="uid://cudqmqsrpkx0m"
 path.s3tc="res://.godot/imported/wheat_ripe_01_brown_mud_toon.jpg-b2668888ab9f3c6b7e5a5884b50762cb.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "5c09b1669408b8ef4e6a148aad2bc117"
+"md5": "c8e9ac209f69c9e8d4127c6b70b8190f"
 }
 
 [deps]

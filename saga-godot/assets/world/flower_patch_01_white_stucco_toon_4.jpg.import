@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://lo6hefp717tw"
+uid="uid://bys0xpultptmu"
 path.s3tc="res://.godot/imported/flower_patch_01_white_stucco_toon_4.jpg-dcf6a74920204cf2229589453c18647e.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "57f9d2d0e5673f616b7e76cd42503caf"
+"md5": "ece6e8afbc35a3a22c334a0ed44fa964"
 }
 
 [deps]

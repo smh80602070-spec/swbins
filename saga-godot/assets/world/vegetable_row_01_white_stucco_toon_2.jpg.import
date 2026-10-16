@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cs5scytly3njb"
+uid="uid://bq7ltmbufhoh1"
 path.s3tc="res://.godot/imported/vegetable_row_01_white_stucco_toon_2.jpg-fa85567c6b81886f9f7ad28b9fdb113b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "2bd4e163e9e49ba22472e3947370a72f"
+"md5": "b0ecd2657b99372577531e73f9fd4cf1"
 }
 
 [deps]

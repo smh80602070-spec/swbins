@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dhhg0alihqgmj"
+uid="uid://dmrb2dblx1is7"
 path.s3tc="res://.godot/imported/stone_lantern_01_beige_wall_001_toon.jpg-a42d4a2eafbf838dae973f7f6406e5a4.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "33366f273f8bf2b84c7445a3516e22bb"
+"md5": "60aa2c17f5bab17e7a2f83e0e00d051f"
 }
 
 [deps]

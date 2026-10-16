@@ -84,7 +84,7 @@ def batches():
         ip = os.path.join(init_dir, bid + '.png')
         cv.save(ip)
         bitems.append({'id': bid, 'seed': int(hashlib.md5(('rts:' + bid).encode()).hexdigest()[:8], 16), 'prompt': f'{subj}, three-quarter view from above, {BSTYLE}', 'negative': BNEG,
-                       'init_image': ip, 'denoise': 0.65, 'meta': {'mode': 'img2img', 'init_image': bid + '.png (3D 밑그림, tools/world-forge/build_rts.py)', 'denoise': 0.65, 'init_license': 'CC0-1.0 (코드 형태 + Poly Haven CC0 재질)'}})
+                       'init_image': ip, 'denoise': 0.65, 'meta': {'mode': 'img2img', 'init_image': bid + '.png (3D 밑그림, tools/world-forge/build_rts.py)', 'denoise': 0.65, 'init_license': 'CC0-1.0 (코드 형태 + 자체 PBR 재질 K-0113)'}})
     json.dump({'model': 'animagine-xl-4.0-opt', 'out': 'rts_bld',
                'defaults': {'prompt_prefix': 'masterpiece, high score, great score, absurdres', 'width': 768, 'height': 768, 'steps': 28, 'cfg': 5.5, 'sampler': 'Euler a', 'negative': BNEG},
                'items': bitems}, open(os.path.join(AI, 'batches', 'rts_bld.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

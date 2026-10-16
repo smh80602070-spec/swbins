@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6i1dq66sww8l"
+uid="uid://wo5w488knwy6"
 path.s3tc="res://.godot/imported/rock_moss_01_concrete_wall_001_toon.jpg-96bd85679c077ba2a5cca0ac45c18a6c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "f7d2bdbf0586ea10a954e5f736ec33bc"
+"md5": "bd6fd32121c753a896c497427a43c7a1"
 }
 
 [deps]

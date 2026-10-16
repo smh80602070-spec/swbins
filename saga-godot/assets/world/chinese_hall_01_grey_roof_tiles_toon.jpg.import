@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://o3lg1rn6ut3n"
+uid="uid://tfbmsm35sytm"
 path.s3tc="res://.godot/imported/chinese_hall_01_grey_roof_tiles_toon.jpg-ac471d114828bc77d63b31ea641c0355.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "ce7c38ded311bc629bb80dccdf1808a9"
+"md5": "da5231225f1eeb591a507ccd4b1a1a5d"
 }
 
 [deps]

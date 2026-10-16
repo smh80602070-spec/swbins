@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk0tbcuvvfk6w"
+uid="uid://cyywvo06a2we0"
 path.s3tc="res://.godot/imported/campfire_logs_01_castle_wall_slates_toon.jpg-2c564a903b0339cd1917224594585347.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "6cdb3d201839d61ec76bc58df16e4792"
+"md5": "d079a206e2568e696b79247328a6349e"
 }
 
 [deps]

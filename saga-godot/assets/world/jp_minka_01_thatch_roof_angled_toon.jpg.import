@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gupp6wm64wic"
+uid="uid://brem43kcedbyr"
 path.s3tc="res://.godot/imported/jp_minka_01_thatch_roof_angled_toon.jpg-bd57cbd1eec3449580d97b8efdd7b006.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "c72988bad5227b8581dc1c4e7ac72499"
+"md5": "c646a67a72299b5bf018936392fa33af"
 }
 
 [deps]

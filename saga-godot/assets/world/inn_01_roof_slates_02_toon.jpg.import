@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0kb65fthjbdp"
+uid="uid://ciu5jdwge54eu"
 path.s3tc="res://.godot/imported/inn_01_roof_slates_02_toon.jpg-0075510446218026507be3621a09161b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "a2718d0ac6e88fd3fea454d14ef4cb89"
+"md5": "b73df98f6a060c6e2f7ca2f2a8f6fb7a"
 }
 
 [deps]

@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ci8m5q3uqy2p4"
+uid="uid://cdg4dkfsowgk7"
 path.s3tc="res://.godot/imported/silkroad_house_01_clay_plaster_toon_3.jpg-f5c44255f7addade5a2acc6269264e65.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "dfe0883adaaffb7afb9306756be5948a"
+"md5": "a62b54245464eb9170dd8235c8dc5a5c"
 }
 
 [deps]

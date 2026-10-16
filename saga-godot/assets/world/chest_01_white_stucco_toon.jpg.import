@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://3nvvh1ddy7qe"
+uid="uid://doooi583pbsiu"
 path.s3tc="res://.godot/imported/chest_01_white_stucco_toon.jpg-4d11f867302bef91703436d5cc9919be.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "95911945d1a2d52fd911733bc888527e"
+"md5": "60ac76a01db509e151b86c334401dc3b"
 }
 
 [deps]

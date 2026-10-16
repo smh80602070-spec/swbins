@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://di6ylbkw0m7rr"
+uid="uid://ca06svwewoqdb"
 path.s3tc="res://.godot/imported/grass_tuft_02_white_stucco_toon_1.jpg-0ae77497c4db02ab62ce6185a6345bb5.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "5da1cbfffc144a872ff1d7506bc3379e"
+"md5": "ebd7f9380b30d5daf90119f5a65951c6"
 }
 
 [deps]

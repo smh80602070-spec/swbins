@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqfcd7ba2apyv"
+uid="uid://c5x2ke7uatdue"
 path.s3tc="res://.godot/imported/wheat_growing_01_white_stucco_toon.jpg-55204af1a1a8abbae1f1329960a9e254.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "1d172a5b740f5e7ccc6ea4b162774d35"
+"md5": "417253343010f3703e8abbd7f0b7b98e"
 }
 
 [deps]

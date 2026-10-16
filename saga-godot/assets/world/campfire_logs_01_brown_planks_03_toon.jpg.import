@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0gbd3mh1ew4o"
+uid="uid://cohp2g5m3uwd6"
 path.s3tc="res://.godot/imported/campfire_logs_01_brown_planks_03_toon.jpg-d9a77349ba23e574f40ad77a4166023e.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "e8b247996b73c8c9cb3f1e19b0aa02ce"
+"md5": "3291d343ce995ed5c6b24c4cbe1b12c8"
 }
 
 [deps]

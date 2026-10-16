@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d4deor6bgix03"
+uid="uid://cy3te80xpvtto"
 path.s3tc="res://.godot/imported/caravan_wagon_01_black_painted_planks_toon.jpg-ec7818163941861ab84773d85641fe15.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "72c8dd877799fbff2b4cac9bcdf1a3af"
+"md5": "2eefb842471d9be28a9ff871b6732c4c"
 }
 
 [deps]

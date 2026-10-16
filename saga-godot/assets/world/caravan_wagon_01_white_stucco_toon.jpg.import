@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d1nrpqhgjrd32"
+uid="uid://ds6130m0d7mpn"
 path.s3tc="res://.godot/imported/caravan_wagon_01_white_stucco_toon.jpg-024cd7026386bd5303935bcb31909124.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "60fef9de7e744e49e1c0a159950bbd67"
+"md5": "27260718540a35b835da17f3f34bfb8a"
 }
 
 [deps]

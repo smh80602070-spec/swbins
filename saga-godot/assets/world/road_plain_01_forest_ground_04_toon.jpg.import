@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bq0rv1tv47v85"
+uid="uid://ddnd2iv6k7pdu"
 path.s3tc="res://.godot/imported/road_plain_01_forest_ground_04_toon.jpg-cba26afd360dca37521a354b5dfdd2f6.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "22b0a56e474a5aa6613ede4765465a8c"
+"md5": "979661e008fbfb208aaf766b1443d42b"
 }
 
 [deps]

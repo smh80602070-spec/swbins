@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhhr0nha6vsbb"
+uid="uid://d2nhdrfsrcgqu"
 path.s3tc="res://.godot/imported/wall_block_01_castle_wall_slates_toon_1.jpg-f19cf2e0bce76a652d0ed14510c4e90e.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "96ddf82dd282270ef48f08f87b7750b3"
+"md5": "25b4af76aebb81e0ec8385fe8858599e"
 }
 
 [deps]

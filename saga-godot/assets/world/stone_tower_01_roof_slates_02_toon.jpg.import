@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgxoimlbtxauh"
+uid="uid://c7qepvhpwhce"
 path.s3tc="res://.godot/imported/stone_tower_01_roof_slates_02_toon.jpg-0e3502e5c6cc877c7f41fb727b45bfbd.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "a2718d0ac6e88fd3fea454d14ef4cb89"
+"md5": "b73df98f6a060c6e2f7ca2f2a8f6fb7a"
 }
 
 [deps]

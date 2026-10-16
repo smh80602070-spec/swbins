@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddy8mhkkgwvwy"
+uid="uid://b5nvoyq6tq8tn"
 path.s3tc="res://.godot/imported/rock_outcrop_01_castle_wall_slates_toon.jpg-8f2db328244700fac54487bf8d52f69e.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "55ad091c7416503a6d8e6f748fe69c8c"
+"md5": "032f7739b64a65d9ef2f3a2744fdd65c"
 }
 
 [deps]

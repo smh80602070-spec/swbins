@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tbcmmxjnpbbp"
+uid="uid://cywf172rdk4wt"
 path.s3tc="res://.godot/imported/future_dome_01_grey_plaster_toon.jpg-706e1bbfc69a731eae0885aa27138611.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "47080eb134df53a300aa9c5ccae12a56"
+"md5": "8ee156e17181c5b8608afa1fd62dd0a3"
 }
 
 [deps]

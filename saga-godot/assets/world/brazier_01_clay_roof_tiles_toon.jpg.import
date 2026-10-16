@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://x2mnefiiu585"
+uid="uid://x3ssax70y7he"
 path.s3tc="res://.godot/imported/brazier_01_clay_roof_tiles_toon.jpg-12ecec76ce03b8a5819cc0c847fbc0af.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "b8baf0430fd70349f87d3409c57320c6"
+"md5": "167cbbd4f5bab88cd799f13e2ea1388f"
 }
 
 [deps]

@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctyqri7pgg0wd"
+uid="uid://dxrlirwoq8r0h"
 path.s3tc="res://.godot/imported/loot_sword_g0_concrete_wall_001_toon.jpg-64d1539d6f12dbfcfb030c16f0e0cf78.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "3a7c195082b7830b70e17726cab5a6d0"
+"md5": "a6926f88c647a08ca539e313218475ee"
 }
 
 [deps]

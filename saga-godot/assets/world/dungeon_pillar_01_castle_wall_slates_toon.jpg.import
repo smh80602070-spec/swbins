@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1vjkq5tmtqtw"
+uid="uid://c5cwphpqg3652"
 path.s3tc="res://.godot/imported/dungeon_pillar_01_castle_wall_slates_toon.jpg-fe984d4619d1cf44814c147b0872e32d.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "27db28abc21cb581826f845f36766869"
+"md5": "85e4aab9ba46cf6fd120bea06045cdbd"
 }
 
 [deps]

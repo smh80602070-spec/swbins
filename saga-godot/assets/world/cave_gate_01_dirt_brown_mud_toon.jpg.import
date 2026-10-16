@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0e515t30lgam"
+uid="uid://cvdishbv662ra"
 path.s3tc="res://.godot/imported/cave_gate_01_dirt_brown_mud_toon.jpg-d0ba1b6b7248b360eaf6bad9b4d77055.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "368dedcb2cfb05a7d1d25ba4c90d0973"
+"md5": "249b71ed59458786b8eab1d351b0f605"
 }
 
 [deps]

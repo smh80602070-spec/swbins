@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://di4o28w0t7o5n"
+uid="uid://ceq7jn1nm8rpy"
 path.s3tc="res://.godot/imported/chinese_hall_01_brown_planks_03_toon.jpg-5d841f41822c829f752c8ce7ee0ae369.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "a1ef9b8443a6300a1c6318266acb3b04"
+"md5": "0d926a85c7e713e8eee43fb488d69c76"
 }
 
 [deps]

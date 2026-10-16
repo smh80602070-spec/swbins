@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://besex76tqgqxy"
+uid="uid://bgrk27gnowg88"
 path.s3tc="res://.godot/imported/hill_01_white_stucco_toon.jpg-778f1ec93dfaebd351ea9db3b7929462.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "0a1e6fcb02676d3ff64f9bd1b752836e"
+"md5": "eb75c9a6a1e52aa37ace4c053eef6b01"
 }
 
 [deps]

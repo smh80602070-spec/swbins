@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bpqcickrem387"
+uid="uid://dmwn64g32tpxn"
 path.s3tc="res://.godot/imported/river_bend_01_aerial_grass_rock_toon.jpg-996e494888b009785a76eb7987c0490f.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "b37df00feff70d3d622f7ca3ac812b9f"
+"md5": "f8f265d82e2ab09051f76212810b35b1"
 }
 
 [deps]

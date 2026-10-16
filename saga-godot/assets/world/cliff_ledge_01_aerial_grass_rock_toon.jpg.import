@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://yaenrdhsdbbf"
+uid="uid://bf10x3nh07lbg"
 path.s3tc="res://.godot/imported/cliff_ledge_01_aerial_grass_rock_toon.jpg-da3c9770f8949d11f262ae4278dbe933.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "c41248650035480f728111a7cb1b75d3"
+"md5": "fa957adf0b19356804a472558d5dd66e"
 }
 
 [deps]

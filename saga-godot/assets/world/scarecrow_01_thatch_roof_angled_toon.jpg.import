@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dl7ivaew4v8g7"
+uid="uid://dnegm6ad0fynd"
 path.s3tc="res://.godot/imported/scarecrow_01_thatch_roof_angled_toon.jpg-afdf6611e8779935eb0de726154c032f.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "897a5cb47a7f8acefb838cfb58e4cef3"
+"md5": "35f29a48422475565b53f9da495297a8"
 }
 
 [deps]

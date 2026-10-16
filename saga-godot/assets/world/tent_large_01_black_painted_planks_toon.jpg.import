@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5uuvoa44sb8v"
+uid="uid://bly21a3yna7x7"
 path.s3tc="res://.godot/imported/tent_large_01_black_painted_planks_toon.jpg-42623951c625c14e88edc8af9c168f68.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "72c8dd877799fbff2b4cac9bcdf1a3af"
+"md5": "2eefb842471d9be28a9ff871b6732c4c"
 }
 
 [deps]

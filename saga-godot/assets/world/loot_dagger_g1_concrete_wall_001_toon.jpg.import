@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c36kd57lmboht"
+uid="uid://d0hgi0r2633i4"
 path.s3tc="res://.godot/imported/loot_dagger_g1_concrete_wall_001_toon.jpg-8d758de1f69373e79e9014c5c88fc52d.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "9f968016ec4a08cac73751fa58558721"
+"md5": "10c0fb070be618a480b136673a7a69f3"
 }
 
 [deps]

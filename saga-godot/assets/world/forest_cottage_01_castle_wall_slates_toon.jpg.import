@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bfupoaufuhr24"
+uid="uid://bufvtobr7q7x2"
 path.s3tc="res://.godot/imported/forest_cottage_01_castle_wall_slates_toon.jpg-edf37da65f8f45f05aaf4615fc727379.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "0274dcfef4f9250fc341cce4d1d9ceab"
+"md5": "9a18c5aaad42ddf599182c9c057eae74"
 }
 
 [deps]

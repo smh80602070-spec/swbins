@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c25ivx6veftge"
+uid="uid://c50qlijh5erbl"
 path.s3tc="res://.godot/imported/future_dome_01_white_stucco_toon_2.jpg-eb6cd2279f85c3547b703bec3525ea6b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "17d713f187dcd4f1674ccb487e1379cb"
+"md5": "9aef9007eaa6f9188e057c78905e8883"
 }
 
 [deps]

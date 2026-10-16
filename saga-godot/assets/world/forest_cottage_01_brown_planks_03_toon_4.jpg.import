@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbnwlpal22yb0"
+uid="uid://ol57oxpgcwpy"
 path.s3tc="res://.godot/imported/forest_cottage_01_brown_planks_03_toon_4.jpg-bf48927abc9f25a1ec661be39d293363.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "e44f280edf1bcd10c919c8ec4ee38e6d"
+"md5": "49875a69f0d2ac03e5f4dfb4fbf146b7"
 }
 
 [deps]

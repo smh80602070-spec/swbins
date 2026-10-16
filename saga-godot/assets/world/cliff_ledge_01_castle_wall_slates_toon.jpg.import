@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pd12juvu2l18"
+uid="uid://cx85w7y21t1pe"
 path.s3tc="res://.godot/imported/cliff_ledge_01_castle_wall_slates_toon.jpg-43a0981ca82df62cf9550da2ef47d972.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "55ad091c7416503a6d8e6f748fe69c8c"
+"md5": "032f7739b64a65d9ef2f3a2744fdd65c"
 }
 
 [deps]

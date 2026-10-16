@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgmgmk6gnrdvs"
+uid="uid://cibqmwhhnnklm"
 path.s3tc="res://.godot/imported/wood_fence_01_brown_planks_03_toon.jpg-4e10c1afe539cad325ffd7397a55f3ca.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "46e5ca2d86c6a55b78ef63ef30f77137"
+"md5": "5d09f2068ca2da9f9a39198114f2f69e"
 }
 
 [deps]

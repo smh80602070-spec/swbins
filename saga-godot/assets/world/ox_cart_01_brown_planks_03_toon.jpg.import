@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bs4ax8qe3qq37"
+uid="uid://0lu3apysiu83"
 path.s3tc="res://.godot/imported/ox_cart_01_brown_planks_03_toon.jpg-979f6db4f0f96d9e48ff1cd90cea7e07.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "46e5ca2d86c6a55b78ef63ef30f77137"
+"md5": "5d09f2068ca2da9f9a39198114f2f69e"
 }
 
 [deps]

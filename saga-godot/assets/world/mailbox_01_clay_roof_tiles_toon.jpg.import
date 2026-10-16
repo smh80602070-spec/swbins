@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dev3duknehbdi"
+uid="uid://co4urugu2u32q"
 path.s3tc="res://.godot/imported/mailbox_01_clay_roof_tiles_toon.jpg-6ddd7938c63ce4117ee549e9be03ed73.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "fefac4de576e949a23d866f69c0bb9f8"
+"md5": "dd3aefb418b7cd3f05e6b519b761ee43"
 }
 
 [deps]

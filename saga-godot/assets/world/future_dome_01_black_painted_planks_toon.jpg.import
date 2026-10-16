@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dv30lebu4f74x"
+uid="uid://11cyyagthjjb"
 path.s3tc="res://.godot/imported/future_dome_01_black_painted_planks_toon.jpg-07c9d0b27e2362de5c4f03494a0ea5f6.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "618132d1c217a07103a7765fc6ee3737"
+"md5": "bd8deda9662211890a8fc8b101f59af5"
 }
 
 [deps]

@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk0xew58go3i7"
+uid="uid://djohk48654tn2"
 path.s3tc="res://.godot/imported/rock_outcrop_01_aerial_grass_rock_toon.jpg-a6b77fbc1ceb1f17c3030e11d019852a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "5eefe81ba7148aabd610dc8d9615d0a4"
+"md5": "0afc37f983e0892208e95316ffd5701e"
 }
 
 [deps]

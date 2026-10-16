@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8b0p0tn0m7mq"
+uid="uid://bt61x51bipeh1"
 path.s3tc="res://.godot/imported/cave_gate_01_lava_concrete_wall_001_toon.jpg-845aeb63c6df9d096dba8f44beaace75.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "a9bb214e61998293981fa426972752dc"
+"md5": "40df8a4b0c2e8dd92c3ad056e07dd8e6"
 }
 
 [deps]

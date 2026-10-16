@@ -34,7 +34,7 @@ BODY = {
     'mt_dragon': os.path.join(ROOT, 'saga-assets', 'pets3d', 'pet_pt_cheongryong.glb'),
 }
 BODY_LICENSE = {
-    'mt_dragon': 'CC0-1.0 (K-0075 신수 몸 — 재질 Poly Haven CC0, 형태는 코드)',
+    'mt_dragon': 'CC0-1.0 (K-0075 신수 몸 — 재질 자체 PBR K-0113, 형태는 코드)',
 }
 SUBJECT = {   # 주제 태그 — 첫 태그에 가중치(키트 규칙). 사람은 안 태운다(no humans) — 안장·고삐로 탈것임을 보인다
     'mt_farm': 'sturdy bay draft horse, leather saddle, simple reins, saddlebags, thick mane, calm',

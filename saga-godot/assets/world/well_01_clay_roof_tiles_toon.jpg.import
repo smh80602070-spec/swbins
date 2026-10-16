@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d1xmw7n8dj3lb"
+uid="uid://ghw886exel4u"
 path.s3tc="res://.godot/imported/well_01_clay_roof_tiles_toon.jpg-58c814df412cc193abed2eb8ce64d693.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "b57aaf7bd38061ddccdaaad77036bd89"
+"md5": "4eb61401d90f174f2dda42936e4f1755"
 }
 
 [deps]

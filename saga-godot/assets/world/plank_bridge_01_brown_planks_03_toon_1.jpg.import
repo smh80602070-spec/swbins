@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bsvbsh3174t50"
+uid="uid://dnwj2fvjyo17n"
 path.s3tc="res://.godot/imported/plank_bridge_01_brown_planks_03_toon_1.jpg-cee51e4ca71b92d676ecd00010d51506.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "5bf2f0d22cf6b4b30b810e2635fe4bd1"
+"md5": "7c322047c92fe28f45569ace5038c63b"
 }
 
 [deps]

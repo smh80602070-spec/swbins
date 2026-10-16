@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cegtsx3hilfjf"
+uid="uid://c8cq5phxldrwx"
 path.s3tc="res://.godot/imported/tree_birch_01_white_stucco_toon_5.jpg-ecea8956730fec9027796e653f6eabde.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "ca1d9c124b829b58fa306add6d3864b4"
+"md5": "8383514875a9f85f48a096198c4690ad"
 }
 
 [deps]

@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c14pxwi2eitxq"
+uid="uid://pn808tpi4e7f"
 path.s3tc="res://.godot/imported/barrel_01_concrete_wall_001_toon.jpg-9bd29483f96ec63cc35a2a5bd49cd478.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "e8126239ed0b9e4970fc2d68971ba062"
+"md5": "c535ffd923ad33ef0c1cc631a3d23782"
 }
 
 [deps]

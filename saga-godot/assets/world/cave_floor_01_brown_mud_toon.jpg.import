@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://derovw3e1bbid"
+uid="uid://dle0w22hfd3wg"
 path.s3tc="res://.godot/imported/cave_floor_01_brown_mud_toon.jpg-fc4ece520ce370db6717e20a7c10488d.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "feb4b60fc2ce407cac52f9fbfdb68f22"
+"md5": "7777134f99acb1cb6dcfaace2b5dfe7b"
 }
 
 [deps]

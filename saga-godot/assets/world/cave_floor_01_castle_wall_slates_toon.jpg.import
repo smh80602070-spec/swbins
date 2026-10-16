@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://x0byy3g6cvl1"
+uid="uid://f6vublkjsvsq"
 path.s3tc="res://.godot/imported/cave_floor_01_castle_wall_slates_toon.jpg-90f9154059d4534ccb220dd9ebd0e7c7.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "e1918f36a41ef080b5fdffa1c9b7d761"
+"md5": "c2ac11d36f57d85aa05d2c60bd1cc8b6"
 }
 
 [deps]

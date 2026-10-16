@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4k3supquhflc"
+uid="uid://d2r2cy4ik4jty"
 path.s3tc="res://.godot/imported/hill_01_concrete_wall_001_toon_5.jpg-c2e242e77eb1a53b8f43f422014c53ae.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "3238b7dae669265aeb0e28f0c4a8a075"
+"md5": "2242bcca33774f3ec59d885d909369c8"
 }
 
 [deps]

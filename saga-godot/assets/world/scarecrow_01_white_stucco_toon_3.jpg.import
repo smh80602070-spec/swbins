@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://co0qvptuls8yc"
+uid="uid://da4lvtjix0a2h"
 path.s3tc="res://.godot/imported/scarecrow_01_white_stucco_toon_3.jpg-149e23bc7b738474fc059160d817545a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "9301465a20f6d569b611961304b6a6c9"
+"md5": "2b2bd7b42e1dff08589838d8b95f1890"
 }
 
 [deps]

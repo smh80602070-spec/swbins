@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqd3vceiolewd"
+uid="uid://c3y3l6jcpuoo7"
 path.s3tc="res://.godot/imported/modern_block_01_concrete_wall_001_toon.jpg-f2447a2f815bfd6d736048d70b4bae1f.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "4023472c25029801768d43f03f1e81fe"
+"md5": "9fb8686e66d9992ccc58d2b862401f79"
 }
 
 [deps]

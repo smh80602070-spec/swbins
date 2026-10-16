@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cio4objygo3n2"
+uid="uid://o5euwafaw6r2"
 path.s3tc="res://.godot/imported/rock_moss_01_white_stucco_toon_5.jpg-1123e93bcb1606cdd49b1b5d0229cc0d.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "7621f8244d0533cc4a271e602b314e50"
+"md5": "e7e6006e97cd873f4ee162a50cf23c86"
 }
 
 [deps]

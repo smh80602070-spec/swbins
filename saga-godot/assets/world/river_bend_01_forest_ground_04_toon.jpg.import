@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://csyqcnrx5kcuv"
+uid="uid://o2f88bmkd5x1"
 path.s3tc="res://.godot/imported/river_bend_01_forest_ground_04_toon.jpg-884b471f343e37ca3a51f2e36bc78d9b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "22b0a56e474a5aa6613ede4765465a8c"
+"md5": "979661e008fbfb208aaf766b1443d42b"
 }
 
 [deps]

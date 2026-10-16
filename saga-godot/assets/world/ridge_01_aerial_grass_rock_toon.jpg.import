@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dsvvcan8djppo"
+uid="uid://cd7af1g8af34r"
 path.s3tc="res://.godot/imported/ridge_01_aerial_grass_rock_toon.jpg-0b0b6a21d9d86ebc8c0ec8c108a1c3b3.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "e4710470e35797de909cc38057f79665"
+"md5": "1bb19ae20ce4e551b7bb56b69311e5c3"
 }
 
 [deps]

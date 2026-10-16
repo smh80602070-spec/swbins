@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dho5jvu8aperj"
+uid="uid://xim8cb8siry0"
 path.s3tc="res://.godot/imported/inn_01_beam_wall_01_toon.jpg-82013a11548f403dc8bd045c54ee0f0d.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "48b4f260c8421c0713b91bc59270d5a0"
+"md5": "bb4a7fd861b51fece234e13556ce7d4a"
 }
 
 [deps]

@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gmhou3ay685i"
+uid="uid://b5dx1wuqds37a"
 path.s3tc="res://.godot/imported/pebbles_01_concrete_wall_001_toon_2.jpg-91fa00c1853113c779278be8a3e162d1.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "0d032b957ab989b82e448baa24a0af98"
+"md5": "076330584ce6e77adaa867a3e7405c1a"
 }
 
 [deps]

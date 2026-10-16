@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://byxmfsjgmi3od"
+uid="uid://jisdrwfxiif0"
 path.s3tc="res://.godot/imported/notice_board_01_white_stucco_toon.jpg-4bc13d652e9978268cd6e816758769e4.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "278eefa30e7b3b29268a0b85fb2f5f27"
+"md5": "39ca51bf7e527cc9d297e0e0ee6ded1b"
 }
 
 [deps]

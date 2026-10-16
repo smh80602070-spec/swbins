@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://qtra0spfajej"
+uid="uid://tpxht16hyyye"
 path.s3tc="res://.godot/imported/signal_pylon_01_grey_plaster_toon.jpg-8159cfebd6e5f0d848c0d5f710aeb06c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "612ad6eb0b4b6c0c54f20cfa7bddd730"
+"md5": "d553a2ab79fb9fedf14f9b2a80962eb5"
 }
 
 [deps]

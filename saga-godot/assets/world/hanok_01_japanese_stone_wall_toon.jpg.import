@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5jgvrrxbry8r"
+uid="uid://b3vm3a8ed6uuo"
 path.s3tc="res://.godot/imported/hanok_01_japanese_stone_wall_toon.jpg-d9228d10f3a97fd4f84b35899def536a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "a19ff79c3ed988678afc5e16479f57ac"
+"md5": "0ff84fac3237d9a127a946dacddbf13e"
 }
 
 [deps]

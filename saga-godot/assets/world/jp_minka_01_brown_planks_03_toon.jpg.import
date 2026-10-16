@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbn47vajsqtgr"
+uid="uid://cfrpf4x31fkbs"
 path.s3tc="res://.godot/imported/jp_minka_01_brown_planks_03_toon.jpg-0905e6f29f8e334f81f2ede9d788a887.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "437abc1b7376e30ba79d6eac85ee71dc"
+"md5": "54bb748baa169e29fd0e5e3f31bb60dc"
 }
 
 [deps]

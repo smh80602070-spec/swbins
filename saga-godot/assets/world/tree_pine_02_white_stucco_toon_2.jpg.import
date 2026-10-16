@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vpi63bvfiul7"
+uid="uid://ct46eip1wgnd3"
 path.s3tc="res://.godot/imported/tree_pine_02_white_stucco_toon_2.jpg-e8ea521b003fd21f97789c427eff1426.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "bada9012a0233122a8713cb8a7dbce31"
+"md5": "4fbd1263b88407969d6e4839da7cf8f0"
 }
 
 [deps]

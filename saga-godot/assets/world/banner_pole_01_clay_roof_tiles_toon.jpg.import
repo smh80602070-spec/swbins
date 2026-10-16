@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqmomq03jxorf"
+uid="uid://bmdpduk0ciwio"
 path.s3tc="res://.godot/imported/banner_pole_01_clay_roof_tiles_toon.jpg-fdf283fb0ce920311615b3a6c841aafa.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "b65289e6bc85f032bf96e0fca2a31854"
+"md5": "29c809cad75ede9d8a3475156a3984e7"
 }
 
 [deps]

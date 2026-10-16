@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mvy353i0g030"
+uid="uid://dp4pakiyd8hpk"
 path.s3tc="res://.godot/imported/cliff_ledge_01_forest_ground_04_toon.jpg-1db09c3bddbb91da0b1afac82cca1a25.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "22b0a56e474a5aa6613ede4765465a8c"
+"md5": "979661e008fbfb208aaf766b1443d42b"
 }
 
 [deps]

@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjl0gl37k60gg"
+uid="uid://dr4wp1tp0iqdv"
 path.s3tc="res://.godot/imported/hanok_01_white_stucco_toon.jpg-b2d38ff1ca0d6231e6207cebf7c693df.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "deb4dd4eb2fa3e8e26b2079f8cd1ebe5"
+"md5": "29c553629da15ba2c52492c3432dcf6f"
 }
 
 [deps]

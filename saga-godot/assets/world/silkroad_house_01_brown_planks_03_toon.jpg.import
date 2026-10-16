@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cm126mnp7usrw"
+uid="uid://4qw62yqxoy5v"
 path.s3tc="res://.godot/imported/silkroad_house_01_brown_planks_03_toon.jpg-e5dcf90dac6a7af592031f76e3805ffb.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "b427afe14a4112216edd3c9a524c2a0c"
+"md5": "6185bb50401e84fc703dcfbaed17d71c"
 }
 
 [deps]

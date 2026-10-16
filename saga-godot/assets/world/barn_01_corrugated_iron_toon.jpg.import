@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://drs17um7ayale"
+uid="uid://cocw2kmfj03k6"
 path.s3tc="res://.godot/imported/barn_01_corrugated_iron_toon.jpg-b346932df2103a16a89da1d1b9ec1f90.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "2aa76922d4aab5ae6606a7b125e8dab7"
+"md5": "647b6f4a13d9f27f55c88664640e6b8c"
 }
 
 [deps]

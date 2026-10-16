@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhq0w16c41pc5"
+uid="uid://4cnpb57ukf1i"
 path.s3tc="res://.godot/imported/stone_tower_01_black_painted_planks_toon_3.jpg-fe576e8478b128d1dc0f7a1bc7be5efd.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "72c8dd877799fbff2b4cac9bcdf1a3af"
+"md5": "2eefb842471d9be28a9ff871b6732c4c"
 }
 
 [deps]

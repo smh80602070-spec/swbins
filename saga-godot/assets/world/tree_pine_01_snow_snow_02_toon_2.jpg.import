@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://4f1m02hug8yr"
+uid="uid://blhm857r8pj81"
 path.s3tc="res://.godot/imported/tree_pine_01_snow_snow_02_toon_2.jpg-2ed8c8616060a99663ba788d9bea2f81.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "937d503d19876dcd6f580940c04e7b51"
+"md5": "617f6492e8de04f790a30e39c70c398d"
 }
 
 [deps]

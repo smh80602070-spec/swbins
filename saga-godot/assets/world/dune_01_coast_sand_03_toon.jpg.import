@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnpyuobpfp2f5"
+uid="uid://dn2ngk5c3s52y"
 path.s3tc="res://.godot/imported/dune_01_coast_sand_03_toon.jpg-8e8363275d62e10b05c96034e583fdc6.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "152e8ef3fb9c21ce5237087f5012a9f9"
+"md5": "bba0e3bf5cfb25ffe2cfd4cb1f87ea59"
 }
 
 [deps]

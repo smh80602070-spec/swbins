@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxf0pcnwpyg8v"
+uid="uid://dyehghcjbu8pi"
 path.s3tc="res://.godot/imported/ridge_01_forest_ground_04_toon.jpg-2cf1540827bff536babc8888428d3163.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "22b0a56e474a5aa6613ede4765465a8c"
+"md5": "979661e008fbfb208aaf766b1443d42b"
 }
 
 [deps]

@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0v1m0b81qajb"
+uid="uid://chrwjyvq3t0v3"
 path.s3tc="res://.godot/imported/sail_boat_01_coated_pine_toon.jpg-9d58fadad441f832dde5c6df31169dc8.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "2737686e9ce05ba7f9ce895e1a74be8d"
+"md5": "ae35a2e42b426204ead7ee72f36fcb5c"
 }
 
 [deps]

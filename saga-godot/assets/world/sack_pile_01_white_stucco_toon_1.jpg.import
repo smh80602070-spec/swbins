@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cnsa18orhlnsu"
+uid="uid://cgbh33ehf15ur"
 path.s3tc="res://.godot/imported/sack_pile_01_white_stucco_toon_1.jpg-08bfbb1215bf0ec20cb07e07b6a58d4d.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "f2bb0aa11e542e42905c2ed282cb5292"
+"md5": "02480b1bd205eed8aadd53a59fb00a20"
 }
 
 [deps]

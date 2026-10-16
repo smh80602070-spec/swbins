@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bu1xs2k46cc4s"
+uid="uid://x2ghdgks6566"
 path.s3tc="res://.godot/imported/dungeon_gate_01_castle_wall_slates_toon.jpg-aa2f3a59ea610b94c0fb7d7cdea7b6ce.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "1c83fd08ccbd954aeeb254db383724b0"
+"md5": "1e1c02fbfa76f7812fc25dedc6c7e8a9"
 }
 
 [deps]

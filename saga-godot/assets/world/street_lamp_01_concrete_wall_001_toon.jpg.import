@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b47hr1oj384r1"
+uid="uid://c87jvbvljugw7"
 path.s3tc="res://.godot/imported/street_lamp_01_concrete_wall_001_toon.jpg-329cc42d99c436bace2c14e652f26b16.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "19f8a43b9e37588e48ed7392468100fc"
+"md5": "5b418f2fc8da0ba27d7cbc012790e4ad"
 }
 
 [deps]

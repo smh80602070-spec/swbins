@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://buqf4ilvik1py"
+uid="uid://dh7l0u7mn66ry"
 path.s3tc="res://.godot/imported/barn_01_brown_planks_03_toon.jpg-818f872215418c3e6e66c9791d54b9b6.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "89da995dd35ffaa4f46bf61de0d5f21c"
+"md5": "1381e919c3319ad0148a340ae1fdc486"
 }
 
 [deps]

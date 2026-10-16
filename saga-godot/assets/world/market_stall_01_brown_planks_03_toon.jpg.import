@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwgjvg7nb66fx"
+uid="uid://cg8ucya8lx04p"
 path.s3tc="res://.godot/imported/market_stall_01_brown_planks_03_toon.jpg-ce375695a9f77d1ad02fb4857876296c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "46e5ca2d86c6a55b78ef63ef30f77137"
+"md5": "5d09f2068ca2da9f9a39198114f2f69e"
 }
 
 [deps]

@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djpfl4c78gg2l"
+uid="uid://y3rrl0r7bplg"
 path.s3tc="res://.godot/imported/forest_cottage_01_white_stucco_toon.jpg-b0ca4f1fb1ffe4f0d9ce6666e3e228f6.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "97c947a390a99b75aaebe82139de78bd"
+"md5": "55863c45fb2dfd5f2817074869d130ea"
 }
 
 [deps]

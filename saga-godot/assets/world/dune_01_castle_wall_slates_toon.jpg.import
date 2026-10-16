@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dj36fwjk3ieqs"
+uid="uid://ce6f6ctjlm6xd"
 path.s3tc="res://.godot/imported/dune_01_castle_wall_slates_toon.jpg-6a297ca7424b5d893068ab5ff2fb42d1.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "55ad091c7416503a6d8e6f748fe69c8c"
+"md5": "032f7739b64a65d9ef2f3a2744fdd65c"
 }
 
 [deps]

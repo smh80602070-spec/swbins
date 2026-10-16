@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgnbqqpm0sxf"
+uid="uid://bkny264t1glqt"
 path.s3tc="res://.godot/imported/chinese_hall_01_white_stucco_toon.jpg-479a82c212ea347741ae37d73aad8768.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "e8f4a7b40de6f63deb5f89f5092c8a45"
+"md5": "7a2907ddab529cf909d3fb77de514508"
 }
 
 [deps]

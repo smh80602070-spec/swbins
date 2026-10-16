@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ch7imvxf0u20p"
+uid="uid://ug6a8cwgk4a"
 path.s3tc="res://.godot/imported/barrel_01_brown_planks_03_toon.jpg-79fc2fb5c0b6421cdc82f2b746afe589.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "46e5ca2d86c6a55b78ef63ef30f77137"
+"md5": "5d09f2068ca2da9f9a39198114f2f69e"
 }
 
 [deps]

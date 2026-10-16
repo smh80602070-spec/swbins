@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ylng4gv2loqv"
+uid="uid://c2twqfn5m8ifo"
 path.s3tc="res://.godot/imported/mine_cart_01_corrugated_iron_toon.jpg-7e07ab3db263b2dd19223de7b77426d8.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "451144d1334c04d55271d0678178bb18"
+"md5": "21ba63d66176f1bc03f320a481fa7f58"
 }
 
 [deps]

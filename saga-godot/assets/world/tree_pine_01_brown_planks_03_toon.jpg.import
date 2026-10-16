@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ci42a4qqi5uwl"
+uid="uid://cuu2hj5mdcoar"
 path.s3tc="res://.godot/imported/tree_pine_01_brown_planks_03_toon.jpg-eed6e017009ae9d0fa45c60e9e69bc08.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "b6f652583412f8495beae52e73020911"
+"md5": "30b75f0957b85f5f898a41c6ea3b7321"
 }
 
 [deps]

@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b5r427vkcdyf8"
+uid="uid://b4bkiygp0cb6c"
 path.s3tc="res://.godot/imported/eu_house_01_clay_roof_tiles_toon.jpg-41dc1b0b347bc043e16afef455e89d82.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "b57aaf7bd38061ddccdaaad77036bd89"
+"md5": "4eb61401d90f174f2dda42936e4f1755"
 }
 
 [deps]

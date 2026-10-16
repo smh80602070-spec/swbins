@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c76ru11glnrq4"
+uid="uid://5tpcebkoduw2"
 path.s3tc="res://.godot/imported/altar_base_01_castle_wall_slates_toon.jpg-70b52dcdf12fcf4903ad8d11da47b196.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "202e91bcbd5677b40b7eaf433005ad89"
+"md5": "9d40741b02ac82ebde6ad5d7a80b2586"
 }
 
 [deps]

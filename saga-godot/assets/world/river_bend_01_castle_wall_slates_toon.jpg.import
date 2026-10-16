@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mesmbirhm6oe"
+uid="uid://cv8wfs8nn8xqv"
 path.s3tc="res://.godot/imported/river_bend_01_castle_wall_slates_toon.jpg-7a6075af924286f1625f7fd39562bb7b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "55ad091c7416503a6d8e6f748fe69c8c"
+"md5": "032f7739b64a65d9ef2f3a2744fdd65c"
 }
 
 [deps]

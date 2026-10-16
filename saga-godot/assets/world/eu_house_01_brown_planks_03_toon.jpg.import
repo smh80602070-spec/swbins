@@ -2,14 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://4rieu683o6yi"
+uid="uid://bqlqn5takuerb"
 path.s3tc="res://.godot/imported/eu_house_01_brown_planks_03_toon.jpg-c2415573024f23d17350e0814727f7c7.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "a1cee9c804b9f1b3a3ec425e8121e328"
+"md5": "8c9c47a1d4647eeb8a2ce63422380409"
 }
 
 [deps]
