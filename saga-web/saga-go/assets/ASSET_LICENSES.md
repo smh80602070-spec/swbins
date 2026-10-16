@@ -1391,3 +1391,27 @@ Quaternius "Ultimate Monsters"(CC0, 사가나락 `assets/models/monsters/quatern
 ## VRM 애니메 아바타 d~z (`assets/models/people/anime/avatar_sample_d~z.glb`, 2026-10-02)
 
 VRoid 샘플(pixiv VRoid Project, VRM 1.0 — 상업·재배포·개작 허용, 크레딧 불필요) 중 `t` 를 뺀 22벌이다. `avatar_sample_t` 는 개작 허용·개작본 재배포 불가라 웹에 넣지 않았다. `tools/glb-compress/vrm-slim.mjs`(모프 제거·프리미티브 합침) 뒤 `compress.mjs`(Meshopt + 텍스처 WebP 1024px)로 줄인 파일이다 — 약 270MB → 17MB(벌당 약 0.8MB). 뼈·재질·메시 수는 그대로, VRMC_* 확장은 웹이 안 읽어 떨어졌다. 웹 3D 는 Pages 용량(1GB 한도) 때문에 이 한 판에만 둔다(K-0022 3b) — 다른 판에서 쓰려면 이 폴더 파일을 복사한다.
+
+<!-- self-made:auto (tools/asset-audit/self_docs.py, K-0119) — 손으로 고치지 말 것 -->
+## 자체 산출 사본 — saga-assets 정본과 md5 같은 파일 (자동)
+
+이 판 `assets/` 안에서 정본(`saga-assets/`)과 내용이 같은 파일. 출처·도구·모델은 정본 옆 `*.license.json` 이 정본이고, 묶음별 라이선스 모음은 `saga-assets/CREDITS.md`.
+
+| 파일 | 수 | 정본 | 도구·모델 | 라이선스 |
+|---|---|---|---|---|
+| `audio/bgm/*` | 2 | `saga-assets/bgm` | music-gen · ACE-Step/Ace-Step1.5 (acestep-v15-turbo) | MIT |
+| `icons/icon64/*` | 22 | `saga-assets/icons/icon64` | gen.py · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `sprites2d_sheets/pool_e_demon_128/*` | 6 | `saga-assets/sprites2d/pool_e_demon_128` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
+| `sprites2d_sheets/pool_e_undead_127/*` | 6 | `saga-assets/sprites2d/pool_e_undead_127` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
+| `sprites2d_sheets/pool_f_human_139/*` | 6 | `saga-assets/sprites2d/pool_f_human_139` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
+| `sprites2d_sheets/pool_g_human_147/*` | 6 | `saga-assets/sprites2d/pool_g_human_147` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
+| `store/*` | 2 | `saga-assets/store/go` | gen.py · Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0 |
+| `textures/land_c/*` | 18 | `saga-assets/land-go` | gen.py (ComfyUI) · z-image-turbo | Apache-2.0 |
+| `ui/*` | 19 | `saga-assets/ui/dungeon`, `saga-assets/ui/go` | uigen.py | CC0-1.0 |
+| `web2d/moving/hero_f/*` | 3 | `saga-assets/web2d/moving/hero_f` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `web2d/moving/hero_m/*` | 3 | `saga-assets/web2d/moving/hero_m` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `web2d/moving/villager_a/*` | 3 | `saga-assets/web2d/moving/villager_a` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `web2d/moving/villager_b/*` | 3 | `saga-assets/web2d/moving/villager_b` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `web2d/moving/villager_c/*` | 3 | `saga-assets/web2d/moving/villager_c` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `web2d/tile/*` | 6 | `saga-assets/web2d/tile` | gen.py · sd_xl_base_1.0 | CreativeML OpenRAIL++-M |
+<!-- /self-made:auto -->

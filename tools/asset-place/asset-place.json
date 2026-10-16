@@ -689,8 +689,47 @@
     "*.webp",
     "*.json"
    ],
-   "note": "K-0032 몬스터 도감 초상 32(K-0043 몸 mon_* 20 + boss_* 12 × 정사각 192·카드 300x344). 도감(MONSTERS) 데이터가 아직 없어 정본 보관 — 연결은 웹이 항목을 만든 뒤 대상을 더한다",
-   "targets": []
+   "note": "K-0032 몬스터 도감 초상 32(K-0043 몸 mon_* 20 + boss_* 12 × 정사각 192·카드 300x344). 도감(MONSTERS) 데이터가 아직 없어 정본 보관 — 2나락 적 카드(W-0072 monster-portrait.js)가 _c 32장을 씀. K-0119 로 대상 등록(그 전엔 W-0072 손 복사본이 K-0113 이전 옛 몸 렌더판이었다)",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-dungeon/assets/portraits-monster",
+     "rename": {
+      "boss_01_c.webp": "boss_01_c.webp",
+      "boss_02_c.webp": "boss_02_c.webp",
+      "boss_03_c.webp": "boss_03_c.webp",
+      "boss_04_c.webp": "boss_04_c.webp",
+      "boss_05_c.webp": "boss_05_c.webp",
+      "boss_06_c.webp": "boss_06_c.webp",
+      "boss_07_c.webp": "boss_07_c.webp",
+      "boss_08_c.webp": "boss_08_c.webp",
+      "boss_09_c.webp": "boss_09_c.webp",
+      "boss_10_c.webp": "boss_10_c.webp",
+      "boss_11_c.webp": "boss_11_c.webp",
+      "boss_12_c.webp": "boss_12_c.webp",
+      "mon_cons_01_c.webp": "mon_cons_01_c.webp",
+      "mon_cons_02_c.webp": "mon_cons_02_c.webp",
+      "mon_cons_03_c.webp": "mon_cons_03_c.webp",
+      "mon_cons_04_c.webp": "mon_cons_04_c.webp",
+      "mon_quad_01_c.webp": "mon_quad_01_c.webp",
+      "mon_quad_02_c.webp": "mon_quad_02_c.webp",
+      "mon_quad_03_c.webp": "mon_quad_03_c.webp",
+      "mon_quad_04_c.webp": "mon_quad_04_c.webp",
+      "mon_serp_01_c.webp": "mon_serp_01_c.webp",
+      "mon_serp_02_c.webp": "mon_serp_02_c.webp",
+      "mon_serp_03_c.webp": "mon_serp_03_c.webp",
+      "mon_serp_04_c.webp": "mon_serp_04_c.webp",
+      "mon_spir_01_c.webp": "mon_spir_01_c.webp",
+      "mon_spir_02_c.webp": "mon_spir_02_c.webp",
+      "mon_spir_03_c.webp": "mon_spir_03_c.webp",
+      "mon_spir_04_c.webp": "mon_spir_04_c.webp",
+      "mon_wing_01_c.webp": "mon_wing_01_c.webp",
+      "mon_wing_02_c.webp": "mon_wing_02_c.webp",
+      "mon_wing_03_c.webp": "mon_wing_03_c.webp",
+      "mon_wing_04_c.webp": "mon_wing_04_c.webp"
+     }
+    }
+   ]
   },
   {
    "id": "portraits-expr-story",

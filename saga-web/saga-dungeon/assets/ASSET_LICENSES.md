@@ -1942,3 +1942,38 @@ Orc·Demon 은 Ultimate Monsters). 사용자 결정("사가만리처럼 대역 �
 ## 2D 스프라이트 시트 (`assets/sprites2d_sheets/`)
 
 2026-10-01 자체 제작 — 공방(`tools/char-forge/gear_sprites.py`)이 CC0 VRoid 몸(`tools/char-forge/_src/cc0_vroid`) 위에 절차 생성 장비를 입혀 Blender 로 굽는다(128px·8프레임·방향 3·동작 idle/walk/attack/hit/death, WebP). 적 4벌: `pool_basem_demon_104`, `pool_e_orc_125`, `pool_d_goblin_118`, `pool_g_undead_143`. 벌마다 `manifest.json` 에 몸·종류·규격·출처 문구. 원작 에셋 없음. 이 판은 아직 안 읽는다(W 티켓 — 인물·괴물 id 연결과 `sprite.js` 배선).
+
+<!-- self-made:auto (tools/asset-audit/self_docs.py, K-0119) — 손으로 고치지 말 것 -->
+## 자체 산출 사본 — saga-assets 정본과 md5 같은 파일 (자동)
+
+이 판 `assets/` 안에서 정본(`saga-assets/`)과 내용이 같은 파일. 출처·도구·모델은 정본 옆 `*.license.json` 이 정본이고, 묶음별 라이선스 모음은 `saga-assets/CREDITS.md`.
+
+| 파일 | 수 | 정본 | 도구·모델 | 라이선스 |
+|---|---|---|---|---|
+| `audio/bgm/*` | 3 | `saga-assets/bgm` | music-gen · ACE-Step/Ace-Step1.5 (acestep-v15-turbo) | MIT |
+| `cutscene/*` | 12 | `saga-assets/cutscene` | gen.py · Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0 |
+| `icons/icon64/*` | 93 | `saga-assets/icons/icon64` | gen.py · animagine-xl-4.0-opt, icon_pack.py · none | CreativeML OpenRAIL++-M, CC0-1.0 |
+| `portraits-monster/*` | 32 | `saga-assets/portraits-monster` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `rarity/*` | 4 | `saga-assets/rarity` | raritygen.py | CC0-1.0 |
+| `sprites2d_sheets/pool_basem_demon_104/*` | 6 | `saga-assets/sprites2d/pool_basem_demon_104` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
+| `sprites2d_sheets/pool_d_goblin_118/*` | 6 | `saga-assets/sprites2d/pool_d_goblin_118` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
+| `sprites2d_sheets/pool_e_orc_125/*` | 6 | `saga-assets/sprites2d/pool_e_orc_125` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
+| `sprites2d_sheets/pool_g_undead_143/*` | 6 | `saga-assets/sprites2d/pool_g_undead_143` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
+| `store/*` | 2 | `saga-assets/store/dungeon` | gen.py · Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0 |
+| `ui/*` | 19 | `saga-assets/ui/dungeon` | uigen.py | CC0-1.0 |
+| `vfx/*` | 17 | `saga-assets/vfx` | vfxgen.py | CC0-1.0 |
+| `web2d/bg/*` | 24 | `saga-assets/web2d/bg` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `web2d/interior/*` | 6 | `saga-assets/web2d/interior` | gen.py · Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0 |
+| `web2d/moving/beast_big/*` | 3 | `saga-assets/web2d/moving/beast_big` | gen.py · animagine-xl-4.0-opt, gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `web2d/moving/beast_dog/*` | 3 | `saga-assets/web2d/moving/beast_dog` | gen.py · animagine-xl-4.0-opt, gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `web2d/moving/beast_wolf/*` | 3 | `saga-assets/web2d/moving/beast_wolf` | gen.py · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `web2d/moving/companion_archer/*` | 3 | `saga-assets/web2d/moving/companion_archer` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `web2d/moving/companion_mage/*` | 3 | `saga-assets/web2d/moving/companion_mage` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `web2d/moving/companion_warrior/*` | 3 | `saga-assets/web2d/moving/companion_warrior` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `web2d/moving/hero_f/*` | 3 | `saga-assets/web2d/moving/hero_f` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `web2d/moving/hero_m/*` | 3 | `saga-assets/web2d/moving/hero_m` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `web2d/moving/villager_a/*` | 3 | `saga-assets/web2d/moving/villager_a` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `web2d/moving/villager_b/*` | 3 | `saga-assets/web2d/moving/villager_b` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `web2d/moving/villager_c/*` | 3 | `saga-assets/web2d/moving/villager_c` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `web2d/tile/*` | 7 | `saga-assets/web2d/tile` | gen.py (ComfyUI) · z-image-turbo, gen.py · sd_xl_base_1.0 | Apache-2.0, CreativeML OpenRAIL++-M |
+<!-- /self-made:auto -->
