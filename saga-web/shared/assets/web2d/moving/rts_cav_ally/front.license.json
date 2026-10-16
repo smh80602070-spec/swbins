@@ -1,20 +1,20 @@
 {
  "id": "rts_cav_ally_front",
- "generator": "tools/ai-art/gen.py",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
  "model": "animagine-xl-4.0-opt",
  "model_license": "CreativeML OpenRAIL++-M",
- "prompt": "masterpiece, high score, great score, absurdres, 1boy, cavalry rider sitting on a brown horse, steel helmet, long lance, blue and white clothing, blue cloth horse cloth, full horse and rider visible, solo, front view, facing the viewer, whole body from head to feet, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
- "negative_prompt": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, ground, flag, banner, close-up, portrait, upper body, zoomed in, army, crowd, many soldiers, duplicate, tiled, repeated pattern, extra arms, lance in the foreground",
- "seed": 3518397767,
- "steps": 28,
- "cfg_scale": 5.5,
- "sampler": "Euler a",
+ "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, cavalry rider sitting on a brown horse, steel helmet, long lance, blue and white clothing, blue cloth horse cloth, full horse and rider visible, wide shot, adult, tall, realistic body proportions, detailed face, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+ "negative_prompt": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+ "seed": 319267551,
+ "steps": 30,
+ "cfg_scale": 6.0,
+ "sampler": "euler_ancestral/normal",
  "size": [
   256,
   256
  ],
- "seconds": 24.7,
- "date": "2026-10-04",
+ "seconds": 66.1,
+ "date": "2026-10-16",
  "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
  "packed_by": "tools/ai-art/pack_moving2d.py"
 }
