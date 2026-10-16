@@ -432,6 +432,7 @@
   'use strict';
   global.DG = global.DG || {};
   global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.menu = { keep: [] };   // W-0255 ☰ 메뉴 화면 — 09-11 "하단 메뉴가 화면을 가려" 로 독엔 단추 하나만(옛 더보기 자리에 ☰), 열넷 전부 메뉴 격자
   global.DG.cfg.account = {
     art: 'assets/store/dungeon_key',   // 타이틀 키 아트(K-0041, W-0050)
     name: '2나락',

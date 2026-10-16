@@ -11,7 +11,7 @@
  *       사내 http 주소로 폰에서 열면 홈 화면 추가는 되지만 이 캐시는 동작하지 않는다.
  */
 
-var VERSION = 'go-v6.72.149';
+var VERSION = 'go-v6.72.153';
 var APP_CACHE = 'dg-app-' + VERSION;
 
 /* index.html 이 부르는 스크립트가 여기 다 있어야 오프라인에서 게임이 돈다.
@@ -27,6 +27,7 @@ var SHELL = [
   './manifest.json',
   './css/style.css',
   './css/encounter3d.css',
+  './css/ui-kit.css',   // W-0252 공용 창 틀 — 색 옷 그림(assets/ui)은 런타임 캐시로
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png'

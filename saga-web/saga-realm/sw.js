@@ -11,7 +11,7 @@
  *       사내 http 주소로 폰에서 열면 홈 화면 추가는 되지만 이 캐시는 동작하지 않는다.
  */
 
-var VERSION = 'realm-v1.94.123';
+var VERSION = 'realm-v1.94.125';
 var APP_CACHE = 'sr-app-' + VERSION;
 
 /* index.html 이 부르는 스크립트가 여기 다 있어야 오프라인에서 게임이 돈다.
@@ -26,6 +26,7 @@ var SHELL = [
   './manifest.json',
   './css/style.css',
   './css/strategy.css',
+  './css/ui-kit.css',   // W-0254 공용 창 틀
   './css/rts.css',
   './rts.html',
   './js/rts/grid.js',

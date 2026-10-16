@@ -424,6 +424,7 @@
   'use strict';
   global.DG = global.DG || {};
   global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.menu = { keep: ['me', 'quest', 'party', 'bag'] };   // W-0253 ☰ 메뉴 화면 — 독엔 이 넷 + ☰, 나머지(성도·천거·도감·사관·기록·키설정·설정)는 메뉴 격자
   global.DG.cfg.account = {
     art: 'assets/store/go_key',   // 타이틀 키 아트(K-0041, W-0050)
     name: '1만리',

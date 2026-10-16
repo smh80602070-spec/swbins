@@ -73,6 +73,7 @@
    "js/ui-detail.js",
    "js/ui-town.js",
    "js/ui.js",
+   "js/menu-grid.js",
    "js/perf.js",
    "js/game.js"
   ]
@@ -150,6 +151,7 @@
    "js/ui-detail.js",
    "js/ui-town.js",
    "js/ui.js",
+   "js/menu-grid.js",
    "js/game.js"
   ]
  ],

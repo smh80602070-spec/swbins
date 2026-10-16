@@ -9,6 +9,7 @@ try{if(location.protocol!=='file:'&&/\/index\.html$/.test(location.pathname))his
 <title>2나락 — 내려간다</title>
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/diablo.css">
+<link rel="stylesheet" href="css/ui-kit.css">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icons/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -53,27 +54,24 @@ try{if(location.protocol!=='file:'&&/\/index\.html$/.test(location.pathname))his
 <!-- 가운데: 본영/마을 — 기본은 필드를 도는 화면이고, 던전(굴혈)은 걸어 들어가야 하는 이벤트 던전이다 -->
 <div id="camp"></div>
 
-<!-- 우하단: 액션 독 — 2026-09-11, "하단 메뉴가 화면을 가려" 재신고로 붙박이 셋
-     (부대·장비·지도)까지 마저 접었다. 이제 화면에 늘 떠 있는 건 "더보기"
-     버튼 하나뿐 — 열 셋 전부 그 뒤에서 기다린다. -->
+<!-- 우하단: 액션 독 — 2026-09-11, "하단 메뉴가 화면을 가려" 재신고로 붙박이를 다 접었다.
+     W-0255: 옛 "더보기" 팝오버 대신 공용 ☰ 메뉴 화면(js/menu-grid.js · core.js cfg.menu.keep = []) —
+     화면엔 ☰ 하나, 단추는 여기 그대로 두고(숨김) 메뉴 격자가 읽어 간다. -->
 <nav id="dock">
-  <div id="dock-more">
-    <button data-sheet="party"><span data-icon="swords">⚔️</span><small>부대</small></button>
-    <button data-sheet="gear"><span data-icon="backpack">🎒</span><small>장비</small></button>
-    <button data-sheet="world"><span data-icon="map">🗺️</span><small>지도</small></button>
-    <button data-sheet="skill"><span data-icon="scroll-text">📜</span><small>무예</small></button>
-    <button data-sheet="craft"><span data-icon="hammer">🔨</span><small>세공</small></button>
-    <button data-sheet="vendor"><span data-icon="store">🧺</span><small>행상</small></button>
-    <button data-sheet="dex"><span data-icon="book-open">📖</span><small>도감</small></button>
-    <button data-sheet="beast"><span data-icon="award">👹</span><small>몬스터</small></button>
-    <button data-sheet="quest"><span data-icon="flag">🚩</span><small>퀘스트</small></button>
-    <button data-sheet="look"><span data-icon="user">🧑</span><small>외모</small></button>
-    <button data-sheet="log"><span data-icon="scroll-text">📜</span><small>기록</small></button>
-    <button data-sheet="overworld"><span data-icon="compass">🧭</span><small>오버월드</small></button>
-    <button data-sheet="keys"><span data-icon="keyboard">⌨️</span><small>키설정</small></button>
-    <button data-sheet="settings"><span data-icon="settings">⚙️</span><small>설정</small></button>
-  </div>
-  <button id="dock-more-btn"><span data-icon="ellipsis">⋯</span><small>더보기</small></button>
+  <button data-sheet="party"><span data-icon="swords">⚔️</span><small>부대</small></button>
+  <button data-sheet="gear"><span data-icon="backpack">🎒</span><small>장비</small></button>
+  <button data-sheet="world"><span data-icon="map">🗺️</span><small>지도</small></button>
+  <button data-sheet="skill"><span data-icon="scroll-text">📜</span><small>무예</small></button>
+  <button data-sheet="craft"><span data-icon="hammer">🔨</span><small>세공</small></button>
+  <button data-sheet="vendor"><span data-icon="store">🧺</span><small>행상</small></button>
+  <button data-sheet="dex"><span data-icon="book-open">📖</span><small>도감</small></button>
+  <button data-sheet="beast"><span data-icon="award">👹</span><small>몬스터</small></button>
+  <button data-sheet="quest"><span data-icon="flag">🚩</span><small>퀘스트</small></button>
+  <button data-sheet="look"><span data-icon="user">🧑</span><small>외모</small></button>
+  <button data-sheet="log"><span data-icon="scroll-text">📜</span><small>기록</small></button>
+  <button data-sheet="overworld"><span data-icon="compass">🧭</span><small>오버월드</small></button>
+  <button data-sheet="keys"><span data-icon="keyboard">⌨️</span><small>키설정</small></button>
+  <button data-sheet="settings"><span data-icon="settings">⚙️</span><small>설정</small></button>
 </nav>
 
 <!-- 슬라이드 시트 -->

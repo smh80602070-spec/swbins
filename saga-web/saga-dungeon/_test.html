@@ -6,6 +6,7 @@
 <title>사가나락 자가진단</title>
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/diablo.css">
+<link rel="stylesheet" href="css/ui-kit.css">
 <style>
   body { overflow: auto; }
   #report { padding: 16px; font-family: Consolas, monospace; font-size: 13px; line-height: 1.8; }
@@ -177,6 +178,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/auto.js"></script>
 <script src="js/ui-shop.js"></script>
 <script src="js/ui.js"></script>
+<script src="js/menu-grid.js"></script>
 <script src="js/ui-detail.js"></script>
 <script src="js/game.js"></script>
 <script>
@@ -1048,6 +1050,30 @@ window.requestAnimationFrame = function () { return 0; };
     /* ── 재미표준 A·B·C·D·G·H 측정(W-0221, SAGA-DESIGN §3 규격 진단 그대로 — 게임 동작은 안 바꾼다) ── */
     function funMark(ok, part) { return (ok ? '○' : (part ? '△' : '×')) + ' — '; }
 
+    t('W-0255 ☰ 메뉴 화면(2나락) — 독엔 cfg 것 + ☰ · 나머지 격자 · 숨은 칸(display:none) 빠짐 · 접힌 단추 뱃지 → ☰ 점·칸 뱃지 · Esc 는 다른 창이 열려 있으면 양보', function () {
+      var M = DG.menuGrid, keep = ((DG.cfg.menu || {}).keep || []).join();
+      if (!M) { throw new Error('menu-grid.js 안 실림'); }
+      var real = document.getElementById('dock'); M._reset(); if (real) { real.id = 'dock-real'; }
+      var dock = document.createElement('nav'), hit = [], keys = ["party","gear","world","skill","craft","vendor","dex","beast","quest","look","log","overworld","keys","settings"], i, sh = null;
+      dock.id = 'dock';
+      for (i = 0; i < keys.length; i++) { var b = document.createElement('button'); b.setAttribute('data-sheet', keys[i]); b.innerHTML = '<span>·</span><small>' + keys[i] + '</small>'; b.onclick = (function (k) { return function () { hit.push(k); }; })(keys[i]); dock.appendChild(b); }
+      var off = dock.querySelector('[data-sheet="' + keys[3] + '"]'); off.style.display = 'none';   // 아직 안 열린 칸
+      var late = dock.querySelector('[data-sheet="' + keys[keys.length - 3] + '"]');
+      document.body.appendChild(dock);
+      try {
+        var inited = M.init(), hidden = dock.querySelectorAll('button[data-menu-only]').length, mb = document.getElementById('btn-menu');
+        var alert0 = mb.classList.contains('mg-alert'); late.classList.add('badge'); late.setAttribute('data-badge', '3'); M._sync(); var alert1 = mb.classList.contains('mg-alert');
+        var n = M.open(), badgeCell = document.querySelector('#menu-grid .mg-cell.badge[data-badge="3"]'), cells = document.querySelectorAll('#menu-grid .mg-cell');
+        if (cells[0]) { cells[0].click(); } var clicked = hit.join(','), closedByCell = !M.isOpen();
+        var pre = M._otherOpen(); window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' })); var escOpen = M.isOpen() === !pre;
+        if (!M.isOpen()) { M.open(); } window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' })); var escClose = !M.isOpen();
+        sh = document.createElement('aside'); sh.id = 'sheet'; sh.className = 'show'; document.body.appendChild(sh);
+        window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' })); var yield1 = !M.isOpen();
+        var ok = keep === '' && inited && hidden === 14 && n === 13 && cells.length === n && !alert0 && alert1 && !!badgeCell && clicked === keys[0] && closedByCell && escOpen && escClose && yield1;
+        if (!ok) { throw new Error(JSON.stringify({ keep: keep, inited: inited, hidden: hidden, n: n, alert0: alert0, alert1: alert1, badgeCell: !!badgeCell, clicked: clicked, closedByCell: closedByCell, escOpen: escOpen, escClose: escClose, yield1: yield1 })); }
+        return '독 ' + (keep || '(없음)') + ' + ☰ · 접은 ' + hidden + ' · 칸 ' + n + '(숨은 칸 뺌) · 뱃지 → ☰ 점 · Esc ' + (pre ? '(다른 창 열림 → 양보)' : '열고') + ' 닫음';
+      } finally { M._reset(); dock.remove(); if (sh) { sh.remove(); } if (real) { real.id = 'dock'; M.init(); } }
+    });
     t('재미표준 A 목표판(측정) — 부팅 뒤 지금·이번 세션·이번 주 세 줄이 비어 있지 않다', function () {
       var GL = DG.goals; if (!GL || !GL.lines) { return '× — DG.goals.lines 없음'; }
       var keep = JSON.stringify(C.save.goals || null), L;

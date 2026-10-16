@@ -72,6 +72,7 @@
    "js/icon.js",
    "js/ui-detail.js",
    "js/ui.js",
+   "js/menu-grid.js",
    "js/region-icon.js",
    "js/perf.js",
    "js/game.js"
@@ -143,6 +144,7 @@
    "js/side-hand.js",
    "js/ui-detail.js",
    "js/ui.js",
+   "js/menu-grid.js",
    "js/region-icon.js",
    "js/game.js"
   ]
