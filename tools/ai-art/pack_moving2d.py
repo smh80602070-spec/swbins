@@ -1,5 +1,5 @@
 """K-0056 단계 3·4 — AI 가 그린 정면·옆·뒤 정지 그림(moving2d)을 웹 규격으로 포장: 배경 제거 → 256px 알파 → <캐릭터>/<front|side|back>.webp + manifest.json + license.
-  py tools/ai-art/pack_moving2d.py [<원본폴더>] [<출력폴더>] [--heads]      기본 _out/moving2d → _out/moving2d_pack · --heads 는 등신 재기(K-0112, 끝 줄 HEADS_OK|HEADS_LOW)
+  py tools/ai-art/pack_moving2d.py [<원본폴더>] [<출력폴더>] [--heads]      기본 _out/moving2d → _out/moving2d_pack · --heads 는 등신 재기(K-0112, 끝 줄 HEADS_OK|HEADS_LOW — 모자·두건·수염·말에 흔들려 참고만, 판정은 heads_ruler.py 눈 자)
 방식 A(한 장 모드): 웹 코드가 걸음(위아래 bob·기울임)·숨쉬기·좌우 뒤집기를 만든다. 반대 옆은 side 를 뒤집어 쓴다.
 같은 캐릭터의 세 방향은 **한 배율**로 줄여서 몸 크기가 같게 하고(가장 큰 방향이 240px), 발 밑을 아래 가운데 4px 위에 놓는다.
 manifest: {id, kind:'still3', px:256, views:[..], body_px(정면 몸 높이 px), license}. 검사: 알맹이 비율·투명 비율·가장자리 흰 테. report.json·sheet.jpg.
