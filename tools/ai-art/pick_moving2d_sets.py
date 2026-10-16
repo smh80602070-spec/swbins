@@ -23,8 +23,11 @@ def files(src):
 def copy(src, f, dst, name):
     shutil.copyfile(os.path.join(src, f), os.path.join(dst, name + '.png'))
     lp = os.path.join(src, f[:-4] + '.license.json')
+    dl = os.path.join(dst, name + '.license.json')
     if os.path.exists(lp):
-        shutil.copyfile(lp, os.path.join(dst, name + '.license.json'))
+        shutil.copyfile(lp, dl)
+    elif os.path.exists(dl):   # 다시 고를 때 예전 후보의 license 가 남지 않게
+        os.remove(dl)
 
 
 def stage(src, dst):
