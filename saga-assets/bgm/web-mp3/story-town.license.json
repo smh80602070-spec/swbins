@@ -1,0 +1,52 @@
+{
+ "id": "story-town",
+ "ticket": "K-0117",
+ "generator": "tools/ai-art/k117_audio.py",
+ "source": "saga-assets/bgm/story-town.ogg",
+ "replaces": "saga-web/saga-story/assets/audio/bgm/town.mp3",
+ "license": "CC0-1.0 (자체 — 자체 소리 story-town.ogg 를 mp3 로 옮김)",
+ "encoder": "ffmpeg (imageio-ffmpeg) libmp3lame 128k",
+ "source_license": {
+  "tool": "music-gen",
+  "model": "ACE-Step/Ace-Step1.5 (acestep-v15-turbo)",
+  "license": "MIT (code and model weights)",
+  "license_url": "https://huggingface.co/ACE-Step/Ace-Step1.5",
+  "commercial_use": true,
+  "note": "사용자가 후보 a 를 고름(2026-10-01) — 배선은 W-0016·G-0011·U-0014",
+  "created_at": "2026-10-01T18:08:56+0900",
+  "slot": "story-town",
+  "candidate": "a",
+  "params": {
+   "prompt": "bright adventurous town theme, accordion, whistle, bouncy bass, cheerful fantasy side scroller feel 110 bpm, instrumental",
+   "lyrics": "[Instrumental]",
+   "duration": 75,
+   "seed_hint": 4101
+  },
+  "result": {
+   "metas": {
+    "bpm": 104,
+    "duration": 75.0,
+    "genres": "N/A",
+    "keyscale": "B♭ major",
+    "timesignature": "2"
+   },
+   "seed_value": null,
+   "dit_model": null,
+   "lm_model": null
+  },
+  "edited_by_human": true,
+  "picked": "a",
+  "level": {
+   "by": "tools/asset-forge/bgmlevel.py (K-0088)",
+   "lufs_before": -16.8,
+   "lufs_after": -17.0,
+   "group_target": -17.0,
+   "gain_db": -0.3,
+   "capped": false,
+   "trim_head_s": 0.0,
+   "trim_tail_s": 9.0,
+   "ceiling_dbfs": -1.5
+  },
+  "duration_s": 66.0
+ }
+}

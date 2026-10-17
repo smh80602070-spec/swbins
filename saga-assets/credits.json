@@ -207,6 +207,42 @@
    ]
   },
   {
+   "tool": "k117_audio.py",
+   "model": "",
+   "license": "CC0-1.0 (자체 — 자체 소리 forest-field.ogg 를 mp3 로 옮김)",
+   "count": 1,
+   "where": [
+    "saga-assets/bgm/web-mp3"
+   ]
+  },
+  {
+   "tool": "k117_audio.py",
+   "model": "",
+   "license": "CC0-1.0 (자체 — 자체 소리 story-battle.ogg 를 mp3 로 옮김)",
+   "count": 1,
+   "where": [
+    "saga-assets/bgm/web-mp3"
+   ]
+  },
+  {
+   "tool": "k117_audio.py",
+   "model": "",
+   "license": "CC0-1.0 (자체 — 자체 소리 story-field.ogg 를 mp3 로 옮김)",
+   "count": 1,
+   "where": [
+    "saga-assets/bgm/web-mp3"
+   ]
+  },
+  {
+   "tool": "k117_audio.py",
+   "model": "",
+   "license": "CC0-1.0 (자체 — 자체 소리 story-town.ogg 를 mp3 로 옮김)",
+   "count": 1,
+   "where": [
+    "saga-assets/bgm/web-mp3"
+   ]
+  },
+  {
    "tool": "bake_for_rig.py --map vroid (vroid_batch.sh anim 단계, 2026-10-07)",
    "model": "",
    "license": "CC0-1.0 (뼈대+동작만 — 메시·그림 없음. 동작 원본 Quaternius Universal Animation Library CC0 + 자체 키프레임 tools/char-forge/keyframes.py)",
@@ -327,9 +363,12 @@
    "tool": "make_ui_icons.py",
    "model": "none",
    "license": "CC0-1.0 (코드 생성 — 24격자 기하 도형, 외부 그림·Lucide 경로 없음)",
-   "count": 28,
+   "count": 112,
    "where": [
-    "saga-assets/icons/license"
+    "saga-assets/icons/license",
+    "saga-godot/assets/icons/license",
+    "saga-unity/Assets/SagaCore/Resources/Icons/license",
+    "saga-web/shared/assets/icons/license"
    ]
   },
   {
@@ -527,6 +566,69 @@
     "saga-godot/assets/audio/sfx",
     "saga-unity/Assets/SagaCore/Resources/Audio/Sfx",
     "saga-web/shared/audio/sfx"
+   ]
+  },
+  {
+   "tool": "k117_audio.py",
+   "model": "",
+   "license": "CC0-1.0 (자체 — 자체 소리 sfx_ui_notify.ogg 를 mp3 로 옮김)",
+   "count": 1,
+   "where": [
+    "saga-assets/sfx/web-mp3"
+   ]
+  },
+  {
+   "tool": "k117_audio.py",
+   "model": "",
+   "license": "CC0-1.0 (자체 — 자체 소리 sfx_victory.ogg 를 mp3 로 옮김)",
+   "count": 1,
+   "where": [
+    "saga-assets/sfx/web-mp3"
+   ]
+  },
+  {
+   "tool": "k117_audio.py",
+   "model": "",
+   "license": "CC0-1.0 (자체 — 자체 소리 sfx_sword_hit_1.ogg 를 mp3 로 옮김)",
+   "count": 1,
+   "where": [
+    "saga-assets/sfx/web-mp3"
+   ]
+  },
+  {
+   "tool": "k117_audio.py",
+   "model": "",
+   "license": "CC0-1.0 (자체 — 자체 소리 sfx_levelup.ogg 를 mp3 로 옮김)",
+   "count": 1,
+   "where": [
+    "saga-assets/sfx/web-mp3"
+   ]
+  },
+  {
+   "tool": "k117_audio.py",
+   "model": "",
+   "license": "CC0-1.0 (자체 — 자체 소리 sfx_ui_open.ogg 를 mp3 로 옮김)",
+   "count": 1,
+   "where": [
+    "saga-assets/sfx/web-mp3"
+   ]
+  },
+  {
+   "tool": "k117_audio.py",
+   "model": "",
+   "license": "CC0-1.0 (자체 — 자체 소리 sfx_coin_big.ogg 를 mp3 로 옮김)",
+   "count": 1,
+   "where": [
+    "saga-assets/sfx/web-mp3"
+   ]
+  },
+  {
+   "tool": "k117_audio.py",
+   "model": "",
+   "license": "CC0-1.0 (자체 — 코드 합성 천둥, 외부 입력 없음)",
+   "count": 1,
+   "where": [
+    "saga-assets/sfx/web-mp3"
    ]
   },
   {

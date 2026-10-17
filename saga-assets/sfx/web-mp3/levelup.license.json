@@ -1,0 +1,19 @@
+{
+ "id": "levelup",
+ "ticket": "K-0117",
+ "generator": "tools/ai-art/k117_audio.py",
+ "source": "saga-assets/sfx/sfx_levelup.ogg",
+ "replaces": "saga-web/saga-go/assets/audio/sfx/levelup.mp3",
+ "license": "CC0-1.0 (자체 — 자체 소리 sfx_levelup.ogg 를 mp3 로 옮김)",
+ "encoder": "ffmpeg (imageio-ffmpeg) libmp3lame 128k",
+ "source_license": {
+  "id": "sfx_levelup",
+  "generator": "tools/asset-forge/sfxset.py",
+  "license": "CC0-1.0 (코드 합성 — 외부 입력 없음)",
+  "category": "event",
+  "duration_ms": 1250,
+  "rms_db": -23.0,
+  "sample_rate": 44100,
+  "channels": 1
+ }
+}

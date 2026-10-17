@@ -1,0 +1,9 @@
+{
+ "id": "thunder",
+ "ticket": "K-0117",
+ "generator": "tools/ai-art/k117_audio.py",
+ "source": "synth:thunder",
+ "replaces": "saga-web/saga-go/assets/audio/sfx/thunder.mp3",
+ "license": "CC0-1.0 (자체 — 코드 합성 천둥, 외부 입력 없음)",
+ "encoder": "ffmpeg (imageio-ffmpeg) libmp3lame 128k"
+}

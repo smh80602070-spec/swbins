@@ -1373,6 +1373,46 @@
      "dir": "saga-web/saga-forest/assets/sprites2d/animals"
     }
    ]
+  },
+  {
+   "id": "sfx-web-mp3",
+   "src": "saga-assets/sfx/web-mp3",
+   "include": [
+    "*.mp3"
+   ],
+   "note": "K-0117 1만리 빌린 OGA 효과음 mp3 7 → 자체(sfxset 코드 합성 6 + 코드 천둥 1) 같은 이름 mp3 — 웹 코드 0줄. 출처는 정본 옆 license.json",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-go/assets/audio/sfx"
+    }
+   ]
+  },
+  {
+   "id": "bgm-web-mp3",
+   "src": "saga-assets/bgm/web-mp3",
+   "include": [
+    "*.mp3"
+   ],
+   "note": "K-0117 3마을·4종횡 빌린 BGM mp3 4 → 자체 BGM ogg 를 mp3 로(통합 음량 옛과 같게). 이름: <판>-<옛 이름>.mp3 → 판 폴더 <옛 이름>.mp3",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-forest/assets/audio/bgm",
+     "rename": {
+      "forest-forest.mp3": "forest.mp3"
+     }
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-story/assets/audio/bgm",
+     "rename": {
+      "story-battle.mp3": "battle.mp3",
+      "story-forest.mp3": "forest.mp3",
+      "story-town.mp3": "town.mp3"
+     }
+    }
+   ]
   }
  ]
 }

@@ -1,0 +1,52 @@
+{
+ "id": "forest-forest",
+ "ticket": "K-0117",
+ "generator": "tools/ai-art/k117_audio.py",
+ "source": "saga-assets/bgm/forest-field.ogg",
+ "replaces": "saga-web/saga-forest/assets/audio/bgm/forest.mp3",
+ "license": "CC0-1.0 (자체 — 자체 소리 forest-field.ogg 를 mp3 로 옮김)",
+ "encoder": "ffmpeg (imageio-ffmpeg) libmp3lame 128k",
+ "source_license": {
+  "tool": "music-gen",
+  "model": "ACE-Step/Ace-Step1.5 (acestep-v15-turbo)",
+  "license": "MIT (code and model weights)",
+  "license_url": "https://huggingface.co/ACE-Step/Ace-Step1.5",
+  "commercial_use": true,
+  "note": "사용자가 후보 a 를 고름(2026-10-01) — 배선은 W-0016·G-0011·U-0014",
+  "created_at": "2026-10-01T18:07:03+0900",
+  "slot": "forest-field",
+  "candidate": "a",
+  "params": {
+   "prompt": "peaceful forest walk, soft piano, airy flute melody, gentle strings, slow dreamy 70 bpm, instrumental",
+   "lyrics": "[Instrumental]",
+   "duration": 75,
+   "seed_hint": 3201
+  },
+  "result": {
+   "metas": {
+    "bpm": 104,
+    "duration": 75.0,
+    "genres": "N/A",
+    "keyscale": "F major",
+    "timesignature": "3"
+   },
+   "seed_value": null,
+   "dit_model": null,
+   "lm_model": null
+  },
+  "edited_by_human": true,
+  "picked": "a",
+  "level": {
+   "by": "tools/asset-forge/bgmlevel.py (K-0088)",
+   "lufs_before": -18.1,
+   "lufs_after": -15.4,
+   "group_target": -15.1,
+   "gain_db": 3.0,
+   "capped": false,
+   "trim_head_s": 0.2,
+   "trim_tail_s": 6.15,
+   "ceiling_dbfs": -1.5
+  },
+  "duration_s": 68.65
+ }
+}

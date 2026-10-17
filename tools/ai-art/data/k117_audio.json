@@ -1,0 +1,16 @@
+{
+ "note": "K-0117 짝 표 — 웹에 남은 빌린 mp3(OGA 효과음 7 · BGM 4) → 자체 소리. dst 는 정본, asset-place 가 old 자리로 이름 그대로 덮는다.",
+ "items": [
+  {"kind": "sfx", "old": "saga-web/saga-go/assets/audio/sfx/discover.mp3", "src": "saga-assets/sfx/sfx_ui_notify.ogg", "dst": "saga-assets/sfx/web-mp3/discover.mp3"},
+  {"kind": "sfx", "old": "saga-web/saga-go/assets/audio/sfx/encounter_win.mp3", "src": "saga-assets/sfx/sfx_victory.ogg", "dst": "saga-assets/sfx/web-mp3/encounter_win.mp3"},
+  {"kind": "sfx", "old": "saga-web/saga-go/assets/audio/sfx/hit.mp3", "src": "saga-assets/sfx/sfx_sword_hit_1.ogg", "dst": "saga-assets/sfx/web-mp3/hit.mp3"},
+  {"kind": "sfx", "old": "saga-web/saga-go/assets/audio/sfx/levelup.mp3", "src": "saga-assets/sfx/sfx_levelup.ogg", "dst": "saga-assets/sfx/web-mp3/levelup.mp3"},
+  {"kind": "sfx", "old": "saga-web/saga-go/assets/audio/sfx/panel_open.mp3", "src": "saga-assets/sfx/sfx_ui_open.ogg", "dst": "saga-assets/sfx/web-mp3/panel_open.mp3"},
+  {"kind": "sfx", "old": "saga-web/saga-go/assets/audio/sfx/reward.mp3", "src": "saga-assets/sfx/sfx_coin_big.ogg", "dst": "saga-assets/sfx/web-mp3/reward.mp3"},
+  {"kind": "sfx", "old": "saga-web/saga-go/assets/audio/sfx/thunder.mp3", "src": "synth:thunder", "dst": "saga-assets/sfx/web-mp3/thunder.mp3"},
+  {"kind": "bgm", "old": "saga-web/saga-forest/assets/audio/bgm/forest.mp3", "src": "saga-assets/bgm/forest-field.ogg", "dst": "saga-assets/bgm/web-mp3/forest-forest.mp3"},
+  {"kind": "bgm", "old": "saga-web/saga-story/assets/audio/bgm/battle.mp3", "src": "saga-assets/bgm/story-battle.ogg", "dst": "saga-assets/bgm/web-mp3/story-battle.mp3"},
+  {"kind": "bgm", "old": "saga-web/saga-story/assets/audio/bgm/forest.mp3", "src": "saga-assets/bgm/story-field.ogg", "dst": "saga-assets/bgm/web-mp3/story-forest.mp3"},
+  {"kind": "bgm", "old": "saga-web/saga-story/assets/audio/bgm/town.mp3", "src": "saga-assets/bgm/story-town.ogg", "dst": "saga-assets/bgm/web-mp3/story-town.mp3"}
+ ]
+}

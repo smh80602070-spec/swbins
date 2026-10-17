@@ -26,6 +26,10 @@
 | 도구 | 모델 | 라이선스 | 개수 |
 |---|---|---|---|
 | music-gen | ACE-Step/Ace-Step1.5 (acestep-v15-turbo) | MIT (code and model weights) | 160 |
+| k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 forest-field.ogg 를 mp3 로 옮김) | 1 |
+| k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 story-battle.ogg 를 mp3 로 옮김) | 1 |
+| k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 story-field.ogg 를 mp3 로 옮김) | 1 |
+| k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 story-town.ogg 를 mp3 로 옮김) | 1 |
 | bake_for_rig.py --map vroid (vroid_batch.sh anim 단계, 2026-10-07) | - | CC0-1.0 (뼈대+동작만 — 메시·그림 없음. 동작 원본 Quaternius Universal Animation Library CC0 + 자체 키프레임 too | 1 |
 | outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 2000 |
 | outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024)) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 1000 |
@@ -36,7 +40,7 @@
 | gen.py | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1699 |
 | remote3d | microsoft/TRELLIS-image-large | MIT | 225 |
 | icon_pack.py | none | CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음) | 76 |
-| make_ui_icons.py | none | CC0-1.0 (코드 생성 — 24격자 기하 도형, 외부 그림·Lucide 경로 없음) | 28 |
+| make_ui_icons.py | none | CC0-1.0 (코드 생성 — 24격자 기하 도형, 외부 그림·Lucide 경로 없음) | 112 |
 | gen.py (ComfyUI) | z-image-turbo | Apache-2.0 | 110 |
 | make_map.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 195 |
 | build_monster.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 335 |
@@ -52,6 +56,13 @@
 | region_hero.py village | - | CC0-1.0 (배치표 — 자체 생성 데이터, 조각·재질은 각각 CC0) | 3 |
 | sfxset.py | - | CC0-1.0 (코드 합성 — 외부 입력 없음) | 280 |
 | sfxmoss.py(시작점·길이 맞춘 판으로 채점) | OpenMOSS-Team/MOSS-SoundEffect-v2.0 | Apache-2.0 (모델·코드) — AI 생성, 원작 효과음 모사 없음 | 88 |
+| k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 sfx_ui_notify.ogg 를 mp3 로 옮김) | 1 |
+| k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 sfx_victory.ogg 를 mp3 로 옮김) | 1 |
+| k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 sfx_sword_hit_1.ogg 를 mp3 로 옮김) | 1 |
+| k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 sfx_levelup.ogg 를 mp3 로 옮김) | 1 |
+| k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 sfx_ui_open.ogg 를 mp3 로 옮김) | 1 |
+| k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 sfx_coin_big.ogg 를 mp3 로 옮김) | 1 |
+| k117_audio.py | - | CC0-1.0 (자체 — 코드 합성 천둥, 외부 입력 없음) | 1 |
 | make_sky.py | - | CC0-1.0 (코드 생성 — 외부 입력 없음) | 30 |
 | make_ibl.py | Illustrious-XL-v2.0 | 자체 하늘 그림(saga-assets/sky/sky_noon_present.webp)에서 코드로 — 그 그림의 라이선스를 따른다 | 3 |
 | beast2d_rebake.py --sheets (Blender render_sheet.py, Idle·Run 4컷) | - | CC0-1.0 (자체 3D 몸 렌더 — 외부 입력 없음, 몸 출처는 creatures3d license) | 11 |

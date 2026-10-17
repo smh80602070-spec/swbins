@@ -1,0 +1,28 @@
+{
+ "id": "hit",
+ "ticket": "K-0117",
+ "generator": "tools/ai-art/k117_audio.py",
+ "source": "saga-assets/sfx/sfx_sword_hit_1.ogg",
+ "replaces": "saga-web/saga-go/assets/audio/sfx/hit.mp3",
+ "license": "CC0-1.0 (자체 — 자체 소리 sfx_sword_hit_1.ogg 를 mp3 로 옮김)",
+ "encoder": "ffmpeg (imageio-ffmpeg) libmp3lame 128k",
+ "source_license": {
+  "id": "sfx_sword_hit_1",
+  "generator": "C:/swbins3/sfx-gen/moss_trial.py --plan (MOSS-SoundEffect v2, 창 10초·시작점 자르기) + tools/asset-forge/sfxmoss.py(시작점·길이 맞춘 판으로 채점)",
+  "license": "Apache-2.0 (모델·코드) — AI 생성, 원작 효과음 모사 없음",
+  "category": "combat",
+  "duration_ms": 350,
+  "rms_db": -22.0,
+  "sample_rate": 44100,
+  "channels": 1,
+  "model": "OpenMOSS-Team/MOSS-SoundEffect-v2.0",
+  "prompt": "A sharp steel sword slash hitting leather armor, short metallic impact",
+  "clap": {
+   "moss": 0.133,
+   "moss_rank": 8,
+   "cur": 0.118,
+   "cur_rank": 10,
+   "replace": true
+  }
+ }
+}
