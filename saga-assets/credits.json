@@ -340,9 +340,10 @@
    "tool": "remote3d",
    "model": "microsoft/TRELLIS-image-large",
    "license": "MIT",
-   "count": 225,
+   "count": 336,
    "where": [
     "saga-assets/creatures3d",
+    "saga-godot/assets/creatures",
     "saga-unity/Assets/Art/CreaturesSelf",
     "saga-web/shared/assets/creatures3d"
    ]
@@ -375,7 +376,7 @@
    "tool": "gen.py (ComfyUI)",
    "model": "z-image-turbo",
    "license": "Apache-2.0",
-   "count": 110,
+   "count": 125,
    "where": [
     "saga-assets/land-go",
     "saga-assets/textures_real/brick",
@@ -899,25 +900,26 @@
    "tool": "build_field.py",
    "model": "",
    "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
-   "count": 241,
+   "count": 242,
    "where": [
     "saga-assets/world/real",
     "saga-assets/world/toon",
     "saga-assets/world/web",
     "saga-godot/assets/world",
-    "saga-unity/Assets/SagaCore/Resources/World",
-    "saga-web/shared/assets/world3d"
+    "saga-godot/assets/world/real",
+    "saga-unity/Assets/SagaCore/Resources/World"
    ]
   },
   {
    "tool": "build_kit.py",
    "model": "",
    "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
-   "count": 39,
+   "count": 48,
    "where": [
     "saga-assets/world/real",
     "saga-assets/world/toon",
     "saga-godot/assets/world",
+    "saga-godot/assets/world/real",
     "saga-unity/Assets/SagaCore/Resources/World"
    ]
   },
@@ -925,23 +927,24 @@
    "tool": "build_village.py",
    "model": "",
    "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
-   "count": 166,
+   "count": 207,
    "where": [
     "saga-assets/world/real",
     "saga-assets/world/toon",
     "saga-assets/world/web",
     "saga-godot/assets/world",
-    "saga-unity/Assets/SagaCore/Resources/World",
-    "saga-web/shared/assets/world3d"
+    "saga-godot/assets/world/real",
+    "saga-unity/Assets/SagaCore/Resources/World"
    ]
   },
   {
    "tool": "build_isle_real.py",
    "model": "",
    "license": "CC0-1.0 (형태는 코드, 결은 자체 PBR K-0093·K-0113)",
-   "count": 2,
+   "count": 4,
    "where": [
-    "saga-assets/world/real"
+    "saga-assets/world/real",
+    "saga-godot/assets/world/real"
    ]
   },
   {

@@ -1,0 +1,676 @@
+{
+ "ticket": "K-0121",
+ "made": "2026-10-17",
+ "note": "2나락 적 body → asset3d 표 → creatures3d id (k121_targets.js 로 생성)",
+ "counts": {
+  "enemies": 134,
+  "bodies": 58,
+  "species_rows": 27,
+  "creature_ids": 27,
+  "pending": 31,
+  "humans": 18,
+  "nobody": 2
+ },
+ "creature_ids": [
+  "elephant",
+  "boar",
+  "tiger",
+  "dino_pet",
+  "apatosaurus",
+  "parasaurolophus",
+  "raptor",
+  "stegosaurus",
+  "trex",
+  "triceratops",
+  "dragon",
+  "frog_brute",
+  "ghost",
+  "ghost_skull",
+  "glub",
+  "glub_evolved",
+  "goleling",
+  "goleling_evolved",
+  "hywirl",
+  "monkroose",
+  "mushnub",
+  "pink_slime",
+  "rat",
+  "slime",
+  "spider",
+  "squidle",
+  "wasp"
+ ],
+ "species": [
+  {
+   "body": "beast_big",
+   "enemies": [
+    "남만 코끼리병",
+    "전상코끼리병"
+   ],
+   "src": "assets/models/animals/Elephant.glb",
+   "creature": "elephant"
+  },
+  {
+   "body": "beast_boar",
+   "enemies": [
+    "멧돼지",
+    "왕멧돼지"
+   ],
+   "src": "assets/models/animals/Boar.glb",
+   "creature": "boar"
+  },
+  {
+   "body": "beast_tiger",
+   "enemies": [
+    "산군",
+    "백두산군"
+   ],
+   "src": "assets/models/animals/Tiger.glb",
+   "creature": "tiger"
+  },
+  {
+   "body": "dino",
+   "enemies": [
+    "뿔공룡",
+    "왕뿔공룡"
+   ],
+   "src": "assets/models/monsters/quaternius/Dino_1c1ae302.glb",
+   "creature": "dino_pet"
+  },
+  {
+   "body": "dino_apato",
+   "enemies": [
+    "장경룡"
+   ],
+   "src": "assets/models/monsters/quaternius_dino/Apatosaurus.glb",
+   "creature": "apatosaurus"
+  },
+  {
+   "body": "dino_para",
+   "enemies": [
+    "볏공룡",
+    "동력파룡"
+   ],
+   "src": "assets/models/monsters/quaternius_dino/Parasaurolophus.glb",
+   "creature": "parasaurolophus"
+  },
+  {
+   "body": "dino_raptor",
+   "enemies": [
+    "쾌조룡",
+    "강철익수"
+   ],
+   "src": "assets/models/monsters/quaternius_dino/Velociraptor.glb",
+   "creature": "raptor"
+  },
+  {
+   "body": "dino_stego",
+   "enemies": [
+    "판갑룡",
+    "강철판갑"
+   ],
+   "src": "assets/models/monsters/quaternius_dino/Stegosaurus.glb",
+   "creature": "stegosaurus"
+  },
+  {
+   "body": "dino_trex",
+   "enemies": [
+    "폭룡",
+    "초강폭룡"
+   ],
+   "src": "assets/models/monsters/quaternius_dino/Trex.glb",
+   "creature": "trex"
+  },
+  {
+   "body": "dino_tri",
+   "enemies": [
+    "삼각뿔룡"
+   ],
+   "src": "assets/models/monsters/quaternius_dino/Triceratops.glb",
+   "creature": "triceratops"
+  },
+  {
+   "body": "dragon",
+   "enemies": [
+    "이무기",
+    "흑이무기"
+   ],
+   "src": "assets/models/monsters/quaternius/Dragon_ae5b8510.glb",
+   "creature": "dragon"
+  },
+  {
+   "body": "frog_enemy",
+   "enemies": [
+    "독개구리",
+    "왕독개구리"
+   ],
+   "src": "assets/models/monsters/quaternius2/FrogEnemy.glb",
+   "creature": "frog_brute"
+  },
+  {
+   "body": "ghost",
+   "enemies": [
+    "원귀",
+    "악귀"
+   ],
+   "src": "assets/models/monsters/quaternius/Ghost_810f60a2.glb",
+   "creature": "ghost"
+  },
+  {
+   "body": "ghost_skull",
+   "enemies": [
+    "해골귀",
+    "백골귀왕"
+   ],
+   "src": "assets/models/monsters/quaternius/Ghost_Skull_0716bf8e.glb",
+   "creature": "ghost_skull"
+  },
+  {
+   "body": "glub",
+   "enemies": [
+    "늪슬라임",
+    "묵늪슬라임"
+   ],
+   "src": "assets/models/monsters/quaternius/Glub_f64d32a9.glb",
+   "creature": "glub"
+  },
+  {
+   "body": "glub_evolved",
+   "enemies": [
+    "늪 왕슬라임",
+    "심연늪슬라임"
+   ],
+   "src": "assets/models/monsters/quaternius/Glub_Evolved_27590c4e.glb",
+   "creature": "glub_evolved"
+  },
+  {
+   "body": "goleling",
+   "enemies": [
+    "진흙귀신",
+    "심연진흙귀신"
+   ],
+   "src": "assets/models/monsters/quaternius/Goleling_51bf31d7.glb",
+   "creature": "goleling"
+  },
+  {
+   "body": "goleling_evolved",
+   "enemies": [
+    "왕진흙귀신",
+    "태고진흙귀신"
+   ],
+   "src": "assets/models/monsters/quaternius/Goleling_Evolved_d6308fbf.glb",
+   "creature": "goleling_evolved"
+  },
+  {
+   "body": "hywirl",
+   "enemies": [
+    "회오리 정령",
+    "폭풍 정령"
+   ],
+   "src": "assets/models/monsters/quaternius/Hywirl_6500a805.glb",
+   "creature": "hywirl"
+  },
+  {
+   "body": "monkroose",
+   "enemies": [
+    "산짐승 요괴",
+    "노괴 산짐승"
+   ],
+   "src": "assets/models/monsters/quaternius/Monkroose_54ca5c4d.glb",
+   "creature": "monkroose"
+  },
+  {
+   "body": "mushnub",
+   "enemies": [
+    "애기버섯",
+    "홀씨버섯"
+   ],
+   "src": "assets/models/monsters/quaternius/Mushnub_55c64684.glb",
+   "creature": "mushnub"
+  },
+  {
+   "body": "pink_slime",
+   "enemies": [
+    "홍슬라임",
+    "대홍슬라임"
+   ],
+   "src": "assets/models/monsters/quaternius/Pink_Slime_3ddbff73.glb",
+   "creature": "pink_slime"
+  },
+  {
+   "body": "rat",
+   "enemies": [
+    "들쥐떼",
+    "역병쥐떼"
+   ],
+   "src": "assets/models/monsters/quaternius2/Rat.glb",
+   "creature": "rat"
+  },
+  {
+   "body": "slime_enemy",
+   "enemies": [
+    "동굴슬라임",
+    "결정슬라임"
+   ],
+   "src": "assets/models/monsters/community/SlimeEnemy.glb",
+   "creature": "slime"
+  },
+  {
+   "body": "spider",
+   "enemies": [
+    "왕거미",
+    "독왕거미"
+   ],
+   "src": "assets/models/monsters/quaternius2/Spider.glb",
+   "creature": "spider"
+  },
+  {
+   "body": "squidle",
+   "enemies": [
+    "먹물 요괴",
+    "심해 먹물귀"
+   ],
+   "src": "assets/models/monsters/quaternius/Squidle_cbe8419d.glb",
+   "creature": "squidle"
+  },
+  {
+   "body": "wasp",
+   "enemies": [
+    "말벌떼",
+    "왕말벌떼"
+   ],
+   "src": "assets/models/monsters/quaternius2/Wasp.glb",
+   "creature": "wasp"
+  }
+ ],
+ "pending": [
+  {
+   "body": "blue_demon",
+   "enemies": [
+    "청귀",
+    "대청귀"
+   ],
+   "src": "assets/models/monsters/quaternius/Blue_Demon_6fbb8914.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 Blue_Demon"
+  },
+  {
+   "body": "cactoro",
+   "enemies": [
+    "가시귀",
+    "철가시귀"
+   ],
+   "src": "assets/models/monsters/quaternius/Cactoro_625862f9.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 Cactoro"
+  },
+  {
+   "body": "cactoro_2",
+   "enemies": [
+    "가시왕",
+    "대가시왕"
+   ],
+   "src": "assets/models/monsters/quaternius/Cactoro_e88090e2.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 Cactoro"
+  },
+  {
+   "body": "crab",
+   "enemies": [
+    "집게괴",
+    "철갑해"
+   ],
+   "src": "assets/models/monsters/quaternius_cute/Crab.glb",
+   "pending": "K-0122",
+   "why": "경로 꼴 다름"
+  },
+  {
+   "body": "cthulhu",
+   "enemies": [
+    "심연촉수귀",
+    "강철촉수귀"
+   ],
+   "src": "assets/models/monsters/quaternius_cute/Cthulhu.glb",
+   "pending": "K-0122",
+   "why": "경로 꼴 다름"
+  },
+  {
+   "body": "cyclops",
+   "enemies": [
+    "외눈귀",
+    "기계외안"
+   ],
+   "src": "assets/models/monsters/quaternius_cute/Cyclops.glb",
+   "pending": "K-0122",
+   "why": "경로 꼴 다름"
+  },
+  {
+   "body": "demon",
+   "enemies": [
+    "화염귀",
+    "겁화귀"
+   ],
+   "src": "assets/models/monsters/quaternius/Demon_46b52ba4.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 Demon"
+  },
+  {
+   "body": "demon_2",
+   "enemies": [
+    "탐귀",
+    "탐욕귀왕"
+   ],
+   "src": "assets/models/monsters/quaternius/Demon_c2e39eb4.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 Demon"
+  },
+  {
+   "body": "demon_green",
+   "enemies": [
+    "풋귀",
+    "동합귀"
+   ],
+   "src": "assets/models/monsters/quaternius_cute/GreenDemon.glb",
+   "pending": "K-0122",
+   "why": "경로 꼴 다름"
+  },
+  {
+   "body": "frog",
+   "enemies": [
+    "청개구리",
+    "괴이두꺼비"
+   ],
+   "src": "assets/models/monsters/quaternius/Frog_9018566d.glb",
+   "pending": "K-0122",
+   "why": "폴더 예외 quaternius/Frog"
+  },
+  {
+   "body": "giant",
+   "enemies": [
+    "거인",
+    "폭풍거인"
+   ],
+   "src": "assets/models/monsters/quaternius2/Giant.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 Giant"
+  },
+  {
+   "body": "green_blob",
+   "enemies": [
+    "이끼괴물",
+    "고목이끼괴물"
+   ],
+   "src": "assets/models/monsters/quaternius/Green_Blob_64ab590e.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 Green_Blob"
+  },
+  {
+   "body": "green_spiky_blob",
+   "enemies": [
+    "가시슬라임",
+    "대가시슬라임"
+   ],
+   "src": "assets/models/monsters/quaternius/Green_Spiky_Blob_cd25a048.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 Green_Spiky_Blob"
+  },
+  {
+   "body": "mushnub_evolved",
+   "enemies": [
+    "왕버섯도깨비",
+    "포자군주"
+   ],
+   "src": "assets/models/monsters/quaternius/Mushnub_Evolved_84bc88a5.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 Mushnub_Evolved"
+  },
+  {
+   "body": "mushroom_king",
+   "enemies": [
+    "독버섯 요괴",
+    "독버섯 대군주"
+   ],
+   "src": "assets/models/monsters/quaternius/Mushroom_King_798301fb.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 Mushroom_King"
+  },
+  {
+   "body": "ninja",
+   "enemies": [
+    "그림자 자객",
+    "칠흑 자객"
+   ],
+   "src": "assets/models/monsters/quaternius/Ninja_2ed11876.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 Ninja"
+  },
+  {
+   "body": "ninja_2",
+   "enemies": [
+    "은신 첩자",
+    "심야 첩자"
+   ],
+   "src": "assets/models/monsters/quaternius/Ninja_42162a27.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 Ninja"
+  },
+  {
+   "body": "orc",
+   "enemies": [
+    "산도깨비",
+    "노산도깨비"
+   ],
+   "src": "assets/models/monsters/quaternius/Orc_52a479b3.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 Orc"
+  },
+  {
+   "body": "orc_enemy",
+   "enemies": [
+    "왕도깨비",
+    "노왕도깨비"
+   ],
+   "src": "assets/models/monsters/quaternius/Orc_Enemy_3076c5f7.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 Orc_Enemy"
+  },
+  {
+   "body": "skeleton_mage",
+   "enemies": [
+    "해골법사",
+    "해골대법사"
+   ],
+   "src": "assets/models/monsters/kaykit_skeletons/Skeleton_Mage.glb",
+   "pending": "K-0122",
+   "why": "경로 꼴 다름"
+  },
+  {
+   "body": "skeleton_minion",
+   "enemies": [
+    "해골졸개",
+    "해골척후"
+   ],
+   "src": "assets/models/monsters/kaykit_skeletons/Skeleton_Minion.glb",
+   "pending": "K-0122",
+   "why": "경로 꼴 다름"
+  },
+  {
+   "body": "skeleton_rogue",
+   "enemies": [
+    "해골도둑",
+    "해골암살자"
+   ],
+   "src": "assets/models/monsters/kaykit_skeletons/Skeleton_Rogue.glb",
+   "pending": "K-0122",
+   "why": "경로 꼴 다름"
+  },
+  {
+   "body": "skeleton_solo",
+   "enemies": [
+    "원혼",
+    "구천혼"
+   ],
+   "src": "assets/models/monsters/quaternius2/SkeletonSolo.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 SkeletonSolo"
+  },
+  {
+   "body": "skeleton_warrior",
+   "enemies": [
+    "해골무사",
+    "해골대장"
+   ],
+   "src": "assets/models/monsters/kaykit_skeletons/Skeleton_Warrior.glb",
+   "pending": "K-0122",
+   "why": "경로 꼴 다름"
+  },
+  {
+   "body": "snake",
+   "enemies": [
+    "독사",
+    "흑사"
+   ],
+   "src": "assets/models/monsters/quaternius2/Snake.glb",
+   "pending": "K-0122",
+   "why": "폴더 예외 quaternius2/Snake"
+  },
+  {
+   "body": "treant",
+   "enemies": [
+    "고목정",
+    "청동거목"
+   ],
+   "src": "assets/models/monsters/quaternius_cute/Tree.glb",
+   "pending": "K-0122",
+   "why": "경로 꼴 다름"
+  },
+  {
+   "body": "tribal",
+   "enemies": [
+    "산야인",
+    "노산야인"
+   ],
+   "src": "assets/models/monsters/quaternius/Tribal_1b4759ca.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 Tribal"
+  },
+  {
+   "body": "wizard",
+   "enemies": [
+    "요술사",
+    "대요술사"
+   ],
+   "src": "assets/models/monsters/quaternius/Wizard_d206c071.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 Wizard"
+  },
+  {
+   "body": "yeti",
+   "enemies": [
+    "설인",
+    "설산군주"
+   ],
+   "src": "assets/models/monsters/quaternius/Yeti_085b078d.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 Yeti"
+  },
+  {
+   "body": "yeti_2",
+   "enemies": [
+    "대설인",
+    "빙하대설인"
+   ],
+   "src": "assets/models/monsters/quaternius/Yeti_40a831b3.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 Yeti"
+  },
+  {
+   "body": "zombie",
+   "enemies": [
+    "강시",
+    "역병강시"
+   ],
+   "src": "assets/models/monsters/quaternius2/Zombie.glb",
+   "pending": "K-0122",
+   "why": "짝 없음 Zombie"
+  }
+ ],
+ "humans": [
+  {
+   "name": "황건적",
+   "body": "ogau_worker_male"
+  },
+  {
+   "name": "산적",
+   "body": "ogau_viking_male"
+  },
+  {
+   "name": "도적떼",
+   "body": "kaykitadv_rogue_hooded"
+  },
+  {
+   "name": "떠돌이 병졸",
+   "body": "ogau_soldier_male"
+  },
+  {
+   "name": "왜구",
+   "body": "ogau_pirate_male"
+  },
+  {
+   "name": "마적",
+   "body": "ogau_cowboy_male"
+  },
+  {
+   "name": "오랑캐 궁수",
+   "body": "qrpg_ranger"
+  },
+  {
+   "name": "거란 기병",
+   "body": "ogau_bluesoldier_male"
+  },
+  {
+   "name": "여진 궁수",
+   "body": "ogau_elf"
+  },
+  {
+   "name": "몽골 기병",
+   "body": "ogau_knight_male"
+  },
+  {
+   "name": "왜군 조총병",
+   "body": "ogau_ninja_male"
+  },
+  {
+   "name": "위군 창병",
+   "body": "ogau_viking_female"
+  },
+  {
+   "name": "수군 척후선",
+   "body": "pppirate_henry"
+  },
+  {
+   "name": "철갑 중장병",
+   "body": "ogaknight_char"
+  },
+  {
+   "name": "근위 기병",
+   "body": "kaykitadv_knight"
+  },
+  {
+   "name": "연노 사수",
+   "body": "ogau_bluesoldier_female"
+  },
+  {
+   "name": "수군 함대",
+   "body": "pppirate_anne"
+  },
+  {
+   "name": "흑기병",
+   "body": "ogau_knight_golden_male"
+  }
+ ],
+ "nobody": [
+  "들개",
+  "강철랑"
+ ]
+}

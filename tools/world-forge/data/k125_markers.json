@@ -1,12 +1,18 @@
 {
- "note": "K-0125 재고(Opus 10-17) — 1만리 이야기 지역 js 의 switch(st.model) 종류. pair=있는 world3d(이름 추정, 실행 세션이 case 본문 읽고 확정) · keep=웹 코드 그대로 · new=새 GLB 후보. 크기는 각 case 의 box/cyl 인자(m 단위, three y 위).",
+ "note": "K-0125 재고(Opus 10-17) — 1만리 이야기 지역 js 의 switch(st.model) 종류. pair=있는 world3d(이름 추정, 실행 세션이 case 본문 읽고 확정) · keep=웹 코드 그대로 · new=새 GLB 후보. 크기는 각 case 의 box/cyl 인자(m 단위, three y 위). · 10-18 Opus 단계 1: case 본문(그리는 쪽)·후보 GLB 실제 크기로 짝 확정 — pair = {id, h(옛 높이 m, AS.build mul), n(여러 개), note(코드에 남는 부품)} · 이름만 닮은 14 → new(→ 제안 id) · 2 → keep.",
  "regions": {
   "frost": {
    "file": "saga-web/saga-go/js/frost.js",
    "pair": {
-    "stele": "stele_01",
-    "statue": "(새 statue_guard_01 하나를 여러 지역이 같이)",
-    "beacon": "brazier_01"
+    "stele": {
+     "id": "stele_01",
+     "h": 3.1
+    },
+    "beacon": {
+     "id": "brazier_01",
+     "h": 2.2,
+     "note": "불꽃 원뿔은 코드(o.flame)"
+    }
    },
    "keep": {
     "lake": "지형 높이 맞춤 고리"
@@ -19,16 +25,27 @@
     "sat",
     "snowman",
     "cable",
-    "cave"
+    "cave",
+    "statue → statue_guard_01(네 지역 같이 — 창 든 석상 4.6m)"
    ]
   },
   "crossing": {
    "file": "saga-web/saga-go/js/crossing.js",
    "pair": {
-    "gate": "stone_arch_01",
-    "signal": "signal_pylon_01",
-    "lantern": "stone_lantern_01",
-    "cart": "handcart_01"
+    "signal": {
+     "id": "signal_pylon_01",
+     "h": 3.4,
+     "note": "깜빡이 등은 코드"
+    },
+    "lantern": {
+     "id": "stone_lantern_01",
+     "h": 1.9,
+     "note": "불빛 칸 o.blink 코드"
+    },
+    "cart": {
+     "id": "handcart_01",
+     "h": 0.95
+    }
    },
    "keep": {},
    "new": [
@@ -42,22 +59,30 @@
     "crystal",
     "pod",
     "ticket",
-    "helm"
+    "helm",
+    "gate → gate_light_pillars_01(빛 기둥 12m 둘 + 경계비 — 문짝은 코드, 세 지역 같이)"
    ]
   },
   "skyport": {
    "file": "saga-web/saga-go/js/skyport.js",
    "pair": {
-    "temple": "temple_roof_01",
-    "gate": "stone_arch_01",
-    "antenna": "signal_pylon_01",
-    "bell": "bell_pavilion_01",
-    "cairn": "rubble_pillar_01",
-    "sign": "signpost_01",
-    "crate": "crate_stack_01",
-    "jar": "jar_01"
+    "sign": {
+     "id": "signpost_01",
+     "h": 2.6
+    },
+    "crate": {
+     "id": "crate_stack_01",
+     "h": 1.0,
+     "note": "빛 띠는 코드"
+    },
+    "jar": {
+     "id": "jar_01",
+     "h": 1.3
+    }
    },
-   "keep": {},
+   "keep": {
+    "bell": "떨어진 종 — 이야기 진행에 따라 종 몸을 숨김(o.bellBody), 틀 둘은 코드로 둬도 됨"
+   },
    "new": [
     "port",
     "station",
@@ -65,19 +90,26 @@
     "phone",
     "courier",
     "capsule",
-    "busstop"
+    "busstop",
+    "temple → stone_pagoda_01(삼층 돌탑 6.6m — temple_roof_01 은 지붕 2m)",
+    "gate → gate_light_pillars_01(같이)",
+    "antenna → lattice_mast_01(8m 격자 탑 — signal_pylon_01 3.4m 와 비가 다름)",
+    "cairn → cairn_01(돌 다섯 쌓음 2.5m — rubble_pillar_01 은 무너진 기둥)"
    ]
   },
   "sunken": {
    "file": "saga-web/saga-go/js/sunken.js",
    "pair": {
-    "dome": "future_dome_01",
-    "gate": "stone_arch_01",
-    "supply": "crate_stack_01"
+    "supply": {
+     "id": "crate_stack_01",
+     "h": 1.0,
+     "note": "주황 띠는 코드"
+    }
    },
    "keep": {
     "jelly": "흔들림?",
-    "drone": "움직임?"
+    "drone": "움직임?",
+    "dome": "유리 돔 R11 — 안이 보이고 둘레 조각이 문(충돌·door) — 코드 그대로"
    },
    "new": [
     "palace",
@@ -89,22 +121,50 @@
     "buoy",
     "turtle",
     "plaque",
-    "haetae"
+    "haetae",
+    "gate → gate_light_pillars_01(같이, 돌 기둥 색)"
    ]
   },
   "amber": {
    "file": "saga-web/saga-go/js/amber.js",
    "pair": {
-    "market": "market_stall_01",
-    "tower": "watchtower_01",
-    "statue": "(새 statue_guard_01 하나를 여러 지역이 같이)",
-    "lamp": "street_lamp_01",
-    "bench": "bench_01",
-    "mailbox": "mailbox_01",
-    "cart": "handcart_01",
-    "jar": "jar_01",
-    "board": "notice_board_01",
-    "panel": "holo_panel_01"
+    "market": {
+     "id": "market_stall_01",
+     "h": 1.5,
+     "n": 4,
+     "note": "가운데 돔은 코드"
+    },
+    "lamp": {
+     "id": "street_lamp_01",
+     "h": 4.1
+    },
+    "bench": {
+     "id": "bench_01",
+     "h": 1.0,
+     "note": "호박 덩이 코드"
+    },
+    "mailbox": {
+     "id": "mailbox_01",
+     "h": 1.1
+    },
+    "cart": {
+     "id": "handcart_01",
+     "h": 0.8,
+     "note": "호박 덩이 코드"
+    },
+    "jar": {
+     "id": "jar_01",
+     "h": 1.1,
+     "note": "호박 덩이 코드"
+    },
+    "board": {
+     "id": "notice_board_01",
+     "h": 2.2
+    },
+    "panel": {
+     "id": "holo_panel_01",
+     "h": 1.6
+    }
    },
    "keep": {
     "kite": "흔들림?",
@@ -115,18 +175,34 @@
     "cross",
     "clock",
     "rail",
-    "vend"
+    "vend",
+    "tower → drain_tower_01(합금 심 12m + 녹슨 다리 18m)",
+    "statue → statue_guard_01(같이)"
    ]
   },
   "vault": {
    "file": "saga-web/saga-go/js/vault.js",
    "pair": {
-    "pylon": "signal_pylon_01",
-    "statue": "(새 statue_guard_01 하나를 여러 지역이 같이)",
-    "signal": "signal_pylon_01",
-    "haystack": "haystack_01",
-    "jars": "jar_01",
-    "parcels": "crate_small_01"
+    "signal": {
+     "id": "signal_pylon_01",
+     "h": 1.1
+    },
+    "haystack": {
+     "id": "haystack_01",
+     "h": 2.0,
+     "n": 3
+    },
+    "jars": {
+     "id": "jar_01",
+     "h": 0.9,
+     "n": 5,
+     "note": "돌 선반은 코드"
+    },
+    "parcels": {
+     "id": "crate_small_01",
+     "h": 0.5,
+     "n": 6
+    }
    },
    "keep": {
     "dronedown": "움직임?"
@@ -145,18 +221,27 @@
     "forklift",
     "container",
     "seedpod",
-    "caseshard"
+    "caseshard",
+    "pylon → steel_pylon_01(강철 기둥 10m + 빛 구슬은 코드)",
+    "statue → statue_guard_01(같이)"
    ]
   },
   "fork": {
    "file": "saga-web/saga-go/js/fork.js",
    "pair": {
-    "gate": "stone_arch_01",
-    "forge": "smithy_01",
-    "tower": "watchtower_01",
-    "statue": "(새 statue_guard_01 하나를 여러 지역이 같이)",
-    "well": "well_01",
-    "flag": "banner_pole_01"
+    "forge": {
+     "id": "smithy_01",
+     "h": 4.4
+    },
+    "well": {
+     "id": "well_01",
+     "h": 2.3
+    },
+    "flag": {
+     "id": "banner_pole_01",
+     "h": 2.4,
+     "note": "깃발 흔들림은 코드"
+    }
    },
    "keep": {
     "kite": "흔들림?",
@@ -173,7 +258,10 @@
     "laundry",
     "tripod",
     "rails",
-    "shard"
+    "shard",
+    "gate → castle_gate_01(망루 둘 6m + 다리 지붕 23m 폭 — stone_arch_01 4.8m 와 비가 다름)",
+    "tower → bell_tower_01(돌 종탑 5×10m, 멈춘 종 — watchtower_01 3.2×8.5 와 비가 다름)",
+    "statue → statue_guard_01(같이)"
    ]
   },
   "stormeye": {
@@ -218,8 +306,8 @@
   }
  },
  "count": {
-  "pair": 40,
-  "keep": 10,
-  "new": 69
+  "pair": 24,
+  "keep": 12,
+  "new": 83
  }
 }

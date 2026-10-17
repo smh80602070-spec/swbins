@@ -38,10 +38,10 @@
 | gen.py | Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-07 확인), 폐쇄 파생 모델 수익화만 금지 | 594 |
 | competitiongen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 21 |
 | gen.py | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1699 |
-| remote3d | microsoft/TRELLIS-image-large | MIT | 225 |
+| remote3d | microsoft/TRELLIS-image-large | MIT | 336 |
 | icon_pack.py | none | CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음) | 76 |
 | make_ui_icons.py | none | CC0-1.0 (코드 생성 — 24격자 기하 도형, 외부 그림·Lucide 경로 없음) | 112 |
-| gen.py (ComfyUI) | z-image-turbo | Apache-2.0 | 110 |
+| gen.py (ComfyUI) | z-image-turbo | Apache-2.0 | 125 |
 | make_map.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 195 |
 | build_monster.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 335 |
 | gen.py (ComfyUI) | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 305 |
@@ -89,10 +89,10 @@
 | foliage_atlas.py | - | 자체 생성(Z-Image-Turbo Apache-2.0 출력, 상업 허용) — 남의 사진·스캔 0 | 1 |
 | build_foliage.py | - | 자체 생성 — 형태는 전부 코드, 결은 자체 아틀라스(Z-Image-Turbo 출력 · foliage_atlas.py) | 14 |
 | build_nature_real.py | - | CC0-1.0 자체 생성 — 형태는 코드, 잎은 자체 아틀라스(foliage_atlas.py), 줄기·바위는 자체 PBR(K-0093·K-0113) | 28 |
-| build_field.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 241 |
-| build_kit.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 39 |
-| build_village.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 166 |
-| build_isle_real.py | - | CC0-1.0 (형태는 코드, 결은 자체 PBR K-0093·K-0113) | 2 |
+| build_field.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 242 |
+| build_kit.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 48 |
+| build_village.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 207 |
+| build_isle_real.py | - | CC0-1.0 (형태는 코드, 결은 자체 PBR K-0093·K-0113) | 4 |
 | build_terrain.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 높이맵은 전부 코드 — 값 잡음 fbm + 모양 함수 + 간단한 침식) | 70 |
 | build_equip.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 435 |
 | build_interior.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 260 |
