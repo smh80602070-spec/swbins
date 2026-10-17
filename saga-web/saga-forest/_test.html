@@ -100,6 +100,7 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/mount.js"></script>
 <script src="js/village.js"></script>
 <script src="js/village-folk.js"></script>
+<script src="js/partner.js"></script>
 <script src="js/village-tasks.js"></script>
 <script src="js/bug.js"></script>
 <script src="js/home.js"></script>
@@ -7529,6 +7530,46 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       var same = E.fix('돈 🪙120') === '돈 🪙120', sup = typeof E.supports('🪙') === 'boolean';
       return keys.length >= 38 && !bad.length && same && sup && E.bad.length === 0 && ('표 ' + keys.length + '자 · 이 기기 🪙 ' + (E.supports('🪙') ? '그림' : '빈 네모')) || '실패 ' + keys.length + ' ' + bad.join('') + ' ' + same + sup;
     });
+
+    /* ── 동반자(W-0288) ─────────────────────────────────── */
+    (function () {
+      var P = DG.partner, s = V.state(), raw = V.raw(), res = raw.residents;
+      if (!P || !res || res.length < 2) { t('동반자(W-0288) — 주민이 둘 이상이어야 진단', function () { return '실패 주민 ' + (res ? res.length : 0); }); return; }
+      var a = res[0], b = res[1]; function HR(x) { V.heartOf(x.id); return s.hearts[x.id]; }
+      var keep = { partner: s.partner, bag: s.bag.hongmae, ha: JSON.stringify(HR(a)), hb: JSON.stringify(HR(b)), px: raw.player.x, py: raw.player.y, weeds: s.weeds ? s.weeds.slice() : null, gold: C.save.player.gold };
+      s.partner = null;
+      t('동반자 — 하트 가득 + ❤️ 홍매가 있어야 청할 수 있다(W-0288)', function () {
+        HR(a).h = 5; s.bag.hongmae = 1; raw.player.x = a.x; raw.player.y = a.y;
+        var r1 = P.propose(a.id);
+        HR(a).h = 10; s.bag.hongmae = 0;
+        var r2 = P.propose(a.id);
+        s.bag.hongmae = 1;
+        var r3 = P.propose(a.id);
+        return r1.kind === 'no' && r2.kind === 'no' && r3.kind === 'talk' && P.isPartner(a.id) && s.bag.hongmae === 0 && '5♥ × · 홍매 없음 × · 10♥+홍매 ○ · 홍매 -1';
+      });
+      t('동반자 — 한 명만(W-0288)', function () {
+        HR(b).h = 10; s.bag.hongmae = 1; raw.player.x = b.x; raw.player.y = b.y;
+        var r = P.propose(b.id);
+        return r.kind === 'no' && P.get().id === a.id && s.bag.hongmae === 1 && r.text;
+      });
+      t('동반자 — 아침 한 가지는 하루 한 번(W-0288)', function () {
+        var p = P.get(); p.last = s.day - 1;
+        var r1 = P.onNewDay(), r2 = P.onNewDay();
+        return !!r1 && ['water', 'meal', 'gift'].indexOf(r1.kind) >= 0 && r2 === null && (r1.kind + ' · ' + r1.text);
+      });
+      t('동반자 — 30일째 기념일 대사·금은 그날 한 번, 집 안 자리(W-0288)', function () {
+        var p = P.get(); p.since = s.day - P.ANNIV_DAYS; p.annivDay = 0;
+        var g0 = C.save.player.gold, l1 = P.line(a), l2 = P.line(a), spot = P.homeSpot();
+        p.since = s.day - 3; var l3 = P.line(a);
+        return !!l1 && l1.text.indexOf(String(P.ANNIV_DAYS)) >= 0 && C.save.player.gold === g0 + P.ANNIV_GOLD && !!l2 && l2.text !== l1.text && l3 === null && !!spot && spot.x > 0 && ('금 +' + (C.save.player.gold - g0));
+      });
+      t('동반자 — 헤어지면 하트 절반(W-0288)', function () {
+        HR(a).h = 10;
+        var r = P.breakUp();
+        return r.kind === 'talk' && P.get() === null && V.heartOf(a.id) === 5 && P.canPropose(a.id).ok === false && ('💗 ' + V.heartOf(a.id));
+      });
+      s.partner = keep.partner; s.bag.hongmae = keep.bag; s.hearts[a.id] = JSON.parse(keep.ha); s.hearts[b.id] = JSON.parse(keep.hb); raw.player.x = keep.px; raw.player.y = keep.py; if (keep.weeds) { s.weeds = keep.weeds; } C.save.player.gold = keep.gold;
+    })();
 
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';

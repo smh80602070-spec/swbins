@@ -1117,12 +1117,13 @@
     var items = Hm.state().items;
     var order = [], i;
     for (i = 0; i < items.length; i++) { order.push({ y: items[i].y, t: 'f', o: items[i] }); }
-    order.push({ y: p.y, t: 'me', o: p });
+    order.push({ y: p.y, t: 'me', o: p }); if (global.DG.partner && global.DG.partner.homeSpot()) { order.push({ y: global.DG.partner.homeSpot().y, t: 'pt', o: null }); }   // W-0288 동반자
     order.sort(function (a, b) { return a.y - b.y; });
 
     var f = V.focus();
     for (i = 0; i < order.length; i++) {
       if (order[i].t === 'f') { drawFurn(order[i].o, f, now); }
+      else if (order[i].t === 'pt') { global.DG.partner.drawIn(ctx, projIn, inSc, now, shadow, bubble); }   // W-0288
       else { drawMeIn(order[i].o, now); }
     }
 

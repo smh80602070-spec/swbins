@@ -176,6 +176,8 @@
 
     var mem = mementoStory(res);                     // 하트 10 — 사람마다 한 번 사연과 기념품
     if (mem) { return mem; }
+    var pl = global.DG.partner ? global.DG.partner.line(res) : null;   // W-0288 동반자 기념일 대사(그날만)
+    if (pl) { return pl; }
 
     var F = global.DG.folk;
     var ty = F ? F.typeOf(res.id) : null;

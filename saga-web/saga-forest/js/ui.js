@@ -257,6 +257,9 @@
       } else if (act === 'v-follow') {
         var fw = global.DG.village.requestFollow(b.getAttribute('data-who'));
         if (fw) { toast(fw.text); }
+      } else if (act === 'v-partner' || act === 'v-breakup') {   // W-0288
+        var pp = act === 'v-partner' ? global.DG.partner.propose(b.getAttribute('data-who')) : global.DG.partner.breakUp();
+        if (pp) { toast((pp.name ? pp.name + ' — ' : '') + pp.text); if (pp.kind === 'talk' && global.DG.sfx) { global.DG.sfx.play('gift_love'); } }
       } else if (act === 'v-parcel') {
         var pc = global.DG.village.pickupParcel(b.getAttribute('data-kind'), b.getAttribute('data-dest'));
         if (pc) { toast(pc.text); }
@@ -841,7 +844,10 @@
         (V.canFollow(folk.id) && !global.DG.folk.followStatus()
           ? ' <button class="btn tiny" data-act="v-follow" data-who="' + folk.id +
               '">🚶 함께 걷기 (' + global.DG.folk.FOLLOW_SEC + '초)</button>'
-          : '') + '</div>';
+          : '') +
+        /* W-0288 동반자 — 하트 10 + ❤️ 홍매면 청하기, 이미 함께 살면 헤어지기 */
+        (global.DG.partner ? (global.DG.partner.isPartner(folk.id) ? ' <button class="btn tiny ghost" data-act="v-breakup">💔 헤어지기</button>'
+          : (global.DG.partner.canPropose(folk.id).ok ? ' <button class="btn tiny primary" data-act="v-partner" data-who="' + folk.id + '">💞 함께 살자고 청하기 (❤️ 홍매)</button>' : '')) : '') + '</div>';
     }
     for (i = 0; i < list.length; i++) {
       var e = list[i];

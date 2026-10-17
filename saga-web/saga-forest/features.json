@@ -1064,5 +1064,25 @@
   "ticket": "W-0285",
   "since": "2026-10-17",
   "note": "테라리아·마크식(구조만). 장부 tasks/gameplay/forest.md · 세이브 save.village.cave = { deepest, torchUntil, relic, dug }(옛 세이브 빈 것) · 동굴 안은 2D 실내뿐(3D 는 indoors/caveInside 에서 숨김)"
+ },
+ {
+  "id": "fs.partner",
+  "name": "동반자 — 하트 10 + ❤️ 홍매(교배 꽃)를 곁에서 건네 청하면 승낙(가방 카드 단추) · 한 명만 · 아침마다 한 가지(뜰 손질 잡초 둘·아침밥 경험 +20·좋아하는 갈래 선물, 날짜 해시) · 30일마다 기념일 대사·금 300(그날 한 번) · 2D 집 안에 서 있고 말풍선 · 헤어지기(하트 절반)",
+  "files": [
+   "js/partner.js",
+   "js/village-folk.js",
+   "src/village/02.js",
+   "src/village-view/02.js",
+   "src/ui/01.js"
+  ],
+  "tests": [
+   "동반자(W-0288)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0288",
+  "since": "2026-10-17",
+  "note": "스타듀·하베스트 문 식(구조만). 장부 tasks/gameplay/forest.md · 세이브 save.village.partner = { id, since, last, anniv, annivDay }(옛 세이브 없음=null) · 3D 는 집 안을 안 그리므로 밖에선 여느 주민, 집 안 2D 에만 선다"
  }
 ]
