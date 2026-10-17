@@ -1,0 +1,43 @@
+{
+ "id": "great_white",
+ "generator": "TRELLIS (microsoft/TRELLIS, Kaggle T4) — tools/ai-art/remote3d",
+ "model": "microsoft/TRELLIS-image-large",
+ "model_license": "MIT",
+ "input_image": "tools/ai-art/_out/remote3d_in_k109/great_white.png",
+ "input_license": {
+  "id": "great_white_v02",
+  "generator": "tools/ai-art/gen.py (ComfyUI)",
+  "model": "animagine-xl-4.0-opt",
+  "model_license": "CreativeML OpenRAIL++-M",
+  "prompt": "masterpiece, high score, great score, absurdres, (great white shark:1.2), large torpedo-shaped body, grey back and white belly, pointed snout, tall triangular dorsal fin, crescent tail, (body straight and level:1.2), gliding forward, no water, (three-quarter side view:1.2), whole body visible, single fish, game sprite, full body, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+  "negative_prompt": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon, floor, platform, puddle, ellipse, circles, bubbles, dots, confetti, drop shadow, second creature, curved body, arched body, jumping, breaching, splash, water spray, coiled, ring shape, open jaws, teeth, blood, two sharks, sticker, white outline",
+  "seed": 1090001,
+  "steps": 28,
+  "cfg_scale": 5.5,
+  "sampler": "euler_ancestral/normal",
+  "size": [
+   768,
+   768
+  ],
+  "seconds": 70.1,
+  "date": "2026-10-14",
+  "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안."
+ },
+ "seed": 1,
+ "simplify": 0.95,
+ "texture_size": 1024,
+ "times": {
+  "gen_sec": 26,
+  "glb_sec": 28,
+  "bytes": 1272804
+ },
+ "date": "2026-10-14",
+ "note": "K-0096 자체 생성(입력 = 우리 txt2img 그림). 빌린 모델을 대신한다 — 게임 참조 바꾸기는 W 티켓.",
+ "pipeline": "remote3d/finish.py(얼굴 +Z·발 밑 원점·키 m·떨어진 조각·바닥 판 지움) → asset-forge/creature_rig.py(자체 뼈대 + 자체 키프레임 동작 7, quad·bird·worm) → glb-compress/compress.mjs(Meshopt·WebP)",
+ "yaw": -90,
+ "height_m": 1.0,
+ "replaces": "Quaternius CC0 — Shark (animals_extra2 몫 — 1만리 펫 pt_shark_2 백상아리, K-0109)",
+ "commercial_use": true,
+ "rig": "worm",
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k109\\great_white.glb) · 결 평균(여백 제외) [152, 164, 172] → [192, 201, 214] (입력 전경 [192, 201, 214])"
+}
