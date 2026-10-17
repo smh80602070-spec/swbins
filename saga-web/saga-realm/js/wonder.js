@@ -56,6 +56,7 @@
     var W = byId(id), f = R().force(fid), c = R().city(cityId);
     if (!W) { return '없는 불가사의'; }
     if (builtBy(id)) { return '이미 ' + name(builtBy(id)) + ' 이(가) 지었습니다'; }
+    if (global.DG.tech && !global.DG.tech.wonderOpen(fid)) { return '학 갈래 「큰 도면」을 먼저 연구해야 합니다'; }   // W-0290 기술 나무가 문
     if (jobOf(fid)) { return '이미 ' + byId(jobOf(fid).id).name + ' 을(를) 짓는 중입니다'; }
     if (!c || c.force !== fid) { return '우리 성에서만 짓습니다'; }
     if (!f || f.gold < W.gold) { return '금이 모자랍니다(🪙' + W.gold + ')'; }

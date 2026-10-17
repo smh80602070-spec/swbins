@@ -429,7 +429,7 @@
       if (ids[i] === R.me()) { continue; }
       if (R.state().result) { break; }
       if (global.DG.statecraft) { global.DG.statecraft.aiSpend(ids[i]); }   // 경륜도(W-0182) — 쌓인 점수를 성향대로 찍는다
-      if (global.DG.wonder) { global.DG.wonder.aiStep(ids[i]); }   // W-0279 금이 넉넉하면 불가사의를 짓는다
+      if (global.DG.wonder) { global.DG.wonder.aiStep(ids[i]); } if (global.DG.tech) { global.DG.tech.aiStep(ids[i]); }   // W-0279 금이 넉넉하면 불가사의를 짓는다 · W-0290 성향대로 연구
       out.push({ force: ids[i], did: runForce(ids[i]) });
     }
     return out;

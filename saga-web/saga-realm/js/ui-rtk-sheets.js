@@ -220,6 +220,7 @@
         farHtml + '</div>';
     }
     if (global.DG.wonder) { html += global.DG.wonder.cardHtml(openCityId); }   // W-0279 불가사의 칸
+    if (global.DG.tech) { html += global.DG.tech.cardHtml(); }   // W-0290 기술 나무 칸
     return html;
   }
 

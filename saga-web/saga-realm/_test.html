@@ -101,7 +101,9 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/passive-web-ui.js"></script>
 <script src="js/data-passive.js"></script>
 <script src="js/statecraft.js"></script>
+<script src="js/data-tech.js"></script>
 <script src="js/wonder.js"></script>
+<script src="js/tech.js"></script>
 <script src="js/mount.js"></script>
 <script src="js/war.js"></script>
 <script src="js/journey.js"></script>
@@ -2292,6 +2294,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
     function wonderSet() {
       fresh('cao');
       var WD = DG.wonder, other = R.liveForces().filter(function (f) { return f !== 'cao'; })[0];
+      if (DG.tech) { DG.tech.rec('cao').done = ['l1', 'l2', 'l3']; DG.tech.rec(other).done = ['l1', 'l2', 'l3']; }   // W-0290 학 3마디(큰 도면)가 불가사의 문
       [['cao'], [other]].forEach(function (x) { var f = R.force(x[0]); f.gold = 20000; R.citiesOf(x[0]).forEach(function (cid) { R.city(cid).troops = 20000; }); });
       return { WD: WD, other: other, capA: R.citiesOf('cao')[0], capB: R.citiesOf(other)[0] };
     }
@@ -6995,6 +6998,34 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var f4 = G.firstError([{ kind: 'error', t: 120, msg: 'Script error.', src: '' }], [], 100);   // R-5 교차 출처 오류는 거른다
       var ok = k && s1 && bf && f4 === null && f1 === 'x is undefined (ui-rtk.js)' && f2 === 'Unexpected token (app.js:3)' && f3 === null && !document.getElementById('boot-guard');
       return ok ? '백업 키(겹치면 -2·-3) · 세이브 키 · 첫 오류 「' + f2 + '」(Script error. 거름) · 진단엔 띠 없음' : '실패 ' + [k, s1, bf, f4, f1, f2, f3].join(' ');
+    });
+
+    /* W-0290 기술 나무 — 판정(tech.js)만 */
+    t('기술 나무(W-0290) — 달마다 연구점(1 + 학자 + 글 모으기) · 갈래 안은 차례대로 · 효과가 경륜도 배율에 더해진다(물꼬 트기 → 군량 +5%)', function () {
+      fresh('cao'); var TC = DG.tech, TD2 = DG.techData; if (!TC || !TD2) { return '실패 tech 없음'; }
+      delete R.state().tech;
+      var per = TC.ptsPerMonth('cao'); TC.monthly(); var p1 = TC.rec('cao').pts;
+      var s0 = DG.statecraft.sum('cao', 'foodPct'), f0 = DG.statecraft.food('cao');
+      var no = TC.research('cao', 'farm');
+      TC.rec('cao').pts = 100;
+      var a = TC.research('cao', 'farm'), f1 = DG.statecraft.food('cao'), b = TC.research('cao', 'farm');
+      var okOrder = a.ok && a.node.id === 'f1' && b.ok && b.node.id === 'f2' && TC.doneCount('cao', 'farm') === 2 && TC.nextOf('cao', 'farm').id === 'f3' && TC.rec('cao').pts === 100 - 6 - 9;
+      var ok = per >= 1 && p1 === per && !no.ok && Math.abs(f1 / f0 - (100 + s0 + 5) / (100 + s0)) < 1e-9 && TC.pct('cao', 'foodPct') === 10 && okOrder && TD2.BRANCHES.length === 4 && TD2.BRANCHES.every(function (x) { return x.nodes.length === 6; });
+      delete R.state().tech;
+      return ok ? ('달 +' + per + ' · 6점 전엔 거절 · 물꼬 → 군량 ×' + (f1 / f0).toFixed(3) + ' · 두 마디 뒤 foodPct 10 · 24마디') : ('실패 ' + JSON.stringify({ per: per, p1: p1, no: no, a: a, b: b, f: [f0, f1], s0: s0 }));
+    });
+    t('기술 나무(W-0290) — 나루 짓기(조선 비용 -20%) · 큰 도면 전엔 불가사의 못 짓고 뒤엔 된다 · AI 는 성향 갈래부터 · 내 세력은 AI 가 안 건드림', function () {
+      fresh('cao'); var TC = DG.tech, WD = DG.wonder, TD2 = DG.techData; if (!TC || !WD) { return '실패 tech/wonder 없음'; }
+      delete R.state().tech; delete R.state().wonders;
+      var c0 = TC.cost('cao', 'ships', 150); TC.rec('cao').pts = 200; TC.research('cao', 'trade'); TC.research('cao', 'trade'); var c1 = TC.cost('cao', 'ships', 150), c2 = TC.cost('cao', 'train', 50);
+      var cap = R.citiesOf('cao')[0]; R.force('cao').gold = 20000; R.city(cap).troops = 20000;
+      var before = WD.why('cao', 'canal', cap); TC.research('cao', 'learn'); TC.research('cao', 'learn'); TC.research('cao', 'learn'); var after = WD.why('cao', 'canal', cap);
+      var other = R.liveForces().filter(function (f) { return f !== 'cao'; })[0], def = DG.forceData.FORCES.filter(function (x) { return x.id === other; })[0];
+      var first = TD2.CREED_ORDER[(def && def.creed) || 'balanced'][0];
+      TC.rec(other).pts = 50; var got = TC.aiStep(other), mine = TC.aiStep('cao');
+      var ok = c0 === 150 && c1 === 120 && c2 === 50 && /도면/.test(before || '') && after === null && !!got && TD2.node(got).branch === first && mine === null;
+      delete R.state().tech; delete R.state().wonders;
+      return ok ? ('조선 150 → ' + c1 + ' · 도면 전 "' + before + '" → 뒤 OK · AI(' + ((def && def.creed) || 'balanced') + ') 첫 연구 ' + got) : ('실패 ' + JSON.stringify({ c: [c0, c1, c2], before: before, after: after, got: got, first: first, mine: mine }));
     });
 
     t('런타임 에러 없음', function () {

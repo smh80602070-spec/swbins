@@ -247,7 +247,7 @@
     st.round = rd ? rd.n : 1;                        // 회차(§5-14) — 새 판은 1회차, nextRound() 는 +1
     st.events = null; st.rel = {};                   // 사연·관계(§5-2) — 새 판은 이어받지 않는다(event.js 가 필요할 때 채운다)
     st.cities = {}; st.forces = {}; st.officers = {}; st.captives = {};
-    st.camps = []; st.campSeq = 0; st.wonders = null;   // W-0279 불가사의는 판마다 새로(setup 은 같은 상태 객체를 다시 쓴다 — 안 비우면 지난 판 완공이 이어졌다)
+    st.camps = []; st.campSeq = 0; st.wonders = null; st.tech = null;   // W-0290 기술 나무도 판마다 새로 · W-0279 불가사의는 판마다 새로(setup 은 같은 상태 객체를 다시 쓴다 — 안 비우면 지난 판 완공이 이어졌다)
     st.journeys = []; st.journeySeq = 0;
 
     var i, j;
@@ -449,10 +449,10 @@
     if (orderKey === 'ships' && CD.find(cityId).land !== 'river') {
       return { ok: false, why: '물길이 없는 성입니다' };
     }
-    var fs = force(c.force);
-    if (!fs || fs.gold < o.gold) { return { ok: false, why: '금이 모자랍니다' }; }
+    var fs = force(c.force), oc = global.DG.tech ? global.DG.tech.cost(c.force, orderKey, o.gold) : o.gold;   // W-0290 기술 나무 비용 마디(조선·훈련 -20%)
+    if (!fs || fs.gold < oc) { return { ok: false, why: '금이 모자랍니다' }; }
 
-    fs.gold -= o.gold;
+    fs.gold -= oc;
     r.done = true;
     monthOrders[cityId] = { key: orderKey, officer: officerId };
 
