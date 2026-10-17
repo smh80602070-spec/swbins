@@ -6,7 +6,16 @@
 (function (global) {
   'use strict';
 
-  /** ref = 내 인물(도감), (x,y) = 발 밑 가운데, h = 몸 높이(px), o = { facing(1|-1), walking, now, wx, wy, ppu(W-0203 보폭) } */
+  /** W-0296 공중 몸짓 — 오르는 중 jump · 내려오는 중 fall, 진행률 t(0..1)는 그 상태로 머문 시간 / AIR_MS. 땅에 서면 null(→ 걷기·서기). 순수에 가깝다(시각만 받는다) */
+  var AIR_MS = 420, airSt = { clip: null, at: 0 };
+  function airClip(air, vy, now) {
+    if (!air) { airSt.clip = null; return null; }
+    var c = (vy || 0) < 0 ? 'jump' : 'fall';
+    if (airSt.clip !== c) { airSt.clip = c; airSt.at = now; }
+    return { clip: c, t: Math.min(1, Math.max(0, (now - airSt.at) / AIR_MS)) };
+  }
+
+  /** ref = 내 인물(도감), (x,y) = 발 밑 가운데, h = 몸 높이(px), o = { facing(1|-1), walking, now, wx, wy, ppu(W-0203 보폭), air(공중), vy(세로 속도 — 음수 = 오름) } */
   function me(ctx, ref, x, y, h, o) {
     var M = global.DG.mode2d;
     if (!M) { return false; }
@@ -14,10 +23,11 @@
     if (!pool) { return false; }
     o = o || {};
     var tH = (global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.targetH) || 62;
-    var ht = M.actT ? M.actT('me:hit', o.hurt) : null, at = M.actT ? M.actT('me:atk', o.atk) : null;   // W-0073 단계 4 — 맞음 > 공격 > 걷기 > 서기
-    return M.draw(ctx, { pool: pool, clip: ht !== null ? 'hit' : (at !== null ? 'attack' : (o.walking ? 'walk' : 'idle')), t: ht !== null ? ht : at, facing: o.facing, ms: o.now || Date.now(), x: x, y: y, scale: h / tH, stride: (o.wx != null && M.pace) ? M.pace('me', o.wx, o.wy, o.ppu, h, o.now || Date.now()) : null });
+    var ht = M.actT ? M.actT('me:hit', o.hurt) : null, at = M.actT ? M.actT('me:atk', o.atk) : null;   // W-0073 단계 4 — 맞음 > 공격 > 공중 > 걷기 > 서기
+    var now = o.now || Date.now(), ac = airClip(o.air, o.vy, now), clip = ht !== null ? 'hit' : (at !== null ? 'attack' : (ac ? ac.clip : (o.walking ? 'walk' : 'idle')));
+    return M.draw(ctx, { pool: pool, clip: clip, t: ht !== null ? ht : (at !== null ? at : (ac ? ac.t : null)), facing: o.facing, ms: o.now || Date.now(), x: x, y: y, scale: h / tH, stride: (o.wx != null && M.pace) ? M.pace('me', o.wx, o.wy, o.ppu, h, o.now || Date.now()) : null });
   }
 
   global.DG = global.DG || {};
-  global.DG.actor2d = { me: me };
+  global.DG.actor2d = { me: me, airClip: airClip, AIR_MS: AIR_MS };
 })(window);

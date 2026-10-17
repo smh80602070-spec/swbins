@@ -276,7 +276,7 @@
 
     updateBossZoom(!!run.boss);
     var vz = effZoom(), hv = W / (2 * vz), lo = hv - W / 2, hi = stg.width - W / 2 - hv;   // W-0132 — 보이는 폭 = W/z, 가운데 기준 확대
-    camX = hi >= lo ? core.clamp(p.x + S.P_W / 2 - W / 2, lo, hi) : (stg.width - W) / 2;
+    camX = Math.round(hi >= lo ? core.clamp(p.x + S.P_W / 2 - W / 2, lo, hi) : (stg.width - W) / 2);   // W-0296 픽셀 자리 — 타일·층이 반 픽셀에 걸려 흔들리지 않게
     if (vz !== lastZ) { lastZ = vz; applyZoomTransform(); }
     /* 3D 바탕(side-view3d.js)이 살아 있으면 세계는 거기서 그린다 — 여기서는
        하늘·뒷배경·바닥·발판·사람·몹을 건너뛰고 오버레이(미니맵·보스체력·데미지숫자)만 남긴다.
@@ -311,26 +311,29 @@
         drawBackdrop(stg);
       }
 
-      /* 바닥 — 타일이 있으면 타일 */
-      ctx.fillStyle = stg.ground;
-      ctx.fillRect(0, stg.floor, W, H - stg.floor);
-      if (M2 && tl) { M2.fillTile(ctx, { id: tl, x: 0, y: stg.floor, w: W, h: H - stg.floor, dx: camX, scale: 0.25 }); }
-      groundDress(stg);   // W-0132 — 결 누르기·흙 단면·풀 가장자리
-      ctx.fillStyle = 'rgba(255,255,255,0.30)';
-      ctx.fillRect(0, stg.floor, W, 5);
-      ctx.fillStyle = 'rgba(40,32,24,0.35)';
-      ctx.fillRect(0, stg.floor + 5, W, 2);
+      /* 바닥 — 메이플식 타일 조각(W-0296, side-tiles2d — K-0135 그림)이 있으면 그것, 없으면 타일 결 + 꾸밈 */
+      var T2 = global.DG.sideTiles2d;
+      if (!(T2 && T2.drawGround(ctx, rg, camX, W, H, stg.floor))) {
+        ctx.fillStyle = stg.ground;
+        ctx.fillRect(0, stg.floor, W, H - stg.floor);
+        if (M2 && tl) { M2.fillTile(ctx, { id: tl, x: 0, y: stg.floor, w: W, h: H - stg.floor, dx: camX, scale: 0.25 }); }
+        groundDress(stg);   // W-0132 — 결 누르기·흙 단면·풀 가장자리
+        ctx.fillStyle = 'rgba(255,255,255,0.30)';
+        ctx.fillRect(0, stg.floor, W, 5);
+        ctx.fillStyle = 'rgba(40,32,24,0.35)';
+        ctx.fillRect(0, stg.floor + 5, W, 2);
+      }
 
       /* 발판 */
       for (var i = 0; i < stg.plats.length; i++) {
         var pl = stg.plats[i];
         var x = pl[0] - camX;
         if (x + pl[2] < -40 || x > W + 40) { continue; }
-        drawPlat(x, pl[1], pl[2], stg, pl[0]);   // W-0132 — 메이플식 흙덩이 발판(초록 막대 대신)
+        if (!(T2 && T2.drawPlat(ctx, rg, x, pl[1], pl[2]))) { drawPlat(x, pl[1], pl[2], stg, pl[0]); }   // W-0296 타일 조각(왼끝·가운데·오른끝) · 없으면 W-0132 흙덩이
       }
     }
 
-    drawRopes(stg);
+    drawRopes(stg, use3d ? null : rg);
     drawPortals(stg);
 
     /* 떨어진 것 */
@@ -408,6 +411,7 @@
 
     if (global.DG.sideHand) { global.DG.sideHand.draw(ctx, camX); }   // W-0176 옛 조각·숨은 상자
     drawMe(p);
+    if (!use3d && global.DG.sideBg2d) { global.DG.sideBg2d.drawFront(ctx, { region: rg, camX: camX, W: W, H: H }); global.DG.sideBg2d.tint(ctx, W, H); }   // W-0296 앞 층(발 살짝 가림)·시간대 곱하기 색
     drawFx();
     ctx.restore();
 
@@ -878,12 +882,13 @@
     ctx.fillStyle = 'rgba(255,255,255,0.22)'; ctx.fillRect(0, fl - 2, W, 2);
   }
 
-  function drawRopes(stg) {
-    var list = stg.ropes || [];
+  function drawRopes(stg, rg) {
+    var list = stg.ropes || [], T2 = global.DG.sideTiles2d;
     for (var i = 0; i < list.length; i++) {
       var r = list[i], x = r[0] - camX;
       if (x < -30 || x > W + 30) { continue; }
       var top = r[1], bot = r[2], ladder = r[3] === 'ladder';
+      if (rg && T2 && T2.drawRope(ctx, rg, x, top, bot, ladder)) { continue; }   // W-0296 세로 이음 타일(K-0135)
       if (ladder) {
         ctx.strokeStyle = 'rgba(190,160,110,0.85)';
         ctx.lineWidth = 3;
@@ -1095,7 +1100,7 @@
       ctx.fillText(mtd.emoji, x, y + 4);
       y -= 20;
     }
-    if (!(global.DG.sideView3d && global.DG.sideView3d.ready()) && !(global.DG.actor2d && global.DG.actor2d.me(ctx, ref, x, y, S.P_H * 1.12, { facing: p.facing, walking: !!p.vx && p.onGround, atk: p.atkCd, hurt: p.hurt, wx: p.x, wy: p.y, ppu: 1 }))) {
+    if (!(global.DG.sideView3d && global.DG.sideView3d.ready()) && !(global.DG.actor2d && global.DG.actor2d.me(ctx, ref, x, y, S.P_H * 1.12, { facing: p.facing, walking: !!p.vx && p.onGround, atk: p.atkCd, hurt: p.hurt, wx: p.x, wy: p.y, ppu: 1, air: !p.onGround && !p.climb, vy: p.vy }))) {
       global.DG.sprite.stamp(ctx, {
         kind: 'human', ref: ref, x: x, y: y, s: 1.05,
         facing: p.facing, phase: p.phase, walking: !!p.vx && p.onGround,

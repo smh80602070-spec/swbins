@@ -83,6 +83,8 @@ window.DG_NO_TUNE = true;
 <script src="js/mode2d.js"></script>
 <script src="js/vfx2d.js"></script>
 <script src="js/actor2d.js"></script>
+<script src="js/side-bg2d.js"></script>
+<script src="js/side-tiles2d.js"></script>
 <script src="assets/sprites2d/mon-manifest.js"></script>
 <script src="js/core.js"></script>
 <script src="js/assets3d-ids.js"></script>
@@ -167,6 +169,32 @@ window.DG_NO_TUNE = true;
       var same = PG.standardFrom(null, keep, { tier: 'high' }) === keep;
       var ok = lo.on === false && md.on && md.normal === '512_n' && hi.normal === 'hi_n' && hi.rough === '512_r' && off && Math.abs(rep.x - 15.625) < 1e-9 && rep.y > 7 && same && !!PG.SETS.grass && !!PG.SETS.dirt && !!PG.SETS.rock;
       return ok ? ('LOW 끔 · MEDIUM ' + md.normal + ' · HIGH ' + hi.normal + ' · 반복 ' + rep.x.toFixed(1) + '×' + rep.y.toFixed(1)) : ('실패 ' + JSON.stringify({ lo: lo, md: md, hi: hi, off: off, rep: rep, same: same }));
+    });
+    /* W-0296 메이플식 2D 판 — 타일 조각·시차·공중 몸짓·시간대(그림 없이 도는 값 층) */
+    t('메이플 2D(W-0296) — 발판이 타일 셋(왼끝·가운데·오른끝)으로 나뉘고 폭을 빈틈없이 덮는다 · 좁으면 끝 둘만 · 키는 K-0135 약속', function () {
+      var T2 = DG.sideTiles2d; if (!T2) { return '실패 sideTiles2d 없음'; }
+      var a = T2.platSegs(200), b = T2.platSegs(60), cover = function (g, w) { var x = 0; for (var i = 0; i < g.length; i++) { if (g[i].x !== x) { return false; } x += g[i].w; } return x === w; };
+      var ok = a[0].part === 'plat_l' && a[a.length - 1].part === 'plat_r' && a.slice(1, -1).every(function (q) { return q.part === 'plat_m'; }) && cover(a, 200) && b.length === 2 && cover(b, 60) && T2.platSegs(0).length === 0;
+      var key = T2.fileOf('story_forest', 'plat_l') === 'assets/web2d/tile/story_forest-plat_l.png' && T2.partsOf('ground').join(',') === 'ground,ground_top';
+      return ok && key ? ('200px → ' + a.map(function (q) { return q.part.slice(5) + q.w; }).join(' ') + ' · 60px → 끝 둘') : ('실패 ' + JSON.stringify({ a: a, b: b, key: key }));
+    });
+    t('메이플 2D(W-0296) — 시차 층 배율이 깊이대로(먼 < 중 ≤ 가까운 < 앞 층 1.15) · 지역 층 자료도 그 순서', function () {
+      var B = DG.sideBg2d; if (!B) { return '실패 sideBg2d 없음'; }
+      var x = new XMLHttpRequest(); x.open('GET', 'assets/web2d/bg/story_field_meadow.layers.json', false); x.send();
+      var meta = x.status === 200 ? JSON.parse(x.responseText) : null, D = B.DEPTH;
+      var ok = D.far < D.mid && D.mid <= D.near && D.near < D.front && B.depthOk(meta) && !B.depthOk({ far: { speed: 0.5 }, mid: { speed: 0.2 }, near: { speed: 1 } });
+      return ok ? ('far ' + meta.far.speed + ' · mid ' + meta.mid.speed + ' · near ' + meta.near.speed + ' · 앞 ' + D.front) : ('실패 ' + JSON.stringify(meta));
+    });
+    t('메이플 2D(W-0296) — 공중 몸짓: 오를 때 jump · 내릴 때 fall(진행률이 시간 따라 오른다) · 땅이면 없음 · 시트 없으면 걷기의 한 칸(3행 시트도 walk)', function () {
+      var A = DG.actor2d, M = DG.mode2d; if (!A || !A.airClip || !M) { return '실패 actor2d/mode2d 없음'; }
+      var g = A.airClip(false, 0, 1000), j0 = A.airClip(true, -5, 1000), j1 = A.airClip(true, -3, 1000 + A.AIR_MS / 2), f0 = A.airClip(true, 4, 1500), land = A.airClip(false, 0, 1600);
+      var ok = g === null && j0.clip === 'jump' && j0.t === 0 && Math.abs(j1.t - 0.5) < 1e-9 && f0.clip === 'fall' && f0.t === 0 && land === null && M.roleOf('jump', false) === 'walk' && M.roleOf('fall', false) === 'walk' && M.AIR.jump && M.AIR_T > 0 && M.AIR_T < 1;
+      return ok ? ('jump t 0 → ' + j1.t.toFixed(2) + ' · fall · 땅 null · 없으면 걷기 칸 ' + Math.floor(M.AIR_T * M.FRAMES)) : ('실패 ' + JSON.stringify({ g: g, j0: j0, j1: j1, f0: f0 }));
+    });
+    t('메이플 2D(W-0296) — 시간대 색: 6시 새벽 · 12시 낮(안 칠함) · 18시 노을 · 23시 밤 · 손잡이 off 면 없음', function () {
+      var B = DG.sideBg2d; if (!B) { return '실패 sideBg2d 없음'; }
+      var k = [6, 12, 18, 23].map(function (h) { return B.todOf(h, 'auto'); }).join(','), off = B.todOf(12, 'off'), fix = B.todOf(12, 'night');
+      return k === 'dawn,noon,sunset,night' && off === null && fix === 'night' && B.TOD.noon === null && B.TOD.night.a > B.TOD.dawn.a ? (k + ' · off null · 고정 night') : ('실패 ' + k);
     });
     t('2D 카메라 가까이(W-0204) — 720 화면 기본 배율 1.9 → 몸(P_H·1.12·배율) 100~140px(옛 1.35 → 81) · 키 600 아래는 1 그대로', function () {
       var SV = DG.sideView, S = DG.side, z = SV.baseZoom(720), body = S.P_H * 1.12 * z, low = SV.baseZoom(500);

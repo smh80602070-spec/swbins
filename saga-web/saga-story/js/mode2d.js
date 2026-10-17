@@ -192,6 +192,8 @@
      d3 오른쪽 뒤 3/4·d4 뒤, 왼쪽 셋은 d1~d3 좌우 뒤집기). 어느 인물에 있나·칸 크기·카메라 높이는 assets3d-ids `hero2d8 = {id: [px, cam_z]}`
      (폴더에서 생성 — 파일을 두드리지 않아 404 가 없다). 표에 없으면 지금 3행 시트 그대로 */
   var ROLES8 = { idle: 1, walk: 1, attack: 1, attack2: 1, heavy: 1, hit: 1, death: 1, knockdown: 1 };
+  /* W-0296 공중 몸짓 — K-0135 가 8방향 폴더에 `jump.webp`·`fall.webp`(옆 한 줄 8프레임)를 둔다. 오기 전·없는 인물은 걷기 시트의 다리 벌린 칸(AIR_T)을 멈춰 쓴다 */
+  var AIR = { jump: 1, fall: 1 }, AIR_T = 0.3;
   var PPM = 51.2;   // 1m = 51.2px — 128 칸(2.5m)·192 칸(3.75m) 공통(K-0029 manifest px_per_m)
   function sheet8(pool) {
     var t = isVroid(pool) && global.DG && global.DG.assets3dIds && global.DG.assets3dIds.hero2d8;
@@ -201,7 +203,7 @@
   function roleOf(clip, eight) {
     clip = clip || 'idle';
     if (eight) { return ROLES8[clip] ? clip : (/^attack/.test(clip) ? 'attack' : 'idle'); }
-    return { attack2: 'attack', heavy: 'attack', knockdown: 'death' }[clip] || (FPS[clip] && clip) || 'idle';   // 3행 시트에 없는 이름은 idle(없는 파일 404 막기)
+    return { attack2: 'attack', heavy: 'attack', knockdown: 'death', jump: 'walk', fall: 'walk' }[clip] || (FPS[clip] && clip) || 'idle';   // 3행 시트에 없는 이름은 idle(없는 파일 404 막기)
   }
   /** W-0138 — 마을 맨손 시트(K-0083 ①): 8방향 시트를 가진 사람(hero2d8, 299 전부 idle_town·walk_town 있음)이 o.town 이면
    *  서기·걷기를 맨손 그림으로. 순수(진단이 본다) — 그 밖(공격·피격, 3행 시트, 짐승)은 roleOf 그대로 */
@@ -271,6 +273,11 @@
     var cr = null;
     if (isCrea(o.pool)) { var ci = creaInfo(o.pool.slice(CPRE.length)); if (!ci || !ci.fit) { return false; } cr = ci.fit; }   // W-0129 — manifest 받기 전엔 옛 그림
     var s8 = sheet8(o.pool), eight = !!s8, role = roleOf(o.clip, eight), e = getImg(o.pool, role, eight);
+    var air = !!AIR[o.clip], airRow = false, at = o.t;
+    if (air) {   // W-0296 — 시트가 있으면 한 줄 띠(옆), 없으면 걷기의 다리 벌린 칸에 멈춤
+      var ea = eight ? getImg(o.pool, o.clip, true) : null;
+      if (ea && ea.ok) { e = ea; role = o.clip; airRow = true; } else { role = 'walk'; e = getImg(o.pool, 'walk', eight); at = AIR_T; }
+    }
     var tr = townRole(role, eight, o.town), et = tr !== role ? getImg(o.pool, tr, true) : null;   // W-0138 마을 맨손 — 받는 중·없으면 전투 시트 그대로
     if (et && et.ok) { e = et; role = tr; }
     if (eight && !e.ok) {
@@ -283,7 +290,7 @@
       if (!(base && base.ok)) { return false; }
       e = base; role = 'idle';
     }
-    var c8 = eight ? cell8(s8, e.img && e.img.naturalWidth) : null, P = eight ? c8[0] : PX, d = eight ? dirOf8(o.dirX, o.dirY, o.facing) : dirOf(o.facing), f = (o.t !== undefined && o.t !== null) ? Math.min(FRAMES - 1, Math.max(0, Math.floor(o.t * FRAMES))) : (o.stride !== undefined && o.stride !== null && /walk|run/.test(role)) ? Math.floor(o.stride * FRAMES) % FRAMES : frameAt(role, o.ms || 0);   // W-0203 걷기는 보폭 위상
+    var c8 = eight ? cell8(s8, e.img && e.img.naturalWidth) : null, P = eight ? c8[0] : PX, d = airRow ? { row: 0, flip: dirOf(o.facing).flip } : eight ? dirOf8(o.dirX, o.dirY, o.facing) : dirOf(o.facing), f = (at !== undefined && at !== null) ? Math.min(FRAMES - 1, Math.max(0, Math.floor(at * FRAMES))) : (o.stride !== undefined && o.stride !== null && /walk|run/.test(role)) ? Math.floor(o.stride * FRAMES) % FRAMES : frameAt(role, o.ms || 0);   // W-0203 걷기는 보폭 위상
     var cf = C(), vr = (isVroid(o.pool) || cr) && cf.vroid2d, ph = vr ? (vr.h || 85) : (cf.poolH || {})[o.pool], sc = (ph ? (cf.targetH || 62) / ph : (cf.scale || 1)) * (o.scale || 1) * (cr ? cr.k : 1), w = P * sc, h = P * sc;   // 몬스터는 사람 시트 배율 × 찍은 폭 비(W-0129)
     var foot = cr ? cr.foot : eight ? (P / 2 + c8[1] * PPM + 1.5) / P : ((vr && vr.foot) || cf.foot || 0.87);   // 8방향 칸: 가운데 + 카메라 높이(실측 114/128·156/192 와 ±1px)
     ctx.save();
@@ -530,7 +537,7 @@
     bgFailed: function (region) { var b = bgs[region]; return b ? b.fail || LAYERS.some(function (l) { return b.imgs[l].fail; }) : null; },
     preloadBg: function (region) { getBg(region); },
     tileOk: function (id) { var t = tiles[id]; return t ? t.ok : null; },
-    FRAMES: FRAMES, PX: PX, FPS: FPS,
+    FRAMES: FRAMES, PX: PX, FPS: FPS, AIR: AIR, AIR_T: AIR_T,
     isOn: isOn, pick: pick, vroidPick: vroidPick, face: face, actT: actT, actInfo: actInfo, dirOf8: dirOf8, roleOf: roleOf, roleKey: roleKey, townRole: townRole, sheet8: sheet8, beastOf: beastOf, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
     draw: draw, preload: preload, loadIndex: loadIndex, tintSlot: tintSlot, tintPx: tintPx, tintData: tintData, tintRowW: tintRowW, tintOf: tintOf, bare: bare,
     drawStill: drawStill, stillPose: stillPose, isStill: isStill, pace: pace,
