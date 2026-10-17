@@ -1,0 +1,41 @@
+{
+ "note": "K-0128 실측(Opus 10-17) — 고돗이 부르는 것과 사실판 짝. 티켓 전제와 다름: 무기 KayKit 4 는 코드에서 이미 안 불림(loot_pickup.gd 가 자체 loot_*_g0~4), 2나락 방은 빌린 킷이 아니라 자체 툰 dungeon_* (assets/dungeon/*.glb 4 는 참조 0).",
+ "weapons": {
+  "kaykit_unused": [
+   "assets/weapons/axe_1handed",
+   "dagger",
+   "staff",
+   "sword_1handed"
+  ],
+  "do": "고돗이 지움(참조 0)"
+ },
+ "dungeon_kit": {
+  "old": "res://assets/world/<id>.glb(툰)",
+  "real": {
+   "dungeon_room_12_dirt": "res://assets/world/real/dungeon_room_12_dirt_real.glb",
+   "dungeon_room_12_lava": "res://assets/world/real/dungeon_room_12_lava_real.glb",
+   "dungeon_room_12_limestone": "res://assets/world/real/dungeon_room_12_limestone_real.glb",
+   "dungeon_gate_44_dirt": "res://assets/world/real/dungeon_gate_44_dirt_real.glb",
+   "dungeon_gate_44_lava": "res://assets/world/real/dungeon_gate_44_lava_real.glb",
+   "dungeon_gate_44_limestone": "res://assets/world/real/dungeon_gate_44_limestone_real.glb",
+   "dungeon_corridor_4_dirt": "res://assets/world/real/dungeon_corridor_4_dirt_real.glb",
+   "dungeon_corridor_4_lava": "res://assets/world/real/dungeon_corridor_4_lava_real.glb",
+   "dungeon_corridor_4_limestone": "res://assets/world/real/dungeon_corridor_4_limestone_real.glb",
+   "dungeon_pillar_01": "res://assets/world/real/dungeon_pillar_01_real.glb",
+   "cave_gate_01_dirt": "res://assets/world/real/cave_gate_01_dirt_real.glb"
+  },
+  "unused": "assets/dungeon/{corridor,gate,gate-rock,room-small}.glb"
+ },
+ "isle": {
+  "old": "games/saga_go/world/isle_rock.gd(G-0130 정점색 뿔)",
+  "real": [
+   "res://assets/world/real/isle_rock_01_real.glb",
+   "res://assets/world/real/isle_rock_02_real.glb"
+  ],
+  "unit": "윗반지름 1·높이 1 — x·z 를 윗반지름, y 를 높이로 늘림(sky_isle: 13·13)"
+ },
+ "monsters": {
+  "old": "saga_core/world/monster_body.gd → res://assets/world/mon_<fam>_NN.glb·boss_NN(build_monster.py 툰 다면체)",
+  "status": "판단 대기 — 사실 몸 출처(TRELLIS K-0096 식 새 몸 vs build_monster --style real) 고르기"
+ }
+}

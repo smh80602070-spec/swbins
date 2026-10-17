@@ -1,0 +1,18 @@
+{
+ "id": "cave_gate_01_dirt_real",
+ "generator": "tools/world-forge/build_field.py",
+ "blender": "5.2.1 LTS",
+ "style": "real",
+ "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+ "inputs": [
+  "self-pbr: brown_mud",
+  "self-pbr: coast_sand_rocks_02"
+ ],
+ "size_m": [
+  4.0,
+  0.8,
+  3.28
+ ],
+ "tris": 284,
+ "ticket": "K-0128"
+}

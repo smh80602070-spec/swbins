@@ -1,0 +1,22 @@
+{
+ "id": "dungeon_room_12_lava_real",
+ "generator": "tools/world-forge/build_kit.py",
+ "blender": "5.2.1 LTS",
+ "style": "real",
+ "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+ "inputs": [
+  "self-pbr: coast_sand_rocks_02",
+  "self-pbr: concrete_wall_001",
+  "self-pbr: white_stucco"
+ ],
+ "size_m": [
+  12.13,
+  12.09,
+  4.3
+ ],
+ "tris": 2382,
+ "nodes": [
+  "col_room"
+ ],
+ "ticket": "K-0128"
+}

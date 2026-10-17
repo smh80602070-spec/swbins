@@ -889,9 +889,59 @@
    "tool": "build_nature_real.py",
    "model": "",
    "license": "CC0-1.0 자체 생성 — 형태는 코드, 잎은 자체 아틀라스(foliage_atlas.py), 줄기·바위는 자체 PBR(K-0093·K-0113)",
-   "count": 14,
+   "count": 28,
    "where": [
-    "saga-assets/world/foliage"
+    "saga-assets/world/foliage",
+    "saga-godot/assets/world/foliage"
+   ]
+  },
+  {
+   "tool": "build_field.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+   "count": 241,
+   "where": [
+    "saga-assets/world/real",
+    "saga-assets/world/toon",
+    "saga-assets/world/web",
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/World",
+    "saga-web/shared/assets/world3d"
+   ]
+  },
+  {
+   "tool": "build_kit.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+   "count": 39,
+   "where": [
+    "saga-assets/world/real",
+    "saga-assets/world/toon",
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/World"
+   ]
+  },
+  {
+   "tool": "build_village.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+   "count": 166,
+   "where": [
+    "saga-assets/world/real",
+    "saga-assets/world/toon",
+    "saga-assets/world/web",
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/World",
+    "saga-web/shared/assets/world3d"
+   ]
+  },
+  {
+   "tool": "build_isle_real.py",
+   "model": "",
+   "license": "CC0-1.0 (형태는 코드, 결은 자체 PBR K-0093·K-0113)",
+   "count": 2,
+   "where": [
+    "saga-assets/world/real"
    ]
   },
   {
@@ -913,19 +963,6 @@
    "model": "",
    "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
    "count": 435,
-   "where": [
-    "saga-assets/world/toon",
-    "saga-assets/world/web",
-    "saga-godot/assets/world",
-    "saga-unity/Assets/SagaCore/Resources/World",
-    "saga-web/shared/assets/world3d"
-   ]
-  },
-  {
-   "tool": "build_village.py",
-   "model": "",
-   "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
-   "count": 165,
    "where": [
     "saga-assets/world/toon",
     "saga-assets/world/web",
@@ -958,30 +995,6 @@
     "saga-godot/assets/world",
     "saga-unity/Assets/SagaCore/Resources/World",
     "saga-web/shared/assets/world3d"
-   ]
-  },
-  {
-   "tool": "build_field.py",
-   "model": "",
-   "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
-   "count": 240,
-   "where": [
-    "saga-assets/world/toon",
-    "saga-assets/world/web",
-    "saga-godot/assets/world",
-    "saga-unity/Assets/SagaCore/Resources/World",
-    "saga-web/shared/assets/world3d"
-   ]
-  },
-  {
-   "tool": "build_kit.py",
-   "model": "",
-   "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
-   "count": 30,
-   "where": [
-    "saga-assets/world/toon",
-    "saga-godot/assets/world",
-    "saga-unity/Assets/SagaCore/Resources/World"
    ]
   },
   {

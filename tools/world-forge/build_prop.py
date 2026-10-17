@@ -316,7 +316,7 @@ def build(pid, out, style):
     lo = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)))
     hi = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
-    W.export_glb([ob], out, int(os.environ.get('WF_TOON_PX', '256')) if style == 'toon' else 1024, 'JPEG' if style == 'toon' else 'AUTO')
+    W.export_glb([ob], out, int(os.environ.get('WF_TOON_PX', '256')) if style == 'toon' else 1024, 'JPEG' if style == 'toon' or os.environ.get('WF_JPEG') else 'AUTO')   # WF_JPEG=1 — 사실판도 JPEG(K-0128 고돗 방 킷, 알파 없는 결만)
     size = [round(hi[i] - lo[i], 2) for i in range(3)]
     lic = {'id': pid, 'generator': GENERATOR, 'blender': bpy.app.version_string, 'style': style,
            'license': 'CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)',

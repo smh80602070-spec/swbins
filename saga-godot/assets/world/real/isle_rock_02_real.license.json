@@ -1,0 +1,14 @@
+{
+ "id": "isle_rock_02_real",
+ "generator": "tools/world-forge/build_isle_real.py",
+ "ticket": "K-0128",
+ "blender": "5.2.1 LTS",
+ "style": "real",
+ "license": "CC0-1.0 (형태는 코드, 결은 자체 PBR K-0093·K-0113)",
+ "inputs": [
+  "self-pbr: forest_ground_04",
+  "self-pbr: aerial_rocks_02"
+ ],
+ "unit": "윗반지름 1·높이 1(원점 윗면 가운데)",
+ "tris": 2480
+}

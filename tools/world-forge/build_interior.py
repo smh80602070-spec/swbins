@@ -627,7 +627,7 @@ def build_scene(pid, out, style):
         objs.append(e)
     bpy.context.view_layer.objects.active = ob
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
-    W.export_glb(objs, out, int(os.environ.get('WF_TOON_PX', '256')) if style == 'toon' else 1024, 'JPEG' if style == 'toon' else 'AUTO')
+    W.export_glb(objs, out, int(os.environ.get('WF_TOON_PX', '256')) if style == 'toon' else 1024, 'JPEG' if style == 'toon' or os.environ.get('WF_JPEG') else 'AUTO')   # WF_JPEG=1 — 사실판도 JPEG(K-0128 고돗 방 킷, 알파 없는 결만)
     lic = {'id': pid, 'generator': BP.GENERATOR, 'blender': bpy.app.version_string, 'style': style,
            'license': 'CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)',
            'inputs': sorted(f'self-pbr: {m}' for m in C.mats), 'size_m': size, 'tris': tris, 'nodes': [n[0] for n in NODES]}

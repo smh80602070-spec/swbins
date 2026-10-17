@@ -5,3 +5,5 @@ web2d/realm-ui
 textures_real
 # world/foliage — K-0104 고돗 배치 끝(assets/world/foliage), 화면 배선은 G-0227(고돗 큐 1번). 2026-10-14 K-0104
 world/foliage
+# world/real — K-0128 고돗 배경 사실판(방 킷·섬 밑동) 배치 끝, 화면 배선은 수신함 고돗 줄. 2026-10-17 K-0128
+world/real

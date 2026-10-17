@@ -177,6 +177,24 @@
    ]
   },
   {
+   "id": "world-real",
+   "src": "saga-assets/world/real",
+   "include": [
+    "*.glb",
+    "*.license.json"
+   ],
+   "note": "K-0128 고돗 배경 사실판(자체 PBR, JPEG 결) — 2나락 방 킷 dungeon_*_real · 굴 문 · 떠 있는 섬 밑동 isle_rock_0n_real(단위 크기)",
+   "targets": [
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/world/real",
+     "sidecar": [
+      ".import"
+     ]
+    }
+   ]
+  },
+  {
    "id": "world-foliage",
    "src": "saga-assets/world/foliage",
    "include": [
