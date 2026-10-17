@@ -40,6 +40,5 @@
  "height_m": 0.9,
  "replaces": "Quaternius CC0 — Velociraptor (dungeon animals_extra2·forest animals_extra2·go animals·story animals_extra2)",
  "commercial_use": true,
- "rig": "bird",
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c\\raptor.glb) · 결 평균(여백 제외) [147, 111, 110] → [215, 168, 157] (입력 전경 [220, 168, 157])"
+ "rig": "bird"
 }

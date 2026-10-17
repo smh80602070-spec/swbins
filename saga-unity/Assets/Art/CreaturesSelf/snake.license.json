@@ -41,7 +41,7 @@
  "replaces": "Quaternius CC0 — Snake·Snake_angry(색 변형 — 같은 몸) (dungeon standin·forest animals·go animals·story standin)",
  "commercial_use": true,
  "rig": "worm",
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c\\snake.glb) · 결 평균(여백 제외) [177, 156, 153] → [206, 206, 182] (입력 전경 [211, 211, 182])",
  "engine": true,
- "engine_note": "웹 압축본에서 Meshopt·양자화·WebP 를 풀어 만든 엔진용 일반 GLB (tools/glb-compress/decode.mjs)",
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c\\snake.glb) · 결 평균(여백 제외) [177, 156, 153] → [206, 206, 182] (입력 전경 [211, 211, 182])"
+ "engine_note": "웹 압축본에서 Meshopt·양자화·WebP 를 풀어 만든 엔진용 일반 GLB (tools/glb-compress/decode.mjs)"
 }

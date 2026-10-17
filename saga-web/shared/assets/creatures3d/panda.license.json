@@ -40,6 +40,5 @@
  "height_m": 1.0,
  "replaces": "Poly by Google CC-BY 3.0 — Panda.glb (dungeon·forest·go·story animals/)",
  "commercial_use": true,
- "rig": "quad",
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\_out\\creature_rig\\k96\\panda.glb) · 결 평균(여백 제외) [158, 157, 160] → [161, 161, 162] (입력 전경 [164, 163, 163])"
+ "rig": "quad"
 }

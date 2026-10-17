@@ -40,6 +40,5 @@
  "height_m": 0.3,
  "replaces": "Quaternius CC0 — Cat (dungeon animals·forest animals·go animals·story animals)",
  "commercial_use": true,
- "rig": "quad",
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c\\cat.glb) · 결 평균(여백 제외) [141, 115, 97] → [209, 174, 152] (입력 전경 [215, 180, 156])"
+ "rig": "quad"
 }

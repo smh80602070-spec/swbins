@@ -40,6 +40,5 @@
  "height_m": 1.4,
  "replaces": "Quaternius CC0 — Zebra.glb",
  "commercial_use": true,
- "rig": "quad",
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\_out\\creature_rig\\k96\\zebra.glb) · 결 평균(여백 제외) [81, 79, 82] → [129, 127, 128] (입력 전경 [143, 142, 143])"
+ "rig": "quad"
 }

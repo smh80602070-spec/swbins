@@ -40,6 +40,5 @@
  "height_m": 0.6,
  "replaces": "Quaternius CC0 Ultimate Monsters — Cat_Monster (D·F G S standin)",
  "commercial_use": true,
- "rig": "quad",
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c2\\cat_monster.glb) · 결 평균(여백 제외) [171, 164, 178] → [210, 201, 219] (입력 전경 [213, 203, 228])"
+ "rig": "quad"
 }

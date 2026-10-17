@@ -39,6 +39,5 @@
  "height_m": 4.0,
  "replaces": "Quaternius CC0 — Apatosaurus (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
  "commercial_use": true,
- "rig": "quad",
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c3\\apatosaurus.glb) · 결 평균(여백 제외) [109, 123, 93] → [158, 167, 132] (입력 전경 [159, 168, 132])"
+ "rig": "quad"
 }

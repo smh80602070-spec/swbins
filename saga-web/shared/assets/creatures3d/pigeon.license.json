@@ -40,6 +40,5 @@
  "height_m": 0.3,
  "replaces": "Quaternius CC0 — Pigeon (dungeon standin·forest standin·go animals·story standin)",
  "commercial_use": true,
- "rig": "bird",
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c\\pigeon.glb) · 결 평균(여백 제외) [97, 87, 101] → [167, 161, 173] (입력 전경 [175, 166, 177])"
+ "rig": "bird"
 }

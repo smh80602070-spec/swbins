@@ -40,6 +40,5 @@
  "height_m": 0.5,
  "replaces": "Quaternius CC0 (2nd pack) — Rat (D R quaternius2·G S foes)",
  "commercial_use": true,
- "rig": "quad",
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_d\\rat.glb) · 결 평균(여백 제외) [172, 176, 174] → [200, 195, 196] (입력 전경 [202, 197, 197])"
+ "rig": "quad"
 }

@@ -40,6 +40,5 @@
  "height_m": 1.0,
  "replaces": "Quaternius CC0 Ultimate Monsters — Dragon (D·F G S standin)",
  "commercial_use": true,
- "rig": "quad",
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c2\\dragon.glb) · 결 평균(여백 제외) [198, 150, 155] → [230, 185, 181] (입력 전경 [234, 188, 184])"
+ "rig": "quad"
 }

@@ -40,6 +40,5 @@
  "height_m": 2.6,
  "replaces": "Poly CC-BY — Elephant.glb (dungeon animals/, forest·go·story standin/)",
  "commercial_use": true,
- "rig": "quad",
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\_out\\creature_rig\\k96\\elephant.glb) · 결 평균(여백 제외) [103, 104, 116] → [120, 131, 156] (입력 전경 [120, 131, 156])"
+ "rig": "quad"
 }

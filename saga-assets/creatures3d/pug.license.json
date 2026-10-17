@@ -40,6 +40,5 @@
  "height_m": 0.3,
  "replaces": "Quaternius CC0 — Pug (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
  "commercial_use": true,
- "rig": "quad",
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c\\pug.glb) · 결 평균(여백 제외) [97, 69, 64] → [181, 159, 147] (입력 전경 [203, 173, 156])"
+ "rig": "quad"
 }

@@ -40,6 +40,5 @@
  "height_m": 2.5,
  "replaces": "Quaternius CC0 — Parasaurolophus (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
  "commercial_use": true,
- "rig": "bird",
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c\\parasaurolophus.glb) · 결 평균(여백 제외) [91, 57, 49] → [196, 160, 135] (입력 전경 [211, 164, 137])"
+ "rig": "bird"
 }

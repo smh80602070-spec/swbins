@@ -40,6 +40,5 @@
  "height_m": 0.8,
  "replaces": "Quaternius CC0 — Wolf (dungeon animals·forest animals·go animals·story animals)",
  "commercial_use": true,
- "rig": "quad",
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c\\wolf.glb) · 결 평균(여백 제외) [119, 116, 124] → [166, 162, 173] (입력 전경 [173, 167, 178])"
+ "rig": "quad"
 }

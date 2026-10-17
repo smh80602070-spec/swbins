@@ -40,6 +40,5 @@
  "height_m": 1.0,
  "replaces": "Quaternius CC0 — Deer (dungeon animals·forest animals·go animals·story animals)",
  "commercial_use": true,
- "rig": "quad",
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c\\deer.glb) · 결 평균(여백 제외) [100, 87, 74] → [159, 135, 118] (입력 전경 [165, 137, 121])"
+ "rig": "quad"
 }

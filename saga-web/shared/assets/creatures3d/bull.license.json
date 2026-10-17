@@ -40,6 +40,5 @@
  "height_m": 1.5,
  "replaces": "Quaternius CC0 — Bull (dungeon animals_extra·forest animals_extra·go animals·story animals_extra)",
  "commercial_use": true,
- "rig": "quad",
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c\\bull.glb) · 결 평균(여백 제외) [46, 41, 47] → [108, 104, 113] (입력 전경 [118, 111, 117])"
+ "rig": "quad"
 }
