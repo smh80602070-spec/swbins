@@ -12,6 +12,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
 KINDS = ('sword', 'spear', 'axe', 'dagger', 'bow', 'staff', 'gun', 'shield', 'gauntlet')
 GRADES = ('common', 'rare', 'legend')
+EXTRA = {'wpn_club_01': (0.6, 0.95), 'wpn_scroll_01': (0.3, 0.45), 'wpn_fan_01': (0.3, 0.65), 'wpn_brush_01': (0.3, 0.45)}   # K-0116 짝 넷 — 가장 긴 변 m 범위
 NEED = {'bow': {'grip', 'tip', 'tip_low', 'nock', 'up'}, 'shield': {'grip', 'tip', 'face', 'up'}}
 
 
@@ -44,7 +45,24 @@ def main():
                 bad.append(f'{pid}: 웹 경량본 {os.path.getsize(wp) // 1024}KB > 300KB')
             if os.path.exists(wp) and NEED.get(k, {'grip', 'tip', 'up'}) - nodes_of(wp):   # 압축이 소켓 노드를 지우면 안 된다(K-0088)
                 bad.append(f'{pid}: 웹 경량본 노드 없음 {sorted(NEED.get(k, {"grip", "tip", "up"}) - nodes_of(wp))}')
-    print('무기', len(KINDS) * len(GRADES), '· 오류', len(bad))
+    for pid in EXTRA:                                                          # K-0116 등급 없는 짝 넷 — 쥐는 자리·크기 범위
+        p = os.path.join(toon, pid + '.glb')
+        if not os.path.exists(p):
+            bad.append('없음 ' + pid)
+            continue
+        miss = {'grip', 'tip', 'up'} - nodes_of(p)
+        if miss:
+            bad.append(f'{pid}: 노드 없음 {sorted(miss)}')
+        lic = json.load(open(os.path.join(toon, pid + '.license.json'), encoding='utf-8'))
+        lo, hi = EXTRA[pid]
+        if not (lo <= max(lic.get('size_m', [0])) <= hi):
+            bad.append(f'{pid}: 크기 {lic.get("size_m")} 가 {lo}~{hi}m 밖')
+        if lic.get('tris', 0) > 1500:
+            bad.append(f'{pid}: 삼각형 {lic["tris"]} > 1500')
+        wp = os.path.join(web, pid + '.glb')
+        if os.path.exists(wp) and {'grip', 'tip', 'up'} - nodes_of(wp):
+            bad.append(f'{pid}: 웹 경량본 노드 없음')
+    print('무기', len(KINDS) * len(GRADES), '+ 짝', len(EXTRA), '· 오류', len(bad))
     print('WEAPON_FAIL' if bad else 'WEAPON_OK')
     for b in bad:
         print(' -', b)

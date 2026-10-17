@@ -11,3 +11,4 @@
 - [ ] 10-17 · (K-0133 넘김, 페이블) · 정본 `creatures3d` 111 전부 재질·결 고침(검은 덩어리 → 입력 그림 색) → 웹 shared/creatures3d 222 복사 끝 — 1만리·2나락·3마을 sw VERSION 올리기 · 2D 짐승 그림은 K-0134 뒤 · 웹
 - [ ] 10-17 · 사용자 "3d,2d 게임성" 참고작 목록(판마다 4~6, 정본 루트 README 표) — README·index 반영 끝 · **웹 설계 → W-0274** · 고돗·유니티 PLAN 반영은 각 R-0 · 웹/고돗/유니티
 - [ ] 10-17 · (K-0117 넘김) · 빌린 mp3 11 이 자체 소리로 바뀜(1만리 sfx 7 · 3마을 bgm forest · 4종횡 bgm battle·forest·town, 이름 그대로) → ① ASSET_LICENSES 손 절 지우기(1만리 373~433 OGA "RPG Sound Pack"·"100 CC0 SFX #2" 천둥 절 · 3마을 562~ BGM 절 · 4종횡 207~209 표) ② 세 판 sw VERSION ③ `node tools/qc.mjs --game saga-go` 플레이 "1만리 PC 클릭 이동 walkingTo 0.00" FAIL — 10-17 SD 사슬+Blender 로 4fps 일 때 났다, 부하 없을 때 다시 보고 진짜면 W 티켓 · 웹
+- [ ] 10-17 · (K-0116 넘김) · 자체 `world3d/wpn_{club,scroll,fan,brush}_01.glb`·`mill_01.glb` 도착 → 2나락 `asset3d.js` 486·508·528~530 다섯 줄을 새 id 로(fan 은 brush 재사용 끝냄), 옛 weapons/·hexagon windmill 지우기·ASSET_LICENSES · 쥐는 축이 손에 맞는지 화면 확인 · 웹

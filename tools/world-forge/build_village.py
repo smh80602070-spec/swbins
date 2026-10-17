@@ -354,9 +354,41 @@ def bars_door_01(C):
         tube(M, (x, 0, 2.62), (x, 0, 2.74), 0.028, 0.0, metal, 1.0, 4)                  # 창끝
 
 
+def mill_01(C):
+    """방앗간(풍차, K-0116) — 돌 탑 몸통 + 원뿔 지붕 + 앞(-y)에 날개 넷. 바닥 원점, 키 ≈7.4m."""
+    M = C.M
+    st = stone(C, 1.4, '#a29d92')
+    dk = stone(C, 1.4, '#857f75')
+    roof = wood(C, '#7a3a2a', 1.0)
+    frame = dark_wood(C)
+    sail = cloth(C, CLOTH_CREAM)
+    tube(M, (0, 0, 0), (0, 0, 0.35), 1.75, 1.72, dk, 1.2, 12)                          # 기단
+    tube(M, (0, 0, 0.35), (0, 0, 4.2), 1.62, 1.25, st, 1.2, 12)                        # 몸통(위로 좁아짐)
+    tube(M, (0, 0, 4.12), (0, 0, 4.3), 1.38, 1.38, frame, 1.0, 12)                      # 처마 띠
+    tube(M, (0, 0, 4.3), (0, 0, 6.0), 1.45, 0.06, roof, 1.0, 12)                        # 원뿔 지붕
+    obox(M, (0, -1.55, 0.35), (0.85, 0.3, 1.5), 0, frame, 1.0)                          # 문
+    obox(M, (0, -1.6, 1.85), (1.05, 0.22, 0.12), 0, dk, 1.0)                            # 문 위 인방
+    for x, z in ((-0.7, 2.6), (0.75, 3.3)):
+        obox(M, (x, -1.45 + 0.08 * (z - 2.6), z), (0.4, 0.2, 0.5), 0, frame, 1.0)      # 작은 창
+    hz, hy = 4.65, -1.45
+    tube(M, (0, -0.9, hz), (0, hy - 0.35, hz), 0.17, 0.15, frame, 1.0, 8)               # 굴대
+    tube(M, (0, hy - 0.35, hz), (0, hy - 0.5, hz), 0.24, 0.2, iron(C), 1.0, 8)          # 굴대 머리
+    L, w = 2.75, 0.62
+    for k in range(4):
+        a = math.radians(20 + 90 * k)
+        d = (math.cos(a), math.sin(a))
+        n = (-d[1], d[0])
+        tube(M, (0, hy - 0.42, hz), (d[0] * L, hy - 0.42, hz + d[1] * L), 0.06, 0.05, frame, 1.0, 5)   # 날개 살
+        pts = [(d[0] * r + n[0] * o, d[1] * r + n[1] * o) for r, o in ((0.45, 0.04), (L, 0.04), (L, w), (0.45, w * 0.8))]
+        M.face([Vector((x, hy - 0.46, hz + z)) for x, z in pts], [(0, 0), (1, 0), (1, 1), (0, 1)], sail)
+        M.face([Vector((x, hy - 0.38, hz + z)) for x, z in reversed(pts)], [(0, 1), (1, 1), (1, 0), (0, 0)], sail)
+        for r in (1.1, 1.8, 2.5):                                                        # 가로 살
+            tube(M, (d[0] * r + n[0] * 0.04, hy - 0.47, hz + d[1] * r + n[1] * 0.04), (d[0] * r + n[0] * w, hy - 0.47, hz + d[1] * r + n[1] * w), 0.025, 0.025, frame, 1.0, 4)
+
+
 VILLAGE = {f.__name__: f for f in (
     market_stall_01, low_stone_wall_01, signpost_01, notice_board_01, crate_stack_01, barrel_01, sack_pile_01, tent_small_01, tent_large_01,
-    campfire_logs_01, bench_01, handcart_01, dungeon_pillar_01, wall_piece_01, chest_01, jar_01, altar_base_01, bars_door_01)}
+    campfire_logs_01, bench_01, handcart_01, dungeon_pillar_01, wall_piece_01, chest_01, jar_01, altar_base_01, bars_door_01, mill_01)}
 
 if __name__ == '__main__':
     BP.PROPS.clear()

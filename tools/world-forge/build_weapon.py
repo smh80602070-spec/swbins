@@ -398,14 +398,100 @@ FN = {'sword': sword, 'spear': spear, 'axe': axe, 'dagger': dagger, 'bow': bow, 
 ALL = {f'wpn_{k}_{g}': (k, g) for k in KINDS for g in GRADES}
 
 
+# ---- K-0116 등급 없는 짝 넷(2나락 몽둥이·두루마리·부채·붓) — 등급 표(ALL)와 섞지 않는다. 손잡이 규약은 검과 같다(grip 원점, tip +z).
+def club(C, t):
+    """나무 몽둥이 — 손잡이에서 끝으로 굵어지는 막대 + 쇠테 둘 + 징."""
+    M = C.M
+    wd = C.s('brown_planks_03', 0.8, '#7a5634')
+    grip_wrap(M, t, -0.1, 0.1, 0.021, 4)
+    ball(M, (0, 0, -0.125), 0.028, t.trim)
+    n = 6
+    for i in range(n):
+        z0, z1 = 0.1 + 0.09 * i, 0.1 + 0.09 * (i + 1)
+        tube(M, (0.004 * math.sin(i), 0, z0), (0.004 * math.sin(i + 1), 0, z1), 0.026 + 0.0075 * i, 0.026 + 0.0075 * (i + 1), wd, 0.5, 8)
+    ball(M, (0, 0, 0.64), 0.072, wd, n=8)
+    for z, r in ((0.42, 0.058), (0.56, 0.07)):
+        tube(M, (0, 0, z - 0.014), (0, 0, z + 0.014), r, r, t.dark, 0.3, 8, caps=False)
+    for k in range(5):
+        a = 2 * math.pi * k / 5
+        tube(M, (math.cos(a) * 0.066, math.sin(a) * 0.066, 0.5), (math.cos(a) * 0.1, math.sin(a) * 0.1, 0.5), 0.012, 0.0, t.trim, 0.3, 5)
+    node('grip', (0, 0, 0))
+    node('tip', (0, 0, 0.71))
+    node('up', (0, 0, 0.5))
+
+
+def scroll(C, t):
+    """두루마리 — 세로로 쥔 말린 종이 원통 + 위아래 축 끝 손잡이 + 묶은 끈."""
+    M = C.M
+    paper = C.s('white_stucco', 1.0, '#ecdfbd')
+    rod = C.s('black_painted_planks', 0.8)
+    tie = C.s('white_stucco', 1.0, '#a8322a')
+    tube(M, (0, 0, -0.13), (0, 0, 0.13), 0.034, 0.034, paper, 0.6, 12)
+    for sgn in (-1, 1):
+        tube(M, (0, 0, sgn * 0.13), (0, 0, sgn * 0.165), 0.012, 0.012, rod, 0.3, 8)
+        ball(M, (0, 0, sgn * 0.175), 0.018, t.trim, n=6)
+    tube(M, (0, 0, 0.02), (0, 0, 0.036), 0.037, 0.037, tie, 0.3, 12, caps=False)
+    tube(M, (0, -0.035, 0.028), (0.02, -0.07, -0.02), 0.005, 0.004, tie, 0.3, 4)   # 늘어진 끈
+    tube(M, (0, -0.035, 0.028), (-0.018, -0.068, -0.03), 0.005, 0.004, tie, 0.3, 4)
+    node('grip', (0, 0, 0))
+    node('tip', (0, 0, 0.19))
+    node('up', (0, 0, 0.5))
+
+
+def fan(C, t):
+    """접부채 — 사북(원점 아래)에서 펼친 반원, 살 12 + 종이 판."""
+    M = C.M
+    paper = C.s('white_stucco', 1.0, '#e9dcc0')
+    ink = C.s('white_stucco', 1.0, '#a8322a')
+    rib = C.s('brown_planks_03', 0.6, '#5a3f2b')
+    piv = (0, 0, -0.06)
+    tube(M, (0, -0.01, -0.06), (0, 0.01, -0.06), 0.012, 0.012, t.trim, 0.3, 8)
+    R0, R1, N = 0.12, 0.3, 12
+    a0, a1 = math.radians(-68), math.radians(68)
+    for i in range(N + 1):
+        a = a0 + (a1 - a0) * i / N
+        d = (math.sin(a), 0, math.cos(a))
+        r_end = R1 if i in (0, N) else R0 + 0.01
+        tube(M, piv, (piv[0] + d[0] * r_end, 0, piv[2] + d[2] * r_end), 0.006, 0.004, rib, 0.3, 4)
+    arc = 18
+    outer = [(math.sin(a0 + (a1 - a0) * k / arc) * R1, piv[2] + math.cos(a0 + (a1 - a0) * k / arc) * R1) for k in range(arc + 1)]
+    inner = [(math.sin(a0 + (a1 - a0) * k / arc) * R0, piv[2] + math.cos(a0 + (a1 - a0) * k / arc) * R0) for k in range(arc + 1)]
+    plate(M, outer + list(reversed(inner)), (0, 0.004, 0), (1, 0, 0), (0, 0, 1), 0.004, paper, bevel=0.003, te=0.002)
+    band = [(math.sin(a0 + (a1 - a0) * k / arc) * (R1 - 0.03), piv[2] + math.cos(a0 + (a1 - a0) * k / arc) * (R1 - 0.03)) for k in range(arc + 1)]
+    plate(M, outer + list(reversed(band)), (0, 0.009, 0), (1, 0, 0), (0, 0, 1), 0.002, ink, bevel=0.002, te=0.001)   # 가장자리 붉은 띠
+    node('grip', (0, 0, 0))
+    node('tip', (0, 0, piv[2] + R1))
+    node('up', (0, 0, 0.5))
+
+
+def brush(C, t):
+    """붓 — 마디 있는 대나무 대 + 쇠 고리 + 털 끝(뾰족)."""
+    M = C.M
+    bam = C.s('white_stucco', 1.0, '#b49a5a')
+    hair = C.s('black_painted_planks', 0.6)
+    tube(M, (0, 0, -0.09), (0, 0, 0.2), 0.011, 0.0105, bam, 0.4, 8)
+    for z in (-0.03, 0.06, 0.15):
+        tube(M, (0, 0, z - 0.004), (0, 0, z + 0.004), 0.0125, 0.0125, bam, 0.3, 8, caps=False)
+    tube(M, (0, 0, 0.2), (0, 0, 0.215), 0.0135, 0.0135, t.trim, 0.3, 8)
+    tube(M, (0, 0, 0.215), (0, 0, 0.245), 0.0135, 0.011, hair, 0.3, 8, caps=False)
+    tube(M, (0, 0, 0.245), (0, 0, 0.29), 0.011, 0.0, hair, 0.3, 8)
+    ball(M, (0, 0, -0.095), 0.009, t.trim, n=6)
+    node('grip', (0, 0, 0))
+    node('tip', (0, 0, 0.29))
+    node('up', (0, 0, 0.5))
+
+
+EXTRA = {'wpn_club_01': club, 'wpn_scroll_01': scroll, 'wpn_fan_01': fan, 'wpn_brush_01': brush}
+
+
 def build_scene(pid, out, style):
     del NODES[:]
-    kind, grade = ALL[pid]
+    kind, grade = ALL[pid] if pid in ALL else (pid.split('_')[1], 'common')
     bpy.ops.wm.read_factory_settings(use_empty=True)
     W._mat_cache.clear()
     W.set_style(style)
     C = BP.Ctx(pid)
-    FN[kind](C, T(C, grade))
+    (EXTRA[pid] if pid in EXTRA else FN[kind])(C, T(C, grade))
     ob = C.M.build()
     tris = sum(len(p.vertices) - 2 for p in ob.data.polygons)
     pts = [Vector(c) for c in ob.bound_box]
@@ -434,7 +520,7 @@ def build_scene(pid, out, style):
 if __name__ == '__main__':
     style = arg('--style', 'real')
     if '--list' in A:
-        print('WEAPONS', ' '.join(ALL))
+        print('WEAPONS', ' '.join(ALL), '· EXTRA', ' '.join(EXTRA))
     elif '--all' in A:
         d = arg('--out-dir')
         for pid in ALL:
