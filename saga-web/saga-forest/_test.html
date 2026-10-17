@@ -103,6 +103,7 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/village-tasks.js"></script>
 <script src="js/bug.js"></script>
 <script src="js/home.js"></script>
+<script src="js/lots.js"></script>
 <script src="js/mail.js"></script>
 <script src="js/museum.js"></script>
 <script src="js/spirit.js"></script>
@@ -2582,6 +2583,35 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       V.leaveHome();
       return pl.kind === 'place' && placed && again.kind === 'no' &&
         pick.kind === 'pick' && back && '놓기 → 거두기 왕복';
+    });
+
+    /* ── 입주 조건(W-0284, `lots.js`) — 테라리아·스타바운드 자리 ─────────── */
+    t('빈 집(W-0284) — 서로 다른 태그 셋 + 좋아하는 태그 둘이면 다음 날(rollDay) 그 손님이 눌러앉는다 · 태그 둘이면 아직', function () {
+      var Lt = DG.lots, Hm = DG.home, VI = DG.visitor, s = V.state(), keep = { lots: JSON.stringify(s.lots || []), vs: JSON.stringify(s.visitSettled || []), stock: JSON.stringify(Hm.state().stock) };
+      try {
+        s.lots = []; s.visitSettled = [];
+        Hm.state().stock = { visit_sailor: 1, mulhang: 1, bangseok: 1, hwabun: 1 };
+        var b = Lt.build(), p1 = Lt.put(0, 'visit_sailor'), p2 = Lt.put(0, 'mulhang');       // 바다·부엌 — 선원이 좋아하는 둘, 태그는 둘뿐
+        var h2 = Lt.hintFor(0), r0 = Lt.rollDay();
+        var p3 = Lt.put(0, 'bangseok');                                                        // 서재 — 셋째 태그
+        var m = Lt.matchFor(0), r1 = Lt.rollDay(), who = s.lots[0].who, settled = VI.settled().slice();
+        var r2 = Lt.rollDay();                                                              // 이미 산다 — 또 안 앉는다
+        var lock = Lt.put(0, 'hwabun');
+        var ok = b.ok && p1.ok && p2.ok && /2\/3/.test(h2) && r0 === null && p3.ok && m && m.d.key === 'sailor' && m.score === 2 &&
+          r1 === 'sailor' && who === 'sailor' && settled.indexOf('sailor') >= 0 && r2 === null && !lock.ok && Hm.stockCount('visit_sailor') === 0;
+        return ok ? ('바다·부엌·안방 → 🧭 난파 선원 눌러앉음(visitSettled ' + settled.length + ') · 둘일 땐 "' + h2 + '"') : ('실패 ' + JSON.stringify({ b: b, p1: p1, p2: p2, h2: h2, r0: r0, p3: p3, m: m && [m.d.key, m.score], r1: r1, who: who, settled: settled, r2: r2, lock: lock }));
+      } finally { s.lots = JSON.parse(keep.lots); s.visitSettled = JSON.parse(keep.vs); Hm.state().stock = JSON.parse(keep.stock); }
+    });
+    t('빈 집(W-0284) — 셋 상한: 넷째는 못 짓고 제작대 레시피 lot 도 막힌다 · 가구는 집마다 6점 · 거두면 창고로', function () {
+      var Lt = DG.lots, Hm = DG.home, CR = DG.craft, s = V.state(), keep = { lots: JSON.stringify(s.lots || []), stock: JSON.stringify(Hm.state().stock) };
+      try {
+        s.lots = []; Hm.state().stock = { soban: 7 };
+        var a = Lt.build(), b = Lt.build(), c = Lt.build(), d = Lt.build(), can = CR.can('lot');
+        var i, last; for (i = 0; i < 7; i++) { last = Lt.put(0, 'soban'); }
+        var six = s.lots[0].furn.length, tk = Lt.take(0, 'soban'), back = Hm.stockCount('soban');
+        var ok = a.ok && b.ok && c.ok && !d.ok && !can.ok && /셋|3/.test(can.why) && !last.ok && six === 6 && tk.ok && back === 2 && Lt.tagOf('soban') === 'kitchen' && Lt.tagName('kitchen') === '부엌';
+        return ok ? ('셋까지 · 넷째 "' + d.why + '" · 레시피 "' + can.why + '" · 6점 상한 · 거두기 ○') : ('실패 ' + JSON.stringify({ a: a, d: d, can: can, last: last, six: six, tk: tk, back: back }));
+      } finally { s.lots = JSON.parse(keep.lots); Hm.state().stock = JSON.parse(keep.stock); }
     });
 
     t('집 — 문 앞에는 놓지 못한다', function () {
@@ -7105,15 +7135,15 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
     function crKeep() { var s = V.state(); return JSON.stringify({ tools: s.tools || {}, craft: s.craft || null, bag: s.bag || {}, gold: C.save.player.gold }); }
     function crBack(k) { var o = JSON.parse(k), s = V.state(); s.tools = o.tools; if (o.craft) { s.craft = o.craft; } else { delete s.craft; } s.bag = o.bag; C.save.player.gold = o.gold; }
 
-    t('fs.craft: 제작대 ① 레시피 12 — 재료는 전부 채집 품목(무게 > 0, 계절 안 탐), 도구 6·가구 4·공사 자재 2', function () {
+    t('fs.craft: 제작대 ① 레시피 13 — 재료는 전부 채집 품목(무게 > 0, 계절 안 탐), 도구 6·가구 4·공사 자재 2·빈 집 1(W-0284)', function () {
       var R = VD.RECIPES, bad = [], kinds = {};
       R.forEach(function (r) {
         kinds[r.kind] = (kinds[r.kind] || 0) + 1;
         Object.keys(r.need).forEach(function (k) { var it = VD.item(k); if (!it || !(it.w > 0) || it.season) { bad.push(r.key + ':' + k); } });
         if (r.kind === 'furn' && !VD.furn(r.furn)) { bad.push(r.key + ':furn'); }
       });
-      return R.length === 12 && kinds.tool === 6 && kinds.furn === 4 && kinds.pave === 2 && bad.length === 0 &&
-        ('레시피 ' + R.length + ' · 도구 ' + kinds.tool + ' · 가구 ' + kinds.furn + ' · 자재 ' + kinds.pave + ' · 재료 이상 0');
+      return R.length === 13 && kinds.tool === 6 && kinds.furn === 4 && kinds.pave === 2 && kinds.lot === 1 && bad.length === 0 &&
+        ('레시피 ' + R.length + ' · 도구 ' + kinds.tool + ' · 가구 ' + kinds.furn + ' · 자재 ' + kinds.pave + ' · 빈 집 ' + kinds.lot + ' · 재료 이상 0');
     });
 
     t('재미표준 D 성장 선택(측정) — 도구 승급 3택 100회: 후보 셋·같은 축 중복 0·거절 보상', function () {

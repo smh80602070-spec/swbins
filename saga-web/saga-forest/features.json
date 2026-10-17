@@ -1023,5 +1023,27 @@
    "2D 말풍선 비키기(W-0205) — 한 점에 말풍선 5개: 넷째 자리까지 위로(옛 셋), 다섯째는 숨김·행동 안내([키])는 안 숨김"
   ],
   "note": "D2(claude 2026-10-14): pw-look2d village 새 w205_new_fs Read — 전방·곤충 박사 나비·내 집·흑상 말풍선이 안 겹침 ○."
+ },
+ {
+  "id": "fs.lots",
+  "name": "입주 조건 — 제작대 레시피 \"작은 빈 집\"(셋까지)에 집 창고 가구를 넣으면(집마다 6점) 가구 태그(서재·악기·부엌·안방·뜰·바다·밤·별·길, 없으면 계열) 서로 다른 셋 + 그 태그를 둘 이상 좋아하는 아직 안 눌러앉은 떠돌이 방문객이 다음 날 눌러앉는다(visitSettled 그대로 — 광장 곁 자리·선물·사연) · 하루 한 명 · 꾸미기 창에 집마다 태그·어울릴 손님 줄",
+  "files": [
+   "js/lots.js",
+   "js/data-village.js",
+   "js/craft.js",
+   "src/ui/02.js",
+   "src/village/02.js",
+   "css/style.css"
+  ],
+  "tests": [
+   "빈 집(W-0284)",
+   "fs.craft: 제작대 ① 레시피 13"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0284",
+  "since": "2026-10-17",
+  "note": "테라리아·스타바운드식(구조만). 장부 tasks/gameplay/forest.md · 세이브 save.village.lots[](옛 세이브 빈 것)"
  }
 ]

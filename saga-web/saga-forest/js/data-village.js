@@ -599,7 +599,9 @@
     { key: 'f_deungjan', kind: 'furn', furn: 'deungjan', need: { iron: 2, apple: 4 } },
     { key: 'f_mungab',   kind: 'furn', furn: 'mungab',   need: { copper: 3, pine: 8 } },
     { key: 'p_stone', kind: 'pave', pave: 'stone', n: 3, name: '징검돌(돌길 자재)', emoji: '⬜', need: { iron: 3, sora: 2 } },
-    { key: 'p_path',  kind: 'pave', pave: 'path',  n: 5, name: '흙다짐(흙길 자재)', emoji: '🟫', need: { shard: 3, godung: 2 } }
+    { key: 'p_path',  kind: 'pave', pave: 'path',  n: 5, name: '흙다짐(흙길 자재)', emoji: '🟫', need: { shard: 3, godung: 2 } },
+    /* W-0284 작은 빈 집(lots.js) — 셋까지. 가구를 넣어 손님을 부른다 */
+    { key: 'lot', kind: 'lot', need: { pine: 12, iron: 3, shard: 2 } }
   ];
 
   /**
@@ -607,6 +609,23 @@
    *   set  계열. 같은 계열을 셋 이상 놓으면 집 평가에 보탬이 된다
    *   form 화면이 무엇으로 그릴지 (village-view.js 의 drawFurn)
    */
+  /* W-0284 입주 조건(lots.js) — 가구 태그(없으면 계열 set 이 태그)·방문객(visitor.js) 선호 */
+  var LOT_TAGS = {
+    seoan: 'study', jokja: 'study', mungab: 'study', badukpan: 'study', byeongpung: 'study', deungjan: 'study',
+    geomungo: 'music',
+    mulhang: 'kitchen', hwaro: 'kitchen', soban: 'kitchen', fest_chuseok: 'kitchen', fest_dongji: 'kitchen',
+    yo: 'rest', bangseok: 'rest', bandaji: 'rest', dokja: 'rest',
+    hwabun: 'garden', fest_dano: 'garden', visit_bug: 'garden', visit_photo: 'garden',
+    visit_sailor: 'sea', visit_angler: 'sea',
+    visit_wisp: 'night', visit_dokkaebi: 'night', fest_baekjung: 'night', fest_daeborum: 'night',
+    visit_future: 'star', visit_alien: 'star',
+    visit_parcel: 'road', fest_seollal: 'road', fest_samjin: 'road', fest_chilseok: 'road'
+  };
+  var LOT_TAG_NAMES = { study: '서재', music: '악기', kitchen: '부엌', rest: '안방', garden: '뜰', sea: '바다', night: '밤', star: '별', road: '길' };
+  var LOT_LIKES = {
+    fox: ['road', 'kitchen', 'study'], sailor: ['sea', 'kitchen'], wisp: ['night', 'music'], angler: ['sea', 'garden'], bugdoc: ['garden', 'study'],
+    traveler: ['star', 'study'], dokkaebi: ['night', 'rest'], alien: ['star', 'music'], courier: ['road', 'rest'], photo: ['garden', 'night']
+  };
   var FURN_SETS = {
     anbang: { name: '안방', color: '#c98a4a' },
     sarang: { name: '사랑방', color: '#7a6a9a' },
@@ -1213,6 +1232,7 @@
   ];
 
   global.DG.villageData = {
+    LOT_TAGS: LOT_TAGS, LOT_TAG_NAMES: LOT_TAG_NAMES, LOT_LIKES: LOT_LIKES,   // W-0284
     PARCEL_KINDS: PARCEL_KINDS, DELIVERY_DESTS: DELIVERY_DESTS, DELIVERY_GRADES: DELIVERY_GRADES,
     ENCOUNTER_KINDS: ENCOUNTER_KINDS,
     gradeOf: gradeOf,

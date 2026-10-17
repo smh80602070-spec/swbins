@@ -1209,6 +1209,7 @@
       '들어옵니다. 기본이 아닌 것을 바르면 집 평가가 각각 +12 오릅니다.</small></div>';
 
     /* 창고 → 놓기 */
+    html += global.DG.lots ? global.DG.lots.sheetHtml() : '';   // W-0284 작은 빈 집
     html += '<div class="sec"><h4>창고</h4>';
     if (!stt.stock.length) {
       html += '<div class="hint">창고가 비었습니다 — 전방(🎒 가방 시트)에 날마다 가구 넉 점이 들어옵니다.</div>';

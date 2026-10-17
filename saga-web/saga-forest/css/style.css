@@ -1416,3 +1416,7 @@ body.tilted3 #vignette {
 #mt-ride span { font-size: 20px; line-height: 1; }
 #mt-ride em { font-size: 10px; font-style: normal; opacity: .7; }
 #mt-ride:active { transform: scale(.94); }
+
+/* W-0284 작은 빈 집 — 가구 칩 */
+.life-chips { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; margin: 4px 0; }
+.life-chips .btn.tiny small { opacity: .7; }
