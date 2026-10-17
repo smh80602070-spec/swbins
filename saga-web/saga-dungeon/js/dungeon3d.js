@@ -2629,7 +2629,8 @@
        뜻이 지나쳐 사람이 개미만 해졌다. 지금은 기본은 던전과 같게 두고 세로
        화면에서만 최대 1.2배로 줄여 잡는다 — 여전히 화면비 보정은 하되 덜 물러난다.
        던전 쪽 거리는 그대로다(연출·조작 감각이 거기 맞춰져 있다). */
-    var zNow = ZOOM() / USERZOOM();
+    var BCz = global.DG.beltCam3d, uzNow = USERZOOM(); if (BCz && BCz.on() && uzNow < core.tuned('dungeon3d.beltZoomMin', 0.7)) { uzNow = core.tuned('dungeon3d.beltZoomMin', 0.7); }   // 사용자 10-17 "카메라 앵글" — 벨트 카메라에선 줌 하한 0.7(끝까지 오므려도 기본의 1.4배). 0.32 는 옛 마을 camAim(거리 0.4배)용 하한이라 벨트에선 3배 멀어져 인물이 점이 됐다 · 손잡이 dungeon3d.beltZoomMin
+    var zNow = ZOOM() / uzNow;
     if (run.town) {
       var asp = camera.aspect || 1;
       zNow *= (asp < 1 ? Math.min(1.2, 1 / Math.max(0.7, asp)) : 1);

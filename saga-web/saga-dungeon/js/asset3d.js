@@ -969,7 +969,7 @@
      LOW_GAP ms 가 지나야 시작한다. 4G 폰에서 주민 몸 아홉(각 ~600KB)이 먼저 줄을 차지해 45초가 지나도 건물이 상자였다.
      같은 파일을 높은 쪽이 다시 부르면 높은 줄로 올린다. 손잡이 asset3d.lazyNpc(auto = 폰 · 1 · 0) */
   var lowQ = [], lowScope = false, lastHi = 0, lowTimer = null, LOW_GAP = 1500, lowSince = 0, LOW_MAX = 15000;   // LOW_MAX — 높은 쪽이 계속 이어져도 이만큼 지나면 푼다
-  function LAZY_NPC() { var k = tuned('asset3d.lazyNpc', 'auto'); if (k === 1 || k === '1') { return true; } if (k === 0 || k === '0') { return false; } return light(); }
+  function LAZY_NPC() { var k = tuned('asset3d.lazyNpc', 'auto'); if (k === 1 || k === '1') { return true; } if (k === 0 || k === '0') { return false; } return true; }   // W-0275 auto = 모든 기기(옛: 폰만) — PC 도 사람 몸 아홉이 먼저 줄을 서서 건물이 상자로 남았다(사용자 10-17 "로딩 보기 싫어")
   function nowMs() { return (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now(); }
   function withLazy(fn) { var keep = lowScope; lowScope = LAZY_NPC(); if (lowScope) { lastHi = Math.max(lastHi, nowMs()); } try { return fn(); } finally { lowScope = keep; } }
   function lowReady() {
@@ -1400,7 +1400,7 @@
     FIXED_HERO: FIXED_HERO, fixedRecipe: fixedRecipe,
     normName: normName, score: score, mapClips: mapClips, SLOTS: SLOTS, fit: fit,
     ready: function () { return !!three(); }, hasLoader: function () { return !!loader(); },
-    DEFAULTS: DEFAULTS, restore: restore, heroRecipe: heroRecipe, ANIM_SRC: ANIM_SRC, withLazy: withLazy, lazyNpc: LAZY_NPC, lowQueue: function () { return lowQ.slice(); }, prefetchState: function () { return Object.keys(bytes).map(function (u) { return u.split('/').pop(); }); }, prefetchOn: PREF_ON, qState: function () { var n = nowMs(); return { inflight: inflight, start: startQ.length, low: lowQ.length, hiAgo: Math.round(n - lastHi), lowAgo: lowQ.length ? Math.round(n - lowSince) : null, timer: !!lowTimer, loading: Object.keys(cache).filter(function (u) { return cache[u].state === 'load'; }).map(function (u) { return u.split('/').slice(-2).join('/'); }), next: startQ.slice(0, 4).map(function (u) { return u.split('/').slice(-2).join('/'); }) }; }, ownAnimOf: function (rec) { return !!(rec && !rec.anim && wantsOwnAnim(rec.body)); },   // W-0213 buildHero 의 own 과 같은 식
+    DEFAULTS: DEFAULTS, restore: restore, heroRecipe: heroRecipe, ANIM_SRC: ANIM_SRC, withLazy: withLazy, lazyNpc: LAZY_NPC, hiPending: function () { var n = 0, k; for (k in cache) { var c = cache[k]; if (c && !c.low && (c.state === 'queued' || c.state === 'load')) { n++; } } return n + heavyQ.length; },   /* W-0275 로딩 가림막 — 높은 줄(건물·내 몸·동료) 남은 수 */  lowQueue: function () { return lowQ.slice(); }, prefetchState: function () { return Object.keys(bytes).map(function (u) { return u.split('/').pop(); }); }, prefetchOn: PREF_ON, qState: function () { var n = nowMs(); return { inflight: inflight, start: startQ.length, low: lowQ.length, hiAgo: Math.round(n - lastHi), lowAgo: lowQ.length ? Math.round(n - lowSince) : null, timer: !!lowTimer, loading: Object.keys(cache).filter(function (u) { return cache[u].state === 'load'; }).map(function (u) { return u.split('/').slice(-2).join('/'); }), next: startQ.slice(0, 4).map(function (u) { return u.split('/').slice(-2).join('/'); }) }; }, ownAnimOf: function (rec) { return !!(rec && !rec.anim && wantsOwnAnim(rec.body)); },   // W-0213 buildHero 의 own 과 같은 식
     build: build, buildHero: buildHero, step: step, play: play, rawScene: rawScene, tick: tick,
     ownAllMat: ownAllMat, flashAllMat: flashAllMat,
     tuned: tuned, set: set, stats: stats, isActorAsset: isActorAsset, isSwayAsset: isSwayAsset,
