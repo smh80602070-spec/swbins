@@ -594,7 +594,7 @@
             (skillSlotPick !== null && rank > 0 && sk.shape !== 'passive'
               ? '<button class="btn tiny" data-act="skill-set" data-key="' + sk.key +
                 '">' + KEYS[skillSlotPick] + ' 에 걸기</button>' : '') +
-          '</div>' + secretRow(skillHero, sk, rank) + '</div>';
+          '</div>' + secretRow(skillHero, sk, rank) + (rank && sk.shape !== 'passive' && global.DG.skillTree ? global.DG.skillTree.rowHtml(sk.key) : '') + '</div>';   // W-0280 무예별 작은 나무
       }
       html += '</div>';
     }

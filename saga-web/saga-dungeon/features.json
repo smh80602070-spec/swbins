@@ -1106,5 +1106,24 @@
   "ticket": "W-0203",
   "since": "2026-10-14",
   "note": "D2(claude 2026-10-14): 걷는 동안 내 몸 위상 실측 — 3마을 2.73 바퀴/초(옛 시계 1.25 — 다리가 느려 미끄러짐), 1만리 0.59(최소 걸음, 옛 1.25 — 제자리걸음) · pw-look2d walk(3마을) 8칸 다 돎 ○ · qc 1만리·3마을 2D 한 장 사람 ○. 손잡이 mode2d.strideK·strideMaxHz·strideMinHz."
+ },
+ {
+  "id": "dg.skill-tree",
+  "name": "무예별 작은 나무 — 무예를 쓸 때마다 경험 1, 무예 레벨 1~20(L→L+1 에 8L), 레벨마다 점 1 을 그 무예만의 마디 8 나무(마디마다 갈래 둘: 위력·기력·재냉각·범위·흡수·불/한기 결·연타)에 찍는다 · 비결은 모양, 나무는 수치만 · 되돌리기 금 200(경험은 남음) · 무예 창 무예 줄 아래 칸",
+  "files": [
+   "js/skill-tree.js",
+   "src/dungeon/06-skill.js",
+   "src/ui/02.js",
+   "css/style.css"
+  ],
+  "tests": [
+   "무예 나무(W-0280)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0280",
+  "since": "2026-10-17",
+  "note": "라스트 에포크식(구조만). 장부 tasks/gameplay/dungeon.md · 세이브 save.skillTree[무예 key] = { xp, pts[] } (인물이 아니라 무예마다 하나)"
  }
 ]

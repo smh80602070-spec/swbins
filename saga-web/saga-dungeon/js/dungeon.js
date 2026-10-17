@@ -4173,7 +4173,7 @@
       m.dmg *= b; m.boost = b;
       if (sk.shape === 'summon') { m.summonAdd = (m.summonAdd || 0) + 1; }
     }
-    return m;
+    return global.DG.skillTree ? global.DG.skillTree.apply(m) : m;   // W-0280 무예별 작은 나무 — 수치·덧붙임(skill-tree.js)
   }
 
   /** 무예의 위력 배수 — '집중·주술' 같은 상시가 여기 얹힌다 */
@@ -4211,7 +4211,7 @@
     sv = sk.shape === 'summon' ? sv + (mod.summonAdd || 0) : sv * mod.dmg;
     if (mod.drain) { addBuff('drainPct', mod.drain, mod.drainSec); }
     applyShapeSkill(mod.sk, sv);
-    core.emit('dungeon:skill', sk.key);
+    core.emit('dungeon:skill', sk.key); if (global.DG.skillTree) { global.DG.skillTree.gain(sk.key); }   // W-0280 쓸 때마다 무예 경험 1
     return true;
   }
 

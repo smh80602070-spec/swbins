@@ -957,6 +957,11 @@ body.dg3d #dg-canvas { background: transparent !important; border-color: transpa
 .gr-lv { font-size: 11px; color: var(--ink-faint); margin-left: auto; }
 .gr-opts { font-size: 11px; color: var(--ink-dim); margin: 5px 0 7px; line-height: 1.6; }
 .gr-btns { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; }
+/* W-0280 무예별 작은 나무 — 마디 8, 갈래 둘 */
+.gr-tree { margin-top: 6px; padding-top: 5px; border-top: 1px dashed var(--line, #444); font-size: 11px; }
+.gr-node { display: flex; gap: 3px; align-items: center; flex-wrap: wrap; margin: 2px 0; opacity: .75; }
+.gr-node.on { opacity: 1; }
+.gr-node .btn.tiny { font-size: 10px; padding: 1px 5px; }
 .gr-none { font-size: 11px; }
 
 .dt-gears { display: flex; flex-direction: column; gap: 6px; margin-top: 11px; }

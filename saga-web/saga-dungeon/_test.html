@@ -125,6 +125,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/passive-web-ui.js"></script>
 <script src="js/meridian.js"></script>
 <script src="js/secret.js"></script>
+<script src="js/skill-tree.js"></script>
 <script src="js/gesture.js"></script>
 <script src="js/world-map.js"></script>
 <script src="js/dungeon.js"></script>
@@ -2198,6 +2199,58 @@ window.requestAnimationFrame = function () { return 0; };
       DN.leave();
       C.save.skills = {}; C.save.slots = {};
       return fired && hurt1 && hurt2 && (chainSk.name + ' — 둘 다 맞았다');
+    });
+
+    /* ── 무예별 작은 나무(W-0280, `skill-tree.js`) — 라스트 에포크 자리 ─────── */
+
+    t('무예 나무(W-0280) — 무예 경험이 오른다: 쓸 때마다 1, 레벨 1→2 는 8, 20 이 끝, 레벨마다 점 1', function () {
+      var ST = DG.skillTree, keep = C.save.skillTree;
+      try {
+        C.save.skillTree = {};
+        var lv0 = ST.lvOf('a_pierce'), i;
+        for (i = 0; i < 7; i++) { ST.gain('a_pierce'); }
+        var lv7 = ST.lvOf('a_pierce'), p7 = ST.pointsLeft('a_pierce');
+        ST.gain('a_pierce');
+        var lv8 = ST.lvOf('a_pierce'), p8 = ST.pointsLeft('a_pierce');
+        ST.gain('a_pierce', 100000);
+        var top = ST.lvOf('a_pierce'), pt = ST.pointsLeft('a_pierce');
+        var ok = lv0 === 1 && lv7 === 1 && p7 === 0 && lv8 === 2 && p8 === 1 && top === ST.MAX_LV && pt === ST.MAX_LV - 1 && ST.progress('a_pierce').need === 0;
+        return ok ? ('8 번 쓰면 Lv2 · 점 1 · 끝은 Lv' + top + ' 점 ' + pt) : ('실패 ' + JSON.stringify({ lv0: lv0, lv7: lv7, p7: p7, lv8: lv8, p8: p8, top: top, pt: pt }));
+      } finally { C.save.skillTree = keep; }
+    });
+
+    t('무예 나무(W-0280) — 점수 찍으면 수치 반영: 위력 ×1.04/점 · 앞 마디 먼저 · 갈래는 하나 · 범위·결 덧붙임은 복제본에만(원본 그대로)', function () {
+      var ST = DG.skillTree, SD = DG.skillData, keep = C.save.skillTree;
+      try {
+        C.save.skillTree = {};
+        var sk = SD.skillByKey('a_pierce'), m0 = DN._secretMod(sk);
+        ST.gain('a_pierce', 100000);                                   // Lv20 · 점 19
+        var pre = ST.put('a_pierce', 1, 'a');                          // 앞 마디 없이 → prereq
+        var ok1 = ST.put('a_pierce', 0, 'a').ok && ST.put('a_pierce', 0, 'a').ok;
+        var side = ST.put('a_pierce', 0, 'b');                         // 다른 갈래 → side
+        var ok2 = ST.put('a_pierce', 1, 'b').ok;                       // 범위(bolt 엔 r 없음 → 위력 반)
+        var ok3 = ST.put('a_pierce', 2, 'a').ok && ST.put('a_pierce', 3, 'b').ok;   // 위력 5 · 한기 결
+        var four = ST.put('a_pierce', 3, 'b');                         // 결 마디는 1점 → max
+        var m = DN._secretMod(sk), s = ST.sums('a_pierce');
+        var ok = !pre.ok && pre.reason === 'prereq' && ok1 && !side.ok && side.reason === 'side' && ok2 && ok3 && !four.ok && four.reason === 'max' &&
+          s.dmg === 13 && s.range === 6 && s.cold === 1 && Math.abs(m.dmg - m0.dmg * 1.13 * 1.03) < 1e-9 && m.sk.el === 'cold' && !sk.el && m.sk !== sk &&
+          ST.spent('a_pierce') === 5 && ST.pointsLeft('a_pierce') === 14;
+        return ok ? ('위력 ×' + m.dmg.toFixed(3) + ' · 한기 결 덧붙음 · 점 5 씀/14 남음') : ('실패 ' + JSON.stringify({ pre: pre, ok1: ok1, side: side, ok2: ok2, ok3: ok3, four: four, s: s, dmg: [m0.dmg, m.dmg], el: m.sk.el }));
+      } finally { C.save.skillTree = keep; }
+    });
+
+    t('무예 나무(W-0280) — 되돌리기: 금 200 이 빠지고 점은 비고 경험은 남는다 · 금이 모자라면 못 한다 · 빈 나무는 못 되돌린다', function () {
+      var ST = DG.skillTree, keep = C.save.skillTree, g0 = C.save.player.gold;
+      try {
+        C.save.skillTree = {};
+        ST.gain('a_pierce', 20); ST.put('a_pierce', 0, 'a');
+        C.save.player.gold = 100; var poor = ST.reset('a_pierce');
+        C.save.player.gold = 1000; var r = ST.reset('a_pierce');
+        var after = { gold: C.save.player.gold, spent: ST.spent('a_pierce'), xp: C.save.skillTree.a_pierce.xp, left: ST.pointsLeft('a_pierce') };
+        var empty = ST.reset('a_pierce');
+        var ok = !poor.ok && poor.reason === 'gold' && r.ok && after.gold === 800 && after.spent === 0 && after.xp === 20 && after.left === 1 && !empty.ok;
+        return ok ? ('되돌림 — 금 1000→' + after.gold + ' · 경험 ' + after.xp + ' 그대로 · 점 ' + after.left) : ('실패 ' + JSON.stringify({ poor: poor, r: r, after: after, empty: empty }));
+      } finally { C.save.skillTree = keep; C.save.player.gold = g0; }
     });
 
     /* ── 비결(秘訣, §5.9, `secret.js`) — 원작 3편 룬 자리 ────────────── */
