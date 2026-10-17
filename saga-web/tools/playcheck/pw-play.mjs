@@ -133,8 +133,8 @@ async function one(browser, g, device) {
         document.querySelectorAll('button').forEach((b) => { if (/건너뛰기/.test(b.textContent) && b.offsetParent) { b.click(); } });
         const h = document.getElementById('help-ok'); if (h && h.offsetParent) { h.click(); }
         const mg = document.getElementById('menu-grid'); if (mg) { mg.classList.remove('show'); }
-        /* 1만리 만남 카드(#encounter) 가 화면 가운데를 덮으면 클릭 이동이 카드를 누른다 — 닫기 단추, 없으면 show 를 뗀다 */
-        const enc = document.querySelector('#encounter.show'); if (enc) { const bt = [...enc.querySelectorAll('button')].find((x) => /닫기|물러난다|나중에|✕/.test(x.textContent)); if (bt) { bt.click(); } else { enc.classList.remove('show'); } }
+        /* 1만리만 — 5천하는 같은 #encounter 에 시나리오·세력 고르기를 띄운다(닫으면 빈 화면). 1만리 만남 카드(#encounter) 가 화면 가운데를 덮으면 클릭 이동이 카드를 누른다 — 닫기 단추, 없으면 show 를 뗀다 */
+        const enc = document.querySelector('#encounter.show'); if (enc && !enc.querySelector('[data-act^="pick-"]') && location.pathname.indexOf('/saga-go/') >= 0) { const bt = [...enc.querySelectorAll('button')].find((x) => /닫기|물러난다|나중에|✕/.test(x.textContent)); if (bt) { bt.click(); } else { enc.classList.remove('show'); } }
       });
     },
     /** 키 몇 개를 차례로 눌러 위치 변화를 센다 */
