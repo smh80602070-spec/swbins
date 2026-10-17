@@ -1,0 +1,21 @@
+{
+ "id": "PolyHaven_LeafyGrass",
+ "ticket": "K-0130",
+ "generator": "tools/world-forge/k130_unity_pbr.py",
+ "license": "self-pbr: grass (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0)",
+ "set": "grass",
+ "rot90": false,
+ "squeeze_x": 1,
+ "gain": [
+  1.783,
+  1.338,
+  1.699
+ ],
+ "files": {
+  "diff": "leafy_grass_diff_1k.jpg",
+  "nor": "leafy_grass_nor_gl_1k.jpg",
+  "rough": "leafy_grass_rough_1k.jpg",
+  "ao": "leafy_grass_ao_1k.jpg",
+  "ms": "leafy_grass_metallicsmoothness_1k.png"
+ }
+}

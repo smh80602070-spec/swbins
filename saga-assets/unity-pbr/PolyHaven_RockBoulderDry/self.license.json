@@ -1,0 +1,17 @@
+{
+ "id": "PolyHaven_RockBoulderDry",
+ "ticket": "K-0130",
+ "generator": "tools/world-forge/k130_unity_pbr.py",
+ "license": "self-pbr: rock (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0)",
+ "set": "rock",
+ "rot90": false,
+ "squeeze_x": 1,
+ "gain": [
+  1.169,
+  1.083,
+  0.981
+ ],
+ "files": {
+  "diff": "rock_boulder_dry_diff_1k.jpg"
+ }
+}

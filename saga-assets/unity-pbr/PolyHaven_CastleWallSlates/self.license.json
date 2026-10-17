@@ -1,0 +1,21 @@
+{
+ "id": "PolyHaven_CastleWallSlates",
+ "ticket": "K-0130",
+ "generator": "tools/world-forge/k130_unity_pbr.py",
+ "license": "self-pbr: stonewall (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0)",
+ "set": "stonewall",
+ "rot90": false,
+ "squeeze_x": 1,
+ "gain": [
+  1.039,
+  0.939,
+  0.761
+ ],
+ "files": {
+  "diff": "castle_wall_slates_diff_1k.jpg",
+  "nor": "castle_wall_slates_nor_gl_1k.jpg",
+  "rough": "castle_wall_slates_rough_1k.jpg",
+  "ao": "castle_wall_slates_ao_1k.jpg",
+  "ms": "castle_wall_slates_metallicsmoothness_1k.png"
+ }
+}

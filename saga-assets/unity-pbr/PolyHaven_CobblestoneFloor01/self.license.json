@@ -1,0 +1,21 @@
+{
+ "id": "PolyHaven_CobblestoneFloor01",
+ "ticket": "K-0130",
+ "generator": "tools/world-forge/k130_unity_pbr.py",
+ "license": "self-pbr: paving (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0)",
+ "set": "paving",
+ "rot90": false,
+ "squeeze_x": 1,
+ "gain": [
+  0.866,
+  0.79,
+  0.679
+ ],
+ "files": {
+  "diff": "cobblestone_floor_01_diff_1k.jpg",
+  "nor": "cobblestone_floor_01_nor_gl_1k.jpg",
+  "rough": "cobblestone_floor_01_rough_1k.jpg",
+  "ao": "cobblestone_floor_01_ao_1k.jpg",
+  "ms": "cobblestone_floor_01_metallicsmoothness_1k.png"
+ }
+}

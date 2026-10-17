@@ -1,0 +1,21 @@
+{
+ "id": "PolyHaven_DarkWoodenPlanks",
+ "ticket": "K-0130",
+ "generator": "tools/world-forge/k130_unity_pbr.py",
+ "license": "self-pbr: planks (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0)",
+ "set": "planks",
+ "rot90": true,
+ "squeeze_x": 1,
+ "gain": [
+  0.494,
+  0.513,
+  0.525
+ ],
+ "files": {
+  "diff": "dark_wooden_planks_diff_1k.jpg",
+  "nor": "dark_wooden_planks_nor_gl_1k.jpg",
+  "rough": "dark_wooden_planks_rough_1k.jpg",
+  "ao": "dark_wooden_planks_ao_1k.jpg",
+  "ms": "dark_wooden_planks_metallicsmoothness_1k.png"
+ }
+}

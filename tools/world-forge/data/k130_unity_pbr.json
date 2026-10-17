@@ -1,0 +1,35 @@
+{
+ "note": "K-0130 유니티 Art/Environment/PBR 폴더 → 자체 PBR 세트(saga-assets/textures_real). rot = 90° 돌림(판자 결 가로로) · squeeze_x = 가로로 1/n 눌러 n 번 이어 붙임(세로 결 — 나무껍질, 이음매 유지).",
+ "items": {
+  "PolyHaven_CastleWallSlates": {
+   "key": "castle_wall_slates",
+   "set": "stonewall"
+  },
+  "PolyHaven_CobblestoneFloor01": {
+   "key": "cobblestone_floor_01",
+   "set": "paving"
+  },
+  "PolyHaven_DarkWoodenPlanks": {
+   "key": "dark_wooden_planks",
+   "set": "planks",
+   "rot": true
+  },
+  "PolyHaven_GrassPath2": {
+   "key": "grass_path_2",
+   "set": "dirt"
+  },
+  "PolyHaven_LeafyGrass": {
+   "key": "leafy_grass",
+   "set": "grass"
+  },
+  "PolyHaven_RockBoulderDry": {
+   "key": "rock_boulder_dry",
+   "set": "rock"
+  },
+  "PolyHaven_BarkWillow02": {
+   "key": "bark_willow_02",
+   "set": "rock",
+   "squeeze_x": 3
+  }
+ }
+}

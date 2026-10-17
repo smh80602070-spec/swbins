@@ -688,6 +688,61 @@
    ]
   },
   {
+   "tool": "k130_unity_pbr.py",
+   "model": "",
+   "license": "self-pbr: rock (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0)",
+   "count": 2,
+   "where": [
+    "saga-assets/unity-pbr/PolyHaven_BarkWillow02",
+    "saga-assets/unity-pbr/PolyHaven_RockBoulderDry"
+   ]
+  },
+  {
+   "tool": "k130_unity_pbr.py",
+   "model": "",
+   "license": "self-pbr: stonewall (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0)",
+   "count": 1,
+   "where": [
+    "saga-assets/unity-pbr/PolyHaven_CastleWallSlates"
+   ]
+  },
+  {
+   "tool": "k130_unity_pbr.py",
+   "model": "",
+   "license": "self-pbr: paving (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0)",
+   "count": 1,
+   "where": [
+    "saga-assets/unity-pbr/PolyHaven_CobblestoneFloor01"
+   ]
+  },
+  {
+   "tool": "k130_unity_pbr.py",
+   "model": "",
+   "license": "self-pbr: planks (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0)",
+   "count": 1,
+   "where": [
+    "saga-assets/unity-pbr/PolyHaven_DarkWoodenPlanks"
+   ]
+  },
+  {
+   "tool": "k130_unity_pbr.py",
+   "model": "",
+   "license": "self-pbr: dirt (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0)",
+   "count": 1,
+   "where": [
+    "saga-assets/unity-pbr/PolyHaven_GrassPath2"
+   ]
+  },
+  {
+   "tool": "k130_unity_pbr.py",
+   "model": "",
+   "license": "self-pbr: grass (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0)",
+   "count": 1,
+   "where": [
+    "saga-assets/unity-pbr/PolyHaven_LeafyGrass"
+   ]
+  },
+  {
    "tool": "vfxgen.py",
    "model": "",
    "license": "CC0-1.0 (코드 생성 — 외부 입력 없음)",
@@ -852,7 +907,7 @@
    "tool": "build_village.py",
    "model": "",
    "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
-   "count": 119,
+   "count": 155,
    "where": [
     "saga-assets/world/toon",
     "saga-assets/world/web",
@@ -878,7 +933,7 @@
    "tool": "build_nature.py",
    "model": "",
    "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
-   "count": 147,
+   "count": 150,
    "where": [
     "saga-assets/world/toon",
     "saga-assets/world/web",

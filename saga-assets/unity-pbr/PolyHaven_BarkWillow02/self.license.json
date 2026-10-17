@@ -1,0 +1,17 @@
+{
+ "id": "PolyHaven_BarkWillow02",
+ "ticket": "K-0130",
+ "generator": "tools/world-forge/k130_unity_pbr.py",
+ "license": "self-pbr: rock (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0)",
+ "set": "rock",
+ "rot90": false,
+ "squeeze_x": 3,
+ "gain": [
+  0.922,
+  0.823,
+  0.729
+ ],
+ "files": {
+  "diff": "bark_willow_02_diff_1k.jpg"
+ }
+}

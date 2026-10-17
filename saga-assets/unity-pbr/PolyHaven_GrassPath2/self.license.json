@@ -1,0 +1,21 @@
+{
+ "id": "PolyHaven_GrassPath2",
+ "ticket": "K-0130",
+ "generator": "tools/world-forge/k130_unity_pbr.py",
+ "license": "self-pbr: dirt (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0)",
+ "set": "dirt",
+ "rot90": false,
+ "squeeze_x": 1,
+ "gain": [
+  1.251,
+  1.427,
+  1.408
+ ],
+ "files": {
+  "diff": "grass_path_2_diff_1k.jpg",
+  "nor": "grass_path_2_nor_gl_1k.jpg",
+  "rough": "grass_path_2_rough_1k.jpg",
+  "ao": "grass_path_2_ao_1k.jpg",
+  "ms": "grass_path_2_metallicsmoothness_1k.png"
+ }
+}

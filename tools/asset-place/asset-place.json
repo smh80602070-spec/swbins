@@ -1413,6 +1413,26 @@
      }
     }
    ]
+  },
+  {
+   "id": "unity-pbr",
+   "src": "saga-assets/unity-pbr",
+   "recursive": true,
+   "include": [
+    "*.jpg",
+    "*.png",
+    "LICENSE.txt"
+   ],
+   "note": "K-0130 유니티 Art/Environment/PBR 옛 사진 재질 7 → 자체 PBR(같은 이름·크기·채널 규약, .meta guid 그대로 → .mat 연결 0 변경). 출처는 정본 폴더마다 self.license.json",
+   "targets": [
+    {
+     "track": "unity",
+     "dir": "saga-unity/Assets/Art/Environment/PBR",
+     "sidecar": [
+      ".meta"
+     ]
+    }
+   ]
   }
  ]
 }
