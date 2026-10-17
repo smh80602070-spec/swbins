@@ -916,7 +916,7 @@
    "tool": "build_village.py",
    "model": "",
    "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
-   "count": 155,
+   "count": 159,
    "where": [
     "saga-assets/world/toon",
     "saga-assets/world/web",

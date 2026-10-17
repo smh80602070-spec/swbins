@@ -391,6 +391,8 @@ VILLAGE = {f.__name__: f for f in (
     campfire_logs_01, bench_01, handcart_01, dungeon_pillar_01, wall_piece_01, chest_01, jar_01, altar_base_01, bars_door_01, mill_01)}
 from build_village_k126 import K126  # noqa: E402  K-0126 새 12
 VILLAGE.update(K126)
+from build_village_k136 import K136  # noqa: E402  K-0136 2나락 표식 2
+VILLAGE.update(K136)
 
 if __name__ == '__main__':
     BP.PROPS.clear()
