@@ -16,3 +16,4 @@
 - [ ] 10-17 · (K-0130 넘김) · 유니티 `Art/Environment/PBR` 텍스처 28 이 자체 PBR 로 같은 이름 덮어씀(.meta·.mat 그대로) → 재가져오기 뒤 장면 색·결 확인(조약돌이 네모 판석으로, 나무껍질 결 △) · ASSET_GUIDE 의 Poly Haven 줄 · 유니티
 - [ ] 10-17 · "등으로 마무리했었으니 · 내가 말하지 않은 게임들도 첨부 해도 됨" · 참고작을 장르 대표작까지 넓혀 판별 격차표·우선순위 → 티켓(W-0276~0285 다음 묶음) · 페이블 R-0 · 웹
 - [ ] 10-17 · (K-0115 넘김) · 자체 단풍 나무 5 `shared/assets/world3d/tree_{broadleaf_01,broadleaf_02,broadleaf_03,birch_01,pine_01}_autumn.glb` → 3마을 `core.js:490` reg `tree:*:autumn` 을 새 id 로, 옛 Quaternius 가을 7 지우기·ASSET_LICENSES · 웹
+- [ ] 10-17 · (K-0123 넘김) · 5천하 보병 `troops/Knight_Male.glb` 가 자체 병사(코드, 978 삼각형)로 같은 이름 덮어씀 → 3D 원정·전투 화면에서 걷기·찌르기·쓰러짐·기병 앉기 눈 확인 · asset3d.js 736 주석과 ASSET_LICENSES Quaternius 기사 절 정리 · 5천하 sw VERSION · 웹

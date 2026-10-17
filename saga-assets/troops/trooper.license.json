@@ -1,0 +1,9 @@
+{
+ "id": "trooper",
+ "ticket": "K-0123",
+ "generator": "tools/char-forge/build_trooper.py (Blender 코드 — 부품 = 뼈 하나, 자체 키프레임 동작 6) → tools/glb-compress/compress.mjs",
+ "license": "CC0-1.0 (형태·뼈·동작 전부 코드, 외부 입력 없음)",
+ "replaces": "saga-realm/assets/models/troops/Knight_Male.glb (Quaternius Ultimate Animated Character Pack)",
+ "spec": "뼈 Root>Hips…Fist.R · 재질 Armor·Armor_Dark·Skin·Detail·Red(세력색)·Detail_Glow · 클립 Idle·Walk·Attack·Hit·Death·SitDown · 앞 -Y(glTF +Z)",
+ "tris": 978
+}

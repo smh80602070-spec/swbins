@@ -674,6 +674,15 @@
    ]
   },
   {
+   "tool": "compress.mjs",
+   "model": "",
+   "license": "CC0-1.0 (형태·뼈·동작 전부 코드, 외부 입력 없음)",
+   "count": 1,
+   "where": [
+    "saga-assets/troops"
+   ]
+  },
+  {
    "tool": "uigen.py",
    "model": "",
    "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",

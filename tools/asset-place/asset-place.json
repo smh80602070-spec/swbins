@@ -1433,6 +1433,23 @@
      ]
     }
    ]
+  },
+  {
+   "id": "troops",
+   "src": "saga-assets/troops",
+   "include": [
+    "trooper.glb"
+   ],
+   "note": "K-0123 5천하 보병 몸 — 코드로 지은 2등신 병사(build_trooper.py, 978 삼각형·클립 6·세력색 재질 Red). 옛 Knight_Male(Quaternius) 이름으로 덮어 웹 코드 0줄. 기병 말은 W-0163 자체 horse_farm. 출처는 정본 옆 license",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-realm/assets/models/troops",
+     "rename": {
+      "trooper.glb": "Knight_Male.glb"
+     }
+    }
+   ]
   }
  ]
 }
