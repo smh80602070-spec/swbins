@@ -160,10 +160,10 @@ def pine_layers(M, z0, r0, h0, count, shrink, n, tints, seed):
         h *= 0.93
 
 
-def tree_broadleaf_01(C):
+def tree_broadleaf_01(C, autumn=False):
     M = C.M
     bark = C.s('brown_planks_03', 1.0, '#6d4b33')
-    slots = leaf_slots(C, ('#2f6a2e', '#43883a', '#5da745', '#86c75a'))
+    slots = leaf_slots(C, AUTUMN['broadleaf_01'] if autumn else ('#2f6a2e', '#43883a', '#5da745', '#86c75a'))
     tube(M, (0, 0, 0), (0.05, 0.02, 2.7), 0.32, 0.17, bark, 1.0, 8)
     roots(M, bark, 0.3, 5, 4)
     fork(M, (0.05, 0.02, 1.8), (1.0, 0.25, 3.3), 0.11, 0.05, bark)
@@ -172,11 +172,11 @@ def tree_broadleaf_01(C):
     clump_crown(M, (0.0, 0.0, 4.4), 2.0, 1.9, 1.7, 30, 0.78, slots, 11)
 
 
-def tree_broadleaf_02(C):
+def tree_broadleaf_02(C, autumn=False):
     """둥글고 낮은 활엽수 — 줄기가 굵고 잎이 넓게 퍼진다."""
     M = C.M
     bark = C.s('brown_planks_03', 1.0, '#58402c')
-    slots = leaf_slots(C, ('#356b33', '#4a8d3b', '#68ac48', '#92cc5e'))
+    slots = leaf_slots(C, AUTUMN['broadleaf_02'] if autumn else ('#356b33', '#4a8d3b', '#68ac48', '#92cc5e'))
     tube(M, (0, 0, 0), (-0.05, 0.0, 2.0), 0.44, 0.23, bark, 1.0, 8)
     roots(M, bark, 0.44, 6, 5)
     fork(M, (0, 0, 1.5), (1.4, 0.2, 2.7), 0.16, 0.07, bark)
@@ -185,11 +185,11 @@ def tree_broadleaf_02(C):
     clump_crown(M, (0.0, 0.0, 3.5), 2.8, 2.5, 1.5, 36, 0.86, slots, 21)
 
 
-def tree_broadleaf_03(C):
+def tree_broadleaf_03(C, autumn=False):
     """키 큰 갸름한 활엽수(노란 기가 도는 연두) — K-0058 변형."""
     M = C.M
     bark = C.s('brown_planks_03', 1.0, '#70563a')
-    slots = leaf_slots(C, ('#4f7a2a', '#6b9a33', '#8ab83e', '#b0d14f'))
+    slots = leaf_slots(C, AUTUMN['broadleaf_03'] if autumn else ('#4f7a2a', '#6b9a33', '#8ab83e', '#b0d14f'))
     tube(M, (0, 0, 0), (0.0, 0.05, 3.4), 0.26, 0.13, bark, 1.0, 7)
     roots(M, bark, 0.26, 4, 6)
     fork(M, (0, 0.05, 2.6), (0.7, 0.2, 4.0), 0.09, 0.04, bark)
@@ -197,10 +197,13 @@ def tree_broadleaf_03(C):
     clump_crown(M, (0.0, 0.0, 5.3), 1.45, 1.4, 2.3, 30, 0.66, slots, 61)
 
 
-def tree_pine_01(C, snow=False):
+def tree_pine_01(C, snow=False, autumn=False):
     M = C.M
     bark = C.s('brown_planks_03', 1.0, '#5a3f2b')
-    if snow:
+    if autumn:                                   # 낙엽송처럼 노랗게(K-0115)
+        sa = C.s('white_stucco', 1.0, AUTUMN['pine_01'][0], sat=1.0)
+        sb = C.s('white_stucco', 1.0, AUTUMN['pine_01'][1], sat=1.0)
+    elif snow:
         sa = C.s('snow_02', 1.0, '#f2f6fa')
         sb = C.s('snow_02', 1.0, '#d6e2ee')
     else:
@@ -213,6 +216,36 @@ def tree_pine_01(C, snow=False):
 
 def tree_pine_01_snow(C):
     tree_pine_01(C, snow=True)
+
+
+# K-0115 가을 변종 — 모양·삼각형은 여름판과 같고 잎 색만(주황·붉음·노랑 세 갈래를 잎 slot 에 섞음)
+AUTUMN = {
+    'broadleaf_01': ('#a8322a', '#c8642a', '#d9843a', '#e3a948'),
+    'broadleaf_02': ('#93302a', '#b4482a', '#c8642a', '#d9a43a'),
+    'broadleaf_03': ('#b86a2a', '#c8862e', '#d9a43a', '#e6c25a'),
+    'birch_01': ('#c48e2e', '#d9a43a', '#e5bd4e', '#efd476'),
+    'pine_01': ('#c98f2e', '#d9a43a'),
+}
+
+
+def tree_broadleaf_01_autumn(C):
+    tree_broadleaf_01(C, autumn=True)
+
+
+def tree_broadleaf_02_autumn(C):
+    tree_broadleaf_02(C, autumn=True)
+
+
+def tree_broadleaf_03_autumn(C):
+    tree_broadleaf_03(C, autumn=True)
+
+
+def tree_pine_01_autumn(C):
+    tree_pine_01(C, autumn=True)
+
+
+def tree_birch_01_autumn(C):
+    tree_birch_01(C, autumn=True)
 
 
 def tree_pine_02(C):
@@ -262,11 +295,11 @@ def tree_dead_01(C):
     _grow(M, bark, Vector((0.1, 0, 1.6)), Vector((0.05, 0.02, 1.0)), 1.9, 0.17, 2, rnd)
 
 
-def tree_birch_01(C):
+def tree_birch_01(C, autumn=False):
     M = C.M
     bark = C.s('white_stucco', 1.0, '#e8e4da')
     mark = C.s('white_stucco', 1.0, '#2e2a26')
-    slots = leaf_slots(C, ('#6aa23c', '#86bd4a', '#a3d05a', '#c2de78'))
+    slots = leaf_slots(C, AUTUMN['birch_01'] if autumn else ('#6aa23c', '#86bd4a', '#a3d05a', '#c2de78'))
     tube(M, (0, 0, 0), (0.1, 0.05, 4.4), 0.15, 0.07, bark, 1.0, 7)
     for z in (0.5, 0.95, 1.5, 2.1, 2.7, 3.3, 3.9):
         rr = 0.155 - z * 0.017
@@ -516,7 +549,8 @@ def mountain_01(C):
 NATURE = {f.__name__: f for f in (
     tree_broadleaf_01, tree_broadleaf_02, tree_broadleaf_03, tree_pine_01, tree_pine_01_snow, tree_pine_02, tree_pine_03, tree_dead_01, tree_birch_01,
     bush_01, bush_02, grass_tuft_01, grass_tuft_02, flower_patch_01, rock_small_01, rock_large_01, rock_large_02, rock_moss_01, pebbles_01, log_01,
-    stump_01, mushroom_01, hill_01, mountain_01)}
+    stump_01, mushroom_01, hill_01, mountain_01,
+    tree_broadleaf_01_autumn, tree_broadleaf_02_autumn, tree_broadleaf_03_autumn, tree_birch_01_autumn, tree_pine_01_autumn)}
 
 if __name__ == '__main__':
     BP.PROPS.clear()
