@@ -828,7 +828,7 @@
       hint.classList.toggle('show', !!msg);
     }
     els.hud.classList.add('show');
-    if (els.touchpad) { els.touchpad.classList.add('show'); }
+    if (els.touchpad) { els.touchpad.classList.toggle('show', !!core.touchOnly()); }   // W-0272 손가락 기기만 — PC 에선 ▲▼ 가 독 뒤에 숨고 ◀▶ 가 미니맵을 덮었다(PC 이동은 키·화면 누르기 존)
   }
 
   /** 마을 사람 대화창(PLAN 16절) — 이름·대사 한 줄 + 닫는다 단추 */

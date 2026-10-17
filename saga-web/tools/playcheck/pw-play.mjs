@@ -72,9 +72,19 @@ const ADAPT = {
   },
   'saga-story': {
     pos: () => { const r = DG.side.raw(); return r && r.player ? { x: r.player.x, y: r.player.y } : null; },
-    minMove: 5, touch: 'pad:#touchpad', dragY: 0.75, keys: ['KeyD', 'KeyA', 'ArrowLeft', 'ArrowRight'],   // 옆보기라 가로만   // 4종횡은 화면 아래쪽 절반을 누르면 그쪽으로 달린다
+    minMove: 5, touch: 'pad:#touchpad', dragX: 0.8, dragY: 0.75, keys: ['KeyD', 'KeyA', 'ArrowLeft', 'ArrowRight'],   // 옆보기라 가로만   // 4종횡은 화면 아래쪽 절반을 누르면 그쪽으로 달린다
     prep: async (c) => { const s = await c.ev(() => { const S = DG.side, C = DG.core; if (!C.save.party.length && DG.hero && DG.hero.recruit) { const h = DG.data.heroes.filter((x) => x.rarity <= 2)[0]; if (h) { DG.hero.recruit(h.id); } } const st = S.stages().map((x) => x.ref).filter((s) => !s.town)[0]; return st ? { key: st.key, ok: S.enter(st.key) } : null; }); await sleep(3000); await c.clearIntro(); return s ? `사냥터 ${s.key}` : '사냥터 없음'; },
-    extra: [{ name: '자동 사냥으로 적을 때림(side:hit 15초)', run: async (c) => { await c.ev(() => { window.__hits = 0; DG.core.on('side:hit', () => { window.__hits++; }); DG.auto.setOn(true); }); for (let i = 0; i < 30; i++) { await sleep(500); await c.clearIntro(); if (await c.ev(() => window.__hits > 0)) { break; } } const n = await c.ev(() => { const k = window.__hits; DG.auto.setOn(false); return k; }); return { ok: n > 0, detail: `hit ${n}` }; } }]
+    extra: [{ name: '자동 사냥으로 적을 때림(30초)', run: async (c) => {
+      /* W-0272 — 4종횡엔 side:hit 이벤트가 없다(side:kill 만). 살아 있는 적 체력 합이 줄거나 처치 수가 오르면 때린 것 */
+      const snap = () => c.ev(() => { const r = DG.side.raw(); if (!r) { return null; } return { hp: Math.round(r.enemies.filter((e) => e.hp > 0).reduce((a, e) => a + e.hp, 0)), n: r.enemies.filter((e) => e.hp > 0).length, kills: r.kills || 0, x: Math.round(r.player.x), doing: DG.auto.status ? DG.auto.status().doing : '' }; });
+      const a = await snap(); if (!a) { return { ok: false, detail: '사냥터 아님' }; }
+      await c.ev(() => DG.auto.setOn(true));
+      let b = a;
+      for (let k = 0; k < 60; k++) { await sleep(500); await c.clearIntro(); b = await snap(); if (b && (b.kills > a.kills || b.hp < a.hp - 1)) { break; } }
+      await c.ev(() => DG.auto.setOn(false));
+      const ok = !!b && (b.kills > a.kills || b.hp < a.hp - 1);
+      return { ok, detail: `적 체력 ${a.hp}→${b && b.hp} · 처치 ${a.kills}→${b && b.kills} · x ${a.x}→${b && b.x} · ${b && b.doing}` };
+    } }]
   },
   'saga-realm': {
     pos: () => { const R3 = DG.realm3d; if (R3 && R3.active && R3.active() && R3.focusMap) { const f = R3.focusMap(); return { x: f.x, y: f.y }; } return null; },
@@ -168,7 +178,7 @@ async function one(browser, g, device) {
     check('키 4방향 이동(3/4 이상)', A.moveKeys === 'optional' ? true : kr.okN >= 3, kr.detail, { skip: A.moveKeys === 'optional' && kr.okN < 3 });
     /* 이동 — 마우스 끌기 / 터치 */
     if (!phone) {
-      await step('마우스 끌기 이동', async () => { if (A.drag === 'none') { return { ok: true, skip: true, detail: '이 판은 끌기가 걷기가 아님' }; } const a = await c.pos(); const [mx, my] = c.center(A.dragY || 0.5); await page.mouse.move(mx, my); await page.mouse.down(); for (let i = 1; i <= 10; i++) { await page.mouse.move(mx + i * 12, my + i * 6); await sleep(40); } await sleep(1500); await page.mouse.up(); await sleep(250); const d = c.dist(a, await c.pos()); return { ok: A.moveKeys === 'optional' ? true : d > A.minMove, detail: `이동 ${d.toFixed(1)}` }; });
+      await step('마우스 끌기 이동', async () => { if (A.drag === 'none') { return { ok: true, skip: true, detail: '이 판은 끌기가 걷기가 아님' }; } const a = await c.pos(); const [cx0, my] = c.center(A.dragY || 0.5); const mx = A.dragX ? Math.round((c.phone ? 390 : 1280) * A.dragX) : cx0; await page.mouse.move(mx, my); await page.mouse.down(); for (let i = 1; i <= 10; i++) { await page.mouse.move(mx + i * 12, my + i * 6); await sleep(40); } await sleep(1500); await page.mouse.up(); await sleep(250); const d = c.dist(a, await c.pos()); return { ok: A.moveKeys === 'optional' ? true : d > A.minMove, detail: `이동 ${d.toFixed(1)}` }; });
     } else {
       await step('터치 이동(' + A.touch + ')', async () => {
         const a = await c.pos();
