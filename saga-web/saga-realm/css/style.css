@@ -1257,6 +1257,8 @@ body.sheet-open #realm3d { right: calc(min(420px, 92vw) + 20px); }
   stroke: rgba(190, 205, 230, .13); stroke-width: .35; stroke-linecap: round;
 }
 .rlink.same { stroke-width: .55; opacity: .5; }
+.rsupply { stroke-width: .75; stroke-linecap: round; opacity: .85; pointer-events: none; }   /* W-0278 보급 길 */
+.rsupply.cut { stroke-dasharray: 1.4 1.1; opacity: .95; }
 .rcity { cursor: pointer; }
 .rcity circle { transition: r .18s ease; }
 .rcity .ring { fill: none; stroke: var(--gold, #e8c46a); stroke-width: .45; }

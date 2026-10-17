@@ -204,7 +204,9 @@
     { key: 'bribe',   name: '매수', emoji: '💰', gold: 600,
       desc: '충성이 낮은 적 무장을 금으로 부른다.' },
     { key: 'fire',    name: '화계', emoji: '🔥', gold: 300,
-      desc: '적 성의 군량에 불을 놓는다. 원정 나온 군대가 굶는다.' }
+      desc: '적 성의 군량에 불을 놓는다. 원정 나온 군대가 굶는다.' },
+    { key: 'cutsupply', name: '보급 끊기', emoji: '✂️', gold: 250,
+      desc: '이 성에서 나갔거나 이 성을 지나 보급받는 적 진의 보급을 2달 끊는다 — 그동안 사기·병력이 달마다 준다.' }   // W-0278
   ];
 
   function plotByKey(k) {
@@ -275,6 +277,7 @@
       if (!targetId) { return { ok: false, why: '흔들 사람이 없습니다' }; }
     }
 
+    if (kind === 'cutsupply' && !(global.DG.supplyLine && global.DG.supplyLine.campsVia(cityId).length)) { return { ok: false, why: '끊을 보급선이 없습니다 — 이 성에서 나간 적 진이 없습니다' }; }   // W-0278
     f.gold -= p.gold;
     r.done = true;
     var chance = plotChance(kind, byId, cityId, targetId);
@@ -309,6 +312,9 @@
       if (c.gov === targetId) { c.gov = null; }
       text = off.find(targetId).name + ' 이(가) 우리 쪽으로 넘어왔다';
       core.emit('toast', '💰 ' + off.find(targetId).name + ' 이(가) 넘어왔다');
+    } else if (kind === 'cutsupply') {   // W-0278
+      var nCut = global.DG.supplyLine.cutVia(cityId);
+      text = CD.find(cityId).name + ' 을 지나는 적 진 ' + nCut + '곳의 보급선이 ' + global.DG.supplyLine.CUT_MONTHS + '달 끊겼다';
     }
 
     core.log(p.emoji + ' ' + p.name + ' — ' + text, 'good');

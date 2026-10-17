@@ -1039,5 +1039,25 @@
   "ticket": "W-0201",
   "since": "2026-10-14",
   "note": "D2(claude 2026-10-14): qc 3D 장면 칸 없음 — 진단(W-0201 줄)만 · 몸 길은 다섯 판 공용 vroid-variant.shade."
+ },
+ {
+  "id": "rk.supply-line",
+  "name": "보급선 — 진(陣)은 출진 성에서 우리 성만 밟아(적 진 선 성은 못 지남) 맞닿은 성까지 길이 이어져야 보급, 끊기면 달마다 사기 ×0.85·병력 -5% · 계략 ✂️ 보급 끊기(2달) · 2D·3D 지도에 초록·빨강 길",
+  "files": [
+   "js/supplyline.js",
+   "js/war.js",
+   "js/diplo.js",
+   "js/ui-rtk.js",
+   "js/realm3d.js"
+  ],
+  "tests": [
+   "보급선(W-0278)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0278",
+  "since": "2026-10-17",
+  "note": "하츠 오브 아이언식(구조만). 장부 tasks/gameplay/realm.md"
  }
 ]

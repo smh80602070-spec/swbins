@@ -105,6 +105,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/war.js"></script>
 <script src="js/journey.js"></script>
 <script src="js/diplo.js"></script>
+<script src="js/supplyline.js"></script>
 <script src="js/rtk-ai.js"></script>
 <script src="js/data-news.js"></script>
 <script src="js/event.js"></script>
@@ -2254,6 +2255,38 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         ('진중 ' + ids.length + '명 — 성 명부에서 빠지고 봉급은 그대로 ' + paid + '명분');
     });
 
+    /* W-0278 보급선 — 판정(supplyline.js)만 */
+    t('보급선(W-0278) — 출진 성에서 우리 땅 길이 이어지면 ○, 출진 성에 적 진이 서거나 길 위 성이 적 것이 되면 끊김', function () {
+      var SL = DG.supplyLine; if (!SL) { return '실패 supplyLine 없음'; }
+      var s = campSet(); if (!s) { return false; }
+      var cp = s.cp, p0 = SL.path(cp), ok0 = SL.ok(cp), fake = { id: 'w278fake', force: 'zz_test', to: 'chenliu', from: 'xuchang', troops: 1000, officers: [] };
+      W.camps().push(fake);
+      var cutByCamp = !SL.ok(cp) && SL.path(cp) === null;
+      W.camps().splice(W.camps().indexOf(fake), 1);
+      var pu = R.city('puyang'), pf = pu.force; pu.force = 'cao'; cp.from = 'puyang';
+      var p1 = SL.path(cp), ch = R.city('chenliu'), cf = ch.force; ch.force = 'zz_test';
+      var p2 = SL.path(cp); ch.force = cf; pu.force = pf; cp.from = 'chenliu';
+      var via = p1 && p1[0] === 'puyang' && p1.indexOf('chenliu') > 0 && p1[p1.length - 1] === 'luoyang';
+      var ok = p0 && p0.join(',') === 'chenliu,luoyang' && ok0 && cutByCamp && via && (!p2 || p2.indexOf('chenliu') < 0);
+      return ok ? ('진류→낙양 ○ · 진류에 적 진 → 끊김 · 복양→진류→낙양 · 진류를 잃으면 ' + (p2 ? '다른 길' : '끊김')) : ('실패 ' + JSON.stringify({ p0: p0, ok0: ok0, cutByCamp: cutByCamp, p1: p1, p2: p2 }));
+    });
+    t('보급선(W-0278) — 끊긴 달엔 사기 ×0.85·병력 -5%, 이어진 달엔 그대로 · 계략 끊김은 2달 뒤 풀린다', function () {
+      var SL = DG.supplyLine; if (!SL) { return '실패 supplyLine 없음'; }
+      var s = campSet(); if (!s) { return false; }
+      var cp = s.cp, m0 = cp.morale, t0 = cp.troops, same = SL.monthly(cp) === false && cp.morale === m0 && cp.troops === t0;
+      cp.cutT = SL.CUT_MONTHS; var c1 = SL.monthly(cp), m1 = cp.morale, t1 = cp.troops, c2 = SL.monthly(cp), c3 = SL.monthly(cp);
+      var ok = same && c1 && Math.abs(m1 - m0 * 0.85) < 1e-9 && t1 === t0 - Math.round(t0 * 0.05) && c2 && c3 === false && !(cp.cutT > 0);
+      return ok ? ('사기 ' + Math.round(m0 * 100) + '→' + Math.round(m1 * 100) + ' · 병력 ' + C.fmt(t0) + '→' + C.fmt(t1) + ' · 2달 뒤 이어짐') : ('실패 ' + JSON.stringify({ same: same, c1: c1, m: [m0, m1], t: [t0, t1], c2: c2, c3: c3 }));
+    });
+    t('보급선(W-0278) — 계략 ✂️ 보급 끊기: 그 성에서 나간 적 진이 2달 끊긴다 · 표적이 없으면 금을 안 쓰고 막는다 · 지도에 선', function () {
+      var SL = DG.supplyLine, D = DG.diplo; if (!SL || !D) { return '실패 supplyLine/diplo 없음'; }
+      var s = campSet(); if (!s) { return false; }
+      var p = D.plotByKey('cutsupply'), via = SL.campsVia('chenliu'), none = SL.campsVia('luoyang').length;
+      var n = SL.cutVia('chenliu'), svg = SL.svg();
+      var ok = p && p.gold > 0 && via.indexOf(s.cp) >= 0 && none === 0 && n >= 1 && s.cp.cutT === 2 && !SL.ok(s.cp) && /class="rsupply cut"/.test(svg);
+      s.cp.cutT = 0;
+      return ok ? ('진류 경유 진 ' + n + '곳 끊김(2달) · 낙양 경유 없음 · 지도 빨강 점선') : ('실패 ' + JSON.stringify({ p: !!p, via: via.length, none: none, n: n, cut: s.cp.cutT }));
+    });
     t('진영은 달마다 한 번씩 더 친다', function () {
       var s = campSet();
       if (!s) { return false; }

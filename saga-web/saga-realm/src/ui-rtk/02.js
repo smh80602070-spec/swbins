@@ -103,7 +103,7 @@
       s += '<text class="rjourney" x="' + pos.x + '" y="' + pos.y +
         '" fill="' + forceColor(jn[i].force) + '">🚩</text>';
     }
-    s += '</svg>';
+    if (global.DG.supplyLine) { s += global.DG.supplyLine.svg(); } s += '</svg>';   // W-0278 진 뒤 보급 길(초록 이어짐·빨강 끊김)
 
     /* 범례 — 살아 있는 세력 */
     var rank = R().ranking();

@@ -639,7 +639,7 @@
 
     addProp('tent', cp.id + ':tent', px, pz, 5, Math.atan2(dx, dz) + Math.PI, seq);
     var n = clamp(Math.round((cp.troops || 0) / 1200), 2, 10);
-    bannerCluster(n, px + 4, pz, col);
+    bannerCluster(n, px + 4, pz, col); if (global.DG.supplyLine) { global.DG.supplyLine.segs3d(cp).forEach(function (sg) { addRoad(sg.a, sg.b, { color: sg.color, opacity: sg.good ? 0.7 : 0.9, width: 1.1, y: 0.14 }); }); }   // W-0278 보급 길(초록·빨강)
 
     if (cp.force === R().me()) {
       var hit = new t.Mesh(

@@ -187,7 +187,7 @@
       }
       return retreat(cp, '군량이 떨어져');
     }
-    cp.food -= eat;
+    cp.food -= eat; if (global.DG.supplyLine) { global.DG.supplyLine.monthly(cp); }   // W-0278 보급선 — 출진 성에서 우리 땅 길이 끊겼거나 계략에 끊기면 사기 ×0.85·병력 -5%(supplyline.js)
 
     /* 진이 길어질수록 사기가 깎인다 */
     cp.morale *= global.DG.statecraft ? global.DG.statecraft.campDecay(CAMP_DECAY, to.force) : CAMP_DECAY;   // 청야(경륜도)
