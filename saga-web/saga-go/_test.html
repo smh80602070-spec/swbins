@@ -151,6 +151,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/world3d-landtex.js"></script>
 <script src="js/world3d.js"></script>
 <script src="js/encounter.js"></script>
+<script src="js/stealth.js"></script>
 <script src="js/encounter3d.js"></script>
 <script src="js/battle3d.js"></script>
 <script src="js/sky3d.js"></script>
@@ -357,6 +358,46 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         C.save.player.featTotal > 0 && (g.exp > 0 || g.lv > 1) &&
         goldGain === hero.rarity * 15 &&
         ('공적 누적 ' + C.save.player.featTotal + ' · 동행 경험치 ' + g.exp + ' · 금 +' + goldGain);
+    });
+
+    /* ── 몰래 다가가 포획(W-0286, `stealth.js`) — 레전드 아르세우스 자리 ─────── */
+    function stSpawn(uid, dx, dy, hx, hy, rar) {
+      var p = C.save.player.pos, pet = D.pets.filter(function (x) { return x.kind !== 'divine' && (rar ? x.rarity >= 4 : x.rarity <= 2); })[0];
+      var sp = { uid: uid, kind: 'pet', ref: pet, x: p.x + dx, y: p.y + dy, homeX: p.x + dx, homeY: p.y + dy, tx: p.x + dx, ty: p.y + dy, dirX: hx, dirY: hy, facing: hx < 0 ? -1 : 1, moving: false, pause: 5000, phase: 0, bornAt: Date.now() };
+      W.spawns.push(sp); return sp;
+    }
+    t('몰래 포획(W-0286) — 뒤에서 다가가면 창 1.6배: 등 돌린 짐승(풀숲 밖)은 sneak, 마주 본 짐승은 아님 · 초록 구간 ×1.6 · 안내 줄', function () {
+      var ST = DG.stealth; ST._reset(); C.save.items.feed = 5;
+      var grass = ST.inGrass();
+      var back = stSpawn(99981, 5, 0, 1, 0), face = stSpawn(99982, 5, 0, -1, 0);   // 둘 다 내 동쪽 5m — 하나는 동쪽(등), 하나는 서쪽(나)을 본다
+      var sb = ST.sneakOf(back), sf = ST.sneakOf(face);
+      DG.encounter.open(face); var a0 = DG.encounter.aim(), w0 = a0 && a0.zoneW; DG.encounter.close();
+      DG.encounter.open(back); var a1 = DG.encounter.aim(), w1 = a1 && a1.zoneW, hint = /몰래 다가갔다/.test((document.getElementById('encounter') || {}).innerHTML || ''); DG.encounter.close();
+      W.removeSpawn(99981); W.removeSpawn(99982);
+      var ok = sb === true && (grass ? sf === true : sf === false) && w0 > 0 && Math.abs(w1 - Math.min(0.6, w0 * 1.6)) < 1e-9 && hint;
+      return ok ? ('등 뒤 sneak · 창 ' + w0.toFixed(3) + ' → ' + w1.toFixed(3) + ' · 안내 ○' + (grass ? ' (풀숲 안)' : '')) : ('실패 ' + JSON.stringify({ grass: grass, sb: sb, sf: sf, w0: w0, w1: w1, hint: hint }));
+    });
+    t('몰래 포획(W-0286) — 시야 안에서 달리면 들킴: 겁 많은 종은 달아나 사라지고, 사나운 종은 덤빈다 · 시야 밖(뒤)에서 달리면 안 들킴', function () {
+      var ST = DG.stealth, p = C.save.player.pos; ST._reset();
+      var timid = stSpawn(99983, 6, 0, -1, 0), fierce = stSpawn(99984, 0, 6, 0, -1, true), backS = stSpawn(99985, -6, 0, -1, 0);
+      var n1 = ST.notices(timid, p, true, true), n2 = ST.notices(backS, p, true, true);
+      ST.moved(true); ST.step(0.05, W.spawns, p);
+      var ok1 = !!timid.spotted && timid.fleeing && !!fierce.spotted && fierce.charging && !backS.spotted && ST.fierce(fierce) && !ST.fierce(timid) && !ST.sneakOf(timid) && ST.marked(timid);
+      for (var i = 0; i < 200 && W.spawns.indexOf(timid) >= 0; i++) { ST.step(0.1, W.spawns, { x: p.x - 1000, y: p.y }); }
+      var gone = W.spawns.indexOf(timid) < 0;
+      W.removeSpawn(99984); W.removeSpawn(99985); W.removeSpawn(99983);
+      return ok1 && n1 && !n2 && gone ? '정면 6m 달리기 → 겁쟁이 달아나 사라짐 · 사나운 종 덤빔 · 등 뒤 6m 는 무사' : ('실패 ' + JSON.stringify({ n1: n1, n2: n2, t: [timid.spotted, timid.fleeing], f: [fierce.spotted, fierce.charging], b: backS.spotted, gone: gone }));
+    });
+    t('몰래 포획(W-0286) — 웅크리면 안 들킴(정면이라도) · 걸음 ×0.5 · 12m 밖·옆(100° 밖)은 안 봄', function () {
+      var ST = DG.stealth, p = C.save.player.pos; ST._reset();
+      var front = stSpawn(99986, 6, 0, -1, 0), far = stSpawn(99987, 13, 0, -1, 0), side = stSpawn(99988, 0, 6, 1, 0);
+      ST.setCrouch(true); var mul = ST.moved(true); var c1 = ST.notices(front, p, true, true);
+      ST.step(0.05, W.spawns, p); var c2 = !front.spotted;
+      ST.setCrouch(false);
+      var fv = [ST.inFov(front, p), ST.inFov(far, p), ST.inFov(side, p)];
+      W.removeSpawn(99986); W.removeSpawn(99987); W.removeSpawn(99988); ST._reset();
+      var ok = mul === 0.5 && c1 === false && c2 && fv[0] === true && fv[1] === false && fv[2] === false;
+      return ok ? '웅크리면 정면 6m 도 무사 · 걸음 ×' + mul + ' · 13m·옆은 시야 밖' : ('실패 ' + JSON.stringify({ mul: mul, c1: c1, c2: c2, fv: fv }));
     });
 
     t('포획 시도 → 사료 소모·종료 (성공 시 명성·금)', function () {

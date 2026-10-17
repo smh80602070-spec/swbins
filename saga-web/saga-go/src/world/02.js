@@ -855,7 +855,7 @@
     }
 
     ctx.beginPath();
-    ctx.ellipse(p.x, p.y - bodyH * 0.45, bodyH * 0.34, bodyH * 0.52, 0, 0, Math.PI * 2);
+    ctx.ellipse(p.x, p.y - bodyH * 0.45, bodyH * 0.34, bodyH * 0.52, 0, 0, Math.PI * 2); if (global.DG.stealth) { global.DG.stealth.mark2d(ctx, s, p.x, p.y - bodyH * 1.15, bodyH); }   // W-0286 들킴 ❗
     ctx.fillStyle = 'rgba(0,0,0,0.22)';
     ctx.fill();
 

@@ -2068,3 +2068,9 @@ body.fs-on #dock, body.fs-on #near { display: none !important; }
 .me-lead img { width: 64px; height: 64px; }
 .me-row img { width: 36px; height: 36px; }
 .me-lead:hover, .me-row:hover { background: rgba(255,255,255,0.09); }
+
+/* W-0286 웅크리기(X) 단추 — 오른쪽 가운데, 켜지면 금빛 */
+#st-crouch { position: fixed; right: calc(14px + var(--safe-r, 0px)); top: 38%; z-index: 30; width: 44px; height: 44px; border-radius: 50%; font-size: 20px; line-height: 1;
+  background: rgba(20, 22, 28, .55); border: 1px solid var(--glass-br, rgba(255,255,255,.2)); color: #fff; cursor: pointer; }
+#st-crouch.on { background: rgba(200, 160, 40, .85); box-shadow: 0 0 12px rgba(255, 210, 60, .7); }
+body.sheet-open #st-crouch, #encounter.show ~ #st-crouch { display: none; }

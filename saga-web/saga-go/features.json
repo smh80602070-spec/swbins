@@ -1132,5 +1132,26 @@
   "ticket": "W-0277",
   "since": "2026-10-17",
   "note": "붉은사막식(구조만). G 는 요리 창이 써서 C. 장부 tasks/gameplay/go.md"
+ },
+ {
+  "id": "go.stealth-catch",
+  "name": "몰래 다가가 포획 — 들판 짐승마다 시야 부채꼴(앞 100°·12m). 풀숲(지형 숲) 안이거나 시야 밖(뒤)에서 포획하면 타이밍 창 ×1.6·포획 +15%(실전 포획도 +15%) · 시야 안에서 달리거나 풀숲 밖에서 걸으면 들킴 → 겁 많은 종은 달아나 사라지고 사나운 종(신수·희귀 4+)은 덤빈다(3m 면 조우) · 머리 위 ❗(2D·3D) · 웅크리기 X(폰 🫥) 걸음 ×0.5·안 들킴 · 안 들킨 짐승은 46m 안에서도 돌아보지 않는다",
+  "files": [
+   "js/stealth.js",
+   "js/encounter.js",
+   "src/world/01.js",
+   "src/world/02.js",
+   "src/world3d/04-actors.js",
+   "css/style.css"
+  ],
+  "tests": [
+   "몰래 포획(W-0286)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0286",
+  "since": "2026-10-17",
+  "note": "레전드 아르세우스식(구조만). 장부 tasks/gameplay/go.md · 세이브 안 씀(스폰 칸 spotted·fleeing·charging 은 판 안)"
  }
 ]

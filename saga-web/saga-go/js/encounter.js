@@ -337,7 +337,7 @@
        `catchBase`만으로 충분하다 */
     var hpK = core.tuned('petAction.hpK', 0.14);
     var foeHp = Math.max(6, Math.round(pw.atk * hpK / Math.max(0.05, p.catchBase || 0.3)));
-    cur = { spawn: spawn, pet: p, done: false, live: true };
+    cur = { spawn: spawn, pet: p, done: false, live: true, sneak: !!(global.DG.stealth && global.DG.stealth.sneakOf(spawn)) };   // W-0286 몰래 다가감
     global.DG.rogueAction.open({
       title: '🐾 포획 — ' + p.name,
       foeName: p.name,
@@ -362,7 +362,7 @@
        "정확도"였던 자리를 "가한 피해 비율"이 대신한다. 완파(cleared)면
        옛 시스템의 최고 보너스(정확히 맞춘 완벽한 타이밍)와 같은 대접 */
     var bonus = perf.cleared ? 0.45 : perf.ratio * 0.40;
-    var chance = core.clamp(p.catchBase + core.effect('catchPct') / 100 + bonus, 0.02, 0.97);
+    var chance = core.clamp(p.catchBase + core.effect('catchPct') / 100 + bonus + (cur && cur.sneak ? global.DG.stealth.FIRST_ADD : 0), 0.02, 0.97);   // W-0286 몰래 +15%
     var ok = Math.random() < chance;
     var perfLine = '가한 피해 ' + Math.round(core.clamp(perf.ratio, 0, 1) * 100) + '%' +
       (perf.ults ? ' · 필살 ' + perf.ults + '회' : '') +
@@ -417,6 +417,7 @@
       zone: 0.5, zoneW: core.clamp(0.30 - p.rarity * 0.035, 0.08, 0.30),
       running: true
     };
+    if (global.DG.stealth && global.DG.stealth.sneakOf(spawn)) { cur.sneak = true; cur.zoneW = Math.min(0.6, cur.zoneW * global.DG.stealth.ZONE_MUL); }   // W-0286 풀숲·뒤에서 — 창 ×1.6
     /* 무대를 **먼저** 연다 — 카드의 조작 안내가 3D 인지 아닌지를 보고 갈리기 때문이다
        (뒤에 열면 첫 화면만 옛 문구가 뜬다) */
     openFx('pet', spawn);
@@ -444,6 +445,7 @@
         '</div>' +
         '<div class="catch-track"><div class="catch-zone"></div><div class="catch-needle"></div></div>' +
         '<div class="enc-cost">소모: 🍖 사료 1' + (canPay ? '' : ' <b class="warn">(부족)</b>') + ' · 보너스: 장착 마구간 +' + core.effect('catchPct') + '%</div>' +
+        (cur.sneak ? '<div class="enc-hint">🌿 <b>몰래 다가갔다</b> — 초록 구간 ×1.6 · 포획 +15%</div>' : '') +   // W-0286
         '<div class="enc-hint">' +
           (fx() ? '흰 고리가 <b>초록 테</b> 안에 들어왔을 때 <b>화면을 위로 밀거나</b>'
                 : '바늘이 <b>초록 구간</b>에 있을 때') +
@@ -492,7 +494,7 @@
     var off = Math.abs(cur.needle - cur.zone);
     var inZone = off <= cur.zoneW / 2;
     var accuracy = inZone ? 1 - (off / (cur.zoneW / 2)) : 0;      // 0~1
-    var chance = p.catchBase + core.effect('catchPct') / 100;
+    var chance = p.catchBase + core.effect('catchPct') / 100 + (cur.sneak ? global.DG.stealth.FIRST_ADD : 0);   // W-0286 몰래 +15%
     if (inZone) { chance += 0.18 + accuracy * 0.35; }
     else { chance *= 0.35; }
     chance = core.clamp(chance, 0.02, 0.97);

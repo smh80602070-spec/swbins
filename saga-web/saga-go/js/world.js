@@ -322,7 +322,7 @@
 
     if (!dx && !dy) { return; }
     var len = Math.hypot(dx, dy) || 1;
-    var step = moveSpeed(run) * dt;
+    var step = moveSpeed(run && !(global.DG.stealth && global.DG.stealth.crouched())) * dt; if (global.DG.stealth) { step *= global.DG.stealth.moved(run); }   // W-0286 웅크리기 걸음 ×0.5·움직임 기록
     var ux = dx / len, uy = dy / len;
     /* §5 ⑰ 오르기·헤엄·점프 — 능선 오르막은 절반(기력이 다하면 0), 강은 0.6. 능선·강 밖은 늘 1 */
     var LFm = global.DG.landform, MTf = global.DG.mount, flyOn = !!(MTf && MTf.flying && MTf.flying());
@@ -429,11 +429,11 @@
   /** 야생 인물·펫이 제자리 주변을 어슬렁거린다 */
   function wanderSpawns(dt) {   // W-0228 — 2D(평면·2.5D)는 빠르기·반경을 화면 몸 높이로(field2d.wander) — 15m·2.6m/초는 2D 에서 32px 안에서 5px/초라 서 있는 것 같았다
     var pos = core.save.player.pos, now = Date.now(), W3w = global.DG.world3d, F2w = global.DG.field2d, w2 = F2w && F2w.wander && geom && !(W3w && W3w.active && W3w.active()) ? F2w.wander((geom.mode === 2 ? 1.5 : 1.25) * bodyK() * 48 / scale()) : null;
-    for (var i = 0; i < spawns.length; i++) {
+    var STw = global.DG.stealth; if (STw) { STw.step(dt, spawns, pos); } for (var i = 0; i < spawns.length; i++) {   // W-0286 들킴·달아남·덤빔
       var s = spawns[i];
       var near = Math.hypot(s.x - pos.x, s.y - pos.y) <= ENCOUNTER_RANGE;
 
-      if (near) {
+      if (near && !(STw && STw.free(s))) {   // W-0286 안 들킨 짐승은 돌아보지 않는다
         // 눈이 마주치면 멈춰서 플레이어를 바라본다
         s.moving = false;
         s.facing = (pos.x >= s.x) ? 1 : -1;
@@ -1667,7 +1667,7 @@
     }
 
     ctx.beginPath();
-    ctx.ellipse(p.x, p.y - bodyH * 0.45, bodyH * 0.34, bodyH * 0.52, 0, 0, Math.PI * 2);
+    ctx.ellipse(p.x, p.y - bodyH * 0.45, bodyH * 0.34, bodyH * 0.52, 0, 0, Math.PI * 2); if (global.DG.stealth) { global.DG.stealth.mark2d(ctx, s, p.x, p.y - bodyH * 1.15, bodyH); }   // W-0286 들킴 ❗
     ctx.fillStyle = 'rgba(0,0,0,0.22)';
     ctx.fill();
 

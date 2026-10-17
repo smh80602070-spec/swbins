@@ -1738,7 +1738,7 @@
       var onStage = stageAt && stageAt.uid === s.uid;
       var boost = onStage ? 1 : farBoost(s.x, s.y);
       placeActor(a, s.x, s.y, h * (kind === 'hero' ? 1 : 0.86) * boost,
-        onStage ? 0 : bob, onStage ? false : !!s.moving, s.phase || 0, now);
+        onStage ? 0 : bob, onStage ? false : !!s.moving, s.phase || 0, now); if (global.DG.stealth) { global.DG.stealth.mark3d(a, s, h); }   // W-0286 들킴 ❗
       if (onStage) {
         /* 무대 소품(조준 고리)이 상대의 크기에 맞게 서도록 키를 적어 둔다 —
            뿔낙지와 여포에 같은 크기의 고리를 씌우면 하나는 묻히고 하나는 넘친다 */
