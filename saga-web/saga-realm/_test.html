@@ -101,6 +101,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/passive-web-ui.js"></script>
 <script src="js/data-passive.js"></script>
 <script src="js/statecraft.js"></script>
+<script src="js/wonder.js"></script>
 <script src="js/mount.js"></script>
 <script src="js/war.js"></script>
 <script src="js/journey.js"></script>
@@ -2286,6 +2287,39 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var ok = p && p.gold > 0 && via.indexOf(s.cp) >= 0 && none === 0 && n >= 1 && s.cp.cutT === 2 && !SL.ok(s.cp) && /class="rsupply cut"/.test(svg);
       s.cp.cutT = 0;
       return ok ? ('진류 경유 진 ' + n + '곳 끊김(2달) · 낙양 경유 없음 · 지도 빨강 점선') : ('실패 ' + JSON.stringify({ p: !!p, via: via.length, none: none, n: n, cut: s.cp.cutT }));
+    });
+    /* W-0279 불가사의 경쟁 — 판정(wonder.js)만 */
+    function wonderSet() {
+      fresh('cao');
+      var WD = DG.wonder, other = R.liveForces().filter(function (f) { return f !== 'cao'; })[0];
+      [['cao'], [other]].forEach(function (x) { var f = R.force(x[0]); f.gold = 20000; R.citiesOf(x[0]).forEach(function (cid) { R.city(cid).troops = 20000; }); });
+      return { WD: WD, other: other, capA: R.citiesOf('cao')[0], capB: R.citiesOf(other)[0] };
+    }
+    t('불가사의(W-0279) — 먼저 다 지은 세력만 효과(경륜도 배율에 더해짐) · 진 세력은 효과 없음 · 한 세력은 하나씩', function () {
+      var z = wonderSet(), WD = z.WD; if (!WD) { return '실패 wonder 없음'; }
+      var g0 = DG.statecraft.gold('cao'), a = WD.start('cao', 'canal', z.capA), busy = WD.why('cao', 'farm', z.capA), b = WD.start(z.other, 'canal', z.capB), i;
+      for (i = 0; i < 10; i++) { WD.monthly(); }
+      var ok = a.ok && b.ok && !!busy && WD.builtBy('canal') === 'cao' && WD.pct('cao', 'goldPct') === 8 && WD.pct(z.other, 'goldPct') === 0 && Math.abs(DG.statecraft.gold('cao') - g0 * 1.08) < 1e-9 && !WD.jobOf('cao') && !WD.jobOf(z.other);
+      delete R.state().wonders;   // 뒤 진단(경륜도 배율)에 새지 않게
+      return ok ? ('큰 물길 → 조조측 금 ×' + (DG.statecraft.gold('cao') / g0).toFixed(2) + ' · 다른 세력 0 · 짓는 중엔 둘째 못 함') : ('실패 ' + JSON.stringify({ a: a, b: b, busy: busy, by: WD.builtBy('canal'), g: [g0, DG.statecraft.gold('cao')] }));
+    });
+    t('불가사의(W-0279) — 늦은 세력은 들인 금의 반을 돌려받고 인부(병력)도 돌아온다 · 이미 지어진 것은 못 짓는다', function () {
+      var z = wonderSet(), WD = z.WD; if (!WD) { return '실패 wonder 없음'; }
+      var W = WD.byId('bridge'), gB0 = R.force(z.other).gold, tB0 = R.city(z.capB).troops;
+      WD.start('cao', 'bridge', z.capA); WD.monthly(); WD.start(z.other, 'bridge', z.capB);
+      var mid = R.force(z.other).gold === gB0 - W.gold && R.city(z.capB).troops === tB0 - W.men, i;
+      for (i = 0; i < W.months; i++) { WD.monthly(); }
+      var ok = mid && WD.builtBy('bridge') === 'cao' && R.force(z.other).gold === gB0 - W.gold + Math.round(W.gold * WD.REFUND) && R.city(z.capB).troops === tB0 && /이미/.test(WD.why(z.other, 'bridge', z.capB) || '');
+      delete R.state().wonders;   // 뒤 진단(경륜도 배율)에 새지 않게
+      return ok ? ('늦은 쪽 금 ' + gB0 + ' → ' + R.force(z.other).gold + '(반 환급) · 인부 돌아옴 · 다시 못 지음') : ('실패 ' + JSON.stringify({ mid: mid, by: WD.builtBy('bridge'), gold: R.force(z.other).gold, troops: [tB0, R.city(z.capB).troops] }));
+    });
+    t('불가사의(W-0279) — AI 는 금이 넉넉하면(비용 ×2.5) 아직 아무도 안 지은 것을 짓는다 · 모자라면 안 짓는다 · 내 세력은 AI 가 안 건드림', function () {
+      var z = wonderSet(), WD = z.WD; if (!WD) { return '실패 wonder 없음'; }
+      var mine = WD.aiStep('cao'), got = WD.aiStep(z.other), job = WD.jobOf(z.other); var rc = got ? WD.racers(got).length : 0;
+      var z2 = wonderSet(); R.force(z2.other).gold = 100; var poor = WD.aiStep(z2.other);
+      var ok = mine === null && !!got && job && job.id === got && poor === null && rc === 1;
+      delete R.state().wonders;   // 뒤 진단(경륜도 배율)에 새지 않게
+      return ok ? ('AI 가 ' + WD.byId(got).name + ' 착공 · 금 100 이면 안 지음') : ('실패 ' + JSON.stringify({ mine: mine, got: got, job: job, poor: poor }));
     });
     t('진영은 달마다 한 번씩 더 친다', function () {
       var s = campSet();

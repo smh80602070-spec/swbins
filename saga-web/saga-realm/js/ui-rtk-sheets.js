@@ -219,6 +219,7 @@
       html += '<div class="sec"><h4>원정 <span class="muted">내 땅·빈 땅만 거쳐 여러 달에 걸쳐 옮깁니다</span></h4>' +
         farHtml + '</div>';
     }
+    if (global.DG.wonder) { html += global.DG.wonder.cardHtml(openCityId); }   // W-0279 불가사의 칸
     return html;
   }
 

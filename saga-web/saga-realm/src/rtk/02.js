@@ -17,7 +17,7 @@
     global.DG.rtkAI.runAll();
     if (global.DG.war) { global.DG.war.resolveAll(); }
     if (global.DG.war) { global.DG.war.resolveJourneys(); }
-    if (global.DG.diplo) { global.DG.diplo.monthly(); }
+    if (global.DG.diplo) { global.DG.diplo.monthly(); } if (global.DG.wonder) { global.DG.wonder.monthly(); }   // W-0279 불가사의 — 공사 한 달·먼저 다 지은 세력이 갖는다(wonder.js)
     settleMonth();
 
     st.month += 1;

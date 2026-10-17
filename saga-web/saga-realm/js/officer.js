@@ -458,7 +458,7 @@
       if (isLordNow) {
         var cs = st.cities, ck;
         for (ck in cs) { if (Object.prototype.hasOwnProperty.call(cs, ck) && cs[ck].gov === k) { cs[ck].gov = null; } }
-        succeed(lordOfF, k, a);
+        var nl = succeed(lordOfF, k, a); if (nl) { lordForce[nl] = lordOfF; }   // W-0279 즉위한 사람도 이 바퀴에서 군주로 — 늙은 후계가 같은 달 또 죽으면 계승 없이 "죽은 군주"가 남았다
         gone.push(k);
         continue;
       }

@@ -1059,5 +1059,25 @@
   "ticket": "W-0278",
   "since": "2026-10-17",
   "note": "하츠 오브 아이언식(구조만). 장부 tasks/gameplay/realm.md"
+ },
+ {
+  "id": "rk.wonder",
+  "name": "불가사의 경쟁 — 세상에 하나뿐인 건축 여섯(금·인부 6~12달), 먼저 다 지은 세력만 세력 전체 배율(경륜도 sum 에 더함), 늦으면 금 반 환급·인부 돌아옴 · AI 는 비용 ×2.5 금이면 착공 · 내 성 창 칸에 다른 세력 진행률",
+  "files": [
+   "js/wonder.js",
+   "js/statecraft.js",
+   "js/rtk.js",
+   "js/rtk-ai.js",
+   "js/ui-rtk-sheets.js"
+  ],
+  "tests": [
+   "불가사의(W-0279)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0279",
+  "since": "2026-10-17",
+  "note": "문명식(구조만). 장부 tasks/gameplay/realm.md"
  }
 ]
