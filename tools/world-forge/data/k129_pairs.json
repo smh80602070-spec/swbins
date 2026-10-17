@@ -1,0 +1,21 @@
+{
+ "_note": "K-0129 짝 후보(Opus 10-17) — world3d 툰 id. 'new:' = 짝 없음. 유니티 배경은 사실 PBR(10-09) 이라 툰 짝을 그대로 쓸지·사실판을 새로 지을지는 페이블 세계 3D 진단에서 정한다.",
+ "antique_estoc_1k": "wpn_sword_rare", "antique_katana_01_1k": "wpn_sword_legend", "ornate_medieval_dagger_1k": "wpn_dagger_rare",
+ "ornate_medieval_mace_1k": "wpn_club_01", "ornate_war_hammer_1k": "wpn_axe_rare", "wooden_handle_saber_1k": "wpn_sword_common",
+ "wooden_axe_1k": "wpn_axe_common", "hatchet_1k": "wpn_axe_common", "kite_shield_1k": "wpn_shield_rare", "kite_shield_lod1": "wpn_shield_rare",
+ "barrel_03_1k": "barrel_01", "wine_barrel_01_1k": "keg_01", "wine_barrel_01_lod1": "keg_01", "wooden_crate_01_1k": "crate_small_01",
+ "wicker_basket_01_1k": "new:wicker_basket_01", "wicker_basket_01_lod1": "new:wicker_basket_01", "wooden_bucket_01_1k": "new:wooden_bucket_01",
+ "wooden_lantern_01_1k": "hanging_lantern_01", "brass_diya_lantern_1k": "oil_lamp_01", "stone_fire_pit_1k": "campfire_logs_01",
+ "rock_moss_set_02_1k": "rock_moss_01", "rock_moss_set_02_lod1": "rock_moss_01",
+ "dead_tree_trunk_1k": "stump_01", "dead_tree_trunk_lod1": "stump_01", "dead_quiver_trunk_1k": "tree_dead_01", "dead_quiver_trunk_lod1": "tree_dead_01",
+ "fishermans_hat_1k": "acc_hat_wide", "round_spectacles_1k": "acc_glasses_round", "seadogs_compass_1k": "new:pocket_compass_01",
+ "concrete_road_barrier_02_1k": "new:road_barrier_01", "concrete_road_barrier_02_lod1": "new:road_barrier_01",
+ "covered_car_1k": "new:covered_car_01", "covered_car_lod1": "new:covered_car_01", "old_tyre_1k": "new:old_tyre_01",
+ "portable_generator_1k": "new:generator_01", "portable_generator_lod1": "new:generator_01",
+ "portable_searchlight_1k": "new:searchlight_01", "portable_searchlight_lod1": "new:searchlight_01",
+ "power_box_01_1k": "new:power_box_01", "power_box_01_lod1": "new:power_box_01", "utility_box_01_1k": "new:power_box_01", "utility_box_01_lod1": "new:power_box_01",
+ "security_camera_02_1k": "new:security_camera_01", "security_camera_02_lod1": "new:security_camera_01",
+ "vintage_spacecraft_instrument_1k": "terminal_01", "vintage_spacecraft_instrument_lod1": "terminal_01",
+ "Flower_3_Single": "flower_patch_01", "Flower_4_Single": "flower_patch_01", "Mushroom_Common": "mushroom_01",
+ "Fox": "CreaturesSelf/fox", "Snake": "CreaturesSelf/snake", "Birb": "CreaturesSelf/birb"
+}

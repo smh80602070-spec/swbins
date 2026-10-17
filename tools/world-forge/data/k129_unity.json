@@ -1,0 +1,733 @@
+{
+ "note": "K-0129 생성물 — tools/world-forge/k129_unity.py",
+ "summary": {
+  "items": 52,
+  "used": 52,
+  "paired_used": 52
+ },
+ "items": [
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/antique_estoc/antique_estoc_1k.gltf",
+   "name": "antique_estoc_1k",
+   "guid": "8ab94bbf7da04344aa151d7c3911c977",
+   "refs": [
+    "Scenes/TestVillage.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "wpn_sword_rare"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/antique_katana_01/antique_katana_01_1k.gltf",
+   "name": "antique_katana_01_1k",
+   "guid": "a9a8d9db5272de74eb9f387a82294764",
+   "refs": [
+    "Scenes/TestVillage.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "wpn_sword_legend"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/barrel_03/barrel_03_1k.gltf",
+   "name": "barrel_03_1k",
+   "guid": "1ebb86b565e648246a111a3a6730e7a7",
+   "refs": [
+    "Scenes/TestDungeon.unity",
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "barrel_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/brass_diya_lantern/brass_diya_lantern_1k.gltf",
+   "name": "brass_diya_lantern_1k",
+   "guid": "828aec48acc3a0c4f894b5246dc7c53e",
+   "refs": [
+    "Scenes/TestVillage.unity"
+   ],
+   "cs": [
+    "BuildTestVillageScene.cs"
+   ],
+   "used": true,
+   "pair": "oil_lamp_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/concrete_road_barrier_02/concrete_road_barrier_02_1k.gltf",
+   "name": "concrete_road_barrier_02_1k",
+   "guid": "ee46c4577cf949b4f8e5be9db88616dd",
+   "refs": [
+    "Scenes/TestDungeon.unity",
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "new:road_barrier_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/concrete_road_barrier_02/concrete_road_barrier_02_lod1.glb",
+   "name": "concrete_road_barrier_02_lod1",
+   "guid": "ceabf62d626ccd041adcaa988a72c96d",
+   "refs": [
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "new:road_barrier_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/covered_car/covered_car_1k.gltf",
+   "name": "covered_car_1k",
+   "guid": "3bb839f94e0f379449351103bed6e985",
+   "refs": [
+    "Scenes/TestDungeon.unity",
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "new:covered_car_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/covered_car/covered_car_lod1.glb",
+   "name": "covered_car_lod1",
+   "guid": "e1aede7597a8eee46b8770da1f40dc21",
+   "refs": [
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "new:covered_car_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/dead_quiver_trunk/dead_quiver_trunk_1k.gltf",
+   "name": "dead_quiver_trunk_1k",
+   "guid": "6f86ae52500b63742a0ad3fddb154824",
+   "refs": [
+    "Scenes/TestDungeon.unity",
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "tree_dead_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/dead_quiver_trunk/dead_quiver_trunk_lod1.glb",
+   "name": "dead_quiver_trunk_lod1",
+   "guid": "f51c34180877efa4e8c79b0665d757be",
+   "refs": [
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "tree_dead_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/dead_tree_trunk/dead_tree_trunk_1k.gltf",
+   "name": "dead_tree_trunk_1k",
+   "guid": "10d800fb3da06df4a868edd1d2a42c05",
+   "refs": [
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "stump_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/dead_tree_trunk/dead_tree_trunk_lod1.glb",
+   "name": "dead_tree_trunk_lod1",
+   "guid": "87e1c5534692bf447b2b18ad45e8b95b",
+   "refs": [
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "stump_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/fishermans_hat/fishermans_hat_1k.gltf",
+   "name": "fishermans_hat_1k",
+   "guid": "0ab9a35e91361854c8229cdaa99ea126",
+   "refs": [
+    "Scenes/TestVillage.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "acc_hat_wide"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/hatchet/hatchet_1k.gltf",
+   "name": "hatchet_1k",
+   "guid": "cedd6199ffbedd645a9ae2914b920aa0",
+   "refs": [
+    "Scenes/TestVillage.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "wpn_axe_common"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/kite_shield/kite_shield_1k.gltf",
+   "name": "kite_shield_1k",
+   "guid": "5bcdc27810749ad4e94ef8264378c9aa",
+   "refs": [
+    "Scenes/TestDungeon.unity",
+    "Scenes/TestVillage.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "wpn_shield_rare"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/kite_shield/kite_shield_lod1.glb",
+   "name": "kite_shield_lod1",
+   "guid": "aebd262d2b165d243919fda00cc4359a",
+   "refs": [
+    "Scenes/TestVillage.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "wpn_shield_rare"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/old_tyre/old_tyre_1k.gltf",
+   "name": "old_tyre_1k",
+   "guid": "02d4e7e445ba0c347afa7fb4b6d2eb5d",
+   "refs": [
+    "Scenes/TestDungeon.unity",
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "new:old_tyre_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/ornate_medieval_dagger/ornate_medieval_dagger_1k.gltf",
+   "name": "ornate_medieval_dagger_1k",
+   "guid": "d63164696f5ea424390bb2a8966db1a0",
+   "refs": [
+    "Scenes/TestVillage.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "wpn_dagger_rare"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/ornate_medieval_mace/ornate_medieval_mace_1k.gltf",
+   "name": "ornate_medieval_mace_1k",
+   "guid": "72dce5189f039bb4e956654afbfc6605",
+   "refs": [
+    "Scenes/TestVillage.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "wpn_club_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/ornate_war_hammer/ornate_war_hammer_1k.gltf",
+   "name": "ornate_war_hammer_1k",
+   "guid": "36b1eba4f2f19dd4eac1843ae08273f3",
+   "refs": [
+    "Scenes/TestVillage.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "wpn_axe_rare"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/portable_generator/portable_generator_1k.gltf",
+   "name": "portable_generator_1k",
+   "guid": "1fe4ca03b5a0f1c4c86c285913dfc78c",
+   "refs": [
+    "Scenes/TestDungeon.unity",
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "new:generator_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/portable_generator/portable_generator_lod1.glb",
+   "name": "portable_generator_lod1",
+   "guid": "2593aea124cb18d4db3df2b2fab16e16",
+   "refs": [
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "new:generator_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/portable_searchlight/portable_searchlight_1k.gltf",
+   "name": "portable_searchlight_1k",
+   "guid": "92c370a617f42cb46839ec303cdddc43",
+   "refs": [
+    "Scenes/TestDungeon.unity",
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "new:searchlight_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/portable_searchlight/portable_searchlight_lod1.glb",
+   "name": "portable_searchlight_lod1",
+   "guid": "b09d29d3efbe46e4aa183e72677475a1",
+   "refs": [
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "new:searchlight_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/power_box_01/power_box_01_1k.gltf",
+   "name": "power_box_01_1k",
+   "guid": "b5b32868f20988841819759adac6d33d",
+   "refs": [
+    "Scenes/TestDungeon.unity",
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "new:power_box_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/power_box_01/power_box_01_lod1.glb",
+   "name": "power_box_01_lod1",
+   "guid": "d4fe4238a67ec3e45a4885c7924726be",
+   "refs": [
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "new:power_box_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/rock_moss_set_02/rock_moss_set_02_1k.gltf",
+   "name": "rock_moss_set_02_1k",
+   "guid": "357504a7b73e7cc4f8ba7efd98d002c2",
+   "refs": [
+    "Scenes/TestDungeon.unity",
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "rock_moss_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/rock_moss_set_02/rock_moss_set_02_lod1.glb",
+   "name": "rock_moss_set_02_lod1",
+   "guid": "5563c7b684f067444bc7ffb1ff4d1786",
+   "refs": [
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "rock_moss_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/round_spectacles/round_spectacles_1k.gltf",
+   "name": "round_spectacles_1k",
+   "guid": "df20d4b5999c1284d878810a9123cd64",
+   "refs": [
+    "Scenes/TestVillage.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "acc_glasses_round"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/seadogs_compass/seadogs_compass_1k.gltf",
+   "name": "seadogs_compass_1k",
+   "guid": "9183973499dddc149abe93f4af1f0bad",
+   "refs": [
+    "Scenes/TestVillage.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "new:pocket_compass_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/security_camera_02/security_camera_02_1k.gltf",
+   "name": "security_camera_02_1k",
+   "guid": "aa63d5e98ff6bea4aa3230c96b90220f",
+   "refs": [
+    "Scenes/TestDungeon.unity",
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "new:security_camera_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/security_camera_02/security_camera_02_lod1.glb",
+   "name": "security_camera_02_lod1",
+   "guid": "f8442542b454c5f4d9574cc2b83e7925",
+   "refs": [
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "new:security_camera_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/stone_fire_pit/stone_fire_pit_1k.gltf",
+   "name": "stone_fire_pit_1k",
+   "guid": "5ceadd2f6b4c23a4b83b1081d80dd2db",
+   "refs": [
+    "Scenes/TestDungeon.unity",
+    "Scenes/TestVillage.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "campfire_logs_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/utility_box_01/utility_box_01_1k.gltf",
+   "name": "utility_box_01_1k",
+   "guid": "18d2ee92457c72d46916f248a096e664",
+   "refs": [
+    "Scenes/TestDungeon.unity",
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "new:power_box_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/utility_box_01/utility_box_01_lod1.glb",
+   "name": "utility_box_01_lod1",
+   "guid": "a9dd35356d9465e449dc6bc3d1442111",
+   "refs": [
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "new:power_box_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/vintage_spacecraft_instrument/vintage_spacecraft_instrument_1k.gltf",
+   "name": "vintage_spacecraft_instrument_1k",
+   "guid": "c767322d5ae0e3943a771411a5cc6533",
+   "refs": [
+    "Scenes/TestDungeon.unity",
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "terminal_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/vintage_spacecraft_instrument/vintage_spacecraft_instrument_lod1.glb",
+   "name": "vintage_spacecraft_instrument_lod1",
+   "guid": "4b43eb8855433a24780c4f3ee6abf70a",
+   "refs": [
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "terminal_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/wicker_basket_01/wicker_basket_01_1k.gltf",
+   "name": "wicker_basket_01_1k",
+   "guid": "021752fca8842fb47aeea60875e41478",
+   "refs": [
+    "Scenes/TestDungeon.unity",
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "new:wicker_basket_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/wicker_basket_01/wicker_basket_01_lod1.glb",
+   "name": "wicker_basket_01_lod1",
+   "guid": "d458f505c9e0a324398d4727917e6385",
+   "refs": [
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "new:wicker_basket_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/wine_barrel_01/wine_barrel_01_1k.gltf",
+   "name": "wine_barrel_01_1k",
+   "guid": "5db565cb155cf57419dfe3f2bc5af032",
+   "refs": [
+    "Scenes/TestDungeon.unity",
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "keg_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/wine_barrel_01/wine_barrel_01_lod1.glb",
+   "name": "wine_barrel_01_lod1",
+   "guid": "82d4a543d1e38194980662735ca370c2",
+   "refs": [
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "keg_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/wooden_axe/wooden_axe_1k.gltf",
+   "name": "wooden_axe_1k",
+   "guid": "35a3e4419410bb745bf7e458dae7cdff",
+   "refs": [
+    "Scenes/TestVillage.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "wpn_axe_common"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/wooden_bucket_01/wooden_bucket_01_1k.gltf",
+   "name": "wooden_bucket_01_1k",
+   "guid": "6879464f24c3c9a4989ed798616c185d",
+   "refs": [
+    "Scenes/TestDungeon.unity",
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "new:wooden_bucket_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/wooden_crate_01/wooden_crate_01_1k.gltf",
+   "name": "wooden_crate_01_1k",
+   "guid": "f4a3f732a74fa0e4c84cad6024873b91",
+   "refs": [
+    "Scenes/TestDungeon.unity",
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "crate_small_01"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/wooden_handle_saber/wooden_handle_saber_1k.gltf",
+   "name": "wooden_handle_saber_1k",
+   "guid": "9605a795000a6634da0b9ae1f5729599",
+   "refs": [
+    "Scenes/TestVillage.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "wpn_sword_common"
+  },
+  {
+   "dir": "Art/Props/PolyHaven",
+   "file": "Art/Props/PolyHaven/wooden_lantern_01/wooden_lantern_01_1k.gltf",
+   "name": "wooden_lantern_01_1k",
+   "guid": "00d2159cc00f3f4438f2c5978d54bdb2",
+   "refs": [
+    "Scenes/TestDungeon.unity",
+    "Scenes/TestVillage.unity",
+    "Scenes/TestVillageForest.unity",
+    "_Recovery/0.unity"
+   ],
+   "cs": [],
+   "used": true,
+   "pair": "hanging_lantern_01"
+  },
+  {
+   "dir": "Art/Vegetation/QuaterniusNature",
+   "file": "Art/Vegetation/QuaterniusNature/Flower_3_Single.gltf",
+   "name": "Flower_3_Single",
+   "guid": "d8dc12ac7bc74e64caf324415563e694",
+   "refs": [
+    "Art/CharactersRealistic/Forest/Forest_kkot.prefab"
+   ],
+   "cs": [
+    "SetupForestCreatureModels.cs"
+   ],
+   "used": true,
+   "pair": "flower_patch_01"
+  },
+  {
+   "dir": "Art/Vegetation/QuaterniusNature",
+   "file": "Art/Vegetation/QuaterniusNature/Flower_4_Single.gltf",
+   "name": "Flower_4_Single",
+   "guid": "22e562a03273efd4596933c2cba2888b",
+   "refs": [
+    "Art/CharactersRealistic/Forest/Forest_kkot.prefab"
+   ],
+   "cs": [
+    "SetupForestCreatureModels.cs"
+   ],
+   "used": true,
+   "pair": "flower_patch_01"
+  },
+  {
+   "dir": "Art/Vegetation/QuaterniusNature",
+   "file": "Art/Vegetation/QuaterniusNature/Mushroom_Common.gltf",
+   "name": "Mushroom_Common",
+   "guid": "f051d8773253f9c4bab74130abd64d9f",
+   "refs": [
+    "Art/CharactersRealistic/Forest/Forest_beoseot.prefab",
+    "Art/CharactersRealistic/Forest/Forest_pojagoemul.prefab"
+   ],
+   "cs": [
+    "SetupForestCreatureModels.cs"
+   ],
+   "used": true,
+   "pair": "mushroom_01"
+  },
+  {
+   "dir": "Art/Creatures/Fox",
+   "file": "Art/Creatures/Fox/Fox.glb",
+   "name": "Fox",
+   "guid": "d547c381ea444bb0bf1ed81d94e49fe9",
+   "refs": [
+    "Animators/Beast_Fox.controller",
+    "Art/Creatures/Fox/FoxAnimated.prefab"
+   ],
+   "cs": [
+    "SetupBeastAnimals.cs"
+   ],
+   "used": true,
+   "pair": "CreaturesSelf/fox"
+  },
+  {
+   "dir": "Art/Creatures/Snake",
+   "file": "Art/Creatures/Snake/Snake.glb",
+   "name": "Snake",
+   "guid": "2c7cdf7c43d84570a9a6bf7638c2f0cf",
+   "refs": [
+    "Animators/Beast_Snake.controller",
+    "Art/Creatures/Snake/SnakeAnimated.prefab"
+   ],
+   "cs": [
+    "SetupBeastAnimals.cs"
+   ],
+   "used": true,
+   "pair": "CreaturesSelf/snake"
+  },
+  {
+   "dir": "Art/Creatures/Birb",
+   "file": "Art/Creatures/Birb/Birb.glb",
+   "name": "Birb",
+   "guid": "2f95c1d60a1e44c5bcff5b966dbfe688",
+   "refs": [
+    "Animators/Beast_Birb.controller",
+    "Art/Creatures/Birb/BirbAnimated.prefab"
+   ],
+   "cs": [
+    "SetupBeastAnimals.cs"
+   ],
+   "used": true,
+   "pair": "CreaturesSelf/birb"
+  }
+ ]
+}
