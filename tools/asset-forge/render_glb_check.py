@@ -12,6 +12,8 @@ from mathutils import Vector
 
 src, out = sys.argv[sys.argv.index('--') + 1:][:2]
 rest = sys.argv[sys.argv.index('--') + 3:]
+TOON = '--toon' in rest                      # 웹 toon3d(3단 램프) 흉내 — Toon BSDF + 정점색 'Col' 곱(K-0136)
+rest = [x for x in rest if x != '--toon']
 size = int(rest[0]) if rest else 512
 action, phase = (rest[1], float(rest[2])) if len(rest) >= 3 else (None, 0.0)
 
@@ -99,6 +101,42 @@ ms.use_nodes = True
 ms.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value = (0.5, 0.5, 0.5, 1)
 ms.node_tree.nodes['Principled BSDF'].inputs['Roughness'].default_value = 0.85
 sph.data.materials.append(ms)
+
+if TOON:
+    for o in meshes:
+        has_col = 'Col' in o.data.color_attributes
+        for slot in o.material_slots:
+            m = slot.material
+            if not m or not m.use_nodes:
+                continue
+            t = m.node_tree
+            bsdf = next((n for n in t.nodes if n.type == 'BSDF_PRINCIPLED'), None)
+            outn = next((n for n in t.nodes if n.type == 'OUTPUT_MATERIAL'), None)
+            if bsdf is None or outn is None:
+                continue
+            toon = t.nodes.new('ShaderNodeBsdfToon')
+            toon.component = 'DIFFUSE'
+            toon.inputs['Size'].default_value = 0.55
+            toon.inputs['Smooth'].default_value = 0.02
+            src = bsdf.inputs['Base Color']
+            if has_col and not any(n.type == 'VERTEX_COLOR' for n in t.nodes):
+                vc = t.nodes.new('ShaderNodeVertexColor')
+                vc.layer_name = 'Col'
+                mix = t.nodes.new('ShaderNodeMix')
+                mix.data_type = 'RGBA'
+                mix.blend_type = 'MULTIPLY'
+                mix.inputs['Factor'].default_value = 1.0
+                if src.is_linked:
+                    t.links.new(src.links[0].from_socket, mix.inputs[6])
+                else:
+                    mix.inputs[6].default_value = src.default_value
+                t.links.new(vc.outputs['Color'], mix.inputs[7])
+                t.links.new(mix.outputs[2], toon.inputs['Color'])
+            elif src.is_linked:
+                t.links.new(src.links[0].from_socket, toon.inputs['Color'])
+            else:
+                toon.inputs['Color'].default_value = src.default_value
+            t.links.new(toon.outputs['BSDF'], outn.inputs['Surface'])
 
 scene.render.filepath = os.path.abspath(out)
 bpy.ops.render.render(write_still=True)
