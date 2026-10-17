@@ -160,10 +160,10 @@ def pine_layers(M, z0, r0, h0, count, shrink, n, tints, seed):
         h *= 0.93
 
 
-def tree_broadleaf_01(C, autumn=False):
+def tree_broadleaf_01(C, autumn=False, snow=False):
     M = C.M
     bark = C.s('brown_planks_03', 1.0, '#6d4b33')
-    slots = leaf_slots(C, AUTUMN['broadleaf_01'] if autumn else ('#2f6a2e', '#43883a', '#5da745', '#86c75a'))
+    slots = leaf_slots(C, AUTUMN['broadleaf_01'] if autumn else (('#4f7f4a', '#c9d6e0', '#e6edf3', '#f4f8fb') if snow else ('#2f6a2e', '#43883a', '#5da745', '#86c75a')))
     tube(M, (0, 0, 0), (0.05, 0.02, 2.7), 0.32, 0.17, bark, 1.0, 8)
     roots(M, bark, 0.3, 5, 4)
     fork(M, (0.05, 0.02, 1.8), (1.0, 0.25, 3.3), 0.11, 0.05, bark)
@@ -226,6 +226,11 @@ AUTUMN = {
     'birch_01': ('#c48e2e', '#d9a43a', '#e5bd4e', '#efd476'),
     'pine_01': ('#c98f2e', '#d9a43a'),
 }
+
+
+def tree_broadleaf_01_snow(C):
+    """K-0126 눈 덮인 활엽수 — 잎 덩이 위에 눈(흰·푸른 흰), 아래에 남은 초록 한 갈래."""
+    tree_broadleaf_01(C, snow=True)
 
 
 def tree_broadleaf_01_autumn(C):
@@ -550,7 +555,7 @@ NATURE = {f.__name__: f for f in (
     tree_broadleaf_01, tree_broadleaf_02, tree_broadleaf_03, tree_pine_01, tree_pine_01_snow, tree_pine_02, tree_pine_03, tree_dead_01, tree_birch_01,
     bush_01, bush_02, grass_tuft_01, grass_tuft_02, flower_patch_01, rock_small_01, rock_large_01, rock_large_02, rock_moss_01, pebbles_01, log_01,
     stump_01, mushroom_01, hill_01, mountain_01,
-    tree_broadleaf_01_autumn, tree_broadleaf_02_autumn, tree_broadleaf_03_autumn, tree_birch_01_autumn, tree_pine_01_autumn)}
+    tree_broadleaf_01_autumn, tree_broadleaf_02_autumn, tree_broadleaf_03_autumn, tree_birch_01_autumn, tree_pine_01_autumn, tree_broadleaf_01_snow)}
 
 if __name__ == '__main__':
     BP.PROPS.clear()

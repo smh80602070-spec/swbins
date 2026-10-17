@@ -1,0 +1,1879 @@
+{
+ "note": "K-0126 생성물 — tools/world-forge/k126_needs.py. pair 는 data/k126_pairs.json(손).",
+ "summary": {
+  "name": 151,
+  "prefix": 0,
+  "none": 1,
+  "pair": 152
+ },
+ "items": [
+  {
+   "key": "saga-dungeon:buildings/MarketStand_1",
+   "game": "saga-dungeon",
+   "folder": "buildings",
+   "name": "MarketStand_1",
+   "path": "saga-web/saga-dungeon/assets/models/buildings/MarketStand_1.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:404"
+   ],
+   "pair": "market_stall_01"
+  },
+  {
+   "key": "saga-dungeon:buildings/hexagon/barracks",
+   "game": "saga-dungeon",
+   "folder": "buildings/hexagon",
+   "name": "barracks",
+   "path": "saga-web/saga-dungeon/assets/models/buildings/hexagon/barracks.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:485"
+   ],
+   "pair": "barn_01"
+  },
+  {
+   "key": "saga-dungeon:buildings/hexagon/tavern",
+   "game": "saga-dungeon",
+   "folder": "buildings/hexagon",
+   "name": "tavern",
+   "path": "saga-web/saga-dungeon/assets/models/buildings/hexagon/tavern.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:484"
+   ],
+   "pair": "inn_01"
+  },
+  {
+   "key": "saga-dungeon:buildings/hexagon/well",
+   "game": "saga-dungeon",
+   "folder": "buildings/hexagon",
+   "name": "well",
+   "path": "saga-web/saga-dungeon/assets/models/buildings/hexagon/well.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:465"
+   ],
+   "pair": "well_01"
+  },
+  {
+   "key": "saga-dungeon:buildings/hexagon/windmill",
+   "game": "saga-dungeon",
+   "folder": "buildings/hexagon",
+   "name": "windmill",
+   "path": "saga-web/saga-dungeon/assets/models/buildings/hexagon/windmill.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:486"
+   ],
+   "pair": "mill_01"
+  },
+  {
+   "key": "saga-dungeon:buildings/realistic/house_cottage",
+   "game": "saga-dungeon",
+   "folder": "buildings/realistic",
+   "name": "house_cottage",
+   "path": "saga-web/saga-dungeon/assets/models/buildings/realistic/house_cottage.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:477"
+   ],
+   "pair": "forest_cottage_01"
+  },
+  {
+   "key": "saga-dungeon:buildings/realistic/house_stone",
+   "game": "saga-dungeon",
+   "folder": "buildings/realistic",
+   "name": "house_stone",
+   "path": "saga-web/saga-dungeon/assets/models/buildings/realistic/house_stone.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:449"
+   ],
+   "pair": "eu_house_01"
+  },
+  {
+   "key": "saga-dungeon:buildings/realistic/house_wooden",
+   "game": "saga-dungeon",
+   "folder": "buildings/realistic",
+   "name": "house_wooden",
+   "path": "saga-web/saga-dungeon/assets/models/buildings/realistic/house_wooden.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:449"
+   ],
+   "pair": "jp_minka_01"
+  },
+  {
+   "key": "saga-dungeon:buildings/realistic/tower_round",
+   "game": "saga-dungeon",
+   "folder": "buildings/realistic",
+   "name": "tower_round",
+   "path": "saga-web/saga-dungeon/assets/models/buildings/realistic/tower_round.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:498"
+   ],
+   "pair": "stone_tower_01"
+  },
+  {
+   "key": "saga-dungeon:dungeon/banner_thin_red.gltf",
+   "game": "saga-dungeon",
+   "folder": "dungeon",
+   "name": "banner_thin_red.gltf",
+   "path": "saga-web/saga-dungeon/assets/models/dungeon/banner_thin_red.gltf.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:583"
+   ],
+   "pair": "banner_pole_01"
+  },
+  {
+   "key": "saga-dungeon:dungeon/barrel_large.gltf",
+   "game": "saga-dungeon",
+   "folder": "dungeon",
+   "name": "barrel_large.gltf",
+   "path": "saga-web/saga-dungeon/assets/models/dungeon/barrel_large.gltf.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:572"
+   ],
+   "pair": "barrel_01"
+  },
+  {
+   "key": "saga-dungeon:dungeon/barrier_column.gltf",
+   "game": "saga-dungeon",
+   "folder": "dungeon",
+   "name": "barrier_column.gltf",
+   "path": "saga-web/saga-dungeon/assets/models/dungeon/barrier_column.gltf.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:564"
+   ],
+   "pair": "dungeon_pillar_01"
+  },
+  {
+   "key": "saga-dungeon:dungeon/bed_decorated.gltf",
+   "game": "saga-dungeon",
+   "folder": "dungeon",
+   "name": "bed_decorated.gltf",
+   "path": "saga-web/saga-dungeon/assets/models/dungeon/bed_decorated.gltf.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:604"
+   ],
+   "pair": "bed_wood_01"
+  },
+  {
+   "key": "saga-dungeon:dungeon/bottle_a_green.gltf",
+   "game": "saga-dungeon",
+   "folder": "dungeon",
+   "name": "bottle_a_green.gltf",
+   "path": "saga-web/saga-dungeon/assets/models/dungeon/bottle_a_green.gltf.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:597"
+   ],
+   "pair": "jar_01"
+  },
+  {
+   "key": "saga-dungeon:dungeon/box_small.gltf",
+   "game": "saga-dungeon",
+   "folder": "dungeon",
+   "name": "box_small.gltf",
+   "path": "saga-web/saga-dungeon/assets/models/dungeon/box_small.gltf.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:573"
+   ],
+   "pair": "crate_small_01"
+  },
+  {
+   "key": "saga-dungeon:dungeon/candle_lit.gltf",
+   "game": "saga-dungeon",
+   "folder": "dungeon",
+   "name": "candle_lit.gltf",
+   "path": "saga-web/saga-dungeon/assets/models/dungeon/candle_lit.gltf.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:596"
+   ],
+   "pair": "candlestick_01"
+  },
+  {
+   "key": "saga-dungeon:dungeon/chair.gltf",
+   "game": "saga-dungeon",
+   "folder": "dungeon",
+   "name": "chair.gltf",
+   "path": "saga-web/saga-dungeon/assets/models/dungeon/chair.gltf.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:577"
+   ],
+   "pair": "chair_wood_01"
+  },
+  {
+   "key": "saga-dungeon:dungeon/chest",
+   "game": "saga-dungeon",
+   "folder": "dungeon",
+   "name": "chest",
+   "path": "saga-web/saga-dungeon/assets/models/dungeon/chest.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:560"
+   ],
+   "pair": "chest_01"
+  },
+  {
+   "key": "saga-dungeon:dungeon/crates_stacked.gltf",
+   "game": "saga-dungeon",
+   "folder": "dungeon",
+   "name": "crates_stacked.gltf",
+   "path": "saga-web/saga-dungeon/assets/models/dungeon/crates_stacked.gltf.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:574"
+   ],
+   "pair": "crate_stack_01"
+  },
+  {
+   "key": "saga-dungeon:dungeon/floor_tile_big_spikes",
+   "game": "saga-dungeon",
+   "folder": "dungeon",
+   "name": "floor_tile_big_spikes",
+   "path": "saga-web/saga-dungeon/assets/models/dungeon/floor_tile_big_spikes.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:581"
+   ],
+   "pair": "new:spike_trap_01"
+  },
+  {
+   "key": "saga-dungeon:dungeon/pillar.gltf",
+   "game": "saga-dungeon",
+   "folder": "dungeon",
+   "name": "pillar.gltf",
+   "path": "saga-web/saga-dungeon/assets/models/dungeon/pillar.gltf.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:562"
+   ],
+   "pair": "dungeon_pillar_01"
+  },
+  {
+   "key": "saga-dungeon:dungeon/stairs_wide.gltf",
+   "game": "saga-dungeon",
+   "folder": "dungeon",
+   "name": "stairs_wide.gltf",
+   "path": "saga-web/saga-dungeon/assets/models/dungeon/stairs_wide.gltf.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:591"
+   ],
+   "pair": "cave_stairs_01_limestone"
+  },
+  {
+   "key": "saga-dungeon:dungeon/sword_shield.gltf",
+   "game": "saga-dungeon",
+   "folder": "dungeon",
+   "name": "sword_shield.gltf",
+   "path": "saga-web/saga-dungeon/assets/models/dungeon/sword_shield.gltf.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:578"
+   ],
+   "pair": "weapon_rack_01"
+  },
+  {
+   "key": "saga-dungeon:dungeon/table_long.gltf",
+   "game": "saga-dungeon",
+   "folder": "dungeon",
+   "name": "table_long.gltf",
+   "path": "saga-web/saga-dungeon/assets/models/dungeon/table_long.gltf.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:586"
+   ],
+   "pair": "table_wood_01"
+  },
+  {
+   "key": "saga-dungeon:dungeon/table_small.gltf",
+   "game": "saga-dungeon",
+   "folder": "dungeon",
+   "name": "table_small.gltf",
+   "path": "saga-web/saga-dungeon/assets/models/dungeon/table_small.gltf.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:608"
+   ],
+   "pair": "table_round_01"
+  },
+  {
+   "key": "saga-dungeon:dungeon/torch_mounted.gltf",
+   "game": "saga-dungeon",
+   "folder": "dungeon",
+   "name": "torch_mounted.gltf",
+   "path": "saga-web/saga-dungeon/assets/models/dungeon/torch_mounted.gltf.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:561"
+   ],
+   "pair": "new:torch_wall_01"
+  },
+  {
+   "key": "saga-dungeon:dungeon/wall_doorway",
+   "game": "saga-dungeon",
+   "folder": "dungeon",
+   "name": "wall_doorway",
+   "path": "saga-web/saga-dungeon/assets/models/dungeon/wall_doorway.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:568"
+   ],
+   "pair": "dungeon_gate_01"
+  },
+  {
+   "key": "saga-dungeon:nature/Bush_1",
+   "game": "saga-dungeon",
+   "folder": "nature",
+   "name": "Bush_1",
+   "path": "saga-web/saga-dungeon/assets/models/nature/Bush_1.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:73"
+   ],
+   "pair": "bush_01"
+  },
+  {
+   "key": "saga-dungeon:nature/Bush_2",
+   "game": "saga-dungeon",
+   "folder": "nature",
+   "name": "Bush_2",
+   "path": "saga-web/saga-dungeon/assets/models/nature/Bush_2.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:73"
+   ],
+   "pair": "bush_02"
+  },
+  {
+   "key": "saga-dungeon:nature/CommonTree_1",
+   "game": "saga-dungeon",
+   "folder": "nature",
+   "name": "CommonTree_1",
+   "path": "saga-web/saga-dungeon/assets/models/nature/CommonTree_1.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:70"
+   ],
+   "pair": "tree_broadleaf_01"
+  },
+  {
+   "key": "saga-dungeon:nature/CommonTree_2",
+   "game": "saga-dungeon",
+   "folder": "nature",
+   "name": "CommonTree_2",
+   "path": "saga-web/saga-dungeon/assets/models/nature/CommonTree_2.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:70"
+   ],
+   "pair": "tree_broadleaf_02"
+  },
+  {
+   "key": "saga-dungeon:nature/CommonTree_3",
+   "game": "saga-dungeon",
+   "folder": "nature",
+   "name": "CommonTree_3",
+   "path": "saga-web/saga-dungeon/assets/models/nature/CommonTree_3.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:70"
+   ],
+   "pair": "tree_broadleaf_03"
+  },
+  {
+   "key": "saga-dungeon:nature/CommonTree_Dead_1",
+   "game": "saga-dungeon",
+   "folder": "nature",
+   "name": "CommonTree_Dead_1",
+   "path": "saga-web/saga-dungeon/assets/models/nature/CommonTree_Dead_1.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:71"
+   ],
+   "pair": "tree_dead_01"
+  },
+  {
+   "key": "saga-dungeon:nature/Flowers",
+   "game": "saga-dungeon",
+   "folder": "nature",
+   "name": "Flowers",
+   "path": "saga-web/saga-dungeon/assets/models/nature/Flowers.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:434"
+   ],
+   "pair": "flower_patch_01"
+  },
+  {
+   "key": "saga-dungeon:nature/Grass_2",
+   "game": "saga-dungeon",
+   "folder": "nature",
+   "name": "Grass_2",
+   "path": "saga-web/saga-dungeon/assets/models/nature/Grass_2.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:433"
+   ],
+   "pair": "grass_tuft_01"
+  },
+  {
+   "key": "saga-dungeon:nature/Grass_Short",
+   "game": "saga-dungeon",
+   "folder": "nature",
+   "name": "Grass_Short",
+   "path": "saga-web/saga-dungeon/assets/models/nature/Grass_Short.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:433"
+   ],
+   "pair": "grass_tuft_02"
+  },
+  {
+   "key": "saga-dungeon:nature/Rock_1",
+   "game": "saga-dungeon",
+   "folder": "nature",
+   "name": "Rock_1",
+   "path": "saga-web/saga-dungeon/assets/models/nature/Rock_1.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:72"
+   ],
+   "pair": "rock_large_01"
+  },
+  {
+   "key": "saga-dungeon:nature/Rock_2",
+   "game": "saga-dungeon",
+   "folder": "nature",
+   "name": "Rock_2",
+   "path": "saga-web/saga-dungeon/assets/models/nature/Rock_2.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:72"
+   ],
+   "pair": "rock_large_02"
+  },
+  {
+   "key": "saga-dungeon:nature/Rock_3",
+   "game": "saga-dungeon",
+   "folder": "nature",
+   "name": "Rock_3",
+   "path": "saga-web/saga-dungeon/assets/models/nature/Rock_3.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:72"
+   ],
+   "pair": "rock_small_01"
+  },
+  {
+   "key": "saga-dungeon:nature/Rock_Moss_1",
+   "game": "saga-dungeon",
+   "folder": "nature",
+   "name": "Rock_Moss_1",
+   "path": "saga-web/saga-dungeon/assets/models/nature/Rock_Moss_1.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:72"
+   ],
+   "pair": "rock_moss_01"
+  },
+  {
+   "key": "saga-dungeon:nature/WoodLog",
+   "game": "saga-dungeon",
+   "folder": "nature",
+   "name": "WoodLog",
+   "path": "saga-web/saga-dungeon/assets/models/nature/WoodLog.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:74"
+   ],
+   "pair": "log_01"
+  },
+  {
+   "key": "saga-dungeon:nature/pond",
+   "game": "saga-dungeon",
+   "folder": "nature",
+   "name": "pond",
+   "path": "saga-web/saga-dungeon/assets/models/nature/pond.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:420"
+   ],
+   "pair": "pond_01"
+  },
+  {
+   "key": "saga-dungeon:nature/realistic/IslandTree_02",
+   "game": "saga-dungeon",
+   "folder": "nature/realistic",
+   "name": "IslandTree_02",
+   "path": "saga-web/saga-dungeon/assets/models/nature/realistic/IslandTree_02.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:381"
+   ],
+   "pair": "tree_broadleaf_02"
+  },
+  {
+   "key": "saga-dungeon:nature/realistic/Log_a",
+   "game": "saga-dungeon",
+   "folder": "nature/realistic",
+   "name": "Log_a",
+   "path": "saga-web/saga-dungeon/assets/models/nature/realistic/Log_a.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:442"
+   ],
+   "pair": "log_01"
+  },
+  {
+   "key": "saga-dungeon:nature/realistic/Log_b",
+   "game": "saga-dungeon",
+   "folder": "nature/realistic",
+   "name": "Log_b",
+   "path": "saga-web/saga-dungeon/assets/models/nature/realistic/Log_b.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:442"
+   ],
+   "pair": "log_01"
+  },
+  {
+   "key": "saga-dungeon:nature/realistic/MossRock_a",
+   "game": "saga-dungeon",
+   "folder": "nature/realistic",
+   "name": "MossRock_a",
+   "path": "saga-web/saga-dungeon/assets/models/nature/realistic/MossRock_a.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:390"
+   ],
+   "pair": "rock_moss_01"
+  },
+  {
+   "key": "saga-dungeon:nature/realistic/MossRock_b",
+   "game": "saga-dungeon",
+   "folder": "nature/realistic",
+   "name": "MossRock_b",
+   "path": "saga-web/saga-dungeon/assets/models/nature/realistic/MossRock_b.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:390"
+   ],
+   "pair": "rock_moss_01"
+  },
+  {
+   "key": "saga-dungeon:nature/realistic/MossRock_c",
+   "game": "saga-dungeon",
+   "folder": "nature/realistic",
+   "name": "MossRock_c",
+   "path": "saga-web/saga-dungeon/assets/models/nature/realistic/MossRock_c.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:390"
+   ],
+   "pair": "rock_moss_01"
+  },
+  {
+   "key": "saga-dungeon:nature/realistic/Rock_07",
+   "game": "saga-dungeon",
+   "folder": "nature/realistic",
+   "name": "Rock_07",
+   "path": "saga-web/saga-dungeon/assets/models/nature/realistic/Rock_07.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:389"
+   ],
+   "pair": "rock_outcrop_01"
+  },
+  {
+   "key": "saga-dungeon:nature/realistic/Shrub_04",
+   "game": "saga-dungeon",
+   "folder": "nature/realistic",
+   "name": "Shrub_04",
+   "path": "saga-web/saga-dungeon/assets/models/nature/realistic/Shrub_04.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:437"
+   ],
+   "pair": "bush_02"
+  },
+  {
+   "key": "saga-dungeon:nature/realistic/Stone_01",
+   "game": "saga-dungeon",
+   "folder": "nature/realistic",
+   "name": "Stone_01",
+   "path": "saga-web/saga-dungeon/assets/models/nature/realistic/Stone_01.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:389"
+   ],
+   "pair": "rock_small_01"
+  },
+  {
+   "key": "saga-dungeon:nature/realistic/TreeDead",
+   "game": "saga-dungeon",
+   "folder": "nature/realistic",
+   "name": "TreeDead",
+   "path": "saga-web/saga-dungeon/assets/models/nature/realistic/TreeDead.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:384"
+   ],
+   "pair": "tree_dead_01"
+  },
+  {
+   "key": "saga-dungeon:props/Arch",
+   "game": "saga-dungeon",
+   "folder": "props",
+   "name": "Arch",
+   "path": "saga-web/saga-dungeon/assets/models/props/Arch.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:392",
+    "asset3d.js:394",
+    "asset3d.js:558",
+    "dungeon3d.js:912"
+   ],
+   "pair": "new:stone_arch_01"
+  },
+  {
+   "key": "saga-dungeon:props/Bonfire_Lit",
+   "game": "saga-dungeon",
+   "folder": "props",
+   "name": "Bonfire_Lit",
+   "path": "saga-web/saga-dungeon/assets/models/props/Bonfire_Lit.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:408"
+   ],
+   "pair": "campfire_logs_01"
+  },
+  {
+   "key": "saga-dungeon:props/Mine",
+   "game": "saga-dungeon",
+   "folder": "props",
+   "name": "Mine",
+   "path": "saga-web/saga-dungeon/assets/models/props/Mine.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:399"
+   ],
+   "pair": "cave_gate_01_dirt"
+  },
+  {
+   "key": "saga-dungeon:props/Mushroom_1",
+   "game": "saga-dungeon",
+   "folder": "props",
+   "name": "Mushroom_1",
+   "path": "saga-web/saga-dungeon/assets/models/props/Mushroom_1.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:438"
+   ],
+   "pair": "mushroom_01"
+  },
+  {
+   "key": "saga-dungeon:props/Mushroom_2",
+   "game": "saga-dungeon",
+   "folder": "props",
+   "name": "Mushroom_2",
+   "path": "saga-web/saga-dungeon/assets/models/props/Mushroom_2.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:438"
+   ],
+   "pair": "mushroom_01"
+  },
+  {
+   "key": "saga-dungeon:props/Temple",
+   "game": "saga-dungeon",
+   "folder": "props",
+   "name": "Temple",
+   "path": "saga-web/saga-dungeon/assets/models/props/Temple.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:397"
+   ],
+   "pair": "temple_roof_01"
+  },
+  {
+   "key": "saga-dungeon:props/Tent",
+   "game": "saga-dungeon",
+   "folder": "props",
+   "name": "Tent",
+   "path": "saga-web/saga-dungeon/assets/models/props/Tent.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:403"
+   ],
+   "pair": "tent_large_01"
+  },
+  {
+   "key": "saga-dungeon:props/Wall",
+   "game": "saga-dungeon",
+   "folder": "props",
+   "name": "Wall",
+   "path": "saga-web/saga-dungeon/assets/models/props/Wall.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:395",
+    "asset3d.js:558"
+   ],
+   "pair": "wall_piece_01"
+  },
+  {
+   "key": "saga-dungeon:props/signpost",
+   "game": "saga-dungeon",
+   "folder": "props",
+   "name": "signpost",
+   "path": "saga-web/saga-dungeon/assets/models/props/signpost.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:429"
+   ],
+   "pair": "signpost_01"
+  },
+  {
+   "key": "saga-go:buildings/Blacksmith",
+   "game": "saga-go",
+   "folder": "buildings",
+   "name": "Blacksmith",
+   "path": "saga-web/saga-go/assets/models/buildings/Blacksmith.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:149"
+   ],
+   "pair": "new:smithy_01"
+  },
+  {
+   "key": "saga-go:buildings/House_1",
+   "game": "saga-go",
+   "folder": "buildings",
+   "name": "House_1",
+   "path": "saga-web/saga-go/assets/models/buildings/House_1.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:148"
+   ],
+   "pair": "eu_house_01"
+  },
+  {
+   "key": "saga-go:buildings/House_2",
+   "game": "saga-go",
+   "folder": "buildings",
+   "name": "House_2",
+   "path": "saga-web/saga-go/assets/models/buildings/House_2.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:148"
+   ],
+   "pair": "forest_cottage_01"
+  },
+  {
+   "key": "saga-go:buildings/House_3",
+   "game": "saga-go",
+   "folder": "buildings",
+   "name": "House_3",
+   "path": "saga-web/saga-go/assets/models/buildings/House_3.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:148"
+   ],
+   "pair": "hanok_01"
+  },
+  {
+   "key": "saga-go:buildings/House_4",
+   "game": "saga-go",
+   "folder": "buildings",
+   "name": "House_4",
+   "path": "saga-web/saga-go/assets/models/buildings/House_4.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:149"
+   ],
+   "pair": "jp_minka_01"
+  },
+  {
+   "key": "saga-go:buildings/Inn",
+   "game": "saga-go",
+   "folder": "buildings",
+   "name": "Inn",
+   "path": "saga-web/saga-go/assets/models/buildings/Inn.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:444",
+    "asset3d.js:509",
+    "prop3d.js:145",
+    "prop3d.js:203"
+   ],
+   "pair": "inn_01"
+  },
+  {
+   "key": "saga-go:buildings/LargeSquareTowerBricks",
+   "game": "saga-go",
+   "folder": "buildings",
+   "name": "LargeSquareTowerBricks",
+   "path": "saga-web/saga-go/assets/models/buildings/LargeSquareTowerBricks.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:470",
+    "asset3d.js:510",
+    "prop3d.js:151"
+   ],
+   "pair": "new:tower_square_01"
+  },
+  {
+   "key": "saga-go:buildings/LargeTower",
+   "game": "saga-go",
+   "folder": "buildings",
+   "name": "LargeTower",
+   "path": "saga-web/saga-go/assets/models/buildings/LargeTower.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:468",
+    "asset3d.js:486",
+    "asset3d.js:510",
+    "prop3d.js:150"
+   ],
+   "pair": "stone_tower_01"
+  },
+  {
+   "key": "saga-go:buildings/MarketStand_1",
+   "game": "saga-go",
+   "folder": "buildings",
+   "name": "MarketStand_1",
+   "path": "saga-web/saga-go/assets/models/buildings/MarketStand_1.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:173"
+   ],
+   "pair": "market_stall_01"
+  },
+  {
+   "key": "saga-go:buildings/PointyTower",
+   "game": "saga-go",
+   "folder": "buildings",
+   "name": "PointyTower",
+   "path": "saga-web/saga-go/assets/models/buildings/PointyTower.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:460",
+    "asset3d.js:467",
+    "prop3d.js:150"
+   ],
+   "pair": "new:tower_pointy_01"
+  },
+  {
+   "key": "saga-go:buildings/Tower",
+   "game": "saga-go",
+   "folder": "buildings",
+   "name": "Tower",
+   "path": "saga-web/saga-go/assets/models/buildings/Tower.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:460",
+    "asset3d.js:460",
+    "asset3d.js:462",
+    "asset3d.js:467"
+   ],
+   "pair": "stone_tower_01"
+  },
+  {
+   "key": "saga-go:buildings/Watchtower",
+   "game": "saga-go",
+   "folder": "buildings",
+   "name": "Watchtower",
+   "path": "saga-web/saga-go/assets/models/buildings/Watchtower.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:459",
+    "asset3d.js:466",
+    "prop3d.js:151"
+   ],
+   "pair": "new:watchtower_01"
+  },
+  {
+   "key": "saga-go:buildings/Well",
+   "game": "saga-go",
+   "folder": "buildings",
+   "name": "Well",
+   "path": "saga-web/saga-go/assets/models/buildings/Well.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:172"
+   ],
+   "pair": "well_01"
+  },
+  {
+   "key": "saga-go:buildings/realistic/chengde_temple",
+   "game": "saga-go",
+   "folder": "buildings/realistic",
+   "name": "chengde_temple",
+   "path": "saga-web/saga-go/assets/models/buildings/realistic/chengde_temple.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:274",
+    "world3d.js:1167"
+   ],
+   "pair": "chinese_hall_01"
+  },
+  {
+   "key": "saga-go:buildings/realistic/house_stone",
+   "game": "saga-go",
+   "folder": "buildings/realistic",
+   "name": "house_stone",
+   "path": "saga-web/saga-go/assets/models/buildings/realistic/house_stone.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:201"
+   ],
+   "pair": "eu_house_01"
+  },
+  {
+   "key": "saga-go:buildings/realistic/house_wooden",
+   "game": "saga-go",
+   "folder": "buildings/realistic",
+   "name": "house_wooden",
+   "path": "saga-web/saga-go/assets/models/buildings/realistic/house_wooden.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:201"
+   ],
+   "pair": "jp_minka_01"
+  },
+  {
+   "key": "saga-go:buildings/realistic/market_cross",
+   "game": "saga-go",
+   "folder": "buildings/realistic",
+   "name": "market_cross",
+   "path": "saga-web/saga-go/assets/models/buildings/realistic/market_cross.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:283",
+    "prop3d.js:286"
+   ],
+   "pair": "stele_01"
+  },
+  {
+   "key": "saga-go:buildings/realistic/tower_round",
+   "game": "saga-go",
+   "folder": "buildings/realistic",
+   "name": "tower_round",
+   "path": "saga-web/saga-go/assets/models/buildings/realistic/tower_round.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:455",
+    "asset3d.js:461",
+    "prop3d.js:88",
+    "prop3d.js:209"
+   ],
+   "pair": "stone_tower_01"
+  },
+  {
+   "key": "saga-go:buildings/realistic/tower_ruin",
+   "game": "saga-go",
+   "folder": "buildings/realistic",
+   "name": "tower_ruin",
+   "path": "saga-web/saga-go/assets/models/buildings/realistic/tower_ruin.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:449",
+    "beacon.js:16"
+   ],
+   "pair": "new:tower_ruin_01"
+  },
+  {
+   "key": "saga-go:buildings/realistic/well",
+   "game": "saga-go",
+   "folder": "buildings/realistic",
+   "name": "well",
+   "path": "saga-web/saga-go/assets/models/buildings/realistic/well.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:279",
+    "prop3d.js:281"
+   ],
+   "pair": "well_01"
+  },
+  {
+   "key": "saga-go:nature/BushBerries_1",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "BushBerries_1",
+   "path": "saga-web/saga-go/assets/models/nature/BushBerries_1.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:478"
+   ],
+   "pair": "bush_01"
+  },
+  {
+   "key": "saga-go:nature/Bush_1",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "Bush_1",
+   "path": "saga-web/saga-go/assets/models/nature/Bush_1.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:133"
+   ],
+   "pair": "bush_01"
+  },
+  {
+   "key": "saga-go:nature/Bush_2",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "Bush_2",
+   "path": "saga-web/saga-go/assets/models/nature/Bush_2.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:133"
+   ],
+   "pair": "bush_02"
+  },
+  {
+   "key": "saga-go:nature/CommonTree_1",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "CommonTree_1",
+   "path": "saga-web/saga-go/assets/models/nature/CommonTree_1.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:130"
+   ],
+   "pair": "tree_broadleaf_01"
+  },
+  {
+   "key": "saga-go:nature/CommonTree_2",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "CommonTree_2",
+   "path": "saga-web/saga-go/assets/models/nature/CommonTree_2.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:130"
+   ],
+   "pair": "tree_broadleaf_02"
+  },
+  {
+   "key": "saga-go:nature/CommonTree_3",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "CommonTree_3",
+   "path": "saga-web/saga-go/assets/models/nature/CommonTree_3.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:130"
+   ],
+   "pair": "tree_broadleaf_03"
+  },
+  {
+   "key": "saga-go:nature/CommonTree_Autumn_1",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "CommonTree_Autumn_1",
+   "path": "saga-web/saga-go/assets/models/nature/CommonTree_Autumn_1.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:138"
+   ],
+   "pair": "tree_broadleaf_01_autumn"
+  },
+  {
+   "key": "saga-go:nature/CommonTree_Autumn_2",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "CommonTree_Autumn_2",
+   "path": "saga-web/saga-go/assets/models/nature/CommonTree_Autumn_2.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:138"
+   ],
+   "pair": "tree_broadleaf_02_autumn"
+  },
+  {
+   "key": "saga-go:nature/CommonTree_Snow_1",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "CommonTree_Snow_1",
+   "path": "saga-web/saga-go/assets/models/nature/CommonTree_Snow_1.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:139"
+   ],
+   "pair": "tree_pine_01_snow"
+  },
+  {
+   "key": "saga-go:nature/CommonTree_Snow_2",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "CommonTree_Snow_2",
+   "path": "saga-web/saga-go/assets/models/nature/CommonTree_Snow_2.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:139"
+   ],
+   "pair": "new:tree_broadleaf_01_snow"
+  },
+  {
+   "key": "saga-go:nature/Flowers",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "Flowers",
+   "path": "saga-web/saga-go/assets/models/nature/Flowers.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:476"
+   ],
+   "pair": "flower_patch_01"
+  },
+  {
+   "key": "saga-go:nature/Grass_2",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "Grass_2",
+   "path": "saga-web/saga-go/assets/models/nature/Grass_2.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:195",
+    "prop3d.js:320"
+   ],
+   "pair": "grass_tuft_01"
+  },
+  {
+   "key": "saga-go:nature/Mountain_1",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "Mountain_1",
+   "path": "saga-web/saga-go/assets/models/nature/Mountain_1.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:159"
+   ],
+   "pair": "mountain_01"
+  },
+  {
+   "key": "saga-go:nature/Mountain_2",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "Mountain_2",
+   "path": "saga-web/saga-go/assets/models/nature/Mountain_2.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:159"
+   ],
+   "pair": "ridge_01"
+  },
+  {
+   "key": "saga-go:nature/Mushroom_1",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "Mushroom_1",
+   "path": "saga-web/saga-go/assets/models/nature/Mushroom_1.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:475"
+   ],
+   "pair": "mushroom_01"
+  },
+  {
+   "key": "saga-go:nature/PineTree_1",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "PineTree_1",
+   "path": "saga-web/saga-go/assets/models/nature/PineTree_1.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:131"
+   ],
+   "pair": "tree_pine_01"
+  },
+  {
+   "key": "saga-go:nature/PineTree_2",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "PineTree_2",
+   "path": "saga-web/saga-go/assets/models/nature/PineTree_2.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:131"
+   ],
+   "pair": "tree_pine_02"
+  },
+  {
+   "key": "saga-go:nature/Plant_1",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "Plant_1",
+   "path": "saga-web/saga-go/assets/models/nature/Plant_1.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:477"
+   ],
+   "pair": "grass_tuft_02"
+  },
+  {
+   "key": "saga-go:nature/Rock_1",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "Rock_1",
+   "path": "saga-web/saga-go/assets/models/nature/Rock_1.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:479",
+    "prop3d.js:132"
+   ],
+   "pair": "rock_large_01"
+  },
+  {
+   "key": "saga-go:nature/Rock_2",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "Rock_2",
+   "path": "saga-web/saga-go/assets/models/nature/Rock_2.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:132"
+   ],
+   "pair": "rock_large_02"
+  },
+  {
+   "key": "saga-go:nature/Rock_3",
+   "game": "saga-go",
+   "folder": "nature",
+   "name": "Rock_3",
+   "path": "saga-web/saga-go/assets/models/nature/Rock_3.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:132"
+   ],
+   "pair": "rock_small_01"
+  },
+  {
+   "key": "saga-go:nature/realistic/IslandTree_02",
+   "game": "saga-go",
+   "folder": "nature/realistic",
+   "name": "IslandTree_02",
+   "path": "saga-web/saga-go/assets/models/nature/realistic/IslandTree_02.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:181",
+    "prop3d.js:182",
+    "prop3d.js:183"
+   ],
+   "pair": "tree_broadleaf_02"
+  },
+  {
+   "key": "saga-go:nature/realistic/MossRock_a",
+   "game": "saga-go",
+   "folder": "nature/realistic",
+   "name": "MossRock_a",
+   "path": "saga-web/saga-go/assets/models/nature/realistic/MossRock_a.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:190",
+    "prop3d.js:240",
+    "prop3d.js:243"
+   ],
+   "pair": "rock_moss_01"
+  },
+  {
+   "key": "saga-go:nature/realistic/MossRock_b",
+   "game": "saga-go",
+   "folder": "nature/realistic",
+   "name": "MossRock_b",
+   "path": "saga-web/saga-go/assets/models/nature/realistic/MossRock_b.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:190"
+   ],
+   "pair": "rock_moss_01"
+  },
+  {
+   "key": "saga-go:nature/realistic/MossRock_c",
+   "game": "saga-go",
+   "folder": "nature/realistic",
+   "name": "MossRock_c",
+   "path": "saga-web/saga-go/assets/models/nature/realistic/MossRock_c.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:190"
+   ],
+   "pair": "rock_moss_01"
+  },
+  {
+   "key": "saga-go:nature/realistic/PineSapling",
+   "game": "saga-go",
+   "folder": "nature/realistic",
+   "name": "PineSapling",
+   "path": "saga-web/saga-go/assets/models/nature/realistic/PineSapling.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:186"
+   ],
+   "pair": "tree_pine_03"
+  },
+  {
+   "key": "saga-go:nature/realistic/Rock_07",
+   "game": "saga-go",
+   "folder": "nature/realistic",
+   "name": "Rock_07",
+   "path": "saga-web/saga-go/assets/models/nature/realistic/Rock_07.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:189"
+   ],
+   "pair": "rock_outcrop_01"
+  },
+  {
+   "key": "saga-go:nature/realistic/Shrub_04",
+   "game": "saga-go",
+   "folder": "nature/realistic",
+   "name": "Shrub_04",
+   "path": "saga-web/saga-go/assets/models/nature/realistic/Shrub_04.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:195",
+    "prop3d.js:257",
+    "prop3d.js:260"
+   ],
+   "pair": "bush_02"
+  },
+  {
+   "key": "saga-go:nature/realistic/Stone_01",
+   "game": "saga-go",
+   "folder": "nature/realistic",
+   "name": "Stone_01",
+   "path": "saga-web/saga-go/assets/models/nature/realistic/Stone_01.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:189"
+   ],
+   "pair": "rock_small_01"
+  },
+  {
+   "key": "saga-go:nature/realistic/mountainside",
+   "game": "saga-go",
+   "folder": "nature/realistic",
+   "name": "mountainside",
+   "path": "saga-web/saga-go/assets/models/nature/realistic/mountainside.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:217",
+    "prop3d.js:219"
+   ],
+   "pair": "cliff_ledge_01"
+  },
+  {
+   "key": "saga-go:props/Arch",
+   "game": "saga-go",
+   "folder": "props",
+   "name": "Arch",
+   "path": "saga-web/saga-go/assets/models/props/Arch.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:483",
+    "prop3d.js:171"
+   ],
+   "pair": "new:stone_arch_01"
+  },
+  {
+   "key": "saga-go:props/Bridge",
+   "game": "saga-go",
+   "folder": "props",
+   "name": "Bridge",
+   "path": "saga-web/saga-go/assets/models/props/Bridge.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:175"
+   ],
+   "pair": "plank_bridge_01"
+  },
+  {
+   "key": "saga-go:props/Chest",
+   "game": "saga-go",
+   "folder": "props",
+   "name": "Chest",
+   "path": "saga-web/saga-go/assets/models/props/Chest.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:472"
+   ],
+   "pair": "chest_01"
+  },
+  {
+   "key": "saga-go:props/Gazebo",
+   "game": "saga-go",
+   "folder": "props",
+   "name": "Gazebo",
+   "path": "saga-web/saga-go/assets/models/props/Gazebo.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:169"
+   ],
+   "pair": "new:pavilion_01"
+  },
+  {
+   "key": "saga-go:props/Mine",
+   "game": "saga-go",
+   "folder": "props",
+   "name": "Mine",
+   "path": "saga-web/saga-go/assets/models/props/Mine.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:170"
+   ],
+   "pair": "cave_gate_01_dirt"
+  },
+  {
+   "key": "saga-go:props/Rice_4",
+   "game": "saga-go",
+   "folder": "props",
+   "name": "Rice_4",
+   "path": "saga-web/saga-go/assets/models/props/Rice_4.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:174"
+   ],
+   "pair": "wheat_growing_01"
+  },
+  {
+   "key": "saga-go:props/Temple",
+   "game": "saga-go",
+   "folder": "props",
+   "name": "Temple",
+   "path": "saga-web/saga-go/assets/models/props/Temple.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:484"
+   ],
+   "pair": "temple_roof_01"
+  },
+  {
+   "key": "saga-go:props/Wall",
+   "game": "saga-go",
+   "folder": "props",
+   "name": "Wall",
+   "path": "saga-web/saga-go/assets/models/props/Wall.glb",
+   "call": "none",
+   "where": [],
+   "pair": "wall_piece_01"
+  },
+  {
+   "key": "saga-go:props/WoodenTorch",
+   "game": "saga-go",
+   "folder": "props",
+   "name": "WoodenTorch",
+   "path": "saga-web/saga-go/assets/models/props/WoodenTorch.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:160"
+   ],
+   "pair": "torch_stand_01"
+  },
+  {
+   "key": "saga-go:props/realistic/roman_arch",
+   "game": "saga-go",
+   "folder": "props/realistic",
+   "name": "roman_arch",
+   "path": "saga-web/saga-go/assets/models/props/realistic/roman_arch.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:233",
+    "prop3d.js:235"
+   ],
+   "pair": "new:stone_arch_01"
+  },
+  {
+   "key": "saga-go:props/realistic/sweathouse",
+   "game": "saga-go",
+   "folder": "props/realistic",
+   "name": "sweathouse",
+   "path": "saga-web/saga-go/assets/models/props/realistic/sweathouse.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:228",
+    "prop3d.js:231"
+   ],
+   "pair": "new:earth_lodge_01"
+  },
+  {
+   "key": "saga-go:props/realistic/wayside_shrine",
+   "game": "saga-go",
+   "folder": "props/realistic",
+   "name": "wayside_shrine",
+   "path": "saga-web/saga-go/assets/models/props/realistic/wayside_shrine.glb",
+   "call": "name",
+   "where": [
+    "prop3d.js:224",
+    "prop3d.js:226"
+   ],
+   "pair": "new:wayside_shrine_01"
+  },
+  {
+   "key": "saga-go:props/realistic/wooden_lantern",
+   "game": "saga-go",
+   "folder": "props/realistic",
+   "name": "wooden_lantern",
+   "path": "saga-web/saga-go/assets/models/props/realistic/wooden_lantern.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:473",
+    "prop3d.js:221",
+    "prop3d.js:222"
+   ],
+   "pair": "stone_lantern_01"
+  },
+  {
+   "key": "saga-realm:buildings/House_1",
+   "game": "saga-realm",
+   "folder": "buildings",
+   "name": "House_1",
+   "path": "saga-web/saga-realm/assets/models/buildings/House_1.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:209"
+   ],
+   "pair": "eu_house_01"
+  },
+  {
+   "key": "saga-realm:buildings/House_2",
+   "game": "saga-realm",
+   "folder": "buildings",
+   "name": "House_2",
+   "path": "saga-web/saga-realm/assets/models/buildings/House_2.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:209"
+   ],
+   "pair": "forest_cottage_01"
+  },
+  {
+   "key": "saga-realm:buildings/House_3",
+   "game": "saga-realm",
+   "folder": "buildings",
+   "name": "House_3",
+   "path": "saga-web/saga-realm/assets/models/buildings/House_3.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:209"
+   ],
+   "pair": "hanok_01"
+  },
+  {
+   "key": "saga-realm:buildings/House_4",
+   "game": "saga-realm",
+   "folder": "buildings",
+   "name": "House_4",
+   "path": "saga-web/saga-realm/assets/models/buildings/House_4.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:209"
+   ],
+   "pair": "jp_minka_01"
+  },
+  {
+   "key": "saga-realm:buildings/LargeSquareTowerBricks",
+   "game": "saga-realm",
+   "folder": "buildings",
+   "name": "LargeSquareTowerBricks",
+   "path": "saga-web/saga-realm/assets/models/buildings/LargeSquareTowerBricks.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:192"
+   ],
+   "pair": "new:tower_square_01"
+  },
+  {
+   "key": "saga-realm:buildings/LargeTower",
+   "game": "saga-realm",
+   "folder": "buildings",
+   "name": "LargeTower",
+   "path": "saga-web/saga-realm/assets/models/buildings/LargeTower.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:192"
+   ],
+   "pair": "stone_tower_01"
+  },
+  {
+   "key": "saga-realm:buildings/MarketStand_1",
+   "game": "saga-realm",
+   "folder": "buildings",
+   "name": "MarketStand_1",
+   "path": "saga-web/saga-realm/assets/models/buildings/MarketStand_1.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:207"
+   ],
+   "pair": "market_stall_01"
+  },
+  {
+   "key": "saga-realm:buildings/PointyTower",
+   "game": "saga-realm",
+   "folder": "buildings",
+   "name": "PointyTower",
+   "path": "saga-web/saga-realm/assets/models/buildings/PointyTower.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:191"
+   ],
+   "pair": "new:tower_pointy_01"
+  },
+  {
+   "key": "saga-realm:buildings/Tower",
+   "game": "saga-realm",
+   "folder": "buildings",
+   "name": "Tower",
+   "path": "saga-web/saga-realm/assets/models/buildings/Tower.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:191",
+    "asset3d.js:191",
+    "asset3d.js:192",
+    "asset3d.js:193"
+   ],
+   "pair": "stone_tower_01"
+  },
+  {
+   "key": "saga-realm:buildings/Watchtower",
+   "game": "saga-realm",
+   "folder": "buildings",
+   "name": "Watchtower",
+   "path": "saga-web/saga-realm/assets/models/buildings/Watchtower.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:190"
+   ],
+   "pair": "new:watchtower_01"
+  },
+  {
+   "key": "saga-realm:buildings/Well",
+   "game": "saga-realm",
+   "folder": "buildings",
+   "name": "Well",
+   "path": "saga-web/saga-realm/assets/models/buildings/Well.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:208"
+   ],
+   "pair": "well_01"
+  },
+  {
+   "key": "saga-realm:buildings/asian/BellStructure",
+   "game": "saga-realm",
+   "folder": "buildings/asian",
+   "name": "BellStructure",
+   "path": "saga-web/saga-realm/assets/models/buildings/asian/BellStructure.glb",
+   "call": "name",
+   "where": [
+    "admin.js:447",
+    "asset3d.js:250",
+    "asset3d.js:274"
+   ],
+   "pair": "new:bell_pavilion_01"
+  },
+  {
+   "key": "saga-realm:nature/Bush_1",
+   "game": "saga-realm",
+   "folder": "nature",
+   "name": "Bush_1",
+   "path": "saga-web/saga-realm/assets/models/nature/Bush_1.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:201"
+   ],
+   "pair": "bush_01"
+  },
+  {
+   "key": "saga-realm:nature/Bush_2",
+   "game": "saga-realm",
+   "folder": "nature",
+   "name": "Bush_2",
+   "path": "saga-web/saga-realm/assets/models/nature/Bush_2.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:201"
+   ],
+   "pair": "bush_02"
+  },
+  {
+   "key": "saga-realm:nature/CommonTree_1",
+   "game": "saga-realm",
+   "folder": "nature",
+   "name": "CommonTree_1",
+   "path": "saga-web/saga-realm/assets/models/nature/CommonTree_1.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:196"
+   ],
+   "pair": "tree_broadleaf_01"
+  },
+  {
+   "key": "saga-realm:nature/CommonTree_2",
+   "game": "saga-realm",
+   "folder": "nature",
+   "name": "CommonTree_2",
+   "path": "saga-web/saga-realm/assets/models/nature/CommonTree_2.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:196"
+   ],
+   "pair": "tree_broadleaf_02"
+  },
+  {
+   "key": "saga-realm:nature/Flowers",
+   "game": "saga-realm",
+   "folder": "nature",
+   "name": "Flowers",
+   "path": "saga-web/saga-realm/assets/models/nature/Flowers.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:203"
+   ],
+   "pair": "flower_patch_01"
+  },
+  {
+   "key": "saga-realm:nature/Grass_2",
+   "game": "saga-realm",
+   "folder": "nature",
+   "name": "Grass_2",
+   "path": "saga-web/saga-realm/assets/models/nature/Grass_2.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:202"
+   ],
+   "pair": "grass_tuft_01"
+  },
+  {
+   "key": "saga-realm:nature/Mountain_1",
+   "game": "saga-realm",
+   "folder": "nature",
+   "name": "Mountain_1",
+   "path": "saga-web/saga-realm/assets/models/nature/Mountain_1.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:195"
+   ],
+   "pair": "mountain_01"
+  },
+  {
+   "key": "saga-realm:nature/Mountain_2",
+   "game": "saga-realm",
+   "folder": "nature",
+   "name": "Mountain_2",
+   "path": "saga-web/saga-realm/assets/models/nature/Mountain_2.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:195"
+   ],
+   "pair": "ridge_01"
+  },
+  {
+   "key": "saga-realm:nature/PineTree_1",
+   "game": "saga-realm",
+   "folder": "nature",
+   "name": "PineTree_1",
+   "path": "saga-web/saga-realm/assets/models/nature/PineTree_1.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:196"
+   ],
+   "pair": "tree_pine_01"
+  },
+  {
+   "key": "saga-realm:nature/Rock_1",
+   "game": "saga-realm",
+   "folder": "nature",
+   "name": "Rock_1",
+   "path": "saga-web/saga-realm/assets/models/nature/Rock_1.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:197"
+   ],
+   "pair": "rock_large_01"
+  },
+  {
+   "key": "saga-realm:nature/Rock_2",
+   "game": "saga-realm",
+   "folder": "nature",
+   "name": "Rock_2",
+   "path": "saga-web/saga-realm/assets/models/nature/Rock_2.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:197"
+   ],
+   "pair": "rock_large_02"
+  },
+  {
+   "key": "saga-realm:nature/WoodLog",
+   "game": "saga-realm",
+   "folder": "nature",
+   "name": "WoodLog",
+   "path": "saga-web/saga-realm/assets/models/nature/WoodLog.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:210"
+   ],
+   "pair": "log_01"
+  },
+  {
+   "key": "saga-realm:props/Temple",
+   "game": "saga-realm",
+   "folder": "props",
+   "name": "Temple",
+   "path": "saga-web/saga-realm/assets/models/props/Temple.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:205"
+   ],
+   "pair": "temple_roof_01"
+  },
+  {
+   "key": "saga-realm:props/Tent",
+   "game": "saga-realm",
+   "folder": "props",
+   "name": "Tent",
+   "path": "saga-web/saga-realm/assets/models/props/Tent.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:211"
+   ],
+   "pair": "tent_large_01"
+  },
+  {
+   "key": "saga-realm:props/Wall",
+   "game": "saga-realm",
+   "folder": "props",
+   "name": "Wall",
+   "path": "saga-web/saga-realm/assets/models/props/Wall.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:204"
+   ],
+   "pair": "wall_piece_01"
+  },
+  {
+   "key": "saga-realm:props/WoodenTorch",
+   "game": "saga-realm",
+   "folder": "props",
+   "name": "WoodenTorch",
+   "path": "saga-web/saga-realm/assets/models/props/WoodenTorch.glb",
+   "call": "name",
+   "where": [
+    "asset3d.js:206"
+   ],
+   "pair": "torch_stand_01"
+  }
+ ]
+}

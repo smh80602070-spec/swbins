@@ -389,6 +389,8 @@ def mill_01(C):
 VILLAGE = {f.__name__: f for f in (
     market_stall_01, low_stone_wall_01, signpost_01, notice_board_01, crate_stack_01, barrel_01, sack_pile_01, tent_small_01, tent_large_01,
     campfire_logs_01, bench_01, handcart_01, dungeon_pillar_01, wall_piece_01, chest_01, jar_01, altar_base_01, bars_door_01, mill_01)}
+from build_village_k126 import K126  # noqa: E402  K-0126 새 12
+VILLAGE.update(K126)
 
 if __name__ == '__main__':
     BP.PROPS.clear()
