@@ -293,7 +293,7 @@
              ' 에게 (\u25b2' + own.gain + ')</button>'
            : '<span class="muted" style="font-size:11px">지금 동행에겐 보탬이 안 됩니다</span>') +
       '<button class="btn tiny ghost" data-act="gear-lock" data-id="' + g.uid + '">' +
-        (g.lock ? '\uD83D\uDD12 잠김' : '\uD83D\uDD13 잠그기') + '</button>' +
+        (g.lock ? '\uD83D\uDD12 잠김' : '\uD83D\uDD13 잠그기') + '</button>' + (global.DG.wpnSwap ? global.DG.wpnSwap.bagBtn(g) : '') +   // W-0281 을에 들기
       (it.repairCost(g) ? '<button class="btn tiny" data-act="gear-repair" data-id="' + g.uid +
         '">\uD83D\uDD27 수리 ' + priceTag(it.repairCost(g)) + '</button>' : '') +
       '<button class="btn tiny ghost" data-act="gear-sell" data-id="' + g.uid + '">' +
@@ -347,7 +347,7 @@
           '<b>' + esc(h ? h.name : '') + '</b>' +
           '<small>Lv.' + (hero().info(gearHero).lv || 1) + '</small></div>' +
         slot('armor', '갑주') +
-      '</div>' +
+      '</div>' + (global.DG.wpnSwap ? global.DG.wpnSwap.slotHtml(gearHero) : '') +   // W-0281 무기 을 칸
       '<div class="d2-doll" style="grid-template-columns:1fr 1fr">' +
         slot('helm', '투구') + slot('glove', '장갑') +
       '</div>' +

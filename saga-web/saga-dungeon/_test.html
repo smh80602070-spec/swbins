@@ -126,6 +126,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/meridian.js"></script>
 <script src="js/secret.js"></script>
 <script src="js/skill-tree.js"></script>
+<script src="js/wpn-swap.js"></script>
 <script src="js/gesture.js"></script>
 <script src="js/world-map.js"></script>
 <script src="js/dungeon.js"></script>
@@ -1010,8 +1011,8 @@ window.requestAnimationFrame = function () { return 0; };
       } finally { DN.leave(); }
     }); 
     });
-    t('dg.engage ③ 키 글자(W-0175) — 강공격 Shift·회피 Space·투장 F·서명 G 단추 구석에 키 표(마우스), 손가락만인 기기는 CSS 로 뺀다', function () {
-      var want = ['Shift', 'Space', 'F', 'G'], els = document.querySelectorAll('#dg-actions .dg-act-key'), src = '', got;
+    t('dg.engage ③ 키 글자(W-0175) — 강공격 Shift·회피 Space·투장 F·서명 G·무기 바꾸기 Q(W-0281) 단추 구석에 키 표(마우스), 손가락만인 기기는 CSS 로 뺀다', function () {
+      var want = ['Shift', 'Space', 'F', 'G', 'Q'], els = document.querySelectorAll('#dg-actions .dg-act-key'), src = '', got;
       if (els.length) { got = [].map.call(els, function (e) { return e.textContent; }); }
       else {
         var x = new XMLHttpRequest(); x.open('GET', 'js/dungeon-view.js', false); x.send(); src = x.responseText;
@@ -2199,6 +2200,55 @@ window.requestAnimationFrame = function () { return 0; };
       DN.leave();
       C.save.skills = {}; C.save.slots = {};
       return fired && hurt1 && hurt2 && (chainSk.name + ' — 둘 다 맞았다');
+    });
+
+    /* ── 무기 두 벌 바꿔 들기(W-0281, `wpn-swap.js`) — PoE2 자리 ─────────── */
+    function wpnSet() {
+      var WS = DG.wpnSwap, id = C.save.party[0], IT = DG.item;
+      WS._reset(id); C.save.wpn2 = {};
+      var sword = IT.roll(1, { base: 'w_hwando', tier: 0 }), bow = IT.roll(1, { base: 'w_gakgung', tier: 0 });
+      var eq = IT.equipped(id), keepW = eq.weapon; delete eq.weapon;
+      IT.bag().push(sword); IT.bag().push(bow);
+      var a = IT.equip(id, sword.uid), b = WS.take(id, bow.uid);
+      return { WS: WS, id: id, IT: IT, sword: sword, bow: bow, keepW: keepW, a: a, b: b };
+    }
+    t('무기 두 벌(W-0281) — 을(乙)에 활을 들고 Q 로 바꾸면 손·직업·무예 슬롯이 활 것으로, 다시 바꾸면 칼로 돌아온다', function () {
+      var z = wpnSet(), WS = z.WS, id = z.id, IT = z.IT, SK = DG.skill, SD = DG.skillData, keepSlots = C.save.slots[id], keepSk = C.save.skills[id];
+      var cls0 = SK.classOf(id).key, act = function (c) { return SD.skillsOf(c).filter(function (x) { return x.shape !== 'passive'; })[0].key; }, k0 = act(cls0), k1 = act('archer');
+      try {
+        C.save.slots[id] = {}; C.save.slots[id][cls0] = [k0, null, null, null]; C.save.slots[id].archer = [k1, null, null, null];
+        C.save.skills[id] = {}; C.save.skills[id][k0] = 1; C.save.skills[id][k1] = 1;
+        var c0 = SK.classOf(id).key, s0 = SK.equipped(id)[0];
+        var r1 = WS.swap(id);
+        var c1 = SK.classOf(id).key, s1 = SK.equipped(id)[0], hand1 = IT.equipped(id).weapon.uid, w2 = WS.of(id).uid;
+        WS._reset(id);
+        var r2 = WS.swap(id);
+        var c2 = SK.classOf(id).key, hand2 = IT.equipped(id).weapon.uid;
+        var ok = z.a && z.b.ok && c0 === 'marshal' && r1.ok && r1.look === 'bow' && c1 === 'archer' && hand1 === z.bow.uid && w2 === z.sword.uid &&
+          s0 && s0.sk.key === k0 && s1 && s1.sk.key === k1 && r2.ok && c2 === cls0 && hand2 === z.sword.uid;
+        return ok ? ('칼(' + c0 + ') → 활(' + c1 + ', 슬롯 ' + s1.sk.name + ') → 칼') : ('실패 ' + JSON.stringify({ a: z.a, b: z.b, c0: c0, r1: r1, c1: c1, s0: s0 && s0.sk.key, s1: s1 && s1.sk.key, r2: r2, c2: c2 }));
+      } finally { C.save.slots[id] = keepSlots; C.save.skills[id] = keepSk; IT.equipped(id).weapon = z.keepW; if (!z.keepW) { delete IT.equipped(id).weapon; } C.save.wpn2 = {}; WS._reset(id); }
+    });
+    t('무기 두 벌(W-0281) — 쿨 1초: 바로 다시 바꾸면 막히고(cd), 첫 타 배율 1.15 는 한 번만', function () {
+      var z = wpnSet(), WS = z.WS, id = z.id, IT = z.IT;
+      try {
+        var r1 = WS.swap(id), r2 = WS.swap(id), left = WS.cdLeft(id), f1 = WS.firstHit(), f2 = WS.firstHit();
+        var info = WS.info(id);
+        var ok = r1.ok && !r2.ok && r2.reason === 'cd' && left > 0.5 && left <= 1 && f1 === 1.15 && f2 === 1 && info.has && !info.can && info.cdMax === 1;
+        return ok ? ('쿨 ' + left.toFixed(2) + '초 남음 · 첫 타 ×' + f1 + ' 다음 ×' + f2) : ('실패 ' + JSON.stringify({ r1: r1, r2: r2, left: left, f1: f1, f2: f2, info: info }));
+      } finally { IT.equipped(id).weapon = z.keepW; if (!z.keepW) { delete IT.equipped(id).weapon; } C.save.wpn2 = {}; WS._reset(id); }
+    });
+    t('무기 두 벌(W-0281) — 한 벌이면 단추 흐림(has=false·single) · 갑옷은 을에 못 든다 · 을을 벗으면 가방으로', function () {
+      var WS = DG.wpnSwap, id = C.save.party[0], IT = DG.item;
+      WS._reset(id); C.save.wpn2 = {};
+      var one = WS.info(id), r = WS.swap(id);
+      var armor = IT.roll(1, { slot: 'armor', tier: 0 }); IT.bag().push(armor);
+      var bad = WS.take(id, armor.uid);
+      var bow = IT.roll(1, { base: 'w_gakgung', tier: 0 }); IT.bag().push(bow);
+      var n0 = IT.bag().length, tk = WS.take(id, bow.uid), n1 = IT.bag().length, off = WS.off(id), n2 = IT.bag().length;
+      IT.bag().splice(IT.bag().indexOf(armor), 1); IT.bag().splice(IT.bag().indexOf(bow), 1); C.save.wpn2 = {};
+      var ok = !one.has && !one.can && !r.ok && r.reason === 'single' && !bad.ok && bad.reason === 'slot' && tk.ok && n1 === n0 - 1 && off.ok && n2 === n0 && !WS.of(id);
+      return ok ? '한 벌이면 흐림·못 바꿈 · 갑옷 거부 · 을 넣고 빼면 가방 수 그대로' : ('실패 ' + JSON.stringify({ one: one, r: r, bad: bad, tk: tk, n: [n0, n1, n2], off: off }));
     });
 
     /* ── 무예별 작은 나무(W-0280, `skill-tree.js`) — 라스트 에포크 자리 ─────── */

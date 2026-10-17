@@ -151,7 +151,7 @@
             /* 인물별 서명 무예(2026-09-11) — 투장 무예 옆, 넷째 자리. 파일럿
                8명 밖 인물이면 계속 흐린 채(empty)로 남는다. */
             '<button class="dg-skill empty" data-sigsk title="서명 무예 (G)"><b class="dg-sk-key dg-act-key">G</b>' +
-              '<span class="dg-sk-e">🌟</span><i class="dg-sk-cd"></i></button>' +
+              '<span class="dg-sk-e">🌟</span><i class="dg-sk-cd"></i></button>' + '<button class="dg-skill empty" data-swap title="무기 바꿔 들기 (Q)"><b class="dg-sk-key dg-act-key">Q</b><span class="dg-sk-e">🔁</span><i class="dg-sk-cd"></i></button>' +   // W-0281 무기 두 벌(wpn-swap.js)
           '</div>' +
         '</div>' +
         '<div id="dg-bottom"></div>' +
@@ -375,7 +375,7 @@
     actionsEl = document.getElementById('dg-actions');
     if (actionsEl) {
       actionsEl.addEventListener('pointerdown', function (e) {
-        if (e.target.closest('[data-heavy]')) { d().heavyAttack(); e.preventDefault(); return; }
+        if (e.target.closest('[data-heavy]')) { d().heavyAttack(); e.preventDefault(); return; } if (e.target.closest('[data-swap]')) { if (global.DG.wpnSwap) { global.DG.wpnSwap.press(); } e.preventDefault(); return; }   // W-0281
         if (e.target.closest('[data-dodge]')) { d().doDodge(); e.preventDefault(); return; }
         if (e.target.closest('[data-setsk]')) { pressSetSkill(); e.preventDefault(); return; }
         if (e.target.closest('[data-sigsk]')) { pressSigSkill(); e.preventDefault(); }
@@ -487,7 +487,7 @@
     /* 투장 전용 무예(2026-09-10) — 강공격·회피와 같은 자리, F 하나 더. */
     if (k === 'f') { pressSetSkill(); e.preventDefault(); return; }
     /* 인물별 서명 무예(2026-09-11) — 같은 자리, G 하나 더. */
-    if (k === 'g') { pressSigSkill(); e.preventDefault(); return; }
+    if (k === 'g') { pressSigSkill(); e.preventDefault(); return; } if (k === 'q' && !e.repeat) { if (global.DG.wpnSwap) { global.DG.wpnSwap.press(); } e.preventDefault(); return; }   // W-0281 무기 바꿔 들기
     keys[k] = true;
     pushInput();
     var km = keymap();

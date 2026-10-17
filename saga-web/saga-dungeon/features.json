@@ -1125,5 +1125,27 @@
   "ticket": "W-0280",
   "since": "2026-10-17",
   "note": "라스트 에포크식(구조만). 장부 tasks/gameplay/dungeon.md · 세이브 save.skillTree[무예 key] = { xp, pts[] } (인물이 아니라 무예마다 하나)"
+ },
+ {
+  "id": "dg.wpn-swap",
+  "name": "무기 두 벌 바꿔 들기 — 인물마다 무기 을(乙) 칸(장비 창 종이인형 아래, 가방 무기 설명의 \"을에 들기\"), Q(폰 🔁 단추, 강공격·회피·투장·서명 옆 다섯째)로 갑·을을 0.4초에 바꿔 들면 직업·무예 슬롯이 그 무기 것으로 · 쿨 1초 · 바꾼 직후 첫 타 ×1.15 · 을이 없으면 단추 흐림",
+  "files": [
+   "js/wpn-swap.js",
+   "src/dungeon-view/01.js",
+   "src/dungeon/05-boss.js",
+   "src/ui/02.js",
+   "js/dungeon-view-hud.js",
+   "css/diablo.css"
+  ],
+  "tests": [
+   "무기 두 벌(W-0281)",
+   "dg.engage ③ 키 글자(W-0175)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0281",
+  "since": "2026-10-17",
+  "note": "PoE2 식(구조만). 장부 tasks/gameplay/dungeon.md · 세이브 save.wpn2[인물id] = 물건(장비 보정 순회에 안 들어감)"
  }
 ]

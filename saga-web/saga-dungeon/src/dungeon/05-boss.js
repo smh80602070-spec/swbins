@@ -928,7 +928,7 @@
     var edmg = elemDmgOf();
     var hasWd = function (k) { return !!(run && run.boons[k]); };
     var hasEl = function (el) { return hasElemInHit(el, kind, edmg); };
-    var dmg = atkOf() * (mul || 1) * (0.86 + Math.random() * 0.28);
+    var dmg = atkOf() * (mul || 1) * (0.86 + Math.random() * 0.28); if (global.DG.wpnSwap) { dmg *= global.DG.wpnSwap.firstHit(); }   // W-0281 바꿔 든 직후 첫 타 ×1.15
     /* 세계 보스(§5.4) 머리 부위 파괴 — 급소가 열려 크리 확률 +15%p */
     var critChance = boonVal('critPct') + core.effect('critPct') + (e.wbHelmBroken ? 15 : 0);
     var crit = forcedCrit !== null ? forcedCrit : (Math.random() * 100 < critChance);

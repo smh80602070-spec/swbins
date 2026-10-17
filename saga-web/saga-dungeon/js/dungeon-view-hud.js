@@ -301,6 +301,16 @@
       dCd.textContent = st.dodgeAct.cd > 0.05 ? Math.ceil(st.dodgeAct.cd) : '';
       dBtn.classList.toggle('ready', st.dodgeAct.cd <= 0);
     }
+    /* W-0281 무기 바꿔 들기(Q) — 을이 없으면 'empty'로 흐리게, 쿨 1초 링, 그림은 다음에 들 무기 */
+    var wBtn = actionsEl && actionsEl.querySelector('[data-swap]'), WS = global.DG.wpnSwap;
+    if (wBtn && WS) {
+      var wi = WS.info(), wCd = wBtn.querySelector('.dg-sk-cd');
+      wCd.style.height = (wi.cdMax ? (wi.cd / wi.cdMax) * 100 : 0) + '%';
+      wBtn.querySelector('.dg-sk-e').textContent = wi.has ? wi.next : '🔁';
+      wBtn.classList.toggle('empty', !wi.has);
+      wBtn.classList.toggle('ready', wi.can);
+      wBtn.title = wi.has ? '무기 바꿔 들기 (Q) — ' + wi.hand + ' → ' + wi.next + ' · 첫 타 ×' + WS.FIRST_MUL : '무기 을(乙)이 없다 — 장비 창에서 "을에 들기"';
+    }
     /* 투장 전용 무예 — 세 점을 못 갖추면 'empty'로 흐리게(스킬 넷의 빈 칸과
        같은 결). 갖췄으면 어느 벌인지에 따라 그림·이름이 매 틱 바뀐다
        (선두를 바꾸면 손이 통째로 바뀐다, 위 무예와 같은 규칙). */

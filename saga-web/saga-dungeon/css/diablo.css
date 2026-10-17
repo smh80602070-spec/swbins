@@ -819,6 +819,10 @@ b, strong, .p-sub, .coin, .dg-loot, .d2-gv { font-variant-numeric: tabular-nums;
 @media (max-width: 780px) {
   body.sheet-open #dg-minimap { visibility: hidden; }
 }
+/* W-0281 무기 바꾸기(Q)로 다섯이 된 세로 단추 열(300px)이 폰 세로에서 화면 가운데(터치 이동 자리)까지 올라왔다 — 가로와 같이 두 칸 격자로 접는다 */
+@media (max-width: 780px) {
+  #dg-actions { display: grid; grid-template-columns: repeat(2, 52px); }
+}
 
 /* W-0175 강공격·회피·투장·서명 단추 구석 키 글자 — 스킬 넷의 dg-sk-key 와 같은 표. 손가락만인 기기는 뺀다(키보드가 없다) */
 #dg-actions .dg-skill { position: relative; }
