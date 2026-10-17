@@ -1,0 +1,225 @@
+{
+ "note": "K-0125 재고(Opus 10-17) — 1만리 이야기 지역 js 의 switch(st.model) 종류. pair=있는 world3d(이름 추정, 실행 세션이 case 본문 읽고 확정) · keep=웹 코드 그대로 · new=새 GLB 후보. 크기는 각 case 의 box/cyl 인자(m 단위, three y 위).",
+ "regions": {
+  "frost": {
+   "file": "saga-web/saga-go/js/frost.js",
+   "pair": {
+    "stele": "stele_01",
+    "statue": "(새 statue_guard_01 하나를 여러 지역이 같이)",
+    "beacon": "brazier_01"
+   },
+   "keep": {
+    "lake": "지형 높이 맞춤 고리"
+   },
+   "new": [
+    "fort",
+    "obs",
+    "ship",
+    "hut",
+    "sat",
+    "snowman",
+    "cable",
+    "cave"
+   ]
+  },
+  "crossing": {
+   "file": "saga-web/saga-go/js/crossing.js",
+   "pair": {
+    "gate": "stone_arch_01",
+    "signal": "signal_pylon_01",
+    "lantern": "stone_lantern_01",
+    "cart": "handcart_01"
+   },
+   "keep": {},
+   "new": [
+    "platform",
+    "tgate",
+    "clock",
+    "guard",
+    "steps",
+    "dial",
+    "tile",
+    "crystal",
+    "pod",
+    "ticket",
+    "helm"
+   ]
+  },
+  "skyport": {
+   "file": "saga-web/saga-go/js/skyport.js",
+   "pair": {
+    "temple": "temple_roof_01",
+    "gate": "stone_arch_01",
+    "antenna": "signal_pylon_01",
+    "bell": "bell_pavilion_01",
+    "cairn": "rubble_pillar_01",
+    "sign": "signpost_01",
+    "crate": "crate_stack_01",
+    "jar": "jar_01"
+   },
+   "keep": {},
+   "new": [
+    "port",
+    "station",
+    "farm",
+    "phone",
+    "courier",
+    "capsule",
+    "busstop"
+   ]
+  },
+  "sunken": {
+   "file": "saga-web/saga-go/js/sunken.js",
+   "pair": {
+    "dome": "future_dome_01",
+    "gate": "stone_arch_01",
+    "supply": "crate_stack_01"
+   },
+   "keep": {
+    "jelly": "흔들림?",
+    "drone": "움직임?"
+   },
+   "new": [
+    "palace",
+    "lab",
+    "lighthouse",
+    "tewak",
+    "helmet",
+    "pearl",
+    "buoy",
+    "turtle",
+    "plaque",
+    "haetae"
+   ]
+  },
+  "amber": {
+   "file": "saga-web/saga-go/js/amber.js",
+   "pair": {
+    "market": "market_stall_01",
+    "tower": "watchtower_01",
+    "statue": "(새 statue_guard_01 하나를 여러 지역이 같이)",
+    "lamp": "street_lamp_01",
+    "bench": "bench_01",
+    "mailbox": "mailbox_01",
+    "cart": "handcart_01",
+    "jar": "jar_01",
+    "board": "notice_board_01",
+    "panel": "holo_panel_01"
+   },
+   "keep": {
+    "kite": "흔들림?",
+    "drone": "움직임?"
+   },
+   "new": [
+    "pass",
+    "cross",
+    "clock",
+    "rail",
+    "vend"
+   ]
+  },
+  "vault": {
+   "file": "saga-web/saga-go/js/vault.js",
+   "pair": {
+    "pylon": "signal_pylon_01",
+    "statue": "(새 statue_guard_01 하나를 여러 지역이 같이)",
+    "signal": "signal_pylon_01",
+    "haystack": "haystack_01",
+    "jars": "jar_01",
+    "parcels": "crate_small_01"
+   },
+   "keep": {
+    "dronedown": "움직임?"
+   },
+   "new": [
+    "pass",
+    "vault",
+    "granary",
+    "yard",
+    "feast",
+    "ship",
+    "train",
+    "palace",
+    "mortar",
+    "sotdae",
+    "forklift",
+    "container",
+    "seedpod",
+    "caseshard"
+   ]
+  },
+  "fork": {
+   "file": "saga-web/saga-go/js/fork.js",
+   "pair": {
+    "gate": "stone_arch_01",
+    "forge": "smithy_01",
+    "tower": "watchtower_01",
+    "statue": "(새 statue_guard_01 하나를 여러 지역이 같이)",
+    "well": "well_01",
+    "flag": "banner_pole_01"
+   },
+   "keep": {
+    "kite": "흔들림?",
+    "dronedn": "움직임?",
+    "rain": "파티클",
+    "birds": "움직임"
+   },
+   "new": [
+    "pass",
+    "loco",
+    "lattice",
+    "junction",
+    "works",
+    "laundry",
+    "tripod",
+    "rails",
+    "shard"
+   ]
+  },
+  "stormeye": {
+   "file": "saga-web/saga-go/js/stormeye.js",
+   "new": [
+    "(장면 하나) 매듭(밧줄 고리·종이 띠)·눈 고리·랜턴 구 — 정적 몸만"
+   ],
+   "pair": {},
+   "keep": {}
+  },
+  "skyroute": {
+   "file": "saga-web/saga-go/js/skyroute.js",
+   "new": [
+    "(장면 하나) 첨탑 정거장(원뿔/육각 + 난간 고리)"
+   ],
+   "pair": {},
+   "keep": {}
+  },
+  "skyisle": {
+   "file": "saga-web/saga-go/js/skyisle.js",
+   "new": [
+    "(장면 하나) 하늘섬(풀판·바위판·거꾸로 선 뿔·난간·기둥)"
+   ],
+   "pair": {},
+   "keep": {}
+  },
+  "era-sites": {
+   "file": "saga-web/saga-go/js/era-sites.js",
+   "new": [
+    "(장면 하나) 선대 유적(녹슨 갈비 아치 등)·정거장"
+   ],
+   "pair": {},
+   "keep": {}
+  },
+  "nightecho": {
+   "file": "saga-web/saga-go/js/nightecho.js",
+   "new": [
+    "(장면 하나) 보랏불(깜빡임 = 코드), 받침만"
+   ],
+   "pair": {},
+   "keep": {}
+  }
+ },
+ "count": {
+  "pair": 40,
+  "keep": 10,
+  "new": 69
+ }
+}
