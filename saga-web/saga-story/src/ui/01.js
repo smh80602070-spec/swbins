@@ -677,7 +677,7 @@
     var RF = global.DG.rift;
     var key = [core.save.player.level, st.kills, st.deaths, st.potions, st.bosses, bossFlags, gateFlags,
                RF && RF.pending() ? 'r1' : 'r0',
-               me && me.id, global.DG.auto.active(), global.DG.auto.status().doing].join('|');
+               me && me.id, global.DG.auto.active(), global.DG.auto.status().doing].join('|') + (global.DG.life ? '|' + global.DG.life.key() : '');   // W-0283 생활 칸도 키에
     if (key === campKey) { els.camp.classList.add('show'); return; }
     campKey = key;
 
@@ -708,6 +708,7 @@
       html += '<button class="btn tiny ghost wide" data-act="rift-open">🌀 비경' +
         (RF.pending() ? ' — 진행 중' : '') + '</button>';
     }
+    html += (global.DG.life ? global.DG.life.campHtml() : '');   // W-0283 요리·연주
     html += '<div class="camp-auto">' + sectionAuto() + '</div>';
     html += '<small class="muted">쓰러지면 그 판에서 주운 금의 <b>절반만</b> 남습니다. ' +
       '레벨이 오르면 다음 사냥터가 열립니다.</small>';
@@ -928,7 +929,7 @@
       '<div class="stat-row"><span>공격력</span><b>' + core.fmt(pw.atk) + '</b></div>' +
       '<div class="stat-row"><span>탕약</span><b>🧪 ' + st.potions + '</b></div>' +
       '<small class="muted">앞에 세운 인물의 능력치가 그대로 몸이 됩니다. ' +
-      '도감에서 다른 인물을 앞에 세우거나 승급하면 세집니다.</small></div></div>';
+      '도감에서 다른 인물을 앞에 세우거나 승급하면 세집니다.</small></div></div>' + (global.DG.life ? '<div class="sec"><h4>생활</h4>' + global.DG.life.campHtml() + '</div>' : '');   // W-0283 요리·연주(사냥터 시트에도)
 
     html += '<div class="sec"><h4>사냥터 <button class="btn tiny ghost" data-act="ow-open" ' +
       'style="float:right;margin-top:-2px">🗺️ 전체 지도 (M)</button></h4>';

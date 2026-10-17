@@ -42,7 +42,7 @@
        다르면 둘 다 0/1이다). elem 은 castSkill() 이 쏠 때 실어 보낸 원소뿐이라
        melee·aoe·dash 등 나머지 효과에는 안 걸린다(§5-1 "다음 3발" 범위 그대로) */
     if (p.parryBonus !== 1) { m *= p.parryBonus; p.parryBonus = 1; } if (global.DG.sideJust) { m *= global.DG.sideJust.nextMul(); }   // W-0282 저스트 회피 다음 한 타 ×1.3
-    if (p.shadowHitT > 0) { m *= p.shadowHitMul; p.shadowHitT = 0; }
+    if (p.shadowHitT > 0) { m *= p.shadowHitMul; p.shadowHitT = 0; } if (global.DG.life) { m *= global.DG.life.mealMul(); }   // W-0283 요리 한 끼
     var rm = run.rm;   // 비경 축복(§5-3) — 비경 밖에서는 null
     var crit = forceCrit || Math.random() < critRate() + (rm ? rm.crit : 0);
     var dmg = atkOf() * m * (0.88 + Math.random() * 0.24) * (crit ? critMul() + (rm ? rm.critMul : 0) : 1);
@@ -469,7 +469,7 @@
   function update(dt) {
     if (!run) { return; }
     dt = Math.min(dt, 0.05);
-    var MTs = global.DG.mount; if (MTs && MTs.step) { MTs.step(dt); }         // 탈것 — 날갯짓 쉼·내림 판정(mount.js)
+    var MTs = global.DG.mount; if (MTs && MTs.step) { MTs.step(dt); } if (global.DG.life) { global.DG.life.tick(run, dt); }   // W-0283 연주 회복         // 탈것 — 날갯짓 쉼·내림 판정(mount.js)
     /* 손맛 표준(§5-7) — 타격 정지(hitstop). 한 대 맞은 순간 몇 프레임만 확
        늦춘다(멈추지는 않는다 — dt=0 이면 몇몇 카운트다운이 얼어붙은 티가
        난다). 실제 경과 시간(줄지 않은 dt)으로 hitstopT 를 줄이고, 이
@@ -918,7 +918,7 @@
         g.alive = false;
         g.respawnAt = Date.now() + GATHER_RESPAWN * 1000;
         var s = st();
-        var gain = inForage ? FORAGE_MUL : 1;
+        var gain = inForage ? FORAGE_MUL : 1; if (global.DG.life) { gain += global.DG.life.gatherExtra(); global.DG.life.gain('gather', inForage ? 2 : 1); }   // W-0283 채집 랭크 — 두 개·경험
         s.mats[g.kind] = (s.mats[g.kind] || 0) + gain;
         var GD = SD.GATHERS[g.kind];
         sfx('coin');

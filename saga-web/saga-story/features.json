@@ -741,5 +741,25 @@
   "ticket": "W-0282",
   "since": "2026-10-17",
   "note": "소울워커·던파식(구조만). 장부 tasks/gameplay/story.md · 세이브엔 안 남음(판 안 상태)"
+ },
+ {
+  "id": "st.life-rank",
+  "name": "생활 기술 등급 — 채집·요리·연주 셋, 할 때마다 경험, 랭크 F→E→D→C→B→A→3→2→1(9단, 누적 940) · 채집은 캐면 경험 1(🍀 2)·랭크마다 두 개 확률 +1/8 · 요리는 캔 것 2개 → 한 끼 10분 한 타 ×(1+0.05×단)·경험 6 · 연주는 10분 동안 사냥 중 초마다 체력 0.4%×단 회복·쿨 60초·경험 4 · 사냥터 시트·쉬는 판에 요리·연주 단추, 가방 \"캔 것\"에 랭크 막대 셋",
+  "files": [
+   "js/life.js",
+   "src/side/02.js",
+   "src/ui/01.js",
+   "src/ui/02.js",
+   "css/style.css"
+  ],
+  "tests": [
+   "생활 기술(W-0283)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0283",
+  "since": "2026-10-17",
+  "note": "마비노기식(구조만). 장부 tasks/gameplay/story.md · 세이브 save.life = { gather·cook·play: { xp }, meal, tune, playAt }(옛 세이브 빈 것)"
  }
 ]

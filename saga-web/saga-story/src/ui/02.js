@@ -101,7 +101,7 @@
        않는 카운터라 가방과는 딴 줄에 둔다 */
     var SD = global.DG.sideData, mats = S.state().mats || {}, gk = Object.keys(SD.GATHERS);
     var got = gk.filter(function (k) { return mats[k] > 0; });
-    html += '<div class="sec"><h4>캔 것</h4>';
+    html += '<div class="sec"><h4>캔 것</h4>' + (global.DG.life ? global.DG.life.ranksHtml() : '');   // W-0283 생활 랭크 셋
     if (!got.length) {
       html += '<div class="hint">사냥터를 걷다 보면 꽃·열매·광물이 서 있습니다. 지나가면 줍습니다.</div>';
     } else {

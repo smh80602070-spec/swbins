@@ -97,6 +97,7 @@ window.DG_NO_TUNE = true;
 <script src="js/mount.js"></script>
 <script src="js/side.js"></script>
 <script src="js/side-just.js"></script>
+<script src="js/life.js"></script>
 <script src="js/side-view.js"></script>
 <script src="js/side-layers3d.js"></script>
 <script src="js/vendor/three.iife.js"></script>
@@ -3648,6 +3649,42 @@ window.DG_NO_TUNE = true;
       var after = S.state().mats[g.kind] || 0;
       return !g.alive && after === before + 1 &&
         (SD.GATHERS[g.kind].name + ' ' + before + ' → ' + after);
+    });
+
+    /* ── 생활 기술 등급(W-0283, `life.js`) — 마비노기 자리 ─────────────── */
+    t('생활 기술(W-0283) — 할 때마다 경험: 방금 캔 채집이 채집 경험 1 · 랭크 F→E 는 20 · 9단(1) 까지 누적 940', function () {
+      var L = DG.life, keep = C.save.life; C.save.life = null;
+      try {
+        var p0 = L.progress('gather');
+        /* 위 항목이 캔 것 하나가 life 에 먼저 들어갔는지는 세이브를 비웠으니 여기선 직접 */
+        var run = S.raw(), g = run.gathers[0];
+        g.alive = true; run.forage = null; run.player.x = g.x - 10; run.player.y = run.stage.floor - S.P_H; S.update(0.05);
+        var p1 = L.progress('gather');
+        for (var i = 0; i < 19; i++) { L.gain('gather', 1); }
+        var p2 = L.progress('gather');
+        L.gain('cook', 100000);
+        var top = L.progress('cook'), sum = L.NEED.reduce(function (a, b) { return a + b; }, 0);
+        var ok = p0.rank === 'F' && p0.xp === 0 && p1.xp === 1 && p2.rank === 'E' && p2.xp === 0 && top.rank === '1' && top.need === 0 && sum === 940 && L.RANKS.length === 9;
+        run.player.x = 5;
+        return ok ? ('캐서 1 · 20 이면 E · 요리 끝 랭크 ' + top.rank + ' · 누적 ' + sum) : ('실패 ' + JSON.stringify({ p0: p0, p1: p1, p2: p2, top: top, sum: sum }));
+      } finally { C.save.life = keep; }
+    });
+    t('생활 기술(W-0283) — 랭크 효과 반영: 채집 1 이면 늘 두 개 · 요리는 캔 것 2개를 먹고 한 타 ×(1+0.05×단) · 연주는 사냥 중 초마다 체력 회복·쿨 60초', function () {
+      var L = DG.life, keep = C.save.life, keepMats = JSON.stringify(S.state().mats || {}); C.save.life = null;
+      try {
+        var run = S.raw(), p = run.player;
+        var f0 = L.gatherExtra();                                  // F — 0
+        L.gain('gather', 100000); var f1 = L.gatherExtra();       // 1 — 늘 1
+        S.state().mats = { herb: 3 };
+        var none = L.cook.call(null); var m1 = L.mealMul();        // herb 3 ≥ 2 → 된다
+        var left = S.state().mats.herb;
+        S.state().mats = { herb: 1 }; var poor = L.cook();
+        var pl = L.play(), again = L.play();
+        run.hp = Math.round(run.hpMax * 0.5); var h0 = run.hp; S.update(0.05); var h1 = run.hp;
+        var ok = f0 === 0 && f1 === 1 && none.ok && Math.abs(m1 - 1.05) < 1e-9 && left === 1 && !poor.ok && poor.reason === 'mats' &&
+          pl.ok && Math.abs(pl.regen - 0.004) < 1e-9 && !again.ok && again.reason === 'cd' && h1 > h0;
+        return ok ? ('두 개 ○ · 한 끼 ×' + m1 + '(들꽃 3→' + left + ') · 연주 뒤 체력 ' + h0 + '→' + h1.toFixed(1) + ' · 60초 쿨') : ('실패 ' + JSON.stringify({ f0: f0, f1: f1, none: none, m1: m1, left: left, poor: poor, pl: pl, again: again, h: [h0, h1] }));
+      } finally { C.save.life = keep; S.state().mats = JSON.parse(keepMats); }
     });
 
     t('캔 자리는 시간이 지나면 다시 돋는다', function () {
