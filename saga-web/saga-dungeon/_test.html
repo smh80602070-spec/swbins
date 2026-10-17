@@ -157,6 +157,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/portrait3d.js"></script>
 <script src="js/belt-cam3d.js"></script>
 <script src="js/loot3d.js"></script>
+<script src="js/loot-filter.js"></script>
 <script src="js/dungeon3d-plan.js"></script>
 <script src="js/dungeon3d-gear.js"></script>
 <script src="js/dungeon3d.js"></script>
@@ -8968,6 +8969,69 @@ window.requestAnimationFrame = function () { return 0; };
       var r = [follow, clampT, want, kinds];
       return r.every(Boolean) && ('들판 창 따라감 · 마을 멈춤 x ' + Math.round(L3.camX) + ' · 소품 ' + Object.keys(B.PIECE).length + '종') || '실패 ' + r.join(',');
     });
+
+    /* ── 전리품 거르기(W-0287) ─────────────────────────── */
+    (function () {
+      var LFt = DG.lootFilter;
+      var saved = JSON.stringify(C.save.settings.lootFilter || null);
+      function mk(tier, slotKey) { return { kind: 'item', item: IT.roll(3, { tier: tier, base: slotKey }), x: 0, y: 0 }; }
+      function pick(drops) {
+        var ctx = { player: { x: 0, y: 0 }, room: { enemies: [], drops: drops }, loot: { gold: 0, items: [] }, town: false, floor: 1 };
+        DN.pickupField(ctx, []);
+        return ctx;
+      }
+      t('전리품 거르기 — 숨김 규칙이면 안 보이고 줍지도 않는다(W-0287)', function () {
+        C.save.settings.lootFilter = { rules: [{ when: { minTier: 0 }, do: 'hide' }], hinted: true };
+        var dp = mk(0), ctx = pick([dp]);
+        return LFt.hidden(dp) && ctx.room.drops.length === 1 && ctx.loot.items.length === 0 && '숨김 · 바닥에 남음';
+      });
+      t('전리품 거르기 — 위에서부터 첫 일치만(W-0287)', function () {
+        C.save.settings.lootFilter = { rules: [{ when: { minTier: 2 }, do: 'show' }, { when: {}, do: 'hide' }], hinted: true };
+        var a = LFt.judge(mk(2)), b = LFt.judge(mk(0));
+        C.save.settings.lootFilter.rules.reverse();
+        var c = LFt.judge(mk(2));
+        var rs = C.save.settings.lootFilter.rules; rs[0].off = true;
+        var d = LFt.judge(mk(0));
+        return a === 'show' && b === 'hide' && c === 'hide' && d === 'show' && ('명품 ' + a + ' · 상품 ' + b + ' · 뒤집으면 ' + c + ' · 꺼진 규칙 건너뜀 ' + d);
+      });
+      t('전리품 거르기 — 금·단약·재료는 늘 보이고 줍는다(W-0287)', function () {
+        C.save.settings.lootFilter = { rules: [{ when: {}, do: 'hide' }], hinted: true };
+        var g = { kind: 'gold', gold: 7, x: 0, y: 0 }, m = { kind: 'mat', mat: { kind: 'gem', key: DG.gemData.GEMS[0].key, g: 0 }, x: 0, y: 0 };
+        var ctx = pick([g, mk(4), m]);
+        var jg = LFt.judge(g), jm = LFt.judge(m);
+        return jg === 'show' && jm === 'show' && ctx.loot.gold === 7 && ctx.room.drops.length === 1 && ctx.room.drops[0].kind === 'item' && '금 +7 · 재료 주움 · 전설은 숨김대로 남음';
+      });
+      t('전리품 거르기 — 기본 셋은 숨기지 않고 보물 이상 빛기둥 · 내 직업 무기 빛기둥(W-0287)', function () {
+        C.save.settings.lootFilter = null;
+        var rs = LFt.rules();
+        var party0 = C.save.party.slice(), lead = party0[0] || D.heroes[0].id; if (!party0.length) { C.save.party = [lead]; }   // 이 자리에선 부대가 비어 있을 수 있다
+        var w = IT.roll(1, { tier: 0, base: 'w_hwando' }), dex0 = C.save.dex.heroes[lead]; C.save.dex.heroes[lead] = true;   // 요구 수준 1 · 도감에 있어야 입는다
+        IT.add(w); var eq = IT.equip(lead, w.uid);
+        var mine = LFt.judge({ kind: 'item', item: IT.roll(3, { tier: 0, base: 'w_wolto' }) });   // 월도도 도독(sword·guandao) 무기
+        var other = LFt.judge({ kind: 'item', item: IT.roll(3, { tier: 0, base: 'w_gakgung' }) });
+        var hideN = rs.filter(function (r) { return r.do === 'hide'; }).length; try { IT.unequip(lead, 'weapon'); } catch (e) { /* 되돌림 */ } C.save.dex.heroes[lead] = dex0; C.save.party = party0;
+        var j3 = LFt.judge(mk(3)), j1 = LFt.judge(mk(1)), okAll = eq && rs.length === 3 && hideN === 0 && j3 === 'beam' && j1 === 'show' && mine === 'beam' && other === 'show';
+        if (!okAll) { return '실패 eq=' + eq + ' n=' + rs.length + ' hide=' + hideN + ' j3=' + j3 + ' j1=' + j1 + ' mine=' + mine + ' other=' + other + ' cls=' + LFt.myClassKey() + ' lv=' + (DG.hero.info(lead) || {}).lv + ' req=' + IT.reqLevel(w) + ' dex=' + !!C.save.dex.heroes[lead] + ' lead=' + lead; }
+        return okAll &&
+          ('내 직업 ' + LFt.myClassKey() + ' · 같은 직업 무기 ' + mine + ' · 다른 직업 ' + other);
+      });
+      t('전리품 거르기 — 4층부터 "상품 숨기기" 추천을 한 번만(W-0287)', function () {
+        C.save.settings.lootFilter = null; LFt.rules();
+        var a = LFt.hintIfDeep(2), b = LFt.hintIfDeep(4), c = LFt.hintIfDeep(5);
+        return a === false && b === true && c === false && '2층 × · 4층 ○ · 5층 다시 ×';
+      });
+      t('전리품 거르기 — 규칙 추가는 맨 위 · 상한 ' + LFt.MAX_RULES + ' · 순서·끄기·지우기(W-0287)', function () {
+        C.save.settings.lootFilter = null; LFt.rules();
+        LFt.add({ when: { slot: 'armor' }, do: 'hide' });
+        var top = LFt.rules()[0].when.slot === 'armor';
+        LFt.move(0, 1); var moved = LFt.rules()[1].when.slot === 'armor';
+        LFt.toggle(1); var off = LFt.rules()[1].off === true;
+        LFt.remove(1); var n4 = LFt.rules().length === 3;
+        var i = 0; while (LFt.add({ when: {}, do: 'show' })) { i++; if (i > 50) { break; } }
+        return top && moved && off && n4 && LFt.rules().length === LFt.MAX_RULES && ('상한에서 멈춤 ' + LFt.rules().length);
+      });
+      C.save.settings.lootFilter = saved === 'null' ? undefined : JSON.parse(saved);
+    })();
 
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';

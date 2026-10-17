@@ -4073,7 +4073,7 @@
 
   function jitter(v) { return v + (Math.random() - 0.5) * 26; }
 
-  function take(dp) {
+  function take(dp) { if (global.DG.lootFilter && global.DG.lootFilter.hidden(dp)) { return false; }   // W-0287 숨긴 물건은 바닥에 그대로(줍기·자동 줍기 둘 다 여기로 온다)
     if (dp.kind === 'gold') {
       /* 마을(`run.town`)은 탈출해야 정산되는 노획물 개념이 없다 — 이미 안전지대에
          있으므로 주운 즉시 지갑으로 넣는다(재료·물약·감정서와 같은 대접) */

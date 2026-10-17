@@ -899,7 +899,7 @@
     /* 바닥에 떨어진 것 (이름표는 조명 뒤에 다시 그린다) */
     var plates = [];
     for (i = 0; i < run.room.drops.length; i++) {
-      var dp = run.room.drops[i];
+      var dp = run.room.drops[i]; if (global.DG.lootFilter && global.DG.lootFilter.hidden(dp)) { continue; }   // W-0287 전리품 거르기
       var bob = Math.sin((now + i * 300) / 320) * 2;
       p = proj(m, dp.x, dp.y);
       ctx.beginPath();

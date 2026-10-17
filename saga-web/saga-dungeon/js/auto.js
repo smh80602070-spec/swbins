@@ -211,7 +211,7 @@
     }
 
     /* 벽·기둥 너머라 못 줍는 노획물에 1분 넘게 붙어 있었다(09-28 헤드리스) — 같은 것을 4초 넘게 못 주우면 건너뛴다 */
-    var drop = nearestOf(room.drops.filter(function (o) { return !o._autoSkip; }), p);
+    var drop = nearestOf(room.drops.filter(function (o) { return !o._autoSkip && !(global.DG.lootFilter && global.DG.lootFilter.hidden(o)); }), p);
     if (drop) {
       if (dropAim.o !== drop.o) { dropAim.o = drop.o; dropAim.t = 0; }
       dropAim.t += dt;

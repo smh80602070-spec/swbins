@@ -217,7 +217,7 @@
         var D30 = global.DG.dungeon3d;
         if (D30 && D30.set) { D30.set('dg3d.quality', b.getAttribute('data-level')); renderSheet(); }
         return;
-      }
+      } if (global.DG.lootFilter && global.DG.lootFilter.act(act, b)) { renderSheet(); return; }   // W-0287 전리품 거르기 단추(lf-*)
       if (act === 'hitstop-toggle') {
         core.save.settings.hitstop = core.save.settings.hitstop === false;
         core.persist();
@@ -645,7 +645,7 @@
         '<span class="key-cur">×' + shakeV + '</span></div>' +
       '<div class="key-row"><b>타격 정지</b>' +
         '<button data-act="hitstop-toggle">' + (hitstopOn ? '켜짐' : '꺼짐') + '</button></div>' +
-      '<div class="hint">멀미가 있으면 화면 흔들림을 0으로, 타격 정지를 꺼짐으로 두세요.</div>';
+      '<div class="hint">멀미가 있으면 화면 흔들림을 0으로, 타격 정지를 꺼짐으로 두세요.</div>' + (global.DG.lootFilter ? global.DG.lootFilter.settingsHtml() : '');   // W-0287
   }
 
   /** 2026-09-09 — 이동 키 다시 지정. WASD·방향키는 코드에 그대로 박혀 있고

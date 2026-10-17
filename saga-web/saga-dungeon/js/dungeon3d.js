@@ -2553,13 +2553,13 @@
     /* 바닥의 전리품 — 등급색으로 빛나는 낮은 조각 */
     var ds = (run.room && run.room.drops) || [];
     for (i = 0; i < ds.length; i++) {
-      var dp = ds[i];
+      var dp = ds[i]; if (global.DG.lootFilter && global.DG.lootFilter.hidden(dp)) { continue; }   // W-0287 전리품 거르기(숨김)
       var da = actorOf('d' + i, 'drop', null);
       /* 자리(i)는 같아도 떨어진 물건이 바뀌면 다시 짓는다 — 옛 색이 남던 것 */
       if (!da.node.userData.built || da.node.userData.ref !== dp) {
         while (da.node.children.length) { da.node.remove(da.node.children[0]); }
         if (!(global.DG.loot3d && global.DG.loot3d.add(da.node, dp, T, dropHex(dp)))) { box(da.node, 0, 3, 0, 12, 6, 12, global.DG.loot3d ? global.DG.loot3d.hexOf(dp, dropHex(dp)) : dropHex(dp), 'glow', false); }   // W-0146 아이콘 + 등급 받침(loot3d.js), 아이콘 없으면 옛 상자(종류 색)
-        var bm = lootBeam(dp);
+        var bm = lootBeam(dp, !!(global.DG.lootFilter && global.DG.lootFilter.beam(dp)));   // W-0287 규칙 beam 이면 등급과 무관하게 기둥
         if (bm) { da.node.add(bm); }
         da.node.userData.built = true;
         da.node.userData.ref = dp;
@@ -2720,10 +2720,10 @@
    * 전리품 빛기둥(§5.9) — 명품 이상은 떨어진 자리에서 등급색 기둥이 선다(원작 3편).
    * 명품 옅고 짧게 · 보물 · 전설/고유 굵고 높게. 안개를 뚫게 fog:false.
    */
-  function lootBeam(dp) {
+  function lootBeam(dp, force) {
     var it = dp && dp.kind === 'item' ? dp.item : null;
     var tier = it ? (it.tier || 0) : 0;
-    if (!it || (tier < 2 && !it.uniq)) { return null; }
+    if (!it || (tier < 2 && !it.uniq && !force)) { return null; }
     var IT = global.DG.itemData || null, col = '#ffff64';
     try { col = (IT && IT.TIERS && IT.TIERS[tier]) ? IT.TIERS[tier].color : (tier >= 4 ? '#c7a76c' : (tier === 3 ? '#00c000' : '#ffff64')); } catch (e) { /* 색은 없어도 선다 */ }
     if (it.uniq) { col = '#f0a53a'; }
