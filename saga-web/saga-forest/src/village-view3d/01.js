@@ -1075,7 +1075,7 @@
     else if (t.ACESFilmicToneMapping) { renderer.toneMapping = t.ACESFilmicToneMapping; }
     renderer.toneMappingExposure = 1.0;
     if (t.SRGBColorSpace) { renderer.outputColorSpace = t.SRGBColorSpace; }
-    renderer.shadowMap.enabled = q.shadow;
+    renderer.shadowMap.enabled = q.shadow; if (global.DG.post3d) { global.DG.post3d.init(t, renderer); }   // W-0292 후처리·SSAO(공용 post3d·ssao3d) — 렌더러 직후 켜야 재질이 그 톤매핑으로 컴파일된다
     if (t.PCFSoftShadowMap) { renderer.shadowMap.type = t.PCFSoftShadowMap; }
 
     scene = new t.Scene();

@@ -1075,7 +1075,7 @@
     else if (t.ACESFilmicToneMapping) { renderer.toneMapping = t.ACESFilmicToneMapping; }
     renderer.toneMappingExposure = 1.0;
     if (t.SRGBColorSpace) { renderer.outputColorSpace = t.SRGBColorSpace; }
-    renderer.shadowMap.enabled = q.shadow;
+    renderer.shadowMap.enabled = q.shadow; if (global.DG.post3d) { global.DG.post3d.init(t, renderer); }   // W-0292 후처리·SSAO(공용 post3d·ssao3d) — 렌더러 직후 켜야 재질이 그 톤매핑으로 컴파일된다
     if (t.PCFSoftShadowMap) { renderer.shadowMap.type = t.PCFSoftShadowMap; }
 
     scene = new t.Scene();
@@ -1240,7 +1240,7 @@
     var w = global.innerWidth, h = global.innerHeight;
     renderer.setSize(w, h, false);
     camera.aspect = w / (h || 1);
-    camera.updateProjectionMatrix();
+    camera.updateProjectionMatrix(); if (global.DG.post3d) { global.DG.post3d.resize(); }   // W-0292
   }
 
   /** 2D 캔버스와 3D 캔버스는 **하나만 보인다** — 다른 화면의 두 배 켠 자리와 같은 원칙 */
@@ -1881,10 +1881,10 @@
     syncSky();
     syncWeatherFX(dt);
     syncMeteor();
-    renderer.render(scene, camera);
+    if (global.DG.post3d) { var VDp = global.DG.villageData; global.DG.post3d.present(renderer, scene, camera, { alt: global.DG.post3d.altOfPhase(VDp && VDp.phaseOf ? VDp.phaseOf(new Date().getHours()).key : 'day'), weather: 'clear' }); } else { renderer.render(scene, camera); }   // W-0292 후처리 길(켜져 있을 때)·아니면 곧바로
   }
 
-  global.DG = global.DG || {};
+  global.DG = global.DG || {}; global.DG.perf = global.DG.perf || { tier: function () { return { key: String(tier()).toUpperCase() }; } };   // W-0292 post3d 가 등급을 DG.perf.tier().key 로 읽는다(2나락과 같게) — 로드 때 정의해 진단도 본다
   global.DG.villageView3d = {
     init: init, resize: resize, step: step, toggle: toggle,
     active: active, available: available, on: ON,

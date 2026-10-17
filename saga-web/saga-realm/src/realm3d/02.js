@@ -780,11 +780,11 @@
     tickActors(t);
     statCull();
 
-    if (global.DG.realmWater3d) { global.DG.realmWater3d.tick(t, scene, tier()); } renderer.render(scene, camera);   // W-0141 물결 시계
+    if (global.DG.realmWater3d) { global.DG.realmWater3d.tick(t, scene, tier()); } if (global.DG.post3d) { global.DG.post3d.present(renderer, scene, camera, { alt: 0.9, weather: 'clear' }); } else { renderer.render(scene, camera); }   // W-0141 물결 시계
     requestAnimationFrame(tick);
   }
 
-  global.DG = global.DG || {};
+  global.DG = global.DG || {}; global.DG.perf = global.DG.perf || { tier: function () { return { key: String(tier()).toUpperCase() }; } };   // W-0292 post3d 가 등급을 읽는 자리(로드 때 정의)
   global.DG.realm3d = {
     available: available,
     active: active,

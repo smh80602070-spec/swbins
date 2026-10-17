@@ -36,8 +36,8 @@ const FILES = [
   ['js/passive-web-ui.js', 'js/passive-web-ui.js', ['saga-dungeon', 'saga-go', 'saga-realm', 'saga-story', 'saga-forest']],
   ['js/cutscene.js', 'js/cutscene.js', ['saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm']],   // W-0048 — 이야기 장면 컷신 배경(K-0044), 다른 판은 장면 상자를 잇는 티켓에서 판 목록에 추가
   ['js/perf-hud.js', 'js/perf.js', ['saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm']],   // 재기 표시(?perf) — 네 벌이 글자까지 같다(1만리 perf.js 는 품질 자동조절이 든 다른 파일)
-  ['js/ssao3d.js', 'js/ssao3d.js', ['saga-go', 'saga-dungeon', 'saga-story']],
-  ['js/post3d.js', 'js/post3d.js', ['saga-go', 'saga-dungeon', 'saga-story']],
+  ['js/ssao3d.js', 'js/ssao3d.js', ['saga-go', 'saga-dungeon', 'saga-story', 'saga-forest', 'saga-realm']],   // W-0292 다섯 판 같게
+  ['js/post3d.js', 'js/post3d.js', ['saga-go', 'saga-dungeon', 'saga-story', 'saga-forest', 'saga-realm']],   // W-0292
   ['js/toon3d-core.js', 'js/toon3d-core.js'],
   ['js/itemicon-ids.js', 'js/itemicon-ids.js'],   // W-0025 — 아이템 아이콘 이름 표(생성물: tools/gen-itemicon-ids.mjs)
   ['js/itemicon.js', 'js/itemicon.js'],

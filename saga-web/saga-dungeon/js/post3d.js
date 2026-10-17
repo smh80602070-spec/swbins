@@ -588,6 +588,16 @@
   /** SAGA-DESIGN §8-6 — 렌더 타깃·셰이더가 실패하면(폰 GPU 드라이버 등) 후처리를
    *  영구히 끄고 바로 그리는 길로 돌려보낸다. "갈색/녹색 화면" 류가 이 자리다.
    *  실제 처리는 `drawInner`, 여기는 그 둘레의 그물이다 */
+  /** W-0292 — 후처리를 거치거나(켜져 있을 때) 곧바로 그린다. 켜졌다 꺼진 순간 타깃이 물려 검게 남지 않게 setRenderTarget(null).
+   *  판마다 같은 네 줄을 되풀이하지 않게 공용으로(3마을·5천하 줄 수 상한). true = 후처리 길로 그렸다 */
+  function present(renderer, scene, camera, light) {
+    if (draw(renderer, scene, camera, light)) { return true; }
+    if (renderer) { renderer.setRenderTarget(null); renderer.render(scene, camera); }
+    return false;
+  }
+  /** 시간대 이름 → 해 높이(-1~1, lookAt 의 alt): 낮 0.9 · 새벽/저녁 0.1 · 밤 -0.6. 판의 시간대 키가 달라도 이 셋으로 */
+  function altOfPhase(key) { var k = String(key || 'day'); return /night|밤/.test(k) ? -0.6 : /dawn|dusk|evening|morning|sunset|새벽|저녁|아침/.test(k) ? 0.1 : 0.9; }
+
   function draw(renderer, scene, camera, light) {
     if (!ready || !renderer || !scene || !camera) { return false; }
     try {
@@ -703,7 +713,7 @@
     plan: plan, lookAt: lookAt, soft: soft, mipSizes: mipSizes,
     TIER_POST: TIER_POST,
     /* 그림 층 */
-    init: init, draw: draw, resize: resize, stats: stats,
+    init: init, draw: draw, present: present, altOfPhase: altOfPhase, resize: resize, stats: stats,   // W-0292 present·altOfPhase
     available: function () { return ready; },
     /** 지금 처방 (데모·어드민이 들여다본다) */
     last: function () { return lastPlan; },

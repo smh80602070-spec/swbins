@@ -279,7 +279,7 @@
       renderer = new t.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false });
     } catch (e) { failed = true; return; }
     renderer.setPixelRatio(Math.min(global.devicePixelRatio || 1, DPR()));
-    if (global.DG.toon3d && global.DG.toon3d.toneRenderer) { global.DG.toon3d.toneRenderer(renderer); }   // Neutral 톤매핑(2026-09-23)
+    if (global.DG.toon3d && global.DG.toon3d.toneRenderer) { global.DG.toon3d.toneRenderer(renderer); } if (global.DG.post3d) { global.DG.post3d.init(t, renderer); }   // W-0292 후처리·SSAO(공용)   // Neutral 톤매핑(2026-09-23)
 
     scene = new t.Scene();
     scene.background = (global.DG.toon3d && global.DG.toon3d.skyBackground) ? global.DG.toon3d.skyBackground(0x9fd0e8) : new t.Color(0x9fd0e8);   // 하늘 그라디언트(2026-09-23, 아래는 안개색 그대로)
@@ -363,7 +363,7 @@
     if (!w || !h) { return; }
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    camera.updateProjectionMatrix();
+    camera.updateProjectionMatrix(); if (global.DG.post3d) { global.DG.post3d.resize(); }   // W-0292
   }
 
   function syncVisibility() {

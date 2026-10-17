@@ -79,6 +79,8 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/mode2d.js"></script>
 <script src="js/actor2d.js"></script>
 <script src="js/core.js"></script>
+<script src="js/ssao3d.js"></script>
+<script src="js/post3d.js"></script>
 <script src="js/assets3d-ids.js"></script>
 <script src="js/itemicon-ids.js"></script>
 <script src="js/itemicon.js"></script>
@@ -164,6 +166,19 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
   setTimeout(function () {
     var C = DG.core, V = DG.village, VD = DG.villageData, AU = DG.auto;
 
+
+    /* W-0292 후처리·SSAO 가 이 판에도 실렸다 — 값 층(three 없이) */
+    t('후처리(W-0292) — post3d·ssao3d 가 실려 있고 HIGH 는 걸고 LOW 는 안 건다', function () {
+      var PS = DG.post3d, AS = DG.ssao3d;
+      if (!PS || !AS) { return '실패 post3d/ssao3d 없음'; }
+      var hi = PS.plan({ tier: 'HIGH', w: 1280, h: 720 }), lo = PS.plan({ tier: 'LOW', w: 1280, h: 720 });
+      return hi.on === true && hi.bloom.on === true && hi.ao && hi.ao.on === true && lo.on === false && 'HIGH 후처리·블룸·SSAO ○ · LOW ×';
+    });
+    t('후처리(W-0292) — 등급은 이 판 품질 손잡이를 따른다(DG.perf.tier)', function () {
+      var P = DG.perf; if (!P || !P.tier) { return '실패 DG.perf 없음(3D 가 한 번 켜져야 생긴다)'; }
+      C.setTune('village3d.quality', 'low'); var lo = P.tier().key; C.setTune('village3d.quality', 'high'); var hi = P.tier().key; C.setTune('village3d.quality', null);
+      return lo === 'LOW' && hi === 'HIGH' && ('low→LOW · high→HIGH');
+    });
     t('3마을 3D 밤 등불(W-0167) — 시간대로 세기: 낮 0·밤 1(저녁은 그 사이), 손잡이 village3d.lamp 0 이면 늘 0', function () {
       var CC = DG.cozyCam3d, C = DG.core, n = CC.lampLevel(23), d = CC.lampLevel(13), e = CC.lampLevel(19), off;
       C.setTune('village3d.lamp', 0); off = CC.lampLevel(23); C.setTune('village3d.lamp', null);

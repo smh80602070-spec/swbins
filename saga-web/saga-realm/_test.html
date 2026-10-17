@@ -82,6 +82,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/bgm.js"></script>
 <script src="js/voice.js"></script>
 <script src="js/vendor/three.iife.js"></script>
+<script src="js/ssao3d.js"></script>
+<script src="js/post3d.js"></script>
 <script src="js/toon3d-core.js"></script>
 <script src="js/toon3d.js"></script>
 <script src="js/anim-own.js"></script>
@@ -5287,6 +5289,32 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return ok && (E.MAX + 5) + '건 넣어 ' + arr.length + '건 남음(오래된 것부터 밀림)';
     });
 
+
+    /* W-0292 후처리·SSAO 가 이 판에도 실렸다 — 값 층(three 없이) */
+    t('후처리(W-0292) — post3d·ssao3d 가 실려 있고 HIGH 는 걸고 LOW 는 안 건다', function () {
+      var PS = DG.post3d, AS = DG.ssao3d;
+      if (!PS || !AS) { return '실패 post3d/ssao3d 없음'; }
+      var hi = PS.plan({ tier: 'HIGH', w: 1280, h: 720 }), lo = PS.plan({ tier: 'LOW', w: 1280, h: 720 });
+      return hi.on === true && hi.bloom.on === true && hi.ao && hi.ao.on === true && lo.on === false && 'HIGH 후처리·블룸·SSAO ○ · LOW ×';
+    });
+    t('후처리(W-0292) — 등급은 이 판 품질 손잡이를 따른다(DG.perf.tier)', function () {
+      var P = DG.perf; if (!P || !P.tier) { return '실패 DG.perf 없음(3D 가 한 번 켜져야 생긴다)'; }
+      C.setTune('realm3d.quality', 'low'); var lo = P.tier().key; C.setTune('realm3d.quality', 'high'); var hi = P.tier().key; C.setTune('realm3d.quality', null);
+      return lo === 'LOW' && hi === 'HIGH' && ('low→LOW · high→HIGH');
+    });
+
+    /* W-0292 후처리·SSAO 가 이 판에도 실렸다 — 값 층(three 없이) */
+    t('후처리(W-0292) — post3d·ssao3d 가 실려 있고 HIGH 는 걸고 LOW 는 안 건다', function () {
+      var PS = DG.post3d, AS = DG.ssao3d;
+      if (!PS || !AS) { return '실패 post3d/ssao3d 없음'; }
+      var hi = PS.plan({ tier: 'HIGH', w: 1280, h: 720 }), lo = PS.plan({ tier: 'LOW', w: 1280, h: 720 });
+      return hi.on === true && hi.bloom.on === true && hi.ao && hi.ao.on === true && lo.on === false && 'HIGH 후처리·블룸·SSAO ○ · LOW ×';
+    });
+    t('후처리(W-0292) — 등급은 이 판 품질 손잡이를 따른다(DG.perf.tier)', function () {
+      var P = DG.perf; if (!P || !P.tier) { return '실패 DG.perf 없음(3D 가 한 번 켜져야 생긴다)'; }
+      C.setTune('realm3d.quality', 'low'); var lo = P.tier().key; C.setTune('realm3d.quality', 'high'); var hi = P.tier().key; C.setTune('realm3d.quality', null);
+      return lo === 'LOW' && hi === 'HIGH' && ('low→LOW · high→HIGH');
+    });
     t('배우 계획(R-4 realm3d-plan.js) — realm3d 가 같은 상수·같은 함수를 쓴다(몸짓 표 열 가지·전투 연출 같은 값)', function () {
       var P = DG.realm3dPlan, R3 = DG.realm3d, beatSame = !R3 || !R3.battleBeat || JSON.stringify(R3.battleBeat('win', 1.2)) === JSON.stringify(P.battleBeat('win', 1.2));
       var ok = P && Object.keys(P.ORDER_GESTURES).length >= 10 && P.GESTURE_ON < P.GESTURE_EVERY && P.BATTLE_MAX > 0 && beatSame;
