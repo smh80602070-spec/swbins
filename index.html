@@ -5,130 +5,129 @@
 <script>/* 주소창에서 파일 이름을 지운다 — /xxx/index.html → /xxx/ */
 try{if(location.protocol!=='file:'&&/\/index\.html$/.test(location.pathname))history.replaceState(null,'',location.pathname.replace(/index\.html$/,'')+location.search+location.hash);}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>사가(Saga) — 역사 인물로 노는 다섯 판</title>
-<meta name="description" content="한국사·중국사·일본사·세계사 인물 105인으로 노는 웹 게임 다섯. 원작 모방을 넘어 시대와 장르를 넘나드는 퓨전을 지향한다.">
+<title>사가(Saga) — 이 세상에 없는 게임 다섯</title>
+<meta name="description" content="역사 인물 500명으로 노는 게임 다섯 판. 판마다 한 장르의 명작들을 함께 녹여 그 장르의 좋은 것을 다 가진 게임을 만든다.">
 <style>
   :root {
-    --bg:#0e1016; --panel:rgba(24,28,37,.78); --br:rgba(255,255,255,.09);
-    --ink:#eef1f6; --dim:#98a1b0; --faint:#6b7383;
-    --gold:#f5b445; --blue:#4aa3f0; --good:#5ec26a; --purple:#b57bf5; --red:#e0837a;
+    --bg:#0c0e13; --panel:rgba(22,26,34,.82); --br:rgba(255,255,255,.08);
+    --ink:#f0f2f6; --dim:#a3abb9; --faint:#6e7686;
+    --gold:#f2b84b; --blue:#5aaef2;
   }
   * { box-sizing:border-box; }
   body {
     margin:0; background:var(--bg); color:var(--ink);
     font:15px/1.7 system-ui,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;
     background-image:
-      radial-gradient(900px 500px at 12% -8%, rgba(74,163,240,.10), transparent 60%),
-      radial-gradient(800px 460px at 88% 4%, rgba(245,180,69,.09), transparent 60%);
+      radial-gradient(1000px 520px at 15% -10%, rgba(90,174,242,.12), transparent 60%),
+      radial-gradient(900px 480px at 90% 0%, rgba(242,184,75,.10), transparent 60%);
     background-attachment:fixed;
   }
-  .wrap { max-width:880px; margin:0 auto; padding:48px 20px 72px; }
-  header { margin-bottom:34px; }
-  h1 { margin:0 0 10px; font-size:27px; letter-spacing:-.4px; }
-  h1 small { display:block; font-size:13px; font-weight:400; color:var(--faint); margin-top:8px; letter-spacing:0; }
-  .lead { color:var(--dim); font-size:14.5px; max-width:62ch; margin:0; }
-  .lead b { color:var(--ink); font-weight:600; }
+  .wrap { max-width:960px; margin:0 auto; padding:56px 20px 72px; }
+  .hero h1 { margin:0; font-size:34px; letter-spacing:-.6px; line-height:1.25; }
+  .hero h1 em { font-style:normal; color:var(--gold); }
+  .hero p { margin:14px 0 0; color:var(--dim); font-size:15.5px; max-width:64ch; }
+  .hero p b { color:var(--ink); font-weight:600; }
 
-  .grid { display:grid; gap:14px; margin:30px 0 0; }
-  @media (min-width:660px) { .grid { grid-template-columns:1fr 1fr; } }
+  h2.sec { margin:44px 0 14px; font-size:13px; letter-spacing:.12em; color:var(--faint); font-weight:600; }
 
-  .card {
-    display:block; text-decoration:none; color:inherit;
-    background:var(--panel); border:1px solid var(--br); border-radius:16px;
-    padding:18px 18px 15px; transition:border-color .15s, transform .15s, background .15s;
+  .games { display:grid; gap:14px; }
+  @media (min-width:720px) { .games { grid-template-columns:1fr 1fr; } .games a:last-child { grid-column:1 / -1; } }
+  .game {
+    display:block; text-decoration:none; color:inherit; position:relative; overflow:hidden;
+    background:var(--panel); border:1px solid var(--br); border-radius:18px;
+    padding:20px 20px 18px; transition:border-color .15s, transform .15s;
   }
-  .card:hover { border-color:rgba(245,180,69,.45); transform:translateY(-2px); background:rgba(30,35,46,.85); }
-  .card:focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
-  .card .top { display:flex; align-items:center; gap:11px; }
-  .card .ico { font-size:26px; line-height:1; }
-  .card h2 { margin:0; font-size:17px; font-weight:650; }
-  .card .origin { margin-left:auto; font-size:11px; color:var(--faint); border:1px solid var(--br); border-radius:99px; padding:3px 9px; white-space:nowrap; }
-  .card p { margin:11px 0 0; font-size:13.5px; color:var(--dim); line-height:1.65; }
-  .card .more { margin-top:12px; font-size:11.5px; color:var(--faint); }
-  .card .more span { color:var(--blue); }
+  .game:hover { border-color:rgba(242,184,75,.5); transform:translateY(-2px); }
+  .game:focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
+  .game .no { font-size:12px; color:var(--gold); font-weight:700; letter-spacing:.08em; }
+  .game h3 { margin:2px 0 0; font-size:21px; }
+  .game p { margin:8px 0 0; color:var(--dim); font-size:14px; }
+  .game .mix { margin-top:12px; display:flex; flex-wrap:wrap; gap:6px; }
+  .game .mix span { font-size:11.5px; color:var(--ink); border:1px solid var(--br); border-radius:99px; padding:2px 9px; background:rgba(255,255,255,.03); }
+  .game .play { position:absolute; right:18px; top:18px; font-size:12px; color:var(--blue); }
 
-  .note {
-    margin-top:34px; padding:16px 18px; border-radius:14px;
-    border:1px solid var(--br); background:rgba(20,23,30,.55);
-    font-size:13px; color:var(--dim);
-  }
-  .note h3 { margin:0 0 9px; font-size:13px; color:var(--ink); font-weight:650; }
+  .pillars { display:grid; gap:12px; }
+  @media (min-width:720px) { .pillars { grid-template-columns:repeat(3,1fr); } }
+  .pillar { background:rgba(18,21,28,.6); border:1px solid var(--br); border-radius:14px; padding:16px; }
+  .pillar b { display:block; font-size:14.5px; margin-bottom:6px; }
+  .pillar p { margin:0; font-size:13px; color:var(--dim); }
+
+  .note { margin-top:40px; padding:16px 18px; border-radius:14px; border:1px solid var(--br); background:rgba(18,21,28,.55); font-size:13px; color:var(--dim); }
   .note ul { margin:0; padding-left:18px; }
   .note li { margin:5px 0; }
   .note b { color:var(--ink); font-weight:600; }
-  code { font-family:ui-monospace,"Cascadia Mono",Consolas,monospace; font-size:12px;
-         background:rgba(255,255,255,.06); padding:1px 5px; border-radius:5px; }
+  footer { margin-top:28px; font-size:12px; color:var(--faint); }
   a { color:var(--blue); }
-  footer { margin-top:30px; font-size:12px; color:var(--faint); }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <header>
-    <h1>사가(Saga) — 역사 인물로 노는 다섯 판
-      <small>브라우저에서 그냥 열립니다 · 한국사 · 중국사 · 일본사 · 세계사 인물 500명과 짐승 105종(표시 이름은 전부 가명)</small>
-    </h1>
-    <p class="lead">
-      원작이 있는 판은 <b>구조만</b> 옮겼습니다. 원작의 그림·소리·데이터는 하나도
-      가져오지 않고, 그림·3D 몸·소리는 <b>직접 만든 것</b>(로컬 AI·코드 생성)만 쓰는 쪽으로 옮겨 왔습니다.
-      판마다 2D·3D 두 화면이 있고, 원작 모방에 머물지 않고 <b>시대(과거·현대·미래)와 장르를 넘나드는 퓨전</b>을
-      다섯 판 모두의 지향점으로 삼았습니다.
-    </p>
-  </header>
+  <section class="hero">
+    <h1>이 세상에 없는 게임, <em>다섯 판</em></h1>
+    <p>역사 인물 500명과 짐승 105종이 나오는 게임 다섯(표시 이름은 전부 가명).
+       판마다 한 장르의 명작들을 <b>함께 녹여</b>, 어느 한 게임의 따라 하기가 아니라
+       <b>그 장르의 좋은 것을 다 가진 게임</b>을 만들고 있습니다. 브라우저에서 바로 열립니다.</p>
+  </section>
 
-  <div class="grid">
+  <h2 class="sec">다섯 판</h2>
+  <div class="games">
 
-    <a class="card" href="saga-web/saga-go/">
-      <div class="top"><span class="ico">🏯</span><h2>1만리</h2><span class="origin">원신 · 엘든 링 · 붉은사막 · 옥토패스</span></div>
-      <p>실제 지도를 걸으며 인물을 등용하고 짐승을 포획합니다. 들판 실시간 전투·원소·탈것과 비행,
-         별자리 성도까지. 3D·2D 게임성은 원신·엘든 링·붉은사막·옥토패스 트래블러를 따라 배웁니다(바탕은 포켓몬GO).</p>
-      <div class="more">위치 권한을 주면 실제로 걷습니다 — 안 주면 <span>키보드·자동 순행</span>으로 놉니다</div>
+    <a class="game" href="saga-web/saga-go/">
+      <span class="play">해 보기 →</span>
+      <div class="no">1</div><h3>1만리</h3>
+      <p>걸은 만큼 열전이 두꺼워지는 오픈월드. 실제 지도를 걸으며 인물을 등용하고 짐승을 포획하고, 들판에서 원소를 섞어 싸웁니다.</p>
+      <div class="mix"><span>원신</span><span>엘든 링</span><span>붉은사막</span><span>옥토패스 트래블러</span><span>레전드 아르세우스</span></div>
     </a>
 
-    <a class="card" href="saga-web/saga-dungeon/">
-      <div class="top"><span class="ico">⚔️</span><h2>2나락</h2><span class="origin">디아블로 · PoE2 · 라스트 에포크 · 크로니콘</span></div>
-      <p>마을 104개가 이어진 들판과 던전을 도는 탑다운 핵앤슬래시. 무작위 접사·세트·고유 장비,
-         인물마다 서명 무예, 경락도(패시브 그물). 디아블로·패스 오브 엑자일 2·라스트 에포크·크로니콘의 손맛과 빌드를 따라 배웁니다.</p>
-      <div class="more">깊이 내려갈수록 <span>물건이 좋아집니다</span></div>
+    <a class="game" href="saga-web/saga-dungeon/">
+      <span class="play">해 보기 →</span>
+      <div class="no">2</div><h3>2나락</h3>
+      <p>마을 104개가 이어진 들판과 던전을 도는 핵앤슬래시. 인물마다 서명 무예, 빌드를 깊게 팝니다.</p>
+      <div class="mix"><span>디아블로</span><span>패스 오브 엑자일 2</span><span>라스트 에포크</span><span>크로니콘</span></div>
     </a>
 
-    <a class="card" href="saga-web/saga-forest/">
-      <div class="top"><span class="ico">🌳</span><h2>3마을</h2><span class="origin">동물의숲 · 스타듀 · 젤다 · 테라리아 · 마인크래프트</span></div>
-      <p>마을을 가꾸고 주민과 지냅니다. 낚시·곤충·화석·꽃·계절 행사·편지, 집과 옷, 솜씨도까지.
-         땅은 <b>둥글게 휘어</b> 보이고, 마을 밖 숲·동굴로도 걸어 나갑니다. 동물의숲·스타듀 밸리·젤다·스타바운드·테라리아·마인크래프트의 생활·탐험·만들기를 따라 배웁니다.</p>
-      <div class="more">하루가 <span>실제 시각</span>을 따라갑니다</div>
+    <a class="game" href="saga-web/saga-forest/">
+      <span class="play">해 보기 →</span>
+      <div class="no">3</div><h3>3마을</h3>
+      <p>둥글게 휘는 마을을 가꾸고 주민과 삽니다. 낚시·채집·축제·편지, 마을 밖 숲과 동굴까지.</p>
+      <div class="mix"><span>동물의숲</span><span>스타듀 밸리</span><span>젤다</span><span>스타바운드</span><span>테라리아</span><span>마인크래프트</span></div>
     </a>
 
-    <a class="card" href="saga-web/saga-story/">
-      <div class="top"><span class="ico">🍁</span><h2>4종횡</h2><span class="origin">메이플 · 마비노기 · 던파 · 소울워커</span></div>
-      <p>발판·줄을 타며 싸우는 횡스크롤 액션. 전직 다섯 단과 사방 성좌도, 사냥터를 옮겨 다니며 사명을 받습니다. 메이플스토리·마비노기·던전앤파이터·소울워커의 액션과 성장을 따라 배웁니다.</p>
-      <div class="more">방향키와 <span>점프</span>로 놉니다</div>
+    <a class="game" href="saga-web/saga-story/">
+      <span class="play">해 보기 →</span>
+      <div class="no">4</div><h3>4종횡</h3>
+      <p>발판과 줄을 타며 싸우는 횡스크롤 액션. 전직 다섯 단, 사냥과 생활을 오갑니다.</p>
+      <div class="mix"><span>메이플스토리</span><span>마비노기</span><span>던전앤파이터</span><span>소울워커</span></div>
     </a>
 
-    <a class="card" href="saga-web/saga-realm/">
-      <div class="top"><span class="ico">👑</span><h2>5천하</h2><span class="origin">삼국지 · 토탈 워 · 크킹 · 호이 · 에오엠 · 문명</span></div>
-      <p>실제 세계 지도에서 내 땅을 넓히는 전략 — 내정·외교·계략과 경륜도. 전장은 칸을 밟는 턴 전술입니다. 삼국지·토탈 워: 삼국·크루세이더 킹즈·하츠 오브 아이언·에이지 오브 엠파이어·문명의 대전략을 따라 배웁니다.</p>
-      <div class="more">바쁘면 <span>🤝 맡기고</span> 다음 달로</div>
+    <a class="game" href="saga-web/saga-realm/">
+      <span class="play">해 보기 →</span>
+      <div class="no">5</div><h3>5천하</h3>
+      <p>실제 세계 지도 위에서 다스리고 뻗고 치는 대전략. 내정·외교·계략, 전장은 직접 지휘합니다.</p>
+      <div class="mix"><span>삼국지</span><span>토탈 워: 삼국</span><span>크루세이더 킹즈</span><span>하츠 오브 아이언</span><span>에이지 오브 엠파이어</span><span>문명</span></div>
     </a>
 
+  </div>
+
+  <h2 class="sec">어떻게 만드나</h2>
+  <div class="pillars">
+    <div class="pillar"><b>게임성 장부</b><p>판마다 넣을 메커니즘을 한 줄씩 쌓고, 판의 정체성에 꿰이는 것만 넣습니다. 떠오르는 대로 계속 더합니다.</p></div>
+    <div class="pillar"><b>그래픽 기준선</b><p>기준은 원신급. 다섯 판 중 가장 좋은 쪽에 나머지를 맞추고, 자동 점검이 매번 확인합니다.</p></div>
+    <div class="pillar"><b>세 트랙</b><p>웹에서 먼저 검증하고, Godot·Unity 두 3D 엔진이 같은 다섯 판을 한 단 더 올려 짓습니다.</p></div>
   </div>
 
   <div class="note">
-    <h3>놀기 전에 알아 두면 좋은 것</h3>
     <ul>
-      <li><b>저장은 이 브라우저 안에만 남습니다</b>(localStorage). 다섯 판이 각자 따로 저장하고,
-          시크릿 창이나 다른 기기로는 안 따라갑니다.</li>
-      <li><b>1만리는 위치를 씁니다.</b> 권한을 주면 실제로 걸은 만큼 움직이고,
-          안 주면 조용히 키보드 이동으로 넘어갑니다. 폰에서 걸으면서 하는 쪽이 제 맛입니다.</li>
-      <li>처음 열 때 그림·모델을 받느라 잠깐 걸립니다. 두 번째부터는 캐시가 받아 줍니다.</li>
-      <li>원작의 그림·소리·데이터는 하나도 가져오지 않았습니다. 인물 이름은 모방(오마주)한 가명이고,
-          열전은 직접 썼습니다.</li>
-      <li><b>아직 짓는 중</b> — 판마다 손맛·그래픽을 계속 고치고 있어 바로 안 보일 수 있습니다.</li>
+      <li><b>저장은 이 브라우저 안에만 남습니다.</b> 다섯 판이 각자 따로 저장하고, 시크릿 창이나 다른 기기로는 안 따라갑니다.</li>
+      <li><b>1만리는 위치를 씁니다.</b> 권한을 주면 걸은 만큼 움직이고, 안 주면 키보드로 놉니다.</li>
+      <li>처음 열 때 모델을 받느라 잠깐 걸립니다. 두 번째부터는 빨라집니다.</li>
+      <li>그림·3D 몸·소리는 직접 만든 것만 씁니다. 참고한 게임들의 그림·소리·데이터는 쓰지 않았습니다.</li>
+      <li><b>짓는 중</b>입니다. 손맛과 그래픽이 계속 바뀝니다.</li>
     </ul>
   </div>
 
-  <footer>개인 취미로 만든 것입니다</footer>
+  <footer>개인 취미로 만든 것입니다 · <a href="https://github.com/smh80602070-spec/swbins">저장소</a></footer>
 
 </div>
 </body>
