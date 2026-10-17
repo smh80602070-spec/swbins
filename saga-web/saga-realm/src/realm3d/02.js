@@ -98,7 +98,7 @@
       asset3d().buildHero(ref, col, function (m) {
         if (c.dead || !m) { return; }
         m.scale.setScalar(HERO_SCALE);
-        grp.add(m);
+        grp.add(m); if (global.DG.realmShadow3d) { global.DG.realmShadow3d.mark(m); }
         c.hero = m;
       });
     }
@@ -109,7 +109,7 @@
       if (c.dead || !m) { return; }
       m.scale.setScalar(TROOP_SCALE);
       s.remove(prim);
-      s.add(m);
+      s.add(m); if (global.DG.realmShadow3d) { global.DG.realmShadow3d.mark(m); }
       s.userData.model = m;
     });
   }
@@ -128,7 +128,7 @@
         m.scale.setScalar(HERO_SCALE);
         m.position.z = s[3];
         m.rotation.y = s[4];
-        c.grp.add(m);
+        c.grp.add(m); if (global.DG.realmShadow3d) { global.DG.realmShadow3d.mark(m); }
         c.duel[s[0]] = m;
         if (s[0] === 'a') { c.hero = m; }
       });
@@ -347,7 +347,7 @@
     mesh.position.set((p1.x + p2.x) / 2, (p1.y + p2.y) / 2 + opt.y, (p1.z + p2.z) / 2);
     mesh.rotation.order = 'YXZ';
     mesh.rotation.y = Math.atan2(dx, dz);
-    mesh.rotation.x = -Math.atan2(dy, flat || 0.001);
+    mesh.rotation.x = -Math.atan2(dy, flat || 0.001); mesh.userData.noShadow = 1;
     dyn.add(mesh);
   }
 
@@ -476,7 +476,7 @@
       var cx = worldX(city.x), cz = worldZ(city.y), gy = elevAt(cx, cz);
       g.position.set(cx, gy, cz);
       g.scale.setScalar(h);
-      dyn.add(global.DG.realmSky3d ? global.DG.realmSky3d.realify(g) : g);   // W-0141
+      dyn.add(global.DG.realmSky3d ? global.DG.realmSky3d.realify(g) : g); if (global.DG.realmShadow3d) { global.DG.realmShadow3d.mark(g); }   // W-0141 · W-0293 성은 비동기로 붙어 rebuild 끝 mark 를 놓친다
 
       var footprint = Math.max(3.2, h * 0.5);
       addShadow(cx, cz, footprint * 0.9);
@@ -617,7 +617,7 @@
     for (i = 0; i < journeys.length; i++) { buildJourney(journeys[i], seq); }
 
     /* 배우(PLAN §5-10) — 다시 짓지 않고 목표만 갈아 준다 */
-    syncActors(st);
+    syncActors(st); if (global.DG.realmShadow3d && dyn) { global.DG.realmShadow3d.mark(dyn); }   // W-0293 성·진·원정(dyn)이 해 그림자를 드리운다(길은 noShadow)
   }
 
   /* ── 카메라 조작 (드래그 회전 · 휠/핀치 확대) ─────────── */
@@ -780,7 +780,7 @@
     tickActors(t);
     statCull();
 
-    if (global.DG.realmWater3d) { global.DG.realmWater3d.tick(t, scene, tier()); } if (global.DG.post3d) { global.DG.post3d.present(renderer, scene, camera, { alt: 0.9, weather: 'clear' }); } else { renderer.render(scene, camera); }   // W-0141 물결 시계
+    if (global.DG.realmWater3d) { global.DG.realmWater3d.tick(t, scene, tier()); } if (global.DG.realmShadow3d) { global.DG.realmShadow3d.follow(pivotX, pivotZ, tier()); } if (global.DG.post3d) { global.DG.post3d.present(renderer, scene, camera, { alt: 0.9, weather: 'clear' }); } else { renderer.render(scene, camera); }   // W-0141 물결 시계
     requestAnimationFrame(tick);
   }
 

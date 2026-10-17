@@ -120,6 +120,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/realm3d-strait.js"></script>
 <script src="js/realm3d-static.js"></script>
 <script src="js/realm-sky3d.js"></script>
+<script src="js/realm-shadow3d.js"></script>
 <script src="js/realm-water3d.js"></script>
 <script src="js/ui-rtk-sheets.js"></script>
 <script src="js/live-portrait.js"></script>
@@ -5314,6 +5315,20 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var P = DG.perf; if (!P || !P.tier) { return '실패 DG.perf 없음(3D 가 한 번 켜져야 생긴다)'; }
       C.setTune('realm3d.quality', 'low'); var lo = P.tier().key; C.setTune('realm3d.quality', 'high'); var hi = P.tier().key; C.setTune('realm3d.quality', null);
       return lo === 'LOW' && hi === 'HIGH' && ('low→LOW · high→HIGH');
+    });
+    /* W-0293 해 그림자 — 값 층(three 없이) */
+    t('해 그림자(W-0293) — realm-shadow3d 계획: LOW 0(끔) · MEDIUM 1024 · HIGH 2048', function () {
+      var S = DG.realmShadow3d; if (!S || !S.plan) { return '실패 realmShadow3d 없음'; }
+      C.setTune('realm3d.shadow', null);
+      var lo = S.plan('low'), md = S.plan('medium'), hi = S.plan('HIGH');
+      return lo.on === false && lo.size === 0 && md.on === true && md.size === 1024 && hi.on === true && hi.size === 2048 && hi.span === 260 && ('low 0 · medium 1024 · high 2048');
+    });
+    t('해 그림자(W-0293) — mark 는 발밑 데칼(blob)·noShadow·툰 외곽선은 건너뛰고 나머지 메시만 드리운다', function () {
+      var S = DG.realmShadow3d; if (!S || !S.mark) { return '실패 realmShadow3d 없음'; }
+      var ms = [{ isMesh: true, name: 'blob', userData: {} }, { isMesh: true, name: 'wall', userData: {} }, { isMesh: true, name: 'road', userData: { noShadow: 1 } }, { isMesh: true, name: 'ol', userData: { _toonOutline: true } }, { isMesh: false, name: 'grp', userData: {} }];
+      var n = S.mark({ traverse: function (f) { ms.forEach(f); } });
+      var wall = ms[1], blob = ms[0];
+      return n === 1 && wall.castShadow === true && wall.receiveShadow === true && !blob.castShadow && !ms[2].castShadow && !ms[3].castShadow && ('표시 1/5 · blob·noShadow·외곽선 건너뜀');
     });
     t('배우 계획(R-4 realm3d-plan.js) — realm3d 가 같은 상수·같은 함수를 쓴다(몸짓 표 열 가지·전투 연출 같은 값)', function () {
       var P = DG.realm3dPlan, R3 = DG.realm3d, beatSame = !R3 || !R3.battleBeat || JSON.stringify(R3.battleBeat('win', 1.2)) === JSON.stringify(P.battleBeat('win', 1.2));

@@ -291,7 +291,7 @@
     var hemi = new t.HemisphereLight(0xffffff, 0x4a5a3a, 0.95 * LG); scene.add(hemi);
     var sun = new t.DirectionalLight(0xfff4e0, 1.0 * LG);
     sun.position.set(-120, 200, 90);
-    scene.add(sun); if (global.DG.realmSky3d) { global.DG.realmSky3d.attach(t, scene, sun, hemi); }   // W-0141 하늘 그림·그림 속 해 자리 빛·지평선 안개색(realm-sky3d.js)
+    scene.add(sun); if (global.DG.realmSky3d) { global.DG.realmSky3d.attach(t, scene, sun, hemi); } if (global.DG.realmShadow3d) { global.DG.realmShadow3d.attach(t, renderer, scene, sun, tier()); }   // W-0141 하늘 그림·그림 속 해 자리 빛·지평선 안개색(realm-sky3d.js)
 
     /* PlaneGeometry는 XY 평면에 눕고, rotation.x=-90°로 눕히면 로컬 (x,y,z)가
      * 세계 (x, z, -y)로 간다 — 로컬 y ↔ 세계 z 가 **부호가 뒤집힌다.** elevAt()은
@@ -309,7 +309,7 @@
       groundTN ? groundTN.lambertLike({ color: 0xffffff, map: groundTexture() })
         : new t.MeshLambertMaterial({ color: 0xffffff, map: groundTexture() })
     );
-    ground.rotation.x = -Math.PI / 2;
+    ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true;   // W-0293 해 그림자를 받는 땅(realm-shadow3d.js)
     scene.add(ground);
 
     /* 바다 — 해협(STRAITS) 자리만 지형이 SEA_LEVEL 아래로 파여 있어서, 이
@@ -450,7 +450,7 @@
     shadowDummy.updateMatrix();
     if (isStatic) {
       if (!statShadowInst) {
-        statShadowInst = new t.InstancedMesh(blobGeo, blobMat, SHADOW_MAX);
+        statShadowInst = new t.InstancedMesh(blobGeo, blobMat, SHADOW_MAX); statShadowInst.name = 'blob';
         statShadowInst.count = 0;
         statShadowCount = 0;
         statGrp.add(statShadowInst);
@@ -463,7 +463,7 @@
       return;
     }
     if (!shadowInst) {
-      shadowInst = new t.InstancedMesh(blobGeo, blobMat, SHADOW_MAX);
+      shadowInst = new t.InstancedMesh(blobGeo, blobMat, SHADOW_MAX); shadowInst.name = 'blob';
       shadowInst.count = 0;
       shadowCount = 0;
       dyn.add(shadowInst);

@@ -60,7 +60,7 @@ if (si >= 0) {
   const d = new Date(); const ymd = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
   const cell = s => String(s).replace(/\|/g, '/').replace(/\s+/g, ' ');
   const L = [`# 확인 시트 — ${game}`, `${ymd} · 판 ${game} · 기능 ${pick.length}개`, '○/× 만 적어 주세요. 10개 넘게 보지 않아도 됩니다.', '',
-    '| n | 기능 | 여는 법 | 조작 | 기대 | ○/× | 메모 |', '|---|---|---|---|---|---|---|'];
+    '| n | 기능 | 여는 법 | 조작 | 기대 | ○/× | 메모 |', '| --- | --- | --- | --- | --- | --- | --- |'];
   pick.forEach((x, n) => {
     const s = x.sheet;
     const open = s ? `[열기](${base}index.html${s.open || ''})` + (s.preset ? ` · [관리](${base}_admin.html) "${s.preset}"` : '') : '-';
@@ -92,7 +92,7 @@ for (const g of GAMES) {
 }
 
 function table() {
-  const L = ['| 판 | 기능 | D0 | D1 | D2 | 끝 | 완성도 | 사람 몫 | WIP | 초과 | 러너 n/m | 표시 |', '|---|---|---|---|---|---|---|---|---|---|---|---|'];
+  const L = ['| 판 | 기능 | D0 | D1 | D2 | 끝 | 완성도 | 사람 몫 | WIP | 초과 | 러너 n/m | 표시 |', '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |'];
   rows.forEach(r => L.push(`| ${r.game} | ${r.total} | ${r.D0} | ${r.D1} | ${r.D2} | ${r.D3p} | ${r.pct}% | ${r.hum.n}(미확인 ${r.hum.open}) | ${r.wip} | ${r.over ? '초과' : '-'} | ${r.runner} | ${r.failFeatures.length ? 'FAIL ' + r.failFeatures.length : '-'} |`));
   return L.join('\n');
 }
@@ -145,7 +145,7 @@ const uRows = UNITY_GAMES.map(([pre, name]) => {
     failN: uRun ? a.filter(x => x.tests.some(t => uFails.has(t))).length : 0 };
 });
 function uTable() {
-  const L = ['| 판 | 기능 | D0 | D1 | D2 | 끝 | 완성도 | 사람 몫 | WIP | 초과 | 러너 | 표시 |', '|---|---|---|---|---|---|---|---|---|---|---|---|'];
+  const L = ['| 판 | 기능 | D0 | D1 | D2 | 끝 | 완성도 | 사람 몫 | WIP | 초과 | 러너 | 표시 |', '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |'];
   uRows.forEach(r => L.push(`| ${r.game} | ${r.total} | ${r.D0} | ${r.D1} | ${r.D2} | ${r.D3p} | ${r.pct}% | ${r.hum.n}(미확인 ${r.hum.open}) | ${r.wip} | ${r.over ? '초과' : '-'} | ${uRun ? `${uRun.n}/${uRun.m}` : '-'} | ${r.failN ? 'FAIL ' + r.failN : '-'} |`));
   return L.join('\n');
 }
@@ -173,7 +173,7 @@ const gRows = GODOT_GAMES.map(([pre, name]) => {
     failN: gRun ? a.filter(x => x.tests.some(t => gFails.has(t))).length : 0 };
 });
 function gTable() {
-  const L = ['| 판 | 기능 | D0 | D1 | D2 | 끝 | 완성도 | 사람 몫 | WIP | 초과 | 러너 | 표시 |', '|---|---|---|---|---|---|---|---|---|---|---|---|'];
+  const L = ['| 판 | 기능 | D0 | D1 | D2 | 끝 | 완성도 | 사람 몫 | WIP | 초과 | 러너 | 표시 |', '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |'];
   const run = gRun ? `${gRun.probes - gFails.size}/${gRun.probes}` : '-';
   gRows.forEach(r => L.push(`| ${r.game} | ${r.total} | ${r.D0} | ${r.D1} | ${r.D2} | ${r.D3p} | ${r.pct}% | ${r.hum.n}(미확인 ${r.hum.open}) | ${r.wip} | ${r.over ? '초과' : '-'} | ${run} | ${r.failN ? 'FAIL ' + r.failN : '-'} |`));
   return L.join('\n');
