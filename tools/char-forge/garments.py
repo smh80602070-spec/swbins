@@ -1598,7 +1598,7 @@ class Builder:
 
 
 # ---- 천 그림 ----
-# 무늬 → 사진 결(sources.json "polyhaven"). 틀 paint 에 fabric='<id>' 를 주면 그것. 없으면 무늬로 고른다
+# 무늬 → 옷 결(K-0131 자체 코드 결 `_src/self_fabric`, fabric_self.py — 옛 천 사진 대신). 틀 paint 에 fabric='<id>' 를 주면 그것. 없으면 무늬로 고른다
 PHOTO_OF = {'weave': 'rough_linen', 'stripes': 'stretch_poplin', 'quilt': 'stretch_poplin', 'brocade': 'crepe_satin',
             'knit': 'knitted_fleece', 'lamellar': 'metal_plate', 'scale': 'metal_plate', 'plate': 'metal_plate',
             'ribs': 'metal_plate', 'mail': 'metal_plate'}
@@ -1612,8 +1612,11 @@ def photo_for(P, pat):
     if not tid:
         return None
     if tid not in _photo_cache:
-        base = os.path.join(os.path.dirname(os.path.abspath(__file__)), '_src', 'polyhaven')
-        info = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'sources.json'), encoding='utf-8'))['polyhaven']['items'][tid]
+        base = os.path.join(os.path.dirname(os.path.abspath(__file__)), '_src', 'self_fabric')
+        if not os.path.exists(os.path.join(base, 'index.json')):
+            import subprocess
+            subprocess.run([sys.executable if 'blender' not in sys.executable.lower() else 'py', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fabric_self.py')], check=True)
+        size_mm = json.load(open(os.path.join(base, 'index.json'), encoding='utf-8'))['size_mm'][tid]
 
         def load(fn):
             im = bpy.data.images.load(os.path.join(base, fn), check_existing=False)
@@ -1621,7 +1624,7 @@ def photo_for(P, pat):
             a = np.array(im.pixels[:], np.float32).reshape(hh, w, 4)[..., :3]
             bpy.data.images.remove(im)
             return a.mean(axis=2)
-        _photo_cache[tid] = (tid, load(tid + '_diff_1k.jpg'), load(tid + '_disp_1k.png'), info['size_mm'])
+        _photo_cache[tid] = (tid, load(tid + '_diff_1k.png'), load(tid + '_disp_1k.png'), size_mm)
     return _photo_cache[tid]
 
 
