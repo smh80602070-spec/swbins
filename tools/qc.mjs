@@ -168,6 +168,20 @@ async function checkPlay() {
   }
 }
 
+/* ── ④-4 그래픽 기준선(W-0291) — 다섯 판 3D 를 높음 품질로 띄워 shared/gfx-baseline.json 의 기능이 켜졌는지(pw-gfx). 빠진 칸은 WARN(티켓 번호 함께) ── */
+async function checkGfx() {
+  if (noShots || !games.length) return;
+  const b = await serve();
+  const r = run(process.execPath, ['pw-gfx.mjs', ...games, '--base', b], { cwd: PLAY, timeout: 20 * 60 * 1000 });
+  const j = readJson(path.join(PLAY, 'results', 'pw-gfx.json'), null);
+  if (!j) { row('그래픽 기준선', games.map(nm).join('·'), 'FAIL', 'pw-gfx 결과 없음 ' + (r.out.trim().split(String.fromCharCode(10)).pop() || ''), r.sec); return; }
+  for (const g of games) {
+    const x = (j.runs || []).find((x) => x.game === g); if (!x) continue;
+    const miss = x.rows.filter((q) => !q.na && !q.ok);
+    row('그래픽 기준선', nm(g), x.err ? 'FAIL' : (miss.length ? 'WARN' : 'PASS'), x.err ? x.err : (miss.length ? '빠짐 ' + miss.map((q) => q.name + (q.ticket ? '(' + q.ticket + ')' : '')).join(' · ') : x.rows.filter((q) => !q.na).length + '항목 전부 켜짐'), r.sec / games.length);
+  }
+}
+
 /* ── ④-2 배포 확인(W-0258) — 로컬 서버가 아니라 공개 Pages 주소를 서비스 워커 켠 채 실제 클릭으로. 이 PC 네트워크 기준(사용자 기기 차단은 못 잡음) ── */
 function checkDeploy() {
   if (!games.length) return;
@@ -277,6 +291,7 @@ function report() {
     checkTests();
     await checkShots();
     await checkPlay();
+    await checkGfx();
     if (branch === 'web' || (full && !branch)) checkDeploy();
     checkStatus();
     if (branch === 'godot' || has('--godot') || (full && !branch)) checkGodot();

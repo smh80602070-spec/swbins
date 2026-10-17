@@ -1,0 +1,13 @@
+{
+ "_": "그래픽 기준선(W-0291) — 다섯 판이 같이 켜야 할 3D 그래픽 기능. pw-gfx.mjs 가 실제 장면을 띄워 재고 qc.mjs \"그래픽 기준선\" 줄로 올린다. need: 판별 required(필수) | na(해당 없음, 이유). 기준(본뜰 판)은 다섯 판 중 가장 좋은 쪽. 장부 tasks/gameplay/README.md 그래픽 절과 같이 고친다.",
+ "features": [
+  { "id": "toon", "name": "툰 재질(셀 셰이딩·림·얼굴 그림자)", "ref": "다섯 판 같음", "need": {} },
+  { "id": "tonemap", "name": "톤매핑", "ref": "1만리", "need": {} },
+  { "id": "post", "name": "후처리(블룸·색보정)", "ref": "1만리·2나락", "need": {}, "ticket": "W-0292" },
+  { "id": "ssao", "name": "SSAO(구석 그늘)", "ref": "1만리·2나락", "need": {}, "ticket": "W-0292" },
+  { "id": "shadow", "name": "해 그림자(드리우는 메시)", "ref": "2나락", "need": {}, "ticket": "W-0293" },
+  { "id": "sun", "name": "해(방향광)", "ref": "다섯 판", "need": {} },
+  { "id": "sky", "name": "하늘(돔·배경 텍스처)", "ref": "1만리", "need": { "saga-story": "na: 옆보기 배경 층이 하늘을 맡는다" }, "ticket": "W-0294" },
+  { "id": "pbr", "name": "PBR 재질(표준 재질 + 맵)", "ref": "1만리·2나락·3마을", "need": {}, "ticket": "W-0295" }
+ ]
+}
