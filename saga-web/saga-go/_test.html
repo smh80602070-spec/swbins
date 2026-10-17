@@ -5955,6 +5955,57 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         'world3d.landPaint=0 이면 실제 지도만 깔린다';
     });
 
+    /* W-0276 길 행동(옥토패스식) — 선두 동행 성향 → 조사·도발·이끌기, 마을 사람마다 하루 한 번, 거절하면 그날 끝 */
+    t('길 행동(W-0276) — 무력·지력·통솔 중 가장 높은 축이 도발·조사·이끌기', function () {
+      var a = DG.talk.pathOf({ stats: { might: 90, wisdom: 50, command: 60 } });
+      var b = DG.talk.pathOf({ stats: { might: 40, wisdom: 88, command: 60 } });
+      var c = DG.talk.pathOf({ stats: { might: 40, wisdom: 50, command: 92 } });
+      return a.key === 'provoke' && b.key === 'probe' && c.key === 'lead' && '무력→도발 · 지력→조사 · 통솔→이끌기';
+    });
+    t('길 행동(W-0276) — 하루 한 번 · 거절하면 그날 다시 안 된다 · 조사·이끌기는 목표를 준다', function () {
+      var party0 = C.save.party.slice(), path0 = C.save.path, pos0 = { x: C.save.player.pos.x, y: C.save.player.pos.y };
+      var hs = DG.data.heroes, wise = null, ldr = null;
+      hs.forEach(function (h) { var p = DG.talk.pathOf(h); if (p && p.key === 'probe' && !wise) { wise = h; } if (p && p.key === 'lead' && !ldr) { ldr = h; } });
+      var v = DG.land.place('village'); if (v) { C.save.player.pos.x = v.x; C.save.player.pos.y = v.y; }
+      try {
+        C.setTune('talk.pathFail', 0);
+        C.save.party = [wise.id]; C.save.path = null;
+        var n1 = { p: { id: 't_path_a', name: '시험갑' }, dist: 5 };
+        var r1 = DG.talk.doPath(n1), r2 = DG.talk.doPath(n1);
+        C.save.party = [ldr.id];
+        var r3 = DG.talk.doPath({ p: { id: 't_path_b', name: '시험을' }, dist: 5 });
+        C.setTune('talk.pathFail', 1);
+        var r4 = DG.talk.doPath({ p: { id: 't_path_c', name: '시험병' }, dist: 5 });
+        var u4 = DG.talk.pathUsed('t_path_c'), r5 = DG.talk.doPath({ p: { id: 't_path_c', name: '시험병' }, dist: 5 });
+        var ok = r1.ok && r1.act === 'probe' && r2.ok === false && r3.ok && r3.act === 'lead' && !!r3.target &&
+          r4.ok === false && r4.why === 'refused' && u4 === -1 && r5.ok === false;
+        return ok ? ('조사 ' + (r1.target ? r1.target.name : '숨은 터 없음') + ' · 두 번째 막힘 · 이끌기 → ' + r3.target.name + ' · 거절 뒤 막힘')
+          : ('실패 ' + JSON.stringify([r1, r2, r3, r4, u4, r5]).slice(0, 300));
+      } finally {
+        C.setTune('talk.pathFail', null);
+        C.save.party = party0; C.save.path = path0; C.save.player.pos.x = pos0.x; C.save.player.pos.y = pos0.y;
+        if (DG.world.walkTo) { DG.world.walkTo(pos0.x, pos0.y); }
+        DG.talk.close();
+      }
+    });
+    t('길 행동(W-0276) — 도발은 결투를 열고, 지면 그 사람은 그날 거절', function () {
+      var party0 = C.save.party.slice(), path0 = C.save.path, D0 = DG.duel.open, got = null, gold0 = C.save.player.gold;
+      var brave = null; DG.data.heroes.forEach(function (h) { var p = DG.talk.pathOf(h); if (p && p.key === 'provoke' && !brave) { brave = h; } });
+      try {
+        DG.duel.open = function (o) { got = o; };
+        C.save.party = [brave.id]; C.save.path = null;
+        var r = DG.talk.doPath({ p: { id: 't_path_d', name: '시험정' }, dist: 5 });
+        got.onDone({ cleared: false });
+        var lost = DG.talk.pathUsed('t_path_d');
+        C.save.path = null;
+        DG.talk.doPath({ p: { id: 't_path_e', name: '시험무' }, dist: 5 }); got.onDone({ cleared: true });
+        var won = C.save.player.gold - gold0;
+        return r.ok && r.act === 'provoke' && r.foeHp > 0 && lost === -1 && won === 30 && ('결투 체력 ' + r.foeHp + ' · 지면 거절 · 이기면 금 +30');
+      } finally {
+        DG.duel.open = D0; C.save.party = party0; C.save.path = path0; C.save.player.gold = gold0;
+      }
+    });
+
     /* ── 계절 (season) — PLAN 37절 ──────────────────────────
      * PLAN 이 "MVP 이후" 로 미뤄 둔 절이다. 계절도 **시각의 순수 함수**라
      * 값으로 다 본다. 다섯 갈래 중 **천후 하나만 판정에 닿는다**.

@@ -1099,5 +1099,21 @@
   "ticket": "W-0208",
   "since": "2026-10-14",
   "note": "D2(claude 2026-10-14): tmp/go-net.mjs 외부 호스트 0 · qc 1-world3d·2D 한 장 Read — 지형·화면 그대로, 아래 출처 표기 없음 ○."
+ },
+ {
+  "id": "go.path",
+  "name": "길 행동 — 선두 동행 성향으로 마을 사람에게 조사·도발·이끌기(하루 한 번, 거절 30%)",
+  "files": [
+   "js/talk.js"
+  ],
+  "tests": [
+   "길 행동(W-0276)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0276",
+  "since": "2026-10-17",
+  "note": "옥토패스 트래블러식. 장부 tasks/gameplay/go.md"
  }
 ]

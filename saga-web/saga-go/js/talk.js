@@ -96,6 +96,102 @@
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
+  /* ── 길 행동(W-0276, 옥토패스 트래블러식) ─────────────
+   * 선두 동행(`save.party[0]`)의 무력·지력·통솔 중 가장 높은 축이 마을 사람에게 하는 한 가지를 정한다:
+   *   지력 → 조사(가까운 숨은 터를 방향·거리로) · 무력 → 도발(그 자리 결투, 이기면 금) · 통솔 → 이끌기(가까운 명소로 앞장 — 걸어감)
+   * 마을 사람마다 하루 한 번(`save.path = { day, used: { 사람id: 1 | -1 } }`). 조사·이끌기는 30% 로 거절당하고,
+   * 도발은 지면 거절과 같다 — 거절한 사람은 그날 다시 말을 섞지 않는다(-1). 손잡이 `talk.pathFail`(0.3) · `talk.provokeHpMul`(14)
+   */
+  var PATH = {
+    wisdom: { key: 'probe', name: '조사', icon: '🔎' },
+    might: { key: 'provoke', name: '도발', icon: '⚔️' },
+    command: { key: 'lead', name: '이끌기', icon: '🧭' }
+  };
+  function leadHero() {
+    var id = (core.save.party || [])[0], hs = (global.DG.data && global.DG.data.heroes) || [], i;
+    if (!id) { return null; }
+    for (i = 0; i < hs.length; i++) { if (hs[i].id === id) { return hs[i]; } }
+    return null;
+  }
+  /** 이 인물의 길 행동 — 무력·지력·통솔 중 가장 높은 축(같으면 지력 → 무력 → 통솔 순) */
+  function pathOf(h) {
+    if (!h || !h.stats) { return null; }
+    var s = h.stats, k = 'wisdom';
+    if ((s.might || 0) > (s[k] || 0)) { k = 'might'; }
+    if ((s.command || 0) > (s[k] || 0)) { k = 'command'; }
+    return PATH[k];
+  }
+  function today() { var D = global.DG.daily; return D && D.dayKey ? D.dayKey() : new Date().toDateString(); }
+  function pathState() {
+    var s = core.save.path;
+    if (!s || s.day !== today()) { s = core.save.path = { day: today(), used: {} }; }
+    return s;
+  }
+  /** 0 아직 · 1 오늘 했다 · -1 거절(오늘 말을 안 섞는다) */
+  function pathUsed(id) { return pathState().used[id] || 0; }
+  /** 화면 위(-y)가 북 */
+  function compass(dx, dy) {
+    var a = Math.atan2(dx, -dy) * 180 / Math.PI; if (a < 0) { a += 360; }
+    return ['북', '북동', '동', '남동', '남', '남서', '서', '북서'][Math.round(a / 45) % 8];
+  }
+  function refuse(st, p) {
+    st.used[p.id] = -1;
+    core.emit('toast', '🙅 ' + p.name + '이(가) 고개를 돌립니다 — 오늘은 말을 섞지 않겠답니다');
+  }
+  /** 길 행동 하나 — 카드 단추가 부른다. 진단도 그대로 부른다 */
+  function doPath(n) {
+    var p = n.p, act = pathOf(leadHero());
+    if (!act) { return { ok: false, why: '동행이 없다' }; }
+    var st = pathState();
+    if (st.used[p.id]) { return { ok: false, why: '오늘은 이미' }; }
+    var pos = core.save.player.pos, h = leadHero();
+    if (act.key !== 'provoke' && Math.random() < core.tuned('talk.pathFail', 0.3)) {
+      refuse(st, p); core.persist(); close();
+      return { ok: false, why: 'refused', act: act.key };
+    }
+    st.used[p.id] = 1;
+    var out = { ok: true, act: act.key };
+    if (act.key === 'probe') {
+      var DM = global.DG.domain, g0 = DM && DM.nearest ? DM.nearest() : null, g = g0 ? (g0.d || g0) : null;   // nearest() = { d, dist, inRange }
+      if (g) {
+        out.target = { x: g.x, y: g.y, name: g.name };
+        core.emit('toast', '🔎 ' + p.name + ': "' + (g.name || '숨은 터') + '" — ' + compass(g.x - pos.x, g.y - pos.y) + '쪽 ' + Math.round(Math.hypot(g.x - pos.x, g.y - pos.y)) + 'm 에 있다더군요');
+      } else {
+        core.emit('toast', '🔎 ' + p.name + ': 이 근처엔 숨은 터가 없다고 합니다');
+      }
+      core.emit('path:probe', out.target || null);
+    } else if (act.key === 'lead') {
+      var L = global.DG.land, ps = L && L.places ? L.places().filter(function (q) { return q && !q.hidden; }) : [], best = null, bd = Infinity;
+      ps.forEach(function (q) { var d = Math.hypot(q.x - pos.x, q.y - pos.y); if (d > 40 && d < bd) { bd = d; best = q; } });
+      if (best) {
+        out.target = { x: best.x, y: best.y, name: best.name };
+        if (global.DG.world && global.DG.world.walkTo) { global.DG.world.walkTo(best.x, best.y); }
+        core.emit('toast', '🧭 ' + p.name + ': "' + best.name + '"까지 앞장서지요 · ' + Math.round(bd) + 'm');
+      } else {
+        core.emit('toast', '🧭 ' + p.name + ': 가 볼 만한 곳이 가까이엔 없습니다');
+      }
+      core.emit('path:lead', out.target || null);
+    } else {
+      var Du = global.DG.duel, pw = global.DG.hero && global.DG.hero.partyPower ? global.DG.hero.partyPower() : { atk: 40, def: 200 };
+      out.foeHp = Math.max(1, Math.round((pw.atk || 40) * core.tuned('talk.provokeHpMul', 14)));
+      close();
+      if (Du && Du.open) {
+        Du.open({
+          title: '⚔️ 도발 — ' + p.name, foeName: p.name, foeHp: out.foeHp, myAtk: pw.atk, myDef: pw.def,
+          onDone: function (r) {
+            if (r && r.cleared) { core.save.player.gold += 30; core.emit('toast', '⚔️ ' + p.name + '을(를) 꺾었습니다 · 금 +30'); }
+            else { refuse(pathState(), p); }
+            core.persist(); core.emit('changed');
+          }
+        });
+      }
+    }
+    core.emit('path:act', { act: act.key, who: p.id, by: h ? h.id : null });
+    core.persist();
+    if (act.key !== 'provoke') { close(); }
+    return out;
+  }
+
   /** 주민 카드 — 누구고, 지금 어디로 가는 길이고, 무슨 말을 하는가 */
   function openNpc(n) {
     var N = global.DG.npc, L = global.DG.land;
@@ -108,14 +204,23 @@
       : '';
     var CX = global.DG.codex;
     if (CX) { CX.discover('people', p.id, { name: p.name }); }
-    return card(
+    var used = pathUsed(p.id), h = leadHero(), act = pathOf(h);
+    if (used < 0) { line = '…(오늘은 말을 섞지 않으려 합니다)'; }
+    var pathBtn = act
+      ? '<button class="btn wide" data-act="path"' + (used ? ' disabled' : '') + '>' + act.icon + ' ' + esc(h.name) + ' · ' + act.name + (used > 0 ? ' — 오늘 했다' : used < 0 ? ' — 거절당함' : '') + '</button>'
+      : '';
+    var okCard = card(
       '<div class="enc-big">' + global.DG.portrait3d.img('hero', p, 96) + '</div>' +
       '<h3>' + esc(p.name) + '</h3>' +
       '<p class="quote">"' + esc(line) + '"</p>' +
       '<div class="enc-reward">' + esc(p.personality) +
         (where ? ' · ' + where : '') + ' · ' + Math.round(n.dist) + 'm</div>' +
-      '<small class="muted">이 마을 사람입니다 — 잡거나 설득할 수는 없습니다.</small>'
+      '<small class="muted">이 마을 사람입니다 — 잡거나 설득할 수는 없습니다. 선두 동행이 길 행동을 하루 한 번 할 수 있습니다.</small>' +
+      pathBtn
     );
+    var b = host() && host().querySelector('[data-act="path"]');
+    if (b) { b.addEventListener('click', function () { doPath(n); }); }
+    return okCard;
   }
 
   /** 짐승 카드 — 무엇이고, 어떤 습성이고, 지금 나를 알아챘는가 */
@@ -162,6 +267,7 @@
   global.DG = global.DG || {};
   global.DG.talk = {
     on: on, pick: pick, tap: tap, close: close, josaRo: josaRo,
+    PATH: PATH, pathOf: pathOf, leadHero: leadHero, pathUsed: pathUsed, doPath: doPath, compass: compass,   // W-0276 길 행동
     NPC_R: NPC_R, BEAST_R: BEAST_R,
     /** 지금 열려 있나 */
     active: function () { return busy(); }
