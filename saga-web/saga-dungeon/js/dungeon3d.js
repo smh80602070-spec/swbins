@@ -2653,7 +2653,7 @@
        수 있다 — 다음에 "땅 끝이 각져 보인다"는 제보가 오면 이 트레이드오프
        때문이다(안개를 다시 켜는 대신 땅을 더 넓게 세우는 쪽으로 풀 것). */
     scene.fog = null;
-    scene.background = new T.Color(bgHex);
+    scene.background = new T.Color(bgHex); if (global.DG.skydome3d) { var SDk = global.DG.skydome3d.get('dungeon3d', { tune: 'dungeon3d', radius: 2500, dim: 0.85 }); if (L.town) { SDk.frame({ three: T, scene: scene, camera: camera, slot: core.tuned('dungeon3d.skyTime', 'noon'), era: core.tuned('dungeon3d.skyEra', 'past') }); } else { SDk.hide(); } }   // W-0294 마을(바깥)만 그린 하늘 공(공용 skydome3d) — 던전 방은 옛 단색, 해는 아트 바이블 NW 그대로 · 밝기 0.85(블룸 문턱 — 09-09 하얀 안개 재신고)
     if (frame % 120 === 0) {
       var diagMsg = '📊 tier=' + effectiveLevel() + ' ema=' + perfEma.toFixed(1) +
         'ms fogFar=' + fogFar.toFixed(0) + ' fieldR=' + fldR + ' camDist=' + aim.dist.toFixed(0) +

@@ -81,6 +81,7 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/core.js"></script>
 <script src="js/ssao3d.js"></script>
 <script src="js/post3d.js"></script>
+<script src="js/skydome3d.js"></script>
 <script src="js/assets3d-ids.js"></script>
 <script src="js/itemicon-ids.js"></script>
 <script src="js/itemicon.js"></script>
@@ -168,6 +169,16 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 
 
     /* W-0292 후처리·SSAO 가 이 판에도 실렸다 — 값 층(three 없이) */
+    /* W-0294 그린 하늘 공 — 공용 skydome3d 값 층(three 없이) */
+    t('하늘(W-0294) — 시간에 따라 하늘 그림·해 방향이 바뀐다(공용 skydome3d, 3마을 실제 시각)', function () {
+      var SD = DG.skydome3d; if (!SD || !SD.make) { return '실패 skydome3d 없음'; }
+      var slots = [6, 12, 18, 23].map(SD.slotOfHour).join(',');
+      var keys = SD.keyOf({ slot: 'noon', era: 'myth' }) === 'noon_past' && SD.keyOf({ phase: 'even', era: 'future' }) === 'sunset_future' && SD.keyOf({ slot: 'noon', weather: 'rain' }) === null;
+      var dawn = SD.dirOf(80, SD.elOf(0.46, 0.68), 22), noon = SD.dirOf(180, SD.elOf(0.11, 0.68), 22), low = SD.dirOf(80, 5, 35);
+      var moved = noon.y > dawn.y + 0.3 && Math.abs(dawn.x - noon.x) + Math.abs(dawn.z - noon.z) > 0.3 && Math.abs(low.y - Math.sin(35 * Math.PI / 180)) < 1e-9;
+      var r = slots === 'dawn,noon,sunset,night' && keys && moved && typeof SD.get === 'function';
+      return r ? ('6·12·18·23시 → ' + slots + ' · 비는 옛 하늘 · 해 고도 새벽 ' + dawn.y.toFixed(2) + ' → 낮 ' + noon.y.toFixed(2)) : ('실패 ' + JSON.stringify({ slots: slots, keys: keys, moved: moved }));
+    });
     t('후처리(W-0292) — post3d·ssao3d 가 실려 있고 HIGH 는 걸고 LOW 는 안 건다', function () {
       var PS = DG.post3d, AS = DG.ssao3d;
       if (!PS || !AS) { return '실패 post3d/ssao3d 없음'; }

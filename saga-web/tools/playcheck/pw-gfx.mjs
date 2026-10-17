@@ -4,7 +4,7 @@
 //   toon    = MeshToonMaterial 이거나 userData.toon / onBeforeCompile 붙은 재질이 있는가
 //   tonemap = renderer.toneMapping !== 0          post = DG.post3d.available() && stats().drawn>0 또는 렌더 대상(target)이 있는 그리기
 //   ssao    = DG.ssao3d.available() && stats() 가 그린 흔적   shadow = renderer.shadowMap.enabled && castShadow 메시 ≥ 3
-//   sun     = DirectionalLight ≥ 1                   sky = scene.background 가 텍스처이거나 BackSide 큰 메시(반지름 ≥ 500)
+//   sun     = DirectionalLight ≥ 1                   sky = scene.background 가 텍스처이거나 무늬(map) 있는 BackSide 공(반지름 ≥ min(500, far/2), far 안쪽 — W-0294)
 //   pbr     = MeshStandard/Physical 재질 중 map·normalMap·roughnessMap 있는 것 ≥ 1
 // 결과: 콘솔 표 + results/pw-gfx.json + shots/gfx/<판>.png + shots/gfx/compare.png(다섯 장 가로). 판정은 "빠진 필수 칸 수"(WARN 용).
 import fs from 'node:fs';
@@ -58,10 +58,10 @@ async function clearIntro(p) {
 /** 페이지 안 — 렌더 가로채기 + 재기 */
 const MEASURE = async () => {
   const T = window.THREE; if (!T || !T.WebGLRenderer) { return { err: 'THREE 없음' }; }
-  const seen = new Map(); let rdr = null, targets = 0, calls = 0;
+  const seen = new Map(), farOf = new Map(); let rdr = null, targets = 0, calls = 0;
   /* WebGLRenderer.render 는 생성자에서 인스턴스마다 붙어 원형을 바꿔도 안 걸린다 → 장면마다 부르는 onBeforeRender(원형)를 가로챈다 */
   const P0 = T.Object3D.prototype, orig = P0.onBeforeRender;
-  P0.onBeforeRender = function (renderer, scene, cam, target) { if (this.isScene) { calls++; rdr = renderer; if (target) { targets++; } seen.set(this, (seen.get(this) || 0) + 1); } return orig.apply(this, arguments); };
+  P0.onBeforeRender = function (renderer, scene, cam, target) { if (this.isScene) { calls++; rdr = renderer; if (target) { targets++; } seen.set(this, (seen.get(this) || 0) + 1); if (cam && cam.far) { farOf.set(this, Math.max(farOf.get(this) || 0, cam.far)); } } return orig.apply(this, arguments); };
   await new Promise((r) => setTimeout(r, 1500));
   P0.onBeforeRender = orig;
   if (!rdr) { return { err: '그린 프레임 없음', calls }; }
@@ -76,7 +76,7 @@ const MEASURE = async () => {
       if (o.castShadow && o.visible) { r.cast++; }
       const ms = Array.isArray(o.material) ? o.material : [o.material];
       ms.forEach((m) => { if (m) { mats.add(m); } });
-      const g = o.geometry; if (o.material && o.material.side === T.BackSide && g) { if (!g.boundingSphere) { g.computeBoundingSphere(); } if (g.boundingSphere && g.boundingSphere.radius * Math.max(o.scale.x, 1) >= 500) { r.sky++; } }
+      const g = o.geometry; if (o.material && o.material.side === T.BackSide && g) { if (!g.boundingSphere) { g.computeBoundingSphere(); } const far = farOf.get(scene) || 1000, rad = g.boundingSphere ? g.boundingSphere.radius * Math.max(o.scale.x, 1) : 0; if (o.visible && o.material.map && rad >= Math.min(500, far * 0.5) && rad < far) { r.sky++; } }   // W-0294 그린 하늘 공(무늬 있는 안쪽 면 공, 카메라 far 안쪽) — 옛 기준(반지름 500)은 far 400 인 3마을 공을 못 셌고 무늬 없는 그라디언트도 셌다
     }
   });
   mats.forEach((m) => {

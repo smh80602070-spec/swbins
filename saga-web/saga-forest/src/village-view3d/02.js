@@ -732,7 +732,7 @@
     syncInstScatter();
     syncNpcs(dt);
     syncResidents(dt);
-    syncSky();
+    syncSky(); if (global.DG.skydome3d && scene) { var VDs = global.DG.villageData; global.DG.skydome3d.get('village3d', { tune: 'village3d', radius: 360, minEl: 35 }).drive({ three: three(), scene: scene, camera: camera, phase: VDs && VDs.phaseOf ? VDs.phaseOf(new Date().getHours()).key : 'day', weather: VDs && VDs.weather ? VDs.weather().key : 'clear', era: C().tuned('village3d.skyEra', 'past'), sun: sunLight, sunDist: 50, alt: skyDome, altOn: SKY_ON() }); }   // W-0294 그린 하늘 공(공용 skydome3d — 1만리·5천하와 같은 그림·해 자리), 비·눈·손잡이 village3d.pano 0 이면 옛 그라디언트 공
     syncWeatherFX(dt);
     syncMeteor();
     if (global.DG.post3d) { var VDp = global.DG.villageData; global.DG.post3d.present(renderer, scene, camera, { alt: global.DG.post3d.altOfPhase(VDp && VDp.phaseOf ? VDp.phaseOf(new Date().getHours()).key : 'day'), weather: 'clear' }); } else { renderer.render(scene, camera); }   // W-0292 후처리 길(켜져 있을 때)·아니면 곧바로

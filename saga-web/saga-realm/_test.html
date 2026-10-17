@@ -84,6 +84,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/vendor/three.iife.js"></script>
 <script src="js/ssao3d.js"></script>
 <script src="js/post3d.js"></script>
+<script src="js/skydome3d.js"></script>
 <script src="js/toon3d-core.js"></script>
 <script src="js/toon3d.js"></script>
 <script src="js/anim-own.js"></script>
@@ -5361,7 +5362,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         r.file = RS.skyFile({ act: 4, month: 13 }) === 'sky/sky_dawn_present_1k.webp';   // 13월 = 1월
         C.setTune('realm3d.skyTime', 'night'); r.night = RS.skyKey({ act: 2, month: 6 }) === 'night_past';
         r.allKeys = ['dawn', 'noon', 'sunset', 'night'].every(function (a) { return ['past', 'present', 'future'].every(function (b) { return !!RS.SUN_UV[a + '_' + b]; }); });
-        d = RS.sunDir('sunset_present'); r.sunset = d.x < 0.2 && Math.abs(d.y - Math.sin(25 * Math.PI / 180)) < 1e-9;   // 낮은 해도 25° 로 받친다
+        d = RS.sunDir('sunset_present'); var SD = DG.skydome3d, e = SD.dirOf(0.7194 * 360, SD.elOf(0.4778, 0.68), 25); r.sunset = Math.abs(d.x - e.x) + Math.abs(d.y - e.y) + Math.abs(d.z - e.z) < 1e-9 && d.y >= Math.sin(25 * Math.PI / 180) - 1e-9;   // W-0294 공용 하늘 공과 같은 규약(지평선 행 0.68)
+        d = RS.sunDir('sunset_present', 40); r.clamp = Math.abs(d.y - Math.sin(40 * Math.PI / 180)) < 1e-9;   // 낮은 해는 minEl 로 받친다
         d = RS.sunDir('noon_past'); r.noon = d.y > 0.9;
       } finally { C.setTune('realm3d.skyTime', k0); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });

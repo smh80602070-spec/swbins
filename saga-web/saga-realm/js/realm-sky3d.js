@@ -8,7 +8,7 @@
  *   시대  이야기 막 1~3 = past · 4~6 = present · 7~9 = future (균열·혼돈 시나리오는 future)
  *   시각  달(턴 시계) — 봄·여름 noon · 가을(9~11월) sunset · 겨울(12~2월) dawn.
  *         밤(night)은 손잡이 `realm3d.skyTime`(auto|dawn|noon|sunset|night)로만 — 지도가 어두우면 판을 못 읽는다
- *   해    그림에 그려 넣은 해·달 자리(`sky_markers.json` 의 sun_uv)를 three 의 등장방형 규약으로 풀어
+ *   해    그림에 그려 넣은 해·달 자리(`sky_markers.json` 의 sun_uv)를 공용 하늘 공(shared skydome3d, W-0294) 규약으로 풀어
  *         DirectionalLight 방향으로 — 다만 지도 판독을 위해 고도는 25° 밑으로 안 내린다
  *   안개  파노라마 지평선 바로 위 띠의 평균색 — 먼 땅이 하늘 그림 속으로 녹는다
  *   재질  지도에 세우는 성·소품(GLB)만 툰 → 표준(PBR) 재질(색·무늬는 그대로, 거칠기 0.8·금속 0)
@@ -22,6 +22,7 @@
   var core = global.DG.core;
 
   function ON() { return core.tuned('realm3d.real', 1) ? true : false; }
+  function HORIZON() { return core.tuned('realm3d.panoHorizon', 0.68); }   // 그림 지평선 행 — 공용 하늘 공과 같은 값(W-0294)
 
   /* sky_markers.json 의 sun_uv(밤은 달) — 그림을 다시 그리면 같이 고친다(K-0067) */
   var SUN_UV = {
@@ -61,10 +62,8 @@
   /** 그림 속 해 자리 → 해가 있는 쪽 단위 벡터(three 등장방형: u = atan(z,x)/2π + 0.5, 그림 위가 v 0).
    *  minEl(도) 아래로는 안 내린다 — 방위만 그림을 따른다 */
   function sunDir(key, minEl) {
-    var uv = SUN_UV[key] || SUN_UV.noon_present;
-    var phi = (uv[0] - 0.5) * Math.PI * 2, el = (0.5 - uv[1]) * Math.PI;
-    el = Math.max(el, (minEl === undefined ? 25 : minEl) * Math.PI / 180);
-    return { x: Math.cos(phi) * Math.cos(el), y: Math.sin(el), z: Math.sin(phi) * Math.cos(el) };
+    var uv = SUN_UV[key] || SUN_UV.noon_present, SD = global.DG.skydome3d;
+    return SD.dirOf(uv[0] * 360, SD.elOf(uv[1], HORIZON()), minEl === undefined ? 25 : minEl);
   }
   function light(key) { return LIGHT[String(key).split('_')[0]] || LIGHT.noon; }
 
@@ -76,28 +75,11 @@
     return { act: act, scen: st.scen, month: st.month };
   }
 
-  /* ══ 그림 층 — three 가 있을 때만 산다 ═════════════════════ */
+  /* ══ 그림 층 — 공·그림 받기·지평선 색은 공용 shared/js/skydome3d.js(W-0294) ═════ */
 
-  var T = null, scene = null, sun = null, hemi = null, oldFog = null;
-  var texCache = {}, fogCache = {}, shown = null, why = '-', LG = 1;
-
-  function root() {
-    var A = global.DG.assets3d;
-    if (!A) { return null; }
-    if (A.url) { A.url('world', '_'); }      // 처음이면 뿌리를 정한다(동기 한 번)
-    return A.root ? A.root() : null;
-  }
-
-  /** 지평선 바로 위 띠(v 0.40~0.49)의 평균색 */
-  function horizonColor(img) {
-    try {
-      var cv = global.document.createElement('canvas'); cv.width = 64; cv.height = 32;
-      var g = cv.getContext('2d'); g.drawImage(img, 0, 0, 64, 32);
-      var d = g.getImageData(0, 13, 64, 3).data, r = 0, gg = 0, b = 0, n = d.length / 4, i;
-      for (i = 0; i < d.length; i += 4) { r += d[i]; gg += d[i + 1]; b += d[i + 2]; }
-      return ((Math.round(r / n) << 16) | (Math.round(gg / n) << 8) | Math.round(b / n)) >>> 0;
-    } catch (e) { return null; }
-  }
+  var T = null, scene = null, sun = null, hemi = null, oldFog = null, camera = null;
+  var shown = null, why = '-', LG = 1, fogHex = null;
+  var sky = global.DG.skydome3d.make({ tune: 'realm3d', radius: 2000, minEl: 25, toneMapped: false, name: 'realmsky' });
 
   function applyLight(key) {
     var L = light(key), d = sunDir(key);
@@ -105,60 +87,39 @@
     if (hemi) { hemi.color.setHex(L.hemi); hemi.groundColor.setHex(L.ground); hemi.intensity = L.hemiK * LG; }
   }
 
-  /* 하늘 공 — scene.background 에 등장방형 그림을 걸면 three 가 큐브맵으로 바꾸는데, 헤드리스(swiftshader)에서
-     카메라를 끄는 동안 탭이 통째로 죽었다(W-0141 촬영). 카메라를 따라다니는 안쪽 면 공 한 개로 그린다 — 안개·깊이 안 받음.
-     공의 무늬 u 는 three 등장방형 규약(sunDir)과 좌우가 반대라 repeat.x = -1 로 맞춘다 */
-  var dome = null;
-  function domeOf() {
-    if (dome) { return dome; }
-    dome = new T.Mesh(new T.SphereGeometry(2000, 48, 24), new T.MeshBasicMaterial({ side: T.BackSide, fog: false, depthWrite: false, depthTest: false, toneMapped: false }));
-    dome.frustumCulled = false; dome.renderOrder = -1000; dome.visible = false;
-    dome.onBeforeRender = function (r, sc, cam) { dome.position.copy(cam.position); dome.updateMatrixWorld(true); };
-    scene.add(dome);
-    return dome;
-  }
-  function showSky(tx) {
-    var d = domeOf();
-    d.material.map = tx; d.material.needsUpdate = true; d.visible = true;
-  }
-
   function restore() {
     if (!scene || shown === null) { return; }
-    if (dome) { dome.visible = false; }
+    sky.hide();
     if (scene.fog && oldFog !== null) { scene.fog.color.setHex(oldFog); }
     applyLight('noon_present');
-    shown = null;
+    shown = null; fogHex = null;
   }
 
-  /** 지금 판에 맞는 하늘을 건다(바뀐 게 없으면 아무것도 안 한다) */
+  /** 지금 판에 맞는 하늘을 고른다(바뀐 게 없으면 아무것도 안 한다) — 그림은 tick 이 받아 건다 */
   function refresh() {
     if (!T || !scene) { return null; }
     if (!ON()) { restore(); why = '손잡이 0'; return null; }
     var key = skyKey(current());
     if (key === shown) { return key; }
-    var base = root();
-    if (!base) { why = '에셋 뿌리 없음'; return null; }
-    shown = key;
+    shown = key; fogHex = null;
     applyLight(key);
-    var tex = texCache[key];
-    if (tex) { showSky(tex); if (fogCache[key] !== undefined && scene.fog) { scene.fog.color.setHex(fogCache[key]); } return key; }
-    new T.TextureLoader().load(base + 'sky/sky_' + key + '_1k.webp', function (tx) {
-      tx.wrapS = T.RepeatWrapping; tx.repeat.x = -1;
-      if (T.SRGBColorSpace) { tx.colorSpace = T.SRGBColorSpace; }
-      texCache[key] = tx;
-      var hc = tx.image ? horizonColor(tx.image) : null;
-      if (hc !== null) { fogCache[key] = hc; }
-      if (shown !== key || !scene) { return; }
-      showSky(tx);
-      if (hc !== null && scene.fog) { scene.fog.color.setHex(hc); }
-      why = 'ok';
-    }, undefined, function () { why = '그림 못 받음 ' + key; if (shown === key) { restore(); } });
+    tick(camera);
     return key;
+  }
+
+  /** 매 틱(realm3d tick) — 공을 카메라에 붙이고, 그림이 들어오면 지평선 색을 안개에 */
+  function tick(cam) {
+    if (cam) { camera = cam; }
+    if (!T || !scene || shown === null) { return; }
+    var r = sky.frame({ three: T, scene: scene, camera: camera, key: shown });
+    why = sky.stats().why;
+    if (r && r.horizon !== null && r.horizon !== undefined && r.horizon !== fogHex && scene.fog) { fogHex = r.horizon; scene.fog.color.setHex(fogHex); }
   }
 
   /** realm3d.init 이 씬·빛을 만든 직후 한 번 */
   function attach(three, sc, sunLight, hemiLight) {
-    T = three; scene = sc; sun = sunLight; hemi = hemiLight;
+    T = three; scene = sc; sun = sunLight; hemi = hemiLight; shown = null;
+    var A = global.DG.assets3d; if (A && A.url) { A.url('world', '_'); }      // 처음이면 에셋 뿌리를 정한다(동기 한 번) — 공용 공이 root() 를 읽는다
     var TN = global.DG.toon3d; LG = TN && TN.lightGain ? TN.lightGain() : 1;
     oldFog = sc.fog ? sc.fog.color.getHex() : null;
     refresh();
@@ -201,7 +162,7 @@
     /* 값 층 — 자가진단이 본다 */
     eraOf: eraOf, todOf: todOf, skyKey: skyKey, skyFile: skyFile, sunDir: sunDir, light: light, current: current, SUN_UV: SUN_UV,
     /* 그림 층 */
-    attach: attach, refresh: refresh, realify: realify, lights: function () { return { sun: sun, hemi: hemi }; },
-    stats: function () { var n = 0, k; for (k in realMats) { if (Object.prototype.hasOwnProperty.call(realMats, k)) { n++; } } return { on: ON(), shown: shown, why: why, realMats: n }; }
+    attach: attach, refresh: refresh, tick: tick, realify: realify, lights: function () { return { sun: sun, hemi: hemi }; },
+    stats: function () { var n = 0, k; for (k in realMats) { if (Object.prototype.hasOwnProperty.call(realMats, k)) { n++; } } var ss = sky.stats(); return { on: ON(), shown: shown, why: why, dome: ss.dome, realMats: n }; }
   };
 })(window);

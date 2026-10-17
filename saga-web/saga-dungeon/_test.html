@@ -138,6 +138,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/building.js"></script>
 <script src="js/ssao3d.js"></script>
 <script src="js/post3d.js"></script>
+<script src="js/skydome3d.js"></script>
 <script src="js/field3d.js"></script>
 <script src="js/toon3d-core.js"></script>
 <script src="js/toon3d.js"></script>
@@ -5023,6 +5024,16 @@ window.requestAnimationFrame = function () { return 0; };
 
     var D3 = DG.dungeon3d;
 
+    /* W-0294 그린 하늘 공 — 공용 skydome3d 값 층(three 없이) */
+    t('하늘(W-0294) — 시간에 따라 하늘 그림·해 방향이 바뀐다(공용 skydome3d, 2나락 마을)', function () {
+      var SD = DG.skydome3d; if (!SD || !SD.make) { return '실패 skydome3d 없음'; }
+      var slots = [6, 12, 18, 23].map(SD.slotOfHour).join(',');
+      var keys = SD.keyOf({ slot: 'noon', era: 'myth' }) === 'noon_past' && SD.keyOf({ phase: 'even', era: 'future' }) === 'sunset_future' && SD.keyOf({ slot: 'noon', weather: 'rain' }) === null;
+      var dawn = SD.dirOf(80, SD.elOf(0.46, 0.68), 22), noon = SD.dirOf(180, SD.elOf(0.11, 0.68), 22), low = SD.dirOf(80, 5, 35);
+      var moved = noon.y > dawn.y + 0.3 && Math.abs(dawn.x - noon.x) + Math.abs(dawn.z - noon.z) > 0.3 && Math.abs(low.y - Math.sin(35 * Math.PI / 180)) < 1e-9;
+      var r = slots === 'dawn,noon,sunset,night' && keys && moved && typeof SD.get === 'function';
+      return r ? ('6·12·18·23시 → ' + slots + ' · 비는 옛 하늘 · 해 고도 새벽 ' + dawn.y.toFixed(2) + ' → 낮 ' + noon.y.toFixed(2)) : ('실패 ' + JSON.stringify({ slots: slots, keys: keys, moved: moved }));
+    });
     t('3D — 화면 층이 없어도 판정은 그대로 돈다', function () {
       /* 이 판의 심장인 던전 판정에 3D 가 스미면 안 된다 */
       return D3.available() === false && D3.active() === false &&
