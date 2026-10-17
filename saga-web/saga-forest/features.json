@@ -1045,5 +1045,24 @@
   "ticket": "W-0284",
   "since": "2026-10-17",
   "note": "테라리아·스타바운드식(구조만). 장부 tasks/gameplay/forest.md · 세이브 save.village.lots[](옛 세이브 빈 것)"
+ },
+ {
+  "id": "fs.cave-depth",
+  "name": "땅 아래 층 — 동굴 첫 방(보물상자) 깊은 칸 사다리로 지하 1~5층. 층마다 광석 둘(철석·토기 / 구리·철석 / 은괴·구리 / 옛 동전·은괴 / 고사리·물고기 화석, 하루 한 번씩, 횃불이 밝으면 둘)·짐승 하나(사다리를 지킨다 — 쫓으면 내려감)·어둠(횃불 받침에서 소나무 1 로 2분, 시야 70→260) · 5층엔 옛 유물(물고기 화석 — 사고 기증) 한 번 · 문은 위층 사다리 · 가장 깊이 기록",
+  "files": [
+   "js/cave-depth.js",
+   "src/village/01.js",
+   "src/village/02.js",
+   "src/village-view/02.js"
+  ],
+  "tests": [
+   "지하 층(W-0285)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0285",
+  "since": "2026-10-17",
+  "note": "테라리아·마크식(구조만). 장부 tasks/gameplay/forest.md · 세이브 save.village.cave = { deepest, torchUntil, relic, dug }(옛 세이브 빈 것) · 동굴 안은 2D 실내뿐(3D 는 indoors/caveInside 에서 숨김)"
  }
 ]

@@ -429,7 +429,7 @@
   function enterCave() {
     if (indoors || caveIn) { return null; }
     outPos = { x: player.x, y: player.y };
-    caveIn = true;
+    caveIn = true; if (global.DG.caveDepth) { global.DG.caveDepth.reset(); }   // W-0285 들어서면 첫 방(0층)
     target = null;
     var d = caveDoor();
     player.x = d.x; player.y = d.y - TILE * 0.6;
@@ -439,7 +439,7 @@
   }
 
   function leaveCave() {
-    if (!caveIn) { return null; }
+    if (!caveIn) { return null; } if (global.DG.caveDepth && global.DG.caveDepth.floor() > 0) { return global.DG.caveDepth.up(); }   // W-0285 지하 층에선 문이 위층 사다리
     caveIn = false;
     target = null;
     if (outPos) { player.x = outPos.x; player.y = outPos.y; }

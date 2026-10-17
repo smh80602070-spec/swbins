@@ -429,7 +429,7 @@
   function enterCave() {
     if (indoors || caveIn) { return null; }
     outPos = { x: player.x, y: player.y };
-    caveIn = true;
+    caveIn = true; if (global.DG.caveDepth) { global.DG.caveDepth.reset(); }   // W-0285 들어서면 첫 방(0층)
     target = null;
     var d = caveDoor();
     player.x = d.x; player.y = d.y - TILE * 0.6;
@@ -439,7 +439,7 @@
   }
 
   function leaveCave() {
-    if (!caveIn) { return null; }
+    if (!caveIn) { return null; } if (global.DG.caveDepth && global.DG.caveDepth.floor() > 0) { return global.DG.caveDepth.up(); }   // W-0285 지하 층에선 문이 위층 사다리
     caveIn = false;
     target = null;
     if (outPos) { player.x = outPos.x; player.y = outPos.y; }
@@ -1596,7 +1596,7 @@
     if (caveIn) {
       var dr3 = caveDoor();
       var best3 = null, bd3 = REACH;
-      var chests = caveChests();
+      var chests = caveChests(); if (global.DG.caveDepth && global.DG.caveDepth.floor() > 0) { return global.DG.caveDepth.nearest(player, dr3, REACH); }   // W-0285 지하 층
       for (i = 0; i < chests.length; i++) {
         d = Math.hypot(chests[i].x - player.x, chests[i].y - player.y);
         if (d < bd3) { bd3 = d; best3 = { type: 'chest', obj: chests[i], dist: d }; }
@@ -1810,7 +1810,7 @@
 
     /* 동굴 안 — 문이면 나가고, 상자면 연다 */
     if (f.type === 'cavedoor') { return leaveCave(); }
-    if (f.type === 'chest') { return openChest(f.obj); }
+    if (f.type === 'chest') { return openChest(f.obj); } if (f.type === 'cd') { return global.DG.caveDepth.act(f.obj); }   // W-0285 지하 층 사물(광석·짐승·사다리·횃불·유물)
 
     if (f.type === 'bug') { return global.DG.bug.swing(f.obj); }
     if (f.type === 'resident') { return talk(f.obj); }

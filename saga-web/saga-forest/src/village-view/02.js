@@ -609,20 +609,40 @@
     order.push({ y: p.y, t: 'me', o: p });
     order.sort(function (a, b) { return a.y - b.y; });
 
+    var CDv = window.DG.caveDepth, deep = !!(CDv && CDv.floor() > 0);   // W-0285 지하 층 — 상자 대신 그 층 사물
+    if (deep) { order = CDv.order(p); }
     var f = V.focus();
     for (i = 0; i < order.length; i++) {
-      if (order[i].t === 'c') { drawChest(order[i].o, u); }
+      if (order[i].t === 'c') { drawChest(order[i].o, u); } else if (order[i].t === 'cd') { drawCd(order[i].o, u); }
       else if (order[i].t === 'guard') { drawBossGuard(order[i].o, u); }
       else { drawMeIn(order[i].o, now); }
     }
 
     if (f && f.type === 'cavedoor') {
-      bubble('밖으로 나간다 [' + core.actHint() + ']', dx, dtop - 14 * u, '#2a2622', '#e8dfce');
+      bubble((deep ? '위로 올라간다 [' : '밖으로 나간다 [') + core.actHint() + ']', dx, dtop - 14 * u, '#2a2622', '#e8dfce');
     }
+    if (f && f.type === 'cd' && CDv) { var qf = projIn(f.obj.x, f.obj.y); bubble(CDv.labelOf(f.obj) + ' [' + core.actHint() + ']', qf.x, qf.y - 34 * u, '#2a2622', '#e8dfce'); }   // W-0285
 
-    /* 어둑함 — 방 전체가 늘 밤이다(등잔이 없다) */
-    ctx.fillStyle = 'rgba(8,6,4,0.38)';
-    ctx.fillRect(0, 0, W, H);
+    /* 어둑함 — 방 전체가 늘 밤이다(등잔이 없다). W-0285 지하 층은 횃불 시야 밖이 캄캄하다 */
+    if (deep) {
+      var qp = projIn(p.x, p.y), rr = CDv.sight() * u;
+      var dg = ctx.createRadialGradient(qp.x, qp.y - 12 * u, rr * 0.35, qp.x, qp.y - 12 * u, rr);
+      dg.addColorStop(0, 'rgba(8,6,4,0.15)'); dg.addColorStop(1, 'rgba(4,3,2,0.94)');
+      ctx.fillStyle = dg; ctx.fillRect(0, 0, W, H);
+      ctx.font = 'bold ' + Math.round(13 * u) + 'px sans-serif'; ctx.textAlign = 'right'; ctx.fillStyle = '#e8dfce';
+      ctx.fillText(CDv.hud(), inOx + fw - 6 * u, inOy + fh + 22 * u);   // 방 아래 오른쪽 — 왼쪽 위 상태 카드와 안 겹친다
+    } else {
+      ctx.fillStyle = 'rgba(8,6,4,0.38)';
+      ctx.fillRect(0, 0, W, H);
+    }
+  }
+  /** W-0285 지하 층 사물 — 광석·짐승·사다리·횃불·유물은 글자 그림(2D 되돌림과 같은 결) */
+  function drawCd(o, u) {
+    var CDv = window.DG.caveDepth, g = CDv ? CDv.glyph(o) : '', q = projIn(o.x, o.y);
+    if (!g) { return; }
+    shadow(q.x, q.y + 2 * u, 14 * u, 5 * u);
+    ctx.font = Math.round(26 * u) + 'px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = '#fff';
+    ctx.fillText(g, q.x, q.y - 4 * u);
   }
 
   /**
