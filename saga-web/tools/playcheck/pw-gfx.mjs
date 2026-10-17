@@ -37,7 +37,7 @@ const HIGH = {
 };
 /* 판별 들어가서 3D 켜기 */
 const ENTER = {
-  'saga-go': async (p) => { await p.evaluate(() => { for (let i = 0; i < 4 && DG.world.tiltMode !== 2; i++) { document.getElementById('btn-tilt') && document.getElementById('btn-tilt').click(); } }); },
+  'saga-go': async (p) => { await p.evaluate(() => { if (DG.weather && DG.weather.force) { DG.weather.force('clear'); }   /* W-0277 — 비·눈·안개면 그린 하늘을 일부러 끈다(W-0294 설계) → 기준선은 맑음으로 고정해 잰다 */ for (let i = 0; i < 4 && DG.world.tiltMode !== 2; i++) { document.getElementById('btn-tilt') && document.getElementById('btn-tilt').click(); } }); },
   'saga-dungeon': async (p) => { await p.evaluate(() => { [...document.querySelectorAll('.stc-cell')].slice(0, 3).forEach((c) => c.click()); const b = document.querySelector('.stc-btn'); if (b) { b.click(); } }); await sleep(3500); },
   'saga-forest': async (p) => { await p.evaluate(() => { const V = DG.villageView3d; if (V && V.available && V.available() && !V.active()) { V.toggle(); } }); },
   'saga-story': async (p) => { await p.evaluate(() => { const S = DG.side, C = DG.core; if (!C.save.party.length && DG.hero && DG.hero.recruit) { const h = DG.data.heroes.filter((x) => x.rarity <= 2)[0]; if (h) { DG.hero.recruit(h.id); } } const st = S.stages().map((x) => x.ref).filter((s) => !s.town)[0]; if (st) { S.enter(st.key); } const V = DG.sideView3d; if (V && V.setQuality) { V.setQuality('high'); } if (V && V.available && V.available() && !V.active()) { V.toggle(); } }); await sleep(2500); },

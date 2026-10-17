@@ -176,6 +176,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/duel.js"></script>
 <script src="js/rogue-action.js"></script>
 <script src="js/field-foes.js"></script>
+<script src="js/field-grab.js"></script>
 <script src="js/field-combat.js"></script>
 <script src="js/slash3d.js"></script>
 <script src="js/adventure.js"></script>
@@ -881,6 +882,41 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       return S.foes[S.uid];
     }
     function fcEv(S, kind) { return DG.fieldCombat.drain(S).filter(function (e) { return !kind || e.t === kind; }); }
+    /* W-0277 잡기·던지기 — 판정(field-grab.js)만, 화면 없이 */
+    t('잡기(W-0277) — 1.5m 안 잡몹을 잡아(0.3초) 던지면 5m 앞에 떨어져 피해, 떨어진 자리 2m 안 적과 함께 1.5초 넘어진다 · 먼 적은 안 넘어짐', function () {
+      var FC = DG.fieldCombat, GB = DG.fieldGrab; if (!GB) { return '실패 fieldGrab 없음'; }
+      FC._kdForTest(1);
+      try {
+        var S = fcState(), f = fcFoe(S, 'bear', 1, 0), o = fcFoe(S, 'bear', 6, 0), far = fcFoe(S, 'bear', -9, 0), hp0 = f.hp, i;
+        var r = GB.grab(S, 0, 0); fcEv(S);
+        var held = !!S.grab && S.grab.f === f && f.stun > 50;
+        for (i = 0; i < 10; i++) { FC.step(S, 0.08, { px: 0, py: 0, blocked: true }); }
+        var land = fcEv(S, 'throwLand')[0];
+        var ok = r.ok && held && !S.grab && land && Math.abs(f.x - 5) < 1.5 && f.hp < hp0 && f.stun > 1 && o.stun > 1 && !(far.stun > 0) && land.n === 1;
+        return ok ? ('잡음 → ' + f.x.toFixed(1) + 'm 착지 · 피해 ' + (hp0 - f.hp) + ' · 넘어짐 ' + (land.n + 1)) : ('실패 ' + JSON.stringify({ r: r, held: held, fx: f.x, hp: [hp0, f.hp], st: [f.stun, o.stun, far.stun], land: land }));
+      } finally { FC._kdForTest(0); }
+    });
+    t('잡기(W-0277) — 보스는 잡히지 않고 밀쳐진다(넉백·짧은 휘청), 들지 않는다', function () {
+      var FC = DG.fieldCombat, GB = DG.fieldGrab; if (!GB) { return '실패 fieldGrab 없음'; }
+      FC._kdForTest(1);
+      try {
+        var S = fcState(), b = fcFoe(S, 'rex', 1, 0), r = GB.grab(S, 0, 0), ev = fcEv(S, 'shove');
+        return GB.isBoss(b) && r.ok && r.shove && !S.grab && b.kb && b.kb.vx > 0 && b.stun > 0 && b.stun < 1 && ev.length === 1 ? ('밀치기 · 휘청 ' + b.stun.toFixed(1) + '초') : ('실패 ' + JSON.stringify({ r: r, kb: b.kb, st: b.stun }));
+      } finally { FC._kdForTest(0); }
+    });
+    t('잡기(W-0277) — 쿨 6초: 곧바로 다시 잡으면 막히고, 6초 뒤엔 다시 잡을 적이 잡힌다 · 멀면 쿨 안 씀', function () {
+      var FC = DG.fieldCombat, GB = DG.fieldGrab; if (!GB) { return '실패 fieldGrab 없음'; }
+      FC._kdForTest(1);
+      try {
+        var S = fcState(), none = GB.grab(S, 0, 0), cd0 = S.grabCd || 0, f = fcFoe(S, 'bear', 1, 0), i;
+        GB.grab(S, 0, 0); for (i = 0; i < 10; i++) { FC.step(S, 0.08, { px: 0, py: 0, blocked: true }); }
+        var g = fcFoe(S, 'bear', 0.8, 0.3), again = GB.grab(S, 0, 0), t1 = !!GB.target(S, 0, 0);
+        for (i = 0; i < 64; i++) { FC.step(S, 0.1, { px: 0, py: 0, blocked: true }); }
+        g.x = 0.8; g.y = 0.3; var t2 = !!GB.target(S, 0, 0);
+        var ok = none.none && cd0 === 0 && !again.ok && again.cd > 0 && !t1 && t2 && GB.CD() === 6;
+        return ok ? ('막힘(남은 ' + again.cd.toFixed(1) + '초) → 6초 뒤 다시') : ('실패 ' + JSON.stringify({ none: none, cd0: cd0, again: again, t1: t1, t2: t2 }));
+      } finally { FC._kdForTest(0); }
+    });
 
     t('들판 전투 ⑲-1 — 원소 반응: 열한 쌍(물안개·터짐·물벼락·녹임·얼어붙음·서리번개·회오리·굳힘·꽃피움·들불·싹틈) · 풍·암은 받는 원소에만 · 같은 원소·물리는 없음', function () {
       var FC = DG.fieldCombat, R = FC.react, K = function (a, b) { var r = R(a, b); return r ? r.kind : null; };

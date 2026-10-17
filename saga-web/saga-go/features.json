@@ -1115,5 +1115,22 @@
   "ticket": "W-0276",
   "since": "2026-10-17",
   "note": "옥토패스 트래블러식. 장부 tasks/gameplay/go.md"
+ },
+ {
+  "id": "go.grab",
+  "name": "잡기·던지기 — 들판 전투 C(폰 ✊, 가까울 때만 빛남): 1.5m 안 잡몹을 잡아 5m 던져 ×1.2 피해, 떨어진 자리 2m 적과 함께 1.5초 넘어짐 · 보스는 밀치기 · 쿨 6초",
+  "files": [
+   "js/field-grab.js",
+   "js/field-combat.js"
+  ],
+  "tests": [
+   "잡기(W-0277)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0277",
+  "since": "2026-10-17",
+  "note": "붉은사막식(구조만). G 는 요리 창이 써서 C. 장부 tasks/gameplay/go.md"
  }
 ]

@@ -536,7 +536,7 @@
     S.calmT += dt;
     S.iframe = Math.max(0, S.iframe - dt);
     S.swapCd = Math.max(0, S.swapCd - dt);
-    S.atkCd = Math.max(0, S.atkCd - dt);
+    S.atkCd = Math.max(0, S.atkCd - dt); if (global.DG.fieldGrab) { global.DG.fieldGrab.step(S, dt, px, py); }   // W-0277 잡기·던지기(field-grab.js) — 쿨·든 적 옮기기·착지
     if (S.aim) {                                                    // ⑲-22 조준 — 활 아닌 인물·쓰러짐·대화면 풀린다
       if (!canAim(S) || inp.blocked) { aimEnd(S); }
       else { if (S.aim.hold) { S.aim.t = Math.min(AIM_FULL() + 1, S.aim.t + dt); } aimLock(S, px, py); }
@@ -1004,7 +1004,7 @@
         if (e.kind === 'field' || e.kind === 'seed' || e.kind === 'kitzone' || e.kind === 'vortex' || e.kind === 'feast' || e.kind === 'rain') { ring(e.x, e.y, e.r, EL[e.el].color, e.kind === 'seed' ? 0.7 : 0.4); }
         else if (e.kind === 'shell') { ring(e.x, e.y, e.r, EL[e.el].color, 0.55); if (W3()) { W3().shake(0.15); } }
         else { ring(e.x, e.y, 0.9, EL[e.el].color, 0.3); if (e.tx !== undefined) { ring(e.tx, e.ty, e.r, EL[e.el].color, 0.3); } }   // echo 등 tx 없는 구역은 발밑 고리만(안 그러면 undefined 좌표로 예외)
-      } else if (e.t === 'dodge') { if (W3()) { W3().playAnim('me', 'dodge', 300); } sfx('sx:sfx_dodge'); }
+      } else if (e.t === 'dodge') { if (W3()) { W3().playAnim('me', 'dodge', 300); } sfx('sx:sfx_dodge'); } else if (e.t === 'grab') { ring(e.x, e.y, 1.2 * KDV, '#ffd27a', 0.35); floatNum(e.x, e.y, '✊ 잡기', null, 1, true, true); A2('me', 'heavy', 300); if (W3()) { W3().playAnim('me', 'attack', 300); } } else if (e.t === 'throwLand') { ring(e.x, e.y, e.r, '#ffb347', 0.6); ring(e.x, e.y, e.r * 0.5, '#ffffff', 0.35); floatNum(e.x, e.y, '넘어뜨림' + (e.n ? ' +' + e.n : ''), null, 1.15, true, true); if (W3()) { W3().shake(0.35); W3().hold(70); } sfx('hit'); } else if (e.t === 'shove') { ring(e.x, e.y, 1.6 * KDV, '#ff8a5a', 0.4); floatNum(e.x, e.y, '밀치기', null, 1, true, true); if (W3()) { W3().shake(0.2); } sfx('hit'); } else if (e.t === 'grabCd') { floatNum(pos.x, pos.y, '✊ ' + Math.ceil(e.left) + '초', null, 0.9, false, true); }   // W-0277 잡기·던지기·밀치기 화면
       else if (e.t === 'tell') { A2('fc' + e.uid, 'attack', 700); if (W3()) { W3().playAnim('fc' + e.uid, 'attack', 700); } }
       else if (e.t === 'strike') { if (e.r) { ring(e.x, e.y, e.r, '#ff4d4d', 0.3); } }
       else if (e.t === 'siege') { floatNum(e.x, e.y + 1.5, '-' + e.dmg, null, 0.9, false); c.emit('field:siege', e); }   // ⑲-16 제단이 맞았다(story.js)
@@ -1117,7 +1117,7 @@
       var W = global.DG.world, mv = W && W.motion ? W.motion : null;
       var moving = mv && mv.speed > 1.5;
       r = dodge(S, moving ? mv.vx : 0, moving ? mv.vy : 0, pos.x, pos.y);
-    } else if (kind === 'swap') { r = swap(S, arg); }
+    } else if (kind === 'swap') { r = swap(S, arg); } else if (kind === 'grab') { r = global.DG.fieldGrab ? global.DG.fieldGrab.grab(S, pos.x, pos.y) : { ok: false }; }   // W-0277
     handle(drain(S), pos);
     return r || { ok: false };
   }

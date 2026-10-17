@@ -47,7 +47,7 @@ const ADAPT = {
         const a = await c.pos();
         await c.page.mouse.move(x, y); await sleep(150); await c.page.mouse.click(x, y); await sleep(400);
         const r = await c.ev(() => ({ w: !!(DG.world.walkingTo && DG.world.walkingTo()), ev: window.__pwEv.slice().concat(document.querySelector('#encounter.show, #rogue-hud.show, #duel.show') ? ['만남 화면'] : []) }));
-        if (r.w) { await sleep(2000); const d = c.dist(a, await c.pos()); return { ok: d > 0.5, detail: `걷기 ${d.toFixed(1)} @${x},${y}` }; }
+        if (r.w) { await sleep(2000); const d = c.dist(a, await c.pos()); if (d > 0.5) { return { ok: true, detail: `걷기 ${d.toFixed(1)} @${x},${y}` + (tried.length ? ' · ' + tried.join(' ') : '') }; } tried.push('막힘@' + x + ',' + y); continue; }   // W-0277 — 누른 자리가 집 벽이면 걷기가 시작돼도 제자리(10-17 시작 자리 앞 집) → 다음 빈 땅으로
         if (r.ev.length) { tried.push('만남@' + x + ',' + y); return { ok: true, detail: '짐승을 눌러 만남(정상 반응) · ' + tried.join(' ') }; }
         tried.push('무반응@' + x + ',' + y);
       }
@@ -206,7 +206,8 @@ async function one(browser, g, device) {
       await c.ev(() => { const mg = document.getElementById('menu-grid'); if (mg) { mg.classList.remove('show'); } });
       await sleep(300);
       const still = await c.ev(() => !!(document.querySelector('#menu-grid.show, #sheet.show, #encounter.show, #detail.show, #overworld-map.show') || (DG.passiveWebUI && DG.passiveWebUI.isOpen && DG.passiveWebUI.isOpen())));
-      const r = await c.keys(['KeyD']);
+      let r = await c.keys(['KeyD']);
+      for (const k2 of ['KeyA', 'KeyS', 'KeyW']) { if (r.okN === 1) { break; } const r2 = await c.keys([k2]); r = { okN: r2.okN, detail: r.detail + ' ' + r2.detail }; }   // W-0277 — 입력이 살았는지만 본다: D 쪽이 벽(10-17 1만리 시작 자리 앞 집)이면 다른 쪽으로
       return { ok: win && !still && (A.moveKeys === 'optional' || r.okN === 1), detail: `창 ${win ? '열림' : '안 열림'} · 닫힘 ${!still} · ${r.detail}` };
     });
     /* HUD 겹침 */

@@ -17,7 +17,7 @@
         '<div class="fc-sta"><i></i></div>' +
         '<button class="fc-btn fc-burst" data-fc="burst"><span>폭발</span><em>Q</em><i class="fc-fill"></i></button>' +
         '<button class="fc-btn fc-skill" data-fc="skill"><span>스킬</span><em>E</em><i class="fc-cd"></i></button>' +
-        '<button class="fc-btn fc-dodge" data-fc="dodge"><span>회피</span><em>␣</em></button>' +
+        '<button class="fc-btn fc-dodge" data-fc="dodge"><span>회피</span><em>␣</em></button>' + '<button class="fc-btn fc-grab" data-fc="grab" title="잡기·던지기 — 가까운 잡몹을 잡아 던진다(보스는 밀치기)"><span>✊</span><em>C</em></button>' +   // W-0277
         '<button class="fc-btn fc-atk" data-fc="attack"><span>⚔️</span><em>J</em></button>' +
         '<button class="fc-btn fc-aim" data-fc="aim" style="display:none"><span>🎯</span><em>R</em></button>' + '<button class="fc-btn fc-auto" data-fc="auto" title="자동 사냥 — 다가가 싸운다"><span>🤖 자동</span></button>' +
       '</div>';
@@ -93,7 +93,7 @@
     paintAim();
     if (!show) { return; }
     var ab = hudEl.querySelector('.fc-aim');                          // ⑲-22 활 인물일 때만 🎯
-    if (ab) { ab.style.display = canAim(S) && aimOk() ? '' : 'none'; ab.classList.toggle('ready', !!S.aim); }
+    if (ab) { ab.style.display = canAim(S) && aimOk() ? '' : 'none'; ab.classList.toggle('ready', !!S.aim); } var gb = hudEl.querySelector('.fc-grab'); if (gb && global.DG.fieldGrab) { gb.classList.toggle('near', !!global.DG.fieldGrab.target(S, pp.x, pp.y)); gb.classList.toggle('cd', S.grabCd > 0); }   // W-0277 잡을 적이 가까울 때만 빛남
     /* ⑲-1 원소가 일곱으로 늘며 동행 원소가 새로 정해졌다 — 처음 한 번만 알린다(save.field.el7) */
     var fsv = fieldSave();
     if (!fsv.el7) { fsv.el7 = 1; toast('✨ 원소가 일곱(화·수·뇌·풍·빙·암·초)으로 늘었다 — 동행 원소가 새로 정해졌다'); core().persist(); }
@@ -345,7 +345,7 @@
       if (k === 'j') { var ra = act('attack'); if (!(ra && ra.plunge)) { holdStart(); } }
       else if (k === 'e') { act('skill'); }
       else if (k === 'r') { act('aim'); }                             // ⑲-22 활 조준
-      else if (k === 'q') { act('burst'); }
+      else if (k === 'q') { act('burst'); } else if (k === 'c') { act('grab'); }   // W-0277 잡기(G 는 요리 창)
       else if (k === ' ' && nearby) { e.preventDefault(); act('dodge'); }
       else if (k >= '1' && k <= '4' && nearby) { act('swap', +k - 1); }
     });
@@ -395,7 +395,7 @@
   function init() { bindKeys(); }
 
   global.DG = global.DG || {};
-  global.DG.fieldCombat = {
+  if (global.DG.fieldGrab) { global.DG.fieldGrab.bind({ K: K, KDV: function () { return KDV; }, FOES: FOES, KB_T: KB_T, active: active, nearestFoe: nearestFoe, foesWithin: foesWithin, hitFoe: hitFoe, push: push }); } global.DG.fieldCombat = {   // W-0277 잡기(field-grab.js)에 속 함수를 넘긴다
     EL: EL, anim2d: anim2d, _handle: handle, FOES: FOES, ROT: ROT, SHADOW_BACK: SHADOW_BACK, RIFT_STEP: RIFT_STEP, RIFT_SLOPE: RIFT_SLOPE, riftOk: riftOk, SIEGE_PULL: SIEGE_PULL, tideMarks: tideMarks, markHit: markHit, foeAtk: foeAtk, KB_T: KB_T, knock: knock, rainFollow: rainFollow, THEMES: THEMES, ELITES: ELITES, ERA_THEMES: ERA_THEMES, ERA_ELITES: ERA_ELITES, eraOfCamp: eraOfCamp, CELL: CELL, ENERGY_MAX: ENERGY_MAX,
     SKILL_CD: SKILL_CD, wpnSlot: wpnSlot, wpnMs: wpnMs, SWAP_CD: SWAP_CD, BODY: BODY, separate: separate, DODGE_COST: DODGE_COST, VAPOR_MUL: VAPOR_MUL,
     /* 판정 층 — 화면 없이 굴린다(자가진단이 쓰는 문) */

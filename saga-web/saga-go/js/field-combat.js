@@ -1403,7 +1403,7 @@
     S.calmT += dt;
     S.iframe = Math.max(0, S.iframe - dt);
     S.swapCd = Math.max(0, S.swapCd - dt);
-    S.atkCd = Math.max(0, S.atkCd - dt);
+    S.atkCd = Math.max(0, S.atkCd - dt); if (global.DG.fieldGrab) { global.DG.fieldGrab.step(S, dt, px, py); }   // W-0277 잡기·던지기(field-grab.js) — 쿨·든 적 옮기기·착지
     if (S.aim) {                                                    // ⑲-22 조준 — 활 아닌 인물·쓰러짐·대화면 풀린다
       if (!canAim(S) || inp.blocked) { aimEnd(S); }
       else { if (S.aim.hold) { S.aim.t = Math.min(AIM_FULL() + 1, S.aim.t + dt); } aimLock(S, px, py); }
@@ -1871,7 +1871,7 @@
         if (e.kind === 'field' || e.kind === 'seed' || e.kind === 'kitzone' || e.kind === 'vortex' || e.kind === 'feast' || e.kind === 'rain') { ring(e.x, e.y, e.r, EL[e.el].color, e.kind === 'seed' ? 0.7 : 0.4); }
         else if (e.kind === 'shell') { ring(e.x, e.y, e.r, EL[e.el].color, 0.55); if (W3()) { W3().shake(0.15); } }
         else { ring(e.x, e.y, 0.9, EL[e.el].color, 0.3); if (e.tx !== undefined) { ring(e.tx, e.ty, e.r, EL[e.el].color, 0.3); } }   // echo 등 tx 없는 구역은 발밑 고리만(안 그러면 undefined 좌표로 예외)
-      } else if (e.t === 'dodge') { if (W3()) { W3().playAnim('me', 'dodge', 300); } sfx('sx:sfx_dodge'); }
+      } else if (e.t === 'dodge') { if (W3()) { W3().playAnim('me', 'dodge', 300); } sfx('sx:sfx_dodge'); } else if (e.t === 'grab') { ring(e.x, e.y, 1.2 * KDV, '#ffd27a', 0.35); floatNum(e.x, e.y, '✊ 잡기', null, 1, true, true); A2('me', 'heavy', 300); if (W3()) { W3().playAnim('me', 'attack', 300); } } else if (e.t === 'throwLand') { ring(e.x, e.y, e.r, '#ffb347', 0.6); ring(e.x, e.y, e.r * 0.5, '#ffffff', 0.35); floatNum(e.x, e.y, '넘어뜨림' + (e.n ? ' +' + e.n : ''), null, 1.15, true, true); if (W3()) { W3().shake(0.35); W3().hold(70); } sfx('hit'); } else if (e.t === 'shove') { ring(e.x, e.y, 1.6 * KDV, '#ff8a5a', 0.4); floatNum(e.x, e.y, '밀치기', null, 1, true, true); if (W3()) { W3().shake(0.2); } sfx('hit'); } else if (e.t === 'grabCd') { floatNum(pos.x, pos.y, '✊ ' + Math.ceil(e.left) + '초', null, 0.9, false, true); }   // W-0277 잡기·던지기·밀치기 화면
       else if (e.t === 'tell') { A2('fc' + e.uid, 'attack', 700); if (W3()) { W3().playAnim('fc' + e.uid, 'attack', 700); } }
       else if (e.t === 'strike') { if (e.r) { ring(e.x, e.y, e.r, '#ff4d4d', 0.3); } }
       else if (e.t === 'siege') { floatNum(e.x, e.y + 1.5, '-' + e.dmg, null, 0.9, false); c.emit('field:siege', e); }   // ⑲-16 제단이 맞았다(story.js)
@@ -1984,7 +1984,7 @@
       var W = global.DG.world, mv = W && W.motion ? W.motion : null;
       var moving = mv && mv.speed > 1.5;
       r = dodge(S, moving ? mv.vx : 0, moving ? mv.vy : 0, pos.x, pos.y);
-    } else if (kind === 'swap') { r = swap(S, arg); }
+    } else if (kind === 'swap') { r = swap(S, arg); } else if (kind === 'grab') { r = global.DG.fieldGrab ? global.DG.fieldGrab.grab(S, pos.x, pos.y) : { ok: false }; }   // W-0277
     handle(drain(S), pos);
     return r || { ok: false };
   }
@@ -2008,7 +2008,7 @@
         '<div class="fc-sta"><i></i></div>' +
         '<button class="fc-btn fc-burst" data-fc="burst"><span>폭발</span><em>Q</em><i class="fc-fill"></i></button>' +
         '<button class="fc-btn fc-skill" data-fc="skill"><span>스킬</span><em>E</em><i class="fc-cd"></i></button>' +
-        '<button class="fc-btn fc-dodge" data-fc="dodge"><span>회피</span><em>␣</em></button>' +
+        '<button class="fc-btn fc-dodge" data-fc="dodge"><span>회피</span><em>␣</em></button>' + '<button class="fc-btn fc-grab" data-fc="grab" title="잡기·던지기 — 가까운 잡몹을 잡아 던진다(보스는 밀치기)"><span>✊</span><em>C</em></button>' +   // W-0277
         '<button class="fc-btn fc-atk" data-fc="attack"><span>⚔️</span><em>J</em></button>' +
         '<button class="fc-btn fc-aim" data-fc="aim" style="display:none"><span>🎯</span><em>R</em></button>' + '<button class="fc-btn fc-auto" data-fc="auto" title="자동 사냥 — 다가가 싸운다"><span>🤖 자동</span></button>' +
       '</div>';
@@ -2084,7 +2084,7 @@
     paintAim();
     if (!show) { return; }
     var ab = hudEl.querySelector('.fc-aim');                          // ⑲-22 활 인물일 때만 🎯
-    if (ab) { ab.style.display = canAim(S) && aimOk() ? '' : 'none'; ab.classList.toggle('ready', !!S.aim); }
+    if (ab) { ab.style.display = canAim(S) && aimOk() ? '' : 'none'; ab.classList.toggle('ready', !!S.aim); } var gb = hudEl.querySelector('.fc-grab'); if (gb && global.DG.fieldGrab) { gb.classList.toggle('near', !!global.DG.fieldGrab.target(S, pp.x, pp.y)); gb.classList.toggle('cd', S.grabCd > 0); }   // W-0277 잡을 적이 가까울 때만 빛남
     /* ⑲-1 원소가 일곱으로 늘며 동행 원소가 새로 정해졌다 — 처음 한 번만 알린다(save.field.el7) */
     var fsv = fieldSave();
     if (!fsv.el7) { fsv.el7 = 1; toast('✨ 원소가 일곱(화·수·뇌·풍·빙·암·초)으로 늘었다 — 동행 원소가 새로 정해졌다'); core().persist(); }
@@ -2336,7 +2336,7 @@
       if (k === 'j') { var ra = act('attack'); if (!(ra && ra.plunge)) { holdStart(); } }
       else if (k === 'e') { act('skill'); }
       else if (k === 'r') { act('aim'); }                             // ⑲-22 활 조준
-      else if (k === 'q') { act('burst'); }
+      else if (k === 'q') { act('burst'); } else if (k === 'c') { act('grab'); }   // W-0277 잡기(G 는 요리 창)
       else if (k === ' ' && nearby) { e.preventDefault(); act('dodge'); }
       else if (k >= '1' && k <= '4' && nearby) { act('swap', +k - 1); }
     });
@@ -2386,7 +2386,7 @@
   function init() { bindKeys(); }
 
   global.DG = global.DG || {};
-  global.DG.fieldCombat = {
+  if (global.DG.fieldGrab) { global.DG.fieldGrab.bind({ K: K, KDV: function () { return KDV; }, FOES: FOES, KB_T: KB_T, active: active, nearestFoe: nearestFoe, foesWithin: foesWithin, hitFoe: hitFoe, push: push }); } global.DG.fieldCombat = {   // W-0277 잡기(field-grab.js)에 속 함수를 넘긴다
     EL: EL, anim2d: anim2d, _handle: handle, FOES: FOES, ROT: ROT, SHADOW_BACK: SHADOW_BACK, RIFT_STEP: RIFT_STEP, RIFT_SLOPE: RIFT_SLOPE, riftOk: riftOk, SIEGE_PULL: SIEGE_PULL, tideMarks: tideMarks, markHit: markHit, foeAtk: foeAtk, KB_T: KB_T, knock: knock, rainFollow: rainFollow, THEMES: THEMES, ELITES: ELITES, ERA_THEMES: ERA_THEMES, ERA_ELITES: ERA_ELITES, eraOfCamp: eraOfCamp, CELL: CELL, ENERGY_MAX: ENERGY_MAX,
     SKILL_CD: SKILL_CD, wpnSlot: wpnSlot, wpnMs: wpnMs, SWAP_CD: SWAP_CD, BODY: BODY, separate: separate, DODGE_COST: DODGE_COST, VAPOR_MUL: VAPOR_MUL,
     /* 판정 층 — 화면 없이 굴린다(자가진단이 쓰는 문) */
