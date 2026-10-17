@@ -1113,7 +1113,7 @@
        여기 한 곳에서 꺼내 쓰고 곧바로 지운다(둘이 겹칠 일은 없다 — 갈래가
        다르면 둘 다 0/1이다). elem 은 castSkill() 이 쏠 때 실어 보낸 원소뿐이라
        melee·aoe·dash 등 나머지 효과에는 안 걸린다(§5-1 "다음 3발" 범위 그대로) */
-    if (p.parryBonus !== 1) { m *= p.parryBonus; p.parryBonus = 1; }
+    if (p.parryBonus !== 1) { m *= p.parryBonus; p.parryBonus = 1; } if (global.DG.sideJust) { m *= global.DG.sideJust.nextMul(); }   // W-0282 저스트 회피 다음 한 타 ×1.3
     if (p.shadowHitT > 0) { m *= p.shadowHitMul; p.shadowHitT = 0; }
     var rm = run.rm;   // 비경 축복(§5-3) — 비경 밖에서는 null
     var crit = forceCrit || Math.random() < critRate() + (rm ? rm.crit : 0);
@@ -1267,7 +1267,7 @@
   function hurtMe(amount) {
     if (!run) { return; }
     var p = run.player;
-    if (p.invuln > 0) { return; }
+    if (p.invuln > 0) { if (global.DG.sideJust) { global.DG.sideJust.evaded(p); } return; }   // W-0282 회피 무적 안에 닿으면 저스트(side-just.js)
     /* 받아치기(§5-1, 무사 고유 조작) — 창 안에 맞으면 무효화하고, 그제서야
        "다음 한 타" 보너스가 켜진다(눌렀다고 바로 켜지지 않는다 — 실제로
        받아쳐야 한다). strike() 가 p.parryBonus 를 꺼내 쓰고 지운다. */
@@ -1548,7 +1548,7 @@
        프레임에 쓸 dt 만 낮춰 이동·물리·쿨다운이 같이 늦춰진다("화면
        전체"가 아니라 판정 dt 만 — 사가나락 dungeon.js `update()`와 같은
        요령). */
-    if (run.hitstopT > 0) { run.hitstopT -= dt; dt *= 0.15; }
+    if (run.hitstopT > 0) { run.hitstopT -= dt; dt *= 0.15; } if (global.DG.sideJust) { dt = global.DG.sideJust.scale(dt); }   // W-0282 저스트 회피 슬로(0.8초 ×0.35)
     /* 비경(§5-3) — 층이 끝났으면 타격 반복문 밖인 여기서 정리한다(무대를 갈아 끼우거나 나가기도 한다) */
     if (run.riftTick && global.DG.rift) {
       run.riftTick = false;
@@ -1761,7 +1761,7 @@
       var gone = es.life <= 0 || es.x < -20 || es.x > stg.width + 20;
       if (!gone && overlap({ x: es.x - 7, y: es.y - 5, w: 14, h: 10 },
                            { x: p.x, y: p.y, w: P_W, h: P_H })) {
-        gone = true;
+        gone = true; if (p.invuln > 0 && global.DG.sideJust) { global.DG.sideJust.evaded(p); }   // W-0282
         if (p.invuln <= 0) {
           hurtMe(es.dmg);
           if (!run) { return; }
@@ -1837,7 +1837,7 @@
           e.patternT -= dt;
           if (e.patternT <= 0 && e.patternKind === 'slam') {
             var slamDx = Math.abs(e.slamX - (p.x + P_W / 2));
-            var slamDy = Math.abs(e.slamY - (p.y + P_H));
+            var slamDy = Math.abs(e.slamY - (p.y + P_H)); if (slamDx < GATE_SLAM_R && slamDy < GATE_SLAM_R && p.invuln > 0 && global.DG.sideJust) { global.DG.sideJust.evaded(p); }   // W-0282
             if (slamDx < GATE_SLAM_R && slamDy < GATE_SLAM_R && p.invuln <= 0) {
               hurtMe(Math.round(e.dmg * 1.3));
               if (!run) { return; }
