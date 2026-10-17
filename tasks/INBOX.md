@@ -14,3 +14,4 @@
 - [ ] 10-17 · (K-0116 넘김) · 자체 `world3d/wpn_{club,scroll,fan,brush}_01.glb`·`mill_01.glb` 도착 → 2나락 `asset3d.js` 486·508·528~530 다섯 줄을 새 id 로(fan 은 brush 재사용 끝냄), 옛 weapons/·hexagon windmill 지우기·ASSET_LICENSES · 쥐는 축이 손에 맞는지 화면 확인 · 웹
 - [ ] 10-17 · (K-0126 넘김) · 1만리·2나락·5천하 빌린 건물·자연·소품·던전 152 → 자체 world3d 짝 표 `tools/world-forge/data/k126_needs.json`(key·부르는 자리·pair, 새 13 포함) → 판마다 asset3d.js·prop3d.js 경로를 짝 id 로·옛 파일 지우기·ASSET_LICENSES · 웹
 - [ ] 10-17 · (K-0130 넘김) · 유니티 `Art/Environment/PBR` 텍스처 28 이 자체 PBR 로 같은 이름 덮어씀(.meta·.mat 그대로) → 재가져오기 뒤 장면 색·결 확인(조약돌이 네모 판석으로, 나무껍질 결 △) · ASSET_GUIDE 의 Poly Haven 줄 · 유니티
+- [ ] 10-17 · "등으로 마무리했었으니 · 내가 말하지 않은 게임들도 첨부 해도 됨" · 참고작을 장르 대표작까지 넓혀 판별 격차표·우선순위 → 티켓(W-0276~0285 다음 묶음) · 페이블 R-0 · 웹
