@@ -99,6 +99,7 @@ window.DG_NO_TUNE = true;
 <script src="js/vendor/three.iife.js"></script>
 <script src="js/toon3d-core.js"></script>
 <script src="js/toon3d.js"></script>
+<script src="js/pbrground3d.js"></script>
 <script src="js/anim-own.js"></script>
 <script src="js/vroid-variant.js"></script>
 <script src="js/asset3d.js"></script>
@@ -158,6 +159,15 @@ window.DG_NO_TUNE = true;
   setTimeout(function () {
     var C = DG.core, S = DG.side, SD = DG.sideData, AU = DG.auto;
 
+    /* W-0295 PBR 땅 — 공용 pbrground3d 값 층(three 없이) */
+    t('PBR 땅(W-0295, 4종횡 바닥·발판) — LOW 는 옛 재질 · MEDIUM 법선 512 · HIGH 법선 hi · 손잡이 story3d.pbr 0 이면 끔', function () {
+      var PG = DG.pbrground3d, C = DG.core; if (!PG || !PG.plan) { return '실패 pbrground3d 없음'; }
+      var k0 = C.tuned('story3d.pbr', 1), lo = PG.plan('LOW', 'story3d'), md = PG.plan('medium', 'story3d'), hi = PG.plan('high', 'story3d'), off, rep = PG.repeatOf(2000, 900, 128), keep = {};
+      try { C.setTune('story3d.pbr', 0); off = PG.plan('high', 'story3d').on === false; } finally { C.setTune('story3d.pbr', k0); }
+      var same = PG.standardFrom(null, keep, { tier: 'high' }) === keep;
+      var ok = lo.on === false && md.on && md.normal === '512_n' && hi.normal === 'hi_n' && hi.rough === '512_r' && off && Math.abs(rep.x - 15.625) < 1e-9 && rep.y > 7 && same && !!PG.SETS.grass && !!PG.SETS.dirt && !!PG.SETS.rock;
+      return ok ? ('LOW 끔 · MEDIUM ' + md.normal + ' · HIGH ' + hi.normal + ' · 반복 ' + rep.x.toFixed(1) + '×' + rep.y.toFixed(1)) : ('실패 ' + JSON.stringify({ lo: lo, md: md, hi: hi, off: off, rep: rep, same: same }));
+    });
     t('2D 카메라 가까이(W-0204) — 720 화면 기본 배율 1.9 → 몸(P_H·1.12·배율) 100~140px(옛 1.35 → 81) · 키 600 아래는 1 그대로', function () {
       var SV = DG.sideView, S = DG.side, z = SV.baseZoom(720), body = S.P_H * 1.12 * z, low = SV.baseZoom(500);
       return Math.abs(z - 1.9) < 1e-9 && body >= 100 && body <= 140 && low === 1 && ('배율 ' + z + ' · 몸 ' + Math.round(body) + 'px') || '실패 ' + z + ' · ' + body + ' · ' + low;

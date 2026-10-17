@@ -18,7 +18,9 @@ const argv = process.argv.slice(2);
 const bi = argv.indexOf('--base');
 const BASE = (bi >= 0 ? argv[bi + 1] : (process.env.PW_BASE || 'http://127.0.0.1:8871/')).replace(/\/?$/, '/');
 const ALL = ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm'];
-const games = argv.filter((a, i) => !a.startsWith('--') && argv[i - 1] !== '--base');
+const games = argv.filter((a, i) => !a.startsWith('--') && argv[i - 1] !== '--base' && argv[i - 1] !== '--tune');
+/* --tune 키=값 (여러 번) — 판마다 HIGH 손잡이 뒤에 덧붙인다. 같은 장면을 손잡이 하나만 바꿔 A/B 촬영할 때(W-0295) */
+const EXTRA = argv.map((a, i) => (a === '--tune' ? argv[i + 1] : null)).filter(Boolean).map((kv) => { const j = kv.indexOf('='), v = kv.slice(j + 1); return [kv.slice(0, j), /^-?\d+(\.\d+)?$/.test(v) ? +v : v]; });
 const BL = JSON.parse(fs.readFileSync(path.join(HERE, '..', '..', 'shared', 'gfx-baseline.json'), 'utf8'));
 const SHOTS = path.join(HERE, 'shots', 'gfx');
 fs.mkdirSync(SHOTS, { recursive: true });
@@ -109,7 +111,7 @@ async function one(browser, g) {
   let m = null, err = '';
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 }); await sleep(1500);
-    await page.evaluate((hi) => { try { localStorage.clear(); } catch (e) { /* 없음 */ } DG.account.create('그래픽'); hi.forEach(([k, v]) => DG.core.setTune(k, v)); }, HIGH[g]);
+    await page.evaluate((hi) => { try { localStorage.clear(); } catch (e) { /* 없음 */ } DG.account.create('그래픽'); hi.forEach(([k, v]) => DG.core.setTune(k, v)); }, HIGH[g].concat(EXTRA));
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 }); await sleep(3500);
     await page.evaluate(() => { const b = document.getElementById('title-continue'); if (b) { b.click(); } }); await sleep(3000);
     await clearIntro(page);

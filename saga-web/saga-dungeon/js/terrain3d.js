@@ -131,17 +131,19 @@
   function fieldGroundMaterial(hex) {
     var t = three();
     if (!t) { return null; }
-    var key = (hex >>> 0).toString(16);
+    var key = (hex >>> 0).toString(16), PG = global.DG.pbrground3d, PF = global.DG.perf, tier = PF && PF.tier ? PF.tier().key : 'MEDIUM', pbr = !!(PG && PG.plan(tier, 'dungeon3d').on);   // W-0295 PBR 땅(공용 pbrground3d) — LOW·손잡이 dungeon3d.pbr 0 이면 옛 툰
+    key += pbr ? ':pbr' : '';
     if (matCache[key]) { return matCache[key]; }
     var grass = loadTex('real_grass.webp'), dirt = loadTex('real_dirt.webp'), stone = loadTex('real_rock.webp');   // W-0196 자체 PBR(K-0093)
     if (!grass || !dirt || !stone) { return null; }
     var TN = global.DG.toon3d;
-    var m = new t.MeshToonMaterial({ color: new t.Color(hex), gradientMap: TN ? TN.ramp() : null });
+    var m = pbr ? new t.MeshStandardMaterial({ color: new t.Color(hex), roughness: 1, metalness: 0 }) : new t.MeshToonMaterial({ color: new t.Color(hex), gradientMap: TN ? TN.ramp() : null });
+    if (pbr) { PG.apply(t, m, { tier: tier, tune: 'dungeon3d', set: 'dirt', tile: 101, w: 202, h: 202 }); }   // 들판 칸 상자(CHUNK 200+2) 윗면에 법선·거칠기 두 번 반복 — 바탕색은 아래 트라이플레이너 그대로
     m.onBeforeCompile = function (shader) { patchShader(shader, grass, dirt, stone); };
     /* onBeforeCompile 이 셰이더 구조 자체를 바꾸므로 캐시 키를 갈라야 한다
        (사가만리 `world3d.js` swayify() 와 같은 이유) — 텍스처는 유니폼 값일
        뿐이라 재질끼리(테마 색이 달라도) 프로그램은 그대로 나눠 쓴다. */
-    m.customProgramCacheKey = function () { return 'terrain3d'; };
+    m.customProgramCacheKey = function () { return pbr ? 'terrain3d-pbr' : 'terrain3d'; };
     matCache[key] = m;
     return m;
   }

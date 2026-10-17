@@ -309,7 +309,7 @@
       groundTN ? groundTN.lambertLike({ color: 0xffffff, map: groundTexture() })
         : new t.MeshLambertMaterial({ color: 0xffffff, map: groundTexture() })
     );
-    ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true;   // W-0293 해 그림자를 받는 땅(realm-shadow3d.js)
+    ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; if (global.DG.pbrground3d) { ground.material = global.DG.pbrground3d.standardFrom(t, ground.material, { tier: tier(), tune: 'realm3d', set: 'grass', tile: 18, w: GROUND_SPAN, h: GROUND_SPAN, gain: C().tuned('realm3d.pbrGain', 1.18) }); }   // W-0295 지역 색 지도는 그대로 + 자체 PBR 풀 법선·거칠기(LOW 옛 재질)   // W-0293 해 그림자를 받는 땅(realm-shadow3d.js)
     scene.add(ground);
 
     /* 바다 — 해협(STRAITS) 자리만 지형이 SEA_LEVEL 아래로 파여 있어서, 이

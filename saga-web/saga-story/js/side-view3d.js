@@ -36,8 +36,8 @@
     var geo = new Tc.ExtrudeGeometry(sh, { depth: 46, bevelEnabled: false, curveSegments: 6 });
     geo.translate(0, 0, -23);
     var dirt = SVp && SVp._dirt ? SVp._dirt(stg) : stg.ground, grass = SVp && SVp._grass ? SVp._grass(stg) : '#6f9f48';
-    m = new Tc.Mesh(geo, LM({ color: dirt, map: dirtMat.map || null })); m.position.set(cx, py, 0); m.receiveShadow = true; g.add(m);
-    var top = new Tc.Mesh(new Tc.BoxGeometry(pw - 4, 7, 48), LM({ color: grass })); top.position.set(cx, py - 3, 0); top.receiveShadow = true; g.add(top);
+    m = new Tc.Mesh(geo, pbrGround(LM({ color: dirt, map: dirtMat.map || null }), PBR_SET[stg.mood] || 'dirt', pw, 46)); m.position.set(cx, py, 0); m.receiveShadow = true; g.add(m);
+    var top = new Tc.Mesh(new Tc.BoxGeometry(pw - 4, 7, 48), pbrGround(LM({ color: grass }), 'grass', pw, 48)); top.position.set(cx, py - 3, 0); top.receiveShadow = true; g.add(top);
     return g;
   }
 
@@ -56,6 +56,13 @@
     if (TN) { return TN.lambertLike(opts); }
     var t = three();
     return t ? new t.MeshLambertMaterial(opts) : null;
+  }
+  /** W-0295 PBR 땅 — 바닥·발판의 자체 타일 그림·사냥터 색은 그대로, 자체 PBR 법선·거칠기(공용 pbrground3d)를 얹은 표준 재질로.
+   *  LOW·손잡이 story3d.pbr 0·공용 파일 없음이면 옛 툰 재질 그대로. 세트는 mood 따라(숲 흙·굴/불 바위·하늘 풀) */
+  var PBR_SET = { forest: 'dirt', cave: 'rock', fire: 'rock', sky: 'grass' };
+  function pbrGround(mat, set, w, h) {
+    var PG = global.DG.pbrground3d, t = three();
+    return PG && t ? PG.standardFrom(t, mat, { tier: effectiveLevel(), tune: 'story3d', set: set, tile: TILE_WORLD * 2, w: w, h: h }) : mat;
   }
 
   var renderer = null, scene = null, camera = null, ready = false;
@@ -598,7 +605,7 @@
       color: stg.ground,
       map: groundTexture(stg.mood, groundSpanX / TILE_WORLD, groundSpanZ / TILE_WORLD)
     });
-    var ground = new Tc.Mesh(new Tc.PlaneGeometry(groundSpanX, groundSpanZ), groundMat);
+    var ground = new Tc.Mesh(new Tc.PlaneGeometry(groundSpanX, groundSpanZ), pbrGround(groundMat, PBR_SET[stg.mood] || 'grass', groundSpanX, groundSpanZ));
     ground.rotation.x = -Math.PI / 2;
     ground.position.set(stg.width / 2, 0, -80);
     ground.receiveShadow = true;

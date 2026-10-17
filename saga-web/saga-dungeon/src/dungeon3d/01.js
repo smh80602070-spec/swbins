@@ -590,7 +590,7 @@
   var texMatCache = {};
   function texMat(hex, url, repU, repV) {
     var toon = TOON_ON();
-    var k = hex + '|' + url + '|' + repU.toFixed(2) + '|' + repV.toFixed(2) + '|' + (toon ? 't' : 'l');
+    var PGm = global.DG.pbrground3d, pset = (/real_(rock|stonewall|gravel)\.webp/.exec(url) || [])[1], pbr = !!(pset && PGm && PGm.plan(effectiveLevel(), 'dungeon3d').on), k = hex + '|' + url + '|' + repU.toFixed(2) + '|' + repV.toFixed(2) + '|' + (toon ? 't' : 'l') + (pbr ? '|p' : '');   // W-0295 PBR
     if (texMatCache[k]) { return texMatCache[k]; }
     var base = rawTex(url);
     /* 로드가 끝나기 전에는 **맵 없이 층 색만**으로 그린다 — 예전의 단색
@@ -599,7 +599,7 @@
        clone 해서 물린다. */
     var m = toon
       ? new T.MeshToonMaterial({ color: new T.Color(hex), flatShading: true, gradientMap: global.DG.toon3d.ramp() })
-      : new T.MeshLambertMaterial({ color: new T.Color(hex), flatShading: true });
+      : new T.MeshLambertMaterial({ color: new T.Color(hex), flatShading: true }); if (pbr) { m = new T.MeshStandardMaterial({ color: new T.Color(hex), flatShading: true, roughness: 1, metalness: 0 }); PGm.apply(T, m, { tier: effectiveLevel(), tune: 'dungeon3d', set: pset, tile: 1, w: repU, h: repV }); }   // W-0295 바닥·벽 = 같은 원본(K-0093)의 법선·거칠기를 바탕색과 같은 반복으로 — 무늬와 요철이 맞는다 · LOW·손잡이 dungeon3d.pbr 0 이면 옛 툰
     onTexReady(url, function () {
       var tx = base.clone();
       tx.wrapS = tx.wrapT = T.RepeatWrapping;
