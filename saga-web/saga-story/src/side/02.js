@@ -250,7 +250,7 @@
       exp: run.expGained, gear: run.gearFound,
       feat: achieveDoneCount() - run.feat0,
       next: Q ? Q.nextTodo() : null,
-      rift: riftSum, rank: global.DG.runRank ? global.DG.runRank.finish() : null   // W-0104 결과 등급
+      rift: riftSum, rank: global.DG.runRank ? global.DG.runRank.finish(stg, run.gold, true) : null   // W-0104 결과 등급 · W-0289 쓰러진 판은 덤 없음
     };
     run = null;
     core.emit('side:end', got);

@@ -1591,13 +1591,13 @@ window.DG_NO_TUNE = true;
       } finally { lpBack(k); }
     });
 
-    t('st.job-2: 결과 등급 ⑤ rankOf — (피격 0·콤보 20·90초)=S, (피격 15·콤보 3·600초)=C · 카드 한 줄', function () {
+    t('st.job-2: 결과 등급 ⑤ rankOf — (피격 0·콤보 20·90초)=S, (피격 15·콤보 3·600초)=D(W-0289 부터 0점은 D) · 카드 한 줄', function () {
       var RR = DG.runRank, a = RR.rankOf({ hits: 0, comboMax: 20, sec: 90 }), c = RR.rankOf({ hits: 15, comboMax: 3, sec: 600 });
       var b = RR.rankOf({ hits: 3, comboMax: 12, sec: 160 });
       RR.start(); RR.onHit(); var none = RR.finish() === null;                 // 셋 못 잡고 나온 판은 등급 없음
       RR.start(); RR.onHit(); RR.onHit(); RR.onHurt(); RR.onHit(); RR.onKill(); RR.onKill(); RR.onKill(); var f = RR.finish();
-      return none && a.rank === 'S' && c.rank === 'C' && f.hits === 1 && f.comboMax === 2 && RR.line(b).indexOf('⭐ 이번 판 등급 ' + b.rank + ' — 피격 3 · 콤보 12 · 2:40') === 0 &&
-        ('S · C · ' + RR.line(b) + ' · 셈(맞으면 콤보 0) 피격 ' + f.hits + ' 최대 콤보 ' + f.comboMax);
+      return none && a.rank === 'S' && c.rank === 'D' && f.hits === 1 && f.comboMax === 2 && RR.line(b).indexOf('⭐ 이번 판 등급 ' + b.rank + ' — 피격 3 · 콤보 12 · 2:40') === 0 &&
+        ('S · D · ' + RR.line(b) + ' · 셈(맞으면 콤보 0) 피격 ' + f.hits + ' 최대 콤보 ' + f.comboMax);
     });
 
     t('무예 점수는 레벨에서 나온다 (세이브에 담지 않는다)', function () {
@@ -6721,6 +6721,32 @@ window.DG_NO_TUNE = true;
         DG.ui.closeSheet();
         return card && btn && open ? '무예 창 카드 · 「성좌도 열기」 → 겹창' : '실패 card=' + card + ' btn=' + !!btn + ' open=' + open;
       });
+    });
+
+    /* ── 사냥 평가 등급 S~D(W-0289) ─────────────────────── */
+    t('사냥 평가(W-0289) — 빠르고 안 맞고 많이 잡으면 S, 느리고 많이 맞으면 D · 깊은 사냥터는 시간·피격을 봐준다', function () {
+      var RR = DG.runRank;
+      var s1 = RR.rankOf({ hits: 0, comboMax: 20, sec: 100, kills: 15, tier: 1 });
+      var d1 = RR.rankOf({ hits: 15, comboMax: 3, sec: 600, kills: 3, tier: 1 });
+      var deep = RR.rankOf({ hits: 4, comboMax: 10, sec: 300, kills: 10, tier: 1 }), deep3 = RR.rankOf({ hits: 4, comboMax: 10, sec: 300, kills: 10, tier: 3 });
+      var tiers = ['field', 'forest', 'cave', 'gisanchae', 'ruin', 'deepcave'].map(function (k) { return RR.tierOf(SD.STAGES.filter(function (q) { return q.key === k; })[0]); }).join('');
+      return s1.rank === 'S' && s1.pt === 9 && d1.rank === 'D' && d1.pt === 0 && deep.pt < deep3.pt && tiers === '123455' &&
+        ('S ' + s1.pt + '점 · D ' + d1.pt + '점 · 같은 기록 급1 ' + deep.rank + '(' + deep.pt + ') → 급3 ' + deep3.rank + '(' + deep3.pt + ') · 급 ' + tiers);
+    });
+    t('사냥 평가(W-0289) — 등급별 덤(S 금 ×1.5 + 🧩 조각 1 · A ×1.2) · 쓰러진 판은 덤 없음 · 사냥터별 최고 기록', function () {
+      var RR = DG.runRank, p = C.save.player, g0 = p.gold, f0 = p.memFrag || 0, stg = { key: '_rk_test', need: 1 };
+      if (!C.save.side) { C.save.side = {}; } delete (C.save.side.rankBest || {})._rk_test;
+      RR.start(); for (var i = 0; i < 20; i++) { RR.onHit(); } for (i = 0; i < 15; i++) { RR.onKill(); }
+      var s = RR.finish(stg, 1000, false);
+      var sOk = s.rank === 'S' && s.bonusGold === 500 && s.shard === 1 && p.gold === g0 + 500 && (p.memFrag || 0) === f0 + 1 && s.best === true && !s.prevBest && RR.bestOf('_rk_test') === 'S';
+      RR.start(); for (i = 0; i < 20; i++) { RR.onHit(); } for (i = 0; i < 15; i++) { RR.onKill(); }
+      var dd = RR.finish(stg, 1000, true);
+      var dOk = dd.rank === 'S' && dd.bonusGold === 0 && dd.shard === 0 && p.gold === g0 + 500 && dd.best === false && RR.line2(dd).indexOf('쓰러져') >= 0;
+      RR.start(); for (i = 0; i < 12; i++) { RR.onHit(); } RR.onHurt(); RR.onHurt(); for (i = 0; i < 5; i++) { RR.onKill(); }
+      var a = RR.finish({ key: '_rk_test2', need: 1 }, 1000, false);
+      var aOk = a.rank === 'A' && a.bonusGold === 200 && a.shard === 0 && a.best === true && RR.bestOf('_rk_test2') === 'A' && RR.line2(a).indexOf('🏆 첫 기록 A') >= 0;
+      p.gold = g0; p.memFrag = f0; delete C.save.side.rankBest._rk_test; delete C.save.side.rankBest._rk_test2;
+      return sOk && dOk && aOk && ('S 덤 +500·조각 +1 · 죽은 S 덤 0 · A 덤 +' + a.bonusGold + ' · ' + RR.line2(s));
     });
 
     t('런타임 에러 없음', function () {

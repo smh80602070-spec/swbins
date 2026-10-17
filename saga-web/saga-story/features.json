@@ -761,5 +761,25 @@
   "ticket": "W-0283",
   "since": "2026-10-17",
   "note": "마비노기식(구조만). 장부 tasks/gameplay/story.md · 세이브 save.life = { gather·cook·play: { xp }, meal, tune, playAt }(옛 세이브 빈 것)"
+ },
+ {
+  "id": "st.run-grade",
+  "name": "사냥 평가 등급 S~D — 한 판(들어가서 나올 때까지)을 피격·최대 연계·시간·처치 수로 점수(합 9) → S≥7·A≥5·B≥3·C≥1·D, 사냥터 급(need 로 1~5)이 깊을수록 시간·피격을 봐줌 · 살아 나온 판만 덤(S 금 ×1.5 + 🧩 기억 조각 1 · A ×1.2 · B ×1.1) · 사냥터별 최고 기록(save.side.rankBest) · 세션 카드 둘째 줄",
+  "files": [
+   "js/runrank.js",
+   "src/side/01.js",
+   "src/side/02.js",
+   "src/ui/01.js"
+  ],
+  "tests": [
+   "사냥 평가(W-0289)",
+   "st.job-2: 결과 등급 ⑤"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0289",
+  "since": "2026-10-17",
+  "note": "던파식(구조만) — W-0104 S·A·B·C 를 넓힘. 장부 tasks/gameplay/story.md · 티켓의 save.side.best 는 옛 칸(최고 사냥터 key)과 겹쳐 rankBest 로 둠"
  }
 ]

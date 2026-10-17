@@ -447,7 +447,7 @@
         (g.rift.clear ? '정복!' : (g.rift.floors + '층 통과')) + ' · 🧩 +' + g.rift.shards +
         ' · 축복 ' + g.rift.boons + '</b></div>';
     }
-    if (g.feat) { html += '<div class="stat-row"><span>업적 진척</span><b>🏅 +' + g.feat + '</b></div>'; } if (g.rank && global.DG.runRank) { html += '<div class="stat-row"><span><b>' + esc(global.DG.runRank.line(g.rank)) + '</b></span></div>'; }   // W-0104
+    if (g.feat) { html += '<div class="stat-row"><span>업적 진척</span><b>🏅 +' + g.feat + '</b></div>'; } if (g.rank && global.DG.runRank) { html += '<div class="stat-row"><span><b>' + esc(global.DG.runRank.line(g.rank)) + '</b></span></div>'; var rl2 = global.DG.runRank.line2 ? global.DG.runRank.line2(g.rank) : ''; if (rl2) { html += '<div class="stat-row"><span>' + esc(rl2) + '</span></div>'; } }   // W-0104 · W-0289 덤·최고 기록 줄
     html += '<div class="card on"><div class="stat-row"><span><b>다음에 할 것</b></span></div>' +
       '<div class="stat-row"><span>' + esc(g.next || '🏃 사냥터로 돌아가기') + '</span></div></div>';
     return html;
