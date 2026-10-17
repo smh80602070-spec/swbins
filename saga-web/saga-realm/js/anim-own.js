@@ -21,7 +21,7 @@
  *   3) 30/60fps 로 촘촘히 표집해 쿼터니언 키로 굽는다. 발이 땅에 붙는 클립은 **FK 로 발바닥 높이를 재서**
  *      엉덩이 높이(hips.dy)를 자동으로 맞춘다 — 무릎을 얼마나 굽혀도 발이 뜨거나 박히지 않는다.
  *
- * 클립 아홉(이름은 `asset3d.mapClips()` 가 알아본다): Idle_Loop · Walk_Loop · Run_Loop · Jump · Land · Attack ·
+ * 클립 아홉(이름은 `asset3d.mapClips()` 가 알아본다 · W-0303: 걷기·달리기는 IK 발 고정, `Pose_*` 는 pose3d.js 가 register 로 더함): Idle_Loop · Walk_Loop · Run_Loop · Jump · Land · Attack ·
  * Hit · Death · Dodge. 모든 클립이 **같은 뼈 전부**를 움직이는 트랙을 갖는다(빠뜨리면 크로스페이드 때 앞 클립의 자세가 남는다).
  *
  * three 없이도 도는 순수 함수(`clipData`)와, three 를 물려 `AnimationClip` 으로 바꾸는 `clipsFor()` 로 나뉜다 —
@@ -252,7 +252,9 @@
 
   /** 키 자세 목록 [[u, pose, ease?], ...] → u(0~1) 로 자세를 보간하는 함수 */
   function keyed(keys) {
-    return function (u) {
+    fnOf.keys = keys;   // W-0303 진단이 들어가기·나오기 간격을 읽는다
+    return fnOf;
+    function fnOf(u) {
       var i, a, b, k, e, out = {}, n;
       if (u <= keys[0][0]) { return keys[0][1]; }
       for (i = 1; i < keys.length; i++) {
@@ -266,7 +268,7 @@
         }
       }
       return keys[keys.length - 1][1];
-    };
+    }
   }
 
   /* ── 클립 정의 ─────────────────────────────────────────── */
@@ -291,18 +293,47 @@
       { 'hips.dz': 0 });
   }
 
+  /* ── 걷기·달리기 (W-0303 발 고정) ───────────────────────
+   * 옛 방식(다리 각을 사인으로 흔듦)은 디딘 발이 땅에서 앞으로 밀렸다(FK 측정 79cm/걸음). 이제 **발 궤적을 먼저 정하고**
+   * 두 뼈 IK(허벅지 L1·정강이 L2, 표준 VRoid 길이)로 다리 각을 푼다 — 디딘 발은 엉덩이 기준 x 가 일정 속도로 뒤로 가고(미끄러짐 0),
+   * 든 발은 부드럽게 앞으로 넘어간다. 엉덩이 높이는 접지 풀이(solveGround)가 디딘 발로 맞추므로 여기선 발 사이 상대만 정한다.
+   *   클립 본래 빠르기: 걷기 보폭 ±0.30m·한 바퀴 1.0초(60% 디딤) → 1.0 m/s(0.59 키/초) · 달리기 ±0.34m·0.66초(35% 디딤·공중 뜸) → 3.0 m/s(1.76 키/초) */
+  var L1 = 0.3637, L2 = 0.4059;
+  /** 엉덩이 관절 기준 발목 목표(x 앞 +, y 아래 −, 표준 m) → { a: 허벅지 앞 들기(°), k: 무릎 굽힘(°) } */
+  function legIK(x, y) {
+    var d = Math.min(L1 + L2 - 0.004, Math.hypot(x, y)) || 0.001;
+    var inner = Math.acos(Math.max(-1, Math.min(1, (L1 * L1 + L2 * L2 - d * d) / (2 * L1 * L2))));
+    var alpha = Math.acos(Math.max(-1, Math.min(1, (L1 * L1 + d * d - L2 * L2) / (2 * L1 * d))));
+    return { a: (Math.atan2(x, -y) + alpha) / D2R, k: (Math.PI - inner) / D2R };
+  }
+  /** 한 다리의 한 바퀴 — ph 0~1(0 에서 발을 디딤), st 디딤 비율, half 보폭 반(m), hMid 발 밑 선 엉덩이 높이, lift 든 발 높이, bob x² 낮춤 */
+  function gaitLeg(ph, st, half, hMid, lift, bob) {
+    ph -= Math.floor(ph);
+    var x, y, foot;
+    if (ph < st) {
+      var u = ph / st;
+      x = half - 2 * half * u;                       // 일정 속도로 뒤로
+      y = -(hMid - bob * x * x);
+      foot = 0;                                      // 디딘 동안은 발바닥 평평(발목을 돌리면 접지점이 밀린다 — 뒤꿈치·발끝 굴림은 K 모캡 몫)
+    } else {
+      var v = (ph - st) / (1 - st), mm = -(1 - st) / st, e = smooth(v) + mm * (2 * v * v * v - 3 * v * v + v);   // 양 끝 기울기 = 디딤 속도(발이 땅에 대해 멈춘 채 떼고 디딘다 — 끝속도 0 이면 땅 곁에서 미끄러진다)
+      x = -half + 2 * half * e;
+      y = -(hMid - bob * x * x) + lift * Math.pow(Math.sin(Math.PI * v), 0.45) * (0.7 + 0.3 * (1 - v));   // 들어 올렸다 앞으로 내려놓는다 — 뗄 때·디딜 때 가파르게(땅 곁에서 멈춰 서 있으면 그게 미끄러짐으로 보인다)
+      foot = 26 * Math.sin(Math.PI * Math.min(1, v * 1.6)) * (1 - v) - 8 * Math.sin(Math.PI * v) * v;   // 뗀 발끝은 처졌다가 디디기 전에 들리고, 디딜 땐 평평(0)으로 돌아온다
+    }
+    var ik = legIK(x, y);
+    return { a: ik.a, k: ik.k, ft: ik.a - ik.k + foot, x: x, stance: ph < st };
+  }
   function walkPose(t01) {
     var ph = t01 * 2 * Math.PI, s = Math.sin(ph);
-    var aL = 26 * s, aR = -aL;
-    var kL = 6 + 42 * pulse(ph, 0, 1.15) + 10 * pulse(ph, 1.9, 0.7);
-    var kR = 6 + 42 * pulse(ph, Math.PI, 1.15) + 10 * pulse(ph, Math.PI + 1.9, 0.7);
-    var ftL = (aL - kL) + 12 * pulse(ph, 4.5, 0.75) - 7 * pulse(ph, 1.25, 0.6);
-    var ftR = (aR - kR) + 12 * pulse(ph, 4.5 - Math.PI, 0.75) - 7 * pulse(ph, 1.25 - Math.PI, 0.6);
-    var afL = -20 * s, afR = 20 * s;                               // 팔은 반대쪽 다리와 함께 나간다
-    return M(BASE, legs(aL, kL, ftL, aR, kR, ftR), {
+    /* 왼발은 t=0.25 에 디딘다(옛 클립과 같은 위상 — 팔·몸통 식의 s 가 그대로 "왼발 앞") */
+    var lg = gaitLeg(t01 - 0.25, 0.6, 0.30, 0.712, 0.075, 0.13), rg = gaitLeg(t01 - 0.75, 0.6, 0.30, 0.712, 0.075, 0.13);
+    var sw = (lg.x - rg.x) / 0.6;                                   // −1~1 왼발 앞 정도(팔은 반대쪽 다리와 함께)
+    var afL = -20 * sw, afR = 20 * sw;
+    return M(BASE, legs(lg.a, lg.k, lg.ft, rg.a, rg.k, rg.ft), {
       'lua.p': -afL, 'rua.p': -afR,
       'lla.y': -(16 + 16 * (afL + 20) / 40), 'rla.y': 16 + 16 * (afR + 20) / 40,
-      'chest.y': 7 * s, 'upper.y': 3 * s, 'hips.y': -5 * s, 'head.y': -4 * s,
+      'chest.y': 7 * sw, 'upper.y': 3 * sw, 'hips.y': -5 * sw, 'head.y': -4 * sw,
       'spine.p': 3, 'chest.p': 1.5, 'hips.dx': -0.01 * s,
       'hips.r': 1.6 * Math.cos(ph), 'chest.r': -1.2 * Math.cos(ph)
     });
@@ -310,17 +341,18 @@
 
   function runPose(t01) {
     var ph = t01 * 2 * Math.PI, s = Math.sin(ph);
-    var aL = 42 * s, aR = -aL;
-    var kL = 16 + 92 * pulse(ph, -0.2, 1.3), kR = 16 + 92 * pulse(ph, Math.PI - 0.2, 1.3);
-    var ftL = (aL - kL) * 0.8 + 16 * pulse(ph, 4.5, 0.8), ftR = (aR - kR) * 0.8 + 16 * pulse(ph, 4.5 - Math.PI, 0.8);
-    var afL = -46 * s, afR = 46 * s;
-    return M(BASE, legs(aL, kL, ftL, aR, kR, ftR), {
+    var lg = gaitLeg(t01 - 0.25, 0.35, 0.34, 0.66, 0.22, 0.2), rg = gaitLeg(t01 - 0.75, 0.35, 0.34, 0.66, 0.22, 0.2);
+    var sw = (lg.x - rg.x) / 0.68;
+    var afL = -46 * sw, afR = 46 * sw;
+    /* 두 발 다 떨어진 동안(왼발 뗀 뒤 0.6~0.75 · 오른발 뗀 뒤 0.1~0.25) 뜬다 — 종 모양으로 */
+    var fl = Math.max(pulse(ph, (0.675) * 2 * Math.PI, 0.55), pulse(ph, (0.175) * 2 * Math.PI, 0.55));
+    return M(BASE, legs(lg.a, lg.k, lg.ft, rg.a, rg.k, rg.ft), {
       'lua.p': -afL, 'rua.p': -afR,
-      'lla.y': -(82 + 8 * s), 'rla.y': 82 - 8 * s,
+      'lla.y': -(82 + 8 * sw), 'rla.y': 82 - 8 * sw,
       'lua.r': -66, 'rua.r': 66,
-      'chest.y': 9 * s, 'upper.y': 4 * s, 'hips.y': -7 * s, 'head.y': -5 * s,
+      'chest.y': 9 * sw, 'upper.y': 4 * sw, 'hips.y': -7 * sw, 'head.y': -5 * sw,
       'spine.p': 6, 'chest.p': 5, 'neck.p': -4, 'head.p': -3, 'hips.dx': -0.012 * s,
-      'lift': 0.05 * s * s
+      'lift': 0.05 * fl
     });
   }
 
@@ -523,11 +555,12 @@
     { name: 'Wpn_bow_0', dur: 0.6, fn: bowA }, { name: 'Wpn_bow_1', dur: 0.55, fn: bowB }, { name: 'Wpn_bow_2', dur: 0.9, fn: bowC }
   ];
   COMBAT.forEach(function (c) { c.loop = false; c.fps = 60; c.ground = true; c.once = true; });
+  var EXTRA = [];   // W-0303 — pose3d.js 가 register() 로 더하는 상황·전투·생활 몸짓(`Pose_*`). 무기 몸짓처럼 이름을 댈 때만 굽는다
 
   /** 클립 표 — 이름은 asset3d.mapClips() 가 알아보는 낱말을 담는다 */
   var CLIPS = [
     { name: 'Idle_Loop', dur: 3.2, loop: true, fps: 30, fn: idlePose, ground: true },
-    { name: 'Walk_Loop', dur: 1.0, loop: true, fps: 30, fn: walkPose, ground: true },
+    { name: 'Walk_Loop', dur: 1.0, loop: true, fps: 60, fn: walkPose, ground: true },
     { name: 'Run_Loop', dur: 0.66, loop: true, fps: 60, fn: runPose, ground: true },
     { name: 'Jump', dur: 0.75, loop: false, fps: 30, fn: jumpPose, ground: true },
     { name: 'Land', dur: 0.5, loop: false, fps: 60, fn: landPose, ground: true },
@@ -536,6 +569,9 @@
     { name: 'Death', dur: 1.6, loop: false, fps: 60, fn: deathPose, ground: true },
     { name: 'Dodge', dur: 0.7, loop: false, fps: 60, fn: dodgePose, ground: true }
   ];
+
+  /** 이름으로 무기·상황 몸짓 정의 찾기(기본 아홉은 아님) */
+  function defOf(name) { var tb = COMBAT.concat(EXTRA), i; for (i = 0; i < tb.length; i++) { if (tb[i].name === name) { return tb[i]; } } return null; }
 
   /* ── 굽기 ─────────────────────────────────────────────── */
 
@@ -566,7 +602,7 @@
     for (ci = 0; ci < POSE_KEYS.length; ci++) {
       bonesOfKey(POSE_KEYS[ci]).forEach(function (nm) { if (rig.by[nm]) { animated.push(nm); } });
     }
-    var table = only ? CLIPS.concat(COMBAT) : CLIPS;   // W-0169 — 무기 몸짓은 이름을 대 달랄 때만 굽는다
+    var table = only ? CLIPS.concat(COMBAT, EXTRA) : CLIPS;   // W-0169 — 무기 몸짓은 이름을 대 달랄 때만 굽는다 (W-0303 EXTRA 도)
     for (ci = 0; ci < table.length; ci++) {
       def = table[ci];
       if (only && only.indexOf(def.name) < 0) { continue; }
@@ -725,11 +761,11 @@
     /* W-0169 — 무기 몸짓 `Wpn_<무기>_<단>` 이름표·길이(초). 없는 이름이면 0 */
     COMBAT_NAMES: COMBAT.map(function (c) { return c.name; }),
     /** W-0197 — 걸음새: 몸 높이당 이동 속도(hps, 키/초) → { slot: 'walk'|'run', rate: 클립 빠르기 } — 순수(손잡이만 읽음).
-     *  클립 본래 빠르기 = 걷기 0.82 키/초(1.4m/s ÷ 1.7m)·달리기 2.9(5m/s ÷ 1.7m). rate 를 0.6~1.7 로 묶어 다리가 미친 듯 돌지 않게 */
+     *  클립 본래 빠르기(W-0303 IK 걷기 뒤) = 걷기 0.59 키/초(1.0m/s ÷ 1.7m)·달리기 1.76(3.0m/s ÷ 1.7m). rate 를 0.6~1.7 로 묶어 다리가 미친 듯 돌지 않게 */
     gait: function (hps, hasRun, wasRun) {
       var C = global.DG.core, tn = function (k, d) { var v = C && C.tuned ? +C.tuned(k, d) : d; return isFinite(v) && v > 0 ? v : d; };
       var v = Math.max(0, +hps || 0), run = hasRun !== false && v >= tn('anim3d.runFrom', 1.4) * (wasRun ? 0.85 : 1);   // 되돌이 — 문턱 곁에서 걷기↔달리기가 프레임마다 뒤집히지 않게
-      var r = v / (run ? tn('anim3d.runHps', 2.9) : tn('anim3d.walkHps', 0.82));
+      var r = v / (run ? tn('anim3d.runHps', 1.76) : tn('anim3d.walkHps', 0.59));
       return { slot: run ? 'run' : 'walk', rate: Math.max(0.6, Math.min(1.7, r)) };
     },
     /** W-0197 — 몸(정규화 키 1 을 키운 shell)의 지난 프레임과의 이동으로 키/초를 잰다. st = 배우마다 둘 작은 객체 · m = matrixWorld.elements · dt 초.
@@ -770,21 +806,58 @@
     /** asset3d 배우(u = node.userData)에 무기 몸짓 액션을 단다 — 몸 파일(u.ownBody)마다 한 번 굽고 캐시. 자체 몸짓이 아닌 몸이면 null(부르는 쪽이 보통 공격) */
     weaponAction: function (u, slot, THREE) {
       if (u.actions && u.actions[slot]) { return slot; }
-      var body = u.ownBody, def = null, i;
-      for (i = 0; i < COMBAT.length; i++) { if (COMBAT[i].name === slot) { def = COMBAT[i]; } }
+      var body = u.ownBody, def = defOf(slot);
       if (!u.ownAnim || !body || !body.ownRig || !def || !THREE || !u.mixer) { return null; }
       var wc = body.wpnClips || (body.wpnClips = {});
       if (!wc[slot]) { wc[slot] = clipsFor(null, THREE, [slot], body.ownRig)[0] || null; }
       if (!wc[slot]) { return null; }
       var act = u.mixer.clipAction(wc[slot]);
-      act.setLoop(THREE.LoopOnce, 1); act.clampWhenFinished = true;
+      if (def.loop) { act.setLoop(THREE.LoopRepeat, Infinity); act.clampWhenFinished = false; } else { act.setLoop(THREE.LoopOnce, 1); act.clampWhenFinished = true; }   // W-0303 붙드는 자세(앉기·낚시)는 반복
       u.actions[slot] = act;
       return slot;
     },
-    combatDur: function (name) { for (var i = 0; i < COMBAT.length; i++) { if (COMBAT[i].name === name) { return COMBAT[i].dur; } } return 0; },
+    combatDur: function (name) { var d = defOf(name); return d ? d.dur : 0; },
+    /** W-0303 — 늦게 굽는 몸짓(무기 Wpn_·상황 Pose_)인가 · 그 클립이 반복인가 · 전환 블렌드 초(무기 0.08 — 한 박자 느린 손맛 금지, 상황 0.25, 나머지 0.2) */
+    extraSlot: function (slot) { return typeof slot === 'string' && /^(Wpn|Pose)_/.test(slot); },
+    loopOf: function (name) { var d = defOf(name); return !!(d && d.loop); },
+    blendOf: function (slot) { return typeof slot !== 'string' ? 0.2 : slot.indexOf('Wpn_') === 0 ? 0.08 : slot.indexOf('Pose_') === 0 ? 0.25 : 0.2; },
+    /** W-0303 — 바깥 파일(pose3d.js)이 클립을 더한다: { name, dur, loop, fn(t01)→pose, fps? }. 같은 이름이면 바꿔 끼운다 */
+    register: function (defs) {
+      defs.forEach(function (d) {
+        var o = { name: d.name, dur: d.dur, loop: !!d.loop, fps: d.fps || 30, fn: d.fn, ground: d.ground !== false, once: !d.loop }, i;
+        for (i = 0; i < EXTRA.length; i++) { if (EXTRA[i].name === o.name) { EXTRA[i] = o; return; } }
+        EXTRA.push(o);
+      });
+    },
+    EXTRA: EXTRA,
+    /** W-0303 — 자세 도구(pose3d.js 가 같은 수식으로 짠다) */
+    lib: { M: M, S: S, legs: legs, keyed: keyed, BASE: BASE, smooth: smooth, easeIn: easeIn, easeOut: easeOut, pulse: pulse, lerp: lerp, legIK: legIK, gaitLeg: gaitLeg },
     makeRig: makeRig, refRig: refRig, rigFromObject3D: rigFromObject3D,
     clipData: clipData, clipsFor: clipsFor, fkAt: fkAt, frameAt: frameAt, localQuats: localQuats, worldFrom: worldFrom,
     groundPoints: groundPoints,
+    /** W-0303 진단 — 발 미끄러짐: 디딘 발의 접지점(뒤꿈치·발볼 중 낮은 것, 땅에서 8mm 안)은 클립 본래 속도 v(m/s, 표준 몸)로 뒤로 가야 한다.
+     *  한 바퀴를 n 등분해 그 어긋남을 더한 것(m) ÷ 2 = 걸음당 미끄러짐. { step: 걸음당 m, worst: 최대 속도 오차 m/s, frames } */
+    footSlip: function (rig, clipName, v, n) {
+      var clip = clipData(rig, [clipName])[0], N = n || 120, dt = clip.duration / N, fr = rig.frame, sides = ['l', 'r'], pts = [], k, i;
+      var contact = function (W, s) {
+        var foot = W[BONES[s + 'foot']], toe = W[BONES[s + 'toe']], out = [], off;
+        off = qrot(qmul(foot.q, qconj(rig.by[BONES[s + 'foot']].wq)), contactOffset(rig, HEEL)); out.push(vadd(foot.p, off));
+        if (toe) { off = qrot(qmul(toe.q, qconj(rig.by[BONES[s + 'toe']].wq)), contactOffset(rig, BALL)); out.push(vadd(toe.p, off)); }
+        return out.map(function (p) { return { up: vdot(p, fr.u) - rig.rest.minUp, f: vdot(p, fr.f) }; });
+      };
+      for (k = 0; k <= N; k++) { var W = fkAt(rig, clip, k * dt); pts.push({ l: contact(W, 'l'), r: contact(W, 'r') }); }
+      var slip = 0, worst = 0, frames = 0;
+      for (k = 1; k <= N; k++) {
+        for (i = 0; i < 2; i++) {
+          var a = pts[k - 1][sides[i]], b = pts[k][sides[i]], j, best = -1;
+          for (j = 0; j < a.length; j++) { if (a[j].up < 0.008 && b[j].up < 0.008 && (best < 0 || b[j].up < b[best].up)) { best = j; } }
+          if (best < 0) { continue; }
+          var d = (b[best].f - a[best].f) + v * dt;
+          slip += Math.abs(d); frames++; worst = Math.max(worst, Math.abs(d / dt));
+        }
+      }
+      return { step: slip / 2, worst: worst, frames: frames };
+    },
     math: { qmul: qmul, qrot: qrot, qconj: qconj, qaxis: qaxis, qslerp: qslerp, vadd: vadd, vsub: vsub, vdot: vdot, vlen: vlen, vcross: vcross }
   };
 })(window);

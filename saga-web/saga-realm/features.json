@@ -1103,5 +1103,26 @@
   "ticket": "W-0290",
   "since": "2026-10-17",
   "note": "문명·AoE 식(구조만). 장부 tasks/gameplay/realm.md · 세이브 save.rtk.tech = { [force]: { pts, done[] } }(옛 세이브 빈 것) · 진형 해금 대신 있는 배율 키만 씀(진형은 war.js 가 능력치로 자동)"
+ },
+ {
+  "id": "rk.pose3d",
+  "name": "상황·전투·생활 몸짓(W-0303) — 공용 pose3d 열둘 + IK 걷기 발 고정 · asset3d.play 가 Pose_ 를 풂(판 연결은 다음 체크포인트)",
+  "files": [
+   "../shared/js/pose3d.js",
+   "../shared/js/anim-own.js",
+   "js/asset3d.js"
+  ],
+  "tests": [
+   "Pose_ 클립 열둘(W-0303)",
+   "앉기·줍기·인사 자세(W-0303)",
+   "자연스러움 — 발 미끄러짐·블렌드·idle 변주(W-0303)",
+   "시선(W-0303)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0303",
+  "since": "2026-10-18",
+  "note": "코드로 굽는 클립(에셋 없음). 손잡이 pose3d.idleEvery 4(±1초)·pose3d.lookMax 60 · anim3d.walkHps 0.59·runHps 1.76(IK 클립 본래 빠르기) · 2D 는 mode2d o.pose 대역(K 동작별 시트 뒤 프레임 치환)"
  }
 ]

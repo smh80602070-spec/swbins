@@ -1168,5 +1168,27 @@
   "ticket": "W-0287",
   "since": "2026-10-17",
   "note": "라스트 에포크·PoE 식(구조만). 장부 tasks/gameplay/dungeon.md · 세이브 save.settings.lootFilter = { rules, hinted } · 판정 DG.lootFilter.judge(dp) · 3D 는 lootBeam(dp, force)"
+ },
+ {
+  "id": "dg.pose3d",
+  "name": "상황·전투·생활 몸짓(W-0303) — 공용 pose3d 열둘 + IK 걷기 발 고정 · 무예 시전 Pose_cast",
+  "files": [
+   "../shared/js/pose3d.js",
+   "../shared/js/anim-own.js",
+   "js/asset3d.js",
+   "src/dungeon3d/04.js"
+  ],
+  "tests": [
+   "Pose_ 클립 열둘(W-0303)",
+   "앉기·줍기·인사 자세(W-0303)",
+   "자연스러움 — 발 미끄러짐·블렌드·idle 변주(W-0303)",
+   "시선(W-0303)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0303",
+  "since": "2026-10-18",
+  "note": "코드로 굽는 클립(에셋 없음). 손잡이 pose3d.idleEvery 4(±1초)·pose3d.lookMax 60 · anim3d.walkHps 0.59·runHps 1.76(IK 클립 본래 빠르기) · 2D 는 mode2d o.pose 대역(K 동작별 시트 뒤 프레임 치환)"
  }
 ]

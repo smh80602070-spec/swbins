@@ -1185,14 +1185,14 @@
       var animC = parts.anim;
       if (own) {
         /* 몸이 조립된 장면에서 실제 뼈를 읽어 그 몸에 맞춰 굽는다 — 몸마다 한 번(캐시), 못 하면 UAL1 로 되돌아간다 */
-        if (!parts.body.ownClips) { parts.body.ownClips = global.DG.ownAnim.clipsFor(model, t) || []; }
+        if (!parts.body.ownClips) { parts.body.ownRig = global.DG.ownAnim.restRig ? global.DG.ownAnim.restRig(model) : null; parts.body.ownClips = global.DG.ownAnim.clipsFor(model, t) || []; }   // W-0303 ownRig = 정지 자세 뼈대(상황 몸짓을 나중에 굽는다)
         if (parts.body.ownClips.length) {
           var oc = parts.body.ownClips, om = new t.AnimationMixer(model.children[0]), oa = {}, oi;
           for (oi = 0; oi < oc.length; oi++) { oa[oc[oi].name] = om.clipAction(oc[oi]); }
           model.userData.mixer = om;
           model.userData.actions = oa;
           model.userData.clipMap = mapClips(oc.map(function (a) { return a.name; }));
-          model.userData.ownAnim = true;
+          model.userData.ownAnim = true; model.userData.ownBody = parts.body;   // W-0303 상황 몸짓 캐시 자리
           if (global.DG.toon3d) { global.DG.toon3d.addOutline(model); global.DG.toon3d.rimActor && global.DG.toon3d.rimActor(model); }
           cb(model);
           return;

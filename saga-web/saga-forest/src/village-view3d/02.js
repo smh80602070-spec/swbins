@@ -121,7 +121,7 @@
       player.group = g;
       player.mixer = g.userData.mixer || null;
       player.actions = g.userData.actions || null;
-      player.clipMap = g.userData.clipMap || null;
+      player.clipMap = g.userData.clipMap || null; player.u = g.userData;   // W-0303 상황 몸짓은 userData(ownBody·mixer)로 굽는다
       g.scale.setScalar(PLAYER_H());
       scene.add(g);
       playAction(player, 'idle');
@@ -131,7 +131,7 @@
   /** entity(player 또는 npc3d 한 칸)의 몸짓을 slot(idle/walk 등)으로 바꾼다 */
   function playAction(entity, slot) {
     if (!entity.actions || !entity.clipMap) { return; }
-    var name = entity.clipMap[slot];
+    var OAp = global.DG.ownAnim, name = entity.clipMap[slot] || (OAp && OAp.extraSlot && OAp.extraSlot(slot) && entity.u ? OAp.weaponAction(entity.u, slot, three()) : null);   // W-0303 Pose_ 몸짓(pose3d)
     if (!name || !entity.actions[name]) { return; }
     var act = entity.actions[name];
     if (entity.action === act) { return; }
@@ -157,7 +157,7 @@
 
   function triggerAction() {
     if (!player.actions || !player.clipMap) { return; }
-    var name = player.clipMap.interaction || player.clipMap.attack;
+    var OAt = global.DG.ownAnim, name = (OAt && OAt.extraSlot && player.u ? OAt.weaponAction(player.u, 'Pose_pick', three()) : null) || player.clipMap.interaction || player.clipMap.attack;   // W-0303 줍기·채집 몸짓
     if (!name || !player.actions[name]) { return; }
     var t = three(), act = player.actions[name];
     if (player.action && player.action !== act) { player.action.fadeOut(0.1); }
@@ -261,10 +261,10 @@
     var moved = Math.hypot(dx, dy);
     var targetYaw = facingYaw;
     if (moved > MOVE_EPS() * (1 / 60)) {
-      targetYaw = Math.atan2(dx, dy);
+      targetYaw = Math.atan2(dx, dy); if (global.DG.pose3d) { global.DG.pose3d.idleVariant(player, 0, false); }   // W-0303 걸으면 변주 끊김
       if (actionTimer <= 0) { var OAg = global.DG.ownAnim, gg = OAg && OAg.gaitOf && player.clipMap ? OAg.gaitOf(player, dt > 0 ? moved / dt * WORLD_SCALE() / PLAYER_H() : 0) : { slot: 'walk', rate: 1 }; playAction(player, gg.slot); if (player.mixer) { player.mixer.timeScale = gg.rate; } }   // W-0197 키/초로 걷기·달리기·빠르기
     } else if (actionTimer <= 0) {
-      playAction(player, 'idle'); if (player.mixer) { player.mixer.timeScale = 1; }
+      var P3s = global.DG.pose3d, fishing = !!(V.fishState && V.fishState()); playAction(player, fishing ? 'Pose_fish' : (P3s ? P3s.idleVariant(player, Date.now() / 1000, true) : null) || 'idle'); if (player.mixer) { player.mixer.timeScale = 1; }
     }
     if (actionTimer > 0) { actionTimer = Math.max(0, actionTimer - dt); if (player.mixer) { player.mixer.timeScale = 1; } }
     lastPX = px; lastPY = py;
@@ -339,7 +339,7 @@
             ent.yaw = angleLerp(ent.yaw || 0, Math.atan2(mdx, mdy), turnLerpK(dt));
             ent.group.rotation.y = ent.yaw;
           }
-          if (ent.actions) { playAction(ent, movedNow ? 'walk' : 'idle'); }
+          if (ent.actions) { playAction(ent, movedNow ? 'walk' : (global.DG.pose3d && ent.u ? global.DG.pose3d.idleVariant(ent, Date.now() / 1000, true) : null) || 'idle'); }   // W-0303 사람도 서 있으면 둘러보기·체중 옮기기
           ent.lastX = p.x; ent.lastY = p.y;
         }
         applyShadowLOD(ent, d);

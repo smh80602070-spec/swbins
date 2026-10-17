@@ -702,14 +702,14 @@
       var animC = parts.anim;
       if (own) {
         /* 몸이 조립된 장면에서 실제 뼈를 읽어 그 몸에 맞춰 굽는다 — 몸마다 한 번(캐시). 못 만들면 UAL1 길로 되돌아간다 */
-        if (!parts.body.ownClips) { parts.body.ownClips = global.DG.ownAnim.clipsFor(model, t) || []; }
+        if (!parts.body.ownClips) { parts.body.ownRig = global.DG.ownAnim.restRig ? global.DG.ownAnim.restRig(model) : null; parts.body.ownClips = global.DG.ownAnim.clipsFor(model, t) || []; }   // W-0303 ownRig = 정지 자세 뼈대(상황 몸짓을 나중에 굽는다)
         if (parts.body.ownClips.length) {
           var oc = parts.body.ownClips, om = new t.AnimationMixer(model.children[0]), oa = {}, oi;
           for (oi = 0; oi < oc.length; oi++) { oa[oc[oi].name] = om.clipAction(oc[oi]); }
           model.userData.mixer = om;
           model.userData.actions = oa;
           model.userData.clipMap = mapClips(oc.map(function (a) { return a.name; }));
-          model.userData.ownAnim = true;
+          model.userData.ownAnim = true; model.userData.ownBody = parts.body;   // W-0303 상황 몸짓 캐시 자리
           animC = null;                              // 아래 UAL1 길은 건너뛴다
         } else {
           own = false;
@@ -905,13 +905,14 @@
   function play(model, slot, force) {
     var u = model && model.userData;
     if (!u || !u.mixer) { return false; }
-    var name = u.clipMap && u.clipMap[slot];
+    var OA = global.DG.ownAnim, extra = OA && OA.extraSlot && OA.extraSlot(slot);   // W-0303 상황 몸짓(Pose_)은 그 몸에 늦게 굽는다
+    var name = (u.clipMap && u.clipMap[slot]) || (extra && OA.weaponAction ? OA.weaponAction(u, slot, three()) : null);
     var next = name && u.actions[name];
     if (!next) { return false; }
     if (u.anim === slot && !force) { return true; }
-    var prev = u.anim && u.clipMap[u.anim] && u.actions[u.clipMap[u.anim]];
+    var prev = u.curAct || (u.anim && u.clipMap[u.anim] && u.actions[u.clipMap[u.anim]]);
     var t = three();
-    if (ONE_SHOT[slot]) {
+    if (ONE_SHOT[slot] || (extra && !OA.loopOf(slot))) {
       next.setLoop(t.LoopOnce, 1);
       next.clampWhenFinished = true;
     } else {
@@ -919,8 +920,8 @@
       next.clampWhenFinished = false;
     }
     next.reset().play();
-    if (prev && prev !== next) { prev.crossFadeTo(next, 0.15, false); }
-    u.anim = slot;
+    if (prev && prev !== next) { prev.crossFadeTo(next, extra ? OA.blendOf(slot) : 0.15, false); }
+    u.anim = slot; u.curAct = next;   // W-0303 Pose_ 자리는 clipMap 에 없어 틀던 액션을 따로 든다
     return true;
   }
   function step(model, o) {

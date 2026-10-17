@@ -1456,7 +1456,7 @@
       /* 교전 몸짓(`playAnim`) 이 걸려 있으면 그 자리 이름을 준다 — 끝나면
          (`animUntil` 지나면) 도로 걷기/서기로 돌아간다. 클립이 없으면
          `asset3d.play` 가 조용히 실패하니 여기서 따로 안 가른다 */
-      var animNow = (a.animUntil && now < a.animUntil) ? a.animName : undefined;
+      var animNow = (a.animUntil && now < a.animUntil) ? a.animName : undefined; if (animNow === undefined && a === actors.me) { animNow = meLifeSlot(a, walk, now / 1000) || undefined; }   // W-0303 낚시 대기·인사·idle 변주
       global.DG.actor3d.step(a.node, { t: now / 1000, walking: walk, phase: phase, anim: animNow });
     } else {
       a.node.scale.set(h, h, 1);
@@ -1686,8 +1686,8 @@
       var npq = TSm.who === 'me' ? TSm.lst : TSm.spk;
       var mdd = Math.atan2(npq.x - mx, npq.y - my) - meA.ang;
       meA.ang += Math.atan2(Math.sin(mdd), Math.cos(mdd)) * 0.18;
-      meA.node.rotation.y = meA.ang;
-    }
+      meA.node.rotation.y = meA.ang; meA.node.userData.look = { x: npq.x, y: meA.node.position.y + 1.45 * meA.node.scale.y, z: npq.y };   // W-0303 시선 — 말 거는 사람을 눈으로 따라간다
+    } else if (meA.node.userData.look) { meA.node.userData.look = null; }
     if (TFm && meA.mesh) {
       var meTalk = !!(TSm && TSm.who === 'me');
       TFm.pose(T, meA.node, { speaking: meTalk && TSm.speaking, vowel: meTalk ? TSm.vowel : null, open: meTalk ? TSm.open : 0,
@@ -1997,7 +1997,7 @@
 
   /** 나 또는 상대에게 몸짓을 하나 재생한다(공격·피격·회피) — `who` 는 'me'·'foe'.
    *  클립이 없는 몸(도형 배우, 아직 안 받은 GLB)이면 조용히 아무 일도 안 한다. */
-  function playAnim(who, name, ms) {
+  function meLifeSlot(a, walk, nowS) { var P3 = global.DG.pose3d; if (!P3) { return null; } var FS = global.DG.fishing, fs = FS && FS.state ? FS.state().state : null, TS = talkShot(), wave = P3.once(a, 'talk', !!TS, nowS, 'Pose_wave'); if (walk) { P3.idleVariant(a, nowS, false); return null; } if (fs === 'wait' || fs === 'nibble') { return 'Pose_fish'; } return wave || (TS ? null : P3.idleVariant(a, nowS, true)); }   /* W-0303 내 생활 몸짓: 낚시 기다릴 땐 Pose_fish, 대화가 열리면 처음 한 번 Pose_wave, 서 있으면 3~5초마다 idle 변주(걸으면 끊김) */ function playAnim(who, name, ms) {
     var key = who === 'foe' ? 'duelfoe' : (who === 'ally' ? 'ally' : (actors[who] ? who : 'me'));
     var a = actors[key];
     if (!a) { return false; }

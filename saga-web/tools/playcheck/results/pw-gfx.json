@@ -1,26 +1,26 @@
 {
- "at": "2026-10-17T15:06:42.346Z",
- "base": "http://127.0.0.1:9336/",
+ "at": "2026-10-17T23:17:41.226Z",
+ "base": "http://127.0.0.1:2048/",
  "runs": [
   {
-   "game": "saga-realm",
+   "game": "saga-go",
    "err": "",
    "m": {
-    "calls": 22,
-    "targets": 20,
-    "objects": 2665,
-    "toon": 52,
-    "cast": 1080,
+    "calls": 44,
+    "targets": 40,
+    "objects": 4481,
+    "toon": 340,
+    "cast": 41,
     "sun": 1,
-    "sky": 2,
-    "pbr": 163,
-    "std": 202,
+    "sky": 1,
+    "pbr": 35,
+    "std": 40,
     "toneMapping": 7,
     "shadowMap": true,
     "postStats": {
      "ready": true,
      "failed": false,
-     "frames": 66,
+     "frames": 42,
      "on": true,
      "tier": "HIGH",
      "tone": "neutral",
@@ -37,7 +37,120 @@
      "on": true,
      "ready": true,
      "failed": false,
-     "frames": 66,
+     "frames": 42,
+     "tier": "HIGH",
+     "samples": 12,
+     "size": "640x360",
+     "radius": 2.4,
+     "intensity": 0.85
+    },
+    "has": {
+     "toon": true,
+     "tonemap": true,
+     "post": true,
+     "ssao": true,
+     "shadow": true,
+     "sun": true,
+     "sky": true,
+     "pbr": true
+    }
+   },
+   "rows": [
+    {
+     "id": "toon",
+     "name": "툰 재질(셀 셰이딩·림·얼굴 그림자)",
+     "na": false,
+     "ok": true,
+     "ticket": null
+    },
+    {
+     "id": "tonemap",
+     "name": "톤매핑",
+     "na": false,
+     "ok": true,
+     "ticket": null
+    },
+    {
+     "id": "post",
+     "name": "후처리(블룸·색보정)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0292"
+    },
+    {
+     "id": "ssao",
+     "name": "SSAO(구석 그늘)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0292"
+    },
+    {
+     "id": "shadow",
+     "name": "해 그림자(드리우는 메시)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0293"
+    },
+    {
+     "id": "sun",
+     "name": "해(방향광)",
+     "na": false,
+     "ok": true,
+     "ticket": null
+    },
+    {
+     "id": "sky",
+     "name": "하늘(돔·배경 텍스처)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0294"
+    },
+    {
+     "id": "pbr",
+     "name": "PBR 재질(표준 재질 + 맵)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0295"
+    }
+   ],
+   "missing": []
+  },
+  {
+   "game": "saga-forest",
+   "err": "",
+   "m": {
+    "calls": 55,
+    "targets": 50,
+    "objects": 3155,
+    "toon": 330,
+    "cast": 386,
+    "sun": 1,
+    "sky": 1,
+    "pbr": 1,
+    "std": 1,
+    "toneMapping": 7,
+    "shadowMap": true,
+    "postStats": {
+     "ready": true,
+     "failed": false,
+     "frames": 46,
+     "on": true,
+     "tier": "HIGH",
+     "tone": "neutral",
+     "size": "1280x720",
+     "msaa": 4,
+     "mips": 4,
+     "exposure": 1,
+     "bloom": 0.234,
+     "ao": "12표본 640x360",
+     "sat": 1,
+     "temp": 0
+    },
+    "ssaoStats": {
+     "on": true,
+     "ready": true,
+     "failed": false,
+     "frames": 46,
      "tier": "HIGH",
      "samples": 12,
      "size": "640x360",

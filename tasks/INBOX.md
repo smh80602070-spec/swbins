@@ -15,3 +15,4 @@
 - [ ] 10-17 · (자체툴 K-0128 → 고돗) · 2나락 방 킷·섬 밑동 사실판 world/real · KayKit·assets/dungeon 지움 — 시트 ③ · 고돗
 - [ ] 10-17 · (자체툴 K-0129 → 유니티) · PolyHaven 테스트 씬만·식물 3·짐승 셋 정리 — 시트 ④ · 유니티
 - [ ] 10-17 · (자체툴 K-0128 괴물 → 고돗) · 자체 괴물 몸 111 고돗 배치 끝, monster_body.gd shape→id 표 — 시트 ⑤ · 고돗
+- 10-18 사용자(페이블 세션): "사람 몫(human:true) 항목은 없어도 될 것 같다 — 자동 QC 에서 충분히 확인 가능" → R-0: features.json human 칸을 자동 QC(playcheck·pw-gfx·촬영 판정)로 대체하는 체제 티켓(SAGA-ARCH §3.1 등급 규칙 손봄) · 웹

@@ -1153,5 +1153,28 @@
   "ticket": "W-0286",
   "since": "2026-10-17",
   "note": "레전드 아르세우스식(구조만). 장부 tasks/gameplay/go.md · 세이브 안 씀(스폰 칸 spotted·fleeing·charging 은 판 안)"
+ },
+ {
+  "id": "go.pose3d",
+  "name": "상황·전투·생활 몸짓(W-0303 모션 묶음 1) — 공용 pose3d 열둘 + IK 걷기 발 고정 · 낚시 대기·대화 인사·idle 변주·시선 · 원소 시전",
+  "files": [
+   "../shared/js/pose3d.js",
+   "../shared/js/anim-own.js",
+   "js/asset3d.js",
+   "src/world3d/04-actors.js",
+   "js/field-combat.js"
+  ],
+  "tests": [
+   "Pose_ 클립 열둘(W-0303)",
+   "앉기·줍기·인사 자세(W-0303)",
+   "자연스러움 — 발 미끄러짐·블렌드·idle 변주(W-0303)",
+   "시선(W-0303)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0303",
+  "since": "2026-10-18",
+  "note": "코드로 굽는 클립(에셋 없음). 손잡이 pose3d.idleEvery 4(±1초)·pose3d.lookMax 60 · anim3d.walkHps 0.59·runHps 1.76(IK 클립 본래 빠르기) · 2D 는 mode2d o.pose 대역(K 동작별 시트 뒤 프레임 치환)"
  }
 ]

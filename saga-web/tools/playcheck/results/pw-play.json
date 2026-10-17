@@ -1,55 +1,55 @@
 {
- "base": "http://127.0.0.1:9336/",
- "at": "2026-10-17T15:05:31.806Z",
+ "base": "http://127.0.0.1:2048/",
+ "at": "2026-10-17T23:16:20.647Z",
  "runs": [
   {
-   "game": "saga-realm",
+   "game": "saga-go",
    "device": "pc",
    "ok": true,
    "checks": [
     {
      "name": "부팅(가입→첫 관문→들어감)",
      "ok": true,
-     "detail": "16006ms ",
-     "ms": 16006,
+     "detail": "27166ms ",
+     "ms": 27166,
      "skip": false,
      "warn": false
     },
     {
      "name": "위치를 읽을 수 있다",
      "ok": true,
-     "detail": "null",
-     "ms": 3,
-     "skip": true,
+     "detail": "{\"x\":0,\"y\":0}",
+     "ms": 1020,
+     "skip": false,
      "warn": false
     },
     {
      "name": "FPS(1초)",
      "ok": true,
-     "detail": "62 fps(헤드리스 swiftshader)",
-     "ms": 1011,
+     "detail": "3 fps(헤드리스 swiftshader)",
+     "ms": 2005,
      "skip": false,
-     "warn": false
+     "warn": true
     },
     {
      "name": "키 4방향 이동(3/4 이상)",
      "ok": true,
-     "detail": "D×? S×? Left×? Up×?",
-     "skip": true
+     "detail": "D○2.4 S○2.4 Left○3.2 Up○3.2",
+     "skip": false
     },
     {
      "name": "마우스 끌기 이동",
      "ok": true,
-     "detail": "이동 -1.0",
-     "ms": 4240,
-     "skip": false,
+     "detail": "이 판은 끌기가 걷기가 아님",
+     "ms": 0,
+     "skip": true,
      "warn": false
     },
     {
      "name": "☰ 메뉴 → 첫 칸 창 → 닫기 → 키 이동",
      "ok": true,
-     "detail": "창 열림 · 닫힘 true · D×? A×? S×? W×?",
-     "ms": 8795,
+     "detail": "창 열림 · 닫힘 true · D○3.2",
+     "ms": 10322,
      "skip": false,
      "warn": false
     },
@@ -57,31 +57,23 @@
      "name": "HUD 겹침(보이는 고정 요소 쌍)",
      "ok": true,
      "detail": "없음",
-     "ms": 5,
+     "ms": 404,
      "skip": false,
      "warn": false
     },
     {
-     "name": "3D 지도 끌기(panBy)",
+     "name": "클릭 이동(빈 땅 → 걷기 · 짐승 → 만남)",
      "ok": true,
-     "detail": "3D 지도 꺼짐",
-     "ms": 1,
-     "skip": true,
-     "warn": false
-    },
-    {
-     "name": "다음 달(next-month) 예외 없음",
-     "ok": true,
-     "detail": "turn 0→1",
-     "ms": 2673,
+     "detail": "짐승을 눌러 만남(정상 반응) · 만남@640,302",
+     "ms": 4034,
      "skip": false,
      "warn": false
     },
     {
      "name": "새로 고침 → 이어하기 → 들어감",
      "ok": true,
-     "detail": "null",
-     "ms": 7275,
+     "detail": "{\"x\":2.4000000000000004,\"y\":-0.7999999999999998}",
+     "ms": 23651,
      "skip": false,
      "warn": false
     },
@@ -92,61 +84,63 @@
     }
    ],
    "fails": [],
-   "warns": [],
+   "warns": [
+    "FPS(1초)"
+   ],
    "shots": [
-    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-realm-pc-0.png",
-    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-realm-pc-menu.png",
-    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-realm-pc-1.png"
+    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-go-pc-0.png",
+    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-go-pc-menu.png",
+    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-go-pc-1.png"
    ]
   },
   {
-   "game": "saga-realm",
+   "game": "saga-go",
    "device": "phone",
    "ok": true,
    "checks": [
     {
      "name": "부팅(가입→첫 관문→들어감)",
      "ok": true,
-     "detail": "15660ms ",
-     "ms": 15660,
+     "detail": "18613ms ",
+     "ms": 18613,
      "skip": false,
      "warn": false
     },
     {
      "name": "위치를 읽을 수 있다",
      "ok": true,
-     "detail": "null",
-     "ms": 5,
-     "skip": true,
+     "detail": "{\"x\":0,\"y\":0}",
+     "ms": 226,
+     "skip": false,
      "warn": false
     },
     {
      "name": "FPS(1초)",
      "ok": true,
-     "detail": "62 fps(헤드리스 swiftshader)",
-     "ms": 1002,
+     "detail": "11 fps(헤드리스 swiftshader)",
+     "ms": 1147,
      "skip": false,
      "warn": false
     },
     {
      "name": "키 4방향 이동(3/4 이상)",
      "ok": true,
-     "detail": "D×? S×? Left×? Up×?",
-     "skip": true
+     "detail": "D○8.0 S○5.6 Left○6.4 Up○8.8",
+     "skip": false
     },
     {
-     "name": "터치 이동(joy:#rjoy)",
+     "name": "터치 이동(joy:#gjoy)",
      "ok": true,
-     "detail": "이동 -1.0 @68,694",
-     "ms": 4400,
+     "detail": "이동 39.1 @73,635",
+     "ms": 6267,
      "skip": false,
      "warn": false
     },
     {
      "name": "☰ 메뉴 → 첫 칸 창 → 닫기 → 키 이동",
      "ok": true,
-     "detail": "창 열림 · 닫힘 true · D×? A×? S×? W×?",
-     "ms": 8024,
+     "detail": "창 열림 · 닫힘 true · D○9.5",
+     "ms": 6002,
      "skip": false,
      "warn": false
     },
@@ -154,31 +148,23 @@
      "name": "HUD 겹침(보이는 고정 요소 쌍)",
      "ok": true,
      "detail": "없음",
-     "ms": 5,
+     "ms": 84,
      "skip": false,
      "warn": false
     },
     {
-     "name": "3D 지도 끌기(panBy)",
+     "name": "클릭 이동(빈 땅 → 걷기 · 짐승 → 만남)",
      "ok": true,
-     "detail": "3D 지도 꺼짐",
-     "ms": 1,
-     "skip": true,
-     "warn": false
-    },
-    {
-     "name": "다음 달(next-month) 예외 없음",
-     "ok": true,
-     "detail": "turn 0→1",
-     "ms": 2661,
+     "detail": "걷기 18.3 @195,354",
+     "ms": 3307,
      "skip": false,
      "warn": false
     },
     {
      "name": "새로 고침 → 이어하기 → 들어감",
      "ok": true,
-     "detail": "null",
-     "ms": 7232,
+     "detail": "{\"x\":48.0676753488217,\"y\":-34.77023086437659}",
+     "ms": 9892,
      "skip": false,
      "warn": false
     },
@@ -191,9 +177,191 @@
    "fails": [],
    "warns": [],
    "shots": [
-    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-realm-phone-0.png",
-    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-realm-phone-menu.png",
-    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-realm-phone-1.png"
+    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-go-phone-0.png",
+    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-go-phone-menu.png",
+    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-go-phone-1.png"
+   ]
+  },
+  {
+   "game": "saga-forest",
+   "device": "pc",
+   "ok": true,
+   "checks": [
+    {
+     "name": "부팅(가입→첫 관문→들어감)",
+     "ok": true,
+     "detail": "19607ms ",
+     "ms": 19607,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "위치를 읽을 수 있다",
+     "ok": true,
+     "detail": "{\"x\":600,\"y\":440.00000000000006}",
+     "ms": 783,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "FPS(1초)",
+     "ok": true,
+     "detail": "5 fps(헤드리스 swiftshader)",
+     "ms": 1626,
+     "skip": false,
+     "warn": true
+    },
+    {
+     "name": "키 4방향 이동(3/4 이상)",
+     "ok": true,
+     "detail": "D○47.2 S○35.4 Left○47.2 Up○47.2",
+     "skip": false
+    },
+    {
+     "name": "마우스 끌기 이동",
+     "ok": true,
+     "detail": "이동 123.0",
+     "ms": 15769,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "☰ 메뉴 → 첫 칸 창 → 닫기 → 키 이동",
+     "ok": true,
+     "detail": "창 열림 · 닫힘 true · D○47.2",
+     "ms": 10381,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "HUD 겹침(보이는 고정 요소 쌍)",
+     "ok": true,
+     "detail": "없음",
+     "ms": 418,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "클릭 이동(moveTarget)",
+     "ok": true,
+     "detail": "이동 35.4 목표 true @#map3d",
+     "ms": 4867,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "새로 고침 → 이어하기 → 들어감",
+     "ok": true,
+     "detail": "{\"x\":600,\"y\":440.00000000000006}",
+     "ms": 16513,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "페이지 예외·console.error 없음",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "fails": [],
+   "warns": [
+    "FPS(1초)"
+   ],
+   "shots": [
+    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-forest-pc-0.png",
+    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-forest-pc-menu.png",
+    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-forest-pc-1.png"
+   ]
+  },
+  {
+   "game": "saga-forest",
+   "device": "phone",
+   "ok": true,
+   "checks": [
+    {
+     "name": "부팅(가입→첫 관문→들어감)",
+     "ok": true,
+     "detail": "22286ms ",
+     "ms": 22286,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "위치를 읽을 수 있다",
+     "ok": true,
+     "detail": "{\"x\":600,\"y\":440.00000000000006}",
+     "ms": 1035,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "FPS(1초)",
+     "ok": true,
+     "detail": "4 fps(헤드리스 swiftshader)",
+     "ms": 1605,
+     "skip": false,
+     "warn": true
+    },
+    {
+     "name": "키 4방향 이동(3/4 이상)",
+     "ok": true,
+     "detail": "D○35.4 S○35.4 Left○35.4 Up○35.4",
+     "skip": false
+    },
+    {
+     "name": "터치 이동(joy:#vjoy)",
+     "ok": true,
+     "detail": "이동 188.8 @73,635",
+     "ms": 17073,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "☰ 메뉴 → 첫 칸 창 → 닫기 → 키 이동",
+     "ok": true,
+     "detail": "창 열림 · 닫힘 true · D○35.4",
+     "ms": 14590,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "HUD 겹침(보이는 고정 요소 쌍)",
+     "ok": true,
+     "detail": "없음",
+     "ms": 534,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "클릭 이동(moveTarget)",
+     "ok": true,
+     "detail": "이동 35.4 목표 true @#map3d",
+     "ms": 5464,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "새로 고침 → 이어하기 → 들어감",
+     "ok": true,
+     "detail": "{\"x\":600,\"y\":440.00000000000006}",
+     "ms": 17193,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "페이지 예외·console.error 없음",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "fails": [],
+   "warns": [
+    "FPS(1초)"
+   ],
+   "shots": [
+    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-forest-phone-0.png",
+    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-forest-phone-menu.png",
+    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-forest-phone-1.png"
    ]
   }
  ]

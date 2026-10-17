@@ -1348,12 +1348,12 @@
   function play(node, slot) {
     var u = node.userData;
     if (!u.mixer || u.anim === slot) { return false; }
-    var OA = global.DG.ownAnim, name = (u.clipMap && u.clipMap[slot]) || (OA && OA.weaponAction && /^Wpn_/.test(slot) ? OA.weaponAction(u, slot, three()) || (u.clipMap && u.clipMap.attack) : null);   // W-0171 무기 몸짓
+    var OA = global.DG.ownAnim, name = (u.clipMap && u.clipMap[slot]) || (OA && OA.weaponAction && OA.extraSlot(slot) ? OA.weaponAction(u, slot, three()) || (u.clipMap && u.clipMap[slot.indexOf('Pose_') === 0 ? 'idle' : 'attack']) : null);   // W-0171 무기 몸짓 · W-0303 상황 몸짓(Pose_, 없으면 idle)
     var next = name && u.actions[name];
     if (!next) { return false; }
     var prev = u.curAct || (u.anim && u.clipMap[u.anim] && u.actions[u.clipMap[u.anim]]);   // 무기 몸짓 자리는 clipMap 에 없어 틀던 액션을 따로 든다
     next.reset().play();
-    if (prev && prev !== next) { prev.crossFadeTo(next, slot.indexOf('Wpn_') === 0 ? 0.08 : 0.2, false); }
+    if (prev && prev !== next) { prev.crossFadeTo(next, OA && OA.blendOf ? OA.blendOf(slot) : 0.2, false); }   // W-0303 블렌드 무기 0.08·상황 0.25·나머지 0.2
     u.anim = slot; u.curAct = next;
     return true;
   }

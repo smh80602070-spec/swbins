@@ -1,176 +1,342 @@
 {
  "script": "pw-visual-close.mjs",
- "pass": 6,
- "total": 6,
+ "pass": 15,
+ "total": 15,
  "scenes": [
   {
-   "game": "saga-story",
-   "key": "1-town",
-   "title": "마을 3D 배경(HIGH)",
+   "game": "saga-go",
+   "key": "1-world3d",
+   "title": "마을 3D(등 뒤 카메라)",
    "feats": [
-    "st.side-view3d",
-    "st.asset3d"
+    "go.world3d",
+    "go.asset3d"
    ],
-   "file": "shots/visual-20261007/saga-story-1-town.png",
+   "file": "shots/visual-20261007/saga-go-1-world3d.png",
    "px": {
-    "mean": 42.1,
-    "std": 27.1,
-    "bins": 240
+    "mean": 114.2,
+    "std": 38.2,
+    "bins": 328
    },
    "metrics": {
-    "active": true,
-    "q": "high",
-    "level": "high",
-    "post": {
-     "ready": true,
-     "failed": false,
-     "frames": 7,
+    "on": true,
+    "tilt": 2,
+    "gl": {
+     "calls": 1,
+     "tris": 2,
+     "geos": 177,
+     "texs": 188,
+     "progs": 49,
+     "w": 1280,
+     "h": 720,
+     "dpr": 1
+    },
+    "me": {
+     "visible": true
+    }
+   }
+  },
+  {
+   "game": "saga-go",
+   "key": "2-close",
+   "title": "인물 가까이(휠로 당김)",
+   "feats": [
+    "go.asset3d",
+    "go.world3d"
+   ],
+   "file": "shots/visual-20261007/saga-go-2-close.png",
+   "px": {
+    "mean": 112.2,
+    "std": 38.6,
+    "bins": 360
+   },
+   "metrics": {
+    "on": true,
+    "tilt": 2,
+    "gl": {
+     "calls": 201,
+     "tris": 308240,
+     "geos": 178,
+     "texs": 185,
+     "progs": 85,
+     "w": 1280,
+     "h": 720,
+     "dpr": 1
+    },
+    "me": {
+     "visible": true
+    },
+    "zoom": 0.7
+   }
+  },
+  {
+   "game": "saga-go",
+   "key": "3-duel",
+   "title": "결투(실시간 전투) 화면",
+   "feats": [
+    "go.rogue-action"
+   ],
+   "file": "shots/visual-20261007/saga-go-3-duel.png",
+   "px": {
+    "mean": 41.8,
+    "std": 22.2,
+    "bins": 120
+   },
+   "metrics": {
+    "on": true,
+    "tilt": 2,
+    "gl": {
+     "calls": 237,
+     "tris": 310228,
+     "geos": 179,
+     "texs": 185,
+     "progs": 85,
+     "w": 1280,
+     "h": 720,
+     "dpr": 1
+    },
+    "me": {
+     "visible": true
+    }
+   }
+  },
+  {
+   "game": "saga-go",
+   "key": "4-burst",
+   "title": "전투 연출 알갱이(불꽃·검기·흙먼지)",
+   "feats": [
+    "go.battle3d"
+   ],
+   "file": "shots/visual-20261007/saga-go-4-burst.png",
+   "px": {
+    "mean": 109.4,
+    "std": 39.2,
+    "bins": 327
+   },
+   "metrics": {
+    "on": true,
+    "tilt": 2,
+    "gl": {
+     "calls": 276,
+     "tris": 327732,
+     "geos": 180,
+     "texs": 185,
+     "progs": 85,
+     "w": 1280,
+     "h": 720,
+     "dpr": 1
+    },
+    "me": {
+     "visible": true
+    },
+    "burst": {
+     "n": 27,
+     "on": true
+    },
+    "stats": {
      "on": true,
-     "tier": "HIGH",
-     "tone": "neutral",
-     "size": "2560x1440",
-     "msaa": 4,
-     "mips": 4,
-     "exposure": 1,
-     "bloom": 0.234,
-     "ao": "12표본 1280x720",
-     "sat": 1,
-     "temp": 0
-    },
-    "stage": "sinya"
+     "live": true,
+     "pool": 28,
+     "cap": 48,
+     "alive": 27,
+     "battle": false,
+     "shake": 0
+    }
    }
   },
   {
-   "game": "saga-story",
-   "key": "2-field-high",
-   "title": "첫 사냥터 3D(HIGH 후처리)",
+   "game": "saga-go",
+   "key": "5-2d",
+   "title": "3D 끔(2D 캔버스로 되돌림)",
    "feats": [
-    "st.side-view3d",
-    "st.asset3d",
-    "st.post3d"
+    "go.world3d"
    ],
-   "file": "shots/visual-20261007/saga-story-2-field-high.png",
+   "file": "shots/visual-20261007/saga-go-5-2d.png",
    "px": {
-    "mean": 43.3,
-    "std": 26.4,
-    "bins": 289
+    "mean": 111.1,
+    "std": 39.5,
+    "bins": 380
+   },
+   "metrics": {
+    "on": false,
+    "tilt": 2,
+    "gl": {
+     "calls": 247,
+     "tris": 326662,
+     "geos": 180,
+     "texs": 185,
+     "progs": 85,
+     "w": 1280,
+     "h": 720,
+     "dpr": 1
+    },
+    "me": {
+     "visible": true
+    }
+   }
+  },
+  {
+   "game": "saga-forest",
+   "key": "1-village3d",
+   "title": "3D 마을",
+   "feats": [
+    "fs.village-view3d",
+    "fs.asset3d"
+   ],
+   "file": "shots/visual-20261007/saga-forest-1-village3d.png",
+   "px": {
+    "mean": 45.1,
+    "std": 19.9,
+    "bins": 220
    },
    "metrics": {
     "active": true,
-    "q": "high",
-    "level": "high",
-    "post": {
-     "ready": true,
-     "failed": false,
-     "frames": 19,
-     "on": true,
-     "tier": "HIGH",
-     "tone": "neutral",
-     "size": "2560x1440",
-     "msaa": 4,
-     "mips": 4,
-     "exposure": 1,
-     "bloom": 0.234,
-     "ao": "12표본 1280x720",
-     "sat": 1,
-     "temp": 0
-    },
-    "stage": "field",
-    "k": "field"
+    "inst": 13,
+    "scatter": 73,
+    "indoors": false
    }
   },
   {
-   "game": "saga-story",
-   "key": "3-field-low",
-   "title": "같은 사냥터(LOW 후처리)",
+   "game": "saga-forest",
+   "key": "2-sphere2d",
+   "title": "2D 구면 투영 마을",
    "feats": [
-    "st.post3d"
+    "fs.village-view"
    ],
-   "file": "shots/visual-20261007/saga-story-3-field-low.png",
+   "file": "shots/visual-20261007/saga-forest-2-sphere2d.png",
    "px": {
-    "mean": 49.6,
-    "std": 25.6,
-    "bins": 272
+    "mean": 124,
+    "std": 42.4,
+    "bins": 494
    },
    "metrics": {
-    "active": true,
-    "q": "low",
-    "level": "low",
-    "post": {
-     "ready": true,
-     "failed": false,
-     "frames": 30,
-     "on": false,
-     "tier": "LOW",
-     "tone": "neutral",
-     "size": "-",
-     "msaa": "-",
-     "mips": 0,
-     "exposure": 1,
-     "bloom": 0.234,
-     "ao": "off",
-     "sat": 1,
-     "temp": 0
-    },
-    "stage": "field"
+    "active": false,
+    "inst": 13,
+    "scatter": 73,
+    "indoors": false
    }
   },
   {
-   "game": "saga-story",
+   "game": "saga-forest",
+   "key": "3-home",
+   "title": "집 안 평면(안 휨)",
+   "feats": [
+    "fs.village-view"
+   ],
+   "file": "shots/visual-20261007/saga-forest-3-home.png",
+   "px": {
+    "mean": 86.4,
+    "std": 72.7,
+    "bins": 199
+   },
+   "metrics": {
+    "active": false,
+    "inst": 13,
+    "scatter": 73,
+    "indoors": true
+   }
+  },
+  {
+   "game": "saga-forest",
    "key": "4-portrait",
-   "title": "3D 초상 판(영웅·사슴·구미호)",
+   "title": "3D 초상 판(영웅·펫)",
    "feats": [
-    "st.portrait3d"
+    "fs.portrait3d",
+    "fs.asset3d"
    ],
-   "file": "shots/visual-20261007/saga-story-4-portrait.png",
+   "file": "shots/visual-20261007/saga-forest-4-portrait.png",
    "px": {
-    "mean": 49.9,
-    "std": 31.8,
-    "bins": 403
+    "mean": 46.2,
+    "std": 28.3,
+    "bins": 319
    },
    "metrics": {
     "asked": 12,
-    "got": 12,
+    "got": 8,
     "stats": {
      "on": true,
      "ready": true,
      "failed": false,
-     "made": 12,
+     "made": 8,
      "gaveUp": 0,
-     "cached": 12,
-     "pending": 0
+     "cached": 8,
+     "pending": 4
     }
    }
   }
  ],
  "checks": [
   {
-   "name": "장면 saga-story 1-town 마을 3D 배경(HIGH) — 화면이 단색이 아니다",
+   "name": "장면 saga-go 1-world3d 마을 3D(등 뒤 카메라) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":42.1,\"std\":27.1,\"bins\":240},\"metrics\":{\"active\":true,\"q\":\"high\",\"level\":\"high\",\"post\":{\"ready\":true,\"failed\":false,\"frames\":7,\"on\":true,\"tier\":\"HIGH\",\"tone\":\"neutral\",\"size\":\"2560x1440\",\"msaa\":4,\"mips\":4,\"exposure\":1,\"bloom\":0.234,\"ao\":\"12표본 1280x720\",\"sat\":1,\"temp\":0},\"stage\":\"sinya\"}}"
+   "detail": "{\"px\":{\"mean\":114.2,\"std\":38.2,\"bins\":328},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":1,\"tris\":2,\"geos\":177,\"texs\":188,\"progs\":49,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true}}}"
   },
   {
-   "name": "장면 saga-story 2-field-high 첫 사냥터 3D(HIGH 후처리) — 화면이 단색이 아니다",
+   "name": "장면 saga-go 2-close 인물 가까이(휠로 당김) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":43.3,\"std\":26.4,\"bins\":289},\"metrics\":{\"active\":true,\"q\":\"high\",\"level\":\"high\",\"post\":{\"ready\":true,\"failed\":false,\"frames\":19,\"on\":true,\"tier\":\"HIGH\",\"tone\":\"neutral\",\"size\":\"2560x1440\",\"msaa\":4,\"mips\":4,\"exposure\":1,\"bloom\":0.234,\"ao\":\"12표본 1280x720\",\"sat\":1,\"temp\":0},\"stage\":\"field\",\"k\":\"field\"}}"
+   "detail": "{\"px\":{\"mean\":112.2,\"std\":38.6,\"bins\":360},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":201,\"tris\":308240,\"geos\":178,\"texs\":185,\"progs\":85,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true},\"zoom\":0.7}}"
   },
   {
-   "name": "장면 saga-story 3-field-low 같은 사냥터(LOW 후처리) — 화면이 단색이 아니다",
+   "name": "장면 saga-go 3-duel 결투(실시간 전투) 화면 — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":49.6,\"std\":25.6,\"bins\":272},\"metrics\":{\"active\":true,\"q\":\"low\",\"level\":\"low\",\"post\":{\"ready\":true,\"failed\":false,\"frames\":30,\"on\":false,\"tier\":\"LOW\",\"tone\":\"neutral\",\"size\":\"-\",\"msaa\":\"-\",\"mips\":0,\"exposure\":1,\"bloom\":0.234,\"ao\":\"off\",\"sat\":1,\"temp\":0},\"stage\":\"field\"}}"
+   "detail": "{\"px\":{\"mean\":41.8,\"std\":22.2,\"bins\":120},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":237,\"tris\":310228,\"geos\":179,\"texs\":185,\"progs\":85,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true}}}"
   },
   {
-   "name": "장면 saga-story 4-portrait 3D 초상 판(영웅·사슴·구미호) — 화면이 단색이 아니다",
+   "name": "장면 saga-go 4-burst 전투 연출 알갱이(불꽃·검기·흙먼지) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":49.9,\"std\":31.8,\"bins\":403},\"metrics\":{\"asked\":12,\"got\":12,\"stats\":{\"on\":true,\"ready\":true,\"failed\":false,\"made\":12,\"gaveUp\":0,\"cached\":12,\"pending\":0}}}"
+   "detail": "{\"px\":{\"mean\":109.4,\"std\":39.2,\"bins\":327},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":276,\"tris\":327732,\"geos\":180,\"texs\":185,\"progs\":85,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true},\"burst\":{\"n\":27,\"on\":true},\"stats\":{\"on\":true,\"live\":true,\"pool\":28,\"cap\":48,\"alive\":27,\"battle\":false,\"shake\":0}}}"
   },
   {
-   "name": "사가종횡 초상 — 굽기를 청한 것 중 반 넘게 그림이 나온다",
+   "name": "장면 saga-go 5-2d 3D 끔(2D 캔버스로 되돌림) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"asked\":12,\"got\":12,\"stats\":{\"on\":true,\"ready\":true,\"failed\":false,\"made\":12,\"gaveUp\":0,\"cached\":12,\"pending\":0}}"
+   "detail": "{\"px\":{\"mean\":111.1,\"std\":39.5,\"bins\":380},\"metrics\":{\"on\":false,\"tilt\":2,\"gl\":{\"calls\":247,\"tris\":326662,\"geos\":180,\"texs\":185,\"progs\":85,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true}}}"
   },
   {
-   "name": "사가종횡 페이지 예외·console.error 없음",
+   "name": "사가만리 페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "장면 saga-forest 1-village3d 3D 마을 — 화면이 단색이 아니다",
+   "ok": true,
+   "detail": "{\"px\":{\"mean\":45.1,\"std\":19.9,\"bins\":220},\"metrics\":{\"active\":true,\"inst\":13,\"scatter\":73,\"indoors\":false}}"
+  },
+  {
+   "name": "장면 saga-forest 2-sphere2d 2D 구면 투영 마을 — 화면이 단색이 아니다",
+   "ok": true,
+   "detail": "{\"px\":{\"mean\":124,\"std\":42.4,\"bins\":494},\"metrics\":{\"active\":false,\"inst\":13,\"scatter\":73,\"indoors\":false}}"
+  },
+  {
+   "name": "장면 saga-forest 3-home 집 안 평면(안 휨) — 화면이 단색이 아니다",
+   "ok": true,
+   "detail": "{\"px\":{\"mean\":86.4,\"std\":72.7,\"bins\":199},\"metrics\":{\"active\":false,\"inst\":13,\"scatter\":73,\"indoors\":true}}"
+  },
+  {
+   "name": "장면 saga-forest 4-portrait 3D 초상 판(영웅·펫) — 화면이 단색이 아니다",
+   "ok": true,
+   "detail": "{\"px\":{\"mean\":46.2,\"std\":28.3,\"bins\":319},\"metrics\":{\"asked\":12,\"got\":8,\"stats\":{\"on\":true,\"ready\":true,\"failed\":false,\"made\":8,\"gaveUp\":0,\"cached\":8,\"pending\":4}}}"
+  },
+  {
+   "name": "사가마을 초상 — 굽기를 청한 것 중 반 넘게 그림이 나온다",
+   "ok": true,
+   "detail": "{\"asked\":12,\"got\":8,\"stats\":{\"on\":true,\"ready\":true,\"failed\":false,\"made\":8,\"gaveUp\":0,\"cached\":8,\"pending\":4}}"
+  },
+  {
+   "name": "fs.auto 자동 순행 — 🤖 단추로 켜면 스스로 할 일을 잡고(doing), 다시 누르면 꺼진다",
+   "ok": true,
+   "detail": "{\"a0\":false,\"a1\":{\"on\":true,\"doing\":\"🌳 꽃 으로 (85)\"},\"a2\":false}"
+  },
+  {
+   "name": "사가마을 페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "fs.admin 어드민 — 🔍 점검이 모두 통과, 프리셋 단추를 누르면 세이브가 바뀐다",
+   "ok": true,
+   "detail": "{\"out\":\"모두 통과 — 9항목✔ 따로 만든 칸으로 옮겨 연다 — yeoksa-village/save/_admintes\",\"presets\":15,\"changed\":true}"
+  },
+  {
+   "name": "사가마을 어드민 페이지 예외 없음",
    "ok": true,
    "detail": ""
   }

@@ -847,6 +847,8 @@
 
   /** 몸짓 하나 고르기 — GLB 사람이면 뼈대 애니메이션을 굴리고(걷기/맞음/가만있기),
    *  아직 도형이면 흰빛으로 번쩍이는 예전 방식 그대로다 */
+  /** W-0303 — 말을 걸면 처음 한 번 손을 흔든다(pose3d.once), 그 뒤엔 서 있기 */
+  function talkWave(p, on) { var P3 = global.DG.pose3d; return P3 ? P3.once(p, 'talk', on, Date.now() / 1000, 'Pose_wave') : null; }
   function stepActor(shell, animName) {
     if (shell.userData.flashMats) {
       var hn = shell.userData.hurtNow || 0;
@@ -857,7 +859,7 @@
     var u = shell.userData;
     if (!u.mixer) { return; }
     if (u.anim !== animName) {
-      var OAs = global.DG.ownAnim, clipName = (u.clipMap && u.clipMap[animName]) || (OAs && OAs.weaponAction && /^Wpn_/.test(animName) ? OAs.weaponAction(u, animName, three()) || (u.clipMap && u.clipMap.attack) : null);   // W-0172 무기 몸짓
+      var OAs = global.DG.ownAnim, clipName = (u.clipMap && u.clipMap[animName]) || (OAs && OAs.weaponAction && OAs.extraSlot(animName) ? OAs.weaponAction(u, animName, three()) || (u.clipMap && u.clipMap[animName.indexOf('Pose_') === 0 ? 'idle' : 'attack']) : null);   // W-0172 무기 몸짓 · W-0303 상황 몸짓
       var next = clipName && u.actions[clipName];
       if (next) {
         var prevClip = u.anim && u.clipMap[u.anim];
@@ -870,7 +872,7 @@
           next.setLoop(Tc0.LoopOnce);
         }
         next.reset().play();
-        if (prev && prev !== next) { prev.crossFadeTo(next, animName.indexOf('Wpn_') === 0 ? 0.08 : 0.2, false); }
+        if (prev && prev !== next) { prev.crossFadeTo(next, OAs && OAs.blendOf ? OAs.blendOf(animName) : 0.2, false); }   // W-0303 블렌드
         u.anim = animName; u.curAct = next;
       }
     }
@@ -1000,8 +1002,8 @@
     stepActor(playerMesh, (p.hurt || 0) > 0 ? 'hit' :
       ((p.dodgeAnim || 0) > 0 ? 'dodge' :
       ((p.atkCd || 0) > 0 ? (wpnAtk(p) || 'attack') :
-      (((p.drinkAnim || 0) > 0 || !!run.talk) ? 'interaction' :
-      (running ? 'run' : (walking ? 'walk' : 'idle'))))));
+      ((p.drinkAnim || 0) > 0 ? 'interaction' : (run.talk ? (talkWave(p, !!run.talk) || 'idle') :
+      (running ? 'run' : (walking ? 'walk' : 'idle')))))));
     var bob = (!playerMesh.userData.mixer && walking) ? Math.abs(Math.sin(Date.now() / 90)) * 3 : 0;
     playerMesh.position.y += bob;
 

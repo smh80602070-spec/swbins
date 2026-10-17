@@ -2442,7 +2442,7 @@
     }
     if (AS3) {
       AS3.step(me.node.userData.mixerNode, { t: nowT, walking: !!p.walking && !mtRef,
-        anim: p.dodge ? 'dodge' : ((OAw && OAw.attackSlot ? OAw.attackSlot(p._wpn || (p._wpn = {}), p.castAnim ? 0 : Math.max(0, p.atkAnim || 0), nowT, function () { var IT = global.DG.item, w = IT ? IT.equipped(core.save.party[0]).weapon : null; return w && !IT.isBroken(w) ? (IT.baseOf(w) || {}).look : 'sword'; }, function () { var R = global.DG.dungeon && global.DG.dungeon.raw ? global.DG.dungeon.raw() : null; return ((R && R.combo) || 1) - 1; }) : null) || (p.atkAnim > 0 ? (p.castAnim ? 'interaction' : 'attack') : (p.walking && !mtRef ? 'walk' : 'idle'))) });   // W-0171 무기·연속 단 몸짓
+        anim: p.dodge ? 'dodge' : ((OAw && OAw.attackSlot ? OAw.attackSlot(p._wpn || (p._wpn = {}), p.castAnim ? 0 : Math.max(0, p.atkAnim || 0), nowT, function () { var IT = global.DG.item, w = IT ? IT.equipped(core.save.party[0]).weapon : null; return w && !IT.isBroken(w) ? (IT.baseOf(w) || {}).look : 'sword'; }, function () { var R = global.DG.dungeon && global.DG.dungeon.raw ? global.DG.dungeon.raw() : null; return ((R && R.combo) || 1) - 1; }) : null) || (p.atkAnim > 0 ? (p.castAnim ? 'Pose_cast' : 'attack') : (p.walking && !mtRef ? 'walk' : 'idle'))) });   // W-0171 무기·연속 단 몸짓
       AS3.flashAllMat(ensureFlash(me.node), p.hurt, 0.28);
     }
 

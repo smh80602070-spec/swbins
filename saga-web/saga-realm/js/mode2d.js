@@ -297,6 +297,8 @@
     if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
     ctx.imageSmoothingEnabled = true;
     if (d.flip) { ctx.translate(o.x, 0); ctx.scale(-1, 1); ctx.translate(-o.x, 0); }
+    var P2 = o.pose && global.DG.pose3d && global.DG.pose3d.frame2d ? global.DG.pose3d.frame2d(o.pose) : null;   // W-0303 2D 대역 — 동작 프레임(K 시트) 전엔 발 밑 기준으로 기울이고 누른다
+    if (P2) { ctx.translate(o.x, o.y); ctx.rotate(P2.rot); ctx.scale(P2.sx, P2.sy); ctx.translate(-o.x, -o.y); }
     var slot = tintOf(o.pool), Co = global.DG && global.DG.core, tk = slot && Co && Co.tuned ? Math.min(1, Math.max(0, +Co.tuned('mode2d.borrowTint', 1))) : 1;
     var tl = slot && Co && Co.tuned ? Math.min(1, Math.max(0, +Co.tuned('mode2d.borrowTintLow', 0.25))) : 1;   // W-0195 허리 아래 세기(1 = 옛 온몸)
     var cell = slot && tk > 0 ? tintCell(e, bare(o.pool) + '/' + role + (eight ? '#8' : ''), f * P, d.row * P, P, slot, tk, tl) : null;

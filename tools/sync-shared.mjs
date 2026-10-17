@@ -20,6 +20,7 @@ const GAMES = ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-rea
 const FILES = [
   ['js/net.js', 'js/net.js'],
   ['js/anim-own.js', 'js/anim-own.js'],
+  ['js/pose3d.js', 'js/pose3d.js'],   // W-0303 — 상황·전투·생활 몸짓(anim-own 뒤에 싣는다)
   ['js/vroid-variant.js', 'js/vroid-variant.js'],
   ['js/account.js', 'js/account.js'],
   ['build/build-single.mjs', 'build/build-single.mjs'],

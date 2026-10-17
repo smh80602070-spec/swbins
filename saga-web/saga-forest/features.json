@@ -1084,5 +1084,27 @@
   "ticket": "W-0288",
   "since": "2026-10-17",
   "note": "스타듀·하베스트 문 식(구조만). 장부 tasks/gameplay/forest.md · 세이브 save.village.partner = { id, since, last, anniv, annivDay }(옛 세이브 없음=null) · 3D 는 집 안을 안 그리므로 밖에선 여느 주민, 집 안 2D 에만 선다"
+ },
+ {
+  "id": "fs.pose3d",
+  "name": "상황·전투·생활 몸짓(W-0303) — 공용 pose3d 열둘 + IK 걷기 발 고정 · 줍기 Pose_pick·낚시 대기 Pose_fish·나·마을 사람 idle 변주",
+  "files": [
+   "../shared/js/pose3d.js",
+   "../shared/js/anim-own.js",
+   "js/asset3d.js",
+   "src/village-view3d/02.js"
+  ],
+  "tests": [
+   "Pose_ 클립 열둘(W-0303)",
+   "앉기·줍기·인사 자세(W-0303)",
+   "자연스러움 — 발 미끄러짐·블렌드·idle 변주(W-0303)",
+   "시선(W-0303)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0303",
+  "since": "2026-10-18",
+  "note": "코드로 굽는 클립(에셋 없음). 손잡이 pose3d.idleEvery 4(±1초)·pose3d.lookMax 60 · anim3d.walkHps 0.59·runHps 1.76(IK 클립 본래 빠르기) · 2D 는 mode2d o.pose 대역(K 동작별 시트 뒤 프레임 치환)"
  }
 ]

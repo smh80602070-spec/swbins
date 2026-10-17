@@ -89,6 +89,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/toon3d-core.js"></script>
 <script src="js/toon3d.js"></script>
 <script src="js/anim-own.js"></script>
+<script src="js/pose3d.js"></script>
 <script src="js/vroid-variant.js"></script>
 <script src="js/asset3d.js"></script>
 <script src="js/portrait3d.js"></script>
@@ -6066,6 +6067,95 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var err = Math.hypot(p.x - q[0], p.y - q[1], p.z - q[2]);
       return clips.length === 9 && slotsOk && err < 0.004 &&
         ('AnimationClip 9 · mapClips 아홉 자리 전부 제 이름(대타 0) · 왼발 위치 오차 ' + (err * 1000).toFixed(2) + 'mm');
+    });
+
+    /* ── 상황·전투·생활 몸짓 (shared/js/pose3d.js, W-0303 모션 묶음 1) — 렌더 없이 FK 로 잰다 ───────────── */
+    t('pose3d — Pose_ 클립 열둘(상황 넷·전투 셋·생활 셋+idle 변주)이 등록되고 그 몸에 굽히며, 같은 뼈 전부·유한, 한 번 도는 클립은 BASE 에서 ≥0.3초 들어가 ≥0.3초에 BASE 로 나오고, 반복 클립은 이음새가 없다 (W-0303)', function () {
+      var OA = DG.ownAnim, P3 = DG.pose3d, rig = OA.refRig(), m = OA.math, i, j, bad = [];
+      if (!P3 || !OA.register || !OA.extraSlot) { throw new Error('pose3d/anim-own register 없음'); }
+      var clips = OA.clipData(rig, P3.NAMES), base = OA.clipData(rig, ['Idle_Loop'])[0];
+      if (clips.length !== 12 || P3.NAMES.length !== 12) { bad.push('클립 수 ' + clips.length); }
+      var kinds = { situ: 0, combat: 0, life: 0, idle: 0 }; P3.DEFS.forEach(function (d) { kinds[d.kind]++; });
+      if (kinds.situ !== 4 || kinds.combat !== 3 || kinds.life !== 2 || kinds.idle !== 3) { bad.push('갈래 ' + JSON.stringify(kinds)); }
+      var restW = OA.worldFrom(rig, OA.localQuats(rig, OA.BASE));
+      clips.forEach(function (c) {
+        if (c.tracks.length !== base.tracks.length) { bad.push(c.name + ' 트랙 ' + c.tracks.length); }
+        for (i = 0; i < c.tracks.length; i++) { for (j = 0; j < c.tracks[i].values.length; j++) { if (!isFinite(c.tracks[i].values[j])) { bad.push(c.name + ' 무한'); break; } } }
+        var W0 = OA.fkAt(rig, c, 0), W1 = OA.fkAt(rig, c, c.duration), d = 0, nm;
+        for (nm in W0) { d = Math.max(d, m.vlen(m.vsub(W0[nm].p, W1[nm].p))); }
+        if (P3.isLoop(c.name)) { if (d > 0.002) { bad.push(c.name + ' 이음새 ' + (d * 1000).toFixed(1) + 'mm'); } }
+        else {
+          var io = P3.inOut(c.name), db = 0;
+          for (nm in W0) { db = Math.max(db, m.vlen(m.vsub(W0[nm].p, restW[nm].p)), m.vlen(m.vsub(W1[nm].p, restW[nm].p))); }
+          if (!io || io[0] < 0.3 || io[1] < 0.3) { bad.push(c.name + ' 들어가기/나오기 ' + (io ? io.map(function (x) { return x.toFixed(2); }).join('/') : '없음')); }
+          if (db > 0.002) { bad.push(c.name + ' 시작·끝이 BASE 아님 ' + (db * 1000).toFixed(1) + 'mm'); }
+        }
+      });
+      if (!OA.extraSlot('Pose_sit') || !OA.extraSlot('Wpn_sword_0') || OA.extraSlot('idle')) { bad.push('extraSlot'); }
+      if (!OA.loopOf('Pose_sit') || OA.loopOf('Pose_pick') || OA.combatDur('Pose_cast') !== 1.2) { bad.push('loopOf/combatDur'); }
+      return !bad.length && ('Pose_ 12 · 트랙 ' + base.tracks.length + ' · 한 번 도는 클립 ' + P3.DEFS.filter(function (d) { return !d.loop; }).length + ' 전부 BASE↔BASE ≥0.3초') || bad.join(' · ');
+    });
+    t('pose3d — 앉기는 엉덩이가 선 키의 2/3 아래로 발은 땅에, 불 쬐기는 쪼그려 두 손을 앞으로, 줍기는 오른손이 무릎 아래로 갔다 가슴 위로, 인사는 오른손이 머리 위, 낚시·막기는 손이 몸 앞, 강공격은 두 손이 머리 위에서 앞 아래로, 시전은 두 손이 모였다 앞으로 · 어느 자세도 관절이 땅 아래로 안 간다 (W-0303)', function () {
+      var OA = DG.ownAnim, P3 = DG.pose3d, rig = OA.refRig(), B = OA.BONES, m = OA.math, fr = rig.frame, bad = [], by = {};
+      OA.clipData(rig, P3.NAMES).forEach(function (c) { by[c.name] = c; });
+      var up = function (W, b) { return m.vdot(W[b].p, fr.u) - rig.rest.minUp; }, fwd = function (W, b) { return m.vdot(W[b].p, fr.f) - m.vdot(W[B.hips].p, fr.f); };
+      var at = function (nm, k) { return OA.fkAt(rig, by[nm], by[nm].duration * k); };
+      var stand = up(OA.worldFrom(rig, OA.localQuats(rig, OA.BASE)), B.hips), W;
+      W = at('Pose_sit', 0.5); if (!(up(W, B.hips) < stand * 0.67 && up(W, B.lfoot) < 0.12 && up(W, B.rfoot) < 0.12)) { bad.push('앉기 엉덩이 ' + up(W, B.hips).toFixed(2)); }
+      W = at('Pose_warm', 0.5); if (!(up(W, B.hips) < stand * 0.5 && fwd(W, B.rhand) > 0.3 && fwd(W, B.lhand) > 0.3)) { bad.push('불 쬐기'); }
+      var P1 = at('Pose_pick', 0.45), P2 = at('Pose_pick', 0.76); if (!(up(P1, B.rhand) < 0.58 && up(P2, B.rhand) > 1.0)) { bad.push('줍기 손 ' + up(P1, B.rhand).toFixed(2) + '→' + up(P2, B.rhand).toFixed(2)); }
+      W = at('Pose_wave', 0.5); if (!(up(W, B.rhand) > up(W, B.head))) { bad.push('인사 손 ' + up(W, B.rhand).toFixed(2)); }
+      W = at('Pose_fish', 0.3); if (!(fwd(W, B.rhand) > 0.25 && fwd(W, B.lhand) > 0.25)) { bad.push('낚시 손'); }
+      W = at('Pose_block', 0.3); if (!(fwd(W, B.lhand) > 0.18 && up(W, B.lhand) > 1.1)) { bad.push('막기 팔뚝'); }
+      var H1 = at('Pose_heavy', 0.3), H2 = at('Pose_heavy', 0.55); if (!(up(H1, B.rhand) > up(H1, B.head) && fwd(H2, B.rhand) > 0.35 && up(H2, B.rhand) < up(H2, B.head))) { bad.push('강공격'); }
+      var C1 = at('Pose_cast', 0.4), C2 = at('Pose_cast', 0.7); if (!(m.vlen(m.vsub(C1[B.rhand].p, C1[B.lhand].p)) < 0.25 && fwd(C2, B.rhand) > 0.25)) { bad.push('시전 손 ' + m.vlen(m.vsub(C1[B.rhand].p, C1[B.lhand].p)).toFixed(2)); }
+      var lowest = 1e9, lowN = '';
+      P3.NAMES.forEach(function (nm) { var k, n; for (k = 0; k <= 40; k++) { var Wk = at(nm, k / 40); for (n in Wk) { if (/Index|Middle|Ring|Little|Thumb/.test(n)) { continue; } var y = up(Wk, n); if (y < lowest) { lowest = y; lowN = nm + ':' + n; } } } });
+      if (lowest < -0.045) { bad.push('땅 아래 ' + lowN + ' ' + (lowest * 100).toFixed(1) + 'cm'); }
+      return !bad.length && ('앉기 엉덩이 ' + up(at('Pose_sit', 0.5), B.hips).toFixed(2) + 'm(선 키 ' + stand.toFixed(2) + ') · 줍기 손 ' + up(P1, B.rhand).toFixed(2) + '→' + up(P2, B.rhand).toFixed(2) + 'm · 가장 낮은 관절 ' + (lowest * 100).toFixed(1) + 'cm') || bad.join(' · ');
+    });
+    t('pose3d 자연스러움 — 걷기 발 미끄러짐 ≤ 2cm/걸음·달리기 ≤ 2cm(디딘 발 접지점이 몸 속도로 뒤로) · 전환 블렌드 0.15~0.3초(무기만 0.08) · idle 변주는 쉴 때 3~5초마다 하나 돌고 끝나면 쉬며 걸으면 끊긴다 · once 는 시작 때 한 번 (W-0303)', function () {
+      var OA = DG.ownAnim, P3 = DG.pose3d, rig = OA.refRig(), bad = [];
+      var w = OA.footSlip(rig, 'Walk_Loop', 1.0), r = OA.footSlip(rig, 'Run_Loop', 3.0);
+      if (!(w.step <= 0.02 && w.frames > 60)) { bad.push('걷기 미끄러짐 ' + (w.step * 100).toFixed(2) + 'cm'); }
+      if (!(r.step <= 0.02 && r.frames > 30)) { bad.push('달리기 미끄러짐 ' + (r.step * 100).toFixed(2) + 'cm'); }
+      var g = OA.gait(0.59); if (!(g.slot === 'walk' && Math.abs(g.rate - 1) < 0.01)) { bad.push('걸음새 본래 빠르기 ' + g.rate); }
+      var bl = [OA.blendOf('Pose_sit'), OA.blendOf('idle'), OA.blendOf('Wpn_sword_0')];
+      if (!(bl[0] >= 0.15 && bl[0] <= 0.3 && bl[1] >= 0.15 && bl[1] <= 0.3 && bl[2] === 0.08 && P3.BLEND === bl[0])) { bad.push('블렌드 ' + bl.join('/')); }
+      var st = {}, seq = [], k; for (k = 0; k < 40; k++) { seq.push(P3.idleVariant(st, k * 0.5, true, 4) || '-'); }
+      var runs = seq.join(' ').replace(/(-\s?)+/g, '-').split(' ').filter(Boolean);
+      if (!(seq[0] === '-' && seq[7] === '-' && seq[8] === 'Pose_idle_look' && seq[14] === '-' && runs.indexOf('Pose_idle_shift') > 0 && runs.indexOf('Pose_idle_scratch') > 0)) { bad.push('idle 변주 ' + seq.slice(0, 20).join(',')); }
+      var s2 = {}; P3.idleVariant(s2, 0, true, 4); var on = P3.idleVariant(s2, 4.1, true, 4), off = P3.idleVariant(s2, 4.2, false), again = P3.idleVariant(s2, 4.3, true, 4);
+      if (!(on === 'Pose_idle_look' && off === null && again === null)) { bad.push('걸으면 끊김'); }
+      var o = {}, a = P3.once(o, 'talk', true, 10, 'Pose_wave'), b = P3.once(o, 'talk', true, 11.5, 'Pose_wave'), c = P3.once(o, 'talk', true, 12, 'Pose_wave'), d = P3.once(o, 'talk', false, 13, 'Pose_wave'), e = P3.once(o, 'talk', true, 14, 'Pose_wave');
+      if (!(a === 'Pose_wave' && b === 'Pose_wave' && c === null && d === null && e === 'Pose_wave')) { bad.push('once'); }
+      var f2 = P3.frame2d('Pose_sit'); if (!(f2 && f2.sy < 1 && P3.frame2d('없음') === null)) { bad.push('frame2d'); }
+      return !bad.length && ('걷기 미끄러짐 ' + (w.step * 100).toFixed(2) + 'cm/걸음(최대 속도 오차 ' + w.worst.toFixed(2) + 'm/s) · 달리기 ' + (r.step * 100).toFixed(2) + 'cm · 블렌드 ' + bl.join('/') + ' · idle 변주 ' + runs.join('→')) || bad.join(' · ');
+    });
+    t('pose3d 시선 — 실제 three 뼈대에서 믹서 뒤 머리를 목표 쪽으로 돌리고(±60° 안, 0.5초에 90%), 목표가 없으면 되돌아온다 · 반복 Pose_ 는 믹서 액션이 반복, 한 번 도는 것은 끝 자세를 붙든다 (W-0303)', function () {
+      var OA = DG.ownAnim, P3 = DG.pose3d, TH = window.THREE, rig = OA.refRig();
+      if (!TH || !TH.AnimationMixer) { return '(three 없음 — 건너뜀)'; }
+      var bones = {}, root = new TH.Group(), node = new TH.Group(); node.add(root);
+      rig.order.forEach(function (nm) { var n = rig.by[nm], b = new TH.Bone(); b.name = nm; b.position.set(n.p[0], n.p[1], n.p[2]); bones[nm] = b; (n.parent ? bones[n.parent] : root).add(b); });
+      var body = { ownRig: rig }, u = { mixer: new TH.AnimationMixer(root), actions: {}, ownAnim: true, ownBody: body, clipMap: {} };
+      var sit = OA.weaponAction(u, 'Pose_sit', TH), pick = OA.weaponAction(u, 'Pose_pick', TH);
+      var loopOk = sit === 'Pose_sit' && u.actions.Pose_sit.loop === TH.LoopRepeat && pick === 'Pose_pick' && u.actions.Pose_pick.loop === TH.LoopOnce && u.actions.Pose_pick.clampWhenFinished;
+      u.actions[u.clipMap.idle = 'Idle_Loop'] = u.mixer.clipAction(OA.clipsFor(null, TH, ['Idle_Loop'], rig)[0]); u.actions.Idle_Loop.play();
+      node.updateMatrixWorld(true);
+      var head = bones[OA.BONES.head], face = function () { node.updateMatrixWorld(true); return new TH.Vector3(0, 0, -1).applyQuaternion(head.getWorldQuaternion(new TH.Quaternion())); };
+      var f0 = face(), i;
+      u.look = { x: -5, y: 1.4, z: -5 };                       // 왼쪽 앞(얼굴은 -Z) 45°
+      for (i = 0; i < 30; i++) { u.mixer.update(1 / 60); node.updateMatrixWorld(true); P3.look(node, u, 1 / 60); }
+      var f1 = face(), turned = Math.atan2(f1.x, -f1.z) * 180 / Math.PI;   // 왼쪽(-x)이면 음수
+      u.look = { x: 5, y: 1.4, z: 1 };                         // 오른쪽 뒤 — 60° 로 잘린다
+      for (i = 0; i < 60; i++) { u.mixer.update(1 / 60); node.updateMatrixWorld(true); P3.look(node, u, 1 / 60); }
+      var f2 = face(), capped = Math.atan2(f2.x, -f2.z) * 180 / Math.PI;
+      u.look = null;
+      for (i = 0; i < 90; i++) { u.mixer.update(1 / 60); node.updateMatrixWorld(true); P3.look(node, u, 1 / 60); }
+      var f3 = face(), back = Math.acos(Math.max(-1, Math.min(1, f3.dot(f0)))) * 180 / Math.PI;
+      var ok = loopOk && turned < -35 && turned > -50 && capped > 50 && capped <= 62 && back < 6;
+      return ok && ('왼쪽 목표 0.5초 뒤 ' + turned.toFixed(0) + '° · 오른쪽 뒤 목표는 ' + capped.toFixed(0) + '° 에서 멈춤 · 목표 없으면 ' + back.toFixed(1) + '° 로 복귀 · 앉기 반복/줍기 한 번') ||
+        ('turned ' + turned.toFixed(0) + ' capped ' + capped.toFixed(0) + ' back ' + back.toFixed(1) + ' loop ' + loopOk);
     });
 
     t('anim-own — VRM 몸(anime 경로)만 자체 몸짓 길을 탄다', function () {
