@@ -1,0 +1,115 @@
+{
+ "note": "K-0127(Opus 10-17) — 고돗이 부르는 자연물(res://assets/world/<id>.glb, 9개 gd/tscn) → 사실판 짝. 옛 Quaternius(assets/vegetation·rocks)는 G-0020(10-04)에 코드에서 이미 빠졌고 낡은 생성물 games/_generated/hebei_layout.tscn·tools/layout/out/hebei.json 과 kinds.json waterfall 한 줄에만 남음.",
+ "refs": {
+  "tree_broadleaf_01": 9,
+  "rock_large_01": 9,
+  "grass_tuft_01": 8,
+  "rock_moss_01": 7,
+  "rock_small_01": 6,
+  "tree_pine_01": 5,
+  "tree_broadleaf_02": 5,
+  "tree_pine_02": 4,
+  "tree_birch_01": 4,
+  "rock_large_02": 4,
+  "grass_tuft_02": 4,
+  "tree_broadleaf_03": 3,
+  "bush_02": 3,
+  "bush_01": 3,
+  "tree_pine_03": 2,
+  "tree_dead_01": 1,
+  "stump_01": 1,
+  "log_01": 1
+ },
+ "pairs": {
+  "tree_broadleaf_01": {
+   "id": "tree_broadleaf_01_real",
+   "file": "res://assets/world/foliage/tree_broadleaf_01_real.gltf",
+   "scale": "옛 툰 배율 그대로(높이 비 0.93~1.06)"
+  },
+  "tree_broadleaf_02": {
+   "id": "tree_broadleaf_02_real",
+   "file": "res://assets/world/foliage/tree_broadleaf_02_real.gltf",
+   "scale": "옛 툰 배율 그대로(높이 비 0.93~1.06)"
+  },
+  "tree_broadleaf_03": {
+   "id": "tree_broadleaf_03_real",
+   "file": "res://assets/world/foliage/tree_broadleaf_03_real.gltf",
+   "scale": "옛 툰 배율 그대로(높이 비 0.93~1.06)"
+  },
+  "tree_birch_01": {
+   "id": "tree_birch_01_real",
+   "file": "res://assets/world/foliage/tree_birch_01_real.gltf",
+   "scale": "옛 툰 배율 그대로(높이 비 0.93~1.06)"
+  },
+  "tree_pine_01": {
+   "id": "tree_pine_01_real",
+   "file": "res://assets/world/foliage/tree_pine_01_real.gltf",
+   "scale": "옛 툰 배율 그대로(높이 비 0.93~1.06)"
+  },
+  "tree_pine_02": {
+   "id": "tree_pine_02_real",
+   "file": "res://assets/world/foliage/tree_pine_02_real.gltf",
+   "scale": "옛 툰 배율 그대로(높이 비 0.93~1.06)"
+  },
+  "tree_pine_03": {
+   "id": "tree_pine_03_real",
+   "file": "res://assets/world/foliage/tree_pine_03_real.gltf",
+   "scale": "옛 툰 배율 그대로(높이 비 0.93~1.06)"
+  },
+  "tree_dead_01": {
+   "id": "tree_dead_01_real",
+   "file": "res://assets/world/foliage/tree_dead_01_real.gltf",
+   "scale": "옛 툰 배율 그대로(높이 비 0.93~1.06)"
+  },
+  "rock_large_01": {
+   "id": "rock_large_01_real",
+   "file": "res://assets/world/foliage/rock_large_01_real.gltf",
+   "scale": "옛 툰 배율 그대로(높이 비 0.93~1.06)"
+  },
+  "rock_large_02": {
+   "id": "rock_large_02_real",
+   "file": "res://assets/world/foliage/rock_large_02_real.gltf",
+   "scale": "옛 툰 배율 그대로(높이 비 0.93~1.06)"
+  },
+  "rock_moss_01": {
+   "id": "rock_moss_01_real",
+   "file": "res://assets/world/foliage/rock_moss_01_real.gltf",
+   "scale": "옛 툰 배율 그대로(높이 비 0.93~1.06)"
+  },
+  "rock_small_01": {
+   "id": "rock_small_01_real",
+   "file": "res://assets/world/foliage/rock_small_01_real.gltf",
+   "scale": "옛 툰 배율 그대로(높이 비 0.93~1.06)"
+  },
+  "stump_01": {
+   "id": "stump_01_real",
+   "file": "res://assets/world/foliage/stump_01_real.gltf",
+   "scale": "옛 툰 배율 그대로(높이 비 0.93~1.06)"
+  },
+  "log_01": {
+   "id": "log_01_real",
+   "file": "res://assets/world/foliage/log_01_real.gltf",
+   "scale": "옛 툰 배율 그대로(높이 비 0.93~1.06)"
+  },
+  "grass_tuft_01": {
+   "id": "grass_clump_01",
+   "file": "res://assets/world/foliage/grass_clump_01.gltf",
+   "scale": "K-0104 들풀"
+  },
+  "grass_tuft_02": {
+   "id": "grass_clump_02",
+   "file": "res://assets/world/foliage/grass_clump_02.gltf",
+   "scale": "K-0104 들풀"
+  },
+  "bush_01": {
+   "id": "bush_leafy_01",
+   "file": "res://assets/world/foliage/bush_leafy_01.gltf",
+   "scale": "K-0104 들풀"
+  },
+  "bush_02": {
+   "id": "bush_leafy_02",
+   "file": "res://assets/world/foliage/bush_leafy_02.gltf",
+   "scale": "K-0104 들풀"
+  }
+ }
+}
