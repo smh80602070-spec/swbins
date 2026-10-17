@@ -1,0 +1,211 @@
+{
+ "base": "https://smh80602070-spec.github.io/swbins/saga-web/",
+ "at": "2026-10-17T00:34:23.515Z",
+ "games": [
+  {
+   "game": "saga-go",
+   "ok": true,
+   "steps": [
+    {
+     "name": "첫 방문",
+     "ok": true,
+     "ms": 8036,
+     "why": ""
+    },
+    {
+     "name": "가입",
+     "ok": true,
+     "ms": 4077,
+     "why": ""
+    },
+    {
+     "name": "첫 관문",
+     "ok": true,
+     "ms": 3836,
+     "why": ""
+    },
+    {
+     "name": "☰ 메뉴 → 창",
+     "ok": true,
+     "ms": 2609,
+     "why": ""
+    },
+    {
+     "name": "새로 고침 → 이어하기",
+     "ok": true,
+     "ms": 21571,
+     "why": ""
+    }
+   ],
+   "errors": [],
+   "bad": [],
+   "deployed": "go-v6.72.164",
+   "local": "go-v6.72.164",
+   "sameVersion": true
+  },
+  {
+   "game": "saga-dungeon",
+   "ok": true,
+   "steps": [
+    {
+     "name": "첫 방문",
+     "ok": true,
+     "ms": 8301,
+     "why": ""
+    },
+    {
+     "name": "가입",
+     "ok": true,
+     "ms": 3648,
+     "why": ""
+    },
+    {
+     "name": "첫 관문",
+     "ok": true,
+     "ms": 7159,
+     "why": ""
+    },
+    {
+     "name": "☰ 메뉴 → 창",
+     "ok": true,
+     "ms": 2940,
+     "why": ""
+    },
+    {
+     "name": "새로 고침 → 이어하기",
+     "ok": true,
+     "ms": 13150,
+     "why": ""
+    }
+   ],
+   "errors": [],
+   "bad": [],
+   "deployed": "dungeon-v0.199.147",
+   "local": "dungeon-v0.199.147",
+   "sameVersion": true
+  },
+  {
+   "game": "saga-forest",
+   "ok": true,
+   "steps": [
+    {
+     "name": "첫 방문",
+     "ok": true,
+     "ms": 7774,
+     "why": ""
+    },
+    {
+     "name": "가입",
+     "ok": true,
+     "ms": 5061,
+     "why": ""
+    },
+    {
+     "name": "첫 관문",
+     "ok": true,
+     "ms": 6059,
+     "why": ""
+    },
+    {
+     "name": "☰ 메뉴 → 창",
+     "ok": true,
+     "ms": 1656,
+     "why": ""
+    },
+    {
+     "name": "새로 고침 → 이어하기",
+     "ok": true,
+     "ms": 14507,
+     "why": ""
+    }
+   ],
+   "errors": [],
+   "bad": [],
+   "deployed": "village-v0.136.125",
+   "local": "village-v0.136.125",
+   "sameVersion": true
+  },
+  {
+   "game": "saga-story",
+   "ok": true,
+   "steps": [
+    {
+     "name": "첫 방문",
+     "ok": true,
+     "ms": 7645,
+     "why": ""
+    },
+    {
+     "name": "가입",
+     "ok": true,
+     "ms": 4190,
+     "why": ""
+    },
+    {
+     "name": "첫 관문",
+     "ok": true,
+     "ms": 8581,
+     "why": ""
+    },
+    {
+     "name": "☰ 메뉴 → 창",
+     "ok": true,
+     "ms": 2227,
+     "why": ""
+    },
+    {
+     "name": "새로 고침 → 이어하기",
+     "ok": true,
+     "ms": 15551,
+     "why": ""
+    }
+   ],
+   "errors": [],
+   "bad": [],
+   "deployed": "side-v0.118.128",
+   "local": "side-v0.118.128",
+   "sameVersion": true
+  },
+  {
+   "game": "saga-realm",
+   "ok": true,
+   "steps": [
+    {
+     "name": "첫 방문",
+     "ok": true,
+     "ms": 8016,
+     "why": ""
+    },
+    {
+     "name": "가입",
+     "ok": true,
+     "ms": 3732,
+     "why": ""
+    },
+    {
+     "name": "첫 관문",
+     "ok": true,
+     "ms": 7130,
+     "why": ""
+    },
+    {
+     "name": "☰ 메뉴 → 창",
+     "ok": true,
+     "ms": 1218,
+     "why": ""
+    },
+    {
+     "name": "새로 고침 → 이어하기",
+     "ok": true,
+     "ms": 11253,
+     "why": ""
+    }
+   ],
+   "errors": [],
+   "bad": [],
+   "deployed": "realm-v1.94.137",
+   "local": "realm-v1.94.137",
+   "sameVersion": true
+  }
+ ]
+}

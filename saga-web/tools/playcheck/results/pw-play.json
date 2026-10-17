@@ -1,0 +1,200 @@
+{
+ "base": "http://127.0.0.1:9336/",
+ "at": "2026-10-17T15:05:31.806Z",
+ "runs": [
+  {
+   "game": "saga-realm",
+   "device": "pc",
+   "ok": true,
+   "checks": [
+    {
+     "name": "부팅(가입→첫 관문→들어감)",
+     "ok": true,
+     "detail": "16006ms ",
+     "ms": 16006,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "위치를 읽을 수 있다",
+     "ok": true,
+     "detail": "null",
+     "ms": 3,
+     "skip": true,
+     "warn": false
+    },
+    {
+     "name": "FPS(1초)",
+     "ok": true,
+     "detail": "62 fps(헤드리스 swiftshader)",
+     "ms": 1011,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "키 4방향 이동(3/4 이상)",
+     "ok": true,
+     "detail": "D×? S×? Left×? Up×?",
+     "skip": true
+    },
+    {
+     "name": "마우스 끌기 이동",
+     "ok": true,
+     "detail": "이동 -1.0",
+     "ms": 4240,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "☰ 메뉴 → 첫 칸 창 → 닫기 → 키 이동",
+     "ok": true,
+     "detail": "창 열림 · 닫힘 true · D×? A×? S×? W×?",
+     "ms": 8795,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "HUD 겹침(보이는 고정 요소 쌍)",
+     "ok": true,
+     "detail": "없음",
+     "ms": 5,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "3D 지도 끌기(panBy)",
+     "ok": true,
+     "detail": "3D 지도 꺼짐",
+     "ms": 1,
+     "skip": true,
+     "warn": false
+    },
+    {
+     "name": "다음 달(next-month) 예외 없음",
+     "ok": true,
+     "detail": "turn 0→1",
+     "ms": 2673,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "새로 고침 → 이어하기 → 들어감",
+     "ok": true,
+     "detail": "null",
+     "ms": 7275,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "페이지 예외·console.error 없음",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "fails": [],
+   "warns": [],
+   "shots": [
+    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-realm-pc-0.png",
+    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-realm-pc-menu.png",
+    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-realm-pc-1.png"
+   ]
+  },
+  {
+   "game": "saga-realm",
+   "device": "phone",
+   "ok": true,
+   "checks": [
+    {
+     "name": "부팅(가입→첫 관문→들어감)",
+     "ok": true,
+     "detail": "15660ms ",
+     "ms": 15660,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "위치를 읽을 수 있다",
+     "ok": true,
+     "detail": "null",
+     "ms": 5,
+     "skip": true,
+     "warn": false
+    },
+    {
+     "name": "FPS(1초)",
+     "ok": true,
+     "detail": "62 fps(헤드리스 swiftshader)",
+     "ms": 1002,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "키 4방향 이동(3/4 이상)",
+     "ok": true,
+     "detail": "D×? S×? Left×? Up×?",
+     "skip": true
+    },
+    {
+     "name": "터치 이동(joy:#rjoy)",
+     "ok": true,
+     "detail": "이동 -1.0 @68,694",
+     "ms": 4400,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "☰ 메뉴 → 첫 칸 창 → 닫기 → 키 이동",
+     "ok": true,
+     "detail": "창 열림 · 닫힘 true · D×? A×? S×? W×?",
+     "ms": 8024,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "HUD 겹침(보이는 고정 요소 쌍)",
+     "ok": true,
+     "detail": "없음",
+     "ms": 5,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "3D 지도 끌기(panBy)",
+     "ok": true,
+     "detail": "3D 지도 꺼짐",
+     "ms": 1,
+     "skip": true,
+     "warn": false
+    },
+    {
+     "name": "다음 달(next-month) 예외 없음",
+     "ok": true,
+     "detail": "turn 0→1",
+     "ms": 2661,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "새로 고침 → 이어하기 → 들어감",
+     "ok": true,
+     "detail": "null",
+     "ms": 7232,
+     "skip": false,
+     "warn": false
+    },
+    {
+     "name": "페이지 예외·console.error 없음",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "fails": [],
+   "warns": [],
+   "shots": [
+    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-realm-phone-0.png",
+    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-realm-phone-menu.png",
+    "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-realm-phone-1.png"
+   ]
+  }
+ ]
+}

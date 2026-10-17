@@ -4,205 +4,173 @@
  "total": 6,
  "scenes": [
   {
-   "game": "saga-go",
-   "key": "1-world3d",
-   "title": "마을 3D(등 뒤 카메라)",
+   "game": "saga-story",
+   "key": "1-town",
+   "title": "마을 3D 배경(HIGH)",
    "feats": [
-    "go.world3d",
-    "go.asset3d"
+    "st.side-view3d",
+    "st.asset3d"
    ],
-   "file": "shots/visual-20261007/saga-go-1-world3d.png",
+   "file": "shots/visual-20261007/saga-story-1-town.png",
    "px": {
-    "mean": 117.3,
-    "std": 37,
-    "bins": 351
+    "mean": 42.1,
+    "std": 27.1,
+    "bins": 240
    },
    "metrics": {
-    "on": true,
-    "tilt": 2,
-    "gl": {
-     "calls": 1,
-     "tris": 2,
-     "geos": 161,
-     "texs": 179,
-     "progs": 54,
-     "w": 1280,
-     "h": 720,
-     "dpr": 1
+    "active": true,
+    "q": "high",
+    "level": "high",
+    "post": {
+     "ready": true,
+     "failed": false,
+     "frames": 7,
+     "on": true,
+     "tier": "HIGH",
+     "tone": "neutral",
+     "size": "2560x1440",
+     "msaa": 4,
+     "mips": 4,
+     "exposure": 1,
+     "bloom": 0.234,
+     "ao": "12표본 1280x720",
+     "sat": 1,
+     "temp": 0
     },
-    "me": {
-     "visible": true
-    }
+    "stage": "sinya"
    }
   },
   {
-   "game": "saga-go",
-   "key": "2-close",
-   "title": "인물 가까이(휠로 당김)",
+   "game": "saga-story",
+   "key": "2-field-high",
+   "title": "첫 사냥터 3D(HIGH 후처리)",
    "feats": [
-    "go.asset3d",
-    "go.world3d"
+    "st.side-view3d",
+    "st.asset3d",
+    "st.post3d"
    ],
-   "file": "shots/visual-20261007/saga-go-2-close.png",
+   "file": "shots/visual-20261007/saga-story-2-field-high.png",
    "px": {
-    "mean": 115.4,
-    "std": 37.3,
-    "bins": 394
+    "mean": 43.3,
+    "std": 26.4,
+    "bins": 289
    },
    "metrics": {
-    "on": true,
-    "tilt": 2,
-    "gl": {
-     "calls": 186,
-     "tris": 331421,
-     "geos": 162,
-     "texs": 174,
-     "progs": 93,
-     "w": 1280,
-     "h": 720,
-     "dpr": 1
+    "active": true,
+    "q": "high",
+    "level": "high",
+    "post": {
+     "ready": true,
+     "failed": false,
+     "frames": 19,
+     "on": true,
+     "tier": "HIGH",
+     "tone": "neutral",
+     "size": "2560x1440",
+     "msaa": 4,
+     "mips": 4,
+     "exposure": 1,
+     "bloom": 0.234,
+     "ao": "12표본 1280x720",
+     "sat": 1,
+     "temp": 0
     },
-    "me": {
-     "visible": true
-    },
-    "zoom": 0.7
+    "stage": "field",
+    "k": "field"
    }
   },
   {
-   "game": "saga-go",
-   "key": "3-duel",
-   "title": "결투(실시간 전투) 화면",
+   "game": "saga-story",
+   "key": "3-field-low",
+   "title": "같은 사냥터(LOW 후처리)",
    "feats": [
-    "go.rogue-action"
+    "st.post3d"
    ],
-   "file": "shots/visual-20261007/saga-go-3-duel.png",
+   "file": "shots/visual-20261007/saga-story-3-field-low.png",
    "px": {
-    "mean": 42.6,
-    "std": 22,
-    "bins": 123
+    "mean": 49.6,
+    "std": 25.6,
+    "bins": 272
    },
    "metrics": {
-    "on": true,
-    "tilt": 2,
-    "gl": {
-     "calls": 191,
-     "tris": 333591,
-     "geos": 163,
-     "texs": 174,
-     "progs": 93,
-     "w": 1280,
-     "h": 720,
-     "dpr": 1
+    "active": true,
+    "q": "low",
+    "level": "low",
+    "post": {
+     "ready": true,
+     "failed": false,
+     "frames": 30,
+     "on": false,
+     "tier": "LOW",
+     "tone": "neutral",
+     "size": "-",
+     "msaa": "-",
+     "mips": 0,
+     "exposure": 1,
+     "bloom": 0.234,
+     "ao": "off",
+     "sat": 1,
+     "temp": 0
     },
-    "me": {
-     "visible": true
-    }
+    "stage": "field"
    }
   },
   {
-   "game": "saga-go",
-   "key": "4-burst",
-   "title": "전투 연출 알갱이(불꽃·검기·흙먼지)",
+   "game": "saga-story",
+   "key": "4-portrait",
+   "title": "3D 초상 판(영웅·사슴·구미호)",
    "feats": [
-    "go.battle3d"
+    "st.portrait3d"
    ],
-   "file": "shots/visual-20261007/saga-go-4-burst.png",
+   "file": "shots/visual-20261007/saga-story-4-portrait.png",
    "px": {
-    "mean": 117.7,
-    "std": 36.3,
-    "bins": 322
+    "mean": 49.9,
+    "std": 31.8,
+    "bins": 403
    },
    "metrics": {
-    "on": true,
-    "tilt": 2,
-    "gl": {
-     "calls": 224,
-     "tris": 352663,
-     "geos": 165,
-     "texs": 174,
-     "progs": 93,
-     "w": 1280,
-     "h": 720,
-     "dpr": 1
-    },
-    "me": {
-     "visible": true
-    },
-    "burst": {
-     "n": 27,
-     "on": true
-    },
+    "asked": 12,
+    "got": 12,
     "stats": {
      "on": true,
-     "live": true,
-     "pool": 27,
-     "cap": 48,
-     "alive": 26,
-     "battle": false,
-     "shake": 0
-    }
-   }
-  },
-  {
-   "game": "saga-go",
-   "key": "5-2d",
-   "title": "3D 끔(2D 캔버스로 되돌림)",
-   "feats": [
-    "go.world3d"
-   ],
-   "file": "shots/visual-20261007/saga-go-5-2d.png",
-   "px": {
-    "mean": 110.5,
-    "std": 40.4,
-    "bins": 385
-   },
-   "metrics": {
-    "on": false,
-    "tilt": 2,
-    "gl": {
-     "calls": 199,
-     "tris": 351601,
-     "geos": 165,
-     "texs": 174,
-     "progs": 93,
-     "w": 1280,
-     "h": 720,
-     "dpr": 1
-    },
-    "me": {
-     "visible": true
+     "ready": true,
+     "failed": false,
+     "made": 12,
+     "gaveUp": 0,
+     "cached": 12,
+     "pending": 0
     }
    }
   }
  ],
  "checks": [
   {
-   "name": "장면 saga-go 1-world3d 마을 3D(등 뒤 카메라) — 화면이 단색이 아니다",
+   "name": "장면 saga-story 1-town 마을 3D 배경(HIGH) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":117.3,\"std\":37,\"bins\":351},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":1,\"tris\":2,\"geos\":161,\"texs\":179,\"progs\":54,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true}}}"
+   "detail": "{\"px\":{\"mean\":42.1,\"std\":27.1,\"bins\":240},\"metrics\":{\"active\":true,\"q\":\"high\",\"level\":\"high\",\"post\":{\"ready\":true,\"failed\":false,\"frames\":7,\"on\":true,\"tier\":\"HIGH\",\"tone\":\"neutral\",\"size\":\"2560x1440\",\"msaa\":4,\"mips\":4,\"exposure\":1,\"bloom\":0.234,\"ao\":\"12표본 1280x720\",\"sat\":1,\"temp\":0},\"stage\":\"sinya\"}}"
   },
   {
-   "name": "장면 saga-go 2-close 인물 가까이(휠로 당김) — 화면이 단색이 아니다",
+   "name": "장면 saga-story 2-field-high 첫 사냥터 3D(HIGH 후처리) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":115.4,\"std\":37.3,\"bins\":394},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":186,\"tris\":331421,\"geos\":162,\"texs\":174,\"progs\":93,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true},\"zoom\":0.7}}"
+   "detail": "{\"px\":{\"mean\":43.3,\"std\":26.4,\"bins\":289},\"metrics\":{\"active\":true,\"q\":\"high\",\"level\":\"high\",\"post\":{\"ready\":true,\"failed\":false,\"frames\":19,\"on\":true,\"tier\":\"HIGH\",\"tone\":\"neutral\",\"size\":\"2560x1440\",\"msaa\":4,\"mips\":4,\"exposure\":1,\"bloom\":0.234,\"ao\":\"12표본 1280x720\",\"sat\":1,\"temp\":0},\"stage\":\"field\",\"k\":\"field\"}}"
   },
   {
-   "name": "장면 saga-go 3-duel 결투(실시간 전투) 화면 — 화면이 단색이 아니다",
+   "name": "장면 saga-story 3-field-low 같은 사냥터(LOW 후처리) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":42.6,\"std\":22,\"bins\":123},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":191,\"tris\":333591,\"geos\":163,\"texs\":174,\"progs\":93,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true}}}"
+   "detail": "{\"px\":{\"mean\":49.6,\"std\":25.6,\"bins\":272},\"metrics\":{\"active\":true,\"q\":\"low\",\"level\":\"low\",\"post\":{\"ready\":true,\"failed\":false,\"frames\":30,\"on\":false,\"tier\":\"LOW\",\"tone\":\"neutral\",\"size\":\"-\",\"msaa\":\"-\",\"mips\":0,\"exposure\":1,\"bloom\":0.234,\"ao\":\"off\",\"sat\":1,\"temp\":0},\"stage\":\"field\"}}"
   },
   {
-   "name": "장면 saga-go 4-burst 전투 연출 알갱이(불꽃·검기·흙먼지) — 화면이 단색이 아니다",
+   "name": "장면 saga-story 4-portrait 3D 초상 판(영웅·사슴·구미호) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":117.7,\"std\":36.3,\"bins\":322},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":224,\"tris\":352663,\"geos\":165,\"texs\":174,\"progs\":93,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true},\"burst\":{\"n\":27,\"on\":true},\"stats\":{\"on\":true,\"live\":true,\"pool\":27,\"cap\":48,\"alive\":26,\"battle\":false,\"shake\":0}}}"
+   "detail": "{\"px\":{\"mean\":49.9,\"std\":31.8,\"bins\":403},\"metrics\":{\"asked\":12,\"got\":12,\"stats\":{\"on\":true,\"ready\":true,\"failed\":false,\"made\":12,\"gaveUp\":0,\"cached\":12,\"pending\":0}}}"
   },
   {
-   "name": "장면 saga-go 5-2d 3D 끔(2D 캔버스로 되돌림) — 화면이 단색이 아니다",
+   "name": "사가종횡 초상 — 굽기를 청한 것 중 반 넘게 그림이 나온다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":110.5,\"std\":40.4,\"bins\":385},\"metrics\":{\"on\":false,\"tilt\":2,\"gl\":{\"calls\":199,\"tris\":351601,\"geos\":165,\"texs\":174,\"progs\":93,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true}}}"
+   "detail": "{\"asked\":12,\"got\":12,\"stats\":{\"on\":true,\"ready\":true,\"failed\":false,\"made\":12,\"gaveUp\":0,\"cached\":12,\"pending\":0}}"
   },
   {
-   "name": "사가만리 페이지 예외·console.error 없음",
+   "name": "사가종횡 페이지 예외·console.error 없음",
    "ok": true,
    "detail": ""
   }
