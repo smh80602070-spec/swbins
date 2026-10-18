@@ -1,0 +1,15 @@
+{
+ "note": "K-0137 주역 10 고유 몸 — 움직이는 초상 주역 23(saga-assets/portraits-live) 중 다섯 판 시나리오 언급 9 + 전략가 1. 밑몸·옷은 지금 그대로(_in/vroid/<id>.glb, K-0024 옷 이식), 머리카락 = 밑몸으로 적게 쓰인 샘플(≤7명)에서 서로 다르게 · 뼈 비율·얼굴 레이어 조합도 서로 다르게. 표시 이름·id 그대로. (data.js HEROES 첫 둘은 다섯 판 공통 사본이라 '판마다 둘'이 안 됨 — Opus 판단 10-18, 사용자 거부권)",
+ "leads": [
+  {"id": "hl_mukhyang",   "body": "V", "hair": "o", "ratio": {"head": 1.00, "arm": 1.02, "leg": 1.06}, "face": "eye=1,brow=2,mouth=1,iris=2,skin=1,deco=0"},
+  {"id": "kr_gyebaek",    "body": "L", "hair": "y", "ratio": {"head": 0.97, "arm": 1.04, "leg": 1.08}, "face": "eye=2,brow=1,mouth=0,iris=5,skin=2,deco=2"},
+  {"id": "fu_jongwang",   "body": "B", "hair": "m", "ratio": {"head": 1.02, "arm": 1.06, "leg": 1.12}, "face": "eye=3,brow=2,mouth=2,iris=7,skin=3,deco=0"},
+  {"id": "tb_baekgi",     "body": "P", "hair": "t", "ratio": {"head": 0.96, "arm": 1.05, "leg": 1.10}, "face": "eye=2,brow=0,mouth=2,iris=1,skin=4,deco=3"},
+  {"id": "ru_geohae",     "body": "P", "hair": "w", "ratio": {"head": 1.04, "arm": 1.08, "leg": 1.04}, "face": "eye=0,brow=2,mouth=1,iris=6,skin=0,deco=1"},
+  {"id": "sg_caocao",     "body": "P", "hair": "k", "ratio": {"head": 1.00, "arm": 1.00, "leg": 1.00}, "face": "eye=3,brow=1,mouth=0,iris=3,skin=2,deco=0"},
+  {"id": "sg_liubei",     "body": "G", "hair": "j", "ratio": {"head": 0.98, "arm": 1.03, "leg": 1.08}, "face": "eye=1,brow=0,mouth=1,iris=4,skin=1,deco=2"},
+  {"id": "sg_lubu",       "body": "Z", "hair": "s", "ratio": {"head": 0.95, "arm": 1.08, "leg": 1.14}, "face": "eye=2,brow=2,mouth=2,iris=8,skin=3,deco=1"},
+  {"id": "sg_sunquan",    "body": "L", "hair": "u", "ratio": {"head": 1.03, "arm": 0.98, "leg": 1.02}, "face": "eye=0,brow=1,mouth=0,iris=0,skin=4,deco=3"},
+  {"id": "sg_zhugeliang", "body": "N", "hair": "q", "ratio": {"head": 0.99, "arm": 1.01, "leg": 1.10}, "face": "eye=1,brow=1,mouth=2,iris=5,skin=0,deco=0"}
+ ]
+}
