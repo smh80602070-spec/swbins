@@ -13,3 +13,5 @@
 - [ ] 10-17 · (자체툴 K-0128 괴물 → 고돗) · 자체 괴물 몸 111 고돗 배치 끝, monster_body.gd shape→id 표 — 시트 ⑤ · 고돗
 - [ ] 10-18 · (자체툴 K-0139 → 고돗) · 같은 파일 `saga-godot/assets/anim_mocap/vroid_mocap_anims.glb` → VRoid 몸 anim_cc0 `_lib.res` 에 12 클립 갈아 끼우기(`.import` 는 고돗 세션) · 고돗
 - [ ] 10-18 · (자체툴 K-0141 → 웹 1만리) · W-0319 의 둘째 묶음 — 같은 표 `tools/world-forge/data/k125_markers.json` 지역별 `built` 에 K-0141 GLB 57(값 {id, h(GLB 높이 m), k, note(코드에 남는 부품·원점·rot)}) — 소품 50·진열장 넷·고개 기둥 셋 + 장면 장식(하늘길 사당·잔해·궤도 원점 = 원판 가운데 / 선대 조선소·역참 = 그룹 원점 / 매듭 돌 / 보랏불 받침) · 판정 몸(원판·난간·houseRects 벽)은 코드 그대로 · `keep` 16 = 코드 유지 이유 · 배치·ids·번들 끝 · 웹
+- [ ] 10-18 · (자체툴 K-0137 → 고돗) · 주역 10 몸 바뀜(새 머리카락·뼈 비율·얼굴 레이어 — hl_mukhyang·kr_gyebaek·fu_jongwang·tb_baekgi·ru_geohae·sg_caocao·sg_liubei·sg_lubu·sg_sunquan·sg_zhugeliang) · 원본 `tools/char-forge/_out/vroid/<id>/<id>.glb`·`<id>_anims.glb`(이 PC) → `vroid_intake.sh --only <10>` 로 얼굴 데칼·anim_cc0 `_lib.res` 다시 · 고돗
+- [ ] 10-18 · (자체툴 K-0137 → 유니티) · 같은 주역 10 몸 바뀜 — 유니티가 이 열 명을 VRoid 몸으로 쓰는 자리가 있으면 같은 원본으로 갈아 끼우기(없으면 [x]) · 유니티

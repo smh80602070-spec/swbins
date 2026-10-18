@@ -6,7 +6,8 @@
  "source_samples": [
   "AvatarSample_C",
   "AvatarSample_L",
-  "AvatarSample_N"
+  "AvatarSample_N",
+  "AvatarSample_Y"
  ],
  "body": "AvatarSample_L",
  "kit": {
@@ -14,5 +15,17 @@
   "bottom": "c",
   "shoes": "l"
  },
- "note": "옷·몸 조각을 샘플 25벌 사이에서 이식한 인물. 얼굴·머리는 샘플 그대로(약간 다르게만, 사용자 2026-10-02)."
+ "note": "옷·몸 조각을 샘플 25벌 사이에서 이식한 인물. 얼굴·머리는 샘플 그대로(약간 다르게만, 사용자 2026-10-02).",
+ "k0137": {
+  "date": "2026-10-18",
+  "hair_donor": "AvatarSample_Y",
+  "ratio": {
+   "head": 0.97,
+   "arm": 1.04,
+   "leg": 1.08
+  },
+  "face_layers": "eye=2,brow=1,mouth=0,iris=5,skin=2,deco=2",
+  "generator": "tools/char-forge/k137_leads.py (vrm_mix.py 머리카락·뼈 비율 + face_layers.py) → vroid_batch.sh glb·anim·web",
+  "note": "주역 10 고유 몸 — 머리카락은 밑몸으로 적게 쓰인 샘플에서(같은 VRoid 샘플 이용 조건), 원본 _in/vroid_k137_bak/"
+ }
 }

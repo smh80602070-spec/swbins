@@ -22,6 +22,8 @@ for f in files:
     hb = arm.data.bones['J_Bip_C_Head']; hp = arm.matrix_world @ hb.head_local; hl = (hb.tail_local - hb.head_local).length
     c = hp + Vector((0, 0, hl * 0.9))
     cd.ortho_scale = hl * 4.2
-    cam.location = c + Vector((0, 3, 0)); cam.rotation_euler = (c - cam.location).to_track_quat('-Z', 'Y').to_euler()
+    fy = [(o.matrix_world @ v.co).y for o in bpy.data.objects if o.type == 'MESH' and o.name.startswith('Face') for i, v in enumerate(o.data.vertices) if i % 7 == 0]
+    side = -1 if fy and sum(fy) / len(fy) < hp.y else 1          # 얼굴이 있는 쪽에서 찍는다(VRM 1.0 샘플 계열은 -Y 를 본다, K-0137)
+    cam.location = c + Vector((0, 3 * side, 0)); cam.rotation_euler = (c - cam.location).to_track_quat('-Z', 'Y').to_euler()
     sc.render.filepath = os.path.join(out, os.path.splitext(os.path.basename(f))[0] + '_hc.png')
     bpy.ops.render.render(write_still=True); print('OK', sc.render.filepath)

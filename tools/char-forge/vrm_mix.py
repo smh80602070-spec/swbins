@@ -4,7 +4,9 @@ Blender 헤드리스, VRM 애드온 없이 glTF 단계에서 한다(VRM 은 glTF
   blender -b --factory-startup -P tools/char-forge/vrm_mix.py -- <target.vrm> <donor.vrm> <out.glb> [head=1.05,arm=0.97,leg=1.0]
     target = 몸·얼굴·옷, donor = 머리카락(앞·뒤). 경로는 절대 경로로 준다(Blender 는 상대 경로를 드라이브 루트로 푼다).
     세 번째 뒤 인자(선택): 뼈 비율 — head·arm·leg 배율(1.0 = 그대로). 머리카락은 머리 크기를 따라간다.
-머리카락 뼈 = 이름이 `HairJoint` 로 시작하는 뼈. 뒷머리 = Body 메시 안 `HairBack` 재질 면(donor 것을 떼어 오고 target 것은 지운다).
+머리카락 뼈 = 이름이 `HairJoint`(VRM 0.x) 또는 `J_Sec_Hair`(VRM 1.0 샘플 B~Z·옷 이식 GLB) 로 시작하는 뼈 — target 의 옛 머리 뼈는 먼저 지운다
+(같은 이름이라 그대로 두면 donor 머리가 옛 뼈에 묶인다). 뒷머리 = 메시 안 `HairBack` 재질 면 — 옷 이식 GLB 는 따로 조각(`Body.00n`)이고
+머리·얼굴도 여러 조각이라 종류마다 목록으로 다룬다(donor 것을 떼어 오고 target 것은 지운다). 머리 크기 = 얼굴 피부(`Face_00_SKIN`) 면 높이 비(K-0137).
 """
 import bpy, bmesh, sys, os, shutil, tempfile
 from mathutils import Vector, Matrix
@@ -33,8 +35,23 @@ def load(path, tag):
             continue
         n = o.name
         kind = 'Body' if n.startswith('Body') else 'Face' if n.startswith('Face') else 'Hair' if n.startswith('Hair') else 'Other'
-        kinds[kind] = o
+        kinds.setdefault(kind, []).append(o)
     return arm, kinds, new
+
+
+HAIR_BONE = ('HairJoint', 'J_Sec_Hair')
+
+
+def mat_faces_z(objs, key):
+    """objs 의 면 중 재질 이름에 key 가 든 면 정점의 월드 z 범위 높이(없으면 None)."""
+    zs = []
+    for o in objs:
+        idx = {i for i, sl in enumerate(o.material_slots) if sl.material and key in sl.material.name}
+        if not idx:
+            continue
+        vs = {v for p in o.data.polygons if p.material_index in idx for v in p.vertices}
+        zs += [(o.matrix_world @ o.data.vertices[v].co).z for v in vs]
+    return (max(zs) - min(zs)) if zs else None
 
 
 def head_pos(arm):
@@ -121,23 +138,28 @@ Ht, _ = head_pos(tarm)
 Hd, _ = head_pos(darm)
 
 
-def face_height(o):
-    zs = [(o.matrix_world @ v.co).z for v in o.data.vertices]
-    return max(zs) - min(zs)
+def face_height(objs):
+    h = mat_faces_z(objs, 'Face_00_SKIN')            # 얼굴 피부 면만 — 눈썹·속눈썹 같은 작은 조각 하나를 재면 축척이 틀어진다
+    if h is None:
+        zs = [(o.matrix_world @ v.co).z for o in objs for v in o.data.vertices]
+        h = max(zs) - min(zs)
+    return h
 
 
-s = face_height(tk['Face']) / face_height(dk['Face'])     # 머리카락 크기 = 얼굴 메시 높이 비율(head 배율은 뒤에서 뼈로 따로 준다)
+s = face_height(tk['Face']) / face_height(dk['Face'])     # 머리카락 크기 = 얼굴 피부 높이 비율(head 배율은 뒤에서 뼈로 따로 준다)
 M = Matrix.Translation(Ht) @ Matrix.Scale(s, 4) @ Matrix.Translation(-Hd)       # donor 월드 → target 월드(머리 기준)
 
 # 1) donor 머리카락 오브젝트: 뒷머리(Body 의 HairBack 면) 떼어 오기
-back = split_material_faces(dk['Body'], 'HairBack') if 'Body' in dk else None
-hair_objs = ([dk['Hair']] if 'Hair' in dk else []) + ([back] if back else [])      # Base_* 는 머리가 Body 의 HairBack 면 하나뿐
+backs = [b for b in (split_material_faces(o, 'HairBack') for o in dk.get('Body', [])) if b]
+hair_objs = list(dk.get('Hair', [])) + backs      # Base_* 는 머리가 Body 의 HairBack 면 하나뿐
 
-# 2) target 에 머리카락 뼈 만들기(donor 의 HairJoint 뼈를 같은 계층으로, 위치만 변환)
-hair_bones = [b for b in darm.data.bones if b.name.startswith('HairJoint')]
+# 2) target 에 머리카락 뼈 만들기(donor 의 머리 뼈를 같은 계층으로, 위치만 변환) — target 의 옛 머리 뼈는 먼저 지운다
+hair_bones = [b for b in darm.data.bones if b.name.startswith(HAIR_BONE)]
 bpy.context.view_layer.objects.active = tarm
 bpy.ops.object.mode_set(mode='EDIT')
 eb = tarm.data.edit_bones
+for b in [b for b in eb if b.name.startswith(HAIR_BONE)]:
+    eb.remove(b)
 made = {}
 order = sorted(hair_bones, key=lambda b: len(b.parent_recursive))
 for b in order:
@@ -169,10 +191,14 @@ for o in hair_objs:
 # 4) 정리: target 의 옛 머리카락 제거, donor 의 나머지 제거
 tnew_names = [o.name for o in tnew]
 dnew_names = [o.name for o in dnew]
-if tk.get('Hair'):
-    bpy.data.objects.remove(tk['Hair'], do_unlink=True)
-if 'Body' in tk:
-    delete_material_faces(tk['Body'], 'HairBack')
+for o in tk.get('Hair', []):
+    bpy.data.objects.remove(o, do_unlink=True)
+for o in tk.get('Body', []):
+    mats = [sl.material.name for sl in o.material_slots if sl.material]
+    if mats and all('HairBack' in m for m in mats):
+        bpy.data.objects.remove(o, do_unlink=True)        # 옷 이식 GLB — 뒷머리가 따로 조각
+    else:
+        delete_material_faces(o, 'HairBack')
 keep = {o.name for o in hair_objs}
 for n in tnew_names:
     if n.startswith('Icosphere') and n in bpy.data.objects:
