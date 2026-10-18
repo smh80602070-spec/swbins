@@ -1,5 +1,5 @@
 {
- "note": "K-0125 재고(Opus 10-17) — 1만리 이야기 지역 js 의 switch(st.model) 종류. pair=있는 world3d(이름 추정, 실행 세션이 case 본문 읽고 확정) · keep=웹 코드 그대로 · new=새 GLB 후보. 크기는 각 case 의 box/cyl 인자(m 단위, three y 위). · 10-18 Opus 단계 1: case 본문(그리는 쪽)·후보 GLB 실제 크기로 짝 확정 — pair = {id, h(옛 높이 m, AS.build mul), n(여러 개), note(코드에 남는 부품)} · 이름만 닮은 14 → new(→ 제안 id) · 2 → keep.",
+ "note": "K-0125 재고(Opus 10-17) — 1만리 이야기 지역 js 의 switch(st.model) 종류. pair=있는 world3d(이름 추정, 실행 세션이 case 본문 읽고 확정) · keep=웹 코드 그대로 · new=새 GLB 후보. 크기는 각 case 의 box/cyl 인자(m 단위, three y 위). · 10-18 Opus 단계 1: case 본문(그리는 쪽)·후보 GLB 실제 크기로 짝 확정 — pair = {id, h(옛 높이 m, AS.build mul), n(여러 개), note(코드에 남는 부품)} · 이름만 닮은 14 → new(→ 제안 id) · 2 → keep. · 10-18 K-0141: 남은 new 58 → built 54 항목(GLB 57, built 값 = {id, h(GLB 높이 m), k, note}) + keep 4 · 장면 셋은 판정 몸 코드, 장식만.",
  "regions": {
   "frost": {
    "file": "saga-web/saga-go/js/frost.js",
@@ -17,18 +17,34 @@
    "keep": {
     "lake": "지형 높이 맞춤 고리"
    },
-   "new": [
-    "hut",
-    "sat",
-    "snowman",
-    "cave"
-   ],
+   "new": [],
    "built": {
     "fort": "frost_fort_01",
     "obs": "frost_observatory_01",
     "ship": "frost_airship_wreck_01",
     "cable": "frost_cableway_01",
-    "statue": "statue_guard_01"
+    "statue": "statue_guard_01",
+    "hut": {
+     "id": "frost_hut_01",
+     "h": 4.2,
+     "k": "K-0141",
+     "note": "yaw 0.3 구움"
+    },
+    "sat": {
+     "id": "frost_satdish_01",
+     "h": 2.1,
+     "k": "K-0141"
+    },
+    "snowman": {
+     "id": "snowman_01",
+     "h": 2.7,
+     "k": "K-0141"
+    },
+    "cave": {
+     "id": "frost_ice_cave_01",
+     "h": 3.1,
+     "k": "K-0141"
+    }
    }
   },
   "crossing": {
@@ -49,22 +65,53 @@
      "h": 0.95
     }
    },
-   "keep": {},
-   "new": [
-    "tgate",
-    "guard",
-    "steps",
-    "dial",
-    "tile",
-    "crystal",
-    "pod",
-    "ticket",
-    "helm"
-   ],
+   "keep": {
+    "steps": "섬돌 열다섯이 다 출렁(bob)·꼭대기 수정 돎 — 정적 몸 없음",
+    "crystal": "몸 통째 돎(spin) 팔면체 하나"
+   },
+   "new": [],
    "built": {
     "platform": "crossing_platform_01",
     "clock": "crossing_clocktower_01",
-    "gate": "gate_light_pillars_01"
+    "gate": "gate_light_pillars_01",
+    "tgate": {
+     "id": "crossing_tilted_gate_01",
+     "h": 9.67,
+     "k": "K-0141",
+     "note": "12° 기울기 구움 · 떠 있는 성벽 조각 넷 = 코드(bob)"
+    },
+    "guard": {
+     "id": "guard_robot_01",
+     "h": 2.4,
+     "k": "K-0141",
+     "note": "눈 등 o.blink 코드"
+    },
+    "dial": {
+     "id": "crossing_dial_01",
+     "h": 0.68,
+     "k": "K-0141"
+    },
+    "tile": {
+     "id": "roof_tile_shards_01",
+     "h": 0.3,
+     "k": "K-0141"
+    },
+    "pod": {
+     "id": "crossing_pod_01",
+     "h": 1.49,
+     "k": "K-0141",
+     "note": "등 o.blink 코드"
+    },
+    "ticket": {
+     "id": "ticket_machine_01",
+     "h": 1.6,
+     "k": "K-0141"
+    },
+    "helm": {
+     "id": "sword_helm_01",
+     "h": 1.47,
+     "k": "K-0141"
+    }
    }
   },
   "skyport": {
@@ -87,20 +134,50 @@
    "keep": {
     "bell": "떨어진 종 — 이야기 진행에 따라 종 몸을 숨김(o.bellBody), 틀 둘은 코드로 둬도 됨"
    },
-   "new": [
-    "farm",
-    "phone",
-    "courier",
-    "capsule",
-    "busstop",
-    "antenna → lattice_mast_01(8m 격자 탑 — signal_pylon_01 3.4m 와 비가 다름)",
-    "cairn → cairn_01(돌 다섯 쌓음 2.5m — rubble_pillar_01 은 무너진 기둥)"
-   ],
+   "new": [],
    "built": {
     "port": "skyport_mooring_tower_01",
     "station": "skyport_station_01",
     "temple": "stone_pagoda_01",
-    "gate": "gate_light_pillars_01"
+    "gate": "gate_light_pillars_01",
+    "farm": {
+     "id": "solar_farm_01",
+     "h": 1.86,
+     "k": "K-0141",
+     "note": "표시등 o.led 코드"
+    },
+    "phone": {
+     "id": "phone_booth_01",
+     "h": 2.3,
+     "k": "K-0141"
+    },
+    "courier": {
+     "id": "courier_bot_01",
+     "h": 1.2,
+     "k": "K-0141"
+    },
+    "capsule": {
+     "id": "time_capsule_01",
+     "h": 1.84,
+     "k": "K-0141",
+     "note": "등 o.blink 코드"
+    },
+    "busstop": {
+     "id": "bus_stop_01",
+     "h": 2.51,
+     "k": "K-0141"
+    },
+    "antenna": {
+     "id": "lattice_mast_01",
+     "h": 8.0,
+     "k": "K-0141",
+     "note": "꼭대기 등 o.blink 코드"
+    },
+    "cairn": {
+     "id": "cairn_01",
+     "h": 2.47,
+     "k": "K-0141"
+    }
    }
   },
   "sunken": {
@@ -117,20 +194,53 @@
     "drone": "움직임?",
     "dome": "유리 돔 R11 — 안이 보이고 둘레 조각이 문(충돌·door) — 코드 그대로"
    },
-   "new": [
-    "lab",
-    "tewak",
-    "helmet",
-    "pearl",
-    "buoy",
-    "turtle",
-    "plaque",
-    "haetae"
-   ],
+   "new": [],
    "built": {
     "palace": "sunken_palace_01",
     "lighthouse": "sunken_lighthouse_01",
-    "gate": "gate_light_pillars_01"
+    "gate": "gate_light_pillars_01",
+    "lab": {
+     "id": "sunken_lab_01",
+     "h": 6.4,
+     "k": "K-0141",
+     "note": "잠수정(bob)·관제실 창(blink) 코드"
+    },
+    "tewak": {
+     "id": "tewak_float_01",
+     "h": 0.72,
+     "k": "K-0141"
+    },
+    "helmet": {
+     "id": "diving_helmet_01",
+     "h": 0.9,
+     "k": "K-0141"
+    },
+    "pearl": {
+     "id": "pearl_shell_01",
+     "h": 0.45,
+     "k": "K-0141"
+    },
+    "buoy": {
+     "id": "buoy_01",
+     "h": 1.4,
+     "k": "K-0141",
+     "note": "출렁 = 코드가 GLB 루트를 흔듦 · 등 코드"
+    },
+    "turtle": {
+     "id": "turtle_stele_01",
+     "h": 2.05,
+     "k": "K-0141"
+    },
+    "plaque": {
+     "id": "sunken_plaque_01",
+     "h": 0.25,
+     "k": "K-0141"
+    },
+    "haetae": {
+     "id": "haetae_01",
+     "h": 1.45,
+     "k": "K-0141"
+    }
    }
   },
   "amber": {
@@ -176,18 +286,31 @@
    },
    "keep": {
     "kite": "흔들림?",
-    "drone": "움직임?"
+    "drone": "움직임?",
+    "cross": "지름 44m 아스팔트 칠 = 땅 높이 맞춤 · 신호등 깜빡 · 결정 치움 — 코드"
    },
-   "new": [
-    "pass",
-    "cross",
-    "rail",
-    "vend"
-   ],
+   "new": [],
    "built": {
     "clock": "amber_clockshop_01",
     "tower": "drain_tower_01",
-    "statue": "statue_guard_01"
+    "statue": "statue_guard_01",
+    "pass": {
+     "id": "amber_pass_posts_01",
+     "h": 4.35,
+     "k": "K-0141",
+     "note": "결정 무더기·막(o.pass 치우는 문) 코드"
+    },
+    "rail": {
+     "id": "amber_elevated_rail_01",
+     "h": 9.3,
+     "k": "K-0141",
+     "note": "반투명 결정 무더기 코드"
+    },
+    "vend": {
+     "id": "vending_machine_01",
+     "h": 1.9,
+     "k": "K-0141"
+    }
    }
   },
   "vault": {
@@ -217,25 +340,83 @@
    "keep": {
     "dronedown": "움직임?"
    },
-   "new": [
-    "pass",
-    "yard",
-    "feast",
-    "ship",
-    "train",
-    "palace",
-    "mortar",
-    "sotdae",
-    "forklift",
-    "container",
-    "seedpod",
-    "caseshard",
-    "pylon → steel_pylon_01(강철 기둥 10m + 빛 구슬은 코드)"
-   ],
+   "new": [],
    "built": {
     "vault": "vault_seedvault_01",
     "granary": "vault_granary_01",
-    "statue": "statue_guard_01"
+    "statue": "statue_guard_01",
+    "pass": {
+     "id": "vault_pass_posts_01",
+     "h": 14.0,
+     "k": "K-0141",
+     "note": "막 o.gate 코드"
+    },
+    "yard": {
+     "id": "vault_container_yard_01",
+     "h": 11.3,
+     "k": "K-0141"
+    },
+    "feast": {
+     "id": "vault_case_feast_01",
+     "h": 2.64,
+     "k": "K-0141",
+     "note": "진열장 caseOf — 호박 유리판 코드(투명)"
+    },
+    "ship": {
+     "id": "vault_case_ship_01",
+     "h": 2.64,
+     "k": "K-0141",
+     "note": "호박 유리판 코드"
+    },
+    "train": {
+     "id": "vault_case_train_01",
+     "h": 2.64,
+     "k": "K-0141",
+     "note": "호박 유리판 코드"
+    },
+    "palace": {
+     "id": "vault_case_palace_01",
+     "h": 2.64,
+     "k": "K-0141",
+     "note": "호박 유리판 코드"
+    },
+    "mortar": {
+     "id": "dideul_mortar_01",
+     "h": 1.13,
+     "k": "K-0141"
+    },
+    "sotdae": {
+     "id": "sotdae_01",
+     "h": 5.34,
+     "k": "K-0141"
+    },
+    "forklift": {
+     "id": "forklift_01",
+     "h": 2.69,
+     "k": "K-0141"
+    },
+    "container": {
+     "id": "open_container_01",
+     "h": 2.65,
+     "k": "K-0141"
+    },
+    "seedpod": {
+     "id": "seed_pod_01",
+     "h": 1.31,
+     "k": "K-0141",
+     "note": "떠 있는 씨앗 o.floater 코드"
+    },
+    "caseshard": {
+     "id": "case_shards_01",
+     "h": 2.51,
+     "k": "K-0141"
+    },
+    "pylon": {
+     "id": "steel_pylon_01",
+     "h": 10.3,
+     "k": "K-0141",
+     "note": "빛 구슬 o.orb 코드"
+    }
    }
   },
   "fork": {
@@ -261,68 +442,144 @@
     "rain": "파티클",
     "birds": "움직임"
    },
-   "new": [
-    "pass",
-    "lattice",
-    "junction",
-    "works",
-    "laundry",
-    "tripod",
-    "rails",
-    "shard"
-   ],
+   "new": [],
    "built": {
     "loco": "fork_locomotive_01",
     "gate": "castle_gate_01",
     "tower": "bell_tower_01",
-    "statue": "statue_guard_01"
+    "statue": "statue_guard_01",
+    "pass": {
+     "id": "fork_pass_posts_01",
+     "h": 14.0,
+     "k": "K-0141",
+     "note": "막 o.veil 코드"
+    },
+    "lattice": {
+     "id": "lattice_stake_base_01",
+     "h": 1.01,
+     "k": "K-0141",
+     "note": "빛 격자 o.frame 코드"
+    },
+    "junction": {
+     "id": "fork_signpost_01",
+     "h": 3.16,
+     "k": "K-0141",
+     "note": "하늘 틈·별까마귀 코드"
+    },
+    "works": {
+     "id": "rail_works_tents_01",
+     "h": 2.06,
+     "k": "K-0141"
+    },
+    "laundry": {
+     "id": "laundry_line_01",
+     "h": 2.2,
+     "k": "K-0141"
+    },
+    "tripod": {
+     "id": "survey_tripod_01",
+     "h": 1.81,
+     "k": "K-0141"
+    },
+    "rails": {
+     "id": "rail_pile_01",
+     "h": 0.62,
+     "k": "K-0141"
+    },
+    "shard": {
+     "id": "fork_shards_01",
+     "h": 0.9,
+     "k": "K-0141"
+    }
    }
   },
   "stormeye": {
    "file": "saga-web/saga-go/js/stormeye.js",
-   "new": [
-    "(장면 하나) 매듭(밧줄 고리·종이 띠)·눈 고리·랜턴 구 — 정적 몸만"
-   ],
+   "new": [],
    "pair": {},
-   "keep": {}
+   "keep": {},
+   "built": {
+    "knot": {
+     "id": "stormeye_knot_01",
+     "h": 1.2,
+     "k": "K-0141",
+     "note": "연기·불꽃·빛줄기 코드 · 눈 원판(EYE_R 판정)·소용돌이 = 코드"
+    }
+   }
   },
   "skyroute": {
    "file": "saga-web/saga-go/js/skyroute.js",
-   "new": [
-    "(장면 하나) 첨탑 정거장(원뿔/육각 + 난간 고리)"
-   ],
+   "new": [],
    "pair": {},
-   "keep": {}
+   "keep": {},
+   "built": {
+    "shrine": {
+     "id": "skyroute_shrine_01",
+     "h": 4.5,
+     "k": "K-0141",
+     "note": "원점 = 원판 가운데 윗면 · 원판·난간·방울 장대 코드"
+    },
+    "wreck": {
+     "id": "skyroute_wreck_01",
+     "h": 13.59,
+     "k": "K-0141",
+     "note": "원점 = 원판 가운데 · 프로펠러·풍향 날개·기관 등 코드"
+    },
+    "orbit": {
+     "id": "skyroute_orbit_01",
+     "h": 9.0,
+     "k": "K-0141",
+     "note": "원점 = 원판 가운데 · 안테나 등·씨앗 빛 심 코드"
+    }
+   }
   },
   "skyisle": {
    "file": "saga-web/saga-go/js/skyisle.js",
-   "new": [
-    "(장면 하나) 하늘섬(풀판·바위판·거꾸로 선 뿔·난간·기둥)"
-   ],
+   "new": [],
    "pair": {},
-   "keep": {}
+   "keep": {
+    "isle": "윗면·난간·밑 뿔이 ISLE_R·RAIL_H 판정과 한 몸, 남는 장식 = 받침 하나 — 코드"
+   }
   },
   "era-sites": {
    "file": "saga-web/saga-go/js/era-sites.js",
-   "new": [
-    "(장면 하나) 선대 유적(녹슨 갈비 아치 등)·정거장"
-   ],
+   "new": [],
    "pair": {},
-   "keep": {}
+   "keep": {},
+   "built": {
+    "yard": {
+     "id": "era_shipyard_01",
+     "h": 14.31,
+     "k": "K-0141",
+     "note": "rot = 그룹 -f.rot · 불똥·날개 조각 코드 · 벽 판정 rectsOfYard 그대로"
+    },
+    "station": {
+     "id": "era_post_station_01",
+     "h": 6.0,
+     "k": "K-0141",
+     "note": "깃발 코드 · 벽 판정 rectsOfStation 그대로"
+    }
+   }
   },
   "nightecho": {
    "file": "saga-web/saga-go/js/nightecho.js",
-   "new": [
-    "(장면 하나) 보랏불(깜빡임 = 코드), 받침만"
-   ],
+   "new": [],
    "pair": {},
-   "keep": {}
+   "keep": {},
+   "built": {
+    "ember": {
+     "id": "nightecho_ember_base_01",
+     "h": 0.36,
+     "k": "K-0141",
+     "note": "받침 새로 · 불꽃·빛무리·보랏빛 고리 코드"
+    }
+   }
   }
  },
  "count": {
   "pair": 24,
-  "keep": 12,
-  "built": 25,
-  "new": 58
+  "keep": 16,
+  "built": 82,
+  "new": 0
  }
 }

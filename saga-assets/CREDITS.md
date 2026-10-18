@@ -31,7 +31,7 @@
 | k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 story-field.ogg 를 mp3 로 옮김) | 1 |
 | k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 story-town.ogg 를 mp3 로 옮김) | 1 |
 | bake_for_rig.py --map vroid (vroid_batch.sh anim 단계, 2026-10-07) | - | CC0-1.0 (뼈대+동작만 — 메시·그림 없음. 동작 원본 Quaternius Universal Animation Library CC0 + 자체 키프레임 too | 1 |
-| mocap_retarget.py (K-0139) | - | CMU Graphics Lab Motion Capture Database — "may be copied, modified, or redistributed with | 1 |
+| mocap_retarget.py (K-0139) | - | CMU Graphics Lab Motion Capture Database — "may be copied, modified, or redistributed with | 3 |
 | outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 2000 |
 | outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024)) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 1000 |
 |  에서 옮긴 같은 파일(K-0078, 유니티 vroid-bodies 원본 자리) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 26 |
@@ -92,7 +92,7 @@
 | build_nature_real.py | - | CC0-1.0 자체 생성 — 형태는 코드, 잎은 자체 아틀라스(foliage_atlas.py), 줄기·바위는 자체 PBR(K-0093·K-0113) | 28 |
 | build_field.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 242 |
 | build_kit.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 48 |
-| build_village.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 267 |
+| build_village.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 381 |
 | build_isle_real.py | - | CC0-1.0 (형태는 코드, 결은 자체 PBR K-0093·K-0113) | 4 |
 | build_terrain.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 높이맵은 전부 코드 — 값 잡음 fbm + 모양 함수 + 간단한 침식) | 70 |
 | build_equip.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 435 |

@@ -395,6 +395,8 @@ from build_village_k136 import K136  # noqa: E402  K-0136 2나락 표식 2
 VILLAGE.update(K136)
 from build_village_k125 import K125  # noqa: E402  K-0125 1만리 지역 랜드마크 20
 VILLAGE.update(K125)
+from build_village_k141 import K141  # noqa: E402  K-0141 1만리 지역 2차 57
+VILLAGE.update(K141)
 
 if __name__ == '__main__':
     BP.PROPS.clear()

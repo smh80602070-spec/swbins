@@ -1,0 +1,21 @@
+{
+ "id": "era_post_station_01",
+ "generator": "tools/world-forge/build_village.py",
+ "blender": "5.2.1 LTS",
+ "style": "toon",
+ "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+ "inputs": [
+  "self-pbr: brown_planks_03",
+  "self-pbr: castle_wall_slates",
+  "self-pbr: cobblestone_floor_01",
+  "self-pbr: concrete_wall_001",
+  "self-pbr: japanese_stone_wall",
+  "self-pbr: thatch_roof_angled"
+ ],
+ "size_m": [
+  22.8,
+  23.75,
+  6.0
+ ],
+ "tris": 510
+}

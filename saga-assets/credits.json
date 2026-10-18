@@ -255,9 +255,11 @@
    "tool": "mocap_retarget.py (K-0139)",
    "model": "",
    "license": "CMU Graphics Lab Motion Capture Database — \"may be copied, modified, or redistributed without permission\" (mocap.cs.cmu.edu FAQ) · BVH 변환 Bruce Hahne 2010(추가 제한 없음)",
-   "count": 1,
+   "count": 3,
    "where": [
-    "saga-assets/characters/anim-src/mocap"
+    "saga-assets/characters/anim-src/mocap",
+    "saga-godot/assets/anim_mocap",
+    "saga-web/shared/assets/anim"
    ]
   },
   {
@@ -936,7 +938,7 @@
    "tool": "build_village.py",
    "model": "",
    "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
-   "count": 267,
+   "count": 381,
    "where": [
     "saga-assets/world/real",
     "saga-assets/world/toon",
