@@ -1,0 +1,13 @@
+{
+ "id": "(push_batch.py 가 계정 이름으로 채운다)",
+ "title": "saga k140 sd",
+ "code_file": "sd_kaggle.py",
+ "language": "python",
+ "kernel_type": "script",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_internet": true,
+ "dataset_sources": [],
+ "competition_sources": [],
+ "kernel_sources": []
+}

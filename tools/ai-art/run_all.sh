@@ -4,6 +4,10 @@
 #  · 내가 띄운 경우에만: 메모리(파이썬 작업 집합)가 RSS_LIMIT_GB 를 넘겼을 때만 껐다 켠다(누적 방지). 넘기 전엔 한 번 띄운 것을 계속 쓴다 → 창이 자주 안 뜬다.
 #  · 창은 start_sd.ps1 이 숨겨서 띄운다.
 cd /c/swbins
+# K-0140 원격: bash tools/ai-art/run_all.sh --remote <배치.json> <상태파일> — 로컬 ComfyUI 안 띄우고 Kaggle GPU 왕복(같은 gen.py, 같은 _out). pid 파일 안 씀(로컬 사슬과 별개)
+if [ "$1" = "--remote" ]; then
+  rm -f "$3"; PYTHONIOENCODING=utf-8 py tools/ai-art/remote/push_batch.py "$2" --state "$3"; exit $?
+fi
 B="$1"; S="$2"; rm -f "$S" tools/ai-art/_out/STOP; echo $$ > tools/ai-art/_out/run_all.pid
 export AI_ART_MAX=8
 RSS_LIMIT_GB=${RSS_LIMIT_GB:-10}

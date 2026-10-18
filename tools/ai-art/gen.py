@@ -55,6 +55,12 @@ BLOCK = re.compile(r'(genshin|honkai|pokemon|pok[eé]mon|final fantasy|zelda|dia
 
 
 def free_gb():
+    if os.name != 'nt':      # K-0140 원격(Kaggle Linux) — /proc/meminfo
+        for line in open('/proc/meminfo'):
+            if line.startswith('MemAvailable:'):
+                return int(line.split()[1]) / 2 ** 20
+        return 99.0
+
     class MS(ctypes.Structure):
         _fields_ = [('dwLength', ctypes.c_ulong), ('dwMemoryLoad', ctypes.c_ulong), ('ullTotalPhys', ctypes.c_ulonglong),
                     ('ullAvailPhys', ctypes.c_ulonglong), ('ullTotalPageFile', ctypes.c_ulonglong), ('ullAvailPageFile', ctypes.c_ulonglong),
