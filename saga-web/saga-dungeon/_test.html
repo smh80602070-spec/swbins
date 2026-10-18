@@ -1092,6 +1092,15 @@ window.requestAnimationFrame = function () { return 0; };
         return '독 ' + (keep || '(없음)') + ' + ☰ · 접은 ' + hidden + ' · 칸 ' + n + '(숨은 칸 뺌) · 뱃지 → ☰ 점 · Esc ' + (pre ? '(다른 창 열림 → 양보)' : '열고') + ' 닫음';
       } finally { M._reset(); dock.remove(); if (sh) { sh.remove(); } if (real) { real.id = 'dock'; M.init(); } }
     });
+    t('표식 확인 창(결사비·난입) — Esc 로 닫힌다(W-0314 QC: 실제 GPU 속도에서 걸어 들어가 연 창이 Esc 4번에도 남아 끌기·메뉴를 막았다)', function () {
+      var el = document.getElementById('encounter'); if (!el) { return false; }
+      var keep = { h: el.innerHTML, c: el.className };
+      el.innerHTML = '<div class="enc-card"><button data-act="enc-close">물러난다</button></div>'; el.classList.add('show');
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+      var closed = !el.classList.contains('show') && el.innerHTML === '';
+      el.innerHTML = keep.h; el.className = keep.c;
+      return closed && '열린 표식 창 → Esc → 닫힘·비움';
+    });
     t('W-0265 사관 묵향 움직이는 초상 — 대화 출연진 id · live.json·바탕 그림이 있다 · 대화창 얼굴 칸이 캔버스(+평온 초상)를 낸다', function () {
       var LP = DG.livePortrait, c = DG.scenarioData.CAST.mukhyang, x = new XMLHttpRequest(), y = new XMLHttpRequest();
       x.open('GET', 'assets/portraits/live/hl_mukhyang/live.json', false); x.send(); y.open('GET', 'assets/portraits/hero/hl_mukhyang_c.webp', false); y.send();

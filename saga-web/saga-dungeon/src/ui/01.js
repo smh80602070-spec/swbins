@@ -120,7 +120,7 @@
         toggleOverworldMap();
         return;
       }
-      if (e.key !== 'Escape') { return; }
+      if (e.key !== 'Escape') { return; } var encEsc = $('encounter'); if (encEsc && encEsc.classList.contains('show')) { encClose(); return; }   /* 10-18 W-0314 QC — 표식 확인 창(결사비·난입 등)이 Esc 로 안 닫혔다 */
       if (els['dock-more'] && els['dock-more'].classList.contains('show')) { closeMore(); return; }
       if (UD().isOpen()) { closeDetail(); return; }
       if (openTab) { closeSheet(); }

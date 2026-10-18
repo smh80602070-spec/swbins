@@ -10,6 +10,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
+import { chromeArgs, gpuInfo, isSoftware } from './cdp.mjs';
+let GPU_NAME = null;   // W-0314 이 실행이 실제로 그린 렌더러
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const CHROME = process.env.PW_CHROME || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
@@ -56,7 +58,8 @@ const ADAPT = {
     } }]
   },
   'saga-dungeon': {
-    pos: () => { const T = DG.town; if (T && T.active() && T.me) { return T.me(); } const r = DG.dungeon.raw(); return r && r.player ? { x: r.player.x, y: r.player.y } : null; },
+    /* W-0314 — 던전이 열려 있으면 던전 좌표 먼저(실제 GPU 속도에선 키 이동이 굴혈 입구까지 걸어 들어가 던전이 열리는데, 마을 좌표를 읽어 이동 0 으로 셌다) */
+    pos: () => { const D = DG.dungeon, r = D && D.active && D.active() && D.raw ? D.raw() : null; if (r && r.player) { return { x: r.player.x, y: r.player.y }; } const T = DG.town; if (T && T.active() && T.me) { return T.me(); } const r2 = D.raw(); return r2 && r2.player ? { x: r2.player.x, y: r2.player.y } : null; },
     minMove: 8, touch: 'canvas',
     gate: async (c) => { await c.ev(() => { [...document.querySelectorAll('.stc-cell')].slice(0, 3).forEach((x) => x.click()); const b = document.querySelector('.stc-btn'); if (b) { b.click(); } }); await sleep(3500); },
     extra: [{ name: '던전 입장 뒤 키 이동', run: async (c) => {
@@ -172,10 +175,17 @@ async function one(browser, g, device) {
     });
     await c.shot('0');
     await step('위치를 읽을 수 있다', async () => { const ok = await posOK(); return { ok: ok || !!A.posOptional, skip: !ok && !!A.posOptional, detail: JSON.stringify(await c.pos()) }; });
-    await step('FPS(1초)', async () => { const n = await c.ev(() => new Promise((r) => { let k = 0; const t0 = performance.now(); (function f() { k++; if (performance.now() - t0 < 1000) { requestAnimationFrame(f); } else { r(k); } })(); })); return { ok: n > 0, warn: n < 8, detail: `${n} fps(헤드리스 swiftshader)` }; });
+    /* W-0314 — 0.5초 쉬고 2초 rAF. 실제 GPU 일 때만 판정(PC ≥30 PASS · 20~30 WARN · <20 FAIL), 폰 흉내·소프트웨어는 숫자만(0 이면 FAIL) */
+    await step('FPS', async () => { const n = await c.ev(() => new Promise((r) => { setTimeout(() => { let k = 0; const t0 = performance.now(); (function f() { k++; const t = performance.now() - t0; if (t < 2000) { requestAnimationFrame(f); } else { r(Math.round(k / (t / 1000))); } })(); }, 500); }));
+      const soft = isSoftware(GPU_NAME), judge = !soft && device === 'pc';
+      return { ok: n > 0 && (!judge || n >= 20), warn: judge ? n < 30 : n < 8, detail: `${n} fps` + (soft ? '(소프트웨어 — 상대값)' : judge ? '(GPU · PC 30 이상 PASS)' : '(GPU · 폰 흉내 — 숫자만)') }; });
     /* 이동 — 키 */
     const kr = await c.keys(A.keys || ['KeyD', 'KeyS', 'ArrowLeft', 'ArrowUp']);
     check('키 4방향 이동(3/4 이상)', A.moveKeys === 'optional' ? true : kr.okN >= 3, kr.detail, { skip: A.moveKeys === 'optional' && kr.okN < 3 });
+    /* W-0314 — 실제 GPU 속도에선 키 이동이 길어 표식(2나락 난입·결사비)을 밟아 확인 창이 뜬다 → 다음 단계(끌기·메뉴)를 막지 않게 그 창을 닫는다(Esc 가 아니라 창의 닫기 단추 — 4종횡은 Esc 가 메뉴) */
+    const encShut = await c.ev(() => { const b = document.querySelector('#encounter.show [data-act="enc-close"]'); if (b) { b.click(); return true; } return false; }); if (encShut) { await sleep(300); }
+    /* 같은 까닭으로 가게·NPC 표식이 연 옆 시트(body.sheet-open)가 남아 터치를 먹는다 — 사람처럼 Esc 로 닫는다(4종횡은 Esc 가 메뉴라 뺌) */
+    for (let i = 0; i < 3 && g !== 'saga-story'; i++) { const open = await c.ev(() => !!(document.querySelector('#sheet.show, #encounter.show') || document.body.classList.contains('sheet-open'))); if (!open) { break; } await page.keyboard.press('Escape'); await sleep(300); }
     /* 이동 — 마우스 끌기 / 터치 */
     if (!phone) {
       await step('마우스 끌기 이동', async () => { if (A.drag === 'none') { return { ok: true, skip: true, detail: '이 판은 끌기가 걷기가 아님' }; } const a = await c.pos(); const [cx0, my] = c.center(A.dragY || 0.5); const mx = A.dragX ? Math.round((c.phone ? 390 : 1280) * A.dragX) : cx0; await page.mouse.move(mx, my); await page.mouse.down(); for (let i = 1; i <= 10; i++) { await page.mouse.move(mx + i * 12, my + i * 6); await sleep(40); } await sleep(1500); await page.mouse.up(); await sleep(250); const d = c.dist(a, await c.pos()); return { ok: A.moveKeys === 'optional' ? true : d > A.minMove, detail: `이동 ${d.toFixed(1)}` }; });
@@ -247,7 +257,8 @@ async function one(browser, g, device) {
   return { game: g, device, ok: fails.length === 0, checks, fails: fails.map((x) => x.name), warns: warns.map((x) => x.name), shots };
 }
 
-const browser = await chromium.launch({ executablePath: CHROME, headless: true, args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--disable-gpu', '--autoplay-policy=no-user-gesture-required'] });
+const browser = await chromium.launch({ executablePath: CHROME, headless: true, args: chromeArgs() });
+{ const p0 = await browser.newPage(); GPU_NAME = await gpuInfo(p0); await p0.close(); console.log('GPU ' + GPU_NAME + (isSoftware(GPU_NAME) ? ' — 소프트웨어, FPS 는 상대값' : '')); }
 const out = [];
 try {
   for (const g of (games.length ? games : ALL)) {
@@ -258,7 +269,7 @@ try {
     }
   }
 } finally { await browser.close(); }
-fs.writeFileSync(path.join(HERE, 'results', 'pw-play.json'), JSON.stringify({ base: BASE, at: new Date().toISOString(), runs: out }, null, 1));
+fs.writeFileSync(path.join(HERE, 'results', 'pw-play.json'), JSON.stringify({ base: BASE, at: new Date().toISOString(), gpu: GPU_NAME, runs: out }, null, 1));
 const nf = out.filter((r) => !r.ok).length;
 console.log(`PW-PLAY ${nf ? 'FAIL ' + nf : 'OK'} / ${out.length}`);
 process.exit(nf ? 1 : 0);

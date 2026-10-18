@@ -8,6 +8,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
+import { chromeArgs, wantGpu } from './cdp.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const CHROME = process.env.PW_CHROME || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
@@ -15,7 +16,7 @@ const argv = process.argv.slice(2);
 const bi = argv.indexOf('--base');
 const BASE = (bi >= 0 ? argv[bi + 1] : (process.env.PW_BASE || 'http://127.0.0.1:8871/')).replace(/\/?$/, '/');
 const RUNS = +((argv.find((a) => a.startsWith('--runs=')) || '--runs=3').slice(7));
-const GPU = argv.includes('--gpu'), THROTTLE = +((argv.find((a) => a.startsWith('--throttle=')) || '--throttle=4').slice(11));   // CPU 감속 배수(1 = 감속 없음)
+const GPU = argv.includes('--gpu') || wantGpu(), THROTTLE = +((argv.find((a) => a.startsWith('--throttle=')) || '--throttle=4').slice(11));   // CPU 감속 배수(1 = 감속 없음)
 const ALL = ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm'];
 const games = argv.filter((a, i) => !a.startsWith('--') && argv[i - 1] !== '--base' && argv[i - 1] !== '--tune');
 /* --tune 키=값 (여러 번) — 계정 만든 뒤 손잡이를 덧붙인다(켬·끔 A/B) */
@@ -59,7 +60,7 @@ const MEASURE = async () => {
   const fps = n / ((last - t0) / 1000), info = rdr && rdr.info, gl = rdr && rdr.getContext && rdr.getContext(), dbg = gl && gl.getExtension('WEBGL_debug_renderer_info');
   const q = (window.DG && ((DG.perf && DG.perf.tier && DG.perf.tier().key) || (DG.dungeon3d && DG.dungeon3d.quality && DG.dungeon3d.quality()) || (DG.villageView3d && DG.villageView3d.quality && DG.villageView3d.quality()) || (DG.sideView3d && DG.sideView3d.quality && DG.sideView3d.quality()) || (DG.realm3d && DG.realm3d.quality && DG.realm3d.quality()))) || '?';
   return { fps: +fps.toFixed(1), worstMs: Math.round(worst), calls: info ? mc : null, tris: info ? mt : null, tex: info ? info.memory.textures : null, geo: info ? info.memory.geometries : null,
-    heapMB: performance.memory ? +(performance.memory.usedJSHeapSize / 1048576).toFixed(1) : null, gpu: dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : null, quality: typeof q === 'object' ? JSON.stringify(q) : String(q), three: !!rdr };
+    heapMB: performance.memory ? +(performance.memory.usedJSHeapSize / 1048576).toFixed(1) : null, gpu: dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : null, aq: DG.autoq && DG.autoq.downs ? DG.autoq.downs() : null, quality: typeof q === 'object' ? JSON.stringify(q) : String(q), three: !!rdr };
 };
 
 async function one(browser, g) {
@@ -95,7 +96,7 @@ async function one(browser, g) {
 }
 
 if (!process.env.PW_BUDGET_LIB) {   // pw-cpu-profile.mjs 가 SCENES·clearIntro 만 가져다 쓸 때는 안 돈다
-const args = ['--autoplay-policy=no-user-gesture-required', '--enable-precise-memory-info'].concat(GPU ? ['--use-angle=d3d11', '--ignore-gpu-blocklist', '--enable-gpu-rasterization'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--disable-gpu']);
+const args = chromeArgs({ gpu: GPU }).concat(['--enable-precise-memory-info']);   // W-0314 공용 인자 — 기본 GPU, PW_GPU=0 이면 swiftshader
 const browser = await chromium.launch({ executablePath: CHROME, headless: true, args });
 const out = [];
 try {
@@ -105,7 +106,7 @@ try {
     const avg = (f) => { const v = runs.map(f).filter((x) => typeof x === 'number'); return v.length ? +(v.reduce((a, b) => a + b, 0) / v.length).toFixed(1) : null; };
     const names = (runs[0].scenes || []).map((s) => s.name);
     const r = { game: g, runs: runs.length, firstMB: avg((x) => x.firstMB), totalMB: avg((x) => x.totalMB), top: runs[0].top, err: runs.map((x) => x.err).filter(Boolean)[0] || '',
-      scenes: names.map((nm, i) => ({ name: nm, fps: avg((x) => x.scenes[i] && x.scenes[i].fps), worstMs: avg((x) => x.scenes[i] && x.scenes[i].worstMs), calls: avg((x) => x.scenes[i] && x.scenes[i].calls), tris: avg((x) => x.scenes[i] && x.scenes[i].tris), tex: avg((x) => x.scenes[i] && x.scenes[i].tex), heapMB: avg((x) => x.scenes[i] && x.scenes[i].heapMB), quality: runs[0].scenes[i] && runs[0].scenes[i].quality, gpu: runs[0].scenes[i] && runs[0].scenes[i].gpu })) };
+      scenes: names.map((nm, i) => ({ name: nm, fps: avg((x) => x.scenes[i] && x.scenes[i].fps), worstMs: avg((x) => x.scenes[i] && x.scenes[i].worstMs), calls: avg((x) => x.scenes[i] && x.scenes[i].calls), tris: avg((x) => x.scenes[i] && x.scenes[i].tris), tex: avg((x) => x.scenes[i] && x.scenes[i].tex), heapMB: avg((x) => x.scenes[i] && x.scenes[i].heapMB), quality: runs[0].scenes[i] && runs[0].scenes[i].quality, aq: runs[runs.length - 1].scenes[i] && runs[runs.length - 1].scenes[i].aq, gpu: runs[0].scenes[i] && runs[0].scenes[i].gpu })) };
     r.over = [];
     if (r.firstMB > BUDGET.mb) { r.over.push('용량 ' + r.firstMB + 'MB'); }
     r.scenes.forEach((s) => { if (GPU && s.fps != null && s.fps < BUDGET.fps) { r.over.push(s.name + ' FPS ' + s.fps); } if (s.calls != null && s.calls > BUDGET.calls) { r.over.push(s.name + ' 그리기 ' + s.calls); } });

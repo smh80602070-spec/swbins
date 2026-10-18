@@ -1,8 +1,8 @@
 {
- "at": "2026-10-18T02:06:30.794Z",
+ "at": "2026-10-18T05:45:43.772Z",
  "base": "http://127.0.0.1:8871/",
  "gpu": true,
- "gpuName": null,
+ "gpuName": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "budget": {
   "mb": 25,
   "fps": 30,
@@ -12,8 +12,78 @@
  "viewport": "390x844@2",
  "runs": [
   {
+   "game": "saga-forest",
+   "runs": 1,
+   "firstMB": 15.2,
+   "totalMB": 16.7,
+   "top": [
+    [
+     "saga-forest/dist/app.js",
+     1.83
+    ],
+    [
+     "saga-forest/assets/audio/bgm/saga-forest-town.ogg",
+     0.85
+    ],
+    [
+     "shared/assets/characters3d/hb_mangwon.glb",
+     0.61
+    ],
+    [
+     "shared/assets/characters3d/jiao_hoangmi.glb",
+     0.58
+    ],
+    [
+     "shared/assets/characters3d/kd_cheolsim.glb",
+     0.58
+    ],
+    [
+     "shared/assets/characters3d/rf_hansui.glb",
+     0.57
+    ]
+   ],
+   "err": "",
+   "scenes": [
+    {
+     "name": "마을",
+     "fps": 17.3,
+     "worstMs": 82,
+     "calls": 46,
+     "tris": 83488,
+     "tex": 59,
+     "heapMB": 80.1,
+     "quality": "LOW",
+     "aq": {
+      "village3d": 2
+     },
+     "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+     "name": "걷기",
+     "fps": 12.7,
+     "worstMs": 118,
+     "calls": 48,
+     "tris": 111412,
+     "tex": 74,
+     "heapMB": 95.9,
+     "quality": "LOW",
+     "aq": {
+      "village3d": 2
+     },
+     "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+   ],
+   "over": [
+    "마을 FPS 17.3",
+    "걷기 FPS 12.7"
+   ],
+   "at": "2026-10-18T05:45:43.772Z",
+   "gpu": true,
+   "cpuThrottle": 4
+  },
+  {
    "game": "saga-realm",
-   "runs": 2,
+   "runs": 1,
    "firstMB": 4,
    "totalMB": 8.4,
    "top": [
@@ -47,29 +117,39 @@
     {
      "name": "지도",
      "fps": 60.3,
-     "worstMs": 46.5,
+     "worstMs": 18,
      "calls": null,
      "tris": null,
      "tex": null,
-     "heapMB": 8.6,
+     "heapMB": 12,
      "quality": "HIGH",
+     "aq": {
+      "realm3d": 0
+     },
      "gpu": null
     },
     {
      "name": "성",
-     "fps": 12.3,
-     "worstMs": 115,
+     "fps": 19.4,
+     "worstMs": 95,
      "calls": 286,
      "tris": 346817,
      "tex": 206,
-     "heapMB": 41.4,
+     "heapMB": 53.6,
      "quality": "HIGH",
+     "aq": {
+      "realm3d": 0,
+      "city3d": 1
+     },
      "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)"
     }
    ],
    "over": [
-    "성 FPS 12.3"
-   ]
+    "성 FPS 19.4"
+   ],
+   "at": "2026-10-18T05:45:43.772Z",
+   "gpu": true,
+   "cpuThrottle": 4
   }
  ]
 }

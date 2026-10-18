@@ -13,9 +13,10 @@
   'use strict';
   var ORDER = ['high', 'medium', 'low'];
   function tn(k, d) { var C = global.DG && global.DG.core, v = C && C.tuned ? +C.tuned(k, d) : d; return isFinite(v) ? v : d; }
+  var live = {};   // W-0314 — 판이 만든 것(키별). 폰 예산·QC 가 "자동 품질이 실제로 내려갔나" 를 읽는다
   function make(key) {
     var st = { down: 0, t: 0, n: 0, grace: 0 };
-    return {
+    return live[key] = {
       st: st,
       /** 프레임 하나(dt 초). auto 가 아니면 세지 않는다. 한 단계 내려야 하면 true(부른 쪽이 픽셀비·그림자를 다시 먹인다) */
       note: function (dt, isAuto) {
@@ -34,5 +35,7 @@
     };
   }
   global.DG = global.DG || {};
-  global.DG.autoq = { make: make, ORDER: ORDER };
+  /** 키별 내린 단계 { village3d: 1, … } — 아직 아무도 안 만들었으면 {} */
+  function downs() { var o = {}, k; for (k in live) { if (Object.prototype.hasOwnProperty.call(live, k)) { o[k] = live[k].st.down; } } return o; }
+  global.DG.autoq = { make: make, ORDER: ORDER, downs: downs };
 })(typeof window !== 'undefined' ? window : this);

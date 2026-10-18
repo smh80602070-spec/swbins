@@ -3,16 +3,17 @@
 // 서버(node serve.mjs C:/swbins/saga-web 8871)는 사용자가 아니라 이 스크립트를 돌리는 쪽이 띄우고 끈다.
 // 매번 새 컨텍스트(= 새 프로필)라 남은 세이브가 결과를 흔들지 않는다.
 import { chromium } from 'playwright-core';
+import { chromeArgs } from './cdp.mjs';
 
 const CHROME = process.env.PW_CHROME || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 export const BASE = process.env.PW_BASE || 'http://127.0.0.1:8871/';
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-/** 새 크롬(헤드리스, swiftshader)·새 컨텍스트로 연다. errors 에 페이지 예외·console.error 를 모은다 */
-export async function open(game, { w = 1280, h = 720, mobile = false } = {}) {
+/** 새 크롬(헤드리스)·새 컨텍스트로 연다. errors 에 페이지 예외·console.error 를 모은다. gpu:true 면 실제 GPU(W-0314 — QC 촬영), 기본 swiftshader */
+export async function open(game, { w = 1280, h = 720, mobile = false, gpu = false } = {}) {
   const browser = await chromium.launch({
     executablePath: CHROME, headless: true,
-    args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--disable-gpu', '--autoplay-policy=no-user-gesture-required']
+    args: chromeArgs({ gpu })
   });
   const ctx = await browser.newContext({
     viewport: { width: w, height: h }, serviceWorkers: 'block',

@@ -11,6 +11,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
+import { chromeArgs, gpuInfo } from './cdp.mjs';
+let GFX_GPU = null;
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const CHROME = process.env.PW_CHROME || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
@@ -132,7 +134,8 @@ async function one(browser, g) {
   return res;
 }
 
-const browser = await chromium.launch({ executablePath: CHROME, headless: true, args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--disable-gpu', '--autoplay-policy=no-user-gesture-required'] });
+const browser = await chromium.launch({ executablePath: CHROME, headless: true, args: chromeArgs() });   // W-0314 기본 실제 GPU(PW_GPU=0 이면 swiftshader)
+{ const p0 = await browser.newPage(); GFX_GPU = await gpuInfo(p0); await p0.close(); }
 const out = [];
 try {
   for (const g of (games.length ? games : ALL)) {
@@ -150,7 +153,7 @@ try {
     await ctx.close();
   }
 } finally { await browser.close(); }
-fs.writeFileSync(path.join(HERE, 'results', 'pw-gfx.json'), JSON.stringify({ at: new Date().toISOString(), base: BASE, runs: out }, null, 1));
+fs.writeFileSync(path.join(HERE, 'results', 'pw-gfx.json'), JSON.stringify({ at: new Date().toISOString(), base: BASE, gpu: GFX_GPU, runs: out }, null, 1));
 const miss = out.reduce((a, r) => a + r.missing.length, 0);
 console.log(`PW-GFX 빠진 칸 ${miss} / 판 ${out.length}`);
 process.exit(0);

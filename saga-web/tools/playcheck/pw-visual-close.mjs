@@ -5,7 +5,11 @@
 // fs.auto·fs.admin 은 같은 스크립트의 기계 확인 한 줄씩. Math.random 은 진단과 같은 씨앗 mulberry32(20260824).
 // 결과는 콘솔 + results/pw-visual-close.json
 import fs from 'node:fs';
-import { open, sleep } from './pw.mjs';
+import { open as open0, sleep } from './pw.mjs';
+import { wantGpu, gpuInfo } from './cdp.mjs';
+/* W-0314 — QC 3D 장면은 기본 실제 GPU(PW_GPU=0 이면 swiftshader). 첫 장면에서 렌더러 이름을 남긴다 */
+let VIS_GPU = null;
+const open = async (g, o) => { const r = await open0(g, Object.assign({ gpu: wantGpu() }, o || {})); if (VIS_GPU === null) { VIS_GPU = await gpuInfo(r.page); } return r; };
 
 const SHOTS = 'shots/visual-20261007';
 fs.mkdirSync(SHOTS, { recursive: true });
@@ -252,5 +256,5 @@ const RUN = { 'saga-go': runGo, 'saga-dungeon': runDungeon, 'saga-forest': runFo
 for (const g of Object.keys(RUN)) { if (!want.length || want.includes(g)) { await RUN[g](); } }
 console.log('요약', results.filter(Boolean).length + '/' + results.length);
 fs.mkdirSync('results', { recursive: true });
-fs.writeFileSync('results/pw-visual-close.json', JSON.stringify({ script: 'pw-visual-close.mjs', pass: results.filter(Boolean).length, total: results.length, scenes, checks: rows }, null, 1) + '\n');
+fs.writeFileSync('results/pw-visual-close.json', JSON.stringify({ script: 'pw-visual-close.mjs', gpu: VIS_GPU, pass: results.filter(Boolean).length, total: results.length, scenes, checks: rows }, null, 1) + '\n');
 process.exit(results.every(Boolean) ? 0 : 1);

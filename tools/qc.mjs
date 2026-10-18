@@ -164,6 +164,7 @@ async function checkPlay() {
   const r = run(process.execPath, ['pw-play.mjs', ...games, '--base', b], { cwd: PLAY, timeout: 30 * 60 * 1000 });
   const j = readJson(path.join(PLAY, 'results', 'pw-play.json'), null);
   if (!j) { row('플레이', games.map(nm).join('·'), 'FAIL', 'pw-play 결과 없음 ' + (r.out.trim().split('\n').pop() || ''), r.sec); return; }
+  row('렌더러', '플레이·촬영', j.gpu && !/swiftshader|llvmpipe|software/i.test(j.gpu) ? 'PASS' : 'WARN', (j.gpu || '모름') + (j.gpu && /swiftshader/i.test(j.gpu) ? ' — 소프트웨어라 FPS 판정 안 함(W-0314)' : ''));
   for (const g of games) {
     for (const x of (j.runs || []).filter((x) => x.game === g)) {
       const dev = x.device === 'phone' ? '폰' : 'PC';
@@ -201,6 +202,23 @@ async function checkBudget() {
     const age = (Date.now() - Date.parse(x.at || j.at)) / 86400000;   // 판마다 잰 때(합쳐 쓰기)
     const sc = (x.scenes || []).map((q) => q.name + ' ' + q.fps + 'fps·그리기 ' + q.calls).join(' · ');
     row('폰 예산', nm(g), x.over && x.over.length || age > 7 ? 'WARN' : 'PASS', '첫 화면 ' + x.firstMB + 'MB/' + B.mb + ' · ' + sc + (x.over && x.over.length ? ' · 넘음 ' + x.over.join(', ') : '') + (age > 7 ? ' · 측정 ' + Math.round(age) + '일 묵음' : '') + (j.gpu ? '' : ' · swiftshader(FPS 상대값)'));
+  }
+}
+
+/* ── ④-6 자동 품질(W-0314) — 마지막 폰 예산 결과의 장면마다 autoq 단계(aq)를 본다. 3마을·5천하는 auto 일 때 3초 평균 FPS 가 26 밑이면 한 단계 내린다.
+   장면 FPS ≥ 30 이거나 한 단계라도 내려갔으면 PASS · FPS < 26 인데 그대로 HIGH 면 FAIL(W-0302 가 잡은 갇힘) · 결과에 aq 칸이 없으면 WARN(다시 재야) ── */
+function checkAutoq() {
+  const AQ_GAMES = ['saga-forest', 'saga-realm'].filter((g) => games.includes(g));
+  if (!AQ_GAMES.length) return;
+  const j = readJson(path.join(PLAY, 'results', 'pw-phone-budget.json'), null);
+  for (const g of AQ_GAMES) {
+    const x = j && (j.runs || []).find((q) => q.game === g);
+    if (!x) { row('자동 품질', nm(g), 'WARN', '폰 예산 측정 없음 — node saga-web/tools/playcheck/pw-phone-budget.mjs ' + g); continue; }
+    const sc = x.scenes || [];
+    if (!sc.some((q) => q.aq)) { row('자동 품질', nm(g), 'WARN', '측정에 autoq 칸 없음(W-0314 전 결과) — 다시 재기'); continue; }
+    const down = (q) => Object.values(q.aq || {}).reduce((a, b) => a + b, 0);
+    const stuck = sc.filter((q) => q.fps < 26 && down(q) === 0);
+    row('자동 품질', nm(g), stuck.length ? 'FAIL' : 'PASS', sc.map((q) => q.name + ' ' + q.fps + 'fps·내림 ' + down(q)).join(' · ') + (stuck.length ? ' · 갇힘 ' + stuck.map((q) => q.name).join(',') : ''));
   }
 }
 
@@ -315,6 +333,7 @@ function report() {
     await checkPlay();
     await checkGfx();
     await checkBudget();
+    checkAutoq();
     if (branch === 'web' || (full && !branch)) checkDeploy();
     checkStatus();
     if (branch === 'godot' || has('--godot') || (full && !branch)) checkGodot();

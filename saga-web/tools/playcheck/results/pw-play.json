@@ -1,6 +1,7 @@
 {
- "base": "http://127.0.0.1:11117/",
- "at": "2026-10-18T04:58:12.585Z",
+ "base": "http://127.0.0.1:13369/",
+ "at": "2026-10-18T06:32:59.906Z",
+ "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
  "runs": [
   {
    "game": "saga-go",
@@ -10,8 +11,8 @@
     {
      "name": "부팅(가입→첫 관문→들어감)",
      "ok": true,
-     "detail": "25540ms ",
-     "ms": 25540,
+     "detail": "26590ms ",
+     "ms": 26590,
      "skip": false,
      "warn": false
     },
@@ -19,22 +20,22 @@
      "name": "위치를 읽을 수 있다",
      "ok": true,
      "detail": "{\"x\":0,\"y\":0}",
-     "ms": 1042,
+     "ms": 999,
      "skip": false,
      "warn": false
     },
     {
-     "name": "FPS(1초)",
+     "name": "FPS",
      "ok": true,
-     "detail": "3 fps(헤드리스 swiftshader)",
-     "ms": 1829,
+     "detail": "3 fps(소프트웨어 — 상대값)",
+     "ms": 5679,
      "skip": false,
      "warn": true
     },
     {
      "name": "키 4방향 이동(3/4 이상)",
      "ok": true,
-     "detail": "D○3.2 S○3.2 Left○3.2 Up○3.2",
+     "detail": "D○3.2 S○2.4 Left○3.2 Up○3.2",
      "skip": false
     },
     {
@@ -49,7 +50,7 @@
      "name": "☰ 메뉴 → 첫 칸 창 → 닫기 → 키 이동",
      "ok": true,
      "detail": "창 열림 · 닫힘 true · D○3.2",
-     "ms": 9568,
+     "ms": 10398,
      "skip": false,
      "warn": false
     },
@@ -57,23 +58,23 @@
      "name": "HUD 겹침(보이는 고정 요소 쌍)",
      "ok": true,
      "detail": "없음",
-     "ms": 362,
+     "ms": 394,
      "skip": false,
      "warn": false
     },
     {
      "name": "클릭 이동(빈 땅 → 걷기 · 짐승 → 만남)",
      "ok": true,
-     "detail": "걷기 6.4 @640,302",
-     "ms": 5905,
+     "detail": "걷기 4.8 @640,302",
+     "ms": 5769,
      "skip": false,
      "warn": false
     },
     {
      "name": "새로 고침 → 이어하기 → 들어감",
      "ok": true,
-     "detail": "{\"x\":3.199994456158113,\"y\":-7.99999999999808}",
-     "ms": 21653,
+     "detail": "{\"x\":3.1999961193106787,\"y\":-6.399999999998656}",
+     "ms": 23468,
      "skip": false,
      "warn": false
     },
@@ -85,7 +86,7 @@
    ],
    "fails": [],
    "warns": [
-    "FPS(1초)"
+    "FPS"
    ],
    "shots": [
     "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-go-pc-0.png",
@@ -101,8 +102,8 @@
     {
      "name": "부팅(가입→첫 관문→들어감)",
      "ok": true,
-     "detail": "12713ms ",
-     "ms": 12713,
+     "detail": "14700ms ",
+     "ms": 14701,
      "skip": false,
      "warn": false
     },
@@ -110,37 +111,37 @@
      "name": "위치를 읽을 수 있다",
      "ok": true,
      "detail": "{\"x\":0,\"y\":0}",
-     "ms": 320,
+     "ms": 224,
      "skip": false,
      "warn": false
     },
     {
-     "name": "FPS(1초)",
+     "name": "FPS",
      "ok": true,
-     "detail": "13 fps(헤드리스 swiftshader)",
-     "ms": 2993,
+     "detail": "10 fps(소프트웨어 — 상대값)",
+     "ms": 2838,
      "skip": false,
      "warn": false
     },
     {
      "name": "키 4방향 이동(3/4 이상)",
      "ok": true,
-     "detail": "D○8.8 S○6.4 Left×0.0 Up○6.4",
+     "detail": "D○8.0 S○5.6 Left○7.2 Up○8.8",
      "skip": false
     },
     {
      "name": "터치 이동(joy:#gjoy)",
      "ok": true,
-     "detail": "이동 31.6 @73,635",
-     "ms": 5682,
+     "detail": "이동 39.1 @73,635",
+     "ms": 6017,
      "skip": false,
      "warn": false
     },
     {
      "name": "☰ 메뉴 → 첫 칸 창 → 닫기 → 키 이동",
      "ok": true,
-     "detail": "창 열림 · 닫힘 true · D○8.3",
-     "ms": 6523,
+     "detail": "창 열림 · 닫힘 true · D○8.0",
+     "ms": 5210,
      "skip": false,
      "warn": false
     },
@@ -148,23 +149,23 @@
      "name": "HUD 겹침(보이는 고정 요소 쌍)",
      "ok": true,
      "detail": "없음",
-     "ms": 93,
+     "ms": 87,
      "skip": false,
      "warn": false
     },
     {
      "name": "클릭 이동(빈 땅 → 걷기 · 짐승 → 만남)",
      "ok": true,
-     "detail": "걷기 16.5 @195,354",
-     "ms": 3338,
+     "detail": "걷기 18.5 @195,354",
+     "ms": 3433,
      "skip": false,
      "warn": false
     },
     {
      "name": "새로 고침 → 이어하기 → 들어감",
      "ok": true,
-     "detail": "{\"x\":39.66454836375286,\"y\":-26.955205851980054}",
-     "ms": 10825,
+     "detail": "{\"x\":45.80127780024007,\"y\":-35.17023086437696}",
+     "ms": 9891,
      "skip": false,
      "warn": false
     },

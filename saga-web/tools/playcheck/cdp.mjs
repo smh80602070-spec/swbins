@@ -8,6 +8,19 @@ const PROFILE = path.join(SCR, process.env.PC_PROF || 'chrome-prof');   // 둘�
 const OUT = path.join(SCR, 'shots');
 fs.mkdirSync(OUT, { recursive: true });
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
+
+/* W-0314 공용 크롬 인자 — QC 촬영·플레이·폰 예산은 기본 **실제 GPU(d3d11)**(W-0302 검증: 이 PC Radeon Pro 570X 에서 1만리 HIGH 41~58fps).
+   PW_GPU=0 이면 swiftshader(소프트웨어 — 어디서나 같게 그려 그림 비교용, FPS 는 상대값). GPU 없는 PC 는 크롬이 알아서 swiftshader 로 떨어진다 → gpuInfo 로 확인 */
+export const wantGpu = () => process.env.PW_GPU !== '0';
+export function chromeArgs({ gpu = wantGpu() } = {}) {
+  return ['--autoplay-policy=no-user-gesture-required'].concat(gpu ? ['--use-angle=d3d11', '--ignore-gpu-blocklist', '--enable-gpu-rasterization'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--disable-gpu']);
+}
+/** 이 페이지가 실제로 무엇으로 그리나(WEBGL_debug_renderer_info) — 'ANGLE (AMD … Direct3D11 …)' 또는 '…SwiftShader…' */
+export async function gpuInfo(page) {
+  try { return await page.evaluate(() => { const c = document.createElement('canvas'), gl = c.getContext('webgl2') || c.getContext('webgl'); if (!gl) { return null; } const d = gl.getExtension('WEBGL_debug_renderer_info'); return d ? gl.getParameter(d.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER); }); } catch (e) { return null; }
+}
+/** 소프트웨어 렌더(FPS 를 판정에 못 쓴다) */
+export const isSoftware = (name) => !name || /swiftshader|llvmpipe|software|basic render/i.test(name);
 const PORT = +(process.env.PC_PORT || 9351);
 
 export async function launch(w = 1280, h = 720) {
