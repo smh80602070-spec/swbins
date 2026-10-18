@@ -153,6 +153,9 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/world3d-plan.js"></script>
 <script src="js/world3d-landtex.js"></script>
 <script src="js/world3d.js"></script>
+<script src="js/ragdoll3d.js"></script>
+<script src="js/farland3d.js"></script>
+<script src="js/renderer3d.js"></script>
 <script src="js/encounter.js"></script>
 <script src="js/stealth.js"></script>
 <script src="js/encounter3d.js"></script>
@@ -17203,6 +17206,19 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       while (b.phase && steps < 400) { R.step(b, rg, 1 / 60, g); steps++; }
       var ok = [ncons === 36, b.phase === 0 || steps < 400, minY >= 0.2 - 1e-6, err < 0.02, fin, Math.abs(headY - hipsY) < 0.9, rg.anc[20] === rg.anc[9]];
       return ok.every(Boolean) && ('구속 ' + ncons + ' · ' + steps + '걸음 · 오차 ' + (err * 100).toFixed(2) + 'cm · 머리-엉덩이 높이차 ' + (headY - hipsY).toFixed(2) + 'm') || '실패 ' + ok.join(',') + ' minY ' + minY.toFixed(3) + ' err ' + err.toFixed(3) + ' steps ' + steps;
+    });
+
+    t('farland3d — 극좌표 고리 계획(S×(N+1) 정점·2SN 삼각형, 바깥일수록 간격이 넓다)·8방향 번호(상대각 0→0, 45°→1, −45°→7, 360°→0)·과장(안쪽 1·바깥 k) (W-0310 ④)', function () {
+      var F = DG.farland3d, p = F.ringPlan(850, 2200, 96, 20), gaps = []; for (var i = 1; i <= 20; i++) { gaps.push(p.r[i] - p.r[i - 1]); }
+      var wider = gaps.every(function (g, i) { return i === 0 || g >= gaps[i - 1] - 1e-9; });
+      var d = Math.PI / 4, ok = [p.verts === 96 * 21, p.tris === 96 * 20 * 2, p.r[0] === 850, Math.abs(p.r[20] - 2200) < 1e-9, wider, F.viewOf(0) === 0, F.viewOf(d) === 1, F.viewOf(-d) === 7, F.viewOf(Math.PI * 2) === 0, F.viewOf(Math.PI) === 4, F.exag(850, 850, 2200, 6) === 1, Math.abs(F.exag(2200, 850, 2200, 6) - 6) < 1e-9, F.exag(1500, 850, 2200, 6) > 1 && F.exag(1500, 850, 2200, 6) < 6];
+      return ok.every(Boolean) && ('정점 ' + p.verts + ' · 삼각형 ' + p.tris + ' · 첫 간격 ' + gaps[0].toFixed(1) + 'm → 끝 ' + gaps[19].toFixed(1) + 'm') || '실패 ' + ok.join(',');
+    });
+
+    t('renderer3d — 손잡이 0 이면 WebGL · 손잡이 1 이어도 navigator.gpu 나 WebGPURenderer 가 없으면 WebGL 로 되돌리고 이유를 남긴다 · 셋 다 있을 때만 WebGPU (W-0310 ⑤)', function () {
+      var R = DG.renderer3d, a = R.decide(0, true, true), b = R.decide(1, false, true), c = R.decide(1, true, false), d = R.decide(1, true, true);
+      var ok = [a.kind === 'webgl', b.kind === 'webgl' && /navigator\.gpu/.test(b.why), c.kind === 'webgl' && /WebGPURenderer/.test(c.why), d.kind === 'webgpu', R.kind() === 'none' || R.kind() === 'webgl' || R.kind() === 'webgpu'];
+      return ok.every(Boolean) && ('지금 ' + R.kind() + (R.why() ? ' — ' + R.why() : '') + ' · 손잡이 ' + (R.KNOB() ? 1 : 0)) || '실패 ' + ok.join(',');
     });
 
     t('런타임 에러 없음', function () {

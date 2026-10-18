@@ -192,7 +192,7 @@
          **켜야 한다**: WebGL 은 그린 직후 버퍼를 비우므로, rAF 가 거의 돌지 않는
          그 환경에서는 캡처 시점에 빈 캔버스가 찍힌다(밟아 본 함정이다).
          데모 페이지가 `DG_3D_PRESERVE` 로 켠다. */
-      renderer = new T.WebGLRenderer({
+      renderer = (global.DG.renderer3d ? global.DG.renderer3d.make : function (t, o) { return new t.WebGLRenderer(o); })(T, {   // W-0310 ⑤ 렌더러 고르기(go3d.webgpu=1 이면 WebGPU 시도, 못 켜면 WebGL)
         canvas: canvas, antialias: true, alpha: false,
         preserveDrawingBuffer: !!global.DG_3D_PRESERVE
       });

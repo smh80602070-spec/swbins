@@ -1,13 +1,15 @@
 /**
  * limitless — "웹엔 한계가 없다" 시연 장면(W-0310) — `_demo.html#limitless` 에서만 켠다.
  *   ① 군중 300(crowd3d: 인스턴싱 + 뼈 행렬 텍스처) ② 날씨·빛(weather3d: GPU 비·눈 2만·번개·빛줄기) ③ 물리(ragdoll3d: 군중 중 하나가 0.45초마다
- *   떠밀려 래그돌로 쓰러지고(군중 인스턴스의 live 줄에 그려 그리기 +0) · 돌 12 가 비탈을 굴러 내려오고(그리기 +1) · 둘레 풀이 눕는다(press3d)). ④⑤(임포스터·WebGPU)는 뒤 체크포인트.
+ *   떠밀려 래그돌로 쓰러지고(군중 인스턴스의 live 줄에 그려 그리기 +0) · 돌 12 가 비탈을 굴러 내려오고(그리기 +1) · 둘레 풀이 눕는다(press3d))
+ *   ④ 지평선(farland3d: 타일 밖 2.2km 먼 땅 고리 + 숲 임포스터 8방향 빌보드 + 산 테 — 안개를 km 밖으로, ridge 실루엣은 끔)
+ *   ⑤ WebGPU 길(renderer3d: `#limitless,webgpu=1` → 손잡이 go3d.webgpu=1 — 못 켜면 WebGL 로 자동 되돌리고 콘솔 한 줄, stats().renderer 에 종류·이유).
  *   본 게임은 손대지 않는다 — world3d 의 장면에 얹기만 하고, 손잡이 crowd3d.on·weather3d.on 이 0 이면 아무것도 안 한다(기본).
- *   DG.limitless.start({ n, weather, physics, ragdoll, rocks }) → 몸 GLB 받기·굽기 뒤 scene 에 추가 · weather(kind) → 날씨 바꿈('off' 면 끔) · physics(on) · stats()
+ *   DG.limitless.start({ n, weather, physics, ragdoll, rocks, horizon }) → 몸 GLB 받기·굽기 뒤 scene 에 추가 · weather(kind) → 날씨 바꿈('off' 면 끔) · physics(on) · horizon(on) · stats()
  */
 (function (global) {
   'use strict';
-  var state = { crowd: null, weather: null, raf: 0, ready: false, err: null, ms: 0, shell: null, last: 0, wkind: 'off', rag: null, rocks: null, physOn: false, physMs: 0, spawnT: 0, ragN: 0, rockN: 0 };
+  var state = { crowd: null, weather: null, raf: 0, ready: false, err: null, ms: 0, shell: null, last: 0, wkind: 'off', rag: null, rocks: null, physOn: false, physMs: 0, spawnT: 0, ragN: 0, rockN: 0, horizonOn: false, ridge0: null };
 
   function three() { return global.THREE || null; }
 
@@ -25,6 +27,7 @@
     if (C && C.setTune) { C.setTune('crowd3d.on', 1); if (o.n) { C.setTune('crowd3d.n', o.n); } }
     stop();
     state.ragN = o.ragdoll !== undefined ? o.ragdoll : global.DG.ragdoll3d.N(); state.rockN = o.rocks !== undefined ? o.rocks : global.DG.ragdoll3d.ROCKS(); state.physOn = o.physics !== undefined ? !!o.physics : false;
+    if (o.horizon !== undefined) { horizon(o.horizon); }
     if (o.weather) { weather(o.weather); }
     if (o.n === 0) { state.ready = true; loop(); return true; }
     var ref = pickHero(); if (!ref) { state.err = '인물 없음'; return false; }
@@ -64,6 +67,14 @@
     if (global.DG.weather) { global.DG.weather.force(kind); }
     state.wkind = kind;
     if (!state.raf) { state.last = performance.now(); loop(); }
+    return true;
+  }
+
+  /** ④ 지평선 켜기·끄기 — far3d.on 손잡이(world3d 05-render 가 매 프레임 farland3d.follow 를 부른다) + 산 실루엣 고리(sky3d.ridge)는 끈다(먼 땅이 대신) */
+  function horizon(on) {
+    var C = global.DG.core, F = global.DG.farland3d; if (!C || !C.setTune || !F) { return false; }
+    if (on) { if (!state.horizonOn) { state.ridge0 = C.tuned('sky3d.ridge', 1); } C.setTune('far3d.on', 1); C.setTune('sky3d.ridge', 0); state.horizonOn = true; }
+    else { C.setTune('far3d.on', 0); if (state.ridge0 !== null) { C.setTune('sky3d.ridge', state.ridge0); state.ridge0 = null; } F.off(); state.horizonOn = false; }
     return true;
   }
 
@@ -109,16 +120,16 @@
 
   function stop() {
     if (state.raf) { cancelAnimationFrame(state.raf); state.raf = 0; }
-    physics(0);
+    physics(0); horizon(0);
     if (state.crowd) { if (state.crowd.group.parent) { state.crowd.group.parent.remove(state.crowd.group); } state.crowd.dispose(); state.crowd = null; }
     state.ready = false;
   }
 
   function stats() {
     var c = state.crowd;
-    return { ready: state.ready, err: state.err, n: c ? c.n : 0, meshes: c ? c.meshes : 0, bones: c ? c.bones : 0, frames: c ? c.frames : 0, texKB: c ? Math.round(c.texBytes / 1024) : 0, slots: c ? c.slots : [], ms: +state.ms.toFixed(2), weather: state.wkind, drops: state.weather ? state.weather.n : 0, physics: state.physOn, ragdolls: state.rag ? state.rag.active() : 0, ragN: state.rag ? state.rag.n : 0, rocks: state.rocks ? state.rocks.n : 0, physMs: +state.physMs.toFixed(2), press: global.DG.press3d ? global.DG.press3d.n : 0 };
+    return { ready: state.ready, err: state.err, n: c ? c.n : 0, meshes: c ? c.meshes : 0, bones: c ? c.bones : 0, frames: c ? c.frames : 0, texKB: c ? Math.round(c.texBytes / 1024) : 0, slots: c ? c.slots : [], ms: +state.ms.toFixed(2), weather: state.wkind, drops: state.weather ? state.weather.n : 0, physics: state.physOn, ragdolls: state.rag ? state.rag.active() : 0, ragN: state.rag ? state.rag.n : 0, rocks: state.rocks ? state.rocks.n : 0, physMs: +state.physMs.toFixed(2), press: global.DG.press3d ? global.DG.press3d.n : 0, horizon: state.horizonOn, far: global.DG.farland3d ? global.DG.farland3d.stats() : null, renderer: global.DG.renderer3d ? { kind: global.DG.renderer3d.kind(), why: global.DG.renderer3d.why(), knob: global.DG.renderer3d.KNOB(), gpu: global.DG.renderer3d.gpuAvailable() } : null };
   }
 
   global.DG = global.DG || {};
-  global.DG.limitless = { start: start, stop: stop, weather: weather, physics: physics, stats: stats, _rag: function () { return state.rag; }, _crowd: function () { return state.crowd; }, _shell: function () { return state.shell; }, _weather: function () { return state.weather; } };
+  global.DG.limitless = { start: start, stop: stop, weather: weather, physics: physics, horizon: horizon, stats: stats, _rag: function () { return state.rag; }, _crowd: function () { return state.crowd; }, _shell: function () { return state.shell; }, _weather: function () { return state.weather; } };
 })(window);

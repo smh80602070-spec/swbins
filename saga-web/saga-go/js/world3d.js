@@ -192,7 +192,7 @@
          **켜야 한다**: WebGL 은 그린 직후 버퍼를 비우므로, rAF 가 거의 돌지 않는
          그 환경에서는 캡처 시점에 빈 캔버스가 찍힌다(밟아 본 함정이다).
          데모 페이지가 `DG_3D_PRESERVE` 로 켠다. */
-      renderer = new T.WebGLRenderer({
+      renderer = (global.DG.renderer3d ? global.DG.renderer3d.make : function (t, o) { return new t.WebGLRenderer(o); })(T, {   // W-0310 ⑤ 렌더러 고르기(go3d.webgpu=1 이면 WebGPU 시도, 못 켜면 WebGL)
         canvas: canvas, antialias: true, alpha: false,
         preserveDrawingBuffer: !!global.DG_3D_PRESERVE
       });
@@ -2340,7 +2340,7 @@
   function syncLight(dt) {
     var L = lightingAt(forcedMs === null ? undefined : forcedMs, weatherKey());
     lightNow = L;
-    var pos = core.save.player.pos; if (global.DG.ground3d) { global.DG.ground3d.ridge(scene); global.DG.ground3d.follow(pos, scene.fog && scene.fog.color ? scene.fog.color.getHex() : null, L.bg); global.DG.ground3d.turf(scene, pos); }   /* W-0200 먼 산 고리·발밑 잔풀 */ if (global.DG.skypano3d) { global.DG.skypano3d.apply(L, { three: T, scene: scene, camera: camera, pos: pos, dark: eventDark }); }   // W-0140 그린 하늘·그 해 자리·지평선 색(skypano3d.js)
+    var pos = core.save.player.pos; if (global.DG.ground3d) { global.DG.ground3d.ridge(scene); global.DG.ground3d.follow(pos, scene.fog && scene.fog.color ? scene.fog.color.getHex() : null, L.bg); global.DG.ground3d.turf(scene, pos); } if (global.DG.farland3d) { global.DG.farland3d.follow(scene, pos, camera, L); }   /* W-0200 먼 산 고리·발밑 잔풀 */ if (global.DG.skypano3d) { global.DG.skypano3d.apply(L, { three: T, scene: scene, camera: camera, pos: pos, dark: eventDark }); }   // W-0140 그린 하늘·그 해 자리·지평선 색(skypano3d.js)
     /* 해는 늘 플레이어 곁을 따라다닌다 — 그림자 상자를 좁게 유지하려고.
        높이·방위만 시각이 정한다 */
     sun.position.set(pos.x + L.sun.x, L.sun.y, pos.y + L.sun.z);
@@ -2364,7 +2364,7 @@
     if (scene.fog) {
       scene.fog.color.setHex(L.bg);
       scene.fog.near = L.fog.near * (1 - dk * 0.5);
-      scene.fog.far = L.fog.far * (1 - dk * 0.4);
+      scene.fog.far = L.fog.far * (1 - dk * 0.4); var FLf = global.DG.farland3d ? global.DG.farland3d.fogFar() : 0; if (FLf) { scene.fog.far = FLf; scene.fog.near = Math.max(scene.fog.near, FLf * 0.45); }   // W-0310 ④ 지평선 — far3d.on 이면 안개를 km 밖으로
     }
   }
 
