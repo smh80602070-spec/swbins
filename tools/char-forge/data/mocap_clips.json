@@ -1,0 +1,81 @@
+{
+ "note": "K-0139 — 클립 12 ↔ CMU Graphics Lab 모캡(2010 Hahne BVH 변환, una-dinosauria/cmu-mocap 거울). 구간은 BVH 프레임(120fps, 1번 프레임은 T 자세라 빼고 2부터). loop = 첫·끝을 섞어 이음. reverse = 거꾸로 재생(쓰러짐 = 바닥에서 일어나기 역재생). 구간 0 은 실행 때 눈으로 정해 채운다.",
+ "source": "http://mocap.cs.cmu.edu/ — FAQ: \"The motion capture data may be copied, modified, or redistributed without permission.\" · BVH 변환 Bruce Hahne(READMEFIRST: 추가 제한 없음)",
+ "clips": [
+  {
+   "game": "walk",
+   "cmu": "07_01",
+   "desc": "walk — 발 미끄러짐 1.6cm(바닥 기준 = 구간 최저 발 높이, 10-18) · 08_01 2.8cm · 104_02 숙인 조심 걸음",
+   "loop": true
+  },
+  {
+   "game": "run",
+   "cmu": "09_01",
+   "desc": "run — 가벼운 달리기(전력 질주는 UAL sprint 그대로)",
+   "loop": true
+  },
+  {
+   "game": "idle",
+   "cmu": "111_28",
+   "desc": "standing still (140_06 은 권투 자세로 웅크려 바꿈)",
+   "loop": true
+  },
+  {
+   "game": "idle_b",
+   "cmu": "113_21",
+   "desc": "standing still (변주)",
+   "loop": true
+  },
+  {
+   "game": "turn",
+   "cmu": "69_16",
+   "desc": "turn in place",
+   "loop": false
+  },
+  {
+   "game": "sit_stand",
+   "cmu": "143_18",
+   "desc": "sit down and get up",
+   "loop": false
+  },
+  {
+   "game": "pickup",
+   "cmu": "26_09",
+   "desc": "bend, pick up",
+   "loop": false
+  },
+  {
+   "game": "greet",
+   "cmu": "13_26",
+   "desc": "wave — 손 흔들기(111_02 깊은 절은 다리가 뒤로 들려 바꿈)",
+   "loop": false
+  },
+  {
+   "game": "cast",
+   "cmu": "120_03",
+   "desc": "cast spell",
+   "loop": false
+  },
+  {
+   "game": "strong",
+   "cmu": "02_07",
+   "desc": "swordplay (한 번 내리치기 구간)",
+   "loop": false
+  },
+  {
+   "game": "hit",
+   "cmu": "22_12",
+   "desc": "stumbles into (휘청 구간)",
+   "loop": false,
+   "inplace": true
+  },
+  {
+   "game": "death",
+   "cmu": "111_06",
+   "desc": "get up from floor 전체를 역재생 3배 — 서 있다 쓰러져 눕기",
+   "loop": false,
+   "reverse": true,
+   "speed": 3.0
+  }
+ ]
+}

@@ -1183,6 +1183,25 @@
    ]
   },
   {
+   "id": "anim-mocap",
+   "src": "saga-assets/characters/anim-src/mocap",
+   "include": [
+    "*.glb",
+    "*.license.json"
+   ],
+   "note": "K-0139 CMU 모캡 클립 12(VRoid 뼈대, 30fps — walk·run·idle·idle_b·turn·sit_stand·pickup·greet·cast·strong·hit·death)",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/anim"
+    },
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/anim_mocap"
+    }
+   ]
+  },
+  {
    "id": "characters-sprites2d8",
    "src": "saga-assets/characters/sprites2d8",
    "recursive": true,
