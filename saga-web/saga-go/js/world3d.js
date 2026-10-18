@@ -2573,7 +2573,7 @@
     removeFx: function (n) { if (fxGroup && n) { fxGroup.remove(n); } },
     /** 클릭(탭)한 자리를 3D 바닥에도 표시 — `world.js`의 `onClick()`이 부른다 */
     clickMark: clickMark,
-    camNode: function () { return camera; }, pickGround: pickGround,
+    camNode: function () { return camera; }, pickGround: pickGround, sceneNode: function () { return scene; }, rendererNode: function () { return renderer; },   // W-0310 군중·날씨 조각이 같은 장면에 얹는다
     /** 돌려 보기 — 드래그가 두드린다(`world.js`). 라디안을 더한다 */
     turn: function (d) {
       if (talkShot()) { return yaw; }            // ⑲-13 대화 중엔 끌어 돌리기를 안 받는다

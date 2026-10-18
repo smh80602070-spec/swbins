@@ -1,0 +1,65 @@
+{
+ "at": "2026-10-18T04:31:08.620Z",
+ "n": 300,
+ "phone": false,
+ "gpu": true,
+ "rows": [
+  {
+   "name": "군중 300",
+   "fps": 47.9,
+   "worstMs": 43,
+   "calls": 304,
+   "tris": 13365242,
+   "heapMB": 182.2,
+   "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+   "crowd": {
+    "ready": true,
+    "err": null,
+    "n": 300,
+    "meshes": 17,
+    "bones": 134,
+    "frames": 146,
+    "texKB": 1223,
+    "slots": [
+     "idle",
+     "walk",
+     "run"
+    ],
+    "ms": 0.49
+   }
+  },
+  {
+   "name": "군중 0(바탕)",
+   "fps": 52.2,
+   "worstMs": 44,
+   "calls": 274,
+   "tris": 624764,
+   "heapMB": 203.9,
+   "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+   "crowd": {
+    "ready": false,
+    "err": null,
+    "n": 0,
+    "meshes": 0,
+    "bones": 0,
+    "frames": 0,
+    "texKB": 0,
+    "slots": [],
+    "ms": 0.51
+   }
+  }
+ ],
+ "gpuName": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "errors": [
+  "Failed to load resource: the server responded with a status of 404 (Not Found)"
+ ],
+ "summary": {
+  "fpsOn": 47.9,
+  "fpsOff": 52.2,
+  "costMs": 1.7,
+  "callsAdded": 30,
+  "heapAddedMB": -21.7,
+  "cpuMs": 0.49,
+  "texKB": 1223
+ }
+}
