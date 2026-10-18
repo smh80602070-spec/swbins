@@ -2187,7 +2187,7 @@
     /* 멀리 물러날수록 **더 내려다본다** — 거리와 높이를 같은 비율로 늘리면
        지평선만 잔뜩 보이고 발밑이 안 보인다 */
     var back = mode === 2 ? CAM3D_BACK() * z : CAM_DIST() * CAM_BACK_MUL[mode] * z;   // W-0198 3D 는 휠로 물러나면(z≈2.2) 옛 24m·12m 쯤
-    var high = mode === 2 ? CAM3D_UP() * Math.pow(z, 1.3) : CAM_HIGH() * CAM_HIGH_MUL[mode] * Math.pow(z, 1.12);
+    var high = mode === 2 ? Math.max(CAM3D_UP() * Math.pow(z, 1.3), z < 1 ? CAM3D_LOOK() * 1.15 : 0) : CAM_HIGH() * CAM_HIGH_MUL[mode] * Math.pow(z, 1.12);   // W-0324 코앞(z<1)에선 눈높이 아래로 안 내려감 — 다리만 보이던 것
     if (focus) {
       /* 나와 대상 사이를 본다. 카메라는 **내 뒤 옆쪽**에 서서 둘을 한 화면에 담는다 */
       var dx = focus.x - pos.x, dy = focus.y - pos.y;
@@ -2207,7 +2207,7 @@
        보는 곳은 그대로 내 앞이라, 돌려도 **내가 화면 한가운데** 남는다 */
     var cs = Math.cos(yw), sn = Math.sin(yw);
     var ax = 0, az = back;                       // 안 돌렸을 때 카메라가 서는 자리
-    var ahead = mode === 2 ? CAM3D_AHEAD() : CAM_AHEAD[mode];
+    var ahead = mode === 2 ? CAM3D_AHEAD() * Math.min(1, z) : CAM_AHEAD[mode];   // W-0324 코앞에선 앞쪽 대신 나를 본다
     return {
       pos: { x: pos.x + ax * cs - az * sn, y: high, z: pos.y + ax * sn + az * cs },
       look: { x: pos.x + ahead * sn, y: mode === 0 ? 0.5 : (mode === 2 ? CAM3D_LOOK() : 2.4), z: pos.y - ahead * cs }

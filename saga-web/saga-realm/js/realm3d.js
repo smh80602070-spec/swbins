@@ -42,8 +42,8 @@
   function FOV() { return C().tuned('realm3d.fov', 50); }
   function PITCH_MIN() { return C().tuned('realm3d.pitchMin', 0.35); }
   function PITCH_MAX() { return C().tuned('realm3d.pitchMax', 1.3); }
-  function DIST_MIN() { return C().tuned('realm3d.distMin', 90); }
-  function DIST_MAX() { return C().tuned('realm3d.distMax', 900); }
+  function DIST_MIN() { return C().tuned('realm3d.distMin', 15); }   // W-0324 코앞 15m(에셋 확인용, 사용자 10-18)
+  function DIST_MAX() { return C().tuned('realm3d.distMax', 1800); }   // W-0324 멀리 1800m(camera far 2400 안)
   /** 지도 위 배우(PLAN §5-10) — 0 이면 옛 지도(원정은 🚩 깃발만). 카메라가
    *  `actorLod` 보다 멀면 배우를 숨기고 옛 깃발로 돌아간다 */
   function ACTORS_ON() { return C().tuned('realm3d.actors', 1) ? true : false; }

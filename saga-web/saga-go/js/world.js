@@ -788,7 +788,7 @@
   /* 최대를 크게 잡아 둔다 — 야생 대상은 70~320m 밖에 서므로(SPAWN_RADIUS),
      원작만 한 배율로는 한 마리도 화면에 안 들어온다. 끝까지 당기면 반경 150m 쯤을
      내려다본다. **판정은 그대로다** — 스폰 거리도 조우 사거리도 안 건드렸다. */
-  var ZOOM3_MIN = 0.7, ZOOM3_MAX = 9;
+  var ZOOM3_MIN = 0.12, ZOOM3_MAX = 9, ZOOM3_WIDE3 = 0.7;   // W-0324 코앞(0.12 — 에셋 확인용, 사용자 10-18)·3인치 모드는 옛 0.7
   /* 기본 배율 — 원작만 한 배율(×1, 아바타가 화면의 1/8)로 열면 **한 마리도 안 보인다.**
      야생 대상이 70m 밖부터 생기기 때문이다. 켜자마자 보이는 자리에서 시작하고,
      가까이 보고 싶으면 휠로 당긴다. 옛 세이브에는 이 칸이 없으니 여기서 채운다 */
@@ -849,7 +849,7 @@
       core.save.settings.zoom2dPrev = camZoom2d();
       core.save.settings.zoom3dPrev = zoom3d();
       setCamZoom2d(ZOOM2_MIN);
-      setZoom3d(ZOOM3_MIN);
+      setZoom3d(ZOOM3_WIDE3);
       core.save.settings.wide3in = true;
     }
     core.persist();
@@ -1888,7 +1888,7 @@
     /** 3D 카메라 배율 — 화면 값이다(판정에는 안 닿는다) */
     get zoom3d() { return zoom3d(); },
     setZoom3d: setZoom3d, nudgeZoom: nudgeZoom,
-    ZOOM3_MIN: ZOOM3_MIN, ZOOM3_MAX: ZOOM3_MAX, ZOOM3_DEFAULT: ZOOM3_DEFAULT,
+    ZOOM3_MIN: ZOOM3_MIN, ZOOM3_MAX: ZOOM3_MAX, ZOOM3_WIDE3: ZOOM3_WIDE3, ZOOM3_DEFAULT: ZOOM3_DEFAULT,
     /** 2D·2.5D 카메라 배율 — 화면 값이다(판정에는 안 닿는다) */
     get camZoom2d() { return camZoom2d(); },
     setCamZoom2d: setCamZoom2d, nudgeZoom2d: nudgeZoom2d, _bindZoom: bindZoom,   // W-0155 진단

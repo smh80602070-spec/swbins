@@ -87,7 +87,7 @@
      당김, 2026-09-02)를 얹어 거리에 0.4 를 곱하는데, 이 손잡이(camZoom)의
      아래 한계가 0.55 라 아무리 오므려도 마을에서는 충분히 물러나지 못했다.
      0.32 로 낮춰 최대로 오므리면 마을도 던전만큼(또는 그 이상) 물러나게 한다. */
-  var CAM_ZOOM_MIN = 0.32, CAM_ZOOM_MAX = 2.0;
+  var CAM_ZOOM_MIN = 0.2, CAM_ZOOM_MAX = 6;   // W-0324 코앞 6·멀리 0.2(에셋 확인용, 사용자 10-18) — dungeon3d USERZOOM 과 같게
   function userZoom() {
     var v = core.save && core.save.settings ? core.save.settings.camZoom : 1;
     if (v === undefined || v === null) { v = 1; }

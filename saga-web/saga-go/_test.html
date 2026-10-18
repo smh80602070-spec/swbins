@@ -3014,7 +3014,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       W.setCamZoom2d(1.6); W.setZoom3d(5);
       var before2d = W.camZoom2d, before3d = W.zoom3d;
       var on = W.toggle3inch();
-      var wideOk = on && W.camZoom2d === W.ZOOM2_MIN && W.zoom3d === W.ZOOM3_MIN;
+      var wideOk = on && W.camZoom2d === W.ZOOM2_MIN && W.zoom3d === W.ZOOM3_WIDE3;
       var off = W.toggle3inch();
       var backOk = !off && W.camZoom2d === before2d && W.zoom3d === before3d;
       W.setCamZoom2d(1); W.setZoom3d(4);

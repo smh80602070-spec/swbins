@@ -109,7 +109,7 @@
       v = (v === undefined || v === null) ? 1 : v;
       /* 아래 한계 0.4 는 dungeon-view.js 의 CAM_ZOOM_MIN(0.32)보다 높으면 안 된다
          — 더 높으면 거기서 낮춰 둔 값이 여기서 도로 잘린다(2026-09-07). */
-      return v < 0.3 ? 0.3 : (v > 2.5 ? 2.5 : v);
+      return v < 0.2 ? 0.2 : (v > 6 ? 6 : v);   // W-0324 dungeon-view CAM_ZOOM 0.2~6 과 같게
     } catch (e) { return 1; }
   }
   /** 카메라 기울기 — 0 은 완전 위, 1 은 낮게. 원작은 3/4 쯤이다.

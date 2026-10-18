@@ -37,7 +37,7 @@
       core.save.settings.zoom2dPrev = camZoom2d();
       core.save.settings.zoom3dPrev = zoom3d();
       setCamZoom2d(ZOOM2_MIN);
-      setZoom3d(ZOOM3_MIN);
+      setZoom3d(ZOOM3_WIDE3);
       core.save.settings.wide3in = true;
     }
     core.persist();
@@ -1076,7 +1076,7 @@
     /** 3D 카메라 배율 — 화면 값이다(판정에는 안 닿는다) */
     get zoom3d() { return zoom3d(); },
     setZoom3d: setZoom3d, nudgeZoom: nudgeZoom,
-    ZOOM3_MIN: ZOOM3_MIN, ZOOM3_MAX: ZOOM3_MAX, ZOOM3_DEFAULT: ZOOM3_DEFAULT,
+    ZOOM3_MIN: ZOOM3_MIN, ZOOM3_MAX: ZOOM3_MAX, ZOOM3_WIDE3: ZOOM3_WIDE3, ZOOM3_DEFAULT: ZOOM3_DEFAULT,
     /** 2D·2.5D 카메라 배율 — 화면 값이다(판정에는 안 닿는다) */
     get camZoom2d() { return camZoom2d(); },
     setCamZoom2d: setCamZoom2d, nudgeZoom2d: nudgeZoom2d, _bindZoom: bindZoom,   // W-0155 진단

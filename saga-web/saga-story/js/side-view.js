@@ -21,7 +21,7 @@
    *  카메라 수식은 한 자도 안 건드리고 이 둘을 나란히 스케일만 해도 그대로 맞는다 —
    *  side-view3d.js 머리말의 "좌표계를 두 벌 관리하지 않는다"를 깨지 않는 길이다 */
   var viewZoom = 1, lastZ = 0, lowK = 1, zoomOy = 0;
-  var ZOOM_MIN = 0.65, ZOOM_MAX = 1.9;
+  var ZOOM_MIN = 0.35, ZOOM_MAX = 5;   // W-0324 코앞 5·멀리 0.35(에셋 확인용, 사용자 10-18)
   var zoomPointers = {}, pinchDist0 = 0;
 
   /** 보스전 확대(PLAN 20절) — 사람이 잡은 viewZoom 위에 **덧셈이 아니라 곱셈**으로

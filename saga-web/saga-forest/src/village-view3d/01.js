@@ -208,7 +208,7 @@
   /** 사람이 핀치·휠로 직접 조절하는 확대 — CAM_DIST()/CAM_HIGH() 손잡이와는 다른 값이다.
    *  1 이 기본(손잡이 값 그대로), 커지면 당겨서(확대) 가까이, 작아지면 물러나 멀리 본다 */
   var userZoom = 1;
-  var USERZOOM_MIN = 0.5, USERZOOM_MAX = 2.2;
+  var USERZOOM_MIN = 0.25, USERZOOM_MAX = 6;   // W-0324 코앞 6·멀리 0.25(에셋 확인용, 사용자 10-18)
   var zoomPointers = {}, pinchDist0 = 0;
 
   /** 사람이 드래그로 돌리는 시점 — 걷는 방향(facingYaw)에 얹는 **덧각**이다.
