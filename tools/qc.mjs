@@ -269,6 +269,26 @@ function checkDeploy() {
     const shot = path.join(PLAY, 'shots', 'deploy', x.game + '.png');
     if (fs.existsSync(shot)) eyes.push({ game: x.game, what: '배포 주소 마지막 화면', file: path.relative(ROOT, shot) });
   }
+  if (!has('--deploy-later')) { checkDeployLater(); }
+}
+
+/* W-0317 ⑨ — 푸시 전 QC 의 배포 확인은 늘 "배포 버전 ≠ 로컬"(Pages 배포에 몇 분) WARN 이었다 → push.sh 가 푸시 뒤 `qc --deploy-later` 를 분리 실행해
+   5분(QC_DEPLOY_WAIT 초) 뒤 공개 주소를 다시 보고 _out/deploy-last.json·.md 에 남긴다. 여기선 그 마지막 결과를 한 줄로(24시간 안이면) */
+function checkDeployLater() {
+  const j = readJson(path.join(OUT, 'deploy-last.json'), null);
+  if (!j) { row('배포(푸시 뒤)', '다섯 판', 'WARN', '푸시 뒤 결과 없음 — push.sh 가 푸시 뒤 5분에 node tools/qc.mjs --deploy-later 를 띄운다'); return; }
+  const age = (Date.now() - Date.parse(j.at)) / 3600000, bad = (j.games || []).filter((x) => !x.ok), lag = (j.games || []).filter((x) => x.ok && !x.sameVersion);
+  row('배포(푸시 뒤)', '다섯 판', bad.length ? 'FAIL' : (lag.length || age > 24 ? 'WARN' : 'PASS'), (bad.length ? '× ' + bad.map((x) => nm(x.game)).join('·') + ' · ' : '') + (lag.length ? '버전 지연 ' + lag.map((x) => nm(x.game) + ' ' + x.deployed).join('·') + ' · ' : '') + (j.games || []).length + '판 · ' + j.at.slice(0, 16).replace('T', ' ') + 'Z' + (age > 24 ? ' · ' + Math.round(age) + '시간 묵음' : '') + (j.commit ? ' · ' + j.commit : ''));
+}
+async function deployLater() {
+  const wait = +(process.env.QC_DEPLOY_WAIT || 300);
+  await new Promise((r) => setTimeout(r, wait * 1000));
+  checkDeploy();
+  const j = readJson(path.join(PLAY, 'results', 'pw-deploy.json'), null), commit = run('git', ['log', '--oneline', '-1']).out.trim().slice(0, 70);
+  const out = { at: new Date().toISOString(), wait, commit, games: j ? j.games.map((x) => ({ game: x.game, ok: x.ok, sameVersion: x.sameVersion, deployed: x.deployed, local: x.local })) : [] };
+  fs.writeFileSync(path.join(OUT, 'deploy-last.json'), JSON.stringify(out, null, 1));
+  fs.writeFileSync(path.join(OUT, 'deploy-last.md'), '# 푸시 뒤 배포 확인 ' + out.at + '\n\n' + (out.commit || '') + '\n\n| 판 | 흐름 | 배포 버전 | 로컬 |\n|---|---|---|---|\n' + out.games.map((x) => '| ' + nm(x.game) + ' | ' + (x.ok ? '○' : '×') + ' | ' + x.deployed + ' | ' + x.local + (x.sameVersion ? '' : ' ≠') + ' |').join('\n') + '\n');
+  console.log('DEPLOY-LATER ' + out.games.map((x) => x.game + (x.ok ? (x.sameVersion ? ' ○' : ' △') : ' ×')).join(' · '));
 }
 
 /* ── ⑤ 상태(완성도·WIP) ── */
@@ -358,6 +378,7 @@ function report() {
 (async () => {
   try {
     console.log(`QC 시작 — 갈래 ${branch || 'web'} · 판 ${games.map(nm).join('·') || '-'} · ${full ? 'full' : 'quick'}${noShots ? ' · 촬영 생략' : ''}`);
+    if (has('--deploy-later')) { await deployLater(); process.exit(0); }   // W-0317 ⑨ push.sh 가 분리 실행
     if (deployOnly) { checkDeploy(); return; }
     if (playOnly) { await checkPlay(); stopServer(); return; }
     checkBundles();
