@@ -141,12 +141,37 @@
     Pose_wave: { rot: -0.05 }, Pose_fish: { rot: 0.12 }, Pose_idle_look: { rot: 0.02 }, Pose_idle_scratch: { rot: -0.03 }, Pose_idle_shift: { rot: 0.04 }
   };
 
+  /* W-0316 몸짓 판정 — 자세마다 "손·엉덩이가 몸 어디 있어야 하나". 값은 선 몸의 머리 높이를 1 로 둔 비율(위 up 은 땅부터, 앞 fwd·옆 side 는 엉덩이부터,
+     side 는 몸 왼쪽이 +). at = 판정·촬영 시점(클립 길이 비). 기준 뼈대(진단)와 실제 VRoid 몸(pose-shot 촬영) 둘 다 같은 check 를 탄다 — 빈틈 ⑥:
+     예전 진단은 손 "높이" 만 봐서 인사 팔이 앞으로 뻗어도 통과했다. 기준 뼈대 측정값(10-18)에 여유를 두고 잡았다 */
+  var EXPECT = {
+    Pose_sit: { at: 0.5, t: [['엉덩이 낮음(<0.35)', function (r) { return r.hips.up < 0.35; }]] },
+    Pose_warm: { at: 0.5, t: [['쪼그림(엉덩이<0.45)', function (r) { return r.hips.up < 0.45; }], ['두 손 앞(>0.18)', function (r) { return r.rhand.fwd > 0.18 && r.lhand.fwd > 0.18; }]] },
+    Pose_pick: { at: 0.45, t: [['오른손 낮음(<0.5)', function (r) { return r.rhand.up < 0.5; }], ['오른손 앞(>0.12)', function (r) { return r.rhand.fwd > 0.12; }]] },
+    Pose_lean: { at: 0.5, t: [['두 손 앞(>0.08)', function (r) { return r.rhand.fwd > 0.08 && r.lhand.fwd > 0.08; }]] },
+    Pose_heavy: { at: 0.5, t: [['두 손 앞으로 내려침(>0.2)', function (r) { return r.rhand.fwd > 0.2 && r.lhand.fwd > 0.2; }]] },
+    Pose_cast: { at: 0.62, t: [['두 손 앞(>0.15)', function (r) { return r.rhand.fwd > 0.15 && r.lhand.fwd > 0.15; }], ['가슴 높이 이상(>0.75)', function (r) { return r.rhand.up > 0.75 && r.lhand.up > 0.75; }]] },
+    Pose_block: { at: 0.5, t: [['왼 팔뚝 앞·위(앞>0.1·위>0.8)', function (r) { return r.lhand.fwd > 0.1 && r.lhand.up > 0.8; }]] },
+    Pose_wave: { at: 0.4, t: [['오른손 머리 위', function (r) { return r.rhand.up > r.head.up; }], ['앞으로 안 뻗음(|앞|<0.15)', function (r) { return Math.abs(r.rhand.fwd) < 0.15; }], ['몸 옆(오른쪽 <-0.1)', function (r) { return r.rhand.side < -0.1; }]] },
+    Pose_fish: { at: 0.5, t: [['두 손 앞(>0.15)', function (r) { return r.rhand.fwd > 0.15 && r.lhand.fwd > 0.15; }]] },
+    Pose_idle_scratch: { at: 0.45, t: [['오른손 머리에 닿음(<0.2)', function (r) { return r.dRH < 0.2; }], ['앞으로 안 뻗음(|앞|<0.12)', function (r) { return Math.abs(r.rhand.fwd) < 0.12; }]] },
+    Pose_idle_look: { at: 0.5, t: [['손 내림(<0.75)', function (r) { return r.rhand.up < 0.75 && r.lhand.up < 0.75; }]] },
+    Pose_idle_shift: { at: 0.5, t: [['손 내림(<0.75)', function (r) { return r.rhand.up < 0.75 && r.lhand.up < 0.75; }]] }
+  };
+  var MEASURE_BONES = ['hips', 'head', 'rhand', 'lhand'];
   function defOf(name) { var i; for (i = 0; i < DEFS.length; i++) { if (DEFS[i].name === name) { return DEFS[i]; } } return null; }
   function tn(k, d) { var C = global.DG.core, v = C && C.tuned ? +C.tuned(k, d) : d; return isFinite(v) ? v : d; }
 
   global.DG.pose3d = {
     NAMES: DEFS.map(function (d) { return d.name; }), DEFS: DEFS, IDLE: IDLE, BLEND: 0.25, FRAME2D: FRAME2D,
     durOf: function (name) { var d = defOf(name); return d ? d.dur : 0; },
+    EXPECT: EXPECT,
+    /** W-0316 — r = { hips, head, rhand, lhand: {up, fwd, side}, dRH } (선 머리 높이 1 비율) → { ok, bad: [못 맞춘 칸], at } · 기대 없는 이름은 null */
+    check: function (name, r) { var e = EXPECT[name], bad = [], i; if (!e || !r) { return null; } for (i = 0; i < e.t.length; i++) { var ok = false; try { ok = !!e.t[i][1](r); } catch (x) { ok = false; } if (!ok) { bad.push(e.t[i][0]); } } return { ok: !bad.length, bad: bad, at: e.at }; },
+    /** 실제 몸(three 마디) — 선 자세에서 한 번: 머리 높이 H·앞 방향 부호(발가락이 발목 앞인 쪽) */
+    restOf: function (node) { var T = global.THREE, B = OA.BONES, v = {}; if (!T || !node) { return null; } node.updateMatrixWorld(true); ['head', 'lfoot', 'ltoe'].forEach(function (k) { var b = node.getObjectByName(B[k]); v[k] = b ? node.worldToLocal(b.getWorldPosition(new T.Vector3())) : null; }); if (!v.head || !v.lfoot || !v.ltoe) { return null; } return { H: v.head.y, fs: v.ltoe.z >= v.lfoot.z ? 1 : -1 }; },
+    /** 지금 자세를 재 r 을 낸다(check 에 넣을 꼴). rest = restOf(node) */
+    measure: function (node, rest) { var T = global.THREE, B = OA.BONES, p = {}, out = {}, k; if (!T || !node || !rest || !(rest.H > 0)) { return null; } node.updateMatrixWorld(true); for (k = 0; k < MEASURE_BONES.length; k++) { var b = node.getObjectByName(B[MEASURE_BONES[k]]); if (!b) { return null; } p[MEASURE_BONES[k]] = node.worldToLocal(b.getWorldPosition(new T.Vector3())); } for (k in p) { out[k] = { up: +(p[k].y / rest.H).toFixed(3), fwd: +((p[k].z - p.hips.z) * rest.fs / rest.H).toFixed(3), side: +((p[k].x - p.hips.x) * rest.fs / rest.H).toFixed(3) }; } out.dRH = +(p.rhand.distanceTo(p.head) / rest.H).toFixed(3); return out; },
     isLoop: function (name) { var d = defOf(name); return !!(d && d.loop); },
     /** 2D 대역 틀 — 모르는 이름이면 null */
     frame2d: function (name) { var f = FRAME2D[name]; return f ? { rot: f.rot || 0, sx: f.sx || 1, sy: f.sy || 1 } : null; },
