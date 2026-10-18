@@ -1,0 +1,57 @@
+# W-0332 — GitHub Pages 배포(웹만·겹치지 않게·웹이 바뀐 푸시에만).
+# 옛 기본 배포(브랜치 소스)는 7만 4천 파일 전체를 5~6분 올리며 그동안 판 폴더가 404 였다.
+# 이 워크플로는 루트 index.html·.nojekyll·saga-web/(개발 전용 tools/playcheck 제외)만 묶어 deploy-pages 로 한 번에 바꾼다.
+# 저장소 Settings → Pages → Source = "GitHub Actions" 일 때만 쓴다(되돌림: Source 를 브랜치로).
+name: pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'saga-web/**'
+      - 'index.html'
+      - '.nojekyll'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: 받기(웹만 · 얕게)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            saga-web
+          sparse-checkout-cone-mode: true
+
+      - name: 묶기
+        run: |
+          mkdir -p _site
+          cp index.html .nojekyll _site/
+          rsync -a --exclude 'tools/playcheck/' saga-web _site/
+          du -sh _site
+          find _site -type f | wc -l
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
