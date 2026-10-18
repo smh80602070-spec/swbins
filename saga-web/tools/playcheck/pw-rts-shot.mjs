@@ -1,6 +1,7 @@
 // 사가천하 RTS 화면 한 장 촬영(W-0043) — 건물·유닛을 깔아 놓고 찍는다. 사용자가 화면 확인을 요청했을 때만 쓴다(작업 중 습관적 촬영 금지).
 //   node pw-rts-shot.mjs <저장 경로.png>        서버 :8871 (돌리는 쪽이 띄우고 끈다)
 import { open, sleep } from './pw.mjs';
+import { clearOverlays, beforeShot } from './overlay.mjs';   // W-0317 ⑦ 가리는 창 공용
 const r = await open('saga-realm', { w: 1100, h: 700 });
 await r.page.addInitScript(() => { window.DG_NO_ACCOUNT = true; });
 await r.page.goto(r.url('rts.html?diff=1&qa=1&mode=rts')); await sleep(1500);
@@ -16,6 +17,7 @@ await r.page.evaluate(() => {
   V.camera.x = cs.x + 7; V.camera.y = cs.y + 3; V.camera.z = 2.4;
 });
 await sleep(4500);
+const covered = await beforeShot(r.page, 'saga-realm', { keep: ['sheet', 'detail'] }); if (covered.length) { console.log('covered', covered.join(',')); }
 await r.page.screenshot({ path: process.argv[2] || '_rts.png' });
 console.log('오류', r.errors.filter((e) => !/404/.test(e)).slice(0, 3).join(' | '), 'nf', r.notFound.slice(0, 4).join(','));
 await r.close(); process.exit(0);

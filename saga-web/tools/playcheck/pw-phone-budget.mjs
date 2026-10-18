@@ -9,6 +9,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
 import { chromeArgs, wantGpu } from './cdp.mjs';
+import { clearOverlays, beforeShot } from './overlay.mjs';   // W-0317 ⑦ 가리는 창 공용
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const CHROME = process.env.PW_CHROME || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
@@ -24,18 +25,6 @@ const TUNES = argv.map((a, i) => (a === '--tune' ? argv[i + 1] : null)).filter(B
 export const BUDGET = { mb: 25, fps: 30, calls: 300 };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-export async function clearIntro(p) {
-  for (let i = 0; i < 12; i++) {
-    const open = await p.evaluate(() => !!((window.DG && DG.scenario && DG.scenario.isOpen && DG.scenario.isOpen()) || (window.DG && DG.story && DG.story.isOpen && DG.story.isOpen())));
-    if (!open) { break; }
-    await p.evaluate(() => { if (DG.scenario && DG.scenario.skip) { DG.scenario.skip(); } else if (DG.story && DG.story.skip) { DG.story.skip(); } }); await sleep(250);
-  }
-  await p.evaluate(() => {
-    document.querySelectorAll('button').forEach((b) => { if (/건너뛰기/.test(b.textContent) && b.offsetParent) { b.click(); } });
-    const h = document.getElementById('help-ok'); if (h && h.offsetParent) { h.click(); }
-    if (DG.menuGrid && DG.menuGrid.close) { DG.menuGrid.close(); }
-  });
-}
 /** 판마다 장면 — [이름, 들어가기] 차례로. 첫 장면 = 첫 화면(용량은 여기까지 센다) */
 export const SCENES = {
   'saga-go': [['들판', async () => {}], ['걷기', async (p) => { await p.keyboard.down('w'); }]],
@@ -79,13 +68,13 @@ async function one(browser, g) {
     await cdp.send('Emulation.setCPUThrottlingRate', { rate: THROTTLE });
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 120000 }); await sleep(4000);
     await page.evaluate(() => { const b = document.getElementById('title-continue'); if (b) { b.click(); } }); await sleep(4000);
-    await clearIntro(page);
+    await clearOverlays(page, g);
     for (let i = 0; i < SCENES[g].length; i++) {
       const [name, enter] = SCENES[g][i];
-      await enter(page); await clearIntro(page); await sleep(8000); await clearIntro(page);
+      await enter(page); await clearOverlays(page, g); await sleep(8000); const covered = await beforeShot(page, g);
       if (i === 0) { firstBytes = bytes; }
       const m = await page.evaluate(MEASURE);
-      res.scenes.push({ name, ...m });
+      res.scenes.push({ name, ...m, covered });
     }
   } catch (e) { res.err = e.message.slice(0, 200); }
   res.firstMB = +((firstBytes == null ? bytes : firstBytes) / 1048576).toFixed(2);
@@ -95,7 +84,7 @@ async function one(browser, g) {
   return res;
 }
 
-if (!process.env.PW_BUDGET_LIB) {   // pw-cpu-profile.mjs 가 SCENES·clearIntro 만 가져다 쓸 때는 안 돈다
+if (!process.env.PW_BUDGET_LIB) {   // pw-cpu-profile.mjs 가 SCENES 만 가져다 쓸 때는 안 돈다(가리는 창은 overlay.mjs)
 const args = chromeArgs({ gpu: GPU }).concat(['--enable-precise-memory-info']);   // W-0314 공용 인자 — 기본 GPU, PW_GPU=0 이면 swiftshader
 const browser = await chromium.launch({ executablePath: CHROME, headless: true, args });
 const out = [];

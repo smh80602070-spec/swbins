@@ -8,6 +8,7 @@ import { chromium } from 'playwright-core';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { clearOverlays, beforeShot } from './overlay.mjs';   // W-0317 ⑦ 가리는 창 공용
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..', '..');
@@ -30,17 +31,6 @@ const inGame = (page) => page.evaluate(() => {
   return !document.querySelector('#acc-host.show') && !shown(g) && shown(d);
 });
 /** 이야기 장면·안내 카드 걷기(판마다 첫 장면이 다르다) */
-async function clearIntro(page) {
-  for (let i = 0; i < 14; i++) {
-    const open = await page.evaluate(() => !!((window.DG && DG.scenario && DG.scenario.isOpen && DG.scenario.isOpen()) || (window.DG && DG.story && DG.story.isOpen && DG.story.isOpen())));
-    if (!open) { break; }
-    await page.keyboard.press('Escape'); await sleep(250);
-  }
-  await page.evaluate(() => {
-    document.querySelectorAll('button').forEach((b) => { if (/건너뛰기/.test(b.textContent) && b.offsetParent) { b.click(); } });
-    const h = document.getElementById('help-ok'); if (h && h.offsetParent) { h.click(); }
-  });
-}
 /** 판별 첫 관문 */
 async function firstGate(page, g) {
   if (g === 'saga-realm') {
@@ -49,7 +39,7 @@ async function firstGate(page, g) {
   } else if (g === 'saga-dungeon') {
     await page.evaluate(() => { [...document.querySelectorAll('.stc-cell')].slice(0, 3).forEach((c) => c.click()); const b = document.querySelector('.stc-btn'); if (b) { b.click(); } }); await sleep(3500);
   }
-  await clearIntro(page);
+  await clearOverlays(page, g);
 }
 
 async function one(browser, g) {
@@ -62,7 +52,7 @@ async function one(browser, g) {
   page.on('response', (r) => { if (r.status() >= 400 && !/license\.json|favicon/.test(r.url())) { bad.push(r.status() + ' ' + r.url().replace(BASE, '')); } });
   const url = BASE + g + '/';
   const step = async (name, fn) => { const t = Date.now(); let ok = false, why = ''; try { ok = !!(await fn()); } catch (e) { why = e.message.slice(0, 160); } steps.push({ name, ok, ms: Date.now() - t, why }); return ok; };
-  let ver = null;
+  let ver = null, covered = [];
   try {
     await step('첫 방문', async () => { const r = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 }); await sleep(7000); return r && r.status() < 400; });
     await step('가입', async () => {
@@ -81,15 +71,16 @@ async function one(browser, g) {
     await step('새로 고침 → 이어하기', async () => {
       await page.reload({ waitUntil: 'domcontentloaded', timeout: 60000 }); await sleep(7000);
       await page.evaluate(() => { const b = document.getElementById('title-continue'); if (b) { b.click(); } }); await sleep(3000);
-      await clearIntro(page); await sleep(800);
+      await clearOverlays(page, g); await sleep(800);
       return inGame(page);
     });
     ver = await page.evaluate(async (u) => { try { const t = await (await fetch(u + 'sw.js', { cache: 'no-store' })).text(); const m = /var VERSION = '([^']+)'/.exec(t); return m ? m[1] : null; } catch (e) { return null; } }, url);
+    covered = await beforeShot(page, g);
     await page.screenshot({ path: path.join(HERE, 'shots', 'deploy', g + '.png') });
   } catch (e) { errors.push('ERR ' + e.message.slice(0, 200)); }
   await ctx.close();
   const local = localVer(g);
-  return { game: g, ok: steps.length === 5 && steps.every((s) => s.ok) && !errors.length && !bad.length, steps, errors: errors.slice(0, 8), bad: bad.slice(0, 8), deployed: ver, local, sameVersion: ver === local };
+  return { game: g, ok: steps.length === 5 && steps.every((s) => s.ok) && !errors.length && !bad.length, steps, errors: errors.slice(0, 8), bad: bad.slice(0, 8), deployed: ver, local, sameVersion: ver === local, covered };
 }
 
 const browser = await chromium.launch({ executablePath: CHROME, headless: true, args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--disable-gpu', '--autoplay-policy=no-user-gesture-required'] });

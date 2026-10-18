@@ -25,7 +25,8 @@ if (argv.includes('--accept-baseline')) {
 }
 
 process.env.PW_BUDGET_LIB = '1';
-const { SCENES, clearIntro } = await import('./pw-phone-budget.mjs');
+const { SCENES } = await import('./pw-phone-budget.mjs');
+const { clearOverlays } = await import('./overlay.mjs');   // W-0317 ⑦
 const WEB = path.resolve(HERE, '..', '..'), marks = {};
 /* dist 번들의 줄 → 원본 파일(번들이 파일 앞마다 남기는 /*@ js/… 표시) */
 function srcOf(url, line) {
@@ -48,8 +49,8 @@ async function once(browser) {
   await cdp.send('Emulation.setCPUThrottlingRate', { rate: TH });
   await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 120000 }); await sleep(4000);
   await page.evaluate(() => { const b = document.getElementById('title-continue'); if (b) { b.click(); } }); await sleep(4000);
-  await clearIntro(page);
-  for (let i = 0; i <= SC; i++) { await SCENES[g][i][1](page); await clearIntro(page); await sleep(8000); await clearIntro(page); }
+  await clearOverlays(page, g);
+  for (let i = 0; i <= SC; i++) { await SCENES[g][i][1](page); await clearOverlays(page, g); await sleep(8000); await clearOverlays(page, g); }
   await sleep(WAIT * 1000);
   const gpu = await page.evaluate(() => { const c = document.createElement('canvas'), gl = c.getContext('webgl2') || c.getContext('webgl'), d = gl && gl.getExtension('WEBGL_debug_renderer_info'); return d ? gl.getParameter(d.UNMASKED_RENDERER_WEBGL) : null; });
   await cdp.send('Profiler.enable'); await cdp.send('Profiler.setSamplingInterval', { interval: 200 }); await cdp.send('Profiler.start');

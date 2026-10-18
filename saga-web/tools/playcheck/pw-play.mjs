@@ -11,6 +11,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
 import { chromeArgs, gpuInfo, isSoftware } from './cdp.mjs';
+import { clearOverlays, beforeShot } from './overlay.mjs';   // W-0317 ⑦ 가리는 창 공용
 let GPU_NAME = null;   // W-0314 이 실행이 실제로 그린 렌더러
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -36,7 +37,7 @@ const ADAPT = {
     extra: [{ name: '클릭 이동(빈 땅 → 걷기 · 짐승 → 만남)', run: async (c) => {
       /* W-0273 — 누른 자리에 짐승이 있으면 가까울 땐 만남(전투), 멀면 그쪽으로 걷는다(world.js onClick). 둘 다 정상 반응.
          빈 땅을 먼저 찾아 누르고(여러 자리), 끝내 짐승만 걸리면 만남도 ○ 로 친다 */
-      await c.clearIntro();
+      await c.clear();
       await c.ev(() => { window.__pwEv = []; if (!window.__pwEvOn) { window.__pwEvOn = 1; DG.core.on('encounter:request', () => window.__pwEv.push('만남')); } });
       const W = c.phone ? 390 : 1280, H = c.phone ? 844 : 720;
       const pts = [[0.5, 0.42], [0.3, 0.5], [0.7, 0.5], [0.5, 0.6], [0.25, 0.35], [0.75, 0.35]];
@@ -63,7 +64,7 @@ const ADAPT = {
     minMove: 8, touch: 'canvas',
     gate: async (c) => { await c.ev(() => { [...document.querySelectorAll('.stc-cell')].slice(0, 3).forEach((x) => x.click()); const b = document.querySelector('.stc-btn'); if (b) { b.click(); } }); await sleep(3500); },
     extra: [{ name: '던전 입장 뒤 키 이동', run: async (c) => {
-      await c.ev(() => { if (DG.town.active()) { DG.town.leave(); } DG.dungeon.enter({ floor: 1 }); }); await sleep(3500); await c.clearIntro();
+      await c.ev(() => { if (DG.town.active()) { DG.town.leave(); } DG.dungeon.enter({ floor: 1 }); }); await sleep(3500); await c.clear();
       const on = await c.ev(() => !!DG.dungeon.active()); if (!on) { return { ok: false, detail: '던전이 안 켜짐' }; }
       const r = await c.keys(['KeyD', 'KeyS']); await c.shot('dungeon'); return { ok: r.okN >= 1, detail: r.detail };
     } }]
@@ -76,14 +77,14 @@ const ADAPT = {
   'saga-story': {
     pos: () => { const r = DG.side.raw(); return r && r.player ? { x: r.player.x, y: r.player.y } : null; },
     minMove: 5, touch: 'pad:#touchpad', dragX: 0.8, dragY: 0.75, keys: ['KeyD', 'KeyA', 'ArrowLeft', 'ArrowRight'],   // 옆보기라 가로만   // 4종횡은 화면 아래쪽 절반을 누르면 그쪽으로 달린다
-    prep: async (c) => { const s = await c.ev(() => { const S = DG.side, C = DG.core; if (!C.save.party.length && DG.hero && DG.hero.recruit) { const h = DG.data.heroes.filter((x) => x.rarity <= 2)[0]; if (h) { DG.hero.recruit(h.id); } } const st = S.stages().map((x) => x.ref).filter((s) => !s.town)[0]; return st ? { key: st.key, ok: S.enter(st.key) } : null; }); await sleep(3000); await c.clearIntro(); return s ? `사냥터 ${s.key}` : '사냥터 없음'; },
+    prep: async (c) => { const s = await c.ev(() => { const S = DG.side, C = DG.core; if (!C.save.party.length && DG.hero && DG.hero.recruit) { const h = DG.data.heroes.filter((x) => x.rarity <= 2)[0]; if (h) { DG.hero.recruit(h.id); } } const st = S.stages().map((x) => x.ref).filter((s) => !s.town)[0]; return st ? { key: st.key, ok: S.enter(st.key) } : null; }); await sleep(3000); await c.clear(); return s ? `사냥터 ${s.key}` : '사냥터 없음'; },
     extra: [{ name: '자동 사냥으로 적을 때림(30초)', run: async (c) => {
       /* W-0272 — 4종횡엔 side:hit 이벤트가 없다(side:kill 만). 살아 있는 적 체력 합이 줄거나 처치 수가 오르면 때린 것 */
       const snap = () => c.ev(() => { const r = DG.side.raw(); if (!r) { return null; } return { hp: Math.round(r.enemies.filter((e) => e.hp > 0).reduce((a, e) => a + e.hp, 0)), n: r.enemies.filter((e) => e.hp > 0).length, kills: r.kills || 0, x: Math.round(r.player.x), doing: DG.auto.status ? DG.auto.status().doing : '' }; });
       const a = await snap(); if (!a) { return { ok: false, detail: '사냥터 아님' }; }
       await c.ev(() => DG.auto.setOn(true));
       let b = a;
-      for (let k = 0; k < 60; k++) { await sleep(500); await c.clearIntro(); b = await snap(); if (b && (b.kills > a.kills || b.hp < a.hp - 1)) { break; } }
+      for (let k = 0; k < 60; k++) { await sleep(500); await c.clear(); b = await snap(); if (b && (b.kills > a.kills || b.hp < a.hp - 1)) { break; } }
       await c.ev(() => DG.auto.setOn(false));
       const ok = !!b && (b.kills > a.kills || b.hp < a.hp - 1);
       return { ok, detail: `적 체력 ${a.hp}→${b && b.hp} · 처치 ${a.kills}→${b && b.kills} · x ${a.x}→${b && b.x} · ${b && b.doing}` };
@@ -94,7 +95,7 @@ const ADAPT = {
     minMove: 0.5, touch: 'joy:#rjoy', moveKeys: 'optional', posOptional: true,   // 턴제 — 3D 지도가 켜졌을 때만 초점이 움직인다
     gate: async (c) => { await c.page.locator('[data-act="pick-scen"]').first().click({ timeout: 10000 }); await sleep(1200); await c.page.locator('[data-act="pick-force"]').first().click({ timeout: 10000 }); await sleep(4000); },
     extra: [{ name: '3D 지도 끌기(panBy)', run: async (c) => { const a = await c.pos(); if (!a) { return { ok: true, skip: true, detail: '3D 지도 꺼짐' }; } await c.ev(() => { for (let i = 0; i < 20; i++) { DG.realm3d.panBy(1, 0); } }); await sleep(500); const d = c.dist(a, await c.pos()); return { ok: d > 0.5, detail: `이동 ${d.toFixed(2)}` }; } },
-      { name: '다음 달(next-month) 예외 없음', run: async (c) => { const t0 = await c.ev(() => DG.rtk.state().turn); const had = await c.ev(() => { const b = document.querySelector('[data-act="next-month"]'); if (b) { b.click(); return true; } return false; }); if (!had) { return { ok: true, skip: true, detail: '단추 없음' }; } await sleep(2500); await c.clearIntro(); const t1 = await c.ev(() => DG.rtk.state().turn); return { ok: t1 > t0, detail: `turn ${t0}→${t1}` }; } }]
+      { name: '다음 달(next-month) 예외 없음', run: async (c) => { const t0 = await c.ev(() => DG.rtk.state().turn); const had = await c.ev(() => { const b = document.querySelector('[data-act="next-month"]'); if (b) { b.click(); return true; } return false; }); if (!had) { return { ok: true, skip: true, detail: '단추 없음' }; } await sleep(2500); await c.clear(); const t1 = await c.ev(() => DG.rtk.state().turn); return { ok: t1 > t0, detail: `turn ${t0}→${t1}` }; } }]
   }
 };
 
@@ -125,21 +126,8 @@ async function one(browser, g, device) {
     /** 화면 가운데 x · 세로 비율 y(폰 390 너비에서도 화면 안) */
     center: (fy) => [Math.round((phone ? 390 : 1280) / 2), Math.round((phone ? 844 : 720) * fy)],
     topAt: (x, y) => page.evaluate(([x, y]) => { const e = document.elementFromPoint(x, y); return e ? (e.id ? '#' + e.id : e.tagName.toLowerCase() + (typeof e.className === 'string' && e.className ? '.' + e.className.trim().split(/s+/)[0] : '')) : 'none'; }, [x, y]),
-    shot: async (k) => { const f = path.join(SHOTS, `${g}-${device}-${k}.png`); await page.screenshot({ path: f }); shots.push(f); return f; },
-    clearIntro: async () => {
-      for (let i = 0; i < 14; i++) {
-        const open = await page.evaluate(() => !!((window.DG && DG.scenario && DG.scenario.isOpen && DG.scenario.isOpen()) || (window.DG && DG.story && DG.story.isOpen && DG.story.isOpen())));
-        if (!open) { break; }
-        await page.evaluate(() => { if (DG.scenario && DG.scenario.skip) { DG.scenario.skip(); } else if (DG.story && DG.story.skip) { DG.story.skip(); } }); await sleep(250);
-      }
-      await page.evaluate(() => {
-        document.querySelectorAll('button').forEach((b) => { if (/건너뛰기/.test(b.textContent) && b.offsetParent) { b.click(); } });
-        const h = document.getElementById('help-ok'); if (h && h.offsetParent) { h.click(); }
-        const mg = document.getElementById('menu-grid'); if (mg) { mg.classList.remove('show'); }
-        /* 1만리만 — 5천하는 같은 #encounter 에 시나리오·세력 고르기를 띄운다(닫으면 빈 화면). 1만리 만남 카드(#encounter) 가 화면 가운데를 덮으면 클릭 이동이 카드를 누른다 — 닫기 단추, 없으면 show 를 뗀다 */
-        const enc = document.querySelector('#encounter.show'); if (enc && !enc.querySelector('[data-act^="pick-"]') && location.pathname.indexOf('/saga-go/') >= 0) { const bt = [...enc.querySelectorAll('button')].find((x) => /닫기|물러난다|나중에|✕/.test(x.textContent)); if (bt) { bt.click(); } else { enc.classList.remove('show'); } }
-      });
-    },
+    shot: async (k) => { const cov = await beforeShot(page, g, { keep: ['sheet', 'detail'] }); if (cov.length) { covered.push(k + ':' + cov.join(',')); } const f = path.join(SHOTS, `${g}-${device}-${k}.png`); await page.screenshot({ path: f }); shots.push(f); return f; },
+    clear: () => clearOverlays(page, g, { keep: ['sheet', 'detail'] }),   // W-0317 ⑦ 공용(overlay.mjs) — 시트·상세는 시험이 연 것일 수 있어 남긴다
     /** 키 몇 개를 차례로 눌러 위치 변화를 센다 */
     keys: async (codes) => {
       const parts = []; let okN = 0;
@@ -166,11 +154,11 @@ async function one(browser, g, device) {
       await page.evaluate(() => { try { localStorage.clear(); } catch (e) { /* 없음 */ } DG.account.create('플레이'); });
       await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 }); await sleep(3500);
       await page.evaluate(() => { const b = document.getElementById('title-continue'); if (b) { b.click(); } }); await sleep(3000);
-      await c.clearIntro();
+      await c.clear();
       if (A.gate) { await A.gate(c); }
-      await c.clearIntro(); await sleep(1500);
+      await c.clear(); await sleep(1500);
       const prep = A.prep ? await A.prep(c) : '';
-      await c.clearIntro();
+      await c.clear();
       return { ok: await inGame(), detail: `${Date.now() - tBoot}ms ${prep}` };
     });
     await c.shot('0');
@@ -245,7 +233,7 @@ async function one(browser, g, device) {
     await step('새로 고침 → 이어하기 → 들어감', async () => {
       await page.reload({ waitUntil: 'domcontentloaded', timeout: 60000 }); await sleep(3500);
       await page.evaluate(() => { const b = document.getElementById('title-continue'); if (b) { b.click(); } }); await sleep(2500);
-      await c.clearIntro(); await sleep(800);
+      await c.clear(); await sleep(800);
       return { ok: await inGame(), detail: JSON.stringify(await c.pos()) };
     });
     await c.shot('1');
@@ -254,7 +242,7 @@ async function one(browser, g, device) {
   check('페이지 예외·console.error 없음', real.length === 0, real.slice(0, 3).join(' | '));
   await ctx.close();
   const fails = checks.filter((x) => !x.ok && !x.skip), warns = checks.filter((x) => x.ok && x.warn);
-  return { game: g, device, ok: fails.length === 0, checks, fails: fails.map((x) => x.name), warns: warns.map((x) => x.name), shots };
+  return { game: g, device, ok: fails.length === 0, checks, fails: fails.map((x) => x.name), warns: warns.map((x) => x.name), shots, covered };
 }
 
 const browser = await chromium.launch({ executablePath: CHROME, headless: true, args: chromeArgs() });

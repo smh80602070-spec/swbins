@@ -12,6 +12,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
 import { chromeArgs, gpuInfo } from './cdp.mjs';
+import { clearOverlays, beforeShot } from './overlay.mjs';   // W-0317 ⑦ 가리는 창 공용
 let GFX_GPU = null;
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -46,18 +47,6 @@ const ENTER = {
   'saga-realm': async (p) => { await p.locator('[data-act="pick-scen"]').first().click({ timeout: 10000 }); await sleep(1200); await p.locator('[data-act="pick-force"]').first().click({ timeout: 10000 }); await sleep(4000); }
 };
 
-async function clearIntro(p) {
-  for (let i = 0; i < 12; i++) {
-    const open = await p.evaluate(() => !!((window.DG && DG.scenario && DG.scenario.isOpen && DG.scenario.isOpen()) || (window.DG && DG.story && DG.story.isOpen && DG.story.isOpen())));
-    if (!open) { break; }
-    await p.evaluate(() => { if (DG.scenario && DG.scenario.skip) { DG.scenario.skip(); } else if (DG.story && DG.story.skip) { DG.story.skip(); } }); await sleep(250);
-  }
-  await p.evaluate(() => {
-    document.querySelectorAll('button').forEach((b) => { if (/건너뛰기/.test(b.textContent) && b.offsetParent) { b.click(); } });
-    const h = document.getElementById('help-ok'); if (h && h.offsetParent) { h.click(); }
-    const mg = document.getElementById('menu-grid'); if (mg) { mg.classList.remove('show'); }
-  });
-}
 
 /** 페이지 안 — 렌더 가로채기 + 재기 */
 const MEASURE = async () => {
@@ -110,20 +99,20 @@ async function one(browser, g) {
   const page = await ctx.newPage();
   try { const cdp = await ctx.newCDPSession(page); await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: true }); } catch (e) { /* 없어도 된다 */ }
   const url = BASE + g + '/';
-  let m = null, err = '';
+  let m = null, err = '', covered = [];
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 }); await sleep(1500);
     await page.evaluate((hi) => { try { localStorage.clear(); } catch (e) { /* 없음 */ } DG.account.create('그래픽'); hi.forEach(([k, v]) => DG.core.setTune(k, v)); }, HIGH[g].concat(EXTRA));
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 }); await sleep(3500);
     await page.evaluate(() => { const b = document.getElementById('title-continue'); if (b) { b.click(); } }); await sleep(3000);
-    await clearIntro(page);
-    await ENTER[g](page); await clearIntro(page);
-    await sleep(6000); await clearIntro(page);
+    await clearOverlays(page, g);
+    await ENTER[g](page); await clearOverlays(page, g);
+    await sleep(6000); covered = await beforeShot(page, g);
     m = await page.evaluate(MEASURE);
     await page.screenshot({ path: path.join(SHOTS, g + '.png') });
   } catch (e) { err = e.message.slice(0, 200); }
   await ctx.close();
-  const res = { game: g, err: err || (m && m.err) || '', m, rows: [] };
+  const res = { game: g, err: err || (m && m.err) || '', m, rows: [], covered };
   for (const f of BL.features) {
     const need = f.need[g];
     const na = typeof need === 'string' && need.startsWith('na');

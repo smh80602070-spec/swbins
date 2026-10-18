@@ -7,6 +7,9 @@
 import fs from 'node:fs';
 import { open as open0, sleep } from './pw.mjs';
 import { wantGpu, gpuInfo } from './cdp.mjs';
+import { clearOverlays, beforeShot } from './overlay.mjs';   // W-0317 ⑦ 가리는 창 공용
+const KEEP = ['sheet', 'detail', 'encounter'];   // 장면이 일부러 연 창(결투 카드·시트)은 남긴다
+const skipScenes = (r) => clearOverlays(r.page, r.game, { keep: KEEP });
 /* W-0314 — QC 3D 장면은 기본 실제 GPU(PW_GPU=0 이면 swiftshader). 첫 장면에서 렌더러 이름을 남긴다 */
 let VIS_GPU = null;
 const open = async (g, o) => { const r = await open0(g, Object.assign({ gpu: wantGpu() }, o || {})); if (VIS_GPU === null) { VIS_GPU = await gpuInfo(r.page); } return r; };
@@ -24,6 +27,7 @@ const realErrors = (errs) => errs.filter((e) => !/status of 404/.test(e) && !/We
 /** 찍고 화소를 잰다 — 축소본(160×90)의 밝기 표준편차와 4비트 색 칸 수. 단색·빈 화면이면 std 가 거의 0 이다 */
 async function shoot(r, game, key, title, feats, metrics) {
   const file = SHOTS + '/' + game + '-' + key + '.png';
+  const covered = await beforeShot(r.page, game, { keep: KEEP });
   const buf = await r.page.screenshot({ path: file });
   const px = await r.page.evaluate(async (b64) => {
     const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();
@@ -35,7 +39,7 @@ async function shoot(r, game, key, title, feats, metrics) {
     const mean = s / n;
     return { mean: +mean.toFixed(1), std: +Math.sqrt(Math.max(0, s2 / n - mean * mean)).toFixed(1), bins: Object.keys(bins).length };
   }, buf.toString('base64'));
-  const row = { game, key, title, feats, file, px, metrics: metrics || null };
+  const row = { game, key, title, feats, file, px, metrics: metrics || null, covered };
   scenes.push(row);
   check('장면 ' + game + ' ' + key + ' ' + title + ' — 화면이 단색이 아니다', px.std >= 8 && px.bins >= 12, JSON.stringify({ px, metrics }));
   return row;
@@ -48,9 +52,6 @@ async function boot(r, { title = true } = {}) {
   await r.page.goto(r.url('index.html')); await sleep(3000);
   if (title) { await ev(() => { var b = document.getElementById('title-continue'); if (b) { b.click(); } }); }
   await sleep(4000);
-}
-async function skipScenes(r, isOpen) {
-  for (let i = 0; i < 12 && await r.page.evaluate(isOpen); i++) { await r.page.keyboard.press('Escape'); await sleep(250); }
 }
 /** 초상 판 — 영웅 6·펫 몇을 굽게 하고 다 구워진 그림을 한 판에 늘어놓는다(화면 위에 덮어 찍고 치운다) */
 async function portraitBoard(r) {

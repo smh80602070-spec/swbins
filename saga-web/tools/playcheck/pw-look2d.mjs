@@ -4,12 +4,13 @@
 //   (W-0106 — 판마다 장면 2~3: 가까이·조우 카드·집 안·밤·던전 방·깊은 층·지도 확대)
 // 서버: node serve.mjs C:/swbins/saga-web 8871 (돌리는 쪽이 띄우고 끈다). 크롬은 전용 새 프로필, 끝나면 스스로 닫는다.
 import { open, sleep } from './pw.mjs';
+import { clearOverlays, beforeShot } from './overlay.mjs';   // W-0317 ⑦ 가리는 창 공용
 
 const [game, dest, scene] = [process.argv[2] || 'saga-story', process.argv[3] || 'look2d.png', process.argv[4]];
 const r = await open(game, { w: +(process.env.GW || 1280), h: +(process.env.GH || 720) });   // W-0204 폰 세로는 GW=390 GH=844
 const { page } = r;
 const ev = (fn, arg) => page.evaluate(fn, arg);
-const skip = async () => { for (let i = 0; i < 14; i++) { const open1 = await ev(() => !!((DG.scenario && DG.scenario.isOpen && DG.scenario.isOpen()) || (DG.story && DG.story.isOpen && DG.story.isOpen()))); if (!open1) { break; } await page.keyboard.press('Escape'); await sleep(250); } };
+const skip = () => clearOverlays(page, game, { keep: ['sheet', 'detail', 'encounter'] });   // W-0317 ⑦ 공용 — 4종횡은 Esc 가 메뉴를 열어 API 로만 닫는다
 try {
   await page.goto(r.url('index.html')); await sleep(1500);
   await ev(() => { DG.account.create('확인'); });
@@ -65,6 +66,7 @@ try {
   }
   const body = await ev(() => new Promise((res) => { const M = DG.mode2d, p0 = M.pace, seen = {}; M.pace = function (k, x, y, u, bp) { seen[k] = Math.round(bp); return p0.apply(this, arguments); }; setTimeout(() => { M.pace = p0; const ks = Object.keys(seen); res({ me: seen.player || seen.me || seen['me:in'] || null, others: ks.filter((k) => !/^(player|me|me:in)$/.test(k)).slice(0, 4).map((k) => seen[k]) }); }, 1200); }));   // W-0204 몸 px(pace 가 받는 bodyPx — 보폭 쓰는 배우만)
   const info = await ev(() => ({ w: innerWidth, h: innerHeight }));
+  { const cov = await beforeShot(page, game, { keep: ['sheet', 'detail', 'encounter'] }); if (cov.length) { console.log('covered', cov.join(',')); } }
   await page.screenshot(dest.endsWith('.jpg') ? { path: dest, type: 'jpeg', quality: 72 } : { path: dest });
   console.log('저장', dest, JSON.stringify(info), '몸px', JSON.stringify(body), r.errors.length ? 'errors ' + JSON.stringify(r.errors.slice(0, 3)) : '');
 } finally { await r.close(); }
