@@ -10,7 +10,10 @@
         borrow = 폴더·이름에 팩 표시(quaternius·kaykit·kenney·polypizza·oga·sketchfab·polyhaven·community·realistic·standin…)
                  또는 그 판 ASSET_LICENSES.md 가 그 폴더를 남의 팩으로 적음
         unknown = 위 둘 다 아님(손으로 본다)
-  쓰임  used   = 파일 이름(확장자 뺀 줄기 포함)이 그 판 js·html·json 이나 shared/js 에 나온다
+  쓰임  used   = 파일 이름(확장자 뺀 줄기 포함)이 그 판 js·html·json 이나 shared/js 에 나온다(use_why `name`)
+                 또는 이어 붙여 부른다 — 줄기 = <앞>[-_]<나머지> 이고 '<앞>-'(따옴표 문자열)과 '<나머지>'(목록 글자)가
+                 둘 다 그 판 코드에 있다(`'character-' + letter`·`'avatar_sample_' + n`, use_why `prefix:<앞>`, K-0142)
+                 또는 `tools/asset-forge/kitbash.py` 레시피 부품 `"file"` 이름(조립 입력, use_why `kitbash`)
         unused = 안 나온다
 이름 대조라 참고용이다 — 지우기 전엔 웹 세션이 한 번 더 확인한다.
 """
@@ -28,6 +31,23 @@ GAMES = ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm']
 PACK = re.compile(r'quaternius|kaykit|kenney|polypizza|poly_pizza|oga_|opengameart|sketchfab|polyhaven|poly_haven|'
                   r'community|realistic|standin|ultimate|universal_base|synty|mixamo', re.I)
 CODE_EXT = {'.js', '.mjs', '.html', '.json', '.css'}
+QUOTED = re.compile(r"""['"]([A-Za-z0-9_.-]+)['"]""")
+
+
+def kitbash_parts():
+    return set(re.findall(r'"file":\s*"([^"]+)"', read(os.path.join('tools', 'asset-forge', 'kitbash.py'))))
+
+
+def use_reason(name, stem, c, lits, kb):
+    """쓰임 이유 — 'name' · 'prefix:<앞>' · 'kitbash' · ''(안 씀)"""
+    if (name in c) or (re.search(r'(?<![A-Za-z0-9_])' + re.escape(stem) + r'(?![A-Za-z0-9])', c) is not None):
+        return 'name'
+    for i, ch in enumerate(stem):
+        if ch in '-_' and 2 <= i < len(stem) - 1 and stem[:i + 1] in lits and stem[i + 1:] in lits:
+            return 'prefix:' + stem[:i + 1]
+    if name in kb:
+        return 'kitbash'
+    return ''
 
 
 def git_files():
@@ -114,6 +134,8 @@ def main():
                                           and os.path.getsize(os.path.join(ROOT, f)) < 16 << 20)
         docs[g] = read(pre + 'assets/ASSET_LICENSES.md')
     sections = {g: split_sections(docs[g]) for g in GAMES}
+    lits = {g: set(QUOTED.findall(code[g])) for g in GAMES}
+    kb = kitbash_parts()
 
     rows = []
     for f in files:
@@ -143,9 +165,9 @@ def main():
             else:
                 src, why = 'borrow', 'doc: ' + head
         c = code[g]
-        used = (name in c) or (re.search(r'(?<![A-Za-z0-9_])' + re.escape(stem) + r'(?![A-Za-z0-9])', c) is not None)
+        uw = use_reason(name, stem, c, lits[g], kb)
         rows.append({'game': g, 'path': f, 'folder': folder, 'src': src, 'why': why,
-                     'used': used, 'md5': h, 'bytes': os.path.getsize(os.path.join(ROOT, f))})
+                     'used': bool(uw), 'use_why': uw, 'md5': h, 'bytes': os.path.getsize(os.path.join(ROOT, f))})
 
     # 모름 → 다른 판의 같은 md5 사본 판정을 물려받는다(다섯 벌 복사라 한 판 문서에만 적힌 일이 많다)
     by_md5 = {}
