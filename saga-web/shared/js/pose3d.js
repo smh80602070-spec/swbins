@@ -182,7 +182,7 @@
       return [ks[1][0] * d.dur, (1 - ks[ks.length - 2][0]) * d.dur];
     },
     /** `on` 이 false→true 되는 순간부터 그 클립 길이만큼 이름을 준다(대화 시작에 인사 한 번 따위). st 는 배우마다 둘 객체, nowS 초 */
-    once: function (st, key, on, nowS, name) {
+    once: function (st, key, on, nowS, name) { var CK = global.DG.clock; if (CK && CK.s) { nowS = CK.s(nowS); }   // W-0316 가짜 시계 앞당김(게임 중 0)
       var o = st._once || (st._once = {});
       if (!on) { delete o[key]; return null; }
       if (o[key] === undefined) { o[key] = nowS; }
@@ -200,7 +200,7 @@
     },
     /** 쉬는 몸 한 줄 — 서 있으면 idle 변주, pose3d.sitAfter(8)초 넘게 가만히 있으면 rest(기본 Pose_sit, 모닥불 곁이면 Pose_warm)로 앉아 쉰다.
      *  still=false(걷기)거나 0.5초 넘게 안 불렸으면(공격·대화 따위가 끼었으면) 처음부터 다시 센다. 쉴 몸짓이 없으면 null(부르는 쪽이 idle) */
-    life: function (st, nowS, still, rest) {
+    life: function (st, nowS, still, rest) { var CK = global.DG.clock; if (CK && CK.s) { nowS = CK.s(nowS); }   // W-0316 가짜 시계 앞당김(게임 중 0)
       var l = st._lf || (st._lf = { since: nowS, last: nowS, dt: 0 }), gap = nowS - l.last;
       /* 끊김 = 평소 호출 간격(프레임)의 3배 넘게 안 불림(최소 0.5초) — 느린 기기(초당 2~5프레임)에서 매 프레임 끊김으로 보면 영영 못 앉는다 */
       if (!still || gap > Math.max(0.5, 3 * l.dt)) { l.since = nowS; }

@@ -1,7 +1,7 @@
 {
- "base": "http://127.0.0.1:13369/",
- "at": "2026-10-18T06:32:59.906Z",
- "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+ "base": "http://127.0.0.1:1439/",
+ "at": "2026-10-18T08:09:23.363Z",
+ "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "runs": [
   {
    "game": "saga-go",
@@ -11,8 +11,8 @@
     {
      "name": "부팅(가입→첫 관문→들어감)",
      "ok": true,
-     "detail": "26590ms ",
-     "ms": 26590,
+     "detail": "14615ms ",
+     "ms": 14615,
      "skip": false,
      "warn": false
     },
@@ -20,22 +20,22 @@
      "name": "위치를 읽을 수 있다",
      "ok": true,
      "detail": "{\"x\":0,\"y\":0}",
-     "ms": 999,
+     "ms": 53,
      "skip": false,
      "warn": false
     },
     {
      "name": "FPS",
      "ok": true,
-     "detail": "3 fps(소프트웨어 — 상대값)",
-     "ms": 5679,
+     "detail": "37 fps(GPU · PC 30 이상 PASS)",
+     "ms": 2536,
      "skip": false,
-     "warn": true
+     "warn": false
     },
     {
      "name": "키 4방향 이동(3/4 이상)",
      "ok": true,
-     "detail": "D○3.2 S○2.4 Left○3.2 Up○3.2",
+     "detail": "D○9.6 S○6.0 Left×0.0 Up○9.7",
      "skip": false
     },
     {
@@ -49,8 +49,8 @@
     {
      "name": "☰ 메뉴 → 첫 칸 창 → 닫기 → 키 이동",
      "ok": true,
-     "detail": "창 열림 · 닫힘 true · D○3.2",
-     "ms": 10398,
+     "detail": "창 열림 · 닫힘 true · D○9.6",
+     "ms": 3816,
      "skip": false,
      "warn": false
     },
@@ -58,23 +58,23 @@
      "name": "HUD 겹침(보이는 고정 요소 쌍)",
      "ok": true,
      "detail": "없음",
-     "ms": 394,
+     "ms": 32,
      "skip": false,
      "warn": false
     },
     {
      "name": "클릭 이동(빈 땅 → 걷기 · 짐승 → 만남)",
      "ok": true,
-     "detail": "걷기 4.8 @640,302",
-     "ms": 5769,
+     "detail": "걷기 15.1 @640,302",
+     "ms": 2839,
      "skip": false,
      "warn": false
     },
     {
      "name": "새로 고침 → 이어하기 → 들어감",
      "ok": true,
-     "detail": "{\"x\":3.1999961193106787,\"y\":-6.399999999998656}",
-     "ms": 23468,
+     "detail": "{\"x\":19.199404756047358,\"y\":-18.805598726675715}",
+     "ms": 7548,
      "skip": false,
      "warn": false
     },
@@ -85,9 +85,7 @@
     }
    ],
    "fails": [],
-   "warns": [
-    "FPS"
-   ],
+   "warns": [],
    "shots": [
     "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-go-pc-0.png",
     "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-go-pc-menu.png",
@@ -102,8 +100,8 @@
     {
      "name": "부팅(가입→첫 관문→들어감)",
      "ok": true,
-     "detail": "14700ms ",
-     "ms": 14701,
+     "detail": "10431ms ",
+     "ms": 10431,
      "skip": false,
      "warn": false
     },
@@ -111,37 +109,37 @@
      "name": "위치를 읽을 수 있다",
      "ok": true,
      "detail": "{\"x\":0,\"y\":0}",
-     "ms": 224,
+     "ms": 3,
      "skip": false,
      "warn": false
     },
     {
      "name": "FPS",
      "ok": true,
-     "detail": "10 fps(소프트웨어 — 상대값)",
-     "ms": 2838,
+     "detail": "44 fps(GPU · 폰 흉내 — 숫자만)",
+     "ms": 2581,
      "skip": false,
      "warn": false
     },
     {
      "name": "키 4방향 이동(3/4 이상)",
      "ok": true,
-     "detail": "D○8.0 S○5.6 Left○7.2 Up○8.8",
+     "detail": "D○9.6 S○6.0 Left×0.0 Up○9.7",
      "skip": false
     },
     {
      "name": "터치 이동(joy:#gjoy)",
      "ok": true,
-     "detail": "이동 39.1 @73,635",
-     "ms": 6017,
+     "detail": "이동 41.9 @73,635",
+     "ms": 3130,
      "skip": false,
      "warn": false
     },
     {
      "name": "☰ 메뉴 → 첫 칸 창 → 닫기 → 키 이동",
      "ok": true,
-     "detail": "창 열림 · 닫힘 true · D○8.0",
-     "ms": 5210,
+     "detail": "창 열림 · 닫힘 true · D○9.7",
+     "ms": 3670,
      "skip": false,
      "warn": false
     },
@@ -149,23 +147,23 @@
      "name": "HUD 겹침(보이는 고정 요소 쌍)",
      "ok": true,
      "detail": "없음",
-     "ms": 87,
+     "ms": 26,
      "skip": false,
      "warn": false
     },
     {
      "name": "클릭 이동(빈 땅 → 걷기 · 짐승 → 만남)",
      "ok": true,
-     "detail": "걷기 18.5 @195,354",
-     "ms": 3433,
+     "detail": "걷기 10.7 @195,354",
+     "ms": 2848,
      "skip": false,
      "warn": false
     },
     {
      "name": "새로 고침 → 이어하기 → 들어감",
      "ok": true,
-     "detail": "{\"x\":45.80127780024007,\"y\":-35.17023086437696}",
-     "ms": 9891,
+     "detail": "{\"x\":58.59739805811567,\"y\":-29.12841036251553}",
+     "ms": 7269,
      "skip": false,
      "warn": false
     },

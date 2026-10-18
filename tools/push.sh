@@ -113,5 +113,10 @@ for n in 2 3 4; do   # 세션 여럿이 연달아 올리면 한 번으로 모자
 done
 [ $r -ne 0 ] && { say "푸시 못 함(위 사유). 로컬 커밋은 그대로 있다"; exit 1; }
 say "푸시: $(git -C "$W" log --oneline -1 HEAD | cut -c1-70)"
+# W-0317 ⑨ — 웹 판을 올렸으면 5분 뒤 공개 주소 배포 확인을 분리 실행(셸이 끝나도 돈다) → tools/_out/deploy-last.json·md, 다음 qc 의 "배포(푸시 뒤)" 줄. PUSH_NO_DEPLOY=1 이면 안 띄움
+if [ -z "${PUSH_NO_DEPLOY:-}" ] && for c in "${mine[@]}"; do git diff-tree --no-commit-id --name-only -r "$c"; done 2>/dev/null | grep -q '^saga-web/saga-'; then
+  nohup node tools/qc.mjs --branch web --deploy-later >/dev/null 2>&1 &
+  disown 2>/dev/null; say "배포 재확인 5분 뒤(분리 실행) → tools/_out/deploy-last.md"
+fi
 cleanup
 PUSHED="${mine[*]}" align --trusted   # 방금 내 커밋을 전부 올렸다(또는 이미 있어 건너뜀) — 그 커밋들 때문에 맞추기를 거절하지 않는다

@@ -636,12 +636,12 @@
      GLB(진짜 모델)에는 안 쓴다 — trunk/leaf 조각이 안 갈려 있어 뿌리까지 흔들리면
      어색하고, 색으로 캐시하는 `prop3d.matCache` 를 건드리면 우연히 같은 색인
      다른 사물까지 흔들릴 수 있다(LOD 밖의 도형 나무·풀만 흔든다) */
-  var swayShaders = [], swayClock = 0;
+  var swayShaders = [], swayClock = 0, pressVec = [];   // 풀 눕힘 자리(래그돌·돌 둘레, W-0310 ③) — 비어 있으면 r=0 이라 아무것도 안 한다
   function swayify(m) {
     m.onBeforeCompile = function (shader) {
       shader.uniforms.uSwTime = { value: swayClock };
-      shader.uniforms.uSwAmt = { value: SWAY_AMT() };
-      shader.vertexShader = 'uniform float uSwTime;\nuniform float uSwAmt;\n' +
+      shader.uniforms.uSwAmt = { value: SWAY_AMT() }; if (!pressVec.length) { for (var pvI = 0; pvI < 8; pvI++) { pressVec.push(new T.Vector4(0, 0, 0, 0)); } } shader.uniforms.uPress = { value: pressVec };   // W-0310 ③ 풀 눕힘 자리 여덟(DG.press3d) — Vector4 는 처음 쓸 때(파일 로드 때 THREE 가 없을 수 있다)
+      shader.vertexShader = 'uniform float uSwTime;\nuniform float uSwAmt;\nuniform vec4 uPress[8];\n' +
         shader.vertexShader.replace('#include <begin_vertex>',
           '#include <begin_vertex>\n' +
           '#ifdef USE_INSTANCING\n' +
@@ -651,7 +651,7 @@
           '#endif\n' +
           '  float swLift = (transformed.y + 0.5) * uSwAmt;\n' +
           '  transformed.x += sin(uSwTime * 1.6 + swPhase) * swLift;\n' +
-          '  transformed.z += cos(uSwTime * 1.3 + swPhase) * swLift * 0.6;\n');
+          '  transformed.z += cos(uSwTime * 1.3 + swPhase) * swLift * 0.6;\n' + '#ifdef USE_INSTANCING\n  vec3 swW = (modelMatrix * instanceMatrix * vec4(transformed, 1.0)).xyz;\n#else\n  vec3 swW = (modelMatrix * vec4(transformed, 1.0)).xyz;\n#endif\n' + '  for (int pi = 0; pi < 8; pi++) { if (uPress[pi].w > 0.0) { vec2 pd = swW.xz - uPress[pi].xz; float pk = clamp(1.0 - length(pd) / uPress[pi].w, 0.0, 1.0) * clamp(transformed.y + 0.5, 0.0, 1.5); transformed.xz += normalize(pd + vec2(0.001, 0.0)) * pk * 0.45; transformed.y -= pk * 0.4; } }\n');
       swayShaders.push(shader);
     };
     /* 흔들리는 것과 안 흔들리는 재질은 **다른 프로그램**이다 — 캐시 키를 안 가르면
@@ -1288,7 +1288,7 @@
     if (!SWAY_ON() || !swayShaders.length || swayBroken) { return; }
     try {
       swayClock += dt;
-      var amt = SWAY_AMT(), i;
+      var amt = SWAY_AMT(), i, PR = global.DG.press3d; if (PR && pressVec.length) { for (i = 0; i < 8; i++) { pressVec[i].set(PR.arr[i * 4], PR.arr[i * 4 + 1], PR.arr[i * 4 + 2], i < PR.n ? PR.arr[i * 4 + 3] : 0); } }   // 풀 눕힘 자리(W-0310 ③)
       for (i = 0; i < swayShaders.length; i++) {
         swayShaders[i].uniforms.uSwTime.value = swayClock;
         swayShaders[i].uniforms.uSwAmt.value = amt;

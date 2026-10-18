@@ -93,6 +93,7 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/toon3d-core.js"></script>
 <script src="js/toon3d.js"></script>
 <script src="js/anim-own.js"></script>
+<script src="js/clock.js"></script>
 <script src="js/pose3d.js"></script>
 <script src="js/vroid-variant.js"></script>
 <script src="js/asset3d.js"></script>
@@ -967,6 +968,13 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       var s5 = new TH.Skeleton([b0, b1], inv(1)); s5.calculateInverses = function () {}; m5.bind(s5);
       var ok = m1.skeleton === m2.skeleton && m3.skeleton !== m1.skeleton && m4.skeleton !== m1.skeleton && m5.skeleton === s5;
       return ok && '같은 뼈·역바인드 → 한 뼈대 · 다른 역바인드·손잡이 끔·바인드 행렬 없음 → 따로' || ('실패 ' + [m1.skeleton === m2.skeleton, m3.skeleton !== m1.skeleton, m4.skeleton !== m1.skeleton, m5.skeleton === s5].join(','));
+    });
+    t('가짜 시계 W-0316 — autoq 는 시각을 읽지 않고 프레임 간격을 받는다: 10fps 프레임을 3.2초 흘리면 한 단계 내리고, downs() 가 그 단계를 보인다(QC "자동 품질" 줄이 읽는 값)', function () {
+      var A = DG.autoq, q = A.make('w0316clock'), i, hit = -1;
+      if (!A.downs) { return false; }
+      for (i = 0; i < 32; i++) { if (q.note(0.1, true) && hit < 0) { hit = i; } }
+      var d = A.downs().w0316clock;
+      return d === 1 && hit >= 28 && hit <= 31 && q.lower('high') === 'medium' && ('프레임 ' + (hit + 1) + '번째(' + ((hit + 1) * 0.1).toFixed(1) + '초)에 한 단계 · downs ' + d);
     });
     t('자동 품질 FPS 내리기 — "자동"이면 3초 평균 FPS 가 26 아래일 때 한 단계(high→medium→low) 내리고, 내린 직후 한 창은 쉬며, 다시 올리지 않고, 사람이 고른 품질(auto 아님)이면 세지 않는다 (W-0302)', function () {
       var A = DG.autoq, q = A.make('w0302probe'), seq = [], i, k;
