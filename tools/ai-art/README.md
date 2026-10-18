@@ -9,6 +9,22 @@ py tools/ai-art/gen.py tools/ai-art/batches/<배치>.json                # 한 �
 powershell -ExecutionPolicy Bypass -File tools\ai-art\stop_sd.ps1      # 끝나면 반드시 끈다(VRAM·RAM 반환, 이 도구가 켠 프로세스만)
 ```
 
+## 원격 GPU(Kaggle) — K-0140 (2026-10-18)
+
+로컬 AMD 8GB 사슬(장당 84~112초)이 막힐 때 같은 배치를 Kaggle 무료 GPU(T4 ×2)로 돌린다. 결과는 로컬과 같은 `_out/<배치 out>/`.
+
+```bash
+bash tools/ai-art/run_all.sh --remote tools/ai-art/batches/<배치>.json tools/ai-art/_out/<상태>.st     # 배치 하나
+py tools/ai-art/remote/push_batch.py <배치1>.json <배치2>.json --state <상태>                       # 여럿 한 번에
+py tools/ai-art/remote/push_batch.py <배치>.json --no-push --state <상태>                            # 끊긴 뒤 받기만
+```
+
+- **같은 그림**: 이 PC 와 같은 ComfyUI 커밋·GGUF 커밋 + 이 PC 의 saga 고친 GGUF `ops.py` + `saga_seamless.py` 를 싣고, 모델은 HF 에서 **로컬 파일과 바이트 크기가 같은 것만** 받아 **같은 gen.py** 로(그래프·씨앗·license 같음, license 에 `remote` 칸).
+- **멱등**: 로컬에 다 있는 항목은 안 올리고, 받을 때 없는 그림만 놓는다. img2img 출처 칸은 이 PC 경로로 다시 쓴다.
+- 판정·고르기·포장은 그대로 로컬(`judge.sh` 는 `CUDA_VISIBLE_DEVICES= HIP_VISIBLE_DEVICES=-1` 이면 CPU — 사슬 중에도).
+- 실측(10-18): 설치 30초·모델 40초 · SDXL txt2img 26초/장 · img2img 28초/장(T4 한 장) · 80/80 ok.
+- 함정: Kaggle 이 QUEUED 로 수십 분~한 시간 세워 둘 때 있음 · 무료 GPU 주 30h(사용자 계정) · 토큰은 `%USERPROFILE%\.kaggle`(커밋 금지) · 같은 배치를 로컬 사슬과 동시에 돌리면 헛일(파일은 안 겹침 — 있는 그림은 서로 건너뜀).
+
 ## ComfyUI 이사 (2026-10-07, 사용자 "용량 대비 위력" 지적)
 A1111 1.10.1(2025-02 멈춤) → **ComfyUI**(Windows ROCm 공식, 포트 8188). `gen.py` 는 배치 JSON 형식을 그대로 받고 뒤에서 ComfyUI 그래프(`/prompt`→`/history`→`/view`)를 짠다.
 - 모델 두 계열: **`z-image-turbo`**(Apache-2.0, GGUF Q6_K, 8단계·CFG 1 고정, 부정 프롬프트 없음, **문장형** 프롬프트 — 범용·사실풍·글자·초상 밑그림) /
