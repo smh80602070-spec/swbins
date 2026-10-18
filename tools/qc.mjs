@@ -145,6 +145,19 @@ async function checkShots() {
       for (const s of (j.scenes || [])) { if (s.file) eyes.push({ game: s.game, what: '3D ' + s.key + ' ' + (s.title || ''), file: path.relative(ROOT, path.join(PLAY, s.file)) }); }
     } else row('3D 장면', v3.map(nm).join('·'), 'FAIL', 'pw-visual-close 결과 없음 ' + (r.out.trim().split('\n').pop() || ''), r.sec);
   }
+  /* W-0316 몸짓 판정 — 1만리 내 몸(실제 VRoid)에 자세 열둘을 걸어 판정 시점에 멈추고 뼈로 기대 범위를 본다(pose3d.check) + 모음판 눈 판정 */
+  if (games.includes('saga-go')) {
+    const r = run(process.execPath, ['pose-shot.mjs', 'qcpose'], { cwd: PLAY, env, timeout: 10 * 60 * 1000 });
+    const j = readJson(path.join(PLAY, 'results', 'pose-shot.json'), null);
+    if (!j || !j.poses || !j.poses.length) { row('몸짓 판정', nm('saga-go'), 'FAIL', 'pose-shot 결과 없음 ' + (j && j.err || r.out.trim().split('\n').pop() || ''), r.sec); }
+    else {
+      const bad = j.poses.filter((x) => !x.ok);
+      row('몸짓 판정', nm('saga-go'), bad.length ? 'FAIL' : 'PASS', bad.length ? '× ' + bad.map((x) => x.pose + '(' + x.bad.join('/') + ')').join(' | ') : j.poses.length + '자세 기대 범위 안(실제 몸 뼈)', r.sec);
+      run(process.execPath, ['pose-sheet.mjs', 'qcpose'], { cwd: PLAY, timeout: 2 * 60 * 1000 });
+      const sheet = path.join(PLAY, 'shots', 'qcpose_sheet.jpg');
+      if (fs.existsSync(sheet)) { eyes.push({ game: 'saga-go', what: '몸짓 모음판(자세 열둘 — 팔·다리가 자세 이름대로인가)', file: path.relative(ROOT, sheet) }); }
+    }
+  }
   if (games.includes('saga-realm')) {
     const r = run(process.execPath, ['pw-rk-sheet.mjs'], { cwd: PLAY, env, timeout: 15 * 60 * 1000 });
     const j = readJson(path.join(PLAY, 'results', 'pw-rk-sheet.json'), null);

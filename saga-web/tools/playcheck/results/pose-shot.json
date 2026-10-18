@@ -1,0 +1,688 @@
+{
+ "at": "2026-10-18T07:57:36.536Z",
+ "tag": "qcpose",
+ "shots": [
+  {
+   "pose": "Pose_sit",
+   "path": "shots/qcpose_Pose_sit.jpg",
+   "u": {
+    "anim": "Pose_sit",
+    "clip": "Pose_sit",
+    "own": true
+   },
+   "judged": {
+    "ok": true,
+    "bad": [],
+    "r": {
+     "hips": {
+      "up": 0.169,
+      "fwd": 0,
+      "side": 0
+     },
+     "head": {
+      "up": 0.523,
+      "fwd": -0.05,
+      "side": 0.004
+     },
+     "rhand": {
+      "up": 0.347,
+      "fwd": 0.207,
+      "side": -0.204
+     },
+     "lhand": {
+      "up": 0.343,
+      "fwd": 0.207,
+      "side": 0.207
+     },
+     "dRH": 0.374
+    }
+   }
+  },
+  {
+   "pose": "Pose_warm",
+   "path": "shots/qcpose_Pose_warm.jpg",
+   "u": {
+    "anim": "Pose_warm",
+    "clip": "Pose_warm",
+    "own": true
+   },
+   "judged": {
+    "ok": true,
+    "bad": [],
+    "r": {
+     "hips": {
+      "up": 0.33,
+      "fwd": 0,
+      "side": 0
+     },
+     "head": {
+      "up": 0.669,
+      "fwd": 0.126,
+      "side": 0.008
+     },
+     "rhand": {
+      "up": 0.443,
+      "fwd": 0.282,
+      "side": -0.233
+     },
+     "lhand": {
+      "up": 0.429,
+      "fwd": 0.281,
+      "side": 0.237
+     },
+     "dRH": 0.365
+    }
+   }
+  },
+  {
+   "pose": "Pose_pick",
+   "path": "shots/qcpose_Pose_pick.jpg",
+   "u": {
+    "anim": "Pose_pick",
+    "clip": "Pose_pick",
+    "own": true
+   },
+   "judged": {
+    "ok": true,
+    "bad": [],
+    "r": {
+     "hips": {
+      "up": 0.519,
+      "fwd": 0,
+      "side": 0
+     },
+     "head": {
+      "up": 0.73,
+      "fwd": 0.277,
+      "side": 0
+     },
+     "rhand": {
+      "up": 0.423,
+      "fwd": 0.257,
+      "side": -0.194
+     },
+     "lhand": {
+      "up": 0.439,
+      "fwd": 0.075,
+      "side": 0.176
+     },
+     "dRH": 0.364
+    }
+   }
+  },
+  {
+   "pose": "Pose_lean",
+   "path": "shots/qcpose_Pose_lean.jpg",
+   "u": {
+    "anim": "Pose_lean",
+    "clip": "Pose_lean",
+    "own": true
+   },
+   "judged": {
+    "ok": true,
+    "bad": [],
+    "r": {
+     "hips": {
+      "up": 0.634,
+      "fwd": 0,
+      "side": 0
+     },
+     "head": {
+      "up": 0.993,
+      "fwd": -0.019,
+      "side": 0.008
+     },
+     "rhand": {
+      "up": 0.857,
+      "fwd": 0.163,
+      "side": -0.14
+     },
+     "lhand": {
+      "up": 0.837,
+      "fwd": 0.161,
+      "side": 0.148
+     },
+     "dRH": 0.271
+    }
+   }
+  },
+  {
+   "pose": "Pose_heavy",
+   "path": "shots/qcpose_Pose_heavy.jpg",
+   "u": {
+    "anim": "Pose_heavy",
+    "clip": "Pose_heavy",
+    "own": true
+   },
+   "judged": {
+    "ok": true,
+    "bad": [],
+    "r": {
+     "hips": {
+      "up": 0.587,
+      "fwd": 0,
+      "side": 0
+     },
+     "head": {
+      "up": 0.895,
+      "fwd": 0.185,
+      "side": 0
+     },
+     "rhand": {
+      "up": 0.658,
+      "fwd": 0.322,
+      "side": -0.244
+     },
+     "lhand": {
+      "up": 0.658,
+      "fwd": 0.322,
+      "side": 0.244
+     },
+     "dRH": 0.366
+    }
+   }
+  },
+  {
+   "pose": "Pose_cast",
+   "path": "shots/qcpose_Pose_cast.jpg",
+   "u": {
+    "anim": "Pose_cast",
+    "clip": "Pose_cast",
+    "own": true
+   },
+   "judged": {
+    "ok": true,
+    "bad": [],
+    "r": {
+     "hips": {
+      "up": 0.62,
+      "fwd": 0,
+      "side": 0
+     },
+     "head": {
+      "up": 0.98,
+      "fwd": 0.027,
+      "side": 0
+     },
+     "rhand": {
+      "up": 0.918,
+      "fwd": 0.218,
+      "side": -0.268
+     },
+     "lhand": {
+      "up": 0.918,
+      "fwd": 0.218,
+      "side": 0.268
+     },
+     "dRH": 0.335
+    }
+   }
+  },
+  {
+   "pose": "Pose_block",
+   "path": "shots/qcpose_Pose_block.jpg",
+   "u": {
+    "anim": "Pose_block",
+    "clip": "Pose_block",
+    "own": true
+   },
+   "judged": {
+    "ok": true,
+    "bad": [],
+    "r": {
+     "hips": {
+      "up": 0.619,
+      "fwd": 0,
+      "side": 0
+     },
+     "head": {
+      "up": 0.977,
+      "fwd": 0.054,
+      "side": 0
+     },
+     "rhand": {
+      "up": 0.661,
+      "fwd": 0.075,
+      "side": -0.162
+     },
+     "lhand": {
+      "up": 0.929,
+      "fwd": 0.166,
+      "side": 0.149
+     },
+     "dRH": 0.356
+    }
+   }
+  },
+  {
+   "pose": "Pose_wave",
+   "path": "shots/qcpose_Pose_wave.jpg",
+   "u": {
+    "anim": "Pose_wave",
+    "clip": "Pose_wave",
+    "own": true
+   },
+   "judged": {
+    "ok": true,
+    "bad": [],
+    "r": {
+     "hips": {
+      "up": 0.642,
+      "fwd": 0,
+      "side": 0
+     },
+     "head": {
+      "up": 1.001,
+      "fwd": -0.019,
+      "side": 0.008
+     },
+     "rhand": {
+      "up": 1.143,
+      "fwd": 0.036,
+      "side": -0.216
+     },
+     "lhand": {
+      "up": 0.608,
+      "fwd": 0.029,
+      "side": 0.162
+     },
+     "dRH": 0.271
+    }
+   }
+  },
+  {
+   "pose": "Pose_fish",
+   "path": "shots/qcpose_Pose_fish.jpg",
+   "u": {
+    "anim": "Pose_fish",
+    "clip": "Pose_fish",
+    "own": true
+   },
+   "judged": {
+    "ok": true,
+    "bad": [],
+    "r": {
+     "hips": {
+      "up": 0.638,
+      "fwd": 0,
+      "side": 0
+     },
+     "head": {
+      "up": 0.998,
+      "fwd": 0.015,
+      "side": 0
+     },
+     "rhand": {
+      "up": 0.842,
+      "fwd": 0.222,
+      "side": -0.196
+     },
+     "lhand": {
+      "up": 0.894,
+      "fwd": 0.216,
+      "side": 0.193
+     },
+     "dRH": 0.324
+    }
+   }
+  },
+  {
+   "pose": "Pose_idle_scratch",
+   "path": "shots/qcpose_Pose_idle_scratch.jpg",
+   "u": {
+    "anim": "Pose_idle_scratch",
+    "clip": "Pose_idle_scratch",
+    "own": true
+   },
+   "judged": {
+    "ok": true,
+    "bad": [],
+    "r": {
+     "hips": {
+      "up": 0.642,
+      "fwd": 0,
+      "side": 0
+     },
+     "head": {
+      "up": 1.001,
+      "fwd": -0.019,
+      "side": 0
+     },
+     "rhand": {
+      "up": 1.076,
+      "fwd": -0.012,
+      "side": -0.062
+     },
+     "lhand": {
+      "up": 0.614,
+      "fwd": 0.029,
+      "side": 0.167
+     },
+     "dRH": 0.098
+    }
+   }
+  },
+  {
+   "pose": "walk",
+   "path": "shots/qcpose_walk.jpg",
+   "u": {
+    "anim": "walk",
+    "clip": "Walk_Loop",
+    "own": true
+   },
+   "judged": null
+  },
+  {
+   "pose": "run",
+   "path": "shots/qcpose_run.jpg",
+   "u": {
+    "anim": "run",
+    "clip": "Run_Loop",
+    "own": true
+   },
+   "judged": null
+  }
+ ],
+ "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "rest": {
+  "H": 0.8872238649947071,
+  "fs": 1
+ },
+ "errors": [
+  "console.error Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "console.error Failed to load resource: the server responded with a status of 404 (Not Found)"
+ ],
+ "poses": [
+  {
+   "pose": "Pose_sit",
+   "ok": true,
+   "bad": [],
+   "r": {
+    "hips": {
+     "up": 0.169,
+     "fwd": 0,
+     "side": 0
+    },
+    "head": {
+     "up": 0.523,
+     "fwd": -0.05,
+     "side": 0.004
+    },
+    "rhand": {
+     "up": 0.347,
+     "fwd": 0.207,
+     "side": -0.204
+    },
+    "lhand": {
+     "up": 0.343,
+     "fwd": 0.207,
+     "side": 0.207
+    },
+    "dRH": 0.374
+   },
+   "clip": "Pose_sit"
+  },
+  {
+   "pose": "Pose_warm",
+   "ok": true,
+   "bad": [],
+   "r": {
+    "hips": {
+     "up": 0.33,
+     "fwd": 0,
+     "side": 0
+    },
+    "head": {
+     "up": 0.669,
+     "fwd": 0.126,
+     "side": 0.008
+    },
+    "rhand": {
+     "up": 0.443,
+     "fwd": 0.282,
+     "side": -0.233
+    },
+    "lhand": {
+     "up": 0.429,
+     "fwd": 0.281,
+     "side": 0.237
+    },
+    "dRH": 0.365
+   },
+   "clip": "Pose_warm"
+  },
+  {
+   "pose": "Pose_pick",
+   "ok": true,
+   "bad": [],
+   "r": {
+    "hips": {
+     "up": 0.519,
+     "fwd": 0,
+     "side": 0
+    },
+    "head": {
+     "up": 0.73,
+     "fwd": 0.277,
+     "side": 0
+    },
+    "rhand": {
+     "up": 0.423,
+     "fwd": 0.257,
+     "side": -0.194
+    },
+    "lhand": {
+     "up": 0.439,
+     "fwd": 0.075,
+     "side": 0.176
+    },
+    "dRH": 0.364
+   },
+   "clip": "Pose_pick"
+  },
+  {
+   "pose": "Pose_lean",
+   "ok": true,
+   "bad": [],
+   "r": {
+    "hips": {
+     "up": 0.634,
+     "fwd": 0,
+     "side": 0
+    },
+    "head": {
+     "up": 0.993,
+     "fwd": -0.019,
+     "side": 0.008
+    },
+    "rhand": {
+     "up": 0.857,
+     "fwd": 0.163,
+     "side": -0.14
+    },
+    "lhand": {
+     "up": 0.837,
+     "fwd": 0.161,
+     "side": 0.148
+    },
+    "dRH": 0.271
+   },
+   "clip": "Pose_lean"
+  },
+  {
+   "pose": "Pose_heavy",
+   "ok": true,
+   "bad": [],
+   "r": {
+    "hips": {
+     "up": 0.587,
+     "fwd": 0,
+     "side": 0
+    },
+    "head": {
+     "up": 0.895,
+     "fwd": 0.185,
+     "side": 0
+    },
+    "rhand": {
+     "up": 0.658,
+     "fwd": 0.322,
+     "side": -0.244
+    },
+    "lhand": {
+     "up": 0.658,
+     "fwd": 0.322,
+     "side": 0.244
+    },
+    "dRH": 0.366
+   },
+   "clip": "Pose_heavy"
+  },
+  {
+   "pose": "Pose_cast",
+   "ok": true,
+   "bad": [],
+   "r": {
+    "hips": {
+     "up": 0.62,
+     "fwd": 0,
+     "side": 0
+    },
+    "head": {
+     "up": 0.98,
+     "fwd": 0.027,
+     "side": 0
+    },
+    "rhand": {
+     "up": 0.918,
+     "fwd": 0.218,
+     "side": -0.268
+    },
+    "lhand": {
+     "up": 0.918,
+     "fwd": 0.218,
+     "side": 0.268
+    },
+    "dRH": 0.335
+   },
+   "clip": "Pose_cast"
+  },
+  {
+   "pose": "Pose_block",
+   "ok": true,
+   "bad": [],
+   "r": {
+    "hips": {
+     "up": 0.619,
+     "fwd": 0,
+     "side": 0
+    },
+    "head": {
+     "up": 0.977,
+     "fwd": 0.054,
+     "side": 0
+    },
+    "rhand": {
+     "up": 0.661,
+     "fwd": 0.075,
+     "side": -0.162
+    },
+    "lhand": {
+     "up": 0.929,
+     "fwd": 0.166,
+     "side": 0.149
+    },
+    "dRH": 0.356
+   },
+   "clip": "Pose_block"
+  },
+  {
+   "pose": "Pose_wave",
+   "ok": true,
+   "bad": [],
+   "r": {
+    "hips": {
+     "up": 0.642,
+     "fwd": 0,
+     "side": 0
+    },
+    "head": {
+     "up": 1.001,
+     "fwd": -0.019,
+     "side": 0.008
+    },
+    "rhand": {
+     "up": 1.143,
+     "fwd": 0.036,
+     "side": -0.216
+    },
+    "lhand": {
+     "up": 0.608,
+     "fwd": 0.029,
+     "side": 0.162
+    },
+    "dRH": 0.271
+   },
+   "clip": "Pose_wave"
+  },
+  {
+   "pose": "Pose_fish",
+   "ok": true,
+   "bad": [],
+   "r": {
+    "hips": {
+     "up": 0.638,
+     "fwd": 0,
+     "side": 0
+    },
+    "head": {
+     "up": 0.998,
+     "fwd": 0.015,
+     "side": 0
+    },
+    "rhand": {
+     "up": 0.842,
+     "fwd": 0.222,
+     "side": -0.196
+    },
+    "lhand": {
+     "up": 0.894,
+     "fwd": 0.216,
+     "side": 0.193
+    },
+    "dRH": 0.324
+   },
+   "clip": "Pose_fish"
+  },
+  {
+   "pose": "Pose_idle_scratch",
+   "ok": true,
+   "bad": [],
+   "r": {
+    "hips": {
+     "up": 0.642,
+     "fwd": 0,
+     "side": 0
+    },
+    "head": {
+     "up": 1.001,
+     "fwd": -0.019,
+     "side": 0
+    },
+    "rhand": {
+     "up": 1.076,
+     "fwd": -0.012,
+     "side": -0.062
+    },
+    "lhand": {
+     "up": 0.614,
+     "fwd": 0.029,
+     "side": 0.167
+    },
+    "dRH": 0.098
+   },
+   "clip": "Pose_idle_scratch"
+  }
+ ],
+ "fail": 0
+}

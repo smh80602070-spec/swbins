@@ -9281,6 +9281,18 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       if (lowest < -0.045) { bad.push('땅 아래 ' + lowN + ' ' + (lowest * 100).toFixed(1) + 'cm'); }
       return !bad.length && ('앉기 엉덩이 ' + up(at('Pose_sit', 0.5), B.hips).toFixed(2) + 'm(선 키 ' + stand.toFixed(2) + ') · 줍기 손 ' + up(P1, B.rhand).toFixed(2) + '→' + up(P2, B.rhand).toFixed(2) + 'm · 가장 낮은 관절 ' + (lowest * 100).toFixed(1) + 'cm') || bad.join(' · ');
     });
+    t('pose3d 몸 기준 기대 범위 W-0316 — 자세 열둘을 판정 시점에서 재 손·엉덩이가 있어야 할 곳(인사 손은 머리 위·몸 옆·앞으로 안 뻗음, 머리 긁기 손은 머리에 닿음 …)', function () {
+      var OA = DG.ownAnim, P3 = DG.pose3d, rig = OA.refRig(), B = OA.BONES, m = OA.math, fr = rig.frame, by = {}, bad = [], n = 0;
+      if (!P3.check || !P3.EXPECT) { return false; }
+      OA.clipData(rig, P3.NAMES).forEach(function (c) { by[c.name] = c; });
+      var side = m.vcross(fr.u, fr.f), Ws = OA.worldFrom(rig, OA.localQuats(rig, OA.BASE)), H = m.vdot(Ws[B.head].p, fr.u) - rig.rest.minUp;
+      var rOf = function (W) { var o = {}; ['hips', 'head', 'rhand', 'lhand'].forEach(function (k) { var p = W[B[k]].p, d = m.vsub(p, W[B.hips].p); o[k] = { up: (m.vdot(p, fr.u) - rig.rest.minUp) / H, fwd: m.vdot(d, fr.f) / H, side: m.vdot(d, side) / H }; }); o.dRH = m.vlen(m.vsub(W[B.rhand].p, W[B.head].p)) / H; return o; };
+      Object.keys(P3.EXPECT).forEach(function (nm) { var c = by[nm]; if (!c) { bad.push(nm + ' 클립 없음'); return; } var r = rOf(OA.fkAt(rig, c, c.duration * P3.EXPECT[nm].at)), k = P3.check(nm, r); n++; if (!k.ok) { bad.push(nm + ' ' + k.bad.join('/')); } });
+      /* 거꾸로 — 인사 팔을 앞으로 뻗은 가짜 값은 걸려야 한다 */
+      var fake = P3.check('Pose_wave', { hips: { up: 0.67, fwd: 0, side: 0 }, head: { up: 1, fwd: 0, side: 0 }, rhand: { up: 1.1, fwd: 0.45, side: -0.1 }, lhand: { up: 0.6, fwd: 0, side: 0.14 }, dRH: 0.5 });
+      if (fake.ok) { bad.push('앞으로 뻗은 인사를 못 거름'); }
+      return !bad.length && (n + '자세 기대 범위 안 · 앞으로 뻗은 인사는 걸림(' + fake.bad.join('/') + ')') || bad.join(' · ');
+    });
     t('pose3d 자연스러움 — 걷기 발 미끄러짐 ≤ 2cm/걸음·달리기 ≤ 2cm(디딘 발 접지점이 몸 속도로 뒤로) · 전환 블렌드 0.15~0.3초(무기만 0.08) · idle 변주는 쉴 때 3~5초마다 하나 돌고 끝나면 쉬며 걸으면 끊긴다 · once 는 시작 때 한 번 (W-0303)', function () {
       var OA = DG.ownAnim, P3 = DG.pose3d, rig = OA.refRig(), bad = [];
       var w = OA.footSlip(rig, 'Walk_Loop', 1.0), r = OA.footSlip(rig, 'Run_Loop', 3.0);
