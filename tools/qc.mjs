@@ -190,10 +190,11 @@ async function checkBudget() {
   if (has('--budget')) { const b = await serve(); run(process.execPath, ['pw-phone-budget.mjs', ...games, '--gpu', '--runs=1', '--base', b], { cwd: PLAY, timeout: 60 * 60 * 1000 }); }
   const j = readJson(path.join(PLAY, 'results', 'pw-phone-budget.json'), null);
   if (!j) { row('폰 예산', games.map(nm).join('·'), 'WARN', '측정 없음 — node saga-web/tools/playcheck/pw-phone-budget.mjs --gpu'); return; }
-  const age = (Date.now() - Date.parse(j.at)) / 86400000, B = j.budget || {};
+  const B = j.budget || {};
   for (const g of games) {
     const x = (j.runs || []).find((q) => q.game === g);
     if (!x) { row('폰 예산', nm(g), 'WARN', '그 판 측정 없음'); continue; }
+    const age = (Date.now() - Date.parse(x.at || j.at)) / 86400000;   // 판마다 잰 때(합쳐 쓰기)
     const sc = (x.scenes || []).map((q) => q.name + ' ' + q.fps + 'fps·그리기 ' + q.calls).join(' · ');
     row('폰 예산', nm(g), x.over && x.over.length || age > 7 ? 'WARN' : 'PASS', '첫 화면 ' + x.firstMB + 'MB/' + B.mb + ' · ' + sc + (x.over && x.over.length ? ' · 넘음 ' + x.over.join(', ') : '') + (age > 7 ? ' · 측정 ' + Math.round(age) + '일 묵음' : '') + (j.gpu ? '' : ' · swiftshader(FPS 상대값)'));
   }

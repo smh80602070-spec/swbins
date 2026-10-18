@@ -115,7 +115,12 @@ try {
 } finally { await browser.close(); }
 const gpuName = out[0] && out[0].scenes[0] && out[0].scenes[0].gpu;
 fs.mkdirSync(path.join(HERE, 'results'), { recursive: true });
-fs.writeFileSync(path.join(HERE, 'results', 'pw-phone-budget.json'), JSON.stringify({ at: new Date().toISOString(), base: BASE, gpu: GPU, gpuName, budget: BUDGET, cpuThrottle: THROTTLE, viewport: '390x844@2', runs: out }, null, 1));
+/* 판 몇 개만 다시 재도 다른 판 결과는 남긴다(합쳐 쓰기) — 판마다 그 판을 잰 때(at)를 붙인다 */
+const RES = path.join(HERE, 'results', 'pw-phone-budget.json'), now = new Date().toISOString();
+let prev = []; try { prev = JSON.parse(fs.readFileSync(RES, 'utf8')).runs || []; } catch (e) { /* 처음 */ }
+out.forEach((r) => { r.at = now; r.gpu = GPU; r.cpuThrottle = THROTTLE; });
+const merged = prev.filter((p) => !out.some((r) => r.game === p.game)).concat(out).sort((a, b) => ALL.indexOf(a.game) - ALL.indexOf(b.game));
+fs.writeFileSync(RES, JSON.stringify({ at: now, base: BASE, gpu: GPU, gpuName, budget: BUDGET, cpuThrottle: THROTTLE, viewport: '390x844@2', runs: merged }, null, 1));
 console.log(`PHONE-BUDGET 넘은 판 ${out.filter((r) => r.over.length).length} / ${out.length} · GPU ${GPU ? gpuName : 'swiftshader(FPS 상대값)'}`);
 process.exit(0);
 }
