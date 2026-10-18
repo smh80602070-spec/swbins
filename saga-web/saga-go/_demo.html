@@ -164,6 +164,7 @@ window.DG_NO_TUNE = true;
 <script src="js/world3d-landtex.js"></script>
 <script src="js/world3d.js"></script>
 <script src="js/crowd3d.js"></script>
+<script src="js/weather3d.js"></script>
 <script src="js/_expansion/limitless.js"></script>
 <script src="js/encounter.js"></script>
 <script src="js/stealth.js"></script>
@@ -520,8 +521,8 @@ setTimeout(function () {
   /* W-0310 "웹엔 한계가 없다" 시연 — `#limitless`(`,n=300` 으로 인원). 군중은 내 둘레 60m 에 서고·걷고·달리고·앉는다
      — 본 게임엔 손잡이 crowd3d.on(기본 0)으로만. 측정은 tools/playcheck/pw-limitless.mjs */
   if (hash.indexOf('limitless') >= 0) {
-    var nmL = /n=(\d+)/.exec(hash), nL = nmL ? Math.max(1, Math.min(2000, +nmL[1])) : 300;
-    setTimeout(function () { C.save.settings.zoom3d = 3; if (DG.limitless) { DG.limitless.start({ n: nL }); } var nr = document.getElementById('near'); if (nr) { nr.style.display = 'none'; } }, 2500);
+    var nmL = /n=(\d+)/.exec(hash), nL = nmL ? Math.max(0, Math.min(2000, +nmL[1])) : 300, wL = (/weather=([a-z]+)/.exec(hash) || [])[1];
+    setTimeout(function () { C.save.settings.zoom3d = 3; if (DG.limitless) { DG.limitless.start({ n: nL, weather: wL }); } var nr = document.getElementById('near'); if (nr) { nr.style.display = 'none'; } }, 2500);
   }
   if (hash.indexOf('people') >= 0) {
     var zmP = /zoom=([\d.]+)/.exec(hash);
