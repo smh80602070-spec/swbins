@@ -17186,6 +17186,25 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       return r.every(Boolean) && ('숲 40칸 나무 ' + trees + ' · 2D 배율 ×' + F.zoomMul()) || '실패 ' + r.join(',');
     });
 
+    /* ── 래그돌(shared/js/ragdoll3d.js, W-0310 ③) — 렌더 없이 버릿만 돌린다 ───────────── */
+    t('ragdoll3d — VRoid 뼈 이름으로 알갱이 15·구속(몸통 15 + 사슬 11 + 밀어내기 10)이 서고, 1.5m 위에서 떠밀면 1.5초 안에 땅 위(모든 알갱이 y ≥ 땅)·거리 구속 오차 < 2cm·뼈 월드 행렬 전부 유한, 가라앉은 뒤 자리를 비운다 (W-0310 ③)', function () {
+      var R = DG.ragdoll3d, names = ['J_Bip_C_Hips', 'J_Bip_C_Spine', 'J_Bip_C_Chest', 'J_Bip_C_UpperChest', 'J_Bip_C_Neck', 'J_Bip_C_Head', 'J_Bip_L_Shoulder', 'J_Bip_L_UpperArm', 'J_Bip_L_LowerArm', 'J_Bip_L_Hand', 'J_Bip_R_Shoulder', 'J_Bip_R_UpperArm', 'J_Bip_R_LowerArm', 'J_Bip_R_Hand', 'J_Bip_L_UpperLeg', 'J_Bip_L_LowerLeg', 'J_Bip_L_Foot', 'J_Bip_R_UpperLeg', 'J_Bip_R_LowerLeg', 'J_Bip_R_Foot', 'J_Bip_L_Index1'];
+      var par = [-1, 0, 1, 2, 3, 4, 3, 6, 7, 8, 3, 10, 11, 12, 0, 14, 15, 0, 17, 18, 9];
+      var pos = [[0, 0.95, 0], [0, 1.05, 0], [0, 1.2, 0], [0, 1.35, 0], [0, 1.5, 0], [0, 1.58, 0], [-0.08, 1.42, 0], [-0.18, 1.4, 0], [-0.18, 1.12, 0], [-0.18, 0.86, 0], [0.08, 1.42, 0], [0.18, 1.4, 0], [0.18, 1.12, 0], [0.18, 0.86, 0], [-0.1, 0.9, 0], [-0.1, 0.48, 0], [-0.1, 0.06, 0], [0.1, 0.9, 0], [0.1, 0.48, 0], [0.1, 0.06, 0], [-0.18, 0.78, 0.02]];
+      var rest = new Float32Array(names.length * 16); pos.forEach(function (p, i) { rest.set([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, p[0], p[1], p[2], 1], i * 16); });
+      var rg = R.rig(names, par, rest); if (!rg) { return '틀 실패(뼈 이름)'; }
+      var ncons = rg.cons.length, b = R.body(rg); R.spawnAt(b, rg, 3, 1.5, -2, 0.7, 3, 1);
+      var g = function () { return 0.2; }, steps = 0, out = new Float32Array(rg.nb * 16), fin = true, minY = 9, err = 0, k;
+      while (b.phase === 1 && steps < 200) { R.step(b, rg, 1 / 60, g); steps++; }
+      for (k = 0; k < R.P.length; k++) { minY = Math.min(minY, b.p[k * 3 + 1]); }
+      for (k = 0; k < rg.cons.length; k++) { var c = rg.cons[k]; if (!c[3]) { continue; } var L = Math.hypot(b.p[c[0] * 3] - b.p[c[1] * 3], b.p[c[0] * 3 + 1] - b.p[c[1] * 3 + 1], b.p[c[0] * 3 + 2] - b.p[c[1] * 3 + 2]); err = Math.max(err, Math.abs(L - c[2])); }
+      R.bones(b, rg, out); for (k = 0; k < out.length; k++) { if (!isFinite(out[k])) { fin = false; break; } }
+      var headY = out[5 * 16 + 13], hipsY = out[13];
+      while (b.phase && steps < 400) { R.step(b, rg, 1 / 60, g); steps++; }
+      var ok = [ncons === 36, b.phase === 0 || steps < 400, minY >= 0.2 - 1e-6, err < 0.02, fin, Math.abs(headY - hipsY) < 0.9, rg.anc[20] === rg.anc[9]];
+      return ok.every(Boolean) && ('구속 ' + ncons + ' · ' + steps + '걸음 · 오차 ' + (err * 100).toFixed(2) + 'cm · 머리-엉덩이 높이차 ' + (headY - hipsY).toFixed(2) + 'm') || '실패 ' + ok.join(',') + ' minY ' + minY.toFixed(3) + ' err ' + err.toFixed(3) + ' steps ' + steps;
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

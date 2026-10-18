@@ -34,6 +34,7 @@ const FILES = [
   ['js/ai.js', 'js/ai.js', ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story']],   // R-4 — 네 판이 글자까지 같다(5천하는 따로 갈라짐)
   ['js/autoq.js', 'js/autoq.js', ['saga-forest', 'saga-realm']],
   ['js/crowd3d.js', 'js/crowd3d.js', ['saga-go']],
+  ['js/ragdoll3d.js', 'js/ragdoll3d.js', ['saga-go']],   // W-0310 ③ 물리(래그돌·돌·풀 눕힘) — 지금은 1만리만
   ['js/weather3d.js', 'js/weather3d.js', ['saga-go']],   // W-0310 ② 날씨·빛(GPU 비·눈·번개·빛줄기) — 지금은 1만리만   // W-0310 군중(인스턴싱+뼈 텍스처) — 시연·손잡이, 지금은 1만리만   // W-0302 자동 품질 FPS 내리기(기기 점수만 보던 두 판)
   ['js/sheetspec.js', 'js/sheetspec.js'],   // W-0311 — 2D 16방향·동작별 프레임 규격(mode2d 앞에 싣는다)
   ['js/mode2d.js', 'js/mode2d.js', ['saga-story', 'saga-dungeon', 'saga-go', 'saga-forest', 'saga-realm']],   // W-0019 — 2D 시트 부품(4종횡부터, 다른 판은 배선하며 판 목록에 추가)
