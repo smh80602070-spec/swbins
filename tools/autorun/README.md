@@ -1,5 +1,7 @@
 # autorun — 무인 기동 (K-0074)
 
+> **10-18 사용자 결정: 트레이·데몬은 쓰지 않는다** — 같은 창 이어하기(K-0098, 아래 절)가 70% 에서 멈추는 걸로 충분. PC 마다 한 번 `powershell -ExecutionPolicy Bypass -File toolsautoruninstall-startup.ps1 -Uninstall` 로 시작 프로그램에서 빼고 떠 있는 tray.ps1·daemon.mjs 는 그 PID 만 끈다(이 PC 10-18 끝 · **다른 PC 는 그쪽 첫 세션이**).
+
 사람이 "이어해" 를 치지 않아도 갈래 큐가 돈다. 한 번 기동 = 큐 맨 위 티켓 하나를 `claude -p "<갈래> 이어해"` 로 실행(게이트·절차는 세션 안에서 그대로).
 
 ```
