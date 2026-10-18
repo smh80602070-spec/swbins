@@ -11,6 +11,8 @@
  *   GET  /api/live  PUT /api/live  shared/ops/live.json 읽기·쓰기(꼴 검사: notices[]·maintenance{}·minVersion{}·events[])
  *   POST /api/run {cmd: 'qc'|'play'|'deploy', games: []}   한 번에 하나 · GET /api/run/log → { running, cmd, lines }
  *   GET  /shots/<경로>            saga-web/tools/playcheck/shots/ 사진
+ *   서버 탭(W-0326)은 브라우저가 saga-ops(server.mjs, 기본 :8810)에 직접 간다 — 이 콘솔 서버는 중계하지 않는다(운영 열쇠를 여기 안 둔다).
+ *   --check 는 live.json 의 server 가 있으면 /v1/health 도 찍는다. 한 바퀴 시험은 `node saga-ops/test.mjs`.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -92,13 +94,16 @@ function validLive(j) {
   if (!j.maintenance || typeof j.maintenance !== 'object') { return 'maintenance 가 객체가 아님'; }
   if (j.minVersion && typeof j.minVersion !== 'object') { return 'minVersion 이 객체가 아님'; }
   if (j.events && !Array.isArray(j.events)) { return 'events 가 배열이 아님'; }
+  if (j.server != null && (typeof j.server !== 'string' || (j.server && !/^https?:\/\//.test(j.server)))) { return 'server 는 http(s) URL 문자열(빈 칸 = 서버 없음)'; }
   return null;
 }
 
 if (argv.includes('--check')) {
   const o = overview();
   console.log(o.games.map((g) => `${g.name} ${g.localVersion} 번들${g.bundleFresh ? '○' : '×'} 완성 ${g.features.done}/${g.features.total} 배포 ${g.deployed ? (g.deployed.same ? '같음' : '다름 ' + g.deployed.version) : '-'} QC ${g.qc ? g.qc.verdict : '-'} 플레이 ${g.play ? (g.play.ok ? 'OK' : 'FAIL ' + g.play.runs.filter((r) => !r.ok).map((r) => r.device + ':' + r.fails.join('/')).join(' ')) : '-'}`).join('\n'));
-  console.log('OPS-CHECK OK live ' + (o.live ? '읽음' : '없음'));
+  const sv = o.live && o.live.server;
+  const health = sv ? await fetch(sv.replace(/\/+$/, '') + '/v1/health', { signal: AbortSignal.timeout(3000) }).then((r) => r.json()).then((h) => (h && h.ok ? '연결 ○ db ' + h.db : '응답 이상')).catch((e) => '연결 × ' + e.message) : '없음(live.json server 빈 칸)';
+  console.log('OPS-CHECK OK live ' + (o.live ? '읽음' : '없음') + ' · 서버 ' + health);
   process.exit(0);
 }
 

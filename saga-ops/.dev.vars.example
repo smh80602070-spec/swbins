@@ -1,0 +1,13 @@
+# saga-ops/.dev.vars 로 복사해 채운다 — .dev.vars 는 .gitignore (열쇠·시크릿은 저장소에 절대 안 담는다)
+OPS_ADMIN_KEY=여기에-긴-무작위-문자열
+OPS_PORT=8810
+OPS_HOST=127.0.0.1
+# 쉼표로 여러 개. 공개 배포면 Pages 주소만(예: https://<계정>.github.io)
+OPS_ORIGINS=*
+# 1 이면 provider 'mock' 결제 허용 — 시험·QC 만. 운영에선 비운다
+OPS_PAY_MOCK=
+# 토스페이먼츠 시크릿(test_sk_… 면 샌드박스) — PC 웹 결제
+TOSS_SECRET_KEY=
+# Google Play Developer API 서비스 계정 json 경로 + 앱 패키지 — 안드로이드(TWA) 결제
+GOOGLE_PLAY_SA_JSON=
+GOOGLE_PLAY_PACKAGE=

@@ -128,6 +128,8 @@ tools/gen/
 
 **웹 진행 상태(2026-10-01)** — 위 1~5 는 끝났다. 1 러너 `tools/test-web.mjs` · 2 정본 `saga-web/shared/`(net·anim-own·vroid-variant·account·errlog·bgm·ssao3d·post3d·toon3d·build-single, `tools/sync-shared.mjs` 가 복사·`--check`, 판별 차이는 `core.js` 끝 `DG.cfg.<모듈>`) · 3 `js/manifest.json`+`tools/gen-index.mjs`(index·_test 의 script 묶음) · 4 큰 파일은 **소스 분할**(`tools/build-parts.mjs` TARGETS 19개: `src/<이름>/NN.js` → `js/<이름>.js` 바이트 동일, 하나의 클로저라 실행 파일은 한 덩이) · 5 `?perf` 는 사가만리 `perf.js`(자동 등급 포함)와 나머지 넷의 `DG.perfHud`(재기 표시만, `DG.perf` 다리를 가리지 않으려 따로). 남은 것: `toon3d` 는 글자까지 같은 네 함수만 `toon3d-core.js` 로 뺐고(W-0019), 갈라진 `toonify`·외곽선은 화면 확인 몫이라 보류. `portrait3d`(같은 함수 18개가 클로저 상태에 얽힘)·`asset3d`(92개 중 다섯 판 같은 것 2개)는 **합치지 않는다**(조사 W-0020). 클로저를 실제로 갈라 싣는 "진짜 분리"는 공유 상태 객체화가 필요해 별도 결정.
 
+**서버 층(W-0326, 2026-10-19 사용자 결정 (c) 자체 Node)** — 다섯 판은 정적 웹 그대로 두고, 선택적으로 붙는 서버 한 층을 `saga-ops/`(루트)에 둔다: `server.mjs`(의존 없는 Node + `node:sqlite`) · `schema.sql` · `API.md`(정본). 판 쪽 연결은 공용 `shared/js/ops-client.js` 하나뿐 — `shared/ops/live.json` 의 `server` 가 비면 아무것도 안 보낸다(오프라인 우선). 서버가 있으면 익명 기기 id 로 로그인 → 서버 플래그(공지·점검·최소 버전·이벤트 tunes·기능 플래그, 즉시) → `DG.ops.track` 버퍼 전송(DAU·오류·퍼널) → 우편(모든 지급은 우편으로) → 상품 표·영수증 검증(`DG.ops.buy`, 서버가 플랫폼에 확인한 뒤에만 지급). 운영 콘솔(`saga-web/tools/ops`)의 서버 탭이 운영 API(열쇠 `X-Admin-Key`, 쓰기는 전부 감사 로그 전후 기록)를 쓴다. 규칙: 세이브 키·앱 id 안 건드림 · 열쇠·DB 는 저장소 금지(`.dev.vars`·`data/`) · 판 코드가 서버 응답을 믿고 지급하지 않는다(우편 items 만, 뜻은 판의 `DG.ops.onMail` 갈고리) · QC "운영 서버" 줄(`saga-ops/test.mjs`, 메모리 DB·mock 결제 한 바퀴).
+
 ### 4.3 Godot
 
 **지금**: `saga_core` 5천 줄, 네 판이 `saga_go/`(choice_prompt 29회·environment_profile 13·glb_utils 8·anim_library_loader·creature_builder·vroid_body·player) 참조, 세이브 다섯 벌이 같은 `_migrate` 계약을 복사, probe 61개 전부 GO, autoload 23개 항상 로드, PLAN 217KB.

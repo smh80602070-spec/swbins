@@ -1,6 +1,8 @@
 {
  "_": "라이브옵스 데이터(W-0271) — 운영 콘솔(saga-web/tools/ops, :8802)이 쓰고 다섯 판 ops-client.js 가 부팅 때 읽는다. 공개 파일이라 비밀 없음. games 가 비면 다섯 판 전부. 날짜는 YYYY-MM-DD(끝 날 포함).",
- "updatedAt": "2026-10-17",
+ "updatedAt": "2026-10-19",
+ "server": "",
+ "_server": "W-0326 운영 서버 URL(saga-ops/server.mjs, 예 http://127.0.0.1:8810) — 비면 판은 이 파일만 읽고 아무것도 안 보낸다. 적으면 서버 플래그가 이 파일보다 우선",
  "notices": [],
  "maintenance": { "on": false, "msg": "", "games": [] },
  "minVersion": {},

@@ -88,6 +88,15 @@ function checkBundles() {
   }
 }
 
+/* ── W-0326 운영 서버 한 바퀴(saga-ops/test.mjs — 메모리 DB·mock 결제, 바깥 네트워크 없음) — 웹 갈래면 판 수와 무관하게 한 번 ── */
+function checkOps() {
+  if ((branch && branch !== 'web') || !fs.existsSync(path.join(ROOT, 'saga-ops', 'test.mjs'))) return;
+  const r = run(process.execPath, [path.join(ROOT, 'saga-ops', 'test.mjs')], { timeout: 120000 });
+  const m = /OPS-SERVER (OK|FAIL) (\d+\/\d+)/.exec(r.out);
+  const fails = r.out.split('\n').filter((l) => /^FAIL /.test(l)).slice(0, 2).map((l) => l.slice(5, 120));
+  row('운영 서버', '다섯 판', m && m[1] === 'OK' ? 'PASS' : 'FAIL', m && m[1] === 'OK' ? m[2] + ' 한 바퀴(계정·이벤트·플래그·세이브·우편·mock 결제·제재·감사)' : (fails.join(' | ') || r.out.trim().split('\n').pop() || '실행 실패'), r.sec);
+}
+
 /* ── ② 진단 러너 + ③ 재미 표준 ── */
 function funMarks(g) {
   const f = path.join(OUT, `last-${g}.html`);
@@ -402,6 +411,7 @@ function report() {
     if (deployOnly) { checkDeploy(); return; }
     if (playOnly) { await checkPlay(); stopServer(); return; }
     checkBundles();
+    checkOps();
     checkTests();
     await checkShots();
     await checkPlay();
