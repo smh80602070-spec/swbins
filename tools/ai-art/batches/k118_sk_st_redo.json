@@ -1,0 +1,155 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k118_sk_st_redo",
+ "kit": {
+  "spec": "icon",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "sk_st_w_whirl",
+   "seed": 1382543177,
+   "prompt": "(tornado:1.15), sword, swirling wind, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 선풍(旋風)"
+  },
+  {
+   "id": "sk_st_n_quake",
+   "seed": 3381856472,
+   "prompt": "(cracked impact mark:1.15), spear, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 진각(震脚)"
+  },
+  {
+   "id": "sk_st_a_retreat",
+   "seed": 502996957,
+   "prompt": "(winged boots:1.15), arrow, speed lines, forward dash trail, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 퇴보사(退步射)"
+  },
+  {
+   "id": "sk_st_h_ray",
+   "seed": 3615342675,
+   "prompt": "(sparkles:1.15), arrow, radiant starlight, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 광시(光矢)"
+  },
+  {
+   "id": "sk_st_h_swarm",
+   "seed": 4061614141,
+   "prompt": "(fireworks:1.15), arrow, several projectiles spread, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 십이시(十二矢)"
+  },
+  {
+   "id": "sk_st_h_retreat",
+   "seed": 3620082413,
+   "prompt": "(winged boots:1.15), arrow, speed lines, forward dash trail, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 익보사(翼步射)"
+  },
+  {
+   "id": "sk_st_r_step",
+   "seed": 3348814919,
+   "prompt": "(footprints:1.15), throwing knife, speed lines, forward dash trail, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 은신보(隱身步)"
+  },
+  {
+   "id": "sk_st_r_vital",
+   "seed": 551720280,
+   "prompt": "(flower playing card:1.15), rising aura, upward glow, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 급소(急所)"
+  },
+  {
+   "id": "sk_st_r_whirl",
+   "seed": 3295290660,
+   "prompt": "(spinning kick motion arc:1.15), throwing knife, swirling wind, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 선풍각(旋風脚)"
+  },
+  {
+   "id": "sk_st_x_shadow",
+   "seed": 842542116,
+   "prompt": "(shadow mask:1.15), throwing knife, speed lines, forward dash trail, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 그림자밟기"
+  },
+  {
+   "id": "sk_st_d_bloom",
+   "seed": 875796941,
+   "prompt": "(red flower:1.15), throwing knife, several projectiles spread, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 구화만개(九花滿開)"
+  },
+  {
+   "id": "sk_st_d_veil",
+   "seed": 3362717938,
+   "prompt": "(coffin:1.15), throwing knife, ghostly blue spirit flame, speed lines, forward dash trail, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 명계보(冥界步)"
+  },
+  {
+   "id": "sk_st_m_fire",
+   "seed": 2828621491,
+   "prompt": "(flames:1.15), paper talisman, fire, burning, flying projectile, motion streak, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 화구(火球)"
+  },
+  {
+   "id": "sk_st_m_step",
+   "seed": 2928469693,
+   "prompt": "(whirlwind spiral:1.15), paper talisman, speed lines, forward dash trail, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 축지(縮地)"
+  },
+  {
+   "id": "sk_st_p_orb",
+   "seed": 4216649759,
+   "prompt": "(blue energy orb:1.15), paper talisman, several projectiles spread, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 연환탄(連環彈)"
+  },
+  {
+   "id": "sk_st_i_orb",
+   "seed": 3835643825,
+   "prompt": "(blue energy orb:1.15), paper talisman, radiant starlight, several projectiles spread, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 유성탄(流星彈)"
+  },
+  {
+   "id": "sk_st_z_step",
+   "seed": 2421929440,
+   "prompt": "(whirlwind spiral:1.15), paper talisman, speed lines, forward dash trail, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 신행보(神行步)"
+  },
+  {
+   "id": "sk_st_p_stars",
+   "seed": 2760834040,
+   "prompt": "(starry galaxy:1.15), arrow, radiant starlight, several projectiles spread, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 성궁만천(星弓滿天)"
+  },
+  {
+   "id": "sk_st_p_afterimage",
+   "seed": 3416944408,
+   "prompt": "(fading dotted outline:1.15), throwing knife, crescent slash arc, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 무영참(無影斬)"
+  }
+ ],
+ "note": "K-0118 단계 3 다시 뽑기 — 판정 후보 없음 33 + 포장 검사 탈락 11(새 씨앗)"
+}

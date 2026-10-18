@@ -1,0 +1,430 @@
+{
+ "name": "story_props_C",
+ "spec": "sprite",
+ "note": "K-0135 ② 소품 지역 10 × 5 = 50 + ②-b 앞 층 10",
+ "items": [
+  {
+   "id": "sp_forest_lamp",
+   "spec": "sprite",
+   "subject": "lamp post, old paper lantern style",
+   "subject_ko": "4종횡 forest 소품 lamp",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_forest_sign",
+   "spec": "sprite",
+   "subject": "signpost fitting mossy forest soil",
+   "subject_ko": "4종횡 forest 소품 sign",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_forest_bush",
+   "spec": "sprite",
+   "subject": "bush fitting mossy forest soil",
+   "subject_ko": "4종횡 forest 소품 bush",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_forest_rock",
+   "spec": "sprite",
+   "subject": "rock fitting mossy forest soil",
+   "subject_ko": "4종횡 forest 소품 rock",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_forest_crate",
+   "spec": "sprite",
+   "subject": "supply crate fitting mossy forest soil",
+   "subject_ko": "4종횡 forest 소품 crate",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sf_forest_front",
+   "spec": "bg",
+   "subject": "foreground silhouette band of grass and moss fringe and bushes along the bottom edge, plain white sky above, empty upper half",
+   "subject_ko": "4종횡 forest 앞 층(위 흰 하늘 → 알파)",
+   "extra": "no humans"
+  },
+  {
+   "id": "sp_field_meadow_lamp",
+   "spec": "sprite",
+   "subject": "lamp post, solar garden lamp style",
+   "subject_ko": "4종횡 field_meadow 소품 lamp",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_field_meadow_sign",
+   "spec": "sprite",
+   "subject": "signpost fitting green meadow turf",
+   "subject_ko": "4종횡 field_meadow 소품 sign",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_field_meadow_bush",
+   "spec": "sprite",
+   "subject": "bush fitting green meadow turf",
+   "subject_ko": "4종횡 field_meadow 소품 bush",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_field_meadow_rock",
+   "spec": "sprite",
+   "subject": "rock fitting green meadow turf",
+   "subject_ko": "4종횡 field_meadow 소품 rock",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_field_meadow_crate",
+   "spec": "sprite",
+   "subject": "supply crate fitting green meadow turf",
+   "subject_ko": "4종횡 field_meadow 소품 crate",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sf_field_meadow_front",
+   "spec": "bg",
+   "subject": "foreground silhouette band of lush grass fringe with small flowers and bushes along the bottom edge, plain white sky above, empty upper half",
+   "subject_ko": "4종횡 field_meadow 앞 층(위 흰 하늘 → 알파)",
+   "extra": "no humans"
+  },
+  {
+   "id": "sp_mountain_shrine_lamp",
+   "spec": "sprite",
+   "subject": "lamp post, hanging prayer bell style",
+   "subject_ko": "4종횡 mountain_shrine 소품 lamp",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_mountain_shrine_sign",
+   "spec": "sprite",
+   "subject": "signpost fitting worn stone path",
+   "subject_ko": "4종횡 mountain_shrine 소품 sign",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_mountain_shrine_bush",
+   "spec": "sprite",
+   "subject": "bush fitting worn stone path",
+   "subject_ko": "4종횡 mountain_shrine 소품 bush",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_mountain_shrine_rock",
+   "spec": "sprite",
+   "subject": "rock fitting worn stone path",
+   "subject_ko": "4종횡 mountain_shrine 소품 rock",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_mountain_shrine_crate",
+   "spec": "sprite",
+   "subject": "supply crate fitting worn stone path",
+   "subject_ko": "4종횡 mountain_shrine 소품 crate",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sf_mountain_shrine_front",
+   "spec": "bg",
+   "subject": "foreground silhouette band of pine needle and moss fringe and bushes along the bottom edge, plain white sky above, empty upper half",
+   "subject_ko": "4종횡 mountain_shrine 앞 층(위 흰 하늘 → 알파)",
+   "extra": "no humans"
+  },
+  {
+   "id": "sp_old_battlefield_lamp",
+   "spec": "sprite",
+   "subject": "lamp post, rusted helmet style",
+   "subject_ko": "4종횡 old_battlefield 소품 lamp",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_old_battlefield_sign",
+   "spec": "sprite",
+   "subject": "signpost fitting trampled brown dirt",
+   "subject_ko": "4종횡 old_battlefield 소품 sign",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_old_battlefield_bush",
+   "spec": "sprite",
+   "subject": "bush fitting trampled brown dirt",
+   "subject_ko": "4종횡 old_battlefield 소품 bush",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_old_battlefield_rock",
+   "spec": "sprite",
+   "subject": "rock fitting trampled brown dirt",
+   "subject_ko": "4종횡 old_battlefield 소품 rock",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_old_battlefield_crate",
+   "spec": "sprite",
+   "subject": "supply crate fitting trampled brown dirt",
+   "subject_ko": "4종횡 old_battlefield 소품 crate",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sf_old_battlefield_front",
+   "spec": "bg",
+   "subject": "foreground silhouette band of dry grass fringe with rusted arrowheads and bushes along the bottom edge, plain white sky above, empty upper half",
+   "subject_ko": "4종횡 old_battlefield 앞 층(위 흰 하늘 → 알파)",
+   "extra": "no humans"
+  },
+  {
+   "id": "sp_cave_mouth_lamp",
+   "spec": "sprite",
+   "subject": "lamp post, miner hard hat lamp style",
+   "subject_ko": "4종횡 cave_mouth 소품 lamp",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_cave_mouth_sign",
+   "spec": "sprite",
+   "subject": "signpost fitting rough gray cave rock floor",
+   "subject_ko": "4종횡 cave_mouth 소품 sign",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_cave_mouth_bush",
+   "spec": "sprite",
+   "subject": "bush fitting rough gray cave rock floor",
+   "subject_ko": "4종횡 cave_mouth 소품 bush",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_cave_mouth_rock",
+   "spec": "sprite",
+   "subject": "rock fitting rough gray cave rock floor",
+   "subject_ko": "4종횡 cave_mouth 소품 rock",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_cave_mouth_crate",
+   "spec": "sprite",
+   "subject": "supply crate fitting rough gray cave rock floor",
+   "subject_ko": "4종횡 cave_mouth 소품 crate",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sf_cave_mouth_front",
+   "spec": "bg",
+   "subject": "foreground silhouette band of damp moss fringe on stone and bushes along the bottom edge, plain white sky above, empty upper half",
+   "subject_ko": "4종횡 cave_mouth 앞 층(위 흰 하늘 → 알파)",
+   "extra": "no humans"
+  },
+  {
+   "id": "sp_deep_cave_lamp",
+   "spec": "sprite",
+   "subject": "lamp post, glowing crystal cluster style",
+   "subject_ko": "4종횡 deep_cave 소품 lamp",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_deep_cave_sign",
+   "spec": "sprite",
+   "subject": "signpost fitting dark wet blue stone floor",
+   "subject_ko": "4종횡 deep_cave 소품 sign",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_deep_cave_bush",
+   "spec": "sprite",
+   "subject": "bush fitting dark wet blue stone floor",
+   "subject_ko": "4종횡 deep_cave 소품 bush",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_deep_cave_rock",
+   "spec": "sprite",
+   "subject": "rock fitting dark wet blue stone floor",
+   "subject_ko": "4종횡 deep_cave 소품 rock",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_deep_cave_crate",
+   "spec": "sprite",
+   "subject": "supply crate fitting dark wet blue stone floor",
+   "subject_ko": "4종횡 deep_cave 소품 crate",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sf_deep_cave_front",
+   "spec": "bg",
+   "subject": "foreground silhouette band of glowing blue crystal fringe and bushes along the bottom edge, plain white sky above, empty upper half",
+   "subject_ko": "4종횡 deep_cave 앞 층(위 흰 하늘 → 알파)",
+   "extra": "no humans"
+  },
+  {
+   "id": "sp_fire_gorge_lamp",
+   "spec": "sprite",
+   "subject": "lamp post, brass heat valve style",
+   "subject_ko": "4종횡 fire_gorge 소품 lamp",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_fire_gorge_sign",
+   "spec": "sprite",
+   "subject": "signpost fitting cracked red volcanic rock",
+   "subject_ko": "4종횡 fire_gorge 소품 sign",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_fire_gorge_bush",
+   "spec": "sprite",
+   "subject": "bush fitting cracked red volcanic rock",
+   "subject_ko": "4종횡 fire_gorge 소품 bush",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_fire_gorge_rock",
+   "spec": "sprite",
+   "subject": "rock fitting cracked red volcanic rock",
+   "subject_ko": "4종횡 fire_gorge 소품 rock",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_fire_gorge_crate",
+   "spec": "sprite",
+   "subject": "supply crate fitting cracked red volcanic rock",
+   "subject_ko": "4종횡 fire_gorge 소품 crate",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sf_fire_gorge_front",
+   "spec": "bg",
+   "subject": "foreground silhouette band of charred ember fringe and bushes along the bottom edge, plain white sky above, empty upper half",
+   "subject_ko": "4종횡 fire_gorge 앞 층(위 흰 하늘 → 알파)",
+   "extra": "no humans"
+  },
+  {
+   "id": "sp_ruined_city_lamp",
+   "spec": "sprite",
+   "subject": "lamp post, broken neon sign style",
+   "subject_ko": "4종횡 ruined_city 소품 lamp",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_ruined_city_sign",
+   "spec": "sprite",
+   "subject": "signpost fitting cracked old city paving stones",
+   "subject_ko": "4종횡 ruined_city 소품 sign",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_ruined_city_bush",
+   "spec": "sprite",
+   "subject": "bush fitting cracked old city paving stones",
+   "subject_ko": "4종횡 ruined_city 소품 bush",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_ruined_city_rock",
+   "spec": "sprite",
+   "subject": "rock fitting cracked old city paving stones",
+   "subject_ko": "4종횡 ruined_city 소품 rock",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_ruined_city_crate",
+   "spec": "sprite",
+   "subject": "supply crate fitting cracked old city paving stones",
+   "subject_ko": "4종횡 ruined_city 소품 crate",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sf_ruined_city_front",
+   "spec": "bg",
+   "subject": "foreground silhouette band of weeds and rubble fringe and bushes along the bottom edge, plain white sky above, empty upper half",
+   "subject_ko": "4종횡 ruined_city 앞 층(위 흰 하늘 → 알파)",
+   "extra": "no humans"
+  },
+  {
+   "id": "sp_orbital_base_lamp",
+   "spec": "sprite",
+   "subject": "lamp post, hologram beacon style",
+   "subject_ko": "4종횡 orbital_base 소품 lamp",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_orbital_base_sign",
+   "spec": "sprite",
+   "subject": "signpost fitting riveted steel deck plates",
+   "subject_ko": "4종횡 orbital_base 소품 sign",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_orbital_base_bush",
+   "spec": "sprite",
+   "subject": "bush fitting riveted steel deck plates",
+   "subject_ko": "4종횡 orbital_base 소품 bush",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_orbital_base_rock",
+   "spec": "sprite",
+   "subject": "rock fitting riveted steel deck plates",
+   "subject_ko": "4종횡 orbital_base 소품 rock",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_orbital_base_crate",
+   "spec": "sprite",
+   "subject": "supply crate fitting riveted steel deck plates",
+   "subject_ko": "4종횡 orbital_base 소품 crate",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sf_orbital_base_front",
+   "spec": "bg",
+   "subject": "foreground silhouette band of cyan glowing metal trim and bushes along the bottom edge, plain white sky above, empty upper half",
+   "subject_ko": "4종횡 orbital_base 앞 층(위 흰 하늘 → 알파)",
+   "extra": "no humans"
+  },
+  {
+   "id": "sp_sky_bridge_lamp",
+   "spec": "sprite",
+   "subject": "lamp post, wind chime with propeller style",
+   "subject_ko": "4종횡 sky_bridge 소품 lamp",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_sky_bridge_sign",
+   "spec": "sprite",
+   "subject": "signpost fitting white sky-stone bridge tiles",
+   "subject_ko": "4종횡 sky_bridge 소품 sign",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_sky_bridge_bush",
+   "spec": "sprite",
+   "subject": "bush fitting white sky-stone bridge tiles",
+   "subject_ko": "4종횡 sky_bridge 소품 bush",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_sky_bridge_rock",
+   "spec": "sprite",
+   "subject": "rock fitting white sky-stone bridge tiles",
+   "subject_ko": "4종횡 sky_bridge 소품 rock",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sp_sky_bridge_crate",
+   "spec": "sprite",
+   "subject": "supply crate fitting white sky-stone bridge tiles",
+   "subject_ko": "4종횡 sky_bridge 소품 crate",
+   "extra": "no humans, single object"
+  },
+  {
+   "id": "sf_sky_bridge_front",
+   "spec": "bg",
+   "subject": "foreground silhouette band of cloud wisp and brass trim and bushes along the bottom edge, plain white sky above, empty upper half",
+   "subject_ko": "4종횡 sky_bridge 앞 층(위 흰 하늘 → 알파)",
+   "extra": "no humans"
+  }
+ ],
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4
+}

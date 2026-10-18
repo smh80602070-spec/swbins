@@ -1,6 +1,6 @@
 {
  "note": "tools/ai-art/place_icons.py 가 만든 표 — 손으로 고치지 않는다. K-0035. 키 = 그림 한 장(같은 물건은 한 키를 함께 쓴다), skip = 상태 값이라 그림 없음.",
- "date": "2026-10-17",
+ "date": "2026-10-18",
  "size": {
   "icon128": 128,
   "icon64": 64
@@ -13,10 +13,10 @@
   "4": "유니크"
  },
  "counts": {
-  "entries": 381,
-  "keys": 353,
+  "entries": 603,
+  "keys": 575,
   "skip": 4,
-  "k118": 28
+  "k118": 250
  },
  "entries": {
   "saga-dungeon:equip:w_hwando": {
@@ -2324,6 +2324,1560 @@
    "mode": "code",
    "name": "x",
    "group": "ui"
+  },
+  "saga-realm:mapmark:battle": {
+   "key": "map_battle",
+   "grade": 0,
+   "mode": "ai",
+   "name": "battle",
+   "group": "mapmark"
+  },
+  "saga-realm:mapmark:port": {
+   "key": "map_port",
+   "grade": 0,
+   "mode": "ai",
+   "name": "port",
+   "group": "mapmark"
+  },
+  "saga-realm:mapmark:camp": {
+   "key": "map_camp",
+   "grade": 0,
+   "mode": "ai",
+   "name": "camp",
+   "group": "mapmark"
+  },
+  "saga-realm:mapmark:guard": {
+   "key": "map_guard",
+   "grade": 0,
+   "mode": "ai",
+   "name": "guard",
+   "group": "mapmark"
+  },
+  "saga-realm:mapmark:flag": {
+   "key": "map_flag",
+   "grade": 0,
+   "mode": "ai",
+   "name": "flag",
+   "group": "mapmark"
+  },
+  "saga-dungeon:job:archer": {
+   "key": "job_dg_archer",
+   "grade": 0,
+   "mode": "ai",
+   "name": "궁장",
+   "group": "job"
+  },
+  "saga-dungeon:job:warrior": {
+   "key": "job_dg_warrior",
+   "grade": 0,
+   "mode": "ai",
+   "name": "무장",
+   "group": "job"
+  },
+  "saga-dungeon:job:scholar": {
+   "key": "job_dg_scholar",
+   "grade": 0,
+   "mode": "ai",
+   "name": "책사",
+   "group": "job"
+  },
+  "saga-dungeon:job:marshal": {
+   "key": "job_dg_marshal",
+   "grade": 0,
+   "mode": "ai",
+   "name": "도독",
+   "group": "job"
+  },
+  "saga-dungeon:job:mystic": {
+   "key": "job_dg_mystic",
+   "grade": 0,
+   "mode": "ai",
+   "name": "방사",
+   "group": "job"
+  },
+  "saga-story:job:none": {
+   "key": "job_st_none",
+   "grade": 0,
+   "mode": "ai",
+   "name": "무명(無名)",
+   "group": "job"
+  },
+  "saga-story:job:warrior": {
+   "key": "job_st_warrior",
+   "grade": 0,
+   "mode": "ai",
+   "name": "무사(武士)",
+   "group": "job"
+  },
+  "saga-story:job:archer": {
+   "key": "job_st_archer",
+   "grade": 0,
+   "mode": "ai",
+   "name": "궁수(弓手)",
+   "group": "job"
+  },
+  "saga-story:job:rogue": {
+   "key": "job_st_rogue",
+   "grade": 0,
+   "mode": "ai",
+   "name": "협객(俠客)",
+   "group": "job"
+  },
+  "saga-story:job:mage": {
+   "key": "job_st_mage",
+   "grade": 0,
+   "mode": "ai",
+   "name": "방사(方士)",
+   "group": "job"
+  },
+  "saga-story:job:general": {
+   "key": "job_st_general",
+   "grade": 0,
+   "mode": "ai",
+   "name": "장군(將軍)",
+   "group": "job"
+  },
+  "saga-story:job:sniper": {
+   "key": "job_st_sniper",
+   "grade": 0,
+   "mode": "ai",
+   "name": "신궁(神弓)",
+   "group": "job"
+  },
+  "saga-story:job:assassin": {
+   "key": "job_st_assassin",
+   "grade": 0,
+   "mode": "ai",
+   "name": "자객(刺客)",
+   "group": "job"
+  },
+  "saga-story:job:sage": {
+   "key": "job_st_sage",
+   "grade": 0,
+   "mode": "ai",
+   "name": "도사(道士)",
+   "group": "job"
+  },
+  "saga-story:job:marshal": {
+   "key": "job_st_marshal",
+   "grade": 0,
+   "mode": "ai",
+   "name": "원수(元帥)",
+   "group": "job"
+  },
+  "saga-story:job:flier": {
+   "key": "job_st_flier",
+   "grade": 0,
+   "mode": "ai",
+   "name": "비장(飛將)",
+   "group": "job"
+  },
+  "saga-story:job:wraith": {
+   "key": "job_st_wraith",
+   "grade": 0,
+   "mode": "ai",
+   "name": "귀영(鬼影)",
+   "group": "job"
+  },
+  "saga-story:job:immortal": {
+   "key": "job_st_immortal",
+   "grade": 0,
+   "mode": "ai",
+   "name": "진인(眞人)",
+   "group": "job"
+  },
+  "saga-story:job:warlord": {
+   "key": "job_st_warlord",
+   "grade": 0,
+   "mode": "ai",
+   "name": "전신(戰神)",
+   "group": "job"
+  },
+  "saga-story:job:falcon": {
+   "key": "job_st_falcon",
+   "grade": 0,
+   "mode": "ai",
+   "name": "궁성(弓聖)",
+   "group": "job"
+  },
+  "saga-story:job:reaper": {
+   "key": "job_st_reaper",
+   "grade": 0,
+   "mode": "ai",
+   "name": "명왕(冥王)",
+   "group": "job"
+  },
+  "saga-story:job:ascendant": {
+   "key": "job_st_ascendant",
+   "grade": 0,
+   "mode": "ai",
+   "name": "천존(天尊)",
+   "group": "job"
+  },
+  "saga-story:job:godwar": {
+   "key": "job_st_godwar",
+   "grade": 0,
+   "mode": "ai",
+   "name": "군신(軍神)",
+   "group": "job"
+  },
+  "saga-story:job:skybow": {
+   "key": "job_st_skybow",
+   "grade": 0,
+   "mode": "ai",
+   "name": "천궁(天弓)",
+   "group": "job"
+  },
+  "saga-story:job:noshadow": {
+   "key": "job_st_noshadow",
+   "grade": 0,
+   "mode": "ai",
+   "name": "무영(無影)",
+   "group": "job"
+  },
+  "saga-story:job:voidsage": {
+   "key": "job_st_voidsage",
+   "grade": 0,
+   "mode": "ai",
+   "name": "태허(太虛)",
+   "group": "job"
+  },
+  "saga-dungeon:skill:a_pierce": {
+   "key": "sk_dg_a_pierce",
+   "grade": 0,
+   "mode": "ai",
+   "name": "관통사(貫通射)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_multi": {
+   "key": "sk_dg_a_multi",
+   "grade": 0,
+   "mode": "ai",
+   "name": "연사(連射)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_fire": {
+   "key": "sk_dg_a_fire",
+   "grade": 0,
+   "mode": "ai",
+   "name": "화시(火矢)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_ice": {
+   "key": "sk_dg_a_ice",
+   "grade": 0,
+   "mode": "ai",
+   "name": "빙시(氷矢)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_storm": {
+   "key": "sk_dg_a_storm",
+   "grade": 0,
+   "mode": "ai",
+   "name": "뇌시(雷矢)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_eye": {
+   "key": "sk_dg_a_eye",
+   "grade": 0,
+   "mode": "ai",
+   "name": "매의 눈(鷹眼)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_reach": {
+   "key": "sk_dg_a_reach",
+   "grade": 0,
+   "mode": "ai",
+   "name": "장궁(長弓)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_swift": {
+   "key": "sk_dg_a_swift",
+   "grade": 0,
+   "mode": "ai",
+   "name": "질보(疾步)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_whirl": {
+   "key": "sk_dg_w_whirl",
+   "grade": 0,
+   "mode": "ai",
+   "name": "회전참(回轉斬)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_cleave": {
+   "key": "sk_dg_w_cleave",
+   "grade": 0,
+   "mode": "ai",
+   "name": "분쇄(粉碎)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_quake": {
+   "key": "sk_dg_w_quake",
+   "grade": 0,
+   "mode": "ai",
+   "name": "진각(震脚)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_dash": {
+   "key": "sk_dg_w_dash",
+   "grade": 0,
+   "mode": "ai",
+   "name": "돌진(突進)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_rage": {
+   "key": "sk_dg_w_rage",
+   "grade": 0,
+   "mode": "ai",
+   "name": "광분(狂奮)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_tough": {
+   "key": "sk_dg_w_tough",
+   "grade": 0,
+   "mode": "ai",
+   "name": "단련(鍛鍊)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_mastery": {
+   "key": "sk_dg_w_mastery",
+   "grade": 0,
+   "mode": "ai",
+   "name": "병기술(兵器術)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_second": {
+   "key": "sk_dg_w_second",
+   "grade": 0,
+   "mode": "ai",
+   "name": "이혼대법(離魂)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_fire": {
+   "key": "sk_dg_s_fire",
+   "grade": 0,
+   "mode": "ai",
+   "name": "화탄(火彈)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_blaze": {
+   "key": "sk_dg_s_blaze",
+   "grade": 0,
+   "mode": "ai",
+   "name": "염화(炎火)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_meteor": {
+   "key": "sk_dg_s_meteor",
+   "grade": 0,
+   "mode": "ai",
+   "name": "유성(流星)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_frost": {
+   "key": "sk_dg_s_frost",
+   "grade": 0,
+   "mode": "ai",
+   "name": "한파(寒波)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_bolt": {
+   "key": "sk_dg_s_bolt",
+   "grade": 0,
+   "mode": "ai",
+   "name": "뇌격(雷擊)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_wave": {
+   "key": "sk_dg_s_wave",
+   "grade": 0,
+   "mode": "ai",
+   "name": "기공파(氣功波)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_wit": {
+   "key": "sk_dg_s_wit",
+   "grade": 0,
+   "mode": "ai",
+   "name": "명민(明敏)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_focus": {
+   "key": "sk_dg_s_focus",
+   "grade": 0,
+   "mode": "ai",
+   "name": "집중(集中)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_rally": {
+   "key": "sk_dg_m_rally",
+   "grade": 0,
+   "mode": "ai",
+   "name": "사기(士氣)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_guard": {
+   "key": "sk_dg_m_guard",
+   "grade": 0,
+   "mode": "ai",
+   "name": "호신강기(護身)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_banner": {
+   "key": "sk_dg_m_banner",
+   "grade": 0,
+   "mode": "ai",
+   "name": "독전(督戰)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_smite": {
+   "key": "sk_dg_m_smite",
+   "grade": 0,
+   "mode": "ai",
+   "name": "기격(氣擊)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_ring": {
+   "key": "sk_dg_m_ring",
+   "grade": 0,
+   "mode": "ai",
+   "name": "기환(氣環)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_res": {
+   "key": "sk_dg_m_res",
+   "grade": 0,
+   "mode": "ai",
+   "name": "기수련(氣修)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_wall": {
+   "key": "sk_dg_m_wall",
+   "grade": 0,
+   "mode": "ai",
+   "name": "철벽(鐵壁)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_lead": {
+   "key": "sk_dg_m_lead",
+   "grade": 0,
+   "mode": "ai",
+   "name": "통솔(統率)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_horde": {
+   "key": "sk_dg_y_horde",
+   "grade": 0,
+   "mode": "ai",
+   "name": "음병(陰兵)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_golem": {
+   "key": "sk_dg_y_golem",
+   "grade": 0,
+   "mode": "ai",
+   "name": "토우(土偶)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_curse": {
+   "key": "sk_dg_y_curse",
+   "grade": 0,
+   "mode": "ai",
+   "name": "주박(呪縛)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_wither": {
+   "key": "sk_dg_y_wither",
+   "grade": 0,
+   "mode": "ai",
+   "name": "고독(蠱毒)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_doom": {
+   "key": "sk_dg_y_doom",
+   "grade": 0,
+   "mode": "ai",
+   "name": "멸(滅)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_leech": {
+   "key": "sk_dg_y_leech",
+   "grade": 0,
+   "mode": "ai",
+   "name": "흡정(吸精)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_hex": {
+   "key": "sk_dg_y_hex",
+   "grade": 0,
+   "mode": "ai",
+   "name": "주술(呪術)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_spirit": {
+   "key": "sk_dg_y_spirit",
+   "grade": 0,
+   "mode": "ai",
+   "name": "정신(精神)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_chain": {
+   "key": "sk_dg_a_chain",
+   "grade": 0,
+   "mode": "ai",
+   "name": "연환시(連環矢)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_venom": {
+   "key": "sk_dg_a_venom",
+   "grade": 0,
+   "mode": "ai",
+   "name": "독시(毒矢)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_cripple": {
+   "key": "sk_dg_a_cripple",
+   "grade": 0,
+   "mode": "ai",
+   "name": "파훼시(破毀矢)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_blaze_dash": {
+   "key": "sk_dg_w_blaze_dash",
+   "grade": 0,
+   "mode": "ai",
+   "name": "화염돌진(火焰突進)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_chainfire": {
+   "key": "sk_dg_s_chainfire",
+   "grade": 0,
+   "mode": "ai",
+   "name": "연쇄화염(連鎖火焰)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_fan": {
+   "key": "sk_dg_s_fan",
+   "grade": 0,
+   "mode": "ai",
+   "name": "선풍(扇風)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_spirit": {
+   "key": "sk_dg_s_spirit",
+   "grade": 0,
+   "mode": "ai",
+   "name": "빙정소환(氷精召喚)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_chain": {
+   "key": "sk_dg_m_chain",
+   "grade": 0,
+   "mode": "ai",
+   "name": "연환기격(連環氣擊)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_press": {
+   "key": "sk_dg_m_press",
+   "grade": 0,
+   "mode": "ai",
+   "name": "위압(威壓)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_charge": {
+   "key": "sk_dg_m_charge",
+   "grade": 0,
+   "mode": "ai",
+   "name": "기신보(氣身步)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_chain": {
+   "key": "sk_dg_y_chain",
+   "grade": 0,
+   "mode": "ai",
+   "name": "독쇄(毒鎖)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_ghoststrike": {
+   "key": "sk_dg_y_ghoststrike",
+   "grade": 0,
+   "mode": "ai",
+   "name": "음령타(陰靈打)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_possess": {
+   "key": "sk_dg_y_possess",
+   "grade": 0,
+   "mode": "ai",
+   "name": "귀합(鬼合)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_speedy": {
+   "key": "sk_dg_a_speedy",
+   "grade": 0,
+   "mode": "ai",
+   "name": "속사태세(速射態勢)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_hawk": {
+   "key": "sk_dg_a_hawk",
+   "grade": 0,
+   "mode": "ai",
+   "name": "응사소환(鷹使召喚)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_throw": {
+   "key": "sk_dg_w_throw",
+   "grade": 0,
+   "mode": "ai",
+   "name": "투창(投槍)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_hound": {
+   "key": "sk_dg_w_hound",
+   "grade": 0,
+   "mode": "ai",
+   "name": "군견소환(軍犬召喚)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_blink": {
+   "key": "sk_dg_s_blink",
+   "grade": 0,
+   "mode": "ai",
+   "name": "축지(縮地)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_insight": {
+   "key": "sk_dg_s_insight",
+   "grade": 0,
+   "mode": "ai",
+   "name": "심득(心得)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_javelin": {
+   "key": "sk_dg_m_javelin",
+   "grade": 0,
+   "mode": "ai",
+   "name": "표창(標槍)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_reserve": {
+   "key": "sk_dg_m_reserve",
+   "grade": 0,
+   "mode": "ai",
+   "name": "원군소환(援軍召喚)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_precision": {
+   "key": "sk_dg_m_precision",
+   "grade": 0,
+   "mode": "ai",
+   "name": "필중(必中)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_soulbolt": {
+   "key": "sk_dg_y_soulbolt",
+   "grade": 0,
+   "mode": "ai",
+   "name": "혼탄(魂彈)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_dashshot": {
+   "key": "sk_dg_a_dashshot",
+   "grade": 0,
+   "mode": "ai",
+   "name": "질주사(疾走射)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_firstaid": {
+   "key": "sk_dg_a_firstaid",
+   "grade": 0,
+   "mode": "ai",
+   "name": "응급처치(應急處置)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_intimidate": {
+   "key": "sk_dg_w_intimidate",
+   "grade": 0,
+   "mode": "ai",
+   "name": "위해(威嚇)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_frostcleave": {
+   "key": "sk_dg_w_frostcleave",
+   "grade": 0,
+   "mode": "ai",
+   "name": "빙인참(氷刃斬)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_plague": {
+   "key": "sk_dg_s_plague",
+   "grade": 0,
+   "mode": "ai",
+   "name": "역병(疫病)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_venombolt": {
+   "key": "sk_dg_s_venombolt",
+   "grade": 0,
+   "mode": "ai",
+   "name": "독무탄(毒霧彈)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_flamesaber": {
+   "key": "sk_dg_m_flamesaber",
+   "grade": 0,
+   "mode": "ai",
+   "name": "화도(火刀)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_venomfield": {
+   "key": "sk_dg_m_venomfield",
+   "grade": 0,
+   "mode": "ai",
+   "name": "독진(毒陣)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_frostcharge": {
+   "key": "sk_dg_m_frostcharge",
+   "grade": 0,
+   "mode": "ai",
+   "name": "빙보(氷步)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_thunderdoom": {
+   "key": "sk_dg_y_thunderdoom",
+   "grade": 0,
+   "mode": "ai",
+   "name": "뇌쇄(雷殺)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_hellstrike": {
+   "key": "sk_dg_y_hellstrike",
+   "grade": 0,
+   "mode": "ai",
+   "name": "화령타(火靈打)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_frostchain": {
+   "key": "sk_dg_y_frostchain",
+   "grade": 0,
+   "mode": "ai",
+   "name": "빙쇄(氷鎖)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_emp_bolt": {
+   "key": "sk_dg_a_emp_bolt",
+   "grade": 0,
+   "mode": "ai",
+   "name": "전자시(電子矢)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_emp_nova": {
+   "key": "sk_dg_a_emp_nova",
+   "grade": 0,
+   "mode": "ai",
+   "name": "전자충격파(電子衝擊波)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_emp_chain": {
+   "key": "sk_dg_a_emp_chain",
+   "grade": 0,
+   "mode": "ai",
+   "name": "궤도연환시(軌道連環矢)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_emp_swing": {
+   "key": "sk_dg_w_emp_swing",
+   "grade": 0,
+   "mode": "ai",
+   "name": "전자인(電子刃)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_emp_dash": {
+   "key": "sk_dg_w_emp_dash",
+   "grade": 0,
+   "mode": "ai",
+   "name": "광속돌격(光速突擊)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_emp_nova": {
+   "key": "sk_dg_w_emp_nova",
+   "grade": 0,
+   "mode": "ai",
+   "name": "전자진(電子陣)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_emp_bolt": {
+   "key": "sk_dg_s_emp_bolt",
+   "grade": 0,
+   "mode": "ai",
+   "name": "입자탄(粒子彈)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_emp_nova": {
+   "key": "sk_dg_s_emp_nova",
+   "grade": 0,
+   "mode": "ai",
+   "name": "특이점(特異點)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_emp_chain": {
+   "key": "sk_dg_s_emp_chain",
+   "grade": 0,
+   "mode": "ai",
+   "name": "양자쇄(量子鎖)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_emp_swing": {
+   "key": "sk_dg_m_emp_swing",
+   "grade": 0,
+   "mode": "ai",
+   "name": "전자검(電子劍)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_emp_bolt": {
+   "key": "sk_dg_m_emp_bolt",
+   "grade": 0,
+   "mode": "ai",
+   "name": "위성포(衛星砲)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_emp_chain": {
+   "key": "sk_dg_y_emp_chain",
+   "grade": 0,
+   "mode": "ai",
+   "name": "유령신호(幽靈信號)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_emp_bolt": {
+   "key": "sk_dg_y_emp_bolt",
+   "grade": 0,
+   "mode": "ai",
+   "name": "환영입자탄(幻影粒子彈)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_emp_nova": {
+   "key": "sk_dg_y_emp_nova",
+   "grade": 0,
+   "mode": "ai",
+   "name": "차원진동(次元振動)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_flamedance": {
+   "key": "sk_dg_a_flamedance",
+   "grade": 0,
+   "mode": "ai",
+   "name": "염인무(炎刃舞)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_venomchain": {
+   "key": "sk_dg_a_venomchain",
+   "grade": 0,
+   "mode": "ai",
+   "name": "독쇄시(毒鎖矢)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:a_firerain": {
+   "key": "sk_dg_a_firerain",
+   "grade": 0,
+   "mode": "ai",
+   "name": "화우(火雨)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_blastfire": {
+   "key": "sk_dg_w_blastfire",
+   "grade": 0,
+   "mode": "ai",
+   "name": "폭염진(爆炎陣)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_frostchain": {
+   "key": "sk_dg_w_frostchain",
+   "grade": 0,
+   "mode": "ai",
+   "name": "빙격연환(氷擊連環)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_thundercage": {
+   "key": "sk_dg_s_thundercage",
+   "grade": 0,
+   "mode": "ai",
+   "name": "뇌옥(雷獄)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_flamefan": {
+   "key": "sk_dg_s_flamefan",
+   "grade": 0,
+   "mode": "ai",
+   "name": "화선(火扇)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_chichain": {
+   "key": "sk_dg_s_chichain",
+   "grade": 0,
+   "mode": "ai",
+   "name": "기쇄(氣鎖)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_firestrike": {
+   "key": "sk_dg_m_firestrike",
+   "grade": 0,
+   "mode": "ai",
+   "name": "화표(火標)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_firestorm": {
+   "key": "sk_dg_m_firestorm",
+   "grade": 0,
+   "mode": "ai",
+   "name": "화진(火陣)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:m_frostblade": {
+   "key": "sk_dg_m_frostblade",
+   "grade": 0,
+   "mode": "ai",
+   "name": "빙인(氷刃)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_poisonbolt": {
+   "key": "sk_dg_y_poisonbolt",
+   "grade": 0,
+   "mode": "ai",
+   "name": "독혼탄(毒魂彈)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_frostspirit": {
+   "key": "sk_dg_y_frostspirit",
+   "grade": 0,
+   "mode": "ai",
+   "name": "빙령타(氷靈打)",
+   "group": "skill"
+  },
+  "saga-story:skill:slash": {
+   "key": "sk_st_slash",
+   "grade": 0,
+   "mode": "ai",
+   "name": "연참(連斬)",
+   "group": "skill"
+  },
+  "saga-story:skill:sweep": {
+   "key": "sk_st_sweep",
+   "grade": 0,
+   "mode": "ai",
+   "name": "횡소(橫掃)",
+   "group": "skill"
+  },
+  "saga-story:skill:bolt": {
+   "key": "sk_st_bolt",
+   "grade": 0,
+   "mode": "ai",
+   "name": "기탄(氣彈)",
+   "group": "skill"
+  },
+  "saga-story:skill:brace": {
+   "key": "sk_st_brace",
+   "grade": 0,
+   "mode": "ai",
+   "name": "기합(氣合)",
+   "group": "skill"
+  },
+  "saga-story:skill:w_cut": {
+   "key": "sk_st_w_cut",
+   "grade": 0,
+   "mode": "ai",
+   "name": "참격(斬擊)",
+   "group": "skill"
+  },
+  "saga-story:skill:w_rush": {
+   "key": "sk_st_w_rush",
+   "grade": 0,
+   "mode": "ai",
+   "name": "돌진(突進)",
+   "group": "skill"
+  },
+  "saga-story:skill:w_iron": {
+   "key": "sk_st_w_iron",
+   "grade": 0,
+   "mode": "ai",
+   "name": "철갑(鐵甲)",
+   "group": "skill"
+  },
+  "saga-story:skill:w_edge": {
+   "key": "sk_st_w_edge",
+   "grade": 0,
+   "mode": "ai",
+   "name": "파공검(破空劍)",
+   "group": "skill"
+  },
+  "saga-story:skill:w_vital": {
+   "key": "sk_st_w_vital",
+   "grade": 0,
+   "mode": "ai",
+   "name": "생기결(生氣訣)",
+   "group": "skill"
+  },
+  "saga-story:skill:g_smash": {
+   "key": "sk_st_g_smash",
+   "grade": 0,
+   "mode": "ai",
+   "name": "패왕격(霸王擊)",
+   "group": "skill"
+  },
+  "saga-story:skill:g_roar": {
+   "key": "sk_st_g_roar",
+   "grade": 0,
+   "mode": "ai",
+   "name": "함성(喊聲)",
+   "group": "skill"
+  },
+  "saga-story:skill:g_wall": {
+   "key": "sk_st_g_wall",
+   "grade": 0,
+   "mode": "ai",
+   "name": "철벽(鐵壁)",
+   "group": "skill"
+  },
+  "saga-story:skill:g_edge": {
+   "key": "sk_st_g_edge",
+   "grade": 0,
+   "mode": "ai",
+   "name": "벽공검(劈空劍)",
+   "group": "skill"
+  },
+  "saga-story:skill:g_vital": {
+   "key": "sk_st_g_vital",
+   "grade": 0,
+   "mode": "ai",
+   "name": "회천결(回天訣)",
+   "group": "skill"
+  },
+  "saga-story:skill:n_heaven": {
+   "key": "sk_st_n_heaven",
+   "grade": 0,
+   "mode": "ai",
+   "name": "천붕격(天崩擊)",
+   "group": "skill"
+  },
+  "saga-story:skill:n_charge": {
+   "key": "sk_st_n_charge",
+   "grade": 0,
+   "mode": "ai",
+   "name": "철기돌격(鐵騎突擊)",
+   "group": "skill"
+  },
+  "saga-story:skill:n_banner": {
+   "key": "sk_st_n_banner",
+   "grade": 0,
+   "mode": "ai",
+   "name": "대장기(大將旗)",
+   "group": "skill"
+  },
+  "saga-story:skill:n_edge": {
+   "key": "sk_st_n_edge",
+   "grade": 0,
+   "mode": "ai",
+   "name": "천단검(天斷劍)",
+   "group": "skill"
+  },
+  "saga-story:skill:n_vital": {
+   "key": "sk_st_n_vital",
+   "grade": 0,
+   "mode": "ai",
+   "name": "불사결(不死訣)",
+   "group": "skill"
+  },
+  "saga-story:skill:o_ruin": {
+   "key": "sk_st_o_ruin",
+   "grade": 0,
+   "mode": "ai",
+   "name": "파멸격(破滅擊)",
+   "group": "skill"
+  },
+  "saga-story:skill:o_tremor": {
+   "key": "sk_st_o_tremor",
+   "grade": 0,
+   "mode": "ai",
+   "name": "지열(地裂)",
+   "group": "skill"
+  },
+  "saga-story:skill:o_smite": {
+   "key": "sk_st_o_smite",
+   "grade": 0,
+   "mode": "ai",
+   "name": "벽력돌(霹靂突)",
+   "group": "skill"
+  },
+  "saga-story:skill:o_conquer": {
+   "key": "sk_st_o_conquer",
+   "grade": 0,
+   "mode": "ai",
+   "name": "패천기(覇天旗)",
+   "group": "skill"
+  },
+  "saga-story:skill:o_edge": {
+   "key": "sk_st_o_edge",
+   "grade": 0,
+   "mode": "ai",
+   "name": "파천검(破天劍)",
+   "group": "skill"
+  },
+  "saga-story:skill:o_vital": {
+   "key": "sk_st_o_vital",
+   "grade": 0,
+   "mode": "ai",
+   "name": "재생결(再生訣)",
+   "group": "skill"
+  },
+  "saga-story:skill:a_shot": {
+   "key": "sk_st_a_shot",
+   "grade": 0,
+   "mode": "ai",
+   "name": "사격(射擊)",
+   "group": "skill"
+  },
+  "saga-story:skill:a_double": {
+   "key": "sk_st_a_double",
+   "grade": 0,
+   "mode": "ai",
+   "name": "연사(連射)",
+   "group": "skill"
+  },
+  "saga-story:skill:a_pierce": {
+   "key": "sk_st_a_pierce",
+   "grade": 0,
+   "mode": "ai",
+   "name": "관통시(貫通矢)",
+   "group": "skill"
+  },
+  "saga-story:skill:a_eye": {
+   "key": "sk_st_a_eye",
+   "grade": 0,
+   "mode": "ai",
+   "name": "응안(鷹眼)",
+   "group": "skill"
+  },
+  "saga-story:skill:a_burst": {
+   "key": "sk_st_a_burst",
+   "grade": 0,
+   "mode": "ai",
+   "name": "환시(環矢)",
+   "group": "skill"
+  },
+  "saga-story:skill:s_rain": {
+   "key": "sk_st_s_rain",
+   "grade": 0,
+   "mode": "ai",
+   "name": "전우(箭雨)",
+   "group": "skill"
+  },
+  "saga-story:skill:s_snipe": {
+   "key": "sk_st_s_snipe",
+   "grade": 0,
+   "mode": "ai",
+   "name": "일점사(一點射)",
+   "group": "skill"
+  },
+  "saga-story:skill:s_split": {
+   "key": "sk_st_s_split",
+   "grade": 0,
+   "mode": "ai",
+   "name": "분시(分矢)",
+   "group": "skill"
+  },
+  "saga-story:skill:s_retreat": {
+   "key": "sk_st_s_retreat",
+   "grade": 0,
+   "mode": "ai",
+   "name": "활보사(闊步射)",
+   "group": "skill"
+  },
+  "saga-story:skill:s_burst": {
+   "key": "sk_st_s_burst",
+   "grade": 0,
+   "mode": "ai",
+   "name": "광환시(廣環矢)",
+   "group": "skill"
+  },
+  "saga-story:skill:f_storm": {
+   "key": "sk_st_f_storm",
+   "grade": 0,
+   "mode": "ai",
+   "name": "시우(矢雨)",
+   "group": "skill"
+  },
+  "saga-story:skill:f_pierce": {
+   "key": "sk_st_f_pierce",
+   "grade": 0,
+   "mode": "ai",
+   "name": "파천시(破天矢)",
+   "group": "skill"
+  },
+  "saga-story:skill:f_volley": {
+   "key": "sk_st_f_volley",
+   "grade": 0,
+   "mode": "ai",
+   "name": "만시(萬矢)",
+   "group": "skill"
+  },
+  "saga-story:skill:f_focus": {
+   "key": "sk_st_f_focus",
+   "grade": 0,
+   "mode": "ai",
+   "name": "정심(定心)",
+   "group": "skill"
+  },
+  "saga-story:skill:f_retreat": {
+   "key": "sk_st_f_retreat",
+   "grade": 0,
+   "mode": "ai",
+   "name": "답공사(踏空射)",
+   "group": "skill"
+  },
+  "saga-story:skill:f_burst": {
+   "key": "sk_st_f_burst",
+   "grade": 0,
+   "mode": "ai",
+   "name": "천환시(天環矢)",
+   "group": "skill"
+  },
+  "saga-story:skill:h_tempest": {
+   "key": "sk_st_h_tempest",
+   "grade": 0,
+   "mode": "ai",
+   "name": "천사우(天射雨)",
+   "group": "skill"
+  },
+  "saga-story:skill:h_zenith": {
+   "key": "sk_st_h_zenith",
+   "grade": 0,
+   "mode": "ai",
+   "name": "궁천합(弓天合)",
+   "group": "skill"
+  },
+  "saga-story:skill:h_retreat": {
+   "key": "sk_st_h_retreat",
+   "grade": 0,
+   "mode": "ai",
+   "name": "익보사(翼步射)",
+   "group": "skill"
+  },
+  "saga-story:skill:h_burst": {
+   "key": "sk_st_h_burst",
+   "grade": 0,
+   "mode": "ai",
+   "name": "극환시(極環矢)",
+   "group": "skill"
+  },
+  "saga-story:skill:r_twin": {
+   "key": "sk_st_r_twin",
+   "grade": 0,
+   "mode": "ai",
+   "name": "쌍참(雙斬)",
+   "group": "skill"
+  },
+  "saga-story:skill:r_knife": {
+   "key": "sk_st_r_knife",
+   "grade": 0,
+   "mode": "ai",
+   "name": "비도(飛刀)",
+   "group": "skill"
+  },
+  "saga-story:skill:r_step": {
+   "key": "sk_st_r_step",
+   "grade": 0,
+   "mode": "ai",
+   "name": "은신보(隱身步)",
+   "group": "skill"
+  },
+  "saga-story:skill:r_whirl": {
+   "key": "sk_st_r_whirl",
+   "grade": 0,
+   "mode": "ai",
+   "name": "선풍각(旋風脚)",
+   "group": "skill"
+  },
+  "saga-story:skill:r_dart": {
+   "key": "sk_st_r_dart",
+   "grade": 0,
+   "mode": "ai",
+   "name": "관통표(貫通鏢)",
+   "group": "skill"
+  },
+  "saga-story:skill:x_storm": {
+   "key": "sk_st_x_storm",
+   "grade": 0,
+   "mode": "ai",
+   "name": "난무(亂舞)",
+   "group": "skill"
+  },
+  "saga-story:skill:x_fan": {
+   "key": "sk_st_x_fan",
+   "grade": 0,
+   "mode": "ai",
+   "name": "만천화우(滿天花雨)",
+   "group": "skill"
+  },
+  "saga-story:skill:x_whirl": {
+   "key": "sk_st_x_whirl",
+   "grade": 0,
+   "mode": "ai",
+   "name": "질풍각(疾風脚)",
+   "group": "skill"
+  },
+  "saga-story:skill:x_dart": {
+   "key": "sk_st_x_dart",
+   "grade": 0,
+   "mode": "ai",
+   "name": "암습표(暗襲鏢)",
+   "group": "skill"
+  },
+  "saga-story:skill:v_blur": {
+   "key": "sk_st_v_blur",
+   "grade": 0,
+   "mode": "ai",
+   "name": "잔영(殘影)",
+   "group": "skill"
+  },
+  "saga-story:skill:v_petal": {
+   "key": "sk_st_v_petal",
+   "grade": 0,
+   "mode": "ai",
+   "name": "낙화(落花)",
+   "group": "skill"
+  },
+  "saga-story:skill:v_void": {
+   "key": "sk_st_v_void",
+   "grade": 0,
+   "mode": "ai",
+   "name": "허공답보(虛空踏步)",
+   "group": "skill"
+  },
+  "saga-story:skill:v_mark": {
+   "key": "sk_st_v_mark",
+   "grade": 0,
+   "mode": "ai",
+   "name": "사혼(死魂)",
+   "group": "skill"
+  },
+  "saga-story:skill:v_whirl": {
+   "key": "sk_st_v_whirl",
+   "grade": 0,
+   "mode": "ai",
+   "name": "광풍각(狂風脚)",
+   "group": "skill"
+  },
+  "saga-story:skill:v_dart": {
+   "key": "sk_st_v_dart",
+   "grade": 0,
+   "mode": "ai",
+   "name": "귀표(鬼鏢)",
+   "group": "skill"
+  },
+  "saga-story:skill:d_carve": {
+   "key": "sk_st_d_carve",
+   "grade": 0,
+   "mode": "ai",
+   "name": "팔도(八刀)",
+   "group": "skill"
+  },
+  "saga-story:skill:d_curse": {
+   "key": "sk_st_d_curse",
+   "grade": 0,
+   "mode": "ai",
+   "name": "명왕부(冥王符)",
+   "group": "skill"
+  },
+  "saga-story:skill:d_whirl": {
+   "key": "sk_st_d_whirl",
+   "grade": 0,
+   "mode": "ai",
+   "name": "절명풍(絶命風)",
+   "group": "skill"
+  },
+  "saga-story:skill:d_dart": {
+   "key": "sk_st_d_dart",
+   "grade": 0,
+   "mode": "ai",
+   "name": "명표(冥鏢)",
+   "group": "skill"
+  },
+  "saga-story:skill:m_bolt": {
+   "key": "sk_st_m_bolt",
+   "grade": 0,
+   "mode": "ai",
+   "name": "뇌전(雷電)",
+   "group": "skill"
+  },
+  "saga-story:skill:m_heal": {
+   "key": "sk_st_m_heal",
+   "grade": 0,
+   "mode": "ai",
+   "name": "치유(治癒)",
+   "group": "skill"
+  },
+  "saga-story:skill:m_talis": {
+   "key": "sk_st_m_talis",
+   "grade": 0,
+   "mode": "ai",
+   "name": "부적(符籍)",
+   "group": "skill"
+  },
+  "saga-story:skill:m_orb": {
+   "key": "sk_st_m_orb",
+   "grade": 0,
+   "mode": "ai",
+   "name": "마탄(魔彈)",
+   "group": "skill"
+  },
+  "saga-story:skill:p_quake": {
+   "key": "sk_st_p_quake",
+   "grade": 0,
+   "mode": "ai",
+   "name": "지진(地震)",
+   "group": "skill"
+  },
+  "saga-story:skill:p_beam": {
+   "key": "sk_st_p_beam",
+   "grade": 0,
+   "mode": "ai",
+   "name": "천뢰(天雷)",
+   "group": "skill"
+  },
+  "saga-story:skill:p_ward": {
+   "key": "sk_st_p_ward",
+   "grade": 0,
+   "mode": "ai",
+   "name": "호신부(護身符)",
+   "group": "skill"
+  },
+  "saga-story:skill:p_step": {
+   "key": "sk_st_p_step",
+   "grade": 0,
+   "mode": "ai",
+   "name": "축지술(縮地術)",
+   "group": "skill"
+  },
+  "saga-story:skill:i_meteor": {
+   "key": "sk_st_i_meteor",
+   "grade": 0,
+   "mode": "ai",
+   "name": "유성(流星)",
+   "group": "skill"
+  },
+  "saga-story:skill:i_abyss": {
+   "key": "sk_st_i_abyss",
+   "grade": 0,
+   "mode": "ai",
+   "name": "천붕지열(天崩地裂)",
+   "group": "skill"
+  },
+  "saga-story:skill:i_mend": {
+   "key": "sk_st_i_mend",
+   "grade": 0,
+   "mode": "ai",
+   "name": "회춘(回春)",
+   "group": "skill"
+  },
+  "saga-story:skill:i_tao": {
+   "key": "sk_st_i_tao",
+   "grade": 0,
+   "mode": "ai",
+   "name": "태극(太極)",
+   "group": "skill"
+  },
+  "saga-story:skill:i_step": {
+   "key": "sk_st_i_step",
+   "grade": 0,
+   "mode": "ai",
+   "name": "이형보(移形步)",
+   "group": "skill"
+  },
+  "saga-story:skill:i_orb": {
+   "key": "sk_st_i_orb",
+   "grade": 0,
+   "mode": "ai",
+   "name": "유성탄(流星彈)",
+   "group": "skill"
+  },
+  "saga-story:skill:z_starfall": {
+   "key": "sk_st_z_starfall",
+   "grade": 0,
+   "mode": "ai",
+   "name": "낙성우(落星雨)",
+   "group": "skill"
+  },
+  "saga-story:skill:z_collapse": {
+   "key": "sk_st_z_collapse",
+   "grade": 0,
+   "mode": "ai",
+   "name": "건곤붕(乾坤崩)",
+   "group": "skill"
+  },
+  "saga-story:skill:z_rebirth": {
+   "key": "sk_st_z_rebirth",
+   "grade": 0,
+   "mode": "ai",
+   "name": "환생(還生)",
+   "group": "skill"
+  },
+  "saga-story:skill:z_eternity": {
+   "key": "sk_st_z_eternity",
+   "grade": 0,
+   "mode": "ai",
+   "name": "무극(無極)",
+   "group": "skill"
+  },
+  "saga-story:skill:z_orb": {
+   "key": "sk_st_z_orb",
+   "grade": 0,
+   "mode": "ai",
+   "name": "성라탄(星羅彈)",
+   "group": "skill"
+  },
+  "saga-story:skill:p_wrath": {
+   "key": "sk_st_p_wrath",
+   "grade": 0,
+   "mode": "ai",
+   "name": "천멸격(天滅擊)",
+   "group": "skill"
+  },
+  "saga-story:skill:p_banner": {
+   "key": "sk_st_p_banner",
+   "grade": 0,
+   "mode": "ai",
+   "name": "군신강림(軍神降臨)",
+   "group": "skill"
+  },
+  "saga-story:skill:p_sun": {
+   "key": "sk_st_p_sun",
+   "grade": 0,
+   "mode": "ai",
+   "name": "일월시(日月矢)",
+   "group": "skill"
+  },
+  "saga-story:skill:p_gate": {
+   "key": "sk_st_p_gate",
+   "grade": 0,
+   "mode": "ai",
+   "name": "유명문(幽冥門)",
+   "group": "skill"
+  },
+  "saga-story:skill:p_void": {
+   "key": "sk_st_p_void",
+   "grade": 0,
+   "mode": "ai",
+   "name": "태허붕(太虛崩)",
+   "group": "skill"
+  },
+  "saga-story:skill:p_all": {
+   "key": "sk_st_p_all",
+   "grade": 0,
+   "mode": "ai",
+   "name": "만상환생(萬象還生)",
+   "group": "skill"
   }
  }
 }

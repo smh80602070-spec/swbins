@@ -1,0 +1,491 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "story_props_C",
+ "kit": {
+  "spec": "sprite",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "sp_forest_lamp",
+   "seed": 2732426552,
+   "prompt": "(lamp post:1.15), old paper lantern style, no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 forest 소품 lamp"
+  },
+  {
+   "id": "sp_forest_sign",
+   "seed": 711117472,
+   "prompt": "(signpost fitting mossy forest soil:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 forest 소품 sign"
+  },
+  {
+   "id": "sp_forest_bush",
+   "seed": 906767383,
+   "prompt": "(bush fitting mossy forest soil:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 forest 소품 bush"
+  },
+  {
+   "id": "sp_forest_rock",
+   "seed": 345654898,
+   "prompt": "(rock fitting mossy forest soil:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 forest 소품 rock"
+  },
+  {
+   "id": "sp_forest_crate",
+   "seed": 1564857645,
+   "prompt": "(supply crate fitting mossy forest soil:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 forest 소품 crate"
+  },
+  {
+   "id": "sf_forest_front",
+   "seed": 3725145784,
+   "prompt": "(foreground silhouette band of grass and moss fringe and bushes along the bottom edge:1.15), plain white sky above, empty upper half, no humans, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 forest 앞 층(위 흰 하늘 → 알파)",
+   "width": 1216,
+   "height": 640,
+   "steps": 30,
+   "cfg": 6.0,
+   "spec": "bg"
+  },
+  {
+   "id": "sp_field_meadow_lamp",
+   "seed": 392568050,
+   "prompt": "(lamp post:1.15), solar garden lamp style, no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 field_meadow 소품 lamp"
+  },
+  {
+   "id": "sp_field_meadow_sign",
+   "seed": 2306905835,
+   "prompt": "(signpost fitting green meadow turf:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 field_meadow 소품 sign"
+  },
+  {
+   "id": "sp_field_meadow_bush",
+   "seed": 1205403976,
+   "prompt": "(bush fitting green meadow turf:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 field_meadow 소품 bush"
+  },
+  {
+   "id": "sp_field_meadow_rock",
+   "seed": 567083201,
+   "prompt": "(rock fitting green meadow turf:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 field_meadow 소품 rock"
+  },
+  {
+   "id": "sp_field_meadow_crate",
+   "seed": 3021195978,
+   "prompt": "(supply crate fitting green meadow turf:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 field_meadow 소품 crate"
+  },
+  {
+   "id": "sf_field_meadow_front",
+   "seed": 4047951008,
+   "prompt": "(foreground silhouette band of lush grass fringe with small flowers and bushes along the bottom edge:1.15), plain white sky above, empty upper half, no humans, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 field_meadow 앞 층(위 흰 하늘 → 알파)",
+   "width": 1216,
+   "height": 640,
+   "steps": 30,
+   "cfg": 6.0,
+   "spec": "bg"
+  },
+  {
+   "id": "sp_mountain_shrine_lamp",
+   "seed": 1249502886,
+   "prompt": "(lamp post:1.15), hanging prayer bell style, no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 mountain_shrine 소품 lamp"
+  },
+  {
+   "id": "sp_mountain_shrine_sign",
+   "seed": 942607207,
+   "prompt": "(signpost fitting worn stone path:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 mountain_shrine 소품 sign"
+  },
+  {
+   "id": "sp_mountain_shrine_bush",
+   "seed": 2501599810,
+   "prompt": "(bush fitting worn stone path:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 mountain_shrine 소품 bush"
+  },
+  {
+   "id": "sp_mountain_shrine_rock",
+   "seed": 1233099333,
+   "prompt": "(rock fitting worn stone path:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 mountain_shrine 소품 rock"
+  },
+  {
+   "id": "sp_mountain_shrine_crate",
+   "seed": 3460681456,
+   "prompt": "(supply crate fitting worn stone path:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 mountain_shrine 소품 crate"
+  },
+  {
+   "id": "sf_mountain_shrine_front",
+   "seed": 97592336,
+   "prompt": "(foreground silhouette band of pine needle and moss fringe and bushes along the bottom edge:1.15), plain white sky above, empty upper half, no humans, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 mountain_shrine 앞 층(위 흰 하늘 → 알파)",
+   "width": 1216,
+   "height": 640,
+   "steps": 30,
+   "cfg": 6.0,
+   "spec": "bg"
+  },
+  {
+   "id": "sp_old_battlefield_lamp",
+   "seed": 2391969286,
+   "prompt": "(lamp post:1.15), rusted helmet style, no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 old_battlefield 소품 lamp"
+  },
+  {
+   "id": "sp_old_battlefield_sign",
+   "seed": 1239236807,
+   "prompt": "(signpost fitting trampled brown dirt:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 old_battlefield 소품 sign"
+  },
+  {
+   "id": "sp_old_battlefield_bush",
+   "seed": 159380344,
+   "prompt": "(bush fitting trampled brown dirt:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 old_battlefield 소품 bush"
+  },
+  {
+   "id": "sp_old_battlefield_rock",
+   "seed": 424931718,
+   "prompt": "(rock fitting trampled brown dirt:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 old_battlefield 소품 rock"
+  },
+  {
+   "id": "sp_old_battlefield_crate",
+   "seed": 1310823363,
+   "prompt": "(supply crate fitting trampled brown dirt:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 old_battlefield 소품 crate"
+  },
+  {
+   "id": "sf_old_battlefield_front",
+   "seed": 3492666553,
+   "prompt": "(foreground silhouette band of dry grass fringe with rusted arrowheads and bushes along the bottom edge:1.15), plain white sky above, empty upper half, no humans, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 old_battlefield 앞 층(위 흰 하늘 → 알파)",
+   "width": 1216,
+   "height": 640,
+   "steps": 30,
+   "cfg": 6.0,
+   "spec": "bg"
+  },
+  {
+   "id": "sp_cave_mouth_lamp",
+   "seed": 976752042,
+   "prompt": "(lamp post:1.15), miner hard hat lamp style, no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 cave_mouth 소품 lamp"
+  },
+  {
+   "id": "sp_cave_mouth_sign",
+   "seed": 291702102,
+   "prompt": "(signpost fitting rough gray cave rock floor:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 cave_mouth 소품 sign"
+  },
+  {
+   "id": "sp_cave_mouth_bush",
+   "seed": 2001375414,
+   "prompt": "(bush fitting rough gray cave rock floor:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 cave_mouth 소품 bush"
+  },
+  {
+   "id": "sp_cave_mouth_rock",
+   "seed": 1249525862,
+   "prompt": "(rock fitting rough gray cave rock floor:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 cave_mouth 소품 rock"
+  },
+  {
+   "id": "sp_cave_mouth_crate",
+   "seed": 2871613787,
+   "prompt": "(supply crate fitting rough gray cave rock floor:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 cave_mouth 소품 crate"
+  },
+  {
+   "id": "sf_cave_mouth_front",
+   "seed": 3858733252,
+   "prompt": "(foreground silhouette band of damp moss fringe on stone and bushes along the bottom edge:1.15), plain white sky above, empty upper half, no humans, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 cave_mouth 앞 층(위 흰 하늘 → 알파)",
+   "width": 1216,
+   "height": 640,
+   "steps": 30,
+   "cfg": 6.0,
+   "spec": "bg"
+  },
+  {
+   "id": "sp_deep_cave_lamp",
+   "seed": 36961178,
+   "prompt": "(lamp post:1.15), glowing crystal cluster style, no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 deep_cave 소품 lamp"
+  },
+  {
+   "id": "sp_deep_cave_sign",
+   "seed": 1610061844,
+   "prompt": "(signpost fitting dark wet blue stone floor:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 deep_cave 소품 sign"
+  },
+  {
+   "id": "sp_deep_cave_bush",
+   "seed": 2224102953,
+   "prompt": "(bush fitting dark wet blue stone floor:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 deep_cave 소품 bush"
+  },
+  {
+   "id": "sp_deep_cave_rock",
+   "seed": 1989213906,
+   "prompt": "(rock fitting dark wet blue stone floor:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 deep_cave 소품 rock"
+  },
+  {
+   "id": "sp_deep_cave_crate",
+   "seed": 1210424414,
+   "prompt": "(supply crate fitting dark wet blue stone floor:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 deep_cave 소품 crate"
+  },
+  {
+   "id": "sf_deep_cave_front",
+   "seed": 778073059,
+   "prompt": "(foreground silhouette band of glowing blue crystal fringe and bushes along the bottom edge:1.15), plain white sky above, empty upper half, no humans, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 deep_cave 앞 층(위 흰 하늘 → 알파)",
+   "width": 1216,
+   "height": 640,
+   "steps": 30,
+   "cfg": 6.0,
+   "spec": "bg"
+  },
+  {
+   "id": "sp_fire_gorge_lamp",
+   "seed": 871698734,
+   "prompt": "(lamp post:1.15), brass heat valve style, no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 fire_gorge 소품 lamp"
+  },
+  {
+   "id": "sp_fire_gorge_sign",
+   "seed": 3915129484,
+   "prompt": "(signpost fitting cracked red volcanic rock:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 fire_gorge 소품 sign"
+  },
+  {
+   "id": "sp_fire_gorge_bush",
+   "seed": 1434594736,
+   "prompt": "(bush fitting cracked red volcanic rock:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 fire_gorge 소품 bush"
+  },
+  {
+   "id": "sp_fire_gorge_rock",
+   "seed": 4264765369,
+   "prompt": "(rock fitting cracked red volcanic rock:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 fire_gorge 소품 rock"
+  },
+  {
+   "id": "sp_fire_gorge_crate",
+   "seed": 3534366566,
+   "prompt": "(supply crate fitting cracked red volcanic rock:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 fire_gorge 소품 crate"
+  },
+  {
+   "id": "sf_fire_gorge_front",
+   "seed": 1783202571,
+   "prompt": "(foreground silhouette band of charred ember fringe and bushes along the bottom edge:1.15), plain white sky above, empty upper half, no humans, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 fire_gorge 앞 층(위 흰 하늘 → 알파)",
+   "width": 1216,
+   "height": 640,
+   "steps": 30,
+   "cfg": 6.0,
+   "spec": "bg"
+  },
+  {
+   "id": "sp_ruined_city_lamp",
+   "seed": 2214528897,
+   "prompt": "(lamp post:1.15), broken neon sign style, no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 ruined_city 소품 lamp"
+  },
+  {
+   "id": "sp_ruined_city_sign",
+   "seed": 3291036003,
+   "prompt": "(signpost fitting cracked old city paving stones:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 ruined_city 소품 sign"
+  },
+  {
+   "id": "sp_ruined_city_bush",
+   "seed": 806111472,
+   "prompt": "(bush fitting cracked old city paving stones:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 ruined_city 소품 bush"
+  },
+  {
+   "id": "sp_ruined_city_rock",
+   "seed": 3316474357,
+   "prompt": "(rock fitting cracked old city paving stones:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 ruined_city 소품 rock"
+  },
+  {
+   "id": "sp_ruined_city_crate",
+   "seed": 2391614421,
+   "prompt": "(supply crate fitting cracked old city paving stones:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 ruined_city 소품 crate"
+  },
+  {
+   "id": "sf_ruined_city_front",
+   "seed": 833020979,
+   "prompt": "(foreground silhouette band of weeds and rubble fringe and bushes along the bottom edge:1.15), plain white sky above, empty upper half, no humans, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 ruined_city 앞 층(위 흰 하늘 → 알파)",
+   "width": 1216,
+   "height": 640,
+   "steps": 30,
+   "cfg": 6.0,
+   "spec": "bg"
+  },
+  {
+   "id": "sp_orbital_base_lamp",
+   "seed": 144747660,
+   "prompt": "(lamp post:1.15), hologram beacon style, no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 orbital_base 소품 lamp"
+  },
+  {
+   "id": "sp_orbital_base_sign",
+   "seed": 2821665790,
+   "prompt": "(signpost fitting riveted steel deck plates:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 orbital_base 소품 sign"
+  },
+  {
+   "id": "sp_orbital_base_bush",
+   "seed": 4287080600,
+   "prompt": "(bush fitting riveted steel deck plates:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 orbital_base 소품 bush"
+  },
+  {
+   "id": "sp_orbital_base_rock",
+   "seed": 1833643244,
+   "prompt": "(rock fitting riveted steel deck plates:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 orbital_base 소품 rock"
+  },
+  {
+   "id": "sp_orbital_base_crate",
+   "seed": 2128880972,
+   "prompt": "(supply crate fitting riveted steel deck plates:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 orbital_base 소품 crate"
+  },
+  {
+   "id": "sf_orbital_base_front",
+   "seed": 1652486450,
+   "prompt": "(foreground silhouette band of cyan glowing metal trim and bushes along the bottom edge:1.15), plain white sky above, empty upper half, no humans, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 orbital_base 앞 층(위 흰 하늘 → 알파)",
+   "width": 1216,
+   "height": 640,
+   "steps": 30,
+   "cfg": 6.0,
+   "spec": "bg"
+  },
+  {
+   "id": "sp_sky_bridge_lamp",
+   "seed": 1265004937,
+   "prompt": "(lamp post:1.15), wind chime with propeller style, no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 sky_bridge 소품 lamp"
+  },
+  {
+   "id": "sp_sky_bridge_sign",
+   "seed": 3311238151,
+   "prompt": "(signpost fitting white sky-stone bridge tiles:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 sky_bridge 소품 sign"
+  },
+  {
+   "id": "sp_sky_bridge_bush",
+   "seed": 2325291844,
+   "prompt": "(bush fitting white sky-stone bridge tiles:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 sky_bridge 소품 bush"
+  },
+  {
+   "id": "sp_sky_bridge_rock",
+   "seed": 421511930,
+   "prompt": "(rock fitting white sky-stone bridge tiles:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 sky_bridge 소품 rock"
+  },
+  {
+   "id": "sp_sky_bridge_crate",
+   "seed": 2807813910,
+   "prompt": "(supply crate fitting white sky-stone bridge tiles:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 sky_bridge 소품 crate"
+  },
+  {
+   "id": "sf_sky_bridge_front",
+   "seed": 1515209082,
+   "prompt": "(foreground silhouette band of cloud wisp and brass trim and bushes along the bottom edge:1.15), plain white sky above, empty upper half, no humans, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 sky_bridge 앞 층(위 흰 하늘 → 알파)",
+   "width": 1216,
+   "height": 640,
+   "steps": 30,
+   "cfg": 6.0,
+   "spec": "bg"
+  }
+ ]
+}

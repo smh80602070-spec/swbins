@@ -1,0 +1,321 @@
+{
+ "name": "story_tiles_C",
+ "spec": "tile",
+ "note": "K-0135 ① 4종횡 메이플식 타일 — 지역 10 × 땅·벽·테 + 묶음 3 × 발판·밧줄·사다리 = 39",
+ "items": [
+  {
+   "id": "st_forest_ground",
+   "spec": "tile",
+   "subject": "mossy forest soil with roots and fallen leaves",
+   "subject_ko": "4종횡 forest 땅",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_forest_wall",
+   "spec": "tile",
+   "subject": "stacked mossy logs wall",
+   "subject_ko": "4종횡 forest 벽",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_forest_edge",
+   "spec": "sprite",
+   "width": 1216,
+   "height": 384,
+   "subject": "horizontal strip of grass and moss fringe, long thin band, side view",
+   "subject_ko": "4종횡 forest 땅 위 테 띠(알파)",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "st_field_meadow_ground",
+   "spec": "tile",
+   "subject": "green meadow turf with tiny wildflowers",
+   "subject_ko": "4종횡 field_meadow 땅",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_field_meadow_wall",
+   "spec": "tile",
+   "subject": "packed earth bank with grass roots",
+   "subject_ko": "4종횡 field_meadow 벽",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_field_meadow_edge",
+   "spec": "sprite",
+   "width": 1216,
+   "height": 384,
+   "subject": "horizontal strip of lush grass fringe with small flowers, long thin band, side view",
+   "subject_ko": "4종횡 field_meadow 땅 위 테 띠(알파)",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "st_mountain_shrine_ground",
+   "spec": "tile",
+   "subject": "worn stone path with pine needles",
+   "subject_ko": "4종횡 mountain_shrine 땅",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_mountain_shrine_wall",
+   "spec": "tile",
+   "subject": "old shrine stone wall with red wood beams",
+   "subject_ko": "4종횡 mountain_shrine 벽",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_mountain_shrine_edge",
+   "spec": "sprite",
+   "width": 1216,
+   "height": 384,
+   "subject": "horizontal strip of pine needle and moss fringe, long thin band, side view",
+   "subject_ko": "4종횡 mountain_shrine 땅 위 테 띠(알파)",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "st_old_battlefield_ground",
+   "spec": "tile",
+   "subject": "trampled brown dirt with broken arrows",
+   "subject_ko": "4종횡 old_battlefield 땅",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_old_battlefield_wall",
+   "spec": "tile",
+   "subject": "wooden palisade stakes",
+   "subject_ko": "4종횡 old_battlefield 벽",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_old_battlefield_edge",
+   "spec": "sprite",
+   "width": 1216,
+   "height": 384,
+   "subject": "horizontal strip of dry grass fringe with rusted arrowheads, long thin band, side view",
+   "subject_ko": "4종횡 old_battlefield 땅 위 테 띠(알파)",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "st_cave_mouth_ground",
+   "spec": "tile",
+   "subject": "rough gray cave rock floor with pebbles",
+   "subject_ko": "4종횡 cave_mouth 땅",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_cave_mouth_wall",
+   "spec": "tile",
+   "subject": "layered gray cave rock wall",
+   "subject_ko": "4종횡 cave_mouth 벽",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_cave_mouth_edge",
+   "spec": "sprite",
+   "width": 1216,
+   "height": 384,
+   "subject": "horizontal strip of damp moss fringe on stone, long thin band, side view",
+   "subject_ko": "4종횡 cave_mouth 땅 위 테 띠(알파)",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "st_deep_cave_ground",
+   "spec": "tile",
+   "subject": "dark wet blue stone floor with glowing crystals",
+   "subject_ko": "4종횡 deep_cave 땅",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_deep_cave_wall",
+   "spec": "tile",
+   "subject": "dark blue crystal cave wall",
+   "subject_ko": "4종횡 deep_cave 벽",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_deep_cave_edge",
+   "spec": "sprite",
+   "width": 1216,
+   "height": 384,
+   "subject": "horizontal strip of glowing blue crystal fringe, long thin band, side view",
+   "subject_ko": "4종횡 deep_cave 땅 위 테 띠(알파)",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "st_fire_gorge_ground",
+   "spec": "tile",
+   "subject": "cracked red volcanic rock with ember glow",
+   "subject_ko": "4종횡 fire_gorge 땅",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_fire_gorge_wall",
+   "spec": "tile",
+   "subject": "dark basalt column wall with lava cracks",
+   "subject_ko": "4종횡 fire_gorge 벽",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_fire_gorge_edge",
+   "spec": "sprite",
+   "width": 1216,
+   "height": 384,
+   "subject": "horizontal strip of charred ember fringe, long thin band, side view",
+   "subject_ko": "4종횡 fire_gorge 땅 위 테 띠(알파)",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "st_ruined_city_ground",
+   "spec": "tile",
+   "subject": "cracked old city paving stones with weeds",
+   "subject_ko": "4종횡 ruined_city 땅",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_ruined_city_wall",
+   "spec": "tile",
+   "subject": "crumbling brick wall with vines",
+   "subject_ko": "4종횡 ruined_city 벽",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_ruined_city_edge",
+   "spec": "sprite",
+   "width": 1216,
+   "height": 384,
+   "subject": "horizontal strip of weeds and rubble fringe, long thin band, side view",
+   "subject_ko": "4종횡 ruined_city 땅 위 테 띠(알파)",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "st_orbital_base_ground",
+   "spec": "tile",
+   "subject": "riveted steel deck plates with glowing cyan seams",
+   "subject_ko": "4종횡 orbital_base 땅",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_orbital_base_wall",
+   "spec": "tile",
+   "subject": "sci-fi bulkhead panels with vents",
+   "subject_ko": "4종횡 orbital_base 벽",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_orbital_base_edge",
+   "spec": "sprite",
+   "width": 1216,
+   "height": 384,
+   "subject": "horizontal strip of cyan glowing metal trim, long thin band, side view",
+   "subject_ko": "4종횡 orbital_base 땅 위 테 띠(알파)",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "st_sky_bridge_ground",
+   "spec": "tile",
+   "subject": "white sky-stone bridge tiles with gold inlay",
+   "subject_ko": "4종횡 sky_bridge 땅",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_sky_bridge_wall",
+   "spec": "tile",
+   "subject": "white marble railing wall with brass rivets",
+   "subject_ko": "4종횡 sky_bridge 벽",
+   "extra": "no humans"
+  },
+  {
+   "id": "st_sky_bridge_edge",
+   "spec": "sprite",
+   "width": 1216,
+   "height": 384,
+   "subject": "horizontal strip of cloud wisp and brass trim, long thin band, side view",
+   "subject_ko": "4종횡 sky_bridge 땅 위 테 띠(알파)",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "st_wood_plat",
+   "spec": "sprite",
+   "width": 1152,
+   "height": 384,
+   "subject": "long weathered wooden plank, side view, horizontal",
+   "subject_ko": "wood 발판",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "st_wood_rope",
+   "spec": "sprite",
+   "width": 384,
+   "height": 1152,
+   "subject": "single vertical thick hemp rope hanging straight down",
+   "subject_ko": "wood 밧줄",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "st_wood_ladder",
+   "spec": "sprite",
+   "width": 384,
+   "height": 1152,
+   "subject": "old wooden ladder, front view, vertical",
+   "subject_ko": "wood 사다리",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "st_stone_plat",
+   "spec": "sprite",
+   "width": 1152,
+   "height": 384,
+   "subject": "long flat stone slab ledge, side view, horizontal",
+   "subject_ko": "stone 발판",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "st_stone_rope",
+   "spec": "sprite",
+   "width": 384,
+   "height": 1152,
+   "subject": "single vertical iron chain hanging straight down",
+   "subject_ko": "stone 밧줄",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "st_stone_ladder",
+   "spec": "sprite",
+   "width": 384,
+   "height": 1152,
+   "subject": "iron rung ladder bolted to stone, front view, vertical",
+   "subject_ko": "stone 사다리",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "st_metal_plat",
+   "spec": "sprite",
+   "width": 1152,
+   "height": 384,
+   "subject": "long steel catwalk girder with cyan light strip, side view, horizontal",
+   "subject_ko": "metal 발판",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "st_metal_rope",
+   "spec": "sprite",
+   "width": 384,
+   "height": 1152,
+   "subject": "single vertical steel cable with clamps hanging straight down",
+   "subject_ko": "metal 밧줄",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "st_metal_ladder",
+   "spec": "sprite",
+   "width": 384,
+   "height": 1152,
+   "subject": "steel maintenance ladder, front view, vertical",
+   "subject_ko": "metal 사다리",
+   "extra": "no humans, isolated"
+  }
+ ],
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4
+}

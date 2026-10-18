@@ -1,0 +1,21 @@
+{
+ "id": "sk_st_p_void",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, (dark moon:1.15), paper talisman, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+ "negative_prompt": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+ "seed": 1203341745,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "euler_ancestral/normal",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 94.1,
+ "date": "2026-10-18",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "ticket": "K-0118",
+ "placed_by": "tools/ai-art/place_icons.py"
+}
