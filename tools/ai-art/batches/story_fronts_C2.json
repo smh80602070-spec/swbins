@@ -1,0 +1,30 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "story_fronts_C2",
+ "kit": {
+  "spec": "sprite",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "sf_fire_gorge_front",
+   "seed": 1783202571,
+   "prompt": "(low row of dry thorny bushes:1.15), dark lava rocks, smoldering embers, horizontal strip, side view, flat bottom edge, dense, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 fire_gorge 앞 층(낮은 가시덤불·용암 바위 띠)",
+   "width": 1536,
+   "height": 512
+  }
+ ]
+}

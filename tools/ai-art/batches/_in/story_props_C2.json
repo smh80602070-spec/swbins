@@ -1,0 +1,5 @@
+{"name": "story_props_C2", "spec": "sprite", "note": "K-0135 ② 다시 — 1차 주제 '<X> fitting <땅 재질>' 이 땅 재질만 그려 후보 넷이 다 바위·금속판이던 2종. 물건을 앞에, 지역 맛은 뒤 태그로", "style": "C", "model": "animagine-xl-4.0-opt", "variants": 4,
+ "items": [
+  {"id": "sp_fire_gorge_crate", "spec": "sprite", "subject": "wooden supply crate, iron bands, scorched edges, soot", "subject_ko": "4종횡 fire_gorge 소품 crate(그을린 나무 상자)", "extra": "no humans, single object"},
+  {"id": "sp_orbital_base_bush", "spec": "sprite", "subject": "potted shrub, metal planter box, leafy green bush, rivets", "subject_ko": "4종횡 orbital_base 소품 bush(금속 화분 덤불)", "extra": "no humans, single object"}
+ ]}

@@ -133,6 +133,16 @@ def vertical_piece(p, holes=0.0):
     s = crop_alpha(cut_bg(Image.open(p), holes=holes))   # 사다리만 갇힌 칸 지움 — 밝은 밧줄·발판은 속살까지 지워진다
     s = s.resize((max(8, round(s.width * (T * 3) / s.height)), T * 3), Image.LANCZOS)
     mid = s.crop((0, T, s.width, T * 2))
+    if holes:   # 사다리 — 가로대 간격이 T 로 안 나뉘면 위·아래 줄이 달라 이음이 깨진다 → 위아래 줄이 같은 창(높이 0.7~1.3T)을 찾아 T 로
+        a = np.asarray(s).astype(np.float32)
+        best = None
+        for h in range(round(T * 0.7), round(T * 1.3) + 1):
+            for y in range(T // 2, s.height - h - T // 2):
+                d = np.abs(a[y] - a[y + h]).mean()
+                if best is None or d < best[0]:
+                    best = (d, y, h)
+        if best:
+            mid = s.crop((0, best[1], s.width, best[1] + best[2])).resize((s.width, T), Image.LANCZOS)
     cv = Image.new('RGBA', (T, T), (0, 0, 0, 0))
     k = min(1.0, (T - 4) / mid.width)
     mid = mid.resize((max(1, round(mid.width * k)), T), Image.LANCZOS)
@@ -149,8 +159,38 @@ def prop(p, S=96):
     return cv
 
 
+def front_strip(im, W=1920, H=200, overlap=0.08):
+    """K-0135 ②-b 다시 — sprite 규격 가로 띠(회녹 바탕): 바탕 지우기 → 높이 H 로 → 조금씩 겹쳐 W 까지 되풀이
+    (좌우 섞기는 이음 자리에 흐린 잔상을 남겨 안 씀). 아래 띠는 불투명 — 열마다 가장 아래 잎 밑(아래 24줄 안)을 아래 30줄 중앙색 하나로
+    채운다(열마다 제 색을 끌어내리면 세로 줄무늬가 생김). 맨 아래 6줄은 언제나 불투명."""
+    c = crop_alpha(cut_bg(im, holes=0.002))
+    c = c.resize((max(8, round(c.width * H / c.height)), H), Image.LANCZOS)
+    ca = np.asarray(c).copy()                        # 왼끝 겹침 폭만큼 투명으로 흐림 — 원본 가장자리에서 잘린 잎이 세로선으로 안 보이게
+    fw = max(2, round(c.width * overlap))
+    ca[:, :fw, 3] = (ca[:, :fw, 3] * np.linspace(0, 1, fw)[None, :]).astype(np.uint8)
+    c = Image.fromarray(ca, 'RGBA')
+    step = max(1, round(c.width * (1 - overlap)))
+    out = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+    x = -round(c.width * overlap / 2)
+    while x < W:
+        out.alpha_composite(c, (x, 0)) if x >= 0 else out.alpha_composite(c.crop((-x, 0, c.width, H)), (0, 0))
+        x += step
+    a = np.asarray(out).copy()
+    al = a[..., 3] > 128
+    low = a[H - 30:][al[H - 30:]][:, :3]
+    base = (np.median(low, axis=0) if len(low) else np.array([90, 110, 80])).astype(np.uint8)
+    ys = np.where(al.any(axis=0), H - 1 - np.argmax(al[::-1], axis=0), H - 6)
+    for x in range(W):
+        y = min(max(int(ys[x]) + 1, H - 24), H - 6)   # 아래 24줄 안에서만 — 떨어진 관목 머리 밑까지 칠하면 덩어리가 된다
+        a[y:, x, :3] = base
+        a[y:, x, 3] = 255
+    return Image.fromarray(a, 'RGBA')
+
+
 def front(p, W=1920):
     im = Image.open(p).convert('RGB')
+    if im.width >= 2.5 * im.height:                   # 가로 띠(story_fronts_C 1536×512) — 옛 bg 규격(1216×640, 위 흰 하늘)과 비율로 가름
+        return front_strip(im, W)
     a = np.asarray(im).astype(np.int16)
     sky = (a.min(axis=2) >= 225)                       # 흰 하늘
     lab, _ = ndimage.label(sky)

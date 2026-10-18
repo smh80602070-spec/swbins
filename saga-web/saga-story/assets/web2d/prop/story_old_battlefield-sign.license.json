@@ -1,0 +1,22 @@
+{
+ "id": "story_old_battlefield-sign",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, (signpost fitting trampled brown dirt:1.15), no humans, single object, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+ "negative_prompt": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+ "seed": 1239236809,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "euler_ancestral/normal",
+ "size": [
+  96,
+  96
+ ],
+ "seconds": 28.0,
+ "date": "2026-10-18",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "kind": "prop",
+ "packed_by": "tools/ai-art/pack_story2d.py (K-0135)",
+ "source": "sp_old_battlefield_sign_v03.png"
+}

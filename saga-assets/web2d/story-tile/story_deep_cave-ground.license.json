@@ -1,0 +1,23 @@
+{
+ "id": "story_deep_cave-ground",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, (dark wet blue stone floor with glowing crystals:1.15), no humans, seamless texture, tileable, top-down, flat even lighting, no cast shadow, uniform density, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+ "negative_prompt": "text, signature, watermark, blurry, lowres, worst quality, low quality, border, frame, object, character, vignette, perspective, harsh outline, dark palette, gritty, photorealistic, neon",
+ "seed": 2896021244,
+ "steps": 28,
+ "cfg_scale": 5.0,
+ "sampler": "euler_ancestral/normal",
+ "size": [
+  48,
+  48
+ ],
+ "seconds": 26.0,
+ "date": "2026-10-18",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py",
+ "kind": "tile",
+ "packed_by": "tools/ai-art/pack_story2d.py (K-0135)",
+ "source": "st_deep_cave_ground_v04.png"
+}

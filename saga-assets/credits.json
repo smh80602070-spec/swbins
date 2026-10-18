@@ -375,7 +375,7 @@
    "tool": "gen.py (ComfyUI)",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 1325,
+   "count": 1465,
    "where": [
     "saga-assets/icons/license",
     "saga-assets/portraits-expr",
@@ -401,7 +401,7 @@
    "tool": "gen.py (ComfyUI)",
    "model": "z-image-turbo",
    "license": "Apache-2.0",
-   "count": 133,
+   "count": 141,
    "where": [
     "saga-assets/land-go",
     "saga-assets/textures_real/brick",

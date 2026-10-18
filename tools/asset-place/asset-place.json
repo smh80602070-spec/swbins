@@ -317,6 +317,51 @@
    ]
   },
   {
+   "id": "web2d-story-tile",
+   "src": "saga-assets/web2d/story-tile",
+   "include": [
+    "*.png",
+    "*.license.json"
+   ],
+   "note": "K-0135 4종횡 메이플식 타일 80(48px — 땅·벽·땅 위·발판 셋·밧줄·사다리 × 지역 10)",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-story/assets/web2d/tile"
+    }
+   ]
+  },
+  {
+   "id": "web2d-story-prop",
+   "src": "saga-assets/web2d/story-prop",
+   "include": [
+    "*.png",
+    "*.license.json"
+   ],
+   "note": "K-0135 4종횡 발판 소품 50(96px 알파, 발 밑 아래 가운데)",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-story/assets/web2d/prop"
+    }
+   ]
+  },
+  {
+   "id": "web2d-story-front",
+   "src": "saga-assets/web2d/story-front",
+   "include": [
+    "*.webp",
+    "*.license.json"
+   ],
+   "note": "K-0135 4종횡 앞 층 10(1920 폭 알파 — 풀·덤불 실루엣)",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-story/assets/web2d/bg"
+    }
+   ]
+  },
+  {
    "id": "region-pieces",
    "src": "saga-assets/regions/pieces",
    "include": [

@@ -1,0 +1,19 @@
+{
+ "name": "story_fronts_C2",
+ "spec": "sprite",
+ "note": "K-0135 ②-b 불 협곡만 다시 — 1차 띠 넷이 따로 선 나무(앞 층으로 안 맞음) → 낮은 가시덤불·용암 바위 띠",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "items": [
+  {
+   "id": "sf_fire_gorge_front",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "low row of dry thorny bushes, dark lava rocks, smoldering embers, horizontal strip, side view, flat bottom edge, dense",
+   "subject_ko": "4종횡 fire_gorge 앞 층(낮은 가시덤불·용암 바위 띠)",
+   "extra": "no humans, isolated"
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "name": "story_fronts_C",
+ "spec": "sprite",
+ "note": "K-0135 ②-b 다시 — 1차(spec bg)는 프롬프트에 scenery·wide shot·depth 가 붙어 산·구름 풍경 40장(아래 띠 아님) → 땅 위 테(st_*_edge)처럼 sprite 규격 가로 띠 1536×512, 바탕은 cut_bg 로 지움",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "items": [
+  {
+   "id": "sf_forest_front",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "long row of foreground foliage, ferns, moss, leafy bushes, horizontal strip, side view, flat bottom edge, dense",
+   "subject_ko": "4종횡 forest 앞 층(띠 — 바탕 지움)",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "sf_field_meadow_front",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "long row of foreground foliage, tall grass, wildflowers, clover, horizontal strip, side view, flat bottom edge, dense",
+   "subject_ko": "4종횡 field_meadow 앞 층(띠 — 바탕 지움)",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "sf_mountain_shrine_front",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "long row of foreground foliage, bamboo shoots, grass tufts, small stones, horizontal strip, side view, flat bottom edge, dense",
+   "subject_ko": "4종횡 mountain_shrine 앞 층(띠 — 바탕 지움)",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "sf_old_battlefield_front",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "long row of foreground foliage, dry grass, broken wooden stakes, weeds, horizontal strip, side view, flat bottom edge, dense",
+   "subject_ko": "4종횡 old_battlefield 앞 층(띠 — 바탕 지움)",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "sf_cave_mouth_front",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "long row of foreground foliage, mossy rocks, ferns, roots, horizontal strip, side view, flat bottom edge, dense",
+   "subject_ko": "4종횡 cave_mouth 앞 층(띠 — 바탕 지움)",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "sf_deep_cave_front",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "long row of foreground foliage, crystal clusters, glowing mushrooms, moss, horizontal strip, side view, flat bottom edge, dense",
+   "subject_ko": "4종횡 deep_cave 앞 층(띠 — 바탕 지움)",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "sf_fire_gorge_front",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "long row of foreground foliage, charred rocks, dry thorny shrubs, embers, horizontal strip, side view, flat bottom edge, dense",
+   "subject_ko": "4종횡 fire_gorge 앞 층(띠 — 바탕 지움)",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "sf_ruined_city_front",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "long row of foreground foliage, rubble, broken bricks, weeds, horizontal strip, side view, flat bottom edge, dense",
+   "subject_ko": "4종횡 ruined_city 앞 층(띠 — 바탕 지움)",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "sf_orbital_base_front",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "long row of foreground foliage, metal pipes, cables, small potted plants, horizontal strip, side view, flat bottom edge, dense",
+   "subject_ko": "4종횡 orbital_base 앞 층(띠 — 바탕 지움)",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "sf_sky_bridge_front",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "long row of foreground foliage, fluffy cloud tufts, small flowers, horizontal strip, side view, flat bottom edge, dense",
+   "subject_ko": "4종횡 sky_bridge 앞 층(띠 — 바탕 지움)",
+   "extra": "no humans, isolated"
+  }
+ ]
+}

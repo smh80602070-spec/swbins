@@ -1,0 +1,111 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "story_fronts_C",
+ "kit": {
+  "spec": "sprite",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "sf_forest_front",
+   "seed": 3725145784,
+   "prompt": "(long row of foreground foliage:1.15), ferns, moss, leafy bushes, horizontal strip, side view, flat bottom edge, dense, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 forest 앞 층(띠 — 바탕 지움)",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "sf_field_meadow_front",
+   "seed": 4047951008,
+   "prompt": "(long row of foreground foliage:1.15), tall grass, wildflowers, clover, horizontal strip, side view, flat bottom edge, dense, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 field_meadow 앞 층(띠 — 바탕 지움)",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "sf_mountain_shrine_front",
+   "seed": 97592336,
+   "prompt": "(long row of foreground foliage:1.15), bamboo shoots, grass tufts, small stones, horizontal strip, side view, flat bottom edge, dense, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 mountain_shrine 앞 층(띠 — 바탕 지움)",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "sf_old_battlefield_front",
+   "seed": 3492666553,
+   "prompt": "(long row of foreground foliage:1.15), dry grass, broken wooden stakes, weeds, horizontal strip, side view, flat bottom edge, dense, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 old_battlefield 앞 층(띠 — 바탕 지움)",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "sf_cave_mouth_front",
+   "seed": 3858733252,
+   "prompt": "(long row of foreground foliage:1.15), mossy rocks, ferns, roots, horizontal strip, side view, flat bottom edge, dense, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 cave_mouth 앞 층(띠 — 바탕 지움)",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "sf_deep_cave_front",
+   "seed": 778073059,
+   "prompt": "(long row of foreground foliage:1.15), crystal clusters, glowing mushrooms, moss, horizontal strip, side view, flat bottom edge, dense, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 deep_cave 앞 층(띠 — 바탕 지움)",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "sf_fire_gorge_front",
+   "seed": 1783202571,
+   "prompt": "(long row of foreground foliage:1.15), charred rocks, dry thorny shrubs, embers, horizontal strip, side view, flat bottom edge, dense, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 fire_gorge 앞 층(띠 — 바탕 지움)",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "sf_ruined_city_front",
+   "seed": 833020979,
+   "prompt": "(long row of foreground foliage:1.15), rubble, broken bricks, weeds, horizontal strip, side view, flat bottom edge, dense, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 ruined_city 앞 층(띠 — 바탕 지움)",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "sf_orbital_base_front",
+   "seed": 1652486450,
+   "prompt": "(long row of foreground foliage:1.15), metal pipes, cables, small potted plants, horizontal strip, side view, flat bottom edge, dense, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 orbital_base 앞 층(띠 — 바탕 지움)",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "sf_sky_bridge_front",
+   "seed": 1515209082,
+   "prompt": "(long row of foreground foliage:1.15), fluffy cloud tufts, small flowers, horizontal strip, side view, flat bottom edge, dense, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 sky_bridge 앞 층(띠 — 바탕 지움)",
+   "width": 1536,
+   "height": 512
+  }
+ ]
+}
