@@ -51,7 +51,13 @@ node tools/gen-itemicon-ids.mjs --check || bad '^saga-web/|^saga-assets/icons/' 
 node tools/gen-assets3d-ids.mjs --check || bad '^saga-web/'   # shared/assets GLB 이름 표(W-0021)
 
 echo "== world3d 조립 (saga-go/src/world3d 조각 → js/world3d.js, tools/build-parts.mjs)"
-node tools/build-parts.mjs --check || bad '^saga-web/' 
+bp_out=$(node tools/build-parts.mjs --check 2>&1); bp_rc=$?; printf '%s
+' "$bp_out" | grep -v '^ok '
+if [ $bp_rc -ne 0 ]; then
+  # W-0313 — 조립본이 조각보다 새로운 DIFF(= 조립본을 직접 고침 · 다음 조립에서 사라질 변경)는 범위와 무관하게 FAIL. 조각 쪽이 새로우면(고치는 중) 옛 범위 규칙
+  if printf '%s
+' "$bp_out" | grep -q '조립본이 더 새롭다'; then echo "FAIL 조립본만 고친 변경 — 조각(src/)에 옮기지 않으면 다음 조립에서 사라진다(W-0313)"; fail=1; else bad '^saga-web/'; fi
+fi
 
 echo "== sw.js 캐시 버전 (판별 PLAN §7 함정: js/ 고치고 VERSION 안 올리면 옛 캐시를 계속 본다)"
 for d in "${targets[@]}"; do

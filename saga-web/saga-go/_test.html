@@ -1009,6 +1009,16 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       return dm.join(',') === '54,60,90' && f.hp === f.hpMax - 204 && ('피해 ' + dm.join(' → '));
     });
 
+    t('들판 전투 배선 W-0313 — 원소 시전 이벤트가 2D 몸짓 cast 와 3D Pose_cast 를 실제로 건다(W-0303 이 조립본에서 사라졌던 줄)', function () {
+      var FC = DG.fieldCombat, W3o = DG.world3d, got = null, keep = W3o ? { a: W3o.active, p: W3o.playAnim } : null;
+      if (!W3o || !FC._handle || !FC.anim2d) { return false; }
+      W3o.active = function () { return true; }; W3o.playAnim = function (k, clip) { got = k + ':' + clip; };
+      try { FC._handle([{ t: 'skill', el: 'fire', shape: 'circle', x: 0, y: 0, x0: 0, y0: 0, r: 2, n: 0 }], { x: 0, y: 0 }); }
+      catch (e) { got = got || ('예외 ' + e.message); }
+      finally { W3o.active = keep.a; W3o.playAnim = keep.p; }
+      var a2 = FC.anim2d('me');
+      return got === 'me:Pose_cast' && a2 && a2.clip === 'cast' && ('3D ' + got + ' · 2D ' + a2.clip);
+    });
     t('들판 전투 — 물안개은 ×1.5(숙련 보정 포함), 반응 뒤 원소는 지워진다', function () {
       var FC = DG.fieldCombat, S = fcState(), f = fcFoe(S, 'bear', 3, 0);
       S.party[0].el = 'fire'; S.party[0].shape = 'circle';        // ⑫ 모양은 따로 본다 — 여기선 옛 원형

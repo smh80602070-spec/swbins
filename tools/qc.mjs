@@ -81,6 +81,10 @@ function checkBundles() {
   if (games.length) {
     const r = run(process.execPath, [path.join(ROOT, 'tools', 'sync-shared.mjs'), '--check']);
     row('shared 사본', '다섯 판', r.code === 0 ? 'PASS' : 'FAIL', r.code === 0 ? '정본과 같음' : r.out.trim().split('\n').slice(0, 3).join(' | '), r.sec);
+    /* W-0313 — 조립본(js/)이 조각(src/)과 같은가. 조립본만 고친 변경은 다음 조립에서 사라진다 */
+    const b = run(process.execPath, [path.join(ROOT, 'tools', 'build-parts.mjs'), '--check']);
+    const diffs = b.out.split('\n').filter((l) => /^DIFF /.test(l));
+    row('조립본=조각', '다섯 판', b.code === 0 ? 'PASS' : 'FAIL', b.code === 0 ? (b.out.match(/^ok /gm) || []).length + '개 같음' : diffs.slice(0, 3).map((l) => l.slice(5, 140)).join(' | '), b.sec);
   }
 }
 

@@ -4,6 +4,10 @@
  *
  *   node tools/build-parts.mjs           조각(`dir/*.js`, 이름순)을 바이트 그대로 이어 `out` 에 쓴다
  *   node tools/build-parts.mjs --check   쓰지 않고 이어 붙인 것과 `out` 이 같은지만 본다. 다르면 종료 1 (precheck 가 부른다)
+ *   node tools/build-parts.mjs --force   조각보다 새롭고 다른 조립본도 덮어쓴다(그 조립본의 변경을 버릴 때만)
+ *
+ * W-0313 거부 — 조립본(out)이 조각보다 **새롭고 다르면** 덮어쓰지 않고 종료 1(REFUSE). 조립본을 직접 고친 변경이
+ * 다음 조립에서 조용히 사라지던 길(W-0303 원소 시전 몸짓이 js/field-combat.js 에만 들어가 사라짐)을 막는다.
  *
  * 제외: 도구가 파일을 직접 고치는 js — 2나락 `town.js`(맵 편집기 마을 어댑터·콘텐츠 편집기)·판별 `asset3d.js`(콘텐츠 편집기 DEFAULTS 표).
  *
@@ -38,7 +42,9 @@ const TARGETS = [
   { out: 'saga-web/saga-realm/js/war.js', dir: 'saga-web/saga-realm/src/war' },
   { out: 'saga-web/saga-realm/js/rtk.js', dir: 'saga-web/saga-realm/src/rtk' },
 ];
-const check = process.argv.includes('--check');
+const check = process.argv.includes('--check'), force = process.argv.includes('--force');
+/** 조립본이 조각 전부보다 나중에 고쳐졌나 — mtime 기준(내용이 같으면 묻지 않는다) */
+const newerThanParts = (out, dir, parts) => { const o = fs.statSync(out).mtimeMs; return parts.every(f => fs.statSync(path.join(dir, f)).mtimeMs < o); };
 
 let bad = 0;
 for (const t of TARGETS) {
@@ -50,8 +56,9 @@ for (const t of TARGETS) {
   const same = cur && cur.equals(built);
   if (check) {
     if (same) console.log(`ok   ${t.out} = 조각 ${parts.length}개`);
-    else { console.log(`DIFF ${t.out} ≠ ${t.dir}/*.js — 조각을 고쳤으면 node tools/build-parts.mjs, ${path.basename(t.out)} 를 직접 고쳤으면 그 내용을 조각에 옮길 것`); bad++; }
+    else { console.log(`DIFF ${t.out} ≠ ${t.dir}/*.js — ` + (cur && newerThanParts(out, dir, parts) ? `조립본이 더 새롭다: ${path.basename(t.out)} 를 직접 고쳤으면 그 내용을 조각에 옮길 것(조립하면 REFUSE)` : `조각을 고쳤으면 node tools/build-parts.mjs`)); bad++; }
   } else if (same) console.log(`이미 같음 ${t.out}`);
-  else { fs.writeFileSync(out, built); console.log(`조립 ${t.out} ← 조각 ${parts.length}개 (${built.length}B)`); }
+  else if (cur && !force && newerThanParts(out, dir, parts)) { console.log(`REFUSE ${t.out} 조립본이 조각보다 새롭고 다르다 — 그 내용을 ${t.dir}/ 조각에 옮긴 뒤 다시, 버리려면 --force`); bad++; }
+  else { fs.writeFileSync(out, built); console.log(`조립 ${t.out} ← 조각 ${parts.length}개 (${built.length}B)` + (force && cur ? ' (--force)' : '')); }
 }
 process.exit(bad ? 1 : 0);
