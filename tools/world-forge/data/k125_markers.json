@@ -18,16 +18,18 @@
     "lake": "지형 높이 맞춤 고리"
    },
    "new": [
-    "fort",
-    "obs",
-    "ship",
     "hut",
     "sat",
     "snowman",
-    "cable",
-    "cave",
-    "statue → statue_guard_01(네 지역 같이 — 창 든 석상 4.6m)"
-   ]
+    "cave"
+   ],
+   "built": {
+    "fort": "frost_fort_01",
+    "obs": "frost_observatory_01",
+    "ship": "frost_airship_wreck_01",
+    "cable": "frost_cableway_01",
+    "statue": "statue_guard_01"
+   }
   },
   "crossing": {
    "file": "saga-web/saga-go/js/crossing.js",
@@ -49,9 +51,7 @@
    },
    "keep": {},
    "new": [
-    "platform",
     "tgate",
-    "clock",
     "guard",
     "steps",
     "dial",
@@ -59,9 +59,13 @@
     "crystal",
     "pod",
     "ticket",
-    "helm",
-    "gate → gate_light_pillars_01(빛 기둥 12m 둘 + 경계비 — 문짝은 코드, 세 지역 같이)"
-   ]
+    "helm"
+   ],
+   "built": {
+    "platform": "crossing_platform_01",
+    "clock": "crossing_clocktower_01",
+    "gate": "gate_light_pillars_01"
+   }
   },
   "skyport": {
    "file": "saga-web/saga-go/js/skyport.js",
@@ -84,18 +88,20 @@
     "bell": "떨어진 종 — 이야기 진행에 따라 종 몸을 숨김(o.bellBody), 틀 둘은 코드로 둬도 됨"
    },
    "new": [
-    "port",
-    "station",
     "farm",
     "phone",
     "courier",
     "capsule",
     "busstop",
-    "temple → stone_pagoda_01(삼층 돌탑 6.6m — temple_roof_01 은 지붕 2m)",
-    "gate → gate_light_pillars_01(같이)",
     "antenna → lattice_mast_01(8m 격자 탑 — signal_pylon_01 3.4m 와 비가 다름)",
     "cairn → cairn_01(돌 다섯 쌓음 2.5m — rubble_pillar_01 은 무너진 기둥)"
-   ]
+   ],
+   "built": {
+    "port": "skyport_mooring_tower_01",
+    "station": "skyport_station_01",
+    "temple": "stone_pagoda_01",
+    "gate": "gate_light_pillars_01"
+   }
   },
   "sunken": {
    "file": "saga-web/saga-go/js/sunken.js",
@@ -112,18 +118,20 @@
     "dome": "유리 돔 R11 — 안이 보이고 둘레 조각이 문(충돌·door) — 코드 그대로"
    },
    "new": [
-    "palace",
     "lab",
-    "lighthouse",
     "tewak",
     "helmet",
     "pearl",
     "buoy",
     "turtle",
     "plaque",
-    "haetae",
-    "gate → gate_light_pillars_01(같이, 돌 기둥 색)"
-   ]
+    "haetae"
+   ],
+   "built": {
+    "palace": "sunken_palace_01",
+    "lighthouse": "sunken_lighthouse_01",
+    "gate": "gate_light_pillars_01"
+   }
   },
   "amber": {
    "file": "saga-web/saga-go/js/amber.js",
@@ -173,12 +181,14 @@
    "new": [
     "pass",
     "cross",
-    "clock",
     "rail",
-    "vend",
-    "tower → drain_tower_01(합금 심 12m + 녹슨 다리 18m)",
-    "statue → statue_guard_01(같이)"
-   ]
+    "vend"
+   ],
+   "built": {
+    "clock": "amber_clockshop_01",
+    "tower": "drain_tower_01",
+    "statue": "statue_guard_01"
+   }
   },
   "vault": {
    "file": "saga-web/saga-go/js/vault.js",
@@ -209,8 +219,6 @@
    },
    "new": [
     "pass",
-    "vault",
-    "granary",
     "yard",
     "feast",
     "ship",
@@ -222,9 +230,13 @@
     "container",
     "seedpod",
     "caseshard",
-    "pylon → steel_pylon_01(강철 기둥 10m + 빛 구슬은 코드)",
-    "statue → statue_guard_01(같이)"
-   ]
+    "pylon → steel_pylon_01(강철 기둥 10m + 빛 구슬은 코드)"
+   ],
+   "built": {
+    "vault": "vault_seedvault_01",
+    "granary": "vault_granary_01",
+    "statue": "statue_guard_01"
+   }
   },
   "fork": {
    "file": "saga-web/saga-go/js/fork.js",
@@ -251,18 +263,20 @@
    },
    "new": [
     "pass",
-    "loco",
     "lattice",
     "junction",
     "works",
     "laundry",
     "tripod",
     "rails",
-    "shard",
-    "gate → castle_gate_01(망루 둘 6m + 다리 지붕 23m 폭 — stone_arch_01 4.8m 와 비가 다름)",
-    "tower → bell_tower_01(돌 종탑 5×10m, 멈춘 종 — watchtower_01 3.2×8.5 와 비가 다름)",
-    "statue → statue_guard_01(같이)"
-   ]
+    "shard"
+   ],
+   "built": {
+    "loco": "fork_locomotive_01",
+    "gate": "castle_gate_01",
+    "tower": "bell_tower_01",
+    "statue": "statue_guard_01"
+   }
   },
   "stormeye": {
    "file": "saga-web/saga-go/js/stormeye.js",
@@ -308,6 +322,7 @@
  "count": {
   "pair": 24,
   "keep": 12,
-  "new": 83
+  "built": 25,
+  "new": 58
  }
 }
