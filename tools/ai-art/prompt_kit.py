@@ -128,6 +128,8 @@ def build(args):
         elif it.get('spec') and it['spec'] != spec:   # 항목별 규격 — 크기·단계·cfg 도 그 규격을 따른다
             isp = SPECS[it['spec']]
             row.update(width=isp['w'], height=isp['h'], steps=isp['steps'], cfg=isp['cfg'], spec=it['spec'])
+        if it.get('spec') and it['spec'] != spec and sp.get('tiling') and not SPECS[it['spec']].get('tiling'):
+            row['tiling'] = False   # K-0135 — 파일 규격(tile)의 순환 패딩을 sprite 항목이 물려받으면 원색 파편으로 깨진다(크기를 손으로 줘도)
         items.append(row)
     batch = {'model': model, 'out': src.get('out', src.get('name', os.path.splitext(os.path.basename(args.src))[0])),
              'kit': {'spec': spec, 'style': style, 'style_name': STYLES[style]['name']},

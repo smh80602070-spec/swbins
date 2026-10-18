@@ -1,0 +1,8 @@
+{"name": "story_tiles_C2", "spec": "tile", "note": "K-0135 ① 다시 — 1차에서 후보 넷 전부 실패한 5종(밧줄 셋이 추·모래시계 꼴, 돌 사다리 기둥 꼴, 들판 벽 파편). id 는 1차와 같고 out 만 다르다", "style": "C", "model": "animagine-xl-4.0-opt", "variants": 4,
+ "items": [
+  {"id": "st_wood_rope", "spec": "sprite", "width": 384, "height": 1152, "subject": "(braided hemp rope:1.2), close-up, vertical, rope fibers, knots along rope, frayed strands", "subject_ko": "wood 밧줄(땋은 결 근접)", "extra": "no humans, isolated"},
+  {"id": "st_stone_rope", "spec": "sprite", "width": 384, "height": 1152, "subject": "(iron chain:1.2), vertical, hanging chain, chain links, close-up, rusty", "subject_ko": "stone 밧줄 = 쇠사슬", "extra": "no humans, isolated"},
+  {"id": "st_metal_rope", "spec": "sprite", "width": 384, "height": 1152, "subject": "(steel cable:1.2), vertical, braided wire rope, close-up, metal clamps", "subject_ko": "metal 밧줄 = 강철 줄", "extra": "no humans, isolated"},
+  {"id": "st_stone_ladder", "spec": "sprite", "width": 384, "height": 1152, "subject": "(wooden ladder:1.2), iron bands, front view, vertical, two side rails, rungs", "subject_ko": "stone 사다리(쇠띠 두른 나무)", "extra": "no humans, isolated"},
+  {"id": "st_field_meadow_wall", "spec": "tile", "subject": "(dirt cliff face:1.15), soil layers, grass roots, small stones, earth wall", "subject_ko": "4종횡 field_meadow 벽(흙 벼랑)", "extra": "no humans"}
+ ]}

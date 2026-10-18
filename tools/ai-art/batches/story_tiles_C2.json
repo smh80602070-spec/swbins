@@ -1,0 +1,69 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "story_tiles_C2",
+ "kit": {
+  "spec": "tile",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, border, frame, object, character, vignette, perspective",
+  "variants": 4,
+  "tiling": true
+ },
+ "items": [
+  {
+   "id": "st_wood_rope",
+   "seed": 20921115,
+   "prompt": "((braided hemp rope:1.2):1.15), close-up, vertical, rope fibers, knots along rope, frayed strands, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "wood 밧줄(땋은 결 근접)",
+   "width": 384,
+   "height": 1152,
+   "tiling": false
+  },
+  {
+   "id": "st_stone_rope",
+   "seed": 2373696047,
+   "prompt": "((iron chain:1.2):1.15), vertical, hanging chain, chain links, close-up, rusty, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "stone 밧줄 = 쇠사슬",
+   "width": 384,
+   "height": 1152,
+   "tiling": false
+  },
+  {
+   "id": "st_metal_rope",
+   "seed": 2895860727,
+   "prompt": "((steel cable:1.2):1.15), vertical, braided wire rope, close-up, metal clamps, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "metal 밧줄 = 강철 줄",
+   "width": 384,
+   "height": 1152,
+   "tiling": false
+  },
+  {
+   "id": "st_stone_ladder",
+   "seed": 904313595,
+   "prompt": "((wooden ladder:1.2):1.15), iron bands, front view, vertical, two side rails, rungs, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "stone 사다리(쇠띠 두른 나무)",
+   "width": 384,
+   "height": 1152,
+   "tiling": false
+  },
+  {
+   "id": "st_field_meadow_wall",
+   "seed": 2309168498,
+   "prompt": "((dirt cliff face:1.15):1.15), soil layers, grass roots, small stones, earth wall, no humans, seamless texture, tileable, top-down, flat even lighting, no cast shadow, uniform density, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, border, frame, object, character, vignette, perspective, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 field_meadow 벽(흙 벼랑)"
+  }
+ ]
+}

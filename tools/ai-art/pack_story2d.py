@@ -57,8 +57,9 @@ def save(im, path, lic, src):
     json.dump(lic, open(os.path.splitext(path)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 
 
-def cut_bg(im, tol=34, keep_ratio=0.04):
-    """가장자리 색에서 이어진 비슷한 색을 지운다 → RGBA. 떠 있는 작은 덩어리(가장 큰 것의 keep_ratio 미만)도 지운다."""
+def cut_bg(im, tol=34, keep_ratio=0.04, holes=0.0):
+    """가장자리 색에서 이어진 비슷한 색을 지운다 → RGBA. 떠 있는 작은 덩어리(가장 큰 것의 keep_ratio 미만)도 지운다.
+    holes > 0 이면 가장자리와 안 이어진 배경색 칸도(넓이 ≥ 그림의 holes 비율) 지운다 — 사다리 가로대 사이처럼 갇힌 배경(K-0135)."""
     a = np.asarray(im.convert('RGB')).astype(np.int16)
     border = np.concatenate([a[0], a[-1], a[:, 0], a[:, -1]])
     bg = np.median(border, axis=0)
@@ -66,6 +67,10 @@ def cut_bg(im, tol=34, keep_ratio=0.04):
     lab, _ = ndimage.label(near)
     edge_labels = set(np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))) - {0}
     bgmask = np.isin(lab, list(edge_labels))
+    if holes > 0:
+        sizes0 = ndimage.sum(np.ones_like(lab), lab, range(1, lab.max() + 1))
+        big = [i + 1 for i, z in enumerate(sizes0) if z >= holes * lab.size]
+        bgmask |= np.isin(lab, big)
     fg = ~bgmask
     lab2, n = ndimage.label(fg, structure=np.ones((3, 3)))
     if n > 1:
@@ -124,8 +129,8 @@ def plat_parts(p):
     return l, wrap_x(m, 0.3), r
 
 
-def vertical_piece(p):
-    s = crop_alpha(cut_bg(Image.open(p)))
+def vertical_piece(p, holes=0.0):
+    s = crop_alpha(cut_bg(Image.open(p), holes=holes))   # 사다리만 갇힌 칸 지움 — 밝은 밧줄·발판은 속살까지 지워진다
     s = s.resize((max(8, round(s.width * (T * 3) / s.height)), T * 3), Image.LANCZOS)
     mid = s.crop((0, T, s.width, T * 2))
     cv = Image.new('RGBA', (T, T), (0, 0, 0, 0))
@@ -174,7 +179,7 @@ def main():
             parts['plat_l'], parts['plat_m'], parts['plat_r'] = plat_parts(P[f'st_{g}_plat'])
         for k in ('rope', 'ladder'):
             if f'st_{g}_{k}' in P:
-                parts[k] = vertical_piece(P[f'st_{g}_{k}'])
+                parts[k] = vertical_piece(P[f'st_{g}_{k}'], 0.002 if k == 'ladder' else 0.0)
         grp_parts[g] = parts
     for reg, g in GROUP.items():
         key = 'story_' + reg
