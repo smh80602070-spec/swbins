@@ -5,13 +5,17 @@
  *   ④ 지평선(farland3d: 타일 밖 2.2km 먼 땅 고리 + 숲 임포스터 8방향 빌보드 + 산 테 — 안개를 km 밖으로, ridge 실루엣은 끔)
  *   ⑤ WebGPU 길(renderer3d: `#limitless,webgpu=1` → 손잡이 go3d.webgpu=1 — 못 켜면 WebGL 로 자동 되돌리고 콘솔 한 줄, stats().renderer 에 종류·이유).
  *   본 게임은 손대지 않는다 — world3d 의 장면에 얹기만 하고, 손잡이 crowd3d.on·weather3d.on 이 0 이면 아무것도 안 한다(기본).
- *   DG.limitless.start({ n, weather, physics, ragdoll, rocks, horizon }) → 몸 GLB 받기·굽기 뒤 scene 에 추가 · weather(kind) → 날씨 바꿈('off' 면 끔) · physics(on) · horizon(on) · stats()
+ *   ⑥ 자동 단계(perf.tier): HIGH 1 · MEDIUM 0.6 · LOW 0.33 을 군중·비 알갱이·래그돌·임포스터 수에 곱한다(auto=0 이면 안 곱함) — 폰은 LOW 로 내려 30fps 를 노린다.
+ *   DG.limitless.start({ n, weather, physics, ragdoll, rocks, horizon, auto }) → 몸 GLB 받기·굽기 뒤 scene 에 추가 · weather(kind) → 날씨 바꿈('off' 면 끔) · physics(on) · horizon(on) · stats()
  */
 (function (global) {
   'use strict';
   var state = { crowd: null, weather: null, raf: 0, ready: false, err: null, ms: 0, shell: null, last: 0, wkind: 'off', rag: null, rocks: null, physOn: false, physMs: 0, spawnT: 0, ragN: 0, rockN: 0, horizonOn: false, ridge0: null };
 
   function three() { return global.THREE || null; }
+  /** 자동 단계 밀도 — perf 가 고른 단계(HIGH/MEDIUM/LOW)에 따라 수를 줄인다 */
+  function density() { var P = global.DG.perf, k = P && P.tier ? P.tier().key : 'HIGH'; return k === 'LOW' ? 0.33 : (k === 'MEDIUM' ? 0.6 : 1); }
+  var autoOn = true;
 
   function pickHero() {
     var D = global.DG.data, ids = ['sg_guanyu', 'kr_yisunsin', 'sg_zhaoyun'];
@@ -24,9 +28,11 @@
     o = o || {};
     var t = three(), W3 = global.DG.world3d, A = global.DG.actor3d, C = global.DG.core;
     if (!t || !W3 || !A) { state.err = 'three/world3d/actor3d 없음'; return false; }
-    if (C && C.setTune) { C.setTune('crowd3d.on', 1); if (o.n) { C.setTune('crowd3d.n', o.n); } }
+    autoOn = o.auto !== undefined ? !!o.auto : true; var dn = autoOn ? density() : 1; state.dens = dn;
+    if (o.n !== undefined) { o.n = Math.round(o.n * dn); }
+    if (C && C.setTune) { C.setTune('crowd3d.on', 1); if (o.n) { C.setTune('crowd3d.n', o.n); } if (dn < 1) { C.setTune('weather3d.n', Math.round(global.DG.weather3d.N() * dn)); C.setTune('far3d.trees', Math.round(2500 * dn)); } }
     stop();
-    state.ragN = o.ragdoll !== undefined ? o.ragdoll : global.DG.ragdoll3d.N(); state.rockN = o.rocks !== undefined ? o.rocks : global.DG.ragdoll3d.ROCKS(); state.physOn = o.physics !== undefined ? !!o.physics : false;
+    state.ragN = Math.round((o.ragdoll !== undefined ? o.ragdoll : global.DG.ragdoll3d.N()) * dn); state.rockN = o.rocks !== undefined ? o.rocks : global.DG.ragdoll3d.ROCKS(); state.physOn = o.physics !== undefined ? !!o.physics : false;
     if (o.horizon !== undefined) { horizon(o.horizon); }
     if (o.weather) { weather(o.weather); }
     if (o.n === 0) { state.ready = true; loop(); return true; }
@@ -39,7 +45,7 @@
       var scene = W3.sceneNode && W3.sceneNode();
       if (shell.userData.assetState === 'glb' && shell.userData.mixer && scene) {
         var pos = C.save.player.pos, me = W3.actorPos && W3.actorPos('me');
-        var cr = global.DG.crowd3d.make(t, shell, { n: o.n || global.DG.crowd3d.N(), radius: o.radius, cx: pos.x, cz: pos.y, scale: me && me.scale ? me.scale : 1, live: state.ragN });
+        var cr = global.DG.crowd3d.make(t, shell, { n: o.n || Math.round(global.DG.crowd3d.N() * dn), radius: o.radius, cx: pos.x, cz: pos.y, scale: me && me.scale ? me.scale : 1, live: state.ragN });
         if (!cr) { state.err = '굽기 실패(클립 없음)'; return; }
         scene.add(cr.group); state.crowd = cr; state.ready = true; state.last = performance.now();
         if (state.physOn) { physics(1); }
@@ -127,7 +133,7 @@
 
   function stats() {
     var c = state.crowd;
-    return { ready: state.ready, err: state.err, n: c ? c.n : 0, meshes: c ? c.meshes : 0, bones: c ? c.bones : 0, frames: c ? c.frames : 0, texKB: c ? Math.round(c.texBytes / 1024) : 0, slots: c ? c.slots : [], ms: +state.ms.toFixed(2), weather: state.wkind, drops: state.weather ? state.weather.n : 0, physics: state.physOn, ragdolls: state.rag ? state.rag.active() : 0, ragN: state.rag ? state.rag.n : 0, rocks: state.rocks ? state.rocks.n : 0, physMs: +state.physMs.toFixed(2), press: global.DG.press3d ? global.DG.press3d.n : 0, horizon: state.horizonOn, far: global.DG.farland3d ? global.DG.farland3d.stats() : null, renderer: global.DG.renderer3d ? { kind: global.DG.renderer3d.kind(), why: global.DG.renderer3d.why(), knob: global.DG.renderer3d.KNOB(), gpu: global.DG.renderer3d.gpuAvailable() } : null };
+    return { ready: state.ready, err: state.err, density: state.dens, tier: global.DG.perf && global.DG.perf.tier ? global.DG.perf.tier().key : null, n: c ? c.n : 0, meshes: c ? c.meshes : 0, bones: c ? c.bones : 0, frames: c ? c.frames : 0, texKB: c ? Math.round(c.texBytes / 1024) : 0, slots: c ? c.slots : [], ms: +state.ms.toFixed(2), weather: state.wkind, drops: state.weather ? state.weather.n : 0, physics: state.physOn, ragdolls: state.rag ? state.rag.active() : 0, ragN: state.rag ? state.rag.n : 0, rocks: state.rocks ? state.rocks.n : 0, physMs: +state.physMs.toFixed(2), press: global.DG.press3d ? global.DG.press3d.n : 0, horizon: state.horizonOn, far: global.DG.farland3d ? global.DG.farland3d.stats() : null, renderer: global.DG.renderer3d ? { kind: global.DG.renderer3d.kind(), why: global.DG.renderer3d.why(), knob: global.DG.renderer3d.KNOB(), gpu: global.DG.renderer3d.gpuAvailable() } : null };
   }
 
   global.DG = global.DG || {};

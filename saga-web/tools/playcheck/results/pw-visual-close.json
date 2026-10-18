@@ -14,9 +14,9 @@
    ],
    "file": "shots/visual-20261007/saga-go-1-world3d.png",
    "px": {
-    "mean": 113.1,
-    "std": 42.6,
-    "bins": 349
+    "mean": 111.9,
+    "std": 43.2,
+    "bins": 351
    },
    "metrics": {
     "on": true,
@@ -24,9 +24,9 @@
     "gl": {
      "calls": 1,
      "tris": 2,
-     "geos": 246,
-     "texs": 325,
-     "progs": 56,
+     "geos": 292,
+     "texs": 436,
+     "progs": 57,
      "w": 1280,
      "h": 720,
      "dpr": 1
@@ -46,7 +46,7 @@
    ],
    "file": "shots/visual-20261007/saga-go-2-close.png",
    "px": {
-    "mean": 104.5,
+    "mean": 104.6,
     "std": 44.2,
     "bins": 410
    },
@@ -56,9 +56,9 @@
     "gl": {
      "calls": 1,
      "tris": 2,
-     "geos": 247,
-     "texs": 325,
-     "progs": 56,
+     "geos": 293,
+     "texs": 436,
+     "progs": 57,
      "w": 1280,
      "h": 720,
      "dpr": 1
@@ -78,9 +78,9 @@
    ],
    "file": "shots/visual-20261007/saga-go-3-duel.png",
    "px": {
-    "mean": 40.2,
+    "mean": 40.3,
     "std": 23.8,
-    "bins": 100
+    "bins": 102
    },
    "metrics": {
     "on": true,
@@ -88,9 +88,9 @@
     "gl": {
      "calls": 1,
      "tris": 2,
-     "geos": 248,
-     "texs": 325,
-     "progs": 56,
+     "geos": 294,
+     "texs": 436,
+     "progs": 57,
      "w": 1280,
      "h": 720,
      "dpr": 1
@@ -109,9 +109,9 @@
    ],
    "file": "shots/visual-20261007/saga-go-4-burst.png",
    "px": {
-    "mean": 112.6,
+    "mean": 112.8,
     "std": 42.3,
-    "bins": 376
+    "bins": 378
    },
    "metrics": {
     "on": true,
@@ -119,9 +119,9 @@
     "gl": {
      "calls": 1,
      "tris": 2,
-     "geos": 249,
-     "texs": 325,
-     "progs": 56,
+     "geos": 295,
+     "texs": 436,
+     "progs": 57,
      "w": 1280,
      "h": 720,
      "dpr": 1
@@ -138,7 +138,7 @@
      "live": true,
      "pool": 27,
      "cap": 48,
-     "alive": 26,
+     "alive": 27,
      "battle": false,
      "shake": 0
     }
@@ -153,9 +153,9 @@
    ],
    "file": "shots/visual-20261007/saga-go-5-2d.png",
    "px": {
-    "mean": 114.1,
-    "std": 41.8,
-    "bins": 467
+    "mean": 112.7,
+    "std": 43.1,
+    "bins": 487
    },
    "metrics": {
     "on": false,
@@ -163,9 +163,9 @@
     "gl": {
      "calls": 1,
      "tris": 2,
-     "geos": 249,
-     "texs": 325,
-     "progs": 56,
+     "geos": 295,
+     "texs": 436,
+     "progs": 57,
      "w": 1280,
      "h": 720,
      "dpr": 1
@@ -180,27 +180,27 @@
   {
    "name": "장면 saga-go 1-world3d 마을 3D(등 뒤 카메라) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":113.1,\"std\":42.6,\"bins\":349},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":1,\"tris\":2,\"geos\":246,\"texs\":325,\"progs\":56,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true}}}"
+   "detail": "{\"px\":{\"mean\":111.9,\"std\":43.2,\"bins\":351},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":1,\"tris\":2,\"geos\":292,\"texs\":436,\"progs\":57,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true}}}"
   },
   {
    "name": "장면 saga-go 2-close 인물 가까이(휠로 당김) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":104.5,\"std\":44.2,\"bins\":410},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":1,\"tris\":2,\"geos\":247,\"texs\":325,\"progs\":56,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true},\"zoom\":0.4038832279793692}}"
+   "detail": "{\"px\":{\"mean\":104.6,\"std\":44.2,\"bins\":410},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":1,\"tris\":2,\"geos\":293,\"texs\":436,\"progs\":57,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true},\"zoom\":0.4038832279793692}}"
   },
   {
    "name": "장면 saga-go 3-duel 결투(실시간 전투) 화면 — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":40.2,\"std\":23.8,\"bins\":100},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":1,\"tris\":2,\"geos\":248,\"texs\":325,\"progs\":56,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true}}}"
+   "detail": "{\"px\":{\"mean\":40.3,\"std\":23.8,\"bins\":102},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":1,\"tris\":2,\"geos\":294,\"texs\":436,\"progs\":57,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true}}}"
   },
   {
    "name": "장면 saga-go 4-burst 전투 연출 알갱이(불꽃·검기·흙먼지) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":112.6,\"std\":42.3,\"bins\":376},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":1,\"tris\":2,\"geos\":249,\"texs\":325,\"progs\":56,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true},\"burst\":{\"n\":27,\"on\":true},\"stats\":{\"on\":true,\"live\":true,\"pool\":27,\"cap\":48,\"alive\":26,\"battle\":false,\"shake\":0}}}"
+   "detail": "{\"px\":{\"mean\":112.8,\"std\":42.3,\"bins\":378},\"metrics\":{\"on\":true,\"tilt\":2,\"gl\":{\"calls\":1,\"tris\":2,\"geos\":295,\"texs\":436,\"progs\":57,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true},\"burst\":{\"n\":27,\"on\":true},\"stats\":{\"on\":true,\"live\":true,\"pool\":27,\"cap\":48,\"alive\":27,\"battle\":false,\"shake\":0}}}"
   },
   {
    "name": "장면 saga-go 5-2d 3D 끔(2D 캔버스로 되돌림) — 화면이 단색이 아니다",
    "ok": true,
-   "detail": "{\"px\":{\"mean\":114.1,\"std\":41.8,\"bins\":467},\"metrics\":{\"on\":false,\"tilt\":2,\"gl\":{\"calls\":1,\"tris\":2,\"geos\":249,\"texs\":325,\"progs\":56,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true}}}"
+   "detail": "{\"px\":{\"mean\":112.7,\"std\":43.1,\"bins\":487},\"metrics\":{\"on\":false,\"tilt\":2,\"gl\":{\"calls\":1,\"tris\":2,\"geos\":295,\"texs\":436,\"progs\":57,\"w\":1280,\"h\":720,\"dpr\":1},\"me\":{\"visible\":true}}}"
   },
   {
    "name": "사가만리 페이지 예외·console.error 없음",

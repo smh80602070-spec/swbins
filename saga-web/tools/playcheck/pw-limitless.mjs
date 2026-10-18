@@ -33,8 +33,8 @@ try {
   const B = `http://127.0.0.1:${PORT}/`;
   /* 품질 높음 고정(pw-gfx 와 같은 손잡이) — 자동이면 첫 멈춤에서 LOW 로 떨어져 집이 민짜가 된다 */
   await page.goto(B + '_demo.html#limitless,n=' + N + ',physics=0,horizon=0,ragdoll=' + RAG + ',rocks=' + ROCKS, { waitUntil: 'load' });
-  await page.evaluate(() => { if (DG.core && DG.core.setTune) { DG.core.setTune('perf.startTier', 'HIGH'); DG.core.setTune('perf.auto', 0); } });
-  await page.reload({ waitUntil: 'load' });
+  /* PC 는 높음 고정(자동이면 첫 멈춤에서 LOW 로 떨어진다) · 폰은 자동 단계 그대로(시연이 밀도를 줄이는지 본다) */
+  await page.evaluate((ph) => { if (DG.perf && DG.perf.pin) { DG.perf.pin(ph ? 'LOW' : 'HIGH'); } }, PHONE);   // 데모는 DG_NO_TUNE 이라 setTune+reload 는 사라진다 — 시연이 2.5초 뒤 서기 전에 단계를 못박는다
   for (let i = 0; i < 90; i++) { await sleep(1000); const st = await page.evaluate(() => DG.limitless && DG.limitless.stats()); if (st && (st.ready || st.err)) { if (st.err) { console.log('ERR', st.err); } break; } }
   await sleep(2500);
   fs.mkdirSync(path.join(HERE, 'shots'), { recursive: true });
@@ -55,16 +55,16 @@ try {
   await page.evaluate(() => { DG.limitless.weather('off'); DG.limitless.stop(); }); await sleep(1500);
   const off = await row('전부 끔(바탕)');
   /* ⑤ WebGPU 손잡이 — 같은 페이지를 webgpu=1 로 다시 열어 렌더러 종류·이유만 적는다(WebGL 빌드라 되돌아와야 정상) */
-  await page.goto(B + '_demo.html#limitless,n=0,physics=0,horizon=0,webgpu=1', { waitUntil: 'load' }); await page.reload({ waitUntil: 'load' }); await sleep(4000);   // 해시만 바뀌면 다시 안 열려 reload
-  out.webgpu = await page.evaluate(() => (DG.limitless && DG.limitless.stats().renderer) || null);
+  if (!PHONE) { await page.goto(B + '_demo.html#limitless,n=0,physics=0,horizon=0,webgpu=1', { waitUntil: 'load' }); await page.reload({ waitUntil: 'load', timeout: 90000 }); await sleep(4000); }   // 해시만 바뀌면 다시 안 열려 reload
+  out.webgpu = PHONE ? null : await page.evaluate(() => (DG.limitless && DG.limitless.stats().renderer) || null); if (!PHONE) { await shot('webgpu'); }
   out.gpuName = on.gpu; out.errors = errs.slice(0, 8); if (errs.length) { console.log('콘솔 오류 ' + errs.length + ': ' + errs.slice(0, 3).join(' | ')); }
   const ms = (a, b) => a.fps && b.fps ? +((1000 / a.fps) - (1000 / b.fps)).toFixed(1) : null;
   out.summary = { fpsCrowd: on.fps, fpsPhys: phys.fps, fpsFar: far.fps, fpsRain: rain.fps, fpsSnow: snow.fps, fpsOff: off.fps, crowdMs: ms(on, off), physMs: ms(phys, on), farMs: ms(far, on), rainMs: ms(rain, on), snowMs: ms(snow, on), callsCrowd: on.calls - off.calls, callsPhys: phys.calls - on.calls, callsFar: far.calls - on.calls, trisFar: far.tris - on.tris, farSt: far.st && far.st.far, callsRain: rain.calls - on.calls, cpuMs: on.st && on.st.ms, physCpuMs: phys.st && phys.st.physMs, ragdolls: phys.st && phys.st.ragdolls, texKB: on.st && on.st.texKB };
-  console.log('장면 | fps | 최악ms | 그리기 | 삼각형 | 힙MB');
-  for (const r of out.rows) { console.log(`${r.name} | ${r.fps} | ${r.worstMs} | ${r.calls} | ${r.tris} | ${r.heapMB}`); }
+  console.log('장면 | fps | 최악ms | 그리기 | 삼각형 | 힙MB | 단계');
+  for (const r of out.rows) { console.log(`${r.name} | ${r.fps} | ${r.worstMs} | ${r.calls} | ${r.tris} | ${r.heapMB} | ${r.tier}${r.st && r.st.density < 1 ? ' ×' + r.st.density : ''}`); }
   console.log('WebGPU 손잡이', JSON.stringify(out.webgpu));
   console.log('GPU', on.gpu, '· 군중', JSON.stringify(on.st), '· 비용 군중', out.summary.crowdMs, 'ms · 물리', out.summary.physMs, 'ms(CPU ' + out.summary.physCpuMs + ', 래그돌 ' + out.summary.ragdolls + ') · 지평선', out.summary.farMs, 'ms(그리기 +' + out.summary.callsFar + ', 삼각형 +' + out.summary.trisFar + ', ' + JSON.stringify(out.summary.farSt) + ') · 비', out.summary.rainMs, 'ms · 눈', out.summary.snowMs, 'ms · 그리기 군중 +' + out.summary.callsCrowd + ' 물리 +' + out.summary.callsPhys + ' 비 +' + out.summary.callsRain);
 } catch (e) { console.log('ERR', e.message); out.err = e.message; }
 fs.mkdirSync(path.join(HERE, 'results'), { recursive: true });
-fs.writeFileSync(path.join(HERE, 'results', 'pw-limitless.json'), JSON.stringify(out, null, 1));
+fs.writeFileSync(path.join(HERE, 'results', 'pw-limitless' + (PHONE ? '-phone' : '') + '.json'), JSON.stringify(out, null, 1));   // PC·폰 결과를 따로
 await browser.close(); srv.kill();

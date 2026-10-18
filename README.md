@@ -47,16 +47,23 @@
 | 자체 제작 도구 | `tools/` | 인물 몸·괴물·소품·땅 재질·초상·소리를 로컬에서 생성 |
 
 <!-- status:begin -->
-웹 다섯 판 기능 등록부 현황(`node tools/status.mjs` 가 덮어씀 · 2026-10-18 08:09Z):
+웹 다섯 판 기능 등록부 현황(`node tools/status.mjs` 가 덮어씀 · 2026-10-18 10:07Z):
 
 | 판 | 기능 | D0 | D1 | D2 | 끝 | 완성도 | WIP | 초과 | 러너 n/m | 표시 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| saga-go | 55 | 0 | 8 | 40 | 47 | 85.5% | 8 | - | 942/942 | - |
+| saga-go | 56 | 0 | 9 | 40 | 47 | 83.9% | 9 | - | 945/945 | - |
 | saga-dungeon | 55 | 0 | 6 | 46 | 49 | 89.1% | 6 | - | 553/553 | - |
 | saga-forest | 52 | 0 | 6 | 43 | 46 | 88.5% | 6 | - | 486/486 | - |
 | saga-story | 37 | 0 | 7 | 27 | 30 | 81.1% | 7 | - | 351/351 | - |
 | saga-realm | 51 | 0 | 6 | 39 | 45 | 88.2% | 6 | - | 414/414 | - |
 <!-- status:end -->
+
+### 웹엔 한계가 없다 — 1만리 기술 시연(W-0310)
+
+브라우저에서 안 된다고 여기는 다섯을 한 들판에 같이 띄운다: 군중 300(인스턴싱 + 뼈 텍스처) · 날씨(GPU 비·눈 2만, 번개, 빛줄기) · 물리(래그돌·굴러가는 돌·풀 눕힘, 외부 라이브러리 없음) · 지평선 2.2km(먼 땅 고리·숲 임포스터·산 테) · WebGPU 손잡이(못 켜면 WebGL 로).
+
+- 주소: <https://smh80602070-spec.github.io/swbins/saga-web/saga-go/_demo.html#limitless> (`,weather=rain` · `,n=600` · `,webgpu=1` 을 붙일 수 있다)
+- 수치(이 PC Radeon Pro 570X 급, HIGH): 다섯 기능 합 +3.6ms · 그리기 +24 · 받는 용량 +32KB · 메모리 +0~30MB — 판 바탕(마을 HIGH 18.9fps)이 병목이라 그쪽이 다음 티켓. 표는 `tasks/sheets/web-limitless-20261018.md`.
 
 트랙마다 상세 상태는 `saga-web/STATE.md`·`saga-godot/docs/PROJECT_STATE.md`·`saga-unity/docs/PROJECT_STATE.md` 에 있습니다.
 

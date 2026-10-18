@@ -527,8 +527,8 @@ setTimeout(function () {
      — 본 게임엔 손잡이 crowd3d.on(기본 0)으로만. 측정은 tools/playcheck/pw-limitless.mjs */
   if (hash.indexOf('limitless') >= 0) {
     var nmL = /n=(\d+)/.exec(hash), nL = nmL ? Math.max(0, Math.min(2000, +nmL[1])) : 300, wL = (/weather=([a-z]+)/.exec(hash) || [])[1];
-    var rgL = /ragdoll=(\d+)/.exec(hash), rkL = /rocks=(\d+)/.exec(hash), phL = hash.indexOf('physics=0') < 0 ? 1 : 0, hzL = hash.indexOf('horizon=0') < 0 ? 1 : 0;   // ③ 물리·④ 지평선 기본 켬(physics=0·horizon=0 으로 끔) · ragdoll=20 · rocks=12
-    setTimeout(function () { C.save.settings.zoom3d = 3; if (DG.limitless) { DG.limitless.start({ n: nL, weather: wL, physics: phL, horizon: hzL, ragdoll: rgL ? +rgL[1] : undefined, rocks: rkL ? +rkL[1] : undefined }); } var nr = document.getElementById('near'); if (nr) { nr.style.display = 'none'; } }, 2500);
+    var rgL = /ragdoll=(\d+)/.exec(hash), rkL = /rocks=(\d+)/.exec(hash), phL = hash.indexOf('physics=0') < 0 ? 1 : 0, hzL = hash.indexOf('horizon=0') < 0 ? 1 : 0, auL = hash.indexOf('auto=0') < 0 ? 1 : 0;   // ③ 물리·④ 지평선 기본 켬(physics=0·horizon=0 으로 끔) · ragdoll=20 · rocks=12
+    setTimeout(function () { C.save.settings.zoom3d = 3; if (DG.limitless) { DG.limitless.start({ n: nL, weather: wL, physics: phL, horizon: hzL, auto: auL, ragdoll: rgL ? +rgL[1] : undefined, rocks: rkL ? +rkL[1] : undefined }); } var nr = document.getElementById('near'); if (nr) { nr.style.display = 'none'; } }, 2500);
   }
   if (hash.indexOf('people') >= 0) {
     var zmP = /zoom=([\d.]+)/.exec(hash);

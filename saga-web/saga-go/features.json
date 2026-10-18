@@ -12,7 +12,8 @@
   "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": null, "since": "2026-09-30",
+  "ticket": null,
+  "since": "2026-09-30",
   "note": "D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094). 시점은 #btn-tilt 실제 클릭(2D·2.5D·3D 돌기). · 2D 조작(W-0155, qc+claude 10-10): 휠 위·핀치 벌리기·+ 키 = 2D 도 가까이(옛날엔 2D 만 반대 — 2D 줌은 배율, 3D 줌은 거리라 같은 곱이 뜻이 갈렸다). 진단 go.world 휠 방향. · 조작(W-0174, qc+claude 10-11): 46m 밖 대상을 누르면 걸어가서 닿으면 저절로 만난다(walk:meet → keys.js) · 대상 최소 거리 70→25m·최대 10→14."
  },
  {
@@ -1209,5 +1210,29 @@
   "ticket": "W-0302",
   "since": "2026-10-18",
   "note": "표 tasks/sheets/web-phone-budget-20261018.md — 용량·그리기 수는 상한 안, FPS(폰 흉내)는 30 아래(원인·남은 거리 시트). 손잡이 anim3d.shareSkel · village3d/realm3d.lowFps 26 · lowWin 3 · autoq.on · city3d.fps 30"
+ },
+ {
+  "id": "go.limitless",
+  "name": "\"웹엔 한계가 없다\" 시연(W-0310) — 군중 300(crowd3d VAT)·날씨(weather3d)·물리(ragdoll3d)·지평선(farland3d)·WebGPU 손잡이(renderer3d), _demo.html#limitless",
+  "files": [
+   "../shared/js/crowd3d.js",
+   "../shared/js/weather3d.js",
+   "../shared/js/ragdoll3d.js",
+   "../shared/js/farland3d.js",
+   "../shared/js/renderer3d.js",
+   "js/_expansion/limitless.js",
+   "../tools/playcheck/pw-limitless.mjs"
+  ],
+  "tests": [
+   "ragdoll3d — VRoid 뼈 이름으로 알갱이 15",
+   "farland3d — 극좌표 고리 계획",
+   "renderer3d — 손잡이 0 이면 WebGL"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0310",
+  "since": "2026-10-18",
+  "note": "표 tasks/sheets/web-limitless-20261018.md — 기능 몫은 예산 안(+3.6ms·+24 그리기·+32KB), 판 바탕(마을 HIGH 18.9fps·442 그리기)이 밖. 본 게임 기본은 손잡이 전부 0(crowd3d.on·weather3d.on·ragdoll3d.on·far3d.on·go3d.webgpu). 날씨 본게임 연결은 W-0329"
  }
 ]

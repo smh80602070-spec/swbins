@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T09:29:52.457Z",
+ "at": "2026-10-18T10:02:16.342Z",
  "n": 300,
  "drops": 20000,
  "ragdoll": 20,
@@ -10,16 +10,18 @@
  "rows": [
   {
    "name": "군중 300",
-   "fps": 44,
-   "worstMs": 43,
-   "calls": 387,
-   "tris": 14121425,
-   "heapMB": 164.8,
+   "fps": 17.3,
+   "worstMs": 111,
+   "calls": 447,
+   "tris": 14150668,
+   "heapMB": 195.9,
    "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-   "tier": "LOW",
+   "tier": "HIGH",
    "st": {
     "ready": true,
     "err": null,
+    "density": 1,
+    "tier": "HIGH",
     "n": 300,
     "meshes": 17,
     "bones": 134,
@@ -30,7 +32,7 @@
      "walk",
      "run"
     ],
-    "ms": 0.43,
+    "ms": 0.46,
     "weather": "off",
     "drops": 0,
     "physics": false,
@@ -59,20 +61,22 @@
      "gpu": true
     }
    },
-   "first": 43.1
+   "first": 17.1
   },
   {
    "name": "군중 + 물리(래그돌 20·돌 12)",
-   "fps": 41.3,
-   "worstMs": 46,
-   "calls": 395,
-   "tris": 14128841,
-   "heapMB": 185.5,
+   "fps": 16.9,
+   "worstMs": 102,
+   "calls": 466,
+   "tris": 14208318,
+   "heapMB": 184.3,
    "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-   "tier": "LOW",
+   "tier": "HIGH",
    "st": {
     "ready": true,
     "err": null,
+    "density": 1,
+    "tier": "HIGH",
     "n": 300,
     "meshes": 17,
     "bones": 134,
@@ -83,14 +87,14 @@
      "walk",
      "run"
     ],
-    "ms": 1.34,
+    "ms": 1.58,
     "weather": "off",
     "drops": 0,
     "physics": true,
-    "ragdolls": 3,
+    "ragdolls": 4,
     "ragN": 20,
     "rocks": 12,
-    "physMs": 0.9,
+    "physMs": 1.09,
     "press": 8,
     "horizon": false,
     "far": {
@@ -112,20 +116,22 @@
      "gpu": true
     }
    },
-   "first": 41.3
+   "first": 16.9
   },
   {
    "name": "군중 + 지평선(고리 2.2km·임포스터)",
-   "fps": 43.5,
-   "worstMs": 44,
-   "calls": 399,
-   "tris": 14164043,
-   "heapMB": 174.2,
+   "fps": 17.9,
+   "worstMs": 99,
+   "calls": 448,
+   "tris": 14155600,
+   "heapMB": 215.4,
    "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-   "tier": "LOW",
+   "tier": "HIGH",
    "st": {
     "ready": true,
     "err": null,
+    "density": 1,
+    "tier": "HIGH",
     "n": 300,
     "meshes": 17,
     "bones": 134,
@@ -136,14 +142,14 @@
      "walk",
      "run"
     ],
-    "ms": 0.44,
+    "ms": 0.47,
     "weather": "off",
     "drops": 0,
     "physics": false,
     "ragdolls": 0,
     "ragN": 0,
     "rocks": 0,
-    "physMs": 1,
+    "physMs": 1.07,
     "press": 0,
     "horizon": true,
     "far": {
@@ -151,7 +157,7 @@
      "inner": 838,
      "outer": 2200,
      "trees": 500,
-     "buildMs": 50.3,
+     "buildMs": 50.4,
      "atlas": true,
      "rim": true,
      "relief": 10,
@@ -165,20 +171,22 @@
      "gpu": true
     }
    },
-   "first": 42.9
+   "first": 17.5
   },
   {
    "name": "군중 + 비 20000",
-   "fps": 42.7,
-   "worstMs": 46,
-   "calls": 395,
-   "tris": 14118421,
-   "heapMB": 172.2,
+   "fps": 16.6,
+   "worstMs": 103,
+   "calls": 632,
+   "tris": 14234384,
+   "heapMB": 215,
    "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-   "tier": "LOW",
+   "tier": "HIGH",
    "st": {
     "ready": true,
     "err": null,
+    "density": 1,
+    "tier": "HIGH",
     "n": 300,
     "meshes": 17,
     "bones": 134,
@@ -189,14 +197,14 @@
      "walk",
      "run"
     ],
-    "ms": 0.47,
+    "ms": 0.49,
     "weather": "rain",
     "drops": 20000,
     "physics": false,
     "ragdolls": 0,
     "ragN": 0,
     "rocks": 0,
-    "physMs": 1,
+    "physMs": 1.07,
     "press": 0,
     "horizon": false,
     "far": {
@@ -204,7 +212,7 @@
      "inner": 838,
      "outer": 2200,
      "trees": 0,
-     "buildMs": 50.3,
+     "buildMs": 50.4,
      "atlas": true,
      "rim": true,
      "relief": 10,
@@ -218,20 +226,22 @@
      "gpu": true
     }
    },
-   "first": 42.7
+   "first": 16.6
   },
   {
    "name": "군중 + 눈 20000",
-   "fps": 43.4,
-   "worstMs": 43,
-   "calls": 375,
-   "tris": 14134851,
-   "heapMB": 183.3,
+   "fps": 17.4,
+   "worstMs": 102,
+   "calls": 554,
+   "tris": 14237936,
+   "heapMB": 223.4,
    "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-   "tier": "LOW",
+   "tier": "HIGH",
    "st": {
     "ready": true,
     "err": null,
+    "density": 1,
+    "tier": "HIGH",
     "n": 300,
     "meshes": 17,
     "bones": 134,
@@ -242,14 +252,14 @@
      "walk",
      "run"
     ],
-    "ms": 0.51,
+    "ms": 0.48,
     "weather": "snow",
     "drops": 20000,
     "physics": false,
     "ragdolls": 0,
     "ragN": 0,
     "rocks": 0,
-    "physMs": 1,
+    "physMs": 1.07,
     "press": 0,
     "horizon": false,
     "far": {
@@ -257,7 +267,7 @@
      "inner": 838,
      "outer": 2200,
      "trees": 0,
-     "buildMs": 50.3,
+     "buildMs": 50.4,
      "atlas": true,
      "rim": true,
      "relief": 10,
@@ -271,34 +281,36 @@
      "gpu": true
     }
    },
-   "first": 43.4
+   "first": 16.7
   },
   {
    "name": "전부 끔(바탕)",
-   "fps": 44.8,
-   "worstMs": 44,
-   "calls": 324,
-   "tris": 580033,
-   "heapMB": 194.4,
+   "fps": 18.1,
+   "worstMs": 97,
+   "calls": 424,
+   "tris": 661880,
+   "heapMB": 216.4,
    "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-   "tier": "LOW",
+   "tier": "HIGH",
    "st": {
     "ready": false,
     "err": null,
+    "density": 1,
+    "tier": "HIGH",
     "n": 0,
     "meshes": 0,
     "bones": 0,
     "frames": 0,
     "texKB": 0,
     "slots": [],
-    "ms": 0.47,
+    "ms": 0.46,
     "weather": "off",
     "drops": 0,
     "physics": false,
     "ragdolls": 0,
     "ragN": 0,
     "rocks": 0,
-    "physMs": 1,
+    "physMs": 1.07,
     "press": 0,
     "horizon": false,
     "far": {
@@ -306,7 +318,7 @@
      "inner": 838,
      "outer": 2200,
      "trees": 0,
-     "buildMs": 50.3,
+     "buildMs": 50.4,
      "atlas": true,
      "rim": true,
      "relief": 10,
@@ -320,7 +332,7 @@
      "gpu": true
     }
    },
-   "first": 44.8
+   "first": 18
   }
  ],
  "webgpu": {
@@ -337,37 +349,37 @@
   "Failed to load resource: the server responded with a status of 404 (Not Found)"
  ],
  "summary": {
-  "fpsCrowd": 44,
-  "fpsPhys": 41.3,
-  "fpsFar": 43.5,
-  "fpsRain": 42.7,
-  "fpsSnow": 43.4,
-  "fpsOff": 44.8,
-  "crowdMs": 0.4,
-  "physMs": 1.5,
-  "farMs": 0.3,
-  "rainMs": 0.7,
-  "snowMs": 0.3,
-  "callsCrowd": 63,
-  "callsPhys": 8,
-  "callsFar": 12,
-  "trisFar": 42618,
+  "fpsCrowd": 17.3,
+  "fpsPhys": 16.9,
+  "fpsFar": 17.9,
+  "fpsRain": 16.6,
+  "fpsSnow": 17.4,
+  "fpsOff": 18.1,
+  "crowdMs": 2.6,
+  "physMs": 1.4,
+  "farMs": -1.9,
+  "rainMs": 2.4,
+  "snowMs": -0.3,
+  "callsCrowd": 23,
+  "callsPhys": 19,
+  "callsFar": 1,
+  "trisFar": 4932,
   "farSt": {
    "on": true,
    "inner": 838,
    "outer": 2200,
    "trees": 500,
-   "buildMs": 50.3,
+   "buildMs": 50.4,
    "atlas": true,
    "rim": true,
    "relief": 10,
    "sectors": 96,
    "rings": 20
   },
-  "callsRain": 8,
-  "cpuMs": 0.43,
-  "physCpuMs": 0.9,
-  "ragdolls": 3,
+  "callsRain": 185,
+  "cpuMs": 0.46,
+  "physCpuMs": 1.09,
+  "ragdolls": 4,
   "texKB": 1390
  }
 }

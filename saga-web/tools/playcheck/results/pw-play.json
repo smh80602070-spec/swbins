@@ -1,6 +1,6 @@
 {
- "base": "http://127.0.0.1:1439/",
- "at": "2026-10-18T08:09:23.363Z",
+ "base": "http://127.0.0.1:2913/",
+ "at": "2026-10-18T10:07:34.729Z",
  "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "runs": [
   {
@@ -11,8 +11,8 @@
     {
      "name": "부팅(가입→첫 관문→들어감)",
      "ok": true,
-     "detail": "14615ms ",
-     "ms": 14615,
+     "detail": "13206ms ",
+     "ms": 13206,
      "skip": false,
      "warn": false
     },
@@ -20,22 +20,22 @@
      "name": "위치를 읽을 수 있다",
      "ok": true,
      "detail": "{\"x\":0,\"y\":0}",
-     "ms": 53,
+     "ms": 68,
      "skip": false,
      "warn": false
     },
     {
      "name": "FPS",
      "ok": true,
-     "detail": "37 fps(GPU · PC 30 이상 PASS)",
-     "ms": 2536,
+     "detail": "28 fps(GPU · PC 30 이상 PASS)",
+     "ms": 2574,
      "skip": false,
-     "warn": false
+     "warn": true
     },
     {
      "name": "키 4방향 이동(3/4 이상)",
      "ok": true,
-     "detail": "D○9.6 S○6.0 Left×0.0 Up○9.7",
+     "detail": "D○10.1 S○6.1 Left×0.1 Up○9.9",
      "skip": false
     },
     {
@@ -49,8 +49,8 @@
     {
      "name": "☰ 메뉴 → 첫 칸 창 → 닫기 → 키 이동",
      "ok": true,
-     "detail": "창 열림 · 닫힘 true · D○9.6",
-     "ms": 3816,
+     "detail": "창 열림 · 닫힘 true · D○9.7",
+     "ms": 3893,
      "skip": false,
      "warn": false
     },
@@ -58,7 +58,7 @@
      "name": "HUD 겹침(보이는 고정 요소 쌍)",
      "ok": true,
      "detail": "없음",
-     "ms": 32,
+     "ms": 30,
      "skip": false,
      "warn": false
     },
@@ -66,15 +66,15 @@
      "name": "클릭 이동(빈 땅 → 걷기 · 짐승 → 만남)",
      "ok": true,
      "detail": "걷기 15.1 @640,302",
-     "ms": 2839,
+     "ms": 2843,
      "skip": false,
      "warn": false
     },
     {
      "name": "새로 고침 → 이어하기 → 들어감",
      "ok": true,
-     "detail": "{\"x\":19.199404756047358,\"y\":-18.805598726675715}",
-     "ms": 7548,
+     "detail": "{\"x\":19.732424518178966,\"y\":-18.805598476909832}",
+     "ms": 7568,
      "skip": false,
      "warn": false
     },
@@ -85,7 +85,9 @@
     }
    ],
    "fails": [],
-   "warns": [],
+   "warns": [
+    "FPS"
+   ],
    "shots": [
     "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-go-pc-0.png",
     "C:\\swbins\\saga-web\\tools\\playcheck\\shots\\play\\saga-go-pc-menu.png",
@@ -100,8 +102,8 @@
     {
      "name": "부팅(가입→첫 관문→들어감)",
      "ok": true,
-     "detail": "10431ms ",
-     "ms": 10431,
+     "detail": "10342ms ",
+     "ms": 10342,
      "skip": false,
      "warn": false
     },
@@ -109,29 +111,29 @@
      "name": "위치를 읽을 수 있다",
      "ok": true,
      "detail": "{\"x\":0,\"y\":0}",
-     "ms": 3,
+     "ms": 64,
      "skip": false,
      "warn": false
     },
     {
      "name": "FPS",
      "ok": true,
-     "detail": "44 fps(GPU · 폰 흉내 — 숫자만)",
-     "ms": 2581,
+     "detail": "32 fps(GPU · 폰 흉내 — 숫자만)",
+     "ms": 2598,
      "skip": false,
      "warn": false
     },
     {
      "name": "키 4방향 이동(3/4 이상)",
      "ok": true,
-     "detail": "D○9.6 S○6.0 Left×0.0 Up○9.7",
+     "detail": "D○9.7 S○6.0 Left×0.1 Up○9.7",
      "skip": false
     },
     {
      "name": "터치 이동(joy:#gjoy)",
      "ok": true,
-     "detail": "이동 41.9 @73,635",
-     "ms": 3130,
+     "detail": "이동 41.3 @73,635",
+     "ms": 3167,
      "skip": false,
      "warn": false
     },
@@ -139,7 +141,7 @@
      "name": "☰ 메뉴 → 첫 칸 창 → 닫기 → 키 이동",
      "ok": true,
      "detail": "창 열림 · 닫힘 true · D○9.7",
-     "ms": 3670,
+     "ms": 3595,
      "skip": false,
      "warn": false
     },
@@ -147,23 +149,23 @@
      "name": "HUD 겹침(보이는 고정 요소 쌍)",
      "ok": true,
      "detail": "없음",
-     "ms": 26,
+     "ms": 24,
      "skip": false,
      "warn": false
     },
     {
      "name": "클릭 이동(빈 땅 → 걷기 · 짐승 → 만남)",
      "ok": true,
-     "detail": "걷기 10.7 @195,354",
-     "ms": 2848,
+     "detail": "걷기 11.1 @195,354",
+     "ms": 2769,
      "skip": false,
      "warn": false
     },
     {
      "name": "새로 고침 → 이어하기 → 들어감",
      "ok": true,
-     "detail": "{\"x\":58.59739805811567,\"y\":-29.12841036251553}",
-     "ms": 7269,
+     "detail": "{\"x\":58.01424387508257,\"y\":-29.312903218016533}",
+     "ms": 7399,
      "skip": false,
      "warn": false
     },

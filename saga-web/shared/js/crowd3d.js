@@ -23,6 +23,7 @@
   function N() { return tn('crowd3d.n', 300); }
   function RADIUS() { return tn('crowd3d.radius', 60); }
   function OUTLINE() { return tn('crowd3d.outline', 0) ? true : false; }   // 외곽선 껍데기 메시(*_outline)까지 세우면 그리기 수가 두 배
+  function SHADOW() { return tn('crowd3d.shadow', 1) ? true : false; }   // 군중 그림자(스킨 메시 17 × 그림자 패스 = 그리기 +17) — 예산(W-0310 ⑥) 맞출 때 끈다
 
   /** 몸(shell)의 클립을 프레임으로 굽는다 → { tex, bones, frames: {slot: {start, n}}, total, skins, maps } */
   function bake(t, shell, slots, fps, withOutline, scale, live) {
@@ -111,7 +112,7 @@
       m = new t.InstancedMesh(geo, Array.isArray(sk.material) ? cl : cl[0], total);
       m.instanceMatrix = instMat;
       m.frustumCulled = false;
-      m.castShadow = true; m.receiveShadow = false;
+      m.castShadow = o.shadow === undefined ? SHADOW() : !!o.shadow; m.receiveShadow = false;
       var dm = new t.MeshDepthMaterial({ depthPacking: t.RGBADepthPacking, map: mats[0].map || null, alphaTest: mats[0].alphaTest || 0 });
       m.customDepthMaterial = patchMaterial(t, dm, baked, baked.binds[i]);
       group.add(m); meshes.push(m);
@@ -162,5 +163,5 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.crowd3d = { make: make, bake: bake, ON: ON, N: N, RADIUS: RADIUS, OUTLINE: OUTLINE };
+  global.DG.crowd3d = { make: make, bake: bake, ON: ON, N: N, RADIUS: RADIUS, OUTLINE: OUTLINE, SHADOW: SHADOW };
 })(window);
