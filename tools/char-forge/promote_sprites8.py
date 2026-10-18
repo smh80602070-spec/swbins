@@ -13,6 +13,8 @@ K-0029 단계 5 — 다 구운 8방향 무기 시트(`_out/sprites8/<id>/`, run_
 
     py tools/char-forge/promote_sprites8.py --town [--write]   # K-0083 마을 사람 맨손 시트(`_out/sprites8_town/<id>/`, data/town_sprite_plan.json)
       idle_town·walk_town.webp 둘만 정본 인물 폴더에 더하고 정본 manifest 에 `town`·`town_clipmap` 칸만 넣는다 — 전투 시트·출처는 안 건드린다.
+    py tools/char-forge/promote_sprites8.py --air [--write]    # K-0135 ④ 공중 몸짓(`_out/sprites8_jump/<id>/`, data/story_jump_plan.json)
+      jump·fall.webp(옆 d2 한 줄)을 더하고 manifest 에 `air`·`air_clipmap`·`air_dirs` 칸만 — 같은 "추가만" 규칙.
       정본 폴더(전투 시트)가 아직 없는 인물은 건너뛴다(manifest 를 새로 만들지 않는다).
 """
 import hashlib
@@ -44,9 +46,9 @@ def license_for(pid, man):
     return json.dumps(lic, ensure_ascii=False, indent=1) + '\n'
 
 
-def town(write):
-    """K-0083 — 맨손 평상 시트 둘을 정본에 더한다(전투 manifest 는 칸만 더함)."""
-    src = os.path.join(ROOT, 'tools', 'char-forge', '_out', 'sprites8_town')
+def town(write, sub='sprites8_town', key='town', label='마을 시트'):
+    """K-0083 — 맨손 평상 시트 둘을 정본에 더한다(전투 manifest 는 칸만 더함). K-0135 --air 도 같은 길(key='air', 방향 칸 더함)."""
+    src = os.path.join(ROOT, 'tools', 'char-forge', '_out', sub)
     ids = sorted(i for i in os.listdir(src) if os.path.exists(os.path.join(src, i, 'manifest.json'))) if os.path.isdir(src) else []
     add = same = 0
     skip = []
@@ -60,7 +62,9 @@ def town(write):
         roles = [r for r in tm.get('clips', []) if os.path.exists(os.path.join(sd, r + '.webp'))]
         man = json.load(open(dm, encoding='utf-8'))
         diff = [r for r in roles if not os.path.exists(os.path.join(dd, r + '.webp')) or md5(os.path.join(sd, r + '.webp')) != md5(os.path.join(dd, r + '.webp'))]
-        man_new = dict(man, town=roles, town_clipmap=tm.get('clipmap') or {})
+        man_new = dict(man, **{key: roles, key + '_clipmap': tm.get('clipmap') or {}})
+        if key != 'town':
+            man_new[key + '_dirs'] = tm.get('dirs') or []
         if not diff and man_new == man:
             same += 1
             continue
@@ -70,7 +74,7 @@ def town(write):
                 shutil.copyfile(os.path.join(sd, r + '.webp'), os.path.join(dd, r + '.webp'))
             with open(dm, 'w', encoding='utf-8', newline='\n') as fh:
                 fh.write(json.dumps(man_new, ensure_ascii=False, indent=1))
-    print(('올림' if write else '올릴 것') + f' 마을 시트 {add} · 같음 {same} · 다 구운 인물 {len(ids)}' + (f' · 정본 전투 시트 없어 건너뜀 {len(skip)}' if skip else ''))
+    print(('올림' if write else '올릴 것') + f' {label} {add} · 같음 {same} · 다 구운 인물 {len(ids)}' + (f' · 정본 전투 시트 없어 건너뜀 {len(skip)}' if skip else ''))
     return 0
 
 
@@ -82,6 +86,8 @@ def main():
     write = '--write' in sys.argv
     if '--town' in sys.argv:
         return town(write)
+    if '--air' in sys.argv:
+        return town(write, 'sprites8_jump', 'air', '공중 시트')
     ids = sorted(i for i in os.listdir(SRC) if os.path.exists(os.path.join(SRC, i, 'manifest.json'))) if os.path.isdir(SRC) else []
     new = changed = same = 0
     nolic = []
@@ -94,9 +100,9 @@ def main():
             continue
         files = [f for f in os.listdir(sd) if f.endswith('.webp')]
         diff = [f for f in files if not os.path.exists(os.path.join(dd, f)) or md5(os.path.join(sd, f)) != md5(os.path.join(dd, f))]
-        # manifest: 정본에 --town 이 더한 칸(town·town_clipmap)은 남긴다 — 전투 시트를 다시 올려도 마을 시트 연결이 안 끊기게(K-0028)
+        # manifest: 정본에 --town·--air 가 더한 칸(town·air …)은 남긴다 — 전투 시트를 다시 올려도 마을 시트 연결이 안 끊기게(K-0028)
         dm = os.path.join(dd, 'manifest.json')
-        keep = {k: v for k, v in json.load(open(dm, encoding='utf-8')).items() if k in ('town', 'town_clipmap')} if os.path.exists(dm) else {}
+        keep = {k: v for k, v in json.load(open(dm, encoding='utf-8')).items() if k in ('town', 'town_clipmap', 'air', 'air_clipmap', 'air_dirs')} if os.path.exists(dm) else {}
         man_txt = json.dumps(dict(man, **keep), ensure_ascii=False, indent=1) if keep else open(os.path.join(sd, 'manifest.json'), encoding='utf-8').read()
         if not os.path.exists(dm) or open(dm, encoding='utf-8').read() != man_txt:
             diff.append('manifest.json')
