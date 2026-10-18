@@ -792,8 +792,39 @@
     }));
   }
 
+  /* W-0318 — CMU 모캡 12(K-0139, shared/assets/anim/vroid_mocap_anims.glb · VRoid 뼈대 30fps)를 코드 클립 위에 덮는다.
+     파일은 한 몸(ac_balgwang)에 맞춰 뼈마다 위치·회전·크기를 구웠다 — 다른 몸에 그대로 물리면 위치 트랙이 비율을 틀어서,
+     J_Bip_ 뼈의 **회전만** 쓰고 엉덩이 위치는 두 몸의 엉덩이 높이 비로 늘인다(VRoid 는 정지 회전이 전부 항등이라 회전은 그대로 옮는다).
+     머리카락(J_Sec_)·Root·크기 트랙은 버린다. 짝 없는 셋(turn·sit_stand·idle_b)은 쓰지 않는다. 손잡이 anim3d.mocap(1, 0 = 옛 코드 클립) */
+  /* cast·strong·greet 는 뺐다(10-19 pose-shot: 판정 시점 자세가 '두 손 앞으로 내려침·두 손 앞·오른손 머리 위' 와 달라 몸짓 뜻이 안 읽힘) — 맞는 원본은 K 몫, 그때까진 코드 자세 */
+  var MOCAP_MAP = { walk: 'Walk_Loop', run: 'Run_Loop', idle: 'Idle_Loop', hit: 'Hit', death: 'Death', pickup: 'Pose_pick' };
+  function mocapOn() { var C = global.DG && global.DG.core; return !!(C && C.tuned ? +C.tuned('anim3d.mocap', 1) : 1); }
+  function mocapUrl() { var A = global.DG && global.DG.assets3d, r = A && A.root ? A.root() : null; return (r || '../shared/assets/') + 'anim/vroid_mocap_anims.glb'; }
+  /** own(코드 클립 배열)에 모캡을 덮은 새 배열. src = 받은 GLB(acquire 결과 · {clips|gltf|animations, scene}). 클립 userData.mocap = 원래 이름 */
+  function mocapMerge(model, own, src, T) {
+    if (!src || !T || !model || !own) { return own; }
+    var g = src.gltf || src, clips = src.clips || g.animations || [], scene = g.scene || null;
+    var sh = scene && scene.getObjectByName ? scene.getObjectByName('J_Bip_C_Hips') : null, mh = model.getObjectByName ? model.getObjectByName('J_Bip_C_Hips') : null;
+    var k = sh && mh && Math.abs(sh.position.y) > 1e-6 ? mh.position.y / sh.position.y : 1, has = {}, out = own.slice(), at = {}, i;
+    model.traverse(function (o) { if (o.name) { has[o.name] = 1; } });
+    for (i = 0; i < out.length; i++) { at[out[i].name] = i; }
+    clips.forEach(function (c) {
+      var to = MOCAP_MAP[c.name], tr = []; if (!to) { return; }
+      c.tracks.forEach(function (t0) {
+        var dot = t0.name.lastIndexOf('.'), bone = t0.name.slice(0, dot), prop = t0.name.slice(dot + 1);
+        if (bone.indexOf('J_Bip_') !== 0 || !has[bone]) { return; }
+        if (prop === 'quaternion') { tr.push(t0.clone()); } else if (prop === 'position' && bone === 'J_Bip_C_Hips') { var v = t0.clone(); for (var j = 0; j < v.values.length; j++) { v.values[j] *= k; } tr.push(v); }
+      });
+      if (!tr.length) { return; }
+      var nc = new T.AnimationClip(to, c.duration, tr); nc.userData = { mocap: c.name };
+      if (at[to] !== undefined) { out[at[to]] = nc; } else { at[to] = out.length; out.push(nc); }
+    });
+    return out;
+  }
+
   global.DG = global.DG || {};
   global.DG.ownAnim = {
+    mocapOn: mocapOn, mocapUrl: mocapUrl, mocapMerge: mocapMerge, MOCAP_MAP: MOCAP_MAP,   // W-0318
     BONES: BONES, POSE_KEYS: POSE_KEYS, CLIP_NAMES: CLIPS.map(function (c) { return c.name; }),
     CLIPS: CLIPS, BASE: BASE,
     /* W-0169 — 무기 몸짓 `Wpn_<무기>_<단>` 이름표·길이(초). 없는 이름이면 0 */

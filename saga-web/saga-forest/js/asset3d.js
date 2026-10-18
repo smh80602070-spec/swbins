@@ -1167,7 +1167,7 @@
        둘 다 없으니 헛수고로 받으러 가지 않고 바로 다음 칸으로 넘어간다 */
     if (rec.outfit) { acquire(rec.outfit, function (c) { parts.outfit = c; onOne(); }); } else { onOne(); }
     if (rec.hair) { acquire(rec.hair, function (c) { parts.hair = c; onOne(); }); } else { onOne(); }
-    if (own) { onOne(); } else { acquire(rec.anim || ANIM_SRC, function (c) { parts.anim = c; onOne(); }); }
+    var OAm = global.DG.ownAnim; if (own) { if (OAm && OAm.mocapOn && OAm.mocapOn()) { acquire(OAm.mocapUrl(), function (c) { parts.mocap = c; onOne(); }); } else { onOne(); } } else { acquire(rec.anim || ANIM_SRC, function (c) { parts.anim = c; onOne(); }); }
 
     function assemble() {
       if (!parts.body) { cb(null); return; }
@@ -1185,7 +1185,7 @@
       var animC = parts.anim;
       if (own) {
         /* 몸이 조립된 장면에서 실제 뼈를 읽어 그 몸에 맞춰 굽는다 — 몸마다 한 번(캐시), 못 하면 UAL1 로 되돌아간다 */
-        if (!parts.body.ownClips) { parts.body.ownRig = global.DG.ownAnim.restRig ? global.DG.ownAnim.restRig(model) : null; parts.body.ownClips = global.DG.ownAnim.clipsFor(model, t) || []; }   // W-0303 ownRig = 정지 자세 뼈대(상황 몸짓을 나중에 굽는다)
+        if (!parts.body.ownClips) { parts.body.ownRig = global.DG.ownAnim.restRig ? global.DG.ownAnim.restRig(model) : null; parts.body.ownClips = global.DG.ownAnim.clipsFor(model, t) || []; } if (parts.mocap && !parts.body.mocapIn && global.DG.ownAnim.mocapMerge) { parts.body.ownClips = global.DG.ownAnim.mocapMerge(model, parts.body.ownClips, parts.mocap, t); parts.body.mocapIn = true; }   // W-0303 ownRig = 정지 자세 뼈대(상황 몸짓을 나중에 굽는다)
         if (parts.body.ownClips.length) {
           var oc = parts.body.ownClips, om = new t.AnimationMixer(model.children[0]), oa = {}, oi;
           for (oi = 0; oi < oc.length; oi++) { oa[oc[oi].name] = om.clipAction(oc[oi]); }

@@ -1280,7 +1280,7 @@
     /* QRPG는 몸 파일 자체에 클립이 있다 — `rec.anim` 이 `rec.body` 와 같은 파일이면
        같은 캐시를 다시 받아 그 클립을 그대로 쓴다. 옛 조합형은 `rec.anim` 이 없어
        공용 ANIM_SRC(UAL) 로 몸짓을 옮겨 입는다 */
-    if (own) { onOne(); } else { acquire(rec.anim || ANIM_SRC, function (c) { parts.anim = c; onOne(); }); } } if (LAZY('hero')) { shell.userData.wake = go; } else { go(); }
+    var OAm = global.DG.ownAnim; if (own) { if (OAm && OAm.mocapOn && OAm.mocapOn()) { acquire(OAm.mocapUrl(), function (c) { parts.mocap = c; onOne(); }); } else { onOne(); } } else { acquire(rec.anim || ANIM_SRC, function (c) { parts.anim = c; onOne(); }); } } if (LAZY('hero')) { shell.userData.wake = go; } else { go(); }
 
     function assemble() {
       if (!parts.body) { shell.userData.assetState = 'fail'; return; }
@@ -1302,7 +1302,7 @@
       var animC = parts.anim;
       if (own) {
         /* 몸이 조립된 장면에서 실제 뼈를 읽어 그 몸에 맞춰 굽는다 — 몸마다 한 번(캐시). 못 만들면 UAL1 길로 되돌아간다 */
-        if (!parts.body.ownClips) { parts.body.ownRig = global.DG.ownAnim.restRig ? global.DG.ownAnim.restRig(model) : null; parts.body.ownClips = global.DG.ownAnim.clipsFor(model, t) || []; }   // W-0169 ownRig = 정지 자세 뼈대(무기 몸짓을 나중에 굽는다)
+        if (!parts.body.ownClips) { parts.body.ownRig = global.DG.ownAnim.restRig ? global.DG.ownAnim.restRig(model) : null; parts.body.ownClips = global.DG.ownAnim.clipsFor(model, t) || []; } if (parts.mocap && !parts.body.mocapIn && global.DG.ownAnim.mocapMerge) { parts.body.ownClips = global.DG.ownAnim.mocapMerge(model, parts.body.ownClips, parts.mocap, t); parts.body.mocapIn = true; }   // W-0169 ownRig = 정지 자세 뼈대(무기 몸짓을 나중에 굽는다)
         if (parts.body.ownClips.length) {
           var oc = parts.body.ownClips, om = new t.AnimationMixer(model), oa = {}, oi;
           for (oi = 0; oi < oc.length; oi++) { oa[oc[oi].name] = om.clipAction(oc[oi]); }

@@ -6916,6 +6916,19 @@ window.DG_NO_TUNE = true;
       return sOk && dOk && aOk && ('S 덤 +500·조각 +1 · 죽은 S 덤 0 · A 덤 +' + a.bonusGold + ' · ' + RR.line2(s));
     });
 
+    t('모캡 덮기(W-0318) — 짝 이름(walk→Walk_Loop)으로 코드 클립을 바꾸고, J_Bip_ 회전 + 엉덩이 위치(두 몸 엉덩이 높이 비)만 남기며 Root·머리카락·크기·다른 뼈 위치는 버린다 · 짝 없는 클립(turn)은 안 넣는다', function () {
+      var O = DG.ownAnim, T = window.THREE; if (!O || !O.mocapMerge || !T) { return '모듈 없음'; }
+      var mk = function (hy) { var r = new T.Group(); r.name = 'Root'; var h = new T.Bone(); h.name = 'J_Bip_C_Hips'; h.position.y = hy; r.add(h); var a = new T.Bone(); a.name = 'J_Bip_L_UpperArm'; h.add(a); var s = new T.Bone(); s.name = 'J_Sec_Hair1_01'; h.add(s); return r; };
+      var q = [0, 0, 0, 1, 0, 0.7071, 0, 0.7071], src = mk(1.0), model = mk(0.8);
+      var walk = new T.AnimationClip('walk', 1, [new T.QuaternionKeyframeTrack('J_Bip_L_UpperArm.quaternion', [0, 1], q), new T.VectorKeyframeTrack('J_Bip_C_Hips.position', [0, 1], [0, 1, 0, 0, 1.1, 0]), new T.VectorKeyframeTrack('J_Bip_L_UpperArm.position', [0, 1], [0, 0, 0, 1, 1, 1]), new T.QuaternionKeyframeTrack('Root.quaternion', [0, 1], q), new T.QuaternionKeyframeTrack('J_Sec_Hair1_01.quaternion', [0, 1], q), new T.VectorKeyframeTrack('J_Bip_C_Hips.scale', [0, 1], [1, 1, 1, 1, 1, 1])]);
+      var turn = new T.AnimationClip('turn', 1, [new T.QuaternionKeyframeTrack('J_Bip_L_UpperArm.quaternion', [0, 1], q)]);
+      var own = [new T.AnimationClip('Walk_Loop', 1, []), new T.AnimationClip('Attack', 1, [])];
+      var out = O.mocapMerge(model, own, { clips: [walk, turn], scene: src }, T), w = out.filter(function (c) { return c.name === 'Walk_Loop'; })[0];
+      var names = w ? w.tracks.map(function (x) { return x.name; }).sort().join() : '', hp = w ? w.tracks.filter(function (x) { return x.name === 'J_Bip_C_Hips.position'; })[0] : null;
+      var ok = [out.length === 2, !!(w && w.userData && w.userData.mocap === 'walk'), names === 'J_Bip_C_Hips.position,J_Bip_L_UpperArm.quaternion', !!hp && Math.abs(hp.values[4] - 0.88) < 1e-6, out[1].name === 'Attack' && !(out[1].userData && out[1].userData.mocap), Object.keys(O.MOCAP_MAP).length === 6, /anim\/vroid_mocap_anims\.glb$/.test(O.mocapUrl())];
+      return ok.every(Boolean) && ('짝 ' + Object.keys(O.MOCAP_MAP).length + ' · 남은 트랙 ' + names + ' · 엉덩이 1.1→' + hp.values[4].toFixed(2)) || '실패 ' + ok.join(',');
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

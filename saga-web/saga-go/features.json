@@ -1234,5 +1234,23 @@
   "ticket": "W-0310",
   "since": "2026-10-18",
   "note": "표 tasks/sheets/web-limitless-20261018.md — 기능 몫은 예산 안(+3.6ms·+24 그리기·+32KB), 판 바탕(마을 HIGH 18.9fps·442 그리기)이 밖. 본 게임 기본은 손잡이 전부 0(crowd3d.on·weather3d.on·ragdoll3d.on·far3d.on·go3d.webgpu). 날씨 본게임 연결은 W-0329"
+ },
+ {
+  "id": "go.mocap",
+  "name": "CMU 모캡 6 클립(K-0139) — 다섯 판 VRoid 자체 몸짓에 덮기(W-0318)",
+  "files": [
+   "../shared/js/anim-own.js",
+   "js/asset3d.js",
+   "../shared/assets/anim/vroid_mocap_anims.glb"
+  ],
+  "tests": [
+   "모캡 덮기(W-0318)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0318",
+  "since": "2026-10-19",
+  "note": "다섯 판 공용(anim-own.mocapMerge, 판별 asset3d 두 줄). 짝 6 — 걷기·달리기·서기·맞기·쓰러짐·줍기. 시전·강공격·인사는 몸짓 판정 × 라 코드 자세(K 원본 대기). 손잡이 anim3d.mocap"
  }
 ]
