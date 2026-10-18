@@ -25,6 +25,17 @@ function sheets8() {
   }
   return o;
 }
+/* W-0311 — 16방향·동작별 프레임 시트: characters2d16/<id>/sheet.json 을 그대로 표에(실행 중 sheet.json·없는 그림을 안 두드린다). dirs 16 만 */
+function sheets16() {
+  const dir = path.join(SHARED, 'assets', 'characters2d16'), o = {};
+  if (!fs.existsSync(dir)) return o;
+  for (const id of fs.readdirSync(dir).sort()) {
+    const mf = path.join(dir, id, 'sheet.json');
+    if (!fs.existsSync(mf)) continue;
+    try { const m = JSON.parse(fs.readFileSync(mf, 'utf8')); if (m.dirs === 16) o[id] = m; } catch (e) { /* 깨진 sheet.json 은 뺀다 */ }
+  }
+  return o;
+}
 /* 2D 그림(world2d/*.webp) 중 같은 이름 GLB 가 없는 것(W-0114 — K-0083 성 세 시대·계절 나무) — spriteUrl 이 GLB 표와 함께 본다 */
 const names2d = () => { const d = path.join(SHARED, 'assets', 'world2d'), g = new Set(names('world3d')); return fs.existsSync(d) ? fs.readdirSync(d).filter(f => f.endsWith('.webp')).map(f => f.slice(0, -5)).filter(n => !g.has(n)).sort() : []; };
 /* 통일 몸 성별(W-0150) — 빌린 몸(borrowRecipe)이 성별 아는 사람에게 같은 성별 몸을 고르게. 도감 105 = char-forge hero_traits.json gender,
@@ -50,6 +61,7 @@ const body = `/* 생성: tools/gen-assets3d-ids.mjs — 손으로 고치지 않�
     world2d: ${JSON.stringify(names2d())},
     creature: ${JSON.stringify(names('creatures3d'))},
     hero2d8: ${JSON.stringify(sheets8())},
+    hero2d16: ${JSON.stringify(sheets16())},
     heroSex: ${JSON.stringify(heroSex())}
   };
 })(typeof window !== 'undefined' ? window : this);

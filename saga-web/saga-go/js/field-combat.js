@@ -1851,7 +1851,7 @@
         }
         if (e.name) { floatNum(pos.x, pos.y, EL[e.el].icon + ' ' + e.name, e.el, 0.95, true, true); }       // ⑲-11 고유·갈래
         else if (e.shape && e.shape !== 'circle') { floatNum(pos.x, pos.y, SHAPES[e.shape].icon + ' ' + SHAPES[e.shape].name, e.el, 0.9, true, true); }
-        A2('me', 'heavy', 380); if (W3()) { W3().playAnim('me', 'attack', 380); }
+        var CSm = (global.DG.ownAnim && global.DG.ownAnim.combatDur('Pose_cast') * 1000) || 380; A2('me', 'cast', CSm); if (W3()) { W3().playAnim('me', 'Pose_cast', CSm); }   /* W-0303 원소 시전 몸짓 · W-0311 2D 역할 cast(옛 시트는 heavy) */
       } else if (e.t === 'heavy') {
         ring(e.x, e.y, e.r, '#f4f1e2', 0.5);
         floatNum(pos.x, pos.y, '강공격', null, 1, true, true);

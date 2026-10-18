@@ -75,6 +75,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/region-xy.js"></script>
 <script src="js/genchar-xy.js"></script>
 <script src="js/sprite.js"></script>
+<script src="js/sheetspec.js"></script>
 <script src="js/mode2d.js"></script>
 <script src="js/actor2d.js"></script>
 <script src="js/core.js"></script>
@@ -9314,6 +9315,51 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         ('turned ' + turned.toFixed(0) + ' capped ' + capped.toFixed(0) + ' back ' + back.toFixed(1) + ' loop ' + loopOk);
     });
 
+    /* ── 2D 16방향·동작별 프레임 규격 (shared/js/sheetspec.js, W-0311) — 순수 함수, 그림 없이 ───────────── */
+    t('sheetspec — 16방향: 22.5° 칸 9행(0 정면·4 오른쪽 옆·8 뒤)·왼쪽 일곱은 뒤집기, 멈추면 facing · 대역은 옛 5행의 가까운 행 · 동작별 프레임 수(걷기 12·달리기 8·공격 10·강공격 14·앉기 6·시전 12·피격 4·쓰러짐 10) (W-0311)', function () {
+      var S = DG.sheetspec, bad = [], i, k, row = [], flip = [];
+      if (!S) { throw new Error('sheetspec 없음'); }
+      for (i = 0; i < 16; i++) { var a = i * Math.PI / 8, d = S.dirOf16(Math.sin(a), Math.cos(a)); row.push(d.row); flip.push(d.flip ? 1 : 0); }
+      if (row.join(',') !== '0,1,2,3,4,5,6,7,8,7,6,5,4,3,2,1') { bad.push('행 ' + row.join(',')); }
+      if (flip.join('') !== '0000000000111111' && flip.join('') !== '0000000001111111') { bad.push('뒤집기 ' + flip.join('')); }
+      if (S.dirOf16(0, 0, 'back').row !== 8 || S.dirOf16(0, 0, 'front').row !== 0 || !S.dirOf16(0, 0, -1).flip || S.dirOf16(0, 0, 1).row !== 4) { bad.push('멈춤 facing'); }
+      var as8 = []; for (k = 0; k <= 8; k++) { as8.push(S.dirOf16as8(Math.sin(k * Math.PI / 8), Math.cos(k * Math.PI / 8)).row); }
+      if (as8.join(',') !== '0,0,1,1,2,2,3,3,4') { bad.push('대역 ' + as8.join(',')); }
+      var sp = S.specOf({ dirs: 16, px: 192 }), want = { walk: 12, run: 8, attack: 10, heavy: 14, sit: 6, cast: 12, hit: 4, death: 10 };
+      for (k in want) { if (S.framesOf(sp, k) !== want[k]) { bad.push(k + ' ' + S.framesOf(sp, k)); } }
+      var sp2 = S.specOf({ dirs: 16, frames: { walk: 16 } }); if (S.framesOf(sp2, 'walk') !== 16 || S.framesOf(sp2, 'run') !== 8) { bad.push('sheet.json 덮어쓰기'); }
+      if (S.specOf(null) !== null || S.specOf({ dirs: 8 }).rows !== 5) { bad.push('specOf 빈 값'); }
+      return !bad.length && ('16방향 행 ' + row.join('') + ' · 대역 ' + as8.join('') + ' · 프레임 걷기 12·강공격 14·앉기 6') || bad.join(' · ');
+    });
+    t('sheetspec — 프레임: 짧은 몸짓은 진행률, 걷기·달리기는 보폭 위상 그대로(프레임 수만 12), 한 번 도는 동작은 끝 프레임에 머문다 · 역할: 자세 이름(Pose_sit → sit) · 시트에 없으면 가까운 역할 · roles 목록이 있으면 그 안에서 (W-0311)', function () {
+      var S = DG.sheetspec, sp = S.specOf({ dirs: 16 }), bad = [];
+      if (S.frameAt(sp, 'heavy', 0, 0.5) !== 7) { bad.push('진행률 ' + S.frameAt(sp, 'heavy', 0, 0.5)); }
+      if (S.frameAt(sp, 'walk', 0, null, 0.5) !== 6 || S.frameAt(sp, 'walk', 0, null, 0.99) !== 11 || S.frameAt(sp, 'run', 0, null, 0.5) !== 4) { bad.push('보폭'); }
+      if (S.frameAt(sp, 'death', 99999) !== 9 || S.frameAt(sp, 'idle', 1000) !== 6) { bad.push('한 번·반복'); }
+      if (S.roleName('Pose_sit') !== 'sit' || S.roleName('Pose_idle_look') !== 'idle' || S.roleName(null) !== 'idle') { bad.push('roleName'); }
+      var lim = S.specOf({ dirs: 16, roles: ['idle', 'walk', 'attack', 'hit', 'death'] });
+      var got = ['run', 'heavy', 'cast', 'sit', 'warm', 'pick', 'Pose_wave'].map(function (c) { return S.roleOf(lim, c); }).join(',');
+      if (got !== 'walk,attack,attack,idle,idle,attack,idle') { bad.push('가까운 역할 ' + got); }
+      if (S.roleOf(sp, 'Pose_sit') !== 'sit' || S.roleOf(sp, 'cast') !== 'cast') { bad.push('있는 역할'); }
+      var c = S.cellOf(sp, 'walk', 12 * 128); if (c[0] !== 128 || c[1] !== 0.95) { bad.push('칸 ' + c.join('/')); }
+      return !bad.length && ('강공격 반 = 7번째 · 걷기 보폭 0.5 = 6번째(12장) · roles 다섯뿐이면 ' + got) || bad.join(' · ');
+    });
+    t('mode2d 16방향 길 — 표(hero2d16)에 없는 인물은 옛 8방향 그대로(spec16 null · 회귀 0), 있으면 규격을 읽고 자세(Pose_)가 시트에 있으면 그 역할·마을이면 맨손 역할 (W-0311)', function () {
+      var M = DG.mode2d, I = DG.assets3dIds, keep = I.hero2d16, bad = [];
+      if (!M.spec16 || !M.role16) { throw new Error('mode2d spec16 없음'); }
+      if (M.spec16('vroid:no_such_hero') !== null) { bad.push('없는 인물에 규격'); }
+      I.hero2d16 = { w311_probe: { dirs: 16, px: 192, cam_z: 1.15, roles: ['idle', 'walk', 'sit', 'heavy', 'idle_town'] } };
+      var sp = M.spec16('vroid:w311_probe');
+      if (!sp || sp.dirs !== 16) { bad.push('규격 못 읽음'); }
+      else {
+        if (M.role16(sp, { clip: 'idle', pose: 'Pose_sit' }) !== 'sit') { bad.push('자세 역할'); }
+        if (M.role16(sp, { clip: 'idle', pose: 'Pose_fish' }) !== 'idle') { bad.push('없는 자세'); }
+        if (M.role16(sp, { clip: 'idle', town: true }) !== 'idle_town' || M.role16(sp, { clip: 'walk', town: true }) !== 'walk') { bad.push('마을 맨손'); }
+        if (M.role16(sp, { clip: 'cast' }) !== 'heavy') { bad.push('시전 → 강공격'); }
+      }
+      I.hero2d16 = keep;
+      return !bad.length && '없는 인물 null · 앉기 자세 → sit · 시전 → heavy(시트에 없음)' || bad.join(' · ');
+    });
     t('pose3d 쉬는 몸 — life(): 서 있으면 idle 변주, 가만히 8초 넘으면 앉기(모닥불 곁이면 준 rest 로), 걷거나 0.5초 넘게 안 불리면(공격·대화가 끼면) 다시 센다 · 앉기는 땅에 무릎 세워 앉아 엉덩이가 땅 가까이 (W-0303)', function () {
       var P3 = DG.pose3d, OA = DG.ownAnim, rig = OA.refRig(), m = OA.math, fr = rig.frame, st = {}, seq = [], k, bad = [];
       for (k = 0; k <= 48; k++) { seq.push(P3.life(st, k * 0.25, k < 12 || k > 14) || '-'); }   // 3~3.5초에 한 번 걸음
@@ -16999,7 +17045,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var dirs = [d(0, 1), d(1, 1), d(1, 0), d(1, -1), d(0, -1), d(-1, -1), d(-1, 0), d(-1, 1), d(0, 0, -1), d(0, 0, 'back')].join(',');
       var roles = ['attack2', 'heavy', 'knockdown', 'cast'].map(function (c) { return M.roleOf(c, true) + '/' + M.roleOf(c, false); }).join(',');
       var none = M.sheet8('vroid:__없는_인물__') === null && M.sheet8('villager_a') === null;
-      return dirs === '0,1,2,3,4,3m,2m,1m,2m,4' && roles === 'attack2/attack,heavy/attack,knockdown/death,idle/idle' && none &&
+      return dirs === '0,1,2,3,4,3m,2m,1m,2m,4' && roles === 'attack2/attack,heavy/attack,knockdown/death,heavy/attack' && none &&
         ('8쪽 행 표 · 역할 8/3행 폴백 · 표 밖은 3행') || '실패 ' + dirs + ' | ' + roles + ' | ' + none;
     });
 

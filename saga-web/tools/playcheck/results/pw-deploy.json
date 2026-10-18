@@ -1,6 +1,6 @@
 {
  "base": "https://smh80602070-spec.github.io/swbins/saga-web/",
- "at": "2026-10-17T00:34:23.515Z",
+ "at": "2026-10-18T01:12:36.618Z",
  "games": [
   {
    "game": "saga-go",
@@ -9,39 +9,39 @@
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 8036,
+     "ms": 8026,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 4077,
+     "ms": 4191,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 3836,
+     "ms": 3947,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 2609,
+     "ms": 3640,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 21571,
+     "ms": 23972,
      "why": ""
     }
    ],
    "errors": [],
    "bad": [],
-   "deployed": "go-v6.72.164",
-   "local": "go-v6.72.164",
-   "sameVersion": true
+   "deployed": "go-v6.72.178",
+   "local": "go-v6.72.179",
+   "sameVersion": false
   },
   {
    "game": "saga-dungeon",
@@ -50,39 +50,39 @@
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 8301,
+     "ms": 8157,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 3648,
+     "ms": 3659,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 7159,
+     "ms": 8645,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 2940,
+     "ms": 2703,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 13150,
+     "ms": 13679,
      "why": ""
     }
    ],
    "errors": [],
    "bad": [],
-   "deployed": "dungeon-v0.199.147",
-   "local": "dungeon-v0.199.147",
-   "sameVersion": true
+   "deployed": "dungeon-v0.199.164",
+   "local": "dungeon-v0.199.165",
+   "sameVersion": false
   },
   {
    "game": "saga-forest",
@@ -91,39 +91,39 @@
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 7774,
+     "ms": 8072,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 5061,
+     "ms": 3991,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 6059,
+     "ms": 9263,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 1656,
+     "ms": 4852,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 14507,
+     "ms": 20982,
      "why": ""
     }
    ],
    "errors": [],
    "bad": [],
-   "deployed": "village-v0.136.125",
-   "local": "village-v0.136.125",
-   "sameVersion": true
+   "deployed": "village-v0.136.139",
+   "local": "village-v0.136.140",
+   "sameVersion": false
   },
   {
    "game": "saga-story",
@@ -132,39 +132,39 @@
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 7645,
+     "ms": 7626,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 4190,
+     "ms": 4118,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 8581,
+     "ms": 8028,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 2227,
+     "ms": 2254,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 15551,
+     "ms": 16666,
      "why": ""
     }
    ],
    "errors": [],
    "bad": [],
-   "deployed": "side-v0.118.128",
-   "local": "side-v0.118.128",
-   "sameVersion": true
+   "deployed": "side-v0.118.144",
+   "local": "side-v0.118.145",
+   "sameVersion": false
   },
   {
    "game": "saga-realm",
@@ -173,39 +173,39 @@
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 8016,
+     "ms": 8069,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 3732,
+     "ms": 3726,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 7130,
+     "ms": 7190,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 1218,
+     "ms": 1220,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 11253,
+     "ms": 11264,
      "why": ""
     }
    ],
    "errors": [],
    "bad": [],
-   "deployed": "realm-v1.94.137",
-   "local": "realm-v1.94.137",
-   "sameVersion": true
+   "deployed": "realm-v1.94.154",
+   "local": "realm-v1.94.155",
+   "sameVersion": false
   }
  ]
 }

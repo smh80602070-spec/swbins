@@ -1178,5 +1178,25 @@
   "ticket": "W-0303",
   "since": "2026-10-18",
   "note": "코드로 굽는 클립(에셋 없음). 손잡이 pose3d.idleEvery 4(±1초)·pose3d.lookMax 60 · anim3d.walkHps 0.59·runHps 1.76(IK 클립 본래 빠르기) · 2D 는 mode2d o.pose 대역(K 동작별 시트 뒤 프레임 치환) · 연결: 낚시 대기 Pose_fish·대화 인사 Pose_wave·쉬기(변주 → 8초 앉기)·시선·원소 시전 Pose_cast · 2D actor2d 낚시·쉬기 대역 · 손잡이 pose3d.sitAfter 8"
+ },
+ {
+  "id": "go.sheet16",
+  "name": "2D 16방향·동작별 프레임 시트 규격(W-0311) — 공용 sheetspec + mode2d 16방향 길, K 시트가 온 인물부터(없으면 옛 8방향 그대로)",
+  "files": [
+   "../shared/js/sheetspec.js",
+   "../shared/js/mode2d.js",
+   "../shared/js/assets3d-ids.js"
+  ],
+  "tests": [
+   "16방향 행·뒤집기·동작별 프레임(W-0311)",
+   "보폭 위상·가까운 역할(W-0311)",
+   "mode2d 16방향 길 회귀 0(W-0311)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0311",
+  "since": "2026-10-18",
+  "note": "시트 굽기는 K(INBOX 10-18 규격: characters2d16/<id>/<역할>.webp 9행 + sheet.json). tools/gen-assets3d-ids.mjs 가 sheet.json 을 표 hero2d16 에 담아 실행 중 404 0. 동작 그림은 처음 그릴 때 받기. 자세(W-0303 Pose_)가 시트에 있으면 그 프레임, 없으면 기울이기 대역. D2 는 K 시트 뒤"
  }
 ]

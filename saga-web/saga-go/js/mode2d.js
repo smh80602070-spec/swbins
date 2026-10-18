@@ -202,8 +202,8 @@
   /** 동작 이름 → 시트에 있는 역할. 8방향은 8역할, 3행 시트는 idle·walk·attack·hit·death 다섯(나머지는 가까운 것) */
   function roleOf(clip, eight) {
     clip = clip || 'idle';
-    if (eight) { return ROLES8[clip] ? clip : (/^attack/.test(clip) ? 'attack' : 'idle'); }
-    return { attack2: 'attack', heavy: 'attack', knockdown: 'death', jump: 'walk', fall: 'walk' }[clip] || (FPS[clip] && clip) || 'idle';   // 3행 시트에 없는 이름은 idle(없는 파일 404 막기)
+    if (eight) { return ROLES8[clip] ? clip : clip === 'cast' ? 'heavy' : (/^attack/.test(clip) ? 'attack' : 'idle'); }   // W-0311 cast 는 16방향 시트에만 — 옛 시트는 강공격 칸
+    return { attack2: 'attack', heavy: 'attack', cast: 'attack', knockdown: 'death', jump: 'walk', fall: 'walk' }[clip] || (FPS[clip] && clip) || 'idle';   // 3행 시트에 없는 이름은 idle(없는 파일 404 막기)
   }
   /** W-0138 — 마을 맨손 시트(K-0083 ①): 8방향 시트를 가진 사람(hero2d8, 299 전부 idle_town·walk_town 있음)이 o.town 이면
    *  서기·걷기를 맨손 그림으로. 순수(진단이 본다) — 그 밖(공격·피격, 3행 시트, 짐승)은 roleOf 그대로 */
@@ -245,7 +245,7 @@
 
   function getImg(pool, clip, eight) {
     pool = bare(pool);   // 옷 색 꼬리(W-0121)는 같은 시트를 쓴다
-    var key = pool + '/' + clip + (eight ? '#8' : ''), e = imgs[key];
+    var key = pool + '/' + clip + (eight === 16 ? '#16' : eight ? '#8' : ''), e = imgs[key];
     if (e) { return e; }
     e = imgs[key] = { img: null, ok: false, fail: false };
     if (!global.Image) { e.fail = true; return e; }
@@ -253,7 +253,7 @@
     im.onload = function () { e.ok = true; };
     im.onerror = function () { e.fail = true; };   // 파일이 없으면 영영 기존 그림 — 다시 받으려 들지 않는다
     im.src = isCrea(pool) ? creaRoot() + 'creatures2d/' + pool.slice(CPRE.length) + '/' + clip + '.webp'   // W-0129 몬스터 시트
-      : isVroid(pool) ? global.DG.assets3d.root() + (eight ? 'characters2d8/' : 'characters2d/') + pool.slice(VPRE.length) + '/' + clip + '.webp' : base() + pool + '/' + clip + '.webp';
+      : isVroid(pool) ? global.DG.assets3d.root() + (eight === 16 ? 'characters2d16/' : eight ? 'characters2d8/' : 'characters2d/') + pool.slice(VPRE.length) + '/' + clip + '.webp' : base() + pool + '/' + clip + '.webp';
     e.img = im;
     return e;
   }
@@ -267,9 +267,39 @@
    * 한 프레임을 그린다. o = { pool, clip, facing, ms, x, y(발 밑 가운데), scale(1 = 128px), alpha }
    * 받는 중이거나 파일이 없으면 false(→ 부른 쪽이 기존 그림을 그린다). 그렸으면 true.
    */
+  /* ── 16방향·동작별 프레임 시트(W-0311) — 규격·방향·프레임은 sheetspec.js(순수). 표 hero2d16 에 있는 인물만, 그 동작 그림을 받은 뒤에만 이 길.
+     받는 중이면 false → draw 가 옛 8방향 길로 그린다(깜박임 0). 역할은 자세(o.pose, W-0303)가 시트에 있으면 그것 — 그럴 땐 기울이기 대역을 안 쓴다 */
+  function SS() { return global.DG && global.DG.sheetspec; }
+  function spec16(pool) { return SS() && isVroid(pool) ? SS().lookup(bare(pool).slice(VPRE.length)) : null; }
+  function role16(spec, o) {
+    var S = SS(), pr = o.pose ? S.roleName(o.pose) : null, r = pr && S.roleOf(spec, o.pose) === pr ? pr : S.roleOf(spec, o.clip);
+    if (o.town && (r === 'idle' || r === 'walk') && S.roleOf(spec, r + '_town') === r + '_town') { r = r + '_town'; }   // W-0138 마을 맨손
+    return r;
+  }
+  function draw16(ctx, o, spec) {
+    var S = SS(), role = role16(spec, o), e = getImg(o.pool, role, 16);
+    if (!e.ok) { if (role !== 'idle') { getImg(o.pool, 'idle', 16); } return false; }
+    var c = S.cellOf(spec, role, e.img && e.img.naturalWidth), P = c[0], d = S.dirOf16(o.dirX, o.dirY, o.facing), f = S.frameAt(spec, role, o.ms || 0, o.t, o.stride);
+    var cf = C(), vr = cf.vroid2d, sc = (vr ? (cf.targetH || 62) / (vr.h || 85) : (cf.scale || 1)) * (o.scale || 1), w = P * sc, h = P * sc, foot = (P / 2 + c[1] * PPM + 1.5) / P;
+    ctx.save();
+    if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
+    ctx.imageSmoothingEnabled = true;
+    if (d.flip) { ctx.translate(o.x, 0); ctx.scale(-1, 1); ctx.translate(-o.x, 0); }
+    var P2 = o.pose && S.roleName(o.pose) !== role && global.DG.pose3d && global.DG.pose3d.frame2d ? global.DG.pose3d.frame2d(o.pose) : null;   // 시트에 그 자세가 없을 때만 대역
+    if (P2) { ctx.translate(o.x, o.y); ctx.rotate(P2.rot); ctx.scale(P2.sx, P2.sy); ctx.translate(-o.x, -o.y); }
+    var slot = tintOf(o.pool), Co = global.DG && global.DG.core, tk = slot && Co && Co.tuned ? Math.min(1, Math.max(0, +Co.tuned('mode2d.borrowTint', 1))) : 1;
+    var tl = slot && Co && Co.tuned ? Math.min(1, Math.max(0, +Co.tuned('mode2d.borrowTintLow', 0.25))) : 1;
+    var cell = slot && tk > 0 ? tintCell(e, bare(o.pool) + '/' + role + '#16', f * P, d.row * P, P, slot, tk, tl) : null;
+    if (cell) { ctx.drawImage(cell, 0, 0, P, P, o.x - w / 2, o.y - h * foot, w, h); }
+    else { ctx.drawImage(e.img, f * P, d.row * P, P, P, o.x - w / 2, o.y - h * foot, w, h); }
+    ctx.restore();
+    return true;
+  }
+
   function draw(ctx, o) {
     if (!ctx || !o || !o.pool || !isOn()) { return false; }
     if (isStill(o.pool)) { return drawStill(ctx, o); }      // 한 장 모드 풀(W-0032)
+    var s16 = spec16(o.pool); if (s16 && draw16(ctx, o, s16)) { return true; }   // W-0311 16방향 시트가 온 인물부터
     var cr = null;
     if (isCrea(o.pool)) { var ci = creaInfo(o.pool.slice(CPRE.length)); if (!ci || !ci.fit) { return false; } cr = ci.fit; }   // W-0129 — manifest 받기 전엔 옛 그림
     var s8 = sheet8(o.pool), eight = !!s8, role = roleOf(o.clip, eight), e = getImg(o.pool, role, eight);
@@ -541,7 +571,7 @@
     tileOk: function (id) { var t = tiles[id]; return t ? t.ok : null; },
     FRAMES: FRAMES, PX: PX, FPS: FPS, AIR: AIR, AIR_T: AIR_T,
     isOn: isOn, pick: pick, vroidPick: vroidPick, face: face, actT: actT, actInfo: actInfo, dirOf8: dirOf8, roleOf: roleOf, roleKey: roleKey, townRole: townRole, sheet8: sheet8, beastOf: beastOf, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
-    draw: draw, preload: preload, loadIndex: loadIndex, tintSlot: tintSlot, tintPx: tintPx, tintData: tintData, tintRowW: tintRowW, tintOf: tintOf, bare: bare,
+    draw: draw, preload: preload, spec16: spec16, role16: role16, loadIndex: loadIndex, tintSlot: tintSlot, tintPx: tintPx, tintData: tintData, tintRowW: tintRowW, tintOf: tintOf, bare: bare,
     drawStill: drawStill, stillPose: stillPose, isStill: isStill, pace: pace,
     stillLoaded: function (pool, view) { var e = stills[pool + '/' + view]; return e ? e.ok : null; },
     /** 진단용 — 그 풀·동작 이미지를 받았나(true/false), 아직 안 불렀으면 null */
