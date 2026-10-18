@@ -317,7 +317,7 @@
   function castBody(sk, swapMul) {
     var p = run.player;
     if (global.DG.mount && global.DG.mount.onAttack) { global.DG.mount.onAttack(); }   // 탈것 위에선 못 싸운다 — 무예를 쓰면 내린다
-    p.atkCd = ATK_ANIM_DUR;
+    p.atkCd = ATK_ANIM_DUR; p.castPose = sk.cost > 0;   // W-0303 기력 쓰는 무예는 시전 몸짓
     var S0 = global.DG.sfx;
     sfx(sk.cost === 0 ? 'swing' : (S0 ? S0.skillCue(sk.effect) : 'skill'));
 

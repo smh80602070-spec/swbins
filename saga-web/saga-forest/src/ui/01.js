@@ -637,7 +637,7 @@
     if (!r) { return; }
     lastResult = r; resultAt = Date.now();
     if (!NO_GESTURE_KIND[r.kind] && global.DG.villageView3d && global.DG.villageView3d.triggerAction) {
-      global.DG.villageView3d.triggerAction();
+      global.DG.villageView3d.triggerAction(r);
     }
     if (r.kind === 'open') { openPlace(r.place || 'shop'); }
     else if (r.kind === 'home' || r.kind === 'pick' || r.kind === 'keep' ||

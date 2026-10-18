@@ -6158,6 +6158,20 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         ('turned ' + turned.toFixed(0) + ' capped ' + capped.toFixed(0) + ' back ' + back.toFixed(1) + ' loop ' + loopOk);
     });
 
+    t('pose3d 쉬는 몸 — life(): 서 있으면 idle 변주, 가만히 8초 넘으면 앉기(모닥불 곁이면 준 rest 로), 걷거나 0.5초 넘게 안 불리면(공격·대화가 끼면) 다시 센다 · 앉기는 땅에 무릎 세워 앉아 엉덩이가 땅 가까이 (W-0303)', function () {
+      var P3 = DG.pose3d, OA = DG.ownAnim, rig = OA.refRig(), m = OA.math, fr = rig.frame, st = {}, seq = [], k, bad = [];
+      for (k = 0; k <= 48; k++) { seq.push(P3.life(st, k * 0.25, k < 12 || k > 14) || '-'); }   // 3~3.5초에 한 번 걸음
+      var firstSit = seq.indexOf('Pose_sit') * 0.25;
+      if (!(firstSit >= 11.4 && firstSit <= 11.6)) { bad.push('앉기 시작 ' + firstSit + '초(걸음 뒤 8초여야)'); }
+      if (seq.slice(0, 12).indexOf('Pose_sit') >= 0) { bad.push('8초 전에 앉음'); }
+      var s2 = {}; P3.life(s2, 0, true); P3.life(s2, 9, true);   // 9초 틈 = 다른 몸짓이 끼었다
+      if (P3.life(s2, 9.1, true) !== null && P3.life(s2, 9.1, true) === 'Pose_sit') { bad.push('틈 뒤에도 앉음'); }
+      var s3 = {}, w; for (k = 0; k <= 40; k++) { w = P3.life(s3, k * 0.25, true, 'Pose_warm'); }
+      if (w !== 'Pose_warm') { bad.push('rest 무시 ' + w); }
+      var c = OA.clipData(rig, ['Pose_sit'])[0], W = OA.fkAt(rig, c, 1), hipsUp = m.vdot(W[OA.BONES.hips].p, fr.u) - rig.rest.minUp;
+      if (!(hipsUp < 0.25)) { bad.push('앉은 엉덩이 ' + hipsUp.toFixed(2) + 'm'); }
+      return !bad.length && ('걸음 뒤 ' + (firstSit - 3.5).toFixed(1) + '초에 앉음 · 앉은 엉덩이 ' + hipsUp.toFixed(2) + 'm · 모닥불 곁 Pose_warm') || bad.join(' · ');
+    });
     t('anim-own — VRM 몸(anime 경로)만 자체 몸짓 길을 탄다', function () {
       var A3 = DG.asset3d;
       var on = A3.wantsOwnAnim('assets/models/people/anime/avatar_sample_a.glb') &&

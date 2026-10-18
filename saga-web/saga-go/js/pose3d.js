@@ -23,9 +23,11 @@
   function sw(t01, k) { return Math.sin(t01 * 2 * Math.PI + (k || 0)); }   // 반복 클립 한 바퀴에 이어지는 흔들림
 
   /* ── 상황 넷 ─────────────────────────────────────────── */
-  /** 앉기 — 허벅지를 앞으로 수평 가까이, 무릎 직각, 발바닥 평평(ft = a − k). 접지 풀이가 엉덩이를 의자 높이로 내린다 */
-  var SIT = M(BASE, legs(84, 88, -4, 84, 88, -4), S('ua', -68, -28), S('la', null, null, -48), S('hand', null, 10),
-    { 'spine.p': -2, 'chest.p': 2, 'head.p': 3 });
+  /** 앉기 — 땅에 무릎 세워 앉기(판에 의자가 없다). 발목을 엉덩이 앞 0.36m·같은 높이에 두는 두 뼈 IK 로 다리 각을 풀고 발바닥은 평평(ft = a − k),
+   *  접지 풀이가 발을 땅에 대면 엉덩이도 땅 가까이 온다. 두 손은 무릎 위, 몸은 조금 뒤로 */
+  var SIT_L = L.legIK(0.36, -0.02), SIT_R = L.legIK(0.34, -0.02);
+  var SIT = M(BASE, legs(SIT_L.a, SIT_L.k, SIT_L.a - SIT_L.k, SIT_R.a, SIT_R.k, SIT_R.a - SIT_R.k), S('ul', 8), S('ua', -64, -44), S('la', null, null, -36), S('hand', null, 6),
+    { 'spine.p': -8, 'chest.p': 4, 'neck.p': 4, 'head.p': 4 });
   function sitPose(t) { return M(SIT, { 'chest.p': 2 + 1.2 * sw(t), 'head.p': 3 + 0.6 * sw(t, 0.8), 'hips.r': 0.6 * sw(t, 1.3) }); }
 
   /** 불 쬐기 — 쪼그려 앉아 두 손바닥을 앞(불)으로 */
@@ -86,8 +88,9 @@
   /* ── 생활 셋 ─────────────────────────────────────────── */
   /** 인사 — 오른손을 들어 두 번 흔든다 */
   var wavePose = (function () {
-    var up = M(BASE, { 'rua.r': -58, 'rua.p': -6, 'rua.y': 10, 'rla.y': 104, 'rhand.p': 0, 'chest.r': -2, 'head.y': -6, 'head.p': 3 });
-    var w1 = M(up, { 'rua.r': -62, 'rla.y': 84 }), w2 = M(up, { 'rua.r': -62, 'rla.y': 118 }), w3 = M(up, { 'rla.y': 100 });
+    /* 팔꿈치는 어깨 높이 옆, 아래팔은 위로 세운다(FK 로 찾은 각 — 손이 어깨 위 0.35m). 흔들기 = 아래팔을 좌우(r)로 */
+    var up = M(BASE, { 'rua.r': -35, 'rua.y': 30, 'rla.r': -60, 'rla.y': 0, 'rhand.p': 0, 'chest.r': -2, 'head.y': -6, 'head.p': 3 });
+    var w1 = M(up, { 'rla.r': -40 }), w2 = M(up, { 'rla.r': -78 }), w3 = M(up, { 'rla.r': -58 });
     return keyed([[0, BASE], [0.22, up], [0.36, w1], [0.5, w2], [0.64, w1], [0.76, w3], [1, BASE]]);
   })();
 
@@ -104,8 +107,9 @@
     return keyed([[0, BASE], [0.25, l], [0.45, l], [0.62, r], [0.78, r], [1, BASE]]);
   })();
   var scratchPose = (function () {
-    var up = M(BASE, { 'rua.r': -30, 'rua.p': -12, 'rua.y': 14, 'rla.y': 142, 'rhand.p': -10, 'head.p': 4, 'head.r': -6 });
-    return keyed([[0, BASE], [0.25, up], [0.4, M(up, { 'rla.y': 134 })], [0.55, M(up, { 'rla.y': 144 })], [0.7, M(up, { 'rla.y': 136 })], [1, BASE]]);
+    /* 팔꿈치를 옆으로 들고 손이 머리 오른쪽 위에(FK 로 찾은 각) — 긁기 = 손목·아래팔을 조금씩 */
+    var up = M(BASE, { 'rua.r': -45, 'rua.y': 10, 'rla.r': -70, 'rla.y': 160, 'rhand.p': -10, 'head.p': 4, 'head.r': -6 });
+    return keyed([[0, BASE], [0.25, up], [0.4, M(up, { 'rla.y': 150, 'rhand.p': -24 })], [0.55, M(up, { 'rla.y': 162 })], [0.7, M(up, { 'rla.y': 152, 'rhand.p': -24 })], [1, BASE]]);
   })();
   var shiftPose = (function () {
     var s = M(BASE, legs(6, 16, -10, 0, 2, -2), { 'hips.dx': -0.045, 'hips.r': -4, 'spine.r': 3, 'chest.r': 2, 'head.r': -1 });
@@ -132,7 +136,7 @@
 
   /** 2D 대역 — 동작별 프레임(K 시트)이 없을 때 mode2d 가 쓰는 기울이기·누르기. rot 라디안(앞으로 +) · sx/sy 발 밑 기준 배율 */
   var FRAME2D = {
-    Pose_sit: { sy: 0.82, sx: 1.06 }, Pose_warm: { sy: 0.76, sx: 1.08, rot: 0.08 }, Pose_pick: { rot: 0.34, sy: 0.9 }, Pose_lean: { rot: -0.14 },
+    Pose_sit: { sy: 0.58, sx: 1.1 }, Pose_warm: { sy: 0.76, sx: 1.08, rot: 0.08 }, Pose_pick: { rot: 0.34, sy: 0.9 }, Pose_lean: { rot: -0.14 },
     Pose_heavy: { rot: 0.24, sx: 1.08 }, Pose_cast: { sy: 1.03, rot: 0.05 }, Pose_block: { rot: -0.08, sy: 0.96 },
     Pose_wave: { rot: -0.05 }, Pose_fish: { rot: 0.12 }, Pose_idle_look: { rot: 0.02 }, Pose_idle_scratch: { rot: -0.03 }, Pose_idle_shift: { rot: 0.04 }
   };
@@ -168,6 +172,18 @@
       if (v.cur) { if (nowS < v.until) { return v.cur; } v.cur = null; v.next = nowS + every; return null; }
       if (nowS >= v.next) { v.cur = IDLE[v.i++ % IDLE.length]; v.until = nowS + this.durOf(v.cur); return v.cur; }
       return null;
+    },
+    /** 쉬는 몸 한 줄 — 서 있으면 idle 변주, pose3d.sitAfter(8)초 넘게 가만히 있으면 rest(기본 Pose_sit, 모닥불 곁이면 Pose_warm)로 앉아 쉰다.
+     *  still=false(걷기)거나 0.5초 넘게 안 불렸으면(공격·대화 따위가 끼었으면) 처음부터 다시 센다. 쉴 몸짓이 없으면 null(부르는 쪽이 idle) */
+    life: function (st, nowS, still, rest) {
+      var l = st._lf || (st._lf = { since: nowS, last: nowS, dt: 0 }), gap = nowS - l.last;
+      /* 끊김 = 평소 호출 간격(프레임)의 3배 넘게 안 불림(최소 0.5초) — 느린 기기(초당 2~5프레임)에서 매 프레임 끊김으로 보면 영영 못 앉는다 */
+      if (!still || gap > Math.max(0.5, 3 * l.dt)) { l.since = nowS; }
+      if (gap > 0 && gap < 2) { l.dt = l.dt ? l.dt + (gap - l.dt) * 0.2 : gap; }
+      l.last = nowS;
+      if (!still) { this.idleVariant(st, nowS, false); return null; }
+      if (nowS - l.since >= tn('pose3d.sitAfter', 8)) { this.idleVariant(st, nowS, false); return rest || 'Pose_sit'; }
+      return this.idleVariant(st, nowS, true);
     },
     /** 시선 — 믹서가 머리를 쓴 뒤(step 안 mixer.update 다음) 부른다. u.look = { x, y?, z } 월드 목표(y 없으면 눈높이).
      *  머리 뼈의 지금 얼굴 방향(-Z)에서 목표 방향으로 돌리되 ±60°(pose3d.lookMax) 안, 0.5초에 90% 따라간다. 목표가 없으면 되돌아온다 */

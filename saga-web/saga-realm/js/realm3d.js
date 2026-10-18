@@ -824,7 +824,7 @@
     var hx = worldX(a.x1) - worldX(a.x0), hz = worldZ(a.y1) - worldZ(a.y0);
     if (!p.out) { hx = -hx; hz = -hz; }
     if (hx * hx + hz * hz > 1e-6) { c.grp.rotation.y = Math.atan2(hx, hz); }
-    if (c.hero && A3 && A3.step) { A3.step(c.hero, { anim: p.moving ? a.clip : a.rest, t: tms / 1000 }); }
+    if (c.hero && A3 && A3.step) { A3.step(c.hero, { anim: p.moving ? a.clip : ((c.hero.userData.ownBody && global.DG.pose3d ? global.DG.pose3d.life(c, tms / 1000, true) : null) || a.rest), t: tms / 1000 }); }   // W-0303 떠돌이도 쉬면 둘러보기·앉기
   }
   function tickBattle(c, a, tms, A3) {
     var wx = worldX(a.x), wz = worldZ(a.y);
@@ -863,7 +863,7 @@
     }
   }
   /** 몸에 실제로 있는 첫 슬롯(별칭으로 떨어진 것은 건너뛴다) — 없으면 null */
-  function gestureSlot(model, clips) {
+  /* W-0303 — 자체 몸짓 몸(ownBody)이면 명령마다 상황·전투·생활 몸짓을 먼저(진단이 보는 ORDER_GESTURES 표준 슬롯은 그대로 둔다) */ var ORDER_POSE = { agri: 'Pose_pick', comm: 'Pose_wave', tech: 'Pose_heavy', sec: 'Pose_idle_look', wall: 'Pose_heavy', draft: 'Pose_cast', train: 'Pose_heavy', ships: 'Pose_heavy', search: 'Pose_pick', hire: 'Pose_wave' }; function poseFor(model, order) { var u = model && model.userData; return u && u.ownBody && global.DG.pose3d ? ORDER_POSE[order] || null : null; } function gestureSlot(model, clips) {
     var cm = model && model.userData && model.userData.clipMap, i;
     if (!cm) { return null; }
     for (i = 0; i < clips.length; i++) {
@@ -945,7 +945,7 @@
     c.grp.rotation.y = 0;                       // 로컬 +z = 기본 카메라 쪽을 본다
     if (c.badge) { c.badge.position.y = HERO_SCALE + 2.2 + Math.sin(tms / 420 + c.seed) * 0.35; }
     if (!c.hero || !A3 || !A3.step) { return; }
-    var slot = a.order ? gestureSlot(c.hero, a.clips) : null;
+    var slot = a.order ? (poseFor(c.hero, a.order) || gestureSlot(c.hero, a.clips)) : null;
     var on = !!slot && ((tms / 1000 + c.seed) % GESTURE_EVERY) < GESTURE_ON;
     var start = on && !c.gOn;
     c.gOn = on;

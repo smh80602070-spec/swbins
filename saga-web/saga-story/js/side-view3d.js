@@ -849,6 +849,7 @@
    *  아직 도형이면 흰빛으로 번쩍이는 예전 방식 그대로다 */
   /** W-0303 — 말을 걸면 처음 한 번 손을 흔든다(pose3d.once), 그 뒤엔 서 있기 */
   function talkWave(p, on) { var P3 = global.DG.pose3d; return P3 ? P3.once(p, 'talk', on, Date.now() / 1000, 'Pose_wave') : null; }
+  function sideLife(p, still) { var P3 = global.DG.pose3d; return P3 ? P3.life(p, Date.now() / 1000, still) : null; }   // W-0303 쉬는 몸(변주 · 8초 → 앉기)
   function stepActor(shell, animName) {
     if (shell.userData.flashMats) {
       var hn = shell.userData.hurtNow || 0;
@@ -1001,9 +1002,9 @@
        보다는 위, 회피·공격보다는 아래 — 둘 다 그 자리에서 짧게 끝난다 */
     stepActor(playerMesh, (p.hurt || 0) > 0 ? 'hit' :
       ((p.dodgeAnim || 0) > 0 ? 'dodge' :
-      ((p.atkCd || 0) > 0 ? (wpnAtk(p) || 'attack') :
+      ((p.atkCd || 0) > 0 ? (p.castPose ? 'Pose_cast' : (wpnAtk(p) || 'attack')) :
       ((p.drinkAnim || 0) > 0 ? 'interaction' : (run.talk ? (talkWave(p, !!run.talk) || 'idle') :
-      (running ? 'run' : (walking ? 'walk' : 'idle')))))));
+      (running ? 'run' : (walking ? 'walk' : (sideLife(playerMesh.userData, true) || 'idle'))))))));
     var bob = (!playerMesh.userData.mixer && walking) ? Math.abs(Math.sin(Date.now() / 90)) * 3 : 0;
     playerMesh.position.y += bob;
 

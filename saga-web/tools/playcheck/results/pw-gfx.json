@@ -1,6 +1,6 @@
 {
- "at": "2026-10-17T23:17:41.226Z",
- "base": "http://127.0.0.1:2048/",
+ "at": "2026-10-18T00:19:16.253Z",
+ "base": "http://127.0.0.1:4114/",
  "runs": [
   {
    "game": "saga-go",
@@ -8,9 +8,9 @@
    "m": {
     "calls": 44,
     "targets": 40,
-    "objects": 4481,
-    "toon": 340,
-    "cast": 41,
+    "objects": 2974,
+    "toon": 200,
+    "cast": 23,
     "sun": 1,
     "sky": 1,
     "pbr": 35,
@@ -20,7 +20,7 @@
     "postStats": {
      "ready": true,
      "failed": false,
-     "frames": 42,
+     "frames": 37,
      "on": true,
      "tier": "HIGH",
      "tone": "neutral",
@@ -37,7 +37,7 @@
      "on": true,
      "ready": true,
      "failed": false,
-     "frames": 42,
+     "frames": 37,
      "tier": "HIGH",
      "samples": 12,
      "size": "640x360",
@@ -121,9 +121,9 @@
    "m": {
     "calls": 55,
     "targets": 50,
-    "objects": 3155,
-    "toon": 330,
-    "cast": 386,
+    "objects": 3027,
+    "toon": 323,
+    "cast": 372,
     "sun": 1,
     "sky": 1,
     "pbr": 1,
@@ -133,7 +133,7 @@
     "postStats": {
      "ready": true,
      "failed": false,
-     "frames": 46,
+     "frames": 47,
      "on": true,
      "tier": "HIGH",
      "tone": "neutral",
@@ -150,7 +150,7 @@
      "on": true,
      "ready": true,
      "failed": false,
-     "frames": 46,
+     "frames": 47,
      "tier": "HIGH",
      "samples": 12,
      "size": "640x360",

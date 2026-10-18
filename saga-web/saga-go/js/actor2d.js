@@ -14,12 +14,13 @@
     var pool = M.pick(key === 'player' ? 'me' : 'human', (ref && (ref.id || ref.name)) || key);   // 나(player)는 주인공 몸(hero_m/f), 나머지 인물은 마을 사람 몸
     if (!pool) { return false; }
     o = o || {};
+    var P3 = global.DG.pose3d, FSs = key === 'player' && global.DG.fishing && global.DG.fishing.state ? global.DG.fishing.state().state : null, pose = key === 'player' && P3 ? ((FSs === 'wait' || FSs === 'nibble') ? 'Pose_fish' : P3.life(P3.st2d || (P3.st2d = {}), (o.now || Date.now()) / 1000, !o.moving)) : null;   // W-0303 2D 대역 — 낚시 대기·쉬기(K 동작 시트 전)
     var clip = o.moving ? 'walk' : 'idle', act = key === 'player' && global.DG.fieldCombat && global.DG.fieldCombat.anim2d ? global.DG.fieldCombat.anim2d('me') : null, actT = null;
     /* W-0224 — 들판 전투 몸짓: 맞음 → hit · 강공격·필살·낙하 → heavy · 평타 → attack/attack2 번갈아(2나락 actor2d 와 같은 꼴). 진행도는 mode2d.actT(남은 초) */
     if (act && M.actT) { var ak = 'me:' + (act.clip === 'hit' ? 'hit' : 'atk'); actT = M.actT(ak, act.left); var ai = M.actInfo ? M.actInfo(ak) : null; clip = act.clip === 'hit' ? 'hit' : (act.clip === 'heavy' ? 'heavy' : (ai && ai.n % 2 === 0 ? 'attack2' : 'attack')); }
     else if (key === 'player' && M.actT) { M.actT('me:atk', 0); M.actT('me:hit', 0); }
     var tH = (global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.targetH) || 40;
-    var drawn = M.draw(ctx, { pool: pool, clip: clip, t: actT, facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: (o.now || Date.now()) + (o.phase || 0) * 160, x: x, y: y, scale: s * 40 * 1.2 / tH, stride: (o.wx != null && M.pace) ? M.pace(o.pk || key || pool, o.wx, o.wy, o.ppu, s * 48 * (global.DG.field2d && global.DG.field2d.strideMul ? global.DG.field2d.strideMul() : 1), o.now || Date.now()) : null });
+    var drawn = M.draw(ctx, { pool: pool, clip: clip, t: actT, facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: (o.now || Date.now()) + (o.phase || 0) * 160, x: x, y: y, scale: s * 40 * 1.2 / tH, stride: (o.wx != null && M.pace) ? M.pace(o.pk || key || pool, o.wx, o.wy, o.ppu, s * 48 * (global.DG.field2d && global.DG.field2d.strideMul ? global.DG.field2d.strideMul() : 1), o.now || Date.now()) : null, pose: act ? null : pose });
     if (drawn && key === 'player') { rankStars(ctx, ref, x, y, s); }
     return drawn;
   }

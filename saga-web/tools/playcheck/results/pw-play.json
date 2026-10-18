@@ -1,6 +1,6 @@
 {
- "base": "http://127.0.0.1:2048/",
- "at": "2026-10-17T23:16:20.647Z",
+ "base": "http://127.0.0.1:4114/",
+ "at": "2026-10-18T00:18:02.241Z",
  "runs": [
   {
    "game": "saga-go",
@@ -10,8 +10,8 @@
     {
      "name": "부팅(가입→첫 관문→들어감)",
      "ok": true,
-     "detail": "27166ms ",
-     "ms": 27166,
+     "detail": "27874ms ",
+     "ms": 27874,
      "skip": false,
      "warn": false
     },
@@ -19,7 +19,7 @@
      "name": "위치를 읽을 수 있다",
      "ok": true,
      "detail": "{\"x\":0,\"y\":0}",
-     "ms": 1020,
+     "ms": 1066,
      "skip": false,
      "warn": false
     },
@@ -27,29 +27,29 @@
      "name": "FPS(1초)",
      "ok": true,
      "detail": "3 fps(헤드리스 swiftshader)",
-     "ms": 2005,
+     "ms": 2124,
      "skip": false,
      "warn": true
     },
     {
      "name": "키 4방향 이동(3/4 이상)",
      "ok": true,
-     "detail": "D○2.4 S○2.4 Left○3.2 Up○3.2",
+     "detail": "D○2.4 S○2.4 Left○2.4 Up○2.4",
      "skip": false
     },
     {
      "name": "마우스 끌기 이동",
      "ok": true,
      "detail": "이 판은 끌기가 걷기가 아님",
-     "ms": 0,
+     "ms": 1,
      "skip": true,
      "warn": false
     },
     {
      "name": "☰ 메뉴 → 첫 칸 창 → 닫기 → 키 이동",
      "ok": true,
-     "detail": "창 열림 · 닫힘 true · D○3.2",
-     "ms": 10322,
+     "detail": "창 열림 · 닫힘 true · D○2.4",
+     "ms": 10395,
      "skip": false,
      "warn": false
     },
@@ -57,7 +57,7 @@
      "name": "HUD 겹침(보이는 고정 요소 쌍)",
      "ok": true,
      "detail": "없음",
-     "ms": 404,
+     "ms": 413,
      "skip": false,
      "warn": false
     },
@@ -65,15 +65,15 @@
      "name": "클릭 이동(빈 땅 → 걷기 · 짐승 → 만남)",
      "ok": true,
      "detail": "짐승을 눌러 만남(정상 반응) · 만남@640,302",
-     "ms": 4034,
+     "ms": 3761,
      "skip": false,
      "warn": false
     },
     {
      "name": "새로 고침 → 이어하기 → 들어감",
      "ok": true,
-     "detail": "{\"x\":2.4000000000000004,\"y\":-0.7999999999999998}",
-     "ms": 23651,
+     "detail": "{\"x\":2.4000000000000004,\"y\":2.220446049250313e-16}",
+     "ms": 24367,
      "skip": false,
      "warn": false
     },
@@ -101,8 +101,8 @@
     {
      "name": "부팅(가입→첫 관문→들어감)",
      "ok": true,
-     "detail": "18613ms ",
-     "ms": 18613,
+     "detail": "13725ms ",
+     "ms": 13725,
      "skip": false,
      "warn": false
     },
@@ -110,7 +110,7 @@
      "name": "위치를 읽을 수 있다",
      "ok": true,
      "detail": "{\"x\":0,\"y\":0}",
-     "ms": 226,
+     "ms": 337,
      "skip": false,
      "warn": false
     },
@@ -118,29 +118,29 @@
      "name": "FPS(1초)",
      "ok": true,
      "detail": "11 fps(헤드리스 swiftshader)",
-     "ms": 1147,
+     "ms": 2998,
      "skip": false,
      "warn": false
     },
     {
      "name": "키 4방향 이동(3/4 이상)",
      "ok": true,
-     "detail": "D○8.0 S○5.6 Left○6.4 Up○8.8",
+     "detail": "D○8.0 S○5.6 Left○7.2 Up○8.8",
      "skip": false
     },
     {
      "name": "터치 이동(joy:#gjoy)",
      "ok": true,
-     "detail": "이동 39.1 @73,635",
-     "ms": 6267,
+     "detail": "이동 38.8 @73,635",
+     "ms": 6065,
      "skip": false,
      "warn": false
     },
     {
      "name": "☰ 메뉴 → 첫 칸 창 → 닫기 → 키 이동",
      "ok": true,
-     "detail": "창 열림 · 닫힘 true · D○9.5",
-     "ms": 6002,
+     "detail": "창 열림 · 닫힘 true · D○8.5",
+     "ms": 6213,
      "skip": false,
      "warn": false
     },
@@ -148,23 +148,23 @@
      "name": "HUD 겹침(보이는 고정 요소 쌍)",
      "ok": true,
      "detail": "없음",
-     "ms": 84,
+     "ms": 88,
      "skip": false,
      "warn": false
     },
     {
      "name": "클릭 이동(빈 땅 → 걷기 · 짐승 → 만남)",
      "ok": true,
-     "detail": "걷기 18.3 @195,354",
-     "ms": 3307,
+     "detail": "걷기 17.9 @195,354",
+     "ms": 3471,
      "skip": false,
      "warn": false
     },
     {
      "name": "새로 고침 → 이어하기 → 들어감",
      "ok": true,
-     "detail": "{\"x\":48.0676753488217,\"y\":-34.77023086437659}",
-     "ms": 9892,
+     "detail": "{\"x\":46.06296342933869,\"y\":-34.40346454950644}",
+     "ms": 10355,
      "skip": false,
      "warn": false
     },
@@ -190,8 +190,8 @@
     {
      "name": "부팅(가입→첫 관문→들어감)",
      "ok": true,
-     "detail": "19607ms ",
-     "ms": 19607,
+     "detail": "19191ms ",
+     "ms": 19191,
      "skip": false,
      "warn": false
     },
@@ -199,7 +199,7 @@
      "name": "위치를 읽을 수 있다",
      "ok": true,
      "detail": "{\"x\":600,\"y\":440.00000000000006}",
-     "ms": 783,
+     "ms": 787,
      "skip": false,
      "warn": false
     },
@@ -207,7 +207,7 @@
      "name": "FPS(1초)",
      "ok": true,
      "detail": "5 fps(헤드리스 swiftshader)",
-     "ms": 1626,
+     "ms": 1637,
      "skip": false,
      "warn": true
     },
@@ -221,7 +221,7 @@
      "name": "마우스 끌기 이동",
      "ok": true,
      "detail": "이동 123.0",
-     "ms": 15769,
+     "ms": 15794,
      "skip": false,
      "warn": false
     },
@@ -229,7 +229,7 @@
      "name": "☰ 메뉴 → 첫 칸 창 → 닫기 → 키 이동",
      "ok": true,
      "detail": "창 열림 · 닫힘 true · D○47.2",
-     "ms": 10381,
+     "ms": 10257,
      "skip": false,
      "warn": false
     },
@@ -237,7 +237,7 @@
      "name": "HUD 겹침(보이는 고정 요소 쌍)",
      "ok": true,
      "detail": "없음",
-     "ms": 418,
+     "ms": 410,
      "skip": false,
      "warn": false
     },
@@ -245,7 +245,7 @@
      "name": "클릭 이동(moveTarget)",
      "ok": true,
      "detail": "이동 35.4 목표 true @#map3d",
-     "ms": 4867,
+     "ms": 4807,
      "skip": false,
      "warn": false
     },
@@ -253,7 +253,7 @@
      "name": "새로 고침 → 이어하기 → 들어감",
      "ok": true,
      "detail": "{\"x\":600,\"y\":440.00000000000006}",
-     "ms": 16513,
+     "ms": 15689,
      "skip": false,
      "warn": false
     },
@@ -281,8 +281,8 @@
     {
      "name": "부팅(가입→첫 관문→들어감)",
      "ok": true,
-     "detail": "22286ms ",
-     "ms": 22286,
+     "detail": "21925ms ",
+     "ms": 21925,
      "skip": false,
      "warn": false
     },
@@ -290,7 +290,7 @@
      "name": "위치를 읽을 수 있다",
      "ok": true,
      "detail": "{\"x\":600,\"y\":440.00000000000006}",
-     "ms": 1035,
+     "ms": 1034,
      "skip": false,
      "warn": false
     },
@@ -298,7 +298,7 @@
      "name": "FPS(1초)",
      "ok": true,
      "detail": "4 fps(헤드리스 swiftshader)",
-     "ms": 1605,
+     "ms": 1570,
      "skip": false,
      "warn": true
     },
@@ -312,7 +312,7 @@
      "name": "터치 이동(joy:#vjoy)",
      "ok": true,
      "detail": "이동 188.8 @73,635",
-     "ms": 17073,
+     "ms": 15504,
      "skip": false,
      "warn": false
     },
@@ -320,7 +320,7 @@
      "name": "☰ 메뉴 → 첫 칸 창 → 닫기 → 키 이동",
      "ok": true,
      "detail": "창 열림 · 닫힘 true · D○35.4",
-     "ms": 14590,
+     "ms": 13730,
      "skip": false,
      "warn": false
     },
@@ -328,7 +328,7 @@
      "name": "HUD 겹침(보이는 고정 요소 쌍)",
      "ok": true,
      "detail": "없음",
-     "ms": 534,
+     "ms": 503,
      "skip": false,
      "warn": false
     },
@@ -336,7 +336,7 @@
      "name": "클릭 이동(moveTarget)",
      "ok": true,
      "detail": "이동 35.4 목표 true @#map3d",
-     "ms": 5464,
+     "ms": 5140,
      "skip": false,
      "warn": false
     },
@@ -344,7 +344,7 @@
      "name": "새로 고침 → 이어하기 → 들어감",
      "ok": true,
      "detail": "{\"x\":600,\"y\":440.00000000000006}",
-     "ms": 17193,
+     "ms": 17403,
      "skip": false,
      "warn": false
     },

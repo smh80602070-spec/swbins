@@ -1910,7 +1910,7 @@
     core.emit('changed');
     core.persist();
     return { kind: 'gather', text: got.emoji + ' ' + got.name + ' ×' + n +
-      (bonus ? ' 🎵' : ''), item: got, streak: streak, bonus: bonus };
+      (bonus ? ' 🎵' : ''), item: got, streak: streak, bonus: bonus, propKind: prop.kind };
   }
 
   /* ── 잡초 ─────────────────────────────────────────────────

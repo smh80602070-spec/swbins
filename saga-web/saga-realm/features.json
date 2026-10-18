@@ -1106,23 +1106,26 @@
  },
  {
   "id": "rk.pose3d",
-  "name": "상황·전투·생활 몸짓(W-0303) — 공용 pose3d 열둘 + IK 걷기 발 고정 · asset3d.play 가 Pose_ 를 풂(판 연결은 다음 체크포인트)",
+  "name": "상황·전투·생활 몸짓(W-0303) — 공용 pose3d 열둘 + IK 걷기 발 고정 · 태수 명령·떠돌이·일꾼",
   "files": [
    "../shared/js/pose3d.js",
    "../shared/js/anim-own.js",
-   "js/asset3d.js"
+   "js/asset3d.js",
+   "src/realm3d/02.js",
+   "js/city3d.js"
   ],
   "tests": [
    "Pose_ 클립 열둘(W-0303)",
    "앉기·줍기·인사 자세(W-0303)",
    "자연스러움 — 발 미끄러짐·블렌드·idle 변주(W-0303)",
-   "시선(W-0303)"
+   "시선(W-0303)",
+   "쉬는 몸 life(W-0303)"
   ],
   "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": "W-0303",
   "since": "2026-10-18",
-  "note": "코드로 굽는 클립(에셋 없음). 손잡이 pose3d.idleEvery 4(±1초)·pose3d.lookMax 60 · anim3d.walkHps 0.59·runHps 1.76(IK 클립 본래 빠르기) · 2D 는 mode2d o.pose 대역(K 동작별 시트 뒤 프레임 치환)"
+  "note": "코드로 굽는 클립(에셋 없음). 손잡이 pose3d.idleEvery 4(±1초)·pose3d.lookMax 60 · anim3d.walkHps 0.59·runHps 1.76(IK 클립 본래 빠르기) · 2D 는 mode2d o.pose 대역(K 동작별 시트 뒤 프레임 치환) · 연결: 태수 명령 ORDER_POSE(개간·수색 줍기·기술·축성·훈련 내리치기·상업·등용 인사·치안 둘러보기·징병 시전)·떠돌이 쉬기·성 안 일꾼 Pose_heavy/Pose_pick · 손잡이 pose3d.sitAfter 8"
  }
 ]

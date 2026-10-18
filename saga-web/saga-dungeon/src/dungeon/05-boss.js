@@ -160,7 +160,7 @@
       if (near && nd <= reach && p.atkCd <= 0) {
         if (global.DG.mount && global.DG.mount.onAttack) { global.DG.mount.onAttack(); }   // 탈것 위에선 못 싸운다 — 자동 공격이 나갈 때 내린다
         p.atkCd = atkCdOf() / (rally ? 1.4 : 1);
-        p.atkAnim = 0.22;
+        p.atkAnim = 0.22; p.heavyPose = false;
         p.castAnim = false;
         strike(near);
         if (!run) { return; }
@@ -505,7 +505,7 @@
     if (near && nd <= reach && p.atkCd <= 0) {
       if (global.DG.mount && global.DG.mount.onAttack) { global.DG.mount.onAttack(); }
       p.atkCd = atkCdOf() / (rally ? 1.4 : 1);
-      p.atkAnim = 0.22;
+      p.atkAnim = 0.22; p.heavyPose = false;
       p.castAnim = false;
       strike(near);
       if (!run) { return; }
@@ -1220,7 +1220,7 @@
     if (!near || nd > reach) { return false; }
     p.heavyCd = HEAVY_CD;
     p.atkCd = Math.max(p.atkCd, HEAVY_RECOVER);
-    p.atkAnim = 0.38;                    // 평타(0.22)보다 오래 자세가 남는다 — 묵직한 스윙
+    p.atkAnim = 0.38; p.heavyPose = true;   // W-0303 강공격 몸짓 · 평타(0.22)보다 오래 자세가 남는다 — 묵직한 스윙
     p.castAnim = false;
     sfx('heavy');
     strike(near, HEAVY_MUL, HEAVY_KB);

@@ -788,19 +788,21 @@
   "files": [
    "../shared/js/pose3d.js",
    "../shared/js/anim-own.js",
-   "js/side-view3d.js"
+   "js/side-view3d.js",
+   "src/side/02.js"
   ],
   "tests": [
    "Pose_ 클립 열둘(W-0303)",
    "앉기·줍기·인사 자세(W-0303)",
    "자연스러움 — 발 미끄러짐·블렌드·idle 변주(W-0303)",
-   "시선(W-0303)"
+   "시선(W-0303)",
+   "쉬는 몸 life(W-0303)"
   ],
   "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": "W-0303",
   "since": "2026-10-18",
-  "note": "코드로 굽는 클립(에셋 없음). 손잡이 pose3d.idleEvery 4(±1초)·pose3d.lookMax 60 · anim3d.walkHps 0.59·runHps 1.76(IK 클립 본래 빠르기) · 2D 는 mode2d o.pose 대역(K 동작별 시트 뒤 프레임 치환)"
+  "note": "코드로 굽는 클립(에셋 없음). 손잡이 pose3d.idleEvery 4(±1초)·pose3d.lookMax 60 · anim3d.walkHps 0.59·runHps 1.76(IK 클립 본래 빠르기) · 2D 는 mode2d o.pose 대역(K 동작별 시트 뒤 프레임 치환) · 연결: 기력 무예 Pose_cast(p.castPose)·말 걸면 인사 Pose_wave·쉬기(8초 앉기) · 손잡이 pose3d.sitAfter 8"
  }
 ]

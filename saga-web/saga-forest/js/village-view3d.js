@@ -1292,7 +1292,7 @@
    *  불러 몸짓을 한 번 튼다. 남은 초(`actionTimer`)는 `syncCamera()`가
    *  매 프레임 줄이며, 그동안은 idle/walk 로 안 덮어쓴다(재생 도중 끊기지
    *  않는다) — 한 번 다 튼 뒤엔 저절로 걷기/멈춤으로 돌아온다. */
-  var actionTimer = 0;
+  var actionTimer = 0; /* W-0303 — 모닥불(campfire) 한 칸 반 안이면 쉴 때 불 쬐기. 0.5초에 한 번만 센다 */ var fireAt = 0, fireNear = false; function nearFire(raw) { var now = Date.now(), i, q, T = (global.DG.village && global.DG.village.TILE) || 48; if (now - fireAt < 500) { return fireNear; } fireAt = now; fireNear = false; for (i = 0; i < raw.props.length; i++) { q = raw.props[i]; if (q.kind === 'campfire' && Math.hypot(q.x - raw.player.x, q.y - raw.player.y) < T * 1.5) { fireNear = true; break; } } return fireNear; }
 
   /** §5.8① 낚시 성공 줌 인 — 0.2초 동안 카메라를 살짝 당겼다 되돌린다.
    *  `userZoom`(사람이 손으로 정한 배율)은 그대로 두고, 그 위에 잠깐
@@ -1301,9 +1301,9 @@
   var fishZoomTimer = 0;
   function triggerFishZoom() { fishZoomTimer = FISH_ZOOM_DUR; }
 
-  function triggerAction() {
+  var HEAVY_KIND = { rock: 1, mossyRock: 1, rubble: 1, tree: 1, pine: 1 }; /* W-0303 바위 깨기·나무 치기는 크게 내리치기 */ function triggerAction(r) {
     if (!player.actions || !player.clipMap) { return; }
-    var OAt = global.DG.ownAnim, name = (OAt && OAt.extraSlot && player.u ? OAt.weaponAction(player.u, 'Pose_pick', three()) : null) || player.clipMap.interaction || player.clipMap.attack;   // W-0303 줍기·채집 몸짓
+    var OAt = global.DG.ownAnim, name = (OAt && OAt.extraSlot && player.u ? OAt.weaponAction(player.u, r && HEAVY_KIND[r.propKind] ? 'Pose_heavy' : 'Pose_pick', three()) : null) || player.clipMap.interaction || player.clipMap.attack;   // W-0303 줍기·채집 몸짓
     if (!name || !player.actions[name]) { return; }
     var t = three(), act = player.actions[name];
     if (player.action && player.action !== act) { player.action.fadeOut(0.1); }
@@ -1407,10 +1407,10 @@
     var moved = Math.hypot(dx, dy);
     var targetYaw = facingYaw;
     if (moved > MOVE_EPS() * (1 / 60)) {
-      targetYaw = Math.atan2(dx, dy); if (global.DG.pose3d) { global.DG.pose3d.idleVariant(player, 0, false); }   // W-0303 걸으면 변주 끊김
+      targetYaw = Math.atan2(dx, dy); if (global.DG.pose3d) { global.DG.pose3d.life(player, Date.now() / 1000, false); }   // W-0303 걸으면 변주·앉기 끊김
       if (actionTimer <= 0) { var OAg = global.DG.ownAnim, gg = OAg && OAg.gaitOf && player.clipMap ? OAg.gaitOf(player, dt > 0 ? moved / dt * WORLD_SCALE() / PLAYER_H() : 0) : { slot: 'walk', rate: 1 }; playAction(player, gg.slot); if (player.mixer) { player.mixer.timeScale = gg.rate; } }   // W-0197 키/초로 걷기·달리기·빠르기
     } else if (actionTimer <= 0) {
-      var P3s = global.DG.pose3d, fishing = !!(V.fishState && V.fishState()); playAction(player, fishing ? 'Pose_fish' : (P3s ? P3s.idleVariant(player, Date.now() / 1000, true) : null) || 'idle'); if (player.mixer) { player.mixer.timeScale = 1; }
+      var P3s = global.DG.pose3d, fishing = !!(V.fishState && V.fishState()); playAction(player, fishing ? 'Pose_fish' : (P3s ? P3s.life(player, Date.now() / 1000, true, nearFire(raw) ? 'Pose_warm' : null) : null) || 'idle'); if (player.mixer) { player.mixer.timeScale = 1; }
     }
     if (actionTimer > 0) { actionTimer = Math.max(0, actionTimer - dt); if (player.mixer) { player.mixer.timeScale = 1; } }
     lastPX = px; lastPY = py;

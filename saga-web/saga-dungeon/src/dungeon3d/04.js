@@ -268,7 +268,7 @@
     }
     if (AS3) {
       AS3.step(me.node.userData.mixerNode, { t: nowT, walking: !!p.walking && !mtRef,
-        anim: p.dodge ? 'dodge' : ((OAw && OAw.attackSlot ? OAw.attackSlot(p._wpn || (p._wpn = {}), p.castAnim ? 0 : Math.max(0, p.atkAnim || 0), nowT, function () { var IT = global.DG.item, w = IT ? IT.equipped(core.save.party[0]).weapon : null; return w && !IT.isBroken(w) ? (IT.baseOf(w) || {}).look : 'sword'; }, function () { var R = global.DG.dungeon && global.DG.dungeon.raw ? global.DG.dungeon.raw() : null; return ((R && R.combo) || 1) - 1; }) : null) || (p.atkAnim > 0 ? (p.castAnim ? 'Pose_cast' : 'attack') : (p.walking && !mtRef ? 'walk' : 'idle'))) });   // W-0171 무기·연속 단 몸짓
+        anim: p.dodge ? 'dodge' : (p.heavyPose && p.atkAnim > 0 && !p.castAnim) ? 'Pose_heavy' : ((OAw && OAw.attackSlot ? OAw.attackSlot(p._wpn || (p._wpn = {}), p.castAnim ? 0 : Math.max(0, p.atkAnim || 0), nowT, function () { var IT = global.DG.item, w = IT ? IT.equipped(core.save.party[0]).weapon : null; return w && !IT.isBroken(w) ? (IT.baseOf(w) || {}).look : 'sword'; }, function () { var R = global.DG.dungeon && global.DG.dungeon.raw ? global.DG.dungeon.raw() : null; return ((R && R.combo) || 1) - 1; }) : null) || (p.atkAnim > 0 ? (p.castAnim ? 'Pose_cast' : 'attack') : (p.walking && !mtRef ? 'walk' : ((run.town && global.DG.pose3d ? global.DG.pose3d.life(me.node.userData, nowT, !p.walking && !mtRef) : null) || 'idle')))) });   // W-0303 마을에선 가만히 8초 → 앉아 쉬기   // W-0171 무기·연속 단 몸짓
       AS3.flashAllMat(ensureFlash(me.node), p.hurt, 0.28);
     }
 
@@ -360,7 +360,7 @@
       /* §5.16 몸짓 — 닿으면 인사(👋), 연 시트에서 일을 보면 제 일 몸짓(🔨 벼림…), 틈틈이 혼자 일한다 */
       var npG = GS() ? GS().plan(np.key, nowT, 'idle', true) : null;
       gestureBubble(na.node, npG, 70);
-      if (AS3) { AS3.step(na.node.userData.mixerNode, { t: nowT, walking: false, anim: npG ? npG.slot : 'idle' }); }
+      if (AS3) { AS3.step(na.node.userData.mixerNode, { t: nowT, walking: false, anim: npG ? npG.slot : ((global.DG.pose3d ? global.DG.pose3d.idleVariant(na.node.userData, nowT, true) : null) || 'idle') }); }   // W-0303 틈틈이 둘러보기·체중 옮기기
     }
     var mks = (run.room && run.room.marks) || [];
     for (i = 0; i < mks.length; i++) {
@@ -608,7 +608,7 @@
     fieldKey: function () { return fieldKey; },
     three: function () { return T; },
     addFx: function (n) { if (fxGroup && n) { fxGroup.add(n); } return n; },
-    camNode: function () { return camera; }, _meScreen: function () { var a = actors['me']; if (!a || !a.node || !camera || !T) { return null; } var v = new T.Vector3(); a.node.getWorldPosition(v); v.y += 30; v.project(camera); return { x: Math.round((v.x + 1) * 500) / 1000, y: Math.round((1 - v.y) * 500) / 1000 }; },   // W-0186 진단 — 내 머리께의 화면 자리(0~1)
+    camNode: function () { return camera; }, _meAnim: function () { var a = actors['me'], n = a && a.node && a.node.userData.mixerNode, u = n && n.userData; if (!u || !u.actions) { return null; } var hb = n.getObjectByName('J_Bip_C_Hips'), hd = n.getObjectByName('J_Bip_C_Head'), ft = n.getObjectByName('J_Bip_L_Foot'), V = T && new T.Vector3(), yOf = function (b) { return b && V ? Math.round(b.getWorldPosition(V).y * 10) / 10 : null; }; return { anim: u.anim, clip: u.curAct ? u.curAct.getClip().name : null, hipsY: yOf(hb), headY: yOf(hd), footY: yOf(ft), w: Object.keys(u.actions).filter(function (k) { return u.actions[k].isRunning() && u.actions[k].getEffectiveWeight() > 0.01; }).map(function (k) { return k + ':' + u.actions[k].getEffectiveWeight().toFixed(2); }) }; }, _meScreen: function () { var a = actors['me']; if (!a || !a.node || !camera || !T) { return null; } var v = new T.Vector3(); a.node.getWorldPosition(v); v.y += 30; v.project(camera); return { x: Math.round((v.x + 1) * 500) / 1000, y: Math.round((1 - v.y) * 500) / 1000 }; },   // W-0186 진단 — 내 머리께의 화면 자리(0~1)
     /** 손잡이 — 이 판에는 어드민이 없어 콘솔·데모가 두드린다 */
     set: set, tuned: tuned, _roomLight: function () { return { lift: tuned('dungeon3d.roomLift', 0.65), amb: tuned('dungeon3d.roomAmb', 0.5) }; },   // W-0145 진단
     stats: stats,

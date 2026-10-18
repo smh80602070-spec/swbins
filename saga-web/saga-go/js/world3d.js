@@ -1997,7 +1997,7 @@
 
   /** 나 또는 상대에게 몸짓을 하나 재생한다(공격·피격·회피) — `who` 는 'me'·'foe'.
    *  클립이 없는 몸(도형 배우, 아직 안 받은 GLB)이면 조용히 아무 일도 안 한다. */
-  function meLifeSlot(a, walk, nowS) { var P3 = global.DG.pose3d; if (!P3) { return null; } var FS = global.DG.fishing, fs = FS && FS.state ? FS.state().state : null, TS = talkShot(), wave = P3.once(a, 'talk', !!TS, nowS, 'Pose_wave'); if (walk) { P3.idleVariant(a, nowS, false); return null; } if (fs === 'wait' || fs === 'nibble') { return 'Pose_fish'; } return wave || (TS ? null : P3.idleVariant(a, nowS, true)); }   /* W-0303 내 생활 몸짓: 낚시 기다릴 땐 Pose_fish, 대화가 열리면 처음 한 번 Pose_wave, 서 있으면 3~5초마다 idle 변주(걸으면 끊김) */ function playAnim(who, name, ms) {
+  function meLifeSlot(a, walk, nowS) { var P3 = global.DG.pose3d; if (!P3) { return null; } var FS = global.DG.fishing, fs = FS && FS.state ? FS.state().state : null, TS = talkShot(), wave = P3.once(a, 'talk', !!TS, nowS, 'Pose_wave'); if (walk) { P3.life(a, nowS, false); return null; } if (fs === 'wait' || fs === 'nibble') { return 'Pose_fish'; } return wave || (TS ? null : P3.life(a, nowS, true)); }   /* W-0303 내 생활 몸짓: 낚시 기다릴 땐 Pose_fish, 대화가 열리면 처음 한 번 Pose_wave, 서 있으면 3~5초마다 idle 변주(걸으면 끊김) */ function playAnim(who, name, ms) {
     var key = who === 'foe' ? 'duelfoe' : (who === 'ally' ? 'ally' : (actors[who] ? who : 'me'));
     var a = actors[key];
     if (!a) { return false; }

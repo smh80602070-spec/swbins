@@ -207,7 +207,7 @@
       { id: cityId + '_work', anim: 'interaction', x: -h * 1.15, z: h * 0.3, every: 2.2 }
     ];
     specs.forEach(function (sp) {
-      var w = { model: null, anim: sp.anim, every: sp.every, next: 0 };
+      var w = { model: null, anim: sp.anim, pose: sp.anim === 'attack' ? 'Pose_heavy' : 'Pose_pick', every: sp.every, next: 0 };
       workers.push(w);
       asset3d().buildHero({ id: 'npc_' + sp.id }, null, function (g) {
         if (seq !== rebuildSeq || !g || !dyn) { return; }
@@ -229,7 +229,7 @@
       if (!w.model) { continue; }
       var force = now >= w.next;
       if (force) { w.next = now + w.every; }
-      asset3d().step(w.model, { anim: w.anim, t: now, force: force });
+      asset3d().step(w.model, { anim: (w.model.userData.ownBody && global.DG.pose3d ? w.pose : null) || w.anim, t: now, force: force });   // W-0303 자체 몸짓 몸은 내리치기·줍기
     }
   }
 
