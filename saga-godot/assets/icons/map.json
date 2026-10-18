@@ -13,10 +13,10 @@
   "4": "유니크"
  },
  "counts": {
-  "entries": 603,
-  "keys": 575,
+  "entries": 634,
+  "keys": 606,
   "skip": 4,
-  "k118": 250
+  "k118": 281
  },
  "entries": {
   "saga-dungeon:equip:w_hwando": {
@@ -2626,6 +2626,13 @@
    "name": "돌진(突進)",
    "group": "skill"
   },
+  "saga-dungeon:skill:w_leap": {
+   "key": "sk_dg_w_leap",
+   "grade": 0,
+   "mode": "ai",
+   "name": "도약(跳躍)",
+   "group": "skill"
+  },
   "saga-dungeon:skill:w_rage": {
    "key": "sk_dg_w_rage",
    "grade": 0,
@@ -2673,6 +2680,13 @@
    "grade": 0,
    "mode": "ai",
    "name": "유성(流星)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_ice": {
+   "key": "sk_dg_s_ice",
+   "grade": 0,
+   "mode": "ai",
+   "name": "빙탄(氷彈)",
    "group": "skill"
   },
   "saga-dungeon:skill:s_frost": {
@@ -2745,6 +2759,13 @@
    "name": "기환(氣環)",
    "group": "skill"
   },
+  "saga-dungeon:skill:m_heal": {
+   "key": "sk_dg_m_heal",
+   "grade": 0,
+   "mode": "ai",
+   "name": "치유(治癒)",
+   "group": "skill"
+  },
   "saga-dungeon:skill:m_res": {
    "key": "sk_dg_m_res",
    "grade": 0,
@@ -2764,6 +2785,13 @@
    "grade": 0,
    "mode": "ai",
    "name": "통솔(統率)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_shade": {
+   "key": "sk_dg_y_shade",
+   "grade": 0,
+   "mode": "ai",
+   "name": "분신술(分身)",
    "group": "skill"
   },
   "saga-dungeon:skill:y_horde": {
@@ -2843,11 +2871,25 @@
    "name": "파훼시(破毀矢)",
    "group": "skill"
   },
+  "saga-dungeon:skill:w_chain": {
+   "key": "sk_dg_w_chain",
+   "grade": 0,
+   "mode": "ai",
+   "name": "연환격(連環擊)",
+   "group": "skill"
+  },
   "saga-dungeon:skill:w_blaze_dash": {
    "key": "sk_dg_w_blaze_dash",
    "grade": 0,
    "mode": "ai",
    "name": "화염돌진(火焰突進)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_palm": {
+   "key": "sk_dg_w_palm",
+   "grade": 0,
+   "mode": "ai",
+   "name": "벽력장(霹靂掌)",
    "group": "skill"
   },
   "saga-dungeon:skill:s_chainfire": {
@@ -2913,6 +2955,13 @@
    "name": "귀합(鬼合)",
    "group": "skill"
   },
+  "saga-dungeon:skill:a_flourish": {
+   "key": "sk_dg_a_flourish",
+   "grade": 0,
+   "mode": "ai",
+   "name": "궁신무(弓身舞)",
+   "group": "skill"
+  },
   "saga-dungeon:skill:a_speedy": {
    "key": "sk_dg_a_speedy",
    "grade": 0,
@@ -2946,6 +2995,13 @@
    "grade": 0,
    "mode": "ai",
    "name": "축지(縮地)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_hex": {
+   "key": "sk_dg_s_hex",
+   "grade": 0,
+   "mode": "ai",
+   "name": "저주(咀呪)",
    "group": "skill"
   },
   "saga-dungeon:skill:s_insight": {
@@ -2983,6 +3039,20 @@
    "name": "혼탄(魂彈)",
    "group": "skill"
   },
+  "saga-dungeon:skill:y_specter": {
+   "key": "sk_dg_y_specter",
+   "grade": 0,
+   "mode": "ai",
+   "name": "귀보(鬼步)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:y_soulmend": {
+   "key": "sk_dg_y_soulmend",
+   "grade": 0,
+   "mode": "ai",
+   "name": "혼백치유(魂魄治癒)",
+   "group": "skill"
+  },
   "saga-dungeon:skill:a_dashshot": {
    "key": "sk_dg_a_dashshot",
    "grade": 0,
@@ -2997,6 +3067,13 @@
    "name": "응급처치(應急處置)",
    "group": "skill"
   },
+  "saga-dungeon:skill:a_gale": {
+   "key": "sk_dg_a_gale",
+   "grade": 0,
+   "mode": "ai",
+   "name": "기환시(氣環矢)",
+   "group": "skill"
+  },
   "saga-dungeon:skill:w_intimidate": {
    "key": "sk_dg_w_intimidate",
    "grade": 0,
@@ -3009,6 +3086,20 @@
    "grade": 0,
    "mode": "ai",
    "name": "빙인참(氷刃斬)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_thunderlance": {
+   "key": "sk_dg_w_thunderlance",
+   "grade": 0,
+   "mode": "ai",
+   "name": "벽력창(霹靂槍)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:s_restore": {
+   "key": "sk_dg_s_restore",
+   "grade": 0,
+   "mode": "ai",
+   "name": "축기회복(蓄氣回復)",
    "group": "skill"
   },
   "saga-dungeon:skill:s_plague": {
@@ -3144,6 +3235,13 @@
    "name": "위성포(衛星砲)",
    "group": "skill"
   },
+  "saga-dungeon:skill:m_emp_nova": {
+   "key": "sk_dg_m_emp_nova",
+   "grade": 0,
+   "mode": "ai",
+   "name": "전자결계(電磁結界)",
+   "group": "skill"
+  },
   "saga-dungeon:skill:y_emp_chain": {
    "key": "sk_dg_y_emp_chain",
    "grade": 0,
@@ -3191,6 +3289,13 @@
    "grade": 0,
    "mode": "ai",
    "name": "폭염진(爆炎陣)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_firelance": {
+   "key": "sk_dg_w_firelance",
+   "grade": 0,
+   "mode": "ai",
+   "name": "화창(火槍)",
    "group": "skill"
   },
   "saga-dungeon:skill:w_frostchain": {
@@ -3256,6 +3361,13 @@
    "name": "빙령타(氷靈打)",
    "group": "skill"
   },
+  "saga-dungeon:skill:y_infernoring": {
+   "key": "sk_dg_y_infernoring",
+   "grade": 0,
+   "mode": "ai",
+   "name": "화염귀진(火焰鬼陣)",
+   "group": "skill"
+  },
   "saga-story:skill:slash": {
    "key": "sk_st_slash",
    "grade": 0,
@@ -3289,6 +3401,13 @@
    "grade": 0,
    "mode": "ai",
    "name": "참격(斬擊)",
+   "group": "skill"
+  },
+  "saga-story:skill:w_whirl": {
+   "key": "sk_st_w_whirl",
+   "grade": 0,
+   "mode": "ai",
+   "name": "선풍(旋風)",
    "group": "skill"
   },
   "saga-story:skill:w_rush": {
@@ -3359,6 +3478,13 @@
    "grade": 0,
    "mode": "ai",
    "name": "천붕격(天崩擊)",
+   "group": "skill"
+  },
+  "saga-story:skill:n_quake": {
+   "key": "sk_st_n_quake",
+   "grade": 0,
+   "mode": "ai",
+   "name": "진각(震脚)",
    "group": "skill"
   },
   "saga-story:skill:n_charge": {
@@ -3459,6 +3585,13 @@
    "name": "응안(鷹眼)",
    "group": "skill"
   },
+  "saga-story:skill:a_retreat": {
+   "key": "sk_st_a_retreat",
+   "grade": 0,
+   "mode": "ai",
+   "name": "퇴보사(退步射)",
+   "group": "skill"
+  },
   "saga-story:skill:a_burst": {
    "key": "sk_st_a_burst",
    "grade": 0,
@@ -3550,6 +3683,20 @@
    "name": "천사우(天射雨)",
    "group": "skill"
   },
+  "saga-story:skill:h_ray": {
+   "key": "sk_st_h_ray",
+   "grade": 0,
+   "mode": "ai",
+   "name": "광시(光矢)",
+   "group": "skill"
+  },
+  "saga-story:skill:h_swarm": {
+   "key": "sk_st_h_swarm",
+   "grade": 0,
+   "mode": "ai",
+   "name": "십이시(十二矢)",
+   "group": "skill"
+  },
   "saga-story:skill:h_zenith": {
    "key": "sk_st_h_zenith",
    "grade": 0,
@@ -3592,6 +3739,13 @@
    "name": "은신보(隱身步)",
    "group": "skill"
   },
+  "saga-story:skill:r_vital": {
+   "key": "sk_st_r_vital",
+   "grade": 0,
+   "mode": "ai",
+   "name": "급소(急所)",
+   "group": "skill"
+  },
   "saga-story:skill:r_whirl": {
    "key": "sk_st_r_whirl",
    "grade": 0,
@@ -3618,6 +3772,13 @@
    "grade": 0,
    "mode": "ai",
    "name": "만천화우(滿天花雨)",
+   "group": "skill"
+  },
+  "saga-story:skill:x_shadow": {
+   "key": "sk_st_x_shadow",
+   "grade": 0,
+   "mode": "ai",
+   "name": "그림자밟기",
    "group": "skill"
   },
   "saga-story:skill:x_whirl": {
@@ -3683,6 +3844,20 @@
    "name": "팔도(八刀)",
    "group": "skill"
   },
+  "saga-story:skill:d_bloom": {
+   "key": "sk_st_d_bloom",
+   "grade": 0,
+   "mode": "ai",
+   "name": "구화만개(九花滿開)",
+   "group": "skill"
+  },
+  "saga-story:skill:d_veil": {
+   "key": "sk_st_d_veil",
+   "grade": 0,
+   "mode": "ai",
+   "name": "명계보(冥界步)",
+   "group": "skill"
+  },
   "saga-story:skill:d_curse": {
    "key": "sk_st_d_curse",
    "grade": 0,
@@ -3704,6 +3879,13 @@
    "name": "명표(冥鏢)",
    "group": "skill"
   },
+  "saga-story:skill:m_fire": {
+   "key": "sk_st_m_fire",
+   "grade": 0,
+   "mode": "ai",
+   "name": "화구(火球)",
+   "group": "skill"
+  },
   "saga-story:skill:m_bolt": {
    "key": "sk_st_m_bolt",
    "grade": 0,
@@ -3723,6 +3905,13 @@
    "grade": 0,
    "mode": "ai",
    "name": "부적(符籍)",
+   "group": "skill"
+  },
+  "saga-story:skill:m_step": {
+   "key": "sk_st_m_step",
+   "grade": 0,
+   "mode": "ai",
+   "name": "축지(縮地)",
    "group": "skill"
   },
   "saga-story:skill:m_orb": {
@@ -3758,6 +3947,13 @@
    "grade": 0,
    "mode": "ai",
    "name": "축지술(縮地術)",
+   "group": "skill"
+  },
+  "saga-story:skill:p_orb": {
+   "key": "sk_st_p_orb",
+   "grade": 0,
+   "mode": "ai",
+   "name": "연환탄(連環彈)",
    "group": "skill"
   },
   "saga-story:skill:i_meteor": {
@@ -3830,6 +4026,13 @@
    "name": "무극(無極)",
    "group": "skill"
   },
+  "saga-story:skill:z_step": {
+   "key": "sk_st_z_step",
+   "grade": 0,
+   "mode": "ai",
+   "name": "신행보(神行步)",
+   "group": "skill"
+  },
   "saga-story:skill:z_orb": {
    "key": "sk_st_z_orb",
    "grade": 0,
@@ -3851,11 +4054,25 @@
    "name": "군신강림(軍神降臨)",
    "group": "skill"
   },
+  "saga-story:skill:p_stars": {
+   "key": "sk_st_p_stars",
+   "grade": 0,
+   "mode": "ai",
+   "name": "성궁만천(星弓滿天)",
+   "group": "skill"
+  },
   "saga-story:skill:p_sun": {
    "key": "sk_st_p_sun",
    "grade": 0,
    "mode": "ai",
    "name": "일월시(日月矢)",
+   "group": "skill"
+  },
+  "saga-story:skill:p_afterimage": {
+   "key": "sk_st_p_afterimage",
+   "grade": 0,
+   "mode": "ai",
+   "name": "무영참(無影斬)",
    "group": "skill"
   },
   "saga-story:skill:p_gate": {

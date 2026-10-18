@@ -1,0 +1,43 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k118_redo2",
+ "kit": {
+  "spec": "icon",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery",
+  "variants": 4
+ },
+ "note": "K-0118 둘째 다시 뽑기(10-18 Opus) — 후보 없음 2(비·회생) + 눈 ✗ 1(진각, 조각 몇 개뿐) · 주제 구체화 · 새 씨앗",
+ "items": [
+  {
+   "id": "sk_dg_a_rain",
+   "seed": 2069483010,
+   "prompt": "(cluster of arrows falling downward:1.2), arrowheads pointing down, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 시우(矢雨)"
+  },
+  {
+   "id": "sk_dg_w_regen",
+   "seed": 3512982622,
+   "prompt": "(glowing green leaf with healing cross:1.2), rising sparkles, soft healing light, sparkles, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 스킬 회생(回生)"
+  },
+  {
+   "id": "sk_st_n_quake",
+   "seed": 2198171174,
+   "prompt": "(cracked stone ground under a heavy stomp:1.2), shockwave cracks, dust burst, spear, radial burst ring, shockwave, magic skill icon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스킬 진각(震脚)"
+  }
+ ]
+}
