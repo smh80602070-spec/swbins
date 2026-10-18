@@ -27,32 +27,32 @@
   {
    "name": "달 루프 — ▶ 다음 달을 누르면 달이 넘어가고 금이 바뀌고 무장 명령이 다시 열린다",
    "ok": true,
-   "detail": "달 0→1 · 금 4340→5178 · 명령 사용 false"
+   "detail": "달 0→1 · 금 4340→5163 · 명령 사용 false"
   },
   {
    "name": "외교 — 이웃 세력에 조공 사절을 보내면 금이 나가고 우호가 오른다",
    "ok": true,
-   "detail": "{\"to\":\"jue\",\"res\":{\"ok\":true,\"done\":true,\"relation\":45,\"up\":5},\"g0\":5178,\"g1\":4478,\"rel0\":40,\"rel1\":45}"
+   "detail": "{\"to\":\"jue\",\"res\":{\"ok\":true,\"done\":true,\"relation\":45,\"up\":5},\"g0\":5163,\"g1\":4463,\"rel0\":40,\"rel1\":45}"
   },
   {
    "name": "출진 — 맞닿은 적 성으로 출진하면 전투가 치러져 승패·손실이 나오고 출진한 성의 병력이 줄어든다",
    "ok": true,
-   "detail": "{\"ok\":true,\"won\":false,\"lossA\":1000,\"lossD\":69,\"troopsFrom\":[5444,4444]}"
+   "detail": "{\"ok\":true,\"won\":false,\"lossA\":1000,\"lossD\":59,\"troopsFrom\":[5444,4444]}"
   },
   {
    "name": "개입형 전투 — 출진하면 합마다 명령을 물어 오고(돌격·수비) 끝에 보고가 나온다",
    "ok": true,
-   "detail": "{\"ok\":true,\"intro\":true,\"prompts\":1,\"rounds\":1,\"cmds\":[\"press\"],\"hasReport\":true,\"ms\":167}"
+   "detail": "{\"ok\":true,\"intro\":true,\"prompts\":1,\"rounds\":1,\"cmds\":[\"press\"],\"hasReport\":true,\"ms\":199}"
   },
   {
    "name": "무장 — 공과 금을 갖추면 승진해 관직이 한 단 오르고 금이 들고 충성이 오른다",
    "ok": true,
-   "detail": "{\"id\":\"sg_huangzhong\",\"rank\":[0,1],\"cost\":{\"feats\":20,\"gold\":300},\"g\":[5987,5687],\"loyal\":[57,69],\"name\":\"교위(校尉)\",\"res\":true,\"earlyWhy\":\"공이 모자랍니다 (0/20)\"}"
+   "detail": "{\"id\":\"sg_huangzhong\",\"rank\":[0,1],\"cost\":{\"feats\":20,\"gold\":300},\"g\":[5942,5642],\"loyal\":[57,69],\"name\":\"교위(校尉)\",\"res\":true,\"earlyWhy\":\"공이 모자랍니다 (0/20)\"}"
   },
   {
    "name": "전략 화면 틀 — #cpanel 은 realm/window.png, 독 단추는 btn_normal, 배너는 popup·성 열기는 tab_on 9-slice 그림을 입고 그림이 다 온다(W-0088 · W-0254 부터 판 폴더 saga-realm/assets/ui)",
    "ok": true,
-   "detail": "{\"fr\":{\"cpanel\":\"url(\\\"http://127.0.0.1:3226/saga-realm/assets/ui/window.png\\\")\",\"dock\":\"url(\\\"http://127.0.0.1:3226/saga-realm/assets/ui/btn_normal.png\\\")\",\"banner\":\"url(\\\"http://127.0.0.1:3226/saga-realm/assets/ui/popup.png\\\")\",\"open\":\"url(\\\"http://127.0.0.1:3226/saga-realm/assets/ui/tab_on.png\\\")\",\"status\":[200,200,200,200]},\"uiMiss\":[]}"
+   "detail": "{\"fr\":{\"cpanel\":\"url(\\\"http://127.0.0.1:5546/saga-realm/assets/ui/window.png\\\")\",\"dock\":\"url(\\\"http://127.0.0.1:5546/saga-realm/assets/ui/btn_normal.png\\\")\",\"banner\":\"url(\\\"http://127.0.0.1:5546/saga-realm/assets/ui/popup.png\\\")\",\"open\":\"url(\\\"http://127.0.0.1:5546/saga-realm/assets/ui/tab_on.png\\\")\",\"status\":[200,200,200,200]},\"uiMiss\":[]}"
   }
  ]
 }

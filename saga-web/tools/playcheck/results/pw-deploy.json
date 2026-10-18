@@ -1,6 +1,6 @@
 {
  "base": "https://smh80602070-spec.github.io/swbins/saga-web/",
- "at": "2026-10-18T10:36:53.738Z",
+ "at": "2026-10-18T11:50:13.929Z",
  "games": [
   {
    "game": "saga-go",
@@ -9,38 +9,38 @@
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 8142,
+     "ms": 8019,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 3766,
+     "ms": 4130,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 4526,
+     "ms": 4628,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 3443,
+     "ms": 2801,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 25026,
+     "ms": 23441,
      "why": ""
     }
    ],
    "errors": [],
    "bad": [],
-   "deployed": "go-v6.72.191",
-   "local": "go-v6.72.191",
+   "deployed": "go-v6.72.192",
+   "local": "go-v6.72.192",
    "sameVersion": true,
    "covered": []
   },
@@ -51,38 +51,38 @@
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 8278,
+     "ms": 9337,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 3656,
+     "ms": 3642,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 8787,
+     "ms": 9199,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 2654,
+     "ms": 2683,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 13721,
+     "ms": 14673,
      "why": ""
     }
    ],
    "errors": [],
    "bad": [],
-   "deployed": "dungeon-v0.199.172",
-   "local": "dungeon-v0.199.172",
+   "deployed": "dungeon-v0.199.175",
+   "local": "dungeon-v0.199.175",
    "sameVersion": true,
    "covered": []
   },
@@ -93,38 +93,38 @@
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 7759,
+     "ms": 7928,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 3705,
+     "ms": 3813,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 10151,
+     "ms": 10853,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 3346,
+     "ms": 2157,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 20886,
+     "ms": 20215,
      "why": ""
     }
    ],
    "errors": [],
    "bad": [],
-   "deployed": "village-v0.136.147",
-   "local": "village-v0.136.147",
+   "deployed": "village-v0.136.148",
+   "local": "village-v0.136.148",
    "sameVersion": true,
    "covered": []
   },
@@ -135,38 +135,38 @@
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 7748,
+     "ms": 7839,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 4173,
+     "ms": 4030,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 9856,
+     "ms": 7332,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 2204,
+     "ms": 2789,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 15799,
+     "ms": 14768,
      "why": ""
     }
    ],
    "errors": [],
    "bad": [],
-   "deployed": "side-v0.118.151",
-   "local": "side-v0.118.151",
+   "deployed": "side-v0.118.152",
+   "local": "side-v0.118.152",
    "sameVersion": true,
    "covered": []
   },
@@ -177,38 +177,38 @@
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 7774,
+     "ms": 8110,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 3717,
+     "ms": 3740,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 7002,
+     "ms": 7074,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 1220,
+     "ms": 1217,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 11301,
+     "ms": 11261,
      "why": ""
     }
    ],
    "errors": [],
    "bad": [],
-   "deployed": "realm-v1.94.162",
-   "local": "realm-v1.94.162",
+   "deployed": "realm-v1.94.163",
+   "local": "realm-v1.94.163",
    "sameVersion": true,
    "covered": []
   }

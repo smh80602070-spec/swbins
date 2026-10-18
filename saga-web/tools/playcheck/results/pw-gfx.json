@@ -1,17 +1,131 @@
 {
- "at": "2026-10-18T11:10:02.914Z",
- "base": "http://127.0.0.1:4601/",
+ "at": "2026-10-18T11:46:18.841Z",
+ "base": "http://127.0.0.1:6007/",
  "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "runs": [
+  {
+   "game": "saga-go",
+   "err": "",
+   "m": {
+    "calls": 297,
+    "targets": 270,
+    "objects": 4361,
+    "toon": 360,
+    "cast": 340,
+    "sun": 1,
+    "sky": 1,
+    "pbr": 35,
+    "std": 40,
+    "toneMapping": 7,
+    "shadowMap": true,
+    "postStats": {
+     "ready": true,
+     "failed": false,
+     "frames": 169,
+     "on": true,
+     "tier": "HIGH",
+     "tone": "neutral",
+     "size": "1280x720",
+     "msaa": 4,
+     "mips": 4,
+     "exposure": 1,
+     "bloom": 0.416,
+     "ao": "12표본 640x360",
+     "sat": 0.95,
+     "temp": -0.14
+    },
+    "ssaoStats": {
+     "on": true,
+     "ready": true,
+     "failed": false,
+     "frames": 169,
+     "tier": "HIGH",
+     "samples": 12,
+     "size": "640x360",
+     "radius": 2.4,
+     "intensity": 0.85
+    },
+    "has": {
+     "toon": true,
+     "tonemap": true,
+     "post": true,
+     "ssao": true,
+     "shadow": true,
+     "sun": true,
+     "sky": true,
+     "pbr": true
+    }
+   },
+   "rows": [
+    {
+     "id": "toon",
+     "name": "툰 재질(셀 셰이딩·림·얼굴 그림자)",
+     "na": false,
+     "ok": true,
+     "ticket": null
+    },
+    {
+     "id": "tonemap",
+     "name": "톤매핑",
+     "na": false,
+     "ok": true,
+     "ticket": null
+    },
+    {
+     "id": "post",
+     "name": "후처리(블룸·색보정)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0292"
+    },
+    {
+     "id": "ssao",
+     "name": "SSAO(구석 그늘)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0292"
+    },
+    {
+     "id": "shadow",
+     "name": "해 그림자(드리우는 메시)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0293"
+    },
+    {
+     "id": "sun",
+     "name": "해(방향광)",
+     "na": false,
+     "ok": true,
+     "ticket": null
+    },
+    {
+     "id": "sky",
+     "name": "하늘(돔·배경 텍스처)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0294"
+    },
+    {
+     "id": "pbr",
+     "name": "PBR 재질(표준 재질 + 맵)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0295"
+    }
+   ],
+   "covered": [],
+   "missing": []
+  },
   {
    "game": "saga-dungeon",
    "err": "",
    "m": {
-    "calls": 902,
-    "targets": 820,
-    "objects": 3242,
-    "toon": 262,
-    "cast": 175,
+    "calls": 418,
+    "targets": 380,
+    "objects": 3053,
+    "toon": 258,
+    "cast": 235,
     "sun": 1,
     "sky": 1,
     "pbr": 6,
@@ -21,7 +135,7 @@
     "postStats": {
      "ready": true,
      "failed": false,
-     "frames": 410,
+     "frames": 308,
      "on": true,
      "tier": "HIGH",
      "tone": "neutral",
@@ -38,10 +152,352 @@
      "on": true,
      "ready": true,
      "failed": false,
-     "frames": 410,
+     "frames": 308,
      "tier": "HIGH",
      "samples": 12,
      "size": "598x360",
+     "radius": 2.4,
+     "intensity": 0.85
+    },
+    "has": {
+     "toon": true,
+     "tonemap": true,
+     "post": true,
+     "ssao": true,
+     "shadow": true,
+     "sun": true,
+     "sky": true,
+     "pbr": true
+    }
+   },
+   "rows": [
+    {
+     "id": "toon",
+     "name": "툰 재질(셀 셰이딩·림·얼굴 그림자)",
+     "na": false,
+     "ok": true,
+     "ticket": null
+    },
+    {
+     "id": "tonemap",
+     "name": "톤매핑",
+     "na": false,
+     "ok": true,
+     "ticket": null
+    },
+    {
+     "id": "post",
+     "name": "후처리(블룸·색보정)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0292"
+    },
+    {
+     "id": "ssao",
+     "name": "SSAO(구석 그늘)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0292"
+    },
+    {
+     "id": "shadow",
+     "name": "해 그림자(드리우는 메시)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0293"
+    },
+    {
+     "id": "sun",
+     "name": "해(방향광)",
+     "na": false,
+     "ok": true,
+     "ticket": null
+    },
+    {
+     "id": "sky",
+     "name": "하늘(돔·배경 텍스처)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0294"
+    },
+    {
+     "id": "pbr",
+     "name": "PBR 재질(표준 재질 + 맵)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0295"
+    }
+   ],
+   "covered": [],
+   "missing": []
+  },
+  {
+   "game": "saga-forest",
+   "err": "",
+   "m": {
+    "calls": 517,
+    "targets": 470,
+    "objects": 2959,
+    "toon": 321,
+    "cast": 364,
+    "sun": 1,
+    "sky": 1,
+    "pbr": 1,
+    "std": 1,
+    "toneMapping": 7,
+    "shadowMap": true,
+    "postStats": {
+     "ready": true,
+     "failed": false,
+     "frames": 390,
+     "on": true,
+     "tier": "HIGH",
+     "tone": "neutral",
+     "size": "1280x720",
+     "msaa": 4,
+     "mips": 4,
+     "exposure": 1,
+     "bloom": 0.416,
+     "ao": "12표본 640x360",
+     "sat": 0.95,
+     "temp": -0.14
+    },
+    "ssaoStats": {
+     "on": true,
+     "ready": true,
+     "failed": false,
+     "frames": 390,
+     "tier": "HIGH",
+     "samples": 12,
+     "size": "640x360",
+     "radius": 2.4,
+     "intensity": 0.85
+    },
+    "has": {
+     "toon": true,
+     "tonemap": true,
+     "post": true,
+     "ssao": true,
+     "shadow": true,
+     "sun": true,
+     "sky": true,
+     "pbr": true
+    }
+   },
+   "rows": [
+    {
+     "id": "toon",
+     "name": "툰 재질(셀 셰이딩·림·얼굴 그림자)",
+     "na": false,
+     "ok": true,
+     "ticket": null
+    },
+    {
+     "id": "tonemap",
+     "name": "톤매핑",
+     "na": false,
+     "ok": true,
+     "ticket": null
+    },
+    {
+     "id": "post",
+     "name": "후처리(블룸·색보정)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0292"
+    },
+    {
+     "id": "ssao",
+     "name": "SSAO(구석 그늘)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0292"
+    },
+    {
+     "id": "shadow",
+     "name": "해 그림자(드리우는 메시)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0293"
+    },
+    {
+     "id": "sun",
+     "name": "해(방향광)",
+     "na": false,
+     "ok": true,
+     "ticket": null
+    },
+    {
+     "id": "sky",
+     "name": "하늘(돔·배경 텍스처)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0294"
+    },
+    {
+     "id": "pbr",
+     "name": "PBR 재질(표준 재질 + 맵)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0295"
+    }
+   ],
+   "covered": [],
+   "missing": []
+  },
+  {
+   "game": "saga-story",
+   "err": "",
+   "m": {
+    "calls": 825,
+    "targets": 750,
+    "objects": 2229,
+    "toon": 152,
+    "cast": 613,
+    "sun": 1,
+    "sky": 1,
+    "pbr": 13,
+    "std": 13,
+    "toneMapping": 7,
+    "shadowMap": true,
+    "postStats": {
+     "ready": true,
+     "failed": false,
+     "frames": 492,
+     "on": true,
+     "tier": "HIGH",
+     "tone": "neutral",
+     "size": "2560x1440",
+     "msaa": 4,
+     "mips": 4,
+     "exposure": 1,
+     "bloom": 0.234,
+     "ao": "12표본 1280x720",
+     "sat": 1,
+     "temp": 0
+    },
+    "ssaoStats": {
+     "on": true,
+     "ready": true,
+     "failed": false,
+     "frames": 445,
+     "tier": "HIGH",
+     "samples": 12,
+     "size": "1280x720",
+     "radius": 2.4,
+     "intensity": 0.85
+    },
+    "has": {
+     "toon": true,
+     "tonemap": true,
+     "post": true,
+     "ssao": true,
+     "shadow": true,
+     "sun": true,
+     "sky": true,
+     "pbr": true
+    }
+   },
+   "rows": [
+    {
+     "id": "toon",
+     "name": "툰 재질(셀 셰이딩·림·얼굴 그림자)",
+     "na": false,
+     "ok": true,
+     "ticket": null
+    },
+    {
+     "id": "tonemap",
+     "name": "톤매핑",
+     "na": false,
+     "ok": true,
+     "ticket": null
+    },
+    {
+     "id": "post",
+     "name": "후처리(블룸·색보정)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0292"
+    },
+    {
+     "id": "ssao",
+     "name": "SSAO(구석 그늘)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0292"
+    },
+    {
+     "id": "shadow",
+     "name": "해 그림자(드리우는 메시)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0293"
+    },
+    {
+     "id": "sun",
+     "name": "해(방향광)",
+     "na": false,
+     "ok": true,
+     "ticket": null
+    },
+    {
+     "id": "sky",
+     "name": "하늘(돔·배경 텍스처)",
+     "na": true,
+     "ok": true,
+     "ticket": "W-0294"
+    },
+    {
+     "id": "pbr",
+     "name": "PBR 재질(표준 재질 + 맵)",
+     "na": false,
+     "ok": true,
+     "ticket": "W-0295"
+    }
+   ],
+   "covered": [],
+   "missing": []
+  },
+  {
+   "game": "saga-realm",
+   "err": "",
+   "m": {
+    "calls": 363,
+    "targets": 330,
+    "objects": 6618,
+    "toon": 407,
+    "cast": 1182,
+    "sun": 1,
+    "sky": 2,
+    "pbr": 163,
+    "std": 202,
+    "toneMapping": 7,
+    "shadowMap": true,
+    "postStats": {
+     "ready": true,
+     "failed": false,
+     "frames": 202,
+     "on": true,
+     "tier": "HIGH",
+     "tone": "neutral",
+     "size": "1280x720",
+     "msaa": 4,
+     "mips": 4,
+     "exposure": 1,
+     "bloom": 0.234,
+     "ao": "12표본 640x360",
+     "sat": 1,
+     "temp": 0
+    },
+    "ssaoStats": {
+     "on": true,
+     "ready": true,
+     "failed": false,
+     "frames": 202,
+     "tier": "HIGH",
+     "samples": 12,
+     "size": "640x360",
      "radius": 2.4,
      "intensity": 0.85
     },

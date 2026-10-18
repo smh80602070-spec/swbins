@@ -1,12 +1,12 @@
 {
- "at": "2026-10-18T11:07:33.564Z",
+ "at": "2026-10-18T11:40:41.562Z",
  "phone": true,
  "sec": 60,
  "samples": 282,
- "seen": 46,
+ "seen": 56,
  "popin": 0,
  "appear": 0,
- "offscreen": 46,
+ "offscreen": 51,
  "list": [],
  "probe": {
   "hasMe": false,
