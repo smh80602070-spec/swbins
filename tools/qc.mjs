@@ -145,6 +145,17 @@ async function checkShots() {
       for (const s of (j.scenes || [])) { if (s.file) eyes.push({ game: s.game, what: '3D ' + s.key + ' ' + (s.title || ''), file: path.relative(ROOT, path.join(PLAY, s.file)) }); }
     } else row('3D 장면', v3.map(nm).join('·'), 'FAIL', 'pw-visual-close 결과 없음 ' + (r.out.trim().split('\n').pop() || ''), r.sec);
   }
+  /* W-0325 로딩 — 2나락 마을 진입 뒤 3·8초에 **보이는** 대역 상자(시야 안) 수 · 가림막. 3초 > 0 이거나 8초 > 10 이면 WARN(옛 QC 는 다 받은 화면만 찍어 못 잡았다) */
+  if (games.includes('saga-dungeon')) {
+    const r = run(process.execPath, ['dg-load-seq.mjs'], { cwd: PLAY, env, timeout: 6 * 60 * 1000 });
+    const j = readJson(path.join(PLAY, 'results', 'dg-load-seq.json'), null), at = (ms) => j && (j.rows || []).find((x) => x.ms === ms);
+    if (!at(3000) || at(3000).err) { row('로딩', nm('saga-dungeon'), 'FAIL', 'dg-load-seq 결과 없음 ' + ((j && j.err) || r.out.trim().split(String.fromCharCode(10)).pop() || ''), r.sec); }
+    else {
+      const a = at(3000), c = at(8000) || {}, warn = a.boxOnScreen > 0 || (c.boxOnScreen || 0) > 10;
+      row('로딩', nm('saga-dungeon'), warn ? 'WARN' : 'PASS', '3초 시야 안 상자 ' + a.boxOnScreen + '(가림막 ' + (a.veil ? '덮음' : '걷힘') + ') · 8초 ' + c.boxOnScreen + ' · GLB ' + c.glb + ' · 숨은 대역 ' + c.ghost, r.sec);
+      for (const ms of [3000, 8000]) { const f = path.join(PLAY, 'shots', 'dg_load_' + ms + '.png'); if (fs.existsSync(f)) { eyes.push({ game: 'saga-dungeon', what: '로딩 ' + ms / 1000 + '초(갈색 상자가 없나)', file: path.relative(ROOT, f) }); } }
+    }
+  }
   /* W-0316 몸짓 판정 — 1만리 내 몸(실제 VRoid)에 자세 열둘을 걸어 판정 시점에 멈추고 뼈로 기대 범위를 본다(pose3d.check) + 모음판 눈 판정 */
   if (games.includes('saga-go')) {
     const r = run(process.execPath, ['pose-shot.mjs', 'qcpose'], { cwd: PLAY, env, timeout: 10 * 60 * 1000 });

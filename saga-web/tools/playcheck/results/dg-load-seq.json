@@ -1,0 +1,166 @@
+{
+ "at": "2026-10-18T10:50:05.120Z",
+ "rows": [
+  {
+   "ms": 500,
+   "veil": true,
+   "why": "",
+   "pend": 29,
+   "ratio": 0,
+   "glb": 0,
+   "box": 0,
+   "boxOnScreen": 0,
+   "ghost": 101,
+   "fail": 0
+  },
+  {
+   "ms": 1500,
+   "veil": true,
+   "why": "",
+   "pend": 23,
+   "ratio": 0.3,
+   "glb": 9,
+   "box": 0,
+   "boxOnScreen": 0,
+   "ghost": 32,
+   "fail": 0
+  },
+  {
+   "ms": 3000,
+   "veil": true,
+   "why": "",
+   "pend": 80,
+   "ratio": 0.3,
+   "glb": 9,
+   "box": 0,
+   "boxOnScreen": 0,
+   "ghost": 32,
+   "fail": 0
+  },
+  {
+   "ms": 8000,
+   "veil": false,
+   "why": "ratio",
+   "pend": 0,
+   "ratio": 1,
+   "glb": 41,
+   "box": 0,
+   "boxOnScreen": 0,
+   "ghost": 0,
+   "fail": 0
+  },
+  {
+   "ms": 12000,
+   "veil": false,
+   "why": "ratio",
+   "pend": 0,
+   "ratio": 1,
+   "glb": 41,
+   "box": 0,
+   "boxOnScreen": 0,
+   "ghost": 0,
+   "fail": 0
+  }
+ ],
+ "re": [
+  {
+   "ms": 800,
+   "veil": false,
+   "why": "",
+   "pend": 24,
+   "ratio": 0.29,
+   "glb": 9,
+   "box": 0,
+   "boxOnScreen": 0,
+   "ghost": 92,
+   "fail": 0
+  },
+  {
+   "ms": 2500,
+   "veil": false,
+   "why": "",
+   "pend": 66,
+   "ratio": 0.3,
+   "glb": 9,
+   "box": 0,
+   "boxOnScreen": 0,
+   "ghost": 32,
+   "fail": 0
+  },
+  {
+   "ms": 5000,
+   "veil": false,
+   "why": "ratio",
+   "pend": 0,
+   "ratio": 1,
+   "glb": 41,
+   "box": 0,
+   "boxOnScreen": 0,
+   "ghost": 0,
+   "fail": 0
+  }
+ ],
+ "glbAt": [
+  "characters3d/sl_hosang.glb@280",
+  "world3d/torch_stand_01.glb@292",
+  "world3d/dungeon_pillar_01.glb@294",
+  "world3d/flower_patch_01.glb@1135",
+  "world3d/rock_small_01.glb@1135",
+  "world3d/rock_moss_01.glb@1213",
+  "world3d/rock_large_02.glb@1260",
+  "world3d/grass_tuft_02.glb@1260",
+  "world3d/tree_broadleaf_03.glb@2901",
+  "world3d/bush_02.glb@2902",
+  "world3d/mushroom_01.glb@2904",
+  "world3d/log_01.glb@2927",
+  "world3d/tree_dead_01.glb@2928",
+  "world3d/tent_large_01.glb@2930",
+  "world3d/rubble_pillar_01.glb@2940",
+  "world3d/banner_pole_01.glb@2940",
+  "world3d/signpost_01.glb@2941",
+  "world3d/campfire_logs_01.glb@2959",
+  "world3d/wall_piece_01.glb@2961",
+  "world3d/eu_house_01.glb@2964",
+  "world3d/stele_01.glb@3344",
+  "world3d/wpn_sword_common.glb@3345",
+  "world3d/well_01.glb@3346",
+  "world3d/forest_cottage_01.glb@3368",
+  "world3d/stone_tower_01.glb@3369",
+  "world3d/tent_small_01.glb@3370",
+  "world3d/low_stone_wall_01.glb@3400",
+  "world3d/pond_01.glb@3400",
+  "world3d/reed_clump_01.glb@3401",
+  "characters3d/rf_chengpu.glb@3427",
+  "characters3d/rf_handang.glb@3427",
+  "characters3d/rf_kuailiang.glb@3428",
+  "characters3d/rf_sunce.glb@3556",
+  "characters3d/rf_yanghong.glb@3657",
+  "characters3d/rf_zhanghe.glb@3695",
+  "characters3d/rg_jilju.glb@3833"
+ ],
+ "veil": [
+  [
+   238,
+   false,
+   "",
+   29,
+   0
+  ],
+  [
+   1050,
+   true,
+   "",
+   29,
+   0
+  ],
+  [
+   6557,
+   false,
+   "ratio",
+   3,
+   0.85
+  ]
+ ],
+ "tier": "MEDIUM",
+ "errors": []
+}

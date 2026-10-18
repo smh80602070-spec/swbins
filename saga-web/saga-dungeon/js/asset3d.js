@@ -38,6 +38,12 @@
   }
   function set(k, v) { if (v === null || v === undefined) { delete knobs[k]; } else { knobs[k] = v; } return knobs; }
   function GLB_ON() { return tuned('asset3d.glb', 1) ? true : false; }
+  /* W-0325 — GLB 가 올 몸의 대역 도형(갈색 상자)은 받는 동안 숨긴다(사용자 10-18 "로딩이 깨져 보임"). 실패·shapeGhostMs(20초) 넘도록 안 오면 다시 보인다.
+     손잡이 dungeon3d.shapeGhost(0 = 숨김 · 1 = 옛 상자) · dungeon3d.shapeGhostMs. tracked = 화면 안 비율(가림막)·가까운 것 먼저(pump)가 보는 몸 목록 */
+  var tracked = [];
+  function ghostShape(shell, shape) { if (!shape) { return; } tracked.push(shell); if (tracked.length > 600) { tracked = tracked.filter(function (s) { return !!s.parent && s.userData.assetState === 'shape'; }); } if (tuned('dungeon3d.shapeGhost', 0)) { return; } shape.visible = false; shell.userData.ghost = shape; if (typeof setTimeout !== 'undefined') { setTimeout(function () { if (shell.userData.assetState === 'shape') { shape.visible = true; } }, tuned('dungeon3d.shapeGhostMs', 20000)); } }
+  function failShell(shell) { shell.userData.assetState = 'fail'; if (shell.userData.ghost) { shell.userData.ghost.visible = true; } }
+  function noteShell(url, sh) { var A3c = global.DG.assets3d, cu = A3c && A3c.creatureFor ? A3c.creatureFor(url) : null, c = cache[cu || url]; if (c && c.state === 'queued') { (c.shells || (c.shells = [])).push(sh); } }
 
   /* ── 표 ─────────────────────────────────────────────── */
   var PEOPLE = 'assets/models/people/regular/';
@@ -979,9 +985,34 @@
     if (!lowTimer && typeof setTimeout !== 'undefined') { lowTimer = setTimeout(function () { lowTimer = null; pump(); }, wait + 20); }
     return false;
   }
+  /** W-0325 — 높은 줄에서 카메라에 가장 가까운 몸을 기다리는 파일부터(몸이 안 걸린 파일 = 미리 받기·사람 우선은 거리 0 으로 앞). 손잡이 asset3d.nearFirst(1) */
+  var nearV = null;
+  function takeNear() {
+    var D3 = global.DG.dungeon3d, cam = D3 && D3.camNode ? D3.camNode() : null, t = three();
+    if (!tuned('asset3d.nearFirst', 1) || !cam || !t || startQ.length < 2) { return startQ.shift(); }
+    nearV = nearV || new t.Vector3();
+    var best = 0, bd = Infinity, i, j;
+    for (i = 0; i < startQ.length; i++) {
+      var c = cache[startQ[i]], d = c && c.shells && c.shells.length ? Infinity : 0;
+      if (c && c.shells) { for (j = 0; j < c.shells.length; j++) { var s = c.shells[j]; if (!s.parent) { continue; } s.updateWorldMatrix(true, false); s.getWorldPosition(nearV); d = Math.min(d, nearV.distanceToSquared(cam.position)); } }
+      if (d < bd) { bd = d; best = i; if (d === 0) { break; } }
+    }
+    return startQ.splice(best, 1)[0];
+  }
+  /** W-0325 가림막 — 카메라 시야 안 몸 중 GLB 가 된 비율(시야 안 몸이 없으면 1) */
+  var frus = null, frM = null, boxV = null;
+  function readyRatio() {
+    var D3 = global.DG.dungeon3d, cam = D3 && D3.camNode ? D3.camNode() : null, t = three();
+    if (!cam || !t) { return 1; }
+    frus = frus || new t.Frustum(); frM = frM || new t.Matrix4(); boxV = boxV || new t.Vector3();
+    cam.updateMatrixWorld(); frM.multiplyMatrices(cam.projectionMatrix, cam.matrixWorldInverse); frus.setFromProjectionMatrix(frM);
+    var glb = 0, all = 0, i;
+    for (i = 0; i < tracked.length; i++) { var s = tracked[i], st = s.userData.assetState; if (!s.parent || st === 'fail') { continue; } s.getWorldPosition(boxV); if (!frus.containsPoint(boxV)) { continue; } all++; if (st === 'glb') { glb++; } }
+    return all ? glb / all : 1;
+  }
   function pump() {
     while (inflight < MAX_INFLIGHT && (startQ.length || lowReady())) {
-      var url = startQ.length ? startQ.shift() : lowQ.shift();
+      var url = startQ.length ? takeNear() : lowQ.shift();
       var c = cache[url];
       if (!c || c.state !== 'queued') { continue; }
       var ld = loader();
@@ -1228,11 +1259,12 @@
     shell.userData.assetState = 'shape';
     shell.userData.body = rec ? rec.body : null;          // 재기(어느 몸 파일인가 — 사가나락 Q8 마을·던전 몸 비교)
     if (!GLB_ON() || !rec) { return shell; }
+    ghostShape(shell, shape);
 
     var parts = {}, pending = 4;
     var own = !rec.anim && wantsOwnAnim(rec.body);   // VRM 몸 → 자체 몸짓(UAL1 을 받으러 가지 않는다)
     function onOne() { pending--; if (pending === 0) { scheduleHeavy(assemble); } }
-    acquire(rec.body, function (c) { parts.body = c; onOne(); });
+    acquire(rec.body, function (c) { parts.body = c; onOne(); }); noteShell(rec.body, shell);
     /* outfit·hair 는 조합형(옛 Quaternius) 레시피에만 있다 — QRPG 통짜 스킨은
        둘 다 없으니 헛수고로 받으러 가지 않고 바로 다음 칸으로 넘어간다 */
     if (rec.outfit) { acquire(rec.outfit, function (c) { parts.outfit = c; onOne(); }); } else { onOne(); }
@@ -1240,10 +1272,10 @@
     if (own) { onOne(); } else { acquire(rec.anim || ANIM_SRC, function (c) { parts.anim = c; onOne(); }); }
 
     function assemble() {
-      if (!parts.body) { shell.userData.assetState = 'fail'; return; }
+      if (!parts.body) { failShell(shell); return; }
       var model;
       try { model = assembleHero(parts, mul, tintHex, rec); applyVroid(model, rec, seed); }
-      catch (e) { shell.userData.assetState = 'fail'; return; }
+      catch (e) { failShell(shell); return; }
       while (shell.children.length) { shell.remove(shell.children[0]); }
       shell.add(model);
       shell.userData.assetState = 'glb';
@@ -1307,16 +1339,17 @@
     shell.userData.assetState = 'shape';
     if (!wants(kind, seed)) { return shell; }
     var url = urlOf(kind, seed);
+    ghostShape(shell, shape);
 
     acquire(url, function (c) {
-      if (!c) { shell.userData.assetState = 'fail'; return; }
+      if (!c) { failShell(shell); return; }
       scheduleHeavy(function () {
         var model;
         try {
           model = cloneScene(c.gltf);
           model = normalize(model, mul);
           applyTint(model, tintHex);
-        } catch (e) { shell.userData.assetState = 'fail'; return; }
+        } catch (e) { failShell(shell); return; }
         while (shell.children.length) { shell.remove(shell.children[0]); }
         shell.add(model);
         shell.userData.assetState = 'glb';
@@ -1329,6 +1362,7 @@
         }
       });
     });
+    noteShell(url, shell);
     return shell;
   }
 
@@ -1400,7 +1434,7 @@
     FIXED_HERO: FIXED_HERO, fixedRecipe: fixedRecipe,
     normName: normName, score: score, mapClips: mapClips, SLOTS: SLOTS, fit: fit,
     ready: function () { return !!three(); }, hasLoader: function () { return !!loader(); },
-    DEFAULTS: DEFAULTS, restore: restore, heroRecipe: heroRecipe, ANIM_SRC: ANIM_SRC, withLazy: withLazy, lazyNpc: LAZY_NPC, hiPending: function () { var n = 0, k; for (k in cache) { var c = cache[k]; if (c && !c.low && (c.state === 'queued' || c.state === 'load')) { n++; } } return n + heavyQ.length; },   /* W-0275 로딩 가림막 — 높은 줄(건물·내 몸·동료) 남은 수 */  lowQueue: function () { return lowQ.slice(); }, prefetchState: function () { return Object.keys(bytes).map(function (u) { return u.split('/').pop(); }); }, prefetchOn: PREF_ON, qState: function () { var n = nowMs(); return { inflight: inflight, start: startQ.length, low: lowQ.length, hiAgo: Math.round(n - lastHi), lowAgo: lowQ.length ? Math.round(n - lowSince) : null, timer: !!lowTimer, loading: Object.keys(cache).filter(function (u) { return cache[u].state === 'load'; }).map(function (u) { return u.split('/').slice(-2).join('/'); }), next: startQ.slice(0, 4).map(function (u) { return u.split('/').slice(-2).join('/'); }) }; }, ownAnimOf: function (rec) { return !!(rec && !rec.anim && wantsOwnAnim(rec.body)); },   // W-0213 buildHero 의 own 과 같은 식
+    DEFAULTS: DEFAULTS, restore: restore, heroRecipe: heroRecipe, ANIM_SRC: ANIM_SRC, withLazy: withLazy, lazyNpc: LAZY_NPC, readyRatio: readyRatio, tracked: function () { return tracked; }, ghostOf: function (s) { return s && s.userData ? s.userData.ghost || null : null; }, hiPending: function () { var n = 0, k; for (k in cache) { var c = cache[k]; if (c && !c.low && (c.state === 'queued' || c.state === 'load')) { n++; } } return n + heavyQ.length; },   /* W-0275 로딩 가림막 — 높은 줄(건물·내 몸·동료) 남은 수 */  lowQueue: function () { return lowQ.slice(); }, prefetchState: function () { return Object.keys(bytes).map(function (u) { return u.split('/').pop(); }); }, prefetchOn: PREF_ON, qState: function () { var n = nowMs(); return { inflight: inflight, start: startQ.length, low: lowQ.length, hiAgo: Math.round(n - lastHi), lowAgo: lowQ.length ? Math.round(n - lowSince) : null, timer: !!lowTimer, loading: Object.keys(cache).filter(function (u) { return cache[u].state === 'load'; }).map(function (u) { return u.split('/').slice(-2).join('/'); }), next: startQ.slice(0, 4).map(function (u) { return u.split('/').slice(-2).join('/'); }) }; }, ownAnimOf: function (rec) { return !!(rec && !rec.anim && wantsOwnAnim(rec.body)); },   // W-0213 buildHero 의 own 과 같은 식
     build: build, buildHero: buildHero, step: step, play: play, rawScene: rawScene, tick: tick,
     ownAllMat: ownAllMat, flashAllMat: flashAllMat,
     tuned: tuned, set: set, stats: stats, isActorAsset: isActorAsset, isSwayAsset: isSwayAsset,

@@ -183,7 +183,7 @@
    "js/vroid-variant.js",
    "assets/sprites2d/people-manifest.js",
    "js/asset3d-people.js",
-   "js/asset3d.js",
+   "js/asset3d.js", "js/load-veil.js",
    "js/terrain3d.js",
    "js/sway3d.js",
    "js/road3d.js",

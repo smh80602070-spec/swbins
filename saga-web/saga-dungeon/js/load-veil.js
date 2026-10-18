@@ -5,7 +5,9 @@
  * 들어선 지 80ms 에 높은 줄(asset3d.hiPending — 마을 사람 몸은 낮은 줄이라 안 기다린다)이 남아 있으면
  * 짙은 막 + 지명 + 진행 막대로 가렸다가, 다 오면(또는 최대 6초) 0.35초에 걷는다. 이미 받아 둔 곳은 막이 안 뜬다.
  * 이야기 장면(#scnbox)이 떠 있으면 그 위를 가리지 않는다. 진단(DG_NO_DRAW)·2D(받을 것이 없다)에선 안 뜬다.
- * 손잡이 `loadVeil.on`(1) · `loadVeil.maxMs`(6000).
+ * W-0325(10-19): 걷는 조건 = 높은 줄이 다 옴 **또는 카메라 시야 안 몸의 GLB 비율 ≥ loadVeil.ratio(0.8)** · 상한 loadVeil.maxMs **8000**(옛 6000 — 상자 투성이 광장이 20초 보였다).
+ * 순수 판정 `shouldHide(pending, ratio, ms)` 는 three 없이 돈다 — 자가진단이 본다.
+ * 손잡이 `loadVeil.on`(1) · `loadVeil.maxMs`(8000) · `loadVeil.ratio`(0.8).
  */
 (function (global) {
   'use strict';
@@ -15,6 +17,9 @@
 
   function tuned(k, d) { var C = global.DG && global.DG.core; return C && C.tuned ? C.tuned(k, d) : d; }
   function now() { return (global.performance && global.performance.now) ? global.performance.now() : Date.now(); }
+  function ratio() { var A = global.DG && global.DG.asset3d; return A && A.readyRatio ? A.readyRatio() : 1; }
+  /** 걷을 때인가 — 'done'(다 옴)·'ratio'(시야 안 80%)·'max'(상한)·'' */
+  function shouldHide(p, r, ms) { if (ms <= MIN_MS) { return ''; } if (p === 0) { return 'done'; } if (r >= tuned('loadVeil.ratio', 0.8)) { return 'ratio'; } if (ms > tuned('loadVeil.maxMs', 8000)) { return 'max'; } return ''; }
   function pending() { var A = global.DG && global.DG.asset3d; return A && A.hiPending ? A.hiPending() : 0; }
   function scen() { var S = global.DG && global.DG.scenario; return !!(S && S.isOpen && S.isOpen()); }
   function area() {
@@ -70,11 +75,11 @@
     if (el && !hiding) {
       var p = pending(); maxP = Math.max(maxP, p);
       if (bar) { bar.style.width = Math.round(100 * (1 - p / maxP)) + '%'; }
-      if (p === 0 && t - shownAt > MIN_MS) { hide('done'); } else if (t - shownAt > tuned('loadVeil.maxMs', 6000)) { hide('max'); } else if (scen()) { hide('scene'); } else if (a !== key || !a) { hide('area'); }
+      var hw = shouldHide(p, ratio(), t - shownAt); if (hw) { hide(hw); } else if (scen()) { hide('scene'); } else if (a !== key || !a) { hide('area'); }
     }
   }
 
   global.DG = global.DG || {};
-  global.DG.loadVeil = { step: step, shown: function () { return !!el && !hiding; }, why: function () { return why; }, _hide: hide };
+  global.DG.loadVeil = { shouldHide: shouldHide, step: step, shown: function () { return !!el && !hiding; }, why: function () { return why; }, _hide: hide };
   if (!global.DG_NO_DRAW && global.setInterval) { global.setInterval(step, 100); }
 })(window);
