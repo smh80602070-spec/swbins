@@ -13,10 +13,10 @@
   "4": "유니크"
  },
  "counts": {
-  "entries": 634,
-  "keys": 606,
+  "entries": 636,
+  "keys": 608,
   "skip": 4,
-  "k118": 281
+  "k118": 283
  },
  "entries": {
   "saga-dungeon:equip:w_hwando": {
@@ -2556,6 +2556,13 @@
    "name": "연사(連射)",
    "group": "skill"
   },
+  "saga-dungeon:skill:a_rain": {
+   "key": "sk_dg_a_rain",
+   "grade": 0,
+   "mode": "ai",
+   "name": "시우(矢雨)",
+   "group": "skill"
+  },
   "saga-dungeon:skill:a_fire": {
    "key": "sk_dg_a_fire",
    "grade": 0,
@@ -2981,6 +2988,13 @@
    "grade": 0,
    "mode": "ai",
    "name": "투창(投槍)",
+   "group": "skill"
+  },
+  "saga-dungeon:skill:w_regen": {
+   "key": "sk_dg_w_regen",
+   "grade": 0,
+   "mode": "ai",
+   "name": "회생(回生)",
    "group": "skill"
   },
   "saga-dungeon:skill:w_hound": {
