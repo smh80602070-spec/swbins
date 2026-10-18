@@ -1494,6 +1494,21 @@
      }
     }
    ]
+  },
+  {
+   "id": "tiles-ground",
+   "src": "saga-assets/tiles/ground",
+   "include": [
+    "*.webp",
+    "*.license.json"
+   ],
+   "note": "K-0136 3단계 1만리·2나락 3D 땅 타일 8(512px 이음매 없음, 사실풍 Z-Image 원격) — 웹 landTexture 가 깐다(W 줄)",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/tiles/ground"
+    }
+   ]
   }
  ]
 }

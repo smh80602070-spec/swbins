@@ -375,7 +375,7 @@
    "tool": "gen.py (ComfyUI)",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 1193,
+   "count": 1325,
    "where": [
     "saga-assets/icons/license",
     "saga-assets/portraits-expr",
@@ -401,7 +401,7 @@
    "tool": "gen.py (ComfyUI)",
    "model": "z-image-turbo",
    "license": "Apache-2.0",
-   "count": 125,
+   "count": 133,
    "where": [
     "saga-assets/land-go",
     "saga-assets/textures_real/brick",
@@ -938,7 +938,7 @@
    "tool": "build_village.py",
    "model": "",
    "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
-   "count": 381,
+   "count": 552,
    "where": [
     "saga-assets/world/real",
     "saga-assets/world/toon",
