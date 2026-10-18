@@ -10,10 +10,10 @@
 - 고친다: 각 트랙 `STATE.md` 를 status 출력으로 **덮어쓴다**. 루트 README "현재" 절도 같은 표.
 - 보고: 판별 완성도 %·D0/D1 개수·WIP 초과 판. 커밋 `-- <STATE 파일들> README.md`.
 
-## R-2 확인 시트 (R-1 다음 세션)
-- `node tools/status.mjs --sheet <판>` 으로 D1·D2 기능 10개 시트를 `tasks/sheets/<판>-<날짜>.md` 에 낸다. 플래그십 먼저.
-- 사용자가 ○/× 를 적어 오면: ○ → `features.json` `level: "D3", verified: <날짜>` · × → `T-NNNN` 버그 티켓 초안(제목·재현 3줄·기대 1줄만, 나머지 칸은 페이블) 을 큐 "미작성"에 추가.
-- 시트 없는 기능은 확인 요청 금지.
+## R-2 촬영 판정 (R-1 다음 세션 — W-0312 로 사람 확인 시트 대신)
+- `node tools/qc.mjs --branch web` → `tools/_out/qc-last.md` 의 "Claude 눈 판정 목록" PNG 를 Read 로 본다. 플래그십 먼저.
+- ○ → `features.json` `level: "D3", verified: "<날짜> qc+claude"` · △ → 그 판 W 티켓 초안 · × → 버그 티켓 초안(제목·재현 3줄·기대 1줄, 나머지 칸은 R-0).
+- 사람에게 "실기·눈 확인" 을 넘기지 않는다(사용자는 거부권만).
 
 ## R-3 닫기 세션 (비율 40%)
 - `features.json` 에서 `level: "D0"` 중 가장 오래된 것 하나: 진단 항목을 `_test.html`(웹)·probe(Godot)·Playtest(Unity)에 붙여 D1 로.

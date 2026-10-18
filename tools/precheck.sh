@@ -119,6 +119,7 @@ if ls saga-web/*/features.json >/dev/null 2>&1; then
   node - <<'NODE' 
 const fs = require('fs'), path = require('path');
 const req = ['id', 'name', 'files', 'tests', 'level', 'verified', 'fun', 'ticket', 'since'];
+const allow = new Set(Object.keys(JSON.parse(fs.readFileSync('tools/features-schema.json', 'utf8')).items.properties));   // W-0312 — 스키마에 없는 키(옛 human 등)는 FAIL
 let bad = 0;
 for (const g of fs.readdirSync('saga-web')) {
   const p = path.join('saga-web', g, 'features.json');
@@ -126,7 +127,8 @@ for (const g of fs.readdirSync('saga-web')) {
   let a; try { a = JSON.parse(fs.readFileSync(p, 'utf8')); } catch (e) { console.log('FAIL ' + p + ' JSON 오류 ' + e.message); bad++; continue; }
   const ids = new Set();
   for (const x of a) {
-    const miss = req.filter(k => !(k in x));
+    const miss = req.filter(k => !(k in x)), extra = Object.keys(x).filter(k => !allow.has(k));
+    if (extra.length) { console.log('FAIL ' + p + ' ' + x.id + ' 스키마에 없는 키 ' + extra.join(',') + (extra.includes('human') ? ' — 사람 몫 칸은 W-0312 로 폐지' : '')); bad++; }
     if (miss.length) { console.log('FAIL ' + p + ' ' + x.id + ' 키 없음 ' + miss.join(',')); bad++; }
     if (!/^D[0-4]$/.test(x.level)) { console.log('FAIL ' + p + ' ' + x.id + ' level ' + x.level); bad++; }
     if (ids.has(x.id)) { console.log('FAIL ' + p + ' id 중복 ' + x.id); bad++; }

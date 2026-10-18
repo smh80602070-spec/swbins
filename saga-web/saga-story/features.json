@@ -30,8 +30,7 @@
    ],
    "expect": "발판 위에서만 뛰어지고 줄을 타며 아래로 내려오는 동작이 자연스럽다"
   },
-  "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): 물리·조작 pw-st-sheet 13/13 측정 · 사냥터 그림 ○ · D2: saga-web/tools/playcheck/pw-st-sheet.mjs(Playwright) 13/13 — results/pw-st-sheet.json. 기계 확인(움직임의 맛·그림은 D3 사람 몫) · 2D 1차(W-0106, 10-08): △3/3 — 시작 자리가 ◀ 단추 밑(→ W-0155 끝: 폰 가로는 조작판 끝 + 24px 뒤, 844×390 에서 몸 왼끝 148px > 단추 110px ○)·몸 1/16(충돌 상자 비율), 시트 web-2d-20261007 · 조작(W-0176): 공격 고정 키 Z·J(누르고 있으면 계속) · Shift 누르는 순간 회피, 고유 조작은 C 길게 · Space 짧게 = 낮은 점프(side.jumpCut 0.45) · 밧줄은 닿은 뒤 0.15초 안 ↑ 도 잡음 · 🌀 무예 자동 끄기.",
-  "human": true
+  "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): 물리·조작 pw-st-sheet 13/13 측정 · 사냥터 그림 ○ · D2: saga-web/tools/playcheck/pw-st-sheet.mjs(Playwright) 13/13 — results/pw-st-sheet.json. 기계 확인(움직임의 맛·그림은 D3 사람 몫) · 2D 1차(W-0106, 10-08): △3/3 — 시작 자리가 ◀ 단추 밑(→ W-0155 끝: 폰 가로는 조작판 끝 + 24px 뒤, 844×390 에서 몸 왼끝 148px > 단추 110px ○)·몸 1/16(충돌 상자 비율), 시트 web-2d-20261007 · 조작(W-0176): 공격 고정 키 Z·J(누르고 있으면 계속) · Shift 누르는 순간 회피, 고유 조작은 C 길게 · Space 짧게 = 낮은 점프(side.jumpCut 0.45) · 밧줄은 닿은 뒤 0.15초 안 ↑ 도 잡음 · 🌀 무예 자동 끄기."
  },
  {
   "id": "st.relics",
@@ -122,8 +121,7 @@
    ],
    "expect": "맞는 순간 숫자가 뜨고 적이 밀려나며 내가 맞은 직후엔 잠깐 무적이다"
   },
-  "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): 전투(급소·넉백·숫자 팝) pw-st-sheet 13/13 측정 · 보스 등장 장면 ○ · D2: saga-web/tools/playcheck/pw-st-sheet.mjs(Playwright) 13/13 — results/pw-st-sheet.json. 기계 확인(움직임의 맛·그림은 D3 사람 몫)",
-  "human": true
+  "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): 전투(급소·넉백·숫자 팝) pw-st-sheet 13/13 측정 · 보스 등장 장면 ○ · D2: saga-web/tools/playcheck/pw-st-sheet.mjs(Playwright) 13/13 — results/pw-st-sheet.json. 기계 확인(움직임의 맛·그림은 D3 사람 몫)"
  },
  {
   "id": "st.data-enemy",
@@ -324,8 +322,7 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): 마을 visual-20261007/saga-story-1-town.png ○(집·주민·노을) · 사냥터 2-field-high ○ · D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099).",
-  "human": true
+  "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): 마을 visual-20261007/saga-story-1-town.png ○(집·주민·노을) · 사냥터 2-field-high ○ · D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099)."
  },
  {
   "id": "st.asset3d",

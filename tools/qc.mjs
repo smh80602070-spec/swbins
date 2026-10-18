@@ -225,7 +225,7 @@ function checkStatus() {
     const feats = readJson(path.join(ROOT, 'saga-web', g, 'features.json'), []);
     const d0 = feats.filter((f) => f.level === 'D0').length, d1 = feats.filter((f) => f.level === 'D1').length;
     const wipLim = (() => { const w = readJson(path.join(ROOT, 'tools', 'wip.json'), {}); return (w.flagship || []).includes('web:' + g.replace('saga-', '')) ? w.limit_flagship || 20 : w.limit || 10; })();
-    const done = feats.filter((f) => (f.human ? f.level === 'D3' : ['D2', 'D3'].includes(f.level))).length;
+    const done = feats.filter((f) => ['D2', 'D3', 'D4'].includes(f.level)).length;   // W-0312 끝 = D2 이상 하나(사람 몫 칸 폐지)
     row('완성도', nm(g), d0 + d1 > wipLim ? 'WARN' : 'PASS', `${feats.length ? Math.round(done / feats.length * 100) : 0}% (${done}/${feats.length}) · D0 ${d0} · D1 ${d1} · WIP ${d0 + d1}/${wipLim}`, r.sec / games.length);
   }
   return st;

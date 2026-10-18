@@ -12,8 +12,7 @@
   "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": null,
-  "since": "2026-09-30",
+  "ticket": null, "since": "2026-09-30",
   "note": "D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094). 시점은 #btn-tilt 실제 클릭(2D·2.5D·3D 돌기). · 2D 조작(W-0155, qc+claude 10-10): 휠 위·핀치 벌리기·+ 키 = 2D 도 가까이(옛날엔 2D 만 반대 — 2D 줌은 배율, 3D 줌은 거리라 같은 곱이 뜻이 갈렸다). 진단 go.world 휠 방향. · 조작(W-0174, qc+claude 10-11): 46m 밖 대상을 누르면 걸어가서 닿으면 저절로 만난다(walk:meet → keys.js) · 대상 최소 거리 70→25m·최대 10→14."
  },
  {
@@ -109,8 +108,7 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "D3(qc+claude, W-0110): 땅 사진 변형 경계 섞기 뒤 visual-20261007/saga-go-1-world3d.png ○(가운데 십자 이음매 사라짐, 길·흙 같은 다른 종류 경계 직선은 그대로) · qc+claude 2026-10-08: △ 땅이 OSM 칸마다 재질·밝기가 갈려 화면 가운데 십자 이음매(visual-20261007/saga-go-1-world3d.png) → W-0110 · D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). △ 땅 네 칸 이음매는 사람 판정 · 하늘 물고기는 W-0152 로 닫음(qc+claude 2026-10-10 — 물고기 꼴 펫 스폰이 산·들 칸에 서던 것, 2-close·4-burst ○).",
-  "human": true
+  "note": "D3(qc+claude, W-0110): 땅 사진 변형 경계 섞기 뒤 visual-20261007/saga-go-1-world3d.png ○(가운데 십자 이음매 사라짐, 길·흙 같은 다른 종류 경계 직선은 그대로) · qc+claude 2026-10-08: △ 땅이 OSM 칸마다 재질·밝기가 갈려 화면 가운데 십자 이음매(visual-20261007/saga-go-1-world3d.png) → W-0110 · D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). △ 땅 네 칸 이음매는 사람 판정 · 하늘 물고기는 W-0152 로 닫음(qc+claude 2026-10-10 — 물고기 꼴 펫 스폰이 산·들 칸에 서던 것, 2-close·4-burst ○)."
  },
  {
   "id": "go.asset3d",
@@ -192,8 +190,7 @@
     "🤖 자동 전투를 켜 본다"
    ],
    "expect": "때리는 손맛·회피 무적·스태거가 보이고 🤖 이 입력을 대신한다"
-  },
-  "human": true
+  }
  },
  {
   "id": "go.battle3d",
@@ -209,7 +206,6 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "human": true,
   "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): 전투 알갱이 visual-20261007/saga-go-4-burst.png ○(불꽃 뭉치 작지만 선다) · D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). 흔들림·hold 손맛은 사람."
  },
  {
@@ -247,8 +243,7 @@
     "적 방패(원소)를 깨 비틀거리게 한다"
    ],
    "expect": "적 머리 위 이름·체력·방패 줄, 우하단 ⚔️ 단추·우상단 동행 초상 4, 피해 숫자가 원소 빛깔"
-  },
-  "human": true
+  }
  },
  {
   "id": "go.biome",
@@ -611,7 +606,6 @@
   },
   "ticket": null,
   "since": "2026-09-30",
-  "human": true,
   "note": "D3(qc+claude, W-0109 — 사람 아님, Claude 눈·측정): 2D 지도 shots/web2d_saga-go_near.jpg ○(건물·인물·짐승 스프라이트·이름표) · pw-go-close2 8/8 · D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094). · 2D 1차(W-0106, 10-08): ○1 △2/3 — 이름표 겹침·휠 방향, 시트 tasks/sheets/web-2d-20261007.md"
  },
  {
