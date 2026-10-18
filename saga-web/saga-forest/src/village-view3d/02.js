@@ -724,7 +724,7 @@
     renderer.shadowMap.enabled = q.shadow;
     if (sunLight) { sunLight.castShadow = q.shadow; }
     if (player.mixer) { player.mixer.update(dt); }
-    syncCamera(dt);
+    syncCamera(dt); if (AQ() && AQ().note(dt, isAutoQ()) && renderer) { renderer.setPixelRatio(Math.min(global.devicePixelRatio || 1, QUALITY_PRESET[tier()].dpr)); }   /* W-0302 자동이면 3초 평균 FPS 가 낮을 때 한 단계 내림(그림자는 step 이 매 프레임 따라감) */
     syncWalkMark(); if (global.DG.cozyCam3d) { global.DG.cozyCam3d.syncGrid(three(), scene, global.DG.village, WORLD_SCALE()); if (global.DG.cozyCam3d.syncLamp) { global.DG.cozyCam3d.syncLamp(three(), scene, global.DG.village, WORLD_SCALE()); } }   // W-0160 풀밭 칸 격자
     syncTerrain();
     syncWaterRipple(dt);

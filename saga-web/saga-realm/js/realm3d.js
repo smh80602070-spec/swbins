@@ -88,10 +88,10 @@
       touch: !!(('ontouchstart' in global) || (n.maxTouchPoints > 0))
     };
   }
-  var autoTierCache = null;
+  var autoTierCache = null, aqV = null; function AQ() { return aqV || (global.DG.autoq ? (aqV = global.DG.autoq.make('realm3d')) : null); }   /* W-0302 자동 품질 FPS 내리기(shared/js/autoq.js) */ function isAutoQ() { var q = QUALITY(); return q !== 'low' && q !== 'medium' && q !== 'high'; }
   function autoTier() {
     if (!autoTierCache) { autoTierCache = tierFor(deviceScore(probeDevice())); }
-    return autoTierCache;
+    return AQ() ? AQ().lower(autoTierCache) : autoTierCache;   // W-0302 실제 FPS 가 낮으면 한 단계씩 내린 등급
   }
   /** 고정 값(low/medium/high)이면 그걸, 'auto'면 켤 때 한 번 잰 등급을 쓴다 */
   function tier() {
@@ -1407,7 +1407,7 @@
     }
     var gap = tickGapMs();
     if (gap && (now || 0) - lastTickT < gap - 2) { requestAnimationFrame(tick); return; }
-    lastTickT = now || 0;
+    var dtq = lastTickT && now ? (now - lastTickT) / 1000 : 0; lastTickT = now || 0; if (AQ() && AQ().note(dtq * 16.7 / Math.max(16.7, gap || 16.7), isAutoQ()) && renderer) { renderer.setPixelRatio(Math.min(global.devicePixelRatio || 1, DPR())); }   /* W-0302 자동 품질 — 일부러 30·10fps 로 낮춘 간격(gap) 대비로 환산해 잰다 */
     yaw += (targetYaw - yaw) * 0.15;
     pitch += (targetPitch - pitch) * 0.15;
     dist += (targetDist - dist) * 0.15;

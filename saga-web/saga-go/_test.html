@@ -9360,6 +9360,22 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       I.hero2d16 = keep;
       return !bad.length && '없는 인물 null · 앉기 자세 → sit · 시전 → heavy(시트에 없음)' || bad.join(' · ');
     });
+    t('뼈대 나누기 — 같은 뼈 객체·같은 역바인드면 SkinnedMesh.bind 가 처음 뼈대를 다시 쓴다(three 가 한 프레임 한 번만 곱함), 역바인드가 다르거나 바인드 행렬을 안 주면 따로, 손잡이 끄면 따로 (W-0302)', function () {
+      var TH = window.THREE, OA = DG.ownAnim;
+      if (!TH || !TH.SkinnedMesh) { return '(three 없음 — 건너뜀)'; }
+      OA.skel.patch(TH);
+      var b0 = new TH.Bone(), b1 = new TH.Bone(); b0.add(b1); b1.position.y = 1;
+      var inv = function (y) { return [new TH.Matrix4(), new TH.Matrix4().makeTranslation(0, -y, 0)]; };
+      var mk = function () { var g = new TH.BufferGeometry(); g.setAttribute('position', new TH.Float32BufferAttribute([0, 0, 0], 3)); return new TH.SkinnedMesh(g, new TH.MeshBasicMaterial()); };
+      var m1 = mk(), m2 = mk(), m3 = mk(), m4 = mk(), m5 = mk(), C = DG.core, keep = C.tuned('anim3d.shareSkel', 1);
+      m1.bind(new TH.Skeleton([b0, b1], inv(1)), new TH.Matrix4());
+      m2.bind(new TH.Skeleton([b0, b1], inv(1)), new TH.Matrix4());
+      m3.bind(new TH.Skeleton([b0, b1], inv(2)), new TH.Matrix4());
+      C.setTune('anim3d.shareSkel', 0); m4.bind(new TH.Skeleton([b0, b1], inv(1)), new TH.Matrix4()); C.setTune('anim3d.shareSkel', keep);
+      var s5 = new TH.Skeleton([b0, b1], inv(1)); s5.calculateInverses = function () {}; m5.bind(s5);
+      var ok = m1.skeleton === m2.skeleton && m3.skeleton !== m1.skeleton && m4.skeleton !== m1.skeleton && m5.skeleton === s5;
+      return ok && '같은 뼈·역바인드 → 한 뼈대 · 다른 역바인드·손잡이 끔·바인드 행렬 없음 → 따로' || ('실패 ' + [m1.skeleton === m2.skeleton, m3.skeleton !== m1.skeleton, m4.skeleton !== m1.skeleton, m5.skeleton === s5].join(','));
+    });
     t('pose3d 쉬는 몸 — life(): 서 있으면 idle 변주, 가만히 8초 넘으면 앉기(모닥불 곁이면 준 rest 로), 걷거나 0.5초 넘게 안 불리면(공격·대화가 끼면) 다시 센다 · 앉기는 땅에 무릎 세워 앉아 엉덩이가 땅 가까이 (W-0303)', function () {
       var P3 = DG.pose3d, OA = DG.ownAnim, rig = OA.refRig(), m = OA.math, fr = rig.frame, st = {}, seq = [], k, bad = [];
       for (k = 0; k <= 48; k++) { seq.push(P3.life(st, k * 0.25, k < 12 || k > 14) || '-'); }   // 3~3.5초에 한 번 걸음

@@ -336,7 +336,8 @@
     requestAnimationFrame(tick);
   }
 
-  var lastCityT = 0;
+  var lastCityT = 0, aqC = null;
+  function aqCity() { return aqC || (global.DG.autoq ? (aqC = global.DG.autoq.make('city3d')) : null); }
   /** 궤도 카메라를 손대지 않고 천천히 저절로 돈다 — 손잡이를 하나 더 두지 않는다 */
   function tick() {
     if (!active()) { loopRunning = false; return; }
@@ -348,7 +349,11 @@
     }
     /* 발열(2026-09-24) — 60 상한(손잡이 perf.fps). 120Hz 폰에서 초당 120번 그리던 헛그림만 막는다 */
     var nowMs = performance.now(), cfps = global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('perf.fps', 60) : 60;
+    /* W-0302 폰 예산 — 천천히 도는 장식 그림 칸이라 기본 30fps(손잡이 city3d.fps), 자동 품질(autoq)이 느리다고 보면 15 → 10fps·픽셀비 1 */
+    var aq = aqCity(), capF = [global.DG.core.tuned('city3d.fps', 30), 15, 10][aq ? aq.st.down : 0];
+    cfps = cfps > 0 ? Math.min(cfps, capF) : capF;
     if (cfps > 0 && nowMs - lastCityT < 1000 / cfps - 2) { requestAnimationFrame(tick); return; }
+    if (aq && lastCityT && aq.note((nowMs - lastCityT) / 1000 * 16.7 / (1000 / cfps), true)) { renderer.setPixelRatio(1); }
     lastCityT = nowMs;
     spin += 0.0035;
     var dist = TIER_H.t3 * 2.6;

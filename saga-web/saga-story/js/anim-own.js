@@ -677,7 +677,45 @@
   }
 
   /** 장면 root 의 VRM 몸에 맞춘 three AnimationClip 아홉. 못 만들면 빈 배열(그러면 호출한 쪽이 옛 길로 간다) */
+  /* ── 뼈대 나누기(W-0302 폰 성능) ─────────────────────────
+   * GLTFLoader·SkeletonUtils.clone 은 스킨 메시(몸·머리카락·옷·얼굴…·외곽선 껍질)마다 새 Skeleton 을 만든다. three 는 뼈대 객체마다
+   * 매 프레임 뼈 행렬을 다시 곱하니, 같은 뼈를 부위 수만큼 되풀이했다(1만리 측정: 스킨 메시 152 · 뼈대 152 · 실제 다른 뼈 묶음 8 —
+   * 프레임마다 뼈 27,561개, CPU 18%). 같은 뼈 객체 목록·같은 역바인드 행렬이면 처음 것을 다시 쓴다 — three 가 한 프레임 한 번만 곱한다.
+   * 판정·자세에는 안 닿는다(같은 뼈를 같은 행렬로 곱한 값을 나눠 쓸 뿐). 손잡이 anim3d.shareSkel 0 이면 예전 그대로 */
+  var skelReg = typeof WeakMap === 'function' ? new WeakMap() : null;
+  function shareOn() { var C = global.DG && global.DG.core; return !C || !C.tuned || +C.tuned('anim3d.shareSkel', 1) !== 0; }
+  function sameInv(a, b) {
+    if (!a || !b || a.length !== b.length) { return false; }
+    for (var i = 0; i < a.length; i++) { var x = a[i].elements, y = b[i].elements; for (var j = 0; j < 16; j++) { if (Math.abs(x[j] - y[j]) > 1e-5) { return false; } } }
+    return true;
+  }
+  function shareSkel(s) {
+    if (!skelReg || !s || !s.bones || !s.bones.length || !s.bones[0] || !shareOn()) { return s; }
+    var list = skelReg.get(s.bones[0]), i, k, j, same;
+    if (!list) { list = []; skelReg.set(s.bones[0], list); }
+    for (i = 0; i < list.length; i++) {
+      k = list[i];
+      if (k === s) { return s; }
+      if (k.bones.length !== s.bones.length) { continue; }
+      same = true; for (j = 0; j < s.bones.length; j++) { if (k.bones[j] !== s.bones[j]) { same = false; break; } }
+      if (same && sameInv(k.boneInverses, s.boneInverses)) { return k; }
+    }
+    list.push(s);
+    return s;
+  }
+  /** three 의 SkinnedMesh.bind 를 한 번 감싼다(바인드 행렬을 줄 때만 — 안 주면 three 가 그 뼈대의 역행렬을 다시 계산하니 나누면 안 된다) */
+  function patchSkin(T) {
+    if (!T || !T.SkinnedMesh || T.SkinnedMesh.prototype.__shareSkel) { return; }
+    var bind0 = T.SkinnedMesh.prototype.bind;
+    T.SkinnedMesh.prototype.bind = function (sk, bm) { return bind0.call(this, bm !== undefined ? shareSkel(sk) : sk, bm); };
+    T.SkinnedMesh.prototype.__shareSkel = true;
+  }
+  /** 이미 묶인 몸(감싸기 전에 받은 것) — 그 자리에서 합친다 */
+  function shareIn(root) { if (root && root.traverse) { root.traverse(function (m) { if (m.isSkinnedMesh && m.skeleton) { m.skeleton = shareSkel(m.skeleton); } }); } }
+  if (global.THREE) { patchSkin(global.THREE); }
+
   function clipsFor(root, THREE, only, restRig) {
+    patchSkin(THREE); shareIn(root);   // W-0302 뼈대 나누기(three 를 늦게 받는 4종횡도 첫 몸에서 감싼다)
     if (!THREE || (!root && !restRig)) { return []; }
     var rig = restRig || null;   // W-0169 — 나중에 굽을 땐 처음(정지 자세)에 읽어 둔 뼈대를 준다. 몸짓이 돌던 몸을 다시 읽으면 그 자세가 "정지"가 된다
     if (!rig) { try { rig = rigFromObject3D(root); } catch (e) { return []; } }
@@ -835,6 +873,8 @@
     makeRig: makeRig, refRig: refRig, rigFromObject3D: rigFromObject3D,
     clipData: clipData, clipsFor: clipsFor, fkAt: fkAt, frameAt: frameAt, localQuats: localQuats, worldFrom: worldFrom,
     groundPoints: groundPoints,
+    /** W-0302 뼈대 나누기 — 진단·다른 몸 굽는 곳이 부른다 */
+    skel: { share: shareSkel, patch: patchSkin, shareIn: shareIn },
     /** W-0303 진단 — 발 미끄러짐: 디딘 발의 접지점(뒤꿈치·발볼 중 낮은 것, 땅에서 8mm 안)은 클립 본래 속도 v(m/s, 표준 몸)로 뒤로 가야 한다.
      *  한 바퀴를 n 등분해 그 어긋남을 더한 것(m) ÷ 2 = 걸음당 미끄러짐. { step: 걸음당 m, worst: 최대 속도 오차 m/s, frames } */
     footSlip: function (rig, clipName, v, n) {

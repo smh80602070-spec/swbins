@@ -1,0 +1,75 @@
+{
+ "at": "2026-10-18T02:06:30.794Z",
+ "base": "http://127.0.0.1:8871/",
+ "gpu": true,
+ "gpuName": null,
+ "budget": {
+  "mb": 25,
+  "fps": 30,
+  "calls": 300
+ },
+ "cpuThrottle": 4,
+ "viewport": "390x844@2",
+ "runs": [
+  {
+   "game": "saga-realm",
+   "runs": 2,
+   "firstMB": 4,
+   "totalMB": 8.4,
+   "top": [
+    [
+     "saga-realm/dist/app.js",
+     2
+    ],
+    [
+     "saga-realm/assets/audio/bgm/saga-realm-field.ogg",
+     0.86
+    ],
+    [
+     "saga-realm/assets/audio/bgm/saga-realm-town.ogg",
+     0.74
+    ],
+    [
+     "shared/assets/characters3d/tb_jongja.glb",
+     0.67
+    ],
+    [
+     "shared/assets/characters3d/rf_lijue.glb",
+     0.55
+    ],
+    [
+     "shared/assets/characters3d/rf_liubiao.glb",
+     0.54
+    ]
+   ],
+   "err": "",
+   "scenes": [
+    {
+     "name": "지도",
+     "fps": 60.3,
+     "worstMs": 46.5,
+     "calls": null,
+     "tris": null,
+     "tex": null,
+     "heapMB": 8.6,
+     "quality": "HIGH",
+     "gpu": null
+    },
+    {
+     "name": "성",
+     "fps": 12.3,
+     "worstMs": 115,
+     "calls": 286,
+     "tris": 346817,
+     "tex": 206,
+     "heapMB": 41.4,
+     "quality": "HIGH",
+     "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+   ],
+   "over": [
+    "성 FPS 12.3"
+   ]
+  }
+ ]
+}

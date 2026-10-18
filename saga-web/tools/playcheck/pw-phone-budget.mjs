@@ -15,13 +15,15 @@ const argv = process.argv.slice(2);
 const bi = argv.indexOf('--base');
 const BASE = (bi >= 0 ? argv[bi + 1] : (process.env.PW_BASE || 'http://127.0.0.1:8871/')).replace(/\/?$/, '/');
 const RUNS = +((argv.find((a) => a.startsWith('--runs=')) || '--runs=3').slice(7));
-const GPU = argv.includes('--gpu');
+const GPU = argv.includes('--gpu'), THROTTLE = +((argv.find((a) => a.startsWith('--throttle=')) || '--throttle=4').slice(11));   // CPU 감속 배수(1 = 감속 없음)
 const ALL = ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm'];
-const games = argv.filter((a, i) => !a.startsWith('--') && argv[i - 1] !== '--base');
+const games = argv.filter((a, i) => !a.startsWith('--') && argv[i - 1] !== '--base' && argv[i - 1] !== '--tune');
+/* --tune 키=값 (여러 번) — 계정 만든 뒤 손잡이를 덧붙인다(켬·끔 A/B) */
+const TUNES = argv.map((a, i) => (a === '--tune' ? argv[i + 1] : null)).filter(Boolean).map((kv) => { const j = kv.indexOf('='), v = kv.slice(j + 1); return [kv.slice(0, j), /^-?\d+(\.\d+)?$/.test(v) ? +v : v]; });
 export const BUDGET = { mb: 25, fps: 30, calls: 300 };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-async function clearIntro(p) {
+export async function clearIntro(p) {
   for (let i = 0; i < 12; i++) {
     const open = await p.evaluate(() => !!((window.DG && DG.scenario && DG.scenario.isOpen && DG.scenario.isOpen()) || (window.DG && DG.story && DG.story.isOpen && DG.story.isOpen())));
     if (!open) { break; }
@@ -34,7 +36,7 @@ async function clearIntro(p) {
   });
 }
 /** 판마다 장면 — [이름, 들어가기] 차례로. 첫 장면 = 첫 화면(용량은 여기까지 센다) */
-const SCENES = {
+export const SCENES = {
   'saga-go': [['들판', async () => {}], ['걷기', async (p) => { await p.keyboard.down('w'); }]],
   'saga-dungeon': [['마을', async (p) => { await p.evaluate(() => { [...document.querySelectorAll('.stc-cell')].slice(0, 3).forEach((c) => c.click()); const b = document.querySelector('.stc-btn'); if (b) { b.click(); } }); await sleep(3500); }],
     ['던전', async (p) => { await p.evaluate(() => { if (DG.town && DG.town.active && DG.town.active()) { DG.town.leave(); } DG.dungeon.enter({ floor: 1 }); }); await sleep(4000); }]],
@@ -48,14 +50,15 @@ const SCENES = {
 
 /** 페이지 안 — 3초 rAF 로 FPS, 그 사이 렌더러를 붙잡아 info */
 const MEASURE = async () => {
-  const T = window.THREE; let rdr = null; const P0 = T && T.Object3D.prototype, orig = P0 && P0.onBeforeRender;
-  if (P0) { P0.onBeforeRender = function (renderer) { if (this.isScene) { rdr = renderer; } return orig && orig.apply(this, arguments); }; }
+  const T = window.THREE; let rdr = null, mc = 0, mt = 0; const P0 = T && T.Object3D.prototype, orig = P0 && P0.onBeforeRender, origA = P0 && P0.onAfterRender;
+  /* 장면 렌더 하나의 그리기 수 = 그 장면 직후 info(후처리 화면 사각형 한 장이 마지막에 덮어써 1 로 보이던 것) — 프레임 안 가장 큰 장면 값 */
+  if (P0) { P0.onBeforeRender = function (renderer) { if (this.isScene) { rdr = renderer; } return orig && orig.apply(this, arguments); }; P0.onAfterRender = function (renderer) { if (this.isScene && renderer.info) { mc = Math.max(mc, renderer.info.render.calls); mt = Math.max(mt, renderer.info.render.triangles); } return origA && origA.apply(this, arguments); }; }
   let n = 0, t0 = performance.now(), worst = 0, last = t0; const tick = () => { const t = performance.now(); worst = Math.max(worst, t - last); last = t; n++; if (t - t0 < 3000) { requestAnimationFrame(tick); } };
   await new Promise((r) => { requestAnimationFrame(tick); setTimeout(r, 3300); });
-  if (P0) { P0.onBeforeRender = orig; }
+  if (P0) { P0.onBeforeRender = orig; P0.onAfterRender = origA; }
   const fps = n / ((last - t0) / 1000), info = rdr && rdr.info, gl = rdr && rdr.getContext && rdr.getContext(), dbg = gl && gl.getExtension('WEBGL_debug_renderer_info');
   const q = (window.DG && ((DG.perf && DG.perf.tier && DG.perf.tier().key) || (DG.dungeon3d && DG.dungeon3d.quality && DG.dungeon3d.quality()) || (DG.villageView3d && DG.villageView3d.quality && DG.villageView3d.quality()) || (DG.sideView3d && DG.sideView3d.quality && DG.sideView3d.quality()) || (DG.realm3d && DG.realm3d.quality && DG.realm3d.quality()))) || '?';
-  return { fps: +fps.toFixed(1), worstMs: Math.round(worst), calls: info ? info.render.calls : null, tris: info ? info.render.triangles : null, tex: info ? info.memory.textures : null, geo: info ? info.memory.geometries : null,
+  return { fps: +fps.toFixed(1), worstMs: Math.round(worst), calls: info ? mc : null, tris: info ? mt : null, tex: info ? info.memory.textures : null, geo: info ? info.memory.geometries : null,
     heapMB: performance.memory ? +(performance.memory.usedJSHeapSize / 1048576).toFixed(1) : null, gpu: dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : null, quality: typeof q === 'object' ? JSON.stringify(q) : String(q), three: !!rdr };
 };
 
@@ -70,9 +73,9 @@ async function one(browser, g) {
   const url = BASE + g + '/', res = { game: g, scenes: [], err: '' };
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 90000 }); await sleep(1500);
-    await page.evaluate(() => { try { localStorage.clear(); } catch (e) { /* 없음 */ } DG.account.create('예산'); });
+    await page.evaluate((tn) => { try { localStorage.clear(); } catch (e) { /* 없음 */ } DG.account.create('예산'); tn.forEach(([k, v]) => DG.core.setTune(k, v)); }, TUNES);
     bytes = 0; big.clear();   // 계정 만들기 전 첫 받기는 빼고, 진짜 첫 화면(이어하기)부터 센다 — 캐시 끔이라 다시 다 받는다
-    await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+    await cdp.send('Emulation.setCPUThrottlingRate', { rate: THROTTLE });
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 120000 }); await sleep(4000);
     await page.evaluate(() => { const b = document.getElementById('title-continue'); if (b) { b.click(); } }); await sleep(4000);
     await clearIntro(page);
@@ -91,6 +94,7 @@ async function one(browser, g) {
   return res;
 }
 
+if (!process.env.PW_BUDGET_LIB) {   // pw-cpu-profile.mjs 가 SCENES·clearIntro 만 가져다 쓸 때는 안 돈다
 const args = ['--autoplay-policy=no-user-gesture-required', '--enable-precise-memory-info'].concat(GPU ? ['--use-angle=d3d11', '--ignore-gpu-blocklist', '--enable-gpu-rasterization'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--disable-gpu']);
 const browser = await chromium.launch({ executablePath: CHROME, headless: true, args });
 const out = [];
@@ -111,6 +115,7 @@ try {
 } finally { await browser.close(); }
 const gpuName = out[0] && out[0].scenes[0] && out[0].scenes[0].gpu;
 fs.mkdirSync(path.join(HERE, 'results'), { recursive: true });
-fs.writeFileSync(path.join(HERE, 'results', 'pw-phone-budget.json'), JSON.stringify({ at: new Date().toISOString(), base: BASE, gpu: GPU, gpuName, budget: BUDGET, cpuThrottle: 4, viewport: '390x844@2', runs: out }, null, 1));
+fs.writeFileSync(path.join(HERE, 'results', 'pw-phone-budget.json'), JSON.stringify({ at: new Date().toISOString(), base: BASE, gpu: GPU, gpuName, budget: BUDGET, cpuThrottle: THROTTLE, viewport: '390x844@2', runs: out }, null, 1));
 console.log(`PHONE-BUDGET 넘은 판 ${out.filter((r) => r.over.length).length} / ${out.length} · GPU ${GPU ? gpuName : 'swiftshader(FPS 상대값)'}`);
 process.exit(0);
+}

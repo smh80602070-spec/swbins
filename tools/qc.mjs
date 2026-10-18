@@ -8,6 +8,7 @@
  *   --full        진단 3회(DIFF 검사)·3D 장면 촬영 전부·에셋 감사·Godot probe 까지
  *   --no-shots    촬영(playwright) 생략          --godot   Godot probe_all 도(exe 는 GODOT 환경변수 또는 스크래치패드에서 찾음)
  *   --play        플레이 QC 만(W-0270 — pw-play.mjs: 판마다 PC·폰으로 키·끌기·터치 이동 · ☰ 창 닫은 뒤 이동 · HUD 겹침 · 새로 고침 이어하기). 기본 실행에 든다(--no-shots 면 생략)
+ *   --budget      폰 예산 측정을 실제로 돌린다(W-0302 pw-phone-budget.mjs, 판마다 1회 — 없으면 마지막 결과만 읽는다)
  *   --deploy      배포 확인만(W-0258 — 공개 Pages 주소에서 가입→시작→☰→새로 고침, pw-deploy.mjs). --branch web·--full 엔 늘 든다
  *
  * 하는 일(웹 판마다): ① 번들·shared 사본 최신인지(bundle --check·sync-shared --check) ② 진단 러너(test-web.mjs, RESULT n/m·실패 줄·DIFF)
@@ -182,6 +183,22 @@ async function checkGfx() {
   }
 }
 
+/* ── ④-5 폰 예산(W-0302) — 마지막 pw-phone-budget.mjs 결과(폰 흉내 · GPU · CPU 4배 감속)를 읽어 상한(용량·FPS·그리기 수)을 넘은 판은 WARN.
+   측정이 25분쯤이라 QC 가 돌리진 않는다(--budget 을 주면 돌린다). 결과가 7일 넘게 묵으면 다시 재라고 WARN */
+async function checkBudget() {
+  if (!games.length) return;
+  if (has('--budget')) { const b = await serve(); run(process.execPath, ['pw-phone-budget.mjs', ...games, '--gpu', '--runs=1', '--base', b], { cwd: PLAY, timeout: 60 * 60 * 1000 }); }
+  const j = readJson(path.join(PLAY, 'results', 'pw-phone-budget.json'), null);
+  if (!j) { row('폰 예산', games.map(nm).join('·'), 'WARN', '측정 없음 — node saga-web/tools/playcheck/pw-phone-budget.mjs --gpu'); return; }
+  const age = (Date.now() - Date.parse(j.at)) / 86400000, B = j.budget || {};
+  for (const g of games) {
+    const x = (j.runs || []).find((q) => q.game === g);
+    if (!x) { row('폰 예산', nm(g), 'WARN', '그 판 측정 없음'); continue; }
+    const sc = (x.scenes || []).map((q) => q.name + ' ' + q.fps + 'fps·그리기 ' + q.calls).join(' · ');
+    row('폰 예산', nm(g), x.over && x.over.length || age > 7 ? 'WARN' : 'PASS', '첫 화면 ' + x.firstMB + 'MB/' + B.mb + ' · ' + sc + (x.over && x.over.length ? ' · 넘음 ' + x.over.join(', ') : '') + (age > 7 ? ' · 측정 ' + Math.round(age) + '일 묵음' : '') + (j.gpu ? '' : ' · swiftshader(FPS 상대값)'));
+  }
+}
+
 /* ── ④-2 배포 확인(W-0258) — 로컬 서버가 아니라 공개 Pages 주소를 서비스 워커 켠 채 실제 클릭으로. 이 PC 네트워크 기준(사용자 기기 차단은 못 잡음) ── */
 function checkDeploy() {
   if (!games.length) return;
@@ -292,6 +309,7 @@ function report() {
     await checkShots();
     await checkPlay();
     await checkGfx();
+    await checkBudget();
     if (branch === 'web' || (full && !branch)) checkDeploy();
     checkStatus();
     if (branch === 'godot' || has('--godot') || (full && !branch)) checkGodot();

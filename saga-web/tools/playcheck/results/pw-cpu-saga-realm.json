@@ -1,0 +1,159 @@
+{
+ "game": "saga-realm",
+ "throttle": 4,
+ "sec": 4,
+ "scene": 1,
+ "totalMs": 5967,
+ "rows": [
+  {
+   "fn": "(program) @ [:-1:-1]",
+   "ms": 2125,
+   "pct": 35.6
+  },
+  {
+   "fn": "multiplyMatrices @js/voice.js [app.js:61:65992]",
+   "ms": 413,
+   "pct": 6.9
+  },
+  {
+   "fn": "Am @js/voice.js [app.js:3895:35301]",
+   "ms": 223,
+   "pct": 3.7
+  },
+  {
+   "fn": "texSubImage2D @ [:-1:-1]",
+   "ms": 221,
+   "pct": 3.7
+  },
+  {
+   "fn": "s @js/voice.js [app.js:3793:6494]",
+   "ms": 165,
+   "pct": 2.8
+  },
+  {
+   "fn": "rl @js/voice.js [app.js:3895:29332]",
+   "ms": 105,
+   "pct": 1.8
+  },
+  {
+   "fn": "fa @js/voice.js [app.js:3895:32785]",
+   "ms": 90,
+   "pct": 1.5
+  },
+  {
+   "fn": "x @js/voice.js [app.js:3843:8257]",
+   "ms": 89,
+   "pct": 1.5
+  },
+  {
+   "fn": "upload @js/voice.js [app.js:3793:15534]",
+   "ms": 84,
+   "pct": 1.4
+  },
+  {
+   "fn": "bindVertexArray @ [:-1:-1]",
+   "ms": 84,
+   "pct": 1.4
+  },
+  {
+   "fn": "Mh.renderBufferDirect @js/voice.js [app.js:3895:24499]",
+   "ms": 79,
+   "pct": 1.3
+  },
+  {
+   "fn": "f @js/voice.js [app.js:3643:14490]",
+   "ms": 79,
+   "pct": 1.3
+  },
+  {
+   "fn": "(idle) @ [:-1:-1]",
+   "ms": 79,
+   "pct": 1.3
+  },
+  {
+   "fn": "drawElements @ [:-1:-1]",
+   "ms": 76,
+   "pct": 1.3
+  },
+  {
+   "fn": "updateMatrixWorld @js/voice.js [app.js:61:79937]",
+   "ms": 74,
+   "pct": 1.2
+  },
+  {
+   "fn": "bindTexture @ [:-1:-1]",
+   "ms": 67,
+   "pct": 1.1
+  },
+  {
+   "fn": "Zx @js/voice.js [app.js:3793:8623]",
+   "ms": 66,
+   "pct": 1.1
+  },
+  {
+   "fn": "wt @js/voice.js [app.js:3793:8058]",
+   "ms": 64,
+   "pct": 1.1
+  },
+  {
+   "fn": "s @js/voice.js [app.js:3895:9388]",
+   "ms": 62,
+   "pct": 1
+  },
+  {
+   "fn": "wm @js/voice.js [app.js:3895:39688]",
+   "ms": 61,
+   "pct": 1
+  },
+  {
+   "fn": "Tt @js/voice.js [app.js:3793:8171]",
+   "ms": 61,
+   "pct": 1
+  },
+  {
+   "fn": "a @js/voice.js [app.js:100:5889]",
+   "ms": 60,
+   "pct": 1
+  },
+  {
+   "fn": "uniformMatrix4fv @ [:-1:-1]",
+   "ms": 59,
+   "pct": 1
+  },
+  {
+   "fn": "setValue @js/voice.js [app.js:3793:15400]",
+   "ms": 56,
+   "pct": 0.9
+  },
+  {
+   "fn": "compose @js/voice.js [app.js:61:69586]",
+   "ms": 56,
+   "pct": 0.9
+  },
+  {
+   "fn": "o @js/voice.js [app.js:3643:13749]",
+   "ms": 54,
+   "pct": 0.9
+  },
+  {
+   "fn": "z @js/voice.js [app.js:3871:22614]",
+   "ms": 52,
+   "pct": 0.9
+  },
+  {
+   "fn": "t0 @js/voice.js [app.js:3793:9593]",
+   "ms": 46,
+   "pct": 0.8
+  },
+  {
+   "fn": "uniform1fv @ [:-1:-1]",
+   "ms": 44,
+   "pct": 0.7
+  },
+  {
+   "fn": "$e @js/voice.js [app.js:3871:25806]",
+   "ms": 44,
+   "pct": 0.7
+  }
+ ]
+}

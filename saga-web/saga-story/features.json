@@ -824,5 +824,22 @@
   "ticket": "W-0311",
   "since": "2026-10-18",
   "note": "시트 굽기는 K(INBOX 10-18 규격: characters2d16/<id>/<역할>.webp 9행 + sheet.json). tools/gen-assets3d-ids.mjs 가 sheet.json 을 표 hero2d16 에 담아 실행 중 404 0. 동작 그림은 처음 그릴 때 받기. 자세(W-0303 Pose_)가 시트에 있으면 그 프레임, 없으면 기울이기 대역. D2 는 K 시트 뒤"
+ },
+ {
+  "id": "st.phone-budget",
+  "name": "폰 예산(W-0302) — 뼈대 나누기(같은 뼈·역바인드면 한 Skeleton, 프레임당 뼈 계산 약 절반) · 측정 틀 pw-phone-budget(GPU·CPU 4배 감속)",
+  "files": [
+   "../shared/js/anim-own.js",
+   "../tools/playcheck/pw-phone-budget.mjs"
+  ],
+  "tests": [
+   "뼈대 나누기(W-0302)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0302",
+  "since": "2026-10-18",
+  "note": "표 tasks/sheets/web-phone-budget-20261018.md — 용량·그리기 수는 상한 안, FPS(폰 흉내)는 30 아래(원인·남은 거리 시트). 손잡이 anim3d.shareSkel · village3d/realm3d.lowFps 26 · lowWin 3 · autoq.on · city3d.fps 30"
  }
 ]

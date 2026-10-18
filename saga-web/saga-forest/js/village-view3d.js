@@ -173,10 +173,10 @@
       touch: !!(('ontouchstart' in global) || (n.maxTouchPoints > 0))
     };
   }
-  var autoTierCache = null;
+  var autoTierCache = null, aqV = null; function AQ() { return aqV || (global.DG.autoq ? (aqV = global.DG.autoq.make('village3d')) : null); }   /* W-0302 자동 품질 FPS 내리기(shared/js/autoq.js) */ function isAutoQ() { var q = QUALITY(); return q !== 'low' && q !== 'medium' && q !== 'high'; }
   function autoTier() {
     if (!autoTierCache) { autoTierCache = tierFor(deviceScore(probeDevice())); }
-    return autoTierCache;
+    return AQ() ? AQ().lower(autoTierCache) : autoTierCache;   // W-0302 실제 FPS 가 낮으면 한 단계씩 내린 등급
   }
   /** 고정 값(low/medium/high)이면 그걸, 'auto'면 켤 때 한 번 잰 등급을 쓴다 */
   function tier() {
@@ -1870,7 +1870,7 @@
     renderer.shadowMap.enabled = q.shadow;
     if (sunLight) { sunLight.castShadow = q.shadow; }
     if (player.mixer) { player.mixer.update(dt); }
-    syncCamera(dt);
+    syncCamera(dt); if (AQ() && AQ().note(dt, isAutoQ()) && renderer) { renderer.setPixelRatio(Math.min(global.devicePixelRatio || 1, QUALITY_PRESET[tier()].dpr)); }   /* W-0302 자동이면 3초 평균 FPS 가 낮을 때 한 단계 내림(그림자는 step 이 매 프레임 따라감) */
     syncWalkMark(); if (global.DG.cozyCam3d) { global.DG.cozyCam3d.syncGrid(three(), scene, global.DG.village, WORLD_SCALE()); if (global.DG.cozyCam3d.syncLamp) { global.DG.cozyCam3d.syncLamp(three(), scene, global.DG.village, WORLD_SCALE()); } }   // W-0160 풀밭 칸 격자
     syncTerrain();
     syncWaterRipple(dt);
