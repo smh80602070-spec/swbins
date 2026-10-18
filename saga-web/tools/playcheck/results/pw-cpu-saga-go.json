@@ -1,159 +1,192 @@
 {
  "game": "saga-go",
+ "at": "2026-10-18T07:25:20.635Z",
+ "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "throttle": 4,
- "sec": 4,
+ "sec": 3,
  "scene": 0,
- "totalMs": 7742,
+ "runs": 3,
+ "totalMs": 6212,
  "rows": [
   {
+   "key": "(program) @",
    "fn": "(program) @ [:-1:-1]",
-   "ms": 3908,
-   "pct": 50.5
+   "ms": 3269,
+   "pct": 51.6
   },
   {
-   "fn": "update @js/starchart.js [app.js:4008:64552]",
-   "ms": 1395,
-   "pct": 18
+   "key": "update @js/vendor/three.iife.js",
+   "fn": "update @js/vendor/three.iife.js [app.js:4008:64552]",
+   "ms": 839,
+   "pct": 13.6
   },
   {
-   "fn": "updateMatrixWorld @js/starchart.js [app.js:174:79937]",
-   "ms": 194,
-   "pct": 2.5
+   "key": "updateMatrixWorld @js/vendor/three.iife.js",
+   "fn": "updateMatrixWorld @js/vendor/three.iife.js [app.js:174:79966]",
+   "ms": 162,
+   "pct": 2.7
   },
   {
-   "fn": "rl @js/starchart.js [app.js:4008:29332]",
-   "ms": 182,
-   "pct": 2.3
+   "key": "rl @js/vendor/three.iife.js",
+   "fn": "rl @js/vendor/three.iife.js [app.js:4008:29332]",
+   "ms": 152,
+   "pct": 2.6
   },
   {
-   "fn": "multiplyMatrices @js/starchart.js [app.js:174:65992]",
-   "ms": 149,
+   "key": "multiplyMatrices @js/vendor/three.iife.js",
+   "fn": "multiplyMatrices @js/vendor/three.iife.js [app.js:174:66021]",
+   "ms": 114,
    "pct": 1.9
   },
   {
+   "key": "getBoundingClientRect @",
    "fn": "getBoundingClientRect @ [:-1:-1]",
-   "ms": 79,
-   "pct": 1
+   "ms": 93,
+   "pct": 1.5
   },
   {
-   "fn": "Am @js/starchart.js [app.js:4008:35301]",
+   "key": "Am @js/vendor/three.iife.js",
+   "fn": "Am @js/vendor/three.iife.js [app.js:4008:35301]",
    "ms": 79,
-   "pct": 1
+   "pct": 1.3
   },
   {
+   "key": "s @js/vendor/three.iife.js",
+   "fn": "s @js/vendor/three.iife.js [app.js:3906:6494]",
+   "ms": 75,
+   "pct": 1.2
+  },
+  {
+   "key": "Mh.renderBufferDirect @js/vendor/three.iife.js",
+   "fn": "Mh.renderBufferDirect @js/vendor/three.iife.js [app.js:4008:24499]",
+   "ms": 56,
+   "pct": 0.9
+  },
+  {
+   "key": "texSubImage2D @",
    "fn": "texSubImage2D @ [:-1:-1]",
-   "ms": 76,
-   "pct": 1
-  },
-  {
-   "fn": "s @js/starchart.js [app.js:3906:6494]",
-   "ms": 52,
+   "ms": 41,
    "pct": 0.7
   },
   {
-   "fn": "Mh.renderBufferDirect @js/starchart.js [app.js:4008:24499]",
-   "ms": 48,
+   "key": "fa @js/vendor/three.iife.js",
+   "fn": "fa @js/vendor/three.iife.js [app.js:4008:32785]",
+   "ms": 38,
    "pct": 0.6
   },
   {
-   "fn": "fa @js/starchart.js [app.js:4008:32785]",
-   "ms": 39,
-   "pct": 0.5
+   "key": "p @js/icon.js",
+   "fn": "p @js/icon.js [app.js:4266:6422]",
+   "ms": 36,
+   "pct": 0.6
   },
   {
+   "key": "c @js/relief3d.js",
    "fn": "c @js/relief3d.js [app.js:4126:455]",
-   "ms": 38,
+   "ms": 30,
    "pct": 0.5
   },
   {
-   "fn": "C @js/ui.js [app.js:4365:8841]",
-   "ms": 37,
-   "pct": 0.5
-  },
-  {
-   "fn": "s @js/starchart.js [app.js:4008:9388]",
-   "ms": 37,
-   "pct": 0.5
-  },
-  {
+   "key": "bindVertexArray @",
    "fn": "bindVertexArray @ [:-1:-1]",
-   "ms": 36,
+   "ms": 31,
    "pct": 0.5
   },
   {
-   "fn": "setValue @js/starchart.js [app.js:3906:15400]",
-   "ms": 36,
+   "key": "x @js/vendor/three.iife.js",
+   "fn": "x @js/vendor/three.iife.js [app.js:3956:8257]",
+   "ms": 32,
    "pct": 0.5
   },
   {
-   "fn": "f @js/starchart.js [app.js:3756:14490]",
-   "ms": 29,
+   "key": "C @js/ui.js",
+   "fn": "C @js/ui.js [app.js:4377:8841]",
+   "ms": 32,
+   "pct": 0.5
+  },
+  {
+   "key": "o @js/vendor/three.iife.js",
+   "fn": "o @js/vendor/three.iife.js [app.js:3956:12676]",
+   "ms": 24,
    "pct": 0.4
   },
   {
-   "fn": "x @js/starchart.js [app.js:3956:8257]",
-   "ms": 29,
-   "pct": 0.4
-  },
-  {
-   "fn": "p @js/icon.js [app.js:4254:6422]",
-   "ms": 28,
-   "pct": 0.4
-  },
-  {
-   "fn": "wt @js/starchart.js [app.js:3906:8058]",
-   "ms": 27,
-   "pct": 0.3
-  },
-  {
-   "fn": "evaluate @js/starchart.js [app.js:4008:149210]",
-   "ms": 26,
-   "pct": 0.3
-  },
-  {
-   "fn": "drawElements @ [:-1:-1]",
+   "key": "setValue @js/vendor/three.iife.js",
+   "fn": "setValue @js/vendor/three.iife.js [app.js:3906:15400]",
    "ms": 23,
+   "pct": 0.4
+  },
+  {
+   "key": "wt @js/vendor/three.iife.js",
+   "fn": "wt @js/vendor/three.iife.js [app.js:3906:8058]",
+   "ms": 24,
+   "pct": 0.4
+  },
+  {
+   "key": "m @js/game.js",
+   "fn": "m @js/game.js [app.js:4386:12036]",
+   "ms": 15,
    "pct": 0.3
   },
   {
-   "fn": "slerpFlat @js/starchart.js [app.js:174:40037]",
-   "ms": 22,
+   "key": "Ie @js/world.js",
+   "fn": "Ie @js/world.js [app.js:4044:21443]",
+   "ms": 16,
    "pct": 0.3
   },
   {
-   "fn": "R @js/fort.js [app.js:4335:512]",
-   "ms": 21,
-   "pct": 0.3
-  },
-  {
-   "fn": "Zx @js/starchart.js [app.js:3906:8623]",
-   "ms": 21,
-   "pct": 0.3
-  },
-  {
-   "fn": "Ae @js/world.js [app.js:4044:21436]",
-   "ms": 20,
-   "pct": 0.3
-  },
-  {
-   "fn": "da @js/starchart.js [app.js:4008:32096]",
-   "ms": 20,
-   "pct": 0.3
-  },
-  {
-   "fn": "n @js/starchart.js [app.js:4008:8630]",
+   "key": "da @js/vendor/three.iife.js",
+   "fn": "da @js/vendor/three.iife.js [app.js:4008:32096]",
    "ms": 19,
    "pct": 0.3
   },
   {
-   "fn": "we @js/dispatch.js [app.js:119:12922]",
-   "ms": 19,
-   "pct": 0.2
+   "key": "upload @js/vendor/three.iife.js",
+   "fn": "upload @js/vendor/three.iife.js [app.js:3906:15534]",
+   "ms": 16,
+   "pct": 0.3
   },
   {
-   "fn": "upload @js/starchart.js [app.js:3906:15534]",
+   "key": "f @js/vendor/three.iife.js",
+   "fn": "f @js/vendor/three.iife.js [app.js:3756:14490]",
+   "ms": 19,
+   "pct": 0.3
+  },
+  {
+   "key": "bindTexture @",
+   "fn": "bindTexture @ [:-1:-1]",
+   "ms": 16,
+   "pct": 0.3
+  },
+  {
+   "key": "n @js/vendor/three.iife.js",
+   "fn": "n @js/vendor/three.iife.js [app.js:3906:53]",
+   "ms": 21,
+   "pct": 0.3
+  },
+  {
+   "key": "Zx @js/vendor/three.iife.js",
+   "fn": "Zx @js/vendor/three.iife.js [app.js:3906:8623]",
+   "ms": 16,
+   "pct": 0.3
+  },
+  {
+   "key": "uniformMatrix4fv @",
+   "fn": "uniformMatrix4fv @ [:-1:-1]",
    "ms": 17,
-   "pct": 0.2
+   "pct": 0.3
+  },
+  {
+   "key": "(idle) @",
+   "fn": "(idle) @ [:-1:-1]",
+   "ms": 15,
+   "pct": 0.3
+  },
+  {
+   "key": "drawElements @",
+   "fn": "drawElements @ [:-1:-1]",
+   "ms": 21,
+   "pct": 0.3
   }
  ]
 }

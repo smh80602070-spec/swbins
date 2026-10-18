@@ -8,6 +8,7 @@
 ## R-1 주간 상태 갱신 (매주 첫 세션)
 - 돌린다: `node tools/test-web.mjs all` → `node tools/status.mjs` (Godot·Unity 는 각 러너 결과 파일이 있으면 읽는다).
 - 고친다: 각 트랙 `STATE.md` 를 status 출력으로 **덮어쓴다**. 루트 README "현재" 절도 같은 표.
+- 성능 실측(W-0315, 주 1회): `node tools/qc.mjs --branch web --budget --profile` — 실제 GPU 로 폰 예산·CPU 상위 표 두 장을 다시 잰다. "CPU 상위" WARN 이면 그 함수부터 본다(의도한 변화면 `pw-cpu-profile.mjs <판> --accept-baseline`, 이유는 커밋 메시지에).
 - 보고: 판별 완성도 %·D0/D1 개수·WIP 초과 판. 커밋 `-- <STATE 파일들> README.md`.
 
 ## R-2 촬영 판정 (R-1 다음 세션 — W-0312 로 사람 확인 시트 대신)

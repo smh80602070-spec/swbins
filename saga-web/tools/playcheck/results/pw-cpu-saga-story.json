@@ -1,0 +1,192 @@
+{
+ "game": "saga-story",
+ "at": "2026-10-18T07:14:04.554Z",
+ "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "throttle": 4,
+ "sec": 3,
+ "scene": 0,
+ "runs": 3,
+ "totalMs": 4771,
+ "rows": [
+  {
+   "key": "(program) @",
+   "fn": "(program) @ [:-1:-1]",
+   "ms": 2329,
+   "pct": 45.9
+  },
+  {
+   "key": "(idle) @",
+   "fn": "(idle) @ [:-1:-1]",
+   "ms": 169,
+   "pct": 4.4
+  },
+  {
+   "key": "multiplyMatrices @saga-story/js/vendor/three.iife.js",
+   "fn": "multiplyMatrices @saga-story/js/vendor/three.iife.js [three.iife.js:0:65992]",
+   "ms": 164,
+   "pct": 3.6
+  },
+  {
+   "key": "rl @saga-story/js/vendor/three.iife.js",
+   "fn": "rl @saga-story/js/vendor/three.iife.js [three.iife.js:3834:29332]",
+   "ms": 148,
+   "pct": 3.4
+  },
+  {
+   "key": "updateMatrixWorld @saga-story/js/vendor/three.iife.js",
+   "fn": "updateMatrixWorld @saga-story/js/vendor/three.iife.js [three.iife.js:0:79937]",
+   "ms": 141,
+   "pct": 3.1
+  },
+  {
+   "key": "texSubImage2D @",
+   "fn": "texSubImage2D @ [:-1:-1]",
+   "ms": 143,
+   "pct": 2.7
+  },
+  {
+   "key": "compose @saga-story/js/vendor/three.iife.js",
+   "fn": "compose @saga-story/js/vendor/three.iife.js [three.iife.js:0:69586]",
+   "ms": 94,
+   "pct": 2.1
+  },
+  {
+   "key": "s @saga-story/js/vendor/three.iife.js",
+   "fn": "s @saga-story/js/vendor/three.iife.js [three.iife.js:3732:6494]",
+   "ms": 72,
+   "pct": 1.6
+  },
+  {
+   "key": "Am @saga-story/js/vendor/three.iife.js",
+   "fn": "Am @saga-story/js/vendor/three.iife.js [three.iife.js:3834:35301]",
+   "ms": 61,
+   "pct": 1.3
+  },
+  {
+   "key": "w @js/game.js",
+   "fn": "w @js/game.js [app2.js:194:11703]",
+   "ms": 39,
+   "pct": 0.9
+  },
+  {
+   "key": "p @js/icon.js",
+   "fn": "p @js/icon.js [app2.js:165:6422]",
+   "ms": 43,
+   "pct": 0.9
+  },
+  {
+   "key": "Mh.renderBufferDirect @saga-story/js/vendor/three.iife.js",
+   "fn": "Mh.renderBufferDirect @saga-story/js/vendor/three.iife.js [three.iife.js:3834:24499]",
+   "ms": 41,
+   "pct": 0.9
+  },
+  {
+   "key": "M @js/ui.js",
+   "fn": "M @js/ui.js [app2.js:179:11371]",
+   "ms": 45,
+   "pct": 0.9
+  },
+  {
+   "key": "querySelector @",
+   "fn": "querySelector @ [:-1:-1]",
+   "ms": 38,
+   "pct": 0.8
+  },
+  {
+   "key": "v @saga-story/js/vendor/three.iife.js",
+   "fn": "v @saga-story/js/vendor/three.iife.js [three.iife.js:3810:3567]",
+   "ms": 34,
+   "pct": 0.8
+  },
+  {
+   "key": "bindVertexArray @",
+   "fn": "bindVertexArray @ [:-1:-1]",
+   "ms": 32,
+   "pct": 0.7
+  },
+  {
+   "key": "fa @saga-story/js/vendor/three.iife.js",
+   "fn": "fa @saga-story/js/vendor/three.iife.js [three.iife.js:3834:32785]",
+   "ms": 24,
+   "pct": 0.6
+  },
+  {
+   "key": "a @saga-story/js/vendor/three.iife.js",
+   "fn": "a @saga-story/js/vendor/three.iife.js [three.iife.js:39:5889]",
+   "ms": 29,
+   "pct": 0.6
+  },
+  {
+   "key": "bindTexture @",
+   "fn": "bindTexture @ [:-1:-1]",
+   "ms": 26,
+   "pct": 0.6
+  },
+  {
+   "key": "update @saga-story/js/vendor/three.iife.js",
+   "fn": "update @saga-story/js/vendor/three.iife.js [three.iife.js:3834:233627]",
+   "ms": 29,
+   "pct": 0.6
+  },
+  {
+   "key": "applyMatrix4 @saga-story/js/vendor/three.iife.js",
+   "fn": "applyMatrix4 @saga-story/js/vendor/three.iife.js [three.iife.js:0:58474]",
+   "ms": 28,
+   "pct": 0.6
+  },
+  {
+   "key": "evaluate @saga-story/js/vendor/three.iife.js",
+   "fn": "evaluate @saga-story/js/vendor/three.iife.js [three.iife.js:3834:149210]",
+   "ms": 24,
+   "pct": 0.5
+  },
+  {
+   "key": "copy @saga-story/js/vendor/three.iife.js",
+   "fn": "copy @saga-story/js/vendor/three.iife.js [three.iife.js:0:57627]",
+   "ms": 20,
+   "pct": 0.5
+  },
+  {
+   "key": "upload @saga-story/js/vendor/three.iife.js",
+   "fn": "upload @saga-story/js/vendor/three.iife.js [three.iife.js:3732:15534]",
+   "ms": 21,
+   "pct": 0.5
+  },
+  {
+   "key": "f @saga-story/js/vendor/three.iife.js",
+   "fn": "f @saga-story/js/vendor/three.iife.js [three.iife.js:3582:14490]",
+   "ms": 23,
+   "pct": 0.5
+  },
+  {
+   "key": "drawElements @",
+   "fn": "drawElements @ [:-1:-1]",
+   "ms": 22,
+   "pct": 0.5
+  },
+  {
+   "key": "o @saga-story/js/vendor/three.iife.js",
+   "fn": "o @saga-story/js/vendor/three.iife.js [three.iife.js:3582:13749]",
+   "ms": 22,
+   "pct": 0.5
+  },
+  {
+   "key": "wt @saga-story/js/vendor/three.iife.js",
+   "fn": "wt @saga-story/js/vendor/three.iife.js [three.iife.js:3732:8058]",
+   "ms": 24,
+   "pct": 0.5
+  },
+  {
+   "key": "slerpFlat @saga-story/js/vendor/three.iife.js",
+   "fn": "slerpFlat @saga-story/js/vendor/three.iife.js [three.iife.js:0:40037]",
+   "ms": 18,
+   "pct": 0.4
+  },
+  {
+   "key": "setValue @saga-story/js/vendor/three.iife.js",
+   "fn": "setValue @saga-story/js/vendor/three.iife.js [three.iife.js:3732:15400]",
+   "ms": 18,
+   "pct": 0.4
+  }
+ ]
+}

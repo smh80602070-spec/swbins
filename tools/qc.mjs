@@ -222,6 +222,26 @@ function checkAutoq() {
   }
 }
 
+/* ── ④-7 CPU 상위(W-0315) — 함수별 자기 시간(pw-cpu-profile, 폰 흉내·GPU·CPU 4배)을 기준선(saga-web/tools/playcheck/baseline/cpu-<판>.json)과 견준다.
+   기준선에 없던 함수가 10% 이상이거나, 있던 함수가 +5%p 이상 오르면 WARN(뼈대 중복 같은 성능 회귀 — W-0302). ( 로 시작하는 (program)·(garbage collector) 는 뺀다.
+   --profile 이면 먼저 잰다(판마다 3회 ≈ 3분). 결과가 7일 넘게 묵으면 WARN. 기준선은 `node saga-web/tools/playcheck/pw-cpu-profile.mjs <판> --accept-baseline` 으로만 바뀐다 ── */
+async function checkCpu() {
+  if (!games.length) return;
+  if (has('--profile')) { const b = await serve(); for (const g of games) { run(process.execPath, ['pw-cpu-profile.mjs', g, '--runs=3', '--base=' + b], { cwd: PLAY, timeout: 20 * 60 * 1000 }); } }
+  for (const g of games) {
+    const res = readJson(path.join(PLAY, 'results', 'pw-cpu-' + g + '.json'), null), base = readJson(path.join(PLAY, 'baseline', 'cpu-' + g + '.json'), null);
+    if (!res || !res.rows) { row('CPU 상위', nm(g), 'WARN', '측정 없음 — node saga-web/tools/playcheck/pw-cpu-profile.mjs ' + g + ' --runs=3'); continue; }
+    if (!base) { row('CPU 상위', nm(g), 'WARN', '기준선 없음 — pw-cpu-profile.mjs ' + g + ' --accept-baseline'); continue; }
+    const age = res.at ? (Date.now() - Date.parse(res.at)) / 86400000 : 99;
+    const keyOf = (r) => r.key || String(r.fn || '').replace(/ \[[^\]]*\]$/, '');   // 옛 결과(줄 번호 붙은 fn)도 읽는다
+    const bm = new Map(base.rows.filter((r) => !/^\(/.test(keyOf(r))).map((r) => [keyOf(r), r.pct]));
+    const bad = [];
+    for (const r of res.rows) { const k = keyOf(r); if (/^\(/.test(k)) { continue; } const b = bm.get(k); if (b === undefined ? r.pct >= 10 : r.pct - b >= 5) { bad.push(k.slice(0, 60) + ' ' + (b === undefined ? '새 ' : b + '→') + r.pct + '%'); } }
+    const top = res.rows.filter((r) => !/^\(/.test(keyOf(r))).slice(0, 2).map((r) => keyOf(r).split(' @')[0] + ' ' + r.pct + '%').join(' · ');
+    row('CPU 상위', nm(g), bad.length || age > 7 ? 'WARN' : 'PASS', (bad.length ? '오름 ' + bad.slice(0, 3).join(' | ') : '기준선 안 · ' + top) + (age > 7 ? ' · 측정 ' + Math.round(age) + '일 묵음' : ''));
+  }
+}
+
 /* ── ④-2 배포 확인(W-0258) — 로컬 서버가 아니라 공개 Pages 주소를 서비스 워커 켠 채 실제 클릭으로. 이 PC 네트워크 기준(사용자 기기 차단은 못 잡음) ── */
 function checkDeploy() {
   if (!games.length) return;
@@ -334,6 +354,7 @@ function report() {
     await checkGfx();
     await checkBudget();
     checkAutoq();
+    await checkCpu();
     if (branch === 'web' || (full && !branch)) checkDeploy();
     checkStatus();
     if (branch === 'godot' || has('--godot') || (full && !branch)) checkGodot();

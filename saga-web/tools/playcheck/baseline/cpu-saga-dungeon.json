@@ -1,0 +1,129 @@
+{
+ "game": "saga-dungeon",
+ "at": "2026-10-18T07:07:51.471Z",
+ "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "throttle": 4,
+ "runs": 3,
+ "rows": [
+  {
+   "key": "(program) @",
+   "pct": 50.4
+  },
+  {
+   "key": "multiplyMatrices @js/vendor/three.iife.js",
+   "pct": 3.9
+  },
+  {
+   "key": "X @js/town.js",
+   "pct": 2.7
+  },
+  {
+   "key": "updateMatrixWorld @js/vendor/three.iife.js",
+   "pct": 2.1
+  },
+  {
+   "key": "texSubImage2D @",
+   "pct": 2.1
+  },
+  {
+   "key": "s @js/vendor/three.iife.js",
+   "pct": 1.8
+  },
+  {
+   "key": "Am @js/vendor/three.iife.js",
+   "pct": 1.8
+  },
+  {
+   "key": "rl @js/vendor/three.iife.js",
+   "pct": 1.6
+  },
+  {
+   "key": "Mh.renderBufferDirect @js/vendor/three.iife.js",
+   "pct": 1.5
+  },
+  {
+   "key": "V @js/world-map.js",
+   "pct": 1.4
+  },
+  {
+   "key": "X @js/field3d.js",
+   "pct": 1.2
+  },
+  {
+   "key": "getBoundingClientRect @",
+   "pct": 1.2
+  },
+  {
+   "key": "update @js/vendor/three.iife.js",
+   "pct": 0.9
+  },
+  {
+   "key": "fa @js/vendor/three.iife.js",
+   "pct": 0.9
+  },
+  {
+   "key": "setValue @js/vendor/three.iife.js",
+   "pct": 0.8
+  },
+  {
+   "key": "bindVertexArray @",
+   "pct": 0.8
+  },
+  {
+   "key": "get clientWidth @",
+   "pct": 0.7
+  },
+  {
+   "key": "wt @js/vendor/three.iife.js",
+   "pct": 0.7
+  },
+  {
+   "key": "f @js/vendor/three.iife.js",
+   "pct": 0.7
+  },
+  {
+   "key": "upload @js/vendor/three.iife.js",
+   "pct": 0.6
+  },
+  {
+   "key": "bindTexture @",
+   "pct": 0.6
+  },
+  {
+   "key": "da @js/vendor/three.iife.js",
+   "pct": 0.6
+  },
+  {
+   "key": "Zx @js/vendor/three.iife.js",
+   "pct": 0.6
+  },
+  {
+   "key": "o @js/vendor/three.iife.js",
+   "pct": 0.6
+  },
+  {
+   "key": "x @js/vendor/three.iife.js",
+   "pct": 0.6
+  },
+  {
+   "key": "de @js/dungeon-view-hud.js",
+   "pct": 0.5
+  },
+  {
+   "key": "z @js/vendor/three.iife.js",
+   "pct": 0.5
+  },
+  {
+   "key": "M @js/vendor/three.iife.js",
+   "pct": 0.5
+  },
+  {
+   "key": "uniformMatrix4fv @",
+   "pct": 0.5
+  },
+  {
+   "key": "Tt @js/vendor/three.iife.js",
+   "pct": 0.5
+  }
+ ]
+}

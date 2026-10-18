@@ -1,0 +1,129 @@
+{
+ "game": "saga-go",
+ "at": "2026-10-18T07:05:07.707Z",
+ "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "throttle": 4,
+ "runs": 3,
+ "rows": [
+  {
+   "key": "(program) @",
+   "pct": 59.7
+  },
+  {
+   "key": "update @js/vendor/three.iife.js",
+   "pct": 11.2
+  },
+  {
+   "key": "updateMatrixWorld @js/vendor/three.iife.js",
+   "pct": 2.2
+  },
+  {
+   "key": "rl @js/vendor/three.iife.js",
+   "pct": 1.9
+  },
+  {
+   "key": "multiplyMatrices @js/vendor/three.iife.js",
+   "pct": 1.3
+  },
+  {
+   "key": "getBoundingClientRect @",
+   "pct": 1.2
+  },
+  {
+   "key": "Am @js/vendor/three.iife.js",
+   "pct": 1.1
+  },
+  {
+   "key": "s @js/vendor/three.iife.js",
+   "pct": 0.9
+  },
+  {
+   "key": "Mh.renderBufferDirect @js/vendor/three.iife.js",
+   "pct": 0.8
+  },
+  {
+   "key": "texSubImage2D @",
+   "pct": 0.5
+  },
+  {
+   "key": "bindVertexArray @",
+   "pct": 0.5
+  },
+  {
+   "key": "fa @js/vendor/three.iife.js",
+   "pct": 0.5
+  },
+  {
+   "key": "c @js/relief3d.js",
+   "pct": 0.4
+  },
+  {
+   "key": "Zx @js/vendor/three.iife.js",
+   "pct": 0.4
+  },
+  {
+   "key": "n @js/vendor/three.iife.js",
+   "pct": 0.4
+  },
+  {
+   "key": "drawElements @",
+   "pct": 0.4
+  },
+  {
+   "key": "x @js/vendor/three.iife.js",
+   "pct": 0.4
+  },
+  {
+   "key": "C @js/ui.js",
+   "pct": 0.4
+  },
+  {
+   "key": "p @js/icon.js",
+   "pct": 0.4
+  },
+  {
+   "key": "a @js/vendor/three.iife.js",
+   "pct": 0.3
+  },
+  {
+   "key": "p @js/vendor/three.iife.js",
+   "pct": 0.3
+  },
+  {
+   "key": "setValue @js/vendor/three.iife.js",
+   "pct": 0.3
+  },
+  {
+   "key": "f @js/vendor/three.iife.js",
+   "pct": 0.3
+  },
+  {
+   "key": "wt @js/vendor/three.iife.js",
+   "pct": 0.3
+  },
+  {
+   "key": "(garbage collector) @",
+   "pct": 0.3
+  },
+  {
+   "key": "m @js/game.js",
+   "pct": 0.2
+  },
+  {
+   "key": "V @js/core.js",
+   "pct": 0.2
+  },
+  {
+   "key": "Ie @js/world.js",
+   "pct": 0.2
+  },
+  {
+   "key": "ne @js/world3d.js",
+   "pct": 0.2
+  },
+  {
+   "key": "slerpFlat @js/vendor/three.iife.js",
+   "pct": 0.2
+  }
+ ]
+}

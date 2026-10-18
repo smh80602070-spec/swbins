@@ -29,3 +29,18 @@ CPU 4배 감속은 이 PC(옛 데스크톱 CPU) 기준이라 중급 폰보다 �
 - **공통**: 감속 4배에서 CPU 대부분이 그리기 경로(three 행렬 갱신·버퍼 바인딩·뼈 텍스처 올리기)와 브라우저 자체(프로파일 "(program)" 35~50%). 30fps 까지 1만리·2나락·4종횡 자동 사냥은 약 3.5배, 3마을·4종횡 사냥터는 약 1.7배 남았다.
 - **다음 손(새 티켓 후보)**: ① 정적 물체 `matrixAutoUpdate=false`(건물·땅·소품 — 행렬 갱신 몫) ② 먼 배우 뼈·믹서를 격 프레임으로(1만리 LOW 도 스킨 메시 100+) ③ 같은 재질 소품 메시 합치기(그리기 수) ④ 5천하 성 칸 정적 건물 한 덩이로 굽기(삼각 35만). 측정 틀은 이 시트의 명령과 `pw-cpu-profile.mjs <판> --wait=25`(함수별 자기 시간).
 - 실폰 확인: 이 흉내가 비관적인지 한 번 실폰(중급 안드로이드) FPS 를 재 보면 상한 판단이 선다.
+
+## CPU 상위 — 기준선(W-0315, 10-18 · 폰 흉내 390×844@2 · 실제 GPU d3d11 · CPU 4배 · 첫 장면 3초 × 3회 평균)
+
+`node tools/qc.mjs --game <판>` 의 "CPU 상위" 줄이 이 기준선과 견준다(새 함수 10% 이상 · 있던 함수 +5%p 이상 → WARN). 기준선은 `pw-cpu-profile.mjs <판> --accept-baseline` 으로만 바뀐다. (program)·(idle) 등 괄호 항목은 뺐다.
+
+| 판 | 1 | 2 | 3 | 4 | 5 |
+|---|---|---|---|---|---|
+| 1만리 | update `three.iife.js` 11.2% | updateMatrixWorld `three.iife.js` 2.2% | rl `three.iife.js` 1.9% | multiplyMatrices `three.iife.js` 1.3% | getBoundingClientRect `` 1.2% |
+| 2나락 | multiplyMatrices `three.iife.js` 3.9% | X `town.js` 2.7% | updateMatrixWorld `three.iife.js` 2.1% | texSubImage2D `` 2.1% | s `three.iife.js` 1.8% |
+| 3마을 | updateMatrixWorld `three.iife.js` 7.3% | rl `three.iife.js` 4.4% | multiplyMatrices `three.iife.js` 2.6% | Nn `village-view3d.js` 1.6% | O `data-village.js` 1.1% |
+| 4종횡 | multiplyMatrices `three.iife.js` 3.6% | rl `three.iife.js` 3.4% | updateMatrixWorld `three.iife.js` 3.1% | texSubImage2D `` 2.7% | compose `three.iife.js` 2.1% |
+| 5천하 | desired `core.js` 0% | querySelector `` 0% | C `hud.js` 0% | A `hud.js` 0% | - |
+
+- 시험(10-18): 1만리 번들에 매 프레임 계산 함수(2백만 번 sqrt)를 임시로 넣자 `CPU 상위 · 1만리 — 오름 w0315Regress 새 11.5%` WARN → 빼자 PASS. 대기 루프(performance.now 돌기)는 자기 시간이 1.5% 로만 잡혀 못 잡음 — 함수 자체가 계산할 때만 잡힌다.
+- 번들 vendor(three.js)에 표시가 없어 앞 파일(starchart.js·voice.js)로 잡히던 것 고침(`shared/build/bundle.mjs` vendor 앞 `/*@ 경로*/`).

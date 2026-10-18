@@ -1,0 +1,129 @@
+{
+ "game": "saga-story",
+ "at": "2026-10-18T07:14:04.554Z",
+ "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "throttle": 4,
+ "runs": 3,
+ "rows": [
+  {
+   "key": "(program) @",
+   "pct": 45.9
+  },
+  {
+   "key": "(idle) @",
+   "pct": 4.4
+  },
+  {
+   "key": "multiplyMatrices @saga-story/js/vendor/three.iife.js",
+   "pct": 3.6
+  },
+  {
+   "key": "rl @saga-story/js/vendor/three.iife.js",
+   "pct": 3.4
+  },
+  {
+   "key": "updateMatrixWorld @saga-story/js/vendor/three.iife.js",
+   "pct": 3.1
+  },
+  {
+   "key": "texSubImage2D @",
+   "pct": 2.7
+  },
+  {
+   "key": "compose @saga-story/js/vendor/three.iife.js",
+   "pct": 2.1
+  },
+  {
+   "key": "s @saga-story/js/vendor/three.iife.js",
+   "pct": 1.6
+  },
+  {
+   "key": "Am @saga-story/js/vendor/three.iife.js",
+   "pct": 1.3
+  },
+  {
+   "key": "w @js/game.js",
+   "pct": 0.9
+  },
+  {
+   "key": "p @js/icon.js",
+   "pct": 0.9
+  },
+  {
+   "key": "Mh.renderBufferDirect @saga-story/js/vendor/three.iife.js",
+   "pct": 0.9
+  },
+  {
+   "key": "M @js/ui.js",
+   "pct": 0.9
+  },
+  {
+   "key": "querySelector @",
+   "pct": 0.8
+  },
+  {
+   "key": "v @saga-story/js/vendor/three.iife.js",
+   "pct": 0.8
+  },
+  {
+   "key": "bindVertexArray @",
+   "pct": 0.7
+  },
+  {
+   "key": "fa @saga-story/js/vendor/three.iife.js",
+   "pct": 0.6
+  },
+  {
+   "key": "a @saga-story/js/vendor/three.iife.js",
+   "pct": 0.6
+  },
+  {
+   "key": "bindTexture @",
+   "pct": 0.6
+  },
+  {
+   "key": "update @saga-story/js/vendor/three.iife.js",
+   "pct": 0.6
+  },
+  {
+   "key": "applyMatrix4 @saga-story/js/vendor/three.iife.js",
+   "pct": 0.6
+  },
+  {
+   "key": "evaluate @saga-story/js/vendor/three.iife.js",
+   "pct": 0.5
+  },
+  {
+   "key": "copy @saga-story/js/vendor/three.iife.js",
+   "pct": 0.5
+  },
+  {
+   "key": "upload @saga-story/js/vendor/three.iife.js",
+   "pct": 0.5
+  },
+  {
+   "key": "f @saga-story/js/vendor/three.iife.js",
+   "pct": 0.5
+  },
+  {
+   "key": "drawElements @",
+   "pct": 0.5
+  },
+  {
+   "key": "o @saga-story/js/vendor/three.iife.js",
+   "pct": 0.5
+  },
+  {
+   "key": "wt @saga-story/js/vendor/three.iife.js",
+   "pct": 0.5
+  },
+  {
+   "key": "slerpFlat @saga-story/js/vendor/three.iife.js",
+   "pct": 0.4
+  },
+  {
+   "key": "setValue @saga-story/js/vendor/three.iife.js",
+   "pct": 0.4
+  }
+ ]
+}

@@ -74,7 +74,7 @@ async function build(game) {
     let wrapped = 0;
     for (const f of sp.files) {
       const code = fs.readFileSync(path.join(WEB, game, f), 'utf8');
-      if (/(^|\/)vendor\//.test(f)) { parts.push(code); continue; }
+      if (/(^|\/)vendor\//.test(f)) { parts.push(`/*@ ${f}*/` + code); continue; }   // W-0315 — vendor 도 표시(없으면 CPU 프로파일이 three 를 바로 앞 파일로 잡았다)
       const r = await transform(code, { loader: 'js', minify: true, target: 'es2018', legalComments: 'none', sourcefile: f });
       const c = r.code.replace(/\s+$/, '');
       if (wrappable(c)) { parts.push(`/*@ ${f}*/` + wrap(c, f)); wrapped++; } else { parts.push(`/*@ ${f} 안 감쌈*/` + c); plain.push(f); }

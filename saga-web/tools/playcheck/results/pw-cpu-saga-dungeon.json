@@ -1,0 +1,192 @@
+{
+ "game": "saga-dungeon",
+ "at": "2026-10-18T07:07:51.471Z",
+ "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "throttle": 4,
+ "sec": 3,
+ "scene": 0,
+ "runs": 3,
+ "totalMs": 5827,
+ "rows": [
+  {
+   "key": "(program) @",
+   "fn": "(program) @ [:-1:-1]",
+   "ms": 2939,
+   "pct": 50.4
+  },
+  {
+   "key": "multiplyMatrices @js/vendor/three.iife.js",
+   "fn": "multiplyMatrices @js/vendor/three.iife.js [app.js:158:66021]",
+   "ms": 224,
+   "pct": 3.9
+  },
+  {
+   "key": "X @js/town.js",
+   "fn": "X @js/town.js [app.js:146:9841]",
+   "ms": 155,
+   "pct": 2.7
+  },
+  {
+   "key": "updateMatrixWorld @js/vendor/three.iife.js",
+   "fn": "updateMatrixWorld @js/vendor/three.iife.js [app.js:158:79966]",
+   "ms": 123,
+   "pct": 2.1
+  },
+  {
+   "key": "texSubImage2D @",
+   "fn": "texSubImage2D @ [:-1:-1]",
+   "ms": 125,
+   "pct": 2.1
+  },
+  {
+   "key": "s @js/vendor/three.iife.js",
+   "fn": "s @js/vendor/three.iife.js [app.js:3890:6494]",
+   "ms": 103,
+   "pct": 1.8
+  },
+  {
+   "key": "Am @js/vendor/three.iife.js",
+   "fn": "Am @js/vendor/three.iife.js [app.js:3992:35301]",
+   "ms": 104,
+   "pct": 1.8
+  },
+  {
+   "key": "rl @js/vendor/three.iife.js",
+   "fn": "rl @js/vendor/three.iife.js [app.js:3992:29332]",
+   "ms": 96,
+   "pct": 1.6
+  },
+  {
+   "key": "Mh.renderBufferDirect @js/vendor/three.iife.js",
+   "fn": "Mh.renderBufferDirect @js/vendor/three.iife.js [app.js:3992:24499]",
+   "ms": 86,
+   "pct": 1.5
+  },
+  {
+   "key": "V @js/world-map.js",
+   "fn": "V @js/world-map.js [app.js:128:11788]",
+   "ms": 82,
+   "pct": 1.4
+  },
+  {
+   "key": "X @js/field3d.js",
+   "fn": "X @js/field3d.js [app.js:4030:2460]",
+   "ms": 71,
+   "pct": 1.2
+  },
+  {
+   "key": "getBoundingClientRect @",
+   "fn": "getBoundingClientRect @ [:-1:-1]",
+   "ms": 68,
+   "pct": 1.2
+  },
+  {
+   "key": "update @js/vendor/three.iife.js",
+   "fn": "update @js/vendor/three.iife.js [app.js:3992:64552]",
+   "ms": 51,
+   "pct": 0.9
+  },
+  {
+   "key": "fa @js/vendor/three.iife.js",
+   "fn": "fa @js/vendor/three.iife.js [app.js:3992:32785]",
+   "ms": 51,
+   "pct": 0.9
+  },
+  {
+   "key": "setValue @js/vendor/three.iife.js",
+   "fn": "setValue @js/vendor/three.iife.js [app.js:3890:15400]",
+   "ms": 48,
+   "pct": 0.8
+  },
+  {
+   "key": "bindVertexArray @",
+   "fn": "bindVertexArray @ [:-1:-1]",
+   "ms": 49,
+   "pct": 0.8
+  },
+  {
+   "key": "get clientWidth @",
+   "fn": "get clientWidth @ [:-1:-1]",
+   "ms": 42,
+   "pct": 0.7
+  },
+  {
+   "key": "wt @js/vendor/three.iife.js",
+   "fn": "wt @js/vendor/three.iife.js [app.js:3890:8058]",
+   "ms": 42,
+   "pct": 0.7
+  },
+  {
+   "key": "f @js/vendor/three.iife.js",
+   "fn": "f @js/vendor/three.iife.js [app.js:3740:14490]",
+   "ms": 42,
+   "pct": 0.7
+  },
+  {
+   "key": "upload @js/vendor/three.iife.js",
+   "fn": "upload @js/vendor/three.iife.js [app.js:3890:15534]",
+   "ms": 36,
+   "pct": 0.6
+  },
+  {
+   "key": "bindTexture @",
+   "fn": "bindTexture @ [:-1:-1]",
+   "ms": 37,
+   "pct": 0.6
+  },
+  {
+   "key": "da @js/vendor/three.iife.js",
+   "fn": "da @js/vendor/three.iife.js [app.js:3992:32096]",
+   "ms": 32,
+   "pct": 0.6
+  },
+  {
+   "key": "Zx @js/vendor/three.iife.js",
+   "fn": "Zx @js/vendor/three.iife.js [app.js:3890:8623]",
+   "ms": 37,
+   "pct": 0.6
+  },
+  {
+   "key": "o @js/vendor/three.iife.js",
+   "fn": "o @js/vendor/three.iife.js [app.js:3740:13749]",
+   "ms": 35,
+   "pct": 0.6
+  },
+  {
+   "key": "x @js/vendor/three.iife.js",
+   "fn": "x @js/vendor/three.iife.js [app.js:3940:8257]",
+   "ms": 32,
+   "pct": 0.6
+  },
+  {
+   "key": "de @js/dungeon-view-hud.js",
+   "fn": "de @js/dungeon-view-hud.js [app.js:4159:6140]",
+   "ms": 28,
+   "pct": 0.5
+  },
+  {
+   "key": "z @js/vendor/three.iife.js",
+   "fn": "z @js/vendor/three.iife.js [app.js:3968:22614]",
+   "ms": 32,
+   "pct": 0.5
+  },
+  {
+   "key": "M @js/vendor/three.iife.js",
+   "fn": "M @js/vendor/three.iife.js [app.js:3968:11088]",
+   "ms": 30,
+   "pct": 0.5
+  },
+  {
+   "key": "uniformMatrix4fv @",
+   "fn": "uniformMatrix4fv @ [:-1:-1]",
+   "ms": 32,
+   "pct": 0.5
+  },
+  {
+   "key": "Tt @js/vendor/three.iife.js",
+   "fn": "Tt @js/vendor/three.iife.js [app.js:3890:8171]",
+   "ms": 29,
+   "pct": 0.5
+  }
+ ]
+}

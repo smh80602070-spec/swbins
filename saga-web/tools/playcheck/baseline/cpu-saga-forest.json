@@ -1,0 +1,129 @@
+{
+ "game": "saga-forest",
+ "at": "2026-10-18T07:11:11.459Z",
+ "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "throttle": 4,
+ "runs": 3,
+ "rows": [
+  {
+   "key": "(program) @",
+   "pct": 58.2
+  },
+  {
+   "key": "updateMatrixWorld @js/vendor/three.iife.js",
+   "pct": 7.3
+  },
+  {
+   "key": "rl @js/vendor/three.iife.js",
+   "pct": 4.4
+  },
+  {
+   "key": "multiplyMatrices @js/vendor/three.iife.js",
+   "pct": 2.6
+  },
+  {
+   "key": "Nn @js/village-view3d.js",
+   "pct": 1.6
+  },
+  {
+   "key": "O @js/data-village.js",
+   "pct": 1.1
+  },
+  {
+   "key": "Xn @js/village-view3d.js",
+   "pct": 1.1
+  },
+  {
+   "key": "s @js/vendor/three.iife.js",
+   "pct": 1.1
+  },
+  {
+   "key": "bn @js/village-view3d.js",
+   "pct": 1
+  },
+  {
+   "key": "slerpFlat @js/vendor/three.iife.js",
+   "pct": 0.9
+  },
+  {
+   "key": "evaluate @js/vendor/three.iife.js",
+   "pct": 0.8
+  },
+  {
+   "key": "apply @js/vendor/three.iife.js",
+   "pct": 0.8
+  },
+  {
+   "key": "Am @js/vendor/three.iife.js",
+   "pct": 0.7
+  },
+  {
+   "key": "texSubImage2D @",
+   "pct": 0.7
+  },
+  {
+   "key": "O @js/ui.js",
+   "pct": 0.6
+  },
+  {
+   "key": "Mh.renderBufferDirect @js/vendor/three.iife.js",
+   "pct": 0.5
+  },
+  {
+   "key": "(idle) @",
+   "pct": 0.5
+  },
+  {
+   "key": "dn @js/village.js",
+   "pct": 0.5
+  },
+  {
+   "key": "update @js/vendor/three.iife.js",
+   "pct": 0.4
+  },
+  {
+   "key": "a @js/vendor/three.iife.js",
+   "pct": 0.4
+  },
+  {
+   "key": "applyMatrix4 @js/vendor/three.iife.js",
+   "pct": 0.4
+  },
+  {
+   "key": "setValue @js/vendor/three.iife.js",
+   "pct": 0.4
+  },
+  {
+   "key": "setFromRotationMatrix @js/vendor/three.iife.js",
+   "pct": 0.4
+  },
+  {
+   "key": "A @js/core.js",
+   "pct": 0.3
+  },
+  {
+   "key": "o @js/vendor/three.iife.js",
+   "pct": 0.3
+  },
+  {
+   "key": "bindVertexArray @",
+   "pct": 0.3
+  },
+  {
+   "key": "wt @js/vendor/three.iife.js",
+   "pct": 0.3
+  },
+  {
+   "key": "x @js/vendor/three.iife.js",
+   "pct": 0.3
+  },
+  {
+   "key": "bindTexture @",
+   "pct": 0.3
+  },
+  {
+   "key": "w @js/minimap.js",
+   "pct": 0.3
+  }
+ ]
+}

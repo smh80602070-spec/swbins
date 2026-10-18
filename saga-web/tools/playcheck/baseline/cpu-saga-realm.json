@@ -1,0 +1,33 @@
+{
+ "game": "saga-realm",
+ "at": "2026-10-18T07:16:39.021Z",
+ "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "throttle": 4,
+ "runs": 3,
+ "rows": [
+  {
+   "key": "(idle) @",
+   "pct": 71.3
+  },
+  {
+   "key": "(program) @",
+   "pct": 28.7
+  },
+  {
+   "key": "desired @js/core.js",
+   "pct": 0
+  },
+  {
+   "key": "querySelector @",
+   "pct": 0
+  },
+  {
+   "key": "C @js/hud.js",
+   "pct": 0
+  },
+  {
+   "key": "A @js/hud.js",
+   "pct": 0
+  }
+ ]
+}
