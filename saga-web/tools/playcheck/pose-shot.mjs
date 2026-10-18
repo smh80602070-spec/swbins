@@ -34,7 +34,7 @@ try {
     await ev(([n, m, fc]) => { const p = DG.core.save.player.pos, W = DG.world3d; if (W.faceTo) { W.faceTo(p.x + 30 * fc, p.y + 4, m); } W.playAnim('me', n, m); }, [nm, ms, FACE]);
     await sleep(1600);   // 블렌드가 다 들어갈 때까지
     /* 헤드리스는 느려(5fps) 찍는 사이 한 번 도는 클립이 끝난다 — 가장 잘 보이는 순간에 액션을 멈춰 세운다 */
-    const atK = await ev((n) => (DG.pose3d && DG.pose3d.EXPECT && DG.pose3d.EXPECT[n] ? DG.pose3d.EXPECT[n].at : null), nm) || AT[nm];
+    const atK = await ev((n) => (DG.pose3d && DG.pose3d.EXPECT && DG.pose3d.EXPECT[n] ? DG.pose3d.EXPECT[n].at : null), nm) || AT[nm] || 0.5;   // 걷기·달리기도 반 바퀴에 멈춰 세운다(두 번 찍어도 같게)
     if (atK) { await ev(([k]) => { const d = DG.world3d.actorNode('me').userData, a = d.curAct; if (a) { a.time = a.getClip().duration * k; a.paused = true; if (d.mixer) { d.mixer.update(0); } } }, [atK]); await sleep(700); }
     const judged = await ev(([n, rest]) => { const P3 = DG.pose3d, node = DG.world3d.actorNode('me'); if (!P3 || !P3.check || !rest) { return null; } const rr = P3.measure(node, rest); const k = P3.check(n, rr); return k ? { ok: k.ok, bad: k.bad, r: rr } : null; }, [nm, out.rest]);
     const u = await ev(() => { const n = DG.world3d.actorNode('me'), d = n && n.userData; return d ? { anim: d.anim, clip: d.curAct && d.curAct.getClip ? d.curAct.getClip().name : null, own: !!d.ownBody } : null; });

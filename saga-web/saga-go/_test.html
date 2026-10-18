@@ -136,6 +136,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/toon3d-core.js"></script>
 <script src="js/toon3d.js"></script>
 <script src="js/anim-own.js"></script>
+<script src="js/clock.js"></script>
 <script src="js/pose3d.js"></script>
 <script src="js/vroid-variant.js"></script>
 <script src="js/asset3d-pure.js"></script>
@@ -9292,6 +9293,16 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var fake = P3.check('Pose_wave', { hips: { up: 0.67, fwd: 0, side: 0 }, head: { up: 1, fwd: 0, side: 0 }, rhand: { up: 1.1, fwd: 0.45, side: -0.1 }, lhand: { up: 0.6, fwd: 0, side: 0.14 }, dRH: 0.5 });
       if (fake.ok) { bad.push('앞으로 뻗은 인사를 못 거름'); }
       return !bad.length && (n + '자세 기대 범위 안 · 앞으로 뻗은 인사는 걸림(' + fake.bad.join('/') + ')') || bad.join(' · ');
+    });
+    t('가짜 시계 W-0316 — 실제 시각이 멈춰 있어도 DG.clock 을 앞당기면 가만히 선 몸이 8초(pose3d.sitAfter) 뒤에 앉는다 · 7.5초엔 아직 · 시계를 되돌리면 게임 중 앞당김 0', function () {
+      var CK = DG.clock, P3 = DG.pose3d, st = {}, real = 1000, i, at75 = null, at85 = null;
+      if (!CK || !CK.advance) { return false; }
+      CK.reset();
+      try {
+        for (i = 1; i <= 270; i++) { CK.advance(1 / 30); var slot = P3.life(st, real, true); if (i === 225) { at75 = slot; } if (i === 255) { at85 = slot; } }   // 30fps 9초 — 실제 시각(real)은 그대로
+      } finally { CK.reset(); }
+      var sitNow = at85 === 'Pose_sit', notYet = at75 !== 'Pose_sit', back = CK.offset() === 0;
+      return sitNow && notYet && back && ('7.5초 ' + (at75 || '서기') + ' → 8.5초 ' + at85 + ' · 되돌림 0');
     });
     t('pose3d 자연스러움 — 걷기 발 미끄러짐 ≤ 2cm/걸음·달리기 ≤ 2cm(디딘 발 접지점이 몸 속도로 뒤로) · 전환 블렌드 0.15~0.3초(무기만 0.08) · idle 변주는 쉴 때 3~5초마다 하나 돌고 끝나면 쉬며 걸으면 끊긴다 · once 는 시작 때 한 번 (W-0303)', function () {
       var OA = DG.ownAnim, P3 = DG.pose3d, rig = OA.refRig(), bad = [];
