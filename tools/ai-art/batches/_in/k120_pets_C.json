@@ -1,0 +1,163 @@
+{
+ "name": "k120_pets_C",
+ "spec": "creature",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0120 1단계 — 오마주 펫 16 + 까치: 도감 초상을 밑그림으로 밝은 단색 배경 3/4 전신(TRELLIS 입력). 원작 이름 없이 생김새만.",
+ "items": [
+  {
+   "id": "pk_bulbasaur",
+   "subject": "small cream rabbit-like creature wearing a big green mushroom cap cloak",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible",
+   "init_image": "saga-web/saga-go/assets/portraits/pet/pk_bulbasaur_c.webp",
+   "denoise": 0.72,
+   "seed": 12000000
+  },
+  {
+   "id": "pk_charmander",
+   "subject": "orange fire lizard, small horns, flame tipped tail",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible",
+   "init_image": "saga-web/saga-go/assets/portraits/pet/pk_charmander_c.webp",
+   "denoise": 0.72,
+   "seed": 12000131
+  },
+  {
+   "id": "pk_squirtle",
+   "subject": "deep blue octopus creature, big round orange eyes, eight curling tentacles",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible",
+   "init_image": "saga-web/saga-go/assets/portraits/pet/pk_squirtle_c.webp",
+   "denoise": 0.72,
+   "seed": 12000262
+  },
+  {
+   "id": "pk_magikarp",
+   "subject": "round blue water blob creature with small white wings",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible",
+   "init_image": "saga-web/saga-go/assets/portraits/pet/pk_magikarp_c.webp",
+   "denoise": 0.72,
+   "seed": 12000393
+  },
+  {
+   "id": "pk_pikachu",
+   "subject": "white rabbit with long upright ears, sitting",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible",
+   "init_image": "saga-web/saga-go/assets/portraits/pet/pk_pikachu_c.webp",
+   "denoise": 0.72,
+   "seed": 12000524
+  },
+  {
+   "id": "pk_eevee",
+   "subject": "brown monkey with mossy green fur on back, long tail",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible",
+   "init_image": "saga-web/saga-go/assets/portraits/pet/pk_eevee_c.webp",
+   "denoise": 0.72,
+   "seed": 12000655
+  },
+  {
+   "id": "pk_slowbro",
+   "subject": "translucent lavender water droplet creature, glossy",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible",
+   "init_image": "saga-web/saga-go/assets/portraits/pet/pk_slowbro_c.webp",
+   "denoise": 0.72,
+   "seed": 12000786
+  },
+  {
+   "id": "pk_gengar",
+   "subject": "purple shadow ghost creature, small horns, glowing eyes, wispy tail",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible",
+   "init_image": "saga-web/saga-go/assets/portraits/pet/pk_gengar_c.webp",
+   "denoise": 0.72,
+   "seed": 12000917
+  },
+  {
+   "id": "pk_snorlax",
+   "subject": "huge round fluffy white snow cat creature, sleepy smile",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible",
+   "init_image": "saga-web/saga-go/assets/portraits/pet/pk_snorlax_c.webp",
+   "denoise": 0.72,
+   "seed": 12001048
+  },
+  {
+   "id": "pk_lapras",
+   "subject": "dark beast with large spread orange bat wings, glowing blue eyes",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible",
+   "init_image": "saga-web/saga-go/assets/portraits/pet/pk_lapras_c.webp",
+   "denoise": 0.72,
+   "seed": 12001179
+  },
+  {
+   "id": "pk_alakazam",
+   "subject": "small sage creature in a tall pointed hat and dark starry cloak",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible",
+   "init_image": "saga-web/saga-go/assets/portraits/pet/pk_alakazam_c.webp",
+   "denoise": 0.72,
+   "seed": 12001310
+  },
+  {
+   "id": "pk_dragonite",
+   "subject": "plump yellow dragon with white feathered wings, long tail",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible",
+   "init_image": "saga-web/saga-go/assets/portraits/pet/pk_dragonite_c.webp",
+   "denoise": 0.72,
+   "seed": 12001441
+  },
+  {
+   "id": "pk_charizard",
+   "subject": "slender orange fire dragon, large bat wings, flaming tail",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible",
+   "init_image": "saga-web/saga-go/assets/portraits/pet/pk_charizard_c.webp",
+   "denoise": 0.72,
+   "seed": 12001572
+  },
+  {
+   "id": "pk_gyarados",
+   "subject": "long blue water serpent, white fins, crest",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible",
+   "init_image": "saga-web/saga-go/assets/portraits/pet/pk_gyarados_c.webp",
+   "denoise": 0.72,
+   "seed": 12001703
+  },
+  {
+   "id": "pk_mewtwo",
+   "subject": "slender purple cosmic dragon serpent, starry glow, horns",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible",
+   "init_image": "saga-web/saga-go/assets/portraits/pet/pk_mewtwo_c.webp",
+   "denoise": 0.72,
+   "seed": 12001834
+  },
+  {
+   "id": "pk_mew",
+   "subject": "white cat with golden bell collar, sitting, small golden halo",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible",
+   "init_image": "saga-web/saga-go/assets/portraits/pet/pk_mew_c.webp",
+   "denoise": 0.72,
+   "seed": 12001965
+  },
+  {
+   "id": "pt_magpie",
+   "subject": "black and white magpie bird with blue-green wing sheen, long tail",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible",
+   "init_image": "saga-web/saga-go/assets/portraits/pet/pt_magpie_c.webp",
+   "denoise": 0.72,
+   "seed": 12002096
+  }
+ ]
+}

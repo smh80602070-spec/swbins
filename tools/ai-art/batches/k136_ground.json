@@ -1,0 +1,54 @@
+{
+ "model": "z-image-turbo",
+ "out": "k136_ground",
+ "note": "K-0136 3 — 1만리·2나락 땅 타일 8(K-0091 방식: 평평한 견본 → make_seamless → 512, tiling 쓰지 않음)",
+ "defaults": {
+  "prompt_prefix": "",
+  "width": 1024,
+  "height": 1024,
+  "variants": 4,
+  "tiling": false
+ },
+ "items": [
+  {
+   "id": "go_village_dirt",
+   "seed": 13600000,
+   "prompt": "A flat top-down photo-real ground texture: packed light brown village dirt road with fine gravel and faint cart ruts. Seen straight from above, evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Medium brightness and gentle low contrast, natural muted colors, fine small-scale detail for a stylized adventure game ground. Uniform repeating terrain texture."
+  },
+  {
+   "id": "go_stone_path",
+   "seed": 13700000,
+   "prompt": "A flat top-down photo-real ground texture: old gray cobblestone path with moss in the joints. Seen straight from above, evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Medium brightness and gentle low contrast, natural muted colors, fine small-scale detail for a stylized adventure game ground. Uniform repeating terrain texture."
+  },
+  {
+   "id": "go_field_grass",
+   "seed": 13800000,
+   "prompt": "A flat top-down photo-real ground texture: short green field grass with tiny clover and scattered small pebbles. Seen straight from above, evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Medium brightness and gentle low contrast, natural muted colors, fine small-scale detail for a stylized adventure game ground. Uniform repeating terrain texture."
+  },
+  {
+   "id": "go_shore_sand",
+   "seed": 13900000,
+   "prompt": "A flat top-down photo-real ground texture: damp beige shore sand with small shells and darker wet patches. Seen straight from above, evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Medium brightness and gentle low contrast, natural muted colors, fine small-scale detail for a stylized adventure game ground. Uniform repeating terrain texture."
+  },
+  {
+   "id": "dg_dungeon_stone",
+   "seed": 14000000,
+   "prompt": "A flat top-down photo-real ground texture: dark gray dungeon flagstones, worn and slightly cracked. Seen straight from above, evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Medium brightness and gentle low contrast, natural muted colors, fine small-scale detail for a stylized adventure game ground. Uniform repeating terrain texture."
+  },
+  {
+   "id": "dg_town_dirt",
+   "seed": 14100000,
+   "prompt": "A flat top-down photo-real ground texture: trampled dark brown town dirt with straw bits. Seen straight from above, evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Medium brightness and gentle low contrast, natural muted colors, fine small-scale detail for a stylized adventure game ground. Uniform repeating terrain texture."
+  },
+  {
+   "id": "dg_cave_rock",
+   "seed": 14200000,
+   "prompt": "A flat top-down photo-real ground texture: rough dark cave rock floor with gritty pebbles. Seen straight from above, evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Medium brightness and gentle low contrast, natural muted colors, fine small-scale detail for a stylized adventure game ground. Uniform repeating terrain texture."
+  },
+  {
+   "id": "dg_mud_swamp",
+   "seed": 14300000,
+   "prompt": "A flat top-down photo-real ground texture: dark muddy swamp ground with puddle-dark patches and reeds stubble. Seen straight from above, evenly lit with soft overcast light, no shadows, no horizon, no objects, no border, fills the entire frame edge to edge. Medium brightness and gentle low contrast, natural muted colors, fine small-scale detail for a stylized adventure game ground. Uniform repeating terrain texture."
+  }
+ ]
+}
