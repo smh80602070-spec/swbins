@@ -982,7 +982,7 @@
       if (it.kind === 'jar') { drawJar(m, it.o, now); }
       else if (it.kind === 'pillar') { drawPillar(m, it.o, theme, wh); } else if (it.kind === 'prop2d') { var bp = proj(m, it.o.x, it.o.y), bcv = m.belt && it.o.y > m.py && Math.abs(it.o.x - m.px) < it.o.h * 0.7 && it.o.y - m.py < it.o.h * 1.4; if (bcv) { ctx.save(); ctx.globalAlpha = 0.4; } global.DG.mode2d.drawKind(ctx, it.o.t, bp.x, bp.y, it.o.h * m.s, it.o.seed || (it.o.x + ',' + it.o.y)); if (bcv) { ctx.restore(); } }   // W-0131 — 벨트에서 나를 가리는 건물은 비친다
       else if (it.kind === 'thing') { drawThing(m, it.o, it.icon, now); }
-      else if (it.kind === 'foe') { drawFoe(m, it.o, now, bars); }
+      else if (it.kind === 'foe') { var svA = it.o.bornAt && global.DG.spawnView ? global.DG.spawnView.appearK(it.o, global.DG.spawnView.now()) : 1; if (svA < 1) { ctx.save(); ctx.globalAlpha = svA; } drawFoe(m, it.o, now, bars); if (svA < 1) { ctx.restore(); } }   // W-0327 등장 연출
       else if (it.kind === 'npc') { drawNpc(m, it.o, now, plates, it.near); }
       else if (it.kind === 'mark') { drawMark(m, it.o, now, plates, it.near); }
       else if (it.kind === 'companion') { drawCompanion(m, it.o, now, plates); } else if (it.kind === 'fp') { BT.drawPiece(ctx, m, it.o); }   // W-0131 들판 소품

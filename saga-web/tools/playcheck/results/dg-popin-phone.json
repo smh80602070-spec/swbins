@@ -1,0 +1,24 @@
+{
+ "at": "2026-10-18T11:07:33.564Z",
+ "phone": true,
+ "sec": 60,
+ "samples": 282,
+ "seen": 46,
+ "popin": 0,
+ "appear": 0,
+ "offscreen": 46,
+ "list": [],
+ "probe": {
+  "hasMe": false,
+  "player": [
+   195,
+   240
+  ],
+  "anchor": [
+   0,
+   0
+  ],
+  "radius": 924
+ },
+ "errors": []
+}

@@ -347,18 +347,18 @@
     var px0 = (isTown && ctx.player) ? ctx.player.x : cx0;
     var py0 = (isTown && ctx.player) ? ctx.player.y : cy0;
     var biome = biomeOf(ctx);
-    var R = fieldRadiusUnits(), remain = count;
+    var R = fieldRadiusUnits(), remain = count, SV = global.DG.spawnView, md = (SV && SV.on()) ? SV.minDist() + PACK_SPREAD : 0, pl = isTown ? ctx.player : (run && run.player);   /* W-0327 화면 밖에서만(사용자 "이동하면 몹들이 갑자기 생긴다") — md = 화면이 덮는 땅 반경 × 1.2 + 무리 퍼짐. 마을은 고리를 [md, …]로, 던전 방은 md 안쪽 자리를 버린다. 앞 여덟 번에 못 찾으면 옛 고리로(스폰 수 그대로) + bornAt 등장 연출(3D 솟음·2D 투명). 손잡이 dg.spawnOff(1) */
     while (remain > 0) {
       var packSize = Math.min(remain, 4 + Math.floor(Math.random() * 3));   // §5.19 4~6(남으면)
       /* 팩 중심 하나를 고른다 — 예전과 같은 각도·거리 뽑기 */
-      var tries = 8, a0, d0, ax2 = 0, ay2 = 0, ok = false;
+      var tries = md ? 16 : 8, a0, d0, ax2 = 0, ay2 = 0, ok = false, appear = false, rg = (SV && md) ? SV.ring(wl + 60, R, isTown ? md : 0) : null;
       while (tries-- && !ok) {
-        a0 = Math.random() * Math.PI * 2;
-        d0 = (wl + 60) + Math.random() * Math.max(40, R - wl - 60);
+        a0 = Math.random() * Math.PI * 2; if (md && tries < 8) { appear = true; rg = null; }   // W-0327 뒤 여덟 번 = 옛 고리(화면 안일 수 있다 → 등장 연출)
+        d0 = rg ? rg.lo + Math.random() * (rg.hi - rg.lo) : (wl + 60) + Math.random() * Math.max(40, R - wl - 60);
         ax2 = px0 + Math.cos(a0) * d0;
         ay2 = py0 + Math.sin(a0) * d0;
         if (isTown && Math.hypot(ax2 - cx0, ay2 - cy0) < TOWN_SAFE_R) { continue; }
-        if (inRoomRect(ax2, ay2, ctx) || fieldBlockedAt(ax2, ay2, ctx)) { continue; }
+        if (inRoomRect(ax2, ay2, ctx) || fieldBlockedAt(ax2, ay2, ctx) || (md && !appear && pl && Math.hypot(ax2 - pl.x, ay2 - pl.y) < md)) { continue; }   // W-0327 화면 안 자리도 버린다(연출 단계 전까지)
         ok = true;
       }
       if (!ok) { remain -= packSize; continue; }   // 이번 팩은 자리를 못 찾았다 — 개수만 줄이고 다음 팩으로
@@ -371,7 +371,7 @@
           if (isTown && Math.hypot(x - cx0, y - cy0) < TOWN_SAFE_R) { continue; }
           if (inRoomRect(x, y, ctx) || fieldBlockedAt(x, y, ctx)) { continue; }
           en = spawnEnemy(floor, false, { x: x, y: y, ref: ref });
-          en.field = true;
+          en.field = true; if (appear && SV) { en.bornAt = SV.now(); }
           enemies.push(en);
           break;
         }

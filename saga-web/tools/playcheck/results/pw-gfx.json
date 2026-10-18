@@ -1,17 +1,17 @@
 {
- "at": "2026-10-18T10:51:44.112Z",
- "base": "http://127.0.0.1:4093/",
+ "at": "2026-10-18T11:10:02.914Z",
+ "base": "http://127.0.0.1:4601/",
  "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "runs": [
   {
    "game": "saga-dungeon",
    "err": "",
    "m": {
-    "calls": 1001,
-    "targets": 910,
-    "objects": 2315,
-    "toon": 237,
-    "cast": 170,
+    "calls": 902,
+    "targets": 820,
+    "objects": 3242,
+    "toon": 262,
+    "cast": 175,
     "sun": 1,
     "sky": 1,
     "pbr": 6,
@@ -21,7 +21,7 @@
     "postStats": {
      "ready": true,
      "failed": false,
-     "frames": 420,
+     "frames": 410,
      "on": true,
      "tier": "HIGH",
      "tone": "neutral",
@@ -38,7 +38,7 @@
      "on": true,
      "ready": true,
      "failed": false,
-     "frames": 420,
+     "frames": 410,
      "tier": "HIGH",
      "samples": 12,
      "size": "598x360",

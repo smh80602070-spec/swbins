@@ -154,6 +154,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/asset3d-people.js"></script>
 <script src="js/asset3d.js"></script>
 <script src="js/load-veil.js"></script>
+<script src="js/spawn-view.js"></script>
 <script src="js/terrain3d.js"></script>
 <script src="js/sway3d.js"></script>
 <script src="js/road3d.js"></script>
@@ -9221,6 +9222,14 @@ window.requestAnimationFrame = function () { return 0; };
       var ok = [hid, !g2 && s2.children.length > 0 && s2.children[0].visible !== false, !!shape3 && shape3.visible !== false && !A.ghostOf(s3),
         V.shouldHide(5, 0.3, 200) === '', V.shouldHide(0, 0, 400) === 'done', V.shouldHide(5, 0.85, 1000) === 'ratio', V.shouldHide(5, 0.3, 8100) === 'max', V.shouldHide(5, 0.3, 7000) === ''];
       return ok.every(Boolean) && ('대역 숨김 · 손잡이 1 = 옛 상자 · GLB 끔 = 도형 그대로 · 가림막 done/ratio/max') || '실패 ' + ok.join(',');
+    });
+
+    t('들판 보충 스폰(W-0327) — 화면 밖 고리: 하한이 화면 반경을 넘고(들판 반경보다 크면 상한을 늘림) · 화면이 없으면 옛 고리 그대로 · 등장 연출 0→1(0.6초) · 연출 없는 적은 1', function () {
+      var S = DG.spawnView; if (!S || !S.ring || !S.appearK) { return '모듈 없음'; }
+      var a = S.ring(86, 600, 0), b = S.ring(86, 600, 400), c = S.ring(86, 600, 900), t0 = 1000;
+      var ok = [a.lo === 86 && a.hi === 600, b.lo === 400 && b.hi === 600, c.lo === 900 && c.hi === 1140,
+        S.appearK({ bornAt: t0 }, t0) === 0, Math.abs(S.appearK({ bornAt: t0 }, t0 + 300) - 0.5) < 1e-9, S.appearK({ bornAt: t0 }, t0 + 700) === 1, S.appearK({}, t0) === 1, S.minDist() >= 0];
+      return ok.every(Boolean) && ('고리 ' + JSON.stringify([a, b, c]) + ' · 진단 화면 반경 ' + Math.round(S.radius())) || '실패 ' + ok.join(',');
     });
 
     t('런타임 에러 없음', function () {

@@ -327,7 +327,7 @@
          "이번 프레임에 안 보였다"로 알아서 치운다 — 수동 정리 필요 없다. */
       var wbk = e.worldBoss ? (':' + (e.wbWeaponBroken ? 1 : 0) + (e.wbArmorBroken ? 1 : 0) + (e.wbHelmBroken ? 1 : 0)) : '';
       var a = actorOf('e' + i + ':' + (e.ref && e.ref.id) + wbk, 'foe', e);
-      a.node.position.set(e.x, groundYAt(e.x, e.y), e.y);
+      a.node.position.set(e.x, groundYAt(e.x, e.y), e.y); if (e.bornAt && global.DG.spawnView) { var svK = global.DG.spawnView.appearK(e, global.DG.spawnView.now()); if (svK < 1) { a.node.position.y -= (1 - svK) * 46; } else { e.bornAt = 0; } }   // W-0327 화면 안 보충 = 0.6초 땅에서 솟음
       a.node.rotation.y = Math.atan2(p.x - e.x, p.y - e.y);
       a.node.rotation.x = 0;
       /* 맞은 직후에는 흔들린다 · §5.19 움찔(hit 모션)은 0.28초 — 판정의 80ms 플래시로는 모션이 안 보였다 */

@@ -156,6 +156,15 @@ async function checkShots() {
       for (const ms of [3000, 8000]) { const f = path.join(PLAY, 'shots', 'dg_load_' + ms + '.png'); if (fs.existsSync(f)) { eyes.push({ game: 'saga-dungeon', what: '로딩 ' + ms / 1000 + '초(갈색 상자가 없나)', file: path.relative(ROOT, f) }); } }
     }
   }
+  /* W-0327 갑자기 생긴 적 — 2나락 마을 들판을 60초 걸으며 처음 본 적이 그 순간 화면 안이면 센다(dg-popin, PC·폰). 연출(bornAt) 없이 화면 안 1 이상이면 WARN */
+  if (games.includes('saga-dungeon')) {
+    for (const ph of [false, true]) {
+      const r = run(process.execPath, ['dg-popin.mjs', '--sec=60'].concat(ph ? ['--phone'] : []), { cwd: PLAY, env, timeout: 6 * 60 * 1000 });
+      const j = readJson(path.join(PLAY, 'results', 'dg-popin' + (ph ? '-phone' : '') + '.json'), null), who = nm('saga-dungeon') + (ph ? ' 폰' : ' PC');
+      if (!j || j.err || !j.samples) { row('갑자기 생긴 적', who, 'FAIL', 'dg-popin 결과 없음 ' + ((j && j.err) || r.out.trim().split(String.fromCharCode(10)).pop() || ''), r.sec); continue; }
+      row('갑자기 생긴 적', who, j.popin ? 'WARN' : 'PASS', '화면 안 ' + j.popin + ' · 연출 ' + j.appear + ' · 화면 밖 ' + j.offscreen + ' / 새 적 ' + j.seen + (j.popin ? ' · 예 ' + j.list.filter((x) => !x.appear).slice(0, 3).map((x) => x.t + 'ms ' + x.d).join(', ') : ''), r.sec);
+    }
+  }
   /* W-0316 몸짓 판정 — 1만리 내 몸(실제 VRoid)에 자세 열둘을 걸어 판정 시점에 멈추고 뼈로 기대 범위를 본다(pose3d.check) + 모음판 눈 판정 */
   if (games.includes('saga-go')) {
     const r = run(process.execPath, ['pose-shot.mjs', 'qcpose'], { cwd: PLAY, env, timeout: 10 * 60 * 1000 });
