@@ -47,7 +47,7 @@
 | 자체 제작 도구 | `tools/` | 인물 몸·괴물·소품·땅 재질·초상·소리를 로컬에서 생성 |
 
 <!-- status:begin -->
-웹 다섯 판 기능 등록부 현황(`node tools/status.mjs` 가 덮어씀 · 2026-10-18 11:50Z):
+웹 다섯 판 기능 등록부 현황(`node tools/status.mjs` 가 덮어씀 · 2026-10-18 21:39Z):
 
 | 판 | 기능 | D0 | D1 | D2 | 끝 | 완성도 | WIP | 초과 | 러너 n/m | 표시 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -80,6 +80,8 @@ node saga-web/tools/serve-game.mjs 8791 saga-web/saga-go
 3D 트랙은 `saga-godot/`(Godot 4.7)·`saga-unity/`(Unity 6)으로 엽니다.
 
 ## 검증과 운영
+
+- **공개 배포**: `main` 에 웹(`saga-web/`·루트 `index.html`)이 바뀐 푸시가 오면 `.github/workflows/pages.yml` 이 웹만 묶어 GitHub Pages 에 한 번에 바꿔 끼운다(약 3분, 배포 중에도 옛 판이 그대로 열림 · 겹치면 줄 서서 차례로). 다른 갈래 푸시는 배포하지 않는다. 되돌림: Settings → Pages → Source 를 브랜치로.
 
 사람이 매번 해 보지 않아도 되게, 기계가 사람처럼 놀아 보고 확인합니다.
 
