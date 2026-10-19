@@ -1,0 +1,105 @@
+{
+ "note": "K-0145 대상 표 — 새 creatures3d 10(사람꼴 4·그 밖 6). rig none = creature_fill 루트 동작 · fist = FistR 노드",
+ "items": [
+  {
+   "id": "cactus_imp",
+   "rig": "none",
+   "height": 1.2,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "quaternius/Cactoro",
+   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Cactoro 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "swamp_toad",
+   "rig": "none",
+   "height": 1.3,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "quaternius/Frog",
+   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Frog 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "moss_blob",
+   "rig": "none",
+   "height": 1.0,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "quaternius/Green_Blob",
+   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Green_Blob 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "spike_blob",
+   "rig": "none",
+   "height": 1.1,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "quaternius/Green_Spiky_Blob",
+   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Green_Spiky_Blob 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "spore_cap",
+   "rig": "none",
+   "height": 1.4,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "quaternius/Mushnub_Evolved",
+   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Mushnub_Evolved 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "mushroom_lord",
+   "rig": "none",
+   "height": 1.8,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "quaternius/Mushroom_King",
+   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Mushroom_King 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "shadow_ninja",
+   "rig": "none",
+   "height": 1.7,
+   "yaw": 0,
+   "humanoid": true,
+   "fist": true,
+   "borrowed": "quaternius/Ninja",
+   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7 + 오른손 FistR 노드(무기 쥠). 빌린 quaternius/Ninja 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "goblin_brute",
+   "rig": "none",
+   "height": 1.9,
+   "yaw": 0,
+   "humanoid": true,
+   "fist": true,
+   "borrowed": "quaternius/Orc",
+   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7 + 오른손 FistR 노드(무기 쥠). 빌린 quaternius/Orc 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "masked_tribal",
+   "rig": "none",
+   "height": 1.8,
+   "yaw": 0,
+   "humanoid": true,
+   "fist": true,
+   "borrowed": "quaternius/Tribal",
+   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7 + 오른손 FistR 노드(무기 쥠). 빌린 quaternius/Tribal 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "hat_wizard",
+   "rig": "none",
+   "height": 1.5,
+   "yaw": 0,
+   "humanoid": true,
+   "fist": true,
+   "borrowed": "quaternius/Wizard",
+   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7 + 오른손 FistR 노드(무기 쥠). 빌린 quaternius/Wizard 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  }
+ ]
+}

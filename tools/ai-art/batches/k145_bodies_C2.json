@@ -1,0 +1,39 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k145_bodies_C2",
+ "kit": {
+  "spec": "creature",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "swamp_toad",
+   "seed": 4133918805,
+   "prompt": "(bipedal frog monster:1.15), green and yellow frog skin, black spots, bulging frog eyes on top of head, wide frog mouth, two arms with webbed hands, two frog legs, upright, no humans, full body, whole creature visible, solo, bold colors, standing, arms slightly away from body, empty hands, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "shadow_ninja",
+   "seed": 3539755293,
+   "prompt": "(plump humanoid ninja creature:1.15), black hood and face mask, big glowing eyes, two arms, two legs, red waist sash, sword sheath on back, upright, no humans, full body, whole creature visible, solo, bold colors, standing, arms slightly away from body, empty hands, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "hat_wizard",
+   "seed": 3976618541,
+   "prompt": "(small plump humanoid wizard creature:1.15), tall purple pointed hat, long purple robe, green scarf, glowing eyes under hat, two small arms, two short legs, upright, no humans, full body, whole creature visible, solo, bold colors, standing, arms slightly away from body, empty hands, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  }
+ ]
+}

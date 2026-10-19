@@ -1,0 +1,31 @@
+{
+ "name": "k145_bodies_C2",
+ "spec": "creature",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0145 다시 — 1차 넷 다 실패 3종(두꺼비가 버섯·해파리, 닌자가 새·펭귄꼴, 마법사가 팔 없는 덩어리): 두발·팔 또렷하게",
+ "items": [
+  {
+   "id": "swamp_toad",
+   "from": "quaternius/Frog",
+   "subject": "bipedal frog monster, green and yellow frog skin, black spots, bulging frog eyes on top of head, wide frog mouth, two arms with webbed hands, two frog legs, upright",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, solo, bold colors, standing, arms slightly away from body, empty hands"
+  },
+  {
+   "id": "shadow_ninja",
+   "from": "quaternius/Ninja",
+   "subject": "plump humanoid ninja creature, black hood and face mask, big glowing eyes, two arms, two legs, red waist sash, sword sheath on back, upright",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, solo, bold colors, standing, arms slightly away from body, empty hands"
+  },
+  {
+   "id": "hat_wizard",
+   "from": "quaternius/Wizard",
+   "subject": "small plump humanoid wizard creature, tall purple pointed hat, long purple robe, green scarf, glowing eyes under hat, two small arms, two short legs, upright",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, solo, bold colors, standing, arms slightly away from body, empty hands"
+  }
+ ]
+}
