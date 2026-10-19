@@ -411,6 +411,7 @@
         break;
       }
     }
+    if (global.DG.regionGlb) { global.DG.regionGlb.apply('fork', st.model, g, o); }   // W-0319 표에 있으면 GLB 로(받은 뒤 코드 몸통 숨김 · 움직이는 부품은 그대로)
     g.position.set(st.x, gyAt(w, st.x, st.y), st.y);
     return o;
   }

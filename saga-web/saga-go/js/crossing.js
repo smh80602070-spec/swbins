@@ -390,6 +390,7 @@
       case 'ticket': box(T3, g, m.panel, 0.8, 1.6, 0.6, 0, 0.8, 0); box(T3, g, m.glow, 0.5, 0.3, 0.05, 0, 1.3, 0.31); break;
       case 'helm': { var sw = box(T3, g, m.alloy, 0.08, 1.4, 0.2, 0, 0.7, 0); sw.rotation.z = 0.15; ball(T3, g, m.bronze, 0.35, 0.5, 0.25, 0.2).scale.y = 0.7; break; }
     }
+    if (global.DG.regionGlb) { global.DG.regionGlb.apply('crossing', st.model, g, o); }   // W-0319 표에 있으면 GLB 로(받은 뒤 코드 몸통 숨김 · 움직이는 부품은 그대로)
     g.position.set(st.x, y0, st.y);
     w.addFx(g);
     return o;

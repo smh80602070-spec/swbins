@@ -142,6 +142,8 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/vroid-variant.js"></script>
 <script src="js/asset3d-pure.js"></script>
 <script src="js/asset3d.js"></script>
+<script src="js/region-glb-table.js"></script>
+<script src="js/region-glb.js"></script>
 <script src="js/prop3d.js"></script>
 <script src="js/relief3d.js"></script>
 <script src="js/actor3d.js"></script>
@@ -17236,6 +17238,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
     });
 
     t('W-0331 앱 안 브라우저 판정 — 구글 앱·카카오·iOS 웹뷰·안드 웹뷰는 앱, 사파리·iOS 크롬·PC 는 아님 · 진단엔 띠 없음', function () { var A = DG.inApp; if (!A || !A.test) { return '실패 DG.inApp 없음'; } var ios = 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko)'; var c = [[ios + ' Version/18.0 Mobile/15E148 Safari/604.1', null], [ios + ' CriOS/130.0.0.0 Mobile/15E148 Safari/604.1', null], [ios + ' GSA/350.0.0 Mobile/15E148 Safari/604.1', '구글 앱'], [ios + ' Mobile/15E148 KAKAOTALK 10.8.0', '카카오톡'], [ios + ' Mobile/15E148', '앱 속 브라우저'], ['Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/130.0.0.0 Mobile Safari/537.36', '앱 속 브라우저'], ['Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', null]]; for (var i = 0; i < c.length; i++) { if (A.test(c[i][0]) !== c[i][1]) { return '실패 ' + i + '번 = ' + A.test(c[i][0]) + ' (기대 ' + c[i][1] + ')'; } } if (document.getElementById('inapp-band')) { return '실패 진단 화면에 띠가 떴다'; } return c.length + '가지 맞음'; });
+    t('W-0319 지역 GLB 표 — 항목 전부 world3d 주소 있음 · keepOf 순수(root·hide 뺌·배열 펼침·Object3D 만) · entry · 손잡이 regionGlb.on', function () { var R = DG.regionGlb, T = DG.regionGlbTable, A = DG.assets3d; if (!R || !T || !A) { return '실패 regionGlb·표·assets3d 없음'; } var W = (DG.assets3dIds && DG.assets3dIds.world) || [], live = A.state && A.state() === 'ok', n = 0, miss = [], r, k; for (r in T) { for (k in T[r]) { n++; if (W.indexOf(T[r][k].id) < 0 || (live && !A.url('world', T[r][k].id))) { miss.push(r + '.' + k + ':' + T[r][k].id); } } } if (n < 90) { return '실패 항목 ' + n; } if (miss.length) { return '실패 주소 없음 ' + miss.slice(0, 5).join(' '); } var fake = function () { return { isObject3D: true }; }, root = fake(), a = fake(), b = fake(), c = fake(); var keep = R.keepOf({ root: root, spin: [a, b], flame: c, hull: fake(), n: 3, s: 'x', nul: null }, root, ['hull']); if (keep.length !== 3 || keep.indexOf(a) < 0 || keep.indexOf(b) < 0 || keep.indexOf(c) < 0) { return '실패 keepOf ' + keep.length; } if (!R.entry('frost', 'fort') || R.entry('frost', 'nope') || R.entry('nope', 'fort')) { return '실패 entry'; } DG.core.setTune('regionGlb.on', 0); var off = R.ON(); DG.core.setTune('regionGlb.on', null); if (off || !R.ON()) { return '실패 손잡이'; } return n + ' 항목 id 표 ○' + (live ? '·주소 ○' : '') + ' · 미룸 ' + (DG.regionGlbSkipped || []).length; });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

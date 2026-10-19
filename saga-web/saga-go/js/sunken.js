@@ -367,6 +367,7 @@
       case 'jelly': { var jl = ball(T3, g, m.jelly, 0.5, 0, 1.4, 0); jl.scale.y = 0.6; o.bob.push({ o: jl, y: 1.4, ph: 2 }); for (i = 0; i < 4; i++) { box(T3, g, m.jelly, 0.04, 0.8, 0.04, Math.cos(i * 1.6) * 0.25, 0.9, Math.sin(i * 1.6) * 0.25); } break; }
       case 'drone': { box(T3, g, m.alloy, 1, 0.4, 0.7, 0, 0.3, 0, 0.3); o.blink = ball(T3, g, m.glow, 0.1, 0.45, 0.4, 0); break; }
     }
+    if (global.DG.regionGlb) { global.DG.regionGlb.apply('sunken', st.model, g, o); }   // W-0319 표에 있으면 GLB 로(받은 뒤 코드 몸통 숨김 · 움직이는 부품은 그대로)
     g.position.set(st.x, y0, st.y);
     w.addFx(g);
     return o;

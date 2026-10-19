@@ -402,6 +402,7 @@
         for (i = 0; i < 6; i++) { box(T3, g, m.drop, 0.05, 0.18, 0.05, Math.cos(i * 1.9) * 1.2, 1.2 + (i % 3) * 0.5, Math.sin(i * 1.9) * 1.2); }
         break;
     }
+    if (global.DG.regionGlb) { global.DG.regionGlb.apply('vault', st.model, g, o); }   // W-0319 표에 있으면 GLB 로(받은 뒤 코드 몸통 숨김 · 움직이는 부품은 그대로)
     g.position.set(st.x, gyAt(w, st.x, st.y), st.y);
     return o;
   }

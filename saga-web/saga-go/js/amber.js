@@ -338,6 +338,7 @@
       case 'board': box(T3, g, m.dark, 2, 1.2, 0.1, 0, 1.6, 0); cyl(T3, g, m.dark, 0.06, 0.06, 1.2, 0, 0.6, 0, 6); break;
       case 'panel': box(T3, g, m.panel, 2.4, 0.1, 1.4, 0, 1.2, 0, 0.3).rotation.x = -0.5; cyl(T3, g, m.alloy, 0.06, 0.06, 1.2, 0, 0.6, 0, 6); break;
     }
+    if (global.DG.regionGlb) { global.DG.regionGlb.apply('amber', st.model, g, o); }   // W-0319 표에 있으면 GLB 로(받은 뒤 코드 몸통 숨김 · 움직이는 부품은 그대로)
     g.position.set(st.x, gyAt(w, st.x, st.y), st.y);
     return o;
   }
