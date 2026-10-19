@@ -16,19 +16,23 @@ SCOPE="${PRECHECK_PATHS:-}"
 [ -n "$SCOPE" ] && echo "범위: 이번 커밋 경로 $(printf '%s\n' "$SCOPE" | sed '/^$/d' | wc -l)개 — 그 밖의 실패는 WARN"
 mine() { [ -z "$SCOPE" ] && return 0; printf '%s\n' "$SCOPE" | grep -qE "$1"; }   # 범위 없으면 참 · 있으면 정규식에 맞는 범위 경로가 있으면 참
 bad() { if mine "$1"; then fail=1; else echo "WARN 위 실패는 이번 커밋 경로 밖(남의 작업 중 파일) — 커밋은 막지 않는다"; fi; }
+# 실패한 검사 이름(K-0147) — 검사마다 sec 로 머리를 찍고, 그 검사 안에서 fail=1 이 되면 끝줄 "PRECHECK FAIL — <검사>" 에 모은다
+cur=""; failed=""
+secend() { if [ "$fail" = 1 ]; then failed="$failed${failed:+ · }${cur%% (*}"; fail=0; fi; }
+sec() { secend; cur="$1"; echo "== $1"; }
 badfiles() { # $1 = 실패 줄이 든 출력 · 'FAIL <파일>' 의 파일 중 하나라도 범위 안이면(또는 범위 없음) FAIL
   local f hit=1; [ -z "$SCOPE" ] && { fail=1; return; }
   while read -r f; do [ -n "$f" ] && printf '%s\n' "$SCOPE" | grep -qxF "$f" && hit=0; done < <(printf '%s\n' "$1" | sed -n 's/^FAIL \([^ ]*\).*/\1/p')
   if [ $hit -eq 0 ]; then fail=1; else echo "WARN 위 실패 파일은 이번 커밋 경로 밖(남의 작업 중 파일) — 커밋은 막지 않는다"; fi
 }
 
-echo "== js 구문"
+sec "js 구문"
 targets=(); for a in "$@"; do [ "$a" = "--full" ] || targets+=("$a"); done; [ ${#targets[@]} -eq 0 ] && targets=(saga-web/saga-go saga-web/saga-dungeon saga-web/saga-forest saga-web/saga-story saga-web/saga-realm)
 # node 한 번으로 전부 파싱하고 걸린 파일만 node --check 로 재판정(파일마다 띄우면 5분 → 수 초)
 jsdirs=(); for d in "${targets[@]}"; do [ -d "$d/js" ] && jsdirs+=("$d/js"); done
 if [ ${#jsdirs[@]} -gt 0 ]; then sx=$(node tools/hooks/syntax-check.js "${jsdirs[@]}"); sxs=$?; printf '%s\n' "$sx"; [ $sxs -ne 0 ] && badfiles "$sx"; fi
 
-echo "== 도감 data.js 다섯 벌 md5 (루트 CLAUDE.md: 도감은 다섯 벌 함께 고치고 md5 로 확인)"
+sec "도감 data.js 다섯 벌 md5 (루트 CLAUDE.md: 도감은 다섯 벌 함께 고치고 md5 로 확인)"
 sums=""; for g in saga-go saga-dungeon saga-forest saga-story saga-realm; do
   p="saga-web/$g/js/data.js"; [ -f "$p" ] || continue
   s=$(md5sum "$p" | cut -c1-8); echo "$s $g"; sums="$sums $s"
@@ -42,15 +46,15 @@ if [ "$distinct" -gt 1 ]; then
   fi
 fi
 
-echo "== shared 정본 (saga-web/shared → 다섯 판 사본 md5, tools/sync-shared.mjs)"
+sec "shared 정본 (saga-web/shared → 다섯 판 사본 md5, tools/sync-shared.mjs)"
 node tools/sync-shared.mjs --check || bad '^saga-web/' 
 
-echo "== script 순서 manifest (판별 js/manifest.json ↔ index·_test 의 script 줄, tools/gen-index.mjs)"
+sec "script 순서 manifest (판별 js/manifest.json ↔ index·_test 의 script 줄, tools/gen-index.mjs)"
 node tools/gen-index.mjs --check || bad '^saga-web/'
 node tools/gen-itemicon-ids.mjs --check || bad '^saga-web/|^saga-assets/icons/'   # 아이템 아이콘 이름 표(W-0025)
 node tools/gen-assets3d-ids.mjs --check || bad '^saga-web/'   # shared/assets GLB 이름 표(W-0021)
 
-echo "== world3d 조립 (saga-go/src/world3d 조각 → js/world3d.js, tools/build-parts.mjs)"
+sec "world3d 조립 (saga-go/src/world3d 조각 → js/world3d.js, tools/build-parts.mjs)"
 bp_out=$(node tools/build-parts.mjs --check 2>&1); bp_rc=$?; printf '%s
 ' "$bp_out" | grep -v '^ok '
 if [ $bp_rc -ne 0 ]; then
@@ -59,7 +63,7 @@ if [ $bp_rc -ne 0 ]; then
 ' "$bp_out" | grep -q '조립본이 더 새롭다'; then echo "FAIL 조립본만 고친 변경 — 조각(src/)에 옮기지 않으면 다음 조립에서 사라진다(W-0313)"; fail=1; else bad '^saga-web/'; fi
 fi
 
-echo "== sw.js 캐시 버전 (판별 PLAN §7 함정: js/ 고치고 VERSION 안 올리면 옛 캐시를 계속 본다)"
+sec "sw.js 캐시 버전 (판별 PLAN §7 함정: js/ 고치고 VERSION 안 올리면 옛 캐시를 계속 본다)"
 for d in "${targets[@]}"; do
   [ -f "$d/sw.js" ] || continue
   if git status --porcelain -- "$d/js" 2>/dev/null | grep -q . && ! git status --porcelain -- "$d/sw.js" 2>/dev/null | grep -q .; then
@@ -67,7 +71,7 @@ for d in "${targets[@]}"; do
   fi
 done
 
-echo "== 에셋 빠른 점검 (tools/asset-audit --quick: 바뀐 에셋만 — 공개 저장소 유출·압축 GLB 디코더 누락·GitHub 100MB)"
+sec "에셋 빠른 점검 (tools/asset-audit --quick: 바뀐 에셋만 — 공개 저장소 유출·압축 GLB 디코더 누락·GitHub 100MB)"
 PY=""; for c in "py -3" python3 python; do $c -c "import sys" >/dev/null 2>&1 && { PY=$c; break; }; done
 if [ -n "$PY" ]; then
   PYTHONIOENCODING=utf-8 $PY tools/asset-audit/audit.py --quick || fail=1
@@ -75,12 +79,12 @@ else
   echo "WARN 파이썬이 없어 에셋 빠른 점검을 건너뛴다"
 fi
 
-echo "== 크레딧 필수 표기 (tools/asset-audit/credits.py --check: 크레딧 필수 출처가 credits.json 에 한 줄이라도 빠지면 FAIL, K-0038)"
+sec "크레딧 필수 표기 (tools/asset-audit/credits.py --check: 크레딧 필수 출처가 credits.json 에 한 줄이라도 빠지면 FAIL, K-0038)"
 if [ -n "$PY" ]; then
   PYTHONIOENCODING=utf-8 $PY tools/asset-audit/credits.py --check || bad '^saga-assets/|/assets/|/Assets/|^tools/asset-audit/' 
 fi
 
-echo "== 문서 크기"
+sec "문서 크기"
 limit() { # 파일 상한(바이트)
   local f=$1 max=$2; [ -f "$f" ] || return 0
   local n; n=$(tr -d '\r' <"$f" | wc -c)   # 작업본이 CRLF 여도 저장소(LF) 크기로 잰다
@@ -108,7 +112,7 @@ over=''   # CRLF 로 체크아웃된 작업본이 저장소(LF) 크기보다 줄
 while read -r f; do lim=6144; case "$f" in tasks/sheets/*) lim=16384;; esac; [ "$(tr -d '\r' <"$f" | wc -c)" -gt "$lim" ] && over="$over$f"$'\n'; done < <(find tasks -name '*.md' -size +5000c 2>/dev/null)   # 확인 시트(tasks/sheets)는 사람에게 보내는 답안지라 16KB — 세션이 매번 읽는 티켓·큐만 6KB
 if [ -n "$over" ]; then printf '%s' "$over" | while read -r f; do echo "OVER $f > 6144B"; done; badfiles "$(printf '%s' "$over" | sed 's/^/FAIL /')"; else echo "ok   tasks/**/*.md 전부 6144B 이하"; fi
 
-echo "== 정본 범주 반영 (tools/asset-audit/reflect.py --categories · K-0073, 새 범주 FAIL — tools/reflect-allow.txt 는 봐줌 · W-0086)"
+sec "정본 범주 반영 (tools/asset-audit/reflect.py --categories · K-0073, 새 범주 FAIL — tools/reflect-allow.txt 는 봐줌 · W-0086)"
 if [ -d saga-assets ]; then
   if rout=$(PYTHONIOENCODING=utf-8 py tools/asset-audit/reflect.py --categories 2>/dev/null); then
     echo "$rout"
@@ -120,7 +124,7 @@ if [ -d saga-assets ]; then
   else echo "WARN reflect.py --categories 실행 실패(py 없음?)"; fi
 fi
 
-echo "== features.json 스키마 (saga-web/*/features.json · tools/features-schema.json)"
+sec "features.json 스키마 (saga-web/*/features.json · tools/features-schema.json)"
 if ls saga-web/*/features.json >/dev/null 2>&1; then
   node - <<'NODE' 
 const fs = require('fs'), path = require('path');
@@ -147,7 +151,7 @@ NODE
   [ $? -ne 0 ] && bad '/features\.json$'
 fi
 
-echo "== WIP 상한 (tools/wip.json · SAGA-ARCH §8-2: 새기능 티켓은 그 판의 D0+D1 이 상한 아래일 때만)"
+sec "WIP 상한 (tools/wip.json · SAGA-ARCH §8-2: 새기능 티켓은 그 판의 D0+D1 이 상한 아래일 때만)"
 node - <<'NODE' || fail=1
 const fs = require('fs'), { execSync } = require('child_process');
 const cfg = JSON.parse(fs.readFileSync('tools/wip.json', 'utf8'));
@@ -191,7 +195,7 @@ for (const f of added) {
 process.exit(bad ? 1 : 0);
 NODE
 
-echo "== 파일 크기 (바뀐 js/gd/cs 가 새로 1500줄을 넘거나, 이미 넘던 목록 tools/big-files.txt 보다 늘면 FAIL)"
+sec "파일 크기 (바뀐 js/gd/cs 가 새로 1500줄을 넘거나, 이미 넘던 목록 tools/big-files.txt 보다 늘면 FAIL)"
 node - "${targets[@]}" <<'NODE' || fail=1
 const fs = require('fs'), path = require('path'), { execSync } = require('child_process');
 const LIM = 1500;
@@ -221,7 +225,7 @@ console.log((bad ? '' : 'ok   ') + '확인 ' + n + '개');
 process.exit(bad ? 1 : 0);
 NODE
 
-echo "== 진단 수 (_test.html 의 t(' 줄 수가 tools/_out/testcount.json 보다 줄면 WARN — 기준선은 안 줄어든다, 일부러 줄였으면 TESTCOUNT_RESET=1)"
+sec "진단 수 (_test.html 의 t(' 줄 수가 tools/_out/testcount.json 보다 줄면 WARN — 기준선은 안 줄어든다, 일부러 줄였으면 TESTCOUNT_RESET=1)"
 node - <<'NODE'
 const fs = require('fs'), path = require('path');
 const file = 'tools/_out/testcount.json';
@@ -242,12 +246,13 @@ console.log('ok   진단 수 ' + Object.entries(now).map(([g, n]) => g.replace('
 NODE
 
 if [ -f saga-godot/tools/check_refs.sh ]; then
-  echo "== Godot 참조 방향 (saga-godot/tools/check_refs.sh)"
+  sec "Godot 참조 방향 (saga-godot/tools/check_refs.sh)"
   bash saga-godot/tools/check_refs.sh || { echo "FAIL Godot 참조 방향 위반(위 줄)"; bad '^saga-godot/'; }
 fi
 
 
-echo "== 웹 진단 (--full 일 때만: tools/test-web.mjs all)"
+sec "웹 진단 (--full 일 때만: tools/test-web.mjs all)"
 for a in "$@"; do [ "$a" = "--full" ] && { node tools/test-web.mjs all || fail=1; break; }; done
 
-[ $fail -eq 0 ] && echo "PRECHECK OK" || { echo "PRECHECK FAIL"; exit 1; }
+secend
+[ -z "$failed" ] && echo "PRECHECK OK" || { echo "PRECHECK FAIL — $failed"; exit 1; }

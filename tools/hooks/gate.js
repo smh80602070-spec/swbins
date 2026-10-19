@@ -87,7 +87,9 @@ if (name === 'PreToolUse' && tool === 'Bash') {
     if (scope) env.PRECHECK_PATHS = scope.join('\n'); else delete env.PRECHECK_PATHS;
     const r = spawnSync('bash', ['tools/precheck.sh'], { encoding: 'utf8', env });
     if (r.error || r.status !== 0) {
-      const lines = String(r.stdout || '').split('\n').filter(l => /FAIL|OVER|MISMATCH/.test(l));
+      const all = String(r.stdout || '').split(/\r?\n/);
+      let lines = all.filter(l => /FAIL|OVER|MISMATCH/.test(l));
+      if (lines.length <= 1) lines = all.filter(l => l.trim()).slice(-15);   // K-0147 — FAIL 줄을 안 찍는 검사면 끝 15줄
       block('precheck 실패 — 커밋을 막았다. 고친 뒤 다시 커밋:\n' + lines.join('\n') + (r.stderr ? '\n' + r.stderr : '') + (r.error ? '\n' + r.error.message : ''));
     }
   }
