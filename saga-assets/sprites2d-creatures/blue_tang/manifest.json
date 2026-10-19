@@ -1,0 +1,27 @@
+{
+ "id": "blue_tang",
+ "body": "blue_tang",
+ "kind": "creature",
+ "family": null,
+ "px": 128,
+ "frames": 8,
+ "dirs": [
+  0,
+  1,
+  2
+ ],
+ "clips": [
+  "idle",
+  "walk",
+  "attack",
+  "hit",
+  "death"
+ ],
+ "side_src": "d1",
+ "ortho_m": 0.2726,
+ "cam_z": 0.1036,
+ "anchor_feet_y_px": 112.64,
+ "side_faces": "right",
+ "license": "",
+ "source": "saga-assets/creatures3d/blue_tang.glb (자기 동작 Idle·Walk·Attack·Hit·Death) — tools/char-forge/creature_sprites.py (K-0090 ③)"
+}

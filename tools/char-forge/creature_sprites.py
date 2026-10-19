@@ -28,7 +28,10 @@ sc = bpy.context.scene
 bpy.ops.import_scene.gltf(filepath=src)
 objs = list(sc.objects)
 arm = next((o for o in objs if o.type == 'ARMATURE'), None)
-meshes = [o for o in objs if o.type == 'MESH']
+# K-0143: glTF 임포터가 뼈 표시용으로 만드는 모양 메시(Icosphere, 지름 2m)는 렌더엔 안 나오지만 bbox 를 ±1 로 부풀려
+# 뼈 붙은 작은 몸(물고기·새·퍼그)이 2.4m 칸에 몇 px 로 찍혔다 → 뼈 custom_shape 로 쓰인 메시·Icosphere 는 뺀다
+_shapes = {pb.custom_shape for o in objs if o.type == 'ARMATURE' for pb in o.pose.bones if pb.custom_shape}
+meshes = [o for o in objs if o.type == 'MESH' and o not in _shapes and not o.name.startswith('Icosphere')]
 piv = bpy.data.objects.new('piv', None)
 sc.collection.objects.link(piv)
 for o in objs:
@@ -164,8 +167,8 @@ for key, act in acts.items():
     use(act)
     od = os.path.join(out, key)
     os.makedirs(od, exist_ok=True)
-    for d in (0, 1, 2):
-        piv.rotation_euler.z = math.radians(90 * d)      # 0 정면(−Y 를 봄) · 1 오른쪽(+X) · 2 뒤
+    for d in ((0, 1, 2, 3) if os.environ.get('SIDE_ALT') else (0, 1, 2)):   # K-0143: SIDE_ALT=1 이면 3 = 반대쪽 옆(왼쪽)도 — 묶는 쪽이 더 밝은 옆을 고른다(TRELLIS 결이 면마다 다름)
+        piv.rotation_euler.z = math.radians(90 * d)      # 0 정면(−Y 를 봄) · 1 오른쪽(+X) · 2 뒤 · 3 왼쪽
         c0 = hold(key, frames(act)[0])
         for i, f in enumerate(frames(act)):
             hold(key, f, c0)

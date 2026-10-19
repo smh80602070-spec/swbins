@@ -1,0 +1,393 @@
+{
+ "note": "K-0143 ④ 도감 펫(1만리 sprite.js pk_/pt_ 표 → k114_beasts 이름 → creatures3d id) 종 몸 2D 시트 대상",
+ "ids": [
+  "alpaca",
+  "alpaking",
+  "anglerfish",
+  "apatosaurus",
+  "armored_catfish",
+  "bear",
+  "betta",
+  "birb",
+  "black_lionfish",
+  "blobfish",
+  "blue_goldfish",
+  "blue_tang",
+  "boar",
+  "bull",
+  "bunny",
+  "butterflyfish",
+  "cardinalfish",
+  "cat",
+  "cat_monster",
+  "clownfish",
+  "coral_grouper",
+  "cow",
+  "cow_farm",
+  "cowfish",
+  "crane",
+  "deer",
+  "dino_pet",
+  "dolphin",
+  "donkey",
+  "dragon",
+  "dragon_evolved",
+  "elephant",
+  "fish_a",
+  "fish_b",
+  "fish_c",
+  "flatfish",
+  "flowerhorn",
+  "fox",
+  "frog",
+  "ghost",
+  "glub",
+  "glub_evolved",
+  "goblin_shark",
+  "goldfish",
+  "goleling",
+  "great_white",
+  "horse",
+  "horse_farm",
+  "horse_white",
+  "humphead",
+  "husky",
+  "hywirl",
+  "koi",
+  "lionfish",
+  "llama",
+  "mandarinfish",
+  "manta_ray",
+  "monkey",
+  "monkroose",
+  "moorish_idol",
+  "mushnub",
+  "owl",
+  "panda",
+  "parasaurolophus",
+  "parrotfish",
+  "pig",
+  "pigeon",
+  "pink_slime",
+  "piranha",
+  "puffer",
+  "pug",
+  "raptor",
+  "red_snapper",
+  "royal_gramma",
+  "shark",
+  "sheep",
+  "shiba",
+  "snake",
+  "squidle",
+  "stag",
+  "stegosaurus",
+  "sunfish",
+  "swordfish",
+  "tang",
+  "tetra",
+  "tiger",
+  "trex",
+  "triceratops",
+  "tuna",
+  "turbot",
+  "whale",
+  "worm",
+  "yellow_tang",
+  "zebra",
+  "zebra_clownfish"
+ ],
+ "pets_by_id": {
+  "alpaca": [
+   "pt_alpaca"
+  ],
+  "alpaking": [
+   "pk_dragonite"
+  ],
+  "anglerfish": [
+   "pt_anglerfish"
+  ],
+  "apatosaurus": [
+   "pt_apatosaurus"
+  ],
+  "armored_catfish": [
+   "pt_armored_catfish"
+  ],
+  "bear": [
+   "pt_bear"
+  ],
+  "betta": [
+   "pt_betta"
+  ],
+  "birb": [
+   "pt_samjogo"
+  ],
+  "black_lionfish": [
+   "pt_black_lion_fish"
+  ],
+  "blobfish": [
+   "pt_blobfish"
+  ],
+  "blue_goldfish": [
+   "pt_blue_goldfish"
+  ],
+  "blue_tang": [
+   "pt_blue_tang"
+  ],
+  "boar": [
+   "pt_boar"
+  ],
+  "bull": [
+   "pt_bull"
+  ],
+  "bunny": [
+   "pk_pikachu"
+  ],
+  "butterflyfish": [
+   "pt_butterfly_fish"
+  ],
+  "cardinalfish": [
+   "pt_cardinal_fish"
+  ],
+  "cat": [
+   "pt_cat"
+  ],
+  "cat_monster": [
+   "pk_mew"
+  ],
+  "clownfish": [
+   "pt_clownfish"
+  ],
+  "coral_grouper": [
+   "pt_coral_grouper"
+  ],
+  "cow": [
+   "pt_cow"
+  ],
+  "cow_farm": [
+   "pt_cow_farm"
+  ],
+  "cowfish": [
+   "pt_cowfish"
+  ],
+  "crane": [
+   "pt_crane"
+  ],
+  "deer": [
+   "pt_deer"
+  ],
+  "dino_pet": [
+   "pk_charmander"
+  ],
+  "dolphin": [
+   "pt_dolphin"
+  ],
+  "donkey": [
+   "pt_donkey"
+  ],
+  "dragon": [
+   "pk_charizard"
+  ],
+  "dragon_evolved": [
+   "pt_cheongryong"
+  ],
+  "elephant": [
+   "pt_bulgasari"
+  ],
+  "fish_a": [
+   "pt_fish_1"
+  ],
+  "fish_b": [
+   "pt_fish_2"
+  ],
+  "fish_c": [
+   "pt_fish_3"
+  ],
+  "flatfish": [
+   "pt_flatfish"
+  ],
+  "flowerhorn": [
+   "pt_flower_horn"
+  ],
+  "fox": [
+   "pt_gumiho",
+   "pt_fox"
+  ],
+  "frog": [
+   "pt_toad"
+  ],
+  "ghost": [
+   "pk_gengar"
+  ],
+  "glub": [
+   "pk_magikarp"
+  ],
+  "glub_evolved": [
+   "pk_lapras"
+  ],
+  "goblin_shark": [
+   "pt_goblin_shark"
+  ],
+  "goldfish": [
+   "pt_goldfish"
+  ],
+  "goleling": [
+   "pt_haetae"
+  ],
+  "great_white": [
+   "pt_shark_2"
+  ],
+  "horse": [
+   "pt_jeoktoma",
+   "pt_horse"
+  ],
+  "horse_farm": [
+   "pt_horse_farm"
+  ],
+  "horse_white": [
+   "pt_jeolyeong",
+   "pt_white_horse"
+  ],
+  "humphead": [
+   "pt_humphead"
+  ],
+  "husky": [
+   "pt_sapsal"
+  ],
+  "hywirl": [
+   "pt_jujak"
+  ],
+  "koi": [
+   "pt_carp",
+   "pt_koi_2"
+  ],
+  "lionfish": [
+   "pt_lionfish"
+  ],
+  "llama": [
+   "pt_llama"
+  ],
+  "mandarinfish": [
+   "pt_mandarin_fish"
+  ],
+  "manta_ray": [
+   "pt_manta_ray"
+  ],
+  "monkey": [
+   "pt_monkey"
+  ],
+  "monkroose": [
+   "pk_eevee"
+  ],
+  "moorish_idol": [
+   "pt_moorish_idol"
+  ],
+  "mushnub": [
+   "pk_bulbasaur"
+  ],
+  "owl": [
+   "pt_owl"
+  ],
+  "panda": [
+   "pt_panda"
+  ],
+  "parasaurolophus": [
+   "pt_parasaurolophus"
+  ],
+  "parrotfish": [
+   "pt_parrot_fish"
+  ],
+  "pig": [
+   "pt_pig"
+  ],
+  "pigeon": [
+   "pt_magpie"
+  ],
+  "pink_slime": [
+   "pk_slowbro"
+  ],
+  "piranha": [
+   "pt_piranha"
+  ],
+  "puffer": [
+   "pt_puffer"
+  ],
+  "pug": [
+   "pt_pug"
+  ],
+  "raptor": [
+   "pt_velociraptor"
+  ],
+  "red_snapper": [
+   "pt_red_snapper"
+  ],
+  "royal_gramma": [
+   "pt_royal_gramma"
+  ],
+  "shark": [
+   "pt_shark"
+  ],
+  "sheep": [
+   "pt_sheep"
+  ],
+  "shiba": [
+   "pt_jindo"
+  ],
+  "snake": [
+   "pt_hyeonmu",
+   "pk_gyarados"
+  ],
+  "squidle": [
+   "pk_squirtle"
+  ],
+  "stag": [
+   "pt_stag"
+  ],
+  "stegosaurus": [
+   "pt_stegosaurus"
+  ],
+  "sunfish": [
+   "pt_sunfish"
+  ],
+  "swordfish": [
+   "pt_swordfish"
+  ],
+  "tang": [
+   "pt_tang"
+  ],
+  "tetra": [
+   "pt_tetra"
+  ],
+  "tiger": [
+   "pt_baekho",
+   "pt_tiger"
+  ],
+  "trex": [
+   "pt_t_rex"
+  ],
+  "triceratops": [
+   "pt_triceratops"
+  ],
+  "tuna": [
+   "pt_tuna"
+  ],
+  "turbot": [
+   "pt_turbot"
+  ],
+  "whale": [
+   "pt_whale"
+  ],
+  "worm": [
+   "pt_worm"
+  ],
+  "yellow_tang": [
+   "pt_yellow_tang"
+  ],
+  "zebra": [
+   "pt_zebra"
+  ],
+  "zebra_clownfish": [
+   "pt_zebra_clown_fish"
+  ]
+ }
+}

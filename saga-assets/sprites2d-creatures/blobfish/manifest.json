@@ -1,0 +1,27 @@
+{
+ "id": "blobfish",
+ "body": "blobfish",
+ "kind": "creature",
+ "family": null,
+ "px": 128,
+ "frames": 8,
+ "dirs": [
+  0,
+  1,
+  2
+ ],
+ "clips": [
+  "idle",
+  "walk",
+  "attack",
+  "hit",
+  "death"
+ ],
+ "side_src": "d1",
+ "ortho_m": 0.1861,
+ "cam_z": 0.0707,
+ "anchor_feet_y_px": 112.64,
+ "side_faces": "right",
+ "license": "",
+ "source": "saga-assets/creatures3d/blobfish.glb (자기 동작 Idle·Walk·Attack·Hit·Death) — tools/char-forge/creature_sprites.py (K-0090 ③)"
+}

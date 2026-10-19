@@ -5,7 +5,7 @@
 - [ ] 10-13 · (K-0093 자체툴 넘김) · 자체 PBR 12세트(정본 `saga-assets/textures_real`) — 유니티 사실 재질에 재사용(웹은 W-0196 끝) — **R-0 10-16 유니티 PBR 폴더 교체는 K-0130** · 유니티
 - [ ] 10-15 · (K-0110 넘김) · 같은 AI 움직이는 초상이 `saga-godot/assets/portraits/live` 에도 — 켜도 됨 · 고돗
 - [ ] 10-15 · (K-0086 넘김) · 사실 몸 verify 통과 — U-0036 B·U-0037 B 씬 재빌드 R-0 가능 · 유니티
-- [ ] 10-16 · "추가적으로 요청사항은 메뉴 ui가 전체적으로 변경이 되어야 할것 같아" · 메뉴 UI(창 틀·배치·그림체) 전체 갈아엎기 — 다섯 판 웹 먼저. 자체툴 몫은 창 틀·버튼·아이콘 그림체 C 묶음 · 웹/고돗/유니티/자체툴 — **R-0 10-16 웹 → W-0252~0256**(같은 틀 + 판별 색 옷 K-0040 9-slice · ☰ 메뉴 화면, 정본 제안·거부권) · **웹 끝 10-16** · 3D 둘은 웹 틀 끝난 뒤 각 R-0 가 같은 규격
+- [ ] 10-16 · "추가적으로 요청사항은 메뉴 ui가 전체적으로 변경이 되어야 할것 같아" · 메뉴 UI(메인·일시정지·가방·설정 등 창 틀·배치·그림체)를 판 하나씩 땜질 말고 전체 갈아엎기 — 어느 판·트랙인지 안 말함, R-0 가 다섯 판 웹 먼저(플래그십 1만리·5천하) + 3D 둘도 같은 틀인지 한 번 묻기. 자체툴 몫은 창 틀·버튼·아이콘 그림체 C 묶음 · 웹/고돗/유니티/자체툴 — **R-0 10-16 웹 → W-0252~0256**(같은 틀 + 판별 색 옷 K-0040 9-slice · ☰ 메뉴 화면, 정본 제안·거부권) · **웹 끝 10-16** · 3D 둘은 웹 틀 끝난 뒤 각 R-0 가 같은 규격
 - [ ] 10-17 · 사용자 "3d,2d 게임성" 참고작 목록(판마다 4~6, 정본 루트 README 표) — README·index 반영 끝 · **웹 설계 W-0274 끝** · 고돗·유니티 PLAN 반영은 각 R-0 · 웹/고돗/유니티
 - [ ] 10-17 · (자체툴 K-0127 → 고돗) · 정육면체 잎 나무·바위 → foliage/<id>_real.gltf 14 — 시트 ② · 고돗
 - [ ] 10-17 · (자체툴 K-0128 → 고돗) · 2나락 방 킷·섬 밑동 사실판 world/real · KayKit·assets/dungeon 지움 — 시트 ③ · 고돗
@@ -15,9 +15,11 @@
 - [ ] 10-18 · (자체툴 K-0137 → 고돗) · 주역 10 몸 바뀜(새 머리카락·뼈 비율·얼굴 레이어 — hl_mukhyang·kr_gyebaek·fu_jongwang·tb_baekgi·ru_geohae·sg_caocao·sg_liubei·sg_lubu·sg_sunquan·sg_zhugeliang) · 원본 `tools/char-forge/_out/vroid/<id>/<id>.glb`·`<id>_anims.glb`(이 PC) → `vroid_intake.sh --only <10>` 로 얼굴 데칼·anim_cc0 `_lib.res` 다시 · 고돗
 - [ ] 10-18 · (자체툴 K-0137 → 유니티) · 같은 주역 10 몸 바뀜 — 유니티가 이 열 명을 VRoid 몸으로 쓰는 자리가 있으면 같은 원본으로 갈아 끼우기(없으면 [x]) · 유니티
 - [ ] 10-19 · (웹 W-0318 → 자체툴) · K-0139 모캡 12 중 cast·strong·greet 는 몸짓 뜻과 달라(판정 시점에 시전 = 무릎 든 채 두 손 머리 위, 강공격 = 웅크림, 인사 = 손이 머리 위로 안 감) 웹이 안 씀 — 두 손 앞으로 내뿜는 시전·두 손 머리 위에서 내려치는 강공격·오른손 흔드는 인사 CMU 클립으로 다시 굽기(판정 기준 shared/js/pose3d.js EXPECT) · 자체툴
-- [ ] 10-19 · (자체툴 K-0136 → 웹 1만리·2나락) · 3D 땅 타일 8 도착 `shared/assets/tiles/ground/<id>.webp`(512 이음매 없음, 사실풍) — 1만리 `world3d-landtex.js landTexture` 코드 칠 단색 대신 go_village_dirt(마을)·go_stone_path(길)·go_field_grass(들)·go_shore_sand(물가), 2나락 `town3d*.js` 바닥에 dg_town_dirt·dg_dungeon_stone·dg_cave_rock·dg_mud_swamp — 반복 UV 로 깔고(툰 3단 램프 그대로 두면 회색화되니 정본 색 유지) · 웹
+- [ ] 10-19 · (자체툴 K-0136 → 웹 1만리·2나락) · 3D 땅 타일 8 `shared/assets/tiles/ground/<id>.webp`(512 이음매 없음) — 1만리 `landTexture` 단색 대신 go_*(마을 흙·돌길·들풀·물가), 2나락 `town3d*.js` 바닥에 dg_*(마을 흙·던전 돌·동굴 바위·늪) · 웹
 - [ ] 10-19 · 사용자 "모바일 화면이 깨짐(아이폰 16 Pro)" · 아이폰 크기(402×874) 흉내로 다섯 판 첫 화면 촬영 — 세로 키 아트 `<판>_key_v.webp`(K-0041) 가 정사각 그림에 흐린 띠를 위아래로 덧댄 1080×1920 이라 세로 폰에서 화면의 약 30% 가 띠로 보인다 → 띠 없이 세로로 꽉 찬 세로 키 아트 다섯 장 다시(그 전까지 웹은 그대로) · 자체툴
 - [ ] 10-19 · (자체툴 K-0135 → 웹 W-0296) · 4종횡 타일 80·소품 50·앞 층 10(`saga-story/assets/web2d/{tile,prop,bg}`, 규격 그대로) + 사람 jump·fall 500(`characters2d8/<id>/`, mode2d 가 이미 읽음) · 웹
-- [ ] 10-19 · (자체툴 K-0121 → 웹 2나락) · 종 몸 초상 27 `portraits-monster/<creatures3d id>_c.webp` — idOf·foeBody 가 `ref.body` 의 id 먼저(목록 `tools/ai-art/data/k121_targets.json`), 없으면 옛 해시 · 웹
+- [ ] 10-19 · (자체툴 K-0121 → 웹 2나락) · 종 몸 초상 27·사람 적 18 `portraits-monster/<id>_c.webp` — idOf·foeBody 가 body 의 id 먼저(짝 `tools/ai-art/data/k121_targets.json`) · 웹
 - [ ] 10-19 · (자체툴 K-0122·K-0120 → 웹) · 빌린 괴물 → `creatures3d/<id>`(표 `tools/world-forge/data/k122_monsters.json`), `FistR` 는 뼈 아닌 노드 · 펫 `world3d/pet_<id>.glb` + 2D `beast_<펫 id>.png`(1만리 sprite.js 표 `pk_x:'pk_x'`) · 웹
-- [ ] 10-19 · 사용자 "2D 는 오딘스피어 같은 그래픽 · 다섯 판 동일"·"3D 는 원신+파판, 다섯 판 다 변경 — 넘 구려 · 캐릭터만 멋짐 · 통일 안 됨"·"다섯 판 자동 퀘스트 · 1만리 자동 개선" · R-0(웹 공용 컷아웃 뼈대·겹 배경 엔진 + K 그림 / 3D 통일 규격 / 자동 퀘스트 다섯 판) · 웹/자체툴
+
+- [ ] 10-19 · 사용자 "모바일로 하면 망게임임"·"웹을 왜 만들고 있냐임" · 트랙 우선순위 재결정(웹 = 검증 모래판? 제품 = 3D 둘?) — 답 뒤 체제 R-0 · 웹/고돗/유니티
+- [ ] 10-19 · (자체툴 K-0143 → 웹 1만리) · 종 몸 2D 시트 95 `shared/assets/creatures2d/<creatures3d id>/`(K-0090 꼴, manifest ortho_m 실제 크기) — 2D 짐승 풀은 종 id 먼저, 없으면 옛 mon_* · 웹
