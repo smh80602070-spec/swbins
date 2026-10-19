@@ -2,6 +2,7 @@
  "index": [
   [
    "js/errlog.js",
+   "js/inapp.js",
    "js/emojicompat.js",
    "js/data.js",
    "js/data-enemy.js",
@@ -39,7 +40,8 @@
    "js/toon3d-core.js",
    "js/toon3d.js",
    "js/anim-own.js",
-   "js/clock.js", "js/pose3d.js",
+   "js/clock.js",
+   "js/pose3d.js",
    "js/vroid-variant.js",
    "js/asset3d.js",
    "assets/sprites2d/mon-manifest.js",
@@ -91,6 +93,7 @@
  "test": [
   [
    "js/errlog.js",
+   "js/inapp.js",
    "js/data.js",
    "js/data-enemy.js",
    "js/data-side.js",
@@ -128,7 +131,8 @@
    "js/toon3d.js",
    "js/pbrground3d.js",
    "js/anim-own.js",
-   "js/clock.js", "js/pose3d.js",
+   "js/clock.js",
+   "js/pose3d.js",
    "js/vroid-variant.js",
    "js/asset3d.js",
    "js/portrait3d.js",

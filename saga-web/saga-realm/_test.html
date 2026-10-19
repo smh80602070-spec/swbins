@@ -63,6 +63,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 })(20260824);
 </script>
 <script src="js/errlog.js"></script>
+<script src="js/inapp.js"></script>
 <script src="js/boot-guard.js"></script>
 <script src="js/data.js"></script>
 <script src="js/data-city.js"></script>
@@ -7222,6 +7223,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return ok.every(Boolean) && ('짝 ' + Object.keys(O.MOCAP_MAP).length + ' · 남은 트랙 ' + names + ' · 엉덩이 1.1→' + hp.values[4].toFixed(2)) || '실패 ' + ok.join(',');
     });
 
+    t('W-0331 앱 안 브라우저 판정 — 구글 앱·카카오·iOS 웹뷰·안드 웹뷰는 앱, 사파리·iOS 크롬·PC 는 아님 · 진단엔 띠 없음', function () { var A = DG.inApp; if (!A || !A.test) { return '실패 DG.inApp 없음'; } var ios = 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko)'; var c = [[ios + ' Version/18.0 Mobile/15E148 Safari/604.1', null], [ios + ' CriOS/130.0.0.0 Mobile/15E148 Safari/604.1', null], [ios + ' GSA/350.0.0 Mobile/15E148 Safari/604.1', '구글 앱'], [ios + ' Mobile/15E148 KAKAOTALK 10.8.0', '카카오톡'], [ios + ' Mobile/15E148', '앱 속 브라우저'], ['Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/130.0.0.0 Mobile Safari/537.36', '앱 속 브라우저'], ['Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', null]]; for (var i = 0; i < c.length; i++) { if (A.test(c[i][0]) !== c[i][1]) { return '실패 ' + i + '번 = ' + A.test(c[i][0]) + ' (기대 ' + c[i][1] + ')'; } } if (document.getElementById('inapp-band')) { return '실패 진단 화면에 띠가 떴다'; } return c.length + '가지 맞음'; });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

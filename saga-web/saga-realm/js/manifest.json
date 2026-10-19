@@ -2,6 +2,7 @@
  "index": [
   [
    "js/errlog.js",
+   "js/inapp.js",
    "js/emojicompat.js",
    "js/data.js",
    "js/data-city.js",
@@ -29,7 +30,8 @@
    "js/toon3d-core.js",
    "js/toon3d.js",
    "js/anim-own.js",
-   "js/clock.js", "js/pose3d.js",
+   "js/clock.js",
+   "js/pose3d.js",
    "js/vroid-variant.js",
    "js/asset3d.js",
    "assets/portraits/manifest.js",
@@ -88,6 +90,7 @@
  "test": [
   [
    "js/errlog.js",
+   "js/inapp.js",
    "js/boot-guard.js",
    "js/data.js",
    "js/data-city.js",
@@ -115,7 +118,8 @@
    "js/toon3d-core.js",
    "js/toon3d.js",
    "js/anim-own.js",
-   "js/clock.js", "js/pose3d.js",
+   "js/clock.js",
+   "js/pose3d.js",
    "js/vroid-variant.js",
    "js/asset3d.js",
    "js/portrait3d.js",
