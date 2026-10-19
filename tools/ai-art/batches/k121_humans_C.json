@@ -1,0 +1,183 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k121_humans_C",
+ "kit": {
+  "spec": "portrait",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 640,
+  "height": 896,
+  "steps": 30,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "npc_bandit_01",
+   "seed": 3463749400,
+   "prompt": "(rebel peasant soldier:1.15), yellow head cloth, patched hemp tunic, rope belt, solo, adult, looking at viewer, front view, facing viewer, 1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "황건적 (몸 npc_bandit_01)",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_bandit_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "npc_bandit_04",
+   "seed": 2984533757,
+   "prompt": "(mountain bandit:1.15), fur vest, rough leather armor, scar, solo, adult, looking at viewer, front view, facing viewer, 1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "산적 (몸 npc_bandit_04)",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_bandit_04.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "npc_bandit_08",
+   "seed": 1978097160,
+   "prompt": "(hooded thief:1.15), dark hood, cloth mask around neck, leather straps, solo, adult, looking at viewer, front view, facing viewer, 1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "도적떼 (몸 npc_bandit_08)",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_bandit_08.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "npc_soldier_16",
+   "seed": 4263983277,
+   "prompt": "(wandering foot soldier:1.15), worn padded armor, cloth helmet, solo, adult, looking at viewer, front view, facing viewer, 1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "떠돌이 병졸 (몸 npc_soldier_16)",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_soldier_16.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "npc_bandit_12",
+   "seed": 583438199,
+   "prompt": "(coastal raider:1.15), headband, short jacket, rope sash, solo, adult, looking at viewer, front view, facing viewer, 1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "왜구 (몸 npc_bandit_12)",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_bandit_12.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "npc_bandit_05",
+   "seed": 3030354243,
+   "prompt": "(horse bandit:1.15), wide hat, long coat, dust scarf, solo, adult, looking at viewer, front view, facing viewer, 1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "마적 (몸 npc_bandit_05)",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_bandit_05.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "npc_soldier_03",
+   "seed": 2620515619,
+   "prompt": "(steppe archer:1.15), fur hat, leather armor, quiver strap, solo, adult, looking at viewer, front view, facing viewer, 1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "오랑캐 궁수 (몸 npc_soldier_03)",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_soldier_03.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "npc_soldier_07",
+   "seed": 589699945,
+   "prompt": "(northern cavalryman:1.15), round iron helmet, lamellar armor, solo, adult, looking at viewer, front view, facing viewer, 1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "거란 기병 (몸 npc_soldier_07)",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_soldier_07.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "npc_soldier_18",
+   "seed": 709324696,
+   "prompt": "(forest hunter archer:1.15), fur trimmed hood, leather bracers, solo, adult, looking at viewer, front view, facing viewer, 1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "여진 궁수 (몸 npc_soldier_18)",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_soldier_18.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "npc_soldier_08",
+   "seed": 1323634906,
+   "prompt": "(steppe horseman:1.15), fur-rimmed helmet, deel robe, leather armor, solo, adult, looking at viewer, front view, facing viewer, 1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "몽골 기병 (몸 npc_soldier_08)",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_soldier_08.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "npc_soldier_21",
+   "seed": 1576581533,
+   "prompt": "(musketeer foot soldier:1.15), conical lacquered helmet, plain armor, solo, adult, looking at viewer, front view, facing viewer, 1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "왜군 조총병 (몸 npc_soldier_21)",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_soldier_21.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "npc_bandit_10",
+   "seed": 3346346225,
+   "prompt": "(female spear soldier:1.15), blue cloth armor, iron helmet, solo, adult, looking at viewer, front view, facing viewer, 1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "위군 창병 (몸 npc_bandit_10)",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_bandit_10.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "npc_soldier_14",
+   "seed": 3333608612,
+   "prompt": "(naval scout:1.15), light vest, rope coil on shoulder, sea cap, solo, adult, looking at viewer, front view, facing viewer, 1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "수군 척후선 (몸 npc_soldier_14)",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_soldier_14.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "npc_soldier_06",
+   "seed": 2144417328,
+   "prompt": "(heavy armored infantry:1.15), full iron plate armor, closed helmet, solo, adult, looking at viewer, front view, facing viewer, 1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "철갑 중장병 (몸 npc_soldier_06)",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_soldier_06.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "npc_bandit_06",
+   "seed": 1640602477,
+   "prompt": "(royal guard cavalry:1.15), polished breastplate, red cape, plumed helmet, solo, adult, looking at viewer, front view, facing viewer, 1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "근위 기병 (몸 npc_bandit_06)",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_bandit_06.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "npc_bandit_09",
+   "seed": 334954834,
+   "prompt": "(female crossbow soldier:1.15), padded armor, hair tied back, solo, adult, looking at viewer, front view, facing viewer, 1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "연노 사수 (몸 npc_bandit_09)",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_bandit_09.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "npc_bandit_11",
+   "seed": 1093071306,
+   "prompt": "(female navy officer:1.15), long naval coat, tricorne hat, solo, adult, looking at viewer, front view, facing viewer, 1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "수군 함대 (몸 npc_bandit_11)",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_bandit_11.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "npc_soldier_23",
+   "seed": 457487267,
+   "prompt": "(black cavalry knight:1.15), black plate armor, dark cloak, solo, adult, looking at viewer, front view, facing viewer, 1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "흑기병 (몸 npc_soldier_23)",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_soldier_23.png",
+   "denoise": 0.65
+  }
+ ]
+}

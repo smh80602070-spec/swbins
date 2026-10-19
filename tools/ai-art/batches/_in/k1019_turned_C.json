@@ -1,0 +1,37 @@
+{
+ "name": "k1019_turned_C",
+ "spec": "creature",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0120·K-0122 — TRELLIS 가 정면 귀여운 그림(흰 테두리)을 납작 판으로 만든 3종(잠보 고양이 두 번·촉수 꼬마 두 번·외눈 GPU 오류 세 번) → 몸을 45도 돌린 3/4 로 다시",
+ "items": [
+  {
+   "id": "tentacle_imp",
+   "from": "quaternius_cute/Cthulhu",
+   "subject": "small green squid-faced imp, face tentacles, tiny wings, cute",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, body turned 45 degrees, three-quarter side view, visible side and depth, thick round volume",
+   "subject_ko": "tentacle_imp — 45도 돌린 3/4(납작 판 다시)"
+  },
+  {
+   "id": "cyclops_cute",
+   "from": "quaternius_cute/Cyclops",
+   "subject": "round purple one-eyed monster, single big eye, small horns, cute",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, body turned 45 degrees, three-quarter side view, visible side and depth, thick round volume",
+   "subject_ko": "cyclops_cute — 45도 돌린 3/4(납작 판 다시)"
+  },
+  {
+   "id": "pk_snorlax",
+   "subject": "huge round fluffy white snow cat creature, sleepy smile",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, body turned 45 degrees, three-quarter side view, visible side and depth, thick round volume",
+   "init_image": "tools/ai-art/_out/k120_init2/pk_snorlax.png",
+   "denoise": 0.75,
+   "seed": 12001048,
+   "src_portrait": "saga-web/saga-go/assets/portraits/pet/pk_snorlax_c.webp",
+   "subject_ko": "잠보 고양이 — 45도 돌린 3/4(납작 판 두 번, 밑그림 0.75)"
+  }
+ ]
+}

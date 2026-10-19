@@ -1,0 +1,44 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k1019_turned_C",
+ "kit": {
+  "spec": "creature",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "tentacle_imp",
+   "seed": 1585035028,
+   "prompt": "(small green squid-faced imp:1.15), face tentacles, tiny wings, cute, no humans, full body, whole creature visible, body turned 45 degrees, three-quarter side view, visible side and depth, thick round volume, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "tentacle_imp — 45도 돌린 3/4(납작 판 다시)"
+  },
+  {
+   "id": "cyclops_cute",
+   "seed": 136571188,
+   "prompt": "(round purple one-eyed monster:1.15), single big eye, small horns, cute, no humans, full body, whole creature visible, body turned 45 degrees, three-quarter side view, visible side and depth, thick round volume, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "cyclops_cute — 45도 돌린 3/4(납작 판 다시)"
+  },
+  {
+   "id": "pk_snorlax",
+   "seed": 12001048,
+   "prompt": "(huge round fluffy white snow cat creature:1.15), sleepy smile, no humans, full body, whole creature visible, body turned 45 degrees, three-quarter side view, visible side and depth, thick round volume, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "잠보 고양이 — 45도 돌린 3/4(납작 판 두 번, 밑그림 0.75)",
+   "init_image": "tools/ai-art/_out/k120_init2/pk_snorlax.png",
+   "denoise": 0.75
+  }
+ ]
+}

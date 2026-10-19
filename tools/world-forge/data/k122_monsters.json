@@ -55,7 +55,8 @@
   "kaykit_skeletons/Skeleton_Rogue": "skeleton_rogue",
   "kaykit_skeletons/Skeleton_Warrior": "skeleton_warrior",
   "quaternius_cute/Crab": "crab_cute",
-  "quaternius_cute/GreenDemon": "green_imp"
+  "quaternius_cute/GreenDemon": "green_imp",
+  "quaternius_cute/Tree": "tree_walker"
  },
  "robots": {
   "robots/Robot_Drone": "robot_drone",
@@ -64,7 +65,6 @@
  },
  "pending": [
   "quaternius_cute/Cthulhu → tentacle_imp",
-  "quaternius_cute/Cyclops → cyclops_cute",
-  "quaternius_cute/Tree → tree_walker"
+  "quaternius_cute/Cyclops → cyclops_cute"
  ]
 }

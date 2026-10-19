@@ -1,0 +1,154 @@
+{
+ "name": "k121_humans_C",
+ "spec": "portrait",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0121 사람 적 18 초상 — 자체 NPC 몸 반신 렌더 밑그림(_out/k121_busts, 출처 파일) · 0.65 · 옷차림은 적마다(실존 이름 없이 생김새만)",
+ "items": [
+  {
+   "id": "npc_bandit_01",
+   "subject": "rebel peasant soldier, yellow head cloth, patched hemp tunic, rope belt",
+   "extra": "solo, adult, looking at viewer",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_bandit_01.png",
+   "denoise": 0.65,
+   "subject_ko": "황건적 (몸 npc_bandit_01)"
+  },
+  {
+   "id": "npc_bandit_04",
+   "subject": "mountain bandit, fur vest, rough leather armor, scar",
+   "extra": "solo, adult, looking at viewer",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_bandit_04.png",
+   "denoise": 0.65,
+   "subject_ko": "산적 (몸 npc_bandit_04)"
+  },
+  {
+   "id": "npc_bandit_08",
+   "subject": "hooded thief, dark hood, cloth mask around neck, leather straps",
+   "extra": "solo, adult, looking at viewer",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_bandit_08.png",
+   "denoise": 0.65,
+   "subject_ko": "도적떼 (몸 npc_bandit_08)"
+  },
+  {
+   "id": "npc_soldier_16",
+   "subject": "wandering foot soldier, worn padded armor, cloth helmet",
+   "extra": "solo, adult, looking at viewer",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_soldier_16.png",
+   "denoise": 0.65,
+   "subject_ko": "떠돌이 병졸 (몸 npc_soldier_16)"
+  },
+  {
+   "id": "npc_bandit_12",
+   "subject": "coastal raider, headband, short jacket, rope sash",
+   "extra": "solo, adult, looking at viewer",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_bandit_12.png",
+   "denoise": 0.65,
+   "subject_ko": "왜구 (몸 npc_bandit_12)"
+  },
+  {
+   "id": "npc_bandit_05",
+   "subject": "horse bandit, wide hat, long coat, dust scarf",
+   "extra": "solo, adult, looking at viewer",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_bandit_05.png",
+   "denoise": 0.65,
+   "subject_ko": "마적 (몸 npc_bandit_05)"
+  },
+  {
+   "id": "npc_soldier_03",
+   "subject": "steppe archer, fur hat, leather armor, quiver strap",
+   "extra": "solo, adult, looking at viewer",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_soldier_03.png",
+   "denoise": 0.65,
+   "subject_ko": "오랑캐 궁수 (몸 npc_soldier_03)"
+  },
+  {
+   "id": "npc_soldier_07",
+   "subject": "northern cavalryman, round iron helmet, lamellar armor",
+   "extra": "solo, adult, looking at viewer",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_soldier_07.png",
+   "denoise": 0.65,
+   "subject_ko": "거란 기병 (몸 npc_soldier_07)"
+  },
+  {
+   "id": "npc_soldier_18",
+   "subject": "forest hunter archer, fur trimmed hood, leather bracers",
+   "extra": "solo, adult, looking at viewer",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_soldier_18.png",
+   "denoise": 0.65,
+   "subject_ko": "여진 궁수 (몸 npc_soldier_18)"
+  },
+  {
+   "id": "npc_soldier_08",
+   "subject": "steppe horseman, fur-rimmed helmet, deel robe, leather armor",
+   "extra": "solo, adult, looking at viewer",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_soldier_08.png",
+   "denoise": 0.65,
+   "subject_ko": "몽골 기병 (몸 npc_soldier_08)"
+  },
+  {
+   "id": "npc_soldier_21",
+   "subject": "musketeer foot soldier, conical lacquered helmet, plain armor",
+   "extra": "solo, adult, looking at viewer",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_soldier_21.png",
+   "denoise": 0.65,
+   "subject_ko": "왜군 조총병 (몸 npc_soldier_21)"
+  },
+  {
+   "id": "npc_bandit_10",
+   "subject": "female spear soldier, blue cloth armor, iron helmet",
+   "extra": "solo, adult, looking at viewer",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_bandit_10.png",
+   "denoise": 0.65,
+   "subject_ko": "위군 창병 (몸 npc_bandit_10)"
+  },
+  {
+   "id": "npc_soldier_14",
+   "subject": "naval scout, light vest, rope coil on shoulder, sea cap",
+   "extra": "solo, adult, looking at viewer",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_soldier_14.png",
+   "denoise": 0.65,
+   "subject_ko": "수군 척후선 (몸 npc_soldier_14)"
+  },
+  {
+   "id": "npc_soldier_06",
+   "subject": "heavy armored infantry, full iron plate armor, closed helmet",
+   "extra": "solo, adult, looking at viewer",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_soldier_06.png",
+   "denoise": 0.65,
+   "subject_ko": "철갑 중장병 (몸 npc_soldier_06)"
+  },
+  {
+   "id": "npc_bandit_06",
+   "subject": "royal guard cavalry, polished breastplate, red cape, plumed helmet",
+   "extra": "solo, adult, looking at viewer",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_bandit_06.png",
+   "denoise": 0.65,
+   "subject_ko": "근위 기병 (몸 npc_bandit_06)"
+  },
+  {
+   "id": "npc_bandit_09",
+   "subject": "female crossbow soldier, padded armor, hair tied back",
+   "extra": "solo, adult, looking at viewer",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_bandit_09.png",
+   "denoise": 0.65,
+   "subject_ko": "연노 사수 (몸 npc_bandit_09)"
+  },
+  {
+   "id": "npc_bandit_11",
+   "subject": "female navy officer, long naval coat, tricorne hat",
+   "extra": "solo, adult, looking at viewer",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_bandit_11.png",
+   "denoise": 0.65,
+   "subject_ko": "수군 함대 (몸 npc_bandit_11)"
+  },
+  {
+   "id": "npc_soldier_23",
+   "subject": "black cavalry knight, black plate armor, dark cloak",
+   "extra": "solo, adult, looking at viewer",
+   "init_image": "tools/ai-art/_out/k121_busts/npc_soldier_23.png",
+   "denoise": 0.65,
+   "subject_ko": "흑기병 (몸 npc_soldier_23)"
+  }
+ ]
+}

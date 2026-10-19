@@ -598,79 +598,98 @@
  "humans": [
   {
    "name": "황건적",
-   "body": "ogau_worker_male"
+   "body": "ogau_worker_male",
+   "self_body": "npc_bandit_01"
   },
   {
    "name": "산적",
-   "body": "ogau_viking_male"
+   "body": "ogau_viking_male",
+   "self_body": "npc_bandit_04"
   },
   {
    "name": "도적떼",
-   "body": "kaykitadv_rogue_hooded"
+   "body": "kaykitadv_rogue_hooded",
+   "self_body": "npc_bandit_08"
   },
   {
    "name": "떠돌이 병졸",
-   "body": "ogau_soldier_male"
+   "body": "ogau_soldier_male",
+   "self_body": "npc_soldier_16"
   },
   {
    "name": "왜구",
-   "body": "ogau_pirate_male"
+   "body": "ogau_pirate_male",
+   "self_body": "npc_bandit_12"
   },
   {
    "name": "마적",
-   "body": "ogau_cowboy_male"
+   "body": "ogau_cowboy_male",
+   "self_body": "npc_bandit_05"
   },
   {
    "name": "오랑캐 궁수",
-   "body": "qrpg_ranger"
+   "body": "qrpg_ranger",
+   "self_body": "npc_soldier_03"
   },
   {
    "name": "거란 기병",
-   "body": "ogau_bluesoldier_male"
+   "body": "ogau_bluesoldier_male",
+   "self_body": "npc_soldier_07"
   },
   {
    "name": "여진 궁수",
-   "body": "ogau_elf"
+   "body": "ogau_elf",
+   "self_body": "npc_soldier_18"
   },
   {
    "name": "몽골 기병",
-   "body": "ogau_knight_male"
+   "body": "ogau_knight_male",
+   "self_body": "npc_soldier_08"
   },
   {
    "name": "왜군 조총병",
-   "body": "ogau_ninja_male"
+   "body": "ogau_ninja_male",
+   "self_body": "npc_soldier_21"
   },
   {
    "name": "위군 창병",
-   "body": "ogau_viking_female"
+   "body": "ogau_viking_female",
+   "self_body": "npc_bandit_10"
   },
   {
    "name": "수군 척후선",
-   "body": "pppirate_henry"
+   "body": "pppirate_henry",
+   "self_body": "npc_soldier_14"
   },
   {
    "name": "철갑 중장병",
-   "body": "ogaknight_char"
+   "body": "ogaknight_char",
+   "self_body": "npc_soldier_06"
   },
   {
    "name": "근위 기병",
-   "body": "kaykitadv_knight"
+   "body": "kaykitadv_knight",
+   "self_body": "npc_bandit_06"
   },
   {
    "name": "연노 사수",
-   "body": "ogau_bluesoldier_female"
+   "body": "ogau_bluesoldier_female",
+   "self_body": "npc_bandit_09"
   },
   {
    "name": "수군 함대",
-   "body": "pppirate_anne"
+   "body": "pppirate_anne",
+   "self_body": "npc_bandit_11"
   },
   {
    "name": "흑기병",
-   "body": "ogau_knight_golden_male"
+   "body": "ogau_knight_golden_male",
+   "self_body": "npc_soldier_23"
   }
  ],
  "nobody": [
   "들개",
   "강철랑"
- ]
+ ],
+ "note_humans": "10-19 Opus: 사람 적 18 → 자체 NPC 몸(npc_swap_plan — 이름 있는 인물 500 과 안 겹침, 얼굴·옷 겹치지 않게 47 렌더 중 고름) self_body · 초상 = 반신 렌더 밑그림 0.65 + 적마다 옷차림(밑그림 옷은 현대 교복·후드라 역할 옷으로 바뀜 = 초상 옷 ≠ 3D 몸 옷) → portraits-monster/<self_body>_c.webp"
 }
