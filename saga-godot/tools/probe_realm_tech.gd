@@ -63,6 +63,13 @@ func _initialize() -> void:
 	T.bump()
 	var food1: float = SC.mul("food")
 	check(is_equal_approx(food0, 1.0) and is_equal_approx(food1, 1.05), "④ 수확 배수 %.2f → %.2f(물꼬 트기 +5%%)" % [food0, food1])
+	RS.tech = {"pts": 0, "done": []}
+	T.bump()
+	var take0: float = SC.mul("take")
+	RS.tech = {"pts": 0, "done": ["m4"]}
+	T.bump()
+	var take1: float = SC.mul("take")
+	check(is_equal_approx(take0 - take1, 0.05), "④ 받는 피해 %.2f → %.2f(방패 벽 수비 +5%%, G-0244)" % [take0, take1])
 
 	# ⑤ 명령 금
 	RS.tech = {"pts": 100, "done": []}

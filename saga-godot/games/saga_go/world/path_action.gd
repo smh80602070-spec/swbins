@@ -24,6 +24,8 @@ const PATH := {
 const FAIL := 0.3
 const LEAD_MIN_M := 40.0
 const LEAD_SEC := 30.0
+const LEAD_MAX := 90.0
+const LEAD_WAIT := 8.0
 const LEAD_SPEED := 4.5
 const PROVOKE_SEC := 60.0
 const PROVOKE_HP_MUL := 14.0
@@ -34,7 +36,7 @@ const SHOW_SEC := 4.0
 
 ## 점검용 — 0 이상이면 randf() 대신 이 값으로 거절을 굴린다.
 var test_roll := -1.0
-## 지금 이끄는 주민 {id, root, home, to, t} · 지금 도발 결투 {id, name, enemy, t}
+## 지금 이끄는 주민 {id, root, home, to, t, sec} ·지금 도발 결투 {id, name, enemy, t}
 var leading := {}
 var duel := {}
 var last := {}
@@ -150,7 +152,8 @@ func act(v: Dictionary) -> Dictionary:
 			out.target = w
 			var root: Node3D = (get_parent().roots as Dictionary)[v.id]
 			_end_lead()
-			leading = {"id": v.id, "root": root, "home": root.global_position, "to": w.pos, "t": 0.0, "region": TestMap.region_at(root.global_position)}
+			leading = {"id": v.id, "root": root, "home": root.global_position, "to": w.pos, "t": 0.0, "sec": lead_sec(_flat(w.pos - root.global_position)),
+				"region": TestMap.region_at(root.global_position)}
 			Toast.show(self, "🧭 %s: \"%s\"까지 앞장서지요 · %dm" % [v.name, w.name, roundi(_flat(w.pos - me))], SHOW_SEC)
 	else:
 		out.foe_hp = _provoke(v)
@@ -263,14 +266,18 @@ func _process(delta: float) -> void:
 		_btn_t = BUTTON_TICK
 		_refresh_button()
 
-## 이끌기 — LEAD_SEC 동안 길목 쪽으로(닿으면 섬), 그 뒤 집으로 걸어 돌아간다. 땅 높이를 따른다.
+## 이끌기 걷는 시간 — 길목까지 걸리는 시간 + LEAD_WAIT(닿아서 서 있기), LEAD_SEC~LEAD_MAX 안(G-0244: 30초 고정이면 146m 길목에 못 닿았다).
+static func lead_sec(dist: float) -> float:
+	return clampf(dist / LEAD_SPEED + LEAD_WAIT, LEAD_SEC, LEAD_MAX)
+
+## 이끌기 — leading.sec 동안 길목 쪽으로(닿으면 섬), 그 뒤 집으로 걸어 돌아간다. 땅 높이를 따른다.
 func _walk(delta: float) -> void:
 	var r: Node3D = leading.root
 	if not is_instance_valid(r):
 		leading = {}
 		return
 	leading.t += delta
-	var back: bool = float(leading.t) > LEAD_SEC
+	var back: bool = float(leading.t) > float(leading.sec)
 	var goal: Vector3 = leading.home if back else leading.to
 	var d := Vector3(goal.x - r.global_position.x, 0.0, goal.z - r.global_position.z)
 	var step := LEAD_SPEED * delta

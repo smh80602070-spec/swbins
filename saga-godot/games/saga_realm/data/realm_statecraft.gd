@@ -108,7 +108,7 @@ static func fx() -> Dictionary:
 		"plot": pct.call("plotPct"),
 		"fire": HWAGONG_FIRE if r.hwagong else 1.0,
 		"atk": pct.call("atkPct"),
-		"take": maxf(0.5, 1.0 - (float(a.sum("defPct")) + Wonder.pct(Wonder.ME, "defPct")) / 100.0),   # G-0243 만리 장벽
+		"take": maxf(0.5, 1.0 - (float(a.sum("defPct")) + Tech.pct("defPct") + Wonder.pct(Wonder.ME, "defPct")) / 100.0),   # G-0243 만리 장벽 · G-0244 방패 벽
 		"field": (CHEOLGI_FIELD if r.cheolgi else 1.0) * (GONG_FIELD if r.gongseong else 1.0),
 		"siege": CHEOLGI_SIEGE if r.cheolgi else 1.0,
 		"chip": GONG_WALL if r.gongseong else 1.0,

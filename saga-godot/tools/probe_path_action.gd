@@ -124,7 +124,10 @@ func _physics_process(_delta: float) -> void:
 				_check("lead_walk", moved > 0.5 and absf(r.global_position.y - ground) < 0.05 and area.global_position.is_equal_approx(r.global_position),
 					"moved=%.2f dy=%.3f" % [moved, r.global_position.y - ground])
 				var l: Dictionary = _pa.get("leading")
-				l.t = PathAction.LEAD_SEC + 0.1
+				var far := PathAction.lead_sec(146.0)
+				_check("lead_far", far * PathAction.LEAD_SPEED > 146.0 + 0.5 and float(l.sec) >= PathAction.LEAD_SEC,
+					"146m sec=%.1f sec=%.1f" % [far, float(l.sec)])
+				l.t = float(l.sec) + 0.1
 			elif _frame > 40:
 				if (_pa.get("leading") as Dictionary).is_empty():
 					var r: Node3D = _npc.roots["npc_elder"]
