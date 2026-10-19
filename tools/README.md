@@ -49,6 +49,7 @@
 | `tools/asset-audit/` | 세 트랙 에셋 점검 — 공개 유출 · 압축 디코더 누락 · 용량 · .meta/.import 짝 · 폰 예산 · 출처 문서 · 미참조 · 사본. `--quick` 은 바뀐 것만 |
 | `tools/asset-place/` | 에셋 배치 - 정본 `saga-assets/` 한 곳에서 웹·Godot·Unity 폴더로 배포하고 같은지 검사(`place.py --check`·`--write`, 표 `asset-place.json`). 웹·고돗·유니티 갈래는 에셋을 안 고친다(K-0019) |
 | `tools/claude-home/` | 좀비 청소기 — 부모 죽은 bash·git·serena·헤드리스 크롬 묶음만 끔(일반 node·Unity·Godot 품은 묶음은 보존), 세션 시작·턴 끝(10분 간격) 훅. PC마다 `node tools/claude-home/install.js`(되돌리기 `--uninstall`), 기록 `~/.claude/reap-orphans.log`(끈 것)·`reap-orphans.last`(마지막으로 돈 시각). 훅이 WMI(cscript `reap-launch.wsf`)로 띄운다 — 그냥 detached 로 띄우면 훅과 함께 죽는다. 끄는 건 이름난 단명 보조(statusline·rtk hook 등)·MCP·30분 넘은 헤드리스 크롬·한 번도 실행 못 한 일시정지 고아뿐 — 부모 죽은 bash 라도 남의 백그라운드 작업일 수 있어 안 끈다. 시험: `reap-orphans.ps1 -DryRun` |
+| `.mcp.json`(루트) | 프로젝트 MCP — **Chrome DevTools MCP**(성능 추적·콘솔·네트워크·화면, `--isolated` = 쓸 때마다 임시 프로필이라 사용자 크롬과 안 섞임). 저장소를 받은 PC 는 다음 세션 첫머리에 한 번 승인하면 `mcp__chrome-devtools__*` 가 뜬다(npx 가 받음 — Node 만 있으면 됨). 세레나·repomix 는 PC 마다 user 스코프 |
 | `tools/hooks/` | `gate.js` 훅 게이트(세션 절차·커밋 전 precheck·PLAN 날짜 기록 막기) · 티켓 6144B 초과 막기 · `syntax-check.js` js 구문 한꺼번에 |
 | `saga-web/tools/mobile-layout/` | 폰 배치 점검 — 다섯 판을 헤드리스 크롬 모바일 에뮬레이션(세로·가로)으로 띄워 화면 밖·닿지 않음·가림·겹침·터치 40px·글자 11px 을 **숫자로**(스크린샷 없음), 첫 화면·첫 창·시트 전부. `node probe.js` → `MLAYOUT 합계 0건` |
 | `saga-godot/tools/godot_regress.sh` | 다섯 대표 씬 헤드리스 3회 회귀(로그 md5·error/warn 0) |
