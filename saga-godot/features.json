@@ -4362,5 +4362,36 @@
   "ticket": "G-0235",
   "since": "2026-10-19",
   "note": "보스는 착지 넘어짐에서도 빠짐(밀치기만) · 비탈 위로 던지면 덜 감(점검 땅 3.85m) · 그림·소리는 기존 고리·흔들림"
+ },
+ {
+  "id": "gd.dg.weapon-swap",
+  "name": "2나락 무기 두 벌 바꿔 들기 — 무기 을(乙) 칸 하나 · Q(폰 🔁)로 갑↔을 0.4초 자세(몸 기울이기) · 직업·무예 넉 자리 따라 바뀜 · 쿨 1초(단추 쿨 고리) · 바꾼 직후 첫 타 ×1.15 한 번(손맛 세게) · 새 무기를 주우면 손 무기가 을로(을에 있던 건 버림)(웹 W-0281)",
+  "files": [
+   "games/saga_dungeon/data/dungeon_equipment_state.gd",
+   "games/saga_dungeon/player/weapon_swap_input.gd",
+   "games/saga_dungeon/player/DungeonPlayer.tscn",
+   "games/saga_dungeon/ui/weapon_swap_button.gd",
+   "games/saga_dungeon/ui/DungeonHUD.tscn",
+   "games/saga_dungeon/world/loot_pickup.gd",
+   "games/saga_dungeon/ui/vendor_button.gd",
+   "games/saga_dungeon/player/melee_attack.gd",
+   "games/saga_dungeon/player/skill_caster.gd",
+   "games/saga_dungeon/data/dungeon_save_state.gd",
+   "project.godot",
+   "tools/probe_dungeon_swap.gd"
+  ],
+  "tests": [
+   "dungeon_swap",
+   "dungeon_slots",
+   "dungeon_gear",
+   "save_dungeon",
+   "dungeon_melee"
+  ],
+  "level": "D2",
+  "verified": "2026-10-19",
+  "fun": {},
+  "ticket": "G-0236",
+  "since": "2026-10-19",
+  "note": "세이브 순수 추가 칸 weapon2(버전 그대로) · 을은 능력치·투장에 안 셈 · 사망 무덤은 갑만 · 자세는 새 그림 없이 Visual rotation.x"
  }
 ]

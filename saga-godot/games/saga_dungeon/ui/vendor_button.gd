@@ -109,7 +109,10 @@ func _gamble(slot_name: String, cost: int, lv: int) -> void:
 		return
 	var t := DungeonItems.roll_tier_gamble()
 	var it := DungeonItems.roll(lv, slot_name, t, true)
-	DungeonEquipmentState.equip(slot_name, it)
+	if slot_name == "weapon":   # G-0236 줍기와 같은 경계 — 손 무기는 을로
+		DungeonEquipmentState.pick_weapon(it)
+	else:
+		DungeonEquipmentState.equip(slot_name, it)
 	var tier: Dictionary = DungeonItems.TIERS[it.tier]
 	var lines := DungeonItems.item_lines(it)
 	Toast.show(self, "🎲 %s · %s (%s)" % [tier.name, DungeonItems.item_name(it), " · ".join(lines)], 4.0)

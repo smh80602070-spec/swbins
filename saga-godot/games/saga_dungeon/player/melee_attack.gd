@@ -79,6 +79,8 @@ func _strike(enemy: Node) -> void:
 		is_crit = false
 	if is_crit:
 		dmg *= CRIT_MULT
+	var first_mul: float = DungeonEquipmentState.take_first_hit()   # G-0236 바꿔 든 직후 첫 타 ×1.15(한 번)
+	dmg *= first_mul
 	dmg *= Meridian.hit_mul(get_tree(), enemy, _player)   # G-0217 경락 규칙 피해 배수(일격·독행·역린·천리안·관통)
 	## dungeon.js strike()의 "res = resistOf(e,'phys'); if (res>0) dmg *= 1-res/100"
 	## 그대로 — 정예 "철갑 두른"이 붙기 전엔 어떤 몬스터에도 resist.phys가
@@ -91,7 +93,7 @@ func _strike(enemy: Node) -> void:
 	## 헤더 참고. 유일한 "타격 한 곳"(melee_attack.gd) 에서만 이번에 잇는다
 	## — 무예 스크립트 80여 개는 범위 밖(다음 세션).
 	if enemy is Node3D:
-		CombatFeel.hit(enemy, dmg, is_crit)
+		CombatFeel.hit(enemy, dmg, is_crit, DungeonEquipmentState.FIRST_HIT_TUNE if first_mul > 1.0 else {})
 		Voice.say("shout")   # G-0111 — 가끔 외침(말하는 이 = Voice.speaker)
 	if is_instance_valid(enemy) and enemy.hp > 0.0:
 		_apply_elemental(enemy)

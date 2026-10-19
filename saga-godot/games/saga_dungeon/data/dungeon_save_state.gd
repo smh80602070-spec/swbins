@@ -94,6 +94,7 @@ func save(player: Node3D) -> void:
 		"boons": DungeonRunState.boons,
 		## §"제외" 3번(장비 등급+접사) — 같은 경계, 순수 추가 필드.
 		"weapon": DungeonEquipmentState.weapon,
+		"weapon2": DungeonEquipmentState.weapon2,   # G-0236 무기 을 — 순수 추가(버전 그대로)
 		## §"제외" 2번(소켓+부문어·투장·내구) — 부적(charm)도 무기와 같은
 		## 경계(순수 추가 필드). 소켓(sock)·내구(dur)·세트(set)는 weapon/
 		## charm 안에 이미 들어 있어 따로 안 적는다(item Dictionary 그대로
@@ -201,6 +202,7 @@ func try_load() -> bool:
 		var v: Variant = data.get(slot_name, {})
 		equip_saved[slot_name] = v if typeof(v) == TYPE_DICTIONARY else {}
 	DungeonEquipmentState.restore(equip_saved)
+	DungeonEquipmentState.restore_weapon2(data.get("weapon2", {}))   # G-0236 없으면(옛 세이브) 한 벌
 	var runes: Variant = data.get("runes", {})
 	var scrolls: Variant = data.get("scrolls", 0)
 	var gems: Variant = data.get("gems", {})

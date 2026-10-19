@@ -272,6 +272,8 @@ func _strike(enemy: Node, sk: Dictionary, mult: float) -> void:
 		is_crit = false
 	if is_crit:
 		dmg *= MeleeAttack.CRIT_MULT
+	var first_mul: float = DungeonEquipmentState.take_first_hit()   # G-0236 바꿔 든 직후 첫 타 ×1.15(한 번)
+	dmg *= first_mul
 	dmg *= Meridian.hit_mul(get_tree(), enemy, _player) * Meridian.mul("skill")   # G-0217 경락 규칙(무심 무예 ×0.7)
 	var el: String = str(sk.get("el", "phys"))
 	var res: float = float(enemy.resist_pct(el)) if enemy.has_method("resist_pct") else 0.0
@@ -281,7 +283,7 @@ func _strike(enemy: Node, sk: Dictionary, mult: float) -> void:
 	if enemy.has_method("take_damage"):
 		enemy.take_damage(dmg)
 	if enemy is Node3D:
-		CombatFeel.hit(enemy, dmg, is_crit, {} if _hits == 0 else HIT_QUIET)
+		CombatFeel.hit(enemy, dmg, is_crit, DungeonEquipmentState.FIRST_HIT_TUNE if first_mul > 1.0 else ({} if _hits == 0 else HIT_QUIET))
 		_hits += 1
 
 

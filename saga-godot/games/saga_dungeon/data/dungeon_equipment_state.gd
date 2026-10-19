@@ -114,6 +114,84 @@ func restore(saved: Dictionary) -> void:
 		_emit_changed(slot_name)
 
 
+## ── G-0236 무기 을(乙) — 웹 wpn-swap.js(W-0281) 이식 ──
+## 을은 SLOT_NAMES 밖이다(넣으면 _active_items 가 능력치·투장을 두 번 셈). 갑↔을을 바꾸면
+## weapon_changed 하나로 직업·무예 넉 자리·경락도·job_label 이 저절로 따라온다.
+## 가방이 없는 판이라 웹 "을에 들기" 대신 — 새 무기를 밟으면 손 무기가 을로, 을에 있던 건 버림(pick_weapon).
+const SWAP_SEC := 0.4      # 바꿔 드는 자세(weapon_swap_input.gd 가 몸을 기울인다)
+const SWAP_CD := 1.0
+const FIRST_MUL := 1.15    # 바꾼 직후 첫 타 한 번
+const FIRST_HIT_TUNE := {"stop_ms": 110, "shake_mul": 1.8, "pop_mul": 1.35}   # 첫 타 CombatFeel.hit 세게
+
+signal weapon_swapped
+
+var weapon2: Dictionary = {}
+var _swap_cd := 0.0
+var _first_mul := 0.0
+
+
+func _process(delta: float) -> void:
+	if _swap_cd > 0.0:
+		_swap_cd = maxf(0.0, _swap_cd - delta)
+
+
+func cd_left() -> float:
+	return _swap_cd
+
+
+## 무기 아닌 것은 을에 못 든다.
+static func is_weapon(it: Dictionary) -> bool:
+	return not it.is_empty() and str(DungeonItems.base_by_key(str(it.get("base", ""))).get("slot", "")) == "weapon"
+
+
+func set_weapon2(it: Dictionary) -> bool:
+	if not it.is_empty() and not is_weapon(it):
+		return false
+	weapon2 = it
+	weapon_swapped.emit()
+	return true
+
+
+## 줍기(loot_pickup.gd) — 손에 든 무기를 을로 내리고(을에 있던 건 버림) 새 무기를 든다.
+func pick_weapon(it: Dictionary) -> void:
+	if not weapon.is_empty():
+		weapon2 = weapon
+	equip("weapon", it)
+	weapon_swapped.emit()
+
+
+## {ok, reason("single"|"cd"), left}. 갑이 비어 있었으면 을이 손으로 가고 을 칸은 빈다(웹 그대로).
+func swap_weapons() -> Dictionary:
+	if weapon2.is_empty():
+		return {"ok": false, "reason": "single"}
+	if _swap_cd > 0.0:
+		return {"ok": false, "reason": "cd", "left": _swap_cd}
+	var cur := weapon
+	weapon = weapon2
+	weapon2 = cur
+	_swap_cd = SWAP_CD
+	_first_mul = FIRST_MUL
+	_emit_changed("weapon")
+	weapon_swapped.emit()
+	return {"ok": true}
+
+
+## 바꾼 직후 첫 타 배율 — 타격 한 곳(melee·skill _strike)이 한 번 쓰고 끈다. 없으면 1.0.
+func take_first_hit() -> float:
+	if _first_mul <= 0.0:
+		return 1.0
+	var m := _first_mul
+	_first_mul = 0.0
+	return m
+
+
+func restore_weapon2(v: Variant) -> void:
+	weapon2 = v if typeof(v) == TYPE_DICTIONARY and is_weapon(v) else {}
+	_swap_cd = 0.0
+	_first_mul = 0.0
+	weapon_swapped.emit()
+
+
 ## 부서진 장비는 아무 값도 안 낸다(item.js "부서지면 능력치를 안 준다") —
 ## main·접사·소켓 효과·투장 집계 전부 이 문턱 하나를 공유한다.
 func _active_items() -> Array[Dictionary]:

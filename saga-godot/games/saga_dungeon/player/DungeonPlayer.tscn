@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://saga_core/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://saga_core/player/dungeon_camera_rig.gd" id="2"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://games/saga_dungeon/player/boon_speed_sync.gd" id="6"]
 [ext_resource type="Script" path="res://games/saga_dungeon/player/potion_belt_input.gd" id="7"]
 [ext_resource type="Script" path="res://games/saga_dungeon/player/skill_caster.gd" id="skill_caster"]
+[ext_resource type="Script" path="res://games/saga_dungeon/player/weapon_swap_input.gd" id="weapon_swap"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape1"]
 radius = 0.45
@@ -48,3 +49,6 @@ script = ExtResource("7")
 
 [node name="SkillCaster" type="Node" parent="."]
 script = ExtResource("skill_caster")
+
+[node name="WeaponSwapInput" type="Node" parent="."]
+script = ExtResource("weapon_swap")

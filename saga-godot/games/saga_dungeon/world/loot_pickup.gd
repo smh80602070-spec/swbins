@@ -307,7 +307,10 @@ static func _spawn_item(parent: Node, pos: Vector3, it: Dictionary, pillar: bool
 	parent.add_child(area)
 	area.body_entered.connect(func(body: Node3D) -> void:
 		if body.is_in_group("player"):
-			DungeonEquipmentState.equip(slot_name, it)
+			if slot_name == "weapon":   # G-0236 손 무기는 을로(을에 있던 건 버림)
+				DungeonEquipmentState.pick_weapon(it)
+			else:
+				DungeonEquipmentState.equip(slot_name, it)
 			var lines := DungeonItems.item_lines(it)
 			Toast.show(area, "🎁 %s · %s (%s)" % [tier.name, DungeonItems.item_name(it), " · ".join(lines)], TOAST_SEC)
 			area.queue_free()
