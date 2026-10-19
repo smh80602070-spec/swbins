@@ -23,6 +23,23 @@ var ranks: Dictionary = {}   # skill_key(String) -> rank(int)
 ## G-0198 — 무예 넉 자리(Z·X·C·V), 웹 skill.js slots() 그대로 **직업마다 따로**: cls_key -> [키 넷] ("" = 빈 칸).
 ## 무기를 바꿨다 도로 쥐면 손이 그대로 살아난다.
 var slots: Dictionary = {}
+## G-0241 — 무예별 작은 나무 {무예 key: {xp, pts}}(dungeon_skill_tree.gd). 세이브 "skill_tree" 순수 추가.
+var tree: Dictionary = {}
+
+
+func restore_tree(saved: Variant) -> void:
+	tree.clear()
+	if typeof(saved) != TYPE_DICTIONARY:
+		return
+	for k in saved:
+		var t: Variant = saved[k]
+		if typeof(t) != TYPE_DICTIONARY:
+			continue
+		var pts: Array = []
+		if t.get("pts", null) is Array:
+			for v in t.pts:
+				pts.append(int(v) if v != null else 0)
+		tree[str(k)] = {"xp": int(t.get("xp", 0)), "pts": pts}
 
 
 func award_point(cls_key: String) -> void:

@@ -14,6 +14,8 @@ extends Node
 ##   한 번 시전에 여럿을 맞히면 멈칫·흔들림·타격음은 첫 적 한 번만(나머지는 HIT_QUIET). 색은 DungeonItems.ELEMENTS color 그대로.
 
 const Meridian := preload("res://games/saga_dungeon/data/dungeon_meridian.gd")   # G-0217 경락도
+const SkillTree := preload("res://games/saga_dungeon/data/dungeon_skill_tree.gd")   # G-0241 무예별 작은 나무
+const Toast := preload("res://saga_core/ui/toast.gd")
 const MeleeAttack := preload("res://games/saga_dungeon/player/melee_attack.gd")
 const DungeonMinion := preload("res://games/saga_dungeon/world/dungeon_minion.gd")
 const CombatFx := preload("res://saga_core/combat_fx.gd")
@@ -83,6 +85,7 @@ func try_cast(skill_key: String) -> bool:
 	var sk := DungeonSkills.skill_by_key(skill_key)
 	if not DungeonSkills.is_active(sk):
 		return false
+	sk = SkillTree.mods(sk)   # G-0241 나무 — 복제본에 r·el·shots·hops·tree_* (원본 표는 그대로)
 	var ok := false
 	var blood := Meridian.blood_cost(get_tree())   # G-0217 혈공(경락 규칙) — 무예마다 최대 체력 5%, 모자라면 못 쓴다
 	var ph: Node = get_tree().get_first_node_in_group("player_health") if blood > 0.0 else null
@@ -106,7 +109,12 @@ func try_cast(skill_key: String) -> bool:
 		"summon": ok = _cast_summon(sk, rank)
 		"chain": ok = _cast_chain(sk, rank)
 	if ok:
-		_cd[skill_key] = float(sk.cd) * Meridian.mul("cd")   # G-0217 기력·혈공·무심(경락)
+		_cd[skill_key] = float(sk.cd) * Meridian.mul("cd") * float(sk.get("tree_cd", 1.0))   # G-0217 기력·혈공·무심(경락) × G-0241 나무(재냉각·기력, 하한 ×0.3)
+		if float(sk.get("tree_drain", 0.0)) > 0.0:   # G-0241 나무 흡수 — 시전 때 6초 흡혈
+			DungeonRunState.add_temp_buff("drainPct", float(sk.tree_drain), SkillTree.DRAIN_SEC)
+		var g := SkillTree.gain(skill_key)   # G-0241 시전 1 = 경험 1 (ok 일 때만)
+		if bool(g.up) and is_inside_tree():
+			Toast.show(self, "🌱 %s %s 무예 레벨 %d — 나무에 점 하나" % [str(sk.get("icon", "")), str(sk.name), int(g.lv)], 2.5)
 		if ph != null:
 			ph.hp = maxf(1.0, float(ph.hp) - blood)
 			ph.hp_changed.emit(ph.hp, ph.max_hp)
@@ -207,7 +215,7 @@ func _cast_summon(sk: Dictionary, rank: int) -> bool:
 	var parent := get_tree().current_scene
 	if parent == null:
 		parent = _player.get_parent()
-	for i in range(roundi(DungeonSkills.value_at(sk, rank)) + int(Meridian.add("summonCountAdd"))):
+	for i in range(roundi(DungeonSkills.value_at(sk, rank)) + int(Meridian.add("summonCountAdd")) + int(sk.get("summon_add", 0))):
 		var m: Node3D = DungeonMinion.new()
 		m.kind_key = str(sk.key) # G-0202 몸 고르기 — _ready 전에
 		parent.add_child(m)
@@ -266,7 +274,7 @@ func _enemies_in_radius(radius: float) -> Array:
 func _strike(enemy: Node, sk: Dictionary, mult: float) -> void:
 	var pct_mult: float = DungeonRunState.atk_mult() + DungeonEquipmentState.atk_pct_bonus() / 100.0
 	var base: float = MeleeAttack.ATK_DAMAGE * pct_mult + DungeonEquipmentState.atk_flat_bonus()
-	var dmg: float = base * mult * DungeonRunState.skill_mul()
+	var dmg: float = base * mult * DungeonRunState.skill_mul() * float(sk.get("tree_dmg", 1.0))   # G-0241 나무 위력
 	var is_crit := randf() * 100.0 < DungeonRunState.crit_chance()
 	if is_crit and Meridian.has_rule("onecut"):   # G-0217 일격 — 치명 없음(굴림 순서는 그대로)
 		is_crit = false

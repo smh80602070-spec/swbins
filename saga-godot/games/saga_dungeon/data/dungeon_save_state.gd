@@ -130,6 +130,8 @@ func save(player: Node3D) -> void:
 		"skill_ranks": DungeonSkillState.ranks,
 		## G-0198 — 무예 넉 자리(직업마다 키 넷). 순수 추가(버전 안 올림), 없으면 배운 활성 무예로 채운다.
 		"skill_slots": DungeonSkillState.slots,
+		## G-0241 — 무예별 작은 나무 {key: {xp, pts}}. 순수 추가(버전 안 올림), 없으면 {}.
+		"skill_tree": DungeonSkillState.tree,
 		## PLAN 101-2 DUNGEON ②(유품, 2026-09-17) — 순수 추가 필드(버전 안
 		## 올림). {} 면 유품 없음(dungeon_grave_state.gd 참고).
 		"grave": DungeonGraveState.grave,
@@ -233,6 +235,7 @@ func try_load() -> bool:
 		skill_points if typeof(skill_points) == TYPE_DICTIONARY else {},
 		skill_ranks if typeof(skill_ranks) == TYPE_DICTIONARY else {},
 		data.get("skill_slots", null))
+	DungeonSkillState.restore_tree(data.get("skill_tree", {}))
 	var grave: Variant = data.get("grave", {})
 	DungeonGraveState.restore(grave if typeof(grave) == TYPE_DICTIONARY else {})
 	var sigils: Variant = data.get("sigils", [])

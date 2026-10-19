@@ -7,12 +7,14 @@ extends Button
 ## 하나를 투자한다.
 ## G-0198 — 맨 위 "🎯 자리에 걸기"로 배운 활성 무예를 Z·X·C·V 넉 자리 중 하나에 건다(이미 걸린 것이면 맞바꿈, 웹 setSlot).
 ## 이 흐름의 창 둘(무예 고르기·자리 고르기)은 고르면 스스로 닫힌다.
+## G-0241 — 배운 활성 무예 줄 밑에 "🌳 나무 Lv·점" 줄 → 마디 8(갈래 가/나) + ↩ 되돌리기(금 200) 창(data/dungeon_skill_tree.gd).
 ## G-0217 — 둘째 줄 "☯ 경락도"(키 F2, 액션 dungeon_meridian 은 실행 때 단다)가 공용 패시브 그물 화면을 지금 직업 경락도로 연다.
 
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const Screen := preload("res://saga_core/ui/passive_web_screen.gd")
 const Meridian := preload("res://games/saga_dungeon/data/dungeon_meridian.gd")
+const SkillTree := preload("res://games/saga_dungeon/data/dungeon_skill_tree.gd")
 
 var meridian_open := false
 
@@ -69,6 +71,10 @@ func _on_pressed() -> void:
 			"label": "%s (%d/%d단) — %s" % [sk.name, rank, DungeonSkills.MAX_RANK, sk.desc],
 			"cb": func() -> void: _invest(str(sk.key), str(sk.name)),
 		})
+		if DungeonSkills.is_active(sk) and rank > 0:   # G-0241 무예별 작은 나무(passive 는 시전이 없어 나무 없음)
+			choices.append({"label": "　%s — %s" % [SkillTree.line(str(sk.key)), sk.name], "cb": func() -> void:
+				_close(box)
+				open_tree(str(sk.key))})
 
 	box.append(ChoicePrompt.build(get_tree().current_scene,
 		"🥋 %s — 남은 점수 %d" % [cls_name, pts], choices))
@@ -148,3 +154,48 @@ func _invest(skill_key: String, skill_name: String) -> void:
 	var pre := DungeonSkills.prereq_of(sk)
 	if not pre.is_empty():
 		Toast.show(self, "먼저 「%s」에 1단 이상 올려야 한다." % str(pre.get("name", "?")), 2.5)
+
+
+## G-0241 — 무예 하나의 나무 창. 찍거나 되돌리면 창을 다시 그린다.
+func open_tree(skill_key: String) -> CanvasLayer:
+	var sk := DungeonSkills.skill_by_key(skill_key)
+	var choices: Array = []
+	var box: Array = []
+	for i in SkillTree.NODES:
+		for side: String in ["a", "b"]:
+			var opt: Dictionary = SkillTree.TREE[i][side]
+			var cur := 0
+			var t: Variant = DungeonSkillState.tree.get(skill_key, {})
+			if typeof(t) == TYPE_DICTIONARY and i < (t.get("pts", []) as Array).size():
+				cur = int(t.pts[i])
+			var mine := (side == "a" and cur > 0) or (side == "b" and cur < 0)
+			var w := SkillTree.why(skill_key, i, side)
+			choices.append({"label": "%s 마디 %d %s · %s%s%s" % ["●" if mine else "○", i + 1, "가" if side == "a" else "나", SkillTree.label(opt),
+				(" ×%d" % absi(cur)) if mine else "", "" if w == "" else " (%s)" % TREE_WHY.get(w, w)],
+				"cb": _tree_put.bind(skill_key, i, side, box)})
+	choices.append({"label": "↩ 되돌리기 — 금 %d (경험은 남음)" % SkillTree.RESET_GOLD, "cb": _tree_reset.bind(skill_key, box)})
+	choices.append({"label": "닫기", "cb": _close.bind(box)})
+	box.append(ChoicePrompt.build(get_tree().current_scene, "🌳 %s %s — %s" % [str(sk.get("icon", "")), str(sk.get("name", skill_key)), SkillTree.line(skill_key)], choices))
+	return box[0]
+
+
+const TREE_WHY := {"prereq": "앞 마디 먼저", "side": "다른 갈래", "max": "끝", "point": "점 없음", "arg": "?"}
+
+
+func _tree_put(skill_key: String, i: int, side: String, box: Array) -> void:
+	var r := SkillTree.put(skill_key, i, side)
+	if not bool(r.ok):
+		Toast.show(self, "찍을 수 없다 — %s." % TREE_WHY.get(str(r.reason), str(r.reason)), 2.0)
+		return
+	_close(box)
+	open_tree(skill_key)
+
+
+func _tree_reset(skill_key: String, box: Array) -> void:
+	var r := SkillTree.reset(skill_key)
+	if not bool(r.ok):
+		Toast.show(self, "찍은 점이 없다." if str(r.reason) == "empty" else "금이 모자란다 — %d 금." % SkillTree.RESET_GOLD, 2.0)
+		return
+	Toast.show(self, "↩ 나무를 되돌렸다 — 금 %d." % SkillTree.RESET_GOLD, 2.0)
+	_close(box)
+	open_tree(skill_key)
