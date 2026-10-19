@@ -4205,5 +4205,33 @@
   "ticket": "G-0230",
   "since": "2026-10-19",
   "note": "웹 타이밍 창 ×1.6 은 이 판에 창이 없어 뺌 · 웅크리기 X 는 도감(go_codex)과 겹쳐 Ctrl · 사나운 종 몸은 대역(바위곰·번개살쾡이 — 신수 전투 몸은 K)"
+ },
+ {
+  "id": "gd.dg.loot-filter",
+  "name": "2나락 전리품 거르기 — 규칙 목록(등급 이상·부위·원소·내 직업 무기 → 보이기·숨기기·빛기둥) 위에서부터 첫 일치 · 숨긴 장비는 안 떨어짐(금·단약·재료는 늘) · 기본 셋 전설·보물·내 직업 무기 빛기둥 · 4층부터 \"상품 숨기기\" 추천 한 번 · HUD 🧹 규칙 창(하는 일·위·아래·끄기·지우기·빠른 추가 넷·기본으로)(웹 W-0287)",
+  "files": [
+   "games/saga_dungeon/data/loot_filter.gd",
+   "games/saga_dungeon/ui/loot_filter_button.gd",
+   "games/saga_dungeon/ui/DungeonHUD.tscn",
+   "games/saga_dungeon/world/loot_pickup.gd",
+   "games/saga_dungeon/data/dungeon_save_state.gd",
+   "games/saga_dungeon/world/test_room.gd",
+   "tools/scene_probes/loot_filter.gd",
+   "tools/probe_loot_filter.gd",
+   "tools/scene_probes/loot_glow.gd"
+  ],
+  "tests": [
+   "loot_filter",
+   "loot_glow",
+   "dungeon_gear",
+   "save_dungeon",
+   "dungeon_run"
+  ],
+  "level": "D2",
+  "verified": "2026-10-19",
+  "fun": {},
+  "ticket": "G-0231",
+  "since": "2026-10-19",
+  "note": "세이브 순수 추가 칸(버전 그대로) · 장비 원소 칸 없음 → elem 조건은 칸만 · 빛기둥 노드는 규칙 수만큼 늘 수 있음(PERF 는 따로 안 잼)"
  }
 ]

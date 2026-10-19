@@ -43,6 +43,8 @@ var scenario: Dictionary = {}
 ## G-0217 경락도 — 직업키 → {start, taken}(공용 패시브 그물 saga_core/data/passive_web.gd 의 세이브 칸). 효과는 data/dungeon_meridian.gd. 순수 추가 필드, 버전 안 올림.
 var passive: Dictionary = {}
 var _passive_apis: Dictionary = {}
+## G-0231 전리품 거르기 — {"rules": [...], "hinted": bool}(data/loot_filter.gd). 순수 추가 필드, 버전 안 올림 — 없으면 기본 셋.
+var loot_filter: Dictionary = {}
 const Meridian := preload("res://games/saga_dungeon/data/dungeon_meridian.gd")
 
 
@@ -149,6 +151,7 @@ func save(player: Node3D) -> void:
 		"worldboss_last_slot": DungeonWorldBossState.last_rewarded_slot,
 		"scenario": scenario,   # G-0085
 		"passive": passive,   # G-0217 경락도
+		"loot_filter": loot_filter,   # G-0231 전리품 거르기
 	}
 	SafeFile.write_text(save_path(), JSON.stringify(data))
 
@@ -181,6 +184,8 @@ func try_load() -> bool:
 	var pv: Variant = data.get("passive", {})   # G-0217 — 없으면(옛 세이브) 빈 경락도
 	passive = (pv as Dictionary).duplicate(true) if pv is Dictionary else {}
 	_passive_apis = {}
+	var lf: Variant = data.get("loot_filter", {})   # G-0231 — 없으면(옛 세이브) 기본 셋(loot_filter.gd store())
+	loot_filter = (lf as Dictionary).duplicate(true) if lf is Dictionary else {}
 
 	var p: Variant = data.get("player_pos", [0.0, 0.0, 0.0])
 	if not (p is Array) or p.size() < 3:

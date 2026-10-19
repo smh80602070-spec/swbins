@@ -105,6 +105,7 @@ const WEAPON_LOOK_KIND := {
 }
 const WEAPON_PICKUP_LENGTH := 0.9 # 바닥에 뜨는 목표 길이(m) — 새 GLB 는 길이 1.0~1.8m 라 AABB 최장축 기준으로 역산해 맞춘다.
 const TOAST_SEC := 4.0
+const LootFilter := preload("res://games/saga_dungeon/data/loot_filter.gd")
 const TRIGGER_RADIUS := 1.4
 const MAT_DROP_CHANCE := 0.12 # dungeon.js "e.boss?0.9:0.12"(dropMat 호출 확률) 그대로
 const POTION_DROP_CHANCE := 0.16 # dungeon.js "e.boss?1:(elK?0.34:0.16)" 그대로
@@ -243,11 +244,8 @@ static func _spawn_legendary_glow(area: Node3D, tier: Dictionary) -> void:
 	area.add_child(p)
 
 
-## PLAN 101-2 DUNGEON ⑥(월드 보스, 2026-09-17) — `legendary_mult`(기본
-## 1.0)는 DungeonItems.roll()로 그대로 넘어간다(웹 5.4 "전설 확률×3").
-static func spawn_at(parent: Node, pos: Vector3, ilvl: int, is_boss: bool = false, is_elite: bool = false, legendary_mult: float = 1.0) -> void:
-	var ilvl_bonus := 30 if is_boss else (ELITE_ILVL_BONUS if is_elite else 0)
-	var it := DungeonItems.roll(ilvl + ilvl_bonus, "", -1, false, legendary_mult)
+## 장비 노획물 하나(몸·등급 고리·잔광·빛기둥·줍기). G-0231 에서 spawn_at 본문을 떼어 냈다.
+static func _spawn_item(parent: Node, pos: Vector3, it: Dictionary, pillar: bool) -> void:
 	var tier: Dictionary = DungeonItems.TIERS[it.tier]
 	var b := DungeonItems.base_by_key(str(it.base))
 	var slot_name := str(b.get("slot", "weapon"))
@@ -297,6 +295,7 @@ static func spawn_at(parent: Node, pos: Vector3, ilvl: int, is_boss: bool = fals
 	_spawn_tier_ring(area, tier)
 	if it.tier == LEGENDARY_TIER_KEY:
 		_spawn_legendary_glow(area, tier)
+	if pillar:   # G-0231 빛기둥은 거르기 규칙이 정한다(기본 셋 = 전설·보물·내 직업 무기)
 		_spawn_legendary_beam(area, tier)
 
 	var cs := CollisionShape3D.new()
@@ -313,6 +312,17 @@ static func spawn_at(parent: Node, pos: Vector3, ilvl: int, is_boss: bool = fals
 			Toast.show(area, "🎁 %s · %s (%s)" % [tier.name, DungeonItems.item_name(it), " · ".join(lines)], TOAST_SEC)
 			area.queue_free()
 	)
+
+
+## PLAN 101-2 DUNGEON ⑥(월드 보스, 2026-09-17) — `legendary_mult`(기본
+## 1.0)는 DungeonItems.roll()로 그대로 넘어간다(웹 5.4 "전설 확률×3").
+static func spawn_at(parent: Node, pos: Vector3, ilvl: int, is_boss: bool = false, is_elite: bool = false, legendary_mult: float = 1.0) -> void:
+	var ilvl_bonus := 30 if is_boss else (ELITE_ILVL_BONUS if is_elite else 0)
+	var it := DungeonItems.roll(ilvl + ilvl_bonus, "", -1, false, legendary_mult)
+	## G-0231 전리품 거르기 — 숨긴 장비는 노드를 안 만든다(줍기에서도 빠짐). 금·단약·재료·감정서는 아래 그대로 늘 나온다.
+	var verdict := LootFilter.judge(it)
+	if bool(verdict.show):
+		_spawn_item(parent, pos, it, bool(verdict.pillar))
 
 	var gold_mul := 5.0 if is_boss else (ELITE_GOLD_MUL if is_elite else 1.0)
 	_spawn_gold(parent, pos + Vector3(-0.6, 0, -0.6), ilvl, gold_mul)

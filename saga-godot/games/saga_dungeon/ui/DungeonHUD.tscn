@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3]
+[gd_scene load_steps=22 format=3]
 
 [ext_resource type="Script" path="res://saga_core/ui/virtual_joystick.gd" id="1"]
 [ext_resource type="Script" path="res://games/saga_dungeon/ui/hp_label.gd" id="2"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://saga_core/ui/save_transfer_button.gd" id="save_transfer_btn"]
 [ext_resource type="Script" path="res://saga_core/ui/graphics_button.gd" id="graphics_btn"]
 [ext_resource type="Script" path="res://games/saga_dungeon/ui/skill_slot_button.gd" id="slot_button"]
+[ext_resource type="Script" path="res://games/saga_dungeon/ui/loot_filter_button.gd" id="loot_filter_btn"]
 
 [node name="DungeonHUD" type="CanvasLayer"]
 
@@ -324,6 +325,19 @@ offset_bottom = -6750.0
 text = "🌊"
 theme_override_font_sizes/font_size = 30
 script = ExtResource("91")
+
+[node name="LootFilterButton" type="Button" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -180.0
+offset_top = -6900.0
+offset_right = -40.0
+offset_bottom = -6830.0
+text = "🧹"
+theme_override_font_sizes/font_size = 30
+script = ExtResource("loot_filter_btn")
 
 [node name="GoalBoard" type="Label" parent="."]
 anchor_left = 1.0

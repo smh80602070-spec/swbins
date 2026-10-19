@@ -45,6 +45,9 @@ func _spawn_and_collect(parent: Node3D, mult: float, n: int) -> Array:
 
 func run() -> int:
 	seed(20260824)
+	## G-0231 — 빛기둥은 이제 전리품 거르기 규칙이 정한다. 이 점검은 "전설만 빛기둥" 한 줄로 고정해 돌리고 되돌린다.
+	var saved_filter: Dictionary = DungeonSaveState.loot_filter.duplicate(true)
+	DungeonSaveState.loot_filter = {"rules": [{"when": {"min_tier": LootPickup.LEGENDARY_TIER_KEY}, "do": "beam"}], "hinted": true}
 	var legend_color := Color(String(DungeonItems.TIERS[LootPickup.LEGENDARY_TIER_KEY].color))
 	var parent := Node3D.new()
 	add_child(parent)
@@ -85,4 +88,5 @@ func run() -> int:
 	if seen_legend == 0 or seen_plain == 0:
 		_fail("sample shortage legend=%d plain=%d" % [seen_legend, seen_plain])
 	parent.queue_free()
+	DungeonSaveState.loot_filter = saved_filter
 	return fails

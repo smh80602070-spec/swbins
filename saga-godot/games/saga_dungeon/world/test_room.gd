@@ -534,6 +534,8 @@ func _finish_exit(body: Node3D, room_index: int, is_final: bool) -> void:
 	DungeonSkillState.award_point(cls_key)
 	Meridian.on_room_clear(get_tree())   # G-0217 경락도 방마다 회복(healOnFloor)
 	DungeonSaveState.mark_room_cleared(room_index)
+	if not is_final:
+		preload("res://games/saga_dungeon/data/loot_filter.gd").hint_if_deep(self, room_index + 2)   # G-0231 다음 층이 4층부터면 한 번 권함
 	## PLAN 101-2 DUNGEON ④(부적 던전, 2026-09-17) — 이 슬라이스의 "클리어"
 	## = 마지막 방(is_final)에 부적을 켠 채로 닿았을 때(dungeon_sigil_
 	## state.gd::clear_run() 헤더 참고). 저장 앞에 둬야 다음 티어 부적이
