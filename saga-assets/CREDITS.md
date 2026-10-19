@@ -39,7 +39,7 @@
 | gen.py | Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-07 확인), 폐쇄 파생 모델 수익화만 금지 | 594 |
 | competitiongen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 21 |
 | gen.py | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1699 |
-| remote3d | microsoft/TRELLIS-image-large | MIT | 445 |
+| remote3d | microsoft/TRELLIS-image-large | MIT | 448 |
 | icon_pack.py | none | CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음) | 76 |
 | gen.py (ComfyUI) | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1650 |
 | make_ui_icons.py | none | CC0-1.0 (코드 생성 — 24격자 기하 도형, 외부 그림·Lucide 경로 없음) | 112 |
@@ -68,6 +68,7 @@
 | make_ibl.py | Illustrious-XL-v2.0 | 자체 하늘 그림(saga-assets/sky/sky_noon_present.webp)에서 코드로 — 그 그림의 라이선스를 따른다 | 3 |
 | beast2d_rebake.py --sheets (Blender render_sheet.py, Idle·Run 4컷) | - | CC0-1.0 (자체 3D 몸 렌더 — 외부 입력 없음, 몸 출처는 creatures3d license) | 11 |
 | beast2d_rebake.py (Blender render_sprite.py) | - | CC0-1.0 (자체 3D 몸 렌더 — 외부 입력 없음, 몸 출처는 creatures3d license) | 103 |
+| pet2d_k120.py (Blender render_sprite.py 옆모습, K-0114 맞춤) | - | CC0-1.0 (자체 3D 몸 렌더 — 몸 출처는 pets3d license) | 17 |
 | compress.mjs | - | CC0-1.0 (형태·뼈·동작 전부 코드, 외부 입력 없음) | 1 |
 | uigen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 285 |
 | k130_unity_pbr.py | - | self-pbr: rock (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0) | 2 |

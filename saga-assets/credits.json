@@ -351,7 +351,7 @@
    "tool": "remote3d",
    "model": "microsoft/TRELLIS-image-large",
    "license": "MIT",
-   "count": 445,
+   "count": 448,
    "where": [
     "saga-assets/creatures3d",
     "saga-assets/pets3d",
@@ -683,6 +683,15 @@
    "model": "",
    "license": "CC0-1.0 (자체 3D 몸 렌더 — 외부 입력 없음, 몸 출처는 creatures3d license)",
    "count": 103,
+   "where": [
+    "saga-assets/sprites2d-creatures/beast"
+   ]
+  },
+  {
+   "tool": "pet2d_k120.py (Blender render_sprite.py 옆모습, K-0114 맞춤)",
+   "model": "",
+   "license": "CC0-1.0 (자체 3D 몸 렌더 — 몸 출처는 pets3d license)",
+   "count": 17,
    "where": [
     "saga-assets/sprites2d-creatures/beast"
    ]

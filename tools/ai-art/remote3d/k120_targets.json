@@ -188,10 +188,12 @@
    "rig": "none",
    "height": 1.2,
    "yaw": 0,
-   "input": "tools/ai-art/_out/remote3d_in_k1019/pk_snorlax.png",
+   "input": "tools/ai-art/_out/remote3d_in_k1019d/pk_snorlax__t02.png",
    "borrowed": "standin 대역(Quaternius Alien_2·Cat_Monster·Demon·Orc·Wizard·Yeti — sprite.js pk_* 표)",
-   "judge_a": "다시(1차 납작 판)",
-   "lic_note": "K-0120 자체 생성 — 입력 = 도감 초상(web_pets_105)을 u2net 으로 떼어 img2img(k120_pets_C2/C3, 그림체 C) → TRELLIS. 빌린 standin 대역을 대신한다 — 게임 참조 바꾸기는 W 티켓."
+   "judge_a": "○(45도 돌린 그림, 10-19)",
+   "lic_note": "K-0120 자체 생성 — 입력 = 도감 초상(web_pets_105)을 u2net 으로 떼어 img2img(k120_pets_C2/C3, 그림체 C) → TRELLIS. 빌린 standin 대역을 대신한다 — 게임 참조 바꾸기는 W 티켓.",
+   "plate": true,
+   "plate_cut": 0.33
   },
   {
    "id": "pk_squirtle",

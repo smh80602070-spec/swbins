@@ -150,7 +150,9 @@
    "humanoid": false,
    "fist": false,
    "borrowed": "quaternius_cute/Cyclops",
-   "lic_note": "K-0122 자체 생성 — 입력 = 우리 txt2img(k122_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius_cute/Cyclops 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+   "lic_note": "K-0122 자체 생성 — 입력 = 우리 txt2img(k122_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius_cute/Cyclops 를 대신한다 — 게임 참조 바꾸기는 W 티켓.",
+   "plate": true,
+   "judge_a": "○(45도 돌린 그림, 10-19)"
   },
   {
    "id": "green_imp",
