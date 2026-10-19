@@ -1,0 +1,28 @@
+{
+ "name": "k145_portraits_C",
+ "spec": "creature",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0145 단계 3 — 초상(K-0144 꼴). 1차 = 5천하 몸 있는 둘(dragon_evolved·alien_grunt), 새 몸 10 은 단계 2 뒤 같은 배치에 더함.",
+ "items": [
+  {
+   "id": "dragon_evolved",
+   "subject": "pale blue-white dragon, large pink-violet wings, curved horns, spiky crest, long tail",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k145_init_w/dragon_evolved.png",
+   "denoise": 0.6,
+   "seed": 20271119
+  },
+  {
+   "id": "alien_grunt",
+   "subject": "tall slender lime-green alien, big black eyes, purple armor plates, long thin limbs",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k145_init_w/alien_grunt.png",
+   "denoise": 0.6,
+   "seed": 20271216
+  }
+ ]
+}
