@@ -4285,5 +4285,37 @@
   "ticket": "G-0233",
   "since": "2026-10-19",
   "note": "소리 없음(4종횡 효과음 자리 없음) · 일시정지 중엔 시간 안 건드림 · 상태는 정적 칸(golden 해시 그대로)"
+ },
+ {
+  "id": "gd.rk.tech-tree",
+  "name": "5천하 기술 나무 — 세력 연구 농·상·군·학 × 6마디(값 6~25) · 달마다 연구점 1 + 지력 85 이상 무장(넷까지) + 글 모으기 · 효과는 경륜도 합산 자리(군량·금·내정·공격·수비·징병·축성·등용·외교·계략·경험 %) · 조선·훈련 비용 −20% · 큰 도면 = 불가사의 문 플래그 · HUD 📜 연구 창(웹 W-0290)",
+  "files": [
+   "games/saga_realm/data/realm_tech.gd",
+   "games/saga_realm/ui/realm_tech_button.gd",
+   "games/saga_realm/ui/RealmHUD.tscn",
+   "games/saga_realm/data/realm_statecraft.gd",
+   "games/saga_realm/data/realm_rules.gd",
+   "games/saga_realm/data/realm_rules_month.gd",
+   "games/saga_realm/data/realm_state.gd",
+   "games/saga_realm/data/realm_save_state.gd",
+   "games/saga_realm/ui/realm_order_button.gd",
+   "tools/probe_realm_tech.gd"
+  ],
+  "tests": [
+   "realm_tech",
+   "realm_statecraft",
+   "realm_state",
+   "realm_tactics",
+   "save_realm",
+   "scenario_realm",
+   "realm_golden",
+   "realm_ai_statecraft"
+  ],
+  "level": "D2",
+  "verified": "2026-10-19",
+  "fun": {},
+  "ticket": "G-0234",
+  "since": "2026-10-19",
+  "note": "세이브 21→22 · AI 는 연구 안 함 · 불가사의 없음(플래그만) · 빈 나무 = golden 그대로"
  }
 ]

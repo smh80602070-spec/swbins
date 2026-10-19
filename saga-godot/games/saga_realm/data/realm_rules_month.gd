@@ -85,6 +85,12 @@ func next_month() -> void:
 	## 안 넘어온 쪽) 전부가 지금 화친 중이면 이어지고, 하나라도 깨지면
 	## 되돌린다. 위에서 막 닳은 truce_months를 그대로 본다("이번 달"
 	## 기준이 맞다).
+	## G-0234 기술 나무 연구점 — 1 + 지력 85 이상 무장(넷까지) + 「글 모으기」.
+	var scholars := 0
+	for oid in roster:
+		if _effective_stat(String(oid), "wisdom") >= float(preload("res://games/saga_realm/data/realm_tech.gd").SCHOLAR_WIS):
+			scholars += 1
+	preload("res://games/saga_realm/data/realm_tech.gd").monthly(scholars)
 	if _all_alive_forces_at_peace():
 		diplomacy_peace_streak += 1
 	else:

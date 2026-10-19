@@ -161,7 +161,7 @@ func _initialize() -> void:
 	var old_ok: bool = RS.try_load()
 	var old_empty: bool = (RS.ai_passive as Dictionary).is_empty()
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(RS.path_override))
-	check(saved_ok and load_ok and round_ok and old_ok and old_empty and RS.SAVE_VERSION == 21, "⑧ 세이브 왕복(%s %d마디) · 옛 20 → 빈 칸 · 버전 21" % [fid, keep_taken.size()])
+	check(saved_ok and load_ok and round_ok and old_ok and old_empty and RS.SAVE_VERSION >= 21, "⑧ 세이브 왕복(%s %d마디) · 옛 20 → 빈 칸 · 버전 21 이상(G-0234 에 22)" % [fid, keep_taken.size()])
 
 	RS.enemies = saved.enemies
 	RS.cities = saved.cities

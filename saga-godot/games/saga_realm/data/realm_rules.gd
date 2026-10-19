@@ -132,7 +132,8 @@ func execute_order(key: String, debate_mul: float = 1.0) -> Dictionary:
 	## 걸러 원작 순서(금 차감보다 먼저)를 그대로 지켰다.
 	if key == "ships" and RealmOrders.cap_of("ships", current_city) <= 0:
 		return {"ok": false, "why": "물길이 없는 성입니다"}
-	if gold < int(o.gold):
+	var order_gold: int = preload("res://games/saga_realm/data/realm_tech.gd").cost(key, int(o.gold))   # G-0234 기술 나무(조선·훈련 −20%)
+	if gold < order_gold:
 		return {"ok": false, "why": "금이 모자랍니다"}
 
 	## 수색·등용은 로스터 전체 아무나(성 소속 무관), 나머지(개발형·징병)는
@@ -143,7 +144,7 @@ func execute_order(key: String, debate_mul: float = 1.0) -> Dictionary:
 		var why := "이 성에 배치된 무장이 없습니다" if location_bound else "명령을 쓸 무장이 없습니다"
 		return {"ok": false, "why": why}
 
-	gold -= int(o.gold)
+	gold -= order_gold
 	_done_this_month[officer_id] = true
 
 	if key == "search":

@@ -141,6 +141,8 @@ var _passive_api: RefCounted = null
 ## G-0219 AI 세력 경륜도 — 세력 → {start, taken, won}(저장 키 "ai_passive", 20→21). 찍기·효과는 data/realm_ai_statecraft.gd.
 var ai_passive: Dictionary = {}
 var _ai_apis: Dictionary = {}
+## G-0234 기술 나무 — {"pts": int, "done": [마디 id…]}(저장 키 "tech", 21→22). 규칙·표는 data/realm_tech.gd.
+var tech: Dictionary = {}
 
 ## **2026-09-17 추가 — PLAN 101-2 REALM ③후보(웹판 §5-1 "인물 특성·야망").**
 ## `officer_growth`와 같은 지연 초기화 패턴 — officer_id -> {k, prog, done,

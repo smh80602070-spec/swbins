@@ -41,6 +41,8 @@ static var _def: Dictionary = {}
 static var _fx: Dictionary = {}
 static var _fx_api_id := 0
 static var _fx_rev := -1
+static var _fx_tech_rev := -1   # G-0234 기술 나무를 연구하면 다시 셈
+const Tech := preload("res://games/saga_realm/data/realm_tech.gd")
 
 
 static func _rs() -> Node:
@@ -82,11 +84,12 @@ static func fx() -> Dictionary:
 	var a := api()
 	if a == null:
 		return {}
-	if a.get_instance_id() == _fx_api_id and int(a.rev) == _fx_rev:
+	if a.get_instance_id() == _fx_api_id and int(a.rev) == _fx_rev and Tech.rev == _fx_tech_rev:
 		return _fx
 	_fx_api_id = a.get_instance_id()
 	_fx_rev = int(a.rev)
-	var pct := func(k: String) -> float: return 1.0 + float(a.sum(k)) / 100.0
+	_fx_tech_rev = Tech.rev
+	var pct := func(k: String) -> float: return 1.0 + (float(a.sum(k)) + Tech.pct(k)) / 100.0   # G-0234 기술 나무 % 도 같은 자리(웹 statecraft.sum 이 tech.pct 를 더하는 꼴)
 	var r := {}
 	for k in ["tunjeon", "cheolgi", "wongyo", "ilin", "gongseong", "muwi", "hwagong", "cheongya"]:
 		r[k] = bool(a.has(k))

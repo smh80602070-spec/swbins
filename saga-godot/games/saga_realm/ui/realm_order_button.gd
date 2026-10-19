@@ -27,7 +27,7 @@ func _on_pressed() -> void:
 	var choices: Array = []
 	for o: Dictionary in RealmOrders.ORDERS:
 		choices.append({
-			"label": "%s %s (💰%d) — %s" % [o.emoji, o.name, int(o.gold), o.desc],
+			"label": "%s %s (💰%d) — %s" % [o.emoji, o.name, preload("res://games/saga_realm/data/realm_tech.gd").cost(String(o.key), int(o.gold)), o.desc],   # G-0234 기술 나무 비용
 			"cb": func() -> void: _start_order(String(o.key), String(o.name), layer_box),
 		})
 	layer_box["layer"] = ChoicePrompt.build(self, "명령", choices)
