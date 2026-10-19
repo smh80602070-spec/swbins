@@ -9,7 +9,9 @@
    "humanoid": false,
    "fist": false,
    "borrowed": "quaternius/Cactoro",
-   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Cactoro 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Cactoro 를 대신한다 — 게임 참조 바꾸기는 W 티켓.",
+   "plate": true,
+   "plate_cut": 0.07
   },
   {
    "id": "swamp_toad",
@@ -19,7 +21,8 @@
    "humanoid": false,
    "fist": false,
    "borrowed": "quaternius/Frog",
-   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Frog 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Frog 를 대신한다 — 게임 참조 바꾸기는 W 티켓.",
+   "plate": true
   },
   {
    "id": "moss_blob",
@@ -49,7 +52,9 @@
    "humanoid": false,
    "fist": false,
    "borrowed": "quaternius/Mushnub_Evolved",
-   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Mushnub_Evolved 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Mushnub_Evolved 를 대신한다 — 게임 참조 바꾸기는 W 티켓.",
+   "plate_cut": 0.02,
+   "plate": true
   },
   {
    "id": "mushroom_lord",
@@ -59,7 +64,9 @@
    "humanoid": false,
    "fist": false,
    "borrowed": "quaternius/Mushroom_King",
-   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Mushroom_King 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Mushroom_King 를 대신한다 — 게임 참조 바꾸기는 W 티켓.",
+   "plate_cut": 0.05,
+   "plate": true
   },
   {
    "id": "shadow_ninja",
@@ -79,7 +86,9 @@
    "humanoid": true,
    "fist": true,
    "borrowed": "quaternius/Orc",
-   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7 + 오른손 FistR 노드(무기 쥠). 빌린 quaternius/Orc 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+   "lic_note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7 + 오른손 FistR 노드(무기 쥠). 빌린 quaternius/Orc 를 대신한다 — 게임 참조 바꾸기는 W 티켓.",
+   "plate_cut": 0.03,
+   "plate": true
   },
   {
    "id": "masked_tribal",

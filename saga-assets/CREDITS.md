@@ -33,14 +33,14 @@
 | bake_for_rig.py --map vroid (vroid_batch.sh anim 단계, 2026-10-07) | - | CC0-1.0 (뼈대+동작만 — 메시·그림 없음. 동작 원본 Quaternius Universal Animation Library CC0 + 자체 키프레임 too | 1 |
 | mocap_retarget.py (K-0139) | - | CMU Graphics Lab Motion Capture Database — "may be copied, modified, or redistributed with | 3 |
 | outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 2000 |
-| sprite_plan_16.json) + gear_sprites.py + weapon_attach.py (K-0138 16방향, 몸·무기는 8방향과 같음) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 10 |
+| sprite_plan_16.json) + gear_sprites.py + weapon_attach.py (K-0138 16방향, 몸·무기는 8방향과 같음) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 20 |
 | outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024)) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 1000 |
 |  에서 옮긴 같은 파일(K-0078, 유니티 vroid-bodies 원본 자리) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 26 |
 |  에서 옮긴 같은 파일(K-0078, 유니티 vroid-bodies 원본 자리) | - | VRoid Studio 로 만든 VRM — 출처·조건은 고돗 원 자리와 같다(K-0018 배치, saga-assets/CREDITS.md VRoid 절) | 2 |
 | gen.py | Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-07 확인), 폐쇄 파생 모델 수익화만 금지 | 594 |
 | competitiongen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 21 |
 | gen.py | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1699 |
-| remote3d | microsoft/TRELLIS-image-large | MIT | 455 |
+| remote3d | microsoft/TRELLIS-image-large | MIT | 465 |
 | icon_pack.py | none | CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음) | 76 |
 | gen.py (ComfyUI) | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1667 |
 | make_ui_icons.py | none | CC0-1.0 (코드 생성 — 24격자 기하 도형, 외부 그림·Lucide 경로 없음) | 112 |

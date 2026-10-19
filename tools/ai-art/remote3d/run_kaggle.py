@@ -5,7 +5,7 @@
 
 - 계정 이름은 `kaggle config view` 에서 읽는다(저장소에 안 적는다). 토큰은 %USERPROFILE%\\.kaggle\\access_token — 커밋 금지.
 - 데이터셋 `<계정>/saga-k95-input`(비공개, 있으면 새 판) · 노트북 `<계정>/saga-k95-trellis`(비공개, GPU T4·인터넷 켬).
-- `--no-push` 는 밀어 넣지 않고 지켜보기·받기만(끊긴 뒤 이어 받기). 데이터셋이 이미 있으면 그대로 쓴다(그림을 바꿨으면 `--reupload`).
+- `--no-push` 는 밀어 넣지 않고 지켜보기·받기만(끊긴 뒤 이어 받기). 밀어 넣을 땐 늘 데이터셋 새 판을 올린다(K-0145 — 예전 기본은 옛 입력을 그대로 써서 남의 묶음을 다시 돌렸다). 같은 입력을 다시 돌릴 땐 `--keep-data`.
 """
 import glob
 import json
@@ -91,7 +91,7 @@ def main():
     u = user()
     t0 = time.time()
     if '--no-push' not in a:
-        push(src, u, '--reupload' in a)
+        push(src, u, '--keep-data' not in a)
     while True:
         st = kg('kernels', 'status', '%s/%s' % (u, KN), check=False)
         print(time.strftime('%H:%M:%S'), st[-160:], flush=True)

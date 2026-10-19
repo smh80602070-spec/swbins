@@ -1,5 +1,5 @@
 {
- "note": "K-0122 단계 1(Opus 10-17) — 5천하 data-force.js monster: 경로 + 2나락 js 참조 → 자체 creatures3d 짝. 'new:humanoid' = 사람꼴(무기 쥠) 자체 몸 없음 → 그림 → TRELLIS(SD 사슬 뒤). 2나락 실제 놀이 쓰임은 W-0266 메모상 0 — 표 갈 때 웹이 다시 확인. · 10-19 Opus: built = 새 자체 몸(creatures3d id), robots = 이미 자체(짝만), pending = 3D 다시 도는 중.",
+ "note": "K-0122 단계 1(Opus 10-17) — 5천하 data-force.js monster: 경로 + 2나락 js 참조 → 자체 creatures3d 짝. 'new:humanoid' = 사람꼴(무기 쥠) 자체 몸 없음 → 그림 → TRELLIS(SD 사슬 뒤). 2나락 실제 놀이 쓰임은 W-0266 메모상 0 — 표 갈 때 웹이 다시 확인. · 10-19 Opus: built = 새 자체 몸(creatures3d id), robots = 이미 자체(짝만), pending = 3D 다시 도는 중. · 10-20 K-0145: built +10(2나락 pending 12 body — Cactoro·Ninja 는 두 파일이 한 id).",
  "pair": {
   "quaternius/Dragon_Evolved": "dragon_evolved",
   "quaternius/Ghost_Skull": "ghost_skull",
@@ -29,7 +29,11 @@
   "kaykit_skeletons/Skeleton_Mage",
   "kaykit_skeletons/Skeleton_Minion",
   "kaykit_skeletons/Skeleton_Rogue",
-  "kaykit_skeletons/Skeleton_Warrior"
+  "kaykit_skeletons/Skeleton_Warrior",
+  "quaternius/Ninja",
+  "quaternius/Orc",
+  "quaternius/Tribal",
+  "quaternius/Wizard"
  ],
  "new_other": [
   "quaternius_cute/Crab",
@@ -39,7 +43,13 @@
   "quaternius_cute/Tree",
   "robots/Robot_Drone",
   "robots/Robot_Large",
-  "robots/Robot_Walker"
+  "robots/Robot_Walker",
+  "quaternius/Cactoro",
+  "quaternius/Frog",
+  "quaternius/Green_Blob",
+  "quaternius/Green_Spiky_Blob",
+  "quaternius/Mushnub_Evolved",
+  "quaternius/Mushroom_King"
  ],
  "built": {
   "quaternius/Alien(2)": "alien_grunt",
@@ -58,7 +68,17 @@
   "quaternius_cute/GreenDemon": "green_imp",
   "quaternius_cute/Tree": "tree_walker",
   "quaternius_cute/Cthulhu": "tentacle_imp",
-  "quaternius_cute/Cyclops": "cyclops_cute"
+  "quaternius_cute/Cyclops": "cyclops_cute",
+  "quaternius/Cactoro": "cactus_imp",
+  "quaternius/Frog": "swamp_toad",
+  "quaternius/Green_Blob": "moss_blob",
+  "quaternius/Green_Spiky_Blob": "spike_blob",
+  "quaternius/Mushnub_Evolved": "spore_cap",
+  "quaternius/Mushroom_King": "mushroom_lord",
+  "quaternius/Ninja": "shadow_ninja",
+  "quaternius/Orc": "goblin_brute",
+  "quaternius/Tribal": "masked_tribal",
+  "quaternius/Wizard": "hat_wizard"
  },
  "robots": {
   "robots/Robot_Drone": "robot_drone",

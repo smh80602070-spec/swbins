@@ -280,7 +280,7 @@
    "tool": "sprite_plan_16.json) + gear_sprites.py + weapon_attach.py (K-0138 16방향, 몸·무기는 8방향과 같음)",
    "model": "",
    "license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
-   "count": 10,
+   "count": 20,
    "where": [
     "saga-assets/characters/sprites2d16/fu_jongwang",
     "saga-assets/characters/sprites2d16/hl_mukhyang",
@@ -365,7 +365,7 @@
    "tool": "remote3d",
    "model": "microsoft/TRELLIS-image-large",
    "license": "MIT",
-   "count": 455,
+   "count": 465,
    "where": [
     "saga-assets/creatures3d",
     "saga-assets/pets3d",
