@@ -6,6 +6,7 @@ cd "$(dirname "$0")/.." || exit 1
 
 : "${GODOT:?GODOT 환경변수에 Godot 콘솔 exe 경로를 지정할 것}"
 PROJECT="$(pwd)"
+export SAGA_HOUR=12   # G-0250 — 시간대 빛(day_light.gd)이 실제 시각을 타면 md5 가 흔들린다. 낮 12시 = 씬 값 그대로
 LOGDIR="${TMPDIR:-/tmp}/godot_regress"
 mkdir -p "$LOGDIR"
 

@@ -8,6 +8,7 @@ extends WorldEnvironment
 const ENV_PC: Environment = preload("res://assets/environment/env_pc.tres")
 const ENV_MOBILE: Environment = preload("res://assets/environment/env_mobile.tres")
 const Gfx := preload("res://saga_core/data/graphics_settings.gd")
+const DayLight := preload("res://saga_core/world/day_light.gd")
 
 
 ## PLAN 106장 ② — GO 만 손그림 하늘(sky_toon.gdshader). 이 스크립트와 env_*.tres 는
@@ -66,6 +67,11 @@ func _pick_environment() -> void:
 			var env2 := base.duplicate() as Environment
 			env2.sky = _real_sky()
 			environment = env2
+			## G-0250 — 시간대 빛(새벽·낮·노을·밤). 씬 뿌리에 형제로(형제 _ready 가 다 돈 뒤 — story_sky 가 env 를 갈아 끼운 다음).
+			if DayLight.enabled() and owner != null:
+				var dl := DayLight.new()
+				dl.name = "DayLight"
+				owner.add_child.call_deferred(dl)
 		return
 	var env := base.duplicate() as Environment
 	var mat := ShaderMaterial.new()

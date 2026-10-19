@@ -12,7 +12,7 @@
 | 기준선 자동 점검(QC) | — | 끝 W-0291(10-17 측정: 1만리 8/8 · 2나락 하늘·PBR × · 3마을 후처리·SSAO·하늘 × · 4종횡 PBR × · 5천하 후처리·SSAO·그림자 ×) | 끝 G-0249(값 점검 다섯 ok · 네 판 기준 PNG 는 사용자 승인 뒤 graphics/baseline/<판>/) | ? |
 | 후처리(블룸·톤매핑·색보정)·SSAO | 1만리·2나락 | W-0292(3마을·5천하) | ○(공용 env_pc.tres glow·tonemap 3·adjustment·SSAO·SSIL·SDFGI + environment_profile 을 다섯 판 씬이 다 닮 · 2나락 SDFGI 끔은 의도 G-0224) | ? |
 | 해 그림자(품질별 지도) | 2나락 | 끝 W-0293(5천하 realm-shadow3d · 3마을·4종횡은 측정에서 이미 ○) | ○(네 판 Sun shadow_enabled · 2나락 횃불 그림자 test_room 338 · 품질별 그림자 거리 render_budget 은 1만리만 △) | ? |
-| 하늘 셰이더·시간대 빛 | 1만리 | 끝 W-0294(공용 shared/js/skydome3d.js — 1만리·5천하 갈아끼움, 3마을 실제 시각·2나락 마을 연결, 4종횡 na) | 하늘 ○(sky_real G-0141·0148 1만리·3마을·5천하, 4종횡 씬별 색 story_sky, 2나락 na) · 시간대 빛 3(3마을·4종횡·5천하 — sky_panorama·night_visual 은 1만리만) → G-0250 | ? |
+| 하늘 셰이더·시간대 빛 | 1만리 | 끝 W-0294(공용 shared/js/skydome3d.js — 1만리·5천하 갈아끼움, 3마을 실제 시각·2나락 마을 연결, 4종횡 na) | 끝 G-0250(공용 day_light.gd — 3마을·5천하·4종횡 바깥 씬 새벽·낮·노을·밤 해·주변광·sky_real 노을/별, 1만리는 sky_panorama·night_visual 그대로 · 남은 것: 밤 창·등롱 불빛 1만리만, 2나락 na) | ? |
 | PBR 사진 땅 | 1만리·2나락·3마을 | 끝 W-0295(공용 shared/js/pbrground3d.js + shared/assets/ground 법선·거칠기 — 2나락 마을·방 바닥·벽·들판, 4종횡 바닥·발판, 5천하 지도 땅. 그래픽 기준선 다섯 판 8/8) | 2(2나락 방 = 빌린 kit toon jpg · 5천하 지도·도읍 땅 vertex_color — 1만리 G-0143·3마을 G-0225·4종횡 G-0222·5천하 전술판 G-0223 ○) | ? |
 | 2D 16방향·동작별 프레임 | 디아블로 2 | 끝 W-0311 코드분(sheetspec·mode2d 16방향 길 — 그림은 K 시트 뒤) | na(3D) | ? |
 | 2D 그림체(HD-2D 쪽) | 옥토패스 | 없음 — 3D 기준선 뒤 R-0 | na(3D) | ? |
