@@ -4476,5 +4476,33 @@
   "ticket": "G-0239",
   "since": "2026-10-19",
   "note": "세이브 22→23(camps, 옛 세이브 = 빈 배열) · golden 2f12de0b→a8902b8f(비김→진, CAMP_ON=false 면 옛 값) · AI 는 끊기 계략 안 씀 · AI 진은 이겨도 성 안 뺏음 · 진 장수는 성 명령에서 안 빠짐"
+ },
+ {
+  "id": "gd.go.path-action",
+  "name": "1만리 길 행동(웹 W-0276) — 6 키·폰 \"길\"로 14m 안 주민에게 선두 동료(party()[0]) 무·지·통 최고 축대로 하루 한 번: 지 조사(열린 비경 입구 최근접 방위·m) · 무 도발(주민 자리 도적, 체력 atk×14, 이기면 경험 +30) · 통 이끌기(40m 넘는 최근접 길목으로 주민 몸이 땅 따라 앞장, 30초 뒤 집으로) · 조사·이끌기 30% 거절, 도발 지면(60초·전멸) 거절 → 그날 말 안 섞음",
+  "files": [
+   "games/saga_go/world/path_action.gd",
+   "games/saga_go/world/npc_builder.gd",
+   "games/saga_go/combat/field_combat.gd",
+   "games/saga_go/combat/field_combat_ui.gd",
+   "games/saga_go/data/party_state.gd",
+   "games/saga_go/data/save_state.gd",
+   "games/saga_go/data/help.gd",
+   "tools/probe_path_action.gd"
+  ],
+  "tests": [
+   "path_action",
+   "grab_throw",
+   "combat",
+   "domain",
+   "gamepad",
+   "savemove"
+  ],
+  "level": "D2",
+  "verified": "2026-10-19",
+  "fun": {},
+  "ticket": "G-0240",
+  "since": "2026-10-19",
+  "note": "패드 빈 단추 없어 패드 생략 · 촌장 사명·상인 제안이 아직이면 그쪽 먼저 · 비경·결투 중엔 안 됨 · 어부(포구) 뺌 · 그림·소리 새로 없음"
  }
 ]

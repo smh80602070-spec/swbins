@@ -63,10 +63,12 @@ const LINES := {
 
 var _last_said_ms := {}
 var _quest_prompt_by_id := {}
+var roots := {} # G-0240 주민 id → 몸 뿌리(길 행동 이끌기가 걷게 한다)
 
 func _ready() -> void:
 	for v in VILLAGERS:
 		_spawn(v)
+	add_child(preload("res://games/saga_go/world/path_action.gd").new()) # G-0240 길 행동(6 키)
 
 func _spawn(v: Dictionary) -> void:
 	var ch: String = TestMap.tile_at(v.grid.x, v.grid.y)
@@ -76,6 +78,7 @@ func _spawn(v: Dictionary) -> void:
 	root.name = "Villager_%s" % v.id
 	root.position = TestMap.world_pos(v.grid.x, v.grid.y) + Vector3(0, ground, 0)
 	add_child(root)
+	roots[v.id] = root
 
 	var body := _build_body(v)
 	root.add_child(body)

@@ -135,6 +135,8 @@ func passive_api() -> RefCounted:
 var hunt: Dictionary = {}
 ## G-0195 사냥 의뢰 흔적 — {day, read:[칸 키], boss, done}(data/trail.gd). 날이 바뀌면 새로.
 var trail: Dictionary = {}
+## G-0240 길 행동 — {day, used: {주민 id: 1 | -1}}(world/path_action.gd). 날이 바뀌면 새로.
+var go_path: Dictionary = {}
 ## 2026-09-30 주간 도전 — {"week", "base": {셈: 주 시작 값}, "claimed": [도전 id], "bonus": 완주 보상 받음}. 필드만 더해 SAVE_VERSION 그대로.
 ## world/weekly_goals.gd 가 읽고 쓴다(규칙은 data/weekly_goals.gd).
 var weekly_goals: Dictionary = {}

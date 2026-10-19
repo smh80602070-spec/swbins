@@ -67,6 +67,7 @@ func save() -> bool:
 		"passive": PartyState.passive,   # G-0215 성도
 		"hunt": PartyState.hunt,
 		"trail": PartyState.trail,   # G-0195
+		"go_path": PartyState.go_path,   # G-0240
 		"weekly_goals": PartyState.weekly_goals,
 		"album": PartyState.album,
 		"drops": DropState.drops,
@@ -175,6 +176,8 @@ func try_load() -> bool:
 	PartyState.hunt = (hn as Dictionary).duplicate(true) if typeof(hn) == TYPE_DICTIONARY else {}
 	var tr: Variant = data.get("trail", {})   # G-0195 — 없으면 빈 사전(오늘 흔적 0)
 	PartyState.trail = (tr as Dictionary).duplicate(true) if typeof(tr) == TYPE_DICTIONARY else {}
+	var gp: Variant = data.get("go_path", {})   # G-0240 — 없으면 빈 사전(오늘 길 행동 0)
+	PartyState.go_path = (gp as Dictionary).duplicate(true) if typeof(gp) == TYPE_DICTIONARY else {}
 	## weekly_goals(2026-09-30 주간 도전) — 없으면 빈 사전(이번 주를 새로 짠다).
 	var wg: Variant = data.get("weekly_goals", {})
 	PartyState.weekly_goals = (wg as Dictionary).duplicate(true) if typeof(wg) == TYPE_DICTIONARY else {}

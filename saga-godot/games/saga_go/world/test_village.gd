@@ -234,6 +234,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_assist.gd").new())
 	if OS.get_environment("SAGA_GRAB_THROW_PROBE") != "": # G-0235 잡기·던지기
 		add_child(load("res://tools/probe_grab_throw.gd").new())
+	if OS.get_environment("SAGA_PATH_ACTION_PROBE") != "": # G-0240 길 행동
+		add_child(load("res://tools/probe_path_action.gd").new())
 	if OS.get_environment("SAGA_MONSTER_BODY_PROBE") != "": # G-0059 들판 적·보스 GLB 몸
 		add_child(load("res://tools/probe_monster_body.gd").new())
 	## G-0018 전투·이동 손맛 기준선 측정 — 측정할 때만 붙인다.

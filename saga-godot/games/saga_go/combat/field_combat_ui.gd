@@ -160,8 +160,8 @@ func _build_hud() -> void:
 	_hud.add_child(_roster_box)
 
 	if DisplayServer.is_touchscreen_available():
-		## [글자, 동작, 오른쪽 끝 x, 위 y] — 106장 ㊵ "조준"은 공격 단추 바로 위(활 인물일 때만 보임). G-0235 ✊ 잡기는 대시 위(field_grab.gd 가 밝기).
-		var specs := [["공격", "combat_quick", -170, -300], ["스킬", "combat_ult", -300, -300], ["폭발", "combat_burst", -430, -300], ["대시", "combat_dodge", -560, -300], ["조준", "go_aim", -170, -430], ["✊", "go_grab", -560, -430]]
+		## [글자, 동작, 오른쪽 끝 x, 위 y] — 106장 ㊵ "조준"은 공격 단추 바로 위(활 인물일 때만 보임). G-0235 ✊ 잡기는 대시 위(field_grab.gd 가 밝기). G-0240 "길"은 대시 왼쪽(path_action.gd 가 보임·밝기).
+		var specs := [["공격", "combat_quick", -170, -300], ["스킬", "combat_ult", -300, -300], ["폭발", "combat_burst", -430, -300], ["대시", "combat_dodge", -560, -300], ["조준", "go_aim", -170, -430], ["✊", "go_grab", -560, -430], ["길", "go_path", -690, -300]]
 		for sp in specs:
 			var b := Button.new()
 			b.text = sp[0]
