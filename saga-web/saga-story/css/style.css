@@ -1108,7 +1108,7 @@ body.tilted3 #vignette {
   #dock { right: 6px; gap: 5px; }
   #dock button { width: 42px; height: 42px; border-radius: 13px; flex: 0 0 auto; }
   #dock button span { font-size: 16px; }
-  #dock button small { font-size: 11px; }
+  #dock button small { font-size: 11px; white-space: nowrap; letter-spacing: -.5px; }   /* W-0343 — 좁은 칸에서 "사냥 터"·"이야 기" 로 꺾였다 */
 
   /* 손가락 조작판 — #hud 가 여기서 거의 전체 폭(calc(100vw-16px))으로 커지고
      두 줄(3차 전직은 스킬 여덟 칸)이라 카드가 높다. 체력·기력 띠를 뺀 뒤로

@@ -64,7 +64,7 @@
   function applyZoomTransform() {
     var t = 'scale(' + effZoom().toFixed(3) + ')', run = S && S.raw ? S.raw() : null, fl = run && run.stage ? run.stage.floor : 560;
     if (fl > H) { fl = H * 0.75; }   /* W-0188 폰 가로 3D(lowK 1·키 390) — 바닥 선이 논리 화면 밖이라 옛 식이 기준점을 수천 px 아래로 풀어 화면이 통째로 위로 밀렸다(두목 확대 때). 3D 카메라는 바닥을 가운데께 두니 그 근처를 기준으로 */
-    var z = effZoom(), want = Math.min(fl, H * 0.8), oy = Math.abs(1 - z) < 1e-3 ? fl : (want - fl * z) / (1 - z);   // 바닥 선이 화면의 want 자리에 오게 기준점(px)을 푼다
+    var z = effZoom(), want = W < H ? H * +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('side.portraitFloor', 0.72) : 0.72) : Math.min(fl, H * 0.8), oy =Math.abs(1 - z) < 1e-3 ? fl : (want - fl * z) / (1 - z);   // 바닥 선이 화면의 want 자리에 오게 기준점(px)을 푼다
     zoomOy = oy;
     var org = '50% ' + Math.round(oy / lowK) + 'px';   // 기준점은 CSS 픽셀(논리 ÷ lowK)
     if (cv) { cv.style.transform = t; cv.style.transformOrigin = org; }

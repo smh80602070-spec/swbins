@@ -59,13 +59,16 @@
     if (!ctx || !o || !o.region || !+tuned('story2d.front', 1)) { return false; }
     var e = front(o.region);
     if (!e.ok) { return false; }
-    var im = e.img, k = o.H / 540, dw = (im.naturalWidth || 1920) * k, dh = (im.naturalHeight || 120) * k, y = Math.round(o.H - dh);
+    var port = o.W < o.H, k = o.H / 540 * (port ? +tuned('story2d.frontPortrait', 0.45) : 1);   // W-0343 세로 폰 — 화면 키로 키우면 1.9 배 확대까지 겹쳐 아래 1/3 을 덮었다 → 낮고 옅게
+    var im = e.img, dw = (im.naturalWidth || 1920) * k, dh = (im.naturalHeight || 120) * k, y = Math.round(o.H - dh), a0 = ctx.globalAlpha;
+    if (port) { ctx.globalAlpha = a0 * +tuned('story2d.frontPortraitA', 0.7); }
     var dx = (o.camX || 0) * DEPTH.front, n = Math.floor(dx / dw), off = dx - n * dw, i, x;
     for (i = 0; i * dw - off < o.W; i++) {
       x = Math.round(i * dw - off);
       if ((n + i) % 2 !== 0) { ctx.save(); ctx.translate(x + dw, 0); ctx.scale(-1, 1); ctx.drawImage(im, 0, y, dw, dh); ctx.restore(); }   // 홀수 칸은 뒤집어 이음매를 숨긴다(drawBg 와 같은 요령)
       else { ctx.drawImage(im, x, y, dw, dh); }
     }
+    ctx.globalAlpha = a0;
     return true;
   }
 
