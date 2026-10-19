@@ -101,6 +101,8 @@ namespace Saga.Realm.Data
                 gridNote = ApplyGrid(grid, officers, enemyId, def.Name);
             }
 
+            if (RealmTechData.Pct("atkPct") != 0) duelPowerMul *= RealmTechData.Mul("atkPct"); // tasks U-0129 창 갈기·쇠뇌 틀
+            if (RealmTechData.Pct("defPct") != 0) takeMul /= RealmTechData.Mul("defPct");      // tasks U-0129 방패 벽 — 아군 손실을 덜
             var atk = new RealmArmy { Troops = troops, Start = troops, Train = city.Train, Tech = city.Tech, OfficerIds = officers, Morale = 1f };
             var defArmy = new RealmArmy { Troops = enemy.Troops, Start = enemy.Troops, Train = enemy.Train, Tech = enemy.Tech, OfficerIds = new List<string>(), Morale = 1f };
 
@@ -306,7 +308,8 @@ namespace Saga.Realm.Data
         /// 슬라이스의 적 성에 치안 필드가 없어 뺐다(중립값으로 상쇄한
         /// 것과 같다 — RealmPlotData.cs 클래스 주석 참고).</summary>
         private static float PlotChance(RealmOfficer officer) =>
-            Mathf.Clamp((0.30f + (officer.Wisdom - 30) / 200f) * RealmOfficerTraits.PlotChanceMultiplier(officer.Id), 0.05f, 0.9f);
+            Mathf.Clamp((0.30f + (officer.Wisdom - 30) / 200f) * RealmOfficerTraits.PlotChanceMultiplier(officer.Id)
+                * (1f + (RealmTechData.Pct("plotPct") + RealmTechData.Pct("diploPct")) / 100f), 0.05f, 0.9f); // tasks U-0129 꾀주머니·태학·먼 장사
 
         /// <summary>계략을 걸 수 있는 무장 — Attack()과 같은 자리(출진
         /// 성)에 배치된, 이 달에 아직 안 쓴 사람 중 지력 최고. UI가 % 미리

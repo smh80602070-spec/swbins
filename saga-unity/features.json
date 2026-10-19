@@ -2098,5 +2098,23 @@
   "ticket": "U-0127",
   "since": "2026-10-19",
   "note": "D2(U-0127): docs/playcheck/d2-u0127-20261019.json — PlaytestForestHeadless 22→27(movein build·tags2·settle·oneaday·save) · 짓기 열매 15(재료 없음) · 집 모습 = 내 집 껍데기 ×0.55 · 촬영 안 함"
+ },
+ {
+  "id": "un.rk.tech-tree",
+  "name": "U-0129 기술 나무 — 세력 연구 네 갈래(농·상·군·학) × 6마디(웹 W-0290 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaRealm/Data/RealmTechData.cs",
+   "saga-unity/Assets/Games/SagaRealm/UI/RealmTechUi.cs",
+   "saga-unity/Assets/Games/SagaRealm/Data/RealmCityState.cs"
+  ],
+  "tests": [
+   "PlaytestRealmTech"
+  ],
+  "level": "D2",
+  "verified": "2026-10-19 claude",
+  "fun": {},
+  "ticket": "U-0129",
+  "since": "2026-10-19",
+  "note": "D2(U-0129): docs/playcheck/d2-u0129-20261019.json — PlaytestRealmSlice 107→112(tech points·order·cost·effects·save) · UiLayoutCheck 문제 0(📜 연구 단추·창 세 화면비 ko/en) · 적 세력 연구 없음 · 경험(expPct) 칸 없음 · 촬영 안 함"
  }
 ]

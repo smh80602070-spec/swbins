@@ -334,9 +334,10 @@ namespace Saga.Realm.Data
             {
                 return new OrderResult(false, RealmLocalization.T("order.err_no_river", "물길이 없는 성입니다"));
             }
-            if (Gold < order.Gold) return new OrderResult(false, RealmLocalization.T("order.err_no_gold", "금이 모자랍니다"));
+            int cost = RealmTechData.Cost(orderKey, order.Gold); // tasks U-0129 — 조선·훈련 ×0.8(연구 0 = 그대로)
+            if (Gold < cost) return new OrderResult(false, RealmLocalization.T("order.err_no_gold", "금이 모자랍니다"));
 
-            Gold -= order.Gold;
+            Gold -= cost;
             _doneThisMonth.Add(officer.Id);
 
             OrderResult result = orderKey switch
@@ -357,6 +358,8 @@ namespace Saga.Realm.Data
         {
             int sv = GetStat(officer, order.Stat);
             var (rolled, crit) = RollAmount(sv, order.Base, order.Per);
+            float techMul = RealmTechData.Mul(key == "wall" ? "wallPct" : key == "train" || key == "ships" ? "-" : "govPct"); // tasks U-0129 내정·축성
+            if (techMul != 1f) rolled = Mathf.RoundToInt(rolled * techMul);
 
             int cap = CapOf(key, cityDef);
             int before = GetField(record, key);
@@ -375,6 +378,7 @@ namespace Saga.Realm.Data
         {
             int sv = GetStat(officer, order.Stat);
             var (rolled, _) = RollAmount(sv, order.Base, order.Per);
+            if (RealmTechData.Pct("troopPct") != 0) rolled = Mathf.RoundToInt(rolled * RealmTechData.Mul("troopPct")); // tasks U-0129
 
             int room = Mathf.FloorToInt(record.Pop * 0.06f) - record.Troops;
             int amount = Mathf.Max(0, Mathf.Min(rolled, Mathf.Max(0, room)));
@@ -438,6 +442,7 @@ namespace Saga.Realm.Data
 
             var target = RealmOfficerPool.Get(targetId);
             float chance = RealmEras.AdjustHireChance(target, HireChance(officer.Wisdom, target.Rarity, debateMul)); // 109-5 낯선 시대 × 0.85
+            if (RealmTechData.Pct("hirePct") != 0) chance = Mathf.Min(1f, chance * RealmTechData.Mul("hirePct")); // tasks U-0129 객주 두기
             if (UnityEngine.Random.value > chance)
             {
                 return new OrderResult(true, string.Format(RealmLocalization.T("order.hire_declined", "{0}이(가) 설득에 응하지 않았다."), target.Name));
@@ -485,7 +490,7 @@ namespace Saga.Realm.Data
             foreach (var cityId in _activeCityIds)
             {
                 var r = _cities[cityId];
-                income += Mathf.RoundToInt(r.Comm * 0.55f * SecMul(r.Sec));
+                income += Mathf.RoundToInt(r.Comm * 0.55f * SecMul(r.Sec) * RealmTechData.Mul("goldPct")); // tasks U-0129 기술 나무(연구 0 = ×1)
             }
             int upkeep = _roster.Count * UpkeepPerOfficer;
             Gold = Mathf.Max(0, Gold + income - upkeep);
@@ -495,7 +500,7 @@ namespace Saga.Realm.Data
             foreach (var cityId in _activeCityIds)
             {
                 var r = _cities[cityId];
-                if (harvest) r.Food += Mathf.RoundToInt(r.Agri * 6f * SecMul(r.Sec));
+                if (harvest) r.Food += Mathf.RoundToInt(r.Agri * 6f * SecMul(r.Sec) * RealmTechData.Mul("foodPct"));
 
                 int eat = Mathf.RoundToInt(r.Troops / 1000f * FoodPer1000);
                 r.Food -= eat;
@@ -514,6 +519,7 @@ namespace Saga.Realm.Data
             if (Month > 12) { Month = 1; Year++; }
             _doneThisMonth.Clear();
             _orderThisMonth.Clear();
+            RealmTechData.Monthly(); // tasks U-0129 — 연구점(1 + 학자 + 글 모으기)
             if (_hurt.Count > 0) // tasks U-0098 중상 — 달마다 하나씩 낫는다
             {
                 foreach (var id in new List<string>(_hurt.Keys))

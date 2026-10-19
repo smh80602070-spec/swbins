@@ -350,7 +350,7 @@ namespace Saga.Realm.UI
             {
                 string key = keys[i];
                 var order = RealmOrderData.Get(key);
-                string label = order != null ? string.Format(RealmLocalization.T("ui.order_label", "{0} ({1}냥)"), order.Name, order.Gold) : key;
+                string label = order != null ? string.Format(RealmLocalization.T("ui.order_label", "{0} ({1}냥)"), order.Name, RealmTechData.Cost(order.Key, order.Gold)) : key;
 
                 int col = i / 5; // 0=왼쪽, 1=오른쪽
                 int row = i % 5;
@@ -805,7 +805,7 @@ namespace Saga.Realm.UI
                 var order = RealmOrderData.Get(keys[i]);
                 var label = buttons[i].GetComponentInChildren<TMPro.TextMeshProUGUI>();
                 if (order != null && label != null)
-                    label.text = string.Format(RealmLocalization.T("ui.order_label", "{0} ({1}냥)"), order.Name, order.Gold);
+                    label.text = string.Format(RealmLocalization.T("ui.order_label", "{0} ({1}냥)"), order.Name, RealmTechData.Cost(order.Key, order.Gold));
             }
         }
         private void ChooseBgm() { RealmSettingsState.BgmOn = !RealmSettingsState.BgmOn; RefreshSettingsPanel(); }

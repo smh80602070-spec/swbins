@@ -107,6 +107,9 @@ namespace Saga.Realm.Data
             public int[] hurtMonths;
             public string[] annalIds, annalWhere, annalBy;
             public int[] annalYears, annalMonths;
+            // tasks U-0129 기술 나무 — 버전 그대로: 옛 세이브는 0점·null = 연구 없음.
+            public int techPts;
+            public string[] techDone;
         }
 
         /// <summary>PlaytestRealmSlice.cs 전용 — GameBootstrap.Awake()가
@@ -198,6 +201,8 @@ namespace Saga.Realm.Data
             RealmScenario.Snapshot(out data.scenarioSeen, out data.scenarioT0, out data.scenarioTurnSeen, out data.scenarioIds, out data.scenarioKs, out data.scenarioTurns, out data.scenarioSideWho, out data.scenarioSideTurn);
             RealmScenario.SnapshotStage(out data.scenarioStageId, out data.scenarioStageTarget, out data.scenarioStageSince);
             RealmCityState.SnapshotWarRecords(out data.hurtIds, out data.hurtMonths, out data.annalIds, out data.annalWhere, out data.annalBy, out data.annalYears, out data.annalMonths);
+            data.techPts = RealmTechData.Points; // tasks U-0129
+            data.techDone = RealmTechData.SnapshotDone();
             return JsonUtility.ToJson(data);
         }
 
@@ -282,6 +287,7 @@ namespace Saga.Realm.Data
             RealmScenario.Restore(data.scenarioSeen, data.scenarioT0, data.scenarioTurnSeen, data.scenarioIds, data.scenarioKs, data.scenarioTurns, data.scenarioSideWho, data.scenarioSideTurn);
             RealmScenario.RestoreStage(data.scenarioStageId, data.scenarioStageTarget, data.scenarioStageSince); // 옛 세이브(필드 없음)는 단계 없음
             RealmCityState.RestoreWarRecords(data.hurtIds, data.hurtMonths, data.annalIds, data.annalWhere, data.annalBy, data.annalYears, data.annalMonths);
+            RealmTechData.Restore(data.techPts, data.techDone); // tasks U-0129
             return true;
         }
 

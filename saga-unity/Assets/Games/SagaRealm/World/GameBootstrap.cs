@@ -20,6 +20,7 @@ namespace Saga.Realm.World
             RealmAudio.PlayBgm(bgmClip);
             RealmBgmScene.Attach(gameObject); // tasks U-0021 — 장면별 곡(town·field·battle, 파일 없으면 폴백)
             Saga.Realm.UI.RealmMountUi.Install(); // PLAN.md 109-15 명마·비행 — 명마 패널·날기 단추·H 키(Play 때, 씬 재빌드 없이)
+            Saga.Realm.UI.RealmTechUi.Install(); // tasks U-0129 기술 나무 — 📜 연구 단추·창(Play 때, 씬 재빌드 없이)
         }
     }
 }
