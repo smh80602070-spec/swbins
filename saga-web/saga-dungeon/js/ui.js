@@ -952,7 +952,7 @@
       /* 들판 방랑 상인(PLAN §60 후보 1 나머지 절반) — 마을 붙박이 NPC와
          달리 시트가 아니라 #encounter 카드로 재고를 고른다(아래
          openFieldMerchant). 대사도 sheet도 없어 일반 갈래로는 못 받는다. */
-      if (o.key === 'fieldmerchant') { openFieldMerchant(o); return; }
+      if ((o.key === 'fieldmerchant' || o.sheet) && global.DG.auto && global.DG.auto.status && global.DG.auto.status().on) { toast(o.emoji + ' ' + o.name + ' — 자동 순회 중이라 지나갑니다'); return; }   /* W-0344 시트·상인 카드도 자동을 그 앞에 세웠다(아이폰 측정 "무예" 시트). 진척(tutorial·goals)은 이벤트를 따로 듣는다 */ if (o.key === 'fieldmerchant') { openFieldMerchant(o); return; }
       /* 세 시대 손님(§5.20) — 볼일(시트) 없이 말만 한다. 대사는 닿을 때마다 돌아간다 */
       if (!o.sheet) {
         if (o.story && o.story.length && folkStory(o)) { return; }          // 시대 손님 사연(정본 side_visitors) — 말 걸 때마다 한 토막씩
@@ -969,7 +969,7 @@
          세워짐)를 위해 그대로 남겨 둔다(해 될 것 없다). 다른 마을로 건너
          가는 표식은 PLAN §28-8(오픈월드 A안)부터 아예 없다 — 걸어서
          발판에 들어서면 활성 마을이 저절로 갈린다(travel() 은퇴). */
-      if (o.key === 'gate' || o.key === 'exit_dungeon') { enterGate(); }
+      if (global.DG.auto && global.DG.auto.status && global.DG.auto.status().on && !(o.key === 'gate' || o.key === 'exit_dungeon' || o.roadMark || o.fieldRelic || o.nameStone || o.worldBossNotice)) { toast((o.emoji || '📍') + ' ' + (o.name || '') + ' — 자동 순회 중이라 지나갑니다'); return; }   /* W-0344 고르는 카드(난입·결사비·역참·건물)를 열면 자동이 카드 앞에서 멈췄다 — 자동 중엔 안 열고 지나간다. 손으로 밟으면 그대로 */ if (o.key === 'gate' || o.key === 'exit_dungeon') { enterGate(); }
       else if (o.key === 'waypoint') { openWaypoint(); }
       else if (o.key === 'horde') { openHorde(); }
       /* 길 위의 발견거리(PLAN §60 후보 2) — 창을 안 띄운다. 토스트만
