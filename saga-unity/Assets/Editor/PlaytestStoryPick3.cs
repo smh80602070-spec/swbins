@@ -102,7 +102,8 @@ namespace Saga.EditorTools
 
                 // ⑧ 등급
                 if (StoryRunRank.RankOf(90f, 0, 20).Rank != "S") Fail("RankOf S");
-                if (StoryRunRank.RankOf(600f, 15, 3).Rank != "C") Fail("RankOf C");
+                if (StoryRunRank.RankOf(600f, 15, 3).Rank != "D") Fail("RankOf D"); // U-0128 — 0점은 이제 D(웹 W-0289)
+                if (StoryRunRank.RankOf(600f, 6, 3).Rank != "C") Fail("RankOf C");
                 StoryRunRank.ClearForTest();
                 StoryRunRank.OnHit(0f); StoryRunRank.OnKill(false, 1f); StoryRunRank.OnKill(true, 2f);
                 if (StoryRunRank.Last.HasValue) Fail("처치 2 판에 등급이 남");

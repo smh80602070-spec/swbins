@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-19",
+  "tickets": [
+    "U-0128 4종횡 판 등급 넓히기(웹 W-0289)"
+  ],
+  "how": "PlaytestStorySlice.Run·UiLayoutCheck.Run 배치(unity-batch.sh, -quit 없음, </dev/null), 세이브 다섯 치움·되돌림",
+  "ok_before": 47,
+  "ok_after": 53,
+  "new_ok": [
+    "runrank2 d",
+    "runrank2 kills",
+    "runrank2 tier",
+    "runrank2 dead",
+    "runrank2 bonus",
+    "runrank2 best"
+  ],
+  "ui_layout": "4종횡 카드 0 · 전체 문제 2 = 2나락 en 시나리오 장면 제목 ↔ 대상 적 카드(U-0108, 무관·상태성 — 앞 두 번은 0)",
+  "error_cs": 0,
+  "exception": 0,
+  "warnings_cs": "16 기존(5천하 실행과 같음)",
+  "save_md5_same": true,
+  "runs": "4(10-19 오전 3회 실패·되돌림 → 진단 가정 둘 고쳐 재실행 1회 통과)"
+}

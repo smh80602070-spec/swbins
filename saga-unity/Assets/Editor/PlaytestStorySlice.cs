@@ -206,6 +206,7 @@ namespace Saga.EditorTools
                     if (!PlaytestStoryScenario.Run()) { Fail(); return; } // PLAN.md 109-16 시나리오 — 레벨·직업·사명·비경 조각·자리를 되돌린다.
                     if (!PlaytestStoryRound.Run()) { Fail(); return; } // tasks U-0024 회차 — 회차·세이브·최고 기록을 되돌린다.
                     if (!PlaytestStoryPick3.Run()) { Fail(); return; } // tasks U-0093 무예 3택·판 등급 — 세이브 JSON·3택 몫을 되돌린다.
+                    if (!PlaytestStoryRunRank2.Run()) { Fail(); return; } // tasks U-0128 판 등급 넓히기 — D·처치·급·덤·최고 기록(세이브 JSON 을 되돌린다)
                     if (!PlaytestHurtSignal.Run("PlaytestStorySlice", "st")) { Fail(); return; } // tasks U-0105 "내가 맞았다" 신호 — 진짜 Hurt 번쩍·붉은 숫자·맥박(체력·무적·판 등급 셈 되돌림)
                     _enemyIndex = 0;
                     _phase = Phase.TalkNpc;
@@ -827,7 +828,8 @@ namespace Saga.EditorTools
                     // Lv.10(JobChangeLevel)에 안 닿아 직접 exp를 보태 전직
                     // 가능 여부·스탯 반영·재전직 방지를 검증한다(GainExp/
                     // ChooseJob 둘 다 public static API라 리플렉션 불필요).
-                    if (!StoryJobState.CanChooseJob) StoryJobState.GainExp(9999f);
+                    // tasks U-0128 — 판 등급 덤 경험치로 자연 Lv.10 에 닿아도 뒤의 2차 전직(Lv.15 전제)까지 가게 같이 보탠다
+                    if (!StoryJobState.CanChooseJob || StoryJobState.Level < StoryCombat.JobPromoteLevel) StoryJobState.GainExp(9999f);
                     if (!StoryJobState.CanChooseJob)
                     {
                         Debug.LogError($"[PlaytestStorySlice] 전직 가능 상태가 안 됨 — level={StoryJobState.Level}");
@@ -1150,10 +1152,11 @@ namespace Saga.EditorTools
             runner.StartRunWithSeed(1);
 
             bool treasureCleared = false;
+            int shardsBeforeTreasure = StoryLabyrinthState.MemoryShards; // tasks U-0128 — 들판 판 S 등급 덤으로 조각이 이미 있을 수 있어 전후 차로 본다
             runner.EnterNode(StoryLabyrinthData.NodeType.Treasure, () => treasureCleared = true);
-            if (!treasureCleared || StoryLabyrinthState.MemoryShards != 1)
+            if (!treasureCleared || StoryLabyrinthState.MemoryShards != shardsBeforeTreasure + 1)
             {
-                Debug.LogError($"[PlaytestStorySlice] 비경 보물 노드 실패 — cleared={treasureCleared} shards={StoryLabyrinthState.MemoryShards}(기대=1)");
+                Debug.LogError($"[PlaytestStorySlice] 비경 보물 노드 실패 — cleared={treasureCleared} shards={StoryLabyrinthState.MemoryShards}(기대={shardsBeforeTreasure + 1})");
                 return false;
             }
 

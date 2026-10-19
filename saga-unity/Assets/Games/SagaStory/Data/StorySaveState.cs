@@ -112,6 +112,8 @@ namespace Saga.Story.Data
             public int round;
             public int roundKills;
             public int roundRifts;
+            // tasks U-0128 사냥터 최고 등급 — 버전 그대로(scenarioJson·mountSel 과 같은 꼴): 옛 세이브는 null → 빈 칸.
+            public string rankBest;
         }
 
         public static bool Save()
@@ -166,6 +168,7 @@ namespace Saga.Story.Data
             StoryEras.SnapshotStories(out data.folkStoryIds, out data.folkStoryCounts);
             data.tutV = 1;
             data.tutDone = StoryTutorial.Ids();
+            data.rankBest = StoryRunRank.Best; // tasks U-0128
             data.round = StoryRound.Round;
             data.roundKills = Mathf.Max(0, StoryRound.BaseKills);
             data.roundRifts = Mathf.Max(0, StoryRound.BaseRifts);
@@ -218,7 +221,8 @@ namespace Saga.Story.Data
             StoryEras.RestoreStories(data.folkStoryIds, data.folkStoryCounts);
             if (string.IsNullOrEmpty(data.scenarioJson)) StoryScenario.RestoreLegacy(StoryJobState.Level, StoryJobState.HasJob);
             else StoryScenario.Restore(data.scenarioJson);
-            StoryRound.Restore(data.round, data.roundKills, data.roundRifts, data.round >= 2); // 기준점은 첫 회귀 뒤(2회차부터)에만 있다
+            StoryRound.Restore(data.round, data.roundKills, data.roundRifts, data.round >= 2);
+            StoryRunRank.RestoreBest(data.rankBest); // tasks U-0128 // 기준점은 첫 회귀 뒤(2회차부터)에만 있다
 
             Transform player = FindPlayer();
             if (player != null && data.playerPos != null && data.playerPos.Length == 3)

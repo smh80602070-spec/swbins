@@ -1,5 +1,10 @@
 {
   "entries": [
+    { "key": "runrank.bonus", "value": "등급 덤 경험치 +{0}" },
+    { "key": "runrank.shard", "value": "🧩 기억 조각 +{0}" },
+    { "key": "runrank.best", "value": "🏆 최고 기록 {0} → {1}" },
+    { "key": "runrank.first", "value": "🏆 첫 기록 {0}" },
+    { "key": "runrank.dead", "value": "쓰러져 덤 없음" },
     { "key": "settings.title", "value": "설정" },
     { "key": "settings.sfx", "value": "효과음" },
     { "key": "settings.vibration", "value": "진동" },

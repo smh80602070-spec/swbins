@@ -429,9 +429,10 @@ namespace Saga.Story.World
             {
                 StoryQuestState.AddKill();
                 if (isBoss) StoryQuestState.AddBossKill();
-                StoryRunRank.OnKill(isBoss, Time.time);   // tasks U-0093 — 두목이면 판 끝
                 float expMul = _isChampion ? ChampionExpMul : 1f;
-                StoryJobState.GainExp((isBoss ? StoryCombat.BossExp : StoryCombat.GruntExp) * expMul * StoryRound.GainMul());
+                float gain = (isBoss ? StoryCombat.BossExp : StoryCombat.GruntExp) * expMul * StoryRound.GainMul();
+                StoryJobState.GainExp(gain);
+                StoryRunRank.OnKill(isBoss, Time.time, gain);   // tasks U-0093 — 두목이면 판 끝 · U-0128 판 경험치(덤의 밑)
                 if (_isChampion)
                 {
                     StorySaveState.ClaimChampion();

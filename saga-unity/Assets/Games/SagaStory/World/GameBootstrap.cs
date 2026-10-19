@@ -50,7 +50,8 @@ namespace Saga.Story.World
 
         private static void OnRunFinished(StoryRunRank.Result r)
         {
-            Saga.Story.UI.DialogueLabel.Instance?.Show(StoryRunRank.Line(r), 5f);
+            string l2 = StoryRunRank.Line2(r); // tasks U-0128 — 덤·최고 기록·쓰러짐
+            Saga.Story.UI.DialogueLabel.Instance?.Show(StoryRunRank.Line(r) + (l2.Length > 0 ? "\n" + l2 : ""), 5f);
         }
     }
 }

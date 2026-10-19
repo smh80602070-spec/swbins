@@ -49,7 +49,7 @@ namespace Saga.Story.Data
             if (Hp <= 0f)
             {
                 Falls++;
-                StoryRunRank.Finish(Time.time);   // 쓰러짐 = 판 끝
+                StoryRunRank.Finish(Time.time, dead: true);   // 쓰러짐 = 판 끝(U-0128 덤 없음)
                 Fell?.Invoke();
             }
             return true;

@@ -1,5 +1,10 @@
 {
   "entries": [
+    { "key": "runrank.bonus", "value": "Rank bonus EXP +{0}" },
+    { "key": "runrank.shard", "value": "🧩 Memory shard +{0}" },
+    { "key": "runrank.best", "value": "🏆 Best {0} → {1}" },
+    { "key": "runrank.first", "value": "🏆 First record {0}" },
+    { "key": "runrank.dead", "value": "Fell — no bonus" },
     { "key": "settings.title", "value": "Settings" },
     { "key": "settings.sfx", "value": "Sound Effects" },
     { "key": "settings.vibration", "value": "Vibration" },

@@ -1894,14 +1894,15 @@
    "saga-unity/Assets/Games/SagaStory/UI/StoryPickUi.cs"
   ],
   "tests": [
-   "PlaytestStoryPick3"
+   "PlaytestStoryPick3",
+   "PlaytestStoryRunRank2"
   ],
   "level": "D2",
-  "verified": "2026-10-11 claude",
+  "verified": "2026-10-19 claude",
   "fun": {},
   "ticket": "U-0093",
   "since": "2026-10-11",
-  "note": "D2(U-0093): docs/playcheck/d2-u0092-u0093-20261011.json — PlaytestStoryPick3 OK · 3택 창 촬영 Claude 눈 ○(고친 뒤 다시 찍음) · 판 등급 줄은 진단만(촬영 못 봄)"
+  "note": "D2(U-0093): docs/playcheck/d2-u0092-u0093-20261011.json — PlaytestStoryPick3 OK · 3택 창 촬영 Claude 눈 ○(고친 뒤 다시 찍음) · 판 등급 줄은 진단만(촬영 못 봄) · U-0128(웹 W-0289) 등급 넓힘 D·처치 15·급(회차)·덤(판 경험치 ×1.5/1.2/1.1·S 기억 조각)·최고 기록 — docs/playcheck/d2-u0128-20261019.json PlaytestStoryRunRank2 6줄 OK"
  },
  {
   "id": "un.rk.news",
