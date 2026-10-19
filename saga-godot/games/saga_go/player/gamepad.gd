@@ -2,7 +2,7 @@ extends Node
 ## G-0033 — 사가만리 게임패드(엑스박스식 배치, 0번 패드). 동작마다 고치지 않고, 시작 직후(모든 기능이 동작을 만든 뒤) InputMap 을 훑어
 ## 대응표의 키에 묶인 동작에 패드 입력을 덧붙인다(키보드·마우스 묶음은 그대로). 같은 키를 쓰는 동작 여럿(F 상호작용 등)에 한 번에 붙는다.
 ##   왼쪽 스틱 이동 · 오른쪽 스틱 카메라(camera_rig.gd) · A 점프 · X 공격 · B 대시·달리기 · Y 상호작용 · RB 원소 스킬 · RT 원소 폭발
-##   LT 활 조준 · LB 원소 시야 · 십자키 편성 1~4 · L3 탈것 · Back 지도 · Start 인물 화면.
+##   LT 활 조준 · LB 원소 시야 · 십자키 편성 1~4 · L3 탈것 · R3 잡기·던지기 · Back 지도 · Start 인물 화면.
 ## 창(ui_modal)이 보이면 B 는 Esc 로 바꿔 넣고(화면마다 Esc 키를 직접 본다), 초점이 없으면 그 창의 첫 단추에 초점을 준다(십자키·A 로 고르기).
 
 const SETUP_FRAMES := 2
@@ -32,6 +32,7 @@ const BY_ACTION := {
 	"move_back": ["a", JOY_AXIS_LEFT_Y, 1.0],
 	"go_sight": ["b", JOY_BUTTON_LEFT_SHOULDER, 0.0],
 	"go_mount": ["b", JOY_BUTTON_LEFT_STICK, 0.0],
+	"go_grab": ["b", JOY_BUTTON_RIGHT_STICK, 0.0],   # G-0235 잡기·던지기(5 키)
 }
 ## 패드 단추를 안 붙이는 동작(키 대응표에 걸려도) — 이름으로 정한 것들.
 const SKIP_KEY_MAP := ["go_sight", "go_mount", "move_left", "move_right", "move_forward", "move_back"]

@@ -4336,5 +4336,31 @@
   "ticket": "G-0227",
   "since": "2026-10-19",
   "note": "창 모드 전후 촬영 (C) 갈림길 ○·광장 △ · 마을 그리기 평균 250→255(예산 260) · 임포트 캐시 없는 PC 에선 빈 층"
+ },
+ {
+  "id": "gd.go.grab-throw",
+  "name": "1만리 잡기·던지기(웹 W-0277) — 5 키·패드 R3·폰 ✊ 로 1.5m 안 잡몹을 들어(0.3초) 바라보는 쪽 5m 포물선으로 던짐(속도+중력 move_and_slide, 벽에 막힘) · 착지 ×1.2 뒤 넘어뜨림 1.5초 + 2m 안 잡몹 넘어짐 · 보스는 밀치기 2.5m·0.4초 휘청 · 쿨 6초",
+  "files": [
+   "games/saga_go/combat/field_grab.gd",
+   "games/saga_go/combat/field_enemy.gd",
+   "games/saga_go/combat/field_combat.gd",
+   "games/saga_go/combat/field_combat_ui.gd",
+   "games/saga_go/player/gamepad.gd",
+   "games/saga_go/data/help.gd",
+   "tools/probe_grab_throw.gd"
+  ],
+  "tests": [
+   "grab_throw",
+   "combat",
+   "combat_feel",
+   "gamepad",
+   "field_boss"
+  ],
+  "level": "D2",
+  "verified": "2026-10-19",
+  "fun": {},
+  "ticket": "G-0235",
+  "since": "2026-10-19",
+  "note": "보스는 착지 넘어짐에서도 빠짐(밀치기만) · 비탈 위로 던지면 덜 감(점검 땅 3.85m) · 그림·소리는 기존 고리·흔들림"
  }
 ]

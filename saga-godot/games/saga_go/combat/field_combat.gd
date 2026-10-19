@@ -10,6 +10,7 @@ extends "res://games/saga_go/combat/field_combat_ui.gd"
 ##   Shift / 오른쪽 / L  대시(회피) — 무적 0.3초, 스태미나 15 (Shift 는 계속 누르면 달리기)
 ##   1~4              인물 교체 — 나 + 등용한 동료 앞 셋(쿨 1초). 인물마다 원소가 정해져 있다
 ##   R                활 조준 켜고 끔(106장 ㊵, combat/aimed_shot.gd) — 활 인물은 공격을 길게 눌러도 조준 사격
+##   5                잡기·던지기(G-0235, combat/field_grab.gd) — 1.5m 안 잡몹을 들어 던진다 · 보스는 밀치기 · 쿨 6초
 ## 체력·기력은 인물마다 따로(원신과 같다). 지금 인물이 쓰러지면 다음 인물로 저절로 바뀌고,
 ## 다 쓰러지면 마지막으로 딛은 땅에서 모두 가득 차서 일어난다. 명단에 같은 원소가 둘 이상이면
 ## 원소 공명(화 공격 +25% · 수 최대 체력 +25% · 뇌 기력 +50%). 공격·방어·체력은 인물마다 레벨·돌파로
@@ -34,6 +35,7 @@ const AimedShot := preload("res://games/saga_go/combat/aimed_shot.gd")
 const FeelTuning := preload("res://games/saga_go/combat/feel_tuning.gd")
 const GoStarchart := preload("res://games/saga_go/data/go_starchart.gd")   # G-0215 성도
 const FieldAssist := preload("res://games/saga_go/combat/field_assist.gd")
+const FieldGrab := preload("res://games/saga_go/combat/field_grab.gd")   # G-0235 잡기·던지기
 const Voice := preload("res://saga_core/audio/voice.gd")   # G-0111 대사 음성
 
 const COMBO_MUL := [0.35, 0.4, 0.6]
@@ -209,6 +211,7 @@ var _crit_id := "" # 지금 치는 인물(치명타 굴림) — 비었으면 치
 var force_crit := false # 106장 ㊵ 급소 화살 — 이 한 방은 반드시 치명타
 var aim: Node = null # 106장 ㊵ 활 조준 사격(combat/aimed_shot.gd)
 var assist: Node = null # G-0071 협공(combat/field_assist.gd)
+var grab: Node = null # G-0235 잡기·던지기(combat/field_grab.gd)
 var since_hit := 99.0 # G-0071 지금 인물이 마지막으로 적을 친 뒤 지난 초
 var last_target: Node3D = null # G-0071 지금 인물이 마지막으로 친 적
 var _rng := RandomNumberGenerator.new()
@@ -226,12 +229,15 @@ func _ready() -> void:
 	assist = FieldAssist.new()
 	assist.name = "FieldAssist"
 	add_child(assist)
+	grab = FieldGrab.new()
+	grab.name = "FieldGrab"
+	add_child(grab)
 	_refresh_hud()
 
 ## 새 입력 액션·키는 project.godot 를 고치지 않고 여기서 등록한다(GO 만 — 다른 판엔 안 샌다).
 ## 106장 ⑧: 원신 PC 배치(마우스 왼쪽 공격·E 스킬·오른쪽 대시)를 옛 J/K/L 옆에 더한다.
 func _ensure_actions() -> void:
-	var keys := {"combat_burst": KEY_Q, "go_aim": KEY_R, "party_1": KEY_1, "party_2": KEY_2, "party_3": KEY_3, "party_4": KEY_4}
+	var keys := {"combat_burst": KEY_Q, "go_aim": KEY_R, "party_1": KEY_1, "party_2": KEY_2, "party_3": KEY_3, "party_4": KEY_4, "go_grab": KEY_5}
 	for action in keys:
 		if InputMap.has_action(action):
 			continue
@@ -408,7 +414,7 @@ func _mouse_blocked(event: InputEvent) -> bool:
 		return false
 	return Input.mouse_mode != Input.MOUSE_MODE_CAPTURED
 
-const INPUT_ACTIONS := ["combat_quick", "combat_ult", "combat_burst", "combat_dodge", "go_aim", "party_1", "party_2", "party_3", "party_4"]
+const INPUT_ACTIONS := ["combat_quick", "combat_ult", "combat_burst", "combat_dodge", "go_aim", "go_grab", "party_1", "party_2", "party_3", "party_4"]
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _duel_open() or _player == null or _player.get("frozen") or _mouse_blocked(event):
@@ -449,6 +455,9 @@ func _act(action: String, pressed: bool) -> void:
 		"go_aim":
 			if pressed:
 				aim.toggle()
+		"go_grab":
+			if pressed:
+				grab.grab()
 		_:
 			if pressed and action.begins_with("party_"):
 				switch_to(int(action.substr(6)) - 1)
@@ -1321,6 +1330,7 @@ func take_damage(amount: float, source: Node) -> void:
 	if _player.call("is_invulnerable"):
 		_dodge_success()
 		return
+	grab.release() # G-0235 — 맞으면 든 적을 놓는다
 	var d := PartyState.char_def(active_id())
 	var dmg := amount * FeelTuning.enemy_dmg_mul * (1.0 - d / (d + 120.0)) * GoStarchart.mul("take")   # G-0215 철벽 부대
 	if _guard_t > 0.0:

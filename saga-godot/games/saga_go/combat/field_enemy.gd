@@ -258,6 +258,18 @@ const WAKE_M := 90.0
 const SLEEP_CHECK := 0.5
 
 enum AI { IDLE, CHASE, WINDUP, LUNGE, RECOVER, RETURN, DEAD }
+## G-0235 잡기·던지기(combat/field_grab.gd) — 잡힘(머리 위 HOLD_UP 따라감)·던져짐(속도+중력 포물선, 바닥 닿으면 thrown_landed)·
+## 넘어짐(downed_t 초 AI 멈춤, 몸을 DOWN_TILT 만큼 눕힌다). 잡히고 던져지는 동안엔 충돌 층을 비워 다른 몸과 안 부딪힌다(벽·땅만).
+enum Grab { NONE, HELD, THROWN }
+signal thrown_landed(enemy: Node)
+const HOLD_UP := 1.9
+const FLY_MAX := 2.0
+const DOWN_TILT := -1.2
+var grab_state := Grab.NONE
+var downed_t := 0.0
+var _holder: Node3D = null
+var _grab_layer := 1
+var _fly_t := 0.0
 
 var kind := "wolf"
 var def: Dictionary = {}
@@ -397,6 +409,11 @@ func _physics_process(delta: float) -> void:
 		_t -= delta
 		if _t <= 0.0:
 			_revive()
+		return
+	if grab_state != Grab.NONE or downed_t > 0.0:
+		_tick_status(delta)
+		if ai != AI.DEAD:
+			_grab_tick(delta)
 		return
 	if ai == AI.IDLE and _sleep_tick(delta):
 		return
@@ -611,6 +628,104 @@ func hold_respawn(sec: float) -> void:
 func knockback(dir: Vector3, force: float) -> void:
 	_knock = Vector3(dir.x, 0, dir.z).normalized() * force
 
+## G-0235 — 밀치기 휘청(보스): 예고를 끊고 sec 초 쉰다.
+func stagger(sec: float) -> void:
+	_set_tell(false)
+	ai = AI.RECOVER
+	_t = maxf(_t, sec)
+
+func grab_by(holder: Node3D) -> void:
+	if ai == AI.DEAD or grab_state != Grab.NONE:
+		return
+	_set_tell(false)
+	_grab_layer = collision_layer
+	collision_layer = 0
+	_holder = holder
+	add_collision_exception_with(holder)
+	grab_state = Grab.HELD
+	downed_t = 0.0
+	_knock = Vector3.ZERO
+	velocity = Vector3.ZERO
+	ai = AI.RECOVER
+	_t = 0.5
+
+func throw_with(v: Vector3) -> void:
+	if grab_state != Grab.HELD:
+		return
+	grab_state = Grab.THROWN
+	velocity = v
+	_fly_t = 0.0
+
+## 놓기(던지지 않고) — 든 사람 앞 발치에 내려놓는다.
+func release_grab() -> void:
+	if grab_state == Grab.HELD and is_instance_valid(_holder):
+		var f: Vector3 = _holder.call("facing") if _holder.has_method("facing") else Vector3.FORWARD
+		global_position = _holder.global_position + Vector3(f.x, 0.0, f.z).normalized() * 1.0 + Vector3.UP * 0.3
+	_end_grab()
+
+func knock_down(sec: float) -> void:
+	if ai == AI.DEAD or grab_state != Grab.NONE:
+		return
+	downed_t = maxf(downed_t, sec)
+	_set_tell(false)
+	_knock = Vector3.ZERO
+	ai = AI.RECOVER
+	_t = 0.3
+	if _visual:
+		_visual.rotation.x = DOWN_TILT
+	_one_shot("hit")
+
+func is_downed() -> bool:
+	return downed_t > 0.0
+
+func _end_grab() -> void:
+	_clear_grab()
+	velocity = Vector3.ZERO
+	if ai != AI.DEAD:
+		ai = AI.RECOVER
+		_t = maxf(_t, 0.3)
+
+func _clear_grab() -> void:
+	if grab_state != Grab.NONE:
+		collision_layer = _grab_layer
+		if is_instance_valid(_holder):
+			remove_collision_exception_with(_holder)
+	grab_state = Grab.NONE
+	_holder = null
+	downed_t = 0.0
+	if _visual:
+		_visual.rotation.x = 0.0
+
+## 잡힘·던져짐·넘어짐 한 틱(_physics_process 가 그 동안 AI 대신 부른다).
+func _grab_tick(delta: float) -> void:
+	if grab_state == Grab.HELD:
+		if not is_instance_valid(_holder):
+			_end_grab()
+			return
+		global_position = _holder.global_position + Vector3.UP * HOLD_UP
+		velocity = Vector3.ZERO
+		return
+	if grab_state == Grab.THROWN:
+		_fly_t += delta
+		velocity.y -= GRAVITY * delta
+		move_and_slide()
+		var fell := global_position.y < home.y - 6.0
+		if (_fly_t > 0.05 and is_on_floor()) or _fly_t > FLY_MAX or fell:
+			if fell:
+				global_position = home
+			_end_grab()
+			thrown_landed.emit(self)
+		return
+	downed_t -= delta
+	velocity.x = 0.0
+	velocity.z = 0.0
+	velocity.y = -1.0 if is_on_floor() else velocity.y - GRAVITY * delta
+	move_and_slide()
+	if downed_t <= 0.0:
+		downed_t = 0.0
+		if _visual:
+			_visual.rotation.x = 0.0
+
 func set_aura(element: String) -> void:
 	aura = element
 	aura_t = Elements.AURA_SEC if element != "" else 0.0
@@ -674,6 +789,7 @@ func _die() -> void:
 	phys_vuln_t = 0.0
 	quicken_t = 0.0
 	_dots.clear()
+	_clear_grab()
 	_leave_corpse()
 	visible = false
 	collision_layer = 0
