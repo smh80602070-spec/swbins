@@ -177,10 +177,52 @@
     setTimeout(tick, 500);
   }
 
+  /* ── 지난번에 죽었나(10-19 — 아이폰 크롬 "이 페이지를 열 수 없음") ─────────────
+   * 아이폰은 GPU·메모리를 넘기면 탭을 통째로 죽이고, 그땐 우리 코드가 아무것도 못 남긴다. 그래서 열 때 `saga-realm/alive` 를 쓰고
+   * 정상으로 나갈 때(탭 숨김·pagehide) 지운다. 다음에 열 때 그 칸이 남아 있으면 지난번이 죽은 것 — 번들(core)이 손잡이를 읽기 **전에**
+   * 3D(`realm3d.on`)를 끄고 품질을 low 로 내려 2D 로 연다. 손잡이 표 `saga-realm/tune` 만 고친다(세이브는 안 건드림) · 🧊·⚙️ 로 되돌릴 수 있다. */
+  var ALIVE_KEY = 'saga-realm/alive', TUNE_KEY = 'saga-realm/tune', ALIVE_MAX_MS = 7 * 864e5;
+  /** 순수 — 남은 alive 칸(JSON 객체 또는 null)·손잡이 표(객체)·지금 → { crashed, n, tune(고친 표 또는 null), was3d } */
+  function crashPlan(alive, tune, now) {
+    if (!alive || typeof alive.t !== 'number' || now - alive.t > ALIVE_MAX_MS || now < alive.t) { return { crashed: false, n: 0, tune: null, was3d: false }; }
+    var t = {}, k, was3d = false;
+    for (k in (tune || {})) { if (Object.prototype.hasOwnProperty.call(tune, k)) { t[k] = tune[k]; } }
+    was3d = !!(t['realm3d.on'] && t['realm3d.on'] !== '0');
+    t['realm3d.on'] = 0; t['realm3d.quality'] = 'low';
+    return { crashed: true, n: (alive.n || 0) + 1, tune: t, was3d: was3d };
+  }
   global.DG = global.DG || {};
-  global.DG.bootGuard = { bakKey: bakKey, bakFree: bakFree, saveKeyOf: saveKeyOf, firstError: firstError, HOLD_MS: HOLD_MS, DARK_MS: DARK_MS };
+  global.DG.bootGuard = { bakKey: bakKey, bakFree: bakFree, saveKeyOf: saveKeyOf, firstError: firstError, HOLD_MS: HOLD_MS, DARK_MS: DARK_MS, crashPlan: crashPlan, ALIVE_KEY: ALIVE_KEY };
 
   if (global.DG_NO_ACCOUNT || !global.addEventListener) { return; }   // 자가진단 — 순수 함수만
+  (function sentinel() {
+    var ls = null; try { ls = global.localStorage; } catch (x) { return; }
+    if (!ls) { return; }
+    var jget = function (k) { try { return JSON.parse(ls.getItem(k) || 'null'); } catch (x) { return null; } };
+    var now = Date.now(), plan = crashPlan(jget(ALIVE_KEY), jget(TUNE_KEY) || {}, now), n = plan.crashed ? plan.n : 0;
+    if (plan.crashed) {
+      try { ls.setItem(TUNE_KEY, JSON.stringify(plan.tune)); } catch (x) { /* 꽉 참 */ }
+      var say = function () {
+        if (!document.body || document.getElementById('boot-safe')) { return; }
+        var el = document.createElement('div'); el.id = 'boot-safe';
+        el.style.cssText = 'position:fixed;left:8px;right:8px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:9998;padding:10px 40px 10px 14px;border-radius:12px;' +
+          'background:#1d2b44;border:1px solid #5aaef2;color:#eef4fb;font:13px/1.5 "Malgun Gothic",system-ui;box-shadow:0 6px 20px rgba(0,0,0,.5)';
+        el.innerHTML = '<b>지난번에 열다가 멈췄습니다</b><br>' + (plan.was3d ? '3D 지도를 끄고 ' : '') + '그래픽을 낮음으로 낮춰 가볍게 열었습니다. ' +
+          '⚙️ 설정·🧊 로 다시 올릴 수 있어요.' + (n >= 2 ? ' (' + n + '번째 — 계속 멈추면 이 글을 알려 주세요)' : '') +
+          '<button type="button" style="position:absolute;right:6px;top:6px;padding:2px 8px;border:0;background:transparent;color:#eef4fb;font-size:16px;cursor:pointer" aria-label="닫기">✕</button>';
+        el.querySelector('button').addEventListener('click', function () { el.remove(); });
+        document.body.appendChild(el);
+        global.setTimeout(function () { if (el.parentNode) { el.remove(); } }, 15000);
+      };
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', say); } else { say(); }
+    }
+    var mark = function () { try { ls.setItem(ALIVE_KEY, JSON.stringify({ t: Date.now(), n: n })); } catch (x) { /* */ } };
+    var clear = function () { try { ls.removeItem(ALIVE_KEY); } catch (x) { /* */ } };
+    mark();
+    global.setTimeout(function () { n = 0; if (!document.hidden) { mark(); } }, 30000);   // 30초 멀쩡하면 연속 횟수 0
+    global.addEventListener('pagehide', clear);
+    document.addEventListener('visibilitychange', function () { if (document.hidden) { clear(); } else { mark(); } });
+  })();
   global.addEventListener('error', function (ev) {
     if (done || shown || (ev && ev.target && ev.target !== global)) { return; }   // R-5 띠가 선 뒤엔 안 쌓는다(매 프레임 예외면 끝없이 컸다)   // 그림·소리 못 받음(자원 오류)은 부팅 실패가 아니다
     own.push({ kind: 'error', t: Date.now(), msg: (ev && ev.message) || '오류', src: (ev && ev.filename) || '', line: (ev && ev.lineno) || 0 });
