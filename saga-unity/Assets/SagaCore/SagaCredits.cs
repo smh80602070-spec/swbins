@@ -62,9 +62,9 @@ namespace Saga.Core
                 TitleKo = "숲 꾸밈", TitleEn = "Nature decorations",
                 BodyKo = "Quaternius — Stylized Nature MegaKit — CC0", BodyEn = "Quaternius — Stylized Nature MegaKit — CC0" },
 
-            new Entry { Id = "quaternius_animals", Paths = new[] { "Assets/Art/Creatures/" },
-                TitleKo = "짐승 몸(임시)", TitleEn = "Creature bodies (placeholder)",
-                BodyKo = "Quaternius — Animals pack(Fox·Birb) · Easy Enemies pack(Snake) — CC0", BodyEn = "Quaternius — Animals pack (Fox, Birb), Easy Enemies pack (Snake) — CC0" },
+            new Entry { Id = "creatures_self", Paths = new[] { "Assets/Art/CreaturesSelf/" }, // tasks U-0100 — 빌린 Quaternius 동물 셋을 자체판으로
+                TitleKo = "짐승 몸(자체 생성)", TitleEn = "Creature bodies (generated)",
+                BodyKo = "눈여우·회오리매·덩굴뱀 — 자체 그림(ComfyUI)을 TRELLIS 로 입체화(모델 MIT 라이선스)", BodyEn = "Snow fox, whirlwind hawk and vine snake — our own drawings turned 3D with TRELLIS (model under the MIT license)" },
 
             new Entry { Id = "bgm", Paths = new[] { "Assets/Art/Audio/CC0_BGM/" },
                 TitleKo = "배경음악", TitleEn = "Music",

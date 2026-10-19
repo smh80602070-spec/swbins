@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-19",
+  "tickets": [
+    "U-0100 1만리 짐승 몸 셋 자체판(K-0096 TRELLIS) — 빌린 Quaternius Fox·Birb·Snake 걷음"
+  ],
+  "how": "SetupBeastAnimals.SetupAll 배치(Fox=True Birb=True Snake=True · 클립 7) → 빌린 GLB 셋 git rm → PlaytestHeadless(세이브 치움·복원) → PlaytestShowcaseGui(GUI, SAGA_SHOT_BEASTS=1 새 손잡이 — 짐승을 주인공 앞에 세움) → audit --quick",
+  "fix": "굽기를 새 GLB 로 다시 하면 프리팹 루트 fileID(= 인스턴스 ID XOR 원본 루트 ID)가 바뀌어 TestVillage 씬의 FieldSpawner.beastModels 참조 셋이 끊김(1회차 진단: 몸 셋 폴백) → 씬 파일의 그 세 줄 fileID 만 새 값으로(재빌드 아님). 씬 파일들은 이 PC 에서 assume-unchanged 표시라 커밋 때만 풀고 다시 걸었다",
+  "ok": "PlaytestHeadless 89→89 · beasts OK 몸 WindHawk=동물(Beast_Birb) IceFox=동물(Beast_Fox) GrassSnake=동물(Beast_Snake) · error CS 0·Exception 0 · 세이브 md5 같음",
+  "eye": [
+    {
+      "id": "fox",
+      "eye": "○",
+      "note": "네 발로 선 붉은 여우·흰 가슴·검은 귀끝"
+    },
+    {
+      "id": "snake",
+      "eye": "○",
+      "note": "똬리 튼 연두 뱀·혀"
+    },
+    {
+      "id": "birb",
+      "eye": "○",
+      "note": "통통한 흰 새(뒤·위에서)·볏·분홍 날개 끝·발 — 첫 장은 벽 속, 둘째는 뱀에 가려 다시 찍음"
+    }
+  ],
+  "audit": "audit --quick 🔴 0 · credits OK",
+  "runs": 2,
+  "shots": "세션 scratchpad shots_u0100(커밋 안 함)"
+}

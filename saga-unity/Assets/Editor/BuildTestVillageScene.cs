@@ -356,7 +356,7 @@ namespace Saga.EditorTools
         /// <summary>PLAN.md 107-1 "들판 전투" — 플레이어에 `FieldCombat`(HUD 는 Play 때 스스로 만든다),
         /// 적 무리 여섯 곳을 세울 `FieldSpawner` 에 모델 둘(산적 Abe·해골 Skeleton, 없으면 캡슐)만 넘긴다.</summary>
         /// <summary>
-        /// `FieldEnemy.BeastKinds` 순서(회오리매·눈여우·바위곰·덩굴뱀)의 몸 후보 — 앞이 먼저. 저폴리 동물(`Art/Creatures`, 커밋됨, `SetupBeastAnimals`)이 있으면
+        /// `FieldEnemy.BeastKinds` 순서(회오리매·눈여우·바위곰·덩굴뱀)의 몸 후보 — 앞이 먼저. 짐승 몸(tasks U-0100 자체판 `Art/CreaturesSelf` 를 `SetupBeastAnimals` 가 `Art/Creatures` 프리팹으로 구움, 커밋됨)이 있으면
         /// 그것, 없으면 FOREST 짐승 몸(Jolleen·Goblin·Parasite — 로컬 전용)을 사람형 그대로. 바위곰은 동물 대역이 없어(곰 모델은 뼈대가 없다) Hulk.
         /// 저폴리 동물을 안 쓰려면 이 후보에서 앞 줄을 빼면 된다.
         /// </summary>

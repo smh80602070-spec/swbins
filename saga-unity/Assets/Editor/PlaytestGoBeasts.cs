@@ -112,7 +112,7 @@ namespace Saga.EditorTools
                 }
                 else
                 {
-                    // 저폴리 동물(Quaternius CC0, `Art/Creatures`) — 사람 키가 아니라 몸 길이로 크기를 맞추고 제 컨트롤러를 쓴다(뱀은 피격·쓰러짐 클립이 없다)
+                    // 짐승 몸(tasks U-0100 자체판 `Art/CreaturesSelf` → 굽기 `Art/Creatures`) — 사람 키가 아니라 몸 길이로 크기를 맞추고 제 컨트롤러를 쓴다(셋 다 피격·쓰러짐 있음)
                     if (!e.IsAnimalBody) Fail($"{r.Name} 동물 몸인데 크기를 길이로 안 맞춤");
                     if (an.runtimeAnimatorController == null) { Fail($"{r.Name} 컨트롤러 없음"); continue; }
                     var names = new HashSet<string>();

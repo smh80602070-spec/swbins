@@ -138102,10 +138102,10 @@ MonoBehaviour:
   skeletonModel: {fileID: 7372887235395909551, guid: cfb920940cf96b04789e4ae4b4d0789b, type: 3}
   guardianModel: {fileID: 8486061734732956589, guid: b1ded788d4f983b4ba9e6cac5051bc89, type: 3}
   beastModels:
-  - {fileID: 1182714056231111772, guid: 1f1bbdb56ccfaf34ea4b9f0ce57433d5, type: 3}
-  - {fileID: 5564364869009493658, guid: 29148b8a382210d4bbb79e7bff5e82ce, type: 3}
+  - {fileID: 8570528803936027050, guid: 1f1bbdb56ccfaf34ea4b9f0ce57433d5, type: 3}
+  - {fileID: 3144043599165997932, guid: 29148b8a382210d4bbb79e7bff5e82ce, type: 3}
   - {fileID: 1655311492678616914, guid: b72d3bfd981a3324c9c8a08f771eca27, type: 3}
-  - {fileID: 3144424174410055544, guid: 967994f1b1d39594087c39e479795b60, type: 3}
+  - {fileID: 5564838918970716814, guid: 967994f1b1d39594087c39e479795b60, type: 3}
   beastController: {fileID: 9100000, guid: fb219e0fb1ce7eb41a41f8fbdf10ef7a, type: 2}
   eraBodyNames:
   - GasMask

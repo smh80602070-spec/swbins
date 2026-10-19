@@ -81,6 +81,23 @@ namespace Saga.EditorTools
                 Saga.Go.Data.EggState.Discover(pet);
                 Debug.Log($"[ShowcaseGui] buddy {pet} {Saga.Go.Data.EggState.SetBuddy(pet)}");
             }
+            // U-0100 `SAGA_SHOT_BEASTS=1` — 짐승 셋(원소 옛 적이 바뀔 때만 생겨 장면 시작엔 없다)을 주인공 앞 8m 에 옛 시대 몸으로 세운다(촬영 프로세스 안에서만)
+            if (_frame == 60 && System.Environment.GetEnvironmentVariable("SAGA_SHOT_BEASTS") == "1")
+            {
+                var pl = GameObject.FindWithTag("Player");
+                if (pl != null)
+                {
+                    var kinds = new[] { Saga.Go.Combat.FieldEnemy.Kind.WindHawk, Saga.Go.Combat.FieldEnemy.Kind.IceFox, Saga.Go.Combat.FieldEnemy.Kind.GrassSnake };
+                    string want = System.Environment.GetEnvironmentVariable("SAGA_SHOT_TARGETS") ?? "";
+                    for (int k = 0; k < kinds.Length; k++)
+                    {
+                        if (!want.Contains("FieldEnemy_" + kinds[k])) continue; // 대상에 적힌 짐승만(서로 가리지 않게)
+                        var at = pl.transform.position + pl.transform.forward * 8f + pl.transform.right * (k == 0 ? 10f : (k - 1) * 5f); // 매는 오른쪽 끝(왼쪽은 마을 건물 벽)
+                        Saga.Go.Combat.FieldEnemy.Spawn(kinds[k], at, null, "shot", null, Saga.Go.Data.GoEra.Past, null);
+                    }
+                    Debug.Log("[ShowcaseGui] beasts 셋 세움");
+                }
+            }
             // U-0105 `hurt` — 판 첫 장면(이야기 창·컷 카메라)이 화면을 덮지 않게 진단처럼 첫 프레임에 끈다(촬영 프로세스 안에서만)
             if (_frame == 0 && ((System.Environment.GetEnvironmentVariable("SAGA_SHOT_ACT") ?? "").Contains("hurt") || (System.Environment.GetEnvironmentVariable("SAGA_SHOT_ACT") ?? "").Contains("dgranged")))
             {

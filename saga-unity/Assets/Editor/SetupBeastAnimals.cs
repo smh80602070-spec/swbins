@@ -7,8 +7,8 @@ using UnityEngine;
 namespace Saga.EditorTools
 {
     /// <summary>
-    /// PLAN.md 109-14-1b 임시 짐승 몸 — 새 원소 괴물 눈여우·회오리매·덩굴뱀에 쓰는 Quaternius CC0 저폴리 동물(`Assets/Art/Creatures/`,
-    /// 웹 사가나락 `assets/models` 에서 옮겨 옴). glTFast Mecanim 모드로 들어온 클립으로 `Speed`·`Attack`·`Hit`·`Death` 컨트롤러와
+    /// PLAN.md 109-14-1b 짐승 몸 — 새 원소 괴물 눈여우·회오리매·덩굴뱀. tasks U-0100 부터 자체툴 K-0096 자체판(`Assets/Art/CreaturesSelf/`,
+    /// 빌린 Quaternius CC0 는 걷음). glTFast Mecanim 모드로 들어온 클립으로 `Speed`·`Attack`·`Hit`·`Death` 컨트롤러와
     /// 프리팹(`CreaturesXxxAnimated.prefab`)을 굽는다. 걷기·달리기·대기는 반복 사본을 따로 만든다(임포트 클립은 반복 표시가 없다).
     /// 없는 클립은 상태를 뺀다(뱀은 피격·쓰러짐 클립이 없다). 프리팹이 없으면 `BuildTestVillageScene` 이 사람형 몸으로 둔다.
     /// 배치: `-executeMethod Saga.EditorTools.SetupBeastAnimals.SetupAll`.
@@ -22,12 +22,14 @@ namespace Saga.EditorTools
 
         private static readonly Spec[] Specs =
         {
-            new Spec { Name = "Fox", Idle = "Idle", Walk = "Walk", Run = "Gallop", Attack = "Attack", Hit = "Idle_HitReact_Left", Death = "Death" },
-            new Spec { Name = "Birb", Idle = "Idle", Walk = "Walk", Run = "Walk", Attack = "Bite_Front", Hit = "HitRecieve", Death = "Death" },
-            new Spec { Name = "Snake", Idle = "Snake_Idle", Walk = "Snake_Walk", Run = "Snake_Walk", Attack = "Snake_Attack" },
+            // tasks U-0100 — 자체판(K-0096 TRELLIS, `Art/CreaturesSelf/`) 셋 다 같은 동작 7(Special 은 안 씀) — 뱀도 이제 피격·쓰러짐이 있다.
+            new Spec { Name = "Fox", Idle = "Idle", Walk = "Walk", Run = "Run", Attack = "Attack", Hit = "Hit", Death = "Death" },
+            new Spec { Name = "Birb", Idle = "Idle", Walk = "Walk", Run = "Run", Attack = "Attack", Hit = "Hit", Death = "Death" },
+            new Spec { Name = "Snake", Idle = "Idle", Walk = "Walk", Run = "Run", Attack = "Attack", Hit = "Hit", Death = "Death" },
         };
 
-        public static string GlbPath(string name) => $"Assets/Art/Creatures/{name}/{name}.glb";
+        /// <summary>tasks U-0100 — 몸은 자체판 `Art/CreaturesSelf/{소문자}.glb`, 굽는 프리팹·클립은 옛 자리 그대로(씬이 그 프리팹 GUID 를 가리킨다).</summary>
+        public static string GlbPath(string name) => $"Assets/Art/CreaturesSelf/{name.ToLowerInvariant()}.glb";
         public static string PrefabPath(string name) => $"Assets/Art/Creatures/{name}/{name}Animated.prefab";
 
         [MenuItem("Saga/Setup Beast Animals")]
