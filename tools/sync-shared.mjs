@@ -38,6 +38,7 @@ const FILES = [
   ['js/assets3d.js', 'js/assets3d.js'],
   ['js/ai.js', 'js/ai.js', ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story']],   // R-4 — 네 판이 글자까지 같다(5천하는 따로 갈라짐)
   ['js/autoq.js', 'js/autoq.js', ['saga-forest', 'saga-realm']],
+  ['js/autoquest.js', 'js/autoquest.js', ['saga-go']],   // W-0337 자동 퀘스트 공용 틀(순수 상태 기계 + ▶ 단추·입력 감시) — 지금은 1만리만, 나머지 넷은 W-0338
   ['js/crowd3d.js', 'js/crowd3d.js', ['saga-go']],
   ['js/ragdoll3d.js', 'js/ragdoll3d.js', ['saga-go']],   // W-0310 ③ 물리(래그돌·돌·풀 눕힘) — 지금은 1만리만
   ['js/farland3d.js', 'js/farland3d.js', ['saga-go']],   // W-0310 ④ 지평선(먼 땅 고리·숲 임포스터) — 지금은 1만리만

@@ -395,6 +395,7 @@
     lastFrame = now;
 
     global.DG.auto.update(dt);          // 자동 순행 — 조작을 대신 넣어 준다
+    if (global.DG.autoQuestGo) { global.DG.autoQuestGo.update(dt); }   // W-0337 ▶ 자동 퀘스트(목표 목록·막힘·멈춤)
     world.update(dt);
     if (global.DG.keys) { global.DG.keys.tick(dt); }   // W-0174 F 만나기·걸어가서 만나기·D-패드 달리기·카메라 따라 돌기
     tickSupply();

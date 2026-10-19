@@ -1722,6 +1722,7 @@ body.fc-on #dock, body.fc-on #near { display: none !important; }
   #field-hud .fc-party { top: calc(var(--below-header, 152px) + 8px); }   /* W-0342 — 84 는 이야기 자동 이동 단추(#story-go)·재화 줄과 겹쳤다 → 미니맵처럼 지갑·자동 순행 띠·장 이야기 줄 아래 끝(ui.js syncHeaderStack) 밑으로 */
 }
 @media (pointer: coarse) and (max-height: 520px) {
+  body #aq-go { right: calc(224px + var(--safe-r, 0px)); }   /* W-0337 ▶ 도 같이 왼쪽으로 */
   body #story-go { right: calc(176px + var(--safe-r, 0px)); }   /* W-0342 폰 가로 — 동료 칩(오른쪽 150 폭) 왼쪽으로(body — 뒤에 오는 #story-go 규칙을 이기게) */
 }
 
@@ -1784,6 +1785,11 @@ body.fc-on #dock, body.fc-on #near { display: none !important; }
 }
 #story-go:empty { display: none; }
 #story-go.on { background: linear-gradient(#ff9a8a, #e0503c); color: #fff; }
+/* W-0337 ▶ 자동 퀘스트 단추 — 🧭 왼쪽 옆, 같은 알약(목표가 있을 때만 · 켜지면 붉게) */
+#aq-go { position: fixed; right: calc(126px + var(--safe-r, 0px)); top: calc(84px + var(--safe-t)); z-index: 25; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; color: #1b1405; background: linear-gradient(#d9f2ff, #7cc4ea); border: 1px solid #eaf8ff; box-shadow: 0 2px 10px rgba(0,0,0,.45); }
+#aq-go:empty { display: none; }
+#aq-go.on { background: linear-gradient(#ff9a8a, #e0503c); color: #fff; }
+body.sheet-open #aq-go { visibility: hidden; pointer-events: none; }
 #story-track { max-width: calc(100vw - 32px - 56px); }
 #overworld-map .ow-way { margin-top: 8px; max-height: 120px; overflow-y: auto; }
 #overworld-map .ow-way-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }

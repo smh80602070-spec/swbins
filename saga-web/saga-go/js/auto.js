@@ -558,6 +558,8 @@
     setOn: setOn, toggle: toggle, toggleFlag: toggleFlag,
     update: update, status: status,
     /** 자가진단용 — 한 판단만 굴려 본다 */
-    _tickMap: tickMap, _autoRankUp: autoRankUp, _tickStory: tickStory
+    _tickMap: tickMap, _autoRankUp: autoRankUp, _tickStory: tickStory,
+    /** W-0337 자동 퀘스트가 더 멀리 비켜 가게 — walkToward 가 4초까지 이 자리로 간다 */
+    _sidestep: function (x, y) { stuck.side = { x: x, y: y }; stuck.t = 0; }
   };
 })(window);
