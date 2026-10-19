@@ -14,12 +14,10 @@
 - [ ] 10-18 · (자체툴 K-0139 → 고돗) · 같은 파일 `saga-godot/assets/anim_mocap/vroid_mocap_anims.glb` → VRoid 몸 anim_cc0 `_lib.res` 에 12 클립 갈아 끼우기(`.import` 는 고돗 세션) · 고돗
 - [ ] 10-18 · (자체툴 K-0137 → 고돗) · 주역 10 몸 바뀜(새 머리카락·뼈 비율·얼굴 레이어 — hl_mukhyang·kr_gyebaek·fu_jongwang·tb_baekgi·ru_geohae·sg_caocao·sg_liubei·sg_lubu·sg_sunquan·sg_zhugeliang) · 원본 `tools/char-forge/_out/vroid/<id>/<id>.glb`·`<id>_anims.glb`(이 PC) → `vroid_intake.sh --only <10>` 로 얼굴 데칼·anim_cc0 `_lib.res` 다시 · 고돗
 - [ ] 10-18 · (자체툴 K-0137 → 유니티) · 같은 주역 10 몸 바뀜 — 유니티가 이 열 명을 VRoid 몸으로 쓰는 자리가 있으면 같은 원본으로 갈아 끼우기(없으면 [x]) · 유니티
-- [ ] 10-19 · (웹 W-0318 → 자체툴) · K-0139 모캡 12 중 cast·strong·greet 는 몸짓 뜻과 달라(판정 시점에 시전 = 무릎 든 채 두 손 머리 위, 강공격 = 웅크림, 인사 = 손이 머리 위로 안 감) 웹이 안 씀 — 두 손 앞으로 내뿜는 시전·두 손 머리 위에서 내려치는 강공격·오른손 흔드는 인사 CMU 클립으로 다시 굽기(판정 기준 shared/js/pose3d.js EXPECT) → K-0138 cast·wave · 자체툴
 - [ ] 10-19 · (자체툴 K-0136 → 웹 1만리·2나락) · 3D 땅 타일 8 `shared/assets/tiles/ground/<id>.webp`(512 이음매 없음) — 1만리 `landTexture` 단색 대신 go_*(마을 흙·돌길·들풀·물가), 2나락 `town3d*.js` 바닥에 dg_*(마을 흙·던전 돌·동굴 바위·늪) · 웹
-- [ ] 10-19 · 사용자 "모바일 화면이 깨짐(아이폰 16 Pro)" · 아이폰 크기(402×874) 흉내로 다섯 판 첫 화면 촬영 — 세로 키 아트 `<판>_key_v.webp`(K-0041) 가 정사각 그림에 흐린 띠를 위아래로 덧댄 1080×1920 이라 세로 폰에서 화면의 약 30% 가 띠로 보인다 → 띠 없이 세로로 꽉 찬 세로 키 아트 다섯 장 다시(그 전까지 웹은 그대로) · 자체툴
 - [ ] 10-19 · (자체툴 K-0135 → 웹 W-0296) · 4종횡 타일 80·소품 50·앞 층 10(`saga-story/assets/web2d/{tile,prop,bg}`, 규격 그대로) + 사람 jump·fall 500(`characters2d8/<id>/`, mode2d 가 이미 읽음) · 웹
 - [ ] 10-19 · (자체툴 K-0121 → 웹 2나락) · 종 몸 초상 27+17(K-0144)+10(K-0145)·5천하 용·외계 2·사람 적 18 `portraits-monster/<id>_c.webp` — idOf·foeBody 가 body 의 id 먼저(짝 `tools/ai-art/data/k121_targets.json`) · 웹
 - [ ] 10-19 · (자체툴 K-0122·K-0120 → 웹) · 빌린 괴물 → `creatures3d/<id>`(표 `tools/world-forge/data/k122_monsters.json`), `FistR` 는 뼈 아닌 노드 · 펫 `world3d/pet_<id>.glb` + 2D `beast_<펫 id>.png`(1만리 sprite.js 표 `pk_x:'pk_x'`) · 웹
 - [ ] 10-19 · (자체툴 K-0143 → 웹 1만리) · 종 몸 2D 시트 95 `shared/assets/creatures2d/<creatures3d id>/`(K-0090 꼴, manifest ortho_m 실제 크기) — 2D 짐승 풀은 종 id 먼저, 없으면 옛 mon_* · 웹
-- [ ] 10-19 · (웹 W-0336·W-0339 → 자체툴) · 2D 오딘스피어식 인물 부위 그림(뼈 16·부위 webp, 규격 `shared/js/cutout2d.js` 머리)·장소별 겹 배경 5~7 층 / 3D 원신+파판 규격(`shared/js/look3d.js`)에 맞춘 환경 모델·재질 · 자체툴
+- [ ] 10-19 · (웹 W-0336·W-0339 → 자체툴) · 2D 오딘스피어식 인물 부위 그림(뼈 16·부위 webp, 규격 `shared/js/cutout2d.js` 머리)·장소별 겹 배경 5~7 층 / 3D 원신+파판 규격(`shared/js/look3d.js`)에 맞춘 환경 모델·재질 · 자체툴 — **2D 절반 → K-0150**(10-20), 3D 는 W-0339 뒤
 - [ ] 10-19 · (자체툴 K-0138 → 웹) · 16방향 주역 10 `characters2d16/<id>/sheet.json`(역할 9) — gen-assets3d-ids · 웹
