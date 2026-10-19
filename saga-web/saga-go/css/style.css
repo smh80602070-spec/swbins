@@ -1836,6 +1836,11 @@ body.sheet-open #aq-go { visibility: hidden; pointer-events: none; }
   /* 자동 순행 띠 → 지역 사명 → 이야기 줄 차례로 윗 카드 밑에 쌓는다(높이는 ui.js syncHeaderStack 이 잰다) */
   #region-mission { top: calc(var(--top-bottom, 106px) + 6px + var(--autobar-h, 0px)); }
   #story-track { top: calc(var(--top-bottom, 106px) + 6px + var(--autobar-h, 0px) + var(--mission-h, 0px)); }
+  /* W-0337 — 🧭·▶ 가 top 84 에서 재화 줄을 덮었다 → 이야기 줄 오른쪽 끝 같은 줄로(줄은 왼쪽 붙이고 두 단추 폭만큼 줄임) */
+  #story-track { left: 12px; transform: none; max-width: calc(100vw - 24px - 84px); }
+  #story-go, #aq-go { top: calc(var(--top-bottom, 106px) + 3px + var(--autobar-h, 0px) + var(--mission-h, 0px)); width: 36px; height: 36px; font-size: 17px; }
+  #story-go { right: calc(12px + var(--safe-r, 0px)); }
+  #aq-go { right: calc(54px + var(--safe-r, 0px)); }
   /* 💬 단추는 근처 카드(+N 칩까지) 위로 비켜 둔다 */
   #story-btn { bottom: calc(214px + var(--safe-b)); }
   /* 근처 카드는 한 장(ui.js renderNear) — 나머지는 이 칩으로 펼친다 */
