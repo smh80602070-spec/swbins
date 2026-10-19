@@ -152,3 +152,11 @@ body { font-variant-numeric: tabular-nums; }
 .icon-btn.sm { border-image-width: 8px; }
 /* 창 안 닫기 단추는 둥근 그대로(9-slice 를 둥근 칸에 입히면 네모가 비친다) */
 #sheet-close, .dt-x, .mg-x, #sheet-close:hover, .dt-x:hover, .mg-x:hover, #sheet-close:active, .dt-x:active, .mg-x:active { border-image: none; }   /* :hover 까지 — .icon-btn:hover 가 그림을 다시 끼우지 않게(R-5) */
+
+/* ── 폰 탭 목표 44px(W-0335 측정 → W-0340, 애플 HIG) — 판별 style.css 가 미디어 쿼리 안에서 width/height 를 40·36·34 로 주므로
+   특이도 싸움 대신 min-* 로 바닥만 깐다(그림·자리 규칙은 그대로, 작으면 44 로 자란다). 손가락 기기(pointer: coarse)의 좁은 변 ≤ 520 만 — PC 그대로 */
+@media (pointer: coarse) and (max-width: 520px), (pointer: coarse) and (max-height: 520px) {
+  /* !important — 판 안의 더 센 선택자(.focus-card .btn·#wallet .btn.primary·#rmapctl .icon-btn.sm …)가 40 을 다시 준다. 하한값이라 이 쿼리 안에서만 */
+  .icon-btn, #dock button, .hud-sk, #hud-dodge, .goal-hide, #sheet-close, .dt-x, .mg-x { min-width: 44px !important; min-height: 44px !important; }
+  .btn, #acc-host .acc-btn { min-height: 44px !important; }
+}

@@ -83,7 +83,7 @@ function domMeasure() {
   const bytes = res.reduce((a, r) => a + (r.transferSize || r.encodedBodySize || 0), 0);
   const heap = performance.memory ? performance.memory.usedJSHeapSize : null;
   return {
-    W, H, taps: taps.length, smallTaps: small.length, smallEx: small.slice(0, 6).map(name), overflowX, cut: cut.slice(0, 6), cutN: cut.length,
+    W, H, taps: taps.length, smallTaps: small.length, smallEx: small.slice(0, 16).map((e) => { const r = e.getBoundingClientRect(); return name(e) + ' ' + Math.round(r.width) + '×' + Math.round(r.height); }), overflowX, cut: cut.slice(0, 6), cutN: cut.length,
     overlap: over.slice(0, 6), overlapN: over.length, texts: texts.length, tiny: tiny.length, tinyEx: tiny.slice(0, 6), judged, lowC: lowC.length, lowCEx: lowC.slice(0, 6),
     canvasMP: +(cv / 1e6).toFixed(2), mb: +(bytes / 1048576).toFixed(1), resN: res.length, heapMB: heap ? +(heap / 1048576).toFixed(1) : null,
     inappBand: !!(document.getElementById('inapp-band') && vis(document.getElementById('inapp-band')))

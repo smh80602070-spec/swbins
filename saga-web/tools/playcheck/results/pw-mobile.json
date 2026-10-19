@@ -1,6 +1,6 @@
 {
- "base": "http://127.0.0.1:2559/",
- "at": "2026-10-19T08:45:30.967Z",
+ "base": "http://127.0.0.1:4100/",
+ "at": "2026-10-19T09:51:54.543Z",
  "play": 60,
  "note": "이 PC WebKit·크롬은 GPU 메모리 한도가 없다 — 죽음 0 ≠ 폰 안 죽음",
  "runs": [
@@ -15,7 +15,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "13869ms"
+     "detail": "14868ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -46,18 +46,13 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 13869,
+   "bootMs": 14868,
    "portrait": {
     "W": 402,
     "H": 874,
     "taps": 12,
-    "smallTaps": 4,
-    "smallEx": [
-     "#btn-mapfocus",
-     "#btn-auto",
-     "#btn-geo",
-     "#btn-more"
-    ],
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
@@ -85,22 +80,16 @@
     "inappBand": false
    },
    "fps": {
-    "min": 3,
-    "avg": 6,
-    "n": 8
+    "min": 2,
+    "avg": 5,
+    "n": 7
    },
    "afterPlay": {
     "W": 402,
     "H": 874,
     "taps": 13,
-    "smallTaps": 5,
-    "smallEx": [
-     "#btn-mapfocus",
-     "#btn-auto",
-     "#btn-geo",
-     "#btn-more",
-     "button.btn.tiny"
-    ],
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
@@ -108,7 +97,7 @@
      "div.fc-party↔#story-go"
     ],
     "overlapN": 1,
-    "texts": 26,
+    "texts": 25,
     "tiny": 10,
     "tinyEx": [
      "div.p-goal.now 11.0px",
@@ -118,12 +107,12 @@
      "small 11.0px",
      "em 11.0px"
     ],
-    "judged": 24,
+    "judged": 23,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 4.39,
     "mb": 12.3,
-    "resN": 193,
+    "resN": 194,
     "heapMB": null,
     "inappBand": false
    },
@@ -131,14 +120,10 @@
     "W": 874,
     "H": 402,
     "taps": 20,
-    "smallTaps": 12,
+    "smallTaps": 2,
     "smallEx": [
-     "#btn-mapfocus",
-     "div.p-goal",
-     "div.p-goal",
-     "#btn-auto",
-     "#btn-geo",
-     "#btn-acc"
+     "div.p-goal 197×14",
+     "div.p-goal 197×14"
     ],
     "overflowX": 0,
     "cut": [],
@@ -170,13 +155,8 @@
     "W": 402,
     "H": 874,
     "taps": 12,
-    "smallTaps": 4,
-    "smallEx": [
-     "#btn-mapfocus",
-     "#btn-auto",
-     "#btn-geo",
-     "#btn-more"
-    ],
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
@@ -184,7 +164,7 @@
      "div.fc-party↔#story-go"
     ],
     "overlapN": 1,
-    "texts": 24,
+    "texts": 23,
     "tiny": 9,
     "tinyEx": [
      "div.p-goal.now 11.0px",
@@ -194,7 +174,7 @@
      "em 11.0px",
      "em 11.0px"
     ],
-    "judged": 22,
+    "judged": 21,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 4.39,
@@ -216,7 +196,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "13264ms"
+     "detail": "13354ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -247,18 +227,13 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 13264,
+   "bootMs": 13354,
    "portrait": {
     "W": 412,
     "H": 839,
     "taps": 12,
-    "smallTaps": 4,
-    "smallEx": [
-     "#btn-mapfocus",
-     "#btn-auto",
-     "#btn-geo",
-     "#btn-more"
-    ],
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
@@ -280,13 +255,13 @@
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 3.59,
-    "mb": 10.8,
-    "resN": 180,
-    "heapMB": 40.6,
+    "mb": 11.2,
+    "resN": 176,
+    "heapMB": 41.4,
     "inappBand": false
    },
    "fps": {
-    "min": 54,
+    "min": 55,
     "avg": 60,
     "n": 8
    },
@@ -294,14 +269,8 @@
     "W": 412,
     "H": 839,
     "taps": 13,
-    "smallTaps": 5,
-    "smallEx": [
-     "#btn-mapfocus",
-     "#btn-auto",
-     "#btn-geo",
-     "#btn-more",
-     "button.btn.tiny"
-    ],
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
@@ -309,7 +278,7 @@
      "div.fc-party↔#story-go"
     ],
     "overlapN": 1,
-    "texts": 28,
+    "texts": 27,
     "tiny": 10,
     "tinyEx": [
      "div.p-goal.now 11.0px",
@@ -319,27 +288,23 @@
      "small 11.0px",
      "em 11.0px"
     ],
-    "judged": 26,
+    "judged": 25,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 3.59,
-    "mb": 16,
+    "mb": 15.1,
     "resN": 250,
-    "heapMB": 73.3,
+    "heapMB": 69.7,
     "inappBand": false
    },
    "landscape": {
     "W": 839,
     "H": 412,
     "taps": 20,
-    "smallTaps": 12,
+    "smallTaps": 2,
     "smallEx": [
-     "#btn-mapfocus",
-     "div.p-goal",
-     "div.p-goal",
-     "#btn-auto",
-     "#btn-geo",
-     "#btn-acc"
+     "div.p-goal 197×14",
+     "div.p-goal 197×14"
     ],
     "overflowX": 0,
     "cut": [],
@@ -348,7 +313,7 @@
      "div.fc-party↔#story-go"
     ],
     "overlapN": 1,
-    "texts": 31,
+    "texts": 32,
     "tiny": 16,
     "tinyEx": [
      "div.p-sub 11.0px",
@@ -358,26 +323,21 @@
      "div.p-goal 11.0px",
      "b 11.0px"
     ],
-    "judged": 29,
+    "judged": 30,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 3.61,
-    "mb": 16,
+    "mb": 15.1,
     "resN": 250,
-    "heapMB": 63.6,
+    "heapMB": 53.9,
     "inappBand": false
    },
    "back": {
     "W": 412,
     "H": 839,
     "taps": 12,
-    "smallTaps": 4,
-    "smallEx": [
-     "#btn-mapfocus",
-     "#btn-auto",
-     "#btn-geo",
-     "#btn-more"
-    ],
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
@@ -385,7 +345,7 @@
      "div.fc-party↔#story-go"
     ],
     "overlapN": 1,
-    "texts": 25,
+    "texts": 26,
     "tiny": 9,
     "tinyEx": [
      "div.p-goal.now 11.0px",
@@ -395,13 +355,13 @@
      "em 11.0px",
      "em 11.0px"
     ],
-    "judged": 23,
+    "judged": 24,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 3.59,
-    "mb": 16,
+    "mb": 15.1,
     "resN": 250,
-    "heapMB": 75.6,
+    "heapMB": 61.9,
     "inappBand": false
    },
    "ok": true
@@ -417,7 +377,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "17666ms"
+     "detail": "17850ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -448,18 +408,13 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 17666,
+   "bootMs": 17850,
    "portrait": {
     "W": 402,
     "H": 874,
     "taps": 10,
-    "smallTaps": 4,
-    "smallEx": [
-     "#btn-acc",
-     "#btn-auto",
-     "#btn-more",
-     "button.goal-hide"
-    ],
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
@@ -485,23 +440,16 @@
     "inappBand": false
    },
    "fps": {
-    "min": 2,
+    "min": 3,
     "avg": 3,
-    "n": 8
+    "n": 7
    },
    "afterPlay": {
     "W": 402,
     "H": 874,
     "taps": 15,
-    "smallTaps": 9,
-    "smallEx": [
-     "#btn-acc",
-     "#btn-auto",
-     "#btn-more",
-     "button.goal-hide",
-     "button.btn.tiny",
-     "button.btn.tiny"
-    ],
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
@@ -535,21 +483,14 @@
     "W": 874,
     "H": 402,
     "taps": 17,
-    "smallTaps": 11,
-    "smallEx": [
-     "#btn-acc",
-     "#btn-auto",
-     "#btn-3d",
-     "#btn-sound",
-     "#btn-help",
-     "#btn-admin"
-    ],
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 27,
+    "texts": 28,
     "tiny": 18,
     "tinyEx": [
      "div.p-sub 11.0px",
@@ -575,15 +516,8 @@
     "W": 402,
     "H": 874,
     "taps": 14,
-    "smallTaps": 8,
-    "smallEx": [
-     "#btn-acc",
-     "#btn-auto",
-     "#btn-more",
-     "button.goal-hide",
-     "button.btn.tiny",
-     "button.btn.tiny"
-    ],
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
@@ -624,7 +558,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "17081ms"
+     "detail": "16997ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -655,18 +589,13 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 17081,
+   "bootMs": 16997,
    "portrait": {
     "W": 412,
     "H": 839,
     "taps": 10,
-    "smallTaps": 4,
-    "smallEx": [
-     "#btn-acc",
-     "#btn-auto",
-     "#btn-more",
-     "button.goal-hide"
-    ],
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
@@ -688,27 +617,20 @@
     "canvasMP": 1.42,
     "mb": 4.2,
     "resN": 113,
-    "heapMB": 18.8,
+    "heapMB": 18.2,
     "inappBand": false
    },
    "fps": {
-    "min": 26,
-    "avg": 31,
+    "min": 25,
+    "avg": 29,
     "n": 7
    },
    "afterPlay": {
     "W": 412,
     "H": 839,
-    "taps": 15,
-    "smallTaps": 9,
-    "smallEx": [
-     "#btn-acc",
-     "#btn-auto",
-     "#btn-more",
-     "button.goal-hide",
-     "button.btn.tiny",
-     "button.btn.tiny"
-    ],
+    "taps": 13,
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
@@ -716,106 +638,83 @@
      "button.goal-hide↔#autobar"
     ],
     "overlapN": 1,
-    "texts": 32,
-    "tiny": 19,
+    "texts": 23,
+    "tiny": 8,
     "tinyEx": [
      "div.p-sub 11.0px",
      "b 11.0px",
      "button.btn.tiny 11.0px",
      "small 11.0px",
      "small.muted 11.0px",
-     "h4 11.0px"
+     "div.dg-tip 11.0px"
     ],
-    "judged": 15,
-    "lowC": 2,
-    "lowCEx": [
-     "button.btn.tiny 3.0",
-     "button.btn.tiny 3.0"
-    ],
+    "judged": 9,
+    "lowC": 0,
+    "lowCEx": [],
     "canvasMP": 1.42,
-    "mb": 5.4,
-    "resN": 145,
-    "heapMB": 28.7,
+    "mb": 6.6,
+    "resN": 156,
+    "heapMB": 24.3,
     "inappBand": false
    },
    "landscape": {
     "W": 839,
     "H": 412,
-    "taps": 18,
-    "smallTaps": 12,
-    "smallEx": [
-     "#btn-acc",
-     "#btn-auto",
-     "#btn-3d",
-     "#btn-sound",
-     "#btn-help",
-     "#btn-admin"
-    ],
+    "taps": 16,
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 30,
-    "tiny": 18,
+    "texts": 22,
+    "tiny": 8,
     "tinyEx": [
      "div.p-sub 11.0px",
      "b 11.0px",
      "small 11.0px",
      "small.muted 11.0px",
-     "h4 11.0px",
-     "button.btn.tiny 11.0px"
+     "div.dg-tip 11.0px",
+     "b 11.0px"
     ],
-    "judged": 13,
-    "lowC": 2,
-    "lowCEx": [
-     "button.btn.tiny 3.0",
-     "button.btn.tiny 3.0"
-    ],
+    "judged": 7,
+    "lowC": 0,
+    "lowCEx": [],
     "canvasMP": 1.31,
     "mb": 6.6,
-    "resN": 153,
-    "heapMB": 27.6,
+    "resN": 157,
+    "heapMB": 29.5,
     "inappBand": false
    },
    "back": {
     "W": 412,
     "H": 839,
-    "taps": 14,
-    "smallTaps": 8,
-    "smallEx": [
-     "#btn-acc",
-     "#btn-auto",
-     "#btn-more",
-     "button.goal-hide",
-     "button.btn.tiny",
-     "button.btn.tiny"
-    ],
+    "taps": 12,
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 28,
-    "tiny": 17,
+    "texts": 20,
+    "tiny": 7,
     "tinyEx": [
      "div.p-sub 11.0px",
      "b 11.0px",
      "small 11.0px",
      "small.muted 11.0px",
-     "h4 11.0px",
-     "button.btn.tiny 11.0px"
+     "div.dg-tip 11.0px",
+     "b 11.0px"
     ],
-    "judged": 12,
-    "lowC": 2,
-    "lowCEx": [
-     "button.btn.tiny 3.0",
-     "button.btn.tiny 3.0"
-    ],
+    "judged": 6,
+    "lowC": 0,
+    "lowCEx": [],
     "canvasMP": 1.42,
     "mb": 6.6,
-    "resN": 153,
-    "heapMB": 26.6,
+    "resN": 157,
+    "heapMB": 27.5,
     "inappBand": false
    },
    "ok": true
@@ -831,7 +730,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "13439ms"
+     "detail": "13517ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -862,19 +761,14 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 13439,
+   "bootMs": 13517,
    "portrait": {
     "W": 402,
     "H": 874,
     "taps": 9,
-    "smallTaps": 9,
+    "smallTaps": 1,
     "smallEx": [
-     "div.p-goal",
-     "#btn-acc",
-     "#btn-auto",
-     "#btn-3d",
-     "#btn-more",
-     "button.btn.primary"
+     "div.p-goal 125×28"
     ],
     "overflowX": 0,
     "cut": [],
@@ -901,7 +795,7 @@
     "inappBand": false
    },
    "fps": {
-    "min": 4,
+    "min": 2,
     "avg": 4,
     "n": 8
    },
@@ -909,14 +803,9 @@
     "W": 402,
     "H": 874,
     "taps": 10,
-    "smallTaps": 10,
+    "smallTaps": 1,
     "smallEx": [
-     "div.p-goal",
-     "#btn-acc",
-     "#btn-auto",
-     "#btn-3d",
-     "#btn-more",
-     "button.btn.tiny"
+     "div.p-goal 125×28"
     ],
     "overflowX": 0,
     "cut": [],
@@ -933,14 +822,12 @@
      "b 11.0px",
      "div.p-goal.tut-goal 11.0px"
     ],
-    "judged": 25,
-    "lowC": 1,
-    "lowCEx": [
-     "button.btn.ghost 3.9"
-    ],
+    "judged": 24,
+    "lowC": 0,
+    "lowCEx": [],
     "canvasMP": 2.24,
     "mb": 6.6,
-    "resN": 77,
+    "resN": 78,
     "heapMB": null,
     "inappBand": false
    },
@@ -948,14 +835,9 @@
     "W": 874,
     "H": 402,
     "taps": 9,
-    "smallTaps": 6,
+    "smallTaps": 1,
     "smallEx": [
-     "div.p-goal",
-     "#btn-acc",
-     "#btn-auto",
-     "#btn-3d",
-     "#btn-more",
-     "button.btn.primary"
+     "div.p-goal 306×14"
     ],
     "overflowX": 0,
     "cut": [],
@@ -976,8 +858,8 @@
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 2.26,
-    "mb": 6.8,
-    "resN": 84,
+    "mb": 6.9,
+    "resN": 85,
     "heapMB": null,
     "inappBand": false
    },
@@ -985,14 +867,9 @@
     "W": 402,
     "H": 874,
     "taps": 9,
-    "smallTaps": 9,
+    "smallTaps": 1,
     "smallEx": [
-     "div.p-goal",
-     "#btn-acc",
-     "#btn-auto",
-     "#btn-3d",
-     "#btn-more",
-     "button.btn.primary"
+     "div.p-goal 125×28"
     ],
     "overflowX": 0,
     "cut": [],
@@ -1013,8 +890,8 @@
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 2.24,
-    "mb": 6.8,
-    "resN": 84,
+    "mb": 6.9,
+    "resN": 85,
     "heapMB": null,
     "inappBand": false
    },
@@ -1031,7 +908,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "13839ms"
+     "detail": "13199ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -1062,19 +939,14 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 13839,
+   "bootMs": 13199,
    "portrait": {
     "W": 412,
     "H": 839,
     "taps": 9,
-    "smallTaps": 9,
+    "smallTaps": 1,
     "smallEx": [
-     "div.p-goal",
-     "#btn-acc",
-     "#btn-auto",
-     "#btn-3d",
-     "#btn-more",
-     "button.btn.primary"
+     "div.p-goal 136×28"
     ],
     "overflowX": 0,
     "cut": [],
@@ -1097,7 +969,7 @@
     "canvasMP": 2.2,
     "mb": 6.1,
     "resN": 59,
-    "heapMB": 22.1,
+    "heapMB": 19.1,
     "inappBand": false
    },
    "fps": {
@@ -1108,22 +980,91 @@
    "afterPlay": {
     "W": 412,
     "H": 839,
-    "taps": 10,
-    "smallTaps": 9,
+    "taps": 11,
+    "smallTaps": 1,
     "smallEx": [
-     "div.p-goal",
-     "#btn-acc",
-     "#btn-auto",
-     "#btn-3d",
-     "#btn-more",
-     "button.btn.tiny"
+     "div.p-goal 136×28"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
-    "overlap": [],
-    "overlapN": 0,
-    "texts": 25,
+    "overlap": [
+     "#vjoy↔#mt-ride"
+    ],
+    "overlapN": 1,
+    "texts": 26,
+    "tiny": 21,
+    "tinyEx": [
+     "div.p-title 11.0px",
+     "div.p-sub 11.0px",
+     "b 11.0px",
+     "div.p-goal.scn-goal 11.0px",
+     "b 11.0px",
+     "div.p-goal.tut-goal 11.0px"
+    ],
+    "judged": 26,
+    "lowC": 1,
+    "lowCEx": [
+     "button.btn.ghost 3.9"
+    ],
+    "canvasMP": 2.2,
+    "mb": 7.8,
+    "resN": 102,
+    "heapMB": 21,
+    "inappBand": false
+   },
+   "landscape": {
+    "W": 839,
+    "H": 412,
+    "taps": 10,
+    "smallTaps": 1,
+    "smallEx": [
+     "div.p-goal 308×14"
+    ],
+    "overflowX": 0,
+    "cut": [],
+    "cutN": 0,
+    "overlap": [
+     "#vjoy↔#mt-ride"
+    ],
+    "overlapN": 1,
+    "texts": 24,
+    "tiny": 14,
+    "tinyEx": [
+     "div.p-sub 11.0px",
+     "b 11.0px",
+     "div.p-goal.scn-goal 11.0px",
+     "b 11.0px",
+     "div.p-goal.tut-goal 11.0px",
+     "small 9.2px"
+    ],
+    "judged": 24,
+    "lowC": 1,
+    "lowCEx": [
+     "button.btn.ghost 3.9"
+    ],
+    "canvasMP": 2.23,
+    "mb": 8,
+    "resN": 106,
+    "heapMB": 26.9,
+    "inappBand": false
+   },
+   "back": {
+    "W": 412,
+    "H": 839,
+    "taps": 10,
+    "smallTaps": 1,
+    "smallEx": [
+     "div.p-goal 136×28"
+    ],
+    "overflowX": 0,
+    "cut": [],
+    "cutN": 0,
+    "overlap": [
+     "#vjoy↔#mt-ride"
+    ],
+    "overlapN": 1,
+    "texts": 23,
     "tiny": 20,
     "tinyEx": [
      "div.p-title 11.0px",
@@ -1133,87 +1074,15 @@
      "b 11.0px",
      "div.p-goal.tut-goal 11.0px"
     ],
-    "judged": 25,
-    "lowC": 0,
-    "lowCEx": [],
-    "canvasMP": 2.2,
-    "mb": 7.7,
-    "resN": 89,
-    "heapMB": 23.1,
-    "inappBand": false
-   },
-   "landscape": {
-    "W": 839,
-    "H": 412,
-    "taps": 9,
-    "smallTaps": 6,
-    "smallEx": [
-     "div.p-goal",
-     "#btn-acc",
-     "#btn-auto",
-     "#btn-3d",
-     "#btn-more",
-     "button.btn"
-    ],
-    "overflowX": 0,
-    "cut": [],
-    "cutN": 0,
-    "overlap": [],
-    "overlapN": 0,
-    "texts": 23,
-    "tiny": 13,
-    "tinyEx": [
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "div.p-goal.scn-goal 11.0px",
-     "b 11.0px",
-     "div.p-goal.tut-goal 11.0px",
-     "small 9.2px"
-    ],
     "judged": 23,
-    "lowC": 0,
-    "lowCEx": [],
-    "canvasMP": 2.23,
-    "mb": 7.8,
-    "resN": 93,
-    "heapMB": 25.3,
-    "inappBand": false
-   },
-   "back": {
-    "W": 412,
-    "H": 839,
-    "taps": 9,
-    "smallTaps": 8,
-    "smallEx": [
-     "div.p-goal",
-     "#btn-acc",
-     "#btn-auto",
-     "#btn-3d",
-     "#btn-more",
-     "button"
+    "lowC": 1,
+    "lowCEx": [
+     "button.btn.ghost 3.9"
     ],
-    "overflowX": 0,
-    "cut": [],
-    "cutN": 0,
-    "overlap": [],
-    "overlapN": 0,
-    "texts": 22,
-    "tiny": 19,
-    "tinyEx": [
-     "div.p-title 11.0px",
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "div.p-goal.scn-goal 11.0px",
-     "b 11.0px",
-     "div.p-goal.tut-goal 11.0px"
-    ],
-    "judged": 22,
-    "lowC": 0,
-    "lowCEx": [],
     "canvasMP": 2.2,
-    "mb": 7.8,
-    "resN": 93,
-    "heapMB": 23.8,
+    "mb": 8,
+    "resN": 106,
+    "heapMB": 21.8,
     "inappBand": false
    },
    "ok": true
@@ -1229,7 +1098,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "16605ms"
+     "detail": "16629ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -1260,20 +1129,13 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 16605,
+   "bootMs": 16629,
    "portrait": {
     "W": 402,
     "H": 874,
     "taps": 18,
-    "smallTaps": 14,
-    "smallEx": [
-     "#btn-focus",
-     "#btn-map",
-     "#btn-auto",
-     "#btn-autoskill",
-     "#btn-more",
-     "button.hud-sk.ready"
-    ],
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
@@ -1299,7 +1161,7 @@
     "inappBand": false
    },
    "fps": {
-    "min": 4,
+    "min": 2,
     "avg": 4,
     "n": 8
    },
@@ -1307,15 +1169,8 @@
     "W": 402,
     "H": 874,
     "taps": 19,
-    "smallTaps": 15,
-    "smallEx": [
-     "#btn-focus",
-     "#btn-map",
-     "#btn-auto",
-     "#btn-autoskill",
-     "#btn-more",
-     "button.btn.tiny"
-    ],
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
@@ -1335,8 +1190,8 @@
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 2.48,
-    "mb": 3.1,
-    "resN": 69,
+    "mb": 3,
+    "resN": 65,
     "heapMB": null,
     "inappBand": false
    },
@@ -1344,21 +1199,14 @@
     "W": 874,
     "H": 402,
     "taps": 22,
-    "smallTaps": 13,
-    "smallEx": [
-     "#btn-focus",
-     "#btn-map",
-     "#btn-auto",
-     "#btn-autoskill",
-     "#btn-acc",
-     "#btn-sound"
-    ],
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 25,
+    "texts": 24,
     "tiny": 17,
     "tinyEx": [
      "div.p-sub 11.0px",
@@ -1368,12 +1216,12 @@
      "b 11.0px",
      "div.goal-row 11.0px"
     ],
-    "judged": 25,
+    "judged": 24,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 2.48,
-    "mb": 3.1,
-    "resN": 70,
+    "mb": 3,
+    "resN": 68,
     "heapMB": null,
     "inappBand": false
    },
@@ -1381,15 +1229,8 @@
     "W": 402,
     "H": 874,
     "taps": 18,
-    "smallTaps": 14,
-    "smallEx": [
-     "#btn-focus",
-     "#btn-map",
-     "#btn-auto",
-     "#btn-autoskill",
-     "#btn-more",
-     "button.hud-sk.ready"
-    ],
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
@@ -1409,8 +1250,8 @@
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 2.48,
-    "mb": 3.1,
-    "resN": 70,
+    "mb": 3,
+    "resN": 68,
     "heapMB": null,
     "inappBand": false
    },
@@ -1427,7 +1268,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "16344ms"
+     "detail": "16457ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -1458,20 +1299,13 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 16344,
+   "bootMs": 16457,
    "portrait": {
     "W": 412,
     "H": 839,
     "taps": 18,
-    "smallTaps": 14,
-    "smallEx": [
-     "#btn-focus",
-     "#btn-map",
-     "#btn-auto",
-     "#btn-autoskill",
-     "#btn-more",
-     "button.hud-sk.ready"
-    ],
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
@@ -1505,15 +1339,8 @@
     "W": 412,
     "H": 839,
     "taps": 20,
-    "smallTaps": 15,
-    "smallEx": [
-     "#btn-focus",
-     "#btn-map",
-     "#btn-auto",
-     "#btn-autoskill",
-     "#btn-more",
-     "button.btn.tiny"
-    ],
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
@@ -1533,24 +1360,17 @@
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 2.44,
-    "mb": 5.1,
-    "resN": 90,
-    "heapMB": 8.7,
+    "mb": 5,
+    "resN": 86,
+    "heapMB": 8.8,
     "inappBand": false
    },
    "landscape": {
     "W": 839,
     "H": 412,
     "taps": 24,
-    "smallTaps": 14,
-    "smallEx": [
-     "#btn-focus",
-     "#btn-map",
-     "#btn-auto",
-     "#btn-autoskill",
-     "#btn-acc",
-     "#btn-3d"
-    ],
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
@@ -1570,24 +1390,17 @@
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 2.44,
-    "mb": 5.1,
-    "resN": 90,
-    "heapMB": 9.2,
+    "mb": 5,
+    "resN": 86,
+    "heapMB": 9.4,
     "inappBand": false
    },
    "back": {
     "W": 412,
     "H": 839,
     "taps": 19,
-    "smallTaps": 14,
-    "smallEx": [
-     "#btn-focus",
-     "#btn-map",
-     "#btn-auto",
-     "#btn-autoskill",
-     "#btn-more",
-     "button.hud-sk.ready"
-    ],
+    "smallTaps": 0,
+    "smallEx": [],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
@@ -1607,9 +1420,9 @@
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 2.44,
-    "mb": 5.1,
-    "resN": 90,
-    "heapMB": 8.6,
+    "mb": 5,
+    "resN": 86,
+    "heapMB": 9.4,
     "inappBand": false
    },
    "ok": true
@@ -1625,7 +1438,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "20563ms"
+     "detail": "20254ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -1656,19 +1469,14 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 20563,
+   "bootMs": 20254,
    "portrait": {
     "W": 402,
     "H": 874,
     "taps": 15,
-    "smallTaps": 10,
+    "smallTaps": 1,
     "smallEx": [
-     "#btn-acc",
-     "#btn-3d",
-     "#btn-gyeong",
-     "#btn-more",
-     "button.btn.ghost",
-     "button.btn.primary"
+     "span.rlg.me 45×17"
     ],
     "overflowX": 0,
     "cut": [],
@@ -1695,22 +1503,17 @@
     "inappBand": false
    },
    "fps": {
-    "min": 1,
-    "avg": 19,
+    "min": 28,
+    "avg": 30,
     "n": 3
    },
    "afterPlay": {
     "W": 402,
     "H": 874,
     "taps": 19,
-    "smallTaps": 11,
+    "smallTaps": 1,
     "smallEx": [
-     "#btn-acc",
-     "#btn-3d",
-     "#btn-gyeong",
-     "#btn-more",
-     "button.btn.ghost",
-     "button.btn.primary"
+     "span.rlg.me 45×17"
     ],
     "overflowX": 0,
     "cut": [],
@@ -1740,22 +1543,17 @@
     "W": 874,
     "H": 402,
     "taps": 15,
-    "smallTaps": 10,
+    "smallTaps": 1,
     "smallEx": [
-     "#btn-acc",
-     "#btn-3d",
-     "#btn-gyeong",
-     "#btn-more",
-     "button.btn.ghost",
-     "button.btn.primary"
+     "span.rlg.me 45×17"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 132,
-    "tiny": 123,
+    "texts": 129,
+    "tiny": 120,
     "tinyEx": [
      "span.tag 11.0px",
      "div.p-sub 11.0px",
@@ -1764,7 +1562,7 @@
      "b 11.0px",
      "div.p-goal 11.0px"
     ],
-    "judged": 131,
+    "judged": 128,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 0.4,
@@ -1777,14 +1575,9 @@
     "W": 402,
     "H": 874,
     "taps": 19,
-    "smallTaps": 11,
+    "smallTaps": 1,
     "smallEx": [
-     "#btn-acc",
-     "#btn-3d",
-     "#btn-gyeong",
-     "#btn-more",
-     "button.btn.ghost",
-     "button.btn.primary"
+     "span.rlg.me 45×17"
     ],
     "overflowX": 0,
     "cut": [],
@@ -1823,7 +1616,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "18548ms"
+     "detail": "18558ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -1854,19 +1647,14 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 18548,
+   "bootMs": 18558,
    "portrait": {
     "W": 412,
     "H": 839,
     "taps": 15,
-    "smallTaps": 10,
+    "smallTaps": 1,
     "smallEx": [
-     "#btn-acc",
-     "#btn-3d",
-     "#btn-gyeong",
-     "#btn-more",
-     "button.btn.ghost",
-     "button.btn.primary"
+     "span.rlg.me 45×17"
     ],
     "overflowX": 0,
     "cut": [],
@@ -1901,22 +1689,17 @@
     "W": 412,
     "H": 839,
     "taps": 19,
-    "smallTaps": 11,
+    "smallTaps": 1,
     "smallEx": [
-     "#btn-acc",
-     "#btn-3d",
-     "#btn-gyeong",
-     "#btn-more",
-     "button.btn.ghost",
-     "button.btn.primary"
+     "span.rlg.me 45×17"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 88,
-    "tiny": 75,
+    "texts": 87,
+    "tiny": 74,
     "tinyEx": [
      "span.tag 11.0px",
      "div.p-sub 11.0px",
@@ -1925,27 +1708,22 @@
      "b 11.0px",
      "div.p-goal 11.0px"
     ],
-    "judged": 84,
+    "judged": 83,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 0.39,
     "mb": 3.5,
     "resN": 77,
-    "heapMB": 10.7,
+    "heapMB": 10.6,
     "inappBand": false
    },
    "landscape": {
     "W": 839,
     "H": 412,
     "taps": 15,
-    "smallTaps": 10,
+    "smallTaps": 1,
     "smallEx": [
-     "#btn-acc",
-     "#btn-3d",
-     "#btn-gyeong",
-     "#btn-more",
-     "button.btn.ghost",
-     "button.btn.primary"
+     "span.rlg.me 45×17"
     ],
     "overflowX": 0,
     "cut": [],
@@ -1975,22 +1753,17 @@
     "W": 412,
     "H": 839,
     "taps": 19,
-    "smallTaps": 11,
+    "smallTaps": 1,
     "smallEx": [
-     "#btn-acc",
-     "#btn-3d",
-     "#btn-gyeong",
-     "#btn-more",
-     "button.btn.ghost",
-     "button.btn.primary"
+     "span.rlg.me 45×17"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 88,
-    "tiny": 75,
+    "texts": 87,
+    "tiny": 74,
     "tinyEx": [
      "span.tag 11.0px",
      "div.p-sub 11.0px",
@@ -1999,13 +1772,13 @@
      "b 11.0px",
      "div.p-goal 11.0px"
     ],
-    "judged": 84,
+    "judged": 83,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 0.39,
     "mb": 3.5,
     "resN": 77,
-    "heapMB": 10.8,
+    "heapMB": 10.2,
     "inappBand": false
    },
    "ok": true
