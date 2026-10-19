@@ -57,6 +57,7 @@
   /** 앞 층 — o = { region, camX, W, H }. 그렸으면 true */
   function drawFront(ctx, o) {
     if (!ctx || !o || !o.region || !+tuned('story2d.front', 1)) { return false; }
+    if (global.DG.parallax2d && global.DG.parallax2d.drawFor(ctx, { region: o.region, camX: o.camX, W: o.W, H: o.H, front: true })) { return true; }   // W-0336 겹 배경의 앞 층
     var e = front(o.region);
     if (!e.ok) { return false; }
     var port = o.W < o.H, k = o.H / 540 * (port ? +tuned('story2d.frontPortrait', 0.45) : 1);   // W-0343 세로 폰 — 화면 키로 키우면 1.9 배 확대까지 겹쳐 아래 1/3 을 덮었다 → 낮고 옅게

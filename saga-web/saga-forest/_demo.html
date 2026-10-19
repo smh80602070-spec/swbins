@@ -73,6 +73,8 @@ window.DG_NO_TUNE = true;
 <script src="js/inapp.js"></script>
 <script src="js/device-mode.js"></script>
 <script src="js/font-floor.js"></script>
+<script src="js/cutout2d.js"></script>
+<script src="js/parallax2d.js"></script>
 <script src="js/emojicompat.js"></script>
 <script src="js/data.js"></script>
 <script src="js/data-village.js"></script>
@@ -539,4 +541,5 @@ setTimeout(function () {
   if (tab === 'dex') { DG.ui.openDetail('hero', DG.data.heroes[0].id); }
 }, 350);
 </script>
+<script>/* W-0336 #cutout — 컷아웃 대역 일곱 클립 + 겹 배경 대역 */ if (location.hash === '#cutout') { setTimeout(function () { if (window.DG && DG.cutout2d) { DG.cutout2d.demo(); } }, 900); }</script>
 </body></html>

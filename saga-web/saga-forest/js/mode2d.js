@@ -298,6 +298,7 @@
 
   function draw(ctx, o) {
     if (!ctx || !o || !o.pool || !isOn()) { return false; }
+    if (global.DG.cutout2d && global.DG.cutout2d.drawFor(ctx, o, (C().targetH || 62) * (o.scale || 1))) { return true; }   // W-0336 컷아웃 뼈대(손잡이 cutout2d.on, 기본 0 — 그대로)
     if (isStill(o.pool)) { return drawStill(ctx, o); }      // 한 장 모드 풀(W-0032)
     var s16 = spec16(o.pool); if (s16 && draw16(ctx, o, s16)) { return true; }   // W-0311 16방향 시트가 온 인물부터
     var cr = null;
@@ -446,6 +447,7 @@
    */
   function drawBg(ctx, o) {
     if (!ctx || !o || !o.region || !isOn()) { return false; }
+    if (!o.only && global.DG.parallax2d && global.DG.parallax2d.drawFor(ctx, o)) { return true; }   // W-0336 겹 배경 5~7층(손잡이 parallax2d.on, 기본 0 — 그대로)
     var b = getBg(o.region), m = b.meta;
     if (b.fail || !m) { return false; }
     var names = o.only ? [o.only] : LAYERS, base = o.base || o.H || 540, k = base / 540, any = false, i, L, e, dh, dw, y;

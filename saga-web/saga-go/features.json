@@ -1252,5 +1252,24 @@
   "ticket": "W-0318",
   "since": "2026-10-19",
   "note": "다섯 판 공용(anim-own.mocapMerge, 판별 asset3d 두 줄). 짝 6 — 걷기·달리기·서기·맞기·쓰러짐·줍기. 시전·강공격·인사는 몸짓 판정 × 라 코드 자세(K 원본 대기). 손잡이 anim3d.mocap"
+ },
+ {
+  "id": "go.cutout2d",
+  "name": "2D 오딘스피어식 엔진(W-0336) — 공용 컷아웃 뼈대(cutout2d — 부위 그림·뼈 16·클립 일곱·관성 흔들림)·겹 배경(parallax2d — 5~7층·안개·빛 띠), mode2d.draw/drawBg 갈래 · 손잡이 cutout2d.on·parallax2d.on(0 기본·1 그림·2 대역)",
+  "files": [
+   "../shared/js/cutout2d.js",
+   "../shared/js/parallax2d.js",
+   "../shared/js/mode2d.js"
+  ],
+  "tests": [
+   "W-0336 컷아웃 뼈대",
+   "W-0336 겹 배경"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0336",
+  "since": "2026-10-19",
+  "note": "그림은 K(수신함 10-19 웹 W-0336·W-0339 → 자체툴) — 오면 index.json·layers.json 만 두고 손잡이 1. 지금은 대역(코드 도형)·_demo.html#cutout"
  }
 ]

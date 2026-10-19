@@ -1180,5 +1180,24 @@
   "ticket": "W-0333",
   "since": "2026-10-19",
   "note": "WebKit iPhone 15 Pro 402×874 DPR3: 처음 2D · 🧊 뒤 3D low(post LOW) · 같은 탭 새로 고침 3번 죽음 0·오류 0 · pw-phone-budget 성 19.4→60.1fps OK · 사용자 아이폰 열림 보고 = D3"
+ },
+ {
+  "id": "rk.cutout2d",
+  "name": "2D 오딘스피어식 엔진(W-0336) — 공용 컷아웃 뼈대(cutout2d — 부위 그림·뼈 16·클립 일곱·관성 흔들림)·겹 배경(parallax2d — 5~7층·안개·빛 띠), mode2d.draw/drawBg 갈래 · 손잡이 cutout2d.on·parallax2d.on(0 기본·1 그림·2 대역)",
+  "files": [
+   "../shared/js/cutout2d.js",
+   "../shared/js/parallax2d.js",
+   "../shared/js/mode2d.js"
+  ],
+  "tests": [
+   "W-0336 컷아웃 뼈대",
+   "W-0336 겹 배경"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0336",
+  "since": "2026-10-19",
+  "note": "그림은 K(수신함 10-19 웹 W-0336·W-0339 → 자체툴) — 오면 index.json·layers.json 만 두고 손잡이 1. 지금은 대역(코드 도형)·_demo.html#cutout"
  }
 ]

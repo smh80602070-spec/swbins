@@ -63,6 +63,8 @@ window.DG_NO_ACCOUNT = true;
 <script src="js/inapp.js"></script>
 <script src="js/device-mode.js"></script>
 <script src="js/font-floor.js"></script>
+<script src="js/cutout2d.js"></script>
+<script src="js/parallax2d.js"></script>
 <script src="js/emojicompat.js"></script>
 <script src="js/data.js"></script>
 <script src="js/data-enemy.js"></script>
@@ -272,4 +274,5 @@ setTimeout(function () {
   else if (['field', 'dex', 'log'].indexOf(tab) >= 0) { DG.ui.openSheet(tab); }
 }, 350);
 </script>
+<script>/* W-0336 #cutout — 컷아웃 대역 일곱 클립 + 겹 배경 대역 */ if (location.hash === '#cutout') { setTimeout(function () { if (window.DG && DG.cutout2d) { DG.cutout2d.demo(); } }, 900); }</script>
 </body></html>
