@@ -4317,5 +4317,24 @@
   "ticket": "G-0234",
   "since": "2026-10-19",
   "note": "세이브 21→22 · AI 는 연구 안 함 · 불가사의 없음(플래그만) · 빈 나무 = golden 그대로"
+ },
+ {
+  "id": "gd.go.field-clutter",
+  "name": "1만리 들판 덤 층 — 플레이어 둘레(PC 52m·폰 32m)에만 사진 결 풀포기·꽃무리·덤불(K-0104 잎)을 해시 자리로 흩음 · 길 띠·눈 칸·땅 아닌 자리 비움 · 종류마다 MultiMesh 하나(그리기 +5, 덤불 그림자)",
+  "files": [
+   "games/saga_go/world/field_clutter.gd",
+   "games/saga_go/world/test_village.gd"
+  ],
+  "tests": [
+   "village",
+   "perf",
+   "triplanar"
+  ],
+  "level": "D2",
+  "verified": "2026-10-19",
+  "fun": {},
+  "ticket": "G-0227",
+  "since": "2026-10-19",
+  "note": "창 모드 전후 촬영 (C) 갈림길 ○·광장 △ · 마을 그리기 평균 250→255(예산 260) · 임포트 캐시 없는 PC 에선 빈 층"
  }
 ]

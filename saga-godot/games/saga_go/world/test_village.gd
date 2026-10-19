@@ -81,6 +81,9 @@ func _ready() -> void:
 	var grass := preload("res://games/saga_go/world/grass_field.gd").new()
 	grass.name = "GrassField"
 	add_child(grass)
+	var clutter := preload("res://games/saga_go/world/field_clutter.gd").new()   # G-0227 둘레 덤불·풀포기·꽃무리(사진 결 잎)
+	clutter.name = "FieldClutter"
+	add_child(clutter)
 	## 2026-09-28 마을 채우기 — 오두막·좌판·등롱·텃밭(village_dressing.gd, 비워 둘 자리는 건너뜀).
 	add_child(preload("res://games/saga_go/world/village_dressing.gd").new())
 	## 2026-09-28 밤 화면 — 달빛·별·창과 등롱 불(night_visual.gd).
