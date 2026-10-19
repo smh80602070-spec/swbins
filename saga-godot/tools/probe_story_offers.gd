@@ -4,7 +4,7 @@ extends SceneTree
 ##   godot --headless --path saga-godot --script res://tools/probe_story_offers.gd
 ## ① 옛 세이브(sp_cut_lv 없음, Lv.30·무예 20) 를 불러오면 남은 SP 가 전과 같다 ② 새 판(컷 1): 무사 Lv1 → Lv4 = 3택 세 장 · 장마다 유파가 서로 다름 · SP 는 0
 ## ③ 레벨 100개로 굴린 3택에 같은 유파·같은 무예 겹침 0 ④ 고르기 = 그 무예 +1·SP 그대로 · 거절 = SP +1 ⑤ 전직 전(고를 무예 없음)은 레벨마다 SP 3 그대로
-## ⑥ 등급(G-0245 새 식): (피격 0·연속 20·90초) S · (15·3·600초) D · 사이 값 ⑦ 판 셈: 타격 셋 → 연속 3 · 맞으면 끊기고 피격 1 · 나오면 last_run ⑧ 무예 92 이름·유파 다 있음 · 저장 왕복(3택).
+## ⑥ 등급(G-0245 새 식): (피격 0·연속 20·90초) S · (15·3·600초) D · 사이 값 ⑦ 판 셈: 타격 셋 → 연속 3 · 맞으면 끊기고 피격 1 · 나오면 last_run ⑧ 무예 100 이름·유파 다 있음 · 저장 왕복(3택).
 ## 상태는 끝에 되돌린다. 끝에 "PROBE story_offers OK|FAIL n".
 
 const SAVED_VARS := ["level", "exp", "job", "skills", "sp_cut_lv", "sp_bonus", "skill_offers", "skill_free", "quests_done", "achievements", "feat", "last_run", "run_t0_ms", "run_hits", "run_combo", "run_combo_max", "run_kills", "run_gold0", "run_stage", "run_tier_now", "rank_best", "gold", "memory_fragments", "path_override"]

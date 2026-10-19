@@ -809,6 +809,61 @@ const ASCENDANT_ORB_BASE := 2.4
 const ASCENDANT_ORB_PER := 0.2
 const ASCENDANT_ORB_SHOTS := 8
 
+## ── G-0246 5차 각성기 여덟(data-job.js 09-30 원문 수치 그대로, 4차와 같은 재해석) ──
+## 천멸격(p_wrath) — melee, hits:5. 파멸격(o_ruin)의 끝.
+const GODWAR_WRATH_COST := 74.0
+const GODWAR_WRATH_CD := 13.0
+const GODWAR_WRATH_BASE := 8.4
+const GODWAR_WRATH_PER := 0.76
+const GODWAR_WRATH_HITS := 5
+## 군신강림(p_banner) — buff. sec:20·atk×2.2·guard0.6·regen3.4. 패천기(o_conquer)의 끝.
+const GODWAR_BANNER_COST := 72.0
+const GODWAR_BANNER_CD := 32.0
+const GODWAR_BANNER_SEC := 20.0
+const GODWAR_BANNER_ATK_MUL := 2.2
+const GODWAR_BANNER_GUARD := 0.6
+const GODWAR_BANNER_REGEN_MUL := 3.4
+## 성궁만천(p_stars) — volley(shots:16). 십이시(h_swarm)의 끝.
+const SKYBOW_STARS_COST := 68.0
+const SKYBOW_STARS_CD := 9.0
+const SKYBOW_STARS_BASE := 2.9
+const SKYBOW_STARS_PER := 0.24
+const SKYBOW_STARS_SHOTS := 16
+## 일월시(p_sun) — bolt(사거리 2배). 광시(h_ray)의 끝.
+const SKYBOW_SUN_COST := 72.0
+const SKYBOW_SUN_CD := 11.0
+const SKYBOW_SUN_BASE := 10.5
+const SKYBOW_SUN_PER := 0.85
+const SKYBOW_SUN_RANGE_MUL := 2.0
+## 무영참(p_afterimage) — melee, hits:12. 팔도(d_carve)의 끝.
+const NOSHADOW_AFTERIMAGE_COST := 72.0
+const NOSHADOW_AFTERIMAGE_CD := 10.0
+const NOSHADOW_AFTERIMAGE_BASE := 3.6
+const NOSHADOW_AFTERIMAGE_PER := 0.3
+const NOSHADOW_AFTERIMAGE_HITS := 12
+## 유명문(p_gate) — dash, dist:460px + invuln:2. 명계보(d_veil)의 끝.
+const NOSHADOW_GATE_COST := 62.0
+const NOSHADOW_GATE_CD := 9.0
+const NOSHADOW_GATE_BASE := 4.6
+const NOSHADOW_GATE_PER := 0.38
+const NOSHADOW_GATE_DIST_PX := 460.0
+const NOSHADOW_GATE_INVULN_SEC := 2.0
+## 태허붕(p_void) — aoe, r:380px. 건곤붕(z_collapse)의 끝.
+const VOIDSAGE_VOID_COST := 88.0
+const VOIDSAGE_VOID_CD := 16.0
+const VOIDSAGE_VOID_BASE := 8.2
+const VOIDSAGE_VOID_PER := 0.68
+const VOIDSAGE_VOID_RANGE_MUL := 380.0 / 78.0
+## 만상환생(p_all) — heal [0.8, 0.06]. 환생(z_rebirth)의 끝.
+const VOIDSAGE_ALL_COST := 70.0
+const VOIDSAGE_ALL_CD := 15.0
+const VOIDSAGE_ALL_BASE := 0.8
+const VOIDSAGE_ALL_PER := 0.06
+
+
+static func noshadow_gate_dist_m() -> float:
+	return NOSHADOW_GATE_DIST_PX * WARRIOR_RUSH_SCALE
+
 
 ## G-0214 — 성좌 급소 보탬. 점검(SceneTree)이 이 파일을 preload 할 땐 autoload 이름이 아직 없어 이름으로 안 부르고 트리에서 찾는다.
 static func _passive_crit() -> float:

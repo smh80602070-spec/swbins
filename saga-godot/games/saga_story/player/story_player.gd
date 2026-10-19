@@ -1,4 +1,4 @@
-extends StorySkillsMage
+extends "res://games/saga_story/player/story_skills_awaken.gd"   # G-0246 5차 각성기(class_name 없이 경로로 잇는다)
 
 const StoryLook := preload("res://games/saga_story/data/story_look.gd")   # G-0187
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
@@ -193,6 +193,7 @@ func _physics_process(delta: float) -> void:
 	_cd_ascendant_eternity = maxf(0.0, _cd_ascendant_eternity - cd_delta)
 	_cd_ascendant_step = maxf(0.0, _cd_ascendant_step - cd_delta)
 	_cd_ascendant_orb = maxf(0.0, _cd_ascendant_orb - cd_delta)
+	_tick_awaken_cd(cd_delta)   # G-0246
 	_job_buff_time_left = maxf(0.0, _job_buff_time_left - delta)
 	## m_talis(부적)·p_ward(호신부)가 걸려 있으면 mp 회복이 배로 빨라진다
 	## (side.js MP_REGEN*bf.regen과 같은 자리) — 다른 job 버프는 regen이
@@ -451,6 +452,7 @@ func _physics_process(delta: float) -> void:
 			_cast_ascendant_step()
 		if Input.is_action_just_pressed("story_job_skill4_6"):
 			_cast_ascendant_orb()
+	_awaken_input(chain)   # G-0246 5차 각성기(story_job_skill5_1·5_2) — 4차 분기와 별개
 
 
 ## 나는 탈것 — 가로 평면에서 난다(중력 없음).

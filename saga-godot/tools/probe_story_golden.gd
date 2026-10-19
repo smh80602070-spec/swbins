@@ -9,6 +9,15 @@ extends SceneTree
 const GOLDEN := "de2c70a2fdff13a05deef5e3cbcd2f6a"  # 분리 전 HEAD(2026-10-01)에서 잰 값
 const PLAYER_DIR := "res://games/saga_story/player/"
 const SEED := 20260824
+## G-0246 — 5차 각성기(story_skills_awaken.gd)는 기준값 뒤에 생긴 것이라 그 시전·쿨다운 칸은 뺀다(점검은 probe_story_awaken) — 빼면 옛 92 무예 동작은 기준값 그대로.
+const AWAKEN_PREFIXES := ["_cast_godwar_", "_cast_skybow_", "_cast_noshadow_", "_cast_voidsage_", "_cd_godwar_", "_cd_skybow_", "_cd_noshadow_", "_cd_voidsage_"]
+
+
+func _is_awaken(n: String) -> bool:
+	for pre: String in AWAKEN_PREFIXES:
+		if n.begins_with(pre):
+			return true
+	return false
 
 var _dummy_script: GDScript
 var _log := ""
@@ -31,7 +40,7 @@ func _snapshot(p: Node) -> Dictionary:
 	for prop in p.get_property_list():
 		## body_id(G-0030) 는 겉모습 설정이라 스킬 동작 비교에서 뺀다 — 빼면 분리 전 기준값과 같다(10-06 확인).
 		## _fx_hits(G-0201) 는 그림·멈칫 횟수 손잡이라 뺀다 — 피해·쿨다운·MP 비교는 그대로.
-		if (int(prop.usage) & PROPERTY_USAGE_SCRIPT_VARIABLE) == 0 or prop.name == "body_id" or prop.name == "_fx_hits":
+		if (int(prop.usage) & PROPERTY_USAGE_SCRIPT_VARIABLE) == 0 or prop.name == "body_id" or prop.name == "_fx_hits" or _is_awaken(String(prop.name)):
 			continue
 		var v: Variant = p.get(prop.name)
 		match typeof(v):
@@ -59,7 +68,7 @@ func _initialize() -> void:
 	var probe_p: Node = packed.instantiate()
 	var names: Array = []
 	for m in probe_p.get_method_list():
-		if String(m.name).begins_with("_cast_"):
+		if String(m.name).begins_with("_cast_") and not _is_awaken(String(m.name)):
 			names.append(String(m.name))
 	probe_p.free()
 	names.sort()

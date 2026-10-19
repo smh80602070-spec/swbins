@@ -202,9 +202,9 @@ func _initialize() -> void:
 	check(npc_ok and Combat.GATHER_INFO.size() == 4 and Combat.GATHER_RESPAWN_SEC > 0.0 and Combat.GATHER_RADIUS_M > 0.0, "NPC 대사 4명(각 3줄+) · 채집물 4종")
 
 	# ④ 직업·무예
-	var tiers := [Combat.JOBS_TIER1, Combat.JOBS_TIER2, Combat.JOBS_TIER3, Combat.JOBS_TIER4]
+	var tiers := [Combat.JOBS_TIER1, Combat.JOBS_TIER2, Combat.JOBS_TIER3, Combat.JOBS_TIER4, Combat.JOBS_TIER5]   # G-0246 5차
 	var job_ok := true
-	for t in 4:
+	for t in 5:
 		job_ok = job_ok and (tiers[t] as Dictionary).size() == 4
 		for k: String in tiers[t]:
 			job_ok = job_ok and Combat.job_tier(k) == t + 1 and String(Combat.job_info(k).name) != ""
@@ -213,22 +213,22 @@ func _initialize() -> void:
 				var bi: Dictionary = Combat.job_info(below)
 				var ki: Dictionary = Combat.job_info(k)
 				job_ok = job_ok and Combat.job_tier(below) == t and float(ki.hp) > float(bi.hp) and float(ki.atk) > float(bi.atk) and float(ki.mp) >= float(bi.mp) and Combat.job_level_need(k) > Combat.job_level_need(below) and Combat.job_next(below) == k
-	check(job_ok, "직업 16(4×4 갈래): 사슬(prereq)·tier·수치가 오르고 · 레벨 문턱이 오름 · job_next")
+	check(job_ok, "직업 20(4×5 갈래): 사슬(prereq)·tier·수치가 오르고 · 레벨 문턱이 오름 · job_next")
 	check(Combat.job_chain("warlord") == ["warlord", "marshal", "general", "warrior"] and Combat.job_chain("none").is_empty() and Combat.job_root("ascendant") == "mage" and Combat.job_root("mage") == "mage" and Combat.job_level_need("warrior") == 10 and Combat.job_level_need("zzz") == 999999 and Combat.job_tier("zzz") == 0, "job_chain·job_root·레벨 문턱(1차 10)")
 	var gr: Dictionary = Combat.job_grow_chain("general")
-	check(gr.hp == 40.0 + 110.0 and gr.atk == 2.0 + 7.0 and gr.mp == 0.0 and Combat.job_grow_chain("none") == {"hp": 0.0, "atk": 0.0, "mp": 0.0} and Combat.job_grow_chain("sage").mp == 130.0 and Combat.job_advance_skill_gate("general") == 5 and Combat.job_advance_skill_gate("warlord") == 10 and Combat.job_advance_skill_gate("warrior") == 0, "사슬 수치 합(장군 hp 150·atk 9) · 진급 무예 문턱 5·8·10")
+	check(gr.hp == 40.0 + 110.0 and gr.atk == 2.0 + 7.0 and gr.mp == 0.0 and Combat.job_grow_chain("none") == {"hp": 0.0, "atk": 0.0, "mp": 0.0} and Combat.job_grow_chain("sage").mp == 130.0 and Combat.job_advance_skill_gate("general") == 5 and Combat.job_advance_skill_gate("warlord") == 10 and Combat.job_advance_skill_gate("godwar") == 10 and Combat.job_level_need("godwar") == 80 and Combat.job_advance_skill_gate("warrior") == 0, "사슬 수치 합(장군 hp 150·atk 9) · 진급 무예 문턱 5·8·10")
 	var skill_ok := true
 	var count := 0
 	for job: String in Combat.JOB_SKILL_KEYS:
 		var arr: Array = Combat.JOB_SKILL_KEYS[job]
-		skill_ok = skill_ok and arr.size() >= 5 and arr.size() <= 6
+		skill_ok = skill_ok and (arr.size() >= 5 or (Combat.job_tier(job) == 5 and arr.size() == 2)) and arr.size() <= 6
 		for k in arr:
 			count += 1
 			skill_ok = skill_ok and Combat.SKILL_JOB.get(k, "") == job
 			if Combat.SKILL_NEED.has(k):
 				var need: Dictionary = Combat.SKILL_NEED[k]
 				skill_ok = skill_ok and int(need.lv) == 5 and Combat.job_chain(job).has(String(Combat.SKILL_JOB.get(need.key, "")))
-	check(skill_ok and count == Combat.SKILL_JOB.size() and Combat.JOB_SKILL_KEYS.size() == 16, "무예 표: 직업 16 × 5~6(%d) · 키가 SKILL_JOB 과 서로 맞물림 · 선행 무예는 사슬 아래 직업의 5렙" % count)
+	check(skill_ok and count == Combat.SKILL_JOB.size() and Combat.JOB_SKILL_KEYS.size() == 20, "무예 표: 직업 16 × 5~6 + 5차 4 × 2(%d) · 키가 SKILL_JOB 과 서로 맞물림 · 선행 무예는 사슬 아래 직업의 5렙" % count)
 	var combat_script: GDScript = Combat
 	var consts: Dictionary = combat_script.get_script_constant_map()
 	var cost_ok := true
@@ -253,7 +253,7 @@ func _initialize() -> void:
 			continue
 		var m: Dictionary = Combat.mentor_of(job)
 		mentor_ok = mentor_ok and not m.is_empty() and String(m.name) != "" and m == Combat.mentor_of(job)
-	check(mentor_ok, "스승: 직업 16 모두 도감 인물을 시드로 결정(같은 직업이면 늘 같은 사람)")
+	check(mentor_ok, "스승: 직업 20 모두 도감 인물을 시드로 결정(같은 직업이면 늘 같은 사람)")
 	check(Combat.BOSS_HP_MUL == 12.0 and Combat.BOSS_DMG_MUL == 2.0 and Combat.BOSS_COOL_SEC == 900.0 and Combat.BRACE_COST < Combat.MP_MAX and Combat.SWEEP_COST < Combat.BOLT_COST, "기본 보스 ×12/×2 · 15분 · 기본 무예 비용 순서")
 
 	# ⑤ 상태 — 경험치·장비

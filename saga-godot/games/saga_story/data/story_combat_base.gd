@@ -611,6 +611,7 @@ const JOB_FROM := {
 	"general": "warrior", "sniper": "archer", "assassin": "rogue", "sage": "mage",
 	"marshal": "general", "flier": "sniper", "wraith": "assassin", "immortal": "sage",
 	"warlord": "marshal", "falcon": "flier", "reaper": "wraith", "ascendant": "immortal",
+	"godwar": "warlord", "skybow": "falcon", "noshadow": "reaper", "voidsage": "ascendant",   # G-0246 5차
 }
 const JOB_TIER := {
 	"none": 0,
@@ -618,11 +619,13 @@ const JOB_TIER := {
 	"general": 2, "sniper": 2, "assassin": 2, "sage": 2,
 	"marshal": 3, "flier": 3, "wraith": 3, "immortal": 3,
 	"warlord": 4, "falcon": 4, "reaper": 4, "ascendant": 4,
+	"godwar": 5, "skybow": 5, "noshadow": 5, "voidsage": 5,
 }
 const JOB_LEVEL_NEED := {
 	"general": 25, "sniper": 25, "assassin": 25, "sage": 25,
 	"marshal": 45, "flier": 45, "wraith": 45, "immortal": 45,
 	"warlord": 70, "falcon": 70, "reaper": 70, "ascendant": 70,
+	"godwar": 80, "skybow": 80, "noshadow": 80, "voidsage": 80,
 }
 
 ## data-job.js JOBS의 tier2~4 grow(hp/atk/mp) 그대로 — JOBS_TIER1과 같은
@@ -645,10 +648,17 @@ const JOBS_TIER4 := {
 	"reaper":    {"name": "명왕(冥王)", "hp": 155.0, "atk": 30.0, "mp": 0.0},
 	"ascendant": {"name": "천존(天尊)", "hp": 130.0, "atk": 26.0, "mp": 260.0},
 }
+## G-0246 — 5차(data-job.js tier:5, 웹 09-30 그대로 · 범용 칭호). 4차 무예 하나를 10까지 익혀야(게이트 5:10).
+const JOBS_TIER5 := {
+	"godwar":   {"name": "군신(軍神)", "hp": 420.0, "atk": 27.0, "mp": 0.0},
+	"skybow":   {"name": "천궁(天弓)", "hp": 160.0, "atk": 52.0, "mp": 0.0},
+	"noshadow": {"name": "무영(無影)", "hp": 210.0, "atk": 40.0, "mp": 0.0},
+	"voidsage": {"name": "태허(太虛)", "hp": 175.0, "atk": 35.0, "mp": 360.0},
+}
 
 ## job.js canJoin()의 tier별 무예 레벨 문턱(하위 무예 하나가 이 이상이어야
 ## 그 tier로 진급 가능) — tier2:5, tier3:8, tier4:10 그대로.
-const JOB_SKILL_LEVEL_GATE := {2: 5, 3: 8, 4: 10}
+const JOB_SKILL_LEVEL_GATE := {2: 5, 3: 8, 4: 10, 5: 10}
 
 
 static func job_tier(key: String) -> int:
@@ -664,6 +674,8 @@ static func job_info(key: String) -> Dictionary:
 		return JOBS_TIER3[key]
 	if JOBS_TIER4.has(key):
 		return JOBS_TIER4[key]
+	if JOBS_TIER5.has(key):
+		return JOBS_TIER5[key]
 	return {"name": key, "hp": 0.0, "atk": 0.0, "mp": 0.0}
 
 
@@ -860,6 +872,9 @@ const SKILL_JOB := {
 	"d_curse": "reaper", "d_whirl": "reaper", "d_dart": "reaper",
 	"z_starfall": "ascendant", "z_collapse": "ascendant", "z_rebirth": "ascendant",
 	"z_eternity": "ascendant", "z_step": "ascendant", "z_orb": "ascendant",
+	## G-0246 — 5차 각성기 여덟(갈래마다 둘, 웹 key 그대로).
+	"p_wrath": "godwar", "p_banner": "godwar", "p_stars": "skybow", "p_sun": "skybow",
+	"p_afterimage": "noshadow", "p_gate": "noshadow", "p_void": "voidsage", "p_all": "voidsage",
 }
 
 ## job → 그 직업 무예 key 목록. tier1(여섯)은 data-job.js SKILLS 등장
@@ -890,6 +905,11 @@ const JOB_SKILL_KEYS := {
 	"falcon": ["h_tempest", "h_ray", "h_swarm", "h_zenith", "h_retreat", "h_burst"],
 	"reaper": ["d_carve", "d_bloom", "d_veil", "d_curse", "d_whirl", "d_dart"],
 	"ascendant": ["z_starfall", "z_collapse", "z_rebirth", "z_eternity", "z_step", "z_orb"],
+	## G-0246 — 5차(둘)는 입력 story_job_skill5_1~2·SP 투자 story_job_1~2.
+	"godwar": ["p_wrath", "p_banner"],
+	"skybow": ["p_stars", "p_sun"],
+	"noshadow": ["p_afterimage", "p_gate"],
+	"voidsage": ["p_void", "p_all"],
 }
 
 ## **2026-09-13 추가(같은 날 더 더) — 2~4차 전직 다음 걸음: tier2 무예
@@ -985,6 +1005,15 @@ const SKILL_NEED := {
 	"z_eternity": {"key": "i_tao", "lv": 5},
 	"z_step": {"key": "i_step", "lv": 5},
 	"z_orb": {"key": "i_orb", "lv": 5},
+	## G-0246 — 각성기는 4차 사슬 하나의 끝(5).
+	"p_wrath": {"key": "o_ruin", "lv": 5},
+	"p_banner": {"key": "o_conquer", "lv": 5},
+	"p_stars": {"key": "h_swarm", "lv": 5},
+	"p_sun": {"key": "h_ray", "lv": 5},
+	"p_afterimage": {"key": "d_carve", "lv": 5},
+	"p_gate": {"key": "d_veil", "lv": 5},
+	"p_void": {"key": "z_collapse", "lv": 5},
+	"p_all": {"key": "z_rebirth", "lv": 5},
 }
 
 

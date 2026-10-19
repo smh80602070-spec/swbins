@@ -33,7 +33,7 @@ func _initialize() -> void:
 	for k in Meta.SKILLS:
 		if not KINDS.has(Meta.fx_of(k)):
 			bad.append(k)
-	check(Meta.SKILLS.size() == 92 and bad.is_empty(), "① 무예 92 전부 fx 가 웹 아홉 종류 안 %s" % str(bad))
+	check(Meta.SKILLS.size() == 100 and bad.is_empty(), "① 무예 100(G-0246 각성기 여덟 포함) 전부 fx 가 웹 아홉 종류 안 %s" % str(bad))
 
 	var save: Node = root.get_node("StorySaveState")
 	var saved_skills: Dictionary = save.skills.duplicate()
@@ -105,7 +105,7 @@ func _initialize() -> void:
 		for e in dummies:
 			e.queue_free()
 		await process_frame
-	check(names.size() == 95 and no_fx.is_empty(), "② 시전 %d 전부 그림 노드가 생김 %s" % [names.size(), str(no_fx)])
+	check(names.size() == 103 and no_fx.is_empty(), "② 시전 %d 전부 그림 노드가 생김 %s" % [names.size(), str(no_fx)])
 	check(pop_bad.is_empty(), "② 숫자 수 = 맞은 수 %s" % str(pop_bad))
 	var w: Array = stop_of.get("_cast_warrior_whirl", [0, 0])
 	var c: Array = stop_of.get("_cast_warrior_cut", [0, 0])

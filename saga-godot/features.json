@@ -1908,6 +1908,19 @@
   "since": "2026-09-16"
  },
  {
+  "id": "gd.st.awaken",
+  "name": "4종횡 5차 전직(Lv80)·각성기 여덟",
+  "files": [],
+  "tests": [
+   "story_awaken"
+  ],
+  "level": "D2",
+  "verified": "2026-10-20",
+  "fun": {},
+  "ticket": "G-0246",
+  "since": "2026-10-20"
+ },
+ {
   "id": "gd.st.npc-talk",
   "name": "NPC_TALK 밀도",
   "files": [],
