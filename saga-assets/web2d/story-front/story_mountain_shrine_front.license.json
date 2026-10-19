@@ -11,7 +11,7 @@
  "sampler": "euler_ancestral/normal",
  "size": [
   1920,
-  200
+  120
  ],
  "seconds": 26.2,
  "date": "2026-10-18",

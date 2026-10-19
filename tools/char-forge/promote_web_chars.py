@@ -40,6 +40,21 @@ def lic_of(r, suffix=''):
     return d
 
 
+
+def keep_extra(new, path, also=None):
+    """K-0137 — 다시 올릴 때 조합표 밖 기록(k0137 고유 몸: 머리 donor·뼈 비율·얼굴 레이어)을 지우지 않는다.
+    옛 파일(또는 also — 2D 는 웹 3D 출처)에서 k0* 칸을 옮기고, 그 donor 샘플을 source_samples 에 더한다."""
+    for src in (path, also):
+        if src and os.path.exists(src):
+            old = json.load(open(src, encoding='utf-8'))
+            for k, v in old.items():
+                if k.startswith('k0') and k not in new:
+                    new[k] = v
+    don = (new.get('k0137') or {}).get('hair_donor')
+    if don and don not in new.get('source_samples', []):
+        new['source_samples'] = sorted(new.get('source_samples', []) + [don])
+    return new
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
     a = sys.argv[1:]
@@ -67,13 +82,15 @@ def main():
         sys.exit('web_share_textures 실패')
     for r in ready:
         i = r['id']
-        json.dump(lic_of(r), open(os.path.join(w3, i + '.license.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+        lp3 = os.path.join(w3, i + '.license.json')
+        json.dump(keep_extra(lic_of(r), lp3), open(lp3, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         d2 = os.path.join(CANON, 'sprites2d', i)
         os.makedirs(d2, exist_ok=True)
         for f in os.listdir(os.path.join(SP, i)):
             if f.endswith('.webp') or f == 'manifest.json':
                 shutil.copy(os.path.join(SP, i, f), os.path.join(d2, f))
-        json.dump(lic_of(r, '_sprites2d'), open(os.path.join(d2, i + '.license.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+        lp2 = os.path.join(d2, i + '.license.json')
+        json.dump(keep_extra(lic_of(r, '_sprites2d'), lp2, os.path.join(w3, i + '.license.json')), open(lp2, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print('PROMOTE 올림 %d' % len(ready))
 
 

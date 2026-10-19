@@ -6,6 +6,7 @@
  "source_samples": [
   "AvatarSample_G",
   "AvatarSample_L",
+  "AvatarSample_O",
   "AvatarSample_V",
   "AvatarSample_Z"
  ],
@@ -21,5 +22,17 @@
   "name": "aurora_gradient",
   "source": "saga-assets/patterns/aurora_gradient.webp",
   "license": "CreativeML OpenRAIL++-M (AI 생성 무늬 타일, saga-assets/patterns/_provenance.json)"
+ },
+ "k0137": {
+  "date": "2026-10-18",
+  "hair_donor": "AvatarSample_O",
+  "ratio": {
+   "head": 1.0,
+   "arm": 1.02,
+   "leg": 1.06
+  },
+  "face_layers": "eye=1,brow=2,mouth=1,iris=2,skin=1,deco=0",
+  "generator": "tools/char-forge/k137_leads.py (vrm_mix.py 머리카락·뼈 비율 + face_layers.py) → vroid_batch.sh glb·anim·web",
+  "note": "주역 10 고유 몸 — 머리카락은 밑몸으로 적게 쓰인 샘플에서(같은 VRoid 샘플 이용 조건), 원본 _in/vroid_k137_bak/"
  }
 }

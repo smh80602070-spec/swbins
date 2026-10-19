@@ -159,7 +159,7 @@ def prop(p, S=96):
     return cv
 
 
-def front_strip(im, W=1920, H=200, overlap=0.08):
+def front_strip(im, W=1920, H=120, overlap=0.08):   # H 120 = 웹 side-bg2d drawFront 의 기준(화면 540 높이에 120 → 22%). 10-19 첫 판 200 은 37% 를 덮어 꽃이 화면 절반
     """K-0135 ②-b 다시 — sprite 규격 가로 띠(회녹 바탕): 바탕 지우기 → 높이 H 로 → 조금씩 겹쳐 W 까지 되풀이
     (좌우 섞기는 이음 자리에 흐린 잔상을 남겨 안 씀). 아래 띠는 불투명 — 열마다 가장 아래 잎 밑(아래 24줄 안)을 아래 30줄 중앙색 하나로
     채운다(열마다 제 색을 끌어내리면 세로 줄무늬가 생김). 맨 아래 6줄은 언제나 불투명."""
@@ -181,7 +181,7 @@ def front_strip(im, W=1920, H=200, overlap=0.08):
     base = (np.median(low, axis=0) if len(low) else np.array([90, 110, 80])).astype(np.uint8)
     ys = np.where(al.any(axis=0), H - 1 - np.argmax(al[::-1], axis=0), H - 6)
     for x in range(W):
-        y = min(max(int(ys[x]) + 1, H - 24), H - 6)   # 아래 24줄 안에서만 — 떨어진 관목 머리 밑까지 칠하면 덩어리가 된다
+        y = min(max(int(ys[x]) + 1, H - round(H * 0.12)), H - 4)   # 아래 24줄 안에서만 — 떨어진 관목 머리 밑까지 칠하면 덩어리가 된다
         a[y:, x, :3] = base
         a[y:, x, 3] = 255
     return Image.fromarray(a, 'RGBA')
