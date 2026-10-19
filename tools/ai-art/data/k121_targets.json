@@ -7,11 +7,13 @@
   "bodies": 58,
   "species_rows": 27,
   "creature_ids": 27,
-  "pending": 12,
+  "pending": 0,
   "humans": 18,
   "nobody": 2,
   "species_k144": 19,
-  "creature_ids_k144": 17
+  "creature_ids_k144": 17,
+  "species_k145": 12,
+  "creature_ids_k145": 10
  },
  "creature_ids": [
   "elephant",
@@ -285,128 +287,7 @@
    "creature": "wasp"
   }
  ],
- "pending": [
-  {
-   "body": "cactoro",
-   "enemies": [
-    "가시귀",
-    "철가시귀"
-   ],
-   "src": "assets/models/monsters/quaternius/Cactoro_625862f9.glb",
-   "pending": "다음 몸 티켓",
-   "why": "짝 없음 Cactoro · K-0122 표에 없음(quaternius/Cactoro)"
-  },
-  {
-   "body": "cactoro_2",
-   "enemies": [
-    "가시왕",
-    "대가시왕"
-   ],
-   "src": "assets/models/monsters/quaternius/Cactoro_e88090e2.glb",
-   "pending": "다음 몸 티켓",
-   "why": "짝 없음 Cactoro · K-0122 표에 없음(quaternius/Cactoro)"
-  },
-  {
-   "body": "frog",
-   "enemies": [
-    "청개구리",
-    "괴이두꺼비"
-   ],
-   "src": "assets/models/monsters/quaternius/Frog_9018566d.glb",
-   "pending": "다음 몸 티켓",
-   "why": "폴더 예외 quaternius/Frog · K-0122 표에 없음(quaternius/Frog)"
-  },
-  {
-   "body": "green_blob",
-   "enemies": [
-    "이끼괴물",
-    "고목이끼괴물"
-   ],
-   "src": "assets/models/monsters/quaternius/Green_Blob_64ab590e.glb",
-   "pending": "다음 몸 티켓",
-   "why": "짝 없음 Green_Blob · K-0122 표에 없음(quaternius/Green_Blob)"
-  },
-  {
-   "body": "green_spiky_blob",
-   "enemies": [
-    "가시슬라임",
-    "대가시슬라임"
-   ],
-   "src": "assets/models/monsters/quaternius/Green_Spiky_Blob_cd25a048.glb",
-   "pending": "다음 몸 티켓",
-   "why": "짝 없음 Green_Spiky_Blob · K-0122 표에 없음(quaternius/Green_Spiky_Blob)"
-  },
-  {
-   "body": "mushnub_evolved",
-   "enemies": [
-    "왕버섯도깨비",
-    "포자군주"
-   ],
-   "src": "assets/models/monsters/quaternius/Mushnub_Evolved_84bc88a5.glb",
-   "pending": "다음 몸 티켓",
-   "why": "짝 없음 Mushnub_Evolved · K-0122 표에 없음(quaternius/Mushnub_Evolved)"
-  },
-  {
-   "body": "mushroom_king",
-   "enemies": [
-    "독버섯 요괴",
-    "독버섯 대군주"
-   ],
-   "src": "assets/models/monsters/quaternius/Mushroom_King_798301fb.glb",
-   "pending": "다음 몸 티켓",
-   "why": "짝 없음 Mushroom_King · K-0122 표에 없음(quaternius/Mushroom_King)"
-  },
-  {
-   "body": "ninja",
-   "enemies": [
-    "그림자 자객",
-    "칠흑 자객"
-   ],
-   "src": "assets/models/monsters/quaternius/Ninja_2ed11876.glb",
-   "pending": "다음 몸 티켓",
-   "why": "짝 없음 Ninja · K-0122 표에 없음(quaternius/Ninja)"
-  },
-  {
-   "body": "ninja_2",
-   "enemies": [
-    "은신 첩자",
-    "심야 첩자"
-   ],
-   "src": "assets/models/monsters/quaternius/Ninja_42162a27.glb",
-   "pending": "다음 몸 티켓",
-   "why": "짝 없음 Ninja · K-0122 표에 없음(quaternius/Ninja)"
-  },
-  {
-   "body": "orc",
-   "enemies": [
-    "산도깨비",
-    "노산도깨비"
-   ],
-   "src": "assets/models/monsters/quaternius/Orc_52a479b3.glb",
-   "pending": "다음 몸 티켓",
-   "why": "짝 없음 Orc · K-0122 표에 없음(quaternius/Orc)"
-  },
-  {
-   "body": "tribal",
-   "enemies": [
-    "산야인",
-    "노산야인"
-   ],
-   "src": "assets/models/monsters/quaternius/Tribal_1b4759ca.glb",
-   "pending": "다음 몸 티켓",
-   "why": "짝 없음 Tribal · K-0122 표에 없음(quaternius/Tribal)"
-  },
-  {
-   "body": "wizard",
-   "enemies": [
-    "요술사",
-    "대요술사"
-   ],
-   "src": "assets/models/monsters/quaternius/Wizard_d206c071.glb",
-   "pending": "다음 몸 티켓",
-   "why": "짝 없음 Wizard · K-0122 표에 없음(quaternius/Wizard)"
-  }
- ],
+ "pending": [],
  "humans": [
   {
    "name": "황건적",
@@ -696,5 +577,128 @@
    "paired_by": "K-0144 (k122_monsters.json quaternius2/Zombie)"
   }
  ],
- "note_k144": "K-0144 단계 1(10-19): pending 31 중 K-0122 짝 표로 몸 생긴 19 body → creatures3d 17(species_k144) · 남은 12 는 다음 몸 티켓"
+ "note_k144": "K-0144 단계 1(10-19): pending 31 중 K-0122 짝 표로 몸 생긴 19 body → creatures3d 17(species_k144) · 남은 12 는 다음 몸 티켓",
+ "species_k145": [
+  {
+   "body": "cactoro",
+   "enemies": [
+    "가시귀",
+    "철가시귀"
+   ],
+   "src": "assets/models/monsters/quaternius/Cactoro_625862f9.glb",
+   "creature": "cactus_imp",
+   "paired_by": "K-0145 (k122_monsters.json quaternius/Cactoro)"
+  },
+  {
+   "body": "cactoro_2",
+   "enemies": [
+    "가시왕",
+    "대가시왕"
+   ],
+   "src": "assets/models/monsters/quaternius/Cactoro_e88090e2.glb",
+   "creature": "cactus_imp",
+   "paired_by": "K-0145 (k122_monsters.json quaternius/Cactoro)"
+  },
+  {
+   "body": "frog",
+   "enemies": [
+    "청개구리",
+    "괴이두꺼비"
+   ],
+   "src": "assets/models/monsters/quaternius/Frog_9018566d.glb",
+   "creature": "swamp_toad",
+   "paired_by": "K-0145 (k122_monsters.json quaternius/Frog)"
+  },
+  {
+   "body": "green_blob",
+   "enemies": [
+    "이끼괴물",
+    "고목이끼괴물"
+   ],
+   "src": "assets/models/monsters/quaternius/Green_Blob_64ab590e.glb",
+   "creature": "moss_blob",
+   "paired_by": "K-0145 (k122_monsters.json quaternius/Green_Blob)"
+  },
+  {
+   "body": "green_spiky_blob",
+   "enemies": [
+    "가시슬라임",
+    "대가시슬라임"
+   ],
+   "src": "assets/models/monsters/quaternius/Green_Spiky_Blob_cd25a048.glb",
+   "creature": "spike_blob",
+   "paired_by": "K-0145 (k122_monsters.json quaternius/Green_Spiky_Blob)"
+  },
+  {
+   "body": "mushnub_evolved",
+   "enemies": [
+    "왕버섯도깨비",
+    "포자군주"
+   ],
+   "src": "assets/models/monsters/quaternius/Mushnub_Evolved_84bc88a5.glb",
+   "creature": "spore_cap",
+   "paired_by": "K-0145 (k122_monsters.json quaternius/Mushnub_Evolved)"
+  },
+  {
+   "body": "mushroom_king",
+   "enemies": [
+    "독버섯 요괴",
+    "독버섯 대군주"
+   ],
+   "src": "assets/models/monsters/quaternius/Mushroom_King_798301fb.glb",
+   "creature": "mushroom_lord",
+   "paired_by": "K-0145 (k122_monsters.json quaternius/Mushroom_King)"
+  },
+  {
+   "body": "ninja",
+   "enemies": [
+    "그림자 자객",
+    "칠흑 자객"
+   ],
+   "src": "assets/models/monsters/quaternius/Ninja_2ed11876.glb",
+   "creature": "shadow_ninja",
+   "paired_by": "K-0145 (k122_monsters.json quaternius/Ninja)"
+  },
+  {
+   "body": "ninja_2",
+   "enemies": [
+    "은신 첩자",
+    "심야 첩자"
+   ],
+   "src": "assets/models/monsters/quaternius/Ninja_42162a27.glb",
+   "creature": "shadow_ninja",
+   "paired_by": "K-0145 (k122_monsters.json quaternius/Ninja)"
+  },
+  {
+   "body": "orc",
+   "enemies": [
+    "산도깨비",
+    "노산도깨비"
+   ],
+   "src": "assets/models/monsters/quaternius/Orc_52a479b3.glb",
+   "creature": "goblin_brute",
+   "paired_by": "K-0145 (k122_monsters.json quaternius/Orc)"
+  },
+  {
+   "body": "tribal",
+   "enemies": [
+    "산야인",
+    "노산야인"
+   ],
+   "src": "assets/models/monsters/quaternius/Tribal_1b4759ca.glb",
+   "creature": "masked_tribal",
+   "paired_by": "K-0145 (k122_monsters.json quaternius/Tribal)"
+  },
+  {
+   "body": "wizard",
+   "enemies": [
+    "요술사",
+    "대요술사"
+   ],
+   "src": "assets/models/monsters/quaternius/Wizard_d206c071.glb",
+   "creature": "hat_wizard",
+   "paired_by": "K-0145 (k122_monsters.json quaternius/Wizard)"
+  }
+ ],
+ "note_k145": "K-0145(10-20): pending 12 body → 자체 creatures3d 10(species_k145 — Cactoro·Ninja 두 파일은 한 id) · pending 0"
 }

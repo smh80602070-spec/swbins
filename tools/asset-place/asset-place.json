@@ -769,7 +769,7 @@
     "*.webp",
     "*.json"
    ],
-   "note": "K-0032 몬스터 도감 초상 32(K-0043 몸 mon_* 20 + boss_* 12 × 정사각 192·카드 300x344). 도감(MONSTERS) 데이터가 아직 없어 정본 보관 — 2나락 적 카드(W-0072 monster-portrait.js)가 _c 32장을 씀. K-0119 로 대상 등록(그 전엔 W-0072 손 복사본이 K-0113 이전 옛 몸 렌더판이었다) · K-0121 종 몸 초상 27(creatures3d id 마다 <id>_c — 웹 monster-portrait.js 가 body 로 고름) · K-0121 사람 적 18(자체 NPC 몸 id <npc_*>_c — 적 이름 짝은 tools/ai-art/data/k121_targets.json humans) · K-0144 종 몸 초상 17(K-0122 새 몸, 짝 k121_targets.json species_k144)",
+   "note": "K-0032 몬스터 도감 초상 32(K-0043 몸 mon_* 20 + boss_* 12 × 정사각 192·카드 300x344). 도감(MONSTERS) 데이터가 아직 없어 정본 보관 — 2나락 적 카드(W-0072 monster-portrait.js)가 _c 32장을 씀. K-0119 로 대상 등록(그 전엔 W-0072 손 복사본이 K-0113 이전 옛 몸 렌더판이었다) · K-0121 종 몸 초상 27(creatures3d id 마다 <id>_c — 웹 monster-portrait.js 가 body 로 고름) · K-0121 사람 적 18(자체 NPC 몸 id <npc_*>_c — 적 이름 짝은 tools/ai-art/data/k121_targets.json humans) · K-0144 종 몸 초상 17(K-0122 새 몸, 짝 k121_targets.json species_k144) · K-0145 초상 12(새 몸 10 species_k145 + 5천하 dragon_evolved·alien_grunt)",
    "targets": [
     {
      "track": "web",
@@ -868,7 +868,19 @@
       "tentacle_imp_c.webp": "tentacle_imp_c.webp",
       "tree_walker_c.webp": "tree_walker_c.webp",
       "yeti_c.webp": "yeti_c.webp",
-      "zombie_c.webp": "zombie_c.webp"
+      "zombie_c.webp": "zombie_c.webp",
+      "dragon_evolved_c.webp": "dragon_evolved_c.webp",
+      "alien_grunt_c.webp": "alien_grunt_c.webp",
+      "cactus_imp_c.webp": "cactus_imp_c.webp",
+      "swamp_toad_c.webp": "swamp_toad_c.webp",
+      "moss_blob_c.webp": "moss_blob_c.webp",
+      "spike_blob_c.webp": "spike_blob_c.webp",
+      "spore_cap_c.webp": "spore_cap_c.webp",
+      "mushroom_lord_c.webp": "mushroom_lord_c.webp",
+      "shadow_ninja_c.webp": "shadow_ninja_c.webp",
+      "goblin_brute_c.webp": "goblin_brute_c.webp",
+      "masked_tribal_c.webp": "masked_tribal_c.webp",
+      "hat_wizard_c.webp": "hat_wizard_c.webp"
      }
     }
    ]

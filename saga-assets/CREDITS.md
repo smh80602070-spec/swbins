@@ -40,9 +40,9 @@
 | gen.py | Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-07 확인), 폐쇄 파생 모델 수익화만 금지 | 594 |
 | competitiongen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 21 |
 | gen.py | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1699 |
-| remote3d | microsoft/TRELLIS-image-large | MIT | 465 |
+| remote3d | microsoft/TRELLIS-image-large | MIT | 485 |
 | icon_pack.py | none | CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음) | 76 |
-| gen.py (ComfyUI) | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1667 |
+| gen.py (ComfyUI) | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1679 |
 | make_ui_icons.py | none | CC0-1.0 (코드 생성 — 24격자 기하 도형, 외부 그림·Lucide 경로 없음) | 112 |
 | gen.py (ComfyUI) | z-image-turbo | Apache-2.0 | 141 |
 | make_map.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 195 |

@@ -1,0 +1,44 @@
+{
+ "id": "dragon_evolved",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, (pale blue-white dragon:1.15), large pink-violet wings, curved horns, spiky crest, long tail, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+ "negative_prompt": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+ "seed": 20271119,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "euler_ancestral/normal",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 30.0,
+ "date": "2026-10-19",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "mode": "img2img",
+ "init_image": "tools/ai-art/_out/k145_init_w/dragon_evolved.png",
+ "denoise": 0.6,
+ "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py",
+ "init_model": "",
+ "init_model_license": "",
+ "base_body": "saga-assets/creatures3d/dragon_evolved.glb",
+ "base_license": "MIT",
+ "base_inputs": {
+  "input_image": "tools/ai-art/_out/remote3d_in_k96d/dragon_evolved.png",
+  "input_license": "CreativeML OpenRAIL++-M"
+ },
+ "picked_candidate": "dragon_evolved_v01.png",
+ "sizes": {
+  "s": [
+   192,
+   192
+  ],
+  "c": [
+   300,
+   344
+  ]
+ },
+ "packed_by": "K-0145 — make_monster_dex.pack 과 같은 규격(정사각 192 · 카드 300×344 흰 바탕)",
+ "body": "saga-assets/creatures3d/dragon_evolved.glb"
+}

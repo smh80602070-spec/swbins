@@ -32,6 +32,86 @@
    "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
    "init_image": "tools/ai-art/_out/k145_init_w/alien_grunt.png",
    "denoise": 0.6
+  },
+  {
+   "id": "cactus_imp",
+   "seed": 20271300,
+   "prompt": "(small green cactus imp:1.15), tiny spines, big round eyes, wide straw safari hat, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k145_init_w/cactus_imp.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "swamp_toad",
+   "seed": 20271307,
+   "prompt": "(bipedal teal-green toad monster:1.15), black spots, bulging eyes, webbed hands, crouched frog legs, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k145_init_w/swamp_toad.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "moss_blob",
+   "seed": 20271314,
+   "prompt": "(green moss slime blob:1.15), glossy jelly body, small dark eyes, bubbles inside, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k145_init_w/moss_blob.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "spike_blob",
+   "seed": 20271321,
+   "prompt": "(pastel rainbow slime blob:1.15), white crystal spikes on top, small pink eyes, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k145_init_w/spike_blob.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "spore_cap",
+   "seed": 20271328,
+   "prompt": "(red spotted mushroom creature:1.15), big red cap with white dots, small pale body, root-like feet, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k145_init_w/spore_cap.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "mushroom_lord",
+   "seed": 20271335,
+   "prompt": "(tall pale mushroom king:1.15), huge white cap with pink-red spots and blue crown tip, tiny body, green loincloth, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k145_init_w/mushroom_lord.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "shadow_ninja",
+   "seed": 20271342,
+   "prompt": "(stocky masked ninja creature:1.15), black hood, navy suit, red sash, sword sheaths on back, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k145_init_w/shadow_ninja.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "goblin_brute",
+   "seed": 20271349,
+   "prompt": "(wiry green goblin brute:1.15), big pointed ears, spiky blue hair, blue-yellow striped body, clawed hands, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k145_init_w/goblin_brute.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "masked_tribal",
+   "seed": 20271356,
+   "prompt": "(tall tribal spirit monster:1.15), white feathered mask with red markings, feather claws, red-brown limbs, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k145_init_w/masked_tribal.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "hat_wizard",
+   "seed": 20271363,
+   "prompt": "(plump pastel wizard creature:1.15), tall pointed lilac hat, green scarf over face, glowing eyes, purple robe, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k145_init_w/hat_wizard.png",
+   "denoise": 0.6
   }
  ]
 }

@@ -365,7 +365,7 @@
    "tool": "remote3d",
    "model": "microsoft/TRELLIS-image-large",
    "license": "MIT",
-   "count": 465,
+   "count": 485,
    "where": [
     "saga-assets/creatures3d",
     "saga-assets/pets3d",
@@ -391,7 +391,7 @@
    "tool": "gen.py (ComfyUI)",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 1667,
+   "count": 1679,
    "where": [
     "saga-assets/icons/license",
     "saga-assets/portraits-expr",

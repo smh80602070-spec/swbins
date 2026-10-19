@@ -4,7 +4,7 @@
  "style": "C",
  "model": "animagine-xl-4.0-opt",
  "variants": 4,
- "note": "K-0145 단계 3 — 초상(K-0144 꼴). 1차 = 5천하 몸 있는 둘(dragon_evolved·alien_grunt), 새 몸 10 은 단계 2 뒤 같은 배치에 더함.",
+ "note": "K-0145 단계 3 — 초상(K-0144 꼴). 1차 = 5천하 몸 있는 둘(dragon_evolved·alien_grunt), 10-20 새 몸 10 더함(옅은 셋 hat_wizard·spike_blob·mushroom_lord 연회녹 밑그림).",
  "items": [
   {
    "id": "dragon_evolved",
@@ -23,6 +23,96 @@
    "init_image": "tools/ai-art/_out/k145_init_w/alien_grunt.png",
    "denoise": 0.6,
    "seed": 20271216
+  },
+  {
+   "id": "cactus_imp",
+   "subject": "small green cactus imp, tiny spines, big round eyes, wide straw safari hat",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k145_init_w/cactus_imp.png",
+   "denoise": 0.6,
+   "seed": 20271300
+  },
+  {
+   "id": "swamp_toad",
+   "subject": "bipedal teal-green toad monster, black spots, bulging eyes, webbed hands, crouched frog legs",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k145_init_w/swamp_toad.png",
+   "denoise": 0.6,
+   "seed": 20271307
+  },
+  {
+   "id": "moss_blob",
+   "subject": "green moss slime blob, glossy jelly body, small dark eyes, bubbles inside",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k145_init_w/moss_blob.png",
+   "denoise": 0.6,
+   "seed": 20271314
+  },
+  {
+   "id": "spike_blob",
+   "subject": "pastel rainbow slime blob, white crystal spikes on top, small pink eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k145_init_w/spike_blob.png",
+   "denoise": 0.6,
+   "seed": 20271321
+  },
+  {
+   "id": "spore_cap",
+   "subject": "red spotted mushroom creature, big red cap with white dots, small pale body, root-like feet",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k145_init_w/spore_cap.png",
+   "denoise": 0.6,
+   "seed": 20271328
+  },
+  {
+   "id": "mushroom_lord",
+   "subject": "tall pale mushroom king, huge white cap with pink-red spots and blue crown tip, tiny body, green loincloth",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k145_init_w/mushroom_lord.png",
+   "denoise": 0.6,
+   "seed": 20271335
+  },
+  {
+   "id": "shadow_ninja",
+   "subject": "stocky masked ninja creature, black hood, navy suit, red sash, sword sheaths on back",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k145_init_w/shadow_ninja.png",
+   "denoise": 0.6,
+   "seed": 20271342
+  },
+  {
+   "id": "goblin_brute",
+   "subject": "wiry green goblin brute, big pointed ears, spiky blue hair, blue-yellow striped body, clawed hands",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k145_init_w/goblin_brute.png",
+   "denoise": 0.6,
+   "seed": 20271349
+  },
+  {
+   "id": "masked_tribal",
+   "subject": "tall tribal spirit monster, white feathered mask with red markings, feather claws, red-brown limbs",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k145_init_w/masked_tribal.png",
+   "denoise": 0.6,
+   "seed": 20271356
+  },
+  {
+   "id": "hat_wizard",
+   "subject": "plump pastel wizard creature, tall pointed lilac hat, green scarf over face, glowing eyes, purple robe",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k145_init_w/hat_wizard.png",
+   "denoise": 0.6,
+   "seed": 20271363
   }
  ]
 }
