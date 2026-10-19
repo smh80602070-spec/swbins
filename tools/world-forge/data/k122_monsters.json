@@ -1,15 +1,70 @@
 {
- "note": "K-0122 단계 1(Opus 10-17) — 5천하 data-force.js monster: 경로 + 2나락 js 참조 → 자체 creatures3d 짝. 'new:humanoid' = 사람꼴(무기 쥠) 자체 몸 없음 → 그림 → TRELLIS(SD 사슬 뒤). 2나락 실제 놀이 쓰임은 W-0266 메모상 0 — 표 갈 때 웹이 다시 확인.",
+ "note": "K-0122 단계 1(Opus 10-17) — 5천하 data-force.js monster: 경로 + 2나락 js 참조 → 자체 creatures3d 짝. 'new:humanoid' = 사람꼴(무기 쥠) 자체 몸 없음 → 그림 → TRELLIS(SD 사슬 뒤). 2나락 실제 놀이 쓰임은 W-0266 메모상 0 — 표 갈 때 웹이 다시 확인. · 10-19 Opus: built = 새 자체 몸(creatures3d id), robots = 이미 자체(짝만), pending = 3D 다시 도는 중.",
  "pair": {
-  "quaternius/Dragon_Evolved": "dragon_evolved", "quaternius/Ghost_Skull": "ghost_skull", "quaternius/Goleling_Evolved": "goleling_evolved",
-  "quaternius2/FrogEnemy": "frog_brute", "quaternius2/Rat": "rat", "quaternius2/Snake": "snake", "quaternius2/Spider": "spider", "quaternius2/Wasp": "wasp",
+  "quaternius/Dragon_Evolved": "dragon_evolved",
+  "quaternius/Ghost_Skull": "ghost_skull",
+  "quaternius/Goleling_Evolved": "goleling_evolved",
+  "quaternius2/FrogEnemy": "frog_brute",
+  "quaternius2/Rat": "rat",
+  "quaternius2/Snake": "snake",
+  "quaternius2/Spider": "spider",
+  "quaternius2/Wasp": "wasp",
   "community/SlimeEnemy": "slime",
-  "quaternius_dino/Apatosaurus": "apatosaurus", "quaternius_dino/Parasaurolophus": "parasaurolophus", "quaternius_dino/Stegosaurus": "stegosaurus",
-  "quaternius_dino/Trex": "trex", "quaternius_dino/Triceratops": "triceratops", "quaternius_dino/Velociraptor": "raptor"
+  "quaternius_dino/Apatosaurus": "apatosaurus",
+  "quaternius_dino/Parasaurolophus": "parasaurolophus",
+  "quaternius_dino/Stegosaurus": "stegosaurus",
+  "quaternius_dino/Trex": "trex",
+  "quaternius_dino/Triceratops": "triceratops",
+  "quaternius_dino/Velociraptor": "raptor"
  },
- "new_humanoid": ["quaternius/Alien(2)", "quaternius/Blue_Demon", "quaternius/Demon", "quaternius/Orc_Enemy", "quaternius/Yeti",
-                  "quaternius2/Giant", "quaternius2/SkeletonSolo", "quaternius2/Zombie",
-                  "kaykit_skeletons/Skeleton_Mage", "kaykit_skeletons/Skeleton_Minion", "kaykit_skeletons/Skeleton_Rogue", "kaykit_skeletons/Skeleton_Warrior"],
- "new_other": ["quaternius_cute/Crab", "quaternius_cute/Cthulhu", "quaternius_cute/Cyclops", "quaternius_cute/GreenDemon", "quaternius_cute/Tree",
-               "robots/Robot_Drone", "robots/Robot_Large", "robots/Robot_Walker"]
+ "new_humanoid": [
+  "quaternius/Alien(2)",
+  "quaternius/Blue_Demon",
+  "quaternius/Demon",
+  "quaternius/Orc_Enemy",
+  "quaternius/Yeti",
+  "quaternius2/Giant",
+  "quaternius2/SkeletonSolo",
+  "quaternius2/Zombie",
+  "kaykit_skeletons/Skeleton_Mage",
+  "kaykit_skeletons/Skeleton_Minion",
+  "kaykit_skeletons/Skeleton_Rogue",
+  "kaykit_skeletons/Skeleton_Warrior"
+ ],
+ "new_other": [
+  "quaternius_cute/Crab",
+  "quaternius_cute/Cthulhu",
+  "quaternius_cute/Cyclops",
+  "quaternius_cute/GreenDemon",
+  "quaternius_cute/Tree",
+  "robots/Robot_Drone",
+  "robots/Robot_Large",
+  "robots/Robot_Walker"
+ ],
+ "built": {
+  "quaternius/Alien(2)": "alien_grunt",
+  "quaternius/Blue_Demon": "demon_blue",
+  "quaternius/Demon": "demon_red",
+  "quaternius/Orc_Enemy": "orc_warrior",
+  "quaternius/Yeti": "yeti",
+  "quaternius2/Giant": "giant",
+  "quaternius2/SkeletonSolo": "skeleton",
+  "quaternius2/Zombie": "zombie",
+  "kaykit_skeletons/Skeleton_Mage": "skeleton_mage",
+  "kaykit_skeletons/Skeleton_Minion": "skeleton_minion",
+  "kaykit_skeletons/Skeleton_Rogue": "skeleton_rogue",
+  "kaykit_skeletons/Skeleton_Warrior": "skeleton_warrior",
+  "quaternius_cute/Crab": "crab_cute",
+  "quaternius_cute/GreenDemon": "green_imp"
+ },
+ "robots": {
+  "robots/Robot_Drone": "robot_drone",
+  "robots/Robot_Large": "robot_large",
+  "robots/Robot_Walker": "robot_walker"
+ },
+ "pending": [
+  "quaternius_cute/Cthulhu → tentacle_imp",
+  "quaternius_cute/Cyclops → cyclops_cute",
+  "quaternius_cute/Tree → tree_walker"
+ ]
 }

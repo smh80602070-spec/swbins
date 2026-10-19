@@ -1,0 +1,176 @@
+{
+ "note": "K-0122 대상 표 — 새 creatures3d 17(사람꼴 12·귀여운 5). 로봇 셋은 이미 자체(짝만, 표 k122_monsters.json pair 에 더함). rig none = creature_fill 루트 동작 · fist = FistR 노드",
+ "items": [
+  {
+   "id": "alien_grunt",
+   "rig": "none",
+   "height": 1.8,
+   "yaw": 0,
+   "humanoid": true,
+   "fist": true,
+   "borrowed": "quaternius/Alien(2)",
+   "lic_note": "K-0122 자체 생성 — 입력 = 우리 txt2img(k122_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7 + 오른손 FistR 노드(무기 쥠). 빌린 quaternius/Alien(2) 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "demon_blue",
+   "rig": "none",
+   "height": 2.2,
+   "yaw": 0,
+   "humanoid": true,
+   "fist": true,
+   "borrowed": "quaternius/Blue_Demon",
+   "lic_note": "K-0122 자체 생성 — 입력 = 우리 txt2img(k122_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7 + 오른손 FistR 노드(무기 쥠). 빌린 quaternius/Blue_Demon 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "demon_red",
+   "rig": "none",
+   "height": 2.2,
+   "yaw": 0,
+   "humanoid": true,
+   "fist": true,
+   "borrowed": "quaternius/Demon",
+   "lic_note": "K-0122 자체 생성 — 입력 = 우리 txt2img(k122_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7 + 오른손 FistR 노드(무기 쥠). 빌린 quaternius/Demon 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "orc_warrior",
+   "rig": "none",
+   "height": 2.0,
+   "yaw": 0,
+   "humanoid": true,
+   "fist": true,
+   "borrowed": "quaternius/Orc_Enemy",
+   "lic_note": "K-0122 자체 생성 — 입력 = 우리 txt2img(k122_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7 + 오른손 FistR 노드(무기 쥠). 빌린 quaternius/Orc_Enemy 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "yeti",
+   "rig": "none",
+   "height": 2.4,
+   "yaw": 0,
+   "humanoid": true,
+   "fist": true,
+   "borrowed": "quaternius/Yeti",
+   "lic_note": "K-0122 자체 생성 — 입력 = 우리 txt2img(k122_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7 + 오른손 FistR 노드(무기 쥠). 빌린 quaternius/Yeti 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "giant",
+   "rig": "none",
+   "height": 3.0,
+   "yaw": 0,
+   "humanoid": true,
+   "fist": true,
+   "borrowed": "quaternius2/Giant",
+   "lic_note": "K-0122 자체 생성 — 입력 = 우리 txt2img(k122_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7 + 오른손 FistR 노드(무기 쥠). 빌린 quaternius2/Giant 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "skeleton",
+   "rig": "none",
+   "height": 1.8,
+   "yaw": 0,
+   "humanoid": true,
+   "fist": true,
+   "borrowed": "quaternius2/SkeletonSolo",
+   "lic_note": "K-0122 자체 생성 — 입력 = 우리 txt2img(k122_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7 + 오른손 FistR 노드(무기 쥠). 빌린 quaternius2/SkeletonSolo 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "zombie",
+   "rig": "none",
+   "height": 1.8,
+   "yaw": 0,
+   "humanoid": true,
+   "fist": true,
+   "borrowed": "quaternius2/Zombie",
+   "lic_note": "K-0122 자체 생성 — 입력 = 우리 txt2img(k122_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7 + 오른손 FistR 노드(무기 쥠). 빌린 quaternius2/Zombie 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "skeleton_mage",
+   "rig": "none",
+   "height": 1.8,
+   "yaw": 0,
+   "humanoid": true,
+   "fist": true,
+   "borrowed": "kaykit_skeletons/Skeleton_Mage",
+   "lic_note": "K-0122 자체 생성 — 입력 = 우리 txt2img(k122_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7 + 오른손 FistR 노드(무기 쥠). 빌린 kaykit_skeletons/Skeleton_Mage 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "skeleton_minion",
+   "rig": "none",
+   "height": 1.0,
+   "yaw": 0,
+   "humanoid": true,
+   "fist": true,
+   "borrowed": "kaykit_skeletons/Skeleton_Minion",
+   "lic_note": "K-0122 자체 생성 — 입력 = 우리 txt2img(k122_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7 + 오른손 FistR 노드(무기 쥠). 빌린 kaykit_skeletons/Skeleton_Minion 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "skeleton_rogue",
+   "rig": "none",
+   "height": 1.8,
+   "yaw": 0,
+   "humanoid": true,
+   "fist": true,
+   "borrowed": "kaykit_skeletons/Skeleton_Rogue",
+   "lic_note": "K-0122 자체 생성 — 입력 = 우리 txt2img(k122_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7 + 오른손 FistR 노드(무기 쥠). 빌린 kaykit_skeletons/Skeleton_Rogue 를 대신한다 — 게임 참조 바꾸기는 W 티켓.",
+   "plate": true
+  },
+  {
+   "id": "skeleton_warrior",
+   "rig": "none",
+   "height": 1.9,
+   "yaw": 0,
+   "humanoid": true,
+   "fist": true,
+   "borrowed": "kaykit_skeletons/Skeleton_Warrior",
+   "lic_note": "K-0122 자체 생성 — 입력 = 우리 txt2img(k122_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7 + 오른손 FistR 노드(무기 쥠). 빌린 kaykit_skeletons/Skeleton_Warrior 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "crab_cute",
+   "rig": "none",
+   "height": 0.6,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "quaternius_cute/Crab",
+   "lic_note": "K-0122 자체 생성 — 입력 = 우리 txt2img(k122_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius_cute/Crab 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "tentacle_imp",
+   "rig": "none",
+   "height": 0.7,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "quaternius_cute/Cthulhu",
+   "lic_note": "K-0122 자체 생성 — 입력 = 우리 txt2img(k122_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius_cute/Cthulhu 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "cyclops_cute",
+   "rig": "none",
+   "height": 0.8,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "quaternius_cute/Cyclops",
+   "lic_note": "K-0122 자체 생성 — 입력 = 우리 txt2img(k122_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius_cute/Cyclops 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "green_imp",
+   "rig": "none",
+   "height": 0.7,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "quaternius_cute/GreenDemon",
+   "lic_note": "K-0122 자체 생성 — 입력 = 우리 txt2img(k122_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius_cute/GreenDemon 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "tree_walker",
+   "rig": "none",
+   "height": 1.2,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "quaternius_cute/Tree",
+   "lic_note": "K-0122 자체 생성 — 입력 = 우리 txt2img(k122_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius_cute/Tree 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  }
+ ]
+}
