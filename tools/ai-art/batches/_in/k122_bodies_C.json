@@ -1,0 +1,129 @@
+{
+ "name": "k122_bodies_C",
+ "spec": "creature",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0122 단계 2 그림 — 빌린 몸 17(사람꼴 12·귀여운 5)의 자체 몸 입력(TRELLIS). 로봇 셋은 이미 자체(creatures3d robot_*, TRELLIS) → 짝만. 원작 이름 없이 생김새만. id = 새 creatures3d id, from = 대신하는 빌린 경로",
+ "items": [
+  {
+   "id": "alien_grunt",
+   "from": "quaternius/Alien(2)",
+   "subject": "gray-green alien soldier, big black eyes, slender limbs, sleek armor plates",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands"
+  },
+  {
+   "id": "demon_blue",
+   "from": "quaternius/Blue_Demon",
+   "subject": "blue horned demon, muscular, bat wings folded, long tail",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands"
+  },
+  {
+   "id": "demon_red",
+   "from": "quaternius/Demon",
+   "subject": "red horned demon, hooved feet, spiked shoulders, long tail",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands"
+  },
+  {
+   "id": "orc_warrior",
+   "from": "quaternius/Orc_Enemy",
+   "subject": "green orc warrior, tusks, leather armor, bald head",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands"
+  },
+  {
+   "id": "yeti",
+   "from": "quaternius/Yeti",
+   "subject": "white furry yeti, huge arms, blue face, hunched",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands"
+  },
+  {
+   "id": "giant",
+   "from": "quaternius2/Giant",
+   "subject": "stone-skinned hill giant, loincloth, huge fists, bald",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands"
+  },
+  {
+   "id": "skeleton",
+   "from": "quaternius2/SkeletonSolo",
+   "subject": "plain skeleton, bare bones, glowing eye sockets",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands"
+  },
+  {
+   "id": "zombie",
+   "from": "quaternius2/Zombie",
+   "subject": "green-skinned zombie, torn clothes, stiff posture",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands"
+  },
+  {
+   "id": "skeleton_mage",
+   "from": "kaykit_skeletons/Skeleton_Mage",
+   "subject": "skeleton mage, hooded robe, bone crown",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands"
+  },
+  {
+   "id": "skeleton_minion",
+   "from": "kaykit_skeletons/Skeleton_Minion",
+   "subject": "small skeleton minion, chunky skull, cracked bones",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands"
+  },
+  {
+   "id": "skeleton_rogue",
+   "from": "kaykit_skeletons/Skeleton_Rogue",
+   "subject": "skeleton rogue, hood, scarf, leather straps",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands"
+  },
+  {
+   "id": "skeleton_warrior",
+   "from": "kaykit_skeletons/Skeleton_Warrior",
+   "subject": "skeleton warrior, horned helmet, iron chest plate",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands"
+  },
+  {
+   "id": "crab_cute",
+   "from": "quaternius_cute/Crab",
+   "subject": "round orange crab, big claws, cute eyes on stalks",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible"
+  },
+  {
+   "id": "tentacle_imp",
+   "from": "quaternius_cute/Cthulhu",
+   "subject": "small green squid-faced imp, face tentacles, tiny wings, cute",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible"
+  },
+  {
+   "id": "cyclops_cute",
+   "from": "quaternius_cute/Cyclops",
+   "subject": "round purple one-eyed monster, single big eye, small horns, cute",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible"
+  },
+  {
+   "id": "green_imp",
+   "from": "quaternius_cute/GreenDemon",
+   "subject": "small green imp, tiny horns, pointed tail, cute grin",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible"
+  },
+  {
+   "id": "tree_walker",
+   "from": "quaternius_cute/Tree",
+   "subject": "small walking tree creature, leafy crown, root legs, cute face",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible"
+  }
+ ]
+}

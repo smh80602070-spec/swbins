@@ -1,0 +1,20 @@
+{
+ "name": "k120_pets_C3",
+ "spec": "creature",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0120 토끼만 다시 — C2 는 초상의 흰 원판·상자가 따라와 3D 몸에 상자가 생김 → 토끼만 자른 밑그림",
+ "items": [
+  {
+   "id": "pk_pikachu",
+   "subject": "small white rabbit, long pink ears, red eyes, sitting",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, no pedestal",
+   "init_image": "tools/ai-art/_out/k120_init2/pk_pikachu_c3.png",
+   "denoise": 0.6,
+   "seed": 12000524,
+   "src_portrait": "saga-web/saga-go/assets/portraits/pet/pk_pikachu_c.webp"
+  }
+ ]
+}

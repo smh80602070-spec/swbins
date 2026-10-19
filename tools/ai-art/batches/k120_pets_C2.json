@@ -1,0 +1,157 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k120_pets_C2",
+ "kit": {
+  "spec": "creature",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "pk_bulbasaur",
+   "seed": 12000000,
+   "prompt": "(small cream rabbit-like creature wearing a big green mushroom cap cloak:1.15), no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k120_init2/pk_bulbasaur.png",
+   "denoise": 0.55
+  },
+  {
+   "id": "pk_charmander",
+   "seed": 12000131,
+   "prompt": "(orange fire lizard:1.15), small horns, flame tipped tail, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k120_init2/pk_charmander.png",
+   "denoise": 0.55
+  },
+  {
+   "id": "pk_squirtle",
+   "seed": 12000262,
+   "prompt": "(deep blue octopus creature:1.15), big round orange eyes, eight curling tentacles, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k120_init2/pk_squirtle.png",
+   "denoise": 0.55
+  },
+  {
+   "id": "pk_magikarp",
+   "seed": 12000393,
+   "prompt": "(round blue water blob creature with small white wings:1.15), no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k120_init2/pk_magikarp.png",
+   "denoise": 0.55
+  },
+  {
+   "id": "pk_pikachu",
+   "seed": 12000524,
+   "prompt": "(white rabbit with long upright ears:1.15), sitting, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k120_init2/pk_pikachu.png",
+   "denoise": 0.55
+  },
+  {
+   "id": "pk_eevee",
+   "seed": 12000655,
+   "prompt": "(brown monkey with mossy green fur on back:1.15), long tail, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k120_init2/pk_eevee.png",
+   "denoise": 0.55
+  },
+  {
+   "id": "pk_slowbro",
+   "seed": 12000786,
+   "prompt": "(translucent lavender water droplet creature:1.15), glossy, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k120_init2/pk_slowbro.png",
+   "denoise": 0.55
+  },
+  {
+   "id": "pk_gengar",
+   "seed": 12000917,
+   "prompt": "(purple shadow ghost creature:1.15), small horns, glowing eyes, wispy tail, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k120_init2/pk_gengar.png",
+   "denoise": 0.55
+  },
+  {
+   "id": "pk_snorlax",
+   "seed": 12001048,
+   "prompt": "(huge round fluffy white snow cat creature:1.15), sleepy smile, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k120_init2/pk_snorlax.png",
+   "denoise": 0.55
+  },
+  {
+   "id": "pk_lapras",
+   "seed": 12001179,
+   "prompt": "(dark beast with large spread orange bat wings:1.15), glowing blue eyes, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k120_init2/pk_lapras.png",
+   "denoise": 0.55
+  },
+  {
+   "id": "pk_alakazam",
+   "seed": 12001310,
+   "prompt": "(small sage creature in a tall pointed hat and dark starry cloak:1.15), no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k120_init2/pk_alakazam.png",
+   "denoise": 0.55
+  },
+  {
+   "id": "pk_dragonite",
+   "seed": 12001441,
+   "prompt": "(plump yellow dragon with white feathered wings:1.15), long tail, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k120_init2/pk_dragonite.png",
+   "denoise": 0.55
+  },
+  {
+   "id": "pk_charizard",
+   "seed": 12001572,
+   "prompt": "(slender orange fire dragon:1.15), large bat wings, flaming tail, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k120_init2/pk_charizard.png",
+   "denoise": 0.55
+  },
+  {
+   "id": "pk_gyarados",
+   "seed": 12001703,
+   "prompt": "(long blue water serpent:1.15), white fins, crest, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k120_init2/pk_gyarados.png",
+   "denoise": 0.55
+  },
+  {
+   "id": "pk_mewtwo",
+   "seed": 12001834,
+   "prompt": "(slender purple cosmic dragon serpent:1.15), starry glow, horns, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k120_init2/pk_mewtwo.png",
+   "denoise": 0.55
+  },
+  {
+   "id": "pk_mew",
+   "seed": 12001965,
+   "prompt": "(white cat with golden bell collar:1.15), sitting, small golden halo, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k120_init2/pk_mew.png",
+   "denoise": 0.55
+  },
+  {
+   "id": "pt_magpie",
+   "seed": 12002096,
+   "prompt": "(black and white magpie bird with blue-green wing sheen:1.15), long tail, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k120_init2/pt_magpie.png",
+   "denoise": 0.55
+  }
+ ]
+}

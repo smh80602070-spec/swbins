@@ -752,7 +752,7 @@
     "*.webp",
     "*.json"
    ],
-   "note": "K-0032 몬스터 도감 초상 32(K-0043 몸 mon_* 20 + boss_* 12 × 정사각 192·카드 300x344). 도감(MONSTERS) 데이터가 아직 없어 정본 보관 — 2나락 적 카드(W-0072 monster-portrait.js)가 _c 32장을 씀. K-0119 로 대상 등록(그 전엔 W-0072 손 복사본이 K-0113 이전 옛 몸 렌더판이었다)",
+   "note": "K-0032 몬스터 도감 초상 32(K-0043 몸 mon_* 20 + boss_* 12 × 정사각 192·카드 300x344). 도감(MONSTERS) 데이터가 아직 없어 정본 보관 — 2나락 적 카드(W-0072 monster-portrait.js)가 _c 32장을 씀. K-0119 로 대상 등록(그 전엔 W-0072 손 복사본이 K-0113 이전 옛 몸 렌더판이었다) · K-0121 종 몸 초상 27(creatures3d id 마다 <id>_c — 웹 monster-portrait.js 가 body 로 고름)",
    "targets": [
     {
      "track": "web",
@@ -789,7 +789,34 @@
       "mon_wing_01_c.webp": "mon_wing_01_c.webp",
       "mon_wing_02_c.webp": "mon_wing_02_c.webp",
       "mon_wing_03_c.webp": "mon_wing_03_c.webp",
-      "mon_wing_04_c.webp": "mon_wing_04_c.webp"
+      "mon_wing_04_c.webp": "mon_wing_04_c.webp",
+      "apatosaurus_c.webp": "apatosaurus_c.webp",
+      "boar_c.webp": "boar_c.webp",
+      "dino_pet_c.webp": "dino_pet_c.webp",
+      "dragon_c.webp": "dragon_c.webp",
+      "elephant_c.webp": "elephant_c.webp",
+      "frog_brute_c.webp": "frog_brute_c.webp",
+      "ghost_skull_c.webp": "ghost_skull_c.webp",
+      "ghost_c.webp": "ghost_c.webp",
+      "glub_evolved_c.webp": "glub_evolved_c.webp",
+      "glub_c.webp": "glub_c.webp",
+      "goleling_evolved_c.webp": "goleling_evolved_c.webp",
+      "goleling_c.webp": "goleling_c.webp",
+      "hywirl_c.webp": "hywirl_c.webp",
+      "monkroose_c.webp": "monkroose_c.webp",
+      "mushnub_c.webp": "mushnub_c.webp",
+      "parasaurolophus_c.webp": "parasaurolophus_c.webp",
+      "pink_slime_c.webp": "pink_slime_c.webp",
+      "raptor_c.webp": "raptor_c.webp",
+      "rat_c.webp": "rat_c.webp",
+      "slime_c.webp": "slime_c.webp",
+      "spider_c.webp": "spider_c.webp",
+      "squidle_c.webp": "squidle_c.webp",
+      "stegosaurus_c.webp": "stegosaurus_c.webp",
+      "tiger_c.webp": "tiger_c.webp",
+      "trex_c.webp": "trex_c.webp",
+      "triceratops_c.webp": "triceratops_c.webp",
+      "wasp_c.webp": "wasp_c.webp"
      }
     }
    ]

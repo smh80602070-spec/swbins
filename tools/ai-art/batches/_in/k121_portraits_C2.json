@@ -1,0 +1,253 @@
+{
+ "name": "k121_portraits_C2",
+ "spec": "creature",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0121 단계 3 — 2나락 적 종 몸(creatures3d) 27 렌더를 밑그림으로 img2img, 그림체 C. 주제 = 렌더에 보이는 몸 모양·색, 2나락 어둠은 조명 태그 하나. · C2(10-19): 1차는 몸 렌더 투명 바탕이 검정으로 읽혀 108장 전부 검은 바탕 → 흰 바탕에 깐 밑그림(_out/k121_init_w, 같은 렌더를 흰색 위에 합성)",
+ "items": [
+  {
+   "id": "apatosaurus",
+   "subject": "green long-necked sauropod dinosaur, long tail, pale belly",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/apatosaurus.png",
+   "denoise": 0.6,
+   "seed": 20271018
+  },
+  {
+   "id": "boar",
+   "subject": "dark gray wild boar, curved tusks, bristly mane",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/boar.png",
+   "denoise": 0.6,
+   "seed": 20271115
+  },
+  {
+   "id": "dino_pet",
+   "subject": "small cute cream dinosaur creature, big eyes, orange belly",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/dino_pet.png",
+   "denoise": 0.6,
+   "seed": 20271212
+  },
+  {
+   "id": "dragon",
+   "subject": "slender red dragon, bat wings, small horns, long tail",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/dragon.png",
+   "denoise": 0.6,
+   "seed": 20271309
+  },
+  {
+   "id": "elephant",
+   "subject": "blue-gray elephant, long trunk, large ears",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/elephant.png",
+   "denoise": 0.6,
+   "seed": 20271406
+  },
+  {
+   "id": "frog_brute",
+   "subject": "huge green spotted frog brute, muscular arms, crouching",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/frog_brute.png",
+   "denoise": 0.6,
+   "seed": 20271503
+  },
+  {
+   "id": "ghost",
+   "subject": "white sheet ghost, small dark eyes, wispy tail",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/ghost.png",
+   "denoise": 0.6,
+   "seed": 20271600
+  },
+  {
+   "id": "ghost_skull",
+   "subject": "pale floating spirit, skull face, long curling tail",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/ghost_skull.png",
+   "denoise": 0.6,
+   "seed": 20271697
+  },
+  {
+   "id": "glub",
+   "subject": "round white fish blob creature, small fins, pink cheeks",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/glub.png",
+   "denoise": 0.6,
+   "seed": 20271794
+  },
+  {
+   "id": "glub_evolved",
+   "subject": "large round white blob creature, smooth body, small side fin",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/glub_evolved.png",
+   "denoise": 0.6,
+   "seed": 20271891
+  },
+  {
+   "id": "goleling",
+   "subject": "small white stone golem, round body, yellow gem on head",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/goleling.png",
+   "denoise": 0.6,
+   "seed": 20271988
+  },
+  {
+   "id": "goleling_evolved",
+   "subject": "large purple stone golem, heavy fists, crystal armor plates",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/goleling_evolved.png",
+   "denoise": 0.6,
+   "seed": 20272085
+  },
+  {
+   "id": "hywirl",
+   "subject": "slim white bird creature, yellow crest, long tail feathers",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/hywirl.png",
+   "denoise": 0.6,
+   "seed": 20272182
+  },
+  {
+   "id": "monkroose",
+   "subject": "cute round cream monkey creature, big blue eyes, curled tail",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/monkroose.png",
+   "denoise": 0.6,
+   "seed": 20272279
+  },
+  {
+   "id": "mushnub",
+   "subject": "giant pink mushroom creature, blue gills, tiny face",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/mushnub.png",
+   "denoise": 0.6,
+   "seed": 20272376
+  },
+  {
+   "id": "parasaurolophus",
+   "subject": "brown crested dinosaur, long head crest, long tail",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/parasaurolophus.png",
+   "denoise": 0.6,
+   "seed": 20272473
+  },
+  {
+   "id": "pink_slime",
+   "subject": "glossy pink jelly slime",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/pink_slime.png",
+   "denoise": 0.6,
+   "seed": 20272570
+  },
+  {
+   "id": "raptor",
+   "subject": "orange striped velociraptor, sharp claws",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/raptor.png",
+   "denoise": 0.6,
+   "seed": 20272667
+  },
+  {
+   "id": "rat",
+   "subject": "white rat, long tail, pink ears",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/rat.png",
+   "denoise": 0.6,
+   "seed": 20272764
+  },
+  {
+   "id": "slime",
+   "subject": "glossy teal and yellow slime blob",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/slime.png",
+   "denoise": 0.6,
+   "seed": 20272861
+  },
+  {
+   "id": "spider",
+   "subject": "dark red giant spider, long thin legs, red eye",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/spider.png",
+   "denoise": 0.6,
+   "seed": 20272958
+  },
+  {
+   "id": "squidle",
+   "subject": "pink squid creature, droopy cap, big sad eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/squidle.png",
+   "denoise": 0.6,
+   "seed": 20273055
+  },
+  {
+   "id": "stegosaurus",
+   "subject": "white stegosaurus, pink back plates, spiked tail",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/stegosaurus.png",
+   "denoise": 0.6,
+   "seed": 20273152
+  },
+  {
+   "id": "tiger",
+   "subject": "orange striped tiger, prowling",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/tiger.png",
+   "denoise": 0.6,
+   "seed": 20273249
+  },
+  {
+   "id": "trex",
+   "subject": "pink tyrannosaurus, small arms, big jaw",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/trex.png",
+   "denoise": 0.6,
+   "seed": 20273346
+  },
+  {
+   "id": "triceratops",
+   "subject": "cream triceratops, three horns, neck frill",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/triceratops.png",
+   "denoise": 0.6,
+   "seed": 20273443
+  },
+  {
+   "id": "wasp",
+   "subject": "giant wasp, yellow and black stripes, clear wings",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k121_init_w/wasp.png",
+   "denoise": 0.6,
+   "seed": 20273540
+  }
+ ]
+}

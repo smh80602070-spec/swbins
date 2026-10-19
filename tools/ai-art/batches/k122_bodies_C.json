@@ -1,0 +1,123 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k122_bodies_C",
+ "kit": {
+  "spec": "creature",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "alien_grunt",
+   "seed": 1508860914,
+   "prompt": "(gray-green alien soldier:1.15), big black eyes, slender limbs, sleek armor plates, no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "demon_blue",
+   "seed": 1550799958,
+   "prompt": "(blue horned demon:1.15), muscular, bat wings folded, long tail, no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "demon_red",
+   "seed": 1290568933,
+   "prompt": "(red horned demon:1.15), hooved feet, spiked shoulders, long tail, no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "orc_warrior",
+   "seed": 2847498123,
+   "prompt": "(green orc warrior:1.15), tusks, leather armor, bald head, no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "yeti",
+   "seed": 3543866308,
+   "prompt": "(white furry yeti:1.15), huge arms, blue face, hunched, no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "giant",
+   "seed": 4269216627,
+   "prompt": "(stone-skinned hill giant:1.15), loincloth, huge fists, bald, no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "skeleton",
+   "seed": 3592819269,
+   "prompt": "(plain skeleton:1.15), bare bones, glowing eye sockets, no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "zombie",
+   "seed": 1181126770,
+   "prompt": "(green-skinned zombie:1.15), torn clothes, stiff posture, no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "skeleton_mage",
+   "seed": 1903670131,
+   "prompt": "(skeleton mage:1.15), hooded robe, bone crown, no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "skeleton_minion",
+   "seed": 3354327830,
+   "prompt": "(small skeleton minion:1.15), chunky skull, cracked bones, no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "skeleton_rogue",
+   "seed": 1250700048,
+   "prompt": "(skeleton rogue:1.15), hood, scarf, leather straps, no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "skeleton_warrior",
+   "seed": 3709368168,
+   "prompt": "(skeleton warrior:1.15), horned helmet, iron chest plate, no humans, full body, whole creature visible, standing, arms slightly away from body, empty hands, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "crab_cute",
+   "seed": 1807679910,
+   "prompt": "(round orange crab:1.15), big claws, cute eyes on stalks, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "tentacle_imp",
+   "seed": 1585035028,
+   "prompt": "(small green squid-faced imp:1.15), face tentacles, tiny wings, cute, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "cyclops_cute",
+   "seed": 136571188,
+   "prompt": "(round purple one-eyed monster:1.15), single big eye, small horns, cute, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "green_imp",
+   "seed": 2056337567,
+   "prompt": "(small green imp:1.15), tiny horns, pointed tail, cute grin, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "tree_walker",
+   "seed": 2500450549,
+   "prompt": "(small walking tree creature:1.15), leafy crown, root legs, cute face, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  }
+ ]
+}

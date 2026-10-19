@@ -1,0 +1,237 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k121_portraits_C2",
+ "kit": {
+  "spec": "creature",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "apatosaurus",
+   "seed": 20271018,
+   "prompt": "(green long-necked sauropod dinosaur:1.15), long tail, pale belly, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/apatosaurus.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "boar",
+   "seed": 20271115,
+   "prompt": "(dark gray wild boar:1.15), curved tusks, bristly mane, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/boar.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "dino_pet",
+   "seed": 20271212,
+   "prompt": "(small cute cream dinosaur creature:1.15), big eyes, orange belly, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/dino_pet.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "dragon",
+   "seed": 20271309,
+   "prompt": "(slender red dragon:1.15), bat wings, small horns, long tail, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/dragon.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "elephant",
+   "seed": 20271406,
+   "prompt": "(blue-gray elephant:1.15), long trunk, large ears, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/elephant.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "frog_brute",
+   "seed": 20271503,
+   "prompt": "(huge green spotted frog brute:1.15), muscular arms, crouching, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/frog_brute.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "ghost",
+   "seed": 20271600,
+   "prompt": "(white sheet ghost:1.15), small dark eyes, wispy tail, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/ghost.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "ghost_skull",
+   "seed": 20271697,
+   "prompt": "(pale floating spirit:1.15), skull face, long curling tail, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/ghost_skull.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "glub",
+   "seed": 20271794,
+   "prompt": "(round white fish blob creature:1.15), small fins, pink cheeks, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/glub.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "glub_evolved",
+   "seed": 20271891,
+   "prompt": "(large round white blob creature:1.15), smooth body, small side fin, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/glub_evolved.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "goleling",
+   "seed": 20271988,
+   "prompt": "(small white stone golem:1.15), round body, yellow gem on head, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/goleling.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "goleling_evolved",
+   "seed": 20272085,
+   "prompt": "(large purple stone golem:1.15), heavy fists, crystal armor plates, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/goleling_evolved.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "hywirl",
+   "seed": 20272182,
+   "prompt": "(slim white bird creature:1.15), yellow crest, long tail feathers, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/hywirl.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "monkroose",
+   "seed": 20272279,
+   "prompt": "(cute round cream monkey creature:1.15), big blue eyes, curled tail, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/monkroose.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "mushnub",
+   "seed": 20272376,
+   "prompt": "(giant pink mushroom creature:1.15), blue gills, tiny face, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/mushnub.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "parasaurolophus",
+   "seed": 20272473,
+   "prompt": "(brown crested dinosaur:1.15), long head crest, long tail, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/parasaurolophus.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "pink_slime",
+   "seed": 20272570,
+   "prompt": "(glossy pink jelly slime:1.15), no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/pink_slime.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "raptor",
+   "seed": 20272667,
+   "prompt": "(orange striped velociraptor:1.15), sharp claws, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/raptor.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "rat",
+   "seed": 20272764,
+   "prompt": "(white rat:1.15), long tail, pink ears, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/rat.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "slime",
+   "seed": 20272861,
+   "prompt": "(glossy teal and yellow slime blob:1.15), no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/slime.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "spider",
+   "seed": 20272958,
+   "prompt": "(dark red giant spider:1.15), long thin legs, red eye, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/spider.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "squidle",
+   "seed": 20273055,
+   "prompt": "(pink squid creature:1.15), droopy cap, big sad eyes, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/squidle.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "stegosaurus",
+   "seed": 20273152,
+   "prompt": "(white stegosaurus:1.15), pink back plates, spiked tail, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/stegosaurus.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "tiger",
+   "seed": 20273249,
+   "prompt": "(orange striped tiger:1.15), prowling, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/tiger.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "trex",
+   "seed": 20273346,
+   "prompt": "(pink tyrannosaurus:1.15), small arms, big jaw, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/trex.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "triceratops",
+   "seed": 20273443,
+   "prompt": "(cream triceratops:1.15), three horns, neck frill, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/triceratops.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "wasp",
+   "seed": 20273540,
+   "prompt": "(giant wasp:1.15), yellow and black stripes, clear wings, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k121_init_w/wasp.png",
+   "denoise": 0.6
+  }
+ ]
+}
