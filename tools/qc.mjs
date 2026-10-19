@@ -9,6 +9,7 @@
  *   --no-shots    촬영(playwright) 생략          --godot   Godot probe_all 도(exe 는 GODOT 환경변수 또는 스크래치패드에서 찾음)
  *   --play        플레이 QC 만(W-0270 — pw-play.mjs: 판마다 PC·폰으로 키·끌기·터치 이동 · ☰ 창 닫은 뒤 이동 · HUD 겹침 · 새로 고침 이어하기). 기본 실행에 든다(--no-shots 면 생략)
  *   --budget      폰 예산 측정을 실제로 돌린다(W-0302 pw-phone-budget.mjs, 판마다 1회 — 없으면 마지막 결과만 읽는다)
+ *   --mobile      모바일 실태 측정을 실제로 돌린다(W-0335 pw-mobile.mjs, 아이폰 WebKit·안드 크롬 — 없으면 마지막 결과만 읽는다)
  *   --deploy      배포 확인만(W-0258 — 공개 Pages 주소에서 가입→시작→☰→새로 고침, pw-deploy.mjs). --branch web·--full 엔 늘 든다
  *
  * 하는 일(웹 판마다): ① 번들·shared 사본 최신인지(bundle --check·sync-shared --check) ② 진단 러너(test-web.mjs, RESULT n/m·실패 줄·DIFF)
@@ -249,6 +250,23 @@ async function checkBudget() {
 
 /* ── ④-6 자동 품질(W-0314) — 마지막 폰 예산 결과의 장면마다 autoq 단계(aq)를 본다. 3마을·5천하는 auto 일 때 3초 평균 FPS 가 26 밑이면 한 단계 내린다.
    장면 FPS ≥ 30 이거나 한 단계라도 내려갔으면 PASS · FPS < 26 인데 그대로 HIGH 면 FAIL(W-0302 가 잡은 갇힘) · 결과에 aq 칸이 없으면 WARN(다시 재야) ── */
+/* ── ④-5b 모바일(W-0335) — 마지막 pw-mobile.mjs 결과(아이폰 WebKit·안드 크롬)를 판마다 읽는다. 탭 죽음이면 FAIL, 못 들어감·가로 넘침·
+   예외면 WARN, 나머지(작은 단추·작은 글자·가로 겹침)는 숫자만 적는다(시트 tasks/sheets/web-mobile-20261019.md 가 판정). 7일 넘게 묵으면 WARN ── */
+async function checkMobile() {
+  if (!games.length) return;
+  if (has('--mobile')) { const b = await serve(); run(process.execPath, ['pw-mobile.mjs', ...games, '--base', b], { cwd: PLAY, timeout: 60 * 60 * 1000 }); }
+  const j = readJson(path.join(PLAY, 'results', 'pw-mobile.json'), null);
+  if (!j) { row('모바일', games.map(nm).join('·'), 'WARN', '측정 없음 — node saga-web/tools/playcheck/pw-mobile.mjs'); return; }
+  const age = (Date.now() - Date.parse(j.at)) / 86400000;
+  for (const g of games) {
+    const xs = (j.runs || []).filter((q) => q.game === g);
+    if (!xs.length) { row('모바일', nm(g), 'WARN', '그 판 측정 없음'); continue; }
+    const dead = xs.filter((q) => q.crash), bad = xs.filter((q) => !q.ok || q.errors.length || (q.portrait && q.portrait.overflowX > 1));
+    const d = xs.map((q) => { const p = q.portrait || {}, l = q.landscape || {}; return q.device + ' 죽음 ' + q.crash + '·예외 ' + q.errors.length + '·fps ' + (q.fps ? q.fps.min : '-') + '·작은 단추 ' + p.smallTaps + '/' + p.taps + '·글자<12 ' + p.tiny + '·가로 겹침 ' + l.overlapN; }).join(' · ');
+    row('모바일', nm(g), dead.length ? 'FAIL' : (bad.length || age > 7 ? 'WARN' : 'PASS'), d + (age > 7 ? ' · 측정 ' + Math.round(age) + '일 묵음' : ''));
+  }
+}
+
 function checkAutoq() {
   const AQ_GAMES = ['saga-forest', 'saga-realm'].filter((g) => games.includes(g));
   if (!AQ_GAMES.length) return;
@@ -417,6 +435,7 @@ function report() {
     await checkPlay();
     await checkGfx();
     await checkBudget();
+    await checkMobile();
     checkAutoq();
     await checkCpu();
     if (branch === 'web' || (full && !branch)) checkDeploy();
