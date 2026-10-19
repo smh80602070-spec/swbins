@@ -31,6 +31,7 @@ const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
+const Partner := preload("res://games/saga_forest/data/forest_partner.gd")   # G-0232 동반자
 const Voice := preload("res://saga_core/audio/voice.gd")   # G-0111 대사 음성
 ## PLAN 103-1 spritegen.py 산출물(09-20, 그동안 어디서도 안 쓰였다) — 관계
 ## 메뉴 제목의 "(♥%d)" 숫자 대신 실제 하트 한 줄로 보여준다. ChoicePrompt
@@ -217,6 +218,12 @@ func _talk(v: Dictionary) -> void:
 		Toast.show(self, "%s — 새해 복 많이 받으시오. 🧧 💰 +%d" % [v.name, money], LINE_SHOW_SEC)
 		return
 
+	## G-0232 — 동반자 기념일이면 기념 대사가 먼저(그날 한 번 금).
+	var anniv := Partner.anniversary_line(String(v.id))
+	if anniv != "":
+		Toast.show(self, anniv, LINE_SHOW_SEC)
+		return
+
 	if ForestSaveState.is_quest_done(v.id):
 		## 5♥ 해제 — 고유 대화 한 줄(웹판 §5.4 "5♥ 고유 대화 3"을 하나로
 		## 좁혔다, 이 슬라이스엔 부탁을 하나만 두는 주민 구조라 그렇다).
@@ -335,6 +342,12 @@ func _open_interact_menu(v: Dictionary) -> void:
 					"cb": func() -> void: _give_gift(v, cat, layer_box),
 				})
 
+	## G-0232 동반자 — 하트 10 이면 "함께 살자"(교배꽃 건넴, 이미 다른 사람이면 거절 대사), 함께 사는 사람이면 헤어지기.
+	if Partner.partner_id() == String(v.id):
+		choices.append({"label": "💔 헤어지기 (하트 절반)", "cb": func() -> void: _partner_act(false, layer_box)})
+	elif ForestSaveState.heart(v.id) >= 10:
+		choices.append({"label": "💞 함께 살자 (🌺 %s 한 송이)" % Partner.TOKEN, "cb": func() -> void: _partner_act(true, layer_box, String(v.id))})
+
 	if choices.is_empty():
 		Toast.show(self, "%s — 지금은 딱히 할 게 없다." % v.name, 2.0)
 		return
@@ -346,6 +359,14 @@ func _open_interact_menu(v: Dictionary) -> void:
 	var layer: CanvasLayer = ChoicePrompt.build(self, v.name, choices)
 	layer_box["layer"] = layer
 	_add_heart_row(layer, ForestSaveState.heart(v.id))
+
+
+## G-0232 — 청하기·헤어지기. 결과 대사는 토스트, 창은 닫는다.
+func _partner_act(propose: bool, layer_box: Dictionary, id: String = "") -> void:
+	if layer_box.has("layer"):
+		(layer_box["layer"] as CanvasLayer).queue_free()
+	var r: Dictionary = Partner.propose(id) if propose else Partner.break_up()
+	Toast.show(self, String(r.text), LINE_SHOW_SEC)
 
 
 ## choice_prompt.gd 패널(가운데 정렬, 위 끝 = 패널 offset_top)의 바로 위 한 줄에

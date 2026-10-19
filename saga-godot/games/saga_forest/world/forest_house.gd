@@ -119,6 +119,9 @@ var _furniture_nodes: Array = []  # ForestSaveState.home_items와 같은 인덱�
 ## 증축할 때 이것만 지우고 다시 짓는다(가구는 _furniture_nodes로 별도
 ## 관리라 안 건드린다).
 var _shell_nodes: Array = []
+## G-0232 동반자 — 방 오른쪽 벽 곁에 서 있는 그 주민 몸 + 말풍선(data/forest_partner.gd). 바뀌면(청하기·헤어지기·증축) 다시 놓는다.
+var _partner_node: Node3D = null
+var _partner_key := ""
 var _half_x := 0.0
 var _half_z := 0.0
 
@@ -140,6 +143,7 @@ func _process(_delta: float) -> void:
 		_home_items_synced = true
 		for it: Dictionary in ForestSaveState.home_items:
 			_spawn_furniture_visual(it)
+	_sync_partner()
 	if _in_finish_shop and Input.is_action_just_pressed("forest_gather"):
 		_open_finish_menu()
 		return
@@ -213,6 +217,38 @@ func _wall(size: Vector3, local_pos: Vector3, parent: Node3D) -> void:
 	cs.shape = box
 	body.add_child(cs)
 	parent.add_child(body)
+
+
+## G-0232 — 동반자 몸(집 안은 휘지 않아 VroidBody 원래 재질 그대로). 말풍선은 Label3D 한 줄.
+func _sync_partner() -> void:
+	var id := String(ForestSaveState.partner.get("id", ""))
+	var key := "%s|%.1f" % [id, _half_x]
+	if key == _partner_key or _interior_node == null:
+		return
+	_partner_key = key
+	if _partner_node != null:
+		_partner_node.queue_free()
+		_partner_node = null
+	if id == "":
+		return
+	var root := Node3D.new()
+	root.name = "Partner"
+	root.position = Vector3(_half_x - 1.0, 0.0, 0.0)
+	root.rotation.y = -PI * 0.5   # 몸 앞 +Z → 방 가운데(-X)를 본다
+	root.add_child(preload("res://saga_core/world/vroid_body.gd").build(id, 2))
+	var bubble := Label3D.new()
+	bubble.name = "Bubble"
+	bubble.text = preload("res://games/saga_forest/data/forest_partner.gd").bubble_text()
+	bubble.font_size = 56
+	bubble.pixel_size = 0.006
+	bubble.outline_size = 10
+	bubble.modulate = Color(0.33, 0.25, 0.17)
+	bubble.outline_modulate = Color(0.97, 0.93, 0.85)
+	bubble.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	bubble.position = Vector3(0, 2.1, 0)
+	root.add_child(bubble)
+	_interior_node.add_child(root)
+	_partner_node = root
 
 
 func _build_interior() -> void:

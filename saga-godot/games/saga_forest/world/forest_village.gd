@@ -44,6 +44,9 @@ func _ready() -> void:
 	## 제외 목록 6번(계절행사 8일) — 오늘이 그 여덟 날 중 하나면 들어오자마자
 	## 안내한다(gather_label.gd가 상시 표시하는 것과 별개로, 첫 인상은
 	## 한 번 크게).
+	var pm: Dictionary = preload("res://games/saga_forest/data/forest_partner.gd").on_new_day()   # G-0232 동반자 아침 한 가지
+	if not pm.is_empty():
+		Toast.show(self, String(pm.text), 4.0)
 	var e := ForestFestival.event_of_today()
 	if not e.is_empty():
 		Toast.show(self, "🎊 %s — %s" % [e.name, e.hello], 4.0)

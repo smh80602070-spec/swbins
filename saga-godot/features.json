@@ -4233,5 +4233,31 @@
   "ticket": "G-0231",
   "since": "2026-10-19",
   "note": "세이브 순수 추가 칸(버전 그대로) · 장비 원소 칸 없음 → elem 조건은 칸만 · 빛기둥 노드는 규칙 수만큼 늘 수 있음(PERF 는 따로 안 잼)"
+ },
+ {
+  "id": "gd.fs.partner",
+  "name": "3마을 동반자 — 하트 10 + 교배꽃 한 송이를 곁에서 건네 \"함께 살자\"(한 명만, 둘째는 거절 대사) · 날이 바뀌면 아침 한 가지(뜰 손질 솔방울 둘·아침밥 금 20·좋아하는 갈래 선물) · 30일마다 기념 대사·금 300 · 집 안 오른쪽 벽 곁에 몸·말풍선 · 헤어지기 하트 절반(웹 W-0288)",
+  "files": [
+   "games/saga_forest/data/forest_partner.gd",
+   "games/saga_forest/data/forest_save_state.gd",
+   "games/saga_forest/world/villager_builder.gd",
+   "games/saga_forest/world/forest_house.gd",
+   "games/saga_forest/world/forest_village.gd",
+   "tools/scene_probes/forest_partner.gd",
+   "tools/probe_forest_partner.gd"
+  ],
+  "tests": [
+   "forest_partner",
+   "forest_hearts",
+   "forest_rules",
+   "save_forest",
+   "scenario_forest"
+  ],
+  "level": "D2",
+  "verified": "2026-10-19",
+  "fun": {},
+  "ticket": "G-0232",
+  "since": "2026-10-19",
+  "note": "3D 마을엔 잡초·경험치가 없어 아침 두 갈래를 바꿈 · 세이브 순수 추가 칸 · 집 안 몸은 VroidBody(휘지 않음)"
  }
 ]
