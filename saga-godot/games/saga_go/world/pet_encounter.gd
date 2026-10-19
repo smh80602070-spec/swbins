@@ -29,9 +29,19 @@ const PetBody := preload("res://saga_core/world/pet_body.gd")
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const Pets := preload("res://saga_core/data/pets.gd")
+const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
 
-const TRIGGER_RADIUS := 16.0
+## G-0230 몰래 다가가 포획(웹 W-0286 stealth.js) — 신수마다 시야 부채꼴(앞 100°·12m). 시야 안에서 달리면 들킨다
+## (웅크리면 달리기가 안 되니 안 들킴): 겁 많은 종(pets.gd temper "timid")은 달아나 사라지고 사나운 종은 들판 적으로 덤빈다.
+## 풀숲(숲 T 칸) 안이거나 시야 밖에서 조우 창을 열면 포획 +15%p(상한 95%). 웹의 타이밍 창 ×1.6 은 이 판에 창이 없어 뺐다.
+## 조우 원은 16 → 9m — 시야(12m)를 건너야 창이 열려야 "다가가기"가 생긴다.
+const TRIGGER_RADIUS := 9.0
 const TOAST_SEC := 5.0
+const FOV_DEG := 100.0
+const SIGHT_RANGE := 12.0
+const SNEAK_ADD := 0.15
+const CATCH_CAP := 0.95
+const MARK_SEC := 1.0
 
 @export var grid := Vector2i(0, 0)
 @export var pet_id := ""
@@ -39,6 +49,9 @@ const TOAST_SEC := 5.0
 var _pet: Dictionary
 var _triggered := false
 var _layer: CanvasLayer
+var _spotted := false
+var _sneak := false
+var _player: Node3D
 
 func _ready() -> void:
 	add_to_group("go_pets") # 사진 도감(photo_album.gd)이 화면 안 신수를 찾는다
@@ -48,6 +61,7 @@ func _ready() -> void:
 		queue_free()
 		return
 	_pet = found
+	rotation.y = float(posmod(grid.x * 7 + grid.y * 13, 8)) * TAU / 8.0   # G-0230 보는 쪽(몸 앞 +Z) — 자리마다 다르게
 	_spawn_visual()
 	_spawn_area()
 
@@ -80,10 +94,13 @@ func _on_body_entered(body: Node3D) -> void:
 	_show_prompt()
 
 func _show_prompt() -> void:
-	var pct := int(round(float(_pet.catch_base) * 100.0))
+	_sneak = _player_ref() != null and sneaking(_player.global_position)
+	var pct := int(round(catch_chance(float(_pet.catch_base), 1.0, _sneak) * 100.0))
 	var title := "%s %s (★%d)\n%s\n다가가면 %d%% 확률로 잡을 수 있다." % [
 		_pet.emoji, _pet.name, int(_pet.rarity), _pet.desc, pct,
 	]
+	if _sneak:
+		title += "\n🌿 몰래 다가갔다 — 포획 +15%"
 	var choices: Array = [
 		{"label": "다가가 잡는다", "cb": _attempt_catch},
 		{"label": "물러난다", "cb": _flee},
@@ -95,7 +112,7 @@ func _show_prompt() -> void:
 ## 도구·은사 계열, DUNGEON 은사처럼 이 판엔 없는 시스템) catchBase만
 ## 남는다 — 값을 새로 지어내지 않고 있는 항만 옮긴 것이다.
 func _attempt_catch() -> void:
-	if randf() < float(_pet.catch_base) * preload("res://games/saga_go/data/go_starchart.gd").mul("catch"):   # G-0215 성도 포획
+	if randf() < catch_chance(float(_pet.catch_base), preload("res://games/saga_go/data/go_starchart.gd").mul("catch"), _sneak):   # G-0215 성도 포획 · G-0230 몰래
 		_caught()
 	else:
 		_escaped()
@@ -121,3 +138,110 @@ func _flee() -> void:
 		_layer.queue_free()
 	Toast.show(self, "%s에게서 조용히 물러났다." % _pet.name, TOAST_SEC)
 	_triggered = false
+
+# ---------------------------------------------------------------- G-0230 몰래 다가가기
+
+## 포획 확률 — 원래 식(catch_base × 성도 배수) 그대로, 몰래 다가갔을 때만 +15%p(상한 95%).
+static func catch_chance(base: float, mul: float, sneak: bool) -> float:
+	var c := base * mul
+	return minf(c + SNEAK_ADD, CATCH_CAP) if sneak else c
+
+## p 가 origin 에서 heading 을 보는 시야 부채꼴(앞 100°·12m) 안인가 — 높이는 안 본다.
+static func in_fov(origin: Vector3, heading: Vector3, p: Vector3) -> bool:
+	var r := Vector3(p.x - origin.x, 0.0, p.z - origin.z)
+	var d := r.length()
+	if d > SIGHT_RANGE:
+		return false
+	if d < 0.001:
+		return true
+	return heading.dot(r / d) >= cos(deg_to_rad(FOV_DEG * 0.5))
+
+## 풀숲 = 지도 숲(T) 칸 안.
+static func in_grass(p: Vector3) -> bool:
+	var region := TestMap.region_at(p)
+	if region == "":
+		return false
+	var g := TestMap.grid_at(region, p)
+	return TestMap.tile_at(g.x, g.y, region) == "T"
+
+func heading() -> Vector3:
+	var z := global_transform.basis.z
+	return Vector3(z.x, 0.0, z.z).normalized()
+
+## 몰래 다가간 자리인가 — 안 들켰고 풀숲 안이거나 시야 밖.
+func sneaking(p: Vector3) -> bool:
+	return not _spotted and (in_grass(p) or not in_fov(global_position, heading(), p))
+
+## 이 걸음에 들키나 — 시야 안에서 달림(웅크리면 달리기가 안 된다).
+func notices(p: Vector3, running: bool) -> bool:
+	return visible and not _spotted and running and in_fov(global_position, heading(), p)
+
+func _player_ref() -> Node3D:
+	if _player == null or not is_instance_valid(_player):
+		_player = get_tree().get_first_node_in_group("player") as Node3D
+	return _player
+
+func _physics_process(_delta: float) -> void:
+	if _spotted or _player_ref() == null:
+		return
+	if notices(_player.global_position, bool(_player.get("is_running"))):
+		spot()
+
+## 들킴 — 머리 위 ❗ 1초, 열린 창은 닫는다. timid 는 달아나 사라지고 fierce 는 들판 적으로 덤빈다.
+func spot() -> void:
+	_spotted = true
+	if _layer:
+		_layer.queue_free()
+		_layer = null
+	_triggered = true
+	_show_mark()
+	if String(_pet.get("temper", "timid")) == "fierce":
+		Toast.show(self, "❗ %s이(가) 알아챘다 — 덤빈다!" % _pet.name, TOAST_SEC)
+		_charge()
+	else:
+		Toast.show(self, "❗ %s이(가) 알아채고 달아난다" % _pet.name, TOAST_SEC)
+		get_tree().create_timer(MARK_SEC).timeout.connect(func() -> void:
+			if is_instance_valid(self):
+				EventState.mark_resolved(name)
+				queue_free())
+
+func _show_mark() -> void:
+	var l := Label3D.new()
+	l.name = "SpotMark"
+	l.text = "❗"
+	l.font_size = 96
+	l.pixel_size = 0.01
+	l.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	l.no_depth_test = true
+	l.position = Vector3(0, 1.6 + 0.4 * float(_pet.rarity), 0)
+	add_child(l)
+	get_tree().create_timer(MARK_SEC).timeout.connect(func() -> void:
+		if is_instance_valid(l):
+			l.queue_free())
+
+## 사나운 신수 — 그 자리에 들판 적 하나(몸은 대역 — 신수 전투 몸은 K 몫), 이름은 "성난 <신수>".
+## 쓰러뜨리면 신수가 지쳐 다시 나타나고 조우 창을 열 수 있다(몰래 보너스는 없다).
+var foe: Node3D
+
+func _charge() -> void:
+	visible = false
+	var e: CharacterBody3D = FieldEnemy.new()
+	e.setup("rock_bear" if int(_pet.rarity) >= 5 else "thunder_cat", global_position, 20260824 + grid.x * 31 + grid.y)
+	var d: Dictionary = e.def.duplicate()
+	d.name = "성난 " + String(_pet.name)
+	e.def = d
+	e.respawns = false
+	e.name = "PetFoe_" + String(pet_id)
+	get_parent().add_child(e)
+	e.global_position = global_position + Vector3.UP * 0.6
+	e.connect("died", _on_foe_died)
+	foe = e
+
+func _on_foe_died(_e: Node) -> void:
+	foe = null
+	visible = true
+	_triggered = false
+	Toast.show(self, "%s이(가) 지쳐 주저앉았다 — 다가가면 잡을 수 있다" % _pet.name, TOAST_SEC)
+	if _player_ref() != null and _player.global_position.distance_to(global_position) <= TRIGGER_RADIUS:
+		_triggered = true
+		_show_prompt()

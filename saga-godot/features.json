@@ -4182,5 +4182,28 @@
   "ticket": "G-0218",
   "since": "2026-10-13",
   "note": "창 모드 fs_workshop 가로·세로 Claude 눈 ○(HUD 단추로 연 화면 · 점수 50 — 장인→손 큰 장인 33마디 · 손 큰 장인 카드) · 빈 솜씨도 = 기존 수치(굴림 순서 그대로)"
+ },
+ {
+  "id": "gd.go.sneak-catch",
+  "name": "1만리 몰래 다가가 포획 — 신수 시야 부채꼴(앞 100°·12m) · 시야 안에서 달리면 들킴(❗) → 겁 많은 종 달아남·사나운 종 \"성난 <신수>\" 들판 적 → 쓰러뜨리면 지쳐 다시 나타남 · 풀숲(숲 칸)·등 뒤에서 창을 열면 포획 +15%p(상한 95%) · 웅크리기 Ctrl·폰 🫥(걸음 ×0.5·달리기 안 됨) · 조우 원 16→9m(웹 W-0286)",
+  "files": [
+   "games/saga_go/world/pet_encounter.gd",
+   "games/saga_go/player/go_player.gd",
+   "saga_core/data/pets.gd",
+   "project.godot",
+   "tools/probe_sneak_catch.gd",
+   "games/saga_go/world/test_village.gd"
+  ],
+  "tests": [
+   "sneak_catch",
+   "hunt",
+   "gamepad"
+  ],
+  "level": "D2",
+  "verified": "2026-10-19",
+  "fun": {},
+  "ticket": "G-0230",
+  "since": "2026-10-19",
+  "note": "웹 타이밍 창 ×1.6 은 이 판에 창이 없어 뺌 · 웅크리기 X 는 도감(go_codex)과 겹쳐 Ctrl · 사나운 종 몸은 대역(바위곰·번개살쾡이 — 신수 전투 몸은 K)"
  }
 ]

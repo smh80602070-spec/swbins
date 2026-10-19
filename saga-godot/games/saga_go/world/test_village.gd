@@ -280,6 +280,8 @@ func _ready() -> void:
 	add_child(hunt_log)
 	if OS.get_environment("SAGA_HUNT_PROBE") != "":
 		add_child(load("res://tools/probe_hunt.gd").new())
+	if OS.get_environment("SAGA_SNEAK_CATCH_PROBE") != "": # G-0230 몰래 다가가 포획
+		add_child(load("res://tools/probe_sneak_catch.gd").new())
 	var help := preload("res://games/saga_go/world/help_guide.gd").new()
 	help.name = "HelpGuide"
 	add_child(help)

@@ -113,6 +113,10 @@ var _last_move_dir := Vector3.ZERO
 var _action_t := 0.0
 var _action_move := 1.0
 var _plunge := false
+## G-0230 몰래 다가가기 — 웅크리기(Ctrl·폰 🫥): 걸음 ×0.5·달리기 안 됨. is_running = 이번 틱 달렸나(신수 시야 판정이 읽는다).
+const CROUCH_MUL := 0.5
+var crouching := false
+var is_running := false
 var _plunge_from_y := 0.0
 ## 106장 ㊳ 바람 기둥(world/sky_isle.gd 가 기둥 안이면 매 프레임 updraft 를 부른다) — 남은 초·솟는 속도·
 ## 기둥 안에서 스스로 활공을 접었으면 기둥을 나갈 때까지 다시 펴지 않는다.
@@ -211,6 +215,11 @@ func _physics_process(delta: float) -> void:
 	_jump_buffer = maxf(_jump_buffer - delta, 0.0)
 	if Input.is_action_just_pressed("jump"):
 		_jump_buffer = JUMP_BUFFER_SEC
+	if Input.is_action_just_pressed("crouch"):
+		set_crouch(not crouching)
+	elif crouching and mode != Mode.GROUND:
+		set_crouch(false)
+	is_running = false
 
 	_action_t = maxf(_action_t - delta, 0.0)
 	_updraft_t = maxf(_updraft_t - delta, 0.0)
@@ -269,12 +278,15 @@ func _tick_ground(delta: float, move_dir: Vector3) -> void:
 	## 106장 ㊵ 조준 중엔 제자리(방향은 aimed_shot.gd 가 카메라 쪽으로 돌린다).
 	if aiming:
 		move_dir = Vector3.ZERO
-	var running := Input.is_action_pressed("run") and not _exhausted and stamina > 0.0 and move_dir.length() > 0.05
+	var running := Input.is_action_pressed("run") and not _exhausted and stamina > 0.0 and move_dir.length() > 0.05 and not crouching
 	var gs := preload("res://games/saga_go/data/go_starchart.gd")   # G-0215 성도 이동(맨발·철벽 부대) · 바람길 땅 탈것
 	var speed := (RUN_SPEED if running else WALK_SPEED) * speed_mult * mount_speed_mul * gs.mul("move") * (gs.mount_mul(false) if mounted else 1.0)
+	if crouching:
+		speed *= CROUCH_MUL
 	if _action_t > 0.0:
 		speed *= _action_move
 		running = false
+	is_running = running
 	if _land_t > 0.0:
 		_land_t -= delta
 		speed *= float(FeelTuning.move_preset.get("land_mul", 1.0))
@@ -285,6 +297,8 @@ func _tick_ground(delta: float, move_dir: Vector3) -> void:
 	if move_dir.length() > 0.05:
 		_face(move_dir, delta)
 		_play_anim("idle" if mounted else ("sprint" if running else "walk"))
+		if crouching:
+			_anim_scale(0.5)
 		if not mounted and _try_wall(move_dir, delta, true):
 			return
 	else:
@@ -868,6 +882,15 @@ func _build_glider_code() -> MeshInstance3D:
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 	return mi
 
+## G-0230 — 웅크리기 켜고 끄기. 끌 때 걸음 동작 빠르기를 되돌린다.
+func set_crouch(on: bool) -> void:
+	if on == crouching:
+		return
+	crouching = on
+	if not on:
+		_anim_scale(1.0)
+	Toast.show(self, "🫥 웅크렸다 — 걸음 절반 · 시야 안에서도 안 들킨다" if on else "🧍 일어섰다", 2.0)
+
 func _build_hud() -> void:
 	var layer := CanvasLayer.new()
 	layer.name = "TraversalHUD"
@@ -892,6 +915,20 @@ func _build_hud() -> void:
 		b.button_down.connect(func(): Input.action_press("jump"))
 		b.button_up.connect(func(): Input.action_release("jump"))
 		layer.add_child(b)
+		var c := Button.new()   # G-0230 웅크리기 — 점프 위 한 칸
+		c.name = "CrouchButton"
+		c.text = "🫥"
+		c.custom_minimum_size = Vector2(90, 90)
+		c.anchor_left = 1.0
+		c.anchor_right = 1.0
+		c.anchor_top = 1.0
+		c.anchor_bottom = 1.0
+		c.offset_left = -285
+		c.offset_right = -195
+		c.offset_top = -280
+		c.offset_bottom = -190
+		c.pressed.connect(func(): set_crouch(not crouching))
+		layer.add_child(c)
 
 
 ## 원신처럼 캐릭터 옆에 뜨는 초록 고리. 쓰는 중이거나 덜 찼을 때만 보이고,
