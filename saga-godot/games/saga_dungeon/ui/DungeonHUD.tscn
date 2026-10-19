@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3]
+[gd_scene load_steps=24 format=3]
 
 [ext_resource type="Script" path="res://saga_core/ui/virtual_joystick.gd" id="1"]
 [ext_resource type="Script" path="res://games/saga_dungeon/ui/hp_label.gd" id="2"]
@@ -22,6 +22,7 @@
 [ext_resource type="Script" path="res://games/saga_dungeon/ui/skill_slot_button.gd" id="slot_button"]
 [ext_resource type="Script" path="res://games/saga_dungeon/ui/loot_filter_button.gd" id="loot_filter_btn"]
 [ext_resource type="Script" path="res://games/saga_dungeon/ui/weapon_swap_button.gd" id="weapon_swap_btn"]
+[ext_resource type="Script" path="res://games/saga_dungeon/ui/mode_button.gd" id="mode_btn"]
 
 [node name="DungeonHUD" type="CanvasLayer"]
 
@@ -326,6 +327,19 @@ offset_bottom = -6670.0
 text = "🔻0"
 theme_override_font_sizes/font_size = 30
 script = ExtResource("90")
+
+[node name="ModeButton" type="Button" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -180.0
+offset_top = -6745.0
+offset_right = -40.0
+offset_bottom = -6675.0
+text = "⚖️평"
+theme_override_font_sizes/font_size = 30
+script = ExtResource("mode_btn")
 
 [node name="HordeButton" type="Button" parent="."]
 anchor_left = 1.0

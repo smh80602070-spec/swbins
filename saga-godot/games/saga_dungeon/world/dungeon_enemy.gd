@@ -52,6 +52,7 @@ extends CharacterBody3D
 
 signal died
 
+const DungeonMode := preload("res://games/saga_dungeon/data/dungeon_mode.gd")   # G-0247 난도 평·험·절
 const ATTACK_COOLDOWN := 1.4  # 원작에 없는 값 — 직접 정함(위 주석 참고)
 const CHASE_SPEED := 2.4
 const DETECT_RADIUS := 9.0
@@ -107,14 +108,15 @@ var _hex_time_left := 0.0
 ## "여러 방 연결"(§28-8 A안 이전의 최소 버전) — 방을 층처럼 취급해 웹판
 ## `dungeon.js`의 `enemyHp(floor, boss)`·`enemyDmg(floor, boss)` 공식을
 ## 그대로 옮겼다: `round(24 * 1.26^(floor-1))`·`round(5 * 1.20^(floor-1))`
-## (boss=false 고정, mode().hp/dmg는 난도 시스템이 없어 1로 취급 — 기존
-## 방 0의 24/5와 정확히 일치하는 걸로 확인). 새 몬스터를 상상하지 않고
+## (G-0247 — mode().hp/dmg 는 data/dungeon_mode.gd, 평이면 1이라 기존
+## 방 0의 24/5와 그대로). 새 몬스터를 상상하지 않고
 ## 같은 잡졸이 층마다 세지기만 한다.
 var max_hp: float
 var attack_damage: float
 var hp: float
 var _floor_num: int = 1
 var is_boss: bool = false
+var _mode_on := false # G-0247 난도를 곱했나(던전 방 적만 — 난입·월드 보스는 평 고정) · resist_pct 도 이것으로
 var _scale_mul: float = 1.0
 var _creature: Node3D
 var _anim := ""
@@ -140,13 +142,16 @@ static func _elite_chance(floor_num: int) -> float:
 ## force_elite=true는 dungeon.js spawnEnemy(floor, false, {forceElite:true})
 ## 그대로 — "정예 소굴"(POI: Elite) 방이 확률 없이 정예 하나를 반드시
 ## 끼우는 자리에서만 쓴다(test_room.gd::_spawn_elite_den).
-func _init(floor_num: int = 1, boss: bool = false, shade: bool = false, force_elite: bool = false, extra_stat_mult: float = 1.0, hp_only_extra_mult: float = 1.0) -> void:
+func _init(floor_num: int = 1, boss: bool = false, shade: bool = false, force_elite: bool = false, extra_stat_mult: float = 1.0, hp_only_extra_mult: float = 1.0, use_mode: bool = false) -> void:
 	_floor_num = floor_num
+	_mode_on = use_mode
 	is_boss = boss
 	_is_shade = shade
 	_scale_mul = BOSS_SCALE if boss else 1.0
-	max_hp = roundf(24.0 * pow(1.26, floor_num - 1) * (7.0 if boss else 1.0))
-	attack_damage = roundf(5.0 * pow(1.20, floor_num - 1) * (2.2 if boss else 1.0))
+	## G-0247 — 웹 enemyHp/enemyDmg 의 mode().hp/dmg 자리(부적 배율보다 앞, 같은 식 안)
+	var md: Dictionary = DungeonMode.mode() if use_mode else DungeonMode.MODES[0]
+	max_hp = roundf(24.0 * pow(1.26, floor_num - 1) * (7.0 if boss else 1.0) * float(md.hp))
+	attack_damage = roundf(5.0 * pow(1.20, floor_num - 1) * (2.2 if boss else 1.0) * float(md.dmg))
 	## PLAN 101-2 DUNGEON ④(부적 던전, 2026-09-17) — "정예 2배" 부적이
 	## 켜져 있으면 정예 확률만 두 배(상한 90%, 완전 확정은 안 만든다).
 	var elite_chance := _elite_chance(floor_num)
@@ -433,6 +438,8 @@ func apply_elem_dot(dps: float, secs: float) -> void:
 ## 에만 +40을 더한다.
 func resist_pct(kind: String) -> float:
 	var base := float(resist.get(kind, 0.0))
+	if _mode_on:
+		base += float(DungeonMode.mode().get("resist", 0))   # G-0247 웹 resistOf "n += mode().resist"
 	if DungeonSigilState.has_mod("resist_boost") and kind == DungeonSigilState.resist_boost_el():
 		base += 40.0
 	return clampf(base, 0.0, DungeonItems.RESIST_CAP)
@@ -507,7 +514,7 @@ func _die() -> void:
 			## 자기 자신과 같은 스크립트로 새로 만든다(파일 안에서 자기
 			## 클래스 이름을 못 쓰므로 get_script() 경유 — test_room.gd처럼
 			## 바깥에서 부를 땐 그냥 DungeonEnemy.new()로 preload한다).
-			var kid: CharacterBody3D = get_script().new(_floor_num, false, true)
+			var kid: CharacterBody3D = get_script().new(_floor_num, false, true, false, 1.0, 1.0, _mode_on)
 			var offset := Vector3(0.9 if i == 0 else -0.9, 0, 0.6 if i == 0 else -0.6)
 			## 트리에 먼저 넣어야 한다 — 안 그러면 global_position 대입이
 			## "!is_inside_tree()" 오류를 낸다(트리 밖 Node3D는 전역 변환을
@@ -515,5 +522,5 @@ func _die() -> void:
 			parent.add_child(kid)
 			kid.global_position = global_position + offset
 		Toast.show(parent, "👤 그림자가 갈라졌다", 2.5)
-	LootPickup.spawn_at(get_parent(), global_position, _floor_num, is_boss, not elite_key.is_empty())
+	LootPickup.spawn_at(get_parent(), global_position, _floor_num, is_boss, not elite_key.is_empty(), 1.0, _mode_on)
 	queue_free()

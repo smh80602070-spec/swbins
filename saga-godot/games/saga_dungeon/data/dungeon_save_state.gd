@@ -14,6 +14,7 @@ const SAVE_PATH := "user://save_dungeon.json"
 const SaveSlots := preload("res://saga_core/data/save_slots.gd")   # G-0070 슬롯(1 = 이 파일 그대로)
 const SafeFile := preload("res://saga_core/data/safe_file.gd")  # 임시 파일 → .bak → 바꿔치기(쓰는 도중 꺼져도 직전본이 남는다)
 const SAVE_VERSION := 2
+const DungeonMode := preload("res://games/saga_dungeon/data/dungeon_mode.gd")   # G-0247 난도 칸
 
 
 func save_version() -> int:
@@ -155,6 +156,7 @@ func save(player: Node3D) -> void:
 		"scenario": scenario,   # G-0085
 		"passive": passive,   # G-0217 경락도
 		"loot_filter": loot_filter,   # G-0231 전리품 거르기
+		"mode": DungeonMode.chosen,   # G-0247 고른 난도 — 순수 추가(버전 그대로), 없으면 "normal"
 	}
 	SafeFile.write_text(save_path(), JSON.stringify(data))
 
@@ -189,6 +191,7 @@ func try_load() -> bool:
 	_passive_apis = {}
 	var lf: Variant = data.get("loot_filter", {})   # G-0231 — 없으면(옛 세이브) 기본 셋(loot_filter.gd store())
 	loot_filter = (lf as Dictionary).duplicate(true) if lf is Dictionary else {}
+	DungeonMode.restore(data.get("mode", "normal"))   # G-0247 — 없으면(옛 세이브) 평
 
 	var p: Variant = data.get("player_pos", [0.0, 0.0, 0.0])
 	if not (p is Array) or p.size() < 3:

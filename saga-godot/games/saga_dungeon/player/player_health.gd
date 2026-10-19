@@ -147,6 +147,10 @@ func _die_and_respawn() -> void:
 		player.global_position = grace.call("grace_pos")
 		if player is CharacterBody3D:
 			(player as CharacterBody3D).velocity = Vector3.ZERO
+	## G-0247 — 웹 dieNightmare: 부적 켠 채 쓰러지면 부적은 소모·꺼짐(되돌림 없음, 은총에서 일어나도 평소 던전)
+	var lost_tier: int = DungeonSigilState.fail_run()
+	if lost_tier > 0:
+		Toast.show(self, "💀 부적 던전 실패 · 티어 %d — 부적이 타 버렸다." % lost_tier, 5.0)
 	recalc_max_hp()
 	hp = max_hp
 	_dead = false

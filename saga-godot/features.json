@@ -1351,6 +1351,19 @@
   "since": "2026-09-16"
  },
  {
+  "id": "gd.dg.difficulty",
+  "name": "2나락 난도 평·험·절 + 부적 사망 규칙",
+  "files": [],
+  "tests": [
+   "dungeon_mode"
+  ],
+  "level": "D2",
+  "verified": "2026-10-20",
+  "fun": {},
+  "ticket": "G-0247",
+  "since": "2026-10-20"
+ },
+ {
   "id": "gd.dg.raid",
   "name": "101-2 ⑤난입",
   "files": [],

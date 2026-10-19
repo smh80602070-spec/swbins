@@ -133,6 +133,22 @@ func clear_run() -> void:
 	deactivate()
 
 
+## G-0247 — 웹 dieNightmare: 부적 켠 채 쓰러지면 그 부적은 소모(목록에서 빠짐)되고 꺼진다.
+## 되돌려 주지 않는다 · 최고 기록(best_tier_cleared)은 완주만 올린다. 쓰러진 티어를 돌려준다(꺼져 있었으면 0).
+func fail_run() -> int:
+	if not is_active():
+		return 0
+	var tier: int = int(active_sigil().get("tier", 1))
+	sigils.remove_at(active_index)
+	deactivate()
+	return tier
+
+
+## G-0247 — 웹 goRoom 부적 마지막 방 "정예 무리" 수 4+min(3,⌊T/3⌋)
+static func pack_count(tier: int) -> int:
+	return 4 + mini(3, tier / 3)
+
+
 func has_mod(key: String) -> bool:
 	if not is_active():
 		return false

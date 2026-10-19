@@ -42,6 +42,7 @@ extends RefCounted
 ## 층에서도 훨씬 센 물건이 나온다.
 
 const Toast := preload("res://saga_core/ui/toast.gd")
+const DungeonMode := preload("res://games/saga_dungeon/data/dungeon_mode.gd")   # G-0247 난도 bias·금
 const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
 const OUTLINE_SHADER := preload("res://saga_core/shaders/cel_outline.gdshader")
 const LEGENDARY_TIER_KEY := 4 # DungeonItems.TIERS[4] == "전설"
@@ -319,18 +320,20 @@ static func _spawn_item(parent: Node, pos: Vector3, it: Dictionary, pillar: bool
 
 ## PLAN 101-2 DUNGEON ⑥(월드 보스, 2026-09-17) — `legendary_mult`(기본
 ## 1.0)는 DungeonItems.roll()로 그대로 넘어간다(웹 5.4 "전설 확률×3").
-static func spawn_at(parent: Node, pos: Vector3, ilvl: int, is_boss: bool = false, is_elite: bool = false, legendary_mult: float = 1.0) -> void:
+## G-0247 — use_mode=true(던전 방 적)면 난도 bias 가 등급·재료 굴림에, gold 가 금에 붙는다(웹 dropItem·dropMat·dropGold).
+static func spawn_at(parent: Node, pos: Vector3, ilvl: int, is_boss: bool = false, is_elite: bool = false, legendary_mult: float = 1.0, use_mode: bool = false) -> void:
 	var ilvl_bonus := 30 if is_boss else (ELITE_ILVL_BONUS if is_elite else 0)
-	var it := DungeonItems.roll(ilvl + ilvl_bonus, "", -1, false, legendary_mult)
+	var md: Dictionary = DungeonMode.mode() if use_mode else DungeonMode.MODES[0]
+	var it := DungeonItems.roll(ilvl + ilvl_bonus, "", -1, false, legendary_mult, float(md.bias))
 	## G-0231 전리품 거르기 — 숨긴 장비는 노드를 안 만든다(줍기에서도 빠짐). 금·단약·재료·감정서는 아래 그대로 늘 나온다.
 	var verdict := LootFilter.judge(it)
 	if bool(verdict.show):
 		_spawn_item(parent, pos, it, bool(verdict.pillar))
 
 	var gold_mul := 5.0 if is_boss else (ELITE_GOLD_MUL if is_elite else 1.0)
-	_spawn_gold(parent, pos + Vector3(-0.6, 0, -0.6), ilvl, gold_mul)
+	_spawn_gold(parent, pos + Vector3(-0.6, 0, -0.6), ilvl, gold_mul * float(md.gold))
 	if randf() < (BOSS_MAT_DROP_CHANCE if is_boss else MAT_DROP_CHANCE):
-		_spawn_mat(parent, pos + Vector3(0.6, 0, 0.6), ilvl + (30 if is_boss else 0))
+		_spawn_mat(parent, pos + Vector3(0.6, 0, 0.6), ilvl + (30 if is_boss else 0), float(md.bias))
 	var potion_chance := BOSS_POTION_DROP_CHANCE if is_boss else (ELITE_POTION_DROP_CHANCE if is_elite else POTION_DROP_CHANCE)
 	if randf() < potion_chance:
 		_spawn_potion(parent, pos + Vector3(0.6, 0, -0.6), ilvl)
@@ -374,8 +377,8 @@ static func _spawn_gold(parent: Node, pos: Vector3, floor_num: int, mul: float =
 
 ## dungeon.js dropMat() 전체 — 주옥(4층부터)·부문·보석 중 하나가 나온다
 ## (DungeonItems.roll_material_drop()이 그 셋 사이 확률을 가른다).
-static func _spawn_mat(parent: Node, pos: Vector3, floor_num: int) -> void:
-	var mat := DungeonItems.roll_material_drop(floor_num)
+static func _spawn_mat(parent: Node, pos: Vector3, floor_num: int, bias: float = 0.0) -> void:
+	var mat := DungeonItems.roll_material_drop(floor_num, bias)
 	match str(mat.get("kind", "")):
 		"rune":
 			var r := DungeonItems.rune_by_key(str(mat.key))

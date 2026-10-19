@@ -20,6 +20,7 @@ const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
 const DungeonEnemy := preload("res://games/saga_dungeon/world/dungeon_enemy.gd")
 const DungeonHeroEncounter := preload("res://games/saga_dungeon/world/dungeon_hero_encounter.gd")
 const LootPickup := preload("res://games/saga_dungeon/world/loot_pickup.gd")
+const DungeonMode := preload("res://games/saga_dungeon/data/dungeon_mode.gd")   # G-0247 난도 평·험·절
 const Toast := preload("res://saga_core/ui/toast.gd")
 ## GO의 사건 선택지 패널을 그대로 재사용한다(GLBUtils·Toast와 같은 cross-game
 ## 재사용 경계 — GO 전용 로직이 아니라 순수 UI 빌더라 옮길 필요가 없다).
@@ -189,6 +190,7 @@ func _ready() -> void:
 	## 잡졸을 다시 세우지 않는다(EventState의 "이미 끝난 사건은 되살아나지
 	## 않는다"와 같은 경계, 이제 방마다 따로 확인한다).
 	var loaded: bool = DungeonSaveState.try_load()
+	DungeonMode.begin_run()   # G-0247 이번 회차 난도를 적 세우기 전에 굳힌다(HUD 에서 바꾸면 다음 회차부터)
 	for i in range(ROOM_COUNT):
 		var cleared: bool = loaded and DungeonSaveState.is_room_cleared(i)
 		if not cleared:
@@ -264,6 +266,8 @@ func _ready() -> void:
 	DungeonGoldState.gold_changed.connect(_refresh_goal_board)
 	DungeonHordeState.horde_changed.connect(_refresh_goal_board)
 	DungeonSigilState.sigil_changed.connect(_refresh_goal_board)
+	DungeonSigilState.sigil_changed.connect(_maybe_spawn_sigil_pack)   # G-0247 부적을 켜면 마지막 방에 정예 무리
+	_maybe_spawn_sigil_pack()
 	_refresh_goal_board()
 
 	## 101-3 G "동행 실루엣" — GO test_village.gd와 같은 배선(등용 인원 수만큼
@@ -294,6 +298,9 @@ func _refresh_goal_board() -> void:
 		var story: String = _scenario.call("objective") if _scenario != null else ""
 		if story != "":
 			now = story + " · " + now   # G-0085 이야기 목표 먼저
+	var md: Dictionary = DungeonMode.mode()
+	if String(md.key) != "normal":
+		now += " · ⚖️%s" % String(md.name)   # G-0247 난도(평이면 안 붙임)
 	var session := "금 +%d · 새로 연 방 +%d" % [
 		DungeonGoldState.session_gold_gained(),
 		DungeonSaveState.rooms_cleared.count(true) - _session_start_cleared]
@@ -574,7 +581,7 @@ func _finish_exit(body: Node3D, room_index: int, is_final: bool) -> void:
 func _spawn_chest(origin_z: float, floor_num: int) -> void:
 	var bonus_count := 1 + (1 if randf() < 0.5 else 0)
 	for b in range(bonus_count):
-		LootPickup.spawn_at(self, Vector3(2.6 + float(b) * 1.1, 0, origin_z), floor_num, false, true)
+		LootPickup.spawn_at(self, Vector3(2.6 + float(b) * 1.1, 0, origin_z), floor_num, false, true, 1.0, true)
 	Toast.show(self, "🎁 보물상자!", 3.0)
 
 
@@ -629,6 +636,20 @@ func _spawn_cave_vein(origin_z: float, floor_num: int) -> void:
 	Toast.show(self, "⛏️ 광맥 · 세공 재료를 캤다", 3.0)
 
 
+## G-0247 — 웹 goRoom 부적 갈래 "마지막 방 정예 무리": 부적이 켜져 있고 마지막 방이 안 깨졌으면
+## 정예(force_elite) 4+min(3,⌊T/3⌋) 을 그 방에 한 번 세운다(씬 열 때 켜져 있었든 도중에 켰든).
+var _sigil_pack_done := false
+func _maybe_spawn_sigil_pack() -> void:
+	if _sigil_pack_done or not DungeonSigilState.is_active() or DungeonSaveState.is_room_cleared(ROOM_COUNT - 1) or _room_origin_z.size() < ROOM_COUNT:
+		return
+	_sigil_pack_done = true
+	var n: int = DungeonSigilState.pack_count(int(DungeonSigilState.active_sigil().get("tier", 1)))
+	var oz: float = _room_origin_z[ROOM_COUNT - 1]
+	for k in range(n):
+		var ang := TAU * float(k) / float(n)
+		_spawn_enemy_at(Vector3(cos(ang) * 2.4, 0, oz - 1.5 + sin(ang) * 2.4), ROOM_COUNT, false, false, true)
+
+
 func _spawn_enemy(origin_z: float, floor_num: int, is_boss: bool = false) -> void:
 	_spawn_enemy_at(Vector3(0, 0, origin_z - 1.5), floor_num, is_boss, true, false)
 
@@ -640,7 +661,7 @@ func _spawn_enemy(origin_z: float, floor_num: int, is_boss: bool = false) -> voi
 ## 진짜 층 끝 보스 전용으로 남겨 둔다(dungeon.js miniboss 주석 "따로 더
 ## 챙길 것은 없다" 그대로).
 func _spawn_enemy_at(pos: Vector3, floor_num: int, is_boss: bool, grant_hero_reward: bool, force_elite: bool) -> void:
-	var enemy: CharacterBody3D = DungeonEnemy.new(floor_num, is_boss, false, force_elite)
+	var enemy: CharacterBody3D = DungeonEnemy.new(floor_num, is_boss, false, force_elite, 1.0, 1.0, true)   # G-0247 방 적만 난도를 곱한다
 	enemy.position = pos
 	add_child(enemy)
 	if is_boss and grant_hero_reward:

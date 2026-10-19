@@ -496,12 +496,13 @@ static func roll_gem_drop(floor_num: int) -> Dictionary:
 ## dungeon.js dropMat() 전체 — 주옥(4층부터, 최대 10%) → 부문(22%) → 보석
 ## (나머지) 순으로 갈린다. 바깥 확률(잡졸 12%, loot_pickup.gd MAT_DROP_CHANCE)은
 ## 호출 쪽이 이미 걸러 부른다고 본다.
-static func roll_material_drop(floor_num: int) -> Dictionary:
+## G-0247 bias = 난도 mode().bias(웹 dropMat — 주옥 +bias/600 · 부문 +bias/200)
+static func roll_material_drop(floor_num: int, bias: float = 0.0) -> Dictionary:
 	if floor_num >= 4:
-		var jewel_chance: float = minf(0.10, 0.02 + float(floor_num) * 0.004)
+		var jewel_chance: float = minf(0.10, 0.02 + float(floor_num) * 0.004) + bias / 600.0
 		if randf() < jewel_chance:
 			return {"kind": "jewel", "j": roll_jewel(floor_num + 1)}
-	if randf() < 0.22:
+	if randf() < 0.22 + bias / 200.0:
 		var key := roll_rune_drop(floor_num)
 		if key != "":
 			return {"kind": "rune", "key": key}
@@ -551,11 +552,15 @@ static func bonus_for(s: Dictionary, n: int) -> Array[Dictionary]:
 ## 한 등급의 가중치만 곱한다(나머지 등급 비율은 그대로, 전설 몫만 커진
 ## 만큼 다른 등급 몫이 상대적으로 줄어든다 — 원작 item.js도 등급별 가중치
 ## 자체를 조작하는 방식이라 같은 결).
-static func roll_tier(legendary_mult: float = 1.0) -> int:
+## G-0247 bias = 난도 mode().bias — 웹 item.js rollTier(bias): find = 1+bias/100, i 등급 가중 ×find^i(0등급 그대로).
+static func roll_tier(legendary_mult: float = 1.0, bias: float = 0.0) -> int:
 	var total := 0.0
 	var w: Array[float] = []
+	var find := 1.0 + bias / 100.0
 	for i in range(TIERS.size()):
 		var weight: float = TIERS[i].weight
+		if i > 0 and bias != 0.0:
+			weight *= pow(find, i)
 		if i == LEGENDARY_TIER and legendary_mult != 1.0:
 			weight *= legendary_mult
 		w.append(weight)
@@ -747,7 +752,7 @@ static func socket_effects(it: Dictionary) -> Array[Dictionary]:
 ## 채로 온다 — item.js roll()의 `unid: opts.unid===false?false:t>=1`과 같음).
 ## PLAN 101-2 DUNGEON ⑥(월드 보스, 2026-09-17) — `legendary_mult`(기본
 ## 1.0)는 forced_tier가 안 쓰일 때만 roll_tier()로 그대로 넘어간다.
-static func roll(ilvl: int, slot: String = "", forced_tier: int = -1, force_identified: bool = false, legendary_mult: float = 1.0) -> Dictionary:
+static func roll(ilvl: int, slot: String = "", forced_tier: int = -1, force_identified: bool = false, legendary_mult: float = 1.0, bias: float = 0.0) -> Dictionary:
 	ilvl = maxi(1, ilvl)
 	var pool: Array[Dictionary] = []
 	for b: Dictionary in BASES:
@@ -756,7 +761,7 @@ static func roll(ilvl: int, slot: String = "", forced_tier: int = -1, force_iden
 	if pool.is_empty():
 		pool = BASES
 	var base: Dictionary = pool[randi() % pool.size()]
-	var t: int = forced_tier if forced_tier >= 0 else roll_tier(legendary_mult)
+	var t: int = forced_tier if forced_tier >= 0 else roll_tier(legendary_mult, bias)
 	var tier: Dictionary = TIERS[t]
 
 	var aff: Array[Dictionary] = []
