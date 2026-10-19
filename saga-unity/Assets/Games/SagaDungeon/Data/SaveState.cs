@@ -63,6 +63,7 @@ namespace Saga.Dungeon.Data
             public int hp;
             public string weaponId;
             public string gemId;
+            public string weapon2Id; // tasks U-0131 무기 을(乙) — 옛 세이브엔 없음(null = 한 벌), 버전 안 올림.
             public string[] discovered;
             public int questStage; // v3 이하 호환용 — v4부터는 아래 세 플래그가 정본.
             public bool bossDead;
@@ -129,6 +130,7 @@ namespace Saga.Dungeon.Data
                 hp = HeroState.Hp,
                 weaponId = HeroState.EquippedWeaponId,
                 gemId = HeroState.SocketedGemId,
+                weapon2Id = HeroState.SecondWeaponId,
                 discovered = BestiaryState.Snapshot(),
                 bossDead = QuestState.BossDead,
                 minibossDead = QuestState.MinibossDead,
@@ -199,7 +201,7 @@ namespace Saga.Dungeon.Data
             // 이 빌드보다 나중 버전(다운그레이드)이면 반쯤 바뀐 채로 적용하지 않는다.
             if (SaveMigrator.IsFuture(data.version, SaveVersion)) return false;
 
-            HeroState.Restore(data.level, data.exp, data.hp, data.gold, data.weaponId, data.gemId);
+            HeroState.Restore(data.level, data.exp, data.hp, data.gold, data.weaponId, data.gemId, data.weapon2Id);
             SecretState.Restore(data.version >= 11 ? data.secrets : null); // 레벨 뒤(모자라면 없는 것으로 읽는다).
             if (data.version >= 12) TrialState.Restore(data.trialBest, data.trialOpen, data.trialRuns, data.trialBoard);
             else TrialState.Restore(0, 1, 0, null);

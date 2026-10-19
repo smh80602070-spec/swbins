@@ -158,6 +158,7 @@ namespace Saga.EditorTools
                 if (!PlaytestDungeonWalls.Run()) _hadError = true; // tasks U-0109 벽 상자 = 면마다 미터 UV(MetricBox) — 윗면·끝면 UV 폭·PBR 벽 전부·마모 바꾼 뒤(단계 되돌림).
                 if (!PlaytestDungeonFoeCard.Run()) _hadError = true; // tasks U-0108 대상 적 카드 — 숨김·보임·채움·12m·락온 먼저·정예/두목 색, 더미를 지운다.
                 if (!PlaytestDungeonLootFilter.Run()) _hadError = true; // tasks U-0126 전리품 거르기 — 기본 셋·숨기기·금 늘 보임·첫 일치·저장 왕복(거르기 PlayerPrefs 되돌림, 표식 지움)
+                if (!PlaytestDungeonWeaponSwap.Run()) _hadError = true; // tasks U-0131 무기 두 벌 — 줍기·맞바꿈·쿨·첫 타·을 공격력 밖·max 비교·저장 왕복·폰 단추(영웅 되돌림)
                 if (!PlaytestHurtSignal.Run("PlaytestDungeonHeadless", "dg")) _hadError = true; // tasks U-0105 "내가 맞았다" 신호 — 진짜 TakeDamage 번쩍·붉은 숫자·흔들림·맥박(체력·무적·피격자 되돌림)
                 CheckTemple(); // PLAN.md 106-2 — 플레이어를 순간이동시키므로 맨 끝(finally 에서 되돌린다).
                 StartCutCameraProbe(); // PLAN.md 106-3 — 6·8프레임째에 이어서 본다.

@@ -32,6 +32,45 @@ namespace Saga.Dungeon.Data
         public static string EquippedWeaponId { get; private set; } = "wp_start";
         public static ItemData EquippedWeapon => ItemData.Get(EquippedWeaponId);
 
+        // tasks U-0131 무기 두 벌(웹 W-0281 `wpn-swap.js`·고돗 G-0236) — 가방이 없어 더 센 무기를 주우면 손 무기가 을(乙)로 간다
+        // (wp_start 는 버림, 을에 있던 건 버림). G·폰 🔁 로 갑↔을. 을은 Atk 합에 안 든다. 시각은 부르는 쪽이 준다(UnityEngine 안 끌어옴).
+        public const float SwapSec = 0.4f, SwapCooldown = 1f, SwapFirstMul = 1.15f;
+        public static string SecondWeaponId { get; private set; }
+        public static ItemData SecondWeapon => ItemData.Get(SecondWeaponId);
+        private static float _swapReadyAt = float.NegativeInfinity;
+        private static bool _firstHitArmed;
+        public static float SwapCooldownLeft(float now) => Math.Max(0f, _swapReadyAt - now);
+        public static bool CanSwap(float now) => SecondWeapon != null && SwapCooldownLeft(now) <= 0f;
+
+        /// <summary>갑↔을. 을이 없거나 쿨이면 false. 바꾸면 다음 첫 타 한 번 ×<see cref="SwapFirstMul"/>.</summary>
+        public static bool Swap(float now)
+        {
+            if (!CanSwap(now)) return false;
+            string cur = EquippedWeaponId;
+            EquippedWeaponId = SecondWeaponId;
+            SecondWeaponId = cur == "wp_start" || ItemData.Get(cur) == null ? null : cur;
+            _swapReadyAt = now + SwapCooldown;
+            _firstHitArmed = true;
+            EquipmentChanged?.Invoke(EquippedWeaponId);
+            return true;
+        }
+
+        /// <summary>바꾼 뒤 첫 타 배율 — 한 번 쓰면 1 로 돌아간다(평타·강공격·회전베기 중 먼저 친 것).</summary>
+        public static float TakeFirstHit()
+        {
+            if (!_firstHitArmed) return 1f;
+            _firstHitArmed = false;
+            return SwapFirstMul;
+        }
+
+        /// <summary>진단용 — 을·쿨·첫 타를 비운다.</summary>
+        public static void ResetSwapForTest()
+        {
+            SecondWeaponId = null;
+            _swapReadyAt = float.NegativeInfinity;
+            _firstHitArmed = false;
+        }
+
         // "세공·행상 재고 굴리기·도감" 슬라이스 — 무기 소켓 하나(둘째
         // 소켓·세트 효과는 범위 밖, GemData.cs 참고).
         public static string SocketedGemId { get; private set; }
@@ -123,12 +162,16 @@ namespace Saga.Dungeon.Data
             return true;
         }
 
-        /// <summary>더 센 무기만 자동 장착 — GO Inventory.cs와 같은 결.</summary>
+        /// <summary>더 센 무기만 자동 장착 — GO Inventory.cs와 같은 결. tasks U-0131 — 갑·을 둘 중 센 것보다 세야 바뀌고,
+        /// 손에 있던 무기는 을로(wp_start 는 버림).</summary>
         public static bool EquipIfBetter(string itemId)
         {
             var item = ItemData.Get(itemId);
             if (item == null) return false;
             if (EquippedWeapon != null && EquippedWeapon.AtkBonus >= item.AtkBonus) return false;
+            if (SecondWeapon != null && SecondWeapon.AtkBonus >= item.AtkBonus) return false;
+            string old = EquippedWeaponId;
+            if (old != "wp_start" && ItemData.Get(old) != null) SecondWeaponId = old;
             EquippedWeaponId = itemId;
             EquipmentChanged?.Invoke(EquippedWeaponId);
             return true;
@@ -191,12 +234,16 @@ namespace Saga.Dungeon.Data
             Hp = Math.Min(HpMax, Hp + amount);
         }
 
-        public static void Restore(int level, int exp, int hp, int gold, string weaponId, string gemId = null)
+        /// <summary>tasks U-0131 — <paramref name="weapon2Id"/> 없으면(옛 세이브·진단 되돌림) 한 벌.</summary>
+        public static void Restore(int level, int exp, int hp, int gold, string weaponId, string gemId = null, string weapon2Id = null)
         {
             Level = Math.Max(1, level);
             Exp = Math.Max(0, exp);
             Gold = Math.Max(0, gold);
             EquippedWeaponId = string.IsNullOrEmpty(weaponId) ? "wp_start" : weaponId;
+            SecondWeaponId = ItemData.Get(weapon2Id) != null ? weapon2Id : null;
+            _swapReadyAt = float.NegativeInfinity;
+            _firstHitArmed = false;
             SocketedGemId = gemId; // 없으면 null 그대로 — 소켓 빈 채로 시작(구 세이브도 그대로 로드됨).
             Hp = Math.Clamp(hp, 0, HpMax);
             if (Hp <= 0) Hp = HpMax;

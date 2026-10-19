@@ -822,6 +822,10 @@
     { "key": "grace.who_how", "value": "{0} — {1}" },
     { "key": "grace.keep", "value": "Kept: codex, heroes and merits stay" },
     { "key": "grace.restarted", "value": "Floor {0} Grace — you rose again" },
-    { "key": "foe.elite_prefix", "value": "Elite " }
+    { "key": "foe.elite_prefix", "value": "Elite " },
+    { "key": "swap.btn", "value": "Swap" },
+    { "key": "swap.btn_empty", "value": "No 2nd" },
+    { "key": "swap.single", "value": "No second weapon — pick up a stronger one and your current weapon becomes the second" },
+    { "key": "swap.done", "value": "Drew {0} — next first hit ×1.15" }
   ]
 }

@@ -822,6 +822,10 @@
     { "key": "grace.who_how", "value": "{0} — {1}" },
     { "key": "grace.keep", "value": "남는 것: 도감·인물·공적은 그대로" },
     { "key": "grace.restarted", "value": "제 {0}층 은총 — 다시 일어섰다" },
-    { "key": "foe.elite_prefix", "value": "정예 " }
+    { "key": "foe.elite_prefix", "value": "정예 " },
+    { "key": "swap.btn", "value": "바꿔 들기" },
+    { "key": "swap.btn_empty", "value": "을 없음" },
+    { "key": "swap.single", "value": "을(乙) 무기가 없다 — 더 센 무기를 주우면 지금 무기가 을로 간다" },
+    { "key": "swap.done", "value": "{0} 을(를) 들었다 — 다음 첫 타 ×1.15" }
   ]
 }

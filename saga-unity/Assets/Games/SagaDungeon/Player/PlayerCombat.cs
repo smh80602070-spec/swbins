@@ -162,6 +162,25 @@ namespace Saga.Dungeon.Player
             {
                 TryWhirl();
             }
+            if (kb != null && kb.gKey.wasPressedThisFrame) TrySwap(); // tasks U-0131 — Q 는 락온·Tab 은 다음 대상이라 G
+        }
+
+        /// <summary>tasks U-0131 무기 두 벌 — 폰 단추(<see cref="WeaponSwapButton"/>)가 부른다.</summary>
+        public void TriggerSwap() => TrySwap();
+
+        /// <summary>갑↔을(쿨 1초). 0.4초 바꿔 드는 동안은 평타가 막히고, 다음 첫 타 한 번이 ×1.15.</summary>
+        private bool TrySwap()
+        {
+            if (DungeonCutscenes.Playing || Climbing) return false;
+            if (HeroState.SecondWeapon == null)
+            {
+                DialogueLabel.Instance?.Show(DungeonLocalization.T("swap.single", "을(乙) 무기가 없다 — 더 센 무기를 주우면 지금 무기가 을로 간다"), 2f);
+                return false;
+            }
+            if (!HeroState.Swap(Time.time)) return false;
+            _cooldownLeft = Mathf.Max(_cooldownLeft, HeroState.SwapSec);
+            DialogueLabel.Instance?.Show(string.Format(DungeonLocalization.T("swap.done", "{0} 을(를) 들었다 — 다음 첫 타 ×1.15"), HeroState.EquippedWeapon?.Name), 1.6f);
+            return true;
         }
 
         /// <summary>모바일 화면의 "공격" 버튼(OnClick)이 부른다.</summary>
@@ -189,7 +208,7 @@ namespace Saga.Dungeon.Player
             _controller.FaceToward(enemy.transform.position);
             SecretState.OnCast(M, Time.time);
             float mul = ConsumeCounter();
-            float dmg = HeroState.HitDamage * SecretState.DamageMul(M);
+            float dmg = HeroState.HitDamage * SecretState.DamageMul(M) * HeroState.TakeFirstHit(); // tasks U-0131 바꾼 뒤 첫 타
             Strike(enemy, dmg * mul, mul > 1f, M);
             var hitList = new List<DungeonEnemy>(ExtraTargets(enemy, range, SecretState.ExtraTargets(M)));
             foreach (var extra in hitList) Strike(extra, dmg, false, M);
@@ -214,7 +233,7 @@ namespace Saga.Dungeon.Player
             _cooldownLeft = Mathf.Max(_cooldownLeft, HeavyRecoverSec);
             _controller.FaceToward(enemy.transform.position);
             SecretState.OnCast(M, Time.time);
-            float dmg = HeroState.HitDamage * HeavyDamageMul * SecretState.DamageMul(M);
+            float dmg = HeroState.HitDamage * HeavyDamageMul * SecretState.DamageMul(M) * HeroState.TakeFirstHit(); // tasks U-0131
             Strike(enemy, dmg * ConsumeCounter(), true, M);
             var hitList = new List<DungeonEnemy>(ExtraTargets(enemy, range, SecretState.ExtraTargets(M)));
             foreach (var extra in hitList) Strike(extra, dmg, true, M);
@@ -247,6 +266,7 @@ namespace Saga.Dungeon.Player
                 hits.Add(enemy);
             }
             if (hits.Count == 0) return;
+            damage *= HeroState.TakeFirstHit(); // tasks U-0131 — 맞힐 적이 있을 때만 쓴다
             SecretState.OnCast(M, Time.time);
             foreach (var enemy in hits) Strike(enemy, damage, false, M); // 모아 두고 친다 — 쓰러지는 적이 목록을 흔들지 않게.
             PartyState.AddPlayerHit(heavy: false); // 여럿을 베도 한 번(게이지가 회전베기 난사로 넘치지 않게).

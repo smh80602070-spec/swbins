@@ -2083,6 +2083,24 @@
   "note": "D2(U-0126): docs/playcheck/d2-u0126-20261019.json — PlaytestDungeonHeadless 54→59(lootfilter defaults·hide·gold·order·save) · UiLayoutCheck 문제 0(설정 창 🧹 단추 포함 — 설정 속 단추는 안 눌러 거르기 창은 진단이 12줄 꽉 찬 상태로 겹침·밖 0) · 촬영 안 함"
  },
  {
+  "id": "un.dg.weapon-swap",
+  "name": "U-0131 무기 두 벌 — 바뀐 손 무기를 을(乙)로, G·폰 바꿔 들기 단추로 갑↔을(쿨 1초·첫 타 ×1.15, 웹 W-0281 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaDungeon/Data/HeroState.cs",
+   "saga-unity/Assets/Games/SagaDungeon/Player/PlayerCombat.cs",
+   "saga-unity/Assets/Games/SagaDungeon/UI/WeaponSwapButton.cs"
+  ],
+  "tests": [
+   "PlaytestDungeonWeaponSwap"
+  ],
+  "level": "D2",
+  "verified": "2026-10-20 claude",
+  "fun": {},
+  "ticket": "U-0131",
+  "since": "2026-10-20",
+  "note": "D2(U-0131): docs/playcheck/d2-u0131-20261020.json — PlaytestDungeonHeadless +5(swap pick·swap·first·atk·save) · G 키(Q 락온·Tab 다음 대상) · 촬영 안 함"
+ },
+ {
   "id": "un.fs.move-in",
   "name": "U-0127 입주 조건 — 작은 빈 집(최대 셋)에 가구 태그 셋이면 다음 날 어울리는 떠돌이 손님이 눌러앉음(웹 W-0284 이식)",
   "files": [
