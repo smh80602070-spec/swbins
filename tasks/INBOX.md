@@ -19,5 +19,6 @@
 - [ ] 10-19 · 사용자 "모바일 화면이 깨짐(아이폰 16 Pro)" · 아이폰 크기(402×874) 흉내로 다섯 판 첫 화면 촬영 — 세로 키 아트 `<판>_key_v.webp`(K-0041) 가 정사각 그림에 흐린 띠를 위아래로 덧댄 1080×1920 이라 세로 폰에서 화면의 약 30% 가 띠로 보인다 → 띠 없이 세로로 꽉 찬 세로 키 아트 다섯 장 다시(그 전까지 웹은 그대로) · 자체툴
 - [ ] 10-19 · (자체툴 K-0135 → 웹 W-0296) · 4종횡 타일 80·소품 50·앞 층 10(`saga-story/assets/web2d/{tile,prop,bg}`, 규격 그대로) + 사람 jump·fall 500(`characters2d8/<id>/`, mode2d 가 이미 읽음) · 웹
 - [ ] 10-19 · (자체툴 K-0121 → 웹 2나락) · 종 몸 초상 27 `portraits-monster/<creatures3d id>_c.webp` — idOf·foeBody 가 `ref.body` 의 id 먼저(목록 `tools/ai-art/data/k121_targets.json`), 없으면 옛 해시 · 웹
-- [ ] 10-19 · 사용자 "브랜치로 변경하겠음" · Pages Source 를 브랜치로 되돌림(5천하 아이폰 = 탭 죽음 W-0333, 배포 탓 아님) → 푸시마다 5~6분 404 재발(W-0332 메모). **결정**: W-0333 뒤 Actions 로 다시(Settings + pages.yml push 주석 풀기) · 웹
 - [ ] 10-19 · (자체툴 K-0122·K-0120 → 웹) · 빌린 괴물 → `creatures3d/<id>`(표 `tools/world-forge/data/k122_monsters.json`), 사람꼴 오른손 `FistR` 는 뼈 아닌 노드(boneOf 를 이름으로도) · 오마주 펫 `world3d/pet_<id>.glb`(standin 정리) · 웹
+
+- [ ] 10-19 · 사용자 "모바일로 하면 망게임임"·"웹을 왜 만들고 있냐임" · 트랙 우선순위 재결정(웹 = 검증 모래판? 제품 = 3D 둘?) — 답 뒤 체제 R-0 · 웹/고돗/유니티
