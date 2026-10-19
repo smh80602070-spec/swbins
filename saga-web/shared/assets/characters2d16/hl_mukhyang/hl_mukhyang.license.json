@@ -1,0 +1,54 @@
+{
+ "id": "hl_mukhyang_sprites2d16",
+ "generator": "tools/char-forge/bake_sprite_batch.py(data/sprite_plan_16.json) + gear_sprites.py + weapon_attach.py (K-0138 16방향, 몸·무기는 8방향과 같음)",
+ "license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
+ "commercial_use": true,
+ "source_samples": [
+  "AvatarSample_G",
+  "AvatarSample_L",
+  "AvatarSample_O",
+  "AvatarSample_V",
+  "AvatarSample_Z"
+ ],
+ "body": "AvatarSample_V",
+ "kit": {
+  "top": "g",
+  "bottom": "z",
+  "shoes": "l"
+ },
+ "note": "옷·몸 조각을 샘플 사이에서 이식한 인물. 얼굴·머리는 샘플 그대로(약간 다르게만, 사용자 2026-10-02). K-0028: 무늬 한 칸 합성(outfit_swap.py). 8방향 무기 시트: 무기 staff(절차 생성 모형, 자체)·동작 burst, death, hit, knockdown, skill, staff_heavy, staff_idle, walk(CC0 UAL + 자체 CF_*).",
+ "pattern": {
+  "slot": "top",
+  "name": "aurora_gradient",
+  "source": "saga-assets/patterns/aurora_gradient.webp",
+  "license": "CreativeML OpenRAIL++-M (AI 생성 무늬 타일, saga-assets/patterns/_provenance.json)"
+ },
+ "k0137": {
+  "date": "2026-10-18",
+  "hair_donor": "AvatarSample_O",
+  "ratio": {
+   "head": 1.0,
+   "arm": 1.02,
+   "leg": 1.06
+  },
+  "face_layers": "eye=1,brow=2,mouth=1,iris=2,skin=1,deco=0",
+  "generator": "tools/char-forge/k137_leads.py (vrm_mix.py 머리카락·뼈 비율 + face_layers.py) → vroid_batch.sh glb·anim·web",
+  "note": "주역 10 고유 몸 — 머리카락은 밑몸으로 적게 쓰인 샘플에서(같은 VRoid 샘플 이용 조건), 원본 _in/vroid_k137_bak/"
+ },
+ "motion": {
+  "mocap": [
+   "m.death@0:0.8",
+   "m.hit",
+   "m.idle",
+   "m.pickup",
+   "m.run",
+   "m.sit_stand@0:0.45",
+   "m.walk"
+  ],
+  "mocap_license": "saga-assets/characters/anim-src/mocap/vroid_mocap_anims.license.json (CMU 모캡 — 자유 사용, K-0139)",
+  "body_anims": [
+   "skill",
+   "staff_heavy"
+  ]
+ }
+}

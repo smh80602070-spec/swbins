@@ -580,16 +580,25 @@ fix_materials()
 if os.environ.get('SPRITE_MODE'):
     clips = os.environ.get('CLIP', 'walk').split(',')          # 여러 동작은 쉼표 — 그러면 <out>/<동작>/ 폴더로 나뉜다
     nfr = int(os.environ.get('NFR', '8'))
+    nfr_map = dict((kv.split('=')[0], int(kv.split('=')[1])) for kv in os.environ.get('NFR_MAP', '').split(',') if '=' in kv)   # K-0138 동작별 프레임 수
     ndir = int(os.environ.get('NDIR', '4'))
     dir_list = [int(x) for x in os.environ.get('DIR_LIST', '').split(',') if x != ''] or list(range(ndir))
     px = int(os.environ.get('SPRITE_PX', '192'))
     arm, piv = LAST
     objs_before = {o.name for o in bpy.data.objects}
-    bpy.ops.import_scene.gltf(filepath=os.environ['ANIM_GLB'])
-    acts = {}
-    for cname in clips:
-        acts[cname] = bpy.data.actions[cname]
+    for src in os.environ['ANIM_GLB'].split(';'):              # K-0138: 'a.glb;m=b.glb' — 접두 붙은 파일의 동작은 'm.<이름>'(몸 _anims 의 walk 와 모캡 walk 가 안 겹치게)
+        pre, _, path = src.rpartition('=') if '=' in src and not os.path.exists(src) else ('', '', src)
+        acts_before = set(bpy.data.actions)
+        bpy.ops.import_scene.gltf(filepath=path)
+        if pre:
+            for a in [a for a in bpy.data.actions if a not in acts_before]:
+                a.name = pre + '.' + a.name.split('.')[0] if a.name.split('.')[-1].isdigit() else pre + '.' + a.name
+    acts, rng = {}, {}
+    for cname in clips:                                        # 'name@0:0.5' = 그 동작의 앞 절반만(앉기 = sit_stand 앞쪽)
+        an, _, r = cname.partition('@')
+        acts[cname] = bpy.data.actions[an]
         acts[cname].use_fake_user = True
+        rng[cname] = tuple(float(x) for x in r.split(':')) if r else (0.0, 1.0)
     for o in [o for o in bpy.data.objects if o.name not in objs_before]:
         bpy.data.objects.remove(o)
     arm.animation_data_create()
@@ -630,6 +639,9 @@ if os.environ.get('SPRITE_MODE'):
         if hasattr(arm.animation_data, 'action_slot') and act.slots:
             arm.animation_data.action_slot = act.slots[0]
         f0, f1 = act.frame_range
+        a0, a1 = rng[cname]
+        f0, f1 = f0 + (f1 - f0) * a0, f0 + (f1 - f0) * a1
+        nfr = nfr_map.get(cname, int(os.environ.get('NFR', '8')))
         # 카메라: ORTHO 가 있으면 고정 배율(모든 동작·캐릭터 같은 px/m, 발 위치 같음), 없으면 동작 전체 몸 상자
         lo = Vector((1e9, 1e9, 1e9)); hi = Vector((-1e9, -1e9, -1e9))
         for f in range(0, nfr, max(1, nfr // 6)):
@@ -643,7 +655,7 @@ if os.environ.get('SPRITE_MODE'):
             cam_z = float(os.environ.get('CAM_Z', '0.95'))
         cam_d.ortho_scale = size_m
         cam.location = (piv.location.x, -8, cam_z)
-        odir = os.path.join(out, cname) if len(clips) > 1 else out
+        odir = os.path.join(out, cname.replace('@', '_').replace(':', '-')) if len(clips) > 1 else out
         os.makedirs(odir, exist_ok=True)
         _json.dump({'clip': cname, 'dirs': dir_list, 'frames': nfr, 'px': px, 'ortho_m': size_m, 'px_per_m': px / size_m,
                     'anchor_feet_y_px': px * (0.5 + cam_z / size_m)},

@@ -1,0 +1,43 @@
+{
+ "dirs": 16,
+ "rows": 9,
+ "px": 192,
+ "cam_z": 1.15,
+ "ortho_m": 3.75,
+ "frames": {
+  "idle": 8,
+  "walk": 12,
+  "run": 8,
+  "attack": 10,
+  "heavy": 14,
+  "hit": 4,
+  "death": 10,
+  "sit": 6,
+  "pick": 8
+ },
+ "fps": {
+  "idle": 6,
+  "walk": 12,
+  "run": 12,
+  "attack": 16,
+  "heavy": 13,
+  "hit": 12,
+  "death": 10,
+  "sit": 4,
+  "pick": 9
+ },
+ "roles": {
+  "idle": "idle.webp",
+  "walk": "walk.webp",
+  "run": "run.webp",
+  "attack": "attack.webp",
+  "heavy": "heavy.webp",
+  "hit": "hit.webp",
+  "death": "death.webp",
+  "sit": "sit.webp",
+  "pick": "pick.webp"
+ },
+ "mirror": true,
+ "side_faces": "right",
+ "weapon": "spear"
+}

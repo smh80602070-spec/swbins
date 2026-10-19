@@ -76,6 +76,10 @@ def main():
         odir = os.path.join(out_root, e['id'])
         epx, eortho, ecz = e.get('px', px), e.get('ortho', plan.get('ortho', 2.5)), e.get('cam_z', plan.get('cam_z', 0.95))   # 긴 무기 인물은 칸만 키운다(px/m 같게)
         cmap = e.get('clipmap') or {c: c for c in clips}           # 역할(시트 파일 이름) → _anims.glb 안 동작 이름(K-0029 무기별)
+        nfr_of = {}
+        if plan.get('roles16'):                                    # K-0138 16방향: 역할 → [동작, 프레임]. '$attack' = 그 인물 clipmap 값(무기별), 'm.<이름>' = 모캡 파일 동작
+            nfr_of = {r: n for r, (s, n) in plan['roles16'].items()}
+            cmap = {r: (cmap.get(s[1:], s[1:]) if s.startswith('$') else s) for r, (s, n) in plan['roles16'].items()}
         roles = list(cmap)
         todo = [c for c in roles if not os.path.exists(os.path.join(odir, c + '.webp'))]
         if not todo:
@@ -87,11 +91,18 @@ def main():
         acts = list(dict.fromkeys(cmap[c] for c in todo))
         env = dict(os.environ, SPRITE_MODE='1', CLIP=','.join(acts), NFR=str(frames), NDIR=str(plan.get('ndir', 4)), DIR_LIST=','.join(map(str, dirs)),
                    SPRITE_PX=str(epx), ORTHO=str(eortho), CAM_Z=str(ecz), ANIM_GLB=anims, VIEW_DEG='180')
+        if nfr_of:
+            env['NFR_MAP'] = ','.join(f'{cmap[r]}={nfr_of[r]}' for r in todo)
+        if plan.get('anim_extra'):                                 # 'm=<모캡 glb>' — 동작 이름 앞에 m. 이 붙는다(gear_sprites)
+            pre, path = plan['anim_extra'].split('=', 1)
+            env['ANIM_GLB'] = anims + ';' + pre + '=' + os.path.join(ROOT, path)
         if e.get('weapon'):
             env['WEAPON'] = os.path.abspath(os.path.join(ROOT, e['weapon']))
             if e.get('two_hand_clips'):
                 env['TWO_HAND_CLIPS'] = ','.join(e['two_hand_clips'])
-            env['COMBAT_CLIPS'] = ','.join(cmap[r] for r in ('idle', 'attack', 'attack2', 'heavy') if r in cmap)
+            env['COMBAT_CLIPS'] = ','.join(cmap[r] for r in plan.get('combat_roles', ('idle', 'attack', 'attack2', 'heavy')) if r in cmap)
+            if plan.get('weapon_upright'):
+                env['WEAPON_UPRIGHT'] = '1'
         os.makedirs(odir, exist_ok=True)
         t0 = time.time()
         rc = run([BLENDER, '-b', '--factory-startup', '-P', os.path.join(HERE, 'gear_sprites.py'), '--', body, tmp, e['kind']],
@@ -101,14 +112,19 @@ def main():
             continue
         sizes = {}
         for c in todo:
-            folder = os.path.join(tmp, cmap[c]) if len(acts) > 1 else tmp
-            sizes[c] = sheet_from_frames(folder, dirs, frames, os.path.join(odir, c + '.webp'), epx)
+            folder = os.path.join(tmp, cmap[c].replace('@', '_').replace(':', '-')) if len(acts) > 1 else tmp
+            sizes[c] = sheet_from_frames(folder, dirs, nfr_of.get(c, frames), os.path.join(odir, c + '.webp'), epx)
         man = {'id': e['id'], 'body': e['body'], 'kind': e['kind'], 'px': epx, 'frames': frames, 'dirs': dirs, 'clips': roles,
                    'ortho_m': eortho, 'cam_z': ecz, 'side_faces': 'right', 'px_per_m': round(epx / eortho, 2),
                    'license': 'CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vroid, 코드 gear_sprites.py'}
         if plan.get('ndir', 4) != 4 or e.get('weapon'):                 # K-0029 8방향·무기별 시트 — 웹(W-0073)이 읽는 칸
             man.update({'ndir': plan.get('ndir', 4), 'mirror': True, 'weapon': e.get('weapon_kind'), 'clipmap': cmap})
         json.dump(man, open(os.path.join(odir, 'manifest.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+        if nfr_of:                                                 # K-0138 웹 sheetspec.js 가 읽는 한 파일(빠진 칸은 웹 DEFAULT16)
+            sj = {'dirs': plan.get('ndir', 16), 'rows': len(dirs), 'px': epx, 'cam_z': ecz, 'ortho_m': eortho,
+                  'frames': {r: nfr_of[r] for r in roles}, 'fps': {r: plan['fps16'][r] for r in roles if r in plan.get('fps16', {})},
+                  'roles': {r: r + '.webp' for r in roles}, 'mirror': True, 'side_faces': 'right', 'weapon': e.get('weapon_kind')}
+            json.dump(sj, open(os.path.join(odir, 'sheet.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         import shutil
         shutil.rmtree(tmp, ignore_errors=True)
         kb = sum(sizes.values()) / 1024

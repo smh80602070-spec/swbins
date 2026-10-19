@@ -1,0 +1,283 @@
+{
+ "note": "K-0138 16방향·동작별 시트 — 9행(0·22.5·…·180°, 왼쪽은 뒤집기) · 역할 이름 = 웹 sheetspec.js(W-0311) 낱말(heavy·death·pick·wave) · 걷기·달리기·시전·피격·쓰러짐·앉기·줍기·인사·서기 = K-0139 모캡(m.), 공격·강공격 = 인물 무기별 _anims · 1차 주역 10(k137_leads.json), 2차 299 는 같은 표로 entries 만 · weapon_upright: 칼·단검도 attack·heavy·death 밖에선(쓰러짐은 칼이 같이 눕게) 세워 듦(모캡 손 각도) · death 는 앞 80%(끝이 다시 일어섬) · cast·wave 뺌(10-19): K-0139 모캡 cast·greet 는 웹 판정(W-0318)이 몸짓 뜻과 다르다고 안 씀 — 수신함 \"모캡 다시 굽기\" 뒤 roles16 에 되살림(웹은 NEAR 로 heavy·idle)",
+ "px": 128,
+ "ortho": 2.5,
+ "cam_z": 0.95,
+ "ndir": 16,
+ "dirs": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8
+ ],
+ "out": "tools/char-forge/_out/sprites16",
+ "anim_extra": "m=saga-assets/characters/anim-src/mocap/vroid_mocap_anims.glb",
+ "roles16": {
+  "idle": [
+   "m.idle",
+   8
+  ],
+  "walk": [
+   "m.walk",
+   12
+  ],
+  "run": [
+   "m.run",
+   8
+  ],
+  "attack": [
+   "$attack",
+   10
+  ],
+  "heavy": [
+   "$heavy",
+   14
+  ],
+  "hit": [
+   "m.hit",
+   4
+  ],
+  "death": [
+   "m.death@0:0.8",
+   10
+  ],
+  "sit": [
+   "m.sit_stand@0:0.45",
+   6
+  ],
+  "pick": [
+   "m.pickup",
+   8
+  ]
+ },
+ "fps16": {
+  "idle": 6,
+  "walk": 12,
+  "run": 12,
+  "attack": 16,
+  "heavy": 13,
+  "hit": 12,
+  "death": 10,
+  "sit": 4,
+  "pick": 9
+ },
+ "bodies": {
+  "sg_zhugeliang": "tools/char-forge/_out/vroid/sg_zhugeliang/sg_zhugeliang.glb",
+  "sg_liubei": "tools/char-forge/_out/vroid/sg_liubei/sg_liubei.glb",
+  "sg_caocao": "tools/char-forge/_out/vroid/sg_caocao/sg_caocao.glb",
+  "sg_sunquan": "tools/char-forge/_out/vroid/sg_sunquan/sg_sunquan.glb",
+  "sg_lubu": "tools/char-forge/_out/vroid/sg_lubu/sg_lubu.glb",
+  "kr_gyebaek": "tools/char-forge/_out/vroid/kr_gyebaek/kr_gyebaek.glb",
+  "hl_mukhyang": "tools/char-forge/_out/vroid/hl_mukhyang/hl_mukhyang.glb",
+  "fu_jongwang": "tools/char-forge/_out/vroid/fu_jongwang/fu_jongwang.glb",
+  "ru_geohae": "tools/char-forge/_out/vroid/ru_geohae/ru_geohae.glb",
+  "tb_baekgi": "tools/char-forge/_out/vroid/tb_baekgi/tb_baekgi.glb"
+ },
+ "entries": [
+  {
+   "id": "sg_zhugeliang",
+   "body": "sg_zhugeliang",
+   "kind": "human",
+   "weapon_kind": "dagger",
+   "weapon": "saga-assets/world/toon/wpn_dagger_legend.glb",
+   "clipmap": {
+    "idle": "dagger_idle",
+    "attack": "dagger_1",
+    "attack2": "dagger_2",
+    "heavy": "dagger_heavy",
+    "walk": "walk",
+    "hit": "hit",
+    "death": "death",
+    "knockdown": "knockdown"
+   }
+  },
+  {
+   "id": "sg_liubei",
+   "body": "sg_liubei",
+   "kind": "human",
+   "weapon_kind": "sword",
+   "weapon": "saga-assets/world/toon/wpn_sword_legend.glb",
+   "clipmap": {
+    "idle": "guard",
+    "attack": "attack",
+    "attack2": "sword_2",
+    "heavy": "sword_heavy",
+    "walk": "walk",
+    "hit": "hit",
+    "death": "death",
+    "knockdown": "knockdown"
+   }
+  },
+  {
+   "id": "sg_caocao",
+   "body": "sg_caocao",
+   "kind": "human",
+   "weapon_kind": "sword",
+   "weapon": "saga-assets/world/toon/wpn_sword_legend.glb",
+   "clipmap": {
+    "idle": "guard",
+    "attack": "attack",
+    "attack2": "sword_2",
+    "heavy": "sword_heavy",
+    "walk": "walk",
+    "hit": "hit",
+    "death": "death",
+    "knockdown": "knockdown"
+   }
+  },
+  {
+   "id": "sg_sunquan",
+   "body": "sg_sunquan",
+   "kind": "human",
+   "weapon_kind": "spear",
+   "weapon": "saga-assets/world/toon/wpn_spear_rare.glb",
+   "clipmap": {
+    "idle": "spear_idle",
+    "attack": "spear_1",
+    "attack2": "spear_2",
+    "heavy": "spear_heavy",
+    "walk": "walk",
+    "hit": "hit",
+    "death": "death",
+    "knockdown": "knockdown"
+   },
+   "two_hand_clips": [
+    "spear_idle",
+    "spear_1",
+    "spear_2",
+    "spear_heavy"
+   ],
+   "px": 192,
+   "ortho": 3.75,
+   "cam_z": 1.15
+  },
+  {
+   "id": "sg_lubu",
+   "body": "sg_lubu",
+   "kind": "human",
+   "weapon_kind": "spear",
+   "weapon": "saga-assets/world/toon/wpn_spear_legend.glb",
+   "clipmap": {
+    "idle": "spear_idle",
+    "attack": "spear_1",
+    "attack2": "spear_2",
+    "heavy": "spear_heavy",
+    "walk": "walk",
+    "hit": "hit",
+    "death": "death",
+    "knockdown": "knockdown"
+   },
+   "two_hand_clips": [
+    "spear_idle",
+    "spear_1",
+    "spear_2",
+    "spear_heavy"
+   ],
+   "px": 192,
+   "ortho": 3.75,
+   "cam_z": 1.15
+  },
+  {
+   "id": "kr_gyebaek",
+   "body": "kr_gyebaek",
+   "kind": "human",
+   "weapon_kind": "sword",
+   "weapon": "saga-assets/world/toon/wpn_sword_rare.glb",
+   "clipmap": {
+    "idle": "guard",
+    "attack": "attack",
+    "attack2": "sword_2",
+    "heavy": "sword_heavy",
+    "walk": "walk",
+    "hit": "hit",
+    "death": "death",
+    "knockdown": "knockdown"
+   }
+  },
+  {
+   "id": "hl_mukhyang",
+   "body": "hl_mukhyang",
+   "kind": "human",
+   "weapon_kind": "staff",
+   "weapon": "saga-assets/world/toon/wpn_staff_rare.glb",
+   "clipmap": {
+    "idle": "staff_idle",
+    "attack": "skill",
+    "attack2": "burst",
+    "heavy": "staff_heavy",
+    "walk": "walk",
+    "hit": "hit",
+    "death": "death",
+    "knockdown": "knockdown"
+   },
+   "two_hand_clips": [
+    "staff_heavy"
+   ],
+   "px": 192,
+   "ortho": 3.75,
+   "cam_z": 1.15
+  },
+  {
+   "id": "fu_jongwang",
+   "body": "fu_jongwang",
+   "kind": "human",
+   "weapon_kind": "gun",
+   "weapon": "saga-assets/world/toon/wpn_gun_rare.glb",
+   "clipmap": {
+    "idle": "gun_idle",
+    "attack": "gun_1",
+    "attack2": "gun_1",
+    "heavy": "gun_1",
+    "walk": "walk",
+    "hit": "hit",
+    "death": "death",
+    "knockdown": "knockdown"
+   }
+  },
+  {
+   "id": "ru_geohae",
+   "body": "ru_geohae",
+   "kind": "human",
+   "weapon_kind": "gun",
+   "weapon": "saga-assets/world/toon/wpn_gun_rare.glb",
+   "clipmap": {
+    "idle": "gun_idle",
+    "attack": "gun_1",
+    "attack2": "gun_1",
+    "heavy": "gun_1",
+    "walk": "walk",
+    "hit": "hit",
+    "death": "death",
+    "knockdown": "knockdown"
+   }
+  },
+  {
+   "id": "tb_baekgi",
+   "body": "tb_baekgi",
+   "kind": "human",
+   "weapon_kind": "dagger",
+   "weapon": "saga-assets/world/toon/wpn_dagger_rare.glb",
+   "clipmap": {
+    "idle": "dagger_idle",
+    "attack": "dagger_1",
+    "attack2": "dagger_2",
+    "heavy": "dagger_heavy",
+    "walk": "walk",
+    "hit": "hit",
+    "death": "death",
+    "knockdown": "knockdown"
+   }
+  }
+ ],
+ "weapon_upright": true,
+ "combat_roles": [
+  "attack",
+  "heavy",
+  "death"
+ ]
+}

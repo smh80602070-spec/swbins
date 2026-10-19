@@ -1343,6 +1343,24 @@
    ]
   },
   {
+   "id": "characters-sprites2d16",
+   "src": "saga-assets/characters/sprites2d16",
+   "recursive": true,
+   "include": [
+    "*.webp",
+    "sheet.json",
+    "manifest.json",
+    "*.license.json"
+   ],
+   "note": "K-0138 인물 16방향(9행 + 뒤집기)·동작별 프레임 시트(역할 11, 웹 sheetspec.js 낱말) + sheet.json — 웹 W-0311 mode2d 가 sheet.json 이 있는 인물부터 16방향으로 그린다(없으면 8방향). 정본은 promote_sprites16.py 가 올린다",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/characters2d16"
+    }
+   ]
+  },
+  {
    "id": "icons-web",
    "src": "saga-assets/icons",
    "recursive": true,

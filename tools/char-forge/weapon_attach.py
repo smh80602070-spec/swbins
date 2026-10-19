@@ -74,4 +74,5 @@ def from_env(arm):
     kind = os.path.basename(p).split('_')[1] if os.path.basename(p).startswith('wpn_') else ''
     side = os.environ.get('WEAPON_HAND') or ('L' if kind in OFF_HAND else 'R')
     two = os.environ.get('TWO_HAND', '1' if kind in TWO_HAND else '') not in ('', '0')
-    return attach(arm, p, side, two, upright='always' if kind == 'bow' else kind in TWO_HAND)   # 창·도끼·지팡이(전투 밖에서만)·활(늘)
+    up = 'always' if kind == 'bow' else (kind in TWO_HAND or bool(os.environ.get('WEAPON_UPRIGHT')))   # K-0138: 모캡 동작은 손 각도가 제멋대로라 칼·단검도 전투 밖에선 세운다
+    return attach(arm, p, side, two, upright=up)   # 창·도끼·지팡이(전투 밖에서만)·활(늘)

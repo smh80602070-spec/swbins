@@ -1,0 +1,48 @@
+{
+ "id": "hl_mukhyang",
+ "body": "hl_mukhyang",
+ "kind": "human",
+ "px": 192,
+ "frames": 8,
+ "dirs": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8
+ ],
+ "clips": [
+  "idle",
+  "walk",
+  "run",
+  "attack",
+  "heavy",
+  "hit",
+  "death",
+  "sit",
+  "pick"
+ ],
+ "ortho_m": 3.75,
+ "cam_z": 1.15,
+ "side_faces": "right",
+ "px_per_m": 51.2,
+ "license": "CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vroid, 코드 gear_sprites.py",
+ "ndir": 16,
+ "mirror": true,
+ "weapon": "staff",
+ "clipmap": {
+  "idle": "m.idle",
+  "walk": "m.walk",
+  "run": "m.run",
+  "attack": "skill",
+  "heavy": "staff_heavy",
+  "hit": "m.hit",
+  "death": "m.death@0:0.8",
+  "sit": "m.sit_stand@0:0.45",
+  "pick": "m.pickup"
+ }
+}
