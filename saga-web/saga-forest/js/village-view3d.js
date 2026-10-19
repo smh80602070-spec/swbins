@@ -49,7 +49,7 @@
   /** 손잡이 — 2026-09-09부터 기본이 켜져 있다(3D로 시작). 사가나락(`dg3d.on`
    *  기본 1)와 시점을 맞췄다 — 그 전엔 "2D 가 그대로 간다"가 기본이었다.
    *  🧊 버튼이 이걸 뒤집는다(끄고 싶으면 여전히 끌 수 있다) */
-  function ON() { return C().tuned('village3d.on', 1) ? true : false; }
+  function ON() { var v = C().tuned('village3d.on', 1) ? true : false; return global.DG.deviceMode ? global.DG.deviceMode.want3d('vv', v) : v; }   // 10-19 폰은 2D
   /** 안개 켜고 끄기(2026-09-10, "안개는 중요 하지 않으니 제거 하던지
    *  옵션에 키고 끄는걸 추가해 끄는게 기본이고") — §44 에서 FOG_FAR 를
    *  늘려 고치려 했던 것 자체를 사용자가 "중요하지 않다"고 되돌렸다.
@@ -1254,7 +1254,7 @@
 
   function toggle() {
     if (!available()) { return false; }
-    C().setTune('village3d.on', ON() ? 0 : 1);
+    var nx = !ON(); C().setTune('village3d.on', nx ? 1 : 0); if (global.DG.deviceMode) { global.DG.deviceMode.mark('vv', nx); }
     syncVisibility();
     return ON();
   }

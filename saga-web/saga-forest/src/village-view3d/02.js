@@ -108,7 +108,7 @@
 
   function toggle() {
     if (!available()) { return false; }
-    C().setTune('village3d.on', ON() ? 0 : 1);
+    var nx = !ON(); C().setTune('village3d.on', nx ? 1 : 0); if (global.DG.deviceMode) { global.DG.deviceMode.mark('vv', nx); }
     syncVisibility();
     return ON();
   }

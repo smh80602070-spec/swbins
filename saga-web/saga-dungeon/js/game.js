@@ -278,7 +278,7 @@
       btn3d.classList.toggle('on', D3.wanted());
       btn3d.addEventListener('click', function () {
         var on = !D3.wanted();
-        core.setTune('dg3d.on', on ? 1 : 0);
+        core.setTune('dg3d.on', on ? 1 : 0); if (global.DG.deviceMode) { global.DG.deviceMode.mark('dg', on); }
         btn3d.classList.toggle('on', on);
         ui.toast(on ? '🧊 3D 화면' : '🖼️ 2D 화면 — 그림으로 봅니다');
       });

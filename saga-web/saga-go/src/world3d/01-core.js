@@ -119,7 +119,7 @@
   }
 
   /** 3D 로 그릴까 — 손잡이로 끌 수 있다(0 이면 예전 2D 화면) */
-  function wanted() { var S = core.save && core.save.settings; return core.tuned('world.render3d', 1) && !(S && S.tilt === 0) ? true : false; }   // 시점 2D(tilt 0) = 2D 캔버스 판(W-0019 — "2D 단추를 누르면 전체가 2D")
+  function wanted() { var S = core.save && core.save.settings, v = core.tuned('world.render3d', 1) && !(S && S.tilt === 0) ? true : false; return global.DG.deviceMode ? global.DG.deviceMode.want3d('go', v) : v; }   // 10-19 폰은 2D(이 탭에서 시점을 올렸을 때만 3D)   // 시점 2D(tilt 0) = 2D 캔버스 판(W-0019 — "2D 단추를 누르면 전체가 2D")
 
   function available() { return ready && !failed; }
   function active() { return available() && wanted(); }

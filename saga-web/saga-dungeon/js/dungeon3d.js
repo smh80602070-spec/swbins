@@ -91,7 +91,7 @@
   }
 
   /** 3D 로 그릴까 — 0 이면 예전 캔버스 화면이다 */
-  function wanted() { return tuned('dg3d.on', 1) ? true : false; }
+  function wanted() { var v = tuned('dg3d.on', 1) ? true : false; return global.DG.deviceMode ? global.DG.deviceMode.want3d('dg', v) : v; }   // 10-19 폰은 2D
   /** 카메라가 방을 얼마나 담을까 (작을수록 당겨 본다) */
   function ZOOM() { return tuned('dg3d.zoom', 1); }
   /**

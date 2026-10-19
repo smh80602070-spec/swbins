@@ -143,7 +143,7 @@
 
   function ON() {
     if (!global.DG || !global.DG.core) { return true; }
-    return !!global.DG.core.tuned('sideView3d.on', 1);
+    var v = !!global.DG.core.tuned('sideView3d.on', 1); return global.DG.deviceMode ? global.DG.deviceMode.want3d('sv', v) : v;   // 10-19 폰은 2D
   }
 
   /** three 자체가 없거나 WebGL 컨텍스트를 못 만들면 false — 손잡이(ON)와는 별개다 */
@@ -154,7 +154,7 @@
   /** 상단 🧊 단추 — 손잡이만 뒤집는다. WebGL 자체가 안 되면(available() false) 못 켠다 */
   function toggle() {
     if (!available() || !global.DG.core) { return ON(); }
-    global.DG.core.setTune('sideView3d.on', ON() ? 0 : 1);
+    var nx = !ON(); global.DG.core.setTune('sideView3d.on', nx ? 1 : 0); if (global.DG.deviceMode) { global.DG.deviceMode.mark('sv', nx); }
     return ON();
   }
 

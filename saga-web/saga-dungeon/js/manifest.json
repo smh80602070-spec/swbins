@@ -3,6 +3,7 @@
   [
    "js/errlog.js",
    "js/inapp.js",
+   "js/device-mode.js",
    "js/emojicompat.js",
    "js/data.js",
    "js/data-hero-ext.js",
@@ -125,6 +126,7 @@
   [
    "js/errlog.js",
    "js/inapp.js",
+   "js/device-mode.js",
    "js/data.js",
    "js/data-hero-ext.js",
    "js/data-enemy.js",
