@@ -3947,12 +3947,12 @@
    "scenario_dungeon",
    "scenario_forest"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D2",
+  "verified": "2026-10-19",
   "fun": {},
   "ticket": "G-0220",
   "since": "2026-10-13",
-  "note": "코드 끝 — 그림은 자체툴 고돗 배치 전(놓인 주역 0/23, 그동안 지금 모양). 촬영 st_talk_portrait 가로·세로 ○(웹 초상을 user:// 에 베껴). 놓이면 실제 그림으로 다시 찍어 D2"
+  "note": "K-0100 배치(live 23·expr 92) 뒤 실제 그림(res://assets/portraits)으로 촬영 st_talk_portrait·st_talk_joy 가로·세로 ○ — 기본·기쁨이 같은 사람·같은 그림체, 세로에서 글 안 가림 (10-19)"
  },
  {
   "id": "gd.go.real_ground",
