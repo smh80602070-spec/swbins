@@ -159,4 +159,6 @@ body { font-variant-numeric: tabular-nums; }
   /* !important — 판 안의 더 센 선택자(.focus-card .btn·#wallet .btn.primary·#rmapctl .icon-btn.sm …)가 40 을 다시 준다. 하한값이라 이 쿼리 안에서만 */
   .icon-btn, #dock button, .hud-sk, #hud-dodge, .goal-hide, #sheet-close, .dt-x, .mg-x { min-width: 44px !important; min-height: 44px !important; }
   .btn, #acc-host .acc-btn { min-height: 44px !important; }
+  /* W-0341 — <small> 의 브라우저 기본 "smaller"(부모 12px → 10px)는 px 규칙이 아니라 font-floor.js 가 못 올린다. 판 규칙이 있는 small 은 그쪽이 이긴다 */
+  small { font-size: max(12px, .85em); }
 }

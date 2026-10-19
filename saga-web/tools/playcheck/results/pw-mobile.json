@@ -1,7 +1,7 @@
 {
- "base": "http://127.0.0.1:4100/",
- "at": "2026-10-19T09:51:54.543Z",
- "play": 60,
+ "base": "http://127.0.0.1:4989/",
+ "at": "2026-10-19T10:15:02.930Z",
+ "play": 20,
  "note": "이 PC WebKit·크롬은 GPU 메모리 한도가 없다 — 죽음 0 ≠ 폰 안 죽음",
  "runs": [
   {
@@ -15,7 +15,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "14868ms"
+     "detail": "13788ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -46,7 +46,7 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 14868,
+   "bootMs": 13788,
    "portrait": {
     "W": 402,
     "H": 874,
@@ -60,29 +60,22 @@
      "div.fc-party↔#story-go"
     ],
     "overlapN": 1,
-    "texts": 23,
-    "tiny": 9,
-    "tinyEx": [
-     "div.p-goal.now 11.0px",
-     "small 11.0px",
-     "b.mm-range 11.0px",
-     "small 11.0px",
-     "em 11.0px",
-     "em 11.0px"
-    ],
-    "judged": 23,
+    "texts": 22,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 22,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 4.39,
-    "mb": 10.3,
-    "resN": 152,
+    "mb": 10.5,
+    "resN": 156,
     "heapMB": null,
     "inappBand": false
    },
    "fps": {
-    "min": 2,
-    "avg": 5,
-    "n": 7
+    "min": 5,
+    "avg": 6,
+    "n": 3
    },
    "afterPlay": {
     "W": 402,
@@ -97,22 +90,15 @@
      "div.fc-party↔#story-go"
     ],
     "overlapN": 1,
-    "texts": 25,
-    "tiny": 10,
-    "tinyEx": [
-     "div.p-goal.now 11.0px",
-     "small 11.0px",
-     "button.btn.tiny 11.0px",
-     "b.mm-range 11.0px",
-     "small 11.0px",
-     "em 11.0px"
-    ],
-    "judged": 23,
+    "texts": 27,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 25,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 4.39,
-    "mb": 12.3,
-    "resN": 194,
+    "mb": 11.2,
+    "resN": 170,
     "heapMB": null,
     "inappBand": false
    },
@@ -122,8 +108,8 @@
     "taps": 20,
     "smallTaps": 2,
     "smallEx": [
-     "div.p-goal 197×14",
-     "div.p-goal 197×14"
+     "div.p-goal 215×15",
+     "div.p-goal 215×15"
     ],
     "overflowX": 0,
     "cut": [],
@@ -133,21 +119,14 @@
     ],
     "overlapN": 1,
     "texts": 30,
-    "tiny": 16,
-    "tinyEx": [
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "div.p-goal.now 11.0px",
-     "small 11.0px",
-     "div.p-goal 11.0px",
-     "b 11.0px"
-    ],
+    "tiny": 0,
+    "tinyEx": [],
     "judged": 28,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 4.41,
-    "mb": 12.3,
-    "resN": 194,
+    "mb": 11.2,
+    "resN": 170,
     "heapMB": null,
     "inappBand": false
    },
@@ -165,21 +144,14 @@
     ],
     "overlapN": 1,
     "texts": 23,
-    "tiny": 9,
-    "tinyEx": [
-     "div.p-goal.now 11.0px",
-     "small 11.0px",
-     "b.mm-range 11.0px",
-     "small 11.0px",
-     "em 11.0px",
-     "em 11.0px"
-    ],
+    "tiny": 0,
+    "tinyEx": [],
     "judged": 21,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 4.39,
-    "mb": 12.3,
-    "resN": 194,
+    "mb": 11.2,
+    "resN": 170,
     "heapMB": null,
     "inappBand": false
    },
@@ -196,7 +168,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "13354ms"
+     "detail": "13526ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -227,7 +199,7 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 13354,
+   "bootMs": 13526,
    "portrait": {
     "W": 412,
     "H": 839,
@@ -242,28 +214,21 @@
     ],
     "overlapN": 1,
     "texts": 23,
-    "tiny": 9,
-    "tinyEx": [
-     "div.p-goal.now 11.0px",
-     "small 11.0px",
-     "b.mm-range 11.0px",
-     "small 11.0px",
-     "em 11.0px",
-     "em 11.0px"
-    ],
+    "tiny": 0,
+    "tinyEx": [],
     "judged": 23,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 3.59,
-    "mb": 11.2,
-    "resN": 176,
-    "heapMB": 41.4,
+    "mb": 11.3,
+    "resN": 183,
+    "heapMB": 36,
     "inappBand": false
    },
    "fps": {
-    "min": 55,
-    "avg": 60,
-    "n": 8
+    "min": 50,
+    "avg": 55,
+    "n": 3
    },
    "afterPlay": {
     "W": 412,
@@ -278,23 +243,16 @@
      "div.fc-party↔#story-go"
     ],
     "overlapN": 1,
-    "texts": 27,
-    "tiny": 10,
-    "tinyEx": [
-     "div.p-goal.now 11.0px",
-     "small 11.0px",
-     "button.btn.tiny 11.0px",
-     "b.mm-range 11.0px",
-     "small 11.0px",
-     "em 11.0px"
-    ],
-    "judged": 25,
+    "texts": 29,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 27,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 3.59,
-    "mb": 15.1,
-    "resN": 250,
-    "heapMB": 69.7,
+    "mb": 13.7,
+    "resN": 223,
+    "heapMB": 62.4,
     "inappBand": false
    },
    "landscape": {
@@ -303,8 +261,8 @@
     "taps": 20,
     "smallTaps": 2,
     "smallEx": [
-     "div.p-goal 197×14",
-     "div.p-goal 197×14"
+     "div.p-goal 214×30",
+     "div.p-goal 214×15"
     ],
     "overflowX": 0,
     "cut": [],
@@ -313,23 +271,16 @@
      "div.fc-party↔#story-go"
     ],
     "overlapN": 1,
-    "texts": 32,
-    "tiny": 16,
-    "tinyEx": [
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "div.p-goal.now 11.0px",
-     "small 11.0px",
-     "div.p-goal 11.0px",
-     "b 11.0px"
-    ],
-    "judged": 30,
+    "texts": 30,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 28,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 3.61,
-    "mb": 15.1,
-    "resN": 250,
-    "heapMB": 53.9,
+    "mb": 13.7,
+    "resN": 224,
+    "heapMB": 36.7,
     "inappBand": false
    },
    "back": {
@@ -345,23 +296,16 @@
      "div.fc-party↔#story-go"
     ],
     "overlapN": 1,
-    "texts": 26,
-    "tiny": 9,
-    "tinyEx": [
-     "div.p-goal.now 11.0px",
-     "small 11.0px",
-     "b.mm-range 11.0px",
-     "small 11.0px",
-     "em 11.0px",
-     "em 11.0px"
-    ],
-    "judged": 24,
+    "texts": 23,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 21,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 3.59,
-    "mb": 15.1,
-    "resN": 250,
-    "heapMB": 61.9,
+    "mb": 13.7,
+    "resN": 224,
+    "heapMB": 39.9,
     "inappBand": false
    },
    "ok": true
@@ -377,7 +321,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "17850ms"
+     "detail": "22052ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -408,7 +352,7 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 17850,
+   "bootMs": 22052,
    "portrait": {
     "W": 402,
     "H": 874,
@@ -421,15 +365,8 @@
     "overlap": [],
     "overlapN": 0,
     "texts": 15,
-    "tiny": 7,
-    "tinyEx": [
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "small 11.0px",
-     "div.dg-tip 11.0px",
-     "b 11.0px",
-     "b 11.0px"
-    ],
+    "tiny": 0,
+    "tinyEx": [],
     "judged": 2,
     "lowC": 0,
     "lowCEx": [],
@@ -440,14 +377,14 @@
     "inappBand": false
    },
    "fps": {
-    "min": 3,
-    "avg": 3,
-    "n": 7
+    "min": 1,
+    "avg": 2,
+    "n": 2
    },
    "afterPlay": {
     "W": 402,
     "H": 874,
-    "taps": 15,
+    "taps": 11,
     "smallTaps": 0,
     "smallEx": [],
     "overflowX": 0,
@@ -457,64 +394,21 @@
      "button.goal-hide↔#autobar"
     ],
     "overlapN": 1,
-    "texts": 30,
-    "tiny": 18,
-    "tinyEx": [
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "button.btn.tiny 11.0px",
-     "small 11.0px",
-     "small.muted 11.0px",
-     "h4 11.0px"
-    ],
-    "judged": 15,
-    "lowC": 2,
-    "lowCEx": [
-     "button.btn.tiny 3.0",
-     "button.btn.tiny 3.0"
-    ],
+    "texts": 18,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 5,
+    "lowC": 0,
+    "lowCEx": [],
     "canvasMP": 1.44,
-    "mb": 4.4,
-    "resN": 121,
+    "mb": 4.3,
+    "resN": 117,
     "heapMB": null,
     "inappBand": false
    },
    "landscape": {
     "W": 874,
     "H": 402,
-    "taps": 17,
-    "smallTaps": 0,
-    "smallEx": [],
-    "overflowX": 0,
-    "cut": [],
-    "cutN": 0,
-    "overlap": [],
-    "overlapN": 0,
-    "texts": 28,
-    "tiny": 18,
-    "tinyEx": [
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "small 11.0px",
-     "small.muted 11.0px",
-     "h4 11.0px",
-     "button.btn.tiny 11.0px"
-    ],
-    "judged": 13,
-    "lowC": 2,
-    "lowCEx": [
-     "button.btn.tiny 3.0",
-     "button.btn.tiny 3.0"
-    ],
-    "canvasMP": 1.34,
-    "mb": 4.4,
-    "resN": 124,
-    "heapMB": null,
-    "inappBand": false
-   },
-   "back": {
-    "W": 402,
-    "H": 874,
     "taps": 14,
     "smallTaps": 0,
     "smallEx": [],
@@ -523,25 +417,38 @@
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 27,
-    "tiny": 17,
-    "tinyEx": [
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "small 11.0px",
-     "small.muted 11.0px",
-     "h4 11.0px",
-     "button.btn.tiny 11.0px"
-    ],
-    "judged": 12,
-    "lowC": 2,
-    "lowCEx": [
-     "button.btn.tiny 3.0",
-     "button.btn.tiny 3.0"
-    ],
-    "canvasMP": 1.44,
+    "texts": 15,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 2,
+    "lowC": 0,
+    "lowCEx": [],
+    "canvasMP": 1.34,
     "mb": 4.4,
-    "resN": 124,
+    "resN": 120,
+    "heapMB": null,
+    "inappBand": false
+   },
+   "back": {
+    "W": 402,
+    "H": 874,
+    "taps": 10,
+    "smallTaps": 0,
+    "smallEx": [],
+    "overflowX": 0,
+    "cut": [],
+    "cutN": 0,
+    "overlap": [],
+    "overlapN": 0,
+    "texts": 15,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 2,
+    "lowC": 0,
+    "lowCEx": [],
+    "canvasMP": 1.34,
+    "mb": 4.4,
+    "resN": 120,
     "heapMB": null,
     "inappBand": false
    },
@@ -558,7 +465,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "16997ms"
+     "detail": "17122ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -589,7 +496,7 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 16997,
+   "bootMs": 17122,
    "portrait": {
     "W": 412,
     "H": 839,
@@ -602,33 +509,26 @@
     "overlap": [],
     "overlapN": 0,
     "texts": 15,
-    "tiny": 7,
-    "tinyEx": [
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "small 11.0px",
-     "div.dg-tip 11.0px",
-     "b 11.0px",
-     "b 11.0px"
-    ],
+    "tiny": 0,
+    "tinyEx": [],
     "judged": 2,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 1.42,
     "mb": 4.2,
     "resN": 113,
-    "heapMB": 18.2,
+    "heapMB": 14.9,
     "inappBand": false
    },
    "fps": {
-    "min": 25,
-    "avg": 29,
-    "n": 7
+    "min": 23,
+    "avg": 25,
+    "n": 3
    },
    "afterPlay": {
     "W": 412,
     "H": 839,
-    "taps": 13,
+    "taps": 15,
     "smallTaps": 0,
     "smallEx": [],
     "overflowX": 0,
@@ -638,29 +538,25 @@
      "button.goal-hide↔#autobar"
     ],
     "overlapN": 1,
-    "texts": 23,
-    "tiny": 8,
-    "tinyEx": [
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "button.btn.tiny 11.0px",
-     "small 11.0px",
-     "small.muted 11.0px",
-     "div.dg-tip 11.0px"
+    "texts": 30,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 15,
+    "lowC": 2,
+    "lowCEx": [
+     "button.btn.tiny 3.0",
+     "button.btn.tiny 3.0"
     ],
-    "judged": 9,
-    "lowC": 0,
-    "lowCEx": [],
     "canvasMP": 1.42,
-    "mb": 6.6,
-    "resN": 156,
-    "heapMB": 24.3,
+    "mb": 5.3,
+    "resN": 133,
+    "heapMB": 22.7,
     "inappBand": false
    },
    "landscape": {
     "W": 839,
     "H": 412,
-    "taps": 16,
+    "taps": 17,
     "smallTaps": 0,
     "smallEx": [],
     "overflowX": 0,
@@ -668,29 +564,25 @@
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 22,
-    "tiny": 8,
-    "tinyEx": [
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "small 11.0px",
-     "small.muted 11.0px",
-     "div.dg-tip 11.0px",
-     "b 11.0px"
+    "texts": 28,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 13,
+    "lowC": 2,
+    "lowCEx": [
+     "button.btn.tiny 3.0",
+     "button.btn.tiny 3.0"
     ],
-    "judged": 7,
-    "lowC": 0,
-    "lowCEx": [],
     "canvasMP": 1.31,
-    "mb": 6.6,
-    "resN": 157,
-    "heapMB": 29.5,
+    "mb": 5.4,
+    "resN": 138,
+    "heapMB": 24.3,
     "inappBand": false
    },
    "back": {
     "W": 412,
     "H": 839,
-    "taps": 12,
+    "taps": 14,
     "smallTaps": 0,
     "smallEx": [],
     "overflowX": 0,
@@ -698,23 +590,19 @@
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 20,
-    "tiny": 7,
-    "tinyEx": [
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "small 11.0px",
-     "small.muted 11.0px",
-     "div.dg-tip 11.0px",
-     "b 11.0px"
+    "texts": 27,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 12,
+    "lowC": 2,
+    "lowCEx": [
+     "button.btn.tiny 3.0",
+     "button.btn.tiny 3.0"
     ],
-    "judged": 6,
-    "lowC": 0,
-    "lowCEx": [],
     "canvasMP": 1.42,
-    "mb": 6.6,
-    "resN": 157,
-    "heapMB": 27.5,
+    "mb": 5.4,
+    "resN": 138,
+    "heapMB": 21.9,
     "inappBand": false
    },
    "ok": true
@@ -730,7 +618,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "13517ms"
+     "detail": "14343ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -761,14 +649,14 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 13517,
+   "bootMs": 14343,
    "portrait": {
     "W": 402,
     "H": 874,
     "taps": 9,
     "smallTaps": 1,
     "smallEx": [
-     "div.p-goal 125×28"
+     "div.p-goal 125×30"
     ],
     "overflowX": 0,
     "cut": [],
@@ -776,15 +664,8 @@
     "overlap": [],
     "overlapN": 0,
     "texts": 22,
-    "tiny": 19,
-    "tinyEx": [
-     "div.p-title 11.0px",
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "div.p-goal.scn-goal 11.0px",
-     "b 11.0px",
-     "div.p-goal.tut-goal 11.0px"
-    ],
+    "tiny": 0,
+    "tinyEx": [],
     "judged": 21,
     "lowC": 0,
     "lowCEx": [],
@@ -796,8 +677,8 @@
    },
    "fps": {
     "min": 2,
-    "avg": 4,
-    "n": 8
+    "avg": 3,
+    "n": 3
    },
    "afterPlay": {
     "W": 402,
@@ -805,7 +686,7 @@
     "taps": 10,
     "smallTaps": 1,
     "smallEx": [
-     "div.p-goal 125×28"
+     "div.p-goal 125×30"
     ],
     "overflowX": 0,
     "cut": [],
@@ -813,53 +694,39 @@
     "overlap": [],
     "overlapN": 0,
     "texts": 25,
-    "tiny": 20,
-    "tinyEx": [
-     "div.p-title 11.0px",
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "div.p-goal.scn-goal 11.0px",
-     "b 11.0px",
-     "div.p-goal.tut-goal 11.0px"
-    ],
+    "tiny": 0,
+    "tinyEx": [],
     "judged": 24,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 2.24,
-    "mb": 6.6,
-    "resN": 78,
+    "mb": 6.4,
+    "resN": 71,
     "heapMB": null,
     "inappBand": false
    },
    "landscape": {
     "W": 874,
     "H": 402,
-    "taps": 9,
+    "taps": 10,
     "smallTaps": 1,
     "smallEx": [
-     "div.p-goal 306×14"
+     "div.p-goal 334×15"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 23,
-    "tiny": 13,
-    "tinyEx": [
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "div.p-goal.scn-goal 11.0px",
-     "b 11.0px",
-     "div.p-goal.tut-goal 11.0px",
-     "small 9.2px"
-    ],
-    "judged": 22,
+    "texts": 25,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 24,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 2.26,
-    "mb": 6.9,
-    "resN": 85,
+    "mb": 6.6,
+    "resN": 76,
     "heapMB": null,
     "inappBand": false
    },
@@ -869,7 +736,7 @@
     "taps": 9,
     "smallTaps": 1,
     "smallEx": [
-     "div.p-goal 125×28"
+     "div.p-goal 125×30"
     ],
     "overflowX": 0,
     "cut": [],
@@ -877,21 +744,14 @@
     "overlap": [],
     "overlapN": 0,
     "texts": 22,
-    "tiny": 19,
-    "tinyEx": [
-     "div.p-title 11.0px",
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "div.p-goal.scn-goal 11.0px",
-     "b 11.0px",
-     "div.p-goal.tut-goal 11.0px"
-    ],
+    "tiny": 0,
+    "tinyEx": [],
     "judged": 21,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 2.24,
-    "mb": 6.9,
-    "resN": 85,
+    "mb": 6.6,
+    "resN": 76,
     "heapMB": null,
     "inappBand": false
    },
@@ -908,7 +768,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "13199ms"
+     "detail": "13251ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -939,14 +799,14 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 13199,
+   "bootMs": 13251,
    "portrait": {
     "W": 412,
     "H": 839,
     "taps": 9,
     "smallTaps": 1,
     "smallEx": [
-     "div.p-goal 136×28"
+     "div.p-goal 136×30"
     ],
     "overflowX": 0,
     "cut": [],
@@ -954,135 +814,97 @@
     "overlap": [],
     "overlapN": 0,
     "texts": 22,
-    "tiny": 19,
-    "tinyEx": [
-     "div.p-title 11.0px",
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "div.p-goal.scn-goal 11.0px",
-     "b 11.0px",
-     "div.p-goal.tut-goal 11.0px"
-    ],
+    "tiny": 0,
+    "tinyEx": [],
     "judged": 21,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 2.2,
     "mb": 6.1,
     "resN": 59,
-    "heapMB": 19.1,
+    "heapMB": 24.1,
     "inappBand": false
    },
    "fps": {
     "min": 61,
     "avg": 61,
-    "n": 8
+    "n": 3
    },
    "afterPlay": {
     "W": 412,
     "H": 839,
-    "taps": 11,
+    "taps": 10,
     "smallTaps": 1,
     "smallEx": [
-     "div.p-goal 136×28"
+     "div.p-goal 136×30"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
-    "overlap": [
-     "#vjoy↔#mt-ride"
-    ],
-    "overlapN": 1,
-    "texts": 26,
-    "tiny": 21,
-    "tinyEx": [
-     "div.p-title 11.0px",
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "div.p-goal.scn-goal 11.0px",
-     "b 11.0px",
-     "div.p-goal.tut-goal 11.0px"
-    ],
-    "judged": 26,
+    "overlap": [],
+    "overlapN": 0,
+    "texts": 25,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 25,
     "lowC": 1,
     "lowCEx": [
      "button.btn.ghost 3.9"
     ],
     "canvasMP": 2.2,
-    "mb": 7.8,
-    "resN": 102,
-    "heapMB": 21,
+    "mb": 7.5,
+    "resN": 82,
+    "heapMB": 28.2,
     "inappBand": false
    },
    "landscape": {
     "W": 839,
     "H": 412,
-    "taps": 10,
+    "taps": 9,
     "smallTaps": 1,
     "smallEx": [
-     "div.p-goal 308×14"
+     "div.p-goal 336×15"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
-    "overlap": [
-     "#vjoy↔#mt-ride"
-    ],
-    "overlapN": 1,
-    "texts": 24,
-    "tiny": 14,
-    "tinyEx": [
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "div.p-goal.scn-goal 11.0px",
-     "b 11.0px",
-     "div.p-goal.tut-goal 11.0px",
-     "small 9.2px"
-    ],
-    "judged": 24,
-    "lowC": 1,
-    "lowCEx": [
-     "button.btn.ghost 3.9"
-    ],
+    "overlap": [],
+    "overlapN": 0,
+    "texts": 23,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 22,
+    "lowC": 0,
+    "lowCEx": [],
     "canvasMP": 2.23,
-    "mb": 8,
-    "resN": 106,
-    "heapMB": 26.9,
+    "mb": 7.5,
+    "resN": 82,
+    "heapMB": 25.3,
     "inappBand": false
    },
    "back": {
     "W": 412,
     "H": 839,
-    "taps": 10,
+    "taps": 9,
     "smallTaps": 1,
     "smallEx": [
-     "div.p-goal 136×28"
+     "div.p-goal 136×30"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
-    "overlap": [
-     "#vjoy↔#mt-ride"
-    ],
-    "overlapN": 1,
-    "texts": 23,
-    "tiny": 20,
-    "tinyEx": [
-     "div.p-title 11.0px",
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "div.p-goal.scn-goal 11.0px",
-     "b 11.0px",
-     "div.p-goal.tut-goal 11.0px"
-    ],
-    "judged": 23,
-    "lowC": 1,
-    "lowCEx": [
-     "button.btn.ghost 3.9"
-    ],
+    "overlap": [],
+    "overlapN": 0,
+    "texts": 22,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 21,
+    "lowC": 0,
+    "lowCEx": [],
     "canvasMP": 2.2,
-    "mb": 8,
-    "resN": 106,
-    "heapMB": 21.8,
+    "mb": 7.5,
+    "resN": 82,
+    "heapMB": 28.3,
     "inappBand": false
    },
    "ok": true
@@ -1098,7 +920,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "16629ms"
+     "detail": "16819ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -1129,7 +951,7 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 16629,
+   "bootMs": 16819,
    "portrait": {
     "W": 402,
     "H": 874,
@@ -1142,15 +964,8 @@
     "overlap": [],
     "overlapN": 0,
     "texts": 21,
-    "tiny": 20,
-    "tinyEx": [
-     "div.p-title 11.0px",
-     "div.p-sub 11.0px",
-     "div.coin 11.0px",
-     "div.coin 11.0px",
-     "div.coin.hi 11.0px",
-     "div.coin 11.0px"
-    ],
+    "tiny": 0,
+    "tinyEx": [],
     "judged": 21,
     "lowC": 0,
     "lowCEx": [],
@@ -1161,9 +976,9 @@
     "inappBand": false
    },
    "fps": {
-    "min": 2,
+    "min": 3,
     "avg": 4,
-    "n": 8
+    "n": 3
    },
    "afterPlay": {
     "W": 402,
@@ -1176,29 +991,22 @@
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 24,
-    "tiny": 21,
-    "tinyEx": [
-     "div.p-title 11.0px",
-     "div.p-sub 11.0px",
-     "div.coin 11.0px",
-     "div.coin 11.0px",
-     "div.coin.hi 11.0px",
-     "div.coin 11.0px"
-    ],
-    "judged": 24,
+    "texts": 23,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 23,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 2.48,
-    "mb": 3,
-    "resN": 65,
+    "mb": 2.6,
+    "resN": 43,
     "heapMB": null,
     "inappBand": false
    },
    "landscape": {
     "W": 874,
     "H": 402,
-    "taps": 22,
+    "taps": 23,
     "smallTaps": 0,
     "smallEx": [],
     "overflowX": 0,
@@ -1207,21 +1015,14 @@
     "overlap": [],
     "overlapN": 0,
     "texts": 24,
-    "tiny": 17,
-    "tinyEx": [
-     "div.p-sub 11.0px",
-     "div.goal-row.goal-tut 11.0px",
-     "small 9.2px",
-     "div.goal-row.goal-scn 11.0px",
-     "b 11.0px",
-     "div.goal-row 11.0px"
-    ],
+    "tiny": 0,
+    "tinyEx": [],
     "judged": 24,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 2.48,
-    "mb": 3,
-    "resN": 68,
+    "mb": 2.7,
+    "resN": 55,
     "heapMB": null,
     "inappBand": false
    },
@@ -1236,22 +1037,15 @@
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 21,
-    "tiny": 20,
-    "tinyEx": [
-     "div.p-title 11.0px",
-     "div.p-sub 11.0px",
-     "div.coin 11.0px",
-     "div.coin 11.0px",
-     "div.coin.hi 11.0px",
-     "div.coin 11.0px"
-    ],
-    "judged": 21,
+    "texts": 20,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 20,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 2.48,
-    "mb": 3,
-    "resN": 68,
+    "mb": 2.7,
+    "resN": 55,
     "heapMB": null,
     "inappBand": false
    },
@@ -1268,7 +1062,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "16457ms"
+     "detail": "16420ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -1299,7 +1093,7 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 16457,
+   "bootMs": 16420,
    "portrait": {
     "W": 412,
     "H": 839,
@@ -1312,15 +1106,8 @@
     "overlap": [],
     "overlapN": 0,
     "texts": 21,
-    "tiny": 20,
-    "tinyEx": [
-     "div.p-title 11.0px",
-     "div.p-sub 11.0px",
-     "div.coin 11.0px",
-     "div.coin 11.0px",
-     "div.coin.hi 11.0px",
-     "div.coin 11.0px"
-    ],
+    "tiny": 0,
+    "tinyEx": [],
     "judged": 21,
     "lowC": 0,
     "lowCEx": [],
@@ -1333,7 +1120,7 @@
    "fps": {
     "min": 61,
     "avg": 61,
-    "n": 8
+    "n": 3
    },
    "afterPlay": {
     "W": 412,
@@ -1347,22 +1134,15 @@
     "overlap": [],
     "overlapN": 0,
     "texts": 25,
-    "tiny": 22,
-    "tinyEx": [
-     "div.p-title 11.0px",
-     "div.p-sub 11.0px",
-     "div.coin 11.0px",
-     "div.coin 11.0px",
-     "div.coin.hi 11.0px",
-     "div.coin 11.0px"
-    ],
+    "tiny": 0,
+    "tinyEx": [],
     "judged": 25,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 2.44,
     "mb": 5,
-    "resN": 86,
-    "heapMB": 8.8,
+    "resN": 83,
+    "heapMB": 9.6,
     "inappBand": false
    },
    "landscape": {
@@ -1377,22 +1157,15 @@
     "overlap": [],
     "overlapN": 0,
     "texts": 25,
-    "tiny": 18,
-    "tinyEx": [
-     "div.p-sub 11.0px",
-     "div.goal-row.goal-tut 11.0px",
-     "small 9.2px",
-     "div.goal-row.goal-scn 11.0px",
-     "b 11.0px",
-     "div.goal-row 11.0px"
-    ],
+    "tiny": 0,
+    "tinyEx": [],
     "judged": 25,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 2.44,
     "mb": 5,
-    "resN": 86,
-    "heapMB": 9.4,
+    "resN": 83,
+    "heapMB": 9.2,
     "inappBand": false
    },
    "back": {
@@ -1407,22 +1180,15 @@
     "overlap": [],
     "overlapN": 0,
     "texts": 21,
-    "tiny": 21,
-    "tinyEx": [
-     "div.p-title 11.0px",
-     "div.p-sub 11.0px",
-     "div.coin 11.0px",
-     "div.coin 11.0px",
-     "div.coin.hi 11.0px",
-     "div.coin 11.0px"
-    ],
+    "tiny": 0,
+    "tinyEx": [],
     "judged": 21,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 2.44,
     "mb": 5,
-    "resN": 86,
-    "heapMB": 9.4,
+    "resN": 83,
+    "heapMB": 9.7,
     "inappBand": false
    },
    "ok": true
@@ -1438,7 +1204,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "20254ms"
+     "detail": "19876ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -1469,31 +1235,24 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 20254,
+   "bootMs": 19876,
    "portrait": {
     "W": 402,
     "H": 874,
     "taps": 15,
     "smallTaps": 1,
     "smallEx": [
-     "span.rlg.me 45×17"
+     "span.rlg.me 47×18"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 117,
-    "tiny": 110,
-    "tinyEx": [
-     "span.tag 11.0px",
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "b 11.0px",
-     "b 11.0px",
-     "div.p-goal 11.0px"
-    ],
-    "judged": 116,
+    "texts": 47,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 46,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 0.4,
@@ -1503,39 +1262,32 @@
     "inappBand": false
    },
    "fps": {
-    "min": 28,
-    "avg": 30,
-    "n": 3
+    "min": 33,
+    "avg": 33,
+    "n": 1
    },
    "afterPlay": {
     "W": 402,
     "H": 874,
-    "taps": 19,
+    "taps": 15,
     "smallTaps": 1,
     "smallEx": [
-     "span.rlg.me 45×17"
+     "span.rlg.me 47×18"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 139,
-    "tiny": 126,
-    "tinyEx": [
-     "span.tag 11.0px",
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "b 11.0px",
-     "b 11.0px",
-     "div.p-goal 11.0px"
-    ],
-    "judged": 135,
+    "texts": 47,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 46,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 0.4,
-    "mb": 2.7,
-    "resN": 72,
+    "mb": 2.6,
+    "resN": 70,
     "heapMB": null,
     "inappBand": false
    },
@@ -1545,61 +1297,47 @@
     "taps": 15,
     "smallTaps": 1,
     "smallEx": [
-     "span.rlg.me 45×17"
+     "span.rlg.me 47×18"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 129,
-    "tiny": 120,
-    "tinyEx": [
-     "span.tag 11.0px",
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "b 11.0px",
-     "b 11.0px",
-     "div.p-goal 11.0px"
-    ],
-    "judged": 128,
+    "texts": 48,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 47,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 0.4,
-    "mb": 2.7,
-    "resN": 72,
+    "mb": 2.6,
+    "resN": 70,
     "heapMB": null,
     "inappBand": false
    },
    "back": {
     "W": 402,
     "H": 874,
-    "taps": 19,
+    "taps": 15,
     "smallTaps": 1,
     "smallEx": [
-     "span.rlg.me 45×17"
+     "span.rlg.me 47×18"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 139,
-    "tiny": 126,
-    "tinyEx": [
-     "span.tag 11.0px",
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "b 11.0px",
-     "b 11.0px",
-     "div.p-goal 11.0px"
-    ],
-    "judged": 135,
+    "texts": 47,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 46,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 0.4,
-    "mb": 2.7,
-    "resN": 72,
+    "mb": 2.6,
+    "resN": 70,
     "heapMB": null,
     "inappBand": false
    },
@@ -1616,7 +1354,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "18558ms"
+     "detail": "18584ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -1647,43 +1385,36 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 18558,
+   "bootMs": 18584,
    "portrait": {
     "W": 412,
     "H": 839,
     "taps": 15,
     "smallTaps": 1,
     "smallEx": [
-     "span.rlg.me 45×17"
+     "span.rlg.me 47×18"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 117,
-    "tiny": 110,
-    "tinyEx": [
-     "span.tag 11.0px",
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "b 11.0px",
-     "b 11.0px",
-     "div.p-goal 11.0px"
-    ],
-    "judged": 116,
+    "texts": 47,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 46,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 0.39,
     "mb": 3.5,
     "resN": 72,
-    "heapMB": 16.1,
+    "heapMB": 15.8,
     "inappBand": false
    },
    "fps": {
     "min": 61,
     "avg": 61,
-    "n": 8
+    "n": 3
    },
    "afterPlay": {
     "W": 412,
@@ -1691,30 +1422,23 @@
     "taps": 19,
     "smallTaps": 1,
     "smallEx": [
-     "span.rlg.me 45×17"
+     "span.rlg.me 47×18"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 87,
-    "tiny": 74,
-    "tinyEx": [
-     "span.tag 11.0px",
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "b 11.0px",
-     "b 11.0px",
-     "div.p-goal 11.0px"
-    ],
-    "judged": 83,
+    "texts": 71,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 67,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 0.39,
     "mb": 3.5,
-    "resN": 77,
-    "heapMB": 10.6,
+    "resN": 73,
+    "heapMB": 10.1,
     "inappBand": false
    },
    "landscape": {
@@ -1723,30 +1447,23 @@
     "taps": 15,
     "smallTaps": 1,
     "smallEx": [
-     "span.rlg.me 45×17"
+     "span.rlg.me 47×18"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 83,
-    "tiny": 74,
-    "tinyEx": [
-     "span.tag 11.0px",
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "b 11.0px",
-     "b 11.0px",
-     "div.p-goal 11.0px"
-    ],
-    "judged": 82,
+    "texts": 65,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 64,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 0.39,
     "mb": 3.5,
-    "resN": 77,
-    "heapMB": 10.4,
+    "resN": 73,
+    "heapMB": 10.1,
     "inappBand": false
    },
    "back": {
@@ -1755,30 +1472,23 @@
     "taps": 19,
     "smallTaps": 1,
     "smallEx": [
-     "span.rlg.me 45×17"
+     "span.rlg.me 47×18"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 87,
-    "tiny": 74,
-    "tinyEx": [
-     "span.tag 11.0px",
-     "div.p-sub 11.0px",
-     "b 11.0px",
-     "b 11.0px",
-     "b 11.0px",
-     "div.p-goal 11.0px"
-    ],
-    "judged": 83,
+    "texts": 71,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 67,
     "lowC": 0,
     "lowCEx": [],
     "canvasMP": 0.39,
     "mb": 3.5,
-    "resN": 77,
-    "heapMB": 10.2,
+    "resN": 73,
+    "heapMB": 9.8,
     "inappBand": false
    },
    "ok": true

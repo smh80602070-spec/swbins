@@ -28,6 +28,7 @@ const FILES = [
   ['js/errlog.js', 'js/errlog.js'],
   ['js/inapp.js', 'js/inapp.js'],
   ['js/device-mode.js', 'js/device-mode.js'],   // 10-19 폰은 2D · PC 는 3D(다섯 판 "3D 를 원하나" 함수가 묻는다)   // W-0331 앱 안 브라우저(구글 앱·카카오 등) 안내 띠 — errlog 바로 뒤에 싣는다
+  ['js/font-floor.js', 'js/font-floor.js'],   // W-0341 폰 글자 바닥 12px(실린 시트의 12px 아래 font-size 를 올림)
   ['js/emojicompat.js', 'js/emojicompat.js'],   // W-0135 — 윈도 10 빈 네모 이모지 대체(manifest index 에만, 진단 test 엔 안 넣음)
   ['js/bgm.js', 'js/bgm.js'],
   ['js/voice.js', 'js/voice.js'],   // W-0137 — 대사 음성(bgm 잠금·설정 줄 뒤, 판별 core 이벤트를 듣는다)

@@ -69,11 +69,11 @@ function domMeasure() {
   const rgb = (s) => { const m = String(s).match(/rgba?\(([^)]+)\)/); if (!m) { return null; } const p = m[1].split(/[ ,/]+/).filter(Boolean).map(Number); return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 }; };
   const lum = (c) => { const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }; return 0.2126 * f(c.r) + 0.7152 * f(c.g) + 0.0722 * f(c.b); };
   const bgOf = (e) => { for (let n = e; n && n !== document.documentElement; n = n.parentElement) { const cs = getComputedStyle(n); if (cs.backgroundImage && cs.backgroundImage !== 'none') { return null; } const c = rgb(cs.backgroundColor); if (c && c.a >= 0.9) { return c; } } return null; };
-  const texts = [...document.querySelectorAll('body *')].filter((e) => [...e.childNodes].some((n) => n.nodeType === 3 && /[가-힣A-Za-z0-9]/.test(n.textContent)) && vis(e));   // 그림 글자(이모지·기호)만 든 단추는 셈 밖
+  const texts = [...document.querySelectorAll('body *')].filter((e) => [...e.childNodes].some((n) => n.nodeType === 3 && /[가-힣A-Za-z0-9]/.test(n.textContent)) && vis(e) && !e.closest('svg'));   // 그림 글자(이모지·기호)만 든 단추는 셈 밖 · SVG 글자는 viewBox 좌표 단위라 셈 밖(5천하 지도 1.1)
   const tiny = [], lowC = []; let judged = 0;
   for (const e of texts) {
     const cs = getComputedStyle(e), fs = parseFloat(cs.fontSize) || 0;
-    if (fs < 12) { tiny.push(name(e) + ' ' + fs.toFixed(1) + 'px'); }
+    if (fs < 12) { tiny.push((e.parentElement ? name(e.parentElement) + '>' : '') + name(e) + ' ' + fs.toFixed(1) + 'px' + (e.style.fontSize ? '(인라인)' : '')); }
     const fg = rgb(cs.color), bg = bgOf(e);
     if (fg && bg) { judged++; const L1 = lum(fg), L2 = lum(bg), ratio = (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05); if (ratio < 4.5) { lowC.push(name(e) + ' ' + ratio.toFixed(1)); } }
   }
