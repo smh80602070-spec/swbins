@@ -1,0 +1,157 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k144_portraits_C",
+ "kit": {
+  "spec": "creature",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "crab_cute",
+   "seed": 20271019,
+   "prompt": "(cute brown crab:1.15), big curved pale claws, round shell, small eyes, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k144_init_w/crab_cute.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "cyclops_cute",
+   "seed": 20271116,
+   "prompt": "(cute round white one-eyed creature:1.15), single big purple eye, small horn, stubby feet, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k144_init_w/cyclops_cute.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "demon_blue",
+   "seed": 20271213,
+   "prompt": "(slender blue-violet horned demon:1.15), bat wings, long curved horns, clawed feet, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k144_init_w/demon_blue.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "demon_red",
+   "seed": 20271310,
+   "prompt": "(slender red armored demon:1.15), small white horns, long curved tail, glowing chest gem, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k144_init_w/demon_red.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "giant",
+   "seed": 20271407,
+   "prompt": "(huge bald pale giant:1.15), massive muscular arms, brown loincloth, hunched, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k144_init_w/giant.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "green_imp",
+   "seed": 20271504,
+   "prompt": "(small cute green imp:1.15), pointed ears, short horns, grinning face, pink cheeks, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k144_init_w/green_imp.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "orc_warrior",
+   "seed": 20271601,
+   "prompt": "(muscular green orc warrior:1.15), leather armor, metal bracers, big shoulders, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k144_init_w/orc_warrior.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "skeleton",
+   "seed": 20271698,
+   "prompt": "(tall thin skeleton:1.15), bare bones, ribcage, hunched posture, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k144_init_w/skeleton.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "skeleton_mage",
+   "seed": 20271795,
+   "prompt": "(skeleton mage:1.15), white robe, small dark crown, skull face, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k144_init_w/skeleton_mage.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "skeleton_minion",
+   "seed": 20271892,
+   "prompt": "(small skeleton minion:1.15), huge round skull head, tiny ribcage body, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k144_init_w/skeleton_minion.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "skeleton_rogue",
+   "seed": 20271989,
+   "prompt": "(skeleton rogue:1.15), pale hood, red scarf, long bony arms, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k144_init_w/skeleton_rogue.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "skeleton_warrior",
+   "seed": 20272086,
+   "prompt": "(skeleton warrior:1.15), horned bone helmet, bony limbs, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k144_init_w/skeleton_warrior.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "snake",
+   "seed": 20272183,
+   "prompt": "(coiled pale cream snake:1.15), green spots, raised head, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k144_init_w/snake.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "tentacle_imp",
+   "seed": 20272280,
+   "prompt": "(round white blob creature:1.15), small tentacles under body, little dark eyes, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k144_init_w/tentacle_imp.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "tree_walker",
+   "seed": 20272377,
+   "prompt": "(walking tree creature:1.15), pink and blue leafy canopy, thick pale trunk, root legs, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k144_init_w/tree_walker.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "yeti",
+   "seed": 20272474,
+   "prompt": "(white furry yeti:1.15), big round body, single blue eye, short legs, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k144_init_w/yeti.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "zombie",
+   "seed": 20272571,
+   "prompt": "(hunched zombie:1.15), dark hooded coat, gray-blue skin, dangling arms, no humans, monster, dim dungeon torchlight, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k144_init_w/zombie.png",
+   "denoise": 0.6
+  }
+ ]
+}

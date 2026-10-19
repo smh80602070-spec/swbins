@@ -377,7 +377,7 @@
    "tool": "gen.py (ComfyUI)",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 1650,
+   "count": 1667,
    "where": [
     "saga-assets/icons/license",
     "saga-assets/portraits-expr",

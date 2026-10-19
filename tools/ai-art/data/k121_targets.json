@@ -7,9 +7,11 @@
   "bodies": 58,
   "species_rows": 27,
   "creature_ids": 27,
-  "pending": 31,
+  "pending": 12,
   "humans": 18,
-  "nobody": 2
+  "nobody": 2,
+  "species_k144": 19,
+  "creature_ids_k144": 17
  },
  "creature_ids": [
   "elephant",
@@ -285,24 +287,14 @@
  ],
  "pending": [
   {
-   "body": "blue_demon",
-   "enemies": [
-    "청귀",
-    "대청귀"
-   ],
-   "src": "assets/models/monsters/quaternius/Blue_Demon_6fbb8914.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 Blue_Demon"
-  },
-  {
    "body": "cactoro",
    "enemies": [
     "가시귀",
     "철가시귀"
    ],
    "src": "assets/models/monsters/quaternius/Cactoro_625862f9.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 Cactoro"
+   "pending": "다음 몸 티켓",
+   "why": "짝 없음 Cactoro · K-0122 표에 없음(quaternius/Cactoro)"
   },
   {
    "body": "cactoro_2",
@@ -311,68 +303,8 @@
     "대가시왕"
    ],
    "src": "assets/models/monsters/quaternius/Cactoro_e88090e2.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 Cactoro"
-  },
-  {
-   "body": "crab",
-   "enemies": [
-    "집게괴",
-    "철갑해"
-   ],
-   "src": "assets/models/monsters/quaternius_cute/Crab.glb",
-   "pending": "K-0122",
-   "why": "경로 꼴 다름"
-  },
-  {
-   "body": "cthulhu",
-   "enemies": [
-    "심연촉수귀",
-    "강철촉수귀"
-   ],
-   "src": "assets/models/monsters/quaternius_cute/Cthulhu.glb",
-   "pending": "K-0122",
-   "why": "경로 꼴 다름"
-  },
-  {
-   "body": "cyclops",
-   "enemies": [
-    "외눈귀",
-    "기계외안"
-   ],
-   "src": "assets/models/monsters/quaternius_cute/Cyclops.glb",
-   "pending": "K-0122",
-   "why": "경로 꼴 다름"
-  },
-  {
-   "body": "demon",
-   "enemies": [
-    "화염귀",
-    "겁화귀"
-   ],
-   "src": "assets/models/monsters/quaternius/Demon_46b52ba4.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 Demon"
-  },
-  {
-   "body": "demon_2",
-   "enemies": [
-    "탐귀",
-    "탐욕귀왕"
-   ],
-   "src": "assets/models/monsters/quaternius/Demon_c2e39eb4.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 Demon"
-  },
-  {
-   "body": "demon_green",
-   "enemies": [
-    "풋귀",
-    "동합귀"
-   ],
-   "src": "assets/models/monsters/quaternius_cute/GreenDemon.glb",
-   "pending": "K-0122",
-   "why": "경로 꼴 다름"
+   "pending": "다음 몸 티켓",
+   "why": "짝 없음 Cactoro · K-0122 표에 없음(quaternius/Cactoro)"
   },
   {
    "body": "frog",
@@ -381,18 +313,8 @@
     "괴이두꺼비"
    ],
    "src": "assets/models/monsters/quaternius/Frog_9018566d.glb",
-   "pending": "K-0122",
-   "why": "폴더 예외 quaternius/Frog"
-  },
-  {
-   "body": "giant",
-   "enemies": [
-    "거인",
-    "폭풍거인"
-   ],
-   "src": "assets/models/monsters/quaternius2/Giant.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 Giant"
+   "pending": "다음 몸 티켓",
+   "why": "폴더 예외 quaternius/Frog · K-0122 표에 없음(quaternius/Frog)"
   },
   {
    "body": "green_blob",
@@ -401,8 +323,8 @@
     "고목이끼괴물"
    ],
    "src": "assets/models/monsters/quaternius/Green_Blob_64ab590e.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 Green_Blob"
+   "pending": "다음 몸 티켓",
+   "why": "짝 없음 Green_Blob · K-0122 표에 없음(quaternius/Green_Blob)"
   },
   {
    "body": "green_spiky_blob",
@@ -411,8 +333,8 @@
     "대가시슬라임"
    ],
    "src": "assets/models/monsters/quaternius/Green_Spiky_Blob_cd25a048.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 Green_Spiky_Blob"
+   "pending": "다음 몸 티켓",
+   "why": "짝 없음 Green_Spiky_Blob · K-0122 표에 없음(quaternius/Green_Spiky_Blob)"
   },
   {
    "body": "mushnub_evolved",
@@ -421,8 +343,8 @@
     "포자군주"
    ],
    "src": "assets/models/monsters/quaternius/Mushnub_Evolved_84bc88a5.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 Mushnub_Evolved"
+   "pending": "다음 몸 티켓",
+   "why": "짝 없음 Mushnub_Evolved · K-0122 표에 없음(quaternius/Mushnub_Evolved)"
   },
   {
    "body": "mushroom_king",
@@ -431,8 +353,8 @@
     "독버섯 대군주"
    ],
    "src": "assets/models/monsters/quaternius/Mushroom_King_798301fb.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 Mushroom_King"
+   "pending": "다음 몸 티켓",
+   "why": "짝 없음 Mushroom_King · K-0122 표에 없음(quaternius/Mushroom_King)"
   },
   {
    "body": "ninja",
@@ -441,8 +363,8 @@
     "칠흑 자객"
    ],
    "src": "assets/models/monsters/quaternius/Ninja_2ed11876.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 Ninja"
+   "pending": "다음 몸 티켓",
+   "why": "짝 없음 Ninja · K-0122 표에 없음(quaternius/Ninja)"
   },
   {
    "body": "ninja_2",
@@ -451,8 +373,8 @@
     "심야 첩자"
    ],
    "src": "assets/models/monsters/quaternius/Ninja_42162a27.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 Ninja"
+   "pending": "다음 몸 티켓",
+   "why": "짝 없음 Ninja · K-0122 표에 없음(quaternius/Ninja)"
   },
   {
    "body": "orc",
@@ -461,88 +383,8 @@
     "노산도깨비"
    ],
    "src": "assets/models/monsters/quaternius/Orc_52a479b3.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 Orc"
-  },
-  {
-   "body": "orc_enemy",
-   "enemies": [
-    "왕도깨비",
-    "노왕도깨비"
-   ],
-   "src": "assets/models/monsters/quaternius/Orc_Enemy_3076c5f7.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 Orc_Enemy"
-  },
-  {
-   "body": "skeleton_mage",
-   "enemies": [
-    "해골법사",
-    "해골대법사"
-   ],
-   "src": "assets/models/monsters/kaykit_skeletons/Skeleton_Mage.glb",
-   "pending": "K-0122",
-   "why": "경로 꼴 다름"
-  },
-  {
-   "body": "skeleton_minion",
-   "enemies": [
-    "해골졸개",
-    "해골척후"
-   ],
-   "src": "assets/models/monsters/kaykit_skeletons/Skeleton_Minion.glb",
-   "pending": "K-0122",
-   "why": "경로 꼴 다름"
-  },
-  {
-   "body": "skeleton_rogue",
-   "enemies": [
-    "해골도둑",
-    "해골암살자"
-   ],
-   "src": "assets/models/monsters/kaykit_skeletons/Skeleton_Rogue.glb",
-   "pending": "K-0122",
-   "why": "경로 꼴 다름"
-  },
-  {
-   "body": "skeleton_solo",
-   "enemies": [
-    "원혼",
-    "구천혼"
-   ],
-   "src": "assets/models/monsters/quaternius2/SkeletonSolo.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 SkeletonSolo"
-  },
-  {
-   "body": "skeleton_warrior",
-   "enemies": [
-    "해골무사",
-    "해골대장"
-   ],
-   "src": "assets/models/monsters/kaykit_skeletons/Skeleton_Warrior.glb",
-   "pending": "K-0122",
-   "why": "경로 꼴 다름"
-  },
-  {
-   "body": "snake",
-   "enemies": [
-    "독사",
-    "흑사"
-   ],
-   "src": "assets/models/monsters/quaternius2/Snake.glb",
-   "pending": "K-0122",
-   "why": "폴더 예외 quaternius2/Snake"
-  },
-  {
-   "body": "treant",
-   "enemies": [
-    "고목정",
-    "청동거목"
-   ],
-   "src": "assets/models/monsters/quaternius_cute/Tree.glb",
-   "pending": "K-0122",
-   "why": "경로 꼴 다름"
+   "pending": "다음 몸 티켓",
+   "why": "짝 없음 Orc · K-0122 표에 없음(quaternius/Orc)"
   },
   {
    "body": "tribal",
@@ -551,8 +393,8 @@
     "노산야인"
    ],
    "src": "assets/models/monsters/quaternius/Tribal_1b4759ca.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 Tribal"
+   "pending": "다음 몸 티켓",
+   "why": "짝 없음 Tribal · K-0122 표에 없음(quaternius/Tribal)"
   },
   {
    "body": "wizard",
@@ -561,38 +403,8 @@
     "대요술사"
    ],
    "src": "assets/models/monsters/quaternius/Wizard_d206c071.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 Wizard"
-  },
-  {
-   "body": "yeti",
-   "enemies": [
-    "설인",
-    "설산군주"
-   ],
-   "src": "assets/models/monsters/quaternius/Yeti_085b078d.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 Yeti"
-  },
-  {
-   "body": "yeti_2",
-   "enemies": [
-    "대설인",
-    "빙하대설인"
-   ],
-   "src": "assets/models/monsters/quaternius/Yeti_40a831b3.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 Yeti"
-  },
-  {
-   "body": "zombie",
-   "enemies": [
-    "강시",
-    "역병강시"
-   ],
-   "src": "assets/models/monsters/quaternius2/Zombie.glb",
-   "pending": "K-0122",
-   "why": "짝 없음 Zombie"
+   "pending": "다음 몸 티켓",
+   "why": "짝 없음 Wizard · K-0122 표에 없음(quaternius/Wizard)"
   }
  ],
  "humans": [
@@ -691,5 +503,198 @@
   "들개",
   "강철랑"
  ],
- "note_humans": "10-19 Opus: 사람 적 18 → 자체 NPC 몸(npc_swap_plan — 이름 있는 인물 500 과 안 겹침, 얼굴·옷 겹치지 않게 47 렌더 중 고름) self_body · 초상 = 반신 렌더 밑그림 0.65 + 적마다 옷차림(밑그림 옷은 현대 교복·후드라 역할 옷으로 바뀜 = 초상 옷 ≠ 3D 몸 옷) → portraits-monster/<self_body>_c.webp"
+ "note_humans": "10-19 Opus: 사람 적 18 → 자체 NPC 몸(npc_swap_plan — 이름 있는 인물 500 과 안 겹침, 얼굴·옷 겹치지 않게 47 렌더 중 고름) self_body · 초상 = 반신 렌더 밑그림 0.65 + 적마다 옷차림(밑그림 옷은 현대 교복·후드라 역할 옷으로 바뀜 = 초상 옷 ≠ 3D 몸 옷) → portraits-monster/<self_body>_c.webp",
+ "species_k144": [
+  {
+   "body": "blue_demon",
+   "enemies": [
+    "청귀",
+    "대청귀"
+   ],
+   "src": "assets/models/monsters/quaternius/Blue_Demon_6fbb8914.glb",
+   "creature": "demon_blue",
+   "paired_by": "K-0144 (k122_monsters.json quaternius/Blue_Demon)"
+  },
+  {
+   "body": "crab",
+   "enemies": [
+    "집게괴",
+    "철갑해"
+   ],
+   "src": "assets/models/monsters/quaternius_cute/Crab.glb",
+   "creature": "crab_cute",
+   "paired_by": "K-0144 (k122_monsters.json quaternius_cute/Crab)"
+  },
+  {
+   "body": "cthulhu",
+   "enemies": [
+    "심연촉수귀",
+    "강철촉수귀"
+   ],
+   "src": "assets/models/monsters/quaternius_cute/Cthulhu.glb",
+   "creature": "tentacle_imp",
+   "paired_by": "K-0144 (k122_monsters.json quaternius_cute/Cthulhu)"
+  },
+  {
+   "body": "cyclops",
+   "enemies": [
+    "외눈귀",
+    "기계외안"
+   ],
+   "src": "assets/models/monsters/quaternius_cute/Cyclops.glb",
+   "creature": "cyclops_cute",
+   "paired_by": "K-0144 (k122_monsters.json quaternius_cute/Cyclops)"
+  },
+  {
+   "body": "demon",
+   "enemies": [
+    "화염귀",
+    "겁화귀"
+   ],
+   "src": "assets/models/monsters/quaternius/Demon_46b52ba4.glb",
+   "creature": "demon_red",
+   "paired_by": "K-0144 (k122_monsters.json quaternius/Demon)"
+  },
+  {
+   "body": "demon_2",
+   "enemies": [
+    "탐귀",
+    "탐욕귀왕"
+   ],
+   "src": "assets/models/monsters/quaternius/Demon_c2e39eb4.glb",
+   "creature": "demon_red",
+   "paired_by": "K-0144 (k122_monsters.json quaternius/Demon)"
+  },
+  {
+   "body": "demon_green",
+   "enemies": [
+    "풋귀",
+    "동합귀"
+   ],
+   "src": "assets/models/monsters/quaternius_cute/GreenDemon.glb",
+   "creature": "green_imp",
+   "paired_by": "K-0144 (k122_monsters.json quaternius_cute/GreenDemon)"
+  },
+  {
+   "body": "giant",
+   "enemies": [
+    "거인",
+    "폭풍거인"
+   ],
+   "src": "assets/models/monsters/quaternius2/Giant.glb",
+   "creature": "giant",
+   "paired_by": "K-0144 (k122_monsters.json quaternius2/Giant)"
+  },
+  {
+   "body": "orc_enemy",
+   "enemies": [
+    "왕도깨비",
+    "노왕도깨비"
+   ],
+   "src": "assets/models/monsters/quaternius/Orc_Enemy_3076c5f7.glb",
+   "creature": "orc_warrior",
+   "paired_by": "K-0144 (k122_monsters.json quaternius/Orc_Enemy)"
+  },
+  {
+   "body": "skeleton_mage",
+   "enemies": [
+    "해골법사",
+    "해골대법사"
+   ],
+   "src": "assets/models/monsters/kaykit_skeletons/Skeleton_Mage.glb",
+   "creature": "skeleton_mage",
+   "paired_by": "K-0144 (k122_monsters.json kaykit_skeletons/Skeleton_Mage)"
+  },
+  {
+   "body": "skeleton_minion",
+   "enemies": [
+    "해골졸개",
+    "해골척후"
+   ],
+   "src": "assets/models/monsters/kaykit_skeletons/Skeleton_Minion.glb",
+   "creature": "skeleton_minion",
+   "paired_by": "K-0144 (k122_monsters.json kaykit_skeletons/Skeleton_Minion)"
+  },
+  {
+   "body": "skeleton_rogue",
+   "enemies": [
+    "해골도둑",
+    "해골암살자"
+   ],
+   "src": "assets/models/monsters/kaykit_skeletons/Skeleton_Rogue.glb",
+   "creature": "skeleton_rogue",
+   "paired_by": "K-0144 (k122_monsters.json kaykit_skeletons/Skeleton_Rogue)"
+  },
+  {
+   "body": "skeleton_solo",
+   "enemies": [
+    "원혼",
+    "구천혼"
+   ],
+   "src": "assets/models/monsters/quaternius2/SkeletonSolo.glb",
+   "creature": "skeleton",
+   "paired_by": "K-0144 (k122_monsters.json quaternius2/SkeletonSolo)"
+  },
+  {
+   "body": "skeleton_warrior",
+   "enemies": [
+    "해골무사",
+    "해골대장"
+   ],
+   "src": "assets/models/monsters/kaykit_skeletons/Skeleton_Warrior.glb",
+   "creature": "skeleton_warrior",
+   "paired_by": "K-0144 (k122_monsters.json kaykit_skeletons/Skeleton_Warrior)"
+  },
+  {
+   "body": "snake",
+   "enemies": [
+    "독사",
+    "흑사"
+   ],
+   "src": "assets/models/monsters/quaternius2/Snake.glb",
+   "creature": "snake",
+   "paired_by": "K-0144 (k122_monsters.json quaternius2/Snake)"
+  },
+  {
+   "body": "treant",
+   "enemies": [
+    "고목정",
+    "청동거목"
+   ],
+   "src": "assets/models/monsters/quaternius_cute/Tree.glb",
+   "creature": "tree_walker",
+   "paired_by": "K-0144 (k122_monsters.json quaternius_cute/Tree)"
+  },
+  {
+   "body": "yeti",
+   "enemies": [
+    "설인",
+    "설산군주"
+   ],
+   "src": "assets/models/monsters/quaternius/Yeti_085b078d.glb",
+   "creature": "yeti",
+   "paired_by": "K-0144 (k122_monsters.json quaternius/Yeti)"
+  },
+  {
+   "body": "yeti_2",
+   "enemies": [
+    "대설인",
+    "빙하대설인"
+   ],
+   "src": "assets/models/monsters/quaternius/Yeti_40a831b3.glb",
+   "creature": "yeti",
+   "paired_by": "K-0144 (k122_monsters.json quaternius/Yeti)"
+  },
+  {
+   "body": "zombie",
+   "enemies": [
+    "강시",
+    "역병강시"
+   ],
+   "src": "assets/models/monsters/quaternius2/Zombie.glb",
+   "creature": "zombie",
+   "paired_by": "K-0144 (k122_monsters.json quaternius2/Zombie)"
+  }
+ ],
+ "note_k144": "K-0144 단계 1(10-19): pending 31 중 K-0122 짝 표로 몸 생긴 19 body → creatures3d 17(species_k144) · 남은 12 는 다음 몸 티켓"
 }

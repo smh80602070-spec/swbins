@@ -18,7 +18,7 @@
 - [ ] 10-19 · (자체툴 K-0136 → 웹 1만리·2나락) · 3D 땅 타일 8 `shared/assets/tiles/ground/<id>.webp`(512 이음매 없음) — 1만리 `landTexture` 단색 대신 go_*(마을 흙·돌길·들풀·물가), 2나락 `town3d*.js` 바닥에 dg_*(마을 흙·던전 돌·동굴 바위·늪) · 웹
 - [ ] 10-19 · 사용자 "모바일 화면이 깨짐(아이폰 16 Pro)" · 아이폰 크기(402×874) 흉내로 다섯 판 첫 화면 촬영 — 세로 키 아트 `<판>_key_v.webp`(K-0041) 가 정사각 그림에 흐린 띠를 위아래로 덧댄 1080×1920 이라 세로 폰에서 화면의 약 30% 가 띠로 보인다 → 띠 없이 세로로 꽉 찬 세로 키 아트 다섯 장 다시(그 전까지 웹은 그대로) · 자체툴
 - [ ] 10-19 · (자체툴 K-0135 → 웹 W-0296) · 4종횡 타일 80·소품 50·앞 층 10(`saga-story/assets/web2d/{tile,prop,bg}`, 규격 그대로) + 사람 jump·fall 500(`characters2d8/<id>/`, mode2d 가 이미 읽음) · 웹
-- [ ] 10-19 · (자체툴 K-0121 → 웹 2나락) · 종 몸 초상 27·사람 적 18 `portraits-monster/<id>_c.webp` — idOf·foeBody 가 body 의 id 먼저(짝 `tools/ai-art/data/k121_targets.json`) · 웹
+- [ ] 10-19 · (자체툴 K-0121 → 웹 2나락) · 종 몸 초상 27+17(K-0144, pending 19 body)·사람 적 18 `portraits-monster/<id>_c.webp` — idOf·foeBody 가 body 의 id 먼저(짝 `tools/ai-art/data/k121_targets.json`) · 웹
 - [ ] 10-19 · (자체툴 K-0122·K-0120 → 웹) · 빌린 괴물 → `creatures3d/<id>`(표 `tools/world-forge/data/k122_monsters.json`), `FistR` 는 뼈 아닌 노드 · 펫 `world3d/pet_<id>.glb` + 2D `beast_<펫 id>.png`(1만리 sprite.js 표 `pk_x:'pk_x'`) · 웹
 - [ ] 10-19 · (자체툴 K-0143 → 웹 1만리) · 종 몸 2D 시트 95 `shared/assets/creatures2d/<creatures3d id>/`(K-0090 꼴, manifest ortho_m 실제 크기) — 2D 짐승 풀은 종 id 먼저, 없으면 옛 mon_* · 웹
 - [ ] 10-19 · (웹 W-0336·W-0339 → 자체툴) · 2D 오딘스피어식 인물 부위 그림(뼈 16·부위 webp, 규격 `shared/js/cutout2d.js` 머리)·장소별 겹 배경 5~7 층 / 3D 원신+파판 규격(`shared/js/look3d.js`)에 맞춘 환경 모델·재질 · 자체툴

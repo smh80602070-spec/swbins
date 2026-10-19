@@ -1,0 +1,163 @@
+{
+ "name": "k144_portraits_C",
+ "spec": "creature",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0144 단계 2 — K-0122 로 몸 생긴 2나락 종 17 의 creatures3d 렌더(--tight, 흰 바탕 · 옅은 몸 6 은 연회녹)를 밑그림으로 img2img, 그림체 C. 꼴은 k121_portraits_C2 와 같음.",
+ "items": [
+  {
+   "id": "crab_cute",
+   "subject": "cute brown crab, big curved pale claws, round shell, small eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k144_init_w/crab_cute.png",
+   "denoise": 0.6,
+   "seed": 20271019
+  },
+  {
+   "id": "cyclops_cute",
+   "subject": "cute round white one-eyed creature, single big purple eye, small horn, stubby feet",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k144_init_w/cyclops_cute.png",
+   "denoise": 0.6,
+   "seed": 20271116
+  },
+  {
+   "id": "demon_blue",
+   "subject": "slender blue-violet horned demon, bat wings, long curved horns, clawed feet",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k144_init_w/demon_blue.png",
+   "denoise": 0.6,
+   "seed": 20271213
+  },
+  {
+   "id": "demon_red",
+   "subject": "slender red armored demon, small white horns, long curved tail, glowing chest gem",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k144_init_w/demon_red.png",
+   "denoise": 0.6,
+   "seed": 20271310
+  },
+  {
+   "id": "giant",
+   "subject": "huge bald pale giant, massive muscular arms, brown loincloth, hunched",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k144_init_w/giant.png",
+   "denoise": 0.6,
+   "seed": 20271407
+  },
+  {
+   "id": "green_imp",
+   "subject": "small cute green imp, pointed ears, short horns, grinning face, pink cheeks",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k144_init_w/green_imp.png",
+   "denoise": 0.6,
+   "seed": 20271504
+  },
+  {
+   "id": "orc_warrior",
+   "subject": "muscular green orc warrior, leather armor, metal bracers, big shoulders",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k144_init_w/orc_warrior.png",
+   "denoise": 0.6,
+   "seed": 20271601
+  },
+  {
+   "id": "skeleton",
+   "subject": "tall thin skeleton, bare bones, ribcage, hunched posture",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k144_init_w/skeleton.png",
+   "denoise": 0.6,
+   "seed": 20271698
+  },
+  {
+   "id": "skeleton_mage",
+   "subject": "skeleton mage, white robe, small dark crown, skull face",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k144_init_w/skeleton_mage.png",
+   "denoise": 0.6,
+   "seed": 20271795
+  },
+  {
+   "id": "skeleton_minion",
+   "subject": "small skeleton minion, huge round skull head, tiny ribcage body",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k144_init_w/skeleton_minion.png",
+   "denoise": 0.6,
+   "seed": 20271892
+  },
+  {
+   "id": "skeleton_rogue",
+   "subject": "skeleton rogue, pale hood, red scarf, long bony arms",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k144_init_w/skeleton_rogue.png",
+   "denoise": 0.6,
+   "seed": 20271989
+  },
+  {
+   "id": "skeleton_warrior",
+   "subject": "skeleton warrior, horned bone helmet, bony limbs",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k144_init_w/skeleton_warrior.png",
+   "denoise": 0.6,
+   "seed": 20272086
+  },
+  {
+   "id": "snake",
+   "subject": "coiled pale cream snake, green spots, raised head",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k144_init_w/snake.png",
+   "denoise": 0.6,
+   "seed": 20272183
+  },
+  {
+   "id": "tentacle_imp",
+   "subject": "round white blob creature, small tentacles under body, little dark eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k144_init_w/tentacle_imp.png",
+   "denoise": 0.6,
+   "seed": 20272280
+  },
+  {
+   "id": "tree_walker",
+   "subject": "walking tree creature, pink and blue leafy canopy, thick pale trunk, root legs",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k144_init_w/tree_walker.png",
+   "denoise": 0.6,
+   "seed": 20272377
+  },
+  {
+   "id": "yeti",
+   "subject": "white furry yeti, big round body, single blue eye, short legs",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k144_init_w/yeti.png",
+   "denoise": 0.6,
+   "seed": 20272474
+  },
+  {
+   "id": "zombie",
+   "subject": "hunched zombie, dark hooded coat, gray-blue skin, dangling arms",
+   "view": "three_quarter",
+   "extra": "no humans, monster, dim dungeon torchlight",
+   "init_image": "tools/ai-art/_out/k144_init_w/zombie.png",
+   "denoise": 0.6,
+   "seed": 20272571
+  }
+ ]
+}
