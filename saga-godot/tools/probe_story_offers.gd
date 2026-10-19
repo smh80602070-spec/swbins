@@ -4,10 +4,10 @@ extends SceneTree
 ##   godot --headless --path saga-godot --script res://tools/probe_story_offers.gd
 ## ① 옛 세이브(sp_cut_lv 없음, Lv.30·무예 20) 를 불러오면 남은 SP 가 전과 같다 ② 새 판(컷 1): 무사 Lv1 → Lv4 = 3택 세 장 · 장마다 유파가 서로 다름 · SP 는 0
 ## ③ 레벨 100개로 굴린 3택에 같은 유파·같은 무예 겹침 0 ④ 고르기 = 그 무예 +1·SP 그대로 · 거절 = SP +1 ⑤ 전직 전(고를 무예 없음)은 레벨마다 SP 3 그대로
-## ⑥ 등급: (피격 0·연속 20·90초) S · (15·3·600초) C · 사이 값 ⑦ 판 셈: 타격 셋 → 연속 3 · 맞으면 끊기고 피격 1 · 나오면 last_run ⑧ 무예 92 이름·유파 다 있음 · 저장 왕복(3택).
+## ⑥ 등급(G-0245 새 식): (피격 0·연속 20·90초) S · (15·3·600초) D · 사이 값 ⑦ 판 셈: 타격 셋 → 연속 3 · 맞으면 끊기고 피격 1 · 나오면 last_run ⑧ 무예 92 이름·유파 다 있음 · 저장 왕복(3택).
 ## 상태는 끝에 되돌린다. 끝에 "PROBE story_offers OK|FAIL n".
 
-const SAVED_VARS := ["level", "exp", "job", "skills", "sp_cut_lv", "sp_bonus", "skill_offers", "skill_free", "quests_done", "achievements", "feat", "last_run", "run_t0_ms", "run_hits", "run_combo", "run_combo_max", "path_override"]
+const SAVED_VARS := ["level", "exp", "job", "skills", "sp_cut_lv", "sp_bonus", "skill_offers", "skill_free", "quests_done", "achievements", "feat", "last_run", "run_t0_ms", "run_hits", "run_combo", "run_combo_max", "run_kills", "run_gold0", "run_stage", "run_tier_now", "rank_best", "gold", "memory_fragments", "path_override"]
 
 var fails := 0
 var S: Node
@@ -99,7 +99,7 @@ func _initialize() -> void:
 	S.add_exp(need5)
 	check(S.level == 6 and S.skill_offers.is_empty() and S.sp_total() == 5 * int(Combat.SP_PER_LEVEL), "전직 전(고를 무예 없음): 3택 없이 레벨마다 SP %d 그대로(총 %d)" % [int(Combat.SP_PER_LEVEL), S.sp_total()])
 	# ⑥
-	check(S.rank_of(90.0, 0, 20) == "S" and S.rank_of(600.0, 15, 3) == "C" and S.rank_of(200.0, 3, 10) == "B" and S.rank_of(150.0, 1, 9) == "A", "등급: S(0·20·90초) · C(15·3·600초) · B(3·10·200초) · A(1·9·150초)")
+	check(S.rank_of(90.0, 0, 20) == "S" and S.rank_of(600.0, 15, 3) == "D" and S.rank_of(200.0, 3, 10) == "A" and S.rank_of(150.0, 1, 4) == "B" and S.rank_of(400.0, 6, 0) == "C", "등급(G-0245): S(0·20·90초) · D(15·3·600초) · A(3·10·200초) · B(1·4·150초) · C(6·0·400초)")
 	# ⑦
 	S.begin_run()
 	S.note_player_hit()
@@ -108,6 +108,7 @@ func _initialize() -> void:
 	var c3: int = S.run_combo_max
 	S.note_hurt()
 	var cut: int = S.run_combo
+	S.run_kills = 3   # G-0245 — 처치 3 미만이면 등급 없음
 	var r: Dictionary = S.end_run()
 	var again: Dictionary = S.end_run()
 	check(c3 == 3 and cut == 0 and int(r.hits) == 1 and int(r.combo) == 3 and S.last_run == r and again.is_empty() and "⭐ 지난 사냥 등급" in S.run_line(r), "판 셈: 연속 3 · 맞으면 끊김·피격 1 · 나오면 last_run(%s) · 두 번 나와도 하나" % S.run_line(r))

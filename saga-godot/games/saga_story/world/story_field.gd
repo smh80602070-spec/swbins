@@ -46,13 +46,21 @@ func _ready() -> void:
 	_start_gold = StorySaveState.gold
 	## G-0197 — 지난 판 등급을 한 번 보여 주고(있으면), 이번 판 셈을 시작 · 레벨업 3택 창
 	if not StorySaveState.last_run.is_empty():
-		Toast.show(self, StorySaveState.run_line(StorySaveState.last_run), 4.0)
-	StorySaveState.begin_run()
+		Toast.show(self, StorySaveState.run_text(StorySaveState.last_run), 4.0)
+	_begin_run()
 	add_child(preload("res://games/saga_story/ui/skill_offer_prompt.gd").new())
 	## G-0087 이야기 엔진(세이브를 읽은 뒤 — 장면마다 새로, 진행은 StorySaveState.scenario).
 	var runner: Node = preload("res://games/saga_story/world/scenario_runner.gd").new()
 	runner.name = "ScenarioRunner"
 	add_child(runner)
+
+
+## G-0245 — 사냥터 key·급(맵 enemy_lv)을 실어 판 셈 시작. 지도는 EnemySpawner 의 map_path(없으면 field_map — TestField 와 같은 기본)
+func _begin_run() -> void:
+	var sp := get_node_or_null("EnemySpawner")
+	var path := String(sp.get("map_path")) if sp != null and sp.get("map_path") != null else "res://games/saga_story/data/field_map.gd"
+	var m: Object = (load(path) as GDScript).new()
+	StorySaveState.begin_run(String(m.stage_key()), float(m.enemy_lv()))
 
 
 func _process(_delta: float) -> void:
@@ -65,7 +73,7 @@ func _process(_delta: float) -> void:
 
 func _on_fall(player: Node) -> void:
 	_fallen = true
-	StorySaveState.end_run()   # G-0197 쓰러져도 등급은 남는다
+	StorySaveState.end_run(true)   # G-0197 쓰러져도 등급은 남는다 · G-0245 덤은 없다
 	var lost: int = StorySaveState.apply_fall(_start_gold)
 	if save_on_fall:
 		StorySaveState.save()

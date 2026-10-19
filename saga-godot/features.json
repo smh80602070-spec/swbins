@@ -4336,6 +4336,30 @@
   "note": "채집만 — 요리·연주는 고돗 4종횡에 행동이 없어 뺌(후속 후보) · 두 개도 mats 에 들어가 사명 진행 빨라짐(웹과 같음)"
  },
  {
+  "id": "gd.st.run-rank",
+  "name": "4종횡 사냥 평가 S~D — 점수 9(피격 0→3·≤3+(t-1)→2·≤8+2(t-1)→1 · 연속 ≥20/10/5 → 3/2/1 · 시간 ≤180/360초×(1+0.25(t-1)) → 2/1 · 처치 15 +1), S 7+·A 5+·B 3+·C 1+·D · 급 t = 맵 enemy_lv 문턱 5·12·25·45 · 처치 3 미만 등급 없음 · 살아 나온 판 덤 S 금 +50%·기억 조각 1 · A +20% · B +10% · 사냥터별 최고 기록 rank_best(v22, 옛 세이브 빈 칸) · 토스트·세션 카드 둘째 줄(웹 W-0289)",
+  "files": [
+   "games/saga_story/data/story_save_state.gd",
+   "games/saga_story/world/story_field.gd",
+   "games/saga_story/world/story_portal.gd",
+   "games/saga_story/world/story_town.gd",
+   "games/saga_story/ui/story_save_button.gd",
+   "tools/probe_story_rank.gd"
+  ],
+  "tests": [
+   "story_rank",
+   "story_offers",
+   "story_fall",
+   "save_story"
+  ],
+  "level": "D2",
+  "verified": "2026-10-20",
+  "fun": {},
+  "ticket": "G-0245",
+  "since": "2026-10-20",
+  "note": "판 사냥터·급은 begin_run(stage_key, enemy_lv) 에서 잡는다(포털은 지도를 몰라 end_run(dead) 만) · 비경 end_run 은 별개"
+ },
+ {
   "id": "gd.rk.tech-tree",
   "name": "5천하 기술 나무 — 세력 연구 농·상·군·학 × 6마디(값 6~25) · 달마다 연구점 1 + 지력 85 이상 무장(넷까지) + 글 모으기 · 효과는 경륜도 합산 자리(군량·금·내정·공격·수비·징병·축성·등용·외교·계략·경험 %) · 조선·훈련 비용 −20% · 큰 도면 = 불가사의 문 플래그 · HUD 📜 연구 창(웹 W-0290)",
   "files": [

@@ -19,7 +19,7 @@ const Toast := preload("res://saga_core/ui/toast.gd")
 const SAVE_PATH := "user://save_story.json"
 const SaveSlots := preload("res://saga_core/data/save_slots.gd")   # G-0070 슬롯(1 = 이 파일 그대로)
 const SafeFile := preload("res://saga_core/data/safe_file.gd")  # 임시 파일 → .bak → 바꿔치기(쓰는 도중 꺼져도 직전본이 남는다)
-const SAVE_VERSION := 21  # 20→21: life(생활 랭크 — 채집, G-0238 — 옛 세이브는 0) · 19→20: passive(사방 성좌도, G-0214 — 옛 세이브는 빈 칸) · 18→19: sp_cut_lv/sp_bonus/skill_offers(레벨업 3택, G-0197 — 옛 세이브는 불러온 레벨까지 SP 그대로) · 17→18: scenario(이야기, G-0087) · 1→2: mats, 2→3: has_weapon, 3→4: equipped, 4→5: gold, 5→6: job(1차 전직), 6→7: skills(SP 투자), 7→8: scroll_bonus/scroll_left(주문서), 8→9: bosses/feat/achievements(업적), 9→10: quests_done(사명), 10→11: stage_kills(사냥터별 킬 수 사명), 11→12: visited_stages(q_explore1), 12→13: talks(q_talk1), 13→14: repeat_progress/daily_done_day(반복/일일 사명), 14→15: weekly_champion_week(관문 대장), 15→16: memory_fragments/memory_tier(비경), 16→17: mentor_bond(사제 유대, 51장 STORY "관계" 축 첫 걸음)
+const SAVE_VERSION := 22  # 21→22: rank_best(사냥터별 최고 등급, G-0245 — 옛 세이브는 빈 칸) · 20→21: life(생활 랭크 — 채집, G-0238 — 옛 세이브는 0) · 19→20: passive(사방 성좌도, G-0214 — 옛 세이브는 빈 칸) · 18→19: sp_cut_lv/sp_bonus/skill_offers(레벨업 3택, G-0197 — 옛 세이브는 불러온 레벨까지 SP 그대로) · 17→18: scenario(이야기, G-0087) · 1→2: mats, 2→3: has_weapon, 3→4: equipped, 4→5: gold, 5→6: job(1차 전직), 6→7: skills(SP 투자), 7→8: scroll_bonus/scroll_left(주문서), 8→9: bosses/feat/achievements(업적), 9→10: quests_done(사명), 10→11: stage_kills(사냥터별 킬 수 사명), 11→12: visited_stages(q_explore1), 12→13: talks(q_talk1), 13→14: repeat_progress/daily_done_day(반복/일일 사명), 14→15: weekly_champion_week(관문 대장), 15→16: memory_fragments/memory_tier(비경), 16→17: mentor_bond(사제 유대, 51장 STORY "관계" 축 첫 걸음)
 
 
 func save_version() -> int:
@@ -82,6 +82,16 @@ var run_combo_max := 0
 var _run_last_hit_ms := 0
 var last_run: Dictionary = {}
 const COMBO_GAP_MS := 2500   # 이 안에 다음 타격이면 연속
+## G-0245 — 웹 runrank.js(W-0289) 짝: 처치 수·판 시작 금·사냥터(key·급) · 덤 · 사냥터별 최고(저장함)
+const RUN_MIN_KILLS := 3   # 이만큼 못 잡고 나온 판은 등급 없음
+const RUN_ORDER := ["D", "C", "B", "A", "S"]
+const RUN_BONUS := {"S": 0.5, "A": 0.2, "B": 0.1}   # 살아 나온 판만 — 판에서 주운 금 × 배율
+const RUN_SHARD_ON_S := 1
+var run_kills := 0
+var run_gold0 := 0
+var run_stage := ""
+var run_tier_now := 1
+var rank_best: Dictionary = {}   # stage_key → 등급 글자
 
 ## **2026-09-13 추가 — 문(portal, 15절).** 씬을 넘나들 때 세이브 위치
 ## 대신 문이 정해 준 자리에 서게 하는 임시 값 — story_portal.gd가 넘어가기
@@ -130,6 +140,8 @@ func add_kill(stage_key: String = "") -> void:
 	kills += 1
 	if not stage_key.is_empty():
 		stage_kills[stage_key] = int(stage_kills.get(stage_key, 0)) + 1
+	if run_t0_ms > 0:
+		run_kills += 1   # G-0245 판 처치
 	check_achievements()
 	check_quests()
 
@@ -752,21 +764,34 @@ func decline_offer(index: int) -> bool:
 	return true
 
 
-## G-0197 — 사냥터 한 판 결과 등급(순수 함수): 피격(≤1 둘·≤5 하나)·최대 연속(≥15 둘·≥8 하나)·시간(≤180초 둘·≤360초 하나) 점수 합 6 = S · 4~5 = A · 2~3 = B · 0~1 = C
-static func rank_of(sec: float, hits: int, combo: int) -> String:
+## G-0245 — 사냥터 한 판 결과 등급(순수 함수, 웹 runrank.js rankOf 그대로): 급 t(1~5) · 피격 0→3·≤3+(t-1)→2·≤8+2(t-1)→1 ·
+## 연속 ≥20→3·≥10→2·≥5→1 · 시간 ≤180·≤360초×(1+0.25(t-1))→2·1 · 처치 ≥15 +1 (합 9) → S 7+·A 5+·B 3+·C 1+·D 0
+static func rank_of(sec: float, hits: int, combo: int, kills: int = 0, tier: int = 1) -> String:
+	var t := clampi(tier, 1, 5)
+	var tm := 1.0 + 0.25 * float(t - 1)
 	var p := 0
-	p += 2 if hits <= 1 else (1 if hits <= 5 else 0)
-	p += 2 if combo >= 15 else (1 if combo >= 8 else 0)
-	p += 2 if sec <= 180.0 else (1 if sec <= 360.0 else 0)
-	return "S" if p >= 6 else ("A" if p >= 4 else ("B" if p >= 2 else "C"))
+	p += 3 if hits == 0 else (2 if hits <= 3 + (t - 1) else (1 if hits <= 8 + 2 * (t - 1) else 0))
+	p += 3 if combo >= 20 else (2 if combo >= 10 else (1 if combo >= 5 else 0))
+	p += 2 if sec <= 180.0 * tm else (1 if sec <= 360.0 * tm else 0)
+	p += 1 if kills >= 15 else 0
+	return "S" if p >= 7 else ("A" if p >= 5 else ("B" if p >= 3 else ("C" if p >= 1 else "D")))
 
 
-func begin_run() -> void:
-	run_t0_ms = Time.get_ticks_msec()
+## 사냥터 급 1~5 — 웹 tierOf(need) 문턱 5·12·25·45, need 자리 = 맵 enemy_lv
+static func run_tier(lv: float) -> int:
+	return 1 if lv < 5.0 else (2 if lv < 12.0 else (3 if lv < 25.0 else (4 if lv < 45.0 else 5)))
+
+
+func begin_run(stage_key: String = "", lv: float = 1.0) -> void:
+	run_t0_ms = maxi(1, Time.get_ticks_msec())
 	run_hits = 0
 	run_combo = 0
 	run_combo_max = 0
 	_run_last_hit_ms = 0
+	run_kills = 0
+	run_gold0 = gold
+	run_stage = stage_key
+	run_tier_now = run_tier(lv)
 
 
 ## 내가 적을 때렸다(story_player_base 의 CombatFeel.hit 자리) — 2.5초 안 다음 타격이면 연속
@@ -783,13 +808,32 @@ func note_hurt() -> void:
 	run_combo = 0
 
 
-## 사냥터를 나올 때 — last_run 에 남기고 돌려준다(들어간 적이 없으면 {})
-func end_run() -> Dictionary:
+## 사냥터를 나올 때(dead = 쓰러짐 — 덤 없음, 등급은 매김) — last_run 에 남기고 돌려준다(들어간 적 없거나 처치 RUN_MIN_KILLS 미만이면 {})
+func end_run(dead: bool = false) -> Dictionary:
 	if run_t0_ms <= 0:
 		return {}
 	var sec := float(Time.get_ticks_msec() - run_t0_ms) / 1000.0
-	last_run = {"rank": rank_of(sec, run_hits, run_combo_max), "sec": sec, "hits": run_hits, "combo": run_combo_max}
 	run_t0_ms = 0
+	if run_kills < RUN_MIN_KILLS:
+		last_run = {}
+		return {}
+	var rk := rank_of(sec, run_hits, run_combo_max, run_kills, run_tier_now)
+	last_run = {"rank": rk, "sec": sec, "hits": run_hits, "combo": run_combo_max, "kills": run_kills, "tier": run_tier_now,
+		"bonus_gold": 0, "shard": 0, "best": false, "prev_best": "", "dead": dead}
+	if not dead:
+		var bonus := int(round(float(maxi(0, gold - run_gold0)) * float(RUN_BONUS.get(rk, 0.0))))
+		if bonus > 0:
+			gold += bonus
+			last_run.bonus_gold = bonus
+		if rk == "S":
+			memory_fragments += RUN_SHARD_ON_S   # 토스트는 run_line2 가 함께 보여 준다
+			last_run.shard = RUN_SHARD_ON_S
+	if not run_stage.is_empty():
+		var old := String(rank_best.get(run_stage, ""))
+		last_run.prev_best = old
+		if old.is_empty() or RUN_ORDER.find(rk) > RUN_ORDER.find(old):
+			rank_best[run_stage] = rk
+			last_run.best = true
 	return last_run
 
 
@@ -798,6 +842,29 @@ static func run_line(r: Dictionary) -> String:
 		return ""
 	var s := int(r.sec)
 	return "⭐ 지난 사냥 등급 %s — 피격 %d · 연속 %d · %d:%02d" % [String(r.rank), int(r.hits), int(r.combo), s / 60, s % 60]
+
+
+## 둘째 줄 — 덤·최고 기록·쓰러짐(없으면 빈 글, 웹 line2)
+static func run_line2(r: Dictionary) -> String:
+	if r.is_empty():
+		return ""
+	var p: Array[String] = []
+	if int(r.get("bonus_gold", 0)) > 0:
+		p.append("🪙 등급 덤 +%d" % int(r.bonus_gold))
+	if int(r.get("shard", 0)) > 0:
+		p.append("💠 기억 조각 +%d" % int(r.shard))
+	if bool(r.get("best", false)):
+		var pb := String(r.get("prev_best", ""))
+		p.append("🏆 최고 기록 %s → %s" % [pb, String(r.rank)] if not pb.is_empty() else "🏆 첫 기록 %s" % String(r.rank))
+	if bool(r.get("dead", false)):
+		p.append("쓰러져 덤 없음")
+	return " · ".join(p)
+
+
+## 토스트·세션 카드용 — 첫 줄 + 둘째 줄(있으면)
+static func run_text(r: Dictionary) -> String:
+	var l2 := run_line2(r)
+	return run_line(r) + ("\n" + l2 if not l2.is_empty() else "")
 
 
 func raise_skill(key: String) -> bool:
@@ -837,6 +904,7 @@ func save() -> bool:
 		"mentor_bond": mentor_bond,
 		"passive": passive,   # G-0214
 		"life": life,   # G-0238
+		"rank_best": rank_best,   # G-0245
 		"scenario": scenario,   # G-0087
 		"skills": skills,
 		"sp_cut_lv": sp_cut_lv,   # G-0197
@@ -898,6 +966,13 @@ func try_load() -> bool:
 	if typeof(loaded_life) == TYPE_DICTIONARY:
 		for k: Variant in (loaded_life as Dictionary):
 			life[String(k)] = maxi(0, int((loaded_life as Dictionary)[k]))
+	var loaded_rank_best: Variant = data.get("rank_best", {})   # G-0245 — 옛 세이브(21)는 빈 칸
+	rank_best = {}
+	if typeof(loaded_rank_best) == TYPE_DICTIONARY:
+		for k: Variant in (loaded_rank_best as Dictionary):
+			var g := String((loaded_rank_best as Dictionary)[k])
+			if RUN_ORDER.has(g):
+				rank_best[String(k)] = g
 	var loaded_scenario: Variant = data.get("scenario", {})   # G-0087
 	scenario = (loaded_scenario as Dictionary).duplicate(true) if typeof(loaded_scenario) == TYPE_DICTIONARY else {}
 	var loaded_skills: Variant = data.get("skills", {})

@@ -25,6 +25,9 @@ func _on_pressed() -> void:
 		]
 		if not StorySaveState.last_run.is_empty():   # G-0197 — 지난 사냥 등급
 			lines.append(StorySaveState.run_line(StorySaveState.last_run))
+			var l2 := StorySaveState.run_line2(StorySaveState.last_run)   # G-0245 덤·최고 기록
+			if not l2.is_empty():
+				lines.append(l2)
 		SessionCard.show(get_tree().current_scene, "저장했다 — 이번 세션", lines)
 	else:
 		_toast("저장 실패 — 플레이어를 못 찾았다.")
