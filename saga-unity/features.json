@@ -2119,6 +2119,23 @@
   "note": "D2(U-0127): docs/playcheck/d2-u0127-20261019.json — PlaytestForestHeadless 22→27(movein build·tags2·settle·oneaday·save) · 짓기 열매 15(재료 없음) · 집 모습 = 내 집 껍데기 ×0.55 · 촬영 안 함"
  },
  {
+  "id": "un.fs.cave-depth",
+  "name": "U-0132 땅 아래 층 — 바위 지대 굴 입구 → 지하 5층(횃불·광맥 하루 한 번·사다리 지키는 짐승·5층 유물, 웹 W-0285 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaForest/Data/ForestCave.cs",
+   "saga-unity/Assets/Games/SagaForest/World/ForestCaveRunner.cs"
+  ],
+  "tests": [
+   "PlaytestForestCave"
+  ],
+  "level": "D2",
+  "verified": "2026-10-20 claude",
+  "fun": {},
+  "ticket": "U-0132",
+  "since": "2026-10-20",
+  "note": "D2(U-0132): docs/playcheck/d2-u0132-20261020.json — PlaytestForestHeadless 27→32(cave enter·torch·beast·relic·exit) · 광맥 = 열매(광석 없음)·5층 광맥·유물 = 화석 도감 기존 칸 · 짐승·광맥 도형 대역(K) · 촬영 안 함"
+ },
+ {
   "id": "un.rk.tech-tree",
   "name": "U-0129 기술 나무 — 세력 연구 네 갈래(농·상·군·학) × 6마디(웹 W-0290 이식)",
   "files": [

@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-20",
+  "tickets": [
+    "U-0132 3마을 땅 아래 층(웹 W-0285)"
+  ],
+  "how": "PlaytestForestHeadless.Run·UiLayoutCheck.Run 배치(unity-batch.sh, -quit 없음, </dev/null), 세이브 다섯 백업·되돌림(Forest 헤드리스는 save_forest.json 을 지우고 시작 → 백업에서 되돌림, md5 같음)",
+  "ok_before": 27,
+  "ok_after": 32,
+  "new_ok": [
+    "cave enter",
+    "cave torch",
+    "cave beast",
+    "cave relic",
+    "cave exit"
+  ],
+  "ui_layout": "OK 문제 0",
+  "error_cs": 0,
+  "exception": 0,
+  "save_md5_same": true,
+  "runs": 1
+}
