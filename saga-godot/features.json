@@ -4442,5 +4442,39 @@
   "ticket": "G-0236",
   "since": "2026-10-19",
   "note": "세이브 순수 추가 칸 weapon2(버전 그대로) · 을은 능력치·투장에 안 셈 · 사망 무덤은 갑만 · 자세는 새 그림 없이 Visual rotation.x"
+ },
+ {
+  "id": "gd.rk.supply-line",
+  "name": "5천하 보급선·진 — 비긴 출진은 성 밖에 진(치중 한 달치씩·사기 ×0.94/달·0.60 미만 또는 500 미만이면 물러남·달마다 한 번 더 싸움, AI 도 진) · 출진 성에서 우리 성만 밟아 BFS 로 이어지면 보급 ○, 끊기면(적 진 선 성은 못 지남·계략 ✂️ 보급 끊기 250금 2달) 그 달 사기 ×0.85·병력 −5% · 공격 단추에서 포위 풀기 · 3D 지도 보급 띠 초록/빨강(웹 W-0278)",
+  "files": [
+   "games/saga_realm/data/realm_supply.gd",
+   "games/saga_realm/data/realm_rules_war.gd",
+   "games/saga_realm/data/realm_rules_month.gd",
+   "games/saga_realm/data/realm_state.gd",
+   "games/saga_realm/data/realm_save_state.gd",
+   "games/saga_realm/data/realm_diplo.gd",
+   "games/saga_realm/ui/realm_attack_button.gd",
+   "games/saga_realm/ui/realm_plot_button.gd",
+   "games/saga_realm/world/realm_supply_lines.gd",
+   "games/saga_realm/world/realm_worldmap.gd",
+   "tools/probe_realm_supply.gd"
+  ],
+  "tests": [
+   "realm_supply",
+   "realm_state",
+   "realm_tactics",
+   "realm_tech",
+   "realm_golden",
+   "save_realm",
+   "scenario_realm",
+   "realm_defeat",
+   "realm_data"
+  ],
+  "level": "D2",
+  "verified": "2026-10-19",
+  "fun": {},
+  "ticket": "G-0239",
+  "since": "2026-10-19",
+  "note": "세이브 22→23(camps, 옛 세이브 = 빈 배열) · golden 2f12de0b→a8902b8f(비김→진, CAMP_ON=false 면 옛 값) · AI 는 끊기 계략 안 씀 · AI 진은 이겨도 성 안 뺏음 · 진 장수는 성 명령에서 안 빠짐"
  }
 ]

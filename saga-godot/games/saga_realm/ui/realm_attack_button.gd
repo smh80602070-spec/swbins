@@ -21,6 +21,7 @@ const Toast := preload("res://saga_core/ui/toast.gd")
 const TacticsView := preload("res://games/saga_realm/world/realm_tactics_view.gd")   # G-0183
 const RealmTactics := preload("res://games/saga_realm/data/realm_tactics.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
+const RealmSupply := preload("res://games/saga_realm/data/realm_supply.gd")   # G-0239
 
 const TOAST_SEC := 3.5
 
@@ -57,8 +58,20 @@ func _on_pressed() -> void:
 ## 다음, 치기 전에 3합 일기토를 걸지 물을지 정한다. 걸면 `RealmWar.
 ## DUEL_MOVES` 셋(베기·찌르기·막기) 중 하나를 3번 고르는 화면이 이어진다
 ## (`realm_promote_button.gd`류 다단 ChoicePrompt와 같은 결).
+func _withdraw(target_id: String, box: Dictionary) -> void:   # G-0239
+	(box["layer"] as CanvasLayer).queue_free()
+	Toast.show(self, String(RealmSaveState.withdraw_camp(target_id).get("msg", "")), TOAST_SEC)
+
+
 func _attack(target_id: String, layer_box: Dictionary) -> void:
 	(layer_box["layer"] as CanvasLayer).queue_free()
+	if not RealmSupply.camp_at(RealmSaveState, target_id, RealmSupply.ME).is_empty():   # G-0239 이미 진 — 포위를 풀지 묻는다
+		var cbox := {}
+		cbox["layer"] = ChoicePrompt.build(self, "%s — 진을 치고 있다" % _target_name(target_id), [
+			{"label": "↩️ 포위를 푼다(남은 병력·치중이 출진 성으로 돌아온다)", "cb": func() -> void: _withdraw(target_id, cbox)},
+			{"label": "그대로 둔다", "cb": func() -> void: (cbox["layer"] as CanvasLayer).queue_free()},
+		])
+		return
 	var ask_box := {}
 	var choices: Array = [
 		{"label": "♟️ 전술판을 펼친다(3턴 격자 — 이기면 위력↑, 지면 위력↓ · 쓰러진 장수는 3달 다친다)",
@@ -150,6 +163,10 @@ func _finish_attack(target_id: String, duel_moves: Array, layer_box: Dictionary,
 			toast_sec = TOAST_SEC + 1.5
 	elif r.routed:
 		msg += "↩️ 물러났다 (아군 손실 %d · 적 손실 %d)" % [int(r.loss_a), int(r.loss_d)]
+	elif bool(r.get("camp", false)):   # G-0239 비김 = 진
+		msg += "🏕️ 승부가 안 나 성 밖에 진을 쳤다 — 다음 달 다시 친다 (아군 손실 %d · 적 손실 %d)
+보급선이 끊기면 사기가 꺾인다 · 다시 「공격」 에서 포위를 풀 수 있다" % [int(r.loss_a), int(r.loss_d)]
+		toast_sec = TOAST_SEC + 1.5
 	else:
 		msg += "🌒 날이 저물었다 — 못 떨어뜨렸다 (아군 손실 %d · 적 손실 %d)" % [int(r.loss_a), int(r.loss_d)]
 	Toast.show(self, msg, toast_sec)

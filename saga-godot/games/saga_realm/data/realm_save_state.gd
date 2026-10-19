@@ -5,7 +5,7 @@ extends RealmRulesMonth
 const SAVE_PATH := "user://save_realm.json"
 const SaveSlots := preload("res://saga_core/data/save_slots.gd")   # G-0070 슬롯(1 = 이 파일 그대로)
 const SafeFile := preload("res://saga_core/data/safe_file.gd")  # 임시 파일 → .bak → 바꿔치기(쓰는 도중 꺼져도 직전본이 남는다)
-const SAVE_VERSION := 22  # 21→22(기술 나무: tech, G-0234) · 20→21(AI 세력 경륜도: ai_passive, G-0219) · 19→20(경륜도: passive, G-0216) · 18→19(영내 소식: news, G-0194) · 17→18(격자 전술: officer_hurt/annals, G-0182) · 16→17(이야기 카드: story, G-0088) · 1(성 하나) → 2(성 여러 곳) → 3(officer_city) → 4(enemies) → 5(diplomacy) → 6(정복 성 편입) → 7(충성·계략) → 8(문답) → 9(이간·매수) → 10(인구 증감+재해: cities[].disaster/d_left) → 11(승진/관직: officer_growth) → 12(승패 판정: result) → 13(시나리오: scenario_id) → 14(특성·야망: officer_ambition/enemies_subverted, PLAN 101-2 REALM ③) → 15(이벤트 체인: active_events/events_done, PLAN 101-2 REALM ⑤) → 16(계승: lord_succession_enabled/current_lord_id/heir_id/_succession_shock_until, PLAN 101-2 REALM ⑥)
+const SAVE_VERSION := 23  # 22→23(진·보급선: camps, G-0239) · 21→22(기술 나무: tech, G-0234) · 20→21(AI 세력 경륜도: ai_passive, G-0219) · 19→20(경륜도: passive, G-0216) · 18→19(영내 소식: news, G-0194) · 17→18(격자 전술: officer_hurt/annals, G-0182) · 16→17(이야기 카드: story, G-0088) · 1(성 하나) → 2(성 여러 곳) → 3(officer_city) → 4(enemies) → 5(diplomacy) → 6(정복 성 편입) → 7(충성·계략) → 8(문답) → 9(이간·매수) → 10(인구 증감+재해: cities[].disaster/d_left) → 11(승진/관직: officer_growth) → 12(승패 판정: result) → 13(시나리오: scenario_id) → 14(특성·야망: officer_ambition/enemies_subverted, PLAN 101-2 REALM ③) → 15(이벤트 체인: active_events/events_done, PLAN 101-2 REALM ⑤) → 16(계승: lord_succession_enabled/current_lord_id/heir_id/_succession_shock_until, PLAN 101-2 REALM ⑥)
 
 
 func save_version() -> int:
@@ -32,6 +32,7 @@ func save() -> bool:
 		"passive": passive,   # G-0216
 		"ai_passive": ai_passive,   # G-0219
 		"tech": tech,   # G-0234
+		"camps": camps,   # G-0239
 		"enemy_officer_loyal": enemy_officer_loyal,
 		"diplomacy": diplomacy,
 		"quiz": quiz,
@@ -96,6 +97,8 @@ func try_load() -> bool:
 	var loaded_tech: Variant = data.get("tech", null)   # G-0234 — 옛 세이브(21)는 0점
 	tech = (loaded_tech as Dictionary).duplicate(true) if typeof(loaded_tech) == TYPE_DICTIONARY else {}
 	preload("res://games/saga_realm/data/realm_tech.gd").bump()
+	var loaded_camps: Variant = data.get("camps", [])   # G-0239 — 옛 세이브(22)는 빈 배열
+	camps = (loaded_camps as Array).duplicate(true) if typeof(loaded_camps) == TYPE_ARRAY else []
 	_ai_apis = {}
 	var loaded_enemy_officer_loyal: Variant = data.get("enemy_officer_loyal", {})
 	if typeof(loaded_enemy_officer_loyal) == TYPE_DICTIONARY and not loaded_enemy_officer_loyal.is_empty():

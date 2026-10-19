@@ -110,6 +110,8 @@ func _run(kind: String, name_: String, target_id: String, layer_box: Dictionary)
 			msg += " · 🚪 %s 이(가) 흔들려 재야로 흩어졌다!" % who
 	elif kind == "bribe":
 		msg = "💰 %s — %s 이(가) 우리 쪽으로 넘어왔다!" % [name_, _officer_name(String(r.target))]
+	elif kind == "cut":
+		msg = "✂️ %s — 적 진 %d곳의 보급이 %d달 끊겼다" % [name_, int(r.get("cut", 0)), preload("res://games/saga_realm/data/realm_supply.gd").CUT_MONTHS]   # G-0239
 	else:
 		msg = "%s 성공" % name_
 	Toast.show(self, msg, TOAST_SEC)

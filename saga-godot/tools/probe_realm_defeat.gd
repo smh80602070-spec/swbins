@@ -72,7 +72,14 @@ func _lose(troops: int, extra: Array = []) -> Dictionary:
 	var pre := {"troops": troops, "total": _total_troops(), "cities": S.cities.size(), "gold": S.gold, "food": int(S.cities.xuchang.food),
 		"gov": S.officer_city.duplicate(), "need": Orders.food_upkeep(troops) * 2, "baggage": Orders.food_upkeep(troops)}
 	pre["at"] = S.attack("xiaopei")
+	_unpitch(pre.at)
 	return pre
+
+
+## G-0239 — 비김은 이제 진(camp)으로 남는다. F 측정은 "지고 돌아온" 판이라 그 자리에서 스스로 포위를 풀어(withdraw_camp — 병력·치중이 돌아온다) 옛 비김과 같은 상태로 잰다.
+func _unpitch(at: Dictionary) -> void:
+	if bool(at.get("camp", false)):
+		S.withdraw_camp("xiaopei")
 
 
 ## ④ — 같은 시작에서 전술 보정(grid)을 실어 친다
@@ -85,7 +92,9 @@ func _lose_grid(troops: int, extra: Array, grid: Dictionary) -> Dictionary:
 	S.cities.xuchang.troops = troops
 	S.cities.xuchang.train = 10
 	S.cities.xuchang.tech = 100
-	return {"total": _total_troops(), "at": S.attack("xiaopei", [], grid)}
+	var at: Dictionary = S.attack("xiaopei", [], grid)
+	_unpitch(at)
+	return {"total": _total_troops(), "at": at}
 
 
 func _initialize() -> void:

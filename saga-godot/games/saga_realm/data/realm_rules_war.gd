@@ -160,11 +160,206 @@ func _enemy_attack(enemy_id: String, e: Dictionary, target_id: String) -> String
 
 	var enemy_name := String(enemy_def.get("name", enemy_id))
 	var city_name := String(RealmCities.any_by_id(target_id).get("name", target_id))
+	## G-0239 비김 — AI 도 물러나지 않고 우리 성 밖에 진을 친다(성의 병력이 통째로 나가 그 성은 빈다 · 치중은 그 성 군량에서 두 달치까지).
+	if not rep.won and not rep.routed and RealmSupply.CAMP_ON and afid != "" and RealmSupply.camp_at(self, target_id, afid).is_empty():
+		var bag := mini(int(e.get("food", 0)), RealmOrders.food_upkeep(int(rep.atk_troops_left)) * 2)
+		e.food = int(e.get("food", 0)) - bag
+		RealmSupply.encamp(self, afid, enemy_id, enemy_id, target_id, int(rep.atk_troops_left), int(e.train), int(e.tech), bag, "")
+		e.troops = 0
+		enemies[enemy_id] = e
+		return "🏕️ %s 이(가) %s 을(를) 쳤으나 승부가 안 나 성 밖에 진을 쳤다 (아군 손실 %d · 적 손실 %d)" % \
+			[enemy_name, city_name, int(rep.loss_d), int(rep.loss_a)]
 	if rep.won:
 		return "⚔️ %s 이(가) %s 을(를) 쳐 성이 크게 흔들렸다 (아군 손실 %d · 적 손실 %d)" % \
 			[enemy_name, city_name, int(rep.loss_d), int(rep.loss_a)]
 	return "⚔️ %s 이(가) %s 을(를) 쳤으나 물리쳤다 (아군 손실 %d · 적 손실 %d)" % \
 		[enemy_name, city_name, int(rep.loss_d), int(rep.loss_a)]
+
+
+## G-0239 진의 한 달(war.js resolveAll·resolveCamp) — next_month 가 AI 출병 앞에서 부른다. 목록을 베껴 돈다(도중에 진이 빠진다).
+## 순서: 입성/흩어짐/맹약 → 치중 한 달치(모자라면 20% 흩어지고 물러남) → 보급선(realm_supply.gd monthly) → 사기 ×0.94 →
+## 0.60 미만·500 미만이면 물러남 → attack()·_enemy_attack() 과 같은 RealmWar.fight 한 번(사기는 공 위력 give 에 곱한다 — 웹 armyPower × morale).
+## 이기면 우리 진은 함락(_capture_city), AI 진은 성을 뺏지 않는다(AI 머리말 규칙 그대로) — 성벽·병력만 깎고 돌아간다.
+func _resolve_camps() -> Array:
+	var msgs: Array = []
+	for cp: Dictionary in camps.duplicate():
+		var m := _resolve_camp(cp)
+		if m != "":
+			msgs.append(m)
+	if not msgs.is_empty():
+		Toast.show(self, "\n".join(msgs), 3.0 + float(msgs.size()))
+	return msgs
+
+
+## 사람이 스스로 포위를 푼다(war.js withdraw) — 남은 병력·치중이 출진 성으로. {"ok", "msg"}
+func withdraw_camp(enemy_id: String) -> Dictionary:
+	var cp := RealmSupply.camp_at(self, enemy_id, RealmSupply.ME)
+	if cp.is_empty():
+		return {"ok": false, "why": "진이 없습니다", "msg": "진이 없습니다"}
+	return {"ok": true, "msg": _camp_retreat(cp, "스스로 군을 거두어")}
+
+
+func _camp_name(cp: Dictionary) -> String:
+	if String(cp.force) == RealmSupply.ME:
+		return "우리 군"
+	return String(RealmCities.enemy_by_id(String(cp.src)).get("name", cp.src))
+
+
+func _camp_drop(cp: Dictionary) -> void:
+	camps.erase(cp)
+
+
+## 포위를 푼다 — 남은 병력·치중은 출진 성으로(우리 성을 잃었으면 시작 성으로).
+func _camp_retreat(cp: Dictionary, why: String) -> String:
+	if String(cp.force) == RealmSupply.ME:
+		var home := String(cp.from) if cities.has(String(cp.from)) else RealmCities.DEFAULT_CITY
+		if cities.has(home):
+			cities[home].troops = int(cities[home].troops) + int(cp.troops)
+			cities[home].food = int(cities[home].food) + int(cp.food)
+	else:
+		var e: Dictionary = enemies.get(String(cp.src), {})
+		if not e.is_empty():
+			e.troops = int(e.troops) + int(cp.troops)
+			e.food = int(e.get("food", 0)) + int(cp.food)
+	_camp_drop(cp)
+	return "↩️ %s 이(가) %s 의 포위를 풀었다 — %s" % [_camp_name(cp), String(RealmCities.any_by_id(String(cp.to)).get("name", cp.to)), why]
+
+
+func _resolve_camp(cp: Dictionary) -> String:
+	var me := String(cp.force) == RealmSupply.ME
+	var to := String(cp.to)
+	var to_name := String(RealmCities.any_by_id(to).get("name", to))
+	if me:
+		if not enemies.has(to):
+			_camp_drop(cp)
+			return ""
+		if bool(enemies[to].get("captured", false)):   # 그 사이 우리 깃발이 올랐다 — 그대로 들어간다
+			cities[to].troops = int(cities[to].troops) + int(cp.troops)
+			cities[to].food = int(cities[to].food) + int(cp.food)
+			_camp_drop(cp)
+			return "🚩 %s 에 이미 우리 깃발이 올라 그대로 입성했다" % to_name
+		if int((diplomacy.get(force_of(to), {}) as Dictionary).get("truce_months", 0)) > 0:
+			return _camp_retreat(cp, "맹약이 맺어져")
+	else:
+		var src: Dictionary = enemies.get(String(cp.src), {})
+		if src.is_empty() or bool(src.get("captured", false)) or not cities.has(to):
+			_camp_drop(cp)   # 돌아갈 성을 잃었다 — 원정군이 흩어진다
+			return "🏳️ 돌아갈 곳을 잃은 %s 의 원정군이 %s 앞에서 흩어졌다" % [_camp_name(cp), to_name]
+		if int((diplomacy.get(String(cp.force), {}) as Dictionary).get("truce_months", 0)) > 0:
+			return _camp_retreat(cp, "맹약이 맺어져")
+	## 치중
+	var eat := RealmOrders.food_upkeep(int(cp.troops))
+	if int(cp.food) < eat:
+		cp.troops = maxi(0, int(cp.troops) - roundi(float(cp.troops) * RealmSupply.STARVE))
+		cp.food = 0
+		return _camp_retreat(cp, "군량이 떨어져")
+	cp.food = int(cp.food) - eat
+	var sup := RealmSupply.monthly(self, cp)
+	var head := ""
+	if bool(sup.cut):
+		head = "✂️ %s 의 %s 진 — 보급선이 끊겨 사기가 꺾이고 병사 %d 이 흩어졌다\n" % [_camp_name(cp), to_name, int(sup.lost)]
+	cp.morale = float(cp.morale) * RealmSupply.CAMP_DECAY
+	if float(cp.morale) < RealmSupply.CAMP_QUIT or int(cp.troops) < RealmSupply.CAMP_MIN:
+		return head + _camp_retreat(cp, "군이 지쳐")
+	return head + (_camp_fight_me(cp, to, to_name) if me else _camp_fight_ai(cp, to, to_name))
+
+
+func _camp_fight_me(cp: Dictionary, to: String, to_name: String) -> String:
+	var e: Dictionary = enemies[to]
+	var enemy_def := RealmCities.enemy_by_id(to)
+	var oid := String(cp.get("officer", ""))
+	var led := oid in roster and int(officer_hurt.get(oid, 0)) <= 0
+	var atk_might := _effective_stat(oid, "might") if led else 0.0
+	if led and RealmTraits.has_trait(oid, "militant"):
+		atk_might *= RealmTraits.TRAIT_MILITANT_MIGHT_MUL
+	var atk := {
+		"troops": int(cp.troops), "start": int(cp.troops), "train": int(cp.train), "tech": int(cp.tech),
+		"best_command": _effective_stat(oid, "command") if led else 0.0, "best_might": atk_might,
+		"officer_count": 1 if led else 0, "give": float(cp.morale),
+	}
+	for pair in [["atk", "give"], ["take", "take"], ["field", "give_field"], ["siege", "give_siege"], ["chip", "chip"]]:
+		var m := _sc(String(pair[0]))
+		if m != 1.0:
+			atk[pair[1]] = float(atk.get(pair[1], 1.0)) * m
+	var dfid := force_of(to)
+	var dg := RealmAI.mul(self, dfid, "take") * RealmAI.mul(self, dfid, "hit_me")
+	if dg != 1.0:
+		atk["give"] = float(atk.give) * dg
+	if RealmAI.mul(self, dfid, "def_atk") != 1.0:
+		atk["take"] = float(atk.get("take", 1.0)) * RealmAI.mul(self, dfid, "def_atk")
+	var def_officers: Array = e.get("officers", [])
+	var dbc := 0.0
+	var dbm := 0.0
+	for d: String in def_officers:
+		if Characters.find(d) == null:
+			continue
+		dbc = maxf(dbc, _effective_stat(d, "command"))
+		dbm = maxf(dbm, _effective_stat(d, "might"))
+	var def_army := {"troops": int(e.troops), "start": int(e.troops), "train": int(e.train), "tech": int(e.tech),
+		"best_command": dbc, "best_might": dbm, "officer_count": def_officers.size()}
+	var wall := {"wall": int(e.wall), "max_wall": int(e.max_wall)}
+	var land := String(enemy_def.get("land", "plain"))
+	var rep := RealmWar.fight(atk, def_army, wall, RealmCities.land_def(land), RealmCities.land_siege(land), _rng)
+	e.wall = wall.wall
+	if led:
+		gain_exp(oid, int(RealmGrowth.EXP.march))
+	var months := int(cp.months)
+	if rep.won:
+		var boss := _capture_city(to, enemy_def, oid, int(rep.atk_troops_left), int(cp.train))
+		cities[to].food = int(cities[to].food) + int(cp.food)
+		_camp_drop(cp)
+		return "🏯 %s 진 %d달째 — 에워싼 끝에 함락했다!%s" % [to_name, months, (" (보스 %s · 💰%d)" % [boss, BOSS_BONUS_GOLD]) if boss != "" else ""]
+	e.troops = int(rep.def_troops_left)
+	enemies[to] = e
+	cp.troops = int(rep.atk_troops_left)
+	if rep.routed:
+		return _camp_retreat(cp, "공격군이 무너져")
+	cp.months = months + 1
+	return "🏕️ %s 진 %d달째 — 사기 %d · 병력 %d · 치중 %d" % [to_name, months, roundi(float(cp.morale) * 100.0), int(cp.troops), int(cp.food)]
+
+
+func _camp_fight_ai(cp: Dictionary, to: String, to_name: String) -> String:
+	var c: Dictionary = cities[to]
+	var e: Dictionary = enemies[String(cp.src)]
+	var afid := String(cp.force)
+	var def_officers: Array = []
+	for id: String in roster:
+		if officer_city.get(id, "") == to:
+			def_officers.append(id)
+	var dbc := 0.0
+	var dbm := 0.0
+	for d: String in def_officers:
+		dbc = maxf(dbc, _effective_stat(d, "command"))
+		dbm = maxf(dbm, _effective_stat(d, "might"))
+	var def_army := {"troops": int(c.troops), "start": int(c.troops), "train": int(c.train), "tech": int(c.tech),
+		"best_command": dbc, "best_might": dbm, "officer_count": def_officers.size()}
+	var abc := 0.0
+	var abm := 0.0
+	var atk_officers: Array = e.get("officers", [])
+	for a: String in atk_officers:
+		if Characters.find(a) == null:
+			continue
+		abc = maxf(abc, _effective_stat(a, "command"))
+		abm = maxf(abm, _effective_stat(a, "might"))
+	var atk := {"troops": int(cp.troops), "start": int(cp.troops), "train": int(cp.train), "tech": int(cp.tech),
+		"best_command": abc, "best_might": abm, "officer_count": atk_officers.size(), "give": float(cp.morale) * _sc("enemy_atk")}
+	for pair in [["atk", "give"], ["take", "take"], ["field", "give_field"], ["siege", "give_siege"], ["chip", "chip"]]:
+		var am := RealmAI.mul(self, afid, String(pair[0]))
+		if am != 1.0:
+			atk[pair[1]] = float(atk.get(pair[1], 1.0)) * am
+	var wall := {"wall": int(c.wall), "max_wall": RealmCities.wall_cap(to)}
+	var land := String(RealmCities.any_by_id(to).get("land", "plain"))
+	var rep := RealmWar.fight(atk, def_army, wall, RealmCities.land_def(land), RealmCities.land_siege(land), _rng)
+	c.wall = wall.wall
+	c.troops = int(rep.def_troops_left)
+	cp.troops = int(rep.atk_troops_left)
+	var months := int(cp.months)
+	if rep.won:   # AI 는 성을 뺏지 않는다 — 크게 흔들고 돌아간다
+		return "⚔️ %s 진이 %s 을(를) 크게 흔들었다 (%d달째) · " % [_camp_name(cp), to_name, months] + _camp_retreat(cp, "분을 풀고")
+	if rep.routed:
+		return _camp_retreat(cp, "공격군이 무너져")
+	cp.months = months + 1
+	return "🏕️ %s 진이 %s 을(를) %d달째 에워싸고 있다" % [_camp_name(cp), to_name, months]
 
 
 ## rtk-ai.js pickOrder()를 적 세력 쪽으로 좁혀 옮긴 것(2026-09-14, "묻지말고
@@ -354,6 +549,8 @@ func attack(enemy_id: String, duel_moves: Array = [], grid: Dictionary = {}) -> 
 	var dip: Dictionary = diplomacy.get(force_id, {})
 	if int(dip.get("truce_months", 0)) > 0:
 		return {"ok": false, "why": "맹약이 있어 칠 수 없습니다"}
+	if not RealmSupply.camp_at(self, enemy_id, RealmSupply.ME).is_empty():
+		return {"ok": false, "why": "이미 진을 쳐 에워싸고 있습니다"}   # G-0239
 
 	var from_city: String = String(enemy_def.get("from_city", ""))
 	if not cities.has(from_city):
@@ -483,7 +680,54 @@ func attack(enemy_id: String, duel_moves: Array = [], grid: Dictionary = {}) -> 
 
 	e.wall = wall.wall
 	var boss_beaten := ""
+	var camped := false
 	if rep.won:
+		boss_beaten = _capture_city(enemy_id, enemy_def, officer_id, int(rep.atk_troops_left), int(c.train))
+	elif not rep.routed and RealmSupply.CAMP_ON:
+		## G-0239 비김 — 물러나지 않고 성 밖에 진을 친다(war.js encamp). 병력·치중(need 에서 이 달 먹은 몫을 뺀 나머지)은 진이 든다.
+		e.troops = int(rep.def_troops_left)
+		RealmSupply.encamp(self, RealmSupply.ME, from_city, from_city, enemy_id, int(rep.atk_troops_left), int(c.train), int(c.tech),
+			RealmOrders.food_upkeep(troops), officer_id)
+		camped = true
+	else:
+		## war.js finishMarch() routed 분기 — 치중(baggage)은 need에서 이 달
+		## 먹은 몫(food_upkeep(troops), 정확히 need의 절반)을 뺀 나머지다.
+		var baggage := RealmOrders.food_upkeep(troops)
+		c.troops = int(c.troops) + int(rep.atk_troops_left)
+		c.food = int(c.food) + baggage
+		e.troops = int(rep.def_troops_left)
+	enemies[enemy_id] = e
+	## G-0182 — 전사는 로스터에서 영구히 빠지고 열전(annals)에 남는다 · 중상은 남은 달만큼 명령·출진 못 함.
+	for id: String in grid_dead:
+		_fall_in_tactics(id, enemy_id, force_id)
+	var hurt_ids: Array = []
+	for w: Dictionary in grid_hurt:
+		officer_hurt[w.id] = maxi(int(officer_hurt.get(w.id, 0)), int(w.months))
+		hurt_ids.append(w.id)
+
+	var out := {
+		"ok": true, "won": rep.won, "routed": rep.routed, "sortie": rep.sortie,
+		"loss_a": rep.loss_a, "loss_d": rep.loss_d,
+		"wall_from": rep.wall_from, "wall_to": rep.wall_to,
+		"boss_beaten": boss_beaten,
+		"duel_rounds": duel_rounds, "duel_mul": duel_mul,
+	}
+	if camped:
+		out["camp"] = true   # G-0239
+	## G-0182 — 전술 결과가 있을 때만 붙인다(없으면 돌려주는 값도 예전과 한 글자도 같다 — probe_realm_golden md5).
+	if not grid.is_empty():
+		out["grid"] = String(grid.get("kind", ""))
+		out["fallen"] = grid_dead
+		out["hurt"] = hurt_ids
+	return out
+
+
+## 함락 뒤처리 — attack() 승리 분기를 G-0239 에 떼어 냈다(진이 다음 달 이겨도 같은 길). 보스 이름(없으면 "")을 돌려준다.
+func _capture_city(enemy_id: String, enemy_def: Dictionary, officer_id: String, troops_left: int, train_val: int) -> String:
+	var e: Dictionary = enemies[enemy_id]
+	var def_officers: Array = e.get("officers", [])
+	var boss_beaten := ""
+	if true:
 		e.captured = true
 		e.troops = 0
 		## war.js capture() "보스전"(README 여덟 축) — 성을 잃기 전 수비
@@ -510,7 +754,10 @@ func attack(enemy_id: String, duel_moves: Array = [], grid: Dictionary = {}) -> 
 				found.append(oid)
 			enemy_officer_loyal.erase(oid)
 		e.officers = []
-		_annex_city(enemy_id, enemy_def, int(rep.atk_troops_left), int(c.train))
+		_annex_city(enemy_id, enemy_def, troops_left, train_val)
+		if not (officer_id in roster):
+			enemies[enemy_id] = e
+			return boss_beaten   # G-0239 진을 이끌던 장수가 그 사이 빠졌다(전사 등) — 성만 편입
 		## war.js capture() "데려간 장수는 그 성에 남는다" — off.placeAt()
 		## 그대로. `_governor_at()`이 officer_city를 매번 다시 훑는 구조라
 		## (머리말 참고) 태수를 따로 저장할 필요 없이 이 한 줄로 새 성에
@@ -521,35 +768,8 @@ func attack(enemy_id: String, duel_moves: Array = [], grid: Dictionary = {}) -> 
 		wg.feats = int(wg.feats) + 3
 		officer_loyal[officer_id] = clampi(int(officer_loyal.get(officer_id, 50)) + 3, 0, 100)
 		gain_exp(officer_id, int(RealmGrowth.EXP.win))
-	else:
-		## war.js finishMarch() routed 분기 — 치중(baggage)은 need에서 이 달
-		## 먹은 몫(food_upkeep(troops), 정확히 need의 절반)을 뺀 나머지다.
-		var baggage := RealmOrders.food_upkeep(troops)
-		c.troops = int(c.troops) + int(rep.atk_troops_left)
-		c.food = int(c.food) + baggage
-		e.troops = int(rep.def_troops_left)
 	enemies[enemy_id] = e
-	## G-0182 — 전사는 로스터에서 영구히 빠지고 열전(annals)에 남는다 · 중상은 남은 달만큼 명령·출진 못 함.
-	for id: String in grid_dead:
-		_fall_in_tactics(id, enemy_id, force_id)
-	var hurt_ids: Array = []
-	for w: Dictionary in grid_hurt:
-		officer_hurt[w.id] = maxi(int(officer_hurt.get(w.id, 0)), int(w.months))
-		hurt_ids.append(w.id)
-
-	var out := {
-		"ok": true, "won": rep.won, "routed": rep.routed, "sortie": rep.sortie,
-		"loss_a": rep.loss_a, "loss_d": rep.loss_d,
-		"wall_from": rep.wall_from, "wall_to": rep.wall_to,
-		"boss_beaten": boss_beaten,
-		"duel_rounds": duel_rounds, "duel_mul": duel_mul,
-	}
-	## G-0182 — 전술 결과가 있을 때만 붙인다(없으면 돌려주는 값도 예전과 한 글자도 같다 — probe_realm_golden md5).
-	if not grid.is_empty():
-		out["grid"] = String(grid.get("kind", ""))
-		out["fallen"] = grid_dead
-		out["hurt"] = hurt_ids
-	return out
+	return boss_beaten
 
 
 ## G-0182 — 전술판에서 쓰러진 장수를 영구히 내보낸다(웹 marchApply dead 갈래 — rec.dead·gov 비움·annalize).
@@ -577,6 +797,8 @@ func attack_check(enemy_id: String) -> String:
 		return "이미 함락한 성입니다"
 	if int((diplomacy.get(force_of(enemy_id), {}) as Dictionary).get("truce_months", 0)) > 0:
 		return "맹약이 있어 칠 수 없습니다"
+	if not RealmSupply.camp_at(self, enemy_id, RealmSupply.ME).is_empty():
+		return "이미 진을 쳐 에워싸고 있습니다"   # G-0239
 	var from_city := String(enemy_def.get("from_city", ""))
 	if not cities.has(from_city):
 		return "없는 출진 성"
@@ -823,6 +1045,8 @@ func plot(kind: String, enemy_id: String) -> Dictionary:
 		result["target"] = target_id
 		result["home_city"] = RealmCities.DEFAULT_CITY
 		enemies_subverted += 1  # 위와 같은 이유 — 매수도 "적 무장을 꺾은" 것으로 친다
+	elif kind == "cut":
+		result["cut"] = RealmSupply.cut_via(self, enemy_id)   # G-0239 끊은 진 수
 
 	diplomacy[force_id] = dip
 	return result
@@ -885,6 +1109,8 @@ func _plot_check(kind: String, enemy_id: String) -> Dictionary:
 		return {"ok": false, "why": "손이 닿지 않는 성입니다"}
 	if kind == "fire" and (load("res://games/saga_realm/data/realm_statecraft.gd") as GDScript).call("fire_blocked", month, String(e.get("disaster", "")) == "flood"):
 		return {"ok": false, "why": "화공 — 비 오는 달엔 불을 못 놓는다"}   # G-0216
+	if kind == "cut" and RealmSupply.camps_via(self, enemy_id).is_empty():
+		return {"ok": false, "why": "끊을 진이 없습니다"}   # G-0239 — 표적 진이 없으면 금을 안 쓴다
 
 	if gold < int(plot_def.gold):
 		return {"ok": false, "why": "금이 모자랍니다"}

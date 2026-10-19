@@ -151,7 +151,7 @@ func _initialize() -> void:
 	check(duel_ok and ai_seen.size() == 3 and War.duel_round_mul("win") == 1.3 and War.duel_round_mul("tie") == 1.0 and War.duel_round_mul("lose") == 0.8 and War.DUEL_ROUNDS == 3, "일기토 3판: 결과가 서로 맞물리고 AI 가 세 수를 다 씀 · 이기면 ×1.3·비기면 ×1.0·지면 ×0.8")
 
 	# ④ 외교·계략·성장
-	check(Diplo.PLOTS.size() == 4 and Diplo.plot_by_key("bribe").gold == 600 and Diplo.plot_by_key("zzz").is_empty() and Diplo.plot_by_key("fire").emoji == "🔥", "계략 4(이간·유언비어·매수·화계)")
+	check(Diplo.PLOTS.size() == 5 and Diplo.plot_by_key("cut").gold == 250 and Diplo.plot_by_key("bribe").gold == 600 and Diplo.plot_by_key("zzz").is_empty() and Diplo.plot_by_key("fire").emoji == "🔥", "계략 5(이간·유언비어·매수·화계·보급 끊기 G-0239)")
 	var loy_ok := true
 	for c in Characters.HEROES.slice(0, 120):
 		var l: int = Diplo.base_loyal(String(c.id))

@@ -105,6 +105,9 @@ const PLOTS := [
 	 "desc": "충성이 낮은 적 무장을 금으로 부른다."},
 	{"key": "fire", "name": "화계", "emoji": "🔥", "gold": 300,
 	 "desc": "적 성의 군량에 불을 놓는다. 원정 나온 군대가 굶는다."},
+	## G-0239 웹 W-0278 「보급 끊기」 — 그 성에서 나갔거나 그 성을 지나 보급받는 적 진을 2달 끊는다(realm_supply.gd).
+	{"key": "cut", "name": "보급 끊기", "emoji": "✂️", "gold": 250,
+	 "desc": "그 성에서 나갔거나 그 성을 지나 보급받는 적 진의 보급을 2달 끊는다."},
 ]
 const PLOT_RELATION_HIT := -4      # diplo.js plot() "걸기만 해도" 우호 하락
 const PLOT_FAIL_RELATION_HIT := -6 # diplo.js plot() 들통났을 때 추가 하락

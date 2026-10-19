@@ -6,7 +6,7 @@ extends SceneTree
 ## 한 줄 md5 로 낸다. 끝에 "PROBE realm_golden OK md5=…". 기대값(GOLDEN)이 비어 있으면 값만 찍고 OK, 채워져 있으면 다르면 FAIL.
 ## 진짜 세이브는 안 건드린다(save()·try_load() 안 부름).
 
-const GOLDEN := "2f12de0b9ac14a375c65c2ed610f70df"  # 10-13 G-0219 AI 세력 경륜도(AI 가 달마다 찍고 출병·수비·성장에 걸림 — realm_ai_statecraft.gd AI_ON=false 면 옛 값 a6992811… 그대로, 확인함) · 10-09 G-0126 시간 틈 아홉을 시작 성 셋 재야로(수색 결과가 달라짐 — 재야 표만 되돌리면 옛 값 9f622a79… 그대로, 확인함) · 10-06 문답 260 을 웹 가명판으로 다시 옮긴 뒤(옛 문답이면 분리 전 값 c0419613… 그대로 — 차이는 문답 글자뿐, 확인함)
+const GOLDEN := "a8902b8f27e3ff3b8ca4a7c0c028cf39"  # 10-19 G-0239 비김 → 진(병력·치중이 성 밖에 남아 달마다 다시 싸움, AI 도 진 — realm_supply.gd CAMP_ON=false 면 옛 값 2f12de0b… 그대로, 확인함) · 10-13 G-0219 AI 세력 경륜도(AI 가 달마다 찍고 출병·수비·성장에 걸림 — realm_ai_statecraft.gd AI_ON=false 면 옛 값 a6992811… 그대로, 확인함) · 10-09 G-0126 시간 틈 아홉을 시작 성 셋 재야로(수색 결과가 달라짐 — 재야 표만 되돌리면 옛 값 9f622a79… 그대로, 확인함) · 10-06 문답 260 을 웹 가명판으로 다시 옮긴 뒤(옛 문답이면 분리 전 값 c0419613… 그대로 — 차이는 문답 글자뿐, 확인함)
 const MONTHS := 36
 
 var _log := ""

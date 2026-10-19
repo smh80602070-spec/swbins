@@ -102,7 +102,7 @@ func _initialize() -> void:
 	var old_zero: bool = int(T.state().pts) == 0 and (T.state().done as Array).is_empty()
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(RS.path_override))
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(RS.path_override + ".bak"))
-	check(ok_save and ok_load and round_ok and ok_old and old_zero and RS.SAVE_VERSION == 22, "⑥ 세이브 왕복 · 옛 21 → 0점 · 버전 %d" % RS.SAVE_VERSION)
+	check(ok_save and ok_load and round_ok and ok_old and old_zero and RS.SAVE_VERSION >= 22, "⑥ 세이브 왕복 · 옛 21 → 0점 · 버전 %d(22 이상, G-0239 에 23)" % RS.SAVE_VERSION)
 
 	# ⑦ 단추
 	var stage := Node.new()

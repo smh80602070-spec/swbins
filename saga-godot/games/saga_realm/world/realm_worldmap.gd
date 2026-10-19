@@ -118,6 +118,10 @@ var _env_no_fog: Environment
 func _ready() -> void:
 	get_viewport().physics_object_picking = true
 	_build_ground()
+	var supply_lines := Node3D.new()   # G-0239 진 보급 선(초록 이어짐·빨강 끊김)
+	supply_lines.name = "SupplyLines"
+	supply_lines.set_script(preload("res://games/saga_realm/world/realm_supply_lines.gd"))
+	add_child(supply_lines)
 	_world_env = get_parent().get_node("WorldEnvironment")
 	_env_original = _world_env.environment
 	if RealmSaveState.scenario_ready:

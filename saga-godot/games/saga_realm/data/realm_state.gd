@@ -46,6 +46,7 @@ const RealmCities := preload("res://games/saga_realm/data/realm_cities.gd")
 const RealmAI := preload("res://games/saga_realm/data/realm_ai_statecraft.gd")   # G-0219 AI 세력 경륜도
 const RealmWar := preload("res://games/saga_realm/data/realm_war.gd")
 const RealmDiplo := preload("res://games/saga_realm/data/realm_diplo.gd")
+const RealmSupply := preload("res://games/saga_realm/data/realm_supply.gd")   # G-0239 진·보급선
 const RealmGrowth := preload("res://games/saga_realm/data/realm_growth.gd")
 const RealmQuizData := preload("res://games/saga_realm/data/realm_quiz_data.gd")
 const RealmTraits := preload("res://games/saga_realm/data/realm_traits.gd")
@@ -143,6 +144,8 @@ var ai_passive: Dictionary = {}
 var _ai_apis: Dictionary = {}
 ## G-0234 기술 나무 — {"pts": int, "done": [마디 id…]}(저장 키 "tech", 21→22). 규칙·표는 data/realm_tech.gd.
 var tech: Dictionary = {}
+## G-0239 진(陣) — 비긴 원정이 성 밖에 남는다. [{force, src, from, to, troops, train, tech, morale, months, food, cut_t, officer}](저장 키 "camps", 22→23). 규칙 data/realm_supply.gd · 달마다 realm_rules_war.gd _resolve_camps().
+var camps: Array = []
 
 ## **2026-09-17 추가 — PLAN 101-2 REALM ③후보(웹판 §5-1 "인물 특성·야망").**
 ## `officer_growth`와 같은 지연 초기화 패턴 — officer_id -> {k, prog, done,
@@ -418,6 +421,7 @@ func start_scenario(id: String) -> void:
 	officer_hurt = {}
 	annals = {}
 	news = []
+	camps = []   # G-0239
 	_done_this_month.clear()
 	viewing_map = false
 
