@@ -4259,5 +4259,31 @@
   "ticket": "G-0232",
   "since": "2026-10-19",
   "note": "3D 마을엔 잡초·경험치가 없어 아침 두 갈래를 바꿈 · 세이브 순수 추가 칸 · 집 안 몸은 VroidBody(휘지 않음)"
+ },
+ {
+  "id": "gd.st.just-dodge",
+  "name": "4종횡 저스트 회피 — 대시 무적 중에 적 공격이 닿았고 대시 시작 0.15초 안이면 0.8초 슬로(time_scale 0.35, 실시간 복구) · 다음 한 타 ×1.3(한 번) · 쿨 4초 · 화면 가장자리 청록 번쩍 · 알림(웹 W-0282)",
+  "files": [
+   "games/saga_story/data/story_just.gd",
+   "games/saga_story/player/story_player.gd",
+   "games/saga_story/player/story_player_base.gd",
+   "saga_core/ui/hurt_vignette.gd",
+   "tools/probe_story_just.gd"
+  ],
+  "tests": [
+   "story_just",
+   "story_player",
+   "story_rules",
+   "story_boss",
+   "hurt_signal",
+   "save_story",
+   "story_golden"
+  ],
+  "level": "D2",
+  "verified": "2026-10-19",
+  "fun": {},
+  "ticket": "G-0233",
+  "since": "2026-10-19",
+  "note": "소리 없음(4종횡 효과음 자리 없음) · 일시정지 중엔 시간 안 건드림 · 상태는 정적 칸(golden 해시 그대로)"
  }
 ]

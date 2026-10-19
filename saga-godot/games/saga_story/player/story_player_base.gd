@@ -317,6 +317,7 @@ func _effective_atk() -> float:
 		atk *= _signature_next_mul
 		_signature_next_mul = 1.0
 	atk *= StoryLabyrinthState.atk_mult()  # PLAN 101-2 STORY ⑤(비경, 맹공 은사) — 기본 공격·무예 전부 이 한 곳을 거친다
+	atk *= preload("res://games/saga_story/data/story_just.gd").take_bonus()   # G-0233 저스트 회피 뒤 다음 한 타 ×1.3(한 번 소비)
 	atk *= StoryConstellation.mul("atk")   # G-0214 사방 성좌도(곱만 — 다음 공격 배율처럼 소비하지 않는다)
 	return atk
 

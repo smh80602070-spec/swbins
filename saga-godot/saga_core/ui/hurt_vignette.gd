@@ -16,12 +16,13 @@ const SHADER := """
 shader_type canvas_item;
 uniform float strength = 0.0;
 uniform float inner = 0.72;
+uniform vec3 tint = vec3(0.85, 0.05, 0.04);
 void fragment() {
 	vec2 d = abs(UV - vec2(0.5)) * 2.0;
 	float e = max(d.x, d.y);
 	float a = smoothstep(inner, 1.0, e);
 	a = a * a;   // 가장자리에 몰리게
-	COLOR = vec4(0.85, 0.05, 0.04, a * strength);
+	COLOR = vec4(tint, a * strength);
 }
 """
 
@@ -61,6 +62,14 @@ static func attach(tree: SceneTree) -> Node:
 
 
 func flash() -> void:
+	_mat.set_shader_parameter("tint", Color(0.85, 0.05, 0.04))
+	_flash_t = FLASH_SEC
+	_wake()
+
+
+## G-0233 — 같은 번쩍을 다른 색으로(4종횡 저스트 회피 청록). 번쩍이 끝나면 붉은색으로 돌아간다.
+func flash_tint(c: Color) -> void:
+	_mat.set_shader_parameter("tint", c)
 	_flash_t = FLASH_SEC
 	_wake()
 
@@ -82,6 +91,8 @@ func _process(delta: float) -> void:
 	_flash_t = maxf(_flash_t - delta, 0.0)
 	_pulse_t = fmod(_pulse_t + delta, PULSE_SEC)
 	_apply()
+	if _flash_t <= 0.0:
+		_mat.set_shader_parameter("tint", Color(0.85, 0.05, 0.04))
 	if _flash_t <= 0.0 and not _low:
 		_rect.visible = false
 		set_process(false)   # 평소엔 아무것도 안 셈

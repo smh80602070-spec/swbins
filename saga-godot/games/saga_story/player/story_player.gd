@@ -17,6 +17,7 @@ func take_damage(amount: float) -> void:
 	if amount <= 0.0:
 		return
 	if _invuln_time_left > 0.0:
+		preload("res://games/saga_story/data/story_just.gd").evaded(self)   # G-0233 대시 시작 0.15초 안에 닿았으면 저스트 회피
 		return
 	## PLAN 101-2 STORY ③후보 — 무사 받아치기(w_parry). 판정 창 안에 맞으면
 	## 무효화하고 다음 공격에 배율을 건다(`_effective_atk()`가 소비한다).
@@ -552,6 +553,7 @@ func _do_dash() -> void:
 	_dash_cd_left = DASH_COOLDOWN * StoryConstellation.mul("dodge")   # G-0214 회피 재사용
 	global_position.x += DASH_DIST_M * _facing
 	_invuln_time_left = maxf(_invuln_time_left, DASH_INVULN_SEC)
+	preload("res://games/saga_story/data/story_just.gd").on_dash()   # G-0233
 
 
 ## PLAN 101-2 STORY ③후보(웹판 §5-1 "직업 정체성") — 같은 `story_dash`
