@@ -1035,6 +1035,19 @@
     { "key": "archive.annals_title", "value": "⚰️ Annals — {0} fallen" },
     { "key": "archive.annal_row", "value": "{0} · {2}/{1} · beneath {3} · by {4}" },
     { "key": "archive.annals_more", "value": "and {0} more" },
-    { "key": "mount.hurt", "value": "🩹 {0} mo" }
+    { "key": "mount.hurt", "value": "🩹 {0} mo" },
+    { "key": "camp.why_order", "value": "by order" },
+    { "key": "camp.withdraw", "value": "⛺ Broke camp before {0} ({1}) — {2} troops and {3} supplies back to {4}" },
+    { "key": "plot.cut_effect", "value": "Cut the supply line to {0} for {1} months — troops −5% each month" },
+    { "key": "camp.why_food", "value": "out of food" },
+    { "key": "camp.cut", "value": " · supply cut (morale ×0.85, troops −5%)" },
+    { "key": "camp.why_tired", "value": "the army is worn out" },
+    { "key": "camp.siege", "value": "🏕️ Siege of {0}, month {1} — morale {2:0}" },
+    { "key": "camp.won", "value": " — {0} has fallen! It is ours now" },
+    { "key": "camp.why_routed", "value": "routed" },
+    { "key": "camp.hold", "value": " — no decision, the camp holds ({0} troops, {1} months of supplies)" },
+    { "key": "camp.pitched", "value": "⛺ No decision — camped before {0} ({1} troops, {2} supplies, enemy losses {3}) · we strike again each month" },
+    { "key": "plot.cut_name", "value": "Cut Supplies" },
+    { "key": "plot.cut_desc", "value": "Cut the supply line into an enemy city for 2 months (troops −5% each month)." }
   ]
 }

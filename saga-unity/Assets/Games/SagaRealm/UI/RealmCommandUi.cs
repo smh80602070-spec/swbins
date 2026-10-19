@@ -509,6 +509,8 @@ namespace Saga.Realm.UI
                     y -= 100f;
                 }
             }
+            // tasks U-0134 — 계략이 셋이 돼 목표 둘인 성은 단추 여섯 → 창을 단추 수만큼 늘린다(닫기 단추·창 밖과 안 겹치게, 기본 620).
+            ((RectTransform)_plotPanel.transform).sizeDelta = new Vector2(680f, Mathf.Max(620f, -y + 140f));
         }
 
         /// <summary>문답 — quiz.js draw()/answer() 그대로(RealmQuizState.cs

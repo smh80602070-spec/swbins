@@ -528,9 +528,11 @@ namespace Saga.Realm.Data
                 }
             }
 
+            var campLines = RealmCamp.Monthly(); // tasks U-0134 진·보급선 — 달 바뀐 뒤(군량 먹고·보급 보고·다시 친다)
             Changed?.Invoke();
             string summary = string.Format(RealmLocalization.T("month.summary", "{0}년 {1}월 — 금 +{2}-{3}(봉록){4}"),
                 Year, Month, income, upkeep, harvest ? RealmLocalization.T("month.harvest_suffix", ", 수확") : "");
+            foreach (var l in campLines) summary += "\n" + l;
             if (starved.Count > 0)
                 summary += string.Format(RealmLocalization.T("month.starved_suffix", " — {0} 굶주려 병사 흩어짐"), string.Join(", ", starved));
             return summary;

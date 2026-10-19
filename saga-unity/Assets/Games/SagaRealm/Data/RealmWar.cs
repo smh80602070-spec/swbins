@@ -19,6 +19,9 @@ namespace Saga.Realm.Data
         public const int Rounds = 10; // war.js ROUNDS
         public const float Rout = 0.35f; // war.js ROUT
 
+        /// <summary>tasks U-0134 진단 전용 — 정해 두면 <see cref="Fight"/> 가 이것으로 결과를 낸다(난수·전력 계산 없이). null 이면 그대로.</summary>
+        public static System.Func<RealmArmy, RealmArmy, RealmEnemyRecord, FightResult> FightForTest;
+
         public readonly struct FightResult
         {
             public readonly bool Won;
@@ -28,11 +31,13 @@ namespace Saga.Realm.Data
             public readonly int WallFrom;
             public readonly int WallTo;
             public readonly bool Sortie;
+            /// <summary>tasks U-0134 — 열 합이 다 가도 승부가 안 남(날이 저묾). Routed 도 함께 true(옛 호출은 그대로 물러남으로 읽는다).</summary>
+            public readonly bool Dusk;
 
-            public FightResult(bool won, bool routed, int lossA, int lossD, int wallFrom, int wallTo, bool sortie)
+            public FightResult(bool won, bool routed, int lossA, int lossD, int wallFrom, int wallTo, bool sortie, bool dusk = false)
             {
                 Won = won; Routed = routed; LossA = lossA; LossD = lossD;
-                WallFrom = wallFrom; WallTo = wallTo; Sortie = sortie;
+                WallFrom = wallFrom; WallTo = wallTo; Sortie = sortie; Dusk = dusk;
             }
         }
 
@@ -105,6 +110,7 @@ namespace Saga.Realm.Data
         public static FightResult Fight(RealmArmy atk, RealmArmy def, RealmEnemyRecord wallRef, RealmLand land,
             float firstRoundPowerMul = 1f, float defPowerMul = 1f, float duelPowerMul = 1f, float atkTakeMul = 1f)
         {
+            if (FightForTest != null) return FightForTest(atk, def, wallRef); // tasks U-0134 진단 — 결과를 정해 둔다
             bool sortie = def.Troops > atk.Troops * 0.85f;
             int wallFrom = wallRef.Wall;
             bool won = false, routed = false;
@@ -115,10 +121,11 @@ namespace Saga.Realm.Data
                 if (outcome == "won") { won = true; break; }
                 if (outcome == "routed") { routed = true; break; }
             }
-            if (!won && !routed) routed = true; // 날이 저묾 — 진영 없이 물러난 것과 같이.
+            bool dusk = !won && !routed;
+            if (dusk) routed = true; // 날이 저묾 — 진(RealmCamp, tasks U-0134)을 안 치면 물러난 것과 같이.
 
             return new FightResult(won, routed, atk.Start - atk.Troops, def.Start - def.Troops,
-                wallFrom, wallRef.Wall, sortie);
+                wallFrom, wallRef.Wall, sortie, dusk);
         }
     }
 }

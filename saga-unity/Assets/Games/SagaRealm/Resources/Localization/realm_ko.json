@@ -1035,6 +1035,19 @@
     { "key": "archive.annals_title", "value": "⚰️ 열전 {0}명" },
     { "key": "archive.annal_row", "value": "{0} · {1}년 {2}월 · {3} 아래 · {4}에게" },
     { "key": "archive.annals_more", "value": "외 {0}명" },
-    { "key": "mount.hurt", "value": "🩹 {0}달" }
+    { "key": "mount.hurt", "value": "🩹 {0}달" },
+    { "key": "camp.why_order", "value": "명을 받아" },
+    { "key": "camp.withdraw", "value": "⛺ {0} 앞 진을 풀었다({1}) — 병력 {2}·치중 {3} 이 {4}(으)로" },
+    { "key": "plot.cut_effect", "value": "{0} 보급로를 {1}달 끊었다 — 달마다 병력 −5%" },
+    { "key": "camp.why_food", "value": "군량이 떨어져" },
+    { "key": "camp.cut", "value": " · 보급로 끊김(사기 ×0.85·병력 −5%)" },
+    { "key": "camp.why_tired", "value": "군이 지쳐" },
+    { "key": "camp.siege", "value": "🏕️ {0} {1}달째 에워쌈 — 사기 {2:0}" },
+    { "key": "camp.won", "value": " — {0} 함락! 이제 우리 성" },
+    { "key": "camp.why_routed", "value": "무너져" },
+    { "key": "camp.hold", "value": " — 승부가 안 났다, 진을 그대로(병력 {0}·치중 {1}달치)" },
+    { "key": "camp.pitched", "value": "⛺ 승부가 안 났다 — {0} 앞에 진을 쳤다(병력 {1}·치중 {2}, 적 손실 {3}) · 달마다 다시 친다" },
+    { "key": "plot.cut_name", "value": "보급 끊기" },
+    { "key": "plot.cut_desc", "value": "적 성으로 드는 보급로를 2달 끊는다(달마다 병력 −5%)." }
   ]
 }

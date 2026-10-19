@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-20",
+  "tickets": [
+    "U-0134 5천하 진·보급선(웹 W-0278)"
+  ],
+  "how": "PlaytestRealmSlice.Run·UiLayoutCheck.Run 배치(unity-batch.sh, -quit 없음, </dev/null), 세이브 다섯 백업·되돌림(Realm 슬라이스는 save_realm.json 을 지움 → 백업에서 되돌림, md5 같음)",
+  "ok_before": 112,
+  "ok_after": 117,
+  "new_ok": [
+    "supply pitch",
+    "supply month",
+    "supply supply",
+    "supply retreat",
+    "supply plot"
+  ],
+  "ui_layout": "OK 문제 0 (계략 창은 단추 수만큼 높이 — 목표 둘 성 6줄)",
+  "error_cs": 0,
+  "exception": 0,
+  "save_md5_same": true,
+  "runs": "5(① 기존 진단이 계략 2종 고정 → 종류 수로 ② 슬라이스 뒤쪽엔 적 성이 다 떨어짐 → 진단 동안 되살림 ③ 컴파일 ④ 무장 없는 성 → 무장 있는 성 고름 ⑤ 통과)"
+}

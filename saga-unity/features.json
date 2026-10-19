@@ -2153,6 +2153,24 @@
   "note": "D2(U-0133): docs/playcheck/d2-u0133-20261020.json — PlaytestStorySlice +5(life ranks·extra·node·rankup·save) · 요리·연주는 재료 쓸 곳이 없어 뒤로(고돗 G-0238 과 같음) · 채집터 = 코드 도형 · 촬영 안 함"
  },
  {
+  "id": "un.rk.supply",
+  "name": "U-0134 진·보급선 — 못 떨군 공격은 진(병력·사기·치중), 달마다 치중·보급로·사기, 끊기면 ×0.85·−5%, 0.60/500 밑 퇴각, 계략 ✂️ 보급 끊기(웹 W-0278 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaRealm/Data/RealmCamp.cs",
+   "saga-unity/Assets/Games/SagaRealm/Data/RealmWarState.cs",
+   "saga-unity/Assets/Games/SagaRealm/Data/RealmWar.cs"
+  ],
+  "tests": [
+   "PlaytestRealmSupply"
+  ],
+  "level": "D2",
+  "verified": "2026-10-20 claude",
+  "fun": {},
+  "ticket": "U-0134",
+  "since": "2026-10-20",
+  "note": "D2(U-0134): docs/playcheck/d2-u0134-20261020.json — PlaytestRealmSlice 112→117(supply pitch·month·supply·retreat·plot) · 적 진이 없는 트랙이라 ✂️ 는 적 성 보급(2달 −5%) · 공격 명령 = 진 풀기 · 촬영 안 함"
+ },
+ {
   "id": "un.rk.tech-tree",
   "name": "U-0129 기술 나무 — 세력 연구 네 갈래(농·상·군·학) × 6마디(웹 W-0290 이식)",
   "files": [

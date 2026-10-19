@@ -41,9 +41,11 @@ namespace Saga.Realm.Data
         {
             ["rumor"] = new RealmPlotData("rumor", "유언비어", "🗣️", 150, "적국에 뜬소문을 놓아 군율을 흐트러뜨린다(훈련도 하락)."),
             ["fire"] = new RealmPlotData("fire", "화계", "🔥", 300, "적국의 병참에 불을 놓는다(병력 손실)."),
+            // tasks U-0134 — 웹 W-0278 ✂️ 보급 끊기(250금). 이 트랙엔 적 진이 없어 그 적 성의 보급을 2달 끊는다(달마다 병력 −5%, RealmCamp).
+            ["cut"] = new RealmPlotData("cut", "보급 끊기", "✂️", 250, "적 성으로 드는 보급로를 2달 끊는다(달마다 병력 −5%)."),
         };
 
-        public static readonly string[] AllKeys = { "rumor", "fire" };
+        public static readonly string[] AllKeys = { "rumor", "fire", "cut" };
 
         public static RealmPlotData Get(string key) => Catalog.TryGetValue(key, out var p) ? p : null;
     }

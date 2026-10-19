@@ -942,9 +942,9 @@ namespace Saga.EditorTools
             }
 
             var buttonsRoot = typeof(RealmCommandUi).GetField("_plotButtonsRoot", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(ui) as Transform;
-            if (buttonsRoot == null || buttonsRoot.childCount != 4)
+            if (buttonsRoot == null || buttonsRoot.childCount != RealmPlotData.AllKeys.Length * 2) // tasks U-0134 — 계략이 셋(보급 끊기)이 돼 종류 수 × 목표 2곳
             {
-                Debug.LogError($"[PlaytestRealmSlice] 계략 고르기 패널의 버튼 개수 이상 — {(buttonsRoot == null ? "null" : buttonsRoot.childCount.ToString())}(기대=4, 계략 2종×목표 2곳)");
+                Debug.LogError($"[PlaytestRealmSlice] 계략 고르기 패널의 버튼 개수 이상 — {(buttonsRoot == null ? "null" : buttonsRoot.childCount.ToString())}(기대={RealmPlotData.AllKeys.Length * 2}, 계략 {RealmPlotData.AllKeys.Length}종×목표 2곳)");
                 return false;
             }
 
@@ -960,7 +960,7 @@ namespace Saga.EditorTools
                 return false;
             }
 
-            Debug.Log("[PlaytestRealmSlice] multi-target plot UI OK - changan(2 targets: hanzhong+tianshui) opens a 4-button (2 kinds x 2 targets) picker, wrong enemyId rejected");
+            Debug.Log("[PlaytestRealmSlice] multi-target plot UI OK - changan(2 targets: hanzhong+tianshui) opens a kinds x 2 targets picker, wrong enemyId rejected");
             return true;
         }
 

@@ -129,6 +129,16 @@ namespace Saga.Realm.World
                 BuildMarker(def, WorldPos(def, centerX, centerY), cityId == RealmCityState.CurrentCity);
             }
 
+            // tasks U-0134 진 — 출진한 성 곁 천막(보급 이어짐 갈색 · 끊김 붉은색). 적 성은 지도에 없어 우리 성 옆에 세운다.
+            foreach (var camp in RealmCamp.Camps)
+            {
+                var from = RealmCityData.Get(camp.from);
+                if (from == null) continue;
+                var at = WorldPos(from, centerX, centerY) + new Vector3(PoleRadius * 6f, 0f, 0f);
+                Spawn($"Camp_{camp.from}", transform, PrimitiveType.Cylinder, at + new Vector3(0f, 1.2f, 0f), new Vector3(2.4f, 1.2f, 2.4f),
+                    RealmCamp.Connected(camp) ? new Color(0.62f, 0.5f, 0.32f) : new Color(0.8f, 0.2f, 0.15f), addCollider: false);
+            }
+
             // PLAN.md 109-13-2 지도 위 인물 — 태수 몸짓·재야. 에디터 씬 빌드(Play 아님)엔 안 세운다(씬에 대역이 저장되지 않게).
             if (Application.isPlaying)
             {

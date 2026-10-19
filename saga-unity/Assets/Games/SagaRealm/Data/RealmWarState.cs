@@ -76,6 +76,13 @@ namespace Saga.Realm.Data
         /// (<see cref="RealmTactics.Apply"/>)의 보정값: 공 위력 ×(1+winPct/100)·받는 피해 ×lossMul·전사·중상. null 이면 지금 그대로.</summary>
         public static AttackResult Attack(string fromCityId, string enemyId = null, bool useTactic = false, float duelPowerMul = 1f, RealmTactics.Bonus grid = null)
         {
+            // tasks U-0134 — 이 성에서 나간 진이 서 있으면 공격 명령 = 진 풀기(고돗 포위 풀기와 같음).
+            if (RealmCamp.From(fromCityId) != null)
+            {
+                string w = RealmCamp.Withdraw(fromCityId);
+                Changed?.Invoke();
+                return new AttackResult(true, w);
+            }
             string block = MarchBlock(fromCityId, ref enemyId);
             if (block != null) return new AttackResult(false, block);
 
@@ -126,6 +133,14 @@ namespace Saga.Realm.Data
                 RealmCityState.AbsorbCity(enemyId, enemy.Wall, enemy.Troops, enemy.Train, enemy.Tech);
                 message = string.Format(RealmLocalization.T("war.captured", "{0}을(를) 함락했다! (아군 손실 {1}, 적 손실 {2}) — 이제 우리 성입니다"),
                     def.Name, result.LossA, result.LossD);
+            }
+            else if (result.Dusk && RealmCamp.CampOn && atk.Troops >= RealmCamp.MinTroops)
+            {
+                // tasks U-0134 — 날이 저물면 물러나지 않고 그 성 앞에 진을 친다(병력·사기·치중이 진으로, 달마다 다시 친다).
+                enemy.Troops = defArmy.Troops;
+                RealmCamp.Pitch(fromCityId, enemyId, atk, baggage);
+                message = string.Format(RealmLocalization.T("camp.pitched", "⛺ 승부가 안 났다 — {0} 앞에 진을 쳤다(병력 {1}·치중 {2}, 적 손실 {3}) · 달마다 다시 친다"),
+                    def.Name, atk.Troops, baggage, result.LossD);
             }
             else
             {
@@ -369,7 +384,7 @@ namespace Saga.Realm.Data
             else
             {
                 var def = RealmEnemyCity.Get(enemyId);
-                string effect = kind == "rumor" ? ApplyRumor(enemy, def.Name) : ApplyFire(enemy, def.Name);
+                string effect = kind == "rumor" ? ApplyRumor(enemy, def.Name) : kind == "cut" ? RealmCamp.CutEnemy(enemyId) : ApplyFire(enemy, def.Name); // tasks U-0134 보급 끊기
                 message = string.Format(RealmLocalization.T("plot.succeeded", "{0} {1} 성공 — {2}"), plot.Emoji, plot.Name, effect);
             }
 
