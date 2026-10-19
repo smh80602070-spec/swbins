@@ -4641,5 +4641,23 @@
   "ticket": "G-0243",
   "since": "2026-10-19",
   "note": "세이브 23→24 wonders(옛 = 빈 것) · start_scenario 가 비움(웹 버그 ①) · 고돗 병력이 웹의 약 1/4 이라 인부 = 웹 men × 0.25(375~750) · AI 는 금이 없어 문턱 = 가장 센 성 병력 ≥ 인부 × 2.5, 환급은 인부만 · AI 병력이 안 늘어 문턱만으론 첫 달에 다 착공 → AI_FROM 12달 + 세력마다 hash 6달에 한 번 · AI 에겐 물길·장원·별 보는 대가 빈 효과 · realm_golden a8902b8f → 4cbe88cb(AI_BUILD=false 면 옛 값 그대로)"
+ },
+ {
+  "id": "gd.core.gfx-baseline",
+  "name": "그래픽 기준선 자동 점검(다섯 판) — 후처리 glow·adjustment·ACES·SSAO · 그림자(2나락 횃불) · 툰 몸 cel_applied · 하늘 sky_real(2나락 예외) 값 점검 + 다섯 판 기준 컷 8장(GO 4·네 판 1씩) 촬영·비교",
+  "files": [
+   "tools/probe_gfx_baseline.gd",
+   "tools/godot_regress.sh",
+   "tools/shot_baseline.sh"
+  ],
+  "tests": [
+   "gfx_baseline"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0249",
+  "since": "2026-10-20",
+  "note": "regress \"== 그래픽 기준선\" 다섯 ok · 네 판 기준 PNG 는 사용자 승인 뒤 graphics/baseline/<판>/ 로(그 전엔 shot_baseline 이 건너뜀)"
  }
 ]

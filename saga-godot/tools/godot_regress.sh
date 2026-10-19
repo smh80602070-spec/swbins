@@ -62,6 +62,22 @@ for idx in "${!names[@]}"; do
   fi
 done
 
+## G-0249 그래픽 기준선 — 후처리(glow·adjustment·ACES·SSAO)·그림자·툰 몸(cel_applied)·하늘(sky_real, 2나락 예외)을
+## 씬마다 값으로 본다(헤드리스라 그림은 못 봄 — 그림은 tools/shot_baseline.sh 컷 비교). tools/probe_gfx_baseline.gd.
+echo "== 그래픽 기준선 (probe_gfx_baseline)"
+for idx in "${!names[@]}"; do
+  name="${names[$idx]}"
+  scene="${scenes[$idx]}"
+  log="$LOGDIR/${name}_gfx.log"
+  timeout 300 "$GODOT" --headless --path "$PROJECT" --script res://tools/probe_gfx_baseline.gd -- "res://$scene" </dev/null >"$log" 2>&1
+  if grep -aq "^PROBE gfx_baseline OK" "$log"; then
+    echo "ok   $name gfx"
+  else
+    echo "FAIL $name gfx — $(grep -a "^GFX \|^PROBE gfx" "$log" | head -2 | tr '\n' ' ' | cut -c1-200) $log"
+    fail=1
+  fi
+done
+
 echo "== .import/project.godot 잡음 (104-3)"
 diff_out=$(git diff --stat -- project.godot '*.import')
 if [ -n "$diff_out" ]; then
