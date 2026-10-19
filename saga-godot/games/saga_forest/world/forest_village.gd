@@ -47,6 +47,10 @@ func _ready() -> void:
 	var pm: Dictionary = preload("res://games/saga_forest/data/forest_partner.gd").on_new_day()   # G-0232 동반자 아침 한 가지
 	if not pm.is_empty():
 		Toast.show(self, String(pm.text), 4.0)
+	var lm: Dictionary = preload("res://games/saga_forest/data/forest_lots.gd").on_new_day(ForestSaveState)   # G-0237 빈 집 입주(하루 한 명)
+	if not lm.is_empty():
+		Toast.show(self, String(lm.text), 4.0)
+	add_child(preload("res://games/saga_forest/world/forest_lots_view.gd").new())   # G-0237 눌러앉은 손님 몸·이름표
 	var e := ForestFestival.event_of_today()
 	if not e.is_empty():
 		Toast.show(self, "🎊 %s — %s" % [e.name, e.hello], 4.0)

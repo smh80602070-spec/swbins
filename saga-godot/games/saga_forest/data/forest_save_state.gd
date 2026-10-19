@@ -64,6 +64,9 @@ var affinity_day: Dictionary = {}      # npc_id(String) -> day_key(하루 상한
 var affinity_gained_today: Dictionary = {}  # npc_id(String) -> int(그 기준일에 이미 얻은 양)
 ## G-0232 동반자 — {id, since, last, anniv_day}(날 = ForestDay.epoch_day_index), 없으면 {}. 순수 추가 필드(버전 안 올림). data/forest_partner.gd.
 var partner: Dictionary = {}
+## G-0237 입주 조건 — 작은 빈 집 [{furn, who, day}]·마지막 입주 굴림 날(ForestDay.epoch_day_index). 순수 추가 칸. data/forest_lots.gd.
+var lots: Array = []
+var lots_roll := -1
 var heart_reward_10: Dictionary = {}   # npc_id(String) -> true(10♥ 기념 사례금, 한 번만)
 
 ## 4번째 확장(제외 목록 4번 — 곤충/화석/조개 + 박물관) — 역시 순수 추가.
@@ -458,6 +461,8 @@ func save() -> bool:
 		"affinity_gained_today": affinity_gained_today,
 		"heart_reward_10": heart_reward_10,
 		"partner": partner,   # G-0232
+		"lots": lots,   # G-0237
+		"lots_roll": lots_roll,
 		"tools": tools,
 		"tool_lv": tool_lv,   # G-0196
 		"tool_perks": tool_perks,
@@ -517,6 +522,9 @@ func try_load() -> bool:
 	heart_reward_10 = loaded_heart_reward_10 if typeof(loaded_heart_reward_10) == TYPE_DICTIONARY else {}
 	var loaded_partner: Variant = data.get("partner", {})   # G-0232 — 옛 세이브는 동반자 없음
 	partner = (loaded_partner as Dictionary).duplicate(true) if typeof(loaded_partner) == TYPE_DICTIONARY else {}
+	var loaded_lots: Variant = data.get("lots", [])   # G-0237 — 옛 세이브는 빈 집 없음
+	lots = (loaded_lots as Array).duplicate(true) if typeof(loaded_lots) == TYPE_ARRAY else []
+	lots_roll = int(data.get("lots_roll", -1))
 	var loaded_tools: Variant = data.get("tools", {})
 	tools = loaded_tools if typeof(loaded_tools) == TYPE_DICTIONARY else {}
 	var loaded_tool_lv: Variant = data.get("tool_lv", {})   # G-0196 — 옛 세이브는 빈 값(바구니·잠자리채 Lv1·삽은 있으면 Lv1)

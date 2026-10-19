@@ -2,7 +2,7 @@ extends SceneTree
 
 ## G-0196 3마을 제작대 자동 점검(games/saga_forest/data/forest_craft.gd · world/craft_bench.gd · world/gatherable_builder.gd 덤).
 ##   godot --headless --path saga-godot --script res://tools/probe_forest_craft.gd
-## ① 레시피 12(도구 6·가구 6) 재료가 전부 채집 품목 · 가구 키가 FURNITURE 에 있음 ② 세 갈래 = 서로 다른 축(100번)
+## ① 레시피 13(도구 6·가구 6·빈 집 1) 재료가 전부 채집 품목 · 가구 키가 FURNITURE 에 있음 ② 세 갈래 = 서로 다른 축(100번)
 ## ③ 만들기: 모자라면 까닭 · 승급 순서(Lv3 먼저 안 됨) · 삽 없으면 삽 승급 안 됨 · 재료를 쓰고 Lv 오름 · 가구는 창고 +1
 ## ④ 고르기·거절(💰+100) ⑤ 덤 확률(1000 자리): 수확 ≈30% · 풍성 ≈8% · 손재주 ≈25% · 갈래 없으면 늘 +1
 ## ⑥ 옛 세이브(tool_lv 없음) = 바구니·잠자리채 Lv1·삽은 있으면 Lv1 ⑦ 저장 왕복 ⑧ 실제 채집(gatherable_builder._gather)에 덤이 붙음·손재주는 하루 한 번
@@ -37,15 +37,18 @@ func _initialize() -> void:
 	var furn_ok := true
 	var n_tool := 0
 	var n_furn := 0
+	var n_lot := 0
 	for r: Dictionary in Craft.RECIPES:
 		for label: String in (r.need as Dictionary).keys():
 			mats_ok = mats_ok and Craft.GATHER_LABELS.has(label)
 		if String(r.kind) == "tool":
 			n_tool += 1
+		elif String(r.kind) == "lot":
+			n_lot += 1
 		else:
 			n_furn += 1
 			furn_ok = furn_ok and not Home.furn(String(r.furn)).is_empty()
-	check(Craft.RECIPES.size() == 12 and n_tool == 6 and n_furn == 6 and mats_ok and furn_ok, "레시피 12(도구 6·가구 6) · 재료 전부 채집 품목 · 가구 키 있음")
+	check(Craft.RECIPES.size() == 13 and n_tool == 6 and n_furn == 6 and n_lot == 1 and mats_ok and furn_ok, "레시피 13(도구 6·가구 6·빈 집 1, G-0237) · 재료 전부 채집 품목 · 가구 키 있음")
 	# ②
 	var dup := 0
 	for i in 100:

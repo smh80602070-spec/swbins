@@ -6,10 +6,11 @@ extends RefCounted
 ##   수확(harvest) = 30% 확률로 하나 더 · 풍성(bounty) = 8% 확률로 셋 더(웹 "희귀 ×1.5" 자리 — 이 판엔 희귀 등급이 없다) · 손재주(knack) = 25% 확률로 그 자리가 오늘 한 번 더 참(웹 "속도" 자리).
 ##   같은 축을 거듭 고르면 확률이 겹쳐 오른다(상한 HARVEST_MAX 등). 굴림은 결정적 해시(날·자리·축) — 같은 날 같은 자리는 같은 결과.
 ## 도구 셋: 바구니(과일·솔방울·꽃·조개·약초) · 잠자리채(곤충) · 삽(광석·화석 — 삽은 사야 생긴다, 산 뒤 Lv1). Lv1 → 3.
-## 레시피 12 = 도구 승급 6(셋 × Lv2·3) + 가구 짓기 6(forest_home.gd FURNITURE 중 여섯 — 사는 길은 그대로). 재료는 전부 지금 채집되는 품목만.
+## 레시피 13 = 도구 승급 6(셋 × Lv2·3) + 가구 짓기 6(forest_home.gd FURNITURE 중 여섯 — 사는 길은 그대로) + 작은 빈 집 1(G-0237 forest_lots.gd, 셋까지). 재료는 전부 지금 채집되는 품목만.
 ## 웹과 다른 것: 울타리·징검다리 둘은 고돗 마을에 바깥 놓기 자리가 없어 가구 둘로 바꿨다.
 
 const Workshop := preload("res://games/saga_forest/data/forest_workshop.gd")   # G-0218 솜씨도
+const Lots := preload("res://games/saga_forest/data/forest_lots.gd")   # G-0237 입주 조건
 const AXES := ["harvest", "bounty", "knack"]
 const AXIS_NAMES := {"harvest": "수확 — 30% 확률로 하나 더", "bounty": "풍성 — 8% 확률로 셋 더", "knack": "손재주 — 25% 확률로 그 자리가 오늘 한 번 더"}
 const AXIS_SHORT := {"harvest": "수확", "bounty": "풍성", "knack": "손재주"}
@@ -42,6 +43,7 @@ const RECIPES := [
 	{"key": "make_mulhang", "kind": "furn", "furn": "mulhang", "need": {"광석": 3, "조개": 2}},
 	{"key": "make_jokja", "kind": "furn", "furn": "jokja", "need": {"약초": 2, "꽃": 2, "솔방울": 2}},
 	{"key": "make_hwaro", "kind": "furn", "furn": "hwaro", "need": {"광석": 4, "화석": 1}},
+	{"key": "lot", "kind": "lot", "need": {"솔방울": 12, "광석": 3, "화석": 2}},   # G-0237 작은 빈 집(웹 shard 자리 = 화석)
 ]
 
 
@@ -88,6 +90,8 @@ static func why_not(F: Node, r: Dictionary) -> String:
 			return "%s이(가) 없다" % TOOLS[r.tool]
 		if cur != int(r.lv) - 1:
 			return "지금 Lv%d" % cur
+	if String(r.kind) == "lot" and Lots.why_not_build(F) != "":
+		return Lots.why_not_build(F)
 	for label: String in (r.need as Dictionary).keys():
 		var n := Workshop.need(int(r.need[label]))   # G-0218 손 큰 장인 ×0.7
 		if F.item_count(label) < n:
@@ -114,6 +118,9 @@ static func make(F: Node, key: String) -> Dictionary:
 	if String(r.kind) == "tool":
 		F.tool_lv[String(r.tool)] = int(r.lv)
 		return {"ok": true, "why": "", "tool": String(r.tool)}
+	if String(r.kind) == "lot":
+		Lots.build(F)
+		return {"ok": true, "why": "", "tool": ""}
 	F.home_stock_add(String(r.furn), 1)
 	return {"ok": true, "why": "", "tool": ""}
 

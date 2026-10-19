@@ -1,7 +1,7 @@
 extends Node3D
 
 ## G-0196 — 3마을 제작대(웹 W-0103 의 고돗 짝). 집 동쪽 앞(GRID)에 작업대 하나 — 곁에서 [G] 로 제작대 화면:
-##   레시피 12(도구 승급 6 · 가구 짓기 6 — data/forest_craft.gd). 도구를 올리면 곧바로 세 갈래(수확·풍성·손재주) 중 하나, 거절하면 💰100.
+##   레시피 13(도구 승급 6 · 가구 짓기 6 · 작은 빈 집 — data/forest_craft.gd) + "🏠 빈 집 꾸미기"(G-0237 data/forest_lots.gd). 도구를 올리면 곧바로 세 갈래(수확·풍성·손재주) 중 하나, 거절하면 💰100.
 ## 모양은 박물관(museum.gd)처럼 코드 도형 — 상판·다리 넷·모루(구면 곡률 재질). 새 에셋 없음.
 
 const ForestMap := preload("res://games/saga_forest/data/village_map.gd")
@@ -9,6 +9,7 @@ const TerrainBuilder := preload("res://games/saga_forest/world/forest_terrain_bu
 const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.gd")
 const ForestCraft := preload("res://games/saga_forest/data/forest_craft.gd")
 const ForestHome := preload("res://games/saga_forest/data/forest_home.gd")
+const Lots := preload("res://games/saga_forest/data/forest_lots.gd")   # G-0237 입주 조건
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
@@ -89,10 +90,12 @@ static func need_text(r: Dictionary) -> String:
 static func recipe_name(r: Dictionary) -> String:
 	if String(r.kind) == "tool":
 		return "%s Lv%d" % [ForestCraft.TOOLS[r.tool], int(r.lv)]
+	if String(r.kind) == "lot":
+		return "작은 빈 집 (%d/%d)" % [Lots.count(ForestSaveState), Lots.MAX]
 	return String(ForestHome.furn(String(r.furn)).get("name", r.furn))
 
 
-## 제작대 화면 — 레시피 12(만들 수 있는 것 ✓, 아니면 까닭)
+## 제작대 화면 — 레시피 13(만들 수 있는 것 ✓, 아니면 까닭)
 func open_menu() -> void:
 	var box := {}
 	var choices: Array = []
@@ -100,11 +103,15 @@ func open_menu() -> void:
 		var why := ForestCraft.why_not(ForestSaveState, r)
 		var key := String(r.key)
 		choices.append({
-			"label": "%s %s — %s%s" % ["🛠️" if String(r.kind) == "tool" else "🪑", recipe_name(r), need_text(r), "  ✓" if why == "" else "  (%s)" % why],
+			"label": "%s %s — %s%s" % [{"tool": "🛠️", "lot": "🏠"}.get(String(r.kind), "🪑"), recipe_name(r), need_text(r), "  ✓" if why == "" else "  (%s)" % why],
 			"cb": func() -> void:
 				(box["layer"] as CanvasLayer).queue_free()
 				make(key),
 		})
+	if Lots.count(ForestSaveState) > 0:
+		choices.append({"label": "🏠 빈 집 꾸미기 — 가구를 넣어 손님을 부른다", "cb": func() -> void:
+			(box["layer"] as CanvasLayer).queue_free()
+			open_lots()})
 	choices.append({"label": "닫기", "cb": func() -> void: (box["layer"] as CanvasLayer).queue_free()})
 	var lv_line := "바구니 Lv%d · 잠자리채 Lv%d · 삽 Lv%d" % [ForestCraft.tool_lv(ForestSaveState, "basket"), ForestCraft.tool_lv(ForestSaveState, "net"), ForestCraft.tool_lv(ForestSaveState, "spade")]
 	box["layer"] = ChoicePrompt.build(self, "🔨 제작대 — %s" % lv_line, choices)
@@ -116,6 +123,9 @@ func make(key: String) -> void:
 		Toast.show(self, "🔨 아직 못 만든다 — %s" % String(r.why), 2.5)
 		return
 	var rec := ForestCraft.recipe(key)
+	if String(rec.kind) == "lot":
+		Toast.show(self, "🏠 작은 빈 집을 지었다 (%d/%d) — 제작대 \"빈 집 꾸미기\"로 가구를 넣는다" % [Lots.count(ForestSaveState), Lots.MAX], 3.0)
+		return
 	if String(r.tool) == "":
 		Toast.show(self, "🪑 %s 을(를) 지었다 — 집 창고로(집 안에서 [H] 로 놓는다)" % recipe_name(rec), 3.0)
 		return
@@ -142,3 +152,64 @@ func open_perks(tool: String) -> void:
 			Toast.show(self, "🛠️ %s Lv%d — 갈래 없이 💰%d" % [ForestCraft.TOOLS[tool], ForestCraft.tool_lv(ForestSaveState, tool), ForestCraft.DECLINE_GOLD], 3.0),
 	})
 	box["layer"] = ChoicePrompt.build(self, "🛠️ %s 을(를) Lv%d 로 올렸다 — 갈래 하나" % [ForestCraft.TOOLS[tool], ForestCraft.tool_lv(ForestSaveState, tool)], choices)
+
+
+## G-0237 빈 집 고르기 — 집마다 "어울릴 손님" 줄
+func open_lots() -> void:
+	var box := {}
+	var choices: Array = []
+	for i in Lots.count(ForestSaveState):
+		var idx := i
+		choices.append({"label": "🏠 %d번째 집 — %s" % [i + 1, Lots.hint_for(ForestSaveState, i)], "cb": func() -> void:
+			(box["layer"] as CanvasLayer).queue_free()
+			open_lot(idx)})
+	choices.append({"label": "닫기", "cb": func() -> void: (box["layer"] as CanvasLayer).queue_free()})
+	box["layer"] = ChoicePrompt.build(self, "🏠 작은 빈 집 %d/%d — 서로 다른 태그 셋 + 손님이 좋아하는 태그 둘이면 다음 날 눌러앉는다" % [Lots.count(ForestSaveState), Lots.MAX], choices)
+
+
+## 집 하나 — 든 가구(누르면 창고로) · 창고 가구(누르면 넣기). 산 집은 잠김(닫기만)
+func open_lot(i: int) -> void:
+	var F := ForestSaveState
+	var lot: Dictionary = Lots.lots(F)[i]
+	var locked := String(lot.get("who", "")) != ""
+	var box := {}
+	var choices: Array = []
+	if not locked:
+		for k in lot.furn:
+			var key := String(k)
+			choices.append({"label": "↩ %s %s 거두기" % [_furn_name(key), _tags_text(key)], "cb": func() -> void:
+				(box["layer"] as CanvasLayer).queue_free()
+				var r := Lots.take(F, i, key)
+				Toast.show(self, "🪑 창고로 거두었다" if bool(r.ok) else String(r.why), 2.0)
+				open_lot(i)})
+		if (lot.furn as Array).size() < Lots.FURN_MAX:
+			for k in F.home_stock.keys():
+				var key := String(k)
+				if F.home_stock_count(key) < 1 or ForestHome.furn(key).is_empty():
+					continue
+				choices.append({"label": "＋ %s %s 넣기 (창고 %d)" % [_furn_name(key), _tags_text(key), F.home_stock_count(key)], "cb": func() -> void:
+					(box["layer"] as CanvasLayer).queue_free()
+					var r := Lots.put(F, i, key)
+					Toast.show(self, "🪑 넣었다 — %s" % Lots.hint_for(F, i) if bool(r.ok) else String(r.why), 2.5)
+					open_lot(i)})
+	choices.append({"label": "닫기", "cb": func() -> void: (box["layer"] as CanvasLayer).queue_free()})
+	var tags: Array = []
+	for t: String in Lots.lot_tags(F, i):
+		tags.append(Lots.tag_name(t))
+	var have: Array = []
+	for k in lot.furn:
+		have.append(_furn_name(String(k)))
+	box["layer"] = ChoicePrompt.build(self, "🏠 %d번째 집 — %s
+가구 %d/%d: %s · 태그: %s" % [i + 1, Lots.hint_for(F, i), (lot.furn as Array).size(), Lots.FURN_MAX,
+		", ".join(have) if not have.is_empty() else "없음", " · ".join(tags) if not tags.is_empty() else "없음"], choices)
+
+
+static func _furn_name(key: String) -> String:
+	return String(ForestHome.furn(key).get("name", key))
+
+
+static func _tags_text(key: String) -> String:
+	var names: Array = []
+	for t: String in Lots.tags_of(key):
+		names.append(Lots.tag_name(t))
+	return "[%s]" % "·".join(names)
