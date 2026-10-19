@@ -47,6 +47,7 @@ namespace Saga.EditorTools
                 CheckEnemyStrikeAndDodge(fc, pc, e1, origin);
                 CheckSwapAndWipe(fc, e1, origin);
                 CheckDuelGate(fc);
+                CheckGrab(fc, pc, e1, e2, e3, origin); // U-0125
                 if (hud != null) CheckHud(fc, pc, hud, e1, origin);
             }
             finally
@@ -60,6 +61,72 @@ namespace Saga.EditorTools
 
             if (_ok) Debug.Log($"[{_tag}] field combat OK - enemies {FieldEnemy.All.Count}, party {fc.Party.Count}, reactions·원소 일곱 반응 열셋·강공격·낙하 공격·3타·스킬·폭발·피격·회피·교체·전멸 복귀·결투 경계·버튼");
             return _ok;
+        }
+
+        // ---- U-0125 잡기·던지기 — 잡힘 · 착지 넘어짐 1.5초 · 던진 피해 ×1.2 · 쿨 · 보스 밀치기, 다섯 줄 OK ----
+        private static void CheckGrab(FieldCombat fc, PlayerController pc, FieldEnemy e1, FieldEnemy e2, FieldEnemy e3, Vector3 origin)
+        {
+            fc.ResetForTest();
+            Park(e2, origin, 0f);
+            Park(e3, origin, 10f);
+            Vector3 f = Fwd(pc);
+            Place(e1, origin + f * 2f);
+            e1.SetShieldForTest(0f);
+            bool ok = true;
+            void Bad(string m) { Fail(m); ok = false; }
+
+            if (fc.GrabTarget() != e1) Bad("2m 앞 잡몹이 잡을 대상이 아님");
+            if (!fc.Grab() || fc.LastGrab != "grab" || e1.HoldState != FieldEnemy.Hold.Grabbed) Bad($"잡기 안 됨 ({fc.LastGrab}, {e1.HoldState})");
+            if (Mathf.Abs(fc.GrabCd - FieldCombat.GrabCdSec) > 0.01f) Bad($"쿨 {fc.GrabCd} ≠ {FieldCombat.GrabCdSec}");
+            if (fc.Grab() || fc.LastGrab != "busy") Bad("든 채로 또 잡힘");
+            if (ok) Debug.Log($"[{_tag}] grab OK - 2m 앞 잡몹 잡힘·쿨 {FieldCombat.GrabCdSec}초·든 중 거절");
+
+            ok = true;
+            float atk = fc.Atk, hp0 = e1.Hp;
+            fc.TickTimers(FieldCombat.GrabLift + 0.01f);
+            Vector3? land = fc.GrabLanding;
+            if (land == null) { Bad("들기 0.3초 뒤 안 날아감"); return; }
+            Vector3 side = Vector3.Cross(Vector3.up, f).normalized;
+            Place(e2, land.Value + side * 1.5f);
+            Place(e3, land.Value + side * 2.5f);
+            fc.TickTimers(FieldCombat.GrabFly + 0.05f);
+            if (e1.HoldState != FieldEnemy.Hold.None || fc.Held != null) Bad("착지 뒤에도 잡힌 채");
+            float flown = Vector3.ProjectOnPlane(e1.transform.position - origin, Vector3.up).magnitude;
+            if (flown > FieldCombat.GrabThrow + 1.5f) Bad($"던진 거리 {flown:0.0}m 가 {FieldCombat.GrabThrow}m 를 넘음");
+            if (!e1.Downed || !e2.Downed || !e3.Downed) Bad($"착지 반경 넘어짐 — 던진 {e1.Downed} · 1.5m {e2.Downed} · 2.5m {e3.Downed}");
+            if (fc.LastThrowDowned < 2) Bad($"함께 넘어진 수 {fc.LastThrowDowned} < 2");
+            e2.Tick(1f);
+            if (!e2.Downed || e2.CurrentState != FieldEnemy.State.Stagger) Bad("넘어짐이 1초에 풀림");
+            e2.Tick(0.6f);
+            if (e2.Downed) Bad("넘어짐이 1.6초 지나도 안 풀림");
+            if (ok) Debug.Log($"[{_tag}] grab land OK - {flown:0.0}m 날아 떨어짐·{FieldCombat.GrabLandR:0.0}m 안 {fc.LastThrowDowned} 함께 넘어짐·1.5초 뒤 일어남");
+
+            ok = true;
+            float want = atk * FieldCombat.GrabMul;
+            if (Mathf.Abs(fc.LastThrowDmg - want) > 0.5f || Mathf.Abs(hp0 - e1.Hp - want) > 0.5f) Bad($"던진 피해 {fc.LastThrowDmg} (체력 {hp0 - e1.Hp}) ≠ {want}");
+            if (ok) Debug.Log($"[{_tag}] grab damage OK - 던진 적 피해 공격력 × {FieldCombat.GrabMul}");
+
+            ok = true;
+            Place(e1, origin + f * 2f);
+            if (fc.GrabTarget() != null) Bad("쿨 중인데 잡을 대상이 보임");
+            if (fc.Grab() || fc.LastGrab != "cd") Bad($"쿨 중 잡기가 안 막힘 ({fc.LastGrab})");
+            fc.TickTimers(FieldCombat.GrabCdSec);
+            if (fc.GrabCd > 0f || fc.GrabTarget() != e1) Bad("쿨 6초 뒤 다시 못 잡음");
+            if (ok) Debug.Log($"[{_tag}] grab cooldown OK - 쿨 중 거절·6초 뒤 다시");
+
+            ok = true;
+            Park(e1, origin, 20f);
+            FieldEnemy boss = null;
+            foreach (var e in FieldEnemy.All) if (e.ShoveOnly && e.isActiveAndEnabled && e.Alive && !e.Yielded && (boss == null || (e.IsHero && !boss.IsHero))) boss = e;
+            if (boss == null) { Bad("밀치기를 볼 보스류(수호장·인물) 없음"); return; }
+            fc.ResetForTest();
+            Place(boss, origin + f * 2f);
+            boss.SetShieldForTest(0f);
+            if (!fc.Grab() || fc.LastGrab != "shove") Bad($"보스류가 밀치기 아님 ({fc.LastGrab})");
+            if (boss.HoldState != FieldEnemy.Hold.None || fc.Held != null) Bad("보스류가 잡힘");
+            if (!boss.Sliding) Bad("보스류가 안 밀림");
+            if (ok) Debug.Log($"[{_tag}] grab boss OK - {boss.DisplayName} 잡히지 않고 {FieldCombat.GrabShove:0.0}m 밀쳐짐");
+            fc.ResetForTest();
         }
 
         private static void Fail(string msg)

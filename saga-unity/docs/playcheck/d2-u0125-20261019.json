@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-19",
+  "tickets": [
+    "U-0125 1만리 잡기·던지기(웹 W-0277)"
+  ],
+  "how": "Saga.EditorTools.PlaytestHeadless.Run 배치(unity-batch.sh, -quit 없음, </dev/null) — PlaytestGoFieldCombat.CheckGrab, 세이브 다섯 치움·되돌림",
+  "ok_before": 84,
+  "ok_after": 89,
+  "new_ok": [
+    "grab",
+    "grab land",
+    "grab damage",
+    "grab cooldown",
+    "grab boss"
+  ],
+  "throw_m": 9.0,
+  "land_downed": 2,
+  "boss": "망루 수호장 4.6m 밀쳐짐",
+  "error_cs": 0,
+  "exception": 0,
+  "save_md5_same": true,
+  "runs": 2,
+  "run1": "FieldCombatHud.cs 문자열 줄바꿈 컴파일 오류 → 고침"
+}

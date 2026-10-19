@@ -106,6 +106,11 @@ namespace Saga.Go.Combat
             AimButton = EncounterUiKit.NewButton(t, GoLocalization.T("field.btn.aim", "🎯 조준\n(R)"), new Vector2(1f, 0f), new Vector2(-260f, 370f), new Vector2(140f, 100f), null);
             AimButton.onClick.AddListener(OnAim);
             AimButton.GetComponentInChildren<TextMeshProUGUI>().fontSize = 22;
+            // U-0125 잡기·던지기 — 시야 단추 위, 잡을 적이 가까울 때만 빛나고 쿨 중엔 남은 초
+            GrabButton = EncounterUiKit.NewButton(t, "", new Vector2(1f, 0f), new Vector2(-405f, 330f), new Vector2(110f, 90f), null);
+            GrabButton.onClick.AddListener(OnGrab);
+            _grabLabel = GrabButton.GetComponentInChildren<TextMeshProUGUI>();
+            _grabLabel.fontSize = 22;
             _aimText = EncounterUiKit.NewText(t, "", new Vector2(0.5f, 0.5f), new Vector2(0f, 0f), new Vector2(360f, 110f), 30);
             _aimText.rectTransform.pivot = new Vector2(0.5f, 0.5f);
             _aimText.alignment = TextAlignmentOptions.Center;
@@ -114,6 +119,10 @@ namespace Saga.Go.Combat
         }
 
         public Button AimButton { get; private set; }
+        public Button GrabButton { get; private set; }
+        private TextMeshProUGUI _grabLabel;
+        public string GrabText => _grabLabel != null ? _grabLabel.text : "";
+        private void OnGrab() => _combat.Grab();
         private TextMeshProUGUI _aimText;
         public string AimText => _aimText != null && _aimText.gameObject.activeSelf ? _aimText.text : "";
         private void OnAim() => _combat.ToggleAim();
@@ -204,6 +213,13 @@ namespace Saga.Go.Combat
                         ? mark + "\n<size=60%>" + string.Format(GoLocalization.T("field.aim_charge", "충전 {0}%"), Mathf.RoundToInt(_combat.AimCharge / FieldCombat.AimChargeSec * 100f)) + "</size>"
                         : mark;
                 }
+            }
+
+            if (GrabButton != null)
+            {
+                bool cd = _combat.GrabCd > 0f, near = !cd && _combat.GrabTarget() != null;
+                _grabLabel.text = cd ? $"✊\n{Mathf.CeilToInt(_combat.GrabCd)}" : "✊\n(C)";
+                GrabButton.GetComponent<Image>().color = near ? new Color(1f, 0.82f, 0.48f, 0.55f) : new Color(1f, 1f, 1f, cd ? 0.1f : 0.18f);
             }
 
             var party = _combat.Party;

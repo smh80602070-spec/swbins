@@ -187,6 +187,95 @@ namespace Saga.Go.Combat
             _chargedLeft = 0f;
             _knock = Vector3.zero;
             _siegeStrike = false;
+            HoldState = Hold.None; // U-0125
+            DownedLeft = 0f;
+            LayDown(false);
+        }
+
+        // ---- U-0125 잡기·던지기(웹 W-0277 `field-grab.js`) — 잡힘·던져짐 동안은 `FieldCombat` 이 자리를 옮기고(AI 멎음),
+        // 떨어지면 넘어짐(비틀림 상태 + 몸을 눕힘 — 공격·이동 정지). 수호장·주간 보스·이야기 보스·인물은 안 잡히고 밀치기만.
+        public enum Hold { None, Grabbed, Thrown }
+        public Hold HoldState { get; private set; }
+        public float DownedLeft { get; private set; }
+        public bool Downed => Alive && DownedLeft > 0f;
+        public bool ShoveOnly => IsGuardian || IsWeeklyBoss || IsStoryBoss || IsHero;
+        public bool Grabbable => Alive && !Yielded && !ShoveOnly && HoldState == Hold.None;
+        private Quaternion _standRot;
+        private bool _laid;
+
+        public void BeginHold()
+        {
+            if (!Grabbable) return;
+            HoldState = Hold.Grabbed;
+            _slideLeft = 0f;
+            _knock = Vector3.zero;
+            _alertText.gameObject.SetActive(false);
+            _warnRing.enabled = false;
+            TintVisual(Color.white, false);
+            CurrentState = State.Stagger;
+            _timer = 99f;
+            if (_animator != null) Trig("Hit");
+        }
+
+        /// <summary>든 채·나는 중 자리 — 땅에 붙이지 않는다(포물선).</summary>
+        public void CarryTo(Vector3 pos, bool thrown)
+        {
+            if (HoldState == Hold.None) return;
+            HoldState = thrown ? Hold.Thrown : Hold.Grabbed;
+            transform.position = pos;
+        }
+
+        /// <summary>던질 자리 — from 에서 to 쪽으로 0.5m 씩 나아가 설 수 없는 칸(산·물) 앞에서 멎는다.</summary>
+        public Vector3 ThrowLanding(Vector3 from, Vector3 to)
+        {
+            Vector3 d = Flat(to - from);
+            float len = d.magnitude;
+            Vector3 last = from;
+            for (float s = 0.5f; s <= len + 1e-3f; s += 0.5f)
+            {
+                Vector3 p = from + d * (Mathf.Min(s, len) / Mathf.Max(len, 1e-4f));
+                if (!CanStep(p)) break;
+                last = p;
+            }
+            return Grounded(last);
+        }
+
+        public void EndHold(Vector3 landing)
+        {
+            if (HoldState == Hold.None) return;
+            HoldState = Hold.None;
+            transform.position = Grounded(landing);
+            _timer = 0f;
+        }
+
+        /// <summary>넘어뜨린다(sec 초 동안 비틀림 상태로 멎고 몸이 눕는다). 보스류·굴복한 인물은 안 넘어진다.</summary>
+        public void KnockDown(float sec)
+        {
+            if (!Alive || Yielded || ShoveOnly || HoldState != Hold.None || sec <= 0f) return;
+            _alertText.gameObject.SetActive(false);
+            _warnRing.enabled = false;
+            TintVisual(Color.white, false);
+            _timer = CurrentState == State.Stagger ? Mathf.Max(_timer, sec) : sec;
+            CurrentState = State.Stagger;
+            DownedLeft = Mathf.Max(DownedLeft, sec);
+            LayDown(true);
+        }
+
+        /// <summary>밀치기 — 보스류도 밀린다(`KnockBack` 은 보스를 안 민다). 산·물 칸 앞에서 멎는다.</summary>
+        public void Shove(Vector3 dir, float dist)
+        {
+            dir.y = 0f;
+            if (!Alive || Yielded || dist <= 0f || dir.sqrMagnitude < 1e-6f) return;
+            _slideVel = dir.normalized * (dist / KnockSec);
+            _slideLeft = KnockSec;
+        }
+
+        private void LayDown(bool on)
+        {
+            if (_visual == null || on == _laid) return;
+            if (on) { _standRot = _visual.localRotation; _visual.localRotation = _standRot * Quaternion.Euler(-80f, 0f, 0f); }
+            else _visual.localRotation = _standRot;
+            _laid = on;
         }
 
         private void ClearReactionStates()

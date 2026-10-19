@@ -753,6 +753,7 @@ namespace Saga.Go.Combat
                 if (_timer <= 0f) Revive();
                 return;
             }
+            if (HoldState != Hold.None) { SetMoveAnim(0f); return; } // U-0125 잡힘·던져짐 — 자리는 FieldCombat 이 옮긴다
             TickSlide(dt); // 109-14-17 밀려남 — 멎어 있거나 얼어 있어도 미끄러진다
             if (DuelGate.Active || Saga.Go.Cinematics.GoCutscenes.Playing || StoryState.Talking) { SetMoveAnim(0f); return; } // 106-9 — 등장 컷 동안도 선다. 109-14-12 이야기 대화 중도
             if (Frozen) { SetMoveAnim(0f); return; } // 109-14-1a 얼어붙음 — 제자리에 멎는다(시간은 TickStatus 가 줄인다)
@@ -914,6 +915,7 @@ namespace Saga.Go.Combat
                 if (FrozenLeft <= 0f) { FrozenLeft = 0f; TintVisual(Color.white, false); }
             }
             if (SuperLeft > 0f) SuperLeft = Mathf.Max(0f, SuperLeft - dt);
+            if (DownedLeft > 0f) { DownedLeft -= dt; if (DownedLeft <= 0f) { DownedLeft = 0f; LayDown(false); } } // U-0125 넘어짐
             if (MarkLeft > 0f) MarkLeft = Mathf.Max(0f, MarkLeft - dt);
             if (QuickenLeft > 0f) QuickenLeft = Mathf.Max(0f, QuickenLeft - dt);
             if (BurningLeft > 0 && Alive)

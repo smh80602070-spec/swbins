@@ -364,6 +364,7 @@ namespace Saga.Go.Combat
             if (SagaPad.Pressed(SagaPad.Btn.Skill, kb?.eKey)) Skill();
             if (SagaPad.Pressed(SagaPad.Btn.Burst, kb?.qKey)) Burst();
             if (SagaPad.Pressed(SagaPad.Btn.Dodge, kb?.lKey) || (kb != null && kb.leftCtrlKey.wasPressedThisFrame)) Dodge();
+            if (kb != null && kb.cKey.wasPressedThisFrame) Grab(); // U-0125 잡기·던지기(G 는 요리 창)
             if (SagaPad.Pressed(SagaPad.Btn.Slot1, kb?.digit1Key)) Swap(0); // tasks U-0018 — 십자키 위·오른쪽·아래·왼쪽
             if (SagaPad.Pressed(SagaPad.Btn.Slot2, kb?.digit2Key)) Swap(1);
             if (SagaPad.Pressed(SagaPad.Btn.Slot3, kb?.digit3Key)) Swap(2);
@@ -388,6 +389,7 @@ namespace Saga.Go.Combat
             TickBurn(dt);
             TickGuardAndSeeds(dt);
             TickArrows(dt); // 109-14-22
+            TickGrab(dt); // U-0125
             _sinceHit += dt;
             _calmT += dt;
             if (_sinceHit >= RegenDelaySec)
@@ -1130,6 +1132,7 @@ namespace Saga.Go.Combat
             RainLeft = RainCd = 0f; RainHits = 0; _rainKit = null; // 109-14-17
             if (AimOn) ExitAim(); // 109-14-22
             ClearArrows();
+            ClearGrab(); // U-0125
             _shells.Clear();
             foreach (var m in _party) m.InfuseLeft = 0f;
             ApplyLook();
