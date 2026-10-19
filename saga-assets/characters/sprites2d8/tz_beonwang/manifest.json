@@ -46,5 +46,16 @@
  "town_clipmap": {
   "idle_town": "idle",
   "walk_town": "walk"
- }
+ },
+ "air": [
+  "jump",
+  "fall"
+ ],
+ "air_clipmap": {
+  "jump": "jump",
+  "fall": "fall"
+ },
+ "air_dirs": [
+  2
+ ]
 }
