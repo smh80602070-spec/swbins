@@ -70,7 +70,7 @@ namespace Saga.Dungeon.World
                 var mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "DungeonForageHerb (generated)" };
                 mat.color = HerbColor;
                 herb.GetComponent<MeshRenderer>().sharedMaterial = mat;
-                Object.Destroy(herb.GetComponent<Collider>());
+                Saga.Core.Colliders.Strip(herb);
                 _herbs[i] = herb.transform;
             }
 
@@ -82,7 +82,7 @@ namespace Saga.Dungeon.World
             var pondMat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "DungeonForagePond (generated)" };
             pondMat.color = PondColor;
             pond.GetComponent<MeshRenderer>().sharedMaterial = pondMat;
-            Object.Destroy(pond.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(pond);
             _pond = pond.transform;
         }
 

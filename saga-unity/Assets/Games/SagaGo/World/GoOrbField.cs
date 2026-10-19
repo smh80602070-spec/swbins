@@ -53,14 +53,14 @@ namespace Saga.Go.World
                 if (OrbState.Has(o.Id)) continue;
                 var go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 go.name = "Orb_" + o.Id;
-                Destroy(go.GetComponent<Collider>());
+                Saga.Core.Colliders.Strip(go);
                 go.transform.SetParent(transform, false);
                 go.transform.position = p;
                 go.transform.localScale = Vector3.one * 0.9f;
                 go.GetComponent<MeshRenderer>().sharedMaterial = _mat;
                 var ring = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
                 ring.name = "Halo";
-                Destroy(ring.GetComponent<Collider>());
+                Saga.Core.Colliders.Strip(ring);
                 ring.transform.SetParent(go.transform, false);
                 ring.transform.localScale = new Vector3(1.9f, 0.02f, 1.9f);
                 ring.GetComponent<MeshRenderer>().sharedMaterial = _mat;

@@ -310,7 +310,7 @@ namespace Saga.Dungeon.World
                 stone.transform.localPosition = new Vector3(0f, 0.8f, 0f);
                 stone.transform.localScale = new Vector3(0.55f, 0.8f, 0.55f);
                 stone.GetComponent<Renderer>().sharedMaterial = stoneMat;
-                Destroy(stone.GetComponent<Collider>());
+                Saga.Core.Colliders.Strip(stone);
 
                 var gem = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 gem.name = "Gem";
@@ -320,7 +320,7 @@ namespace Saga.Dungeon.World
                 var gemMat = new Material(shader) { name = "RegionBossGem (generated)" };
                 gemMat.EnableKeyword("_EMISSION");
                 gem.GetComponent<Renderer>().sharedMaterial = gemMat;
-                Destroy(gem.GetComponent<Collider>());
+                Saga.Core.Colliders.Strip(gem);
                 _gems[r] = gem.GetComponent<Renderer>();
                 _gemDim[r] = true; // 아래에서 한 번 칠하게 반대로 둔다.
                 SetGemDim(r, false);

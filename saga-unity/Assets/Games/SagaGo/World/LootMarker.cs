@@ -55,7 +55,7 @@ namespace Saga.Go.World
             visual.transform.SetParent(transform, false);
             visual.transform.localScale = Vector3.one * 0.35f;
             visual.transform.localPosition = new Vector3(0f, 0.5f, 0f);
-            Object.Destroy(visual.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(visual);
 
             var mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "LootMarker (generated)" };
             mat.color = GlowColor;

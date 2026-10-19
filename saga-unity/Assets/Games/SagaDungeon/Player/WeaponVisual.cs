@@ -84,7 +84,7 @@ namespace Saga.Dungeon.Player
             _socket = socket;
             var handle = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
             handle.name = "WeaponHandle (generated)";
-            Object.Destroy(handle.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(handle);
             handle.transform.SetParent(socket, false);
             handle.transform.localScale = new Vector3(0.05f, 0.12f, 0.05f);
             handle.transform.localPosition = Vector3.zero;
@@ -95,7 +95,7 @@ namespace Saga.Dungeon.Player
 
             var blade = GameObject.CreatePrimitive(PrimitiveType.Cube);
             blade.name = "WeaponBlade (generated)";
-            Object.Destroy(blade.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(blade);
             blade.transform.SetParent(socket, false);
             var bladeMat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "WeaponBlade (generated)" };
             bladeMat.color = BladeBaseColor;

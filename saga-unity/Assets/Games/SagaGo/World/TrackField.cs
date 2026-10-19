@@ -111,14 +111,14 @@ namespace Saga.Go.World
             disc.transform.SetParent(root.transform, false);
             disc.transform.localScale = new Vector3(1.6f, 0.04f, 1.6f);
             disc.transform.localPosition = new Vector3(0f, 0.05f, 0f);
-            Destroy(disc.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(disc);
             disc.GetComponent<MeshRenderer>().sharedMaterial = mat;
             var post = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
             post.name = "Post";
             post.transform.SetParent(root.transform, false);
             post.transform.localScale = new Vector3(0.18f, 0.6f, 0.18f);
             post.transform.localPosition = new Vector3(0f, 0.6f, 0f);
-            Destroy(post.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(post);
             post.GetComponent<MeshRenderer>().sharedMaterial = mat;
             return root;
         }

@@ -307,7 +307,7 @@ namespace Saga.Dungeon.World
             var mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "DungeonFloorDoor (generated)" };
             mat.color = new Color(0.85f, 0.75f, 0.3f);
             visual.GetComponent<MeshRenderer>().sharedMaterial = mat;
-            UnityEngine.Object.Destroy(visual.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(visual);
 
             var labelGo = new GameObject("Label");
             labelGo.transform.SetParent(go.transform, false);

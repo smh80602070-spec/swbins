@@ -142,7 +142,7 @@ namespace Saga.Story.Player
         {
             var go = GameObject.CreatePrimitive(type);
             go.name = $"Weapon{type} (generated)";
-            Object.Destroy(go.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(go);
             go.transform.SetParent(parent, false);
             var mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = $"Weapon{type} (generated)" };
             mat.color = color;

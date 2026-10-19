@@ -78,7 +78,7 @@ namespace Saga.Forest.World
             var trunkMat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "TreeTrunk (generated)" };
             trunkMat.color = new Color(0.4f, 0.28f, 0.16f);
             trunk.GetComponent<MeshRenderer>().sharedMaterial = trunkMat;
-            Object.Destroy(trunk.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(trunk);
 
             var canopy = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             canopy.name = "Canopy";
@@ -88,7 +88,7 @@ namespace Saga.Forest.World
             var canopyMat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "TreeCanopy (generated)" };
             canopyMat.color = new Color(0.25f, 0.5f, 0.2f);
             canopy.GetComponent<MeshRenderer>().sharedMaterial = canopyMat;
-            Object.Destroy(canopy.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(canopy);
         }
 
         /// <summary>U-0036 A — 통일 세트 나무(`World/tree_broadleaf_01`)가 있으면 구워진 Visual 을 그것으로 바꾼다.

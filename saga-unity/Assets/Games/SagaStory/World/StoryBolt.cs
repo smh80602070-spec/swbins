@@ -51,7 +51,7 @@ namespace Saga.Story.World
             visual.name = "Visual";
             visual.transform.SetParent(transform, false);
             visual.transform.localScale = pierce ? Vector3.one * 0.35f : new Vector3(0.45f, 0.12f, 0.12f);
-            Destroy(visual.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(visual);
             var mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "StoryBolt (generated)" };
             mat.color = color;
             visual.GetComponent<MeshRenderer>().sharedMaterial = mat;

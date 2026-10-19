@@ -102,7 +102,7 @@ namespace Saga.Dungeon.World
             mat.color = MerchantColor;
             visual.GetComponent<MeshRenderer>().sharedMaterial = mat;
 
-            Object.Destroy(visual.GetComponent<Collider>());
+            Colliders.Strip(visual);
         }
 
         /// <summary>PLAN.md 109-10-7 몸짓 — 좌판 뒤 주인(씬에 구운 것도)에게. 다가서면 인사, 팔면 💰 흥정.</summary>

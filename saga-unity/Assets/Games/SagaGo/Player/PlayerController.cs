@@ -740,7 +740,7 @@ namespace Saga.Go.Player
             {
                 var wing = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 wing.name = side < 0 ? "WingL" : "WingR";
-                Destroy(wing.GetComponent<Collider>());
+                Colliders.Strip(wing);
                 wing.transform.SetParent(root.transform, false);
                 wing.transform.localPosition = new Vector3(side * 1.55f, 0.25f, 0f);
                 wing.transform.localRotation = Quaternion.Euler(0f, 0f, side * -12f);

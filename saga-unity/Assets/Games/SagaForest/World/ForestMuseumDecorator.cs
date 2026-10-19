@@ -36,14 +36,14 @@ namespace Saga.Forest.World
             pole.transform.position = pos + new Vector3(0f, 1.5f, 0f);
             pole.transform.localScale = new Vector3(0.12f, 1.5f, 0.12f);
             pole.GetComponent<MeshRenderer>().sharedMaterial = MakeMat(new Color(0.35f, 0.3f, 0.22f));
-            Object.Destroy(pole.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(pole);
 
             var flag = GameObject.CreatePrimitive(PrimitiveType.Cube);
             flag.name = "Decor_MuseumFlagCloth";
             flag.transform.position = pos + new Vector3(0.5f, 2.6f, 0f);
             flag.transform.localScale = new Vector3(1f, 0.6f, 0.05f);
             flag.GetComponent<MeshRenderer>().sharedMaterial = MakeMat(new Color(0.85f, 0.65f, 0.15f));
-            Object.Destroy(flag.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(flag);
         }
 
         /// <summary>tasks U-0029 — 탑성 조각 여섯을 다 모으면 마을 광장 곁(북쪽 빈자리)에 서는 다시 쌓은 정자.
@@ -101,7 +101,7 @@ namespace Saga.Forest.World
             jar.transform.position = pos + new Vector3(0f, 0.4f, 0f);
             jar.transform.localScale = new Vector3(0.5f, 0.4f, 0.5f);
             jar.GetComponent<MeshRenderer>().sharedMaterial = MakeMat(new Color(0.7f, 0.85f, 0.6f, 0.6f));
-            Object.Destroy(jar.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(jar);
 
             var lightGo = new GameObject("Decor_FireflyLight");
             lightGo.transform.position = pos + new Vector3(0f, 0.7f, 0f);
@@ -122,14 +122,14 @@ namespace Saga.Forest.World
                 stem.transform.position = pos + off + new Vector3(0f, 0.25f, 0f);
                 stem.transform.localScale = new Vector3(0.12f, 0.25f, 0.12f);
                 stem.GetComponent<MeshRenderer>().sharedMaterial = MakeMat(new Color(0.85f, 0.8f, 0.7f));
-                Object.Destroy(stem.GetComponent<Collider>());
+                Saga.Core.Colliders.Strip(stem);
 
                 var cap = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 cap.name = "Decor_MushroomCap";
                 cap.transform.position = pos + off + new Vector3(0f, 0.5f, 0f);
                 cap.transform.localScale = new Vector3(0.4f, 0.22f, 0.4f);
                 cap.GetComponent<MeshRenderer>().sharedMaterial = MakeMat(new Color(0.7f, 0.2f, 0.55f));
-                Object.Destroy(cap.GetComponent<Collider>());
+                Saga.Core.Colliders.Strip(cap);
             }
         }
 
@@ -140,7 +140,7 @@ namespace Saga.Forest.World
             slab.transform.position = pos + new Vector3(0f, 0.9f, 0f);
             slab.transform.localScale = new Vector3(0.7f, 1.8f, 0.2f);
             slab.GetComponent<MeshRenderer>().sharedMaterial = MakeMat(new Color(0.5f, 0.48f, 0.45f));
-            Object.Destroy(slab.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(slab);
         }
 
         private static void BuildFlowerBed(Vector3 pos)
@@ -150,7 +150,7 @@ namespace Saga.Forest.World
             bed.transform.position = pos + new Vector3(0f, 0.1f, 0f);
             bed.transform.localScale = new Vector3(1.2f, 0.1f, 1.2f);
             bed.GetComponent<MeshRenderer>().sharedMaterial = MakeMat(new Color(0.3f, 0.22f, 0.15f));
-            Object.Destroy(bed.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(bed);
 
             Color[] petalColors = { new Color(0.95f, 0.3f, 0.5f), new Color(0.95f, 0.85f, 0.3f), new Color(0.6f, 0.4f, 0.95f) };
             Vector3[] offsets = { new Vector3(0.3f, 0f, 0.2f), new Vector3(-0.3f, 0f, 0.1f), new Vector3(0f, 0f, -0.3f) };
@@ -161,7 +161,7 @@ namespace Saga.Forest.World
                 petal.transform.position = pos + offsets[i] + new Vector3(0f, 0.25f, 0f);
                 petal.transform.localScale = Vector3.one * 0.3f;
                 petal.GetComponent<MeshRenderer>().sharedMaterial = MakeMat(petalColors[i]);
-                Object.Destroy(petal.GetComponent<Collider>());
+                Saga.Core.Colliders.Strip(petal);
             }
         }
 

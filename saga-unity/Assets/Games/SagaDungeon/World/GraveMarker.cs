@@ -79,7 +79,7 @@ namespace Saga.Dungeon.World
             visual.transform.SetParent(transform, false);
             visual.transform.localScale = new Vector3(0.4f, 0.55f, 0.4f); // 관·비석 실루엣에 가깝게(구슬인 LootMarker와 구분).
             visual.transform.localPosition = new Vector3(0f, 0.5f, 0f);
-            Object.Destroy(visual.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(visual);
 
             var mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "GraveMarker (generated)" };
             mat.color = GlowColor;

@@ -37,7 +37,7 @@ namespace Saga.Forest.World
             var mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "ForestTownScoreBoard (generated)" };
             mat.color = new Color(0.6f, 0.5f, 0.35f);
             pole.GetComponent<MeshRenderer>().sharedMaterial = mat;
-            Object.Destroy(pole.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(pole);
         }
 
         private void Update()

@@ -322,14 +322,14 @@ namespace Saga.Dungeon.World
                 post.transform.localPosition = new Vector3(0f, 0.3f, 0f);
                 post.transform.localScale = new Vector3(0.35f, 0.3f, 0.35f);
                 post.GetComponent<Renderer>().sharedMaterial = postMat;
-                Destroy(post.GetComponent<Collider>());
+                Saga.Core.Colliders.Strip(post);
                 var glow = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 glow.name = "Glow";
                 glow.transform.SetParent(root.transform, false);
                 glow.transform.localPosition = new Vector3(0f, 0.85f, 0f);
                 glow.transform.localScale = Vector3.one * 0.3f;
                 glow.GetComponent<Renderer>().sharedMaterial = glowMat;
-                Destroy(glow.GetComponent<Collider>());
+                Saga.Core.Colliders.Strip(glow);
                 root.SetActive(false);
                 _clues[r] = root;
             }
@@ -348,14 +348,14 @@ namespace Saga.Dungeon.World
                 pole.transform.localPosition = new Vector3(0f, 1.1f, 0f);
                 pole.transform.localScale = new Vector3(0.08f, 1.1f, 0.08f);
                 pole.GetComponent<Renderer>().sharedMaterial = poleMat;
-                Destroy(pole.GetComponent<Collider>());
+                Saga.Core.Colliders.Strip(pole);
                 var cloth = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 cloth.name = "Cloth";
                 cloth.transform.SetParent(root.transform, false);
                 cloth.transform.localPosition = new Vector3(0.38f, 1.85f, 0f);
                 cloth.transform.localScale = new Vector3(0.7f, 0.45f, 0.03f);
                 cloth.GetComponent<Renderer>().sharedMaterial = clothMat;
-                Destroy(cloth.GetComponent<Collider>());
+                Saga.Core.Colliders.Strip(cloth);
                 root.SetActive(false);
                 _flags[r] = root;
             }

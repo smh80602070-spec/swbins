@@ -68,7 +68,7 @@ namespace Saga.Go.World
         private static GameObject P(PrimitiveType t, Transform parent, Vector3 local, Vector3 scale, Material m, bool collide, Vector3 euler = default)
         {
             var go = GameObject.CreatePrimitive(t);
-            if (!collide) Destroy(go.GetComponent<Collider>());
+            if (!collide) Saga.Core.Colliders.Strip(go);
             go.transform.SetParent(parent, false);
             go.transform.localPosition = local;
             go.transform.localRotation = Quaternion.Euler(euler);

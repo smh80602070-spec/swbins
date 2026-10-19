@@ -42,7 +42,7 @@ namespace Saga.Forest.World
             mat.EnableKeyword("_EMISSION");
             mat.SetColor("_EmissionColor", new Color(0.2f, 0.4f, 0.7f));
             visual.GetComponent<MeshRenderer>().sharedMaterial = mat;
-            Object.Destroy(visual.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(visual);
             _visual = visual.transform;
         }
 

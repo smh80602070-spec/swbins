@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-19",
+  "tickets": [
+    "U-0122 도형 충돌체 85곳 → Saga.Core.Colliders.Strip(DestroyImmediate)"
+  ],
+  "how": "Saga.EditorTools.{PlaytestHeadless,PlaytestDungeonHeadless,PlaytestForestHeadless,PlaytestStorySlice}.Run 배치(unity-batch.sh, -quit 없음, </dev/null), 진단마다 세이브 다섯 치움·되돌림",
+  "replaced": 85,
+  "files": 61,
+  "excluded": 0,
+  "remaining_destroy_collider": 0,
+  "ok_before": {
+    "go": 84,
+    "dungeon": 54,
+    "forest": 22,
+    "story": 47
+  },
+  "ok_after": {
+    "go": 84,
+    "dungeon": 54,
+    "forest": 22,
+    "story": 47
+  },
+  "error_cs": 0,
+  "exception": 0,
+  "destroying_assets": 0,
+  "dungeon_mount": "OK",
+  "save_md5_same": true
+}

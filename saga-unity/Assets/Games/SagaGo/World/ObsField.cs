@@ -46,7 +46,7 @@ namespace Saga.Go.World
         {
             var go = GameObject.CreatePrimitive(t);
             go.name = name;
-            if (!collide) Destroy(go.GetComponent<Collider>());
+            if (!collide) Saga.Core.Colliders.Strip(go);
             go.transform.SetParent(parent, false);
             go.transform.position = pos;
             go.transform.rotation = Quaternion.Euler(0f, yaw, 0f);

@@ -40,7 +40,7 @@ namespace Saga.Go.World
         {
             var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
             go.name = name;
-            if (!collide) Destroy(go.GetComponent<Collider>());
+            if (!collide) Saga.Core.Colliders.Strip(go);
             go.transform.SetParent(parent, false);
             go.transform.position = center;
             go.transform.rotation = Quaternion.Euler(0f, yaw, 0f);
@@ -82,7 +82,7 @@ namespace Saga.Go.World
             {
                 var b = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
                 b.name = "Yard_barrel" + i;
-                Destroy(b.GetComponent<Collider>());
+                Saga.Core.Colliders.Strip(b);
                 b.transform.SetParent(root.transform, false);
                 b.transform.position = g + new Vector3(-6f + i * 1.3f, 0.7f, -13f + (i % 2) * 1f);
                 b.transform.localScale = new Vector3(1f, 0.7f, 1f);

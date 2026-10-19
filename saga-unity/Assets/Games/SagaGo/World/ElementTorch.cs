@@ -73,7 +73,7 @@ namespace Saga.Go.World
         {
             var p = GameObject.CreatePrimitive(type);
             p.name = name;
-            if (!keepCollider) Destroy(p.GetComponent<Collider>());
+            if (!keepCollider) Saga.Core.Colliders.Strip(p);
             p.transform.SetParent(transform, false);
             p.transform.localPosition = local;
             p.transform.localScale = scale;

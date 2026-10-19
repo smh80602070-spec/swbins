@@ -135,7 +135,7 @@ namespace Saga.Forest.World
             var mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "ForestFurniture (generated)" };
             mat.color = SetColor(item.Set);
             visual.GetComponent<MeshRenderer>().sharedMaterial = mat;
-            Object.Destroy(visual.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(visual);
         }
 
         private const float ModelMaxSize = 0.9f; // 한 칸(1m) 안에 — 가장 넓은 변이 이를 넘으면 줄인다.

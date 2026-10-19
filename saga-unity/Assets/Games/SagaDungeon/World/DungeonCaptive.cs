@@ -67,7 +67,7 @@ namespace Saga.Dungeon.World
             mat.color = CaptiveColor;
             visual.GetComponent<MeshRenderer>().sharedMaterial = mat;
 
-            Object.Destroy(visual.GetComponent<Collider>());
+            Colliders.Strip(visual);
         }
 
         private void Update()

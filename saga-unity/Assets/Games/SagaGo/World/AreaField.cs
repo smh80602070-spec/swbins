@@ -76,11 +76,11 @@ namespace Saga.Go.World
         {
             var go = GameObject.CreatePrimitive(t);
             go.name = name;
-            if (!collide) Destroy(go.GetComponent<Collider>());
+            if (!collide) Saga.Core.Colliders.Strip(go);
             else if (t == PrimitiveType.Cylinder)
             {
                 // 원기둥 기본 충돌은 캡슐이라 납작하게 눌러도 둥근 공이 된다 — 섬돌처럼 발 디디는 원판은 메시 충돌로
-                Destroy(go.GetComponent<Collider>());
+                Saga.Core.Colliders.Strip(go);
                 go.AddComponent<MeshCollider>().sharedMesh = go.GetComponent<MeshFilter>().sharedMesh;
             }
             go.transform.SetParent(parent, false);
@@ -426,7 +426,7 @@ namespace Saga.Go.World
             var waterMat = new Material(Shader.Find("Sprites/Default")) { name = "SunkenWater (generated)", color = new Color(0.32f, 0.62f, 0.78f, 0.42f) };
             var water = GameObject.CreatePrimitive(PrimitiveType.Cube);
             water.name = "Sunken_water";
-            Destroy(water.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(water);
             water.transform.SetParent(parent, false);
             water.transform.position = a.Center + new Vector3(0f, GoStory.SeaLevel, 0f);
             water.transform.localScale = new Vector3(GoAreas.HalfX * 2f, 0.02f, GoAreas.HalfZ * 2f);

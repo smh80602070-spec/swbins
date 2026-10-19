@@ -28,7 +28,7 @@ namespace Saga.Forest.World
             bool part = visitorKey == "alien";
             var b = GameObject.CreatePrimitive(wisp ? PrimitiveType.Sphere : part ? PrimitiveType.Cube : PrimitiveType.Cylinder);
             b.name = "Piece";
-            Destroy(b.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(b);
             b.transform.SetParent(_visual, false);
             b.transform.localPosition = Vector3.up * 0.8f;
             b.transform.localScale = wisp ? Vector3.one * 0.32f : part ? new Vector3(0.35f, 0.18f, 0.25f) : new Vector3(0.45f, 0.04f, 0.45f);
@@ -62,7 +62,7 @@ namespace Saga.Forest.World
             for (int i = 0; i < at.Length; i++)
             {
                 var ball = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                Destroy(ball.GetComponent<Collider>());
+                Saga.Core.Colliders.Strip(ball);
                 ball.transform.SetParent(root, false);
                 ball.transform.localPosition = at[i];
                 ball.transform.localScale = Vector3.one * size[i];

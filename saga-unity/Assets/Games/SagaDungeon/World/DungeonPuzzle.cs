@@ -65,7 +65,7 @@ namespace Saga.Dungeon.World
                 var mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "DungeonPuzzlePod (generated)" };
                 mat.color = UnlitColor;
                 pod.GetComponent<MeshRenderer>().sharedMaterial = mat;
-                Object.Destroy(pod.GetComponent<Collider>());
+                Saga.Core.Colliders.Strip(pod);
 
                 _pods[i] = pod.transform;
                 _rends[i] = pod.GetComponent<Renderer>();

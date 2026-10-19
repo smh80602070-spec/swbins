@@ -80,7 +80,7 @@ namespace Saga.Go.World
         private GameObject Shape(PrimitiveType t, Transform parent, Vector3 pos, Vector3 scale, Color c)
         {
             var g = GameObject.CreatePrimitive(t);
-            Destroy(g.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(g);
             g.transform.SetParent(parent, false);
             g.transform.localPosition = pos; g.transform.localScale = scale;
             g.GetComponent<MeshRenderer>().sharedMaterial = ColorMat(c);

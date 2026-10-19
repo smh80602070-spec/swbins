@@ -38,7 +38,7 @@ namespace Saga.Dungeon.World
             var mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "HordeGate (generated)" };
             mat.color = GateColor;
             visual.GetComponent<MeshRenderer>().sharedMaterial = mat;
-            Object.Destroy(visual.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(visual);
         }
 
         private void Update()

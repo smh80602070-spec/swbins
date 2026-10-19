@@ -47,7 +47,7 @@ namespace Saga.Go.World
         {
             var visual = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             visual.name = "Visual";
-            Object.Destroy(visual.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(visual);
             visual.transform.SetParent(transform, false);
             visual.transform.localScale = Vector3.one * 0.45f;
             visual.transform.localPosition = new Vector3(0f, 0.5f, 0f);

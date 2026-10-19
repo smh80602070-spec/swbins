@@ -36,7 +36,7 @@ namespace Saga.Dungeon.World
             post.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
             post.transform.localPosition = new Vector3(0f, 0.9f, 0f);
             post.GetComponent<MeshRenderer>().sharedMaterial = mat;
-            Destroy(post.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(post);
 
             _glass = new GameObject("Hourglass").transform;
             _glass.SetParent(transform, false);
@@ -49,7 +49,7 @@ namespace Saga.Dungeon.World
                 bulb.transform.localScale = new Vector3(0.45f, 0.35f, 0.45f);
                 bulb.transform.localPosition = new Vector3(0f, i == 0 ? 0.22f : -0.22f, 0f);
                 bulb.GetComponent<MeshRenderer>().sharedMaterial = mat;
-                Destroy(bulb.GetComponent<Collider>());
+                Saga.Core.Colliders.Strip(bulb);
             }
         }
 

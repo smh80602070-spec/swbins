@@ -52,7 +52,7 @@ namespace Saga.Go.World
                 for (int i = 0; i < 5; i++)
                 {
                     var f = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                    Destroy(f.GetComponent<Collider>());
+                    Saga.Core.Colliders.Strip(f);
                     f.transform.SetParent(root.transform, false);
                     float a = i * Mathf.PI * 2f / 5f;
                     f.transform.localPosition = new Vector3(Mathf.Cos(a) * 0.7f, 0.6f + (i % 3) * 0.55f, Mathf.Sin(a) * 0.7f);

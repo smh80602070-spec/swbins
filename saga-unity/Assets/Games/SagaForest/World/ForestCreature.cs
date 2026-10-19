@@ -422,7 +422,7 @@ namespace Saga.Forest.World
             go.transform.localPosition = localPos;
             go.transform.localScale = scale;
             go.GetComponent<MeshRenderer>().sharedMaterial = mat;
-            Object.Destroy(go.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(go);
             return go;
         }
 

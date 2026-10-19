@@ -55,7 +55,7 @@ namespace Saga.Forest.World
             var mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "ForestCollectSpot (generated)" };
             mat.color = spotColor;
             visual.GetComponent<MeshRenderer>().sharedMaterial = mat;
-            Object.Destroy(visual.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(visual);
         }
 
         private void Update()

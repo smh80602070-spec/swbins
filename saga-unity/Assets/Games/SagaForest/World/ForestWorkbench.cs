@@ -69,7 +69,7 @@ namespace Saga.Forest.World
                 vis.transform.SetParent(transform, false);
                 vis.transform.localScale = new Vector3(1.4f, 0.8f, 0.8f);
                 vis.transform.localPosition = new Vector3(0f, 0.4f, 0f);
-                Destroy(vis.GetComponent<Collider>());
+                Colliders.Strip(vis);
             }
             vis.name = "WorkbenchVisual";
         }

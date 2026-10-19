@@ -35,7 +35,7 @@ namespace Saga.Story.World
             go.transform.SetParent(transform, false);
             go.transform.localPosition = new Vector3(0f, 1.2f, 0f);
             go.transform.localScale = new Vector3(0.9f, 1.2f, 0.9f);
-            Object.Destroy(go.GetComponent<Collider>()); // TalkArea(트리거)만 남긴다 — StoryEnemy/StoryNpc Visual과 달리 여긴 시각용 primitive에 물리 콜라이더가 필요 없다.
+            Saga.Core.Colliders.Strip(go); // TalkArea(트리거)만 남긴다 — StoryEnemy/StoryNpc Visual과 달리 여긴 시각용 primitive에 물리 콜라이더가 필요 없다.
 
             var mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "StoryLabyrinthGate (generated)" };
             mat.color = GateColor;

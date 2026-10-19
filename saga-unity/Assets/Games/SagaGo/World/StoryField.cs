@@ -348,7 +348,7 @@ namespace Saga.Go.World
         private static GameObject MaskPart(Transform parent, PrimitiveType t, Vector3 local, Vector3 size, Material m, Transform root)
         {
             var go = GameObject.CreatePrimitive(t);
-            Object.Destroy(go.GetComponent<Collider>());
+            Colliders.Strip(go);
             go.transform.SetParent(parent, false);
             go.transform.rotation = root.rotation;
             go.transform.localPosition = local;
@@ -377,7 +377,7 @@ namespace Saga.Go.World
         {
             _pillar = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
             _pillar.name = "StoryPillar";
-            Destroy(_pillar.GetComponent<Collider>());
+            Colliders.Strip(_pillar);
             _pillar.transform.SetParent(transform, false);
             _pillar.transform.localScale = new Vector3(0.9f, PillarHeight * 0.5f, 0.9f);
             var gold = new Color(1f, 0.82f, 0.29f);

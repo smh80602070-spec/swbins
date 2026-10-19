@@ -79,7 +79,7 @@ namespace Saga.Go.World
         private static GameObject Prim(PrimitiveType t, Transform parent, Vector3 local, Vector3 scale, Material m)
         {
             var go = GameObject.CreatePrimitive(t);
-            Destroy(go.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(go);
             go.transform.SetParent(parent, false);
             go.transform.localPosition = local;
             go.transform.localScale = scale;

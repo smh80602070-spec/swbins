@@ -42,7 +42,7 @@ namespace Saga.Dungeon.World
             mat.color = WellColor;
             visual.GetComponent<MeshRenderer>().sharedMaterial = mat;
 
-            Object.Destroy(visual.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(visual);
         }
 
         private void Update()

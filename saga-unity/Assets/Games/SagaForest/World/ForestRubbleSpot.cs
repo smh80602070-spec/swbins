@@ -99,7 +99,7 @@ namespace Saga.Forest.World
                 rock.transform.localScale = scl[i];
                 rock.transform.localRotation = Quaternion.Euler(0f, 25f * i + 10f, 6f * i);
                 rock.GetComponent<MeshRenderer>().sharedMaterial = mat;
-                Destroy(rock.GetComponent<Collider>());
+                Saga.Core.Colliders.Strip(rock);
                 if (_renderer == null) _renderer = rock.GetComponent<MeshRenderer>();
             }
         }

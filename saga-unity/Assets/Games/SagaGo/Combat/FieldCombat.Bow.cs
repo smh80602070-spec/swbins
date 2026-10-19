@@ -143,7 +143,7 @@ namespace Saga.Go.Combat
                 Target = lk.Kind == AimKind.Enemy ? lk.Enemy : null, HasStop = lk.Kind == AimKind.Target || lk.Kind == AimKind.Point, Stop = lk.Point, Chest = lk.Chest, Index = lk.Index };
             var vis = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
             vis.name = "Arrow";
-            Destroy(vis.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(vis);
             vis.transform.localScale = new Vector3(0.08f, 0.7f, 0.08f);
             var col = full ? GoElements.ColorOf(el) : new Color(0.85f, 0.8f, 0.7f);
             var mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "Arrow (generated)", color = col };

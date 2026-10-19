@@ -126,7 +126,7 @@ namespace Saga.Forest.World
             var roofMat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "ForestHouseRoof (generated)" };
             roofMat.color = RoofColor;
             roof.GetComponent<MeshRenderer>().sharedMaterial = roofMat;
-            Object.Destroy(roof.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(roof);
         }
 
         /// <summary>+500m 포켓의 작은 방 — 남쪽만 비워 실외 문과 같은 자리에

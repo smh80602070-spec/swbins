@@ -90,7 +90,7 @@ namespace Saga.Forest.World
             root.SetParent(transform, false);
             var ball = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             ball.name = "Wisp";
-            Destroy(ball.GetComponent<Collider>());
+            Colliders.Strip(ball);
             ball.transform.SetParent(root, false);
             ball.transform.localPosition = Vector3.up * 1.3f;
             ball.transform.localScale = Vector3.one * 0.55f;

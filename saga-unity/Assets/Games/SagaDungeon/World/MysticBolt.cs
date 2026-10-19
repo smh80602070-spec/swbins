@@ -18,7 +18,7 @@ namespace Saga.Dungeon.World
         {
             var go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             go.name = "MysticBolt";
-            Object.Destroy(go.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(go);
             go.transform.position = from;
             go.transform.localScale = Vector3.one * 0.28f;
             var r = go.GetComponent<Renderer>();

@@ -83,7 +83,7 @@ namespace Saga.Go.Combat
             float h = BodyTop;
             _shieldBubble = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             _shieldBubble.name = "ShieldBubble";
-            Destroy(_shieldBubble.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(_shieldBubble);
             _shieldBubble.transform.SetParent(transform, false);
             _shieldBubble.transform.localPosition = new Vector3(0f, h * 0.5f, 0f);
             _shieldBubble.transform.localScale = new Vector3(2.8f, h * 1.15f, 2.8f);
@@ -108,7 +108,7 @@ namespace Saga.Go.Combat
             {
                 var orb = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 orb.name = "Orb";
-                Destroy(orb.GetComponent<Collider>());
+                Saga.Core.Colliders.Strip(orb);
                 orb.transform.SetParent(_orbit, false);
                 float a = i * Mathf.PI * 2f / 3f;
                 float orbR = IsGuardian ? 2.6f : 1.6f;

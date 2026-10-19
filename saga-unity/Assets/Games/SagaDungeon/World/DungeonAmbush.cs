@@ -74,7 +74,7 @@ namespace Saga.Dungeon.World
             mat.color = MarkerColor;
             visual.GetComponent<MeshRenderer>().sharedMaterial = mat;
 
-            Object.Destroy(visual.GetComponent<Collider>());
+            Saga.Core.Colliders.Strip(visual);
         }
 
         private void Update()
