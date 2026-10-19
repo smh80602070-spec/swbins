@@ -62,6 +62,24 @@ namespace Saga.Dungeon.World
             return item.Grade >= 2 ? PillarTreasure : PillarFine;
         }
 
+        /// <summary>U-0126 전리품 거르기 — 떨굼 하나를 규칙대로: 숨기기면 표식을 안 세우고(다른 것 — 금 말고 보석 — 이 함께면 기둥 없는 표식만),
+        /// 빛기둥이면 명품 아래라도 명품 기둥을, 보이기면 예전 그대로(등급 기둥). 진단이 직접 부른다.</summary>
+        public static LootFilter.Act SpawnFiltered(Vector3 worldPos, ItemData item, bool better, bool hasOther)
+        {
+            var act = LootFilter.Decide(item, better);
+            if (act == LootFilter.Act.Hide)
+            {
+                HiddenCount++;
+                if (hasOther) Spawn(worldPos);
+                return act;
+            }
+            Spawn(worldPos, act == LootFilter.Act.Beam ? Mathf.Max(PillarTierOf(item), PillarFine) : PillarTierOf(item));
+            return act;
+        }
+
+        /// <summary>진단 — 거르기로 숨긴 무기 수.</summary>
+        public static int HiddenCount { get; private set; }
+
         private int _pillarTier;
         private LineRenderer _core;
         private LineRenderer _halo;

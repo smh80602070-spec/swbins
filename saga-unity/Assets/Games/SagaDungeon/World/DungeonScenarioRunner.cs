@@ -105,6 +105,11 @@ namespace Saga.Dungeon.World
 
         private void OnEnemyDied(DungeonEnemy e) => DungeonScenario.OnKill();
         private void OnFreed() => DungeonScenario.OnRescue();
-        private void OnFloor(int floor) => DungeonScenario.OnFloor(floor);
+        private void OnFloor(int floor)
+        {
+            DungeonScenario.OnFloor(floor);
+            string hint = LootFilter.HintIfDeep(floor); // U-0126 — 4층 밑으로 처음 내려가면 거르기를 한 번 권한다
+            if (hint != null) DialogueLabel.Instance?.Show(hint, 5f);
+        }
     }
 }

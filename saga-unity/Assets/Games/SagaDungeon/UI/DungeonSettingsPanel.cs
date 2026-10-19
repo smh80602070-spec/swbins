@@ -42,6 +42,10 @@ namespace Saga.Dungeon.UI
         [SerializeField] private TextMeshProUGUI _bgmValueLabel;
         // U-0075 — 대사 음성 켬/끔(SagaVoice.Enabled, 다섯 판 공용 PlayerPrefs). 씬에 구운 창엔 없어 실행 때만 만든다(회귀 줄과 같은 꼴).
         private TextMeshProUGUI _voiceNameLabel, _voiceValueLabel;
+        // U-0126 — 전리품 거르기 창을 여는 단추(창 왼쪽 위, 실행 때만)
+        private TextMeshProUGUI _lootLabel;
+        private LootFilterPanel _loot;
+        public LootFilterPanel LootPanel => _loot;
 
         public void Build()
         {
@@ -90,7 +94,7 @@ namespace Saga.Dungeon.UI
         private void ChooseLanguage() { DungeonLocalization.CycleLanguage(); DungeonLocalization.RelocalizeScene(); Refresh(); }
 
         /// <summary>110 ⑤c-2c — 씬에 구운 글(빌더 = 한국어)을 지금 언어로, 이 창의 글도 한 번 새로(예전엔 값을 바꿀 때만).</summary>
-        private void Start() { EnsureVoiceRow(); DungeonLocalization.RelocalizeScene(); Refresh(); }
+        private void Start() { EnsureVoiceRow(); EnsureLootFilter(); DungeonLocalization.RelocalizeScene(); Refresh(); }
         private void ChooseBgm() { DungeonSettingsState.BgmOn = !DungeonSettingsState.BgmOn; Refresh(); }
 
         /// <summary>U-0075 — 음성 줄을 붙이고 줄 전체를 82 간격으로 다시 놓는다(예전 95 간격 여섯 줄 판엔 일곱째 자리가 없었다 —
@@ -113,6 +117,19 @@ namespace Saga.Dungeon.UI
                 if (rows[i].Item2.transform.parent is RectTransform v) v.anchoredPosition = new Vector2(v.anchoredPosition.x, y);
             }
         }
+
+        private void EnsureLootFilter()
+        {
+            if (!Application.isPlaying || _panel == null || _loot != null) return;
+            var b = NewButton(_panel.transform, "", new Vector2(0f, 1f), new Vector2(24f, -24f), new Vector2(170f, 60f), null);
+            _lootLabel = b.GetComponentInChildren<TextMeshProUGUI>();
+            _lootLabel.fontSize = 22;
+            b.onClick.AddListener(OpenLootFilter);
+            _loot = gameObject.AddComponent<LootFilterPanel>();
+            _loot.Build(_panel.transform.parent);
+        }
+
+        private void OpenLootFilter() { if (_loot != null) _loot.Open(); }
 
         private void ChooseVoice() { Saga.Core.SagaVoice.Enabled = !Saga.Core.SagaVoice.Enabled; Refresh(); }
 
@@ -140,6 +157,7 @@ namespace Saga.Dungeon.UI
             _qualityValueLabel.text = DungeonSettingsState.GraphicsQualityLabel();
             _languageValueLabel.text = DungeonLocalization.LanguageLabel();
             _bgmValueLabel.text = DungeonLocalization.T(DungeonSettingsState.BgmOn ? "state.on" : "state.off");
+            if (_lootLabel != null) _lootLabel.text = DungeonLocalization.T("lootf.open", "🧹 거르기");
             if (_voiceValueLabel != null)
             {
                 _voiceNameLabel.text = DungeonLocalization.T("settings.voice", "음성");
@@ -162,7 +180,7 @@ namespace Saga.Dungeon.UI
             return canvas;
         }
 
-        private static GameObject NewPanel(Transform parent, Vector2 anchor, Vector2 size, Color color)
+        internal static GameObject NewPanel(Transform parent, Vector2 anchor, Vector2 size, Color color)
         {
             var go = new GameObject("Panel", typeof(RectTransform));
             go.transform.SetParent(parent, false);
@@ -177,7 +195,7 @@ namespace Saga.Dungeon.UI
             return go;
         }
 
-        private static TextMeshProUGUI NewText(Transform parent, string content, Vector2 anchor, Vector2 pos, Vector2 size, int fontSize)
+        internal static TextMeshProUGUI NewText(Transform parent, string content, Vector2 anchor, Vector2 pos, Vector2 size, int fontSize)
         {
             var go = new GameObject("Text", typeof(RectTransform));
             go.transform.SetParent(parent, false);
@@ -197,7 +215,7 @@ namespace Saga.Dungeon.UI
             return text;
         }
 
-        private static Button NewButton(Transform parent, string label, Vector2 anchor, Vector2 pos, Vector2 size, UnityEngine.Events.UnityAction onClick)
+        internal static Button NewButton(Transform parent, string label, Vector2 anchor, Vector2 pos, Vector2 size, UnityEngine.Events.UnityAction onClick)
         {
             var go = new GameObject($"Btn_{label}", typeof(RectTransform));
             go.transform.SetParent(parent, false);

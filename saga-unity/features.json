@@ -2062,5 +2062,23 @@
   "ticket": "U-0125",
   "since": "2026-10-19",
   "note": "D2(U-0125): docs/playcheck/d2-u0125-20261019.json — PlaytestHeadless 84→89(grab·grab land·grab damage·grab cooldown·grab boss OK) · C 키(G 는 요리 창)·폰 ✊ 단추 · 거리 웹 × 1.85 · 촬영 안 함"
+ },
+ {
+  "id": "un.dg.loot-filter",
+  "name": "U-0126 전리품 거르기 — 규칙 목록(등급·무기·비전·센 무기 → 보이기·숨기기·빛기둥) 첫 일치(웹 W-0287 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaDungeon/Data/LootFilter.cs",
+   "saga-unity/Assets/Games/SagaDungeon/UI/LootFilterPanel.cs",
+   "saga-unity/Assets/Games/SagaDungeon/World/LootMarker.cs"
+  ],
+  "tests": [
+   "PlaytestDungeonLootFilter"
+  ],
+  "level": "D2",
+  "verified": "2026-10-19 claude",
+  "fun": {},
+  "ticket": "U-0126",
+  "since": "2026-10-19",
+  "note": "D2(U-0126): docs/playcheck/d2-u0126-20261019.json — PlaytestDungeonHeadless 54→59(lootfilter defaults·hide·gold·order·save) · UiLayoutCheck 문제 0(설정 창 🧹 단추 포함 — 설정 속 단추는 안 눌러 거르기 창은 진단이 12줄 꽉 찬 상태로 겹침·밖 0) · 촬영 안 함"
  }
 ]

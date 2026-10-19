@@ -26,6 +26,8 @@ namespace Saga.EditorTools
                 yield return ($"saga_{g}_graphics_quality_high", 'i');
             }
             yield return ("saga_realm_succession_on", 'i');
+            yield return ("saga_dungeon_loot_filter", 's'); // U-0126
+            yield return ("saga_dungeon_loot_hinted", 'i');
         }
 
         public static int Count => Saved.Count;

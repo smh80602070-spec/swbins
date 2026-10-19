@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-19",
+  "tickets": [
+    "U-0126 2나락 전리품 거르기(웹 W-0287)"
+  ],
+  "how": "PlaytestDungeonHeadless.Run·UiLayoutCheck.Run 배치(unity-batch.sh, -quit 없음, </dev/null), 세이브 다섯 치움·되돌림",
+  "ok_before": 54,
+  "ok_after": 59,
+  "new_ok": [
+    "lootfilter defaults",
+    "lootfilter hide",
+    "lootfilter gold",
+    "lootfilter order",
+    "lootfilter save"
+  ],
+  "ui_layout": "OK 문제 0 · 거르기 창 12줄 겹침·밖 0(진단)",
+  "error_cs": 0,
+  "exception": 0,
+  "save_md5_same": true,
+  "runs": 3,
+  "run1": "기본 셋 셋째 '센 무기 빛기둥' 이 보통 무기에 기둥 → secrets(109-10) FAIL → 기본 둘로, 빠른 추가로만",
+  "run3": "꽉 찬 창 겹침 검사 더함"
+}
