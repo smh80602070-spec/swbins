@@ -126,7 +126,7 @@ try {
   check('무장 — 공과 금을 갖추면 승진해 관직이 한 단 오르고 금이 들고 충성이 오른다', !pm.none && pm.res === true && pm.rank[1] === pm.rank[0] + 1 && pm.g[1] === pm.g[0] - pm.cost.gold && pm.loyal[1] >= pm.loyal[0], JSON.stringify(pm).slice(0, 260));
 
   /* 6) 전략 화면 틀(W-0088) — 1280×720 에서 #cpanel·#dock 단추가 K-0060 옻칠·금테 그림(border-image)을 입고, 그 그림이 404 가 아니다 */
-  await clearCards(); await ev(() => { DG.ui.closeSheet(); }); await sleep(300);
+  await clearCards(); await ev(() => { DG.ui.closeSheet(); if (DG.realm3d && DG.realm3d.active && DG.realm3d.active()) { DG.realm3d.toggle(); } }); await sleep(300);   // 10-19 PC 기본 3D(0cebafb85) — 2D 지도 틀을 보려면 끈다
   await page.locator('#realm g.rcity.mine').first().click({ force: true }); await sleep(800);   // 넓은 화면에서 성을 누르면 #cpanel 이 처음 생긴다(cpanel.js)
   const fr = await ev(() => { var g = (sel) => { var e = document.querySelector(sel); return e ? getComputedStyle(e).borderImageSource : null; }; var out = { cpanel: g('#cpanel'), dock: g('#dock button'), banner: g('#banner'), open: g('#cpanel .cp-open') }; return Promise.all([out.cpanel, out.dock, out.banner, out.open].map((v) => { var m = /url\("?([^")]+)"?\)/.exec(v || ''); return m ? fetch(m[1]).then((x) => x.status, () => 0) : Promise.resolve(0); })).then((st) => { out.status = st; return out; }); });
   const uiMiss = r.notFound.filter((u) => /assets\/ui\/realm\//.test(u));

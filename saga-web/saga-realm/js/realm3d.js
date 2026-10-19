@@ -74,7 +74,7 @@
     var cores = o.cores || 0, mem = o.mem || 0;
     var px = (o.w || 0) * (o.h || 0) * (o.dpr || 1) * (o.dpr || 1);
     s += cores >= 8 ? 2 : (cores >= 4 ? 1 : (cores > 0 ? 0 : 1));
-    s += mem >= 8 ? 2 : (mem >= 4 ? 1 : (mem > 0 ? 0 : 1));
+    s += mem >= 8 ? 2 : (mem >= 4 ? 1 : (mem > 0 ? 0 : (o.ios ? -1 : 1)));   // W-0333 iOS 는 deviceMemory 가 없다 — 모름을 "넉넉"이 아니라 "빠듯"으로
     s += px > 4000000 ? -1 : (px > 1600000 ? 0 : 1);
     if (o.touch) { s -= 1; }
     return s;
@@ -85,7 +85,7 @@
     return {
       cores: n.hardwareConcurrency || 0, mem: n.deviceMemory || 0,
       w: sc.width || 0, h: sc.height || 0, dpr: global.devicePixelRatio || 1,
-      touch: !!(('ontouchstart' in global) || (n.maxTouchPoints > 0))
+      touch: !!(('ontouchstart' in global) || (n.maxTouchPoints > 0)), ios: /iPhone|iPad|iPod/.test(n.userAgent || '') || (/Macintosh/.test(n.userAgent || '') && n.maxTouchPoints > 1)
     };
   }
   var autoTierCache = null, aqV = null; function AQ() { return aqV || (global.DG.autoq ? (aqV = global.DG.autoq.make('realm3d')) : null); }   /* W-0302 자동 품질 FPS 내리기(shared/js/autoq.js) */ function isAutoQ() { var q = QUALITY(); return q !== 'low' && q !== 'medium' && q !== 'high'; }
@@ -95,7 +95,7 @@
   }
   /** 고정 값(low/medium/high)이면 그걸, 'auto'면 켤 때 한 번 잰 등급을 쓴다 */
   function tier() {
-    var q = QUALITY();
+    var q = QUALITY(); if (global.DG.deviceMode && global.DG.deviceMode.phone()) { return 'low'; }   // W-0333 폰 3D = low 고정(DPR 1·후처리·그림자·PBR 땅 0 — post3d·shadow·pbrground 가 이 등급을 따른다, 아이폰 탭 죽음)
     return (q === 'low' || q === 'medium' || q === 'high') ? q : autoTier();
   }
   function DPR() { return C().tuned('realm3d.dpr', QUALITY_PRESET[tier()].dpr); }
