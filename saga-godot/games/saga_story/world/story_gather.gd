@@ -8,6 +8,7 @@ extends Node3D
 
 const Toast := preload("res://saga_core/ui/toast.gd")
 const StoryCombat := preload("res://games/saga_story/data/story_combat.gd")
+const StoryLife := preload("res://games/saga_story/data/story_life.gd")   # G-0238 채집 랭크
 
 const VISUAL_COLOR := Color(0.85, 0.78, 0.25)  # data-side.js herb emoji 🌼 느낌
 
@@ -64,11 +65,19 @@ func _gather() -> void:
 	var ev := get_tree().get_first_node_in_group("story_hunt_events") as Node3D
 	if ev != null:
 		gain = ev.forage_mul_at(global_position.x - ev.global_position.x)
+	var lucky := gain > 1
+	## G-0238 채집 랭크(웹 life.js gatherExtra·gain) — 🍀 ×2 뒤 +1 · 경험 1(🍀 2)
+	var lxp := int(StorySaveState.life.get("gather", 0))
+	gain += StoryLife.extra(StoryLife.rank_idx(lxp), StorySaveState.life_rng)
 	StorySaveState.add_mat(kind, gain)
+	var up: int = StorySaveState.add_life_xp("gather", 2 if lucky else 1)
 	var info: Dictionary = StoryCombat.GATHER_INFO.get(kind, {})
 	var label := String(info.get("name", kind))
 	var emoji := String(info.get("emoji", ""))
-	Toast.show(self, "%s %s +%d%s" % [emoji, label, gain, " 🍀" if gain > 1 else ""], 2.0)
+	var msg := "%s %s +%d%s · %s" % [emoji, label, gain, " 🍀" if lucky else "", StoryLife.label("gather", int(StorySaveState.life["gather"]))]
+	if up >= 0:   # 랭크 오름은 둘째 줄로 한 번 더(토스트 한 칸이라 따로 띄우면 앞 줄을 덮는다)
+		msg += "\n" + StoryLife.rank_up_text("gather", up)
+	Toast.show(self, msg, 2.5 if up >= 0 else 2.0)
 
 	get_tree().create_timer(StoryCombat.GATHER_RESPAWN_SEC).timeout.connect(_respawn)
 

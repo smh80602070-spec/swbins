@@ -4314,6 +4314,28 @@
   "note": "소리 없음(4종횡 효과음 자리 없음) · 일시정지 중엔 시간 안 건드림 · 상태는 정적 칸(golden 해시 그대로)"
  },
  {
+  "id": "gd.st.life-rank",
+  "name": "4종횡 채집 랭크 — 캘 때마다 경험 1(🍀 구간 2) · 랭크 F→E→D→C→B→A→3→2→1(누적 940) · 오를 때마다 \"두 개\" 확률 +1/8(랭크 1 은 늘 둘, 🍀 ×2 뒤 +1) · 토스트 꼬리 \"🌿 채집 D 12/60\"·오름 둘째 줄 · 세이브 life(v21, 옛 세이브 0)(웹 W-0283)",
+  "files": [
+   "games/saga_story/data/story_life.gd",
+   "games/saga_story/data/story_save_state.gd",
+   "games/saga_story/world/story_gather.gd",
+   "tools/probe_story_life.gd"
+  ],
+  "tests": [
+   "story_life",
+   "story_events",
+   "save_story",
+   "story_rules"
+  ],
+  "level": "D2",
+  "verified": "2026-10-19",
+  "fun": {},
+  "ticket": "G-0238",
+  "since": "2026-10-19",
+  "note": "채집만 — 요리·연주는 고돗 4종횡에 행동이 없어 뺌(후속 후보) · 두 개도 mats 에 들어가 사명 진행 빨라짐(웹과 같음)"
+ },
+ {
   "id": "gd.rk.tech-tree",
   "name": "5천하 기술 나무 — 세력 연구 농·상·군·학 × 6마디(값 6~25) · 달마다 연구점 1 + 지력 85 이상 무장(넷까지) + 글 모으기 · 효과는 경륜도 합산 자리(군량·금·내정·공격·수비·징병·축성·등용·외교·계략·경험 %) · 조선·훈련 비용 −20% · 큰 도면 = 불가사의 문 플래그 · HUD 📜 연구 창(웹 W-0290)",
   "files": [

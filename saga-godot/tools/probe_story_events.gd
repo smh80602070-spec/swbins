@@ -328,6 +328,8 @@ func _initialize() -> void:
 	gout.position = Vector3(18.0, 0, 0)
 	stage.add_child(gout)
 	var h0 := int(ss.mats.get("herb", 0))
+	var lx0 := int(ss.life.get("gather", 0))
+	ss.life["gather"] = 0   # G-0238 — 랭크 F(두 개 없음)에서 🍀 ×2 만 잰다
 	gin._gather()
 	var d_in := int(ss.mats.get("herb", 0)) - h0
 	var toast_in := toast.text
@@ -335,9 +337,10 @@ func _initialize() -> void:
 	var d_out := int(ss.mats.get("herb", 0)) - h0 - d_in
 	var toast_out := toast.text
 	ss.mats["herb"] = h0
+	ss.life["gather"] = lx0
 	check(patch != null and is_equal_approx((patch.mesh as PlaneMesh).size.x, 5.2) and quiet_f and toast_f == "🍀 채집이 넘치는 곳이다!" and again_f == "",
 		"⑧ 채집 판 폭 5.2 · 구간 밖 조용 · 처음 들어설 때 토스트 \"%s\" · 다시 들어와도 한 번만" % toast_f)
-	check(d_in == 2 and d_out == 1 and toast_in.ends_with("+2 🍀") and toast_out.ends_with("+1") and sp.forage_mul_at(12.0) == 2 and sp.forage_mul_at(18.0) == 1,
+	check(d_in == 2 and d_out == 1 and toast_in.contains("+2 🍀 · 🌿 채집 F") and toast_out.contains("+1 · 🌿 채집 F") and sp.forage_mul_at(12.0) == 2 and sp.forage_mul_at(18.0) == 1,
 		"⑧ 구간 안 채집 +%d(\"%s\") · 밖 +%d(\"%s\")" % [d_in, toast_in, d_out, toast_out])
 	gin.free()
 	gout.free()

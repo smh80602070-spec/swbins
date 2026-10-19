@@ -19,7 +19,7 @@ const Toast := preload("res://saga_core/ui/toast.gd")
 const SAVE_PATH := "user://save_story.json"
 const SaveSlots := preload("res://saga_core/data/save_slots.gd")   # G-0070 슬롯(1 = 이 파일 그대로)
 const SafeFile := preload("res://saga_core/data/safe_file.gd")  # 임시 파일 → .bak → 바꿔치기(쓰는 도중 꺼져도 직전본이 남는다)
-const SAVE_VERSION := 20  # 19→20: passive(사방 성좌도, G-0214 — 옛 세이브는 빈 칸) · 18→19: sp_cut_lv/sp_bonus/skill_offers(레벨업 3택, G-0197 — 옛 세이브는 불러온 레벨까지 SP 그대로) · 17→18: scenario(이야기, G-0087) · 1→2: mats, 2→3: has_weapon, 3→4: equipped, 4→5: gold, 5→6: job(1차 전직), 6→7: skills(SP 투자), 7→8: scroll_bonus/scroll_left(주문서), 8→9: bosses/feat/achievements(업적), 9→10: quests_done(사명), 10→11: stage_kills(사냥터별 킬 수 사명), 11→12: visited_stages(q_explore1), 12→13: talks(q_talk1), 13→14: repeat_progress/daily_done_day(반복/일일 사명), 14→15: weekly_champion_week(관문 대장), 15→16: memory_fragments/memory_tier(비경), 16→17: mentor_bond(사제 유대, 51장 STORY "관계" 축 첫 걸음)
+const SAVE_VERSION := 21  # 20→21: life(생활 랭크 — 채집, G-0238 — 옛 세이브는 0) · 19→20: passive(사방 성좌도, G-0214 — 옛 세이브는 빈 칸) · 18→19: sp_cut_lv/sp_bonus/skill_offers(레벨업 3택, G-0197 — 옛 세이브는 불러온 레벨까지 SP 그대로) · 17→18: scenario(이야기, G-0087) · 1→2: mats, 2→3: has_weapon, 3→4: equipped, 4→5: gold, 5→6: job(1차 전직), 6→7: skills(SP 투자), 7→8: scroll_bonus/scroll_left(주문서), 8→9: bosses/feat/achievements(업적), 9→10: quests_done(사명), 10→11: stage_kills(사냥터별 킬 수 사명), 11→12: visited_stages(q_explore1), 12→13: talks(q_talk1), 13→14: repeat_progress/daily_done_day(반복/일일 사명), 14→15: weekly_champion_week(관문 대장), 15→16: memory_fragments/memory_tier(비경), 16→17: mentor_bond(사제 유대, 51장 STORY "관계" 축 첫 걸음)
 
 
 func save_version() -> int:
@@ -222,6 +222,15 @@ func visit_stage(stage_key: String) -> void:
 func add_talk() -> void:
 	talks += 1
 	check_quests()
+
+
+## G-0238 — 생활 경험 n 더함. 랭크가 오르면 새 랭크 번호, 아니면 -1.
+func add_life_xp(k: String, n: int = 1) -> int:
+	var SL: GDScript = load("res://games/saga_story/data/story_life.gd")
+	var before: int = SL.rank_idx(int(life.get(k, 0)))
+	life[k] = int(life.get(k, 0)) + n
+	var after: int = SL.rank_idx(int(life[k]))
+	return after if after > before else -1
 
 
 func add_mat(kind: String, amount: int = 1) -> void:
@@ -532,6 +541,10 @@ var mentor_bond := 0
 ## G-0214 사방 성좌도 — 공용 패시브 그물(saga_core/data/passive_web.gd)의 세이브 칸. 효과는 data/story_constellation.gd.
 var passive: Dictionary = {"start": null, "taken": []}
 var _passive_api: RefCounted = null
+## G-0238 생활 랭크(웹 life.js) — 기술 → 경험(채집만, 요리·연주 자리 남김). 랭크·확률은 data/story_life.gd.
+var life: Dictionary = {"gather": 0}
+## 채집 "두 개" 굴림 — 세이브 밖. probe 는 life_rng.seed 를 고정한다.
+var life_rng := RandomNumberGenerator.new()
 
 
 ## 성좌 규칙 층 — passive 사전이 바뀌면(불러오기) 새로 만든다. 점수는 story_constellation.points_total.
@@ -823,6 +836,7 @@ func save() -> bool:
 		"job": job,
 		"mentor_bond": mentor_bond,
 		"passive": passive,   # G-0214
+		"life": life,   # G-0238
 		"scenario": scenario,   # G-0087
 		"skills": skills,
 		"sp_cut_lv": sp_cut_lv,   # G-0197
@@ -879,6 +893,11 @@ func try_load() -> bool:
 	if not passive.has("taken"):
 		passive = {"start": null, "taken": []}
 	_passive_api = null
+	var loaded_life: Variant = data.get("life", {})   # G-0238 — 옛 세이브(20)는 0
+	life = {"gather": 0}
+	if typeof(loaded_life) == TYPE_DICTIONARY:
+		for k: Variant in (loaded_life as Dictionary):
+			life[String(k)] = maxi(0, int((loaded_life as Dictionary)[k]))
 	var loaded_scenario: Variant = data.get("scenario", {})   # G-0087
 	scenario = (loaded_scenario as Dictionary).duplicate(true) if typeof(loaded_scenario) == TYPE_DICTIONARY else {}
 	var loaded_skills: Variant = data.get("skills", {})
