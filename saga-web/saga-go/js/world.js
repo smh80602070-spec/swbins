@@ -858,8 +858,7 @@
 
   /** 시점 모드 — 0: 2D · 1: 2.5D · 2: 3D */
   function tiltMode() {
-    var t = core.save.settings ? core.save.settings.tilt : 0;
-    if (global.DG.deviceMode && !global.DG.deviceMode.want3d('go', true)) { return 0; }   // 10-19 폰은 시점 2D 로 연다
+    var t = core.save.settings ? core.save.settings.tilt : 0; if (global.DG.deviceMode && !global.DG.deviceMode.want3d('go', true)) { return 0; }   // 10-19 폰은 시점 2D 로 연다
     return t === 2 ? 2 : (t ? 1 : 0);
   }
   function tiltOn() { return tiltMode() > 0; }
