@@ -81,6 +81,15 @@ namespace Saga.Forest.Data
             Changed?.Invoke();
         }
 
+        /// <summary>tasks U-0127 — 창고에서 하나 꺼낸다(작은 빈 집에 넣기). 없으면 false.</summary>
+        public static bool TakeStock(string id)
+        {
+            if (StockCount(id) < 1) return false;
+            Stock[id] = StockCount(id) - 1;
+            Changed?.Invoke();
+            return true;
+        }
+
         /// <summary>과일로 산다 — 모자라면 false(창고 안 늘어남).</summary>
         public static bool TryBuy(string id)
         {

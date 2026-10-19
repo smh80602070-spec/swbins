@@ -22,7 +22,7 @@ namespace Saga.Forest.World
         private Transform _player;
         private GameObject _panel;
         private TextMeshProUGUI _title, _status;
-        private Button _upgrade, _decline, _close, _hint;
+        private Button _upgrade, _decline, _close, _hint, _lots;
         private readonly List<Button> _axisButtons = new List<Button>();
         private ForestHandState.Axis[] _offer;
 
@@ -97,6 +97,9 @@ namespace Saga.Forest.World
             _decline.onClick.AddListener(PressDecline);
             _close = SagaUi.NewButton(_panel.transform, "Close", ForestLocalization.T("hand.close", "닫기"), new Vector2(0.5f, 0f), new Vector2(0f, 40f), new Vector2(240f, 56f), SagaUi.ButtonIdle, 24f);
             _close.onClick.AddListener(Close);
+            // tasks U-0127 — 작은 빈 집 창(창 오른쪽 위)
+            _lots = SagaUi.NewButton(_panel.transform, "Lots", ForestLocalization.T("lot.open", "🏠 빈 집"), new Vector2(1f, 1f), new Vector2(-18f, -18f), new Vector2(170f, 54f), SagaUi.ButtonIdle, 22f);
+            _lots.onClick.AddListener(OpenLots);
             _panel.SetActive(false);
         }
 
@@ -119,6 +122,14 @@ namespace Saga.Forest.World
         public void Close()
         {
             if (_panel != null) _panel.SetActive(false);
+        }
+
+        private void OpenLots()
+        {
+            var r = ForestLotRunner.Instance;
+            if (r == null) return;
+            Close();
+            r.Open();
         }
 
         /// <summary>창 글·단추를 지금 상태로.</summary>

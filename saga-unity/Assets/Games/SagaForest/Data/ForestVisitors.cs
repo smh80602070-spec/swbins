@@ -229,6 +229,15 @@ namespace Saga.Forest.Data
             return who + " — " + ForestLocalization.T("visitor.settled_now", "고맙소! 내일부터는 광장 곁에서 지내겠소 — 들르면 작은 선물을 드리리다");
         }
 
+        /// <summary>tasks U-0127 입주 조건 — 꾸민 빈 집에 눌러앉는다(단골 셋 없이도). 이미 살거나 자리가 꽉 찼으면 false.</summary>
+        public static bool SettleFromLot(string key)
+        {
+            if (IndexOf(key) < 0 || IsSettled(key) || Settled.Count >= SettleSpots.Length) return false;
+            Settled.Add(key);
+            Touch();
+            return true;
+        }
+
         public const float FoxMul = 1.5f;
         /// <summary>손님이 서는 광장 자리(world XZ) — 판·창구·나무·사람 길에서 3m 밖(`PlaytestForestVisitors`).</summary>
         public static readonly Vector2 Spot = new Vector2(3f, 2f);

@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-19",
+  "tickets": [
+    "U-0127 3마을 입주 조건(웹 W-0284)"
+  ],
+  "how": "PlaytestForestHeadless.Run 배치(unity-batch.sh, -quit 없음, </dev/null), 세이브 다섯 치움·되돌림",
+  "ok_before": 22,
+  "ok_after": 27,
+  "new_ok": [
+    "movein build",
+    "movein tags2",
+    "movein settle",
+    "movein oneaday",
+    "movein save"
+  ],
+  "error_cs": 0,
+  "exception": 0,
+  "save_md5_same": true,
+  "runs": 2,
+  "run1": "craft '옛 세이브 흉내'(손 칸 셋 연속 정규식)가 사이에 끼운 lotsJson 때문에 FAIL → 필드를 handPending 뒤로"
+}

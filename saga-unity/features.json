@@ -2080,5 +2080,23 @@
   "ticket": "U-0126",
   "since": "2026-10-19",
   "note": "D2(U-0126): docs/playcheck/d2-u0126-20261019.json — PlaytestDungeonHeadless 54→59(lootfilter defaults·hide·gold·order·save) · UiLayoutCheck 문제 0(설정 창 🧹 단추 포함 — 설정 속 단추는 안 눌러 거르기 창은 진단이 12줄 꽉 찬 상태로 겹침·밖 0) · 촬영 안 함"
+ },
+ {
+  "id": "un.fs.move-in",
+  "name": "U-0127 입주 조건 — 작은 빈 집(최대 셋)에 가구 태그 셋이면 다음 날 어울리는 떠돌이 손님이 눌러앉음(웹 W-0284 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaForest/Data/ForestLots.cs",
+   "saga-unity/Assets/Games/SagaForest/World/ForestLotRunner.cs",
+   "saga-unity/Assets/Games/SagaForest/World/ForestWorkbench.cs"
+  ],
+  "tests": [
+   "PlaytestForestMoveIn"
+  ],
+  "level": "D2",
+  "verified": "2026-10-19 claude",
+  "fun": {},
+  "ticket": "U-0127",
+  "since": "2026-10-19",
+  "note": "D2(U-0127): docs/playcheck/d2-u0127-20261019.json — PlaytestForestHeadless 22→27(movein build·tags2·settle·oneaday·save) · 짓기 열매 15(재료 없음) · 집 모습 = 내 집 껍데기 ×0.55 · 촬영 안 함"
  }
 ]

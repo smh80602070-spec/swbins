@@ -108,7 +108,10 @@ namespace Saga.Forest.World
         /// GLB 건물 대신 임시 primitive(PLAN.md 8장 "Placeholder는 개발
         /// 초기 테스트용") — 다음에 실제 건물 GLB를 구하면 이 메서드만
         /// 바꾸면 된다.</summary>
-        private void BuildExterior()
+        private void BuildExterior() => BuildShell(transform, true);
+
+        /// <summary>벽 셋 + 지붕 — 이 집과 tasks U-0127 작은 빈 집(`ForestLotRunner`, 줄여서·충돌 없이)이 같이 쓴다.</summary>
+        internal static void BuildShell(Transform transform, bool solid)
         {
             var mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "ForestHouseWall (generated)" };
             mat.color = WallColor;
@@ -116,6 +119,7 @@ namespace Saga.Forest.World
             BuildWall(transform, new Vector3(0f, 1.25f, 2f), new Vector3(4f, 2.5f, 0.3f), mat); // 북쪽
             BuildWall(transform, new Vector3(2f, 1.25f, 0f), new Vector3(0.3f, 2.5f, 4f), mat); // 동쪽
             BuildWall(transform, new Vector3(-2f, 1.25f, 0f), new Vector3(0.3f, 2.5f, 4f), mat); // 서쪽
+            if (!solid) foreach (Transform w in transform) if (w.name == "Wall") Saga.Core.Colliders.Strip(w.gameObject);
             // 남쪽(-Z)은 일부러 안 세운다 — 문.
 
             var roof = GameObject.CreatePrimitive(PrimitiveType.Cube);
