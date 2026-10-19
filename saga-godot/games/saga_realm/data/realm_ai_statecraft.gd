@@ -12,6 +12,7 @@ extends RefCounted
 
 const SC := preload("res://games/saga_realm/data/realm_statecraft.gd")
 const RealmCities := preload("res://games/saga_realm/data/realm_cities.gd")
+const Wonder := preload("res://games/saga_realm/data/realm_wonder.gd")   # G-0243 불가사의 %
 const AI_ON := true   # 점검(골든)이 끄고 옛 값을 재현한다
 const CAP := 56
 const KEY_AT := 20
@@ -131,9 +132,9 @@ static func fx(rs: Object, fid: String) -> Dictionary:
 		return {}
 	var a := api(rs, fid)
 	var c: Dictionary = _fx.get(fid, {})
-	if not c.is_empty() and int(c.id) == a.get_instance_id() and int(c.rev) == int(a.rev):
+	if not c.is_empty() and int(c.id) == a.get_instance_id() and int(c.rev) == int(a.rev) and int(c.get("wrev", -1)) == Wonder.rev:
 		return c.fx
-	var pct := func(k: String) -> float: return 1.0 + float(a.sum(k)) / 100.0
+	var pct := func(k: String) -> float: return 1.0 + (float(a.sum(k)) + Wonder.pct(fid, k, rs)) / 100.0   # G-0243 불가사의 % 도 같은 자리
 	var r := {}
 	for k in RULE_NAMES:
 		r[k] = bool(a.has(k))
@@ -142,7 +143,7 @@ static func fx(rs: Object, fid: String) -> Dictionary:
 		"field": (SC.CHEOLGI_FIELD if r.cheolgi else 1.0) * (SC.GONG_FIELD if r.gongseong else 1.0),
 		"siege": SC.CHEOLGI_SIEGE if r.cheolgi else 1.0,
 		"def_atk": pct.call("atkPct"),
-		"take": maxf(0.5, 1.0 - float(a.sum("defPct")) / 100.0),
+		"take": maxf(0.5, 1.0 - (float(a.sum("defPct")) + Wonder.pct(fid, "defPct", rs)) / 100.0),
 		"chip": SC.GONG_WALL if r.gongseong else 1.0,
 		"hit_me": SC.CHEONGYA_ENEMY if r.cheongya else 1.0,
 		"gov": pct.call("govPct") * (SC.MUWI_FOOD if r.muwi else 1.0) * (SC.CHEONGYA_SELF if r.cheongya else 1.0) * (TUNJEON_GOV if r.tunjeon else 1.0),
@@ -151,7 +152,7 @@ static func fx(rs: Object, fid: String) -> Dictionary:
 		"best": ILIN_BEST if r.ilin else 1.0,
 		"rules": r,
 	}
-	_fx[fid] = {"id": a.get_instance_id(), "rev": int(a.rev), "fx": f}
+	_fx[fid] = {"id": a.get_instance_id(), "rev": int(a.rev), "wrev": Wonder.rev, "fx": f}
 	return f
 
 

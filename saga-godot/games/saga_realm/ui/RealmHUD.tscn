@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3]
+[gd_scene load_steps=24 format=3]
 
 [ext_resource type="PackedScene" path="res://games/saga_realm/ui/LordPortrait.tscn" id="17"]
 [ext_resource type="Script" path="res://saga_core/ui/goal_board.gd" id="14"]
@@ -22,6 +22,7 @@
 [ext_resource type="Script" path="res://saga_core/ui/graphics_button.gd" id="graphics_btn"]
 [ext_resource type="Script" path="res://games/saga_realm/ui/statecraft_button.gd" id="statecraft_btn"]
 [ext_resource type="Script" path="res://games/saga_realm/ui/realm_tech_button.gd" id="tech_btn"]
+[ext_resource type="Script" path="res://games/saga_realm/ui/realm_wonder_button.gd" id="wonder_btn"]
 
 [node name="RealmHUD" type="CanvasLayer"]
 
@@ -147,6 +148,17 @@ offset_top = -150.0
 offset_right = -180.0
 offset_bottom = -90.0
 script = ExtResource("9")
+
+[node name="WonderButton" type="Button" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -640.0
+offset_right = -180.0
+offset_bottom = -580.0
+script = ExtResource("wonder_btn")
 
 [node name="TechButton" type="Button" parent="."]
 anchor_left = 1.0

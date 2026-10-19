@@ -91,6 +91,7 @@ func next_month() -> void:
 		if _effective_stat(String(oid), "wisdom") >= float(preload("res://games/saga_realm/data/realm_tech.gd").SCHOLAR_WIS):
 			scholars += 1
 	preload("res://games/saga_realm/data/realm_tech.gd").monthly(scholars)
+	var wonder_msgs: Array = preload("res://games/saga_realm/data/realm_wonder.gd").monthly(self)   # G-0243 불가사의 — 공사 한 달·먼저 다 지은 쪽만
 	if _all_alive_forces_at_peace():
 		diplomacy_peace_streak += 1
 	else:
@@ -102,6 +103,9 @@ func next_month() -> void:
 	_tick_succession()
 	_check_defection()
 	_run_enemy_statecraft()   # G-0219 AI 세력 경륜도 — 쌓인 점수를 성향대로(굴림 없음)
+	wonder_msgs.append_array(preload("res://games/saga_realm/data/realm_wonder.gd").ai_all(self))   # G-0243 AI 착공(병력 문턱·굴림 없음)
+	if not wonder_msgs.is_empty():
+		Toast.show(self, "\n".join(wonder_msgs), 3.0)
 	_resolve_camps()   # G-0239 진 — 치중·보급선·사기·한 번 더 싸움(realm_rules_war.gd)
 	_run_enemy_ai()
 	_run_enemy_economy()

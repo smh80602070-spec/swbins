@@ -4555,5 +4555,41 @@
   "ticket": "G-0242",
   "since": "2026-10-19",
   "note": "세이브 순수 추가 칸 cave(버전 그대로) · 0층 = 빈 입구 방(웹은 보물상자 방 — 고돗 3마을엔 굴이 없었다) · 웹 광석 이름은 표시만, 가방은 광석·화석 · 지금 층·쫓은 짐승은 저장 안 함 · 굴 좌표에서 불러온 세이브는 아치 앞으로 · darken_scene 은 판끼리 못 불러 saga_go 와 같은 계약으로 따로 둠 · 굴 조각 GLB·짐승 몸은 K(도형 대역)"
+ },
+ {
+  "id": "gd.rk.wonder",
+  "name": "5천하 불가사의 경쟁 — 세상에 하나뿐인 여섯(만리 장벽·큰 물길·별 보는 대·큰 배움터·너른 장원·큰 다리) · 금과 인부(그 성 병력)를 들여 6~12달 · 먼저 다 지은 세력만 세력 전체 배율(수비·금·계략·내정·군량·공격 %, 경륜도 합산 자리) · 늦은 쪽은 금 반 환급·인부 귀환 · AI 도 둘째 해부터 짓는다 · 문 = 학 갈래 「큰 도면」 · HUD 🏛️ 불가사의 창(남의 진행률) · 3D 지도 완공 성 옆 도형 탑(웹 W-0279)",
+  "files": [
+   "games/saga_realm/data/realm_wonder.gd",
+   "games/saga_realm/ui/realm_wonder_button.gd",
+   "games/saga_realm/ui/RealmHUD.tscn",
+   "games/saga_realm/world/realm_wonder_towers.gd",
+   "games/saga_realm/world/realm_worldmap.gd",
+   "games/saga_realm/data/realm_statecraft.gd",
+   "games/saga_realm/data/realm_ai_statecraft.gd",
+   "games/saga_realm/data/realm_rules_month.gd",
+   "games/saga_realm/data/realm_state.gd",
+   "games/saga_realm/data/realm_save_state.gd",
+   "games/saga_realm/data/realm_tech.gd",
+   "tools/probe_realm_wonder.gd"
+  ],
+  "tests": [
+   "realm_wonder",
+   "realm_tech",
+   "realm_statecraft",
+   "realm_ai_statecraft",
+   "realm_supply",
+   "realm_golden",
+   "save_realm",
+   "realm_state",
+   "realm_defeat",
+   "scenario_realm"
+  ],
+  "level": "D2",
+  "verified": "2026-10-19",
+  "fun": {},
+  "ticket": "G-0243",
+  "since": "2026-10-19",
+  "note": "세이브 23→24 wonders(옛 = 빈 것) · start_scenario 가 비움(웹 버그 ①) · 고돗 병력이 웹의 약 1/4 이라 인부 = 웹 men × 0.25(375~750) · AI 는 금이 없어 문턱 = 가장 센 성 병력 ≥ 인부 × 2.5, 환급은 인부만 · AI 병력이 안 늘어 문턱만으론 첫 달에 다 착공 → AI_FROM 12달 + 세력마다 hash 6달에 한 번 · AI 에겐 물길·장원·별 보는 대가 빈 효과 · realm_golden a8902b8f → 4cbe88cb(AI_BUILD=false 면 옛 값 그대로)"
  }
 ]

@@ -122,6 +122,10 @@ func _ready() -> void:
 	supply_lines.name = "SupplyLines"
 	supply_lines.set_script(preload("res://games/saga_realm/world/realm_supply_lines.gd"))
 	add_child(supply_lines)
+	var wonder_towers := Node3D.new()   # G-0243 완공 불가사의 탑(우리 금빛·남 잿빛)
+	wonder_towers.name = "WonderTowers"
+	wonder_towers.set_script(preload("res://games/saga_realm/world/realm_wonder_towers.gd"))
+	add_child(wonder_towers)
 	_world_env = get_parent().get_node("WorldEnvironment")
 	_env_original = _world_env.environment
 	if RealmSaveState.scenario_ready:

@@ -42,7 +42,9 @@ static var _fx: Dictionary = {}
 static var _fx_api_id := 0
 static var _fx_rev := -1
 static var _fx_tech_rev := -1   # G-0234 기술 나무를 연구하면 다시 셈
+static var _fx_wonder_rev := -1   # G-0243 불가사의가 완공되면 다시 셈
 const Tech := preload("res://games/saga_realm/data/realm_tech.gd")
+const Wonder := preload("res://games/saga_realm/data/realm_wonder.gd")
 
 
 static func _rs() -> Node:
@@ -84,12 +86,13 @@ static func fx() -> Dictionary:
 	var a := api()
 	if a == null:
 		return {}
-	if a.get_instance_id() == _fx_api_id and int(a.rev) == _fx_rev and Tech.rev == _fx_tech_rev:
+	if a.get_instance_id() == _fx_api_id and int(a.rev) == _fx_rev and Tech.rev == _fx_tech_rev and Wonder.rev == _fx_wonder_rev:
 		return _fx
 	_fx_api_id = a.get_instance_id()
 	_fx_rev = int(a.rev)
 	_fx_tech_rev = Tech.rev
-	var pct := func(k: String) -> float: return 1.0 + (float(a.sum(k)) + Tech.pct(k)) / 100.0   # G-0234 기술 나무 % 도 같은 자리(웹 statecraft.sum 이 tech.pct 를 더하는 꼴)
+	_fx_wonder_rev = Wonder.rev
+	var pct := func(k: String) -> float: return 1.0 + (float(a.sum(k)) + Tech.pct(k) + Wonder.pct(Wonder.ME, k)) / 100.0   # G-0234 기술 나무 % · G-0243 불가사의 % 도 같은 자리(웹 statecraft.sum 이 tech.pct·wonder.pct 를 더하는 꼴)
 	var r := {}
 	for k in ["tunjeon", "cheolgi", "wongyo", "ilin", "gongseong", "muwi", "hwagong", "cheongya"]:
 		r[k] = bool(a.has(k))
@@ -105,7 +108,7 @@ static func fx() -> Dictionary:
 		"plot": pct.call("plotPct"),
 		"fire": HWAGONG_FIRE if r.hwagong else 1.0,
 		"atk": pct.call("atkPct"),
-		"take": maxf(0.5, 1.0 - float(a.sum("defPct")) / 100.0),
+		"take": maxf(0.5, 1.0 - (float(a.sum("defPct")) + Wonder.pct(Wonder.ME, "defPct")) / 100.0),   # G-0243 만리 장벽
 		"field": (CHEOLGI_FIELD if r.cheolgi else 1.0) * (GONG_FIELD if r.gongseong else 1.0),
 		"siege": CHEOLGI_SIEGE if r.cheolgi else 1.0,
 		"chip": GONG_WALL if r.gongseong else 1.0,

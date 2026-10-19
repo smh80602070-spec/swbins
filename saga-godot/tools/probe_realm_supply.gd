@@ -146,7 +146,7 @@ func _initialize() -> void:
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(RS.path_override))
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(RS.path_override + ".bak"))
 	RS.path_override = saved_path
-	check(ok_save and ok_load and rt and ok_old and old_empty and RS.SAVE_VERSION == 23, "⑦ 세이브 왕복 · 옛 22 → 빈 배열 · 버전 %d" % RS.SAVE_VERSION)
+	check(ok_save and ok_load and rt and ok_old and old_empty and RS.SAVE_VERSION >= 23, "⑦ 세이브 왕복 · 옛 22 → 빈 배열 · 버전 %d(23 이상, G-0243 에 24)" % RS.SAVE_VERSION)
 
 	# ⑧ 지도 띠
 	_fresh(RS)

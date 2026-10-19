@@ -3,7 +3,7 @@ extends RefCounted
 ## G-0234 5천하 기술 나무 — 세력 연구 네 갈래(농·상·군·학) × 여섯 마디(웹 W-0290 data-tech.js·tech.js 이식, 표·수치 그대로).
 ##   갈래 안에서는 차례대로만(앞 마디가 문). 달마다 연구점 = 1 + 지력 85 이상 무장 수(넷까지) + 「글 모으기」 1.
 ##   효과 세 길: stats → 경륜도 합산 자리(realm_statecraft.gd fx 의 pct)에 더한다 · cost → 내정 명령 금(조선·훈련 −20%) · rule → study·wonder.
-##   불가사의(W-0279)는 이 판에 없어 「큰 도면」(학 3마디)은 wonder_open() 플래그만 남긴다. 웹 표에 진형 해금은 없다(티켓 예시 — 안 지어냄).
+##   「큰 도면」(학 3마디) = 불가사의 문 — wonder_open() 을 realm_wonder.gd why() 가 본다(G-0243). 웹 표에 진형 해금은 없다(티켓 예시 — 안 지어냄).
 ##   AI 세력은 연구하지 않는다(고돗 천하 AI 는 금·인구가 없다 — 경륜도 G-0219 와 같은 경계). 플레이어 세력 하나만.
 ##   상태 RealmSaveState.tech = {"pts": int, "done": [마디 id…]}(세이브 키 "tech", 21→22) · 빈 나무는 배수가 다 1 이라 golden 그대로.
 ## autoload 이름을 직접 쓰지 않는다(realm_statecraft.gd 와 같은 규칙 — 점검이 규칙 파일을 preload).
