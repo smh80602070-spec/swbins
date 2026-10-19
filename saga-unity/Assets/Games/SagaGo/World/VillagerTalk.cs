@@ -31,6 +31,30 @@ namespace Saga.Go.World
             _lineProvider = lineProvider;
         }
 
+        // ---- tasks U-0130 길 행동 — 사람 id(몸 root 이름 "Villager_npc_elder"·"Folk_wp_x_role")·곁 판정 ----
+        private static readonly System.Collections.Generic.List<VillagerTalk> _all = new System.Collections.Generic.List<VillagerTalk>();
+        public static System.Collections.Generic.IReadOnlyList<VillagerTalk> All => _all;
+        /// <summary>몸 root(이끌기는 이걸 옮긴다 — TalkArea 도 따라간다).</summary>
+        public Transform Root => transform.parent != null ? transform.parent : transform;
+        public string Id => Root.name;
+        public string NpcName => string.IsNullOrEmpty(_npcName) ? Id : _npcName;
+        private void OnEnable() { if (!_all.Contains(this)) _all.Add(this); }
+        private void OnDisable() => _all.Remove(this);
+
+        /// <summary>p 에서 r 안 가장 가까운 주민(없으면 null).</summary>
+        public static VillagerTalk Nearest(Vector3 p, float r)
+        {
+            VillagerTalk best = null; float bd = r * r;
+            foreach (var v in _all)
+            {
+                if (v == null || !v.isActiveAndEnabled) continue;
+                Vector3 q = v.Root.position;
+                float d = (q.x - p.x) * (q.x - p.x) + (q.z - p.z) * (q.z - p.z);
+                if (d <= bd && Mathf.Abs(q.y - p.y) < r) { bd = d; best = v; }
+            }
+            return best;
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (!other.CompareTag("Player")) return;

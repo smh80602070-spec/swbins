@@ -2117,5 +2117,23 @@
   "ticket": "U-0129",
   "since": "2026-10-19",
   "note": "D2(U-0129): docs/playcheck/d2-u0129-20261019.json — PlaytestRealmSlice 107→112(tech points·order·cost·effects·save) · UiLayoutCheck 문제 0(📜 연구 단추·창 세 화면비 ko/en) · 적 세력 연구 없음 · 경험(expPct) 칸 없음 · 촬영 안 함"
+ },
+ {
+  "id": "un.go.path-acts",
+  "name": "U-0130 길 행동 — 들판 선두 동행 성향대로 마을 사람에게 조사·도발·이끌기(웹 W-0276 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/Data/GoPath.cs",
+   "saga-unity/Assets/Games/SagaGo/World/PathActions.cs",
+   "saga-unity/Assets/Games/SagaGo/World/VillagerTalk.cs"
+  ],
+  "tests": [
+   "PlaytestGoPath"
+  ],
+  "level": "D2",
+  "verified": "2026-10-19 claude",
+  "fun": {},
+  "ticket": "U-0130",
+  "since": "2026-10-19",
+  "note": "D2(U-0130): docs/playcheck/d2-u0130-20261019.json — PlaytestHeadless 89→94(path pick·day·probe·lead·provoke) · UiLayoutCheck 문제 0 · 선두 = 들판 첫 자리(FieldIds[0]) · 도발 보상 = 경험 +30(웹 금) · 촬영 안 함"
  }
 ]

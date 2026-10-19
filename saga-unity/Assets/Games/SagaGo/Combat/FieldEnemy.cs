@@ -342,6 +342,8 @@ namespace Saga.Go.Combat
         /// <summary>109-14-12 이야기 임무 적(`sq:` 무리) — 경험·전리품·일과 없고 다시 안 선다(쫓기는 건 여느 들판 적처럼).</summary>
         public bool StoryFoe { get; private set; }
         public void MarkStory() => StoryFoe = true;
+        /// <summary>tasks U-0130 길 행동 도발 — 체력을 정해 세운다(공격 ×14, 경험은 부른 쪽이 준다).</summary>
+        public void SetPathFoe(float hp) { MaxHp = Mathf.Max(1f, hp); Hp = MaxHp; RefreshHeadUi(); }
         public bool IsWeeklyBoss { get; private set; }
         /// <summary>공격 간격 배율(주간 보스 2단계 ×0.69).</summary>
         public float CdMul { get; set; } = 1f;

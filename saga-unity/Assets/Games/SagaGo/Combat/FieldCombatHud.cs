@@ -111,6 +111,12 @@ namespace Saga.Go.Combat
             GrabButton.onClick.AddListener(OnGrab);
             _grabLabel = GrabButton.GetComponentInChildren<TextMeshProUGUI>();
             _grabLabel.fontSize = 22;
+            // U-0130 길 행동 — 잡기 단추 위, 곁(14m)에 주민이 있을 때만(오늘 한 사람이면 흐림)
+            PathButton = EncounterUiKit.NewButton(t, "", new Vector2(1f, 0f), new Vector2(-405f, 435f), new Vector2(110f, 90f), null);
+            PathButton.onClick.AddListener(OnPath);
+            _pathLabel = PathButton.GetComponentInChildren<TextMeshProUGUI>();
+            _pathLabel.fontSize = 22;
+            PathButton.gameObject.SetActive(false);
             _aimText = EncounterUiKit.NewText(t, "", new Vector2(0.5f, 0.5f), new Vector2(0f, 0f), new Vector2(360f, 110f), 30);
             _aimText.rectTransform.pivot = new Vector2(0.5f, 0.5f);
             _aimText.alignment = TextAlignmentOptions.Center;
@@ -123,6 +129,10 @@ namespace Saga.Go.Combat
         private TextMeshProUGUI _grabLabel;
         public string GrabText => _grabLabel != null ? _grabLabel.text : "";
         private void OnGrab() => _combat.Grab();
+        public Button PathButton { get; private set; }
+        private TextMeshProUGUI _pathLabel;
+        public string PathText => _pathLabel != null ? _pathLabel.text : "";
+        private void OnPath() => Saga.Go.World.PathActions.Ensure().Press();
         private TextMeshProUGUI _aimText;
         public string AimText => _aimText != null && _aimText.gameObject.activeSelf ? _aimText.text : "";
         private void OnAim() => _combat.ToggleAim();
@@ -220,6 +230,19 @@ namespace Saga.Go.Combat
                 bool cd = _combat.GrabCd > 0f, near = !cd && _combat.GrabTarget() != null;
                 _grabLabel.text = cd ? $"✊\n{Mathf.CeilToInt(_combat.GrabCd)}" : "✊\n(C)";
                 GrabButton.GetComponent<Image>().color = near ? new Color(1f, 0.82f, 0.48f, 0.55f) : new Color(1f, 1f, 1f, cd ? 0.1f : 0.18f);
+            }
+
+            if (PathButton != null)
+            {
+                var near = Saga.Go.World.PathActions.Near();
+                var act = near != null ? GoPath.Current(out _) : GoPath.Act.None;
+                PathButton.gameObject.SetActive(act != GoPath.Act.None);
+                if (act != GoPath.Act.None)
+                {
+                    bool used = GoPath.Used(near.Id) != 0;
+                    _pathLabel.text = GoPath.Icon(act) + " " + GoLocalization.T("path.btn", "길") + "(6)";
+                    PathButton.GetComponent<Image>().color = used ? new Color(1f, 1f, 1f, 0.1f) : new Color(0.62f, 0.86f, 1f, 0.5f);
+                }
             }
 
             var party = _combat.Party;

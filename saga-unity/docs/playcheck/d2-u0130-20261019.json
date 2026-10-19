@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-19",
+  "tickets": [
+    "U-0130 1만리 길 행동(웹 W-0276)"
+  ],
+  "how": "PlaytestHeadless.Run·UiLayoutCheck.Run 배치(unity-batch.sh, </dev/null), 세이브 다섯 치움·되돌림",
+  "ok_before": 89,
+  "ok_after": 94,
+  "new_ok": [
+    "path pick",
+    "path day",
+    "path probe",
+    "path lead",
+    "path provoke"
+  ],
+  "villagers": "곁 판정 대상 18명(촌장·상인·나그네 + 역참 사람)",
+  "probe": "가장 가까운 숨은 터 w_altar 남쪽 68m(진단 자리 기준)",
+  "lead": "40m 넘는 가장 가까운 길목 108m · 10초에 45m(4.5m/s) · 30초 뒤 귀가·오가기 다시 켜짐",
+  "provoke": "산적 체력 2202 = 공격×14 · 이기면 경험 +30 · 60초 넘기면 거절 · 결투 중 금지",
+  "ui_layout": "OK 문제 0(길 단추는 곁 주민 있을 때만 — 시작 화면엔 안 보임, 잡기 단추 위 -405,435)",
+  "error_cs": 0,
+  "fail": 0,
+  "save_md5_same": true,
+  "runs": 1
+}
