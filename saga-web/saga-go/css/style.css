@@ -1719,7 +1719,10 @@ body.fc-on #dock, body.fc-on #near { display: none !important; }
 @keyframes fcNum { 0% { opacity: 0; transform: translate(-50%, 6px) scale(.7); } 15% { opacity: 1; transform: translate(-50%, 0) scale(1.15); } 100% { opacity: 0; transform: translate(-50%, -42px) scale(1); } }
 @media (max-width: 520px) {
   #field-hud .fc-mem { width: 118px; }
-  #field-hud .fc-party { top: calc(84px + var(--safe-t, 0px)); }
+  #field-hud .fc-party { top: calc(var(--below-header, 152px) + 8px); }   /* W-0342 — 84 는 이야기 자동 이동 단추(#story-go)·재화 줄과 겹쳤다 → 미니맵처럼 지갑·자동 순행 띠·장 이야기 줄 아래 끝(ui.js syncHeaderStack) 밑으로 */
+}
+@media (pointer: coarse) and (max-height: 520px) {
+  body #story-go { right: calc(176px + var(--safe-r, 0px)); }   /* W-0342 폰 가로 — 동료 칩(오른쪽 150 폭) 왼쪽으로(body — 뒤에 오는 #story-go 규칙을 이기게) */
 }
 
 /* ── 지역(biome.js, PLAN §5 ⑩) — 이름 띠·순간이동 지점 ─────────── */
