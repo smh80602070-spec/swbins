@@ -67,6 +67,8 @@ var partner: Dictionary = {}
 ## G-0237 입주 조건 — 작은 빈 집 [{furn, who, day}]·마지막 입주 굴림 날(ForestDay.epoch_day_index). 순수 추가 칸. data/forest_lots.gd.
 var lots: Array = []
 var lots_roll := -1
+## G-0242 땅 아래 층 — {deepest, torch_until(unix 초), relic, dug{day, got}}, 없으면 {}. 순수 추가 칸. data/forest_cave.gd.
+var cave: Dictionary = {}
 var heart_reward_10: Dictionary = {}   # npc_id(String) -> true(10♥ 기념 사례금, 한 번만)
 
 ## 4번째 확장(제외 목록 4번 — 곤충/화석/조개 + 박물관) — 역시 순수 추가.
@@ -463,6 +465,7 @@ func save() -> bool:
 		"partner": partner,   # G-0232
 		"lots": lots,   # G-0237
 		"lots_roll": lots_roll,
+		"cave": cave,   # G-0242
 		"tools": tools,
 		"tool_lv": tool_lv,   # G-0196
 		"tool_perks": tool_perks,
@@ -525,6 +528,8 @@ func try_load() -> bool:
 	var loaded_lots: Variant = data.get("lots", [])   # G-0237 — 옛 세이브는 빈 집 없음
 	lots = (loaded_lots as Array).duplicate(true) if typeof(loaded_lots) == TYPE_ARRAY else []
 	lots_roll = int(data.get("lots_roll", -1))
+	var loaded_cave: Variant = data.get("cave", {})   # G-0242 — 옛 세이브는 굴 기록 없음
+	cave = (loaded_cave as Dictionary).duplicate(true) if typeof(loaded_cave) == TYPE_DICTIONARY else {}
 	var loaded_tools: Variant = data.get("tools", {})
 	tools = loaded_tools if typeof(loaded_tools) == TYPE_DICTIONARY else {}
 	var loaded_tool_lv: Variant = data.get("tool_lv", {})   # G-0196 — 옛 세이브는 빈 값(바구니·잠자리채 Lv1·삽은 있으면 Lv1)

@@ -51,6 +51,7 @@ func _ready() -> void:
 	if not lm.is_empty():
 		Toast.show(self, String(lm.text), 4.0)
 	add_child(preload("res://games/saga_forest/world/forest_lots_view.gd").new())   # G-0237 눌러앉은 손님 몸·이름표
+	add_child(preload("res://games/saga_forest/world/forest_cave_view.gd").new())   # G-0242 땅 아래 층(바위 아치 [G])
 	var e := ForestFestival.event_of_today()
 	if not e.is_empty():
 		Toast.show(self, "🎊 %s — %s" % [e.name, e.hello], 4.0)

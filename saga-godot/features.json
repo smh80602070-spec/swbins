@@ -4530,5 +4530,30 @@
   "ticket": "G-0241",
   "since": "2026-10-19",
   "note": "세이브 순수 추가 칸 skill_tree(버전 그대로) · 나무는 무예(key)마다 · passive 는 나무 없음 · 기력이 없어 기력 축 = 재냉각 % · cd 하한 ×0.3 · 경락 cd·reach 와 곱 · 범위 없는 모양은 위력 +범위/2 · 그림은 원소 색·반경이 그대로 따라감(새 그림 없음)"
+ },
+ {
+  "id": "gd.fs.cave-depth",
+  "name": "3마을 땅 아래 층 — 마을 동쪽 바위 아치 [G] → 굴 0~5층(먼 좌표 평평한 방, 흙·석회·용암 결 도형) · 층마다 캐는 자리 둘(하루 한 번, 횃불이면 ×2 — 광석·화석) · 짐승 하나(쫓아야 사다리) · 횃불 받침(솔방울 1 → 120초, 실제 시각) · 5층 유물(화석 +1, 한 번) · 진짜 어둠(해·환경광 낮춤, 손 불빛 2.5m / 횃불 9m)(웹 W-0285)",
+  "files": [
+   "games/saga_forest/data/forest_cave.gd",
+   "games/saga_forest/data/forest_save_state.gd",
+   "games/saga_forest/world/forest_cave_view.gd",
+   "games/saga_forest/world/forest_village.gd",
+   "tools/scene_probes/forest_cave.gd",
+   "tools/probe_forest_cave.gd"
+  ],
+  "tests": [
+   "forest_cave",
+   "forest_craft",
+   "forest_world",
+   "forest_lots",
+   "save_forest"
+  ],
+  "level": "D2",
+  "verified": "2026-10-19",
+  "fun": {},
+  "ticket": "G-0242",
+  "since": "2026-10-19",
+  "note": "세이브 순수 추가 칸 cave(버전 그대로) · 0층 = 빈 입구 방(웹은 보물상자 방 — 고돗 3마을엔 굴이 없었다) · 웹 광석 이름은 표시만, 가방은 광석·화석 · 지금 층·쫓은 짐승은 저장 안 함 · 굴 좌표에서 불러온 세이브는 아치 앞으로 · darken_scene 은 판끼리 못 불러 saga_go 와 같은 계약으로 따로 둠 · 굴 조각 GLB·짐승 몸은 K(도형 대역)"
  }
 ]
