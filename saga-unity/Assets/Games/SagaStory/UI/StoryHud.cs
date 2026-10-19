@@ -105,6 +105,8 @@ namespace Saga.Story.UI
             label.text += "\n" + (StorySummonState.Ready
                 ? StoryLocalization.T("summon.ready_hud", "⚡ 소환 준비 — [V]")
                 : string.Format(StoryLocalization.T("summon.gauge_hud", "⚡ 소환 {0:0}%"), StorySummonState.Gauge));
+
+            label.text += " · " + StoryLife.HudLine(); // tasks U-0133 채집 등급·진척·재료 — 새 줄은 왼쪽 ▲▼ 단추와 겹쳐(UiLayoutCheck) 소환 줄 끝에
         }
     }
 }

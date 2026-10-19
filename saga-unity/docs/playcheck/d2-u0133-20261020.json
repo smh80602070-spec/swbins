@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-20",
+  "tickets": [
+    "U-0133 4종횡 생활 기술 등급 — 채집만(웹 W-0283)"
+  ],
+  "how": "PlaytestStorySlice.Run·UiLayoutCheck.Run 배치(unity-batch.sh, -quit 없음, </dev/null), 세이브 다섯 백업·되돌림(md5 같음)",
+  "new_ok": [
+    "life ranks",
+    "life extra",
+    "life node",
+    "life rankup",
+    "life save"
+  ],
+  "slice_final": "[PlaytestStorySlice] OK (두 번 — HUD·단추 자리 고친 뒤 다시)",
+  "ui_layout": "OK 문제 0 (첫 판 HUD 새 줄이 왼쪽 ▲▼ 단추와 겹쳐 문제 16 → 소환 줄 끝에 짧게)",
+  "error_cs": 0,
+  "exception": 0,
+  "save_md5_same": true,
+  "runs": 2
+}

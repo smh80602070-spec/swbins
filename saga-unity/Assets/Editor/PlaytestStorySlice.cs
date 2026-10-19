@@ -207,6 +207,7 @@ namespace Saga.EditorTools
                     if (!PlaytestStoryRound.Run()) { Fail(); return; } // tasks U-0024 회차 — 회차·세이브·최고 기록을 되돌린다.
                     if (!PlaytestStoryPick3.Run()) { Fail(); return; } // tasks U-0093 무예 3택·판 등급 — 세이브 JSON·3택 몫을 되돌린다.
                     if (!PlaytestStoryRunRank2.Run()) { Fail(); return; } // tasks U-0128 판 등급 넓히기 — D·처치·급·덤·최고 기록(세이브 JSON 을 되돌린다)
+                    if (!PlaytestStoryLife.Run()) { Fail(); return; } // tasks U-0133 채집 등급 — 단계 표·덤·채집터·쿨·단계 오름·저장(세이브 JSON·자리를 되돌린다)
                     if (!PlaytestHurtSignal.Run("PlaytestStorySlice", "st")) { Fail(); return; } // tasks U-0105 "내가 맞았다" 신호 — 진짜 Hurt 번쩍·붉은 숫자·맥박(체력·무적·판 등급 셈 되돌림)
                     _enemyIndex = 0;
                     _phase = Phase.TalkNpc;

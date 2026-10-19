@@ -2136,6 +2136,23 @@
   "note": "D2(U-0132): docs/playcheck/d2-u0132-20261020.json — PlaytestForestHeadless 27→32(cave enter·torch·beast·relic·exit) · 광맥 = 열매(광석 없음)·5층 광맥·유물 = 화석 도감 기존 칸 · 짐승·광맥 도형 대역(K) · 촬영 안 함"
  },
  {
+  "id": "un.st.life-gather",
+  "name": "U-0133 생활 기술 등급(채집만) — 들판 채집터 넷·F→1 아홉 단계(누적 940)·덤 확률 단계/8(웹 W-0283 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaStory/Data/StoryLife.cs",
+   "saga-unity/Assets/Games/SagaStory/World/StoryGatherNode.cs"
+  ],
+  "tests": [
+   "PlaytestStoryLife"
+  ],
+  "level": "D2",
+  "verified": "2026-10-20 claude",
+  "fun": {},
+  "ticket": "U-0133",
+  "since": "2026-10-20",
+  "note": "D2(U-0133): docs/playcheck/d2-u0133-20261020.json — PlaytestStorySlice +5(life ranks·extra·node·rankup·save) · 요리·연주는 재료 쓸 곳이 없어 뒤로(고돗 G-0238 과 같음) · 채집터 = 코드 도형 · 촬영 안 함"
+ },
+ {
   "id": "un.rk.tech-tree",
   "name": "U-0129 기술 나무 — 세력 연구 네 갈래(농·상·군·학) × 6마디(웹 W-0290 이식)",
   "files": [

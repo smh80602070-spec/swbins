@@ -664,6 +664,13 @@
     { "key": "pick.title", "value": "Level up — pick one art ({0} left)" },
     { "key": "pick.decline", "value": "Decline — +1 boost point" },
     { "key": "pick.done", "value": "{0} +1" },
-    { "key": "runrank.line", "value": "Run rank {0} — hits taken {1} · chain {2} · {3}:{4:00}" }
+    { "key": "runrank.line", "value": "Run rank {0} — hits taken {1} · chain {2} · {3}:{4:00}" },
+    { "key": "life.rankup", "value": "🌿 Gathering rank {0} — {1:0}% chance of a bonus" },
+    { "key": "life.max", "value": "max" },
+    { "key": "life.hud", "value": "🌿 {0} {1} · mats {2}" },
+    { "key": "life.wait", "value": "🌿 Regrowing {0:0}s" },
+    { "key": "life.hint", "value": "🌿 Gather (F)" },
+    { "key": "life.got", "value": "🌿 Materials +{0}{1} — gathering {2}" },
+    { "key": "life.extra", "value": " (bonus)" }
   ]
 }
