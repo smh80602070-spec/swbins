@@ -2,6 +2,7 @@
 
   py tools/ai-art/remote3d/promote.py <묶음 폴더> --ids duck,owl [--write]
   … --rig <뼈 심고 압축한 폴더>  # anim/ 대신 creature_rig.py(자체 뼈 + 동작 7) → compress.mjs 결과를 올린다
+  … --targets <표.json> --canon <정본 폴더>  # K-0120: 펫(k120_targets.json → saga-assets/pets3d) — 표 칸 out 이 있으면 그 이름으로 올린다(pet_<id>)
 
 license = run_kaggle 이 쓴 것(TRELLIS MIT + 입력 그림 출처) + 다듬기 단계·대신하는 빌린 파일(대상 표 borrowed)·yaw·키.
 그 다음: `py tools/asset-place/place.py --write --item creatures3d` · `py tools/asset-audit/credits.py`.
@@ -23,7 +24,8 @@ def main():
     a = sys.argv[1:]
     opt = lambda k, d=None: a[a.index(k) + 1] if k in a else d
     d = os.path.abspath(a[0])
-    T = {t['id']: t for t in json.load(open(os.path.join(HERE, 'k96_targets.json'), encoding='utf-8'))['items']}
+    T = {t['id']: t for t in json.load(open(os.path.abspath(opt('--targets')) if opt('--targets') else os.path.join(HERE, 'k96_targets.json'), encoding='utf-8'))['items']}
+    canon = os.path.abspath(opt('--canon')) if opt('--canon') else CANON
     ids = opt('--ids').split(',')
     rig = opt('--rig')
     gd = os.path.abspath(rig) if rig else os.path.join(d, 'anim')
@@ -36,17 +38,20 @@ def main():
     print('올릴 것 %d: %s' % (len(ids), ','.join(ids)))
     if '--write' not in a:
         return
-    os.makedirs(CANON, exist_ok=True)
+    os.makedirs(canon, exist_ok=True)
     for i in ids:
         t = T[i]
-        shutil.copy2(os.path.join(gd, i + '.glb'), os.path.join(CANON, i + '.glb'))
+        o = t.get('out', i)
+        shutil.copy2(os.path.join(gd, i + '.glb'), os.path.join(canon, o + '.glb'))
         lic = json.load(open(os.path.join(d, i + '.license.json'), encoding='utf-8'))
         lic.update(pipeline=PIPE_RIG if rig else PIPE, yaw=t.get('yaw', 0), height_m=t.get('height', 1.0), replaces=t['borrowed'],
-                   commercial_use=True, note='K-0096 자체 생성(입력 = 우리 txt2img 그림). 빌린 모델을 대신한다 — 게임 참조 바꾸기는 W 티켓.')
+                   commercial_use=True, note=t.get('lic_note') or 'K-0096 자체 생성(입력 = 우리 txt2img 그림). 빌린 모델을 대신한다 — 게임 참조 바꾸기는 W 티켓.')
         if rig:
             lic['rig'] = t.get('rig', 'quad')
-        json.dump(lic, open(os.path.join(CANON, i + '.license.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    print('PROMOTE_OK %d → %s' % (len(ids), CANON))
+        if t.get('out'):
+            lic['id'] = o
+        json.dump(lic, open(os.path.join(canon, o + '.license.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    print('PROMOTE_OK %d → %s' % (len(ids), canon))
 
 
 if __name__ == '__main__':

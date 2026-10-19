@@ -1,0 +1,24 @@
+{
+ "name": "k122_bodies_C2",
+ "spec": "creature",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0122 다시 — 1차 넷 다 실패 2종(붉은 악마가 분홍 덩어리·네발, 좀비 형체 없음): 사람꼴·색 또렷하게",
+ "items": [
+  {
+   "id": "demon_red",
+   "from": "quaternius/Demon",
+   "subject": "humanoid red-skinned demon, two curved horns, muscular torso, hooved legs, long pointed tail, upright",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, solo, bold colors, standing, arms slightly away from body, empty hands"
+  },
+  {
+   "id": "zombie",
+   "from": "quaternius2/Zombie",
+   "subject": "humanoid zombie, green-gray skin, ragged brown shirt, torn pants, stiff arms forward, upright",
+   "view": "three_quarter",
+   "extra": "no humans, full body, whole creature visible, solo, bold colors, standing, arms slightly away from body, empty hands"
+  }
+ ]
+}

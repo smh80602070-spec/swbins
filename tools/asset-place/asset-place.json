@@ -238,6 +238,23 @@
    ]
   },
   {
+   "id": "pets3d-trellis-web",
+   "src": "saga-assets/pets3d",
+   "include": [
+    "pet_pk_*.glb",
+    "pet_pk_*.license.json",
+    "pet_pt_magpie.glb",
+    "pet_pt_magpie.license.json"
+   ],
+   "note": "K-0120 오마주 펫 16 + 까치 자체 몸(TRELLIS, 뼈 quad·bird·worm 또는 루트 동작 7, Meshopt) — 웹은 asset3d.js 가 world/pet_<id> 를 찾는다. 기존 pet_pt_* 웹판(world/web)은 따로라 이 항목은 이 17 만",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/world3d"
+    }
+   ]
+  },
+  {
    "id": "world-web",
    "src": "saga-assets/world/web",
    "include": [

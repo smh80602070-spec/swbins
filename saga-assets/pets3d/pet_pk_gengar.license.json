@@ -1,0 +1,47 @@
+{
+ "id": "pet_pk_gengar",
+ "generator": "TRELLIS (microsoft/TRELLIS, Kaggle T4) — tools/ai-art/remote3d",
+ "model": "microsoft/TRELLIS-image-large",
+ "model_license": "MIT",
+ "input_image": "tools/ai-art/_out/remote3d_in_k120/pk_gengar.png",
+ "input_license": {
+  "id": "pk_gengar_v03",
+  "generator": "tools/ai-art/gen.py (ComfyUI)",
+  "model": "animagine-xl-4.0-opt",
+  "model_license": "CreativeML OpenRAIL++-M",
+  "prompt": "masterpiece, high score, great score, absurdres, (purple shadow ghost creature:1.15), small horns, glowing eyes, wispy tail, no humans, full body, whole creature visible, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+  "negative_prompt": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+  "seed": 12000919,
+  "steps": 28,
+  "cfg_scale": 5.5,
+  "sampler": "euler_ancestral/normal",
+  "size": [
+   768,
+   768
+  ],
+  "seconds": 22.2,
+  "date": "2026-10-19",
+  "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+  "mode": "img2img",
+  "init_image": "tools/ai-art/_out/k120_init2/pk_gengar.png",
+  "denoise": 0.55,
+  "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py",
+  "init_model": "animagine-xl-4.0-opt",
+  "init_model_license": "CreativeML OpenRAIL++-M"
+ },
+ "seed": 1,
+ "simplify": 0.95,
+ "texture_size": 1024,
+ "times": {
+  "gen_sec": 35,
+  "glb_sec": 32,
+  "bytes": 1481904
+ },
+ "date": "2026-10-19",
+ "note": "K-0120 자체 생성 — 입력 = 도감 초상(web_pets_105)을 u2net 으로 떼어 img2img(k120_pets_C2/C3, 그림체 C) → TRELLIS. 빌린 standin 대역을 대신한다 — 게임 참조 바꾸기는 W 티켓.",
+ "pipeline": "remote3d/finish.py(얼굴 +Z·발 밑 원점·키 m·떨어진 조각·바닥 판 지움) → glb-compress/creature_fill.mjs --forward-z(뼈 없는 동작 7) → compress.mjs(Meshopt·WebP)",
+ "yaw": 0,
+ "height_m": 1.0,
+ "replaces": "standin 대역(Quaternius Alien_2·Cat_Monster·Demon·Orc·Wizard·Yeti — sprite.js pk_* 표)",
+ "commercial_use": true
+}
