@@ -396,6 +396,7 @@
     /* 첫 발 장면(story.js) 동안은 사냥이 멎는다 — 그림은 계속 그린다 */
     if (!(global.DG.story && global.DG.story.isOpen())) {
       global.DG.auto.update(dt);
+      if (global.DG.autoQuestSt) { global.DG.autoQuestSt.update(dt); }   // W-0338 ▶ 자동 퀘스트(사명 받기·사냥터·바치기)
       S.update(dt);
       if (global.DG.sideHand) { global.DG.sideHand.tick(); }   // W-0176 Z 누르고 있기·옛 조각·숨은 자리
     }

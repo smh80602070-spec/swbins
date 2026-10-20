@@ -281,6 +281,7 @@
     lastFrame = now;
 
     global.DG.auto.update(dt);
+    if (global.DG.autoQuestFs) { global.DG.autoQuestFs.update(dt); }   // W-0338 ▶ 자동 퀘스트(부탁·마을 일)
     V.update(dt);
     if (global.DG.mount) { global.DG.mount.step(); if (!global.DG_NO_DRAW) { global.DG.mount.paint(); } }   // 탈것 — 내림 판정·단추(mount.js)
     if (!global.DG_NO_DRAW) {

@@ -386,6 +386,7 @@
 
       var segT0 = performance.now();
       global.DG.auto.update(dt);
+      if (global.DG.autoQuestDg) { global.DG.autoQuestDg.update(dt); }   // W-0338 ▶ 자동 퀘스트(목표 목록·막힘·멈춤)
       if (global.DG.mount) { global.DG.mount.frame(); }                      // 탈것 — 내림 판정·단추(mount.js)
       lastAutoMs = performance.now() - segT0;
 

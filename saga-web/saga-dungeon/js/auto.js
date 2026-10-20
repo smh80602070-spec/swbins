@@ -253,6 +253,21 @@
     return m ? m.req : null;
   }
 
+  /* W-0338 — 보이는 적이 없을 때 흔적 자리에 **서서** 기다리면 정예가 끝내 안 와 제자리였다(10분 측정 550초~끝).
+     흔적 자리에 닿으면 그 지역 안 300~700보 떨어진 곳을 골라 돌며 찾는다(사람이 지역을 헤매는 것과 같은 길 — 규칙은 그대로) */
+  var roam = { key: '', x: 0, y: 0 };
+  function roamSpot(ch, p, WM) {
+    var c = WM.clueSpot(ch.key), k = ch.key + ':' + ch.step;
+    if (!c) { return null; }
+    if (roam.key === k && Math.hypot(roam.x - p.x, roam.y - p.y) > 60) { return { x: roam.x, y: roam.y }; }
+    if (roam.key !== k && Math.hypot(c.x - p.x, c.y - p.y) > 80) { return c; }   // 아직 흔적 자리까지 못 왔다
+    for (var i = 0; i < 8; i++) {
+      var a = Math.random() * Math.PI * 2, r = 300 + Math.random() * 400, x = c.x + Math.cos(a) * r, y = c.y + Math.sin(a) * r;
+      if (WM.regionAt(x, y).key === ch.key) { roam = { key: k, x: x, y: y }; return { x: x, y: y }; }
+    }
+    return c;
+  }
+
   /** 📜 들판 목표 — 열린 지역 사연 중 가장 가까운 걸음의 자리 { x, y, label } · 없으면 null */
   function questFieldGoal(tr) {
     var Q = global.DG.quest, WM = global.DG.worldMap;
@@ -279,7 +294,7 @@
           var dd = Math.hypot(e.x - p.x, e.y - p.y);
           if (dd < ed) { ed = dd; spot = { x: e.x, y: e.y }; }
         });
-        if (!spot) { spot = WM.clueSpot(ch.key); }
+        if (!spot) { spot = roamSpot(ch, p, WM); }
       }
       if (!spot) { return; }
       var d = Math.hypot(spot.x - p.x, spot.y - p.y);

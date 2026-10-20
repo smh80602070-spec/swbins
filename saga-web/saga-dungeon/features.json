@@ -564,21 +564,25 @@
   "id": "dg.auto",
   "name": "자동 순회(🤖)",
   "files": [
-   "js/auto.js"
+   "js/auto.js",
+   "js/autoquest.js",
+   "js/auto-quest-dg.js"
   ],
   "tests": [
    "자동 — 체력이 깎이면 탈출보다 **먼저 마신다**",
    "자동 — 켜고 끈 상태가 세이브에 남는다",
    "자동 — 본영에서 알아서 내려간다",
    "자동 — 축복은 축·희귀도가 높은 쪽을 고른다 (2026-09-18, §5.1)",
-   "자동 — 던전을 실제로 굴리면 층이 내려간다"
+   "자동 — 던전을 실제로 굴리면 층이 내려간다",
+   "W-0338 2나락 자동 퀘스트 목록 — goals() 는 공용 여섯 종류·id 있음 · 메인 퀘스트가 있으면 main: 줄 · 마을 3D 없이도 던짐 없음",
+   "W-0338 2나락 자동 퀘스트 멈춤 — start 는 🤖 순회·📜 깃발 켜고 stop 은 원래대로 · 던전 안은 busy(막힘 안 셈) · 이동 키 = 멈춤 · 목록 비면 「목표 없음」"
   ],
   "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "D2: saga-web/tools/playcheck/pw-dg-close3.mjs 7/7 — results/pw-dg-close3.json(W-0098)."
+  "note": "D2: saga-web/tools/playcheck/pw-dg-close3.mjs 7/7 — results/pw-dg-close3.json(W-0098). · W-0338(10-20): ▶ 자동 퀘스트(js/auto-quest-dg.js — 목표 = 자동이 고르는 차례: 들판 사연 걸음 → 메인 → 지역·이벤트, ▶ #goals 아래) · 정예가 안 보이면 흔적 자리에 서서 기다리던 것 → 그 지역 안 300~700보를 돌며 찾음(roamSpot) · 10분 새 계정(dg-auto-quest.mjs 600 fresh [aq]): 순회 사연 걸음 +0·막힘 3 → ▶ +3·막힘 0 · 폰 세로 ▶→⏸ ○"
  },
  {
   "id": "dg.minimap",

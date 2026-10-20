@@ -29,6 +29,7 @@
 
     ui.init();
     bindTopbar();
+    if (global.DG.autoRule) { global.DG.autoRule.resume(); }   // W-0338 시정 위임 — 켜 둔 채 닫았으면 이어서
 
     global.addEventListener('beforeunload', function () { core.persist(); });
     document.addEventListener('visibilitychange', function () {

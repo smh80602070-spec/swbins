@@ -22,6 +22,7 @@
     function first() { var gs = ad.goals ? ad.goals() : null; return gs && gs.length ? gs[0] : null; }
     function start() {
       if (st.on) { return false; }
+      if (ad.prestart) { ad.prestart(); }   // 시작 직전 한 번 — 4종횡은 게시판에서 사명을 받는다(목록이 그다음에 찬다)
       var g = first();
       if (!g) { st.why = '목표 없음'; return false; }
       st.on = true; st.why = ''; st.goal = g; st.since = 0; st.still = 0; st.stuck = 0; st.last = null; st.doing = '';
@@ -47,7 +48,7 @@
       st.doing = (ad.run ? ad.run(g, dt) : '') || '';
       var p = ad.pos ? ad.pos() : null, busy = !!(ad.busy && ad.busy());
       if (!p || busy) { st.still = 0; st.last = p ? { x: p.x, y: p.y } : null; return; }   // 대화·전투·창 안에서는 서 있어도 막힘이 아니다
-      if (st.last && Math.hypot(p.x - st.last.x, p.y - st.last.y) < tn('autoquest.stillM', 1)) { st.still += dt; }
+      if (st.last && Math.hypot(p.x - st.last.x, p.y - st.last.y) < tn('autoquest.stillM', 1) * (ad.unit || 1)) { st.still += dt; }   // unit = 판의 1m(2나락 마을은 "보")
       else { st.still = 0; st.last = { x: p.x, y: p.y }; }
       if (st.still < tn('autoquest.stuckSec', 30)) { return; }
       st.still = 0; st.stuck++;
@@ -70,14 +71,28 @@
     document.addEventListener('pointerdown', onPtr, true);
     return function () { document.removeEventListener('keydown', onKey, true); document.removeEventListener('pointerdown', onPtr, true); };
   }
-  /** HUD ▶/⏸ 단추 — id 로 하나 만들고(없으면 body 에) 누르면 toggle. paint(visible) 로 글·표시를 맞춘다 */
-  function button(q, id, titles) {
+  /** HUD ▶/⏸ 단추 — id 로 하나 만들고(없으면 body 에) 누르면 toggle. paint(visible) 로 글·표시를 맞춘다.
+   *  anchor() 가 요소를 주면 그 요소(목표 줄·목표판) 오른쪽 아래 끝에 붙는다(fixed 좌표를 paint 때마다 맞춤 — 판 css 없이) */
+  function button(q, id, titles, anchor) {
     if (typeof document === 'undefined' || !document.body) { return null; }
     var b = document.getElementById(id), last = '';
-    if (!b) { b = document.createElement('button'); b.id = id; b.type = 'button'; b.style.display = 'none'; document.body.appendChild(b); b.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); q.toggle(); }); }
     titles = titles || {};
+    /* 다섯 판 같은 모양 — 기본 알약을 한 번 깐다. :where 라 특이도 0 이어서 판 css(1만리 #aq-go 자리)가 있으면 그게 이긴다.
+       기본이 없을 땐 맨 단추가 게임 캔버스 밑에 깔려 눌리지 않았다(W-0338 폰 촬영) */
+    if (!document.getElementById('aq-style')) {
+      var css = document.createElement('style'); css.id = 'aq-style';
+      css.textContent = ':where(#' + id + '){position:fixed;right:12px;top:120px;z-index:45;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;color:#1b1405;' +
+        'background:linear-gradient(#d9f2ff,#7cc4ea);border:1px solid #eaf8ff;box-shadow:0 2px 10px rgba(0,0,0,.45);padding:0}:where(#' + id + '.on){background:linear-gradient(#ff9a8a,#e0503c);color:#fff}' +
+        ':where(body.sheet-open #' + id + '){visibility:hidden;pointer-events:none}';
+      document.head.appendChild(css);
+    }
+    if (!b) { b = document.createElement('button'); b.id = id; b.type = 'button'; b.style.display = 'none'; document.body.appendChild(b); b.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); (titles.click || q.toggle)(); }); }   // titles.click — 판이 시작 손짓을 따로 둘 때(5천하 위임은 시작하자마자 이 달 명령)
     return { el: b, paint: function (visible) {
-      var on = q.status().on, txt = visible ? (on ? '⏸' : '▶') : '';
+      var on = q.status().on, txt = visible ? (on ? '⏸' : '▶') : '', a = anchor ? anchor() : null;
+      if (a && txt && global.innerWidth) {
+        var r = a.getBoundingClientRect();
+        if (r.width) { b.style.position = 'fixed'; b.style.top = Math.round(r.bottom + 6) + 'px'; b.style.right = Math.round(global.innerWidth - r.right) + 'px'; }
+      }
       if (txt === last) { return; }
       last = txt; b.textContent = txt; b.style.display = txt ? '' : 'none'; b.classList.toggle('on', on);
       b.title = on ? (titles.on || '자동 퀘스트 멈춤') : (titles.off || '자동 퀘스트 — 목표를 끝까지 대신');

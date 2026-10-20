@@ -276,10 +276,14 @@
   "id": "st.auto · W-0223(10-15): 재미표준 측정 A~H 다 잼 — A○ B○ C△(보통 흔들림 3.6px) D○ E○ F△ G△(외형 변화 없음) H△(계절 없음).",
   "name": "자동 사냥(줄 타기·유형별 무예·탕약 35%·이탈 18%, 5분 108마리)",
   "files": [
-   "js/auto.js"
+   "js/auto.js",
+   "js/autoquest.js",
+   "js/auto-quest-st.js"
   ],
   "tests": [
-   "자동 — 5분치를 굴리면 실제로 잡힌다"
+   "자동 — 5분치를 굴리면 실제로 잡힌다",
+   "W-0338 4종횡 자동 퀘스트 목록 — 시작하면 게시판에서 받고(prestart) · 목표는 받은 안 찬 사명 · 사냥터 정해진 토벌이 대화보다 앞 · 목표 사냥터는 열린 곳",
+   "W-0338 4종횡 자동 퀘스트 멈춤 — start 는 🤖 사냥 켜고 stop 은 원래대로 · 찬 사명은 board 가 바친다 · 이동 키 = 멈춤 · 사냥 밖은 busy"
   ],
   "level": "D2",
   "verified": null,
@@ -294,7 +298,7 @@
    ],
    "expect": "줄을 타며 적을 찾아 잡고 체력이 모자라면 탕약을 마신다"
   },
-  "note": "D2: saga-web/tools/playcheck/pw-st-sheet.mjs(Playwright) 13/13 — results/pw-st-sheet.json. 기계 확인(움직임의 맛·그림은 D3 사람 몫)"
+  "note": "D2: saga-web/tools/playcheck/pw-st-sheet.mjs(Playwright) 13/13 — results/pw-st-sheet.json. 기계 확인(움직임의 맛·그림은 D3 사람 몫) · W-0338(10-20): ▶ 자동 퀘스트(js/auto-quest-st.js — 자동 사냥은 사명을 안 따랐다 → 공개 함수로 게시판 받기·바치기·그 사냥터 들어가기, ▶ #goalboard 아래) · 10분 새 계정(aq-measure.mjs saga-story 600 aq): 바친 사명 0 → 13·막힘 1 (🤖 자동 사냥만은 사명 0 — 받지 않는 구조) · 폰 세로 ▶→⏸ ○"
  },
  {
   "id": "st.side-view3d",

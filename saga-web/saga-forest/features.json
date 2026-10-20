@@ -618,7 +618,9 @@
   "id": "fs.auto",
   "name": "자동 순행",
   "files": [
-   "js/auto.js"
+   "js/auto.js",
+   "js/autoquest.js",
+   "js/auto-quest-fs.js"
   ],
   "tests": [
    "자동은 입질을 기다렸다 당긴다 (무한 반복이 아니다)",
@@ -627,14 +629,16 @@
    "자동 — 부탁을 채운 주민을 먼저 본다",
    "자동 — 도구가 없는 것은 목표로 잡지 않는다",
    "자동 — 10분치를 굴리면 실제로 모이고 팔린다",
-   "자동 — 잠자리채가 있으면 벌레를 노리고 살금살금 걷는다"
+   "자동 — 잠자리채가 있으면 벌레를 노리고 살금살금 걷는다",
+   "W-0338 3마을 자동 퀘스트 목록 — 안 끝난 주민 부탁마다 한 줄(가방에 이미 찬 것이 맨 앞) · 마을 일 줄 · 공용 종류만",
+   "W-0338 3마을 자동 퀘스트 멈춤 — start 는 🤖 마을살이·🤝 심부름·🌳 채집 켜고 stop 은 원래대로 · 이동 키 = 멈춤 · 끝난 부탁은 목록에서 빠짐"
   ],
   "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). 🤖 켜기·끄기 기계 확인."
+  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). 🤖 켜기·끄기 기계 확인. · W-0338(10-20): ▶ 자동 퀘스트(js/auto-quest-fs.js — 목표 = 주민 부탁(찬 것 먼저)·마을 일, 실행은 마을살이 🤝·🌳, 낚시·곤충·하루 끝은 막힘 아님, ▶ #wallet 아래) · 10분 새 계정(aq-measure.mjs saga-forest 600 [aq]): 마을살이 +2·막힘 1 → ▶ +5·막힘 0 · 폰 세로 ▶→⏸ ○"
  },
  {
   "id": "fs.admin",
