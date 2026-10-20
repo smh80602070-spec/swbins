@@ -528,6 +528,7 @@
       'dg:grave': ['stele_01'], 'dg:well': ['well_01'], 'dg:vein': ['rock_large_02'], 'dg:pod': ['altar_base_01'],   // 방 소품 바닥 돌(src/dungeon3d/01.js poiProp)
       'wpn:sword': ['wpn_sword_common'], 'wpn:spear': ['wpn_spear_common'], 'wpn:halberd': ['wpn_spear_common'], 'wpn:guandao': ['wpn_spear_common'], 'wpn:axe': ['wpn_axe_common'], 'wpn:staff': ['wpn_staff_common'], 'wpn:bow': ['wpn_bow_common'],
       'wpn:club': ['wpn_club_01'], 'wpn:scroll': ['wpn_scroll_01'], 'wpn:fan': ['wpn_fan_01'], 'wpn:brush': ['wpn_brush_01'], 'mill': ['mill_01'],
+      /* W-0322 — K-0126 짝(옛 빌린 기본 표 줄은 지웠다) */ 'dg:cage': ['dungeon_pillar_01'], 'dg:barrel': ['barrel_01'], 'dg:crate': ['crate_small_01'], 'dg:crates': ['crate_stack_01'], 'dg:spikes': ['spike_trap_01'], 'dg:banner': ['banner_pole_01'], 'dg:stairs': ['cave_stairs_01_limestone'], 'dg:candle': ['candlestick_01'], 'dg:bottle': ['jar_01'],
       'gear:helmet': ['eq_past_1_head'], 'gear:crown': ['acc_crown'], 'gear:gapju': ['eq_past_2_head'], 'gear:cape': ['acc_cape_long'] },   // 걸친 장비(dungeon3d-gear) — 5천하 W-0264 와 같은 투구 셋
     /* 빌린 몸(W-0074, shared/js/assets3d.js borrowRecipe) — 제 몸이 없는 사람(사람 적·마을 사람·내 몸 스타일·이름 없는 적)은 시대 구분 없이
        옛 몸(VRoid 샘플·OGA·Quaternius·poly.pizza·KayKit) 대신 도감과 안 겹치는 VRoid 통일 몸을 입는다(사용자 10-06 "인물은 모두 교체").

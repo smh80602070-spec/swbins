@@ -5269,14 +5269,12 @@ window.requestAnimationFrame = function () { return 0; };
       return r.every(Boolean) && ('세로 머리 자리 ' + rows.join(' · ') + ' (옛 앞 끝 ' + yOld.toFixed(2) + ') · 가로 그대로') || '실패 ' + r.join(',') + ' ' + rows.join(' ');
     });
 
-    t('dg.mobile-cam: 폰 자연물 표(W-0186) — asset3d.light 1 이면 나무·고목·바위·덤불·통나무가 실사 대신 옛 저다각형 · 이 진단 창(터치 없음)은 실사 그대로', function () {
-      var A = DG.asset3d, C = DG.core, kinds = ['tree', 'tree_dead', 'rock', 'bush', 'log'], keep = C.tuned('asset3d.light', 'auto'), real = [], on, pc;
+    t('dg.mobile-cam: 폰 자연물 표(W-0186) — W-0322 뒤 실사 스캔이 없어 폰·PC 어느 쪽도 나무·고목·바위·덤불·통나무에 /realistic/ 경로 0(자체 world3d 는 cfg.assets3d.reg)', function () {
+      var A = DG.asset3d, C = DG.core, kinds = ['tree', 'tree_dead', 'rock', 'bush', 'log'], keep = C.tuned('asset3d.light', 'auto'), real = [];
       try {
-        C.setTune('asset3d.light', null); A._lightReset(); pc = !A.light() && JSON.stringify(A.lookup('tree').url).indexOf('/realistic/') >= 0;
-        C.setTune('asset3d.light', 1); A._lightReset(); on = A.light();
-        kinds.forEach(function (k) { var u = A.urlOf(k, 'seed-' + k); if (!u || u.indexOf('/realistic/') >= 0) { real.push(k + ':' + u); } });
+        [null, 1].forEach(function (v) { C.setTune('asset3d.light', v); A._lightReset(); kinds.forEach(function (k) { var u = A.urlOf(k, 'seed-' + k); if (u && u.indexOf('/realistic/') >= 0) { real.push(v + ':' + k); } }); });
       } finally { C.setTune('asset3d.light', keep === 'auto' ? null : keep); A._lightReset(); }
-      return on && pc && real.length === 0 && ('폰 표: 다섯 가지 모두 저다각형 · 진단 창은 실사') || '실패 ' + [on, pc, real.join(' ')].join(' / ');
+      return real.length === 0 && '실사 경로 0(폰·PC)' || '실패 ' + real.join(' ');
     });
 
     t('은총 빛기둥(W-0165) — 3D 가 꺼진 진단에선 세우지 않는다(null), 은총 자리는 닿은 자리를 적는다', function () {
@@ -6638,7 +6636,7 @@ window.requestAnimationFrame = function () { return 0; };
         A3.REG['monster:cthulhu'], A3.REG.hero[0].body, A3.REG['pet:tiger']
       ];
       var nonActorUrls = [
-        A3.REG.tree, A3.REG.house[0], A3.REG.pillar, A3.REG['wpn:sword'],
+        '_shared/assets/world3d/tree_broadleaf_01.glb', '_shared/assets/world3d/eu_house_01.glb', A3.REG['gear:helmet'], '_shared/assets/world3d/wpn_sword_common.glb',   // W-0322 — 지형·건물은 자체 world3d 주소
         A3.REG['gear:armor:plate']
       ];
       var allActor = actorUrls.every(function (u) { return A3.isActorAsset(u); });
@@ -9234,9 +9232,9 @@ window.requestAnimationFrame = function () { return 0; };
       var A = DG.asset3d, V = DG.loadVeil, C = DG.core, T = window.THREE; if (!A || !V || !V.shouldHide || !T) { return '모듈 없음'; }
       var mk = function () { return new T.Mesh(new T.BoxGeometry(1, 1, 1), new T.MeshBasicMaterial()); };
       var keepGlb = C.tuned('asset3d.glb', 1); C.setTune('asset3d.glb', 1);
-      var s1 = A.build('house', 'w0325', 1, null, mk), g1 = A.ghostOf(s1);
-      C.setTune('dungeon3d.shapeGhost', 1); var s2 = A.build('house', 'w0325b', 1, null, mk), g2 = A.ghostOf(s2); C.setTune('dungeon3d.shapeGhost', null);
-      C.setTune('asset3d.glb', 0); var s3 = A.build('house', 'w0325c', 1, null, mk), shape3 = s3.children[0]; C.setTune('asset3d.glb', keepGlb === 1 ? null : keepGlb);
+      var s1 = A.build('gear:helmet', 'w0325', 1, null, mk), g1 = A.ghostOf(s1);   // W-0322 — 집은 자체 world3d(진단 창엔 공용 주소가 없어 표에 없음), 기본 표에 남은 GLB 키로
+      C.setTune('dungeon3d.shapeGhost', 1); var s2 = A.build('gear:helmet', 'w0325b', 1, null, mk), g2 = A.ghostOf(s2); C.setTune('dungeon3d.shapeGhost', null);
+      C.setTune('asset3d.glb', 0); var s3 = A.build('gear:helmet', 'w0325c', 1, null, mk), shape3 = s3.children[0]; C.setTune('asset3d.glb', keepGlb === 1 ? null : keepGlb);
       var st1 = s1.userData.assetState, hid = !!g1 && (st1 === 'fail' ? g1.visible === true : (st1 === 'shape' ? g1.visible === false : true));   // 받기 실패(로더 없음)면 상자가 다시 보여야 한다
       var ok = [hid, !g2 && s2.children.length > 0 && s2.children[0].visible !== false, !!shape3 && shape3.visible !== false && !A.ghostOf(s3),
         V.shouldHide(5, 0.3, 200) === '', V.shouldHide(0, 0, 400) === 'done', V.shouldHide(5, 0.85, 1000) === 'ratio', V.shouldHide(5, 0.3, 8100) === 'max', V.shouldHide(5, 0.3, 7000) === ''];

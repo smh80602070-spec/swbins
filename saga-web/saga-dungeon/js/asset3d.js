@@ -71,13 +71,7 @@
      사진측량 스캔을 그대로 복사해 옮겼다, `ASSET_LICENSES.md` 참고). 저다각형
      Quaternius 셋은 지우지 않고 여기 남겨 둔다 — 안 맞으면 DEFAULTS 의 해당
      줄을 이 값으로 되돌리면 그만이다. */
-  var NATURE_STYLIZED = {
-    'tree': [NATURE + 'CommonTree_1.glb', NATURE + 'CommonTree_2.glb', NATURE + 'CommonTree_3.glb'],
-    'tree_dead': NATURE + 'CommonTree_Dead_1.glb',
-    'rock': [NATURE + 'Rock_1.glb', NATURE + 'Rock_2.glb', NATURE + 'Rock_3.glb', NATURE + 'Rock_Moss_1.glb'],
-    'bush': [NATURE + 'Bush_1.glb', NATURE + 'Bush_2.glb'],
-    'log': NATURE + 'WoodLog.glb'
-  };
+  var NATURE_STYLIZED = {};   // W-0322 — 옛 저다각형 되돌림 표는 비움(빌린 Quaternius 지움). 자연물은 cfg.assets3d.reg 의 자체 world3d
 
   /* 옛 조합형 — 표 기본에서는 빠졌다. 지우지 않고 남겨 둔다(되돌림 자리) */
   var HERO_RECIPES_FALLBACK = [
@@ -383,34 +377,23 @@
        Poly Haven CC0 사진측량 스캔으로 갈아 끼웠다(`island_tree_02`,
        `saga-forest`가 이미 88% 심플리파이해 둔 4.86MB 짜리를 그대로 복사).
        옛 셋은 `NATURE_STYLIZED.tree`에 되돌림 자리로 남음 */
-    'tree': NATURE_REAL + 'IslandTree_02.glb',
     /* 2026-09-04(이어서) — 같은 실사화, Poly Haven `dead_quiver_trunk`(선 채
        마른 줄기). 늪(swamp) Biome 에도 이 값이 그대로 쓰인다 */
-    'tree_dead': NATURE_REAL + 'TreeDead.glb',
     /* 2026-09-04(이어서) — 같은 실사화. `saga-forest`가 처음 갈아 끼웠던 5종
        그대로(맑은 바위 Rock_07·Stone_01 + 이끼 바위 MossRock_a·b·c) — 이 판은
        바위를 결 하나(`rock`)로만 두므로 다섯을 한 표에 섞는다(`rock:moss`로
        가르지 않는다, PLAN 7절 "이끼"는 이 다섯 중 셋이 그대로 맡는다) */
-    'rock': [NATURE_REAL + 'Rock_07.glb', NATURE_REAL + 'Stone_01.glb',
-      NATURE_REAL + 'MossRock_a.glb', NATURE_REAL + 'MossRock_b.glb', NATURE_REAL + 'MossRock_c.glb'],
     /* 폐허의 기둥·무너진 벽 — 딱 맞는 "부러진 돌기둥" 낱개는 못 찾아
        `Arch.glb`(무너진 아치)로 대신한다. 사가만리가 이미 같은 후보를 적어 뒀다
        (`saga-go/assets/ASSET_LICENSES.md` "사당·폐허의 다른 후보") */
-    'pillar': PROPS + 'Arch.glb',
-    'wall': PROPS + 'Wall.glb',
     /* 제단 — 사가만리가 "사당" 후보로 적어 둔 그 Temple 을 그대로 쓴다 */
-    'altar': PROPS + 'Temple.glb',
     /* 동굴 입구 — 사가만리가 이미 "광산 어귀"로 적어 둔 그 Mine 을 그대로 쓴다 */
-    'cavemouth': PROPS + 'Mine.glb',
     /* 천막 — 2026-09-04, saga-forest 가 이미 받아 둔 진짜 텐트(survival_pack,
        CC0)를 그대로 옮겨 왔다. 여태 대역으로 쓰던 장터 좌판(MarketStand)은
        'stall'로 이름만 남겨 둔다(행상 좌판이 여전히 그 자리를 쓴다) */
-    'tent': PROPS + 'Tent.glb',
-    'stall': BLD + 'MarketStand_1.glb',
     /* 모닥불 — 2026-09-04, saga-forest 가 받아 둔 medieval_village_pack 의
        Bonfire_Lit(CC0)로 갈아 끼웠다. 예전엔 "CC0로 딱 맞는 걸 못 찾았다"고
        적어 뒀던 자리다(도형 그대로 남겨 뒀었다) */
-    'campfire': PROPS + 'Bonfire_Lit.glb',
     /* 물(못) — 2026-09-05, 사용자 요청("물 텍스처 실사화")으로 찾아봤지만
        **타일링되는 물 표면 텍스처 자체가 CC0에 없었다**(Poly Haven·ambientCG
        둘 다 뒤졌다 — 물은 사진 텍스처로 잘 안 만드는 소재라 원천적으로
@@ -422,7 +405,6 @@
        실사 텍스처는 아니지만(저다각형 팔레트 색이다, 다른 실사화와 결이
        다르다는 뜻) **코드가 그리던 도형을 실제 완성 에셋으로 바꿨다**는
        원칙은 그대로 지킨다. 출처는 `ASSET_LICENSES.md` 참고 */
-    'pond': NATURE + 'pond.glb',
     /* 표지판(들판의 'post') — SAGA WEB.md 11절 "표지판", 지난 여러 세션이
        "이 팩·다른 네 판 어디에도 CC0로 맞는 게 없다"고 적어 두고 도형으로
        남겨 뒀던 자리. 2026-09-05 — poly.pizza에서 Kenney의 'Signpost'
@@ -431,27 +413,20 @@
        'pond'처럼 가로세로를 뒤집어 풀 필요가 없다 — 다른 대다수 소품과
        같은 방식으로 그대로 `normalize()`에 맡긴다. 출처는
        `assets/ASSET_LICENSES.md` 참고 */
-    'post': PROPS + 'signpost.glb',
     /* 땅바닥 잡초 — PLAN 7·11절 "풀·꽃·덤불·버섯·통나무", 이 판에만 여태
        하나도 없었다(다른 네 판은 다 갖고 있다). 판정에는 안 닿는 순수 장식
        (field3d.js `clutterAt()`) */
-    'grass': [NATURE + 'Grass_2.glb', NATURE + 'Grass_Short.glb'],
-    'flower': NATURE + 'Flowers.glb',
     /* 2026-09-04(이어서) — 같은 실사화. Poly Haven `shrub_04`(세로로 선 다발이라
        이 판의 normalize()가 옆으로 안 늘린다, `saga-forest` 주석 참고) */
-    'bush': NATURE_REAL + 'Shrub_04.glb',
-    'mushroom': [PROPS + 'Mushroom_1.glb', PROPS + 'Mushroom_2.glb'],
     /* 2026-09-04(이어서) — 같은 실사화. Poly Haven `dead_tree_trunk`·
        `dead_tree_trunk_02`(이름과 달리 쓰러진 통나무 — tree_dead가 아니라
        여기 자리가 원래 뜻에 맞는다, `saga-forest` 주석 참고) */
-    'log': [NATURE_REAL + 'Log_a.glb', NATURE_REAL + 'Log_b.glb'],
     /* 마을(모루골) 건물 — 집 넷은 자리마다 씨앗으로 섞어 세운다(나무·바위와 같은 요령).
        2026-09-04(이어서) — 실사화. PolyScan(CC0, 로그인 없이 무료 다운로드 확인)의
        사진측량 아님·PBR 모델 둘로 갈아 끼웠다 — 돌집(house_stone)·통나무집
        (house_wooden). 원본은 집+수레+양동이가 한 장면에 묶여 있어 `House`·`Wood`
        재질(집 몸체·지붕널) 노드만 추려 냈다(수레·양동이는 버렸다) — 탑과 같은
        trimesh 파이프라인, 텍스처는 4096→768px jpeg85. 출처는 `ASSET_LICENSES.md` */
-    'house': [BLD_REAL + 'house_stone.glb', BLD_REAL + 'house_wooden.glb'],
     /* 2026-09-05 — 우물을 실사화. PolyScan에는 우물 자체가 없었지만
        KayKit(같은 작가, 이미 던전 소품에서 쓰는 그 CC0)의 다른 팩
        "Medieval Hexagon Pack"엔 있다 — 지난 재탐색 때 "CC0인데 저다각형
@@ -467,7 +442,6 @@
        있어 trimesh로 그대로 읽어 단일 glb로만 다시 구웠다(재질 분리·텍스처
        리사이즈 단계 자체가 필요 없었다 — PolyScan 사진측량과 달리 이
        팩은 원래도 저장이 가볍다). 출처는 `ASSET_LICENSES.md` 참고 */
-    'well': BLD_HEX + 'well.glb',
     /* 2026-09-05 — 대장간을 실사화. PolyScan 카탈로그에 '대장간 건물'은
        원래도 없다(모루 소품 하나뿐, 위 재탐색 기록 참고) — 그런데 그 뒤
        카탈로그가 늘어 집 계열 세 번째(medieval-stone-and-wood-cottage)가
@@ -479,15 +453,12 @@
        (House·Wood 재질 노드만 추림, 4096→768px jpeg85) — 이번엔 원본에
        수레·양동이 같은 덤 오브젝트가 없어 그 단계가 필요 없었다.
        출처는 `ASSET_LICENSES.md` 참고 */
-    'blacksmith': BLD_REAL + 'house_cottage.glb',
     /* 2026-09-05 — 여관·마방·방앗간도 같은 Medieval Hexagon Pack(위 우물
        주석 참고)에서 채웠다. 마방은 이 팩에 그 이름 그대로는 없다 — 병영
        (barracks)을 대신 앉혔다(사용자 지시로 역할·모양 일치를 요구하지
        않는다). 여관은 이 팩의 'tavern'(큰 맥주통이 통째로 간판을 겸하는
        모양 — 흔한 여관 도상은 아니지만 이 팩 자체의 방식이다), 방앗간은
       'windmill'(W-0321 — 풍차는 지웠다, 자체 mill_01 은 cfg.assets3d.reg) */
-    'inn': BLD_HEX + 'tavern.glb',       // 갈대나루(나루터) — 나그네 쉼터
-    'stable': BLD_HEX + 'barracks.glb',  // 자작재(산길) — 마방(대역)
     /* SAGA WEB.md "E. 건물" 목록의 "탑" — 모루골(중심 마을)의 표지 건물로
        하나만 세운다. 2026-09-04 — Poly Haven `modular_fort_01`
        (성채 모듈 키트, CC0)에서 원형 탑 조각(`tower_round`) 하나만
@@ -499,7 +470,6 @@
        2026-09-05 — E 건물 목록(집·우물·대장간·여관·마방·방앗간) 여섯이
        이제 다 실사·CC0 에셋으로 찼다(모양이 정확히 원작 그대로는 아니다,
        사용자가 그래도 된다고 정했다) */
-    'belltower': BLD_REAL + 'tower_round.glb',
     /* 무기 'wpn:*' 열하나 — 옛 빌린 Quaternius·Poly 무기(models/weapons/)는 W-0321 에 지웠다. 자체 world3d 짝은 core.js cfg.assets3d.reg 가
        얹고(K-0116·W-0261), 못 얹으면 dungeon3d-gear 의 도형 그대로 */
     /* 몬스터 다양화 이어서 — 투구·왕관(`foeGear()`의 `look.helm`). 'helmet'(일반
@@ -531,55 +501,37 @@
        'pillar'·'wall' 과는 다른 자리**라는 뜻이다 — 저 둘은 사가만리에서 물려받은
        Arch.glb·Wall.glb 를 그대로 쓰므로 여기서 안 건드린다.
        출처는 `assets/ASSET_LICENSES.md` 참고 */
-    'dg:chest': DUN + 'chest.glb',
-    'dg:torch': DUN + 'torch_mounted.gltf.glb',
-    'dg:pillar': DUN + 'pillar.gltf.glb',
     /* 갇힌 우리(POI: 이벤트방) — 실제 감옥 창살 기둥. 자리마다 넷을 둘러 세운다 */
-    'dg:cage': DUN + 'barrier_column.gltf.glb',
     /* 다음 방 문 — 열린 아치 하나만 받았다. 잠금·해금은 모델을 안 바꾸고
        색(tint)만 바꾼다 — 2D 가 오래 쓰던 신호(잠기면 어둡게, 풀리면 금빛)를
        그대로 지킨다 */
-    'dg:door': DUN + 'wall_doorway.glb',
     /* 방 구석 잡동사니(순수 장식, PLAN 6절 보강) — 술통·상자 더미. 판정 신호가
        아니라서 GLB 를 못 받으면 그냥 안 세운다(다른 dg: 항목과 달리 fallback
        도형을 안 둔다) */
-    'dg:barrel': DUN + 'barrel_large.gltf.glb',
-    'dg:crate': DUN + 'box_small.gltf.glb',
-    'dg:crates': DUN + 'crates_stacked.gltf.glb',
     /* 2026-09-04 — SAGA WEB.md 감사("의자·무기·방패" 소품)로 같은 KayKit 팩에서
        두 가지 더 받았다. 술통·상자와 같은 순수 장식 자리(방 구석)에 섞인다 */
-    'dg:chair': DUN + 'chair.gltf.glb',
-    'dg:shield': DUN + 'sword_shield.gltf.glb',
     /* 2026-09-04 — PLAN §G "던전" 목록의 "함정". 판정(피해)은 손대지 않는다
        (밸런스는 사람이 정할 자리) — 방에 위험하다는 인상만 준다 */
-    'dg:spikes': DUN + 'floor_tile_big_spikes.glb',
     /* 보스방 벽 현수막 — 색은 세력이 아니라 "여기가 보스방" 신호라 하나로 고정 */
-    'dg:banner': DUN + 'banner_thin_red.gltf.glb',
     /* 행상 좌판 — MarketStand(=`tent`) 위에 놓일 긴 상. 딱 맞는 "행상 수레"는
        못 찾아 대신한다 */
-    'dg:table': DUN + 'table_long.gltf.glb',
     /* 2026-09-04 — PLAN §G "던전" 목록의 "계단". 마지막 방의 문(`kind==='stair'`,
        dungeon.js의 makeDoors)은 다음 층으로 내려가는 자리인데, 3D는 여태
        다른 문과 똑같은 아치(dg:door)로만 그려 2D의 🪜 표시와 결이 안 맞았다.
        같은 KayKit 팩에서 실물 계단을 받아 이 문 하나만 갈아 끼운다 */
-    'dg:stairs': DUN + 'stairs_wide.gltf.glb',
     /* 2026-09-04(이어서) — SAGA WEB.md "F. 소품" 목록의 "초"·"병". 같은
        KayKit 팩에서 받았다 — 키(key)·접시 더미는 세로가 짧고 가로가 길어
        (`normalize()`가 세로 기준으로 키를 맞추면 가로가 배로 부푼다) 이번엔
        건너뛰었다(부록 "안 되면 안 된다고 보고한다") */
-    'dg:candle': DUN + 'candle_lit.gltf.glb',
-    'dg:bottle': DUN + 'bottle_a_green.gltf.glb',
     /* 2026-09-05 — 바로 위 주석이 "침대도 세로가 짧아 안 맞는다"고 적어
        뒀었는데, 실제 GLB 치수를 재 보니 틀렸다(키·접시와 달리 침대는
        세로가 40~55% — 이미 쓰고 있는 `dg:chest`(50%)와 같은 급이다).
        PolyScan "로그인 필요" 오판과 같은 종류의 실수 — 확인 없이 넘겨짚은
        것. `bed_decorated`(이불·베개 있는 완성형, KayKit 팩 — 맨 프레임보다
        한눈에 침대로 읽힌다)로 SAGA WEB.md "F. 소품"의 "침대"를 채운다 */
-    'dg:bed': DUN + 'bed_decorated.gltf.glb',
     /* 2026-09-05 — 같은 목록의 "책상". `dg:table`(긴 상, 행상 전용)과 갈라
        정사각 발판의 `table_small`을 쓴다 — 세로:가로 비율이 1:1:1이라
        `normalize()`와 가장 잘 맞는 모양이다 */
-    'dg:desk': DUN + 'table_small.gltf.glb'
   };
   var REG = {};
   function restore() { var k; for (k in DEFAULTS) { if (DEFAULTS.hasOwnProperty(k)) { REG[k] = DEFAULTS[k]; } } return REG; }
@@ -828,7 +780,7 @@
      animals/` 밑 물고기 펫 `Flower_Horn.glb` 처럼 이름만 겹치는 것은
      폴더 접두(`/models/nature/`)로 먼저 걸러 안 걸린다. */
   function isSwayAsset(url) {
-    return typeof url === 'string' && /\/models\/nature\//.test(url) && /grass|flower|bush|shrub/i.test(url);
+    return typeof url === 'string' && (/\/models\/nature\//.test(url) && /grass|flower|bush|shrub/i.test(url) || /\/world3d\/(grass_tuft|flower_patch|bush)_/.test(url));   // W-0322 자체 풀·꽃·덤불도
   }
 
   /* ── PBR 을 벗긴다 — 환경맵 없는 이 판의 조명에 그대로 쓰면 새까맣게
