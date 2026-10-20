@@ -1315,5 +1315,23 @@
   "ticket": "W-0347",
   "since": "2026-10-21",
   "note": "10-21: 1만리 짐승 점묘 사라짐(shots/cmp/w347c_go_map) · 밉 사본 캐시는 high 로 충분해 안 만듦"
+ },
+ {
+  "id": "rk.w2d-labels",
+  "name": "2D 성 이름 겹침 정리(W-0348) — 이름을 성 그림 뒤 한 층(rlabs)에, 글자 크기 바뀔 때 겹친 작은 성 이름 숨김(내 성은 늘 보임 · 쌓지 않음)",
+  "files": [
+   "src/ui-rtk/01.js",
+   "src/ui-rtk/02.js",
+   "css/style.css"
+  ],
+  "tests": [
+   "pw-look2d saga-realm map · pw-web-2d-sheet 14/14"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0348",
+  "since": "2026-10-21",
+  "note": "10-21: shots/cmp/w348a_go_map·w348a_dg_town·w348b_rm_map Read — 글자끼리 겹침 0"
  }
 ]

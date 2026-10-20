@@ -665,7 +665,7 @@
   /* W-0144 — 이름표 겹침 풀기(순수). items [{x, y, w, h, dist, pri}] → 각 줄에 y(옮긴 자리)·oy(원래)·alpha·lead. 우선(pri 큰 것) → 가까운 것 순으로 제자리,
      겹치면 위로 h+2 씩 넷째 자리까지(W-0205, 옛 셋), 그래도 겹치면 숨김(alpha 0) — 첫째는 늘 보인다. 둘째 단 넘게 밀리면 lead(머리와 잇는 가는 선) */
   var tagQ = [];
-  function layoutLabels(items) {
+  function layoutLabels(items) { if (global.DG.mode2d && global.DG.mode2d.labels) { return global.DG.mode2d.labels(items); }   // W-0348 공용 — 먼 이름표는 겹치면 숨김, 가까운·퀘스트 대상만 위로 쌓음
     var order = items.slice().sort(function (a, b) { return ((b.pri || 0) - (a.pri || 0)) || ((a.dist || 0) - (b.dist || 0)); }), placed = [], i, s, y;
     for (i = 0; i < order.length; i++) {
       var it = order[i], hit = function (q) { return Math.abs(q.x - it.x) * 2 < q.w + it.w && Math.abs(q.y - y) < (q.h + it.h) / 2; };
@@ -904,7 +904,7 @@
       t: now
     });
 
-    if (p.s > 0.45) { tagQ.push({ t: n.p.name, x: p.x, y: p.y - bodyH * 1.10 - 5 * z, px: Math.round(10 * Math.min(z, 1.4)), shade: 'rgba(0,0,0,0.55)', fill: near ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.7)', dist: n.dist, pri: near ? 2 : 0 }); }   // W-0144 · W-0205 먼 주민 0.42 → 0.7(밝은 돌바닥에서 안 읽혔다)
+    if (p.s > 0.45) { tagQ.push({ t: n.p.name, x: p.x, y: p.y - bodyH * 1.10 - 5 * z, px: Math.round(10 * Math.min(z, 1.4)), shade: 'rgba(0,0,0,0.55)', fill: near ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.7)', dist: n.dist, keep: !!n.p.goal, pri: n.p.goal ? 4 : near ? 2 : 0 }); }   // W-0144 · W-0205 먼 주민 0.42 → 0.7(밝은 돌바닥에서 안 읽혔다)
   }
 
   /**

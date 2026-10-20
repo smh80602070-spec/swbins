@@ -9058,11 +9058,11 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var ok = [w === 'polearm', w2 === 'polearm', A.sharedUrl('hit') === null, r ? (u && u.slice(-'audio/sfx/sfx_crit.ogg'.length) === 'audio/sfx/sfx_crit.ogg') : u === null];
       return ok.every(Boolean) && ('sx → ' + (u || '(공용 주소 없음)') + ' · 창 → spear_hit');
     });
-    t('2D 이름표 비키기(W-0205) — 한 점에 이름표 5개: 넷째 단까지 위로 밀려 넷이 보이고 서로 안 겹침·하나 생략, 우선 높은 것이 제자리, 둘째 단 넘게 밀린 것은 머리와 잇는 선', function () {
-      var L = [0, 1, 2, 3, 4].map(function (i) { return { x: 100, y: 200, w: 60, h: 14, dist: i, pri: i === 4 ? 3 : 0 }; }), out = DG.world.layoutLabels(L), shown = out.filter(function (q) { return q.alpha; }), ov = 0, a, b;
+    t('2D 이름표 비키기(W-0205·W-0348) — 한 점에 가까운 이름표 5개: 셋째 단까지 위로 밀려 셋이 보이고 서로 안 겹침·둘 생략, 우선 높은 것이 제자리, 둘째 단 넘게 밀린 것은 머리와 잇는 선', function () {
+      var L = [0, 1, 2, 3, 4].map(function (i) { return { x: 100, y: 200, w: 60, h: 14, dist: i, pri: i === 4 ? 3 : 2 }; }), out = DG.world.layoutLabels(L), shown = out.filter(function (q) { return q.alpha; }), ov = 0, a, b;
       for (a = 0; a < shown.length; a++) { for (b = a + 1; b < shown.length; b++) { if (Math.abs(shown[a].y - shown[b].y) < 14) { ov++; } } }
-      var r = [shown.length === 4, ov === 0, L[4].y === 200 && L[4].alpha === 1, shown.filter(function (q) { return q.lead; }).length === 2, shown.every(function (q) { return q.oy === 200; })];
-      return r.every(Boolean) && ('보임 ' + shown.length + '/5 · 겹침 0 · 선 2') || '실패 ' + r.join(',');
+      var r = [shown.length === 3, ov === 0, L[4].y === 200 && L[4].alpha === 1, shown.filter(function (q) { return q.lead; }).length === 1, shown.every(function (q) { return q.oy === 200; })];
+      return r.every(Boolean) && ('보임 ' + shown.length + '/5 · 겹침 0 · 선 1') || '실패 ' + r.join(',');
     });
     t('2D 카메라 가까이(W-0204) — 들판 확대 2.0 을 몸도 따름: 나 1.25·48·min(2.5, 확대) = 120px(옛 60) 이 100~140', function () {
       var zm = DG.field2d.zoomMul(), body = 1.25 * 48 * Math.min(2.5, Math.max(1, zm));
@@ -16901,6 +16901,19 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 
     /* ── 2D 모드 시트(W-0019, shared/js/mode2d.js) — 순수 함수만. 이미지는 안 받는다(진단은 파일을 못 믿는다) ─── */
 
+    t('2D 이름표 겹침(W-0348) — 겹친 둘 중 pri 낮은 먼 쪽은 숨고, 안 겹치면 둘 다 · 가까운 것은 위로 쌓이고 · 퀘스트 대상(keep)은 끝까지 보인다', function () {
+      var L = DG.mode2d.labels, box = function (x, y, pri, keep) { return { x: x, y: y, w: 60, h: 16, pri: pri, dist: pri ? 1 : 9, keep: !!keep }; };
+      var a = box(100, 100, 1), b = box(110, 100, 0); L([a, b]);
+      var far = a.alpha === 1 && b.alpha === 0;
+      var c = box(100, 100, 0), d = box(300, 100, 0); L([c, d]);
+      var apart = c.alpha === 1 && d.alpha === 1;
+      var e = box(100, 100, 3), g = box(105, 100, 2); L([e, g]);
+      var stack = e.alpha === 1 && g.alpha === 1 && g.y < g.oy;
+      var row = [0, 1, 2, 3].map(function () { return box(100, 100, 3); }), q = box(100, 100, 0, true); L(row.concat([q]));
+      var keep = q.alpha === 1 && q.y === q.oy && row.filter(function (r) { return r.alpha; }).length === 2;
+      return far && apart && stack && keep && '먼 쪽 숨김 · 떨어지면 둘 · 가까우면 쌓음 · 퀘스트 대상 제자리';
+    });
+
     t('2D 시트 — 프레임 계산: 반복 동작(idle·walk)은 돌고, 한 번 동작(attack·hit·death)은 마지막 프레임에 머문다', function () {
       var M = DG.mode2d;
       var loop = M.frameAt('walk', 0) === 0 && M.frameAt('walk', 1000 / M.FPS.walk) === 1 && M.frameAt('walk', 1000 / M.FPS.walk * M.FRAMES) === 0;
@@ -17177,12 +17190,12 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '휠 위 → 2D 배율 커짐 · 3D 거리 줄어듦 · 휠 아래로 제자리' : ('실패 ' + bad.join(','));
     });
-    t('go.world: 2D 이름표 겹침(W-0144) — 같은 점 여섯은 넷이 위로 비켜 서고 둘은 숨김(W-0205 넷째 단), 가장 가까운 것은 제자리·보임, 떨어진 것은 안 건드림', function () {
-      var L = DG.world.layoutLabels, six = [5, 1, 4, 2, 6, 3].map(function (d) { return { x: 100, y: 200, w: 60, h: 13, dist: d }; }), far = { x: 400, y: 200, w: 60, h: 13, dist: 9 };
+    t('go.world: 2D 이름표 겹침(W-0144·W-0348) — 같은 점 여섯 중 가까운 둘(pri 2)만 위로 비켜 서고 먼 넷은 숨김, 가장 가까운 것은 제자리·보임, 떨어진 것은 안 건드림', function () {
+      var L = DG.world.layoutLabels, six = [5, 1, 4, 2, 6, 3].map(function (d) { return { x: 100, y: 200, w: 60, h: 13, dist: d, pri: d <= 2 ? 2 : 0 }; }), far = { x: 400, y: 200, w: 60, h: 13, dist: 9 };
       L(six.concat([far]));
       var shown = six.filter(function (q) { return q.alpha === 1; }), ys = shown.map(function (q) { return q.y; }).sort(), near = six.filter(function (q) { return q.dist === 1; })[0];
-      var r = [shown.length === 4, ys.join() === [155, 170, 185, 200].sort().join(), near.alpha === 1 && near.y === 200, far.alpha === 1 && far.y === 200, L([]).length === 0];
-      return r.every(Boolean) && ('보임 4 · 숨김 2 · y ' + ys.join('/')) || '실패 ' + r.join(',') + ' ' + JSON.stringify(six);
+      var r = [shown.length === 2, ys.join() === [185, 200].sort().join(), near.alpha === 1 && near.y === 200, far.alpha === 1 && far.y === 200, L([]).length === 0];
+      return r.every(Boolean) && ('보임 2 · 숨김 4 · y ' + ys.join('/')) || '실패 ' + r.join(',') + ' ' + JSON.stringify(six);
     });
     t('go.field2d: 2D 들판 계절 색 — 여름 들은 옛 바탕색 그대로, 가을 들·논밭은 다르고, 길은 가을에도 그대로, 손잡이 0 이면 옛 값 (W-0211)', function () {
       var F = DG.field2d, S = DG.season, r;

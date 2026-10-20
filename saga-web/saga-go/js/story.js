@@ -1388,7 +1388,7 @@
       var face = talk && talk.st.npc === k, inf = npcInfo(k), fw = !!(fs && fs.walking && step().npc === k);
       /* 바라보는 곳 — 대화 상대면 나 · 길(path)을 걷는 중이면 다음 길 점(⑲-28) · 아니면 제 땅 탑(spot 인물은 그 자리) */
       var a = fw && step().path ? followPts(step())[Math.min(fs.i + 1, step().path.length - 1)] : (n.spot ? spotPos(n.spot) : anchorOf(n.zone));
-      out.push({ p: { id: n.id, name: inf.name, color: n.color, rarity: 3, trait: 'virtue', story: k, mask: inf.mask, pet: n.pet || null }, sky: inf.sky,
+      out.push({ p: { id: n.id, name: inf.name, goal: !!(step() && isTalk(step()) && step().npc === k), color: n.color, rarity: 3, trait: 'virtue', story: k, mask: inf.mask, pet: n.pet || null }, sky: inf.sky,
         x: q.x, y: q.y, walking: !!(fw || (n.runPath && chase && chase.npc === k && chase.run && !(chase.pause > 0))), phase: (tms || 0) / 480,
         ang: face ? Math.atan2(pp.y - q.y, pp.x - q.x) : (a ? Math.atan2(a.y - q.y, a.x - q.x) : 0), dist: d });
     }

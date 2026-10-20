@@ -74,7 +74,7 @@
       }
     }
 
-    /* 성 */
+    /* 성 */ var labs = '';   // W-0348 이름은 성을 다 그린 뒤 한 층에 — 성 안에 두면 다음 성 그림이 앞 성 이름을 덮는다
     for (i = 0; i < CD.CITIES.length; i++) {
       var d = CD.CITIES[i], c = st.cities[d.id];
       var mine = c.force === st.me;
@@ -90,9 +90,9 @@
         (c.disaster ? '<text class="rdis" x="' + (d.x + rad + 0.6) + '" y="' + (d.y - rad) +
           '">' + R().disasterByKey(c.disaster).emoji + '</text>' : '') +
         (global.DG.war.besieged(d.id) ? mapMark('camp', d.x - rad - 0.9, d.y - rad, 3, 'rdis', '🏕️') : '') +   // W-0330 진 그림(map_camp)
-        '<text class="rlab" x="' + d.x + '" y="' + (d.y + rad + 2.6) + '">' + esc(d.name) + '</text>' +
         '</g>';
-    }
+      labs += '<text class="rlab" data-p="' + rad.toFixed(2) + '"' + (mine ? ' data-m="1"' : '') + ' x="' + d.x + '" y="' + (d.y + rad + 2.6) + '">' + esc(d.name) + '</text>';
+    } s += '<g class="rlabs">' + labs + '</g>';
 
     /* 가고 있는 원정 — 경로 위 지금 자리에 깃발 하나(2026-09-04) */
     function mapMark(k, x, y, sz, cls, fb, fill) { var M2 = global.DG.map2d; return M2 && M2.mark ? M2.mark(k, x, y, sz, cls, fb, fill) : '<text class="' + cls + '" x="' + x + '" y="' + y + '"' + (fill ? ' fill="' + fill + '"' : '') + '>' + fb + '</text>'; }
@@ -116,7 +116,7 @@
     }
     s += '</div>';
 
-    els.realm.innerHTML = s; if (global.DG.rtkHand) { global.DG.rtkHand.redraw(); }   // W-0177 솟는 결과 글자를 다시 그려도 잃지 않게
+    els.realm.innerHTML = s; declutterLabels(els.realm.querySelector('.rmap')); if (global.DG.rtkHand) { global.DG.rtkHand.redraw(); }   // W-0177 솟는 결과 글자를 다시 그려도 잃지 않게
     syncMapControls();
   }
 

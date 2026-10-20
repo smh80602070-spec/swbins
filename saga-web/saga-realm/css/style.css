@@ -1269,6 +1269,7 @@ body.sheet-open #realm3d { right: calc(min(420px, 92vw) + 20px); }
   paint-order: stroke; stroke: rgba(8, 10, 14, .85); stroke-width: calc(.7px * var(--lz, 1));
   pointer-events: none; font-weight: 600;
 }
+.rlab.rlab-off { display: none; }   /* W-0348 겹친 성 이름(작은 성 쪽) — 확대하면 다시 보인다 */
 .rdis { font-size: 3px; pointer-events: none; }
 .rjourney { font-size: 3.4px; text-anchor: middle; pointer-events: none; }
 

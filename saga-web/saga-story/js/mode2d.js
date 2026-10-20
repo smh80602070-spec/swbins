@@ -562,8 +562,25 @@
   /** 표에 이 종류가 있고 2D 모드인가 — 부르는 쪽이 정렬 목록에 넣을지 정할 때 */
   function hasKind(kind) { var t = C().prop2d; return !!(t && t[kind]) && isOn(); }
 
+  /** W-0348 이름표 겹침 풀기 — items [{x, y(글 바닥), w, h, pri, dist, keep}] 을 받아 it.alpha(1 보임·0 숨김)·it.y(옮긴 자리)·it.oy(원래)·it.lead(줄 그을지) 를 채운다.
+   *  순서 = keep(퀘스트 대상) > pri 높은 것 > 가까운 것. pri ≥ o.stackPri(2) 이거나 keep 이면 위로 o.stack(3) 칸까지 올려 보고, 나머지는 제자리 하나만 — 겹치면 숨긴다
+   *  (옛 1만리 layoutLabels 는 누구나 4칸까지 올려 한 자리에 이름표 탑이 섰다). keep 은 끝까지 안 맞아도 제자리에 보인다 */
+  function labels(items, o) {
+    o = o || {};
+    var stackPri = o.stackPri === undefined ? 2 : o.stackPri, stack = o.stack || 3, gap = o.gap === undefined ? 2 : o.gap, placed = [], i, s, y;
+    var order = items.slice().sort(function (a, b) { return ((b.keep ? 1 : 0) - (a.keep ? 1 : 0)) || ((b.pri || 0) - (a.pri || 0)) || ((a.dist || 0) - (b.dist || 0)); });
+    for (i = 0; i < order.length; i++) {
+      var it = order[i], n = it.keep || (it.pri || 0) >= stackPri ? stack : 1, hit = function (q) { return Math.abs(q.x - it.x) * 2 < q.w + it.w && Math.abs(q.y - y) < (q.h + it.h) / 2; };
+      it.oy = it.oy === undefined ? it.y : it.oy; it.alpha = 0; it.lead = false;
+      for (s = 0; s < n && !it.alpha; s++) { y = it.oy - s * (it.h + gap); if (!placed.some(hit)) { it.y = y; it.alpha = 1; it.lead = s >= 2; placed.push(it); } }
+      if (!it.alpha && it.keep) { it.y = it.oy; it.alpha = 1; placed.push(it); }
+    }
+    return items;
+  }
+
   global.DG = global.DG || {};
   global.DG.mode2d = {
+    labels: labels,
     isCrea: isCrea, creaPool: creaPool, creaFit: creaFit, cell8: cell8,   // W-0129 몬스터 2D 시트
     drawSprite: drawSprite, drawKind: drawKind, hasKind: hasKind, spriteReady: function (id) { return !!spriteOf(id); },
     fillIso: fillIso,

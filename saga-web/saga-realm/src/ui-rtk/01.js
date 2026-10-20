@@ -217,8 +217,8 @@
    *  쥔 동안 매 프레임 불러도 가볍다) */
   function labelZ() { return Math.pow(mapZoom, -0.6).toFixed(3); } function applyMapViewNow() {   // labelZ — W-0106 성 이름 글자가 확대해도 지도만큼 커지지 않게(겹침)
     var svg = els.realm && els.realm.querySelector('.rmap');
-    if (svg) { svg.setAttribute('viewBox', mapViewBox()); svg.style.setProperty('--lz', labelZ()); }
-  }
+    if (svg) { svg.setAttribute('viewBox', mapViewBox()); svg.style.setProperty('--lz', labelZ()); declutterLabels(svg); }
+  }  function declutterLabels(svg) { var M2 = global.DG.mode2d, ls = svg && svg.querySelectorAll ? svg.querySelectorAll('.rlab') : [], list = [], i, fs; if (!M2 || !M2.labels || !ls.length) { return; } try { fs = parseFloat(global.getComputedStyle(ls[0]).fontSize); } catch (e) { fs = 0; } fs = fs > 0 ? fs : 2.5 * +labelZ(); if (svg.__labFs === fs && svg.__labN === ls.length) { return; } svg.__labFs = fs; svg.__labN = ls.length; for (i = 0; i < ls.length; i++) { var el = ls[i], t = el.textContent || ''; list.push({ el: el, x: +el.getAttribute('x'), y: +el.getAttribute('y'), w: (t.length + 0.4) * fs, h: fs * 1.15, pri: +(el.getAttribute('data-p') || 0), keep: el.getAttribute('data-m') === '1', dist: 0 }); } M2.labels(list, { stack: 1, gap: 0 }); for (i = 0; i < list.length; i++) { list[i].el.classList.toggle('rlab-off', !list[i].alpha); } }   // W-0348 성 이름 겹침 — 글자 크기(SVG 단위) 바뀔 때만 이름 상자를 어림해 공용 labels(), 겹친 작은 성 이름 숨김 · 내 성 늘 보임 · 쌓지 않음(이름이 성을 떠나면 헷갈린다)
   function panMapBy(dx, dy) {
     var w = MAP_VB.w / mapZoom, h = MAP_VB.h / mapZoom;
     mapCx += dx * w * MAP_PAN_SPEED;

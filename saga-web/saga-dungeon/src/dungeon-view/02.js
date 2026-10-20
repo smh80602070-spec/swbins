@@ -395,8 +395,9 @@
     /* 바닥에 떨어진 것의 이름 — 원작에서 물건은 **바닥에 이름으로 놓인다**.
        네모난 검은 쪽지에 등급색 글씨, 모서리는 각지게. 둥근 모서리를 주면
        그 순간 요즘 앱의 알림처럼 보인다. */
+    ctx.font = '600 11px ' + D2_FONT; for (i = 0; i < plates.length; i++) { plates[i].w = ctx.measureText(plates[i].text).width + 14; plates[i].h = 17; if (plates[i].pri === undefined) { plates[i].pri = 3; } } if (global.DG.mode2d && global.DG.mode2d.labels) { global.DG.mode2d.labels(plates, { stack: 6 }); }   // W-0348 바닥 물건·표식 이름(pri 3)은 위로 쌓고(디아블로식), 먼 사람 그림표는 겹치면 숨김
     for (i = 0; i < plates.length; i++) {
-      var pl = plates[i];
+      var pl = plates[i]; if (pl.alpha === 0) { continue; }
       ctx.font = '600 11px ' + D2_FONT;
       var tw = ctx.measureText(pl.text).width;
       ctx.fillStyle = 'rgba(0,0,0,0.80)';
@@ -535,7 +536,7 @@
     /* 멀면 **무슨 일을 하는 사람인지**만(그림 하나), 다가서면 이름까지.
        아홉을 다 이름으로 띄우면 폰에서 글자가 겹쳐 죄다 못 읽는다. */
     plates.push({ x: p.x, y: p.y - 44 * z,
-      text: near ? (o.emoji + ' ' + o.name) : o.emoji, color: '#e6d3a6' });
+      text: near ? (o.emoji + ' ' + o.name) : o.emoji, color: '#e6d3a6', pri: near ? 2 : 0, dist: near ? 0 : 1 });   // W-0348 먼 그림표는 겹치면 숨김
     gesturePlate(plates, o.key, p.x, p.y - 60 * z, true);
   }
 
@@ -543,7 +544,7 @@
   function gesturePlate(plates, key, x, y, npc) {
     var GS = global.DG.gesture;
     var g = GS ? GS.plan(key, Date.now() / 1000, 'idle', npc) : null;
-    if (g && g.text) { plates.push({ x: x, y: y - g.k * 6, text: g.text, color: '#ffe8a8' }); }
+    if (g && g.text) { plates.push({ x: x, y: y - g.k * 6, text: g.text, color: '#ffe8a8', pri: 1 }); }   // W-0348 몸짓 글자는 쌓지 않음
   }
 
   /**
