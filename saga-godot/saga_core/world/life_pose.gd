@@ -10,6 +10,8 @@ extends SkeletonModifier3D
 ## 부르는 법: play(이름) · set_rest(on) · tick_still(dt, still)(SIT_AFTER 초 가만히 → 앉기, SAGA_SIT_AFTER 로 바꿈) ·
 ##   set_auto_idle(on, seed)(주민 — 0.5초에 한 번 카메라 25m 안이면 3~5초마다 look/shift) · look_at_target(Node3D)(목 ±60°·0.5초에 90%).
 ## 섞기 0.25초. 탈것 자세(seat_pose)가 켜져 있으면 아무것도 안 한다. 할 일이 없으면 _process_modification 이 바로 돌아간다.
+## G-0266 — 사람(NPC) 한 줄 연결: attach_npc(몸, seed)(+talk_face) · greet(나)(나를 봄 + 인사) · talk_for(초)(손짓·끄덕임) ·
+##   set_hold(on)(이동·공격·쓰러짐 동안 몸짓 0 — 전술판).
 
 const SIT_AFTER := 8.0
 const BLEND_T := 0.25
@@ -61,6 +63,9 @@ var _clock := 0.0
 var _look_target: Node3D = null
 var _look_yaw := 0.0
 var _seat: Node = null
+var _face: Node = null   # attach_npc 가 붙인 talk_face
+var _talk_left := 0.0
+var _hold := false
 var _rng := RandomNumberGenerator.new()
 
 static func _find(skel: Skeleton3D, names: Array) -> int:
@@ -90,6 +95,17 @@ static func attach(body: Node) -> Node:
 	lp.call("_init_bones", skel)
 	return lp
 
+## 사람(NPC) 몸에 생활 몸짓 + 말할 때 손짓(talk_face)을 함께 붙인다. auto = 카메라 25m 안이면 3~5초마다 둘러보기·체중.
+static func attach_npc(body: Node, seed_value: int, auto := true) -> Node:
+	var lp: Node = attach(body)
+	if lp == null:
+		return null
+	if auto:
+		lp.call("set_auto_idle", true, seed_value)
+	if lp.get("_face") == null:
+		lp.set("_face", (load("res://saga_core/world/talk_face.gd") as GDScript).call("attach", body))
+	return lp
+
 func _init_bones(skel: Skeleton3D) -> void:
 	influence = 1.0   # 세기는 몸짓마다 안에서 섞는다
 	for k in ["hips", "spine", "chest", "neck", "head"]:
@@ -117,7 +133,7 @@ func _init_bones(skel: Skeleton3D) -> void:
 # ── 부르는 쪽 ─────────────────────────────────────────
 
 func play(pose_name: String) -> void:
-	if not DUR.has(pose_name):
+	if not DUR.has(pose_name) or _hold:
 		return
 	_act = pose_name
 	_act_t = 0.0
@@ -165,6 +181,33 @@ func set_auto_idle(on: bool, seed_value: int = 0) -> void:
 func look_at_target(t: Node3D) -> void:
 	_look_target = t
 
+## 다가온 이를 보고 손 한 번.
+func greet(t: Node3D) -> void:
+	look_at_target(t)
+	if not _hold:
+		play("wave")
+
+## sec 초 동안 말하는 손짓·끄덕임(attach_npc 로 붙인 talk_face).
+func talk_for(sec: float) -> void:
+	if _face == null or not is_instance_valid(_face):
+		return
+	_face.call("set_talking", true)
+	_talk_left = sec
+
+func is_talking() -> bool:
+	return _face != null and is_instance_valid(_face) and bool(_face.call("is_talking"))
+
+## 이동·공격·쓰러짐 동안 몸짓을 바로 0 으로(전술판). 풀면 다음 차례부터 다시.
+func set_hold(on: bool) -> void:
+	_hold = on
+	if on:
+		_act = ""
+		_rest = false
+		_sit_w = 0.0
+
+func is_held() -> bool:
+	return _hold
+
 func sit_weight() -> float:
 	return _sit_w
 
@@ -174,6 +217,10 @@ func _process(delta: float) -> void:
 ## 시계·섞기(점검은 이걸 직접 부른다).
 func step(delta: float) -> void:
 	_clock += delta
+	if _talk_left > 0.0:
+		_talk_left -= delta
+		if _talk_left <= 0.0 and _face != null and is_instance_valid(_face):
+			_face.call("set_talking", false)
 	var k := delta / BLEND_T
 	_sit_w = move_toward(_sit_w, 1.0 if _rest and not _seated() else 0.0, k)
 	if _act != "":
@@ -184,7 +231,7 @@ func step(delta: float) -> void:
 		_check_t += delta
 		if _check_t >= CHECK_SEC:
 			_check_t = 0.0
-			if _act == "" and not _rest and _clock >= _idle_next and _near_camera():
+			if _act == "" and not _rest and not _hold and _clock >= _idle_next and _near_camera():
 				play("look" if _rng.randf() < 0.5 else "shift")
 				_idle_next = _clock + float(DUR[_act]) + _rng.randf_range(IDLE_MIN, IDLE_MAX)
 	var want := 0.0
@@ -226,7 +273,7 @@ func _yaw_to(p: Vector3) -> float:
 
 func _process_modification() -> void:
 	var skel := get_skeleton()
-	if skel == null:
+	if skel == null or _hold:
 		return
 	if _sit_w < 0.001 and _act == "" and absf(_look_yaw) < 0.05:
 		return

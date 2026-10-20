@@ -3,6 +3,10 @@ extends SceneTree
 ## dex 몸 둘에 saga_core/world/life_pose.gd 를 붙이고(뼈대 손 갱신 Manual) 자세마다 뼈 위치를 잰다 — 값은 선 몸 머리 높이를 1 로 둔 비율.
 ##   웹 pose3d.js EXPECT 와 같은 기준: sit 엉덩이 < 0.35 · wave 오른손 > 머리·앞으로 안 뻗음 |앞| < 0.15·몸 오른쪽 > 0.1 ·
 ##   look/shift 두 손 < 0.75 · 가만히 8초 → sit · 움직이면 0.3초 안 sit 세기 0 · 두 번 붙여도 같은 노드.
+## 둘째 절(G-0266 연결 한 줄 = 점검 한 줄) — 판 코드를 실제로 불러 몸짓이 켜졌는지:
+##   1만리 npc_builder._on_body_entered → 주민 wave · 4종횡 story_talk_npc._on_range_entered → wave ·
+##   4종횡 StoryPlayer._walk(입력 없음·땅) → 앉기(sit 세기 > 0.5) · 5천하 전술판 _select → 말하는 손짓 ·
+##   _play(attack) → 몸짓 멈춤(hold)·idle 이면 풂 · idle_tick → 쉬는 장수 둘러보기/체중. 진짜 세이브는 안 쓴다(메모리만).
 
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const LifePose := preload("res://saga_core/world/life_pose.gd")
@@ -75,6 +79,7 @@ func _run() -> void:
 			lp.call("step", float(LifePose.DUR[pn]))
 		_check(String(lp.call("current")) == "", "%s 몸짓 끝나면 쉼" % id)
 		v.free()
+	await _wiring()
 	print("PROBE life_pose ", "OK" if fails == 0 else "FAIL %d" % fails)
 	quit(1 if fails > 0 else 0)
 
@@ -105,3 +110,78 @@ func _pose(ap: AnimationPlayer, skel: Skeleton3D, b: Dictionary, head_h: float, 
 		for k in b:
 			out[k] = {"y": 0.0, "fwd": 0.0, "side": 0.0}
 	return out
+
+
+const REALM_STATS := {"sg_xiahoudun": {"might": 90, "wisdom": 50, "command": 80}, "sg_zhangliao": {"might": 85, "wisdom": 60, "command": 80}}
+
+
+func _wiring() -> void:
+	var stage := Node3D.new()
+	root.add_child(stage)
+	current_scene = stage
+	var me := CharacterBody3D.new()
+	me.add_to_group("player")
+	stage.add_child(me)
+	## 1만리 마을 사람
+	var nb := Node3D.new()
+	nb.set_script(load("res://games/saga_go/world/npc_builder.gd"))
+	stage.add_child(nb)
+	var v: Dictionary = nb.get("VILLAGERS")[0]
+	nb.call("_on_body_entered", me, v)
+	var lp: Node = (nb.get("lifes") as Dictionary).get(v.id)
+	_check(lp != null and String(lp.call("current")) == "wave", "1만리 주민 %s 다가오면 인사(%s)" % [v.id, lp.call("current") if lp != null else "없음"])
+	## 4종횡 말 거는 사람
+	var tn := Node3D.new()
+	tn.set_script(load("res://games/saga_story/world/story_talk_npc.gd"))
+	stage.add_child(tn)
+	tn.call("_on_range_entered", me)
+	var tl: Node = tn.get("_life")
+	_check(tl != null and String(tl.call("current")) == "wave", "4종횡 말 거는 사람 다가오면 인사")
+	## 4종횡 나 — 땅 위 입력 없음 → 앉기
+	var floor_body := StaticBody3D.new()
+	var cs := CollisionShape3D.new()
+	var box := BoxShape3D.new()
+	box.size = Vector3(40, 1, 40)
+	cs.shape = box
+	floor_body.add_child(cs)
+	floor_body.position = Vector3(100, -0.5, 0)
+	stage.add_child(floor_body)
+	var p: CharacterBody3D = (load("res://games/saga_story/player/StoryPlayer.tscn") as PackedScene).instantiate()
+	stage.add_child(p)
+	p.set_physics_process(false)
+	p.set_process(false)
+	p.global_position = Vector3(100, 0.02, 0)
+	await physics_frame
+	var pl: Node = p.get("_life")
+	if pl != null:
+		pl.set("sit_after", 0.1)
+		for i in 20:
+			p.call("_walk", 1.0 / 60.0)
+			p.move_and_slide()
+		pl.call("step", 0.3)
+	_check(pl != null and bool(pl.call("is_resting")) and float(pl.call("sit_weight")) > 0.5, "4종횡 나 가만히 → 앉기(sit %.2f · 땅 %s)" % [float(pl.call("sit_weight")) if pl != null else -1.0, p.is_on_floor()])
+	## 5천하 전술판
+	var View: GDScript = load("res://games/saga_realm/world/realm_tactics_view.gd")
+	var T: GDScript = load("res://games/saga_realm/data/realm_tactics.gd")
+	var b: Dictionary = T.make_board("g-0266", "plain", false)
+	T.units_of(b, ["sg_xiahoudun"], ["sg_zhangliao"], [800], REALM_STATS)
+	var view: Node = View.open(stage, "x", {"board": b, "mine": ["sg_xiahoudun"]}, func(_g: Dictionary) -> void: pass, false)
+	await process_frame
+	var uid := "me:sg_xiahoudun"
+	var rl: Node = (view.get("_units") as Dictionary)[uid].get("life")
+	view.call("_select", uid)
+	_check(rl != null and bool(rl.call("is_talking")), "5천하 장수 고르면 명 받음 손짓")
+	view.call("_play", uid, "attack")
+	var held: bool = rl != null and bool(rl.call("is_held"))
+	view.call("_play", uid, "idle")
+	_check(held and not bool(rl.call("is_held")), "5천하 공격 중 몸짓 멈춤 · idle 이면 풂")
+	view.call("idle_tick", 10.0)
+	var any := false
+	for k in view.get("_units"):
+		var l: Node = (view.get("_units") as Dictionary)[k].get("life")
+		any = any or (l != null and ["look", "shift"].has(String(l.call("current"))))
+	_check(any, "5천하 대기 장수 둘러보기·체중(타이머 하나)")
+	view.call("_on_cancel")
+	await process_frame
+	stage.queue_free()
+	await process_frame

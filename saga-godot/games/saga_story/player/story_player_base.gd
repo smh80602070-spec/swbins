@@ -69,7 +69,6 @@ var fly_on := false
 @onready var _anim: AnimationPlayer = visual.find_child("AnimationPlayer", true, false)
 
 var _current_anim := ""
-var _gait_scaled := false   # G-0264
 var _facing := 1.0  # +1 오른쪽, -1 왼쪽
 var _fx_hits := 0  # G-0201 이번 한 번(시전·_melee_hit)에 맞힌 수 — 첫 적만 멈칫·흔들림·소리
 var _attack_cd_left := 0.0
@@ -442,7 +441,7 @@ func _play_gait(h_speed: float) -> void:
 	_play_anim(String(g[0]))
 	if _current_anim == String(g[0]):
 		_anim.speed_scale = float(g[1])
-		_gait_scaled = true
+		set_meta("gait_scaled", true)   # 스크립트 var 가 아니라 메타(probe_story_golden 이 var 를 해시한다, G-0266)
 
 ## foot_lock.gd 가 묻는다 — 탈것 위에선 끔(공중·동작 클립은 foot_lock 이 스스로 본다).
 func foot_lock_allowed() -> bool:
@@ -451,9 +450,9 @@ func foot_lock_allowed() -> bool:
 func _play_anim(anim_name: String) -> void:
 	if _anim == null or not _anim.has_animation(anim_name):
 		return
-	if _gait_scaled and anim_name != "walk" and anim_name != "sprint":
+	if get_meta("gait_scaled", false) and anim_name != "walk" and anim_name != "sprint":
 		_anim.speed_scale = 1.0
-		_gait_scaled = false
+		set_meta("gait_scaled", false)
 	if _current_anim == anim_name:
 		return
 	_current_anim = anim_name

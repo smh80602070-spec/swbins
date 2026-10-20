@@ -4855,7 +4855,7 @@
  },
  {
   "id": "gd.core.life-pose",
-  "name": "생활 몸짓(공용) — life_pose.gd: 가만히 8초면 땅에 무릎 세워 앉기·3~5초마다 둘러보기·체중 옮기기·다가오면 인사·나를 봄(목 ±60°), talk_face 를 saga_core 로 옮겨 말할 때 손짓. 3마을 나·주민·동반자·손님, 2나락 나·영웅",
+  "name": "생활 몸짓(다섯 판 공용) — life_pose.gd: 가만히 8초면 땅에 무릎 세워 앉기·3~5초마다 둘러보기·체중 옮기기·다가오면 인사·나를 봄(목 ±60°)·말할 때 손짓(talk_face, saga_core). 1만리 나·마을 사람, 2나락 나·영웅, 3마을 나·주민·동반자·손님, 4종횡 나·말 거는 사람·훈련관·상인, 5천하 전술판 장수 대기·명 받음",
   "files": [
    "saga_core/world/life_pose.gd",
    "saga_core/world/talk_face.gd",
@@ -4864,17 +4864,26 @@
    "games/saga_forest/world/forest_house.gd",
    "games/saga_forest/world/forest_lots_view.gd",
    "games/saga_dungeon/world/dungeon_hero_encounter.gd",
-   "tools/probe_life_pose.gd"
+   "tools/probe_life_pose.gd",
+   "games/saga_go/player/go_player.gd",
+   "games/saga_go/world/npc_builder.gd",
+   "games/saga_story/player/story_player.gd",
+   "games/saga_story/world/story_talk_npc.gd",
+   "games/saga_story/world/story_job_trainer.gd",
+   "games/saga_story/world/story_merchant.gd",
+   "games/saga_realm/world/realm_tactics_view.gd"
   ],
   "tests": [
    "life_pose",
-   "gestures"
+   "gestures",
+   "story_golden",
+   "realm_tactics"
   ],
   "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": "G-0265",
+  "ticket": "G-0265·G-0266",
   "since": "2026-10-20",
-  "note": "SAGA_SIT_AFTER 로 앉기 초(기본 8) · 섞기 0.25초 · 주민은 0.5초 한 번·카메라 25m 안만 · 탈것(seat_pose)이면 끔 · 1만리는 G-0266"
+  "note": "SAGA_SIT_AFTER 로 앉기 초(기본 8) · 섞기 0.25초 · 사람은 attach_npc(0.5초 한 번·카메라 25m 안만) · 전술판은 타이머 하나·이동/공격/쓰러짐 동안 set_hold · 탈것(seat_pose)이면 끔 · probe_life_pose 둘째 절이 판 함수를 실제로 부름"
  }
 ]

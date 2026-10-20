@@ -239,6 +239,8 @@ func _physics_process(delta: float) -> void:
 		Mode.SWIM: _tick_swim(delta, move_dir)
 		Mode.MANTLE: _tick_mantle(delta)
 		Mode.FLY: _tick_fly(delta, move_dir)
+	## G-0266 쉬면 앉기 — 땅·멈춤·탈것 아님·동작 없음·아무 키도 안 누름. 활공·오르기·헤엄·날기면 일어남.
+	_tick_life(delta, mode == Mode.GROUND and move_dir.length() <= 0.05 and is_on_floor() and not mounted and _action_t <= 0.0 and not Input.is_anything_pressed())
 
 	_tick_stamina(delta)
 	_apply_pose(delta)
@@ -731,10 +733,6 @@ func play_action(anim_name: String, dur: float, move_scale: float) -> void:
 		_anim.play(anim_name)
 		_anim.seek(start, true)
 		_current_anim = anim_name
-
-## G-0265 — 1만리 생활 몸짓은 G-0266 에서 잇는다.
-func _life_pose_on() -> bool:
-	return false
 
 ## G-0264 — 발 잠금은 땅에서만(활공·오르기·수영·짚고 넘기·날기·동작 중엔 끔).
 func foot_lock_allowed() -> bool:

@@ -39,6 +39,9 @@ const CAM_DIST := 17.0
 const CAM_NEAR := 12.0
 const STEP_SEC := 0.25   # 칸 하나 걷기
 const FootLock := preload("res://saga_core/player/foot_lock.gd")   # G-0264 걸음새(전술판은 IK 없이 빠르기만)
+const LifePose := preload("res://saga_core/world/life_pose.gd")   # G-0266 장수 대기 몸짓·명 받음
+const IDLE_CHECK := 0.5     # 대기 몸짓 고르기 간격(타이머 하나)
+const IDLE_GAP := [4.0, 6.0]   # 장수마다 다음 둘러보기·체중까지
 const SWING_SEC := 0.4
 const END_SEC := 1.4
 
@@ -71,6 +74,8 @@ const SHIELD_FULL := Color(0.55, 0.82, 1.0, 0.95)
 var _shields: Array = []   # 지금 떠 있는 방패 노드
 var _auto_mode := false
 var cut_count := 0         # 점검용 — 컷을 몇 번 했나
+var _idle_t := 0.0          # G-0266 대기 몸짓 타이머(하나)
+var _idle_rng := RandomNumberGenerator.new()   # 규칙 난수와 따로(전술 결과 그대로)
 var _swing_n := 0          # G-0253 — 뷰 안 연타 셈(궤적 기울기 차례)
 
 
@@ -107,6 +112,7 @@ static func cell_center(x: int, y: int) -> Vector3:
 
 func _ready() -> void:
 	add_to_group("ui_modal")   # 이야기 카드(scenario_runner)·다른 창이 판 위로 안 뜨게
+	_idle_rng.seed = 20260824   # G-0266 대기 몸짓 차례(그림만)
 	_build_ground()
 	_build_cells()
 	_build_units()
@@ -273,7 +279,8 @@ func _build_units() -> void:
 		label.position = Vector3(0, 2.15 if String(u.kind) == "officer" else 1.75, 0)
 		root.add_child(label)
 		var aps := body.find_children("*", "AnimationPlayer", true, false)
-		_units[String(u.uid)] = {"node": root, "label": label, "ap": aps[0] if not aps.is_empty() else null, "hp": float(u.hp)}
+		_units[String(u.uid)] = {"node": root, "label": label, "ap": aps[0] if not aps.is_empty() else null, "hp": float(u.hp),
+			"life": LifePose.attach_npc(body, hash(String(u.uid)), false), "idle_at": _idle_rng.randf_range(IDLE_GAP[0], IDLE_GAP[1])}   # G-0266
 		_place(String(u.uid), int(u.x), int(u.y))
 		_face(String(u.uid), Vector3(1, 0, 0) if u.side == "me" else Vector3(-1, 0, 0))
 		_set_label(String(u.uid))
@@ -381,6 +388,7 @@ func _set_label(uid: String) -> void:
 
 
 func _play(uid: String, clip: String) -> void:
+	_hold(uid, clip != "idle")   # G-0266 — 걷기·공격·쓰러짐 동안 대기 몸짓 0
 	var ap: AnimationPlayer = _units[uid].ap
 	if ap != null and ap.has_animation(clip):
 		ap.speed_scale = 1.0
@@ -584,11 +592,46 @@ func pick_cell(x: int, y: int) -> void:
 
 func _select(uid: String) -> void:
 	_sel = uid
+	var lp: Node = _units[uid].get("life")
+	if lp != null:   # G-0266 — 명 받음(끄덕임·손짓 0.8초)
+		lp.call("talk_for", 0.8)
 	var n: Node3D = _units[uid].node
 	if not instant:
 		var tw := create_tween()
 		tw.tween_method(func(k: float) -> void: _aim_camera(ORIGIN.lerp(n.position, 0.35 * k), lerpf(CAM_DIST, CAM_NEAR, k)), 0.0, 1.0, 0.3)
 	_refresh()
+
+
+# ── 대기 몸짓(G-0266) ──────────────────────────────────
+
+func _hold(uid: String, on: bool) -> void:
+	var lp: Node = _units[uid].get("life") if _units.has(uid) else null
+	if lp != null and is_instance_valid(lp):
+		lp.call("set_hold", on)
+
+
+## 타이머 하나 — 0.5초에 한 번 판 위 장수(보이는 전원)를 훑어, 차례가 된 쉬는 장수에게 둘러보기·체중(4~6초마다).
+func _process(delta: float) -> void:
+	if instant or _closed:
+		return
+	_idle_t += delta
+	if _idle_t < IDLE_CHECK:
+		return
+	idle_tick(_idle_t)
+	_idle_t = 0.0
+
+
+func idle_tick(dt: float) -> void:
+	for uid in _units:
+		var u: Dictionary = _units[uid]
+		var lp: Node = u.get("life")
+		if lp == null or not is_instance_valid(lp) or not (u.node as Node3D).visible or float(u.hp) <= 0.0:
+			continue
+		u.idle_at = float(u.idle_at) - dt
+		if float(u.idle_at) > 0.0 or bool(lp.call("is_held")) or String(lp.call("current")) != "":
+			continue
+		lp.call("play", "look" if _idle_rng.randf() < 0.5 else "shift")
+		u.idle_at = _idle_rng.randf_range(IDLE_GAP[0], IDLE_GAP[1]) + 3.0
 
 
 # ── 연출 ────────────────────────────────────────────
@@ -635,6 +678,7 @@ func _anim_hit(entry: Dictionary) -> void:
 	var t := String(entry.to)
 	var an: Node3D = _units[a].node
 	var tn: Node3D = _units[t].node
+	_hold(t, true)   # G-0266 — 맞는 동안 몸짓 0
 	_face(a, tn.position - an.position)
 	var cut := cut_cam and not instant and not _auto_mode
 	var saved := _cam.global_transform
@@ -680,6 +724,8 @@ func _anim_hit(entry: Dictionary) -> void:
 	if cut:
 		await _wait(maxf(0.0, CUT_HOLD - SWING_SEC))
 		await _cut_to(saved, CUT_IN)
+	if float(_units[t].hp) > 0.0:
+		_hold(t, false)
 	if float(_units[t].hp) <= 0.0:
 		_play(t, "death")
 		var ap: AnimationPlayer = _units[t].ap

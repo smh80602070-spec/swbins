@@ -1,5 +1,7 @@
 extends "res://games/saga_story/player/story_skills_awaken.gd"   # G-0246 5차 각성기(class_name 없이 경로로 잇는다)
 
+const LifePose := preload("res://saga_core/world/life_pose.gd")   # G-0266 쉬면 앉기
+var _life: Node = null
 const StoryLook := preload("res://games/saga_story/data/story_look.gd")   # G-0187
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const Voice := preload("res://saga_core/audio/voice.gd")   # G-0111 대사 음성
@@ -71,6 +73,7 @@ func _ready() -> void:
 	for sk in visual.find_children("*", "Skeleton3D", true, false):   # G-0264 디딘 발 잠금(나만)
 		if FootLock.attach(sk as Skeleton3D) != null:
 			break
+	_life = LifePose.attach(visual)   # G-0266 — 가만히 8초 → 앉기(옆 보기라 몸 방향 그대로)
 	_play_anim("idle")
 	CelShaderApply.apply_to(visual)
 	## PLAN 102-4 — GO/DUNGEON/FOREST는 games/saga_go/player/player.gd를
@@ -534,6 +537,8 @@ func _walk(delta: float) -> void:
 			_play_gait(absf(velocity.x))   # G-0264 걸음새
 	else:
 		_play_anim("idle")
+	if _life != null and is_instance_valid(_life):   # G-0266 — 움직이면·공중·탈것·키 누름이면 일어남
+		_life.call("tick_still", delta, absf(axis) <= 0.05 and is_on_floor() and not mounted and not Input.is_anything_pressed())
 
 
 ## 웹판 §5-5 "회피를 대시로 재정의"(3D엔 회피 입력이 아예 없어 새 액션

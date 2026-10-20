@@ -28,6 +28,7 @@ extends Node3D
 
 const StoryNpcBody := preload("res://games/saga_story/world/story_npc_body.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
+const LifePose := preload("res://saga_core/world/life_pose.gd")   # G-0266 인사·둘러보기·말할 때 손짓
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const StoryCombat := preload("res://games/saga_story/data/story_combat.gd")
 
@@ -35,6 +36,7 @@ const BODY_COLOR := Color(0.72, 0.18, 0.2)  # 상인 — 다른 NPC 도입 전�
 const RANGE_RADIUS := 1.8
 
 var _player_in_range := false
+var _life: Node = null   # G-0266
 var _shop_open := false
 var _area: Area3D
 
@@ -46,7 +48,9 @@ func _ready() -> void:
 
 func _spawn_visual() -> void:
 	## 2026-09-30 — 색 캡슐 대신 VRoid 몸(story_npc_body.gd).
-	add_child(StoryNpcBody.build("merchant"))
+	var body := StoryNpcBody.build("merchant")
+	add_child(body)
+	_life = LifePose.attach_npc(body, hash("merchant"))
 
 
 func _spawn_area() -> void:
@@ -67,6 +71,8 @@ func _on_range_entered(body: Node3D) -> void:
 	if not body.is_in_group("player"):
 		return
 	_player_in_range = true
+	if _life != null:
+		_life.call("greet", body)
 	Toast.show(self, "🏪 상인 — K: 물목을 본다", 2.0)
 
 
@@ -74,6 +80,8 @@ func _on_range_exited(body: Node3D) -> void:
 	if not body.is_in_group("player"):
 		return
 	_player_in_range = false
+	if _life != null:
+		_life.call("look_at_target", null)
 
 
 ## story_player.gd `_physics_process()`와 같은 폴링 방식(Input.is_action_
@@ -156,6 +164,8 @@ func _open_shop() -> void:
 		})
 
 	_shop_open = true
+	if _life != null:
+		_life.call("talk_for", 1.6)
 	layer_box["layer"] = ChoicePrompt.build(get_tree().current_scene, "🏪 상인 — 무엇을 살까", choices)
 
 

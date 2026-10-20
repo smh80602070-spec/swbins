@@ -17,6 +17,7 @@ extends Node3D
 
 const StoryNpcBody := preload("res://games/saga_story/world/story_npc_body.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
+const LifePose := preload("res://saga_core/world/life_pose.gd")   # G-0266 인사·둘러보기·말할 때 손짓
 const StoryCombat := preload("res://games/saga_story/data/story_combat.gd")
 
 @export var npc_key: String = "guard"
@@ -24,6 +25,7 @@ const StoryCombat := preload("res://games/saga_story/data/story_combat.gd")
 const RANGE_RADIUS := 1.8
 
 var _player_in_range := false
+var _life: Node = null   # G-0266
 
 
 func _ready() -> void:
@@ -44,7 +46,9 @@ func _body_color() -> Color:
 
 func _spawn_visual() -> void:
 	## 2026-09-30 — 색 캡슐 대신 VRoid 몸(story_npc_body.gd).
-	add_child(StoryNpcBody.build(npc_key))
+	var body := StoryNpcBody.build(npc_key)
+	add_child(body)
+	_life = LifePose.attach_npc(body, hash(npc_key))
 
 
 func _spawn_area() -> void:
@@ -65,6 +69,8 @@ func _on_range_entered(body: Node3D) -> void:
 	if not body.is_in_group("player"):
 		return
 	_player_in_range = true
+	if _life != null:
+		_life.call("greet", body)
 	var d := _npc_def()
 	Toast.show(self, "%s %s — story_interact로 말을 건넨다" % [String(d.get("emoji", "")), String(d.get("name", npc_key))], 2.0)
 
@@ -73,6 +79,8 @@ func _on_range_exited(body: Node3D) -> void:
 	if not body.is_in_group("player"):
 		return
 	_player_in_range = false
+	if _life != null:
+		_life.call("look_at_target", null)
 
 
 ## story_merchant.gd·story_job_trainer.gd와 같은 폴링 방식. 말은 실제로
@@ -90,4 +98,6 @@ func _process(_delta: float) -> void:
 		return
 	var line: String = String(lines[randi() % lines.size()])
 	StorySaveState.add_talk()
+	if _life != null:
+		_life.call("talk_for", 2.0)
 	Toast.show(self, "%s %s: %s" % [String(d.get("emoji", "")), String(d.get("name", npc_key)), line], 3.0)

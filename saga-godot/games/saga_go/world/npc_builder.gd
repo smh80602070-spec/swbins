@@ -12,6 +12,7 @@ const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
+const LifePose := preload("res://saga_core/world/life_pose.gd")   # G-0266 둘러보기·체중·인사
 
 const TALK_RADIUS := 14.0
 const TALK_GAP_SEC := 45.0
@@ -64,6 +65,7 @@ const LINES := {
 var _last_said_ms := {}
 var _quest_prompt_by_id := {}
 var roots := {} # G-0240 주민 id → 몸 뿌리(길 행동 이끌기가 걷게 한다)
+var lifes := {} # G-0266 주민 id → LifePose(카메라 25m 안만 0.5초 한 번 골라 3~5초마다 둘러보기·체중)
 
 func _ready() -> void:
 	for v in VILLAGERS:
@@ -84,6 +86,9 @@ func _spawn(v: Dictionary) -> void:
 	root.add_child(body)
 	if not body.has_meta("cel_applied"):
 		CelShaderApply.apply_to(body)
+	var lp: Node = LifePose.attach_npc(body, hash(String(v.id)))
+	if lp != null:
+		lifes[v.id] = lp
 
 	var area := Area3D.new()
 	area.name = "TalkArea"
@@ -95,6 +100,7 @@ func _spawn(v: Dictionary) -> void:
 	area.add_child(cs)
 	root.add_child(area)
 	area.body_entered.connect(_on_body_entered.bind(v))
+	area.body_exited.connect(_on_body_exited.bind(v))
 
 	if v.has("quest_id"):
 		_quest_prompt_by_id[v.id] = _build_quest_prompt(v)
@@ -112,6 +118,8 @@ func _on_body_entered(body: Node3D, v: Dictionary) -> void:
 	if not body.is_in_group("player"):
 		return
 	CodexState.discover("people", v.id)
+	if lifes.has(v.id):   # G-0266 — 다가오면 나를 보고 손 한 번
+		(lifes[v.id] as Node).call("greet", body)
 	var now := Time.get_ticks_msec()
 	var last: int = _last_said_ms.get(v.id, -TALK_GAP_SEC * 1000.0 as int)
 	if now - last < TALK_GAP_SEC * 1000.0:
@@ -131,6 +139,10 @@ func _on_body_entered(body: Node3D, v: Dictionary) -> void:
 		_show_offer_prompt(v)
 		return
 	_say(v.name, _pick_line(v))
+
+func _on_body_exited(body: Node3D, v: Dictionary) -> void:
+	if body.is_in_group("player") and lifes.has(v.id):
+		(lifes[v.id] as Node).call("look_at_target", null)
 
 ## 웹판 js/npc.js say()와 같은 규칙 — 비/눈이면 rain 줄, 아니면 밤/낮 줄,
 ## 그것도 없으면 v.line(고정 한 줄)으로 되돈다(LINES에 없는 role도 안전).
