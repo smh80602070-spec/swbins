@@ -20,6 +20,7 @@ uniform float warm : hint_range(0.0, 1.0) = 0.0;     // 새벽·노을(sky_panor
 uniform float sun_size = 0.026;
 uniform float sun_strength = 6.0;
 uniform float stars : hint_range(0.0, 1.0) = 0.0;
+uniform float gray : hint_range(0.0, 1.0) = 0.0;     // G-0258 안개·비 회색 섞기(weather_visual 이 넣음, 기본 0 = 맑음·1만리 그대로)
 uniform sampler2D pano_a : source_color, filter_linear, repeat_enable;
 uniform sampler2D pano_b : source_color, filter_linear, repeat_enable;
 uniform float pano_mix : hint_range(0.0, 1.0) = 0.0;
@@ -118,6 +119,7 @@ void sky() {
 				col = mix(col, cc, den * haze * 0.96);
 			}
 		}
+		col = mix(col, vec3(dot(col, vec3(0.299, 0.587, 0.114))), gray);   // 해·별·구름 다 더한 뒤 — 구름 틈·천정·지평선 한 번에 탈색
 		COLOR = col * mix(1.0, 0.82, warm);
 	}
 }

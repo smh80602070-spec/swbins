@@ -54,7 +54,7 @@ func _unload(scene: Node) -> void:
 
 
 func _vals(scene: Node) -> Dictionary:
-	var d := {"fog": -1.0, "cloud": -1.0, "sun": -1.0, "top": -1.0, "glow": -1.0}
+	var d := {"fog": -1.0, "cloud": -1.0, "sun": -1.0, "top": -1.0, "glow": -1.0, "gray": -1.0}
 	var we := scene.get_node_or_null("WorldEnvironment") as WorldEnvironment
 	if we and we.environment:
 		d.fog = we.environment.fog_density
@@ -67,6 +67,8 @@ func _vals(scene: Node) -> Dictionary:
 			d.top = tcc.r + tcc.g + tcc.b
 			var g = sm.get_shader_parameter("sun_strength")
 			d.glow = float(g) if g != null else 6.0
+			var gr = sm.get_shader_parameter("gray")   # G-0258 회색 섞기
+			d.gray = float(gr) if gr != null else 0.0
 	var sun := scene.get_node_or_null("Sun") as DirectionalLight3D
 	if sun:
 		d.sun = sun.light_energy
@@ -118,7 +120,7 @@ func _run() -> void:
 				await _unload(scene)
 				continue
 			var v := _vals(scene)
-			var info := "fog=%.4f cloud=%.2f sun=%.2f top=%.3f glow=%.2f" % [v.fog, v.cloud, v.sun, v.top, v.glow]
+			var info := "fog=%.4f cloud=%.2f sun=%.2f top=%.3f glow=%.2f gray=%.2f" % [v.fog, v.cloud, v.sun, v.top, v.glow, v.gray]
 			var bad: Array[String] = []
 			if String(wv.key) != w:
 				bad.append("key=%s" % wv.key)
@@ -126,6 +128,8 @@ func _run() -> void:
 				clear = v
 				if _fall(wv, "Rainfall") or _fall(wv, "Snowfall"):
 					bad.append("맑은데 입자")
+				if not is_zero_approx(float(v.gray)):
+					bad.append("맑은데 gray != 0")   # G-0258 — 회귀 그대로
 			if w == "rain":
 				if not float(v.fog) >= float(clear.get("fog", 1e9)) * 2.0:
 					bad.append("안개 밀도 < 맑음×2")
@@ -140,10 +144,14 @@ func _run() -> void:
 					bad.append("하늘 천정 밝기 ≥ 맑음×0.75")
 				if not float(v.glow) < float(clear.get("glow", -1.0)) * 0.2:
 					bad.append("해 빛무리 ≥ 맑음×0.2")
+				if not float(v.gray) >= 0.5:
+					bad.append("gray < 0.5")   # G-0258 — 구름 틈 파란 기
 			if w == "snow" and not _fall(wv, "Snowfall"):
 				bad.append("Snowfall 없음")
 			if w == "fog" and not float(v.fog) >= float(clear.get("fog", 1e9)) * 4.0 * 0.999:
 				bad.append("안개 밀도 < 맑음×4")
+			if w == "fog" and not float(v.gray) >= 0.7:
+				bad.append("gray < 0.7")   # G-0258
 			if bad.is_empty():
 				print("WEATHER %s %s ok %s" % [label, w, info])
 			else:

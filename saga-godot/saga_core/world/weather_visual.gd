@@ -15,14 +15,15 @@ const CHECK_SEC := 60.0
 const SPAN_MS := 3 * 60 * 60 * 1000   # weather.gd SPAN_MS
 ## fog = 1만리 Weather.KINDS.fog_density_mul · tint = KINDS.tint(안개색에 곱 — day_light 가 넣는다)
 ## cloud = sky_panorama.CLOUD_COVER(fog·snow 는 이 표가 정함) · sun = 해 세기 배율(day_light 가 곱한다)
+## G-0258 gray = sky_real 회색 섞기(0~1 — 곱만으론 구름 틈·천정 파란 기가 남았다). 맑음·바람 0.
 ## G-0256 sky = 하늘색 배율(천정·지평선·구름 — day_light 가 곱한다) · sun_glow = sky_real sun_strength(해 빛무리) 배율(이 노드가 곱한다). 맑음·바람 1 = 회귀 그대로.
 const KINDS := {
-	"clear": {"fog": 0.6, "tint": Color(1.05, 1.03, 0.95), "cloud": 0.32, "sun": 1.0, "sky": Color(1, 1, 1), "sun_glow": 1.0},
-	"cloud": {"fog": 1.0, "tint": Color(0.95, 0.96, 1.0), "cloud": 0.72, "sun": 0.85, "sky": Color(0.80, 0.82, 0.86), "sun_glow": 0.5},
-	"rain": {"fog": 1.6, "tint": Color(0.85, 0.9, 1.0), "cloud": 0.9, "sun": 0.75, "sky": Color(0.62, 0.60, 0.55), "sun_glow": 0.1},
-	"wind": {"fog": 0.8, "tint": Color(1.0, 1.0, 1.0), "cloud": 0.5, "sun": 1.0, "sky": Color(1, 1, 1), "sun_glow": 1.0},
-	"fog": {"fog": 2.4, "tint": Color(0.9, 0.9, 0.92), "cloud": 0.95, "sun": 0.75, "sky": Color(0.86, 0.82, 0.72), "sun_glow": 0.15},
-	"snow": {"fog": 1.2, "tint": Color(1.02, 1.02, 1.08), "cloud": 0.6, "sun": 0.85, "sky": Color(0.85, 0.86, 0.90), "sun_glow": 0.4},
+	"clear": {"fog": 0.6, "tint": Color(1.05, 1.03, 0.95), "cloud": 0.32, "sun": 1.0, "sky": Color(1, 1, 1), "sun_glow": 1.0, "gray": 0.0},
+	"cloud": {"fog": 1.0, "tint": Color(0.95, 0.96, 1.0), "cloud": 0.72, "sun": 0.85, "sky": Color(0.80, 0.82, 0.86), "sun_glow": 0.5, "gray": 0.35},
+	"rain": {"fog": 1.6, "tint": Color(0.85, 0.9, 1.0), "cloud": 0.9, "sun": 0.75, "sky": Color(0.62, 0.60, 0.55), "sun_glow": 0.1, "gray": 0.72},
+	"wind": {"fog": 0.8, "tint": Color(1.0, 1.0, 1.0), "cloud": 0.5, "sun": 1.0, "sky": Color(1, 1, 1), "sun_glow": 1.0, "gray": 0.0},
+	"fog": {"fog": 2.4, "tint": Color(0.9, 0.9, 0.92), "cloud": 0.95, "sun": 0.75, "sky": Color(0.86, 0.82, 0.72), "sun_glow": 0.15, "gray": 0.75},
+	"snow": {"fog": 1.2, "tint": Color(1.02, 1.02, 1.08), "cloud": 0.6, "sun": 0.85, "sky": Color(0.85, 0.86, 0.90), "sun_glow": 0.4, "gray": 0.45},
 }
 ## 손보기 — 세 판 바탕 안개가 0.004 라 곱만으론 안개·비가 옅었다(3마을·전술판 컷). 곱한 뒤 더하는 최소 밀도(맑음·흐림·바람 0 = 회귀 그대로).
 const FOG_ADD := {"clear": 0.0, "cloud": 0.0, "rain": 0.006, "wind": 0.0, "fog": 0.016, "snow": 0.004}
@@ -143,6 +144,8 @@ func refresh_now() -> void:
 			if _base.has("sun_glow"):
 				(_env.sky.sky_material as ShaderMaterial).set_shader_parameter("sun_strength", float(_base.sun_glow) * float(k.sun_glow))
 				last["sun_glow"] = float(k.sun_glow)
+				(_env.sky.sky_material as ShaderMaterial).set_shader_parameter("gray", float(k.gray))   # G-0258
+				last["gray"] = float(k.gray)
 	var dl := get_parent().get_node_or_null("DayLight")
 	if dl:
 		dl.weather_tint = k.tint
