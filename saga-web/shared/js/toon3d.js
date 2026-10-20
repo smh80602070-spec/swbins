@@ -31,6 +31,7 @@
   function three() { if (!T) { T = global.THREE || null; } return T; }
 
   var OUTLINE_COLOR = 0x14120f;
+  function LK(k, d) { var L = global.DG && global.DG.look3d, v = L && L.val ? L.val(k) : null; return v === undefined || v === null ? d : v; }   // W-0339 한 벌 표(shared/js/look3d.js) — 실릴 차례가 판마다 달라 쓰는 순간에 읽는다
 
   /* 램프·툰/림 손잡이·림 라이트는 shared/js/toon3d-core.js (W-0019) */
   var K = global.DG.toon3dCore;
@@ -115,7 +116,7 @@
     var m = new t.ShaderMaterial({
       uniforms: t.UniformsUtils.merge([t.UniformsLib.fog, {
         outlineWidth: { value: width },
-        outlineColor: { value: new t.Color(OUTLINE_COLOR) }
+        outlineColor: { value: new t.Color(LK('outline', { color: OUTLINE_COLOR }).color) }
       }]),
       fog: true,
       vertexShader: vert,

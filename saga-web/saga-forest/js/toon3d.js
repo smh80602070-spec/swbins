@@ -72,7 +72,8 @@
     return new t.MeshToonMaterial(o);
   }
 
-  var OUTLINE_COLOR = 0x211a14;
+  var OUTLINE_COLOR = 0x211a14;   // 옛 3마을 갈색 — W-0339 부터는 한 벌 표(look3d)의 색이 먼저(표가 없을 때만 이 값)
+  function LK(k, d) { var L = global.DG && global.DG.look3d, v = L && L.val ? L.val(k) : null; return v === undefined || v === null ? d : v; }   // W-0339 한 벌 표(shared/js/look3d.js) — 실릴 차례가 판마다 달라 쓰는 순간에 읽는다
   var OUTLINE_K = 0.02;          // 모델에서 가장 큰 부품 반지름의 2% — 사가종횡 1.5%·사가나락 3% 사이(이 판은 3/4 부감으로 인물이 그 중간 크기)
   var OUTLINE_MIN_PART = 0.12;   // 이보다 작은 부품(눈·이빨)은 안 두른다 — 검은 점이 된다
   /* 2026-09-23 — 외곽선 재질을 "메시 배율 1.045 부풀리기"에서 **법선 방향 밀기 셰이더**로 바꿨다(사가종횡
@@ -108,7 +109,7 @@
       'void main() { gl_FragColor = vec4(outlineColor, 1.0); }'
     ].join('\n');
     matPool[key] = new t.ShaderMaterial({
-      uniforms: { outlineWidth: { value: width }, outlineColor: { value: new t.Color(OUTLINE_COLOR) } },
+      uniforms: { outlineWidth: { value: width }, outlineColor: { value: new t.Color(LK('outline', { color: OUTLINE_COLOR }).color) } },
       vertexShader: vert, fragmentShader: frag, side: t.BackSide
     });
     return matPool[key];

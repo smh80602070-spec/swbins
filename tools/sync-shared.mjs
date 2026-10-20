@@ -52,6 +52,7 @@ const FILES = [
   ['js/cutscene.js', 'js/cutscene.js', ['saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm']],   // W-0048 — 이야기 장면 컷신 배경(K-0044), 다른 판은 장면 상자를 잇는 티켓에서 판 목록에 추가
   ['js/perf-hud.js', 'js/perf.js', ['saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm']],   // 재기 표시(?perf) — 네 벌이 글자까지 같다(1만리 perf.js 는 품질 자동조절이 든 다른 파일)
   ['js/ssao3d.js', 'js/ssao3d.js', ['saga-go', 'saga-dungeon', 'saga-story', 'saga-forest', 'saga-realm']],   // W-0292 다섯 판 같게
+  ['js/look3d.js', 'js/look3d.js'],   // W-0339 다섯 판 3D 한 벌 규격 — 판별 보정 표(post3d 앞에 싣는다)
   ['js/post3d.js', 'js/post3d.js', ['saga-go', 'saga-dungeon', 'saga-story', 'saga-forest', 'saga-realm']],   // W-0292
   ['js/skydome3d.js', 'js/skydome3d.js', ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-realm']],   // W-0294 그린 하늘 공 — 4종횡은 옆보기 배경 층이 하늘(기준선 na)
   ['js/pbrground3d.js', 'js/pbrground3d.js', ['saga-dungeon', 'saga-story', 'saga-realm']],   // W-0295 PBR 땅(법선·거칠기는 shared/assets/ground) — 1만리·3마을은 아직 안 씀(땅 재질 손질은 그 판 티켓)

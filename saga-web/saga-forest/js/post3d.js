@@ -128,17 +128,20 @@
   /** 후처리를 걸까 — 0 이면 톤매핑만 남는다(캔버스에 바로 그리는 길) */
   function ON() { return core.tuned('post3d.on', 1) ? true : false; }
   /** 블룸 세기 배수. 0 이면 블룸만 뺀다 */
-  function BLOOM() { return core.tuned('post3d.bloom', 1); }
+  function BLOOM() { return core.tuned('post3d.bloom', LK('bloom', 1)); }
   /** 번지기 시작하는 밝기(선형). 올리면 아주 강한 빛만 번진다 */
-  function THRESHOLD() { return core.tuned('post3d.threshold', 0.9); }
+  function THRESHOLD() { return core.tuned('post3d.threshold', LK('threshold', 0.9)); }
   /** 문턱의 무릎 — 넓을수록 부드럽게 번지기 시작한다 */
-  function KNEE() { return core.tuned('post3d.knee', 0.45); }
+  function KNEE() { return core.tuned('post3d.knee', LK('knee', 0.45)); }
   /** 노출 배수. 1 이 '여태 그대로' 다 — 곡선이 중간을 안 건드리므로 */
-  function EXPOSURE() { return core.tuned('post3d.exposure', 1); }
+  function EXPOSURE() { return core.tuned('post3d.exposure', 1) * LOOK().exposure; }
+  /** W-0339 판별 보정(노출 배수·화이트밸런스) — shared/js/look3d.js 표. 없거나 look3d.on 0 이면 1 */
+  function LOOK() { var L = global.DG.look3d; return L && L.cal ? L.cal() : { exposure: 1, wb: [1, 1, 1] }; }
   /** 어느 톤매핑 곡선인가 — 켤 때 한 번만 읽는다(바꾸면 셰이더가 다 다시 컴파일된다) */
-  function TONE() { return core.tuned('post3d.tone', 'neutral'); }
+  function TONE() { return core.tuned('post3d.tone', LK('tone', 'neutral')); }
+  function LK(k, d) { var L = global.DG && global.DG.look3d, v = L && L.val ? L.val(k) : null; return v === undefined || v === null ? d : v; }   // W-0339 한 벌 표(shared/js/look3d.js) — 실릴 차례가 판마다 달라 쓰는 순간에 읽는다
   /** 색보정 세기 0~1. 0 이면 톤매핑만 걸고 색은 안 만진다 */
-  function GRADE() { return core.tuned('post3d.grade', 1); }
+  function GRADE() { return core.tuned('post3d.grade', LK('grade', 1)); }
   /** 카툰(셀셰이딩) 밝기 단수 — 0 이면 끔(기본). 3~6 정도면 만화풍으로 계단진다.
    *  2026-09-06, 사용자 요청("카툰렌더링으로 변경도 되나?") — 재질을 다 바꾸는
    *  대신 이미 있는 합성 셰이더(FRAG_OUT) 맨 끝, 색보정 다음(화면색)에 밝기를
@@ -287,6 +290,7 @@
         sat: look.sat, temp: look.temp, lift: look.lift
       },
       toon: Math.max(0, TOON()),
+      wb: LOOK().wb,
       msaa: live ? tp.msaa : 0,
       /* 맞닿은 자리의 그늘 — `ssao3d.js` 가 잰다. 여기서는 **켤지 말지**만 안다
          (씬을 그린 타깃에 깊이를 붙여 둬야 하므로 처방에 들어와야 한다) */
@@ -414,6 +418,7 @@
     'uniform float lift;',
     'uniform float hasBloom;',
     'uniform float toon;',
+    'uniform vec3 wb;',
     'varying vec2 vUv;',
     LUM,
     'void main() {',
@@ -421,6 +426,8 @@
     /* 그늘은 **번지기 전에** 곱한다 — 뒤에 곱하면 어둡게 만든 자리가
        이미 번져 나가 테두리만 밝게 남는다 */
     '  c *= mix(1.0, texture2D(tAO, vUv).r, hasAO);',
+    /* W-0339 화이트밸런스 — 선형 HDR 에서 판별로 곱한다(톤매핑 앞이라 흰 것이 물들지 않고 그대로 희다) */
+    '  c *= wb;',
     '  c += texture2D(tBloom, vUv).rgb * (strength * hasBloom);',
     '  gl_FragColor = vec4(c, 1.0);',
     '  #include <tonemapping_fragment>',
@@ -524,7 +531,7 @@
         tAO: { value: null }, hasAO: { value: 0 },
         strength: { value: 0.26 }, gradeAmt: { value: 1 },
         sat: { value: 1 }, temp: { value: 0 }, lift: { value: 0 },
-        hasBloom: { value: 1 }, toon: { value: 0 }
+        hasBloom: { value: 1 }, toon: { value: 0 }, wb: { value: new T.Vector3(1, 1, 1) }
       });
     } catch (e) {
       failed = true;
@@ -680,6 +687,7 @@
     matOut.uniforms.temp.value = p.grade.temp;
     matOut.uniforms.lift.value = p.grade.lift;
     matOut.uniforms.toon.value = p.toon;
+    matOut.uniforms.wb.value.set(p.wb[0], p.wb[1], p.wb[2]);
     blit(matOut, null);
 
     drawn++;

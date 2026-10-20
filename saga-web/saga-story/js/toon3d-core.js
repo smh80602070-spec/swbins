@@ -12,6 +12,7 @@
 (function (global) {
   'use strict';
 
+  function LK(k, d) { var L = global.DG && global.DG.look3d, v = L && L.val ? L.val(k) : null; return v === undefined || v === null ? d : v; }   // W-0339 한 벌 표(shared/js/look3d.js) — 실릴 차례가 판마다 달라 쓰는 순간에 읽는다
   var T = null;
   function three() { if (!T) { T = global.THREE || null; } return T; }
 
@@ -60,9 +61,10 @@
     mat.userData = mat.userData || {};
     mat.userData.rimApplied = true;
     mat.onBeforeCompile = function (shader) {
-      shader.uniforms.rimColor = { value: new t.Color(0xfff0d8) };
-      shader.uniforms.rimPower = { value: 2.4 };
-      shader.uniforms.rimIntensity = { value: 0.9 };
+      var rk = LK('rim', { color: 0xfff0d8, power: 2.4, intensity: 0.9 });
+      shader.uniforms.rimColor = { value: new t.Color(rk.color) };
+      shader.uniforms.rimPower = { value: rk.power };
+      shader.uniforms.rimIntensity = { value: rk.intensity };
       shader.vertexShader = shader.vertexShader.replace(
         '#include <common>',
         '#include <common>\nvarying vec3 vRimN;\nvarying vec3 vRimV;'

@@ -1276,5 +1276,22 @@
   "ticket": "W-0336",
   "since": "2026-10-19",
   "note": "그림은 K(수신함 10-19 웹 W-0336·W-0339 → 자체툴) — 오면 index.json·layers.json 만 두고 손잡이 1. 지금은 대역(코드 도형)·_demo.html#cutout"
+ },
+ {
+  "id": "go.look3d",
+  "name": "3D 한 벌 규격 look3d — 판별 노출·화이트밸런스를 post3d 마지막 겹에서(W-0339)",
+  "files": [
+   "js/look3d.js",
+   "js/post3d.js"
+  ],
+  "tests": [
+   "W-0339 look3d 한 벌 규격 — 지금 판 이름이 주소와 같고 판별 보정(노출 0.5~4·wb 세 칸)이 있으며 · post3d 처방에 그 노출·wb 가 실리고 · look3d.on 0 이면 옛 값(노출 1·wb 1)"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0339",
+  "since": "2026-10-20",
+  "note": "10-20: pw-look-compare.mjs(HIGH·정오/낮 고정·1280×720·Radeon) 다섯 판 휘도 차 477.8% → 7.1%·색온도 차 1,428K → 542K(PASS ≤15%·≤800K) — 보정은 look-calibrate.mjs 로 네 번 측정·보정. 표 값(림·외곽선 색·블룸·문턱·색보정)은 쓰는 순간 look3d 를 읽음(3마을 외곽선 갈색 → 한 벌 색). 폰 LOW(후처리 꺼짐)엔 노출만 실림"
  }
 ]
