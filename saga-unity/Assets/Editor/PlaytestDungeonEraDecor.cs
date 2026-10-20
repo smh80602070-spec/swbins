@@ -35,6 +35,7 @@ namespace Saga.EditorTools
         {
             _ok = true;
             _sizes.Clear();
+            _pieceTris.Clear();
             var runner = Object.FindFirstObjectByType<DungeonFloorRunner>();
             var playerGo = GameObject.FindWithTag("Player");
             if (runner == null || playerGo == null) { Fail("러너·플레이어 없음"); return false; }
@@ -54,6 +55,7 @@ namespace Saga.EditorTools
                 if (cc != null) cc.enabled = true;
             }
             Debug.Log($"{T} 크기 — " + string.Join(" · ", _sizes));
+            Debug.Log($"{T} 삼각형 — " + string.Join(" · ", _pieceTris));
             if (_ok) Debug.Log($"{T} OK - 표(여섯 = 명소 순·벌마다 세 시대·몫)·마을 다섯(벽 안·문길·비킴·밑면·잔해·예산)·명소 층(그 층만 켜짐·방 자리 비킴) |{m}");
             return _ok;
         }
@@ -174,7 +176,9 @@ namespace Saga.EditorTools
         // ---- 한 벌 ------------------------------------------------------------------
 
         /// <summary>한 벌의 조각 검사. 돌려주는 값은 삼각형 합.</summary>
-        private static int CheckSet(DungeonEraDecor.Set set, Transform root, Vector3 center, string doors,
+        private static readonly List<string> _pieceTris = new List<string>();
+
+                private static int CheckSet(DungeonEraDecor.Set set, Transform root, Vector3 center, string doors,
             List<(string, Vector3)> others, float clearance)
         {
             if (root.childCount < set.Pieces.Length) Fail($"{set.Id} 조각 {root.childCount} < {set.Pieces.Length}(모델 빠짐)");
@@ -184,9 +188,12 @@ namespace Saga.EditorTools
                 var piece = root.GetChild(i);
                 var p = set.Pieces[i];
                 string id = $"{set.Id} {piece.name}";
+                int pt = 0;
                 foreach (var f in piece.GetComponentsInChildren<MeshFilter>(true))
                     if (f.sharedMesh != null)
-                        for (int s = 0; s < f.sharedMesh.subMeshCount; s++) tri += (int)(f.sharedMesh.GetIndexCount(s) / 3);
+                        for (int s = 0; s < f.sharedMesh.subMeshCount; s++) pt += (int)(f.sharedMesh.GetIndexCount(s) / 3);
+                tri += pt;
+                _pieceTris.Add($"{set.Id}/{piece.name.Substring(3)} {pt / 1000}k"); // tasks U-0139 — 조각별 삼각형(어느 것이 무거운지)
                 if (!PieceRect(piece, out var rect)) { Fail($"{id} 렌더러 없음"); continue; }
                 _sizes.Add($"{set.Id}/{piece.name.Substring(3)} {rect.size.x:F1}×{rect.size.y:F1}×{rect.size.z:F1}");
                 Vector3 lo = rect.min - center, hi = rect.max - center;
