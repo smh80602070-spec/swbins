@@ -5,7 +5,7 @@ extends SceneTree
 ##   창 모드(그리기 숫자): godot --path saga-godot --rendering-method mobile --position -4000,0 --resolution 1280x720 --script res://tools/probe_perf_scenes.gd
 ## 씬마다 SETTLE 프레임 뒤 한 번: 노드·mesh/multimesh·인스턴스·삼각형(get_faces 씬당 한 번, 재질 next_pass 면 ×2)·빛·그림자·해 그림자 거리·입자(emitting)·카메라 far.
 ## 이어서 MEASURE 프레임 동안 RenderingServer draw/objects/primitives(평균·최대)·frame_ms(프레임 간격 가운데값 — TIME_PROCESS 는 1초 최댓값이라 안 씀) — 헤드리스(더미 렌더러)면 0 이라 n/a, 예산에 안 센다.
-## 예산을 넘으면 "PERF5 over <판> <칸>=값/예산" — FAIL 아님(판정은 다음 티켓). FAIL = 씬 못 실음·결과 줄 없음.
+## 예산을 넘으면 "PERF5 over <판> <칸>=값/예산" — FAIL(G-0261 판별 예산). FAIL 은 그 밖에 씬 못 실음·결과 줄 없음.
 ## 끝줄 "PROBE perf_scenes OK|FAIL n" + tools/_out/perf_scenes.md 표(덮어씀). 씬·env·세이브는 안 바꾼다(측정만).
 
 const Gfx := preload("res://saga_core/data/graphics_settings.gd")
@@ -18,12 +18,17 @@ const SCENES := [
 	["STORY", "res://games/saga_story/world/SinyaField.tscn"],   # check_refs:allow
 	["REALM", "res://games/saga_realm/world/TestCity.tscn"],   # check_refs:allow — 이어서 같은 씬에서 viewing_map 토글로 REALM_MAP
 ]
-## 판별 예산 — 출발은 여섯 행 모두 1만리 값(probe_perf BUDGET_DRAW_AVG 260·TRI_AVG 350000·TRI_MAX 500000),
-## 그림자 빛 ≤8(2나락 횃불 7, G-0249)·입자 ≤12. 판마다 따로 고칠 수 있게 dict 로 둔다.
+## G-0261 판별 예산 — 기준 = 창 모드 mobile 1280x720 측정(G-0257 표 1093440d1, FOREST 만 G-0260 뒤 다시 잰 값) × 1.15 올림(draw 10·prims 1만 단위, 지도만 1천) — 같은 판 draw 가 실행마다 ±2% 넘게 흔들려(REALM 302·263·243, GO 264·254) ×1.1 대신 ×1.15.
+## 넘으면 FAIL(창 모드 그리기 칸) — 헤드리스 n/a 칸은 판정 없음, shadow_lights ≤8(2나락 횃불 7, G-0249)·particles ≤12 는 헤드리스에서도 판정.
+## probe_perf(1만리 마을 뼈대 BUDGET_* 260·35만·50만)는 따로 — 이 표는 대표 씬 한 자리 숫자라 판마다 다르다.
 const BASE_BUDGET := {"draw_avg": 260, "tris_avg": 350000, "tris_max": 500000, "shadow_lights": 8, "particles": 12}
 const BUDGET := {
-	"GO": BASE_BUDGET, "DUNGEON": BASE_BUDGET, "FOREST": BASE_BUDGET,
-	"STORY": BASE_BUDGET, "REALM": BASE_BUDGET, "REALM_MAP": BASE_BUDGET,
+	"GO": {"draw_avg": 310, "tris_avg": 280000, "tris_max": 320000, "shadow_lights": 8, "particles": 12},
+	"DUNGEON": {"draw_avg": 370, "tris_avg": 250000, "tris_max": 280000, "shadow_lights": 8, "particles": 12},
+	"FOREST": {"draw_avg": 300, "tris_avg": 450000, "tris_max": 500000, "shadow_lights": 8, "particles": 12},   # G-0260 뒤 draw 253·prims 38.7만
+	"STORY": {"draw_avg": 310, "tris_avg": 210000, "tris_max": 250000, "shadow_lights": 8, "particles": 12},
+	"REALM": {"draw_avg": 350, "tris_avg": 270000, "tris_max": 300000, "shadow_lights": 8, "particles": 12},
+	"REALM_MAP": {"draw_avg": 210, "tris_avg": 21000, "tris_max": 32000, "shadow_lights": 8, "particles": 12},
 }
 const COLS := ["nodes", "mesh_nodes", "mm_nodes", "mm_instances", "tris", "lights", "shadow_lights", "sun_shadow_m", "particles", "cam_far", "draw_avg", "draw_max", "objects_avg", "prims_avg", "prims_max", "frame_ms"]
 
@@ -147,6 +152,7 @@ func _budget(label: String, d: Dictionary) -> void:
 			var line := "PERF5 over %s %s=%d/%d" % [label, c[0], v, b[c[1]]]
 			print(line)
 			_overs.append(line)
+			fails += 1   # G-0261 — 넘으면 FAIL
 
 
 func _row(label: String, scene: Node) -> void:
@@ -203,7 +209,11 @@ func _write_md() -> void:
 		for k in COLS:
 			cells.append(str((r[1] as Dictionary).get(k, "-")))
 		out += "| %s | %s |\n" % [r[0], " | ".join(cells)]
-	out += "\n예산(판별 BUDGET): draw_avg ≤260 · prims_avg ≤350000 · prims_max ≤500000 · shadow_lights ≤8 · particles ≤12\n\n"
+	out += "\n예산(판별 BUDGET, G-0261 — 넘으면 FAIL):\n"
+	for r in _rows:
+		var b: Dictionary = BUDGET.get(r[0], BASE_BUDGET)
+		out += "- %s: draw_avg ≤%d · prims_avg ≤%d · prims_max ≤%d · shadow_lights ≤%d · particles ≤%d\n" % [r[0], b.draw_avg, b.tris_avg, b.tris_max, b.shadow_lights, b.particles]
+	out += "\n"
 	if _overs.is_empty():
 		out += "넘은 곳 없음\n"
 	else:

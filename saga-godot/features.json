@@ -4722,7 +4722,7 @@
  },
  {
   "id": "gd.core.perf-scenes",
-  "name": "최적화 측정 다섯 판 — 다섯 대표 씬 + 5천하 지도(REALM_MAP) 노드·메시·삼각형·빛·그림자·입자·카메라 far·draw/primitives·프레임 간격 표 + 판별 예산(넘으면 PERF5 over, FAIL 아님)",
+  "name": "최적화 측정 다섯 판 — 다섯 대표 씬 + 5천하 지도(REALM_MAP) 노드·메시·삼각형·빛·그림자·입자·카메라 far·draw/primitives·프레임 간격 표 + 판별 예산(넘으면 PERF5 over = FAIL, G-0261)",
   "files": [
    "tools/probe_perf_scenes.gd",
    "tools/probe_perf.gd",
@@ -4736,7 +4736,7 @@
   "fun": {},
   "ticket": "G-0257",
   "since": "2026-10-20",
-  "note": "창 모드(mobile 1280x720) draw 평균 GO 263·DUNGEON 317·FOREST 335·STORY 261·REALM 302·REALM_MAP 174 · prims FOREST 98.8만(예산 35만/50만) · 헤드리스는 그리기 n/a · process_ms 대신 frame_ms(TIME_PROCESS 는 1초 최댓값) · 표 tools/_out/perf_scenes.md"
+  "note": "창 모드(mobile 1280x720) draw 평균 GO 263·DUNGEON 317·FOREST 335·STORY 261·REALM 302·REALM_MAP 174 · prims FOREST 98.8만(예산 35만/50만) · 헤드리스는 그리기 n/a · process_ms 대신 frame_ms(TIME_PROCESS 는 1초 최댓값) · 표 tools/_out/perf_scenes.md · 판별 예산 G-0261(측정 ×1.15 올림, 넘으면 FAIL): draw/prims_avg/prims_max GO 310·28만·32만 · DUNGEON 370·25만·28만 · FOREST 300·45만·50만 · STORY 310·21만·25만 · REALM 350·27만·30만 · REALM_MAP 210·2.1만·3.2만 · 그림자 빛 8·입자 12"
  },
  {
   "id": "gd.fs.perf",
