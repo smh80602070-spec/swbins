@@ -57,8 +57,7 @@ static func _strike(tree: SceneTree, view: Node, a: String, t: String, hit_at: f
 	view.tree_exiting.connect(func() -> void: tree.paused = false)
 	var u: Dictionary = RealmTactics.unit(view.board, t)
 	var scene := tree.current_scene
-	## 첫 궤적·불꽃은 셰이더를 처음 그리느라 한 프레임이 길어 tween 이 통째로 지나간다 — 작은 한 대로 먼저 데운다.
-	await view.call("_anim_hit", {"a": a, "to": t, "hit": true, "dmg": 1})
+	## 첫 궤적·불꽃 셰이더는 씬이 뜰 때 CombatFx.warm 이 데운다(G-0255) — 데우는 한 대 지움.
 	var before := scene.get_children()
 	view.call("_anim_hit", {"a": a, "to": t, "hit": true, "dmg": int(float(u.get("max", 100)) * 0.35)})
 	var t0 := Time.get_ticks_msec()

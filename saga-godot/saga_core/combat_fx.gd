@@ -19,7 +19,8 @@ static var _flash_mesh: QuadMesh = null
 
 
 ## who = 플레이어(Node3D), fwd = 바라보는 방향, reach = 닿는 거리(m), step = 연타 차례.
-static func slash(who: Node3D, fwd: Vector3, reach: float, color: Color, step: int, heavy := false) -> void:
+## scale_mul — G-0255 미리 데우기(warm)만 아주 작게(0.02) 부른다. 기본 1.0 이면 전과 같다.
+static func slash(who: Node3D, fwd: Vector3, reach: float, color: Color, step: int, heavy := false, scale_mul := 1.0) -> void:
 	if who == null or not who.is_inside_tree():
 		return
 	var mi := MeshInstance3D.new()
@@ -35,12 +36,12 @@ static func slash(who: Node3D, fwd: Vector3, reach: float, color: Color, step: i
 	f = f.normalized() if f.length() > 0.01 else Vector3.FORWARD
 	var yaw := atan2(f.x, f.z)
 	var roll := deg_to_rad(float(ROLLS[step % ROLLS.size()]))
-	var s := maxf(reach, 1.2) * (1.25 if heavy else 1.0)
+	var s := maxf(reach, 1.2) * (1.25 if heavy else 1.0) * scale_mul
 	## 초승달은 +Z 쪽으로 열린 호(가운데가 앞) — 몸 방향으로 돌리고, 앞뒤 축으로 기울인다. 좌우 번갈아 휘두르게 홀짝으로 뒤집는다.
 	var flip := -1.0 if step % 2 == 1 else 1.0
 	## 수평으로 누인 호는 뒤에서 보는 카메라엔 가는 점선으로만 보였다(09-28 촬영) — 앞쪽을 TILT 만큼 세워 몸 앞에 큰 호로 보이게.
 	var b := Basis(Vector3.UP, yaw) * Basis(Vector3.FORWARD, roll) * Basis(Vector3.RIGHT, deg_to_rad(-TILT)) * Basis.from_scale(Vector3(s * flip, s, s))
-	mi.global_transform = Transform3D(b, who.global_position + Vector3.UP * 1.05 + f * 0.25)
+	mi.global_transform = Transform3D(b, who.global_position + (Vector3.UP * 1.05 + f * 0.25) * scale_mul)
 	## 맞는 순간의 멈칫(combat_feel 히트스톱, Engine.time_scale)에도 궤적은 끝까지 휘둘러진다 — 멈추면 궤적이 아예 안 보였다(09-28 촬영).
 	var tw := mi.create_tween()
 	tw.set_ignore_time_scale(true)
@@ -50,7 +51,7 @@ static func slash(who: Node3D, fwd: Vector3, reach: float, color: Color, step: i
 
 
 ## 맞은 자리 불꽃 — pos 는 맞은 몸 가운데쯤(월드).
-static func spark(host: Node, pos: Vector3, color: Color, big := false) -> void:
+static func spark(host: Node, pos: Vector3, color: Color, big := false, scale_mul := 1.0) -> void:
 	if host == null or not host.is_inside_tree():
 		return
 	var scene := host.get_tree().current_scene
@@ -64,13 +65,13 @@ static func spark(host: Node, pos: Vector3, color: Color, big := false) -> void:
 	p.particle_flag_align_y = true
 	p.direction = Vector3.UP
 	p.spread = 180.0
-	p.initial_velocity_min = 4.0
-	p.initial_velocity_max = 8.5 if big else 6.5
-	p.gravity = Vector3(0, -9.0, 0)
+	p.initial_velocity_min = 4.0 * scale_mul
+	p.initial_velocity_max = (8.5 if big else 6.5) * scale_mul
+	p.gravity = Vector3(0, -9.0, 0) * scale_mul
 	p.damping_min = 4.0
 	p.damping_max = 8.0
-	p.scale_amount_min = 0.7
-	p.scale_amount_max = 1.3
+	p.scale_amount_min = 0.7 * scale_mul
+	p.scale_amount_max = 1.3 * scale_mul
 	var curve := Curve.new()
 	curve.add_point(Vector2(0, 1))
 	curve.add_point(Vector2(1, 0))
@@ -100,11 +101,11 @@ static func spark(host: Node, pos: Vector3, color: Color, big := false) -> void:
 	fl.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	scene.add_child(fl)
 	fl.global_position = pos
-	fl.scale = Vector3.ONE * (0.4 if big else 0.3)
+	fl.scale = Vector3.ONE * (0.4 if big else 0.3) * scale_mul
 	var tw := fl.create_tween()
 	tw.set_ignore_time_scale(true)
 	tw.set_parallel(true)
-	tw.tween_property(fl, "scale", Vector3.ONE * (1.6 if big else 1.1), 0.12)
+	tw.tween_property(fl, "scale", Vector3.ONE * (1.6 if big else 1.1) * scale_mul, 0.12)
 	tw.tween_property(fm, "albedo_color:a", 0.0, 0.14)
 	tw.chain().tween_callback(fl.queue_free)
 	var t := p.create_tween()
@@ -193,7 +194,7 @@ const PARTICLES := {
 
 
 ## 원소 스킬·폭발·반응의 자리 — 바닥 충격파 + 원소별 입자, big(폭발)이면 빛기둥까지. 색이 원소 색표와 같으면 그 원소로 본다.
-static func element_burst(host: Node, center: Vector3, radius: float, color: Color, sec: float, element: String, big: bool) -> void:
+static func element_burst(host: Node, center: Vector3, radius: float, color: Color, sec: float, element: String, big: bool, scale_mul := 1.0) -> void:
 	if host == null or not host.is_inside_tree():
 		return
 	var scene := host.get_tree().current_scene
@@ -208,7 +209,7 @@ static func element_burst(host: Node, center: Vector3, radius: float, color: Col
 	ring.material_override = rm
 	ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	scene.add_child(ring)
-	ring.global_position = center + Vector3.UP * 0.15
+	ring.global_position = center + Vector3.UP * 0.15 * scale_mul
 	var tw := ring.create_tween()
 	tw.set_ignore_time_scale(true)
 	tw.set_parallel(true)
@@ -226,14 +227,14 @@ static func element_burst(host: Node, center: Vector3, radius: float, color: Col
 	p.randomness = 0.4
 	p.emission_shape = CPUParticles3D.EMISSION_SHAPE_RING
 	p.emission_ring_axis = Vector3.UP
-	p.emission_ring_height = 0.3
-	p.emission_ring_radius = maxf(radius * 0.55, 0.6)
-	p.emission_ring_inner_radius = maxf(radius * 0.15, 0.2)
+	p.emission_ring_height = 0.3 * scale_mul
+	p.emission_ring_radius = maxf(radius * 0.55, 0.6) * scale_mul
+	p.emission_ring_inner_radius = maxf(radius * 0.15, 0.2) * scale_mul
 	p.direction = Vector3.UP
 	p.spread = float(spec[3])
-	p.initial_velocity_min = float(spec[1])
-	p.initial_velocity_max = float(spec[2])
-	p.gravity = Vector3(0, float(spec[4]), 0)
+	p.initial_velocity_min = float(spec[1]) * scale_mul
+	p.initial_velocity_max = float(spec[2]) * scale_mul
+	p.gravity = Vector3(0, float(spec[4]), 0) * scale_mul
 	p.damping_min = 1.0
 	p.damping_max = 3.0
 	p.angular_velocity_min = -float(spec[8])
@@ -254,8 +255,8 @@ static func element_burst(host: Node, center: Vector3, radius: float, color: Col
 	curve.add_point(Vector2(0.7, 0.8))
 	curve.add_point(Vector2(1, 0))
 	p.scale_amount_curve = curve
-	p.scale_amount_min = 0.7
-	p.scale_amount_max = 1.4
+	p.scale_amount_min = 0.7 * scale_mul
+	p.scale_amount_max = 1.4 * scale_mul
 	var grad := Gradient.new()
 	grad.set_color(0, color.lerp(Color.WHITE, 0.15))
 	grad.set_color(1, Color(color.r, color.g, color.b, 0.0))
@@ -273,7 +274,7 @@ static func element_burst(host: Node, center: Vector3, radius: float, color: Col
 	p.material_override = pm
 	p.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	scene.add_child(p)
-	p.global_position = center + Vector3.UP * 0.2
+	p.global_position = center + Vector3.UP * 0.2 * scale_mul
 	p.emitting = true
 	var pt := p.create_tween()
 	pt.tween_interval(p.lifetime + 0.2)
@@ -284,7 +285,7 @@ static func element_burst(host: Node, center: Vector3, radius: float, color: Col
 		var cyl := CylinderMesh.new()
 		cyl.top_radius = radius * 0.3
 		cyl.bottom_radius = radius * 0.45
-		cyl.height = 14.0
+		cyl.height = 14.0 * scale_mul
 		cyl.radial_segments = 20
 		cyl.rings = 1
 		cyl.cap_top = false
@@ -296,7 +297,7 @@ static func element_burst(host: Node, center: Vector3, radius: float, color: Col
 		pillar.material_override = lm
 		pillar.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		scene.add_child(pillar)
-		pillar.global_position = center + Vector3.UP * 7.0
+		pillar.global_position = center + Vector3.UP * 7.0 * scale_mul
 		pillar.scale = Vector3(0.4, 1.0, 0.4)
 		var pw := pillar.create_tween()
 		pw.set_ignore_time_scale(true)
@@ -304,7 +305,7 @@ static func element_burst(host: Node, center: Vector3, radius: float, color: Col
 		pw.tween_property(pillar, "scale", Vector3(1.1, 1.0, 1.1), sec * 0.9).set_ease(Tween.EASE_OUT)
 		pw.tween_method(func(v: float) -> void: lm.set_shader_parameter("fade", v), 1.0, 0.0, sec * 1.1).set_ease(Tween.EASE_IN)
 		pw.chain().tween_callback(pillar.queue_free)
-		spark(host, center + Vector3.UP * 1.2, color, true)
+		spark(host, center + Vector3.UP * 1.2 * scale_mul, color, true, scale_mul)
 
 
 static var _dot: ImageTexture = null
@@ -322,6 +323,56 @@ static func _dot_tex() -> ImageTexture:
 			img.set_pixel(x, y, Color(1, 1, 1, a * a * 1.6))
 	_dot = ImageTexture.create_from_image(img)
 	return _dot
+
+
+# ---------------------------------------------------------------- 미리 데우기(G-0255)
+
+## 씬에서 첫 궤적·불꽃·충격파는 셰이더를 처음 그리느라 그 프레임이 길어 tween 이 통째로 지나가 안 보였다(G-0253).
+## 씬이 뜰 때(environment_profile._ready deferred) 카메라 앞 1.5m 에 한 벌을 아주 작게(0.02) 한 번 그려 컴파일을 끝낸다.
+## 셰이더 캐시는 프로세스 공용이라 한 번만 — 다음 씬은 바로 돌아간다. SAGA_FX_WARM=0 이면 끔. 로그 안 찍음.
+const WARM_SCALE := 0.02
+static var _warmed := false
+static var last_warm := {}
+
+static func warm(host: Node) -> void:
+	if OS.get_environment("SAGA_FX_WARM") == "0":
+		return
+	if _warmed:
+		last_warm = {"nodes": 0, "at_ms": Time.get_ticks_msec()}
+		return
+	## 씬을 실은 직후 몇 프레임은 시간 배율 무시 tween·타이머 걸음이 싣는 시간만큼 길어, 효과가 한 프레임 안에 끝나 그려지기 전에 지워졌다(점검) —
+	## 실시간 0.5초·3 프레임을 프레임 단위로 기다린다(타이머도 같은 걸음이라 안 됨). 씬마다 한 번, 매 틱 셈 아님.
+	if host == null or not host.is_inside_tree():
+		return
+	var tree := host.get_tree()
+	var t0 := Time.get_ticks_msec()
+	var fr := 0
+	while fr < 3 or Time.get_ticks_msec() - t0 < 500:
+		await tree.process_frame
+		fr += 1
+	if _warmed or not is_instance_valid(host) or not host.is_inside_tree() or tree.current_scene == null:
+		return
+	var cam := host.get_viewport().get_camera_3d()
+	if cam == null:
+		return
+	_warmed = true
+	var scene := tree.current_scene
+	var before := scene.get_child_count()
+	var cb := cam.global_transform.basis
+	var front := cam.global_position - cb.z * 1.5
+	var fwd := Vector3(-cb.z.x, 0.0, -cb.z.z)
+	var who := Node3D.new()
+	scene.add_child(who)
+	who.global_position = front
+	slash(who, fwd, 0.05, PHYSICAL, 0, false, WARM_SCALE)
+	who.queue_free()
+	spark(host, front, PHYSICAL, false, WARM_SCALE)
+	spark(host, front, PHYSICAL, true, WARM_SCALE)
+	## 바닥 충격파는 누운 판이라 눈높이면 옆선뿐 — 카메라 아래쪽으로 조금 내려 위에서 보게.
+	var low := front - cb.y * 0.3
+	element_burst(host, low, 0.05, PHYSICAL, 0.3, "", false, WARM_SCALE)
+	element_burst(host, low, 0.05, Color(1.0, 0.5, 0.2), 0.3, "fire", true, WARM_SCALE)
+	last_warm = {"nodes": scene.get_child_count() - before - 1, "at_ms": Time.get_ticks_msec()}
 
 
 ## 원소 색표(elements.gd INFO)와 같은 색이면 그 원소 이름, 아니면 ""(반응 색 등).

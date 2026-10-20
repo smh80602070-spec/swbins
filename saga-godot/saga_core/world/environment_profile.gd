@@ -10,6 +10,7 @@ const ENV_MOBILE: Environment = preload("res://assets/environment/env_mobile.tre
 const Gfx := preload("res://saga_core/data/graphics_settings.gd")
 const DayLight := preload("res://saga_core/world/day_light.gd")
 const WeatherVisual := preload("res://saga_core/world/weather_visual.gd")
+const CombatFx := preload("res://saga_core/combat_fx.gd")
 
 
 ## PLAN 106장 ② — GO 만 손그림 하늘(sky_toon.gdshader). 이 스크립트와 env_*.tres 는
@@ -43,6 +44,8 @@ func _ready() -> void:
 	## G-0054 — 설정 "화질/성능"(graphics_settings.gd). 화질이면 아무것도 안 바뀐다.
 	add_to_group(Gfx.GROUP)
 	Gfx.apply(get_tree())
+	## G-0255 — 전투 효과 셰이더 미리 데우기(프로세스에 한 번). 카메라가 형제 _ready 뒤에 서므로 deferred.
+	CombatFx.warm.call_deferred(self)
 
 
 func _pick_environment() -> void:

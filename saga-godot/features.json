@@ -4776,5 +4776,23 @@
   "ticket": "G-0248",
   "since": "2026-10-20",
   "note": "SAGA_FACE_LIGHT=0 끔 · head_fwd = instance uniform(머리 ~1.8° 넘게 돌 때만 보냄) · gl_compatibility 면 그늘 바닥만 올림 · SDF res://assets/face_sdf/face_sdf.png 와 앞머리 그림자는 K 대기"
+ },
+ {
+  "id": "gd.core.fx-warm",
+  "name": "전투 효과 셰이더 미리 데우기(다섯 판 공용) — 씬이 뜰 때 카메라 앞 1.5m 에 궤적·불꽃·충격파·빛기둥 한 벌을 0.02 크기로 한 번 그려, 첫 베기 궤적이 셰이더 컴파일 프레임에 묻혀 안 보이던 것을 없앤다",
+  "files": [
+   "saga_core/combat_fx.gd",
+   "saga_core/world/environment_profile.gd",
+   "tools/probe_fx_warm.gd"
+  ],
+  "tests": [
+   "fx_warm"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0255",
+  "since": "2026-10-20",
+  "note": "SAGA_FX_WARM=0 끔 · 프로세스에 한 번(static _warmed) · 실은 뒤 실시간 0.5초·3 프레임 기다림(실은 직후 tween 걸음이 길어 그려지기 전에 지워짐) · 로그 안 찍음 · shot_realm_tactics 데우는 한 대 지움"
  }
 ]
