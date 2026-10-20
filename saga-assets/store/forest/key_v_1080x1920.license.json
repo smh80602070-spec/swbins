@@ -1,25 +1,27 @@
 {
- "generator": "tools/ai-art/gen.py",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
  "id": "key_v_1080x1920",
  "model": "Illustrious-XL-v2.0",
- "model_license": "CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-07 확인), 폐쇄 파생 모델 수익화만 금지",
- "prompt": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game key art, cinematic composition, cozy storybook key art, a tiny cottage village glowing with warm lanterns among giant trees and fireflies at dusk, mushrooms, winding stream, magical gentle light",
- "negative_prompt": "lowres, bad anatomy, text, letters, logo, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, frame, border",
- "seed": 20272332,
+ "model_license": "CreativeML OpenRAIL-M (저자 HF 토론 2025-04: 상업 가능, 폐쇄 파생 모델 수익화만 금지)",
+ "prompt": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game key art, cinematic composition, cozy storybook key art, a tiny cottage village glowing with warm lanterns among giant trees and fireflies at dusk, mushrooms, winding stream, magical gentle light, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed",
+ "negative_prompt": "lowres, bad anatomy, text, letters, logo, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, frame, border, letterbox, blurred border, split screen",
+ "seed": 20272184,
  "steps": 28,
  "cfg_scale": 5.5,
- "sampler": "Euler a",
+ "sampler": "euler_ancestral/normal",
  "size": [
   1080,
   1920
  ],
- "seconds": 31.3,
- "date": "2026-10-04",
+ "seconds": 34.0,
+ "date": "2026-10-20",
  "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py",
  "game": "forest",
- "picked_candidate": 2,
+ "picked_candidate": 4,
  "upscaled_from": [
-  1152,
-  648
- ]
+  768,
+  1344
+ ],
+ "packed_by": "K-0149 make_store.py pack_v(세로 구도 그대로, 띠 없음)"
 }

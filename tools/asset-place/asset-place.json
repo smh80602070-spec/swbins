@@ -707,8 +707,60 @@
     "*.webp",
     "*.json"
    ],
-   "note": "K-0041 스토어·타이틀·로딩 일러스트 + 앱 아이콘 — 판 5 × 45(키 가로·세로·아이콘 1024/512/192·적응형 전경·로딩 3). 정본 보관용 — 앱 쪽 연결은 빌드 티켓(상용화)에서 정한다",
-   "targets": []
+   "note": "K-0041 스토어·타이틀·로딩 일러스트 + 앱 아이콘 — 판 5 × 45(키 가로·세로·아이콘 1024/512/192·적응형 전경·로딩 3). 정본 보관용 — 앱 쪽 연결은 빌드 티켓(상용화)에서 정한다 · K-0149 세로 key_v 는 웹 타이틀 사본(W-0050 손 복사)도 place 대상으로",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/store",
+     "rename": {
+      "go/key_v_1080x1920.webp": "go_key_v.webp",
+      "dungeon/key_v_1080x1920.webp": "dungeon_key_v.webp",
+      "forest/key_v_1080x1920.webp": "forest_key_v.webp",
+      "story/key_v_1080x1920.webp": "story_key_v.webp",
+      "realm/key_v_1080x1920.webp": "realm_key_v.webp",
+      "go/key_v_1080x1920.license.json": "go_key_v.license.json",
+      "dungeon/key_v_1080x1920.license.json": "dungeon_key_v.license.json",
+      "forest/key_v_1080x1920.license.json": "forest_key_v.license.json",
+      "story/key_v_1080x1920.license.json": "story_key_v.license.json",
+      "realm/key_v_1080x1920.license.json": "realm_key_v.license.json"
+     }
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-go/assets/store",
+     "rename": {
+      "go/key_v_1080x1920.webp": "go_key_v.webp"
+     }
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-dungeon/assets/store",
+     "rename": {
+      "dungeon/key_v_1080x1920.webp": "dungeon_key_v.webp"
+     }
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-forest/assets/store",
+     "rename": {
+      "forest/key_v_1080x1920.webp": "forest_key_v.webp"
+     }
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-story/assets/store",
+     "rename": {
+      "story/key_v_1080x1920.webp": "story_key_v.webp"
+     }
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-realm/assets/store",
+     "rename": {
+      "realm/key_v_1080x1920.webp": "realm_key_v.webp"
+     }
+    }
+   ]
   },
   {
    "id": "cutscene",

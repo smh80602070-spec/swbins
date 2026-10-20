@@ -1,0 +1,115 @@
+{
+ "model": "Illustrious-XL-v2.0",
+ "out": "store_v",
+ "defaults": {
+  "prompt_prefix": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game key art, cinematic composition",
+  "width": 768,
+  "height": 1344,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "lowres, bad anatomy, text, letters, logo, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, frame, border, letterbox, blurred border, split screen"
+ },
+ "items": [
+  {
+   "id": "store_go_keyv_1",
+   "seed": 20271117,
+   "prompt": "epic key art, a luminous portal gate standing in a mixed-era town square at golden hour, old timber houses beside glass towers, floating lanterns, a winding road leading to distant mountains, warm hopeful light, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  },
+  {
+   "id": "store_go_keyv_2",
+   "seed": 20271214,
+   "prompt": "epic key art, a luminous portal gate standing in a mixed-era town square at golden hour, old timber houses beside glass towers, floating lanterns, a winding road leading to distant mountains, warm hopeful light, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  },
+  {
+   "id": "store_go_keyv_3",
+   "seed": 20271311,
+   "prompt": "epic key art, a luminous portal gate standing in a mixed-era town square at golden hour, old timber houses beside glass towers, floating lanterns, a winding road leading to distant mountains, warm hopeful light, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  },
+  {
+   "id": "store_go_keyv_4",
+   "seed": 20271408,
+   "prompt": "epic key art, a luminous portal gate standing in a mixed-era town square at golden hour, old timber houses beside glass towers, floating lanterns, a winding road leading to distant mountains, warm hopeful light, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  },
+  {
+   "id": "store_dungeon_keyv_1",
+   "seed": 20271505,
+   "prompt": "epic dark fantasy key art, a colossal ancient gate carved into a cliff glowing red, stone stairs descending into darkness, torches, floating embers, ruined arches, ominous cinematic light, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  },
+  {
+   "id": "store_dungeon_keyv_2",
+   "seed": 20271602,
+   "prompt": "epic dark fantasy key art, a colossal ancient gate carved into a cliff glowing red, stone stairs descending into darkness, torches, floating embers, ruined arches, ominous cinematic light, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  },
+  {
+   "id": "store_dungeon_keyv_3",
+   "seed": 20271699,
+   "prompt": "epic dark fantasy key art, a colossal ancient gate carved into a cliff glowing red, stone stairs descending into darkness, torches, floating embers, ruined arches, ominous cinematic light, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  },
+  {
+   "id": "store_dungeon_keyv_4",
+   "seed": 20271796,
+   "prompt": "epic dark fantasy key art, a colossal ancient gate carved into a cliff glowing red, stone stairs descending into darkness, torches, floating embers, ruined arches, ominous cinematic light, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  },
+  {
+   "id": "store_forest_keyv_1",
+   "seed": 20271893,
+   "prompt": "cozy storybook key art, a tiny cottage village glowing with warm lanterns among giant trees and fireflies at dusk, mushrooms, winding stream, magical gentle light, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  },
+  {
+   "id": "store_forest_keyv_2",
+   "seed": 20271990,
+   "prompt": "cozy storybook key art, a tiny cottage village glowing with warm lanterns among giant trees and fireflies at dusk, mushrooms, winding stream, magical gentle light, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  },
+  {
+   "id": "store_forest_keyv_3",
+   "seed": 20272087,
+   "prompt": "cozy storybook key art, a tiny cottage village glowing with warm lanterns among giant trees and fireflies at dusk, mushrooms, winding stream, magical gentle light, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  },
+  {
+   "id": "store_forest_keyv_4",
+   "seed": 20272184,
+   "prompt": "cozy storybook key art, a tiny cottage village glowing with warm lanterns among giant trees and fireflies at dusk, mushrooms, winding stream, magical gentle light, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  },
+  {
+   "id": "store_story_keyv_1",
+   "seed": 20272281,
+   "prompt": "adventurous side-scrolling world key art, floating rock islands linked with rope bridges, waterfalls into clouds, a distant castle, a golden sunset sky with portals to different eras, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  },
+  {
+   "id": "store_story_keyv_2",
+   "seed": 20272378,
+   "prompt": "adventurous side-scrolling world key art, floating rock islands linked with rope bridges, waterfalls into clouds, a distant castle, a golden sunset sky with portals to different eras, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  },
+  {
+   "id": "store_story_keyv_3",
+   "seed": 20272475,
+   "prompt": "adventurous side-scrolling world key art, floating rock islands linked with rope bridges, waterfalls into clouds, a distant castle, a golden sunset sky with portals to different eras, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  },
+  {
+   "id": "store_story_keyv_4",
+   "seed": 20272572,
+   "prompt": "adventurous side-scrolling world key art, floating rock islands linked with rope bridges, waterfalls into clouds, a distant castle, a golden sunset sky with portals to different eras, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  },
+  {
+   "id": "store_realm_keyv_1",
+   "seed": 20272669,
+   "prompt": "grand strategy key art, a vast walled fortress city on a river plain at dawn, banners without markings, mist, mountains and ranks of tents in the distance, majestic sweeping composition, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  },
+  {
+   "id": "store_realm_keyv_2",
+   "seed": 20272766,
+   "prompt": "grand strategy key art, a vast walled fortress city on a river plain at dawn, banners without markings, mist, mountains and ranks of tents in the distance, majestic sweeping composition, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  },
+  {
+   "id": "store_realm_keyv_3",
+   "seed": 20272863,
+   "prompt": "grand strategy key art, a vast walled fortress city on a river plain at dawn, banners without markings, mist, mountains and ranks of tents in the distance, majestic sweeping composition, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  },
+  {
+   "id": "store_realm_keyv_4",
+   "seed": 20272960,
+   "prompt": "grand strategy key art, a vast walled fortress city on a river plain at dawn, banners without markings, mist, mountains and ranks of tents in the distance, majestic sweeping composition, vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed"
+  }
+ ]
+}

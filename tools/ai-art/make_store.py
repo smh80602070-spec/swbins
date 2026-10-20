@@ -4,6 +4,8 @@
   py tools/ai-art/make_store.py sheet              # 고르기 시트 → _out/store_pick.jpg
   py tools/ai-art/make_store.py pack [picks]       # 규격별 포장 → _out/store/<판>/ (picks = _out/store_picks.json {"go":1,...}, 없으면 #1)
   py tools/ai-art/make_store.py check              # 규격 점검(크기·안전영역)·.license.json 100%
+  py tools/ai-art/make_store.py batch_v            # K-0149 세로 키 아트 → batches/store_v.json (판 5 × 후보 4, 768×1344 세로 구도 — 띠 없음)
+  py tools/ai-art/make_store.py pack_v [picks]     # 고른 세로 그림 → key_v_1080x1920(가득 채워 자름) · 정본 saga-assets/store/<판>/ (picks = _out/store_v_picks.json)
 
 판마다 산출: key_h_1920x1080.webp(스토어 가로·타이틀) · key_v_1080x1920.webp(세로 스토어: 가운데 세로 자르기 + 위아래 번짐) · icon_1024.png(iOS, 알파 없음) · icon_512.png · icon_192.png(PWA)
             · android_fg_432.png(적응형 전경 — 안전 원 지름 288px 안에 핵심, 알파) · load_1~3_1920x1080.webp.
@@ -131,6 +133,53 @@ def pack(picks_path=None):
     print('스토어 포장', len(GAMES))
 
 
+VW, VH = 768, 1344
+VCOMP = 'vertical composition, tall portrait framing, open sky in the upper part, foreground at the bottom, subject centered, full bleed'
+
+
+def batch_v():
+    """K-0149 — 세로 키 아트: 가로판과 같은 모델·주제, 세로 구도로 처음부터 그린다(예전 key_v 는 가로 그림 가운데 + 흐린 위아래 띠)."""
+    items, n = [], 0
+    for g, (_name, prompt) in GAMES.items():
+        for k in range(1, 5):
+            n += 1
+            items.append({'id': f'store_{g}_keyv_{k}', 'seed': 20271020 + 97 * n, 'prompt': prompt + ', ' + VCOMP})
+    b = {'model': 'Illustrious-XL-v2.0', 'out': 'store_v',
+         'defaults': {'prompt_prefix': PREFIX, 'width': VW, 'height': VH, 'steps': 28, 'cfg': 5.5, 'sampler': 'Euler a', 'negative': NEG + ', letterbox, blurred border, split screen'}, 'items': items}
+    p = os.path.join(HERE, 'batches', 'store_v.json')
+    json.dump(b, open(p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    print('BATCH store_v', len(items), '→', p)
+
+
+def pack_v(picks_path=None):
+    """고른 세로 그림을 1080×1920 에 가득(가운데 자름) — 정본 saga-assets/store/<판>/key_v_1080x1920.webp 와 _out/store 둘 다."""
+    picks = json.load(open(picks_path or os.path.join(OUT, 'store_v_picks.json'), encoding='utf-8'))
+    canon = os.path.join(HERE, '..', '..', 'saga-assets', 'store')
+    for g in GAMES:
+        k = picks[g]
+        src = os.path.join(OUT, 'store_v', f'store_{g}_keyv_{k}.png')
+        im = Image.open(src).convert('RGB')
+        sc = max(1080 / im.width, 1920 / im.height)
+        im = im.resize((round(im.width * sc), round(im.height * sc)), Image.LANCZOS)
+        x, y = (im.width - 1080) // 2, (im.height - 1920) // 2
+        v = im.crop((x, y, x + 1080, y + 1920))
+        lic = lic_of(src)
+        lic.update({'game': g, 'picked_candidate': k, 'upscaled_from': [VW, VH], 'packed_by': 'K-0149 make_store.py pack_v(세로 구도 그대로, 띠 없음)'})
+        for d in (os.path.join(FINAL, g), os.path.join(canon, g)):
+            save(v, os.path.join(d, 'key_v_1080x1920.webp'), lic)
+    print('세로 키 아트', len(GAMES))
+
+
+def band_seam(p):
+    """옛 key_v 흔적 = 화면 폭 전체에 걸친 붙임선(가운데 그림 ↔ 흐린 띠, 위·아래 약 14%). 줄마다 위아래 밝기 차의 폭 중앙값을 재
+    위 5~25%·아래 75~95% 구간에서 가장 센 줄 ÷ 구간 중앙값 — 옛 다섯 장 22~186, 10 넘으면 띠(K-0149)."""
+    import numpy as np
+    a = np.asarray(Image.open(p).convert('L')).astype(np.float32)
+    d = np.median(np.abs(np.diff(a, axis=0)), axis=1)
+    h = a.shape[0]
+    return max(float(seg.max() / (np.median(seg) + 0.5)) for seg in (d[int(h * 0.05):int(h * 0.25)], d[int(h * 0.75):int(h * 0.95)]))
+
+
 def check():
     bad = []
     total = 0
@@ -156,6 +205,13 @@ def check():
             bb = a.point(lambda v: 255 if v > 8 else 0).getbbox()
             if bb and (bb[0] < 72 or bb[1] < 72 or bb[2] > 360 or bb[3] > 360):
                 bad.append(f'{g} 적응형 전경이 안전영역을 벗어남')
+    for g in GAMES:                                                                   # K-0149 세로 키 아트 흐린 띠 검사
+        p = os.path.join(HERE, '..', '..', 'saga-assets', 'store', g, 'key_v_1080x1920.webp')   # 정본
+        if os.path.exists(p):
+            r = band_seam(p)
+            print(f'띠 {g} {r:.1f}')
+            if r > 10:
+                bad.append(f'{g} key_v 에 붙임선(흐린 띠) {r:.0f} > 10')
     mb = total / 1048576
     print(f'스토어 {len(GAMES)}판 · 파일 {len(GAMES) * len(spec)} · 합계 {mb:.1f}MB')
     print('STORE_FAIL' if bad else 'STORE_OK')
@@ -172,6 +228,10 @@ if __name__ == '__main__':
         sheet()
     elif cmd == 'pack':
         pack(sys.argv[2] if len(sys.argv) > 2 else None)
+    elif cmd == 'batch_v':
+        batch_v()
+    elif cmd == 'pack_v':
+        pack_v(sys.argv[2] if len(sys.argv) > 2 else None)
     elif cmd == 'check':
         sys.exit(check())
     else:
