@@ -19,7 +19,7 @@
    768,
    768
   ],
-  "seconds": 28.0,
+  "seconds": 28,
   "date": "2026-10-19",
   "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
   "mode": "img2img",
@@ -44,5 +44,6 @@
  "height_m": 0.6,
  "replaces": "standin 대역(Quaternius Alien_2·Cat_Monster·Demon·Orc·Wizard·Yeti — sprite.js pk_* 표)",
  "commercial_use": true,
- "rig": "quad"
+ "rig": "quad",
+ "unity_safe": "K-0153 tools/glb-compress/unity_safe.mjs — 유니티 glTFast 용(WebP→JPEG · Meshopt 풂, 양자화는 둠), 모양·그림 같음"
 }

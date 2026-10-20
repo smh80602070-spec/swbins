@@ -15,5 +15,6 @@
   1.16
  ],
  "tris": 2556,
- "family": "quad"
+ "family": "quad",
+ "unity_safe": "K-0153 tools/glb-compress/unity_safe.mjs — 유니티 glTFast 용(WebP→JPEG · Meshopt 풂, 양자화는 둠), 모양·그림 같음"
 }

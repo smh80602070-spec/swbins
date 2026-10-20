@@ -215,7 +215,8 @@
   },
   {
    "id": "pets3d",
-   "src": "saga-assets/pets3d",
+   "src": "saga-assets/pets3d-engine",
+   "note": "K-0153 — 엔진(고돗·유니티)용은 압축을 푼 판: tools/glb-compress/unity_safe.mjs saga-assets/pets3d saga-assets/pets3d-engine (WebP→JPEG·Meshopt 풂, 웹은 pets3d-trellis-web 이 압축 정본)",
    "include": [
     "*.glb",
     "*.license.json"

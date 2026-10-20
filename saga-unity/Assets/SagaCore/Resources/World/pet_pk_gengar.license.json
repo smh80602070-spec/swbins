@@ -41,7 +41,8 @@
  "note": "K-0120 자체 생성 — 입력 = 도감 초상(web_pets_105)을 u2net 으로 떼어 img2img(k120_pets_C2/C3, 그림체 C) → TRELLIS. 빌린 standin 대역을 대신한다 — 게임 참조 바꾸기는 W 티켓.",
  "pipeline": "remote3d/finish.py(얼굴 +Z·발 밑 원점·키 m·떨어진 조각·바닥 판 지움) → glb-compress/creature_fill.mjs --forward-z(뼈 없는 동작 7) → compress.mjs(Meshopt·WebP)",
  "yaw": 0,
- "height_m": 1.0,
+ "height_m": 1,
  "replaces": "standin 대역(Quaternius Alien_2·Cat_Monster·Demon·Orc·Wizard·Yeti — sprite.js pk_* 표)",
- "commercial_use": true
+ "commercial_use": true,
+ "unity_safe": "K-0153 tools/glb-compress/unity_safe.mjs — 유니티 glTFast 용(WebP→JPEG · Meshopt 풂, 양자화는 둠), 모양·그림 같음"
 }

@@ -1,7 +1,9 @@
 /**
  * K-0152 — 환경 GLB 에 자체 사실 재질 맵(법선·거칠기)을 더한다. 색 그림·형태·UV·이름은 그대로, 맵만 더한다(멱등 — 이미 있으면 건너뜀).
  *
- * 사용법: node tools/glb-compress/add_pbr_maps.mjs --ids a,b,c [--sets web,toon] [--size 512] [--dry]
+ * 사용법: node tools/glb-compress/add_pbr_maps.mjs --ids a,b,c [--sets web,toon] [--size 512] [--dry] [--fix-webp]
+ *   맵 형식: web = WebP(EXT_texture_webp) · toon = JPEG q90(유니티 glTFast 가 WebP 를 못 읽는다 — K-0153 · PNG 는 30개 +12MB 라 원래 색 그림과 같은 JPEG, 고돗도 같은 파일)
+ *   --fix-webp: toon 에 이미 들어간 WebP 그림을 JPEG 로 바꾸고 EXT_texture_webp 를 뗀다(K-0152 1차 30개 고침)
  *   대상 = saga-assets/world/<set>/<id>.glb (제자리 갈아 끼움 — 정본 · 배치는 place.py)
  *
  * 맵 식(tools/ai-art/pbr_from_albedo.py 와 같은 결 — 남의 텍스처 0, 그 재질 색 그림에서 계산):
@@ -26,12 +28,13 @@ const sets = arg('--sets', 'web,toon').split(',');
 const SIZE = +arg('--size', 512);
 const dry = process.argv.includes('--dry');
 const STRENGTH = 2.2;
+const fixWebp = process.argv.includes('--fix-webp');
 
 await MeshoptDecoder.ready;
 await MeshoptEncoder.ready;
 const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'meshopt.decoder': MeshoptDecoder, 'meshopt.encoder': MeshoptEncoder });
 
-async function maps(bytes) {
+async function maps(bytes, fmt) {
   const img = sharp(bytes).ensureAlpha();
   const meta = await img.metadata();
   const sc = Math.min(1, SIZE / Math.max(meta.width, meta.height));
@@ -63,7 +66,7 @@ async function maps(bytes) {
       mr[i * 3] = 255; mr[i * 3 + 1] = Math.round(rough * 255); mr[i * 3 + 2] = 0;
     }
   }
-  const enc = (buf) => sharp(buf, { raw: { width: w, height: h, channels: 3 } }).webp({ quality: 85 }).toBuffer();
+  const enc = (buf) => { const im = sharp(buf, { raw: { width: w, height: h, channels: 3 } }); return (fmt === 'jpeg' ? im.jpeg({ quality: 90, chromaSubsampling: '4:4:4' }) : im.webp({ quality: 85 })).toBuffer(); };
   return { nrm: await enc(nrm), mr: await enc(mr), w, h };
 }
 
@@ -75,9 +78,17 @@ for (const set of sets) {
     if (!fs.existsSync(f)) { continue; }
     const doc = await io.read(f);
     const root = doc.getRoot();
-    if (!root.listExtensionsUsed().some((e) => e.extensionName === 'EXT_texture_webp')) { doc.createExtension(EXTTextureWebP).setRequired(true); }
-    const cache = new Map();
+    const fmt = set === 'web' ? 'webp' : 'jpeg';
+    const mime = fmt === 'jpeg' ? 'image/jpeg' : 'image/webp';
     let changed = false;
+    if (fmt === 'webp' && !root.listExtensionsUsed().some((e) => e.extensionName === 'EXT_texture_webp')) { doc.createExtension(EXTTextureWebP).setRequired(true); }
+    if (fmt === 'jpeg' && fixWebp) {                                    // K-0153: WebP 그림 → JPEG, 확장 떼기
+      for (const t of root.listTextures()) {
+        if (t.getMimeType() === 'image/webp') { t.setImage(await sharp(Buffer.from(t.getImage())).jpeg({ quality: 90, chromaSubsampling: '4:4:4' }).toBuffer()).setMimeType('image/jpeg'); t.setURI(t.getURI().replace(/\.webp$/, '.jpg')); changed = true; }
+      }
+      for (const e of root.listExtensionsUsed()) { if (e.extensionName === 'EXT_texture_webp' && !root.listTextures().some((t) => t.getMimeType() === 'image/webp')) { e.dispose(); changed = true; } }
+    }
+    const cache = new Map();
     for (const m of root.listMaterials()) {
       mats++;
       if (m.getNormalTexture()) { continue; }                          // 멱등
@@ -88,9 +99,9 @@ for (const set of sets) {
       }
       let mp = cache.get(base);
       if (!mp) {
-        mp = await maps(Buffer.from(base.getImage()));
-        const nt = doc.createTexture(base.getName() + '_n').setImage(mp.nrm).setMimeType('image/webp');
-        const rt = doc.createTexture(base.getName() + '_r').setImage(mp.mr).setMimeType('image/webp');
+        mp = await maps(Buffer.from(base.getImage()), fmt);
+        const nt = doc.createTexture(base.getName() + '_n').setImage(mp.nrm).setMimeType(mime);
+        const rt = doc.createTexture(base.getName() + '_r').setImage(mp.mr).setMimeType(mime);
         mp = { ...mp, nt, rt };
         cache.set(base, mp);
       }

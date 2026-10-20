@@ -44,5 +44,6 @@
  "height_m": 1.8,
  "replaces": "standin 대역(Quaternius Alien_2·Cat_Monster·Demon·Orc·Wizard·Yeti — sprite.js pk_* 표)",
  "commercial_use": true,
- "rig": "worm"
+ "rig": "worm",
+ "unity_safe": "K-0153 tools/glb-compress/unity_safe.mjs — 유니티 glTFast 용(WebP→JPEG · Meshopt 풂, 양자화는 둠), 모양·그림 같음"
 }
