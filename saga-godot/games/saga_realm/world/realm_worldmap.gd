@@ -79,7 +79,7 @@ const Characters := preload("res://saga_core/data/characters.gd")
 ## 카메라 쪽 정정과 짝을 이룬다).
 const GROUND_SPAN := 6000.0
 const COLOR_GROUND := Color(0.42, 0.48, 0.32)
-const MAP_TILE_SCALE := 0.1   # G-0252 지도는 높이 떠서 보므로 사진 결을 4배 크게(기본 0.4 는 멀리서 자글자글)
+const MAP_TILE_SCALE := 0.04   # G-0252 지도는 높이 떠서 보므로 사진 결을 크게(기본 0.4 는 멀리서 자글자글) · G-0259 0.1 → 0.04(0.06·0.04 컷 비교 — 0.1 은 중간부터 밉맵에 녹아 민 초록)
 const COLOR_FLAG := Color(0.85, 0.8, 0.7)
 const COLOR_CURRENT := Color(0.95, 0.75, 0.2)
 const LAND_COLOR := {"plain": Color(0.74, 0.62, 0.4), "river": Color(0.42, 0.58, 0.66)}
@@ -179,17 +179,21 @@ func _build_all_markers() -> void:
 ## 폴링한다(FOREST gather_label.gd 폴링 패턴과 같은 결) — 숨어 있는 동안은
 ## 강조 갱신도, 탭 판정도 건너뛴다.
 func _process(_delta: float) -> void:
-	if not _markers_built:
-		if not RealmSaveState.scenario_ready:
-			return  # 아직 시나리오를 안 골랐다 — 이번 프레임엔 할 일이 없다
-		_build_all_markers()
-	_check_annexed()
+	## G-0259 — 보이기·안개 사본 토글은 시나리오 확정 전에도 한다(전엔 아래 return 이 먼저라 세이브 없는 첫 판에선
+	## 지도가 성 화면에서도 보인 채였고, 지도를 켜도 안개 사본이 안 걸려 rk_map_wide 컷이 안개에 먹혔다 — probe_realm_map_fog).
 	visible = RealmSaveState.viewing_map
 	if visible != _last_visible:
 		_last_visible = visible
 		_apply_fog_override(visible)
 		for city_id: String in _areas:
 			(_areas[city_id] as Area3D).input_ray_pickable = visible
+	if not _markers_built:
+		if not RealmSaveState.scenario_ready:
+			return  # 아직 시나리오를 안 골랐다 — 이번 프레임엔 할 일이 없다
+		_build_all_markers()
+		for city_id: String in _areas:   # 방금 세운 성표도 지금 보이기에 맞춘다
+			(_areas[city_id] as Area3D).input_ray_pickable = visible
+	_check_annexed()
 	if not visible:
 		return
 

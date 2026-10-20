@@ -4143,7 +4143,7 @@
   "fun": {},
   "ticket": "G-0252",
   "since": "2026-10-20",
-  "note": "SAGA_REALM_OLD=1 옛 민색 vertex_color · 성 색 _land_color·성표는 그대로 · 지도 컷은 지도 안개가 진해 결이 옅게만 보임"
+  "note": "지도 안개 G-0259(갈래 B — 시나리오 확정 전엔 _process 가 토글 전에 돌아가 안개 사본이 안 걸렸음 → 토글을 앞으로 · 지도 땅 tile_scale 0.1 → 0.04 · probe_realm_map_fog) · SAGA_REALM_OLD=1 옛 민색 vertex_color · 성 색 _land_color·성표는 그대로 · 지도 컷은 지도 안개가 진해 결이 옅게만 보임"
  },
  {
   "id": "gd.dg.dark_rooms",
