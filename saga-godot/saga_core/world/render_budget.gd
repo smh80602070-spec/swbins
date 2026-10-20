@@ -5,7 +5,7 @@ extends RefCounted
 ##      화면 밖·그림자 범위 밖 인스턴스까지 전부 그리고, 먼 인스턴스도 가장 자세한 LOD 로 그린다(LOD 는 덩어리 거리로 고른다).
 ##      칸으로 나누면 칸마다 시야 밖은 빠지고 먼 칸은 저절로 낮은 LOD(엔진 기본 — 화면 1px 오차 기준이라 눈엔 같다).
 ##   ② 카메라 far 4000m → FAR_M. 가장 맑은 날 안개(0.012 × 0.6)로도 1000m 너머는 0.07% 만 비쳐 화면이 같다.
-## test_village.gd(1만리, 기본값)·forest_village.gd(3마을 G-0260 — chunk_m 32·no_cast 더함)가 씬을 다 지은 뒤 한 번 부른다. 헤드리스(더미 렌더러)는 인스턴스 위치를 못 읽어 쪼개지 않는다 — 그대로 둔다.
+## test_village.gd(1만리, 기본값)·forest_village.gd(3마을 G-0260 — chunk_m 32·no_cast 더함)·test_room.gd(2나락)·story_terrain_builder.gd(4종횡, far 그대로) — G-0269 가(5천하 성은 50m 에서 draw 239→274 로 늘어 안 부름) 씬을 다 지은 뒤 한 번 부른다. 헤드리스(더미 렌더러)는 인스턴스 위치를 못 읽어 쪼개지 않는다 — 그대로 둔다.
 
 const CHUNK_M := 112.0
 ## 이만큼(삼각형 × 인스턴스) 무거운 덩어리만 쪼갠다 — 작은 풀·꽃 덩어리까지 쪼개면 넓게 보일 때 조각 수만큼 draw call 이 는다
@@ -21,10 +21,11 @@ const NO_CAST_PREFIX := ["Understory", "MeadowHeads", "MeadowStems", "Crops", "S
 		"VillageProps", "Dispatch", "Gather", "CookingPot"]   # 뒤 넷은 마을 소품(간판·게시판·채집물·솥) — 건물·좌판 그림자는 그대로
 
 ## 쪼갠 MultiMesh 수를 돌려준다.
-static func apply(root: Node, chunk_m := CHUNK_M, no_cast: Array = NO_CAST_PREFIX) -> int:
+## far_m = 0 이면 카메라 far 를 안 건드린다(4종횡 — 옆 보기 먼 배경 능선이 1000m 밖, G-0269).
+static func apply(root: Node, chunk_m := CHUNK_M, no_cast: Array = NO_CAST_PREFIX, far_m := FAR_M) -> int:
 	var cam := root.get_viewport().get_camera_3d()
-	if cam and cam.far > FAR_M:
-		cam.far = FAR_M
+	if cam and far_m > 0.0 and cam.far > far_m:
+		cam.far = far_m
 	var split := 0
 	for n in root.find_children("*", "MultiMeshInstance3D", true, false):
 		if _split(n as MultiMeshInstance3D, chunk_m):

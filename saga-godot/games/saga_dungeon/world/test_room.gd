@@ -278,6 +278,10 @@ func _ready() -> void:
 	companions.setup(get_tree().get_first_node_in_group("player"))
 	companions.set_count(DungeonPartyState.members.size())
 	DungeonPartyState.party_changed.connect(func() -> void: companions.set_count(DungeonPartyState.members.size()))
+	## G-0269 그리기 부담 — 1만리·3마을과 같은 render_budget(saga_core). 2나락은 해 그림자가 없고 횃불 7개가 그림자 빛이라
+	## 몫은 작은 것 그림자 끔(처음 놓인 줍기·우물 — 나중 떨어지는 줍기는 loot_pickup._no_cast). far 1000 은 방 안이라 그대로 보임.
+	(func() -> void: preload("res://saga_core/world/render_budget.gd").apply(self, preload("res://saga_core/world/render_budget.gd").CHUNK_M,
+			preload("res://saga_core/world/render_budget.gd").NO_CAST_PREFIX + ["LootPickup", "GoldPickup", "PotionPickup", "GemPickup", "Well"])).call_deferred()
 
 
 ## saga_core/ui/goal_board.gd는 DungeonSaveState·DungeonHordeState·
@@ -612,6 +616,7 @@ func _spawn_well(origin_z: float) -> void:
 	mat.albedo_color = Color(0.25, 0.55, 0.85) # dungeon.js potion.js 'heal' 계열과 구분되는 우물색(물)
 	mi.material_override = mat
 	area.add_child(mi)
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF   # G-0269 우물(0.6m) — 줍기와 같이 횃불 그림자 패스에서 뺌
 	add_child(area)
 	area.body_entered.connect(func(body: Node3D) -> void:
 		if not body.is_in_group("player"):

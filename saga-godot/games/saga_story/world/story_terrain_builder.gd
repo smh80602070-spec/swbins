@@ -46,6 +46,10 @@ func _ready() -> void:
 	for r: Dictionary in _map.ropes_m():
 		_build_climb(r)
 	_build_boundary_walls()
+	## G-0269 그리기 부담 — render_budget(saga_core): 해 그림자 100→50m·먼 배경 나무·언덕(옆 보기 뒤편)은 그림자 안 드리움.
+	## far 는 그대로(0) — 배경 능선이 1000m 밖이라 잘린다. 씬 뿌리(필드 씬 전부가 이 지형 짓기를 씀) 기준, 배경까지 다 지은 뒤.
+	(func() -> void: preload("res://saga_core/world/render_budget.gd").apply(get_parent(), preload("res://saga_core/world/render_budget.gd").CHUNK_M,
+			preload("res://saga_core/world/render_budget.gd").NO_CAST_PREFIX + ["BackgroundTrees", "BackgroundHills"], 0.0)).call_deferred()
 
 
 func _build_ground() -> void:

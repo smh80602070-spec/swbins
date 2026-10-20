@@ -42,6 +42,13 @@ extends RefCounted
 ## 층에서도 훨씬 센 물건이 나온다.
 
 const Toast := preload("res://saga_core/ui/toast.gd")
+
+## G-0269 — 바닥에 떨어진 작은 것(≤0.6m)은 그림자를 안 드리운다. 2나락 방 횃불 7개가 다 그림자 빛이라
+## 작은 줍기 하나가 빛마다 그림자 패스를 더 그렸다(그리기 부담). 빛기둥·고리는 이미 끔. 돌려주는 건 area 그대로.
+static func _no_cast(area: Node) -> Node:
+	for g in area.find_children("*", "GeometryInstance3D", true, false):
+		(g as GeometryInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	return area
 const DungeonMode := preload("res://games/saga_dungeon/data/dungeon_mode.gd")   # G-0247 난도 bias·금
 const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
 const OUTLINE_SHADER := preload("res://saga_core/shaders/cel_outline.gdshader")
@@ -305,7 +312,7 @@ static func _spawn_item(parent: Node, pos: Vector3, it: Dictionary, pillar: bool
 	cs.shape = shape
 	area.add_child(cs)
 
-	parent.add_child(area)
+	parent.add_child(_no_cast(area))
 	area.body_entered.connect(func(body: Node3D) -> void:
 		if body.is_in_group("player"):
 			if slot_name == "weapon":   # G-0236 손 무기는 을로(을에 있던 건 버림)
@@ -366,7 +373,7 @@ static func _spawn_gold(parent: Node, pos: Vector3, floor_num: int, mul: float =
 
 	var area := _pickup_area("GoldPickup", pos, GOLD_COLOR, BoxMesh.new())
 	(area.get_node("Mesh").mesh as BoxMesh).size = Vector3(0.35, 0.35, 0.35)
-	parent.add_child(area)
+	parent.add_child(_no_cast(area))
 	area.body_entered.connect(func(body: Node3D) -> void:
 		if body.is_in_group("player"):
 			DungeonGoldState.add(amount)
@@ -388,7 +395,7 @@ static func _spawn_mat(parent: Node, pos: Vector3, floor_num: int, bias: float =
 			mesh.radius = 0.28
 			mesh.height = 0.56
 			var area := _pickup_area("RunePickup", pos, RUNE_COLOR, mesh)
-			parent.add_child(area)
+			parent.add_child(_no_cast(area))
 			area.body_entered.connect(func(body: Node3D) -> void:
 				if body.is_in_group("player"):
 					DungeonMaterialsState.add_rune(str(mat.key))
@@ -405,7 +412,7 @@ static func _spawn_mat(parent: Node, pos: Vector3, floor_num: int, bias: float =
 			mesh.radius = 0.3
 			mesh.height = 0.6
 			var area := _pickup_area("GemPickup", pos, Color(String(gr.color)), mesh)
-			parent.add_child(area)
+			parent.add_child(_no_cast(area))
 			area.body_entered.connect(func(body: Node3D) -> void:
 				if body.is_in_group("player"):
 					DungeonMaterialsState.add_gem(str(mat.key), grade_num)
@@ -417,7 +424,7 @@ static func _spawn_mat(parent: Node, pos: Vector3, floor_num: int, bias: float =
 			mesh.radius = 0.3
 			mesh.height = 0.6
 			var area := _pickup_area("JewelPickup", pos, JEWEL_COLOR, mesh)
-			parent.add_child(area)
+			parent.add_child(_no_cast(area))
 			area.body_entered.connect(func(body: Node3D) -> void:
 				if body.is_in_group("player"):
 					## 주머니가 차 있으면(JEWEL_MAX) 바닥에 남는다 — area는 안 지운다
@@ -440,7 +447,7 @@ static func _spawn_potion(parent: Node, pos: Vector3, floor_num: int) -> void:
 	mesh.radius = 0.26
 	mesh.height = 0.52
 	var area := _pickup_area("PotionPickup", pos, POTION_COLOR, mesh)
-	parent.add_child(area)
+	parent.add_child(_no_cast(area))
 	area.body_entered.connect(func(body: Node3D) -> void:
 		if body.is_in_group("player"):
 			var r := DungeonPotionState.add(g)
@@ -455,7 +462,7 @@ static func _spawn_scroll(parent: Node, pos: Vector3) -> void:
 	var mesh := BoxMesh.new()
 	mesh.size = Vector3(0.3, 0.42, 0.06)
 	var area := _pickup_area("ScrollPickup", pos, SCROLL_COLOR, mesh)
-	parent.add_child(area)
+	parent.add_child(_no_cast(area))
 	area.body_entered.connect(func(body: Node3D) -> void:
 		if body.is_in_group("player"):
 			DungeonMaterialsState.add_scroll(1)
@@ -478,7 +485,7 @@ static func spawn_grave_at(parent: Node, pos: Vector3) -> void:
 	mesh.size = Vector3(0.55, 0.7, 0.55)
 	var area := _pickup_area("GraveMarker", pos, GRAVE_COLOR, mesh)
 	area.add_to_group("dungeon_grave_marker")
-	parent.add_child(area)
+	parent.add_child(_no_cast(area))
 	area.body_entered.connect(func(body: Node3D) -> void:
 		if body.is_in_group("player"):
 			var gold: int = int(DungeonGraveState.grave.get("gold", 0))
@@ -497,7 +504,7 @@ static func _spawn_sigil(parent: Node, pos: Vector3, tier: int) -> void:
 	mesh.radius = 0.32
 	mesh.height = 0.64
 	var area := _pickup_area("SigilPickup", pos, SIGIL_COLOR, mesh)
-	parent.add_child(area)
+	parent.add_child(_no_cast(area))
 	area.body_entered.connect(func(body: Node3D) -> void:
 		if body.is_in_group("player"):
 			var s := DungeonSigilState.add_sigil(tier)
