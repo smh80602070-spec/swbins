@@ -48,6 +48,8 @@ try {
       await ev((f) => { if (DG.town && DG.town.leave) { DG.town.leave(); } DG.dungeon.enter({ floor: f }); }, scene === 'deep' ? 12 : 1); await sleep(2500);
       for (let i = 0; i < 4; i++) { await ev(() => { document.querySelectorAll('button').forEach((b) => { if (/건너뛰기/.test(b.textContent)) { b.click(); } }); const c = document.getElementById('sheet-close'); if (c && c.offsetParent) { c.click(); } }); await sleep(300); }
       await ev(() => { const R = DG.dungeon.raw(); if (R) { R.hp = R.hpMax = 999999; } });
+      for (let i = 0; i < 24 && await ev(() => !!(DG.loadVeil && DG.loadVeil.shown())); i++) { await sleep(500); }   // W-0347 가림막(GLB 받기 — 2D 판도 같은 막)이 걷힐 때까지 · 12초 넘으면 걷고 찍는다
+      await ev(() => { if (DG.loadVeil && DG.loadVeil.shown()) { console.warn('W-0347 loadVeil 12초 — 걷고 찍음'); DG.loadVeil._hide(); } });
     }
     await sleep(1200);
   } else if (game === 'saga-go') {
@@ -66,6 +68,7 @@ try {
   }
   const body = await ev(() => new Promise((res) => { const M = DG.mode2d, p0 = M.pace, seen = {}; M.pace = function (k, x, y, u, bp) { seen[k] = Math.round(bp); return p0.apply(this, arguments); }; setTimeout(() => { M.pace = p0; const ks = Object.keys(seen); res({ me: seen.player || seen.me || seen['me:in'] || null, others: ks.filter((k) => !/^(player|me|me:in)$/.test(k)).slice(0, 4).map((k) => seen[k]) }); }, 1200); }));   // W-0204 몸 px(pace 가 받는 bodyPx — 보폭 쓰는 배우만)
   const info = await ev(() => ({ w: innerWidth, h: innerHeight }));
+  if (process.env.LOOK_TUNE) { await ev((kv) => { kv.split(',').forEach((x) => { const i = x.indexOf('='); DG.core.setTune(x.slice(0, i), +x.slice(i + 1)); }); }, process.env.LOOK_TUNE); await sleep(700); }   // W-0347 비교판 — 찍기 직전 손잡이(예: mode2d.mip=0)
   { const cov = await beforeShot(page, game, { keep: ['sheet', 'detail', 'encounter'] }); if (cov.length) { console.log('covered', cov.join(',')); } }
   await page.screenshot(dest.endsWith('.jpg') ? { path: dest, type: 'jpeg', quality: 72 } : { path: dest });
   console.log('저장', dest, JSON.stringify(info), '몸px', JSON.stringify(body), r.errors.length ? 'errors ' + JSON.stringify(r.errors.slice(0, 3)) : '');

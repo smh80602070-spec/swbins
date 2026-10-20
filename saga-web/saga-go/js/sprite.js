@@ -798,7 +798,7 @@
       if (bimg && bimg.complete && bimg.naturalWidth) {
         useImg = true;
         var bdw = H * 1.5, bdh = H * 1.5;
-        c.imageSmoothingEnabled = false;
+        c.imageSmoothingEnabled = true; c.imageSmoothingQuality = 'high';   // W-0347 — 짐승 그림은 렌더(K-0114, 96px)라 최근접 확대면 점묘로 깨진다 · 사람(human_*) 16px 픽셀 그림만 최근접
         c.drawImage(bimg, footX - bdw / 2, footY - bdh, bdw, bdh);
       } else {
         loadingMark(c, footX, footY, H, o.color);
@@ -806,7 +806,7 @@
     }
     /* 여기서 한 번 훑는다 — 지도 위 스탬프는 어두운 배경에 서므로
        실루엣만 밝은 테를 둘러 형태가 묻히지 않게 한다 */
-    storyize(cv, { rim: STORY_RIM_MAP, inner: H >= 40, thick: 1 });
+    storyize(cv, { rim: STORY_RIM_MAP, inner: H >= 40 && !(useImg && kind === 'beast'), thick: 1 });   // W-0347 렌더 짐승 그림은 실루엣 테만 — 안쪽 선이 털 결을 점묘로 만든다
     return { cv: cv, w: w, h: h, footX: footX, footY: footY, base: base, sc: sc, img: useImg };
   }
 
@@ -1018,8 +1018,8 @@
     } else if (kind === 'pet') {
       var bimg4 = beastImgOf(ref);
       if (bimg4 && bimg4.complete && bimg4.naturalWidth) {
-        c.imageSmoothingEnabled = false;
-        var bw4 = size * 0.9;
+        c.imageSmoothingEnabled = true; c.imageSmoothingQuality = 'high';   // W-0347
+        var bw4 = size * 0.9; var petImg4 = true;
         c.drawImage(bimg4, size * 0.5 - bw4 / 2, size * 0.9 - bw4, bw4, bw4);
       } else {
         loadingMark(c, size * 0.5, size * 0.9, size * 0.8, beastColorOf(ref));
@@ -1027,7 +1027,7 @@
     } else if (kind === 'building') {
       building(c, { x: size * 0.5, y: size * 0.95, s: size / 58, form: ref.key, color: ref.color, t: 0 });
     }
-    if (!flat) { storyize(cv); }
+    if (!flat) { storyize(cv, petImg4 ? { inner: false } : undefined); }   // W-0347 렌더 짐승 그림은 실루엣 테만
     cache[key] = cv.toDataURL();
     return cache[key];
   }
@@ -1117,14 +1117,14 @@
       /* 짐승은 가로로 긴 형태(용·물고기)가 있어 이미지 상자를 넉넉히 잡는다 */
       var bimg5 = beastImgOf(ref);
       if (bimg5 && bimg5.complete && bimg5.naturalWidth) {
-        fig.imageSmoothingEnabled = false;
-        var bw5 = h * 0.75;
+        fig.imageSmoothingEnabled = true; fig.imageSmoothingQuality = 'high';   // W-0347
+        var bw5 = h * 0.75; var petImg5 = true;
         fig.drawImage(bimg5, w * 0.5 - bw5 / 2, h * 0.80 - bw5, bw5, bw5);
       } else {
         loadingMark(fig, w * 0.5, h * 0.80, h * 0.6, ref.kind === 'divine' ? '#8a5cc0' : '#5f7a4a');
       }
     }
-    storyize(figCv);
+    storyize(figCv, petImg5 ? { inner: false } : undefined);   // W-0347 렌더 짐승 그림은 실루엣 테만
     c.save();
     c.setTransform(1, 0, 0, 1, 0, 0);      // 이미 배율이 반영된 캔버스라 그대로 얹는다
     c.drawImage(figCv, 0, 0);

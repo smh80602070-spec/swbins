@@ -161,6 +161,8 @@
      걷기 8칸을 시계(10fps, 속도 무관)로 넘기면 3마을은 다리가 느려 미끄러지고 1만리는 제자리걸음이었다. 키(배우)마다 땅 위를
      움직인 화면 거리를 쌓아 위상을 낸다 — 두 발 한 바퀴 = 몸 높이 × strideK. 세계 좌표를 받으니 카메라가 나를 따라가도(화면 위치 고정) 맞다 */
   var paces = {}, paceN = 0;
+  /** W-0347 — 큰 그림(시트 칸 256~512px)을 화면 크기로 줄일 때 기본(low) 필터는 가는 선이 점묘처럼 지글거린다 → high(밉맵·큐빅). 손잡이 mode2d.mip 0 = 옛 그리기(비교판) */
+  function hq(ctx) { if (ctx && 'imageSmoothingQuality' in ctx) { ctx.imageSmoothingQuality = tuneOf('mode2d.mip', 1) ? 'high' : 'low'; } return ctx; }
   function tuneOf(k, d) { var Cc = global.DG && global.DG.core, v = Cc && Cc.tuned ? Cc.tuned(k, d) : d; return +v; }
   /** → 걷기 위상 0~1. wx·wy 세계 좌표, ppu 화면 px/세계 단위, bodyPx 화면 몸 높이, ms 지금. 몸 높이 3배 넘게 뛰면 순간이동이라 안 쌓는다.
    *  빠르기 묶음: strideMaxHz(한 바퀴/초, 넘으면 다리 깜박임) · strideMinHz(화면 속도가 아주 느린 1만리도 걷는 티) */
@@ -283,7 +285,7 @@
     var cf = C(), vr = cf.vroid2d, sc = (vr ? (cf.targetH || 62) / (vr.h || 85) : (cf.scale || 1)) * (o.scale || 1), w = P * sc, h = P * sc, foot = (P / 2 + c[1] * PPM + 1.5) / P;
     ctx.save();
     if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
-    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingEnabled = true; hq(ctx);
     if (d.flip) { ctx.translate(o.x, 0); ctx.scale(-1, 1); ctx.translate(-o.x, 0); }
     var P2 = o.pose && S.roleName(o.pose) !== role && global.DG.pose3d && global.DG.pose3d.frame2d ? global.DG.pose3d.frame2d(o.pose) : null;   // 시트에 그 자세가 없을 때만 대역
     if (P2) { ctx.translate(o.x, o.y); ctx.rotate(P2.rot); ctx.scale(P2.sx, P2.sy); ctx.translate(-o.x, -o.y); }
@@ -326,7 +328,7 @@
     var foot = cr ? cr.foot : eight ? (P / 2 + c8[1] * PPM + 1.5) / P : ((vr && vr.foot) || cf.foot || 0.87);   // 8방향 칸: 가운데 + 카메라 높이(실측 114/128·156/192 와 ±1px)
     ctx.save();
     if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
-    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingEnabled = true; hq(ctx);
     if (d.flip) { ctx.translate(o.x, 0); ctx.scale(-1, 1); ctx.translate(-o.x, 0); }
     var P2 = o.pose && global.DG.pose3d && global.DG.pose3d.frame2d ? global.DG.pose3d.frame2d(o.pose) : null;   // W-0303 2D 대역 — 동작 프레임(K 시트) 전엔 발 밑 기준으로 기울이고 누른다
     if (P2) { ctx.translate(o.x, o.y); ctx.rotate(P2.rot); ctx.scale(P2.sx, P2.sy); ctx.translate(-o.x, -o.y); }
@@ -387,7 +389,7 @@
     var ps = stillPose(o.clip || 'idle', o.ms || 0, o.stride);
     ctx.save();
     ctx.globalAlpha = (o.alpha !== undefined ? o.alpha : 1) * ps.alpha;
-    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingEnabled = true; hq(ctx);
     ctx.translate(o.x, o.y);                         // 발 밑 가운데가 원점
     if (d.flip) { ctx.scale(-1, 1); }
     ctx.translate(ps.dx * bodyH, ps.dy * bodyH);
@@ -547,7 +549,7 @@
     ctx.save();
     ctx.fillStyle = 'rgba(0,0,0,0.18)'; ctx.beginPath(); ctx.ellipse(o.x, o.y, w * 0.38, Math.max(2, h * 0.07), 0, 0, Math.PI * 2); ctx.fill();   // 발 밑 그림자
     if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
-    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingEnabled = true; hq(ctx);
     ctx.drawImage(e.img, b.sx, b.sy, b.sw, b.sh, o.x - w / 2, o.y - h, w, h);
     ctx.restore();
     return true;

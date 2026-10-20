@@ -689,7 +689,7 @@
     } else if (kind === 'pet') {
       var pimg2 = petImgOf(ref);
       if (pimg2) {
-        c.imageSmoothingEnabled = false;
+        c.imageSmoothingEnabled = true; c.imageSmoothingQuality = 'high';   // W-0347 — 짐승 그림은 렌더(K-0114, 96px)라 최근접 확대면 점묘로 깨진다 · 사람(human_*) 16px 픽셀 그림만 최근접
         var pw2 = size * 0.78;
         c.drawImage(pimg2, size * 0.5 - pw2 / 2, size * 0.94 - pw2, pw2, pw2);
       } else {
@@ -769,7 +769,7 @@
     } else {
       var pimg3 = petImgOf(ref);
       if (pimg3) {
-        fig.imageSmoothingEnabled = false;
+        fig.imageSmoothingEnabled = true; fig.imageSmoothingQuality = 'high';   // W-0347 — 짐승 그림은 렌더(K-0114, 96px)라 최근접 확대면 점묘로 깨진다 · 사람(human_*) 16px 픽셀 그림만 최근접
         var pw3 = h * 0.62;
         fig.drawImage(pimg3, w * 0.5 - pw3 / 2, h * 0.93 - pw3, pw3, pw3);
       } else {

@@ -1348,5 +1348,22 @@
   "ticket": "W-0322",
   "since": "2026-10-20",
   "note": "10-20: net-log 요청 312 중 옛 경로 0 · pw-visual-close 10/10 GLB 실패 0"
+ },
+ {
+  "id": "dg.w2d-smooth",
+  "name": "2D 그림 결 매끈하게(W-0347) — 펫 그림 최근접 확대 → high · 공용 mode2d 축소 quality high(손잡이 mode2d.mip) · 2D 모음 던전 방 촬영 가림막 대기",
+  "files": [
+   "js/mode2d.js",
+   "js/sprite.js"
+  ],
+  "tests": [
+   "pw-web-2d-sheet 14/14 · pw-2d-cmp 비교판(옛 mip=0 / 새 mip=1)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0347",
+  "since": "2026-10-21",
+  "note": "10-21: 1만리 짐승 점묘 사라짐(shots/cmp/w347c_go_map) · 밉 사본 캐시는 high 로 충분해 안 만듦"
  }
 ]

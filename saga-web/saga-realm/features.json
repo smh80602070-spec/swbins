@@ -1299,5 +1299,21 @@
   "ticket": "W-0346",
   "since": "2026-10-20",
   "note": "10-20: pw-phone-budget 성 힙 34.9→9MB · 받은 양 9.6→4.3MB · 폰 촬영 2D·3D 두 장 Read ○"
+ },
+ {
+  "id": "rk.w2d-smooth",
+  "name": "2D 그림 축소 품질(W-0347) — 공용 mode2d 축소 quality high(손잡이 mode2d.mip 0 = 옛 그리기)",
+  "files": [
+   "js/mode2d.js"
+  ],
+  "tests": [
+   "pw-web-2d-sheet 14/14 · pw-2d-cmp 비교판(옛 mip=0 / 새 mip=1)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0347",
+  "since": "2026-10-21",
+  "note": "10-21: 1만리 짐승 점묘 사라짐(shots/cmp/w347c_go_map) · 밉 사본 캐시는 high 로 충분해 안 만듦"
  }
 ]
