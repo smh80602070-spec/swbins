@@ -21,3 +21,4 @@
 - [ ] 10-19 · (자체툴 K-0143 → 웹 1만리) · 종 몸 2D 시트 95 `shared/assets/creatures2d/<creatures3d id>/`(K-0090 꼴, manifest ortho_m 실제 크기) — 2D 짐승 풀은 종 id 먼저, 없으면 옛 mon_* · 웹
 - [ ] 10-19 · (웹 W-0336·W-0339 → 자체툴) · 2D 오딘스피어식 인물 부위 그림(뼈 16·부위 webp, 규격 `shared/js/cutout2d.js` 머리)·장소별 겹 배경 5~7 층 / 3D 원신+파판 규격(`shared/js/look3d.js`)에 맞춘 환경 모델·재질 · 자체툴 — **2D 절반 → K-0150**(10-20), 3D 는 W-0339 뒤
 - [ ] 10-19 · (자체툴 K-0138 → 웹) · 16방향 주역 10 `characters2d16/<id>/sheet.json`(역할 9) — gen-assets3d-ids · 웹
+- [ ] 10-20 · (고돗 G-0248 → 자체툴) · 원신식 얼굴 SDF 한 장 `saga-godot/assets/face_sdf/face_sdf.png`(VRoid 얼굴 UV 공용, 빛 = 캐릭터 오른쪽 기준 — 반대면 `face_sdf_flip=-1`) + 앞머리 그림자 띠 · 넣으면 바로 켜짐 · 고돗
