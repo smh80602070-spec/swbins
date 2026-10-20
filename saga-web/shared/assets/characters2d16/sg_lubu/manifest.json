@@ -24,7 +24,9 @@
   "hit",
   "death",
   "sit",
-  "pick"
+  "pick",
+  "cast",
+  "wave"
  ],
  "ortho_m": 3.75,
  "cam_z": 1.15,
@@ -43,6 +45,8 @@
   "hit": "m.hit",
   "death": "m.death@0:0.8",
   "sit": "m.sit_stand@0:0.45",
-  "pick": "m.pickup"
+  "pick": "m.pickup",
+  "cast": "m.cast",
+  "wave": "m.greet"
  }
 }

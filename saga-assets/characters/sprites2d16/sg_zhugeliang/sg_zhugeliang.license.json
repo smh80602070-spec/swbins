@@ -30,7 +30,9 @@
  },
  "motion": {
   "mocap": [
+   "m.cast",
    "m.death@0:0.8",
+   "m.greet",
    "m.hit",
    "m.idle",
    "m.pickup",

@@ -48,6 +48,9 @@ def main():
         pass
     write = '--write' in sys.argv
     ids = sorted(i for i in os.listdir(SRC) if os.path.exists(os.path.join(SRC, i, 'sheet.json'))) if os.path.isdir(SRC) else []
+    if '--only' in sys.argv:                                        # 10-20 — 2차 굽기 중 1차만 올릴 때(용량 결정 전)
+        keep = set(sys.argv[sys.argv.index('--only') + 1].split(','))
+        ids = [i for i in ids if i in keep]
     new = changed = same = 0
     nolic, kb = [], {}
     for pid in ids:

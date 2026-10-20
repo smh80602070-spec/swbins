@@ -72,7 +72,9 @@
   "hit": 12,
   "death": 10,
   "sit": 4,
-  "pick": 9
+  "pick": 9,
+  "cast": 11,
+  "wave": 9
  },
  "bodies": {
   "sg_guanyu": "tools/char-forge/_out/vroid/sg_guanyu/sg_guanyu.glb",

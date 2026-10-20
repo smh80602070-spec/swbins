@@ -8,7 +8,7 @@
 - [ ] 10-17 · 사용자 "3d,2d 게임성" 참고작 목록(판마다 4~6, 정본 루트 README 표) — README·index 반영 끝 · **웹 설계 W-0274 끝** · 고돗·유니티 PLAN 반영은 각 R-0 · 웹/고돗/유니티
 - [ ] 10-17 · (자체툴 K-0127 → 고돗) · 정육면체 잎 나무·바위 → foliage/<id>_real.gltf 14 — 시트 ② · 고돗
 - [ ] 10-17 · (자체툴 K-0128 → 고돗) · 2나락 방 킷·섬 밑동 사실판 world/real · KayKit·assets/dungeon 지움 — 시트 ③ · 고돗
-- [ ] 10-17 · (자체툴 K-0129 → 유니티) · PolyHaven 테스트 씬만·식물 3·짐승 셋 정리 — 시트 ④ · 유니티
+- [ ] 10-17 · (자체툴 K-0129 → 유니티) · PolyHaven 테스트 씬만·식물 3·짐승 셋 정리 — 시트 ④ · 유니티 — **주의(유니티 R-0 10-20)**: 유니티 `TestDungeon`·`TestVillage`·`TestVillageForest` 는 실제 판 씬이라 PolyHaven 소품은 실제 화면(2나락 시대 꾸밈 등)에 쓰인다 → 지우지 말고 짝(자체) 생기면 교체, U-0139 메모
 - [ ] 10-17 · (자체툴 K-0128 괴물 → 고돗) · 자체 괴물 몸 111 고돗 배치 끝, monster_body.gd shape→id 표 — 시트 ⑤ · 고돗
 - [ ] 10-18 · (자체툴 K-0139 → 고돗) · 같은 파일 `saga-godot/assets/anim_mocap/vroid_mocap_anims.glb` → VRoid 몸 anim_cc0 `_lib.res` 에 12 클립 갈아 끼우기(`.import` 는 고돗 세션) · 고돗
 - [ ] 10-18 · (자체툴 K-0137 → 고돗) · 주역 10 몸 바뀜(새 머리카락·뼈 비율·얼굴 레이어 — hl_mukhyang·kr_gyebaek·fu_jongwang·tb_baekgi·ru_geohae·sg_caocao·sg_liubei·sg_lubu·sg_sunquan·sg_zhugeliang) · 원본 `tools/char-forge/_out/vroid/<id>/<id>.glb`·`<id>_anims.glb`(이 PC) → `vroid_intake.sh --only <10>` 로 얼굴 데칼·anim_cc0 `_lib.res` 다시 · 고돗
@@ -19,7 +19,7 @@
 - [ ] 10-19 · (자체툴 K-0122·K-0120 → 웹) · 빌린 괴물 → `creatures3d/<id>`(표 `tools/world-forge/data/k122_monsters.json`), `FistR` 는 뼈 아닌 노드 · 펫 `world3d/pet_<id>.glb` + 2D `beast_<펫 id>.png`(1만리 sprite.js 표 `pk_x:'pk_x'`) · 웹
 - [ ] 10-19 · (자체툴 K-0143 → 웹 1만리) · 종 몸 2D 시트 95 `shared/assets/creatures2d/<creatures3d id>/`(K-0090 꼴, manifest ortho_m 실제 크기) — 2D 짐승 풀은 종 id 먼저, 없으면 옛 mon_* · 웹
 - [ ] 10-19 · (웹 W-0339 → 자체툴) · 3D 원신+파판 규격(`shared/js/look3d.js`)에 맞춘 환경 모델·재질 — W-0339 뒤 R-0 (2D 절반은 K-0150 10-20) · 자체툴
-- [ ] 10-19 · (자체툴 K-0138 → 웹) · 16방향 주역 10 `characters2d16/<id>/sheet.json`(역할 9) — gen-assets3d-ids · 웹
+- [ ] 10-19 · (자체툴 K-0138 → 웹) · 16방향 주역 10 `characters2d16/<id>/sheet.json`(역할 11 — cast·wave 10-20) — gen-assets3d-ids · 웹
 - [ ] 10-20 · (고돗 G-0248 → 자체툴) · 원신식 얼굴 SDF 한 장 `saga-godot/assets/face_sdf/face_sdf.png`(VRoid 얼굴 UV 공용, 빛 = 캐릭터 오른쪽 기준 — 반대면 `face_sdf_flip=-1`) + 앞머리 그림자 띠 · 넣으면 바로 켜짐 · 고돗
 - [ ] 10-20 · "다섯판 내 장비랑 내 상태가 보는데 없어(공격력·스텟 설정)"·"장비나 아이템 드래그 … 모바일은 터치" · 다섯 판 공용 「내 정보」 창(입은 장비·능력치·스탯 배분) + 장비·가방 끌어 놓기(Pointer Events 한 길로 마우스·터치, 터치는 길게 눌러 집기) → 판별 조사 뒤 R-0 · 웹
 - [ ] 10-20 · (K-0150) · 겹 배경 둘·컷아웃 주역 2 — parallax2d·cutout2d.on 1 촬영(fog 버그 K-0150 메모) · 웹

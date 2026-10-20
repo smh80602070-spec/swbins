@@ -13,7 +13,9 @@
   "hit": 4,
   "death": 10,
   "sit": 6,
-  "pick": 8
+  "pick": 8,
+  "cast": 12,
+  "wave": 8
  },
  "fps": {
   "idle": 6,
@@ -35,7 +37,9 @@
   "hit": "hit.webp",
   "death": "death.webp",
   "sit": "sit.webp",
-  "pick": "pick.webp"
+  "pick": "pick.webp",
+  "cast": "cast.webp",
+  "wave": "wave.webp"
  },
  "mirror": true,
  "side_faces": "right",
