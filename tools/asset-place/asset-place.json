@@ -1606,14 +1606,16 @@
    "src": "tools/ai-art/_out/k99_png",
    "recursive": true,
    "include": [
-    "*.png",
+    "*_hi.png",
+    "*_hi_n.png",
+    "*_hi_r.png",
     "*.license.json"
    ],
-   "note": "K-0099 자체 PBR 12세트(K-0093) 유니티판 — pbr_from_albedo.py --png 로 만든 무손실 PNG(바탕·법선·거칠기·높이 × hi·512, 70MB). 원본은 _out(정본 바탕색에서 다시 만듦 — 정본에 맵을 또 두지 않는다). .meta 는 patch_unity_pbr.py 로 법선·선형 설정",
+   "note": "K-0099 자체 PBR 12세트(K-0093) 유니티판 — pbr_from_albedo.py --png 로 만든 무손실 PNG(바탕·법선·거칠기·높이 × hi·512, 70MB). 원본은 _out(정본 바탕색에서 다시 만듦 — 정본에 맵을 또 두지 않는다). .meta 는 patch_unity_pbr.py 로 법선·선형 설정. K-0146 — 자리를 SagaCore/Resources/TexturesReal 로(Resources.Load 가 닿게, git mv 로 GUID 유지) · _hi_h(셰이더가 높이를 안 씀)·_512 네 벌(같은 결의 작은 판, Resources 는 통째로 빌드에 들어 이중 적재) 뺌 → _hi·_hi_n·_hi_r 36장 + license",
    "targets": [
     {
      "track": "unity",
-     "dir": "saga-unity/Assets/Art/TexturesReal",
+     "dir": "saga-unity/Assets/SagaCore/Resources/TexturesReal",
      "sidecar": [
       ".meta"
      ]

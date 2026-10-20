@@ -1,6 +1,6 @@
 """Unity PBR 맵 .meta 고치기(K-0099) — 엔진이 만든 기본값(Default 텍스처·sRGB 켬)을 맵 종류에 맞춘다. 멱등.
 
-  py tools/asset-place/patch_unity_pbr.py saga-unity/Assets/Art/TexturesReal     # 아래 *.png.meta 전부
+  py tools/asset-place/patch_unity_pbr.py saga-unity/Assets/SagaCore/Resources/TexturesReal     # 아래 *.png.meta 전부
 
 이름 끝으로 고른다: `*_n.png` = 법선(textureType 1 Normal map, sRGB 는 엔진이 끔) · `*_r.png`·`*_h.png` = 거칠기·높이(sRGBTexture 0, 선형)
 · 나머지(바탕) 그대로(sRGB 켬). Repeat(wrap 0)·밉맵 켬은 엔진 기본값 그대로 — 바꾸지 않는다.
