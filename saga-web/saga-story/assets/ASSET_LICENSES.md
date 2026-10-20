@@ -196,20 +196,9 @@ PLAN 3절("시작 마을 — NPC·상점·집·우물·나무·꽃·울타리·�
 | **재배포** | 허용된다 |
 | **받은 곳** | `saga-dungeon/assets/models/dungeon/chest.glb`를 그대로 복사했다 |
 
-## 배경음악 (`assets/audio/bgm/`, PLAN 34절, 2026-09-09)
+## 배경음악 — 자체(K-0117, W-0321) (`assets/audio/bgm/`)
 
-다섯 판 중 이 판이 처음 BGM을 들인다 — 옮겨 올 선례가 없어 OpenGameArt.org에서
-CC0(저작자 표시 불필요) 곡만 새로 찾았다. **직접 들어보고 어울리는지 판단하지
-못했다** — 태그·제목으로만 골랐다, 다음 세션이 실제로 들어보고 바꿀 수 있다.
-
-| 파일 | 곡명 | 만든 이 | 받은 곳 |
-|---|---|---|---|
-| `town.mp3` | Quaint Town | neonarkade | <https://opengameart.org/content/quaint-town> |
-| `forest.mp3` | Peaceful forest | Samza | <https://opengameart.org/content/peaceful-forest> |
-| `battle.mp3` | Battle Theme A | cynicmusic | <https://opengameart.org/content/battle-theme-a> |
-
-셋 다 **CC0 1.0 Universal** — 저작자 표시 필요 없다, 재배포 허용된다(위
-각 링크의 라이선스 아이콘으로 직접 확인했다).
+`town`·`forest`·`battle`.mp3 셋은 자체 BGM(로컬 AI 생성)으로 같은 이름을 덮어썼다. 출처 정본 `saga-assets/bgm/web-mp3/story-<이름>.license.json`. 예전 OpenGameArt 세 곡은 남지 않았다.
 
 ## 도감 초상 3D화 — 개과(`models/animals/ShibaInu.glb`·`Husky.glb`, 2026-09-14)
 

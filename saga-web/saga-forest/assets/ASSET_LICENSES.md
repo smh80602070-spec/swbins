@@ -35,16 +35,12 @@
 | 파일 | 쓰이는 곳 |
 |---|---|
 | `CommonTree_1·2·3.glb` | 큰 나무 (봄·여름, `TREE_STYLIZED` 되돌림 자리 — 지금 봄·여름 기본은 실사 `IslandTree_02.glb`) |
-| `CommonTree_Autumn_1·2.glb` | 큰 나무 (가을 — `tree:common:autumn`. `_1·2`는 예전 32종 확보 때부터 있었지만 이 키를 부르는 코드가 없어 죽어 있었다) |
-| `CommonTree_Autumn_3.glb` | 큰 나무 (가을, 2026-09-09 새로 받음 — 위 죽은 키를 되살리며 변종을 하나 더 보탰다) |
-| `CommonTree_Snow_1·2.glb` | 큰 나무 (겨울 — `tree:common:snow`, `_1·2` 사정은 Autumn과 같다) |
+| `CommonTree_Snow_1·2.glb` | 큰 나무 (겨울 — `tree:common:snow`) |
 | `CommonTree_Snow_3.glb` | 큰 나무 (겨울, 2026-09-09 새로 받음) |
 | `CommonTree_Dead_1.glb` | 고목 |
 | `PineTree_1·2.glb` | 침엽수 (봄·여름, 되돌림 자리 — 지금 기본은 실사 `PineSapling.glb`) |
-| `PineTree_Autumn_1·2.glb` | 침엽수 (가을 — `tree:pine:autumn`, 2026-09-09 새로 받음) |
 | `PineTree_Snow_1·2.glb` | 침엽수 (겨울 — `tree:pine:snow`, 2026-09-09 새로 받음) |
 | `BirchTree_1·2.glb` | 자작나무 (`tree:birch` — 예전부터 있었지만 아직 어느 SCATTER_KIND 도 안 부르는 되돌림/확장 자리) |
-| `BirchTree_Autumn_1·2.glb` | 자작나무 (가을 — `tree:common:autumn` 풀에 섞임, 2026-09-09 새로 받음) |
 | `BirchTree_Snow_1·2.glb` | 자작나무 (겨울 — `tree:common:snow` 풀에 섞임, 2026-09-09 새로 받음) |
 | `Bush_1·2.glb` · `BushBerries_1.glb` | 덤불 |
 | `Rock_1·2·3.glb` | 돌·바위 |
@@ -54,6 +50,8 @@
 | `Plant_1·2.glb` | 작은 풀숲 |
 | `TreeStump.glb` · `TreeStump_Moss.glb` | 그루터기 |
 | `WoodLog.glb` · `WoodLog_Moss.glb` | 통나무 · 쓰러진 나무 |
+
+> W-0321 — 가을 나무 일곱(`CommonTree_Autumn_1~3`·`PineTree_Autumn_1·2`·`BirchTree_Autumn_1·2`)은 지웠다. 가을은 자체 단풍 `shared/assets/world3d/tree_*_autumn.glb` 다섯(K-0115, 출처 `<id>.license.json`).
 
 `models/props/` — 새로 받은 것
 
@@ -559,34 +557,9 @@ ASSET_LICENSES.md`의 "MPFB2 + makehuman_system_assets" 절 참고).
 
 ---
 
-## 배경음악(BGM) — `forest.mp3` (2026-09-10, `saga-story`에서 옮김)
+## 배경음악(BGM) — `forest.mp3` — 자체(K-0117, W-0321)
 
-"다른 게임을 참조해서 개선해 달라"는 요청으로 다섯 판 중 소리(효과음)만
-있고 배경음악은 없던 이 판에 음악을 얹었다. 새로 받지 않고 `saga-story`가
-이미 갖고 있던 CC0 트랙을 그대로 옮겼다 — 곡 이름부터 이 판과 맞는다.
-
-| 항목 | |
-|---|---|
-| **곡명** | Peaceful forest |
-| **만든 이** | Samza |
-| **라이선스** | **CC0 1.0 Universal** — 저작자 표시 필요 없다, 재배포 허용된다 |
-| **받은 곳** | <https://opengameart.org/content/peaceful-forest> (Samza 본인 업로드).
-  이 판은 `saga-story/assets/audio/bgm/forest.mp3`에서 하드링크로 받았다 —
-  원 출처·라이선스 확인 근거는 `../../saga-story/assets/ASSET_LICENSES.md`의
-  같은 절 참고 |
-| **파일** | `assets/audio/bgm/forest.mp3`(2.4MB) |
-
-`js/bgm.js` 신설 — `saga-story/js/bgm.js`를 본으로 삼되, 이 판은 마을
-하나뿐이고 전투가 없어 town/forest/battle 세 트랙을 가릴 필요가 없다.
-**트랙 하나만 늘 돌린다**(단순하게 시작). `core.save.settings.music`
-(기본 켜짐)·`musicVol`(기본 0.35)에 저장되고, 브라우저 자동재생 정책 때문에
-`sfx.js`와 같은 요령으로 첫 클릭/터치/키 입력 뒤에야 실제로 울린다. ⚙️ 설정
-시트에 "배경음악" on/off·음량 슬라이더를 효과음 항목 바로 아래 얹었다.
-자가진단(`_test.html`)에 세 항목(모듈·기본값 확인 / 첫 눌림 전엔 안 풀림 /
-음량 0~1 끊김) 추가, 245→248(3회 동일).
-
-**실기기 확인 전** — 실제로 음악이 나오는지, 효과음과 볼륨 균형이 맞는지는
-사용자가 직접 들어봐야 한다.
+`assets/audio/bgm/forest.mp3` 는 자체 BGM(로컬 AI 생성)으로 같은 이름을 덮어썼다. 출처 정본 `saga-assets/bgm/web-mp3/forest-forest.license.json`. 예전 OpenGameArt "Peaceful forest" 는 남지 않았다. 재생은 `js/bgm.js`(트랙 하나, 설정 시트 on/off·음량).
 
 ---
 

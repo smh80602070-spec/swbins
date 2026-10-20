@@ -519,7 +519,7 @@
   global.DG.cfg.assets3d = {
     /* 통일 3D 에셋(W-0021, shared/assets/world3d) — asset3d 키 → 그 판 9칸 id. 있는 자리만: 제단·횃불·동굴 입구(바위 아치)·종탑(석탑) */
     reg: { 'altar': ['altar_01'], 'dg:torch': ['torch_stand_01'], 'cavemouth': ['dungeon_gate_01'], 'belltower': ['stone_tower_01'],
-      /* W-0261 — 남은 빌린 KayKit·Quaternius·실사 스캔·hexagon 도 자체로(감사 tasks/sheets/web-asset-audit-20261016.md §A·C). 짝 없는 몽둥이·두루마리·부채·붓·방앗간은 옛 길(K) */
+      /* W-0261 — 남은 빌린 KayKit·Quaternius·실사 스캔·hexagon 도 자체로(감사 tasks/sheets/web-asset-audit-20261016.md §A·C). 몽둥이·두루마리·부채·붓·방앗간은 W-0321 에 K-0116 자체 짝 */
       'tree': ['tree_broadleaf_01', 'tree_broadleaf_02', 'tree_broadleaf_03'], 'tree_dead': ['tree_dead_01'], 'rock': ['rock_large_01', 'rock_large_02', 'rock_small_01', 'rock_moss_01'],
       'grass': ['grass_tuft_01', 'grass_tuft_02'], 'flower': ['flower_patch_01'], 'bush': ['bush_01', 'bush_02'], 'mushroom': ['mushroom_01'], 'log': ['log_01'], 'reed': ['reed_clump_01'], 'pond': ['pond_01'],
       'pillar': ['rubble_pillar_01'], 'wall': ['low_stone_wall_01', 'wall_piece_01'], 'tent': ['tent_large_01', 'tent_small_01'], 'campfire': ['campfire_logs_01'], 'post': ['signpost_01'], 'stall': ['market_stall_01'],
@@ -527,6 +527,7 @@
       'dg:pillar': ['dungeon_pillar_01'], 'dg:door': ['dungeon_gate_01'], 'dg:chair': ['chair_wood_01'], 'dg:shield': ['weapon_rack_01'], 'dg:bed': ['bed_wood_01'], 'dg:desk': ['desk_01'], 'dg:table': ['table_wood_01'], 'dg:chest': ['chest_01'],
       'dg:grave': ['stele_01'], 'dg:well': ['well_01'], 'dg:vein': ['rock_large_02'], 'dg:pod': ['altar_base_01'],   // 방 소품 바닥 돌(src/dungeon3d/01.js poiProp)
       'wpn:sword': ['wpn_sword_common'], 'wpn:spear': ['wpn_spear_common'], 'wpn:halberd': ['wpn_spear_common'], 'wpn:guandao': ['wpn_spear_common'], 'wpn:axe': ['wpn_axe_common'], 'wpn:staff': ['wpn_staff_common'], 'wpn:bow': ['wpn_bow_common'],
+      'wpn:club': ['wpn_club_01'], 'wpn:scroll': ['wpn_scroll_01'], 'wpn:fan': ['wpn_fan_01'], 'wpn:brush': ['wpn_brush_01'], 'mill': ['mill_01'],
       'gear:helmet': ['eq_past_1_head'], 'gear:crown': ['acc_crown'], 'gear:gapju': ['eq_past_2_head'], 'gear:cape': ['acc_cape_long'] },   // 걸친 장비(dungeon3d-gear) — 5천하 W-0264 와 같은 투구 셋
     /* 빌린 몸(W-0074, shared/js/assets3d.js borrowRecipe) — 제 몸이 없는 사람(사람 적·마을 사람·내 몸 스타일·이름 없는 적)은 시대 구분 없이
        옛 몸(VRoid 샘플·OGA·Quaternius·poly.pizza·KayKit) 대신 도감과 안 겹치는 VRoid 통일 몸을 입는다(사용자 10-06 "인물은 모두 교체").

@@ -487,8 +487,9 @@
   global.DG.cfg.assets3d = {
     /* 통일 3D 에셋(W-0021, shared/assets/world3d) — asset3d 키 → 그 판 9칸 id. 있는 자리만: 집·우편함·울타리 */
     reg: { 'building:home': ['forest_cottage_01'], 'building:mail': ['mailbox_01'], 'fence': ['wood_fence_01'],
-      /* W-0262 — 남은 빌린 Quaternius·실사 스캔·KayKit 도 자체로(감사 tasks/sheets/web-asset-audit-20261016.md §A·C). 가을 나무(tree:*:autumn)는 자체 단풍 변종이 없어 옛 길(시트 §D, K) */
+      /* W-0262 — 남은 빌린 Quaternius·실사 스캔·KayKit 도 자체로(감사 tasks/sheets/web-asset-audit-20261016.md §A·C). 가을 나무(tree:*:autumn)는 W-0321 에 K-0115 자체 단풍 다섯 */
       'tree:common': ['tree_broadleaf_01', 'tree_broadleaf_02', 'tree_broadleaf_03'], 'tree:pine': ['tree_pine_01', 'tree_pine_02', 'tree_pine_03'], 'tree:common:snow': ['tree_pine_01_snow', 'tree_birch_01'], 'tree:pine:snow': ['tree_pine_01_snow'],
+      'tree:common:autumn': ['tree_broadleaf_01_autumn', 'tree_broadleaf_02_autumn', 'tree_broadleaf_03_autumn', 'tree_birch_01_autumn'], 'tree:pine:autumn': ['tree_pine_01_autumn'],
       'tree:dead': ['tree_dead_01'], 'tree:birch': ['tree_birch_01'], 'bush': ['bush_01', 'bush_02'], 'rock': ['rock_large_01', 'rock_large_02', 'rock_small_01'], 'rock:moss': ['rock_moss_01'], 'grass': ['grass_tuft_01', 'grass_tuft_02'],
       'flower': ['flower_patch_01'], 'mushroom': ['mushroom_01'], 'stump': ['stump_01'], 'log': ['log_01'], 'mountain': ['mountain_01'], 'bench': ['bench_01'], 'building:bench': ['bench_01'], 'campfire': ['campfire_logs_01'], 'tent': ['tent_large_01'],
       'lantern': ['stone_lantern_01'], 'well': ['well_01'], 'bridge': ['plank_bridge_01'], 'crate': ['crate_small_01'], 'cart': ['handcart_01'], 'building:shop': ['market_stall_01'], 'building:board': ['notice_board_01'], 'building:pole': ['banner_pole_01'],

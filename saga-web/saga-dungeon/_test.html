@@ -1129,15 +1129,16 @@ window.requestAnimationFrame = function () { return 0; };
       if (arr.length < 100 || miss.length) { throw new Error(JSON.stringify({ n: arr.length, miss: miss })); }
       return '짐승형 적 ' + arr.length + ' 전부 자체 계열 몸';
     });
-    t('W-0261 자체 에셋 — 판별 표(cfg.assets3d.reg)의 world3d id 가 전부 있다 · 얹은 뒤 asset3d 표에 빌린 KayKit·Quaternius·실사 경로가 안 남는다 · 3D HDR 은 자체 하늘', function () {
+    t('W-0261 자체 에셋 — 판별 표(cfg.assets3d.reg)의 world3d id 가 전부 있다 · 얹은 뒤 asset3d 표에 빌린 KayKit·Quaternius·실사 경로가 안 남는다 · W-0321 몽둥이·두루마리·부채·붓·방앗간도 자체 · 3D HDR 은 자체 하늘', function () {
       var reg = (DG.cfg.assets3d || {}).reg || {}, A = DG.assets3d, miss = [], n = 0, k, i;
       for (k in reg) { if (Object.prototype.hasOwnProperty.call(reg, k)) { for (i = 0; i < reg[k].length; i++) { n++; if (!A.has('world', reg[k][i])) { miss.push(reg[k][i]); } } } }
       var live = !!(A.url && A.url('world', 'altar_01')), got = live ? A.applyProps() : 0, R3 = DG.asset3d.REG, left = [], bad = new RegExp('models/(dungeon|props|nature|buildings|weapons)/');
       Object.keys(reg).forEach(function (key) { if ([].concat(R3[key] || []).some(function (u) { return bad.test(u); })) { left.push(key); } });
       var src = (function () { try { var x = new XMLHttpRequest(); x.open('GET', 'js/dungeon3d.js', false); x.send(); return x.status === 200 ? x.responseText : ''; } catch (er) { return ''; } })(), skyOk = !src || (src.indexOf('alps_field') < 0 && src.indexOf('ibl_noon_present_1k.hdr') >= 0);
-      var ok = !miss.length && n >= 45 && skyOk && (!live || (!left.length && got >= 1));
-      if (!ok) { throw new Error(JSON.stringify({ miss: miss, left: left, n: n, live: live, got: got, skyOk: skyOk })); }
-      return '표 ' + n + '칸 전부 world3d 에 있음 · HDR 자체 하늘' + (live ? ' · 얹은 뒤 빌린 경로 0' : ' (공용 주소 못 잡음 — 표만)');
+      var k321 = ['wpn:club', 'wpn:scroll', 'wpn:fan', 'wpn:brush', 'mill'].filter(function (q) { return !reg[q]; });
+      var ok = !miss.length && n >= 50 && !k321.length && skyOk && (!live || (!left.length && got >= 1));
+      if (!ok) { throw new Error(JSON.stringify({ miss: miss, left: left, n: n, k321: k321, live: live, got: got, skyOk: skyOk })); }
+      return '표 ' + n + '칸 전부 world3d 에 있음(W-0321 다섯 포함) · HDR 자체 하늘' + (live ? ' · 얹은 뒤 빌린 경로 0' : ' (공용 주소 못 잡음 — 표만)');
     });
     t('재미표준 A 목표판(측정) — 부팅 뒤 지금·이번 세션·이번 주 세 줄이 비어 있지 않다', function () {
       var GL = DG.goals; if (!GL || !GL.lines) { return '× — DG.goals.lines 없음'; }

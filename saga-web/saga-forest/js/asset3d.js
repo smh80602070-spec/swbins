@@ -48,7 +48,7 @@
      팔레트로 우겨넣던 §6.2 계획을 접고 스타일 자체를 바꿨다(경위는
      HANDOFF.md 2026-09-19 절) */
   var BLD_GEN = 'assets/generated/buildings/';
-  var ANI = 'assets/models/animals/';
+  var ANI = 'assets/models/animals/';
   var ANI_EXTRA = 'assets/models/animals_extra/', ANI_EXTRA2 = 'assets/models/animals_extra2/';   // 2026-09-24 사가나락에서 복사(펫 초상)
   var STANDIN = 'assets/models/standin/';   // 신수·오마주 대역 — 사가만리에서 복사
   var MON = 'assets/models/monsters/';
@@ -268,10 +268,9 @@
        흰 자작보다 단풍·눈 옷 입은 쪽이 이 계절 팔레트와 더 붙는다. Quaternius
        `nature_pack`(CC0, 위 TREE_STYLIZED 와 같은 미러) 저다각형 — 실사가
        아니라 봄·여름과 결이 안 맞는 건 의도한 트레이드오프다 */
-    'tree:common:autumn': [
-      NAT + 'CommonTree_Autumn_1.glb', NAT + 'CommonTree_Autumn_2.glb', NAT + 'CommonTree_Autumn_3.glb',
-      NAT + 'BirchTree_Autumn_1.glb', NAT + 'BirchTree_Autumn_2.glb'
-    ],
+    /* 가을 — 옛 Quaternius 가을 일곱은 W-0321 에 지웠다. 자체 단풍(K-0115)은 core.js cfg.assets3d.reg 가 얹고,
+       못 얹으면(공용 주소 못 잡음) 남은 저다각형 초록 나무가 되돌림 자리 */
+    'tree:common:autumn': [NAT + 'CommonTree_1.glb', NAT + 'CommonTree_2.glb', NAT + 'CommonTree_3.glb'],
     'tree:common:snow': [
       NAT + 'CommonTree_Snow_1.glb', NAT + 'CommonTree_Snow_2.glb', NAT + 'CommonTree_Snow_3.glb',
       NAT + 'BirchTree_Snow_1.glb', NAT + 'BirchTree_Snow_2.glb'
@@ -291,7 +290,7 @@
        버전이 따로 있어(`tree:common`과 같은 미러) 겨울 숲 전체가 한쪽만
        계절을 타면 오히려 어색해 보인다 — `tree:common` 과 같은 결로 맞췄다.
        가을 소나무는 잎보다는 아래 마른 낙엽·색 바랜 나무껍질 쪽 변화다 */
-    'tree:pine:autumn': [NAT + 'PineTree_Autumn_1.glb', NAT + 'PineTree_Autumn_2.glb'],
+    'tree:pine:autumn': [NAT + 'PineTree_1.glb', NAT + 'PineTree_2.glb'],   // 되돌림 자리 — 자체 단풍은 cfg.assets3d.reg(W-0321)
     'tree:pine:snow': [NAT + 'PineTree_Snow_1.glb', NAT + 'PineTree_Snow_2.glb'],
     /* 봄·여름 흰 자작(초록잎) — 파일(`BirchTree_1/2.glb`)은 예전 32종 확보 때부터
        있었지만 이 키 자체는 `tree:common:autumn`처럼 아무 SCATTER_KIND 도

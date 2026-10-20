@@ -653,6 +653,8 @@ GLB가 많아 이 작업 환경의 헤드리스 SwiftShader로는 안정적으�
 
 ## 우물·여관·마방·방앗간 — KayKit 다른 팩에서 (2026-09-05, 대장간 다음)
 
+> W-0321 — 방앗간 `windmill.glb` 는 지웠다(자체 `world3d/mill_01.glb`, K-0116). 우물·여관·마방도 W-0261 부터 자체 짝이 얹힌다.
+
 **사용자 지시가 두 번 더 풀렸다.** 먼저 "다른 건물로 변경해도 되니 있는
 걸로 위주로 해줘"(위 대장간 절), 그다음 "꼭 디아블로인 건 아니야 시대가
 퓨전이야 여러 가지를 합쳐도 상관없어 완전 모방은 아니야" · "현대적이거나
@@ -793,52 +795,9 @@ Pack에 `hex_water` 타일이 있어 받아 봤지만 **단색 팔레트 하나�
 > **Signpost** — © **Kenney**, CC0 (Public Domain). 저작자 표시 불필요.
 > `poly.pizza`를 거쳐 받았다. 크기만 맞추었고 형상은 그대로다.
 
-## 몬스터 무기 일곱 — 실사화 (2026-09-05)
+## 무기 열하나 — 자체(W-0261·W-0321)
 
-**SAGA WEB.md "F. 소품" 목록의 "무기"**. `dungeon3d.js`의 `foeGear()`가
-사람 형 적(황건적·왜구·몽골 기병…)에게 `data-enemy.js`의 `look.weapon`대로
-무기를 쥐여 주는데, 몸은 이미 실사 GLB(Quaternius QRPG 창고)인데 **무기만
-도형(각목·상자)**이었다 — 실사 몸에 각목을 든 채 서 있는 자리.
-
-- poly.pizza에서 **Quaternius**(이 판이 사람 몸·짐승에서 이미 쓰는 그
-  출처, CC0)의 무기 낱개들을 찾아 일곱 다 채웠다 — club(뭉툭한 무기)은
-  "Doublesided Hammer"로 대신했다(정확히 "club"이라는 이름의 CC0는
-  없었다 — 대장간=집 모델과 같은 판단, 역할·모양이 정확히 안 맞아도
-  된다).
-- **`wpn:halberd`는 `wpn:spear`와 같은 파일을 재사용한다.** "halberd"·
-  "poleaxe"란 이름의 CC0 모델 자체가 안 보였고(빙 둘러 찾은 후보는 전부
-  Pike·Trident·Pitchfork처럼 결이 다른 무기였다), 이 판의 옛 도형도 이미
-  스피어와 할버드가 "장대+날붙이"로 거의 같은 실루엣이었다 — 재사용이
-  자연스러운 자리다. `mul`(길이)만 살짝 다르게 줘서(2.6 대 2.8) 완전히
-  똑같아 보이진 않게 했다.
-- `js/dungeon3d.js`의 `foeGear()`를 고쳐 각 무기 분기가 `AS3.build('wpn:…', ...)`
-  를 부르게 했다 — **옛 도형은 지우지 않고 fallback 함수로 그대로 넘긴다**
-  (GLB 실패·오프라인이면 각목 그대로 돌아간다). 활만 별도 처리가 필요했다 —
-  칼·창은 손 위치에서 **위로만** 자라는 물건인데 활은 손을 **가운데** 두고
-  위아래로 뻗는 물건이라, fallback 도형도 GLB와 같은 "바닥이 y=0" 규약에
-  맞춰 다시 그려 두 경로(도형/GLB, 비동기라 어느 쪽이 먼저 뜰지 모른다)가
-  같은 한 줄로 위치를 맞추게 했다.
-- **투구·망토·수염은 이번에 손 안 댔다** — 무기가 실루엣에서 가장 크고
-  눈에 띄는 자리라 먼저 골랐다. 남은 자리는 다음 세션 숙제로 남긴다.
-- 격리 렌더(`_inspect_wpn_tmp.html`·`_inspect_sword_tmp.html`, 커밋 안 함)로
-  일곱 다 GLB로 실제 로딩됨을 확인 — 활은 손 높이를 가운데 두고 위아래로
-  걸리는지까지 별도로 확인했다. 자가진단 **241/241** 3회 동일(무기는 순수
-  장식이라 진단이 값으로 안 본다), `_admin.html?selftest` **ADMIN 12/12**.
-  `sw.js` VERSION → `dungeon-v0.39.6`.
-- **실기기 확인 전** — 다음 세션·실기기에서 던전에 들어가 적들이 실제
-  무기를 쥔 채 보이는지 볼 것.
-
-| 무기 | 만든 이 | 받은 곳 | 파일 |
-|---|---|---|---|
-| club(대역: Doublesided Hammer) | Quaternius | `poly.pizza/m/UIXvQ73DS1` | `models/weapons/club.glb`(103KB) |
-| axe | Quaternius | `poly.pizza/m/FkzZ6I1zjT` | `models/weapons/axe.glb`(58KB) |
-| sword | Quaternius | `poly.pizza/m/cDsobPucFA` | `models/weapons/sword.glb`(26KB) |
-| spear · halberd(재사용) | Quaternius | `poly.pizza/m/fH1zmvjPNx` | `models/weapons/spear.glb`(68KB) |
-| staff | Quaternius | `poly.pizza/m/PnGRvO4Lwd` | `models/weapons/staff.glb`(13KB) |
-| bow | Quaternius | `poly.pizza/m/QnpqjLSKFU` | `models/weapons/bow.glb`(38KB) |
-
-> **일곱 무기 모델** — © **Quaternius**, CC0 (Public Domain). 저작자 표시
-> 불필요. `poly.pizza`를 거쳐 받았다. 크기만 맞추었고 형상은 그대로다.
+사람 적·플레이어가 쥐는 무기(`wpn:*`)는 전부 자체 `shared/assets/world3d/wpn_*.glb`(K-0116 몽둥이·두루마리·부채·붓 포함, 출처 `<id>.license.json`)다. 예전 Quaternius·Poly by Google(CC-BY 3.0 붓) 무기 `models/weapons/` 여덟은 W-0321 에 지웠다.
 
 ## 투구·왕관 — 실사화, 그 옆 셋(원뿔 투구·망토·수염)은 여전히 못 찾음 (2026-09-05)
 
@@ -918,53 +877,6 @@ Pack에 `hex_water` 타일이 있어 받아 봤지만 **단색 팔레트 하나�
 > **Cape** — © poly.pizza 업로더(원 제목에 타 게임 코스튬 이름이
 > 붙어 있으나 지오메트리는 업로더 본인의 창작물, CC-BY 3.0). 크기만
 > 맞추었고 형상은 그대로다. 저작자 표시 필요.
-
-## 플레이어 본인의 무기, 그리고 무기 결 넷 더 (2026-09-05, 몬스터 장구 다음)
-
-**실제로 밟은 격차 — 플레이어 자신은 3D 화면에서 무기가 전혀 안 보였다.**
-`meShape()`의 칼 도형은 `AS3.buildHero()`가 진짜 QRPG 몸을 다 실은 순간
-그 자리를 통째로 갈아 끼워 **함께 사라진다**(placeholder였을 뿐) — 몬스터는
-`foeGear()`가 몸과 **별도로** 무기를 `g`에 얹어 이 문제가 없는데, 플레이어
-쪽엔 그 짝이 아예 없었다. `foeGear()` 안에 있던 무기 그리기를
-`attachWeapon()`으로 뽑아내(`js/dungeon3d.js`) 몬스터·플레이어(`kind==='me'`)
-둘 다 같은 함수를 쓰게 했다. 플레이어의 실제 장착 무기는
-`meWeaponLook()`이 `core.save.party[0]`(선두)의 장착 무기 →
-`IT.baseOf(w).look`으로 읽는다(`js/skill.js`의 `classOf()`가 직업을 정하는
-것과 같은 자리, 다만 heroId를 새로 export하지 않고 그 함수가 읽던 저장값을
-직접 다시 읽었다).
-
-- **무기 결 넷을 더 받았다** — `data-item.js`의 무기 `look` 열 가지 중
-  기존 일곱(club·axe·sword·spear·halberd·staff·bow)에 이어:
-  - `guandao`(월도) — CC0 없어 **`wpn:spear`를 그대로 재사용**(halberd와
-    같은 판단).
-  - `scroll`(병서) — Quaternius, **CC0**. 원본이 가로로 누워 있어(긴 축이
-    X) 이 판의 세로로 드는 관례와 안 맞았는데, **Blender 없이 `py -c
-    "import trimesh..."`로 직접 90도 돌려 다시 구웠다** — 흔치 않게
-    개조만으로 해결된 경우.
-  - `fan`(선채)·`brush`(필묵) — 표준 "부채" CC0/CC-BY 단품은 끝까지
-    없었다("war fan"·"hand fan"·"japanese fan" 다 검색). 대신 같은 붓
-    (paint brush) 모델(**CC-BY 3.0**) 하나를 **둘이 공유**한다 — 붓·부채
-    다 "가는 막대를 쥔" 실루엣이라 크게 안 어긋난다는 판단.
-- r·hh는 플레이어(mul=42 고정)를 보스급 적(r=12·hh=31.2)과 같은 값으로
-  근사했다 — `foeBody`의 mul 계산식(`hh+r*0.95`)을 거꾸로 풀면 그 근방이다.
-- 격리 렌더(`_inspect_wpn2_tmp.html`, 커밋 안 함)로 넷 다 실제 GLB로
-  걸리고 자리(바닥 기준점)가 맞는지 확인. 자가진단 **241/241** 3회 동일,
-  `_admin.html?selftest` **ADMIN 12/12**, 콘솔 에러 0. `sw.js` VERSION →
-  `dungeon-v0.40.0`(구조 변경 — `attachWeapon()` 추출 — 이라 마이너 올림).
-- **실기기 확인 전** — 다음 세션·실기기에서 던전에 들어가 **플레이어 본인**의
-  손에 장착한 무기 종류가 실제로 걸리는지 볼 것(이번 항목의 핵심 체감
-  포인트다 — 몬스터 무기와 달리 여태 한 번도 화면에 없던 것이 처음
-  나타나는 자리라 꼭 확인이 필요하다).
-
-| 무기 | 만든 이 | 라이선스 | 받은 곳 | 파일 |
-|---|---|---|---|---|
-| guandao(재사용) | Quaternius | CC0 | (spear.glb 재사용, 위 절 참고) | `models/weapons/spear.glb` |
-| scroll | Quaternius | CC0 | `poly.pizza/m/MWGB9nxMIc` | `models/weapons/scroll.glb`(53KB, 직접 90도 회전) |
-| fan · brush(공유) | Poly by Google | **CC-BY 3.0** | `poly.pizza/m/bGqEF62Pjze` | `models/weapons/brush.glb`(107KB) |
-
-> **Scroll** — © Quaternius, CC0 (Public Domain). 저작자 표시 불필요.
-> **Paint Brush** — © **Poly by Google**, [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/).
-> `poly.pizza`를 거쳐 받았다. 크기만 맞추었고(scroll은 회전도) 형상은 그대로다.
 
 ## 짐승 형 몬스터 다양화 (2026-09-05, 사용자 요청 — "캐릭터도 더 다양하게")
 

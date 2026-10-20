@@ -351,74 +351,9 @@ EverFace).
 파일 이름·시트 좌표는 saga-forest 문서(같은 파일, `human_01.png` ~
 `human_14.png`)와 완전히 같다 — 다시 적지 않는다.
 
-## OpenGameArt "RPG Sound Pack" — 효과음 (`assets/audio/sfx/`)
+## 효과음 — 자체(K-0117, W-0321) (`assets/audio/sfx/`)
 
-**2026-09-04, 오디오 시스템을 처음 들였다.** `SAGA WEB.md` 감사에서 드러난 격차 —
-이 판은 소리가 하나도 없었다. artisticdude 가 만든 유명한 CC0 RPG 효과음 묶음(95개
-.wav)에서 짧은 다섯 조각만 골라 mp3(모노 44.1kHz, 96kbps)로 옮겼다.
-
-| 항목 | |
-|---|---|
-| **만든 이** | artisticdude |
-| **라이선스** | **CC0** |
-| **저작자 표시** | 필요 없다 |
-| **재배포** | 허용된다 |
-| **받은 곳** | <https://opengameart.org/content/rpg-sound-pack> — `rpg_sound_pack.zip` |
-
-| 파일 | 원본 | 쓰이는 곳(`js/audio.js`) |
-|---|---|---|
-| `discover.mp3` | `inventory/bubble2.wav` | `codex` 이벤트 — 새 지역·사람·짐승·사건·역사를 처음 봤을 때 |
-| `catch.mp3`(파일명 `encounter_win.mp3`) | `battle/magic1.wav` | `dex:new` — 등용·포획 성공 |
-| `hit.mp3` | `battle/swing.wav` | `duel:fx` — 교전 중 타격 |
-| `reward.mp3` | `inventory/coin.wav` | `feat` — 공적 획득 · `growth:refine` — 펫 연성 성공(재사용, 2026-09-14) |
-| `panel_open.mp3` | `world/door.wav` | `duel:open`·`station:request`·`encounter:request`·`fort:request` — 카드/무대가 열릴 때 |
-| `levelup.mp3` | `interface/interface6.wav` | `levelup` — 플레이어 레벨업 (2026-09-14 추가) |
-
-**처음엔 다섯만 한 팩에서 골랐다**(10절 "에셋 스타일 통일"). 원본 팩에는 이
-말고도 UI 클릭음(`interface/interface1~5.wav`) · 갑옷·금속·병 소리
-(`inventory/`) · NPC·몬스터 울음(`NPC/`) 등이 더 있다 — 다음 단계(일반 버튼
-탭, 사건 보상 세분화, 전투 시작 신호음 등)에서 더 고를 수 있다. **아직 안
-걸었으면 여기 안 넣는다**는 이 문서 맨 위 규칙대로, 이번에 실제로 안 쓰는
-조각(`interface2`·`interface4` 등으로 떠 봤던 UI 탭음)은 커밋하지 않았다.
-
-**2026-09-14 — `interface6.wav`를 레벨업 소리로 골랐다.** `levelup` 이벤트
-(플레이어 레벨업, 화면 배너는 이미 있었다)에 소리가 없던 것을 마저 채웠다.
-이 팩의 `interface/` 여섯 조각 중 마지막 하나를 썼다 — 나머지 다섯(1~5)은
-여전히 안 쓴다. **이번에도 실제로 들어보고 고른 게 아니라 폴더 이름(UI
-피드백음)으로만 골랐다** — 위 "소리 매핑은 이 팩의 알려진 용례로 골랐을 뿐"
-방식 그대로다. 원본은 44.1kHz 스테레오 WAV(0.5초) — 이 세션엔 `ffmpeg`가
-없어 대신 Node에 `lamejs`(순수 JS mp3 인코더, npm)를 설치해 스테레오→모노
-다운믹스 후 96kbps mp3로 직접 인코딩했다(변환에만 쓰고 저장소엔 안 남겼다,
-위 천둥 절과 같은 "필요하지 않은 dependency 를 설치하지 않는다" 원칙).
-
-`js/audio.js` 는 새 판정을 만들지 않았다 — 이미 도는 이벤트버스(`core.on`/`emit`)를
-엿듣기만 한다. 손잡이 `audio.on`(0이면 무음) · `audio.vol`(0~1, 기본 0.6). 클립은
-`preload="none"`으로 처음 낼 때만 받고(7절), 셋씩 풀로 돌려 써서 짧게 겹쳐도
-안 끊긴다.
-
----
-
-## OpenGameArt "100 CC0 SFX #2" — 천둥 (`assets/audio/sfx/thunder.mp3`)
-
-**2026-09-14.** `js/sky3d.js`가 비 오는 날 번개가 칠 때마다 `sky:thunder`
-이벤트를 던지고 있었는데(2026-09-10 "천둥번개도 보이고" 요청 때 넣은 것),
-그때는 CC0 천둥 음원을 못 찾아 소리 내는 쪽이 없었다(`js/sky3d.js` 주석에
-"아직 천둥 CC0 음원이 없어 소리는 없다"로 남겨 뒀던 자리).
-
-| 항목 | |
-|---|---|
-| **만든 이** | rubberduck |
-| **라이선스** | **CC0** |
-| **저작자 표시** | 필요 없다 |
-| **재배포** | 허용된다 |
-| **받은 곳** | <https://opengameart.org/content/100-cc0-sfx-2> — `sfx_100_v2.zip` 의 `sfx100v2_thunder_01.ogg` |
-
-원본은 48kHz 스테레오 ogg(5.26초)다. 위 RPG Sound Pack 다섯 조각과 같은
-규격(모노 44.1kHz 96kbps mp3)으로 옮겨 `thunder.mp3`로 넣었다 — `assets/`에
-ffmpeg 변환 스크립트를 따로 두지 않고 이번 변환에만 썼다(8절 "필요하지 않은
-dependency 를 설치하지 않는다"와 같은 결로, 저장소에 도구를 남기지 않았다).
-`js/audio.js`의 `CLIPS.thunder`가 이 파일을 가리키고 `sky:thunder`를
-엿듣는다 — 새 판정은 없다.
+효과음 7(`discover`·`encounter_win`·`hit`·`levelup`·`panel_open`·`reward`·`thunder`.mp3)은 자체 소리로 같은 이름을 덮어썼다(K-0117 — 자체 효과음 ogg 를 mp3 로, 천둥은 코드 합성). 출처 정본 `saga-assets/sfx/web-mp3/<이름>.license.json`. 예전 OpenGameArt "RPG Sound Pack"·"100 CC0 SFX #2" 조각은 남지 않았다.
 
 ---
 

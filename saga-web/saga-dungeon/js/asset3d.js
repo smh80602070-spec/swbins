@@ -59,7 +59,6 @@
   var BLD_REAL = 'assets/models/buildings/realistic/';
   var BLD_HEX = 'assets/models/buildings/hexagon/';
   var DUN = 'assets/models/dungeon/';
-  var WPN = 'assets/models/weapons/';
   var GEAR = 'assets/models/gear/';
 
   /* ── 사람 몸 조립표(사람 팩 갈래·VRoid) — R-4(10-11) 로 `asset3d-people.js` 에 옮겼다. 같은 이름으로 받아 둔다 ── */
@@ -486,10 +485,9 @@
        (barracks)을 대신 앉혔다(사용자 지시로 역할·모양 일치를 요구하지
        않는다). 여관은 이 팩의 'tavern'(큰 맥주통이 통째로 간판을 겸하는
        모양 — 흔한 여관 도상은 아니지만 이 팩 자체의 방식이다), 방앗간은
-      'windmill'(날개 달린 실제 풍차, 가장 자연스럽게 맞아떨어졌다) */
+      'windmill'(W-0321 — 풍차는 지웠다, 자체 mill_01 은 cfg.assets3d.reg) */
     'inn': BLD_HEX + 'tavern.glb',       // 갈대나루(나루터) — 나그네 쉼터
     'stable': BLD_HEX + 'barracks.glb',  // 자작재(산길) — 마방(대역)
-    'mill': BLD_HEX + 'windmill.glb',    // 소금벌(염전) — 방앗간
     /* SAGA WEB.md "E. 건물" 목록의 "탑" — 모루골(중심 마을)의 표지 건물로
        하나만 세운다. 2026-09-04 — Poly Haven `modular_fort_01`
        (성채 모듈 키트, CC0)에서 원형 탑 조각(`tower_round`) 하나만
@@ -502,38 +500,8 @@
        이제 다 실사·CC0 에셋으로 찼다(모양이 정확히 원작 그대로는 아니다,
        사용자가 그래도 된다고 정했다) */
     'belltower': BLD_REAL + 'tower_round.glb',
-    /* SAGA WEB.md "F. 소품" 목록의 "무기" — `dungeon3d.js`의 `foeGear()`가
-       사람 형 적(황건적·왜구…)에게 `data-enemy.js`의 `look.weapon`대로
-       쥐여 주던 자리인데, 몸은 실사 GLB(QRPG 창고)인데 무기만 도형(각목)
-       이었다. 2026-09-05 — poly.pizza에서 Quaternius CC0 무기를 찾아
-       일곱 다 채웠다. `wpn:halberd`는 딱 맞는 CC0 도끼창을 못 찾아
-       `wpn:spear`와 **같은 파일을 재사용**한다(대장간=집 모델 재사용과
-       같은 판단 — "역할·모양이 정확히 안 맞아도 된다"). 못 받으면 옛
-       도형(foeGear의 그 각목·활 그대로)으로 돌아간다. 출처는
-       `assets/ASSET_LICENSES.md` 참고 */
-    'wpn:club': WPN + 'club.glb',
-    'wpn:axe': WPN + 'axe.glb',
-    'wpn:sword': WPN + 'sword.glb',
-    'wpn:spear': WPN + 'spear.glb',
-    'wpn:halberd': WPN + 'spear.glb',
-    'wpn:staff': WPN + 'staff.glb',
-    'wpn:bow': WPN + 'bow.glb',
-    /* 2026-09-05(이어서) — 플레이어 본인의 손에도 실제 무기가 들리게
-       하면서, `data-item.js`의 무기 `look` 열 가지(sword·club·spear·bow·
-       axe·staff 는 몬스터와 같이 이미 있음) 중 나머지 넷도 채웠다.
-       `guandao`(월도, 언월도류)는 CC0로 못 찾았지만 `halberd`와 마찬가지로
-       **spear.glb 재사용**(장대+날, 실루엣이 거의 같다). `scroll`(병서)은
-       Quaternius CC0 — 원본이 가로로 누워 있어(긴 축이 X) 이 판의 다른
-       무기처럼 세로로 들 수 없었기에, `py -c "import trimesh..."`로 직접
-       90도 돌려 세로로 세운 뒤 다시 구웠다(Blender 없이 파이썬만으로
-       가능했던 드문 경우). `fan`(선채)·`brush`(필묵)는 둘 다 CC0/CC-BY
-       "부채" 단품을 못 찾아 — 같은 CC-BY 3.0 붓(brush) 모델 하나를
-       **공유**한다(대장간=집 모델과 같은 판단, 붓·부채 다 "가는 막대를
-       쥔" 실루엣이라 크게 안 어긋난다) */
-    'wpn:guandao': WPN + 'spear.glb',
-    'wpn:scroll': WPN + 'scroll.glb',
-    'wpn:fan': WPN + 'brush.glb',
-    'wpn:brush': WPN + 'brush.glb',
+    /* 무기 'wpn:*' 열하나 — 옛 빌린 Quaternius·Poly 무기(models/weapons/)는 W-0321 에 지웠다. 자체 world3d 짝은 core.js cfg.assets3d.reg 가
+       얹고(K-0116·W-0261), 못 얹으면 dungeon3d-gear 의 도형 그대로 */
     /* 몬스터 다양화 이어서 — 투구·왕관(`foeGear()`의 `look.helm`). 'helmet'(일반
        투구, **CC-BY 3.0**)·'crown'(왕관, CC0)만 채웠다. 출처는
        `assets/ASSET_LICENSES.md` 참고 */
