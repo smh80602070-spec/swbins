@@ -158,6 +158,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoSlopesBiome.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 107-3 경사·고개·바이옴
                 if (!PlaytestGoVegetation.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 107-3 식생 바이옴(읽기만)
                 if (!PlaytestGoRegionProps.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 108 ① 지역 전용 소품(읽기만)
+                if (!PlaytestGoVillageProps.Run("PlaytestHeadless")) _hadError = true; // tasks U-0140 마을 소품 자체 모델(읽기만)
                 if (!PlaytestGoEras.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-1 세 시대 사람·적(읽기만)
                 if (!PlaytestAnonymousCrowd.Run("PlaytestHeadless")) _hadError = true; // U-0042 이름 없는 군중(299 목록 없으면 0명)
                 if (!PlaytestGoHouseInterior.Run("PlaytestHeadless")) _hadError = true; // U-0039 마을집 방(순간이동 왕복·방 안 저장 치환)
