@@ -30,9 +30,11 @@ namespace Saga.EditorTools
             "C:/Users/user/AppData/Local/Temp/claude/C--swbins/ed93fe4d-26ed-4226-9dba-82a8fa65cb83/scratchpad/unity_screens/";
 
         private const float BackDistance = 8f;
+        private static string _shotDir = ShotDir;
+        private static int _shotWait; // -shotWait 프레임(지역 이름 안내가 사라질 때까지)
 
         // (씬 GameObject 이름, 파일명) — 이름은 BuildTestVillageScene.cs가 지은 그대로.
-        private static readonly (string targetName, string shot)[] Stops =
+        private static (string targetName, string shot)[] Stops =
         {
             ("House_2", "10_go_house2_wing_chimney.png"),   // 103-1 곁채+굴뚝
             ("House_3", "11_go_house3_chimney.png"),        // 103-1 굴뚝만
@@ -51,7 +53,24 @@ namespace Saga.EditorTools
         [MenuItem("Saga/Playtest GO Landmarks (GUI Screenshot)")]
         public static void Run()
         {
-            Directory.CreateDirectory(ShotDir);
+            // tasks U-0140 — `-shotStops 이름:파일,…`·`-shotDir 폴더/` 를 주면 그 대상만 찍는다(전후 비교). 없으면 위 명소 여섯.
+            var args = System.Environment.GetCommandLineArgs();
+            for (int i = 0; i + 1 < args.Length; i++)
+            {
+                if (args[i] == "-shotDir") _shotDir = args[i + 1].Replace('\\', '/').TrimEnd('/') + "/";
+                if (args[i] == "-shotWait") int.TryParse(args[i + 1], out _shotWait);
+                if (args[i] == "-shotStops")
+                {
+                    var list = new System.Collections.Generic.List<(string, string)>();
+                    foreach (var pair in args[i + 1].Split(','))
+                    {
+                        int c = pair.IndexOf(':');
+                        if (c > 0) list.Add((pair.Substring(0, c), pair.Substring(c + 1)));
+                    }
+                    if (list.Count > 0) Stops = list.ToArray();
+                }
+            }
+            Directory.CreateDirectory(_shotDir);
 
             _origEnterPlayModeOptionsEnabled = EditorSettings.enterPlayModeOptionsEnabled;
             _origEnterPlayModeOptions = EditorSettings.enterPlayModeOptions;
@@ -78,7 +97,7 @@ namespace Saga.EditorTools
                 EditorApplication.playModeStateChanged -= OnStateChanged;
                 EditorSettings.enterPlayModeOptionsEnabled = _origEnterPlayModeOptionsEnabled;
                 EditorSettings.enterPlayModeOptions = _origEnterPlayModeOptions;
-                Debug.Log($"[PlaytestGoLandmarksGui] done, screenshots in {ShotDir}");
+                Debug.Log($"[PlaytestGoLandmarksGui] done, screenshots in {_shotDir}");
                 EditorApplication.Exit(0);
             }
         }
@@ -104,12 +123,12 @@ namespace Saga.EditorTools
 
             // 셰이더 변형 컴파일 + 카메라 추적 대기(PlaytestDungeonEnemiesGui.cs
             // 클래스 주석의 66-2장 ⑩ 함정과 같은 결 — 첫 지점만 넉넉히, 나머지는 짧게).
-            int waitFrames = _stopIndex == 0 ? 180 : 40;
+            int waitFrames = _shotWait > 0 ? _shotWait : _stopIndex == 0 ? 180 : 40;
             if (_frame >= waitFrames)
             {
                 var playerGo = GameObject.FindGameObjectWithTag("Player");
                 Debug.Log($"[PlaytestGoLandmarksGui] pre-shot player pos: {(playerGo != null ? playerGo.transform.position.ToString() : "null")}");
-                ScreenCapture.CaptureScreenshot(ShotDir + Stops[_stopIndex].shot);
+                ScreenCapture.CaptureScreenshot(_shotDir + Stops[_stopIndex].shot);
                 Debug.Log($"[PlaytestGoLandmarksGui] shot {_stopIndex}: {Stops[_stopIndex].shot}");
                 _phase = 1;
                 _frame = 0;

@@ -116,6 +116,7 @@ namespace Saga.Go.World
 
         private void SpawnLantern(string name, Vector3 pos)
         {
+            if (SpawnWorldModel(WorldLantern, name, pos, 0f, true) != null) return;
             if (lanternModel != null)
             {
                 var lantern = Object.Instantiate(lanternModel, transform);
@@ -154,6 +155,7 @@ namespace Saga.Go.World
             float ground = TestMapData.Legend['H'].Height;
             Vector3 pos = TestMapData.WorldPos(4, 3) + new Vector3(4f, ground, 3f);
 
+            if (SpawnWorldModel(WorldStall, "MarketStall", pos, 0f, true) != null) return;
             if (stallModel != null)
             {
                 var stall = Object.Instantiate(stallModel, transform);
@@ -205,6 +207,13 @@ namespace Saga.Go.World
             float ground = TestMapData.Legend['F'].Height;
             Vector3 basePos = TestMapData.WorldPos(3, 9) + new Vector3(3f, ground, 0f);
 
+            // tasks U-0140 — 자체 나무 울(3.12m) 두 칸을 z 로 눕혀 가운데에 문 너비 틈. 없으면 아래 Kenney 네 칸.
+            if (WorldModels.Load(WorldFence) != null)
+            {
+                SpawnWorldModel(WorldFence, "Fence_0", basePos + new Vector3(0f, 0f, -FenceGapHalf - WorldFenceHalf), 90f, false);
+                SpawnWorldModel(WorldFence, "Fence_1", basePos + new Vector3(0f, 0f, FenceGapHalf + WorldFenceHalf), 90f, false);
+                return;
+            }
             SpawnFencePanel(fenceModel, "Fence_0", basePos + new Vector3(0f, 0f, -3f));
             SpawnFencePanel(fenceModel, "Fence_1", basePos + new Vector3(0f, 0f, -1f));
             SpawnFencePanel(fenceGateModel, "FenceGate", basePos + new Vector3(0f, 0f, 1f));
@@ -239,6 +248,37 @@ namespace Saga.Go.World
         }
 
         // ---- 공통 --------------------------------------------------------
+
+        // ---- 자체 모델(tasks U-0140) ----------------------------------------------
+
+        // `Resources/World` 자체툴 모델(K 갈래) — 있으면 위 Kenney 대신 쓴다. 크기는 모델 실측 그대로(돌등롱 2.3m·좌판 3×1.8m·울 3.12m).
+        public const string WorldLantern = "stone_lantern_01";
+        public const string WorldStall = "market_stall_01";
+        public const string WorldFence = "wood_fence_01";
+        public const float FenceGapHalf = 1f;       // 울 가운데 틈(옛 문 한 칸 자리) 반 너비
+        private const float WorldFenceHalf = 1.56f; // wood_fence_01 길이 3.12 의 반
+
+        /// <summary>`pos` 에 빈 자리를 세우고 그 밑에 `WorldModels.Spawn`(배경 재질·바닥 접지). 충돌이 필요하면 모델 경계 상자. 없으면 null.</summary>
+        private GameObject SpawnWorldModel(string model, string name, Vector3 pos, float yaw, bool collider)
+        {
+            if (WorldModels.Load(model) == null) return null;
+            var holder = new GameObject(name);
+            holder.transform.SetParent(transform, false);
+            holder.transform.position = pos;
+            var body = WorldModels.Spawn(model, holder.transform);
+            if (body == null) { DestroyImmediate(holder); return null; }
+            if (collider)
+            {
+                Bounds b = default; bool any = false;
+                foreach (var r in body.GetComponentsInChildren<Renderer>(true))
+                    if (!any) { b = r.bounds; any = true; } else b.Encapsulate(r.bounds);
+                var col = holder.AddComponent<BoxCollider>();
+                col.center = b.center - pos;
+                col.size = b.size;
+            }
+            holder.transform.rotation = Quaternion.Euler(0f, yaw, 0f);
+            return holder;
+        }
 
         private static GameObject CreateBox(string name, Vector3 center, Vector3 size, Color color, bool withCollider = true)
         {

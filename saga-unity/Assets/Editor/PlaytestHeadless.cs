@@ -770,15 +770,23 @@ namespace Saga.EditorTools
                 return;
             }
 
-            var lanternMat = lantern.GetComponent<MeshRenderer>().sharedMaterial;
-            if (lanternMat == null || lanternMat.name != "LanternMetal" ||
-                !lanternMat.HasProperty("metallicFactor") || lanternMat.GetFloat("metallicFactor") < 0.5f)
+            // tasks U-0140 — 자체 모델(Resources/World)로 지은 씬이면 Kenney 재질 분리 검사는 해당 없음(PlaytestGoVillageProps 가 본다).
+            bool worldLantern = lantern.transform.childCount > 0 && lantern.transform.GetChild(0).name == Saga.Go.World.PropsBuilder.WorldLantern;
+            bool worldStall = stall.transform.childCount > 0 && stall.transform.GetChild(0).name == Saga.Go.World.PropsBuilder.WorldStall;
+            var lanternMat = worldLantern ? null : lantern.GetComponent<MeshRenderer>().sharedMaterial;
+            if (!worldLantern && (lanternMat == null || lanternMat.name != "LanternMetal" ||
+                !lanternMat.HasProperty("metallicFactor") || lanternMat.GetFloat("metallicFactor") < 0.5f))
             {
                 Debug.LogError($"[PlaytestHeadless] lantern 재질 이상 — {lanternMat?.name} metallicFactor={(lanternMat != null && lanternMat.HasProperty("metallicFactor") ? lanternMat.GetFloat("metallicFactor").ToString("F2") : "?")}(기대 LanternMetal/≥0.5)");
                 _hadError = true;
                 return;
             }
 
+            if (worldStall)
+            {
+                Debug.Log($"[PlaytestHeadless] props materials OK - 좌판 자체 모델(U-0140){(worldLantern ? "·등롱 자체 모델" : $", lantern metallicFactor={lanternMat.GetFloat("metallicFactor"):F2}")}");
+                return;
+            }
             var stallFilter = stall.GetComponent<MeshFilter>();
             var stallRenderer = stall.GetComponent<MeshRenderer>();
             var mesh = stallFilter.sharedMesh;
@@ -805,7 +813,7 @@ namespace Saga.EditorTools
                 _hadError = true;
                 return;
             }
-            Debug.Log($"[PlaytestHeadless] props materials OK - lantern metallicFactor={lanternMat.GetFloat("metallicFactor"):F2}, stall wood {mesh.GetTriangles(0).Length / 3}tri(tex={woodTex.name})/canopy {mesh.GetTriangles(1).Length / 3}tri(tex={canopyTex.name}) 분리 유지");
+            Debug.Log($"[PlaytestHeadless] props materials OK - lantern {(lanternMat != null ? $"metallicFactor={lanternMat.GetFloat("metallicFactor"):F2}" : "자체 모델")}, stall wood {mesh.GetTriangles(0).Length / 3}tri(tex={woodTex.name})/canopy {mesh.GetTriangles(1).Length / 3}tri(tex={canopyTex.name}) 분리 유지");
         }
 
         private static Texture GetBaseTexture(Material m)
