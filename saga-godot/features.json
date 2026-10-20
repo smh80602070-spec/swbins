@@ -4086,6 +4086,48 @@
   "note": "전후 같은 시간대(19:58) 가로 셋·세로 하나 Claude 눈 ○ — 평지는 흙 결이 안 보여 자갈로 · 이동·공격 칸 표시 그대로 읽힘 · 세로 화면은 판 양옆이 잘림(카메라, 이전부터 — 후속 후보) · SAGA_REALM_OLD=1 옛 판"
  },
  {
+  "id": "gd.dg.real_rooms",
+  "name": "2나락 방·문·통로 PBR 사진 표면 — 원본 재질 이름으로 tiles_real 세트(진흙→흙·해안 바위→바위·콘크리트→콘크리트), 빛깔은 원본 toon 평균에 맞춤(어둠·mood 유지), 양면·월드 공간 법선",
+  "files": [
+   "games/saga_dungeon/world/dungeon_real_surface.gd",
+   "games/saga_dungeon/world/test_room.gd",
+   "saga_core/world/world_curve_material.gd",
+   "saga_core/shaders/curved_triplanar.gdshader"
+  ],
+  "tests": [
+   "real_ground2",
+   "dungeon_belt",
+   "dungeon_world",
+   "gfx_baseline"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0252",
+  "since": "2026-10-20",
+  "note": "SAGA_DUNGEON_OLD=1 옛 toon(환경 G-0224 와 같은 손잡이) · 용암 방 white_stucco 는 빛나는 용암 줄이라 원본 그대로 · 원본 cull 끔이라 셰이더 양면 변종(같은 코드 render_mode 만) · glb 접선 대신 월드 공간 whiteout 법선(world_space_normal) · _hi 400KB — 폰 _512 는 후속"
+ },
+ {
+  "id": "gd.rk.real_map",
+  "name": "5천하 지도 땅·도읍 원반 PBR 사진 땅 — tiles_real 풀·흙·자갈(지도는 결 4배 크게)",
+  "files": [
+   "games/saga_realm/world/realm_worldmap.gd",
+   "games/saga_realm/world/realm_city.gd",
+   "saga_core/world/world_curve_material.gd"
+  ],
+  "tests": [
+   "real_ground2",
+   "realm_state",
+   "gfx_baseline"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0252",
+  "since": "2026-10-20",
+  "note": "SAGA_REALM_OLD=1 옛 민색 vertex_color · 성 색 _land_color·성표는 그대로 · 지도 컷은 지도 안개가 진해 결이 옅게만 보임"
+ },
+ {
   "id": "gd.dg.dark_rooms",
   "name": "2나락 방 분위기 — 공용 하늘·안개(회녹 허공) 대신 나락 전용 환경: 검은 바탕·따뜻한 주변광·검은 안개·SDFGI 끔 + 횃불 느린 깜빡임",
   "files": [

@@ -61,7 +61,8 @@ static func _check(root: Node, node: Node, mesh: Mesh, i: int, active: Material,
 	if active is ShaderMaterial:
 		var sm := active as ShaderMaterial
 		writes_alpha = sm.shader != null and sm.shader.code.contains("ALPHA")
-		for p in ["albedo_texture", "alpha_texture"]:
+		## G-0252 — curved_triplanar(2나락 방·문·통로 PBR 사진 표면)는 grass_albedo 로 결을 그린다 — 단색 아님(원본 toon 을 일부러 갈았다, foreign-texture 대상 아님).
+		for p in ["albedo_texture", "alpha_texture", "grass_albedo"]:
 			var t: Variant = sm.get_shader_parameter(p)
 			if t is Texture2D:
 				samples_tex = true

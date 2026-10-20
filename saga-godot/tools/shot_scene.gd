@@ -138,6 +138,7 @@ const CUTS := [
 	["go_story15", GO, [["static", "res://tools/shot_story13.gd", "duel15", ["@tree"]]]],   # G-0078 15부 50장 멈춘 진수대의 쇠 거신(메모리에서만)
 	["go_story14", GO, [["static", "res://tools/shot_story13.gd", "duel14", ["@tree"]]]],   # G-0077 14부 47장 그 밤의 서리 구미호(메모리에서만)
 	["rk_orders", REALM, [["free_modal"], ["call", "RealmHUD/OrderButton", "_on_pressed", []]]],   # G-0052 — 긴 글 열 줄 선택 창
+	["rk_map_wide", REALM, [["free_modal"], ["set", "/root/RealmSaveState", "viewing_map", true]]],   # G-0252 지도 땅(PBR 풀·흙·자갈) — 지도 단추와 같은 손잡이
 	["rk_duel", REALM, [["free_modal"], ["call", "RealmHUD/AttackButton", "_duel_round", ["enemy", []]]]],
 ]
 

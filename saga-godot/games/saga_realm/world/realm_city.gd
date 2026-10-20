@@ -203,7 +203,8 @@ func _build_scenery() -> void:
 	disc.height = 0.4
 	ground.mesh = disc
 	ground.position = Vector3(0, -0.2, 0)
-	ground.material_override = _mat(Color(0.34, 0.52, 0.24))
+	ground.name = "CityGround"
+	ground.material_override = real_ground_mat(Color(0.34, 0.52, 0.24))
 	root.add_child(ground)
 	for i in 34:
 		var ang := TAU * (float(i) + 0.5 * absf(sin(float(i) * 12.9898))) / 34.0
@@ -397,3 +398,15 @@ func _mat(color: Color) -> ShaderMaterial:
 	## 둬 다른 네 판과 셰이더 하나를 공유하기 위해서다(saga_core 공용화
 	## 경계, 새 머티리얼 종류를 안 늘린다).
 	return WorldCurveMaterial.vertex_color_material(0.0, 0.9, color)
+
+
+## G-0252 — 지도 땅·도읍 원반을 자체 PBR(tiles_real 풀·흙·자갈, 법선·거칠기·높이)로. SAGA_REALM_OLD=1 이면 옛 민색(vertex_color).
+## realm_city.gd·realm_worldmap.gd 가 같은 함수를 하나씩 둔다(서로 참조 안 함 — 성 색 _land_color·성표는 그대로 _mat).
+static func real_ground_mat(color: Color, tile_scale := -1.0) -> ShaderMaterial:
+	if OS.get_environment("SAGA_REALM_OLD") != "" or not ResourceLoader.exists(WorldCurveMaterial.REAL_DIR + "gravel_hi.webp"):
+		return WorldCurveMaterial.vertex_color_material(0.0, 0.9, color)
+	var m := WorldCurveMaterial.triplanar_material(0.0, {"grass": "grass", "dirt": "dirt", "stone": "gravel"}, "SAGA_REALM_OLD")
+	if tile_scale > 0.0:
+		m.set_shader_parameter("tile_scale", tile_scale)
+		m.set_shader_parameter("patch_scale", tile_scale * 0.3)
+	return m

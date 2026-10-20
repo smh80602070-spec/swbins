@@ -17,6 +17,7 @@ extends Node3D
 
 const Meridian := preload("res://games/saga_dungeon/data/dungeon_meridian.gd")   # G-0217 경락도
 const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
+const RealSurface := preload("res://games/saga_dungeon/world/dungeon_real_surface.gd")   # G-0252 방·문·통로 PBR 사진 표면
 const DungeonEnemy := preload("res://games/saga_dungeon/world/dungeon_enemy.gd")
 const DungeonHeroEncounter := preload("res://games/saga_dungeon/world/dungeon_hero_encounter.gd")
 const LootPickup := preload("res://games/saga_dungeon/world/loot_pickup.gd")
@@ -315,6 +316,7 @@ func _spawn_room_mesh(origin_z: float, room_index: int) -> void:
 	var mi := MeshInstance3D.new()
 	mi.name = "RoomMesh"
 	mi.mesh = mesh
+	RealSurface.apply(mi, _mood_for_room(room_index))
 	mi.position = Vector3(0, 0, origin_z)
 	add_child(mi)
 
@@ -407,6 +409,7 @@ func _spawn_gate(origin_z: float, at_north: bool, room_index: int) -> void:
 	## 빈 MeshInstance3D였다는 뜻 — mood 배선과 무관한 기존 버그라 별도로
 	## 고친다.
 	mi.mesh = mesh
+	RealSurface.apply(mi, _mood_for_room(room_index))
 	var z_off: float = -ROOM_HALF.z if at_north else ROOM_HALF.z
 	mi.position = Vector3(0, 0, origin_z + z_off)
 	add_child(mi)
@@ -425,6 +428,7 @@ func _spawn_corridor(from_z: float, to_z: float, room_index: int) -> void:
 			var mi := MeshInstance3D.new()
 			mi.name = "CorridorTile%d" % i
 			mi.mesh = mesh
+			RealSurface.apply(mi, _mood_for_room(room_index))
 			mi.position = Vector3(0, 0, tile_center_z)
 			add_child(mi)
 

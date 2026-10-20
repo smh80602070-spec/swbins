@@ -79,6 +79,7 @@ const Characters := preload("res://saga_core/data/characters.gd")
 ## 카메라 쪽 정정과 짝을 이룬다).
 const GROUND_SPAN := 6000.0
 const COLOR_GROUND := Color(0.42, 0.48, 0.32)
+const MAP_TILE_SCALE := 0.1   # G-0252 지도는 높이 떠서 보므로 사진 결을 4배 크게(기본 0.4 는 멀리서 자글자글)
 const COLOR_FLAG := Color(0.85, 0.8, 0.7)
 const COLOR_CURRENT := Color(0.95, 0.75, 0.2)
 const LAND_COLOR := {"plain": Color(0.74, 0.62, 0.4), "river": Color(0.42, 0.58, 0.66)}
@@ -277,7 +278,8 @@ func _build_ground() -> void:
 	var mesh := PlaneMesh.new()
 	mesh.size = Vector2(GROUND_SPAN, GROUND_SPAN)
 	mi.mesh = mesh
-	mi.material_override = _mat(COLOR_GROUND)
+	mi.name = "MapGround"
+	mi.material_override = real_ground_mat(COLOR_GROUND, MAP_TILE_SCALE)
 	add_child(mi)
 
 
@@ -376,3 +378,15 @@ func _mat(color: Color) -> ShaderMaterial:
 	## 0 — REALM은 걸어다니는 판이 아니라 구면 투영이 없다, saga_core 셰이더
 	## 공유 경계를 유지한다).
 	return WorldCurveMaterial.vertex_color_material(0.0, 0.9, color)
+
+
+## G-0252 — 지도 땅·도읍 원반을 자체 PBR(tiles_real 풀·흙·자갈, 법선·거칠기·높이)로. SAGA_REALM_OLD=1 이면 옛 민색(vertex_color).
+## realm_city.gd·realm_worldmap.gd 가 같은 함수를 하나씩 둔다(서로 참조 안 함 — 성 색 _land_color·성표는 그대로 _mat).
+static func real_ground_mat(color: Color, tile_scale := -1.0) -> ShaderMaterial:
+	if OS.get_environment("SAGA_REALM_OLD") != "" or not ResourceLoader.exists(WorldCurveMaterial.REAL_DIR + "gravel_hi.webp"):
+		return WorldCurveMaterial.vertex_color_material(0.0, 0.9, color)
+	var m := WorldCurveMaterial.triplanar_material(0.0, {"grass": "grass", "dirt": "dirt", "stone": "gravel"}, "SAGA_REALM_OLD")
+	if tile_scale > 0.0:
+		m.set_shader_parameter("tile_scale", tile_scale)
+		m.set_shader_parameter("patch_scale", tile_scale * 0.3)
+	return m

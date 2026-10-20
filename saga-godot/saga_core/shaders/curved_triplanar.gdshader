@@ -34,6 +34,9 @@ uniform float photo_color : hint_range(0.0, 1.0) = 1.0;
 uniform float blotch : hint_range(0.0, 1.0) = 1.0;   // 흙·돌 얼룩 세기(사진 세트에선 줄인다 — 흐린 물감 얼룩)
 uniform float tile_scale : hint_range(0.05, 2.0) = 0.4;
 uniform float patch_scale : hint_range(0.02, 1.0) = 0.12;
+// G-0252 — 1 이면 법선을 월드 공간 triplanar(whiteout)로 풀어 NORMAL 에 직접 쓴다. GLB 벽(2나락 방)은 접선 방향이 칸마다 뒤집혀
+// 접선 공간 NORMAL_MAP 이 바둑판 검은 칸이 됐다. 0(기본) = 예전 그대로(3마을 평지).
+uniform float world_space_normal : hint_range(0.0, 1.0) = 0.0;
 
 varying vec3 world_pos;
 varying vec3 world_normal;
@@ -66,6 +69,19 @@ vec4 _triplanar(sampler2D tex, vec3 pos, vec3 n, float scale) {
 	vec4 yz = texture(tex, pos.zy * scale);
 	vec4 xz = texture(tex, pos.xz * scale);
 	return xz * w.y + yz * w.x + xy * w.z;
+}
+
+// whiteout 블렌드 triplanar 법선(월드 공간) — n 은 정규화된 월드 법선.
+vec3 _triplanar_wnormal(sampler2D tex, vec3 pos, vec3 n, float scale) {
+	vec3 w = abs(n);
+	w /= (w.x + w.y + w.z);
+	vec3 tx = texture(tex, pos.zy * scale).rgb * 2.0 - 1.0;
+	vec3 ty = texture(tex, pos.xz * scale).rgb * 2.0 - 1.0;
+	vec3 tz = texture(tex, pos.xy * scale).rgb * 2.0 - 1.0;
+	tx = vec3(tx.xy + n.zy, abs(tx.z) * n.x);
+	ty = vec3(ty.xy + n.xz, abs(ty.z) * n.y);
+	tz = vec3(tz.xy + n.xy, abs(tz.z) * n.z);
+	return normalize(tx.zyx * w.x + ty.xzy * w.y + tz.xyz * w.z);
 }
 
 void fragment() {
@@ -103,6 +119,14 @@ void fragment() {
 	float detail_rough = (grass_r * grass_w + dirt_r * dirt_w + stone_r * stone_w) / wsum;
 
 	ALBEDO = COLOR.rgb * detail_albedo;
+	if (world_space_normal > 0.5) {
+		vec3 wn = normalize(world_normal) * (FRONT_FACING ? 1.0 : -1.0);   // 양면 변종(2나락 glb 원본 cull 끔)의 뒷면
+		vec3 nw = normalize(_triplanar_wnormal(grass_normal, world_pos, wn, tile_scale) * grass_w
+			+ _triplanar_wnormal(dirt_normal, world_pos, wn, tile_scale) * dirt_w
+			+ _triplanar_wnormal(stone_normal, world_pos, wn, tile_scale) * stone_w);
+		NORMAL = normalize((VIEW_MATRIX * vec4(nw, 0.0)).xyz);
+		detail_normal = vec3(0.0, 0.0, 1.0);
+	}
 	NORMAL_MAP = detail_normal * 0.5 + 0.5;
 	ROUGHNESS = detail_rough;
 }

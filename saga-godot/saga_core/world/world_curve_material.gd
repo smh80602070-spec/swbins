@@ -127,22 +127,25 @@ static func vertex_color_cutout_material(curve_amount: float, roughness_value: f
 ## 지형에 쓰는 자리 — 103장 tilegen 잔디·흙·돌 3장(공용, 게임마다 새로
 ## 안 만든다)을 고정으로 물린다. 호출부는 정점색(지형 종류별 tint)만
 ## 책임진다.
-static func triplanar_material(curve_amount: float) -> ShaderMaterial:
+## G-0252 — sets(슬롯 grass·dirt·stone → tiles_real 세트 이름, 빠진 슬롯은 REAL_SETS)·old_env(옛 512 로 물러설 환경변수)·
+## blotch(≥0 이면 얼룩 세기 덮어씀) — 셋 다 기본값이면 3마을 G-0225 결과 그대로. 빛깔 맞춤은 세트 이름으로(SET_GAIN, 없는 세트 1).
+static func triplanar_material(curve_amount: float, sets := {}, old_env := "SAGA_FOREST_OLD", blotch := -1.0) -> ShaderMaterial:
 	ensure_global_registered()
 	var mat := ShaderMaterial.new()
 	mat.shader = TRIPLANAR_SHADER
 	mat.set_shader_parameter("curve_amount", curve_amount)
 	## G-0225 — 자체 PBR(K-0093 tiles_real)이 있으면 풀·흙·바위 _hi + 높이 + 빛깔 맞춤(1만리 terrain_builder REAL_GAIN 과 같은 값 — 판끼리 참조 금지라 여기 둔다).
 	## 사진 세트에선 흙·돌 얼룩을 줄인다(BLOTCH_REAL). SAGA_FOREST_OLD=1 이면 옛 512.
-	var real := ResourceLoader.exists(REAL_DIR + "grass_hi.webp") and OS.get_environment("SAGA_FOREST_OLD") == ""
+	var real := ResourceLoader.exists(REAL_DIR + "grass_hi.webp") and OS.get_environment(old_env) == ""
 	for k: String in REAL_SETS:
 		if real:
-			var base := REAL_DIR + String(REAL_SETS[k]) + "_hi"
+			var set_name := String(sets.get(k, REAL_SETS[k]))
+			var base := REAL_DIR + set_name + "_hi"
 			mat.set_shader_parameter(k + "_albedo", load(base + ".webp"))
 			mat.set_shader_parameter(k + "_normal", load(base + "_n.webp"))
 			mat.set_shader_parameter(k + "_rough", load(base + "_r.webp"))
 			mat.set_shader_parameter(k + "_height", load(base + "_h.webp"))
-			mat.set_shader_parameter(k + "_gain", REAL_GAIN[k])
+			mat.set_shader_parameter(k + "_gain", SET_GAIN.get(set_name, Vector3.ONE))
 		else:
 			var old := "res://assets/generated/tiles/%s_512" % k
 			mat.set_shader_parameter(k + "_albedo", load(old + ".png"))
@@ -150,12 +153,12 @@ static func triplanar_material(curve_amount: float) -> ShaderMaterial:
 			mat.set_shader_parameter(k + "_rough", load(old + "_r.png"))
 	mat.set_shader_parameter("use_height", 1.0 if real else 0.0)
 	mat.set_shader_parameter("photo_color", PHOTO_COLOR if real else 1.0)
-	mat.set_shader_parameter("blotch", BLOTCH_REAL if real else 1.0)
+	mat.set_shader_parameter("blotch", blotch if blotch >= 0.0 else (BLOTCH_REAL if real else 1.0))
 	return mat
 
 
 const REAL_DIR := "res://assets/generated/tiles_real/"
 const REAL_SETS := {"grass": "grass", "dirt": "dirt", "stone": "rock"}
-const REAL_GAIN := {"grass": Vector3(1.418, 2.341, 1.544), "dirt": Vector3(0.636, 0.546, 0.295), "stone": Vector3(0.946, 0.875, 0.768)}
+const SET_GAIN := {"grass": Vector3(1.418, 2.341, 1.544), "dirt": Vector3(0.636, 0.546, 0.295), "rock": Vector3(0.946, 0.875, 0.768)}   # 세트 이름 → 빛깔 맞춤(옛 슬롯 REAL_GAIN 값 그대로)
 const PHOTO_COLOR := 0.35
 const BLOTCH_REAL := 0.45
