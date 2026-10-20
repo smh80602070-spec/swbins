@@ -24,3 +24,4 @@
 - [ ] 10-20 · (K-0150) · 겹 배경 둘·컷아웃 주역 2 — parallax2d·cutout2d.on 1 촬영(fog 버그 K-0150 메모) · 웹
 - [ ] 10-20 · (자체툴 K-0149 → 웹) · 세로 키 아트 `<판>_key_v.webp` 새 그림(이름·크기 같음) — pw-mobile ⑥ 확인만 · 웹
 - [ ] 10-20 · (K-0148) · 모캡 cast·strong·greet 새 클립(판정 3/3) — 웹 W-0318 뺀 셋 짝 되살리기 · 고돗 glb 재임포트 · 웹/고돗
+- [ ] 10-20 · (K-0151 → 고돗) · face_sdf.png 도착(`assets/face_sdf/`, .import 고돗) — face_view 전후 · FaceMouth 는 UV 달라 sdf 끌 것 · 고돗

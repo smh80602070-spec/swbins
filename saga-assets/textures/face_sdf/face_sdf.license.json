@@ -1,0 +1,10 @@
+{
+ "id": "face_sdf",
+ "generator": "tools/char-forge/face_sdf_bake.py (K-0151 — Blender, VRoid 얼굴 살갗 UV 위 원신식 그림자 문턱 계산 굽기)",
+ "license": "MIT",
+ "model": "",
+ "model_license": "",
+ "base_body": "tools/char-forge/_out/vroid/sg_zhugeliang/sg_zhugeliang.glb (얼굴 살갗 메시 Face_00_SKIN 의 모양·UV 만 씀 — 다른 몸과 평균 차 1/255)",
+ "rule": "value = 0.5 - 0.5*cos(clamp(phi+90,0,180)), phi = 다듬은 법선(메시 법선 40번 고르기 45% + 머리 타원체 55%) 수평 각 · 빛 캐릭터 오른쪽 기준 · cel_toon.gdshader 112~116 문턱과 같은 식",
+ "note": "자체 계산 그림(AI·남의 그림 없음)"
+}

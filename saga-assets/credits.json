@@ -18,8 +18,7 @@
     "Paint Brush",
     "Panda.glb",
     "Pond",
-    "Tiger.glb",
-    "fan · brush(공유)"
+    "Tiger.glb"
    ],
    "where": [
     "saga-web/saga-dungeon/assets/ASSET_LICENSES.md",
@@ -725,6 +724,15 @@
    ]
   },
   {
+   "tool": "face_sdf_bake.py (K-0151 — Blender, VRoid 얼굴 살갗 UV 위 원신식 그림자 문턱 계산 굽기)",
+   "model": "",
+   "license": "MIT",
+   "count": 1,
+   "where": [
+    "saga-assets/textures/face_sdf"
+   ]
+  },
+  {
    "tool": "compress.mjs",
    "model": "",
    "license": "CC0-1.0 (형태·뼈·동작 전부 코드, 외부 입력 없음)",
@@ -829,10 +837,14 @@
    "tool": "cutout_parts.py (Blender 옆모습 부위 렌더)",
    "model": "",
    "license": "MIT",
-   "count": 2,
+   "count": 12,
    "where": [
     "saga-assets/web2d/cutout/hl_mukhyang",
-    "saga-assets/web2d/cutout/sg_zhugeliang"
+    "saga-assets/web2d/cutout/sg_zhugeliang",
+    "saga-web/saga-dungeon/assets/web2d/cutout/hl_mukhyang",
+    "saga-web/saga-dungeon/assets/web2d/cutout/sg_zhugeliang",
+    "saga-web/saga-forest/assets/web2d/cutout/hl_mukhyang",
+    "saga-web/saga-forest/assets/web2d/cutout/sg_zhugeliang"
    ]
   },
   {
@@ -1093,9 +1105,9 @@
   }
  ],
  "doc_sections": {
-  "total": 261,
+  "total": 259,
   "by_license": {
-   "CC0": 187,
+   "CC0": 182,
    "MIT": 13,
    "CC-BY": 29,
    "Kenney(CC0)": 39,
@@ -1113,7 +1125,7 @@
    },
    {
     "doc": "saga-web/saga-go/assets/ASSET_LICENSES.md",
-    "section": "Lucide — UI 아이콘 (`js/icon.js` 안에 적혀 있다)",
+    "section": "UI 아이콘 — 자체(W-0321)",
     "licenses": []
    },
    {
@@ -1173,7 +1185,7 @@
    },
    {
     "doc": "saga-web/saga-dungeon/assets/ASSET_LICENSES.md",
-    "section": "Lucide — UI 아이콘 (2026-09-08, `js/icon.js`)",
+    "section": "UI 아이콘 — 자체(W-0321)",
     "licenses": []
    },
    {
@@ -1198,6 +1210,11 @@
    },
    {
     "doc": "saga-web/saga-forest/assets/ASSET_LICENSES.md",
+    "section": "배경음악(BGM) — `forest.mp3` — 자체(K-0117, W-0321)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-forest/assets/ASSET_LICENSES.md",
     "section": "VRM 애니메 아바타 가공 (2026-09-20)",
     "licenses": []
    },
@@ -1208,7 +1225,12 @@
    },
    {
     "doc": "saga-web/saga-story/assets/ASSET_LICENSES.md",
-    "section": "Lucide — UI 아이콘 (2026-09-08, `js/icon.js`)",
+    "section": "배경음악 — 자체(K-0117, W-0321) (`assets/audio/bgm/`)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-story/assets/ASSET_LICENSES.md",
+    "section": "UI 아이콘 — 자체(W-0321)",
     "licenses": []
    },
    {

@@ -379,6 +379,21 @@
    ]
   },
   {
+   "id": "face-sdf",
+   "src": "saga-assets/textures/face_sdf",
+   "include": [
+    "*.png",
+    "*.license.json"
+   ],
+   "note": "K-0151 원신식 얼굴 그림자 SDF(VRoid 얼굴 살갗 UV 공용, 빛 오른쪽 기준) — 고돗 cel_toon face_sdf 자리(face_light.gd 가 있으면 바로 켬). .import 는 고돗 세션",
+   "targets": [
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/face_sdf"
+    }
+   ]
+  },
+  {
    "id": "web2d-cutout",
    "src": "saga-assets/web2d/cutout",
    "recursive": true,
