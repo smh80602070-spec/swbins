@@ -37,6 +37,12 @@ uniform float patch_scale : hint_range(0.02, 1.0) = 0.12;
 // G-0252 — 1 이면 법선을 월드 공간 triplanar(whiteout)로 풀어 NORMAL 에 직접 쓴다. GLB 벽(2나락 방)은 접선 방향이 칸마다 뒤집혀
 // 접선 공간 NORMAL_MAP 이 바둑판 검은 칸이 됐다. 0(기본) = 예전 그대로(3마을 평지).
 uniform float world_space_normal : hint_range(0.0, 1.0) = 0.0;
+// G-0262 — 1 이면 되풀이 섞기: 낮은 주파수 잡음 k 를 8 칸 번호로 나눠(ia·ia+1) 칸마다 다른 자리 밀기·detile_rot × 번호 회전으로
+// 두 번 뽑아 경계에서 섞는다(텍스처 되풀이 지우기 — 크기를 바꾼 둘째 층은 0.37·0.23 둘 다 큰 격자가 새로 보여 버림).
+// 표본 ×2 라 5천하 지도에서만 켠다. 0(기본) = 예전 그대로(uniform 분기 — 3마을 땅·2나락 방·5천하 도읍 한 픽셀도 안 변함).
+uniform float detile : hint_range(0.0, 1.0) = 0.0;
+uniform float detile_rot = 0.6;
+uniform float detile_patch = 0.45;
 
 varying vec3 world_pos;
 varying vec3 world_normal;
@@ -84,19 +90,54 @@ vec3 _triplanar_wnormal(sampler2D tex, vec3 pos, vec3 n, float scale) {
 	return normalize(tx.zyx * w.x + ty.xzy * w.y + tz.xyz * w.z);
 }
 
+// G-0262 되풀이 섞기 — 칸 번호 idx 의 자리: xz 를 detile_rot × idx 돌리고 텍스처 한 장 안에서 밀기(법선 n 은 그대로).
+vec3 _detile_pos(vec3 pos, float idx, float scale) {
+	float c = cos(detile_rot * idx);
+	float s = sin(detile_rot * idx);
+	vec2 o = sin(vec2(3.0, 7.0) * idx) / scale;
+	return vec3(c * pos.x - s * pos.z + o.x, pos.y, s * pos.x + c * pos.z + o.y);
+}
+
+// dt = (칸 번호 ia, 섞기 몫 dm) — detile 0 이면 안 씀.
+vec4 _sample(sampler2D tex, vec3 pos, vec3 n, float scale, vec2 dt) {
+	if (detile > 0.5) {
+		return mix(_triplanar(tex, _detile_pos(pos, dt.x, scale), n, scale), _triplanar(tex, _detile_pos(pos, dt.x + 1.0, scale), n, scale), dt.y);
+	}
+	return _triplanar(tex, pos, n, scale);
+}
+
+vec3 _sample_wnormal(sampler2D tex, vec3 pos, vec3 n, float scale, vec2 dt) {
+	if (detile > 0.5) {
+		return normalize(mix(_triplanar_wnormal(tex, _detile_pos(pos, dt.x, scale), n, scale), _triplanar_wnormal(tex, _detile_pos(pos, dt.x + 1.0, scale), n, scale), dt.y));
+	}
+	return _triplanar_wnormal(tex, pos, n, scale);
+}
+
+float _sample_height(sampler2D tex, vec3 pos, float scale, vec2 dt) {
+	if (detile > 0.5) {
+		return mix(texture(tex, _detile_pos(pos, dt.x, scale).xz * scale).r, texture(tex, _detile_pos(pos, dt.x + 1.0, scale).xz * scale).r, dt.y);
+	}
+	return texture(tex, pos.xz * scale).r;
+}
+
 void fragment() {
-	vec3 grass_a = _triplanar(grass_albedo, world_pos, world_normal, tile_scale).rgb;
-	vec3 dirt_a = _triplanar(dirt_albedo, world_pos, world_normal, tile_scale).rgb;
-	vec3 stone_a = _triplanar(stone_albedo, world_pos, world_normal, tile_scale).rgb;
+	vec2 dm = vec2(0.0);   // G-0262 (칸 번호, 섞기 몫) — detile 0 이면 안 씀
+	if (detile > 0.5) {
+		float l = _value_noise(world_pos.xz * patch_scale * detile_patch + vec2(7.0, 3.0)) * 8.0;
+		dm = vec2(floor(l), smoothstep(0.2, 0.8, fract(l)));
+	}
+	vec3 grass_a = _sample(grass_albedo, world_pos, world_normal, tile_scale, dm).rgb;
+	vec3 dirt_a = _sample(dirt_albedo, world_pos, world_normal, tile_scale, dm).rgb;
+	vec3 stone_a = _sample(stone_albedo, world_pos, world_normal, tile_scale, dm).rgb;
 	grass_a *= pow(grass_gain, vec3(1.0 - photo_color));
 	dirt_a *= pow(dirt_gain, vec3(1.0 - photo_color));
 	stone_a *= pow(stone_gain, vec3(1.0 - photo_color));
-	vec3 grass_n = _triplanar(grass_normal, world_pos, world_normal, tile_scale).rgb * 2.0 - 1.0;
-	vec3 dirt_n = _triplanar(dirt_normal, world_pos, world_normal, tile_scale).rgb * 2.0 - 1.0;
-	vec3 stone_n = _triplanar(stone_normal, world_pos, world_normal, tile_scale).rgb * 2.0 - 1.0;
-	float grass_r = _triplanar(grass_rough, world_pos, world_normal, tile_scale).r;
-	float dirt_r = _triplanar(dirt_rough, world_pos, world_normal, tile_scale).r;
-	float stone_r = _triplanar(stone_rough, world_pos, world_normal, tile_scale).r;
+	vec3 grass_n = _sample(grass_normal, world_pos, world_normal, tile_scale, dm).rgb * 2.0 - 1.0;
+	vec3 dirt_n = _sample(dirt_normal, world_pos, world_normal, tile_scale, dm).rgb * 2.0 - 1.0;
+	vec3 stone_n = _sample(stone_normal, world_pos, world_normal, tile_scale, dm).rgb * 2.0 - 1.0;
+	float grass_r = _sample(grass_rough, world_pos, world_normal, tile_scale, dm).r;
+	float dirt_r = _sample(dirt_rough, world_pos, world_normal, tile_scale, dm).r;
+	float stone_r = _sample(stone_rough, world_pos, world_normal, tile_scale, dm).r;
 
 	float n1 = _value_noise(world_pos.xz * patch_scale);
 	float n2 = _value_noise(world_pos.xz * patch_scale * 3.7 + vec2(11.0, 5.0));
@@ -104,10 +145,10 @@ void fragment() {
 	float stone_w = smoothstep(0.6, 0.8, n2) * 0.5 * blotch;
 	float grass_w = max(0.05, 1.0 - dirt_w - stone_w);
 	// G-0225 — 높이 기반 섞기(높은 쪽이 이긴다 — 경계가 번지지 않고 틈에 차듯). use_height 0 이면 예전 가중 그대로.
-	vec2 hp = world_pos.xz * tile_scale;
-	float hg = texture(grass_height, hp).r * 0.6 + grass_w;
-	float hd = texture(dirt_height, hp).r * 0.6 + dirt_w;
-	float hs = texture(stone_height, hp).r * 0.75 + stone_w;
+	// hp(world_pos.xz * tile_scale) — G-0262 둘째 층도 같은 dm 으로 섞는다(알베도와 어긋나면 경계가 뜬다).
+	float hg = _sample_height(grass_height, world_pos, tile_scale, dm) * 0.6 + grass_w;
+	float hd = _sample_height(dirt_height, world_pos, tile_scale, dm) * 0.6 + dirt_w;
+	float hs = _sample_height(stone_height, world_pos, tile_scale, dm) * 0.75 + stone_w;
 	float hmax = max(hg, max(hd, hs)) - 0.18;
 	grass_w = mix(grass_w, max(hg - hmax, 0.0) * step(0.001, grass_w) + 0.0001, use_height);
 	dirt_w = mix(dirt_w, max(hd - hmax, 0.0) * step(0.001, dirt_w), use_height);
@@ -121,9 +162,9 @@ void fragment() {
 	ALBEDO = COLOR.rgb * detail_albedo;
 	if (world_space_normal > 0.5) {
 		vec3 wn = normalize(world_normal) * (FRONT_FACING ? 1.0 : -1.0);   // 양면 변종(2나락 glb 원본 cull 끔)의 뒷면
-		vec3 nw = normalize(_triplanar_wnormal(grass_normal, world_pos, wn, tile_scale) * grass_w
-			+ _triplanar_wnormal(dirt_normal, world_pos, wn, tile_scale) * dirt_w
-			+ _triplanar_wnormal(stone_normal, world_pos, wn, tile_scale) * stone_w);
+		vec3 nw = normalize(_sample_wnormal(grass_normal, world_pos, wn, tile_scale, dm) * grass_w
+			+ _sample_wnormal(dirt_normal, world_pos, wn, tile_scale, dm) * dirt_w
+			+ _sample_wnormal(stone_normal, world_pos, wn, tile_scale, dm) * stone_w);
 		NORMAL = normalize((VIEW_MATRIX * vec4(nw, 0.0)).xyz);
 		detail_normal = vec3(0.0, 0.0, 1.0);
 	}

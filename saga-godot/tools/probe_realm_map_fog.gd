@@ -31,6 +31,28 @@ func _ground_tile_scale(wm: Node) -> float:
 	return -1.0
 
 
+## G-0262 — 재질의 detile 값(설정 안 했으면 셰이더 기본값). 공용 셰이더 번짐 잡기: 지도 땅 1 · 도읍 원반·3마을 땅 0.
+func _detile_of(mat: Material) -> float:
+	var sm := mat as ShaderMaterial
+	if sm == null or sm.shader == null:
+		return -1.0
+	var v = sm.get_shader_parameter("detile")
+	if v == null:
+		## 안 정한 값 = 셰이더 선언 기본값(더미 렌더러는 shader_get_parameter_default 가 null 이라 원문에서 읽는다).
+		var rx := RegEx.create_from_string("uniform float detile[^=;]*= *([0-9.]+)")
+		var mt := rx.search(sm.shader.code)
+		v = float(mt.get_string(1)) if mt else null
+	return float(v) if v != null else -1.0
+
+
+func _ground_detile(wm: Node) -> float:
+	for m in wm.find_children("*", "MeshInstance3D", true, false):
+		var sm := (m as MeshInstance3D).material_override as ShaderMaterial
+		if sm and sm.get_shader_parameter("tile_scale") != null:
+			return _detile_of(sm)
+	return -1.0
+
+
 func _run(weather: String) -> void:
 	OS.set_environment("SAGA_WEATHER", weather)
 	var ps := load(SCENE) as PackedScene
@@ -65,6 +87,17 @@ func _run(weather: String) -> void:
 	print("REALM_MAP env %s fog_enabled=%s fog_density=%.4f fog_mode=%d depth=%.0f~%.0f vol=%s sky_affect=%.2f copy=%s orig_is_before=%s cam_far=%.0f tile_scale=%.3f" % [
 		weather, e.fog_enabled, e.fog_density, e.fog_mode, e.fog_depth_begin, e.fog_depth_end, e.volumetric_fog_enabled, e.fog_sky_affect,
 		e != env_before, orig == env_before, cam.far if cam else -1.0, _ground_tile_scale(wm)])
+	print("REALM_MAP detile map=%.1f" % _ground_detile(wm))
+	if not is_equal_approx(_ground_detile(wm), 1.0):
+		_fail("%s 지도 땅 detile %.1f != 1" % [weather, _ground_detile(wm)])
+	var cg := scene.find_child("CityGround", true, false) as MeshInstance3D
+	var city_d := _detile_of(cg.material_override) if cg else -1.0
+	var fs_d := _detile_of(WorldCurveMaterial.triplanar_material(0.004))   # 3마을 forest_terrain_builder 와 같은 부름(기본값)
+	print("REALM_MAP detile city=%.1f forest=%.1f" % [city_d, fs_d])
+	if cg != null and cg.material_override is ShaderMaterial and not is_zero_approx(city_d):
+		_fail("도읍 원반 detile %.1f != 0" % city_d)
+	if not is_zero_approx(fs_d):
+		_fail("3마을 땅 재질 detile %.1f != 0" % fs_d)
 	if e == env_before:
 		_fail("%s 지도인데 env 사본으로 안 바뀜" % weather)
 	if e.fog_enabled:

@@ -283,7 +283,7 @@ func _build_ground() -> void:
 	mesh.size = Vector2(GROUND_SPAN, GROUND_SPAN)
 	mi.mesh = mesh
 	mi.name = "MapGround"
-	mi.material_override = real_ground_mat(COLOR_GROUND, MAP_TILE_SCALE)
+	mi.material_override = real_ground_mat(COLOR_GROUND, MAP_TILE_SCALE, 1.0)   # G-0262 되풀이 섞기는 지도 땅에서만
 	add_child(mi)
 
 
@@ -386,11 +386,14 @@ func _mat(color: Color) -> ShaderMaterial:
 
 ## G-0252 — 지도 땅·도읍 원반을 자체 PBR(tiles_real 풀·흙·자갈, 법선·거칠기·높이)로. SAGA_REALM_OLD=1 이면 옛 민색(vertex_color).
 ## realm_city.gd·realm_worldmap.gd 가 같은 함수를 하나씩 둔다(서로 참조 안 함 — 성 색 _land_color·성표는 그대로 _mat).
-static func real_ground_mat(color: Color, tile_scale := -1.0) -> ShaderMaterial:
+## G-0262 detile 1 = 셰이더 둘째 층(돌린 큰 결)으로 사진 타일 되풀이 격자를 지움(표본 ×2 — 높이 떠 한눈에 수백 m 인 지도에서만).
+static func real_ground_mat(color: Color, tile_scale := -1.0, detile := 0.0) -> ShaderMaterial:
 	if OS.get_environment("SAGA_REALM_OLD") != "" or not ResourceLoader.exists(WorldCurveMaterial.REAL_DIR + "gravel_hi.webp"):
 		return WorldCurveMaterial.vertex_color_material(0.0, 0.9, color)
 	var m := WorldCurveMaterial.triplanar_material(0.0, {"grass": "grass", "dirt": "dirt", "stone": "gravel"}, "SAGA_REALM_OLD")
 	if tile_scale > 0.0:
 		m.set_shader_parameter("tile_scale", tile_scale)
 		m.set_shader_parameter("patch_scale", tile_scale * 0.3)
+	if detile > 0.0:
+		m.set_shader_parameter("detile", detile)
 	return m
