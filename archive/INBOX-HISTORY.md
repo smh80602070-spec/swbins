@@ -185,3 +185,4 @@
 - [x] 10-20 · (K-0152 → 웹) · 환경 GLB 30 법선·거칠기 맵 — toon3d toonify 가 normalMap 넘기게 한 줄 · 웹 → **R-0 10-21(Opus)** W-0358
 - [x] 10-20 · (K-0152·0153·0154 → 고돗·유니티) · toon 30 맵 JPEG·펫 28 엔진판(Meshopt·WebP 풂) +K-0154 toon 348(JPEG) — 다시 임포트, Failed 0 확인 · 고돗/유니티 → **R-0 10-21(Opus)** G-0270 · U-0150
 - [x] 10-21 · (K-0156 → 웹) · 웹 배치 중복 406MB — 표 `tools/asset-audit/out/web_dups.md`(`py tools/asset-audit/web_dups.py` 로 다시 만듦, out/ 는 gitignore), 상위 항목부터 shared 로 모으면 −229MB(코드 경로 약 455자리 — 최대 손 배치 `assets/models` 162MB·347자리, portraits-hero 22MB·4자리, bgm 10MB·11자리) · mpfb_real 177MB 는 2나락만 내용 달라 네 판 것만 모음 · 끝나면 K 가 place 갱신(초안 out/web_dups_place_draft.json) · 웹 → **R-0 10-21(Opus)** W-0359·W-0360
+- [x] 10-21 · (G-0277 R-0 → 자체툴) · `regions/pieces` 의 torch_stand·stone_lantern·street_lamp 사본엔 K-0155 glow 재질이 없음 — 지역 조각도 같은 9종 새 판으로 다시 배치(밤 빛) · 자체툴 → **K-0157 작성**
