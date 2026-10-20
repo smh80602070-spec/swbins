@@ -200,6 +200,8 @@ namespace Saga.Forest.Data
             _s = s ?? new Store();
             if (_s.dug == null) _s.dug = new List<string>();
             _s.deepest = Mathf.Clamp(_s.deepest, 0, Floors);
+            Floor = -1; // R-5 리뷰 — 불러오면 굴 밖에서 시작(러너가 갇힌 자리·어둠을 정리)
+            Shooed.Clear();
             Changed?.Invoke();
         }
 

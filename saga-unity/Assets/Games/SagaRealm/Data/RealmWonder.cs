@@ -88,7 +88,7 @@ namespace Saga.Realm.Data
             if (b != null) return string.Format(RealmLocalization.T("wonder.why_built", "이미 {0} 이(가) 지었습니다"), ByName(b.by));
             if (!RealmTechData.WonderOpen) return RealmLocalization.T("wonder.why_tech", "학 갈래 「큰 도면」을 먼저 연구해야 합니다");
             var mine = JobOf(Me);
-            if (mine != null) return string.Format(RealmLocalization.T("wonder.why_busy", "이미 {0} 을(를) 짓는 중입니다"), Get(mine.id).Name);
+            if (mine != null) return string.Format(RealmLocalization.T("wonder.why_busy", "이미 {0} 을(를) 짓는 중입니다"), Get(mine.id)?.Name ?? mine.id);
             var c = RealmCityState.CityRecord(cityId);
             if (c == null || !Owns(cityId)) return RealmLocalization.T("wonder.why_city", "우리 성에서만 짓습니다");
             if (RealmCityState.Gold < d.Gold) return string.Format(RealmLocalization.T("wonder.why_gold", "금이 모자랍니다({0})"), d.Gold);
@@ -130,7 +130,7 @@ namespace Saga.Realm.Data
         {
             var lines = new List<string>();
             if (_s.firstIdx < 0) _s.firstIdx = MonthIdx;
-            if (RivalOn) RivalStep(lines);
+            _s.built.RemoveAll(b => b.by != Me && (RealmWarState.Get(b.by) == null || RealmWarState.Get(b.by).Captured)); // R-5 리뷰 — 함락된 적 성의 불가사의는 무너진다(다시 지을 수 있게)
             var done = new List<Job>();
             foreach (var j in new List<Job>(_s.jobs))
             {
@@ -143,6 +143,7 @@ namespace Saga.Realm.Data
                 if (!_s.jobs.Contains(j)) continue;
                 _s.jobs.Remove(j);
                 var d = Get(j.id);
+                if (d == null) { GiveBack(j, 1f); continue; } // 표에 없는 id(옛 세이브) — 다 돌려준다
                 if (BuiltOf(j.id) != null) { GiveBack(j, Refund); continue; }
                 _s.built.Add(new Built { id = j.id, by = j.by, city = j.city, year = RealmCityState.Year, month = RealmCityState.Month });
                 GiveBack(j, 0f);
@@ -155,6 +156,7 @@ namespace Saga.Realm.Data
                     if (k.by == Me) lines.Add(string.Format(RealmLocalization.T("wonder.lost", "😞 {0} — {1} 이(가) 먼저 지었다. 들인 금의 반을 돌려받았다"), d.Name, ByName(j.by)));
                 }
             }
+            if (RivalOn) RivalStep(lines); // 달 셈 뒤 — 착공한 달에 바로 한 달이 줄지 않게(R-5 리뷰)
             if (lines.Count > 0) Changed?.Invoke();
             return lines;
         }
@@ -196,6 +198,7 @@ namespace Saga.Realm.Data
             var b = BuiltOf(id);
             if (b != null) return string.Format(RealmLocalization.T("wonder.line_built", "{0} 완공"), ByName(b.by));
             var d = Get(id);
+            if (d == null) return "";
             var parts = new List<string>();
             foreach (var j in _s.jobs) if (j.id == id) parts.Add($"{ByName(j.by)} {Mathf.RoundToInt((1f - j.left / (float)d.Months) * 100f)}%");
             return parts.Count > 0 ? string.Join(" · ", parts) : RealmLocalization.T("wonder.line_none", "아무도 안 짓는 중");

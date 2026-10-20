@@ -26,7 +26,7 @@ namespace Saga.EditorTools
             {
                 // ① 줍기
                 Begin();
-                HeroState.Restore(1, 0, HeroState.HpMax, 0, "wp_start", null);
+                HeroState.Restore(1, 0, HeroState.HpMax, 0, "wp_start", null, null);
                 if (!HeroState.EquipIfBetter("wp_axe") || HeroState.EquippedWeaponId != "wp_axe" || HeroState.SecondWeaponId != null)
                     Fail($"목검 → 쇠도끼: 갑 {HeroState.EquippedWeaponId} · 을 {HeroState.SecondWeaponId ?? "없음"}(목검은 버려야)");
                 if (!HeroState.EquipIfBetter("wp_saber") || HeroState.EquippedWeaponId != "wp_saber" || HeroState.SecondWeaponId != "wp_axe")
@@ -49,7 +49,7 @@ namespace Saga.EditorTools
                     if (HeroState.EquippedWeaponId != "wp_saber") Fail("쿨 1초 안에 또 바뀜");
                     float now = Time.time + HeroState.SwapCooldown + 0.01f;
                     if (!HeroState.Swap(now) || HeroState.EquippedWeaponId != "wp_glaive") Fail("쿨 지난 뒤 안 바뀜");
-                    HeroState.Restore(1, 0, HeroState.HpMax, 0, "wp_axe", null);
+                    HeroState.Restore(1, 0, HeroState.HpMax, 0, "wp_axe", null, null);
                     combat.TriggerSwap();
                     if (HeroState.EquippedWeaponId != "wp_axe" || HeroState.Swap(now + 5f)) Fail("을 없는데 바뀜");
                 }
@@ -66,19 +66,19 @@ namespace Saga.EditorTools
 
                 // ④ 을은 공격력에 안 듦·max 비교
                 Begin();
-                HeroState.Restore(1, 0, HeroState.HpMax, 0, "wp_axe", null);
+                HeroState.Restore(1, 0, HeroState.HpMax, 0, "wp_axe", null, null);
                 float atkOne = HeroState.Atk;
                 HeroState.Restore(1, 0, HeroState.HpMax, 0, "wp_axe", null, "wp_greatblade");
                 if (!Mathf.Approximately(HeroState.Atk, atkOne)) Fail($"을이 공격력에 듦 {HeroState.Atk} ≠ {atkOne}");
                 if (HeroState.EquipIfBetter("wp_glaive")) Fail("을(흑철중검 31)보다 약한 귀두도(26)로 바뀜");
-                if (!HeroState.EquipIfBetter("wp_lance_e") || HeroState.SecondWeaponId != "wp_axe") Fail($"둘보다 센 전자창: 을 {HeroState.SecondWeaponId}");
-                End("atk OK - 을은 공격력 합 밖·줍기는 갑·을 중 센 것보다 세야");
+                if (!HeroState.EquipIfBetter("wp_lance_e") || HeroState.SecondWeaponId != "wp_greatblade") Fail($"둘보다 센 전자창: 을 {HeroState.SecondWeaponId} ≠ 흑철중검(손 쇠도끼보다 센 을은 남는다 — R-5)");
+                End("atk OK - 을은 공격력 합 밖·줍기는 갑·을 중 센 것보다 세야·손·을 중 센 쪽이 을로 남음");
 
                 // ⑤ 저장 왕복·옛 세이브·단추
                 Begin();
                 HeroState.Restore(3, 4, HeroState.HpMax, 50, "wp_saber", null, "wp_axe");
                 string json = DungeonSave.ToJson();
-                HeroState.Restore(1, 0, HeroState.HpMax, 0, "wp_start", null);
+                HeroState.Restore(1, 0, HeroState.HpMax, 0, "wp_start", null, null);
                 if (!DungeonSave.ApplyJson(json) || HeroState.SecondWeaponId != "wp_axe" || HeroState.EquippedWeaponId != "wp_saber") Fail($"저장 왕복 을 {HeroState.SecondWeaponId}");
                 string old = json.Replace("\"weapon2Id\":\"wp_axe\",", "");
                 if (old == json) Fail("세이브 json 에 weapon2Id 가 없음");

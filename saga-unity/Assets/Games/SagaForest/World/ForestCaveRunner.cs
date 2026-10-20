@@ -38,6 +38,8 @@ namespace Saga.Forest.World
         private Renderer _floorRenderer;
         private Light _lamp;
         private Button _hint;
+        private TMPro.TMP_Text _hintText;
+        private string _hintShown;
         private ForestCave.Kind? _near;
         private bool _nearEntrance;
 
@@ -192,6 +194,7 @@ namespace Saga.Forest.World
             var canvas = SagaUi.NewHudCanvas("CaveCanvas", 93, transform);
             _hint = SagaUi.NewButton(canvas.transform, "CaveHint", "", new Vector2(0.5f, 0f), new Vector2(0f, 150f), new Vector2(560f, 64f), SagaUi.ButtonAccent, 24f);
             _hint.onClick.AddListener(Use);
+            _hintText = _hint.GetComponentInChildren<TMPro.TMP_Text>();
             _hint.gameObject.SetActive(false);
         }
 
@@ -219,6 +222,7 @@ namespace Saga.Forest.World
         {
             if (_player == null) { ResolvePlayer(); if (_player == null) return; }
             if (ForestCave.Inside && Flat(_player.position - Pocket).magnitude > 40f) { ForestCave.Leave(); SetDark(false); } // 탈것·순간이동 등으로 빠져나감
+            if (!ForestCave.Inside) { if (_dark) SetDark(false); RescueIfStranded(); } // R-5 리뷰 — 세이브를 불러와 굴 상태가 풀렸을 때
             Sense();
             if (_dark)
             {
@@ -262,7 +266,7 @@ namespace Saga.Forest.World
                 if (_near.HasValue) label = ForestCave.Label(_near.Value);
             }
             bool show = label != null;
-            if (show) _hint.GetComponentInChildren<TMPro.TMP_Text>().text = label + " (F)";
+            if (show && label != _hintShown) { _hintShown = label; _hintText.text = label + " (F)"; } // 바뀔 때만(R-5 리뷰 — 매 프레임 찾기·문자열)
             if (_hint.gameObject.activeSelf != show) _hint.gameObject.SetActive(show);
         }
 

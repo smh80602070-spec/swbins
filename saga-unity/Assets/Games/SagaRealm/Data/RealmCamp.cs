@@ -164,7 +164,7 @@ namespace Saga.Realm.Data
             c.months++;
             var atk = new RealmArmy { Troops = c.troops, Start = c.troops, Train = c.train, Tech = c.tech, OfficerIds = new List<string>(c.officers), Morale = c.morale };
             var defArmy = new RealmArmy { Troops = enemy.Troops, Start = enemy.Troops, Train = enemy.Train, Tech = enemy.Tech, OfficerIds = new List<string>(), Morale = 1f };
-            var r = RealmWar.Fight(atk, defArmy, enemy, def.Land, 1f, RealmWonder.EnemyMul(c.to, "defPct"), RealmTechData.Mul("atkPct"), RealmWonder.EnemyMul(c.to, "atkPct")); // tasks U-0136
+            var r = RealmWar.Fight(atk, defArmy, enemy, def.Land, 1f, RealmWonder.EnemyMul(c.to, "defPct"), RealmTechData.Mul("atkPct"), RealmWonder.EnemyMul(c.to, "atkPct") / RealmTechData.Mul("defPct")); // tasks U-0136 · R-5 리뷰 — 우리 수비(방패 벽·장벽)도 Attack 과 같이
             enemy.Troops = defArmy.Troops;
             c.troops = atk.Troops;
             c.morale = atk.Morale;
@@ -175,7 +175,7 @@ namespace Saga.Realm.Data
                 enemy.Captured = true;
                 RealmCityState.AbsorbCity(c.to, enemy.Wall, enemy.Troops, enemy.Train, enemy.Tech);
                 var from = RealmCityState.CityRecord(c.from);
-                if (from != null) from.Food += c.food; // 남은 치중만 돌아가고 병력은 새 성을 지킨다(AbsorbCity 가 적 남은 병력으로 세움 — Attack 승리와 같음)
+                if (from != null) from.Food += c.food; // 남은 치중만 돌아간다 — 새 성 병력은 AbsorbCity 가 적 남은 병력으로 세우고 진 생존 병력은 돌아오지 않는다(RealmWarState.Attack 승리와 같은 규칙, 바꾸려면 둘 다)
                 Changed?.Invoke();
                 return head + string.Format(RealmLocalization.T("camp.won", " — {0} 함락! 이제 우리 성"), def.Name);
             }

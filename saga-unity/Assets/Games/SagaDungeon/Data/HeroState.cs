@@ -171,7 +171,9 @@ namespace Saga.Dungeon.Data
             if (EquippedWeapon != null && EquippedWeapon.AtkBonus >= item.AtkBonus) return false;
             if (SecondWeapon != null && SecondWeapon.AtkBonus >= item.AtkBonus) return false;
             string old = EquippedWeaponId;
-            if (old != "wp_start" && ItemData.Get(old) != null) SecondWeaponId = old;
+            // 손·을 중 센 쪽이 을로 남는다(R-5 리뷰 — 을이 더 센데 손 무기로 덮으면 센 무기를 버렸다). 목검은 늘 버림.
+            var oldItem = old == "wp_start" ? null : ItemData.Get(old);
+            if (oldItem != null && (SecondWeapon == null || oldItem.AtkBonus >= SecondWeapon.AtkBonus)) SecondWeaponId = old;
             EquippedWeaponId = itemId;
             EquipmentChanged?.Invoke(EquippedWeaponId);
             return true;
@@ -234,8 +236,11 @@ namespace Saga.Dungeon.Data
             Hp = Math.Min(HpMax, Hp + amount);
         }
 
-        /// <summary>tasks U-0131 — <paramref name="weapon2Id"/> 없으면(옛 세이브·진단 되돌림) 한 벌.</summary>
-        public static void Restore(int level, int exp, int hp, int gold, string weaponId, string gemId = null, string weapon2Id = null)
+        /// <summary>tasks U-0131 — 6인자 옛 호출(진단 되돌림)은 을을 그대로 둔다(R-5 리뷰). 7인자로 null 을 넘기면(옛 세이브) 한 벌.</summary>
+        public static void Restore(int level, int exp, int hp, int gold, string weaponId, string gemId = null) =>
+            Restore(level, exp, hp, gold, weaponId, gemId, SecondWeaponId);
+
+        public static void Restore(int level, int exp, int hp, int gold, string weaponId, string gemId, string weapon2Id)
         {
             Level = Math.Max(1, level);
             Exp = Math.Max(0, exp);

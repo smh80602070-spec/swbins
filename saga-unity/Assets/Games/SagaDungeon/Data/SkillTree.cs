@@ -155,12 +155,26 @@ namespace Saga.Dungeon.Data
             Store s = null;
             if (!string.IsNullOrEmpty(json)) { try { s = JsonUtility.FromJson<Store>(json); } catch (ArgumentException) { s = null; } }
             _s = s ?? new Store();
-            if (_s.moves == null || _s.moves.Length != SecretState.MoveCount) _s.moves = new[] { new Branch(), new Branch(), new Branch() };
+            if (_s.moves == null || _s.moves.Length != SecretState.MoveCount)
+            {
+                _s.moves = new Branch[SecretState.MoveCount];
+                for (int i = 0; i < _s.moves.Length; i++) _s.moves[i] = new Branch();
+            }
             for (int i = 0; i < _s.moves.Length; i++)
             {
                 if (_s.moves[i] == null) _s.moves[i] = new Branch();
-                if (_s.moves[i].pts == null || _s.moves[i].pts.Length != Nodes) _s.moves[i].pts = new int[Nodes];
-                _s.moves[i].xp = Math.Max(0, _s.moves[i].xp);
+                var b = _s.moves[i];
+                if (b.pts == null || b.pts.Length != Nodes) b.pts = new int[Nodes];
+                b.xp = Math.Max(0, b.xp);
+                // R-5 리뷰 — 저장된 점을 마디 최대·앞 마디·레벨 점 수로 자른다(고친 세이브가 상한을 넘지 않게)
+                for (int n = 0; n < Nodes; n++)
+                {
+                    int max = Tree[n, b.pts[n] > 0 ? 0 : 1].Max;
+                    b.pts[n] = Mathf.Clamp(b.pts[n], -max, max);
+                    if (n > 0 && b.pts[n - 1] == 0) b.pts[n] = 0;
+                }
+                var m = (SecretMove)i;
+                if (Spent(m) > Level(m) - 1) b.pts = new int[Nodes];
             }
             Changed?.Invoke();
         }
