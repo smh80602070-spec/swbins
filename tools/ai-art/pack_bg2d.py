@@ -25,7 +25,7 @@ ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
 SRC = os.path.join(ROOT, 'saga-assets', 'web2d', 'bg')
 CANON = os.path.join(ROOT, 'saga-assets', 'web2d', 'bg2d')
 MODEL = os.environ.get('DEPTH_ONNX', os.path.join(os.path.expanduser('~'), '.depth', 'dav2s.onnx'))
-PLACES = ['story_field_meadow', 'story_forest']   # 10-20 1차 ○ 둘 — dg_gobun·dg_jiokmun·story_sky_bridge 는 ✗(대칭 실내·복잡 장면, K-0150 메모)
+PLACES = ['story_field_meadow', 'story_forest']   # 10-20 1차 ○ 둘 — dg_gobun·dg_jiokmun·story_sky_bridge 는 세 방법 다 ✗·△(K-0150 메모), __pick 다시 그리기 길은 남겨 둠
 # 이름, 깊이 문턱(가까움 분위수 — 이보다 가까운 픽셀만), 엔진 depth(빠르기)
 LAYERS = [('base', None, 0.05), ('l1', 0.35, 0.25), ('l2', 0.55, 0.5), ('l3', 0.75, 0.8), ('l4', 0.90, 1.0)]
 _sess = None
@@ -50,7 +50,20 @@ INP = os.path.join(HERE, '_out', 'k150_inpaint')
 GW, GH = 1024, 576                       # 원본 생성 크기(license size)
 
 
+def picked(pid):
+    """다시 그린 장면(층 나누기 좋은 옆 구도)을 골라 두었으면 그 그림 — _out/k150_inpaint/<장소>__pick.png(+license)."""
+    p = os.path.join(INP, pid + '__pick.png')
+    return p if os.path.exists(p) else None
+
+
+def src_license(pid):
+    p = picked(pid)
+    return json.load(open((p[:-4] if p else os.path.join(SRC, pid + '_far')) + '.license.json', encoding='utf-8'))
+
+
 def half(pid):
+    if picked(pid):
+        return Image.open(picked(pid)).convert('RGB').resize((960, 540), Image.LANCZOS)
     im = Image.open(os.path.join(SRC, pid + '_far.webp')).convert('RGB')
     return im.crop((0, 0, im.width // 2, im.height))        # 원본 + 좌우 뒤집기 → 왼쪽이 원본
 
@@ -59,16 +72,16 @@ def cuts(d):
     return np.quantile(d, [t for _n, t, _s in LAYERS if t is not None])
 
 
-def prep():
+def prep(ids=None, tag2=''):
     os.makedirs(INP, exist_ok=True)
     B = {}
-    for pid in PLACES:
+    for pid in ids or PLACES:
         h = half(pid)
         d = depth(h)
         np.save(os.path.join(INP, pid + '__depth.npy'), d)
         q = cuts(d)
         h.resize((GW, GH), Image.LANCZOS).save(os.path.join(INP, pid + '__src.png'))
-        lic = json.load(open(os.path.join(SRC, pid + '_far.license.json'), encoding='utf-8'))
+        lic = src_license(pid)
         model = lic.get('model', 'animagine-xl-4.0-opt')
         for k, t in enumerate(q, 1):
             m = Image.fromarray(((d >= t) * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(9)).filter(ImageFilter.GaussianBlur(3))
@@ -81,7 +94,7 @@ def prep():
         tag = 'anim' if 'animagine' in model else 'illu'
         b = {'model': model, 'out': 'k150_inpaint', 'note': 'K-0150 겹 배경 — 깊이 문턱보다 가까운 것을 지운 뒤판(원본과 같은 프롬프트, 마스크 안만 다시 그림)',
              'defaults': {'prompt_prefix': '', 'width': GW, 'height': GH, 'steps': 28, 'cfg': 5.5, 'sampler': 'Euler a', 'negative': '', 'variants': 1}, 'items': items}
-        p = os.path.join(HERE, 'batches', f'k150_inpaint_{tag}.json')
+        p = os.path.join(HERE, 'batches', f'k150_inpaint_{tag}{tag2}.json')
         json.dump(b, open(p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         print('BATCH', p, len(items))
 
@@ -103,7 +116,7 @@ def split(ids=None):
         q = cuts(d)
         out = os.path.join(CANON, pid)
         os.makedirs(out, exist_ok=True)
-        lic0 = json.load(open(src[:-5] + '.license.json', encoding='utf-8'))
+        lic0 = src_license(pid)
         meta = {'layers': []}
         for i, (name, t, spd) in enumerate(LAYERS):
             if i < len(q):                                                   # 그림 = 다음 문턱보다 가까운 것을 지운 뒤판
@@ -120,7 +133,7 @@ def split(ids=None):
             lay = mirror2(pic)
             lay.save(os.path.join(out, name + '.webp'), 'WEBP', quality=86, method=6)
             lic = dict(lic0)
-            lic.update({'id': f'{pid}_{name}', 'size': list(lay.size), 'source_image': os.path.relpath(src, ROOT).replace(os.sep, '/'),
+            lic.update({'id': f'{pid}_{name}', 'size': list(lay.size), 'source_image': os.path.relpath(picked(pid) or src, ROOT).replace(os.sep, '/'),
                         'packed_by': 'K-0150 tools/ai-art/pack_bg2d.py — 깊이 추정 Depth Anything V2 Small(Apache-2.0, 도구 전용)으로 층 가름'
                                      + (f' · 가까움 분위수 {LAYERS[i + 1][1]} 이상을 지운 인페인트(원본 모델·프롬프트, denoise 1.0)' if i < len(q) else ' · 원본 픽셀')
                                      + ('' if t is None else f' · 알파 = 분위수 {t} 이상'),
@@ -202,7 +215,7 @@ def check():
 if __name__ == '__main__':
     cmd = sys.argv[1] if len(sys.argv) > 1 else ''
     if cmd == 'prep':
-        prep()
+        prep(sys.argv[2].split(',') if len(sys.argv) > 2 else None, sys.argv[3] if len(sys.argv) > 3 else '')
     elif cmd == 'split':
         split(sys.argv[2].split(',') if len(sys.argv) > 2 else None)
     elif cmd == 'sheet':

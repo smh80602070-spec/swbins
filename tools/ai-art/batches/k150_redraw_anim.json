@@ -1,0 +1,64 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k150_inpaint",
+ "note": "K-0150 ✗ 셋 다시 — 층 나누기 좋은 옆 풍경 구도(원본 프롬프트 + 구도 낱말)",
+ "defaults": {
+  "prompt_prefix": "",
+  "width": 1024,
+  "height": 576,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": ""
+ },
+ "items": [
+  {
+   "id": "dg_gobun__redraw_1",
+   "prompt": "masterpiece, high score, great score, absurdres, (ancient burial mound tomb interior:1.15), earthen walls, clay burial urns, faint lantern light, warm brown earth tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, side view, layered depth, distinct foreground midground and background planes, open horizontal composition, no one-point perspective, no symmetry",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, symmetrical, one-point perspective, corridor, tunnel view",
+   "seed": 3438586939
+  },
+  {
+   "id": "dg_gobun__redraw_2",
+   "prompt": "masterpiece, high score, great score, absurdres, (ancient burial mound tomb interior:1.15), earthen walls, clay burial urns, faint lantern light, warm brown earth tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, side view, layered depth, distinct foreground midground and background planes, open horizontal composition, no one-point perspective, no symmetry",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, symmetrical, one-point perspective, corridor, tunnel view",
+   "seed": 3438586940
+  },
+  {
+   "id": "dg_gobun__redraw_3",
+   "prompt": "masterpiece, high score, great score, absurdres, (ancient burial mound tomb interior:1.15), earthen walls, clay burial urns, faint lantern light, warm brown earth tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, side view, layered depth, distinct foreground midground and background planes, open horizontal composition, no one-point perspective, no symmetry",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, symmetrical, one-point perspective, corridor, tunnel view",
+   "seed": 3438586941
+  },
+  {
+   "id": "dg_gobun__redraw_4",
+   "prompt": "masterpiece, high score, great score, absurdres, (ancient burial mound tomb interior:1.15), earthen walls, clay burial urns, faint lantern light, warm brown earth tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, side view, layered depth, distinct foreground midground and background planes, open horizontal composition, no one-point perspective, no symmetry",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, symmetrical, one-point perspective, corridor, tunnel view",
+   "seed": 3438586942
+  },
+  {
+   "id": "dg_jiokmun__redraw_1",
+   "prompt": "masterpiece, high score, great score, absurdres, (gate of the underworld:1.15), lava rivers, black volcanic rock, giant iron gate, glowing red tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, side view, layered depth, distinct foreground midground and background planes, open horizontal composition, no one-point perspective, no symmetry",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, symmetrical, one-point perspective, corridor, tunnel view",
+   "seed": 13901308
+  },
+  {
+   "id": "dg_jiokmun__redraw_2",
+   "prompt": "masterpiece, high score, great score, absurdres, (gate of the underworld:1.15), lava rivers, black volcanic rock, giant iron gate, glowing red tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, side view, layered depth, distinct foreground midground and background planes, open horizontal composition, no one-point perspective, no symmetry",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, symmetrical, one-point perspective, corridor, tunnel view",
+   "seed": 13901309
+  },
+  {
+   "id": "dg_jiokmun__redraw_3",
+   "prompt": "masterpiece, high score, great score, absurdres, (gate of the underworld:1.15), lava rivers, black volcanic rock, giant iron gate, glowing red tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, side view, layered depth, distinct foreground midground and background planes, open horizontal composition, no one-point perspective, no symmetry",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, symmetrical, one-point perspective, corridor, tunnel view",
+   "seed": 13901310
+  },
+  {
+   "id": "dg_jiokmun__redraw_4",
+   "prompt": "masterpiece, high score, great score, absurdres, (gate of the underworld:1.15), lava rivers, black volcanic rock, giant iron gate, glowing red tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, side view, layered depth, distinct foreground midground and background planes, open horizontal composition, no one-point perspective, no symmetry",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, symmetrical, one-point perspective, corridor, tunnel view",
+   "seed": 13901311
+  }
+ ]
+}

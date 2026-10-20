@@ -1,0 +1,40 @@
+{
+ "model": "Illustrious-XL-v2.0",
+ "out": "k150_inpaint",
+ "note": "K-0150 ✗ 셋 다시 — 층 나누기 좋은 옆 풍경 구도(원본 프롬프트 + 구도 낱말)",
+ "defaults": {
+  "prompt_prefix": "",
+  "width": 1024,
+  "height": 576,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": ""
+ },
+ "items": [
+  {
+   "id": "story_sky_bridge__redraw_1",
+   "prompt": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game background, rope and stone bridge between floating rock islands, waterfalls falling into clouds, hovering platforms, golden sunset, side view, layered depth, distinct foreground midground and background planes, open horizontal composition, no one-point perspective, no symmetry",
+   "negative": "lowres, bad anatomy, text, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, close-up, symmetrical, one-point perspective, corridor, tunnel view",
+   "seed": 20262524
+  },
+  {
+   "id": "story_sky_bridge__redraw_2",
+   "prompt": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game background, rope and stone bridge between floating rock islands, waterfalls falling into clouds, hovering platforms, golden sunset, side view, layered depth, distinct foreground midground and background planes, open horizontal composition, no one-point perspective, no symmetry",
+   "negative": "lowres, bad anatomy, text, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, close-up, symmetrical, one-point perspective, corridor, tunnel view",
+   "seed": 20262525
+  },
+  {
+   "id": "story_sky_bridge__redraw_3",
+   "prompt": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game background, rope and stone bridge between floating rock islands, waterfalls falling into clouds, hovering platforms, golden sunset, side view, layered depth, distinct foreground midground and background planes, open horizontal composition, no one-point perspective, no symmetry",
+   "negative": "lowres, bad anatomy, text, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, close-up, symmetrical, one-point perspective, corridor, tunnel view",
+   "seed": 20262526
+  },
+  {
+   "id": "story_sky_bridge__redraw_4",
+   "prompt": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game background, rope and stone bridge between floating rock islands, waterfalls falling into clouds, hovering platforms, golden sunset, side view, layered depth, distinct foreground midground and background planes, open horizontal composition, no one-point perspective, no symmetry",
+   "negative": "lowres, bad anatomy, text, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, close-up, symmetrical, one-point perspective, corridor, tunnel view",
+   "seed": 20262527
+  }
+ ]
+}
