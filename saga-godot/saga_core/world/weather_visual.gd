@@ -23,13 +23,18 @@ const KINDS := {
 	"fog": {"fog": 2.4, "tint": Color(0.9, 0.9, 0.92), "cloud": 0.95, "sun": 0.75},
 	"snow": {"fog": 1.2, "tint": Color(1.02, 1.02, 1.08), "cloud": 0.6, "sun": 0.85},
 }
+## 손보기 — 세 판 바탕 안개가 0.004 라 곱만으론 안개·비가 옅었다(3마을·전술판 컷). 곱한 뒤 더하는 최소 밀도(맑음·흐림·바람 0 = 회귀 그대로).
+const FOG_ADD := {"clear": 0.0, "cloud": 0.0, "rain": 0.006, "wind": 0.0, "fog": 0.016, "snow": 0.004}
+## 입자 상자 중심 = 카메라가 보는 쪽 FRONT m 앞 + 위 RISE m(카메라 바로 둘레 입자가 화면에 큰 점·굵은 줄로 보였다).
+const FRONT := 12.0
+const RISE := 10.0
 const ORDER := ["clear", "cloud", "rain", "wind", "fog", "snow"]
 ## 계절 무게(ORDER 순). 겨울만 눈.
 const W_WINTER := [3.0, 2.5, 0.3, 1.5, 1.0, 2.5]
 const W_OTHER := [4.0, 2.5, 1.8, 1.2, 0.8, 0.0]
 const BOX := 22.0
 const RAIN_AMOUNT := 700
-const SNOW_AMOUNT := 260   # region4_frost.SNOW_FULL
+const SNOW_AMOUNT := 600   # region4_frost.SNOW_FULL 260 — 손보기: 근거리 7m 안을 지우니 성겨 늘림
 
 var key := ""
 var _we: WorldEnvironment
@@ -107,11 +112,15 @@ func _process(delta: float) -> void:
 	if p:
 		var cam := get_viewport().get_camera_3d()
 		if cam:
-			var to := cam.global_position + Vector3(0, 10.0, 0)
+			var to := _center(cam)
 			var jump := p.global_position.distance_squared_to(to) > BOX * BOX
 			p.global_position = to
 			if jump:   # 카메라가 순간 이동(전술판·문 넘기)하면 옛 자리 입자가 남는다 — 새 자리에서 미리 돌린 채로 다시
 				p.restart()
+
+
+static func _center(cam: Camera3D) -> Vector3:
+	return cam.global_position - cam.global_transform.basis.z * FRONT + Vector3(0, RISE, 0)
 
 
 func refresh_now() -> void:
@@ -120,7 +129,7 @@ func refresh_now() -> void:
 	var k: Dictionary = KINDS[key]
 	_grab_env()
 	if _env:
-		_env.fog_density = float(_base.fog) * float(k.fog)
+		_env.fog_density = float(_base.fog) * float(k.fog) + float(FOG_ADD[key])
 		if _env.volumetric_fog_enabled:
 			_env.volumetric_fog_density = float(_base.vol) * float(k.fog)
 		last["fog_density"] = _env.fog_density
@@ -174,7 +183,7 @@ func _particles(n: String, amount: int, life: float) -> CPUParticles3D:
 	var cam := get_viewport().get_camera_3d()
 	add_child(p)
 	if cam:
-		p.global_position = cam.global_position + Vector3(0, 10.0, 0)
+		p.global_position = _center(cam)
 	return p
 
 
@@ -186,11 +195,11 @@ func _build_snow() -> CPUParticles3D:
 	p.gravity = Vector3(0, -1.2, 0)
 	p.initial_velocity_min = 1.2
 	p.initial_velocity_max = 2.0
-	p.scale_amount_min = 0.06
-	p.scale_amount_max = 0.12
+	p.scale_amount_min = 1.0
+	p.scale_amount_max = 1.6
 	var q := QuadMesh.new()
-	q.size = Vector2(1, 1)
-	var m := _mat(Color(0.82, 0.85, 0.9, 0.85), BaseMaterial3D.BILLBOARD_ENABLED)
+	q.size = Vector2(0.3, 0.3)   # 손보기 — 크기는 메시로(입자 scale 에 기대지 않음)
+	var m := _mat(Color(0.82, 0.85, 0.9, 0.85), BaseMaterial3D.BILLBOARD_PARTICLES)   # 손보기 — BILLBOARD_ENABLED 는 입자 크기(scale_amount)를 버려 눈송이가 1m 네모(큰 흐린 점)였다
 	var g := Gradient.new()
 	g.colors = PackedColorArray([Color(1, 1, 1, 1), Color(1, 1, 1, 0)])
 	g.offsets = PackedFloat32Array([0.25, 1.0])
@@ -228,8 +237,8 @@ func _mat(c: Color, bb: int) -> StandardMaterial3D:
 	m.billboard_mode = bb
 	m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	m.albedo_color = c
-	## 카메라 바로 앞 입자가 화면에 크게 번지지 않게(region4_frost G-0127 식)
+	## 카메라 가까운 입자가 화면에 크게 번지지 않게(region4_frost G-0127 식, 손보기 — 3~6m 로는 전술판·위에서 본 컷에 큰 점·굵은 줄이 남아 7~13m)
 	m.distance_fade_mode = BaseMaterial3D.DISTANCE_FADE_PIXEL_ALPHA
-	m.distance_fade_min_distance = 3.0
-	m.distance_fade_max_distance = 6.0
+	m.distance_fade_min_distance = 7.0
+	m.distance_fade_max_distance = 13.0
 	return m
