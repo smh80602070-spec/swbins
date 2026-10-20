@@ -12,6 +12,10 @@ extends RefCounted
 ## **fog_density_mul/tint**(환경 분위기, season_weather_visual.gd가 읽는다).
 
 static var _forced: String = ""
+## G-0267 — 진단·촬영 손잡이 SAGA_WEATHER=<키>(세 판 weather_visual.gd 와 같은 이름). 한 번만 읽어 둔다.
+##   KINDS 에 없는 값("0"·빈칸·모르는 키)은 실제 시각 — 1만리엔 "날씨 안 닮" 이 없다. force() 가 이것보다 앞선다.
+static var _env_read := false
+static var _env_key: String = ""
 
 const SPAN_MS := 3 * 60 * 60 * 1000
 
@@ -80,6 +84,12 @@ static func key_at(unix_ms: int) -> String:
 static func current_key() -> String:
 	if _forced != "":
 		return _forced
+	if not _env_read:
+		_env_read = true
+		var k := OS.get_environment("SAGA_WEATHER")
+		_env_key = k if KINDS.has(k) else ""
+	if _env_key != "":
+		return _env_key
 	return key_at(int(Time.get_unix_time_from_system() * 1000.0))
 
 

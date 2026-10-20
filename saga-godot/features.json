@@ -4885,5 +4885,22 @@
   "ticket": "G-0265·G-0266",
   "since": "2026-10-20",
   "note": "SAGA_SIT_AFTER 로 앉기 초(기본 8) · 섞기 0.25초 · 사람은 attach_npc(0.5초 한 번·카메라 25m 안만) · 전술판은 타이머 하나·이동/공격/쓰러짐 동안 set_hold · 탈것(seat_pose)이면 끔 · probe_life_pose 둘째 절이 판 함수를 실제로 부름"
+ },
+ {
+  "id": "gd.go.weather-env",
+  "name": "1만리 날씨 손잡이 — SAGA_WEATHER=<키>(clear·cloud·rain·wind·fog·snow) 면 Weather.current_key() 가 그 키(세 판 weather_visual 과 같은 이름), 0·빈칸·모르는 값은 실제 3시간 슬롯, force() 가 앞섬",
+  "files": [
+   "games/saga_go/data/weather.gd",
+   "tools/probe_go_weather.gd"
+  ],
+  "tests": [
+   "go_weather"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0267",
+  "since": "2026-10-21",
+  "note": "env 는 한 번만 읽어 정적 캐시(_env_read) · 촬영·regress 의 맑음 고정이 1만리 안개·구름에도 먹음"
  }
 ]
