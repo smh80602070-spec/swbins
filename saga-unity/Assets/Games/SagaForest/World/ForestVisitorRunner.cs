@@ -23,6 +23,10 @@ namespace Saga.Forest.World
         private int _builtDay = int.MinValue;
         private string _builtKey = "";
         private int _builtSettled = -1;
+        private string _builtPartner;
+        private ForestVisitorNpc _partner;
+        /// <summary>tasks U-0144 — 집 안에 선 동반자(없으면 null).</summary>
+        public ForestVisitorNpc PartnerNpc => _partner;
         private ForestVisitorNpc _npc;
         private readonly List<ForestVisitorPiece> _pieces = new List<ForestVisitorPiece>();
         private readonly List<ForestVisitorNpc> _kids = new List<ForestVisitorNpc>();
@@ -64,7 +68,7 @@ namespace Saga.Forest.World
             if (_checkLeft > 0f) return;
             _checkLeft = 1f;
             if (ForestVisitors.Today != _builtDay || ForestVisitors.TodayVisitor.Key != _builtKey
-                || ForestVisitors.SettledList.Count != _builtSettled) Rebuild();
+                || ForestVisitors.SettledList.Count != _builtSettled || ForestPartner.Id != _builtPartner) Rebuild();
         }
 
         /// <summary>오늘 손님·꼬마·눌러앉은 손님·조각을 새로 세운다(진단도 날짜를 바꾼 뒤 부른다).</summary>
@@ -74,6 +78,8 @@ namespace Saga.Forest.World
             foreach (var p in _pieces) if (p != null) DestroyImmediate(p.gameObject);
             foreach (var k in _kids) if (k != null) DestroyImmediate(k.gameObject);
             foreach (var n in _settled) if (n != null) DestroyImmediate(n.gameObject);
+            if (_partner != null) DestroyImmediate(_partner.gameObject);
+            _partner = null;
             foreach (var f in _hiddenFolk) if (f != null) f.gameObject.SetActive(true);
             _pieces.Clear();
             _kids.Clear();
@@ -102,6 +108,19 @@ namespace Saga.Forest.World
                 HideFolk(sv);
             }
             AssignChat();
+
+            // tasks U-0144 동반자 — 집 안 방 오른쪽 벽 곁에도 선다(밖 제자리는 그대로).
+            _builtPartner = ForestPartner.Id;
+            var house = FindFirstObjectByType<ForestHouse>();
+            int pi = ForestPartner.Has ? ForestVisitors.IndexOf(ForestPartner.Id) : -1;
+            if (pi >= 0 && house != null)
+            {
+                var spot = house.PartnerSpot;
+                _partner = SpawnNpc(ForestVisitors.List[pi], new Vector2(spot.x, spot.z), ForestVisitorNpc.Role.Settled, "Partner_" + ForestPartner.Id);
+                _partner.transform.position = spot;
+                _partner.transform.rotation = Quaternion.LookRotation(Vector3.left);
+                _partner.gameObject.AddComponent<ForestPartnerButton>();
+            }
 
             if (v.Type != ForestVisitors.Kind.Collect) return;
             _spots = ForestVisitors.PieceSpots(ForestVisitors.Today, v.N, AvoidSpots());

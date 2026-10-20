@@ -178,13 +178,18 @@ namespace Saga.Forest.World
             {
                 case Role.Kid: LastLine = ForestVisitors.KidLine(); break;
                 case Role.Settled:
+                {
                     ForestHearts.Talk(_data.Key); // tasks U-0143 — 그날 처음 다가서면 +1
-                    // 10♥ 기념품 — 오늘 선물·사연을 다 받은 뒤 다가서면 한 번.
-                    string memento = ForestVisitors.GiftTakenToday(_data.Key) && (!ForestVisitors.HasStory(_data.Key) || ForestVisitors.StoryHeard(_data.Key))
-                        ? ForestHearts.Memento(_data.Key, ForestVisitors.Name(_data)) : null;
-                    LastLine = memento ?? ForestVisitors.TalkSettled(_data.Key, Chat);
-                    LastLine += ForestHearts.Tail(_data.Key);
+                    string who = $"{_data.Emoji} {ForestVisitors.Name(_data)}";
+                    // tasks U-0144 동반자 — 날 바뀐 첫 말이면 아침 한 가지·기념일.
+                    string line = ForestPartner.Talk(_data.Key, who);
+                    // 오늘 선물·사연을 다 받은 뒤 다가서면: 10♥ 기념품 한 번 → 그다음 동반자 청하기(두 걸음).
+                    bool plain = ForestVisitors.GiftTakenToday(_data.Key) && (!ForestVisitors.HasStory(_data.Key) || ForestVisitors.StoryHeard(_data.Key));
+                    if (line == null && plain) line = ForestHearts.Memento(_data.Key, ForestVisitors.Name(_data));
+                    if (line == null && plain) line = ForestPartner.Ask(_data.Key, who);
+                    LastLine = (line ?? ForestVisitors.TalkSettled(_data.Key, Chat)) + ForestHearts.Tail(_data.Key);
                     break;
+                }
                 default:
                     ForestHearts.Talk(_data.Key);
                     LastLine = ForestVisitors.Talk(_runner != null ? _runner.RemainingDirs() : null) + ForestHearts.Tail(_data.Key);

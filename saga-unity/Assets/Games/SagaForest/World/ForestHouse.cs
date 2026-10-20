@@ -64,6 +64,9 @@ namespace Saga.Forest.World
         private CharacterController _playerController;
         private bool _isInside;
 
+        /// <summary>tasks U-0144 — 집 안 방 오른쪽 벽 곁(동반자가 서는 자리, 웹 partner.homeSpot).</summary>
+        public Vector3 PartnerSpot => transform.position + IndoorPocketOffset + new Vector3(RoomSize.x * 0.5f - 1.2f, 0f, 0.5f);
+
         private void Awake()
         {
             if (transform.childCount == 0) Build();

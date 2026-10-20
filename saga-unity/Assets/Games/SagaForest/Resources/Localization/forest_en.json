@@ -648,6 +648,17 @@
     { "key": "heart.uniq.bugdoc", "value": "Ants can lift fifty times their weight. I want to care for this forest that much" },
     { "key": "heart.uniq.traveler", "value": "Beep. Confession: my logger had no 'friend' field. I added one yesterday" },
     { "key": "heart.uniq.dokkaebi", "value": "Heard of the goblin club? 'Gold, come out!' is easy — 'Laughter, come out!' is the hard one" },
-    { "key": "heart.uniq.alien", "value": "My planet has no sunsets. The first time I saw one here I told the mothership: 'too many colors'" }
+    { "key": "heart.uniq.alien", "value": "My planet has no sunsets. The first time I saw one here I told the mothership: 'too many colors'" },
+    { "key": "partner.ask", "value": "💞 I'd like to live by your side… bring the price of a heart-flower ({0} fruit), step away and come back" },
+    { "key": "partner.ask_short", "value": "You'll need {0} fruit (you have {1})" },
+    { "key": "partner.accept", "value": "❤️ Your heart... for me? Yes — I'll live by your side. 💞 (I'll help with one thing every morning)" },
+    { "key": "partner.anniv", "value": "💞 {0} days together now. I still treasure that day. (fruit +{1})" },
+    { "key": "partner.anniv_again", "value": "💞 {0} days today. Let's be together tomorrow too." },
+    { "key": "partner.water", "value": "🌿 Tended the yard this morning and picked up some fruit (fruit +{0})" },
+    { "key": "partner.meal", "value": "🍚 Made breakfast — packed the leftovers for you (fruit +{0})" },
+    { "key": "partner.gift", "value": "🎁 Found you a 「{0}」 — it's in the home storage" },
+    { "key": "partner.break", "value": "...I see. Thank you for everything. 💔 (♥ {0}/{1})" },
+    { "key": "partner.break_confirm", "value": "Really part ways? Press again" },
+    { "key": "partner.break_btn", "value": "💔 Part ways" }
   ]
 }

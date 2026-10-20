@@ -648,6 +648,17 @@
     { "key": "heart.uniq.bugdoc", "value": "개미는 자기 몸의 쉰 배를 든대요. 저도 그 정도로 이 숲을 아끼고 싶어요" },
     { "key": "heart.uniq.traveler", "value": "삐빗. 고백: 제 기록 장치엔 ‘친구’ 칸이 없었습니다. 어제 새로 만들었습니다" },
     { "key": "heart.uniq.dokkaebi", "value": "도깨비 방망이 얘기 들었나? 금 나와라 뚝딱보다 웃음 나와라 뚝딱이 더 어렵다네" },
-    { "key": "heart.uniq.alien", "value": "제 별엔 노을이 없어요. 여기 노을을 처음 봤을 때 모선에 ‘색이 너무 많음’ 이라고 보냈어요" }
+    { "key": "heart.uniq.alien", "value": "제 별엔 노을이 없어요. 여기 노을을 처음 봤을 때 모선에 ‘색이 너무 많음’ 이라고 보냈어요" },
+    { "key": "partner.ask", "value": "💞 그대 곁에서 살고 싶소… 마음의 꽃값(과일 {0}개)을 들고 물러났다 다시 오시오" },
+    { "key": "partner.ask_short", "value": "과일 {0}개가 있어야 하오(지금 {1}개)" },
+    { "key": "partner.accept", "value": "❤️ 이 마음을... 내게? 좋소, 그대 곁에서 살겠소. 💞 (아침마다 한 가지를 거들어 드리리다)" },
+    { "key": "partner.anniv", "value": "💞 함께 산 지 {0}일째요. 그날의 마음을 아직 간직하고 있소. (과일 +{1})" },
+    { "key": "partner.anniv_again", "value": "💞 오늘로 {0}일이구려. 내일도 함께하오." },
+    { "key": "partner.water", "value": "🌿 아침에 뜰을 손질하다 열매를 주워 왔소 (과일 +{0})" },
+    { "key": "partner.meal", "value": "🍚 아침밥을 차렸소 — 남은 건 싸 두었소 (과일 +{0})" },
+    { "key": "partner.gift", "value": "🎁 「{0}」을(를) 구해 왔소 — 집 창고에 넣어 두었소" },
+    { "key": "partner.break", "value": "...그렇구려. 그동안 고마웠소. 💔 (♥ {0}/{1})" },
+    { "key": "partner.break_confirm", "value": "정말 헤어질까? 한 번 더" },
+    { "key": "partner.break_btn", "value": "💔 헤어지기" }
   ]
 }

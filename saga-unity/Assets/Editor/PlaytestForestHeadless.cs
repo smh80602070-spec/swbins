@@ -111,6 +111,7 @@ namespace Saga.EditorTools
                 if (!PlaytestForestCraft.Run()) _hadError = true; // tasks U-0095 제작대·채집 손 — 손·열매를 되돌린다.
                 if (!PlaytestForestMoveIn.Run()) _hadError = true; // tasks U-0127 입주 조건 — 열매·집·창고·단골·날짜를 되돌린다.
                 if (!PlaytestForestHearts.Run()) _hadError = true; // tasks U-0143 관계 하트 — 하트·손님 기록·단골·사연·열매·창고·날짜를 되돌린다.
+                if (!PlaytestForestPartner.Run()) _hadError = true; // tasks U-0144 동반자 — 동반자·하트·단골·사연·손님 기록·열매·창고·날짜·손님 몸을 되돌린다.
                 if (!PlaytestForestCave.Run()) _hadError = true; // tasks U-0132 땅 아래 층 — 열매·도감·굴 기록·날짜·시계·자리·빛을 되돌린다.
                 if (!PlaytestForestScenario.Run()) _hadError = true; // PLAN.md 109-16 시나리오 — 과일·집·도감·손님·택배·행사를 되돌린다.
                 if (!PlaytestNpcModels.Forest()) _hadError = true; // PLAN.md 106-4 FOREST 몫 — 숲지기 사실 모델

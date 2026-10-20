@@ -57,6 +57,9 @@ namespace Saga.Forest.Data
         public static IReadOnlyList<Lot> List => _s.lots;
         public static int Count => _s.lots.Count;
 
+        /// <summary>tasks U-0144 — 그 손님이 좋아하는 태그(동반자 아침 선물). 없으면 빈 배열.</summary>
+        public static string[] LikesOf(string key) => key != null && Likes.TryGetValue(key, out var l) ? l : new string[0];
+
         public static string TagOf(string furnId)
         {
             if (furnId != null && Tags.TryGetValue(furnId, out var t)) return t;
