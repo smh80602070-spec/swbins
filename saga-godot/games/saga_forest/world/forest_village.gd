@@ -58,6 +58,10 @@ func _ready() -> void:
 
 	if OS.get_environment("SAGA_DENSITY_REPORT") != "":
 		_print_density_report()
+	## G-0260 그리기 부담 — 1만리와 같은 render_budget(saga_core): 나무 MultiMesh 를 32m 칸으로(마을 90×66m 라 112 면 안 쪼개짐 → 칸마다 LOD·시야 밖 빠짐),
+	## far 1000·해 그림자 50m·작은 생물·채집물·흩뿌림·심은 것 그림자 끔(나무·집·사람 그림자는 그대로). 자식 빌더 _ready 뒤에 한 번.
+	(func() -> void: preload("res://saga_core/world/render_budget.gd").apply(self, 32.0,
+			preload("res://saga_core/world/render_budget.gd").NO_CAST_PREFIX + ["Creatures", "BiomeScatter", "Planting"])).call_deferred()
 
 
 ## saga_core/ui/goal_board.gd는 ForestSaveState·VillagerBuilder를 모른다

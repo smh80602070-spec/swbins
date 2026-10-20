@@ -11,7 +11,7 @@ const Cooking := preload("res://games/saga_go/data/cooking.gd")
 const Waypoints := preload("res://games/saga_go/world/waypoints.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
-const RenderBudget := preload("res://games/saga_go/world/render_budget.gd")
+const RenderBudget := preload("res://saga_core/world/render_budget.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
 signal changed()

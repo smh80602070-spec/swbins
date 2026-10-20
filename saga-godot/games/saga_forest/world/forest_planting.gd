@@ -123,6 +123,7 @@ func _spawn_visual(i: int) -> void:
 	var grown: bool = _elapsed(entry) >= PLANT_DAYS
 	var mi := MeshInstance3D.new()
 	var sphere := SphereMesh.new()
+	sphere.radial_segments = 16; sphere.rings = 8   # G-0260 기본 64×32 → creature_builder 값(반지름 ≤0.5m 라 눈엔 같음)
 	sphere.radius = 0.5 if grown else 0.22
 	sphere.height = sphere.radius * 2.0
 	mi.mesh = sphere

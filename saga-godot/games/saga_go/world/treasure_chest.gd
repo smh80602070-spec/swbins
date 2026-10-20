@@ -18,7 +18,7 @@ const Toast := preload("res://saga_core/ui/toast.gd")
 const Growth := preload("res://games/saga_go/data/growth.gd")
 const Weapons := preload("res://games/saga_go/data/weapons.gd")
 const ShootTarget := preload("res://games/saga_go/world/shoot_target.gd")
-const RenderBudget := preload("res://games/saga_go/world/render_budget.gd")
+const RenderBudget := preload("res://saga_core/world/render_budget.gd")
 
 const GRADES := {
 	"common": {"name": "평범한 상자", "exp": 5.0, "scale": 1.0,

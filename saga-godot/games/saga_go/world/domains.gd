@@ -11,7 +11,7 @@ extends Node3D
 const Domains := preload("res://games/saga_go/data/domains.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
-const RenderBudget := preload("res://games/saga_go/world/render_budget.gd")
+const RenderBudget := preload("res://saga_core/world/render_budget.gd")
 const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
 const FieldBoss := preload("res://games/saga_go/combat/field_boss.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")

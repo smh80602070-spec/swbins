@@ -96,6 +96,7 @@ func _build(d: Dictionary) -> void:
 		mi.scale = Vector3.ONE * float(d.scale)
 	else:
 		var sphere := SphereMesh.new()
+		sphere.radial_segments = 16; sphere.rings = 8   # G-0260 기본 64×32 → creature_builder 값(반지름 ≤0.5m 라 눈엔 같음)
 		sphere.radius = 0.5
 		sphere.height = 1.0
 		mi.mesh = sphere

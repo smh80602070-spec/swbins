@@ -76,6 +76,7 @@ func _add_marker(m: Dictionary) -> void:
 			color = Color(0.5, 0.48, 0.44)
 		"mossrock":
 			var mesh := SphereMesh.new()
+			mesh.radial_segments = 16; mesh.rings = 8   # G-0260 기본 64×32 → creature_builder 값(반지름 ≤0.5m 라 눈엔 같음)
 			mesh.radius = 0.45; mesh.height = 0.7
 			mi.mesh = mesh
 			mi.position = pos + Vector3(0, 0.25, 0)

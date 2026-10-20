@@ -2484,7 +2484,7 @@
   "id": "gd.go.perf_village",
   "name": "마을 PERF 예산 — 다른 지역 식생 거리 컷, draw ≤260·삼각형 평균 ≤35만",
   "files": [
-   "games/saga_go/world/render_budget.gd",
+   "saga_core/world/render_budget.gd",
    "tools/probe_perf.gd",
    "games/saga_go/world/treasure_chest.gd",
    "games/saga_go/world/kitchen.gd",
@@ -4737,6 +4737,24 @@
   "ticket": "G-0257",
   "since": "2026-10-20",
   "note": "창 모드(mobile 1280x720) draw 평균 GO 263·DUNGEON 317·FOREST 335·STORY 261·REALM 302·REALM_MAP 174 · prims FOREST 98.8만(예산 35만/50만) · 헤드리스는 그리기 n/a · process_ms 대신 frame_ms(TIME_PROCESS 는 1초 최댓값) · 표 tools/_out/perf_scenes.md"
+ },
+ {
+  "id": "gd.fs.perf",
+  "name": "3마을 그리기 부담 — render_budget(saga_core 공용) 3마을에도: 나무 MultiMesh 32m 칸(칸마다 LOD·시야 밖 빠짐)·far 1000·해 그림자 50m·작은 생물/채집물/흩뿌림/심은 것 그림자 끔 + 기본 구 세분 64×32 → 16×8 · 삼각형 상위 목록 probe",
+  "files": [
+   "saga_core/world/render_budget.gd",
+   "games/saga_forest/world/forest_village.gd",
+   "tools/probe_perf_top.gd"
+  ],
+  "tests": [
+   "perf_top"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0260",
+  "since": "2026-10-20",
+  "note": "창 모드(mobile 1280x720) FOREST prims 97.4만 → 38.7만·draw 335 → 253 · 상위(perf_top) 나무 4벌 37.5만·사람 7 30.6만·생물 14 6.9만(구 세분 뒤 셈 79.9만 → 72.0만) · 1만리 GO 수치 그대로(draw 264·prims 23.8만) · 촬영 fs_villager·fs_plant_grid·fs_fishing 전후 같음(작은 것 그림자만 빠짐)"
  },
  {
   "id": "gd.core.day-light",

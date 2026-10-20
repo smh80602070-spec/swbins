@@ -441,7 +441,7 @@ func _ready() -> void:
 	add_child(gfx)
 
 	## 그리기 부담 — 다 지은 뒤 지도 전체 MultiMesh 를 칸으로 쪼개고 카메라 far 를 안개에 맞춘다(보이는 것은 그대로, render_budget.gd).
-	(func() -> void: preload("res://games/saga_go/world/render_budget.gd").apply(self)).call_deferred()
+	(func() -> void: preload("res://saga_core/world/render_budget.gd").apply(self)).call_deferred()
 
 	## PLAN.md 101-4 GO ①후보 "일과판" — 로드가 끝난 뒤(위와 같은 이유,
 	## 세션 델타의 기준점이 로드 전 값이면 안 된다) 세션을 연다.

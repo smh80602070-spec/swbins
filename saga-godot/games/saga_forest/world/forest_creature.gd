@@ -212,6 +212,7 @@ func _spawn_visual_dokkaebi() -> void:
 
 	var body := MeshInstance3D.new()
 	var body_mesh := SphereMesh.new()
+	body_mesh.radial_segments = 16; body_mesh.rings = 8   # G-0260 기본 64×32 → creature_builder 값(반지름 ≤0.5m 라 눈엔 같음)
 	body_mesh.radius = 0.32
 	body_mesh.height = 0.58
 	body.mesh = body_mesh
@@ -292,6 +293,7 @@ func _spawn_visual_beoseot() -> void:
 
 	var cap := MeshInstance3D.new()
 	var cap_mesh := SphereMesh.new()
+	cap_mesh.radial_segments = 16; cap_mesh.rings = 8   # G-0260 기본 64×32 → creature_builder 값(반지름 ≤0.5m 라 눈엔 같음)
 	cap_mesh.radius = 0.22
 	cap_mesh.height = 0.22
 	cap.mesh = cap_mesh
@@ -317,6 +319,7 @@ func _spawn_visual_kkot() -> void:
 
 	var body := MeshInstance3D.new()
 	var body_mesh := SphereMesh.new()
+	body_mesh.radial_segments = 16; body_mesh.rings = 8   # G-0260 기본 64×32 → creature_builder 값(반지름 ≤0.5m 라 눈엔 같음)
 	body_mesh.radius = 0.26
 	body_mesh.height = 0.48
 	body.mesh = body_mesh
@@ -351,6 +354,7 @@ func _spawn_visual_nabi() -> void:
 
 	var body := MeshInstance3D.new()
 	var body_mesh := SphereMesh.new()
+	body_mesh.radial_segments = 16; body_mesh.rings = 8   # G-0260 기본 64×32 → creature_builder 값(반지름 ≤0.5m 라 눈엔 같음)
 	body_mesh.radius = 0.16
 	body_mesh.height = 0.3
 	body.mesh = body_mesh
@@ -427,6 +431,7 @@ func _spawn_visual_dalpaeng() -> void:
 
 	var shell := MeshInstance3D.new()
 	var shell_mesh := SphereMesh.new()
+	shell_mesh.radial_segments = 16; shell_mesh.rings = 8   # G-0260 기본 64×32 → creature_builder 값(반지름 ≤0.5m 라 눈엔 같음)
 	shell_mesh.radius = 0.24
 	shell_mesh.height = 0.3
 	shell.mesh = shell_mesh
@@ -437,6 +442,7 @@ func _spawn_visual_dalpaeng() -> void:
 
 	var head := MeshInstance3D.new()
 	var head_mesh := SphereMesh.new()
+	head_mesh.radial_segments = 16; head_mesh.rings = 8   # G-0260 기본 64×32 → creature_builder 값(반지름 ≤0.5m 라 눈엔 같음)
 	head_mesh.radius = 0.09
 	head_mesh.height = 0.18
 	head.mesh = head_mesh
@@ -507,6 +513,7 @@ func _spawn_visual_hangari() -> void:
 
 	var head := MeshInstance3D.new()
 	var head_mesh := SphereMesh.new()
+	head_mesh.radial_segments = 16; head_mesh.rings = 8   # G-0260 기본 64×32 → creature_builder 값(반지름 ≤0.5m 라 눈엔 같음)
 	head_mesh.radius = 0.14
 	head_mesh.height = 0.26
 	head.mesh = head_mesh
@@ -565,6 +572,7 @@ func _spawn_visual_gaemi() -> void:
 
 	var abdomen := MeshInstance3D.new()
 	var abdomen_mesh := SphereMesh.new()
+	abdomen_mesh.radial_segments = 16; abdomen_mesh.rings = 8   # G-0260 기본 64×32 → creature_builder 값(반지름 ≤0.5m 라 눈엔 같음)
 	abdomen_mesh.radius = 0.14
 	abdomen_mesh.height = 0.26
 	abdomen.mesh = abdomen_mesh
@@ -574,6 +582,7 @@ func _spawn_visual_gaemi() -> void:
 
 	var thorax := MeshInstance3D.new()
 	var thorax_mesh := SphereMesh.new()
+	thorax_mesh.radial_segments = 16; thorax_mesh.rings = 8   # G-0260 기본 64×32 → creature_builder 값(반지름 ≤0.5m 라 눈엔 같음)
 	thorax_mesh.radius = 0.1
 	thorax_mesh.height = 0.2
 	thorax.mesh = thorax_mesh
@@ -583,6 +592,7 @@ func _spawn_visual_gaemi() -> void:
 
 	var head := MeshInstance3D.new()
 	var head_mesh := SphereMesh.new()
+	head_mesh.radial_segments = 16; head_mesh.rings = 8   # G-0260 기본 64×32 → creature_builder 값(반지름 ≤0.5m 라 눈엔 같음)
 	head_mesh.radius = 0.09
 	head_mesh.height = 0.18
 	head.mesh = head_mesh
@@ -623,6 +633,7 @@ func _spawn_visual_gaeguri() -> void:
 
 	var body := MeshInstance3D.new()
 	var body_mesh := SphereMesh.new()
+	body_mesh.radial_segments = 16; body_mesh.rings = 8   # G-0260 기본 64×32 → creature_builder 값(반지름 ≤0.5m 라 눈엔 같음)
 	body_mesh.radius = 0.3
 	body_mesh.height = 0.34
 	body.mesh = body_mesh
@@ -633,6 +644,7 @@ func _spawn_visual_gaeguri() -> void:
 
 	var eye_l := MeshInstance3D.new()
 	var eye_mesh := SphereMesh.new()
+	eye_mesh.radial_segments = 16; eye_mesh.rings = 8   # G-0260 기본 64×32 → creature_builder 값(반지름 ≤0.5m 라 눈엔 같음)
 	eye_mesh.radius = 0.07
 	eye_mesh.height = 0.14
 	eye_l.mesh = eye_mesh
@@ -711,6 +723,7 @@ func _spawn_visual_geurimja() -> void:
 
 	var eye := MeshInstance3D.new()
 	var eye_mesh := SphereMesh.new()
+	eye_mesh.radial_segments = 16; eye_mesh.rings = 8   # G-0260 기본 64×32 → creature_builder 값(반지름 ≤0.5m 라 눈엔 같음)
 	eye_mesh.radius = 0.06
 	eye_mesh.height = 0.12
 	eye.mesh = eye_mesh
