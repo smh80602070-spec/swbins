@@ -4721,6 +4721,24 @@
   "note": "regress \"== 그래픽 기준선\" 다섯 ok · 네 판 기준 PNG 는 사용자 승인 뒤 graphics/baseline/<판>/ 로(그 전엔 shot_baseline 이 건너뜀)"
  },
  {
+  "id": "gd.core.perf-scenes",
+  "name": "최적화 측정 다섯 판 — 다섯 대표 씬 + 5천하 지도(REALM_MAP) 노드·메시·삼각형·빛·그림자·입자·카메라 far·draw/primitives·프레임 간격 표 + 판별 예산(넘으면 PERF5 over, FAIL 아님)",
+  "files": [
+   "tools/probe_perf_scenes.gd",
+   "tools/probe_perf.gd",
+   "tools/probe_gfx_baseline.gd"
+  ],
+  "tests": [
+   "perf_scenes"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0257",
+  "since": "2026-10-20",
+  "note": "창 모드(mobile 1280x720) draw 평균 GO 263·DUNGEON 317·FOREST 335·STORY 261·REALM 302·REALM_MAP 174 · prims FOREST 98.8만(예산 35만/50만) · 헤드리스는 그리기 n/a · process_ms 대신 frame_ms(TIME_PROCESS 는 1초 최댓값) · 표 tools/_out/perf_scenes.md"
+ },
+ {
   "id": "gd.core.day-light",
   "name": "시간대 빛(3마을·5천하·4종횡 바깥 씬) — 실제 시각 새벽·낮·노을·밤: 해 방향·색·세기, 주변광·안개, sky_real 노을·별·밤 하늘색 (1만리는 sky_panorama·night_visual 그대로)",
   "files": [
