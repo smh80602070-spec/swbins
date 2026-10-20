@@ -323,8 +323,9 @@ def candlestick_01(C):
     tube(M, (0, 0, 0.04), (0, 0, 0.5), 0.025, 0.02, m, 0.5, 6)
     tube(M, (0, 0, 0.5), (0, 0, 0.56), 0.06, 0.06, m, 0.5, 8)
     tube(M, (0, 0, 0.56), (0, 0, 0.78), 0.03, 0.03, cloth(C, '#efe8d0'), 0.5, 6)
-    tube(M, (0, 0, 0.78), (0, 0, 0.88), 0.03, 0.0, glowm(C, '#ffb84a', 1.8), 0.5, 5)
+    tube(M, (0, 0, 0.78), (0, 0, 0.88), 0.03, 0.0, C.glow('glow_fire'), 0.5, 5)     # K-0155 (옛 glowm #ffb84a ×1.8)
     node('use_point', (0, -0.3, 0))
+    node('light_point', (0, 0, 0.81))
 
 
 def rug_rect_01(C):
@@ -349,9 +350,10 @@ def oil_lamp_01(C):
     tube(M, (0, 0, 0), (0, 0, 0.05), 0.12, 0.1, m, 0.5, 8)
     tube(M, (0, 0, 0.05), (0, 0, 0.16), 0.1, 0.12, m, 0.5, 8)
     tube(M, (0, 0, 0.16), (0, 0, 0.2), 0.12, 0.05, m, 0.5, 8)
-    tube(M, (0, 0, 0.2), (0, 0, 0.32), 0.03, 0.0, glowm(C, '#ffb84a', 1.8), 0.5, 5)
+    tube(M, (0, 0, 0.2), (0, 0, 0.32), 0.03, 0.0, C.glow('glow_fire'), 0.5, 5)       # K-0155 (옛 glowm #ffb84a ×1.8)
     obox(M, (0.13, 0, 0.1), (0.1, 0.03, 0.03), 0, m)
     node('use_point', (0, -0.25, 0))
+    node('light_point', (0, 0, 0.24))
 
 
 def table_lamp_01(C):
@@ -359,8 +361,9 @@ def table_lamp_01(C):
     m = metal(C, '#2c2e33')
     tube(M, (0, 0, 0), (0, 0, 0.03), 0.12, 0.12, m, 0.5, 8)
     tube(M, (0, 0, 0.03), (0, 0, 0.38), 0.02, 0.02, m, 0.5, 6)
-    tube(M, (0, 0, 0.36), (0, 0, 0.58), 0.1, 0.17, glowm(C, '#fff0c8', 1.5), 0.5, 10)
+    tube(M, (0, 0, 0.36), (0, 0, 0.58), 0.1, 0.17, C.glow('glow_lamp'), 0.5, 10)    # K-0155 갓 (옛 glowm #fff0c8 ×1.5)
     node('use_point', (0, -0.3, 0))
+    node('light_point', (0, 0, 0.47))
 
 
 def holo_panel_01(C):
@@ -495,9 +498,10 @@ def hanging_lantern_01(C):
     m = metal(C, '#4a3a2a')
     tube(M, (0, 0, 1.0), (0, 0, 1.5), 0.01, 0.01, m, 0.5, 4)
     obox(M, (0, 0, 0.75), (0.3, 0.3, 0.05), 0, m)
-    obox(M, (0, 0, 0.8), (0.24, 0.24, 0.3), 0, glowm(C, '#ffb84a', 1.5))
+    obox(M, (0, 0, 0.8), (0.24, 0.24, 0.3), 0, C.glow('glow_lamp'))                 # K-0155 등 몸 (옛 glowm #ffb84a ×1.5)
     tube(M, (0, 0, 1.1), (0, 0, 1.2), 0.2, 0.05, m, 0.5, 8)
     node('use_point', (0, 0, 0.7))
+    node('light_point', (0, 0, 0.95))
 
 
 def weapon_rack_01(C):
@@ -631,6 +635,8 @@ def build_scene(pid, out, style):
     lic = {'id': pid, 'generator': BP.GENERATOR, 'blender': bpy.app.version_string, 'style': style,
            'license': 'CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)',
            'inputs': sorted(f'self-pbr: {m}' for m in C.mats), 'size_m': size, 'tris': tris, 'nodes': [n[0] for n in NODES]}
+    if C.glows:
+        lic['glow'] = {g: W.GLOW[g] for g in sorted(C.glows)}
     json.dump(lic, open(os.path.splitext(out)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     kb = os.path.getsize(out) // 1024
     lim = 2500 if (pid in ROOMS or pid in BIG) else 1500

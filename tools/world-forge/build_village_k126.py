@@ -5,7 +5,7 @@ import math
 
 from mathutils import Vector
 
-from build_prop import tube, obox, gable
+from build_prop import tube, obox, gable, node
 from wf_shapes import ball
 
 
@@ -203,7 +203,8 @@ def torch_wall_01(C):
     tube(M, (0, 0.0, 0.2), (0, -0.32, 0.36), 0.03, 0.03, m['iron'], 0.3, 5)
     tube(M, (0, -0.36, 0.18), (0, -0.36, 0.5), 0.045, 0.05, m['wd'], 0.4, 6)               # 횃대
     tube(M, (0, -0.36, 0.45), (0, -0.36, 0.6), 0.07, 0.12, m['iron'], 0.4, 8)              # 불 그릇
-    tube(M, (0, -0.36, 0.58), (0, -0.36, 0.95), 0.1, 0.0, m['fire'], 1.0, 6)
+    tube(M, (0, -0.36, 0.58), (0, -0.36, 0.95), 0.1, 0.0, C.glow('glow_fire'), 1.0, 6)   # K-0155 불꽃 (옛 m['fire'])
+    node('light_point', (0, -0.36, 0.67))
 
 
 K126 = {f.__name__: f for f in (smithy_01, tower_square_01, tower_pointy_01, watchtower_01, tower_ruin_01, stone_arch_01, pavilion_01,

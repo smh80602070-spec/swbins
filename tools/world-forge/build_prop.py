@@ -112,11 +112,24 @@ class Ctx:
     def __init__(self, name):
         self.M = W.Mesh(name)
         self.mats = set()
+        self.glows = set()
 
     def s(self, mat, tile=1.0, tint=None, gain=1.0, sat=1.0):
         key = f'{mat}|{tile}|{tint}|{gain}|{sat}'
         self.mats.add(mat)
         return self.M.slot_of(key, W.pbr_material(mat, tile, tint, name=mat, gain=gain, sat=sat))
+
+    def glow(self, name):
+        """K-0155 불빛 면 칸 — `glow_fire`(횃불·화로·초) · `glow_lamp`(등·가로등·석등 창)."""
+        self.glows.add(name)
+        return self.M.slot_of(name, W.glow_material(name))
+
+
+NODES = []                                                       # K-0155 빈 노드(이름, 위치, scale|None) — build 가 메시와 한 GLB 에 싣는다
+
+
+def node(name, pos, scale=None):
+    NODES.append((name, tuple(pos), scale))
 
 
 # ---------------------------------------------------------------- 지물 15개 (id → 함수)
@@ -138,13 +151,14 @@ def well_01(C):
 def street_lamp_01(C):
     M = C.M
     metal = C.s('concrete_wall_001', 1.0, '#3b3f46')
-    glow = C.s('beige_wall_001', 1.0, '#ffe39a', gain=1.5)
+    glow = C.glow('glow_lamp')                                         # K-0155 (옛 beige_wall_001 #ffe39a ×1.5)
     tube(M, (0, 0, 0), (0, 0, 0.35), 0.17, 0.12, metal, 1.0, 8)
     tube(M, (0, 0, 0.35), (0, 0, 4.2), 0.07, 0.045, metal, 1.0, 8)
     obox(M, (0.45, 0, 4.15), (1.0, 0.1, 0.07), 0, metal)               # 뻗은 팔
     obox(M, (0.9, 0, 3.7), (0.34, 0.34, 0.42), 0, glow)               # 등
     tube(M, (0.9, 0, 4.12), (0.9, 0, 4.3), 0.26, 0.05, metal, 1.0, 8)  # 갓
     obox(M, (0.9, 0, 3.62), (0.4, 0.4, 0.08), 0, metal)
+    node('light_point', (0.9, 0, 3.91))                               # 등 가운데
 
 
 def signal_pylon_01(C):
@@ -162,11 +176,12 @@ def signal_pylon_01(C):
 def torch_stand_01(C):
     M = C.M
     wd = C.s('black_painted_planks', 1.0)
-    fire = C.s('clay_roof_tiles', 1.0, '#ff8a2a', gain=1.7)
+    fire = C.glow('glow_fire')                                         # K-0155 (옛 clay_roof_tiles #ff8a2a ×1.7)
     obox(M, (0, 0, 0), (0.5, 0.5, 0.12), 0, wd)
     tube(M, (0, 0, 0.12), (0, 0, 1.45), 0.08, 0.07, wd, 1.0, 6)
     tube(M, (0, 0, 1.45), (0, 0, 1.8), 0.11, 0.24, wd, 0.6, 8)           # 불 그릇
     tube(M, (0, 0, 1.78), (0, 0, 2.35), 0.2, 0.0, fire, 1.0, 6)          # 불꽃
+    node('light_point', (0, 0, 1.95))
 
 
 def altar_01(C):
@@ -252,7 +267,7 @@ def stone_lantern_01(C):
     M = C.M
     st = C.s('japanese_stone_wall', 1.0)
     dk = C.s('japanese_stone_wall', 1.0, '#8a8478')
-    glow = C.s('beige_wall_001', 1.0, '#ffd37a', gain=1.4)
+    glow = C.glow('glow_lamp')                                         # K-0155 (옛 beige_wall_001 #ffd37a ×1.4)
     tube(M, (0, 0, 0), (0, 0, 0.2), 0.34, 0.3, dk, 1.0, 6)
     tube(M, (0, 0, 0.2), (0, 0, 1.05), 0.13, 0.11, st, 1.0, 6)
     tube(M, (0, 0, 1.05), (0, 0, 1.2), 0.34, 0.3, dk, 1.0, 6)
@@ -260,6 +275,7 @@ def stone_lantern_01(C):
     tube(M, (0, 0, 1.62), (0, 0, 1.78), 0.5, 0.42, dk, 1.0, 6)       # 지붕 처마
     tube(M, (0, 0, 1.78), (0, 0, 2.15), 0.42, 0.0, dk, 1.0, 6)
     tube(M, (0, 0, 2.15), (0, 0, 2.3), 0.06, 0.0, st, 1.0, 5)
+    node('light_point', (0, 0, 1.41))                                 # 불집 가운데
 
 
 def banner_pole_01(C):
@@ -288,7 +304,7 @@ def city_wall_segment_01(C):
 def brazier_01(C):
     M = C.M
     metal = C.s('concrete_wall_001', 1.0, '#34363c')
-    fire = C.s('clay_roof_tiles', 1.0, '#ff7a22', gain=1.8)
+    fire = C.glow('glow_fire')                                         # K-0155 (옛 clay_roof_tiles #ff7a22 ×1.8)
     for k in range(3):
         ang = 2 * math.pi * k / 3 + 0.4
         x, y = math.cos(ang) * 0.42, math.sin(ang) * 0.42
@@ -296,6 +312,7 @@ def brazier_01(C):
     tube(M, (0, 0, 0.78), (0, 0, 1.22), 0.2, 0.55, metal, 1.0, 10, caps=True)   # 그릇
     tube(M, (0, 0, 1.2), (0, 0, 1.28), 0.5, 0.5, fire, 1.0, 10)           # 숯
     tube(M, (0, 0, 1.28), (0, 0, 1.85), 0.34, 0.0, fire, 1.0, 6)          # 불꽃
+    node('light_point', (0, 0, 1.45))
 
 
 PROPS = {f.__name__: f for f in (
@@ -307,20 +324,35 @@ def build(pid, out, style):
     bpy.ops.wm.read_factory_settings(use_empty=True)
     W._mat_cache.clear()
     W.set_style(style)
+    del NODES[:]
     C = Ctx(pid)
     PROPS[pid](C)
     ob = C.M.build()
+    objs = [ob]
+    for name, pos, scale in NODES:                                       # K-0155 빈 노드(light_point …) — build_interior 와 같은 꼴
+        e = bpy.data.objects.new(name, None)
+        e.empty_display_type = 'CUBE' if scale else 'ARROWS'
+        e.empty_display_size = 0.5 if scale else 0.2
+        e.location = Vector(pos)
+        if scale:
+            e.scale = Vector(scale)
+        bpy.context.scene.collection.objects.link(e)
+        objs.append(e)
     bpy.context.view_layer.objects.active = ob
     tris = sum(len(p.vertices) - 2 for p in ob.data.polygons)
     pts = [Vector(c) for c in ob.bound_box]
     lo = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)))
     hi = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
-    W.export_glb([ob], out, int(os.environ.get('WF_TOON_PX', '256')) if style == 'toon' else 1024, 'JPEG' if style == 'toon' or os.environ.get('WF_JPEG') else 'AUTO')   # WF_JPEG=1 — 사실판도 JPEG(K-0128 고돗 방 킷, 알파 없는 결만)
+    W.export_glb(objs, out, int(os.environ.get('WF_TOON_PX', '256')) if style == 'toon' else 1024, 'JPEG' if style == 'toon' or os.environ.get('WF_JPEG') else 'AUTO')   # WF_JPEG=1 — 사실판도 JPEG(K-0128 고돗 방 킷, 알파 없는 결만)
     size = [round(hi[i] - lo[i], 2) for i in range(3)]
     lic = {'id': pid, 'generator': GENERATOR, 'blender': bpy.app.version_string, 'style': style,
            'license': 'CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)',
            'inputs': sorted(f'self-pbr: {m}' for m in C.mats), 'size_m': size, 'tris': tris}
+    if NODES:
+        lic['nodes'] = [n[0] for n in NODES]
+    if C.glows:
+        lic['glow'] = {g: W.GLOW[g] for g in sorted(C.glows)}
     json.dump(lic, open(os.path.splitext(out)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     kb = os.path.getsize(out) // 1024
     print('WORLDFORGE', json.dumps({'id': pid, 'tris': tris, 'size_m': size, 'kb': kb, 'ok': tris <= TRIS_MAX and (style != 'toon' or kb <= 512)}))

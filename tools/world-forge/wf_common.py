@@ -152,6 +152,29 @@ def flat_material(name, color, rough=0.6, metal=0.0, alpha=1.0):
     return mat
 
 
+GLOW = {'glow_fire': '#ffb060', 'glow_lamp': '#ffd890'}      # K-0155 밤 불빛 — 엔진이 이 이름으로 찾아 세기(시각)를 곱한다
+
+
+def glow_material(name, color=None):
+    """불꽃·갓·등 창 재질(K-0155) — 원리 재질 emission = color(세기 1 → glTF emissiveFactor), 바탕색 = color 의 70%. 이름 키 캐시(벽 재질과 안 섞임)."""
+    color = color or GLOW[name]
+    key = ('glow', name, color)
+    if key in _mat_cache:
+        return _mat_cache[key]
+    mat = bpy.data.materials.new(name)
+    mat.use_nodes = True
+    b = next(n for n in mat.node_tree.nodes if n.type == 'BSDF_PRINCIPLED')
+    c = hex_rgba(color)
+    b.inputs['Base Color'].default_value = (c[0] * 0.7, c[1] * 0.7, c[2] * 0.7, 1.0)
+    b.inputs['Emission Color'].default_value = c
+    b.inputs['Emission Strength'].default_value = 1.0
+    b.inputs['Roughness'].default_value = 0.6
+    b.inputs['Metallic'].default_value = 0.0
+    mat['glow'] = 1
+    _mat_cache[key] = mat
+    return mat
+
+
 def hex_rgba(h):
     h = h.lstrip('#')
     s = [int(h[i:i + 2], 16) / 255 for i in (0, 2, 4)]
