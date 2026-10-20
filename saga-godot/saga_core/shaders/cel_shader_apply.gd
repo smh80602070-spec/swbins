@@ -11,6 +11,7 @@ const CEL_SHADER := preload("res://saga_core/shaders/cel_toon.gdshader")
 const OUTLINE_SHADER := preload("res://saga_core/shaders/cel_outline.gdshader")
 const ANIME_EYE := preload("res://saga_core/anime_eye.gd")
 const ANIME_MOUTH := preload("res://saga_core/anime_mouth.gd")
+const FACE_LIGHT := preload("res://saga_core/world/face_light.gd")
 
 ## 공방 몸의 눈 재질 이름("eye") — 실사 눈 텍스처 위에 셀 화풍 눈을 다시 그려 얹는다(anime_eye.gd, 홍채색은 몸 파일마다 하나).
 const EYE_MATERIAL := "eye"
@@ -37,6 +38,8 @@ static func apply_to(root: Node) -> int:
 		if String(mesh_instance.name).contains("ShadowProxy"):
 			continue # 그림자 대역은 색 패스에 안 나온다 — 셀 재질·외곽선 불필요
 		applied += _apply_one(mesh_instance)
+	## G-0248 — 얼굴 그림자(원신식): 머리 뼈가 있는 몸이면 얼굴 재질 face_mode=1 + 머리 앞 방향 수정자(SAGA_FACE_LIGHT=0 끔).
+	FACE_LIGHT.attach(root)
 	return applied
 
 ## 2026-09-29 — 공방(char-forge) 플레이어 몸엔 그림자 대역 ZZ_ShadowProxy(몸을 30%로 줄인 사본)가 있다.
@@ -125,6 +128,10 @@ static func _apply_one(mesh_instance: MeshInstance3D) -> int:
 		var kind := _surface_kind(original.resource_name)
 		shader_mat.set_shader_parameter("skin_warm", 1.0 if kind == "skin" else 0.0)
 		shader_mat.set_shader_parameter("cloth_grain", 1.0 if kind == "cloth" else 0.0)
+		## G-0248 — 얼굴 표면 = 얼굴 메시(VRoid "Face…")나 얼굴 재질(…_Face_00_SKIN·FaceMouth·FaceBrow)의 살갗·얼굴 부품. 몸 살갗(…_Body_00_SKIN, 손·목)은 아님.
+		## face_mode 는 face_light.attach 가 머리 뼈를 확인한 뒤 켠다.
+		if (kind == "skin" or kind == "face") and (String(mesh_instance.name).to_lower().begins_with("face") or original.resource_name.to_lower().contains("_face")):
+			shader_mat.set_meta("face_part", true)
 		shader_mat.next_pass = outline_mat
 		mesh_instance.set_surface_override_material(surface_index, shader_mat)
 		count += 1

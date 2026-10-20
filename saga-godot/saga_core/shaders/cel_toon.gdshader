@@ -30,8 +30,21 @@ uniform float hair_gloss : hint_range(0.0, 1.0) = 0.0;
 // G-0145 — 살갗(cel_shader_apply 가 skin* 재질에 1) · 옷 결(살갗·머리·눈은 0).
 uniform float skin_warm : hint_range(0.0, 1.0) = 0.0;
 uniform float cloth_grain : hint_range(0.0, 1.0) = 1.0;
+// G-0248 — 얼굴 그림자(원신식). 얼굴 표면(face_light.gd 가 face_mode=1)은 제 법선 대신 머리 앞 방향(head_fwd, 월드)을 섞은
+//   수평 법선으로 명암 — 코·입가·턱 밑 얼룩 그늘이 사라지고 경계는 머리 좌우(수평 각) 기준 세로 반쪽. 빛도 수평으로 눌러 잰다(해가 높아도 얼굴이 안 어두워짐).
+//   head_fwd 는 몸마다 다르니 instance uniform(재질 수·draw call 그대로) — gl_compatibility 처럼 안 들어오면(0 벡터) 제 법선 + face_flatten 만큼 그늘 바닥을 올린다.
+//   face_sdf(K 대기): 넣고 face_sdf_on=1 이면 원신 SDF 문턱(빛 수평 각 → 텍스처 값)으로 바꾼다. 텍스처는 빛이 캐릭터 오른쪽에서 올 때 기준, 반대면 UV 좌우 뒤집음(face_sdf_flip=-1 로 반대 규약).
+uniform float face_mode = 0.0;
+instance uniform vec3 head_fwd = vec3(0.0);
+uniform float face_flatten : hint_range(0.0, 1.0) = 0.65;
+uniform sampler2D face_sdf : hint_default_white, filter_linear;
+uniform float face_sdf_on = 0.0;
+uniform float face_sdf_flip = 1.0;
 
 varying float v_strand;   // 머리 결(0~1) — fragment 에서 재고 light 에서 광택 띠를 끊는다
+varying vec3 v_head_fwd;  // G-0248 — 머리 앞(뷰 공간, 얼굴 아니거나 모르면 0)
+varying vec3 v_up;        // G-0248 — 월드 위(뷰 공간)
+varying vec2 v_sdf;       // G-0248 — face_sdf 값(UV 그대로·좌우 뒤집음)
 
 float hash21(vec2 p) {
 	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
@@ -42,6 +55,14 @@ float vnoise(vec2 p) {
 	vec2 f = fract(p);
 	vec2 u = f * f * (3.0 - 2.0 * f);
 	return mix(mix(hash21(i), hash21(i + vec2(1.0, 0.0)), u.x), mix(hash21(i + vec2(0.0, 1.0)), hash21(i + vec2(1.0, 1.0)), u.x), u.y);
+}
+
+void vertex() {
+	v_head_fwd = vec3(0.0);
+	if (face_mode > 0.5 && dot(head_fwd, head_fwd) > 0.01) {
+		v_head_fwd = normalize((VIEW_MATRIX * vec4(head_fwd, 0.0)).xyz);
+	}
+	v_up = (VIEW_MATRIX * vec4(0.0, 1.0, 0.0, 0.0)).xyz;
 }
 
 void fragment() {
@@ -62,10 +83,48 @@ void fragment() {
 	ALPHA_SCISSOR_THRESHOLD = 0.5;
 	ROUGHNESS = 1.0;
 	v_strand = vnoise(UV * vec2(180.0, 6.0)) * 0.6 + vnoise(UV * vec2(420.0, 9.0)) * 0.4;
+	v_sdf = vec2(1.0);
+	if (face_sdf_on > 0.5) {
+		v_sdf = vec2(texture(face_sdf, UV).r, texture(face_sdf, vec2(1.0 - UV.x, UV.y)).r);
+	}
+}
+
+// G-0248 — 얼굴 표면의 빛 세기(0~1). 얼굴 아니면 NORMAL·LIGHT 그대로.
+float face_ndotl(vec3 n, vec3 l, vec3 head_v, vec3 up_v, vec2 sdf2) {
+	float plain = clamp(dot(n, l), 0.0, 1.0);
+	if (face_mode < 0.5) {
+		return plain;
+	}
+	if (dot(head_v, head_v) < 0.25) {
+		// 머리 방향 모름(instance uniform 안 들어옴) — 그늘 바닥만 올려 얼룩을 옅게.
+		return mix(plain, max(plain, 0.7 * smoothstep(0.0, 0.15, plain)), face_flatten);
+	}
+	vec3 up = normalize(up_v);
+	vec3 hf = normalize(head_v - up * dot(head_v, up));
+	float lv = dot(l, up);
+	vec3 lh = l - up * lv;
+	float lhl = length(lh);
+	if (lhl < 0.05) {
+		return lv > 0.0 ? 1.0 : 0.0;   // 바로 위(아래)에서 오는 빛
+	}
+	lh /= lhl;
+	float d;
+	if (face_sdf_on > 0.5) {
+		float side = dot(lh, cross(hf, up)) * face_sdf_flip;
+		float sdf = side >= 0.0 ? sdf2.x : sdf2.y;
+		float thr = 0.5 - 0.5 * dot(hf, lh);   // 정면 0 · 옆 0.5 · 뒤 1
+		d = smoothstep(thr - 0.02, thr + 0.02, sdf);
+	} else {
+		vec3 nh = n - up * dot(n, up);
+		vec3 fn = normalize(mix(nh, hf, face_flatten) + hf * 1e-3);
+		d = clamp(dot(fn, lh), 0.0, 1.0);
+	}
+	// 해가 높을수록 얼굴 전체가 고르게 밝게(수평으로 눌러 잰 몫을 줄임).
+	return mix(d, 1.0, smoothstep(0.8, 0.98, lv));
 }
 
 void light() {
-	float ndotl = clamp(dot(NORMAL, LIGHT), 0.0, 1.0);
+	float ndotl = face_ndotl(NORMAL, LIGHT, v_head_fwd, v_up, v_sdf);
 	float band_step = 1.0 / float(band_count);
 	float banded = floor(ndotl / band_step) * band_step;
 	// G-0145 — 경계 폭을 화면 픽셀 기준 최소 1.5픽셀로(가까이선 또렷, 멀어도 계단·지글거림 없이).

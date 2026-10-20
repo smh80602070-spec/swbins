@@ -2,6 +2,7 @@ extends SceneTree
 ## 얼굴 클로즈업 촬영 — 몸 glb·gltf 하나에(G-0030 부터 기본은 새 인물 몸 주인공 dj_haean) 셀 재질을 입혀 머리 높이에서 정면으로 찍는다(2026-09-30 원신풍 눈).
 ##   FACE_OUT=<png 경로> [FACE_GLB=res://assets/characters_dex/dj_haean.gltf] "$GODOT_CONSOLE" --path saga-godot --rendering-method mobile \
 ##       --position -4000,0 --resolution 1000x1000 --script res://tools/face_view.gd
+## G-0248 — 빛 손잡이: FACE_SUN="피치,요"(기본 -30,25) · FACE_AMB=주변광 세기(기본 0.7) · FACE_SUN_E=해 세기(기본 1.1). 얼굴 그림자 전후는 옆빛(-25,70)·주변광 0.3 으로.
 ## 머리 높이는 뼈 "Head" 로 잰다. 카메라는 몸 앞(+Z)에서 머리를 바라본다.
 
 const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
@@ -37,13 +38,14 @@ func _init() -> void:
 	env.background_color = Color(0.62, 0.78, 0.95)
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	env.ambient_light_color = Color(0.75, 0.8, 0.9)
-	env.ambient_light_energy = 0.7
+	env.ambient_light_energy = float(OS.get_environment("FACE_AMB")) if OS.get_environment("FACE_AMB") != "" else 0.7
 	var we := WorldEnvironment.new()
 	we.environment = env
 	root.add_child(we)
 	var sun := DirectionalLight3D.new()
-	sun.rotation_degrees = Vector3(-30, 25, 0)
-	sun.light_energy = 1.1
+	var sun_pr := OS.get_environment("FACE_SUN").split(",")
+	sun.rotation_degrees = Vector3(float(sun_pr[0]), float(sun_pr[1]), 0) if sun_pr.size() == 2 else Vector3(-30, 25, 0)
+	sun.light_energy = float(OS.get_environment("FACE_SUN_E")) if OS.get_environment("FACE_SUN_E") != "" else 1.1
 	root.add_child(sun)
 	var head_y := 1.5
 	for sk in body.find_children("*", "Skeleton3D", true, false):
