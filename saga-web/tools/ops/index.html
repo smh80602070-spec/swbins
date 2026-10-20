@@ -112,10 +112,11 @@
     </div>
     <div class="card"><h2>플레이어</h2>
       <input id="pl-q" placeholder="uid·기기·이메일" size="24"> <button class="act" onclick="plSearch()">찾기</button>
-      <table id="pl"><thead><tr><th>uid</th><th>기기</th><th>판</th><th>마지막</th><th>정지</th><th></th></tr></thead><tbody></tbody></table>
+      <table id="pl"><thead><tr><th>uid</th><th>기기</th><th>판</th><th>마지막</th><th>제재</th><th>의심</th><th></th></tr></thead><tbody></tbody></table>
       <pre id="pl-detail" class="muted">플레이어를 고르면 계정·세이브·우편·영수증·이벤트가 여기에</pre>
       <div>세이브 <select id="pl-game"></select> <button class="act" onclick="plSaveLoad()">읽기</button> <button class="act" onclick="plSaveWrite()">쓰기(전후 감사 기록)</button><br><textarea id="pl-save" rows="6" style="width:100%"></textarea></div>
-      <div>제재: 일수 <input id="bn-days" size="4" value="7"> 사유 <input id="bn-reason" size="24"> <button class="act" onclick="banSet()">정지</button> <button class="act" onclick="banLift()">해제</button> <span id="pl-msg" class="muted"></span></div>
+      <div>제재: 종류 <select id="bn-kind"><option value="login">접속</option><option value="chat">채팅</option><option value="trade">거래</option><option value="purchase">구매</option></select> 일수 <input id="bn-days" size="4" value="7"> 사유 <input id="bn-reason" size="24"> <button class="act" onclick="banSet()">걸기</button> <button class="act" onclick="banLift()">해제</button> <span id="pl-msg" class="muted"></span></div>
+      <h3>치트 의심(기록만 — 자동 제재 없음) <button class="act" onclick="suLoad()">새로</button></h3><table id="su"><thead><tr><th>시각</th><th>uid</th><th>판</th><th>규칙</th><th>내용</th></tr></thead><tbody></tbody></table>
     </div>
     <div class="card"><h2>보상 우편</h2> 판 <select id="ml-game"></select> 받는 이 <input id="ml-uids" size="30" placeholder="uid uid … (비우면 그 판 전체)"> 제목 <input id="ml-title" size="14"> 본문 <input id="ml-body" size="22"> 지급물 JSON <input id="ml-items" size="28" value='[{"kind":"gold","n":100}]'> <button class="act" onclick="mailSend()">보내기</button> <span id="ml-msg" class="muted"></span></div>
     <div class="card"><h2>상품(캐시템)</h2>
@@ -123,10 +124,13 @@
       id <input id="pr-id" size="14" placeholder="go_gem_100"> 판 <select id="pr-game"></select> 이름 <input id="pr-name" size="12"> 가격 <input id="pr-price" size="7"> 통화 <input id="pr-cur" size="4" value="KRW"> 지급물 <input id="pr-items" size="26" value='[{"kind":"gem","n":100}]'> 스토어 <input id="pr-store" size="20" placeholder='{"google":"sku"}'> <label><input type="checkbox" id="pr-on" checked> 판매</label> <button class="act" onclick="prSave()">저장</button> <span id="pr-msg" class="muted"></span>
       <h3>영수증(최근 50)</h3><table id="rc"><thead><tr><th>id</th><th>uid</th><th>판</th><th>경로</th><th>주문</th><th>상품</th><th>금액</th><th>상태</th><th>시각</th></tr></thead><tbody></tbody></table>
     </div>
-    <div class="card"><h2>서버 플래그(즉시 — 공지·점검·최소 버전·이벤트 tunes·기능 플래그 flags{판|*})</h2><textarea id="fl-json" rows="8" style="width:100%"></textarea><br><button class="act" onclick="flSave()">저장</button> <button class="act" onclick="flFromLive()">live.json 내용 가져오기</button> <span id="fl-msg" class="muted"></span></div>
-    <div class="card"><h2>지표 14일</h2><table id="mt"><thead><tr><th>날</th><th>DAU</th><th>부팅</th><th>신규</th><th>D1</th><th>구매</th><th>매출</th><th>오류</th></tr></thead><tbody></tbody></table>
+    <div class="card"><h2>서버 플래그(즉시 — 공지·점검·최소 버전·이벤트 tunes·기능 플래그 flags{판|*} · A/B ab{이름:{buckets,ratio}})</h2><textarea id="fl-json" rows="8" style="width:100%"></textarea><br><button class="act" onclick="flSave()">저장</button> <button class="act" onclick="flFromLive()">live.json 내용 가져오기</button> <span id="fl-msg" class="muted"></span></div>
+    <div class="card"><h2>지표 14일 <small>A/B 실험 <input id="mt-exp" size="10" placeholder="flags.ab 이름"> <button class="act" onclick="mtLoad()">보기</button> <span id="mt-ab" class="muted"></span></small></h2><table id="mt"><thead><tr><th>날</th><th>DAU</th><th>부팅</th><th>신규</th><th>D1</th><th>구매</th><th>매출</th><th>오류</th></tr></thead><tbody></tbody></table>
       <h3>오류 로그 <input id="er-q" size="16" placeholder="본문 검색"> <button class="act" onclick="erLoad()">검색</button></h3><table id="er"><thead><tr><th>시각</th><th>판</th><th>uid</th><th>내용</th></tr></thead><tbody></tbody></table>
     </div>
+    <div class="card"><h2>운영자(owner 만) <span class="muted" id="ad-me"></span></h2><table id="ad"><thead><tr><th>이름</th><th>등급</th><th>만든 때</th><th>마지막 사용</th></tr></thead><tbody></tbody></table>
+      이름 <input id="ad-who" size="12"> 등급 <select id="ad-role"><option>viewer</option><option>operator</option><option>owner</option></select> <button class="act" onclick="adSet(false)">만들기·등급</button> <button class="act" onclick="adSet(true)">열쇠 새로</button> <button class="act" onclick="adDel()">지우기</button> <span id="ad-msg" class="muted"></span>
+      <small>열쇠는 만들 때 한 번만 보인다(서버엔 해시만). viewer 읽기 · operator 우편·제재·세이브 수정 · owner 상품·플래그·운영자.</small></div>
     <div class="card"><h2>감사 로그(최근 50)</h2><table id="au"><thead><tr><th>시각</th><th>누가</th><th>행위</th><th>대상</th><th>전</th><th>후</th></tr></thead><tbody></tbody></table></div>
   </section>
 </main>
@@ -204,26 +208,29 @@ $('#sv-url').value = SV.url; $('#sv-key').value = SV.key; $('#sv-who').value = S
 const when = (t) => (t ? new Date(t).toLocaleString() : '');
 async function sv(method, p, body) {
   if (!SV.url) { throw new Error('서버 URL 없음'); }
-  const r = await fetch(SV.url.replace(/\/+$/, '') + p, { method, headers: { 'Content-Type': 'application/json', 'X-Admin-Key': SV.key, 'X-Admin-Who': SV.who || 'admin' }, body: body == null ? undefined : JSON.stringify(body) });
+  const r = await fetch(SV.url.replace(/\/+$/, '') + p, { method, headers: { 'Content-Type': 'application/json', 'X-Admin-Key': SV.key, 'X-Admin-Who': encodeURIComponent(SV.who || 'admin') }, body: body == null ? undefined : JSON.stringify(body) });
   const j = await r.json().catch(() => null); if (!r.ok) { throw new Error((j && j.why) || ('HTTP ' + r.status)); } return j;
 }
 function svSave() { SV.url = $('#sv-url').value.trim(); SV.key = $('#sv-key').value; SV.who = $('#sv-who').value.trim(); localStorage.setItem('ops-sv-url', SV.url); localStorage.setItem('ops-sv-key', SV.key); localStorage.setItem('ops-sv-who', SV.who); svLoad(); }
 async function svLoad() {
   try { const h = await sv('GET', '/v1/health'); $('#sv-health').textContent = `연결 ○ · db ${h.db} · 결제 mock ${h.pay.mock ? '켬' : '끔'} · toss ${h.pay.toss ? '○' : '×'} · google ${h.pay.google ? '○' : '×'}`; }
   catch (e) { $('#sv-health').textContent = '연결 × ' + e.message; return; }
-  for (const f of [plSearch, prLoad, flLoad, mtLoad, erLoad, auLoad]) { try { await f(); } catch (e) { console.warn(f.name, e.message); } }
+  try { const me = await sv('GET', '/v1/admin/whoami'); ME = me; $('#ad-me').textContent = '나: ' + me.who + ' · ' + me.role; $('#sv-health').textContent += ' · ' + me.who + '(' + me.role + ')'; } catch (e) { ME = null; }
+  for (const f of [plSearch, prLoad, flLoad, mtLoad, erLoad, auLoad, suLoad, adLoad]) { try { await f(); } catch (e) { console.warn(f.name, e.message); } }
 }
-let PL = null;
+let PL = null, ME = null;
+const KIND = { login: '접속', chat: '채팅', trade: '거래', purchase: '구매' };
+const scText = (sc) => Object.keys(sc || {}).map((k) => KIND[k] + (sc[k].reason ? ' ' + sc[k].reason : '')).join(' · ');
 async function plSearch() {
   try { const r = await sv('GET', '/v1/admin/players?q=' + encodeURIComponent($('#pl-q').value.trim()));
-    $('#pl tbody').innerHTML = r.players.map((p) => `<tr><td><code>${esc(p.uid)}</code></td><td><small>${esc(p.device)}</small></td><td>${p.games.map(nm).join(' ')}</td><td>${when(p.last_seen)}</td><td>${p.ban ? '<span class="bad">정지 ' + esc(p.ban.reason) + '</span>' : ''}</td><td><button class="act" onclick="plOpen('${esc(p.uid)}')">보기</button></td></tr>`).join('') || '<tr><td colspan="6" class="muted">없음 (총 ' + r.total + ')</td></tr>'; }
-  catch (e) { $('#pl tbody').innerHTML = `<tr><td colspan="6" class="bad">${esc(e.message)}</td></tr>`; }
+    $('#pl tbody').innerHTML = r.players.map((p) => `<tr><td><code>${esc(p.uid)}</code></td><td><small>${esc(p.device)}</small></td><td>${p.games.map(nm).join(' ')}</td><td>${when(p.last_seen)}</td><td>${p.sanctions && Object.keys(p.sanctions).length ? '<span class="bad">' + esc(scText(p.sanctions)) + '</span>' : ''}</td><td>${p.suspects ? '<span class="warn">' + p.suspects + '</span>' : ''}</td><td><button class="act" onclick="plOpen('${esc(p.uid)}')">보기</button></td></tr>`).join('') || '<tr><td colspan="7" class="muted">없음 (총 ' + r.total + ')</td></tr>'; }
+  catch (e) { $('#pl tbody').innerHTML = `<tr><td colspan="7" class="bad">${esc(e.message)}</td></tr>`; }
 }
-async function plOpen(uid) { PL = uid; const d = await sv('GET', '/v1/admin/players/' + uid); $('#pl-detail').textContent = JSON.stringify({ account: d.account, ban: d.ban, saves: d.saves, mails: d.mails.slice(0, 10), receipts: d.receipts.slice(0, 10), events: d.events.slice(0, 20) }, null, 1); }
+async function plOpen(uid) { PL = uid; const d = await sv('GET', '/v1/admin/players/' + uid); $('#pl-detail').textContent = JSON.stringify({ account: d.account, sanctions: d.sanctions, ab: d.ab, suspects: (d.suspects || []).slice(0, 10), saves: d.saves, mails: d.mails.slice(0, 10), receipts: d.receipts.slice(0, 10), events: d.events.slice(0, 20) }, null, 1); }
 async function plSaveLoad() { if (!PL) { $('#pl-msg').textContent = '플레이어 먼저'; return; } try { const s = await sv('GET', `/v1/admin/players/${PL}/save/${$('#pl-game').value}`); $('#pl-save').value = JSON.stringify(s.data, null, 1); } catch (e) { $('#pl-save').value = '// ' + e.message; } }
 async function plSaveWrite() { if (!PL) { $('#pl-msg').textContent = '플레이어 먼저'; return; } let data; try { data = JSON.parse($('#pl-save').value); } catch (e) { $('#pl-msg').textContent = 'JSON 아님'; return; } try { const r = await sv('PUT', `/v1/admin/players/${PL}/save/${$('#pl-game').value}`, { data }); $('#pl-msg').textContent = '세이브 rev ' + r.rev; auLoad(); } catch (e) { $('#pl-msg').textContent = '실패: ' + e.message; } }
-async function banSet() { if (!PL) { $('#pl-msg').textContent = '플레이어 먼저'; return; } try { await sv('POST', '/v1/admin/ban', { uid: PL, days: +$('#bn-days').value || null, reason: $('#bn-reason').value }); $('#pl-msg').textContent = '정지'; plSearch(); plOpen(PL); auLoad(); } catch (e) { $('#pl-msg').textContent = '실패: ' + e.message; } }
-async function banLift() { if (!PL) { $('#pl-msg').textContent = '플레이어 먼저'; return; } try { await sv('POST', '/v1/admin/ban', { uid: PL, lift: true }); $('#pl-msg').textContent = '해제'; plSearch(); plOpen(PL); auLoad(); } catch (e) { $('#pl-msg').textContent = '실패: ' + e.message; } }
+async function banSet() { if (!PL) { $('#pl-msg').textContent = '플레이어 먼저'; return; } try { await sv('POST', '/v1/admin/ban', { uid: PL, kind: $('#bn-kind').value, days: +$('#bn-days').value || null, reason: $('#bn-reason').value }); $('#pl-msg').textContent = KIND[$('#bn-kind').value] + ' 제재'; plSearch(); plOpen(PL); auLoad(); } catch (e) { $('#pl-msg').textContent = '실패: ' + e.message; } }
+async function banLift() { if (!PL) { $('#pl-msg').textContent = '플레이어 먼저'; return; } try { await sv('POST', '/v1/admin/ban', { uid: PL, kind: $('#bn-kind').value, lift: true }); $('#pl-msg').textContent = KIND[$('#bn-kind').value] + ' 해제'; plSearch(); plOpen(PL); auLoad(); } catch (e) { $('#pl-msg').textContent = '실패: ' + e.message; } }
 async function mailSend() {
   let items; try { items = JSON.parse($('#ml-items').value || '[]'); } catch (e) { $('#ml-msg').textContent = '지급물은 JSON 배열'; return; }
   const uids = $('#ml-uids').value.split(/[,\s]+/).filter(Boolean);
@@ -242,9 +249,13 @@ async function prSave() {
 async function flLoad() { const r = await sv('GET', '/v1/admin/flags'); $('#fl-json').value = JSON.stringify(r.flags, null, 1); }
 function flFromLive() { if (!LIVE) { return; } $('#fl-json').value = JSON.stringify({ notices: LIVE.notices || [], maintenance: LIVE.maintenance || { on: false }, minVersion: LIVE.minVersion || {}, events: LIVE.events || [], flags: {} }, null, 1); }
 async function flSave() { let d; try { d = JSON.parse($('#fl-json').value); } catch (e) { $('#fl-msg').textContent = 'JSON 아님'; return; } try { await sv('PUT', '/v1/admin/flags', d); $('#fl-msg').textContent = '저장 — 판은 부팅·5분마다 받는다'; auLoad(); } catch (e) { $('#fl-msg').textContent = '실패: ' + e.message; } }
-async function mtLoad() { const r = await sv('GET', '/v1/admin/metrics?days=14'); $('#mt tbody').innerHTML = r.days.map((d) => `<tr><td>${d.day}</td><td>${d.dau}</td><td>${d.boots}</td><td>${d.newUsers}</td><td>${d.d1 == null ? '-' : d.d1 + '%'}</td><td>${d.purchases}</td><td>${d.revenue}</td><td class="${d.errors ? 'warn' : ''}">${d.errors}</td></tr>`).join(''); }
+async function mtLoad() { const ex = ($('#mt-exp') && $('#mt-exp').value.trim()) || ''; const r = await sv('GET', '/v1/admin/metrics?days=14' + (ex ? '&exp=' + encodeURIComponent(ex) : '')); $('#mt-ab').textContent = r.ab ? Object.keys(r.ab).map((b) => b + ': 사용자 ' + r.ab[b].users + ' · 구매 ' + r.ab[b].purchases + ' · 매출 ' + r.ab[b].revenue).join(' / ') || '배정 기록 없음' : ''; $('#mt tbody').innerHTML = r.days.map((d) => `<tr><td>${d.day}</td><td>${d.dau}</td><td>${d.boots}</td><td>${d.newUsers}</td><td>${d.d1 == null ? '-' : d.d1 + '%'}</td><td>${d.purchases}</td><td>${d.revenue}</td><td class="${d.errors ? 'warn' : ''}">${d.errors}</td></tr>`).join(''); }
 async function erLoad() { const r = await sv('GET', '/v1/admin/errors?q=' + encodeURIComponent($('#er-q').value.trim()) + '&limit=50'); $('#er tbody').innerHTML = r.errors.map((e) => `<tr><td>${when(e.t)}</td><td>${nm(e.game)}</td><td><code>${esc(e.uid)}</code></td><td><small>${esc(JSON.stringify(e.d))}</small></td></tr>`).join('') || '<tr><td colspan="4" class="muted">없음</td></tr>'; }
 async function auLoad() { const r = await sv('GET', '/v1/admin/audit?limit=50'); $('#au tbody').innerHTML = r.audit.map((a) => `<tr><td>${when(a.t)}</td><td>${esc(a.who)}</td><td>${esc(a.action)}</td><td><small>${esc(a.target)}</small></td><td><small>${esc(JSON.stringify(a.before)).slice(0, 80)}</small></td><td><small>${esc(JSON.stringify(a.after)).slice(0, 80)}</small></td></tr>`).join('') || '<tr><td colspan="6" class="muted">없음</td></tr>'; }
+async function suLoad() { const r = await sv('GET', '/v1/admin/suspects?limit=50'); $('#su tbody').innerHTML = r.suspects.map((x) => `<tr><td>${when(x.t)}</td><td><code>${esc(x.uid)}</code></td><td>${nm(x.game)}</td><td>${esc(x.rule)}</td><td><small>${esc(JSON.stringify(x.detail)).slice(0, 120)}</small></td></tr>`).join('') || '<tr><td colspan="5" class="muted">없음</td></tr>'; }
+async function adLoad() { if (!ME || ME.role !== 'owner') { $('#ad tbody').innerHTML = '<tr><td colspan="4" class="muted">owner 만 본다</td></tr>'; return; } const r = await sv('GET', '/v1/admin/admins'); $('#ad tbody').innerHTML = r.admins.map((a) => `<tr><td>${esc(a.who)}</td><td>${esc(a.role)}</td><td>${when(a.created)}</td><td>${a.last_use ? when(a.last_use) : '-'}</td></tr>`).join('') || '<tr><td colspan="4" class="muted">없음(환경 열쇠만)</td></tr>'; }
+async function adSet(rotate) { try { const r = await sv('PUT', '/v1/admin/admins', { who: $('#ad-who').value.trim(), role: $('#ad-role').value, rotate }); $('#ad-msg').textContent = r.key ? '열쇠(한 번만): ' + r.key : '등급 바꿈'; adLoad(); auLoad(); } catch (e) { $('#ad-msg').textContent = '실패: ' + e.message; } }
+async function adDel() { try { await sv('PUT', '/v1/admin/admins', { who: $('#ad-who').value.trim(), remove: true }); $('#ad-msg').textContent = '지움'; adLoad(); auLoad(); } catch (e) { $('#ad-msg').textContent = '실패: ' + e.message; } }
 if (SV.url) { svLoad(); }
 </script>
 </body>

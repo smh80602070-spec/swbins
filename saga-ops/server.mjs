@@ -12,6 +12,8 @@
  * 엔드포인트는 API.md 가 정본. 요약: 판 쪽 /v1/account/login · /v1/save/:game · /v1/events · /v1/flags · /v1/mail(/claim) · /v1/products · /v1/receipt
  *   운영 쪽(X-Admin-Key) /v1/admin/players · /v1/admin/players/:uid(save·events·mails) · /v1/admin/mail · /v1/admin/ban · /v1/admin/flags
  *   · /v1/admin/products · /v1/admin/receipts · /v1/admin/metrics · /v1/admin/errors · /v1/admin/audit
+ *   W-0334: 제재 종류(sanction — login·chat·trade·purchase) · 운영자 권한(admin 표 — viewer·operator·owner, /v1/admin/admins) ·
+ *   A/B 배정(flags.ab — uid 해시로 bucket 고정, 로그인 응답·이벤트 ab 칸·지표 ?exp=) · 치트 의심 기록(suspect — 세이브 값 급증·이벤트 과다, 표시만)
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -30,6 +32,7 @@ const DBP = arg('--db', process.env.OPS_DB || path.join(HERE, 'data', 'ops.db'))
 const ADMIN_KEY = process.env.OPS_ADMIN_KEY || crypto.randomBytes(12).toString('hex');
 const ORIGINS = (process.env.OPS_ORIGINS || '*').split(',').map((s) => s.trim());
 const GAMES = ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm'];
+const KINDS = ['login', 'chat', 'trade', 'purchase'], ROLES = ['viewer', 'operator', 'owner'];   // W-0334 ①②
 const SESSION_DAYS = 90, EVENT_D_MAX = 2048, EVENTS_BATCH = 200, SAVE_MAX = 2e6, BODY_MAX = 2.5e6;
 
 function loadDevVars(p) {
@@ -46,6 +49,8 @@ if (DBP !== ':memory:') { fs.mkdirSync(path.dirname(DBP), { recursive: true }); 
 const db = new DatabaseSync(DBP);
 db.exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON;');
 db.exec(fs.readFileSync(path.join(HERE, 'schema.sql'), 'utf8'));
+try { db.exec('ALTER TABLE event ADD COLUMN ab TEXT'); } catch (e) { /* 이미 있다 */ }   // W-0334 ③ 그때의 A/B 배정(JSON)
+db.exec("INSERT OR IGNORE INTO sanction(uid,kind,until,reason,created,by) SELECT uid,'login',until,reason,created,by FROM ban; DELETE FROM ban;");   // W-0334 ① 옛 정지 줄 → login 제재
 const q = (sql) => db.prepare(sql);
 const now = () => Date.now();
 const day = (ms) => new Date(ms).toISOString().slice(0, 10);
@@ -59,12 +64,16 @@ class Http extends Error { constructor(code, msg, extra) { super(msg); this.code
 const bad = (msg, extra) => new Http(400, msg, extra);
 
 /* ── 계정·세션 ── */
-function banOf(uid) {
-  const b = q('SELECT until, reason FROM ban WHERE uid=?').get(uid);
-  if (!b) { return null; }
-  if (b.until && b.until < now()) { q('DELETE FROM ban WHERE uid=?').run(uid); return null; }
-  return { until: b.until, reason: b.reason };
+/** 이 계정의 살아 있는 제재 { kind: { until, reason } } — 기한 지난 줄은 지운다 */
+function sanctionsOf(uid) {
+  const out = {}, t = now();
+  for (const b of q('SELECT kind, until, reason FROM sanction WHERE uid=?').all(uid)) {
+    if (b.until && b.until < t) { q('DELETE FROM sanction WHERE uid=? AND kind=?').run(uid, b.kind); continue; }
+    out[b.kind] = { until: b.until, reason: b.reason };
+  }
+  return out;
 }
+function banOf(uid) { return sanctionsOf(uid).login || null; }
 function login(body) {
   const device = String(body.device || '').trim(), game = String(body.game || '');
   if (!/^[A-Za-z0-9_-]{8,64}$/.test(device)) { throw bad('device 는 8~64자 [A-Za-z0-9_-]'); }
@@ -84,7 +93,8 @@ function login(body) {
   const token = 's_' + rid(24);
   q('INSERT INTO session(token,uid,created,expires) VALUES(?,?,?,?)').run(token, a.uid, t, t + SESSION_DAYS * 864e5);
   q('DELETE FROM session WHERE uid=? AND expires<?').run(a.uid, t);
-  return { uid: a.uid, token, expires: t + SESSION_DAYS * 864e5 };
+  const sc = sanctionsOf(a.uid); delete sc.login;
+  return { uid: a.uid, token, expires: t + SESSION_DAYS * 864e5, sanctions: sc, ab: abOf(a.uid) };   // W-0334 chat·trade·purchase 는 판이 따른다 · A/B 칸
 }
 function auth(req, body) {
   const token = req.headers['x-session'] || (body && body.token) || '';
@@ -95,13 +105,54 @@ function auth(req, body) {
   q('UPDATE account SET last_seen=? WHERE uid=?').run(now(), s.uid);
   return s.uid;
 }
+/** 운영자 — 환경 열쇠(OPS_ADMIN_KEY)는 처음 시작용 owner(이름은 X-Admin-Who). 그 밖엔 admin 표의 열쇠 해시로 이름·등급을 안다 */
 function admin(req) {
-  const k = req.headers['x-admin-key'] || '';
-  if (!k || !safeEq(String(k), ADMIN_KEY)) { throw new Http(401, '운영 열쇠(X-Admin-Key) 틀림'); }
-  return String(req.headers['x-admin-who'] || 'admin').slice(0, 40);
+  const k = String(req.headers['x-admin-key'] || '');
+  if (!k) { throw new Http(401, '운영 열쇠(X-Admin-Key) 틀림'); }
+  if (safeEq(k, ADMIN_KEY)) { let w = String(req.headers['x-admin-who'] || 'admin'); try { w = decodeURIComponent(w); } catch (e) { /* 그대로 */ }   // 헤더는 라틴 글자만 — 콘솔이 한글 이름을 인코딩해 보낸다
+    return { who: w.slice(0, 40), role: 'owner' }; }
+  const row = q('SELECT who, role FROM admin WHERE key_hash=?').get(keyHash(k));
+  if (!row) { throw new Http(401, '운영 열쇠(X-Admin-Key) 틀림'); }
+  q('UPDATE admin SET last_use=? WHERE who=?').run(now(), row.who);
+  return { who: row.who, role: row.role };
 }
+const keyHash = (k) => crypto.createHash('sha256').update(String(k)).digest('hex');
+/** 등급 문턱 — viewer < operator < owner */
+function need(me, role) { if (ROLES.indexOf(me.role) < ROLES.indexOf(role)) { throw new Http(403, role + ' 이상만(지금 ' + me.role + ')'); } return me.who; }
 const safeEq = (a, b) => a.length === b.length && crypto.timingSafeEqual(Buffer.from(a), Buffer.from(b));
 const gameOf = (s) => { if (!GAMES.includes(s)) { throw bad('game 이 다섯 판이 아님'); } return s; };
+
+/* ── W-0334 ③ A/B — flags.ab = { 실험: { buckets:['A','B'], ratio:[50,50] } }. uid+실험 해시(0~99)로 늘 같은 칸 ── */
+function abOf(uid) {
+  const ab = flagsDoc().ab || {}, out = {};
+  for (const k of Object.keys(ab)) {
+    const e = ab[k] || {}, b = Array.isArray(e.buckets) && e.buckets.length ? e.buckets : ['A', 'B'], r = Array.isArray(e.ratio) && e.ratio.length === b.length ? e.ratio : b.map(() => 100 / b.length);
+    const h = crypto.createHash('sha256').update(uid + ':' + k).digest().readUInt32BE(0) % 100, sum = r.reduce((a, x) => a + (+x || 0), 0) || 1;
+    let acc = 0, pick = b[b.length - 1];
+    for (let i = 0; i < b.length; i++) { acc += (+r[i] || 0) * 100 / sum; if (h < acc) { pick = b[i]; break; } }
+    out[k] = pick;
+  }
+  return out;
+}
+
+/* ── W-0334 ④ 치트 의심 — 기록만. 세이브: 금류(gold·gem·coin·money·cash·jewel) 칸이 한 번에 max(10만, 10배) 넘게 · 레벨류(level·lv) 칸이 30 넘게 오름 ── */
+const MONEY_RE = /gold|gem|coin|money|cash|jewel/i, LEVEL_RE = /^(level|lv)$/i;
+function numsOf(o, pre, out, depth) {
+  if (depth > 6 || o == null || typeof o !== 'object') { return out; }
+  for (const k of Object.keys(o).slice(0, 400)) { const v = o[k], p = pre ? pre + '.' + k : k; if (typeof v === 'number' && isFinite(v) && (MONEY_RE.test(k) || LEVEL_RE.test(k))) { out[p] = v; } else if (v && typeof v === 'object') { numsOf(v, p, out, depth + 1); } }
+  return out;
+}
+function saveJumps(prev, next) {
+  const a = numsOf(prev, '', {}, 0), b = numsOf(next, '', {}, 0), hits = [];
+  for (const p of Object.keys(b)) {
+    const was = a[p] || 0, d = b[p] - was, key = p.split('.').pop();
+    if (MONEY_RE.test(key) && d > Math.max(1e5, was * 10)) { hits.push({ path: p, from: was, to: b[p] }); }
+    else if (LEVEL_RE.test(key) && d > 30) { hits.push({ path: p, from: was, to: b[p] }); }
+  }
+  return hits.slice(0, 10);
+}
+const suspect = (uid, game, rule, detail) => q('INSERT INTO suspect(uid,game,t,rule,detail) VALUES(?,?,?,?,?)').run(uid, game, now(), rule, JSON.stringify(detail).slice(0, 2000));
+const EVENTS_PER_MIN = 300;
 
 /* ── 판 쪽 ── */
 function flagsFor(game) {
@@ -118,13 +169,15 @@ function flagsFor(game) {
 function postEvents(uid, body) {
   const list = Array.isArray(body.events) ? body.events.slice(0, EVENTS_BATCH) : [];
   const game = gameOf(String(body.game || ''));
-  const ins = q('INSERT INTO event(uid,game,t,day,ev,d) VALUES(?,?,?,?,?,?)');
-  let n = 0; const t0 = now();
+  const ins = q('INSERT INTO event(uid,game,t,day,ev,d,ab) VALUES(?,?,?,?,?,?,?)');
+  let n = 0; const t0 = now(), abs = abOf(uid), abJ = Object.keys(abs).length ? JSON.stringify(abs) : null;
+  const recent = q('SELECT COUNT(*) n FROM event WHERE uid=? AND t>?').get(uid, t0 - 6e4).n;
+  if (recent + list.length > EVENTS_PER_MIN && !q('SELECT 1 FROM suspect WHERE uid=? AND rule=? AND t>?').get(uid, 'events.rate', t0 - 6e4)) { suspect(uid, game, 'events.rate', { perMin: recent + list.length }); }
   for (const e of list) {
     if (!e || !e.ev) { continue; }
     const t = (typeof e.t === 'number' && e.t > 0 && e.t < t0 + 864e5) ? e.t : t0;
     let d = e.d == null ? null : JSON.stringify(e.d); if (d && d.length > EVENT_D_MAX) { d = d.slice(0, EVENT_D_MAX); }
-    ins.run(uid, game, t, day(t0), String(e.ev).slice(0, 48), d); n++;
+    ins.run(uid, game, t, day(t0), String(e.ev).slice(0, 48), d, abJ); n++;
   }
   return { ok: true, n };
 }
@@ -190,6 +243,7 @@ async function googleToken(sa) {
 }
 async function receipt(uid, body) {
   const game = gameOf(String(body.game || '')), provider = String(body.provider || ''), p = body.payload || {};
+  const sp = sanctionsOf(uid).purchase; if (sp) { throw new Http(403, '구매 제한 계정', { sanction: { kind: 'purchase', ...sp } }); }   // W-0334 ①
   if (!PAY[provider]) { throw bad('provider 는 toss|google|apple|mock'); }
   const orderId = String(p.orderId || p.purchaseToken || '').slice(0, 200); if (!orderId) { throw bad('orderId(또는 purchaseToken) 필요'); }
   const dup = q('SELECT id,status,mail_id FROM receipt WHERE provider=? AND order_id=?').get(provider, orderId);
@@ -213,12 +267,13 @@ const A = {
     const s = (u.searchParams.get('q') || '').trim(), lim = Math.min(+u.searchParams.get('limit') || 50, 200);
     const rows = s ? q('SELECT * FROM account WHERE uid LIKE ? OR device LIKE ? OR email LIKE ? ORDER BY last_seen DESC LIMIT ?').all('%' + s + '%', '%' + s + '%', '%' + s + '%', lim)
       : q('SELECT * FROM account ORDER BY last_seen DESC LIMIT ?').all(lim);
-    return { players: rows.map((a) => ({ ...a, games: J(a.games, []), ban: banOf(a.uid) })), total: q('SELECT COUNT(*) n FROM account').get().n };
+    return { players: rows.map((a) => ({ ...a, games: J(a.games, []), ban: banOf(a.uid), sanctions: sanctionsOf(a.uid), suspects: q('SELECT COUNT(*) n FROM suspect WHERE uid=?').get(a.uid).n })), total: q('SELECT COUNT(*) n FROM account').get().n };
   },
   player(uid) {
     const a = q('SELECT * FROM account WHERE uid=?').get(uid); if (!a) { throw new Http(404, '계정 없음'); }
     return {
-      account: { ...a, games: J(a.games, []) }, ban: banOf(uid),
+      account: { ...a, games: J(a.games, []) }, ban: banOf(uid), sanctions: sanctionsOf(uid), ab: abOf(uid),
+      suspects: q('SELECT id,game,t,rule,detail FROM suspect WHERE uid=? ORDER BY id DESC LIMIT 50').all(uid).map((x) => ({ ...x, detail: J(x.detail, null) })),
       saves: q('SELECT game,rev,updated,length(data) bytes FROM save WHERE uid=?').all(uid),
       mails: q('SELECT * FROM mail WHERE uid=? ORDER BY id DESC LIMIT 50').all(uid).map((m) => ({ ...m, items: J(m.items, []) })),
       receipts: q('SELECT id,game,provider,order_id,product_id,amount,status,created FROM receipt WHERE uid=? ORDER BY id DESC LIMIT 50').all(uid),
@@ -245,20 +300,35 @@ const A = {
     audit(who, 'mail.send', game, null, { n: out.length, title: body.title, items, all: !!body.all });
     return { ok: true, n: out.length, ids: out.slice(0, 20) };
   },
+  /** 제재 — kind(login 기본·chat·trade·purchase). login 만 세션을 끊는다. 응답 ban 은 login 제재(옛 꼴), sanctions 는 전부 */
   ban(who, body) {
     const uid = String(body.uid || ''); if (!q('SELECT 1 FROM account WHERE uid=?').get(uid)) { throw new Http(404, '계정 없음'); }
-    const before = banOf(uid);
-    if (body.lift) { q('DELETE FROM ban WHERE uid=?').run(uid); audit(who, 'ban.lift', uid, before, null); return { ok: true, ban: null }; }
+    const kind = String(body.kind || 'login'); if (!KINDS.includes(kind)) { throw bad('kind 는 ' + KINDS.join('|')); }
+    const before = sanctionsOf(uid)[kind] || null, act = kind === 'login' ? 'ban' : 'sanction.' + kind;
+    if (body.lift) { q('DELETE FROM sanction WHERE uid=? AND kind=?').run(uid, kind); audit(who, act + '.lift', uid, before, null); return { ok: true, ban: banOf(uid), sanctions: sanctionsOf(uid) }; }
     const until = body.days ? now() + (+body.days) * 864e5 : (body.until || null);
-    q('INSERT INTO ban(uid,until,reason,created,by) VALUES(?,?,?,?,?) ON CONFLICT(uid) DO UPDATE SET until=excluded.until, reason=excluded.reason, created=excluded.created, by=excluded.by').run(uid, until, String(body.reason || '').slice(0, 200), now(), who);
-    q('DELETE FROM session WHERE uid=?').run(uid);
-    const after = banOf(uid); audit(who, 'ban.set', uid, before, after); return { ok: true, ban: after };
+    q('INSERT INTO sanction(uid,kind,until,reason,created,by) VALUES(?,?,?,?,?,?) ON CONFLICT(uid,kind) DO UPDATE SET until=excluded.until, reason=excluded.reason, created=excluded.created, by=excluded.by').run(uid, kind, until, String(body.reason || '').slice(0, 200), now(), who);
+    if (kind === 'login') { q('DELETE FROM session WHERE uid=?').run(uid); }
+    const sc = sanctionsOf(uid); audit(who, act + '.set', uid, before, sc[kind]); return { ok: true, ban: banOf(uid), sanctions: sc };
   },
+  /** 운영자 표(owner) — { who, role } 만들면 열쇠를 한 번만 돌려준다 · { who, remove:true } 지움 */
+  admins() { return { admins: q('SELECT who, role, created, last_use FROM admin ORDER BY who').all() }; },
+  adminSet(who, body) {
+    const name = String(body.who || '').trim(); if (!/^[A-Za-z0-9_.\-가-힣]{2,40}$/.test(name)) { throw bad('who 는 2~40자'); }
+    const before = q('SELECT who, role FROM admin WHERE who=?').get(name) || null;
+    if (body.remove) { q('DELETE FROM admin WHERE who=?').run(name); audit(who, 'admin.remove', name, before, null); return { ok: true }; }
+    const role = String(body.role || ''); if (!ROLES.includes(role)) { throw bad('role 은 ' + ROLES.join('|')); }
+    let key = null;
+    if (!before || body.rotate) { key = 'ak_' + rid(24); q('INSERT INTO admin(who,role,key_hash,created) VALUES(?,?,?,?) ON CONFLICT(who) DO UPDATE SET role=excluded.role, key_hash=excluded.key_hash').run(name, role, keyHash(key), now()); }
+    else { q('UPDATE admin SET role=? WHERE who=?').run(role, name); }
+    audit(who, 'admin.set', name, before, { who: name, role, rotated: !!key }); return { ok: true, who: name, role, key };
+  },
+  suspects(u) { const lim = Math.min(+u.searchParams.get('limit') || 100, 500); return { suspects: q('SELECT id,uid,game,t,rule,detail FROM suspect ORDER BY id DESC LIMIT ?').all(lim).map((x) => ({ ...x, detail: J(x.detail, null) })) }; },
   flagsSet(who, body) {
     const d = body && typeof body === 'object' ? body : null; if (!d) { throw bad('객체가 아님'); }
     if (!Array.isArray(d.notices || [])) { throw bad('notices 배열'); }
     for (const n of d.notices || []) { if (!n || !n.id || !n.title) { throw bad('공지엔 id·title'); } }
-    const doc = { notices: d.notices || [], maintenance: d.maintenance || { on: false, msg: '', games: [] }, minVersion: d.minVersion || {}, events: d.events || [], flags: d.flags || {} };
+    const doc = { notices: d.notices || [], maintenance: d.maintenance || { on: false, msg: '', games: [] }, minVersion: d.minVersion || {}, events: d.events || [], flags: d.flags || {}, ab: d.ab && typeof d.ab === 'object' ? d.ab : {} };
     const before = flagsDoc();
     q('INSERT INTO flag(key,value,updated) VALUES(?,?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value, updated=excluded.updated').run('live', JSON.stringify(doc), now());
     audit(who, 'flags.set', 'live', before, doc); return { ok: true, flags: doc };
@@ -288,7 +358,14 @@ const A = {
       const back = cohort ? q('SELECT COUNT(DISTINCT e.uid) n FROM event e JOIN account a ON a.uid=e.uid WHERE e.day=? AND a.created>=? AND a.created<?').get(d, Date.parse(prev), Date.parse(prev) + 864e5).n : 0;
       out.push({ day: d, dau, boots, errors, newUsers: newU, revenue: rev.s, purchases: rev.n, d1: cohort ? Math.round(100 * back / cohort) : null });
     }
-    return { days: out, totals: { accounts: q('SELECT COUNT(*) n FROM account').get().n, revenue: q("SELECT COALESCE(SUM(amount),0) s FROM receipt WHERE status='ok'").get().s } };
+    const exp = u.searchParams.get('exp'); let ab = null;
+    if (exp) {   // W-0334 ③ — DAU 는 이벤트에 찍힌 그때 칸, 매출은 지금 배정(uid 해시라 같은 비율이면 같다)
+      ab = {}; const since = Date.parse(day(now() - (days - 1) * 864e5));
+      for (const e of q('SELECT DISTINCT uid, ab FROM event WHERE t>=? AND ab IS NOT NULL' + (game ? ' AND game=?' : '')).all(since, ...(game ? [game] : []))) { const b = (J(e.ab, {}) || {})[exp]; if (!b) { continue; } (ab[b] = ab[b] || { users: new Set(), revenue: 0, purchases: 0 }).users.add(e.uid); }
+      for (const r of q("SELECT uid, amount FROM receipt WHERE status='ok' AND created>=?" + (game ? ' AND game=?' : '')).all(since, ...(game ? [game] : []))) { const b = abOf(r.uid)[exp]; if (!b) { continue; } const x = (ab[b] = ab[b] || { users: new Set(), revenue: 0, purchases: 0 }); x.revenue += r.amount; x.purchases++; }
+      for (const k of Object.keys(ab)) { ab[k] = { users: ab[k].users.size, revenue: ab[k].revenue, purchases: ab[k].purchases }; }
+    }
+    return { days: out, ab, totals: { accounts: q('SELECT COUNT(*) n FROM account').get().n, revenue: q("SELECT COALESCE(SUM(amount),0) s FROM receipt WHERE status='ok'").get().s } };
   },
   errors(u) {
     const s = (u.searchParams.get('q') || '').trim(), lim = Math.min(+u.searchParams.get('limit') || 100, 500);
@@ -320,7 +397,12 @@ async function route(req, res) {
   if (p === '/v1/health') { return json(res, 200, { ok: true, at: now(), version: 1, db: DBP === ':memory:' ? 'memory' : 'file', pay: { mock: process.env.OPS_PAY_MOCK === '1', toss: !!process.env.TOSS_SECRET_KEY, google: !!process.env.GOOGLE_PLAY_SA_JSON } }); }
   if (seg[0] !== 'v1') { throw new Http(404, '없는 길'); }
   if (seg[1] === 'admin') {
-    const who = admin(req), k = seg[2], id = seg[3] ? decodeURIComponent(seg[3]) : null;
+    const me = admin(req), k = seg[2], id = seg[3] ? decodeURIComponent(seg[3]) : null;
+    /* W-0334 ② — 읽기(GET)는 viewer, 쓰기는 operator, 상품·플래그·운영자 쓰기는 owner */
+    const who = need(me, m === 'GET' ? 'viewer' : (['products', 'flags', 'admins'].includes(k) ? 'owner' : 'operator'));
+    if (k === 'admins') { need(me, 'owner'); if (m === 'GET') { return json(res, 200, A.admins()); } if (m === 'PUT') { return json(res, 200, A.adminSet(who, body)); } }
+    if (k === 'whoami' && m === 'GET') { return json(res, 200, me); }
+    if (k === 'suspects' && m === 'GET') { return json(res, 200, A.suspects(u)); }
     if (k === 'players' && m === 'GET' && !id) { return json(res, 200, A.players(u)); }
     if (k === 'players' && id && !seg[4] && m === 'GET') { return json(res, 200, A.player(id)); }
     if (k === 'players' && id && seg[4] === 'save' && seg[5] && m === 'GET') { return json(res, 200, A.save(id, seg[5])); }
@@ -348,10 +430,11 @@ async function route(req, res) {
   if (seg[1] === 'events' && m === 'POST') { return json(res, 200, postEvents(uid, body)); }
   if (seg[1] === 'save' && seg[2] && m === 'GET') { const s = q('SELECT rev,data,updated FROM save WHERE uid=? AND game=?').get(uid, gameOf(seg[2])); return json(res, 200, s ? { rev: s.rev, updated: s.updated, data: J(s.data, null) } : { rev: 0, data: null }); }
   if (seg[1] === 'save' && seg[2] && m === 'PUT') {
-    const game = gameOf(seg[2]), cur = q('SELECT rev FROM save WHERE uid=? AND game=?').get(uid, game), rev = cur ? cur.rev : 0;
+    const game = gameOf(seg[2]), cur = q('SELECT rev, data FROM save WHERE uid=? AND game=?').get(uid, game), rev = cur ? cur.rev : 0;
     if (body.rev != null && +body.rev !== rev) { return json(res, 409, { ok: false, why: '서버 rev 가 다름(다른 기기가 올림) — GET 으로 받아 고르기', rev }); }
     const data = JSON.stringify(body.data == null ? null : body.data); if (data.length > SAVE_MAX) { throw bad('세이브 너무 큼'); }
     q('INSERT INTO save(uid,game,rev,data,updated) VALUES(?,?,?,?,?) ON CONFLICT(uid,game) DO UPDATE SET rev=excluded.rev, data=excluded.data, updated=excluded.updated').run(uid, game, rev + 1, data, now());
+    if (cur) { const hits = saveJumps(J(cur.data, null), body.data); if (hits.length) { suspect(uid, game, 'save.jump', { rev: rev + 1, hits }); } }   // W-0334 ④ 기록만
     return json(res, 200, { ok: true, rev: rev + 1 });
   }
   if (seg[1] === 'mail' && !seg[2] && m === 'GET') { return json(res, 200, { mails: mailList(uid, gameOf(u.searchParams.get('game') || '')) }); }

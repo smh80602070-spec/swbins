@@ -126,6 +126,7 @@
  ],
  "test": [
   [
+   "js/ops-client.js",
    "js/vendor/three.iife.js",
    "js/vendor/RGBELoader.js"
   ],

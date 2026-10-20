@@ -108,6 +108,62 @@ try {
   const acts = r.j ? r.j.audit.map((a) => a.action) : [];
   t('감사 로그 6 + 전후 기록', ['product.set', 'flags.set', 'mail.send', 'save.edit', 'ban.set', 'ban.lift'].every((a) => acts.includes(a)) && r.j.audit.find((a) => a.action === 'save.edit').before.gold === 10 && r.j.audit.every((a) => a.who === 'tester'), acts.join(','));
   t('없는 길 404', (await call('GET', '/v1/nope')).code === 404);
+
+  /* ── W-0334 ① 제재 종류 ── */
+  r = await call('POST', '/v1/admin/ban', { uid, kind: 'chat', days: 1, reason: '욕설' }, adm); t('채팅 제재', r.j && r.j.sanctions && r.j.sanctions.chat && r.j.ban === null);
+  r = await call('POST', '/v1/account/login', { device: 'dev_test_0001', game: 'saga-go' }); t('채팅 제재는 login 됨 + 응답에 sanctions.chat', r.code === 200 && r.j.sanctions && r.j.sanctions.chat && r.j.sanctions.chat.reason === '욕설');
+  const S2 = { 'X-Session': r.j.token };
+  r = await call('POST', '/v1/admin/ban', { uid, kind: 'purchase', reason: '환불 악용' }, adm); t('구매 제재', r.j && r.j.sanctions.purchase);
+  r = await call('POST', '/v1/receipt', { game: 'saga-go', provider: 'mock', productId: 'go_gem_100', payload: { orderId: 'ord_9', amount: 1200 } }, S2); t('구매 제재면 영수증 403', r.code === 403 && r.j.sanction && r.j.sanction.kind === 'purchase');
+  r = await call('POST', '/v1/admin/ban', { uid, kind: 'purchase', lift: true }, adm); t('구매 제재 해제(채팅은 남음)', r.j && !r.j.sanctions.purchase && r.j.sanctions.chat);
+  r = await call('POST', '/v1/receipt', { game: 'saga-go', provider: 'mock', productId: 'go_gem_100', payload: { orderId: 'ord_9', amount: 1200 } }, S2); t('해제 뒤 영수증 ok', r.j && r.j.ok);
+  t('없는 제재 종류 400', (await call('POST', '/v1/admin/ban', { uid, kind: 'nope' }, adm)).code === 400);
+
+  /* ── W-0334 ② 권한 등급 ── */
+  r = await call('PUT', '/v1/admin/admins', { who: 'viewer1', role: 'viewer' }, adm); const vk = r.j && r.j.key; t('owner 가 viewer 만듦 → 열쇠 한 번', r.code === 200 && /^ak_/.test(vk || ''));
+  r = await call('PUT', '/v1/admin/admins', { who: 'op1', role: 'operator' }, adm); const ok1 = r.j && r.j.key;
+  const V = { 'X-Admin-Key': vk }, O = { 'X-Admin-Key': ok1 };
+  r = await call('GET', '/v1/admin/whoami', null, V); t('whoami = viewer1·viewer(이름은 표에서 — 머리 이름 무시)', r.j && r.j.who === 'viewer1' && r.j.role === 'viewer');
+  t('viewer 읽기 200', (await call('GET', '/v1/admin/players', null, V)).code === 200);
+  t('viewer 쓰기(우편) 403', (await call('POST', '/v1/admin/mail', { uids: [uid], game: 'saga-go', title: 'x' }, V)).code === 403);
+  r = await call('POST', '/v1/admin/mail', { uids: [uid], game: 'saga-go', title: '운영자 우편' }, O); t('operator 우편 200', r.code === 200);
+  t('operator 플래그 쓰기 403(owner 만)', (await call('PUT', '/v1/admin/flags', { notices: [] }, O)).code === 403);
+  t('operator 운영자 표 403', (await call('GET', '/v1/admin/admins', null, O)).code === 403);
+  r = await call('GET', '/v1/admin/admins', null, adm); t('운영자 표엔 해시 없음', r.j && r.j.admins.length === 2 && r.j.admins.every((a) => !('key_hash' in a)));
+  r = await call('PUT', '/v1/admin/admins', { who: 'viewer1', remove: true }, adm); t('지운 열쇠 401', (await call('GET', '/v1/admin/players', null, V)).code === 401);
+  r = await call('GET', '/v1/admin/audit', null, adm); t('감사 로그 행위자 = 운영자 이름', r.j && r.j.audit.some((a) => a.action === 'mail.send' && a.who === 'op1'));
+
+  /* ── W-0334 ③ A/B ── */
+  const fl = (await call('GET', '/v1/admin/flags', null, adm)).j.flags;
+  r = await call('PUT', '/v1/admin/flags', { ...fl, ab: { shop: { buckets: ['A', 'B'], ratio: [50, 50] } } }, adm); t('A/B 실험 저장', r.code === 200 && r.j.flags.ab.shop);
+  r = await call('POST', '/v1/account/login', { device: 'dev_test_0001', game: 'saga-go' }); const b1 = r.j.ab && r.j.ab.shop;
+  const r3 = await call('POST', '/v1/account/login', { device: 'dev_test_0001', game: 'saga-go' }); t('login 에 ab — 같은 uid 는 늘 같은 칸', ['A', 'B'].includes(b1) && r3.j.ab.shop === b1, b1);
+  const S3 = { 'X-Session': r.j.token };
+  const bs = new Set(); for (let i = 0; i < 12; i++) { const x = await call('POST', '/v1/account/login', { device: 'dev_ab_' + String(i).padStart(4, '0'), game: 'saga-go' }); bs.add(x.j.ab.shop); }
+  t('여러 계정이면 두 칸 다 나옴', bs.size === 2, [...bs].join(','));
+  await call('POST', '/v1/events', { game: 'saga-go', events: [{ ev: 'boot' }] }, S3);
+  r = await call('GET', '/v1/admin/metrics?days=1&exp=shop', null, adm); t('지표 bucket 별(DAU·매출)', r.j && r.j.ab && r.j.ab[b1] && r.j.ab[b1].users >= 1 && r.j.ab[b1].revenue >= 1200, JSON.stringify(r.j && r.j.ab));
+
+  /* ── W-0334 ④ 치트 의심(기록만) ── */
+  const sv = (await call('GET', '/v1/save/saga-go', null, S3)).j;
+  r = await call('PUT', '/v1/save/saga-go', { data: { player: { gold: 9999999, level: 99 } }, rev: sv.rev }, S3); t('세이브 금·레벨 급증도 올라간다(막지 않음)', r.j && r.j.ok);
+  const many = []; for (let i = 0; i < 199; i++) { many.push({ ev: 'tick' }); }
+  await call('POST', '/v1/events', { game: 'saga-go', events: many }, S3); await call('POST', '/v1/events', { game: 'saga-go', events: many }, S3);
+  r = await call('GET', '/v1/admin/suspects', null, adm); const rules = r.j ? r.j.suspects.map((x) => x.rule) : [];
+  t('의심 기록 save.jump·events.rate', rules.includes('save.jump') && rules.includes('events.rate') && r.j.suspects.find((x) => x.rule === 'save.jump').detail.hits.length === 2, rules.join(','));
+  r = await call('GET', `/v1/admin/players/${uid}`, null, adm); t('플레이어 상세에 의심·제재·ab', r.j && r.j.suspects.length >= 2 && r.j.sanctions.chat && r.j.ab.shop === b1);
+  t('자동 제재 없음(의심이어도 login)', (await call('POST', '/v1/account/login', { device: 'dev_test_0001', game: 'saga-go' })).code === 200);
+
+  /* ── W-0334 ⑥ 백업 — 임시 파일 DB 에 표를 세우고 backup.mjs 를 돌려 사본이 열리는지 ── */
+  {
+    const os = await import('node:os'), fs = await import('node:fs'), { DatabaseSync } = await import('node:sqlite'), { execFileSync } = await import('node:child_process');
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'opsbk-')), dbp = path.join(dir, 'ops.db');
+    const d = new DatabaseSync(dbp); d.exec(fs.readFileSync(path.join(HERE, 'schema.sql'), 'utf8')); d.prepare('INSERT INTO account(uid,device,created,last_seen) VALUES(?,?,?,?)').run('u_bk', 'dev_backup_01', 1, 1); d.close();
+    const o = execFileSync(process.execPath, [path.join(HERE, 'backup.mjs'), '--db', dbp], { encoding: 'utf8' });
+    const f = (/OPS-BACKUP OK (.+) \d+/.exec(o) || [])[1], ok = !!f && fs.existsSync(f.trim()) && /계정 1/.test(o);
+    t('백업 사본(VACUUM INTO)이 열리고 계정이 있다', ok, o.trim().split('\n').pop());
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
 } catch (e) {
   t('예외 없음', false, String(e && e.stack || e).slice(0, 300) + '\n' + log.slice(-300));
 } finally {

@@ -190,6 +190,7 @@
    "js/mode2d.js",
    "js/actor2d.js",
    "js/core.js",
+   "js/ops-client.js",
    "js/assets3d-ids.js",
    "js/itemicon-ids.js",
    "js/itemicon.js",

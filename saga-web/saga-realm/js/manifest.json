@@ -111,6 +111,7 @@
    "js/data-quiz.js",
    "js/sprite.js",
    "js/core.js",
+   "js/ops-client.js",
    "js/assets3d-ids.js",
    "js/itemicon-ids.js",
    "js/itemicon.js",

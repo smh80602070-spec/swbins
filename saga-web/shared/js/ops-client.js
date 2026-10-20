@@ -38,8 +38,8 @@
     var st = doc.createElement('style'); st.id = 'ops-css';
     st.textContent = '#ops-band{position:fixed;left:0;right:0;top:0;z-index:9000;padding:6px 12px;font:14px/1.4 sans-serif;color:#fff;background:#8a2d2d;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.4)}' +
       '#ops-band.ver{background:#2d5a8a}#ops-band button{margin-left:10px;padding:2px 10px;border:1px solid #fff;border-radius:4px;background:transparent;color:#fff;cursor:pointer}' +
-      '#ops-card,#ops-mail{position:fixed;left:50%;top:14%;transform:translateX(-50%);z-index:9001;width:min(92vw,420px);padding:14px 16px;border:1px solid #c9a86a;border-radius:8px;background:#1d1a16;color:#f1e8d6;font:14px/1.5 sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.6)}' +
-      '#ops-card h3,#ops-mail h3{margin:0 0 6px;font-size:16px;color:#f3d79a}#ops-card p{margin:0 0 10px;white-space:pre-wrap}#ops-card button,#ops-mail button{float:right;padding:4px 14px;border:1px solid #c9a86a;border-radius:4px;background:#3a3025;color:#f1e8d6;cursor:pointer}' +
+      '#ops-card,#ops-sync,#ops-mail{position:fixed;left:50%;top:14%;transform:translateX(-50%);z-index:9001;width:min(92vw,420px);padding:14px 16px;border:1px solid #c9a86a;border-radius:8px;background:#1d1a16;color:#f1e8d6;font:14px/1.5 sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.6)}' +
+      '#ops-sync button{margin:4px 6px 0 0;padding:4px 12px;border:1px solid #c9a86a;border-radius:4px;background:#3a3025;color:#f1e8d6;cursor:pointer}#ops-sync p{margin:0 0 8px}#ops-card h3,#ops-sync h3,#ops-mail h3{margin:0 0 6px;font-size:16px;color:#f3d79a}#ops-card p{margin:0 0 10px;white-space:pre-wrap}#ops-card button,#ops-mail button{float:right;padding:4px 14px;border:1px solid #c9a86a;border-radius:4px;background:#3a3025;color:#f1e8d6;cursor:pointer}' +
       '#ops-mail ul{list-style:none;margin:0 0 8px;padding:0;max-height:40vh;overflow:auto}#ops-mail li{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid #3a3025}#ops-mail li button{float:none;padding:2px 10px}#ops-mail small{color:#b9a98a}';
     doc.head.appendChild(st);
   }
@@ -106,7 +106,7 @@
     var s = lsGet(SESS_KEY);
     if (s && s.token && s.expires > Date.now() + 864e5) { sess = s; return Promise.resolve(sess); }
     return api('POST', '/v1/account/login', { device: deviceId(), game: GAME }).then(function (r) {
-      if (r.ok && r.j && r.j.token) { sess = { uid: r.j.uid, token: r.j.token, expires: r.j.expires }; lsSet(SESS_KEY, sess); banned = null; return sess; }
+      if (r.ok && r.j && r.j.token) { sess = { uid: r.j.uid, token: r.j.token, expires: r.j.expires, sanctions: r.j.sanctions || {}, ab: r.j.ab || {} }; lsSet(SESS_KEY, sess); banned = null; return sess; }   // W-0334 제재(chat·trade·purchase)·A/B 칸도 받아 둔다
       return null;
     });
   }
@@ -186,7 +186,7 @@
       track('boot', { v: mine, w: global.innerWidth, h: global.innerHeight, m: global.matchMedia && global.matchMedia('(pointer:coarse)').matches ? 1 : 0 });
       while (timers.length) { global.clearInterval(timers.pop()); }
       timers.push(global.setInterval(flush, 30000), global.setInterval(pullFlags, 300000), global.setInterval(pullMail, 180000));
-      return pullFlags().then(flush).then(pullMail).then(function () { return s; });
+      return pullFlags().then(flush).then(pullMail).then(startSync).then(function () { return s; });   // W-0334 ⑤ 세이브 동기화는 우편 뒤
     }).catch(function () { return null; });
   }
   function refresh() {
@@ -206,12 +206,72 @@
   function saveUp(data, rev) { return api('PUT', '/v1/save/' + GAME, rev == null ? { data: data } : { data: data, rev: rev }).then(function (r) { return r.j; }); }
   function saveDown() { return api('GET', '/v1/save/' + GAME).then(function (r) { return r.ok ? r.j : null; }); }
 
+  /* ── W-0334 ⑤ 세이브 자동 동기화 — 판 코드 수정 없이: 서버에 붙으면 DG.core.persist 를 감싸 저장 뒤 30초 묶음으로 올린다.
+     올리는 꼴 { k: 세이브 키(프로필), s: 세이브 } · 이 기기가 아는 서버 rev 는 localStorage(REV_KEY) · 판이 직접 주려면 DG.ops.onSave(fn) */
+  var REV_KEY = 'saga-ops/rev/' + GAME, SYNC_MS = 30000, syncT = null, getSave = null, syncOn = false, restoring = false;
+  /** 부팅 때 고르기(순수) — 서버에 없으면 올림 · 서버 rev 가 이 기기가 아는 것보다 크고 같은 프로필이면 물음 · 아니면 그대로 */
+  function syncDecision(localRev, serverRev, sameKey, hasData) {
+    if (!serverRev || !hasData) { return 'upload'; }
+    if (!sameKey) { return 'none'; }
+    return serverRev > (localRev || 0) ? 'ask' : 'none';
+  }
+  function curSave() { var C = global.DG.core; if (getSave) { return getSave(); } return C && C.save ? { k: C.SAVE_KEY, s: C.save } : null; }
+  function pushSave() {
+    syncT = null;
+    var d = curSave(); if (!d || !sess) { return Promise.resolve(null); }
+    return saveUp(d, lsGet(REV_KEY) || 0).then(function (j) {
+      if (j && j.ok) { lsSet(REV_KEY, j.rev); return j; }
+      if (j && j.rev != null) { return saveDown().then(function (sv) { if (sv) { askRestore(sv); } return j; }); }   // 409 — 다른 기기가 먼저 올렸다
+      return j;
+    }).catch(function () { return null; });
+  }
+  function schedule() { if (!syncOn || syncT) { return; } syncT = global.setTimeout(pushSave, SYNC_MS); }
+  function hookPersist() {
+    var C = global.DG.core; if (!C || !C.persist || C.persist._opsSync) { return; }
+    var orig = C.persist, w = function () { if (restoring) { return; } var r = orig.apply(this, arguments); schedule(); return r; };   // 서버 세이브로 갈아타는 동안은 막는다
+    w._opsSync = true; C.persist = w;
+  }
+  function askRestore(sv) {
+    if (!doc.body || doc.getElementById('ops-sync')) { return; }
+    css();
+    var el = doc.createElement('div'); el.id = 'ops-sync';
+    el.innerHTML = '<h3>☁️ 서버에 더 새 세이브가 있습니다</h3><p>다른 기기에서 ' + esc(new Date(sv.updated || Date.now()).toLocaleString()) + ' 에 올린 진행(rev ' + sv.rev + ')으로 이어할까요? 이 기기 진행은 덮입니다.</p>' +
+      '<button type="button" data-sync="server">서버 세이브로 이어하기</button> <button type="button" data-sync="local">이 기기 것 유지(서버를 덮음)</button>';
+    doc.body.appendChild(el);
+    el.addEventListener('click', function (ev) {
+      var b = ev.target && ev.target.closest ? ev.target.closest('button') : null; if (!b) { return; }
+      var pick = b.getAttribute('data-sync'); el.remove(); track('save_sync', { pick: pick, rev: sv.rev });
+      if (pick === 'server') {
+        /* 새로 고침 직전 판의 beforeunload 저장이 옛 세이브를 다시 써 덮었다(실기 10-20) — 메모리 세이브 내용도 서버 것으로 바꾸고 감싼 저장을 막는다 */
+        var C = global.DG.core, cur = C && C.save; restoring = true;
+        if (cur && typeof cur === 'object') { Object.keys(cur).forEach(function (k) { delete cur[k]; }); Object.assign(cur, sv.data.s); }
+        try { global.localStorage.setItem(sv.data.k, JSON.stringify(sv.data.s)); } catch (e) { restoring = false; return; }
+        lsSet(REV_KEY, sv.rev); global.location.reload();
+      }
+      else { lsSet(REV_KEY, sv.rev); pushSave(); }
+    });
+  }
+  function startSync() {
+    if (syncOn || !sess || global.DG_NO_OPS_SYNC) { return Promise.resolve(null); }
+    syncOn = true; hookPersist();
+    return saveDown().then(function (sv) {
+      var me = curSave(), d = sv && sv.data, same = !!(d && me && d.k === me.k);
+      var pick = syncDecision(lsGet(REV_KEY) || 0, sv ? sv.rev : 0, same, !!d);
+      if (pick === 'upload') { return pushSave(); }
+      if (pick === 'ask') { askRestore(sv); }
+      return pick;
+    }).catch(function () { return null; });
+  }
+
   global.DG = global.DG || {};
   global.DG.ops = {
     GAME: GAME, live: function () { return live; }, refresh: refresh, track: track, dump: dump, _seenKey: SEEN_KEY, _trackKey: TRACK_KEY,
     server: function () { return srv || null; }, session: function () { return sess; }, flags: function () { return flagsNow; }, products: function () { return productsNow; }, banned: function () { return banned; },
     mail: function () { return mailsNow; }, claim: claim, onMail: function (fn) { if (typeof fn === 'function') { mailCbs.push(fn); } }, buy: buy, saveUp: saveUp, saveDown: saveDown,
-    flush: flush, login: login, pullFlags: pullFlags, pullMail: pullMail, device: deviceId
+    flush: flush, login: login, pullFlags: pullFlags, pullMail: pullMail, device: deviceId,
+    /* W-0334 — 제재·A/B(로그인 응답) · 세이브 동기화 */
+    sanctions: function () { return (sess && sess.sanctions) || {}; }, ab: function () { return (sess && sess.ab) || {}; },
+    onSave: function (fn) { if (typeof fn === 'function') { getSave = fn; } }, syncDecision: syncDecision, startSync: startSync, pushSave: pushSave, _revKey: REV_KEY
   };
   if (GAME && !global.DG_NO_OPS && !global.DG_NO_DRAW) {
     var start = function () { global.setTimeout(function () { refresh(); }, 3000); };

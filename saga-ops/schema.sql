@@ -104,3 +104,34 @@ CREATE TABLE IF NOT EXISTS audit (                -- 운영자 행위 전부(전
   before TEXT,
   after  TEXT
 );
+
+-- W-0334 ① 제재 종류 — (uid, kind) 마다 한 줄. kind: login(접속 차단) · chat · trade · purchase(영수증 거절). 옛 ban 줄은 부팅 때 login 으로 옮긴다
+CREATE TABLE IF NOT EXISTS sanction (
+  uid     TEXT NOT NULL,
+  kind    TEXT NOT NULL,
+  until   INTEGER,                                -- 없으면 영구
+  reason  TEXT NOT NULL DEFAULT '',
+  created INTEGER NOT NULL,
+  by      TEXT NOT NULL DEFAULT 'admin',
+  PRIMARY KEY (uid, kind)
+);
+
+-- W-0334 ② 운영자 — 열쇠는 sha256 해시만(원문은 만들 때 한 번만 보여 준다). role: viewer(읽기) · operator(우편·제재·세이브 수정) · owner(상품·플래그·운영자)
+CREATE TABLE IF NOT EXISTS admin (
+  who      TEXT PRIMARY KEY,
+  role     TEXT NOT NULL,
+  key_hash TEXT NOT NULL UNIQUE,
+  created  INTEGER NOT NULL,
+  last_use INTEGER
+);
+
+-- W-0334 ④ 치트 의심 — 기록만(자동 제재 없음). 콘솔 플레이어 탭이 보여 준다
+CREATE TABLE IF NOT EXISTS suspect (
+  id     INTEGER PRIMARY KEY AUTOINCREMENT,
+  uid    TEXT NOT NULL,
+  game   TEXT NOT NULL,
+  t      INTEGER NOT NULL,
+  rule   TEXT NOT NULL,                           -- save.jump(값 급증) · events.rate(분당 과다)
+  detail TEXT                                     -- JSON
+);
+CREATE INDEX IF NOT EXISTS idx_suspect_uid ON suspect(uid, t);

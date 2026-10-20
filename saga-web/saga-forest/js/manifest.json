@@ -100,6 +100,7 @@
  ],
  "test": [
   [
+   "js/ops-client.js",
    "js/vendor/three.iife.js"
   ],
   [
