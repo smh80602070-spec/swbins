@@ -4830,5 +4830,27 @@
   "ticket": "G-0255",
   "since": "2026-10-20",
   "note": "SAGA_FX_WARM=0 끔 · 프로세스에 한 번(static _warmed) · 실은 뒤 실시간 0.5초·3 프레임 기다림(실은 직후 tween 걸음이 길어 그려지기 전에 지워짐) · 로그 안 찍음 · shot_realm_tactics 데우는 한 대 지움"
+ },
+ {
+  "id": "gd.core.foot-lock",
+  "name": "발 고정 걷기(나) — 실제 수평 속도로 walk/sprint·클립 빠르기를 맞추고(걸음새 gait), TwoBoneIK3D 로 디딘 발을 그 자리에 잠근다(발목 아래 레이 둘·엉덩이 내림 ≤0.25m·0.15초 섞기). 1만리·2나락·3마을·4종횡 나, 5천하 전술판은 빠르기만",
+  "files": [
+   "saga_core/player/foot_lock.gd",
+   "saga_core/player/player.gd",
+   "games/saga_go/player/go_player.gd",
+   "games/saga_story/player/story_player.gd",
+   "games/saga_story/player/story_player_base.gd",
+   "games/saga_realm/world/realm_tactics_view.gd",
+   "tools/probe_gait.gd"
+  ],
+  "tests": [
+   "gait"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0264",
+  "since": "2026-10-20",
+  "note": "SAGA_FOOT_LOCK=0 끔 · 걸음당 미끄러짐 전 44~220cm → 0cm(probe_gait 잠금 모형) · v0 walk 0.65·sprint 2.90 m/s(배율1) · RATE 0.6~2.3 · 공중·탈것·동작 클립·go Mode≠GROUND 면 끔 · 주민·적엔 안 붙임"
  }
 ]

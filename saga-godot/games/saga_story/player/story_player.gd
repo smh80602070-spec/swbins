@@ -68,6 +68,9 @@ func _ready() -> void:
 		visual.scale *= StoryLook.BODY_SCALE   # G-0187 — 그림만 크게(판정 상자 그대로)
 		_anim = visual.find_child("AnimationPlayer", true, false)
 	visual.rotation.y = PI * 0.5  # 오른쪽(+X)을 보고 시작 — StoryPlayer.tscn 참고
+	for sk in visual.find_children("*", "Skeleton3D", true, false):   # G-0264 디딘 발 잠금(나만)
+		if FootLock.attach(sk as Skeleton3D) != null:
+			break
 	_play_anim("idle")
 	CelShaderApply.apply_to(visual)
 	## PLAN 102-4 — GO/DUNGEON/FOREST는 games/saga_go/player/player.gd를
@@ -525,7 +528,10 @@ func _walk(delta: float) -> void:
 	if absf(axis) > 0.05:
 		_facing = signf(axis)
 		visual.rotation.y = lerp_angle(visual.rotation.y, PI * 0.5 if _facing > 0 else -PI * 0.5, TURN_RATE * delta)
-		_play_anim("idle" if mounted else "walk")
+		if mounted:
+			_play_anim("idle")
+		else:
+			_play_gait(absf(velocity.x))   # G-0264 걸음새
 	else:
 		_play_anim("idle")
 

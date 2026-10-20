@@ -43,6 +43,7 @@ const StoryCombat := preload("res://games/saga_story/data/story_combat.gd")
 const StoryConstellation := preload("res://games/saga_story/data/story_constellation.gd")   # G-0214 사방 성좌도
 const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
 const BlobShadow := preload("res://saga_core/world/blob_shadow.gd")
+const FootLock := preload("res://saga_core/player/foot_lock.gd")   # G-0264 걸음새·디딘 발 잠금
 const CombatFx := preload("res://saga_core/combat_fx.gd")
 const StorySkillMeta := preload("res://games/saga_story/data/story_skill_meta.gd")
 ## G-0201 시전 그림 색 — 웹 side-view.js 그대로: 베기·돌진 흰 · ring 금 · ghost·impact 연파랑 · rain 파랑.
@@ -68,6 +69,7 @@ var fly_on := false
 @onready var _anim: AnimationPlayer = visual.find_child("AnimationPlayer", true, false)
 
 var _current_anim := ""
+var _gait_scaled := false   # G-0264
 var _facing := 1.0  # +1 오른쪽, -1 왼쪽
 var _fx_hits := 0  # G-0201 이번 한 번(시전·_melee_hit)에 맞힌 수 — 첫 적만 멈칫·흔들림·소리
 var _attack_cd_left := 0.0
@@ -432,9 +434,26 @@ func _hit_feel(e: Node3D, roll: Dictionary) -> void:
 	_fx_hits += 1
 
 
+## G-0264 걸음새 — 수평 속도(m/s) → walk/sprint·클립 빠르기(saga_core/player/foot_lock.gd gait, 몸 배율 = visual.scale).
+func _play_gait(h_speed: float) -> void:
+	if _anim == null:
+		return
+	var g: Array = FootLock.gait(h_speed, visual.scale.y, _current_anim == "sprint")
+	_play_anim(String(g[0]))
+	if _current_anim == String(g[0]):
+		_anim.speed_scale = float(g[1])
+		_gait_scaled = true
+
+## foot_lock.gd 가 묻는다 — 탈것 위에선 끔(공중·동작 클립은 foot_lock 이 스스로 본다).
+func foot_lock_allowed() -> bool:
+	return not mounted
+
 func _play_anim(anim_name: String) -> void:
 	if _anim == null or not _anim.has_animation(anim_name):
 		return
+	if _gait_scaled and anim_name != "walk" and anim_name != "sprint":
+		_anim.speed_scale = 1.0
+		_gait_scaled = false
 	if _current_anim == anim_name:
 		return
 	_current_anim = anim_name

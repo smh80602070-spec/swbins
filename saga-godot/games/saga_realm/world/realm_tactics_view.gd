@@ -38,6 +38,7 @@ const CAM_PITCH := 50.0
 const CAM_DIST := 17.0
 const CAM_NEAR := 12.0
 const STEP_SEC := 0.25   # 칸 하나 걷기
+const FootLock := preload("res://saga_core/player/foot_lock.gd")   # G-0264 걸음새(전술판은 IK 없이 빠르기만)
 const SWING_SEC := 0.4
 const END_SEC := 1.4
 
@@ -382,7 +383,19 @@ func _set_label(uid: String) -> void:
 func _play(uid: String, clip: String) -> void:
 	var ap: AnimationPlayer = _units[uid].ap
 	if ap != null and ap.has_animation(clip):
+		ap.speed_scale = 1.0
 		ap.play(clip)
+
+
+## G-0264 — 칸 이동 빠르기(m/s)에 맞춘 걸음 클립·빠르기(디딘 발이 덜 미끄러지게). 몸 배율 = 동작 재생기의 몸 뿌리.
+func _play_gait(uid: String, speed: float) -> void:
+	var ap: AnimationPlayer = _units[uid].ap
+	if ap == null:
+		return
+	var body := ap.get_parent() as Node3D
+	var g: Array = FootLock.gait(speed, body.scale.y if body != null else 1.0, false)
+	_play(uid, String(g[0]) if ap.has_animation(String(g[0])) else "walk")
+	ap.speed_scale = float(g[1])
 
 
 func _wait(sec: float) -> void:
@@ -589,7 +602,7 @@ func _anim_move(uid: String, from: Vector2i, to: Vector2i) -> void:
 	if instant:
 		n.position = dest
 		return
-	_play(uid, "walk")
+	_play_gait(uid, CELL / STEP_SEC)
 	var steps := absi(to.x - from.x) + absi(to.y - from.y)
 	var tw := create_tween()
 	tw.tween_property(n, "position", dest, STEP_SEC * float(steps))

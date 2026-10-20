@@ -7,6 +7,7 @@ extends CharacterBody3D
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
 const BlobShadow := preload("res://saga_core/world/blob_shadow.gd")
+const FootLock := preload("res://saga_core/player/foot_lock.gd")   # G-0264 걸음새·디딘 발 잠금
 
 const WALK_SPEED := 6.0
 const RUN_SPEED := 10.0
@@ -48,6 +49,7 @@ var fly_on := false
 @export var body_id := ""
 var _joystick: Control = null
 var _current_anim := ""
+var _gait_scaled := false   # G-0264 — 걸음새가 speed_scale 을 바꿨으면 다른 클립으로 갈 때 1.0 으로
 
 func _ready() -> void:
 	var found := get_tree().get_nodes_in_group("virtual_joystick")
@@ -72,6 +74,8 @@ func _ready() -> void:
 	## G-0030 — 새 몸은 VroidBody 가 앞(+Z)·셀 셰이더·동작까지 맞춰 주므로 위 회전·셰이더 손질 뒤에 끼운다.
 	if body_id != "":
 		swap_body(VroidBody.build_hero(body_id))
+	else:
+		_attach_foot_lock()
 
 ## G-0024 — Visual 을 새 몸으로 통째 바꾼다(편성원 전환·주인공 몸). 이름·위치·회전을 이어받고, 옛 몸에 얹힌 부속(글라이더 등)은
 ## keep 으로 넘긴 것만 새 몸으로 옮긴다. 새 몸은 VroidBody 가 셀 셰이더·동작 라이브러리까지 입혀 준 것.
@@ -97,6 +101,7 @@ func swap_body(body: Node3D, keep: Array = []) -> void:
 	_anim = visual.find_child("AnimationPlayer", true, false)
 	_current_anim = ""
 	_play_anim("idle")
+	_attach_foot_lock()
 
 
 func _physics_process(delta: float) -> void:
@@ -137,7 +142,10 @@ func _physics_process(delta: float) -> void:
 	if move_dir.length() > 0.05:
 		var target_yaw := atan2(move_dir.x, move_dir.z)
 		visual.rotation.y = lerp_angle(visual.rotation.y, target_yaw, TURN_RATE * delta)
-		_play_anim("idle" if mounted else ("sprint" if running else "walk"))
+		if mounted:
+			_play_anim("idle")
+		else:
+			_play_gait(Vector2(velocity.x, velocity.z).length())
 	else:
 		_play_anim("idle")
 
@@ -176,9 +184,32 @@ func _base_fly(delta: float) -> void:
 	if is_on_floor() and velocity.y <= 0.5:
 		fly_on = false
 
+## G-0264 걸음새 — 실제 수평 속도(m/s) → walk/sprint·클립 빠르기(디딘 발이 몸과 같은 빠르기로 뒤로 가게, foot_lock.gd gait).
+func _play_gait(h_speed: float) -> void:
+	if _anim == null:
+		return
+	var g: Array = FootLock.gait(h_speed, visual.scale.y, _current_anim == "sprint")
+	_play_anim(String(g[0]))
+	if _current_anim == String(g[0]):
+		_anim.speed_scale = float(g[1])
+		_gait_scaled = true
+
+## G-0264 디딘 발 잠금(나만) — 몸이 바뀔 때마다 새 뼈대에 붙인다. SAGA_FOOT_LOCK=0 이면 안 붙는다.
+func _attach_foot_lock() -> void:
+	for s in visual.find_children("*", "Skeleton3D", true, false):
+		if FootLock.attach(s as Skeleton3D) != null:
+			return
+
+## foot_lock.gd 가 묻는다 — 탈것·나는 중·돌진 중엔 끔(공중·동작 클립은 foot_lock 이 스스로 본다).
+func foot_lock_allowed() -> bool:
+	return not mounted and not fly_on and dash_speed <= 0.0 and not frozen
+
 func _play_anim(anim_name: String) -> void:
 	if _anim == null or not _anim.has_animation(anim_name):
 		return
+	if _gait_scaled and anim_name != "walk" and anim_name != "sprint":
+		_anim.speed_scale = 1.0
+		_gait_scaled = false
 	if _current_anim == anim_name:
 		return
 	_current_anim = anim_name

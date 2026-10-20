@@ -296,7 +296,10 @@ func _tick_ground(delta: float, move_dir: Vector3) -> void:
 
 	if move_dir.length() > 0.05:
 		_face(move_dir, delta)
-		_play_anim("idle" if mounted else ("sprint" if running else "walk"))
+		if mounted:
+			_play_anim("idle")
+		else:
+			_play_gait(Vector2(velocity.x, velocity.z).length())   # G-0264 걸음새(웅크림 0.5 는 아래가 덮는다)
 		if crouching:
 			_anim_scale(0.5)
 		if not mounted and _try_wall(move_dir, delta, true):
@@ -728,6 +731,10 @@ func play_action(anim_name: String, dur: float, move_scale: float) -> void:
 		_anim.play(anim_name)
 		_anim.seek(start, true)
 		_current_anim = anim_name
+
+## G-0264 — 발 잠금은 땅에서만(활공·오르기·수영·짚고 넘기·날기·동작 중엔 끔).
+func foot_lock_allowed() -> bool:
+	return super.foot_lock_allowed() and mode == Mode.GROUND and _action_t <= 0.0
 
 func _play_anim(anim_name: String) -> void:
 	if _action_t > 0.0:
