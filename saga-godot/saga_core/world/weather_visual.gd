@@ -1,0 +1,235 @@
+extends Node
+
+## G-0251 — 날씨(3마을·5천하·4종횡 바깥 씬). 1만리는 weather.gd·season_weather_visual·sky_panorama·region4_frost 가 맡고,
+## 세 판은 늘 맑았다. 3시간 슬롯마다 결정론적 날씨 여섯(1만리 Weather.key_at 식 해시) →
+##   env 복제본 fog_density·volumetric_fog_density(1만리 KINDS.fog_density_mul 값) · sky_real cloud_cover(sky_panorama.CLOUD_COVER 값 + 안개·눈)
+##   비/눈 입자 CPUParticles3D "Rainfall"/"Snowfall"(카메라 위 22m 상자, 위치만 따라감)
+## 안개색·해·주변광은 day_light.gd 만 쓴다(같은 칸을 둘이 쓰면 서로 덮는다) — 여기선 DayLight 에 weather_tint·weather_sun_mul 을 넣고 refresh_now().
+## 계절: 3마을 ForestDay.epoch_day_index 의 달 · 5천하 RealmSaveState.month · 4종횡 실제 달. 겨울(12~2월)만 눈, 그 밖엔 눈 무게 0.
+## 손잡이: SAGA_WEATHER=<키>(clear·cloud·rain·wind·fog·snow) 면 그 날씨 고정 · SAGA_WEATHER=0 이면 안 단다.
+## environment_profile._pick_environment 이 _real_sky_scene(GO 밖) 이면 DayLight 옆에 단다. 1만리 코드는 부르지 않는다(값만 옮겨 적음).
+
+const FDay := preload("res://games/saga_forest/data/forest_day.gd")   # check_refs:allow — 3마을 게임 날짜(달) 읽기, 순수 함수 하나
+const GROUP := "saga_weather_visual"
+const CHECK_SEC := 60.0
+const SPAN_MS := 3 * 60 * 60 * 1000   # weather.gd SPAN_MS
+## fog = 1만리 Weather.KINDS.fog_density_mul · tint = KINDS.tint(안개색에 곱 — day_light 가 넣는다)
+## cloud = sky_panorama.CLOUD_COVER(fog·snow 는 이 표가 정함) · sun = 해 세기 배율(day_light 가 곱한다)
+const KINDS := {
+	"clear": {"fog": 0.6, "tint": Color(1.05, 1.03, 0.95), "cloud": 0.32, "sun": 1.0},
+	"cloud": {"fog": 1.0, "tint": Color(0.95, 0.96, 1.0), "cloud": 0.72, "sun": 0.85},
+	"rain": {"fog": 1.6, "tint": Color(0.85, 0.9, 1.0), "cloud": 0.9, "sun": 0.75},
+	"wind": {"fog": 0.8, "tint": Color(1.0, 1.0, 1.0), "cloud": 0.5, "sun": 1.0},
+	"fog": {"fog": 2.4, "tint": Color(0.9, 0.9, 0.92), "cloud": 0.95, "sun": 0.75},
+	"snow": {"fog": 1.2, "tint": Color(1.02, 1.02, 1.08), "cloud": 0.6, "sun": 0.85},
+}
+const ORDER := ["clear", "cloud", "rain", "wind", "fog", "snow"]
+## 계절 무게(ORDER 순). 겨울만 눈.
+const W_WINTER := [3.0, 2.5, 0.3, 1.5, 1.0, 2.5]
+const W_OTHER := [4.0, 2.5, 1.8, 1.2, 0.8, 0.0]
+const BOX := 22.0
+const RAIN_AMOUNT := 700
+const SNOW_AMOUNT := 260   # region4_frost.SNOW_FULL
+
+var key := ""
+var _we: WorldEnvironment
+var _env: Environment
+var _base := {}
+var _check := 0.0
+var _rain: CPUParticles3D
+var _snow: CPUParticles3D
+var last := {}   # 점검용: key·fog_density·cloud_cover·sun_mul
+
+
+static func enabled() -> bool:
+	return OS.get_environment("SAGA_WEATHER") != "0"
+
+
+static func forced_key() -> String:
+	var k := OS.get_environment("SAGA_WEATHER")
+	return k if KINDS.has(k) else ""
+
+
+## weather.gd::_hash01 과 같은 식(값만 옮겨 적음).
+static func _hash01(slot: int) -> float:
+	var h := (slot * 374761393) ^ 987654321
+	h = (h ^ (h >> 13)) * 1274126177
+	h = h ^ (h >> 16)
+	return float(h & 0x7fffffff) / float(0x7fffffff)
+
+
+## 순수 함수 — 시각(ms)·달(1~12) → 날씨 키. 같은 3시간 슬롯·같은 달이면 같은 키.
+static func key_at(unix_ms: int, month: int) -> String:
+	var h := _hash01(int(unix_ms / SPAN_MS))
+	var w: Array = W_WINTER if month == 12 or month <= 2 else W_OTHER
+	var total := 0.0
+	for v in w:
+		total += float(v)
+	var x := h * total
+	for i in ORDER.size():
+		x -= float(w[i])
+		if x <= 0.0 and float(w[i]) > 0.0:
+			return ORDER[i]
+	return ORDER[0]
+
+
+## 이 씬의 달 — 3마을 게임 날짜·5천하 게임 달·그 밖(4종횡) 실제 달.
+func month_now() -> int:
+	var path := get_parent().scene_file_path if get_parent() else ""
+	if path.begins_with("res://games/saga_forest/"):   # check_refs:allow — 경로 판별 문자열
+		var d := Time.get_datetime_dict_from_unix_time(FDay.epoch_day_index() * 86400)
+		return int(d.month)
+	if path.begins_with("res://games/saga_realm/"):   # check_refs:allow
+		var rs := get_tree().root.get_node_or_null("RealmSaveState")   # check_refs:allow — 5천하 게임 달
+		if rs and rs.get("month") != null:
+			return clampi(int(rs.get("month")), 1, 12)
+	return int(Time.get_date_dict_from_system().month)
+
+
+func key_now() -> String:
+	var f := forced_key()
+	if f != "":
+		return f
+	return key_at(int(Time.get_unix_time_from_system() * 1000.0), month_now())
+
+
+func _ready() -> void:
+	add_to_group(GROUP)
+	_we = get_parent().get_node_or_null("WorldEnvironment") as WorldEnvironment
+	refresh_now()
+
+
+func _process(delta: float) -> void:
+	_check -= delta
+	if _check <= 0.0:
+		refresh_now()
+	var p: CPUParticles3D = _rain if _rain and _rain.emitting else (_snow if _snow and _snow.emitting else null)
+	if p:
+		var cam := get_viewport().get_camera_3d()
+		if cam:
+			var to := cam.global_position + Vector3(0, 10.0, 0)
+			var jump := p.global_position.distance_squared_to(to) > BOX * BOX
+			p.global_position = to
+			if jump:   # 카메라가 순간 이동(전술판·문 넘기)하면 옛 자리 입자가 남는다 — 새 자리에서 미리 돌린 채로 다시
+				p.restart()
+
+
+func refresh_now() -> void:
+	_check = CHECK_SEC
+	key = key_now()
+	var k: Dictionary = KINDS[key]
+	_grab_env()
+	if _env:
+		_env.fog_density = float(_base.fog) * float(k.fog)
+		if _env.volumetric_fog_enabled:
+			_env.volumetric_fog_density = float(_base.vol) * float(k.fog)
+		last["fog_density"] = _env.fog_density
+		if _env.sky and _env.sky.sky_material is ShaderMaterial:
+			(_env.sky.sky_material as ShaderMaterial).set_shader_parameter("cloud_cover", float(k.cloud))
+			last["cloud_cover"] = float(k.cloud)
+	var dl := get_parent().get_node_or_null("DayLight")
+	if dl:
+		dl.weather_tint = k.tint
+		dl.weather_sun_mul = float(k.sun)
+		dl.refresh_now()
+	last["key"] = key
+	last["sun_mul"] = float(k.sun)
+	_set_fall(key)
+
+
+## env 는 형제(story_sky 등)가 복제본으로 갈아 끼울 수 있다 — 바뀌었으면 원래 밀도를 다시 잰다.
+func _grab_env() -> void:
+	var e: Environment = _we.environment if _we else null
+	if e == _env:
+		return
+	_env = e
+	if _env:
+		_base["fog"] = _env.fog_density
+		_base["vol"] = _env.volumetric_fog_density
+
+
+func _set_fall(k: String) -> void:
+	if k == "rain" and _rain == null:
+		_rain = _build_rain()
+	if k == "snow" and _snow == null:
+		_snow = _build_snow()
+	if _rain:
+		_rain.emitting = k == "rain"
+		_rain.visible = _rain.emitting
+	if _snow:
+		_snow.emitting = k == "snow"
+		_snow.visible = _snow.emitting
+
+
+func _particles(n: String, amount: int, life: float) -> CPUParticles3D:
+	var p := CPUParticles3D.new()
+	p.name = n
+	p.amount = amount
+	p.lifetime = life
+	p.preprocess = life
+	p.emission_shape = CPUParticles3D.EMISSION_SHAPE_BOX
+	p.emission_box_extents = Vector3(BOX, 1, BOX)
+	p.top_level = true
+	p.visibility_aabb = AABB(Vector3(-BOX, -40, -BOX), Vector3(BOX * 2, 44, BOX * 2))
+	var cam := get_viewport().get_camera_3d()
+	add_child(p)
+	if cam:
+		p.global_position = cam.global_position + Vector3(0, 10.0, 0)
+	return p
+
+
+## 눈 = region4_frost._build_snow 값.
+func _build_snow() -> CPUParticles3D:
+	var p := _particles("Snowfall", SNOW_AMOUNT, 5.0)
+	p.direction = Vector3(0.15, -1, 0.05)
+	p.spread = 12.0
+	p.gravity = Vector3(0, -1.2, 0)
+	p.initial_velocity_min = 1.2
+	p.initial_velocity_max = 2.0
+	p.scale_amount_min = 0.06
+	p.scale_amount_max = 0.12
+	var q := QuadMesh.new()
+	q.size = Vector2(1, 1)
+	var m := _mat(Color(0.82, 0.85, 0.9, 0.85), BaseMaterial3D.BILLBOARD_ENABLED)
+	var g := Gradient.new()
+	g.colors = PackedColorArray([Color(1, 1, 1, 1), Color(1, 1, 1, 0)])
+	g.offsets = PackedFloat32Array([0.25, 1.0])
+	var gt := GradientTexture2D.new()
+	gt.gradient = g
+	gt.fill = GradientTexture2D.FILL_RADIAL
+	gt.fill_from = Vector2(0.5, 0.5)
+	gt.fill_to = Vector2(1.0, 0.5)
+	gt.width = 32
+	gt.height = 32
+	m.albedo_texture = gt
+	q.material = m
+	p.mesh = q
+	return p
+
+
+## 비 = 세로로 선 긴 빌보드(0.03×0.5m) · 속도 9~12 · 중력 −9 · 알파 0.45.
+func _build_rain() -> CPUParticles3D:
+	var p := _particles("Rainfall", RAIN_AMOUNT, 1.3)
+	p.direction = Vector3(0.05, -1, 0.02)
+	p.spread = 3.0
+	p.gravity = Vector3(0, -9, 0)
+	p.initial_velocity_min = 9.0
+	p.initial_velocity_max = 12.0
+	var q := QuadMesh.new()
+	q.size = Vector2(0.03, 0.5)
+	q.material = _mat(Color(0.78, 0.82, 0.9, 0.45), BaseMaterial3D.BILLBOARD_FIXED_Y)
+	p.mesh = q
+	return p
+
+
+func _mat(c: Color, bb: int) -> StandardMaterial3D:
+	var m := StandardMaterial3D.new()
+	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	m.billboard_mode = bb
+	m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	m.albedo_color = c
+	## 카메라 바로 앞 입자가 화면에 크게 번지지 않게(region4_frost G-0127 식)
+	m.distance_fade_mode = BaseMaterial3D.DISTANCE_FADE_PIXEL_ALPHA
+	m.distance_fade_min_distance = 3.0
+	m.distance_fade_max_distance = 6.0
+	return m

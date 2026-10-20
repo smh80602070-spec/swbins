@@ -4679,6 +4679,25 @@
   "note": "SAGA_HOUR=n 고정 · SAGA_DAY_LIGHT=0 끔 · 12시 = 씬 값 그대로(regress SAGA_HOUR=12) · 4종횡 바깥 씬도 sky_real 이라(G-0148) 하늘까지 같은 식, 동굴·미궁·2나락은 안 붙음 · 밤 창·등롱 불빛은 1만리 house_builder 전용(후속)"
  },
  {
+  "id": "gd.core.weather",
+  "name": "날씨(3마을·5천하·4종횡 바깥 씬) — 3시간 슬롯 결정론 날씨 여섯(맑음·흐림·비·바람·안개·눈): 안개 밀도·sky_real 구름 덮개·비/눈 입자, 안개색·해 세기는 DayLight 에 곱 (1만리는 weather·season_weather_visual 그대로)",
+  "files": [
+   "saga_core/world/weather_visual.gd",
+   "saga_core/world/day_light.gd",
+   "saga_core/world/environment_profile.gd",
+   "tools/godot_regress.sh"
+  ],
+  "tests": [
+   "weather_visual"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0251",
+  "since": "2026-10-20",
+  "note": "SAGA_WEATHER=<키> 고정 · =0 끔 · regress SAGA_WEATHER=clear · 겨울(12~2월)만 눈 — 3마을 게임 날짜·5천하 게임 달·4종횡 실제 달 · 60초마다 · 밤 창·등롱은 안 엮음"
+ },
+ {
   "id": "gd.core.face-light",
   "name": "인물 얼굴 그림자(원신식, 다섯 판 공용) — 얼굴 표면은 머리 앞 방향을 섞은 수평 법선으로 명암(코·입가·턱 얼룩 없음, 좌우 반쪽 그늘) · SDF 텍스처 자리",
   "files": [

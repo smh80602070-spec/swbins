@@ -42,6 +42,9 @@ var _day := {}
 var _check := 0.0
 var _moved := false
 var last := {}   # 마지막으로 넣은 값(점검용): hour·sun_energy·warm·stars
+## G-0251 — weather_visual.gd 가 넣는다(안개색·해는 이 노드만 쓰니 날씨 몫도 여기서 곱한다). 맑음·날씨 없음 = 1.
+var weather_tint := Color(1, 1, 1)
+var weather_sun_mul := 1.0
 
 
 static func enabled() -> bool:
@@ -138,7 +141,7 @@ func _apply(na: String, nb: String, t: float) -> void:
 			if _moved:   # 한 번도 안 돌렸으면 그대로 둔다 — 씬 파일 basis 는 정규직교가 아니라 다시 쓰면 값이 조금 바뀐다(regress·점검 "12시 = 씬 값")
 				_sun.global_transform = _day.xf
 				_moved = false
-			_sun.light_energy = _day.sun
+			_sun.light_energy = float(_day.sun) * weather_sun_mul
 			_sun.light_color = _day.sun_color
 		else:
 			var el_a: float = a.el if a.el >= 0.0 else _day.el
@@ -148,7 +151,7 @@ func _apply(na: String, nb: String, t: float) -> void:
 			var d := da.slerp(db, t) if da.dot(db) < 0.9999 else da
 			_moved = true
 			_sun.global_transform = Transform3D(Basis.looking_at(-d.normalized(), Vector3.UP), _sun.global_position)
-			_sun.light_energy = float(_day.sun) * mul
+			_sun.light_energy = float(_day.sun) * mul * weather_sun_mul
 			_sun.light_color = ca.lerp(cb, t)
 		last["sun_energy"] = _sun.light_energy
 	if _env and _day.has("ambient"):
@@ -156,7 +159,7 @@ func _apply(na: String, nb: String, t: float) -> void:
 		_env.ambient_light_energy = float(_day.ambient) * _f(a, b, "amb", t)
 		_env.ambient_light_color = (_day.amb_color as Color).lerp(NIGHT_AMB_COLOR, nt)
 		_env.ambient_light_sky_contribution = lerpf(float(_day.amb_sky), minf(float(_day.amb_sky), NIGHT_AMB_SKY), nt)
-		_env.fog_light_color = (_day.fog as Color) * Color(1, 1, 1).lerp(NIGHT_FOG_MUL, nt)
+		_env.fog_light_color = (_day.fog as Color) * Color(1, 1, 1).lerp(NIGHT_FOG_MUL, nt) * weather_tint
 		if _sky:
 			var warm := _f(a, b, "warm", t)
 			var stars := _f(a, b, "stars", t)

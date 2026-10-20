@@ -9,6 +9,7 @@ const ENV_PC: Environment = preload("res://assets/environment/env_pc.tres")
 const ENV_MOBILE: Environment = preload("res://assets/environment/env_mobile.tres")
 const Gfx := preload("res://saga_core/data/graphics_settings.gd")
 const DayLight := preload("res://saga_core/world/day_light.gd")
+const WeatherVisual := preload("res://saga_core/world/weather_visual.gd")
 
 
 ## PLAN 106장 ② — GO 만 손그림 하늘(sky_toon.gdshader). 이 스크립트와 env_*.tres 는
@@ -72,6 +73,11 @@ func _pick_environment() -> void:
 				var dl := DayLight.new()
 				dl.name = "DayLight"
 				owner.add_child.call_deferred(dl)
+			## G-0251 — 날씨(안개 밀도·구름·비/눈). DayLight 다음에 달아 그 노드에 날씨 몫(안개색·해 배율)을 넣는다.
+			if WeatherVisual.enabled() and owner != null:
+				var wv := WeatherVisual.new()
+				wv.name = "WeatherVisual"
+				owner.add_child.call_deferred(wv)
 		return
 	var env := base.duplicate() as Environment
 	var mat := ShaderMaterial.new()

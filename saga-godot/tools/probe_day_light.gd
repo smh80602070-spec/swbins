@@ -62,6 +62,8 @@ func _init() -> void:
 func _run() -> void:
 	var old_hour := OS.get_environment("SAGA_HOUR")
 	var old_on := OS.get_environment("SAGA_DAY_LIGHT")
+	var old_w := OS.get_environment("SAGA_WEATHER")
+	OS.set_environment("SAGA_WEATHER", "0")   # G-0251 — 날씨가 해 세기·안개색을 곱하면 "12시 = 씬 값" 이 슬롯을 탄다
 	# 순수 함수 경계
 	var want := {3.0: "night", 4.0: "night", 6.0: "dawn", 12.0: "noon", 18.0: "sunset", 21.0: "night", 23.0: "night"}
 	for h in want:
@@ -117,5 +119,6 @@ func _run() -> void:
 		_fail("GO 씬이 _real_sky_scene 에 든다 — DayLight 가 붙는다")
 	OS.set_environment("SAGA_HOUR", old_hour)
 	OS.set_environment("SAGA_DAY_LIGHT", old_on)
+	OS.set_environment("SAGA_WEATHER", old_w)
 	print("PROBE day_light ", "OK" if fails == 0 else "FAIL %d" % fails)
 	quit(1 if fails > 0 else 0)
