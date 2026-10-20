@@ -46,21 +46,34 @@
   },
   {
    "game": "greet",
-   "cmu": "13_26",
-   "desc": "wave — 손 흔들기(111_02 깊은 절은 다리가 뒤로 들려 바꿈)",
-   "loop": false
+   "cmu": "113_27",
+   "desc": "Wave — 오른손 머리 위로 흔들기(K-0148, 옛 13_26 교통 정리는 손이 머리 아래)",
+   "loop": false,
+   "range": [
+    12,
+    87
+   ]
   },
   {
    "game": "cast",
-   "cmu": "120_03",
-   "desc": "cast spell",
-   "loop": false
+   "cmu": "81_10",
+   "desc": "push object high in air — 두 팔 가슴 높이로 곧게 내뻗기(K-0148, 옛 120_03 은 무릎 든 채 두 손 머리 위 · 그 구간 옮김은 막는 자세로 보임)",
+   "loop": false,
+   "range": [
+    339,
+    405
+   ],
+   "inplace": true
   },
   {
    "game": "strong",
-   "cmu": "02_07",
-   "desc": "swordplay (한 번 내리치기 구간)",
-   "loop": false
+   "cmu": "80_71",
+   "desc": "chopping wood — 두 손 머리 위에서 내려치기(K-0148, 옛 02_07 칼놀이는 웅크림)",
+   "loop": false,
+   "range": [
+    27,
+    66
+   ]
   },
   {
    "game": "hit",

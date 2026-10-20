@@ -12,9 +12,9 @@
   "turn": "69_16",
   "sit_stand": "143_18",
   "pickup": "26_09",
-  "greet": "13_26",
-  "cast": "120_03",
-  "strong": "02_07",
+  "greet": "113_27",
+  "cast": "81_10",
+  "strong": "80_71",
   "hit": "22_12",
   "death": "111_06"
  },
@@ -118,46 +118,46 @@
    "drift_m": 0.017
   },
   "greet": {
-   "cmu": "13_26",
+   "cmu": "113_27",
    "window": [
-    289,
-    364
+    12,
+    87
    ],
    "frames": 76,
    "sec": 2.53,
    "loop_score": null,
    "flipped": -0.0,
-   "leg_ratio": 0.049,
+   "leg_ratio": 0.055,
    "slip_m": null,
-   "drift_m": 0.133
+   "drift_m": 0.01
   },
   "cast": {
-   "cmu": "120_03",
+   "cmu": "81_10",
    "window": [
-    131,
-    197
+    339,
+    405
    ],
    "frames": 67,
    "sec": 2.23,
    "loop_score": null,
-   "flipped": 0.0,
-   "leg_ratio": 0.052,
+   "flipped": -0.0,
+   "leg_ratio": 0.055,
    "slip_m": null,
-   "drift_m": 0.061
+   "drift_m": 0.0
   },
   "strong": {
-   "cmu": "02_07",
+   "cmu": "80_71",
    "window": [
-    464,
-    503
+    27,
+    66
    ],
    "frames": 40,
    "sec": 1.33,
    "loop_score": null,
-   "flipped": 0.0,
-   "leg_ratio": 0.052,
+   "flipped": -0.0,
+   "leg_ratio": 0.054,
    "slip_m": null,
-   "drift_m": 0.028
+   "drift_m": 0.013
   },
   "hit": {
    "cmu": "22_12",

@@ -1,5 +1,5 @@
 {
- "note": "K-0138 2차 — sprite_plan_16.json 과 같은 규격, entries = combat_sprite_plan 의 인물(주역 10 뺌). 몸 있는 인물이 500(티켓 적을 땐 299) → 정본 올리기 용량은 promote 때 판단. K-0138 16방향·동작별 시트 — 9행(0·22.5·…·180°, 왼쪽은 뒤집기) · 역할 이름 = 웹 sheetspec.js(W-0311) 낱말(heavy·death·pick·wave) · 걷기·달리기·시전·피격·쓰러짐·앉기·줍기·인사·서기 = K-0139 모캡(m.), 공격·강공격 = 인물 무기별 _anims · 1차 주역 10(k137_leads.json), 2차 299 는 같은 표로 entries 만 · weapon_upright: 칼·단검도 attack·heavy·death 밖에선(쓰러짐은 칼이 같이 눕게) 세워 듦(모캡 손 각도) · death 는 앞 80%(끝이 다시 일어섬) · cast·wave 뺌(10-19): K-0139 모캡 cast·greet 는 웹 판정(W-0318)이 몸짓 뜻과 다르다고 안 씀 — 수신함 \"모캡 다시 굽기\" 뒤 roles16 에 되살림(웹은 NEAR 로 heavy·idle)",
+ "note": "K-0138 2차 — sprite_plan_16.json 과 같은 규격, entries = combat_sprite_plan 의 인물(주역 10 뺌). 몸 있는 인물이 500(티켓 적을 땐 299) → 정본 올리기 용량은 promote 때 판단. K-0138 16방향·동작별 시트 — 9행(0·22.5·…·180°, 왼쪽은 뒤집기) · 역할 이름 = 웹 sheetspec.js(W-0311) 낱말(heavy·death·pick·wave) · 걷기·달리기·시전·피격·쓰러짐·앉기·줍기·인사·서기 = K-0139 모캡(m.), 공격·강공격 = 인물 무기별 _anims · 1차 주역 10(k137_leads.json), 2차 299 는 같은 표로 entries 만 · weapon_upright: 칼·단검도 attack·heavy·death 밖에선(쓰러짐은 칼이 같이 눕게) 세워 듦(모캡 손 각도) · death 는 앞 80%(끝이 다시 일어섬) · cast·wave 되살림(10-20 K-0148 — 시전 81_10·인사 113_27 판정 ○, 그 전 10-19 뺌): K-0139 모캡 cast·greet 는 웹 판정(W-0318)이 몸짓 뜻과 다르다고 안 씀 — 수신함 \"모캡 다시 굽기\" 뒤 roles16 에 되살림(웹은 NEAR 로 heavy·idle)",
  "px": 128,
  "ortho": 2.5,
  "cam_z": 0.95,
@@ -52,6 +52,14 @@
   ],
   "pick": [
    "m.pickup",
+   8
+  ],
+  "cast": [
+   "m.cast",
+   12
+  ],
+  "wave": [
+   "m.greet",
    8
   ]
  },

@@ -61,12 +61,24 @@ def judge(game, r):
 def main():
     target, bvh_dir, cands = build.arg('--target'), build.arg('--bvh'), build.arg('--cands')
     out = build.arg('--out')
+    shots = build.arg('--shots')                                         # 있으면 판정 시점 몸을 3/4 로 찍는다(<폴더>/<클립>_<번호>.png)
     bpy.ops.wm.read_factory_settings(use_empty=True)
     sc = bpy.context.scene
     sc.render.fps, sc.render.fps_base = MR.FPS, 1.0
     objs = build.import_new(target)
     tgt = next(o for o in objs if o.type == 'ARMATURE')
-    build.delete([o for o in objs if o is not tgt])
+    if not shots:
+        build.delete([o for o in objs if o is not tgt])
+    else:
+        os.makedirs(shots, exist_ok=True)
+        cam = bpy.data.objects.new('cam', bpy.data.cameras.new('cam'))
+        sc.collection.objects.link(cam)
+        cam.data.type, cam.data.ortho_scale = 'ORTHO', 2.4
+        cam.location, cam.rotation_euler = (2.2, -3.0, 1.0), (1.5708, 0, 0.63)   # 앞(−Y)·오른쪽 3/4 — 오른손이 보이게
+        sc.camera = cam
+        sc.render.engine = 'BLENDER_WORKBENCH'
+        sc.render.resolution_x = sc.render.resolution_y = 384
+        sc.display.shading.light, sc.display.shading.color_type = 'STUDIO', 'TEXTURE'
     tgt.animation_data_create()
     rest = rest_of(tgt)
     res, ok_n, n = [], 0, 0
@@ -93,6 +105,10 @@ def main():
                 r = measure(tgt, rest)
                 rows.append((f, judge(game, r), r))
             fa = round(f0 + at * (f1 - f0))
+            if shots:
+                sc.frame_set(fa)
+                sc.render.filepath = os.path.join(shots, f"{game}_{num}{'_' + '-'.join(map(str, c['range'])) if c.get('range') else ''}.png")
+                bpy.ops.render.render(write_still=True)
             bad_at = next(b for f, b, _r in rows if f == fa)
             best = min(rows, key=lambda x: (len(x[1]), -x[2]['rhand']['up']))
             w = report.get(game, {}).get('range') or report.get(game, {}).get('window')
