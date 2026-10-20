@@ -4086,6 +4086,24 @@
   "note": "전후 같은 시간대(19:58) 가로 셋·세로 하나 Claude 눈 ○ — 평지는 흙 결이 안 보여 자갈로 · 이동·공격 칸 표시 그대로 읽힘 · 세로 화면은 판 양옆이 잘림(카메라, 이전부터 — 후속 후보) · SAGA_REALM_OLD=1 옛 판"
  },
  {
+  "id": "gd.rk.tactics_fx",
+  "name": "5천하 전술판 타격 VFX — 공용 combat_fx 베기 궤적(연타 기울기·큰 피해 크게)·맞음 불꽃 + 멈칫 0.06초·빗나감 피함 0.25m·쓰러짐 바닥 충격파·컷 중 맞음 카메라 흔들림, instant 면 그림 0",
+  "files": [
+   "games/saga_realm/world/realm_tactics_view.gd",
+   "saga_core/combat_fx.gd"
+  ],
+  "tests": [
+   "realm_tactics_fx",
+   "realm_tactics"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0253",
+  "since": "2026-10-20",
+  "note": "rk_tactics_cut(공격 뒤 궤적 +0.12초 멈춤) Claude 눈 ○ — 초승달 궤적·불꽃·번쩍 읽힘, rk_tactics 그대로 ○ · 첫 궤적은 셰이더 첫 그리기 프레임에 tween 이 지나가 안 보일 수 있음(촬영은 한 대 데움 — 공용 미리 데우기는 후속)"
+ },
+ {
   "id": "gd.dg.real_rooms",
   "name": "2나락 방·문·통로 PBR 사진 표면 — 원본 재질 이름으로 tiles_real 세트(진흙→흙·해안 바위→바위·콘크리트→콘크리트), 빛깔은 원본 toon 평균에 맞춤(어둠·mood 유지), 양면·월드 공간 법선",
   "files": [

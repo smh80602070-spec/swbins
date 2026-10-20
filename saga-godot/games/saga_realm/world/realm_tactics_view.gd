@@ -14,6 +14,12 @@ const RealmTactics := preload("res://games/saga_realm/data/realm_tactics.gd")
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
+## G-0253 — 타격 VFX: 1만리·2나락·4종횡과 같은 공용 그림(베기 궤적·불꽃·바닥 충격파). 새 그림 없음, instant 면 하나도 안 만든다.
+const CombatFx := preload("res://saga_core/combat_fx.gd")
+const SLASH_AT := 0.15      # 휘두름 안 궤적 시점(SWING_SEC×0.6 안)
+const HITSTOP := 0.06       # 맞음 멈칫
+const DODGE := 0.25         # 빗나감 — 공격 반대쪽으로 피하는 거리(m)
+const CAM_SHAKE := 0.05     # 컷 중 맞음 카메라 흔들림(m)
 ## G-0223 — 보드게임 시제품처럼 보이던 판(베이지 단색 칸·회색 상자 성벽·원뿔 나무)을 자체 PBR(K-0093)로: 칸 지형마다 결, 성벽 돌벽 + 여장,
 ## 판 틀 널판, 숲 나무 = 줄기 + 잎 덩이 셋, 강 = 매끈한 물빛. 빛깔은 웹과 같은 COL 그대로(결만 사진). SAGA_REALM_OLD=1 이면 예전 판.
 const RealPbr := preload("res://saga_core/world/real_pbr.gd")
@@ -64,6 +70,7 @@ const SHIELD_FULL := Color(0.55, 0.82, 1.0, 0.95)
 var _shields: Array = []   # 지금 떠 있는 방패 노드
 var _auto_mode := false
 var cut_count := 0         # 점검용 — 컷을 몇 번 했나
+var _swing_n := 0          # G-0253 — 뷰 안 연타 셈(궤적 기울기 차례)
 
 
 ## 연다 — host 는 씬 안 아무 노드(토스트·트리 찾기용), tb = RealmSaveState.tactics_board() 결과, done(grid: Dictionary).
@@ -622,10 +629,24 @@ func _anim_hit(entry: Dictionary) -> void:
 		cut_count += 1
 		await _cut_to(_cut_transform(an.position, tn.position), CUT_IN)
 	_play(a, "attack")
-	await _wait(SWING_SEC * 0.6)
+	var fwd := tn.global_position - an.global_position
+	var big := false
+	if bool(entry.hit):
+		var tu := RealmTactics.unit(board, t)
+		big = not tu.is_empty() and float(entry.dmg) >= float(tu.get("max", 1e9)) * 0.3
+	await _wait(SLASH_AT)
+	if not instant:
+		CombatFx.slash(an, fwd, CELL * 0.9, CombatFx.PHYSICAL, _swing_n % 5, big)
+	_swing_n += 1
+	await _wait(SWING_SEC * 0.6 - SLASH_AT)
 	if bool(entry.hit):
 		_units[t].hp = maxf(0.0, float(_units[t].hp) - float(entry.dmg))
 		_float_text(tn.position, "-%d" % int(entry.dmg), Color(1, 0.85, 0.4))
+		if not instant:
+			CombatFx.spark(self, tn.global_position + Vector3(0, 1.0, 0), CombatFx.PHYSICAL, big)
+			if cut:
+				_shake_cam()
+		await _wait(HITSTOP)
 		if not instant:
 			var base := tn.position
 			var tw := create_tween()
@@ -634,6 +655,12 @@ func _anim_hit(entry: Dictionary) -> void:
 			tw.tween_property(tn, "position", base, 0.04)
 	else:
 		_float_text(tn.position, "빗나감", Color(0.8, 0.85, 0.9))
+		if not instant:
+			var d := Vector3(fwd.x, 0, fwd.z)
+			var base2 := tn.position
+			var tw3 := create_tween()
+			tw3.tween_property(tn, "position", base2 + (d.normalized() if d.length() > 0.01 else Vector3.RIGHT) * DODGE, 0.08).set_ease(Tween.EASE_OUT)
+			tw3.tween_property(tn, "position", base2, 0.1)
 	_set_label(t)
 	await _wait(SWING_SEC * 0.4)
 	_play(a, "idle")
@@ -647,6 +674,7 @@ func _anim_hit(entry: Dictionary) -> void:
 			tn.rotation.x = -PI * 0.5   # 쓰러짐 클립이 없으면 눕힌다
 		await _wait(0.5)
 		if not instant:
+			CombatFx.element_burst(self, tn.global_position, 0.9, CombatFx.PHYSICAL, 0.4, "", false)
 			var tw2 := create_tween()
 			tw2.tween_property(tn, "scale", Vector3.ONE * 0.01, 0.35)
 			await tw2.finished
@@ -660,6 +688,15 @@ static func _cut_transform(a: Vector3, t: Vector3) -> Transform3D:
 	var side := Vector3(-back.z, 0, back.x)
 	var pos := a + back * 1.8 + Vector3(0, 2.3, 0) + side * 0.7
 	return Transform3D(Basis.IDENTITY, pos).looking_at(t + Vector3(0, 1.0, 0), Vector3.UP)
+
+
+## G-0253 — 컷 중 맞으면 카메라 0.05m 두 번(0.04초씩 — 되돌림 tween 훨씬 앞에서 끝남)
+func _shake_cam() -> void:
+	var p0 := _cam.position
+	var tw := create_tween()
+	for k in 2:
+		tw.tween_property(_cam, "position", p0 + Vector3(0, CAM_SHAKE * (1 - 2 * k), 0), 0.04)
+		tw.tween_property(_cam, "position", p0, 0.04)
 
 
 func _cut_to(to: Transform3D, sec: float) -> void:
