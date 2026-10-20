@@ -200,7 +200,7 @@ namespace Saga.Forest.Data
                 return who + " — " + Story(key) + " " + string.Format(ForestLocalization.T("visitor.story_reward", "(과일 +{0})"), StoryFruit);
             }
             if (GiftGot.Contains(key))
-                return chat != null ? $"{who} — " + string.Format(ForestLocalization.T("visitor.chatting", "(수다 중) {0}"), chat) : $"{who} — {SettleLine(key)}";
+                return chat != null ? $"{who} — " + string.Format(ForestLocalization.T("visitor.chatting", "(수다 중) {0}"), chat) : $"{who} — {ForestHearts.UniqLine(key) ?? SettleLine(key)}"; // tasks U-0143 5♥ 고유 대화
             GiftGot.Add(key);
             int g = GiftOf(key);
             ForestState.AddFruit(g);
@@ -435,6 +435,7 @@ namespace Saga.Forest.Data
                 ForestHomeState.AddStock(it.Id, 1);
                 r.Done = true;
                 BondUp(v.Key);
+                ForestHearts.Bump(v.Key, ForestHearts.DoneGain); // tasks U-0143 부탁 완수 하트 +2
                 Touch();
                 return who + " — " + string.Format(ForestLocalization.T("visitor.fox_sold", "좋은 눈이시오 — 「{0}」은(는) 집 창고에 넣어 두었소"), it.Name);
             }
@@ -471,6 +472,7 @@ namespace Saga.Forest.Data
         {
             r.Done = true;
             BondUp(v.Key);
+            ForestHearts.Bump(v.Key, ForestHearts.DoneGain); // tasks U-0143 부탁 완수 하트 +2
             ForestState.AddFruit(v.Fruit);
             var f = FurnitureItem.Get(v.Furniture);
             if (f != null) ForestHomeState.AddStock(f.Id, 1);

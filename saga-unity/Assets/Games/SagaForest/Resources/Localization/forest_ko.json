@@ -629,6 +629,25 @@
     { "key": "cave.hud_dark", "value": "🌑 어둠" },
     { "key": "cave.hud", "value": "{0} · {1} · 가장 깊이 {2}층" },
     { "key": "cave.lbl_enter", "value": "⛰️ 굴로 들어간다" },
-    { "key": "cave.enter", "value": "⛰️ 굴 입구 방 — 사다리로 내려가면 땅 아래 층이다" }
+    { "key": "cave.enter", "value": "⛰️ 굴 입구 방 — 사다리로 내려가면 땅 아래 층이다" },
+    { "key": "heart.tail", "value": " ♥ {0}/{1}" },
+    { "key": "heart.tail_next", "value": " · 다음 {0}♥ {1}" },
+    { "key": "heart.unlock.visit", "value": "집 방문 허용" },
+    { "key": "heart.unlock.uniq", "value": "고유 대화" },
+    { "key": "heart.unlock.follow", "value": "동행" },
+    { "key": "heart.unlock.memento", "value": "기념품" },
+    { "key": "heart.memento_reward", "value": "(기념품 · 과일 +{0})" },
+    { "key": "heart.memento.home", "value": "{0}: 그대에게만 하는 얘기요. 내 고향 이야기를 한 번도 못 했구려. {1} 그 하늘 아래 배운 것이 이 마을에서도 통하니 신기한 일이오." },
+    { "key": "heart.memento.dream", "value": "{0}: 내 꿈을 말해도 웃지 않겠소? 이 마을에서 이웃과 오래오래 사는 것이오. {1} 그런 꿈을 이루게 해 준 이가 바로 그대요." },
+    { "key": "heart.memento.gift", "value": "{0}: 이것을 받아 주시오. 오래 아껴 온 것인데 그대가 가질 때가 되었소. {1} 정이란 이렇게 손에서 손으로 넘어가는 것이라 배웠소." },
+    { "key": "heart.uniq.keeper", "value": "숲이 말을 한다는 걸 믿나? 나는 바람 소리로 내일 날씨를 안다네. 그대 발소리도 이제 알아듣지" },
+    { "key": "heart.uniq.fox", "value": "장사꾼끼리 하는 말인데, 제일 비싼 물건은 늘 덤으로 끼워 주는 정이라오" },
+    { "key": "heart.uniq.sailor", "value": "별자리 읽는 법을 아오? 북쪽 일곱 별만 알면 어느 바다에서도 집에 돌아오지" },
+    { "key": "heart.uniq.wisp", "value": "히히, 사실 나 어둠이 무서워. 그래서 늘 반짝이는 거야 — 비밀이야!" },
+    { "key": "heart.uniq.angler", "value": "물고기가 안 물 땐 하늘을 보게. 구름 그림자가 물속 길을 가르쳐 준다네" },
+    { "key": "heart.uniq.bugdoc", "value": "개미는 자기 몸의 쉰 배를 든대요. 저도 그 정도로 이 숲을 아끼고 싶어요" },
+    { "key": "heart.uniq.traveler", "value": "삐빗. 고백: 제 기록 장치엔 ‘친구’ 칸이 없었습니다. 어제 새로 만들었습니다" },
+    { "key": "heart.uniq.dokkaebi", "value": "도깨비 방망이 얘기 들었나? 금 나와라 뚝딱보다 웃음 나와라 뚝딱이 더 어렵다네" },
+    { "key": "heart.uniq.alien", "value": "제 별엔 노을이 없어요. 여기 노을을 처음 봤을 때 모선에 ‘색이 너무 많음’ 이라고 보냈어요" }
   ]
 }

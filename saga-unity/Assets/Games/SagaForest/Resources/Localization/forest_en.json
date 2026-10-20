@@ -629,6 +629,25 @@
     { "key": "cave.hud_dark", "value": "🌑 Dark" },
     { "key": "cave.hud", "value": "{0} · {1} · deepest B{2}" },
     { "key": "cave.lbl_enter", "value": "⛰️ Enter the cave" },
-    { "key": "cave.enter", "value": "⛰️ Cave mouth — take the ladder down to the floors below" }
+    { "key": "cave.enter", "value": "⛰️ Cave mouth — take the ladder down to the floors below" },
+    { "key": "heart.tail", "value": " ♥ {0}/{1}" },
+    { "key": "heart.tail_next", "value": " · next {0}♥ {1}" },
+    { "key": "heart.unlock.visit", "value": "home visits" },
+    { "key": "heart.unlock.uniq", "value": "personal talk" },
+    { "key": "heart.unlock.follow", "value": "walk together" },
+    { "key": "heart.unlock.memento", "value": "keepsake" },
+    { "key": "heart.memento_reward", "value": "(keepsake · fruit +{0})" },
+    { "key": "heart.memento.home", "value": "{0}: This is just between us. I never told you about my home. {1} What I learned under that sky still works in this village — strange, isn't it." },
+    { "key": "heart.memento.dream", "value": "{0}: Promise not to laugh at my dream? To live a long, long time here beside my neighbors. {1} And you're the one who made it come true." },
+    { "key": "heart.memento.gift", "value": "{0}: Please take this. I've treasured it for years, and now it's time it was yours. {1} I learned that friendship passes from hand to hand like this." },
+    { "key": "heart.uniq.keeper", "value": "Do you believe the forest talks? I can tell tomorrow's weather from the wind. I know your footsteps now, too" },
+    { "key": "heart.uniq.fox", "value": "Between traders: the priciest thing I sell is always the goodwill I throw in for free" },
+    { "key": "heart.uniq.sailor", "value": "Can you read the stars? Know the seven in the north and you'll find home from any sea" },
+    { "key": "heart.uniq.wisp", "value": "Hehe, truth is I'm scared of the dark. That's why I always sparkle — it's a secret!" },
+    { "key": "heart.uniq.angler", "value": "When the fish won't bite, look at the sky. Cloud shadows show you the paths under the water" },
+    { "key": "heart.uniq.bugdoc", "value": "Ants can lift fifty times their weight. I want to care for this forest that much" },
+    { "key": "heart.uniq.traveler", "value": "Beep. Confession: my logger had no 'friend' field. I added one yesterday" },
+    { "key": "heart.uniq.dokkaebi", "value": "Heard of the goblin club? 'Gold, come out!' is easy — 'Laughter, come out!' is the hard one" },
+    { "key": "heart.uniq.alien", "value": "My planet has no sunsets. The first time I saw one here I told the mothership: 'too many colors'" }
   ]
 }

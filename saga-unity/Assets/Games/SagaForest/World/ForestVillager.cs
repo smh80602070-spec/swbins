@@ -87,20 +87,35 @@ namespace Saga.Forest.World
             if (Vector3.Distance(transform.position, _player.position) > TalkRadius) return;
 
             _cooldownLeft = RetalkCooldownSec;
+            Talk();
+        }
+
+        /// <summary>tasks U-0143 진단 — 마지막 말(하트 꼬리 포함).</summary>
+        public string LastLine { get; private set; }
+
+        /// <summary>말 한 번(다가서면 Update 가, 진단은 직접) — 그 글.</summary>
+        public string Talk()
+        {
+            ForestHearts.Talk(ForestHearts.KeeperId); // tasks U-0143 — 그날 처음 다가서면 +1
 
             // PLAN.md 101-2 5.6 "축제 하루"(2026-09-21) — 세배(매달 1일)만
             // 이 숲지기가 맡는다(웹판 "주민 5에게 세배"를 1명으로 좁힘).
             if (ForestFestivalState.TodayKind() == ForestFestivalState.Kind.Sebae &&
                 ForestFestivalState.TryComplete(ForestFestivalState.Kind.Sebae, out int reward))
             {
-                DialogueLabel.Instance?.Show(
-                    string.Format(ForestLocalization.T("festival.sebae", "{0} — \"새해 복 많이 받으시게 — 세배값이네.\" (과일 +{1})"), DisplayName, reward),
-                    ToastSec);
-                return;
+                ForestHearts.Bump(ForestHearts.KeeperId, ForestHearts.DoneGain); // tasks U-0143 세배 완수 +2(웹 축제 하트)
+                LastLine = string.Format(ForestLocalization.T("festival.sebae", "{0} — \"새해 복 많이 받으시게 — 세배값이네.\" (과일 +{1})"), DisplayName, reward)
+                    + ForestHearts.Tail(ForestHearts.KeeperId);
+                DialogueLabel.Instance?.Show(LastLine, ToastSec);
+                return LastLine;
             }
 
-            DialogueLabel.Instance?.Show($"{DisplayName} — \"{Line}\"", ToastSec);
+            // tasks U-0143 — 10♥ 기념품 한 번 · 5♥ 고유 대화 · 하트 꼬리.
+            string memento = ForestHearts.Memento(ForestHearts.KeeperId, DisplayName);
+            LastLine = (memento ?? $"{DisplayName} — \"{ForestHearts.UniqLine(ForestHearts.KeeperId) ?? Line}\"") + ForestHearts.Tail(ForestHearts.KeeperId);
+            DialogueLabel.Instance?.Show(LastLine, ToastSec);
             Saga.Core.SagaVoice.Say("greet", DisplayName); // U-0068 — 주민 인사 한 마디
+            return LastLine;
         }
     }
 }

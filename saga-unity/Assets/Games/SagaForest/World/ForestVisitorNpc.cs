@@ -177,9 +177,17 @@ namespace Saga.Forest.World
             switch (Kind)
             {
                 case Role.Kid: LastLine = ForestVisitors.KidLine(); break;
-                case Role.Settled: LastLine = ForestVisitors.TalkSettled(_data.Key, Chat); break;
+                case Role.Settled:
+                    ForestHearts.Talk(_data.Key); // tasks U-0143 — 그날 처음 다가서면 +1
+                    // 10♥ 기념품 — 오늘 선물·사연을 다 받은 뒤 다가서면 한 번.
+                    string memento = ForestVisitors.GiftTakenToday(_data.Key) && (!ForestVisitors.HasStory(_data.Key) || ForestVisitors.StoryHeard(_data.Key))
+                        ? ForestHearts.Memento(_data.Key, ForestVisitors.Name(_data)) : null;
+                    LastLine = memento ?? ForestVisitors.TalkSettled(_data.Key, Chat);
+                    LastLine += ForestHearts.Tail(_data.Key);
+                    break;
                 default:
-                    LastLine = ForestVisitors.Talk(_runner != null ? _runner.RemainingDirs() : null);
+                    ForestHearts.Talk(_data.Key);
+                    LastLine = ForestVisitors.Talk(_runner != null ? _runner.RemainingDirs() : null) + ForestHearts.Tail(_data.Key);
                     break;
             }
             DialogueLabel.Instance?.Show(LastLine, ForestVisitors.LineSec);
