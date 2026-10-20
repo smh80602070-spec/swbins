@@ -117,6 +117,8 @@ namespace Saga.Realm.Data
             float firstRoundMul = 1f, defMul = 1f;
             if (useTactic) (firstRoundMul, defMul, tacticNote) = ResolveTactic(def.Land, officers);
 
+            defMul *= RealmWonder.EnemyMul(enemyId, "defPct"); // tasks U-0136 — 그 적 성이 먼저 지은 장벽·다리
+            takeMul *= RealmWonder.EnemyMul(enemyId, "atkPct");
             var result = RealmWar.Fight(atk, defArmy, enemy, def.Land, firstRoundMul, defMul, duelPowerMul, takeMul);
 
             int eaten = Mathf.RoundToInt(troops / 1000f * RealmCityState.FoodPer1000);

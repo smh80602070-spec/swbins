@@ -2189,6 +2189,24 @@
   "note": "D2(U-0134): docs/playcheck/d2-u0134-20261020.json — PlaytestRealmSlice 112→117(supply pitch·month·supply·retreat·plot) · 적 진이 없는 트랙이라 ✂️ 는 적 성 보급(2달 −5%) · 공격 명령 = 진 풀기 · 촬영 안 함"
  },
  {
+  "id": "un.rk.wonder",
+  "name": "U-0136 불가사의 경쟁 — 큰 공사 여섯, 먼저 다 지은 쪽만 효과·늦으면 금 반 환급, 경쟁자 = 함락 안 된 적 성(웹 W-0279 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaRealm/Data/RealmWonder.cs",
+   "saga-unity/Assets/Games/SagaRealm/UI/RealmWonderUi.cs",
+   "saga-unity/Assets/Games/SagaRealm/Data/RealmTechData.cs"
+  ],
+  "tests": [
+   "PlaytestRealmWonder"
+  ],
+  "level": "D2",
+  "verified": "2026-10-20 claude",
+  "fun": {},
+  "ticket": "U-0136",
+  "since": "2026-10-20",
+  "note": "D2(U-0136): docs/playcheck/d2-u0136-20261020.json — PlaytestRealmSlice 117→122(wonder gate·build·race·rival·save) · 효과는 RealmTechData.Pct 한 자리 · 적 몫은 그 성 싸움 수비·공격만 · 촬영 안 함"
+ },
+ {
   "id": "un.rk.tech-tree",
   "name": "U-0129 기술 나무 — 세력 연구 네 갈래(농·상·군·학) × 6마디(웹 W-0290 이식)",
   "files": [

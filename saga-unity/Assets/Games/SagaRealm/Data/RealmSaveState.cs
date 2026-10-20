@@ -110,6 +110,7 @@ namespace Saga.Realm.Data
             // tasks U-0129 기술 나무 — 버전 그대로: 옛 세이브는 0점·null = 연구 없음.
             public int techPts;
             public string[] techDone;
+            public string wonderJson; // tasks U-0136 불가사의 — 버전 그대로: 옛 세이브는 null → 빈 것.
             public string campJson; // tasks U-0134 진·보급선 — 버전 그대로: 옛 세이브는 null → 진 없음.
         }
 
@@ -205,6 +206,7 @@ namespace Saga.Realm.Data
             data.techPts = RealmTechData.Points; // tasks U-0129
             data.techDone = RealmTechData.SnapshotDone();
             data.campJson = RealmCamp.Snapshot(); // tasks U-0134
+            data.wonderJson = RealmWonder.Snapshot(); // tasks U-0136
             return JsonUtility.ToJson(data);
         }
 
@@ -291,6 +293,7 @@ namespace Saga.Realm.Data
             RealmCityState.RestoreWarRecords(data.hurtIds, data.hurtMonths, data.annalIds, data.annalWhere, data.annalBy, data.annalYears, data.annalMonths);
             RealmTechData.Restore(data.techPts, data.techDone); // tasks U-0129
             RealmCamp.Restore(data.campJson); // tasks U-0134
+            RealmWonder.Restore(data.wonderJson); // tasks U-0136
             return true;
         }
 

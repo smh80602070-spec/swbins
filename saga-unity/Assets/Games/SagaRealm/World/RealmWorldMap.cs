@@ -139,6 +139,16 @@ namespace Saga.Realm.World
                     RealmCamp.Connected(camp) ? new Color(0.62f, 0.5f, 0.32f) : new Color(0.8f, 0.2f, 0.15f), addCollider: false);
             }
 
+            // tasks U-0136 불가사의 — 우리가 다 지은 성 곁에 도형 탑(에셋 없이).
+            foreach (var w in RealmWonder.All)
+            {
+                var b = RealmWonder.BuiltOf(w.Id);
+                var at = b != null && b.by == RealmWonder.Me ? RealmCityData.Get(b.city) : null;
+                if (at == null) continue;
+                var p = WorldPos(at, centerX, centerY) + new Vector3(-PoleRadius * 6f, 0f, 0f);
+                Spawn($"Wonder_{w.Id}", transform, PrimitiveType.Cylinder, p + new Vector3(0f, 3f, 0f), new Vector3(1.6f, 3f, 1.6f), new Color(0.85f, 0.75f, 0.45f), addCollider: false);
+            }
+
             // PLAN.md 109-13-2 지도 위 인물 — 태수 몸짓·재야. 에디터 씬 빌드(Play 아님)엔 안 세운다(씬에 대역이 저장되지 않게).
             if (Application.isPlaying)
             {

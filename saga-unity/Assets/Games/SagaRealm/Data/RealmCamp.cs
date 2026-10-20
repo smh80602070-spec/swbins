@@ -164,7 +164,7 @@ namespace Saga.Realm.Data
             c.months++;
             var atk = new RealmArmy { Troops = c.troops, Start = c.troops, Train = c.train, Tech = c.tech, OfficerIds = new List<string>(c.officers), Morale = c.morale };
             var defArmy = new RealmArmy { Troops = enemy.Troops, Start = enemy.Troops, Train = enemy.Train, Tech = enemy.Tech, OfficerIds = new List<string>(), Morale = 1f };
-            var r = RealmWar.Fight(atk, defArmy, enemy, def.Land);
+            var r = RealmWar.Fight(atk, defArmy, enemy, def.Land, 1f, RealmWonder.EnemyMul(c.to, "defPct"), RealmTechData.Mul("atkPct"), RealmWonder.EnemyMul(c.to, "atkPct")); // tasks U-0136
             enemy.Troops = defArmy.Troops;
             c.troops = atk.Troops;
             c.morale = atk.Morale;

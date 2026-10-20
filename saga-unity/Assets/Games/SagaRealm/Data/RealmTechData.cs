@@ -105,7 +105,7 @@ namespace Saga.Realm.Data
         {
             int n = 0;
             foreach (var id in Done) { var nd = GetNode(id); if (nd != null && nd.Stats.TryGetValue(key, out var v)) n += v; }
-            return n;
+            return n + RealmWonder.Pct(key); // tasks U-0136 — 우리가 먼저 다 지은 불가사의(같은 key 자리를 그대로 탄다)
         }
 
         /// <summary>1 + 그 키 합/100 — 연구 0 이면 정확히 1.</summary>

@@ -528,7 +528,8 @@ namespace Saga.Realm.Data
                 }
             }
 
-            var campLines = RealmCamp.Monthly(); // tasks U-0134 진·보급선 — 달 바뀐 뒤(군량 먹고·보급 보고·다시 친다)
+            var campLines = RealmCamp.Monthly();
+            campLines.AddRange(RealmWonder.Monthly()); // tasks U-0136 불가사의 — 적 착공·남은 달·완공·환급 // tasks U-0134 진·보급선 — 달 바뀐 뒤(군량 먹고·보급 보고·다시 친다)
             Changed?.Invoke();
             string summary = string.Format(RealmLocalization.T("month.summary", "{0}년 {1}월 — 금 +{2}-{3}(봉록){4}"),
                 Year, Month, income, upkeep, harvest ? RealmLocalization.T("month.harvest_suffix", ", 수확") : "");

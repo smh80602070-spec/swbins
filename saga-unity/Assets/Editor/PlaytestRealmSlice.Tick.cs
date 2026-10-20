@@ -1237,6 +1237,7 @@ namespace Saga.EditorTools
                     if (!PlaytestRealmTactics.Run()) { Fail(); return; }
                     if (!PlaytestRealmTech.Run()) { Fail(); return; } // tasks U-0129 기술 나무 — 세이브 JSON 으로 되돌린다.
                     if (!PlaytestRealmSupply.Run()) { Fail(); return; } // tasks U-0134 진·보급선 — 싸움 결과 고정, 세이브 JSON 으로 되돌린다.
+                    if (!PlaytestRealmWonder.Run()) { Fail(); return; } // tasks U-0136 불가사의 — 세이브 JSON 으로 되돌린다.
                     _phase = Phase.QuizCorrect;
                     break;
                 }

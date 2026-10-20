@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-20",
+  "tickets": [
+    "U-0136 5천하 불가사의 경쟁(웹 W-0279)"
+  ],
+  "how": "PlaytestRealmSlice.Run·UiLayoutCheck.Run 배치(unity-batch.sh, -quit 없음, </dev/null), 세이브 다섯 백업·되돌림(Realm 슬라이스는 save_realm.json 을 지움 → 백업에서 되돌림, md5 같음)",
+  "ok_before": 117,
+  "ok_after": 122,
+  "new_ok": [
+    "wonder gate",
+    "wonder build",
+    "wonder race",
+    "wonder rival",
+    "wonder save"
+  ],
+  "ui_layout": "OK 문제 0 (연구 창 열린 상태 = 불가사의 단추 포함 · 불가사의 창은 진단이 겹침·밖 0 으로 잼)",
+  "error_cs": 0,
+  "exception": 0,
+  "save_md5_same": true,
+  "runs": 1
+}
