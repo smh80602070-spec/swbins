@@ -24,7 +24,7 @@
     var rows = o.keys.map(function (k, i) {
       var sk = JD().skill(k), sc = sk && JD().schoolDef(sk.school), lv = J().levelOf(k);
       return '<button class="btn" data-lp-pick="' + i + '" style="display:block;width:100%;margin-top:8px;text-align:left;line-height:1.5">' +
-        sk.emoji + ' <b>' + esc(sk.name) + '</b> <small class="muted">' + (sc ? esc(sc.name) + ' 사슬 · ' : '') + 'Lv ' + lv + ' → ' + (lv + 1) + '</small><br>' +
+        (global.DG.itemicon ? global.DG.itemicon.or('saga-story', 'skill', k, 28, sk.emoji) : sk.emoji) + ' <b>' + esc(sk.name) + '</b> <small class="muted">' + (sc ? esc(sc.name) + ' 사슬 · ' : '') + 'Lv ' + lv + ' → ' + (lv + 1) + '</small><br>' +
         '<small>' + esc(sk.desc || '') + '</small></button>';
     }).join('');
     return '<h3 style="margin:0 0 4px">📜 Lv.' + o.lv + ' 무예 3택' + (count() > 1 ? ' <small class="muted">(남은 장 ' + count() + ')</small>' : '') + '</h3>' +

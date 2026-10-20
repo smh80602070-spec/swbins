@@ -909,5 +909,23 @@
   "ticket": "W-0321",
   "since": "2026-10-20",
   "note": "10-20: 소리는 K-0117 같은 이름 덮어씀(코드 0줄) · 라이선스 절 정리"
+ },
+ {
+  "id": "st.skill-icons",
+  "name": "직업·무예 그림 125(K-0118 job_st·sk_st) — 무예 창·전직·조작 띠·3택·Z 공격 단추, 없으면 이모지(W-0330)",
+  "files": [
+   "js/ui-job.js",
+   "js/levelpick.js",
+   "src/ui/01.js"
+  ],
+  "tests": [
+   "W-0330 직업·무예 그림 — 표에 skill·job 125 · JOBS·SKILLS 전부 그림 주소 · 무예 창에 <img"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0330",
+  "since": "2026-10-20",
+  "note": "10-20: pw-menu-sheet 05 Read ○ 무명·무사·궁수 그림, Z 단추 무예 그림"
  }
 ]

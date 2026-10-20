@@ -11,6 +11,8 @@
   var esc, pt;
   var api = null;
   function setup(h) { esc = h.esc; pt = h.pt; return api; }
+  /* W-0330 — 직업·무예 그림(K-0118 job_st_*·sk_st_*) 먼저, 없으면 이모지(아이템 아이콘 W-0025 와 같은 길) */
+  function ic(kind, key, size, fb) { var I = global.DG.itemicon; return I ? I.or('saga-story', kind, key, size, fb) : fb; }
 
   /** 🥋 무예 — 전직과 스킬 트리. 원작의 스킬창 자리다 */
   function viewJob() {
@@ -19,7 +21,7 @@
     var i, html = '';
 
     html += '<div class="sec"><h4>지금 자리</h4><div class="card">' +
-      '<div class="stat-row"><span>' + me.emoji + ' <b>' + esc(me.name) + '</b></span>' +
+      '<div class="stat-row"><span>' + ic('job', me.key, 28, me.emoji) + ' <b>' + esc(me.name) + '</b></span>' +
         '<span class="muted">Lv.' + core.save.player.level + '</span></div>' +
       '<div class="stat-row"><span class="muted">' + esc(me.desc) + '</span>' +
         '<b>강화 점수 ' + left + '</b></div>' +   // W-0104 — 레벨업은 3택(📜), 점수는 거절·옛 레벨 몫
@@ -61,7 +63,7 @@
       for (i = 0; i < nexts.length; i++) {
         var nj = nexts[i], why = J.canJoin(nj.key);
         html += '<div class="card"><div class="stat-row">' +
-          '<span>' + nj.emoji + ' <b>' + esc(nj.name) + '</b></span>' +
+          '<span>' + ic('job', nj.key, 28, nj.emoji) + ' <b>' + esc(nj.name) + '</b></span>' +
           '<span class="muted">Lv.' + nj.need + ' 부터</span></div>' +
           '<div class="stat-row"><span class="muted">' + esc(nj.desc) + '</span>' +
             '<span class="muted">체력 +' + (nj.grow ? nj.grow.hp : 0) +
@@ -98,7 +100,7 @@
         var sk = list[i], lv = J.levelOf(sk.key), why2 = J.canRaise(sk.key);
         var mul = J.mulOf(sk);
         html += '<div class="card' + (lv > 0 ? ' on' : '') + (tier ? ' set' + tier : '') + '">' +
-          '<div class="stat-row"><span>' + sk.emoji + ' <b>' + esc(sk.name) + '</b></span>' +
+          '<div class="stat-row"><span>' + ic('skill', sk.key, 28, sk.emoji) + ' <b>' + esc(sk.name) + '</b></span>' +
             '<b>' + lv + ' / ' + sk.max + '</b></div>' +
           '<div class="stat-row"><span class="muted">' + esc(sk.desc) + '</span>' +
             '<span class="muted">기력 ' + sk.cost + ' · 쿨 ' + sk.cd + 's</span></div>' +
@@ -123,7 +125,7 @@
       var bDef = bar[i].school ? JD.schoolDef(bar[i].school) : null;
       var bTier = bDef ? (active[bDef.id] || 0) : 0;
       html += '<div class="stat-row' + (bTier ? ' set' + bTier : '') + '"><span>' + (i + 1) + ' · ' +
-        bar[i].emoji + ' ' + esc(bar[i].name) +
+        ic('skill', bar[i].key, 22, bar[i].emoji) + ' ' + esc(bar[i].name) +
         (bDef ? ' <small class="muted">[' + esc(bDef.name) + ']</small>' : '') +
         '</span><span class="muted">' +
         (bar[i].max ? '레벨 ' + J.levelOf(bar[i].key) : '고정') + '</span></div>';

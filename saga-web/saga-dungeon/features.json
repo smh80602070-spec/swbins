@@ -1314,5 +1314,22 @@
   "ticket": "W-0321",
   "since": "2026-10-20",
   "note": "10-20: 옛 models/weapons/ 여덟·hexagon/windmill 지움(못 얹으면 도형) · dg-wpn-probe 콤보 6·타격음 샘플 ○(쥐는 축 근접 확인은 못 함)"
+ },
+ {
+  "id": "dg.skill-icons",
+  "name": "무예·직업 그림 125(K-0118 sk_dg·job_dg) — 무예 창·손에 든 넷·HUD 스킬 단추, 없으면 이모지(W-0330)",
+  "files": [
+   "src/ui/02.js",
+   "js/dungeon-view-hud.js"
+  ],
+  "tests": [
+   "W-0330 무예·직업 그림 — 표에 skill·job 125 · SKILLS·CLASSES 전부 그림 주소 · 무예 창에 <img"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0330",
+  "since": "2026-10-20",
+  "note": "10-20: pw-menu-sheet 06 Read ○ 무장 직업 그림 · HUD 단추는 무예·비결 바뀔 때만 다시 씀"
  }
 ]

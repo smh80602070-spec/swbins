@@ -1129,6 +1129,15 @@ window.requestAnimationFrame = function () { return 0; };
       if (arr.length < 100 || miss.length) { throw new Error(JSON.stringify({ n: arr.length, miss: miss })); }
       return '짐승형 적 ' + arr.length + ' 전부 자체 계열 몸';
     });
+    t('W-0330 무예·직업 그림 — 표에 skill·job 125 · SKILLS·CLASSES 전부 그림 주소 · 무예 창에 <img', function () {
+      var I = DG.itemicon, SD = DG.skillData, T = DG.itemiconIds['saga-dungeon'], n = Object.keys(T).filter(function (k) { return /^(skill|job):/.test(k); }).length;
+      var miss = SD.SKILLS.filter(function (s) { return !I.src('saga-dungeon', 'skill', s.key); }).map(function (s) { return s.key; })
+        .concat(SD.CLASSES.filter(function (c) { return !I.src('saga-dungeon', 'job', c.key); }).map(function (c) { return 'job:' + c.key; }));
+      DG.ui.openSheet('skill'); var h = document.getElementById('sheet-body').innerHTML; DG.ui.closeSheet();
+      var img = (h.match(/<img[^>]+icon64\/(sk_dg|job_dg)_/g) || []).length;
+      if (n < 125 || miss.length || !img) { throw new Error(JSON.stringify({ n: n, miss: miss.slice(0, 5), img: img })); }
+      return '표 ' + n + ' · 무예 ' + SD.SKILLS.length + '·직업 ' + SD.CLASSES.length + ' 전부 그림 · 무예 창 img ' + img;
+    });
     t('W-0261 자체 에셋 — 판별 표(cfg.assets3d.reg)의 world3d id 가 전부 있다 · 얹은 뒤 asset3d 표에 빌린 KayKit·Quaternius·실사 경로가 안 남는다 · W-0321 몽둥이·두루마리·부채·붓·방앗간도 자체 · 3D HDR 은 자체 하늘', function () {
       var reg = (DG.cfg.assets3d || {}).reg || {}, A = DG.assets3d, miss = [], n = 0, k, i;
       for (k in reg) { if (Object.prototype.hasOwnProperty.call(reg, k)) { for (i = 0; i < reg[k].length; i++) { n++; if (!A.has('world', reg[k][i])) { miss.push(reg[k][i]); } } } }

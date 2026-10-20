@@ -1816,7 +1816,7 @@
     }
 
     var html = '<div class="bagtools">' + tabs + '</div>' +
-      '<div class="sec"><h4>' + cls.emoji + ' ' + esc(cls.name) + '(' + cls.hanja + ')</h4>' +
+      '<div class="sec"><h4>' + ico('job', cls.key, 24, cls.emoji) + ' ' + esc(cls.name) + '(' + cls.hanja + ')</h4>' +   // W-0330 직업·무예 그림(K-0118), 없으면 이모지
       '<div class="card">' +
         '<div class="stat-row"><span>' + esc(h ? h.name : '') + '</span>' +
           '<b>Lv.' + SK.pointsTotal(skillHero) + ' · 남은 점수 ' + left + '</b></div>' +
@@ -1841,7 +1841,7 @@
     for (i = 0; i < eq.length; i++) {
       html += '<button class="btn tiny' + (skillSlotPick === i ? ' primary' : ' ghost') +
         '" data-act="skill-slot" data-idx="' + i + '">' + KEYS[i] + ' ' +
-        (eq[i] ? eq[i].sk.emoji + ' ' + esc(eq[i].sk.name) : '<span class="muted">비었다</span>') +
+        (eq[i] ? ico('skill', eq[i].sk.key, 20, eq[i].sk.emoji) + ' ' + esc(eq[i].sk.name) : '<span class="muted">비었다</span>') +
         '</button>';
     }
     html += '</div>';
@@ -1869,7 +1869,7 @@
         var slotted = eq.filter(function (x) { return x && x.sk.key === sk.key; }).length > 0;
         html += '<div class="grow" style="border-left-color:' +
           (rank ? 'var(--gold)' : (locked ? 'var(--ink-faint)' : 'var(--d2-brass)')) + '">' +
-          '<div class="gr-top"><b>' + sk.emoji + ' ' + esc(sk.name) + '</b>' +
+          '<div class="gr-top"><b>' + ico('skill', sk.key, 28, sk.emoji) + ' ' + esc(sk.name) + '</b>' +
           '<span class="gr-lv">' + rank + ' / ' + SD.MAX_RANK + '단' +
             (slotted ? ' · 손에 듦' : '') + '</span></div>' +
           '<div class="gr-opts">' + esc(sk.desc) +

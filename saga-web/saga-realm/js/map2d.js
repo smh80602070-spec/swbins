@@ -2,6 +2,7 @@
  * 사가천하 2D 국토 지도 꾸밈 (W-0023) — `renderMap()`(src/ui-rtk/02.js)이 부르는 SVG 조각 둘:
  *   terrain(cities)   지도 밑에 깔 지형 바닥(`<defs>` 무늬 + 바탕 + 성 둘레 땅 종류별 번짐) — K-0020 `realm_*` 타일
  *   castle(d, rad)    성 점 위에 얹는 성 그림(`<image>`) — K-0017 `world2d` 스프라이트, 병력(rad) 단계로 고른다
+ *   mark(kind, x, y, sz, cls, fb, fill) 지도 표식 그림(K-0118 `map_*`, W-0330) — 그림이 없으면 옛 글자(`<text>`)
  *   provLabels(cities) 지방 이름 붓글씨(K-0060 `assets/realm-ui/prov_<지방>.png`, W-0264) — 그 지방 성들의 가운데에 옅게
  * 둘 다 **2D 모드(3D 가 안 서 있음)이고 자료를 받았을 때만** 문자열을 돌려주고, 아니면 빈 문자열 — 지도는 옛 모양 그대로(오류 0).
  * 판 설정 `DG.cfg.mode2d`: `tile`(땅 종류 land → 타일 id)·`prop2d`(`city:s|m|l` → { id }). 주소는 `mode2d.tileUrl`·`assets3d.spriteUrl`.
@@ -104,6 +105,13 @@
       '" width="' + hh.toFixed(2) + '" height="' + hh.toFixed(2) + '"/>';
   }
 
+  /** 지도 표식(W-0330) — itemicon 표 `mapmark:<kind>`(battle·port·camp·guard·flag) 그림이 있으면 `<image>`(가운데 x, 글자 밑줄 y 에 맞춤), 없으면 fb 글자 */
+  function mark(kind, x, y, sz, cls, fb, fill) {
+    var I = global.DG && global.DG.itemicon, u = I && I.src('saga-realm', 'mapmark', kind), w = sz * 1.5;
+    if (u) { return '<image class="' + cls + ' rmark" pointer-events="none" href="' + u + '" x="' + (x - w / 2).toFixed(2) + '" y="' + (y - w * 0.85).toFixed(2) + '" width="' + w.toFixed(2) + '" height="' + w.toFixed(2) + '"/>'; }
+    return '<text class="' + cls + '" x="' + x + '" y="' + y + '"' + (fill ? ' fill="' + fill + '"' : '') + '>' + fb + '</text>';
+  }
+
   /** 지방 이름 붓글씨 — 지방(`prov`)마다 성들의 가운데 한 장(256×96 그림, 지도 단위 폭 PROV_W). 2D 모드에서만, 성·길 밑에 깐다 */
   var PROV_W = 20;
   function provLabels(cities) {
@@ -121,5 +129,5 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.map2d = { terrain: terrain, territory: territory, castle: castle, provLabels: provLabels, _reset: function () { settled = false; } };
+  global.DG.map2d = { terrain: terrain, territory: territory, castle: castle, mark: mark, provLabels: provLabels, _reset: function () { settled = false; } };
 })(typeof window !== 'undefined' ? window : this);

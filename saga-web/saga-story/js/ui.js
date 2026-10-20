@@ -752,7 +752,7 @@
        조작 띠에는 손이 쥐는 "공격"(쿨 가장 짧은 자리) 한 칸만 남긴다. */
     var atkI = st.attackIdx;
     var pty = st.party && st.party.list.length > 1 ? st.party : null;
-    var key = st.skills.length + ':' + atkI + ':' + (pty ? pty.list.map(function (m) { return m.id; }).join(',') : '');
+    var key = st.skills.length + ':' + atkI + ':' + (st.skills[atkI] ? st.skills[atkI].key : '') + ':' + (pty ? pty.list.map(function (m) { return m.id; }).join(',') : '');
     if (hudKey === null || hudKey !== key) {
       var html = '<div class="hud-card">' +
         '<div class="hud-hint" id="hud-hint"></div>' +
@@ -760,7 +760,7 @@
       if (atkI >= 0 && st.skills[atkI]) {
         sk = st.skills[atkI];
         html += '<button class="hud-sk" data-act="s-skill" data-i="' + atkI + '" title="' +
-          esc(sk.name + ' — ' + sk.desc + ' (Z)') + '"><b>' + sk.emoji + '</b><u></u>' + (core.touchOnly() ? '' : '<i class="hk">Z</i>') + '</button>';   // W-0176
+          esc(sk.name + ' — ' + sk.desc + ' (Z)') + '"><b>' + ico('skill', sk.key, '1.3em', sk.emoji) + '</b><u></u>' + (core.touchOnly() ? '' : '<i class="hk">Z</i>') + '</button>';   // W-0176
       }
       if (pty) {
         for (i = 0; i < pty.list.length; i++) {

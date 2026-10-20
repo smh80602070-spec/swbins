@@ -3100,6 +3100,13 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return flags === 1 && ('지도 위 원정 깃발 ' + flags + '개');
     });
 
+    t('W-0330 지도 표식 그림 — 표에 mapmark 다섯 · 원정 깃발이 map_flag 그림(없으면 🚩 글자)', function () {
+      var T = DG.itemiconIds['saga-realm'], ks = ['battle', 'port', 'camp', 'guard', 'flag'].filter(function (k) { return T['mapmark:' + k]; });
+      var m = DG.map2d.mark('flag', 10, 10, 3.4, 'rjourney', '🚩', '#f00'), t = DG.map2d.mark('nope', 10, 10, 3.4, 'rjourney', '🚩', '#f00');
+      var ok = ks.length === 5 && /<image[^>]+map_flag_g0\.png/.test(m) && /rjourney/.test(m) && /<text[^>]+>🚩<\/text>/.test(t);
+      if (!ok) { throw new Error(JSON.stringify({ ks: ks, m: m, t: t })); }
+      return '표 ' + ks.length + ' · 깃발 <image> · 없는 표식은 글자 그대로';
+    });
     t('세력 고르기 화면에 열세 깃발이 뜬다', function () {
       DG.ui.showForcePick();
       var n = document.querySelectorAll('#encounter [data-act="pick-force"]').length;

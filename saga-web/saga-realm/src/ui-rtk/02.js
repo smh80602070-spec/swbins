@@ -89,19 +89,18 @@
           '" class="ring"/>' : '') +
         (c.disaster ? '<text class="rdis" x="' + (d.x + rad + 0.6) + '" y="' + (d.y - rad) +
           '">' + R().disasterByKey(c.disaster).emoji + '</text>' : '') +
-        (global.DG.war.besieged(d.id) ? '<text class="rdis" x="' + (d.x - rad - 2.4) +
-          '" y="' + (d.y - rad) + '">🏕️</text>' : '') +
+        (global.DG.war.besieged(d.id) ? mapMark('camp', d.x - rad - 0.9, d.y - rad, 3, 'rdis', '🏕️') : '') +   // W-0330 진 그림(map_camp)
         '<text class="rlab" x="' + d.x + '" y="' + (d.y + rad + 2.6) + '">' + esc(d.name) + '</text>' +
         '</g>';
     }
 
     /* 가고 있는 원정 — 경로 위 지금 자리에 깃발 하나(2026-09-04) */
+    function mapMark(k, x, y, sz, cls, fb, fill) { var M2 = global.DG.map2d; return M2 && M2.mark ? M2.mark(k, x, y, sz, cls, fb, fill) : '<text class="' + cls + '" x="' + x + '" y="' + y + '"' + (fill ? ' fill="' + fill + '"' : '') + '>' + fb + '</text>'; }
     var jn = global.DG.war.journeys();
     for (i = 0; i < jn.length; i++) {
       var pos = journeyPos(jn[i]);
       if (!pos) { continue; }
-      s += '<text class="rjourney" x="' + pos.x + '" y="' + pos.y +
-        '" fill="' + forceColor(jn[i].force) + '">🚩</text>';
+      s += mapMark('flag', pos.x, pos.y, 3.4, 'rjourney', '🚩', forceColor(jn[i].force));   // W-0330 깃발 그림(map_flag)
     }
     if (global.DG.supplyLine) { s += global.DG.supplyLine.svg(); } s += '</svg>';   // W-0278 진 뒤 보급 길(초록 이어짐·빨강 끊김)
 

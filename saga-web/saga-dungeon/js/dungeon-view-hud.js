@@ -267,6 +267,14 @@
     }
 
     var btns = bottomEl.querySelectorAll('.dg-skill');
+    /* W-0330 — 무예 그림(K-0118 sk_dg_*) 먼저, 없으면 이모지. 매 틱 img 를 새로 짓지 않게 무예·비결이 바뀔 때만 다시 쓴다 */
+    function skIcon(el, s) {
+      var k = (s.key || '') + '|' + (s.emoji || '') + '|' + (s.secretEmoji || ''), IC = global.DG.itemicon, h;
+      if (el.getAttribute('data-k') === k) { return; }
+      el.setAttribute('data-k', k);
+      h = s.key && !s.empty && IC ? IC.html('saga-dungeon', 'skill', s.key, '1.6em', s.emoji) : null;
+      if (h) { el.innerHTML = h; el.appendChild(global.document.createTextNode(s.secretEmoji || '')); } else { el.textContent = (s.emoji || '') + (s.secretEmoji || ''); }
+    }
     for (var i = 0; i < btns.length && i < st.skills.length; i++) {
       var sk = st.skills[i];
       var cdEl = btns[i].querySelector('.dg-sk-cd');
@@ -275,7 +283,7 @@
       cdEl.textContent = sk.cd > 0.05 ? Math.ceil(sk.cd) : '';
       /* 걸린 무예가 바뀔 수 있으니 그림·값도 매 틱 맞춘다 (선두를 바꾸면 손이 바뀐다) */
       /* 비결(§5.9)을 걸었으면 무예 그림 옆에 작게 — 손에 든 무예가 어떻게 바뀌었는지 */
-      btns[i].querySelector('.dg-sk-e').textContent = sk.emoji + (sk.secretEmoji || '');
+      skIcon(btns[i].querySelector('.dg-sk-e'), sk);
       btns[i].querySelector('.dg-sk-cost').textContent = sk.empty ? '' : sk.cost;
       btns[i].title = sk.empty ? '무예를 걸어 두세요'
         : (sk.name + ' ' + (sk.rank || 1) + '단' + (sk.secret ? ' · 비결 ' + sk.secretEmoji : '') +

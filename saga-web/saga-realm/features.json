@@ -1250,5 +1250,22 @@
   "ticket": "W-0334",
   "since": "2026-10-20",
   "note": "10-20: 실기 1만리(ops-sync-e2e, 운영 서버 메모리 DB) — 접속 첫 업로드 rev1 → 저장 30초 뒤 rev2 → 다른 기기 rev3 → 새로 고침 카드 → 서버 세이브로 → 값 바뀜 ○(첫 시도는 beforeunload 저장이 덮어 실패 → 메모리 세이브도 바꾸고 감싼 저장 막아 고침)"
+ },
+ {
+  "id": "rl.mapmark-icons",
+  "name": "지도 표식 그림(K-0118 map_camp·map_flag) — 포위 진·원정 깃발, 없으면 글자(W-0330)",
+  "files": [
+   "js/map2d.js",
+   "src/ui-rtk/02.js"
+  ],
+  "tests": [
+   "W-0330 지도 표식 그림 — 표에 mapmark 다섯 · 원정 깃발이 map_flag 그림(없으면 🚩 글자)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0330",
+  "since": "2026-10-20",
+  "note": "10-20: battle·port·guard 는 지도에 그리는 글자가 없어 안 씀 · 새 판 화면엔 포위·원정이 없어 진단으로만 확인"
  }
 ]

@@ -6704,6 +6704,14 @@ window.DG_NO_TUNE = true;
       var ok = typeof entry === 'string' && entry.length > 40 && a.length > 80 && keys.length === 3 && typeof one === 'string';
       return ok && ('시트 ' + a.length + '자 · 문 앞 ' + entry.length + '자 · 축 ' + keys.length) || ('실패 ' + JSON.stringify({ a: a.length, e: entry && entry.length, one: one }));
     });
+    t('W-0330 직업·무예 그림 — 표에 skill·job 125 · JOBS·SKILLS 전부 그림 주소 · 무예 창에 <img', function () {
+      var I = DG.itemicon, JD = DG.jobData, T = DG.itemiconIds['saga-story'], n = Object.keys(T).filter(function (k) { return /^(skill|job):/.test(k); }).length;
+      var miss = JD.SKILLS.filter(function (s) { return !I.src('saga-story', 'skill', s.key); }).map(function (s) { return s.key; })
+        .concat(JD.JOBS.filter(function (j) { return !I.src('saga-story', 'job', j.key); }).map(function (j) { return 'job:' + j.key; }));
+      DG.ui.openSheet('job'); DG.ui.closeSheet(); var h = DG.uiJob.viewJob(), img = (h.match(/<img[^>]+icon64\/(sk_st|job_st)_/g) || []).length;
+      if (n < 125 || miss.length || !img) { throw new Error(JSON.stringify({ n: n, miss: miss.slice(0, 5), img: img })); }
+      return '표 ' + n + ' · 무예 ' + JD.SKILLS.length + '·직업 ' + JD.JOBS.length + ' 전부 그림 · 무예 창 img ' + img;
+    });
     t('무예 시트(R-4 ui-job.js) — job 시트로 연 무예 창이 그려지고, 같은 이름 viewJob 이 글을 낸다', function () {
       var host = function () { var e = document.getElementById('sheet') || document.querySelector('.sheet'); return e ? e.innerHTML : ''; };
       DG.ui.openSheet('job'); var a = host(); DG.ui.closeSheet();
