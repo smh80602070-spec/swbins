@@ -11,13 +11,13 @@
 - [ ] 10-17 · (자체툴 K-0129 → 유니티) · PolyHaven 테스트 씬만·식물 3·짐승 셋 정리 — 시트 ④ · 유니티
 - [ ] 10-17 · (자체툴 K-0128 괴물 → 고돗) · 자체 괴물 몸 111 고돗 배치 끝, monster_body.gd shape→id 표 — 시트 ⑤ · 고돗
 - [ ] 10-18 · (자체툴 K-0139 → 고돗) · 같은 파일 `saga-godot/assets/anim_mocap/vroid_mocap_anims.glb` → VRoid 몸 anim_cc0 `_lib.res` 에 12 클립 갈아 끼우기(`.import` 는 고돗 세션) · 고돗
-- [ ] 10-18 · (자체툴 K-0137 → 고돗) · 주역 10 몸 바뀜(새 머리카락·뼈 비율·얼굴 레이어 — hl_mukhyang·kr_gyebaek·fu_jongwang·tb_baekgi·ru_geohae·sg_caocao·sg_liubei·sg_lubu·sg_sunquan·sg_zhugeliang) · 원본 `tools/char-forge/_out/vroid/<id>/<id>.glb`·`<id>_anims.glb`(이 PC) → `vroid_intake.sh --only <10>` 로 얼굴 데칼·anim_cc0 `_lib.res` 다시 · 고돗
+- [ ] 10-18 · (자체툴 K-0137 → 고돗) · 주역 10 몸 바뀜(명단·원본 K-0137 메모) — `vroid_intake.sh --only <10>` 로 얼굴 데칼·anim_cc0 `_lib.res` 다시 · 고돗
 - [ ] 10-18 · (자체툴 K-0137 → 유니티) · 같은 주역 10 몸 바뀜 — 유니티가 이 열 명을 VRoid 몸으로 쓰는 자리가 있으면 같은 원본으로 갈아 끼우기(없으면 [x]) · 유니티
-- [ ] 10-19 · (자체툴 K-0136 → 웹 1만리·2나락) · 3D 땅 타일 8 `shared/assets/tiles/ground/<id>.webp`(512 이음매 없음) — 1만리 `landTexture` 단색 대신 go_*(마을 흙·돌길·들풀·물가), 2나락 `town3d*.js` 바닥에 dg_*(마을 흙·던전 돌·동굴 바위·늪) · 웹
+- [ ] 10-19 · (자체툴 K-0136 → 웹 1만리·2나락) · 땅 타일 8 `shared/assets/tiles/ground/` — 1만리 landTexture go_*, 2나락 town3d 바닥 dg_* · 웹
 - [ ] 10-19 · (자체툴 K-0135 → 웹 W-0296) · 4종횡 타일 80·소품 50·앞 층 10(`saga-story/assets/web2d/{tile,prop,bg}`, 규격 그대로) + 사람 jump·fall 500(`characters2d8/<id>/`, mode2d 가 이미 읽음) · 웹
-- [ ] 10-19 · (자체툴 K-0121 → 웹 2나락) · 종 몸 초상 27+17(K-0144)+10(K-0145)·5천하 용·외계 2·사람 적 18 `portraits-monster/<id>_c.webp` — idOf·foeBody 가 body 의 id 먼저(짝 `tools/ai-art/data/k121_targets.json`) · 웹
-- [ ] 10-19 · (자체툴 K-0122·K-0120 → 웹) · 빌린 괴물 → `creatures3d/<id>`(표 `tools/world-forge/data/k122_monsters.json`), `FistR` 는 뼈 아닌 노드 · 펫 `world3d/pet_<id>.glb` + 2D `beast_<펫 id>.png`(1만리 sprite.js 표 `pk_x:'pk_x'`) · 웹
-- [ ] 10-19 · (자체툴 K-0143 → 웹 1만리) · 종 몸 2D 시트 95 `shared/assets/creatures2d/<creatures3d id>/`(K-0090 꼴, manifest ortho_m 실제 크기) — 2D 짐승 풀은 종 id 먼저, 없으면 옛 mon_* · 웹
+- [ ] 10-19 · (자체툴 K-0121 → 웹 2나락) · 종 몸 초상 54·5천하 2·사람 적 18 `portraits-monster/<id>_c.webp` — idOf·foeBody 가 body id 먼저(짝 k121_targets.json) · 웹
+- [ ] 10-19 · (자체툴 K-0122·K-0120 → 웹) · 빌린 괴물 → `creatures3d/<id>`(표 k122_monsters.json, FistR 는 노드) · 펫 `world3d/pet_<id>.glb`·2D `beast_<id>.png` · 웹
+- [ ] 10-19 · (자체툴 K-0143 → 웹 1만리) · 종 몸 2D 시트 95 `shared/assets/creatures2d/<id>/` — 2D 짐승 풀은 종 id 먼저 · 웹
 - [ ] 10-19 · (자체툴 K-0138 → 웹) · 16방향 주역 10 `characters2d16/<id>/sheet.json`(역할 11 — cast·wave 10-20) — gen-assets3d-ids · 웹
 - [ ] 10-20 · "다섯판 내 장비랑 내 상태가 보는데 없어(공격력·스텟 설정)"·"장비나 아이템 드래그 … 모바일은 터치" · 다섯 판 공용 「내 정보」 창(입은 장비·능력치·스탯 배분) + 장비·가방 끌어 놓기(Pointer Events 한 길로 마우스·터치, 터치는 길게 눌러 집기) → 판별 조사 뒤 R-0 · 웹
 - [ ] 10-20 · (K-0150) · 겹 배경 둘·컷아웃 주역 2 — parallax2d·cutout2d.on 1 촬영(fog 버그 K-0150 메모) · 웹
@@ -25,4 +25,5 @@
 - [ ] 10-20 · (K-0148) · 모캡 cast·strong·greet 새 클립(판정 3/3) — 웹 W-0318 뺀 셋 짝 되살리기 · 고돗 glb 재임포트 · 웹/고돗
 - [ ] 10-20 · (K-0151 → 고돗) · face_sdf.png 도착(`assets/face_sdf/`, .import 고돗) — face_view 전후 · FaceMouth 는 UV 달라 sdf 끌 것 · 고돗
 - [ ] 10-20 · (K-0152 → 웹) · 환경 GLB 30 법선·거칠기 맵 — toon3d toonify 가 normalMap 넘기게 한 줄 · 웹
-- [ ] 10-20 · (K-0152 → 고돗·유니티) · world/toon 30 GLB 맵 더함 — 다시 임포트 · 고돗/유니티
+- [ ] 10-20 · (K-0152·K-0153 → 고돗·유니티) · toon 30 맵 JPEG·펫 28 엔진판(Meshopt·WebP 풂) — 다시 임포트, Failed 0 확인 · 고돗/유니티
+- [ ] 10-20 · (유니티 U-0140 → 자체툴) · **K-0152 world/toon 30개가 유니티에서 임포트 실패**(맵이 WebP + `EXT_texture_webp` 필수 — glTFast 못 읽음, 돌등롱·나무·바위·여관 등) → **K-0153 요청**(파일 `tasks/tools/K-0153.md` — 유니티·고돗 배치본은 PNG/JPEG) · ⚠ 자체툴 큐 25 줄의 "K-0153 2차 348" 은 번호가 겹침(새 번호로) — 2차를 같은 도구로 돌리면 유니티 실패가 348 더 늘어나니 이 요청 먼저 · 자체툴
