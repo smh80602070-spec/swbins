@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using Saga.Core;
+using Saga.Core.Region;
 using Saga.Go.Data;
 
 namespace Saga.Go.World
@@ -52,6 +54,28 @@ namespace Saga.Go.World
             GoWorldMap.TreeForm.Broadleaf, GoWorldMap.TreeForm.Willow, GoWorldMap.TreeForm.Broadleaf, GoWorldMap.TreeForm.Broadleaf,
             GoWorldMap.TreeForm.Broadleaf, GoWorldMap.TreeForm.Broadleaf, GoWorldMap.TreeForm.Willow, GoWorldMap.TreeForm.Broadleaf,
         };
+
+        // ---- 통일 세트(tasks U-0141 — `Resources/World`, 자체툴 K-0052·0058) ----
+        // 있으면 procgen 대신 쓴다(없는 PC 는 아래 procgen → 결합 메시 순으로 폴백). 자리·수·크기 변주·몸통 충돌은 그대로.
+
+        /// <summary>통일 세트 나무와 수관 모양 — 자작나무는 버드나무류 자리(가늘고 성긴 잎).</summary>
+        public static readonly (string name, GoWorldMap.TreeForm form)[] UnifiedTrees =
+        {
+            ("tree_broadleaf_01", GoWorldMap.TreeForm.Broadleaf), ("tree_broadleaf_02", GoWorldMap.TreeForm.Broadleaf),
+            ("tree_broadleaf_03", GoWorldMap.TreeForm.Broadleaf), ("tree_pine_01", GoWorldMap.TreeForm.Conifer),
+            ("tree_pine_02", GoWorldMap.TreeForm.Conifer), ("tree_pine_03", GoWorldMap.TreeForm.Conifer),
+            ("tree_birch_01", GoWorldMap.TreeForm.Willow),
+        };
+        public static readonly string[] UnifiedRocks = { "rock_large_01", "rock_large_02", "rock_moss_01" };
+        public static readonly string[] UnifiedGrass = { "grass_tuft_01", "grass_tuft_02" };
+        public static readonly string[] UnifiedReeds = { "reed_clump_01" };
+        /// <summary>단풍 판(`<이름>_autumn`)을 쓰는 지역 — 수관 빛깔이 붉은 쪽(호박빛)인 곳.</summary>
+        public static bool WantsAutumn(Color tint) => tint.a > 0f && tint.r > tint.g;
+        // 통일 세트 나무는 5.6~8.3m(procgen 3.4~5m) — 숲 높이가 옛 판과 비슷하게(×s 변주 그대로).
+        private const float UnifiedTreeScale = 0.7f;
+        private const float UnifiedRockScale = 1.0f;   // 2.4~4m 폭 × 0.7~1.5(옛 procgen 2.6 배 ≈ 2~4.4m)
+        private const float UnifiedGrassScale = 1.4f;  // 풀 포기 0.4m 폭 → 옛 procgen 0.7m 쯤
+        private const float UnifiedReedScale = 0.85f;  // 1.7m → 옛 1.5m
 
         // procgen.py 기본 치수(trunk_height=3.0m)가 이미 TrunkHeight와 맞춰
         // 나온 "실제 미터" 치수라 배율은 1이면 된다(Kenney tree_oak.glb는
@@ -222,6 +246,8 @@ namespace Saga.Go.World
             trunkParent.transform.SetParent(transform, false);
 
             bool hasModels = treeModels != null && treeModels.Length > 0;
+            bool unified = WorldModels.Load(UnifiedTrees[0].name) != null;
+            if (unified) hasModels = true; // 결합 메시 폴백 재료를 만들지 않게
 
             // GLB 폴백용 결합 메시 재료(모델을 못 찾았을 때만 실제로 쓰인다).
             var verts = new List<Vector3>();
@@ -238,7 +264,7 @@ namespace Saga.Go.World
                     if (row[x] != 'T') continue;
                     string region = GoWorldMap.RegionAt(x, y);
                     var veg = GoWorldMap.VegetationOf(region);
-                    var candidates = hasModels ? TreeCandidates(veg.Forms) : null;
+                    var candidates = unified ? UnifiedTreeCandidates(veg.Forms) : hasModels ? TreeCandidates(veg.Forms) : null;
 
                     for (int i = 0; i < veg.TreesPerForestTile; i++)
                     {
@@ -248,7 +274,14 @@ namespace Saga.Go.World
                         Quaternion rot = Quaternion.Euler(0f, yaw, 0f);
                         if (SkipTree(basePos, i, keyPoints)) continue;
 
-                        if (hasModels)
+                        if (unified)
+                        {
+                            int pick = Mathf.Clamp(Mathf.FloorToInt(Hash(x, y, i * 2 + 300) * candidates.Count), 0, candidates.Count - 1);
+                            var (treeName, form) = UnifiedTrees[candidates[pick]];
+                            string model = WantsAutumn(veg.CanopyTint) && WorldModels.Load(treeName + "_autumn") != null ? treeName + "_autumn" : treeName;
+                            SpawnUnified(model, "Tree_" + form, visualParent.transform, basePos, rot, UnifiedTreeScale * s, region);
+                        }
+                        else if (hasModels)
                         {
                             int pick = Mathf.Clamp(Mathf.FloorToInt(Hash(x, y, i * 2 + 300) * candidates.Count), 0, candidates.Count - 1);
                             int variant = candidates[pick];
@@ -313,7 +346,8 @@ namespace Saga.Go.World
             var verts = new List<Vector3>();
             var colors = new List<Color>();
             var tris = new List<int>();
-            bool anyModel = rockModels != null && rockModels.Length > 0;
+            bool unifiedRocks = WorldModels.Load(UnifiedRocks[0]) != null;
+            bool anyModel = unifiedRocks || (rockModels != null && rockModels.Length > 0);
             Mesh rockSrc = anyModel ? null : GetPrimitiveMesh(PrimitiveType.Sphere);
 
             for (int y = 0; y < TestMapData.RowCount; y++)
@@ -331,7 +365,12 @@ namespace Saga.Go.World
                         float yaw = Hash(x, y, i * 3 + 503) * 360f;
                         Vector3 basePos = TestMapData.WorldPos(x, y) + new Vector3(jx, TestMapData.GroundHeight(x, y), jz);
 
-                        if (anyModel)
+                        if (unifiedRocks)
+                        {
+                            int variant = Mathf.Clamp(Mathf.FloorToInt(Hash(x, y, i * 3 + 506) * UnifiedRocks.Length), 0, UnifiedRocks.Length - 1);
+                            SpawnUnified(UnifiedRocks[variant], "Rock", visualParent.transform, basePos, Quaternion.Euler(0f, yaw, 0f), UnifiedRockScale * sizeVariant, null);
+                        }
+                        else if (anyModel)
                         {
                             int variant = Mathf.FloorToInt(Hash(x, y, i * 3 + 506) * rockModels.Length);
                             variant = Mathf.Clamp(variant, 0, rockModels.Length - 1);
@@ -369,7 +408,8 @@ namespace Saga.Go.World
         /// <summary>들('.')·숲('T') 칸에 그 지역 수만큼 풀 포기 — 충돌 없음, 지역 재질(풀도 수관 빛깔로 물든다).</summary>
         private void BuildGrass()
         {
-            if (grassModels == null || grassModels.Length == 0) return;
+            bool unified = WorldModels.Load(UnifiedGrass[0]) != null;
+            if (!unified && (grassModels == null || grassModels.Length == 0)) return;
             var parent = new GameObject("Grass");
             parent.transform.SetParent(transform, false);
             var keyPoints = KeyPoints();
@@ -389,6 +429,13 @@ namespace Saga.Go.World
                         float jz = (Hash(x, y, i * 3 + 701) - 0.5f) * TestMapData.TileSize * 0.9f;
                         Vector3 pos = TestMapData.WorldPos(x, y) + new Vector3(jx, ground, jz);
                         if (NearAny(pos, keyPoints, GrassClearance) || GoRegionProps.InClearing(pos)) continue;
+                        if (unified)
+                        {
+                            int u = Mathf.Clamp(Mathf.FloorToInt(Hash(x, y, i * 3 + 702) * UnifiedGrass.Length), 0, UnifiedGrass.Length - 1);
+                            SpawnUnified(UnifiedGrass[u], "Grass", parent.transform, pos, Quaternion.Euler(0f, Hash(x, y, i * 3 + 703) * 360f, 0f),
+                                UnifiedGrassScale * Mathf.Lerp(GrassScaleMin, GrassScaleMax, Hash(x, y, i * 3 + 704)), region);
+                            continue;
+                        }
                         int variant = Mathf.Clamp(Mathf.FloorToInt(Hash(x, y, i * 3 + 702) * grassModels.Length), 0, grassModels.Length - 1);
                         if (grassModels[variant] == null) continue;
                         var g = Object.Instantiate(grassModels[variant], parent.transform);
@@ -406,7 +453,8 @@ namespace Saga.Go.World
         /// <summary>강 북쪽 둑 — 강 칸 바로 위(+z) 줄의 들·숲 칸 남쪽 가장자리를 따라 갈대(길·다리 칸은 비움).</summary>
         private void BuildReeds()
         {
-            if (reedModels == null || reedModels.Length == 0) return;
+            bool unified = WorldModels.Load(UnifiedReeds[0]) != null;
+            if (!unified && (reedModels == null || reedModels.Length == 0)) return;
             var parent = new GameObject("Reeds");
             parent.transform.SetParent(transform, false);
             for (int y = 0; y < TestMapData.RowCount - 1; y++)
@@ -422,6 +470,13 @@ namespace Saga.Go.World
                         float jx = (Hash(x, y, i * 3 + 800) - 0.5f) * TestMapData.TileSize * 0.95f;
                         float jz = TestMapData.TileSize * (0.36f + Hash(x, y, i * 3 + 801) * 0.11f); // 둑 끝 1~7m 안쪽
                         Vector3 pos = TestMapData.WorldPos(x, y) + new Vector3(jx, ground, jz);
+                        if (unified)
+                        {
+                            int u = Mathf.Clamp(Mathf.FloorToInt(Hash(x, y, i * 3 + 802) * UnifiedReeds.Length), 0, UnifiedReeds.Length - 1);
+                            SpawnUnified(UnifiedReeds[u], "Reed", parent.transform, pos, Quaternion.Euler(0f, Hash(x, y, i * 3 + 803) * 360f, 0f),
+                                UnifiedReedScale * Mathf.Lerp(ReedScaleMin, ReedScaleMax, Hash(x, y, i * 3 + 804)), "river");
+                            continue;
+                        }
                         int variant = Mathf.Clamp(Mathf.FloorToInt(Hash(x, y, i * 3 + 802) * reedModels.Length), 0, reedModels.Length - 1);
                         if (reedModels[variant] == null) continue;
                         var r = Object.Instantiate(reedModels[variant], parent.transform);
@@ -464,6 +519,78 @@ namespace Saga.Go.World
                 }
                 renderer.sharedMaterials = mats;
             }
+        }
+
+        // ---- 통일 세트 도우미(tasks U-0141) ---------------------------------------
+
+        private readonly Dictionary<Material, Material> _backdrop = new Dictionary<Material, Material>();
+        private readonly Dictionary<(Material, string), Material> _leafTint = new Dictionary<(Material, string), Material>();
+
+        /// <summary>그 지역 모양에 맞는 통일 세트 나무 번호들(없으면 전부).</summary>
+        private static List<int> UnifiedTreeCandidates(GoWorldMap.TreeForm forms)
+        {
+            var list = new List<int>();
+            for (int i = 0; i < UnifiedTrees.Length; i++)
+                if ((forms & UnifiedTrees[i].form) != 0 && WorldModels.Load(UnifiedTrees[i].name) != null) list.Add(i);
+            if (list.Count == 0)
+                for (int i = 0; i < UnifiedTrees.Length; i++) if (WorldModels.Load(UnifiedTrees[i].name) != null) list.Add(i);
+            return list;
+        }
+
+        /// <summary>통일 세트 모델 하나 — `label` 이름의 빈 자리(위치·회전·크기) 밑에 모델(이름 = 모델 id). 배경 재질(`RegionMaterials.ForBackdrop`, 같은 원본은 한 벌)·충돌 없음.
+        /// `region` 이 있으면 잎 재질(나무결 아닌 것)을 그 지역 빛깔로 엷게 곱한다(지역마다 한 벌 — 같은 지역끼리 배칭이 묶인다).</summary>
+        private GameObject SpawnUnified(string model, string label, Transform parent, Vector3 pos, Quaternion rot, float scale, string region)
+        {
+            var prefab = WorldModels.Load(model);
+            if (prefab == null) return null;
+            var holder = new GameObject(label);
+            holder.transform.SetParent(parent, false);
+            holder.transform.SetPositionAndRotation(pos, rot);
+            holder.transform.localScale = Vector3.one * scale;
+            var go = Object.Instantiate(prefab, holder.transform, false);
+            go.name = model;
+            StripColliders(go);
+            var tint = region != null ? GoWorldMap.VegetationOf(region).CanopyTint : Color.clear;
+            var mats = new List<Material>();
+            foreach (var r in go.GetComponentsInChildren<Renderer>(true))
+            {
+                r.GetSharedMaterials(mats);
+                for (int i = 0; i < mats.Count; i++)
+                {
+                    var m = RegionMaterials.ForBackdrop(mats[i], _backdrop, out _) ?? mats[i];
+                    if (tint.a > 0f && m != null && !IsWoody(m.name)) m = LeafTinted(m, region, tint);
+                    mats[i] = m;
+                }
+                r.SetSharedMaterials(mats);
+            }
+            return holder;
+        }
+
+        private static bool IsWoody(string name)
+        {
+            string n = name.ToLowerInvariant();
+            return n.Contains("plank") || n.Contains("bark") || n.Contains("wood") || n.Contains("trunk") || n.Contains("concrete") || n.Contains("rock") || n.Contains("stone");
+        }
+
+        /// <summary>잎 재질 지역판 — 텍스처 잎은 바탕색 계수가 흰색이라 `TintLeafy` 가 안 먹는다. 빛깔을 가장 밝은 채널 1 로 맞춘 색을
+        /// 세기 절반만큼 곱한다(초록은 그대로·노랑은 파랑을 빼고·짙은 숲은 빨강·파랑을 뺀다).</summary>
+        private Material LeafTinted(Material src, string region, Color tint)
+        {
+            if (_leafTint.TryGetValue((src, region), out var done) && done != null) return done;
+            string prop = src.HasProperty("baseColorFactor") ? "baseColorFactor" : src.HasProperty("_BaseColor") ? "_BaseColor" : null;
+            if (prop == null) { _leafTint[(src, region)] = src; return src; }
+            var m = new Material(src) { name = src.name + "_" + region };
+            m.SetColor(prop, src.GetColor(prop) * LeafMultiplier(tint));
+            _leafTint[(src, region)] = m;
+            return m;
+        }
+
+        /// <summary>잎 곱 색 — 빛깔을 가장 밝은 채널 1 로 맞추고 세기(a)의 절반만 섞는다.</summary>
+        public static Color LeafMultiplier(Color tint)
+        {
+            float top = Mathf.Max(0.001f, Mathf.Max(tint.r, Mathf.Max(tint.g, tint.b)));
+            var norm = new Color(tint.r / top, tint.g / top, tint.b / top, 1f);
+            return Color.Lerp(Color.white, norm, tint.a * 0.5f);
         }
 
         /// <summary>셰이더 `_CanopyTint` 와 같은 공식 — 초록이 뚜렷한 색만 tint 쪽으로, 밝기 흔들림은 살린다.</summary>
