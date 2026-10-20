@@ -446,7 +446,6 @@
        스캔(`Renvylle Castle`, 13~14세기 탑성 폐허)을 gltf-transform으로 다듬어
        옮겼다(1.68M버텍스→가벼운 한 덩이, 자세한 내용은 ASSET_LICENSES.md).
        옛 파일은 지우지 않았다 — `STATION_STYLIZED` 가 되돌림 자리로 들고 있다 */
-    'station': BLD_REAL + 'tower_ruin.glb',
 
     /* 성채 — **등급마다 다른 탑이 선다.** `fort.js` 의 세 등급(보·진·웅진)은
        수비대의 세기가 다른데 여태 화면에서는 다 같은 성채였다. 멀리서 보고
@@ -456,34 +455,15 @@
        성채 모듈, `prop3d.js`의 들판 장식 탑과 같은 파일)를 그대로 재사용한다 —
        진짜 실사 CC0 성곽 탑이 이거 하나뿐이라 세 등급을 다 못 채운다. 보·진은
        옛 저다각형 그대로 둔다(등급 간 크기 차이가 여전히 눈에 보이면 충분하다) */
-    'fort:t1': BLD + 'Watchtower.glb',
-    'fort:t2': [BLD + 'Tower.glb', BLD + 'PointyTower.glb'],
-    'fort:t3': BLD_REAL + 'tower_round.glb',
-    'fort': BLD + 'Tower.glb',
 
     /* 지역 랜드마크(biome.js, PLAN §5 ⑩) — 바이옴마다 다른 탑. 멀리서 "저기가
        어느 땅이다"를 알아보게 성채보다 두 배쯤 크게 세운다(heightMul) */
-    'landmark:plain': BLD + 'Watchtower.glb',
-    'landmark:bamboo': BLD + 'PointyTower.glb',
-    'landmark:canyon': BLD + 'LargeTower.glb',
-    'landmark:marsh': BLD + 'Tower.glb',
-    'landmark:ruins': BLD + 'LargeSquareTowerBricks.glb',
     /* §5 ⑲-3 보물 상자(KayKit Dungeon Remastered CC0, 사가종횡와 같은 파일)·석등(Poly Haven 등롱 CC0, prop3d `lamp` 와 같은 파일) */
-    'chest': 'assets/models/props/Chest.glb',
-    'lantern': 'assets/models/props/realistic/wooden_lantern.glb',
     /* §5 ⑲-6 채집물(Quaternius CC0, 사가마을과 같은 파일)·솥(퓨전 소품 가마솥·모닥불) */
-    'gather:mushroom': 'assets/models/nature/Mushroom_1.glb',
-    'gather:flower': 'assets/models/nature/Flowers.glb',
-    'gather:plant': 'assets/models/nature/Plant_1.glb',
-    'gather:berry': 'assets/models/nature/BushBerries_1.glb',
-    'gather:rock': 'assets/models/nature/Rock_1.glb',
     'cook:pot': 'assets/models/fusion/Cauldron.glb',
     'cook:fire': 'assets/models/fusion/Bonfire_Lit.glb',
     /* §5 ⑲-9 숨은 터 입구(아치)·주간 보스 제단(사당)·보상 나무(빛나무) — 이미 받아 둔 CC0 파일 */
-    'domain:gate': 'assets/models/props/Arch.glb',
-    'domain:altar': 'assets/models/props/Temple.glb',
     'domain:tree': 'assets/models/fusion/Tree_Light_1.glb',
-    'landmark': BLD + 'LargeTower.glb',
 
     /* 세 시대 사람·적(PLAN §5 ⑱ · SAGA-DESIGN §13 전체 퓨전). 전부 Quaternius CC0 — 사가나락가 받아 둔 poly.pizza
        사람·몬스터를 옮겨 오고, 사이버펑크 로봇 셋은 미러에서 받아 Meshopt 로 쌌다(`assets/ASSET_LICENSES.md`).
@@ -504,10 +484,6 @@
     'pet:fc_hulk': FOE_DIR + 'Robot_Large.glb'
   };
 
-  /** 되돌림 자리 — 실사로 갈아 끼우기 전 값. `register('station', STATION_STYLIZED)` ·
-   *  `register('fort:t3', FORT_T3_STYLIZED)` 로 되돌릴 수 있다 */
-  var STATION_STYLIZED = BLD + 'Inn.glb';
-  var FORT_T3_STYLIZED = [BLD + 'LargeTower.glb', BLD + 'LargeSquareTowerBricks.glb'];
 
   var REG = {};
   /** 기본 표를 옮겨 담는다 — `clear()` 로 비운 뒤 되돌릴 때도 이 함수를 쓴다 */

@@ -256,6 +256,16 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
        하필 그 칸에 진단을 돌리면 보급 항목이 통째로 깨진다(토벌에서 밟은 함정).
        적도 자신을 재는 아래 항목들만 그 자리에서 잠깐 풀었다 다시 묶는다. */
     DG.rogue.force(false);
+    /* W-0322 — 옛 빌린 기본 표(prop3d REG·asset3d 성채·랜드마크…)를 지워 소품은 판 짝 표(cfg.assets3d.prop·reg)만 남았다. 진단 서버는 판 폴더만 내줘
+       공용 world3d 를 못 잡으므로(applyProps 가 안 돎) 실제 화면처럼 같은 표를 대역 주소(_shared/…, 표에 있는 id 만)로 한 번 얹는다 — assets3d.applyProp3d·applyReg 와 같은 규칙 */
+    function w322Live() {   // asset3d.restore() 가 기본 표로 되돌리면 다시 부른다
+      var c = (DG.cfg && DG.cfg.assets3d) || {}, P3 = DG.prop3d, A3 = DG.asset3d, A = DG.assets3d;
+      if (!A || !A.has || (A.url && A.url('world', 'altar_01'))) { return; }   // 공용 주소를 잡았으면 게임이 이미 얹었다
+      var u = function (id) { return A.has('world', id) ? '_shared/assets/world3d/' + id + '.glb' : null; }, urls = function (l) { return l.map(u).filter(Boolean); };
+      Object.keys(c.prop || {}).forEach(function (n) { var l = urls(c.prop[n]), e; if (!l.length || !P3) { return; } P3.register(n, 'all', l); e = P3.register()[n]; ['spring', 'summer', 'autumn', 'winter'].forEach(function (sk) { if (e && e[sk]) { P3.register(n, sk, l); } }); });
+      Object.keys(c.reg || {}).forEach(function (k) { var l = urls(c.reg[k]); if (l.length && A3) { A3.register(k, l.length === 1 ? l[0] : l); } });
+    }
+    w322Live();
 
     var C = DG.core, W = DG.world, D = DG.data;
     var HR = DG.hero, NT = DG.net, AI = DG.ai;
@@ -5056,28 +5066,23 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
          Object.keys(seen).length + '가지가 섞인다');
     });
 
-    t('go.mobile-light: 폰 표(W-0185) — prop3d.light 1 이면 실사(realistic/) 자리가 옛 저다각형으로 · 미리 받기에도 실사 0 · 철·같은 자리 규칙 그대로', function () {
-      var C = DG.core, keep = C.tuned('prop3d.light', 'auto'), out;
-      try {
-        C.setTune('prop3d.light', 1); PR._lightReset();
-        var kinds = ['tree', 'pine', 'rock', 'grass', 'house', 'tower', 'lamp', 'rice', 'well', 'market'], real = [], miss = [];
-        kinds.forEach(function (k) { var u = PR.pick(k, 2, 3, 'all'); if (!u) { miss.push(k); } else if (u.indexOf('/realistic/') >= 0) { real.push(k); } });
-        var eager = PR.eagerUrls(), eagerReal = eager.filter(function (u) { return u.indexOf('/realistic/') >= 0; });
-        var au = PR.pick('tree', 0, 0, 'autumn'), wi = PR.pick('tree', 0, 0, 'winter'), same = PR.pick('rock', 7, 9, 'all') === PR.pick('rock', 7, 9, 'all');
-        var lightOn = PR.light();
-        C.setTune('prop3d.light', 0); PR._lightReset();
-        var off = PR.pick('tree', 2, 3, 'all'), offEager = PR.eagerUrls().filter(function (u) { return u.indexOf('/realistic/') >= 0; }).length;
-        out = lightOn && real.length === 0 && miss.length === 0 && eagerReal.length === 0 && au !== wi && /Autumn/.test(au) && same &&
-          off.indexOf('/realistic/') >= 0 && offEager > 0 &&
-          ('폰 표: 열 가지 실사 0 · 미리 받기 ' + eager.length + '개 중 실사 0 · 가을 ' + au.split('/').pop() + ' · 끄면 실사 ' + offEager + '개로 돌아옴');
-      } finally { C.setTune('prop3d.light', keep === 'auto' ? null : keep); PR._lightReset(); }
-      return out;
-    });
-
-    t('go.mobile-light: 자동 판정(W-0185) — 이 진단 창(터치 없음)은 폰 표 안 씀 = PC 화면 그대로', function () {
+    t('go.mobile-light: 자동 판정(W-0185) — 이 진단 창(터치 없음)은 폰 표 안 씀', function () {
       var C = DG.core, keep = C.tuned('prop3d.light', 'auto');
-      try { C.setTune('prop3d.light', null); PR._lightReset(); var on = PR.light(), u = PR.pick('tree', 0, 0, 'all'); return !on && u.indexOf('/realistic/') >= 0 && ('터치 없음 · 짧은 변 ' + Math.min(innerWidth, innerHeight) + 'px → 실사 그대로'); }
+      try { C.setTune('prop3d.light', null); PR._lightReset(); return !PR.light() && ('터치 없음 · 짧은 변 ' + Math.min(innerWidth, innerHeight) + 'px → 폰 표 안 씀'); }
       finally { C.setTune('prop3d.light', keep === 'auto' ? null : keep); PR._lightReset(); }
+    });
+    t('go.mobile-light: 폰 표(W-0185) — W-0322 뒤 옛 실사·저다각형 표가 없어 폰(light 1)·PC(0) 어느 쪽도 소품 열 가지가 자체 world3d · 미리 받기에 실사 0 · 같은 자리 같은 모양', function () {
+      var C = DG.core, keep = C.tuned('prop3d.light', 'auto'), out = [];
+      try {
+        [1, 0].forEach(function (v) {
+          C.setTune('prop3d.light', v); PR._lightReset();
+          var kinds = ['tree', 'pine', 'rock', 'grass', 'house', 'tower', 'lamp', 'rice', 'well', 'market'], bad = [];
+          kinds.forEach(function (k) { var u = PR.pick(k, 2, 3, 'all'); if (!u || !/\/world3d\//.test(u)) { bad.push(k + ':' + u); } });
+          var real = PR.eagerUrls().filter(function (u) { return u.indexOf('/realistic/') >= 0; }).length, same = PR.pick('rock', 7, 9, 'all') === PR.pick('rock', 7, 9, 'all');
+          if (bad.length || real || !same) { out.push(v + ' ' + bad.join(',') + ' 실사 ' + real); }
+        });
+      } finally { C.setTune('prop3d.light', keep === 'auto' ? null : keep); PR._lightReset(); }
+      return !out.length && '폰·PC 열 가지 자체 world3d · 실사 0' || '실패 ' + out.join(' / ');
     });
 
     t('에셋 — 철마다 나무 색이 갈린다 (같은 실사 GLB · 재질만 물든다)', function () {
@@ -5266,10 +5271,10 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
          2026-09-04 — 옛 Inn.glb(저다각형)에서 실사 스캔(tower_ruin.glb)으로
          바뀌었다. 어느 쪽이든 마을 소품 표에 없어야 한다는 뜻은 그대로다 */
       var A = DG.asset3d;
-      A.restore();
+      A.restore(); w322Live();
       var inn = A.urlOf('station', {});
       var town = PR.urls();
-      return town.indexOf(inn) < 0 && /tower_ruin\.glb$/.test(inn) &&
+      return town.indexOf(inn) < 0 && /world3d\/inn_01\.glb$/.test(inn) &&   // W-0322 — 역참은 자체 inn_01(cfg.assets3d.reg)
         ('마을 소품 ' + town.length + '개에 ' + inn.split('/').pop() + ' 는 없다');
     });
 
@@ -5299,7 +5304,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
     t('에셋 — 짐승 다섯 종이 다 진짜 모델로 선다', function () {
       var A = DG.asset3d, AN = DG.animal;
       /* 위의 항목들이 표를 비웠다 가정했으므로(AS.clear) 배송 기본표를 되돌린다 */
-      A.restore();
+      A.restore(); w322Live();
       var got = Object.keys(AN.KINDS).map(function (k) {
         return A.urlOf('pet', AN.refOf(AN.KINDS[k]));
       });
@@ -5320,7 +5325,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
          벌짜리 실사 풀"에서 해시가 고르게 퍼지는가이니, 재는 동안만 손잡이를
          켜 둔다(DG_NO_TUNE이라 메모리에만 남고 저장은 안 된다). */
       C.setTune('world3d.realisticPeople', 1);
-      A.restore();
+      A.restore(); w322Live();
       var seen = {}, i;
       for (i = 0; i < D.heroes.length; i++) {
         seen[A.urlOf('hero', D.heroes[i]).split('/').pop()] = 1;
@@ -5329,7 +5334,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var poolLen = A.DEFAULTS.hero.length, seenLen = Object.keys(seen).length;
       var seenStr = Object.keys(seen).sort().join(' · ');
       C.setTune('world3d.realisticPeople', null);   // null = 손잡이를 아예 지운다(0을 넣으면 칸이 남아 tuneCount()가 흔들린다)
-      A.restore();
+      A.restore(); w322Live();
       /* 원래 이름이 "여섯 벌"이던 옛 테스트(풀이 작을 때는 70명이 골고루 퍼져
          전부 다 걸렸다) — 2026-09-05 실사 인물을 스물여섯 벌까지 늘리고 나니
          70명/26벌 확률상 한둘은 안 걸려도(기대 미사용 개수 ≈ 1.8개) 정상이다
@@ -5513,28 +5518,28 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 
     t('에셋 — 역참은 한 벌로 선다', function () {
       var A = DG.asset3d;
-      A.restore();
+      A.restore(); w322Live();
       var u = A.urlOf('station', { id: 'st_0,0#1' });
       /* 우물·좌판을 섞지 않은 것이 요점이다 — 이 창고는 무엇이든 키 1 로 눕히므로
          원본 키가 절반인 것을 섞으면 우물이 건물만 해진다.
          2026-09-04 — Inn.glb(저다각형)에서 tower_ruin.glb(실사 스캔)로 바뀜 */
-      return /tower_ruin\.glb$/.test(u) && A.chain('station', {}) === 'glb' &&
+      return /world3d\/inn_01\.glb$/.test(u) && A.chain('station', {}) === 'glb' &&   // W-0322 자체 inn_01
         ('역참 ' + u.split('/').pop());
     });
 
     t('에셋 — 성채는 등급마다 다른 탑이 선다 (보 < 진 < 웅진)', function () {
       var A = DG.asset3d;
-      A.restore();
+      A.restore(); w322Live();
       var a = A.urlOf('fort', { id: 'ft_A', tier: 1 });
       var b2 = A.urlOf('fort', { id: 'ft_A', tier: 2 });
       var c2 = A.urlOf('fort', { id: 'ft_A', tier: 3 });
-      return a !== b2 && b2 !== c2 && a !== c2 && /Watchtower/.test(a) &&
+      return a !== b2 && b2 !== c2 && a !== c2 && /world3d\/stone_tower_01/.test(a) &&   // W-0322 — 보 stone_tower·진 dungeon_gate·웅진 chinese_hall(cfg.assets3d.reg)
         ([a, b2, c2].map(function (u) { return u.split('/').pop(); }).join(' · '));
     });
 
     t('에셋 — 등급이 안 실려 와도 성채는 선다 (넓은 키로 떨어진다)', function () {
       var A = DG.asset3d;
-      A.restore();
+      A.restore(); w322Live();
       /* 옛 부름(`tier` 없음)에서도 화면이 비면 안 된다 */
       return A.keysFor('fort', {}).join(',') === 'fort' &&
         A.keysFor('fort', { tier: 3 }).join(',') === 'fort:t3,fort' &&
@@ -5543,14 +5548,15 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 
     t('에셋 — 같은 성채는 늘 같은 탑이다 (id 해시)', function () {
       var A = DG.asset3d;
-      A.restore();
+      A.restore(); w322Live();
       var one = A.urlOf('fort', { id: 'ft_F3,7', tier: 2 });
       var two = A.urlOf('fort', { id: 'ft_F3,7', tier: 2 });
       /* 같은 등급 안에서도 둘로 갈린다 — 어느 쪽이든 늘 같아야 한다 */
       var seen = {}, i;
       for (i = 0; i < 40; i++) { seen[A.urlOf('fort', { id: 'ft_F' + i, tier: 2 })] = 1; }
-      return one === two && Object.keys(seen).length === 2 &&
-        ('진(鎭) 마흔 곳이 두 가지 탑으로');
+      var nv = Object.keys(seen).length;   // W-0322 — 진(鎭)은 W-0260 자체 짝 한 가지(dungeon_gate_01, cfg.assets3d.reg) — 표가 늘면 갈린다
+      return one === two && nv >= 1 && nv === [].concat(DG.cfg.assets3d.reg['fort:t2']).length &&
+        ('진(鎭) 마흔 곳이 ' + nv + '가지 탑으로 · 같은 id 는 늘 같은 탑');
     });
 
     t('에셋 — 키 1 위에 보태는 배수 (도형 키를 그대로 잇는다)', function () {
@@ -9963,7 +9969,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         all.forEach(function (k) { if (!P3.FUSION[k]) { bad.push(z.key + ':' + k + ' 표에 없음'); } else { eras[P3.FUSION[k].era] = 1; } });
         if (!eras.past || !eras.modern || !eras.future) { bad.push(z.key + ' 시대 ' + Object.keys(eras).join('/')); }
       });
-      var urlOk = Object.keys(P3.FUSION).every(function (k) { return (P3.pick('zp_' + k, 0, 0) || '').indexOf('assets/models/fusion/' + P3.FUSION[k].f + '.glb') === 0; });
+      var urlOk = Object.keys(P3.FUSION).every(function (k) { var u = P3.pick('zp_' + k, 0, 0) || ''; return u.indexOf('assets/models/fusion/' + P3.FUSION[k].f + '.glb') === 0 || /\/world3d\//.test(u); });   // W-0322 — 판 짝 표가 얹은 자체(zp_bonfire·zp_cauldron)도
       /* 청풍 벌판(동쪽 안쪽 고리) 한 덩이를 훑는다 */
       function scan(x0, y0, n) {
         var got = [], gx, gy, g0x = Math.floor(x0 / 48), g0y = Math.floor(y0 / 48);
