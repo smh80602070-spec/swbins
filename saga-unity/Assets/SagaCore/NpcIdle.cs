@@ -57,6 +57,7 @@ namespace Saga.Core
             if (idle == null) idle = parent.gameObject.AddComponent<NpcIdle>();
             idle.Init(state);
             EnsureShadow(parent);
+            if (state == "Idle") LifePose.Attach(parent.gameObject, true); // tasks U-0146 — 인사·둘러보기·체중(2나락 씬은 스스로 빠짐)
             return inst;
         }
 
@@ -72,6 +73,7 @@ namespace Saga.Core
             if (idle == null) idle = parent.gameObject.AddComponent<NpcIdle>();
             idle.Init(state);
             EnsureShadow(parent);
+            if (state == "Idle") LifePose.Attach(parent.gameObject, true); // tasks U-0146
             return inst;
         }
 

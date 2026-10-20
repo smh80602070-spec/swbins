@@ -238,6 +238,8 @@ namespace Saga.Go.Player
         {
             _controller = GetComponent<CharacterController>();
             LastLand = transform.position;
+            // tasks U-0146 — 가만히 8초면 앉는다(땅 위 걷기 모드만, 탈것·돌진·조작 잠금 중엔 안 함).
+            if (Application.isPlaying) LifePose.Attach(gameObject, false, () => !OnFoot || GoMounts.Riding != null || MoveLocked || IsDashing);
 
             if (inputActions != null)
             {

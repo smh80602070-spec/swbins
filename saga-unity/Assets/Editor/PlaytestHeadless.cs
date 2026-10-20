@@ -199,6 +199,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoEggs.Run("PlaytestHeadless")) _hadError = true; // tasks U-0046 신수 알·동행 — 부화기·걸음·부화·동행·세이브(상태 되돌림)
                 if (!(PlaytestGoSfxMove.Run("PlaytestHeadless") & PlaytestGoSfx.Run("PlaytestHeadless"))) _hadError = true; // tasks U-0051 무기별 타격음·발소리·점프(진짜 TakeHit·Step) 다음 U-0048 효과음 연결 — 진짜 사건에서 이름을 불렀는지(소리 파일 없어도 기록은 남음). 두 진단 모두 돌도록 & (1500줄 게이트 때문에 한 줄)
                 if (!PlaytestSfxSelf.Run("PlaytestHeadless")) _hadError = true; // tasks U-0104 네 판(2나락·3마을·4종횡·5천하) 효과음 — 자체 92종 이름 먼저(파일 열림·사건 이름·피격 연타·파일 없음 조용히, HeroState 되돌림)
+                if (!PlaytestLifePose.Run("PlaytestHeadless", "go")) _hadError = true; // tasks U-0146 생활 몸짓 — 앉기·인사·둘러보기(진단 물체 지움)
                 if (!PlaytestHurtSignal.Run("PlaytestHeadless", "go")) _hadError = true; // tasks U-0105 "내가 맞았다" 신호 — 진짜 ReceiveStrike 번쩍·회피 0·나선 인물 맥박(파티 되돌림)
                 if (!PlaytestGoHomestead.Run("PlaytestHeadless")) _hadError = true; // tasks U-0032 쉼터 마당(자리·창·세이브 — 마당·금·시각·세이브 파일·플레이어 자리 되돌림)
                 if (!PlaytestGoDispatch.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-26 탐사 파견(표·흐름·알림·세이브·화면 — 동행·탐사·돈·재료·레벨·지도·세이브 되돌림)

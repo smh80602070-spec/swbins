@@ -95,6 +95,15 @@ namespace Saga.EditorTools
                 Vector3 pos; Quaternion rot;
                 if (t == null) { var c = GameCam(); if (c == null) continue; pos = c.transform.position; rot = c.transform.rotation; if (_wpnCam != null) WeaponCam(ref pos, ref rot); _seqFrames[i].Add(ShootTex(c, pos, rot)); continue; }
                 if (main == null) continue;
+                var lpz = t.GetComponent<Saga.Core.LifePose>();   // U-0146 장마다 몸짓 상태
+                if (lpz != null)
+                {
+                    var an = t.GetComponentInChildren<Animator>();
+                    var ua = an != null && an.isHuman ? an.GetBoneTransform(HumanBodyBones.RightUpperArm) : null;
+                    var la = an != null && an.isHuman ? an.GetBoneTransform(HumanBodyBones.RightLowerArm) : null;
+                    float armDeg = ua != null && la != null ? Vector3.Angle(la.position - ua.position, Vector3.down) : -1f;
+                    Debug.Log($"[ShowcaseGui] lifepose {name} 장 {_seqTaken + 1} still {lpz.StillT:F1} sit {lpz.SitW:F2} act {lpz.Current} {lpz.ActT:F2} hold {lpz.HoldNow} 사람 {lpz.Humanoid} 오른윗팔 아래서 {armDeg:F0}° · 애니 {(an != null ? an.name + " 켜짐 " + an.isActiveAndEnabled : "없음")} · 자리 {t.position}");
+                }
                 if (name == "player")
                 {
                     // 몸 위치 기준 옆(오른쪽) 3.4m·높이 2m 에서 가슴을 본다 — 걸음새·무기가 옆에서 보이게. 그 자리가 땅(둑·절벽) 속이면 지면 위 1.5m 로 올린다
@@ -310,6 +319,30 @@ namespace Saga.EditorTools
                         for (int i = 0; i < 20 && Saga.Dungeon.World.DungeonFoeShot.Active.Count == 0; i++) e.Tick(0.05f);
                         foreach (var s in Saga.Dungeon.World.DungeonFoeShot.Active) s.Tick(0.12f);
                         Debug.Log($"[ShowcaseGui] dgranged {foe.NameKo}({foe.Weapon}) @ {go.transform.position} · 탄 {Saga.Dungeon.World.DungeonFoeShot.Active.Count} · 이름 {e.DisplayName}");
+                        break;
+                    }
+                    case "sit":    // U-0146 — 나를 곧장 앉힌다(가만히 8초 건너뜀)
+                    {
+                        var pg = GameObject.FindWithTag("Player");
+                        var lp = pg != null ? pg.GetComponent<Saga.Core.LifePose>() : null;
+                        if (lp == null) { Skip(act); return; }
+                        lp.ForceSitForTest();
+                        Debug.Log($"[ShowcaseGui] sit {pg.name} 사람 몸 {lp.Humanoid}");
+                        break;
+                    }
+                    case "greet":  // U-0146 — 사람 몸 주민 하나를 인사시키고 그 이름을 남긴다(대상 name:LifeGreet)
+                    {
+                        Saga.Core.LifePose lp = null;
+                        foreach (var p in Object.FindObjectsByType<Saga.Core.LifePose>(FindObjectsSortMode.None))
+                        {
+                            if (!p.Npc) continue;
+                            p.Bind();
+                            if (p.Humanoid) { lp = p; break; }
+                        }
+                        if (lp == null) { Skip(act); return; }
+                        lp.gameObject.name = "LifeGreet_" + lp.gameObject.name;
+                        lp.Play(Saga.Core.LifePose.Act.Wave);
+                        Debug.Log($"[ShowcaseGui] greet {lp.gameObject.name}");
                         break;
                     }
                     case "hurt":   // U-0105 "내가 맞았다" — 체력 35% 로 두고 최대치 10% 한 대(→ 약 25%): 첫 장 = 가장자리 번쩍·붉은 숫자, 끝 장 = 30% 밑 맥박

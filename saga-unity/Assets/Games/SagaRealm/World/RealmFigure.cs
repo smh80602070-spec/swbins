@@ -66,6 +66,8 @@ namespace Saga.Realm.World
             f._basePos = localPos;
             var prefab = bodyKey != null ? RealmBodies.Pick(role, bodyKey, skipBody) : null;
             if (!f.BuildBody(prefab)) f.Build(robe);
+            // tasks U-0146 — 사실 몸이 서 있을 때(대기 클립)만 둘러보기·체중(일 몸짓·걷기·베기 중엔 쉼).
+            else Saga.Core.LifePose.Attach(root, true, () => f == null || f.Clip != "idle");
             return f;
         }
 

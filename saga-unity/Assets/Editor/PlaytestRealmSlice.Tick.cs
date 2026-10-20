@@ -1235,6 +1235,7 @@ namespace Saga.EditorTools
                     if (!PlaytestRealmNews.Run()) { Fail(); return; }
                     // tasks U-0098 격자 전술 규칙 — 세이브 JSON·Random 상태로 되돌린다.
                     if (!PlaytestRealmTactics.Run()) { Fail(); return; }
+                    if (!PlaytestLifePose.Run("PlaytestRealmSlice", "realm")) { Fail(); return; } // tasks U-0146 생활 몸짓(장수 대기)
                     if (!PlaytestRealmTech.Run()) { Fail(); return; } // tasks U-0129 기술 나무 — 세이브 JSON 으로 되돌린다.
                     if (!PlaytestRealmSupply.Run()) { Fail(); return; } // tasks U-0134 진·보급선 — 싸움 결과 고정, 세이브 JSON 으로 되돌린다.
                     if (!PlaytestRealmWonder.Run()) { Fail(); return; } // tasks U-0136 불가사의 — 세이브 JSON 으로 되돌린다.

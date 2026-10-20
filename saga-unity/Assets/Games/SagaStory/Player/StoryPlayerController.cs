@@ -98,6 +98,8 @@ namespace Saga.Story.Player
             if (visual != null) visual.rotation = Quaternion.Euler(0f, 90f, 0f);
             // PLAN.md 109-11-1 — 플레이어 체력(두목 패턴이 때린다). Play 때 붙어 씬 재빌드가 필요 없다.
             if (Application.isPlaying && GetComponent<StoryPlayerVitals>() == null) gameObject.AddComponent<StoryPlayerVitals>();
+            // tasks U-0146 — 가만히 8초면 앉는다(줄·날기·탈것·연참 중엔 안 함).
+            if (Application.isPlaying) LifePose.Attach(gameObject, false, () => _onRope || FlyActive || StoryMounts.Riding != null || _attackCooldownLeft > 0f || StoryPlayerHp.Invuln > 0f);
         }
 
         private void Update() => Step(Time.deltaTime);

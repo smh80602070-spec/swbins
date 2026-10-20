@@ -64,6 +64,8 @@ namespace Saga.Forest.Player
         private void Awake()
         {
             _controller = GetComponent<CharacterController>();
+            // tasks U-0146 — 가만히 8초면 앉는다(날기·탈것 중엔 안 함).
+            if (Application.isPlaying) LifePose.Attach(gameObject, false, () => _flying || ForestMounts.Riding != null);
 
             if (inputActions != null)
             {
