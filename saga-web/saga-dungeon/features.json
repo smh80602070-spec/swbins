@@ -1297,5 +1297,22 @@
   "ticket": "W-0320",
   "since": "2026-10-20",
   "note": "10-20 실기: 표식 껍데기 전부 glb(대역 0) · 눈 ○ 역참·난입 · 굴혈·결사비는 장면 확인만"
+ },
+ {
+  "id": "dg.own-wpn5",
+  "name": "몽둥이·두루마리·부채·붓·방앗간 → 자체 world3d(W-0321, K-0116)",
+  "files": [
+   "js/core.js",
+   "js/asset3d.js"
+  ],
+  "tests": [
+   "W-0261 자체 에셋 — 판별 표(cfg.assets3d.reg)의 world3d id 가 전부 있다"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0321",
+  "since": "2026-10-20",
+  "note": "10-20: 옛 models/weapons/ 여덟·hexagon/windmill 지움(못 얹으면 도형) · dg-wpn-probe 콤보 6·타격음 샘플 ○(쥐는 축 근접 확인은 못 함)"
  }
 ]

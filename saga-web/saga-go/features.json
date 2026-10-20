@@ -1326,5 +1326,22 @@
   "ticket": "W-0319",
   "since": "2026-10-20",
   "note": "10-20 실기(HIGH·d3d11): 일곱 지역 GLB 87/87·둘째 묶음 19/19 실패 0. 코드 상자는 대역(받은 뒤 숨김). 가판 넷은 서 있으나 앞 들판 나무에 가림(소품 배치 몫)"
+ },
+ {
+  "id": "go.own-ui-sfx",
+  "name": "UI 아이콘 28 자체 png·효과음 7 자체(W-0321 — Lucide·OGA 지움)",
+  "files": [
+   "../shared/js/icon.js",
+   "js/audio.js"
+  ],
+  "tests": [
+   "아이콘 — 자체 png(ui_<이름>_g0) 를 가리킨다 (W-0321 — 예전 Lucide SVG)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0321",
+  "since": "2026-10-20",
+  "note": "10-20: ☰ 메뉴 모음(pw-menu-sheet saga-go pc) Read ○ 격자 아이콘 png · 소리는 K-0117 같은 이름 덮어씀(코드 0줄)"
  }
 ]

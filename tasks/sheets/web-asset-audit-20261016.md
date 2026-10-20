@@ -26,17 +26,17 @@
 - 3마을 엇맞춤: 비석=이끼 바위·항아리=우물·병=풀·나침반/UFO/상자=우체통·도깨비불=등불·축제 줄=통나무(village3d-kinds.js:20~31) → stele_01·jar_01·vase_tall_01·chest_01·hanging_lantern_01… → W-0262
 
 ## D. 새로 그려야 하는 것 → 자체툴(K) — 수신함
-1. **아이콘 한 벌(그림체 C)** — 지금 이모지·Lucide(빌린 ISC): 독·☰ 메뉴 칸·HUD 스킬 단추(2나락·4종횡)·근처 대상(1만리)·지도 표식(5천하 🚩🏕️)·떨굼 아이템(4종횡)·스킬·직업 아이콘(없음 — 다섯 판 이모지)
+1. △ UI 28 은 W-0321(K-0118) 끝 — **아이콘 한 벌(그림체 C)** — 지금 이모지·Lucide(빌린 ISC): 독·☰ 메뉴 칸·HUD 스킬 단추(2나락·4종횡)·근처 대상(1만리)·지도 표식(5천하 🚩🏕️)·떨굼 아이템(4종횡)·스킬·직업 아이콘(없음 — 다섯 판 이모지)
 2. 첫 화면 캐릭터 그림 다섯(지금 이모지 🗺️⚔️🌳🏃🏯, shared/js/account.js:281)
 3. 오마주 펫 15종 + 까치 몸(지금 Quaternius 괴물 대역 — standin/*)
 4. 몬스터 개별 초상(지금 32장을 해시로 나눠 씀)·사람 적 초상 없음
 5. 출처 문서 빠짐 39 폴더(감사 🟡license — cutscene·icons·ui·store·vfx·web2d…)
 6. 1만리 people/vitruvian_v1.glb 삼각형 10만(폰 예산 2배)
 7. 사람 몸이 VRoid 공식 샘플 바탕(characters3d 500·2D 렌더 8500) — 고유 모델은 미착수(메모리 project_vroid_all_characters)
-8. 1만리 효과음 7(OGA)·Ogg 못 트는 브라우저용 mp3 BGM(OGA) — 자체 SFX 92종으로
+8. ○ W-0321(K-0117) — 1만리 효과음 7(OGA)·Ogg 못 트는 브라우저용 mp3 BGM(OGA) — 자체 SFX 92종으로
 9. (W-0260) 1만리 이야기 지역 표지 12곳(frost 비행선·crossing·skyport·sunken·amber 호박 결정·stormeye 매듭·vault 진열장·fork 격자 빛틀·skyroute·skyisle 하늘섬·era-sites 선대·nightecho 보랏불) — 고유 조형이라 world3d 에 짝이 없어 코드 도형 유지. 자체 모델로 바꾸려면 K 가 지역별 세트(≈12) 제작. 게시판 둘(낚시터·파견)은 notice_board_01 로 바꿈
-10. (W-0261) 2나락 몽둥이(weapons/club — 자체 wpn_* 에 몽둥이 없음)·두루마리·부채·붓·방앗간(hexagon/windmill) — 짝 없어 옛 빌린 경로. 괴물 Green_Spiky_Blob 은 W-0266(몸) 몫
-11. (W-0262) 3마을 가을 나무(Quaternius CommonTree/Birch/PineTree_Autumn 7) — world3d 에 단풍 변종이 없어 옛 길. K 가 tree_broadleaf·tree_pine·tree_birch 가을판(잎 색) 만들면 core.js reg 'tree:common:autumn'·'tree:pine:autumn' 두 줄. 2D 사람 되돌림 Kenney human_01~14(sprite.js humanImg — 초상 없는 인물 카드)는 characters2d 배선 필요(W-0266 곁)
+10. ○ W-0321(K-0116) — (W-0261) 2나락 몽둥이(weapons/club — 자체 wpn_* 에 몽둥이 없음)·두루마리·부채·붓·방앗간(hexagon/windmill) — 짝 없어 옛 빌린 경로. 괴물 Green_Spiky_Blob 은 W-0266(몸) 몫
+11. ○ W-0321(K-0115) — (W-0262) 3마을 가을 나무(Quaternius CommonTree/Birch/PineTree_Autumn 7) — world3d 에 단풍 변종이 없어 옛 길. K 가 tree_broadleaf·tree_pine·tree_birch 가을판(잎 색) 만들면 core.js reg 'tree:common:autumn'·'tree:pine:autumn' 두 줄. 2D 사람 되돌림 Kenney human_01~14(sprite.js humanImg — 초상 없는 인물 카드)는 characters2d 배선 필요(W-0266 곁)
 12. (W-0266) 5천하 괴물 무장 몸 14 — KayKit 해골(Warrior·Mage·Minion·Rogue)·Quaternius 외계인 둘·악마·푸른 악마·오크·예티·거인·SkeletonSolo·좀비·괴물 뱀(data-force.js monster:) — 사람꼴(손에 무기) 자체 몸 필요. 생기면 공용 assets3d CREATURE_OF 에 짝 한 줄씩
 13. (W-0266) 5천하 병사 몸 — 지금 Quaternius Knight_Male(troops/). 가벼운 자체 병사 한 벌: 뼈 Hips·FistR(창 쥘 손), 세력 색 칠할 천 재질 하나(이름 Red 또는 asset3d TROOP_TINT 를 바꿀 이름), 걷기·대기·치기·쓰러짐·SitDown 클립 — 무리 수십이 나눠 입으니 삼각형 적게
 

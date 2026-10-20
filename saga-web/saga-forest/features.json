@@ -1203,5 +1203,22 @@
   "ticket": "W-0334",
   "since": "2026-10-20",
   "note": "10-20: 실기 1만리(ops-sync-e2e, 운영 서버 메모리 DB) — 접속 첫 업로드 rev1 → 저장 30초 뒤 rev2 → 다른 기기 rev3 → 새로 고침 카드 → 서버 세이브로 → 값 바뀜 ○(첫 시도는 beforeunload 저장이 덮어 실패 → 메모리 세이브도 바꾸고 감싼 저장 막아 고침)"
+ },
+ {
+  "id": "fs.own-autumn",
+  "name": "가을 나무 → 자체 단풍 다섯(W-0321, K-0115)",
+  "files": [
+   "js/core.js",
+   "js/asset3d.js"
+  ],
+  "tests": [
+   "W-0262 자체 에셋 — 판별 표(cfg.assets3d.reg)의 world3d id 가 전부 있다"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0321",
+  "since": "2026-10-20",
+  "note": "10-20: VC_SEASON=autumn pw-visual-close Read — HUD 가을·노란 단풍 나무 ○ · 기본 표 가을 칸은 저다각형 초록(되돌림)"
  }
 ]
