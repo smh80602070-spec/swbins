@@ -379,6 +379,38 @@
    ]
   },
   {
+   "id": "web2d-cutout",
+   "src": "saga-assets/web2d/cutout",
+   "recursive": true,
+   "include": [
+    "*.webp",
+    "*.json"
+   ],
+   "note": "K-0150 2D 컷아웃(cutout2d 규격 — index.json 풀 id → <rig>/rig.json + 부위 webp 16). 1차 주역 2(sg_zhugeliang·hl_mukhyang) = Blender 옆모습 부위 렌더 대역(칠하기 미완), 손잡이 cutout2d.on 1 로 켬",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-go/assets/web2d/cutout"
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-dungeon/assets/web2d/cutout"
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-forest/assets/web2d/cutout"
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-story/assets/web2d/cutout"
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-realm/assets/web2d/cutout"
+    }
+   ]
+  },
+  {
    "id": "web2d-bg2d",
    "src": "saga-assets/web2d/bg2d",
    "recursive": true,

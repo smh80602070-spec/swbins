@@ -1,0 +1,34 @@
+{
+ "name": "k150_cutout_C",
+ "spec": "character",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0150 컷아웃 색칠 — Blender 옆모습 렌더를 그림체 C 로 칠함(0.45, 윤곽 유지) · 부위는 pack_cutout.py 가 색 지도로 자름",
+ "items": [
+  {
+   "id": "sg_zhugeliang",
+   "spec": "character",
+   "width": 640,
+   "height": 640,
+   "view": "side",
+   "subject": "side view, full body, facing right, standing straight, arms down, hand-painted 2D game character art, clean lineart",
+   "extra": "solo, simple background, white background",
+   "init_image": "tools/ai-art/_out/k150_cutout_init/sg_zhugeliang.png",
+   "denoise": 0.45,
+   "seed": 20271400
+  },
+  {
+   "id": "hl_mukhyang",
+   "spec": "character",
+   "width": 640,
+   "height": 640,
+   "view": "side",
+   "subject": "side view, full body, facing right, standing straight, arms down, hand-painted 2D game character art, clean lineart",
+   "extra": "solo, simple background, white background",
+   "init_image": "tools/ai-art/_out/k150_cutout_init/hl_mukhyang.png",
+   "denoise": 0.45,
+   "seed": 20271411
+  }
+ ]
+}

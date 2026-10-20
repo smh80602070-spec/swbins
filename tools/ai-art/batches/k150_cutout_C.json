@@ -1,0 +1,41 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k150_cutout_C",
+ "kit": {
+  "spec": "character",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 640,
+  "height": 896,
+  "steps": 30,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "sg_zhugeliang",
+   "seed": 20271400,
+   "prompt": "(side view:1.15), full body, facing right, standing straight, arms down, hand-painted 2D game character art, clean lineart, solo, simple background, white background, side view, from side, full profile, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutout_init/sg_zhugeliang.png",
+   "denoise": 0.45,
+   "width": 640,
+   "height": 640
+  },
+  {
+   "id": "hl_mukhyang",
+   "seed": 20271411,
+   "prompt": "(side view:1.15), full body, facing right, standing straight, arms down, hand-painted 2D game character art, clean lineart, solo, simple background, white background, side view, from side, full profile, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutout_init/hl_mukhyang.png",
+   "denoise": 0.45,
+   "width": 640,
+   "height": 640
+  }
+ ]
+}

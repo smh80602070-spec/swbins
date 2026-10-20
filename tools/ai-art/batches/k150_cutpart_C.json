@@ -1,0 +1,341 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k150_cutpart_C",
+ "kit": {
+  "spec": "sprite",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy",
+  "variants": 1
+ },
+ "items": [
+  {
+   "id": "sg_zhugeliang__hip",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/sg_zhugeliang__hip.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "sg_zhugeliang__chest",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/sg_zhugeliang__chest.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "sg_zhugeliang__head",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/sg_zhugeliang__head.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "sg_zhugeliang__hair",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/sg_zhugeliang__hair.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "sg_zhugeliang__armUL",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/sg_zhugeliang__armUL.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "sg_zhugeliang__armLL",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/sg_zhugeliang__armLL.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "sg_zhugeliang__handL",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/sg_zhugeliang__handL.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "sg_zhugeliang__armUR",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/sg_zhugeliang__armUR.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "sg_zhugeliang__armLR",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/sg_zhugeliang__armLR.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "sg_zhugeliang__handR",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/sg_zhugeliang__handR.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "sg_zhugeliang__legUL",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/sg_zhugeliang__legUL.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "sg_zhugeliang__legLL",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/sg_zhugeliang__legLL.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "sg_zhugeliang__footL",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/sg_zhugeliang__footL.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "sg_zhugeliang__legUR",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/sg_zhugeliang__legUR.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "sg_zhugeliang__legLR",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/sg_zhugeliang__legLR.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "sg_zhugeliang__footR",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/sg_zhugeliang__footR.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "hl_mukhyang__hip",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/hl_mukhyang__hip.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "hl_mukhyang__chest",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/hl_mukhyang__chest.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "hl_mukhyang__head",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/hl_mukhyang__head.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "hl_mukhyang__hair",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/hl_mukhyang__hair.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "hl_mukhyang__armUL",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/hl_mukhyang__armUL.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "hl_mukhyang__armLL",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/hl_mukhyang__armLL.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "hl_mukhyang__handL",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/hl_mukhyang__handL.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "hl_mukhyang__armUR",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/hl_mukhyang__armUR.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "hl_mukhyang__armLR",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/hl_mukhyang__armLR.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "hl_mukhyang__handR",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/hl_mukhyang__handR.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "hl_mukhyang__legUL",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/hl_mukhyang__legUL.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "hl_mukhyang__legLL",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/hl_mukhyang__legLL.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "hl_mukhyang__footL",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/hl_mukhyang__footL.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "hl_mukhyang__legUR",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/hl_mukhyang__legUR.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "hl_mukhyang__legLR",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/hl_mukhyang__legLR.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  },
+  {
+   "id": "hl_mukhyang__footR",
+   "seed": 20271500,
+   "prompt": "(hand-painted 2D game art:1.15), clean lineart, flat cel shading, single isolated body part of a character, same colors, white background, side view, from side, full profile, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k150_cutpart_init/hl_mukhyang__footR.png",
+   "denoise": 0.3,
+   "width": 512,
+   "height": 512
+  }
+ ]
+}

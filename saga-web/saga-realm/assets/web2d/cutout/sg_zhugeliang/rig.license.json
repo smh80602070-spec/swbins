@@ -1,0 +1,11 @@
+{
+ "generator": "tools/char-forge/cutout_parts.py (Blender 옆모습 부위 렌더)",
+ "license": "MIT",
+ "model": "",
+ "model_license": "",
+ "note": "렌더 대역 — 칠하기 미완(K-0150 10-20: 전체 칠하기는 조각보·부위 칠하기는 지글거림 △)",
+ "id": "cutout_sg_zhugeliang",
+ "picked_candidate": "render",
+ "base_body": "tools/char-forge/_out/vroid/sg_zhugeliang/sg_zhugeliang.glb",
+ "packed_by": "K-0150 tools/char-forge/cutout_parts.py(Blender 옆모습 부위 렌더) → tools/ai-art/pack_cutout.py(보이는 곳 = img2img 색칠, 가려진 곳 = 렌더)"
+}
