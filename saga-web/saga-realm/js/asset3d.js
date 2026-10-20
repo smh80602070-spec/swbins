@@ -187,28 +187,10 @@
    *  좁은 키(`city:t3`)부터 찾으므로 등급이 안 실려 와도 `city` 로 떨어진다 */
   var DEFAULTS = {
     'hero': HERO_RECIPES,
-    'city:t1': BLD + 'Watchtower.glb',
-    'city:t2': [BLD + 'Tower.glb', BLD + 'PointyTower.glb'],
-    'city:t3': [BLD + 'LargeTower.glb', BLD + 'LargeSquareTowerBricks.glb'],
-    'city': BLD + 'Tower.glb',
 
-    'mount': [NAT + 'Mountain_1.glb', NAT + 'Mountain_2.glb'],
-    'tree': [NAT + 'CommonTree_1.glb', NAT + 'CommonTree_2.glb', NAT + 'PineTree_1.glb'],
-    'rock': [NAT + 'Rock_1.glb', NAT + 'Rock_2.glb'],
 
     /* 40절 PHASE 4 — 퀄리티 보강. 다섯 판 공통 방침("코드로 그리지 말고
      * 에셋으로")에 따라 saga-go/saga-forest 가 이미 확인해 둔 CC0 를 그대로 옮겼다 */
-    'bush': [NAT + 'Bush_1.glb', NAT + 'Bush_2.glb'],
-    'grass': NAT + 'Grass_2.glb',
-    'flower': NAT + 'Flowers.glb',
-    'wall': PRP + 'Wall.glb',
-    'temple': PRP + 'Temple.glb',
-    'torch': PRP + 'WoodenTorch.glb',
-    'market': BLD + 'MarketStand_1.glb',
-    'well': BLD + 'Well.glb',
-    'house': [BLD + 'House_1.glb', BLD + 'House_2.glb', BLD + 'House_3.glb', BLD + 'House_4.glb'],
-    'log': NAT + 'WoodLog.glb',
-    'tent': PRP + 'Tent.glb',
 
     /* 2026-09-05 — 장수 3D 초상(`portrait3d.js`)에 무기·투구를 얹는다. 여태는
        QRPG 몸(전사·궁수·도적·성직자·마법사·수도승 6종 중 하나) 맨몸뿐이라,
@@ -271,7 +253,7 @@
    * `assets/generated/buildings/city_t{2,3}_asian.glb`.
    */
   if (core && core.tuned('asset3d.asianTower', 1)) {
-    register('city:t1', BLD + 'asian/BellStructure.glb');
+    /* W-0322 — 1등급 BellStructure(빌린 Polygonal Mind)는 지웠다. 성 단계는 cfg.assets3d.reg 의 자체 짝이 얹는다 */
     register('city:t2', 'assets/generated/buildings/city_t2_asian.glb');
     register('city:t3', 'assets/generated/buildings/city_t3_asian.glb');
   }

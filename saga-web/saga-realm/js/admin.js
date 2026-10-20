@@ -444,7 +444,7 @@
     ['rtk.victory.culture', '문화 승리(0/1)', 1, 1, '문답 정답 200 + 서로 다른 보물 8종 — 0 이면 끈다'],
     ['rtk.victory.diplomacy', '외교 승리(0/1)', 1, 1, '살아 있는 모든 세력과 동맹·화친을 36달 연속 — 0 이면 끈다'],
     ['rtk.victory.survival', '생존 승리(0/1)', 1, 1, '균열의 왕 판 전용 — 240달 버티기. 0 이면 끈다'],
-    ['asset3d.asianTower','동양풍 탑(0/1)', 1, 1, '1등급 성채를 CC0 BellStructure.glb로 — 2026-09-10 채택, 기본 켜짐. 0으로 두면 서양풍 Watchtower로 되돌아간다. 새로고침 필요']
+    ['asset3d.asianTower','동양풍 탑(0/1)', 1, 1, '2·3등급 성채를 자체 조립 동양 탑으로(1등급 BellStructure 는 W-0322 에 지움) — 기본 켜짐. 공용 world3d 를 받으면 그 짝이 먼저. 새로고침 필요']
   ];
 
   function renderTune() {

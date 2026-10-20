@@ -1331,5 +1331,22 @@
   "ticket": "W-0330",
   "since": "2026-10-20",
   "note": "10-20: pw-menu-sheet 06 Read ○ 무장 직업 그림 · HUD 단추는 무예·비결 바뀔 때만 다시 씀"
+ },
+ {
+  "id": "dg.own-k126",
+  "name": "빌린 건물·자연·소품·던전 61 → 자체 world3d 짝(W-0322, K-0126)",
+  "files": [
+   "js/asset3d.js",
+   "js/core.js"
+  ],
+  "tests": [
+   "W-0261 자체 에셋 — 판별 표(cfg.assets3d.reg)의 world3d id 가 전부 있다"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0322",
+  "since": "2026-10-20",
+  "note": "10-20: net-log 요청 312 중 옛 경로 0 · pw-visual-close 10/10 GLB 실패 0"
  }
 ]

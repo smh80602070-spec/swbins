@@ -1343,5 +1343,23 @@
   "ticket": "W-0321",
   "since": "2026-10-20",
   "note": "10-20: ☰ 메뉴 모음(pw-menu-sheet saga-go pc) Read ○ 격자 아이콘 png · 소리는 K-0117 같은 이름 덮어씀(코드 0줄)"
+ },
+ {
+  "id": "go.own-k126",
+  "name": "빌린 건물·자연·소품 63 → 자체 world3d 짝(W-0322, K-0126) — prop3d 옛 표·asset3d 옛 항목 지움",
+  "files": [
+   "js/prop3d.js",
+   "js/asset3d.js",
+   "js/core.js"
+  ],
+  "tests": [
+   "go.mobile-light: 폰 표(W-0185) — W-0322 뒤 옛 실사·저다각형 표가 없어 폰(light 1)·PC(0) 어느 쪽도 소품 열 가지가 자체 world3d · 미리 받기에 실사 0 · 같은 자리 같은 모양"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0322",
+  "since": "2026-10-20",
+  "note": "10-20: net-log 요청 536 중 옛 경로 0 · pw-visual-close 6/6"
  }
 ]

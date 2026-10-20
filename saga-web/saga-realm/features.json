@@ -1267,5 +1267,19 @@
   "ticket": "W-0330",
   "since": "2026-10-20",
   "note": "10-20: battle·port·guard 는 지도에 그리는 글자가 없어 안 씀 · 새 판 화면엔 포위·원정이 없어 진단으로만 확인"
+ },
+ {
+  "id": "rl.own-k126",
+  "name": "빌린 성채·자연·잔장식 28 → 자체 world3d 짝(W-0322, K-0126)",
+  "files": [
+   "js/asset3d.js"
+  ],
+  "tests": [],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0322",
+  "since": "2026-10-20",
+  "note": "10-20: net-log 요청 106 중 옛 경로 0 · 5천하는 pw-visual-close 장면 없음"
  }
 ]
