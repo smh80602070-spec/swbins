@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-20",
+  "tickets": [
+    "U-0137 2나락 난도 평·험·절(웹 MODES·고돗 G-0247)"
+  ],
+  "how": "PlaytestDungeonHeadless.Run·UiLayoutCheck.Run 배치(unity-batch.sh, -quit 없음, </dev/null), 세이브 다섯 백업·되돌림(md5 같음)",
+  "ok_before": 69,
+  "ok_after": 74,
+  "new_ok": [
+    "mode table",
+    "mode start",
+    "mode room",
+    "mode sigil",
+    "mode save"
+  ],
+  "ui_layout": "OK 문제 0 (설정 창 열린 상태 = 난도 단추 포함)",
+  "error_cs": 0,
+  "exception": 0,
+  "save_md5_same": true,
+  "runs": "3(① 졸개 경험 반올림 두 번 → 진단 허용치 ② 컴파일(주석 자리) ③ 통과)"
+}

@@ -94,7 +94,7 @@ namespace Saga.Dungeon.UI
         private void ChooseLanguage() { DungeonLocalization.CycleLanguage(); DungeonLocalization.RelocalizeScene(); Refresh(); }
 
         /// <summary>110 ⑤c-2c — 씬에 구운 글(빌더 = 한국어)을 지금 언어로, 이 창의 글도 한 번 새로(예전엔 값을 바꿀 때만).</summary>
-        private void Start() { EnsureVoiceRow(); EnsureLootFilter(); DungeonLocalization.RelocalizeScene(); Refresh(); }
+        private void Start() { EnsureVoiceRow(); EnsureLootFilter(); EnsureModeButton(); DungeonLocalization.RelocalizeScene(); Refresh(); }
         private void ChooseBgm() { DungeonSettingsState.BgmOn = !DungeonSettingsState.BgmOn; Refresh(); }
 
         /// <summary>U-0075 — 음성 줄을 붙이고 줄 전체를 82 간격으로 다시 놓는다(예전 95 간격 여섯 줄 판엔 일곱째 자리가 없었다 —
@@ -131,6 +131,35 @@ namespace Saga.Dungeon.UI
 
         private void OpenLootFilter() { if (_loot != null) _loot.Open(); }
 
+        // tasks U-0137 — 난도 단추(창 오른쪽 위, 실행 때만): 누를 때마다 다음 열린 난도, 들머리(2층까지)에서만.
+        private TextMeshProUGUI _modeLabel;
+        public Button ModeButton { get; private set; }
+
+        private void EnsureModeButton()
+        {
+            if (!Application.isPlaying || _panel == null || ModeButton != null) return;
+            ModeButton = NewButton(_panel.transform, "", new Vector2(1f, 1f), new Vector2(-24f, -24f), new Vector2(170f, 60f), null);
+            _modeLabel = ModeButton.GetComponentInChildren<TextMeshProUGUI>();
+            _modeLabel.fontSize = 22;
+            ModeButton.onClick.AddListener(ChooseMode);
+        }
+
+        private void ChooseMode()
+        {
+            string next = DungeonMode.NextOpen();
+            string why = DungeonMode.Why(next);
+            if (next == DungeonMode.Current.Key)
+                DialogueLabel.Instance?.Show(string.Format(DungeonLocalization.T("mode.locked", "험은 {0}층, 절은 {1}층을 밟아야 열린다(지금 가장 깊이 {2}층)"), DungeonMode.All[1].Need, DungeonMode.All[2].Need, DungeonMode.Best), 2.5f);
+            else if (why == "deep")
+                DialogueLabel.Instance?.Show(DungeonLocalization.T("mode.deep", "난도는 들머리(2층까지)에서만 바꾼다 — 더 내려간 뒤엔 그 회차 그대로"), 2.5f);
+            else if (DungeonMode.Choose(next))
+            {
+                var m = DungeonMode.Current;
+                DialogueLabel.Instance?.Show(string.Format(DungeonLocalization.T("mode.set", "난도 {0} — 적 체력 ×{1} · 피해 ×{2} · 금 ×{3}"), m.Name + "(" + m.Hanja + ")", m.Hp, m.Dmg, m.Gold), 2.5f);
+            }
+            Refresh();
+        }
+
         private void ChooseVoice() { Saga.Core.SagaVoice.Enabled = !Saga.Core.SagaVoice.Enabled; Refresh(); }
 
         private void TogglePanel() => _panel.SetActive(!_panel.activeSelf);
@@ -158,6 +187,7 @@ namespace Saga.Dungeon.UI
             _languageValueLabel.text = DungeonLocalization.LanguageLabel();
             _bgmValueLabel.text = DungeonLocalization.T(DungeonSettingsState.BgmOn ? "state.on" : "state.off");
             if (_lootLabel != null) _lootLabel.text = DungeonLocalization.T("lootf.open", "🧹 거르기");
+            if (_modeLabel != null) _modeLabel.text = string.Format(DungeonLocalization.T("mode.button", "난도 {0}"), DungeonMode.Current.Name + "(" + DungeonMode.Current.Hanja + ")"); // tasks U-0137
             if (_voiceValueLabel != null)
             {
                 _voiceNameLabel.text = DungeonLocalization.T("settings.voice", "음성");

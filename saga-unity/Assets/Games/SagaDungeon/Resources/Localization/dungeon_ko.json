@@ -847,6 +847,13 @@
     { "key": "tree.a", "value": "가" },
     { "key": "tree.b", "value": "나" },
     { "key": "tree.reset", "value": "되돌리기 (금 {0})" },
-    { "key": "tree.button", "value": "{0} 나무 Lv.{1} · 점 {2}" }
+    { "key": "tree.button", "value": "{0} 나무 Lv.{1} · 점 {2}" },
+    { "key": "mode.normal", "value": "평" },
+    { "key": "mode.hard", "value": "험" },
+    { "key": "mode.hell", "value": "절" },
+    { "key": "mode.locked", "value": "험은 {0}층, 절은 {1}층을 밟아야 열린다(지금 가장 깊이 {2}층)" },
+    { "key": "mode.deep", "value": "난도는 들머리(2층까지)에서만 바꾼다 — 더 내려간 뒤엔 그 회차 그대로" },
+    { "key": "mode.set", "value": "난도 {0} — 적 체력 ×{1} · 피해 ×{2} · 금 ×{3}" },
+    { "key": "mode.button", "value": "난도 {0}" }
   ]
 }

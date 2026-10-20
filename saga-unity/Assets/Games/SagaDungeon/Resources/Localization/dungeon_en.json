@@ -847,6 +847,13 @@
     { "key": "tree.a", "value": "A" },
     { "key": "tree.b", "value": "B" },
     { "key": "tree.reset", "value": "Reset ({0} gold)" },
-    { "key": "tree.button", "value": "{0} tree Lv.{1} · {2} pts" }
+    { "key": "tree.button", "value": "{0} tree Lv.{1} · {2} pts" },
+    { "key": "mode.normal", "value": "Calm" },
+    { "key": "mode.hard", "value": "Perilous" },
+    { "key": "mode.hell", "value": "Dire" },
+    { "key": "mode.locked", "value": "Perilous opens at floor {0}, Dire at floor {1} (deepest so far: {2})" },
+    { "key": "mode.deep", "value": "Difficulty can only change at the entrance (up to floor 2) — it stays for the run" },
+    { "key": "mode.set", "value": "Difficulty {0} — enemy HP ×{1} · damage ×{2} · gold ×{3}" },
+    { "key": "mode.button", "value": "Mode: {0}" }
   ]
 }

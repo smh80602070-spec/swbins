@@ -56,6 +56,7 @@ namespace Saga.Dungeon.UI
             if (region >= 0) floorLine = DungeonRegionFoes.DangerLabel(region);
             string landmark = DungeonFloorRunner.Instance?.LandmarkHud ?? ""; // PLAN.md 108 ③ 명소 층
             if (landmark.Length > 0) floorLine += "  " + landmark;
+            floorLine += DungeonMode.HudSuffix; // tasks U-0137 — 험·절이면 층 줄 끝에
             // PLAN.md 109-16 — 시나리오가 열려 있으면 그 장·단계 한 줄(다 봤으면 얻은 칭호)이 옛 메인 퀘스트 줄 자리를 쓴다
             // (웹 "목표판은 이야기 목표를 먼저", 옛 3단계는 1장에 흡수). 줄이 늘면 체력 막대와 겹친다.
             string objective = DungeonScenario.HudLine();

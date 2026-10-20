@@ -467,9 +467,9 @@ namespace Saga.Dungeon.World
             var enemy = go.AddComponent<DungeonEnemy>();
             enemy.SetSpawnContext(RoomId, model != null ? model : gruntModel);
             enemy.ConfigureCombat(
-                DungeonFormulas.EnemyHp(_floor, false) * SigilState.EnemyHpMultiplier(_floor) * (minion ? DungeonHunt.MinionHpMul : 1f),
-                DungeonFormulas.EnemyDmg(_floor, false) * SigilState.EnemyDamageMultiplier(_floor) * (minion ? DungeonHunt.MinionDmgMul : 1f),
-                MinionReward(DungeonFormulas.RewardExp(_floor, false), minion), MinionReward(DungeonFormulas.RewardGold(_floor, false), minion),
+                DungeonFormulas.EnemyHp(_floor, false) * SigilState.EnemyHpMultiplier(_floor) * DungeonMode.Hp * (minion ? DungeonHunt.MinionHpMul : 1f),
+                DungeonFormulas.EnemyDmg(_floor, false) * SigilState.EnemyDamageMultiplier(_floor) * DungeonMode.Dmg * (minion ? DungeonHunt.MinionDmgMul : 1f),
+                MinionReward(DungeonMode.Exp(DungeonFormulas.RewardExp(_floor, false)), minion), MinionReward(DungeonMode.Gold(DungeonFormulas.RewardGold(_floor, false)), minion),
                 minion ? null : "wp_axe", null, false, foe.NameKo,
                 model != null ? Color.white : era == DungeonEra.Future ? EraFusionData.FusionBodyColor : new Color(0.3f, 0.34f, 0.3f),
                 mul * (minion ? DungeonHunt.MinionScale : 1f));
@@ -496,9 +496,9 @@ namespace Saga.Dungeon.World
             enemy.SetSpawnContext(RoomId, gruntModel);
             // PLAN.md 101-2 5.3 "부적 던전" 변형자 — 정상 층은 배율 1이라 그대로.
             enemy.ConfigureCombat(
-                DungeonFormulas.EnemyHp(_floor, false) * SigilState.EnemyHpMultiplier(_floor) * (minion ? DungeonHunt.MinionHpMul : 1f),
-                DungeonFormulas.EnemyDmg(_floor, false) * SigilState.EnemyDamageMultiplier(_floor) * (minion ? DungeonHunt.MinionDmgMul : 1f),
-                MinionReward(DungeonFormulas.RewardExp(_floor, false), minion), MinionReward(DungeonFormulas.RewardGold(_floor, false), minion),
+                DungeonFormulas.EnemyHp(_floor, false) * SigilState.EnemyHpMultiplier(_floor) * DungeonMode.Hp * (minion ? DungeonHunt.MinionHpMul : 1f),
+                DungeonFormulas.EnemyDmg(_floor, false) * SigilState.EnemyDamageMultiplier(_floor) * DungeonMode.Dmg * (minion ? DungeonHunt.MinionDmgMul : 1f),
+                MinionReward(DungeonMode.Exp(DungeonFormulas.RewardExp(_floor, false)), minion), MinionReward(DungeonMode.Gold(DungeonFormulas.RewardGold(_floor, false)), minion),
                 minion ? null : "wp_axe", null, false, roster ? foe.NameKo : _landmark >= 0 ? DungeonLandmarkData.GruntName(_landmark) : "황건적",
                 roster ? foe.Color : new Color(0.72f, 0.64f, 0.3f), minion ? DungeonHunt.MinionScale : 1f);
             if (roster)
@@ -559,9 +559,9 @@ namespace Saga.Dungeon.World
             Color color = mech ? Color.white : fusion ? EraFusionData.FusionBodyColor : new Color(0.75f, 0.35f, 0.15f);
 
             enemy.ConfigureCombat(
-                DungeonFormulas.EliteHp(_floor) * SigilState.EnemyHpMultiplier(_floor),
-                DungeonFormulas.EliteDmg(_floor) * SigilState.EnemyDamageMultiplier(_floor),
-                DungeonFormulas.EliteRewardExp(_floor), DungeonFormulas.EliteRewardGold(_floor),
+                DungeonFormulas.EliteHp(_floor) * SigilState.EnemyHpMultiplier(_floor) * DungeonMode.Hp,
+                DungeonFormulas.EliteDmg(_floor) * SigilState.EnemyDamageMultiplier(_floor) * DungeonMode.Dmg,
+                DungeonMode.Exp(DungeonFormulas.EliteRewardExp(_floor)), DungeonMode.Gold(DungeonFormulas.EliteRewardGold(_floor)),
                 rewardItem, null, false, displayName,
                 color, 1.25f * (mech ? fusionEliteScaleMul : 1f));
             go.SetActive(true);
@@ -582,9 +582,9 @@ namespace Saga.Dungeon.World
             // PLAN.md 101-2 5.4 "월드 보스" — withEscorts는 "boss" 종류(층 끝
             // 진짜 두목)에만 true라(미니보스는 false) 그대로 재사용한다.
             enemy.ConfigureCombat(
-                DungeonFormulas.EnemyHp(_floor, true) * SigilState.EnemyHpMultiplier(_floor),
-                DungeonFormulas.EnemyDmg(_floor, true) * SigilState.EnemyDamageMultiplier(_floor),
-                DungeonFormulas.RewardExp(_floor, true), DungeonFormulas.RewardGold(_floor, true),
+                DungeonFormulas.EnemyHp(_floor, true) * SigilState.EnemyHpMultiplier(_floor) * DungeonMode.Hp,
+                DungeonFormulas.EnemyDmg(_floor, true) * SigilState.EnemyDamageMultiplier(_floor) * DungeonMode.Dmg,
+                DungeonMode.Exp(DungeonFormulas.RewardExp(_floor, true)), DungeonMode.Gold(DungeonFormulas.RewardGold(_floor, true)),
                 "wp_greatblade", "gem_ruby", isBoss, displayName,
                 assassin ? Color.white : color, withEscorts ? 2.0f : 1.8f * (assassin ? minibossScaleMul : 1f), newIsWorldBoss: withEscorts);
             go.SetActive(true);
@@ -610,9 +610,9 @@ namespace Saga.Dungeon.World
             bool demon = lordModel != null;
             enemy.SetSpawnContext(RoomId, demon ? lordModel : eliteModel);
             enemy.ConfigureCombat(
-                DungeonFormulas.EnemyHp(_floor, true) * LordHpMul * SigilState.EnemyHpMultiplier(_floor),
-                DungeonFormulas.EnemyDmg(_floor, true) * SigilState.EnemyDamageMultiplier(_floor),
-                DungeonFormulas.RewardExp(_floor, true), DungeonFormulas.RewardGold(_floor, true),
+                DungeonFormulas.EnemyHp(_floor, true) * LordHpMul * SigilState.EnemyHpMultiplier(_floor) * DungeonMode.Hp,
+                DungeonFormulas.EnemyDmg(_floor, true) * SigilState.EnemyDamageMultiplier(_floor) * DungeonMode.Dmg,
+                DungeonMode.Exp(DungeonFormulas.RewardExp(_floor, true)), DungeonMode.Gold(DungeonFormulas.RewardGold(_floor, true)),
                 LandmarkState.IsCleared(_landmark) ? "wp_greatblade" : lm.RewardItemId, "gem_ruby", true,
                 DungeonLandmarkData.LordName(_landmark),
                 demon ? Color.Lerp(Color.white, lm.LordColor, LordTintMix) : lm.LordColor, 2.1f * (demon ? lordScaleMul : 1f));

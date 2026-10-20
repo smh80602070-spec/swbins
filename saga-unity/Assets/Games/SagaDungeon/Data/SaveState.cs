@@ -63,6 +63,7 @@ namespace Saga.Dungeon.Data
             public int hp;
             public string weaponId;
             public string gemId;
+            public string mode; // tasks U-0137 난도 — 옛 세이브엔 없음(null = 평), 버전 안 올림.
             public string treeJson; // tasks U-0135 무예 나무 — 옛 세이브엔 없음(null = 빈 나무), 버전 안 올림.
             public string weapon2Id; // tasks U-0131 무기 을(乙) — 옛 세이브엔 없음(null = 한 벌), 버전 안 올림.
             public string[] discovered;
@@ -133,6 +134,7 @@ namespace Saga.Dungeon.Data
                 gemId = HeroState.SocketedGemId,
                 weapon2Id = HeroState.SecondWeaponId,
                 treeJson = SkillTree.Snapshot(),
+                mode = DungeonMode.Snapshot(),
                 discovered = BestiaryState.Snapshot(),
                 bossDead = QuestState.BossDead,
                 minibossDead = QuestState.MinibossDead,
@@ -205,6 +207,7 @@ namespace Saga.Dungeon.Data
 
             HeroState.Restore(data.level, data.exp, data.hp, data.gold, data.weaponId, data.gemId, data.weapon2Id);
             SkillTree.Restore(data.treeJson); // tasks U-0135
+            DungeonMode.Restore(data.mode); // tasks U-0137
             SecretState.Restore(data.version >= 11 ? data.secrets : null); // 레벨 뒤(모자라면 없는 것으로 읽는다).
             if (data.version >= 12) TrialState.Restore(data.trialBest, data.trialOpen, data.trialRuns, data.trialBoard);
             else TrialState.Restore(0, 1, 0, null);

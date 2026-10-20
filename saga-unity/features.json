@@ -2119,6 +2119,24 @@
   "note": "D2(U-0135): docs/playcheck/d2-u0135-20261020.json — PlaytestDungeonHeadless 64→69(tree level·rules·effect·reset·save) · 기력 축 = 재냉각 · 불 결 ×1.1·한기 결 얼림(원소 없음) · 비결 창(K) 아래 나무 단추 · 촬영 안 함"
  },
  {
+  "id": "un.dg.difficulty",
+  "name": "U-0137 난도 평·험·절 — 10·20층에 열림, 들머리에서 고르면 회차 고정, 방 적 체력·피해·금·경험 배율(웹 MODES 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaDungeon/Data/DungeonMode.cs",
+   "saga-unity/Assets/Games/SagaDungeon/World/DungeonFloorRunner.cs",
+   "saga-unity/Assets/Games/SagaDungeon/UI/DungeonSettingsPanel.cs"
+  ],
+  "tests": [
+   "PlaytestDungeonMode"
+  ],
+  "level": "D2",
+  "verified": "2026-10-20 claude",
+  "fun": {},
+  "ticket": "U-0137",
+  "since": "2026-10-20",
+  "note": "D2(U-0137): docs/playcheck/d2-u0137-20261020.json — PlaytestDungeonHeadless 69→74(mode table·start·room·sigil·save) · bias·resist 는 굴림 표·저항 칸이 없어 뺌 · 난입·월드 보스는 평 · 촬영 안 함"
+ },
+ {
   "id": "un.fs.move-in",
   "name": "U-0127 입주 조건 — 작은 빈 집(최대 셋)에 가구 태그 셋이면 다음 날 어울리는 떠돌이 손님이 눌러앉음(웹 W-0284 이식)",
   "files": [
