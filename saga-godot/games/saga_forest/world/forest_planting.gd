@@ -44,11 +44,15 @@ const HYBRID2_ROLL := 0.7   # near_best_tier>=1이면 이 더 높은 문턱을 �
 
 var _nodes: Array[Node3D] = []   # ForestSaveState.planted와 같은 인덱스
 var _in_range: Dictionary = {}   # index(int) -> bool
+var _synced: Array = []   # G-0263 자리 노드를 세운 그 planted 배열(같은 객체인지 is_same 으로 본다)
+var _resync_queued := false
 
 
 func _ready() -> void:
-	for i in ForestSaveState.planted.size():
-		_spawn_visual(i)
+	## G-0263 — 부모 forest_village.gd 의 _ready(ForestSaveState.try_load())가 이 노드보다 늦게 돌아
+	## 여기서 세우면 불러오기 전 배열로 세워진다(불러온 꽃이 안 보였다) → 모든 _ready 뒤(유휴)에 세운다.
+	_resync_queued = true
+	resync.call_deferred()
 	add_child(load("res://games/saga_forest/world/plant_grid_overlay.gd").new())   # G-0186 발밑 심을 칸·심은 꽃 둘레 격자
 
 
@@ -71,6 +75,8 @@ func _process(_delta: float) -> void:
 
 
 func _try_plant() -> void:
+	if is_stale():
+		resync()
 	if ForestSaveState.item_count(ITEM_LABEL_NORMAL) < 1:
 		Toast.show(self, "심을 꽃이 없다 — 먼저 꽃을 꺾어 오게.", 2.0)
 		return
@@ -113,7 +119,32 @@ func _try_plant() -> void:
 	Toast.show(self, "꽃을 심었다 — %d일 뒤 자란다%s." % [PLANT_DAYS, hint], 3.0)
 
 
+## G-0263 — planted 가 통째로 바뀌면(세이브 불러오기·촬영 무대·probe) 자리 노드가 옛 인덱스를 쥔다.
+## 매 틱 보지 않고 Area 진입·심기 때만 is_same/크기 한 번 비교한다(불러오기 끝 신호가 없다).
+func is_stale() -> bool:
+	return not is_same(ForestSaveState.planted, _synced) or _nodes.size() != ForestSaveState.planted.size()
+
+
+func resync() -> void:
+	_resync_queued = false
+	for n in _nodes:
+		if is_instance_valid(n):
+			remove_child(n)
+			n.queue_free()
+	_nodes.clear()
+	_in_range.clear()   # 함정: 인덱스 키라 비우지 않으면 옛 키가 남는다(노드를 뗀 뒤 비워 늦은 body_exited 도 지운다)
+	_build_nodes()
+
+
+func _build_nodes() -> void:
+	_synced = ForestSaveState.planted
+	for i in ForestSaveState.planted.size():
+		_spawn_visual(i)
+
+
 func _spawn_visual(i: int) -> void:
+	if i >= ForestSaveState.planted.size():
+		return
 	var entry: Dictionary = ForestSaveState.planted[i]
 	var root := Node3D.new()
 	root.name = "Planted_%d" % i
@@ -157,6 +188,11 @@ func _elapsed(entry: Dictionary) -> int:
 func _on_entered(body: Node3D, i: int) -> void:
 	if not body.is_in_group("player"):
 		return
+	if i >= ForestSaveState.planted.size() or is_stale():
+		if not _resync_queued:   # 신호 안(물리 질의 중)에서 Area 를 떼지 않는다 — 다음 유휴에 다시 세우면 새 Area 가 진입을 다시 알린다
+			_resync_queued = true
+			resync.call_deferred()
+		return
 	_in_range[i] = true
 	var entry: Dictionary = ForestSaveState.planted[i]
 	if _elapsed(entry) < PLANT_DAYS:
@@ -171,11 +207,15 @@ func _on_entered(body: Node3D, i: int) -> void:
 
 
 func _on_exited(body: Node3D, i: int) -> void:
+	if i >= ForestSaveState.planted.size():
+		return
 	if body.is_in_group("player"):
 		_in_range[i] = false
 
 
 func _gather(i: int) -> void:
+	if i >= ForestSaveState.planted.size():
+		return
 	var entry: Dictionary = ForestSaveState.planted[i]
 	if _elapsed(entry) < PLANT_DAYS:
 		return
