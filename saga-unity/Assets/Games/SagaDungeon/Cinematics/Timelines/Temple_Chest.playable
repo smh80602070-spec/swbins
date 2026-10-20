@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1960716381320924180
+--- !u!114 &-7614105423242046025
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24,10 +24,10 @@ MonoBehaviour:
   - m_Version: 1
     m_Start: 0
     m_ClipIn: 0
-    m_Asset: {fileID: 8514492767672213557}
+    m_Asset: {fileID: -116868349479061107}
     m_Duration: 2.5999999046325684
     m_TimeScale: 1
-    m_ParentTrack: {fileID: -1960716381320924180}
+    m_ParentTrack: {fileID: -7614105423242046025}
     m_EaseInDuration: 0.44999998807907104
     m_EaseOutDuration: 0.550000011920929
     m_BlendInDuration: -1
@@ -93,29 +93,7 @@ MonoBehaviour:
   m_Markers:
     m_Objects: []
   TrackPriority: 0
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
-  m_Name: Temple_Chest
-  m_EditorClassIdentifier: Unity.Timeline::UnityEngine.Timeline.TimelineAsset
-  m_Version: 0
-  m_Tracks:
-  - {fileID: -1960716381320924180}
-  - {fileID: 7538975736476859156}
-  m_FixedDuration: 0
-  m_EditorSettings:
-    m_Framerate: 60
-    m_ScenePreview: 1
-  m_DurationMode: 0
-  m_MarkerTrack: {fileID: 0}
---- !u!114 &7538975736476859156
+--- !u!114 &-1209087380243220573
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,10 +117,10 @@ MonoBehaviour:
   - m_Version: 1
     m_Start: 0
     m_ClipIn: 0
-    m_Asset: {fileID: 9042582342072671045}
+    m_Asset: {fileID: 845457373570079432}
     m_Duration: 2.5999999046325684
     m_TimeScale: 1
-    m_ParentTrack: {fileID: 7538975736476859156}
+    m_ParentTrack: {fileID: -1209087380243220573}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
     m_BlendInDuration: 0
@@ -207,7 +185,7 @@ MonoBehaviour:
     m_DisplayName: CutsceneDollyClip
   m_Markers:
     m_Objects: []
---- !u!114 &8514492767672213557
+--- !u!114 &-116868349479061107
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -223,7 +201,29 @@ MonoBehaviour:
   VirtualCamera:
     exposedName: chest_close
     defaultValue: {fileID: 0}
---- !u!114 &9042582342072671045
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
+  m_Name: Temple_Chest
+  m_EditorClassIdentifier: Unity.Timeline::UnityEngine.Timeline.TimelineAsset
+  m_Version: 0
+  m_Tracks:
+  - {fileID: -7614105423242046025}
+  - {fileID: -1209087380243220573}
+  m_FixedDuration: 0
+  m_EditorSettings:
+    m_Framerate: 60
+    m_ScenePreview: 1
+  m_DurationMode: 0
+  m_MarkerTrack: {fileID: 0}
+--- !u!114 &845457373570079432
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}

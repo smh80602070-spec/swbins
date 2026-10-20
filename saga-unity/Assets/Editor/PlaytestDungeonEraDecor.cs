@@ -178,7 +178,7 @@ namespace Saga.EditorTools
         /// <summary>한 벌의 조각 검사. 돌려주는 값은 삼각형 합.</summary>
         private static readonly List<string> _pieceTris = new List<string>();
 
-                private static int CheckSet(DungeonEraDecor.Set set, Transform root, Vector3 center, string doors,
+        private static int CheckSet(DungeonEraDecor.Set set, Transform root, Vector3 center, string doors,
             List<(string, Vector3)> others, float clearance)
         {
             if (root.childCount < set.Pieces.Length) Fail($"{set.Id} 조각 {root.childCount} < {set.Pieces.Length}(모델 빠짐)");
@@ -190,8 +190,15 @@ namespace Saga.EditorTools
                 string id = $"{set.Id} {piece.name}";
                 int pt = 0;
                 foreach (var f in piece.GetComponentsInChildren<MeshFilter>(true))
-                    if (f.sharedMesh != null)
-                        for (int s = 0; s < f.sharedMesh.subMeshCount; s++) pt += (int)(f.sharedMesh.GetIndexCount(s) / 3);
+                {
+                    var mesh = f.sharedMesh;
+                    if (mesh == null) continue;
+                    // tasks U-0139 — Play 땐 정적 배칭이 sharedMesh 를 합친 메시로 바꾼다. 그 렌더러 몫 서브메시만 센다(통째로 세면 판마다 다른 수십만).
+                    int first = 0, count = mesh.subMeshCount;
+                    var mr = f.GetComponent<MeshRenderer>();
+                    if (mr != null && mr.isPartOfStaticBatch) { first = mr.subMeshStartIndex; count = mr.sharedMaterials.Length; }
+                    for (int s = first; s < first + count && s < mesh.subMeshCount; s++) pt += (int)(mesh.GetIndexCount(s) / 3);
+                }
                 tri += pt;
                 _pieceTris.Add($"{set.Id}/{piece.name.Substring(3)} {pt / 1000}k"); // tasks U-0139 — 조각별 삼각형(어느 것이 무거운지)
                 if (!PieceRect(piece, out var rect)) { Fail($"{id} 렌더러 없음"); continue; }
