@@ -464,13 +464,13 @@ func _build_snow() -> void:
 	_snow.gravity = Vector3(0, -1.2, 0)
 	_snow.initial_velocity_min = 1.2
 	_snow.initial_velocity_max = 2.0
-	_snow.scale_amount_min = 0.06
-	_snow.scale_amount_max = 0.12
+	_snow.scale_amount_min = 1.0
+	_snow.scale_amount_max = 1.6
 	var q := QuadMesh.new()
-	q.size = Vector2(1, 1)
+	q.size = Vector2(0.3, 0.3)   # G-0254 — weather_visual 값 그대로(0.3 × 1.0~1.6 = 0.3~0.5m)
 	var m := StandardMaterial3D.new()
 	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	m.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
+	m.billboard_mode = BaseMaterial3D.BILLBOARD_PARTICLES   # G-0254 — ENABLED 는 입자 scale_amount 를 버려 눈송이가 1m 네모였다
 	m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	m.albedo_color = Color(0.82, 0.85, 0.9, 0.85)   # G-0127 — 순백 1.0 이면 화면 번짐(glow)이 눈송이마다 큰 흐린 원을 그렸다
 	## 09-30 — 무늬 없는 정사각 빌보드라 가까운 눈송이가 각진 흰 네모로 보였다(창 모드 f_pass_view). 가운데가 밝고 가장자리가 녹는 동그란 점으로.

@@ -238,6 +238,8 @@ func _physics_process(_delta: float) -> void:
 			if _frame == 5:
 				var snow := _fr.get_node("Snowfall") as CPUParticles3D
 				_saved["em_in"] = snow.emitting
+				var sq := snow.mesh as QuadMesh
+				_check("snow_mat", sq != null and (sq.material as BaseMaterial3D).billboard_mode == BaseMaterial3D.BILLBOARD_PARTICLES and sq.size.x <= 0.4, "size=%s" % (sq.size if sq != null else Vector2.ZERO))
 				_p.global_position = TestMap.world_pos(5.3, 3.4, "village") + Vector3(0, 1.0, 0)
 			if _frame == 12:
 				var snow := _fr.get_node("Snowfall") as CPUParticles3D
