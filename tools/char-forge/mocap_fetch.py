@@ -1,9 +1,10 @@
 """K-0139 1단계 — CMU 모캡 BVH(Hahne 2010 변환)를 data/mocap_clips.json 의 번호대로 받는다.
-  py tools/char-forge/mocap_fetch.py            → tools/char-forge/_in/mocap/<번호>.bvh + source.json (있으면 건너뜀)
+  py tools/char-forge/mocap_fetch.py [--extra 79_01,81_10]   → tools/char-forge/_in/mocap/<번호>.bvh + source.json (있으면 건너뜀, --extra = 표 밖 후보)
 거울: github.com/una-dinosauria/cmu-mocap (data/<사람 3자리>/<번호>.bvh). 라이선스 문구는 mocap_clips.json `source` 그대로.
 """
 import json
 import os
+import sys
 import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -15,7 +16,8 @@ def main():
     t = json.load(open(os.path.join(HERE, 'data', 'mocap_clips.json'), encoding='utf-8'))
     os.makedirs(OUT, exist_ok=True)
     got = []
-    for c in t['clips']:
+    extra = sys.argv[sys.argv.index('--extra') + 1].split(',') if '--extra' in sys.argv else []   # K-0148 후보(표에 넣기 전 재 볼 것)
+    for c in t['clips'] + [{'game': 'cand', 'cmu': n} for n in extra]:
         num = c['cmu']
         p = os.path.join(OUT, num + '.bvh')
         if not os.path.exists(p):
