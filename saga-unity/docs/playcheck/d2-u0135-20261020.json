@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-20",
+  "tickets": [
+    "U-0135 2나락 무예별 작은 나무(웹 W-0280)"
+  ],
+  "how": "PlaytestDungeonHeadless.Run·UiLayoutCheck.Run 배치(unity-batch.sh, -quit 없음, </dev/null), 세이브 다섯 백업·되돌림(md5 같음)",
+  "ok_before": 64,
+  "ok_after": 69,
+  "new_ok": [
+    "tree level",
+    "tree rules",
+    "tree effect",
+    "tree reset",
+    "tree save"
+  ],
+  "ui_layout": "OK 문제 0 (비결 창 열린 상태 = 나무 단추 셋 포함 · 나무 창은 진단이 겹침·밖 0 으로 잼)",
+  "error_cs": 0,
+  "exception": 0,
+  "save_md5_same": true,
+  "runs": 1,
+  "note": "실제 타격 → 경험 배선(Gain 세 자리)은 진단이 직접 치지 않고 규칙·배율만 잰다"
+}

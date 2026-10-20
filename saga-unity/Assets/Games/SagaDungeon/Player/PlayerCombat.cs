@@ -102,6 +102,7 @@ namespace Saga.Dungeon.Player
         private void Awake()
         {
             HeroState.Died += OnDied;
+            SkillTree.LeveledUp += OnTreeLeveled; // tasks U-0135
             PlayerController.PerfectDodged += OnPerfectDodged;
             _controller = GetComponent<PlayerController>();
             _lockOn = GetComponent<PlayerLockOn>();
@@ -111,8 +112,12 @@ namespace Saga.Dungeon.Player
         private void OnDestroy()
         {
             HeroState.Died -= OnDied;
+            SkillTree.LeveledUp -= OnTreeLeveled;
             PlayerController.PerfectDodged -= OnPerfectDodged;
         }
+
+        private static void OnTreeLeveled(SecretMove m, int lv) =>
+            DialogueLabel.Instance?.Show(string.Format(DungeonLocalization.T("tree.leveled", "{0} 무예 레벨 {1} — 나무에 점 하나(비결 창)"), SecretState.MoveName(m), lv), 2.5f);
 
         private void OnPerfectDodged()
         {
@@ -195,50 +200,56 @@ namespace Saga.Dungeon.Player
         /// <summary>모바일 화면의 "회전베기" 버튼(OnClick)이 부른다. 데스크톱은 E키.</summary>
         public void TriggerWhirl() => TryWhirl();
 
+        // tasks U-0135 무예 나무 — 비결 배율과 곱한다(덮지 않음).
+        private static float RangeOf(SecretMove m) => SecretState.RangeMul(m) * SkillTree.RangeMul(m);
+        private static float CdOf(SecretMove m) => SecretState.CooldownMul(m) * SkillTree.CooldownMul(m);
+        private static float DmgOf(SecretMove m) => SecretState.DamageMul(m) * SkillTree.DamageMul(m);
+
         private void TryAttack()
         {
             if (_cooldownLeft > 0f || DungeonCutscenes.Playing || Climbing) return;
             const SecretMove M = SecretMove.Attack;
-            float range = AttackRange * SecretState.RangeMul(M);
+            float range = AttackRange * RangeOf(M);
             var enemy = PickTarget(range);
             if (enemy == null) return;
 
-            _cooldownLeft = AttackCooldown * SecretState.CooldownMul(M);
+            _cooldownLeft = AttackCooldown * CdOf(M);
             Saga.Core.SagaVoice.Say("shout"); // U-0068 — 가끔 외침(말하는 이 = 주인공)
             _controller.FaceToward(enemy.transform.position);
             SecretState.OnCast(M, Time.time);
             float mul = ConsumeCounter();
-            float dmg = HeroState.HitDamage * SecretState.DamageMul(M) * HeroState.TakeFirstHit(); // tasks U-0131 바꾼 뒤 첫 타
+            float dmg = HeroState.HitDamage * DmgOf(M) * HeroState.TakeFirstHit(); // tasks U-0131 바꾼 뒤 첫 타
             Strike(enemy, dmg * mul, mul > 1f, M);
-            var hitList = new List<DungeonEnemy>(ExtraTargets(enemy, range, SecretState.ExtraTargets(M)));
+            var hitList = new List<DungeonEnemy>(ExtraTargets(enemy, range, SecretState.ExtraTargets(M) + SkillTree.ExtraTargets(M)));
             foreach (var extra in hitList) Strike(extra, dmg, false, M);
             // PLAN.md 109-10-10 몰이 사냥 — 앞 120°·사거리 × 1.35 안 곁의 적도 60% 로 휩쓴다.
-            Cleave(enemy, hitList, AttackRange * DungeonHunt.CleaveR * SecretState.RangeMul(M), DungeonHunt.CleaveHalfDeg, dmg * DungeonHunt.CleaveMul, false, M);
+            Cleave(enemy, hitList, AttackRange * DungeonHunt.CleaveR * RangeOf(M), DungeonHunt.CleaveHalfDeg, dmg * DungeonHunt.CleaveMul, false, M);
             PartyState.AddPlayerHit(heavy: mul > 1f); // PLAN.md 106-6 — 맞힐 때마다 동료 명령·소환 게이지.
             _cameraRig?.Shake(mul > 1f ? HeavyShakeMag : HitShakeMag, mul > 1f ? HeavyShakeSec : HitShakeSec);
             SfxPlayer.PlayHit();
             _controller.Animator?.SetTrigger("Attack");
             StartCoroutine(ApplyHitstop(_controller.Animator, enemy.Animator, HitstopSec));
+            SkillTree.Gain(M); // tasks U-0135 — 맞힌 시전 하나 = 무예 경험 1
         }
 
         private void TryHeavyAttack()
         {
             if (_heavyCooldownLeft > 0f || (_controller != null && _controller.IsDodging) || DungeonCutscenes.Playing || Climbing) return;
             const SecretMove M = SecretMove.Heavy;
-            float range = AttackRange * HeavyRangeMul * SecretState.RangeMul(M);
+            float range = AttackRange * HeavyRangeMul * RangeOf(M);
             var enemy = PickTarget(range);
             if (enemy == null) return;
 
-            _heavyCooldownLeft = HeavyCooldown * SecretState.CooldownMul(M);
+            _heavyCooldownLeft = HeavyCooldown * CdOf(M);
             _cooldownLeft = Mathf.Max(_cooldownLeft, HeavyRecoverSec);
             _controller.FaceToward(enemy.transform.position);
             SecretState.OnCast(M, Time.time);
-            float dmg = HeroState.HitDamage * HeavyDamageMul * SecretState.DamageMul(M) * HeroState.TakeFirstHit(); // tasks U-0131
+            float dmg = HeroState.HitDamage * HeavyDamageMul * DmgOf(M) * HeroState.TakeFirstHit(); // tasks U-0131
             Strike(enemy, dmg * ConsumeCounter(), true, M);
-            var hitList = new List<DungeonEnemy>(ExtraTargets(enemy, range, SecretState.ExtraTargets(M)));
+            var hitList = new List<DungeonEnemy>(ExtraTargets(enemy, range, SecretState.ExtraTargets(M) + SkillTree.ExtraTargets(M)));
             foreach (var extra in hitList) Strike(extra, dmg, true, M);
             // PLAN.md 109-10-10 — 강공격은 앞 반원(180°)·사거리 × 1.8, 곁은 강공격의 75%(예비동작도 끊는다).
-            Cleave(enemy, hitList, AttackRange * DungeonHunt.HeavyR * SecretState.RangeMul(M), DungeonHunt.HeavyHalfDeg, dmg * DungeonHunt.HeavySide, true, M);
+            Cleave(enemy, hitList, AttackRange * DungeonHunt.HeavyR * RangeOf(M), DungeonHunt.HeavyHalfDeg, dmg * DungeonHunt.HeavySide, true, M);
             PartyState.AddPlayerHit(heavy: true);
             _cameraRig?.Shake(HeavyShakeMag, HeavyShakeSec);
             SfxPlayer.PlayHeavyHit();
@@ -246,6 +257,7 @@ namespace Saga.Dungeon.Player
             // "Attack" 트리거를 쓴다 — 전용 클립은 다음에 받을 몫.
             _controller.Animator?.SetTrigger("Attack");
             StartCoroutine(ApplyHitstop(_controller.Animator, enemy.Animator, HeavyHitstopSec));
+            SkillTree.Gain(M); // tasks U-0135
         }
 
         /// <summary>회전베기 — 반경 안 살아있는 적을 전부 때린다(TryAttack의
@@ -256,8 +268,8 @@ namespace Saga.Dungeon.Player
             if (_whirlCooldownLeft > 0f || DungeonCutscenes.Playing || Climbing) return;
 
             const SecretMove M = SecretMove.Whirl;
-            float radius = WhirlRadius * SecretState.RangeMul(M);
-            float damage = HeroState.HitDamage * WhirlDamageMul * SecretState.DamageMul(M);
+            float radius = WhirlRadius * RangeOf(M);
+            float damage = HeroState.HitDamage * WhirlDamageMul * DmgOf(M);
             var hits = new List<DungeonEnemy>();
             foreach (var enemy in DungeonEnemy.Active)
             {
@@ -269,13 +281,14 @@ namespace Saga.Dungeon.Player
             damage *= HeroState.TakeFirstHit(); // tasks U-0131 — 맞힐 적이 있을 때만 쓴다
             SecretState.OnCast(M, Time.time);
             foreach (var enemy in hits) Strike(enemy, damage, false, M); // 모아 두고 친다 — 쓰러지는 적이 목록을 흔들지 않게.
+            SkillTree.Gain(M); // tasks U-0135 — 여럿을 베도 한 번
             PartyState.AddPlayerHit(heavy: false); // 여럿을 베도 한 번(게이지가 회전베기 난사로 넘치지 않게).
             GestureState.OnLeadSignature(GestureState.Now); // PLAN.md 109-10-7 — 동행 둘이 ❗ 호응(웹 선두 서명 무예 자리).
             AllySigState.OnLeadSignature(AllySigState.Now); // PLAN.md 109-10-8 — 1.5초 합격 창.
 
             // PLAN.md 101-2 5.1 "축복 3택" 선(旋) 축 — BlessingState.SweepMultiplier로
             // 나눈다(클수록 회전베기를 더 자주 쓴다, 51장 "범위형 빌드"를 직접 강화).
-            _whirlCooldownLeft = WhirlCooldown / BlessingState.SweepMultiplier * SecretState.CooldownMul(M);
+            _whirlCooldownLeft = WhirlCooldown / BlessingState.SweepMultiplier * CdOf(M);
             _cooldownLeft = Mathf.Max(_cooldownLeft, WhirlRecoverSec);
             _cameraRig?.Shake(WhirlShakeMag, WhirlShakeSec);
             SfxPlayer.PlayHit();
@@ -307,14 +320,24 @@ namespace Saga.Dungeon.Player
         /// <summary>PLAN.md 109-15 — 적을 칠 때마다 쏜다(탈것에서 저절로 내린다).</summary>
         public static event System.Action Struck;
 
+        private static float _drainCarry;
+
         private static void Strike(DungeonEnemy enemy, float damage, bool heavy, SecretMove move)
         {
             if (enemy == null || !enemy.IsAlive) return;
             Struck?.Invoke();
             enemy.TakeDamage(damage, heavy);
-            float chill = SecretState.ChillSec(move);
+            float chill = Mathf.Max(SecretState.ChillSec(move), SkillTree.Chills(move) ? SecretState.FrostChillSec : 0f); // tasks U-0135 한기 결
             if (chill > 0f && enemy.IsAlive) enemy.Chill(chill);
             int heal = SecretState.LeechHeal(damage, Time.time);
+            float drain = SkillTree.DrainFrac(move); // tasks U-0135 흡수 — 그 타 피해 × 합%(끝수는 다음 타로)
+            if (drain > 0f)
+            {
+                _drainCarry += damage * drain;
+                int d = (int)_drainCarry;
+                _drainCarry -= d;
+                heal += d;
+            }
             if (heal > 0) HeroState.HealBy(heal);
         }
 

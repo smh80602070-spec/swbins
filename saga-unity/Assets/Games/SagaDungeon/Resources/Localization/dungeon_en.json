@@ -826,6 +826,27 @@
     { "key": "swap.btn", "value": "Swap" },
     { "key": "swap.btn_empty", "value": "No 2nd" },
     { "key": "swap.single", "value": "No second weapon — pick up a stronger one and your current weapon becomes the second" },
-    { "key": "swap.done", "value": "Drew {0} — next first hit ×1.15" }
+    { "key": "swap.done", "value": "Drew {0} — next first hit ×1.15" },
+    { "key": "tree.leveled", "value": "{0} skill level {1} — one point for its tree (Secrets panel)" },
+    { "key": "tree.k.dmg", "value": "Power" },
+    { "key": "tree.k.cost", "value": "Stamina (=cooldown)" },
+    { "key": "tree.k.cd", "value": "Cooldown" },
+    { "key": "tree.k.range", "value": "Reach" },
+    { "key": "tree.k.drain", "value": "Drain" },
+    { "key": "tree.k.fire", "value": "Fire edge (power ×1.1)" },
+    { "key": "tree.k.cold", "value": "Frost edge (chill)" },
+    { "key": "tree.k.multi", "value": "Multi-hit (one more)" },
+    { "key": "tree.why.prereq", "value": "Put a point in the previous node first" },
+    { "key": "tree.why.side", "value": "This node already took the other branch — reset to change" },
+    { "key": "tree.why.max", "value": "This node is maxed" },
+    { "key": "tree.why.point", "value": "No points left — use this skill more to level it" },
+    { "key": "tree.reset_done", "value": "Reset the {0} tree — {1} gold, experience kept" },
+    { "key": "tree.reset_gold", "value": "You need {0} gold to reset" },
+    { "key": "tree.reset_empty", "value": "No points to reset" },
+    { "key": "tree.title", "value": "{0} tree — Lv.{1}/{2} · {3} points left\n1 XP per landed use · one branch per node · in order" },
+    { "key": "tree.a", "value": "A" },
+    { "key": "tree.b", "value": "B" },
+    { "key": "tree.reset", "value": "Reset ({0} gold)" },
+    { "key": "tree.button", "value": "{0} tree Lv.{1} · {2} pts" }
   ]
 }

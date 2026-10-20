@@ -31,6 +31,8 @@ namespace Saga.Dungeon.UI
         private readonly Button[,] _cells = new Button[SecretState.MoveCount, SecretState.SecretCount];
         private readonly TextMeshProUGUI[,] _cellTexts = new TextMeshProUGUI[SecretState.MoveCount, SecretState.SecretCount];
         private readonly TextMeshProUGUI[] _badges = new TextMeshProUGUI[SecretState.MoveCount];
+        private readonly Button[] _treeButtons = new Button[SecretState.MoveCount]; // tasks U-0135 무예 나무
+        public Button TreeButton(SecretMove m) => _treeButtons[(int)m];
         private string _lastLang;
 
         public static SecretPanelUi Instance { get; private set; }
@@ -47,6 +49,7 @@ namespace Saga.Dungeon.UI
             Instance = this;
             Build();
             SecretState.Changed += Refresh;
+            SkillTree.Changed += Refresh; // tasks U-0135 — 무예 레벨·점이 단추 글에
             HeroState.LeveledUp += OnLeveledUp;
             HeroState.EquipmentChanged += OnEquipmentChanged; // 비전(109-10-2)은 든 무기에서 읽는다.
         }
@@ -54,6 +57,7 @@ namespace Saga.Dungeon.UI
         private void OnDestroy()
         {
             SecretState.Changed -= Refresh;
+            SkillTree.Changed -= Refresh;
             HeroState.LeveledUp -= OnLeveledUp;
             HeroState.EquipmentChanged -= OnEquipmentChanged;
             if (Instance == this) Instance = null;
@@ -101,6 +105,12 @@ namespace Saga.Dungeon.UI
                 _title.text = string.Format(DungeonLocalization.T("secret.title", "비결 — 무예 하나에 하나 · 단 {0}/{1} (Lv.{2})"),
                     SecretState.Rank, SecretState.MaxRank, HeroState.Level)
                     + (SecretState.EquippedLore == Secret.None ? "" : "\n" + SecretState.LoreLine(SecretState.EquippedLore));
+            for (int m = 0; m < SecretState.MoveCount; m++)
+            {
+                var tb = _treeButtons[m];
+                if (tb != null) tb.GetComponentInChildren<TextMeshProUGUI>().text = string.Format(DungeonLocalization.T("tree.button", "{0} 나무 Lv.{1} · 점 {2}"),
+                    SecretState.MoveName((SecretMove)m), SkillTree.Level((SecretMove)m), SkillTree.PointsLeft((SecretMove)m));
+            }
             for (int m = 0; m < SecretState.MoveCount; m++)
             {
                 var move = (SecretMove)m;
@@ -175,6 +185,16 @@ namespace Saga.Dungeon.UI
                     _cellTexts[m, i] = b.GetComponentInChildren<TextMeshProUGUI>();
                 }
                 y -= 114f;
+            }
+
+            // tasks U-0135 — 무예 셋 나무 단추(줄 아래 빈 띠, 닫기 위). 누르면 그 무예 나무 창.
+            SkillTreeUi.Install();
+            for (int m = 0; m < SecretState.MoveCount; m++)
+            {
+                var move = (SecretMove)m;
+                var tb = NewButton(_panel.transform, "", new Vector2(0.5f, 1f), new Vector2((m - 1) * 310f, -628f), new Vector2(296f, 70f), CellIdle, 22);
+                tb.onClick.AddListener(() => SkillTreeUi.Instance?.Open(move));
+                _treeButtons[m] = tb;
             }
 
             var close = NewButton(_panel.transform, DungeonLocalization.T("secret.close", "닫기"), new Vector2(0.5f, 0f),

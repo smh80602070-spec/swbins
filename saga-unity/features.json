@@ -2101,6 +2101,24 @@
   "note": "D2(U-0131): docs/playcheck/d2-u0131-20261020.json — PlaytestDungeonHeadless +5(swap pick·swap·first·atk·save) · G 키(Q 락온·Tab 다음 대상) · 촬영 안 함"
  },
  {
+  "id": "un.dg.skill-tree",
+  "name": "U-0135 무예별 작은 나무 — 평타·강공격·회전베기마다 쓸수록 Lv 1~20·마디 여덟(갈래 가/나)·되돌리기 금 200(웹 W-0280 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaDungeon/Data/SkillTree.cs",
+   "saga-unity/Assets/Games/SagaDungeon/UI/SkillTreeUi.cs",
+   "saga-unity/Assets/Games/SagaDungeon/Player/PlayerCombat.cs"
+  ],
+  "tests": [
+   "PlaytestDungeonSkillTree"
+  ],
+  "level": "D2",
+  "verified": "2026-10-20 claude",
+  "fun": {},
+  "ticket": "U-0135",
+  "since": "2026-10-20",
+  "note": "D2(U-0135): docs/playcheck/d2-u0135-20261020.json — PlaytestDungeonHeadless 64→69(tree level·rules·effect·reset·save) · 기력 축 = 재냉각 · 불 결 ×1.1·한기 결 얼림(원소 없음) · 비결 창(K) 아래 나무 단추 · 촬영 안 함"
+ },
+ {
   "id": "un.fs.move-in",
   "name": "U-0127 입주 조건 — 작은 빈 집(최대 셋)에 가구 태그 셋이면 다음 날 어울리는 떠돌이 손님이 눌러앉음(웹 W-0284 이식)",
   "files": [

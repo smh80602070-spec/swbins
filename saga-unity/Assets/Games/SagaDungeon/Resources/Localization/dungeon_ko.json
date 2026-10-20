@@ -826,6 +826,27 @@
     { "key": "swap.btn", "value": "바꿔 들기" },
     { "key": "swap.btn_empty", "value": "을 없음" },
     { "key": "swap.single", "value": "을(乙) 무기가 없다 — 더 센 무기를 주우면 지금 무기가 을로 간다" },
-    { "key": "swap.done", "value": "{0} 을(를) 들었다 — 다음 첫 타 ×1.15" }
+    { "key": "swap.done", "value": "{0} 을(를) 들었다 — 다음 첫 타 ×1.15" },
+    { "key": "tree.leveled", "value": "{0} 무예 레벨 {1} — 나무에 점 하나(비결 창)" },
+    { "key": "tree.k.dmg", "value": "위력" },
+    { "key": "tree.k.cost", "value": "기력(=재냉각)" },
+    { "key": "tree.k.cd", "value": "재냉각" },
+    { "key": "tree.k.range", "value": "범위" },
+    { "key": "tree.k.drain", "value": "흡수" },
+    { "key": "tree.k.fire", "value": "불 결(위력 ×1.1)" },
+    { "key": "tree.k.cold", "value": "한기 결(얼림)" },
+    { "key": "tree.k.multi", "value": "연타(한 놈 더)" },
+    { "key": "tree.why.prereq", "value": "앞 마디에 점이 있어야 열린다" },
+    { "key": "tree.why.side", "value": "이 마디는 다른 갈래를 골랐다 — 되돌리기로" },
+    { "key": "tree.why.max", "value": "이 마디는 다 찍었다" },
+    { "key": "tree.why.point", "value": "남은 점이 없다 — 이 무예를 더 쓰면 레벨이 오른다" },
+    { "key": "tree.reset_done", "value": "{0} 나무를 되돌렸다 — 금 {1}, 경험은 그대로" },
+    { "key": "tree.reset_gold", "value": "금 {0} 이 있어야 되돌린다" },
+    { "key": "tree.reset_empty", "value": "찍은 점이 없다" },
+    { "key": "tree.title", "value": "{0} 나무 — Lv.{1}/{2} · 남은 점 {3}\n맞힌 시전마다 경험 1 · 마디 하나엔 한 갈래 · 앞 마디부터" },
+    { "key": "tree.a", "value": "가" },
+    { "key": "tree.b", "value": "나" },
+    { "key": "tree.reset", "value": "되돌리기 (금 {0})" },
+    { "key": "tree.button", "value": "{0} 나무 Lv.{1} · 점 {2}" }
   ]
 }
