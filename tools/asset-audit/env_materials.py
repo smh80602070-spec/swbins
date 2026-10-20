@@ -2,7 +2,7 @@
 
   py tools/asset-audit/env_materials.py [--top 30]     → tools/asset-audit/out/env_materials.json + 상위 표 + 끝 줄 ENV_MAT n/top (맵 있는 상위 개수)
 
-재질 종류: unlit · tex(색 그림) · col(단색) · nrm(법선 맵) · mr(거칠기·금속 맵) · metal(금속값 > 0.5).
+재질 종류: unlit · tex(색 그림) · col(단색) · nrm(법선 맵) · mr(거칠기·금속 맵) · metal(금속값 > 0.5) · flat(거의 단색 그림이라 맵 없이 단색 처리 — extras.pbr_flat, K-0154).
 쓰임 = 지물 id(파일 이름)가 단어로 나오는 횟수 — 웹 다섯 판 js(dist·assets3d-ids 빼고)·공용 js · 고돗 gd·tscn(assets 빼고) · 유니티 SagaCore cs·json.
 """
 import json
@@ -12,6 +12,7 @@ import struct
 import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
+METAL = re.compile(r'metal|iron|steel|gold|bronze|copper', re.I)   # add_pbr_maps.mjs 와 같음
 SETS = {'web': 'saga-assets/world/web', 'toon': 'saga-assets/world/toon', 'real': 'saga-assets/world/real'}
 
 
@@ -26,7 +27,7 @@ def kinds(j):
     for m in j.get('materials', []):
         p = m.get('pbrMetallicRoughness', {})
         out.append({'name': m.get('name', ''), 'unlit': 'KHR_materials_unlit' in (m.get('extensions') or {}), 'tex': 'baseColorTexture' in p,
-                    'nrm': 'normalTexture' in m, 'mr': 'metallicRoughnessTexture' in p, 'metal': p.get('metallicFactor', 1) > 0.5})
+                    'nrm': 'normalTexture' in m, 'mr': 'metallicRoughnessTexture' in p, 'flat': bool((m.get('extras') or {}).get('pbr_flat')), 'metal': p.get('metallicFactor', 1) > 0.5})
     return out
 
 
@@ -66,7 +67,8 @@ def main():
             gid = f[:-4]
             rows.append({'set': sk, 'id': gid, 'uses': words.get(gid, 0), 'bytes': os.path.getsize(os.path.join(dd, f)), 'mats': len(ks),
                          'tex': sum(k['tex'] for k in ks), 'col': sum(not k['tex'] for k in ks), 'nrm': sum(k['nrm'] for k in ks),
-                         'mr': sum(k['mr'] for k in ks), 'unlit': sum(k['unlit'] for k in ks), 'images': len(j.get('images', []))})
+                         'mr': sum(k['mr'] for k in ks), 'flat': sum(k['flat'] and not k['nrm'] for k in ks),
+                         'colmetal': sum(not k['tex'] and k['metal'] and not METAL.search(k['name']) for k in ks), 'unlit': sum(k['unlit'] for k in ks), 'images': len(j.get('images', []))})
     tot = {}
     for r in rows:
         t = tot.setdefault(r['set'], {'glb': 0, 'mats': 0, 'tex': 0, 'col': 0, 'nrm': 0, 'mr': 0, 'unlit': 0})
@@ -77,7 +79,8 @@ def main():
     for r in rows:
         ids[r['id']] = max(ids.get(r['id'], 0), r['uses'])
     pick = [i for i, u in sorted(ids.items(), key=lambda x: -x[1]) if u > 0 and not i.startswith(('boss_', 'pk_', 'pet_', 'mon_', 'acc_'))][:top]   # 환경만(괴물·펫·장신구 빼고)
-    done = sum(1 for i in pick if all(r['nrm'] >= r['tex'] and r['tex'] > 0 or r['mr'] >= r['mats'] for r in rows if r['id'] == i))
+    # 끝 = 색 그림 재질 전부 법선(또는 평평 처리) + 단색 재질 금속값 바로잡힘(금속 이름 빼고) — 단색만인 GLB 는 넣을 맵이 없다(K-0154)
+    done = sum(1 for i in pick if all(r['nrm'] + r['flat'] >= r['tex'] and r['colmetal'] == 0 for r in rows if r['id'] == i))
     os.makedirs(os.path.join(ROOT, 'tools', 'asset-audit', 'out'), exist_ok=True)
     json.dump({'totals': tot, 'top': pick, 'rows': rows}, open(os.path.join(ROOT, 'tools', 'asset-audit', 'out', 'env_materials.json'), 'w', encoding='utf-8'),
               ensure_ascii=False, indent=1)

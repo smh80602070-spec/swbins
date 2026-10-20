@@ -3,6 +3,8 @@
  *
  * 사용법: node tools/glb-compress/add_pbr_maps.mjs --ids a,b,c [--sets web,toon] [--size 512] [--dry] [--fix-webp]
  *   맵 형식: web = WebP(EXT_texture_webp) · toon = JPEG q90(유니티 glTFast 가 WebP 를 못 읽는다 — K-0153 · PNG 는 30개 +12MB 라 원래 색 그림과 같은 JPEG, 고돗도 같은 파일)
+ *   --flat T: 높이 폭(밝기 − 흐린 밝기의 최대−최소)이 T 미만인 거의 단색 그림은 맵 없이 단색처럼(금속 0·거칠기 0.8, extras.pbr_flat) — 정규화가 잡음을 꽉 찬 법선으로 키우고 JPEG 가 그 잡음에 커지는 것 막기(K-0154)
+ *   --q N: 맵 품질(기본 web 85 · toon 90) · --mr-half: 거칠기 맵을 반 크기로(거칠기는 저주파)
  *   --fix-webp: toon 에 이미 들어간 WebP 그림을 JPEG 로 바꾸고 EXT_texture_webp 를 뗀다(K-0152 1차 30개 고침)
  *   대상 = saga-assets/world/<set>/<id>.glb (제자리 갈아 끼움 — 정본 · 배치는 place.py)
  *
@@ -29,6 +31,9 @@ const SIZE = +arg('--size', 512);
 const dry = process.argv.includes('--dry');
 const STRENGTH = 2.2;
 const fixWebp = process.argv.includes('--fix-webp');
+const FLAT = +arg('--flat', 0);
+const Q = +arg('--q', 0);
+const mrHalf = process.argv.includes('--mr-half');
 
 await MeshoptDecoder.ready;
 await MeshoptEncoder.ready;
@@ -52,6 +57,7 @@ async function maps(bytes, fmt) {
   const H = new Float32Array(w * h);
   let lo = 1e9, hi = -1e9;
   for (let i = 0; i < w * h; i++) { H[i] = L[i] - blur[i] / 255; lo = Math.min(lo, H[i]); hi = Math.max(hi, H[i]); }
+  if (hi - lo < FLAT) { return null; }                               // 거의 단색 — 맵 없음(K-0154)
   const span = Math.max(1e-4, hi - lo);
   const nrm = Buffer.alloc(w * h * 3), mr = Buffer.alloc(w * h * 3);
   const at = (x, y) => H[((y + h) % h) * w + ((x + w) % w)];
@@ -66,8 +72,8 @@ async function maps(bytes, fmt) {
       mr[i * 3] = 255; mr[i * 3 + 1] = Math.round(rough * 255); mr[i * 3 + 2] = 0;
     }
   }
-  const enc = (buf) => { const im = sharp(buf, { raw: { width: w, height: h, channels: 3 } }); return (fmt === 'jpeg' ? im.jpeg({ quality: 90, chromaSubsampling: '4:4:4' }) : im.webp({ quality: 85 })).toBuffer(); };
-  return { nrm: await enc(nrm), mr: await enc(mr), w, h };
+  const enc = (buf, half) => { let im = sharp(buf, { raw: { width: w, height: h, channels: 3 } }); if (half) { im = im.resize(Math.max(4, w >> 1), Math.max(4, h >> 1)); } return (fmt === 'jpeg' ? im.jpeg({ quality: Q || 90, chromaSubsampling: '4:4:4' }) : im.webp({ quality: Q || 85 })).toBuffer(); };
+  return { nrm: await enc(nrm), mr: await enc(mr, mrHalf), w, h };
 }
 
 const METAL = /metal|iron|steel|gold|bronze|copper/i;
@@ -98,8 +104,15 @@ for (const set of sets) {
         continue;
       }
       let mp = cache.get(base);
-      if (!mp) {
+      if (mp === undefined) {
         mp = await maps(Buffer.from(base.getImage()), fmt);
+      }
+      if (mp === null) {                                                // --flat: 거의 단색 그림
+        cache.set(base, null);
+        if (!m.getExtras().pbr_flat) { if (!METAL.test(m.getName())) { m.setMetallicFactor(0); m.setRoughnessFactor(0.8); } m.setExtras({ ...m.getExtras(), pbr_flat: true }); changed = true; }
+        continue;
+      }
+      if (!mp.nt) {
         const nt = doc.createTexture(base.getName() + '_n').setImage(mp.nrm).setMimeType(mime);
         const rt = doc.createTexture(base.getName() + '_r').setImage(mp.mr).setMimeType(mime);
         mp = { ...mp, nt, rt };

@@ -14,5 +14,6 @@
   3.99
  ],
  "tris": 2430,
- "grid": 32
+ "grid": 32,
+ "pbr_maps": "K-0154 tools/glb-compress/add_pbr_maps.mjs --size 128 --flat 0.05 — 그 재질 색 그림에서 자체 계산한 법선·거칠기(남의 텍스처 0, 거의 단색 그림은 맵 없이 거칠기만)"
 }
