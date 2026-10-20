@@ -5206,12 +5206,12 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         !I.has('없는이름') && (I.names().length + '가지');
     });
 
-    t('아이콘 — 글자색을 따라간다 (CSS 를 안 고쳐도 된다)', function () {
+    t('아이콘 — 자체 png(ui_<이름>_g0) 를 가리킨다 (W-0321 — 예전 Lucide SVG)', function () {
       var I = DG.icon;
       var one = I.svg('bot', 0);
       /* `currentColor` 라야 도구줄·독·지갑의 색을 그대로 물려받는다.
          못 만든 이름은 **빈 문자열** — 부르는 쪽이 이모지를 그대로 둔다 */
-      return one.indexOf('currentColor') > 0 && one.indexOf('<svg') === 0 &&
+      return one.indexOf('<img') === 0 && one.indexOf('assets/icons/icon64/ui_bot_g0.png') > 0 &&
         I.svg('없는이름', 0) === '' && '없는 이름은 빈 문자열';
     });
 

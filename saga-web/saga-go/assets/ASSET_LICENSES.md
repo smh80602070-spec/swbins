@@ -276,28 +276,9 @@ sword_attack·hit·death…). `_RM`(root motion 포함) 이 아니라 **기본�
 
 ---
 
-## Lucide — UI 아이콘 (`js/icon.js` 안에 적혀 있다)
+## UI 아이콘 — 자체(W-0321)
 
-| 항목 | |
-|---|---|
-| **만든 이** | Lucide Icons and Contributors (<https://lucide.dev>) |
-| **라이선스** | **ISC** — 저작권 문구를 남기면 자유롭게 쓰고 고치고 재배포할 수 있다 |
-| **받은 곳** | <https://github.com/lucide-icons/lucide> `icons/*.svg` |
-
-> Lucide — © Lucide Icons and Contributors, [ISC License](https://github.com/lucide-icons/lucide/blob/main/LICENSE).
-
-**파일로 두지 않고 `js/icon.js` 안에 적어 두었다.** 스무 개 남짓이라 3.6KB 뿐이고,
-그림 하나에 요청 하나씩 붙으면 첫 화면이 그만큼 늦기 때문이다.
-
-**왜 이모지를 바꿨나.** 이모지는 **폰트가 그리는 것**이라 기기마다 다르게 보인다 —
-같은 화면이 아이폰·안드로이드·윈도우에서 셋으로 갈린다. 도구줄·독·지갑만 바꿨고,
-손잡이 `icon.on` 을 0 으로 내리면 이모지가 그대로 남는다.
-
-**인물·펫의 이모지는 안 바꿨다.** `data.js` 의 `emoji` 는 아이콘이 아니라
-**그 인물의 상징**이다(관우의 칼, 장비의 술). 아이콘 세트에 대응하는 것이 없고,
-바꾸면 도감이 밋밋해진다 — 그 자리는 초상(`portrait3d`)이 맡는다.
-
----
+도구줄·독 아이콘 28은 자체 그림 `assets/icons/icon64/ui_<이름>_g0.png`(K-0118, 출처 `shared/assets/icons/license/`). 예전 Lucide(ISC) SVG 는 지웠다.
 
 ## EverFace — 초상 "진지한" 얼굴 (`assets/sprites2d/portrait/serious/`) — **10-16 W-0259 지움(코드 참조 0)**
 

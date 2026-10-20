@@ -63,7 +63,7 @@ const FILES = [
   ['css/ui-kit.css', 'css/ui-kit.css', ['saga-go', 'saga-realm', 'saga-dungeon', 'saga-forest', 'saga-story']],
   ['js/menu-grid.js', 'js/menu-grid.js', ['saga-go', 'saga-realm', 'saga-dungeon', 'saga-forest', 'saga-story']],   // W-0253 ☰ 메뉴 화면 — 판 core.js 에 DG.cfg.menu.keep 이 있어야 켜진다   // W-0252 공용 창 틀(메뉴 UI 갈아엎기) — 판을 입히는 티켓(W-0254·0255)이 판을 더한다
   ['js/ops-client.js', 'js/ops-client.js', ['saga-go', 'saga-realm', 'saga-dungeon', 'saga-forest', 'saga-story']],   // W-0271 라이브옵스 수신(공지·점검·새 버전 띠) — 운영 콘솔 saga-web/tools/ops
-  ['js/icon.js', 'js/icon.js', ['saga-go', 'saga-dungeon', 'saga-story']],   // R-4 — UI 아이콘(Lucide) 세 벌이 코드 같고 표만 추려 있던 것 → 합집합 표   // 3째 칸 = 이 판들에만(없으면 다섯 판 전부)
+  ['js/icon.js', 'js/icon.js', ['saga-go', 'saga-dungeon', 'saga-story']],   // R-4 — UI 아이콘 합집합 표 · W-0321 Lucide SVG → 자체 png(ui_*_g0, 아래 UI_ICON_GAMES 가 복사)   // 3째 칸 = 이 판들에만(없으면 다섯 판 전부)
 ];
 const check = process.argv.includes('--check');
 
@@ -75,11 +75,14 @@ const ASSET_GAMES = { 'saga-story': ['assets/web2d/bg', 'assets/web2d/tile'], 's
 const BG_PREFIX = { 'saga-dungeon': 'dg_' };
 /** 아이템 아이콘(W-0025) — 이름 표 `itemicon-ids.js` 에 오른 그림 중 **그 판 것만** `<판>/assets/icons/icon64/` 로 복사한다(판 폴더 단독 서버가 `../shared` 를 못 읽는다).
  *  정본 shared/assets/icons/icon64/ · 출처(license/)는 정본에만 둔다. 표는 gen-itemicon-ids.mjs 가 만든다 */
+/** W-0321 — icon.js(도구줄·독 UI 아이콘)를 쓰는 판은 ui_*_g0.png 28장도 */
+const UI_ICON_GAMES = ['saga-go', 'saga-dungeon', 'saga-story'];
 function iconNames(g) {
   const f = path.join(WEB, 'shared', 'js', 'itemicon-ids.js');
-  if (!fs.existsSync(f)) return [];
+  const ui = UI_ICON_GAMES.includes(g) ? fs.readdirSync(path.join(WEB, 'shared', 'assets', 'icons', 'icon64')).filter((x) => /^ui_.+_g0\.png$/.test(x)).map((x) => x.slice(0, -4)) : [];
+  if (!fs.existsSync(f)) return ui;
   const m = /itemiconIds = ({.*});/.exec(fs.readFileSync(f, 'utf8'));
-  return m ? [...new Set(Object.values((JSON.parse(m[1])[g]) || {}))].sort() : [];
+  return [...new Set((m ? Object.values((JSON.parse(m[1])[g]) || {}) : []).concat(ui))].sort();
 }
 /** 줄바꿈(CRLF/LF)은 git autocrlf 가 판마다 따로 바꾸므로 정규화해서 비교한다 */
 const md5 = p => (fs.existsSync(p) ? crypto.createHash('md5').update(fs.readFileSync(p, 'utf8').replace(/\r\n/g, '\n')).digest('hex') : null);

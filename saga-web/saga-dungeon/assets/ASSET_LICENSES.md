@@ -1248,13 +1248,9 @@ PLAN 4절의 우선순위를 따라 나무·바위·폐허(기둥·벽)·절벽�
 카테고리가 실사 또는 CC0 완성 에셋으로 찼다. 남는 것은 saga-go의 탑·성벽
 종류처럼 이 판이 아직 안 쓰기로 한 것뿐이다.
 
-## Lucide — UI 아이콘 (2026-09-08, `js/icon.js`)
+## UI 아이콘 — 자체(W-0321)
 
-`saga-go`의 `js/icon.js`를 그대로 옮겨 도구줄·독·지갑 이모지를 실제 아이콘으로
-갈아 끼웠다("사가나락 UI가 사가만리랑 완전히 같지 않다" 제보). SVG 자체가
-파일이 아니라 `icon.js` 안에 문자열로 박혀 있다 — 출처·라이선스는
-`../saga-go/assets/ASSET_LICENSES.md`의 Lucide 항목을 그대로 따른다
-(Lucide, <https://lucide.dev>, **ISC**).
+도구줄·독 아이콘 28은 자체 그림 `assets/icons/icon64/ui_<이름>_g0.png`(K-0118, 출처 `shared/assets/icons/license/`). 예전 Lucide(ISC) SVG 는 지웠다.
 
 ## 캐릭터 3차분 — poly.pizza 개별 검색 (2026-09-09, "캐릭터 100개" 이어감)
 

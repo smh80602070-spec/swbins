@@ -4,7 +4,7 @@
  * 도구줄·독·지갑의 그림은 여태 **이모지**였다. 이모지는 폰트가 그리는 것이라
  * **기기마다 다르게 보인다** — 같은 화면이 아이폰·안드로이드·윈도우에서 셋으로
  * 갈린다. 사용자 방침("스크립트로 그리는 것은 다 에셋으로", 2026-08-28)에 따라
- * 여기만 실제 아이콘(Lucide, **ISC**)으로 바꾼다.
+ * 여기만 실제 아이콘(자체 png — W-0321, 예전엔 Lucide SVG)으로 바꾼다.
  *
  * **인물·펫의 이모지는 안 바꾼다.** `data.js` 의 `emoji` 는 아이콘이 아니라
  * **그 인물의 상징**이다(관우의 칼, 장비의 술). 아이콘 세트에 대응하는 것이
@@ -16,7 +16,7 @@
  *
  *     <span data-icon="bot">🤖</span>
  *
- * 이 파일이 부팅 때 `[data-icon]` 을 훑어 안을 SVG 로 갈아 끼운다.
+ * 이 파일이 부팅 때 `[data-icon]` 을 훑어 안을 아이콘 그림으로 갈아 끼운다.
  * **손잡이 `icon.on` 을 0 으로 내리면 이모지가 그대로 남는다** — 되돌림이 공짜다.
  * 못 만든 이름은 건너뛰므로 표에 없는 것도 이모지로 남는다.
  *
@@ -24,9 +24,7 @@
  * 판마다 추려 있던 것을 합집합 표 하나로 합쳤다(어느 판도 표에 없어 이모지로 남던 이름은 그대로 남는다).
  * 고치는 곳은 shared 하나, `node tools/sync-shared.mjs` 가 세 판에 복사한다.
  *
- * SVG 는 **파일로 두지 않고 여기 적어 둔다.** 스무 개 남짓이라 3.6KB 뿐이고,
- * 그림 하나에 요청 하나씩 붙으면 첫 화면이 그만큼 늦다. `currentColor` 를 쓰므로
- * 글자색을 그대로 따라간다 — CSS 를 안 고쳐도 된다.
+ * 그림은 64px png 한 장씩(서비스 워커가 한 번 받으면 캐시).
  */
 (function (global) {
   'use strict';
@@ -36,55 +34,25 @@
   /** 아이콘으로 갈아 끼울까 — 0 이면 이모지 그대로 (되돌림용 손잡이) */
   function ON() { return core().tuned('icon.on', 1) ? true : false; }
 
-  /* Lucide (https://lucide.dev) — **ISC**. 24×24 격자에 선 두께 2.
-     `assets/ASSET_LICENSES.md` 에 출처를 적어 두었다 */
-  var SVG = {
-      "award": "<path d=\"m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526\" /> <circle cx=\"12\" cy=\"8\" r=\"6\" />",
-      "backpack": "<path d=\"M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z\" /> <path d=\"M8 10h8\" /> <path d=\"M8 18h8\" /> <path d=\"M8 22v-6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v6\" /> <path d=\"M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2\" />",
-      "book-open": "<path d=\"M12 5v16\" /> <path d=\"M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z\" />",
-      "bot": "<path d=\"M12 8V4H8\" /> <rect width=\"16\" height=\"12\" x=\"4\" y=\"8\" rx=\"2\" /> <path d=\"M2 14h2\" /> <path d=\"M20 14h2\" /> <path d=\"M15 13v2\" /> <path d=\"M9 13v2\" />",
-      "box": "<path d=\"M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z\" /> <path d=\"m3.3 7 8.7 5 8.7-5\" /> <path d=\"M12 22V12\" />",
-      "circle-question-mark": "<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3\" /> <path d=\"M12 17h.01\" />",
-      "clipboard-list": "<rect width=\"8\" height=\"4\" x=\"8\" y=\"2\" rx=\"1\" ry=\"1\" /> <path d=\"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2\" /> <path d=\"M12 11h4\" /> <path d=\"M12 16h4\" /> <path d=\"M8 11h.01\" /> <path d=\"M8 16h.01\" />",
-      "coins": "<path d=\"M13.744 17.736a6 6 0 1 1-7.48-7.48\" /> <path d=\"M15 6h1v4\" /> <path d=\"m6.134 14.768.866-.5 2 3.464\" /> <circle cx=\"16\" cy=\"8\" r=\"6\" />",
-      "compass": "<path d=\"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z\" /> <circle cx=\"12\" cy=\"12\" r=\"10\" />",
-      "ellipsis": "<circle cx=\"12\" cy=\"12\" r=\"1\" /> <circle cx=\"19\" cy=\"12\" r=\"1\" /> <circle cx=\"5\" cy=\"12\" r=\"1\" />",
-      "flag": "<path d=\"M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.333 2q2 0 3.067-.8A1 1 0 0 1 20 4v10a1 1 0 0 1-.4.8A6 6 0 0 1 16 16c-3 0-5-2-8-2a6 6 0 0 0-4 1.528\" />",
-      "footprints": "<path d=\"M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z\" /> <path d=\"M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z\" /> <path d=\"M16 17h4\" /> <path d=\"M4 13h4\" />",
-      "ham": "<path d=\"M13.144 21.144A7.274 10.445 45 1 0 2.856 10.856\" /> <path d=\"M13.144 21.144A7.274 4.365 45 0 0 2.856 10.856a7.274 4.365 45 0 0 10.288 10.288\" /> <path d=\"M16.565 10.435 18.6 8.4a2.501 2.501 0 1 0 1.65-4.65 2.5 2.5 0 1 0-4.66 1.66l-2.024 2.025\" /> <path d=\"m8.5 16.5-1-1\" />",
-      "hammer": "<path d=\"m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9\" /> <path d=\"m18 15 4-4\" /> <path d=\"m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5\" />",
-      "mail": "<path d=\"m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7\" /> <rect x=\"2\" y=\"4\" width=\"20\" height=\"16\" rx=\"2\" />",
-      "map": "<path d=\"M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z\" /> <path d=\"M15 5.764v15\" /> <path d=\"M9 3.236v15\" />",
-      "medal": "<path d=\"M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15\" /> <path d=\"M11 12 5.12 2.2\" /> <path d=\"m13 12 5.88-9.8\" /> <path d=\"M8 7h8\" /> <circle cx=\"12\" cy=\"17\" r=\"5\" /> <path d=\"M12 18v-2h-.5\" />",
-      "palette": "<path d=\"M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z\" /> <circle cx=\"13.5\" cy=\"6.5\" r=\".5\" fill=\"currentColor\" /> <circle cx=\"17.5\" cy=\"10.5\" r=\".5\" fill=\"currentColor\" /> <circle cx=\"6.5\" cy=\"12.5\" r=\".5\" fill=\"currentColor\" /> <circle cx=\"8.5\" cy=\"7.5\" r=\".5\" fill=\"currentColor\" />",
-      "rotate-ccw": "<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\" /> <path d=\"M3 3v5h5\" />",
-      "satellite-dish": "<path d=\"M4 10a7.31 7.31 0 0 0 10 10Z\" /> <path d=\"m9 15 3-3\" /> <path d=\"M17 13a6 6 0 0 0-6-6\" /> <path d=\"M21 13A10 10 0 0 0 11 3\" />",
-      "scroll": "<path d=\"M19 17V5a2 2 0 0 0-2-2H4\" /> <path d=\"M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3\" />",
-      "scroll-text": "<path d=\"M15 12h-5\" /> <path d=\"M15 8h-5\" /> <path d=\"M19 17V5a2 2 0 0 0-2-2H4\" /> <path d=\"M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3\" />",
-      "sparkles": "<path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\" /> <path d=\"M20 2v4\" /> <path d=\"M22 4h-4\" /> <circle cx=\"4\" cy=\"20\" r=\"2\" />",
-      "store": "<path d=\"M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5\" /> <path d=\"M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244\" /> <path d=\"M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05\" />",
-      "swords": "<path d=\"m13 19 6-6\" /> <path d=\"M14.5 17.5 3.586 6.586A2 2 0 013 5.172V3h2.172a2 2 0 011.414.586L17.5 14.5\" /> <path d=\"m14.828 6.172 2.586-2.586A2 2 0 0118.828 3H21v2.172a2 2 0 01-.586 1.414l-2.586 2.586\" /> <path d=\"m16 16 4 4\" /> <path d=\"m19 21 2-2\" /> <path d=\"m5 14 4 4\" /> <path d=\"m5 21-2-2\" /> <path d=\"M7.5 16.5 4 20\" />",
-      "user": "<path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\" /> <circle cx=\"12\" cy=\"7\" r=\"4\" />",
-      "wrench": "<path d=\"M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z\" />",
-      "x": "<path d=\"M18 6 6 18\" /> <path d=\"m6 6 12 12\" />"
-  };
+  /* W-0321 — 자체 아이콘(K-0118 `shared/assets/icons/icon64/ui_<이름>_g0.png`, map.json `shared:ui:<이름>`). 예전 Lucide(ISC) SVG 표를 지웠다.
+     이름은 그대로(lucide 이름의 - → _) — HTML 의 data-icon 은 안 바뀐다. 판 폴더 사본은 sync-shared(UI_ICON_GAMES) */
+  var NAMES = ["award","backpack","book-open","bot","box","circle-question-mark","clipboard-list","coins","compass","ellipsis","flag","footprints","ham","hammer","mail","map","medal","palette","rotate-ccw","satellite-dish","scroll","scroll-text","sparkles","store","swords","user","wrench","x"];
+  var BASE = 'assets/icons/icon64/ui_';
+  function file(name) { return BASE + String(name).replace(/-/g, '_') + '_g0.png'; }
 
   /** 이 이름의 아이콘이 있나 — 순수 함수다(자가진단이 이것만 본다) */
-  function has(name) { return !!SVG[name]; }
+  function has(name) { return NAMES.indexOf(name) >= 0; }
 
   /** 적힌 이름 전부 */
-  function names() { return Object.keys(SVG); }
+  function names() { return NAMES.slice(); }
 
   /**
-   * `<svg>` 한 덩이. `size` 는 px, 안 주면 1em 에 맞춘다.
-   * **`currentColor`** 라 글자색을 그대로 따라간다.
+   * 아이콘 한 덩이(`<img>`) — 이름은 옛 svg 그대로 두었다(부르는 쪽 안 고침). `size` 는 px, 안 주면 1em
    */
   function svg(name, size) {
-    if (!SVG[name]) { return ''; }
-    var s = size ? (' width="' + size + '" height="' + size + '"') : ' width="1em" height="1em"';
-    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
-      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"' + s + '>' +
-      SVG[name] + '</svg>';
+    if (!has(name)) { return ''; }
+    var s = size ? size + 'px' : '1em';
+    return '<img class="ui-icon" src="' + file(name) + '" alt="" aria-hidden="true" draggable="false" style="width:' + s + ';height:' + s + ';vertical-align:-0.15em;object-fit:contain">';
   }
 
   /**
@@ -111,7 +79,7 @@
 
   global.DG = global.DG || {};
   global.DG.icon = {
-    has: has, names: names, svg: svg, sweep: sweep, stats: stats
+    has: has, names: names, svg: svg, file: file, sweep: sweep, stats: stats
   };
 
   /* 부팅 때 한 번 훑는다 — 정적인 도구줄·독은 이 한 번으로 끝난다.

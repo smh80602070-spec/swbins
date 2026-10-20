@@ -230,13 +230,9 @@ GLB로 먼저 정한 짝(진돗개=시바견 체형, 삽살개="북슬북슬한 
 다 훑어도 소형 애완견 체형 CC0 모델이 없다(있는 개는 셰퍼드~시바
 체급뿐), 억지로 물리면 오히려 더 어긋나 보여 2D 도감 그림 그대로 둔다.
 
-## Lucide — UI 아이콘 (2026-09-08, `js/icon.js`)
+## UI 아이콘 — 자체(W-0321)
 
-`saga-go`의 `js/icon.js`를 그대로 옮겨 도구줄·독·지갑 이모지를 실제 아이콘으로
-갈아 끼웠다("사가종횡 UI가 사가만리랑 완전히 같지 않다" 제보). SVG 자체가
-파일이 아니라 `icon.js` 안에 문자열로 박혀 있다 — 출처·라이선스는
-`../saga-go/assets/ASSET_LICENSES.md`의 Lucide 항목을 그대로 따른다
-(Lucide, <https://lucide.dev>, **ISC**).
+도구줄·독 아이콘 28은 자체 그림 `assets/icons/icon64/ui_<이름>_g0.png`(K-0118, 출처 `shared/assets/icons/license/`). 예전 Lucide(ISC) SVG 는 지웠다.
 
 ## MPFB2 실사 몸 20종 — 외형 다양화, 표 기본에 적용됨 (2026-09-10, `saga-go`에서 복사)
 
