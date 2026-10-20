@@ -20,7 +20,9 @@ func _ready() -> void:
 		get_tree().quit(2)
 		return
 	var scene: Node = (load(args[0]) as PackedScene).instantiate()
-	add_child(scene)
+	## G-0268 — current_scene 은 root 의 직속만 된다(mount_host 와 같은 고침). _ready 중엔 root 가 바빠 미룬다.
+	get_tree().root.add_child.call_deferred(scene)
+	await get_tree().process_frame
 	get_tree().current_scene = scene
 	for _i in SETTLE_FRAMES:
 		await get_tree().process_frame

@@ -15,7 +15,9 @@ func _ready() -> void:
 		get_tree().quit(3))
 	var args := OS.get_cmdline_user_args()
 	_scene = (load(args[0]) as PackedScene).instantiate()
-	add_child(_scene)
+	## G-0268 — current_scene 은 root 의 직속만 된다(host 자식이면 "p_scene" ERROR·current_scene 이 host 로 남음). _ready 중엔 root 가 바빠 미룬다.
+	get_tree().root.add_child.call_deferred(_scene)
+	await get_tree().process_frame
 	get_tree().current_scene = _scene
 	for _i in 30:
 		await get_tree().physics_frame
@@ -52,13 +54,18 @@ func _ready() -> void:
 	## 점검 동안 매 프레임 창을 치우고 멈춤을 푼다.
 	get_tree().process_frame.connect(_unmodal)
 	_unmodal()
+	## G-0268 — 대상 씬이 진짜 current_scene 이 되자 2나락 곁 몸(CharacterBody3D)이 나 오른쪽을 막아 걷기 0.1 — 탈것 빠르기만 보므로 다른 몸과는 안 부딪게.
+	for b in get_tree().root.find_children("*", "CharacterBody3D", true, false):
+		if b != _p:
+			_p.add_collision_exception_with(b)
 	for _i in 2:
 		await get_tree().physics_frame
-	var x0 := _p.global_position.x
+	## G-0268 — 수평 거리로 잰다(2나락 벨트 카메라는 "오른쪽" 이 -z 라 x 만 재면 늘 0 — 0 > 0×1.3 이 ok 로 지나갔다).
+	var x0 := Vector2(_p.global_position.x, _p.global_position.z)
 	Input.action_press("move_right")
 	for _i in 30:
 		await get_tree().physics_frame
-	var v_walk := absf(_p.global_position.x - x0) / 0.5
+	var v_walk := Vector2(_p.global_position.x, _p.global_position.z).distance_to(x0) / 0.5
 	Input.action_release("move_right")
 	for _i in 20:
 		await get_tree().physics_frame
@@ -67,13 +74,13 @@ func _ready() -> void:
 		await get_tree().physics_frame
 	## G-0121 — 기준 0.5 는 안장 방식(G-0024 후속, 말 0.35) 전 값 — probe_mount 와 같은 0.2 로.
 	_check("mounted", bool(_p.get("mounted")) and float(_p.get("ride_height")) > 0.2, "ride=%.2f" % float(_p.get("ride_height")))
-	x0 = _p.global_position.x
+	x0 = Vector2(_p.global_position.x, _p.global_position.z)
 	Input.action_press("move_left")
 	for _i in 30:
 		await get_tree().physics_frame
-	var v_ride := absf(_p.global_position.x - x0) / 0.5
+	var v_ride := Vector2(_p.global_position.x, _p.global_position.z).distance_to(x0) / 0.5
 	Input.action_release("move_left")
-	_check("ground_speed", v_ride > v_walk * 1.3, "walk=%.1f ride=%.1f" % [v_walk, v_ride])
+	_check("ground_speed", v_walk > 1.0 and v_ride > v_walk * 1.3, "walk=%.1f ride=%.1f" % [v_walk, v_ride])
 	_m.call("dismount", "")
 	for _i in 30:
 		await get_tree().physics_frame
