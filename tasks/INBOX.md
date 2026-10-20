@@ -1,29 +1,4 @@
 # 아이디어 수신함 — 중간에 들어온 말은 여기 한 줄 (절차 `tasks/INTAKE.md`)
 
 형식: `- [ ] 날짜 · "사용자 말 그대로" · 읽은 뜻 · 갈래/판`. 처리(티켓·폐기)는 R-0 세션(페이블 또는 부감독 오퍼스)이 하고 `[x]` + 티켓 번호, 처리 끝난 줄은 `archive/INBOX-HISTORY.md` 로 옮긴다. 소넷은 추가만.
-- [ ] 10-12 · (U-0104 유니티 넘김) · 네 판(2나락·3마을·4종횡·5천하) 효과음은 이제 자체 92종(`SagaSfx`)을 이름으로 먼저 쓰고, 빌린 Kenney 클립(`saga-unity/Assets/Art/Audio/Kenney_*`)은 씬 필드(GameBootstrap·ForestHostileEncounterUi·ForestCollectSpot/FruitTree·StoryEnemy·RealmCommandUi 등)가 아직 가리켜 **대체용으로만** 남음 → 씬 재빌드 때 그 필드·파일 걷기(1만리 옛 Kenney 필드 포함) · 유니티
-- [ ] 10-13 · (K-0093 자체툴 넘김) · 자체 PBR 12세트(정본 `saga-assets/textures_real`) — 유니티 사실 재질에 재사용(웹은 W-0196 끝) — **R-0 10-16 유니티 PBR 폴더 교체는 K-0130** · 유니티
-- [ ] 10-15 · (K-0110 넘김) · 같은 AI 움직이는 초상이 `saga-godot/assets/portraits/live` 에도 — 켜도 됨 · 고돗
-- [ ] 10-16 · "추가적으로 요청사항은 메뉴 ui가 전체적으로 변경이 되어야 할것 같아" · 메뉴 UI(창 틀·배치·그림체) 전체 갈아엎기 — 다섯 판 웹 먼저. 자체툴 몫은 창 틀·버튼·아이콘 그림체 C 묶음 · 웹/고돗/유니티/자체툴 — **R-0 10-16 웹 → W-0252~0256**(같은 틀 + 판별 색 옷 K-0040 9-slice · ☰ 메뉴 화면, 정본 제안·거부권) · **웹 끝 10-16** · 3D 둘은 웹 틀 끝난 뒤 각 R-0 가 같은 규격
-- [ ] 10-17 · 사용자 "3d,2d 게임성" 참고작 목록(판마다 4~6, 정본 루트 README 표) — README·index 반영 끝 · **웹 설계 W-0274 끝** · 고돗·유니티 PLAN 반영은 각 R-0 · 웹/고돗/유니티
-- [ ] 10-17 · (자체툴 K-0127 → 고돗) · 정육면체 잎 나무·바위 → foliage/<id>_real.gltf 14 — 시트 ② · 고돗
-- [ ] 10-17 · (자체툴 K-0128 → 고돗) · 2나락 방 킷·섬 밑동 사실판 world/real · KayKit·assets/dungeon 지움 — 시트 ③ · 고돗
-- [ ] 10-17 · (자체툴 K-0129 → 유니티) · PolyHaven 테스트 씬만·식물 3·짐승 셋 정리 — 시트 ④ · 유니티
-- [ ] 10-17 · (자체툴 K-0128 괴물 → 고돗) · 자체 괴물 몸 111 고돗 배치 끝, monster_body.gd shape→id 표 — 시트 ⑤ · 고돗
-- [ ] 10-18 · (자체툴 K-0139 → 고돗) · 같은 파일 `saga-godot/assets/anim_mocap/vroid_mocap_anims.glb` → VRoid 몸 anim_cc0 `_lib.res` 에 12 클립 갈아 끼우기(`.import` 는 고돗 세션) · 고돗
-- [ ] 10-18 · (자체툴 K-0137 → 고돗) · 주역 10 몸 바뀜(명단·원본 K-0137 메모) — `vroid_intake.sh --only <10>` 로 얼굴 데칼·anim_cc0 `_lib.res` 다시 · 고돗
-- [ ] 10-18 · (자체툴 K-0137 → 유니티) · 같은 주역 10 몸 바뀜 — 유니티가 이 열 명을 VRoid 몸으로 쓰는 자리가 있으면 같은 원본으로 갈아 끼우기(없으면 [x]) · 유니티
-- [ ] 10-19 · (자체툴 K-0136 → 웹 1만리·2나락) · 땅 타일 8 `shared/assets/tiles/ground/` — 1만리 landTexture go_*, 2나락 town3d 바닥 dg_* · 웹
-- [ ] 10-19 · (자체툴 K-0135 → 웹 W-0296) · 4종횡 타일 80·소품 50·앞 층 10(`saga-story/assets/web2d/{tile,prop,bg}`, 규격 그대로) + 사람 jump·fall 500(`characters2d8/<id>/`, mode2d 가 이미 읽음) · 웹
-- [ ] 10-19 · (자체툴 K-0121 → 웹 2나락) · 종 몸 초상 54·5천하 2·사람 적 18 `portraits-monster/<id>_c.webp` — idOf·foeBody 가 body id 먼저(짝 k121_targets.json) · 웹
-- [ ] 10-19 · (자체툴 K-0122·K-0120 → 웹) · 빌린 괴물 → `creatures3d/<id>`(표 k122_monsters.json, FistR 는 노드) · 펫 `world3d/pet_<id>.glb`·2D `beast_<id>.png` · 웹
-- [ ] 10-19 · (자체툴 K-0143 → 웹 1만리) · 종 몸 2D 시트 95 `shared/assets/creatures2d/<id>/` — 2D 짐승 풀은 종 id 먼저 · 웹
-- [ ] 10-19 · (자체툴 K-0138 → 웹) · 16방향 주역 10 `characters2d16/<id>/sheet.json`(역할 11 — cast·wave 10-20) — gen-assets3d-ids · 웹
-- [ ] 10-20 · "다섯판 내 장비랑 내 상태가 보는데 없어(공격력·스텟 설정)"·"장비나 아이템 드래그 … 모바일은 터치" · 다섯 판 공용 「내 정보」 창(입은 장비·능력치·스탯 배분) + 장비·가방 끌어 놓기(Pointer Events 한 길로 마우스·터치, 터치는 길게 눌러 집기) → 판별 조사 뒤 R-0 · 웹
-- [ ] 10-20 · (K-0150) · 겹 배경 둘·컷아웃 주역 2 — parallax2d·cutout2d.on 1 촬영(fog 버그 K-0150 메모) · 웹
-- [ ] 10-20 · (자체툴 K-0149 → 웹) · 세로 키 아트 `<판>_key_v.webp` 새 그림(이름·크기 같음) — pw-mobile ⑥ 확인만 · 웹
-- [ ] 10-20 · (K-0148) · 모캡 cast·strong·greet 새 클립(판정 3/3) — 웹 W-0318 뺀 셋 짝 되살리기 · 고돗 glb 재임포트 · 웹/고돗
-- [ ] 10-20 · (K-0151 → 고돗) · face_sdf.png 도착(`assets/face_sdf/`, .import 고돗) — face_view 전후 · FaceMouth 는 UV 달라 sdf 끌 것 · 고돗
-- [ ] 10-20 · (K-0152 → 웹) · 환경 GLB 30 법선·거칠기 맵 — toon3d toonify 가 normalMap 넘기게 한 줄 · 웹
-- [ ] 10-20 · (K-0152·0153·0154 → 고돗·유니티) · toon 30 맵 JPEG·펫 28 엔진판(Meshopt·WebP 풂) +K-0154 toon 348(JPEG) — 다시 임포트, Failed 0 확인 · 고돗/유니티
-- [ ] 10-21 · (K-0156 → 웹) · 웹 배치 중복 406MB — 표 `tools/asset-audit/out/web_dups.md`(`py tools/asset-audit/web_dups.py` 로 다시 만듦, out/ 는 gitignore), 상위 항목부터 shared 로 모으면 −229MB(코드 경로 약 455자리 — 최대 손 배치 `assets/models` 162MB·347자리, portraits-hero 22MB·4자리, bgm 10MB·11자리) · mpfb_real 177MB 는 2나락만 내용 달라 네 판 것만 모음 · 끝나면 K 가 place 갱신(초안 out/web_dups_place_draft.json) · 웹
+- [ ] 10-21 · (G-0277 R-0 → 자체툴) · `regions/pieces` 의 torch_stand·stone_lantern·street_lamp 사본엔 K-0155 glow 재질이 없음 — 지역 조각도 같은 9종 새 판으로 다시 배치(밤 빛) · 자체툴
