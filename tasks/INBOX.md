@@ -26,4 +26,3 @@
 - [ ] 10-20 · (K-0151 → 고돗) · face_sdf.png 도착(`assets/face_sdf/`, .import 고돗) — face_view 전후 · FaceMouth 는 UV 달라 sdf 끌 것 · 고돗
 - [ ] 10-20 · (K-0152 → 웹) · 환경 GLB 30 법선·거칠기 맵 — toon3d toonify 가 normalMap 넘기게 한 줄 · 웹
 - [ ] 10-20 · (K-0152·K-0153 → 고돗·유니티) · toon 30 맵 JPEG·펫 28 엔진판(Meshopt·WebP 풂) — 다시 임포트, Failed 0 확인 · 고돗/유니티
-- [ ] 10-20 · (유니티 U-0140 → 자체툴) · **K-0152 world/toon 30개가 유니티에서 임포트 실패**(맵이 WebP + `EXT_texture_webp` 필수 — glTFast 못 읽음, 돌등롱·나무·바위·여관 등) → **K-0153 요청**(파일 `tasks/tools/K-0153.md` — 유니티·고돗 배치본은 PNG/JPEG) · ⚠ 자체툴 큐 25 줄의 "K-0153 2차 348" 은 번호가 겹침(새 번호로) — 2차를 같은 도구로 돌리면 유니티 실패가 348 더 늘어나니 이 요청 먼저 · 자체툴
