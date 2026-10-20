@@ -17,7 +17,6 @@
     "Owl.glb",
     "Paint Brush",
     "Panda.glb",
-    "Pond",
     "Tiger.glb"
    ],
    "where": [
@@ -101,12 +100,6 @@
   }
  ],
  "attributions_review": [
-  {
-   "text": "| **라이선스** | **CC-BY 3.0** — 저작자 표시 필요 |",
-   "where": [
-    "saga-web/saga-dungeon/assets/ASSET_LICENSES.md"
-   ]
-  },
   {
    "text": "© Quaternius. 한 번들 안에 CC0 5종·CC-BY 5종이 섞여 있다(페이지에서",
    "where": [
@@ -727,9 +720,10 @@
    "tool": "face_sdf_bake.py (K-0151 — Blender, VRoid 얼굴 살갗 UV 위 원신식 그림자 문턱 계산 굽기)",
    "model": "",
    "license": "MIT",
-   "count": 1,
+   "count": 2,
    "where": [
-    "saga-assets/textures/face_sdf"
+    "saga-assets/textures/face_sdf",
+    "saga-godot/assets/face_sdf"
    ]
   },
   {
@@ -1105,13 +1099,13 @@
   }
  ],
  "doc_sections": {
-  "total": 259,
+  "total": 243,
   "by_license": {
-   "CC0": 182,
+   "CC0": 168,
    "MIT": 13,
-   "CC-BY": 29,
-   "Kenney(CC0)": 39,
-   "Mixamo": 11,
+   "CC-BY": 28,
+   "Kenney(CC0)": 38,
+   "Mixamo": 10,
    "GPL": 2,
    "OpenRAIL": 15,
    "Apache-2.0": 3,
@@ -1166,16 +1160,6 @@
    {
     "doc": "saga-web/saga-go/assets/ASSET_LICENSES.md",
     "section": "VRM 애니메 아바타 d~z (`assets/models/people/anime/avatar_sample_d~z.glb`, 2026-10-02)",
-    "licenses": []
-   },
-   {
-    "doc": "saga-web/saga-dungeon/assets/ASSET_LICENSES.md",
-    "section": "넣은 파일 — `js/asset3d.js` 의 `dg:` 로 묶은 표에 적혀 있다",
-    "licenses": []
-   },
-   {
-    "doc": "saga-web/saga-dungeon/assets/ASSET_LICENSES.md",
-    "section": "초·병 (2026-09-04, 계단 바로 다음)",
     "licenses": []
    },
    {

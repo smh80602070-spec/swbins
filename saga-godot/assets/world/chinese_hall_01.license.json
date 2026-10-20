@@ -16,5 +16,6 @@
   7.5,
   6.67
  ],
- "tris": 1288
+ "tris": 1288,
+ "pbr_maps": "K-0152 tools/glb-compress/add_pbr_maps.mjs — 그 재질 색 그림에서 자체 계산한 법선·거칠기(남의 텍스처 0)"
 }

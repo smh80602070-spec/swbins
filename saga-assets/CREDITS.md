@@ -5,7 +5,7 @@
 ## 필수 표기 (저작자 표시)
 
 - AvatarSample_A — pixiv VRoid Project (VRM `creditNotation: required`)
-- © Poly by Google, CC-BY 3.0 <https://creativecommons.org/licenses/by/3.0/> — Bear.glb("Black bear"), Boar.glb, Crane.glb("Sandhill crane"), Elephant, Elephant (`models/standin/Elephant.glb`), Elephant.glb, Mesh_Crow.gltf+.bin, Tex_Crow.webp, Monkey.glb, Owl.glb, Paint Brush, Panda.glb, Pond, Tiger.glb
+- © Poly by Google, CC-BY 3.0 <https://creativecommons.org/licenses/by/3.0/> — Bear.glb("Black bear"), Boar.glb, Crane.glb("Sandhill crane"), Elephant, Elephant (`models/standin/Elephant.glb`), Elephant.glb, Mesh_Crow.gltf+.bin, Tex_Crow.webp, Monkey.glb, Owl.glb, Paint Brush, Panda.glb, Tiger.glb
 - © CreativeTechLab, CC-BY 3.0 — Helmet, helmet
 - © Michael Fuchs, CC-BY 3.0 — Viking Helmet, gapju(대역: Viking Helmet)
 - © (개인 업로더, poly.pizza), CC-BY 3.0 — cape
@@ -15,7 +15,6 @@
 
 ### 사람이 확인할 표기 줄(자동으로 이름·라이선스를 못 가름)
 
-- | **라이선스** | **CC-BY 3.0** — 저작자 표시 필요 |
 - © Quaternius. 한 번들 안에 CC0 5종·CC-BY 5종이 섞여 있다(페이지에서
 - | `models/weapons/brush.glb` | **CC-BY 3.0**(Poly by Google) | `assets/models/weapons/brush.glb` |
 - | `models/gear/viking_helmet.glb`(`gapju` 대역) | **CC-BY 3.0**(Michael Fuchs) | `assets/models/gear/viking_helmet.glb` |
@@ -71,7 +70,7 @@
 | beast2d_rebake.py (Blender render_sprite.py) | - | CC0-1.0 (자체 3D 몸 렌더 — 외부 입력 없음, 몸 출처는 creatures3d license) | 103 |
 | pet2d_k120.py (Blender render_sprite.py 옆모습, K-0114 맞춤) | - | CC0-1.0 (자체 3D 몸 렌더 — 몸 출처는 pets3d license) | 17 |
 | gen.py (ComfyUI) | Illustrious-XL-v2.0 | CreativeML OpenRAIL-M (저자 HF 토론 2025-04: 상업 가능, 폐쇄 파생 모델 수익화만 금지) | 10 |
-| face_sdf_bake.py (K-0151 — Blender, VRoid 얼굴 살갗 UV 위 원신식 그림자 문턱 계산 굽기) | - | MIT | 1 |
+| face_sdf_bake.py (K-0151 — Blender, VRoid 얼굴 살갗 UV 위 원신식 그림자 문턱 계산 굽기) | - | MIT | 2 |
 | compress.mjs | - | CC0-1.0 (형태·뼈·동작 전부 코드, 외부 입력 없음) | 1 |
 | uigen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 285 |
 | k130_unity_pbr.py | - | self-pbr: rock (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0) | 2 |
@@ -115,6 +114,6 @@
 
 ## 출처 문서(ASSET_LICENSES·ASSET_GUIDE) 요약
 
-절 259개 — 라이선스 낱말별: CC0 182, Kenney(CC0) 39, CC-BY 29, OpenRAIL 15, MIT 13, Mixamo 11, Apache-2.0 3, GPL 2, OFL 2
-낱말을 못 찾은 절(미상) 51개 — `credits.json` 의 `doc_sections.unknown` 참고.
+절 243개 — 라이선스 낱말별: CC0 168, Kenney(CC0) 38, CC-BY 28, OpenRAIL 15, MIT 13, Mixamo 10, Apache-2.0 3, GPL 2, OFL 2
+낱말을 못 찾은 절(미상) 49개 — `credits.json` 의 `doc_sections.unknown` 참고.
 
