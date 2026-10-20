@@ -19,8 +19,9 @@
 - [ ] 10-19 · (자체툴 K-0121 → 웹 2나락) · 종 몸 초상 27+17(K-0144)+10(K-0145)·5천하 용·외계 2·사람 적 18 `portraits-monster/<id>_c.webp` — idOf·foeBody 가 body 의 id 먼저(짝 `tools/ai-art/data/k121_targets.json`) · 웹
 - [ ] 10-19 · (자체툴 K-0122·K-0120 → 웹) · 빌린 괴물 → `creatures3d/<id>`(표 `tools/world-forge/data/k122_monsters.json`), `FistR` 는 뼈 아닌 노드 · 펫 `world3d/pet_<id>.glb` + 2D `beast_<펫 id>.png`(1만리 sprite.js 표 `pk_x:'pk_x'`) · 웹
 - [ ] 10-19 · (자체툴 K-0143 → 웹 1만리) · 종 몸 2D 시트 95 `shared/assets/creatures2d/<creatures3d id>/`(K-0090 꼴, manifest ortho_m 실제 크기) — 2D 짐승 풀은 종 id 먼저, 없으면 옛 mon_* · 웹
-- [ ] 10-19 · (웹 W-0336·W-0339 → 자체툴) · 2D 오딘스피어식 인물 부위 그림(뼈 16·부위 webp, 규격 `shared/js/cutout2d.js` 머리)·장소별 겹 배경 5~7 층 / 3D 원신+파판 규격(`shared/js/look3d.js`)에 맞춘 환경 모델·재질 · 자체툴 — **2D 절반 → K-0150**(10-20), 3D 는 W-0339 뒤
+- [ ] 10-19 · (웹 W-0339 → 자체툴) · 3D 원신+파판 규격(`shared/js/look3d.js`)에 맞춘 환경 모델·재질 — W-0339 뒤 R-0 (2D 절반은 K-0150 10-20) · 자체툴
 - [ ] 10-19 · (자체툴 K-0138 → 웹) · 16방향 주역 10 `characters2d16/<id>/sheet.json`(역할 9) — gen-assets3d-ids · 웹
 - [ ] 10-20 · (고돗 G-0248 → 자체툴) · 원신식 얼굴 SDF 한 장 `saga-godot/assets/face_sdf/face_sdf.png`(VRoid 얼굴 UV 공용, 빛 = 캐릭터 오른쪽 기준 — 반대면 `face_sdf_flip=-1`) + 앞머리 그림자 띠 · 넣으면 바로 켜짐 · 고돗
 - [ ] 10-20 · "다섯판 내 장비랑 내 상태가 보는데 없어(공격력·스텟 설정)"·"장비나 아이템 드래그 … 모바일은 터치" · 다섯 판 공용 「내 정보」 창(입은 장비·능력치·스탯 배분) + 장비·가방 끌어 놓기(Pointer Events 한 길로 마우스·터치, 터치는 길게 눌러 집기) → 판별 조사 뒤 R-0 · 웹
-- [ ] 10-20 · (자체툴 K-0149 → 웹) · 세로 키 아트 `<판>_key_v.webp` 띠 없는 새 그림 — 이름·크기 그대로라 코드 안 고침, pw-mobile ⑥ 로 아이폰 확인만 · 웹
+- [ ] 10-20 · (K-0150 → 웹 4종횡) · 겹 배경 bg2d 둘(들판·숲) — parallax2d.on 1 촬영 · fog 가 알파 밖도 칠함 · 웹
+- [ ] 10-20 · (자체툴 K-0149 → 웹) · 세로 키 아트 `<판>_key_v.webp` 새 그림(이름·크기 같음) — pw-mobile ⑥ 확인만 · 웹

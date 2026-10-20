@@ -1,0 +1,306 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k150_bg2d_C",
+ "kit": {
+  "spec": "sprite",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "dg_gobun__sky",
+   "seed": 1790645969,
+   "prompt": "(dark violet dusk sky with thin mist clouds and faint stars:1.15), sky only, no ground, no mountains, no buildings, no humans, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "dg_gobun 하늘 층",
+   "width": 1216,
+   "height": 640,
+   "steps": 30,
+   "cfg": 6.0,
+   "spec": "bg"
+  },
+  {
+   "id": "dg_gobun__far",
+   "seed": 1479909603,
+   "prompt": "(rolling grassy burial mounds silhouette:1.15), horizontal strip, flat bottom edge, hazy, distant, low contrast, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "dg_gobun far 층(띠 — 바탕 지움) · 장면: ancient burial mound valley at dusk, weathered stone tomb guardians, dim torchlight, purple mist",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "dg_gobun__mid",
+   "seed": 315396823,
+   "prompt": "(stone tomb gates and broken guardian statues between pine trees:1.15), horizontal strip, flat bottom edge, side view, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "dg_gobun mid 층(띠 — 바탕 지움) · 장면: ancient burial mound valley at dusk, weathered stone tomb guardians, dim torchlight, purple mist",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "dg_gobun__near",
+   "seed": 4254328894,
+   "prompt": "(mossy stone lanterns:1.15), rocks and dry grass, horizontal strip, flat bottom edge, side view, dense, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "dg_gobun near 층(띠 — 바탕 지움) · 장면: ancient burial mound valley at dusk, weathered stone tomb guardians, dim torchlight, purple mist",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "dg_gobun__ground",
+   "seed": 1578615428,
+   "prompt": "(packed earth path with old flagstones:1.15), horizontal strip, flat top edge, fills the whole width, side view cross-section, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "dg_gobun ground 층(띠 — 바탕 지움) · 장면: ancient burial mound valley at dusk, weathered stone tomb guardians, dim torchlight, purple mist",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "dg_gobun__front",
+   "seed": 1163783632,
+   "prompt": "(dark tall grass and fern silhouettes:1.15), horizontal strip, flat bottom edge, dark, dense, close-up, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "dg_gobun front 층(띠 — 바탕 지움) · 장면: ancient burial mound valley at dusk, weathered stone tomb guardians, dim torchlight, purple mist",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "dg_jiokmun__sky",
+   "seed": 2954073719,
+   "prompt": "(blood red sky with a glowing crimson rift and ash clouds:1.15), sky only, no ground, no mountains, no buildings, no humans, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "dg_jiokmun 하늘 층",
+   "width": 1216,
+   "height": 640,
+   "steps": 30,
+   "cfg": 6.0,
+   "spec": "bg"
+  },
+  {
+   "id": "dg_jiokmun__far",
+   "seed": 3617535548,
+   "prompt": "(black jagged volcanic peaks silhouette with red glow:1.15), horizontal strip, flat bottom edge, hazy, distant, low contrast, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "dg_jiokmun far 층(띠 — 바탕 지움) · 장면: hellgate wasteland, glowing red rift in the sky, black jagged rocks, floating embers",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "dg_jiokmun__mid",
+   "seed": 2078363394,
+   "prompt": "(ruined obsidian arches and dead twisted trees:1.15), horizontal strip, flat bottom edge, side view, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "dg_jiokmun mid 층(띠 — 바탕 지움) · 장면: hellgate wasteland, glowing red rift in the sky, black jagged rocks, floating embers",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "dg_jiokmun__near",
+   "seed": 1289907510,
+   "prompt": "(charred rocks:1.15), bones and smoldering cracks, horizontal strip, flat bottom edge, side view, dense, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "dg_jiokmun near 층(띠 — 바탕 지움) · 장면: hellgate wasteland, glowing red rift in the sky, black jagged rocks, floating embers",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "dg_jiokmun__ground",
+   "seed": 1436516049,
+   "prompt": "(cracked black basalt ground with glowing lava seams:1.15), horizontal strip, flat top edge, fills the whole width, side view cross-section, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "dg_jiokmun ground 층(띠 — 바탕 지움) · 장면: hellgate wasteland, glowing red rift in the sky, black jagged rocks, floating embers",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "dg_jiokmun__front",
+   "seed": 961208767,
+   "prompt": "(dark thorny dead branches silhouette:1.15), horizontal strip, flat bottom edge, dark, dense, close-up, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "dg_jiokmun front 층(띠 — 바탕 지움) · 장면: hellgate wasteland, glowing red rift in the sky, black jagged rocks, floating embers",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "story_field_meadow__sky",
+   "seed": 1021208342,
+   "prompt": "(bright blue sky with big white fluffy clouds:1.15), sky only, no ground, no mountains, no buildings, no humans, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "story_field_meadow 하늘 층",
+   "width": 1216,
+   "height": 640,
+   "steps": 30,
+   "cfg": 6.0,
+   "spec": "bg"
+  },
+  {
+   "id": "story_field_meadow__far",
+   "seed": 1257943065,
+   "prompt": "(distant blue hills with an old windmill and a slim glass tower far away:1.15), horizontal strip, flat bottom edge, hazy, distant, low contrast, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "story_field_meadow far 층(띠 — 바탕 지움) · 장면: sunny grass meadow with rolling hills, wildflowers, distant mixed-era skyline with an old windmill and a glass tower",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "story_field_meadow__mid",
+   "seed": 1629845279,
+   "prompt": "(green rolling hills with scattered trees and a wooden fence:1.15), horizontal strip, flat bottom edge, side view, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "story_field_meadow mid 층(띠 — 바탕 지움) · 장면: sunny grass meadow with rolling hills, wildflowers, distant mixed-era skyline with an old windmill and a glass tower",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "story_field_meadow__near",
+   "seed": 1394611202,
+   "prompt": "(flowering bushes:1.15), tall grass and small rocks, horizontal strip, flat bottom edge, side view, dense, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "story_field_meadow near 층(띠 — 바탕 지움) · 장면: sunny grass meadow with rolling hills, wildflowers, distant mixed-era skyline with an old windmill and a glass tower",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "story_field_meadow__ground",
+   "seed": 3688019911,
+   "prompt": "(grass topped soil ground strip with a dirt path:1.15), horizontal strip, flat top edge, fills the whole width, side view cross-section, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "story_field_meadow ground 층(띠 — 바탕 지움) · 장면: sunny grass meadow with rolling hills, wildflowers, distant mixed-era skyline with an old windmill and a glass tower",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "story_field_meadow__front",
+   "seed": 1725586460,
+   "prompt": "(tall grass and wildflower silhouettes:1.15), horizontal strip, flat bottom edge, dark, dense, close-up, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "story_field_meadow front 층(띠 — 바탕 지움) · 장면: sunny grass meadow with rolling hills, wildflowers, distant mixed-era skyline with an old windmill and a glass tower",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "story_forest__sky",
+   "seed": 2611691470,
+   "prompt": "(pale green morning sky seen through high canopy haze:1.15), sky only, no ground, no mountains, no buildings, no humans, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "story_forest 하늘 층",
+   "width": 1216,
+   "height": 640,
+   "steps": 30,
+   "cfg": 6.0,
+   "spec": "bg"
+  },
+  {
+   "id": "story_forest__far",
+   "seed": 1136210704,
+   "prompt": "(distant misty forest treeline silhouette:1.15), horizontal strip, flat bottom edge, hazy, distant, low contrast, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "story_forest far 층(띠 — 바탕 지움) · 장면: deep green ancient forest, tall trees, soft god rays, moss",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "story_forest__mid",
+   "seed": 629184310,
+   "prompt": "(tall mossy tree trunks and hanging vines:1.15), horizontal strip, flat bottom edge, side view, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "story_forest mid 층(띠 — 바탕 지움) · 장면: deep green ancient forest, tall trees, soft god rays, moss",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "story_forest__near",
+   "seed": 3656742935,
+   "prompt": "(ferns:1.15), mushrooms and mossy roots, horizontal strip, flat bottom edge, side view, dense, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "story_forest near 층(띠 — 바탕 지움) · 장면: deep green ancient forest, tall trees, soft god rays, moss",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "story_forest__ground",
+   "seed": 4137261309,
+   "prompt": "(mossy forest floor ground strip with roots:1.15), horizontal strip, flat top edge, fills the whole width, side view cross-section, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "story_forest ground 층(띠 — 바탕 지움) · 장면: deep green ancient forest, tall trees, soft god rays, moss",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "story_forest__front",
+   "seed": 2078436258,
+   "prompt": "(dense fern and leaf silhouettes:1.15), horizontal strip, flat bottom edge, dark, dense, close-up, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "story_forest front 층(띠 — 바탕 지움) · 장면: deep green ancient forest, tall trees, soft god rays, moss",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "story_sky_bridge__sky",
+   "seed": 300734766,
+   "prompt": "(golden sunset sky with layered pink clouds:1.15), sky only, no ground, no mountains, no buildings, no humans, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "story_sky_bridge 하늘 층",
+   "width": 1216,
+   "height": 640,
+   "steps": 30,
+   "cfg": 6.0,
+   "spec": "bg"
+  },
+  {
+   "id": "story_sky_bridge__far",
+   "seed": 3353957775,
+   "prompt": "(distant floating islands silhouette with a futuristic sky station:1.15), horizontal strip, flat bottom edge, hazy, distant, low contrast, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "story_sky_bridge far 층(띠 — 바탕 지움) · 장면: floating rock islands linked with rope bridges above clouds at golden sunset, a distant futuristic sky station",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "story_sky_bridge__mid",
+   "seed": 3051151964,
+   "prompt": "(floating rock islands with waterfalls and rope bridges:1.15), horizontal strip, flat bottom edge, side view, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "story_sky_bridge mid 층(띠 — 바탕 지움) · 장면: floating rock islands linked with rope bridges above clouds at golden sunset, a distant futuristic sky station",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "story_sky_bridge__near",
+   "seed": 502712711,
+   "prompt": "(cloud banks and small floating rocks:1.15), horizontal strip, flat bottom edge, side view, dense, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "story_sky_bridge near 층(띠 — 바탕 지움) · 장면: floating rock islands linked with rope bridges above clouds at golden sunset, a distant futuristic sky station",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "story_sky_bridge__ground",
+   "seed": 4176085377,
+   "prompt": "(stone bridge deck with wooden planks seen from the side:1.15), horizontal strip, flat top edge, fills the whole width, side view cross-section, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "story_sky_bridge ground 층(띠 — 바탕 지움) · 장면: floating rock islands linked with rope bridges above clouds at golden sunset, a distant futuristic sky station",
+   "width": 1536,
+   "height": 512
+  },
+  {
+   "id": "story_sky_bridge__front",
+   "seed": 2778102432,
+   "prompt": "(wispy cloud puffs and hanging vine silhouettes:1.15), horizontal strip, flat bottom edge, dark, dense, close-up, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "story_sky_bridge front 층(띠 — 바탕 지움) · 장면: floating rock islands linked with rope bridges above clouds at golden sunset, a distant futuristic sky station",
+   "width": 1536,
+   "height": 512
+  }
+ ]
+}

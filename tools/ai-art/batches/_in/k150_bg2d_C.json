@@ -1,0 +1,270 @@
+{
+ "name": "k150_bg2d_C",
+ "spec": "sprite",
+ "note": "K-0150 단계 2 — 겹 배경 5 장소 × 6 층(하늘 bg 규격 · 나머지 sprite 가로 띠 1536×512, 바탕 cut_bg). 장소 = 2D region 을 실제로 넘기는 2나락 벨트·4종횡 옆 배경(1만리·3마을·5천하는 2D 가 내려다보기라 자리 없음 — 수신함 웹)",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "items": [
+  {
+   "id": "dg_gobun__sky",
+   "spec": "bg",
+   "subject": "dark violet dusk sky with thin mist clouds and faint stars, sky only, no ground, no mountains, no buildings",
+   "subject_ko": "dg_gobun 하늘 층",
+   "extra": "no humans"
+  },
+  {
+   "id": "dg_gobun__far",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "rolling grassy burial mounds silhouette, horizontal strip, flat bottom edge, hazy, distant, low contrast",
+   "subject_ko": "dg_gobun far 층(띠 — 바탕 지움) · 장면: ancient burial mound valley at dusk, weathered stone tomb guardians, dim torchlight, purple mist",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "dg_gobun__mid",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "stone tomb gates and broken guardian statues between pine trees, horizontal strip, flat bottom edge, side view",
+   "subject_ko": "dg_gobun mid 층(띠 — 바탕 지움) · 장면: ancient burial mound valley at dusk, weathered stone tomb guardians, dim torchlight, purple mist",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "dg_gobun__near",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "mossy stone lanterns, rocks and dry grass, horizontal strip, flat bottom edge, side view, dense",
+   "subject_ko": "dg_gobun near 층(띠 — 바탕 지움) · 장면: ancient burial mound valley at dusk, weathered stone tomb guardians, dim torchlight, purple mist",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "dg_gobun__ground",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "packed earth path with old flagstones, horizontal strip, flat top edge, fills the whole width, side view cross-section",
+   "subject_ko": "dg_gobun ground 층(띠 — 바탕 지움) · 장면: ancient burial mound valley at dusk, weathered stone tomb guardians, dim torchlight, purple mist",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "dg_gobun__front",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "dark tall grass and fern silhouettes, horizontal strip, flat bottom edge, dark, dense, close-up",
+   "subject_ko": "dg_gobun front 층(띠 — 바탕 지움) · 장면: ancient burial mound valley at dusk, weathered stone tomb guardians, dim torchlight, purple mist",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "dg_jiokmun__sky",
+   "spec": "bg",
+   "subject": "blood red sky with a glowing crimson rift and ash clouds, sky only, no ground, no mountains, no buildings",
+   "subject_ko": "dg_jiokmun 하늘 층",
+   "extra": "no humans"
+  },
+  {
+   "id": "dg_jiokmun__far",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "black jagged volcanic peaks silhouette with red glow, horizontal strip, flat bottom edge, hazy, distant, low contrast",
+   "subject_ko": "dg_jiokmun far 층(띠 — 바탕 지움) · 장면: hellgate wasteland, glowing red rift in the sky, black jagged rocks, floating embers",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "dg_jiokmun__mid",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "ruined obsidian arches and dead twisted trees, horizontal strip, flat bottom edge, side view",
+   "subject_ko": "dg_jiokmun mid 층(띠 — 바탕 지움) · 장면: hellgate wasteland, glowing red rift in the sky, black jagged rocks, floating embers",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "dg_jiokmun__near",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "charred rocks, bones and smoldering cracks, horizontal strip, flat bottom edge, side view, dense",
+   "subject_ko": "dg_jiokmun near 층(띠 — 바탕 지움) · 장면: hellgate wasteland, glowing red rift in the sky, black jagged rocks, floating embers",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "dg_jiokmun__ground",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "cracked black basalt ground with glowing lava seams, horizontal strip, flat top edge, fills the whole width, side view cross-section",
+   "subject_ko": "dg_jiokmun ground 층(띠 — 바탕 지움) · 장면: hellgate wasteland, glowing red rift in the sky, black jagged rocks, floating embers",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "dg_jiokmun__front",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "dark thorny dead branches silhouette, horizontal strip, flat bottom edge, dark, dense, close-up",
+   "subject_ko": "dg_jiokmun front 층(띠 — 바탕 지움) · 장면: hellgate wasteland, glowing red rift in the sky, black jagged rocks, floating embers",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "story_field_meadow__sky",
+   "spec": "bg",
+   "subject": "bright blue sky with big white fluffy clouds, sky only, no ground, no mountains, no buildings",
+   "subject_ko": "story_field_meadow 하늘 층",
+   "extra": "no humans"
+  },
+  {
+   "id": "story_field_meadow__far",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "distant blue hills with an old windmill and a slim glass tower far away, horizontal strip, flat bottom edge, hazy, distant, low contrast",
+   "subject_ko": "story_field_meadow far 층(띠 — 바탕 지움) · 장면: sunny grass meadow with rolling hills, wildflowers, distant mixed-era skyline with an old windmill and a glass tower",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "story_field_meadow__mid",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "green rolling hills with scattered trees and a wooden fence, horizontal strip, flat bottom edge, side view",
+   "subject_ko": "story_field_meadow mid 층(띠 — 바탕 지움) · 장면: sunny grass meadow with rolling hills, wildflowers, distant mixed-era skyline with an old windmill and a glass tower",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "story_field_meadow__near",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "flowering bushes, tall grass and small rocks, horizontal strip, flat bottom edge, side view, dense",
+   "subject_ko": "story_field_meadow near 층(띠 — 바탕 지움) · 장면: sunny grass meadow with rolling hills, wildflowers, distant mixed-era skyline with an old windmill and a glass tower",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "story_field_meadow__ground",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "grass topped soil ground strip with a dirt path, horizontal strip, flat top edge, fills the whole width, side view cross-section",
+   "subject_ko": "story_field_meadow ground 층(띠 — 바탕 지움) · 장면: sunny grass meadow with rolling hills, wildflowers, distant mixed-era skyline with an old windmill and a glass tower",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "story_field_meadow__front",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "tall grass and wildflower silhouettes, horizontal strip, flat bottom edge, dark, dense, close-up",
+   "subject_ko": "story_field_meadow front 층(띠 — 바탕 지움) · 장면: sunny grass meadow with rolling hills, wildflowers, distant mixed-era skyline with an old windmill and a glass tower",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "story_forest__sky",
+   "spec": "bg",
+   "subject": "pale green morning sky seen through high canopy haze, sky only, no ground, no mountains, no buildings",
+   "subject_ko": "story_forest 하늘 층",
+   "extra": "no humans"
+  },
+  {
+   "id": "story_forest__far",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "distant misty forest treeline silhouette, horizontal strip, flat bottom edge, hazy, distant, low contrast",
+   "subject_ko": "story_forest far 층(띠 — 바탕 지움) · 장면: deep green ancient forest, tall trees, soft god rays, moss",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "story_forest__mid",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "tall mossy tree trunks and hanging vines, horizontal strip, flat bottom edge, side view",
+   "subject_ko": "story_forest mid 층(띠 — 바탕 지움) · 장면: deep green ancient forest, tall trees, soft god rays, moss",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "story_forest__near",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "ferns, mushrooms and mossy roots, horizontal strip, flat bottom edge, side view, dense",
+   "subject_ko": "story_forest near 층(띠 — 바탕 지움) · 장면: deep green ancient forest, tall trees, soft god rays, moss",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "story_forest__ground",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "mossy forest floor ground strip with roots, horizontal strip, flat top edge, fills the whole width, side view cross-section",
+   "subject_ko": "story_forest ground 층(띠 — 바탕 지움) · 장면: deep green ancient forest, tall trees, soft god rays, moss",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "story_forest__front",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "dense fern and leaf silhouettes, horizontal strip, flat bottom edge, dark, dense, close-up",
+   "subject_ko": "story_forest front 층(띠 — 바탕 지움) · 장면: deep green ancient forest, tall trees, soft god rays, moss",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "story_sky_bridge__sky",
+   "spec": "bg",
+   "subject": "golden sunset sky with layered pink clouds, sky only, no ground, no mountains, no buildings",
+   "subject_ko": "story_sky_bridge 하늘 층",
+   "extra": "no humans"
+  },
+  {
+   "id": "story_sky_bridge__far",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "distant floating islands silhouette with a futuristic sky station, horizontal strip, flat bottom edge, hazy, distant, low contrast",
+   "subject_ko": "story_sky_bridge far 층(띠 — 바탕 지움) · 장면: floating rock islands linked with rope bridges above clouds at golden sunset, a distant futuristic sky station",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "story_sky_bridge__mid",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "floating rock islands with waterfalls and rope bridges, horizontal strip, flat bottom edge, side view",
+   "subject_ko": "story_sky_bridge mid 층(띠 — 바탕 지움) · 장면: floating rock islands linked with rope bridges above clouds at golden sunset, a distant futuristic sky station",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "story_sky_bridge__near",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "cloud banks and small floating rocks, horizontal strip, flat bottom edge, side view, dense",
+   "subject_ko": "story_sky_bridge near 층(띠 — 바탕 지움) · 장면: floating rock islands linked with rope bridges above clouds at golden sunset, a distant futuristic sky station",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "story_sky_bridge__ground",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "stone bridge deck with wooden planks seen from the side, horizontal strip, flat top edge, fills the whole width, side view cross-section",
+   "subject_ko": "story_sky_bridge ground 층(띠 — 바탕 지움) · 장면: floating rock islands linked with rope bridges above clouds at golden sunset, a distant futuristic sky station",
+   "extra": "no humans, isolated"
+  },
+  {
+   "id": "story_sky_bridge__front",
+   "spec": "sprite",
+   "width": 1536,
+   "height": 512,
+   "subject": "wispy cloud puffs and hanging vine silhouettes, horizontal strip, flat bottom edge, dark, dense, close-up",
+   "subject_ko": "story_sky_bridge front 층(띠 — 바탕 지움) · 장면: floating rock islands linked with rope bridges above clouds at golden sunset, a distant futuristic sky station",
+   "extra": "no humans, isolated"
+  }
+ ]
+}

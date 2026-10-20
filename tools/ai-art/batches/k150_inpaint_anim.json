@@ -1,0 +1,89 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k150_inpaint",
+ "note": "K-0150 겹 배경 — 깊이 문턱보다 가까운 것을 지운 뒤판(원본과 같은 프롬프트, 마스크 안만 다시 그림)",
+ "defaults": {
+  "prompt_prefix": "",
+  "width": 1024,
+  "height": 576,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "",
+  "variants": 1
+ },
+ "items": [
+  {
+   "id": "dg_gobun__m1",
+   "prompt": "masterpiece, high score, great score, absurdres, (ancient burial mound tomb interior:1.15), earthen walls, clay burial urns, faint lantern light, warm brown earth tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 3438586839,
+   "init_image": "tools/ai-art/_out/k150_inpaint/dg_gobun__src.png",
+   "mask_image": "tools/ai-art/_out/k150_inpaint/dg_gobun__mask1.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "dg_gobun__m2",
+   "prompt": "masterpiece, high score, great score, absurdres, (ancient burial mound tomb interior:1.15), earthen walls, clay burial urns, faint lantern light, warm brown earth tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 3438586840,
+   "init_image": "tools/ai-art/_out/k150_inpaint/dg_gobun__src.png",
+   "mask_image": "tools/ai-art/_out/k150_inpaint/dg_gobun__mask2.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "dg_gobun__m3",
+   "prompt": "masterpiece, high score, great score, absurdres, (ancient burial mound tomb interior:1.15), earthen walls, clay burial urns, faint lantern light, warm brown earth tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 3438586841,
+   "init_image": "tools/ai-art/_out/k150_inpaint/dg_gobun__src.png",
+   "mask_image": "tools/ai-art/_out/k150_inpaint/dg_gobun__mask3.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "dg_gobun__m4",
+   "prompt": "masterpiece, high score, great score, absurdres, (ancient burial mound tomb interior:1.15), earthen walls, clay burial urns, faint lantern light, warm brown earth tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 3438586842,
+   "init_image": "tools/ai-art/_out/k150_inpaint/dg_gobun__src.png",
+   "mask_image": "tools/ai-art/_out/k150_inpaint/dg_gobun__mask4.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "dg_jiokmun__m1",
+   "prompt": "masterpiece, high score, great score, absurdres, (gate of the underworld:1.15), lava rivers, black volcanic rock, giant iron gate, glowing red tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 13901208,
+   "init_image": "tools/ai-art/_out/k150_inpaint/dg_jiokmun__src.png",
+   "mask_image": "tools/ai-art/_out/k150_inpaint/dg_jiokmun__mask1.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "dg_jiokmun__m2",
+   "prompt": "masterpiece, high score, great score, absurdres, (gate of the underworld:1.15), lava rivers, black volcanic rock, giant iron gate, glowing red tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 13901209,
+   "init_image": "tools/ai-art/_out/k150_inpaint/dg_jiokmun__src.png",
+   "mask_image": "tools/ai-art/_out/k150_inpaint/dg_jiokmun__mask2.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "dg_jiokmun__m3",
+   "prompt": "masterpiece, high score, great score, absurdres, (gate of the underworld:1.15), lava rivers, black volcanic rock, giant iron gate, glowing red tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 13901210,
+   "init_image": "tools/ai-art/_out/k150_inpaint/dg_jiokmun__src.png",
+   "mask_image": "tools/ai-art/_out/k150_inpaint/dg_jiokmun__mask3.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "dg_jiokmun__m4",
+   "prompt": "masterpiece, high score, great score, absurdres, (gate of the underworld:1.15), lava rivers, black volcanic rock, giant iron gate, glowing red tones, wide side-scrolling view, flat ground along the bottom, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 13901211,
+   "init_image": "tools/ai-art/_out/k150_inpaint/dg_jiokmun__src.png",
+   "mask_image": "tools/ai-art/_out/k150_inpaint/dg_jiokmun__mask4.png",
+   "denoise": 1.0
+  }
+ ]
+}
