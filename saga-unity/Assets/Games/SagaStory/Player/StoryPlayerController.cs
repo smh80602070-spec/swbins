@@ -27,6 +27,8 @@ namespace Saga.Story.Player
         private const float TurnRate = 12f; // DUNGEON PlayerController.cs와 같은 결 — LerpAngle의 보간 배율(각속도 아님).
         private const float AttackRange = 2.2f;
         private const float AttackCooldown = 0.36f; // 무예 연참(連斬) cd 0.36(js/data-job.js)
+        private const float DodgeCool = 0.9f;                          // tasks U-0142 — side.js DODGE_COOL
+        private const float DodgeDist = 140f * FieldMapData.ScaleMPerPx;  // side.js DODGE_DIST 140px = 2.8m
         private const float FootprintIntervalSec = 0.35f; // PLAN.md 101-3 G "지형 반응" — 발자국 간격, DUNGEON/GO PlayerController.cs와 같은 값.
 
         [SerializeField] private Transform visual;
@@ -51,6 +53,7 @@ namespace Saga.Story.Player
         private float _sweepCooldownLeft;
         private float _boltCooldownLeft;
         private float _braceCooldownLeft;
+        private float _dodgeCooldownLeft;
         private float _footprintCooldown;
         // 강화 칸 하나 — 웹판 `side.js` p.buff처럼 기합·직업 강화 무예(철갑·응안·급소·부적)가
         // 같은 칸을 쓰고, 나중에 건 것이 앞의 것을 덮는다(곱해 쌓지 않는다).
@@ -126,6 +129,8 @@ namespace Saga.Story.Player
             _sweepCooldownLeft = Mathf.Max(0f, _sweepCooldownLeft - dt);
             _boltCooldownLeft = Mathf.Max(0f, _boltCooldownLeft - dt);
             _braceCooldownLeft = Mathf.Max(0f, _braceCooldownLeft - dt);
+            _dodgeCooldownLeft = Mathf.Max(0f, _dodgeCooldownLeft - dt);
+            StoryJust.Tick(dt); // tasks U-0142 — 저스트 슬로·쿨은 실제 dt 로
             TickSkillCooldowns(dt);
             StoryCombat.TickMpRegen(dt, BuffActive ? _buffRegen : 1f);
             StoryPartyState.TickCooldown(dt); // 101-2 5-8 "동료 교대".
@@ -151,6 +156,7 @@ namespace Saga.Story.Player
                 _controller.enabled = true;
             }
 
+            if (WantsDodge()) TryDodge();
             if (WantsAttack()) TryAttack();
             if (WantsSweep()) TrySweep();
             if (WantsBolt()) TryBolt();
@@ -336,6 +342,27 @@ namespace Saga.Story.Player
         /// TriggerAttack()과 같이 쿨다운을 그대로 존중한다.</summary>
         public void TriggerAttack() => TryAttack();
 
+        /// <summary>tasks U-0142 모바일 "회피" 버튼(씬 재빌드 때 단추가 붙는다)·진단이 부른다.</summary>
+        public bool TriggerDodge() => TryDodge();
+
+        /// <summary>진단 — 회피 재사용 대기 남은 시간.</summary>
+        public float DodgeCooldownLeft => _dodgeCooldownLeft;
+
+        /// <summary>tasks U-0142 회피(웹 side.js dodge, PLAN 12절) — ←→ 를 누르고 있으면 그쪽, 아니면 바라보는 쪽으로
+        /// 2.8m 미끄러지며 무적 0.12초. 줄·탈것·무예 3택 창 중엔 안 나간다. 벽은 CharacterController.Move 가 막는다(웹 clamp 대신).
+        /// dash 유파 2세트면 재사용 대기 ×0.8(<see cref="StorySkillState.DodgeCdMul"/>).</summary>
+        private bool TryDodge()
+        {
+            if (_onRope || _dodgeCooldownLeft > 0f || StoryMounts.Riding != null || StoryPlayerHp.HoldForPick) return false;
+            _dodgeCooldownLeft = DodgeCool * StorySkillState.DodgeCdMul();
+            float axis = HorizontalInput();
+            float dir = Mathf.Abs(axis) > 0.05f ? Mathf.Sign(axis) : _facing;
+            _controller.Move(new Vector3(dir * DodgeDist, 0f, 0f));
+            StoryPlayerHp.GrantDodge();
+            Saga.Story.Audio.StoryAudio.PlaySfx("dodge");
+            return true;
+        }
+
         /// <summary>모바일 "횡소"·"기탄"·"기합" 버튼(OnClick)이 부른다 —
         /// 위 TriggerAttack()과 같은 결.</summary>
         public void TriggerSweep() => TrySweep();
@@ -382,6 +409,7 @@ namespace Saga.Story.Player
             NotifyAttacked();
             PlayAttackAnim();
             Saga.Core.SagaVoice.Say("shout"); // U-0068 — 가끔 외침
+            float justMul = StoryJust.TakeNextMul(); // tasks U-0142 — 저스트 회피 다음 한 타 ×1.3(웹 strike 처럼 휘두르면 맞든 안 맞든 씀)
 
             bool hitAny = false;
             bool anyCrit = false;
@@ -392,7 +420,7 @@ namespace Saga.Story.Player
                 if (Mathf.Abs(dx) > AttackRange) continue;
                 if (Mathf.Abs(dx) > 0.3f && !Mathf.Approximately(Mathf.Sign(dx), _facing)) continue; // 등 뒤는 안 맞는다.
 
-                var (dmg, crit) = StoryCombat.RollDamage(CurrentAtk);
+                var (dmg, crit) = StoryCombat.RollDamage(CurrentAtk, justMul);
                 enemy.TakeDamage(dmg, crit);
                 if (crit) StoryCombat.TriggerHitstop(this);
                 hitAny = true;
@@ -630,6 +658,12 @@ namespace Saga.Story.Player
         {
             var kb = Keyboard.current;
             return SagaPad.Pressed(SagaPad.Btn.Jump, kb?.spaceKey);
+        }
+
+        private bool WantsDodge()
+        {
+            var kb = Keyboard.current;
+            return SagaPad.Pressed(SagaPad.Btn.Dodge, kb?.leftShiftKey) || (kb != null && kb.rightShiftKey.wasPressedThisFrame);
         }
 
         private bool WantsAttack()

@@ -115,11 +115,20 @@ namespace Saga.EditorTools
             if (split.shots != 5 || boltsAdded != 5) { Debug.LogError($"{T} 연 2세트 분시 발수={split.shots}/생긴 투사체={boltsAdded}(기대 5/5)"); return false; }
 
             if (!CastWithSet(castMethod, cds, "assassin", new[] { "r_step", "x_shadow" }, "x_shadow", out var shadow)) return false;
-            if (!Mathf.Approximately(shadow.cooldown, 6f * 0.8f * StoryLabyrinthState.CooldownMul) || shadow.critForce)
+            // tasks U-0142 — dash 2세트는 회피 재사용 대기(웹 그대로), 무예 자신은 ×1.
+            if (!Mathf.Approximately(shadow.cooldown, 6f * StoryLabyrinthState.CooldownMul) || shadow.critForce
+                || !Mathf.Approximately(StorySkillState.DodgeCdMul(), 0.8f))
             {
-                Debug.LogError($"{T} 보 2세트 그림자밟기 재사용={shadow.cooldown}(기대={6f * 0.8f}) 급소확정={shadow.critForce}(2세트엔 false)");
+                Debug.LogError($"{T} 보 2세트 그림자밟기 재사용={shadow.cooldown}(기대={6f}) 급소확정={shadow.critForce}(2세트엔 false) 회피 쿨배율={StorySkillState.DodgeCdMul()}(기대 0.8)");
                 return false;
             }
+            typeof(StoryPlayerController).GetField("_dodgeCooldownLeft", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(_storyController, 0f);
+            if (!_storyController.TriggerDodge() || !Mathf.Approximately(_storyController.DodgeCooldownLeft, 0.9f * 0.8f))
+            {
+                Debug.LogError($"{T} 보 2세트 회피 재사용={_storyController.DodgeCooldownLeft}(기대={0.9f * 0.8f})");
+                return false;
+            }
+            StoryPlayerHp.Refill();
 
             if (!CastWithSet(castMethod, cds, "sage", new[] { "m_bolt", "p_quake" }, "p_quake", out var quake)) return false;
             if (!Mathf.Approximately(quake.radius, StorySkillData.Get("p_quake").RadiusM * 1.15f)) { Debug.LogError($"{T} 진 2세트 지진 반경={quake.radius}"); return false; }
@@ -349,9 +358,9 @@ namespace Saga.EditorTools
             StoryCombat.RestoreMp(StoryCombat.MpMaxCurrent);
             bool veilOk = (bool)castMethod.Invoke(_storyController, new object[] { StorySkillData.Get("d_veil") });
             var veil = _storyController.LastCast;
-            if (!veilOk || veil.key != "d_veil" || !veil.critForce || !Mathf.Approximately(veil.cooldown, 8f * 0.8f * StoryLabyrinthState.CooldownMul))
+            if (!veilOk || veil.key != "d_veil" || !veil.critForce || !Mathf.Approximately(veil.cooldown, 8f * StoryLabyrinthState.CooldownMul))
             {
-                Debug.LogError($"{T} 보 4세트 명계보 — ok={veilOk} 급소확정={veil.critForce}(기대 true) 재사용={veil.cooldown}(기대={8f * 0.8f})");
+                Debug.LogError($"{T} 보 4세트 명계보 — ok={veilOk} 급소확정={veil.critForce}(기대 true) 재사용={veil.cooldown}(기대={8f})");
                 return false;
             }
 

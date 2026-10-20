@@ -18,6 +18,8 @@ namespace Saga.Story.Player
     {
         public static readonly Vector3 FieldRespawn = new Vector3(2f, 0.1f, 0f); // BuildTestStoryScene 플레이어 시작 자리
         private static readonly Color HurtColor = new Color(1f, 0.3f, 0.25f);
+        /// <summary>tasks U-0142 저스트 회피 번쩍 — 붉은 피격과 색만 다르게(금빛).</summary>
+        public static readonly Color JustColor = new Color(1f, 0.82f, 0.25f);
 
         private StoryPlayerController _pc;
 
@@ -31,6 +33,7 @@ namespace Saga.Story.Player
         {
             StoryPlayerHp.Hurted += OnHurt;
             StoryPlayerHp.Fell += OnFell;
+            StoryJust.Happened += OnJust;
             HurtVignette.Bind(HpFrac, this); // tasks U-0105 — 체력 30% 밑이면 가장자리 맥박
         }
 
@@ -40,6 +43,7 @@ namespace Saga.Story.Player
         {
             StoryPlayerHp.Hurted -= OnHurt;
             StoryPlayerHp.Fell -= OnFell;
+            StoryJust.Happened -= OnJust;
             HurtVignette.Unbind(this);
         }
 
@@ -56,6 +60,15 @@ namespace Saga.Story.Player
             DamagePopup.Spawn(transform.position + Vector3.up * 2f, amount, HurtColor);
             StoryCameraFollow.Instance?.Shake(0.1f, 0.18f);
             HurtVignette.Flash(); // tasks U-0105 — 가장자리 붉게 번쩍(받아치기·무적으로 막히면 Hurted 가 안 와 신호 없음)
+        }
+
+        /// <summary>tasks U-0142 — 웹 side-just.js evaded() 의 번쩍·소리·알림.</summary>
+        private void OnJust()
+        {
+            HurtVignette.Flash(JustColor);
+            Saga.Story.Audio.StoryAudio.PlaySfx("crit");
+            DialogueLabel.Instance?.Show(string.Format(
+                StoryLocalization.T("just.toast", "⚡ 저스트 회피! — 느려진다 · 다음 한 타 ×{0}"), StoryJust.NextMul), 2f);
         }
 
         private void OnFell()

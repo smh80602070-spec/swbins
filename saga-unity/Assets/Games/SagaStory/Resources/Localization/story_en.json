@@ -427,6 +427,7 @@
     { "key": "bp.phase2", "value": "⚠ {0} phase 2 — the ground will shake (jump to dodge)!" },
     { "key": "bp.enrage", "value": "🔥 {0} is enraged — a sweep is coming!" },
     { "key": "hp.fell_field", "value": "💀 You fell — back on your feet at the field entrance" },
+    { "key": "just.toast", "value": "⚡ Just dodge! — time slows · next hit ×{0}" },
     { "key": "labyrinth.regroup_fell", "value": "💀 You fell — rise again and retry" },
     { "key": "labyrinth.failed_fell", "value": "💀 You fell — the run ended on floor {0} (memory shards remain, have {1})" },
     { "key": "bp.boss.hwanggeon_chief", "value": "Yellow Turban Chief" },

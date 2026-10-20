@@ -20,11 +20,15 @@ namespace Saga.Story.Data
         public const float HitCool = 0.7f;          // side.js HIT_COOL
         public const float RegenDelay = 5f;
         public const float RegenPctPerSec = 0.04f;
+        /// <summary>tasks U-0142 회피 무적(웹 DODGE_INVULN).</summary>
+        public const float DodgeInvuln = 0.12f;
 
         public static float HpMax => 60f + 15f * 6f + StoryJobState.Level * 12f + StoryJobState.HpBonus;
         public static float Hp { get; private set; } = StoryCombat.StartHp;
         public static float Invuln { get; private set; }
         public static float SinceHurt { get; private set; } = 99f;
+        /// <summary>tasks U-0142 — 회피 무적이 남은 시간(웹 p.dodgeAnim) — 이 안에 닿은 판정이 저스트 후보.</summary>
+        public static float DodgeLeft { get; private set; }
         /// <summary>진단 — 쓰러진 횟수(이번 켬).</summary>
         public static int Falls { get; private set; }
 
@@ -39,7 +43,12 @@ namespace Saga.Story.Data
 
         public static bool Hurt(float amount)
         {
-            if (amount <= 0f || Invuln > 0f || Hp <= 0f || HoldForPick) return false;
+            if (amount <= 0f || Hp <= 0f || HoldForPick) return false;
+            if (Invuln > 0f)
+            {
+                if (DodgeLeft > 0f) StoryJust.Evaded(DodgeLeft); // tasks U-0142 웹 hurtMe 무적 가지
+                return false;
+            }
             float n = Mathf.Max(1f, StoryBossPattern.JsRound(amount));
             Hp = Mathf.Max(0f, Hp - n);
             Invuln = HitCool;
@@ -56,8 +65,16 @@ namespace Saga.Story.Data
         }
 
         /// <summary>한 걸음 — 무적·회복. 최대치가 늘면(레벨업·전직) 는 만큼 채운다.</summary>
+        /// <summary>tasks U-0142 회피 — 무적 0.12초(맞은 뒤 무적이 더 길면 그대로).</summary>
+        public static void GrantDodge()
+        {
+            Invuln = Mathf.Max(Invuln, DodgeInvuln);
+            DodgeLeft = DodgeInvuln;
+        }
+
         public static void Tick(float dt)
         {
+            DodgeLeft = Mathf.Max(0f, DodgeLeft - dt);
             float max = HpMax;
             if (max > _lastMax) Hp += max - _lastMax;
             _lastMax = max;
@@ -72,6 +89,7 @@ namespace Saga.Story.Data
             _lastMax = HpMax;
             Hp = _lastMax;
             Invuln = 0f;
+            DodgeLeft = 0f;
             SinceHurt = 99f;
         }
 
@@ -81,6 +99,7 @@ namespace Saga.Story.Data
             _lastMax = HpMax;
             Hp = Mathf.Clamp(hp, 0f, _lastMax);
             Invuln = 0f;
+            DodgeLeft = 0f;
             SinceHurt = 0f;
         }
     }

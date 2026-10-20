@@ -33,6 +33,7 @@ namespace Saga.Core
         private static RawImage _img;
         private static Texture2D _tex;
         private static float _flashT, _lowW, _phase;
+        private static Color _tint = Red;
         private static bool _manualLow;
         private static Func<float> _bind;
         private static UnityEngine.Object _owner;
@@ -51,8 +52,13 @@ namespace Saga.Core
         public static Func<float> BoundFunc => _bind;
 
         /// <summary>맞은 순간 — 가장자리 붉게 번쩍.</summary>
-        public static void Flash()
+        public static void Flash() => Flash(Red);
+
+        /// <summary>tasks U-0142 — 색만 다른 번쩍(4종횡 저스트 회피 = 금빛). 번쩍이 끝나도 그 색이 맥박까지 남지 않게 다음 Flash()·맥박은 붉게.</summary>
+        public static Color Tint => _tint;
+        public static void Flash(Color tint)
         {
+            _tint = tint;
             FlashCount++;
             _flashT = FlashSec;
             Ensure();
@@ -114,6 +120,7 @@ namespace Saga.Core
             _phase = Mathf.Repeat(_phase + dt * hz * Mathf.PI * 2f, Mathf.PI * 2f);
             float pulse = _lowW > 0f ? _lowW * Mathf.Lerp(PulseMinA, PulseMaxA, 0.5f + 0.5f * Mathf.Sin(_phase)) : 0f;
             float flash = FlashA * (_flashT / FlashSec);
+            if (_flashT <= 0f) _tint = Red;
             Alpha = Mathf.Max(flash, pulse);
             Apply();
         }
@@ -123,7 +130,7 @@ namespace Saga.Core
         {
             if (_inst != null) DestroyImmediate(_inst.gameObject);
             _inst = null; _img = null;
-            _flashT = 0f; _lowW = 0f; _phase = 0f; _manualLow = false;
+            _flashT = 0f; _lowW = 0f; _phase = 0f; _manualLow = false; _tint = Red;
             _bind = null; _owner = null; _hasOwner = false;
             Alpha = 0f; FlashCount = 0;
         }
@@ -153,7 +160,7 @@ namespace Saga.Core
         private static void Apply()
         {
             if (_img == null) return;
-            _img.color = new Color(Red.r, Red.g, Red.b, Alpha);
+            _img.color = new Color(_tint.r, _tint.g, _tint.b, Alpha);
             _img.enabled = Alpha > 0.001f;
         }
 

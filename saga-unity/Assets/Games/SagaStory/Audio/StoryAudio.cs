@@ -53,7 +53,7 @@ namespace Saga.Story.Audio
         }
 
         /// <summary>tasks U-0104 — 코드가 부르는 효과음 이름 전부(진단이 `SagaSfx.Has` 로 파일 있는지 대조).</summary>
-        public static readonly string[] Used = { "sword_hit", "death" };
+        public static readonly string[] Used = { "sword_hit", "death", "dodge", "crit" }; // dodge·crit — tasks U-0142 회피·저스트
 
         /// <summary>tasks U-0104 — 이름으로 자체 효과음(K-0045 <see cref="SagaSfx.Pick"/>, 기록은 파일 없어도 남음)을 먼저 내고,
         /// 그 이름 파일이 없을 때만 씬이 넘긴 옛 클립 <paramref name="fallback"/> — 둘 다 없으면 조용히 건너뛴다.</summary>

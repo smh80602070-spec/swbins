@@ -427,6 +427,7 @@
     { "key": "bp.phase2", "value": "⚠ {0} 2단계 — 땅이 흔들린다(점프로 피하라)!" },
     { "key": "bp.enrage", "value": "🔥 {0} 광폭 — 휩쓸기가 온다!" },
     { "key": "hp.fell_field", "value": "💀 쓰러졌다 — 들판 입구에서 다시 일어선다" },
+    { "key": "just.toast", "value": "⚡ 저스트 회피! — 느려진다 · 다음 한 타 ×{0}" },
     { "key": "labyrinth.regroup_fell", "value": "💀 쓰러졌다 — 재기(再起)로 다시 도전한다" },
     { "key": "labyrinth.failed_fell", "value": "💀 쓰러졌다 — {0}층에서 회차가 끝났다(기억 조각은 남는다, 보유 {1})" },
     { "key": "bp.boss.hwanggeon_chief", "value": "황건 두목" },

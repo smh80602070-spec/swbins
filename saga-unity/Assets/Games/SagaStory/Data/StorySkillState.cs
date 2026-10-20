@@ -252,8 +252,8 @@ namespace Saga.Story.Data
 
         /// <summary>그 무예 하나가 지금 받는 세트 보정 — **판정은 여기 한 곳**(웹판 schoolBonus()).
         /// 시전 쪽은 결과를 제자리(배율·반경·지속·발수·재사용 대기)에 곱하거나 더할 뿐이다.
-        /// **재해석 — dash**: 웹판 2세트는 회피(대시) 재사용 대기를 줄이는데 이 트랙엔 회피 동작이
-        /// 없어, 그 유파의 dash 무예 자신의 재사용 대기에 곱한다(4세트 "급소 확정"은 그대로).</summary>
+        /// **dash**: 2세트는 회피(대시) 재사용 대기 — 무예 자신이 아니라 <see cref="DodgeCdMul"/> 가 본다
+        /// (tasks U-0142 로 회피가 생겨 웹 그대로 되돌림, 4세트 "급소 확정"은 여기).</summary>
         public static SchoolBonus BonusOf(StorySkillData.Skill sk)
         {
             var b = SchoolBonus.None;
@@ -269,12 +269,23 @@ namespace Saga.Story.Data
                 case StorySkillData.SchoolKind.Buff: b.BuffMul = v; break;
                 case StorySkillData.SchoolKind.Volley: b.ShotsAdd = Mathf.RoundToInt(v); break;
                 case StorySkillData.SchoolKind.Dash:
-                    b.CooldownMul = def.V2;
                     b.CritForce = tier >= 4;
                     break;
                 // Heal — 회복 무예가 이 트랙에 없어 적용할 자리가 없다.
             }
             return b;
+        }
+
+        /// <summary>tasks U-0142 — 칸에 dash 유파 세트(2 이상)가 있으면 회피 재사용 대기 배율(웹 job.js dodgeCdMul — 가장 작은 것).</summary>
+        public static float DodgeCdMul()
+        {
+            float mul = 1f;
+            foreach (var sk in SlotSkills())
+            {
+                var def = StorySkillData.GetSchool(sk.School);
+                if (def != null && def.Kind == StorySkillData.SchoolKind.Dash && SchoolTier(sk.School) > 0) mul = Mathf.Min(mul, def.V2);
+            }
+            return mul;
         }
 
         public static void Snapshot(out string[] keys, out int[] levels)

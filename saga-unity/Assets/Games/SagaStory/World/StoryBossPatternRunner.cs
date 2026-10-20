@@ -85,6 +85,7 @@ namespace Saga.Story.World
             _minions.RemoveAll(m => m == null || m.IsDead);
             var bossFeet = new Vector2(transform.position.x, transform.position.y);
             bool near = StoryBossPattern.IsNear(bossFeet, Feet);
+            dt = StoryJust.Scale(dt); // tasks U-0142 저스트 회피 슬로 — 판정 dt 만 ×0.35(전역 timeScale 아님)
             var r = StoryBossPattern.Step(_state, dt, this, near, _enemy.Hp, _enemy.MaxHp, transform.position.x,
                 StoryCombat.BossDmgFor(StoryJobState.Level));
             // 추적 — 예고가 발을 따라온다(마지막 0.5초는 멈춤).
