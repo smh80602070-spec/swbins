@@ -8,7 +8,7 @@
 - [ ] 10-17 · 사용자 "3d,2d 게임성" 참고작 목록(판마다 4~6, 정본 루트 README 표) — README·index 반영 끝 · **웹 설계 W-0274 끝** · 고돗·유니티 PLAN 반영은 각 R-0 · 웹/고돗/유니티
 - [ ] 10-17 · (자체툴 K-0127 → 고돗) · 정육면체 잎 나무·바위 → foliage/<id>_real.gltf 14 — 시트 ② · 고돗
 - [ ] 10-17 · (자체툴 K-0128 → 고돗) · 2나락 방 킷·섬 밑동 사실판 world/real · KayKit·assets/dungeon 지움 — 시트 ③ · 고돗
-- [ ] 10-17 · (자체툴 K-0129 → 유니티) · PolyHaven 테스트 씬만·식물 3·짐승 셋 정리 — 시트 ④ · 유니티 — **주의(유니티 R-0 10-20)**: 유니티 `TestDungeon`·`TestVillage`·`TestVillageForest` 는 실제 판 씬이라 PolyHaven 소품은 실제 화면(2나락 시대 꾸밈 등)에 쓰인다 → 지우지 말고 짝(자체) 생기면 교체, U-0139 메모
+- [ ] 10-17 · (자체툴 K-0129 → 유니티) · PolyHaven 테스트 씬만·식물 3·짐승 셋 정리 — 시트 ④ · 유니티
 - [ ] 10-17 · (자체툴 K-0128 괴물 → 고돗) · 자체 괴물 몸 111 고돗 배치 끝, monster_body.gd shape→id 표 — 시트 ⑤ · 고돗
 - [ ] 10-18 · (자체툴 K-0139 → 고돗) · 같은 파일 `saga-godot/assets/anim_mocap/vroid_mocap_anims.glb` → VRoid 몸 anim_cc0 `_lib.res` 에 12 클립 갈아 끼우기(`.import` 는 고돗 세션) · 고돗
 - [ ] 10-18 · (자체툴 K-0137 → 고돗) · 주역 10 몸 바뀜(새 머리카락·뼈 비율·얼굴 레이어 — hl_mukhyang·kr_gyebaek·fu_jongwang·tb_baekgi·ru_geohae·sg_caocao·sg_liubei·sg_lubu·sg_sunquan·sg_zhugeliang) · 원본 `tools/char-forge/_out/vroid/<id>/<id>.glb`·`<id>_anims.glb`(이 PC) → `vroid_intake.sh --only <10>` 로 얼굴 데칼·anim_cc0 `_lib.res` 다시 · 고돗
