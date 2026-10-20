@@ -64,7 +64,7 @@
   }
 
   /** asset3d — 사가만리와 같은 것을 쓴다(사가나락 4단계, `assets/ASSET_LICENSES.md`) */
-  function AS() { return global.DG.asset3d; } function MARK_GLB() { return !!+tuned('dg3d.markGlb', 1); } var MARK_MODEL = { vow: { id: 'stele_01', h: 40 }, horde: { id: 'banner_pole_01', h: 44 } }; function markModel(k) { return MARK_GLB() && MARK_MODEL[k] || null; }   // W-0219 결사비·난입 모델(world 표 id·키 — 옛 비석 34·역참 47 사이), 손잡이 0 = null   // W-0202 마을 역참 이정표 모델, 0 = 옛 상자 (난입 모닥불+깃발은 위에서 보면 불꽃이 흰 덩이·깃발은 안 보여 옛 비석 그대로)
+  function AS() { return global.DG.asset3d; } function MARK_GLB() { return !!+tuned('dg3d.markGlb', 1); } var MARK_MODEL = { vow: { id: 'stele_01', h: 40 }, horde: { id: 'banner_pole_01', h: 44 } }; function markModel(k) { return MARK_GLB() ? (MARK_MODEL[k] || { id: 'stele_01', h: 40 }) : null; }   // W-0320 ④ 그 밖 비석도 자체 stele_01   // W-0219 결사비·난입 모델(world 표 id·키 — 옛 비석 34·역참 47 사이), 손잡이 0 = null   // W-0202 마을 역참 이정표 모델, 0 = 옛 상자 (난입 모닥불+깃발은 위에서 보면 불꽃이 흰 덩이·깃발은 안 보여 옛 비석 그대로)
   /** 몸짓(§5.16, `gesture.js`) — 손잡이 dungeon.gesture 가 0 이면 plan 이 늘 base 를 돌려준다 */
   function GS() { return global.DG.gesture; }
 
@@ -404,19 +404,16 @@
       var glow = mkey === 'waypoint' ? 0x3aa9c9 : (mkey === 'vow' ? 0xe06565 :
         (isExit ? 0x7fd858 : 0xffb45a));
       var base = isGate ? 0x14161c : 0x4a4f5a;
-      box(g, 0, 2.5, 0, 46, 5, 46, base, 'flat', false);         // 밟는 자리
-      if (isGate) {
-        /* 굴혈 — 내려가는 구멍이다. 기둥을 세우지 않고 **바닥을 뚫어** 보이게 한다 */
-        box(g, 0, 4, 0, 30, 3, 30, 0x000000, 'flat', false);
-        box(g, 0, 6, 0, 22, 1.5, 22, glow, 'glow', false);
-      } else if (mkey === 'waypoint') {
+      var AS3m = MARK_GLB() ? AS() : null, padShape = function () { var sg = new T.Group(); box(sg, 0, 2.5, 0, 46, 5, 46, base, 'flat', false); if (isGate) { box(sg, 0, 4, 0, 30, 3, 30, 0x000000, 'flat', false); box(sg, 0, 6, 0, 22, 1.5, 22, glow, 'glow', false); } return sg; };   // 밟는 자리 · 굴혈은 **바닥을 뚫어**(기둥 없이)
+      g.add(AS3m ? AS3m.build(isGate ? 'crea:cave_hole_01' : 'crea:mark_pad_01', 'mark:' + mkey, isGate ? 9 : 5, null, padShape) : padShape());   // W-0320 ①② 자체 발판(가운데 34 폭 패임 — 빛 판 5.4 그대로)·굴혈(계단·버팀목·빛 결정 포함, 폭 46) — 못 받으면 옛 상자
+      if (isGate) { /* 굴혈은 위 한 벌로 끝 */ } else if (mkey === 'waypoint') {
         var wpShape = function () { var sg = new T.Group(); box(sg, 0, 12, 0, 20, 20, 20, 0x2a3a4a, 'flat', true); box(sg, 0, 25, 0, 26, 4, 26, glow, 'glow', false); return sg; }, AS3w = MARK_GLB() ? AS() : null, wp = AS3w ? AS3w.build('post', 'mark:' + mkey, 47, null, wpShape) : wpShape();   // W-0202 맨 상자(20³) → 있는 이정표 모델(못 받으면 옛 상자 — build 의 대역)
         wp.userData.cast = true; g.add(wp); if (AS3w) { box(g, 0, 5.4, 0, 34, 0.8, 34, glow, 'glow', false); }   // 파란빛은 발판 위 빛 판이 낸다
       } else if (isExit) {
         /* 들길(오버월드, PLAN 28-1절) — 비석이 아니라 **팻말**이다.
            장대 하나에 판을 얹어 "여기서 다른 마을로" 라는 느낌을 준다. */
-        box(g, 0, 20, 0, 6, 40, 6, 0x5c4632, 'flat', true);
-        box(g, 0, 34, 0, 26, 8, 3, glow, 'glow', false);
+        var spShape = function () { var sg = new T.Group(); box(sg, 0, 20, 0, 6, 40, 6, 0x5c4632, 'flat', true); box(sg, 0, 34, 0, 26, 8, 3, glow, 'glow', false); return sg; }, sp = AS3m ? AS3m.build('crea:signpost_01', 'mark:' + mkey, 40, null, spShape) : spShape();
+        sp.userData.cast = true; g.add(sp); if (AS3m) { box(g, 0, 5.4, 0, 34, 0.8, 34, glow, 'glow', false); }   // W-0320 ③ 자체 팻말 — 초록은 발판 위 빛 판이 낸다
       } else {
         var stShape = function (cap) { var sg = new T.Group(); box(sg, 0, 17, 0, 16, 34, 8, 0x6a6a75, 'flat', true); if (cap) { box(sg, 0, 36, 0, 12, 4, 10, glow, 'glow', false); } return sg; }; var mm = markModel(mkey), AS3s = mm ? AS() : null, st = AS3s ? AS3s.build('crea:' + mm.id, 'mark:' + mkey, mm.h, null, stShape) : stShape(true);   // W-0219 결사비 = 자체 비석 stele_01 · 난입 = 깃대 banner_pole_01(world 표, lookup 'crea:') — 못 받거나 dg3d.markGlb 0 이면 옛 상자 비석
         st.userData.cast = true; g.add(st); if (AS3s) { box(g, 0, 5.4, 0, 34, 0.8, 34, glow, 'glow', false); }   // 표식 색은 발판 위 빛 판이 낸다(역참과 같은 꼴)
