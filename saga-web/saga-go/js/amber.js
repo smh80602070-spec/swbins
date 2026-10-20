@@ -297,7 +297,7 @@
       }
       case 'market': {
         for (i = 0; i < 4; i++) { var a = i * Math.PI / 2 + 0.4; box(T3, g, m.wood, 1.8, 1.2, 1.4, Math.cos(a) * 2.6, 0.6, Math.sin(a) * 2.6, a); box(T3, g, m.roof, 2.4, 0.2, 1.9, Math.cos(a) * 2.6, 1.4, Math.sin(a) * 2.6, a); }
-        cyl(T3, g, m.stone, 0.8, 0.8, 0.8, 0, 0.4, 0, 8);
+        o.base = cyl(T3, g, m.stone, 0.8, 0.8, 0.8, 0, 0.4, 0, 8);   // W-0319 가운데 받침은 코드(GLB 는 가판 넷)
         var dome = new T3.Mesh(new T3.SphereGeometry(DOME_R, 20, 12, 0, Math.PI * 2, 0, Math.PI / 2), m.amber); g.add(dome); o.dome = dome;
         o.shell = new T3.Group(); shards(T3, o.shell, m.amberD, 8, DOME_R, 2.6, 0, 0); g.add(o.shell);
         for (i = 0; i < 6; i++) { var sa = i * 1.05; box(T3, g, m.stone, 0.5, 0.5, 0.5, Math.cos(sa) * 6, 0.25, Math.sin(sa) * 6); }   // 석등 고리(6m) 자리 표석
@@ -338,7 +338,7 @@
       case 'board': box(T3, g, m.dark, 2, 1.2, 0.1, 0, 1.6, 0); cyl(T3, g, m.dark, 0.06, 0.06, 1.2, 0, 0.6, 0, 6); break;
       case 'panel': box(T3, g, m.panel, 2.4, 0.1, 1.4, 0, 1.2, 0, 0.3).rotation.x = -0.5; cyl(T3, g, m.alloy, 0.06, 0.06, 1.2, 0, 0.6, 0, 6); break;
     }
-    if (global.DG.regionGlb) { global.DG.regionGlb.apply('amber', st.model, g, o); }   // W-0319 표에 있으면 GLB 로(받은 뒤 코드 몸통 숨김 · 움직이는 부품은 그대로)
+    if (global.DG.regionGlb) { global.DG.regionGlb.apply('amber', st.model, g, o, st.model === 'market' ? [0, 1, 2, 3].map(function (k) { var a = k * Math.PI / 2 + 0.4; return { x: Math.cos(a) * 2.6, z: Math.sin(a) * 2.6, rot: a }; }) : null); }   // W-0319 표에 있으면 GLB 로(받은 뒤 코드 몸통 숨김 · 움직이는 부품은 그대로)
     g.position.set(st.x, gyAt(w, st.x, st.y), st.y);
     return o;
   }

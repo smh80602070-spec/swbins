@@ -112,6 +112,7 @@
     for (var s = 0; s < 4; s++) { var puff = new T3.Mesh(new T3.SphereGeometry(0.45 + s * 0.08, 8, 6), m.smoke); puff.userData.k = s / 4; g.add(puff); o.puffs.push(puff); }
     o.flame = new T3.Mesh(new T3.ConeGeometry(0.34, 0.9, 8), m.flame); o.flame.position.y = 1.65; g.add(o.flame);
     o.beam = new T3.Mesh(new T3.CylinderGeometry(0.1, 0.1, 1, 6, 1, true), m.beam); g.add(o.beam);
+    if (global.DG.regionGlb) { global.DG.regionGlb.apply('stormeye', 'knot', g, o, null, { body: g.children.slice(0, 5) }); }   // W-0319 돌·새끼줄·종이 다섯 → GLB(연기·불꽃·빛줄기는 코드)
     return o;
   }
   function buildEye(T3) {

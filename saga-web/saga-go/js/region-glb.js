@@ -7,6 +7,8 @@
  *   ③ GLB 가 **다 받아진 뒤에만** 코드 몸통을 숨긴다 — 못 받으면(폰 가벼운 표·끈 손잡이·파일 없음) 코드 도형 그대로
  *   ④ o 에 쥔 것(깜빡이 등·도는 바늘·문·출렁 조각 = o.blink·o.spin·o.bob·o.flame·…)은 **남긴다** — 움직임·판정은 코드 몫.
  *      몸통인데 o 에 쥔 묶음은 표의 hide 로 숨긴다(설원 비행선 hull). parent 를 주면 GLB 를 그 묶음 안에 넣는다(같이 움직임)
+ *   ⑥ opt.body — 숨길 몸통을 직접 준다(판정 몸·장식이 한 묶음인 둘째 묶음 — 하늘길 원판·난간은 남기고 사당·잔해만) · [] 면 아무것도 안 숨김(받침 새로)
+ *   ⑤ n>1(같은 부품 여러 자리 — 가판·건초·항아리·소포)은 지역 js 가 자리 목록 spots [{x,z,rot}] 를 넘긴다 — 자리마다 하나씩, 다 받아야 몸통 숨김
  * 손잡이 `regionGlb.on`(1, 0 = 옛 코드 도형) · 판정 몸(충돌 사각형)은 지역 js 그대로라 안 바뀐다.
  */
 (function (global) {
@@ -39,22 +41,24 @@
     return any ? Math.max(0.2, b.max.y - Math.max(b.min.y, g.position.y - 0.5)) : 0;
   }
   function hideBody(p) {
-    p.g.traverse(function (x) { if ((x.isMesh || x.isPoints || x.isLine) && !under(x, p.keep) && !under(x, [p.shell])) { x.visible = false; } });
+    if (p.body) { p.body.forEach(function (b) { b.traverse(function (x) { if (x.isMesh || x.isPoints || x.isLine) { x.visible = false; } }); }); return; }
+    p.g.traverse(function (x) { if ((x.isMesh || x.isPoints || x.isLine) && !under(x, p.keep) && !under(x, p.shells)) { x.visible = false; } });
   }
   function watch() {
     var now = Date.now(), i, p, s;
     for (i = pend.length - 1; i >= 0; i--) {
-      p = pend[i]; s = p.shell.userData.assetState;
-      if (s === 'glb') { hideBody(p); stats.glb++; pend.splice(i, 1); }
-      else if (s === 'fail' || now - p.t > 90000) { stats.fail++; if (p.shell.parent) { p.shell.parent.remove(p.shell); } pend.splice(i, 1); }
+      p = pend[i]; s = p.shells.map(function (x) { return x.userData.assetState; });
+      if (s.every(function (x) { return x === 'glb'; })) { hideBody(p); stats.glb++; pend.splice(i, 1); }
+      else if (s.indexOf('fail') >= 0 || now - p.t > 90000) { stats.fail++; p.shells.forEach(function (x) { if (x.parent) { x.parent.remove(x); } }); pend.splice(i, 1); }
     }
     if (!pend.length && timer) { global.clearInterval(timer); timer = 0; }
   }
 
-  /** 지역 build() 끝에서 — g 는 아직 제자리(원점)에 놓이기 전. 세운 껍데기(또는 null) */
-  function apply(region, model, g, o) {
+  /** 지역 build() 끝에서 — g 는 아직 제자리(원점)에 놓이기 전. 세운 껍데기(n>1 이면 첫 것, 또는 null) */
+  function apply(region, model, g, o, spots, opt) {
     var e = entry(region, model);
     if (!e) { return null; }
+    if (e.n > 1 && !(spots && spots.length)) { stats.skip++; return null; }   // 자리 목록 없이는 어디 세울지 모른다
     stats.asked++;
     var D = global.DG, A3 = D.asset3d, AS = D.assets3d, T = global.THREE;
     var url = ON() && AS && AS.url ? AS.url('world', e.id) : null;
@@ -64,12 +68,17 @@
     if (!(h > 0)) { stats.skip++; return null; }
     var kind = 'rglb_' + e.id;
     A3.register(kind, url);
-    var shell = A3.build(kind, { id: e.id }, function () { return new T.Group(); });
-    if (!shell) { stats.skip++; return null; }
-    shell.scale.setScalar(h);
-    var host = (e.parent && o && o[e.parent] && o[e.parent].isObject3D) ? o[e.parent] : g;
-    host.add(shell);
-    pend.push({ g: g, shell: shell, keep: keep, t: Date.now() });
+    var host = (e.parent && o && o[e.parent] && o[e.parent].isObject3D) ? o[e.parent] : g, shells = [], at = e.n > 1 ? spots : [null], i;
+    for (i = 0; i < at.length; i++) {
+      var sh = A3.build(kind, { id: e.id }, function () { return new T.Group(); });
+      if (!sh) { break; }
+      sh.scale.setScalar(h); sh.name = 'rglb:' + region + '.' + model;   // 이름 — 촬영·진단이 찾는다
+      if (at[i]) { sh.position.set(at[i].x || 0, at[i].y || 0, at[i].z || 0); sh.rotation.y = at[i].rot || 0; }
+      host.add(sh); shells.push(sh);
+    }
+    if (shells.length !== at.length) { shells.forEach(function (x) { host.remove(x); }); stats.skip++; return null; }
+    var shell = shells[0];
+    pend.push({ g: g, shells: shells, keep: keep, body: opt && Array.isArray(opt.body) ? opt.body : null, t: Date.now() });
     if (!timer) { timer = global.setInterval(watch, 300); }
     return shell;
   }

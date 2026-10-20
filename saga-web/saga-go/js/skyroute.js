@@ -166,6 +166,7 @@
   function build(T3, s) {
     var m = M(T3), g = new T3.Group(), o = { root: g, spin: [], sway: [] }, i;
     body(T3, g, s);
+    var n0 = g.children.length;                                                                                  // W-0319 여기부터가 장식(원판·난간은 판정 몸 — 코드)
     if (s.id === 'shrine') {
       box(T3, g, m.stone, 9, 0.5, 6, 0, 0.25, -s.r + 5);                                                          // 북쪽 기와 사당(가운데 8m 비움)
       for (i = 0; i < 4; i++) { cyl(T3, g, m.red, 0.2, 0.2, 3, -3.4 + i * 2.27, 2, -s.r + 7.4, 8); }
@@ -205,6 +206,9 @@
         var core3 = cyl(T3, g, m.glow, 0.4, 0.4, 1.2, sx, 2.2, sz, 8); o.sway.push(core3); (o.seeds = o.seeds || []).push(core3);
       }
     }
+    /* W-0319 둘째 묶음 — 원점 = 원판 가운데 윗면. 사당: 기단·기둥·몸채·지붕 여덟 → GLB(방울 장대는 코드) · 잔해: 조종실·빛띠·기낭·꼬리 둘(프로펠러·풍향계·기관은 코드) · 궤도: 날개·안테나 대·씨앗 받침(안테나 등·씨앗 심은 코드) */
+    var deco = g.children.slice(n0), keepO = [o.blink].concat(o.seeds || []);
+    if (global.DG.regionGlb) { global.DG.regionGlb.apply('skyroute', s.id, g, o, null, { body: s.id === 'shrine' ? deco.slice(0, 8) : s.id === 'wreck' ? deco.slice(0, 5) : deco.filter(function (x) { return keepO.indexOf(x) < 0; }) }); }
     live[s.id] = o;                                                                                              // 움직이는 조각(spin·sway·blink) — anim 이 돌린다
     return o;
   }

@@ -295,6 +295,14 @@
       case 'signal': box(T3, s, m.steelD, 0.08, 1, 0.08, 0, 0.5, 0); box(T3, s, m.red, 0.22, 0.22, 0.12, 0, 1, 0.05); break;
     }
   }
+  /** W-0319 n>1 짝 자리 — build() 의 반복문과 같은 식(건초 셋·항아리 다섯은 선반 위 0.3·소포 여섯은 두 층) */
+  function spotsOf(model) {
+    var out = [], i;
+    if (model === 'haystack') { for (i = 0; i < 3; i++) { out.push({ x: i * 2.2 - 2.2, z: (i % 2) * 0.8 }); } }
+    else if (model === 'jars') { for (i = 0; i < 5; i++) { out.push({ x: -1.1 + i * 0.55, y: 0.3, z: (i % 2) * 0.4 - 0.2 }); } }
+    else if (model === 'parcels') { for (i = 0; i < 6; i++) { out.push({ x: (i % 3) * 0.75 - 0.75, y: Math.floor(i / 3) * 0.5, z: 0, rot: i * 0.2 }); } }
+    return out.length ? out : null;
+  }
   function build(w, T3, st) {
     var m = M(T3), g = new T3.Group(), o = { root: g, gate: null, door: null, orb: null, core: null, haemi: null, deep: null, deepGlass: null, granaryDoor: null, floater: null }, i, k;
     switch (st.model) {
@@ -372,7 +380,7 @@
       }
       case 'haystack': for (i = 0; i < 3; i++) { cyl(T3, g, m.thatch, 0.2, 1, 2, i * 2.2 - 2.2, 1, (i % 2) * 0.8, 10); } break;
       case 'jars':
-        box(T3, g, m.stone, 3, 0.3, 1.6, 0, 0.15, 0);
+        o.shelf = box(T3, g, m.stone, 3, 0.3, 1.6, 0, 0.15, 0);   // W-0319 돌 선반은 코드(GLB 는 항아리 다섯)
         for (i = 0; i < 5; i++) { var jr = ball(T3, g, m.jar, 0.35 + (i % 2) * 0.1, -1.1 + i * 0.55, 0.7, (i % 2) * 0.4 - 0.2); jr.scale.y = 1.3; }
         break;
       case 'mortar': box(T3, g, m.wood, 0.3, 0.8, 0.3, 0, 0.4, 0); box(T3, g, m.wood, 3, 0.2, 0.25, 0.4, 0.85, 0).rotation.z = 0.12; box(T3, g, m.stone, 0.6, 0.4, 0.6, -1.1, 0.2, 0); break;
@@ -402,7 +410,7 @@
         for (i = 0; i < 6; i++) { box(T3, g, m.drop, 0.05, 0.18, 0.05, Math.cos(i * 1.9) * 1.2, 1.2 + (i % 3) * 0.5, Math.sin(i * 1.9) * 1.2); }
         break;
     }
-    if (global.DG.regionGlb) { global.DG.regionGlb.apply('vault', st.model, g, o); }   // W-0319 표에 있으면 GLB 로(받은 뒤 코드 몸통 숨김 · 움직이는 부품은 그대로)
+    if (global.DG.regionGlb) { global.DG.regionGlb.apply('vault', st.model, g, o, spotsOf(st.model)); }   // W-0319 표에 있으면 GLB 로(받은 뒤 코드 몸통 숨김 · 움직이는 부품은 그대로)
     g.position.set(st.x, gyAt(w, st.x, st.y), st.y);
     return o;
   }

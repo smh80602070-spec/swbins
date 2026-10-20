@@ -375,6 +375,7 @@
     box(T3, g, m.steel, 1.8, 0.9, 1.1, P.weld.lx, 0.45, P.weld.lz);                                          // 용접대
     o.spark = box(T3, g, m.spark, 0.25, 0.25, 0.25, P.weld.lx, 1.05, P.weld.lz);
     o.frag = box(T3, g, m.glow, 1.6, 0.12, 0.9, P.frag.lx, CRANE_TOP + 0.1, P.frag.lz, 0.4);                 // 날개 조각
+    if (global.DG.regionGlb) { global.DG.regionGlb.apply('era-sites', 'yard', g, o); }   // W-0319 선대 → GLB(그룹 원점·그룹 회전 그대로 — 불똥·날개 조각은 코드, 벽 판정은 rectsOfYard 그대로)
     g.rotation.y = -f.rot;
     g.position.set(f.x, y0, f.y);
     w.addFx(g);
@@ -428,6 +429,7 @@
       var hd = new T3.Mesh(new T3.SphereGeometry(0.5, 10, 8), m.totem); hd.scale.set(1, 1.2, 0.9); hd.position.set(t[0], 2.6, t[1]); g.add(hd);
       box(T3, g, j ? m.wood : m.red, 0.9, 0.12, 0.1, t[0], 2.95, t[1] - 0.3);                                  // 모자 띠
     });
+    if (global.DG.regionGlb) { global.DG.regionGlb.apply('era-sites', 'station', g, r); }   // W-0319 역참 터 → GLB(깃발은 코드, 벽 판정은 rectsOfStation 그대로)
     g.position.set(c.x, y0, c.y);
     w.addFx(g);
     return r;

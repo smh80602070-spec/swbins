@@ -1309,5 +1309,22 @@
   "ticket": "W-0334",
   "since": "2026-10-20",
   "note": "10-20: 실기 1만리(ops-sync-e2e, 운영 서버 메모리 DB) — 접속 첫 업로드 rev1 → 저장 30초 뒤 rev2 → 다른 기기 rev3 → 새로 고침 카드 → 서버 세이브로 → 값 바뀜 ○(첫 시도는 beforeunload 저장이 덮어 실패 → 메모리 세이브도 바꾸고 감싼 저장 막아 고침)"
+ },
+ {
+  "id": "go.region-glb",
+  "name": "이야기 지역 코드 도형 → 자체 world3d GLB(일곱 지역 짝·새 + n>1 넷 + 둘째 묶음 일곱, 표 106)",
+  "files": [
+   "js/region-glb.js",
+   "js/region-glb-table.js"
+  ],
+  "tests": [
+   "W-0319 지역 GLB 표 — 항목 전부 world3d 주소 있음 · keepOf 순수(root·hide 뺌·배열 펼침·Object3D 만) · entry · 손잡이 regionGlb.on"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0319",
+  "since": "2026-10-20",
+  "note": "10-20 실기(HIGH·d3d11): 일곱 지역 GLB 87/87·둘째 묶음 19/19 실패 0. 코드 상자는 대역(받은 뒤 숨김). 가판 넷은 서 있으나 앞 들판 나무에 가림(소품 배치 몫)"
  }
 ]

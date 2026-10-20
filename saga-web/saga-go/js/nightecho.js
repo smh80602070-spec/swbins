@@ -163,6 +163,7 @@
       f.position.set(Math.sin(i * 2.1) * 0.35, 0.65 + i * 0.2, Math.cos(i * 2.1) * 0.35); g.add(f); o.flames.push(f);
     }
     var ring = new T3.Mesh(new T3.TorusGeometry(0.9, 0.06, 4, 20), new T3.MeshBasicMaterial({ color: 0x6f4bd6 })); ring.rotation.x = Math.PI / 2; ring.position.y = 0.05; g.add(ring);
+    if (global.DG.regionGlb) { global.DG.regionGlb.apply('nightecho', 'ember', g, o, null, { body: [] }); }   // W-0319 받침 새로(숨길 것 없음 — 불꽃·빛무리·고리는 코드)
     return o;
   }
   function paint(dt) {

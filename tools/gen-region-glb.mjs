@@ -22,8 +22,7 @@ const table = {}, skipped = [], missing = [];
 for (const [r, v] of Object.entries(j.regions)) {
   const t = {};
   for (const [k, e] of Object.entries(v.pair || {})) {
-    if (e.n > 1) { skipped.push(r + '.' + k + '(n' + e.n + ')'); continue; }
-    t[k] = { id: e.id, h: e.h };
+    t[k] = e.n > 1 ? { id: e.id, h: e.h, n: e.n } : { id: e.id, h: e.h };   // n>1 — 지역 js 가 자리 목록(spots)을 넘긴다(W-0319 10-20)
   }
   for (const [k, e] of Object.entries(v.built || {})) {
     const o = typeof e === 'string' ? { id: e } : e;
