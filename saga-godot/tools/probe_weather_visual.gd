@@ -54,13 +54,19 @@ func _unload(scene: Node) -> void:
 
 
 func _vals(scene: Node) -> Dictionary:
-	var d := {"fog": -1.0, "cloud": -1.0, "sun": -1.0}
+	var d := {"fog": -1.0, "cloud": -1.0, "sun": -1.0, "top": -1.0, "glow": -1.0}
 	var we := scene.get_node_or_null("WorldEnvironment") as WorldEnvironment
 	if we and we.environment:
 		d.fog = we.environment.fog_density
 		if we.environment.sky and we.environment.sky.sky_material is ShaderMaterial:
 			var c = (we.environment.sky.sky_material as ShaderMaterial).get_shader_parameter("cloud_cover")
 			d.cloud = float(c) if c != null else -1.0
+			var sm := we.environment.sky.sky_material as ShaderMaterial
+			var tc = sm.get_shader_parameter("top_color")
+			var tcc: Color = tc if tc is Color else (Color(tc.x, tc.y, tc.z) if tc is Vector3 else Color(0.13, 0.33, 0.76))
+			d.top = tcc.r + tcc.g + tcc.b
+			var g = sm.get_shader_parameter("sun_strength")
+			d.glow = float(g) if g != null else 6.0
 	var sun := scene.get_node_or_null("Sun") as DirectionalLight3D
 	if sun:
 		d.sun = sun.light_energy
@@ -112,7 +118,7 @@ func _run() -> void:
 				await _unload(scene)
 				continue
 			var v := _vals(scene)
-			var info := "fog=%.4f cloud=%.2f sun=%.2f" % [v.fog, v.cloud, v.sun]
+			var info := "fog=%.4f cloud=%.2f sun=%.2f top=%.3f glow=%.2f" % [v.fog, v.cloud, v.sun, v.top, v.glow]
 			var bad: Array[String] = []
 			if String(wv.key) != w:
 				bad.append("key=%s" % wv.key)
@@ -129,6 +135,11 @@ func _run() -> void:
 					bad.append("Rainfall 없음")
 				if not float(v.sun) < float(clear.get("sun", -1.0)):
 					bad.append("Sun 세기가 맑음보다 안 낮음")
+				## G-0256 — 비면 하늘 위쪽도 어둡게·해 빛무리 거의 없음.
+				if not float(v.top) < float(clear.get("top", -1.0)) * 0.75:
+					bad.append("하늘 천정 밝기 ≥ 맑음×0.75")
+				if not float(v.glow) < float(clear.get("glow", -1.0)) * 0.2:
+					bad.append("해 빛무리 ≥ 맑음×0.2")
 			if w == "snow" and not _fall(wv, "Snowfall"):
 				bad.append("Snowfall 없음")
 			if w == "fog" and not float(v.fog) >= float(clear.get("fog", 1e9)) * 4.0 * 0.999:
@@ -144,6 +155,8 @@ func _run() -> void:
 		if off.get_node_or_null("WeatherVisual") != null:
 			_fail("%s SAGA_WEATHER=0 인데 노드 있음" % label)
 		var ov := _vals(off)
+		if not clear.is_empty() and (not is_equal_approx(float(clear.top), float(ov.top)) or not is_equal_approx(float(clear.glow), float(ov.glow))):
+			_fail("%s 맑음 하늘이 SAGA_WEATHER=0 과 다름 (top %.3f/%.3f glow %.2f/%.2f)" % [label, clear.top, ov.top, clear.glow, ov.glow])
 		if not is_equal_approx(float(ov.fog), float(file.get("fog", -2.0))) or not is_equal_approx(float(ov.sun), float(file.get("sun", -2.0))):
 			_fail("%s SAGA_WEATHER=0 인데 씬 값과 다름 (fog %.4f/%.4f sun %.2f/%.2f)" % [label, ov.fog, file.get("fog", -1.0), ov.sun, file.get("sun", -1.0)])
 		await _unload(off)

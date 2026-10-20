@@ -4755,7 +4755,7 @@
   "fun": {},
   "ticket": "G-0251",
   "since": "2026-10-20",
-  "note": "SAGA_WEATHER=<키> 고정 · =0 끔 · regress SAGA_WEATHER=clear · 겨울(12~2월)만 눈 — 3마을 게임 날짜·5천하 게임 달·4종횡 실제 달 · 60초마다 · 밤 창·등롱은 안 엮음"
+  "note": "SAGA_WEATHER=<키> 고정 · =0 끔 · regress SAGA_WEATHER=clear · 겨울(12~2월)만 눈 — 3마을 게임 날짜·5천하 게임 달·4종횡 실제 달 · 60초마다 · 밤 창·등롱은 안 엮음 · 하늘색·빛무리 G-0256(KINDS sky 배율은 day_light 가 하늘색에 곱·sun_glow 는 sky_real sun_strength 에 곱, 맑음·바람 1)"
  },
  {
   "id": "gd.core.face-light",

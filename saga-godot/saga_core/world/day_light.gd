@@ -45,6 +45,8 @@ var last := {}   # 마지막으로 넣은 값(점검용): hour·sun_energy·warm
 ## G-0251 — weather_visual.gd 가 넣는다(안개색·해는 이 노드만 쓰니 날씨 몫도 여기서 곱한다). 맑음·날씨 없음 = 1.
 var weather_tint := Color(1, 1, 1)
 var weather_sun_mul := 1.0
+## G-0256 — 하늘색(천정·지평선·구름) 배율. 하늘색 넣기는 이 노드만(env 칸 분담) — 밤 남색에도 그대로 곱한다.
+var weather_sky := Color(1, 1, 1)
 
 
 static func enabled() -> bool:
@@ -166,7 +168,7 @@ func _apply(na: String, nb: String, t: float) -> void:
 			_sky.set_shader_parameter("warm", warm)
 			_sky.set_shader_parameter("stars", stars)
 			for k in NIGHT_SKY:
-				_sky.set_shader_parameter(k, (_day["sky_" + k] as Color).lerp(NIGHT_SKY[k], nt))
+				_sky.set_shader_parameter(k, (_day["sky_" + k] as Color).lerp(NIGHT_SKY[k], nt) * weather_sky)
 			last["warm"] = warm
 			last["stars"] = stars
 

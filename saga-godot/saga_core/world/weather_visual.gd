@@ -15,17 +15,19 @@ const CHECK_SEC := 60.0
 const SPAN_MS := 3 * 60 * 60 * 1000   # weather.gd SPAN_MS
 ## fog = 1만리 Weather.KINDS.fog_density_mul · tint = KINDS.tint(안개색에 곱 — day_light 가 넣는다)
 ## cloud = sky_panorama.CLOUD_COVER(fog·snow 는 이 표가 정함) · sun = 해 세기 배율(day_light 가 곱한다)
+## G-0256 sky = 하늘색 배율(천정·지평선·구름 — day_light 가 곱한다) · sun_glow = sky_real sun_strength(해 빛무리) 배율(이 노드가 곱한다). 맑음·바람 1 = 회귀 그대로.
 const KINDS := {
-	"clear": {"fog": 0.6, "tint": Color(1.05, 1.03, 0.95), "cloud": 0.32, "sun": 1.0},
-	"cloud": {"fog": 1.0, "tint": Color(0.95, 0.96, 1.0), "cloud": 0.72, "sun": 0.85},
-	"rain": {"fog": 1.6, "tint": Color(0.85, 0.9, 1.0), "cloud": 0.9, "sun": 0.75},
-	"wind": {"fog": 0.8, "tint": Color(1.0, 1.0, 1.0), "cloud": 0.5, "sun": 1.0},
-	"fog": {"fog": 2.4, "tint": Color(0.9, 0.9, 0.92), "cloud": 0.95, "sun": 0.75},
-	"snow": {"fog": 1.2, "tint": Color(1.02, 1.02, 1.08), "cloud": 0.6, "sun": 0.85},
+	"clear": {"fog": 0.6, "tint": Color(1.05, 1.03, 0.95), "cloud": 0.32, "sun": 1.0, "sky": Color(1, 1, 1), "sun_glow": 1.0},
+	"cloud": {"fog": 1.0, "tint": Color(0.95, 0.96, 1.0), "cloud": 0.72, "sun": 0.85, "sky": Color(0.80, 0.82, 0.86), "sun_glow": 0.5},
+	"rain": {"fog": 1.6, "tint": Color(0.85, 0.9, 1.0), "cloud": 0.9, "sun": 0.75, "sky": Color(0.62, 0.60, 0.55), "sun_glow": 0.1},
+	"wind": {"fog": 0.8, "tint": Color(1.0, 1.0, 1.0), "cloud": 0.5, "sun": 1.0, "sky": Color(1, 1, 1), "sun_glow": 1.0},
+	"fog": {"fog": 2.4, "tint": Color(0.9, 0.9, 0.92), "cloud": 0.95, "sun": 0.75, "sky": Color(0.86, 0.82, 0.72), "sun_glow": 0.15},
+	"snow": {"fog": 1.2, "tint": Color(1.02, 1.02, 1.08), "cloud": 0.6, "sun": 0.85, "sky": Color(0.85, 0.86, 0.90), "sun_glow": 0.4},
 }
 ## 손보기 — 세 판 바탕 안개가 0.004 라 곱만으론 안개·비가 옅었다(3마을·전술판 컷). 곱한 뒤 더하는 최소 밀도(맑음·흐림·바람 0 = 회귀 그대로).
 const FOG_ADD := {"clear": 0.0, "cloud": 0.0, "rain": 0.006, "wind": 0.0, "fog": 0.016, "snow": 0.004}
 ## 입자 상자 중심 = 카메라가 보는 쪽 FRONT m 앞 + 위 RISE m(카메라 바로 둘레 입자가 화면에 큰 점·굵은 줄로 보였다).
+const SUN_STRENGTH_DEFAULT := 6.0   # sky_real.gdshader sun_strength 기본값
 const FRONT := 12.0
 const RISE := 10.0
 const ORDER := ["clear", "cloud", "rain", "wind", "fog", "snow"]
@@ -40,6 +42,7 @@ var key := ""
 var _we: WorldEnvironment
 var _env: Environment
 var _base := {}
+var _sky_mat: ShaderMaterial = null   # G-0256 빛무리 바탕을 잰 하늘 재질
 var _check := 0.0
 var _rain: CPUParticles3D
 var _snow: CPUParticles3D
@@ -136,13 +139,19 @@ func refresh_now() -> void:
 		if _env.sky and _env.sky.sky_material is ShaderMaterial:
 			(_env.sky.sky_material as ShaderMaterial).set_shader_parameter("cloud_cover", float(k.cloud))
 			last["cloud_cover"] = float(k.cloud)
+			## G-0256 — 해 빛무리. 바탕은 _grab_env 에서만 잰다(그 뒤엔 배율만 — 이미 곱한 값을 바탕으로 다시 재지 않게).
+			if _base.has("sun_glow"):
+				(_env.sky.sky_material as ShaderMaterial).set_shader_parameter("sun_strength", float(_base.sun_glow) * float(k.sun_glow))
+				last["sun_glow"] = float(k.sun_glow)
 	var dl := get_parent().get_node_or_null("DayLight")
 	if dl:
 		dl.weather_tint = k.tint
 		dl.weather_sun_mul = float(k.sun)
+		dl.weather_sky = k.sky
 		dl.refresh_now()
 	last["key"] = key
 	last["sun_mul"] = float(k.sun)
+	last["sky"] = k.sky
 	_set_fall(key)
 
 
@@ -155,6 +164,12 @@ func _grab_env() -> void:
 	if _env:
 		_base["fog"] = _env.fog_density
 		_base["vol"] = _env.volumetric_fog_density
+		## 하늘 재질이 env 복제본끼리 같을 수 있다 — 재질이 바뀌었을 때만 빛무리 바탕을 잰다.
+		var sm: ShaderMaterial = _env.sky.sky_material as ShaderMaterial if _env.sky else null
+		if sm != null and sm != _sky_mat:
+			_sky_mat = sm
+			var ss = sm.get_shader_parameter("sun_strength")
+			_base["sun_glow"] = float(ss) if ss != null else SUN_STRENGTH_DEFAULT
 
 
 func _set_fall(k: String) -> void:
