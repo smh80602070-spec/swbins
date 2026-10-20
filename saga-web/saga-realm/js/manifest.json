@@ -170,6 +170,7 @@
    "js/realm3d-plan.js",
    "js/autoq.js",
    "js/realm3d.js",
+   "js/city3d.js",
    "js/realm3d-strait.js",
    "js/realm3d-static.js",
    "js/realm-sky3d.js",

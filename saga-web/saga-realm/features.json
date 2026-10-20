@@ -1281,5 +1281,23 @@
   "ticket": "W-0322",
   "since": "2026-10-20",
   "note": "10-20: net-log 요청 106 중 옛 경로 0 · 5천하는 pw-visual-close 장면 없음"
+ },
+ {
+  "id": "rl.city-phone-2d",
+  "name": "폰은 성 화면도 2D(성 3D WebGL 안 만듦) · 3D 단추로만 켬(W-0346)",
+  "files": [
+   "js/city3d.js",
+   "js/ui-rtk-sheets.js",
+   "src/ui-rtk/01.js"
+  ],
+  "tests": [
+   "W-0346 폰 성 화면 2D — 성 시트를 열어도 city3d 렌더러 0·캔버스 숨김·시트 맨 위에 2D 성 그림 + 3D 단추"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0346",
+  "since": "2026-10-20",
+  "note": "10-20: pw-phone-budget 성 힙 34.9→9MB · 받은 양 9.6→4.3MB · 폰 촬영 2D·3D 두 장 Read ○"
  }
 ]

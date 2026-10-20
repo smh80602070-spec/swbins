@@ -136,6 +136,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/realm3d-plan.js"></script>
 <script src="js/autoq.js"></script>
 <script src="js/realm3d.js"></script>
+<script src="js/city3d.js"></script>
 <script src="js/realm3d-strait.js"></script>
 <script src="js/realm3d-static.js"></script>
 <script src="js/realm-sky3d.js"></script>
@@ -3100,6 +3101,29 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return flags === 1 && ('지도 위 원정 깃발 ' + flags + '개');
     });
 
+    /* W-0346 — 폰 판정·탭 기억(deviceMode)을 이 두 항목 안에서만 대역으로 바꾼다(진단 창은 터치 없음 = PC) */
+    function asPhone(fn) {
+      var DM = DG.deviceMode, keep = { p: DM.phone, w: DM.want3d, m: DM.mark }, st = {};
+      DM.phone = function () { return true; }; DM.want3d = function (k) { return st[k] === '1'; }; DM.mark = function (k, on) { st[k] = on ? '1' : '0'; };
+      try { return fn(); } finally { DM.phone = keep.p; DM.want3d = keep.w; DM.mark = keep.m; DG.city3d.render('beiping'); }
+    }
+    t('W-0346 폰 성 화면 2D — 성 시트를 열어도 city3d 렌더러 0·캔버스 숨김·시트 맨 위에 2D 성 그림 + 3D 단추', function () {
+      fresh('zan'); var C3 = DG.city3d;
+      return asPhone(function () {
+        C3.render('beiping'); var cv = document.getElementById('city3d'), still = C3.stillHtml('beiping');
+        var r = [!C3.on(), !C3._live(), (!cv || cv.style.display === 'none'), /data-act="c3-on"/.test(still), (/<img/.test(still) || !DG.assets3d.spriteUrl('silkroad_house_01'))];
+        return r.every(Boolean) && '폰: 렌더러 0 · 캔버스 숨김 · 2D 성 그림 + 🧊 단추' || '실패 ' + r.join(',');
+      });
+    });
+    t('W-0346 폰 성 3D 단추 — set3d(true) 면 켜지고(2D 그림 빈 글) set3d(false) 면 렌더러를 버린다 · PC 는 늘 3D', function () {
+      var C3 = DG.city3d, pc = C3.on();
+      var r = asPhone(function () {
+        var on = C3.set3d(true), still = C3.stillHtml('beiping'); C3.render('beiping'); var live = C3._live() || !C3.available();   // 진단 창에 WebGL 이 없으면 켜짐만
+        var offv = C3.set3d(false), dead = !C3._live();
+        return [on, still === '', live, !offv, dead];
+      });
+      return pc && r.every(Boolean) && 'PC 3D · 폰 단추로 켬/끔(렌더러 버림)' || '실패 ' + [pc].concat(r).join(',');
+    });
     t('W-0330 지도 표식 그림 — 표에 mapmark 다섯 · 원정 깃발이 map_flag 그림(없으면 🚩 글자)', function () {
       var T = DG.itemiconIds['saga-realm'], ks = ['battle', 'port', 'camp', 'guard', 'flag'].filter(function (k) { return T['mapmark:' + k]; });
       var m = DG.map2d.mark('flag', 10, 10, 3.4, 'rjourney', '🚩', '#f00'), t = DG.map2d.mark('nope', 10, 10, 3.4, 'rjourney', '🚩', '#f00');

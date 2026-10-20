@@ -561,7 +561,7 @@
       showForcePick('chaos');
       return;
     }
-    if (a === 'back-scen') { pickChallenge = false; showScenPick(); return; }
+    if (a === 'back-scen') { pickChallenge = false; showScenPick(); return; } if (a === 'c3-on') { if (global.DG.city3d && global.DG.city3d.set3d) { global.DG.city3d.set3d(true); } renderSheet(); return; }   /* W-0346 폰 성 3D 켜기 */
     if (a === 'lordaging-toggle') {
       core.setTune('rtk.lordAging', off().lordAgingOn() ? 0 : 1);
       renderSheet();

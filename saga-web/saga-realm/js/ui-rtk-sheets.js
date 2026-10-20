@@ -33,7 +33,7 @@
     var d = CD.find(openCityId), c = R().city(openCityId);
     var land = CD.landOf(openCityId);
     var mine = c.force === R().me();
-    var html = '';
+    var html = global.DG.city3d && global.DG.city3d.stillHtml ? global.DG.city3d.stillHtml(openCityId) : '';   // W-0346 폰 2D 성 그림 + 3D 단추
 
     html += '<div class="sec"><div class="card">' +
       '<div class="stat-row"><span><b>' + esc(d.name) + '</b> <span class="muted">' +

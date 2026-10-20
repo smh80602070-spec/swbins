@@ -60,6 +60,26 @@
   var sheetEl = null;   // active() 가 매 프레임 부르므로 요소 자체는 캐시(감사, 2026-09-08)
 
   function available() { return !!three() && !failed; }
+  function phone() { return !!(global.DG.deviceMode && global.DG.deviceMode.phone()); }
+  /** W-0346 — 폰은 성 화면도 2D 가 기본(WebGL 하나가 지도의 두 배 메모리 — 10-18 pw-phone-budget 지도 15MB·성 35MB). 3D 는 그 탭에서 단추로만(deviceMode 'c3') */
+  function ON() { var v = global.DG.core.tuned('city3d.on', 1) ? true : false; return global.DG.deviceMode ? global.DG.deviceMode.want3d('c3', v) : v; }
+  /** 끈다 — 만든 렌더러·장면을 버리고(WebGL 문맥까지 놓는다) 캔버스를 숨긴다. 다시 켜면 ensureInit 이 새로 짓는다 */
+  function off() {
+    var cv = canvas || document.getElementById('city3d');
+    if (cv) { cv.style.display = 'none'; }
+    if (renderer) { try { renderer.dispose(); if (renderer.forceContextLoss) { renderer.forceContextLoss(); } } catch (e) { /* 이미 잃음 */ } }
+    renderer = null; scene = null; camera = null; dyn = null; ready = false; curCityId = null; curSig = ''; npcs = []; workers = [];
+  }
+  /** 꺼진 동안 성 시트 맨 위에 둘 2D 성 그림 + 3D 단추(판 설정 mode2d.prop2d 의 world2d 그림 — 지도 성 그림과 같은 것) */
+  function stillHtml(cityId) {
+    if (ON() || !three()) { return ''; }
+    var c = R().city(cityId), d = cityData().find(cityId), A = global.DG.assets3d, t = (global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.prop2d) || {}, ef = global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.eraOf;
+    var tier = tierOf(c && c.maxWall), p = t[tier === 't3' ? 'city:l' : tier === 't2' ? 'city:m' : 'city:s'], u = A && p && ((p.era && ef && d && A.spriteUrl(p.era + ef(d))) || A.spriteUrl(p.id));
+    return '<div class="c3-still" style="display:flex;align-items:center;gap:10px;margin:0 0 8px">' + (u ? '<img src="' + u + '" alt="" style="width:96px;height:96px;object-fit:contain" loading="lazy">' : '') +
+      '<button class="btn tiny ghost" data-act="c3-on" title="성 안을 3D 로 — 폰은 메모리를 더 씁니다">🧊 3D 로 보기</button></div>';
+  }
+  /** 3D 켜고 끄기(이 탭만 기억) */
+  function set3d(on) { if (global.DG.deviceMode) { global.DG.deviceMode.mark('c3', !!on); } if (!on) { off(); } return ON(); }
 
   function active() {
     if (!sheetEl || !sheetEl.isConnected) { sheetEl = document.getElementById('sheet'); }
@@ -72,9 +92,9 @@
     canvas = document.getElementById('city3d');
     if (!t || !canvas) { failed = true; return false; }
     try {
-      renderer = new t.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false });
+      renderer = new t.WebGLRenderer({ canvas: canvas, antialias: !phone(), alpha: false });   // W-0346 폰 3D 는 안티앨리어스 끔
     } catch (e) { failed = true; return false; }
-    renderer.setPixelRatio(Math.min(global.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(phone() ? 1 : Math.min(global.devicePixelRatio || 1, 2));   // 폰은 화소비 1(realm3d low 와 같은 결)
     if (global.DG.toon3d && global.DG.toon3d.toneRenderer) { global.DG.toon3d.toneRenderer(renderer); }   // Neutral 톤매핑(2026-09-23)
 
     scene = new t.Scene();
@@ -320,6 +340,8 @@
 
   /** 밖에서 부르는 단 하나의 입구 — 성이 다르거나 숫자가 바뀌었을 때만 다시 짓는다 */
   function render(cityId) {
+    if (!ON()) { off(); return; }   // W-0346
+    var cv = canvas || document.getElementById('city3d'); if (cv) { cv.style.display = ''; }
     if (!cityId || !ensureInit()) { return; }
     var s = sig(cityId);
     if (!(cityId === curCityId && s === curSig)) {
@@ -366,7 +388,7 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.city3d = { available: available, render: render };
+  global.DG.city3d = { available: available, render: render, on: ON, set3d: set3d, stillHtml: stillHtml, _live: function () { return !!renderer; } };
 
   /* 성 시트가 열린 채로 명령을 실행하면(달이 넘어가는 등) 숫자가 바뀐 만큼 다시 짓는다 */
   global.DG.core.on('changed', function () {
