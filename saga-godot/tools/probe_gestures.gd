@@ -7,7 +7,7 @@ extends SceneTree
 ## ⑤ speak → 입 모양 번호·세기·set_talking 끄면 닫힘 ⑥ set_mood: 모르는 이름은 ""·표정이 천천히 오름 ⑦ 눈 깜박임이 BLINK_MAX 안에 한 번 일어남 ⑧ 손짓 influence 가 켜지면 1 쪽·끄면 0 쪽.
 ## 끝에 "PROBE gestures OK" 또는 "PROBE gestures FAIL n".
 
-const TalkFace := preload("res://games/saga_go/world/talk_face.gd")
+const TalkFace := preload("res://saga_core/world/talk_face.gd")
 
 var fails := 0
 

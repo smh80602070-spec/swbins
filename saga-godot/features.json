@@ -4852,5 +4852,29 @@
   "ticket": "G-0264",
   "since": "2026-10-20",
   "note": "SAGA_FOOT_LOCK=0 끔 · 걸음당 미끄러짐 전 44~220cm → 0cm(probe_gait 잠금 모형) · v0 walk 0.65·sprint 2.90 m/s(배율1) · RATE 0.6~2.3 · 공중·탈것·동작 클립·go Mode≠GROUND 면 끔 · 주민·적엔 안 붙임"
+ },
+ {
+  "id": "gd.core.life-pose",
+  "name": "생활 몸짓(공용) — life_pose.gd: 가만히 8초면 땅에 무릎 세워 앉기·3~5초마다 둘러보기·체중 옮기기·다가오면 인사·나를 봄(목 ±60°), talk_face 를 saga_core 로 옮겨 말할 때 손짓. 3마을 나·주민·동반자·손님, 2나락 나·영웅",
+  "files": [
+   "saga_core/world/life_pose.gd",
+   "saga_core/world/talk_face.gd",
+   "saga_core/player/player.gd",
+   "games/saga_forest/world/villager_builder.gd",
+   "games/saga_forest/world/forest_house.gd",
+   "games/saga_forest/world/forest_lots_view.gd",
+   "games/saga_dungeon/world/dungeon_hero_encounter.gd",
+   "tools/probe_life_pose.gd"
+  ],
+  "tests": [
+   "life_pose",
+   "gestures"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0265",
+  "since": "2026-10-20",
+  "note": "SAGA_SIT_AFTER 로 앉기 초(기본 8) · 섞기 0.25초 · 주민은 0.5초 한 번·카메라 25m 안만 · 탈것(seat_pose)이면 끔 · 1만리는 G-0266"
  }
 ]

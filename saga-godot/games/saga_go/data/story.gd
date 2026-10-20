@@ -3,7 +3,7 @@ extends RefCounted
 ## PLAN 106장 ㉕ — 원신식 이야기 임무(마신 임무 자리). 표만 — 진행은 world/story_quest.gd, 상태는 PartyState.story {ch, step}.
 ##   장(chapter)마다 단계를 차례로. 단계 type:
 ##     talk  — 그 인물(NPCS)에게 3m 안에서 F → 대화(줄마다 F·Space·누르기로 넘김, 고르는 줄은 대답만 다르다).
-##             줄 = [말하는 이, 글, 표정?] — 표정은 world/talk_face.gd MOODS(joy·angry·sorrow·surprised·fun), 없으면 보통
+##             줄 = [말하는 이, 글, 표정?] — 표정은 saga_core/world/talk_face.gd MOODS(joy·angry·sorrow·surprised·fun), 없으면 보통
 ##     go    — 그 자리 radius 안에 들어가기
 ##     boss  — 들판 보스(world/field_bosses.gd) 하나 쓰러뜨리기(보상 꽃은 따로)
 ##     kill  — 그 자리에 임무 적(되살아나지 않음·전리품 없음)이 서고, 다 쓰러뜨리기

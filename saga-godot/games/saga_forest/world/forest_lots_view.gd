@@ -65,6 +65,9 @@ func _guest(i: int, who: String) -> Node3D:
 			var cut := src.transparency != BaseMaterial3D.TRANSPARENCY_DISABLED
 			(mi as MeshInstance3D).set_surface_override_material(s, WorldCurveMaterial.cutout_material(src.albedo_texture, CURVE_AMOUNT, 0.9, 0.3) if cut else WorldCurveMaterial.textured_material_from(src.albedo_texture, CURVE_AMOUNT))
 	root.add_child(body)
+	var lp: Node = preload("res://saga_core/world/life_pose.gd").attach(body)   # G-0265 둘러보기·체중
+	if lp != null:
+		lp.call("set_auto_idle", true, hash(who))
 	root.add_child(_label("Name", "🏡 %s" % Lots.guest_label(who), 2.3, 26))
 	root.add_child(_label("Line", String(g.get("line", "")), 2.75, 20))
 	return root

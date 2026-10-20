@@ -45,6 +45,8 @@ var _triggered := false
 var _persuade: PersuadeRules
 var _revealed := false
 var _layer: CanvasLayer
+var _life: Node = null   # G-0265 생활 몸짓(life_pose)
+var _face: Node = null   # G-0265 말할 때 손짓(talk_face)
 
 
 func _init(hero_id_in: String = "", room_index_in: int = 0) -> void:
@@ -65,7 +67,13 @@ func _ready() -> void:
 
 func _spawn_visual() -> void:
 	## 2026-09-30 — 캡슐 → GO hero_encounter 와 같은 VRoid 몸(인물 id 로 머리·옷 색 고정, ★5 는 금 테두리).
-	add_child(VroidBody.build(_hero_id, int(_hero.rarity)))
+	var body := VroidBody.build(_hero_id, int(_hero.rarity))
+	add_child(body)
+	## G-0265 — 들어오면 인사·나를 봄, 설득하는 동안 손짓, 등용되면 인사. 서 있는 동안 둘러보기·체중.
+	_life = (load("res://saga_core/world/life_pose.gd") as GDScript).call("attach", body)
+	_face = (load("res://saga_core/world/talk_face.gd") as GDScript).call("attach", body)
+	if _life != null:
+		_life.call("set_auto_idle", true, hash(_hero_id))
 
 	var cs := CollisionShape3D.new()
 	var shape := CapsuleShape3D.new()
@@ -91,6 +99,9 @@ func _on_body_entered(body: Node3D) -> void:
 	if _triggered or not body.is_in_group("player"):
 		return
 	_triggered = true
+	if _life != null:
+		_life.call("look_at_target", body)
+		_life.call("play", "wave")
 	_persuade = PersuadeRules.create(str(_hero["trait"]))
 	_revealed = int(_hero.rarity) <= 3
 	_show_round()
@@ -117,6 +128,8 @@ func _show_round() -> void:
 		choices.append({"label": a.label, "cb": func() -> void: _do_appeal(a.key)})
 	choices.append({"label": "물러난다", "cb": _flee})
 	_layer = ChoicePrompt.build(self, title, choices)
+	if _face != null:
+		_face.call("set_talking", true)
 
 
 func _do_appeal(key: String) -> void:
@@ -137,6 +150,7 @@ func _flee() -> void:
 		_layer.queue_free()
 	Toast.show(self, "%s와(과) 인사를 나누고 헤어졌다." % _hero.name, TOAST_SEC)
 	_triggered = false
+	_quiet()
 
 
 func _fail() -> void:
@@ -149,4 +163,17 @@ func _recruit() -> void:
 	DungeonPartyState.recruit(str(_hero.id))
 	Toast.show(self, "%s가 부대에 합류했다! \"%s\"" % [_hero.name, _hero.quote], TOAST_SEC)
 	DungeonSaveState.mark_hero_resolved(_room_index)
-	queue_free()
+	## G-0265 — 합류 인사(1.6초)를 보이고 사라진다(판정은 위에서 이미 끝남).
+	_quiet()
+	if _life != null and is_inside_tree():
+		_life.call("play", "wave")
+		get_tree().create_timer(1.6).timeout.connect(queue_free)
+	else:
+		queue_free()
+
+
+func _quiet() -> void:
+	if _face != null:
+		_face.call("set_talking", false)
+	if _life != null:
+		_life.call("look_at_target", null)

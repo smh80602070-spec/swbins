@@ -8,6 +8,7 @@ const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
 const BlobShadow := preload("res://saga_core/world/blob_shadow.gd")
 const FootLock := preload("res://saga_core/player/foot_lock.gd")   # G-0264 걸음새·디딘 발 잠금
+const LifePose := preload("res://saga_core/world/life_pose.gd")    # G-0265 쉬면 앉기·둘러보기
 
 const WALK_SPEED := 6.0
 const RUN_SPEED := 10.0
@@ -49,6 +50,7 @@ var fly_on := false
 @export var body_id := ""
 var _joystick: Control = null
 var _current_anim := ""
+var _life: Node = null   # G-0265 생활 몸짓(life_pose) — 2나락·3마을(1만리는 G-0266)
 var _gait_scaled := false   # G-0264 — 걸음새가 speed_scale 을 바꿨으면 다른 클립으로 갈 때 1.0 으로
 
 func _ready() -> void:
@@ -115,6 +117,7 @@ func _physics_process(delta: float) -> void:
 		return
 
 	if fly_on:
+		_tick_life(delta, false)
 		_base_fly(delta)
 		return
 
@@ -125,6 +128,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y = 0.0
 
 	if frozen:
+		_tick_life(delta, false)
 		velocity.x = 0.0
 		velocity.z = 0.0
 		_play_anim("idle")
@@ -133,6 +137,7 @@ func _physics_process(delta: float) -> void:
 
 	var input_dir := _movement_input()
 	var move_dir := _world_direction(input_dir)
+	_tick_life(delta, move_dir.length() <= 0.05 and is_on_floor() and not mounted and not Input.is_anything_pressed())
 
 	var running := Input.is_action_pressed("run")
 	var speed := (RUN_SPEED if running else WALK_SPEED) * speed_mult * mount_speed_mul
@@ -198,7 +203,17 @@ func _play_gait(h_speed: float) -> void:
 func _attach_foot_lock() -> void:
 	for s in visual.find_children("*", "Skeleton3D", true, false):
 		if FootLock.attach(s as Skeleton3D) != null:
-			return
+			break
+	_life = LifePose.attach(visual) if _life_pose_on() else null
+
+## G-0265 — 생활 몸짓을 붙이는 판(1만리 go_player 는 G-0266 까지 false).
+func _life_pose_on() -> bool:
+	return true
+
+## G-0265 — 가만히(입력 없음·땅·탈것 아님) SIT_AFTER 초 → 앉기, 그 사이 3~5초마다 둘러보기·체중. 움직이면·frozen·공중·탈것이면 일어남.
+func _tick_life(delta: float, still: bool) -> void:
+	if _life != null and is_instance_valid(_life):
+		_life.call("tick_still", delta, still)
 
 ## foot_lock.gd 가 묻는다 — 탈것·나는 중·돌진 중엔 끔(공중·동작 클립은 foot_lock 이 스스로 본다).
 func foot_lock_allowed() -> bool:

@@ -235,7 +235,11 @@ func _sync_partner() -> void:
 	root.name = "Partner"
 	root.position = Vector3(_half_x - 1.0, 0.0, 0.0)
 	root.rotation.y = -PI * 0.5   # 몸 앞 +Z → 방 가운데(-X)를 본다
-	root.add_child(preload("res://saga_core/world/vroid_body.gd").build(id, 2))
+	var body: Node3D = preload("res://saga_core/world/vroid_body.gd").build(id, 2)
+	root.add_child(body)
+	var lp: Node = preload("res://saga_core/world/life_pose.gd").attach(body)   # G-0265 둘러보기·체중
+	if lp != null:
+		lp.call("set_auto_idle", true, hash(id))
 	var bubble := Label3D.new()
 	bubble.name = "Bubble"
 	bubble.text = preload("res://games/saga_forest/data/forest_partner.gd").bubble_text()

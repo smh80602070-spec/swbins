@@ -732,6 +732,10 @@ func play_action(anim_name: String, dur: float, move_scale: float) -> void:
 		_anim.seek(start, true)
 		_current_anim = anim_name
 
+## G-0265 — 1만리 생활 몸짓은 G-0266 에서 잇는다.
+func _life_pose_on() -> bool:
+	return false
+
 ## G-0264 — 발 잠금은 땅에서만(활공·오르기·수영·짚고 넘기·날기·동작 중엔 끔).
 func foot_lock_allowed() -> bool:
 	return super.foot_lock_allowed() and mode == Mode.GROUND and _action_t <= 0.0

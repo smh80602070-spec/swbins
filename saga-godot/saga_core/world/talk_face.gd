@@ -64,7 +64,7 @@ static func attach(body: Node) -> Node:
 	for c in skel.get_children():
 		if c.get_meta("talk_face", false):
 			return c
-	var tf: SkeletonModifier3D = (load("res://games/saga_go/world/talk_face.gd") as GDScript).new()
+	var tf: SkeletonModifier3D = (load("res://saga_core/world/talk_face.gd") as GDScript).new()
 	tf.name = "TalkFace"
 	tf.set_meta("talk_face", true)
 	skel.add_child(tf)

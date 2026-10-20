@@ -33,6 +33,9 @@ const Toast := preload("res://saga_core/ui/toast.gd")
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Partner := preload("res://games/saga_forest/data/forest_partner.gd")   # G-0232 동반자
 const Voice := preload("res://saga_core/audio/voice.gd")   # G-0111 대사 음성
+const LifePose := preload("res://saga_core/world/life_pose.gd")   # G-0265 둘러보기·체중·인사
+const TalkFace := preload("res://saga_core/world/talk_face.gd")   # G-0265 말할 때 손짓·입
+const TALK_GESTURE_SEC := 1.6
 ## PLAN 103-1 spritegen.py 산출물(09-20, 그동안 어디서도 안 쓰였다) — 관계
 ## 메뉴 제목의 "(♥%d)" 숫자 대신 실제 하트 한 줄로 보여준다. ChoicePrompt
 ## 자체(5판 39곳 공유)는 안 건드리고, 그 패널 바로 위에 별도 줄을 하나
@@ -125,6 +128,8 @@ const VILLAGERS := [
 
 var _last_said_ms := {}
 var _in_range := {}
+var _life := {}   # G-0265 주민 id → LifePose
+var _face := {}   # G-0265 주민 id → TalkFace
 
 
 func _ready() -> void:
@@ -142,7 +147,16 @@ func _spawn(v: Dictionary) -> void:
 	root.add_to_group("codex_discoverable")
 	add_child(root)
 
-	root.add_child(_build_body(String(v.id)))
+	var body := _build_body(String(v.id))
+	root.add_child(body)
+	## G-0265 — 카메라 25m 안이면 3~5초마다 둘러보기·체중(seed = id 해시), 말할 땐 손짓.
+	var lp: Node = LifePose.attach(body)
+	if lp != null:
+		lp.call("set_auto_idle", true, hash(String(v.id)))
+		_life[v.id] = lp
+	var tf: Node = TalkFace.attach(body)
+	if tf != null:
+		_face[v.id] = tf
 
 	var area := Area3D.new()
 	area.name = "TalkArea"
@@ -181,6 +195,10 @@ func _on_body_entered(body: Node3D, v: Dictionary) -> void:
 		return
 	_in_range[v.id] = true
 	ForestSaveState.mark_met(v.id)
+	var lp: Node = _life.get(v.id)
+	if lp != null:   # G-0265 — 다가오면 나를 보고 손 한 번
+		lp.call("look_at_target", body)
+		lp.call("play", "wave")
 
 	var now := Time.get_ticks_msec()
 	if now - _last_said_ms[v.id] < TALK_GAP_SEC * 1000.0:
@@ -192,6 +210,8 @@ func _on_body_entered(body: Node3D, v: Dictionary) -> void:
 func _on_body_exited(body: Node3D, v: Dictionary) -> void:
 	if body.is_in_group("player"):
 		_in_range[v.id] = false
+		if _life.get(v.id) != null:
+			(_life[v.id] as Node).call("look_at_target", null)
 
 
 ## 웹판 talkNpc() 그대로 — 부탁을 이미 마쳤으면 인사말, 안 마쳤는데
@@ -203,6 +223,7 @@ func _on_body_exited(body: Node3D, v: Dictionary) -> void:
 ## 딸린 값(+2 각각)을 그대로 더한다.
 func _talk(v: Dictionary) -> void:
 	Voice.say("greet", String(v.id))   # G-0111 — 주민 인사 한 마디
+	_gesture(v)
 	if not ForestSaveState.talked_today(v.id):
 		ForestSaveState.mark_talked(v.id)
 		_gain_heart(v, 1)
@@ -243,6 +264,20 @@ func _talk(v: Dictionary) -> void:
 	ForestSaveState.add_gold(int(q.reward))
 	_gain_heart(v, 2)
 	Toast.show(self, "%s — 「%s」을 마쳤다! 💰 +%d" % [v.name, q.title, q.reward], LINE_SHOW_SEC)
+
+
+## G-0265 — 말하는 동안(1.6초) 손짓·끄덕임(talk_face).
+func _gesture(v: Dictionary) -> void:
+	var tf: Node = _face.get(v.id)
+	if tf == null or not is_inside_tree():
+		return
+	tf.call("set_talking", true)
+	get_tree().create_timer(TALK_GESTURE_SEC).timeout.connect(_end_gesture.bind(tf))
+
+
+func _end_gesture(tf: Node) -> void:
+	if is_instance_valid(tf):
+		tf.call("set_talking", false)
 
 
 ## PLAN 101-2 FOREST ②후보 "관계 하트" 공용 진입점 — 하루 상한(§5.4 "+4")과
