@@ -9,3 +9,5 @@ world/foliage
 world/real
 # sprites2d_factory — K-0158 2D 공장 시험 3풀(2나락 sprites2d_sheets 배치 끝), 화면 배선은 W-0370. 2026-10-21 K-0158
 sprites2d_factory
+# illust — K-0163 인물 일러스트 주역 30(판별 assets/illust 배치 끝), 화면 배선은 W-0371. 2026-10-22 K-0168 커밋 때 적음
+illust

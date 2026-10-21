@@ -7,7 +7,7 @@
   {"id": "tb_baekgi",     "body": "P", "hair": "t", "ratio": {"head": 0.96, "arm": 1.05, "leg": 1.10}, "face": "eye=2,brow=0,mouth=2,iris=1,skin=4,deco=3"},
   {"id": "ru_geohae",     "body": "P", "hair": "w", "ratio": {"head": 1.04, "arm": 1.08, "leg": 1.04}, "face": "eye=0,brow=2,mouth=1,iris=6,skin=0,deco=1"},
   {"id": "sg_caocao",     "body": "P", "hair": "k", "ratio": {"head": 1.00, "arm": 1.00, "leg": 1.00}, "face": "eye=3,brow=1,mouth=0,iris=3,skin=2,deco=0"},
-  {"id": "sg_liubei",     "body": "G", "hair": "j", "ratio": {"head": 0.98, "arm": 1.03, "leg": 1.08}, "face": "eye=1,brow=0,mouth=1,iris=4,skin=1,deco=2"},
+  {"id": "sg_liubei",     "body": "G", "hair": "j", "ratio": {"head": 0.72, "arm": 1.03, "leg": 1.08, "all": 1.5}, "face": "eye=1,brow=0,mouth=1,iris=4,skin=1,deco=2", "note": "K-0168 밑몸 G 는 어린이 샘플(머리뼈 1.00m) → all 1.5·head 0.72 로 어른 키"},
   {"id": "sg_lubu",       "body": "Z", "hair": "s", "ratio": {"head": 0.95, "arm": 1.08, "leg": 1.14}, "face": "eye=2,brow=2,mouth=2,iris=8,skin=3,deco=1"},
   {"id": "sg_sunquan",    "body": "L", "hair": "u", "ratio": {"head": 1.03, "arm": 0.98, "leg": 1.02}, "face": "eye=0,brow=1,mouth=0,iris=0,skin=4,deco=3"},
   {"id": "sg_zhugeliang", "body": "N", "hair": "q", "ratio": {"head": 0.99, "arm": 1.01, "leg": 1.10}, "face": "eye=1,brow=1,mouth=2,iris=5,skin=0,deco=0"}

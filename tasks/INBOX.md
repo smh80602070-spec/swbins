@@ -16,3 +16,5 @@
 - [ ] 10-21 · (K-0167 끝 알림) · mode2d MARK 표에 25 줄 — `shared/assets/icons/icon64/ui_<이름>_g0.png`, 이모지→이름 표는 `tasks/tools/done/K-0167.md` 메모 · 웹/다섯 판
 - [ ] 10-22 · 2D폰: 1만리 나무 밟음·2나락 마을 화면 바뀜 · 웹
 - [ ] 10-22 · (G-0287 대기 알림) · 고돗 `assets/characters_dex/*.gltf` 모프 targets 0(이름표만, 웹 characters3d 는 77) → Fcl 모프 살려 다시 내보내기 — NPC·주인공 깜박임·표정·입 · 자체툴
+- [ ] 10-22 · (K-0168 끝 알림) · 고돗 인물 몸 둘 — ① sg_liubei 새 몸(어른 키 머리뼈 1.60m, 웹 characters3d 10-22) → `_out/engine_characters/sg_liubei.*` 지우고 `engine_characters.sh --install godot` + 그 id 임포트 ② 새 201(웹 500 − 고돗 299, ac_*·js_* 등) **받음**(K 결정: 고돗은 그 id 를 안 부르고 바뀌는 건 해시 NPC 겉모습뿐 · 렌더 같은 품질대 · 몸 풀 299→500) → G-0276 에서 지운 201 을 characters_dex 에 다시 넣고 임포트, probe_dex_bodies 어린이 판정 확인 · 고돗
+- [ ] 10-22 · (K-0168 끝 알림) · sg_liubei 새 몸(어른 키) — 유니티 CharactersDex 갈아 끼우기(U-0156 과 같은 decode.mjs --only sg_liubei 길) · 유니티

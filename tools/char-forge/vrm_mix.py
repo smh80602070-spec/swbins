@@ -4,6 +4,7 @@ Blender 헤드리스, VRM 애드온 없이 glTF 단계에서 한다(VRM 은 glTF
   blender -b --factory-startup -P tools/char-forge/vrm_mix.py -- <target.vrm> <donor.vrm> <out.glb> [head=1.05,arm=0.97,leg=1.0]
     target = 몸·얼굴·옷, donor = 머리카락(앞·뒤). 경로는 절대 경로로 준다(Blender 는 상대 경로를 드라이브 루트로 푼다).
     세 번째 뒤 인자(선택): 뼈 비율 — head·arm·leg 배율(1.0 = 그대로). 머리카락은 머리 크기를 따라간다.
+    all = 몸 전체 고르게(K-0168 — 어린이 샘플 밑몸을 어른 키로, head 와 같이 쓰면 머리는 head×all).
 머리카락 뼈 = 이름이 `HairJoint`(VRM 0.x) 또는 `J_Sec_Hair`(VRM 1.0 샘플 B~Z·옷 이식 GLB) 로 시작하는 뼈 — target 의 옛 머리 뼈는 먼저 지운다
 (같은 이름이라 그대로 두면 donor 머리가 옛 뼈에 묶인다). 뒷머리 = 메시 안 `HairBack` 재질 면 — 옷 이식 GLB 는 따로 조각(`Body.00n`)이고
 머리·얼굴도 여러 조각이라 종류마다 목록으로 다룬다(donor 것을 떼어 오고 target 것은 지운다). 머리 크기 = 얼굴 피부(`Face_00_SKIN`) 면 높이 비(K-0137).
@@ -13,7 +14,7 @@ from mathutils import Vector, Matrix
 
 a = sys.argv[sys.argv.index('--') + 1:]
 tgt_path, don_path, out_path = os.path.abspath(a[0]), os.path.abspath(a[1]), os.path.abspath(a[2])
-ratios = {'head': 1.0, 'arm': 1.0, 'leg': 1.0}
+ratios = {'head': 1.0, 'arm': 1.0, 'leg': 1.0, 'all': 1.0}
 if len(a) > 3:
     for kv in a[3].split(','):
         k, v = kv.split('=')
@@ -83,7 +84,7 @@ def delete_material_faces(obj, mat_key):
 def apply_proportions(arm, meshes, r):
     """뼈 비율 — 포즈로 늘이고(head=머리 전체·arm=위팔+아래팔 길이·leg=위다리+아래다리 길이) 그 결과를 메시와 뼈의 기본 자세로 굽는다.
     Face 처럼 모프(shape key)가 있는 메시는 모디파이어를 못 굽는다 → 평가된 정점과 기본 모프의 차이를 모든 모프에 더한다. 끝나면 발이 땅(z=0)에 오게 아마추어를 올리거나 내린다."""
-    if all(abs(v - 1.0) < 1e-6 for v in r.values()):
+    if all(abs(r[k] - 1.0) < 1e-6 for k in ('head', 'arm', 'leg')):
         return
     bpy.context.view_layer.objects.active = arm
     bpy.ops.object.mode_set(mode='POSE')
@@ -107,6 +108,24 @@ def apply_proportions(arm, meshes, r):
     ph = P.get('J_Bip_C_Head')
     if ph:
         ph.scale = (r['head'], r['head'], r['head'])
+    bake_pose(arm, meshes)
+
+
+def apply_uniform(arm, meshes, k):
+    """K-0168 몸 전체 배율 — 맨 위 뼈(부모 없는 뼈)를 포즈로 키워 자식이 모두 따라오게 한 뒤 같은 길로 굽는다."""
+    if abs(k - 1.0) < 1e-6:
+        return
+    bpy.context.view_layer.objects.active = arm
+    bpy.ops.object.mode_set(mode='POSE')
+    for bn in arm.data.bones:
+        bn.inherit_scale = 'FULL'
+    for bn in arm.data.bones:
+        if bn.parent is None:
+            arm.pose.bones[bn.name].scale = (k, k, k)
+    bake_pose(arm, meshes)
+
+
+def bake_pose(arm, meshes):
     bpy.context.view_layer.update()
     dg = bpy.context.evaluated_depsgraph_get()
     newco = {}
@@ -209,6 +228,7 @@ for n in dnew_names:
 
 # 5) 뼈 비율
 apply_proportions(tarm, [o for o in bpy.data.objects if o.type == 'MESH' and o.parent == tarm], ratios)
+apply_uniform(tarm, [o for o in bpy.data.objects if o.type == 'MESH' and o.parent == tarm], ratios['all'])
 
 for o in bpy.data.objects:
     o.select_set(False)
