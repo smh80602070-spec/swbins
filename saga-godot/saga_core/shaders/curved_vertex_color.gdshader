@@ -17,6 +17,9 @@ uniform float roughness_value : hint_range(0.0, 1.0) = 0.95;
 // 살짝 푸르스름하게 보이는 것처럼(games/saga_forest/world/gatherable_builder.gd
 // 참고), 새 메시를 안 구하고 톤만 바꿀 때 쓴다.
 uniform vec3 tint_color : source_color = vec3(1.0);
+// G-0277 — 밤 불빛(night_glow.gd register_shader 가 창·불 면에만 켬). 기본 0 이라 기존 사용처는 그대로.
+uniform vec3 emission_color : source_color = vec3(0.0);
+uniform float emission_energy = 0.0;
 
 void vertex() {
 	VERTEX = saga_apply_world_curve(VERTEX, MODEL_MATRIX, curve_amount);
@@ -25,4 +28,5 @@ void vertex() {
 void fragment() {
 	ALBEDO = COLOR.rgb * tint_color;
 	ROUGHNESS = roughness_value;
+	EMISSION = emission_color * emission_energy;
 }

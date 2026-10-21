@@ -21,6 +21,7 @@ const TEXTURED_SHADER := preload("res://saga_core/shaders/curved_textured.gdshad
 const TRIPLANAR_SHADER := preload("res://saga_core/shaders/curved_triplanar.gdshader")
 const CUTOUT_SHADER := preload("res://saga_core/shaders/curved_textured_cutout.gdshader")
 const VERTEX_COLOR_CUTOUT_SHADER := preload("res://saga_core/shaders/curved_vertex_color_cutout.gdshader")
+const NightGlow := preload("res://saga_core/world/night_glow.gd")   # G-0277
 
 const GLOBAL_PARAM_NAME := "saga_world_curve_center"
 
@@ -60,7 +61,10 @@ static func textured_surfaces(src: Mesh, curve_amount: float, roughness_value: f
 	for i in mesh.get_surface_count():
 		var orig := src.surface_get_material(i) as BaseMaterial3D
 		if orig == null or orig.albedo_texture == null:
-			mesh.surface_set_material(i, vertex_color_material(curve_amount, roughness_value, tint))
+			var vm := vertex_color_material(curve_amount, roughness_value, tint)
+			if orig != null and orig.has_meta("night_glow"):   # G-0277 — 그림 없는 창(forest_cottage glass)도 밤에 빛나게
+				NightGlow.register_shader(vm, String(orig.get_meta("night_glow")))
+			mesh.surface_set_material(i, vm)
 			continue
 		var mat := ShaderMaterial.new()
 		mat.shader = TEXTURED_SHADER
@@ -72,6 +76,8 @@ static func textured_surfaces(src: Mesh, curve_amount: float, roughness_value: f
 		mat.set_shader_parameter("curve_amount", curve_amount)
 		mat.set_shader_parameter("roughness_value", roughness_value)
 		mat.set_shader_parameter("tint_color", tint)
+		if orig.has_meta("night_glow"):   # G-0277 — 불 면·창은 밤에 빛나게(곡률 셰이더 emission 자리)
+			NightGlow.register_shader(mat, String(orig.get_meta("night_glow")))
 		mesh.surface_set_material(i, mat)
 	return mesh
 

@@ -4860,6 +4860,30 @@
   "note": "SAGA_MOCAP=0 이면 옛 18 · hit·death 는 옛 길이로 빠르기 맞춤(피격 창 0.3초·전술판 쓰러짐 0.5초) · 모캡 walk 본래 빠르기 0.86m/s(V0_WALK_MOCAP) · sprint·attack·skill 은 UAL 그대로(CLIP_WINDOW 가 UAL 기준) · cast·strong 은 이름만"
  },
  {
+  "id": "gd.core.night-glow",
+  "name": "밤 불빛(K-0155 규약, 다섯 판 공용) — 자체 GLB 불 면 glow_fire·glow_lamp 는 밤에 세지고 창 glass 는 따뜻하게 빛나며, 카메라 가까운 등 light_point 8 곳에 점광(그림자 없음)",
+  "files": [
+   "saga_core/world/night_glow.gd",
+   "saga_core/world/glb_utils.gd",
+   "saga_core/world/world_curve_material.gd",
+   "saga_core/shaders/curved_textured.gdshader",
+   "saga_core/shaders/curved_vertex_color.gdshader",
+   "saga_core/world/day_light.gd",
+   "games/saga_go/world/night_visual.gd",
+   "tools/probe_night_glow.gd"
+  ],
+  "tests": [
+   "night_glow",
+   "day_light"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0277",
+  "since": "2026-10-21",
+  "note": "SAGA_NIGHT_GLOW=0 끔 · GLBUtils.extract_mesh 가 adopt(재질 원본마다 복제 한 벌·light_point 자리를 메시 메타로 — MultiMesh 도) · 3마을 곡률 셰이더는 emission 자리 · 불 면 낮 0.3 → 밤 3 · 1만리 night_visual·세 판 day_light 가 set_night · 촬영 n_amber_lamps(probe_shots)"
+ },
+ {
   "id": "gd.core.face-light",
   "name": "인물 얼굴 그림자(원신식, 다섯 판 공용) — 얼굴 표면은 머리 앞 방향을 섞은 수평 법선으로 명암(코·입가·턱 얼룩 없음, 좌우 반쪽 그늘) · 얼굴 살갗은 SDF 반쪽 경계(K-0151, G-0271)",
   "files": [

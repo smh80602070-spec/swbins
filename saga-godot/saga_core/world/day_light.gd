@@ -9,6 +9,7 @@ extends Node
 ## 손잡이: SAGA_HOUR=n(0~24, 소수 됨) 이면 그 시각 고정 · SAGA_DAY_LIGHT=0 이면 안 단다.
 ## env_*.tres·씬 파일은 안 건드린다 — environment_profile 이 만든 복제본·런타임 노드 값만. 1만리 코드는 부르지 않는다(값만 옮겨 적음).
 
+const NightGlow := preload("res://saga_core/world/night_glow.gd")   # G-0277
 const GROUP := "saga_day_light"
 const CHECK_SEC := 5.0
 const SUN_MIN_EL := 22.0   # sky_panorama.SUN_MIN_EL
@@ -156,6 +157,7 @@ func _apply(na: String, nb: String, t: float) -> void:
 			_sun.light_energy = float(_day.sun) * mul * weather_sun_mul
 			_sun.light_color = ca.lerp(cb, t)
 		last["sun_energy"] = _sun.light_energy
+	NightGlow.set_night(_f(a, b, "night", t), self)   # G-0277 자체 GLB 불 면·창·가까운 등 점광
 	if _env and _day.has("ambient"):
 		var nt := _f(a, b, "night", t)
 		_env.ambient_light_energy = float(_day.ambient) * _f(a, b, "amb", t)

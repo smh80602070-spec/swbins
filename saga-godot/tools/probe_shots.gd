@@ -42,6 +42,7 @@ const SHOTS := [
 	["n_village_plaza", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(4.7, 5.3), -12.0, 16.0, "night"],
 	["n_house", "village", Vector2(4.0, 5.0), Vector3(-4, 0, 18), Vector2(4.0, 5.0), -6.0, 9.0, "night"],
 	["n_statue_far", "village", "v_statue", Vector3(3, 0, 12), "v_statue", -2.0, 14.0, "night"],
+	["n_amber_lamps", "amber", Vector2(3.2, 4.2), Vector3.ZERO, Vector2(3.55, 6.0), -10.0, 8.0, "night"],   # G-0277 — 가로등 줄 밤 불빛
 	["c_sea", "coast", Vector2(3.0, 3.75), Vector3.ZERO, Vector2(3.0, 2.2), -22.0, 12.0, ""],
 	["v_river", "village", Vector2(3.5, 6.6), Vector3.ZERO, Vector2(3.5, 7.0), -25.0, 10.0, ""],
 	["w_hold", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(5.5, 6.3), -6.0, 3.2, ""],

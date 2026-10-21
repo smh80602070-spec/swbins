@@ -2,6 +2,7 @@ class_name GLBUtils
 extends RefCounted
 
 const _WorldAsset := preload("res://saga_core/world/world_asset.gd")
+const _NightGlow := preload("res://saga_core/world/night_glow.gd")
 
 ## PLAN.md 41·45·46장 — primitive를 실제 GLB 에셋으로 교체하면서 여러 빌더
 ## (vegetation_builder.gd·landmarks_builder.gd)가 똑같이 필요로 하는 작업:
@@ -48,6 +49,7 @@ static func extract_mesh_from_scene(scene: PackedScene) -> Mesh:
 		mesh = mis[0].mesh
 	elif mis.size() > 1:
 		mesh = _merge_mesh_instances(inst, mis)
+	_NightGlow.adopt(mesh, inst)   # G-0277 불 면·창 재질 · light_point 자리
 	inst.queue_free()
 	return mesh
 

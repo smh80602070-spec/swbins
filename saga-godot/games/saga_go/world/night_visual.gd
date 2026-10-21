@@ -7,6 +7,7 @@ extends Node
 ## test_village.gd 가 단다. tools/probe_shots.gd 의 "night" 할 일이 refresh_now() 로 곧바로 바꾼다.
 
 const HouseBuilder := preload("res://games/saga_go/world/house_builder.gd")
+const NightGlow := preload("res://saga_core/world/night_glow.gd")   # G-0277
 
 const CHECK_SEC := 2.0
 const FADE_SEC := 3.0
@@ -101,3 +102,4 @@ func _apply(b: float) -> void:
 		_weather.set("night_mul", Color(1, 1, 1).lerp(NIGHT.fog_mul, b))
 		_weather.call("apply")
 	HouseBuilder.set_night(b)
+	NightGlow.set_night(b, self)   # G-0277 자체 GLB 불 면·창·가까운 등 점광
