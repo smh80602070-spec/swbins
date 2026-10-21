@@ -14,6 +14,7 @@
   global.DG = global.DG || {};
 
   var BASE = 'assets/icons/icon64/';
+  function icoBase() { var A = global.DG && global.DG.assets3d, u = A && A.sharedUrl ? A.sharedUrl('icons/icon64/') : null; return u || 'assets/icons/icon64/'; }   // W-0359 다섯 판 한 벌(shared) — 못 찾으면 판 경로
 
   function table(game) { return (global.DG.itemiconIds || {})[game] || null; }
 
@@ -27,7 +28,7 @@
     var t = table(game), n;
     if (!itemicon.enabled || !t) { return null; }
     n = t[kind + ':' + id];
-    return n ? BASE + n + '.png' : null;
+    return n ? icoBase() + n + '.png' : null;
   }
 
   /**

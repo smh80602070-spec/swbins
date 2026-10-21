@@ -37,8 +37,8 @@
   /* W-0321 — 자체 아이콘(K-0118 `shared/assets/icons/icon64/ui_<이름>_g0.png`, map.json `shared:ui:<이름>`). 예전 Lucide(ISC) SVG 표를 지웠다.
      이름은 그대로(lucide 이름의 - → _) — HTML 의 data-icon 은 안 바뀐다. 판 폴더 사본은 sync-shared(UI_ICON_GAMES) */
   var NAMES = ["award","backpack","book-open","bot","box","circle-question-mark","clipboard-list","coins","compass","ellipsis","flag","footprints","ham","hammer","mail","map","medal","palette","rotate-ccw","satellite-dish","scroll","scroll-text","sparkles","store","swords","user","wrench","x"];
-  var BASE = 'assets/icons/icon64/ui_';
-  function file(name) { return BASE + String(name).replace(/-/g, '_') + '_g0.png'; }
+  function icoBase() { var A = global.DG && global.DG.assets3d, u = A && A.sharedUrl ? A.sharedUrl('icons/icon64/') : null; return u || 'assets/icons/icon64/'; }   // W-0359 다섯 판 한 벌(shared) — 못 찾으면 판 경로
+  function file(name) { return icoBase() + 'ui_' + String(name).replace(/-/g, '_') + '_g0.png'; }
 
   /** 이 이름의 아이콘이 있나 — 순수 함수다(자가진단이 이것만 본다) */
   function has(name) { return NAMES.indexOf(name) >= 0; }

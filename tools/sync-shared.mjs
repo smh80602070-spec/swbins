@@ -172,7 +172,7 @@ for (const g of Object.keys(ASSET_GAMES)) {
     }
   }
 }
-for (const g of GAMES) {
+for (const g of (process.env.ICON_COPY ? GAMES : [])) {   // W-0359 — 판 단독 서버도 /_shared 를 잇고(serve-game) 코드가 assets3d.sharedUrl 로 고르므로 판 복사는 끊었다(되살리려면 ICON_COPY=1)
   for (const n of iconNames(g)) {
     const from = path.join(WEB, 'shared', 'assets', 'icons', 'icon64', n + '.png'), to = path.join(WEB, g, 'assets', 'icons', 'icon64', n + '.png');
     total++;

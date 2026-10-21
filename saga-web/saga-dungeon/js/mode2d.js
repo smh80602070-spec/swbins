@@ -90,7 +90,8 @@
   var markImgs = {}, markMiss = {}, EMO = /^(\p{Extended_Pictographic}(?:️|︎|‍\p{Extended_Pictographic}|[\u{1F3FB}-\u{1F3FF}])*)\s?/u;
   function markOn() { var Co = global.DG && global.DG.core; return !(Co && Co.tuned) || +Co.tuned('mode2d.markIcon', 1) > 0; }
   /** 이모지 하나의 아이콘 주소 — 짝 없으면 null */
-  function markSrc(e) { var n = MARK[String(e || '').replace(/[️︎]/g, '')]; return n ? 'assets/icons/icon64/ui_' + n + '_g0.png' : null; }
+  function icoBase() { var A = global.DG && global.DG.assets3d, u = A && A.sharedUrl ? A.sharedUrl('icons/icon64/') : null; return u || 'assets/icons/icon64/'; }   // W-0359 다섯 판 한 벌(shared) — 못 찾으면 판 경로
+  function markSrc(e) { var n = MARK[String(e || '').replace(/[️︎]/g, '')]; return n ? icoBase() + 'ui_' + n + '_g0.png' : null; }
   function markImg(src) {
     var e = markImgs[src];
     if (!e) { e = markImgs[src] = { ok: false }; if (global.Image) { var im = new global.Image(); im.onload = function () { e.ok = true; }; im.onerror = function () { e.fail = true; }; im.src = src; e.img = im; } }
