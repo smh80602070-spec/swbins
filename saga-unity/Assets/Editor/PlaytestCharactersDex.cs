@@ -29,6 +29,7 @@ namespace Saga.EditorTools
             {
                 int loaded = 0, noTex = 0, tooTall = 0, tooShort = 0, clips = 0, skinned = 0;
                 var bad = new List<string>();
+                var outRange = new List<string>(); // U-0156 — 범위 밖 몸 이름(키)
                 float minH = 99f, maxH = 0f;
                 foreach (var f in files)
                 {
@@ -43,6 +44,7 @@ namespace Saga.EditorTools
                     var b = rs[0].bounds; foreach (var r in rs) b.Encapsulate(r.bounds);
                     minH = Mathf.Min(minH, b.size.y); maxH = Mathf.Max(maxH, b.size.y);
                     if (b.size.y > 2.2f) tooTall++; else if (b.size.y < 1.2f) tooShort++;
+                    if (b.size.y > 2.2f || b.size.y < 1.2f) outRange.Add($"{Path.GetFileNameWithoutExtension(path)} {b.size.y:0.00}m");
                     bool anyTex = false;
                     foreach (var r in rs) foreach (var m in r.sharedMaterials)
                         if (m != null && m.HasProperty("baseColorTexture") && m.GetTexture("baseColorTexture") != null) anyTex = true;
@@ -53,7 +55,7 @@ namespace Saga.EditorTools
                 Debug.Log($"[PlaytestCharactersDex] 파일 {files.Length} · 읽힘 {loaded} · 스킨 몸 {skinned} · 키 {minH:0.00}~{maxH:0.00}m(2.2 초과 {tooTall}·1.2 미만 {tooShort}) · 바탕 그림 없음 {noTex} · 동작 클립 {clips}");
                 PlaytestKit.Check(loaded == files.Length, $"못 읽힌 몸 {bad.Count}: {string.Join(",", bad.GetRange(0, Mathf.Min(8, bad.Count)))}");
                 PlaytestKit.Check(skinned == loaded, $"스킨 메시가 없는 몸 {loaded - skinned}");
-                PlaytestKit.Check(tooTall + tooShort == 0, $"키가 사람 범위 밖 {tooTall + tooShort}");
+                PlaytestKit.Check(tooTall + tooShort == 0, $"키가 사람 범위 밖 {tooTall + tooShort}: {string.Join(",", outRange.GetRange(0, Mathf.Min(8, outRange.Count)))}");
                 PlaytestKit.Check(noTex == 0, $"바탕 그림이 없는 몸 {noTex}");
             }
             PlaytestKit.Summary("PlaytestCharactersDex");
