@@ -1435,5 +1435,25 @@
   "ticket": "W-0358",
   "since": "2026-10-21",
   "note": "10-21: 화로 brazier_01 · 하늘 때 밤 1·새벽/해질녘 0.4(자동은 밤 거의 없음, realm3d.skyTime night 로 봄) · 촬영 없음"
+ },
+ {
+  "id": "rk.phone-hud-diet",
+  "name": "폰 세로 HUD 다이어트(W-0364) — 윗 카드 세력·연월 한 줄(탭 펼침)·지갑 한 줄 금·군량·▶ 다음 달(🤝 전부·병력 탭하면)·🧊 ⋯ 안·조이스틱 감춤(지도 손가락 끌기·🏠➕➖ 그대로) — 가림 전체 28.9→19%·지도 안 11%",
+  "files": [
+   "../shared/css/ui-kit.css",
+   "css/style.css",
+   "src/ui-rtk/01.js"
+  ],
+  "tests": [
+   "test-web W-0364 폰 HUD 접기",
+   "pw-cover ≤15%",
+   "mobile-layout 세로 회귀 0"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0364",
+  "since": "2026-10-22",
+  "note": "10-22: 전체 화면 28.9→19% · 지도(SVG) 안 11%"
  }
 ]

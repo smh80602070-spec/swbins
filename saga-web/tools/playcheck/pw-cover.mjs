@@ -85,7 +85,8 @@ function coverMeasure(fine) {
   const rects = (window.DG && Array.isArray(DG.hudRects)) ? DG.hudRects.slice() : [];
   const inRect = (x, y) => rects.find((r) => x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h);
   /* 판이 DG.boardRect(무대 사각형)를 알려 주면 그 안 점만 가림에 센다(옆으로 가는 4종횡 폰 세로 — 땅 선 밑 바닥 띠는 HUD 자리). 전체 화면 값은 pctAll */
-  const BR = window.DG && DG.boardRect && DG.boardRect.h > 0 ? DG.boardRect : null;
+  const svgR = boardSvgs.length ? boardSvgs[0].getBoundingClientRect() : null;   /* 5천하 — 판이 안 알려 주면 큰 SVG 지도 상자가 무대(지도 밖 범례·독은 검은 바탕 위) */
+  const BR = window.DG && DG.boardRect && DG.boardRect.h > 0 ? DG.boardRect : svgR ? { x: svgR.left, y: Math.max(0, svgR.top), w: svgR.width, h: Math.min(H, svgR.bottom) - Math.max(0, svgR.top) } : null;
   const inBoard = (x, y) => !BR || (x >= BR.x && x <= BR.x + BR.w && y >= BR.y && y <= BR.y + BR.h);
   let totAll = 0, covAll = 0;
   for (let y = STEP / 2; y < H; y += STEP) { for (let x = STEP / 2; x < W; x += STEP) {

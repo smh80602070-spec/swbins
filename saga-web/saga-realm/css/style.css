@@ -1548,3 +1548,17 @@ body.sheet-open #realm3d { right: calc(min(420px, 92vw) + 20px); }
 .rkh-spk { font-size: 12px; margin-top: 4px; opacity: .9; }
 .rkh-del { margin: 4px 0 8px; }
 .rkh-all { margin-right: 6px; }
+
+/* W-0364 폰 세로 HUD 다이어트(공용 규칙은 ui-kit.css body.hud-diet) — 5천하만의 자리.
+   지갑 카드 한 줄(금·군량·▶ 다음 달 — 🤝 전부·병력은 탭하면) · 조이스틱은 폰에서 감춤(지도는 손가락으로 끈다, 🏠➕➖ 그대로) */
+@media (max-width: 520px) {
+  body.hud-diet { --toast-edge: calc(6px + var(--safe-t, 0px)); }
+  body.hud-diet #rjoy { display: none !important; }
+  /* 시정 위임 칩(auto-rule.js 가 지갑 오른쪽 끝에 붙임)은 지갑이 좁아지면 왼쪽 화면 밖으로 밀렸다 — 폰은 왼쪽에 붙인다 */
+  body.hud-diet #aq-rule { left: 12px !important; right: auto !important; top: calc(132px + var(--safe-t, 0px)) !important; }
+  body.hud-diet #aq-go { top: calc(132px + var(--safe-t, 0px)) !important; right: 12px !important; }   /* 접힌 지갑 줄 밑 고정 자리 — JS 가 지갑이 다 그려지기 전 높이로 박아 윗줄과 겹쳤다 */
+  body.hud-diet #wallet:not(.hud-open) { flex-wrap: nowrap; align-items: center; }
+  body.hud-diet #wallet:not(.hud-open) .next-btn { min-height: 40px; padding: 4px 12px; margin-left: 4px; }
+  body.hud-diet #profile:not(.hud-open) { align-self: start; }
+  body.hud-diet #profile:not(.hud-open) .avatar-pt img { width: 30px; height: 30px; }
+}

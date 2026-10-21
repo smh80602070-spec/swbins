@@ -462,6 +462,7 @@
   function init() {
     ['profile', 'wallet', 'realm', 'dock', 'sheet', 'sheet-title', 'sheet-body',
      'sheet-close', 'sheet-map', 'scrim', 'encounter', 'toast'].forEach(function (id) { els[id] = $(id); });
+    var mo = $('top-more'), b3 = $('btn-3d'); if (mo && b3 && global.innerWidth <= 520) { mo.insertBefore(b3, mo.firstChild); }   /* W-0364 폰: 🧊 는 ⋯ 안으로(손잡이 그대로) */ document.body.classList.add('hud-diet'); [els.profile, els.wallet].forEach(function (el) { if (el) { el.addEventListener('click', function (e) { if (e.target.closest('button')) { return; } if (!hudFold(el)) { el.classList.remove('hud-open'); } }); } });   // W-0364 폰 세로 HUD 접기(공용 ui-kit.css) — 윗 카드·지갑 탭 = 펼침, 다시 탭 = 접음(지갑 안 단추는 제 일)
 
     els.dock.addEventListener('click', function (e) {
       var b = e.target.closest('[data-sheet]');
@@ -1213,7 +1214,7 @@
 
   var MONTH_SEASON = ['', '초봄', '봄', '늦봄', '초여름', '여름', '늦여름',
                       '초가을', '가을', '늦가을', '초겨울', '겨울', '늦겨울'];
-
+  var foldTimers = {}; function hudFold(el) { if (!el || !(global.innerWidth <= 520) || el.classList.contains('hud-open')) { return false; } el.classList.add('hud-open'); clearTimeout(foldTimers[el.id]); foldTimers[el.id] = setTimeout(function () { el.classList.remove('hud-open'); }, 6000); return true; }   /* W-0364 폰 세로(≤520)에서 접힌 판이면 펼치고 참(6초 뒤 다시 접힘) */
   function renderTop() {
     var st = R().state();
     if (!st.started) {
@@ -1240,9 +1241,9 @@
     els.wallet.innerHTML =
       coin('🪙', core.fmt(s.gold), '금') +
       coin('🪖', core.fmt(s.troops), '병력') +
-      coin('🍚', core.fmt(s.food), '군량') +
+      coin('🍚', core.fmt(s.food), '군량').replace('class="coin"', 'class="coin hud-keep"') +   // W-0364 폰 접힌 지갑 = 금·군량·▶ 다음 달
       '<button class="btn ghost rkh-all" data-rkh-del="*" title="내 성 전부 — 이 달 안 움직인 무장에게 명령을 맡긴다"' + (st.result ? ' disabled' : '') + '>🤝 전부</button>' +   // W-0177
-      '<button class="btn primary next-btn" data-act="next-month" title="다음 달 (Enter · N)"' + (st.result ? ' disabled' : '') + '>▶ 다음 달</button>';
+      '<button class="btn primary next-btn hud-keep" data-act="next-month" title="다음 달 (Enter · N)"' + (st.result ? ' disabled' : '') + '>▶ 다음 달</button>';
     var nb = els.wallet.querySelector('.next-btn');
     if (nb) { nb.addEventListener('click', function () { act('next-month', nb); }); }
   }
