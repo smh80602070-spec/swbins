@@ -82,6 +82,12 @@ func _one() -> void:
 	if rows.size() != want or (m.get("stats", []) as Array).is_empty() or (m.get("grow", {}) as Dictionary).is_empty():
 		_fail("③ 줄 %d != %d (능력치·그물 비면 안 됨)" % [rows.size(), want])
 	print("ME %s: %s" % [game, " | ".join(rows)])
+	## G-0295 5천하 군주 움직이는 초상
+	if game == "realm":
+		var pid := String(m.get("portrait", ""))
+		var lp: GDScript = load("res://saga_core/ui/live_portrait.gd")
+		if pid == "" or (bool(lp.call("available", pid)) and panel.find_child("MePortrait", true, false) == null):
+			_fail("G-0295 군주 %s 초상 없음" % pid)
 	## ④ 값
 	_check_values(m)
 	## ⑤ 그물

@@ -5,8 +5,11 @@ extends CanvasLayer
 ##   {name, sub, slots:[{label,item}], stats:[{label,value,detail}], grow:{label, open:Callable}}
 ## 창은 읽기만(세이브·균형 안 건드림). 열린 동안 멈춤(passive_web_screen 과 같은 결), Esc·✕ 로 닫힘.
 ## 점검은 `rows(model)` 글 줄을 본다(화면 없이).
+## G-0295 model.portrait = 인물 id 면 왼쪽에 움직이는 초상(live_portrait — 깜빡임·숨·고개, 웹 W-0251). 그림이 없으면 안 붙임.
 
 const UiKit := preload("res://saga_core/ui/ui_kit.gd")
+const LivePortrait := preload("res://saga_core/ui/live_portrait.gd")
+const PORTRAIT := Vector2(120, 160)
 const GROUP := "me_panel"
 const GOLD := Color(1.0, 0.86, 0.5)
 const DIM := Color(0.78, 0.78, 0.78)
@@ -95,6 +98,17 @@ func _ready() -> void:
 	var cols := HBoxContainer.new()
 	cols.add_theme_constant_override("separation", 24)
 	box.add_child(cols)
+	var pid := String(model.get("portrait", ""))
+	if pid != "" and LivePortrait.available(pid):
+		var pf := Control.new()
+		pf.name = "MePortrait"
+		pf.custom_minimum_size = PORTRAIT
+		pf.clip_contents = true
+		cols.add_child(pf)
+		var lp: Control = LivePortrait.new()
+		lp.set_anchors_preset(Control.PRESET_FULL_RECT)
+		pf.add_child(lp)
+		lp.call("setup", pid)
 	cols.add_child(_grid(model.get("slots", []), "label", "item", String(model.get("slots_head", "입은 것"))))
 	cols.add_child(_grid(model.get("stats", []), "label", "value", "능력치", "detail"))
 	var g: Dictionary = model.get("grow", {})

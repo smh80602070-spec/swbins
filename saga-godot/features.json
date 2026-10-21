@@ -5211,5 +5211,22 @@
   "ticket": "G-0294",
   "since": "2026-10-22",
   "note": "기본값 그대로 · 창이 떠 있으면 휠 안 먹음"
+ },
+ {
+  "id": "gd.realm.me-portrait",
+  "name": "5천하 「내 정보」 군주 움직이는 초상(live_portrait 깜빡임·숨·고개), 웹 W-0251",
+  "files": [
+   "saga_core/ui/me_panel.gd",
+   "games/saga_realm/ui/me_adapter.gd"
+  ],
+  "tests": [
+   "me_panel"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0295",
+  "since": "2026-10-22",
+  "note": "무장 상세 시트가 고돗엔 없어 내 정보 창에"
  }
 ]

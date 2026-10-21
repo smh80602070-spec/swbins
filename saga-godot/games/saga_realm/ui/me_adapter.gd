@@ -23,4 +23,4 @@ static func model(hud: Node) -> Dictionary:
 	var grow := {}
 	if sb != null and sb.has_method("open_screen"):
 		grow = {"label": "🧭 경륜도 (F2)", "open": Callable(sb, "open_screen")}
-	return {"name": String(h.name) if h != null else "군주", "sub": "군주", "slots_head": "세력", "slots": slots, "stats": stats, "grow": grow}
+	return {"name": String(h.name) if h != null else "군주", "sub": "군주", "portrait": id, "slots_head": "세력", "slots": slots, "stats": stats, "grow": grow}
