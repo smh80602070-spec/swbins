@@ -19,7 +19,7 @@
 
   /** 다른 창이 열려 있나 — 그때 Esc 는 그 창 몫이다(시트·조우·상세·큰 지도·패시브 그물·이야기 대화) */
   function otherOpen() {
-    if (doc.querySelector('#sheet.show, #encounter.show, #detail.show, #overworld-map.show, #top-more.show, #tools-drawer.show')) { return true; }   // #top-more·#tools-drawer = 좁은 화면 도구 서랍
+    if (doc.querySelector('#sheet.show, #encounter.show, #detail.show, #overworld-map.show, #top-more.show, #tools-drawer.show, #me-panel.show')) { return true; }   // #top-more·#tools-drawer = 좁은 화면 도구 서랍
     var D = global.DG || {};
     if (D.minimap && D.minimap.isBig && D.minimap.isBig()) { return true; }   // 2나락 큰 지도(M)
     return !!((D.passiveWebUI && D.passiveWebUI.isOpen && D.passiveWebUI.isOpen()) || (D.scenario && D.scenario.isOpen && D.scenario.isOpen()) || (D.story && D.story.isOpen && D.story.isOpen()));

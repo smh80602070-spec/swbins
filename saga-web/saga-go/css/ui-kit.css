@@ -121,6 +121,44 @@ body { font-variant-numeric: tabular-nums; }
   background: var(--bad); color: #fff; font-size: 11px; font-weight: 700;
   display: grid; place-items: center;
 }
+/* ── 「내 정보」 창(W-0361, shared/js/me-panel.js) — 메뉴 화면과 같은 덮개·틀(.mg-panel) ── */
+#me-panel {
+  position: fixed; inset: 0; z-index: 66;   /* 직접 연 창 — 자동 진행 ▶(45)·2나락 작은 지도(65) 위 */ display: none;
+  align-items: center; justify-content: center; padding: 24px;
+  background: rgba(6, 8, 12, .62);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+#me-panel.show { display: flex; animation: fade .18s ease-out; }
+.me-panel { display: grid; gap: 12px; }
+.mp-who { display: flex; align-items: center; gap: 12px; }
+.mp-who img, .mp-who canvas { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; }
+.mp-who b { font-size: 17px; }
+.mp-who small { display: block; margin-top: 2px; }
+.mp-body { display: grid; grid-template-columns: 1.15fr 1fr; gap: 12px; align-items: start; }
+.mp-slots { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+.mp-slot {
+  display: flex; align-items: center; gap: 8px; min-height: 52px; padding: 6px 8px; text-align: left;
+  color: var(--ink); font-family: inherit; cursor: pointer;
+  background: rgba(255, 255, 255, .05); border: 1px solid var(--glass-br); border-radius: var(--r-sm);
+}
+.mp-slot:disabled { cursor: default; }
+.mp-slot.empty { opacity: .7; }
+.mp-slot:not(:disabled):hover, .mp-slot:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--gold); }
+.mp-ico { flex: 0 0 36px; height: 36px; display: grid; place-items: center; font-size: 24px; }
+.mp-ico img { width: 36px; height: 36px; object-fit: contain; }
+.mp-txt { display: grid; min-width: 0; }
+.mp-txt small { font-size: 11px; color: var(--ink-2, #aab); }
+.mp-txt b, .mp-txt i { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mp-stats { display: grid; gap: 4px; }
+.mp-stat { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 0 8px; padding: 6px 10px; background: rgba(255, 255, 255, .04); border-radius: var(--r-sm); }
+.mp-stat b { font-size: 16px; color: var(--gold); }
+.mp-stat small { grid-column: 1 / -1; font-size: 11px; }
+.mp-note { margin: 0; font-size: 12px; }
+.mp-grow { justify-self: start; padding: 10px 16px; color: var(--ink); font-family: inherit; font-weight: 700; cursor: pointer; background: rgba(255, 255, 255, .06); border: 1px solid var(--gold); border-radius: var(--r-sm); }
+@media (max-width: 600px) {
+  #me-panel { padding: 12px; }
+  .mp-body { grid-template-columns: 1fr; }
+}
 @media (max-width: 600px) {
   #menu-grid { padding: 16px; }
   .mg-panel { padding: 16px; }

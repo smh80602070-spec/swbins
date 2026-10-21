@@ -161,6 +161,8 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/ui-shops.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/menu-grid.js"></script>
+<script src="js/me-adapter.js"></script>
+<script src="js/me-panel.js"></script>
 <script src="js/game.js"></script>
 <script>
 (function () {
@@ -186,6 +188,11 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 
     /* W-0292 후처리·SSAO 가 이 판에도 실렸다 — 값 층(three 없이) */
     /* W-0294 그린 하늘 공 — 공용 skydome3d 값 층(three 없이) */
+    t('「내 정보」 창(W-0361) — 어댑터 값이 기존 함수 값 그대로 · render 가 칸·수치·성장 단추를 그림', function () {
+      var m = DG.meAdapter.model(); var ok = m.slots.length === DG.villageData.WEAR_PARTS.length && m.stats[1].value === DG.workshop.pointsTotal();
+      var h = DG.mePanel.render(m), drew = h.indexOf('me-panel') > 0 && (m.slots || []).every(function (s, k) { return h.indexOf('data-mp-slot="' + k + '"') > 0; }) && (!m.grow || h.indexOf('data-mp-grow') > 0);
+      return ok && drew && ('칸 ' + (m.slots || []).length + ' · 수치 ' + (m.stats || []).length + (m.grow ? ' · 성장 단추' : '')) || '실패 ' + ok + ',' + drew;
+    });
     t('하늘(W-0294) — 시간에 따라 하늘 그림·해 방향이 바뀐다(공용 skydome3d, 3마을 실제 시각)', function () {
       var SD = DG.skydome3d; if (!SD || !SD.make) { return '실패 skydome3d 없음'; }
       var slots = [6, 12, 18, 23].map(SD.slotOfHour).join(',');

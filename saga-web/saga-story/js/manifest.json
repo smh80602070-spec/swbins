@@ -91,6 +91,8 @@
    "js/ui-job.js",
    "js/ui.js",
    "js/menu-grid.js",
+   "js/me-adapter.js",
+   "js/me-panel.js",
    "js/ops-client.js",
    "js/region-icon.js",
    "js/perf.js",
@@ -183,6 +185,8 @@
    "js/ui-job.js",
    "js/ui.js",
    "js/menu-grid.js",
+   "js/me-adapter.js",
+   "js/me-panel.js",
    "js/region-icon.js",
    "js/game.js"
   ]

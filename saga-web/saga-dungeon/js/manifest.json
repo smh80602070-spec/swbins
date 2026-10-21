@@ -115,6 +115,8 @@
    "js/ui-shop.js",
    "js/ui.js",
    "js/menu-grid.js",
+   "js/me-adapter.js",
+   "js/me-panel.js",
    "js/load-veil.js",
    "js/spawn-view.js",
    "js/ops-client.js",
@@ -241,6 +243,8 @@
    "js/ui-shop.js",
    "js/ui.js",
    "js/menu-grid.js",
+   "js/me-adapter.js",
+   "js/me-panel.js",
    "js/ui-detail.js",
    "js/ui-quest.js",
    "js/game.js"

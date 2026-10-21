@@ -15,7 +15,10 @@
     var dexH = Object.keys((core.save.dex && core.save.dex.heroes) || {}).length, dexP = Object.keys((core.save.dex && core.save.dex.pets) || {}).length;
     var line = function (k, v) { return '<div class="dt-line"><span>' + k + '</span><b>' + v + '</b></div>'; };
     var ride = MT && MT.current ? MT.current() : null;
-    var out = '<div class="me-sheet">' +
+    /* W-0361 — 공용 「내 정보」 패널(입은 칸·들판 전투 수치·성도 단추)을 맨 위에. 어댑터 js/me-adapter.js */
+    var MP = global.DG.mePanel, MA = global.DG.meAdapter, pm = MP && MA ? MA.model() : null, l0 = party.length ? data.find(party[0]) : null;
+    if (pm && l0) { pm.portrait = h.pt('hero', l0, 56); }
+    var out = '<div class="me-sheet">' + (pm ? '<div class="sec"><h4>🧑 내 정보</h4>' + MP.render(pm) + '</div>' : '') +
       '<div class="sec"><h4>🧭 내 프로필</h4>' +
         line('칭호', esc(h.titleOf(p.featTotal))) +
         line('모험 등급', esc(h.advText(p.level)) + ' · 경험 ' + pct + '%') +
@@ -33,7 +36,7 @@
       out += '<div class="sec"><h4>⭐ 선두 — 내 몸</h4>' +
         '<button class="me-lead" data-act="detail" data-id="' + esc(lead.id) + '">' + h.pt('hero', lead, 64) +
           '<span><b>' + esc(lead.name) + '</b> Lv.' + (g ? g.lv : 1) + '<br><small>무력 ' + (fin.might | 0) + ' · 지력 ' + (fin.wisdom | 0) + ' · 통솔 ' + (fin.command | 0) + '</small></span></button>' +
-        equipLines(lead.id, WP, AR, esc, true) + '</div>';
+        (pm ? '' : equipLines(lead.id, WP, AR, esc, true)) + '</div>';   // 칸은 위 패널이 보인다
     }
 
     out += '<div class="sec"><h4>👥 동행 장비</h4>';

@@ -1433,5 +1433,22 @@
   "ticket": "W-0353",
   "since": "2026-10-21",
   "note": "10-21: 공용 엔진 고침만"
+ },
+ {
+  "id": "dg.me-panel",
+  "name": "공용 「내 정보」 창(W-0361, shared/js/me-panel.js + 판 js/me-adapter.js) — 2나락: ☰ 「내 정보」 — 선두 영웅 8칸(item.equipped)·무/지/통·개인 전투력·부대 공/방, 칸 → 장비 창, ☯ 경락도 · 읽기만(세이브·균형 안 바꿈)",
+  "files": [
+   "js/me-panel.js",
+   "js/me-adapter.js"
+  ],
+  "tests": [
+   "「내 정보」 창(W-0361) — 어댑터 값이 기존 함수 값 그대로 · render 가 칸·수치·성장 단추를 그림"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0361",
+  "since": "2026-10-21",
+  "note": "10-21: PC 1280·폰 390 촬영 Read · 칸 누름 → 기존 창, 성장 단추 → 패시브 그물 열림(5/5)"
  }
 ]

@@ -199,6 +199,8 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/ui-shop.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/menu-grid.js"></script>
+<script src="js/me-adapter.js"></script>
+<script src="js/me-panel.js"></script>
 <script src="js/ui-detail.js"></script>
 <script src="js/ui-quest.js"></script>
 <script src="js/game.js"></script>
@@ -246,6 +248,11 @@ window.requestAnimationFrame = function () { return 0; };
     /* ── 갈라져 나온 프로젝트로서의 조건 ─────────────── */
 
     /* W-0295 PBR 땅 — 공용 pbrground3d 값 층(three 없이) */
+    t('「내 정보」 창(W-0361) — 어댑터 값이 기존 함수 값 그대로 · render 가 칸·수치·성장 단추를 그림', function () {
+      var m = DG.meAdapter.model(); var id = (DG.core.save.party || [])[0], ok = !id || (m.slots.length === DG.itemData.SLOTS.length && m.stats[1].value === DG.hero.power(id));
+      var h = DG.mePanel.render(m), drew = h.indexOf('me-panel') > 0 && (m.slots || []).every(function (s, k) { return h.indexOf('data-mp-slot="' + k + '"') > 0; }) && (!m.grow || h.indexOf('data-mp-grow') > 0);
+      return ok && drew && ('칸 ' + (m.slots || []).length + ' · 수치 ' + (m.stats || []).length + (m.grow ? ' · 성장 단추' : '')) || '실패 ' + ok + ',' + drew;
+    });
     t('PBR 땅(W-0295, 2나락 들판 땅) — LOW 는 옛 재질 · MEDIUM 법선 512 · HIGH 법선 hi · 손잡이 dungeon3d.pbr 0 이면 끔', function () {
       var PG = DG.pbrground3d, C = DG.core; if (!PG || !PG.plan) { return '실패 pbrground3d 없음'; }
       var k0 = C.tuned('dungeon3d.pbr', 1), lo = PG.plan('LOW', 'dungeon3d'), md = PG.plan('medium', 'dungeon3d'), hi = PG.plan('high', 'dungeon3d'), off, rep = PG.repeatOf(2000, 900, 128), keep = {};

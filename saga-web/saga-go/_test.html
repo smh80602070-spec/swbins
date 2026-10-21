@@ -223,6 +223,8 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/ui-detail.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/menu-grid.js"></script>
+<script src="js/me-adapter.js"></script>
+<script src="js/me-panel.js"></script>
 <script src="js/game.js"></script>
 <script>
 /* 자가진단 — 헤드리스에서 게임 로직이 실제로 도는지 확인한다.
@@ -274,6 +276,11 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 
     /* ── 본편 뼈대 ─────────────────────────────────────── */
 
+    t('「내 정보」 창(W-0361) — 어댑터 값이 기존 함수 값 그대로 · render 가 칸·수치·성장 단추를 그림', function () {
+      var m = DG.meAdapter.model(); var id = (DG.core.save.party || []).filter(Boolean)[0], ok = !id || m.stats[0].value === DG.fieldCombat.memberOf(id).atk && m.slots.length === 1 + DG.artifact.SLOTS.length;
+      var h = DG.mePanel.render(m), drew = h.indexOf('me-panel') > 0 && (m.slots || []).every(function (s, k) { return h.indexOf('data-mp-slot="' + k + '"') > 0; }) && (!m.grow || h.indexOf('data-mp-grow') > 0);
+      return ok && drew && ('칸 ' + (m.slots || []).length + ' · 수치 ' + (m.stats || []).length + (m.grow ? ' · 성장 단추' : '')) || '실패 ' + ok + ',' + drew;
+    });
     t('초상 목록(W-0164) — manifest 의 인물 초상이 전부 도감 인물이고, 늦게 들어온 인물(ac_balgwang)도 정사각·카드 둘 다 올라 있다', function () {
       var M = DG.portraitDisk, H = {}, bad = [];
       if (!M) { try { var xq = new XMLHttpRequest(); xq.open('GET', 'assets/portraits/manifest.js', false); xq.send(); var tx = xq.responseText, i0 = tx.indexOf('portraitDisk=') + 13; M = JSON.parse(tx.slice(i0, tx.lastIndexOf('};') + 1)); } catch (e) { M = null; } }   // 진단 페이지엔 안 실려 직접 읽는다

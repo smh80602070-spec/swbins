@@ -164,6 +164,8 @@
    "js/ui-detail.js",
    "js/ui.js",
    "js/menu-grid.js",
+   "js/me-adapter.js",
+   "js/me-panel.js",
    "js/ops-client.js",
    "js/game.js"
   ]
@@ -329,6 +331,8 @@
    "js/ui-detail.js",
    "js/ui.js",
    "js/menu-grid.js",
+   "js/me-adapter.js",
+   "js/me-panel.js",
    "js/game.js"
   ]
  ],
