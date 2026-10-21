@@ -10,6 +10,7 @@ extends Node
 ## ④ 같은 종 넷은 같은 몸 ⑤ 예고 → Attack, 맞으면 Hit, 쓰러지면 쓰러진 몸이 장면에 남아 Death·새 몸은 GLB
 ## G-0274 — 보통 종 일곱은 creatures/<id>.glb(MonsterBody.CREATURE_BY_KIND)가 mon_sp_ 보다 먼저: ① 짝 표·② 몸 경로가 그것 · creatures 몸 발 바닥이 땅(±0.08m)
 ##   · ⑦ SAGA_MONSTER_CREATURE=0 이면 mon_sp_wolf.
+## G-0281 — ⑧ 덧칠 종(번개살쾡이 등) 몸 표면이 creature_tint 재질 · 같은 종 둘이 한 재질 · SAGA_MONSTER_TINT=0 이면 덧칠 없음 · 늑대는 덧칠 없음.
 ## ⑥ 기본(환경 없음)은 GLB, SAGA_CODE_CREATURES=1 이면 "" (코드 짐승). 세운 적은 플레이어에게서 150m 밖(잠듦)에 두고 끝에 치운다. 저장 안 함.
 
 const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
@@ -124,6 +125,17 @@ func _physics_process(_delta: float) -> void:
 			var code_ok := MonsterBody.path_for(FieldEnemy.KINDS, "wolf", "x") == "" and String(e.get("glb_path")) == "" and e.get("_visual") != null
 			OS.unset_environment("SAGA_CODE_CREATURES")
 			_made.append(e)
+			## ⑧ 원소 색 덧칠
+			var c1 := _spawn("thunder_cat", "MB_tint1", _base + Vector3(0.0, 0.0, -50.0))
+			var c2 := _spawn("thunder_cat", "MB_tint2", _base + Vector3(4.0, 0.0, -50.0))
+			var w := _spawn("wolf", "MB_tint3", _base + Vector3(8.0, 0.0, -50.0))
+			OS.set_environment("SAGA_MONSTER_TINT", "0")
+			var c0 := _spawn("thunder_cat", "MB_tint0", _base + Vector3(12.0, 0.0, -50.0))
+			OS.unset_environment("SAGA_MONSTER_TINT")
+			_made.append_array([c1, c2, w, c0])
+			var m1 := _over(c1)
+			var tint_ok := m1 is ShaderMaterial and (m1 as ShaderMaterial).shader.resource_path.ends_with("creature_tint.gdshader") and m1 == _over(c2) and _over(w) == null and _over(c0) == null
+			_check("tint", tint_ok, "cat=%s same=%s wolf=%s off=%s" % [m1, m1 == _over(c2), _over(w), _over(c0)])
 			OS.set_environment("SAGA_MONSTER_CREATURE", "0")
 			var off := MonsterBody.path_for(FieldEnemy.KINDS, "wolf", "x")
 			OS.unset_environment("SAGA_MONSTER_CREATURE")
@@ -150,6 +162,11 @@ func _want(k: String) -> String:
 	if MonsterBody.CREATURE_BY_KIND.has(k):
 		return MonsterBody.CREATURE_DIR + String(MonsterBody.CREATURE_BY_KIND[k]) + ".glb"
 	return "res://assets/world/mon_sp_%s.glb" % k
+
+## 몸 첫 메시 첫 표면의 덧칠 재질(override). 없으면 null.
+func _over(e: Node) -> Material:
+	var ms := (e.get("_visual") as Node3D).find_children("*", "MeshInstance3D", true, false)
+	return (ms[0] as MeshInstance3D).get_surface_override_material(0) if not ms.is_empty() else null
 
 ## 몸 메시 맨 아래 높이(장면 좌표).
 func _bottom(v: Node3D) -> float:

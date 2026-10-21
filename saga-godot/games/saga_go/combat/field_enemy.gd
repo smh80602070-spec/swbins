@@ -917,6 +917,7 @@ func _build_visual() -> Node3D:
 	if glb_path != "":
 		v = MonsterBody.build(glb_path, float(def.get("height", WOLF_HEIGHT)))
 		if v != null:
+			MonsterBody.tint(v, kind, def)   # G-0281 creatures 몸 원소 색
 			_anim = v.get_node_or_null("AnimationPlayer") as AnimationPlayer
 			_visual_scale = v.scale.x
 			return v

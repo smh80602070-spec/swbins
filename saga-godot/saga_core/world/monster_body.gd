@@ -11,6 +11,8 @@ extends RefCounted
 ##   mon_sp_ 보다 먼저(CREATURE_BY_KIND). 짝 없는 종(물거북)·보스는 mon_sp_ 그대로. SAGA_MONSTER_CREATURE=0 이면 mon_sp_ 로.
 ##   creatures 몸은 스킨 바인드 포즈에 배율이 있어(늑대 0.57·고양이 0.27) 메시 원본 크기 ≠ 그려지는 크기 — build 가 바인드를
 ##   곱한 상자(_posed_box)로 키를 맞추고 발을 0 에(그려지는 몸은 이미 발 0 이라 보통 그대로).
+## G-0281 — creatures 몸은 원본 동물 색이라 원소가 안 읽혀(번개살쾡이 = 주황 고양이) TINT_BY_KIND 종은 tint() 가 밝기 지키는
+##   색조 덧칠(creature_tint.gdshader, 종마다 재질 한 벌 — 무리가 공유). 끄기 SAGA_MONSTER_TINT=0.
 ## **기본은 켜짐.** 끄는 스위치: SAGA_CODE_CREATURES=1 이면 코드 짐승(creature_builder). SAGA_GLB_MONSTERS 는 옛 켜기(무시해도 켜짐).
 
 const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
@@ -26,6 +28,10 @@ const VARIANTS := 4
 const CREATURE_DIR := "res://assets/creatures/"
 const CREATURE_BY_KIND := {"wolf": "wolf", "fire_imp": "demon_red", "thunder_cat": "cat", "wind_hawk": "owl",
 	"ice_fox": "fox", "rock_bear": "bear", "grass_snake": "snake"}
+## 종 → [KINDS colors 몇 번째, 덧칠 양, 밝기]. 덩굴뱀은 흰 뱀이라 초록. 나머지 넷은 몸 색이 이름과 맞아 그대로(G-0281 촬영).
+const TINT_BY_KIND := {"thunder_cat": [0, 0.85, 1.0], "ice_fox": [1, 0.9, 1.35], "grass_snake": [0, 0.8, 1.0]}
+const TINT_SHADER := "res://saga_core/shaders/creature_tint.gdshader"
+static var _tint_mats := {}   # 종 → ShaderMaterial(같은 종 무리 한 벌)
 ## field_enemy 가 쓰는 소문자 이름 → GLB 애니 이름.
 const ANIMS := {"idle": "Idle", "walk": "Walk", "run": "Run", "attack": "Attack", "hit": "Hit", "death": "Death", "special": "Special"}
 const LOOPED := ["Idle", "Walk", "Run"]
@@ -138,6 +144,35 @@ static func _lift(v: Node3D, dy: float) -> void:
 	for c in v.get_children():
 		if c is Node3D and c.name != "MotionRoot":
 			(c as Node3D).position.y += dy
+
+
+## creatures 몸이면 종 원소 색을 덧칠한다(표에 있는 종만). 바꾼 표면 수.
+static func tint(v: Node3D, kind: String, def: Dictionary) -> int:
+	if v == null or OS.get_environment("SAGA_MONSTER_TINT") == "0" or not TINT_BY_KIND.has(kind) or creature_path(kind) == "":
+		return 0
+	var n := 0
+	for mi in GLBUtils.find_all_mesh_instances(v):
+		if mi.mesh == null:
+			continue
+		for i in mi.mesh.get_surface_count():
+			var base := mi.get_active_material(i) as StandardMaterial3D
+			if base == null or base.albedo_texture == null:
+				continue
+			var key := "%s/%d" % [kind, i]
+			if not _tint_mats.has(key):
+				var t: Array = TINT_BY_KIND[kind]
+				var cols: Array = def.get("colors", [])
+				var sm := ShaderMaterial.new()
+				sm.shader = load(TINT_SHADER) as Shader
+				sm.set_shader_parameter("albedo_texture", base.albedo_texture)   # 이름은 material_audit 이 그림으로 읽는 것
+				sm.set_shader_parameter("tint", cols[int(t[0])] if cols.size() > int(t[0]) else Color.WHITE)
+				sm.set_shader_parameter("amount", float(t[1]))
+				sm.set_shader_parameter("bright", float(t[2]))
+				sm.set_shader_parameter("roughness_v", base.roughness)
+				_tint_mats[key] = sm
+			mi.set_surface_override_material(i, _tint_mats[key])
+			n += 1
+	return n
 
 
 static func anim_name(want: String) -> String:
