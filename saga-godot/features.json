@@ -4818,6 +4818,26 @@
   "note": "SAGA_NATURE_REAL=0 이면 옛 툰 · GLBUtils.extract_mesh·WorldAsset.path 가 거침 · 잎 카드(MASK)는 textured_surfaces 가 컷아웃판(tint 곱)·4종횡 실루엣은 알파만 쓰는 단색 셰이더 · 배치표 kinds.json·hebei 다시 생성"
  },
  {
+  "id": "gd.core.kit-real",
+  "name": "굴·방 킷·하늘섬 밑동 사실판(K-0128) — 2나락 방·문틀·통로 9·기둥·굴 흙 문을 assets/world/real/<id>_real.glb 로(WorldAsset.nature 한 곳), 1만리 하늘섬 넷 밑동은 정점색 뿔 대신 사실 바위 덩이 둘",
+  "files": [
+   "saga_core/world/world_asset.gd",
+   "games/saga_go/world/isle_rock.gd"
+  ],
+  "tests": [
+   "dungeon_belt",
+   "dungeon_world",
+   "world_asset",
+   "perf_scenes"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0273",
+  "since": "2026-10-21",
+  "note": "SAGA_DUNGEON_REAL=0 킷 툰 · SAGA_ISLE_REAL=0 옛 뿔 · 킷은 툰판과 모양·재질 이름이 같아 2나락 RealSurface(G-0252)가 그대로 PBR 로 덮음(방 화면 거의 같음) · 굴 문 석회·용암은 사실판 없어 툰"
+ },
+ {
   "id": "gd.core.face-light",
   "name": "인물 얼굴 그림자(원신식, 다섯 판 공용) — 얼굴 표면은 머리 앞 방향을 섞은 수평 법선으로 명암(코·입가·턱 얼룩 없음, 좌우 반쪽 그늘) · 얼굴 살갗은 SDF 반쪽 경계(K-0151, G-0271)",
   "files": [

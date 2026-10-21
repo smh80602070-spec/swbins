@@ -58,12 +58,32 @@ const NATURE_REAL := {
 }
 
 
-## `assets/world/<옛 툰 id>.glb` 면 사실판 경로(열리면), 아니면 그대로. SAGA_NATURE_REAL=0 이면 늘 옛 것(전후 비교).
+## G-0273 — K-0128 굴·방 킷 사실판(`assets/world/real/<id>_real.glb`). 툰판과 모양·재질 이름이 같고 그림만 사실이라
+## 2나락 RealSurface(G-0252, 재질 이름으로 PBR 세트를 고름)는 그대로 맞물린다. 굴 문은 흙 하나만 왔다(석회·용암은 툰).
+const KIT_DIR := "res://assets/world/real/"
+const KIT_REAL := [
+	"dungeon_room_12_dirt", "dungeon_room_12_limestone", "dungeon_room_12_lava",
+	"dungeon_gate_44_dirt", "dungeon_gate_44_limestone", "dungeon_gate_44_lava",
+	"dungeon_corridor_4_dirt", "dungeon_corridor_4_limestone", "dungeon_corridor_4_lava",
+	"dungeon_pillar_01", "cave_gate_01_dirt",
+]
+
+
+## `assets/world/<옛 툰 id>.glb` 면 사실판 경로(열리면), 아니면 그대로. SAGA_NATURE_REAL=0(자연물)·SAGA_DUNGEON_REAL=0(킷)이면 옛 것(전후 비교).
 ## GLBUtils.extract_mesh·path() 가 거쳐 부르는 곳(다섯 판 빌더)은 고치지 않는다.
 static func nature(old_path: String) -> String:
 	if not old_path.begins_with(WORLD_DIR) or old_path.get_base_dir() + "/" != WORLD_DIR:
 		return old_path
-	var f: String = NATURE_REAL.get(old_path.get_file().get_basename(), "")
+	var id := old_path.get_file().get_basename()
+	if KIT_REAL.has(id):
+		if OS.get_environment("SAGA_DUNGEON_REAL") == "0":
+			return old_path
+		var kp := KIT_DIR + id + "_real.glb"
+		if not ResourceLoader.exists(kp):
+			push_warning("WorldAsset: 킷 사실판 없음 — %s (옛 경로로 물러섬)" % kp)
+			return old_path
+		return kp
+	var f: String = NATURE_REAL.get(id, "")
 	if f == "" or OS.get_environment("SAGA_NATURE_REAL") == "0":
 		return old_path
 	var p := NATURE_DIR + f

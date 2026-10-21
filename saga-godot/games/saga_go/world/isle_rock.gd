@@ -5,6 +5,10 @@ extends RefCounted
 ## 꼭짓점 색으로 윗띠 흙빛·바위 층 줄무늬·끝으로 갈수록 어둡게, 윗띠에서 늘어진 뿌리와 끝 밑에 뜬 돌 몇 개를 더한다.
 ## 전부 메시 한 벌·재질 하나라 그리기 수는 예전 원뿔과 같다(1). 충돌은 부르는 쪽이 원래 CylinderMesh 로 따로 만든다.
 ## 모양은 seed 로 결정적(섬마다 다르지만 매번 같다).
+## G-0273 — K-0128 사실 바위 덩이 둘(`assets/world/real/isle_rock_0N_real.glb`, 윗반지름 1·높이 1·윗면 y=0)을 seed 로 골라
+## 뿔 치수로 늘린다(x·z ← 윗반지름, y ← 높이). 윗면이 원판 밑면(pos.y + 높이/2)에 맞닿는다. SAGA_ISLE_REAL=0 이면 옛 뿔.
+const REAL_ROCKS := ["res://assets/world/real/isle_rock_01_real.glb", "res://assets/world/real/isle_rock_02_real.glb"]
+const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
 
 const RINGS := 7 # 윗링(원판과 맞물림) ~ 끝 바로 위 링
 const SEG := 20
@@ -15,6 +19,18 @@ const ROCK_WARM := Color(0.56, 0.45, 0.35)
 
 ## cone = 예전 보이던 뿔(top_radius·bottom_radius·height 만 읽는다). pos = 예전 MeshInstance3D 자리(뿔 가운데).
 static func add(parent: Node3D, cone: CylinderMesh, color: Color, pos: Vector3, seed: int) -> MeshInstance3D:
+	var real_path: String = REAL_ROCKS[absi(seed) % REAL_ROCKS.size()]
+	if OS.get_environment("SAGA_ISLE_REAL") != "0" and ResourceLoader.exists(real_path):
+		var rm := GLBUtils.extract_mesh(real_path)
+		if rm != null:
+			var ri := MeshInstance3D.new()
+			ri.name = "IsleRock"
+			ri.mesh = rm
+			ri.scale = Vector3(cone.top_radius, cone.height, cone.top_radius)
+			ri.rotation.y = float(absi(seed) % 360) * PI / 180.0
+			ri.position = pos + Vector3.UP * cone.height * 0.5
+			parent.add_child(ri)
+			return ri
 	var mi := MeshInstance3D.new()
 	mi.mesh = build(cone.top_radius, cone.bottom_radius, cone.height, color, seed)
 	var m := StandardMaterial3D.new()
