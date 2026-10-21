@@ -76,6 +76,33 @@ namespace Saga.Core.Region
             if (GroundToon) Shader.EnableKeyword(GroundToonKeyword); else Shader.DisableKeyword(GroundToonKeyword);
         }
 
+        // U-0084 2단계 사실 땅 — 땅 셰이더(VertexColorLit·ForestWorldCurve) 재질에 사진 네 세트를 꽂고 키워드를 켠다.
+        // 세트 순서 = 셰이더 칸 0~3(정점 UV1 가중치 xyzw 와 같은 순서). `SAGA_NO_PHOTO=1` 이면 안 꽂음(옛 디테일 곱).
+        public static readonly string[] GroundPhotoSets = { "grass", "dirt", "rock", "gravel" };
+        public const string GroundPhotoKeyword = "_SAGA_GROUND_PHOTO";
+
+        /// <summary>땅 재질에 사진 세트를 꽂는다. tiling = 세트별 되풀이 크기(m). 사진이 하나라도 없거나 꺼져 있으면 false(재질 그대로).</summary>
+        public static bool ApplyGroundPhoto(Material m, Vector4 tiling)
+        {
+            if (m == null || PhotoOff || !m.HasProperty("_GBase0")) return false;
+            var sets = new (Texture2D b, Texture2D n, Texture2D r)[GroundPhotoSets.Length];
+            for (int i = 0; i < sets.Length; i++)
+            {
+                sets[i] = PhotoSet(GroundPhotoSets[i]);
+                if (sets[i].b == null || sets[i].n == null || sets[i].r == null) return false;
+            }
+            for (int i = 0; i < sets.Length; i++)
+            {
+                m.SetTexture("_GBase" + i, sets[i].b);
+                m.SetTexture("_GNorm" + i, sets[i].n);
+                m.SetTexture("_GRough" + i, sets[i].r);
+            }
+            m.SetVector("_GTiling", tiling);
+            m.SetFloat("_GroundPhoto", 1f);
+            m.EnableKeyword(GroundPhotoKeyword);
+            return true;
+        }
+
         /// <summary>인물(툰 유지 대상)인가 — 스킨 메시이거나 위(부모 포함)에 Animator 가 있는 것. 손에 든 무기도 뼈 아래라 인물 쪽.</summary>
         public static bool IsCharacter(Renderer r) =>
             r is SkinnedMeshRenderer || (r != null && r.GetComponentInParent<Animator>(true) != null);

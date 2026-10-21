@@ -1,0 +1,5 @@
+{"ticket":"U-0084","stage":2,"date":"2026-10-21",
+ "change":"VertexColorLit·ForestWorldCurve 땅 재질에 K-0146 사진 네 세트(풀·흙·바위·자갈) — 정점 UV1 가중치로 섞음, 색은 정점색(사진÷평균 밉), 법선 화면 미분 접선틀, 큰 얼룩으로 반복 깨기, 끄기 SAGA_NO_PHOTO=1",
+ "shots":{"before":"SAGA_NO_PHOTO=1","TestVillage":"타일 격자(코블 디테일) → 흙·바위 사진, 그림자 앉음 ○ · 둑 위 금 무늬 6m 되풀이 조금 보임 △","TestVillageForest":"민 초록 → 풀잎 사진, 휨·그림자 그대로 ○"},
+ "perf_fps_uncapped":{"order":"before,after,after,before","go":[51,47,44,45],"forest":[80,76,76,86],"go_delta":"-5%","forest_delta":"-8%","limit":"-10%"},
+ "diag":"PlaytestGroundLook OK(사진 셰이더 2/2·칸 표·3마을 UV1)"}

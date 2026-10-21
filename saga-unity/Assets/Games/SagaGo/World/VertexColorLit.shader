@@ -19,6 +19,22 @@ Shader "Saga/VertexColorLit"
         _DetailTiling ("Detail Tiling (world units per repeat)", Float) = 2
         _DetailStrength ("Detail Strength", Range(0,1)) = 0.6
         _Roughness ("Roughness (U-0084 PBR)", Range(0,1)) = 0.85
+        // U-0084 2단계 사진 땅 — RegionMaterials.ApplyGroundPhoto 가 채우고 키워드를 켠다(0 풀·1 흙·2 바위·3 자갈).
+        [Toggle(_SAGA_GROUND_PHOTO)] _GroundPhoto ("Ground Photo (U-0084)", Float) = 0
+        _PhotoStrength ("Photo Strength", Range(0,1)) = 1
+        _GTiling ("Photo Tiling m (grass, dirt, rock, gravel)", Vector) = (3, 3, 4, 2.5)
+        [NoScaleOffset] _GBase0 ("Grass", 2D) = "white" {}
+        [NoScaleOffset] _GBase1 ("Dirt", 2D) = "white" {}
+        [NoScaleOffset] _GBase2 ("Rock", 2D) = "white" {}
+        [NoScaleOffset] _GBase3 ("Gravel", 2D) = "white" {}
+        [NoScaleOffset][Normal] _GNorm0 ("Grass N", 2D) = "bump" {}
+        [NoScaleOffset][Normal] _GNorm1 ("Dirt N", 2D) = "bump" {}
+        [NoScaleOffset][Normal] _GNorm2 ("Rock N", 2D) = "bump" {}
+        [NoScaleOffset][Normal] _GNorm3 ("Gravel N", 2D) = "bump" {}
+        [NoScaleOffset] _GRough0 ("Grass R", 2D) = "white" {}
+        [NoScaleOffset] _GRough1 ("Dirt R", 2D) = "white" {}
+        [NoScaleOffset] _GRough2 ("Rock R", 2D) = "white" {}
+        [NoScaleOffset] _GRough3 ("Gravel R", 2D) = "white" {}
     }
     SubShader
     {
@@ -39,11 +55,15 @@ Shader "Saga/VertexColorLit"
             #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
             #pragma multi_compile_fragment _ _SHADOWS_SOFT
             #pragma multi_compile_fragment _ _SAGA_GROUND_TOON
+            #pragma multi_compile_local_fragment _ _SAGA_GROUND_PHOTO
             #pragma multi_compile_fog
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Assets/Shaders/SagaGroundPBR.hlsl"
+            #if defined(_SAGA_GROUND_PHOTO)
+            #include "Assets/Shaders/SagaGroundPhoto.hlsl"
+            #endif
 
             TEXTURE2D(_DetailTex); SAMPLER(sampler_DetailTex);
             float _DetailTiling;
@@ -56,6 +76,7 @@ Shader "Saga/VertexColorLit"
                 float3 normalOS   : NORMAL;
                 float4 color      : COLOR;
                 float2 uv         : TEXCOORD0;
+                float4 kinds      : TEXCOORD1; // U-0084 사진 세트 가중치(TerrainBuilder)
             };
 
             struct Varyings
@@ -66,6 +87,7 @@ Shader "Saga/VertexColorLit"
                 float4 color       : COLOR;
                 float2 uv          : TEXCOORD2;
                 float fogCoord     : TEXCOORD3;
+                float4 kinds       : TEXCOORD4;
             };
 
             Varyings Vert(Attributes IN)
@@ -77,6 +99,7 @@ Shader "Saga/VertexColorLit"
                 OUT.normalWS = TransformObjectToWorldNormal(IN.normalOS);
                 OUT.color = IN.color;
                 OUT.uv = IN.uv;
+                OUT.kinds = IN.kinds;
                 OUT.fogCoord = ComputeFogFactor(OUT.positionHCS.z);
                 return OUT;
             }
@@ -94,11 +117,20 @@ Shader "Saga/VertexColorLit"
                 // 0(안 씀)~1(그대로 곱함) 사이를 보간해 과해지지 않게 한다.
                 half detail = SAMPLE_TEXTURE2D(_DetailTex, sampler_DetailTex, IN.uv / _DetailTiling).r;
                 half3 albedo = IN.color.rgb * lerp(1.0h, detail, _DetailStrength);
+                half rough = (half)_Roughness;
+                #if defined(_SAGA_GROUND_PHOTO)
+                // 사진 땅 — 정점색이 바탕색, 사진은 무늬·법선·거칠기(디테일 곱은 사진이 대신함)
+                {
+                    half3 pa, pn; half pr;
+                    SagaGroundPhoto(IN.uv, IN.kinds, IN.color.rgb, IN.positionWS, normalWS, pa, pn, pr);
+                    albedo = pa; normalWS = pn; rough = lerp(rough, pr, (half)_PhotoStrength);
+                }
+                #endif
 
                 #if defined(_SAGA_GROUND_TOON)
                 half3 lit = albedo * (shadowed + ambient);
                 #else
-                half3 lit = SagaGroundPBR(albedo, IN.positionWS, (half3)normalWS, IN.positionHCS, (half)_Roughness);
+                half3 lit = SagaGroundPBR(albedo, IN.positionWS, (half3)normalWS, IN.positionHCS, rough);
                 #endif
                 lit = MixFog(lit, IN.fogCoord);
                 return half4(lit, 1);

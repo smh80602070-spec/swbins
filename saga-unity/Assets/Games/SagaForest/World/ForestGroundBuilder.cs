@@ -49,6 +49,7 @@ namespace Saga.Forest.World
             var verts = new List<Vector3>();
             var normals = new List<Vector3>();
             var colors = new List<Color>();
+            var kinds = new List<Vector4>();
             var tris = new List<int>();
 
             float halfW = VillageWidth * 0.5f;
@@ -65,6 +66,7 @@ namespace Saga.Forest.World
                     verts.Add(new Vector3(wx, 0f, wz));
                     normals.Add(Vector3.up);
                     colors.Add(ForestBiomeData.SampleTint(wx, wz));
+                    kinds.Add(PhotoKindAt(wx, wz));
                 }
             }
 
@@ -87,6 +89,7 @@ namespace Saga.Forest.World
             mesh.SetVertices(verts);
             mesh.SetNormals(normals);
             mesh.SetColors(colors);
+            mesh.SetUVs(1, kinds);
             mesh.SetTriangles(tris, 0);
             mesh.RecalculateBounds();
 
@@ -106,11 +109,38 @@ namespace Saga.Forest.World
                     mat.SetFloat("_DetailTiling", detailTiling);
                     mat.SetFloat("_DetailStrength", detailStrength);
                 }
+                Saga.Core.Region.RegionMaterials.ApplyGroundPhoto(mat, PhotoTiling);
                 mr.sharedMaterial = mat;
             }
 
             var col = gameObject.AddComponent<MeshCollider>();
             col.sharedMesh = mesh;
+        }
+
+        // ---- U-0084 2단계 사진 땅 — 정점 UV1 = 사진 세트 가중치(풀·흙·바위·자갈) ----
+        /// <summary>사진 되풀이 크기(m) — 이 판은 사람 키가 실제와 비슷해 사진 실제 크기 그대로.</summary>
+        public static readonly Vector4 PhotoTiling = new Vector4(3f, 3f, 4f, 2.5f);
+
+        /// <summary>바깥 = 풀. 바이옴 안쪽으로 갈수록(색 물들임과 같은 반경) 바위 지대 = 바위·자갈, 어둑숲·버섯숲 = 흙 섞인 숲바닥, 꽃밭 = 풀.</summary>
+        public static Vector4 PhotoKindAt(float wx, float wz)
+        {
+            Vector4 w = new Vector4(1, 0, 0, 0);
+            foreach (var z in ForestBiomeData.Zones)
+            {
+                float d = Vector2.Distance(new Vector2(wx, wz), z.Center);
+                if (d >= z.Radius) continue;
+                float t = d <= z.InnerRadius ? 1f : 1f - Mathf.InverseLerp(z.InnerRadius, z.Radius, d);
+                Vector4 k;
+                switch (z.Key)
+                {
+                    case "rocky": k = new Vector4(0.15f, 0, 0.55f, 0.3f); break;
+                    case "dark_forest": k = new Vector4(0.45f, 0.55f, 0, 0); break;
+                    case "mushroom_forest": k = new Vector4(0.6f, 0.4f, 0, 0); break;
+                    default: k = w; break;
+                }
+                w = Vector4.Lerp(w, k, t);
+            }
+            return w;
         }
     }
 }

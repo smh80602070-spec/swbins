@@ -1832,6 +1832,7 @@
   "name": "사실 땅 1단계 — 땅 계열 셰이더(RegionGround 띠·림 툰 / VertexColorLit·ForestWorldCurve 램버트)를 URP PBR 조명으로(거칠기 0.85·금속 0, 그림자·하늘 SH·반사·추가 조명), 텍스처·섞음·휨 그대로(U-0084)",
   "files": [
    "saga-unity/Assets/Shaders/SagaGroundPBR.hlsl",
+   "saga-unity/Assets/Shaders/SagaGroundPhoto.hlsl",
    "saga-unity/Assets/Shaders/RegionGround.shader",
    "saga-unity/Assets/Games/SagaGo/World/VertexColorLit.shader",
    "saga-unity/Assets/Games/SagaForest/Shaders/ForestWorldCurve.shader"
@@ -1845,7 +1846,7 @@
   "fun": {},
   "ticket": "U-0084",
   "since": "2026-10-10",
-  "note": "D2(눈 ○, U-0084 1단계): docs/playcheck/d2-u0084-20261010.json — 1만리·3마을·4종횡·5천하 낮 전후(전 = SAGA_GROUND_TOON=1): 띠 경계 없음·그림자가 땅에 앉음·3마을 휨 그대로·날림 없음. 1만리·3마을은 원래 램버트라 차이가 작고(조금 부드러움·추가 조명 받음), 4종횡·5천하 땅은 이미 URP Lit, 띠·림 툰이던 RegionGround 는 게임 씬 미사용(지역 로더 전용). 2단계(사진 텍스처·높이 섞기)는 K-0093 대기"
+  "note": "D2(눈 ○, U-0084 1단계): docs/playcheck/d2-u0084-20261010.json — 1만리·3마을·4종횡·5천하 낮 전후(전 = SAGA_GROUND_TOON=1): 띠 경계 없음·그림자가 땅에 앉음·3마을 휨 그대로·날림 없음. 1만리·3마을은 원래 램버트라 차이가 작고(조금 부드러움·추가 조명 받음), 4종횡·5천하 땅은 이미 URP Lit, 띠·림 툰이던 RegionGround 는 게임 씬 미사용(지역 로더 전용). 2단계 끝(10-21, d2-u0084-20261021.json): K-0146 사진 네 세트(풀·흙·바위·자갈)를 정점 UV1 가중치로 섞음(색은 정점색, 사진은 무늬·법선·거칠기, 큰 얼룩 반복 깨기, SAGA_NO_PHOTO=1 끔) — 1만리 타일 격자 → 흙·바위 결, 3마을 민 초록 → 풀잎 ○, 성능 −5%/−8%(상한 −10%)"
  },
  {
   "id": "un.dg.room-light",

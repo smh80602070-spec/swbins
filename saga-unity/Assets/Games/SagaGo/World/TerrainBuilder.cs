@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
 using Saga.Go.Data;
@@ -234,6 +235,7 @@ namespace Saga.Go.World
             mesh.SetColors(colors);
             mesh.SetNormals(normals);
             mesh.SetUVs(0, uvs);
+            mesh.SetUVs(1, Enumerable.Repeat(KindRock, verts.Count).ToList());
             mesh.SetTriangles(tris, 0);
             mesh.RecalculateBounds();
             return mesh;
@@ -307,6 +309,7 @@ namespace Saga.Go.World
             mesh.SetColors(colors);
             mesh.SetNormals(normals);
             mesh.SetUVs(0, uvs);
+            mesh.SetUVs(1, PhotoKinds(verts, normals));
             mesh.SetTriangles(tris, 0);
             mesh.RecalculateBounds();
 
@@ -326,8 +329,56 @@ namespace Saga.Go.World
                     mat.SetFloat("_DetailTiling", detailTiling);
                     mat.SetFloat("_DetailStrength", detailStrength);
                 }
+                Saga.Core.Region.RegionMaterials.ApplyGroundPhoto(mat, PhotoTiling);
                 mr.sharedMaterial = mat;
             }
+        }
+
+        // ---- U-0084 2단계 사진 땅 — 정점마다 사진 세트 가중치(UV1: 풀·흙·바위·자갈) ----
+        /// <summary>사진 되풀이 크기(m) — 이 판 몸이 3.4m 라 실제 크기의 두 배쯤.</summary>
+        public static readonly Vector4 PhotoTiling = new Vector4(6f, 6f, 9f, 5f);
+        public static readonly Vector4 KindRock = new Vector4(0, 0, 1, 0);
+
+        /// <summary>지형 글자 → 사진 세트 가중치. 들·숲·밭 = 풀(숲·밭은 흙 섞음), 길·강·다리 = 흙, 산·동굴 = 바위, 마을·사당·폐허 = 자갈.</summary>
+        public static Vector4 PhotoKindOf(char ch)
+        {
+            switch (ch)
+            {
+                case '.': return new Vector4(1, 0, 0, 0);
+                case 'T': return new Vector4(0.6f, 0.4f, 0, 0);
+                case 'F': return new Vector4(0.5f, 0.5f, 0, 0);
+                case '=': case '~': case 'B': return new Vector4(0, 1, 0, 0);
+                case '^': case 'C': return KindRock;
+                case 'H': case 'S': case 'R': return new Vector4(0, 0.3f, 0, 0.7f);
+                default: return new Vector4(1, 0, 0, 0);
+            }
+        }
+
+        /// <summary>정점 가중치 — 누운 면은 둘레 다섯 점 칸의 평균(정점색 섞임처럼 칸 경계가 부드럽게),
+        /// 선 면(절벽·둑)은 그 면을 가진 칸이 산이면 바위·아니면 흙.</summary>
+        public static List<Vector4> PhotoKinds(List<Vector3> verts, List<Vector3> normals)
+        {
+            float r = TestMapData.TileSize * EdgeBlendMargin * 0.5f;
+            var offs = new[] { Vector3.zero, new Vector3(r, 0, 0), new Vector3(-r, 0, 0), new Vector3(0, 0, r), new Vector3(0, 0, -r) };
+            var list = new List<Vector4>(verts.Count);
+            for (int i = 0; i < verts.Count; i++)
+            {
+                Vector3 p = verts[i], n = normals[i];
+                if (n.y < 0.6f)
+                {
+                    var (gx, gy) = TestMapData.WorldToGrid(p - new Vector3(n.x, 0, n.z) * 1f);
+                    list.Add(TestMapData.TileAt(gx, gy) == '^' ? KindRock : new Vector4(0, 1, 0, 0));
+                    continue;
+                }
+                Vector4 w = Vector4.zero;
+                foreach (var o in offs)
+                {
+                    var (gx, gy) = TestMapData.WorldToGrid(p + o);
+                    w += PhotoKindOf(TestMapData.TileAt(gx, gy));
+                }
+                list.Add(w / offs.Length);
+            }
+            return list;
         }
 
         /// <summary>칸 하나를 Sub x Sub 조각으로 나눠 넣는다. (u,v)는 칸 안의 상대 위치.
@@ -697,6 +748,7 @@ namespace Saga.Go.World
             mesh.SetColors(colors);
             mesh.SetNormals(normals);
             mesh.SetUVs(0, uvs);
+            mesh.SetUVs(1, Enumerable.Repeat(KindRock, verts.Count).ToList());
             mesh.SetTriangles(tris, 0);
             mesh.RecalculateBounds();
             return mesh;
