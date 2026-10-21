@@ -28,6 +28,10 @@ const GO := "res://games/saga_go/world/TestVillage.tscn"
 const GFX := "res://saga_core/data/graphics_settings.gd"
 
 const CUTS := [
+	["ac_go_cast", GO, [["static", "res://tools/shot_action.gd", "at", ["@tree", "go_cast"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 3.5]]],   # G-0284
+	["ac_go_strong", GO, [["static", "res://tools/shot_action.gd", "at", ["@tree", "go_strong"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 3.5]]],   # G-0284
+	["ac_dg_attack", DUNGEON, [["free_modal"], ["static", "res://tools/shot_action.gd", "at", ["@tree", "dg_attack"]]]],   # G-0284
+	["ac_dg_cast", DUNGEON, [["free_modal"], ["static", "res://tools/shot_action.gd", "at", ["@tree", "dg_cast"]]]],   # G-0284
 	["st_pose_attack", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "pose", ["@tree", "_attack"]]]],   # G-0283 기본 공격 몸짓
 	["st_pose_cut", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "pose", ["@tree", "_cast_warrior_cut"]]]],   # 전사 strong
 	["st_pose_fire", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "pose", ["@tree", "_cast_mage_fire"]]]],   # 마법 cast

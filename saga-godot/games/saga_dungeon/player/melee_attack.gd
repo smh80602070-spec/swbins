@@ -59,6 +59,8 @@ func try_attack() -> void:
 	if _cooldown_left > 0.0:
 		return
 	_cooldown_left = ATK_COOLDOWN / DungeonRunState.atk_speed_mult()
+	if _player.has_method("play_once"):   # G-0284 — 전엔 휘둘러도 몸이 서 있었다
+		_player.call("play_once", "attack", minf(0.32, _cooldown_left))
 	var range_now: float = ATK_RANGE * DungeonRunState.reach_mult()
 	for enemy in get_tree().get_nodes_in_group("dungeon_enemy"):
 		if not is_instance_valid(enemy):

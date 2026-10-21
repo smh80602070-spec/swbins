@@ -42,6 +42,9 @@ var _dash_hit: Array = []
 var _dash_sk: Dictionary = {}
 var _dash_rank := 0
 var _hits := 0 # 이번 시전에서 맞힌 수 — 첫 적만 멈칫·흔들림
+## G-0284 무예 모양 → 몸짓 클립(saga_core player.play_once). 쏘기·저주·사슬 = 손 뻗어 시전(모캡 cast) · 휘두르기 = 내리찍기(모캡 strong)
+## · 터뜨리기·부르기 = burst · 돌진 = 구르기 · 몸 북돋기·회복 = skill.
+const SHAPE_POSE := {"bolt": "cast", "curse": "cast", "chain": "cast", "swing": "strong", "nova": "burst", "summon": "burst", "dash": "dodge", "buff": "skill", "heal": "skill"}
 @onready var _player: Node3D = get_parent()
 
 
@@ -108,6 +111,8 @@ func try_cast(skill_key: String) -> bool:
 		"curse": ok = _cast_curse(sk, rank)
 		"summon": ok = _cast_summon(sk, rank)
 		"chain": ok = _cast_chain(sk, rank)
+	if ok and _player.has_method("play_once"):   # G-0284 무예 몸짓 — 모양별(SHAPE_POSE)
+		_player.call("play_once", String(SHAPE_POSE.get(str(sk.shape), "skill")), 0.4)
 	if ok:
 		_cd[skill_key] = float(sk.cd) * Meridian.mul("cd") * float(sk.get("tree_cd", 1.0))   # G-0217 기력·혈공·무심(경락) × G-0241 나무(재냉각·기력, 하한 ×0.3)
 		if float(sk.get("tree_drain", 0.0)) > 0.0:   # G-0241 나무 흡수 — 시전 때 6초 흡혈

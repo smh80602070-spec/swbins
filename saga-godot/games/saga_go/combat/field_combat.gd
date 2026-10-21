@@ -613,7 +613,7 @@ func charged_attack() -> bool:
 	_combo = 0
 	_attack_t = 0.5
 	_aim_at_nearest()
-	_player.call("play_action", "attack", 0.5, 0.0)
+	_player.call("play_action", "strong", 0.5, 0.0)   # G-0284 강공격 = 모캡 내리찍기(없으면 play_action 이 attack 으로)
 	_ring_fx(_player.global_position + _player.call("facing") * 1.2, 1.8, Color(0.95, 0.95, 0.85), 0.3)
 	_heavy = true
 	_crit_id = active_id()

@@ -52,6 +52,11 @@ var _joystick: Control = null
 var _current_anim := ""
 var _life: Node = null   # G-0265 생활 몸짓(life_pose) — 2나락·3마을(1만리는 G-0266)
 var _gait_scaled := false   # G-0264 — 걸음새가 speed_scale 을 바꿨으면 다른 클립으로 갈 때 1.0 으로
+## G-0284 한 번짜리 동작(2나락 공격·무예가 부름 — 1만리는 go_player.play_action, 4종횡은 story_player_base._skill_pose 가 따로).
+## 클립의 동작 구간(ONCE_WINDOW 초)만 sec 에 맞춰 한 번 틀고, 그동안(물리 프레임 — 헤드리스는 실시간보다 빠름) 걸음새가 안 덮는다.
+## 창은 G-0283 자세 시트(cast 손 뻗기 앞 0.8초 · strong 들어 올려 내리찍기 0.35~0.75초). 손잡이 SAGA_ACTION_MOCAP=0 이면 안 튼다(옛 길 — 몸 그대로).
+const ONCE_WINDOW := {"attack": [0.30, 0.95], "strong": [0.35, 0.75], "cast": [0.0, 0.8], "skill": [0.0, 0.53], "burst": [0.0, 1.13], "dodge": [0.05, 0.85]}
+var _once_until := 0
 
 func _ready() -> void:
 	var found := get_tree().get_nodes_in_group("virtual_joystick")
@@ -219,8 +224,23 @@ func _tick_life(delta: float, still: bool) -> void:
 func foot_lock_allowed() -> bool:
 	return not mounted and not fly_on and dash_speed <= 0.0 and not frozen
 
+## G-0284 — 한 번짜리 동작(위 ONCE_WINDOW). 클립이 없거나 손잡이 0 이면 false.
+func play_once(clip: String, sec: float) -> bool:
+	if OS.get_environment("SAGA_ACTION_MOCAP") == "0" or _anim == null or not _anim.has_animation(clip) or not ONCE_WINDOW.has(clip):
+		return false
+	var w: Array = ONCE_WINDOW[clip]
+	_once_until = Engine.get_physics_frames() + int(sec * Engine.physics_ticks_per_second)
+	_anim.speed_scale = (float(w[1]) - float(w[0])) / sec
+	_gait_scaled = true   # 끝나고 다음 _play_anim 이 빠르기를 1 로
+	_anim.play(clip)
+	_anim.seek(float(w[0]), true)   # 같은 클립 연타도 매번 구간 시작부터
+	_current_anim = clip
+	return true
+
 func _play_anim(anim_name: String) -> void:
 	if _anim == null or not _anim.has_animation(anim_name):
+		return
+	if Engine.get_physics_frames() < _once_until:
 		return
 	if _gait_scaled and anim_name != "walk" and anim_name != "sprint":
 		_anim.speed_scale = 1.0

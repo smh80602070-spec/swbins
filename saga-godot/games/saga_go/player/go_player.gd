@@ -709,7 +709,8 @@ func face_toward(pos: Vector3) -> void:
 ## 한 번짜리 동작 클립은 길다(공격 1.57초·회피 1.5초) — 후딜(0.3초대)만큼만 틀면 앞부분(준비 동작)만 반복돼 휘두르는 동작이 한 번도 안 나온다(G-0018).
 ## 그래서 클립에서 "실제 동작이 있는 구간"(창 [시작, 끝] 초)만 dur 에 맞춰 재생한다. 창은 클립을 시간대별로 찍어 눈으로 정했다:
 ##   attack 0.30~0.95초 = 몸을 낮춰 찌르는 동작 · dodge 0.05~0.85초 = 웅크림→도약→공중 구르기→착지. 창이 없는 클립은 처음부터 원래 속도.
-const CLIP_WINDOW := {"attack": [0.30, 0.95], "dodge": [0.05, 0.85], "land": [0.0, 0.8], "skill": [0.0, 0.53], "burst": [0.0, 1.13]}   # G-0025 — land·skill·burst 는 클립 전체(속도만 맞춘다)
+const CLIP_WINDOW := {"attack": [0.30, 0.95], "dodge": [0.05, 0.85], "land": [0.0, 0.8], "skill": [0.0, 0.53], "burst": [0.0, 1.13],
+	"cast": [0.0, 0.8], "strong": [0.35, 0.75]}   # G-0284 모캡 시전·내리찍기(웹 W-0357 짝 — 창은 G-0283 자세 시트)   # G-0025 — land·skill·burst 는 클립 전체(속도만 맞춘다)
 var _action_scaled := false # 동작이 재생 속도를 바꿨으면, 끝나고 1.0 으로 되돌린다
 
 ## G-0025 — 이동 상태별 동작(K-0059 클립, dex 동작 라이브러리). 클립이 없는 몸(옛 공방 몸·옛 VRoid 라이브러리)은 fallback.
@@ -717,6 +718,10 @@ func _pose(anim_name: String, fallback: String) -> void:
 	_play_anim(anim_name if _anim != null and _anim.has_animation(anim_name) else fallback)
 
 func play_action(anim_name: String, dur: float, move_scale: float) -> void:
+	if anim_name == "skill" and _anim != null and _anim.has_animation("cast") and OS.get_environment("SAGA_ACTION_MOCAP") != "0":
+		anim_name = "cast"   # G-0284 무예 시전 = 모캡 손 뻗기(옛 UAL skill 0.53초 대신)
+	if anim_name == "strong" and (_anim == null or not _anim.has_animation("strong") or OS.get_environment("SAGA_ACTION_MOCAP") == "0"):
+		anim_name = "attack"   # 모캡 없는 몸·손잡이 0 은 옛 공격 동작
 	if (anim_name == "skill" or anim_name == "burst") and _anim != null and not _anim.has_animation(anim_name):
 		anim_name = "attack"   # 시전 클립이 없는 몸은 공격 동작으로
 	_action_t = dur
