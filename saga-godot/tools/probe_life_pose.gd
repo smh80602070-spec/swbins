@@ -64,12 +64,19 @@ func _run() -> void:
 		_check(float(lp.call("sit_weight")) <= 0.001 and not lp.call("is_resting"), "%s 움직이면 0.3초 안 sit 세기 0 (%.2f)" % [id, lp.call("sit_weight")])
 		## 인사 — u 0.4
 		lp.call("play", "wave")
-		lp.call("step", 0.64)
-		r = await _pose(ap, skel, b, head_h, fwd, right)
-		_check(r.rhand.y > r.head.y, "%s wave 오른손 %.2f > 머리 %.2f" % [id, r.rhand.y, r.head.y])
-		_check(absf(r.rhand.fwd) < 0.15, "%s wave 앞으로 안 뻗음 |%.2f| < 0.15" % [id, r.rhand.fwd])
-		_check(r.rhand.side > 0.1, "%s wave 몸 오른쪽 %.2f > 0.1" % [id, r.rhand.side])
-		lp.call("step", 1.0)
+		if ap.has_animation("greet"):
+			## G-0275 — 모캡 greet 클립이 있는 몸은 뼈 코드 대신 그 클립(손 높이는 클립 몫 — SAGA_MOCAP=0 이 뼈 코드 기준을 잰다).
+			_check(ap.current_animation == "greet" and String(lp.call("current")) == "wave", "%s wave = greet 클립(%s)" % [id, ap.current_animation])
+			ap.play("idle")
+			ap.clear_queue()
+			lp.call("step", 3.0)
+		else:
+			lp.call("step", 0.64)
+			r = await _pose(ap, skel, b, head_h, fwd, right)
+			_check(r.rhand.y > r.head.y, "%s wave 오른손 %.2f > 머리 %.2f" % [id, r.rhand.y, r.head.y])
+			_check(absf(r.rhand.fwd) < 0.15, "%s wave 앞으로 안 뻗음 |%.2f| < 0.15" % [id, r.rhand.fwd])
+			_check(r.rhand.side > 0.1, "%s wave 몸 오른쪽 %.2f > 0.1" % [id, r.rhand.side])
+			lp.call("step", 1.0)
 		## 둘러보기·체중 — u 0.5
 		for pn in ["look", "shift"]:
 			lp.call("play", pn)

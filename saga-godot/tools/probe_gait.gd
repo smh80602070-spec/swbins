@@ -63,7 +63,7 @@ func _run() -> void:
 		var s := 0.0
 		for x in a:
 			s += float(x)
-		print("GAIT v0 %s 배율1 평균=%.2fm/s (foot_lock.gd V0_%s=%.2f)" % [clip, s / a.size(), String(clip).to_upper(), FootLock.V0_WALK if clip == "walk" else FootLock.V0_SPRINT])
+		print("GAIT v0 %s 배율1 평균=%.2fm/s (foot_lock.gd V0_%s=%.2f)" % [clip, s / a.size(), String(clip).to_upper(), (FootLock.V0_WALK_MOCAP if FootLock.VroidBody.mocap_on() else FootLock.V0_WALK) if clip == "walk" else FootLock.V0_SPRINT])
 	print("PROBE gait ", "OK" if fails == 0 else "FAIL %d" % fails)
 	quit(1 if fails > 0 else 0)
 

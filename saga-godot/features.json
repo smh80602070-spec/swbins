@@ -4838,6 +4838,28 @@
   "note": "SAGA_DUNGEON_REAL=0 킷 툰 · SAGA_ISLE_REAL=0 옛 뿔 · 킷은 툰판과 모양·재질 이름이 같아 2나락 RealSurface(G-0252)가 그대로 PBR 로 덮음(방 화면 거의 같음) · 굴 문 석회·용암은 사실판 없어 툰"
  },
  {
+  "id": "gd.core.mocap",
+  "name": "사람 모캡 동작(K-0139 CMU 12, 다섯 판 dex 몸 공용) — idle·walk·hit·death·pickup 을 모캡으로 덮고 greet·cast·strong·turn·sit_stand·idle_b·run 새 이름 · NPC 인사는 greet 클립·서 있는 변주에 idle_b",
+  "files": [
+   "assets/characters_vroid/anim_cc0/mocap_lib.res",
+   "saga_core/world/vroid_body.gd",
+   "saga_core/world/life_pose.gd",
+   "saga_core/player/foot_lock.gd"
+  ],
+  "tests": [
+   "dex_bodies",
+   "life_pose",
+   "gait",
+   "gestures"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0275",
+  "since": "2026-10-21",
+  "note": "SAGA_MOCAP=0 이면 옛 18 · hit·death 는 옛 길이로 빠르기 맞춤(피격 창 0.3초·전술판 쓰러짐 0.5초) · 모캡 walk 본래 빠르기 0.86m/s(V0_WALK_MOCAP) · sprint·attack·skill 은 UAL 그대로(CLIP_WINDOW 가 UAL 기준) · cast·strong 은 이름만"
+ },
+ {
   "id": "gd.core.face-light",
   "name": "인물 얼굴 그림자(원신식, 다섯 판 공용) — 얼굴 표면은 머리 앞 방향을 섞은 수평 법선으로 명암(코·입가·턱 얼룩 없음, 좌우 반쪽 그늘) · 얼굴 살갗은 SDF 반쪽 경계(K-0151, G-0271)",
   "files": [

@@ -72,6 +72,19 @@ func _init() -> void:
 	for c in ["idle", "walk", "sprint", "fall", "climb", "glide", "swim", "plunge"]:
 		if lib != null and lib.has_animation(c) and lib.get_animation(c).loop_mode != Animation.LOOP_LINEAR:
 			_fail("⑦ 반복 클립이 루프가 아님 " + c)
+	## ⑧ G-0275 모캡(K-0139) — 섞은 묶음에 새 일곱 이름·덮은 walk 는 모캡 길이 · SAGA_MOCAP=0 이면 새 이름 없음
+	var ml := VroidBody.dex_library()
+	for c in VroidBody.MOCAP_NEW:
+		if VroidBody.mocap_on() and (ml == null or not ml.has_animation(c)):
+			_fail("⑧ 모캡 새 클립 없음 " + c)
+	if VroidBody.mocap_on() and ml != null and lib != null and is_equal_approx(ml.get_animation("walk").length, lib.get_animation("walk").length):
+		_fail("⑧ walk 가 모캡으로 안 덮임")
+	OS.set_environment("SAGA_MOCAP", "0")
+	var ol := VroidBody.dex_library()
+	if ol == null or ol.has_animation("greet") or ol.has_animation("idle_b"):
+		_fail("⑧ SAGA_MOCAP=0 인데 모캡 클립 있음")
+	OS.set_environment("SAGA_MOCAP", "")
+
 	var sb := VroidBody.build_hero("self", 3)
 	if sb == null or sb.name != VroidBody.DEX_SELF_ID:
 		_fail("⑥ 주인공 몸이 DEX_SELF_ID 가 아니다")

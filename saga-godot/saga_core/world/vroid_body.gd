@@ -8,7 +8,7 @@ const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
 
 const HEAD_BONES := ["J_Bip_C_Head", "Head"]
 const NECK_BONES := ["J_Bip_C_Neck", "neck_01"]
-const LOOP_CLIPS := ["idle", "walk", "sprint"]
+const LOOP_CLIPS := ["idle", "walk", "sprint", "run", "idle_b"]
 
 const GOLD_RIM := Color(1.0, 0.82, 0.35)
 
@@ -19,6 +19,16 @@ const GOLD_RIM := Color(1.0, 0.82, 0.35)
 ## 머리뼈 높이를 id 해시로 정한 목표(1.38~1.50m ≈ 키 1.57~1.70m)에 맞춰 배율을 구한다.
 const DEX_DIR := "res://assets/characters_dex/"
 const DEX_LIB := "res://assets/characters_vroid/anim_cc0/dex_common_lib.res"   # G-0025 — 18클립(기본 8 + 이동·시전 10, K-0059). tools/ual_lib_build.gd 로 만든다
+## G-0275 — K-0139 CMU 모캡(같은 VRoid 뼈, tools/ual_lib_build.gd 로 구움 — 원본 assets/anim_mocap/vroid_mocap_anims.glb).
+## dex 공용 18 위에 MOCAP_OVER 는 모캡으로 덮고 MOCAP_NEW 는 새 이름으로 더한다. sprint·attack·skill 등 나머지는 UAL 그대로.
+## 덮는 것 중 MOCAP_FIT 은 쓰는 곳이 시간 창(피격 0.3초·쓰러짐 뒤 0.5초 줄이기 등)에 맞춰져 있어 옛 길이로 빠르기를 맞춘다.
+## SAGA_MOCAP=0 이면 옛 18 그대로(전후 비교).
+const MOCAP_LIB := "res://assets/characters_vroid/anim_cc0/mocap_lib.res"
+const MOCAP_OVER := ["idle", "walk", "hit", "death", "pickup"]
+const MOCAP_NEW := ["greet", "cast", "strong", "turn", "sit_stand", "idle_b", "run"]
+const MOCAP_FIT := ["hit", "death"]   # pickup 은 부르는 곳이 없어 제 길이(3.5초 — 옛 0.87초로 줄이면 네 배 빠름)
+static var _dex_lib: AnimationLibrary = null
+static var _dex_lib_mocap := false
 const DEX_HEAD_BASE := 1.38
 const DEX_HEAD_STEP := 0.03
 const DEX_SCALE_MIN := 0.85
@@ -114,7 +124,7 @@ static func _build_dex(id: String, rarity: int) -> Node3D:
 	if names.is_empty():
 		return null
 	var h := _hash(id)
-	var lib := load(DEX_LIB) as AnimationLibrary
+	var lib := dex_library()
 	if lib == null:
 		return null
 	## G-0024 — 도감 인물 id 와 같은 이름의 몸이 있으면 그 몸(어린이 체형도 그 인물 그대로). 없을 때만 해시로 고른다.
@@ -173,6 +183,50 @@ static func _build_dex(id: String, rarity: int) -> Node3D:
 		ap.play("idle")
 		ap.seek(float(h % 100) / 100.0 * ap.current_animation_length, true)
 	return v
+
+
+## dex 몸이 나눠 쓰는 동작 묶음(G-0275 모캡 섞음, 프로세스에 한 벌). 못 읽으면 null.
+static func dex_library() -> AnimationLibrary:
+	var want := mocap_on()
+	if _dex_lib != null and _dex_lib_mocap == want:
+		return _dex_lib
+	var base := load(DEX_LIB) as AnimationLibrary
+	if base == null:
+		return null
+	_dex_lib = base
+	_dex_lib_mocap = want
+	if not want:
+		return base
+	var mo := load(MOCAP_LIB) as AnimationLibrary
+	var lib := AnimationLibrary.new()
+	for n in base.get_animation_list():
+		lib.add_animation(n, base.get_animation(n))
+	for n in MOCAP_OVER + MOCAP_NEW:
+		if not mo.has_animation(n):
+			continue
+		var a := mo.get_animation(n)
+		if MOCAP_FIT.has(n) and base.has_animation(n):
+			a = _time_fit(a, base.get_animation(n).length)
+		if lib.has_animation(n):
+			lib.remove_animation(n)
+		lib.add_animation(n, a)
+	_dex_lib = lib
+	return lib
+
+
+static func mocap_on() -> bool:
+	return OS.get_environment("SAGA_MOCAP") != "0" and ResourceLoader.exists(MOCAP_LIB)
+
+
+## 동작 길이를 target 초로(키 시각만 곱함 — 모양 그대로, 원본은 안 건드림).
+static func _time_fit(src: Animation, target: float) -> Animation:
+	var a := src.duplicate(true) as Animation
+	var f := target / maxf(src.length, 0.001)
+	for t in a.get_track_count():
+		for k in a.track_get_key_count(t):
+			a.track_set_key_time(t, k, a.track_get_key_time(t, k) * f)
+	a.length = target
+	return a
 
 
 ## 뼈대 공간에서 몸 앞이 +Z 면 1, -Z 면 -1 — 오른발목 → 발끝 쉬는 자세 방향(뼈가 없으면 1).

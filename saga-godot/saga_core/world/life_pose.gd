@@ -12,6 +12,8 @@ extends SkeletonModifier3D
 ## 섞기 0.25초. 탈것 자세(seat_pose)가 켜져 있으면 아무것도 안 한다. 할 일이 없으면 _process_modification 이 바로 돌아간다.
 ## G-0266 — 사람(NPC) 한 줄 연결: attach_npc(몸, seed)(+talk_face) · greet(나)(나를 봄 + 인사) · talk_for(초)(손짓·끄덕임) ·
 ##   set_hold(on)(이동·공격·쓰러짐 동안 몸짓 0 — 전술판).
+## G-0275 — 몸 AnimationPlayer 에 모캡 클립(vroid_body MOCAP_NEW)이 있으면: wave 는 뼈 코드 대신 greet 클립 한 번,
+##   auto idle 변주 셋 중 하나는 idle_b 클립 한 번(끝나면 idle 로 돌아감). 서 있을 때(idle·idle_b)만. 앉기 sit 은 뼈 코드 그대로.
 
 const SIT_AFTER := 8.0
 const BLEND_T := 0.25
@@ -67,6 +69,8 @@ var _face: Node = null   # attach_npc 가 붙인 talk_face
 var _talk_left := 0.0
 var _hold := false
 var _rng := RandomNumberGenerator.new()
+var _clip_act := ""      # G-0275 — 클립으로 대신 트는 몸짓 이름(current 가 돌려줌)
+var _clip_left := 0.0
 
 static func _find(skel: Skeleton3D, names: Array) -> int:
 	for n in names:
@@ -135,11 +139,39 @@ func _init_bones(skel: Skeleton3D) -> void:
 func play(pose_name: String) -> void:
 	if not DUR.has(pose_name) or _hold:
 		return
+	if pose_name == "wave":
+		var t := clip_once("greet")
+		if t > 0.0:
+			_clip_act = "wave"
+			_clip_left = t
+			return
 	_act = pose_name
 	_act_t = 0.0
 
+## 몸의 클립 하나를 한 번 틀고 idle 로 돌아가게 줄 세운다 — 그 클립 길이(초), 못 틀면 0.
+func clip_once(clip: String) -> float:
+	var ap := _body_ap()
+	if ap == null or not ap.has_animation(clip) or not (ap.current_animation in ["idle", "idle_b"]):
+		return 0.0
+	ap.play(clip, BLEND_T)
+	ap.queue("idle")
+	return ap.get_animation(clip).length
+
+func _body_ap() -> AnimationPlayer:
+	var n: Node = get_skeleton()
+	for _i in 4:
+		if n == null:
+			return null
+		var ap := n.get_node_or_null("AnimationPlayer") as AnimationPlayer
+		if ap != null:
+			return ap
+		n = n.get_parent()
+	return null
+
 func current() -> String:
-	return "sit" if _rest else _act
+	if _rest:
+		return "sit"
+	return _clip_act if _clip_left > 0.0 else _act
 
 func set_rest(on: bool) -> void:
 	_rest = on
@@ -223,6 +255,8 @@ func step(delta: float) -> void:
 			_face.call("set_talking", false)
 	var k := delta / BLEND_T
 	_sit_w = move_toward(_sit_w, 1.0 if _rest and not _seated() else 0.0, k)
+	if _clip_left > 0.0:
+		_clip_left -= delta
 	if _act != "":
 		_act_t += delta
 		if _act_t >= float(DUR[_act]):
@@ -232,8 +266,11 @@ func step(delta: float) -> void:
 		if _check_t >= CHECK_SEC:
 			_check_t = 0.0
 			if _act == "" and not _rest and not _hold and _clock >= _idle_next and _near_camera():
-				play("look" if _rng.randf() < 0.5 else "shift")
-				_idle_next = _clock + float(DUR[_act]) + _rng.randf_range(IDLE_MIN, IDLE_MAX)
+				var clip_t := clip_once("idle_b") if _rng.randf() < 0.34 else 0.0
+				if clip_t <= 0.0:
+					play("look" if _rng.randf() < 0.5 else "shift")
+					clip_t = float(DUR[_act])
+				_idle_next = _clock + clip_t + _rng.randf_range(IDLE_MIN, IDLE_MAX)
 	var want := 0.0
 	if _look_target != null:
 		if not is_instance_valid(_look_target):

@@ -9,7 +9,9 @@ extends SkeletonModifier3D
 ## 나 하나만 붙인다(레이 둘/틱) — 주민·적 안 붙임. 본보기 seat_pose.gd(attach·뼈 이름 표).
 
 ## 클립 본래 빠르기(m/s, 몸 배율 1) — tools/probe_gait.gd 로 잰 값(dex 몸 셋 평균, 메모 G-0264).
+const VroidBody := preload("res://saga_core/world/vroid_body.gd")   # G-0275 mocap_on
 const V0_WALK := 0.65
+const V0_WALK_MOCAP := 0.86   # G-0275 — 모캡 walk(K-0139) 를 덮은 dex 몸(probe_gait SAGA_MOCAP 켬, 같은 셋 평균)
 const V0_SPRINT := 2.9
 const RUN_FROM := 1.7      # 달리기 문턱 = V0_WALK × 이것
 const RUN_BACK := 0.85     # 되돌이 — 문턱 곁에서 걷기↔달리기가 프레임마다 뒤집히지 않게
@@ -61,8 +63,9 @@ static func _find(skel: Skeleton3D, names: Array) -> int:
 ## 걸음새 — 수평 속도(m/s)·몸 배율·지난번 달리기였나 → [클립, 빠르기]. 순수(probe_gait 가 그대로 부른다).
 static func gait(speed: float, body_scale: float, was_run: bool) -> Array:
 	var s := maxf(body_scale, 0.01)
-	var run := speed >= V0_WALK * s * RUN_FROM * (RUN_BACK if was_run else 1.0)
-	var v0 := (V0_SPRINT if run else V0_WALK) * s
+	var vw := V0_WALK_MOCAP if VroidBody.mocap_on() else V0_WALK
+	var run := speed >= vw * s * RUN_FROM * (RUN_BACK if was_run else 1.0)
+	var v0 := (V0_SPRINT if run else vw) * s
 	return ["sprint" if run else "walk", clampf(speed / v0, RATE_MIN, RATE_MAX)]
 
 ## 몸(Skeleton3D)에 붙인다 — 다리 뼈가 없거나 SAGA_FOOT_LOCK=0 이면 null. 이미 붙어 있으면 그것.
