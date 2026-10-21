@@ -31,11 +31,12 @@ namespace Saga.EditorTools
                     {
                         r.GetSharedMaterials(mats);
                         foreach (var m in mats)
-                            if (m != null && m.shader != null && m.shader.name == "Shader Graphs/glTF-pbrMetallicRoughness" && !RegionMaterials.IsTransparent(m)) opaqueLeft++;
+                            // U-0085 뒤 배경은 사실 PBR 그대로(glTF 셰이더 남는 게 맞음) — 툰으로 바뀌면 틀림(U-0150 에서 옛 "glTF 가 남음" 검사를 고침)
+                            if (m != null && m.shader != null && m.shader.name == "Saga/CelToon" && !RegionMaterials.PropsToon) opaqueLeft++;
                         if (!any) { b = r.bounds; any = true; } else b.Encapsulate(r.bounds);
                     }
                     PlaytestKit.Check(any, $"{name}: 렌더러 없음");
-                    PlaytestKit.Check(opaqueLeft == 0, $"{name}: 불투명 glTF 가 안 바뀜 {opaqueLeft}");
+                    PlaytestKit.Check(opaqueLeft == 0, $"{name}: 배경 소품이 툰 {opaqueLeft}");
                     PlaytestKit.Check(Mathf.Max(b.size.x, b.size.z) <= 2.4f + 0.02f, $"{name}: 폭 {Mathf.Max(b.size.x, b.size.z):0.00} > 2.4");
                     PlaytestKit.Check(Mathf.Abs(b.min.y - parent.position.y) < 0.02f, $"{name}: 바닥이 안 닿음 {b.min.y:0.00}");
                     Debug.Log($"[PlaytestWorldModels] {name}: {b.size.x:0.00}×{b.size.y:0.00}×{b.size.z:0.00}");

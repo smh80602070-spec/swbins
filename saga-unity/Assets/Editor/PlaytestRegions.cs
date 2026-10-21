@@ -47,6 +47,11 @@ namespace Saga.EditorTools
                     case "Sky":
                         m.SetFloat("_Mapping", 1f); m.SetFloat("_ImageType", 0f);
                         break;
+                    case "LitGlow":
+                        m.EnableKeyword("_EMISSION");
+                        m.SetColor("_EmissionColor", Color.black);
+                        m.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
+                        break;
                 }
                 AssetDatabase.CreateAsset(m, path);
                 created = true;

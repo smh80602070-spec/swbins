@@ -21,6 +21,7 @@ namespace Saga.Core.Region
             ("Ground", "Saga/RegionGround"),
             ("Unlit", "Universal Render Pipeline/Unlit"),
             ("Lit", "Universal Render Pipeline/Lit"),   // U-0085 배경(소품·길·광장) 사실 재질
+            ("LitGlow", "Universal Render Pipeline/Lit"),   // U-0150 밤 불빛(NightGlow) — 발광 켠 원본(빌드에 _EMISSION 변형이 남게)
             ("SparkAdd", "Saga/RegionSpark"),
             ("SparkAlpha", "Saga/RegionSpark"),
             ("Sky", "Skybox/Panoramic"),
@@ -133,6 +134,9 @@ namespace Saga.Core.Region
         {
             if (PropsToon) return FromGltf(src, cache, out kind);
             kind = Kind.Lit;
+            // U-0150 — 등·횃불 불 면(glow_fire·glow_lamp)은 늘 켜진 단색 Unlit 말고 NightGlow 사본(밤에만 빛남)
+            var gk = src == null ? NightGlow.GlowKind.None : NightGlow.KindOf(src.name);
+            if (gk == NightGlow.GlowKind.Fire || gk == NightGlow.GlowKind.Lamp) return NightGlow.GlowCopy(src);
             if (src == null) return null;
             if (src.shader != null && (src.shader.name == "Saga/CelToon" || src.shader.name == "Universal Render Pipeline/Unlit")) { kind = KindOf(src, null); return src; }
             if (cache != null && cache.TryGetValue(src, out var done)) { kind = done != src ? KindOf(done, src) : IsTransparent(src) ? Kind.KeptTransparent : Kind.Lit; return done; }
