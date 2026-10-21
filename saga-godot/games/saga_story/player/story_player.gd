@@ -696,7 +696,7 @@ func _attack() -> void:
 	## PLAN 101-2 STORY ⑤(비경, 연격 은사) — 기본 공격에만 건다(무예 쿨다운은
 	## 갈래마다 따로라 이번 범위 밖, story_labyrinth.gd 헤더 참고).
 	_attack_cd_left = ATTACK_COOLDOWN / StoryLabyrinthState.atk_speed_mult()
-	_play_anim("sprint")  # 전용 공격 애니메이션이 없어 임시로 빌림(재해석, 실기 확인 때 다시 볼 것)
+	_skill_pose("attack")   # G-0283 — 옛 sprint 대역 대신 attack 클립
 	_melee_hit(ATTACK_RANGE, 1.0)
 	if StoryConstellation.has_rule("yeonta"):   # G-0214 연타 — 타수 +1(공격 ×0.75 는 성좌 공격 배수에)
 		_melee_hit(ATTACK_RANGE, 1.0)

@@ -11,7 +11,7 @@ func _cast_mage_fire() -> void:
 	_cd_mage_fire = StoryCombat.MAGE_FIRE_CD
 	mp -= StoryCombat.MAGE_FIRE_COST
 	_skill_fx_of("m_fire")
-	_play_anim("sprint")
+	_skill_pose("mage_fire")
 	var mul := StoryCombat.skill_mul(StoryCombat.MAGE_FIRE_BASE, StoryCombat.MAGE_FIRE_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.MAGE_FIRE_RANGE_MUL, mul)
 
@@ -23,7 +23,7 @@ func _cast_mage_bolt() -> void:
 		return
 	_cd_mage_bolt = StoryCombat.MAGE_BOLT_CD
 	mp -= StoryCombat.MAGE_BOLT_COST
-	_play_anim("sprint")
+	_skill_pose("mage_bolt")
 	var mul := StoryCombat.skill_mul(StoryCombat.MAGE_BOLT_BASE, StoryCombat.MAGE_BOLT_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.MAGE_BOLT_RANGE_MUL
 	_skill_fx_of("m_bolt", range_m)
@@ -78,7 +78,7 @@ func _cast_mage_step() -> void:
 	_cd_mage_step = StoryCombat.MAGE_STEP_CD
 	mp -= StoryCombat.MAGE_STEP_COST
 	_skill_fx_of("m_step")
-	_play_anim("sprint")
+	_skill_pose("mage_step")
 	var dist_m := StoryCombat.mage_step_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.MAGE_STEP_BASE, StoryCombat.MAGE_STEP_PER, lv))
 	global_position.x += dist_m * _facing
@@ -93,7 +93,7 @@ func _cast_mage_orb() -> void:
 	_cd_mage_orb = StoryCombat.MAGE_ORB_CD
 	mp -= StoryCombat.MAGE_ORB_COST
 	_skill_fx_of("m_orb")
-	_play_anim("sprint")
+	_skill_pose("mage_orb")
 	var mul := StoryCombat.skill_mul(StoryCombat.MAGE_ORB_BASE, StoryCombat.MAGE_ORB_PER, lv)
 	for i in StoryCombat.MAGE_ORB_SHOTS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -106,7 +106,7 @@ func _cast_sage_quake() -> void:
 		return
 	_cd_sage_quake = StoryCombat.SAGE_QUAKE_CD
 	mp -= StoryCombat.SAGE_QUAKE_COST
-	_play_anim("sprint")
+	_skill_pose("sage_quake")
 	var mul := StoryCombat.skill_mul(StoryCombat.SAGE_QUAKE_BASE, StoryCombat.SAGE_QUAKE_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.SAGE_QUAKE_RANGE_MUL
 	_skill_fx_of("p_quake", range_m)
@@ -131,7 +131,7 @@ func _cast_sage_beam() -> void:
 	_cd_sage_beam = StoryCombat.SAGE_BEAM_CD
 	mp -= StoryCombat.SAGE_BEAM_COST
 	_skill_fx_of("p_beam")
-	_play_anim("sprint")
+	_skill_pose("sage_beam")
 	_melee_hit(ATTACK_RANGE, StoryCombat.skill_mul(StoryCombat.SAGE_BEAM_BASE, StoryCombat.SAGE_BEAM_PER, lv))
 
 
@@ -157,7 +157,7 @@ func _cast_sage_step() -> void:
 	_cd_sage_step = StoryCombat.SAGE_STEP_CD
 	mp -= StoryCombat.SAGE_STEP_COST
 	_skill_fx_of("p_step")
-	_play_anim("sprint")
+	_skill_pose("sage_step")
 	var dist_m := StoryCombat.sage_step_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.SAGE_STEP_BASE, StoryCombat.SAGE_STEP_PER, lv))
 	global_position.x += dist_m * _facing
@@ -172,7 +172,7 @@ func _cast_sage_orb() -> void:
 	_cd_sage_orb = StoryCombat.SAGE_ORB_CD
 	mp -= StoryCombat.SAGE_ORB_COST
 	_skill_fx_of("p_orb")
-	_play_anim("sprint")
+	_skill_pose("sage_orb")
 	var mul := StoryCombat.skill_mul(StoryCombat.SAGE_ORB_BASE, StoryCombat.SAGE_ORB_PER, lv)
 	for i in StoryCombat.SAGE_ORB_SHOTS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -186,7 +186,7 @@ func _cast_immortal_meteor() -> void:
 	_cd_immortal_meteor = StoryCombat.IMMORTAL_METEOR_CD
 	mp -= StoryCombat.IMMORTAL_METEOR_COST
 	_skill_fx_of("i_meteor")
-	_play_anim("sprint")
+	_skill_pose("immortal_meteor")
 	_melee_hit(ATTACK_RANGE, StoryCombat.skill_mul(StoryCombat.IMMORTAL_METEOR_BASE, StoryCombat.IMMORTAL_METEOR_PER, lv))
 
 
@@ -197,7 +197,7 @@ func _cast_immortal_abyss() -> void:
 		return
 	_cd_immortal_abyss = StoryCombat.IMMORTAL_ABYSS_CD
 	mp -= StoryCombat.IMMORTAL_ABYSS_COST
-	_play_anim("sprint")
+	_skill_pose("immortal_abyss")
 	var mul := StoryCombat.skill_mul(StoryCombat.IMMORTAL_ABYSS_BASE, StoryCombat.IMMORTAL_ABYSS_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.IMMORTAL_ABYSS_RANGE_MUL
 	_skill_fx_of("i_abyss", range_m)
@@ -248,7 +248,7 @@ func _cast_immortal_step() -> void:
 	_cd_immortal_step = StoryCombat.IMMORTAL_STEP_CD
 	mp -= StoryCombat.IMMORTAL_STEP_COST
 	_skill_fx_of("i_step")
-	_play_anim("sprint")
+	_skill_pose("immortal_step")
 	var dist_m := StoryCombat.immortal_step_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.IMMORTAL_STEP_BASE, StoryCombat.IMMORTAL_STEP_PER, lv))
 	global_position.x += dist_m * _facing
@@ -263,7 +263,7 @@ func _cast_immortal_orb() -> void:
 	_cd_immortal_orb = StoryCombat.IMMORTAL_ORB_CD
 	mp -= StoryCombat.IMMORTAL_ORB_COST
 	_skill_fx_of("i_orb")
-	_play_anim("sprint")
+	_skill_pose("immortal_orb")
 	var mul := StoryCombat.skill_mul(StoryCombat.IMMORTAL_ORB_BASE, StoryCombat.IMMORTAL_ORB_PER, lv)
 	for i in StoryCombat.IMMORTAL_ORB_SHOTS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -277,7 +277,7 @@ func _cast_ascendant_starfall() -> void:
 	_cd_ascendant_starfall = StoryCombat.ASCENDANT_STARFALL_CD
 	mp -= StoryCombat.ASCENDANT_STARFALL_COST
 	_skill_fx_of("z_starfall")
-	_play_anim("sprint")
+	_skill_pose("ascendant_starfall")
 	_melee_hit(ATTACK_RANGE, StoryCombat.skill_mul(StoryCombat.ASCENDANT_STARFALL_BASE, StoryCombat.ASCENDANT_STARFALL_PER, lv))
 
 
@@ -288,7 +288,7 @@ func _cast_ascendant_collapse() -> void:
 		return
 	_cd_ascendant_collapse = StoryCombat.ASCENDANT_COLLAPSE_CD
 	mp -= StoryCombat.ASCENDANT_COLLAPSE_COST
-	_play_anim("sprint")
+	_skill_pose("ascendant_collapse")
 	var mul := StoryCombat.skill_mul(StoryCombat.ASCENDANT_COLLAPSE_BASE, StoryCombat.ASCENDANT_COLLAPSE_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.ASCENDANT_COLLAPSE_RANGE_MUL
 	_skill_fx_of("z_collapse", range_m)
@@ -339,7 +339,7 @@ func _cast_ascendant_step() -> void:
 	_cd_ascendant_step = StoryCombat.ASCENDANT_STEP_CD
 	mp -= StoryCombat.ASCENDANT_STEP_COST
 	_skill_fx_of("z_step")
-	_play_anim("sprint")
+	_skill_pose("ascendant_step")
 	var dist_m := StoryCombat.ascendant_step_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.ASCENDANT_STEP_BASE, StoryCombat.ASCENDANT_STEP_PER, lv))
 	global_position.x += dist_m * _facing
@@ -354,7 +354,7 @@ func _cast_ascendant_orb() -> void:
 	_cd_ascendant_orb = StoryCombat.ASCENDANT_ORB_CD
 	mp -= StoryCombat.ASCENDANT_ORB_COST
 	_skill_fx_of("z_orb")
-	_play_anim("sprint")
+	_skill_pose("ascendant_orb")
 	var mul := StoryCombat.skill_mul(StoryCombat.ASCENDANT_ORB_BASE, StoryCombat.ASCENDANT_ORB_PER, lv)
 	for i in StoryCombat.ASCENDANT_ORB_SHOTS:
 		_melee_hit(ATTACK_RANGE, mul)

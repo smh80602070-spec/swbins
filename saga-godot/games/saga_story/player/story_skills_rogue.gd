@@ -12,7 +12,7 @@ func _cast_rogue_twin() -> void:
 	_cd_rogue_twin = StoryCombat.ROGUE_TWIN_CD
 	mp -= StoryCombat.ROGUE_TWIN_COST
 	_skill_fx_of("r_twin")
-	_play_anim("sprint")
+	_skill_pose("rogue_twin")
 	var mul := StoryCombat.skill_mul(StoryCombat.ROGUE_TWIN_BASE, StoryCombat.ROGUE_TWIN_PER, lv)
 	for i in StoryCombat.ROGUE_TWIN_HITS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -26,7 +26,7 @@ func _cast_rogue_knife() -> void:
 	_cd_rogue_knife = StoryCombat.ROGUE_KNIFE_CD
 	mp -= StoryCombat.ROGUE_KNIFE_COST
 	_skill_fx_of("r_knife")
-	_play_anim("sprint")
+	_skill_pose("rogue_knife")
 	var mul := StoryCombat.skill_mul(StoryCombat.ROGUE_KNIFE_BASE, StoryCombat.ROGUE_KNIFE_PER, lv)
 	for i in StoryCombat.ROGUE_KNIFE_SHOTS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -41,7 +41,7 @@ func _cast_rogue_step() -> void:
 	_cd_rogue_step = StoryCombat.ROGUE_STEP_CD
 	mp -= StoryCombat.ROGUE_STEP_COST
 	_skill_fx_of("r_step")
-	_play_anim("sprint")
+	_skill_pose("rogue_step")
 	var dist_m := StoryCombat.rogue_step_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.ROGUE_STEP_BASE, StoryCombat.ROGUE_STEP_PER, lv))
 	global_position.x += dist_m * _facing
@@ -69,7 +69,7 @@ func _cast_rogue_whirl() -> void:
 		return
 	_cd_rogue_whirl = StoryCombat.ROGUE_WHIRL_CD
 	mp -= StoryCombat.ROGUE_WHIRL_COST
-	_play_anim("sprint")
+	_skill_pose("rogue_whirl")
 	var mul := StoryCombat.skill_mul(StoryCombat.ROGUE_WHIRL_BASE, StoryCombat.ROGUE_WHIRL_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.ROGUE_WHIRL_RANGE_MUL
 	_skill_fx_of("r_whirl", range_m)
@@ -94,7 +94,7 @@ func _cast_rogue_dart() -> void:
 	_cd_rogue_dart = StoryCombat.ROGUE_DART_CD
 	mp -= StoryCombat.ROGUE_DART_COST
 	_skill_fx_of("r_dart")
-	_play_anim("sprint")
+	_skill_pose("rogue_dart")
 	var mul := StoryCombat.skill_mul(StoryCombat.ROGUE_DART_BASE, StoryCombat.ROGUE_DART_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.ROGUE_DART_RANGE_MUL, mul)
 
@@ -107,7 +107,7 @@ func _cast_assassin_storm() -> void:
 	_cd_assassin_storm = StoryCombat.ASSASSIN_STORM_CD
 	mp -= StoryCombat.ASSASSIN_STORM_COST
 	_skill_fx_of("x_storm")
-	_play_anim("sprint")
+	_skill_pose("assassin_storm")
 	var mul := StoryCombat.skill_mul(StoryCombat.ASSASSIN_STORM_BASE, StoryCombat.ASSASSIN_STORM_PER, lv)
 	for i in StoryCombat.ASSASSIN_STORM_HITS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -121,7 +121,7 @@ func _cast_assassin_fan() -> void:
 	_cd_assassin_fan = StoryCombat.ASSASSIN_FAN_CD
 	mp -= StoryCombat.ASSASSIN_FAN_COST
 	_skill_fx_of("x_fan")
-	_play_anim("sprint")
+	_skill_pose("assassin_fan")
 	var mul := StoryCombat.skill_mul(StoryCombat.ASSASSIN_FAN_BASE, StoryCombat.ASSASSIN_FAN_PER, lv)
 	for i in StoryCombat.ASSASSIN_FAN_SHOTS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -135,7 +135,7 @@ func _cast_assassin_shadow() -> void:
 	_cd_assassin_shadow = StoryCombat.ASSASSIN_SHADOW_CD
 	mp -= StoryCombat.ASSASSIN_SHADOW_COST
 	_skill_fx_of("x_shadow")
-	_play_anim("sprint")
+	_skill_pose("assassin_shadow")
 	var dist_m := StoryCombat.assassin_shadow_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.ASSASSIN_SHADOW_BASE, StoryCombat.ASSASSIN_SHADOW_PER, lv))
 	global_position.x += dist_m * _facing
@@ -149,7 +149,7 @@ func _cast_assassin_whirl() -> void:
 		return
 	_cd_assassin_whirl = StoryCombat.ASSASSIN_WHIRL_CD
 	mp -= StoryCombat.ASSASSIN_WHIRL_COST
-	_play_anim("sprint")
+	_skill_pose("assassin_whirl")
 	var mul := StoryCombat.skill_mul(StoryCombat.ASSASSIN_WHIRL_BASE, StoryCombat.ASSASSIN_WHIRL_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.ASSASSIN_WHIRL_RANGE_MUL
 	_skill_fx_of("x_whirl", range_m)
@@ -174,7 +174,7 @@ func _cast_assassin_dart() -> void:
 	_cd_assassin_dart = StoryCombat.ASSASSIN_DART_CD
 	mp -= StoryCombat.ASSASSIN_DART_COST
 	_skill_fx_of("x_dart")
-	_play_anim("sprint")
+	_skill_pose("assassin_dart")
 	var mul := StoryCombat.skill_mul(StoryCombat.ASSASSIN_DART_BASE, StoryCombat.ASSASSIN_DART_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.ASSASSIN_DART_RANGE_MUL, mul)
 
@@ -187,7 +187,7 @@ func _cast_wraith_blur() -> void:
 	_cd_wraith_blur = StoryCombat.WRAITH_BLUR_CD
 	mp -= StoryCombat.WRAITH_BLUR_COST
 	_skill_fx_of("v_blur")
-	_play_anim("sprint")
+	_skill_pose("wraith_blur")
 	var mul := StoryCombat.skill_mul(StoryCombat.WRAITH_BLUR_BASE, StoryCombat.WRAITH_BLUR_PER, lv)
 	for i in StoryCombat.WRAITH_BLUR_HITS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -201,7 +201,7 @@ func _cast_wraith_petal() -> void:
 	_cd_wraith_petal = StoryCombat.WRAITH_PETAL_CD
 	mp -= StoryCombat.WRAITH_PETAL_COST
 	_skill_fx_of("v_petal")
-	_play_anim("sprint")
+	_skill_pose("wraith_petal")
 	var mul := StoryCombat.skill_mul(StoryCombat.WRAITH_PETAL_BASE, StoryCombat.WRAITH_PETAL_PER, lv)
 	for i in StoryCombat.WRAITH_PETAL_SHOTS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -215,7 +215,7 @@ func _cast_wraith_void() -> void:
 	_cd_wraith_void = StoryCombat.WRAITH_VOID_CD
 	mp -= StoryCombat.WRAITH_VOID_COST
 	_skill_fx_of("v_void")
-	_play_anim("sprint")
+	_skill_pose("wraith_void")
 	var dist_m := StoryCombat.wraith_void_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.WRAITH_VOID_BASE, StoryCombat.WRAITH_VOID_PER, lv))
 	global_position.x += dist_m * _facing
@@ -243,7 +243,7 @@ func _cast_wraith_whirl() -> void:
 		return
 	_cd_wraith_whirl = StoryCombat.WRAITH_WHIRL_CD
 	mp -= StoryCombat.WRAITH_WHIRL_COST
-	_play_anim("sprint")
+	_skill_pose("wraith_whirl")
 	var mul := StoryCombat.skill_mul(StoryCombat.WRAITH_WHIRL_BASE, StoryCombat.WRAITH_WHIRL_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.WRAITH_WHIRL_RANGE_MUL
 	_skill_fx_of("v_whirl", range_m)
@@ -268,7 +268,7 @@ func _cast_wraith_dart() -> void:
 	_cd_wraith_dart = StoryCombat.WRAITH_DART_CD
 	mp -= StoryCombat.WRAITH_DART_COST
 	_skill_fx_of("v_dart")
-	_play_anim("sprint")
+	_skill_pose("wraith_dart")
 	var mul := StoryCombat.skill_mul(StoryCombat.WRAITH_DART_BASE, StoryCombat.WRAITH_DART_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.WRAITH_DART_RANGE_MUL, mul)
 
@@ -281,7 +281,7 @@ func _cast_reaper_carve() -> void:
 	_cd_reaper_carve = StoryCombat.REAPER_CARVE_CD
 	mp -= StoryCombat.REAPER_CARVE_COST
 	_skill_fx_of("d_carve")
-	_play_anim("sprint")
+	_skill_pose("reaper_carve")
 	var mul := StoryCombat.skill_mul(StoryCombat.REAPER_CARVE_BASE, StoryCombat.REAPER_CARVE_PER, lv)
 	for i in StoryCombat.REAPER_CARVE_HITS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -295,7 +295,7 @@ func _cast_reaper_bloom() -> void:
 	_cd_reaper_bloom = StoryCombat.REAPER_BLOOM_CD
 	mp -= StoryCombat.REAPER_BLOOM_COST
 	_skill_fx_of("d_bloom")
-	_play_anim("sprint")
+	_skill_pose("reaper_bloom")
 	var mul := StoryCombat.skill_mul(StoryCombat.REAPER_BLOOM_BASE, StoryCombat.REAPER_BLOOM_PER, lv)
 	for i in StoryCombat.REAPER_BLOOM_SHOTS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -309,7 +309,7 @@ func _cast_reaper_veil() -> void:
 	_cd_reaper_veil = StoryCombat.REAPER_VEIL_CD
 	mp -= StoryCombat.REAPER_VEIL_COST
 	_skill_fx_of("d_veil")
-	_play_anim("sprint")
+	_skill_pose("reaper_veil")
 	var dist_m := StoryCombat.reaper_veil_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.REAPER_VEIL_BASE, StoryCombat.REAPER_VEIL_PER, lv))
 	global_position.x += dist_m * _facing
@@ -337,7 +337,7 @@ func _cast_reaper_whirl() -> void:
 		return
 	_cd_reaper_whirl = StoryCombat.REAPER_WHIRL_CD
 	mp -= StoryCombat.REAPER_WHIRL_COST
-	_play_anim("sprint")
+	_skill_pose("reaper_whirl")
 	var mul := StoryCombat.skill_mul(StoryCombat.REAPER_WHIRL_BASE, StoryCombat.REAPER_WHIRL_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.REAPER_WHIRL_RANGE_MUL
 	_skill_fx_of("d_whirl", range_m)
@@ -362,7 +362,7 @@ func _cast_reaper_dart() -> void:
 	_cd_reaper_dart = StoryCombat.REAPER_DART_CD
 	mp -= StoryCombat.REAPER_DART_COST
 	_skill_fx_of("d_dart")
-	_play_anim("sprint")
+	_skill_pose("reaper_dart")
 	var mul := StoryCombat.skill_mul(StoryCombat.REAPER_DART_BASE, StoryCombat.REAPER_DART_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.REAPER_DART_RANGE_MUL, mul)
 

@@ -55,6 +55,7 @@ func _describe(n: Node) -> String:
 
 
 func _initialize() -> void:
+	OS.set_environment("SAGA_STORY_ACTION", "0")   # G-0283 — 몸짓(_current_anim)은 규칙 비교 밖, 옛 sprint 길로 재면 기준값 그대로(몸짓은 probe_story_action)
 	await process_frame
 	var save: Node = root.get_node("StorySaveState")
 	var saved_skills: Dictionary = save.skills.duplicate()

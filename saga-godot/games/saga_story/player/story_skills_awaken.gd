@@ -62,7 +62,7 @@ func _cast_godwar_wrath() -> void:
 	_cd_godwar_wrath = StoryCombat.GODWAR_WRATH_CD
 	mp -= StoryCombat.GODWAR_WRATH_COST
 	_skill_fx_of("p_wrath")
-	_play_anim("sprint")
+	_skill_pose("godwar_wrath")
 	var mul := StoryCombat.skill_mul(StoryCombat.GODWAR_WRATH_BASE, StoryCombat.GODWAR_WRATH_PER, lv)
 	for i in StoryCombat.GODWAR_WRATH_HITS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -90,7 +90,7 @@ func _cast_skybow_stars() -> void:
 	_cd_skybow_stars = StoryCombat.SKYBOW_STARS_CD
 	mp -= StoryCombat.SKYBOW_STARS_COST
 	_skill_fx_of("p_stars")
-	_play_anim("sprint")
+	_skill_pose("skybow_stars")
 	var mul := StoryCombat.skill_mul(StoryCombat.SKYBOW_STARS_BASE, StoryCombat.SKYBOW_STARS_PER, lv)
 	for i in StoryCombat.SKYBOW_STARS_SHOTS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -104,7 +104,7 @@ func _cast_skybow_sun() -> void:
 	_cd_skybow_sun = StoryCombat.SKYBOW_SUN_CD
 	mp -= StoryCombat.SKYBOW_SUN_COST
 	_skill_fx_of("p_sun")
-	_play_anim("sprint")
+	_skill_pose("skybow_sun")
 	var mul := StoryCombat.skill_mul(StoryCombat.SKYBOW_SUN_BASE, StoryCombat.SKYBOW_SUN_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.SKYBOW_SUN_RANGE_MUL, mul)
 
@@ -117,7 +117,7 @@ func _cast_noshadow_afterimage() -> void:
 	_cd_noshadow_afterimage = StoryCombat.NOSHADOW_AFTERIMAGE_CD
 	mp -= StoryCombat.NOSHADOW_AFTERIMAGE_COST
 	_skill_fx_of("p_afterimage")
-	_play_anim("sprint")
+	_skill_pose("noshadow_afterimage")
 	var mul := StoryCombat.skill_mul(StoryCombat.NOSHADOW_AFTERIMAGE_BASE, StoryCombat.NOSHADOW_AFTERIMAGE_PER, lv)
 	for i in StoryCombat.NOSHADOW_AFTERIMAGE_HITS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -131,7 +131,7 @@ func _cast_noshadow_gate() -> void:
 	_cd_noshadow_gate = StoryCombat.NOSHADOW_GATE_CD
 	mp -= StoryCombat.NOSHADOW_GATE_COST
 	_skill_fx_of("p_gate")
-	_play_anim("sprint")
+	_skill_pose("noshadow_gate")
 	var dist_m := StoryCombat.noshadow_gate_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.NOSHADOW_GATE_BASE, StoryCombat.NOSHADOW_GATE_PER, lv))
 	global_position.x += dist_m * _facing
@@ -145,7 +145,7 @@ func _cast_voidsage_void() -> void:
 		return
 	_cd_voidsage_void = StoryCombat.VOIDSAGE_VOID_CD
 	mp -= StoryCombat.VOIDSAGE_VOID_COST
-	_play_anim("sprint")
+	_skill_pose("voidsage_void")
 	var mul := StoryCombat.skill_mul(StoryCombat.VOIDSAGE_VOID_BASE, StoryCombat.VOIDSAGE_VOID_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.VOIDSAGE_VOID_RANGE_MUL
 	_skill_fx_of("p_void", range_m)

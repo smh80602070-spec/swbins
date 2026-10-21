@@ -204,7 +204,7 @@ func _initialize() -> void:
 	var old_ok: bool = S.try_load()
 	var old_empty: bool = S.passive.get("start") == null and (S.passive.taken as Array).is_empty()
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(S.path_override))
-	check(saved_ok and load_ok and round_ok and old_ok and old_empty and S.SAVE_VERSION == 20,
+	check(saved_ok and load_ok and round_ok and old_ok and old_empty and S.SAVE_VERSION >= 20,   # G-0283 — 뒤 티켓(G-0238 21·G-0245 22)이 올려도 이 칸(성좌) 왕복은 그대로
 		"⑦ 세이브 왕복(시작 %s·%d마디) · 옛 세이브 19 → 빈 칸 · 버전 20" % [S.passive.get("start"), (S.passive.taken as Array).size()])
 
 	Input.action_release("move_right")

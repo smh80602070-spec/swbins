@@ -34,12 +34,32 @@ func _layer(bg: Node, layer_name: String, count: int) -> Array:
 		return []
 	if mm.instance_count != count:
 		_fail("%s 개수 %d (기대 %d)" % [layer_name, mm.instance_count, count])
-	var mat := mmi.material_override as BaseMaterial3D
-	if mat == null or mat.shading_mode != BaseMaterial3D.SHADING_MODE_UNSHADED:
+	if not _flat_unshaded(mmi):
 		_fail(layer_name + " 단색 비조명 재질이 아님")
 	if not mmi.has_meta("flat_silhouette"):
 		_fail(layer_name + " flat_silhouette 메타 없음(재질 감사 예외)")
 	return [mm.instance_count]
+
+
+## 한 장 덮개(material_override)가 비조명이거나 — G-0272 사실판 나무는 표면마다(잎 카드는 알파로 오리는 비조명 셰이더) — 표면 전부 비조명.
+func _flat_unshaded(mmi: MultiMeshInstance3D) -> bool:
+	var ov := mmi.material_override as BaseMaterial3D
+	if ov != null:
+		return ov.shading_mode == BaseMaterial3D.SHADING_MODE_UNSHADED
+	var mesh := mmi.multimesh.mesh
+	if mesh.get_surface_count() == 0:
+		return false
+	for i in mesh.get_surface_count():
+		var m := mesh.surface_get_material(i)
+		if m is BaseMaterial3D:
+			if (m as BaseMaterial3D).shading_mode != BaseMaterial3D.SHADING_MODE_UNSHADED:
+				return false
+		elif m is ShaderMaterial:
+			if not (m as ShaderMaterial).shader.code.contains("unshaded"):
+				return false
+		else:
+			return false
+	return true
 
 
 func _initialize() -> void:

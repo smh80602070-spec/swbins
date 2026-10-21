@@ -12,7 +12,7 @@ func _cast_archer_shot() -> void:
 	_cd_archer_shot = StoryCombat.ARCHER_SHOT_CD
 	mp -= StoryCombat.ARCHER_SHOT_COST
 	_skill_fx_of("a_shot")
-	_play_anim("sprint")
+	_skill_pose("archer_shot")
 	_melee_hit(ATTACK_RANGE, StoryCombat.skill_mul(StoryCombat.ARCHER_SHOT_BASE, StoryCombat.ARCHER_SHOT_PER, lv))
 
 
@@ -25,7 +25,7 @@ func _cast_archer_double() -> void:
 	_cd_archer_double = StoryCombat.ARCHER_DOUBLE_CD
 	mp -= StoryCombat.ARCHER_DOUBLE_COST
 	_skill_fx_of("a_double")
-	_play_anim("sprint")
+	_skill_pose("archer_double")
 	var mul := StoryCombat.skill_mul(StoryCombat.ARCHER_DOUBLE_BASE, StoryCombat.ARCHER_DOUBLE_PER, lv)
 	for i in StoryCombat.ARCHER_DOUBLE_SHOTS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -39,7 +39,7 @@ func _cast_archer_pierce() -> void:
 	_cd_archer_pierce = StoryCombat.ARCHER_PIERCE_CD
 	mp -= StoryCombat.ARCHER_PIERCE_COST
 	_skill_fx_of("a_pierce")
-	_play_anim("sprint")
+	_skill_pose("archer_pierce")
 	var mul := StoryCombat.skill_mul(StoryCombat.ARCHER_PIERCE_BASE, StoryCombat.ARCHER_PIERCE_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.ARCHER_PIERCE_RANGE_MUL, mul)
 
@@ -68,7 +68,7 @@ func _cast_archer_retreat() -> void:
 	_cd_archer_retreat = StoryCombat.ARCHER_RETREAT_CD
 	mp -= StoryCombat.ARCHER_RETREAT_COST
 	_skill_fx_of("a_retreat")
-	_play_anim("sprint")
+	_skill_pose("archer_retreat")
 	var dist_m := StoryCombat.archer_retreat_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.ARCHER_RETREAT_BASE, StoryCombat.ARCHER_RETREAT_PER, lv))
 	global_position.x -= dist_m * _facing
@@ -81,7 +81,7 @@ func _cast_archer_burst() -> void:
 		return
 	_cd_archer_burst = StoryCombat.ARCHER_BURST_CD
 	mp -= StoryCombat.ARCHER_BURST_COST
-	_play_anim("sprint")
+	_skill_pose("archer_burst")
 	var mul := StoryCombat.skill_mul(StoryCombat.ARCHER_BURST_BASE, StoryCombat.ARCHER_BURST_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.ARCHER_BURST_RANGE_MUL
 	_skill_fx_of("a_burst", range_m)
@@ -106,7 +106,7 @@ func _cast_sniper_rain() -> void:
 	_cd_sniper_rain = StoryCombat.SNIPER_RAIN_CD
 	mp -= StoryCombat.SNIPER_RAIN_COST
 	_skill_fx_of("s_rain")
-	_play_anim("sprint")
+	_skill_pose("sniper_rain")
 	_melee_hit(ATTACK_RANGE, StoryCombat.skill_mul(StoryCombat.SNIPER_RAIN_BASE, StoryCombat.SNIPER_RAIN_PER, lv))
 
 
@@ -118,7 +118,7 @@ func _cast_sniper_snipe() -> void:
 	_cd_sniper_snipe = StoryCombat.SNIPER_SNIPE_CD
 	mp -= StoryCombat.SNIPER_SNIPE_COST
 	_skill_fx_of("s_snipe")
-	_play_anim("sprint")
+	_skill_pose("sniper_snipe")
 	var mul := StoryCombat.skill_mul(StoryCombat.SNIPER_SNIPE_BASE, StoryCombat.SNIPER_SNIPE_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.SNIPER_SNIPE_RANGE_MUL, mul)
 
@@ -131,7 +131,7 @@ func _cast_sniper_split() -> void:
 	_cd_sniper_split = StoryCombat.SNIPER_SPLIT_CD
 	mp -= StoryCombat.SNIPER_SPLIT_COST
 	_skill_fx_of("s_split")
-	_play_anim("sprint")
+	_skill_pose("sniper_split")
 	var mul := StoryCombat.skill_mul(StoryCombat.SNIPER_SPLIT_BASE, StoryCombat.SNIPER_SPLIT_PER, lv)
 	for i in StoryCombat.SNIPER_SPLIT_SHOTS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -145,7 +145,7 @@ func _cast_sniper_retreat() -> void:
 	_cd_sniper_retreat = StoryCombat.SNIPER_RETREAT_CD
 	mp -= StoryCombat.SNIPER_RETREAT_COST
 	_skill_fx_of("s_retreat")
-	_play_anim("sprint")
+	_skill_pose("sniper_retreat")
 	var dist_m := StoryCombat.sniper_retreat_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.SNIPER_RETREAT_BASE, StoryCombat.SNIPER_RETREAT_PER, lv))
 	global_position.x -= dist_m * _facing
@@ -158,7 +158,7 @@ func _cast_sniper_burst() -> void:
 		return
 	_cd_sniper_burst = StoryCombat.SNIPER_BURST_CD
 	mp -= StoryCombat.SNIPER_BURST_COST
-	_play_anim("sprint")
+	_skill_pose("sniper_burst")
 	var mul := StoryCombat.skill_mul(StoryCombat.SNIPER_BURST_BASE, StoryCombat.SNIPER_BURST_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.SNIPER_BURST_RANGE_MUL
 	_skill_fx_of("s_burst", range_m)
@@ -183,7 +183,7 @@ func _cast_flier_storm() -> void:
 	_cd_flier_storm = StoryCombat.FLIER_STORM_CD
 	mp -= StoryCombat.FLIER_STORM_COST
 	_skill_fx_of("f_storm")
-	_play_anim("sprint")
+	_skill_pose("flier_storm")
 	_melee_hit(ATTACK_RANGE, StoryCombat.skill_mul(StoryCombat.FLIER_STORM_BASE, StoryCombat.FLIER_STORM_PER, lv))
 
 
@@ -195,7 +195,7 @@ func _cast_flier_pierce() -> void:
 	_cd_flier_pierce = StoryCombat.FLIER_PIERCE_CD
 	mp -= StoryCombat.FLIER_PIERCE_COST
 	_skill_fx_of("f_pierce")
-	_play_anim("sprint")
+	_skill_pose("flier_pierce")
 	var mul := StoryCombat.skill_mul(StoryCombat.FLIER_PIERCE_BASE, StoryCombat.FLIER_PIERCE_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.FLIER_PIERCE_RANGE_MUL, mul)
 
@@ -208,7 +208,7 @@ func _cast_flier_volley() -> void:
 	_cd_flier_volley = StoryCombat.FLIER_VOLLEY_CD
 	mp -= StoryCombat.FLIER_VOLLEY_COST
 	_skill_fx_of("f_volley")
-	_play_anim("sprint")
+	_skill_pose("flier_volley")
 	var mul := StoryCombat.skill_mul(StoryCombat.FLIER_VOLLEY_BASE, StoryCombat.FLIER_VOLLEY_PER, lv)
 	for i in StoryCombat.FLIER_VOLLEY_SHOTS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -237,7 +237,7 @@ func _cast_flier_retreat() -> void:
 	_cd_flier_retreat = StoryCombat.FLIER_RETREAT_CD
 	mp -= StoryCombat.FLIER_RETREAT_COST
 	_skill_fx_of("f_retreat")
-	_play_anim("sprint")
+	_skill_pose("flier_retreat")
 	var dist_m := StoryCombat.flier_retreat_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.FLIER_RETREAT_BASE, StoryCombat.FLIER_RETREAT_PER, lv))
 	global_position.x -= dist_m * _facing
@@ -250,7 +250,7 @@ func _cast_flier_burst() -> void:
 		return
 	_cd_flier_burst = StoryCombat.FLIER_BURST_CD
 	mp -= StoryCombat.FLIER_BURST_COST
-	_play_anim("sprint")
+	_skill_pose("flier_burst")
 	var mul := StoryCombat.skill_mul(StoryCombat.FLIER_BURST_BASE, StoryCombat.FLIER_BURST_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.FLIER_BURST_RANGE_MUL
 	_skill_fx_of("f_burst", range_m)
@@ -275,7 +275,7 @@ func _cast_falcon_tempest() -> void:
 	_cd_falcon_tempest = StoryCombat.FALCON_TEMPEST_CD
 	mp -= StoryCombat.FALCON_TEMPEST_COST
 	_skill_fx_of("h_tempest")
-	_play_anim("sprint")
+	_skill_pose("falcon_tempest")
 	_melee_hit(ATTACK_RANGE, StoryCombat.skill_mul(StoryCombat.FALCON_TEMPEST_BASE, StoryCombat.FALCON_TEMPEST_PER, lv))
 
 
@@ -287,7 +287,7 @@ func _cast_falcon_ray() -> void:
 	_cd_falcon_ray = StoryCombat.FALCON_RAY_CD
 	mp -= StoryCombat.FALCON_RAY_COST
 	_skill_fx_of("h_ray")
-	_play_anim("sprint")
+	_skill_pose("falcon_ray")
 	var mul := StoryCombat.skill_mul(StoryCombat.FALCON_RAY_BASE, StoryCombat.FALCON_RAY_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.FALCON_RAY_RANGE_MUL, mul)
 
@@ -300,7 +300,7 @@ func _cast_falcon_swarm() -> void:
 	_cd_falcon_swarm = StoryCombat.FALCON_SWARM_CD
 	mp -= StoryCombat.FALCON_SWARM_COST
 	_skill_fx_of("h_swarm")
-	_play_anim("sprint")
+	_skill_pose("falcon_swarm")
 	var mul := StoryCombat.skill_mul(StoryCombat.FALCON_SWARM_BASE, StoryCombat.FALCON_SWARM_PER, lv)
 	for i in StoryCombat.FALCON_SWARM_SHOTS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -329,7 +329,7 @@ func _cast_falcon_retreat() -> void:
 	_cd_falcon_retreat = StoryCombat.FALCON_RETREAT_CD
 	mp -= StoryCombat.FALCON_RETREAT_COST
 	_skill_fx_of("h_retreat")
-	_play_anim("sprint")
+	_skill_pose("falcon_retreat")
 	var dist_m := StoryCombat.falcon_retreat_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.FALCON_RETREAT_BASE, StoryCombat.FALCON_RETREAT_PER, lv))
 	global_position.x -= dist_m * _facing
@@ -342,7 +342,7 @@ func _cast_falcon_burst() -> void:
 		return
 	_cd_falcon_burst = StoryCombat.FALCON_BURST_CD
 	mp -= StoryCombat.FALCON_BURST_COST
-	_play_anim("sprint")
+	_skill_pose("falcon_burst")
 	var mul := StoryCombat.skill_mul(StoryCombat.FALCON_BURST_BASE, StoryCombat.FALCON_BURST_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.FALCON_BURST_RANGE_MUL
 	_skill_fx_of("h_burst", range_m)

@@ -98,7 +98,7 @@ func _initialize() -> void:
 	f.close()
 	ss.life = {"gather": 55}
 	var old_ok: bool = ss.try_load()
-	check(old_ok and int(ss.life.gather) == 0 and int(ss.mats.get("herb", 0)) == 4 and ss.SAVE_VERSION == 21, "옛 세이브(20) → life.gather 0 · mats 그대로 · 버전 21")
+	check(old_ok and int(ss.life.gather) == 0 and int(ss.mats.get("herb", 0)) == 4 and ss.SAVE_VERSION >= 21, "옛 세이브(20) → life.gather 0 · mats 그대로 · 버전 21 이상")   # G-0283 — G-0245 가 22 로
 	_rm()
 	ss.path_override = ""
 	player.free()

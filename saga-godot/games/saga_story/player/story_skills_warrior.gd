@@ -14,7 +14,7 @@ func _cast_warrior_cut() -> void:
 	_cd_warrior_cut = StoryCombat.WARRIOR_CUT_CD
 	mp -= StoryCombat.WARRIOR_CUT_COST
 	_skill_fx_of("w_cut")
-	_play_anim("sprint")
+	_skill_pose("warrior_cut")
 	_melee_hit(ATTACK_RANGE, StoryCombat.skill_mul(StoryCombat.WARRIOR_CUT_BASE, StoryCombat.WARRIOR_CUT_PER, lv))
 
 
@@ -25,7 +25,7 @@ func _cast_warrior_whirl() -> void:
 		return
 	_cd_warrior_whirl = StoryCombat.WARRIOR_WHIRL_CD
 	mp -= StoryCombat.WARRIOR_WHIRL_COST
-	_play_anim("sprint")
+	_skill_pose("warrior_whirl")
 	var mul := StoryCombat.skill_mul(StoryCombat.WARRIOR_WHIRL_BASE, StoryCombat.WARRIOR_WHIRL_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.WARRIOR_WHIRL_RANGE_MUL
 	_skill_fx_of("w_whirl", range_m)
@@ -54,7 +54,7 @@ func _cast_warrior_rush() -> void:
 	_cd_warrior_rush = StoryCombat.WARRIOR_RUSH_CD
 	mp -= StoryCombat.WARRIOR_RUSH_COST
 	_skill_fx_of("w_rush")
-	_play_anim("sprint")
+	_skill_pose("warrior_rush")
 	var dist_m := StoryCombat.warrior_rush_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.WARRIOR_RUSH_BASE, StoryCombat.WARRIOR_RUSH_PER, lv))
 	global_position.x += dist_m * _facing
@@ -85,7 +85,7 @@ func _cast_warrior_edge() -> void:
 	_cd_warrior_edge = StoryCombat.WARRIOR_EDGE_CD
 	mp -= StoryCombat.WARRIOR_EDGE_COST
 	_skill_fx_of("w_edge")
-	_play_anim("sprint")
+	_skill_pose("warrior_edge")
 	var mul := StoryCombat.skill_mul(StoryCombat.WARRIOR_EDGE_BASE, StoryCombat.WARRIOR_EDGE_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.WARRIOR_EDGE_RANGE_MUL, mul)
 
@@ -110,7 +110,7 @@ func _cast_general_smash() -> void:
 	_cd_general_smash = StoryCombat.GENERAL_SMASH_CD
 	mp -= StoryCombat.GENERAL_SMASH_COST
 	_skill_fx_of("g_smash")
-	_play_anim("sprint")
+	_skill_pose("general_smash")
 	var mul := StoryCombat.skill_mul(StoryCombat.GENERAL_SMASH_BASE, StoryCombat.GENERAL_SMASH_PER, lv)
 	for i in StoryCombat.GENERAL_SMASH_HITS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -123,7 +123,7 @@ func _cast_general_roar() -> void:
 		return
 	_cd_general_roar = StoryCombat.GENERAL_ROAR_CD
 	mp -= StoryCombat.GENERAL_ROAR_COST
-	_play_anim("sprint")
+	_skill_pose("general_roar")
 	var mul := StoryCombat.skill_mul(StoryCombat.GENERAL_ROAR_BASE, StoryCombat.GENERAL_ROAR_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.GENERAL_ROAR_RANGE_MUL
 	_skill_fx_of("g_roar", range_m)
@@ -162,7 +162,7 @@ func _cast_general_edge() -> void:
 	_cd_general_edge = StoryCombat.GENERAL_EDGE_CD
 	mp -= StoryCombat.GENERAL_EDGE_COST
 	_skill_fx_of("g_edge")
-	_play_anim("sprint")
+	_skill_pose("general_edge")
 	var mul := StoryCombat.skill_mul(StoryCombat.GENERAL_EDGE_BASE, StoryCombat.GENERAL_EDGE_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.GENERAL_EDGE_RANGE_MUL, mul)
 
@@ -187,7 +187,7 @@ func _cast_marshal_heaven() -> void:
 	_cd_marshal_heaven = StoryCombat.MARSHAL_HEAVEN_CD
 	mp -= StoryCombat.MARSHAL_HEAVEN_COST
 	_skill_fx_of("n_heaven")
-	_play_anim("sprint")
+	_skill_pose("marshal_heaven")
 	var mul := StoryCombat.skill_mul(StoryCombat.MARSHAL_HEAVEN_BASE, StoryCombat.MARSHAL_HEAVEN_PER, lv)
 	for i in StoryCombat.MARSHAL_HEAVEN_HITS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -200,7 +200,7 @@ func _cast_marshal_quake() -> void:
 		return
 	_cd_marshal_quake = StoryCombat.MARSHAL_QUAKE_CD
 	mp -= StoryCombat.MARSHAL_QUAKE_COST
-	_play_anim("sprint")
+	_skill_pose("marshal_quake")
 	var mul := StoryCombat.skill_mul(StoryCombat.MARSHAL_QUAKE_BASE, StoryCombat.MARSHAL_QUAKE_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.MARSHAL_QUAKE_RANGE_MUL
 	_skill_fx_of("n_quake", range_m)
@@ -225,7 +225,7 @@ func _cast_marshal_charge() -> void:
 	_cd_marshal_charge = StoryCombat.MARSHAL_CHARGE_CD
 	mp -= StoryCombat.MARSHAL_CHARGE_COST
 	_skill_fx_of("n_charge")
-	_play_anim("sprint")
+	_skill_pose("marshal_charge")
 	var dist_m := StoryCombat.marshal_charge_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.MARSHAL_CHARGE_BASE, StoryCombat.MARSHAL_CHARGE_PER, lv))
 	global_position.x += dist_m * _facing
@@ -253,7 +253,7 @@ func _cast_marshal_edge() -> void:
 	_cd_marshal_edge = StoryCombat.MARSHAL_EDGE_CD
 	mp -= StoryCombat.MARSHAL_EDGE_COST
 	_skill_fx_of("n_edge")
-	_play_anim("sprint")
+	_skill_pose("marshal_edge")
 	var mul := StoryCombat.skill_mul(StoryCombat.MARSHAL_EDGE_BASE, StoryCombat.MARSHAL_EDGE_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.MARSHAL_EDGE_RANGE_MUL, mul)
 
@@ -278,7 +278,7 @@ func _cast_warlord_ruin() -> void:
 	_cd_warlord_ruin = StoryCombat.WARLORD_RUIN_CD
 	mp -= StoryCombat.WARLORD_RUIN_COST
 	_skill_fx_of("o_ruin")
-	_play_anim("sprint")
+	_skill_pose("warlord_ruin")
 	var mul := StoryCombat.skill_mul(StoryCombat.WARLORD_RUIN_BASE, StoryCombat.WARLORD_RUIN_PER, lv)
 	for i in StoryCombat.WARLORD_RUIN_HITS:
 		_melee_hit(ATTACK_RANGE, mul)
@@ -291,7 +291,7 @@ func _cast_warlord_tremor() -> void:
 		return
 	_cd_warlord_tremor = StoryCombat.WARLORD_TREMOR_CD
 	mp -= StoryCombat.WARLORD_TREMOR_COST
-	_play_anim("sprint")
+	_skill_pose("warlord_tremor")
 	var mul := StoryCombat.skill_mul(StoryCombat.WARLORD_TREMOR_BASE, StoryCombat.WARLORD_TREMOR_PER, lv)
 	var range_m := ATTACK_RANGE * StoryCombat.WARLORD_TREMOR_RANGE_MUL
 	_skill_fx_of("o_tremor", range_m)
@@ -316,7 +316,7 @@ func _cast_warlord_smite() -> void:
 	_cd_warlord_smite = StoryCombat.WARLORD_SMITE_CD
 	mp -= StoryCombat.WARLORD_SMITE_COST
 	_skill_fx_of("o_smite")
-	_play_anim("sprint")
+	_skill_pose("warlord_smite")
 	var dist_m := StoryCombat.warlord_smite_dist_m()
 	_melee_hit(dist_m, StoryCombat.skill_mul(StoryCombat.WARLORD_SMITE_BASE, StoryCombat.WARLORD_SMITE_PER, lv))
 	global_position.x += dist_m * _facing
@@ -344,7 +344,7 @@ func _cast_warlord_edge() -> void:
 	_cd_warlord_edge = StoryCombat.WARLORD_EDGE_CD
 	mp -= StoryCombat.WARLORD_EDGE_COST
 	_skill_fx_of("o_edge")
-	_play_anim("sprint")
+	_skill_pose("warlord_edge")
 	var mul := StoryCombat.skill_mul(StoryCombat.WARLORD_EDGE_BASE, StoryCombat.WARLORD_EDGE_PER, lv)
 	_melee_hit(ATTACK_RANGE * StoryCombat.WARLORD_EDGE_RANGE_MUL, mul)
 

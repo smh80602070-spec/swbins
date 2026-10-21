@@ -28,6 +28,10 @@ const GO := "res://games/saga_go/world/TestVillage.tscn"
 const GFX := "res://saga_core/data/graphics_settings.gd"
 
 const CUTS := [
+	["st_pose_attack", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "pose", ["@tree", "_attack"]]]],   # G-0283 기본 공격 몸짓
+	["st_pose_cut", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "pose", ["@tree", "_cast_warrior_cut"]]]],   # 전사 strong
+	["st_pose_fire", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "pose", ["@tree", "_cast_mage_fire"]]]],   # 마법 cast
+	["st_pose_shot", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_fx.gd", "pose", ["@tree", "_cast_archer_shot"]]]],   # 궁수 skill
 	["mn_dungeon", DUNGEON, [["free_modal"]]],   # G-0280 HUD(☰ 메뉴로 옮긴 단추 빠짐 — SAGA_MENU_SCREEN=0 이 전)
 	["mo_dungeon", DUNGEON, [["free_modal"], ["call", "MenuScreen", "open_menu"]]],   # G-0280 ☰ 메뉴 열림
 	["mn_forest", FOREST, [["free_modal"]]],

@@ -353,7 +353,7 @@ func _cast_sweep() -> void:
 		return
 	_cd_sweep = StoryCombat.SWEEP_CD
 	mp -= StoryCombat.SWEEP_COST
-	_play_anim("sprint")
+	_skill_pose("sweep")
 	var range_m := ATTACK_RANGE * StoryCombat.SWEEP_RANGE_MUL
 	_skill_fx("aoe", range_m)
 	for enemy in get_tree().get_nodes_in_group("story_enemy"):
@@ -377,7 +377,7 @@ func _cast_bolt() -> void:
 	_cd_bolt = StoryCombat.BOLT_CD
 	mp -= StoryCombat.BOLT_COST
 	_skill_fx("bolt", ATTACK_RANGE * StoryCombat.BOLT_RANGE_MUL)
-	_play_anim("sprint")
+	_skill_pose("bolt")
 	_melee_hit(ATTACK_RANGE * StoryCombat.BOLT_RANGE_MUL, StoryCombat.BOLT_MUL)
 
 
@@ -447,8 +447,60 @@ func _play_gait(h_speed: float) -> void:
 func foot_lock_allowed() -> bool:
 	return not mounted
 
+## G-0283 공격·무예 몸짓 — 옛 몸 시절 "전용 공격 애니메이션이 없어" 모든 공격·무예가 sprint 를 빌렸다(80곳). 지금 dex 몸 라이브러리의
+## attack·strong(모캡 내리찍기)·cast(모캡 손 뻗기)·skill·burst·dodge 로, 클립의 동작 구간(ACT_WINDOW 초)만 ACT_SEC 에 맞춰 한 번 튼다.
+## 그동안(메타 act_until — 스크립트 var 는 probe_story_golden 이 해시) 걸음새 _play_anim 이 덮지 않는다. 돌진(rush·charge)은 sprint 그대로.
+## 창은 클립을 0.2초마다 찍어 골랐다(cast 는 처음부터 팔을 뻗고 있어 앞 0.8초 · strong 은 들어 올렸다 내리찍는 0.35~0.75초).
+## 손잡이: SAGA_STORY_ACTION=0 이면 옛 sprint.
+const ACT_WINDOW := {"attack": [0.30, 0.95], "strong": [0.35, 0.75], "cast": [0.0, 0.8], "skill": [0.0, 0.53], "burst": [0.0, 1.13], "dodge": [0.05, 0.85]}
+const ACT_SEC := {"attack": 0.32, "strong": 0.4, "cast": 0.45, "skill": 0.3, "burst": 0.6, "dodge": 0.4}
+
+## 무예 id(함수 이름 _cast_<id>, 기본 공격 "attack") → 클립. 각성기(·터뜨리기)를 먼저, 움직임 무예는 낱말로, 나머지는 갈래 앞말로.
+static func pose_clip(id: String) -> String:
+	if id == "attack":
+		return "attack"
+	for w in ["rush", "charge"]:
+		if id.contains(w):
+			return "sprint"
+	if id.contains("burst") or id.begins_with("godwar") or id.begins_with("skybow") or id.begins_with("voidsage") or id.begins_with("noshadow"):
+		return "burst"
+	for w in ["step", "retreat", "blur", "veil", "afterimage", "shadow"]:
+		if id.contains(w):
+			return "dodge"
+	for p in ["mage", "sage", "immortal", "ascendant"]:
+		if id.begins_with(p):
+			return "cast"
+	if id == "bolt" or id.ends_with("roar"):
+		return "cast"
+	for p in ["archer", "sniper", "flier", "falcon"]:
+		if id.begins_with(p):
+			return "skill"
+	for p in ["warrior", "general", "marshal", "warlord"]:
+		if id.begins_with(p):
+			return "strong"
+	if id == "sweep":
+		return "strong"
+	return "attack"   # 도적·자객·망령·사신 갈래 — 빠른 베기
+
+## 공격·무예 한 번(80곳이 부른다).
+func _skill_pose(id: String) -> void:
+	var clip := pose_clip(id)
+	if clip == "sprint" or OS.get_environment("SAGA_STORY_ACTION") == "0" or _anim == null or not _anim.has_animation(clip):
+		_play_anim("sprint")
+		return
+	var w: Array = ACT_WINDOW[clip]
+	var sec := float(ACT_SEC[clip])
+	set_meta("act_until", Engine.get_physics_frames() + int(sec * Engine.physics_ticks_per_second))   # 게임 시간(물리 프레임) — 실시간 ms 면 느린 PC·헤드리스에서 어긋남
+	_anim.speed_scale = (float(w[1]) - float(w[0])) / sec
+	set_meta("gait_scaled", true)   # 끝나고 다음 _play_anim 이 빠르기를 1 로
+	_anim.play(clip)
+	_anim.seek(float(w[0]), true)   # 같은 클립 연타도 매번 처음(동작 구간 시작)부터
+	_current_anim = clip
+
 func _play_anim(anim_name: String) -> void:
 	if _anim == null or not _anim.has_animation(anim_name):
+		return
+	if Engine.get_physics_frames() < int(get_meta("act_until", 0)):
 		return
 	if get_meta("gait_scaled", false) and anim_name != "walk" and anim_name != "sprint":
 		_anim.speed_scale = 1.0

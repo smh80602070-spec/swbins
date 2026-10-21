@@ -34,6 +34,32 @@ static func stage(tree: SceneTree) -> void:
 	tree.process_frame.connect(cb[0])
 
 
+## G-0283 — 무예 하나(method)를 촬영 POSE_AT 프레임 전에 — 공격·시전 몸짓(동작 구간 한가운데쯤)이 찍힌다. 손잡이 SAGA_STORY_ACTION=0 이면 옛 sprint.
+const POSE_AT := 112
+static func pose(tree: SceneTree, method: String) -> void:
+	tree.root.get_node("StorySaveState").skills = {"w_cut": 3, "m_fire": 3, "a_shot": 3}
+	for m in tree.get_nodes_in_group("ui_modal"):
+		m.queue_free()
+	var p := tree.get_first_node_in_group("player") as Node3D
+	if p == null:
+		return
+	var n := [0]
+	var cb := [Callable()]
+	cb[0] = func() -> void:
+		n[0] += 1
+		if not is_instance_valid(p):
+			tree.process_frame.disconnect(cb[0])
+			return
+		if n[0] == POSE_AT - 30:
+			p.set("mp", 999.0)
+			for prop in p.get_property_list():
+				if String(prop.name).begins_with("_cd_") or prop.name == "_attack_cd_left":
+					p.set(prop.name, 0.0)
+			p.call(method)
+			tree.process_frame.disconnect(cb[0])
+	tree.process_frame.connect(cb[0])
+
+
 ## G-0203 — 촬영 4프레임 전에 맞는다(체력 27% 에서 — 가장자리 번쩍 + 붉은 숫자 + 맥박). 플레이어가 곧 체력 주인이다.
 static func hurt(tree: SceneTree) -> void:
 	for m in tree.get_nodes_in_group("ui_modal"):
