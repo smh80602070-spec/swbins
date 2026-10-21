@@ -132,6 +132,10 @@ static func _apply_one(mesh_instance: MeshInstance3D) -> int:
 		## face_mode 는 face_light.attach 가 머리 뼈를 확인한 뒤 켠다.
 		if (kind == "skin" or kind == "face") and (String(mesh_instance.name).to_lower().begins_with("face") or original.resource_name.to_lower().contains("_face")):
 			shader_mat.set_meta("face_part", true)
+			## G-0271 — SDF(K-0151)는 얼굴 살갗(…_Face_00_SKIN) UV 로 구웠다. 입 안·눈썹·눈선(…_FACE)·눈(…_EYE)은 UV 가 달라
+			## 꽂으면 그늘 쪽 눈이 새까매진다(face_view 확인) — face_light 가 그 표면엔 face_mode 1 만 켠다.
+			if kind != "skin":
+				shader_mat.set_meta("face_no_sdf", true)
 		shader_mat.next_pass = outline_mat
 		mesh_instance.set_surface_override_material(surface_index, shader_mat)
 		count += 1

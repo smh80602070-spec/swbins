@@ -4795,7 +4795,7 @@
  },
  {
   "id": "gd.core.face-light",
-  "name": "인물 얼굴 그림자(원신식, 다섯 판 공용) — 얼굴 표면은 머리 앞 방향을 섞은 수평 법선으로 명암(코·입가·턱 얼룩 없음, 좌우 반쪽 그늘) · SDF 텍스처 자리",
+  "name": "인물 얼굴 그림자(원신식, 다섯 판 공용) — 얼굴 표면은 머리 앞 방향을 섞은 수평 법선으로 명암(코·입가·턱 얼룩 없음, 좌우 반쪽 그늘) · 얼굴 살갗은 SDF 반쪽 경계(K-0151, G-0271)",
   "files": [
    "saga_core/shaders/cel_toon.gdshader",
    "saga_core/shaders/cel_shader_apply.gd",
@@ -4811,7 +4811,7 @@
   "fun": {},
   "ticket": "G-0248",
   "since": "2026-10-20",
-  "note": "SAGA_FACE_LIGHT=0 끔 · head_fwd = instance uniform(머리 ~1.8° 넘게 돌 때만 보냄) · gl_compatibility 면 그늘 바닥만 올림 · SDF res://assets/face_sdf/face_sdf.png 와 앞머리 그림자는 K 대기"
+  "note": "SAGA_FACE_LIGHT=0 끔 · head_fwd = instance uniform(머리 ~1.8° 넘게 돌 때만 보냄) · gl_compatibility 면 그늘 바닥만 올림 · G-0271 SDF res://assets/face_sdf/face_sdf.png 켬 — …_Face_00_SKIN 만(입 안·눈썹·눈선·눈은 UV 달라 face_no_sdf, 꽂으면 그늘 쪽 눈이 새까맘) · SAGA_FACE_SDF=0 이면 SDF 없이 · 앞머리 그림자는 셰이더 자리 없음"
  },
  {
   "id": "gd.core.fx-warm",

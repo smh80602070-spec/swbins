@@ -6,7 +6,8 @@ extends SkeletonModifier3D
 ## CelShaderApply.apply_to 끝에서 attach 한다(플레이어·NPC·dex 몸·face_view 다 그 길이라 판 코드 수정 없음).
 ## 얼굴 표면 = cel_shader_apply._apply_one 이 "face_part" 메타를 단 재질(얼굴 메시의 살갗·눈썹·입·눈).
 ## 손잡이: SAGA_FACE_LIGHT=0 이면 붙지 않는다(face_mode 0 — 옛 법선 띠 그대로).
-## SDF(K 대기): FACE_SDF_PATH 에 그림이 생기면 face_sdf_on=1 로 바로 꽂힌다(VRoid 얼굴은 UV 가 같아 한 장을 나눠 쓴다).
+## SDF(K-0151, G-0271): FACE_SDF_PATH 한 장을 face_sdf_on=1 로 꽂는다(VRoid 얼굴은 UV 가 같아 한 장을 나눠 쓴다) — 살갗만(입 안·눈썹·눈선·눈 = face_no_sdf 는 빼고).
+## 손잡이: SAGA_FACE_SDF=0 이면 SDF 없이(G-0248 수평 법선 그늘 — 전후 비교용).
 ## 갱신은 머리가 MOVE_DOT 보다 더 돌았을 때만(가만히 선 NPC 는 RenderingServer 호출 0).
 
 const HEAD_BONES := ["J_Bip_C_Head", "Head"]
@@ -29,7 +30,7 @@ static func enabled() -> bool:
 static func sdf_texture() -> Texture2D:
 	if not _sdf_checked:
 		_sdf_checked = true
-		if ResourceLoader.exists(FACE_SDF_PATH):
+		if OS.get_environment("SAGA_FACE_SDF") != "0" and ResourceLoader.exists(FACE_SDF_PATH):
 			_sdf = load(FACE_SDF_PATH) as Texture2D
 	return _sdf
 
@@ -62,7 +63,7 @@ static func attach(root: Node) -> Node:
 			if sm == null or not sm.get_meta("face_part", false):
 				continue
 			sm.set_shader_parameter("face_mode", 1.0)
-			if sdf != null:
+			if sdf != null and not sm.get_meta("face_no_sdf", false):
 				sm.set_shader_parameter("face_sdf", sdf)
 				sm.set_shader_parameter("face_sdf_on", 1.0)
 			any = true
