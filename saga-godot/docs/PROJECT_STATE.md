@@ -34,6 +34,8 @@
 
 - 사람 몸(공방): 입은 살갗 덧그림(㉞, 머리 UV 두 배치만). (가로 UI 56%: saga_core/ui/orientation_scale.gd 로 다섯 판 고침.)
 
+- 인물 몸 설치(`characters_dex`, PC 마다): 주역 10(hl_mukhyang·kr_gyebaek·fu_jongwang·tb_baekgi·ru_geohae·sg_caocao·sg_liubei·sg_lubu·sg_sunquan·sg_zhugeliang)은 10-18 이후 K-0137 몸 — 다른 PC 는 `tools/char-forge/_out/engine_characters/` 의 그 10 을 지우고 `engine_characters.sh --install godot`. 그 도구는 웹 characters3d 의 새 200(도감 500 쪽)도 같이 넣는다 — 해시 NPC 몸이 바뀌니 넣은 뒤 그 200 은 `characters_dex` 에서 지운다(받아들일지는 따로 결정, G-0276).
+
 ## 테스트 상태
 
 - `godot_regress.sh` REGRESS OK(10-04, G-0021 뒤) · `probe_all` 해당 5개 fails=0.
