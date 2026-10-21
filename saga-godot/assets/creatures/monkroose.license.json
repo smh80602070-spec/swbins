@@ -40,5 +40,6 @@
  "height_m": 0.6,
  "replaces": "Quaternius CC0 Ultimate Monsters — Monkroose (D·F G S standin)",
  "commercial_use": true,
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c2\\monkroose.glb) · 결 평균(여백 제외) [224, 188, 197] → [229, 198, 193] (입력 전경 [234, 199, 193])"
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_c2\\monkroose.glb) · 결 평균(여백 제외) [224, 188, 197] → [229, 198, 193] (입력 전경 [234, 199, 193])",
+ "godot_safe": "K-0166 tools/glb-compress/godot_safe.mjs — 고돗 4.7 용(WebP→JPEG/PNG · Meshopt·양자화 풂), 모양·그림 같음"
 }

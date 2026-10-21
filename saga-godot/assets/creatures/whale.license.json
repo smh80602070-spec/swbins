@@ -35,9 +35,10 @@
  "note": "K-0096 자체 생성(입력 = 우리 txt2img 그림). 빌린 모델을 대신한다 — 게임 참조 바꾸기는 W 티켓.",
  "pipeline": "remote3d/finish.py(얼굴 +Z·발 밑 원점·키 m·떨어진 조각·바닥 판 지움) → asset-forge/creature_rig.py(자체 뼈대 + 자체 키프레임 동작 7, quad·bird·worm) → glb-compress/compress.mjs(Meshopt·WebP)",
  "yaw": 0,
- "height_m": 3.0,
+ "height_m": 3,
  "replaces": "Quaternius CC0 — Whale (dungeon animals_extra·forest animals_extra·go animals_extra·story animals_extra)",
  "commercial_use": true,
  "rig": "worm",
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k102\\whale.glb) · 결 평균(여백 제외) [132, 145, 158] → [203, 203, 216] (입력 전경 [206, 204, 217])"
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k102\\whale.glb) · 결 평균(여백 제외) [132, 145, 158] → [203, 203, 216] (입력 전경 [206, 204, 217])",
+ "godot_safe": "K-0166 tools/glb-compress/godot_safe.mjs — 고돗 4.7 용(WebP→JPEG/PNG · Meshopt·양자화 풂), 모양·그림 같음"
 }

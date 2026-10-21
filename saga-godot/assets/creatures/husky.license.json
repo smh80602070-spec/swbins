@@ -40,5 +40,6 @@
  "height_m": 0.6,
  "replaces": "Quaternius CC0 — Husky (dungeon animals·forest animals·go animals·story animals)",
  "commercial_use": true,
- "rig": "quad"
+ "rig": "quad",
+ "godot_safe": "K-0166 tools/glb-compress/godot_safe.mjs — 고돗 4.7 용(WebP→JPEG/PNG · Meshopt·양자화 풂), 모양·그림 같음"
 }

@@ -19,7 +19,7 @@
    768,
    768
   ],
-  "seconds": 22.0,
+  "seconds": 22,
   "date": "2026-10-19",
   "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
   "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py"
@@ -38,5 +38,6 @@
  "yaw": 0,
  "height_m": 1.2,
  "replaces": "quaternius_cute/Tree",
- "commercial_use": true
+ "commercial_use": true,
+ "godot_safe": "K-0166 tools/glb-compress/godot_safe.mjs — 고돗 4.7 용(WebP→JPEG/PNG · Meshopt·양자화 풂), 모양·그림 같음"
 }

@@ -41,5 +41,6 @@
  "replaces": "Quaternius CC0 — Royal_Gramma (dungeon animals_extra2·forest animals_extra2·go animals_extra2·story animals_extra2)",
  "commercial_use": true,
  "rig": "worm",
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_e\\royal_gramma.glb) · 결 평균(여백 제외) [147, 129, 136] → [201, 170, 182] (입력 전경 [206, 173, 185])"
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_e\\royal_gramma.glb) · 결 평균(여백 제외) [147, 129, 136] → [201, 170, 182] (입력 전경 [206, 173, 185])",
+ "godot_safe": "K-0166 tools/glb-compress/godot_safe.mjs — 고돗 4.7 용(WebP→JPEG/PNG · Meshopt·양자화 풂), 모양·그림 같음"
 }

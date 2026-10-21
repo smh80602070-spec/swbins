@@ -280,19 +280,12 @@
   {
    "id": "pets3d",
    "src": "saga-assets/pets3d-engine",
-   "note": "K-0153 — 엔진(고돗·유니티)용은 압축을 푼 판: tools/glb-compress/unity_safe.mjs saga-assets/pets3d saga-assets/pets3d-engine (WebP→JPEG·Meshopt 풂, 웹은 pets3d-trellis-web 이 압축 정본)",
+   "note": "K-0153 — 엔진(고돗·유니티)용은 압축을 푼 판: tools/glb-compress/unity_safe.mjs saga-assets/pets3d saga-assets/pets3d-engine (WebP→JPEG·Meshopt 풂, 웹은 pets3d-trellis-web 이 압축 정본) · K-0166 고돗은 양자화도 푼 pets3d-godot 항목",
    "include": [
     "*.glb",
     "*.license.json"
    ],
    "targets": [
-    {
-     "track": "godot",
-     "dir": "saga-godot/assets/world",
-     "sidecar": [
-      ".import"
-     ]
-    },
     {
      "track": "unity",
      "dir": "saga-unity/Assets/SagaCore/Resources/World",
@@ -1666,18 +1659,11 @@
     "*.glb",
     "*.license.json"
    ],
-   "note": "K-0096 자체 동물·탈것·괴물 3D(TRELLIS 원격 생성 → 얼굴 +Z·발 밑 원점·뼈 없는 동작 7·Meshopt) — 빌린 Poly CC-BY·Quaternius 대체. 게임 참조 바꾸기는 W 티켓 · K-0128(10-17) 고돗에도 같은 몸(세 트랙 동일) — monster_body.gd 가 shape→id 표로 부른다(수신함 고돗 줄)",
+   "note": "K-0096 자체 동물·탈것·괴물 3D(TRELLIS 원격 생성 → 얼굴 +Z·발 밑 원점·뼈 없는 동작 7·Meshopt) — 빌린 Poly CC-BY·Quaternius 대체. 게임 참조 바꾸기는 W 티켓 · K-0128(10-17) 고돗에도 같은 몸(세 트랙 동일) — monster_body.gd 가 shape→id 표로 부른다(수신함 고돗 줄) · K-0166 고돗 배치는 creatures3d-godot 항목(엔진판)",
    "targets": [
     {
      "track": "web",
      "dir": "saga-web/shared/assets/creatures3d"
-    },
-    {
-     "track": "godot",
-     "dir": "saga-godot/assets/creatures",
-     "sidecar": [
-      ".import"
-     ]
     }
    ]
   },
@@ -1716,6 +1702,42 @@
      "dir": "saga-unity/Assets/Art/CreaturesSelf",
      "sidecar": [
       ".meta"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "creatures3d-godot",
+   "src": "tools/glb-compress/_out/godot_safe/creatures",
+   "include": [
+    "*.glb",
+    "*.license.json"
+   ],
+   "note": "K-0166 자체 짐승·괴물 몸 138(정본 creatures3d) 고돗 엔진판 — godot_safe.mjs saga-assets/creatures3d tools/glb-compress/_out/godot_safe/creatures 로 Meshopt·양자화·WebP 를 모두 푼 GLB(JPEG q90). Godot 4.7.2 가 세 필수 확장을 못 읽어 임포트 실패(G-0274). 원본은 _out(정본에서 다시 만듦)",
+   "targets": [
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/creatures",
+     "sidecar": [
+      ".import"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pets3d-godot",
+   "src": "tools/glb-compress/_out/godot_safe/pets",
+   "include": [
+    "*.glb",
+    "*.license.json"
+   ],
+   "note": "K-0166 펫 몸 28(정본 pets3d) 고돗 엔진판 — godot_safe.mjs saga-assets/pets3d tools/glb-compress/_out/godot_safe/pets 로 양자화까지 푼 GLB(pet_pk_* 16·pet_pt_magpie 가 양자화라 임포트 실패, 나머지 pet_pt_* 11 은 pets3d-engine 과 바이트 같음). 원본은 _out(정본에서 다시 만듦)",
+   "targets": [
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/world",
+     "sidecar": [
+      ".import"
      ]
     }
    ]

@@ -40,5 +40,6 @@
  "height_m": 0.7,
  "replaces": "Quaternius CC0 (2nd pack) — Spider (D R quaternius2)",
  "commercial_use": true,
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_d\\spider.glb) · 결 평균(여백 제외) [56, 40, 41] → [129, 86, 95] (입력 전경 [140, 90, 99])"
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_d\\spider.glb) · 결 평균(여백 제외) [56, 40, 41] → [129, 86, 95] (입력 전경 [140, 90, 99])",
+ "godot_safe": "K-0166 tools/glb-compress/godot_safe.mjs — 고돗 4.7 용(WebP→JPEG/PNG · Meshopt·양자화 풂), 모양·그림 같음"
 }

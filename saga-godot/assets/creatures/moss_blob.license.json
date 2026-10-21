@@ -36,7 +36,8 @@
  "note": "K-0145 자체 생성 — 입력 = 우리 txt2img(k145_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Green_Blob 를 대신한다 — 게임 참조 바꾸기는 W 티켓.",
  "pipeline": "remote3d/finish.py(얼굴 +Z·발 밑 원점·키 m·떨어진 조각·바닥 판 지움) → glb-compress/creature_fill.mjs --forward-z(뼈 없는 동작 7) → compress.mjs(Meshopt·WebP)",
  "yaw": 0,
- "height_m": 1.0,
+ "height_m": 1,
  "replaces": "quaternius/Green_Blob",
- "commercial_use": true
+ "commercial_use": true,
+ "godot_safe": "K-0166 tools/glb-compress/godot_safe.mjs — 고돗 4.7 용(WebP→JPEG/PNG · Meshopt·양자화 풂), 모양·그림 같음"
 }

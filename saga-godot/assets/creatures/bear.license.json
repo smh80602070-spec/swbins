@@ -41,5 +41,6 @@
  "replaces": "Poly by Google CC-BY 3.0 — Bear.glb (dungeon·forest·go·story animals/)",
  "commercial_use": true,
  "rig": "quad",
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · 톤 배율 0.551(data/k143_tone.json) · --area: 원본 결(tools/_out/creature_rig/k96/bear.glb)에서 · 겉면 넓이 가중 감마 · 겉면 평균 [34, 34, 39] → [50, 52, 60] (입력 전경 [91, 94, 109])"
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · 톤 배율 0.551(data/k143_tone.json) · --area: 원본 결(tools/_out/creature_rig/k96/bear.glb)에서 · 겉면 넓이 가중 감마 · 겉면 평균 [34, 34, 39] → [50, 52, 60] (입력 전경 [91, 94, 109])",
+ "godot_safe": "K-0166 tools/glb-compress/godot_safe.mjs — 고돗 4.7 용(WebP→JPEG/PNG · Meshopt·양자화 풂), 모양·그림 같음"
 }

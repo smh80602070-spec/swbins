@@ -40,5 +40,6 @@
  "height_m": 0.6,
  "replaces": "Quaternius CC0 (2nd pack) — Wasp (D R quaternius2·G S foes)",
  "commercial_use": true,
- "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_d\\wasp.glb) · 결 평균(여백 제외) [85, 69, 63] → [152, 133, 131] (입력 전경 [168, 144, 138])"
+ "postfix": "tools/glb-compress/creature_fix.py — metallic 0 · roughness 0.85 · texel 마스크 = UV(tools\\ai-art\\_out\\remote3d\\k96_d\\wasp.glb) · 결 평균(여백 제외) [85, 69, 63] → [152, 133, 131] (입력 전경 [168, 144, 138])",
+ "godot_safe": "K-0166 tools/glb-compress/godot_safe.mjs — 고돗 4.7 용(WebP→JPEG/PNG · Meshopt·양자화 풂), 모양·그림 같음"
 }
