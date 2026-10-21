@@ -614,7 +614,7 @@
     stats: stats,
     /** PLAN §28-4 Phase 4 — 순수 함수만 자가진단에 내준다(T 없이도 돈다) */
     _doorPrefetchTargets: doorPrefetchTargets, _nextRoomFor: nextRoomFor,
-    _pickTex: pickTex, _FLOOR_TEX: FLOOR_TEX, _WALL_TEX: WALL_TEX,
+    _pickTex: pickTex, _FLOOR_TEX: FLOOR_TEX, _WALL_TEX: WALL_TEX, _groundTile: groundTile,
     /** 실측용(init() 뒤에만 의미 있다) — 실제 텍스처 요청 횟수·캐시 존재 여부 */
     _texLoadCount: function () { return texLoadCount; },
     /** PLAN §28-8 후속 — render()가 실제로 프리페치를 걸었는지(단순 순수

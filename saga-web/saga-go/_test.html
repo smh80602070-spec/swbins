@@ -278,6 +278,14 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 
     /* ── 본편 뼈대 ─────────────────────────────────────── */
 
+    t('3D 자체 땅 타일(W-0355, K-0136) — 공용 주소가 서면 풀·길·마을 변주 넷째 장이 go_field_grass·go_stone_path·go_village_dirt · 파일 있음', function () {
+      var V = DG.world3dLandTex.LAND_TEX_VARIANTS, A3 = DG.assets3d; var ex = function (u) { try { var x = new XMLHttpRequest(); x.open('HEAD', u, false); x.send(); return x.status === 200; } catch (e) { return false; } };
+      if (!(A3 && A3.state && A3.state() === 'ok')) { return '공용 주소 아직 — 넷째 장 없음(옛 석 장) ' + V.grass.length; }
+      DG.world3dLandTex.landTexture && DG.world3dLandTex.landTexture('x', 0, 0, 1);
+      var g = V.grass[3] || '', rd = V.road[3] || '', tw = V.town[3] || '';
+      var r = [/go_field_grass.webp$/.test(g), /go_stone_path.webp$/.test(rd), /go_village_dirt.webp$/.test(tw), ex(g) && ex(rd) && ex(tw), V.forest.length === 3];
+      return r.every(Boolean) && ('변주 넷 · ' + g.split('/').pop()) || '실패 ' + r.join(',') + ' ' + g;
+    });
     t('끌어 놓기 손놀림(W-0362) — 마우스 6px 끌기 → 받는 칸에 놓음 · 안 받는 칸은 취소 · 짧은 터치는 집지 않음 · 길게 누르기 → 집음 · 먼저 움직인 터치는 스크롤로 넘김 · 취소', function () {
       var DD = DG.dragdrop, host = document.createElement('div'), got = [];
       host.style.cssText = 'position:fixed;left:0;top:0;width:300px;height:100px;z-index:99999';

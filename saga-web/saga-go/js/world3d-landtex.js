@@ -33,6 +33,15 @@
     farm: ['assets/textures/land_c/farm1.webp', 'assets/textures/land_c/farm2.webp', 'assets/textures/land_c/farm3.webp']
   };
   var LAND_TEX_IMG = {};
+  /* W-0355 자체 땅 타일(K-0136 ③, 공용 tiles/ground 512) — 풀·길·마을 변주에 넷째 장으로 더한다(공용 주소를 안 뒤 한 번, 손잡이 world3d.groundTiles 0 이면 안 더함).
+     변주 수가 바뀌면 landTexReadyKey 길이가 바뀌어 타일이 다시 구워진다. 바닷가 모래(go_shore_sand)는 이 판 땅 종류에 물가가 없어 안 씀 */
+  var GROUND_ADD = { grass: 'go_field_grass', road: 'go_stone_path', town: 'go_village_dirt' }, groundAdded = false;
+  function addGroundTiles() {   // 손잡이를 끄면 넷째 장을 다시 뺀다(비교판·되돌림)
+    var A3 = global.DG.assets3d, C = global.DG.core, on = !(C && C.tuned) || +C.tuned('world3d.groundTiles', 1) > 0, k;
+    if (on === groundAdded || (on && !(A3 && A3.state && A3.state() === 'ok' && A3.root))) { return; }
+    groundAdded = on;
+    for (k in GROUND_ADD) { if (GROUND_ADD.hasOwnProperty(k) && LAND_TEX_VARIANTS[k]) { if (on) { LAND_TEX_VARIANTS[k].push(A3.root() + 'tiles/ground/' + GROUND_ADD[k] + '.webp'); } else { LAND_TEX_VARIANTS[k].length = 3; } } }
+  }
   function landTexImg(kind, variant) {
     var key = kind + '#' + variant;
     if (LAND_TEX_IMG[key]) { return LAND_TEX_IMG[key]; }
@@ -144,6 +153,7 @@
   /** 어느 소재가 왔는지 — 지형 텍스처 캐시 키에 넣어, 늦게 온 것도 다음에 반영되게 한다 */
   function landTexReadyKey() {
     var s = '', k, i, urls;
+    addGroundTiles();
     for (k in LAND_TEX_VARIANTS) {
       if (!LAND_TEX_VARIANTS.hasOwnProperty(k)) { continue; }
       urls = LAND_TEX_VARIANTS[k];

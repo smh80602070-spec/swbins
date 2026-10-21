@@ -555,6 +555,8 @@
     var h = F.seedOf(run.floor, run.roomIdx, salt);
     return list[h % list.length];
   }
+  /** W-0355 자체 땅 타일(K-0136 ③, 공용 tiles/ground) — 마을 = 다진 흙, 던전 층 = 돌바닥·굴 바위를 옛 석 장과 함께 후보로(같은 씨앗 = 같은 그림). 공용 주소 전·손잡이 world3d.groundTiles 0 이면 null(옛 석 장) */
+  function groundTile(run) { var A3 = global.DG.assets3d, C = global.DG.core, on = !(C && C.tuned) || +C.tuned('world3d.groundTiles', 1) > 0, r = on && A3 && A3.state && A3.state() === 'ok' && A3.root ? A3.root() + 'tiles/ground/' : null; return !r ? null : run.town ? r + 'dg_town_dirt.webp' : pickTex([r + 'dg_dungeon_stone.webp', r + 'dg_cave_rock.webp'].concat(FLOOR_TEX), run, 'floortex'); }
   var TILE = 70;               // 세계 단위 하나당 텍스처 한 칸 (바닥·벽 공통)
   var rawTexCache = {}, texWaiters = {};
   /** url 하나당 텍스처를 하나만 실어 두고, 실린 뒤에 할 일은 `onTexReady`로 받는다.
@@ -766,7 +768,7 @@
       floorMesh.receiveShadow = true;
       scene.add(floorMesh);
     }
-    var floorTex = pickTex(FLOOR_TEX, run, 'floortex');
+    var floorTex = groundTile(run) || pickTex(FLOOR_TEX, run, 'floortex');
     var wallTex = pickTex(WALL_TEX, run, 'walltex');
     floorMesh.position.set(W / 2, 0, H / 2);
     floorMesh.scale.set(W, H, 1);
@@ -2786,7 +2788,7 @@
     stats: stats,
     /** PLAN §28-4 Phase 4 — 순수 함수만 자가진단에 내준다(T 없이도 돈다) */
     _doorPrefetchTargets: doorPrefetchTargets, _nextRoomFor: nextRoomFor,
-    _pickTex: pickTex, _FLOOR_TEX: FLOOR_TEX, _WALL_TEX: WALL_TEX,
+    _pickTex: pickTex, _FLOOR_TEX: FLOOR_TEX, _WALL_TEX: WALL_TEX, _groundTile: groundTile,
     /** 실측용(init() 뒤에만 의미 있다) — 실제 텍스처 요청 횟수·캐시 존재 여부 */
     _texLoadCount: function () { return texLoadCount; },
     /** PLAN §28-8 후속 — render()가 실제로 프리페치를 걸었는지(단순 순수

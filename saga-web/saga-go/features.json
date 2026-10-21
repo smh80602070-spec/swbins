@@ -1503,5 +1503,21 @@
   "ticket": "W-0362",
   "since": "2026-10-21",
   "note": "10-21: 진짜 입력 — 2나락 PC 마우스·폰 CDP 터치(길게 누르기 → 들고 있는 채 → 무기 칸 누름) 끼워짐 · 4종횡 PC 마우스 끼워짐 · 집은 순간 폰 PNG Read(받는 칸 금빛·못 받는 칸 붉은 테)"
+ },
+ {
+  "id": "go.ground-tiles",
+  "name": "3D 자체 땅 타일(W-0355, K-0136 ③ 512) — 1만리: 풀·길·마을 땅 변주 넷째 장 go_field_grass·go_stone_path·go_village_dirt(공용 주소 선 뒤, 손잡이 world3d.groundTiles 0 이면 뺌) · 바닷가 모래는 물가 땅 종류가 없어 안 씀",
+  "files": [
+   "js/world3d-landtex.js"
+  ],
+  "tests": [
+   "3D 자체 땅 타일(W-0355, K-0136) — 공용 주소가 서면 풀·길·마을 변주 넷째 장이 go_field_grass·go_stone_path·go_village_dirt · 파일 있음"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0355",
+  "since": "2026-10-21",
+  "note": "10-21: 3D 마을 근경 전후 Read — 마을 칸 일부만 넷째 장이라 차이 작음, 이음매·반복 무늬 새로 없음"
  }
 ]

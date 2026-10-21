@@ -250,6 +250,15 @@ window.requestAnimationFrame = function () { return 0; };
     /* ── 갈라져 나온 프로젝트로서의 조건 ─────────────── */
 
     /* W-0295 PBR 땅 — 공용 pbrground3d 값 층(three 없이) */
+    t('3D 자체 땅 타일(W-0355, K-0136) — 마을 바닥 = dg_town_dirt · 던전 층은 돌바닥·굴 바위가 옛 석 장과 함께 후보 · 공용 주소 전엔 옛 석 장(null) · 파일 있음', function () {
+      var D3 = DG.dungeon3d, A3 = DG.assets3d, s0 = A3.state, r0 = A3.root, R = '../shared/assets/'; var ex = function (u) { try { var x = new XMLHttpRequest(); x.open('HEAD', u, false); x.send(); return x.status === 200; } catch (e) { return false; } };
+      var before = (A3.state = function () { return 'loading'; }, D3._groundTile({ town: true, floor: 1, roomIdx: 0 }));
+      A3.state = function () { return 'ok'; }; A3.root = function () { return R; };
+      var town, picks = {}, i;
+      try { town = D3._groundTile({ town: true, floor: 1, roomIdx: 0 }); for (i = 1; i <= 40; i++) { picks[D3._groundTile({ town: false, floor: i, roomIdx: i % 4 }).split('/').pop()] = 1; } } finally { A3.state = s0; A3.root = r0; }
+      var r = [before === null, town === R + 'tiles/ground/dg_town_dirt.webp', !!(picks['dg_dungeon_stone.webp'] || picks['dg_cave_rock.webp']), (s0.call(A3) !== 'ok' || ['dg_town_dirt', 'dg_dungeon_stone', 'dg_cave_rock'].every(function (n) { return ex(r0.call(A3) + 'tiles/ground/' + n + '.webp'); }))];   // 파일은 진짜 공용 주소가 섰을 때만(진단 서버는 판 폴더만 내줄 수 있다)
+      return r.every(Boolean) && ('마을 흙 · 던전 후보 ' + Object.keys(picks).length + '장') || '실패 ' + r.join(',');
+    });
     t('적 초상·몸 종 id 먼저(W-0354) — 적 134 마다 초상이 있으면 파일이 있음(404 0) · body 초상이 있는 적은 초상 id = body = 3D 몸 id · 사람 적은 자체 NPC 몸 초상 · 보스는 옛 길', function () {
       var MP = DG.monsterPortrait, E = DG.enemyData.enemies, miss = [], byBody = 0, hum = 0, mism = [];
       E.forEach(function (e) {

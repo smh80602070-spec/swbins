@@ -1488,5 +1488,22 @@
   "ticket": "W-0354",
   "since": "2026-10-21",
   "note": "10-21: 초상·2D 시트 대 보기 Read — 종 시트 있는 뱀·슬라임·버섯·원귀 ○, 해골·말벌·쥐는 2D 가 옛 계열(K 수신함)"
+ },
+ {
+  "id": "dg.ground-tiles",
+  "name": "3D 자체 땅 타일(W-0355, K-0136 ③ 512) — 2나락: 마을 바닥 = dg_town_dirt · 던전 층 바닥 후보에 dg_dungeon_stone·dg_cave_rock(옛 석 장과 함께, 같은 씨앗 = 같은 그림) · 늪 흙(dg_mud_swamp)은 늪 바닥 자리가 없어 안 씀",
+  "files": [
+   "src/dungeon3d/01.js",
+   "src/dungeon3d/04.js"
+  ],
+  "tests": [
+   "3D 자체 땅 타일(W-0355, K-0136) — 마을 바닥 = dg_town_dirt · 던전 층은 돌바닥·굴 바위가 옛 석 장과 함께 후보 · 공용 주소 전엔 옛 석 장(null) · 파일 있음"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0355",
+  "since": "2026-10-21",
+  "note": "10-21: 3D 마을 전후 Read — 회색 돌 → 다진 흙(마을다움 ○)"
  }
 ]
