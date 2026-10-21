@@ -17,18 +17,19 @@
 
 **공통(saga_core)**: `data/characters.gd`(인물 105, id 불변)·`data/pets.gd`(신수 11) · `ui/toast.gd`·`ui/virtual_joystick.gd`·`ui/goal_board.gd`+`ui/session_card.gd`(101-4, 목표판 3줄·마무리 카드, 다섯 판 전부 붙음)·`ui/duel_hud.gd` · `combat_feel.gd`(101-3, 다섯 판 끝, 09-20㉒ 타격음 배선, 09-21 UI 사운드(`ui()`) 신설+`session_card.gd` "닫기" 배선) · `world/world_curve_material.gd`+`shaders/curved_*`(FOREST 구면) · `world/density_report.gd`(104-5, 발견 밀도, FOREST는 반경 10m) · `shaders/cel_toon.gdshader`+`cel_shader_apply.gd`(66-2/102-3, hit_flash+아웃라인 next_pass 자동) · `world/glb_utils.gd::fit_height()`(102-1, 여전히 미호출). 렌더러 Forward+/Mobile 이중(66-1, `env_pc.tres`·`env_mobile.tres`, 102-2 값).
 
-## 현재 작업 — 중단 지점(2026-10-11)
+## 현재 작업 — 중단 지점(2026-10-21)
 
-- 닫은 티켓 줄거리는 `tasks/godot/done/` 티켓 메모가 정본(10-09 G-0116~0151 그래픽·감사·천하 7막 · 10-10~11 G-0152~0197 손확인·HUD·F 측정·전술판·웹 리뉴얼 이식). 큐에 남은 G-0143·G-0144 2단계는 둘 다 **K-0093(자체 생성 PBR 12세트) 대기**.
-- **방향(사용자 10-09, PLAN 66-2·SAGA-DESIGN §6.0-1 반영)**: 인물·몬스터는 툰 그대로, **배경(물·하늘·풀·땅·소품 재질)은 사실 쪽**. 사용자 판정 "고친거 마음에 들어"·"괜찮네" ○. 기준 네 컷 `graphics/baseline/go/`(10-09 16:17, 이후 `node tools/shot_diff.mjs graphics/baseline/go <폴더>`).
-- 보여 주기 = 같은 시간대 전후 밀어 보기 비교 페이지(Artifact https://claude.ai/artifact/2shrD5bSfk5crvfmAEk3KT, 스크래치 `gallery/index.html` 은 세션마다 사라지니 새 세션은 `Artifact read` 로 받아 이어 붙일 것). GO 컷 = `tools/probe_shots.gd`(진단 컷 d_plaza_*·d_bridge_top·할 일 hide/nograss/burstN), 다른 판 = `tools/scene_shot.tscn`(판 씬 한 장, 넷째 인자 노드 곁에 서기).
-- 이 PC Godot = WinGet Packages `Godot_v4.7.2-stable_win64_console.exe`. 전체 점검 `tools/probe_all.sh` 153개(10-10 G-0157~0174 뒤 전부 fails=0 — 세이브 user://save.json 을 비켜 두고 돌림). 러너가 도는 중엔 probe_all.sh 를 고치지 말 것.
-- 함정: 사가마을·나락 씬을 헤드리스로 띄우면 첫 안내·대화 창(ui_modal)이 연달아 떠 멈춤 — 점검은 매 프레임 창을 치울 것 · 공용 주변광(environment_profile)에 밝은 색을 섞으면 신상·절벽 그늘 입체감이 날아감(G-0127) — 섞을 땐 하늘 밝기 쯤 중간 회색으로 채도만(G-0133) · forward_plus 로 화면 밖 촬영 시 SDFGI 검은 조각.
+- 닫은 티켓 줄거리는 `tasks/godot/done/` 티켓 메모가 정본. 10-21: G-0270~0285(에셋 임포트·얼굴 SDF·자연물 사실판·2나락 킷·모캡 12·주역 몸·밤 불빛·☰ 메뉴 다섯 판·괴물 creatures 일곱 + 원소 색·4종횡/2나락/1만리 공격·무예 몸짓·3마을 곡면 재질 법선 맵) + R-5 고침 다섯(16f49be23).
+- 큐 = **G-0282 모캡 30 배선 하나 — 대기 K**(K-0161 `saga-assets/characters/anim-src/mocap/vroid_clips30_anims.glb` 를 고돗 `assets/anim_mocap/` 로 place 해야 풀림, 수신함 K 줄).
+- 웹 끝난 티켓의 고돗 짝은 다 맞춤(W-0357 → G-0284 · W-0358 → G-0285). 빌린 에셋 0.
+- 이 PC: Godot = WinGet Packages `Godot_v4.7.2-stable_win64_console.exe` · **로컬 main 이 옛 커밋 둘에 묶여 있어 커밋은 임시 worktree(`/c/swt-g270`, origin/main detach)에서 만들어 `push origin HEAD:main`** — 사용자가 `! bash fix.sh` 돌리면 맞춰짐 · `.import` 13(로컬 uid 갈림)은 커밋 안 함.
+- 함정: 헤드리스는 실시간보다 빨리 돎 — 동작 잠금은 물리 프레임으로 · creatures 몸은 스킨 바인드 포즈에 배율(메시 상자 ≠ 그려지는 크기, MonsterBody._posed_box) · 옛 valid=false .import(gitignore)가 남으면 --import 가 다시 안 함(지우고) · 1만리 첫 안내 창을 지우면 봉화대 안내가 깨짐(숨기기만) · 셰이더 그림 uniform 은 `albedo_texture` 여야 material_audit 통과 · 장부 `tasks/gameplay/graphics.md` 6KB 턱밑.
 
 ## 다음 작업 (우선순위)
 
-0. **그래픽 — 배경 사실화 이어서**. G-0143(바닥)·G-0144 2단계(소품·건물)는 K-0093 자체 생성 PBR 텍스처 대기 — 정본 `saga-assets/textures_real/<세트>/`(세트 grass dirt gravel rock sand snow stonewall planks plaster rooftile rust paving). 오면 그 자리에서 연결. 그동안 후보: 사가나락 동굴 바닥·벽 재질(텍스처 뒤), 얼굴·머리 텍스처 2048(사용자 확인 뒤 K).
-1. 106장 사람 몫 — 등반·활공·수영·점프 Mixamo 클립(로그인만 사람), 주역 VRoid 조형. 폭발 동작 CF_Burst 원본(dj_haean_anims.glb)은 K PC 대기.
+0. G-0282(K place 뒤) — 채집·낚시·말·사다리·매달리기 등 판별 행동에 모캡 30.
+1. 장부 우선 2 남은 것 — 물 셰이더·보스 등장 카메라: 웹이 아직 안 함(규칙 "웹 검증 뒤 이식") → 웹이 먼저 하거나 사용자가 고돗 먼저 허락하면 R-0.
+2. 1만리 괴물 남은 몸(물거북·보스 — creatures 짝 없음)은 K.
 
 ## 알려진 오류
 
