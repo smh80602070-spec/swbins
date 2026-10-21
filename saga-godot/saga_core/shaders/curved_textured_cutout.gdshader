@@ -14,6 +14,11 @@ uniform float roughness_value : hint_range(0.0, 1.0) = 0.9;
 uniform float alpha_cutoff : hint_range(0.0, 1.0) = 0.2;
 // G-0272 — textured_surfaces 가 잎 카드(사실판 자연물)를 이 셰이더로 돌릴 때 바이옴 색 곱(기본 흰색 = 옛 그대로).
 uniform vec4 tint_color : source_color = vec4(1.0);
+// G-0285 — 원본 재질의 법선·거칠기 맵(K-0152·K-0154 toon 359 몸, 웹 W-0358 짝). normal_scale 0·use_rough_tex 0 이 기본이라 맵 없는 사용처는 그대로.
+uniform sampler2D normal_texture : hint_normal;
+uniform float normal_scale = 0.0;
+uniform sampler2D roughness_texture : hint_roughness_g;
+uniform float use_rough_tex = 0.0;
 
 void vertex() {
 	VERTEX = saga_apply_world_curve(VERTEX, MODEL_MATRIX, curve_amount);
@@ -24,5 +29,7 @@ void fragment() {
 	ALBEDO = tex.rgb * tint_color.rgb;
 	ALPHA = tex.a;
 	ALPHA_SCISSOR_THRESHOLD = alpha_cutoff;
-	ROUGHNESS = roughness_value;
+	ROUGHNESS = mix(roughness_value, texture(roughness_texture, UV).g, use_rough_tex);
+	NORMAL_MAP = texture(normal_texture, UV).rgb;
+	NORMAL_MAP_DEPTH = normal_scale;
 }

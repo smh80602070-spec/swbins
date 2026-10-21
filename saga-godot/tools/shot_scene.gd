@@ -28,6 +28,7 @@ const GO := "res://games/saga_go/world/TestVillage.tscn"
 const GFX := "res://saga_core/data/graphics_settings.gd"
 
 const CUTS := [
+	["fs_house_close", FOREST, [["free_modal"], ["near", "House", 0.0, 5.0], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 4.0]]],   # G-0285 집 가까이(벽·지붕 법선 결)
 	["ac_go_cast", GO, [["static", "res://tools/shot_action.gd", "at", ["@tree", "go_cast"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 3.5]]],   # G-0284
 	["ac_go_strong", GO, [["static", "res://tools/shot_action.gd", "at", ["@tree", "go_strong"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 3.5]]],   # G-0284
 	["ac_dg_attack", DUNGEON, [["free_modal"], ["static", "res://tools/shot_action.gd", "at", ["@tree", "dg_attack"]]]],   # G-0284

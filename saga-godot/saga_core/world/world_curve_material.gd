@@ -76,10 +76,23 @@ static func textured_surfaces(src: Mesh, curve_amount: float, roughness_value: f
 		mat.set_shader_parameter("curve_amount", curve_amount)
 		mat.set_shader_parameter("roughness_value", roughness_value)
 		mat.set_shader_parameter("tint_color", tint)
+		pbr_maps(mat, orig)
 		if orig.has_meta("night_glow"):   # G-0277 — 불 면·창은 밤에 빛나게(곡률 셰이더 emission 자리)
 			NightGlow.register_shader(mat, String(orig.get_meta("night_glow")))
 		mesh.surface_set_material(i, mat)
 	return mesh
+
+
+## G-0285 — 원본 재질의 법선·거칠기 맵을 곡률 셰이더로 넘긴다(전엔 그림만 넘겨 K-0152·K-0154 의 맵이 3마을에서 사라졌다). 손잡이 SAGA_CURVE_PBR=0.
+static func pbr_maps(mat: ShaderMaterial, orig: BaseMaterial3D) -> void:
+	if OS.get_environment("SAGA_CURVE_PBR") == "0" or orig == null:
+		return
+	if orig.normal_enabled and orig.normal_texture != null:
+		mat.set_shader_parameter("normal_texture", orig.normal_texture)
+		mat.set_shader_parameter("normal_scale", orig.normal_scale)
+	if orig.roughness_texture != null:
+		mat.set_shader_parameter("roughness_texture", orig.roughness_texture)
+		mat.set_shader_parameter("use_rough_tex", 1.0)
 
 
 static func textured_material(texture_path: String, curve_amount: float, roughness_value: float = 0.9) -> ShaderMaterial:
