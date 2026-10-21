@@ -1566,7 +1566,7 @@
       ctx.font = 'bold ' + (15 * z) + 'px system-ui, sans-serif';
       ctx.textAlign = 'center';
       ctx.fillStyle = '#ff9a5a';
-      ctx.fillText('⚔️', p.x, p.y - (bh > 0 ? bh * 0.93 : 62 * z) + Math.sin(now / 380) * 2 * z);
+      (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, '⚔️', p.x, p.y - (bh > 0 ? bh * 0.93 : 62 * z) + Math.sin(now / 380) * 2 * z);   // W-0350 자체 아이콘
       ctx.textAlign = 'left';
       label(ctx, raid.tier.name + ' · ' + raid.hero.name, p.x, p.y + 15 * z,
         'rgba(255,154,90,0.95)', 'center', z);
@@ -1625,7 +1625,7 @@
       var bob = Math.sin(now / (held ? 380 : 520)) * 1.6 * z;
       ctx.font = (14 * z) + 'px system-ui, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText(held ? '🏴' : '🏮', p.x, p.y - (bh > 0 ? bh * 0.77 : 46 * z) + bob);
+      (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, held ? '🏴' : '🏮', p.x, p.y - (bh > 0 ? bh * 0.77 : 46 * z) + bob);
       ctx.textAlign = 'left';
     }
     ctx.globalAlpha = 1;

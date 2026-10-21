@@ -206,7 +206,7 @@
       ctx.strokeStyle = shade(theme.wall, 0.15); ctx.lineWidth = Math.max(2, 3 * s * 0.5); ctx.stroke();
       ctx.font = Math.round(16 * s * 0.8 + 6) + 'px "Malgun Gothic", system-ui'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.globalAlpha = open ? 1 : 0.5; ctx.fillStyle = '#fff';
-      ctx.fillText((icons && icons[dr.kind]) || '⚔️', gx + dw / 2, gy + dh * 0.45);
+      (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, (icons && icons[dr.kind]) || '⚔️', gx + dw / 2, gy + dh * 0.45);   // W-0350
       if (dr.title) { ctx.font = '700 ' + Math.round(8 * s * 0.8 + 7) + 'px "Malgun Gothic", system-ui'; ctx.fillStyle = '#f0d9a0'; ctx.fillText(dr.title, gx + dw / 2, gy - 8); }
       ctx.globalAlpha = 1;
     }

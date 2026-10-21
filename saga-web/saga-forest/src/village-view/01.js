@@ -531,7 +531,7 @@
         ctx.font = Math.round(30 * k) + 'px "Segoe UI Emoji", system-ui';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'alphabetic';
-        ctx.fillText(def.emoji, p.x, p.y + 6 * k);
+        (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, def.emoji, p.x, p.y + 6 * k);   // W-0350
     }
     ctx.restore();
 

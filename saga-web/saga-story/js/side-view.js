@@ -342,7 +342,7 @@
       var def = SD.DROPS[d.kind];
       ctx.font = '18px "Segoe UI Emoji", system-ui';
       ctx.textAlign = 'center';
-      ctx.fillText(def.emoji, d.x - camX, d.y);
+      (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, def.emoji, d.x - camX, d.y);   // W-0350 떨어진 것
     }
 
     /* 적 */
@@ -513,7 +513,7 @@
     ctx.textAlign = 'center';
     ctx.font = '700 15px system-ui, sans-serif';
     ctx.fillStyle = 'rgba(240,226,200,0.95)';
-    ctx.fillText('👺 보스 등장', W / 2, y - 8);
+    (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, '👺 보스 등장', W / 2, y - 8);
     ctx.font = '800 22px system-ui, sans-serif';
     ctx.fillStyle = '#f0e2c8';
     ctx.fillText(best.name, W / 2, y + 18);
@@ -542,7 +542,7 @@
     ctx.textAlign = 'center';
     ctx.font = '700 15px system-ui, sans-serif';
     ctx.fillStyle = 'rgba(240,226,200,0.95)';
-    ctx.fillText('🌟 레벨 업', W / 2, y - 8);
+    (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, '🌟 레벨 업', W / 2, y - 8);
     ctx.font = '800 22px system-ui, sans-serif';
     ctx.fillStyle = '#fff3cf';
     ctx.fillText('Lv.' + best.lv, W / 2, y + 18);
@@ -570,7 +570,7 @@
     ctx.textAlign = 'center';
     ctx.font = '700 15px system-ui, sans-serif';
     ctx.fillStyle = 'rgba(226,240,230,0.95)';
-    ctx.fillText('📋 사명 완수', W / 2, y - 8);
+    (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, '📋 사명 완수', W / 2, y - 8);
     ctx.font = '800 22px system-ui, sans-serif';
     ctx.fillStyle = '#e2f0e6';
     ctx.fillText(best.name, W / 2, y + 18);
@@ -1379,7 +1379,7 @@
         ctx.textAlign = 'center';
         ctx.font = '16px "Segoe UI Emoji", system-ui';
         ctx.globalAlpha = pa;
-        ctx.fillText(f.emoji, x, f.y - 30 - prise);
+        (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, f.emoji, x, f.y - 30 - prise);
         ctx.font = '700 12px "Malgun Gothic", system-ui';
         ctx.lineWidth = 3;
         ctx.strokeStyle = 'rgba(20,16,14,' + pa + ')';

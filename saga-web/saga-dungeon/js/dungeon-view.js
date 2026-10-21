@@ -636,6 +636,7 @@
 
   /* ── 그리기 ───────────────────────────────────────────── */
 
+  function markT(c, s, x, y) { var M = global.DG.mode2d; return M && M.mark ? M.mark(c, s, x, y) : c.fillText(s, x, y); }   // W-0350 표식 이모지 → 자체 아이콘(짝 없으면 글 그대로)
   /* 방 종류는 data-dungeon.js 의 ROOMS 가 정본이다 — 여기에 없는 종류를 적어 두면
      영영 안 뜨는 아이콘이 남는다(서고 📖 가 실제로 그렇게 남아 있었다). */
   var DOOR_ICON = { fight: '⚔️', trove: '🎁', well: '💧', shrine: '⛩️', stair: '🪜',
@@ -824,7 +825,7 @@
       ctx.font = Math.round(19 * m.s + 8) + 'px "Malgun Gothic", system-ui';
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.globalAlpha = open ? 1 : 0.45;
-      ctx.fillText(DOOR_ICON[dr.kind] || '⚔️', dc.x, dc.y - 8 * m.s);
+      markT(ctx, DOOR_ICON[dr.kind] || '⚔️', dc.x, dc.y - 8 * m.s);
       if (dr.title) {
         /* 명소 층(§5.15) — 다음 방 이름 */
         ctx.font = '700 ' + Math.round(9 * m.s + 7) + 'px "Malgun Gothic", system-ui';
@@ -1043,7 +1044,7 @@
       ctx.strokeRect(pl.x - tw / 2 - 6.5, pl.y - 9.5, tw + 13, 17);
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillStyle = pl.color;
-      ctx.fillText(pl.text, pl.x, pl.y - 1);
+      markT(ctx, pl.text, pl.x, pl.y - 1);
     }
     for (i = 0; i < bars.length; i++) {
       var br = bars[i];
@@ -1205,7 +1206,7 @@
     ctx.restore();
     ctx.font = Math.round(23 * m.s + 9) + 'px "Malgun Gothic", system-ui';
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText(o.emoji, p.x, p.y - 13 * m.s + Math.sin(now / 500) * 2);
+    markT(ctx, o.emoji, p.x, p.y - 13 * m.s + Math.sin(now / 500) * 2);
     /* 표식은 바닥에 큰 그림이 이미 있다 — 멀면 이름표를 걸지 않는다 */
     if (near) {
       plates.push({ x: p.x, y: p.y - 38 * z, text: o.name, color: '#f5b445' });

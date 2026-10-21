@@ -78,7 +78,7 @@
       ctx.globalAlpha = 0.75 + Math.sin(now / 420) * 0.2;
       ctx.font = Math.round(15 * k) + 'px "Segoe UI Emoji", system-ui';
       ctx.textAlign = 'center';
-      ctx.fillText('🐾', p.x - 22 * k, p.y + 6 * k);
+      (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, '🐾', p.x - 22 * k, p.y + 6 * k);   // W-0350
       ctx.restore();
     }
   }
@@ -718,7 +718,7 @@
     ctx.textAlign = 'center';
     ctx.textBaseline = 'alphabetic';
     ctx.globalAlpha = unlocked ? 0.45 : 1;
-    ctx.fillText('👹', q.x, q.y + 10 * u);
+    (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, '👹', q.x, q.y + 10 * u);
     ctx.globalAlpha = 1;
     if (!unlocked) {
       bubble('포자대왕이 지키고 있다', q.x, q.y - 40 * u, '#3a1414', '#ffe2d8');

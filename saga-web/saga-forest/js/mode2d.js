@@ -77,6 +77,41 @@
     ctx.beginPath(); ctx.ellipse(x, y, rx, Math.max(1.5, rx * 0.38), 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
   }
 
+  /* ── W-0350 2D 표식 이모지 → 자체 아이콘(K-0118 ui_*_g0.png, 다섯 판 assets/icons/icon64 — sync-shared 가 복사). ctx.fillText 대신 쓴다:
+     글이 짝 있는 이모지로 시작하면 그 이모지만 그림으로(뒤 글은 그대로), 그림을 받기 전·짝 없음·손잡이 mode2d.markIcon 0 이면 옛 fillText.
+     짝 없는 이모지는 markMisses() 에 모인다(K 그림 요청 목록) */
+  var MARK = {
+    '⚔': 'swords', '🗡': 'swords', '⚒': 'hammer', '🔨': 'hammer', '🛠': 'wrench', '🔧': 'wrench', '🚩': 'flag', '🏴': 'flag', '🏳': 'flag', '🎌': 'flag', '⛳': 'flag',
+    '🧭': 'compass', '🗺': 'map', '📜': 'scroll', '📃': 'scroll_text', '📄': 'scroll_text', '📝': 'scroll_text', '📖': 'book_open', '📚': 'book_open', '📕': 'book_open',
+    '🪙': 'coins', '💰': 'coins', '🏅': 'medal', '🎖': 'medal', '🏆': 'award', '🎒': 'backpack', '📦': 'box', '🎁': 'box', '❓': 'circle_question_mark', '❔': 'circle_question_mark',
+    '📋': 'clipboard_list', '✉': 'mail', '📮': 'mail', '📬': 'mail', '👣': 'footprints', '🐾': 'footprints', '🍖': 'ham', '🍗': 'ham', '🎨': 'palette', '✨': 'sparkles', '🌟': 'sparkles',
+    '🏪': 'store', '🏬': 'store', '🛒': 'store', '👤': 'user', '❌': 'x', '✖': 'x', '🔄': 'rotate_ccw', '📡': 'satellite_dish', '🤖': 'bot'
+  };
+  var markImgs = {}, markMiss = {}, EMO = /^(\p{Extended_Pictographic}(?:️|︎|‍\p{Extended_Pictographic}|[\u{1F3FB}-\u{1F3FF}])*)\s?/u;
+  function markOn() { var Co = global.DG && global.DG.core; return !(Co && Co.tuned) || +Co.tuned('mode2d.markIcon', 1) > 0; }
+  /** 이모지 하나의 아이콘 주소 — 짝 없으면 null */
+  function markSrc(e) { var n = MARK[String(e || '').replace(/[️︎]/g, '')]; return n ? 'assets/icons/icon64/ui_' + n + '_g0.png' : null; }
+  function markImg(src) {
+    var e = markImgs[src];
+    if (!e) { e = markImgs[src] = { ok: false }; if (global.Image) { var im = new global.Image(); im.onload = function () { e.ok = true; }; im.onerror = function () { e.fail = true; }; im.src = src; e.img = im; } }
+    return e.ok ? e.img : null;
+  }
+  /** fillText 자리 — (x, y) 와 정렬·기준선은 지금 ctx 그대로. 그림으로 그렸으면 true */
+  function mark(ctx, s, x, y) {
+    s = String(s === undefined || s === null ? '' : s);
+    var m = EMO.exec(s), src = m && markSrc(m[1]), im = src && markOn() ? markImg(src) : null;
+    if (m && !src) { var k = m[1].replace(/[️︎]/g, ''); markMiss[k] = (markMiss[k] || 0) + 1; }
+    if (!im) { ctx.fillText(s, x, y); return false; }
+    var fz = /(\d+(?:\.\d+)?)px/.exec(ctx.font || ''), px = (fz ? +fz[1] : 16) * (s.length > m[0].length ? 1.1 : 1.35), rest = s.slice(m[0].length), gap = rest ? px * 0.18 : 0;
+    var tw = rest ? ctx.measureText(rest).width : 0, all = px + gap + tw, al = ctx.textAlign, bl = ctx.textBaseline;
+    var x0 = al === 'center' ? x - all / 2 : (al === 'right' || al === 'end') ? x - all : x;
+    var top = bl === 'middle' ? y - px / 2 : (bl === 'top' || bl === 'hanging') ? y : y - px * 0.86;
+    ctx.save(); ctx.shadowColor = 'rgba(0,0,0,0.6)'; ctx.shadowBlur = Math.max(2, px * 0.12); ctx.shadowOffsetY = px * 0.04;   // 그림 안 여백·옅은 색이라 땅 위에서 묻히지 않게
+    ctx.drawImage(im, x0, top, px, px); ctx.restore();
+    if (rest) { ctx.save(); ctx.textAlign = 'left'; ctx.fillText(rest, x0 + px + gap, y); ctx.restore(); }
+    return true;
+  }
+
   /* ── VRoid 2D 시트(W-0074 2D) — 사람은 시대 구분 없이 VRoid 로 만든 시트(`shared/assets/characters2d/<id>/`, 규격은 위와 같음)로.
      판 설정 `cfg.mode2d.vroid2d = { kinds: [사람 종류…], h: 프레임 안 몸 높이(px), foot }` 가 있는 판·종류만. 제 시트가 있는 인물(도감·장수 299)은
      제 것, 없는 사람(주민·적·나)은 3D 와 같은 빌린 몸(assets3d.borrowRecipe) — 2D·3D 에서 같은 사람이 같은 몸. 통일 에셋 시험이 안 됐으면 null(옛 풀) */
@@ -622,6 +657,7 @@
   global.DG.mode2d = {
     labels: labels,
     scaleOf: scaleOf, scaleOn: scaleOn, shadow: shadow, SCALE: SCALE, BEAST: BEAST,   // W-0349
+    mark: mark, markSrc: markSrc, MARK: MARK, markMisses: function () { return Object.assign({}, markMiss); },   // W-0350
     isCrea: isCrea, creaPool: creaPool, creaFit: creaFit, cell8: cell8,   // W-0129 몬스터 2D 시트
     drawSprite: drawSprite, drawKind: drawKind, hasKind: hasKind, spriteReady: function (id) { return !!spriteOf(id); },
     fillIso: fillIso,

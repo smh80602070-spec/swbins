@@ -77,9 +77,11 @@ const BG_PREFIX = { 'saga-dungeon': 'dg_' };
  *  정본 shared/assets/icons/icon64/ · 출처(license/)는 정본에만 둔다. 표는 gen-itemicon-ids.mjs 가 만든다 */
 /** W-0321 — icon.js(도구줄·독 UI 아이콘)를 쓰는 판은 ui_*_g0.png 28장도 */
 const UI_ICON_GAMES = ['saga-go', 'saga-dungeon', 'saga-story'];
+/** W-0350 — 2D 표식(mode2d.mark)이 ui_*_g0.png 를 그리므로 png 28장은 다섯 판 모두(icon.js 는 위 셋만) */
+const UI_PNG_GAMES = ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm'];
 function iconNames(g) {
   const f = path.join(WEB, 'shared', 'js', 'itemicon-ids.js');
-  const ui = UI_ICON_GAMES.includes(g) ? fs.readdirSync(path.join(WEB, 'shared', 'assets', 'icons', 'icon64')).filter((x) => /^ui_.+_g0\.png$/.test(x)).map((x) => x.slice(0, -4)) : [];
+  const ui = UI_PNG_GAMES.includes(g) ? fs.readdirSync(path.join(WEB, 'shared', 'assets', 'icons', 'icon64')).filter((x) => /^ui_.+_g0\.png$/.test(x)).map((x) => x.slice(0, -4)) : [];
   if (!fs.existsSync(f)) return ui;
   const m = /itemiconIds = ({.*});/.exec(fs.readFileSync(f, 'utf8'));
   return [...new Set((m ? Object.values((JSON.parse(m[1])[g]) || {}) : []).concat(ui))].sort();

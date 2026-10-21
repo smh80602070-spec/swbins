@@ -1349,5 +1349,21 @@
   "ticket": "W-0349",
   "since": "2026-10-21",
   "note": "10-21: 공용 표만 — 이 판 크기 맞춤은 다음 티켓(W-0366·W-0368)"
+ },
+ {
+  "id": "rk.w2d-mark",
+  "name": "2D 표식 이모지 → 자체 아이콘(W-0350) — 공용 mode2d.mark(fillText 자리): 짝 있는 이모지(MARK 표 50, K-0118 ui 28장)는 png·그림자, 없으면 이모지 그대로 + 목록(K 요청) · 손잡이 mode2d.markIcon 0 = 옛",
+  "files": [
+   "js/mode2d.js"
+  ],
+  "tests": [
+   "pw-2d-cmp 비교판(옛 markIcon=0 / 새 1)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0350",
+  "since": "2026-10-21",
+  "note": "10-21: 공용 함수만 — 5천하 2D 지도는 SVG 라 이모지 표식 없음"
  }
 ]

@@ -1398,5 +1398,23 @@
   "ticket": "W-0349",
   "since": "2026-10-21",
   "note": "10-21: 공용 표만 — 이 판 크기 맞춤은 다음 티켓(W-0366·W-0368)"
+ },
+ {
+  "id": "dg.w2d-mark",
+  "name": "2D 표식 이모지 → 자체 아이콘(W-0350) — 공용 mode2d.mark(fillText 자리): 짝 있는 이모지(MARK 표 50, K-0118 ui 28장)는 png·그림자, 없으면 이모지 그대로 + 목록(K 요청) · 손잡이 mode2d.markIcon 0 = 옛",
+  "files": [
+   "js/mode2d.js",
+   "src/dungeon-view/02.js",
+   "js/belt2d.js"
+  ],
+  "tests": [
+   "pw-2d-cmp 비교판(옛 markIcon=0 / 새 1)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0350",
+  "since": "2026-10-21",
+  "note": "10-21: 2나락 마을 폰 촬영 Read — 난입 ⚔·사관 📖·이름표 머리 그림이 자체 아이콘, ☠·🌀 등 25 는 짝 없어 이모지(수신함 K 요청)"
  }
 ]

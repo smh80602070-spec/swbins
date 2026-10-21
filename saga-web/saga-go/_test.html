@@ -16913,6 +16913,12 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var keep = q.alpha === 1 && q.y === q.oy && row.filter(function (r) { return r.alpha; }).length === 2;
       return far && apart && stack && keep && '먼 쪽 숨김 · 떨어지면 둘 · 가까우면 쌓음 · 퀘스트 대상 제자리';
     });
+    t('2D 표식 아이콘(W-0350) — 짝 있는 표식은 png 주소(⚔️ → ui_swords · 🏴 → ui_flag · 변이 선택자 무시), 없는 표식은 null 이라 이모지로 그리고 짝 없는 목록에 모임', function () {
+      var M = DG.mode2d, a = M.markSrc('⚔️'), b = M.markSrc('⚔'), f = M.markSrc('🏴'), n = M.markSrc('🏮');
+      var c = document.createElement('canvas').getContext('2d'), drew = M.mark(c, '🏮 등롱', 10, 10), miss = M.markMisses();
+      var r = [a === 'assets/icons/icon64/ui_swords_g0.png', b === a, f === 'assets/icons/icon64/ui_flag_g0.png', n === null, drew === false, (miss['🏮'] || 0) >= 1, M.mark(c, '이름만', 1, 1) === false];
+      return r.every(Boolean) && ('⚔️ → ' + a.split('/').pop() + ' · 🏮 → 이모지(짝 없음)') || '실패 ' + r.join(',');
+    });
     t('2D 몸 크기 한 기준(W-0349) — scaleOf 사람 1·곰 1.15·토끼 0.35, 판 설정이 덮음(1만리 집 2.2 < 공용 2.6 · 곰:id 덮기), 짐승 스탬프 배수 0.42~2 묶음, 그림자 한 꼴이 발밑을 칠함', function () {
       var M = DG.mode2d, cf = DG.cfg.mode2d, sc0 = cf.scale, r = [M.scaleOf('human') === 1, M.scaleOf('beast', 'Bear') === 1.15, M.scaleOf('beast', 'Bunny') === 0.35, M.SCALE.house === 2.6, M.scaleOf('house') === 2.2];
       cf.scale = Object.assign({}, sc0, { 'beast:Bear': 2 }); r.push(M.scaleOf('beast', 'Bear') === 2); cf.scale = sc0;
