@@ -492,7 +492,7 @@ func _skill_pose(id: String) -> void:
 	var sec := float(ACT_SEC[clip])
 	set_meta("act_until", Engine.get_physics_frames() + int(sec * Engine.physics_ticks_per_second))   # 게임 시간(물리 프레임) — 실시간 ms 면 느린 PC·헤드리스에서 어긋남
 	_anim.speed_scale = (float(w[1]) - float(w[0])) / sec
-	set_meta("gait_scaled", true)   # 끝나고 다음 _play_anim 이 빠르기를 1 로
+	set_meta("act_scaled", true)   # 잠금 뒤 첫 _play_anim 이 빠르기를 1 로(walk·sprint·줄 오르기로 가도 — R-5)
 	_anim.play(clip)
 	_anim.seek(float(w[0]), true)   # 같은 클립 연타도 매번 처음(동작 구간 시작)부터
 	_current_anim = clip
@@ -502,6 +502,9 @@ func _play_anim(anim_name: String) -> void:
 		return
 	if Engine.get_physics_frames() < int(get_meta("act_until", 0)):
 		return
+	if get_meta("act_scaled", false):
+		_anim.speed_scale = 1.0
+		set_meta("act_scaled", false)
 	if get_meta("gait_scaled", false) and anim_name != "walk" and anim_name != "sprint":
 		_anim.speed_scale = 1.0
 		set_meta("gait_scaled", false)

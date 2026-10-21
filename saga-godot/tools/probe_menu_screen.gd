@@ -11,6 +11,7 @@ extends SceneTree
 const MenuScreen := preload("res://saga_core/ui/menu_screen.gd")
 const GoMenu := preload("res://games/saga_go/ui/go_menu.gd")
 const UiKit := preload("res://saga_core/ui/ui_kit.gd")
+const SaveTransferScreen := preload("res://saga_core/ui/save_transfer_screen.gd")
 
 const SCENES := {"go": "res://games/saga_go/world/TestVillage.tscn", "dungeon": "res://games/saga_dungeon/world/TestRoom.tscn",
 	"forest": "res://games/saga_forest/world/TestVillageForest.tscn", "story": "res://games/saga_story/world/SinyaField.tscn",
@@ -124,9 +125,14 @@ func _one() -> void:
 	await _esc()
 	if not bool(menu.get("is_open")) or not menu.is_in_group("ui_modal"):
 		_fail("③ Esc 로 메뉴 안 열림 (막는 것 %s · paused %s)" % [menu.call("_other_modal"), paused])
+	var pl := get_first_node_in_group("player")
+	if pl != null and not SaveTransferScreen._is_frozen(pl):   # R-5 — frozen 없는 4종횡 몸도 멈춰야
+		_fail("③ 메뉴가 열렸는데 주인공이 안 멈춤")
 	await _esc()
 	if bool(menu.get("is_open")):
 		_fail("③ 다시 Esc 로 메뉴 안 닫힘")
+	if pl != null and SaveTransferScreen._is_frozen(pl):
+		_fail("③ 메뉴를 닫았는데 주인공이 멈춘 채")
 	## ④ 칸마다
 	var opened := 0
 	for b in grid.get_children():

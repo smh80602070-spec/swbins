@@ -158,7 +158,7 @@ static func tint(v: Node3D, kind: String, def: Dictionary) -> int:
 			var base := mi.get_active_material(i) as StandardMaterial3D
 			if base == null or base.albedo_texture == null:
 				continue
-			var key := "%s/%d" % [kind, i]
+			var key := "%s/%s/%d" % [kind, mi.name, i]   # 메시가 여럿인 몸도 메시마다(R-5)
 			if not _tint_mats.has(key):
 				var t: Array = TINT_BY_KIND[kind]
 				var cols: Array = def.get("colors", [])

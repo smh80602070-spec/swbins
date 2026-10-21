@@ -29,7 +29,7 @@ void fragment() {
 	ALBEDO = tex.rgb * tint_color.rgb;
 	ALPHA = tex.a;
 	ALPHA_SCISSOR_THRESHOLD = alpha_cutoff;
-	ROUGHNESS = mix(roughness_value, texture(roughness_texture, UV).g, use_rough_tex);
+	ROUGHNESS = roughness_value * mix(1.0, texture(roughness_texture, UV).g, use_rough_tex);   // StandardMaterial 처럼 값 × 맵(G-0285 R-5)
 	NORMAL_MAP = texture(normal_texture, UV).rgb;
 	NORMAL_MAP_DEPTH = normal_scale;
 }

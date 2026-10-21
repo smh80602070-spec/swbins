@@ -57,6 +57,7 @@ var _gait_scaled := false   # G-0264 — 걸음새가 speed_scale 을 바꿨으�
 ## 창은 G-0283 자세 시트(cast 손 뻗기 앞 0.8초 · strong 들어 올려 내리찍기 0.35~0.75초). 손잡이 SAGA_ACTION_MOCAP=0 이면 안 튼다(옛 길 — 몸 그대로).
 const ONCE_WINDOW := {"attack": [0.30, 0.95], "strong": [0.35, 0.75], "cast": [0.0, 0.8], "skill": [0.0, 0.53], "burst": [0.0, 1.13], "dodge": [0.05, 0.85]}
 var _once_until := 0
+var _once_scaled := false   # 한 번짜리 동작이 빠르기를 바꿨으면 잠금 뒤 첫 _play_anim 이 1 로(walk·sprint 로 가도 — R-5)
 
 func _ready() -> void:
 	var found := get_tree().get_nodes_in_group("virtual_joystick")
@@ -90,6 +91,8 @@ func swap_body(body: Node3D, keep: Array = []) -> void:
 	if body == null or body == visual:
 		return
 	var old := visual
+	_once_until = 0   # 새 몸은 바로 서기(G-0284 R-5)
+	_once_scaled = false
 	body.position = old.position
 	body.rotation = old.rotation
 	for k in keep:
@@ -231,7 +234,7 @@ func play_once(clip: String, sec: float) -> bool:
 	var w: Array = ONCE_WINDOW[clip]
 	_once_until = Engine.get_physics_frames() + int(sec * Engine.physics_ticks_per_second)
 	_anim.speed_scale = (float(w[1]) - float(w[0])) / sec
-	_gait_scaled = true   # 끝나고 다음 _play_anim 이 빠르기를 1 로
+	_once_scaled = true
 	_anim.play(clip)
 	_anim.seek(float(w[0]), true)   # 같은 클립 연타도 매번 구간 시작부터
 	_current_anim = clip
@@ -242,6 +245,9 @@ func _play_anim(anim_name: String) -> void:
 		return
 	if Engine.get_physics_frames() < _once_until:
 		return
+	if _once_scaled:
+		_anim.speed_scale = 1.0
+		_once_scaled = false
 	if _gait_scaled and anim_name != "walk" and anim_name != "sprint":
 		_anim.speed_scale = 1.0
 		_gait_scaled = false

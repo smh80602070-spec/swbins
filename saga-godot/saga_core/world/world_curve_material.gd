@@ -90,7 +90,7 @@ static func pbr_maps(mat: ShaderMaterial, orig: BaseMaterial3D) -> void:
 	if orig.normal_enabled and orig.normal_texture != null:
 		mat.set_shader_parameter("normal_texture", orig.normal_texture)
 		mat.set_shader_parameter("normal_scale", orig.normal_scale)
-	if orig.roughness_texture != null:
+	if orig.roughness_texture != null and orig.roughness_texture_channel == BaseMaterial3D.TEXTURE_CHANNEL_GREEN:   # 셰이더는 G(glTF) 만 읽음
 		mat.set_shader_parameter("roughness_texture", orig.roughness_texture)
 		mat.set_shader_parameter("use_rough_tex", 1.0)
 

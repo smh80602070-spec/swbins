@@ -7,6 +7,7 @@ extends CanvasLayer
 ## 틀은 ui_kit.theme_for(판) — 칸 바탕 card.png. 손잡이: SAGA_MENU_SCREEN=0 이면 attach 가 null.
 
 const UiKit := preload("res://saga_core/ui/ui_kit.gd")
+const SaveTransferScreen := preload("res://saga_core/ui/save_transfer_screen.gd")
 const GROUP := "saga_menu_screen"
 const COLS := 5
 const CARD := Vector2(150, 118)
@@ -178,11 +179,9 @@ func open_menu() -> void:
 		if dot != null:
 			dot.visible = it.get("badge") is Callable and int((it.badge as Callable).call()) > 0
 	_player = get_tree().get_first_node_in_group("player")
-	if _player != null and not ("frozen" in _player):   # frozen 없는 판 몸(4종횡 등)은 안 멈춘다
-		_player = null
-	if _player != null:
-		_frozen_before = _player.get("frozen") == true
-		_player.set("frozen", true)
+	if _player != null:   # frozen 없는 판 몸(4종횡)은 물리 처리를 멈춘다 — 세이브 옮기기 창과 같은 길(G-0280 R-5)
+		_frozen_before = SaveTransferScreen._is_frozen(_player)
+		SaveTransferScreen._set_frozen(_player, true)
 	if _grid.get_child_count() > 0:
 		(_grid.get_child(0) as Control).grab_focus.call_deferred()
 
@@ -194,7 +193,7 @@ func close_menu() -> void:
 	_root.visible = false
 	remove_from_group("ui_modal")
 	if _player != null and is_instance_valid(_player):
-		_player.set("frozen", _frozen_before)
+		SaveTransferScreen._set_frozen(_player, _frozen_before)
 	_player = null
 
 
