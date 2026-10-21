@@ -17,3 +17,4 @@
 - [ ] 10-21 · (W-0359 ② 알림) · 웹 bgm ogg 는 `saga-web/shared/audio/bgm/<판>-<때>.ogg` 만 읽음(판 saga-<판>-*.ogg 지움) → asset-place `bgm` 판 dir targets 빼기 · 자체툴
 - [ ] 10-21 · (K-0163 끝 알림) · W-0371 시작 가능 — 인물 일러스트 주역 30 `assets/illust/<id>/stand.webp`(전신 세로 1024 투명)·`neutral|happy|angry|sad.webp`(반신 512 투명) + 판별 `assets/illust/manifest.js`(`SAGA.illust.ids`) — 2나락 1(hl_mukhyang)·4종횡 16(스승)·5천하 13(1막 군주·이계 군주). 1만리·3마을은 아직 0(대역 = 초상) · 웹/2나락·4종횡·5천하
 - [ ] 10-21 · (K-0163 끝 알림) · 나머지 인물 ~470 일러스트 — 같은 도구 `tools/ai-art/k163_illust.py`(cast 표만 판별로 새로) 로 판마다 한 티켓(3D 몸 있는 도감 인물 순, 원격 120장≈50분이라 판당 2~3회), 1만리·3마을 주역부터 · 자체툴
+- [ ] 10-21 · (K-0167 끝 알림) · mode2d MARK 표에 25 줄 — `shared/assets/icons/icon64/ui_<이름>_g0.png`, 이모지→이름 표는 `tasks/tools/done/K-0167.md` 메모 · 웹/다섯 판

@@ -1,0 +1,8 @@
+{
+ "id": "ui_portal",
+ "generator": "tools/ai-art/make_k167_marks.py",
+ "model": "none",
+ "license": "CC0-1.0 (코드 생성 — 24격자 기하 도형, 외부 그림·이모지 그림 없음)",
+ "date": "2026-10-21",
+ "note": "K-0167 2D 표식 아이콘(🌀 역참·문) — K-0118 ui 꼴(크림 채움·갈색 테·산호 강조). W-0350 mode2d MARK 표 이름 portal."
+}

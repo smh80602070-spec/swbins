@@ -1,0 +1,197 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k167",
+ "kit": {
+  "spec": "icon",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+  "variants": 4
+ },
+ "note": "K-0167 2D 표식 아이콘 25 — W-0350 짝 없는 이모지(뜻만, 이모지 그림 안 베낌) · K-0118 ui 꼴(크림·진한 테) 시험",
+ "items": [
+  {
+   "id": "ui_spring",
+   "seed": 2345893963,
+   "prompt": "(a single water droplet over a small spring pool:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 💧 샘"
+  },
+  {
+   "id": "ui_shrine",
+   "seed": 4141933306,
+   "prompt": "(a small shrine gate, two pillars with a curved roof beam:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 ⛩ 사당"
+  },
+  {
+   "id": "ui_stairs",
+   "seed": 1652981894,
+   "prompt": "(a short stone staircase going down, side view:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 🪜 계단"
+  },
+  {
+   "id": "ui_elite",
+   "seed": 2492529815,
+   "prompt": "(a faceted diamond crest gem, four-pointed badge:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 💠 정예"
+  },
+  {
+   "id": "ui_boss",
+   "seed": 3658385611,
+   "prompt": "(a horned demon mask, fierce face with two horns:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 👹 두목"
+  },
+  {
+   "id": "ui_mine",
+   "seed": 4170840785,
+   "prompt": "(a pickaxe:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 ⛏ 굴"
+  },
+  {
+   "id": "ui_merchant",
+   "seed": 46467750,
+   "prompt": "(a woven wicker basket with handle:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 🧺 상인"
+  },
+  {
+   "id": "ui_puzzle",
+   "seed": 4209047138,
+   "prompt": "(a single jigsaw puzzle piece:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 🧩 수수께끼"
+  },
+  {
+   "id": "ui_event",
+   "seed": 1637115725,
+   "prompt": "(two hands pressed together in prayer:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 🙏 사건"
+  },
+  {
+   "id": "ui_herb",
+   "seed": 1736810940,
+   "prompt": "(a sprig of medicinal herb with three leaves:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 🌿 약초"
+  },
+  {
+   "id": "ui_signpost",
+   "seed": 1349164036,
+   "prompt": "(a wooden signboard on a post:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 🪧 팻말"
+  },
+  {
+   "id": "ui_pit",
+   "seed": 2740931413,
+   "prompt": "(a dark round hole in the ground, pit opening:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 🕳 굴혈"
+  },
+  {
+   "id": "ui_rock",
+   "seed": 2762119459,
+   "prompt": "(a single rounded boulder rock:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 🪨 돌"
+  },
+  {
+   "id": "ui_portal",
+   "seed": 1001637743,
+   "prompt": "(a swirling spiral vortex portal:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 🌀 역참·문"
+  },
+  {
+   "id": "ui_skull",
+   "seed": 2069550283,
+   "prompt": "(a skull with crossed bones:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 ☠ 결사비"
+  },
+  {
+   "id": "ui_crossing",
+   "seed": 1713829629,
+   "prompt": "(a double-headed horizontal arrow:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 ↔ 건너기"
+  },
+  {
+   "id": "ui_gravestone",
+   "seed": 1742362919,
+   "prompt": "(a rounded-top gravestone slab:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 🪦 비석"
+  },
+  {
+   "id": "ui_worship",
+   "seed": 553905,
+   "prompt": "(a small figure kneeling in worship, side silhouette:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 🧎 참배"
+  },
+  {
+   "id": "ui_statue",
+   "seed": 3901615000,
+   "prompt": "(a stone head statue, stern carved face:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 🗿 석상"
+  },
+  {
+   "id": "ui_bell",
+   "seed": 943590688,
+   "prompt": "(a temple bell hanging:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 🔔 종"
+  },
+  {
+   "id": "ui_mirror",
+   "seed": 77890851,
+   "prompt": "(a round hand mirror with handle:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 🪞 거울"
+  },
+  {
+   "id": "ui_seal",
+   "seed": 231480864,
+   "prompt": "(a padlock with a wax seal:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 🔏 봉인"
+  },
+  {
+   "id": "ui_wine",
+   "seed": 2926073943,
+   "prompt": "(a ceramic rice wine bottle with a small cup:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 🍶 술"
+  },
+  {
+   "id": "ui_potion",
+   "seed": 2682973158,
+   "prompt": "(a round glass potion flask with liquid:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 🧪 물약"
+  },
+  {
+   "id": "ui_lantern",
+   "seed": 2519449056,
+   "prompt": "(a round paper lantern hanging:1.2), flat sticker game icon, single object, centered, cream colored object with thick dark brown outline, coral accent, simple bold shapes, minimal detail, readable at small size, white background, no humans, object focus, no cast shadow",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, button, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, photorealistic, neon, dark palette",
+   "subject_ko": "2D 표식 🏮 등롱"
+  }
+ ]
+}
