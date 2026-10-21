@@ -1172,8 +1172,8 @@ window.requestAnimationFrame = function () { return 0; };
     });
     t('W-0265 사관 묵향 움직이는 초상 — 대화 출연진 id · live.json·바탕 그림이 있다 · 대화창 얼굴 칸이 캔버스(+평온 초상)를 낸다', function () {
       var LP = DG.livePortrait, c = DG.scenarioData.CAST.mukhyang, x = new XMLHttpRequest(), y = new XMLHttpRequest();
-      x.open('GET', 'assets/portraits/live/hl_mukhyang/live.json', false); x.send(); y.open('GET', 'assets/portraits/hero/hl_mukhyang_c.webp', false); y.send();
-      var h = LP && LP.html('hl_mukhyang', '기록을 펼칩니다', '<img>'), ok = c && c.id === 'hl_mukhyang' && LP.has('hl_mukhyang') && x.status === 200 && y.status === 200 && (!h || (h.indexOf('data-live="hl_mukhyang"') >= 0 && Number((h.match(/data-talk="([0-9]+)"/) || [0, 0])[1]) > 0));   // 받기 길(fetch)이 없는 진단 환경이면 h 는 null — 그때는 파일·표만
+      x.open('GET', 'assets/portraits/live/hl_mukhyang/live.json', false); x.send(); var shU = DG.assets3d && DG.assets3d.sharedUrl ? DG.assets3d.sharedUrl('portraits/hero/') : null; if (shU) { y.open('GET', shU + 'hl_mukhyang_c.webp', false); y.send(); }   // W-0359 인물 초상은 shared 한 벌 — 이 진단 서버가 shared 를 못 읽으면 그림 확인은 건너뜀
+      var h = LP && LP.html('hl_mukhyang', '기록을 펼칩니다', '<img>'), ok = c && c.id === 'hl_mukhyang' && LP.has('hl_mukhyang') && x.status === 200 && (!shU || y.status === 200) && (!h || (h.indexOf('data-live="hl_mukhyang"') >= 0 && Number((h.match(/data-talk="([0-9]+)"/) || [0, 0])[1]) > 0));   // 받기 길(fetch)이 없는 진단 환경이면 h 는 null — 그때는 파일·표만
       if (!ok) { throw new Error(JSON.stringify({ id: c && c.id, has: LP && LP.has('hl_mukhyang'), live: x.status, still: y.status, h: (h || '').slice(0, 120) })); }
       return '묵향 출연진 id · live.json ○ · ' + (h ? '대화창 캔버스(말하는 입 ' + (h.match(/data-talk="([0-9]+)"/) || [0, 0])[1] + 'ms)' : '(받기 길 없음 — 파일·표만)');
     });

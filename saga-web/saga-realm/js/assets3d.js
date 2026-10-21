@@ -239,6 +239,8 @@
     /** 진단·점검용 — 'init' | 'probing' | 'ok' | 'fail' */
     state: function () { return state; },
     root: function () { return root; },
+    /** W-0359 — 다섯 판이 한 벌로 나눠 쓰는 shared/assets 아래 파일 주소(판 단독 서버는 /_shared, 공개 페이지는 ../shared). 못 찾으면 null */
+    sharedUrl: function (rel) { if (state === 'init') { probe(); } return root ? root + rel : null; },
     /** 시험이 끝나면(되든 안 되든) 부른다 — 이미 끝났으면 바로 */
     whenSettled: function (cb) {
       probe();

@@ -335,8 +335,7 @@
       syncBeams(dt);
       syncClickMark(dt);
       syncCamera(W, dt);
-      instCull();
-      if (global.DG.nightglow3d) { global.DG.nightglow3d.update(scene, camera, lightNow ? lightNow.lamp : 0); }   // W-0358 밤 불빛
+      instCull(); if (global.DG.nightglow3d) { global.DG.nightglow3d.update(scene, camera, lightNow ? lightNow.lamp : 0); }   // W-0358 밤 불빛
 
       present();
       return true;

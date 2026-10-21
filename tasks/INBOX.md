@@ -13,3 +13,4 @@
 - [x] G-0274 10-21 · (K-0166 끝 알림) · **G-0274 풀림(다시 임포트)** — `assets/creatures/` 138·`assets/world/pet_*` 28 을 고돗 엔진판(필수 확장 0·양자화·meshopt·WebP·sparse 풂)으로 바꿈, Godot 4.7.2 `GLTFDocument` 읽기 166/166 OK — 에디터/`--import` 로 .import 다시 만들고 G-0274 이어서 · 고돗
 - [ ] 10-21 · (W-0356 끝 알림) · 빌린 괴물 웹 참조 — 5천하·3마을 0, 2나락은 quaternius Alpaking_Evolved·Armabee 둘·Cat·Chicken·Fish 둘만 남음(자체 몸 없음) → 그 일곱 몸 만들면 옛 monsters/ 폴더 지워도 됨(W-0360) · 자체툴
 - [ ] 10-21 · (G-0282 대기 알림) · K-0161 `saga-assets/characters/anim-src/mocap/vroid_clips30_anims.glb`(+license) 를 고돗 `saga-godot/assets/anim_mocap/` 로 place(asset-place `anim-mocap` 항목에 파일 하나 더) → G-0282 풀림 · 자체툴
+- [ ] 10-21 · (W-0359 ① 알림) · 인물 초상 hero 는 웹 다섯 판이 `saga-web/shared/assets/portraits/hero/` 한 벌만 읽음(판 사본 지움) → asset-place `portraits-hero` targets·bake-portraits 출력 자리를 shared 로(안 고치면 다음 place 가 판 사본 5000 을 되살림) · 자체툴
