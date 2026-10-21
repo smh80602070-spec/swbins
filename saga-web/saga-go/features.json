@@ -1432,5 +1432,22 @@
   "ticket": "W-0350",
   "since": "2026-10-21",
   "note": "10-21: 2나락 마을 폰 촬영 Read — 난입 ⚔·사관 📖·이름표 머리 그림이 자체 아이콘, ☠·🌀 등 25 는 짝 없어 이모지(수신함 K 요청)"
+ },
+ {
+  "id": "go.w2d-petsheet",
+  "name": "2D 펫 그림 순서(W-0352) — 제 그림 있는 오마주 펫 17(3D 도 제 몸)은 beast_<펫 id>, 나머지 도감 펫 87 은 종 몸 2D 시트(creatures2d, 걷기·서기 8칸·미터 비율), 없으면 옛 빌린 표 · 손잡이 sprite.petSheet(0 = 옛) · 짝 표 생성 tools/gen-pet-crea.mjs",
+  "files": [
+   "js/sprite.js",
+   "../../tools/gen-pet-crea.mjs"
+  ],
+  "tests": [
+   "2D 펫 그림 순서(W-0352) — 제 그림 있는 오마주 펫은 beast_<펫 id>(시트 없음), 나머지 도감 펫은 종 몸 시트 id(곰 → bear), 절차 펫·배경 짐승은 옛 표 그대로"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0352",
+  "since": "2026-10-21",
+  "note": "10-21: pw-2d-cmp w352 go map/near Read — 개·당나귀·판다·소가 종 시트, 사람 대비 크기 자연스러움"
  }
 ]

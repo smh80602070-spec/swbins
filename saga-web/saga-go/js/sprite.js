@@ -369,6 +369,11 @@
     pk_alakazam: 'Wizard', pk_dragonite: 'Alpaking', pk_charizard: 'Dragon', pk_gyarados: 'Snake_angry', pk_mewtwo: 'Alien_2',
     pk_mew: 'Cat_Monster'
   };
+  var PET_CREA = {"pt_alpaca":"alpaca","pt_anglerfish":"anglerfish","pt_apatosaurus":"apatosaurus","pt_armored_catfish":"armored_catfish","pt_baekho":"tiger","pt_bear":"bear","pt_betta":"betta","pt_black_lion_fish":"black_lionfish","pt_blobfish":"blobfish","pt_blue_goldfish":"blue_goldfish","pt_blue_tang":"blue_tang","pt_boar":"boar","pt_bulgasari":"elephant","pt_bull":"bull","pt_butterfly_fish":"butterflyfish","pt_cardinal_fish":"cardinalfish","pt_carp":"koi","pt_cat":"cat","pt_cheongryong":"dragon_evolved","pt_clownfish":"clownfish","pt_coral_grouper":"coral_grouper","pt_cow":"cow","pt_cow_farm":"cow_farm","pt_cowfish":"cowfish","pt_crane":"crane","pt_deer":"deer","pt_dolphin":"dolphin","pt_donkey":"donkey","pt_fish_1":"fish_a","pt_fish_2":"fish_b","pt_fish_3":"fish_c","pt_flatfish":"flatfish","pt_flower_horn":"flowerhorn","pt_fox":"fox","pt_goblin_shark":"goblin_shark","pt_goldfish":"goldfish","pt_gumiho":"fox","pt_haetae":"goleling","pt_horse":"horse","pt_horse_farm":"horse_farm","pt_humphead":"humphead","pt_hyeonmu":"snake","pt_jeoktoma":"horse","pt_jeolyeong":"horse_white","pt_jindo":"shiba","pt_jujak":"hywirl","pt_koi_2":"koi","pt_lionfish":"lionfish","pt_llama":"llama","pt_mandarin_fish":"mandarinfish","pt_manta_ray":"manta_ray","pt_monkey":"monkey","pt_moorish_idol":"moorish_idol","pt_owl":"owl","pt_panda":"panda","pt_parasaurolophus":"parasaurolophus","pt_parrot_fish":"parrotfish","pt_pig":"pig","pt_piranha":"piranha","pt_puffer":"puffer","pt_pug":"pug","pt_red_snapper":"red_snapper","pt_royal_gramma":"royal_gramma","pt_samjogo":"birb","pt_sapsal":"husky","pt_shark":"shark","pt_shark_2":"great_white","pt_sheep":"sheep","pt_stag":"stag","pt_stegosaurus":"stegosaurus","pt_sunfish":"sunfish","pt_swordfish":"swordfish","pt_t_rex":"trex","pt_tang":"tang","pt_tetra":"tetra","pt_tiger":"tiger","pt_toad":"frog","pt_triceratops":"triceratops","pt_tuna":"tuna","pt_turbot":"turbot","pt_velociraptor":"raptor","pt_whale":"whale","pt_white_horse":"horse_white","pt_worm":"worm","pt_yellow_tang":"yellow_tang","pt_zebra":"zebra","pt_zebra_clown_fish":"zebra_clownfish"}, PET_OWN = {"pk_alakazam":1,"pk_bulbasaur":1,"pk_charizard":1,"pk_charmander":1,"pk_dragonite":1,"pk_eevee":1,"pk_gengar":1,"pk_gyarados":1,"pk_lapras":1,"pk_magikarp":1,"pk_mew":1,"pk_mewtwo":1,"pk_pikachu":1,"pk_slowbro":1,"pk_snorlax":1,"pk_squirtle":1,"pt_magpie":1};   /* gen:pet-crea — tools/gen-pet-crea.mjs 가 쓴다(W-0352) */
+  /** W-0352 손잡이 sprite.petSheet — 1(기본) = 제 그림(오마주 17, 3D 도 제 몸) → 종 몸 시트 → 옛 표, 0 = 옛 표만 */
+  function petSheetOn() { var Co = global.DG.core; return !(Co && Co.tuned) || +Co.tuned('sprite.petSheet', 1) > 0; }
+  /** 이 펫의 종 몸 2D 시트 풀('crea:<id>') — 표에 없거나 공용 에셋 주소를 아직 모르면 null(→ 그림) */
+  function petCrea(pet) { var M = global.DG.mode2d, c = pet && PET_CREA[pet.id]; return c && M && M.creaPool && petSheetOn() ? M.creaPool(c) : null; }
   var beastImgCache = {};
   function beastImgFile(name) {
     var src = 'assets/sprites2d/beast_' + name + '.png';
@@ -389,6 +394,7 @@
     if (BG_BEAST_FILE[pet.id]) { return BG_BEAST_FILE[pet.id]; }
     if (FC_BEAST_FILE[pet.id]) { return FC_BEAST_FILE[pet.id]; }
     if (!/^(pt_|pk_|ptgen[a-z]*_)/.test(pet.id)) { return null; }   // 절차 펫(2026-09-25)도 — 3D 와 같은 해시·같은 풀
+    if (PET_OWN[pet.id] && petSheetOn()) { return pet.id; }   // W-0352 제 그림(K-0120 beast_<펫 id>.png)이 빌린 이름보다 먼저
     if (PET_BEAST_FILE[pet.id]) { return PET_BEAST_FILE[pet.id]; }
     var list = BEAST_FORM_FILES[beastFormOf(pet)];
     if (!list) { return null; }
@@ -829,12 +835,20 @@
    * 캐시된 스프라이트를 (x, y)=발 위치에 붙인다.
    * @param o {kind, ref, x, y, s, facing, phase, walking, color, look, form, divine, skin, t}
    */
+  /** W-0352 — 도감 펫을 종 몸 2D 시트로(공용 mode2d.draw, 'crea:' 풀). 시트는 미터 비율(사람 시트 2.5m 칸 기준)이라 사람과 같은 배율이면 크기가 맞다:
+   *  짐승 스탬프 s 는 사람(×1.15)보다 큰 ×1.35 기준이라 1.2×1.15/1.35 ≈ 1.02 를 곱한다. 그렸으면 true */
+  function drawCrea(ctx, o) {
+    var pool = petCrea(o.ref), M = global.DG.mode2d;
+    if (!pool || !M.isOn()) { return false; }
+    return M.draw(ctx, { pool: pool, clip: o.walking ? 'walk' : 'idle', facing: o.facing || 1, ms: (o.t || Date.now()) + (o.phase || 0) * 160, x: o.x, y: o.y, scale: (o.s || 1) * 1.02 });
+  }
   function stamp(ctx, o) {
     var kind = o.kind === 'beast' ? 'beast' : 'human';
+    if (kind === 'beast' && drawCrea(ctx, o)) { return; }   // W-0352 종 몸 시트(걷기·서기 8칸)가 서면 그것 — manifest 받기 전엔 아래 그림
     var sc = bucketScale(o.s || 1);
     var pb = bucketPhase(o.phase || 0, !!o.walking);
     var id = (o.ref && (o.ref.id || o.ref.name)) || o.key || 'anon';
-    var key = kind + '|' + id + '|' + sc.toFixed(2) + '|' + pb + (o.bk && o.bk !== 1 ? '|' + o.bk.toFixed(2) : '');   // W-0349 같은 짐승도 스폰(bk)·들판 적(없음) 컷이 다르다
+    var key = kind + '|' + id + '|' + sc.toFixed(2) + '|' + pb + (o.bk && o.bk !== 1 ? '|' + o.bk.toFixed(2) : '') + (kind === 'beast' && petSheetOn() ? '' : '|p0');   // W-0349 같은 짐승도 스폰(bk)·들판 적(없음) 컷이 다르다 · W-0352 손잡이에 따라 그림이 다르다
 
     var e = stampCache[key];
     if (e && !e.img && imgReady(kind, o.ref)) { e = null; }   // 그림이 실리기 전에 구운 코드 그림 컷은 다시 굽는다
@@ -1157,7 +1171,7 @@
     portraitCard: portraitCard,
     stamp: stamp, stampStats: stampStats,
     lookOf: lookOf, idSeed: idSeed, beastFormOf: beastFormOf, beastColorOf: beastColorOf,
-    beastPatternOf: beastPatternOf, beastImgOf: beastImgOf, beastNameOf: beastNameOf, beastK: beastK,
+    beastPatternOf: beastPatternOf, beastImgOf: beastImgOf, beastNameOf: beastNameOf, beastK: beastK, petCrea: petCrea, petOwn: function (id) { return !!PET_OWN[id]; }, petCreaId: function (id) { return PET_CREA[id] || null; },
     portrait: portrait, shade: shade
   };
 })(window);

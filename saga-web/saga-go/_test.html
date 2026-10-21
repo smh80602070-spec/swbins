@@ -3353,6 +3353,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         var base = u.split('/').pop().replace(/\.(glb|gltf)$/, '');
         var key = (/animals_extra2\//.test(u) && /^(Koi|Shark)$/.test(base)) ? base + '_x2' : base;
         var im = DG.sprite.beastImgOf(p);
+        if (DG.sprite.petOwn && DG.sprite.petOwn(p.id)) { key = p.id; }   // W-0352 오마주 17 은 제 그림(3D 도 제 몸 pet_<id>.glb, W-0148)
         if (!im || im.src.indexOf('assets/sprites2d/beast_' + key + '.png') < 0) { bad.push(p.id); }
       });
       AS.clear();
@@ -16912,6 +16913,11 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var row = [0, 1, 2, 3].map(function () { return box(100, 100, 3); }), q = box(100, 100, 0, true); L(row.concat([q]));
       var keep = q.alpha === 1 && q.y === q.oy && row.filter(function (r) { return r.alpha; }).length === 2;
       return far && apart && stack && keep && '먼 쪽 숨김 · 떨어지면 둘 · 가까우면 쌓음 · 퀘스트 대상 제자리';
+    });
+    t('2D 펫 그림 순서(W-0352) — 제 그림 있는 오마주 펫은 beast_<펫 id>(시트 없음), 나머지 도감 펫은 종 몸 시트 id(곰 → bear), 절차 펫·배경 짐승은 옛 표 그대로', function () {
+      var S = DG.sprite, r = [S.petOwn('pk_pikachu'), S.petCreaId('pk_pikachu') === null, S.beastNameOf({ id: 'pk_pikachu' }) === 'pk_pikachu', S.petCreaId('pt_bear') === 'bear',
+        S.petCreaId('ptgen_x1') === null, S.beastNameOf({ id: 'an_deer' }) === 'Deer', S.beastNameOf({ id: 'pt_bear' }) === 'Bear'];
+      return r.every(Boolean) && ('pk_pikachu → 제 그림 · pt_bear → 시트 bear') || '실패 ' + r.join(',');
     });
     t('2D 표식 아이콘(W-0350) — 짝 있는 표식은 png 주소(⚔️ → ui_swords · 🏴 → ui_flag · 변이 선택자 무시), 없는 표식은 null 이라 이모지로 그리고 짝 없는 목록에 모임', function () {
       var M = DG.mode2d, a = M.markSrc('⚔️'), b = M.markSrc('⚔'), f = M.markSrc('🏴'), n = M.markSrc('🏮');
