@@ -1,0 +1,351 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k163_bust",
+ "kit": {
+  "spec": "character",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 640,
+  "height": 896,
+  "steps": 30,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow",
+  "variants": 2
+ },
+ "items": [
+  {
+   "id": "hl_mukhyang",
+   "seed": 2026102150,
+   "prompt": "(1boy:1.15), male focus, purple long hair in twin tails, glasses, oversized green and purple tie-dye hoodie, gray plaid trousers, beige shoes, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "2나락 1막 길잡이 사관(도감 묵향 대역) 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/hl_mukhyang.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "sg_lubu",
+   "seed": 2026102157,
+   "prompt": "(1boy:1.15), male focus, short silver-lavender hair, black high-collar coat with white trim, white vest and frilled cravat, red cape, gray plaid trousers, white shoes, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 전직 스승 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/sg_lubu.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "kr_gyebaek",
+   "seed": 2026102164,
+   "prompt": "(1boy:1.15), male focus, brown bob hair, amber eyes, gray and white frilled blouse vest, black ribbon tie, black cargo pants, beige boots, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 전직 스승 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/kr_gyebaek.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "jp_musashi",
+   "seed": 2026102171,
+   "prompt": "(1boy:1.15), male focus, mint green hair covering one eye, red eyes, black tailcoat with gold embroidery, red vest, red necktie, black pants, white sneakers, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 전직 스승 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/jp_musashi.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "eu_leonidas",
+   "seed": 2026102178,
+   "prompt": "(1boy:1.15), male focus, pale blonde hair with long ponytail, glasses, navy blue turtleneck cropped jacket, black belt pouch, dark gray trousers, white shoes, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 전직 스승 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/eu_leonidas.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "sg_huangzhong",
+   "seed": 2026102185,
+   "prompt": "(1boy:1.15), male focus, short dark blue hair, black and gray zip-up jacket with red accents, dark gray pants with knee straps, black sneakers, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 전직 스승 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/sg_huangzhong.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "sg_taishici",
+   "seed": 2026102192,
+   "prompt": "(1boy:1.15), male focus, black hair with teal sheen, side-swept bangs, amber eyes, black and gray zip-up jacket, gray plaid trousers, black boots, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 전직 스승 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/sg_taishici.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "jp_yoshitsune",
+   "seed": 2026102199,
+   "prompt": "(1boy:1.15), male focus, light cyan short bob hair, mustard yellow turtleneck cropped jacket, black shorts with belt pouch, green thigh-high leg warmers, white sandals, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 전직 스승 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/jp_yoshitsune.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "wd_genghis",
+   "seed": 2026102206,
+   "prompt": "(1boy:1.15), male focus, mint green hair covering one eye, gray and white frilled blouse vest, black ribbon tie, black baggy pants, gray socks, sandals, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 전직 스승 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/wd_genghis.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "jp_hanzo",
+   "seed": 2026102213,
+   "prompt": "(1boy:1.15), male focus, light purple short hair, beige blazer, white shirt, black pants with knee straps, black boots, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 전직 스승 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/jp_hanzo.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "sg_ganning",
+   "seed": 2026102220,
+   "prompt": "(1boy:1.15), male focus, dark red wavy hair with small side braid, black and gray zip-up jacket, gray plaid trousers, black sneakers, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 전직 스승 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/sg_ganning.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "jp_tomoegozen",
+   "seed": 2026102227,
+   "prompt": "(1girl:1.15), brown hair with twin braids, glasses, green eyes, green and white fantasy dress with gold armor accents, pink sash, white stockings, lace-up sandals, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 전직 스승 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/jp_tomoegozen.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "wd_shaka",
+   "seed": 2026102234,
+   "prompt": "(1boy:1.15), male focus, black hair with teal highlights, amber eyes, black double-breasted vest jacket, white shirt, black ribbon tie, black trousers, white shoes, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 전직 스승 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/wd_shaka.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "jp_himiko",
+   "seed": 2026102241,
+   "prompt": "(1girl:1.15), long purple twin tails, blue eyes, cream yukata with navy leaf pattern, purple obi sash, brown sandals, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 전직 스승 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/jp_himiko.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "sg_zhugeliang",
+   "seed": 2026102248,
+   "prompt": "(1boy:1.15), male focus, white hair with long ponytail, hair over one eye, rust brown turtleneck cropped jacket, dark gray trousers, beige shoes, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스승·5천하 책사 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/sg_zhugeliang.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "wd_ibnsina",
+   "seed": 2026102255,
+   "prompt": "(1boy:1.15), male focus, ash blonde hair with ponytail, glasses, black double-breasted vest jacket, white shirt, black ribbon tie, gray plaid trousers, beige shoes, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 전직 스승 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/wd_ibnsina.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "eu_davinci",
+   "seed": 2026102262,
+   "prompt": "(1boy:1.15), male focus, light cyan bob hair, pale aqua oversized hoodie with brown patterned trim, white undershirt, black pants, dark boots, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 전직 스승 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/eu_davinci.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "sg_caocao",
+   "seed": 2026102269,
+   "prompt": "(1boy:1.15), male focus, dark teal medium hair with cyan tips, pink eyes, pale aqua oversized hoodie with brown patterned trim, black pants, dark boots, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 1막 세력 군주 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/sg_caocao.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "rf_yuanshao",
+   "seed": 2026102276,
+   "prompt": "(1boy:1.15), male focus, light purple short hair, black high-collar coat with white trim, white vest and frilled cravat, red cape, black baggy pants, white shoes, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 1막 세력 군주 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/rf_yuanshao.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "rf_gongsunzan",
+   "seed": 2026102283,
+   "prompt": "(1boy:1.15), male focus, dark red hair over one eye, yellow eyes, navy blue turtleneck cropped jacket, gray plaid trousers, black shoes, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 1막 세력 군주 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/rf_gongsunzan.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "rf_kongrong",
+   "seed": 2026102290,
+   "prompt": "(1girl:1.15), short wine red bob hair, red and black halter dress with rose ornament, black belt, brown boots, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 1막 세력 군주 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/rf_kongrong.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "sg_liubei",
+   "seed": 2026102297,
+   "prompt": "(1boy:1.15), male focus, long straight dark navy blue hair, cyan eyes, gray and white frilled blouse vest, black ribbon tie, black cargo pants, beige boots, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 1막 세력 군주 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/sg_liubei.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "rf_yuanshu",
+   "seed": 2026102304,
+   "prompt": "(1boy:1.15), male focus, black hair with teal sheen over one eye, purple turtleneck cropped jacket, black cargo pants, black loafers, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 1막 세력 군주 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/rf_yuanshu.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "rf_sunce",
+   "seed": 2026102311,
+   "prompt": "(1boy:1.15), male focus, mint green hair covering one eye, red eyes, black high-collar coat with white trim, white vest and frilled cravat, red cape, black baggy pants, gray socks, sandals, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 1막 세력 군주 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/rf_sunce.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "rf_liubiao",
+   "seed": 2026102318,
+   "prompt": "(1boy:1.15), male focus, short black hair with teal sheen, gray and white frilled blouse vest, black ribbon tie, gray plaid trousers, sandals, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 1막 세력 군주 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/rf_liubiao.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "rf_lijue",
+   "seed": 2026102325,
+   "prompt": "(1boy:1.15), male focus, olive green short hair, amber eyes, dark gray double-breasted vest jacket, white shirt, black ribbon tie, black trousers, black shoes, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 1막 세력 군주 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/rf_lijue.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "sg_sunquan",
+   "seed": 2026102332,
+   "prompt": "(1boy:1.15), male focus, magenta wavy medium hair, tan skin, dark gray double-breasted vest jacket, white shirt, black ribbon tie, black trousers, sandals, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 세력 군주 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/sg_sunquan.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "fu_jongwang",
+   "seed": 2026102339,
+   "prompt": "(1girl:1.15), long silver white hair, tan skin, black choker, black and white oversized varsity jacket, black crop top, gray shorts, thigh strap, white socks, black loafers, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 4막 이계 군주(균열) 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/fu_jongwang.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "ru_geohae",
+   "seed": 2026102346,
+   "prompt": "(1boy:1.15), male focus, dark brown hair in top bun, pink eyes, beige blazer, white shirt, black cargo pants, gray socks, sandals, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 4막 이계 군주(폐허) 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/ru_geohae.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "tb_baekgi",
+   "seed": 2026102353,
+   "prompt": "(1boy:1.15), male focus, short silver gray hair, tan skin, pink eyes, dark gray double-breasted vest jacket, white shirt, black ribbon tie, black cargo pants, black sneakers, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 4막 이계 군주(묘역) 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/tb_baekgi.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  }
+ ]
+}

@@ -1,0 +1,45 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k163_fix",
+ "kit": {
+  "spec": "character",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 640,
+  "height": 896,
+  "steps": 30,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow",
+  "variants": 3
+ },
+ "items": [
+  {
+   "id": "wd_ibnsina__neutral",
+   "seed": 2026102199,
+   "prompt": "(1boy:1.15), male focus, ash blonde hair with ponytail, glasses, black double-breasted vest jacket, white shirt, black ribbon tie, gray plaid trousers, beige shoes, (calm, closed mouth, both eyes open:1.3), looking at viewer, upper body, portrait, face focus, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "반신 평온 다시(윙크 고침)",
+   "init_image": "tools/ai-art/_out/k163_bust/wd_ibnsina_v02.png",
+   "denoise": 0.6,
+   "width": 768,
+   "height": 768,
+   "mask_image": "tools/ai-art/_out/k163_masks/wd_ibnsina.png"
+  },
+  {
+   "id": "sg_liubei__happy",
+   "seed": 2026102198,
+   "prompt": "(1boy:1.15), male focus, long straight dark navy blue hair, cyan eyes, gray and white frilled blouse vest, black ribbon tie, black cargo pants, beige boots, (happy, big smile, open mouth, laughing:1.4), upper body, portrait, face focus, looking at viewer, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "표정 happy 다시(약함)",
+   "init_image": "tools/ai-art/_out/k163_bust/sg_liubei_v01.png",
+   "denoise": 0.78,
+   "width": 768,
+   "height": 768,
+   "mask_image": "tools/ai-art/_out/k163_masks/sg_liubei.png"
+  }
+ ]
+}

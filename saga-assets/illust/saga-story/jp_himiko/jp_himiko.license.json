@@ -1,0 +1,78 @@
+{
+ "id": "jp_himiko",
+ "name": "여왕영",
+ "ticket": "K-0163",
+ "generator": "tools/ai-art/k163_illust.py + gen.py (ComfyUI, Kaggle 원격)",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "commercial_use": true,
+ "files": {
+  "stand.webp": {
+   "model": "animagine-xl-4.0-opt",
+   "model_license": "CreativeML OpenRAIL++-M",
+   "seed": 2026103413,
+   "prompt": "masterpiece, high score, great score, absurdres, (1girl:1.15), long purple twin tails, blue eyes, cream yukata with navy leaf pattern, purple obi sash, brown sandals, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "mode": "img2img",
+   "denoise": 0.62,
+   "base_body": "saga-assets/characters/web3d/jp_himiko.glb",
+   "base_license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
+   "date": "2026-10-21",
+   "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py",
+   "from": "tools/ai-art/_out/k162_illust30/jp_himiko_v01.png"
+  },
+  "neutral.webp": {
+   "model": "animagine-xl-4.0-opt",
+   "model_license": "CreativeML OpenRAIL++-M",
+   "seed": 2026102242,
+   "prompt": "masterpiece, high score, great score, absurdres, (1girl:1.15), long purple twin tails, blue eyes, cream yukata with navy leaf pattern, purple obi sash, brown sandals, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "mode": "img2img",
+   "denoise": 0.42,
+   "base_body": "saga-assets/characters/web3d/jp_himiko.glb",
+   "base_license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
+   "date": "2026-10-21",
+   "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py",
+   "from": "tools/ai-art/_out/k163_bust/jp_himiko_v02.png"
+  },
+  "happy.webp": {
+   "model": "animagine-xl-4.0-opt",
+   "model_license": "CreativeML OpenRAIL++-M",
+   "seed": 2026102344,
+   "prompt": "masterpiece, high score, great score, absurdres, (1girl:1.15), long purple twin tails, blue eyes, cream yukata with navy leaf pattern, purple obi sash, brown sandals, (happy, smile, open mouth:1.3), joyful eyes, upper body, portrait, face focus, looking at viewer, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "mode": "img2img",
+   "denoise": 0.7,
+   "base_body": "saga-assets/characters/web3d/jp_himiko.glb",
+   "base_license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
+   "date": "2026-10-21",
+   "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py",
+   "from": "tools/ai-art/_out/k163_expr/jp_himiko__happy_v01.png"
+  },
+  "angry.webp": {
+   "model": "animagine-xl-4.0-opt",
+   "model_license": "CreativeML OpenRAIL++-M",
+   "seed": 2026102344,
+   "prompt": "masterpiece, high score, great score, absurdres, (1girl:1.15), long purple twin tails, blue eyes, cream yukata with navy leaf pattern, purple obi sash, brown sandals, (angry, furrowed brows, glaring:1.3), frown, clenched teeth, v-shaped eyebrows, upper body, portrait, face focus, looking at viewer, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "mode": "img2img",
+   "denoise": 0.7,
+   "base_body": "saga-assets/characters/web3d/jp_himiko.glb",
+   "base_license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
+   "date": "2026-10-21",
+   "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py",
+   "from": "tools/ai-art/_out/k163_expr/jp_himiko__angry_v01.png"
+  },
+  "sad.webp": {
+   "model": "animagine-xl-4.0-opt",
+   "model_license": "CreativeML OpenRAIL++-M",
+   "seed": 2026102342,
+   "prompt": "masterpiece, high score, great score, absurdres, (1girl:1.15), long purple twin tails, blue eyes, cream yukata with navy leaf pattern, purple obi sash, brown sandals, (sad, teary eyes, tears:1.3), downturned mouth, worried eyebrows, upper body, portrait, face focus, looking at viewer, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "mode": "img2img",
+   "denoise": 0.7,
+   "base_body": "saga-assets/characters/web3d/jp_himiko.glb",
+   "base_license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
+   "date": "2026-10-21",
+   "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py",
+   "from": "tools/ai-art/_out/k163_expr/jp_himiko__sad_v01.png"
+  }
+ },
+ "license": "saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · 밑그림 = 자체 3D 몸 렌더(VRoid 샘플 개작 허용)",
+ "note": "AI 생성 — 저작권 보호가 약하다. 표시 이름은 가명."
+}

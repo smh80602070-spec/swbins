@@ -1947,6 +1947,54 @@
      "dir": "saga-web/saga-realm/assets/web2d/tile"
     }
    ]
+  },
+  {
+   "id": "illust-dungeon",
+   "src": "saga-assets/illust/saga-dungeon",
+   "recursive": true,
+   "include": [
+    "*.webp",
+    "manifest.js"
+   ],
+   "note": "K-0163 인물 일러스트 주역 30 — <id>/stand.webp(전신 세로 1024 투명)·neutral·happy·angry·sad.webp(반신 512 투명) + manifest.js(SAGA.illust.ids). 출처 license 는 정본에만. 만든 도구 tools/ai-art/k163_illust.py",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-dungeon/assets/illust"
+    }
+   ]
+  },
+  {
+   "id": "illust-story",
+   "src": "saga-assets/illust/saga-story",
+   "recursive": true,
+   "include": [
+    "*.webp",
+    "manifest.js"
+   ],
+   "note": "K-0163 인물 일러스트 주역 30 — <id>/stand.webp(전신 세로 1024 투명)·neutral·happy·angry·sad.webp(반신 512 투명) + manifest.js(SAGA.illust.ids). 출처 license 는 정본에만. 만든 도구 tools/ai-art/k163_illust.py",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-story/assets/illust"
+    }
+   ]
+  },
+  {
+   "id": "illust-realm",
+   "src": "saga-assets/illust/saga-realm",
+   "recursive": true,
+   "include": [
+    "*.webp",
+    "manifest.js"
+   ],
+   "note": "K-0163 인물 일러스트 주역 30 — <id>/stand.webp(전신 세로 1024 투명)·neutral·happy·angry·sad.webp(반신 512 투명) + manifest.js(SAGA.illust.ids). 출처 license 는 정본에만. 만든 도구 tools/ai-art/k163_illust.py",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-realm/assets/illust"
+    }
+   ]
   }
  ]
 }
