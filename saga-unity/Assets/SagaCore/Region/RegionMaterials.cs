@@ -25,6 +25,7 @@ namespace Saga.Core.Region
             ("SparkAlpha", "Saga/RegionSpark"),
             ("Sky", "Skybox/Panoramic"),
             ("SkyReal", "Saga/SkyReal"),       // U-0083 사실 하늘(SkyPass)
+            ("TriplanarPBR", "Saga/TriplanarPBR"),   // U-0085 2단계 색만 있는 배경에 사진 세트(트라이플레이너)
             ("WaterReal", "Saga/WaterReal"),   // U-0078 사실 물 — TerrainBuilder 는 Shader.Find 로 찾으니 빌드에 남기려고 원본만 둔다
         };
 
@@ -80,6 +81,27 @@ namespace Saga.Core.Region
             r is SkinnedMeshRenderer || (r != null && r.GetComponentInParent<Animator>(true) != null);
 
         /// <summary>배경 재질 하나 — 반투명·발광은 <see cref="FromGltf"/> 와 같은 규칙, 나머지는 PBR 그대로 + 이름별 값(같은 원본은 cache).</summary>
+        private static readonly Dictionary<(Material, string), Material> HintCache = new Dictionary<(Material, string), Material>();
+
+        /// <summary>U-0085 2단계 — 재질 이름에 표면이 없을 때 렌더러 물체 이름(<paramref name="hint"/>, 예 `Decor_LanternBase`)으로 사진 세트를 고른다.
+        /// 2나락 코드 재질(`DungeonRoom (generated)` 등)은 씬에 구워져 이름을 못 바꾸므로(씬 무변경) 물체 이름이 단서다.</summary>
+        public static Material ForBackdrop(Material src, Dictionary<Material, Material> cache, out Kind kind, string hint)
+        {
+            if (!PropsToon && !PhotoOff && src != null && hint != null && src.shader != null && src.shader.name != "Saga/CelToon" && src.shader.name != "Saga/TriplanarPBR"
+                && PhotoSetFor(src.name) == null && ColorOnly(src) && !IsTransparent(src) && !IsEmissive(src, out _))
+            {
+                var hs = PhotoSetFor(hint);
+                if (hs != null)
+                {
+                    kind = Kind.Lit;
+                    if (HintCache.TryGetValue((src, hs.Value.set), out var done) && done != null) return done;
+                    var m = PhotoFor(src, hs.Value);
+                    if (m != null) { HintCache[(src, hs.Value.set)] = m; return m; }
+                }
+            }
+            return ForBackdrop(src, cache, out kind);
+        }
+
         public static Material ForBackdrop(Material src, Dictionary<Material, Material> cache, out Kind kind)
         {
             if (PropsToon) return FromGltf(src, cache, out kind);
@@ -88,7 +110,7 @@ namespace Saga.Core.Region
             if (src.shader != null && (src.shader.name == "Saga/CelToon" || src.shader.name == "Universal Render Pipeline/Unlit")) { kind = KindOf(src, null); return src; }
             if (cache != null && cache.TryGetValue(src, out var done)) { kind = done != src ? KindOf(done, src) : IsTransparent(src) ? Kind.KeptTransparent : Kind.Lit; return done; }
             if (IsTransparent(src) || IsEmissive(src, out _)) return FromGltf(src, cache, out kind);
-            if (src.name.EndsWith(" (real)")) return src;   // 이미 다듬은 것(씬 패스는 두 번 훑는다)
+            if (src.name.EndsWith(" (real)") || src.name.EndsWith(" (real photo)")) return src;   // 이미 다듬은 것(씬 패스는 두 번 훑는다)
             var result = TuneByName(src);
             if (cache != null) cache[src] = result;
             return result;
@@ -109,9 +131,85 @@ namespace Saga.Core.Region
             return null;
         }
 
-        /// <summary>이름이 알려진 재질이면 복제해 금속·거칠기를 맞춘다(glTFast·URP Lit 속성 둘 다), 아니면 원본 그대로.</summary>
+        /// <summary>U-0085 2단계 — 끄기(옛 1단계 = 이름별 값만) `SAGA_NO_PHOTO=1`.</summary>
+        public static bool PhotoOff => System.Environment.GetEnvironmentVariable("SAGA_NO_PHOTO") == "1";
+
+        /// <summary>재질 이름 → 사진 세트(K-0146 `Resources/TexturesReal/<세트>`)·되풀이 크기(m). 모르면 null. 잎·풀·나무 줄기는 빼고(알파·나무결이 달라) 둔다.</summary>
+        public static (string set, float tiling)? PhotoSetFor(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return null;
+            string n = name.ToLowerInvariant();
+            bool Has(params string[] keys) { foreach (var k in keys) if (n.Contains(k)) return true; return false; }
+            if (Has("leaf", "leaves", "foliage", "grass", "bush", "bark", "trunk", "branch", "flower", "petal", "glass", "water", "cloth", "fabric", "rope", "skin", "hair")) return null;
+            if (Has("rust", "iron", "steel", "metal", "bronze", "copper", "bandl", "bandr", "lock", "hinge")) return ("rust", 1.5f);
+            if (Has("roof", "lanterntop")) return ("rooftile", 1.5f);
+            if (Has("lanternbase", "pillar", "lintel", "tower", "column")) return ("stonewall", 2f);
+            if (Has("plaster", "stucco", "clay", "adobe", "concrete", "cement")) return ("plaster", 2.5f);
+            if (Has("cobble", "paving", "pave")) return ("paving", 2f);
+            if (Has("gravel", "pebble")) return ("gravel", 2f);
+            if (Has("brick", "stonewall", "stone_wall", "wall", "stone", "masonry")) return ("stonewall", 2f);
+            if (Has("rock", "boulder", "cliff", "granite", "marble", "slate")) return ("rock", 3f);
+            if (Has("plank", "wood", "timber", "log", "barrel", "crate", "fence", "board", "beam")) return ("planks", 1.5f);
+            if (Has("sand")) return ("sand", 3f);
+            if (Has("snow")) return ("snow", 3f);
+            if (Has("dirt", "soil", "mud")) return ("dirt", 3f);
+            return null;
+        }
+
+        private static readonly Dictionary<string, (Texture2D b, Texture2D n, Texture2D r)> PhotoCache = new Dictionary<string, (Texture2D, Texture2D, Texture2D)>();
+
+        /// <summary>사진 세트 셋(바탕·법선·거칠기). 하나라도 없으면 null 셋.</summary>
+        public static (Texture2D b, Texture2D n, Texture2D r) PhotoSet(string set)
+        {
+            if (PhotoCache.TryGetValue(set, out var t)) return t;
+            string p = "TexturesReal/" + set + "/" + set + "_hi";
+            t = (Resources.Load<Texture2D>(p), Resources.Load<Texture2D>(p + "_n"), Resources.Load<Texture2D>(p + "_r"));
+            PhotoCache[set] = t;
+            return t;
+        }
+
+        /// <summary>바탕 그림이 없는(색만 있는) 재질인가 — glTFast·URP 둘 다 본다.</summary>
+        public static bool ColorOnly(Material m)
+        {
+            foreach (var p in new[] { "baseColorTexture", "_BaseMap", "_MainTex" })
+                if (m.HasProperty(p) && m.GetTexture(p) != null) return false;
+            return true;
+        }
+
+        /// <summary>U-0085 2단계 — 색만 있는 배경 재질이 사진 세트에 들면 트라이플레이너 PBR 사본(원래 색으로 물들임). 아니면 null.</summary>
+        public static Material PhotoFor(Material src) => src == null ? null : PhotoFor(src, PhotoSetFor(src.name));
+
+        public static Material PhotoFor(Material src, (string set, float tiling)? ps)
+        {
+            if (PhotoOff || src == null || !ColorOnly(src)) return null;
+            if (ps == null) return null;
+            var tex = PhotoSet(ps.Value.set);
+            if (tex.b == null || tex.n == null || tex.r == null) return null;
+            var m = Make("TriplanarPBR");
+            if (m == null) return null;
+            m.name = src.name + " (real photo)";
+            Color c = ReadColor(src, Color.white, "baseColorFactor", "_BaseColor", "_Color");
+            // 물들임 — 원래 색의 빛깔은 살리되 밝기는 사진 쪽 반·원래 쪽 반(검은 색만 있던 재질이 새까매지지 않게).
+            float luma = Mathf.Max(0.05f, c.r * 0.299f + c.g * 0.587f + c.b * 0.114f);
+            Color tint = c / luma * Mathf.Lerp(1f, luma, 0.5f);
+            tint.a = 1f;
+            m.SetColor("_BaseColor", tint);
+            m.SetTexture("_BaseMap", tex.b);
+            m.SetTexture("_BumpMap", tex.n);
+            m.SetTexture("_RoughMap", tex.r);
+            m.SetFloat("_Tiling", ps.Value.tiling);
+            var s = SurfaceFor(src.name);
+            m.SetFloat("_Metallic", s != null ? s.Value.metallic : 0f);
+            m.SetFloat("_Roughness", s != null ? Mathf.Clamp01(s.Value.roughness + 0.1f) : 1f);
+            return m;
+        }
+
+        /// <summary>이름이 알려진 재질이면 복제해 금속·거칠기를 맞춘다(glTFast·URP Lit 속성 둘 다), 아니면 원본 그대로.
+        /// U-0085 2단계 — 색만 있는 재질이 사진 세트에 들면 <see cref="PhotoFor"/>(트라이플레이너 사진).</summary>
         public static Material TuneByName(Material src)
         {
+            var photo = PhotoFor(src);
+            if (photo != null) return photo;
             var s = SurfaceFor(src.name);
             if (s == null) return src;
             var m = new Material(src) { name = src.name + " (real)" };

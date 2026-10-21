@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -27,7 +28,28 @@ namespace Saga.EditorTools
                 && RegionMaterials.SurfaceFor("Material.001") == null, "이름 → 금속·거칠기 표가 다름");
 
             var lit = Shader.Find("Universal Render Pipeline/Lit");
+            // tasks U-0085 2단계 — 이름 → 사진 세트, 색만 있는 재질은 트라이플레이너 사진(원래 색 물들임), 바탕 그림이 있으면 1단계 그대로
+            PlaytestKit.Check(RegionMaterials.PhotoSetFor("castle_wall_slates")?.set == "stonewall" && RegionMaterials.PhotoSetFor("dark_wooden_planks")?.set == "planks"
+                && RegionMaterials.PhotoSetFor("Rusty_Iron")?.set == "rust" && RegionMaterials.PhotoSetFor("white_plaster")?.set == "plaster"
+                && RegionMaterials.PhotoSetFor("roof_red")?.set == "rooftile" && RegionMaterials.PhotoSetFor("tree_bark") == null
+                && RegionMaterials.PhotoSetFor("leaves") == null && RegionMaterials.PhotoSetFor("Material.001") == null, "이름 → 사진 세트 표가 다름");
+            foreach (var set in new[] { "dirt", "grass", "gravel", "paving", "planks", "plaster", "rock", "rooftile", "rust", "sand", "snow", "stonewall" })
+            {
+                var t = RegionMaterials.PhotoSet(set);
+                PlaytestKit.Check(t.b != null && t.n != null && t.r != null, $"사진 세트 {set} 셋 중 빠짐(K-0146 Resources/TexturesReal)");
+            }
+            var bare = new Material(lit) { name = "old_planks" };
+            bare.SetColor("_BaseColor", new Color(0.5f, 0.3f, 0.15f));
+            var photo = RegionMaterials.ForBackdrop(bare, new Dictionary<Material, Material>(), out var pk);
+            PlaytestKit.Check(photo != bare && photo.shader.name == "Saga/TriplanarPBR" && pk == RegionMaterials.Kind.Lit && photo.GetTexture("_BaseMap") != null
+                && photo.GetTexture("_BumpMap") != null && photo.GetColor("_BaseColor").r > photo.GetColor("_BaseColor").b, "색만 있는 나무판이 사진(트라이플레이너·법선·갈색 물들임)이 아님");
+            // 재질 이름에 표면이 없으면 물체 이름(hint)으로 — 2나락 코드 재질
+            var gen = new Material(lit) { name = "DungeonRoom (generated)" };
+            var byHint = RegionMaterials.ForBackdrop(gen, new Dictionary<Material, Material>(), out _, "Decor_LanternBase");
+            PlaytestKit.Check(byHint != gen && byHint.shader.name == "Saga/TriplanarPBR" && byHint.GetTexture("_BaseMap") == RegionMaterials.PhotoSet("stonewall").b
+                && RegionMaterials.ForBackdrop(gen, new Dictionary<Material, Material>(), out _, "Decor_TreeTrunk") == gen, "물체 이름 단서(석등 받침 → 돌벽, 나무 줄기 → 그대로)가 다름");
             var stone = new Material(lit) { name = "stone_wall" };
+            stone.SetTexture("_BaseMap", Texture2D.grayTexture); // 바탕 그림이 있으면 1단계(이름별 값) 그대로
             stone.SetFloat("_Smoothness", 0.7f);
             var cache = new Dictionary<Material, Material>();
             var made = RegionMaterials.ForBackdrop(stone, cache, out var kind);
@@ -59,7 +81,8 @@ namespace Saga.EditorTools
         {
             var scene = EditorSceneManager.OpenScene(path);
             var st = ToonScenePass.ApplyTo(scene);
-            int charToon = 0, backLit = 0, backToon = 0;
+            int charToon = 0, backLit = 0, backToon = 0, backPhoto = 0, backTex = 0;
+            var bare = new Dictionary<string, int>();   // 색만 있는데 사진이 안 된 배경 재질 이름(표 넓히기 근거)
             string sample = null;
             foreach (var root in scene.GetRootGameObjects())
                 foreach (var r in root.GetComponentsInChildren<Renderer>(true))
@@ -72,13 +95,21 @@ namespace Saga.EditorTools
                         bool toon = m.shader.name == "Saga/CelToon";
                         if (ch && toon) charToon++;
                         else if (!ch && toon && !m.name.EndsWith("_rift")) { backToon++; sample ??= $"{r.name}/{m.name}"; }
-                        else if (!ch && (m.shader.name.Contains("/Lit") || m.shader.name.Contains("glTF-pbr"))) backLit++;
+                        else if (!ch && m.shader.name == "Saga/TriplanarPBR") { backPhoto++; backLit++; }
+                        else if (!ch && (m.shader.name.Contains("/Lit") || m.shader.name.Contains("glTF-pbr")))
+                        {
+                            backLit++;
+                            if (!RegionMaterials.ColorOnly(m)) backTex++;
+                            else { string k = m.name.Replace(" (real)", "").Replace(" (Instance)", "") + "@" + System.Text.RegularExpressions.Regex.Replace(r.name, @"[_ ]?\(?\d+\)?$", ""); bare[k] = bare.TryGetValue(k, out var c) ? c + 1 : 1; }
+                        }
                     }
                 }
             string name = System.IO.Path.GetFileNameWithoutExtension(path);
             PlaytestKit.Check(backToon == 0, $"{name}: 배경에 툰 {backToon}칸 남음(예 {sample})");
             PlaytestKit.Check(st.toonSlots == 0 || charToon > 0, $"{name}: 패스가 툰으로 바꾼 칸이 있는데 인물 툰이 0");
-            return $"{name} 인물 툰 {charToon}·배경 사실 {backLit}(패스 바꿈 {st.converted}: 툰 {st.toonSlots}/사실 {st.litSlots})";
+            if (System.Environment.GetEnvironmentVariable("SAGA_PHOTO_REPORT") == "1")
+                Debug.Log($"[PlaytestToonSplit] {name} 색만 남은 배경 재질: " + string.Join(", ", bare.OrderByDescending(kv => kv.Value).Take(25).Select(kv => kv.Key + "×" + kv.Value)));
+            return $"{name} 인물 툰 {charToon}·배경 사실 {backLit}(사진 {backPhoto}·그림 있음 {backTex}·색만 {bare.Values.Sum()})(패스 바꿈 {st.converted}: 툰 {st.toonSlots}/사실 {st.litSlots})";
         }
 
         [MenuItem("Saga/Playtest Toon Split")]

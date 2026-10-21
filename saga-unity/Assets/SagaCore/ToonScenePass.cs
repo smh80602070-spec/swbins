@@ -88,7 +88,7 @@ namespace Saga.Core
                         if (src == null) continue;
                         st.slots++;
                         if (src.shader == null || !Convertible.Contains(src.shader.name)) { st.kept++; continue; }
-                        var made = character ? RegionMaterials.FromGltf(src, cache, out var kind) : RegionMaterials.ForBackdrop(src, backdropCache, out kind);
+                        var made = character ? RegionMaterials.FromGltf(src, cache, out var kind) : RegionMaterials.ForBackdrop(src, backdropCache, out kind, r.gameObject.name);
                         if (kind == RegionMaterials.Kind.Toon) st.toonSlots++;
                         else if (kind == RegionMaterials.Kind.Lit) st.litSlots++;
                         if (made == null || made == src) { st.kept++; continue; }
