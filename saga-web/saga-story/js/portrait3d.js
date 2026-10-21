@@ -212,7 +212,7 @@
       diskSet = {}; diskFrom = M;
       for (k in M.ids) { for (tt in M.ids[k]) { String(M.ids[k][tt]).split(',').forEach(function (x) { if (x) { diskSet[k + ':' + tt + ':' + x] = 1; } }); } }
     }
-    var A3s = kind === 'hero' && global.DG.assets3d, hb = A3s && A3s.sharedUrl ? A3s.sharedUrl('portraits/hero/') : null;   // W-0359 인물 초상은 다섯 판 한 벌(shared)
+    var A3s = (kind === 'hero' || kind === 'pet') && global.DG.assets3d, hb = A3s && A3s.sharedUrl ? A3s.sharedUrl('portraits/' + kind + '/') : null;   // W-0359 인물·펫 초상은 다섯 판 한 벌(shared)
     return diskSet[kind + ':' + t + ':' + id] ? (hb || M.base + kind + '/') + id + '_' + t + '.webp' : null;
   }
   function diskOf(kind, ref, w, h) {
