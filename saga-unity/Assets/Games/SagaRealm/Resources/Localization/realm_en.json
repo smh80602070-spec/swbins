@@ -89,6 +89,8 @@
     { "key": "command.quiz", "value": "Quiz" },
     { "key": "command.map", "value": "Map" },
     { "key": "command.archive", "value": "Archive" },
+    { "key": "menu.button", "value": "☰ Menu" },
+    { "key": "menu.title", "value": "Menu" },
     { "key": "command.save", "value": "Save" },
     { "key": "command.save_ok", "value": "Saved." },
     { "key": "command.save_fail", "value": "Save failed." },

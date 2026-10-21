@@ -754,6 +754,10 @@ namespace Saga.Realm.UI
             // tasks U-0099 — 구운 씬엔 전술판 토글이 없다(씬 재빌드 없이) → 처음 켤 때 같은 캔버스에 짓는다.
             var canvas = transform.Find("RealmCommandUI");
             if (canvas != null) EnsureGridToggle(canvas);
+            // U-0154 — 창 여는 다섯(서고·문답·지도·명마·연구)은 ☰ 메뉴 화면으로, 기둥의 나머지는 위로 당긴다.
+            if (canvas != null && GetComponent<RealmMenuHub>() == null)
+                gameObject.AddComponent<RealmMenuHub>().Init(canvas, _archiveToggleLabel, _quizToggleLabel, _mapLabel,
+                    new[] { _settingsToggleLabel, _saveLabel, _tacticToggleLabel, _duelToggleLabel });
             RelocalizeBaked();
             RefreshSettingsPanel();
         }

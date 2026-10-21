@@ -89,6 +89,8 @@
     { "key": "command.quiz", "value": "문답" },
     { "key": "command.map", "value": "지도" },
     { "key": "command.archive", "value": "서고" },
+    { "key": "menu.button", "value": "☰ 메뉴" },
+    { "key": "menu.title", "value": "메뉴" },
     { "key": "command.save", "value": "저장" },
     { "key": "command.save_ok", "value": "저장했다." },
     { "key": "command.save_fail", "value": "저장 실패." },

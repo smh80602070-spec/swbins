@@ -62,6 +62,7 @@ namespace Saga.EditorTools
                     }
                     if (!CheckSettingsPanel()) { Fail(); return; }
                     if (!CheckButtonWiring()) { Fail(); return; }
+                    if (!CheckMenuHub()) { Fail(); return; }
                     if (!CheckRealmHudLocalization()) { Fail(); return; }
                     if (!CheckCommandUiPanelsWork()) { Fail(); return; }
                     if (!CheckGoalBoardAndSessionCard()) { Fail(); return; }

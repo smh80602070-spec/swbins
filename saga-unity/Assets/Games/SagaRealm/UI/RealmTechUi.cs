@@ -15,6 +15,8 @@ namespace Saga.Realm.UI
 
         private GameObject _panel;
         private Button _toggle;
+        /// <summary>왼쪽 아래 「연구」 단추 — U-0154 ☰ 메뉴 화면이 대신 누른다(숨기기만).</summary>
+        public Button ToggleButton => _toggle;
         private TextMeshProUGUI _toggleLabel, _title, _points;
         private readonly TextMeshProUGUI[] _rowText = new TextMeshProUGUI[4];
         private readonly Button[] _rowButton = new Button[4];
