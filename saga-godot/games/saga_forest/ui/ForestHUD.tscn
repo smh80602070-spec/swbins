@@ -150,4 +150,5 @@ script = ExtResource("4")
 [node name="MenuHook" type="Node" parent="."]
 script = ExtResource("menu_hook")
 game = "forest"
-items = PackedStringArray("WorkshopButton|🌿|솜씨도 (F2)", "TransferSaveButton|📲|세이브 옮기기", "GraphicsButton|🖼️|화질")
+me_adapter = "res://games/saga_forest/ui/me_adapter.gd"
+items = PackedStringArray("@me|👤|내 정보", "WorkshopButton|🌿|솜씨도 (F2)", "TransferSaveButton|📲|세이브 옮기기", "GraphicsButton|🖼️|화질")

@@ -408,4 +408,5 @@ script = ExtResource("graphics_btn")
 script = ExtResource("menu_hook")
 burger_top = 236.0
 game = "dungeon"
-items = PackedStringArray("SkillButton|🥋|무예·경락 (F2)", "SocketButton|🔨|홈 박기", "VendorButton|🏪|행상", "ForgeButton|⚗️|연단", "LootFilterButton|🧹|전리품 거르기", "SigilButton|🔻|부적", "ModeButton|⚖️|난도", "HordeButton|🌊|난입", "HardcoreButton|☠️|결사", "TransferSaveButton|📲|세이브 옮기기", "GraphicsButton|🖼️|화질")
+me_adapter = "res://games/saga_dungeon/ui/me_adapter.gd"
+items = PackedStringArray("@me|👤|내 정보", "SkillButton|🥋|무예·경락 (F2)", "SocketButton|🔨|홈 박기", "VendorButton|🏪|행상", "ForgeButton|⚗️|연단", "LootFilterButton|🧹|전리품 거르기", "SigilButton|🔻|부적", "ModeButton|⚖️|난도", "HordeButton|🌊|난입", "HardcoreButton|☠️|결사", "TransferSaveButton|📲|세이브 옮기기", "GraphicsButton|🖼️|화질")

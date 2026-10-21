@@ -45,6 +45,10 @@ const CUTS := [
 	["mo_story", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["call", "MenuScreen", "open_menu"]]],
 	["mn_realm", REALM, [["free_modal"]]],
 	["mo_realm", REALM, [["free_modal"], ["call", "MenuScreen", "open_menu"]]],
+	["me_dungeon", DUNGEON, [["free_modal"], ["call", "MenuHook", "open_me"]]],   # G-0286 「내 정보」 창
+	["me_forest", FOREST, [["free_modal"], ["call", "MenuHook", "open_me"]]],
+	["me_story", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["call", "MenuHook", "open_me"]]],
+	["me_realm", REALM, [["free_modal"], ["call", "MenuHook", "open_me"]]],
 	["fs_villager", FOREST, [["near", "Villager/Villager_npc_keeper", 0.0, 3.0]]],
 	["fs_house_in", FOREST, [["touch", "House", "_on_enter_house"]]],
 	["fs_room2", FOREST, [["set", "/root/ForestSaveState", "wall_key", "hanji"], ["set", "/root/ForestSaveState", "floor_key", "wood"], ["touch", "House", "_on_enter_house"],   # G-0062 서안·문갑·도자기·등잔

@@ -5040,5 +5040,28 @@
   "ticket": "G-0114·G-0260·G-0269",
   "since": "2026-10-21",
   "note": "SAGA_NO_SHADOW_TUNE=1 이면 그림자 조정 건너뜀 · 떨어지는 줍기는 loot_pickup._no_cast · 측정은 창 모드 probe_perf_scenes(헤드리스는 쪼개기 안 함)"
+ },
+ {
+  "id": "gd.core.me-panel",
+  "name": "「내 정보」 창(웹 W-0361 짝) — ☰ 칸 @me: 입은 것·능력치(판 기존 함수 값)·그물 단추. 2나락 여덟 부위·평타·체력·받는 피해·치명 / 3마을 옷 넷·돈·솜씨도·걸음 / 4종횡 열 부위·공·방·체력 / 5천하 군주 무·지·통·세력. 1만리는 인물 창(C)이 같은 일",
+  "files": [
+   "saga_core/ui/me_panel.gd",
+   "saga_core/ui/menu_hud_hook.gd",
+   "games/saga_dungeon/ui/me_adapter.gd",
+   "games/saga_forest/ui/me_adapter.gd",
+   "games/saga_story/ui/me_adapter.gd",
+   "games/saga_realm/ui/me_adapter.gd",
+   "tools/probe_me_panel.gd"
+  ],
+  "tests": [
+   "me_panel",
+   "menu_screen"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0286",
+  "since": "2026-10-22",
+  "note": "읽기만(세이브·균형 불변) · 4종횡 공격은 버프 뺀 바탕(_effective_atk 는 한 방 배율 소비라 안 부름) · 촬영 shot_scene me_<판>"
  }
 ]

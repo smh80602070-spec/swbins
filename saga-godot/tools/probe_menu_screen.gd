@@ -114,9 +114,14 @@ func _one() -> void:
 					_fail("① 옮긴 단추 %s 가 HUD 에 보임" % b.name)
 			if items.size() != (hook.get("items") as PackedStringArray).size():
 				print("MENU hook items %d 중 HUD 에 있는 단추 %d" % [(hook.get("items") as PackedStringArray).size(), items.size()])
+	var extra := 0   # G-0286 "@me" 처럼 단추 없는 칸
+	if game != "go":
+		var hk := sc.find_child("MenuHook", true, false)
+		if hk != null:
+			extra = Array(hk.get("items")).filter(func(l): return String(l).begins_with("@")).size()
 	var grid := menu.find_child("MenuGrid", true, false)
-	if grid == null or grid.get_child_count() != items.size():
-		_fail("② 칸 수 %d != %d" % [grid.get_child_count() if grid else -1, items.size()])
+	if grid == null or grid.get_child_count() != items.size() + extra:
+		_fail("② 칸 수 %d != %d" % [grid.get_child_count() if grid else -1, items.size() + extra])
 	## ⑥ 테마
 	var th := UiKit.theme_for(game)
 	if th == null or not (th.get_stylebox("normal", "Button") is StyleBoxTexture):
@@ -178,7 +183,7 @@ func _one() -> void:
 		if cm != null and cm.get("_panel") != null and (cm.get("_panel") as Control).visible:
 			cm.call("toggle_panel")
 		await process_frame
-	print("MENU %s opened=%d/%d fails=%d" % [game, opened, items.size(), fails - f0])
+	print("MENU %s opened=%d/%d fails=%d" % [game, opened, items.size() + extra, fails - f0])
 	for m in get_nodes_in_group("ui_modal"):
 		if m is CanvasLayer and not sc.is_ancestor_of(m):
 			m.queue_free()
