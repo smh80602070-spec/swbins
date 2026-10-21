@@ -1519,5 +1519,23 @@
   "ticket": "W-0355",
   "since": "2026-10-21",
   "note": "10-21: 3D 마을 근경 전후 Read — 마을 칸 일부만 넷째 장이라 차이 작음, 이음매·반복 무늬 새로 없음"
+ },
+ {
+  "id": "go.mocap-cast",
+  "name": "모캡 시전·강공격·인사 되살림(W-0357) — K-0148 다시 구운 cast·strong·greet 를 MOCAP_MAP 에(Pose_cast·Pose_heavy·Pose_wave), 다섯 판 공용 anim-own",
+  "files": [
+   "js/anim-own.js",
+   "../shared/assets/anim/vroid_mocap_anims.glb"
+  ],
+  "tests": [
+   "모캡 덮기(W-0318) — 짝 9",
+   "pose-shot Pose_cast·Pose_heavy·Pose_wave ○"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0357",
+  "since": "2026-10-21",
+  "note": "10-21: pose-shot 셋 ok(bad 0)·클립 userData.mocap 확인 · 1만리 촬영 Read(두 손 앞·오른손 위·두 손 아래 앞)"
  }
 ]

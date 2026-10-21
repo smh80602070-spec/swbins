@@ -9314,7 +9314,7 @@ window.requestAnimationFrame = function () { return 0; };
       var own = [new T.AnimationClip('Walk_Loop', 1, []), new T.AnimationClip('Attack', 1, [])];
       var out = O.mocapMerge(model, own, { clips: [walk, turn], scene: src }, T), w = out.filter(function (c) { return c.name === 'Walk_Loop'; })[0];
       var names = w ? w.tracks.map(function (x) { return x.name; }).sort().join() : '', hp = w ? w.tracks.filter(function (x) { return x.name === 'J_Bip_C_Hips.position'; })[0] : null;
-      var ok = [out.length === 2, !!(w && w.userData && w.userData.mocap === 'walk'), names === 'J_Bip_C_Hips.position,J_Bip_L_UpperArm.quaternion', !!hp && Math.abs(hp.values[4] - 0.88) < 1e-6, out[1].name === 'Attack' && !(out[1].userData && out[1].userData.mocap), Object.keys(O.MOCAP_MAP).length === 6, /anim\/vroid_mocap_anims\.glb$/.test(O.mocapUrl())];
+      var ok = [out.length === 2, !!(w && w.userData && w.userData.mocap === 'walk'), names === 'J_Bip_C_Hips.position,J_Bip_L_UpperArm.quaternion', !!hp && Math.abs(hp.values[4] - 0.88) < 1e-6, out[1].name === 'Attack' && !(out[1].userData && out[1].userData.mocap), Object.keys(O.MOCAP_MAP).length === 9, /anim\/vroid_mocap_anims\.glb$/.test(O.mocapUrl())];
       return ok.every(Boolean) && ('짝 ' + Object.keys(O.MOCAP_MAP).length + ' · 남은 트랙 ' + names + ' · 엉덩이 1.1→' + hp.values[4].toFixed(2)) || '실패 ' + ok.join(',');
     });
 

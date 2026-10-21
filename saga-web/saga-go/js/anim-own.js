@@ -796,8 +796,8 @@
      파일은 한 몸(ac_balgwang)에 맞춰 뼈마다 위치·회전·크기를 구웠다 — 다른 몸에 그대로 물리면 위치 트랙이 비율을 틀어서,
      J_Bip_ 뼈의 **회전만** 쓰고 엉덩이 위치는 두 몸의 엉덩이 높이 비로 늘인다(VRoid 는 정지 회전이 전부 항등이라 회전은 그대로 옮는다).
      머리카락(J_Sec_)·Root·크기 트랙은 버린다. 짝 없는 셋(turn·sit_stand·idle_b)은 쓰지 않는다. 손잡이 anim3d.mocap(1, 0 = 옛 코드 클립) */
-  /* cast·strong·greet 는 뺐다(10-19 pose-shot: 판정 시점 자세가 '두 손 앞으로 내려침·두 손 앞·오른손 머리 위' 와 달라 몸짓 뜻이 안 읽힘) — 맞는 원본은 K 몫, 그때까진 코드 자세 */
-  var MOCAP_MAP = { walk: 'Walk_Loop', run: 'Run_Loop', idle: 'Idle_Loop', hit: 'Hit', death: 'Death', pickup: 'Pose_pick' };
+  /* cast·strong·greet 는 10-19 pose-shot 에서 몸짓 뜻이 안 읽혀 뺐다가, K-0148 이 뜻에 맞는 CMU 구간으로 다시 구워 되살렸다(W-0357) */
+  var MOCAP_MAP = { walk: 'Walk_Loop', run: 'Run_Loop', idle: 'Idle_Loop', hit: 'Hit', death: 'Death', pickup: 'Pose_pick', cast: 'Pose_cast', strong: 'Pose_heavy', greet: 'Pose_wave' };
   function mocapOn() { var C = global.DG && global.DG.core; return !!(C && C.tuned ? +C.tuned('anim3d.mocap', 1) : 1); }
   function mocapUrl() { var A = global.DG && global.DG.assets3d, r = A && A.root ? A.root() : null; return (r || '../shared/assets/') + 'anim/vroid_mocap_anims.glb'; }
   /** own(코드 클립 배열)에 모캡을 덮은 새 배열. src = 받은 GLB(acquire 결과 · {clips|gltf|animations, scene}). 클립 userData.mocap = 원래 이름 */
