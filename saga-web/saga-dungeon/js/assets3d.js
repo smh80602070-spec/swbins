@@ -150,7 +150,18 @@
   /** 눈 판정(W-0178 3단계)에서 옛것보다 못한 id — 빌린 모델을 그대로 둔다(K 다시 굽기 수신함) */
   var CREATURE_SKIP = {};   // W-0206 — W-0194 의 fish_b·fish_c "빈 칸"은 CREATURE_DIRS 가 숫자 이름(Fish2·Fish3)을 못 읽어 새 쪽도 빌린 몸을 받은 것이었다(새 몸은 멀쩡)   // W-0194 — 새 몸이 three 에서 안 보임(빈 칸, 키 1.00) → Fish2·Fish3 빌린 것 유지, K 다시 굽기(수신함)
   var CREATURE_DIRS = /(?:^|\/)(animals|animals_extra|animals_extra2|standin|community|troops|monsters|quaternius|quaternius2|quaternius_dino|robots|space|foes)\/([A-Za-z_][A-Za-z0-9_]*?)(?:_[0-9a-f]{8})?\.glb$/;   // W-0206 이름에 숫자 허용(옛 [A-Za-z_] 라 Fish1·Fish2·Fish3 이 짝을 못 찾았다)
-  function creatureFor(path) {
+  /** W-0360 — 판 손 배치 모델 중 shared/assets/models 한 벌로 옮긴 단위(판 js/models-shared.js, tools/gen-models-shared.mjs) → 공용 주소. 단위 = models 아래 첫 폴더(+둘째 폴더) */
+  function modelShared(path) {
+    var ms = global.DG && global.DG.modelsShared, m = ms && ms.length ? /^(?:\.\/)?assets\/models\/(.+)$/.exec(String(path || '')) : null;
+    if (!m) { return null; }
+    var p = m[1].split('/'), u = p.length > 2 ? p[0] + '/' + p[1] : p[0];
+    if (ms.indexOf(u) < 0) { return null; }
+    if (state === 'init') { probe(); }
+    return root ? root + 'models/' + m[1] : null;
+  }
+  /** GLB 받기 자리(판 asset3d acquire 등)가 부른다 — 자체 몸 짝(creatureOnly)이 먼저, 없으면 shared 로 옮긴 손 배치 모델 */
+  function creatureFor(path) { return creatureOnly(path) || modelShared(path); }
+  function creatureOnly(path) {
     var cm = /^crea:([a-z0-9_]+)$/.exec(String(path || ''));   // W-0356 — 'crea:<id>' 는 옛 빌린 경로가 없다: 손잡이와 무관하게 자체 몸
     if (cm) { return url('creature', cm[1]); }
     var C = global.DG && global.DG.core;
@@ -234,7 +245,7 @@
   }
 
   global.DG.assets3d = {
-    url: url, spriteUrl: spriteUrl, creatureFor: creatureFor, CREATURE_OF: CREATURE_OF, CREATURE_DIR_OF: CREATURE_DIR_OF, CREATURE_SKIP: CREATURE_SKIP, CREATURE_DIR_SKIP: CREATURE_DIR_SKIP, probe: probe, heroRecipe: heroRecipe, borrowRecipe: borrowRecipe, borrowPick: borrowPick, borrowTable: borrowTable, applyProps: applyProps,
+    url: url, spriteUrl: spriteUrl, creatureFor: creatureFor, modelShared: modelShared, CREATURE_OF: CREATURE_OF, CREATURE_DIR_OF: CREATURE_DIR_OF, CREATURE_SKIP: CREATURE_SKIP, CREATURE_DIR_SKIP: CREATURE_DIR_SKIP, probe: probe, heroRecipe: heroRecipe, borrowRecipe: borrowRecipe, borrowPick: borrowPick, borrowTable: borrowTable, applyProps: applyProps,
     has: function (kind, id) { return !!set(kind)[id]; },
     /** 진단·점검용 — 'init' | 'probing' | 'ok' | 'fail' */
     state: function () { return state; },
