@@ -2,6 +2,8 @@
 
   blender -b --factory-startup -P tools/char-forge/creature_sprites.py -- <몸.glb> <출력 폴더>
   환경: NFR=8 SPRITE_PX=128 (기본)
+  K-0158 공장(factory.py): DIR_STEP=45 DIR_LIST=0,1,2,3,4 (5방향 0 정면·1 앞대각·2 옆·3 뒤대각·4 뒤) ·
+        CLIPS=idle=Idle,walk=Walk,run=Run,attack2=Special (역할=몸 동작 이름, 기본 다섯 대신) · NFR_MAP=hit=6,death=6
 
 산출: <출력>/<동작>/d<방향>_f<프레임>.png (방향 0 정면 · 1 오른쪽 옆 · 2 뒤 — 웹 mode2d 줄 순서, 반대 옆은 웹이 뒤집음) + meta.json
 동작 짝: idle=Idle · walk=Walk · attack=Attack · hit=Hit · death=Death (몸 glb 의 애니메이션 이름).
@@ -21,6 +23,11 @@ src, out = argv[0], argv[1]
 NFR = int(os.environ.get('NFR', '8'))
 PX = int(os.environ.get('SPRITE_PX', '128'))
 CLIPS = [('idle', 'Idle'), ('walk', 'Walk'), ('attack', 'Attack'), ('hit', 'Hit'), ('death', 'Death')]
+if os.environ.get('CLIPS'):          # K-0158: 역할=동작 이름 목록(없는 동작은 meta missing 으로)
+    CLIPS = [tuple(kv.split('=', 1)) for kv in os.environ['CLIPS'].split(',') if '=' in kv]
+NFR_MAP = dict((kv.split('=')[0], int(kv.split('=')[1])) for kv in os.environ.get('NFR_MAP', '').split(',') if '=' in kv)
+DIR_STEP = float(os.environ.get('DIR_STEP', '90'))
+DIR_LIST = [int(x) for x in os.environ.get('DIR_LIST', '').split(',') if x != '']
 FEET = 0.88          # 발이 위에서 몇 할 자리(사람 시트 0.5 + 0.95/2.5 = 0.88)
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -61,9 +68,10 @@ def use(act):
             t.animation_data.action_slot = act.slots[0]
 
 
-def frames(act):
+def frames(act, n=None):
+    n = n or NFR
     f0, f1 = act.frame_range
-    return [int(round(f0 + (f1 - f0) * f / NFR)) for f in range(NFR)]
+    return [int(round(f0 + (f1 - f0) * f / n)) for f in range(n)]
 
 
 def bbox():
@@ -116,8 +124,8 @@ for key in ('attack', 'hit', 'death'):
     if key not in acts:
         continue
     use(acts[key])
-    for d in (0, 1):                                   # 뒤(2)는 정면의 좌우 거울 — 폭이 같다
-        piv.rotation_euler.z = math.radians(90 * d)
+    for d in ((0, 1) if DIR_STEP == 90 else (0, 1, 2)):   # 뒤는 정면의 좌우 거울 — 폭이 같다(45° 걸음이면 대각도 잰다)
+        piv.rotation_euler.z = math.radians(DIR_STEP * d)
         fs = frames(acts[key])
         c0 = hold(key, fs[0])
         for f in fs:
@@ -167,14 +175,16 @@ for key, act in acts.items():
     use(act)
     od = os.path.join(out, key)
     os.makedirs(od, exist_ok=True)
-    for d in ((0, 1, 2, 3) if os.environ.get('SIDE_ALT') else (0, 1, 2)):   # K-0143: SIDE_ALT=1 이면 3 = 반대쪽 옆(왼쪽)도 — 묶는 쪽이 더 밝은 옆을 고른다(TRELLIS 결이 면마다 다름)
-        piv.rotation_euler.z = math.radians(90 * d)      # 0 정면(−Y 를 봄) · 1 오른쪽(+X) · 2 뒤 · 3 왼쪽
-        c0 = hold(key, frames(act)[0])
-        for i, f in enumerate(frames(act)):
+    for d in (DIR_LIST or ((0, 1, 2, 3) if os.environ.get('SIDE_ALT') else (0, 1, 2))):   # K-0143: SIDE_ALT=1 이면 3 = 반대쪽 옆(왼쪽)도 — 묶는 쪽이 더 밝은 옆을 고른다(TRELLIS 결이 면마다 다름)
+        piv.rotation_euler.z = math.radians(DIR_STEP * d)      # 90° 걸음: 0 정면(−Y 를 봄) · 1 오른쪽(+X) · 2 뒤 · 3 왼쪽 / 45° 걸음(K-0158): 0 정면 · 1 앞대각 · 2 오른쪽 · 3 뒤대각 · 4 뒤
+        fl = frames(act, NFR_MAP.get(key))
+        c0 = hold(key, fl[0])
+        for i, f in enumerate(fl):
             hold(key, f, c0)
             sc.render.filepath = os.path.join(od, f'd{d}_f{i:02d}.png')
             bpy.ops.render.render(write_still=True)
     done.append(key)
-json.dump({'clips': done, 'missing': [k for k, _ in CLIPS if k not in acts], 'frames': NFR, 'px': PX, 'ortho_m': round(size, 4),
+json.dump({'clips': done, 'missing': [k for k, _ in CLIPS if k not in acts], 'frames': NFR, 'nfr': {k: NFR_MAP.get(k, NFR) for k in done},
+           'dirs': DIR_LIST or [0, 1, 2], 'dir_step': DIR_STEP, 'px': PX, 'ortho_m': round(size, 4),
            'cam_z': round(cam_z, 4), 'anchor_feet_y_px': round(PX * FEET, 2)}, open(os.path.join(out, 'meta.json'), 'w'), indent=1)
 print('CREATURE_SPRITES', src, done, 'size', round(size, 3))

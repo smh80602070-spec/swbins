@@ -8,6 +8,7 @@
   SPRITE_MODE=1 CLIP=walk NFR=8 NDIR=4 SPRITE_PX=128 ORTHO=2.5 CAM_Z=0.95 ANIM_GLB=<bake_for_rig 가 만든 *_anims.glb> VIEW_DEG=180 \
   blender -b --factory-startup -P gear_sprites.py -- <몸.glb> <out_폴더> orc_warlord
   -> <out_폴더>/d<방향>_f<프레임>.png (투명) + meta.json   (CLIP=walk,attack 처럼 쉼표면 <out>/<동작>/ , DIR_LIST=0,1,2 로 방향 골라 굽기)
+  K-0158 공장 5방향·192px: NDIR=8 DIR_LIST=0,1,2,3,4 SPRITE_PX=192 ORTHO=2.5 CAM_Z=0.95 (0 정면·1 앞대각·2 옆·3 뒤대각·4 뒤, 발 88%) — factory.py 가 bake_sprite_batch 로 부른다
   K-0037 층 굽기: EQUIP=<조각 폴더>|eq_past_2 WEAPON=<무기.glb> LAYERS=body,armor,weapon[,full] → <동작 폴더>/<층>/d…png (층마다 몸은 holdout)
 
 kind: human goblin orc undead demon child teen elder · 장비 벌 orc_warlord goblin_scrapper undead_knight demon_lord elder_sage dark_ranger
@@ -660,8 +661,26 @@ if os.environ.get('SPRITE_MODE'):
         _json.dump({'clip': cname, 'dirs': dir_list, 'frames': nfr, 'px': px, 'ortho_m': size_m, 'px_per_m': px / size_m,
                     'anchor_feet_y_px': px * (0.5 + cam_z / size_m)},
                    open(os.path.join(odir, 'meta.json'), 'w'), indent=1)
+        center = cname in [x for x in os.environ.get('CENTER_CLIPS', '').split(',') if x]   # K-0158: 쓰러짐이 칸 밖으로 누우면 그 방향 줄만 카메라를 최소로 옆으로 민다
         for d in dir_list:
             piv.rotation_euler.z = base_deg + 2 * math.pi * d / ndir   # 정면이 맞으면 + 로 옆(d=ndir/4)이 오른쪽을 본다(웹 mode2d 옆 = 오른쪽) — 10-06 확인
+            cam.location.x = piv.location.x
+            if center:
+                ext = []
+                _shp = {pb.custom_shape for o in bpy.data.objects if o.type == 'ARMATURE' for pb in o.pose.bones if pb.custom_shape}
+                vis = [o for o in meshes if not o.hide_render and o not in _shp and not o.name.startswith('Icosphere')]   # 뼈 표시 공(지름 2m)이 bbox 를 ±1m 로 부풀린다(K-0143 함정)
+                for f in range(nfr):
+                    sc.frame_set(int(round(f0 + (f1 - f0) * f / nfr)))
+                    l2, h2 = bbox(vis)
+                    ext.append((l2.x, h2.x))
+                half = cam_d.ortho_scale / 2 * 0.96
+                c = piv.location.x
+                for x0, x1 in [ext[-1]] + ext[:-1]:          # 마지막(누운) 칸을 먼저 넣고, 나머지는 넣을 수 있는 만큼
+                    lo_c, hi_c = x1 - half, x0 + half
+                    if lo_c <= hi_c:
+                        c = min(max(c, lo_c), hi_c)
+                cam.location.x = c
+                print('CENTER', cname, d, round(c - piv.location.x, 3), [tuple(round(v, 2) for v in e) for e in ext])
             for f in range(nfr):
                 sc.frame_set(int(round(f0 + (f1 - f0) * f / nfr)))
                 for ly in layers or ['']:

@@ -92,6 +92,27 @@
    ]
   },
   {
+   "id": "sprites2d_factory",
+   "note": "K-0158 2D 에셋 공장(tools/char-forge/factory.py) 정본 — 192px·5방향·10동작·그림체 C-toon-1, 풀마다 manifest.json. 판 index.json 의 factory 목록은 factory.py 가 쓴다",
+   "src": "saga-assets/sprites2d_factory",
+   "include": [
+    "*.webp",
+    "manifest.json"
+   ],
+   "recursive": true,
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-dungeon/assets/sprites2d_sheets",
+     "only": [
+      "hero_m",
+      "villager_a",
+      "beast_wolf"
+     ]
+    }
+   ]
+  },
+  {
    "id": "sprites2d",
    "src": "saga-assets/sprites2d",
    "include": [

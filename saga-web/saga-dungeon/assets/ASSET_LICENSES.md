@@ -1261,6 +1261,8 @@ Orc·Demon 은 Ultimate Monsters). 사용자 결정("사가만리처럼 대역 �
 
 2026-10-01 자체 제작 — 공방(`tools/char-forge/gear_sprites.py`)이 CC0 VRoid 몸(`tools/char-forge/_src/cc0_vroid`) 위에 절차 생성 장비를 입혀 Blender 로 굽는다(128px·8프레임·방향 3·동작 idle/walk/attack/hit/death, WebP). 적 4벌: `pool_basem_demon_104`, `pool_e_orc_125`, `pool_d_goblin_118`, `pool_g_undead_143`. 벌마다 `manifest.json` 에 몸·종류·규격·출처 문구. 원작 에셋 없음. 이 판은 아직 안 읽는다(W 티켓 — 인물·괴물 id 연결과 `sprite.js` 배선).
 
+2026-10-21 K-0158 2D 에셋 공장(`tools/char-forge/factory.py`) 시험 3풀 `hero_m`·`villager_a`·`beast_wolf` — 192px·5방향·10동작(짐승 7), 그림체 패스 C-toon-1, 자동 판정 PASS. 정본 `saga-assets/sprites2d_factory/<풀>/`(옆 `<풀>.license.json`), 사람 = VRoid 공식 샘플 옷 이식 몸(상업·개작 허용) + CC0 UAL 동작·CMU 모캡, 짐승 = 자체 3D wolf(TRELLIS MIT, 자체 뼈대 동작). 풀 목록은 `index.json` 의 `factory`. 이 판은 아직 안 읽는다(배선 W-0370).
+
 <!-- self-made:auto (tools/asset-audit/self_docs.py, K-0119) — 손으로 고치지 말 것 -->
 ## 자체 산출 사본 — saga-assets 정본과 md5 같은 파일 (자동)
 

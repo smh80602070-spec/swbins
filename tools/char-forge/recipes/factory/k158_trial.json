@@ -1,0 +1,132 @@
+{
+ "note": "K-0158 시험 생산 — 2나락 한 장 그림(still) 풀 셋을 공장 규격(192px·5방향·10동작)으로. 사람 = 옷 이식 VRoid 몸(K-0024 — still 그림과 닮은 쪽: hero_m 갈색 조끼·회색 바지 kr2_dokgaru, villager_a 흰 두루마기 kr_yihwang) + 몸 _anims(CC0 UAL, bake_for_rig) + 모캡 시전·인사·앉기(K-0139·K-0148), 짐승 = K-0096 자체 3D wolf(자기 뼈대 동작 7). 첫 시도의 K-0015 풀 몸(cc0_basem)은 모캡 팔이 들리고 날개·꼬리 장비가 붙어 버림",
+ "game": "saga-dungeon",
+ "px": 192,
+ "ndir": 8,
+ "dirs": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "dir_names": [
+  "front",
+  "front_side",
+  "side",
+  "back_side",
+  "back"
+ ],
+ "ortho": 2.5,
+ "cam_z": 0.95,
+ "foot": 0.88,
+ "style": "C-toon-1",
+ "style_ref": "saga-web/saga-dungeon/assets/web2d/bg",
+ "clips": {
+  "idle": {
+   "frames": 8,
+   "fps": 6,
+   "loop": true
+  },
+  "walk": {
+   "frames": 8,
+   "fps": 10,
+   "loop": true
+  },
+  "run": {
+   "frames": 8,
+   "fps": 12,
+   "loop": true
+  },
+  "attack": {
+   "frames": 8,
+   "fps": 14,
+   "loop": false
+  },
+  "attack2": {
+   "frames": 8,
+   "fps": 12,
+   "loop": false
+  },
+  "cast": {
+   "frames": 8,
+   "fps": 10,
+   "loop": false
+  },
+  "hit": {
+   "frames": 6,
+   "fps": 12,
+   "loop": false
+  },
+  "death": {
+   "frames": 6,
+   "fps": 8,
+   "loop": false
+  },
+  "sit": {
+   "frames": 8,
+   "fps": 6,
+   "loop": false
+  },
+  "talk": {
+   "frames": 8,
+   "fps": 8,
+   "loop": true
+  }
+ },
+ "human": {
+  "bodies": {
+   "kr2_dokgaru": "tools/char-forge/_out/vroid/kr2_dokgaru/kr2_dokgaru.glb",
+   "kr_yihwang": "tools/char-forge/_out/vroid/kr_yihwang/kr_yihwang.glb"
+  },
+  "anim_extra": "m=saga-assets/characters/anim-src/mocap/vroid_mocap_anims.glb",
+  "act": {
+   "idle": "idle",
+   "walk": "walk",
+   "run": "sprint",
+   "attack": "fist_1",
+   "attack2": "fist_heavy",
+   "cast": "m.cast",
+   "hit": "hit",
+   "death": "death",
+   "sit": "m.sit_stand@0:0.45",
+   "talk": "m.greet"
+  },
+  "license": "VRoid Studio 공식 샘플 이용 조건(상업 사용·개작본 재배포 허용, 크레딧 불필요 — 옷 이식 몸 K-0024) + 동작 CC0 UAL(bake_for_rig)·CMU 모캡(K-0139·K-0148, saga-assets/characters/anim-src/mocap/vroid_mocap_anims.license.json)"
+ },
+ "creature": {
+  "act": {
+   "idle": "Idle",
+   "walk": "Walk",
+   "run": "Run",
+   "attack": "Attack",
+   "attack2": "Special",
+   "hit": "Hit",
+   "death": "Death"
+  }
+ },
+ "pools": [
+  {
+   "id": "hero_m",
+   "type": "human",
+   "body": "kr2_dokgaru",
+   "kind": "human",
+   "source_license": "saga-web/shared/assets/characters2d8/kr2_dokgaru/kr2_dokgaru.license.json"
+  },
+  {
+   "id": "villager_a",
+   "type": "human",
+   "body": "kr_yihwang",
+   "kind": "human",
+   "source_license": "saga-web/shared/assets/characters2d8/kr_yihwang/kr_yihwang.license.json"
+  },
+  {
+   "id": "beast_wolf",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/wolf.glb",
+   "license_json": "saga-assets/creatures3d/wolf.license.json"
+  }
+ ],
+ "canon": "saga-assets/sprites2d_factory",
+ "deploy": "saga-web/saga-dungeon/assets/sprites2d_sheets"
+}

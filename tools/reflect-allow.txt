@@ -7,3 +7,5 @@ textures_real
 world/foliage
 # world/real — K-0128 고돗 배경 사실판(방 킷·섬 밑동) 배치 끝, 화면 배선은 수신함 고돗 줄. 2026-10-17 K-0128
 world/real
+# sprites2d_factory — K-0158 2D 공장 시험 3풀(2나락 sprites2d_sheets 배치 끝), 화면 배선은 W-0370. 2026-10-21 K-0158
+sprites2d_factory

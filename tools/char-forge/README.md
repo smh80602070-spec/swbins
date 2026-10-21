@@ -160,3 +160,21 @@ cp tools/char-forge/_out/outfit_swap/*.glb tools/char-forge/_in/vroid/ && bash t
 ## 12. 조합 변형 (K-0072)
 
 샘플 VRM 머리카락·체형 조합 = `MIX.md`.
+
+## 13. 2D 에셋 공장 (K-0158, 2026-10-21)
+
+한 명령으로 계획 → 굽기 → 그림체 통일 → 자동 판정 → 정본·판별 배포.
+
+```
+py tools/char-forge/factory.py tools/char-forge/recipes/factory/k158_trial.json [--only id] [--dry] [--stage bake,style,judge,place] [--force-style]
+py tools/char-forge/sheet_judge.py            # _out/factory/styled 의 풀 전부 판정 → _out/factory/judge.json
+```
+
+- **규격(웹 W-0370 이 읽음)**: 192px 칸 · 방향 5(0 정면·1 앞대각·2 옆(오른쪽)·3 뒤대각·4 뒤, 반대쪽은 뒤집기) · 동작 10(idle·walk·run·attack·attack2·cast·hit·death·sit·talk, 몸에 없는 것은 manifest `missing`) · 8프레임(hit·death 6) · 발 = 위에서 0.88 · `<역할>.webp` 가로 프레임·세로 방향 · `manifest.json` {px, dirs, clips{역할:{frames,fps,loop,file}}, missing, foot, style:"C-toon-1", source, license, ortho_m, px_per_m, anchor_x_px(누운 몸 때문에 카메라를 민 줄의 발 x)}.
+- **굽기**: 사람은 `bake_sprite_batch.py` → `gear_sprites.py`(NDIR=8·DIR_LIST=0..4, 동작은 몸 `_anims` + `m.` 모캡), 짐승은 `creature_sprites.py`(DIR_STEP=45·CLIPS·NFR_MAP — 짐승은 칸 배율이 동작 묶음으로 정해져 늘 전 동작을 함께 굽는다). 쓰러짐·앉기는 `CENTER_CLIPS` 로 칸 밖에 누우면 그 방향 줄만 카메라를 최소로 민다.
+- **그림체 C-toon-1**(`style_pass.py`): 발 맞춤(딛는 동작은 칸마다, run·death 는 줄 기준) → 명도 4단 툰 → 그림자 보랏빛·밝은 면 크림 → 판 배경 k-means 32색(`data/style_palette_<판>.json`)으로 22% 끌어당김 → 바깥 1px 짙은 밤색 부드러운 선. 대조판 `_out/factory/compare_<풀>.png`(배경 그림 위 원본/통일 + 판의 한 장 그림).
+- **판정 다섯 줄**(`sheet_judge.py`): 같은 사람(색 분포 ≥ 0.45) · 발 ±2px · 깜빡임(한 칸만 튀었다 돌아옴) · 잘림(가장자리 1px) · 투명 테두리(가장자리 2px·떨어진 반투명). FAIL 풀은 배포 안 함.
+- **정본·배포**: `saga-assets/sprites2d_factory/<풀>/` + `<풀>.license.json` → `asset-place.json` 항목 `sprites2d_factory` 와 같은 내용으로 판 `assets/sprites2d_sheets/<풀>/` + `index.json` 의 `factory` 목록. 새 판·풀은 계획 json 의 `pools`·`deploy` 와 asset-place `only` 를 같이 늘린다.
+- **이어하기**: 역할 webp 가 있으면 건너뜀(manifest 만 보지 않는다). Blender 하나씩·낮은 우선순위.
+- **처리량(10-21, 이 PC)**: 사람 풀 380칸 굽기 108초(0.29초/칸) + 그림체 55초 ≈ 2.8분, 짐승 260칸 65초 + 41초 ≈ 1.8분. GPU 는 Blender EEVEE 만(SD 없음).
+- **함정**: K-0015 풀 몸(`cc0_basem`)에 모캡을 걸면 팔이 들리고 `rand:` 장비가 날개·꼬리를 붙인다 — 사람은 옷 이식 몸(`_out/vroid/<id>`) + 그 몸 `_anims` 를 쓴다. 뼈 표시 공(Icosphere)이 bbox 를 ±1m 로 부풀린다(보이는 메시만).
