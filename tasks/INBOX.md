@@ -5,12 +5,8 @@
 - [ ] 10-21 · (K-0162 끝 알림) · 이음 타일 배선 W 필요 — 이웃 비트 규칙 `assets/web2d/tile/tiles.json`(이중 격자: 반 칸 밀린 격자, i=NW1+NE2+SW4+SE8 → 4×4 아틀라스 칸, stride 272·gutter 8), 쌍 폴더 `<쌍>/atlas.webp` — 1만리 5·2나락 4·3마을 5(K-0091 forest_edge 대체)·5천하 4 · 웹/1만리·2나락·3마을·5천하
 - [ ] 10-21 · (K-0159 끝 알림) · W-0370 시작 가능 — 공장 사람 시트 9풀(hero_m·hero_f·villager_b·villager_c·companion_warrior·companion_archer·rts_inf_enemy·rts_arc_ally·rts_arc_enemy)이 다섯 판 `assets/sprites2d_sheets/<풀>/` + index.json `factory` 에 있음(무기 풀은 manifest px 256·384 — px_per_m 같음, 발 0.88). villager_a·companion_mage·rts_inf_ally·rts_cav_* 는 still 그대로 · 2나락 옛 시험 villager_a 는 지움 · 웹/다섯 판
 - [ ] 10-21 · (K-0164 끝 알림) · W-0366 그림 옴 — 4종횡 사냥터 10 `assets/web2d/bg2d/story_<사냥터>/layers.json`(sky·far·near·front, 2016×1152 원본·top/h 잘림, 홀수 칸 뒤집기 이음) + 발판 `assets/web2d/tile/side_<사냥터>/tiles.json`(칸 128, top·end_l·end_r 512×128 · side 512×512, 칸 = 세계 칸 x mod 4·y mod 4) — 옛 bg/·story-tile 대신 배선 · 웹/4종횡
-- [x] G-0280 10-21 · (G-0278 끝 알림) · 고돗 ☰ 메뉴·공용 틀(saga_core ui_kit·menu_screen) 1만리 끝 → 나머지 넷 판(2나락·3마을·4종횡·5천하) 메뉴 칸 표·테마 R-0(웹 W-0254·0255 짝) + HUD 40px 단추용 작은 9-slice(모서리 24 가 짓눌림 — 부품 K 또는 slice 작게) · 고돗
 - [ ] 10-21 · (K-0165 끝 알림) · 그림만 바뀜(자리·이름 같음) — 3마을·5천하 물 바탕 `forest_water`·`realm_water` 새 물빛 + 물 쌍 아틀라스 3 · 4종횡 bg2d 깊은 동굴·숲 · 발판 산 사당·궤도 기지 색 — 캐시 갱신에 sw.js VERSION 올림 필요 · 웹/3마을·4종횡·5천하
-- [x] G-0282 10-21 · (K-0161 끝 알림) · 모션 30 팩 `saga-assets/characters/anim-src/mocap/vroid_clips30_anims.glb`(VRoid J_Bip·30fps) + 이름표 `tools/char-forge/data/clips30.json`(판별 쓰임 games·루프·eye ○25 △5 — △ 는 소품 필요): gather throw fish_cast fish_wait bow_greet dig water stir saw sit_ground lie_down sleep sweep rake plant hammer eat drink cheer bow_shoot kick punch_combo jump hang ladder march command flag_wave ride_idle ride_charge → 웹 asset3d `ANIM_SRC`·pose3d 상황에 고른 것 배선(2D 는 공장 motion_table 로 풀마다 굽기) · 웹/다섯 판
-- [ ] 10-21 · (K-0161 끝 알림) · 같은 모션 30 팩을 고돗 `assets/anim_mocap` 로 place(asset-place `anim-mocap` 항목에 파일 하나 더) + 판별 동작 상태(채집·낚시·말·사다리·매달리기) 배선 · 고돗/다섯 판
 - [ ] 10-21 · (K-0161 끝 알림) · 같은 모션 30 팩을 유니티 Humanoid 리타깃(이름 = clips30.json game) + 판별 행동 상태 배선 · 유니티/다섯 판
-- [x] G-0274 10-21 · (K-0166 끝 알림) · **G-0274 풀림(다시 임포트)** — `assets/creatures/` 138·`assets/world/pet_*` 28 을 고돗 엔진판(필수 확장 0·양자화·meshopt·WebP·sparse 풂)으로 바꿈, Godot 4.7.2 `GLTFDocument` 읽기 166/166 OK — 에디터/`--import` 로 .import 다시 만들고 G-0274 이어서 · 고돗
 - [ ] 10-21 · (W-0356 끝 알림) · 빌린 괴물 웹 참조 — 5천하·3마을 0, 2나락은 quaternius Alpaking_Evolved·Armabee 둘·Cat·Chicken·Fish 둘만 남음(자체 몸 없음) → 그 일곱 몸 만들면 옛 monsters/ 폴더 지워도 됨(W-0360) · 자체툴
 - [ ] 10-21 · (G-0282 대기 알림) · K-0161 `saga-assets/characters/anim-src/mocap/vroid_clips30_anims.glb`(+license) 를 고돗 `saga-godot/assets/anim_mocap/` 로 place(asset-place `anim-mocap` 항목에 파일 하나 더) → G-0282 풀림 · 자체툴
 - [ ] 10-21 · (W-0359 ① 알림) · 인물·펫 초상 hero·pet 은 웹 다섯 판이 `saga-web/shared/assets/portraits/{hero,pet}/` 한 벌만 읽음(판 사본 지움) → asset-place `portraits-hero`·펫 초상 targets·bake-portraits 출력 자리를 shared 로(안 고치면 다음 place 가 판 사본 5000 을 되살림) · 자체툴
@@ -19,3 +15,4 @@
 - [ ] 10-21 · (K-0163 끝 알림) · 나머지 인물 ~470 일러스트 — 같은 도구 `tools/ai-art/k163_illust.py`(cast 표만 판별로 새로) 로 판마다 한 티켓(3D 몸 있는 도감 인물 순, 원격 120장≈50분이라 판당 2~3회), 1만리·3마을 주역부터 · 자체툴
 - [ ] 10-21 · (K-0167 끝 알림) · mode2d MARK 표에 25 줄 — `shared/assets/icons/icon64/ui_<이름>_g0.png`, 이모지→이름 표는 `tasks/tools/done/K-0167.md` 메모 · 웹/다섯 판
 - [ ] 10-22 · 2D폰: 1만리 나무 밟음·2나락 마을 화면 바뀜 · 웹
+- [ ] 10-22 · (G-0287 대기 알림) · 고돗 `assets/characters_dex/*.gltf` 모프 targets 0(이름표만, 웹 characters3d 는 77) → Fcl 모프 살려 다시 내보내기 — NPC·주인공 깜박임·표정·입 · 자체툴

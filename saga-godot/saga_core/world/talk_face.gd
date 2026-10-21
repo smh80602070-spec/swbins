@@ -4,6 +4,7 @@ extends SkeletonModifier3D
 ##   입 모양: speak(글자) — 한글 음절의 가운뎃소리(모음)로 VRoid 입 모양 다섯(Fcl_MTH_A·I·U·E·O) 중 하나를 연다. 한글이 아니면(빈칸·문장부호) 닫는다.
 ##   표정: set_mood("joy"·"angry"·"sorrow"·"surprised"·"fun"·"") — Fcl_ALL_* 를 MOOD_W 까지 천천히.
 ##   눈 깜박임: 늘(BLINK_MIN~MAX 초마다 BLINK_SEC 동안 Fcl_EYE_Close).
+##   G-0287 짧은 표정: flash_mood(m, 초) — 그 초 동안만 표정, 뒤엔 원래 표정(대화 중엔 안 덮음). 주인공 몸도 늘 붙인다(player_attach).
 ##   손짓: set_talking(true) 동안 — 애니메이션이 놓은 자세 위에 오른팔을 앞으로 들고(윗팔 ARM_SWING°·아랫팔 FORE_BEND°, 천천히 흔듦)
 ##     머리를 글자마다 조금 끄덕인다(NOD°). 뼈 회전은 뼈대 공간 X 축으로 돌리고, 몸 앞이 +Z 인지 -Z 인지는 모델마다
 ##     발목(Foot) → 발끝(ToeBase) 쉬는 자세 방향으로 잰다(_front) — VRoid 셋 다 뼈대 공간 앞이 같다고 가정하지 않는다.
@@ -43,6 +44,8 @@ var _shapes: Dictionary = {} # 블렌드셰이프 이름 → [[MeshInstance3D, i
 var _mouth := [0.0, 0.0, 0.0, 0.0, 0.0]
 var _mouth_to := [0.0, 0.0, 0.0, 0.0, 0.0]
 var _mood := ""
+var _flash_left := 0.0   # G-0287 flash_mood 남은 초
+var _flash_prev := ""
 var _mood_w: Dictionary = {}
 var _blink_t := 0.0
 var _blink_left := 0.0
@@ -70,6 +73,22 @@ static func attach(body: Node) -> Node:
 	skel.add_child(tf)
 	tf.call("_collect", body)
 	return tf
+
+## G-0287 주인공 몸에 늘 — 손잡이 SAGA_PLAYER_FACE=0 이면 안 붙임(전후 비교).
+static func player_attach(body: Node) -> Node:
+	if OS.get_environment("SAGA_PLAYER_FACE") == "0" or body == null:
+		return null
+	return attach(body)
+
+## 몸(또는 그 위 노드) 안에서 붙은 talk_face — 없으면 null. 매 틱 말고 일이 있을 때만 부른다.
+static func face_of(node: Node) -> Node:
+	if node == null:
+		return null
+	for sk in node.find_children("*", "Skeleton3D", true, false):
+		for c in sk.get_children():
+			if c.get_meta("talk_face", false):
+				return c
+	return null
 
 func _collect(body: Node) -> void:
 	_rng.seed = hash(body.get_path()) if body.is_inside_tree() else 20260824
@@ -140,6 +159,16 @@ static func viseme_of(ch: String) -> int:
 
 func set_mood(m: String) -> void:
 	_mood = m if MOODS.has(m) else ""
+	_flash_left = 0.0
+
+## G-0287 — sec 초만 그 표정, 뒤엔 앞 표정으로. 말하는 중이면(대화 표정이 이김) 안 함.
+func flash_mood(m: String, sec: float) -> void:
+	if _talking or not MOODS.has(m):
+		return
+	if _flash_left <= 0.0:
+		_flash_prev = _mood
+	_mood = m
+	_flash_left = sec
 
 func set_talking(on: bool) -> void:
 	_talking = on
@@ -180,6 +209,10 @@ func _process(delta: float) -> void:
 	if not _mouth_texs.is_empty():
 		_show_mouth()
 	## 표정.
+	if _flash_left > 0.0:
+		_flash_left -= delta
+		if _flash_left <= 0.0:
+			_mood = _flash_prev
 	var kf := 1.0 - exp(-MOOD_BLEND * delta)
 	for m in MOODS:
 		var want := MOOD_W if m == _mood else 0.0

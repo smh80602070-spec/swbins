@@ -9,6 +9,7 @@ const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
 const BlobShadow := preload("res://saga_core/world/blob_shadow.gd")
 const FootLock := preload("res://saga_core/player/foot_lock.gd")   # G-0264 걸음새·디딘 발 잠금
 const LifePose := preload("res://saga_core/world/life_pose.gd")    # G-0265 쉬면 앉기·둘러보기
+const TalkFace := preload("res://saga_core/world/talk_face.gd")    # G-0287 주인공 얼굴 늘(깜박임·짧은 표정)
 
 const WALK_SPEED := 6.0
 const RUN_SPEED := 10.0
@@ -213,6 +214,7 @@ func _attach_foot_lock() -> void:
 		if FootLock.attach(s as Skeleton3D) != null:
 			break
 	_life = LifePose.attach(visual) if _life_pose_on() else null
+	TalkFace.player_attach(visual)
 
 ## G-0265 — 생활 몸짓을 붙이는 판(1만리 go_player 는 G-0266 까지 false).
 func _life_pose_on() -> bool:

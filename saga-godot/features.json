@@ -5063,5 +5063,27 @@
   "ticket": "G-0286",
   "since": "2026-10-22",
   "note": "읽기만(세이브·균형 불변) · 4종횡 공격은 버프 뺀 바탕(_effective_atk 는 한 방 배율 소비라 안 부름) · 촬영 shot_scene me_<판>"
+ },
+ {
+  "id": "gd.core.player-face",
+  "name": "주인공 얼굴 늘(talk_face player_attach) — 1만리·2나락·3마을·4종횡 몸: 깜박임 · 맞으면 놀람 0.45초(combat_feel.hit) · 레벨업 웃음 2초(1만리·4종횡). 손잡이 SAGA_PLAYER_FACE=0",
+  "files": [
+   "saga_core/world/talk_face.gd",
+   "saga_core/player/player.gd",
+   "saga_core/combat_feel.gd",
+   "games/saga_story/player/story_player.gd",
+   "games/saga_story/data/story_save_state.gd",
+   "games/saga_go/player/go_player.gd",
+   "tools/probe_player_face.gd"
+  ],
+  "tests": [
+   "player_face"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0287",
+  "since": "2026-10-22",
+  "note": "대기 K — dex gltf 모프 targets 0 이라 화면엔 아직 안 보임(NPC 도 같음). 모프 오면 SAGA_FACE_STRICT=1"
  }
 ]

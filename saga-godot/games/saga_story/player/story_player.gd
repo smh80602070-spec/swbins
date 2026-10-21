@@ -74,6 +74,8 @@ func _ready() -> void:
 		if FootLock.attach(sk as Skeleton3D) != null:
 			break
 	_life = LifePose.attach(visual)   # G-0266 — 가만히 8초 → 앉기(옆 보기라 몸 방향 그대로)
+	if (load("res://saga_core/world/talk_face.gd") as GDScript).call("player_attach", visual) != null:   # G-0287 얼굴 늘
+		StorySaveState.level_up.connect(_face_level_up)
 	_play_anim("idle")
 	CelShaderApply.apply_to(visual)
 	## PLAN 102-4 — GO/DUNGEON/FOREST는 games/saga_go/player/player.gd를
@@ -703,3 +705,8 @@ func _attack() -> void:
 	Voice.say("shout")   # G-0111 — 가끔 외침
 
 
+## G-0287 레벨업 웃음 — 메서드로 이어 씬이 바뀌면(사냥터 열하나) 연결이 같이 사라진다.
+func _face_level_up(_lv: int) -> void:
+	var face: Node = (load("res://saga_core/world/talk_face.gd") as GDScript).call("face_of", visual)
+	if face != null:
+		face.call("flash_mood", "joy", 2.0)

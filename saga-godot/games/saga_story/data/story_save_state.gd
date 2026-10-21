@@ -1,5 +1,7 @@
 extends SagaSaveBase
 
+signal level_up(new_level: int)   # G-0287 — 주인공 웃는 얼굴(story_player). 세이브 키 아님
+
 ## VERTICAL_SLICE_STORY.md 1절 완료 조건의 마지막 두 단계 — "저장한다 →
 ## 다시 켜서 이어진다"(GO save_state.gd·DUNGEON dungeon_save_state.gd·
 ## FOREST forest_save_state.gd와 같은 정신: 로컬 파일 하나, 버전 필드,
@@ -380,6 +382,8 @@ func add_exp(amount: int) -> void:
 	for lv in range(lv0 + 1, level + 1):   # G-0197 — 컷 위 레벨마다 3택 한 장
 		if lv > sp_cut_lv:
 			_make_offer(lv)
+	if level > lv0:
+		level_up.emit(level)
 	check_achievements()
 
 

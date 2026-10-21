@@ -180,6 +180,7 @@ func _ready() -> void:
 	super._ready()
 	PartyState.weapon_changed.connect(_refresh_weapon)
 	PartyState.artifact_changed.connect(_refresh_armor)
+	PartyState.level_up.connect(_face_level_up)   # G-0287 레벨업 웃음
 	collision_mask = 1 | BORDER_LAYER
 	floor_snap_length = 0.35
 	_last_safe = global_position
@@ -981,3 +982,10 @@ class StaminaRing extends Control:
 		col.a = _alpha
 		if _ratio > 0.001:
 			draw_arc(c, RADIUS, -PI * 0.5, -PI * 0.5 + TAU * _ratio, 40, col, WIDTH, true)
+
+
+## G-0287 — 몸을 갈아 끼워도 그때 몸에서 얼굴을 찾는다.
+func _face_level_up(_lv: int) -> void:
+	var face: Node = TalkFace.face_of(visual)
+	if face != null:
+		face.call("flash_mood", "joy", 2.0)

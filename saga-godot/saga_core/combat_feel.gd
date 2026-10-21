@@ -95,6 +95,7 @@ var _ui_sound_idx := 0
 ## G-0177 — 판이 자기 효과음을 낼 때 건다(1만리 go_sfx.gd). call(kind "hit"|"pick"|"ui", target, crit) 이 true 면
 ## 아래 기본 wav 를 안 낸다(sound_triggered 는 그대로). 안 걸면 다른 판은 지금과 같다.
 var sound_hook: Callable
+const HURT_FACE_SEC := 0.45   # G-0287
 
 
 ## tune(선택, G-0018): {stop_ms 히트스톱 길이(치명이면 +50), shake_mul 흔들림 배율(0=없음), pop_mul 숫자 크기 배율, quiet 타격음 끔}.
@@ -105,6 +106,10 @@ func hit(target: Node3D, amount: float, crit: bool, tune: Dictionary = {}) -> vo
 	if is_instance_valid(target):
 		_do_flash(target)
 		_do_popup(target, amount, crit, float(tune.get("pop_mul", 1.0)))
+		if _is_player(target):   # G-0287 맞은 주인공 — 놀란 얼굴 잠깐
+			var face: Node = (load("res://saga_core/world/talk_face.gd") as GDScript).call("face_of", target)
+			if face != null:
+				face.call("flash_mood", "surprised", HURT_FACE_SEC)
 	if not bool(tune.get("quiet", false)):
 		if _hooked("hit", target, crit):
 			sound_triggered.emit(_sound_idx)
