@@ -16911,7 +16911,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 
     t('BGM — 트랙 표가 saga-go-<장면>.ogg 꼴이고 장면 판별이 그 표 안의 키만 낸다', function () {
       var cfg = DG.cfg.bgm, ks = Object.keys(cfg.tracks);
-      var namesOk = ks.every(function (k) { return cfg.tracks[k] === 'saga-go-' + k + '.ogg'; });
+      var namesOk = ks.every(function (k) { return cfg.tracks[k] === 'shared:go-' + k + '.ogg'; });
       var want = ["field","battle"];
       return namesOk && ks.slice().sort().join() === want.slice().sort().join() &&
         !!cfg.tracks[DG.bgm.desiredTrack()] && ('트랙 ' + ks.join('·'));

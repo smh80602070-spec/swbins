@@ -8782,7 +8782,7 @@ window.requestAnimationFrame = function () { return 0; };
 
     t('BGM — 트랙 표가 saga-dungeon-<장면>.ogg 꼴이고 장면 판별이 그 표 안의 키만 낸다', function () {
       var cfg = DG.cfg.bgm, ks = Object.keys(cfg.tracks);
-      var namesOk = ks.every(function (k) { return cfg.tracks[k] === 'saga-dungeon-' + k + '.ogg'; });
+      var namesOk = ks.every(function (k) { return cfg.tracks[k] === 'shared:dungeon-' + k + '.ogg'; });
       var want = ["town","field","battle"];
       return namesOk && ks.slice().sort().join() === want.slice().sort().join() &&
         !!cfg.tracks[DG.bgm.desiredTrack()] && ('트랙 ' + ks.join('·'));

@@ -64,7 +64,8 @@
     for (k in TRACKS) {
       if (!Object.prototype.hasOwnProperty.call(TRACKS, k)) { continue; }
       var a = document.createElement('audio');
-      a.src = BASE + srcOf(TRACKS[k], a);
+      var sv = srcOf(TRACKS[k], a), A3b = global.DG && global.DG.assets3d, sh = /^shared:/.test(sv) && A3b && A3b.sharedUrl ? A3b.sharedUrl('../audio/bgm/') : null;   // W-0359 'shared:<이름>' = 다섯 판 한 벌(shared/audio/bgm)
+      a.src = sh ? sh + sv.slice(7) : BASE + sv.replace(/^shared:/, '');
       a.loop = true;
       a.preload = 'none';   // 느린 회선 배려 — 실제로 켜기 전엔 안 받는다
       a.volume = volume();

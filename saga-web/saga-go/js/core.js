@@ -449,7 +449,7 @@
   global.DG = global.DG || {};
   global.DG.cfg = global.DG.cfg || {};
   global.DG.cfg.bgm = {
-    tracks: { field: 'saga-go-field.ogg', battle: 'saga-go-battle.ogg' },   // 마을이 따로 없는 걷기 판 — 들판과 교전
+    tracks: { field: 'shared:go-field.ogg', battle: 'shared:go-battle.ogg' },   // 마을이 따로 없는 걷기 판 — 들판과 교전
     vol: 0.35,
     first: 'field',
     poll: 1000,

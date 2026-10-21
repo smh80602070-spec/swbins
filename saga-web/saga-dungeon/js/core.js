@@ -458,7 +458,7 @@
   global.DG = global.DG || {};
   global.DG.cfg = global.DG.cfg || {};
   global.DG.cfg.bgm = {
-    tracks: { town: 'saga-dungeon-town.ogg', field: 'saga-dungeon-field.ogg', battle: 'saga-dungeon-battle.ogg' },
+    tracks: { town: 'shared:dungeon-town.ogg', field: 'shared:dungeon-field.ogg', battle: 'shared:dungeon-battle.ogg' },
     vol: 0.35,
     first: 'town',
     poll: 1000,
