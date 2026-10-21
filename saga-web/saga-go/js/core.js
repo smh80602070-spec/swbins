@@ -475,11 +475,12 @@
     tileBase: 'assets/web2d/tile/',
     /** 역참·성채·랜드마크 2D 스프라이트(K-0017 `world2d`) — 종류 → { id, h(px, 그리는 쪽 배율 s=1 기준) }. 없거나 못 받으면 옛 그림 */
     prop2d: {
-      station: { id: 'inn_01', h: 68 },
-      'fort:t1': { id: 'stone_tower_01', h: 58 }, 'fort:t2': { id: 'chinese_hall_01', h: 56 }, 'fort:t3': { id: 'dungeon_gate_01', h: 58 }, fort: { id: 'stone_tower_01', h: 58 },
-      'landmark:plain': { id: 'stone_tower_01', h: 57 }, 'landmark:bamboo': { id: 'bamboo_clump_01', h: 41 }, 'landmark:canyon': { id: 'rock_outcrop_01', h: 36 },
-      'landmark:marsh': { id: 'pond_01', h: 32 }, 'landmark:ruins': { id: 'stele_01', h: 45 }, 'landmark:home': { id: 'stone_tower_01', h: 57 }
+      station: { id: 'inn_01', h: 68, cls: 'house' },   // W-0349 cls = 공용 크기 표 종류(unitH × scaleOf) — 손잡이 mode2d.scaleTable 0 이면 옛 h
+      'fort:t1': { id: 'stone_tower_01', h: 58, cls: 'tower' }, 'fort:t2': { id: 'chinese_hall_01', h: 56, cls: 'house' }, 'fort:t3': { id: 'dungeon_gate_01', h: 58, cls: 'tower' }, fort: { id: 'stone_tower_01', h: 58, cls: 'tower' },
+      'landmark:plain': { id: 'stone_tower_01', h: 57, cls: 'tower' }, 'landmark:bamboo': { id: 'bamboo_clump_01', h: 41, cls: 'tree' }, 'landmark:canyon': { id: 'rock_outcrop_01', h: 36, cls: 'boulder' },
+      'landmark:marsh': { id: 'pond_01', h: 32, cls: 'pond' }, 'landmark:ruins': { id: 'stele_01', h: 45, cls: 'stele' }, 'landmark:home': { id: 'stone_tower_01', h: 57, cls: 'tower' }
     },
+    unitH: 50, scale: { house: 2.2, tower: 3 },   // W-0349 배율 1 의 사람 키(px, 주민 48×1.05) · 지도 판이라 집·탑은 공용(2.6·4)보다 낮게
     /** 땅 종류(world.js terrainAt) → 2D 바닥 타일(K-0020 `go_*`) — 없는 종류는 옛 사진·색 */
     tile: { grass: 'go_grass', forest: 'go_dirt', mount: 'go_stone', road: 'go_sand', town: 'go_stone', farm: 'go_dirt', water: 'go_water' },
     /** 2D 모드인가 — 3D 장면이 안 서 있을 때(평면·2.5D 캔버스) */

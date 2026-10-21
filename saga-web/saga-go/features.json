@@ -1396,5 +1396,24 @@
   "ticket": "W-0348",
   "since": "2026-10-21",
   "note": "10-21: shots/cmp/w348a_go_map·w348a_dg_town·w348b_rm_map Read — 글자끼리 겹침 0"
+ },
+ {
+  "id": "go.w2d-scale",
+  "name": "2D 몸 크기 한 기준(W-0349) — 공용 mode2d.scaleOf 표(사람 1 · 짐승 그림 이름별 · 집 2.6 · 탑 4, 판 설정 scale 이 덮음)·shadow 한 꼴 · 1만리 도감 짐승 종마다 크기(토끼 작게·말 크게)·역참/성채/지형지물이 사람과 같은 몸 배율(bodyK)·몸 뒤 검은 타원 뺌 (손잡이 mode2d.scaleTable 0 = 옛)",
+  "files": [
+   "js/mode2d.js",
+   "js/sprite.js",
+   "js/core.js",
+   "src/world/02.js"
+  ],
+  "tests": [
+   "2D 몸 크기 한 기준(W-0349) — scaleOf 사람 1·곰 1.15·토끼 0.35, 판 설정이 덮음(1만리 집 2.2 < 공용 2.6 · 곰:id 덮기), 짐승 스탬프 배수 0.42~2 묶음, 그림자 한 꼴이 발밑을 칠함"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0349",
+  "since": "2026-10-21",
+  "note": "10-21: 폰 390×844 역참·성채 옆 옛/새 촬영 Read — 역참이 사람 키만 하던 것 → 2.2배, 탑 3배 · 여우·지렁이·돼지 사람보다 작게"
  }
 ]

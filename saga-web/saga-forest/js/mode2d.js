@@ -40,6 +40,43 @@
     return t && isStill(t[0]) ? { pool: t[0], k: t[1] || 1 } : null;
   }
 
+  /* ── W-0349 몸 크기 한 기준 — 사람 키 = 1. 종류(SCALE)·짐승 그림 이름(BEAST, 그림의 긴 변 ÷ 사람 키) 표 하나를 다섯 판이 같이 쓰고,
+     판 설정 `cfg.mode2d.scale = { <종류>: k, '<종류>:<id>': k }` 가 덮는다. 손잡이 mode2d.scaleTable(1 새 표 · 0 옛 크기 — 비교판용). 그림 크기만, 판정은 그대로 */
+  var SCALE = { human: 1, child: 0.72, beast: 1, small: 0.5, mid: 0.8, large: 1.15, horse: 1.3, huge: 1.8, house: 2.6, tower: 4, tree: 2.4, boulder: 1.4, pond: 0.8, stele: 1.3, prop: 0.6 };
+  var BEAST = {
+    Alien: 0.9, Alien_2: 0.9, Alpaca: 1.05, Alpaking: 1.2, Anglerfish: 0.5, Apatosaurus: 2.4, Armored_Catfish: 0.5, Bear: 1.15, Betta: 0.3, Birb: 0.35, Black_Lion_Fish: 0.4,
+    Blobfish: 0.4, BlueDemon: 1, Blue_Goldfish: 0.3, Blue_Tang: 0.35, Boar: 0.8, Bull: 1.3, Bunny: 0.35, Butterfly_Fish: 0.3, Cardinal_Fish: 0.3, Cat: 0.45, Cat_Monster: 0.7,
+    Clownfish: 0.3, Coral_Grouper: 0.5, Cow: 1.25, Cowfish: 0.35, Cow_Farm: 1.25, Crane: 0.8, Deer: 1, Demon: 1.1, Dino: 1.3, Dolphin: 1.2, Donkey: 1.05, Dragon: 1.7,
+    Dragon_Evolved: 2, Elephant: 1.9, Fish1: 0.4, Fish2: 0.4, Fish3: 0.4, Flatfish: 0.4, Flower_Horn: 0.4, Fox: 0.55, Frog: 0.3, Ghost: 0.9, Glub: 0.5, Glub_Evolved: 0.8,
+    Goblin_Shark: 1.2, Goldfish: 0.3, Goleling: 0.6, Horse: 1.3, Horse_Farm: 1.3, Horse_White: 1.3, Humphead: 0.7, Husky: 0.7, Hywirl: 0.6, Koi: 0.45, Koi_x2: 0.5, Lionfish: 0.4,
+    Llama: 1.05, Mandarin_Fish: 0.3, Manta_ray: 1.2, Monkey: 0.55, Monkroose: 0.6, Moorish_Idol: 0.3, Mushnub: 0.5, Orc: 1.05, Owl: 0.4, Panda: 1, Parasaurolophus: 1.8,
+    Parrot_Fish: 0.45, Pig: 0.65, Pigeon: 0.35, Pink_Slime: 0.5, Piranha: 0.35, Puffer: 0.35, Pug: 0.4, Rat: 0.3, Red_Snapper: 0.5, Robot_Drone: 0.5, Robot_Large: 1.6,
+    Robot_Walker: 1.2, Royal_Gramma: 0.3, Shark: 1.4, Shark_x2: 1.5, Sheep: 0.75, ShibaInu: 0.55, Snake: 0.7, Snake_angry: 0.7, Squidle: 0.6, Stag: 1.1, Stegosaurus: 1.9,
+    Sunfish: 0.9, Swordfish: 1.2, Tang: 0.35, Tetra: 0.25, Tiger: 1.25, Trex: 2, Triceratops: 1.8, Tuna: 0.8, Turbot: 0.5, Velociraptor: 1, Wasp: 0.3, Whale: 2.4, Wizard: 1,
+    Wolf: 0.8, Worm: 0.5, Yellow_Tang: 0.35, Yeti: 1.3, Zebra: 1.25, Zebra_Clown_Fish: 0.3, Zombie: 1,
+    pk_alakazam: 0.95, pk_bulbasaur: 0.5, pk_charizard: 1.2, pk_charmander: 0.5, pk_dragonite: 1.4, pk_eevee: 0.4, pk_gengar: 0.8, pk_gyarados: 1.8, pk_lapras: 1.5,
+    pk_magikarp: 0.5, pk_mew: 0.4, pk_mewtwo: 1.1, pk_pikachu: 0.4, pk_slowbro: 0.9, pk_snorlax: 1.4, pk_squirtle: 0.5, pt_magpie: 0.4
+  };
+  function scaleOn() { var Co = global.DG && global.DG.core; return !(Co && Co.tuned) || +Co.tuned('mode2d.scaleTable', 1) > 0; }
+  /** 사람 키를 1 로 본 그 종류(·id)의 크기. 판 설정 '종류:id' > 짐승 표(id = 그림 이름) > 판 설정 종류 > 공용 종류 > 1 */
+  function scaleOf(kind, id) {
+    var o = C().scale || {}, v;
+    if (id !== undefined && id !== null) {
+      v = o[kind + ':' + id]; if (v !== undefined) { return +v; }
+      if (kind === 'beast' && BEAST[id] !== undefined) { return BEAST[id]; }
+    }
+    v = o[kind]; if (v !== undefined) { return +v; }
+    return SCALE[kind] !== undefined ? SCALE[kind] : 1;
+  }
+  /** 발밑 그림자 한 꼴 — (x, y) 발 밑 가운데, w = 그림자 폭(px). o = { a: 진하기(0.3), fade: 곱(뜰수록 작게) } */
+  function shadow(ctx, x, y, w, o) {
+    o = o || {};
+    var f = o.fade === undefined ? 1 : Math.max(0, o.fade), a = (o.a === undefined ? 0.3 : o.a) * f, rx = w / 2 * (0.4 + 0.6 * f);
+    if (!ctx || !(rx > 0) || !(a > 0)) { return; }
+    ctx.save(); ctx.fillStyle = 'rgba(0,0,0,' + a.toFixed(3) + ')';
+    ctx.beginPath(); ctx.ellipse(x, y, rx, Math.max(1.5, rx * 0.38), 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+  }
+
   /* ── VRoid 2D 시트(W-0074 2D) — 사람은 시대 구분 없이 VRoid 로 만든 시트(`shared/assets/characters2d/<id>/`, 규격은 위와 같음)로.
      판 설정 `cfg.mode2d.vroid2d = { kinds: [사람 종류…], h: 프레임 안 몸 높이(px), foot }` 가 있는 판·종류만. 제 시트가 있는 인물(도감·장수 299)은
      제 것, 없는 사람(주민·적·나)은 3D 와 같은 빌린 몸(assets3d.borrowRecipe) — 2D·3D 에서 같은 사람이 같은 몸. 통일 에셋 시험이 안 됐으면 null(옛 풀) */
@@ -540,24 +577,27 @@
     }
     return e.ok && e.box ? e : null;
   }
-  /** 스프라이트 하나를 발 밑 가운데 (x, y) 에 키 h(px) 로 그린다. 그렸으면 true */
+  /** 스프라이트 하나를 발 밑 가운데 (x, y) 에 키 h(px) 로 그린다. 그렸으면 그린 키(px, 참), 아니면 false */
   function drawSprite(ctx, o) {
     if (!ctx || !o || !o.id || !isOn()) { return false; }
     var e = spriteOf(o.id);
     if (!e) { return false; }
     var b = e.box, h = o.h, w = h * b.sw / b.sh;
     ctx.save();
-    ctx.fillStyle = 'rgba(0,0,0,0.18)'; ctx.beginPath(); ctx.ellipse(o.x, o.y, w * 0.38, Math.max(2, h * 0.07), 0, 0, Math.PI * 2); ctx.fill();   // 발 밑 그림자
+    if (scaleOn()) { shadow(ctx, o.x, o.y, w * 0.8, { a: 0.22 }); }   // W-0349 그림자 한 꼴
+    else { ctx.fillStyle = 'rgba(0,0,0,0.18)'; ctx.beginPath(); ctx.ellipse(o.x, o.y, w * 0.38, Math.max(2, h * 0.07), 0, 0, Math.PI * 2); ctx.fill(); }   // 옛 발 밑 그림자
     if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
     ctx.imageSmoothingEnabled = true; hq(ctx);
     ctx.drawImage(e.img, b.sx, b.sy, b.sw, b.sh, o.x - w / 2, o.y - h, w, h);
     ctx.restore();
-    return true;
+    return h || true;
   }
-  /** 판 표(`DG.cfg.mode2d.prop2d`)의 종류 하나를 그린다 — k 는 확대 배율. 표에 없으면 false */
+  /** 판 표(`DG.cfg.mode2d.prop2d`)의 종류 하나를 그린다 — k 는 확대 배율. 표에 없으면 false.
+   *  W-0349 — 표 칸에 cls(크기 종류)가 있고 판 설정 unitH(배율 1 의 사람 키 px)가 있으면 키 = unitH × scaleOf(cls, id), 아니면 옛 h */
   function drawKind(ctx, kind, x, y, k, seed) {
     var t = C().prop2d, p = t && t[kind], id = p && (p.ids ? p.ids[hashOf(seed) % p.ids.length] : p.id);   // ids = 여러 모양 중 씨앗 해시로 하나
-    return p ? drawSprite(ctx, { id: id, x: x, y: y, h: p.h * (k || 1) }) : false;
+    var u = C().unitH, h = p && p.cls && u && scaleOn() ? u * scaleOf(p.cls, id) : p && p.h;
+    return p ? drawSprite(ctx, { id: id, x: x, y: y, h: h * (k || 1) }) : false;
   }
   /** 표에 이 종류가 있고 2D 모드인가 — 부르는 쪽이 정렬 목록에 넣을지 정할 때 */
   function hasKind(kind) { var t = C().prop2d; return !!(t && t[kind]) && isOn(); }
@@ -581,6 +621,7 @@
   global.DG = global.DG || {};
   global.DG.mode2d = {
     labels: labels,
+    scaleOf: scaleOf, scaleOn: scaleOn, shadow: shadow, SCALE: SCALE, BEAST: BEAST,   // W-0349
     isCrea: isCrea, creaPool: creaPool, creaFit: creaFit, cell8: cell8,   // W-0129 몬스터 2D 시트
     drawSprite: drawSprite, drawKind: drawKind, hasKind: hasKind, spriteReady: function (id) { return !!spriteOf(id); },
     fillIso: fillIso,

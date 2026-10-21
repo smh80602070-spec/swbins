@@ -720,13 +720,13 @@
       : fortTier === 2 ? sp.buildingImg('Tower')
       : fortTier === 3 ? sp.buildingImg('tower_round')
       : null;
-    sp.building(ctx, {
-      x: p.x, y: p.y, s: z * 1.15, form: 'wall', color: mine ? '#7a6234' : undefined,
+    var bh = sp.building(ctx, {
+      x: p.x, y: p.y, s: z * 1.15, k2d: z * bodyK(), form: 'wall', color: mine ? '#7a6234' : undefined,
       t: now / 1000, img: fortImg, kind2d: fortTier ? 'fort:t' + fortTier : 'fort'
     });
 
     /* 깃발 — 지키는 세력의 표식 */
-    var fx = p.x, fy = p.y - 44 * z;
+    var fx = p.x, fy = p.y - (bh > 0 ? bh * 0.66 : 44 * z);   // W-0349 그린 키의 2/3(옛 44/67)
     ctx.strokeStyle = 'rgba(230,230,236,0.7)';
     ctx.lineWidth = 1.4 * z;
     ctx.beginPath();
@@ -754,7 +754,7 @@
       ctx.font = 'bold ' + (15 * z) + 'px system-ui, sans-serif';
       ctx.textAlign = 'center';
       ctx.fillStyle = '#ff9a5a';
-      ctx.fillText('⚔️', p.x, p.y - 62 * z + Math.sin(now / 380) * 2 * z);
+      ctx.fillText('⚔️', p.x, p.y - (bh > 0 ? bh * 0.93 : 62 * z) + Math.sin(now / 380) * 2 * z);
       ctx.textAlign = 'left';
       label(ctx, raid.tier.name + ' · ' + raid.hero.name, p.x, p.y + 15 * z,
         'rgba(255,154,90,0.95)', 'center', z);
@@ -803,8 +803,8 @@
     }
 
     ctx.globalAlpha = held ? 0.72 : (ready ? 1 : 0.55);
-    global.DG.sprite.building(ctx, {
-      x: p.x, y: p.y, s: z * 0.88, form: 'stable', t: now / 1000,
+    var bh = global.DG.sprite.building(ctx, {
+      x: p.x, y: p.y, s: z * 0.88, k2d: z * bodyK(), form: 'stable', t: now / 1000,
       kind2d: 'station', img: global.DG.sprite.buildingImg('tower_ruin')     // 3D 역참과 같은 실사 폐허 탑을 구운 그림(tools/bake-icons, 2026-09-23 — 전엔 굽기가 멎어 옛 여관 그림)
     });
 
@@ -813,7 +813,7 @@
       var bob = Math.sin(now / (held ? 380 : 520)) * 1.6 * z;
       ctx.font = (14 * z) + 'px system-ui, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText(held ? '🏴' : '🏮', p.x, p.y - 46 * z + bob);
+      ctx.fillText(held ? '🏴' : '🏮', p.x, p.y - (bh > 0 ? bh * 0.77 : 46 * z) + bob);
       ctx.textAlign = 'left';
     }
     ctx.globalAlpha = 1;
@@ -833,8 +833,8 @@
     var near = Math.hypot(s.x - pos.x, s.y - pos.y) <= ENCOUNTER_RANGE;
     var sp = global.DG.sprite;
     var isHero = s.kind === 'hero';
-    var scale = z * (isHero ? 1.15 : 1.35);      // 짐승은 기준 키가 작아 더 키운다
-    var bodyH = (isHero ? 40 : 30) * scale;
+    var scale = z * (isHero ? 1.15 : 1.35), bk = isHero || !sp.beastK ? 1 : sp.beastK(s.ref);      // 짐승은 기준 키가 작아 더 키운다 · W-0349 종마다 크기(곰 1.15·토끼 0.42…)
+    var bodyH = (isHero ? 40 : 30 * bk) * scale;
 
     ctx.globalAlpha = age > 0.85 ? core.clamp(1 - (age - 0.85) / 0.15, 0.15, 1) : 1;
 
@@ -857,10 +857,10 @@
     ctx.beginPath();
     ctx.ellipse(p.x, p.y - bodyH * 0.45, bodyH * 0.34, bodyH * 0.52, 0, 0, Math.PI * 2); if (global.DG.stealth) { global.DG.stealth.mark2d(ctx, s, p.x, p.y - bodyH * 1.15, bodyH); }   // W-0286 들킴 ❗
     ctx.fillStyle = 'rgba(0,0,0,0.22)';
-    ctx.fill();
+    if (!(global.DG.mode2d && global.DG.mode2d.scaleOn && global.DG.mode2d.scaleOn())) { ctx.fill(); }   // W-0349 몸 뒤 검은 타원(종이 오린 듯한 테두리) — 새 표에선 발밑 고리만
 
     if (!(isHero && global.DG.actor2d && global.DG.actor2d.human(ctx, s.ref, null, p.x, p.y, scale, { facing: s.facing, dirX: s.dirX, dirY: s.dirY, moving: s.moving, phase: s.phase, now: now, wx: s.x, wy: s.y, ppu: (wsc || 1) * p.s, pk: 'sp:' + (s.id || (s.ref && s.ref.id) + ':' + s.bornAt) }))) sp.stamp(ctx, {
-      kind: isHero ? 'human' : 'beast', ref: s.ref,
+      kind: isHero ? 'human' : 'beast', ref: s.ref, bk: bk,
       x: p.x, y: p.y, s: scale, facing: s.facing, phase: s.phase, walking: s.moving,
       color: isHero ? data.faction(s.ref.faction).color : sp.beastColorOf(s.ref),
       look: isHero ? sp.lookOf(s.ref) : null,
@@ -916,8 +916,8 @@
     var p = project(u, v);
     if (p.s < 0.2 || p.y < -160 || p.y > geom.H + 80) { return; }
     var z = core.clamp(p.s, 0.5, 1.8), BMd = global.DG.biome;
-    global.DG.sprite.building(ctx, { img: global.DG.sprite.buildingImg('Watchtower'), x: p.x, y: p.y, s: z * 2.2, kind2d: 'landmark:' + lm.biome });
-    label(ctx, (BMd.found(lm.key) ? '🌀 ' : '🗼 ') + lm.name, p.x, p.y - 46 * z * 2.2 * 1.3 - 6,
+    var bh = global.DG.sprite.building(ctx, { img: global.DG.sprite.buildingImg('Watchtower'), x: p.x, y: p.y, s: z * 2.2, k2d: z * bodyK(), kind2d: 'landmark:' + lm.biome });
+    label(ctx, (BMd.found(lm.key) ? '🌀 ' : '🗼 ') + lm.name, p.x, p.y - (bh > 0 ? bh + 8 : 46 * z * 2.2 * 1.3) - 6,
       BMd.BIOMES[lm.biome].color, 'center', z);
   }
 

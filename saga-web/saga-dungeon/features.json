@@ -1382,5 +1382,21 @@
   "ticket": "W-0348",
   "since": "2026-10-21",
   "note": "10-21: shots/cmp/w348a_go_map·w348a_dg_town·w348b_rm_map Read — 글자끼리 겹침 0"
+ },
+ {
+  "id": "dg.w2d-scale",
+  "name": "2D 몸 크기 한 기준(W-0349) — 공용 mode2d.scaleOf 표·shadow 한 꼴(소품 발밑 그림자가 이 꼴, 손잡이 mode2d.scaleTable 0 = 옛) · 이 판 인물·건물 배율은 그대로(사람 그림자 두 겹은 W-0368)",
+  "files": [
+   "js/mode2d.js"
+  ],
+  "tests": [
+   "pw-2d-cmp 비교판(옛 scaleTable=0 / 새 1)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0349",
+  "since": "2026-10-21",
+  "note": "10-21: 공용 표만 — 이 판 크기 맞춤은 다음 티켓(W-0366·W-0368)"
  }
 ]

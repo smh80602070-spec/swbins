@@ -382,17 +382,25 @@
     an_deer: 'Deer', an_wolf: 'Wolf', an_magpie: 'Pigeon', an_carp: 'Koi', an_ox: 'Cow'
   };
   /** 도감 펫(id가 pt_/pk_로 시작)과 배경 생물(`an_`, 표에 있는 것)에 적용한다 */
-  function beastImgOf(pet) {
+  function beastImgOf(pet) { var n = beastNameOf(pet); return n ? beastImgFile(n) : null; }
+  /** 그 짐승이 쓰는 그림 이름(beast_<이름>.png) — 없으면 null */
+  function beastNameOf(pet) {
     if (!pet || !pet.id) { return null; }
-    if (BG_BEAST_FILE[pet.id]) { return beastImgFile(BG_BEAST_FILE[pet.id]); }
-    if (FC_BEAST_FILE[pet.id]) { return beastImgFile(FC_BEAST_FILE[pet.id]); }
+    if (BG_BEAST_FILE[pet.id]) { return BG_BEAST_FILE[pet.id]; }
+    if (FC_BEAST_FILE[pet.id]) { return FC_BEAST_FILE[pet.id]; }
     if (!/^(pt_|pk_|ptgen[a-z]*_)/.test(pet.id)) { return null; }   // 절차 펫(2026-09-25)도 — 3D 와 같은 해시·같은 풀
-    if (PET_BEAST_FILE[pet.id]) { return beastImgFile(PET_BEAST_FILE[pet.id]); }
+    if (PET_BEAST_FILE[pet.id]) { return PET_BEAST_FILE[pet.id]; }
     var list = BEAST_FORM_FILES[beastFormOf(pet)];
     if (!list) { return null; }
     var s = String(pet.id || pet.name || ''), h = 0, i;
     for (i = 0; i < s.length; i++) { h = (h * 31 + s.charCodeAt(i)) >>> 0; }
-    return beastImgFile(list[h % list.length]);
+    return list[h % list.length];
+  }
+  /** W-0349 — 도감 짐승 스탬프의 크기 배수(공용 mode2d 표: 그림 긴 변 ÷ 사람 키). 옛 스탬프는 모두 사람 키의 ≈1.05 라 그것으로 나눈다 · 0.42~2 로 묶음(작은 것도 잡을 만큼 보이게) */
+  function beastK(pet) {
+    var M = global.DG.mode2d, n = beastNameOf(pet);
+    if (!n || !M || !M.scaleOf || !M.scaleOn()) { return 1; }
+    return Math.max(0.42, Math.min(2, M.scaleOf('beast', n))) / 1.05;
   }
 
   function beastPatternOf(pet) { return (pet && BEAST_PATTERN[pet.id]) || ''; }
@@ -436,7 +444,8 @@
   }
 
   function building(ctx, o) {
-    if (o.kind2d && global.DG.mode2d && global.DG.mode2d.drawKind(ctx, o.kind2d, o.x, o.y, o.s || 1)) { return; }   // 2D 모드 통일 스프라이트(W-0022) — 없으면 아래 옛 그림
+    var M2 = global.DG.mode2d, k2 = o.k2d && M2 && M2.scaleOn && M2.scaleOn() ? o.k2d : (o.s || 1), d2 = o.kind2d && M2 ? M2.drawKind(ctx, o.kind2d, o.x, o.y, k2) : false;   // W-0349 k2d = 사람과 같은 몸 배율(표 키)
+    if (d2) { return d2; }   // 2D 모드 통일 스프라이트(W-0022) — 그린 키(px)를 돌려준다(깃발·등롱 자리), 없으면 아래 옛 그림
     if (o.img && o.img.complete && o.img.naturalWidth) {
       var H0 = 46 * (o.s || 1), bw = H0 * 1.3, bh = H0 * 1.3;
       ctx.save();
@@ -770,9 +779,9 @@
   /** 캐시에 한 컷을 굽는다 */
   function bake(kind, ref, sc, pb, o) {
     var base = kind === 'human' ? 40 : 30;
-    var H = base * sc;
-    var w = Math.ceil(H * (kind === 'human' ? 1.9 : 2.3));
-    var h = Math.ceil(H * (kind === 'human' ? 1.75 : 1.6));
+    var H = base * sc, bk = kind === 'human' ? 1 : (o.bk || 1), bg = Math.max(1, bk);   // W-0349 짐승 크기 배수 — 큰 짐승은 캔버스도 키운다
+    var w = Math.ceil(H * (kind === 'human' ? 1.9 : 2.3 * bg));
+    var h = Math.ceil(H * (kind === 'human' ? 1.75 : 1.6 * bg));
     var footX = w / 2, footY = h * 0.94;
     var dpr = Math.min(global.devicePixelRatio || 1, 2);
 
@@ -797,7 +806,7 @@
       var bimg = beastImgOf(o.ref);
       if (bimg && bimg.complete && bimg.naturalWidth) {
         useImg = true;
-        var bdw = H * 1.5, bdh = H * 1.5;
+        var bdw = H * 1.5 * bk, bdh = H * 1.5 * bk;
         c.imageSmoothingEnabled = true; c.imageSmoothingQuality = 'high';   // W-0347 — 짐승 그림은 렌더(K-0114, 96px)라 최근접 확대면 점묘로 깨진다 · 사람(human_*) 16px 픽셀 그림만 최근접
         c.drawImage(bimg, footX - bdw / 2, footY - bdh, bdw, bdh);
       } else {
@@ -825,7 +834,7 @@
     var sc = bucketScale(o.s || 1);
     var pb = bucketPhase(o.phase || 0, !!o.walking);
     var id = (o.ref && (o.ref.id || o.ref.name)) || o.key || 'anon';
-    var key = kind + '|' + id + '|' + sc.toFixed(2) + '|' + pb;
+    var key = kind + '|' + id + '|' + sc.toFixed(2) + '|' + pb + (o.bk && o.bk !== 1 ? '|' + o.bk.toFixed(2) : '');   // W-0349 같은 짐승도 스폰(bk)·들판 적(없음) 컷이 다르다
 
     var e = stampCache[key];
     if (e && !e.img && imgReady(kind, o.ref)) { e = null; }   // 그림이 실리기 전에 구운 코드 그림 컷은 다시 굽는다
@@ -1148,7 +1157,7 @@
     portraitCard: portraitCard,
     stamp: stamp, stampStats: stampStats,
     lookOf: lookOf, idSeed: idSeed, beastFormOf: beastFormOf, beastColorOf: beastColorOf,
-    beastPatternOf: beastPatternOf, beastImgOf: beastImgOf,
+    beastPatternOf: beastPatternOf, beastImgOf: beastImgOf, beastNameOf: beastNameOf, beastK: beastK,
     portrait: portrait, shade: shade
   };
 })(window);
