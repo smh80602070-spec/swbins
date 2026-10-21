@@ -1545,5 +1545,24 @@
   "ticket": "W-0364",
   "since": "2026-10-22",
   "note": "10-22: 가림 마을 24→14%·던전 싸움 32.1→12.2~12.7%(2회)"
+ },
+ {
+  "id": "dg.cam2d",
+  "name": "2D 카메라 배율 공용 cam2d(W-0365) — 던전·마을 배율(camZoom) 기기별 기억·＋/－ 단추 · 폰 0.5~2.5(PC 에셋 확인용 0.2~6 그대로) · def 1",
+  "files": [
+   "../shared/js/cam2d.js",
+   "src/dungeon-view/01.js"
+  ],
+  "tests": [
+   "test-web W-0364 폰 HUD 접기",
+   "pw-cover ≤15%",
+   "mobile-layout 세로 회귀 0"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0364",
+  "since": "2026-10-22",
+  "note": "10-22: 폰 세 장 확인 · dungeon-view.js 1500줄 상한 안(기존 줄 끝)"
  }
 ]

@@ -1601,5 +1601,25 @@
   "ticket": "W-0363",
   "since": "2026-10-22",
   "note": "10-22: 가림 첫 화면 30.5→13.4~13.8% · 싸움 중 28.7→11.7~13.4% · 싸움 없음(독·근처 카드) 23% 참고값"
+ },
+ {
+  "id": "go.cam2d",
+  "name": "2D 카메라 배율 공용 cam2d(W-0365) — 들판 2D 배율(camZoom2d) 기기별 기억·＋/－ 단추(3D 때 감춤), 휠·핀치·+/− 키·3인치 그대로 · def 1 · 0.4~2.2",
+  "files": [
+   "../shared/js/cam2d.js",
+   "src/world/02.js",
+   "css/style.css"
+  ],
+  "tests": [
+   "test-web W-0364 폰 HUD 접기",
+   "pw-cover ≤15%",
+   "mobile-layout 세로 회귀 0"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0364",
+  "since": "2026-10-22",
+  "note": "10-22: 폰 def·min·max 세 장 확인(shots/cam2d_saga-go.png)"
  }
 ]

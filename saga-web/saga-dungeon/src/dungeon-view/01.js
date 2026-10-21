@@ -87,7 +87,7 @@
      당김, 2026-09-02)를 얹어 거리에 0.4 를 곱하는데, 이 손잡이(camZoom)의
      아래 한계가 0.55 라 아무리 오므려도 마을에서는 충분히 물러나지 못했다.
      0.32 로 낮춰 최대로 오므리면 마을도 던전만큼(또는 그 이상) 물러나게 한다. */
-  var CAM_ZOOM_MIN = 0.2, CAM_ZOOM_MAX = 6;   // W-0324 코앞 6·멀리 0.2(에셋 확인용, 사용자 10-18) — dungeon3d USERZOOM 과 같게
+  var CAM_ZOOM_MIN = 0.2, CAM_ZOOM_MAX = 6, CAM2 = null; function cam2() { var C2 = global.DG.cam2d, ph = global.DG.deviceMode && global.DG.deviceMode.phone && global.DG.deviceMode.phone(); if (CAM2 || !C2 || !global.document || !document.body) { return CAM2; } CAM2 = C2.register('dungeon', { store: 'yeoksa-dungeon/save/cam2d', min: ph ? 0.5 : CAM_ZOOM_MIN, max: ph ? 2.5 : CAM_ZOOM_MAX, def: 1, onChange: function (v) { var s = core.save && core.save.settings; if (s && Math.abs((s.camZoom == null ? 1 : s.camZoom) - v) > 0.051) { s.camZoom = v; core.persist(); } } }); var s0 = core.save && core.save.settings; if (s0 && s0.camZoom == null) { s0.camZoom = CAM2.get(); } CAM2.buttons(document.body); return CAM2; }   /* W-0324 코앞 6·멀리 0.2(에셋 확인용) — dungeon3d USERZOOM 과 같게 · W-0365 공용 cam2d: 기기별 기억·＋/－ 단추(폰 0.5~2.5), 핀치·휠은 이 판 것 그대로 */
   function userZoom() {
     var v = core.save && core.save.settings ? core.save.settings.camZoom : 1;
     if (v === undefined || v === null) { v = 1; }
@@ -95,7 +95,7 @@
   }
   function setUserZoom(v) {
     if (!core.save || !core.save.settings) { return; }
-    core.save.settings.camZoom = core.clamp(v, CAM_ZOOM_MIN, CAM_ZOOM_MAX);
+    core.save.settings.camZoom = core.clamp(v, CAM2 ? CAM2.min : CAM_ZOOM_MIN, CAM2 ? CAM2.max : CAM_ZOOM_MAX); if (CAM2) { CAM2.set(core.save.settings.camZoom); }
     core.persist();
   }
   /* 화면 아래 조작판이 가리는 높이 — 무대를 그 위로 밀어 올린다.
@@ -263,7 +263,7 @@
     cv.addEventListener('wheel', function (e) {
       e.preventDefault();
       setUserZoom(userZoom() * (e.deltaY < 0 ? 1.08 : 1 / 1.08));
-    }, { passive: false });
+    }, { passive: false }); cam2();
 
     /* 2026-09-09 — "움직이는 게 너무 힘들다"(모바일 재신고). 지금까지는
        화면 아무 데나 눌러 그 쪽으로 계속 걷는 방식(steer, 위)뿐이었는데,

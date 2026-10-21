@@ -225,13 +225,13 @@
     mapCy += dy * h * MAP_PAN_SPEED;
     applyMapViewNow();
   }
-  function zoomMapBy(factor) { zoomAt(factor); }
+  function zoomMapBy(factor) { zoomAt(factor); } var CAM2 = null; function rcam() { var C2 = global.DG.cam2d; if (!CAM2 && C2) { var fill = global.innerHeight > global.innerWidth ? Math.max(1, Math.round(10 * (global.innerHeight - 228) / (global.innerWidth * MAP_VB.h / MAP_VB.w)) / 10) : 1; CAM2 = C2.register('realm', { store: 'saga-realm/save/cam2d', min: Math.min(fill, MAP_ZOOM_MAX - 1), max: MAP_ZOOM_MAX, def: 1, onChange: function (v) { if (Math.abs(v - mapZoom) > 0.051) { zoomAt(v / mapZoom); } } }); } return CAM2; }   /* W-0365 공용 cam2d — 지도 배율 기기별 기억(±·핀치·휠은 이 판 것 그대로, 세력 고른 직후 "내 땅으로" 맞춤이 먼저 · 폰 세로 최소 = 지도가 화면 높이를 채우는 배율) */
   /** 확대 — 화면 점(x, y)을 주면 그 자리를 붙든 채(W-0177 휠), 안 주면 가운데 */
   function zoomAt(factor, x, y) {
     var svg = els.realm && els.realm.querySelector('.rmap'), r = svg && x !== undefined ? svg.getBoundingClientRect() : null;
-    var w = MAP_VB.w / mapZoom, h = MAP_VB.h / mapZoom, z = core.clamp(mapZoom * factor, 1, MAP_ZOOM_MAX), k = mapZoom / z;
+    var w = MAP_VB.w / mapZoom, h = MAP_VB.h / mapZoom, z = core.clamp(mapZoom * factor, rcam() ? CAM2.min : 1, MAP_ZOOM_MAX), k = mapZoom / z;
     if (r && r.width && r.height) { var px = mapCx - w / 2 + (x - r.left) / r.width * w, py = mapCy - h / 2 + (y - r.top) / r.height * h; mapCx = px + (mapCx - px) * k; mapCy = py + (mapCy - py) * k; }
-    mapZoom = z;
+    mapZoom = z; if (rcam()) { CAM2.set(z); }
     applyMapViewNow();
   }
   /** "내 땅으로" — 내 성들의 무게중심으로 지도(2D·3D 다)를 옮기고, **내 땅의
@@ -265,7 +265,7 @@
     var spanX = Math.max(maxX - minX, MIN_SPAN) * 2;
     var spanY = Math.max(maxY - minY, MIN_SPAN) * 2;
     var z = zoomTo || core.clamp(Math.min(MAP_VB.w / spanX, MAP_VB.h / spanY), 2, MAP_ZOOM_MAX);
-    mapCx = cx; mapCy = cy; mapZoom = z;
+    mapCx = cx; mapCy = cy; mapZoom = rcam() ? Math.max(z, CAM2.min) : z;   // W-0365 폰 세로는 지도가 화면 높이를 채우는 배율 밑으로 안 간다(가운데 띠만 보이고 위아래가 비었다)
     applyMapViewNow();
     if (global.DG.realm3d && global.DG.realm3d.panTo) {
       global.DG.realm3d.panTo(cx, cy, Math.max(spanX, spanY));

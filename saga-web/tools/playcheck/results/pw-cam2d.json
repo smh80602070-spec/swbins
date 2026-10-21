@@ -1,0 +1,125 @@
+{
+ "at": "2026-10-21T23:23:23.005Z",
+ "runs": [
+  {
+   "game": "saga-go",
+   "key": "field",
+   "shots": [
+    {
+     "name": "def",
+     "v": 1
+    },
+    {
+     "name": "min",
+     "v": 0.4
+    },
+    {
+     "name": "max",
+     "v": 2.2
+    }
+   ],
+   "errors": [],
+   "def": 1,
+   "min": 0.4,
+   "max": 2.2,
+   "now": 1,
+   "reread": "deungyong-go/save/cam2d={\"field/phone\":2.2}"
+  },
+  {
+   "game": "saga-dungeon",
+   "key": "dungeon",
+   "shots": [
+    {
+     "name": "def",
+     "v": 1
+    },
+    {
+     "name": "min",
+     "v": 0.5
+    },
+    {
+     "name": "max",
+     "v": 2.5
+    }
+   ],
+   "errors": [],
+   "def": 1,
+   "min": 0.5,
+   "max": 2.5,
+   "now": 1,
+   "reread": "yeoksa-dungeon/save/cam2d={\"dungeon/phone\":2.5}"
+  },
+  {
+   "game": "saga-forest",
+   "key": "village",
+   "shots": [
+    {
+     "name": "def",
+     "v": 0.7
+    },
+    {
+     "name": "min",
+     "v": 0.5
+    },
+    {
+     "name": "max",
+     "v": 1.6
+    }
+   ],
+   "errors": [],
+   "def": 0.7,
+   "min": 0.5,
+   "max": 1.6,
+   "now": 0.7,
+   "reread": "yeoksa-village/save/cam2d={\"village/phone\":1.6}"
+  },
+  {
+   "game": "saga-story",
+   "key": "side",
+   "shots": [
+    {
+     "name": "def",
+     "v": 0.7
+    },
+    {
+     "name": "min",
+     "v": 0.55
+    },
+    {
+     "name": "max",
+     "v": 1.8
+    }
+   ],
+   "errors": [],
+   "def": 0.7,
+   "min": 0.55,
+   "max": 1.8,
+   "now": 0.7,
+   "reread": "yeoksa-side/save/cam2d={\"side/phone\":1.8}"
+  },
+  {
+   "game": "saga-realm",
+   "key": "realm",
+   "shots": [
+    {
+     "name": "def",
+     "v": 2.9
+    },
+    {
+     "name": "min",
+     "v": 2.9
+    },
+    {
+     "name": "max",
+     "v": 6
+    }
+   ],
+   "errors": [],
+   "def": 2.9,
+   "min": 2.9,
+   "max": 6,
+   "now": 2.9,
+   "reread": "saga-realm/save/cam2d={\"realm/phone\":6}"
+  }
+ ]
+}

@@ -72,8 +72,19 @@
     if (cv3d) { cv3d.style.transform = t; cv3d.style.transformOrigin = org; }
   }
   function setZoom(z) {
-    viewZoom = clamp01(z, ZOOM_MIN, ZOOM_MAX);
+    viewZoom = cam2 ? clamp01(z, cam2.min, cam2.max) : clamp01(z, ZOOM_MIN, ZOOM_MAX);
+    if (cam2) { cam2.set(viewZoom); }   // W-0365 0.1 단위로 기억(폰·PC 따로) — 화면은 맞추기 전 값 그대로 부드럽게
     applyZoomTransform();
+  }
+  /* W-0365 2D 카메라 배율(공용 cam2d) — 이 판의 핀치·휠은 그대로, 저장·＋/－ 단추·폰 기본 0.7(사용자 10-22 "4번 화면이 넘 가까움") */
+  var cam2 = null;
+  function bindCam2() {
+    var C2 = global.DG.cam2d; if (!C2) { return; }
+    var ph = global.DG.deviceMode && global.DG.deviceMode.phone ? global.DG.deviceMode.phone() : false;   // 폰: 0.55 밑이면 화면 밖 검은 테·1.8 위면 몸이 화면 1/3 넘음(촬영 10-22) · PC 는 에셋 확인용 0.35~5 그대로
+    cam2 = C2.register('side', { store: 'yeoksa-side/save/cam2d', min: ph ? 0.55 : ZOOM_MIN, max: ph ? 1.8 : ZOOM_MAX, def: 1, defPhone: 0.7,
+      onChange: function (v) { if (Math.abs(v - viewZoom) > 0.051) { viewZoom = v; applyZoomTransform(); } } });
+    viewZoom = cam2.get(); applyZoomTransform();
+    cam2.buttons(document.body);
   }
   /** 지수 완화 한 걸음 — 순수 계산이라 자가진단이 실제 시간 없이 dt 를 손수
    *  먹여 본다(side-view3d.js 의 updatePerf/_feedPerf 와 같은 요령) */
@@ -118,6 +129,7 @@
       e.preventDefault();
     }, { passive: false });
     bindPad();
+    bindCam2();
   }
 
   /** 손가락 조작판(#touchpad) — 눈에 보이는 단추 넷. 왼쪽 좌우는 그대로 켜고 끄면

@@ -826,7 +826,7 @@
   }
   function setCamZoom2d(z) {
     if (!core.save.settings) { return 1; }
-    core.save.settings.camZoom2d = core.clamp(z, ZOOM2_MIN, ZOOM2_MAX);
+    core.save.settings.camZoom2d = core.clamp(z, ZOOM2_MIN, ZOOM2_MAX); if (cam2) { cam2.set(core.save.settings.camZoom2d); }   // W-0365 폰·PC 따로도 기억(공용 cam2d)
     core.emit('zoom2d', core.save.settings.camZoom2d);
     return core.save.settings.camZoom2d;
   }
@@ -914,8 +914,8 @@
     return (W3 && W3.active && W3.active()) ? nudgeZoom(mul) : nudgeZoom2d(1 / mul);   // W-0155 — mul 은 3D 거리 뜻(>1 멀리), 2D 줌은 배율(>1 가까이)이라 뒤집는다
   }
 
-  /** 휠과 두 손가락으로 카메라를 당기고 민다 — 2D·2.5D·3D 어디서든 듣는다 */
-  function bindZoom(cv) {
+  /** 휠과 두 손가락으로 카메라를 당기고 민다 — 2D·2.5D·3D 어디서든 듣는다 */ var cam2 = null; function bindCam2() { var C2 = global.DG.cam2d, s = core.save.settings; if (!C2 || cam2) { return; } cam2 = C2.register('field', { store: 'deungyong-go/save/cam2d', min: ZOOM2_MIN, max: ZOOM2_MAX, def: ZOOM2_DEFAULT, onChange: function (v) { var s2 = core.save.settings; if (s2 && Math.abs((s2.camZoom2d || ZOOM2_DEFAULT) - v) > 0.051) { s2.camZoom2d = v; core.emit('zoom2d', v); core.persist(); } } }); if (s && (s.camZoom2d == null || s.camZoom2d === '')) { s.camZoom2d = cam2.get(); } var box = cam2.buttons(document.body), W3 = global.DG.world3d; if (box) { global.setInterval(function () { box.style.display = W3 && W3.active && W3.active() ? 'none' : ''; }, 500); } }   /* W-0365 공용 cam2d — 이 판의 휠·핀치·+/− 키·3인치는 그대로, 기기별 기억(세이브에 없으면 이 기기 값으로 연다)과 ＋/－ 단추(3D 때 감춤)만 더한다 */
+  function bindZoom(cv) { bindCam2();
     cv.addEventListener('wheel', function (e) {
       e.preventDefault();
       nudgeCamZoom(e.deltaY > 0 ? 1.12 : 1 / 1.12);

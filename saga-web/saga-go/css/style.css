@@ -2120,3 +2120,5 @@ body.sheet-open #st-crouch, #encounter.show ~ #st-crouch { display: none; }
   /* 잡기는 잡을 적이 가까울 때(.near)·식는 중(.cd)만 — 흐린 채 늘 떠 있던 칸 */
   body.hud-diet #field-hud .fc-grab:not(.near):not(.cd) { visibility: hidden; }
 }
+/* W-0365 ＋/－ 단추(공용 cam2d) — 웅크리기(오른쪽 38%) 밑으로 */
+body { --cam2d-top: 50%; }

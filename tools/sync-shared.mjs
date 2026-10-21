@@ -28,6 +28,7 @@ const FILES = [
   ['js/errlog.js', 'js/errlog.js'],
   ['js/inapp.js', 'js/inapp.js'],
   ['js/device-mode.js', 'js/device-mode.js'],   // 10-19 폰은 2D · PC 는 3D(다섯 판 "3D 를 원하나" 함수가 묻는다)   // W-0331 앱 안 브라우저(구글 앱·카카오 등) 안내 띠 — errlog 바로 뒤에 싣는다
+  ['js/cam2d.js', 'js/cam2d.js'],   // W-0365 2D 카메라 배율 공용(핀치·휠·± 단추·판/기기별 저장) — device-mode 뒤에 싣는다
   ['js/font-floor.js', 'js/font-floor.js'],   // W-0341 폰 글자 바닥 12px(실린 시트의 12px 아래 font-size 를 올림)
   ['js/cutout2d.js', 'js/cutout2d.js'],   // W-0336 2D 컷아웃 뼈대(오딘스피어 문법, mode2d.draw 갈래)
   ['js/parallax2d.js', 'js/parallax2d.js'],   // W-0336 2D 겹 배경 5~7층(mode2d.drawBg 갈래)

@@ -227,3 +227,8 @@ body { font-variant-numeric: tabular-nums; }
   }
   body.hud-diet .icon-btn { opacity: .85; }
 }
+
+/* ── 2D 카메라 ＋/－ 단추(W-0365 shared/js/cam2d.js cam.buttons) — 오른쪽 가운데 세로 둘. 판이 --cam2d-top·--cam2d-right 로 자리만 옮긴다 */
+.cam2d-btns { position: fixed; z-index: 24; right: calc(var(--cam2d-right, 8px) + var(--safe-r, 0px)); top: var(--cam2d-top, 40%); display: flex; flex-direction: column; gap: 6px; }
+.cam2d-btns .icon-btn { font-size: 18px; font-weight: 700; line-height: 1; opacity: .85; }
+body.sheet-open .cam2d-btns { visibility: hidden; }
