@@ -10,6 +10,7 @@ const Album := preload("res://games/saga_go/data/album.gd")
 const Cycle := preload("res://games/saga_go/data/cycle.gd")
 
 var is_open := false
+var grid_menu := false   # G-0278 — saga_core menu_screen 이 붙으면 true(왼쪽 "메뉴" 단추·목록 숨김)
 
 var _player: Node3D
 var _layer: CanvasLayer
@@ -79,7 +80,7 @@ func _physics_process(delta: float) -> void:
 	if _player == null or not is_instance_valid(_player):
 		_player = get_tree().get_first_node_in_group("player") as Node3D
 	var frozen := _player == null or bool(_player.get("frozen"))
-	_btn.visible = not frozen
+	_btn.visible = not frozen and not grid_menu   # G-0278 — ☰ 메뉴 격자가 있으면 이 왼쪽 단추는 숨김(항목은 격자가 그대로 연다)
 	if frozen and is_open:
 		toggle(false)
 	## 배지·항목 표시는 셈이 무거워(종 서른둘·업적 셈) 0.25초마다만 갱신한다.
@@ -110,7 +111,10 @@ func toggle(on: bool) -> void:
 func open_entry(group: String) -> bool:
 	toggle(false)
 	var n := get_tree().get_first_node_in_group(group)
-	return n != null and bool(n.call("open_screen"))
+	if n == null:
+		return false
+	var r: Variant = n.call("open_screen")   # G-0278 — 세이브 옮기기(값 없음)·성도(노드)는 bool 이 아니다(bool() 오류였음)
+	return not (r is bool) or bool(r)
 
 
 func _build() -> void:

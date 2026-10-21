@@ -4884,6 +4884,29 @@
   "note": "SAGA_NIGHT_GLOW=0 끔 · GLBUtils.extract_mesh 가 adopt(재질 원본마다 복제 한 벌·light_point 자리를 메시 메타로 — MultiMesh 도) · 3마을 곡률 셰이더는 emission 자리 · 불 면 낮 0.3 → 밤 3 · 1만리 night_visual·세 판 day_light 가 set_night · 촬영 n_amber_lamps(probe_shots)"
  },
  {
+  "id": "gd.core.menu-screen",
+  "name": "공용 창 틀·☰ 메뉴 화면(웹 W-0252·0253 짝) — K-0040 9-slice 부품으로 판별 Theme(ui_kit) · 오른쪽 위 ☰·Esc·패드 Start 로 카드 격자(원신 일시정지 메뉴 꼴) · 1만리 먼저(칸 17)",
+  "files": [
+   "saga_core/ui/ui_kit.gd",
+   "saga_core/ui/menu_screen.gd",
+   "games/saga_go/ui/go_menu.gd",
+   "games/saga_go/world/hud_menu.gd",
+   "tools/probe_menu_screen.gd"
+  ],
+  "tests": [
+   "menu_screen",
+   "home",
+   "savemove",
+   "gamepad"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0278",
+  "since": "2026-10-21",
+  "note": "SAGA_UI_KIT=0 틀 끔 · SAGA_MENU_SCREEN=0 메뉴 끔 · 칸 = 원래 키 액션을 한 번 누름(화면 코드 안 고침) 또는 hud_menu open_entry·badge_of·shown · Esc: 다른 창(ui_modal 또는 is_open)이 있으면 그 창 몫 · 화면 루트(단추 빼고)에 테마 · 나머지 넷 판은 다음 R-0"
+ },
+ {
   "id": "gd.core.face-light",
   "name": "인물 얼굴 그림자(원신식, 다섯 판 공용) — 얼굴 표면은 머리 앞 방향을 섞은 수평 법선으로 명암(코·입가·턱 얼룩 없음, 좌우 반쪽 그늘) · 얼굴 살갗은 SDF 반쪽 경계(K-0151, G-0271)",
   "files": [

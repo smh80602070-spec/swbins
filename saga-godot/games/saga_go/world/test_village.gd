@@ -439,6 +439,10 @@ func _ready() -> void:
 	gfx.name = "GraphicsMenu"
 	gfx.add_to_group("go_graphics")
 	add_child(gfx)
+	## G-0278 — ☰ 메뉴 화면(공용 menu_screen + ui_kit 틀). hud_menu 세로 목록은 격자 칸으로 들어가고 왼쪽 단추는 숨는다.
+	if preload("res://saga_core/ui/menu_screen.gd").attach(self, "go", preload("res://games/saga_go/ui/go_menu.gd").items(hud_menu)) != null:
+		hud_menu.set("grid_menu", true)
+		(func() -> void: preload("res://games/saga_go/ui/go_menu.gd").apply_theme(self)).call_deferred()
 
 	## 그리기 부담 — 다 지은 뒤 지도 전체 MultiMesh 를 칸으로 쪼개고 카메라 far 를 안개에 맞춘다(보이는 것은 그대로, render_budget.gd).
 	(func() -> void: preload("res://saga_core/world/render_budget.gd").apply(self)).call_deferred()
