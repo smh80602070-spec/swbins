@@ -3,6 +3,7 @@
 //   --base 가 없으면 serve.mjs 를 빈 포트에 스스로 띄우고 끝에 끈다. 판마다 새 컨텍스트(세이브 없음 · 씨앗 mulberry32(20260824)).
 // 셈: 12px 격자 점마다 elementsFromPoint 를 위에서부터 훑어 "칠하는" 첫 요소(바탕색·그림·테·글자 줄·img/svg/작은 캔버스)를 찾는다.
 //   게임판(가장 큰 캔버스)이나 body 까지 내려가면 안 가림. pointer-events:none 인 알림·배너도 잡히게 잴 때만 전부 auto 로 바꾼다.
+//   + 판이 DG.boardRect({x,y,w,h} 무대 사각형)를 알려 주면 그 안 점만 센다(전체 화면 값은 pctAll 로 같이 남김).
 //   + 캔버스에 그리는 오버레이는 DG.hudRects(그리는 쪽이 이번 프레임 사각형 {x,y,w,h,name} 을 등록)를 같은 격자로 더한다.
 //   + "캔버스 미등록 의심": 화면 가운데 1/3 의 등록 안 된 자리에서 아주 밝은 흰 글자 화소 비율(2D 캔버스만 읽힘)을 경고로 남긴다.
 // 한 장면 = 0.8초 간격 세 번 잰 평균(알림·피해 숫자처럼 잠깐 뜨는 것 때문에) — 최대값도 남긴다.
@@ -83,8 +84,12 @@ function coverMeasure(fine) {
   const counts = new Map(); let tot = 0, cov = 0, canvasCov = 0;
   const rects = (window.DG && Array.isArray(DG.hudRects)) ? DG.hudRects.slice() : [];
   const inRect = (x, y) => rects.find((r) => x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h);
+  /* 판이 DG.boardRect(무대 사각형)를 알려 주면 그 안 점만 가림에 센다(옆으로 가는 4종횡 폰 세로 — 땅 선 밑 바닥 띠는 HUD 자리). 전체 화면 값은 pctAll */
+  const BR = window.DG && DG.boardRect && DG.boardRect.h > 0 ? DG.boardRect : null;
+  const inBoard = (x, y) => !BR || (x >= BR.x && x <= BR.x + BR.w && y >= BR.y && y <= BR.y + BR.h);
+  let totAll = 0, covAll = 0;
   for (let y = STEP / 2; y < H; y += STEP) { for (let x = STEP / 2; x < W; x += STEP) {
-    tot++; let hit = null;
+    let hit = null;
     for (const e of document.elementsFromPoint(x, y)) {
       if (e === document.body || e === document.documentElement) { break; }
       if (e.tagName === 'CANVAS') { if (isBoard(e)) { break; } hit = e; break; }
@@ -93,6 +98,7 @@ function coverMeasure(fine) {
       if (boxPaints(e) || textHit(e, x, y)) { hit = e; break; }
     }
     if (!hit) { const r = inRect(x, y); if (r) { hit = { canvasRect: r.name || '캔버스' }; } }
+    totAll++; if (hit) { covAll++; } if (!inBoard(x, y)) { continue; } tot++;
     if (hit) { cov++; const k = hit.canvasRect ? '◇' + hit.canvasRect : fine ? groupOf(hit) + ' ' + fineOf(hit) : groupOf(hit); if (hit.canvasRect) { canvasCov++; } counts.set(k, (counts.get(k) || 0) + 1); }
   } }
   st.remove();
@@ -102,7 +108,7 @@ function coverMeasure(fine) {
   try { const c2 = cvs.filter(isBoard).map((c) => c.getContext && c.getContext('2d', { willReadFrequently: true })).find(Boolean);
     if (c2 && board) { const cw = c2.canvas.width, ch = c2.canvas.height, d = c2.getImageData(Math.floor(cw / 3), Math.floor(ch / 3), Math.floor(cw / 3), Math.floor(ch / 3)).data; let n = 0, b = 0; for (let i = 0; i < d.length; i += 16) { n++; if (d[i] > 245 && d[i + 1] > 245 && d[i + 2] > 245 && d[i + 3] > 200) { b++; } } suspect = +(100 * b / n).toFixed(2); } } catch (e) { /* 3D 캔버스 */ }
   const top = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, fine ? 40 : 10).map(([k, n]) => ({ el: k, pct: +(100 * n / tot).toFixed(1) }));
-  return { W, H, veils: [...veils].slice(0, 6), pct: +(100 * cov / tot).toFixed(1), canvasPct: +(100 * canvasCov / tot).toFixed(1), hudRects: rects.length, whiteMidPct: suspect, top };
+  return { W, H, board: BR, pctAll: +(100 * covAll / totAll).toFixed(1), veils: [...veils].slice(0, 6), pct: +(100 * cov / tot).toFixed(1), canvasPct: +(100 * canvasCov / tot).toFixed(1), hudRects: rects.length, whiteMidPct: suspect, top };
 }
 
 async function freePort() { return new Promise((res) => { const s = net.createServer(); s.listen(0, '127.0.0.1', () => { const p = s.address().port; s.close(() => res(p)); }); }); }
@@ -118,7 +124,7 @@ async function one(browser, g) {
   const url = BASE + g + '/';
   /* 알림·피해 숫자는 잠깐 뜨는 것이라 한 장만 찍으면 그 순간에 따라 갈린다 — 0.8초 간격 세 번 재서 평균(pct)·최대(peak), 목록은 가운데 것 */
   const scene = async (name) => { const ms = []; for (let i = 0; i < 3; i++) { if (i) { await sleep(800); } ms.push(await page.evaluate(coverMeasure, FINE)); }
-    const m = { ...ms[1], pct: +(ms.reduce((a, x) => a + x.pct, 0) / 3).toFixed(1), peak: Math.max(...ms.map((x) => x.pct)), samples: ms.map((x) => x.pct) }; r.scenes.push({ name, ...m });
+    const m = { ...ms[1], pct: +(ms.reduce((a, x) => a + x.pct, 0) / 3).toFixed(1), pctAll: +(ms.reduce((a, x) => a + x.pctAll, 0) / 3).toFixed(1), peak: Math.max(...ms.map((x) => x.pct)), samples: ms.map((x) => x.pct) }; m.peakTop = ms.reduce((a, x) => (x.pct > a.pct ? x : a)).top.slice(0, 6);   /* 최대 때 무엇이 덮었나 */ r.scenes.push({ name, ...m });
     if (SHOT) { await page.screenshot({ path: path.join(HERE, 'shots', `cover_${g}_${name}.png`) }).catch(() => {}); } };
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 }); await sleep(3000);
@@ -150,7 +156,7 @@ try {
   for (const g of (games.length ? games : ALL)) {
     const r = await one(browser, g); out.push(r);
     for (const s of r.scenes) { const info = s.name === 'calm', bad = !info && s.pct > MAX; if (bad) { over++; }   // calm 은 참고값(완료 조건은 첫 화면·싸움 중 — W-0363)
-      console.log(`${info ? 'INFO' : bad ? 'OVER' : 'OK  '} ${g} ${s.name} 가림 ${s.pct}% (최대 ${s.peak} · 캔버스 ${s.canvasPct}% · hudRects ${s.hudRects}${s.whiteMidPct != null ? ' · 가운데 흰 화소 ' + s.whiteMidPct + '%' : ''}) · ` + s.top.slice(0, 6).map((t) => t.el + ' ' + t.pct).join(' · ')); }
+      console.log(`${info ? 'INFO' : bad ? 'OVER' : 'OK  '} ${g} ${s.name} 가림 ${s.pct}% (${s.board ? '무대 ' + s.board.h + 'px 안 · 전체 ' + s.pctAll + '% · ' : ''}최대 ${s.peak} · 캔버스 ${s.canvasPct}% · hudRects ${s.hudRects}${s.whiteMidPct != null ? ' · 가운데 흰 화소 ' + s.whiteMidPct + '%' : ''}) · ` + s.top.slice(0, 6).map((t) => t.el + ' ' + t.pct).join(' · ')); }
     if (r.errors.length) { console.log('  예외 ' + r.errors.slice(0, 3).join(' | ')); }
   }
 } finally {

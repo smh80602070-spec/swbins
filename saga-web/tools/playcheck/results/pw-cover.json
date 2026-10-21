@@ -1,74 +1,158 @@
 {
- "at": "2026-10-21T21:57:56.537Z",
+ "at": "2026-10-21T22:24:07.084Z",
  "max": 15,
  "runs": [
   {
-   "game": "saga-dungeon",
+   "game": "saga-story",
    "scenes": [
     {
      "name": "first",
      "W": 390,
      "H": 844,
+     "board": {
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 616
+     },
+     "pctAll": 18.9,
      "veils": [
-      "#scrim"
+      "#scrim",
+      "#touchpad",
+      "#vignette"
      ],
-     "pct": 14,
-     "canvasPct": 0,
-     "hudRects": 0,
+     "pct": 12.6,
+     "canvasPct": 2.3,
+     "hudRects": 2,
      "whiteMidPct": 0,
      "top": [
       {
        "el": "#top",
-       "pct": 8.8
+       "pct": 7.2
       },
       {
-       "el": "#dungeon",
-       "pct": 2.1
+       "el": "◇보스 띠",
+       "pct": 2.3
       },
       {
-       "el": "#dg-minimap",
-       "pct": 1.9
+       "el": "#touchpad",
+       "pct": 1.7
       },
       {
-       "el": "#dock",
+       "el": "#btn-focus",
        "pct": 0.7
       },
       {
        "el": "#aq-go",
-       "pct": 0.5
+       "pct": 0.6
       }
      ],
-     "peak": 14,
+     "peak": 12.6,
      "samples": [
-      14,
-      14,
-      14
+      12.6,
+      12.6,
+      12.6
+     ],
+     "peakTop": [
+      {
+       "el": "#top",
+       "pct": 7.2
+      },
+      {
+       "el": "◇보스 띠",
+       "pct": 2.3
+      },
+      {
+       "el": "#touchpad",
+       "pct": 1.7
+      },
+      {
+       "el": "#btn-focus",
+       "pct": 0.7
+      },
+      {
+       "el": "#aq-go",
+       "pct": 0.6
+      }
      ]
     },
     {
      "name": "fight",
      "W": 390,
      "H": 844,
-     "veils": [],
-     "pct": 12.7,
-     "canvasPct": 0,
-     "hudRects": 0,
+     "board": {
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 616
+     },
+     "pctAll": 19.3,
+     "veils": [
+      "#scrim",
+      "#touchpad",
+      "#vignette"
+     ],
+     "pct": 13.5,
+     "canvasPct": 2.3,
+     "hudRects": 2,
      "whiteMidPct": 0,
      "top": [
       {
-       "el": "#dungeon",
-       "pct": 11.6
+       "el": "#top",
+       "pct": 3.7
       },
       {
-       "el": "#dg-minimap",
-       "pct": 1.2
+       "el": "#toast",
+       "pct": 2.5
+      },
+      {
+       "el": "◇보스 띠",
+       "pct": 2.3
+      },
+      {
+       "el": "#touchpad",
+       "pct": 1.7
+      },
+      {
+       "el": "#btn-focus",
+       "pct": 0.7
+      },
+      {
+       "el": "#aq-go",
+       "pct": 0.6
       }
      ],
-     "peak": 12.7,
+     "peak": 17.5,
      "samples": [
-      12.7,
-      12.7,
-      12.7
+      11.6,
+      11.5,
+      17.5
+     ],
+     "peakTop": [
+      {
+       "el": "◇보스 등장",
+       "pct": 6.1
+      },
+      {
+       "el": "#top",
+       "pct": 4.7
+      },
+      {
+       "el": "◇보스 띠",
+       "pct": 2.3
+      },
+      {
+       "el": "#touchpad",
+       "pct": 1.7
+      },
+      {
+       "el": "#toast",
+       "pct": 1.3
+      },
+      {
+       "el": "#btn-focus",
+       "pct": 0.7
+      }
      ]
     }
    ],

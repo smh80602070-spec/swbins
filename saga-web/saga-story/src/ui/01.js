@@ -94,6 +94,8 @@
      'sheet', 'sheet-title', 'sheet-body', 'sheet-close', 'scrim', 'toast'].forEach(function (id) {
       els[id] = $(id);
     });
+    var drw = $('tools-drawer'), mapB = $('btn-map'); if (drw && mapB && global.innerWidth <= 520) { drw.insertBefore(mapB, drw.firstChild); }   // W-0364 폰: 🗺️ 는 ⋯ 서랍 안으로(M 키·손잡이 그대로)
+    document.body.classList.add('hud-diet'); [els.profile, els.wallet, els.goalboard].forEach(function (el) { if (el) { el.addEventListener('click', function () { if (!hudFold(el)) { el.classList.remove('hud-open'); } }); } });   // W-0364 폰 세로 HUD 접기(공용 ui-kit.css) — 윗 카드·지갑·목표판 탭 = 펼침, 다시 탭 = 접음
 
     els.dock.addEventListener('click', function (e) {
       var b = e.target.closest('[data-sheet]');
@@ -583,6 +585,7 @@
 
   /* ── 상단 ─────────────────────────────────────────────── */
 
+  var foldTimers = {}; function hudFold(el) { if (!el || !(global.innerWidth <= 520) || el.classList.contains('hud-open')) { return false; } el.classList.add('hud-open'); clearTimeout(foldTimers[el.id]); foldTimers[el.id] = setTimeout(function () { el.classList.remove('hud-open'); }, 6000); return true; }   /* W-0364 폰 세로(≤520)에서 접힌 판이면 펼치고 참(6초 뒤 다시 접힘) */
   function renderTop() {
     var p = core.save.player;
     var need = core.expNeed(p.level);
@@ -599,7 +602,7 @@
           ' · 🧪 ' + st.potions + '</div>' +
         /* 체력·기력 — 예전엔 사냥 중에만 뜨는 #hud 안에만 있어, 쉬는 동안은
            에너지(기력)를 어디서도 볼 수 없었다. 캐릭 정보 카드에 상시 붙여 둔다 */
-        '<div class="p-bars">' +
+        '<div class="p-bars hud-keep">' +   // W-0364 폰 접힌 카드에도 체력·기력 띠는 남긴다
           '<div class="p-bar hp"><i style="width:' + (st.hp / st.hpMax * 100) + '%"></i></div>' +
           '<div class="p-bar mp"><i style="width:' + (st.mp / st.mpMax * 100) + '%"></i></div>' +
         '</div>' +
@@ -648,7 +651,7 @@
    */
   function coin(icon, val, label, hi, ic) {
     var tag = ic ? ' data-icon="' + ic + '"' : '';
-    return '<div class="coin' + (hi ? ' hi' : '') + '" title="' + label + '"><span' + tag + '>' + icon + '</span>' + val + '</div>';
+    return '<div class="coin' + (hi ? ' hi hud-keep' : '') + '" title="' + label + '"><span' + tag + '>' + icon + '</span>' + val + '</div>';
   }
 
   /* ── 사냥터 고르는 판 (가운데) ─────────────────────────

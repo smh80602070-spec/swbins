@@ -419,6 +419,8 @@
        W-0132 — 캔버스가 통째로 확대(CSS)되므로 이 겹쳐 그리기는 거꾸로 줄여 제자리(확대 안 된 화면 좌표)에 둔다 */
     var iz = 1 / effZoom();
     ctx.save(); ctx.translate(W / 2, zoomOy); ctx.scale(iz, iz); ctx.translate(-W / 2, -zoomOy);
+    global.DG.hudRects = [];   // W-0364 캔버스에 그리는 HUD 의 이번 프레임 자리(pw-cover 가 가림에 더한다)
+    global.DG.boardRect = W < H ? { x: 0, y: 0, w: global.innerWidth, h: Math.round(global.innerHeight * +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('side.portraitFloor', 0.72) : 0.72)) + 8 } : null;   // 폰 세로 = 땅 선(화면 72%)까지가 무대 — 그 밑 바닥 띠는 HUD 자리(메이플 아래 띠처럼)
     drawBossBar();
     drawMiniMap(run);
     drawOuch();
@@ -503,13 +505,14 @@
     var dur = 1.8, edge = 0.3;
     var a = Math.min(1, (dur - best.life) / edge, best.life / edge);
     if (a <= 0.02) { return; }
-    var y = H * 0.34, bandH = 64;
+    var y = W <= 520 ? topBelow() + 90 : H * 0.34, bandH = W <= 520 ? 52 : 64, bw = W <= 520 ? Math.min(W, 300) : W, bx = (W - bw) / 2;   // W-0364 폰 세로는 주인공 위가 아니라 보스 띠 밑에 얇고 좁게
+    hudRect(bx, y - bandH / 2, bw, bandH, '보스 등장');
     ctx.globalAlpha = a;
     ctx.fillStyle = 'rgba(10,8,12,0.62)';
-    ctx.fillRect(0, y - bandH / 2, W, bandH);
+    ctx.fillRect(bx, y - bandH / 2, bw, bandH);
     ctx.fillStyle = 'rgba(224,80,31,0.9)';
-    ctx.fillRect(0, y - bandH / 2, W, 2);
-    ctx.fillRect(0, y + bandH / 2 - 2, W, 2);
+    ctx.fillRect(bx, y - bandH / 2, bw, 2);
+    ctx.fillRect(bx, y + bandH / 2 - 2, bw, 2);
     ctx.textAlign = 'center';
     ctx.font = '700 15px system-ui, sans-serif';
     ctx.fillStyle = 'rgba(240,226,200,0.95)';
@@ -532,13 +535,14 @@
     var dur = 2.0, edge = 0.3;
     var a = Math.min(1, (dur - best.life) / edge, best.life / edge);
     if (a <= 0.02) { return; }
-    var y = H * 0.34, bandH = 64;
+    var y = W <= 520 ? topBelow() + 90 : H * 0.34, bandH = W <= 520 ? 52 : 64, bw = W <= 520 ? Math.min(W, 300) : W, bx = (W - bw) / 2;   // W-0364 폰 세로는 주인공 위가 아니라 보스 띠 밑에 얇고 좁게
+    hudRect(bx, y - bandH / 2, bw, bandH, '레벨 업');
     ctx.globalAlpha = a;
     ctx.fillStyle = 'rgba(12,10,6,0.62)';
-    ctx.fillRect(0, y - bandH / 2, W, bandH);
+    ctx.fillRect(bx, y - bandH / 2, bw, bandH);
     ctx.fillStyle = 'rgba(245,196,69,0.9)';
-    ctx.fillRect(0, y - bandH / 2, W, 2);
-    ctx.fillRect(0, y + bandH / 2 - 2, W, 2);
+    ctx.fillRect(bx, y - bandH / 2, bw, 2);
+    ctx.fillRect(bx, y + bandH / 2 - 2, bw, 2);
     ctx.textAlign = 'center';
     ctx.font = '700 15px system-ui, sans-serif';
     ctx.fillStyle = 'rgba(240,226,200,0.95)';
@@ -560,13 +564,14 @@
     var dur = 2.0, edge = 0.3;
     var a = Math.min(1, (dur - best.life) / edge, best.life / edge);
     if (a <= 0.02) { return; }
-    var y = H * 0.34, bandH = 64;
+    var y = W <= 520 ? topBelow() + 90 : H * 0.34, bandH = W <= 520 ? 52 : 64, bw = W <= 520 ? Math.min(W, 300) : W, bx = (W - bw) / 2;   // W-0364 폰 세로는 주인공 위가 아니라 보스 띠 밑에 얇고 좁게
+    hudRect(bx, y - bandH / 2, bw, bandH, '사명 완료');
     ctx.globalAlpha = a;
     ctx.fillStyle = 'rgba(8,12,10,0.62)';
-    ctx.fillRect(0, y - bandH / 2, W, bandH);
+    ctx.fillRect(bx, y - bandH / 2, bw, bandH);
     ctx.fillStyle = 'rgba(90,200,140,0.9)';
-    ctx.fillRect(0, y - bandH / 2, W, 2);
-    ctx.fillRect(0, y + bandH / 2 - 2, W, 2);
+    ctx.fillRect(bx, y - bandH / 2, bw, 2);
+    ctx.fillRect(bx, y + bandH / 2 - 2, bw, 2);
     ctx.textAlign = 'center';
     ctx.font = '700 15px system-ui, sans-serif';
     ctx.fillStyle = 'rgba(226,240,230,0.95)';
@@ -750,7 +755,7 @@
   function miniLand() { return !!(global.innerHeight && global.innerHeight <= 500 && global.innerWidth > 780 && global.innerWidth > global.innerHeight); }
   function miniBox(stg) {
     var land = miniLand();
-    var s = Math.min(land ? 104 : (W <= 560 ? 104 : 128), H - 40);
+    var s = Math.min(land ? 104 : (W <= 520 ? 96 : W <= 560 ? 104 : 128), H - 40);   // W-0364 폰 세로 96
     var top = 240, bot = stg.floor + 30;          // 세로로 담을 구간
     var hw = Math.max(1, stg.width / 2), hh = Math.max(1, (bot - top) / 2);
     var rad = s / 2 - 3;
@@ -764,10 +769,12 @@
    * 미니맵 — 사냥터 전체를 한 칸에 줄여 담아 **어디로 가야 문·보스가
    * 있는지**를 보여 준다(사가만리와 같은 좌하단 원형 스타일).
    */
+  function hudRect(x, y, w, h, name) { var R = global.DG.hudRects; if (R) { R.push({ x: x, y: y, w: w, h: h, name: name }); } }
   function drawMiniMap(run) {
     var stg = run.stage;
     var b = miniBox(stg);
     var cx = b.cx, cy = b.cy, rad = b.rad, scale = b.scale;
+    hudRect(cx - rad, cy - rad, rad * 2, rad * 2, '미니맵');
     function mx(vx) { return cx + (vx - b.hw) * scale; }
     function my(vy) { return cy + (vy - b.top - b.hh) * scale; }
 
@@ -947,6 +954,12 @@
    * 보스 체력 — 화면 위에 굵게 하나. 원작에서 보스 방에 들어서면
    * 위쪽에 이름과 체력이 뜨는 그 자리다.
    */
+  var topBelowY = 254, topBelowT = 0;
+  function topBelow() {   // W-0364 윗 HUD(#top·자동 띠) 아래 끝 — 0.5초마다만 잰다(매 프레임 배치 읽기 안 함)
+    var now = Date.now(); if (now - topBelowT < 500) { return topBelowY; } topBelowT = now;
+    var ys = ['profile', 'wallet', 'goalboard', 'autobar', 'aq-go', 'story-go'].map(function (id) { var e = document.getElementById(id); if (!e || !e.getClientRects().length || getComputedStyle(e).visibility === 'hidden') { return 0; } return e.getBoundingClientRect().bottom;   /* 고정 위치(▶)는 offsetParent 가 늘 null */ });
+    topBelowY = Math.max(60, Math.ceil(Math.max.apply(null, ys))); return topBelowY;
+  }
   function drawBossBar() {
     var run = S.raw();
     if (!run || !run.boss) { return; }
@@ -954,7 +967,8 @@
     /* 좁은 폭에서는 상단 UI 가 두 줄로 접힌다(프로필·도구·지갑) — 그 아래로 내린다.
        폰에서 보스 이름이 도구 단추에 가려 "무엇이 달려드는지" 를 못 읽었다. */
     var narrow = W <= 560;
-    var w = Math.min(W - 40, 420), x = (W - w) / 2, y = narrow ? 254 : 14;
+    var w = W <= 520 ? Math.min(W - 80, 220) : Math.min(W - 40, 420), x = (W - w) / 2, y = narrow ? topBelow() + 8 : 14;   // W-0364 폰은 접힌 윗줄 바로 밑(254 고정이면 화면 가운데까지 내려왔다)
+    hudRect(x - 6, y - 4, w + 12, b.gate ? 46 : 26, '보스 띠');
     var r = Math.max(0, b.hp / b.hpMax);
     ctx.fillStyle = 'rgba(10,12,16,0.72)';
     ctx.fillRect(x - 6, y - 4, w + 12, b.gate ? 46 : 26);

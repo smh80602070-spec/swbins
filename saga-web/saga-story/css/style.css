@@ -1289,3 +1289,20 @@ body.side-just::after { content: ""; position: fixed; inset: 0; pointer-events: 
 .life-bar i { display: block; height: 100%; background: var(--gold, #e0b050); }
 .camp-life { margin: 6px 0; padding: 6px 8px; border: 1px solid rgba(255,255,255,.1); border-radius: 8px; }
 .life-btns { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+
+/* W-0364 폰 세로 HUD 다이어트(공용 규칙은 ui-kit.css body.hud-diet) — 4종횡만의 자리.
+   목표판은 첫 줄만(탭하면 다 — .hud-open) · 윗 카드는 이름·레벨 + 체력·기력 띠 · 자동 띠 얇게 · 알림은 윗줄 높이에 */
+@media (max-width: 520px) {
+  body.hud-diet { --toast-edge: calc(6px + var(--safe-t, 0px)); }
+  body.hud-diet #goalboard:not(.hud-open) > :not(:first-child) { display: none; }
+  body.hud-diet #goalboard { cursor: pointer; }
+  body.hud-diet #profile:not(.hud-open) { padding-top: 4px; padding-bottom: 4px; }
+  /* 자동 띠는 폰에선 접는다 — 🤖 단추(btn-auto)가 켜짐을 금빛으로 보이고 다시 누르면 멈춘다(같은 손잡이) */
+  body.hud-diet #autobar { display: none !important; }
+  /* 사냥 중(#hud.show)엔 지갑 줄도 비킨다(1만리 싸움 중과 같은 결 — 끝나면 돌아온다, 탭으로 펼친 때는 그대로) */
+  body.hud-diet:has(#hud.show) #wallet:not(.hud-open) { visibility: hidden; }
+  body.hud-diet .auto-card { padding: 0 4px 0 8px; gap: 5px; }
+  body.hud-diet .auto-card span { display: none; }   /* 하는 일 글은 PC·☰ 자동 창에 — 폰은 🤖 자동 순행·멈춤만 */
+  /* 자동이 도는 동안 목표판 첫 줄은 비킨다(🤖 띠가 지금 하는 일을 말한다 · 탭하면 목표판은 그대로 펼침) */
+  body.hud-diet:has(#autobar.show) #goalboard:not(.hud-open) { display: none; }
+}

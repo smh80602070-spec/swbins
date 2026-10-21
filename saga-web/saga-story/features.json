@@ -1048,5 +1048,27 @@
   "ticket": "W-0358",
   "since": "2026-10-21",
   "note": "10-21: 횃불은 이 판이 제 점광을 이미 단다 → 빛남만(glowOnly) · 굴 1·모닥불 0.5 · 촬영 없음"
+ },
+ {
+  "id": "st.phone-hud-diet",
+  "name": "폰 세로 HUD 다이어트(W-0364) — 윗 카드 이름·레벨+체력·기력 띠·자원 둘·목표판 첫 줄(탭 펼침)·🗺️ ⋯ 안·자동 띠 접음(🤖 단추가 켜짐·멈춤)·사냥 중 지갑 비킴·보스 띠 윗 HUD 바로 밑 좁게·보스 등장/레벨 업/사명 완료 띠 좁게 보스 띠 밑·캔버스 HUD 자리 DG.hudRects·무대 DG.boardRect — 가림 무대 기준 첫 22.7→12.6%·싸움 23.9→13.5%",
+  "files": [
+   "../shared/css/ui-kit.css",
+   "css/style.css",
+   "src/ui/01.js",
+   "src/ui/02.js",
+   "js/side-view.js"
+  ],
+  "tests": [
+   "test-web W-0364 폰 HUD 접기",
+   "pw-cover ≤15%",
+   "mobile-layout 세로 회귀 0"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0364",
+  "since": "2026-10-22",
+  "note": "10-22: 무대(땅 선 72%까지) 기준 첫 12.6%·싸움 13.5% · 전체 화면 18.9%·19.3%(땅 밑 바닥 띠의 미니맵·독·손 단추 몫)"
  }
 ]
