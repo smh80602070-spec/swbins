@@ -313,7 +313,7 @@ namespace Saga.Forest.World
                 // 채집 손맛만(ForestGatherFeel.Play 는 연속 채집 덤 열매를 줘 광맥 수가 흔들린다).
                 ForestGatherPopup.Spawn(_things[k].position + Vector3.up * 1.2f, k == ForestCave.Kind.Relic ? "🏺" : "⛏️", false);
                 ForestGatherBump.Apply(_things[k]);
-                ForestAudio.PlaySfx("item_pick", null);
+                ForestAudio.PlaySfx("item_pick");
             }
             return ok;
         }

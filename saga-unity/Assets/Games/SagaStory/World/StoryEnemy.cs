@@ -76,8 +76,6 @@ namespace Saga.Story.World
 
         // 2026-09-14 "사운드" — StoryAudio.cs 클래스 주석 참고. 이 컴포넌트
         // 하나가 잡졸·두목 공통이라(SetBoss로만 갈린다) 클립도 공용 한 벌.
-        [SerializeField] private AudioClip hitClip;
-        [SerializeField] private AudioClip deathClip;
 
         private const float FlashSec = 0.08f; // PLAN.md 101-2 STORY "5-7 손맛 표준" — DUNGEON DungeonEnemy.cs와 같은 값.
 
@@ -267,8 +265,6 @@ namespace Saga.Story.World
             var m = go.AddComponent<StoryEnemy>();
             m.modelPrefab = modelPrefab;
             m.riggedVisualScale = riggedVisualScale;
-            m.hitClip = hitClip;
-            m.deathClip = deathClip;
             m.isLabyrinthEnemy = isLabyrinthEnemy;
             go.SetActive(true);
             if (isLabyrinthEnemy) StoryLabyrinthRunner.Instance?.AddArenaEnemy(m);
@@ -337,7 +333,7 @@ namespace Saga.Story.World
         {
             var animator = _visualGo != null ? _visualGo.GetComponentInChildren<Animator>() : null;
             if (animator != null) animator.SetTrigger("Attack");
-            StoryAudio.PlaySfx("sword_hit", hitClip); // tasks U-0104
+            StoryAudio.PlaySfx("sword_hit"); // tasks U-0104
         }
 
         private void BuildVisual()
@@ -387,7 +383,7 @@ namespace Saga.Story.World
             if (_patternRunner == null && isBoss) _patternRunner = GetComponent<StoryBossPatternRunner>();
             if (_patternRunner != null) applied *= _patternRunner.DamageTakenMul;
             _hp -= applied;
-            StoryAudio.PlaySfx("sword_hit", hitClip); // tasks U-0104
+            StoryAudio.PlaySfx("sword_hit"); // tasks U-0104
 
             float height = VisualHeight;
             Vector3 popupPos = transform.position + Vector3.up * height;
@@ -423,7 +419,7 @@ namespace Saga.Story.World
             if (_dead) return;
             _dead = true;
             if (ActiveChampion == this) ActiveChampion = null;
-            StoryAudio.PlaySfx("death", deathClip); // tasks U-0104
+            StoryAudio.PlaySfx("death"); // tasks U-0104
             StoryLootMarker.Spawn(transform.position); // PLAN.md 101-3 F "죽음" — Destroy 전에, transform이 아직 유효할 때.
             if (!isLabyrinthEnemy)
             {

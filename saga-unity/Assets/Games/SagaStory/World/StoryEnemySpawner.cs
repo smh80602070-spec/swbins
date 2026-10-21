@@ -21,8 +21,6 @@ namespace Saga.Story.World
         [SerializeField] private float riggedVisualScale = 1f;
         [SerializeField] private float riggedBossVisualScale = 1f;
         // 2026-09-14 "사운드" — StoryEnemy.cs로 그대로 넘길 뿐, 여긴 안 쓴다.
-        [SerializeField] private AudioClip hitClip;
-        [SerializeField] private AudioClip deathClip;
         // PLAN.md 109-3 세 시대 — 시대 적 몸(`StoryEras.FoeBodies` 이름 순, 배율 = 1.6m × HeightMul / 몸 키). 없는 PC 는 null → 잡졸 몸에 이름·빛깔만.
         [SerializeField] private string[] eraFoeNames = new string[0];
         [SerializeField] private GameObject[] eraFoeModels = new GameObject[0];
@@ -60,8 +58,6 @@ namespace Saga.Story.World
                 }
                 SetPrivateField(enemy, "modelPrefab", model);
                 SetPrivateField(enemy, "riggedVisualScale", scale);
-                SetPrivateField(enemy, "hitClip", hitClip);
-                SetPrivateField(enemy, "deathClip", deathClip);
             }
 
             var bossGo = new GameObject("Boss_HwangGeon");
@@ -72,8 +68,6 @@ namespace Saga.Story.World
             SetPrivateField(boss, "modelPrefab", enemyModelPrefab);
             SetPrivateField(boss, "bossModelPrefab", bossModelPrefab);
             SetPrivateField(boss, "riggedBossVisualScale", riggedBossVisualScale);
-            SetPrivateField(boss, "hitClip", hitClip);
-            SetPrivateField(boss, "deathClip", deathClip);
         }
 
         private static void SetPrivateField(object target, string fieldName, object value)

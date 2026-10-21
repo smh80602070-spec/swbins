@@ -21,7 +21,6 @@ namespace Saga.Forest.World
         [SerializeField] private ForestMuseumState.Category category;
         [SerializeField] private string[] pool;
         [SerializeField] private Color spotColor = Color.white;
-        [SerializeField] private AudioClip[] gatherClips; // BuildTestVillageForestScene.cs가 채운다 — 101-2 5.8① 라운드로빈.
 
         private static readonly Dictionary<ForestMuseumState.Category, Vector3> Positions =
             new Dictionary<ForestMuseumState.Category, Vector3>();
@@ -76,7 +75,7 @@ namespace Saga.Forest.World
             DialogueLabel.Instance?.Show(string.Format(ForestLocalization.T(key, fallback), shown), ToastSec);
 
             string popupLabel = isNew ? $"NEW! {shown}" : shown;
-            ForestGatherFeel.Play(transform.position + Vector3.up * 1.2f, _visual, popupLabel, gatherClips);
+            ForestGatherFeel.Play(transform.position + Vector3.up * 1.2f, _visual, popupLabel);
 
             // PLAN.md 101-2 5.6 "축제 하루"(2026-09-21) — 꽃놀이(매달 8일)만
             // 이 채집 자리 넷이 맡는다(웹판 "1분 안에 꽃 8종류"를 이 트랙의

@@ -48,29 +48,18 @@ namespace Saga.Dungeon.Audio
 
         private static AudioSource _source;
 
-        private static AudioClip _hitClip;
-        private static AudioClip _heavyHitClip;
-        private static AudioClip _enemyDeathClip;
-        private static AudioClip _levelUpClip;
-        private static AudioClip _discoveryClip;
 
-        public static void Configure(AudioClip hitClip, AudioClip heavyHitClip, AudioClip enemyDeathClip,
-            AudioClip levelUpClip, AudioClip discoveryClip, AudioClip bgmClip = null)
+        public static void Configure(AudioClip bgmClip = null)
         {
-            _hitClip = hitClip;
-            _heavyHitClip = heavyHitClip;
-            _enemyDeathClip = enemyDeathClip;
-            _levelUpClip = levelUpClip;
-            _discoveryClip = discoveryClip;
             PlayBgm(bgmClip);
         }
 
-        // tasks U-0104 — 다섯 함수는 이름으로 자체 효과음(K-0045 `SagaSfx`)을 먼저 쓰고, 그 이름 파일이 없을 때만 씬이 넘긴 옛 클립.
-        public static void PlayHit() => Play("sword_hit", _hitClip);
-        public static void PlayHeavyHit() => Play("crit", _heavyHitClip, 0.9f); // 강공격·급소·폭발 — 보통 맞힘과 구분.
-        public static void PlayEnemyDeath() => Play("death", _enemyDeathClip);
-        public static void PlayLevelUp() => Play("levelup", _levelUpClip);
-        public static void PlayDiscovery() => Play("chest_open", _discoveryClip);
+        // tasks U-0104 — 다섯 함수는 이름으로 자체 효과음(K-0045 `SagaSfx`). U-0152 — 빌린 Kenney 대체 클립은 걷음(이름 파일이 없으면 조용).
+        public static void PlayHit() => Play("sword_hit");
+        public static void PlayHeavyHit() => Play("crit", 0.9f); // 강공격·급소·폭발 — 보통 맞힘과 구분.
+        public static void PlayEnemyDeath() => Play("death");
+        public static void PlayLevelUp() => Play("levelup");
+        public static void PlayDiscovery() => Play("chest_open");
 
         /// <summary>tasks U-0104 — 코드가 부르는 이름 전부(진단이 `SagaSfx.Has` 로 파일 있는지 대조).</summary>
         public static readonly string[] Used =
@@ -82,9 +71,9 @@ namespace Saga.Dungeon.Audio
 
         private static readonly Dictionary<string, float> Last = new Dictionary<string, float>();
 
-        /// <summary>tasks U-0104 — 이름으로 자체 효과음(<see cref="SagaSfx.Pick"/>, 기록은 파일 없어도 남음). 그 이름 파일이 없으면
-        /// <paramref name="fallback"/>(씬이 준 옛 클립) — 둘 다 없으면 조용히 건너뛴다. <paramref name="minGap"/> 초 안의 같은 이름 재호출은 건너뜀(피격 연타).</summary>
-        public static void Play(string name, AudioClip fallback = null, float volumeScale = 1f, float minGap = 0f)
+        /// <summary>tasks U-0104 — 이름으로 자체 효과음(<see cref="SagaSfx.Pick"/>, 기록은 파일 없어도 남음). 그 이름 파일이 없으면 조용히 건너뛴다.
+        /// <paramref name="minGap"/> 초 안의 같은 이름 재호출은 건너뜀(피격 연타).</summary>
+        public static void Play(string name, float volumeScale = 1f, float minGap = 0f)
         {
             if (minGap > 0f)
             {
@@ -92,7 +81,7 @@ namespace Saga.Dungeon.Audio
                 if (Last.TryGetValue(name, out float t) && now - t < minGap) return;
                 Last[name] = now;
             }
-            Play(SagaSfx.Pick(name) ?? fallback, volumeScale);
+            Play(SagaSfx.Pick(name), volumeScale);
         }
 
         public static void ResetForTest() => Last.Clear();

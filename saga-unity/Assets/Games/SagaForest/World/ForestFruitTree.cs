@@ -36,7 +36,6 @@ namespace Saga.Forest.World
 
         [SerializeField] private GameObject treeModel; // BuildTestVillageForestScene.cs가 procgen 나무 GLB를 채운다.
         [SerializeField] private Material treeMaterial; // BuildTestVillageForestScene.cs가 TriplanarDetail_Bark.mat을 채운다.
-        [SerializeField] private AudioClip[] gatherClips; // BuildTestVillageForestScene.cs가 채운다 — 101-2 5.8① 라운드로빈.
 
         private float _cooldownLeft;
         private Transform _player;
@@ -139,7 +138,7 @@ namespace Saga.Forest.World
                     FruitName, ForestState.FruitCount),
                 ToastSec);
 
-            ForestGatherFeel.Play(transform.position + Vector3.up * 2.6f, _visual, FruitName, gatherClips);
+            ForestGatherFeel.Play(transform.position + Vector3.up * 2.6f, _visual, FruitName);
         }
     }
 }

@@ -118,8 +118,7 @@ namespace Saga.EditorTools
                 Saga.Go.Data.DailyTaskState.OffForTest = true; // 109-14-8 — 날짜마다 다른 일과 보상이 옛 진단 값에 끼지 않게(일과 진단만 켠다)
                 Saga.Go.Combat.GoKits.OffForTest = true; // 109-14-11 — 옛 진단은 109-8 모양 그대로(스킬표 진단만 켠다)
                 Saga.Go.Data.StoryState.OffForTest = true; // 109-14-12 — 이야기 인물 혼잣말·임무 적·대화 멈춤이 옛 진단에 끼지 않게(이야기 진단만 켠다)
-                var clip = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Art/Audio/Kenney_RPGSounds/chop.ogg");
-                GoAudio.PlaySfx(clip);
+                GoAudio.PlaySfx(Saga.Core.SagaSfx.Pick("sword_hit")); // U-0152 — 산적 맞힘과 같은 자체 효과음(옛 Kenney chop 걷음)
                 CheckDebugHud();
                 CheckSettingsPanel();
                 PlaytestSettingsVoice.Check("PlaytestHeadless", typeof(GoSettingsPanel)); // U-0075 음성 줄

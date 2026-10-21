@@ -678,7 +678,7 @@ namespace Saga.Dungeon.World
             DungeonFoeShot.Fire(from, to.position + Vector3.up * 1.1f, dmg, DisplayName,
                 bow ? DungeonLocalization.T("grave.how_arrow", "화살") : DungeonLocalization.T("grave.how_bullet", "탄환"),
                 _player, transform.parent, bow ? ArrowColor : BulletColor);
-            SfxPlayer.Play("whoosh", null, bow ? 0.7f : 0.9f, 0.08f); // 자체 효과음(U-0104) — 없으면 조용히
+            SfxPlayer.Play("whoosh", bow ? 0.7f : 0.9f, 0.08f); // 자체 효과음(U-0104) — 없으면 조용히
         }
 
         private void EndWindup()

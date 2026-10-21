@@ -51,8 +51,6 @@ namespace Saga.Story.World
         [SerializeField] private GameObject bossModelPrefab;
         [SerializeField] private float riggedVisualScale = 1f;
         [SerializeField] private float riggedBossVisualScale = 1f;
-        [SerializeField] private AudioClip hitClip;
-        [SerializeField] private AudioClip deathClip;
         // PLAN.md 109-3 세 시대 — 필드 `StoryEnemySpawner` 와 같은 표(이름 순 몸·배율). 없는 PC 는 null → 잡졸 몸.
         [SerializeField] private string[] eraFoeNames = new string[0];
         [SerializeField] private GameObject[] eraFoeModels = new GameObject[0];
@@ -280,8 +278,6 @@ namespace Saga.Story.World
                 }
                 SetPrivate(enemy, "modelPrefab", model);
                 SetPrivate(enemy, "riggedVisualScale", scale);
-                SetPrivate(enemy, "hitClip", hitClip);
-                SetPrivate(enemy, "deathClip", deathClip);
                 if (boss)
                 {
                     SetPrivate(enemy, "bossModelPrefab", bossModelPrefab);

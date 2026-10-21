@@ -38,14 +38,6 @@ namespace Saga.EditorTools
         // ForestFruitTree.TreeScale)을 그대로 맞춘다 — FOREST가 GO와
         // 세계 축척이 달라도(1.8m vs 3.4m) 예전 tree_oak×4.5 그대로
         // 재사용했던 전례와 같은 판단.
-        // 101-2 5.8① "채집 손맛 — 효과음 3종 라운드로빈"(ForestGatherFeel.cs) —
-        // 새 에셋 없이 이미 임포트된 Kenney Interface Sounds 3종을 돌려쓴다.
-        private static readonly string[] GatherClipPaths =
-        {
-            "Assets/Art/Audio/Kenney_InterfaceSounds/confirmation_001.ogg",
-            "Assets/Art/Audio/Kenney_InterfaceSounds/confirmation_002.ogg",
-            "Assets/Art/Audio/Kenney_InterfaceSounds/confirmation_003.ogg",
-        };
 
         private const string TreeGlbPath = "Assets/Art/Generated/SagaGo/tree_s1_01.glb";
         private const string TreeMaterialPath = "Assets/Art/Generated/SagaGo/TriplanarDetail_Bark.mat";
@@ -183,20 +175,6 @@ namespace Saga.EditorTools
             return go;
         }
 
-        private static AudioClip[] _gatherClips;
-
-        private static AudioClip[] LoadGatherClips()
-        {
-            if (_gatherClips != null) return _gatherClips;
-            var clips = new AudioClip[GatherClipPaths.Length];
-            for (int i = 0; i < GatherClipPaths.Length; i++)
-            {
-                clips[i] = AssetDatabase.LoadAssetAtPath<AudioClip>(GatherClipPaths[i]);
-            }
-            _gatherClips = clips;
-            return _gatherClips;
-        }
-
         private static void BuildFruitTree()
         {
             var go = new GameObject("FruitTree");
@@ -204,7 +182,6 @@ namespace Saga.EditorTools
             var tree = go.AddComponent<ForestFruitTree>();
             SetPrivateField(tree, "treeModel", _treeGlb);
             SetPrivateField(tree, "treeMaterial", _treeMaterial);
-            SetPrivateField(tree, "gatherClips", LoadGatherClips());
         }
 
         private static void BuildVillager()
@@ -544,7 +521,6 @@ namespace Saga.EditorTools
             SetPrivateField(spot, "category", category);
             SetPrivateField(spot, "pool", ForestMuseumState.ItemsOf(category));
             SetPrivateField(spot, "spotColor", color);
-            SetPrivateField(spot, "gatherClips", LoadGatherClips());
         }
 
         private static (GameObject playerGo, Transform playerTransform) BuildPlayer()
@@ -727,11 +703,6 @@ namespace Saga.EditorTools
             textGo.SetActive(false);
         }
 
-        // 67장 "사운드" 첫 슬라이스(2026-09-14, ForestAudio.cs 참고) — Kenney
-        // Interface Sounds(누름)·RPG Sounds(해소) CC0, docs/ASSET_GUIDE.md 참고.
-        private const string PressClipPath = "Assets/Art/Audio/Kenney_RPGSounds/chop.ogg";
-        private const string ResolveClipPath = "Assets/Art/Audio/Kenney_InterfaceSounds/confirmation_001.ogg";
-
         /// <summary>44장 "전투 콘텐츠"(2026-09-14) — 포자괴물과 대치했을 때
         /// 뜨는 "밀어내기" 미니게임 UI. BuildDialogueUi()와 같은 패턴(자체
         /// Canvas 하나).</summary>
@@ -745,15 +716,8 @@ namespace Saga.EditorTools
             Saga.Core.SagaUi.ApplyGameScaler(scaler);
             canvasGo.AddComponent<GraphicRaycaster>();
 
-            var pressClip = AssetDatabase.LoadAssetAtPath<AudioClip>(PressClipPath);
-            var resolveClip = AssetDatabase.LoadAssetAtPath<AudioClip>(ResolveClipPath);
-            if (pressClip == null || resolveClip == null)
-            {
-                Debug.LogWarning("[BuildTestVillageForestScene] 밀어내기 SFX 클립을 못 찾음 — 소리 없이 동작.");
-            }
-
             var ui = canvasGo.AddComponent<ForestHostileEncounterUi>();
-            ui.Build(canvasGo.transform, pressClip, resolveClip);
+            ui.Build(canvasGo.transform); // 효과음은 이름으로(ui_click·victory·defeat — U-0152)
         }
 
         /// <summary>화면 왼쪽 위 — 디버그 빌드에서만 렌더러 이름·FPS·좌표

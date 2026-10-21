@@ -50,7 +50,7 @@ namespace Saga.Core
 
             new Entry { Id = "kenney", Paths = new[] {
                     "Assets/Art/Characters/", "Assets/Art/Buildings/", "Assets/Art/Dungeon/", "Assets/Art/Shrine/",
-                    "Assets/Art/Props/", "Assets/Art/Rocks/", "Assets/Art/Audio/Kenney_InterfaceSounds/", "Assets/Art/Audio/Kenney_RPGSounds/" },
+                    "Assets/Art/Props/", "Assets/Art/Rocks/" },
                 TitleKo = "모델·효과음", TitleEn = "Models & sound effects",
                 BodyKo = "Kenney (kenney.nl) — CC0", BodyEn = "Kenney (kenney.nl) — CC0" },
 

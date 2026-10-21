@@ -63,7 +63,6 @@ namespace Saga.Go.World
 
         // 67장 "사운드"(2026-09-14) — 강타/피격 화면 플래시에 맞춰 타격감
         // SFX. GoAudio.cs 클래스 주석 참고 — 승리/패배 음악은 아직 없다.
-        [SerializeField] private AudioClip hitClip;
 
         // 편집기 빌드 스크립트가 Init()으로 채워 준다 — NpcBuilder.cs·
         // Gatherable.cs와 같은 이유(런타임 Awake()는 AssetDatabase를 못 쓴다).
@@ -384,14 +383,14 @@ namespace Saga.Go.World
                     ScreenFlash(e.Dodged ? new Color(0.2f, 1.0f, 0.4f, 0.35f) : new Color(1.0f, 0.15f, 0.15f, 0.45f));
                     if (!e.Dodged)
                     {
-                        GoAudio.PlaySfx(hitClip);
+                        Saga.Go.Audio.GoSfx.Play("sword_hit"); // U-0152 — 옛 Kenney chop 걷음
                         ApplyHitstop(heavy: true);
                         GroundDecal.Spawn(transform.position, GroundDecal.Kind.HitMark); // PLAN.md 101-3 G "지형 반응".
                     }
                     break;
                 case "hit":
                     ScreenFlash(new Color(1.0f, 0.15f, 0.15f, 0.3f));
-                    GoAudio.PlaySfx(hitClip, 0.7f);
+                    Saga.Go.Audio.GoSfx.Play("sword_hit", 0.7f);
                     ApplyHitstop(heavy: false);
                     GroundDecal.Spawn(transform.position, GroundDecal.Kind.HitMark); // PLAN.md 101-3 G "지형 반응".
                     break;

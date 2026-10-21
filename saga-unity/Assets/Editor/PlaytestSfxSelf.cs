@@ -40,6 +40,7 @@ namespace Saga.EditorTools
                 CheckOthers(parts);
                 CheckSilent(parts);
                 CheckSources(parts);
+                CheckNoKenney(parts);
             }
             catch (Exception e) { Fail("예외 " + e.GetType().Name + ": " + e.Message); }
             finally { SagaSfx.Loader = loader; SagaSfx.ResetForTest(); SfxPlayer.ResetForTest(); }
@@ -147,7 +148,26 @@ namespace Saga.EditorTools
             Has("SagaStory/World/StoryEnemy.cs", "StoryAudio.PlaySfx(\"sword_hit\"");
             Has("SagaStory/World/StoryEnemy.cs", "StoryAudio.PlaySfx(\"death\"");
             Has("SagaRealm/UI/RealmCommandUi.cs", "RealmAudio.PlaySfx(ok ? \"ui_confirm\" : \"ui_error\"");
-            parts.Add("부르는 곳 소스 10");
+            Has("SagaGo/World/BanditEncounter.cs", "GoSfx.Play(\"sword_hit\"");
+            parts.Add("부르는 곳 소스 11");
+        }
+
+        /// <summary>U-0152 — 빌린 Kenney 효과음 두 폴더가 없고, 코드·씬·프리팹 어디서도 그 경로·guid 를 안 부른다(대체 길 걷음).</summary>
+        private static void CheckNoKenney(List<string> parts)
+        {
+            string[] dirs = { "Assets/Art/Audio/Kenney_" + "InterfaceSounds", "Assets/Art/Audio/Kenney_" + "RPGSounds" };
+            foreach (var d in dirs)
+                if (Directory.Exists(d)) Fail(d + " 폴더가 남음");
+            int hits = 0;
+            foreach (var ext in new[] { "*.cs", "*.unity", "*.prefab" })
+                foreach (var f in Directory.GetFiles("Assets", ext, SearchOption.AllDirectories))
+                {
+                    if (f.Replace('\\', '/').Contains("/_Recovery/")) continue;
+                    string text = File.ReadAllText(f);
+                    foreach (var d in dirs)
+                        if (text.Contains(d)) { hits++; Fail($"{f} 가 {d} 를 부름"); }
+                }
+            parts.Add(hits == 0 ? "Kenney 효과음 참조 0" : $"Kenney 참조 {hits}");
         }
 
         private static void Fail(string msg)

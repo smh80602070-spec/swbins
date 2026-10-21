@@ -66,8 +66,8 @@ namespace Saga.Forest.Audio
 
         /// <summary>tasks U-0104 — 이름으로 자체 효과음(K-0045 <see cref="SagaSfx.Pick"/>, 기록은 파일 없어도 남음)을 먼저 내고,
         /// 그 이름 파일이 없을 때만 씬이 넘긴 옛 클립 <paramref name="fallback"/> — 둘 다 없으면 조용히 건너뛴다.</summary>
-        public static void PlaySfx(string name, AudioClip fallback = null, float volumeScale = 1f) =>
-            PlaySfx(SagaSfx.Pick(name) ?? fallback, volumeScale);
+        public static void PlaySfx(string name, float volumeScale = 1f) =>
+            PlaySfx(SagaSfx.Pick(name), volumeScale); // U-0152 — 이름 파일이 없으면 조용(빌린 대체 클립 걷음)
 
         public static void PlaySfx(AudioClip clip, float volumeScale = 1f)
         {

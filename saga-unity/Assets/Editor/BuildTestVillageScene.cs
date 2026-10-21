@@ -333,11 +333,6 @@ namespace Saga.EditorTools
         private const string AbeAnimatedPrefabPath = "Assets/Art/CharactersRealistic/Abe/AbeAnimated.prefab";
         private const float AbeNativeHeight = 1.94f;
 
-        // 67장 "사운드" — Forest 밀어내기 미니게임과 같은 CC0 파일 재사용
-        // (Assets/Art/Audio는 다섯 판이 공유하는 원본 자산 트리 — Characters/
-        // Buildings처럼 복제 없이 그대로 참조한다).
-        private const string HitClipPath = "Assets/Art/Audio/Kenney_RPGSounds/chop.ogg";
-
         private static void BuildBanditEncounter()
         {
             var go = new GameObject("BanditEncounter");
@@ -353,8 +348,6 @@ namespace Saga.EditorTools
                 Debug.LogWarning($"[BuildTestVillageScene] {AbeAnimatedPrefabPath} 를 못 찾음(로컬 전용 자산) — character-d로 폴백.");
                 encounter.Init(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Art/Characters/character-d.glb"));
             }
-            var hitClip = AssetDatabase.LoadAssetAtPath<AudioClip>(HitClipPath);
-            if (hitClip != null) SetPrivateField(encounter, "hitClip", hitClip);
             encounter.Build();
         }
 

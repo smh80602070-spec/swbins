@@ -44,16 +44,15 @@ namespace Saga.EditorTools
                     // 빌드가 confirm/error 클립을 실제로 채웠는지·헤드리스에서
                     // RealmAudio.PlaySfx가 예외 없이 도는지는 여기서 직접 본다
                     // (GO PlaytestHeadless의 GoAudio 스모크와 같은 결).
-                    var confirmClip = GetPrivateField<AudioClip>(commandUi, "confirmClip");
-                    var errorClip = GetPrivateField<AudioClip>(commandUi, "errorClip");
-                    if (confirmClip == null || errorClip == null)
+                    // U-0152 — 씬 클립 필드는 걷었다: 명령 결과음은 자체 이름(ui_confirm·ui_error)이 있어야 한다.
+                    if (!Saga.Core.SagaSfx.Has("ui_confirm") || !Saga.Core.SagaSfx.Has("ui_error"))
                     {
-                        Debug.LogError("[PlaytestRealmSlice] RealmCommandUi confirm/error 클립 미배선");
+                        Debug.LogError("[PlaytestRealmSlice] 자체 효과음 ui_confirm/ui_error 없음");
                         Fail();
                         return;
                     }
-                    RealmAudio.PlaySfx(confirmClip);
-                    RealmAudio.PlaySfx(errorClip);
+                    RealmAudio.PlaySfx("ui_confirm");
+                    RealmAudio.PlaySfx("ui_error");
                     if (RealmCityState.Gold != RealmCityState.StartingGold || RealmCityState.RosterIds.Count != 1 ||
                         RealmCityState.CurrentCity != "xuchang")
                     {

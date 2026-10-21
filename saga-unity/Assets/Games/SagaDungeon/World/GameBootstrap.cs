@@ -17,12 +17,7 @@ namespace Saga.Dungeon.World
     /// </summary>
     public class GameBootstrap : MonoBehaviour
     {
-        // 2026-09-14 "사운드" 실클립 전환 — SfxPlayer.cs 클래스 주석 참고.
-        [SerializeField] private AudioClip hitClip;
-        [SerializeField] private AudioClip heavyHitClip;
-        [SerializeField] private AudioClip enemyDeathClip;
-        [SerializeField] private AudioClip levelUpClip;
-        [SerializeField] private AudioClip discoveryClip;
+        // 효과음은 이름으로(SfxPlayer — U-0152 옛 Kenney 클립 필드 걷음). BGM 만 씬이 넘긴다.
         [SerializeField] private AudioClip bgmClip; // 67장 "사운드" BGM(2026-09-15).
 
         private CameraRig _cameraRig;
@@ -35,7 +30,7 @@ namespace Saga.Dungeon.World
 
         private void Start()
         {
-            SfxPlayer.Configure(hitClip, heavyHitClip, enemyDeathClip, levelUpClip, discoveryClip, bgmClip);
+            SfxPlayer.Configure(bgmClip);
             SaveState.TryLoad();
             Saga.Core.SagaFlow.Enter("dungeon", SaveState.Save); // PLAN.md 110 ② — 자동 저장·일시정지 메뉴·타이틀로.
             CombineStaticBatches();

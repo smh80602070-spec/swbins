@@ -20,8 +20,6 @@ namespace Saga.Realm.UI
     /// </summary>
     public class RealmCommandUi : MonoBehaviour
     {
-        [SerializeField] private AudioClip confirmClip;
-        [SerializeField] private AudioClip errorClip;
 
         // 2026-09-15 발견 — 아래 참조 필드들은 전부 [SerializeField] 없이
         // Build()(BuildTestCityScene.cs가 에디터에서 딱 한 번 부른다,
@@ -595,7 +593,7 @@ namespace Saga.Realm.UI
 
         /// <summary>명령/문답/공격/계략 네 결과 처리가 공통으로 쓰는
         /// confirm/error 재생 (`RealmAudio.cs` 클래스 주석 참고).</summary>
-        private void PlayOutcomeSfx(bool ok) => RealmAudio.PlaySfx(ok ? "ui_confirm" : "ui_error", ok ? confirmClip : errorClip); // tasks U-0104
+        private void PlayOutcomeSfx(bool ok) => RealmAudio.PlaySfx(ok ? "ui_confirm" : "ui_error"); // tasks U-0104
 
         // 닫기 버튼 영속 리스너용(람다 불가 — SagaCore/ButtonWiring.cs, 2026-09-23 먹통 버그).
         private void CloseAttackPanel() => _attackPanel.SetActive(false);

@@ -35,10 +35,6 @@ namespace Saga.EditorTools
         private const string CityFarmMatPath = "Assets/Art/Environment/PBR/leafy_grass_URPLit.mat";
         private const string CityMarketMatPath = "Assets/Art/Environment/PBR/dark_wooden_planks_URPLit.mat";
 
-        // 2026-09-14 "사운드" — RealmCommandUi.cs 클래스 주석 참고. FOREST/GO와
-        // 같은 Kenney CC0 자산 트리(Assets/Art/Audio, 다섯 판 공유 원본).
-        private const string ConfirmClipPath = "Assets/Art/Audio/Kenney_InterfaceSounds/confirmation_001.ogg";
-        private const string ErrorClipPath = "Assets/Art/Audio/Kenney_InterfaceSounds/error_001.ogg";
 
         [MenuItem("Saga/Build TestCity Scene")]
         public static void Build()
@@ -288,10 +284,6 @@ namespace Saga.EditorTools
 
             var commandsGo = new GameObject("RealmCommands");
             var commandUi = commandsGo.AddComponent<RealmCommandUi>();
-            var confirmClip = AssetDatabase.LoadAssetAtPath<AudioClip>(ConfirmClipPath);
-            var errorClip = AssetDatabase.LoadAssetAtPath<AudioClip>(ErrorClipPath);
-            if (confirmClip != null) SetPrivateField(commandUi, "confirmClip", confirmClip);
-            if (errorClip != null) SetPrivateField(commandUi, "errorClip", errorClip);
             commandUi.Build();
         }
 
