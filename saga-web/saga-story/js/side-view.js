@@ -505,7 +505,7 @@
     var dur = 1.8, edge = 0.3;
     var a = Math.min(1, (dur - best.life) / edge, best.life / edge);
     if (a <= 0.02) { return; }
-    var y = W <= 520 ? topBelow() + 90 : H * 0.34, bandH = W <= 520 ? 52 : 64, bw = W <= 520 ? Math.min(W, 300) : W, bx = (W - bw) / 2;   // W-0364 폰 세로는 주인공 위가 아니라 보스 띠 밑에 얇고 좁게
+    var y = W <= 520 ? topBelow() + 90 : H * 0.34, bandH = W <= 520 ? 38 : 64, bw = W <= 520 ? Math.min(W, 280) : W, bx = (W - bw) / 2;   // W-0364 폰 세로는 주인공 위가 아니라 보스 띠 밑에 얇고 좁게
     hudRect(bx, y - bandH / 2, bw, bandH, '보스 등장');
     ctx.globalAlpha = a;
     ctx.fillStyle = 'rgba(10,8,12,0.62)';
@@ -514,12 +514,12 @@
     ctx.fillRect(bx, y - bandH / 2, bw, 2);
     ctx.fillRect(bx, y + bandH / 2 - 2, bw, 2);
     ctx.textAlign = 'center';
-    ctx.font = '700 15px system-ui, sans-serif';
+    ctx.font = W <= 520 ? '700 12px system-ui, sans-serif' : '700 15px system-ui, sans-serif';   // W-0364 폰은 띠가 얇아 글도 한 단 작게
     ctx.fillStyle = 'rgba(240,226,200,0.95)';
-    (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, '👺 보스 등장', W / 2, y - 8);
-    ctx.font = '800 22px system-ui, sans-serif';
+    (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, '👺 보스 등장', W / 2, y - (W <= 520 ? 6 : 8));
+    ctx.font = W <= 520 ? '800 16px system-ui, sans-serif' : '800 22px system-ui, sans-serif';
     ctx.fillStyle = '#f0e2c8';
-    ctx.fillText(best.name, W / 2, y + 18);
+    ctx.fillText(best.name, W / 2, y + (W <= 520 ? 13 : 18));
     ctx.textAlign = 'left';
     ctx.globalAlpha = 1;
   }
@@ -535,7 +535,7 @@
     var dur = 2.0, edge = 0.3;
     var a = Math.min(1, (dur - best.life) / edge, best.life / edge);
     if (a <= 0.02) { return; }
-    var y = W <= 520 ? topBelow() + 90 : H * 0.34, bandH = W <= 520 ? 52 : 64, bw = W <= 520 ? Math.min(W, 300) : W, bx = (W - bw) / 2;   // W-0364 폰 세로는 주인공 위가 아니라 보스 띠 밑에 얇고 좁게
+    var y = W <= 520 ? topBelow() + 90 : H * 0.34, bandH = W <= 520 ? 38 : 64, bw = W <= 520 ? Math.min(W, 280) : W, bx = (W - bw) / 2;   // W-0364 폰 세로는 주인공 위가 아니라 보스 띠 밑에 얇고 좁게
     hudRect(bx, y - bandH / 2, bw, bandH, '레벨 업');
     ctx.globalAlpha = a;
     ctx.fillStyle = 'rgba(12,10,6,0.62)';
@@ -544,12 +544,12 @@
     ctx.fillRect(bx, y - bandH / 2, bw, 2);
     ctx.fillRect(bx, y + bandH / 2 - 2, bw, 2);
     ctx.textAlign = 'center';
-    ctx.font = '700 15px system-ui, sans-serif';
+    ctx.font = W <= 520 ? '700 12px system-ui, sans-serif' : '700 15px system-ui, sans-serif';   // W-0364 폰은 띠가 얇아 글도 한 단 작게
     ctx.fillStyle = 'rgba(240,226,200,0.95)';
-    (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, '🌟 레벨 업', W / 2, y - 8);
-    ctx.font = '800 22px system-ui, sans-serif';
+    (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, '🌟 레벨 업', W / 2, y - (W <= 520 ? 6 : 8));
+    ctx.font = W <= 520 ? '800 16px system-ui, sans-serif' : '800 22px system-ui, sans-serif';
     ctx.fillStyle = '#fff3cf';
-    ctx.fillText('Lv.' + best.lv, W / 2, y + 18);
+    ctx.fillText('Lv.' + best.lv, W / 2, y + (W <= 520 ? 13 : 18));
     ctx.textAlign = 'left';
     ctx.globalAlpha = 1;
   }
@@ -564,7 +564,7 @@
     var dur = 2.0, edge = 0.3;
     var a = Math.min(1, (dur - best.life) / edge, best.life / edge);
     if (a <= 0.02) { return; }
-    var y = W <= 520 ? topBelow() + 90 : H * 0.34, bandH = W <= 520 ? 52 : 64, bw = W <= 520 ? Math.min(W, 300) : W, bx = (W - bw) / 2;   // W-0364 폰 세로는 주인공 위가 아니라 보스 띠 밑에 얇고 좁게
+    var y = W <= 520 ? topBelow() + 90 : H * 0.34, bandH = W <= 520 ? 38 : 64, bw = W <= 520 ? Math.min(W, 280) : W, bx = (W - bw) / 2;   // W-0364 폰 세로는 주인공 위가 아니라 보스 띠 밑에 얇고 좁게
     hudRect(bx, y - bandH / 2, bw, bandH, '사명 완료');
     ctx.globalAlpha = a;
     ctx.fillStyle = 'rgba(8,12,10,0.62)';
@@ -573,12 +573,12 @@
     ctx.fillRect(bx, y - bandH / 2, bw, 2);
     ctx.fillRect(bx, y + bandH / 2 - 2, bw, 2);
     ctx.textAlign = 'center';
-    ctx.font = '700 15px system-ui, sans-serif';
+    ctx.font = W <= 520 ? '700 12px system-ui, sans-serif' : '700 15px system-ui, sans-serif';   // W-0364 폰은 띠가 얇아 글도 한 단 작게
     ctx.fillStyle = 'rgba(226,240,230,0.95)';
-    (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, '📋 사명 완수', W / 2, y - 8);
-    ctx.font = '800 22px system-ui, sans-serif';
+    (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, '📋 사명 완수', W / 2, y - (W <= 520 ? 6 : 8));
+    ctx.font = W <= 520 ? '800 16px system-ui, sans-serif' : '800 22px system-ui, sans-serif';
     ctx.fillStyle = '#e2f0e6';
-    ctx.fillText(best.name, W / 2, y + 18);
+    ctx.fillText(best.name, W / 2, y + (W <= 520 ? 13 : 18));
     ctx.textAlign = 'left';
     ctx.globalAlpha = 1;
   }
