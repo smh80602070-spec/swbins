@@ -715,7 +715,7 @@
    "tool": "factory.py (K-0158 2D 공장, Blender + style_pass)",
    "model": "-",
    "license": "VRoid 샘플 이용 조건(상업·개작 허용)·CC0 동작 — 자체 렌더",
-   "count": 2,
+   "count": 9,
    "where": [
     "saga-assets/sprites2d_factory"
    ]
@@ -1157,7 +1157,7 @@
  "doc_sections": {
   "total": 232,
   "by_license": {
-   "CC0": 158,
+   "CC0": 159,
    "MIT": 14,
    "CC-BY": 26,
    "Kenney(CC0)": 37,
@@ -1211,11 +1211,6 @@
    {
     "doc": "saga-web/saga-go/assets/ASSET_LICENSES.md",
     "section": "VRM 애니메 아바타 가공 (2026-09-20)",
-    "licenses": []
-   },
-   {
-    "doc": "saga-web/saga-go/assets/ASSET_LICENSES.md",
-    "section": "VRM 애니메 아바타 d~z (`assets/models/people/anime/avatar_sample_d~z.glb`, 2026-10-02)",
     "licenses": []
    },
    {

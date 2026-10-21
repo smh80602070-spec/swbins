@@ -8,5 +8,13 @@
   "pool_e_human_131",
   "pool_d_human_123",
   "pool_basef_human_115"
- ]
+ ],
+ "factory": [
+  "hero_m",
+  "hero_f",
+  "rts_inf_enemy",
+  "rts_arc_ally",
+  "rts_arc_enemy"
+ ],
+ "factory_spec": "K-0158 공장 규격: 192px(긴 무기 풀은 manifest px 가 더 큼 — px_per_m 같음) · 방향 5(0 정면·1 앞대각·2 옆·3 뒤대각·4 뒤, 반대쪽은 뒤집기) · 동작 idle/walk/run/attack/attack2/cast/hit/death/sit/talk(없는 것은 manifest missing) · 8프레임(death·hit 6) · 발 = 위에서 0.88 · 그림체 C-toon-1"
 }

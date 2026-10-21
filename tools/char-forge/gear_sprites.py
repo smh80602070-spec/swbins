@@ -61,7 +61,7 @@ bone_mat.use_nodes = True
 bone_mat.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value = (0.92, 0.88, 0.72, 1)
 
 
-def tint_material(m, rgb, constant, fac=1.0, mottle=None, sat=None, val=None, ramp=None):
+def tint_material(m, rgb, constant, fac=1.0, mottle=None, sat=None, val=None, ramp=None, ramp_lo=0.5):
     nt = m.node_tree
     done = False
     for n in list(nt.nodes):
@@ -86,7 +86,7 @@ def tint_material(m, rgb, constant, fac=1.0, mottle=None, sat=None, val=None, ra
             bw = nt.nodes.new('ShaderNodeRGBToBW')
             nt.links.new(out, bw.inputs['Color'])
             rp = nt.nodes.new('ShaderNodeValToRGB')
-            rp.color_ramp.elements[0].position = 0.5
+            rp.color_ramp.elements[0].position = ramp_lo     # K-0159 cloth_by 는 0.0(무늬 명암을 다 살림)
             rp.color_ramp.elements[0].color = (ramp[0][0], ramp[0][1], ramp[0][2], 1)
             rp.color_ramp.elements[1].position = 1.0
             rp.color_ramp.elements[1].color = (ramp[1][0], ramp[1][1], ramp[1][2], 1)
@@ -308,6 +308,8 @@ def add_gear(arm, objs, gear, pal_name, seed=1, hue=0.0):
                 t = 0.5 - v.co.y            # 0 위(목) … 1 아래(밑단)
                 v.co.x *= 0.34 + 0.55 * t
                 v.co.z += (0.02 + 0.2 * t * t) + 0.035 * math.sin(v.co.x * 20) * t
+                if st == 'wrap':      # K-0159 망토 양 옆을 몸 앞쪽으로 감싸 — 달리기에서 가슴이 비틀려도 옆모습에서 판자처럼 얇아졌다 넓어졌다 깜박이지 않게
+                    v.co.z -= 1.1 * v.co.x * v.co.x
                 if t > 0.96:
                     v.co.y -= 0.03 + 0.05 * abs(math.sin(v.co.x * 17))
             sld = o.modifiers.new('sol', 'SOLIDIFY')
@@ -458,7 +460,7 @@ def build(kind, x):
     global FS
     FS = 1.0 if vrm0 else -1.0     # 정면이 +Y(VRM0) 인지 −Y(VRM1) 인지
     p = P[kind]
-    if any(k in p for k in ('skin', 'cloth', 'hair', 'eye')):
+    if any(k in p for k in ('skin', 'cloth', 'hair', 'eye', 'cloth_by', 'hair_ramp')):
         seen = set()
         for o in objs:
             if o.type != 'MESH':
@@ -469,10 +471,15 @@ def build(kind, x):
                     continue
                 seen.add(m.name)
                 nm = m.name.split('.')[0]   # 두 번째 가져오기부터 이름에 .001 이 붙는다
-                if nm.endswith('_SKIN') and 'skin' in p:
+                cb = next((v for k, v in p.get('cloth_by', {}).items() if k in nm and '_CLOTH' in nm), None)
+                if cb:           # K-0159: 옷 조각별(Tops·Bottoms·Shoes) 다시 칠하기 — {"Tops": [[어두운 r,g,b],[밝은 r,g,b]]} 명도 사다리
+                    tint_material(m, (1, 1, 1), False, 1.0, ramp=cb, ramp_lo=0.0)
+                elif nm.endswith('_SKIN') and 'skin' in p:
                     tint_material(m, p['skin'], False, 0.8, sat=p.get('skin_sat'), val=p.get('skin_val'))
                 elif nm.endswith('_CLOTH') and 'cloth' in p:
                     tint_material(m, p['cloth'], not p.get('cloth_cfg', {}).get('keep_tex'), 1.0, mottle=p.get('cloth_cfg', {}).get('mottle'), sat=p.get('cloth_cfg', {}).get('sat'), val=p.get('cloth_cfg', {}).get('val'), ramp=p.get('cloth_cfg', {}).get('ramp'))
+                elif 'HAIR' in nm and p.get('hair_ramp'):   # K-0159 머리색을 결은 살리고 다시 칠하기
+                    tint_material(m, (1, 1, 1), False, 1.0, ramp=p['hair_ramp'], ramp_lo=0.0)
                 elif 'HAIR' in nm and 'hair' in p:
                     tint_material(m, p['hair'], True)
                 elif 'EyeIris' in nm and 'eye' in p:
@@ -560,6 +567,18 @@ P['dark_ranger'] = _mix('human', gear=['hood', 'cape', 'bracer:cloth', 'chest:st
 _RAMPS = {'demon': ((0.12, 0.01, 0.04), (1.0, 0.42, 0.28)), 'undead': ((0.06, 0.10, 0.14), (0.78, 0.92, 0.88)), 'goblin': ((0.08, 0.14, 0.04), (0.82, 0.95, 0.40))}
 for _k, _r in _RAMPS.items():
     P[_k + '_fancy_gm'] = dict(P[_k + '_fancy'], cloth_cfg=dict(P[_k + '_fancy']['cloth_cfg'], ramp=_r))
+# K-0159: 계획 json 이 벌을 직접 정한다 — KIND_JSON='{"이름": {"base":"human", "hair":[r,g,b], "cloth":[..], "gear":[..], "pal":{"cloth":[..], ...}}}'
+#   (still 그림과 같은 사람이 되게 머리색·옷 색·망토·갑주를 맞춤. pal 이 dict 면 sage 바탕에 덮어 새 팔레트로)
+import json as _kj
+for _k, _v in _kj.loads(os.environ.get('KIND_JSON') or '{}').items():
+    _v = dict(_v)
+    if isinstance(_v.get('pal'), dict):
+        PALS['pal_' + _k] = dict(PALS['sage'], **{kk: tuple(vv) for kk, vv in _v['pal'].items()})
+        _v['pal'] = 'pal_' + _k
+    for _ck in ('hair', 'cloth', 'skin', 'eye', 'scale'):
+        if _ck in _v:
+            _v[_ck] = tuple(_v[_ck])
+    P[_k] = _mix(_v.pop('base', 'human'), **_v)
 STEP = 1.5
 for i, k in enumerate(kinds):
     build(k, i * STEP)

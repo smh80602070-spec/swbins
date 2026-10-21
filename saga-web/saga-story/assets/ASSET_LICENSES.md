@@ -370,6 +370,8 @@ Quaternius "Ultimate Monsters"(CC0, 사가나락 `assets/models/monsters/quatern
 같은 문서의 "세 시대 적 로봇 셋"·"몬스터 2D 시트" 절과 사가만리 문서 "세 시대 사람·적" 절이 정본이다(poly.pizza 몸이 섞여 있어 **표시 의무가 있는 항목은 그쪽 문구를 그대로 이행**).
 이 판에는 GLB 가 없고 그림만 들어와 있다. 그림을 다시 뽑거나 몸을 바꾸면 사가나락 문서의 해당 절을 같이 본다.
 
+2026-10-21 K-0159 2D 에셋 공장 사람 still 풀 `hero_m`·`hero_f` — 192px(무기 풀은 256·384px, px/m 같음)·5방향·10동작, 그림체 C-toon-1, 자동 판정 PASS + 대조판 눈 판정 ○△. 정본 `saga-assets/sprites2d_factory/<풀>/`(옆 `<풀>.license.json`), 몸 = VRoid 공식 샘플 옷 이식 몸(상업·개작 허용, K-0024) + 자체 색 칠·절차 장비(`gear_sprites.py` KIND_JSON) + CC0 UAL 동작·CMU 모캡, 무기 = 자체 툰 무기(`saga-assets/world/toon/wpn_*`). 풀 목록은 `sprites2d_sheets/index.json` 의 `factory`. 이 판은 아직 안 읽는다(배선 W-0370).
+
 <!-- self-made:auto (tools/asset-audit/self_docs.py, K-0119) — 손으로 고치지 말 것 -->
 ## 자체 산출 사본 — saga-assets 정본과 md5 같은 파일 (자동)
 
@@ -377,21 +379,27 @@ Quaternius "Ultimate Monsters"(CC0, 사가나락 `assets/models/monsters/quatern
 
 | 파일 | 수 | 정본 | 도구·모델 | 라이선스 |
 |---|---|---|---|---|
-| `audio/bgm/*.ogg` | 3 | `saga-assets/bgm` | music-gen · ACE-Step/Ace-Step1.5 (acestep-v15-turbo) | MIT |
+| `audio/bgm/*` | 6 | `saga-assets/bgm`, `saga-assets/bgm/web-mp3` | k117_audio.py, music-gen · ACE-Step/Ace-Step1.5 (acestep-v15-turbo) | CC0-1.0, MIT |
 | `cutscene/*` | 12 | `saga-assets/cutscene` | gen.py · Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0 |
-| `icons/icon64/*` | 53 | `saga-assets/icons/icon64` | gen.py · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `icons/icon64/*` | 206 | `saga-assets/icons/icon64` | gen.py (ComfyUI) · animagine-xl-4.0-opt, gen.py · animagine-xl-4.0-opt, make_ui_icons.py · none | CreativeML OpenRAIL++-M, CC0-1.0 |
 | `map/icons/*` | 14 | `saga-assets/map/icons` | make_map.py | CC0-1.0 |
 | `sprites2d_sheets/pool_basef_undead_111/*` | 6 | `saga-assets/sprites2d/pool_basef_undead_111` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
 | `sprites2d_sheets/pool_e_goblin_126/*` | 6 | `saga-assets/sprites2d/pool_e_goblin_126` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
 | `sprites2d_sheets/pool_f_demon_136/*` | 6 | `saga-assets/sprites2d/pool_f_demon_136` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
 | `sprites2d_sheets/pool_g_orc_141/*` | 6 | `saga-assets/sprites2d/pool_g_orc_141` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
-| `store/*` | 2 | `saga-assets/store/story` | gen.py · Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0 |
+| `store/*` | 2 | `saga-assets/store/story` | gen.py · Illustrious-XL-v2.0, gen.py (ComfyUI) · Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0, CreativeML OpenRAIL-M |
 | `ui/*` | 19 | `saga-assets/ui/dungeon`, `saga-assets/ui/story` | uigen.py | CC0-1.0 |
 | `vfx/*` | 4 | `saga-assets/vfx` | vfxgen.py | CC0-1.0 |
-| `web2d/bg/*` | 40 | `saga-assets/web2d/bg` | gen.py · Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0 |
+| `web2d/bg/*` | 50 | `saga-assets/web2d/bg`, `saga-assets/web2d/story-front` | gen.py · Illustrious-XL-v2.0, gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0, CreativeML OpenRAIL++-M |
+| `web2d/bg2d/story_field_meadow/*` | 6 | `saga-assets/web2d/bg2d/story_field_meadow` | gen.py · Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0 |
+| `web2d/bg2d/story_forest/*` | 6 | `saga-assets/web2d/bg2d/story_field_meadow`, `saga-assets/web2d/bg2d/story_forest` | gen.py · Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0 |
+| `web2d/cutout/*` | 1 | `saga-assets/web2d/cutout` | 자체 도구 | 정본 license.json 참조 |
+| `web2d/cutout/hl_mukhyang/*` | 17 | `saga-assets/web2d/cutout/hl_mukhyang` | cutout_parts.py (Blender 옆모습 부위 렌더) | MIT |
+| `web2d/cutout/sg_zhugeliang/*` | 17 | `saga-assets/web2d/cutout/sg_zhugeliang` | cutout_parts.py (Blender 옆모습 부위 렌더) | MIT |
 | `web2d/moving/beast_dog/*` | 3 | `saga-assets/web2d/moving/beast_dog` | gen.py · animagine-xl-4.0-opt, gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
 | `web2d/moving/beast_wolf/*` | 3 | `saga-assets/web2d/moving/beast_wolf` | gen.py · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
 | `web2d/moving/hero_f/*` | 3 | `saga-assets/web2d/moving/hero_f` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
 | `web2d/moving/hero_m/*` | 3 | `saga-assets/web2d/moving/hero_m` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
-| `web2d/tile/*` | 6 | `saga-assets/web2d/tile` | gen.py · sd_xl_base_1.0 | CreativeML OpenRAIL++-M |
+| `web2d/prop/*` | 50 | `saga-assets/web2d/story-prop` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `web2d/tile/*` | 86 | `saga-assets/web2d/story-tile`, `saga-assets/web2d/tile` | gen.py (ComfyUI) · animagine-xl-4.0-opt, gen.py · sd_xl_base_1.0 | CreativeML OpenRAIL++-M |
 <!-- /self-made:auto -->

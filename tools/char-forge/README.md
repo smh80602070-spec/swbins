@@ -58,8 +58,7 @@ py tools/char-forge/fetch_sources.py                                 # 입력 �
 
 | 입력 | 쓰임 | 라이선스(확인한 곳) |
 |---|---|---|
-| **MakeHuman / MPFB 기본 몸·모프·스킨** | 몸 비율(키·체격·나이·얼굴형)을 수치로 조절 | 기본 에셋 CC0, 내보낸 모델 CC0 — 닫힌 소스 상용 게임 OK. GPL 은 애드온 **코드**에만 걸린다(makehumancommunity.org FAQ "use in closed source"·"can I sell models"). **제3자 에셋은 따로 확인** |
-| **MakeHuman 커뮤니티 CC0 옷 팩 14**(09-26, `mh_*`) | 진짜 옷 메시 126벌·머리카락 34·수염 5(드레스·기모노·윗옷·바지·치마·신·장갑·모자·투구·정장·수도복·바이킹 셋, 기본 양복·머리 색 바꿈) | 팩 목록 json 의 항목마다 CC0(`fetch_sources.py` 가 검사). 뺀 것(`exclude`): CC-BY 장화 하나 · 원작 캐릭터 옷 셋 · 정치 문구 모자 · 원작 이름 머리. 가면 팩(masks01)은 슈퍼히어로풍이라 안 들인다 |
+| MakeHuman/MPFB 몸·CC0 옷 팩 14 | (폐기 — 10-08 용량 정리로 몸 지움) | CC0 확인 기록은 `HISTORY.md` H3 |
 | **Quaternius Universal Base Characters** | 이미 뼈가 심긴 기본 몸 6(보통·10대·영웅 비율 × 남녀) + 머리 모양 20 | CC0(quaternius.com). 무료판은 60~70%만 들어 있다 |
 | **Quaternius Universal Animation Library 1·2** | 동작 120+·130+(걷기 여러 방향·전투·총·감정 표현). 위 몸과 같은 뼈 | CC0(quaternius.com, Godot Asset Store 에도 올라와 있다). 무료판은 일부만 들어 있다 |
 | **Quaternius Modular Character Outfits - Fantasy** | 옷(무료판 넷: 여자·남자 × 순찰자·농부, 색 두 벌씩). 위 몸·동작과 같은 뼈 | CC0(quaternius.com·itch). 옷은 **Regular 비율**로 재단돼 있고 "머리만 쓰라"(팩 Readme) |
@@ -92,42 +91,15 @@ py tools/char-forge/fetch_sources.py                                 # 입력 �
 
 ## 7. 교체 순서 (요약)
 
-단계 0 도구 뼈대 ✅ · 1 동작 먼저 교체(saga-godot) ✅ · 2 saga-godot 몸 = VRoid ✅ · 3 saga-unity 몸 공방 후보(사람 판정 대기) ⏳ · 4 도감 대량 레시피(도구만 끝, 보류) ⏸ · 5 상용 문턱 = `tools/asset-audit` 출처 검사 ✅. 기준·측정·세션 일지 전체는 `HISTORY.md` H4.
+단계 0 도구 뼈대 ✅ · 1 동작 먼저 교체(saga-godot) ✅ · 2 saga-godot 몸 = VRoid ✅ · 3 saga-unity 몸 공방 후보(사람 판정 대기) ⏳ · 4 도감 레시피 ⏸ · 5 출처 검사 ✅ (전체 `HISTORY.md` H4).
 
 ## 8. 사람 몫 · 결정 (요약)
 
 D1 무료판만 · D2 얼굴 toon|real 축(godot=toon, unity=real, 한 화면에 섞지 않는다) · D3 Unity 는 FBX(Humanoid), Godot 은 `.glb` · D4 saga-godot 몸 = VRoid 직접 디자인 · D5 unity 몸 = Mixamo 유지·공개 저장소 밖(출처 검사로 대조). 팩 받기는 사람이 itch.io 버튼을 눌러 `Downloads` 에 둔다. 까닭·전문은 `HISTORY.md` H5, 그래픽 예상은 H6.
 
-## 9. 지금 Mixamo·VRoid 가 쓰이는 자리 (교체 대상)
+## 9·10. Mixamo·VRoid 자리 · VRoid 주역 들이기 (접음, K-0159)
 
-| 트랙 | 자리 | 지금 | 대체 |
-|---|---|---|---|
-| godot | GO·FOREST 플레이어 몸 | VRoid `AvatarSample_A` · `saga_forest_avatar_01` | 툰 레시피 |
-| godot | DUNGEON 영웅 | VRoid `dungeon_hero_01` | 툰 레시피 |
-| unity | 주역·적 Maria·Abe·Brute | Mixamo 몸 + 클립 | PBR 레시피 + UAL |
-| unity | 동행 무사(Paladin)·술사(Peasant Girl)·유격(Erika Archer)·마을 사람 | Mixamo | PBR 레시피 + 장비 소켓 |
-| unity | 짐승·괴물(Goblin·Pumpkinhulk·Warrok·Parasite·Nightshade·Jolleen·Skeletonzombie) | Mixamo | 같은 몸의 비율 극단값 + kitbash, 떠 있는 것은 Rigify 뼈 |
-| unity | 이동 기술(등반·활공·수영·물 위·점프)·방패 도발·막기 피격·활 | Mixamo 클립 | **공방 후보 있음(09-25)** — 주역·무사·유격 레시피에 `CF_*`·UAL 동작, 비교 장면 순환에 상태 추가. 게임 교체는 판정 뒤 |
-
-클립 문구의 원래 목록은 `tools/mixamo_automation/README.md` 레시피 표에 있다. 교체가 끝난 줄은 이 표에서 **지운다**(상태 표).
-
-## 10. VRoid 주역 들이기 (사람 몫 → 도구 몫)
-
-**사람 몫 — VRoid Studio 에서**
-1. 새 모델을 만들어 얼굴·머리·옷을 디자인한다. **원신 등 실제 게임 캐릭터를 베끼지 않는다**(화풍은 따라가도 되지만 특정 캐릭터 디자인은 저작권 대상). 이름 정책대로 실존·원작 인물을 본뜨지 않는다.
-2. 부품은 **VRoid 기본 제공 것**만. BOOTH 등에서 받은 텍스처·의상은 판매자 약관이 따로 있어 쓰기 전에 알려 준다.
-3. 내보내기 → VRM(0.0·1.0 둘 다 된다). 라이선스 칸: 아바타 사용 = **모든 사람** · 상업 이용 = **개인·법인 허가** · 재배포 = **허가** · 개변 = **허가**
-   (공개 저장소에 올리고 게임에 넣어 팔 수 있게 — 지금 VRoid 셋과 같은 설정).
-4. 파일 이름을 id 로(영문 소문자·숫자·_, 예 `hero_go_02.vrm`) 저장해 **다운로드 폴더**에 두고, "어느 자리(GO 플레이어·FOREST·DUNGEON·STORY·NPC 등)에 쓸지"만 알려 준다.
-
-**도구 몫 — 명령 한 번**
-
-```bash
-bash tools/char-forge/vroid_intake.sh ~/Downloads/hero_go_02.vrm hero_go_02
-```
-
-사본(.vrm+.glb) → 얼굴 데칼 굽기 → CC0 동작 여덟 굽기·파일 검증 → Godot 동작 묶음(`anim_cc0/<id>_lib.res`) → 셀 셰이더 얼굴 표 등록 → 실제 몸 점검(`probe_anim_cc0.gd`).
-VRM 메타의 라이선스 칸을 찍어 준다 — 상업·재배포가 허가가 아니면 들이지 않는다. 게임 씬에 물리는 건 자리가 정해진 뒤 따로 한다.
+교체 자리 표는 끝난 일이라 접었다(유니티 Mixamo 제거 10-05, 예전 표·절차 전문은 `git log -p -- tools/char-forge/README.md`). VRoid 주역 들이기: 사람이 VRoid 기본 부품만으로 만든 VRM(상업·재배포·개변 허가, 실존·원작 인물 본뜨기 금지)을 id 이름으로 Downloads 에 두면 `bash tools/char-forge/vroid_intake.sh ~/Downloads/<id>.vrm <id>` 한 번(얼굴 데칼·CC0 동작·Godot 묶음·점검, 메타가 허가 아니면 안 들임).
 
 ## 11. VRoid 대량 들이기 (K-0022, 2026-10-02)
 
@@ -142,7 +114,7 @@ py tools/char-forge/vroid_status.py [--all|--missing|--json]  # 인물 id × 단
 - id = 명단(`data/roster.json`) id 를 쓰면 진행표가 그 인물 줄을 채운다. VRM 원본·산출은 git 밖(`_in/`·`_out/`).
 - 산출 `_out/vroid/<id>/{<id>.glb, <id>_anims.glb, verify.ok, web/<id>.glb, log_*.txt}` + `_out/sprites/<id>/`. 게임 폴더에 놓기는 K-0019(`asset-place`).
 - Godot 부(얼굴 데칼·`anim_cc0/<id>_lib.res`)는 분리: Godot 세션에서 `vroid_intake.sh`. 한 명 처리 약 5분(시험: 동작 굽기 <1분 · 웹 경량 · 2D 시트 렌더가 대부분).
-- 웹 경량 GLB 는 모프 제거+Meshopt·WebP 1024px 로 벌당 0.6~0.8MB. 웹 3D 는 한 판에만 둔다(Pages 한도). 사람 몸 삼각형은 줄이지 않는다(뼈 왜곡, 허용치 6.5만).
+- 웹 경량 GLB 벌당 0.6~0.8MB(모프 제거+Meshopt·WebP 1024px), 한 판에만. 사람 몸 삼각형은 줄이지 않는다.
 
 ### 11-b. 옷 이식으로 인물 299명 (K-0024, 2026-10-02)
 
@@ -154,8 +126,7 @@ py tools/char-forge/outfit_swap_plan.py                   # data/outfit_swap_pla
 blender -b --factory-startup -P tools/char-forge/outfit_swap.py -- --plan tools/char-forge/data/outfit_swap_plan.json tools/char-forge/_out/parts tools/char-forge/_out/outfit_swap --render
 cp tools/char-forge/_out/outfit_swap/*.glb tools/char-forge/_in/vroid/ && bash tools/char-forge/vroid_batch.sh   # glb 입력도 받는다
 ```
-- 성별은 명단에 없어 id 해시로 정했다(남 55%) — 바꾸려면 plan 의 gender 를 고치고 다시 굽는다. 원피스 조합은 그 샘플의 상의·하의 조각까지 같이 입힌다(몸통 가림).
-- 알려진 흠: 일부 하의가 몸 살을 비치고 넓은 바지·긴 코트가 발목에서 퍼진다. 동작 중 뚫림은 정면 한 장 외에 확인 안 함.
+- 성별·원피스·알려진 흠(살 비침·발목 퍼짐)은 `tasks/tools/done/K-0024.md`·`K-0101`.
 
 ## 12. 조합 변형 (K-0072)
 
@@ -177,4 +148,5 @@ py tools/char-forge/sheet_judge.py            # _out/factory/styled 의 풀 전�
 - **정본·배포**: `saga-assets/sprites2d_factory/<풀>/` + `<풀>.license.json` → `asset-place.json` 항목 `sprites2d_factory` 와 같은 내용으로 판 `assets/sprites2d_sheets/<풀>/` + `index.json` 의 `factory` 목록. 새 판·풀은 계획 json 의 `pools`·`deploy` 와 asset-place `only` 를 같이 늘린다.
 - **이어하기**: 역할 webp 가 있으면 건너뜀(manifest 만 보지 않는다). Blender 하나씩·낮은 우선순위.
 - **처리량(10-21, 이 PC)**: 사람 풀 380칸 굽기 108초(0.29초/칸) + 그림체 55초 ≈ 2.8분, 짐승 260칸 65초 + 41초 ≈ 1.8분. GPU 는 Blender EEVEE 만(SD 없음).
+- **still 과 같은 사람(K-0159)**: `still_match.py <풀>` 이 500 몸을 still 과 띠 색으로 순위 → 머리 모양·옷 꼴이 닮은 몸을 고르고 계획 `human.kinds` 로 `gear_sprites` KIND_JSON(`hair_ramp`·`cloth_by`·`cape:wrap`·갑주·`pal`)을 맞춘다. 배율 ortho 2.2(몸 ~80%, still 94%), 창·지팡이 풀은 `px` 256(px/m 같음). 판정 6째 줄 `still`. style_pass 는 채도 > 0.10 인 곳 색상을 되살린다(`keep_hue`). 배포 `deploy` = {판 sprites2d_sheets: [풀…]}.
 - **함정**: K-0015 풀 몸(`cc0_basem`)에 모캡을 걸면 팔이 들리고 `rand:` 장비가 날개·꼬리를 붙인다 — 사람은 옷 이식 몸(`_out/vroid/<id>`) + 그 몸 `_anims` 를 쓴다. 뼈 표시 공(Icosphere)이 bbox 를 ±1m 로 부풀린다(보이는 메시만).

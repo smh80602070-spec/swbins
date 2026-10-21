@@ -68,6 +68,47 @@ def load_palette(plan_or_ref):
     return pal
 
 
+def _rgb2hsv(x):
+    mx, mn = x.max(-1), x.min(-1)
+    d = mx - mn
+    r, g, b_ = x[..., 0], x[..., 1], x[..., 2]
+    h = np.zeros_like(mx)
+    m = d > 1e-6
+    rr = m & (mx == r)
+    gg = m & (mx == g) & ~rr
+    bb = m & ~rr & ~gg
+    h[rr] = ((g - b_)[rr] / d[rr]) % 6
+    h[gg] = (b_ - r)[gg] / d[gg] + 2
+    h[bb] = (r - g)[bb] / d[bb] + 4
+    return h / 6, np.where(mx > 1e-6, d / np.maximum(mx, 1e-6), 0), mx
+
+
+def _hsv2rgb(h, s, v):
+    i = np.floor(h * 6).astype(int) % 6
+    f = h * 6 - np.floor(h * 6)
+    p_, q, t = v * (1 - s), v * (1 - s * f), v * (1 - s * (1 - f))
+    sel = [(v, t, p_), (q, v, p_), (p_, v, t), (p_, q, v), (t, p_, v), (v, p_, q)]
+    out = np.zeros(h.shape + (3,), np.float32)
+    for k, (a0, a1, a2) in enumerate(sel):
+        mk = i == k
+        out[mk, 0], out[mk, 1], out[mk, 2] = a0[mk], a1[mk], a2[mk]
+    return out
+
+
+HUE_KEEP_S = 0.10      # K-0159: 원래 채도가 이만큼 넘는 곳(머리·살·옷)은 색상을 원래대로, 채도는 원래의 90% 아래로 안 내림
+
+
+def keep_hue(src, out):
+    """K-0159 색 충실 — 그림자 보랏빛·크림·팔레트 끌어당김이 갈색 머리·살을 회녹색으로 바래게 하던 것(hero_m 대조판).
+    명도(툰 계단)는 그대로 두고 색상·채도만 원래 쪽으로 되돌린다."""
+    h0, s0, _ = _rgb2hsv(src)
+    h1, s1, v1 = _rgb2hsv(out)
+    keep = s0 > HUE_KEEP_S
+    h2 = np.where(keep, h0, h1)
+    s2 = np.where(keep, np.maximum(s1, s0 * 0.9), s1)
+    return np.clip(_hsv2rgb(h2, np.clip(s2, 0, 1), v1), 0, 1)
+
+
 def style_cell(cell, pal):
     """cell: RGBA uint8 (h,w,4) → RGBA uint8."""
     a = cell[..., 3].astype(np.float32) / 255
@@ -87,6 +128,7 @@ def style_cell(cell, pal):
     o8 = np.clip(out * 255, 0, 255).astype(np.uint8)
     sn = snap_rgb_array(o8.reshape(-1, 3), pal).reshape(o8.shape).astype(np.float32) / 255
     out = out * (1 - PULL) + sn * PULL
+    out = keep_hue(rgb, out)
     na = np.where(a < 10 / 255, 0, a)
     a8 = Image.fromarray(np.clip(na * 255, 0, 255).astype(np.uint8))
     dil = np.asarray(a8.filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.GaussianBlur(0.5))).astype(np.float32) / 255
@@ -131,9 +173,11 @@ def ground_sheet(im, px, role, foot):
         lows = [_low(im[y:y + px, x:x + px]) for x in range(0, im.shape[1], px)]
         rowlow = max([v for v in lows if v is not None], default=None)
         for i, x in enumerate(range(0, im.shape[1], px)):
-            base = lows[i] if role in GROUND_EACH else rowlow
+            base = lows[i] if role in GROUND_EACH else (lows[0] if role == 'death' and lows[0] is not None else rowlow)   # K-0159: 쓰러짐은 서 있는 첫 칸 기준(누운 망토가 땅 밑으로 내려가 줄 전체를 끌어올려 머리가 잘리던 것)
             if base is not None:
                 im[y:y + px, x:x + px] = _shift(im[y:y + px, x:x + px], t - base)
+        if role == 'death':       # K-0159: 땅 밑(망토 조각이 바닥을 뚫음)은 안 보인다 — 발 줄 아래를 지운다
+            im[y + t + 1:y + px] = 0
     return im
 
 
@@ -157,6 +201,8 @@ def compare_board(raw_dir, sty_dir, plan, out_png, scale=1.5):
     cols = [('idle', 0, i) for i in range(len(plan['dirs']))] + [(r, f, 2) for r, f in (('walk', 2), ('attack', 4))]
     cols = [c for c in cols if os.path.exists(os.path.join(sty_dir, c[0] + '.webp'))]
     still = os.path.join(os.path.dirname(ref), 'moving', os.path.basename(sty_dir), 'side.webp')
+    if plan.get('still_game'):          # K-0159: 풀의 still 이 있는 판(5천하 rts_* 등)
+        still = os.path.join(ROOT, 'saga-web', plan['still_game'], 'assets', 'web2d', 'moving', os.path.basename(sty_dir), 'side.webp')
     W, H = S * (len(cols) + (1 if os.path.exists(still) else 0)), S
     board = Image.new('RGBA', (W, H * 2 + 8), (255, 255, 255, 255))
     for row, src in enumerate((raw_dir, sty_dir)):

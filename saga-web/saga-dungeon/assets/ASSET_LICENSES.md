@@ -1263,6 +1263,8 @@ Orc·Demon 은 Ultimate Monsters). 사용자 결정("사가만리처럼 대역 �
 
 2026-10-21 K-0158 2D 에셋 공장(`tools/char-forge/factory.py`) 시험 3풀 `hero_m`·`villager_a`·`beast_wolf` — 192px·5방향·10동작(짐승 7), 그림체 패스 C-toon-1, 자동 판정 PASS. 정본 `saga-assets/sprites2d_factory/<풀>/`(옆 `<풀>.license.json`), 사람 = VRoid 공식 샘플 옷 이식 몸(상업·개작 허용) + CC0 UAL 동작·CMU 모캡, 짐승 = 자체 3D wolf(TRELLIS MIT, 자체 뼈대 동작). 풀 목록은 `index.json` 의 `factory`. 이 판은 아직 안 읽는다(배선 W-0370).
 
+2026-10-21 K-0159 2D 에셋 공장 사람 still 풀 `hero_m`·`hero_f`·`villager_b`·`villager_c`·`companion_warrior`·`companion_archer` — 192px(무기 풀은 256·384px, px/m 같음)·5방향·10동작, 그림체 C-toon-1, 자동 판정 PASS + 대조판 눈 판정 ○△. 정본 `saga-assets/sprites2d_factory/<풀>/`(옆 `<풀>.license.json`), 몸 = VRoid 공식 샘플 옷 이식 몸(상업·개작 허용, K-0024) + 자체 색 칠·절차 장비(`gear_sprites.py` KIND_JSON) + CC0 UAL 동작·CMU 모캡, 무기 = 자체 툰 무기(`saga-assets/world/toon/wpn_*`). 풀 목록은 `sprites2d_sheets/index.json` 의 `factory`. 이 판은 아직 안 읽는다(배선 W-0370). K-0158 시험 `villager_a`(젊은 흰옷 몸 — still 의 노인과 달라) 는 뺐다.
+
 <!-- self-made:auto (tools/asset-audit/self_docs.py, K-0119) — 손으로 고치지 말 것 -->
 ## 자체 산출 사본 — saga-assets 정본과 md5 같은 파일 (자동)
 
@@ -1272,18 +1274,23 @@ Orc·Demon 은 Ultimate Monsters). 사용자 결정("사가만리처럼 대역 �
 |---|---|---|---|---|
 | `audio/bgm/*` | 3 | `saga-assets/bgm` | music-gen · ACE-Step/Ace-Step1.5 (acestep-v15-turbo) | MIT |
 | `cutscene/*` | 12 | `saga-assets/cutscene` | gen.py · Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0 |
-| `icons/icon64/*` | 93 | `saga-assets/icons/icon64` | gen.py · animagine-xl-4.0-opt, icon_pack.py · none | CreativeML OpenRAIL++-M, CC0-1.0 |
-| `portraits-monster/*` | 32 | `saga-assets/portraits-monster` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `icons/icon64/*` | 246 | `saga-assets/icons/icon64` | gen.py (ComfyUI) · animagine-xl-4.0-opt, gen.py · animagine-xl-4.0-opt, make_ui_icons.py · none | CreativeML OpenRAIL++-M, CC0-1.0 |
+| `portraits-monster/*` | 106 | `saga-assets/portraits-monster` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
 | `rarity/*` | 4 | `saga-assets/rarity` | raritygen.py | CC0-1.0 |
-| `sprites2d/*.png`, `beast_Manta_ray.png` | 16 | `saga-assets/sprites2d-creatures/beast` | beast2d_rebake.py (Blender render_sprite.py) | CC0-1.0 |
+| `beast_Alpaca.png`, `beast_Cow.png`, `beast_Dolphin.png`, `beast_Donkey.png`, `beast_Fox.png`, `beast_Horse.png`, `beast_Horse_White.png`, `beast_Koi.png`, `beast_Manta_ray.png`, `beast_Shark.png`, `beast_Stag.png`, `beast_Stegosaurus.png`, 외 3 | 15 | `saga-assets/sprites2d-creatures/beast` | beast2d_rebake.py (Blender render_sprite.py) | CC0-1.0 |
+| `sprites2d_sheets/beast_wolf/*` | 8 | `saga-assets/sprites2d_factory/beast_wolf` | 자체 도구 | 자체 3D 몸(saga-assets/creatures3d/wolf.glb, TRELLIS |
+| `sprites2d_sheets/hero_m/*` | 11 | `saga-assets/sprites2d_factory/hero_m` | 자체 도구 | VRoid Studio 공식 샘플 이용 조건(상업 사용·개작본 재배포 허용, 크레딧 불필요 — 옷 이식 몸  |
 | `sprites2d_sheets/pool_basem_demon_104/*` | 6 | `saga-assets/sprites2d/pool_basem_demon_104` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
 | `sprites2d_sheets/pool_d_goblin_118/*` | 6 | `saga-assets/sprites2d/pool_d_goblin_118` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
 | `sprites2d_sheets/pool_e_orc_125/*` | 6 | `saga-assets/sprites2d/pool_e_orc_125` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
 | `sprites2d_sheets/pool_g_undead_143/*` | 6 | `saga-assets/sprites2d/pool_g_undead_143` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
-| `store/*` | 2 | `saga-assets/store/dungeon` | gen.py · Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0 |
+| `store/*` | 2 | `saga-assets/store/dungeon` | gen.py · Illustrious-XL-v2.0, gen.py (ComfyUI) · Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0, CreativeML OpenRAIL-M |
 | `ui/*` | 19 | `saga-assets/ui/dungeon` | uigen.py | CC0-1.0 |
 | `vfx/*` | 17 | `saga-assets/vfx` | vfxgen.py | CC0-1.0 |
 | `web2d/bg/*` | 24 | `saga-assets/web2d/bg` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `web2d/cutout/*` | 1 | `saga-assets/web2d/cutout` | 자체 도구 | 정본 license.json 참조 |
+| `web2d/cutout/hl_mukhyang/*` | 17 | `saga-assets/web2d/cutout/hl_mukhyang` | cutout_parts.py (Blender 옆모습 부위 렌더) | MIT |
+| `web2d/cutout/sg_zhugeliang/*` | 17 | `saga-assets/web2d/cutout/sg_zhugeliang` | cutout_parts.py (Blender 옆모습 부위 렌더) | MIT |
 | `web2d/interior/*` | 6 | `saga-assets/web2d/interior` | gen.py · Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0 |
 | `web2d/moving/beast_big/*` | 3 | `saga-assets/web2d/moving/beast_big` | gen.py · animagine-xl-4.0-opt, gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
 | `web2d/moving/beast_dog/*` | 3 | `saga-assets/web2d/moving/beast_dog` | gen.py · animagine-xl-4.0-opt, gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
@@ -1296,5 +1303,9 @@ Orc·Demon 은 Ultimate Monsters). 사용자 결정("사가만리처럼 대역 �
 | `web2d/moving/villager_a/*` | 3 | `saga-assets/web2d/moving/villager_a` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
 | `web2d/moving/villager_b/*` | 3 | `saga-assets/web2d/moving/villager_b` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
 | `web2d/moving/villager_c/*` | 3 | `saga-assets/web2d/moving/villager_c` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
-| `web2d/tile/*` | 7 | `saga-assets/web2d/tile` | gen.py (ComfyUI) · z-image-turbo, gen.py · sd_xl_base_1.0 | Apache-2.0, CreativeML OpenRAIL++-M |
+| `web2d/tile/*` | 8 | `saga-assets/web2d/terrain/saga-dungeon`, `saga-assets/web2d/tile` | gen.py (ComfyUI) · z-image-turbo, gen.py · sd_xl_base_1.0 | Apache-2.0, CreativeML OpenRAIL++-M |
+| `web2d/tile/dirt_stone/*` | 1 | `saga-assets/web2d/terrain/saga-dungeon/dirt_stone` | edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) · z-image-turbo | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 |
+| `web2d/tile/field_stone/*` | 1 | `saga-assets/web2d/terrain/saga-dungeon/field_stone` | edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) · z-image-turbo | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 |
+| `web2d/tile/moss_dirt/*` | 1 | `saga-assets/web2d/terrain/saga-dungeon/moss_dirt` | edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) · sd_xl_base_1.0, z-image-turbo | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 |
+| `web2d/tile/stone_water/*` | 1 | `saga-assets/web2d/terrain/saga-dungeon/stone_water` | edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) · z-image-turbo | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 |
 <!-- /self-made:auto -->

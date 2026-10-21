@@ -70,7 +70,7 @@
 | beast2d_rebake.py (Blender render_sprite.py) | - | CC0-1.0 (자체 3D 몸 렌더 — 외부 입력 없음, 몸 출처는 creatures3d license) | 103 |
 | pet2d_k120.py (Blender render_sprite.py 옆모습, K-0114 맞춤) | - | CC0-1.0 (자체 3D 몸 렌더 — 몸 출처는 pets3d license) | 17 |
 | factory.py (K-0158 2D 공장, Blender + style_pass) | - | MIT(TRELLIS)·자체 뼈대 동작 — 자체 렌더 | 1 |
-| factory.py (K-0158 2D 공장, Blender + style_pass) | - | VRoid 샘플 이용 조건(상업·개작 허용)·CC0 동작 — 자체 렌더 | 2 |
+| factory.py (K-0158 2D 공장, Blender + style_pass) | - | VRoid 샘플 이용 조건(상업·개작 허용)·CC0 동작 — 자체 렌더 | 9 |
 | gen.py (ComfyUI) | Illustrious-XL-v2.0 | CreativeML OpenRAIL-M (저자 HF 토론 2025-04: 상업 가능, 폐쇄 파생 모델 수익화만 금지) | 10 |
 | face_sdf_bake.py (K-0151 — Blender, VRoid 얼굴 살갗 UV 위 원신식 그림자 문턱 계산 굽기) | - | MIT | 2 |
 | compress.mjs | - | CC0-1.0 (형태·뼈·동작 전부 코드, 외부 입력 없음) | 1 |
@@ -119,6 +119,6 @@
 
 ## 출처 문서(ASSET_LICENSES·ASSET_GUIDE) 요약
 
-절 232개 — 라이선스 낱말별: CC0 158, Kenney(CC0) 37, CC-BY 26, OpenRAIL 15, MIT 14, Mixamo 9, Apache-2.0 3, GPL 2, OFL 2
-낱말을 못 찾은 절(미상) 48개 — `credits.json` 의 `doc_sections.unknown` 참고.
+절 232개 — 라이선스 낱말별: CC0 159, Kenney(CC0) 37, CC-BY 26, OpenRAIL 15, MIT 14, Mixamo 9, Apache-2.0 3, GPL 2, OFL 2
+낱말을 못 찾은 절(미상) 47개 — `credits.json` 의 `doc_sections.unknown` 참고.
 

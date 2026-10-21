@@ -13,13 +13,14 @@
   "tools/char-forge/sheet_judge.py"
  ],
  "date": "2026-10-21",
- "ticket": "K-0158",
+ "ticket": "K-0159",
  "judge": {
   "same": true,
   "foot": true,
   "flicker": true,
   "crop": true,
-  "border": true
+  "border": true,
+  "still": true
  },
- "source_license": "saga-web/shared/assets/characters2d8/kr2_dokgaru/kr2_dokgaru.license.json"
+ "source_license": "saga-web/shared/assets/characters2d8/kr_gyebaek/kr_gyebaek.license.json"
 }

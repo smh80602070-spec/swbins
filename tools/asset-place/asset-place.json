@@ -93,7 +93,7 @@
   },
   {
    "id": "sprites2d_factory",
-   "note": "K-0158 2D 에셋 공장(tools/char-forge/factory.py) 정본 — 192px·5방향·10동작·그림체 C-toon-1, 풀마다 manifest.json. 판 index.json 의 factory 목록은 factory.py 가 쓴다",
+   "note": "K-0158 2D 에셋 공장(tools/char-forge/factory.py) 정본 — 192px·5방향·10동작·그림체 C-toon-1, 풀마다 manifest.json. 판 index.json 의 factory 목록은 factory.py 가 쓴다 · K-0159 다섯 판 사람 still 풀(판정 ○△만, villager_a·companion_mage·rts_inf_ally·rts_cav_* 는 안 놓음)",
    "src": "saga-assets/sprites2d_factory",
    "include": [
     "*.webp",
@@ -103,11 +103,54 @@
    "targets": [
     {
      "track": "web",
-     "dir": "saga-web/saga-dungeon/assets/sprites2d_sheets",
+     "dir": "saga-web/saga-go/assets/sprites2d_sheets",
      "only": [
       "hero_m",
-      "villager_a",
-      "beast_wolf"
+      "hero_f",
+      "villager_b",
+      "villager_c"
+     ]
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-dungeon/assets/sprites2d_sheets",
+     "only": [
+      "beast_wolf",
+      "hero_m",
+      "hero_f",
+      "villager_b",
+      "villager_c",
+      "companion_warrior",
+      "companion_archer"
+     ]
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-forest/assets/sprites2d_sheets",
+     "only": [
+      "hero_m",
+      "hero_f",
+      "villager_b",
+      "villager_c"
+     ]
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-story/assets/sprites2d_sheets",
+     "only": [
+      "hero_m",
+      "hero_f"
+     ]
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-realm/assets/sprites2d_sheets",
+     "only": [
+      "hero_m",
+      "hero_f",
+      "rts_inf_enemy",
+      "rts_arc_ally",
+      "rts_arc_enemy"
      ]
     }
    ]

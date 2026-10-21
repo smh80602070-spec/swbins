@@ -283,6 +283,8 @@ Quaternius CC0 1.0, 사가나락에서 md5 그대로 복사(이미 Meshopt). `Kn
 
 2026-10-01 자체 제작 — 공방(`tools/char-forge/gear_sprites.py`)이 CC0 VRoid 몸(`tools/char-forge/_src/cc0_vroid`) 위에 절차 생성 장비를 입혀 Blender 로 굽는다(128px·8프레임·방향 3·동작 idle/walk/attack/hit/death, WebP). 병사·장수 4벌: `pool_basem_human_107`, `pool_e_human_131`, `pool_d_human_123`, `pool_basef_human_115`. 벌마다 `manifest.json` 에 몸·종류·규격·출처 문구. 원작 에셋 없음. 이 판은 아직 안 읽는다(W 티켓 — 인물·괴물 id 연결과 `sprite.js` 배선).
 
+2026-10-21 K-0159 2D 에셋 공장 사람 still 풀 `hero_m`·`hero_f`·`rts_inf_enemy`·`rts_arc_ally`·`rts_arc_enemy` — 192px(무기 풀은 256·384px, px/m 같음)·5방향·10동작, 그림체 C-toon-1, 자동 판정 PASS + 대조판 눈 판정 ○△. 정본 `saga-assets/sprites2d_factory/<풀>/`(옆 `<풀>.license.json`), 몸 = VRoid 공식 샘플 옷 이식 몸(상업·개작 허용, K-0024) + 자체 색 칠·절차 장비(`gear_sprites.py` KIND_JSON) + CC0 UAL 동작·CMU 모캡, 무기 = 자체 툰 무기(`saga-assets/world/toon/wpn_*`). 풀 목록은 `sprites2d_sheets/index.json` 의 `factory`. 이 판은 아직 안 읽는다(배선 W-0370).
+
 <!-- self-made:auto (tools/asset-audit/self_docs.py, K-0119) — 손으로 고치지 말 것 -->
 ## 자체 산출 사본 — saga-assets 정본과 md5 같은 파일 (자동)
 
@@ -292,14 +294,18 @@ Quaternius CC0 1.0, 사가나락에서 md5 그대로 복사(이미 Meshopt). `Kn
 |---|---|---|---|---|
 | `audio/bgm/*` | 3 | `saga-assets/bgm` | music-gen · ACE-Step/Ace-Step1.5 (acestep-v15-turbo) | MIT |
 | `cutscene/*` | 12 | `saga-assets/cutscene` | gen.py · Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0 |
-| `icons/icon64/*` | 11 | `saga-assets/icons/icon64` | gen.py · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
+| `icons/icon64/*` | 44 | `saga-assets/icons/icon64` | make_ui_icons.py · none, gen.py · animagine-xl-4.0-opt, gen.py (ComfyUI) · animagine-xl-4.0-opt | CC0-1.0, CreativeML OpenRAIL++-M |
+| `models/troops/*` | 1 | `saga-assets/troops` | compress.mjs | CC0-1.0 |
 | `realm-ui/*` | 40 | `saga-assets/web2d/realm-ui` | make_realm_ui.py, gen.py (ComfyUI) · animagine-xl-4.0-opt, make_realm_ui.py woff2 | CC0-1.0 코드 배치 + 글꼴 SIL OFL-1.1, CC0-1.0 |
 | `sprites2d_sheets/pool_basef_human_115/*` | 6 | `saga-assets/sprites2d/pool_basef_human_115` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
 | `sprites2d_sheets/pool_basem_human_107/*` | 6 | `saga-assets/sprites2d/pool_basem_human_107` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
 | `sprites2d_sheets/pool_d_human_123/*` | 6 | `saga-assets/sprites2d/pool_d_human_123` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
 | `sprites2d_sheets/pool_e_human_131/*` | 6 | `saga-assets/sprites2d/pool_e_human_131` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |
-| `store/*` | 2 | `saga-assets/store/realm` | gen.py · Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0 |
+| `store/*` | 2 | `saga-assets/store/realm` | gen.py · Illustrious-XL-v2.0, gen.py (ComfyUI) · Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0, CreativeML OpenRAIL-M |
 | `ui/*` | 19 | `saga-assets/ui/dungeon`, `saga-assets/ui/realm` | uigen.py | CC0-1.0 |
+| `web2d/cutout/*` | 1 | `saga-assets/web2d/cutout` | 자체 도구 | 정본 license.json 참조 |
+| `web2d/cutout/hl_mukhyang/*` | 17 | `saga-assets/web2d/cutout/hl_mukhyang` | cutout_parts.py (Blender 옆모습 부위 렌더) | MIT |
+| `web2d/cutout/sg_zhugeliang/*` | 17 | `saga-assets/web2d/cutout/sg_zhugeliang` | cutout_parts.py (Blender 옆모습 부위 렌더) | MIT |
 | `web2d/moving/hero_f/*` | 3 | `saga-assets/web2d/moving/hero_f` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
 | `web2d/moving/hero_m/*` | 3 | `saga-assets/web2d/moving/hero_m` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
 | `web2d/moving/rts_arc_ally/*` | 3 | `saga-assets/web2d/moving/rts_arc_ally` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
@@ -309,5 +315,9 @@ Quaternius CC0 1.0, 사가나락에서 md5 그대로 복사(이미 Meshopt). `Kn
 | `web2d/moving/rts_inf_ally/*` | 3 | `saga-assets/web2d/moving/rts_inf_ally` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
 | `web2d/moving/rts_inf_enemy/*` | 3 | `saga-assets/web2d/moving/rts_inf_enemy` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
 | `web2d/rts/*` | 77 | `saga-assets/web2d/rts` | rtsai.py transitions, rtsgen.py, gen.py · animagine-xl-4.0-opt | CC0-1.0, CreativeML OpenRAIL++-M |
-| `web2d/tile/*` | 9 | `saga-assets/web2d/tile` | gen.py · sd_xl_base_1.0 | CreativeML OpenRAIL++-M |
+| `web2d/tile/*` | 10 | `saga-assets/web2d/terrain/saga-realm`, `saga-assets/web2d/tile` | gen.py · sd_xl_base_1.0 | CreativeML OpenRAIL++-M |
+| `web2d/tile/dirt_stone/*` | 1 | `saga-assets/web2d/terrain/saga-realm/dirt_stone` | edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) · sd_xl_base_1.0 | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 |
+| `web2d/tile/grass_dirt/*` | 1 | `saga-assets/web2d/terrain/saga-realm/grass_dirt` | edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) · sd_xl_base_1.0 | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 |
+| `web2d/tile/grass_stone/*` | 1 | `saga-assets/web2d/terrain/saga-realm/grass_stone` | edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) · sd_xl_base_1.0 | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 |
+| `web2d/tile/grass_water/*` | 1 | `saga-assets/web2d/terrain/saga-realm/grass_water` | edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) · sd_xl_base_1.0 | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 |
 <!-- /self-made:auto -->
