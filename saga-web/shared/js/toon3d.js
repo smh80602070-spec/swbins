@@ -71,6 +71,7 @@
       side: src.side === undefined ? t.FrontSide : src.side,
       gradientMap: ramp()
     });
+    var TC = global.DG && global.DG.toon3dCore; if (TC && TC.pbrInto) { TC.pbrInto(src, out); }   // W-0358 법선·빛남·이름
     return out;
   }
 

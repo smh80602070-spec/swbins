@@ -1030,5 +1030,23 @@
   "ticket": "W-0362",
   "since": "2026-10-21",
   "note": "10-21: 진짜 입력 — 2나락 PC 마우스·폰 CDP 터치(길게 누르기 → 들고 있는 채 → 무기 칸 누름) 끼워짐 · 4종횡 PC 마우스 끼워짐 · 집은 순간 폰 PNG Read(받는 칸 금빛·못 받는 칸 붉은 테)"
+ },
+ {
+  "id": "sd.nightglow",
+  "name": "툰 법선·빛남 + 등·횃불 밤 불빛(W-0358) — toon3dCore.pbrInto(법선 맵·emissive·이름, 손잡이 world3d.toonPbr) · 공용 nightglow3d(glow_ 세기 낮 0.3·밤 2, 가까운 불 자리 점광 넷 고정, 손잡이 nightglow3d.on)",
+  "files": [
+   "js/toon3d-core.js",
+   "js/toon3d.js",
+   "js/nightglow3d.js"
+  ],
+  "tests": [
+   "test-web n/n"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0358",
+  "since": "2026-10-21",
+  "note": "10-21: 횃불은 이 판이 제 점광을 이미 단다 → 빛남만(glowOnly) · 굴 1·모닥불 0.5 · 촬영 없음"
  }
 ]

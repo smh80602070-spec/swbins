@@ -1304,5 +1304,23 @@
   "ticket": "W-0361",
   "since": "2026-10-21",
   "note": "10-21: PC 1280·폰 390 촬영 Read · 칸 누름 → 기존 창, 성장 단추 → 패시브 그물 열림(5/5)"
+ },
+ {
+  "id": "vl.nightglow",
+  "name": "툰 법선·빛남 + 등·횃불 밤 불빛(W-0358) — toon3dCore.pbrInto(법선 맵·emissive·이름, 손잡이 world3d.toonPbr) · 공용 nightglow3d(glow_ 세기 낮 0.3·밤 2, 가까운 불 자리 점광 넷 고정, 손잡이 nightglow3d.on)",
+  "files": [
+   "js/toon3d-core.js",
+   "js/toon3d.js",
+   "js/nightglow3d.js"
+  ],
+  "tests": [
+   "test-web n/n"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0358",
+  "since": "2026-10-21",
+  "note": "10-21: 기본 마을엔 3D 석등이 안 놓임(놓는 가구·손님 도깨비불 몫) — 엔진 길만, 촬영 없음"
  }
 ]

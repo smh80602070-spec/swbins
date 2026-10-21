@@ -1537,5 +1537,23 @@
   "ticket": "W-0357",
   "since": "2026-10-21",
   "note": "10-21: pose-shot 셋 ok(bad 0)·클립 userData.mocap 확인 · 1만리 촬영 Read(두 손 앞·오른손 위·두 손 아래 앞)"
+ },
+ {
+  "id": "go.nightglow",
+  "name": "툰 법선·빛남 + 등·횃불 밤 불빛(W-0358) — toon3dCore.pbrInto(법선 맵·emissive·이름, 손잡이 world3d.toonPbr) · 공용 nightglow3d(glow_ 세기 낮 0.3·밤 2, 가까운 불 자리 점광 넷 고정, 손잡이 nightglow3d.on)",
+  "files": [
+   "js/toon3d-core.js",
+   "js/toon3d.js",
+   "js/nightglow3d.js"
+  ],
+  "tests": [
+   "W-0358 밤 불빛 — toonify 넘김 · 세기 낮/밤 · 점광 넷 고정"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0358",
+  "since": "2026-10-21",
+  "note": "10-21: 23시 고정 촬영: 석등 불 갓 빛남·발치 작은 불빛 웅덩이, 집 벽 안 빛남 · 묶음(InstancedMesh) 등은 칸 위치로 불 자리 · 점광 켜도 fps 30 안팎(자동 품질 꺼서 견줌 1~4 차)"
  }
 ]

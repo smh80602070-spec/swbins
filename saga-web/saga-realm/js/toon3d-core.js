@@ -83,6 +83,24 @@
     return mat;
   }
 
+  /**
+   * W-0358 — 툰 재질로 바꿀 때 PBR 값 중 법선 맵(K-0152 환경 GLB)·빛남(K-0155 등·횃불 glow_fire·glow_lamp)을 넘긴다.
+   * 재질 이름은 늘 옮긴다(nightglow3d 가 glow_ 이름으로 찾는다). 손잡이 world3d.toonPbr 0 = 옛(빛깔·map 만)
+   */
+  function pbrInto(src, out) {
+    if (!src || !out) { return out; }
+    if (src.name) { out.name = src.name; }
+    var core = global.DG && global.DG.core;
+    if (core && core.tuned && !core.tuned('world3d.toonPbr', 1)) { return out; }
+    if (src.normalMap) { out.normalMap = src.normalMap; if (src.normalScale && out.normalScale) { out.normalScale.copy(src.normalScale); } }
+    var e = src.emissive;
+    if (e && out.emissive && (e.r || e.g || e.b || src.emissiveMap)) {
+      out.emissive.copy(e); out.emissiveMap = src.emissiveMap || null;
+      out.emissiveIntensity = src.emissiveIntensity === undefined ? 1 : src.emissiveIntensity;
+    }
+    return out;
+  }
+
   global.DG = global.DG || {};
-  global.DG.toon3dCore = { ramp: ramp, TOON_ON: TOON_ON, RIM_ON: RIM_ON, applyRimLight: applyRimLight };
+  global.DG.toon3dCore = { ramp: ramp, TOON_ON: TOON_ON, RIM_ON: RIM_ON, applyRimLight: applyRimLight, pbrInto: pbrInto };
 })(window);

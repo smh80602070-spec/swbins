@@ -1417,5 +1417,23 @@
   "ticket": "W-0356",
   "since": "2026-10-21",
   "note": "10-21: 27/27 지어짐·동작 움직임 확인 · 2나락 짝 82 줄도 crea:(못 찾은 7 몸 K)"
+ },
+ {
+  "id": "rk.nightglow",
+  "name": "툰 법선·빛남 + 등·횃불 밤 불빛(W-0358) — toon3dCore.pbrInto(법선 맵·emissive·이름, 손잡이 world3d.toonPbr) · 공용 nightglow3d(glow_ 세기 낮 0.3·밤 2, 가까운 불 자리 점광 넷 고정, 손잡이 nightglow3d.on)",
+  "files": [
+   "js/toon3d-core.js",
+   "js/toon3d.js",
+   "js/nightglow3d.js"
+  ],
+  "tests": [
+   "test-web n/n"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0358",
+  "since": "2026-10-21",
+  "note": "10-21: 화로 brazier_01 · 하늘 때 밤 1·새벽/해질녘 0.4(자동은 밤 거의 없음, realm3d.skyTime night 로 봄) · 촬영 없음"
  }
 ]

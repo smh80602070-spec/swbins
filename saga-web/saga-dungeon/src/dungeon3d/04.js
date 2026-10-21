@@ -525,7 +525,7 @@
     /* 후처리를 거치거나(있고 켜져 있을 때) 곧바로 그린다 — 사가만리 `world3d.js`
        의 `present()` 와 같은 꼴이다. **두 길 다 톤매핑은 한 번 걸린다**
        (`post3d.js` 머리 참고) */
-    var presentT0 = nowMs();
+    var presentT0 = nowMs(); if (global.DG.nightglow3d) { global.DG.nightglow3d.update(scene, camera, L && L.town ? 0 : 1); }
     if (global.DG.fieldInstance && global.DG.fieldInstance.cull) { global.DG.fieldInstance.cull(camera, scene); }
     var P3 = global.DG.post3d;
     if (P3) {

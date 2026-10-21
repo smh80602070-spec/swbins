@@ -1106,6 +1106,7 @@
 
     /* 후처리(PLAN 24절)를 거치거나(켜져 있을 때), 없으면 곧바로 그린다.
        두 길 다 톤매핑은 한 번 걸린다(post3d.js 머리 참고) */
+    if (global.DG.nightglow3d) { global.DG.nightglow3d.update(scene, camera, stg.mood === 'cave' ? 1 : stg.mood === 'fire' ? 0.5 : 0, 0, true); }   // W-0358 밤 불빛(빛남만 — 횃불 점광은 이 판이 이미 단다)
     var P3 = global.DG.post3d;
     if (P3 && P3.draw(renderer, scene, camera, { alt: postAlt(stg.mood), weather: 'clear' })) {
       return;

@@ -1450,6 +1450,7 @@
     }
     tickActors(t);
     statCull();
+    if (global.DG.nightglow3d) { var RSn = global.DG.realmSky3d, todN = RSn && RSn.todOf && RSn.current ? RSn.todOf(RSn.current().month) : 'noon'; global.DG.nightglow3d.update(scene, camera, ({ night: 1, sunset: 0.4, dawn: 0.4 })[todN] || 0); }   // W-0358 밤 불빛
 
     if (global.DG.realmWater3d) { global.DG.realmWater3d.tick(t, scene, tier()); } if (global.DG.realmSky3d && global.DG.realmSky3d.tick) { global.DG.realmSky3d.tick(camera); } if (global.DG.realmShadow3d) { global.DG.realmShadow3d.follow(pivotX, pivotZ, tier()); } if (global.DG.post3d) { global.DG.post3d.present(renderer, scene, camera, { alt: 0.9, weather: 'clear' }); } else { renderer.render(scene, camera); }   // W-0141 물결 시계
     requestAnimationFrame(tick);

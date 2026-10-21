@@ -42,6 +42,7 @@
   ],
   [
    "js/toon3d-core.js",
+   "js/nightglow3d.js",
    "js/toon3d.js",
    "js/anim-own.js",
    "js/clock.js",
@@ -145,6 +146,7 @@
    "js/side-layers3d.js",
    "js/vendor/three.iife.js",
    "js/toon3d-core.js",
+   "js/nightglow3d.js",
    "js/toon3d.js",
    "js/pbrground3d.js",
    "js/anim-own.js",

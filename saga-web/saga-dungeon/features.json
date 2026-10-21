@@ -1505,5 +1505,23 @@
   "ticket": "W-0355",
   "since": "2026-10-21",
   "note": "10-21: 3D 마을 전후 Read — 회색 돌 → 다진 흙(마을다움 ○)"
+ },
+ {
+  "id": "dg.nightglow",
+  "name": "툰 법선·빛남 + 등·횃불 밤 불빛(W-0358) — toon3dCore.pbrInto(법선 맵·emissive·이름, 손잡이 world3d.toonPbr) · 공용 nightglow3d(glow_ 세기 낮 0.3·밤 2, 가까운 불 자리 점광 넷 고정, 손잡이 nightglow3d.on)",
+  "files": [
+   "js/toon3d-core.js",
+   "js/toon3d.js",
+   "js/nightglow3d.js"
+  ],
+  "tests": [
+   "test-web n/n"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0358",
+  "since": "2026-10-21",
+  "note": "10-21: 1층 촬영: 횃불대 불꽃 빛남 + 둘레 작은 불빛(층 안 = 밤 1, 마을 = 낮) · 세기 1·반경 5m 로 낮춤(처음 1.5·6m 는 뒷벽이 넓게 금빛)"
  }
 ]

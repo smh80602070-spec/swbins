@@ -114,7 +114,7 @@
     if (!t || !src) { return src; }
     if (Array.isArray(src)) { return src.map(toonify); }
     if (src.isMeshToonMaterial) { return src; }
-    return new t.MeshToonMaterial({
+    var out = new t.MeshToonMaterial({
       color: src.color ? src.color.clone() : new t.Color(0xffffff),
       map: src.map || null,
       vertexColors: !!src.vertexColors,
@@ -124,6 +124,8 @@
       side: src.side === undefined ? t.FrontSide : src.side,
       gradientMap: ramp()
     });
+    var TC = global.DG && global.DG.toon3dCore; if (TC && TC.pbrInto) { TC.pbrInto(src, out); }   // W-0358 법선·빛남·이름
+    return out;
   }
 
   /* ── 외곽선("고품질 셀 셰이딩급" 3단계, 2026-09-23) ─────────────────────────────────────────────────────────

@@ -57,6 +57,7 @@ const FILES = [
   ['js/skydome3d.js', 'js/skydome3d.js', ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-realm']],   // W-0294 그린 하늘 공 — 4종횡은 옆보기 배경 층이 하늘(기준선 na)
   ['js/pbrground3d.js', 'js/pbrground3d.js', ['saga-dungeon', 'saga-story', 'saga-realm']],   // W-0295 PBR 땅(법선·거칠기는 shared/assets/ground) — 1만리·3마을은 아직 안 씀(땅 재질 손질은 그 판 티켓)
   ['js/toon3d-core.js', 'js/toon3d-core.js'],
+  ['js/nightglow3d.js', 'js/nightglow3d.js'],   // W-0358 밤 불빛(등·횃불 glow_ 재질·light_point 점광 넷) — 다섯 판
   ['js/itemicon-ids.js', 'js/itemicon-ids.js'],   // W-0025 — 아이템 아이콘 이름 표(생성물: tools/gen-itemicon-ids.mjs)
   ['js/itemicon.js', 'js/itemicon.js'],
   ['js/toon3d.js', 'js/toon3d.js', ['saga-go', 'saga-dungeon']],
