@@ -8,18 +8,30 @@
   ③ 그 프레임이 at 에 오게 하는 BVH 구간 제안(range) 을 낸다 → `POSE <클립> <번호> at ok|bad … best f … range a:b` · 끝 줄 `POSE_DONE n/m`.
 재는 식은 pose3d.measure·restOf 그대로: 몸 기준 좌표(three: y 위·z 앞·x 옆 = Blender z·−y·x), H = 쉬는 자세 머리 높이,
 fs = 왼발끝이 왼발목보다 앞(+z)이면 1 · up = y/H · fwd = (z − 골반 z)·fs/H · side = (x − 골반 x)·fs/H.
+
+K-0161 — 구운 클립 팩 점검(Blender 밖에서 부른다):
+    py tools/char-forge/mocap_pose_check.py tools/char-forge/_out/clips/ [--table tools/char-forge/data/clips30.json] [--only a,b]
+폴더의 *_anims.glb 마다 Blender 를 띄워 표의 클립 전부를 프레임마다 잰다 — ① 디딘 발 미끄러짐(발목·발끝 낮은 쪽이 바닥 2cm 안·
+멈춘 동안 수평 이동 — 발목·발끝을 따로 잰다(뒤꿈치 들기로 닿는 점이 바뀌는 건 미끄럼 아님), 표 slip_max 기본 0.03m, locomotion·no_ground 는 재기만) ② 손목 꺾임(아래팔 ↔ 손 방향 ≤ 80°) ③ 땅 뚫림(모든 뼈 머리 ≥ 쉼 발끝 −5cm)
+④ 튐(한 프레임에 뼈가 90° 넘게 돌면 — 뒤집힘) ⑤ 표 expect(항목마다 어느 프레임이든 맞으면). 줄 `CLIP <이름> PASS|FAIL …` · 끝 줄 `CLIPS_CHECK n/m`(다 PASS 면 종료 0).
 """
 import json
+import math
 import os
+import subprocess
 import sys
 
-import bpy
-from mathutils import Vector
+try:
+    import bpy
+    from mathutils import Vector
+except ImportError:          # py 로 부르면 Blender 를 띄우는 쪽(K-0161)
+    bpy = None
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import build  # noqa: E402
-import mocap_retarget as MR  # noqa: E402
+if bpy is not None:
+    import build  # noqa: E402
+    import mocap_retarget as MR  # noqa: E402
 
 BONES = {'hips': 'J_Bip_C_Hips', 'head': 'J_Bip_C_Head', 'rhand': 'J_Bip_R_Hand', 'lhand': 'J_Bip_L_Hand', 'lfoot': 'J_Bip_L_Foot', 'ltoe': 'J_Bip_L_ToeBase'}
 # pose3d.js EXPECT 그대로(웹 이름 → at, [(항목, 판정)]) — 클립 game 이름은 웹 짝(cast→Pose_cast · strong→Pose_heavy · greet→Pose_wave)
@@ -31,6 +43,11 @@ EXPECT = {
                     ('앞으로 안 뻗음(|앞|<0.15)', lambda r: abs(r['rhand']['fwd']) < 0.15),
                     ('몸 옆(오른쪽 <-0.1)', lambda r: r['rhand']['side'] < -0.1)]),
 }
+
+
+BONES2 = {'rfoot': 'J_Bip_R_Foot', 'rtoe': 'J_Bip_R_ToeBase', 'ltoe': 'J_Bip_L_ToeBase', 'lfoot': 'J_Bip_L_Foot'}
+WRIST = (('J_Bip_L_LowerArm', 'J_Bip_L_Hand', 'J_Bip_L_Middle1'), ('J_Bip_R_LowerArm', 'J_Bip_R_Hand', 'J_Bip_R_Middle1'))
+OPS = {'<': lambda a, b: a < b, '>': lambda a, b: a > b}
 
 
 def three(arm, name):
@@ -131,5 +148,140 @@ def main():
     print(f'POSE_DONE {ok_n}/{n}')
 
 
+def check_pack():
+    """K-0161 — 구운 팩(.glb)의 표 클립을 잰다(Blender 안)."""
+    glb, table, out = build.arg('--glb'), build.arg('--table'), build.arg('--json')
+    only = set(build.arg('--only').split(',')) if build.arg('--only') else None
+    t = json.load(open(table, encoding='utf-8'))
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    sc = bpy.context.scene
+    sc.render.fps, sc.render.fps_base = 30, 1.0
+    objs = build.import_new(glb)
+    arm = next(o for o in objs if o.type == 'ARMATURE')
+    arm.animation_data_create()
+    for tr in list(arm.animation_data.nla_tracks):
+        arm.animation_data.nla_tracks.remove(tr)
+    rest = rest_of(arm)
+    mw = arm.matrix_world
+    names = [b.name for b in arm.data.bones if b.name.startswith('J_Bip')]     # 루트·J_Sec(머리카락·옷 흔들 뼈)는 빼고
+    ground0 = min((mw @ arm.pose.bones[b].head).z for b in BONES2.values())
+    H = rest['H']
+    res, ok_n = [], 0
+    for c in t['clips']:
+        g = c['game']
+        if only and g not in only:
+            continue
+        act = bpy.data.actions.get(g)
+        bad, info = [], {}
+        if act is None:
+            res.append({'game': g, 'ok': False, 'bad': ['팩에 없음']})
+            print('CLIP', g, 'FAIL 팩에 없음', flush=True)
+            continue
+        arm.animation_data.action = act
+        if act.slots:
+            arm.animation_data.action_slot = act.slots[0]
+        f0, f1 = int(act.frame_range[0]), int(act.frame_range[1])
+        prevq, jump, jump_b, wrist, low = None, 0.0, '', 0.0, 9.0
+        contact = {k: [] for k in BONES2.values()}
+        hips_xy = []
+        hit = {i: None for i in range(len(c.get('expect', [])))}
+        for f in range(f0, f1 + 1):
+            sc.frame_set(f)
+            P = {n: mw @ arm.pose.bones[n].head for n in names}
+            low = min(low, min(v.z for v in P.values()) - ground0)
+            for lo, hd, fg in WRIST:
+                if fg in P:
+                    a, b = (P[hd] - P[lo]), (P[fg] - P[hd])
+                    if a.length > 1e-4 and b.length > 1e-4:
+                        wrist = max(wrist, math.degrees(a.angle(b)))
+            q = {n: (mw @ arm.pose.bones[n].matrix).to_quaternion() for n in names if n.startswith('J_Bip')}
+            if prevq:
+                for n in q:
+                    dg = math.degrees(2 * math.acos(min(1.0, abs(q[n].dot(prevq[n])))))   # q·−q 같은 회전
+                    if dg > jump:
+                        jump, jump_b = dg, f'{n}@{f}'
+            prevq = q
+            for b in contact:
+                contact[b].append(P[b].copy())
+            hips_xy.append(P[BONES['hips']].copy())
+            r = measure(arm, rest)
+            for k in ('lfoot', 'rfoot'):
+                v = three(arm, BONES2[k])
+                hp = three(arm, BONES['hips'])
+                fs = rest['fs']
+                r[k] = {'up': round(v.y / H, 3), 'fwd': round((v.z - hp.z) * fs / H, 3), 'side': round((v.x - hp.x) * fs / H, 3)}
+            r['dRH'] = round((P[BONES['rhand']] - P[BONES['head']]).length / H, 3)
+            for i, (part, axis, op, val) in enumerate(c.get('expect', [])):
+                x = r[part] if part == 'dRH' else r[part][axis]
+                if OPS[op](x, val) and hit[i] is None:
+                    hit[i] = f
+        # 디딘 발 미끄러짐 — 점(발목·발끝)마다 그 점 최저 높이 2cm 안·수직 속도 작을 때 연속 구간의 수평 이동 최대
+        slip, slip_at = 0.0, ''
+        for s_, cs in contact.items():
+            zmin = min(p.z for p in cs)
+            run = None
+            for j, p in enumerate(cs):
+                vz = abs(p.z - cs[j - 1].z) if j else 0.0
+                if p.z - zmin < 0.02 and vz < 0.006:
+                    run = p.xy.copy() if run is None else run
+                    if (p.xy - run).length > slip:
+                        slip, slip_at = (p.xy - run).length, f'{s_}@{f0 + j}'
+                else:
+                    run = None
+        lim = c.get('slip_max', 0.03)
+        if not (c.get('locomotion') or c.get('no_ground')) and slip > lim:
+            bad.append(f'미끄러짐 {slip:.3f}>{lim}')
+        if wrist > 80:
+            bad.append(f'손목 {wrist:.0f}°')
+        if low < -0.05:
+            bad.append(f'땅 뚫림 {low:.3f}')
+        if jump > 90:
+            bad.append(f'튐 {jump:.0f}°/프레임 {jump_b}')
+        for i, e in enumerate(c.get('expect', [])):
+            if hit[i] is None:
+                bad.append('expect ' + ''.join(map(str, e)))
+        info = {'frames': f1 - f0 + 1, 'slip_m': round(slip, 3), 'slip_at': slip_at, 'wrist_deg': round(wrist, 1), 'low_m': round(low, 3), 'jump_deg': round(jump, 1), 'jump_at': jump_b,
+                'expect_frames': [hit[i] for i in hit], 'drift_m': round((hips_xy[-1].xy - hips_xy[0].xy).length, 3)}
+        ok = not bad
+        ok_n += ok
+        res.append(dict(info, game=g, ok=ok, bad=bad))
+        print('CLIP', g, 'PASS' if ok else 'FAIL ' + ' / '.join(bad), json.dumps(info, ensure_ascii=False), flush=True)
+    if out:
+        json.dump({'glb': os.path.basename(glb), 'rest': rest, 'results': res}, open(out, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    print(f'CLIPS_CHECK {ok_n}/{len(res)}')
+
+
+def cli():
+    """py 로 부름 — 폴더(또는 .glb)의 팩마다 Blender 로 check_pack."""
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+    a = [x for x in sys.argv[1:] if not x.startswith('--')]
+    def opt(k, d=None):
+        return sys.argv[sys.argv.index(k) + 1] if k in sys.argv else d
+    tgt = os.path.abspath(a[0] if a else os.path.join(HERE, '_out', 'clips'))
+    table = os.path.abspath(opt('--table', os.path.join(HERE, 'data', 'clips30.json')))
+    packs = [tgt] if tgt.endswith('.glb') else sorted(os.path.join(tgt, f) for f in os.listdir(tgt) if f.endswith('_anims.glb'))
+    blender = os.environ.get('BLENDER', r'C:\Program Files\Blender Foundation\Blender 5.2\blender.exe')
+    total = passed = 0
+    for g in packs:
+        cmd = [blender, '-b', '--factory-startup', '-P', os.path.abspath(__file__), '--', '--glb', g, '--table', table,
+               '--json', os.path.splitext(g)[0] + '.check.json']
+        if opt('--only'):
+            cmd += ['--only', opt('--only')]
+        pr = subprocess.run(cmd, stdin=subprocess.DEVNULL, capture_output=True, env=dict(os.environ, PYTHONIOENCODING='utf-8'), creationflags=0x00004000 if os.name == 'nt' else 0)
+        for ln in pr.stdout.decode('utf-8', 'replace').splitlines():
+            if ln.startswith(('CLIP ', 'CLIPS_CHECK')):
+                print(os.path.basename(g), ln)
+                if ln.startswith('CLIPS_CHECK'):
+                    k, n = ln.split()[1].split('/')
+                    passed, total = passed + int(k), total + int(n)
+    print(f'CLIPS_CHECK {passed}/{total}')
+    sys.exit(0 if total and passed == total else 1)
+
+
 if __name__ == '__main__':
-    main()
+    if bpy is None:
+        cli()
+    elif '--glb' in sys.argv:
+        check_pack()
+    else:
+        main()

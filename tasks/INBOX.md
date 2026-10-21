@@ -12,3 +12,6 @@
 - [ ] 10-21 · (G-0278 끝 알림) · 고돗 ☰ 메뉴·공용 틀(saga_core ui_kit·menu_screen) 1만리 끝 → 나머지 넷 판(2나락·3마을·4종횡·5천하) 메뉴 칸 표·테마 R-0(웹 W-0254·0255 짝) + HUD 40px 단추용 작은 9-slice(모서리 24 가 짓눌림 — 부품 K 또는 slice 작게) · 고돗
 =======
 - [ ] 10-21 · (K-0165 끝 알림) · 그림만 바뀜(자리·이름 같음) — 3마을·5천하 물 바탕 `forest_water`·`realm_water` 새 물빛 + 물 쌍 아틀라스 3 · 4종횡 bg2d 깊은 동굴·숲 · 발판 산 사당·궤도 기지 색 — 캐시 갱신에 sw.js VERSION 올림 필요 · 웹/3마을·4종횡·5천하
+- [ ] 10-21 · (K-0161 끝 알림) · 모션 30 팩 `saga-assets/characters/anim-src/mocap/vroid_clips30_anims.glb`(VRoid J_Bip·30fps) + 이름표 `tools/char-forge/data/clips30.json`(판별 쓰임 games·루프·eye ○25 △5 — △ 는 소품 필요): gather throw fish_cast fish_wait bow_greet dig water stir saw sit_ground lie_down sleep sweep rake plant hammer eat drink cheer bow_shoot kick punch_combo jump hang ladder march command flag_wave ride_idle ride_charge → 웹 asset3d `ANIM_SRC`·pose3d 상황에 고른 것 배선(2D 는 공장 motion_table 로 풀마다 굽기) · 웹/다섯 판
+- [ ] 10-21 · (K-0161 끝 알림) · 같은 모션 30 팩을 고돗 `assets/anim_mocap` 로 place(asset-place `anim-mocap` 항목에 파일 하나 더) + 판별 동작 상태(채집·낚시·말·사다리·매달리기) 배선 · 고돗/다섯 판
+- [ ] 10-21 · (K-0161 끝 알림) · 같은 모션 30 팩을 유니티 Humanoid 리타깃(이름 = clips30.json game) + 판별 행동 상태 배선 · 유니티/다섯 판

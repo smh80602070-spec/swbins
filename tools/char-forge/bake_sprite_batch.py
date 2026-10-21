@@ -21,7 +21,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
 BLENDER = os.environ.get('BLENDER', r'C:\Program Files\Blender Foundation\Blender 5.2\blender.exe')
 OUT = os.path.join(HERE, '_out', 'sprites')
-CLIPMAP = 'idle=Idle_Loop,walk=Walk_Loop,sprint=Sprint_Loop,attack=Sword_Attack,hit=Hit_Chest,dodge=Roll,death=Death01,pickup=PickUp_Table'
+CLIPMAP = ('idle=Idle_Loop,walk=Walk_Loop,sprint=Sprint_Loop,attack=Sword_Attack,hit=Hit_Chest,dodge=Roll,death=Death01,pickup=PickUp_Table'
+           # K-0161 자체 키프레임 다섯(새로 굽는 몸 _anims 에도) — 모캡 25 를 더한 30 팩은 data/clips30.json → vroid_clips30_anims.glb(anim_extra c=)
+           ',water=CF_Water_Pour,sleep=CF_Sleep_Loop,flag_wave=CF_Flag_Wave_Loop,hang=CF_Hang_Loop,ride_idle=CF_Ride_Idle_Loop,ride_charge=CF_Ride_Charge_Loop')
 BELOW_NORMAL = 0x00004000
 
 
@@ -93,9 +95,9 @@ def main():
                    SPRITE_PX=str(epx), ORTHO=str(eortho), CAM_Z=str(ecz), ANIM_GLB=anims, VIEW_DEG='180')
         if nfr_of:
             env['NFR_MAP'] = ','.join(f'{cmap[r]}={nfr_of[r]}' for r in todo)
-        if plan.get('anim_extra'):                                 # 'm=<모캡 glb>' — 동작 이름 앞에 m. 이 붙는다(gear_sprites)
-            pre, path = plan['anim_extra'].split('=', 1)
-            env['ANIM_GLB'] = anims + ';' + pre + '=' + os.path.join(ROOT, path)
+        if plan.get('anim_extra'):                                 # 'm=<모캡 glb>' — 동작 이름 앞에 m. 이 붙는다(gear_sprites) · K-0161 여럿은 ';' 로('m=…;c=…')
+            env['ANIM_GLB'] = anims + ''.join(';' + pre + '=' + os.path.join(ROOT, path)
+                                              for pre, path in (x.split('=', 1) for x in plan['anim_extra'].split(';') if x))
         if e.get('weapon'):
             env['WEAPON'] = os.path.abspath(os.path.join(ROOT, e['weapon']))
             if e.get('two_hand_clips'):

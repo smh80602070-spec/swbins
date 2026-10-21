@@ -244,6 +244,15 @@
    ]
   },
   {
+   "tool": "mocap_retarget.py (K-0139·K-0161) + keyframes.py",
+   "model": "",
+   "license": "CMU Graphics Lab Motion Capture Database — 복사·수정·재배포 허가 불요(상업 포함, mocap.cs.cmu.edu FAQ) · Hahne BVH 변환 추가 제한 없음 + 자체 키프레임(tools/char-forge/keyframes.py, 이 저장소 코드) — 바탕 자세 Idle_Loop 는 ual1_standard(Quaternius, CC0)",
+   "count": 1,
+   "where": [
+    "saga-assets/characters/anim-src/mocap"
+   ]
+  },
+  {
    "tool": "mocap_retarget.py (K-0139)",
    "model": "",
    "license": "CMU Graphics Lab Motion Capture Database — \"may be copied, modified, or redistributed without permission\" (mocap.cs.cmu.edu FAQ) · BVH 변환 Bruce Hahne 2010(추가 제한 없음)",

@@ -1,0 +1,27 @@
+{
+ "note": "K-0161 모션 30 견본 — 공장 동작 표(motion_table = data/clips30.json)를 사람 풀 하나(옷 이식 VRoid kr2_dokgaru = K-0158 hero_m 몸)에 굽는다. 팩 vroid_clips30_anims.glb 는 접두 c.(anim_extra). 판 배포 없음(deploy 없음 — 판 배선은 웹 W 티켓이 고른 동작만).",
+ "game": "saga-dungeon",
+ "px": 192,
+ "ndir": 8,
+ "dirs": [0, 1, 2, 3, 4],
+ "dir_names": ["front", "front_side", "side", "back_side", "back"],
+ "ortho": 2.2,
+ "cam_z": 0.836,
+ "foot": 0.88,
+ "style": "C-toon-1",
+ "style_ref": "saga-web/saga-dungeon/assets/web2d/bg",
+ "clips": {},
+ "motion_table": "tools/char-forge/data/clips30.json",
+ "motion_prefix": "c",
+ "human": {
+  "bodies": {"kr2_dokgaru": "tools/char-forge/_out/vroid/kr2_dokgaru/kr2_dokgaru.glb"},
+  "anim_extra": "c=saga-assets/characters/anim-src/mocap/vroid_clips30_anims.glb",
+  "act": {},
+  "license": "VRoid Studio 공식 샘플 이용 조건(상업 사용·개작본 재배포 허용 — 옷 이식 몸 K-0024) + 동작 CMU 모캡(복사·수정·재배포 허가 불요)·자체 키프레임(keyframes.py) — saga-assets/characters/anim-src/mocap/vroid_clips30_anims.license.json"
+ },
+ "pools": [
+  {"id": "k161_clips30", "type": "human", "body": "kr2_dokgaru", "kind": "human", "center_roles": ["lie_down", "sleep", "sit_ground", "plant"],
+   "source_license": "saga-web/shared/assets/characters2d8/kr2_dokgaru/kr2_dokgaru.license.json"}
+ ],
+ "canon": "saga-assets/sprites2d_factory"
+}

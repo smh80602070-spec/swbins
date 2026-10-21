@@ -641,6 +641,85 @@ def _plunge():
     return True, [(0, a), (14, b), (28, a)]
 
 
+# ---------- 생활·탈것 동작 (K-0161, 10-21) — 모캡(CMU)에 없는 다섯: 물 주기·잠·깃발·말 타기 둘 ----------
+def _water_pour():
+    """물 주기 — 두 손으로 물뿌리개를 배 앞에 들고(오른손 손잡이 뒤·왼손 앞) 허리를 숙이며 앞 아래로 기울여 붓고, 붓는 동안 조금 흔들다 거둔다."""
+    feet = STAND_FEET            # 발은 그 자리(디딘 채 옮기면 미끄러진다)
+    pole = {'hand_l': (1, -0.4, -0.6), 'hand_r': (-1, -0.4, -0.6)}
+    idle = P(base=('Idle_Loop', 0), ik={'hand_l': (0.26, 0.04, 0.90), 'hand_r': (-0.26, 0.04, 0.90), **STAND_FEET})
+    hold = P(base=('Idle_Loop', 0), pelvis=(0, 0, -0.02), pole=pole,
+             dirs={'hand_l': (0, 1, -0.2), 'hand_r': (0, 1, 0.1)},
+             ik={'hand_l': (0.06, 0.30, 1.02), 'hand_r': (-0.12, 0.20, 1.08), **feet})
+    lean = {'spine_01': (0, 0.30, 1), 'spine_02': (0, 0.45, 1), 'spine_03': (0, 0.45, 1), 'neck_01': (0, 0.35, 1)}
+    def pour(s):   # 허리를 크게 숙여 물뿌리개 주둥이(왼손)를 무릎 앞 아래로, 손잡이(오른손)는 위로 들어 기울인다
+        return P(base=('Idle_Loop', 0), pelvis=(0, -0.08, -0.08), pole=pole, dirs=dict(lean, hand_l=(0, 0.6, -0.8), hand_r=(0, 1, 0.3)),
+                 ik={'hand_l': (0.08 + s, 0.42, 0.88), 'hand_r': (-0.10 + s, 0.34, 1.02), **feet})
+    return False, [(0, idle), (10, hold), (20, pour(0.0)), (30, pour(0.04)), (40, pour(-0.04)), (50, pour(0.0)), (60, hold), (70, idle)]
+
+
+def _sleep():
+    """잠 — 등을 대고 반듯이 누워(머리 = 뒤, 베개 높이만큼 고개 듦) 두 손을 배 위에 포개고, 배가 오르내리며 숨 쉰다(반복)."""
+    pole = {'hand_l': (1, 0, 0.3), 'hand_r': (-1, 0, 0.3), 'foot_l': (0.2, 0, 1), 'foot_r': (-0.2, 0, 1)}
+    def k(b):
+        return P(base=('Idle_Loop', 0), pelvis=(0, -0.70, -0.76 + b * 0.3), pole=pole,
+                 dirs={'pelvis': (0, -1, 0.10 + b), 'spine_01': (0, -1, 0.06 + b), 'spine_02': (0, -1, 0.02), 'spine_03': (0, -1, 0.0),
+                       'neck_01': (0, -1, 0.30), 'clavicle_l': (1, 0, 0.1), 'clavicle_r': (-1, 0, 0.1),
+                       'hand_l': (-1, 0.1, 0.1), 'hand_r': (1, 0.1, 0.1), 'foot_l': (0.15, 0.25, 1), 'foot_r': (-0.15, 0.25, 1)},
+                 ik={'hand_l': (0.05, -0.86, 0.30 + b), 'hand_r': (-0.04, -0.80, 0.32 + b),
+                     'foot_l': (0.13, 0.06, 0.10), 'foot_r': (-0.13, 0.06, 0.10)})
+    return True, [(0, k(0.0)), (45, k(0.025)), (90, k(0.0))]
+
+
+def _flag_wave():
+    """깃발 흔들기 — 두 손으로 깃대를 세워 쥐고(오른손 아래 허리·왼손 위 머리 높이) 깃대 끝이 좌우로 크게 원을 그리게 흔든다. 몸이 따라 휜다(반복)."""
+    feet = {'foot_l': (0.18, 0.08, 0.104), 'foot_r': (-0.18, -0.06, 0.104)}
+    pole = {'hand_l': (1, -0.3, -0.5), 'hand_r': (-1, -0.3, -0.5)}
+    def k(t):   # t = -1(오른쪽으로 누임) … 1(왼쪽)
+        return P(base=('Idle_Loop', 0), pelvis=(t * 0.03, 0, -0.04), pole=pole,
+                 dirs={'spine_02': (t * 0.10, 0.02, 1), 'spine_03': (t * 0.16, 0.0, 1), 'neck_01': (t * 0.10, -0.08, 1)},
+                 ik={'hand_l': (-0.02 + t * 0.26, 0.26, 1.54 - abs(t) * 0.06), 'hand_r': (-0.08 + t * 0.06, 0.22, 1.08), **feet})
+    return True, [(0, k(0.0)), (10, k(1.0)), (20, k(0.0)), (30, k(-1.0)), (40, k(0.0))]
+
+
+def _hang():
+    """매달리기 — 머리 위 봉(높이 1.98)을 두 손으로 잡고 팔을 펴 늘어져(어깨가 귀 쪽으로 올라감), 다리를 모아 조금 굽힌 채
+    몸이 앞뒤로 천천히 흔들린다(반복 2초). 매단 높이는 게임이 정한다 — 클립은 몸 안 자세만."""
+    pole = {'hand_l': (1, 0, -0.2), 'hand_r': (-1, 0, -0.2), 'foot_l': (0.2, 1, 0), 'foot_r': (-0.2, 1, 0)}
+    def k(sw):
+        return P(base=('Idle_Loop', 0), pelvis=(0, -sw * 0.06, 0.02), pole=pole,
+                 dirs={'pelvis': (0, sw * 0.10, 1), 'spine_01': (0, sw * 0.08, 1), 'spine_02': (0, sw * 0.04, 1), 'spine_03': (0, 0.0, 1),
+                       'neck_01': (0, 0.06, 1), 'clavicle_l': (1, 0, 0.45), 'clavicle_r': (-1, 0, 0.45),
+                       'foot_l': (0.05, 0.5 + sw * 0.3, -1), 'foot_r': (-0.05, 0.5 + sw * 0.3, -1)},
+                 ik={'hand_l': (0.19, 0.02, 1.98), 'hand_r': (-0.19, 0.02, 1.98),
+                     'foot_l': (0.08, -0.04 + sw * 0.16, 0.16), 'foot_r': (-0.08, -0.08 + sw * 0.16, 0.20)})
+    return True, [(0, k(0.0)), (15, k(1.0)), (30, k(0.0)), (45, k(-1.0)), (60, k(0.0))]
+
+
+RIDE_POLE = {'hand_l': (0.8, -0.6, -0.4), 'hand_r': (-0.8, -0.6, -0.4), 'foot_l': (1, 0.8, 0), 'foot_r': (-1, 0.8, 0)}
+
+
+def _ride(bob, lean, hand_r=None):
+    """말 위에 앉은 자세 — 골반은 선 높이 그대로(안장 위 자리는 게임이 탈것 뼈에 붙인다), 허벅지를 벌려 말 몸통을 끼고
+    무릎을 굽혀 발은 등자(옆 0.30·높이 0.42)에. 두 손은 고삐(배꼽 앞)."""
+    return P(base=('Idle_Loop', 0), pelvis=(0, lean * 0.05, bob), pole=RIDE_POLE,
+             dirs={'pelvis': (0, 0.05 + lean * 0.3, 1), 'spine_01': (0, 0.08 + lean, 1), 'spine_02': (0, 0.10 + lean, 1),
+                   'spine_03': (0, 0.08 + lean, 1), 'neck_01': (0, 0.02, 1), 'foot_l': (0.1, 1, -0.4), 'foot_r': (-0.1, 1, -0.4),
+                   'hand_l': (0, 1, -0.3), 'hand_r': (0, 1, -0.3) if hand_r is None else (0, 1, 0.25)},
+             ik={'hand_l': (0.10, 0.36 + lean * 0.3, 1.04), 'hand_r': hand_r or (-0.10, 0.36 + lean * 0.3, 1.04),
+                 'foot_l': (0.30, 0.06, 0.42 + bob * 0.5), 'foot_r': (-0.30, 0.06, 0.42 + bob * 0.5)})
+
+
+def _ride_idle():
+    """말 타기(걷기·서기) — 안장에 앉아 고삐를 쥐고 말 걸음에 맞춰 골반이 위아래로 조금 흔들린다(반복 1초)."""
+    return True, [(0, _ride(0.0, 0.0)), (15, _ride(0.025, 0.02)), (30, _ride(0.0, 0.0))]
+
+
+def _ride_charge():
+    """말 위 돌격 — 몸을 앞으로 숙이고 오른손 무기(창·칼)를 앞 위로 겨눈 채, 질주 박자(0.53초)에 맞춰 크게 들썩인다(반복)."""
+    hr = lambda b: (-0.16, 0.60, 1.34 + b)
+    return True, [(0, _ride(0.0, 0.30, hr(0.0))), (8, _ride(0.06, 0.38, hr(0.04))), (16, _ride(0.0, 0.30, hr(0.0)))]
+
+
 CLIPS = {
     'CF_Guard_Idle_Loop': _guard_idle,
     'CF_Climb_Loop': _climb,
@@ -680,6 +759,12 @@ CLIPS = {
     'CF_Fist_Uppercut': _fist_uppercut,
     'CF_Shield_Bash': _shield_bash,
     'CF_Knockdown': _knockdown,
+    'CF_Water_Pour': _water_pour,
+    'CF_Sleep_Loop': _sleep,
+    'CF_Flag_Wave_Loop': _flag_wave,
+    'CF_Hang_Loop': _hang,
+    'CF_Ride_Idle_Loop': _ride_idle,
+    'CF_Ride_Charge_Loop': _ride_charge,
 }
 
 

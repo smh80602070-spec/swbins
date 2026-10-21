@@ -163,9 +163,12 @@ def _shift(cell, dy):
     return o
 
 
-def ground_sheet(im, px, role, foot):
-    """발 맞춤 — 외곽선이 아래로 1px 붙으니 몸(외곽선 전) 아래 경계를 round(foot×px)−1 에 둔다."""
-    if role not in GROUND_EACH + GROUND_ROW or foot is None:
+def ground_sheet(im, px, role, foot, mode=None):
+    """발 맞춤 — 외곽선이 아래로 1px 붙으니 몸(외곽선 전) 아래 경계를 round(foot×px)−1 에 둔다.
+    mode(K-0161 동작 표 sprite.ground): each = 칸마다 · row = 그 줄 가장 낮은 칸 · row0 = 그 줄 첫 칸(쪼그림·눕기·뛰기·매달리기 —
+    앞으로 나온 무릎·다리가 내려다보는 카메라에서 발보다 낮게 찍히니 칸마다 맞추면 발이 뜬다) · free = 안 맞춤."""
+    mode = mode or ('each' if role in GROUND_EACH else 'row' if role in GROUND_ROW else None)
+    if mode not in ('each', 'row', 'row0') or foot is None:
         return im
     t = int(round(foot * px)) - 1
     im = im.copy()
@@ -173,7 +176,7 @@ def ground_sheet(im, px, role, foot):
         lows = [_low(im[y:y + px, x:x + px]) for x in range(0, im.shape[1], px)]
         rowlow = max([v for v in lows if v is not None], default=None)
         for i, x in enumerate(range(0, im.shape[1], px)):
-            base = lows[i] if role in GROUND_EACH else (lows[0] if role == 'death' and lows[0] is not None else rowlow)   # K-0159: 쓰러짐은 서 있는 첫 칸 기준(누운 망토가 땅 밑으로 내려가 줄 전체를 끌어올려 머리가 잘리던 것)
+            base = lows[i] if mode == 'each' else (lows[0] if (role == 'death' or mode == 'row0') and lows[0] is not None else rowlow)   # K-0159: 쓰러짐은 서 있는 첫 칸 기준(누운 망토가 땅 밑으로 내려가 줄 전체를 끌어올려 머리가 잘리던 것)
             if base is not None:
                 im[y:y + px, x:x + px] = _shift(im[y:y + px, x:x + px], t - base)
         if role == 'death':       # K-0159: 땅 밑(망토 조각이 바닥을 뚫음)은 안 보인다 — 발 줄 아래를 지운다
@@ -181,8 +184,8 @@ def ground_sheet(im, px, role, foot):
     return im
 
 
-def style_sheet(src, dst, pal, px=192, role=None, foot=None):
-    im = ground_sheet(np.asarray(Image.open(src).convert('RGBA')), px, role, foot)
+def style_sheet(src, dst, pal, px=192, role=None, foot=None, mode=None):
+    im = ground_sheet(np.asarray(Image.open(src).convert('RGBA')), px, role, foot, mode)
     out = np.zeros_like(im)
     for y in range(0, im.shape[0], px):
         for x in range(0, im.shape[1], px):
@@ -200,6 +203,9 @@ def compare_board(raw_dir, sty_dir, plan, out_png, scale=1.5):
     bg = Image.open(os.path.join(ref, bgs[0])).convert('RGBA') if bgs else Image.new('RGBA', (S, S), (200, 200, 200, 255))
     cols = [('idle', 0, i) for i in range(len(plan['dirs']))] + [(r, f, 2) for r, f in (('walk', 2), ('attack', 4))]
     cols = [c for c in cols if os.path.exists(os.path.join(sty_dir, c[0] + '.webp'))]
+    if not cols:   # K-0161 동작 표 풀(idle·walk 없음) — 역할마다 가운데 프레임·앞대각(dirs 둘째 줄)
+        cols = [(r, plan['clips'][r]['frames'] // 2, min(1, len(plan['dirs']) - 1)) for r in plan['clips']
+                if os.path.exists(os.path.join(sty_dir, r + '.webp'))]
     still = os.path.join(os.path.dirname(ref), 'moving', os.path.basename(sty_dir), 'side.webp')
     if plan.get('still_game'):          # K-0159: 풀의 still 이 있는 판(5천하 rts_* 등)
         still = os.path.join(ROOT, 'saga-web', plan['still_game'], 'assets', 'web2d', 'moving', os.path.basename(sty_dir), 'side.webp')

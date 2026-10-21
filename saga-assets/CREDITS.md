@@ -30,6 +30,7 @@
 | k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 story-field.ogg 를 mp3 로 옮김) | 1 |
 | k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 story-town.ogg 를 mp3 로 옮김) | 1 |
 | bake_for_rig.py --map vroid (vroid_batch.sh anim 단계, 2026-10-07) | - | CC0-1.0 (뼈대+동작만 — 메시·그림 없음. 동작 원본 Quaternius Universal Animation Library CC0 + 자체 키프레임 too | 1 |
+| mocap_retarget.py (K-0139·K-0161) + keyframes.py | - | CMU Graphics Lab Motion Capture Database — 복사·수정·재배포 허가 불요(상업 포함, mocap.cs.cmu.edu FAQ) ·  | 1 |
 | mocap_retarget.py (K-0139) | - | CMU Graphics Lab Motion Capture Database — "may be copied, modified, or redistributed with | 3 |
 | outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 2000 |
 | sprite_plan_16.json) + gear_sprites.py + weapon_attach.py (K-0138 16방향, 몸·무기는 8방향과 같음) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 20 |

@@ -6,6 +6,9 @@
 
 내보내는 .glb = 대상 몸의 뼈대 + 동작(메시 없음). 끝 줄 MOCAP_DONE. 클립마다 MOCAP_CLIP 이름 {구간·프레임·땅 오차·미끄러짐·떠밀림}.
 30fps 로 굽는다(BVH 120fps 를 가져올 때 줄임). BVH 1번 프레임은 Hahne 가 넣은 T 자세라 건너뛴다.
+K-0161(clips30.json): 표 줄의 period·maxlen(초)이 아래 PERIOD·MAXLEN 보다 먼저 · search [a,b] = 자동 구간을 그 BVH 프레임(30fps) 안에서만
+· active = 반복 구간은 움직임이 그 클립 상위 4분의 1 평균의 40% 넘는 곳만(가만히 선 머리·꼬리가 '가장 닮은 두 프레임'으로 뽑히는 것 막기) · inplace_z = 반복 클립의 골반 높이 이동도 뺀다(사다리)
+· cf 칸(CMU 없음) = keyframes.py 자체 동작을 build.retarget 으로 같은 뼈대에 굽는다 — 한 .glb 에 모캡·자체 동작이 함께 든다.
 """
 import json
 import math
@@ -91,14 +94,21 @@ def dist(a, b):
 def pick_window(name, c, src, f0, f1):
     frames = list(range(f0, f1 + 1))
     feat, hips = features(src, frames)
-    if name in PERIOD:
-        pmin, pmax = (int(round(x * FPS)) for x in PERIOD[name])
+    if c.get('period') or name in PERIOD:
+        pmin, pmax = (int(round(x * FPS)) for x in (c.get('period') or PERIOD[name]))
         best = None
+        en = [0.0] + [dist(feat[k], feat[k - 1]) for k in range(1, len(feat))]
+        top = sorted(en)[int(len(en) * 0.75):] or [0.0]
+        floor = (0.4 if c.get('active') is True else float(c.get('active') or 0)) * sum(top) / len(top) if c.get('active') else -1.0
         for i in range(0, len(frames) - pmin - 1):
             for p in range(pmin, min(pmax, len(frames) - 1 - i) + 1):
+                if sum(en[i + 1:i + p + 1]) / p < floor:
+                    continue
                 d = dist(feat[i], feat[i + p]) + 0.5 * dist([u - v for u, v in zip(feat[i + 1], feat[i])], [u - v for u, v in zip(feat[i + p + 1] if i + p + 1 < len(feat) else feat[i + p], feat[i + p])])
                 if best is None or d < best[0]:
                     best = (d, i, p)
+        if best is None:      # active 문턱을 넘는 구간이 없으면 문턱 없이
+            return pick_window(name, dict(c, active=False), src, f0, f1)
         _, i, p = best
         return frames[i], frames[i + p], round(best[0], 3)
     # 반복 아님: 움직임이 있는 곳만, 가장 센 곳 둘레로 최대 길이
@@ -107,13 +117,120 @@ def pick_window(name, c, src, f0, f1):
     act = [k for k, e in enumerate(en) if e > thr]
     a, b = (act[0], act[-1]) if act else (0, len(frames) - 1)
     a, b = max(0, a - 6), min(len(frames) - 1, b + 6)
-    L = int(MAXLEN.get(name, 3.0) * FPS)
+    L = int(c.get('maxlen', MAXLEN.get(name, 3.0)) * FPS)
     if c.get('reverse') and b - a > L:   # 역재생(쓰러짐): 서 있는 끝을 포함해야 하니 움직임의 끝 쪽 L 만
         a = b - L
     elif b - a > L:
         win = max(range(a, b - L + 1), key=lambda s: sum(en[s:s + L]))
         a, b = win, win + L
     return frames[a], frames[b], None
+
+
+def _two_bone(W, th, ca, ft, toe, T, Rfoot=None):
+    """W(월드 행렬)의 허벅지·종아리를 돌려 발목 머리가 T 에 오게 한다(무릎은 지금 굽은 쪽 그대로). 발·발끝은 월드 방향을 지키고 따라 옮긴다."""
+    H, K, A = W[th].translation.copy(), W[ca].translation.copy(), W[ft].translation.copy()
+    a, b = (K - H).length, (A - K).length
+    d_vec = T - H
+    d = max(1e-4, min(d_vec.length, (a + b) * 0.9995))
+    u = d_vec.normalized()
+    pole = (K - H) - u * (K - H).dot(u)
+    if pole.length < 1e-6:
+        return
+    pole.normalize()
+    cos_a = max(-1.0, min(1.0, (a * a + d * d - b * b) / (2 * a * d)))
+    al = math.acos(cos_a)
+    K2 = H + (u * math.cos(al) + pole * math.sin(al)) * a
+    T2 = H + u * d
+    q1 = (K - H).rotation_difference(K2 - H).to_matrix()
+    W[th] = Matrix.Translation(H) @ (q1 @ W[th].to_3x3()).to_4x4()
+    cdir = q1 @ (A - K)
+    q2 = cdir.rotation_difference(T2 - K2).to_matrix()
+    W[ca] = Matrix.Translation(K2) @ (q2 @ q1 @ W[ca].to_3x3()).to_4x4()
+    sh = T2 - A
+    if Rfoot is None:
+        W[ft] = Matrix.Translation(sh) @ W[ft]
+        if toe:
+            W[toe] = Matrix.Translation(sh) @ W[toe]
+        return
+    # 발바닥이 땅에 붙은 동안은 발 방향도 못박는다(발이 제자리에서 돌면 발끝이 미끄러진다) — 발끝은 발에 대한 자기 꺾임을 지킨다
+    Rf_old = W[ft].to_3x3().normalized()
+    if toe:
+        off = W[toe].translation - A
+        Rt_rel = Rf_old.inverted() @ W[toe].to_3x3().normalized()
+        W[toe] = Matrix.Translation(T2 + Rfoot @ Rf_old.inverted() @ off) @ (Rfoot @ Rt_rel).to_4x4()
+    W[ft] = Matrix.Translation(T2) @ Rfoot.to_4x4()
+
+
+def lock_feet(poses, pairs, loop):
+    """K-0161 디딘 발 고정 — 점(발목, 없으면 발끝)이 그 점 최저 높이 2cm 안·위아래로 프레임당 6mm 미만이면 '디딤'
+    (mocap_pose_check 의 미끄럼 기준과 같다). 디딘 구간은 첫 프레임의 수평 자리에 못박고(높이는 그대로) 다리를 두 마디 IK 로
+    (무릎 굽은 쪽 유지). 발목이 들리고 발끝만 디딘 프레임(뒤꿈치 들기)은 발끝 자리를 지키게 발목을 같은 만큼 옮긴다.
+    반복 클립은 처음·끝 디딤을 한 구간으로 본다(이음매가 튀지 않게). 고친 프레임 수를 돌려준다."""
+    n, fixed = len(poses), 0
+
+    def runs_of(P):
+        zmin = min(p.z for p in P)
+        on = [P[i].z - zmin < 0.02 and abs(P[i].z - P[i - 1 if i else (n - 1 if loop else 1)].z) < 0.006 for i in range(n)]
+        runs, i = [], 0
+        while i < n:
+            if on[i]:
+                j = i
+                while j + 1 < n and on[j + 1]:
+                    j += 1
+                runs.append(list(range(i, j + 1)))
+                i = j + 1
+            else:
+                i += 1
+        if loop and len(runs) > 1 and runs[0][0] == 0 and runs[-1][-1] == n - 1:
+            runs[0] = runs.pop() + runs[0]
+        return [r for r in runs if len(r) >= 2]
+
+    for s in ('l', 'r'):
+        th, ca, ft, toe = pairs.get(f'thigh_{s}'), pairs.get(f'calf_{s}'), pairs.get(f'foot_{s}'), pairs.get(f'ball_{s}')
+        if not (th and ca and ft):
+            continue
+        A = [W[ft].translation.copy() for W in poses]
+        Tp = [W[toe].translation.copy() for W in poses] if toe else A
+        a_on = {k for r in runs_of(A) for k in r}
+        t_on = {k for r in runs_of(Tp) for k in r} if toe else set()
+        tz = min(p.z for p in Tp)
+        toe_low = {k for k in range(n) if toe and Tp[k].z - tz < 0.03}   # 재는 쪽(2cm·6mm)보다 넉넉히
+        # 시간 순서로 한 번에: 디딘 동안(발목이든 발끝이든) 앞 프레임의 (고친 뒤) 자리를 이어받아 지킨다 — 발목이 내려오는
+        # 순간에 원본 자리로 튀지 않게. 들리면 남은 옮김을 4프레임에 걸쳐 0 으로. 반복 클립은 발이 들린 프레임부터 한 바퀴.
+        order = list(range(n))
+        if loop:
+            free = [k for k in range(n) if k not in a_on and k not in t_on]
+            if free:
+                order = order[free[0]:] + order[:free[0]]
+        prev_on, off, R0, rel = False, Vector((0, 0, 0)), None, 0
+        for k in order:
+            on = k in a_on or k in t_on
+            if on:
+                if not prev_on:
+                    off, R0 = Vector((0, 0, 0)) if rel == 0 else off, None
+                else:
+                    pk = order[order.index(k) - 1]
+                    if k in a_on:      # 발목 자리를 앞 프레임에 맞춘다
+                        off = Vector((poses[pk][ft].translation.x - A[k].x, poses[pk][ft].translation.y - A[k].y, 0))
+                    else:              # 발끝만 — 발끝 자리를 앞 프레임에 맞추게 발목을 옮긴다
+                        cur = poses[k][toe].translation
+                        off = Vector((poses[pk][toe].translation.x - cur.x, poses[pk][toe].translation.y - cur.y, 0))
+                if k in a_on and k in toe_low:
+                    R0 = R0 or poses[k][ft].to_3x3().normalized()
+                elif k not in a_on:
+                    R0 = None
+                rf = R0 if (k in a_on and k in toe_low) else None
+                rel = 4
+            else:
+                if rel > 0:
+                    rel -= 1
+                    off = off * (rel / (rel + 1))
+                R0, rf = None, None
+            prev_on = on
+            if off.length > 1e-4 or rf is not None:
+                _two_bone(poses[k], th, ca, ft, toe, poses[k][ft].translation + off, rf)
+                fixed += 1
+    return fixed
 
 
 def bake(tgt, src, name, c, report):
@@ -148,6 +265,9 @@ def bake(tgt, src, name, c, report):
         return sum((R[nm[a]].translation - R[nm[b]].translation).length for a, b in (('thigh_l', 'calf_l'), ('calf_l', 'foot_l')))
     k = leg(t_rest, pairs) / leg(s_rest, rigmaps.IDENTITY)
     moving = {pairs['pelvis']}
+    feet_bones = [pairs[b] for b in ('foot_l', 'foot_r', 'ball_l', 'ball_r') if b in pairs]
+    untwist = set(feet_bones) if c.get('clean_feet') else set()
+    good_feet = {}
     below = set()
 
     def sub(b):
@@ -160,7 +280,8 @@ def bake(tgt, src, name, c, report):
     if c.get('range'):
         w0, w1, score = int(c['range'][0]), int(c['range'][1]), None
     else:
-        w0, w1, score = pick_window(name, c, src, max(a0, 2), a1)
+        lo, hi = c.get('search', (a0, a1))
+        w0, w1, score = pick_window(name, c, src, max(a0, 2, int(lo)), min(a1, int(hi)))
     # 진행 방향 맞춤: 배우가 비스듬히 걸은 방향을 쉼 자세의 앞으로 돌린다(동작만 돌림 — 쉼 자세는 그대로)
     def facing(get):
         side = get('thigh_l') - get('thigh_r')
@@ -211,6 +332,8 @@ def bake(tgt, src, name, c, report):
         sc.frame_set(f)
         u = (idx / max(1, len(frames)) if loop else idx / max(1, len(frames) - 1)) if inplace else 0.0
         drift = Vector(((h0.x + (h1.x - h0.x) * u), (h0.y + (h1.y - h0.y) * u), 0.0)) if inplace else Vector((h0.x, h0.y, 0.0))
+        if c.get('inplace_z'):   # K-0161 사다리: 오른 높이(처음→끝 직선)를 빼 제자리에서 오르는 몸짓만 — 땅 붙이기는 안 한다
+            drift.z = (h1.z - h0.z) * u
         W = {}
         for b in order:
             n, p = b.name, b.parent
@@ -218,8 +341,16 @@ def bake(tgt, src, name, c, report):
             if s:
                 sw = Rz @ smw @ src.pose.bones[s].matrix
                 rot = sw.to_3x3().normalized() @ s_rest[s].to_3x3().normalized().inverted() @ align[s] @ t_rest[n].to_3x3().normalized()
+                if n in untwist and p is not None:   # K-0161 발·발끝 제 축 비틀림 빼기 — CMU 발 마커가 한 프레임에 170° 굴러 뒤집힌다(138_01·80_09)
+                    pr = W[p.name].to_3x3().normalized()
+                    rl = t_rest[p.name].to_3x3().normalized().inverted() @ t_rest[n].to_3x3().normalized()
+                    swing, _tw = (rl.inverted() @ pr.inverted() @ rot).to_quaternion().to_swing_twist('Y')
+                    if swing.angle > math.radians(75):   # 발이 뒤로 꺾임 = 마커 뒤바뀜(발끝·뒤꿈치) — 그 앞 프레임의 멀쩡한 꺾임을 쓴다
+                        swing = good_feet.get(n, swing.__class__())
+                    good_feet[n] = swing.copy()
+                    rot = pr @ rl @ swing.to_matrix()
                 if n in moving or p is None:
-                    rel = Vector((sw.translation.x - drift.x, sw.translation.y - drift.y, sw.translation.z - (ground + stand)))
+                    rel = Vector((sw.translation.x - drift.x, sw.translation.y - drift.y, sw.translation.z - (ground + stand) - drift.z))
                     t = t_rest[n].translation + rel * k
                 else:
                     t = (W[p.name] @ (t_rest[p.name].inverted() @ t_rest[n])).translation
@@ -229,11 +360,25 @@ def bake(tgt, src, name, c, report):
         s_low = min((smw @ src.pose.bones[fb].matrix).translation.z - (ground + foot_ref[fb]) for fb in feet) * k
         t_low = min(W[pairs[fb]].translation.z - t_rest[pairs[fb]].translation.z for fb in feet)
         wgt = max(0.0, min(1.0, 1.0 - (abs(s_low) - 0.01) / 0.02))
-        dz = (s_low - t_low) * wgt
+        dz = 0.0 if c.get('inplace_z') else (s_low - t_low) * wgt
         if dz:
             for n in below:
                 W[n] = Matrix.Translation((0, 0, dz)) @ W[n]
         poses.append(W)
+    if c.get('clean_feet'):      # K-0161 발 튐 펴기: 발·발끝이 한 프레임에 40° 넘게 돌면 40° 까지만(발끝 자리는 발을 따라 다시)
+        lim = math.radians(40)
+        for n in feet_bones:
+            for i in range(1, len(poses)):
+                qa, qi = poses[i - 1][n].to_quaternion(), poses[i][n].to_quaternion()
+                if qa.dot(qi) < 0:
+                    qi.negate()
+                d = qa.rotation_difference(qi).angle
+                if d > lim:
+                    poses[i][n] = Matrix.Translation(poses[i][n].translation) @ qa.slerp(qi, lim / d).to_matrix().to_4x4()
+                    for ch in tgt.data.bones[n].children:
+                        if ch.name in poses[i]:
+                            rot_c = poses[i][ch.name].to_3x3()
+                            poses[i][ch.name] = Matrix.Translation((poses[i][n] @ (t_rest[n].inverted() @ t_rest[ch.name])).translation) @ rot_c.to_4x4()
     # 반복 이음: 끝 BLEND_S 를 첫 프레임 쪽으로 섞는다
     if loop:
         nb = min(len(poses) // 3, int(BLEND_S * FPS))
@@ -242,9 +387,13 @@ def bake(tgt, src, name, c, report):
             i = len(poses) - nb + j
             for n in poses[i]:
                 A, Bm = poses[i][n], poses[0][n]
-                q = A.to_quaternion().slerp(Bm.to_quaternion(), a)
+                qa, qb = A.to_quaternion(), Bm.to_quaternion()
+                if qa.dot(qb) < 0:      # 먼 길로 돌면 발끝이 한 프레임에 뒤집힌다(K-0161 march 176°)
+                    qb.negate()
+                q = qa.slerp(qb, a)
                 t = A.translation.lerp(Bm.translation, a)
                 poses[i][n] = Matrix.Translation(t) @ q.to_matrix().to_4x4()
+    locked = lock_feet(poses, pairs, loop) if c.get('lock_feet') and not c.get('locomotion') else 0
     # 발 미끄러짐: 디딘 발(쉼 높이 + 2cm 안)이 디딘 동안 수평으로 움직인 거리 — 반복 걷기·달리기는 제자리라 몸 속도만큼 뒤로 가는 게 정상이라 그걸 빼고 잰다
     slip = 0.0
     if loop:
@@ -300,7 +449,7 @@ def bake(tgt, src, name, c, report):
     hx = [W[pairs['pelvis']].translation.xy for W in poses]
     report[name] = {'cmu': c['cmu'], 'window': [w0, w1], 'frames': len(poses), 'sec': round(len(poses) / FPS, 2),
                     'loop_score': score, 'flipped': flipped, 'leg_ratio': round(k, 3),
-                    'slip_m': round(slip, 3) if loop else None, 'drift_m': round((hx[-1] - hx[0]).length, 3)}
+                    'slip_m': round(slip, 3) if loop else None, 'drift_m': round((hx[-1] - hx[0]).length, 3), 'feet_locked': locked}
     return act, slot
 
 
@@ -315,11 +464,14 @@ def main():
     tgt = next(o for o in objs if o.type == 'ARMATURE')
     build.delete([o for o in objs if o is not tgt])
     report, made = {}, []
+    cf = {c['game']: c['cf'] for c in t['clips'] if c.get('cf') and not c.get('cmu') and (not only or c['game'] in only)}
     for c in t['clips']:
         if only and c['game'] not in only:
             continue
+        if not c.get('cmu'):
+            continue
         src = import_bvh(os.path.join(bvh_dir, c['cmu'] + '.bvh'))
-        made.append(bake(tgt, src, c['game'], c, report))
+        made.append(bake(tgt, src, c['game'], dict(c, lock_feet=c.get('lock_feet', t.get('lock_feet', False)), clean_feet=c.get('clean_feet', t.get('clean_feet', False))), report))
         act = src.animation_data.action
         build.delete([src])
         if act:
@@ -337,13 +489,22 @@ def main():
         except AttributeError:
             pass
         tr.mute = True
+    if cf:   # K-0161 자체 키프레임 동작 — UAL 뼈대 위에 짓고 같은 대상 뼈대로(NLA 트랙은 build.retarget 이 단다)
+        rep = build.retarget(tgt, cf, True, rigmaps.MAPS['vroid'])
+        rep.pop('_meta', None)
+        for k, v in rep.items():
+            report[k] = {'cf': cf[k], 'frames': v['frames'], 'sec': round(v['frames'] / FPS, 2), 'ground_err_m': v['ground_err_m'], 'drift_m': v['drift_m']}
+            print('MOCAP_CLIP', k, json.dumps(report[k], ensure_ascii=False), flush=True)
     tgt.animation_data.action = None
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
     bpy.ops.export_scene.gltf(filepath=out, export_format='GLB', export_animation_mode='ACTIONS', export_force_sampling=True,
                               export_def_bones=False, export_cameras=False, export_lights=False, export_extras=False, export_yup=True, export_skins=True)
     lic = {'target': os.path.basename(target), 'generator': 'tools/char-forge/mocap_retarget.py (K-0139)', 'blender': bpy.app.version_string,
            'license': 'CMU Graphics Lab Motion Capture Database — "may be copied, modified, or redistributed without permission" (mocap.cs.cmu.edu FAQ) · BVH 변환 Bruce Hahne 2010(추가 제한 없음)',
-           'source': t['source'], 'clips': {k: v['cmu'] for k, v in report.items()}, 'report': report}
+           'source': t['source'], 'clips': {k: (v.get('cmu') and 'CMU:' + v['cmu']) or 'CF:' + v['cf'] for k, v in report.items()}, 'report': report}
+    if cf:
+        lic['license'] = t.get('license', {}).get('CMU', lic['license']) + ' + ' + t.get('license', {}).get('CF', 'keyframes.py 자체 키프레임')
+        lic['generator'] = 'tools/char-forge/mocap_retarget.py (K-0139·K-0161) + keyframes.py'
     json.dump(lic, open(os.path.splitext(out)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print('MOCAP_DONE', len(report))
 

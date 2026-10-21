@@ -5,6 +5,8 @@
 계획(본보기 recipes/factory/k158_trial.json):
   px·ndir·dirs(5방향 0 정면·1 앞대각·2 옆·3 뒤대각·4 뒤, 반대쪽은 웹이 뒤집음)·clips{역할:{frames,fps,loop}}·foot·style
   human{bodies, anim_extra, act{역할: 동작}} — 사람 풀은 bake_sprite_batch.py(→ gear_sprites.py)를 그대로 부른다
+  motion_table(K-0161) = 동작 표 json(data/clips30.json) — 그 표의 클립마다 역할 <game>(sprite 의 frames·fps·loop)·동작 '<접두>.<game>' 을
+    clips·human.act 에 더한다(접두 motion_prefix, 기본 c — human.anim_extra 에 'c=<팩 glb>' 를 같이 적는다)
   creature{act{역할: 몸 동작 이름}} — 짐승 풀은 creature_sprites.py(DIR_STEP=45)를 부른다. 몸에 없는 동작은 manifest missing
   pools[{id, type:human|creature, ...}] · canon(정본 saga-assets/…) · deploy(판 assets/sprites2d_sheets)
 
@@ -67,7 +69,8 @@ def bake_human(plan, pool, raw):
         sub['combat_roles'] = pool.get('combat_roles', ['idle', 'attack', 'attack2'])
     sp = os.path.join(OUT, 'plan_' + pool['id'] + '.json')
     json.dump(sub, open(sp, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    env = dict(os.environ, CENTER_CLIPS=','.join(dict.fromkeys(act[r] for r in ('death', 'sit') + tuple(pool.get('center_roles', ())) if r in have)),   # K-0159 center_roles: 창 찌르기처럼 칸 옆으로 나가는 동작도
+    center = ('death', 'sit') + tuple(pool.get('center_roles', ())) + tuple(r for r in have if plan['clips'][r].get('center'))   # K-0161 동작 표 sprite.center
+    env = dict(os.environ, CENTER_CLIPS=','.join(dict.fromkeys(act[r] for r in center if r in have)),   # K-0159 center_roles: 창 찌르기처럼 칸 옆으로 나가는 동작도
                  # 누운 몸이 칸 밖으로 — gear_sprites 가 그 줄만 카메라를 민다
                KIND_JSON=json.dumps(plan['human'].get('kinds', {})))       # K-0159 still 과 같은 사람 — 머리색·옷 조각 색·망토·갑주(gear_sprites KIND_JSON)
     r = subprocess.run([sys.executable, os.path.join(HERE, 'bake_sprite_batch.py'), sp], stdin=subprocess.DEVNULL, env=env)
@@ -144,10 +147,21 @@ def manifest(plan, pool, raw_dir):
     return m
 
 
+def load_plan(plan_path):
+    plan = json.load(open(plan_path, encoding='utf-8'))
+    if plan.get('motion_table'):                 # K-0161 공장 동작 표 — 표 이름이 그대로 역할 이름
+        mt = json.load(open(P(plan['motion_table']), encoding='utf-8'))
+        pre = plan.get('motion_prefix', 'c')
+        for c in mt['clips']:
+            plan['clips'].setdefault(c['game'], dict(c['sprite']))
+            plan.setdefault('human', {}).setdefault('act', {}).setdefault(c['game'], pre + '.' + c['game'])
+    return plan
+
+
 def main():
     a = sys.argv[1:]
     plan_path = a[0]
-    plan = json.load(open(plan_path, encoding='utf-8'))
+    plan = load_plan(plan_path)
     only = a[a.index('--only') + 1].split(',') if '--only' in a else None
     stages = a[a.index('--stage') + 1].split(',') if '--stage' in a else ['bake', 'style', 'judge', 'place']
     pools = [p for p in plan['pools'] if not only or p['id'] in only]
@@ -199,7 +213,7 @@ def main():
                     foot = plan['foot']
                     if p['type'] == 'creature':
                         foot = json.load(open(os.path.join(rd, 'creature_meta.json'), encoding='utf-8'))['foot']
-                    style_pass.style_sheet(src, dst, pal, geo(plan, p)[0], r, foot)
+                    style_pass.style_sheet(src, dst, pal, geo(plan, p)[0], r, foot, plan['clips'][r].get('ground'))
                     n += 1
             m = manifest(plan, p, rd)
             json.dump(m, open(os.path.join(sd, 'manifest.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

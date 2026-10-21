@@ -150,3 +150,21 @@ py tools/char-forge/sheet_judge.py            # _out/factory/styled 의 풀 전�
 - **처리량(10-21, 이 PC)**: 사람 풀 380칸 굽기 108초(0.29초/칸) + 그림체 55초 ≈ 2.8분, 짐승 260칸 65초 + 41초 ≈ 1.8분. GPU 는 Blender EEVEE 만(SD 없음).
 - **still 과 같은 사람(K-0159)**: `still_match.py <풀>` 이 500 몸을 still 과 띠 색으로 순위 → 머리 모양·옷 꼴이 닮은 몸을 고르고 계획 `human.kinds` 로 `gear_sprites` KIND_JSON(`hair_ramp`·`cloth_by`·`cape:wrap`·갑주·`pal`)을 맞춘다. 배율 ortho 2.2(몸 ~80%, still 94%), 창·지팡이 풀은 `px` 256(px/m 같음). 판정 6째 줄 `still`. style_pass 는 채도 > 0.10 인 곳 색상을 되살린다(`keep_hue`). 배포 `deploy` = {판 sprites2d_sheets: [풀…]}.
 - **함정**: K-0015 풀 몸(`cc0_basem`)에 모캡을 걸면 팔이 들리고 `rand:` 장비가 날개·꼬리를 붙인다 — 사람은 옷 이식 몸(`_out/vroid/<id>`) + 그 몸 `_anims` 를 쓴다. 뼈 표시 공(Icosphere)이 bbox 를 ±1m 로 부풀린다(보이는 메시만).
+
+## 14. 모션 30 — 생활·전투 동작 표 (K-0161, 2026-10-21)
+
+표 `data/clips30.json`(이름·출처·라이선스·판별 쓰임·루프·2D 칸 수·판정·눈 판정) → 팩 하나 `saga-assets/characters/anim-src/mocap/vroid_clips30_anims.glb`(+license, VRoid 뼈대 J_Bip·30fps, 3.1MB) — CMU 모캡 24 + 자체 키프레임 6(`keyframes.py` CF_Water_Pour·Sleep·Flag_Wave·Hang·Ride_Idle·Ride_Charge).
+
+```
+py tools/char-forge/mocap_fetch.py --table tools/char-forge/data/clips30.json        # BVH 받기(curl)
+blender -b --factory-startup -P tools/char-forge/mocap_retarget.py -- --target <VRoid .glb 절대> --bvh <_in/mocap 절대> \
+    --table <clips30.json 절대> --out <_out/clips/clips30_anims.glb 절대>                # 굽기 50초
+py tools/char-forge/mocap_pose_check.py tools/char-forge/_out/clips/                 # 점검 → CLIPS_CHECK 30/30
+py tools/char-forge/factory.py tools/char-forge/recipes/factory/k161_clips30.json --stage bake,style,judge   # 2D 견본(5방향·1190칸 ≈ 5분)
+```
+
+- **굽기 손잡이(표 줄)**: `range` 구간 고정 · `search` 자동 구간 범위 · `active`(수 = 문턱 배율) 반복 구간은 움직이는 곳만 · `reverse` · `inplace`/`inplace_z`(사다리) · `cf` = 자체 키프레임(build.retarget). 표 머리 `lock_feet` = 디딘 발 고정(발목·발끝 시간 순 한 번에, 두 마디 IK, 들릴 때 4프레임 풀기, 발바닥 다 닿으면 발 방향도 못박음) · `clean_feet` = CMU 발 마커 뒤집힘 막기(제 축 비틀림 빼기·75° 넘는 꺾임은 앞 프레임·프레임당 40° 제한 — 138_01·80_09 에 170° 뒤집힘이 있음).
+- **점검 다섯**(`mocap_pose_check.py <폴더>`): 디딘 점(발목·발끝 따로) 미끄러짐 ≤ `slip_max`(기본 3cm, locomotion·no_ground 는 재기만) · 손목 ≤ 80° · 땅 뚫림 ≥ −5cm · 튐 ≤ 90°/프레임 · 표 `expect`(어느 프레임이든). 줄 `CLIP 이름 PASS|FAIL {slip_at·jump_at…}`.
+- **공장 동작 표**: 계획에 `motion_table`(+ `anim_extra` 'm=…;c=…' 여럿 가능) → 표 이름이 역할 이름·동작 `c.<이름>`. 표 `sprite.ground`(each 칸마다 / row0 그 줄 첫 칸 — 쪼그림·눕기·뛰기·매달리기·말 위), `sprite.center`(칸 밖이면 카메라 밈), `sprite.spiky`(한 칸 정점이 정상) 를 style_pass·sheet_judge·factory 가 읽는다. 대조판이 idle 없는 풀이면 역할마다 가운데 칸.
+- **눈 판정(10-21)**: ○25 · △5(fish_wait·water·sweep·hammer·flag_wave — 손에 든 소품이 붙어야 읽힘). 판정기 PASS(같은 사람·발·깜빡임·잘림·테두리). 판 배포는 안 함 — 웹·고돗·유니티가 고른 동작만 배선(수신함).
+- **함정**: glTF 가져오기 전 장면 fps 를 30 으로(기본 24 면 구간이 0.8~29.6 으로 줄어 끝이 멈춘 것처럼 보임) · 반복 구간 고르기는 '가장 닮은 두 프레임'이라 가만히 선 머리·꼬리를 뽑는다(`active`) · 발목만 고정하면 발이 제자리에서 돌아 발끝이 미끄러진다 · 이 PC 에서 urllib 받기가 멈춘 일 → curl.

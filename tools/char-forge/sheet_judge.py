@@ -51,10 +51,10 @@ def flick(seq, px, loop, role=None):
     for f in range(n):
         if f + 1 < n or loop:
             j = d(f, (f + 1) % n)
-            jl = JUMP_DEATH if role == 'death' else (JUMP_MOVE if role in ('run', 'walk', 'attack', 'attack2') else JUMP)
+            jl = JUMP_DEATH if role == 'death' else (JUMP_MOVE if role in ('run', 'walk', 'attack', 'attack2', 'spiky') else JUMP)
             if any(j[k] > jl[k] for k in range(3)):
                 bad.append((f, '급변 넓이 %.2f 이동 %.2f 밝기 %.2f' % j))
-        if not loop and (f == 0 or f == n - 1):
+        if (not loop and (f == 0 or f == n - 1)) or role == 'spiky':
             continue
         p, q, nb = d(f, (f - 1) % n), d(f, (f + 1) % n), d((f - 1) % n, (f + 1) % n)
         for k in range(3):
@@ -121,7 +121,10 @@ def judge_pool(pdir, still_game=None):
                 ys = np.where(body.any(1))[0]
                 low = int(ys.max()) + 1                      # 몸 맨 아래 줄 아래 경계(px)
                 dv = low - fy
-                if role in STAND:
+                gm = c.get('ground') or ('each' if role in STAND else None)   # K-0161 동작 표 sprite.ground
+                if gm == 'row0' and f > 0:
+                    pass                                     # 첫 칸만 바닥에 맞춘 줄 — 나머지는 쪼그림·뛰기로 오르내리는 게 정상
+                elif gm in ('each', 'row0'):
                     chk['foot']['worst'] = max(chk['foot']['worst'] or 0, abs(dv))
                     if abs(dv) > FOOT_TOL:
                         bad('foot', f'{tag}: {dv:+.1f}px')
@@ -142,7 +145,7 @@ def judge_pool(pdir, still_game=None):
                 junk = int(((a > 0) & (a < 40) & ~near).sum())
                 if junk > 3:
                     bad('border', f'{tag}: 떨어진 반투명 {junk}px')
-            w, fb = flick(seq, px, bool(c.get('loop')), role)
+            w, fb = flick(seq, px, bool(c.get('loop')), 'spiky' if c.get('spiky') else role)   # K-0161 spiky = 한 칸 정점(뛰기 꼭대기·두 팔 번쩍)이 정상인 동작
             chk['flicker']['worst'] = max(chk['flicker']['worst'] or 0, w)
             for f, why in fb:
                 bad('flicker', f'{role} d{man["dirs"][r]} f{f}: {why}')
