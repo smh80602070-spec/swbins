@@ -8,6 +8,8 @@ extends Node
 ## ① 짝 표 — 종 24 가 mon_sp_<종>, 도적·사람 몸 보스는 "", 모든 종의 길이 실제 파일 ② 실제로 세운 여덟 종·보스 다섯이
 ## 제 종 GLB 몸이고 AnimationPlayer 에 Idle·Walk·Attack·Hit·Death ③ 키가 def.height(늑대 1.05) ±10%
 ## ④ 같은 종 넷은 같은 몸 ⑤ 예고 → Attack, 맞으면 Hit, 쓰러지면 쓰러진 몸이 장면에 남아 Death·새 몸은 GLB
+## G-0274 — 보통 종 일곱은 creatures/<id>.glb(MonsterBody.CREATURE_BY_KIND)가 mon_sp_ 보다 먼저: ① 짝 표·② 몸 경로가 그것 · creatures 몸 발 바닥이 땅(±0.08m)
+##   · ⑦ SAGA_MONSTER_CREATURE=0 이면 mon_sp_wolf.
 ## ⑥ 기본(환경 없음)은 GLB, SAGA_CODE_CREATURES=1 이면 "" (코드 짐승). 세운 적은 플레이어에게서 150m 밖(잠듦)에 두고 끝에 치운다. 저장 안 함.
 
 const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
@@ -38,7 +40,7 @@ func _physics_process(_delta: float) -> void:
 			var sp := 0
 			for k in FieldEnemy.KINDS:
 				var path := MonsterBody.path_for(FieldEnemy.KINDS, k, "x")
-				if path == "res://assets/world/mon_sp_%s.glb" % k:
+				if path == _want(k):
 					sp += 1
 				elif FIELD.has(k) or BOSSES.has(k):
 					bad.append("%s→%s" % [k, path])
@@ -68,14 +70,17 @@ func _physics_process(_delta: float) -> void:
 				for e in _made:
 					var path := String(e.get("glb_path"))
 					var ap := e.get("_anim") as AnimationPlayer
-					var want := "mon_sp_%s.glb" % e.kind
-					if not path.contains(want) or ap == null:
+					var want := _want(e.kind)
+					if path != want or ap == null:
 						bad.append("%s path=%s ap=%s" % [e.kind, path, ap])
 						continue
 					for a in ["Idle", "Walk", "Attack", "Hit", "Death"]:
 						if not ap.has_animation(a):
 							bad.append("%s 애니 %s 없음" % [e.kind, a])
 					var h := _height(e.get("_visual") as Node3D)
+					var foot := _bottom(e.get("_visual") as Node3D) - (e as Node3D).global_position.y
+					if absf(foot) > 0.08 and path.contains("/creatures/"):   # 옛 mon_sp_ 보스(잿불 도깨비왕 0.17)는 떠 있는 꼴 그대로
+						bad.append("%s 발 %.2f" % [e.kind, foot])
 					var target := float(e.def.get("height", FieldEnemy.WOLF_HEIGHT))
 					tall.append("%s %.2f/%.2f" % [e.kind, h, target])
 					if absf(h - target) > target * 0.1:
@@ -91,7 +96,7 @@ func _physics_process(_delta: float) -> void:
 				var seen := {}
 				for e in _made.slice(_made.size() - 4):
 					seen[String(e.get("glb_path"))] = true
-				_check("variants", seen.size() == 1 and String(seen.keys()[0]).ends_with("mon_sp_wolf.glb"), "paths=%s" % [seen.keys()])
+				_check("variants", seen.size() == 1 and String(seen.keys()[0]) == _want("wolf"), "paths=%s" % [seen.keys()])
 				_next()
 		3: # ⑤ 예고 → Attack · 맞기 → Hit · 쓰러짐 → 장면에 쓰러진 몸(Death)·새 몸
 			var e: Node = _made[0] # wolf
@@ -119,6 +124,10 @@ func _physics_process(_delta: float) -> void:
 			var code_ok := MonsterBody.path_for(FieldEnemy.KINDS, "wolf", "x") == "" and String(e.get("glb_path")) == "" and e.get("_visual") != null
 			OS.unset_environment("SAGA_CODE_CREATURES")
 			_made.append(e)
+			OS.set_environment("SAGA_MONSTER_CREATURE", "0")
+			var off := MonsterBody.path_for(FieldEnemy.KINDS, "wolf", "x")
+			OS.unset_environment("SAGA_MONSTER_CREATURE")
+			_check("creature_off", off.ends_with("mon_sp_wolf.glb") and _want("wolf").contains("/creatures/"), "off=%s on=%s" % [off, _want("wolf")])
 			_check("code_creatures", code_ok and MonsterBody.path_for(FieldEnemy.KINDS, "wolf", "x") != "", "glb=%s" % e.get("glb_path"))
 			_next()
 		5:
@@ -136,18 +145,20 @@ func _spawn(kind: String, nm: String, pos: Vector3) -> Node:
 	get_tree().current_scene.add_child(e)
 	return e
 
-## 몸의 메시 전체 세로 크기(장면 좌표).
+## 그 종이 가야 할 몸 — creatures 짝이 있으면 그것(G-0274), 아니면 종 전용 mon_sp_.
+func _want(k: String) -> String:
+	if MonsterBody.CREATURE_BY_KIND.has(k):
+		return MonsterBody.CREATURE_DIR + String(MonsterBody.CREATURE_BY_KIND[k]) + ".glb"
+	return "res://assets/world/mon_sp_%s.glb" % k
+
+## 몸 메시 맨 아래 높이(장면 좌표).
+func _bottom(v: Node3D) -> float:
+	return (v.global_transform * MonsterBody._posed_box(v)).position.y
+
+## 몸의 메시 전체 세로 크기(장면 좌표) — 스킨 몸은 바인드 포즈를 곱한 상자(G-0274).
 func _height(v: Node3D) -> float:
-	var box := AABB()
-	var first := true
-	for mi in v.find_children("*", "MeshInstance3D", true, false):
-		var m := mi as MeshInstance3D
-		if m.mesh == null:
-			continue
-		var b: AABB = m.global_transform * m.mesh.get_aabb()
-		box = b if first else box.merge(b)
-		first = false
-	return box.size.y
+	return (v.global_transform * MonsterBody._posed_box(v)).size.y
+
 
 func _check(name: String, ok: bool, detail: String) -> void:
 	if not ok:

@@ -7,6 +7,10 @@ extends RefCounted
 ##   보스 — hp ≥ BOSS_HP 이고 사람 몸(vroid)이 아닌 종. KINDS 순서대로 같은 갈래 boss_ 를 돌려 준다.
 ## 사람 몸(도적·vroid 보스)은 여기 안 온다.
 ## G-0082 — 종마다 몸 하나(mon_sp_<종 id>.glb, K-0080: 종 색·꼴 맞춤)가 있으면 그것을 먼저 쓴다. 없는 종만 위 갈래 길.
+## G-0274 — 들판 보통 종 일곱은 세 트랙 공용 자체 몸(assets/creatures/<id>.glb, K-0128·K-0166 고돗 엔진판 — 동작 일곱 이름 같음)을
+##   mon_sp_ 보다 먼저(CREATURE_BY_KIND). 짝 없는 종(물거북)·보스는 mon_sp_ 그대로. SAGA_MONSTER_CREATURE=0 이면 mon_sp_ 로.
+##   creatures 몸은 스킨 바인드 포즈에 배율이 있어(늑대 0.57·고양이 0.27) 메시 원본 크기 ≠ 그려지는 크기 — build 가 바인드를
+##   곱한 상자(_posed_box)로 키를 맞추고 발을 0 에(그려지는 몸은 이미 발 0 이라 보통 그대로).
 ## **기본은 켜짐.** 끄는 스위치: SAGA_CODE_CREATURES=1 이면 코드 짐승(creature_builder). SAGA_GLB_MONSTERS 는 옛 켜기(무시해도 켜짐).
 
 const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
@@ -19,6 +23,9 @@ const FAMILY_BY_SHAPE := {"wolf": "quad", "cat": "quad", "fox9": "quad", "bear":
 const BOSS_BY_FAMILY := {"quad": ["boss_01", "boss_02", "boss_03", "boss_12"], "wing": ["boss_04", "boss_05"],
 	"serp": ["boss_06", "boss_07"], "cons": ["boss_08", "boss_09"], "spir": ["boss_10", "boss_11"]}
 const VARIANTS := 4
+const CREATURE_DIR := "res://assets/creatures/"
+const CREATURE_BY_KIND := {"wolf": "wolf", "fire_imp": "demon_red", "thunder_cat": "cat", "wind_hawk": "owl",
+	"ice_fox": "fox", "rock_bear": "bear", "grass_snake": "snake"}
 ## field_enemy 가 쓰는 소문자 이름 → GLB 애니 이름.
 const ANIMS := {"idle": "Idle", "walk": "Walk", "run": "Run", "attack": "Attack", "hit": "Hit", "death": "Death", "special": "Special"}
 const LOOPED := ["Idle", "Walk", "Run"]
@@ -41,6 +48,9 @@ static func path_for(kinds: Dictionary, kind: String, enemy_name: String) -> Str
 	var def: Dictionary = kinds[kind]
 	if def.get("vroid", false):
 		return ""
+	var cr := creature_path(kind)
+	if cr != "":
+		return cr
 	var sp := species_path(kind)
 	if sp != "":
 		return sp
@@ -57,6 +67,14 @@ static func path_for(kinds: Dictionary, kind: String, enemy_name: String) -> Str
 		var list: Array = BOSS_BY_FAMILY[fam]
 		return DIR + String(list[i % list.size()]) + ".glb"
 	return DIR + "mon_%s_%02d.glb" % [fam, variant_of(enemy_name) + 1]
+
+## 세 트랙 공용 자체 몸(G-0274) 경로. 짝 없음·꺼짐·파일 없음이면 "".
+static func creature_path(kind: String) -> String:
+	if OS.get_environment("SAGA_MONSTER_CREATURE") == "0" or not CREATURE_BY_KIND.has(kind):
+		return ""
+	var p := CREATURE_DIR + String(CREATURE_BY_KIND[kind]) + ".glb"
+	return p if ResourceLoader.exists(p) else ""
+
 
 ## 종 전용 몸(K-0080) 경로. 없으면 "".
 static func species_path(kind: String) -> String:
@@ -80,7 +98,11 @@ static func build(path: String, height: float) -> Node3D:
 	if v == null:
 		return null
 	v.name = "MonsterBody"
-	GLBUtils.fit_height(v, height)
+	var box := _posed_box(v)
+	if box.size.y > 0.0001:
+		v.scale = Vector3.ONE * (height / box.size.y)
+		if absf(box.position.y) > 0.01 and not v.find_children("*", "Skeleton3D", true, false).is_empty():   # 뼈 없는 옛 몸(떠 있는 보스 등)은 그대로
+			_lift(v, -box.position.y)
 	var ap := v.get_node_or_null("AnimationPlayer") as AnimationPlayer
 	if ap:
 		for n in LOOPED:
@@ -89,6 +111,34 @@ static func build(path: String, height: float) -> Node3D:
 		if ap.has_animation("Idle"):
 			ap.play("Idle")
 	return v
+
+## 그려지는 몸 상자(v 기준, v 배율 빼고) — 스킨 메시는 뼈 쉼 자세 × 바인드 포즈(첫 뼈)를 곱한다. 스킨 없으면 GLBUtils.fit_height 와 같은 상자.
+static func _posed_box(v: Node3D) -> AABB:
+	var box := AABB()
+	var first := true
+	for mi in GLBUtils.find_all_mesh_instances(v):
+		if mi.mesh == null:
+			continue
+		var xf := GLBUtils._relative_transform(v, mi)
+		var sk := mi.get_node_or_null(mi.skeleton) as Skeleton3D if mi.skin != null else null
+		if sk != null and mi.skin.get_bind_count() > 0:
+			var bone := mi.skin.get_bind_bone(0)
+			if bone < 0:
+				bone = sk.find_bone(mi.skin.get_bind_name(0))
+			if bone >= 0:
+				xf = GLBUtils._relative_transform(v, sk) * sk.get_bone_global_rest(bone) * mi.skin.get_bind_pose(0)
+		var b: AABB = xf * mi.mesh.get_aabb()
+		box = b if first else box.merge(b)
+		first = false
+	return box
+
+
+## 위 자식(뼈대 CreatureArmature 등)을 dy(v 배율 전 단위)만큼 올린다. MotionRoot 는 애니가 위치를 쥐어 덮으므로 건너뛴다.
+static func _lift(v: Node3D, dy: float) -> void:
+	for c in v.get_children():
+		if c is Node3D and c.name != "MotionRoot":
+			(c as Node3D).position.y += dy
+
 
 static func anim_name(want: String) -> String:
 	return String(ANIMS.get(want.to_lower(), want))
