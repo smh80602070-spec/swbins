@@ -211,7 +211,7 @@ namespace Saga.Core
             var dim = SagaUi.Fill(canvas.transform, "Dim").gameObject.AddComponent<Image>();
             dim.color = new Color(0f, 0f, 0f, 0.6f);
             var center = new Vector2(0.5f, 0.5f);
-            var panel = SagaUi.NewPanel(canvas.transform, "Panel", center, Vector2.zero, new Vector2(620f, 640f), SagaUi.Panel);
+            var panel = SagaUi.NewPanel(canvas.transform, "Panel", center, Vector2.zero, new Vector2(620f, 640f), SagaUi.Panel, "window");
             SagaUi.NewText(panel.transform, SagaUi.L("일시 정지", "Paused"), 52f, SagaUi.Gold, new Vector2(0.5f, 1f), new Vector2(0f, -70f), new Vector2(560f, 80f));
             var size = new Vector2(480f, 86f);
             ResumeButton = SagaUi.NewButton(panel.transform, "Resume", SagaUi.L("계속하기", "Resume"), new Vector2(0.5f, 1f), new Vector2(0f, -170f), size, SagaUi.ButtonAccent);

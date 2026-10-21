@@ -340,7 +340,7 @@ namespace Saga.Title
         {
             _credits = SagaUi.Fill(root, "CreditsModal").gameObject;
             _credits.AddComponent<Image>().color = new Color(0f, 0f, 0f, 0.8f);
-            var panel = SagaUi.NewPanel(_credits.transform, "Panel", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1500f, 960f), SagaUi.Panel);
+            var panel = SagaUi.NewPanel(_credits.transform, "Panel", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1500f, 960f), SagaUi.Panel, "window");
             SagaUi.NewText(panel.transform, SagaUi.L("크레딧", "Credits"), 50f, SagaUi.Gold, new Vector2(0.5f, 1f), new Vector2(0f, -30f), new Vector2(1300f, 80f)).fontStyle = FontStyles.Bold;
 
             var view = new GameObject("CreditsScroll", typeof(RectTransform), typeof(Image), typeof(RectMask2D), typeof(ScrollRect));
@@ -438,7 +438,7 @@ namespace Saga.Title
             rows.Add((SagaUi.L("오류 기록", "Error Log"), OnErrorLog, b => ErrorLogButton = b));
             const float rowH = 104f;
             float h = 180f + rows.Count * rowH + 130f; // 제목 180 · 줄 · 닫기 칸 130 (NewRect 는 앵커 = 기준점이라 위 기준 자리는 칸의 윗변)
-            var panel = SagaUi.NewPanel(_settings.transform, "Panel", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(900f, h), SagaUi.Panel);
+            var panel = SagaUi.NewPanel(_settings.transform, "Panel", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(900f, h), SagaUi.Panel, "window");
             SagaUi.NewText(panel.transform, SagaUi.L("설정", "Settings"), 50f, SagaUi.Gold, new Vector2(0.5f, 1f), new Vector2(0f, -36f), new Vector2(800f, 80f)).fontStyle = FontStyles.Bold;
             SagaUi.NewText(panel.transform, SagaUi.L("다섯 판에 함께 적용됩니다", "Applies to all five games"), 26f, SagaUi.InkDim,
                 new Vector2(0.5f, 1f), new Vector2(0f, -122f), new Vector2(800f, 40f));
@@ -459,7 +459,7 @@ namespace Saga.Title
         private void BuildCard(RectTransform parent, int i, Vector2 pos, Vector2 size, bool narrow)
         {
             var g = Games[i];
-            var card = SagaUi.NewPanel(parent, "Card_" + g.Key, new Vector2(0.5f, 0.5f), pos, size, SagaUi.Panel);
+            var card = SagaUi.NewPanel(parent, "Card_" + g.Key, new Vector2(0.5f, 0.5f), pos, size, SagaUi.Panel, "card", g.Key); // U-0153 — 카드마다 제 판 색 옷
             bool saved = g.HasSave();
             if (narrow)
             {
@@ -487,7 +487,7 @@ namespace Saga.Title
                 cont.onClick.AddListener(() => Continue(idx));
             }
             var fresh = SagaUi.NewButton(card, "New", SagaUi.L("새로 시작", "New Game"), anchor, saved ? secondPos : firstPos, size,
-                saved ? SagaUi.ButtonIdle : SagaUi.ButtonAccent, 32f);
+                saved ? SagaUi.ButtonIdle : SagaUi.ButtonAccent, 32f, Games[i].Key);
             fresh.onClick.AddListener(() => RequestNew(idx));
             ContinueButtons.Add(cont);
             NewButtons.Add(fresh);
@@ -497,7 +497,7 @@ namespace Saga.Title
         {
             _confirm = SagaUi.Fill(root, "Confirm").gameObject;
             _confirm.AddComponent<Image>().color = new Color(0f, 0f, 0f, 0.7f);
-            var panel = SagaUi.NewPanel(_confirm.transform, "Panel", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(820f, 380f), SagaUi.Panel);
+            var panel = SagaUi.NewPanel(_confirm.transform, "Panel", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(820f, 380f), SagaUi.Panel, "popup");
             _confirmText = SagaUi.NewText(panel.transform, "", 36f, SagaUi.Ink, new Vector2(0.5f, 1f), new Vector2(0f, -110f), new Vector2(740f, 160f));
             ConfirmYes = SagaUi.NewButton(panel.transform, "Yes", SagaUi.L("지우고 시작", "Delete & Start"), new Vector2(0.5f, 0f), new Vector2(-170f, 70f), new Vector2(300f, 84f), SagaUi.ButtonAccent, 32f);
             ConfirmNo = SagaUi.NewButton(panel.transform, "No", SagaUi.L("취소", "Cancel"), new Vector2(0.5f, 0f), new Vector2(170f, 70f), new Vector2(300f, 84f), SagaUi.ButtonIdle, 32f);
@@ -516,7 +516,7 @@ namespace Saga.Title
 
             _perf = SagaUi.Fill(root, "Perf").gameObject;
             _perf.AddComponent<Image>().color = new Color(0f, 0f, 0f, 0.8f);
-            var panel = SagaUi.NewPanel(_perf.transform, "Panel", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1500f, 860f), SagaUi.Panel);
+            var panel = SagaUi.NewPanel(_perf.transform, "Panel", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1500f, 860f), SagaUi.Panel, "window");
             SagaUi.NewText(panel.transform, "성능 기록 — 판마다 상한(30fps 그대로) · 풀기(상한 없이 여유)", 34f, SagaUi.Gold,
                 new Vector2(0.5f, 1f), new Vector2(0f, -50f), new Vector2(1400f, 60f));
             _perfText = SagaUi.NewText(panel.transform, "", 24f, SagaUi.Ink, new Vector2(0.5f, 1f), new Vector2(0f, -440f), new Vector2(1420f, 680f),

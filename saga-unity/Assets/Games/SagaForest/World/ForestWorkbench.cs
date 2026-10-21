@@ -81,7 +81,7 @@ namespace Saga.Forest.World
             _hint = SagaUi.NewButton(canvas.transform, "WorkbenchHint", ForestLocalization.T("hand.hint", "제작대 (F)"), new Vector2(0.5f, 0f), new Vector2(0f, 150f), new Vector2(300f, 64f), SagaUi.ButtonAccent, 26f);
             _hint.onClick.AddListener(Toggle);
             _hint.gameObject.SetActive(false);
-            _panel = SagaUi.NewPanel(canvas.transform, "WorkbenchPanel", new Vector2(0.5f, 0.5f), new Vector2(0f, 0f), new Vector2(860f, 720f), SagaUi.Panel).gameObject;
+            _panel = SagaUi.NewPanel(canvas.transform, "WorkbenchPanel", new Vector2(0.5f, 0.5f), new Vector2(0f, 0f), new Vector2(860f, 720f), SagaUi.Panel, "window").gameObject;
             _title = SagaUi.NewText(_panel.transform, "", 34f, SagaUi.Gold, new Vector2(0.5f, 1f), new Vector2(0f, -46f), new Vector2(800f, 60f));
             _status = SagaUi.NewText(_panel.transform, "", 24f, SagaUi.Ink, new Vector2(0.5f, 1f), new Vector2(0f, -130f), new Vector2(800f, 100f));
             _upgrade = SagaUi.NewButton(_panel.transform, "Upgrade", "", new Vector2(0.5f, 1f), new Vector2(0f, -230f), new Vector2(520f, 72f), SagaUi.ButtonAccent, 26f);

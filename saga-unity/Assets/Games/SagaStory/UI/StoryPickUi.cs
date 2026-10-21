@@ -51,7 +51,7 @@ namespace Saga.Story.UI
         {
             SagaUi.EnsureEventSystem();
             var canvas = SagaUi.NewHudCanvas("PickCanvas", 95, transform);
-            _panel = SagaUi.NewPanel(canvas.transform, "PickPanel", new Vector2(0.5f, 0.5f), new Vector2(0f, 10f), new Vector2(860f, 660f), SagaUi.Panel).gameObject;
+            _panel = SagaUi.NewPanel(canvas.transform, "PickPanel", new Vector2(0.5f, 0.5f), new Vector2(0f, 10f), new Vector2(860f, 660f), SagaUi.Panel, "window").gameObject;
             _title = SagaUi.NewText(_panel.transform, "", 34f, SagaUi.Gold, new Vector2(0.5f, 1f), new Vector2(0f, -48f), new Vector2(800f, 70f));
             for (int i = 0; i < 3; i++)
             {

@@ -115,7 +115,7 @@ namespace Saga.Forest.World
         {
             SagaUi.EnsureEventSystem();
             var canvas = SagaUi.NewHudCanvas("LotCanvas", 95, transform);
-            _panel = SagaUi.NewPanel(canvas.transform, "LotPanel", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(940f, 760f), SagaUi.Panel).gameObject;
+            _panel = SagaUi.NewPanel(canvas.transform, "LotPanel", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(940f, 760f), SagaUi.Panel, "window").gameObject;
             _title = SagaUi.NewText(_panel.transform, "", 32f, SagaUi.Gold, new Vector2(0.5f, 1f), new Vector2(0f, -30f), new Vector2(880f, 56f));
             _build = SagaUi.NewButton(_panel.transform, "LotBuild", "", new Vector2(0.5f, 1f), new Vector2(0f, -96f), new Vector2(420f, 56f), SagaUi.ButtonAccent, 24f);
             _build.onClick.AddListener(PressBuild);

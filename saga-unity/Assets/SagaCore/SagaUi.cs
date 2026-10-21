@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Saga.Core
@@ -112,10 +113,64 @@ namespace Saga.Core
             return rt;
         }
 
-        public static Image NewPanel(Transform parent, string name, Vector2 anchor, Vector2 pos, Vector2 size, Color color)
+        /// <summary>U-0153 — 판 짧은 이름(K-0040 UI 스킨 폴더 = 웹 `shared/assets/ui/<판>`). 모르는 씬(타이틀 등)은 null.</summary>
+        public static string SkinFor(string sceneName)
+        {
+            switch (sceneName)
+            {
+                case "TestVillage": return "go";
+                case "TestDungeon": return "dungeon";
+                case "TestVillageForest": return "forest";
+                case "TestField": return "story";
+                case "TestCity": return "realm";
+                default: return null;
+            }
+        }
+
+        /// <summary>지금 판의 스킨 — 판 씬이 아니면(타이틀) 1만리 색.</summary>
+        public static string Skin => SkinFor(SceneManager.GetActiveScene().name) ?? "go";
+
+        /// <summary>진단용 — true 면 스킨이 있어도 단색(스킨 없는 PC 와 같은 모양).</summary>
+        public static bool SkinOff;
+
+        private static readonly System.Collections.Generic.Dictionary<string, Sprite> PartCache = new System.Collections.Generic.Dictionary<string, Sprite>();
+
+        /// <summary>UI 스킨 부품 하나(`Resources/UI/<판>/<부품>` — window·popup·card·tab_on·tab_off·btn_normal·btn_hover·btn_pressed·btn_disabled).
+        /// K-0173 이 놓기 전·스킨 없는 PC 면 null → 부르는 쪽은 지금 단색.</summary>
+        public static Sprite Part(string part, string skin = null)
+        {
+            if (SkinOff || string.IsNullOrEmpty(part)) return null;
+            var key = (skin ?? Skin) + "/" + part;
+            if (!PartCache.TryGetValue(key, out var s))
+            {
+                s = Resources.Load<Sprite>("UI/" + key);
+                PartCache[key] = s;
+            }
+            return s;
+        }
+
+        /// <summary>그림은 2배로 그려져 있다(웹 `border-image: 32 / 16px`) — 모서리를 반으로 줄여 놓는다.</summary>
+        private const float SkinPixelsMul = 2f;
+
+        /// <summary>스킨 부품이 있으면 Sliced + 흰 색조로 입힌다. 입혔으면 true.</summary>
+        public static bool ApplySkin(Image img, string part, string skin = null)
+        {
+            var s = Part(part, skin);
+            if (img == null || s == null) return false;
+            img.sprite = s;
+            img.type = Image.Type.Sliced;
+            img.pixelsPerUnitMultiplier = SkinPixelsMul;
+            img.color = Color.white;
+            return true;
+        }
+
+        /// <summary>part 를 주면(window·popup·card) 스킨이 있을 때 그 틀을 입고, 없으면 color 단색 — 배치·크기는 같다.</summary>
+        public static Image NewPanel(Transform parent, string name, Vector2 anchor, Vector2 pos, Vector2 size, Color color,
+            string part = null, string skin = null)
         {
             var img = NewRect(parent, name, anchor, pos, size).gameObject.AddComponent<Image>();
             img.color = color;
+            if (part != null) ApplySkin(img, part, skin);
             return img;
         }
 
@@ -133,17 +188,31 @@ namespace Saga.Core
         }
 
         public static Button NewButton(Transform parent, string name, string label, Vector2 anchor, Vector2 pos, Vector2 size,
-            Color color, float fontSize = 34f)
+            Color color, float fontSize = 34f, string skin = null)
         {
             var rt = NewRect(parent, name, anchor, pos, size);
             var img = rt.gameObject.AddComponent<Image>();
             img.color = color;
             var b = rt.gameObject.AddComponent<Button>();
             b.targetGraphic = img;
-            var colors = b.colors;
-            colors.highlightedColor = new Color(1.15f, 1.15f, 1.15f);
-            colors.pressedColor = new Color(0.8f, 0.8f, 0.8f);
-            b.colors = colors;
+            // U-0153 — 보통 단추(ButtonIdle)만 판 색 옷. 할 일 단추(ButtonAccent)는 웹 `.btn.primary` 처럼 금빛 단색 그대로
+            if (color == ButtonIdle && ApplySkin(img, "btn_normal", skin))
+            {
+                b.transition = Selectable.Transition.SpriteSwap;
+                var st = b.spriteState;
+                st.highlightedSprite = Part("btn_hover", skin);
+                st.selectedSprite = Part("btn_hover", skin);
+                st.pressedSprite = Part("btn_pressed", skin);
+                st.disabledSprite = Part("btn_disabled", skin);
+                b.spriteState = st;
+            }
+            else
+            {
+                var colors = b.colors;
+                colors.highlightedColor = new Color(1.15f, 1.15f, 1.15f);
+                colors.pressedColor = new Color(0.8f, 0.8f, 0.8f);
+                b.colors = colors;
+            }
             var t = NewText(rt, label, fontSize, Ink, new Vector2(0.5f, 0.5f), Vector2.zero, size);
             t.rectTransform.anchorMin = Vector2.zero;
             t.rectTransform.anchorMax = Vector2.one;

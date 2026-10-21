@@ -872,14 +872,12 @@
    "tool": "cutout_parts.py (Blender 옆모습 부위 렌더)",
    "model": "",
    "license": "MIT",
-   "count": 12,
+   "count": 4,
    "where": [
     "saga-assets/web2d/cutout/hl_mukhyang",
     "saga-assets/web2d/cutout/sg_zhugeliang",
-    "saga-web/saga-dungeon/assets/web2d/cutout/hl_mukhyang",
-    "saga-web/saga-dungeon/assets/web2d/cutout/sg_zhugeliang",
-    "saga-web/saga-forest/assets/web2d/cutout/hl_mukhyang",
-    "saga-web/saga-forest/assets/web2d/cutout/sg_zhugeliang"
+    "saga-web/shared/assets/web2d/cutout/hl_mukhyang",
+    "saga-web/shared/assets/web2d/cutout/sg_zhugeliang"
    ]
   },
   {
@@ -1175,6 +1173,15 @@
    "count": 166,
    "where": [
     "saga-unity/Assets/Art/CharactersForge"
+   ]
+  },
+  {
+   "tool": "make_k167_marks.py",
+   "model": "none",
+   "license": "CC0-1.0 (코드 생성 — 24격자 기하 도형, 외부 그림·이모지 그림 없음)",
+   "count": 25,
+   "where": [
+    "saga-web/shared/assets/icons/license"
    ]
   },
   {
