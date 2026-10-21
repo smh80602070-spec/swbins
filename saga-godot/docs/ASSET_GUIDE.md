@@ -357,6 +357,8 @@ Godot이 불필요한 `.import`를 만들지 않게). 예비 판단: 용암 쪽�
 
 ## 2026-09-20 — Quaternius Stylized Nature MegaKit(Standard, CC0) 실제 확보
 
+> **2026-10-21 G-0272 — `assets/vegetation/`·`assets/rocks/` 폴더는 지웠다**(코드 참조 0, 자연물은 K-0127 자체 사실판 `assets/world/foliage/` 로). 아래는 옛 기록.
+
 사람이 `quaternius.itch.io/stylized-nature-megakit`에서 무료 Standard 버전
 (68/116 모델, `Stylized Nature MegaKit[Standard].zip`, 99MB)을 직접 받아
 `C:\Users\user\Downloads\`에 뒀다 — 09-13·09-19 때 자동 다운로드가 안 됐던

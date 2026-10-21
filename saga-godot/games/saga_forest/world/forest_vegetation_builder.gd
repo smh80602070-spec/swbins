@@ -20,7 +20,7 @@ const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.
 ## Kenney tree_oak 대신 Quaternius CommonTree_1을 쓴다. 이 판은 나무를
 ## vertex_color_material로 완전히 덮어 칠하므로(아래 BIOME_TREE_TINT)
 ## 팔레트 스냅 텍스처가 어차피 안 보인다 — 그래서 스냅 변형이 아니라
-## `assets/vegetation/` 원본 gltf를 바로 쓴다. 옛 최종 높이(1.226×4.5≈
+## 옛 `assets/vegetation/`(G-0272 에 지움) 원본 gltf를 바로 쓴다. 옛 최종 높이(1.226×4.5≈
 ## 5.52m) 그대로 맞추려 TREE_SCALE만 CommonTree_1 실측고(7.265)로 역산.
 const TREE_GLB := "res://assets/world/tree_broadleaf_01.glb"   # G-0019 통일 툰 GLB — 옛 CommonTree_1 대신
 const TREE_SCALE := 0.837   # 5.52 / 6.594(broadleaf_01 AABB 실측고)

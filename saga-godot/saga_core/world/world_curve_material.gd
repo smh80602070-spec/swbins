@@ -64,6 +64,10 @@ static func textured_surfaces(src: Mesh, curve_amount: float, roughness_value: f
 			continue
 		var mat := ShaderMaterial.new()
 		mat.shader = TEXTURED_SHADER
+		## G-0272 — 사실판 자연물 잎 카드(gltf MASK)는 컷아웃판으로(불투명 셰이더면 잎 카드가 네모 판으로 보인다).
+		if orig.transparency == BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR:
+			mat.shader = CUTOUT_SHADER
+			mat.set_shader_parameter("alpha_cutoff", orig.alpha_scissor_threshold)
 		mat.set_shader_parameter("albedo_texture", orig.albedo_texture)
 		mat.set_shader_parameter("curve_amount", curve_amount)
 		mat.set_shader_parameter("roughness_value", roughness_value)

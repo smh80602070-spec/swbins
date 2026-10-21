@@ -210,7 +210,7 @@ func _build_scenery() -> void:
 		var ang := TAU * (float(i) + 0.5 * absf(sin(float(i) * 12.9898))) / 34.0
 		var r := 9.5 + 9.0 * absf(fmod(sin(float(i) * 78.233) * 43758.5453, 1.0))
 		var glb: String = SCENERY_ROCK if i % 7 == 3 else SCENERY_TREES[i % SCENERY_TREES.size()]
-		var ps := load(glb) as PackedScene
+		var ps := load(WorldAsset.nature(glb)) as PackedScene   # G-0272 자연물 사실판
 		if ps == null:
 			continue
 		var n := ps.instantiate() as Node3D

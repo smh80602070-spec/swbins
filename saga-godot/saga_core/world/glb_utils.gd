@@ -1,6 +1,8 @@
 class_name GLBUtils
 extends RefCounted
 
+const _WorldAsset := preload("res://saga_core/world/world_asset.gd")
+
 ## PLAN.md 41·45·46장 — primitive를 실제 GLB 에셋으로 교체하면서 여러 빌더
 ## (vegetation_builder.gd·landmarks_builder.gd)가 똑같이 필요로 하는 작업:
 ## 임포트된 GLB 씬을 한 번 인스턴스화해서 그 안의 Mesh 리소스만 뽑아내
@@ -18,8 +20,9 @@ extends RefCounted
 ## GO 마을 나무(CommonTree_1 스냅)는 09-20 교체 뒤로 잎 없이 줄기만, 들꽃
 ## (Flower_3/4_Single 스냅)은 꽃송이 없이 꽃대만 그려졌다. 에러 없이 "덜
 ## 그려질" 뿐이라 로그 회귀·재질 감사 어느 쪽도 못 잡았다.
+## G-0272 — 옛 툰 자연물 경로는 WorldAsset.nature() 로 사실판을 싣는다.
 static func extract_mesh(glb_path: String) -> Mesh:
-	var scene: PackedScene = load(glb_path)
+	var scene: PackedScene = load(_WorldAsset.nature(glb_path))
 	if scene == null:
 		push_warning("GLBUtils: 로드 실패 — %s" % glb_path)
 		return null

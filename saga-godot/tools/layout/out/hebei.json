@@ -3110,7 +3110,7 @@
  ],
  "items": [
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": -10,
    "ty": -10,
@@ -3121,7 +3121,7 @@
    "scale": 1.227
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": -9,
    "ty": -10,
@@ -3132,7 +3132,7 @@
    "scale": 1.882
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": -8,
    "ty": -10,
@@ -3143,7 +3143,7 @@
    "scale": 1.267
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": -8,
    "ty": -10,
@@ -3154,7 +3154,7 @@
    "scale": 1.304
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": -7,
    "ty": -10,
@@ -3165,7 +3165,7 @@
    "scale": 1.633
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": -6,
    "ty": -10,
@@ -3176,7 +3176,7 @@
    "scale": 1.52
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": -5,
    "ty": -10,
@@ -3187,7 +3187,7 @@
    "scale": 1.359
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": -4,
    "ty": -10,
@@ -3198,7 +3198,7 @@
    "scale": 1.606
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": -3,
    "ty": -10,
@@ -3209,7 +3209,7 @@
    "scale": 2.051
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": -2,
    "ty": -10,
@@ -3220,7 +3220,7 @@
    "scale": 1.695
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": -1,
    "ty": -10,
@@ -3231,7 +3231,7 @@
    "scale": 2.033
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": 0,
    "ty": -10,
@@ -3242,7 +3242,7 @@
    "scale": 2.167
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": 1,
    "ty": -10,
@@ -3253,7 +3253,7 @@
    "scale": 1.561
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": 2,
    "ty": -10,
@@ -3264,7 +3264,7 @@
    "scale": 1.536
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": 3,
    "ty": -10,
@@ -3275,7 +3275,7 @@
    "scale": 1.705
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": 3,
    "ty": -10,
@@ -3286,7 +3286,7 @@
    "scale": 1.678
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": 4,
    "ty": -10,
@@ -3297,7 +3297,7 @@
    "scale": 1.565
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": 5,
    "ty": -10,
@@ -3308,7 +3308,7 @@
    "scale": 1.78
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": 6,
    "ty": -10,
@@ -3319,7 +3319,7 @@
    "scale": 1.278
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": 6,
    "ty": -10,
@@ -3330,7 +3330,7 @@
    "scale": 1.221
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": 7,
    "ty": -10,
@@ -3341,7 +3341,7 @@
    "scale": 2.157
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": 8,
    "ty": -10,
@@ -3352,7 +3352,7 @@
    "scale": 1.243
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": 9,
    "ty": -10,
@@ -3363,7 +3363,7 @@
    "scale": 1.367
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": 10,
    "ty": -10,
@@ -3374,7 +3374,7 @@
    "scale": 2.193
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": -10,
    "ty": -9,
@@ -3385,7 +3385,7 @@
    "scale": 1.568
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": -9,
    "ty": -9,
@@ -3396,7 +3396,7 @@
    "scale": 1.394
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": -9,
    "ty": -9,
@@ -3407,7 +3407,7 @@
    "scale": 2.101
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": -8,
    "ty": -9,
@@ -3418,7 +3418,7 @@
    "scale": 1.307
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": -7,
    "ty": -9,
@@ -3429,7 +3429,7 @@
    "scale": 2.02
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": -6,
    "ty": -9,
@@ -3440,7 +3440,7 @@
    "scale": 1.375
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": -5,
    "ty": -9,
@@ -3451,7 +3451,7 @@
    "scale": 2.115
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": -4,
    "ty": -9,
@@ -3462,7 +3462,7 @@
    "scale": 1.673
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": -4,
    "ty": -9,
@@ -3473,7 +3473,7 @@
    "scale": 2.1
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": -3,
    "ty": -9,
@@ -3484,7 +3484,7 @@
    "scale": 1.613
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": -2,
    "ty": -9,
@@ -3495,7 +3495,7 @@
    "scale": 1.958
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": -1,
    "ty": -9,
@@ -3506,7 +3506,7 @@
    "scale": 1.911
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "@cave",
    "tx": 0,
    "ty": -9,
@@ -3514,10 +3514,10 @@
    "y": 0,
    "z": -36,
    "rotY": 0,
-   "scale": 2.6
+   "scale": 0.8
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": 1,
    "ty": -9,
@@ -3528,7 +3528,7 @@
    "scale": 2.163
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": 1,
    "ty": -9,
@@ -3539,7 +3539,7 @@
    "scale": 2.063
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": 2,
    "ty": -9,
@@ -3550,7 +3550,7 @@
    "scale": 1.434
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "@waterfall",
    "tx": 3,
    "ty": -9,
@@ -3561,7 +3561,7 @@
    "scale": 2.4
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": 4,
    "ty": -9,
@@ -3572,7 +3572,7 @@
    "scale": 1.95
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": 5,
    "ty": -9,
@@ -3583,7 +3583,7 @@
    "scale": 1.778
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": 5,
    "ty": -9,
@@ -3594,7 +3594,7 @@
    "scale": 2.006
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": 6,
    "ty": -9,
@@ -3605,7 +3605,7 @@
    "scale": 1.608
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": 7,
    "ty": -9,
@@ -3616,7 +3616,7 @@
    "scale": 1.669
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": 8,
    "ty": -9,
@@ -3627,7 +3627,7 @@
    "scale": 1.252
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": 9,
    "ty": -9,
@@ -3638,7 +3638,7 @@
    "scale": 2.047
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": 10,
    "ty": -9,
@@ -3649,7 +3649,7 @@
    "scale": 1.981
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": 10,
    "ty": -9,
@@ -3660,7 +3660,7 @@
    "scale": 1.204
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": -10,
    "ty": -8,
@@ -3671,7 +3671,7 @@
    "scale": 1.701
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": -9,
    "ty": -8,
@@ -3682,7 +3682,7 @@
    "scale": 1.26
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": -8,
    "ty": -8,
@@ -3693,7 +3693,7 @@
    "scale": 1.854
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": -7,
    "ty": -8,
@@ -3704,7 +3704,7 @@
    "scale": 1.465
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": -6,
    "ty": -8,
@@ -3715,7 +3715,7 @@
    "scale": 1.923
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": -5,
    "ty": -8,
@@ -3726,7 +3726,7 @@
    "scale": 2.12
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": -4,
    "ty": -8,
@@ -3737,7 +3737,7 @@
    "scale": 2.163
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": -4,
    "ty": -8,
@@ -3748,7 +3748,7 @@
    "scale": 1.713
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": -3,
    "ty": -8,
@@ -3759,7 +3759,7 @@
    "scale": 1.234
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": -2,
    "ty": -8,
@@ -3770,7 +3770,7 @@
    "scale": 1.534
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": 0,
    "ty": -8,
@@ -3781,7 +3781,7 @@
    "scale": 1.772
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": 1,
    "ty": -8,
@@ -3792,7 +3792,7 @@
    "scale": 1.613
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": 2,
    "ty": -8,
@@ -3803,7 +3803,7 @@
    "scale": 1.68
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": 3,
    "ty": -8,
@@ -3814,7 +3814,7 @@
    "scale": 1.888
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": 3,
    "ty": -8,
@@ -3825,7 +3825,7 @@
    "scale": 1.601
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": 4,
    "ty": -8,
@@ -3836,7 +3836,7 @@
    "scale": 1.797
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": 4,
    "ty": -8,
@@ -3847,7 +3847,7 @@
    "scale": 1.905
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": 5,
    "ty": -8,
@@ -3858,7 +3858,7 @@
    "scale": 1.203
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": 6,
    "ty": -8,
@@ -3869,7 +3869,7 @@
    "scale": 1.836
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": 7,
    "ty": -8,
@@ -3880,7 +3880,7 @@
    "scale": 1.644
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": 8,
    "ty": -8,
@@ -3891,7 +3891,7 @@
    "scale": 2.065
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": 9,
    "ty": -8,
@@ -3902,7 +3902,7 @@
    "scale": 1.393
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": 9,
    "ty": -8,
@@ -3913,7 +3913,7 @@
    "scale": 2.124
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": 10,
    "ty": -8,
@@ -3924,7 +3924,7 @@
    "scale": 2.094
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": 10,
    "ty": -8,
@@ -3935,7 +3935,7 @@
    "scale": 1.866
   },
   {
-   "asset": "res://assets/vegetation/Grass_Wispy_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_02.gltf",
    "kind": "grass",
    "tx": -10,
    "ty": -7,
@@ -3946,7 +3946,7 @@
    "scale": 1.074
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": -9,
    "ty": -7,
@@ -3957,7 +3957,7 @@
    "scale": 2.109
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": -8,
    "ty": -7,
@@ -3968,7 +3968,7 @@
    "scale": 1.496
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": -8,
    "ty": -7,
@@ -3979,7 +3979,7 @@
    "scale": 1.799
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": -7,
    "ty": -7,
@@ -3990,7 +3990,7 @@
    "scale": 1.427
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": -6,
    "ty": -7,
@@ -4001,7 +4001,7 @@
    "scale": 2.127
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": -6,
    "ty": -7,
@@ -4012,7 +4012,7 @@
    "scale": 1.963
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": -5,
    "ty": -7,
@@ -4023,7 +4023,7 @@
    "scale": 1.623
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": -5,
    "ty": -7,
@@ -4034,7 +4034,7 @@
    "scale": 1.962
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": -4,
    "ty": -7,
@@ -4045,7 +4045,7 @@
    "scale": 1.426
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": -4,
    "ty": -7,
@@ -4056,7 +4056,7 @@
    "scale": 1.336
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": -3,
    "ty": -7,
@@ -4067,7 +4067,7 @@
    "scale": 1.354
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": -2,
    "ty": -7,
@@ -4078,7 +4078,7 @@
    "scale": 1.74
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": -2,
    "ty": -7,
@@ -4089,7 +4089,7 @@
    "scale": 1.552
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": 0,
    "ty": -7,
@@ -4100,7 +4100,7 @@
    "scale": 2.193
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": 0,
    "ty": -7,
@@ -4111,7 +4111,7 @@
    "scale": 1.576
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": 1,
    "ty": -7,
@@ -4122,7 +4122,7 @@
    "scale": 1.281
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": 2,
    "ty": -7,
@@ -4133,7 +4133,7 @@
    "scale": 1.354
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": 3,
    "ty": -7,
@@ -4144,7 +4144,7 @@
    "scale": 1.99
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": 3,
    "ty": -7,
@@ -4155,7 +4155,7 @@
    "scale": 2.085
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": 4,
    "ty": -7,
@@ -4166,7 +4166,7 @@
    "scale": 1.686
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": 5,
    "ty": -7,
@@ -4177,7 +4177,7 @@
    "scale": 2.047
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": 6,
    "ty": -7,
@@ -4188,7 +4188,7 @@
    "scale": 1.501
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": 7,
    "ty": -7,
@@ -4199,7 +4199,7 @@
    "scale": 1.498
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": 7,
    "ty": -7,
@@ -4210,7 +4210,7 @@
    "scale": 2.176
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": 8,
    "ty": -7,
@@ -4221,7 +4221,7 @@
    "scale": 1.673
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": 9,
    "ty": -7,
@@ -4232,7 +4232,7 @@
    "scale": 2.168
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": -10,
    "ty": -6,
@@ -4243,7 +4243,7 @@
    "scale": 1.15
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_3.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_03_real.gltf",
    "kind": "forest",
    "tx": -8,
    "ty": -6,
@@ -4254,7 +4254,7 @@
    "scale": 1.218
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_3.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_03_real.gltf",
    "kind": "forest",
    "tx": -7,
    "ty": -6,
@@ -4265,7 +4265,7 @@
    "scale": 1.112
   },
   {
-   "asset": "res://assets/vegetation/Pine_1.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_01_real.gltf",
    "kind": "forest",
    "tx": -6,
    "ty": -6,
@@ -4276,7 +4276,7 @@
    "scale": 0.994
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_3.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_03_real.gltf",
    "kind": "forest",
    "tx": -6,
    "ty": -6,
@@ -4287,7 +4287,7 @@
    "scale": 0.888
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_3.gltf",
+   "asset": "res://assets/world/foliage/tree_birch_01_real.gltf",
    "kind": "forest",
    "tx": -5,
    "ty": -6,
@@ -4298,7 +4298,7 @@
    "scale": 1.078
   },
   {
-   "asset": "res://assets/rocks/rock_largeA.glb",
+   "asset": "res://assets/world/foliage/rock_small_01_real.gltf",
    "kind": "mount",
    "tx": -4,
    "ty": -6,
@@ -4309,7 +4309,7 @@
    "scale": 1.431
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": -3,
    "ty": -6,
@@ -4320,7 +4320,7 @@
    "scale": 1.957
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": -2,
    "ty": -6,
@@ -4331,7 +4331,7 @@
    "scale": 2.089
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": 0,
    "ty": -6,
@@ -4342,7 +4342,7 @@
    "scale": 1.601
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": 1,
    "ty": -6,
@@ -4353,7 +4353,7 @@
    "scale": 1.714
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": 1,
    "ty": -6,
@@ -4364,7 +4364,7 @@
    "scale": 1.852
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_3.gltf",
+   "asset": "res://assets/world/foliage/rock_moss_01_real.gltf",
    "kind": "mount",
    "tx": 2,
    "ty": -6,
@@ -4375,7 +4375,7 @@
    "scale": 1.486
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": 2,
    "ty": -6,
@@ -4386,7 +4386,7 @@
    "scale": 1.639
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_1.gltf",
+   "asset": "res://assets/world/foliage/rock_large_01_real.gltf",
    "kind": "mount",
    "tx": 3,
    "ty": -6,
@@ -4397,7 +4397,7 @@
    "scale": 1.616
   },
   {
-   "asset": "res://assets/rocks/Rock_Medium_2.gltf",
+   "asset": "res://assets/world/foliage/rock_large_02_real.gltf",
    "kind": "mount",
    "tx": 4,
    "ty": -6,
@@ -4408,7 +4408,7 @@
    "scale": 2.061
   },
   {
-   "asset": "res://assets/vegetation/Pine_3.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_03_real.gltf",
    "kind": "forest",
    "tx": 5,
    "ty": -6,
@@ -4419,7 +4419,7 @@
    "scale": 0.947
   },
   {
-   "asset": "res://assets/vegetation/Pine_3.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_03_real.gltf",
    "kind": "forest",
    "tx": 5,
    "ty": -6,
@@ -4430,7 +4430,7 @@
    "scale": 1.046
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_1.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_01_real.gltf",
    "kind": "forest",
    "tx": 6,
    "ty": -6,
@@ -4441,7 +4441,7 @@
    "scale": 1.193
   },
   {
-   "asset": "res://assets/vegetation/Pine_1.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_01_real.gltf",
    "kind": "forest",
    "tx": 6,
    "ty": -6,
@@ -4452,7 +4452,7 @@
    "scale": 1.004
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_2.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_03_real.gltf",
    "kind": "forest",
    "tx": 7,
    "ty": -6,
@@ -4463,7 +4463,7 @@
    "scale": 1.058
   },
   {
-   "asset": "res://assets/vegetation/Pine_1.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_01_real.gltf",
    "kind": "forest",
    "tx": 7,
    "ty": -6,
@@ -4474,7 +4474,7 @@
    "scale": 1.07
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_3.gltf",
+   "asset": "res://assets/world/foliage/tree_birch_01_real.gltf",
    "kind": "forest",
    "tx": 8,
    "ty": -6,
@@ -4485,7 +4485,7 @@
    "scale": 1.247
   },
   {
-   "asset": "res://assets/vegetation/Pine_1.gltf",
+   "asset": "res://assets/world/foliage/tree_birch_01_real.gltf",
    "kind": "forest",
    "tx": 8,
    "ty": -6,
@@ -4496,7 +4496,7 @@
    "scale": 1.025
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": 9,
    "ty": -6,
@@ -4507,7 +4507,7 @@
    "scale": 1.067
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": 10,
    "ty": -6,
@@ -4518,7 +4518,7 @@
    "scale": 1.071
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": -10,
    "ty": -5,
@@ -4529,7 +4529,7 @@
    "scale": 0.935
   },
   {
-   "asset": "res://assets/vegetation/Pine_1.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_01_real.gltf",
    "kind": "forest",
    "tx": -9,
    "ty": -5,
@@ -4540,7 +4540,7 @@
    "scale": 1.122
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_3.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_03_real.gltf",
    "kind": "forest",
    "tx": -8,
    "ty": -5,
@@ -4551,7 +4551,7 @@
    "scale": 0.956
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_3.gltf",
+   "asset": "res://assets/world/foliage/tree_birch_01_real.gltf",
    "kind": "forest",
    "tx": -7,
    "ty": -5,
@@ -4562,7 +4562,7 @@
    "scale": 0.988
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_3.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_03_real.gltf",
    "kind": "forest",
    "tx": -7,
    "ty": -5,
@@ -4573,7 +4573,7 @@
    "scale": 1.079
   },
   {
-   "asset": "res://assets/vegetation/Pine_1.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_01_real.gltf",
    "kind": "forest",
    "tx": -6,
    "ty": -5,
@@ -4584,7 +4584,7 @@
    "scale": 1.092
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_3.gltf",
+   "asset": "res://assets/world/foliage/tree_birch_01_real.gltf",
    "kind": "forest",
    "tx": -5,
    "ty": -5,
@@ -4595,7 +4595,7 @@
    "scale": 1.088
   },
   {
-   "asset": "res://assets/vegetation/Pine_3.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_03_real.gltf",
    "kind": "forest",
    "tx": -4,
    "ty": -5,
@@ -4606,7 +4606,7 @@
    "scale": 0.871
   },
   {
-   "asset": "res://assets/buildings/pillar-stone.glb",
+   "asset": "res://assets/world/dungeon_pillar_01.glb",
    "kind": "@shrine",
    "tx": -3,
    "ty": -5,
@@ -4614,10 +4614,10 @@
    "y": 0,
    "z": -20,
    "rotY": 0,
-   "scale": 1.4
+   "scale": 0.45
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": -2,
    "ty": -5,
@@ -4628,7 +4628,7 @@
    "scale": 1.076
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": 1,
    "ty": -5,
@@ -4639,7 +4639,7 @@
    "scale": 1.054
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": 2,
    "ty": -5,
@@ -4650,7 +4650,7 @@
    "scale": 0.982
   },
   {
-   "asset": "res://assets/vegetation/Pine_3.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_03_real.gltf",
    "kind": "forest",
    "tx": 3,
    "ty": -5,
@@ -4661,7 +4661,7 @@
    "scale": 1.123
   },
   {
-   "asset": "res://assets/vegetation/Pine_1.gltf",
+   "asset": "res://assets/world/foliage/tree_birch_01_real.gltf",
    "kind": "forest",
    "tx": 3,
    "ty": -5,
@@ -4672,7 +4672,7 @@
    "scale": 0.881
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_1.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_02_real.gltf",
    "kind": "forest",
    "tx": 4,
    "ty": -5,
@@ -4683,7 +4683,7 @@
    "scale": 0.95
   },
   {
-   "asset": "res://assets/vegetation/Pine_3.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_03_real.gltf",
    "kind": "forest",
    "tx": 5,
    "ty": -5,
@@ -4694,7 +4694,7 @@
    "scale": 1.068
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_3.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_03_real.gltf",
    "kind": "forest",
    "tx": 5,
    "ty": -5,
@@ -4705,7 +4705,7 @@
    "scale": 0.905
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_3.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_03_real.gltf",
    "kind": "forest",
    "tx": 6,
    "ty": -5,
@@ -4716,7 +4716,7 @@
    "scale": 0.865
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_2.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_03_real.gltf",
    "kind": "forest",
    "tx": 7,
    "ty": -5,
@@ -4727,7 +4727,7 @@
    "scale": 0.992
   },
   {
-   "asset": "res://assets/vegetation/Pine_2.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_01_real.gltf",
    "kind": "forest",
    "tx": 8,
    "ty": -5,
@@ -4738,7 +4738,7 @@
    "scale": 0.935
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_1.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_01_real.gltf",
    "kind": "forest",
    "tx": 8,
    "ty": -5,
@@ -4749,7 +4749,7 @@
    "scale": 0.923
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_3.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_03_real.gltf",
    "kind": "forest",
    "tx": 9,
    "ty": -5,
@@ -4760,7 +4760,7 @@
    "scale": 1.182
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_1.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_01_real.gltf",
    "kind": "forest",
    "tx": -9,
    "ty": -4,
@@ -4771,7 +4771,7 @@
    "scale": 0.881
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_2.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_02_real.gltf",
    "kind": "forest",
    "tx": -8,
    "ty": -4,
@@ -4782,7 +4782,7 @@
    "scale": 1.17
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_3.gltf",
+   "asset": "res://assets/world/foliage/tree_birch_01_real.gltf",
    "kind": "forest",
    "tx": -7,
    "ty": -4,
@@ -4793,7 +4793,7 @@
    "scale": 1.015
   },
   {
-   "asset": "res://assets/vegetation/Pine_2.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_01_real.gltf",
    "kind": "forest",
    "tx": -7,
    "ty": -4,
@@ -4804,7 +4804,7 @@
    "scale": 0.99
   },
   {
-   "asset": "res://assets/vegetation/Pine_3.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_03_real.gltf",
    "kind": "forest",
    "tx": -6,
    "ty": -4,
@@ -4815,7 +4815,7 @@
    "scale": 1.149
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_2.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_03_real.gltf",
    "kind": "forest",
    "tx": -6,
    "ty": -4,
@@ -4826,7 +4826,7 @@
    "scale": 0.85
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_1.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_01_real.gltf",
    "kind": "forest",
    "tx": -5,
    "ty": -4,
@@ -4837,7 +4837,7 @@
    "scale": 1.104
   },
   {
-   "asset": "res://assets/vegetation/Pine_1.gltf",
+   "asset": "res://assets/world/foliage/tree_birch_01_real.gltf",
    "kind": "forest",
    "tx": -5,
    "ty": -4,
@@ -4848,7 +4848,7 @@
    "scale": 1.24
   },
   {
-   "asset": "res://assets/vegetation/Grass_Wispy_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_02.gltf",
    "kind": "grass",
    "tx": -4,
    "ty": -4,
@@ -4859,7 +4859,7 @@
    "scale": 1.076
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": -2,
    "ty": -4,
@@ -4870,7 +4870,7 @@
    "scale": 1.087
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": 1,
    "ty": -4,
@@ -4881,7 +4881,7 @@
    "scale": 0.886
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_3.gltf",
+   "asset": "res://assets/world/foliage/tree_birch_01_real.gltf",
    "kind": "forest",
    "tx": 3,
    "ty": -4,
@@ -4892,7 +4892,7 @@
    "scale": 1.097
   },
   {
-   "asset": "res://assets/vegetation/Pine_1.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_01_real.gltf",
    "kind": "forest",
    "tx": 3,
    "ty": -4,
@@ -4903,7 +4903,7 @@
    "scale": 1.08
   },
   {
-   "asset": "res://assets/vegetation/Pine_3.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_02_real.gltf",
    "kind": "forest",
    "tx": 4,
    "ty": -4,
@@ -4914,7 +4914,7 @@
    "scale": 1.041
   },
   {
-   "asset": "res://assets/vegetation/Pine_3.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_03_real.gltf",
    "kind": "forest",
    "tx": 4,
    "ty": -4,
@@ -4925,7 +4925,7 @@
    "scale": 1.082
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_3.gltf",
+   "asset": "res://assets/world/foliage/tree_birch_01_real.gltf",
    "kind": "forest",
    "tx": 5,
    "ty": -4,
@@ -4936,7 +4936,7 @@
    "scale": 1.018
   },
   {
-   "asset": "res://assets/vegetation/Pine_2.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_01_real.gltf",
    "kind": "forest",
    "tx": 5,
    "ty": -4,
@@ -4947,7 +4947,7 @@
    "scale": 1.03
   },
   {
-   "asset": "res://assets/vegetation/Pine_2.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_02_real.gltf",
    "kind": "forest",
    "tx": 6,
    "ty": -4,
@@ -4958,7 +4958,7 @@
    "scale": 1.045
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_2.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_02_real.gltf",
    "kind": "forest",
    "tx": 7,
    "ty": -4,
@@ -4969,7 +4969,7 @@
    "scale": 0.941
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_2.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_03_real.gltf",
    "kind": "forest",
    "tx": 8,
    "ty": -4,
@@ -4980,7 +4980,7 @@
    "scale": 1.05
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_3.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_03_real.gltf",
    "kind": "forest",
    "tx": 8,
    "ty": -4,
@@ -4991,7 +4991,7 @@
    "scale": 1.17
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": 9,
    "ty": -4,
@@ -5002,7 +5002,7 @@
    "scale": 0.81
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": -10,
    "ty": -3,
@@ -5013,7 +5013,7 @@
    "scale": 1.121
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": -9,
    "ty": -3,
@@ -5024,7 +5024,7 @@
    "scale": 1.071
   },
   {
-   "asset": "res://assets/vegetation/Pine_2.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_02_real.gltf",
    "kind": "forest",
    "tx": -8,
    "ty": -3,
@@ -5035,7 +5035,7 @@
    "scale": 0.919
   },
   {
-   "asset": "res://assets/vegetation/Pine_3.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_02_real.gltf",
    "kind": "forest",
    "tx": -8,
    "ty": -3,
@@ -5046,7 +5046,7 @@
    "scale": 0.961
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_2.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_03_real.gltf",
    "kind": "forest",
    "tx": -7,
    "ty": -3,
@@ -5057,7 +5057,7 @@
    "scale": 0.894
   },
   {
-   "asset": "res://assets/vegetation/Pine_1.gltf",
+   "asset": "res://assets/world/foliage/tree_birch_01_real.gltf",
    "kind": "forest",
    "tx": -7,
    "ty": -3,
@@ -5068,7 +5068,7 @@
    "scale": 1.068
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_3.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_03_real.gltf",
    "kind": "forest",
    "tx": -6,
    "ty": -3,
@@ -5079,7 +5079,7 @@
    "scale": 0.957
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": -4,
    "ty": -3,
@@ -5090,7 +5090,7 @@
    "scale": 1.147
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": -3,
    "ty": -3,
@@ -5101,7 +5101,7 @@
    "scale": 0.979
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": -2,
    "ty": -3,
@@ -5112,7 +5112,7 @@
    "scale": 0.958
   },
   {
-   "asset": "res://assets/rocks/Pebble_Square_1.gltf",
+   "asset": "res://assets/world/pebbles_01.glb",
    "kind": "road",
    "tx": -1,
    "ty": -3,
@@ -5123,7 +5123,7 @@
    "scale": 0.841
   },
   {
-   "asset": "res://assets/rocks/Pebble_Round_2.gltf",
+   "asset": "res://assets/world/pebbles_01.glb",
    "kind": "road",
    "tx": 0,
    "ty": -3,
@@ -5134,7 +5134,7 @@
    "scale": 0.985
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": 2,
    "ty": -3,
@@ -5145,7 +5145,7 @@
    "scale": 0.907
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": 3,
    "ty": -3,
@@ -5156,7 +5156,7 @@
    "scale": 0.989
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": 4,
    "ty": -3,
@@ -5167,7 +5167,7 @@
    "scale": 0.94
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": 5,
    "ty": -3,
@@ -5178,7 +5178,7 @@
    "scale": 1.022
   },
   {
-   "asset": "res://assets/vegetation/Pine_1.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_01_real.gltf",
    "kind": "forest",
    "tx": 6,
    "ty": -3,
@@ -5189,7 +5189,7 @@
    "scale": 0.94
   },
   {
-   "asset": "res://assets/vegetation/Pine_2.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_02_real.gltf",
    "kind": "forest",
    "tx": 7,
    "ty": -3,
@@ -5200,7 +5200,7 @@
    "scale": 1.102
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_2.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_02_real.gltf",
    "kind": "forest",
    "tx": 7,
    "ty": -3,
@@ -5211,7 +5211,7 @@
    "scale": 0.899
   },
   {
-   "asset": "res://assets/vegetation/Pine_1.gltf",
+   "asset": "res://assets/world/foliage/tree_birch_01_real.gltf",
    "kind": "forest",
    "tx": 8,
    "ty": -3,
@@ -5222,7 +5222,7 @@
    "scale": 0.888
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_1.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_02_real.gltf",
    "kind": "forest",
    "tx": 8,
    "ty": -3,
@@ -5233,7 +5233,7 @@
    "scale": 0.965
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": 9,
    "ty": -3,
@@ -5244,7 +5244,7 @@
    "scale": 1.033
   },
   {
-   "asset": "res://assets/vegetation/Grass_Wispy_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_02.gltf",
    "kind": "grass",
    "tx": 10,
    "ty": -3,
@@ -5255,7 +5255,7 @@
    "scale": 0.881
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": -10,
    "ty": -2,
@@ -5266,7 +5266,7 @@
    "scale": 0.938
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": -9,
    "ty": -2,
@@ -5277,7 +5277,7 @@
    "scale": 1.144
   },
   {
-   "asset": "res://assets/rocks/Pebble_Square_1.gltf",
+   "asset": "res://assets/world/pebbles_01.glb",
    "kind": "road",
    "tx": -4,
    "ty": -2,
@@ -5288,7 +5288,7 @@
    "scale": 1.038
   },
   {
-   "asset": "res://assets/rocks/Pebble_Square_1.gltf",
+   "asset": "res://assets/world/pebbles_01.glb",
    "kind": "road",
    "tx": -3,
    "ty": -2,
@@ -5299,7 +5299,7 @@
    "scale": 0.907
   },
   {
-   "asset": "res://assets/rocks/Pebble_Round_1.gltf",
+   "asset": "res://assets/world/pebbles_01.glb",
    "kind": "road",
    "tx": -2,
    "ty": -2,
@@ -5310,7 +5310,7 @@
    "scale": 1.045
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": 6,
    "ty": -2,
@@ -5321,7 +5321,7 @@
    "scale": 0.938
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": 7,
    "ty": -2,
@@ -5332,7 +5332,7 @@
    "scale": 1.131
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": 8,
    "ty": -2,
@@ -5343,7 +5343,7 @@
    "scale": 1.13
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": 9,
    "ty": -2,
@@ -5354,7 +5354,7 @@
    "scale": 1.13
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": 10,
    "ty": -2,
@@ -5365,7 +5365,7 @@
    "scale": 0.801
   },
   {
-   "asset": "res://assets/vegetation/Grass_Wispy_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_02.gltf",
    "kind": "grass",
    "tx": -10,
    "ty": -1,
@@ -5376,7 +5376,7 @@
    "scale": 0.941
   },
   {
-   "asset": "res://assets/vegetation/Grass_Wispy_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_02.gltf",
    "kind": "grass",
    "tx": -9,
    "ty": -1,
@@ -5387,7 +5387,7 @@
    "scale": 0.919
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": -8,
    "ty": -1,
@@ -5398,7 +5398,7 @@
    "scale": 0.9
   },
   {
-   "asset": "res://assets/buildings/pillar-stone.glb",
+   "asset": "res://assets/world/dungeon_pillar_01.glb",
    "kind": "town",
    "tx": 2,
    "ty": -1,
@@ -5409,7 +5409,7 @@
    "scale": 1
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": 7,
    "ty": -1,
@@ -5420,7 +5420,7 @@
    "scale": 1.125
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": 8,
    "ty": -1,
@@ -5431,7 +5431,7 @@
    "scale": 1.19
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": -9,
    "ty": 0,
@@ -5442,7 +5442,7 @@
    "scale": 1.063
   },
   {
-   "asset": "res://assets/rocks/Pebble_Round_2.gltf",
+   "asset": "res://assets/world/pebbles_01.glb",
    "kind": "road",
    "tx": -7,
    "ty": 0,
@@ -5453,7 +5453,7 @@
    "scale": 0.972
   },
   {
-   "asset": "res://assets/buildings/wall-block.glb",
+   "asset": "res://assets/world/wall_block_01.glb",
    "kind": "town",
    "tx": -6,
    "ty": 0,
@@ -5464,7 +5464,7 @@
    "scale": 1
   },
   {
-   "asset": "res://assets/buildings/pillar-stone.glb",
+   "asset": "res://assets/world/dungeon_pillar_01.glb",
    "kind": "town",
    "tx": -4,
    "ty": 0,
@@ -5475,7 +5475,7 @@
    "scale": 1
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": 8,
    "ty": 0,
@@ -5486,7 +5486,7 @@
    "scale": 1.111
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": 9,
    "ty": 0,
@@ -5497,7 +5497,7 @@
    "scale": 0.956
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": 10,
    "ty": 0,
@@ -5508,7 +5508,7 @@
    "scale": 0.817
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": -10,
    "ty": 1,
@@ -5519,7 +5519,7 @@
    "scale": 1.047
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": -8,
    "ty": 1,
@@ -5530,7 +5530,7 @@
    "scale": 1.049
   },
   {
-   "asset": "res://assets/buildings/wall-block.glb",
+   "asset": "res://assets/world/wall_block_01.glb",
    "kind": "town",
    "tx": -5,
    "ty": 1,
@@ -5541,7 +5541,7 @@
    "scale": 1
   },
   {
-   "asset": "res://assets/buildings/wall-block.glb",
+   "asset": "res://assets/world/wall_block_01.glb",
    "kind": "town",
    "tx": -1,
    "ty": 1,
@@ -5552,7 +5552,7 @@
    "scale": 1
   },
   {
-   "asset": "res://assets/buildings/pillar-stone.glb",
+   "asset": "res://assets/world/dungeon_pillar_01.glb",
    "kind": "town",
    "tx": 0,
    "ty": 1,
@@ -5563,7 +5563,7 @@
    "scale": 1
   },
   {
-   "asset": "res://assets/buildings/pillar-stone.glb",
+   "asset": "res://assets/world/dungeon_pillar_01.glb",
    "kind": "town",
    "tx": 1,
    "ty": 1,
@@ -5574,7 +5574,7 @@
    "scale": 1
   },
   {
-   "asset": "res://assets/buildings/pillar-stone.glb",
+   "asset": "res://assets/world/dungeon_pillar_01.glb",
    "kind": "town",
    "tx": 3,
    "ty": 1,
@@ -5585,7 +5585,7 @@
    "scale": 1
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": 7,
    "ty": 1,
@@ -5596,7 +5596,7 @@
    "scale": 0.839
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": 8,
    "ty": 1,
@@ -5607,7 +5607,7 @@
    "scale": 1.061
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": 9,
    "ty": 1,
@@ -5618,7 +5618,7 @@
    "scale": 0.945
   },
   {
-   "asset": "res://assets/vegetation/Grass_Wispy_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_02.gltf",
    "kind": "grass",
    "tx": -8,
    "ty": 2,
@@ -5629,7 +5629,7 @@
    "scale": 1.131
   },
   {
-   "asset": "res://assets/rocks/Pebble_Round_2.gltf",
+   "asset": "res://assets/world/pebbles_01.glb",
    "kind": "road",
    "tx": -7,
    "ty": 2,
@@ -5640,7 +5640,7 @@
    "scale": 0.835
   },
   {
-   "asset": "res://assets/rocks/Pebble_Round_1.gltf",
+   "asset": "res://assets/world/pebbles_01.glb",
    "kind": "road",
    "tx": -2,
    "ty": 2,
@@ -5651,7 +5651,7 @@
    "scale": 0.905
   },
   {
-   "asset": "res://assets/rocks/Pebble_Round_1.gltf",
+   "asset": "res://assets/world/pebbles_01.glb",
    "kind": "road",
    "tx": 0,
    "ty": 2,
@@ -5662,7 +5662,7 @@
    "scale": 1.085
   },
   {
-   "asset": "res://assets/rocks/Pebble_Round_1.gltf",
+   "asset": "res://assets/world/pebbles_01.glb",
    "kind": "road",
    "tx": 1,
    "ty": 2,
@@ -5673,7 +5673,7 @@
    "scale": 1.014
   },
   {
-   "asset": "res://assets/rocks/Pebble_Round_2.gltf",
+   "asset": "res://assets/world/pebbles_01.glb",
    "kind": "road",
    "tx": 3,
    "ty": 2,
@@ -5684,7 +5684,7 @@
    "scale": 0.857
   },
   {
-   "asset": "res://assets/rocks/Pebble_Round_2.gltf",
+   "asset": "res://assets/world/pebbles_01.glb",
    "kind": "road",
    "tx": 5,
    "ty": 2,
@@ -5695,7 +5695,7 @@
    "scale": 0.866
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": 8,
    "ty": 2,
@@ -5706,7 +5706,7 @@
    "scale": 0.946
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": 9,
    "ty": 2,
@@ -5717,7 +5717,7 @@
    "scale": 0.838
   },
   {
-   "asset": "res://assets/vegetation/Grass_Wispy_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_02.gltf",
    "kind": "grass",
    "tx": 10,
    "ty": 2,
@@ -5728,7 +5728,7 @@
    "scale": 1.038
   },
   {
-   "asset": "res://assets/vegetation/Grass_Wispy_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_02.gltf",
    "kind": "grass",
    "tx": -10,
    "ty": 3,
@@ -5739,7 +5739,7 @@
    "scale": 1.124
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": -9,
    "ty": 3,
@@ -5750,7 +5750,7 @@
    "scale": 1.006
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -8,
    "ty": 3,
@@ -5761,7 +5761,7 @@
    "scale": 1.063
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -8,
    "ty": 3,
@@ -5772,7 +5772,7 @@
    "scale": 1.043
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -7,
    "ty": 3,
@@ -5783,7 +5783,7 @@
    "scale": 1.008
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -7,
    "ty": 3,
@@ -5794,7 +5794,7 @@
    "scale": 0.904
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -6,
    "ty": 3,
@@ -5805,7 +5805,7 @@
    "scale": 0.912
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -6,
    "ty": 3,
@@ -5816,7 +5816,7 @@
    "scale": 0.984
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -5,
    "ty": 3,
@@ -5827,7 +5827,7 @@
    "scale": 0.967
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -5,
    "ty": 3,
@@ -5838,7 +5838,7 @@
    "scale": 0.983
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": -4,
    "ty": 3,
@@ -5849,7 +5849,7 @@
    "scale": 0.807
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": -3,
    "ty": 3,
@@ -5860,7 +5860,7 @@
    "scale": 1.089
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": -2,
    "ty": 3,
@@ -5871,7 +5871,7 @@
    "scale": 0.982
   },
   {
-   "asset": "res://assets/rocks/Pebble_Round_2.gltf",
+   "asset": "res://assets/world/pebbles_01.glb",
    "kind": "road",
    "tx": -1,
    "ty": 3,
@@ -5882,7 +5882,7 @@
    "scale": 0.989
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": 3,
    "ty": 3,
@@ -5893,7 +5893,7 @@
    "scale": 0.913
   },
   {
-   "asset": "res://assets/vegetation/Grass_Wispy_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_02.gltf",
    "kind": "grass",
    "tx": 4,
    "ty": 3,
@@ -5904,7 +5904,7 @@
    "scale": 1.131
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 5,
    "ty": 3,
@@ -5915,7 +5915,7 @@
    "scale": 1.026
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 5,
    "ty": 3,
@@ -5926,7 +5926,7 @@
    "scale": 1.062
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 6,
    "ty": 3,
@@ -5937,7 +5937,7 @@
    "scale": 0.949
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 6,
    "ty": 3,
@@ -5948,7 +5948,7 @@
    "scale": 0.916
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 7,
    "ty": 3,
@@ -5959,7 +5959,7 @@
    "scale": 1.087
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 7,
    "ty": 3,
@@ -5970,7 +5970,7 @@
    "scale": 0.99
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 8,
    "ty": 3,
@@ -5981,7 +5981,7 @@
    "scale": 1.021
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 8,
    "ty": 3,
@@ -5992,7 +5992,7 @@
    "scale": 1.037
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": 10,
    "ty": 3,
@@ -6003,7 +6003,7 @@
    "scale": 0.914
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": -10,
    "ty": 4,
@@ -6014,7 +6014,7 @@
    "scale": 0.993
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -9,
    "ty": 4,
@@ -6025,7 +6025,7 @@
    "scale": 0.976
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -9,
    "ty": 4,
@@ -6036,7 +6036,7 @@
    "scale": 0.993
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -8,
    "ty": 4,
@@ -6047,7 +6047,7 @@
    "scale": 1.04
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -8,
    "ty": 4,
@@ -6058,7 +6058,7 @@
    "scale": 1.039
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -7,
    "ty": 4,
@@ -6069,7 +6069,7 @@
    "scale": 0.917
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -7,
    "ty": 4,
@@ -6080,7 +6080,7 @@
    "scale": 1.071
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -6,
    "ty": 4,
@@ -6091,7 +6091,7 @@
    "scale": 0.956
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -6,
    "ty": 4,
@@ -6102,7 +6102,7 @@
    "scale": 0.964
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -5,
    "ty": 4,
@@ -6113,7 +6113,7 @@
    "scale": 1.007
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -5,
    "ty": 4,
@@ -6124,7 +6124,7 @@
    "scale": 1.023
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -4,
    "ty": 4,
@@ -6135,7 +6135,7 @@
    "scale": 1.003
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -4,
    "ty": 4,
@@ -6146,7 +6146,7 @@
    "scale": 0.922
   },
   {
-   "asset": "res://assets/vegetation/Grass_Wispy_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_02.gltf",
    "kind": "grass",
    "tx": -3,
    "ty": 4,
@@ -6157,7 +6157,7 @@
    "scale": 1.14
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": -2,
    "ty": 4,
@@ -6168,7 +6168,7 @@
    "scale": 0.832
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": 0,
    "ty": 4,
@@ -6179,7 +6179,7 @@
    "scale": 1.197
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 2,
    "ty": 4,
@@ -6190,7 +6190,7 @@
    "scale": 0.944
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 2,
    "ty": 4,
@@ -6201,7 +6201,7 @@
    "scale": 1.009
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 3,
    "ty": 4,
@@ -6212,7 +6212,7 @@
    "scale": 0.963
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 3,
    "ty": 4,
@@ -6223,7 +6223,7 @@
    "scale": 0.963
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 4,
    "ty": 4,
@@ -6234,7 +6234,7 @@
    "scale": 1.09
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 4,
    "ty": 4,
@@ -6245,7 +6245,7 @@
    "scale": 1.019
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 5,
    "ty": 4,
@@ -6256,7 +6256,7 @@
    "scale": 1.09
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 5,
    "ty": 4,
@@ -6267,7 +6267,7 @@
    "scale": 1.078
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 6,
    "ty": 4,
@@ -6278,7 +6278,7 @@
    "scale": 1.016
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 6,
    "ty": 4,
@@ -6289,7 +6289,7 @@
    "scale": 1.029
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 7,
    "ty": 4,
@@ -6300,7 +6300,7 @@
    "scale": 1.034
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 7,
    "ty": 4,
@@ -6311,7 +6311,7 @@
    "scale": 1.069
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 8,
    "ty": 4,
@@ -6322,7 +6322,7 @@
    "scale": 1.054
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 8,
    "ty": 4,
@@ -6333,7 +6333,7 @@
    "scale": 0.98
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": 9,
    "ty": 4,
@@ -6344,7 +6344,7 @@
    "scale": 1.004
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": 10,
    "ty": 4,
@@ -6355,7 +6355,7 @@
    "scale": 1.164
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": -10,
    "ty": 5,
@@ -6366,7 +6366,7 @@
    "scale": 0.819
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -9,
    "ty": 5,
@@ -6377,7 +6377,7 @@
    "scale": 1.05
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -9,
    "ty": 5,
@@ -6388,7 +6388,7 @@
    "scale": 1.049
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -8,
    "ty": 5,
@@ -6399,7 +6399,7 @@
    "scale": 0.921
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -8,
    "ty": 5,
@@ -6410,7 +6410,7 @@
    "scale": 1.09
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -7,
    "ty": 5,
@@ -6421,7 +6421,7 @@
    "scale": 1.084
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -7,
    "ty": 5,
@@ -6432,7 +6432,7 @@
    "scale": 1.069
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -6,
    "ty": 5,
@@ -6443,7 +6443,7 @@
    "scale": 1.067
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -6,
    "ty": 5,
@@ -6454,7 +6454,7 @@
    "scale": 1.099
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -5,
    "ty": 5,
@@ -6465,7 +6465,7 @@
    "scale": 0.925
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -5,
    "ty": 5,
@@ -6476,7 +6476,7 @@
    "scale": 1.018
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -4,
    "ty": 5,
@@ -6487,7 +6487,7 @@
    "scale": 0.979
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -4,
    "ty": 5,
@@ -6498,7 +6498,7 @@
    "scale": 0.925
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": -3,
    "ty": 5,
@@ -6509,7 +6509,7 @@
    "scale": 0.864
   },
   {
-   "asset": "res://assets/rocks/Pebble_Square_1.gltf",
+   "asset": "res://assets/world/pebbles_01.glb",
    "kind": "road",
    "tx": -1,
    "ty": 5,
@@ -6520,7 +6520,7 @@
    "scale": 1.001
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": 0,
    "ty": 5,
@@ -6531,7 +6531,7 @@
    "scale": 1.055
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": 1,
    "ty": 5,
@@ -6542,7 +6542,7 @@
    "scale": 1.032
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 2,
    "ty": 5,
@@ -6553,7 +6553,7 @@
    "scale": 0.901
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 2,
    "ty": 5,
@@ -6564,7 +6564,7 @@
    "scale": 1.067
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 3,
    "ty": 5,
@@ -6575,7 +6575,7 @@
    "scale": 0.987
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 3,
    "ty": 5,
@@ -6586,7 +6586,7 @@
    "scale": 1.037
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 4,
    "ty": 5,
@@ -6597,7 +6597,7 @@
    "scale": 1.041
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 4,
    "ty": 5,
@@ -6608,7 +6608,7 @@
    "scale": 1.057
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 5,
    "ty": 5,
@@ -6619,7 +6619,7 @@
    "scale": 1.013
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 5,
    "ty": 5,
@@ -6630,7 +6630,7 @@
    "scale": 1.045
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 6,
    "ty": 5,
@@ -6641,7 +6641,7 @@
    "scale": 0.915
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 6,
    "ty": 5,
@@ -6652,7 +6652,7 @@
    "scale": 1.04
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 7,
    "ty": 5,
@@ -6663,7 +6663,7 @@
    "scale": 0.974
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 7,
    "ty": 5,
@@ -6674,7 +6674,7 @@
    "scale": 0.987
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 8,
    "ty": 5,
@@ -6685,7 +6685,7 @@
    "scale": 1.003
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 8,
    "ty": 5,
@@ -6696,7 +6696,7 @@
    "scale": 1.08
   },
   {
-   "asset": "res://assets/vegetation/Grass_Wispy_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_02.gltf",
    "kind": "grass",
    "tx": 10,
    "ty": 5,
@@ -6707,7 +6707,7 @@
    "scale": 0.958
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": -10,
    "ty": 6,
@@ -6718,7 +6718,7 @@
    "scale": 0.867
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -8,
    "ty": 6,
@@ -6729,7 +6729,7 @@
    "scale": 0.9
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -8,
    "ty": 6,
@@ -6740,7 +6740,7 @@
    "scale": 0.973
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -7,
    "ty": 6,
@@ -6751,7 +6751,7 @@
    "scale": 1.013
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -7,
    "ty": 6,
@@ -6762,7 +6762,7 @@
    "scale": 0.946
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -6,
    "ty": 6,
@@ -6773,7 +6773,7 @@
    "scale": 0.967
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": -6,
    "ty": 6,
@@ -6784,7 +6784,7 @@
    "scale": 0.943
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": -5,
    "ty": 6,
@@ -6795,7 +6795,7 @@
    "scale": 0.899
   },
   {
-   "asset": "res://assets/vegetation/Grass_Wispy_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_02.gltf",
    "kind": "grass",
    "tx": -4,
    "ty": 6,
@@ -6806,7 +6806,7 @@
    "scale": 1.159
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": -3,
    "ty": 6,
@@ -6817,7 +6817,7 @@
    "scale": 1.03
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": -2,
    "ty": 6,
@@ -6828,7 +6828,7 @@
    "scale": 0.998
   },
   {
-   "asset": "res://assets/rocks/Pebble_Round_2.gltf",
+   "asset": "res://assets/world/pebbles_01.glb",
    "kind": "road",
    "tx": -1,
    "ty": 6,
@@ -6839,7 +6839,7 @@
    "scale": 1.085
   },
   {
-   "asset": "res://assets/vegetation/Grass_Wispy_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_02.gltf",
    "kind": "grass",
    "tx": 0,
    "ty": 6,
@@ -6850,7 +6850,7 @@
    "scale": 0.877
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": 1,
    "ty": 6,
@@ -6861,7 +6861,7 @@
    "scale": 0.952
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": 2,
    "ty": 6,
@@ -6872,7 +6872,7 @@
    "scale": 1.098
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 4,
    "ty": 6,
@@ -6883,7 +6883,7 @@
    "scale": 0.969
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 4,
    "ty": 6,
@@ -6894,7 +6894,7 @@
    "scale": 1.006
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 5,
    "ty": 6,
@@ -6905,7 +6905,7 @@
    "scale": 1.053
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 5,
    "ty": 6,
@@ -6916,7 +6916,7 @@
    "scale": 1.067
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 6,
    "ty": 6,
@@ -6927,7 +6927,7 @@
    "scale": 0.928
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 6,
    "ty": 6,
@@ -6938,7 +6938,7 @@
    "scale": 1.093
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 7,
    "ty": 6,
@@ -6949,7 +6949,7 @@
    "scale": 1.043
   },
   {
-   "asset": "res://assets/vegetation/crops_wheatStageB.glb",
+   "asset": "res://assets/world/wheat_ripe_01.glb",
    "kind": "farm",
    "tx": 7,
    "ty": 6,
@@ -6960,7 +6960,7 @@
    "scale": 0.925
   },
   {
-   "asset": "res://assets/vegetation/Grass_Wispy_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_02.gltf",
    "kind": "grass",
    "tx": 9,
    "ty": 6,
@@ -6971,7 +6971,7 @@
    "scale": 1.066
   },
   {
-   "asset": "res://assets/buildings/planks.glb",
+   "asset": "res://assets/world/plank_bridge_01.glb",
    "kind": "@bridge",
    "tx": -1,
    "ty": 7,
@@ -6979,10 +6979,10 @@
    "y": 0,
    "z": 28,
    "rotY": 0,
-   "scale": 2.5
+   "scale": 1.5
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": -10,
    "ty": 8,
@@ -6993,7 +6993,7 @@
    "scale": 0.92
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": -9,
    "ty": 8,
@@ -7004,7 +7004,7 @@
    "scale": 0.835
   },
   {
-   "asset": "res://assets/buildings/wall-block.glb",
+   "asset": "res://assets/world/wall_block_01.glb",
    "kind": "@ruin",
    "tx": -8,
    "ty": 8,
@@ -7015,7 +7015,7 @@
    "scale": 1.117
   },
   {
-   "asset": "res://assets/buildings/wall-block.glb",
+   "asset": "res://assets/world/wall_block_01.glb",
    "kind": "@ruin",
    "tx": -8,
    "ty": 8,
@@ -7026,7 +7026,7 @@
    "scale": 1.163
   },
   {
-   "asset": "res://assets/buildings/wall-block.glb",
+   "asset": "res://assets/world/wall_block_01.glb",
    "kind": "@ruin",
    "tx": -7,
    "ty": 8,
@@ -7037,7 +7037,7 @@
    "scale": 1.108
   },
   {
-   "asset": "res://assets/buildings/wall-block.glb",
+   "asset": "res://assets/world/wall_block_01.glb",
    "kind": "@ruin",
    "tx": -7,
    "ty": 8,
@@ -7048,7 +7048,7 @@
    "scale": 1.225
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": -6,
    "ty": 8,
@@ -7059,7 +7059,7 @@
    "scale": 1.101
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": -4,
    "ty": 8,
@@ -7070,7 +7070,7 @@
    "scale": 0.962
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": -3,
    "ty": 8,
@@ -7081,7 +7081,7 @@
    "scale": 1.031
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": -2,
    "ty": 8,
@@ -7092,7 +7092,7 @@
    "scale": 0.927
   },
   {
-   "asset": "res://assets/rocks/Pebble_Round_1.gltf",
+   "asset": "res://assets/world/pebbles_01.glb",
    "kind": "road",
    "tx": -1,
    "ty": 8,
@@ -7103,7 +7103,7 @@
    "scale": 1.065
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": 0,
    "ty": 8,
@@ -7114,7 +7114,7 @@
    "scale": 0.912
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": 1,
    "ty": 8,
@@ -7125,7 +7125,7 @@
    "scale": 0.98
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": 6,
    "ty": 8,
@@ -7136,7 +7136,7 @@
    "scale": 1.054
   },
   {
-   "asset": "res://assets/vegetation/Pine_2.gltf",
+   "asset": "res://assets/world/foliage/tree_pine_02_real.gltf",
    "kind": "forest",
    "tx": 7,
    "ty": 8,
@@ -7147,7 +7147,7 @@
    "scale": 0.871
   },
   {
-   "asset": "res://assets/vegetation/CommonTree_2.gltf",
+   "asset": "res://assets/world/foliage/tree_broadleaf_03_real.gltf",
    "kind": "forest",
    "tx": 7,
    "ty": 8,
@@ -7158,7 +7158,7 @@
    "scale": 1.034
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": 8,
    "ty": 8,
@@ -7169,7 +7169,7 @@
    "scale": 1.197
   },
   {
-   "asset": "res://assets/vegetation/Grass_Wispy_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_02.gltf",
    "kind": "grass",
    "tx": 9,
    "ty": 8,
@@ -7180,7 +7180,7 @@
    "scale": 0.857
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": -10,
    "ty": 9,
@@ -7191,7 +7191,7 @@
    "scale": 1.036
   },
   {
-   "asset": "res://assets/buildings/wall-block.glb",
+   "asset": "res://assets/world/wall_block_01.glb",
    "kind": "@ruin",
    "tx": -8,
    "ty": 9,
@@ -7202,7 +7202,7 @@
    "scale": 1.245
   },
   {
-   "asset": "res://assets/buildings/wall-block.glb",
+   "asset": "res://assets/world/wall_block_01.glb",
    "kind": "@ruin",
    "tx": -8,
    "ty": 9,
@@ -7213,7 +7213,7 @@
    "scale": 1.127
   },
   {
-   "asset": "res://assets/buildings/pillar-stone.glb",
+   "asset": "res://assets/world/dungeon_pillar_01.glb",
    "kind": "@ruin",
    "tx": -7,
    "ty": 9,
@@ -7224,7 +7224,7 @@
    "scale": 1.098
   },
   {
-   "asset": "res://assets/buildings/pillar-stone.glb",
+   "asset": "res://assets/world/dungeon_pillar_01.glb",
    "kind": "@ruin",
    "tx": -7,
    "ty": 9,
@@ -7235,7 +7235,7 @@
    "scale": 1.063
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": -6,
    "ty": 9,
@@ -7246,7 +7246,7 @@
    "scale": 0.949
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": -5,
    "ty": 9,
@@ -7257,7 +7257,7 @@
    "scale": 0.913
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": -3,
    "ty": 9,
@@ -7268,7 +7268,7 @@
    "scale": 1.06
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": -2,
    "ty": 9,
@@ -7279,7 +7279,7 @@
    "scale": 1.038
   },
   {
-   "asset": "res://assets/rocks/Pebble_Round_2.gltf",
+   "asset": "res://assets/world/pebbles_01.glb",
    "kind": "road",
    "tx": -1,
    "ty": 9,
@@ -7290,7 +7290,7 @@
    "scale": 0.969
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": 0,
    "ty": 9,
@@ -7301,7 +7301,7 @@
    "scale": 1.048
   },
   {
-   "asset": "res://assets/buildings/roof-gable.glb",
+   "asset": "res://assets/world/temple_roof_01.glb",
    "kind": "@temple",
    "tx": 7,
    "ty": 9,
@@ -7309,10 +7309,10 @@
    "y": 0,
    "z": 36,
    "rotY": 0,
-   "scale": 2
+   "scale": 1
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": 8,
    "ty": 9,
@@ -7323,7 +7323,7 @@
    "scale": 0.897
   },
   {
-   "asset": "res://assets/vegetation/Grass_Wispy_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_02.gltf",
    "kind": "grass",
    "tx": 10,
    "ty": 9,
@@ -7334,7 +7334,7 @@
    "scale": 1.188
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": -10,
    "ty": 10,
@@ -7345,7 +7345,7 @@
    "scale": 0.909
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": -9,
    "ty": 10,
@@ -7356,7 +7356,7 @@
    "scale": 0.933
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": -8,
    "ty": 10,
@@ -7367,7 +7367,7 @@
    "scale": 0.903
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": -6,
    "ty": 10,
@@ -7378,7 +7378,7 @@
    "scale": 1.062
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": -5,
    "ty": 10,
@@ -7389,7 +7389,7 @@
    "scale": 0.957
   },
   {
-   "asset": "res://assets/vegetation/Bush_Common.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_02.gltf",
    "kind": "grass",
    "tx": -4,
    "ty": 10,
@@ -7400,7 +7400,7 @@
    "scale": 0.899
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": -3,
    "ty": 10,
@@ -7411,7 +7411,7 @@
    "scale": 0.977
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": -2,
    "ty": 10,
@@ -7422,7 +7422,7 @@
    "scale": 0.829
   },
   {
-   "asset": "res://assets/rocks/Pebble_Round_1.gltf",
+   "asset": "res://assets/world/pebbles_01.glb",
    "kind": "road",
    "tx": -1,
    "ty": 10,
@@ -7433,7 +7433,7 @@
    "scale": 0.863
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": 1,
    "ty": 10,
@@ -7444,7 +7444,7 @@
    "scale": 1.152
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": 3,
    "ty": 10,
@@ -7455,7 +7455,7 @@
    "scale": 1.068
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": 4,
    "ty": 10,
@@ -7466,7 +7466,7 @@
    "scale": 0.982
   },
   {
-   "asset": "res://assets/vegetation/Grass_Common_Short.gltf",
+   "asset": "res://assets/world/foliage/grass_clump_01.gltf",
    "kind": "grass",
    "tx": 5,
    "ty": 10,
@@ -7477,7 +7477,7 @@
    "scale": 0.986
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": 6,
    "ty": 10,
@@ -7488,7 +7488,7 @@
    "scale": 0.907
   },
   {
-   "asset": "res://assets/vegetation/Flower_3_Group.gltf",
+   "asset": "res://assets/world/flower_patch_01.glb",
    "kind": "grass",
    "tx": 8,
    "ty": 10,
@@ -7499,7 +7499,7 @@
    "scale": 0.863
   },
   {
-   "asset": "res://assets/vegetation/Clover_1.gltf",
+   "asset": "res://assets/world/foliage/bush_leafy_01.gltf",
    "kind": "grass",
    "tx": 10,
    "ty": 10,

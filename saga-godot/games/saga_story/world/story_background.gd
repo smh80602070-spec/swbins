@@ -225,8 +225,43 @@ func _build_layer(glb_path: String, count: int, base_scale: float, z: float, col
 	mmi.multimesh = mm
 	mmi.name = node_name
 	mmi.set_meta("flat_silhouette", true)   # 대기 원근 단색 실루엣 — 재질 감사 flat-tint 예외(material_audit.gd)
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = color
-	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	mmi.material_override = mat
+	## G-0272 — 사실판 나무는 잎이 알파 카드라 한 장 덮개(material_override)면 네모 판이 된다 — 표면마다 단색, 잎 카드는 그 알파로 오린다.
+	mm.mesh = _silhouette_mesh(mesh, color)
 	add_child(mmi)
+
+
+## 잎 카드 단색 실루엣 — 색은 color 그대로, 그림은 알파로만 오린다(StandardMaterial3D 는 그림 색을 곱해 버려 따로).
+const SIL_CUTOUT_CODE := """shader_type spatial;
+render_mode unshaded, cull_disabled;
+uniform vec4 color : source_color;
+uniform sampler2D alpha_tex;
+uniform float cutoff = 0.5;
+void fragment() {
+	ALBEDO = color.rgb;
+	ALPHA = texture(alpha_tex, UV).a;
+	ALPHA_SCISSOR_THRESHOLD = cutoff;
+}
+"""
+static var _sil_shader: Shader
+
+
+func _silhouette_mesh(src: Mesh, color: Color) -> Mesh:
+	var mesh := src.duplicate() as Mesh
+	for i in mesh.get_surface_count():
+		var orig := src.surface_get_material(i) as BaseMaterial3D
+		if orig != null and orig.transparency == BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR and orig.albedo_texture != null:
+			if _sil_shader == null:
+				_sil_shader = Shader.new()
+				_sil_shader.code = SIL_CUTOUT_CODE
+			var sm := ShaderMaterial.new()
+			sm.shader = _sil_shader
+			sm.set_shader_parameter("color", color)
+			sm.set_shader_parameter("alpha_tex", orig.albedo_texture)
+			sm.set_shader_parameter("cutoff", orig.alpha_scissor_threshold)
+			mesh.surface_set_material(i, sm)
+			continue
+		var mat := StandardMaterial3D.new()
+		mat.albedo_color = color
+		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		mesh.surface_set_material(i, mat)
+	return mesh

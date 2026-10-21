@@ -4794,6 +4794,30 @@
   "note": "회색 섞기 G-0258(sky_real gray — 흐림 0.35·비 0.72·안개 0.75·눈 0.45, 맑음·바람 0) · SAGA_WEATHER=<키> 고정 · =0 끔 · regress SAGA_WEATHER=clear · 겨울(12~2월)만 눈 — 3마을 게임 날짜·5천하 게임 달·4종횡 실제 달 · 60초마다 · 밤 창·등롱은 안 엮음 · 하늘색·빛무리 G-0256(KINDS sky 배율은 day_light 가 하늘색에 곱·sun_glow 는 sky_real sun_strength 에 곱, 맑음·바람 1)"
  },
  {
+  "id": "gd.core.nature-real",
+  "name": "자연물 사실판(K-0127) — 옛 툰 나무·바위·풀·덤불 18 쌍을 assets/world/foliage 잎 카드·이어진 바위로(다섯 판 부르는 곳 그대로, WorldAsset.nature 한 곳)",
+  "files": [
+   "saga_core/world/world_asset.gd",
+   "saga_core/world/glb_utils.gd",
+   "saga_core/world/world_curve_material.gd",
+   "saga_core/shaders/curved_textured_cutout.gdshader",
+   "games/saga_story/world/story_background.gd",
+   "games/saga_realm/world/realm_city.gd"
+  ],
+  "tests": [
+   "nature_assets",
+   "world_asset",
+   "gfx_baseline",
+   "perf_scenes"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0272",
+  "since": "2026-10-21",
+  "note": "SAGA_NATURE_REAL=0 이면 옛 툰 · GLBUtils.extract_mesh·WorldAsset.path 가 거침 · 잎 카드(MASK)는 textured_surfaces 가 컷아웃판(tint 곱)·4종횡 실루엣은 알파만 쓰는 단색 셰이더 · 배치표 kinds.json·hebei 다시 생성"
+ },
+ {
   "id": "gd.core.face-light",
   "name": "인물 얼굴 그림자(원신식, 다섯 판 공용) — 얼굴 표면은 머리 앞 방향을 섞은 수평 법선으로 명암(코·입가·턱 얼룩 없음, 좌우 반쪽 그늘) · 얼굴 살갗은 SDF 반쪽 경계(K-0151, G-0271)",
   "files": [

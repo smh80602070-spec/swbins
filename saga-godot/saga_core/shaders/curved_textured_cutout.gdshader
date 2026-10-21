@@ -12,6 +12,8 @@ uniform sampler2D albedo_texture : source_color;
 uniform float curve_amount : hint_range(0.0, 0.02) = 0.004;
 uniform float roughness_value : hint_range(0.0, 1.0) = 0.9;
 uniform float alpha_cutoff : hint_range(0.0, 1.0) = 0.2;
+// G-0272 — textured_surfaces 가 잎 카드(사실판 자연물)를 이 셰이더로 돌릴 때 바이옴 색 곱(기본 흰색 = 옛 그대로).
+uniform vec4 tint_color : source_color = vec4(1.0);
 
 void vertex() {
 	VERTEX = saga_apply_world_curve(VERTEX, MODEL_MATRIX, curve_amount);
@@ -19,7 +21,7 @@ void vertex() {
 
 void fragment() {
 	vec4 tex = texture(albedo_texture, UV);
-	ALBEDO = tex.rgb;
+	ALBEDO = tex.rgb * tint_color.rgb;
 	ALPHA = tex.a;
 	ALPHA_SCISSOR_THRESHOLD = alpha_cutoff;
 	ROUGHNESS = roughness_value;

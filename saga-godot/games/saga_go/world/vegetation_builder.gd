@@ -6,7 +6,7 @@ extends Node3D
 ## 늘 같은 자리에 같은 나무가 선다.
 ##
 ## 2026-09-11 — PLAN.md 43·44장(GLB 교체). 나무/바위 모두 CC0 Kenney
-## Nature Kit(assets/vegetation·assets/rocks, ASSET_GUIDE.md 참고)의
+## Nature Kit(옛 assets/vegetation·assets/rocks — G-0272 에 지움, 지금은 world/foliage 사실판)의
 ## GLB 메시로 바꿨다. 각 GLB는 "루트 하나 + MeshInstance3D 하나"(나무는
 ## 몸통+수관이 한 Mesh 안에 표면 2장으로 이미 합쳐져 있다)라 primitive였을
 ## 때와 똑같이 MultiMesh 하나에 얹을 수 있다 — draw call 수는 그대로다
