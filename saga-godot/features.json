@@ -5228,5 +5228,63 @@
   "ticket": "G-0295",
   "since": "2026-10-22",
   "note": "무장 상세 시트가 고돗엔 없어 내 정보 창에"
+ },
+ {
+  "id": "gd.story.monthly",
+  "name": "4종횡 달 사명 — 달마다 몹 300·이달의 사냥터 두 배·채우면 달 문장(힘 없음), 저장 카드 한 줄, 웹 W-0242",
+  "files": [
+   "games/saga_story/data/story_monthly.gd",
+   "games/saga_story/data/story_save_state.gd",
+   "games/saga_story/ui/story_save_button.gd",
+   "tools/probe_story_monthly.gd"
+  ],
+  "tests": [
+   "story_monthly"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0296",
+  "since": "2026-10-22",
+  "note": "세이브 판 23(monthly 칸) · 기기 날짜"
+ },
+ {
+  "id": "gd.core.hud-kit",
+  "name": "HUD 단추 판 틀 — 9-slice 를 반으로 줄인 사본(모서리 12) hud_theme, 네 판 HUD·1만리 윗줄, 웹 W-0257",
+  "files": [
+   "saga_core/ui/ui_kit.gd",
+   "saga_core/ui/menu_hud_hook.gd",
+   "games/saga_go/ui/go_menu.gd",
+   "tools/probe_hud_kit.gd"
+  ],
+  "tests": [
+   "hud_kit"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0297",
+  "since": "2026-10-22",
+  "note": "1만리 저장·사진은 E·Q 와 겹쳐 뺌(원래 겹침)"
+ },
+ {
+  "id": "gd.go.autoquest",
+  "name": "1만리 자동 퀘스트 — 목표판 밑 ▶: 지금 단계 걷기·말 걸기·줄 넘기기·싸움 대신, 직접 단계·고르기·체력 낮음·막힘에 멈춤 + 공용 saga_core/data/autoquest.gd, 웹 W-0337",
+  "files": [
+   "saga_core/data/autoquest.gd",
+   "games/saga_go/world/auto_quest_go.gd",
+   "saga_core/player/player.gd",
+   "games/saga_go/world/test_village.gd",
+   "tools/probe_autoquest.gd"
+  ],
+  "tests": [
+   "autoquest"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0298",
+  "since": "2026-10-22",
+  "note": "직선 걷기(길 찾기 없음) · 네 판은 G-0299"
  }
 ]

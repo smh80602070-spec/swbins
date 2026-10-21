@@ -19,6 +19,16 @@ static func apply_theme(scene: Node) -> int:
 	var n := 0
 	for nm in SCREENS:
 		n += UiKit.apply(scene.find_child(nm, true, false), "go")
+	## G-0297 HUD 단추도 같은 틀 — 화면마다 스스로 만든 여는 단추(인물 (C)·요리 (G)… 윗줄, 화면 노드나 그 CanvasLayer 바로 밑).
+	## 저장·사진(MobileHUD)은 뺌: 원래부터 E·Q 단추와 같은 자리에 겹쳐 있어 불투명 틀이 그것을 가린다(겹침은 따로 — G-0297 메모)
+	for nm in SCREENS:
+		var node := scene.find_child(nm, true, false)
+		if node == null:
+			continue
+		n += UiKit.apply_hud(node, "go")
+		for c in node.get_children():
+			if c is CanvasLayer:
+				n += UiKit.apply_hud(c, "go")
 	return n
 
 

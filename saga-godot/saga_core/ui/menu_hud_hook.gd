@@ -50,6 +50,7 @@ func _attach() -> void:
 		b.visible = false
 		moved.append(b)
 	UiKit.apply(hud, game)
+	UiKit.apply_hud(hud, game)   # G-0297 남은 HUD 단추(공격·저장 등)도 같은 틀
 
 
 ## 「내 정보」 창(G-0286) — ☰ 칸·촬영(shot_scene "call MenuHook open_me")이 부른다.

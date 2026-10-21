@@ -85,7 +85,7 @@ func _initialize() -> void:
 	f.close()
 	S.rank_best = {"x": "A"}
 	var ld_old: bool = S.try_load()
-	check(ld_old and S.rank_best.is_empty() and S.save_version() == 22, "옛 21 세이브 → rank_best 빈 칸 · 판 22")
+	check(ld_old and S.rank_best.is_empty() and S.save_version() >= 22, "옛 21 세이브 → rank_best 빈 칸 · 판 22 이상(G-0296 에 23)")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(S.path_override))
 	dummy.queue_free()
 	await process_frame

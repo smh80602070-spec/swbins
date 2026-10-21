@@ -174,7 +174,7 @@ func _initialize() -> void:
 	S.job = "none"
 	S.skills = {}
 	var ld: bool = S.try_load()
-	check(sv and ld and S.job == "godwar" and S.skill_level("p_wrath") == 3 and S.skill_level("p_banner") == 1 and S.save_version() == 22, "저장 왕복: job 군신·각성기 레벨 그대로(버전 %d 그대로)" % S.save_version())
+	check(sv and ld and S.job == "godwar" and S.skill_level("p_wrath") == 3 and S.skill_level("p_banner") == 1 and S.save_version() >= 22, "저장 왕복: job 군신·각성기 레벨 그대로(버전 %d 그대로)" % S.save_version())
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(S.path_override))
 	pl.queue_free()
 	await process_frame

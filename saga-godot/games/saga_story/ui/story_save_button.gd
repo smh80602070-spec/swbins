@@ -5,6 +5,8 @@ extends Button
 
 const TOAST_SEC := 3.0
 const SessionCard := preload("res://saga_core/ui/session_card.gd")
+const Monthly := preload("res://games/saga_story/data/story_monthly.gd")   # G-0296
+const Scenario := preload("res://games/saga_story/data/scenario.gd")
 
 
 func _ready() -> void:
@@ -28,6 +30,7 @@ func _on_pressed() -> void:
 			var l2 := StorySaveState.run_line2(StorySaveState.last_run)   # G-0245 덤·최고 기록
 			if not l2.is_empty():
 				lines.append(l2)
+		lines.append(Monthly.line(StorySaveState.monthly, Monthly.now_key(), Scenario.STAGE_NAMES))   # G-0296 달 사명
 		SessionCard.show(get_tree().current_scene, "저장했다 — 이번 세션", lines)
 	else:
 		_toast("저장 실패 — 플레이어를 못 찾았다.")

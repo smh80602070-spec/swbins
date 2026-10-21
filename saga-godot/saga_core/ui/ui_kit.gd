@@ -13,6 +13,8 @@ const SLICE := {"window": 32, "popup": 36, "card": 28, "tab_on": 14, "tab_off": 
 const MIN_TOUCH := 96   # ui_parts.json min_touch_px — 폰 가로 48dp @2x
 
 static var _cache := {}
+static var _hud_cache := {}
+const HUD_SCALE := 0.5   # G-0297 HUD 40px 단추 — 버튼 9-slice(모서리 24)를 반으로 줄인 사본(모서리 12)으로. 그림 파일은 그대로
 
 
 static func enabled() -> bool:
@@ -105,3 +107,64 @@ static func apply(node: Node, game: String) -> int:
 ## 카드 칸 바탕(card.png) — 메뉴 격자.
 static func card_box(game: String) -> StyleBoxTexture:
 	return box(game, "card", 18)
+
+
+## G-0297 HUD 단추 틀(웹 W-0257 짝) — 늘 떠 있는 HUD 단추(40px)가 기본 회색 상자라 메뉴·창(판 9-slice)과 두 결이 섞였다.
+## 같은 그림을 실행 중에 HUD_SCALE 로 줄인 사본(모서리도 같은 배율)으로 Button 만 칠한 Theme. 판마다 한 벌. 꺼졌거나 그림이 없으면 null.
+static func hud_theme(game: String) -> Theme:
+	if not enabled():
+		return null
+	if _hud_cache.has(game):
+		return _hud_cache[game]
+	var th := Theme.new()
+	var btn := {"normal": "btn_normal", "hover": "btn_hover", "pressed": "btn_pressed", "disabled": "btn_disabled", "focus": "btn_hover"}
+	var any := false
+	for st in btn:
+		var sb := small_box(game, btn[st], HUD_SCALE)
+		if sb != null:
+			th.set_stylebox(st, "Button", sb)
+			any = true
+	if not any:
+		return null
+	_hud_cache[game] = th
+	return th
+
+
+## 9-slice 한 장을 scale 배로 줄인 사본(모서리·여백도 같은 배율) — 작은 단추용.
+static func small_box(game: String, part: String, scale: float) -> StyleBoxTexture:
+	var p := "%s%s/%s.png" % [SKIN_DIR, game, part]
+	if not ResourceLoader.exists(p):
+		return null
+	var tex := load(p) as Texture2D
+	var img := tex.get_image()
+	if img == null:
+		return null
+	img = img.duplicate()
+	if img.is_compressed():
+		img.decompress()
+	img.resize(maxi(4, int(img.get_width() * scale)), maxi(4, int(img.get_height() * scale)), Image.INTERPOLATE_LANCZOS)
+	var sb := StyleBoxTexture.new()
+	sb.texture = ImageTexture.create_from_image(img)
+	var s := maxf(2.0, float(SLICE.get(part, 16)) * scale)
+	sb.texture_margin_left = s
+	sb.texture_margin_right = s
+	sb.texture_margin_top = s
+	sb.texture_margin_bottom = s
+	sb.content_margin_left = s * 0.8
+	sb.content_margin_right = s * 0.8
+	sb.content_margin_top = 2.0
+	sb.content_margin_bottom = 2.0
+	return sb
+
+
+## HUD 노드 바로 밑 Button(테마 없는 것)에 hud_theme — 단 수.
+static func apply_hud(hud: Node, game: String) -> int:
+	var th := hud_theme(game)
+	if th == null or hud == null:
+		return 0
+	var n := 0
+	for c in hud.get_children():
+		if c is Button and (c as Button).theme == null:
+			(c as Button).theme = th
+			n += 1
+	return n

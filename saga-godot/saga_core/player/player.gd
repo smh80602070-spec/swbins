@@ -50,6 +50,8 @@ var fly_on := false
 ## G-0030 — 이 판 주인공 몸(새 인물 몸 id, "self" = VroidBody.DEX_SELF_ID). 장면 뿌리 노드에 적는다.
 @export var body_id := ""
 var _joystick: Control = null
+## G-0298 자동 퀘스트(판 어댑터)가 넣는 걷기 방향(월드, 수평 단위) — 손 입력이 없을 때만 쓴다. ZERO 면 전과 같음.
+var auto_dir := Vector3.ZERO
 var _current_anim := ""
 var _life: Node = null   # G-0265 생활 몸짓(life_pose) — 2나락·3마을(1만리는 G-0266)
 var _gait_scaled := false   # G-0264 — 걸음새가 speed_scale 을 바꿨으면 다른 클립으로 갈 때 1.0 으로
@@ -271,7 +273,7 @@ func _movement_input() -> Vector2:
 ## 카메라를 돌리면 "앞으로"가 그 방향을 따라간다(3인칭 액션 RPG 감각).
 func _world_direction(input_dir: Vector2) -> Vector3:
 	if input_dir.length() < 0.001:
-		return Vector3.ZERO
+		return auto_dir   # G-0298 자동 퀘스트가 주는 월드 방향(기본 ZERO = 전과 같음)
 	var cam_basis := camera_rig.global_transform.basis if camera_rig else global_transform.basis
 	var forward := -cam_basis.z
 	forward.y = 0.0
