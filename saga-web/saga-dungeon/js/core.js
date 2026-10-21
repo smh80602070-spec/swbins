@@ -484,7 +484,7 @@
     levelup: function () { var Tw = global.DG.town, D = Tw && Tw.active && Tw.active() ? Tw : global.DG.dungeon, T = global.DG.dungeon3d, r = D && D.raw && D.raw(); if (r && r.player && !(T && T.active && T.active())) { D.fx().push({ t: 'lvl', x: r.player.x, y: r.player.y - 8, life: 1.1 }); } } };   // W-0122 마을·들판이면 마을 fx 에(전엔 늘 던전 — 마을 레벨업은 안 보였다)   // 원소 타격 이펙트 시트(W-0054) — 첫 타격 전에 받아 둔다
   global.DG.cfg.mode2d = {
     base: 'assets/sprites2d_sheets/',
-    tileBase: 'assets/web2d/tile/',
+    tileBase: 'assets/web2d/tile/', bgShared: 1,   // W-0359 배경 층은 shared 한 벌
     /** 마을 건물 2D 스프라이트(K-0017 `world2d`, W-0024) — 장식 종류(town.js) → { id|ids, h:1 }. 키는 장식의 h(방 좌표)×확대로 정해져 h 는 1. 짝 없는 종류(대장간·마구간·방앗간)는 안 그림 */
     prop2d: { house: { ids: ['eu_house_01', 'hanok_01', 'chinese_hall_01'], h: 1 }, well: { id: 'well_01', h: 1 }, inn: { id: 'inn_01', h: 1 }, belltower: { id: 'stone_tower_01', h: 1 } },
     /** 층 테마 이름(data-dungeon THEMES) → 2D 바닥 타일 — 테마마다 한 장(K-0094, W-0191: 다진 흙·깨진 돌·풀흙·젖은 돌·검붉은 돌·구름 돌). 층 색은 타일 위에 얹힌다.

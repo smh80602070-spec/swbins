@@ -418,7 +418,8 @@
      `cfg.still = { <풀id>: true }` 인 풀만 이 길로 온다. 그림 `<stillBase>/<풀>/<front|side|back>.webp`(기본 assets/web2d/moving/) — 면이 없으면 side 로 대신 */
   var SPX = 256, SBODY = 240, SFOOT = 252 / 256, SVIEW = ['front', 'side', 'back'];
   var stills = {};        // '풀/면' → { img, ok, fail }
-  function stillBase() { return C().stillBase || 'assets/web2d/moving/'; }
+  function w2sh(sub) { var A = global.DG && global.DG.assets3d, u = A && A.sharedUrl ? A.sharedUrl('web2d/' + sub + '/') : null; return u || 'assets/web2d/' + sub + '/'; }   // W-0359 다섯 판 한 벌(shared) — 못 찾으면 판 경로
+  function stillBase() { return C().stillBase || w2sh('moving'); }
   function isStill(pool) { var s = C().still; return !!(s && s[pool]); }
   function getStill(pool, view) {
     var key = pool + '/' + view, e = stills[key];
@@ -486,7 +487,7 @@
      = { far|mid|near: { y, h, speed, w } } (기준 높이 540 — 그릴 때 화면 높이에 맞춰 비율 환산). 이미지는 `<지역>_<층>.webp`, 좌우 왕복 이음. */
   var LAYERS = ['far', 'mid', 'near'];
   var bgs = {}, tiles = {};          // 지역 → { meta, imgs:{층:{img,ok,fail}}, fail }  /  타일id → { img, ok, fail, pat }
-  function bgBase() { return C().bgBase || 'assets/web2d/bg/'; }
+  function bgBase() { return C().bgBase || (C().bgShared ? w2sh('bg') : 'assets/web2d/bg/'); }   // bgShared — 판 배경이 전부 shared 에 있는 판(2나락). 4종횡은 판에만 있는 층이 있어 판 경로
   function tileBase() { return C().tileBase || 'assets/web2d/tile/'; }
   function loadImg(url) {
     var e = { img: null, ok: false, fail: false };
@@ -540,7 +541,7 @@
   /** 건물 실내 그림(K-0025, W-0045) — 방 그림과 앞가림 층(투명) 주소. 2D 모드가 아니면 null(3D 는 그림 없이 글만). cfg.interiorBase 로 폴더를 바꾼다 */
   function interiorUrls(id) {
     if (!id || !isOn()) { return null; }
-    var b = C().interiorBase || 'assets/web2d/interior/';
+    var b = C().interiorBase || w2sh('interior');
     return { back: b + id + '.webp', front: b + id + '_front.webp' };
   }
 

@@ -25,7 +25,7 @@
   function art() { var o = global.DG.core; return !(o && o.tuned && !o.tuned('realm.tacArt', 1)); }
   function tileHref(kind) { return TILE[kind] ? (cfg2().tileBase || 'assets/web2d/tile/') + TILE[kind] + '.webp' : ''; }
   function propHref(id) { var A = global.DG.assets3d; return A && A.spriteUrl ? (A.spriteUrl(id) || '') : ''; }
-  function stillHref(pool, view) { return (cfg2().stillBase || 'assets/web2d/moving/') + pool + '/' + view + '.webp'; }
+  function stillHref(pool, view) { var A = global.DG && global.DG.assets3d, u = A && A.sharedUrl ? A.sharedUrl('web2d/moving/') : null; return (cfg2().stillBase || u || 'assets/web2d/moving/') + pool + '/' + view + '.webp'; }   // W-0359 shared 한 벌
   function hashS(str) { var h = 2166136261, i; str = String(str); for (i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } return h >>> 0; }
   /** 유닛 몸 그림 — 순수(진단이 본다): 장수는 제 VRoid 시트(있으면) 아니면 장수 몸 둘 중 하나, 부대는 진영 색 보병 */
   function bodyOf(u) {

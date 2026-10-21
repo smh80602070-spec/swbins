@@ -56,7 +56,7 @@
 
   function tuned(k, d) { var C = global.DG && global.DG.core; return C && C.tuned ? C.tuned(k, d) : d; }
   function cfg() { return (global.DG && global.DG.cfg && global.DG.cfg.mode2d) || {}; }
-  function base() { return cfg().cutoutBase || 'assets/web2d/cutout/'; }
+  function base() { var A = global.DG && global.DG.assets3d, u = A && A.sharedUrl ? A.sharedUrl('web2d/cutout/') : null; return cfg().cutoutBase || u || 'assets/web2d/cutout/'; }   // W-0359 다섯 판 한 벌(shared)
 
   /* ── 순수: 클립 표본 ── */
   function ease(u) { return u * u * (3 - 2 * u); }

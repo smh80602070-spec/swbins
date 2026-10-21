@@ -1555,5 +1555,28 @@
   "ticket": "W-0358",
   "since": "2026-10-21",
   "note": "10-21: 23시 고정 촬영: 석등 불 갓 빛남·발치 작은 불빛 웅덩이, 집 벽 안 빛남 · 묶음(InstancedMesh) 등은 칸 위치로 불 자리 · 점광 켜도 fps 30 안팎(자동 품질 꺼서 견줌 1~4 차)"
+ },
+ {
+  "id": "go.shared-once",
+  "name": "다섯 판 같은 그림·소리 shared 한 벌(W-0359) — 공용 assets3d.sharedUrl(판 단독 /_shared·공개 ../shared): 인물·펫 초상·bgm ogg·아이콘 icon64·2D 움직이는 그림·실내·컷아웃·rts·2나락 배경 · sync-shared 판 복사 끊음",
+  "files": [
+   "js/assets3d.js",
+   "js/portrait3d.js",
+   "js/bgm.js",
+   "js/itemicon.js",
+   "js/icon.js",
+   "js/mode2d.js",
+   "js/cutout2d.js"
+  ],
+  "tests": [
+   "test-web 다섯 n/n",
+   "판마다 실제 서버 받기 200·404 0"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0359",
+  "since": "2026-10-21",
+  "note": "10-21: 판 사본 약 1만 개 지움(−약 38MB) · 판에만 있는 파일이 섞인 tile·4종횡 bg·bg2d·prop 은 판에 둠"
  }
 ]

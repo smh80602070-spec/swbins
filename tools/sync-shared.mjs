@@ -73,7 +73,7 @@ const check = process.argv.includes('--check');
 /** 판 폴더 단독 서버(run.bat)는 `../shared` 를 못 읽는다 — 2D 모드 배경·타일(K-0020)은 그 판 접두어 파일만 판 폴더로 복사한다(W-0019).
  *  정본 shared/assets/web2d/{bg,tile}/ · 접두어 = 판 이름(go_·dungeon_·forest_·story_·realm_) · 출처 .license.json 은 정본에만 둔다 */
 const PREFIX = { 'saga-go': 'go_', 'saga-dungeon': 'dungeon_', 'saga-forest': 'forest_', 'saga-story': 'story_', 'saga-realm': 'realm_' };
-const ASSET_GAMES = { 'saga-story': ['assets/web2d/bg', 'assets/web2d/tile'], 'saga-go': ['assets/web2d/tile'], 'saga-dungeon': ['assets/web2d/bg', 'assets/web2d/tile'], 'saga-forest': ['assets/web2d/tile'], 'saga-realm': ['assets/web2d/tile'] };   // 판 → 그 판이 쓰는 폴더만(1만리는 위에서 본 지도라 층 배경 없음)   // 배선이 끝난 판만(안 쓰는 판에 용량을 안 싣는다) — 판을 배선할 때마다 추가
+const ASSET_GAMES = { 'saga-story': ['assets/web2d/bg', 'assets/web2d/tile'], 'saga-go': ['assets/web2d/tile'], 'saga-dungeon': ['assets/web2d/tile'], 'saga-forest': ['assets/web2d/tile'], 'saga-realm': ['assets/web2d/tile'] };   // 판 → 그 판이 쓰는 폴더만(1만리는 위에서 본 지도라 층 배경 없음)   // 배선이 끝난 판만(안 쓰는 판에 용량을 안 싣는다) — 판을 배선할 때마다 추가
 /** 층 배경만 접두어가 다른 판(W-0191 — 2나락 던전 테마 배경 K-0094 는 dg_<테마>, 옛 dungeon_* 배경 넷은 안 씀) */
 const BG_PREFIX = { 'saga-dungeon': 'dg_' };
 /** 아이템 아이콘(W-0025) — 이름 표 `itemicon-ids.js` 에 오른 그림 중 **그 판 것만** `<판>/assets/icons/icon64/` 로 복사한다(판 폴더 단독 서버가 `../shared` 를 못 읽는다).
@@ -112,7 +112,7 @@ for (const [src, dst, only] of FILES) {
 const EXTRA_TILES = { 'saga-realm': ['forest_grass', 'forest_dirt', 'go_water'] };
 /** 판이 쓰는 K-0061 폴더 통째(출처 .license.json 은 정본에만) — 판 → 폴더(shared/ 아래) */
 const EXTRA_DIRS = { 'saga-realm': ['assets/web2d/rts'] };
-for (const g of Object.keys(EXTRA_DIRS)) {
+for (const g of (process.env.W2D_COPY ? Object.keys(EXTRA_DIRS) : [])) {   // W-0359 판 복사 끊음(rts/art.js 가 shared 를 읽는다)
   for (const d of EXTRA_DIRS[g]) {
     const dir = path.join(WEB, 'shared', d);
     if (!fs.existsSync(dir)) continue;
@@ -187,7 +187,7 @@ for (const g of (process.env.ICON_COPY ? GAMES : [])) {   // W-0359 — 판 단�
 /** 움직이는 그림(K-0056 한 장 모드, W-0032) — 판이 쓰는 풀의 front·side·back.webp 만 `<판>/assets/web2d/moving/<풀>/` 로 복사한다. 판 → 풀 목록은 그 판 `cfg.mode2d.still` 과 맞춘다 */
 const MOVING_GAMES = { 'saga-forest': ['villager_a', 'villager_b', 'villager_c', 'hero_m', 'hero_f'], 'saga-go': ['villager_a', 'villager_b', 'villager_c', 'hero_m', 'hero_f'], 'saga-story': ['hero_m', 'hero_f', 'beast_dog', 'beast_wolf'], 'saga-realm': ['rts_inf_ally', 'rts_inf_enemy', 'rts_arc_ally', 'rts_arc_enemy', 'rts_cav_ally', 'rts_cav_enemy', 'hero_m', 'hero_f'],
   'saga-dungeon': ['hero_m', 'hero_f', 'companion_warrior', 'companion_archer', 'companion_mage', 'villager_a', 'villager_b', 'villager_c', 'beast_dog', 'beast_wolf', 'beast_big'] };
-for (const g of Object.keys(MOVING_GAMES)) {
+for (const g of (process.env.W2D_COPY ? Object.keys(MOVING_GAMES) : [])) {   // W-0359 — 판 복사 끊음(mode2d 가 shared 를 읽는다 · 되살리려면 W2D_COPY=1)
   for (const pool of MOVING_GAMES[g]) {
     for (const v of ['front', 'side', 'back']) {
       const from = path.join(WEB, 'shared', 'assets', 'web2d', 'moving', pool, v + '.webp'), to = path.join(WEB, g, 'assets', 'web2d', 'moving', pool, v + '.webp');
@@ -247,7 +247,7 @@ for (const g of Object.keys(CUT_GAMES)) {
 }
 /** 건물 실내 그림(K-0025, W-0045) — 판이 쓰는 방 그림과 앞가림 층(_front)만 `<판>/assets/web2d/interior/` 로 복사한다. 판 → 방 id */
 const INTERIOR_GAMES = { 'saga-dungeon': ['inn_hall', 'barn_hayloft', 'jp_minka_irori'] };
-for (const g of Object.keys(INTERIOR_GAMES)) {
+for (const g of (process.env.W2D_COPY ? Object.keys(INTERIOR_GAMES) : [])) {   // W-0359 판 복사 끊음
   for (const id of INTERIOR_GAMES[g]) {
     for (const suf of ['', '_front']) {
       const from = path.join(WEB, 'shared', 'assets', 'web2d', 'interior', id + suf + '.webp'), to = path.join(WEB, g, 'assets', 'web2d', 'interior', id + suf + '.webp');

@@ -9156,11 +9156,11 @@ window.requestAnimationFrame = function () { return 0; };
     });
 
     t('2D 던전 방 테마 배경·타일(W-0191, K-0094) — 여섯 테마 모두 시차 배경 dg_<테마>(원·중·근 층 표가 판 폴더에 있음)·바닥 타일 dungeon_<테마>(같은 로마자)', function () {
-      var cf = DG.cfg.mode2d, th = DG.dungeonData.THEMES, bad = [], n = 0;
+      var cf = DG.cfg.mode2d, th = DG.dungeonData.THEMES, bad = [], n = 0, shB = DG.assets3d && DG.assets3d.sharedUrl ? DG.assets3d.sharedUrl('web2d/bg/') : null;   // W-0359 배경 층은 shared 한 벌 — 진단 서버가 shared 를 못 읽으면 층 표 확인은 건너뜀
       th.forEach(function (t0) {
         var bg = cf.beltBg && cf.beltBg[t0.name], tl = cf.tile && cf.tile[t0.name], r = bg && bg.slice(3);
         if (!bg || bg.indexOf('dg_') !== 0 || tl !== 'dungeon_' + r) { bad.push(t0.name + ':' + bg + '/' + tl); return; }
-        try { var x = new XMLHttpRequest(); x.open('GET', 'assets/web2d/bg/' + bg + '.layers.json', false); x.send(); var j = x.status === 200 ? JSON.parse(x.responseText) : null; if (j && j.far && j.mid && j.near) { n++; } else { bad.push(bg + ' 층 표 ' + x.status); } } catch (e) { bad.push(bg + ' ' + e.message); }
+        if (!shB) { n++; return; } try { var x = new XMLHttpRequest(); x.open('GET', shB + bg + '.layers.json', false); x.send(); var j = x.status === 200 ? JSON.parse(x.responseText) : null; if (j && j.far && j.mid && j.near) { n++; } else { bad.push(bg + ' 층 표 ' + x.status); } } catch (e) { bad.push(bg + ' ' + e.message); }
       });
       return th.length === 6 && !bad.length ? '테마 ' + th.length + ' · 층 표 ' + n + ' · 예 ' + cf.beltBg[th[0].name] + '/' + cf.tile[th[0].name] : '실패 ' + bad.join(' ');
     });

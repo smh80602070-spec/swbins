@@ -67,17 +67,18 @@
   var cache = { c: null, key: '', tiles: null }, noise = null, layers = {};
 
   /* ── K-0061 그림(`assets/web2d/rts/rts_*.webp`) — 길 조각·물 2프레임·이펙트 시트. 못 받았으면 null → 옛 그림 ─── */
-  var RBASE = 'assets/web2d/rts/', rimgs = {};
+  var rimgs = {};
+  function rbase() { var A = global.DG && global.DG.assets3d, u = A && A.sharedUrl ? A.sharedUrl('web2d/rts/') : null; return u || 'assets/web2d/rts/'; }   // W-0359 shared 한 벌
   function rimg(name) {
     var e = rimgs[name];
     if (!e) {
       e = rimgs[name] = { img: null, ok: false };
-      if (global.Image) { var im = new global.Image(); im.onload = function () { e.ok = true; }; im.src = RBASE + 'rts_' + name + '.webp'; e.img = im; }
+      if (global.Image) { var im = new global.Image(); im.onload = function () { e.ok = true; }; im.src = rbase() + 'rts_' + name + '.webp'; e.img = im; }
     }
     return e.ok ? e.img : null;
   }
   /** UI 아이콘 <img> — 없으면 글자(이모지)가 대신 보인다 */
-  function icon(name, fallback) { return '<img class="ic" src="' + RBASE + 'rts_icon_' + name + '.png" alt="' + (fallback || '') + '">'; }
+  function icon(name, fallback) { return '<img class="ic" src="' + rbase() + 'rts_icon_' + name + '.png" alt="' + (fallback || '') + '">'; }
 
   /** 길 조각 고르기 — 이웃(북·동·남·서)이 이어졌는지 → { name, rot(시계 방향 90° 수) }. 기준 그림: straight E·W · corner N·E · tee E·S·W(북 닫힘) · end W · cross · dot. 순수 함수 */
   function roadPiece(n, e, s, w) {
