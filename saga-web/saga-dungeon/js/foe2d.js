@@ -15,7 +15,7 @@
     if (!M || !ref) { return false; }
     var bz = ref.kind === 'beast' ? (M.beastOf ? M.beastOf(ref.name) : null) : null;
     /* W-0129 — 사람형이 아닌 적은 몬스터 2D 시트(K-0090 ③, 몸 id = 초상과 같은 monsterPortrait.idOf). 받기 전·없으면 옛 길 */
-    var MP = global.DG.monsterPortrait, cid = ref.kind !== 'human' && MP && MP.idOf ? MP.idOf(ref, !!e.boss) : null, crea = cid && M.creaPool ? M.creaPool(cid) : null;
+    var MP = global.DG.monsterPortrait, cid = ref.kind !== 'human' && MP && MP.sheetOf ? MP.sheetOf(ref, !!e.boss) : null,   /* W-0354 종 시트가 있으면 그것, 없으면 계열 */ crea = cid && M.creaPool ? M.creaPool(cid) : null;
     if (ref.kind === 'beast' && !bz && !crea) { return false; }
     var pool = crea || (bz ? bz.pool : M.pick('t' + (ref.tier || 1), ref.name));
     if (!pool) { return false; }

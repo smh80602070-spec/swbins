@@ -1469,5 +1469,24 @@
   "ticket": "W-0362",
   "since": "2026-10-21",
   "note": "10-21: 진짜 입력 — 2나락 PC 마우스·폰 CDP 터치(길게 누르기 → 들고 있는 채 → 무기 칸 누름) 끼워짐 · 4종횡 PC 마우스 끼워짐 · 집은 순간 폰 PNG Read(받는 칸 금빛·못 받는 칸 붉은 테)"
+ },
+ {
+  "id": "dg.foe-body-portrait",
+  "name": "적 초상·몸 종 id 먼저(W-0354) — monsterPortrait.idOf: 종 몸(body) 초상(K-0121) → 사람 적은 자체 NPC 몸 초상(18) → 옛 계열 · bodyOf(3D crea 몸 = 초상 id, 없으면 계열 자체 몸 → 옛 표) · sheetOf(2D 종 시트 13 있으면 그것) · 짝 표 생성 tools/gen-monster-portrait-ids.mjs · 손잡이 monsterPortrait.byBody(0 = 옛)",
+  "files": [
+   "js/monster-portrait.js",
+   "js/foe2d.js",
+   "src/dungeon3d/03.js",
+   "../../tools/gen-monster-portrait-ids.mjs"
+  ],
+  "tests": [
+   "적 초상·몸 종 id 먼저(W-0354) — 적 134 마다 초상이 있으면 파일이 있음(404 0) · body 초상이 있는 적은 초상 id = body = 3D 몸 id · 사람 적은 자체 NPC 몸 초상 · 보스는 옛 길"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0354",
+  "since": "2026-10-21",
+  "note": "10-21: 초상·2D 시트 대 보기 Read — 종 시트 있는 뱀·슬라임·버섯·원귀 ○, 해골·말벌·쥐는 2D 가 옛 계열(K 수신함)"
  }
 ]

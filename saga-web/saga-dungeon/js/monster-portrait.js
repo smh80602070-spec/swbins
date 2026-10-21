@@ -20,6 +20,7 @@
     spir: ['mon_spir_01', 'mon_spir_02', 'mon_spir_03', 'mon_spir_04'],
     wing: ['mon_wing_01', 'mon_wing_02', 'mon_wing_03', 'mon_wing_04']
   };
+  var HAS = {"alien_grunt":1,"apatosaurus":1,"boar":1,"boss_01":1,"boss_02":1,"boss_03":1,"boss_04":1,"boss_05":1,"boss_06":1,"boss_07":1,"boss_08":1,"boss_09":1,"boss_10":1,"boss_11":1,"boss_12":1,"cactus_imp":1,"crab_cute":1,"cyclops_cute":1,"demon_blue":1,"demon_red":1,"dino_pet":1,"dragon":1,"dragon_evolved":1,"elephant":1,"frog_brute":1,"ghost":1,"ghost_skull":1,"giant":1,"glub":1,"glub_evolved":1,"goblin_brute":1,"goleling":1,"goleling_evolved":1,"green_imp":1,"hat_wizard":1,"hywirl":1,"masked_tribal":1,"mon_cons_01":1,"mon_cons_02":1,"mon_cons_03":1,"mon_cons_04":1,"mon_quad_01":1,"mon_quad_02":1,"mon_quad_03":1,"mon_quad_04":1,"mon_serp_01":1,"mon_serp_02":1,"mon_serp_03":1,"mon_serp_04":1,"mon_spir_01":1,"mon_spir_02":1,"mon_spir_03":1,"mon_spir_04":1,"mon_wing_01":1,"mon_wing_02":1,"mon_wing_03":1,"mon_wing_04":1,"monkroose":1,"moss_blob":1,"mushnub":1,"mushroom_lord":1,"npc_bandit_01":1,"npc_bandit_04":1,"npc_bandit_05":1,"npc_bandit_06":1,"npc_bandit_08":1,"npc_bandit_09":1,"npc_bandit_10":1,"npc_bandit_11":1,"npc_bandit_12":1,"npc_soldier_03":1,"npc_soldier_06":1,"npc_soldier_07":1,"npc_soldier_08":1,"npc_soldier_14":1,"npc_soldier_16":1,"npc_soldier_18":1,"npc_soldier_21":1,"npc_soldier_23":1,"orc_warrior":1,"parasaurolophus":1,"pink_slime":1,"raptor":1,"rat":1,"shadow_ninja":1,"skeleton":1,"skeleton_mage":1,"skeleton_minion":1,"skeleton_rogue":1,"skeleton_warrior":1,"slime":1,"snake":1,"spider":1,"spike_blob":1,"spore_cap":1,"squidle":1,"stegosaurus":1,"swamp_toad":1,"tentacle_imp":1,"tiger":1,"tree_walker":1,"trex":1,"triceratops":1,"wasp":1,"yeti":1,"zombie":1}, HUMAN = {"황건적":"npc_bandit_01","산적":"npc_bandit_04","도적떼":"npc_bandit_08","떠돌이 병졸":"npc_soldier_16","왜구":"npc_bandit_12","마적":"npc_bandit_05","오랑캐 궁수":"npc_soldier_03","거란 기병":"npc_soldier_07","여진 궁수":"npc_soldier_18","몽골 기병":"npc_soldier_08","왜군 조총병":"npc_soldier_21","위군 창병":"npc_bandit_10","수군 척후선":"npc_soldier_14","철갑 중장병":"npc_soldier_06","근위 기병":"npc_bandit_06","연노 사수":"npc_bandit_09","수군 함대":"npc_bandit_11","흑기병":"npc_soldier_23"}, C2D = {"dragon":1,"dragon_evolved":1,"frog":1,"ghost":1,"glub":1,"glub_evolved":1,"goleling":1,"hywirl":1,"monkroose":1,"mushnub":1,"pink_slime":1,"snake":1,"squidle":1};   /* gen:mp-ids — tools/gen-monster-portrait-ids.mjs 가 쓴다(W-0354) */
   var ROBOT = /기계|강철|철갑|동력|동합|청동|드론|보행기|거신|특공대|장갑|판갑|폭주 청년/;
   var SLIME = /슬라임/;
 
@@ -44,11 +45,30 @@
     return null;
   }
 
-  /** 초상 id(확장자 없음) — 없으면 null */
+  /** W-0354 손잡이 monsterPortrait.byBody — 1(기본) = 종 몸·사람 짝 초상 먼저, 0 = 옛 계열만 */
+  function byBody() { var C = global.DG.core; return !(C && C.tuned) || +C.tuned('monsterPortrait.byBody', 1) > 0; }
+  /** 옛 계열 초상(보스 12·계열 20) — 없으면 null */
+  function famId(ref, isBoss) { var fam = family(ref, isBoss), list = fam ? IDS[fam] : null; return list ? list[hash(ref.key || ref.id || ref.name) % list.length] : null; }
+  /** 초상 id(확장자 없음) — 없으면 null. 보스 길은 그대로 · 종 몸(ref.body)에 초상이 있으면 그것(K-0121) · 사람 적은 자체 NPC 몸 짝 · 아니면 옛 계열 */
   function idOf(ref, isBoss) {
-    var fam = family(ref, isBoss), list = fam ? IDS[fam] : null;
-    if (!list || !monsterPortrait.enabled) { return null; }
-    return list[hash(ref.key || ref.id || ref.name) % list.length];
+    if (!ref || !monsterPortrait.enabled) { return null; }
+    if (!isBoss && byBody()) {
+      if (ref.body && HAS[ref.body]) { return ref.body; }
+      if ((ref.kind === 'human' || ref.look) && HUMAN[ref.name]) { return HUMAN[ref.name]; }
+    }
+    return famId(ref, isBoss);
+  }
+  /** 2D 몬스터 시트 id(creatures2d) — 종 몸 시트가 있으면 그것, 없으면 옛 계열 시트(K 가 종 시트를 더하면 생성 표가 넓어진다). 사람 적은 null */
+  function sheetOf(ref, isBoss) {
+    if (!ref || !monsterPortrait.enabled || (!isBoss && (ref.kind === 'human' || ref.look))) { return null; }
+    return !isBoss && byBody() && ref.body && C2D[ref.body] ? ref.body : famId(ref, isBoss);
+  }
+  /** 3D 몸 id(crea:<id> 로 지을 것) — 보스는 보스 몸, 종 몸이 있는 적은 그 몸(초상 = 몸), 없을 때만 옛 계열 몸. 사람 적은 null(사람 창고 길) */
+  function bodyOf(ref, isBoss) {
+    if (!ref || !monsterPortrait.enabled) { return null; }
+    if (isBoss) { return famId(ref, true); }
+    if (ref.kind === 'human' || ref.look) { return null; }
+    return byBody() && ref.body ? ref.body : famId(ref, false);
   }
 
   /** 초상 파일 경로 — 없으면 null */
@@ -65,6 +85,6 @@
     return '<img class="d2-fport" alt="" src="' + p + '" width="' + s + '" height="' + s + '" onerror="this.hidden=true">';
   }
 
-  var monsterPortrait = { enabled: true, IDS: IDS, BASE: BASE, family: family, idOf: idOf, src: src, html: html };
+  var monsterPortrait = { enabled: true, IDS: IDS, BASE: BASE, family: family, idOf: idOf, bodyOf: bodyOf, famId: famId, sheetOf: sheetOf, src: src, html: html, has: function (id) { return !!HAS[id]; }, HUMAN: HUMAN };
   global.DG.monsterPortrait = monsterPortrait;
 })(typeof window !== 'undefined' ? window : this);

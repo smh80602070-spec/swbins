@@ -250,6 +250,17 @@ window.requestAnimationFrame = function () { return 0; };
     /* ── 갈라져 나온 프로젝트로서의 조건 ─────────────── */
 
     /* W-0295 PBR 땅 — 공용 pbrground3d 값 층(three 없이) */
+    t('적 초상·몸 종 id 먼저(W-0354) — 적 134 마다 초상이 있으면 파일이 있음(404 0) · body 초상이 있는 적은 초상 id = body = 3D 몸 id · 사람 적은 자체 NPC 몸 초상 · 보스는 옛 길', function () {
+      var MP = DG.monsterPortrait, E = DG.enemyData.enemies, miss = [], byBody = 0, hum = 0, mism = [];
+      E.forEach(function (e) {
+        var id = MP.idOf(e, false);
+        if (id && !MP.has(id)) { miss.push(e.name + ':' + id); }
+        if (e.body && MP.has(e.body)) { byBody++; if (id !== e.body || MP.bodyOf(e, false) !== e.body) { mism.push(e.name); } }
+        if ((e.kind === 'human' || e.look) && MP.HUMAN[e.name]) { hum++; if (id !== MP.HUMAN[e.name] || MP.bodyOf(e, false) !== null) { mism.push(e.name); } }
+      });
+      var b = DG.enemyData.bosses && DG.enemyData.bosses[0], bossOk = !b || /^boss_[0-9]+$/.test(MP.idOf(b, true) || '');
+      return !miss.length && !mism.length && byBody > 40 && hum >= 18 && bossOk && ('적 ' + E.length + ' · 종 몸 초상 ' + byBody + ' · 사람 짝 ' + hum + ' · 404 0') || '실패 miss ' + miss.slice(0, 4).join(',') + ' mism ' + mism.slice(0, 4).join(',') + ' ' + byBody + '/' + hum + '/' + bossOk;
+    });
     t('끌어 놓기 손놀림(W-0362) — 마우스 6px 끌기 → 받는 칸에 놓음 · 안 받는 칸은 취소 · 짧은 터치는 집지 않음 · 길게 누르기 → 집음 · 먼저 움직인 터치는 스크롤로 넘김 · 취소', function () {
       var DD = DG.dragdrop, host = document.createElement('div'), got = [];
       host.style.cssText = 'position:fixed;left:0;top:0;width:300px;height:100px;z-index:99999';
@@ -4318,11 +4329,11 @@ window.requestAnimationFrame = function () { return 0; };
         ('가장 가까운 둘도 ' + Math.round(min) + ' (문턱 ' + (T.TALK_R * 2) + ') 떨어짐');
     });
 
-    t('몬스터 초상(W-0072) — 보스는 boss_01~12·사람형은 초상 없음·형태별 계열(네발·넋·기계·뱀·날개)·같은 적은 늘 같은 초상·꺼 두면 null, 모든 적이 표 안의 id 이거나 null', function () {
+    t('몬스터 초상(W-0072·W-0354) — 보스는 boss_01~12·짝 없는 사람형은 초상 없음(짝 있으면 NPC 몸 초상)·형태별 계열(네발·넋·기계·뱀·날개)·같은 적은 늘 같은 초상·꺼 두면 null, 모든 적이 표 안의 id 이거나 null', function () {
       var MP = DG.monsterPortrait, ED = DG.enemyData, ok = [], bad = [], i, e, p, nonHuman = 0, withP = 0, all = ED.enemies.concat(ED.eraEnemies);
       function chk(n, v) { if (!v) { bad.push(n); } }
       chk('보스', /^assets\/portraits-monster\/boss_(0[1-9]|1[0-2])_c\.webp$/.test(MP.src({ key: 'x' }, true)));
-      chk('사람형', MP.src({ kind: 'human', look: {}, key: 'a', name: '산적' }) === null && MP.src(null) === null);
+      chk('사람형', MP.src({ kind: 'human', look: {}, key: 'a', name: '없는 사람' }) === null && MP.src(null) === null && (!MP.HUMAN['산적'] || MP.idOf({ kind: 'human', look: {}, name: '산적' }) === MP.HUMAN['산적']));
       chk('네발', MP.family({ form: 'quad', name: '들개' }) === 'quad');
       chk('슬라임=넋', MP.family({ form: 'quad', name: '홍슬라임' }) === 'spir');
       chk('넋', MP.family({ form: 'ogre', name: '원혼' }) === 'spir');
@@ -4335,7 +4346,7 @@ window.requestAnimationFrame = function () { return 0; };
       for (i = 0; i < all.length; i++) {
         e = all[i]; p = MP.idOf(e, false);
         if (e.kind !== 'human' && !e.look) { nonHuman++; }
-        if (p) { withP++; if (all2.indexOf(p) < 0) { bad.push('표 밖 ' + e.name); } }
+        if (p) { withP++; if (all2.indexOf(p) < 0 && !MP.has(p)) { bad.push('표 밖 ' + e.name); } }   // W-0354 종 몸·사람 짝 초상도 파일 있는 것만
         else if (e.kind !== 'human' && !e.look) { bad.push('초상 없음 ' + e.name); }
       }
       MP.enabled = false; chk('끈 뒤 null', MP.src({ key: 'x', form: 'quad', name: 'a' }) === null && MP.src({ key: 'x' }, true) === null); MP.enabled = true;
@@ -9159,8 +9170,8 @@ window.requestAnimationFrame = function () { return 0; };
 
     t('dg.belt2d: 몬스터 2D 시트(W-0129) — 사람형 아닌 적은 몸 id(56벌 이름)로 짝, manifest 로 배율·발(상한 2.2)', function () {
       var M = DG.mode2d, MP = DG.monsterPortrait, ED = DG.enemyData, re = /^(boss_(0[1-9]|1[0-2])|mon_(cons|quad|serp|spir|wing)_0[1-4])$/;
-      var beasts = ED.enemies.filter(function (e) { return e.kind !== 'human' && !e.look; }), bad = beasts.filter(function (e) { var id = MP.idOf(e, false); return id && !re.test(id); });
-      var mapped = beasts.filter(function (e) { return MP.idOf(e, false); }).length, bossOk = ED.bosses.every(function (b) { return re.test(MP.idOf(b, true)); });
+      var beasts = ED.enemies.filter(function (e) { return e.kind !== 'human' && !e.look; }), bad = beasts.filter(function (e) { var id = MP.sheetOf(e, false); return id && !re.test(id) && id !== e.body; });   // W-0354 종 시트가 있으면 body
+      var mapped = beasts.filter(function (e) { return MP.sheetOf(e, false); }).length, bossOk = ED.bosses.every(function (b) { return re.test(MP.sheetOf(b, true)); });
       var f1 = M.creaFit({ px: 128, anchor_feet_y_px: 112.64, ortho_m: 8.8635 }), f2 = M.creaFit({ px: 128, anchor_feet_y_px: 112.64, ortho_m: 3 });
       var fit = Math.abs(f1.foot - 0.88) < 1e-3 && f1.k === 2.2 && Math.abs(f2.k - 1.2) < 1e-9 && M.isCrea('crea:boss_01') && !M.isCrea('vroid:x');
       var r = [bad.length === 0, mapped > 10, bossOk, fit];
