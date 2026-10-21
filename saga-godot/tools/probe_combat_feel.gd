@@ -66,6 +66,10 @@ func _initialize() -> void:
 	check(Engine.time_scale == 1.0 and mat.albedo_color == Color(0.2, 0.4, 0.8), "140ms 뒤: 시간 배율 1.0 으로 돌아오고 원래 색으로 돌아옴")
 	CF.hit(body, 90.0, true)
 	check(stops[-1] == 120 and popups[-1] == [90.0, true], "치명타: 히트스톱 120ms · 팝에 치명 표시")
+	check(is_equal_approx(float(shakes[-1][0]), 0.06 * CF.CRIT_SHAKE_MUL) and shakes[-1][1] == 120, "G-0291 치명 흔들림 ×1.5(tune 없을 때)")
+	CF.hit(body, 1.0, false, {"shake_mul": 1.25, "shake_ms": 160})
+	check(is_equal_approx(float(shakes[-1][0]), 0.075) and shakes[-1][1] == 160 and is_equal_approx(rig.shakes[-1][1], 0.16), "G-0291 tune shake_ms 160 이 리그까지")
+	await _wait_ms(140)
 	var until_before: int = CF._hitstop_until_msec
 	CF.hit(body, 1.0, false)
 	check(CF._hitstop_until_msec >= until_before, "겹쳐 맞아도 히트스톱은 더 긴 쪽을 유지")

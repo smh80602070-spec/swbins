@@ -53,6 +53,10 @@ const FX_RAIN := Color8(150, 200, 255)
 const FX_RING_SEC := 0.4
 const FX_SELF_R := 1.2
 const HIT_QUIET := {"stop_ms": 0, "shake_mul": 0.0, "quiet": true}
+## G-0291 웹 W-0240 흔들림 규격 — 보통 4px/120ms(공용 기본) · 거함타(100 이상) 5px/160ms · 급소 8px/220ms
+const HIT_BIG := {"shake_mul": 1.25, "shake_ms": 160}
+const HIT_CRIT := {"shake_mul": 2.0, "shake_ms": 220}
+const BIG_HIT_DMG := 100.0
 
 @onready var visual: Node3D = $Visual
 ## G-0030 — 이 판 주인공 몸(새 인물 몸 id). 장면의 빈 Visual 을 story_player._ready 가 이 몸으로 갈아 끼운다.
@@ -429,7 +433,7 @@ func _skill_fx(kind: String, range_m := -1.0) -> void:
 func _hit_feel(e: Node3D, roll: Dictionary) -> void:
 	if is_inside_tree() and get_tree().current_scene != null:
 		CombatFx.spark(self, e.global_position + Vector3.UP * 0.9, FX_BLUE, bool(roll.crit))
-	CombatFeel.hit(e, float(roll.dmg), bool(roll.crit), {} if _fx_hits == 0 else HIT_QUIET)
+	CombatFeel.hit(e, float(roll.dmg), bool(roll.crit), HIT_QUIET if _fx_hits > 0 else (HIT_CRIT if bool(roll.crit) else (HIT_BIG if float(roll.dmg) >= BIG_HIT_DMG else {})))
 	_fx_hits += 1
 
 

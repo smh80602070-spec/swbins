@@ -1,6 +1,7 @@
 extends SagaSaveBase
 
 signal level_up(new_level: int)   # G-0287 — 주인공 웃는 얼굴(story_player). 세이브 키 아님
+signal job_changed(job: String)   # G-0289 — 발밑 전직 표식(story_player)
 
 ## VERTICAL_SLICE_STORY.md 1절 완료 조건의 마지막 두 단계 — "저장한다 →
 ## 다시 켜서 이어진다"(GO save_state.gd·DUNGEON dungeon_save_state.gd·
@@ -611,6 +612,7 @@ func choose_job(key: String) -> bool:
 		return false
 	job = key
 	mentor_bond = 0
+	job_changed.emit(job)
 	return true
 
 
@@ -637,6 +639,7 @@ func advance_job(key: String) -> bool:
 		return false
 	job = key
 	mentor_bond = 0
+	job_changed.emit(job)
 	return true
 
 
@@ -861,7 +864,7 @@ static func run_line2(r: Dictionary) -> String:
 		var pb := String(r.get("prev_best", ""))
 		p.append("🏆 최고 기록 %s → %s" % [pb, String(r.rank)] if not pb.is_empty() else "🏆 첫 기록 %s" % String(r.rank))
 	if bool(r.get("dead", false)):
-		p.append("쓰러져 덤 없음")
+		p.append("💀 쓰러져 덤 없음 — 레벨·경험치·장비·전직·성좌는 그대로")   # G-0292
 	return " · ".join(p)
 
 

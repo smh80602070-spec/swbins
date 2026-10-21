@@ -11,6 +11,11 @@ extends Node3D
 
 @export var pitch_deg := 55.0
 @export var spring_length := 12.0
+## G-0294 휠 줌(웹 W-0324 — 회전은 여전히 없음, 끈 길이만): 배율 ZOOM_MIN(가까이)~ZOOM_MAX, 한 칸 ×ZOOM_STEP. 기본 1 = 전과 같음.
+const ZOOM_MIN := 0.2
+const ZOOM_MAX := 1.8
+const ZOOM_STEP := 1.15
+var zoom_mul := 1.0
 ## G-0185 — 2나락 벨트 카메라(던파·드래곤즈 크라운 3D, 웹 W-0158 의 고돗 짝). 켜면 리그가 플레이어를 떠나(top_level) 방 옆(+x)에서
 ## 3/4(BELT_PITCH)로 본다 — 방이 −z 로 이어지니 화면에선 왼→오. 플레이어를 화면 가로(월드 z)로만 따라가되 방 안에선 방 가운데 ±BELT_ROOM_PLAY 에서 멈추고,
 ## 통로에선 그대로 따라가며 BELT_LERP 로 부드럽게 옮긴다(방 넘어갈 때 약 0.4초). 깊이(월드 x)는 방 가운데에 고정.
@@ -127,3 +132,18 @@ func shake(amp_m: float, dur_sec: float) -> void:
 	var until := Time.get_ticks_msec() + int(dur_sec * 1000.0)
 	_shake_until_msec = maxi(_shake_until_msec, until)
 	_shake_amp_m = maxf(_shake_amp_m, amp_m)
+
+
+## G-0294 — 휠 위 = 가까이. 창(ui_modal)이 떠 있으면 안 먹음(목록 굴리기와 겹치지 않게).
+func _unhandled_input(event: InputEvent) -> void:
+	var mb := event as InputEventMouseButton
+	if mb == null or not mb.pressed or (mb.button_index != MOUSE_BUTTON_WHEEL_UP and mb.button_index != MOUSE_BUTTON_WHEEL_DOWN):
+		return
+	if not get_tree().get_nodes_in_group("ui_modal").is_empty():
+		return
+	set_zoom(zoom_mul / ZOOM_STEP if mb.button_index == MOUSE_BUTTON_WHEEL_UP else zoom_mul * ZOOM_STEP)
+
+
+func set_zoom(m: float) -> void:
+	zoom_mul = clampf(m, ZOOM_MIN, ZOOM_MAX)
+	_arm.spring_length = spring_length * zoom_mul

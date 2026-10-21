@@ -5085,5 +5085,131 @@
   "ticket": "G-0287",
   "since": "2026-10-22",
   "note": "대기 K — dex gltf 모프 targets 0 이라 화면엔 아직 안 보임(NPC 도 같음). 모프 오면 SAGA_FACE_STRICT=1"
+ },
+ {
+  "id": "gd.go.rank-ring",
+  "name": "1만리 승급 발밑 금테 — 지금 몸 편성원 asc 1~6(테·안쪽 빛·바깥 테·별 6/12), 웹 W-0237",
+  "files": [
+   "saga_core/world/rank_ring.gd",
+   "games/saga_go/player/go_player.gd",
+   "tools/probe_rank_ring.gd"
+  ],
+  "tests": [
+   "rank_ring"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0288",
+  "since": "2026-10-22",
+  "note": "읽기만(growth.get) · 촬영 3·6 ○"
+ },
+ {
+  "id": "gd.story.job-ring",
+  "name": "4종횡 전직 발밑 표식 — 차수 1~5·갈래 색 테·금 별, 웹 W-0246",
+  "files": [
+   "games/saga_story/player/story_player.gd",
+   "games/saga_story/data/story_save_state.gd"
+  ],
+  "tests": [
+   "rank_ring"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0289",
+  "since": "2026-10-22",
+  "note": "job_changed 신호(세이브 키 아님) · 옆보기라 얇은 타원"
+ },
+ {
+  "id": "gd.dungeon.tier-trail",
+  "name": "2나락 무기 등급 잔광 — 양품부터 등급 색 궤적 0.12~0.3초·전설 금빛 불꽃, 웹 W-0239",
+  "files": [
+   "games/saga_dungeon/player/melee_attack.gd",
+   "saga_core/combat_fx.gd",
+   "tools/probe_dungeon_trail.gd"
+  ],
+  "tests": [
+   "dungeon_trail"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0290",
+  "since": "2026-10-22",
+  "note": "combat_fx.slash fade_sec 기본 0.16 = 전과 같음"
+ },
+ {
+  "id": "gd.core.shake-spec",
+  "name": "타격 흔들림 규격 — 치명 ×1.5(tune 없을 때)·shake_ms 손잡이·4종횡 거함타 160ms·급소 220ms, 웹 W-0238·W-0240",
+  "files": [
+   "saga_core/combat_feel.gd",
+   "games/saga_story/player/story_player_base.gd"
+  ],
+  "tests": [
+   "combat_feel",
+   "story_shake"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0291",
+  "since": "2026-10-22",
+  "note": "1만리 FeelTuning 은 제 표 그대로"
+ },
+ {
+  "id": "gd.story.fall-text",
+  "name": "4종횡 쓰러짐 글 잃은 것·남은 것 + 마을 요약 줄, 웹 W-0241",
+  "files": [
+   "games/saga_story/world/story_field.gd",
+   "games/saga_story/data/story_save_state.gd"
+  ],
+  "tests": [
+   "story_fall",
+   "story_rank"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0292",
+  "since": "2026-10-22",
+  "note": "금 절반 규칙 그대로"
+ },
+ {
+  "id": "gd.dungeon.rise-in",
+  "name": "2나락 난입 물결 적 등장 연출 — 0.6초 땅에서 솟음·흙먼지, 웹 W-0327 ②",
+  "files": [
+   "games/saga_dungeon/world/dungeon_enemy.gd",
+   "games/saga_dungeon/world/horde_arena.gd",
+   "tools/probe_dungeon_rise.gd"
+  ],
+  "tests": [
+   "dungeon_rise"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0293",
+  "since": "2026-10-22",
+  "note": "방 적은 미리 서 있어 팝인 없음(①은 해당 없음)"
+ },
+ {
+  "id": "gd.core.camera-zoom",
+  "name": "카메라 줌 범위 — 1만리 2.2~16·2나락·3마을 휠 배율 0.2~1.8·4종횡 0.18~1.8, 웹 W-0324",
+  "files": [
+   "games/saga_go/player/camera_rig.gd",
+   "saga_core/player/dungeon_camera_rig.gd",
+   "games/saga_story/world/story_camera.gd",
+   "tools/probe_camera_zoom.gd"
+  ],
+  "tests": [
+   "camera_zoom"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0294",
+  "since": "2026-10-22",
+  "note": "기본값 그대로 · 창이 떠 있으면 휠 안 먹음"
  }
 ]

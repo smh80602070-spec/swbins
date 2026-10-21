@@ -14,6 +14,7 @@ extends "res://saga_core/player/player.gd"
 ## 동작 클립은 아직 등반·활공·수영 전용이 없다(Mixamo 로그인 필요) — 지금은
 ## 있는 idle/walk 를 몸 기울기(_pose_pitch)와 재생 속도로 흉내 낸다.
 
+const RankRing := preload("res://saga_core/world/rank_ring.gd")   # G-0288 승급 금테
 const Toast := preload("res://saga_core/ui/toast.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
 const FieldCombat := preload("res://games/saga_go/combat/field_combat.gd")
@@ -155,6 +156,7 @@ func set_hero_body(id: String) -> void:
 	swap_body(body, [_glider, visual.get_node_or_null("FishingRod")])
 	_refresh_weapon()
 	_refresh_armor()
+	_refresh_rank()
 	_yaw = visual.rotation.y
 	if mounted:   # 탈것을 탄 채 바뀌면 새 몸도 안장 자세로(옛 몸의 SeatPose 는 같이 사라진다)
 		var mt := get_node_or_null("Mount")
@@ -181,6 +183,8 @@ func _ready() -> void:
 	PartyState.weapon_changed.connect(_refresh_weapon)
 	PartyState.artifact_changed.connect(_refresh_armor)
 	PartyState.level_up.connect(_face_level_up)   # G-0287 레벨업 웃음
+	PartyState.growth_changed.connect(func(_id: String) -> void: _refresh_rank())   # G-0288 승급 금테
+	_refresh_rank()
 	collision_mask = 1 | BORDER_LAYER
 	floor_snap_length = 0.35
 	_last_safe = global_position
@@ -989,3 +993,10 @@ func _face_level_up(_lv: int) -> void:
 	var face: Node = TalkFace.face_of(visual)
 	if face != null:
 		face.call("flash_mood", "joy", 2.0)
+
+
+## G-0288 — 지금 몸(편성원)의 승급(0~6)을 발밑 금테로(웹 W-0237). 읽기만 — growth_of 는 빈 칸을 만들어 안 씀.
+func _refresh_rank() -> void:
+	var id := _body_id if _body_id != "" else (PartyState.members[0] if not PartyState.members.is_empty() else "")
+	var g: Dictionary = PartyState.growth.get(id, {})
+	RankRing.set_rank(self, int(g.get("asc", 0)))

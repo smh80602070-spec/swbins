@@ -14,8 +14,9 @@ var _visual_meshes: Array[GeometryInstance3D] = []
 const ROTATE_SPEED := 0.006
 ## PLAN 102-1·105 Q-h(c, 2026-09-19) — 1.7m 표준 캐릭터 기준 거리 8m,
 ## 줌 범위 6~11m(옛 4~16m는 3.4m 거인 기준이었다).
-const MIN_ZOOM := 6.0
-const MAX_ZOOM := 11.0
+const MIN_ZOOM := 2.2   # G-0294 6 → 2.2: 몸 하나가 화면을 채울 만큼(1.5 는 머리가 잘림 — 촬영)(웹 W-0324 — 에셋 가까이 보기). 기본 8 그대로
+const MAX_ZOOM := 16.0  # G-0294 11 → 16
+const ZOOM_NEAR := 6.0  # 이보다 가까우면 한 칸을 반으로(가까이선 잘게)
 const ZOOM_STEP := 1.0
 const DEFAULT_ZOOM := 8.0
 const MIN_PITCH := 15.0
@@ -376,4 +377,5 @@ func _aim_turn(rel: Vector2) -> void:
 func _zoom(delta: float) -> void:
 	if aiming:
 		return
-	spring_arm.spring_length = clamp(spring_arm.spring_length + delta, MIN_ZOOM, MAX_ZOOM)
+	var d := delta * (0.5 if spring_arm.spring_length + delta < ZOOM_NEAR else 1.0)
+	spring_arm.spring_length = clamp(spring_arm.spring_length + d, MIN_ZOOM, MAX_ZOOM)

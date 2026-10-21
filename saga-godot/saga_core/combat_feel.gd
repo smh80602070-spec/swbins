@@ -58,6 +58,7 @@ const HITSTOP_CRIT_MS := 120
 const HITSTOP_SCALE := 0.05
 const SHAKE_AMP_M := 0.06
 const SHAKE_MS := 120
+const CRIT_SHAKE_MUL := 1.5   # G-0291 치명은 구분되게(웹 W-0238 4→6px) — tune 에 shake_mul 이 없을 때만(1만리 FeelTuning 은 제 표)
 const FLASH_MS := 80
 const POPUP_SEC := 0.6
 const POPUP_RISE_M := 0.8
@@ -99,10 +100,11 @@ const HURT_FACE_SEC := 0.45   # G-0287
 
 
 ## tune(선택, G-0018): {stop_ms 히트스톱 길이(치명이면 +50), shake_mul 흔들림 배율(0=없음), pop_mul 숫자 크기 배율, quiet 타격음 끔}.
+## G-0291 shake_ms 흔들림 길이(없으면 SHAKE_MS) · shake_mul 이 없으면 치명은 CRIT_SHAKE_MUL.
 ## 비우면 위 기본 상수 그대로 — 사가나락·스토리·다른 호출은 동작이 안 바뀐다.
 func hit(target: Node3D, amount: float, crit: bool, tune: Dictionary = {}) -> void:
 	_do_hitstop(crit, int(tune.get("stop_ms", -1)))
-	_do_shake(float(tune.get("shake_mul", 1.0)))
+	_do_shake(float(tune.get("shake_mul", CRIT_SHAKE_MUL if crit else 1.0)), int(tune.get("shake_ms", SHAKE_MS)))
 	if is_instance_valid(target):
 		_do_flash(target)
 		_do_popup(target, amount, crit, float(tune.get("pop_mul", 1.0)))
@@ -175,13 +177,13 @@ func _process(_delta: float) -> void:
 	_tick_flash()
 
 
-func _do_shake(mul: float = 1.0) -> void:
+func _do_shake(mul: float = 1.0, ms: int = SHAKE_MS) -> void:
 	if mul <= 0.0:
 		return
 	var rig := get_tree().get_first_node_in_group("camera_rig")
 	if rig != null and rig.has_method("shake"):
-		rig.shake(SHAKE_AMP_M * mul, SHAKE_MS / 1000.0)
-	shake_triggered.emit(SHAKE_AMP_M * mul, SHAKE_MS)
+		rig.shake(SHAKE_AMP_M * mul, ms / 1000.0)
+	shake_triggered.emit(SHAKE_AMP_M * mul, ms)
 
 
 func _do_flash(target: Node3D) -> void:

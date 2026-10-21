@@ -38,6 +38,10 @@ const ATK_COOLDOWN := 0.55 # 웹판 BASE_ATK_CD 그대로
 const ATK_DAMAGE := 9.0
 const ATK_RANGE := 2.4
 const CRIT_MULT := 1.85 # 웹판 dungeon.js strike()의 "dmg *= 1.85" 그대로
+const CombatFx := preload("res://saga_core/combat_fx.gd")
+## G-0290 무기 등급 잔광(웹 W-0239) — 양품(1)부터 휘두를 때마다 등급 색 궤적, 단마다 길게. 전설(4)은 맞은 자리 금빛 불꽃도.
+const TRAIL_SEC := [0.0, 0.12, 0.16, 0.22, 0.3]
+var _swing := 0
 
 var _cooldown_left := 0.0
 @onready var _player: Node3D = get_parent()
@@ -62,6 +66,7 @@ func try_attack() -> void:
 	if _player.has_method("play_once"):   # G-0284 — 전엔 휘둘러도 몸이 서 있었다
 		_player.call("play_once", "attack", minf(0.32, _cooldown_left))
 	var range_now: float = ATK_RANGE * DungeonRunState.reach_mult()
+	_tier_trail(range_now)
 	for enemy in get_tree().get_nodes_in_group("dungeon_enemy"):
 		if not is_instance_valid(enemy):
 			continue
@@ -70,6 +75,21 @@ func try_attack() -> void:
 				_strike(enemy)
 				if is_instance_valid(enemy) and randf() * 100.0 < DungeonRunState.echo_pct():
 					_strike(enemy)
+
+
+## G-0290 — 낀 무기 등급(0 상품이면 없음) 색 잔광. 등급·색은 dungeon_items TIERS 그대로.
+func weapon_tier() -> int:
+	return clampi(int(DungeonEquipmentState.weapon.get("tier", 0)), 0, TRAIL_SEC.size() - 1)
+
+
+func _tier_trail(reach: float) -> void:
+	var t := weapon_tier()
+	if t <= 0:
+		return
+	var vis := _player.get("visual") as Node3D
+	var fwd: Vector3 = vis.global_transform.basis.z if vis != null else -_player.global_transform.basis.z
+	CombatFx.slash(_player, fwd, minf(reach, 3.0), Color(String(DungeonItems.TIERS[t].color)), _swing, false, 1.0, TRAIL_SEC[t])
+	_swing += 1
 
 
 func _strike(enemy: Node) -> void:
@@ -96,6 +116,8 @@ func _strike(enemy: Node) -> void:
 	## — 무예 스크립트 80여 개는 범위 밖(다음 세션).
 	if enemy is Node3D:
 		CombatFeel.hit(enemy, dmg, is_crit, DungeonEquipmentState.FIRST_HIT_TUNE if first_mul > 1.0 else {})
+		if weapon_tier() >= 4:   # G-0290 전설 — 맞은 자리 금빛 불꽃
+			CombatFx.spark(enemy, (enemy as Node3D).global_position + Vector3.UP, Color(String(DungeonItems.TIERS[4].color)), true)
 		Voice.say("shout")   # G-0111 — 가끔 외침(말하는 이 = Voice.speaker)
 	if is_instance_valid(enemy) and enemy.hp > 0.0:
 		_apply_elemental(enemy)

@@ -76,6 +76,8 @@ func _ready() -> void:
 	_life = LifePose.attach(visual)   # G-0266 — 가만히 8초 → 앉기(옆 보기라 몸 방향 그대로)
 	if (load("res://saga_core/world/talk_face.gd") as GDScript).call("player_attach", visual) != null:   # G-0287 얼굴 늘
 		StorySaveState.level_up.connect(_face_level_up)
+	StorySaveState.job_changed.connect(_refresh_job_ring)   # G-0289(메서드 — 씬 바뀌면 끊김)
+	_refresh_job_ring()
 	_play_anim("idle")
 	CelShaderApply.apply_to(visual)
 	## PLAN 102-4 — GO/DUNGEON/FOREST는 games/saga_go/player/player.gd를
@@ -710,3 +712,20 @@ func _face_level_up(_lv: int) -> void:
 	var face: Node = (load("res://saga_core/world/talk_face.gd") as GDScript).call("face_of", visual)
 	if face != null:
 		face.call("flash_mood", "joy", 2.0)
+
+
+## G-0289 전직 단(1~5차)을 발밑 표식으로(웹 W-0246) — 테는 갈래 색(1차 직업), 별은 금빛. 몸 크기(BODY_SCALE)만큼 키움.
+const JOB_TINT := {"warrior": Color(0.95, 0.38, 0.3, 0.9), "archer": Color(0.45, 0.85, 0.4, 0.9), "rogue": Color(0.72, 0.45, 0.95, 0.9), "mage": Color(0.4, 0.65, 1.0, 0.9)}
+
+func _refresh_job_ring(_j := "") -> void:
+	var tier := StoryCombat.job_tier(StorySaveState.job)
+	var root := StorySaveState.job
+	for _i in 6:
+		var up := String(StoryCombat.JOB_FROM.get(root, ""))
+		if up == "" or up == "none":
+			break
+		root = up
+	var RankRing: GDScript = load("res://saga_core/world/rank_ring.gd")
+	var ring: Node3D = RankRing.call("set_rank", self, tier, JOB_TINT.get(root, RankRing.get("GOLD")))
+	if ring != null:
+		ring.scale = Vector3.ONE * StoryLook.BODY_SCALE

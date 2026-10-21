@@ -80,7 +80,7 @@ func _on_fall(player: Node) -> void:
 	player.set_physics_process(false)
 	if player is CharacterBody3D:
 		(player as CharacterBody3D).velocity = Vector3.ZERO
-	Toast.show(self, "💀 쓰러졌다 — 주운 금 %d 을 잃고 허도로 돌아간다 · 경험치·장비는 그대로" % lost, 3.0)
+	Toast.show(self, fall_text(lost), 4.0)   # G-0292 잃은 것·남은 것(웹 W-0241)
 	_return_timer = Timer.new()
 	_return_timer.one_shot = true
 	_return_timer.wait_time = FALL_RETURN_SEC
@@ -92,3 +92,9 @@ func _on_fall(player: Node) -> void:
 func _return_to_town() -> void:
 	StorySaveState.set_pending_spawn(TOWN_ARRIVAL_X)
 	get_tree().change_scene_to_file(TOWN_SCENE)
+
+
+## G-0292 쓰러짐 글 — 잃은 것(이번 사냥터 주운 금 절반)과 남은 것을 같이(SAGA-DESIGN §3 F "죽어도 남는 것 명시").
+static func fall_text(lost: int) -> String:
+	return "💀 쓰러졌다 — 잃은 것: 이번 사냥터에서 주운 금 %d(절반)
+남은 것: 레벨·경험치·장비·전직·성좌·업적 그대로 — 허도에서 바로 다시" % lost

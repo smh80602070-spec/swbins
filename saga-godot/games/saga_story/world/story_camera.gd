@@ -9,6 +9,11 @@ extends Camera3D
 const Y_OFFSET := 2.6
 const Z_DISTANCE := 12.5   # G-0187 — 16 → 12.5: 몸 배율 1.6(data/story_look.gd)과 함께 인물이 화면 높이 약 1/7(메이플 크기)
 const Y_LERP_RATE := 3.0
+## G-0294 휠 줌(웹 W-0324) — 거리 배율 ZOOM_MIN(가까이)~ZOOM_MAX, 기본 1 = 전과 같음. 가까우면 눈높이를 몸 가운데 쪽으로 내린다.
+const ZOOM_MIN := 0.18
+const ZOOM_MAX := 1.8
+const ZOOM_STEP := 1.15
+var zoom_mul := 1.0
 
 var _player: Node3D = null
 ## G-0192 — 세계 흔들림(웹 W-0166 ①). saga_core/combat_feel.gd 가 "camera_rig" 그룹 첫 노드의 shake() 를 부른다 — 이 판엔 그 그룹이 없어
@@ -34,8 +39,8 @@ func _process(delta: float) -> void:
 		_base = global_position
 		_inited = true
 	_base.x = _player.global_position.x
-	_base.y = lerp(_base.y, _player.global_position.y + Y_OFFSET, Y_LERP_RATE * delta)
-	_base.z = Z_DISTANCE
+	_base.y = lerp(_base.y, _player.global_position.y + Y_OFFSET * lerpf(0.55, 1.0, clampf(zoom_mul, 0.0, 1.0)), Y_LERP_RATE * delta)
+	_base.z = Z_DISTANCE * zoom_mul
 	var off := Vector3.ZERO
 	if Time.get_ticks_msec() < _shake_until_msec:
 		off = Vector3(randf_range(-_shake_amp_m, _shake_amp_m), randf_range(-_shake_amp_m, _shake_amp_m), 0.0)
@@ -52,3 +57,17 @@ func shake(amp_m: float, dur_sec: float) -> void:
 
 func is_shaking() -> bool:
 	return Time.get_ticks_msec() < _shake_until_msec
+
+
+## G-0294 — 휠 위 = 가까이. 창(ui_modal)이 떠 있으면 안 먹음.
+func _unhandled_input(event: InputEvent) -> void:
+	var mb := event as InputEventMouseButton
+	if mb == null or not mb.pressed or (mb.button_index != MOUSE_BUTTON_WHEEL_UP and mb.button_index != MOUSE_BUTTON_WHEEL_DOWN):
+		return
+	if not get_tree().get_nodes_in_group("ui_modal").is_empty():
+		return
+	set_zoom(zoom_mul / ZOOM_STEP if mb.button_index == MOUSE_BUTTON_WHEEL_UP else zoom_mul * ZOOM_STEP)
+
+
+func set_zoom(m: float) -> void:
+	zoom_mul = clampf(m, ZOOM_MIN, ZOOM_MAX)

@@ -20,7 +20,8 @@ static var _flash_mesh: QuadMesh = null
 
 ## who = 플레이어(Node3D), fwd = 바라보는 방향, reach = 닿는 거리(m), step = 연타 차례.
 ## scale_mul — G-0255 미리 데우기(warm)만 아주 작게(0.02) 부른다. 기본 1.0 이면 전과 같다.
-static func slash(who: Node3D, fwd: Vector3, reach: float, color: Color, step: int, heavy := false, scale_mul := 1.0) -> void:
+## fade_sec — G-0290 잔광 길이(2나락 무기 등급마다 길어짐). 기본 0.16 이면 전과 같다.
+static func slash(who: Node3D, fwd: Vector3, reach: float, color: Color, step: int, heavy := false, scale_mul := 1.0, fade_sec := 0.16) -> void:
 	if who == null or not who.is_inside_tree():
 		return
 	var mi := MeshInstance3D.new()
@@ -46,7 +47,7 @@ static func slash(who: Node3D, fwd: Vector3, reach: float, color: Color, step: i
 	var tw := mi.create_tween()
 	tw.set_ignore_time_scale(true)
 	tw.tween_method(func(v: float) -> void: mat.set_shader_parameter("sweep", v), 0.0, 1.15, 0.09)
-	tw.tween_method(func(v: float) -> void: mat.set_shader_parameter("fade", v), 1.0, 0.0, 0.16)
+	tw.tween_method(func(v: float) -> void: mat.set_shader_parameter("fade", v), 1.0, 0.0, fade_sec)
 	tw.tween_callback(mi.queue_free)
 
 

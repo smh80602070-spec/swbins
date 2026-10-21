@@ -67,6 +67,7 @@ func _spawn_wave(w: int) -> void:
 		var pos := _player.global_position + Vector3(cos(ang) * r, 0, sin(ang) * r)
 		var enemy: CharacterBody3D = DungeonEnemy.new(1, false, false, false, mult)
 		enemy.position = pos
+		enemy.rise_in = true   # G-0293 화면 안에서 생기니 땅에서 솟게
 		enemy.add_to_group("horde_enemy")
 		## 정직하게 밝혀 둔다 — "그림자" 정예가 갈라져 낳는 분신(dungeon_enemy.gd
 		## ::_die() split)은 이 died 연결을 안 물려받는다(부모가 직접

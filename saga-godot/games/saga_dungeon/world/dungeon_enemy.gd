@@ -65,6 +65,11 @@ const RANGED_DETECT_MUL := 300.0 / 230.0  # AGGRO_RANGE_RANGED / AGGRO_RANGE
 const REACH_BONUS := 0.57   # spear·halberd reachBonus 14px
 const PHASE_RATE := 7.0     # en.phase += dt*7
 const DungeonShot := preload("res://games/saga_dungeon/world/dungeon_shot.gd")
+## G-0293 등장 연출(웹 W-0327 ②) — 화면 안에서 나중에 생기는 적(난입 물결)이 갑자기 나타나지 않게: 땅에서 솟으며(RISE_SEC) 흙먼지.
+## 방에 미리 서 있는 적은 그대로(rise_in 기본 false). 솟는 동안도 판정·체력은 그대로(몸 그림만 움직인다).
+const RISE_SEC := 0.6
+const RISE_DEPTH := 1.4
+var rise_in := false
 const COLOR := Color(0.788, 0.659, 0.227)  # data-enemy.js 황건적 color '#c9a83a' 그대로
 const BOSS_SCALE := 22.0 / 13.0  # dungeon.js spawnEnemy()의 r = boss?22:13 그대로
 const ELITE_SCALE := 16.0 / 13.0  # spawnEnemy()의 정예 r=16 그대로
@@ -215,6 +220,14 @@ func _ready() -> void:
 	_spawn_visual()
 
 
+func _rise() -> void:
+	var y0 := _creature.position.y
+	_creature.position.y = y0 - RISE_DEPTH
+	var tw := _creature.create_tween()
+	tw.tween_property(_creature, "position:y", y0, RISE_SEC).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	(load("res://saga_core/combat_fx.gd") as GDScript).call("spark", self, global_position + Vector3.UP * 0.2, Color(0.55, 0.45, 0.33), true)
+
+
 func _spawn_visual() -> void:
 	## enemyName()의 정예 접두처럼, 시각도 정예 색이 잡졸 색을 덮는다. 보스는 곰, 나머지는 도깨비꼴.
 	var col: Color = Color(String(_elite_def.color)) if not _elite_def.is_empty() else (Color(String(species.color)) if not species.is_empty() else COLOR)
@@ -230,6 +243,8 @@ func _spawn_visual() -> void:
 	CreatureBuilder._fit(_creature, kind, 1.7 * _scale_mul * (1.15 if form == "ogre" else 1.0))
 	add_child(_creature)
 	_play_anim("idle")
+	if rise_in:
+		_rise()
 
 	var cs := CollisionShape3D.new()
 	var shape := CapsuleShape3D.new()
