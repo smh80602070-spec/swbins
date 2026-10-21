@@ -23,6 +23,7 @@
 [ext_resource type="Script" path="res://games/saga_dungeon/ui/loot_filter_button.gd" id="loot_filter_btn"]
 [ext_resource type="Script" path="res://games/saga_dungeon/ui/weapon_swap_button.gd" id="weapon_swap_btn"]
 [ext_resource type="Script" path="res://games/saga_dungeon/ui/mode_button.gd" id="mode_btn"]
+[ext_resource type="Script" path="res://saga_core/ui/menu_hud_hook.gd" id="menu_hook"]
 
 [node name="DungeonHUD" type="CanvasLayer"]
 
@@ -403,3 +404,8 @@ offset_right = -40.0
 offset_bottom = -6910.0
 script = ExtResource("graphics_btn")
 
+[node name="MenuHook" type="Node" parent="."]
+script = ExtResource("menu_hook")
+burger_top = 236.0
+game = "dungeon"
+items = PackedStringArray("SkillButton|🥋|무예·경락 (F2)", "SocketButton|🔨|홈 박기", "VendorButton|🏪|행상", "ForgeButton|⚗️|연단", "LootFilterButton|🧹|전리품 거르기", "SigilButton|🔻|부적", "ModeButton|⚖️|난도", "HordeButton|🌊|난입", "HardcoreButton|☠️|결사", "TransferSaveButton|📲|세이브 옮기기", "GraphicsButton|🖼️|화질")

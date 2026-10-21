@@ -23,6 +23,7 @@
 [ext_resource type="Script" path="res://games/saga_realm/ui/statecraft_button.gd" id="statecraft_btn"]
 [ext_resource type="Script" path="res://games/saga_realm/ui/realm_tech_button.gd" id="tech_btn"]
 [ext_resource type="Script" path="res://games/saga_realm/ui/realm_wonder_button.gd" id="wonder_btn"]
+[ext_resource type="Script" path="res://saga_core/ui/menu_hud_hook.gd" id="menu_hook"]
 
 [node name="RealmHUD" type="CanvasLayer"]
 
@@ -297,3 +298,8 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
 horizontal_alignment = 2
 script = ExtResource("14")
+
+[node name="MenuHook" type="Node" parent="."]
+script = ExtResource("menu_hook")
+game = "realm"
+items = PackedStringArray("TechButton|📜|연구", "StatecraftButton|🧭|경륜 (F2)", "WonderButton|🏛️|불가사의", "DiploButton|🤝|외교", "PlotButton|🕵️|계략", "PromoteButton|🎖️|승진", "SuccessionButton|👑|계승", "EventButton|📯|사건", "QuizButton|❓|문답", "ArchiveButton|📚|서고", "TransferSaveButton|📲|세이브 옮기기", "GraphicsButton|🖼️|화질")

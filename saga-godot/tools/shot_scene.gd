@@ -28,6 +28,14 @@ const GO := "res://games/saga_go/world/TestVillage.tscn"
 const GFX := "res://saga_core/data/graphics_settings.gd"
 
 const CUTS := [
+	["mn_dungeon", DUNGEON, [["free_modal"]]],   # G-0280 HUD(☰ 메뉴로 옮긴 단추 빠짐 — SAGA_MENU_SCREEN=0 이 전)
+	["mo_dungeon", DUNGEON, [["free_modal"], ["call", "MenuScreen", "open_menu"]]],   # G-0280 ☰ 메뉴 열림
+	["mn_forest", FOREST, [["free_modal"]]],
+	["mo_forest", FOREST, [["free_modal"], ["call", "MenuScreen", "open_menu"]]],
+	["mn_story", "res://games/saga_story/world/TestField.tscn", [["free_modal"]]],
+	["mo_story", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["call", "MenuScreen", "open_menu"]]],
+	["mn_realm", REALM, [["free_modal"]]],
+	["mo_realm", REALM, [["free_modal"], ["call", "MenuScreen", "open_menu"]]],
 	["fs_villager", FOREST, [["near", "Villager/Villager_npc_keeper", 0.0, 3.0]]],
 	["fs_house_in", FOREST, [["touch", "House", "_on_enter_house"]]],
 	["fs_room2", FOREST, [["set", "/root/ForestSaveState", "wall_key", "hanji"], ["set", "/root/ForestSaveState", "floor_key", "wood"], ["touch", "House", "_on_enter_house"],   # G-0062 서안·문갑·도자기·등잔
@@ -175,6 +183,7 @@ func _steps(steps: Array) -> void:
 		if String(st[0]) == "free_modal":
 			for m in get_nodes_in_group("ui_modal"):
 				if m is CanvasLayer:
+					m.remove_from_group("ui_modal")   # queue_free 는 프레임 끝 — 같은 차례 다음 단계(☰ 메뉴 열기)가 막히지 않게
 					m.queue_free()
 			continue
 		if String(st[0]) == "static":

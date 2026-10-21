@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://saga_core/ui/save_transfer_button.gd" id="save_transfer_btn"]
 [ext_resource type="Script" path="res://saga_core/ui/graphics_button.gd" id="graphics_btn"]
 [ext_resource type="Script" path="res://games/saga_story/ui/constellation_button.gd" id="constellation_btn"]
+[ext_resource type="Script" path="res://saga_core/ui/menu_hud_hook.gd" id="menu_hook"]
 
 [node name="StoryHUD" type="CanvasLayer"]
 
@@ -213,3 +214,9 @@ script = ExtResource("8")
 
 [node name="GoalBoardFeed" type="Node" parent="."]
 script = ExtResource("9")
+
+[node name="MenuHook" type="Node" parent="."]
+script = ExtResource("menu_hook")
+burger_top = 236.0
+game = "story"
+items = PackedStringArray("ConstellationButton|✨|성좌 (L)", "TransferSaveButton|📲|세이브 옮기기", "GraphicsButton|🖼️|화질")

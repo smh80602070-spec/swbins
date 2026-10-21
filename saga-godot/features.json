@@ -4885,10 +4885,15 @@
  },
  {
   "id": "gd.core.menu-screen",
-  "name": "공용 창 틀·☰ 메뉴 화면(웹 W-0252·0253 짝) — K-0040 9-slice 부품으로 판별 Theme(ui_kit) · 오른쪽 위 ☰·Esc·패드 Start 로 카드 격자(원신 일시정지 메뉴 꼴) · 1만리 먼저(칸 17)",
+  "name": "공용 창 틀·☰ 메뉴 화면(웹 W-0252·0253 짝) — K-0040 9-slice 부품으로 판별 Theme(ui_kit) · 오른쪽 위 ☰·Esc·패드 Start 로 카드 격자(원신 일시정지 메뉴 꼴) · 1만리 먼저(칸 17) · G-0280 나머지 넷(HUD 단추 → 칸: 2나락 11·3마을 3·4종횡 3·5천하 12, HUD 안 MenuHook)",
   "files": [
    "saga_core/ui/ui_kit.gd",
    "saga_core/ui/menu_screen.gd",
+   "saga_core/ui/menu_hud_hook.gd",
+   "games/saga_dungeon/ui/DungeonHUD.tscn",
+   "games/saga_forest/ui/ForestHUD.tscn",
+   "games/saga_story/ui/StoryHUD.tscn",
+   "games/saga_realm/ui/RealmHUD.tscn",
    "games/saga_go/ui/go_menu.gd",
    "games/saga_go/world/hud_menu.gd",
    "tools/probe_menu_screen.gd"

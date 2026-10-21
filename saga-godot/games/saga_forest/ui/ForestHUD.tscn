@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://saga_core/ui/save_transfer_button.gd" id="save_transfer_btn"]
 [ext_resource type="Script" path="res://saga_core/ui/graphics_button.gd" id="graphics_btn"]
 [ext_resource type="Script" path="res://games/saga_forest/ui/workshop_button.gd" id="workshop_btn"]
+[ext_resource type="Script" path="res://saga_core/ui/menu_hud_hook.gd" id="menu_hook"]
 
 [node name="ForestHUD" type="CanvasLayer"]
 
@@ -145,3 +146,8 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
 horizontal_alignment = 2
 script = ExtResource("4")
+
+[node name="MenuHook" type="Node" parent="."]
+script = ExtResource("menu_hook")
+game = "forest"
+items = PackedStringArray("WorkshopButton|🌿|솜씨도 (F2)", "TransferSaveButton|📲|세이브 옮기기", "GraphicsButton|🖼️|화질")

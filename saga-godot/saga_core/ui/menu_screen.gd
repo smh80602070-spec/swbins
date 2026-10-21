@@ -20,6 +20,7 @@ var _grid: GridContainer
 var _burger: Button
 var _frozen_before := false
 var _player: Node = null
+var burger_top := 52.0
 
 
 static func enabled() -> bool:
@@ -56,8 +57,8 @@ func _ready() -> void:
 	_burger.anchor_right = 1.0
 	_burger.offset_left = -BURGER.x - 12.0
 	_burger.offset_right = -12.0
-	_burger.offset_top = 52.0
-	_burger.offset_bottom = 52.0 + BURGER.y
+	_burger.offset_top = burger_top
+	_burger.offset_bottom = burger_top + BURGER.y
 	_burger.tooltip_text = "메뉴 (Esc)"
 	_burger.focus_mode = Control.FOCUS_NONE
 	if th != null:
@@ -105,6 +106,14 @@ func _ready() -> void:
 	_grid.add_theme_constant_override("v_separation", 10)
 	col.add_child(_grid)
 	_fill()
+
+
+## ☰ 위 여백 — 판 HUD 오른쪽 위와 겹치면 판이 내린다(G-0280).
+func set_burger_top(v: float) -> void:
+	burger_top = v
+	if _burger != null:
+		_burger.offset_top = v
+		_burger.offset_bottom = v + BURGER.y
 
 
 func set_items(item_list: Array) -> void:
@@ -169,8 +178,10 @@ func open_menu() -> void:
 		if dot != null:
 			dot.visible = it.get("badge") is Callable and int((it.badge as Callable).call()) > 0
 	_player = get_tree().get_first_node_in_group("player")
+	if _player != null and not ("frozen" in _player):   # frozen 없는 판 몸(4종횡 등)은 안 멈춘다
+		_player = null
 	if _player != null:
-		_frozen_before = bool(_player.get("frozen"))
+		_frozen_before = _player.get("frozen") == true
 		_player.set("frozen", true)
 	if _grid.get_child_count() > 0:
 		(_grid.get_child(0) as Control).grab_focus.call_deferred()
