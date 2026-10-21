@@ -318,7 +318,7 @@
    "tool": "gen.py",
    "model": "Illustrious-XL-v2.0",
    "license": "CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-07 확인), 폐쇄 파생 모델 수익화만 금지",
-   "count": 609,
+   "count": 589,
    "where": [
     "saga-assets/competition",
     "saga-assets/cutscene",
@@ -383,7 +383,7 @@
    "tool": "gen.py (ComfyUI)",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 1679,
+   "count": 1839,
    "where": [
     "saga-assets/icons/license",
     "saga-assets/portraits-expr",
@@ -893,7 +893,7 @@
    "tool": "gen.py",
    "model": "sd_xl_base_1.0",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 62,
+   "count": 58,
    "where": [
     "saga-assets/web2d/rts",
     "saga-assets/web2d/tile",
@@ -945,24 +945,24 @@
    "tool": "edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀)",
    "model": "z-image-turbo",
    "license": "원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것",
-   "count": 3,
+   "count": 4,
    "where": [
     "saga-assets/web2d/terrain/saga-dungeon/dirt_stone",
     "saga-assets/web2d/terrain/saga-dungeon/field_stone",
-    "saga-assets/web2d/terrain/saga-dungeon/stone_water"
+    "saga-assets/web2d/terrain/saga-dungeon/stone_water",
+    "saga-assets/web2d/terrain/saga-forest/sand_water"
    ]
   },
   {
    "tool": "edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀)",
    "model": "sd_xl_base_1.0, z-image-turbo",
    "license": "원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것",
-   "count": 5,
+   "count": 4,
    "where": [
     "saga-assets/web2d/terrain/saga-dungeon/moss_dirt",
     "saga-assets/web2d/terrain/saga-forest/grass_dirt",
     "saga-assets/web2d/terrain/saga-forest/grass_sand",
-    "saga-assets/web2d/terrain/saga-forest/grass_stone",
-    "saga-assets/web2d/terrain/saga-forest/sand_water"
+    "saga-assets/web2d/terrain/saga-forest/grass_stone"
    ]
   },
   {
@@ -977,6 +977,16 @@
     "saga-assets/web2d/terrain/saga-go/grass_stone",
     "saga-assets/web2d/terrain/saga-go/grass_water",
     "saga-assets/web2d/terrain/saga-go/sand_water"
+   ]
+  },
+  {
+   "tool": "water_tile.py",
+   "model": "",
+   "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+   "count": 4,
+   "where": [
+    "saga-assets/web2d/tile",
+    "saga-web/shared/assets/web2d/tile"
    ]
   },
   {

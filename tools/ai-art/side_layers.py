@@ -8,6 +8,7 @@
   (원격) push_batch.py tools/ai-art/batches/k164_side_inpaint.json
   py tools/ai-art/side_layers.py split [장소,…]        # 층 4 → saga-assets/web2d/bg2d/story_<장소>/{sky,far,near,front}.webp + layers.json + license
   py tools/ai-art/side_layers.py tiles                 # 발판 타일 → saga-assets/web2d/side-tile/side_<장소>/{top,side,end_l,end_r}.webp + tiles.json
+  py tools/ai-art/side_layers.py match [장소,…]        # K-0165 발판 명도·채도를 배경 near 층에 맞춤(tiles 가 TILE_MATCH 곳은 자동)
   py tools/ai-art/side_layers.py sheet                 # 시험판 _out/side2d/prev/<장소>.png(390×844 세로 두 자리 + 1280×720) · tiles_<n>.png · 이음 수치
   py tools/ai-art/side_layers.py check                 # 규격·파일·해상도·이음 → SIDE2D_OK
 
@@ -44,6 +45,9 @@ GW, GH = 1344, 768           # 생성·인페인트 크기
 # 이름, 깊이 문턱(가까움 분위수), 엔진 depth(빠르기)
 LAYERS = [('sky', None, 0.04), ('far', 0.40, 0.2), ('near', 0.65, 0.5), ('front', 0.85, 0.9)]
 T = 128
+# K-0165 장소별 층 가르기 손잡이 — min = 떠다니는 조각 문턱(넓이 비율), ground = 아래 띠(높이 비율)에 닿는 덩어리만 앞 층에 남김
+SPLIT_OPT = {'deep_cave': {'min': 0.02, 'ground': 0.25}, 'forest': {'min': 0.02, 'ground': 0.25}}   # 옛 싸움터는 K-0165 △ — 거름 넣어도 먼 산 끝이 앞 능선 위로 떠 보임, 옛 것 유지
+TILE_MATCH = {'mountain_shrine': (0.6, 0.6, 0.6), 'orbital_base': (0.9, 1.0, 0.45)}   # (명도·채도 몫, 평균 색 몫, 색 퍼짐 배율)   # K-0165 발판 색 맞춤(배경보다 옅던 두 곳) — tiles 뒤에 match_tiles
 TOOL = 'K-0164 tools/ai-art/side_layers.py'
 
 
@@ -176,9 +180,18 @@ def split(ids=None):
                 from scipy import ndimage
                 fg = d >= q[i - 1]
                 lab, n = ndimage.label(fg)                      # 떠다니는 작은 조각(0.4% 미만)은 뺀다 — 카메라가 움직이면 혼자 미끄러지는 얼룩이 된다(10-21 눈)
+                opt = SPLIT_OPT.get(g, {})
                 if n > 1:
                     sz = ndimage.sum(np.ones_like(lab), lab, range(1, n + 1))
-                    fg = np.isin(lab, [k + 1 for k, z in enumerate(sz) if z >= 0.004 * fg.size])
+                    fg = np.isin(lab, [k + 1 for k, z in enumerate(sz) if z >= opt.get('min', 0.004) * fg.size])
+                if opt.get('ground'):                           # K-0165: 바닥(아래 띠)에 닿는 덩어리만 — 천장·하늘에 걸린 조각은 뒤판(느린 층)에 둔다
+                    lab, n = ndimage.label(fg)
+                    keep = set(np.unique(lab[-round(FH * opt['ground']):])) - {0}
+                    fg = np.isin(lab, list(keep))
+                if opt.get('open'):                             # K-0165: 층 윤곽 위로 삐죽 솟은 좁은 것(작은 바위·가지)을 깎음 — 층이 미끄러지면 혼자 떠 보인다
+                    r = opt['open'] // 2
+                    yy, xx = np.mgrid[-r:r + 1, -r:r + 1]
+                    fg = ndimage.binary_opening(fg, structure=(xx * xx + yy * yy) <= r * r)
                 a = Image.fromarray((fg * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.GaussianBlur(2))
                 pic = pic.convert('RGBA')
                 pic.putalpha(a)
@@ -252,6 +265,66 @@ def heal(im, axes=(0, 1)):
     return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8), im.mode)
 
 
+def _lab(rgb):
+    c = rgb / 255.0
+    c = np.where(c > 0.04045, ((c + 0.055) / 1.055) ** 2.4, c / 12.92)
+    xyz = c @ np.array([[0.4124, 0.3576, 0.1805], [0.2126, 0.7152, 0.0722], [0.0193, 0.1192, 0.9505]]).T / np.array([0.95047, 1.0, 1.08883])
+    f = np.where(xyz > 0.008856, np.cbrt(xyz), 7.787 * xyz + 16 / 116)
+    return np.stack([116 * f[..., 1] - 16, 500 * (f[..., 0] - f[..., 1]), 200 * (f[..., 1] - f[..., 2])], -1)
+
+
+def _rgb(lab):
+    fy = (lab[..., 0] + 16) / 116
+    f = np.stack([fy + lab[..., 1] / 500, fy, fy - lab[..., 2] / 200], -1)
+    xyz = np.where(f > 0.2069, f ** 3, (f - 16 / 116) / 7.787) * np.array([0.95047, 1.0, 1.08883])
+    c = xyz @ np.array([[3.2406, -1.5372, -0.4986], [-0.9689, 1.8758, 0.0415], [0.0557, -0.2040, 1.0570]]).T
+    c = np.where(c > 0.0031308, 1.055 * np.clip(c, 0, None) ** (1 / 2.4) - 0.055, 12.92 * c)
+    return np.clip(c * 255, 0, 255)
+
+
+def _lab_stats(ims):
+    """알파 가중 평균 L · 채도(C) — ims = RGBA 배열들."""
+    L, C, A, B, W = 0.0, 0.0, 0.0, 0.0, 0.0
+    for a in ims:
+        w = a[..., 3] / 255.0
+        lab = _lab(a[..., :3].astype(np.float64))
+        L += float((lab[..., 0] * w).sum())
+        C += float((np.hypot(lab[..., 1], lab[..., 2]) * w).sum())
+        A += float((lab[..., 1] * w).sum())
+        B += float((lab[..., 2] * w).sum())
+        W += float(w.sum())
+    return L / W, C / W, A / W, B / W
+
+
+def match_tiles(g, k=None):
+    """K-0165: 발판 타일 명도·채도(+ 평균 색 kh 몫)를 그 장소 배경 near 층 평균(알파 가중 Lab)에 끌어온다 — 결은 그대로.
+    TILE_MATCH[g] = (명도·채도 몫, 평균 색 몫). 네 장(top·side·end_l·end_r)에 같은 변환."""
+    k, kh, var = TILE_MATCH.get(g, (0.7, 0.0, 1.0)) if k is None else (k, 0.0, 1.0)
+    td = os.path.join(TCANON, 'side_' + g)
+    near = np.asarray(Image.open(os.path.join(CANON, 'story_' + g, 'near.webp')).convert('RGBA')).astype(np.float64)
+    names = ('top', 'side', 'end_l', 'end_r')
+    arr = {n: np.asarray(Image.open(os.path.join(td, n + '.webp')).convert('RGBA')).astype(np.float64) for n in names}
+    nL, nC, nA, nB = _lab_stats([near])
+    tL, tC, tA, tB = _lab_stats([arr['side'], arr['top']])
+    dL = (nL - tL) * k
+    sC = (1 + (nC / max(tC, 1e-3) - 1) * k)
+    for n in names:
+        a = arr[n]
+        lab = _lab(a[..., :3])
+        lab[..., 0] = np.clip(lab[..., 0] + dL, 0, 100)
+        lab[..., 1] = tA * sC + (lab[..., 1] - tA) * sC * var   # var < 1 = 무지개처럼 퍼진 색을 평균 쪽으로 모음
+        lab[..., 2] = tB * sC + (lab[..., 2] - tB) * sC * var
+        lab[..., 1] += (nA - tA * sC) * kh           # kh = 색 기울기 몫(0 = 색상 그대로) — 궤도 기지는 남빛 배경에 무지개 파스텔이 튀어 끌어옴
+        lab[..., 2] += (nB - tB * sC) * kh
+        a[..., :3] = _rgb(lab)
+        Image.fromarray(np.clip(a, 0, 255).astype(np.uint8), 'RGBA').save(os.path.join(td, n + '.webp'), 'WEBP', quality=90, method=6)
+        lp = os.path.join(td, n + '.license.json')
+        lic = json.load(open(lp, encoding='utf-8'))
+        lic['color_match'] = f'K-0165 배경 near 층 평균에 명도·채도 {k:.0%}·평균 색 {kh:.0%} 끌어옴·색 퍼짐 ×{var}(L {tL:.1f}→{tL + dL:.1f}, 채도 ×{sC:.2f}, 결은 그대로)'
+        json.dump(lic, open(lp, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    print('MATCH', g, f'near L{nL:.1f} C{nC:.1f} · tile L{tL:.1f} C{tC:.1f} → dL {dL:+.1f} C×{sC:.2f} · 색 {kh:.0%} 퍼짐 ×{var} (near a{nA:.1f} b{nB:.1f})')
+
+
 def tiles(ids=None):
     """칸 128 · 그림은 4칸 묶음(가로 이음 512) — 웹은 세계 칸 x mod 4(옆면은 y mod 4 도)로 그 칸을 고른다 → 반복 무늬가 4칸에 한 번.
     top 512×128 · side 512×512 · end_l/end_r 512×128(칸 k = top 칸 k 의 바깥쪽을 둥글게 자른 것 — 이웃 top 칸과 그대로 이어짐)."""
@@ -303,6 +376,8 @@ def tiles(ids=None):
                    'note': 'top = 발판·땅 맨 윗줄(위 투명 물결 + 풀 테) · side = 그 밑 채움 · end_l = 발판 왼끝 칸, end_r = 오른끝 칸(그 자리 x mod 4 칸)'},
                   open(os.path.join(out, 'tiles.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         print('TILES', g, fh)
+        if g in TILE_MATCH:
+            match_tiles(g)
 
 
 # ── 5 시험판·검사 ──
@@ -459,6 +534,9 @@ if __name__ == '__main__':
         split(ids)
     elif cmd == 'tiles':
         tiles(ids)
+    elif cmd == 'match':
+        for g in ids or list(TILE_MATCH):
+            match_tiles(g)
     elif cmd == 'sheet':
         sheet()
     elif cmd == 'check':

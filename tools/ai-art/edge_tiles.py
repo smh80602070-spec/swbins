@@ -258,8 +258,8 @@ def wang_main(argv):
                                         'kinds_a': p['kinds_a'], 'kinds_b': p['kinds_b'], 'seam_excess': round(worst, 2)}
             lic = {'id': '%s/%s' % (game, p['pair']), 'generator': 'tools/ai-art/edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀)',
                    'sources': ['saga-assets/web2d/tile/%s.webp' % p['a'], 'saga-assets/web2d/tile/%s.webp' % p['b']],
-                   'model': ', '.join(sorted({_srclic(src_dir, p[k]).get('model', '?') for k in ('a', 'b')})),
-                   'model_license': ', '.join(sorted({_srclic(src_dir, p[k]).get('model_license', '?') for k in ('a', 'b')})),
+                   'model': ', '.join(sorted({m for m in (_srclic(src_dir, p[k]).get('model', '?') for k in ('a', 'b')) if m})),   # K-0165: 코드 그림(model '') 은 빼고
+                   'model_license': ', '.join(sorted({_srclic(src_dir, p[k]).get('model_license') or _srclic(src_dir, p[k]).get('license', '?') for k in ('a', 'b')})),
                    'license': '원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것',
                    'derived': '16칸 모서리 꼴 이음(쌍선형 경계 + 주기 잡음, 경계 %s)' % p['edge'], 'date': '2026-10-21', 'ticket': 'K-0162'}
             json.dump(lic, open(os.path.join(od, 'atlas.license.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

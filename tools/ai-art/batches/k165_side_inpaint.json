@@ -1,0 +1,71 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "side2d_inp",
+ "note": "K-0164 겹 배경 뒤판 — 깊이 문턱보다 가까운 것을 지우고 다시 그림(원본 프롬프트, 마스크 안만)",
+ "defaults": {
+  "prompt_prefix": "",
+  "width": 1344,
+  "height": 768,
+  "steps": 28,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "",
+  "variants": 1
+ },
+ "items": [
+  {
+   "id": "forest__m1",
+   "prompt": "masterpiece, high score, great score, absurdres, (sunlit forest clearing:1.15), open grassy meadow in foreground, forest treeline in the distance, tree canopy far away, distant misty hills, sunbeams, ferns, wildflowers, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, tree trunk in foreground, close-up tree, giant tree, object, pillar, post, statue",
+   "seed": 1304434902,
+   "init_image": "tools/ai-art/_out/side2d_inp/forest__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/forest__mask1_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "forest__m2",
+   "prompt": "masterpiece, high score, great score, absurdres, (sunlit forest clearing:1.15), open grassy meadow in foreground, forest treeline in the distance, tree canopy far away, distant misty hills, sunbeams, ferns, wildflowers, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, tree trunk in foreground, close-up tree, giant tree, object, pillar, post, statue",
+   "seed": 1304434903,
+   "init_image": "tools/ai-art/_out/side2d_inp/forest__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/forest__mask2_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "forest__m3",
+   "prompt": "masterpiece, high score, great score, absurdres, (sunlit forest clearing:1.15), open grassy meadow in foreground, forest treeline in the distance, tree canopy far away, distant misty hills, sunbeams, ferns, wildflowers, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, tree trunk in foreground, close-up tree, giant tree, object, pillar, post, statue",
+   "seed": 1304434904,
+   "init_image": "tools/ai-art/_out/side2d_inp/forest__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/forest__mask3_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "old_battlefield__m1",
+   "prompt": "masterpiece, high score, great score, absurdres, (ancient battlefield plain:1.15), wide open grass plain, low rolling hills, distant fortress on horizon, torn banners far away, golden clouds, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, rocks in foreground, boulder, debris, object, pillar, post, statue",
+   "seed": 2316945334,
+   "init_image": "tools/ai-art/_out/side2d_inp/old_battlefield__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/old_battlefield__mask1_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "old_battlefield__m2",
+   "prompt": "masterpiece, high score, great score, absurdres, (ancient battlefield plain:1.15), wide open grass plain, low rolling hills, distant fortress on horizon, torn banners far away, golden clouds, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, rocks in foreground, boulder, debris, object, pillar, post, statue",
+   "seed": 2316945335,
+   "init_image": "tools/ai-art/_out/side2d_inp/old_battlefield__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/old_battlefield__mask2_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "old_battlefield__m3",
+   "prompt": "masterpiece, high score, great score, absurdres, (ancient battlefield plain:1.15), wide open grass plain, low rolling hills, distant fortress on horizon, torn banners far away, golden clouds, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, rocks in foreground, boulder, debris, object, pillar, post, statue",
+   "seed": 2316945336,
+   "init_image": "tools/ai-art/_out/side2d_inp/old_battlefield__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/old_battlefield__mask3_s.png",
+   "denoise": 1.0
+  }
+ ]
+}

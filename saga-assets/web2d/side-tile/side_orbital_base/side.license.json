@@ -19,5 +19,6 @@
  "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py",
  "source_image": "tools/ai-art/_out/k135_pick/st_orbital_base_ground_v01.png",
  "base_image": "tools/ai-art/_out/k135_pick/st_orbital_base_ground_v01.png",
- "packed_by": "K-0164 tools/ai-art/side_layers.py — K-0135 그림체 C 땅·테 원본을 128 칸 4개 묶음으로(make_seamless · 코드 합성, GPU 안 씀)"
+ "packed_by": "K-0164 tools/ai-art/side_layers.py — K-0135 그림체 C 땅·테 원본을 128 칸 4개 묶음으로(make_seamless · 코드 합성, GPU 안 씀)",
+ "color_match": "K-0165 배경 near 층 평균에 명도·채도 90%·평균 색 100% 끌어옴·색 퍼짐 ×0.45(L 82.4→40.9, 채도 ×1.75, 결은 그대로)"
 }

@@ -46,7 +46,7 @@
    "kinds_b": [
     "river"
    ],
-   "seam_excess": 2.16
+   "seam_excess": 2.8
   },
   "dirt_stone": {
    "atlas": "dirt_stone/atlas.webp",

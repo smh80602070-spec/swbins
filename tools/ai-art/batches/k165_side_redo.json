@@ -1,0 +1,43 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "side2d",
+ "kit": {
+  "spec": "bg",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 1216,
+  "height": 640,
+  "steps": 30,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen",
+  "variants": 4,
+  "hr": 1.5,
+  "hr_denoise": 0.42,
+  "hr_steps": 16
+ },
+ "items": [
+  {
+   "id": "sl_forest",
+   "seed": 1304434898,
+   "prompt": "(sunlit forest clearing:1.15), open grassy meadow in foreground, forest treeline in the distance, tree canopy far away, distant misty hills, sunbeams, ferns, wildflowers, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, tree trunk in foreground, close-up tree, giant tree",
+   "subject_ko": "옛 숲 — 숲 속 빈터(앞 나무 없음·먼 숲 띠)",
+   "width": 1344,
+   "height": 768
+  },
+  {
+   "id": "sl_old_battlefield",
+   "seed": 2316945331,
+   "prompt": "(ancient battlefield plain:1.15), wide open grass plain, low rolling hills, distant fortress on horizon, torn banners far away, golden clouds, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, rocks in foreground, boulder, debris",
+   "subject_ko": "옛 싸움터 — 트인 들(앞 바위 없음)",
+   "width": 1344,
+   "height": 768
+  }
+ ],
+ "note": "K-0165 숲·옛 싸움터 다른 구도(앞 나무·바위 없는 트인 장면) v03·v04 — 1344x768 + hires 1.5"
+}
