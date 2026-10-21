@@ -92,6 +92,9 @@
 | rtsai.py transitions | - | CreativeML OpenRAIL++-M — 코드 합성(경계 마스크) + 고른 AI 타일 rts_forest_floor_1 (sd_xl_base_1.0) | 24 |
 | rtsai.py transitions | - | CreativeML OpenRAIL++-M — 코드 합성(경계 마스크) + 고른 AI 타일 rts_hill_1 (sd_xl_base_1.0) | 24 |
 | rtsai.py transitions | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) — 코드 합성(경계 마스크) + 고른 AI 타일 rts_water_1 (-) | 24 |
+| edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) | z-image-turbo | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 | 3 |
+| edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) | sd_xl_base_1.0, z-image-turbo | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 | 5 |
+| edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) | sd_xl_base_1.0 | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 | 10 |
 | retile_uv.py --unit 4.4 (K-0089) | - | CC0-1.0 (Kenney Modular Cave Kit gate.glb 모양 그대로 + 자체 상자 투영 UV) | 2 |
 | foliage_atlas.py | - | 자체 생성(Z-Image-Turbo Apache-2.0 출력, 상업 허용) — 남의 사진·스캔 0 | 1 |
 | build_foliage.py | - | 자체 생성 — 형태는 전부 코드, 결은 자체 아틀라스(Z-Image-Turbo 출력 · foliage_atlas.py) | 14 |
@@ -116,6 +119,6 @@
 
 ## 출처 문서(ASSET_LICENSES·ASSET_GUIDE) 요약
 
-절 232개 — 라이선스 낱말별: CC0 158, Kenney(CC0) 37, CC-BY 26, OpenRAIL 15, MIT 13, Mixamo 9, Apache-2.0 3, GPL 2, OFL 2
+절 232개 — 라이선스 낱말별: CC0 158, Kenney(CC0) 37, CC-BY 26, OpenRAIL 15, MIT 14, Mixamo 9, Apache-2.0 3, GPL 2, OFL 2
 낱말을 못 찾은 절(미상) 48개 — `credits.json` 의 `doc_sections.unknown` 참고.
 

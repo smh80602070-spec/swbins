@@ -1,0 +1,14 @@
+{
+ "id": "saga-go/grass_sand",
+ "generator": "tools/ai-art/edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀)",
+ "sources": [
+  "saga-assets/web2d/tile/go_grass.webp",
+  "saga-assets/web2d/tile/go_sand.webp"
+ ],
+ "model": "sd_xl_base_1.0",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "license": "원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것",
+ "derived": "16칸 모서리 꼴 이음(쌍선형 경계 + 주기 잡음, 경계 path)",
+ "date": "2026-10-21",
+ "ticket": "K-0162"
+}

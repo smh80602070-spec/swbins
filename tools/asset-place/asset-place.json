@@ -1802,6 +1802,70 @@
      "dir": "saga-web/shared/assets/tiles/ground"
     }
    ]
+  },
+  {
+   "id": "web2d-terrain-go",
+   "src": "saga-assets/web2d/terrain/saga-go",
+   "recursive": true,
+   "include": [
+    "atlas.webp",
+    "tiles.json"
+   ],
+   "note": "K-0162 2D 지형 이음 타일(16칸 모서리 꼴 4×4 아틀라스 256px·여백 8, 이중 격자) — 쌍별 하위 폴더 + tiles.json(이웃 비트 → 칸 번호). 출처 license 는 정본에만",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-go/assets/web2d/tile"
+    }
+   ]
+  },
+  {
+   "id": "web2d-terrain-dungeon",
+   "src": "saga-assets/web2d/terrain/saga-dungeon",
+   "recursive": true,
+   "include": [
+    "atlas.webp",
+    "tiles.json"
+   ],
+   "note": "K-0162 2D 지형 이음 타일(16칸 모서리 꼴 4×4 아틀라스 256px·여백 8, 이중 격자) — 쌍별 하위 폴더 + tiles.json(이웃 비트 → 칸 번호). 출처 license 는 정본에만",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-dungeon/assets/web2d/tile"
+    }
+   ]
+  },
+  {
+   "id": "web2d-terrain-forest",
+   "src": "saga-assets/web2d/terrain/saga-forest",
+   "recursive": true,
+   "include": [
+    "atlas.webp",
+    "tiles.json"
+   ],
+   "note": "K-0162 2D 지형 이음 타일(16칸 모서리 꼴 4×4 아틀라스 256px·여백 8, 이중 격자) — 쌍별 하위 폴더 + tiles.json(이웃 비트 → 칸 번호). 출처 license 는 정본에만",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-forest/assets/web2d/tile"
+    }
+   ]
+  },
+  {
+   "id": "web2d-terrain-realm",
+   "src": "saga-assets/web2d/terrain/saga-realm",
+   "recursive": true,
+   "include": [
+    "atlas.webp",
+    "tiles.json"
+   ],
+   "note": "K-0162 2D 지형 이음 타일(16칸 모서리 꼴 4×4 아틀라스 256px·여백 8, 이중 격자) — 쌍별 하위 폴더 + tiles.json(이웃 비트 → 칸 번호). 출처 license 는 정본에만",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-realm/assets/web2d/tile"
+    }
+   ]
   }
  ]
 }

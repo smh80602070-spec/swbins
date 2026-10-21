@@ -1,0 +1,65 @@
+{
+ "K": "K-0162",
+ "scheme": "wang16-corner-dualgrid",
+ "px": 256,
+ "atlas": "4x4",
+ "gutter": 8,
+ "stride": 272,
+ "rect": "칸 i 자리 = x (i%4)*stride+gutter · y (i//4)*stride+gutter · 크기 px×px(여백은 거울 — 그리지 않는다)",
+ "index": "i = NW*1 + NE*2 + SW*4 + SE*8 (비트 = 그 모서리 칸이 a) · 열 = i%4 · 행 = i//4 · 0 = 전부 b · 15 = 전부 a",
+ "draw": "칸 격자에서 반 칸(왼쪽 위로) 밀린 격자에 그린다 — 그린 칸 (x,y) 의 네 모서리 = 땅 칸 (x,y)·(x+1,y)·(x,y+1)·(x+1,y+1). 결은 PX 주기 이음매 없음이라 어느 칸끼리 붙여도 이어진다",
+ "pairs": {
+  "grass_dirt": {
+   "atlas": "grass_dirt/atlas.webp",
+   "a": "realm_grass",
+   "b": "realm_dirt",
+   "edge": "grass",
+   "kinds_a": [
+    "plain"
+   ],
+   "kinds_b": [
+    "hill"
+   ],
+   "seam_excess": 2.9
+  },
+  "grass_stone": {
+   "atlas": "grass_stone/atlas.webp",
+   "a": "realm_grass",
+   "b": "realm_stone",
+   "edge": "path",
+   "kinds_a": [
+    "plain"
+   ],
+   "kinds_b": [
+    "mount"
+   ],
+   "seam_excess": 2.1
+  },
+  "grass_water": {
+   "atlas": "grass_water/atlas.webp",
+   "a": "realm_grass",
+   "b": "realm_water",
+   "edge": "shore",
+   "kinds_a": [
+    "plain"
+   ],
+   "kinds_b": [
+    "river"
+   ],
+   "seam_excess": 2.16
+  },
+  "dirt_stone": {
+   "atlas": "dirt_stone/atlas.webp",
+   "a": "realm_dirt",
+   "b": "realm_stone",
+   "edge": "path",
+   "kinds_a": [
+    "hill"
+   ],
+   "kinds_b": [
+    "mount"
+   ],
+   "seam_excess": 2.69
+  }
+ }
+}

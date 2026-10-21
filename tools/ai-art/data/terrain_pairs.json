@@ -1,0 +1,32 @@
+{
+ "note": "K-0162 2D 지형 이음 타일(16칸 모서리 꼴, 이중 격자) — 판·땅 쌍. a = 넘어 들어오는 땅(비트 1), b = 바탕 땅(비트 0). 원본은 saga-assets/web2d/tile/<id>.webp(그 판이 지금 쓰는 바닥 — 그림체 그대로). kinds_a·kinds_b = 그 판 core.js cfg.tile 표의 땅 종류 이름. edge = 'grass'(풀 끝 들쭉날쭉+그림자) · 'path'(길 가장자리 어둡게) · 'shore'(물가 거품+젖은 띠). 4종횡은 옆보기 땅 윗면이라 K-0164.",
+ "px": 256,
+ "games": {
+  "saga-go": [
+   {"pair": "grass_dirt",  "a": "go_grass", "b": "go_dirt",  "edge": "grass", "kinds_a": ["grass"], "kinds_b": ["forest", "farm"]},
+   {"pair": "grass_sand",  "a": "go_grass", "b": "go_sand",  "edge": "path",  "kinds_a": ["grass"], "kinds_b": ["road"]},
+   {"pair": "grass_stone", "a": "go_grass", "b": "go_stone", "edge": "path",  "kinds_a": ["grass"], "kinds_b": ["mount", "town"]},
+   {"pair": "grass_water", "a": "go_grass", "b": "go_water", "edge": "shore", "kinds_a": ["grass"], "kinds_b": ["water"]},
+   {"pair": "sand_water",  "a": "go_sand",  "b": "go_water", "edge": "shore", "kinds_a": ["road"],  "kinds_b": ["water"]}
+  ],
+  "saga-dungeon": [
+   {"pair": "moss_dirt",    "a": "dungeon_grass",   "b": "dungeon_gobun",    "edge": "grass", "kinds_a": ["(표 밖 기본 — 마을·들판)"], "kinds_b": ["고분(古墳)"]},
+   {"pair": "field_stone",  "a": "dungeon_sanchae", "b": "dungeon_pyeseong", "edge": "path",  "kinds_a": ["산채(山寨)"], "kinds_b": ["폐성(廢城)"]},
+   {"pair": "stone_water",  "a": "dungeon_pyeseong","b": "dungeon_sugung",   "edge": "shore", "kinds_a": ["폐성(廢城)"], "kinds_b": ["수궁(水宮)"]},
+   {"pair": "dirt_stone",   "a": "dungeon_gobun",   "b": "dungeon_pyeseong", "edge": "path",  "kinds_a": ["고분(古墳)"], "kinds_b": ["폐성(廢城)"]}
+  ],
+  "saga-forest": [
+   {"pair": "grass_dirt",  "a": "forest_grass",   "b": "forest_dirt_v2",  "edge": "grass", "kinds_a": ["grass", "grass_meadow", "grass_dark", "grass_mush"], "kinds_b": ["path", "floor"]},
+   {"pair": "grass_sand",  "a": "forest_grass",   "b": "forest_sand_v2",  "edge": "grass", "kinds_a": ["grass", "grass_meadow", "grass_dark", "grass_mush"], "kinds_b": ["sand"]},
+   {"pair": "grass_stone", "a": "forest_grass",   "b": "forest_stone_v2", "edge": "grass", "kinds_a": ["grass", "grass_meadow", "grass_dark", "grass_mush"], "kinds_b": ["stone", "grass_rocky"]},
+   {"pair": "grass_water", "a": "forest_grass",   "b": "forest_water",    "edge": "shore", "kinds_a": ["grass", "grass_meadow", "grass_dark", "grass_mush"], "kinds_b": ["water"]},
+   {"pair": "sand_water",  "a": "forest_sand_v2", "b": "forest_water",    "edge": "shore", "kinds_a": ["sand"], "kinds_b": ["water"]}
+  ],
+  "saga-realm": [
+   {"pair": "grass_dirt",  "a": "realm_grass", "b": "realm_dirt",  "edge": "grass", "kinds_a": ["plain"], "kinds_b": ["hill"]},
+   {"pair": "grass_stone", "a": "realm_grass", "b": "realm_stone", "edge": "path",  "kinds_a": ["plain"], "kinds_b": ["mount"]},
+   {"pair": "grass_water", "a": "realm_grass", "b": "realm_water", "edge": "shore", "kinds_a": ["plain"], "kinds_b": ["river"]},
+   {"pair": "dirt_stone",  "a": "realm_dirt",  "b": "realm_stone", "edge": "path",  "kinds_a": ["hill"],  "kinds_b": ["mount"]}
+  ]
+ }
+}
