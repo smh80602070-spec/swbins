@@ -9,7 +9,7 @@
 | 기능 | 기준(본뜰 판) | 웹 | 고돗 | 유니티 |
 |---|---|---|---|---|
 | 툰 외곽선·림·얼굴 그림자·VRoid 몸 | 다섯 판 같음 | ○ | 툰 띠·림·외곽선·dex 몸 ○(공용 cel_toon·cel_outline·vroid_body — 다섯 판 다 거침) · 얼굴 그림자 끝 G-0248(머리 앞 기준 반쪽 · SDF 텍스처·앞머리 그림자는 K 대기) | △ 띠·림 ○ · 외곽선 너비 0 → U-0148 · 얼굴 그림자 × (U-0145) |
-| 기준선 자동 점검(QC) | — | 끝 W-0291(10-17 측정: 1만리 8/8 · 2나락 하늘·PBR × · 3마을 후처리·SSAO·하늘 × · 4종횡 PBR × · 5천하 후처리·SSAO·그림자 ×) | 끝 G-0249(값 점검 다섯 ok · 네 판 기준 PNG 는 사용자 승인 뒤 graphics/baseline/<판>/) | × → U-0147 |
+| 기준선 자동 점검(QC) | — | 끝 W-0291(10-17 측정: 1만리 8/8 · 2나락 하늘·PBR × · 3마을 후처리·SSAO·하늘 × · 4종횡 PBR × · 5천하 후처리·SSAO·그림자 ×) | 끝 G-0249(값 점검 다섯 ok · 네 판 기준 PNG 는 사용자 승인 뒤 graphics/baseline/<판>/) | 끝 U-0147(PlaytestGraphicsBaseline 다섯 판 여섯 항목) |
 | 후처리(블룸·톤매핑·색보정)·SSAO | 1만리·2나락 | W-0292(3마을·5천하) | ○(공용 env_pc.tres glow·tonemap 3·adjustment·SSAO·SSIL·SDFGI + environment_profile 을 다섯 판 씬이 다 닮 · 2나락 SDFGI 끔은 의도 G-0224) | ○(SSAO 는 PC 만) |
 | 해 그림자(품질별 지도) | 2나락 | 끝 W-0293(5천하 realm-shadow3d · 3마을·4종횡은 측정에서 이미 ○) | ○(네 판 Sun shadow_enabled · 2나락 횃불 그림자 test_room 338 · 품질별 그림자 거리 render_budget 은 1만리만 △) | ○ |
 | 하늘 셰이더·시간대 빛 | 1만리 | 끝 W-0294(공용 shared/js/skydome3d.js — 1만리·5천하 갈아끼움, 3마을 실제 시각·2나락 마을 연결, 4종횡 na) | 끝 G-0250(공용 day_light.gd — 3마을·5천하·4종횡 바깥 씬 새벽·낮·노을·밤 해·주변광·sky_real 노을/별, 1만리는 sky_panorama·night_visual 그대로 · 남은 것: 밤 창·등롱 불빛 1만리만, 2나락 na) | ○(SkyPass, 5천하 빛만) |

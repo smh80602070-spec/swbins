@@ -20,9 +20,21 @@ namespace Saga.EditorTools
             "Assets/Scenes/TestVillage.unity", "Assets/Scenes/TestVillageForest.unity", "Assets/Scenes/TestField.unity", "Assets/Scenes/TestCity.unity",
         };
 
+        /// <summary>tasks U-0147 — 열린 씬(이름)의 땅 셰이더 이름들(쉼표). `PlaytestGraphicsBaseline` 이 빌려 쓴다.</summary>
+        public static string GroundShadersIn(string sceneName) => string.Join(",", Collect(UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneName)));
+
         private static string CheckScene(string path)
         {
             var scene = EditorSceneManager.OpenScene(path);
+            var shaders = Collect(scene);
+            string name = System.IO.Path.GetFileNameWithoutExtension(path);
+            PlaytestKit.Check(shaders.Count > 0, $"{name}: 땅 렌더러를 못 찾음");
+            PlaytestKit.Check(!shaders.Contains("Saga/CelToon"), $"{name}: 땅이 툰");
+            return $"{name} 땅 {string.Join(",", shaders)}";
+        }
+
+        private static SortedSet<string> Collect(UnityEngine.SceneManagement.Scene scene)
+        {
             var shaders = new SortedSet<string>();
             // 3마을 땅은 씬에 안 저장되고 Awake 가 짓는다 — 편집 모드에선 직접 짓는다(씬은 저장 안 함)
             foreach (var fg in Object.FindObjectsByType<Saga.Forest.World.ForestGroundBuilder>(FindObjectsInactive.Include, FindObjectsSortMode.None))
@@ -39,10 +51,7 @@ namespace Saga.EditorTools
                     foreach (var m in r.sharedMaterials)
                         if (m != null && m.shader != null) shaders.Add(m.shader.name);
                 }
-            string name = System.IO.Path.GetFileNameWithoutExtension(path);
-            PlaytestKit.Check(shaders.Count > 0, $"{name}: 땅 렌더러를 못 찾음");
-            PlaytestKit.Check(!shaders.Contains("Saga/CelToon"), $"{name}: 땅이 툰");
-            return $"{name} 땅 {string.Join(",", shaders)}";
+            return shaders;
         }
 
         [MenuItem("Saga/Playtest Ground Look")]
