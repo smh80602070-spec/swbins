@@ -62,6 +62,9 @@
       els[id] = $(id);
     });
     initStick();
+    document.body.classList.add('hud-diet');   // W-0363 폰 세로 HUD 접기(공용 ui-kit.css) — 넓은 화면은 규칙이 안 걸린다
+    var geoB = $('btn-geo'), drw = $('tools-drawer');
+    if (geoB && drw && global.innerWidth <= 520) { drw.insertBefore(geoB, drw.firstChild); }   // W-0363 폰: 📡 는 ⋯ 서랍 안으로(옮기기만 — 손잡이 그대로)
 
     els.dock.addEventListener('click', function (e) {
       var b = e.target.closest('[data-sheet]');
@@ -70,10 +73,12 @@
       if (openTab === name) { closeSheet(); } else { openSheet(name); }
     });
     els.profile.addEventListener('click', function (e) {
+      if (hudFold(els.profile)) { return; }   // W-0363 폰: 접힌 카드는 첫 탭에 펼치기만, 펼친 뒤 탭이 원래 일
       if (!e.target.closest('[data-act="open-quest"]')) { openSheet('me'); return; }   // W-0225 프로필 칸 = "나" 시트
       openSheet('quest');
     });
     els['sheet-close'].addEventListener('click', closeSheet);
+    els.wallet.addEventListener('click', function () { if (!hudFold(els.wallet)) { els.wallet.classList.remove('hud-open'); } });   // W-0363 폰: 접힌 지갑 탭 = 다 펼침, 다시 탭 = 접음
     els.scrim.addEventListener('click', closeSheet);
     global.addEventListener('keydown', function (e) {
       if (e.key !== 'Escape') { return; }
@@ -527,13 +532,22 @@
    */
   function coin(icon, val, label, hi, ic) {
     var tag = ic ? ' data-icon="' + ic + '"' : '';
-    return '<div class="coin' + (hi ? ' hi' : '') + '" title="' + label + '"><span' + tag + '>' + icon + '</span>' + val + '</div>';
+    return '<div class="coin' + (hi ? ' hi hud-keep' : '') + '" title="' + label + '"><span' + tag + '>' + icon + '</span>' + val + '</div>';
   }
 
   /* ── 근처 대상 — 카드·다시 그리기는 js/ui-near.js(R-4) ─────────────── */
   var SHRINE_NEAR = 500;     // m — 이보다 먼 사당은 (보여도) 근접 패널에 안 올린다
   var DOMAIN_NEAR = 300;     // m
   function UN() { return global.DG.uiNear.setup({ esc: esc, pt: pt, els: els, data: data, SHRINE_NEAR: SHRINE_NEAR, DOMAIN_NEAR: DOMAIN_NEAR }); }
+  /** W-0363 폰 세로(≤520)에서 접힌 판이면 펼치고 참 — 6초 뒤 저절로 다시 접힌다. 넓은 화면·이미 펼친 판은 거짓(원래 탭 일) */
+  var foldTimers = {};
+  function hudFold(el) {
+    if (!el || !(global.innerWidth <= 520) || el.classList.contains('hud-open')) { return false; }
+    el.classList.add('hud-open');
+    clearTimeout(foldTimers[el.id]);
+    foldTimers[el.id] = setTimeout(function () { el.classList.remove('hud-open'); }, 6000);
+    return true;
+  }
   function isPhonePortrait() { return UN().isPhonePortrait(); }
   function renderNear() { UN().render(); }
 
@@ -1085,7 +1099,7 @@
     els.toast.textContent = t.msg;
     els.toast.className = 'show' + (t.type !== 'info' ? ' t-' + t.type : '');
     if (toastTimer) { clearTimeout(toastTimer); }
-    var dur = t.type === 'find' ? 3400 : 2600;
+    var dur = global.innerWidth <= 520 ? 2500 : t.type === 'find' ? 3400 : 2600;   // W-0363 폰은 맨 위 한 줄 2.5초
     toastTimer = setTimeout(function () {
       els.toast.classList.remove('show');
       toastBusy = false;
@@ -1240,12 +1254,12 @@
     var joyId = null, joyCX = 0, joyCY = 0;
     var JOY_R = 46, JOY_DEAD = 8;
     function knobAt(dx, dy) { joyKnob.style.transform = 'translate(' + dx + 'px,' + dy + 'px)'; }
-    function reset() { joyId = null; knobAt(0, 0); W.setStick(0, 0, false); }
+    function reset() { joyId = null; knobAt(0, 0); W.setStick(0, 0, false); joyEl.classList.remove('held'); }   // W-0363 폰: 받침 원은 누를 때만(.held)
     joyEl.addEventListener('pointerdown', function (e) {
       if (joyId !== null) { return; }
       var r = joyEl.getBoundingClientRect();
       joyCX = r.left + r.width / 2; joyCY = r.top + r.height / 2;
-      joyId = e.pointerId;
+      joyId = e.pointerId; joyEl.classList.add('held');
       joyEl.setPointerCapture && joyEl.setPointerCapture(e.pointerId);
       e.preventDefault();
     });

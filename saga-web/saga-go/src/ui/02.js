@@ -28,7 +28,7 @@
     els.toast.textContent = t.msg;
     els.toast.className = 'show' + (t.type !== 'info' ? ' t-' + t.type : '');
     if (toastTimer) { clearTimeout(toastTimer); }
-    var dur = t.type === 'find' ? 3400 : 2600;
+    var dur = global.innerWidth <= 520 ? 2500 : t.type === 'find' ? 3400 : 2600;   // W-0363 폰은 맨 위 한 줄 2.5초
     toastTimer = setTimeout(function () {
       els.toast.classList.remove('show');
       toastBusy = false;
@@ -183,12 +183,12 @@
     var joyId = null, joyCX = 0, joyCY = 0;
     var JOY_R = 46, JOY_DEAD = 8;
     function knobAt(dx, dy) { joyKnob.style.transform = 'translate(' + dx + 'px,' + dy + 'px)'; }
-    function reset() { joyId = null; knobAt(0, 0); W.setStick(0, 0, false); }
+    function reset() { joyId = null; knobAt(0, 0); W.setStick(0, 0, false); joyEl.classList.remove('held'); }   // W-0363 폰: 받침 원은 누를 때만(.held)
     joyEl.addEventListener('pointerdown', function (e) {
       if (joyId !== null) { return; }
       var r = joyEl.getBoundingClientRect();
       joyCX = r.left + r.width / 2; joyCY = r.top + r.height / 2;
-      joyId = e.pointerId;
+      joyId = e.pointerId; joyEl.classList.add('held');
       joyEl.setPointerCapture && joyEl.setPointerCapture(e.pointerId);
       e.preventDefault();
     });

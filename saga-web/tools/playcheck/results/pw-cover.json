@@ -1,0 +1,456 @@
+{
+ "at": "2026-10-21T21:11:28.591Z",
+ "max": 15,
+ "runs": [
+  {
+   "game": "saga-go",
+   "scenes": [
+    {
+     "name": "first",
+     "W": 390,
+     "H": 844,
+     "veils": [
+      "#field-hud",
+      "#scrim",
+      "#tr-sight-layer",
+      "#vignette"
+     ],
+     "pct": 13.8,
+     "canvasPct": 0,
+     "hudRects": 0,
+     "whiteMidPct": 0,
+     "top": [
+      {
+       "el": "#toast div#toast..how 366x28",
+       "pct": 4
+      },
+      {
+       "el": "#field-hud button.fc-btn fc-atk 84x84",
+       "pct": 1.3
+      },
+      {
+       "el": "#minimap canvas 60x60",
+       "pct": 0.8
+      },
+      {
+       "el": "#field-hud button.fc-btn fc-dodge 54x54",
+       "pct": 0.7
+      },
+      {
+       "el": "#field-hud button.fc-btn fc-.kill 60x60",
+       "pct": 0.7
+      },
+      {
+       "el": "#top div#profile.gla. profile 180x44",
+       "pct": 0.7
+      },
+      {
+       "el": "#gjoy div#gjoy-knob 46x46",
+       "pct": 0.5
+      },
+      {
+       "el": "#field-hud span 41x40",
+       "pct": 0.5
+      },
+      {
+       "el": "#field-hud button.fc-mem on 68x46",
+       "pct": 0.5
+      },
+      {
+       "el": "#field-hud button.fc-btn fc-auto on 48x48",
+       "pct": 0.4
+      },
+      {
+       "el": "#field-hud i.fc-fill 62x29",
+       "pct": 0.4
+      },
+      {
+       "el": "#field-hud button.fc-btn fc-bur.t 64x64",
+       "pct": 0.4
+      },
+      {
+       "el": "#field-hud span.fc-face 36x36",
+       "pct": 0.2
+      },
+      {
+       "el": "#field-hud b 15x17",
+       "pct": 0.2
+      },
+      {
+       "el": "#field-hud span.fc-num 22x27",
+       "pct": 0.2
+      },
+      {
+       "el": "#field-hud span.fc-num 36x24",
+       "pct": 0.2
+      },
+      {
+       "el": "#field-hud span 24x16",
+       "pct": 0.2
+      },
+      {
+       "el": "#top button#btn-auto.icon-btn 44x44",
+       "pct": 0.1
+      },
+      {
+       "el": "#top button#btn-more.icon-btn 44x44",
+       "pct": 0.1
+      },
+      {
+       "el": "#btn-mapfocus button#btn-mapfocus.icon-btn 44x44",
+       "pct": 0.1
+      },
+      {
+       "el": "#minimap b.mm-range 29x14",
+       "pct": 0.1
+      },
+      {
+       "el": "#field-hud span 34x26",
+       "pct": 0.1
+      },
+      {
+       "el": "#field-hud span 17x14",
+       "pct": 0.1
+      },
+      {
+       "el": "#field-hud i 14x5",
+       "pct": 0
+      },
+      {
+       "el": "#field-hud em 9x14",
+       "pct": 0
+      },
+      {
+       "el": "#field-hud em 8x14",
+       "pct": 0
+      }
+     ],
+     "peak": 15,
+     "samples": [
+      13.5,
+      12.8,
+      15
+     ]
+    },
+    {
+     "name": "calm",
+     "W": 390,
+     "H": 844,
+     "veils": [
+      "#scrim",
+      "#tr-sight-layer",
+      "#vignette"
+     ],
+     "pct": 23.1,
+     "canvasPct": 0,
+     "hudRects": 0,
+     "whiteMidPct": 0,
+     "top": [
+      {
+       "el": "#near div.near-card 348x58",
+       "pct": 4.2
+      },
+      {
+       "el": "#story-track div#story-track 282x24",
+       "pct": 2.1
+      },
+      {
+       "el": "#minimap canvas 96x96",
+       "pct": 2.1
+      },
+      {
+       "el": "#top div#profile.gla. profile 180x44",
+       "pct": 2
+      },
+      {
+       "el": "#dock button 44x52",
+       "pct": 1
+      },
+      {
+       "el": "#near button.btn primary 68x44",
+       "pct": 1
+      },
+      {
+       "el": "#top div#wallet.gla. wallet 120x35",
+       "pct": 0.9
+      },
+      {
+       "el": "#near button.near-more 77x40",
+       "pct": 0.9
+      },
+      {
+       "el": "#lf-jump button#lf-jump..how 58x58",
+       "pct": 0.6
+      },
+      {
+       "el": "#gjoy div#gjoy-knob 46x46",
+       "pct": 0.5
+      },
+      {
+       "el": "#near small 205x16",
+       "pct": 0.5
+      },
+      {
+       "el": "#dock img.ui-icon 21x21",
+       "pct": 0.5
+      },
+      {
+       "el": "#top button#btn-auto.icon-btn 44x44",
+       "pct": 0.5
+      },
+      {
+       "el": "#top button#btn-more.icon-btn 44x44",
+       "pct": 0.5
+      },
+      {
+       "el": "#btn-mapfocus button#btn-mapfocus.icon-btn 44x44",
+       "pct": 0.5
+      },
+      {
+       "el": "#top div.p-title 126x16",
+       "pct": 0.4
+      },
+      {
+       "el": "#st-crouch button#st-crouch 44x44",
+       "pct": 0.4
+      },
+      {
+       "el": "#minimap b.mm-range 47x22",
+       "pct": 0.4
+      },
+      {
+       "el": "#dock button#btn-menu 44x52",
+       "pct": 0.4
+      },
+      {
+       "el": "#dock small 24x16",
+       "pct": 0.4
+      },
+      {
+       "el": "#aq-go button#aq-go 36x36",
+       "pct": 0.3
+      },
+      {
+       "el": "#near img.pt 36x36",
+       "pct": 0.3
+      },
+      {
+       "el": "#story-go div#story-go 36x36",
+       "pct": 0.3
+      },
+      {
+       "el": "#near b 205x18",
+       "pct": 0.3
+      },
+      {
+       "el": "#dock span 29x21",
+       "pct": 0.3
+      },
+      {
+       "el": "#minimap div#minimap.gla. 104x104",
+       "pct": 0.2
+      },
+      {
+       "el": "#top div.coin hi hud-keep 37x27",
+       "pct": 0.2
+      },
+      {
+       "el": "#top i 24x24",
+       "pct": 0.1
+      },
+      {
+       "el": "#top img.ui-icon 13x13",
+       "pct": 0.1
+      },
+      {
+       "el": "#top div.avatar 30x30",
+       "pct": 0.1
+      },
+      {
+       "el": "#top div.coin 51x27",
+       "pct": 0.1
+      },
+      {
+       "el": "#lf-jump em 24x16",
+       "pct": 0.1
+      },
+      {
+       "el": "#near div.near-ico 40x40",
+       "pct": 0.1
+      },
+      {
+       "el": "#dock span 19x21",
+       "pct": 0.1
+      },
+      {
+       "el": "#top img.ui-icon 16x16",
+       "pct": 0
+      },
+      {
+       "el": "#top img.ui-icon 19x19",
+       "pct": 0
+      },
+      {
+       "el": "#btn-mapfocus span 14x17",
+       "pct": 0
+      },
+      {
+       "el": "#lf-jump span 11x22",
+       "pct": 0
+      },
+      {
+       "el": "#dock small 12x16",
+       "pct": 0
+      }
+     ],
+     "peak": 24,
+     "samples": [
+      24,
+      22.6,
+      22.6
+     ]
+    },
+    {
+     "name": "fight",
+     "W": 390,
+     "H": 844,
+     "veils": [
+      "#field-hud",
+      "#scrim",
+      "#tr-sight-layer",
+      "#vignette"
+     ],
+     "pct": 11.7,
+     "canvasPct": 0,
+     "hudRects": 0,
+     "whiteMidPct": 0,
+     "top": [
+      {
+       "el": "#top div#profile.gla. profile 180x44",
+       "pct": 2
+      },
+      {
+       "el": "#field-hud button.fc-btn fc-atk 84x84",
+       "pct": 1.3
+      },
+      {
+       "el": "#field-hud i.fc-fill 62x61",
+       "pct": 0.8
+      },
+      {
+       "el": "#minimap canvas 60x60",
+       "pct": 0.8
+      },
+      {
+       "el": "#field-hud button.fc-btn fc-dodge 54x54",
+       "pct": 0.7
+      },
+      {
+       "el": "#field-hud button.fc-btn fc-.kill 60x60",
+       "pct": 0.6
+      },
+      {
+       "el": "#gjoy div#gjoy-knob 46x46",
+       "pct": 0.5
+      },
+      {
+       "el": "#field-hud span 41x40",
+       "pct": 0.5
+      },
+      {
+       "el": "#top button#btn-auto.icon-btn 44x44",
+       "pct": 0.5
+      },
+      {
+       "el": "#top button#btn-more.icon-btn 44x44",
+       "pct": 0.5
+      },
+      {
+       "el": "#btn-mapfocus button#btn-mapfocus.icon-btn 44x44",
+       "pct": 0.5
+      },
+      {
+       "el": "#field-hud button.fc-mem on 68x46",
+       "pct": 0.5
+      },
+      {
+       "el": "#top div.p-title 126x16",
+       "pct": 0.4
+      },
+      {
+       "el": "#field-hud button.fc-btn fc-auto on 48x48",
+       "pct": 0.4
+      },
+      {
+       "el": "#field-hud span.fc-face 36x36",
+       "pct": 0.2
+      },
+      {
+       "el": "#field-hud b 15x17",
+       "pct": 0.2
+      },
+      {
+       "el": "#field-hud span 24x16",
+       "pct": 0.2
+      },
+      {
+       "el": "#top i 24x24",
+       "pct": 0.1
+      },
+      {
+       "el": "#minimap b.mm-range 29x14",
+       "pct": 0.1
+      },
+      {
+       "el": "#field-hud span 34x26",
+       "pct": 0.1
+      },
+      {
+       "el": "#field-hud i.fc-cd 58x10",
+       "pct": 0.1
+      },
+      {
+       "el": "#top div.avatar 30x30",
+       "pct": 0.1
+      },
+      {
+       "el": "#field-hud span 17x14",
+       "pct": 0.1
+      },
+      {
+       "el": "#top img.ui-icon 16x16",
+       "pct": 0
+      },
+      {
+       "el": "#top img.ui-icon 19x19",
+       "pct": 0
+      },
+      {
+       "el": "#btn-mapfocus span 14x17",
+       "pct": 0
+      },
+      {
+       "el": "#field-hud i 13x5",
+       "pct": 0
+      },
+      {
+       "el": "#field-hud em 9x14",
+       "pct": 0
+      },
+      {
+       "el": "#field-hud em 8x14",
+       "pct": 0
+      }
+     ],
+     "peak": 11.7,
+     "samples": [
+      11.7,
+      11.7,
+      11.7
+     ]
+    }
+   ],
+   "errors": []
+  }
+ ]
+}

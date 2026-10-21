@@ -421,7 +421,7 @@
     bannerEl.classList.remove('show');
     void bannerEl.offsetWidth;
     bannerEl.classList.add('show');
-    bannerT = 3.2;
+    bannerT = global.innerWidth <= 520 ? 1.5 : 3.2;   // W-0363 폰은 위쪽 작은 글 1.5초
   }
 
   function tick(dt) {

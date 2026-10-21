@@ -2088,3 +2088,35 @@ body.fs-on #dock, body.fs-on #near { display: none !important; }
   background: rgba(20, 22, 28, .55); border: 1px solid var(--glass-br, rgba(255,255,255,.2)); color: #fff; cursor: pointer; }
 #st-crouch.on { background: rgba(200, 160, 40, .85); box-shadow: 0 0 12px rgba(255, 210, 60, .7); }
 body.sheet-open #st-crouch, #encounter.show ~ #st-crouch { display: none; }
+
+/* W-0363 폰 세로 HUD 다이어트(공용 규칙은 ui-kit.css body.hud-diet) — 1만리만의 자리.
+   조이스틱 받침 원은 누를 때만(.held, 잡는 자리 118px 는 그대로) · 지역 배너는 위쪽 1/5 안 작은 글(1.5초, biome.js) */
+@media (max-width: 520px) {
+  body.hud-diet #gjoy:not(.held) { background: transparent; border-color: transparent; box-shadow: none; }
+  body.hud-diet #gjoy-knob { width: 46px; height: 46px; margin: -23px 0 0 -23px; }
+  body.hud-diet #gjoy:not(.held) #gjoy-knob { opacity: .85; }
+  body.hud-diet #region-banner { top: calc(12% + var(--safe-t)); padding: 4px 18px; }
+  body.hud-diet #region-banner b { font-size: 15px; letter-spacing: .06em; }
+  body.hud-diet #region-banner small { font-size: 11px; margin-top: 0; }
+  /* 싸우는 동안은 이야기 줄·▶·🧭·자원 줄도 비킨다(독·근처 카드처럼 — 싸움이 끝나면 돌아온다).
+     자원 줄은 visibility 로만 — 그 아래 끝을 ui.js syncHeaderStack 이 재어 미니맵·동행 칸 자리를 잡는다 */
+  body.hud-diet.fc-on #wallet:not(.hud-open) { visibility: hidden; }
+  body.hud-diet.fc-on #story-track, body.hud-diet.fc-on #story-go, body.hud-diet.fc-on #aq-go { display: none !important; }
+  body.hud-diet.fc-on #st-crouch:not(.on) { display: none; }   /* 웅크리기(안 들키기)는 이미 싸우는 중엔 쓸 데가 없다 — 켜 둔 때만 남긴다 */
+  /* 동행 칸은 얼굴·체력 줄만 남게 좁힌다(이름은 얼굴 색·차례로) · 미니맵 테 얇게 */
+  body.hud-diet #field-hud .fc-mem { width: 68px; gap: 4px; }
+  body.hud-diet #field-hud .fc-meta small { display: none; }
+  body.hud-diet #field-hud .fc-auto { width: 48px; height: 48px; }
+  body.hud-diet #minimap { padding: 3px; }
+  body.hud-diet #minimap .mm-range { bottom: 2px; }
+  body.hud-diet.fc-on #minimap { transform: scale(.62); transform-origin: 0 0; }   /* 싸우는 동안 미니맵은 작게(눌러 큰 지도는 그대로) */
+  /* 윗 카드 = 이름·레벨 한 줄 크기로(펼치면 .hud-open 이 원래대로) · 알림은 그 줄 높이에 겹쳐 뜬다 */
+  body.hud-diet { --toast-edge: 16px; }
+  body.hud-diet #profile:not(.hud-open) { justify-self: start; max-width: 180px; padding: 4px 10px 4px 4px; }
+  body.hud-diet #profile:not(.hud-open) .avatar { width: 30px; height: 30px; }
+  body.hud-diet #profile:not(.hud-open) .avatar i { font-size: 15px; }
+  body.hud-diet .wallet { padding: 3px 5px; }
+  body.hud-diet #wallet:not(.hud-open) .coin { padding: 4px 7px; }
+  /* 잡기는 잡을 적이 가까울 때(.near)·식는 중(.cd)만 — 흐린 채 늘 떠 있던 칸 */
+  body.hud-diet #field-hud .fc-grab:not(.near):not(.cd) { visibility: hidden; }
+}

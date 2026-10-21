@@ -103,7 +103,7 @@
   /** 판의 지름 px — 좁은 화면에서는 저절로 작아진다 (PLAN 31절) */
   function sizePx() {
     var narrow = global.innerWidth && global.innerWidth <= 600;
-    return core.tuned('minimap.size', narrow ? 104 : 128);
+    return core.tuned('minimap.size', global.innerWidth <= 520 ? 96 : narrow ? 104 : 128);   // W-0363 폰 세로 96
   }
   function everySec() { return core.tuned('minimap.everySec', 0.16); }
 

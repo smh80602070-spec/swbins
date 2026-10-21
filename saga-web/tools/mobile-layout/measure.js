@@ -157,7 +157,8 @@ function __sagaMeasure(opt) {
     var cs = getComputedStyle(el);
     if (cs.position !== 'fixed' && cs.position !== 'absolute' && cs.position !== 'sticky') { return false; }
     if (cs.pointerEvents === 'none' && !(el.innerText || '').trim()) { return false; }
-    if (el.id === 'realm' || el.id === 'realm3d') { return false; }   /* 지도 바탕층 — 전략 화면에서는 UI 가 지도 위에 얹히는 게 설계다(W-0027) */
+    if (el.id === 'realm' || el.id === 'realm3d') { return false; }
+    if (el.id === 'toast' && document.body.classList.contains('hud-diet')) { return false; }   /* W-0363 폰 다이어트 — 알림은 일부러 윗 카드 줄 위에 2.5초 겹쳐 뜬다(게임판을 안 가리게) */   /* 지도 바탕층 — 전략 화면에서는 UI 가 지도 위에 얹히는 게 설계다(W-0027) */
     var r = el.getBoundingClientRect();
     if (r.width * r.height > area * 0.6) { return false; }
     if (r.right <= 0 || r.left >= vw || r.bottom <= 0 || r.top >= vh) { return false; }
