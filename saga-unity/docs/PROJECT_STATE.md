@@ -1,13 +1,21 @@
 # PROJECT_STATE — saga-unity (상태만, ≤15KB, 덮어쓴다)
 
-> 기능 %: `features.json` → `docs/STATE.md`(생성)
+> 기능 %: `features.json` → `docs/STATE.md`(생성 — 10-20 GO 96.6·DUNGEON 97.3·FOREST 93.8·STORY 100·REALM 94.4%, D0 다섯은 전부 에셋 줄 `un.*.assets`·`un.go.animals` = K 몫)
 
-**규칙**(SAGA-DESIGN §9): 지금 상태만, 세션 끝에 덮어쓴다. 경위·이유는 `docs/HISTORY.md` 에 append.
-마지막 갱신: 2026-09-30 (109-15 탈것 · GO 14-71 · 109-16 시나리오 넷 판).
+**규칙**(SAGA-DESIGN §9): 지금 상태만, 세션 끝에 덮어쓴다. 경위·이유는 `docs/HISTORY.md`·티켓 메모·커밋 메시지.
+마지막 갱신: 2026-10-22 (U-0153·0154·0155·R-5).
 
-## 캐릭터 자산 — 이 PC 기준 (2026-09-19)
+## 지금 (2026-10-22)
 
-Maria·Abe·Brute + Skeleton·Paladin·PeasantMan·PeasantGirl·Archer·두목 Maw·Ganfaul·Ninja·Demon·AlienSoldier·Morak + FOREST 몸 여섯(Goblin·Hulk·Warrok·Parasite·Nightshade·Jolleen) + 세 시대 GO 아홉(`SetupEraBodies`)·DUNGEON 여덟(Brian·XBot·Swat·YBot·Boss·Zlorp·Leonard·Astra, `SetupDungeonEraBodies`)·STORY 열(Racer·Dummy·Warzombie·Mremireh·Jody·Yaku·Steve·Mannequin·Olivia·Ely, `SetupStoryEraBodies`)·FOREST 여섯(CastleGuard·Pelegrini·Pete·Sophie·Uriel·Jennifer, `SetupForestEraBodies`)·GO 인물 여덟(Kachujin·Arissa·Eve·Dreyar·CastleGuard02·Heraklios·Brady·Joe, `SetupHeroBodies`) — `Assets/Art/CharactersRealistic/`(gitignore, 4.2GB). **새 PC 는 `bash tools/realistic-pack.sh pull` 한 방(구글 드라이브, rclone)**(다시 받기는 GUID 가 바뀜), 몸을 고치면 `manifest`·`pack`·`push`·`Write Asset Gate Deps`·커밋. 빌드는 `SagaAssetGate` 가 목록과 다르거나 폴백이면 막는다. GUI 확인: Maria·Abe 만.
+- **큐**(`tasks/unity/QUEUE.md`): U-0153 메뉴 창 틀 9-slice · U-0154 ☰ 메뉴 화면 — 둘 다 **코드 끝, K-0173(UI 스킨 유니티 배치) 대기**. K-0173 이 `SagaCore/Resources/UI/<판>/` 을 놓으면: 다섯 판 일시정지·설정·☰ 화면 촬영 → Claude 눈 → 큐 줄 끝.
+- **공용 UI**: `SagaUi.Part/ApplySkin`(스킨 없으면 단색) · `SagaCore/MenuGrid`(☰ 격자, Esc 는 `SagaFlowRunner` 가 먼저 `CloseOpen`) · 1만리 `MenuHubUi`·5천하 `RealmMenuHub` 가 씀. 2나락·3마을·4종횡은 창 1~3개라 ☰ 보류(창 4 넘으면 붙임 — U-0154 메모).
+- **다음 후보**: 참고작 격차 `docs/spec/references-1017.md`(유니티만의 다섯 — 쳐내기·부서지는 소품·밭 작물·띄우기·일꾼, 다음 R-0 가 고름) · 게임성 장부 `tasks/gameplay/` 우선 2 줄은 웹 W-0297~0305 가 끝난 뒤 이식(웹에서 검증된 것부터).
+- **대기(K)**: 큐 머리 "대기" 절 — 2나락 짐승 116종 몸·말굽 소리·돌 텍스처 aniso 등.
+- 확인은 사람 시트 없이 QC+Claude 눈(W-0312) — 옛 "실기 확인 대기" 목록은 폐지(경위는 HISTORY grep).
+
+## 검증 명령(배치 — `-quit` 주지 않는다)
+
+`bash tools/unity-batch.sh -- "<Unity.exe>" -batchmode -nographics -projectPath <경로> -logFile <로그> -executeMethod Saga.EditorTools.<이름>` — 이름: `UiLayoutCheck.Run` · `PlaytestHeadless.Run`(1만리) · `PlaytestDungeonHeadless.Run` · `PlaytestForestHeadless.Run` · `PlaytestStorySlice.Run` · `PlaytestRealmSlice.Run`. 로그에서 `] OK`/`FAIL` 줄을 본다(exit 0 만 믿지 않는다). 숲·천하 진단은 실제 세이브를 지우므로 `LocalLow/SAGA Games/SAGA/save*.json` 을 먼저 떠 두고 되돌린다.
 
 ## 완료 요약 — 다섯 게임 × 진척
 
@@ -20,15 +28,6 @@ Maria·Abe·Brute + Skeleton·Paladin·PeasantMan·PeasantGirl·Archer·두목 M
 | REALM | `TestCity` | 완료(경영형) — 명령·계략·문답 36·서고·월드맵·전투·함락 편입 | 적국 55·성 58 · 5-1·5-6·5-2·5-8·5-3·5-5 — **101-2 REALM 전부 완료**(5-4 제외 확정) · **109-5** 시간 틈 아홉(적국 성에 재야)·퓨전 사연 셋(관문 운중·오원·일남) · **109-13** 싸움터·지도 위 인물(대역) | 도시 Environment/Building · 103-1 성벽 3단 | 전부 붙음. 목표판/세션카드. 101-3 해당 없음 |
 
 렌더러: 66-1장 PC(Forward+·MSAA 4)/Mobile(Forward·MSAA 2) + `FF16Volume_*` + 데칼. 아트 방향 **사실적 PBR(FF16 톤)** — 66-2장·102장. Maria 피부 SSS는 `BuildMariaSssShaderGraph.cs`. DUNGEON 카메라는 `CameraRig`→가상 카메라 `PlayerView`→`CinemachineBrain`(106-3), 컷은 `Cinematics/Timelines/Temple_*.playable`.
-
-## 다음 작업 (우선순위, 상세는 PLAN 해당 장)
-
-0. **다음 = 웹·고돗 새 추가분 이식(HISTORY 09-30 "REALM 회차" 대조표: DUNGEON 31층·FOREST 탑성 U-0028·0029 끝, 고돗 새 시스템은 사냥 기록·쉼터 마당 U-0031·0032 끝, 남은 다섯은 U-0032 메모 순서로 R-0)**, 그다음 실기 확인(14-1b 동물 임시 몸 `BeastBodyCandidates`). 회차 요령은 `RealmRound`(타이틀 기본값 `SagaFlow.Defaults`). 110 은 사람 칸만(`docs/STORE_CHECKLIST.md`·`docs/store/`)+묶음 PC `BuildAndroidAab` 실측, ③b 폰 결과 대기. 영어 검수 `node tools/loc-review.mjs`. 정체성 `SagaPlayerBuild.AppId`. 크레딧 `SagaCredits`(새 에셋은 표 한 줄부터)·`SagaCrashLog`·버전 = bundleVersion 한 곳. HUD `SagaUi.ApplyGameScaler`(1600×900 Expand, 가로 고정)·Ⅱ `SagaPauseButton`·언어 `SagaUi.Lang`·구운 글 `XxxLocalization.RelocalizeScene`, 점검 `UiLayoutCheck`·`HangulWatch`, 재빌드 `SagaRebuildScenes`.
-0-1. **남은 것**: 사람 영어 검수(tsv 순위 1부터). GO 동료 몸 Maria.controller 리타깃.
-1. STORY 판수(15→20 약 11판·20→25 약 28판)가 무거우면 `JobPromoteLevel3/4`만.
-2. **101-2·104-1 잔여(보류)** — GO⑤·Kenney 폴백·헤어카드.
-3. **시나리오**(`../scenario/`) — **REALM 19·DUNGEON 19·STORY 17(웹 19장 중 사냥터 둘 뺌)·FOREST 29 끝(109-16, 표 16행)** + 곁가지 넷.
-
 
 ## 알려진 오류
 
@@ -47,24 +46,5 @@ Maria·Abe·Brute + Skeleton·Paladin·PeasantMan·PeasantGirl·Archer·두목 M
 - REALM 새 성은 `RealmEnemyCity.cs`·`RealmCityData.cs` 둘 다. DUNGEON 확인용 텔레포트는 `floorRunner.enabled=false` 먼저, `CameraRig` 확인용은 `_zoom`≤3·`_pitchDeg`≤30.
 - 헤드리스가 `SaveState.Save()` 를 부르면 실제 파일이 남는다 — try/finally 로 복원.
 - Shader Graph internal API는 리플렉션 우회(`BuildMariaSssShaderGraph.cs`) — 매번 `ShaderHasError`, 재빌드 뒤 GUI idle 900프레임.
+- **메인 트리 커밋이 남의 미커밋 에셋(크레딧·범주) 탓에 막히면** origin/main worktree 에서 `PRECHECK_PATHS="<내 경로>" bash tools/precheck.sh && git commit --pathspec-from-file` (U-0153).
 - 가끔 실패 → 재실행: STORY `PartySwapWait` · 배치 시작 `Failed to resolve packages`.
-
-## 테스트 상태 (배치 모드, Unity 6000.3.24f1)
-
-| 검증 | 결과 |
-|---|---|
-| 재빌드·전체 | `PlaytestSagaAab`·`PlaytestSagaCredits`·`PlaytestRealmSlice`·배치 점검 OK(⑥e, 묶음 없는 PC) · 흐름·판별 다섯 3연속 OK(⑤c-2c-2) · 영어(`-hangulWatch`)로도 OK(DUNGEON·STORY 는 세이브 치우고) |
-| `PlaytestStorySlice` | **3연속 OK(2026-09-25)** · 09-27 BossPattern 3연속(묶음 없는 PC, 뒤는 기준선 FAIL — 묶음 PC 재확인) — Eras·Companions·Summon·BossIntro·옷 빛깔·상위 차수·전직·ButtonWiring·JobSkills·무예 세이브 왕복·옛 형식 |
-| `PlaytestDungeonHeadless` | **09-30 탈것 포함 3연속 OK(세이브 치운 채 — 무기 등급 검사는 남은 `save_dungeon.json` 에 갈림)** · 09-27 109-10-5~10 은 묶음 없는 PC 기준선 비교(묶음 PC 재확인) · Regions~EnemyTelegraph 전부. 같은 씬 `FloorProgression`·`OverworldMap` OK |
-| GO `PlaytestHeadless` | **3연속 OK(2026-09-25)** — Peaks~FieldCombat 전부 · 09-29 38장(이야기 끝)까지 3연속 · 10-08 OK → D1 12(`playcheck/d2-u005*`) |
-| `PlaytestForestHeadless` | **3연속 OK(2026-09-25, 세 시대 뒤)** — `PlaytestForestEras`(사람 6/6 몸·소품 38%·잔해 돎 6)·`Zones`·`ZoneProps` 포함 · `PlaytestForestCreatures` 3연속 · Finish·Furniture·HouseTransition OK |
-| REALM 헤드리스 | **3연속 OK(2026-09-29, 사실 몸 뒤)** — `PlaytestRealmEras`·`Battlefield`·`Actors`(전 성 함락 뒤·문답 앞)·`CheckButtonWiring` |
-
-## 실기 확인 대기 (항목명만 — 경위는 HISTORY grep)
-
-- GO: **14-1b 새 괴물 넷 몸(저폴리 동물 톤) · 14-27b 지도 고원 단추** · 14-70·71 12부·14-69 메아리·잔불 · **109-14(⑲-1~44) 조각별 "실기 확인 전" 줄(HISTORY 09-28~29)** · 새 땅 셋 · 정상·폭포·카메라·스킬 모양·인물 몸(109-7~9) · 들판 인물(109-6a) · 세 시대(109-1) · 옛 107~108·VS 항목(HISTORY grep) · 폰 설정·승급·저장 버튼
-- DUNGEON: **109-15 탈것 — 몸 크기·▲▼ 단추·비행 손맛** · **109-10-5~10 — 우두머리·사연·몸짓·서명·주인 수·몰이(세부 HISTORY 09-27)** · **109-10 비결·비전·시련 체감, 지역 배너·땅빛·M 지도** · **꾸밈 시대 층(109-2b)** · **세 시대 잡졸 여덟·손님·행상** · 옛 항목(두목 몸~101) HISTORY grep · **폰에서 버튼 전부**
-- FOREST: **109-15 탈것 — 몸 크기·뜬 2.8m·착지** · **방문객·단골(109-12) — 조각 찾기·다시 다가서기·빛 구슬·꼬마 크기·손짓 글자·자리 여덟·보상 값** · **세 시대(109-4) — 잔해 크기·뜬 높이, 덮개 차, 마을 사람 여섯 발·키·대사** · **숲지기 모델** · **짐승 여덟 모델** · **존 소품 — 실측 크기·휨 따라 내림·걸림** · **특색 존(108 ②)**, 옛 101 항목(HISTORY grep), **폰에서 저장·설정·밀어내기 버튼**
-- STORY: **시나리오 17장(109-16) — 잡졸 20~60·두목 단계 길이·문턱 레벨·고르기 화면** · **109-15 탈것 — 날갯짓·싸움터 경계** · **보스 패턴전·고유 기술·관문 대장(109-11) — 예고·휩쓸기·쇠사슬·그로기·8초 간격** · **세 시대(109-3) — 시대 적 키·타격감·알림·손님** · 두목 Morak(훅 박자) · 척후병·전직관 모델 · 곁의 동료·소환(106-10) · 두목 등장 컷(106-8) · 사건·관계·선택·전직 팝업·관문 대장·비경 · 무예 1~4차(패널 K·칸·손맛·판수·유파 세트·옷 빛깔) — 세부는 HISTORY grep · **폰에서 버튼 전부**
-- REALM: **회차(109-16b) — 다음 달 두 번 누르기·적 ×1.2·금·돌아온 사람·"N회차" HUD** · **109-15 명마 — 패널·날기 카메라·돌격** · **109-13 싸움터·두 장수·태수 몸짓·사실 몸 — 크기·박자·읽힘·손에 든 것** · **세 시대(109-5) — 사연 한 토막 줄바꿈·퓨전 카드 뜨는 빈도·이계 무장 셈** · 옛(HISTORY grep), **폰에서 버튼 전부**
-- 공통: **⑥c 새 이름(GO 상자·반응·해방, 국지 문답 가명, 목표판 글씨)** · **⑥a 크레딧 창 글·오류 기록 복사** · **⑤c-3 새 자리(GO 옛 결투 화면·DUNGEON/STORY 대사 줄·DUNGEON 지역 배너)** · 그림 문자·영어 대사, Ⅱ 단추·타이틀 설정·새 패널 배치, 폰 발열(30fps·"저" 버튼), 옛 소리·설정·렌더 항목(HISTORY grep)
