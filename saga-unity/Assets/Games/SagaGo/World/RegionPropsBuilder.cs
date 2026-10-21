@@ -20,6 +20,9 @@ namespace Saga.Go.World
         [SerializeField] private GameObject[] lodModels = new GameObject[0];
         [SerializeField] private GameObject pillarModel;   // Kenney pillar-stone.glb, 지름 0.32·높이 1(원점 밑면)
         [SerializeField] private Material stoneMaterial;   // castle_wall_slates(LandmarksBuilder 폐허 기둥과 같은 돌)
+        [SerializeField] private string[] pairKeys = new string[0];      // U-0151 자체 짝(표 Model 키 → 모델·맞춤, `PairFit`)
+        [SerializeField] private GameObject[] pairModels = new GameObject[0];
+        [SerializeField] private PairFit.Fit[] pairFits = new PairFit.Fit[0];
 
         private readonly Dictionary<Material, Material> _charred = new Dictionary<Material, Material>();
         private readonly Dictionary<Material, Material> _rift = new Dictionary<Material, Material>();
@@ -36,6 +39,14 @@ namespace Saga.Go.World
             lodModels = lodAssets;
             pillarModel = pillar;
             stoneMaterial = stone;
+        }
+
+        /// <summary>U-0151 — 빌린 소품 키 중 자체 짝이 있는 것(편집기 `SelfPairs.PairFitModels`). 이 키는 옛 모델 대신 짝을 맞춤대로 세운다(LOD 없음).</summary>
+        public void InitPairs(string[] keys, GameObject[] pairs, PairFit.Fit[] fits)
+        {
+            pairKeys = keys;
+            pairModels = pairs;
+            pairFits = fits;
         }
 
         private void Awake()
@@ -101,6 +112,15 @@ namespace Saga.Go.World
                 return pillar;
             }
 
+            int pf = PairFit.Find(pairKeys, p.Model);
+            if (pf >= 0 && pf < pairModels.Length && pairModels[pf] != null)
+            {
+                var pgo = new GameObject(name);
+                pgo.transform.SetParent(parent, false);
+                pgo.transform.localScale = Vector3.one * (GoRegionProps.WorldScale * p.Scale);
+                PairFit.Spawn(pairModels[pf], pgo.transform, pairFits[pf]).name = "LOD0";
+                return pgo;
+            }
             string id = p.Model, part = null;
             int hash = id.IndexOf('#');
             if (hash >= 0) { part = id.Substring(hash + 1); id = id.Substring(0, hash); }
@@ -180,7 +200,7 @@ namespace Saga.Go.World
         }
 
         /// <summary>월드 꼭짓점 최저 높이(편집기 빌드에선 메시를 읽을 수 있다). 못 읽는 메시는 렌더러 경계로 대신한다.</summary>
-        internal static bool TryLowest(GameObject go, out float low)
+        public static bool TryLowest(GameObject go, out float low)
         {
             low = float.PositiveInfinity;
             foreach (var f in go.GetComponentsInChildren<MeshFilter>(true))

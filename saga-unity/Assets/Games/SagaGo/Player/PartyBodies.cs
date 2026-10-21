@@ -32,6 +32,7 @@ namespace Saga.Go.Player
         [SerializeField] private GameObject[] lookBodies;
         [SerializeField] private string[] gearNames;
         [SerializeField] private GameObject[] gearModels;
+        [SerializeField] private float[] gearScales;   // U-0151 — 자체 짝을 옛 꾸밈 크기로(빈 칸·0 = 1)
 
         private PlayerController _pc;
         private Transform _heroVisual;
@@ -178,13 +179,22 @@ namespace Saga.Go.Player
             return null;
         }
 
+        public float GearScale(GoHeroLooks.Gear g)
+        {
+            if (gearNames == null || gearScales == null) return 1f;
+            string n = g.ToString();
+            for (int i = 0; i < gearNames.Length && i < gearScales.Length; i++)
+                if (gearNames[i] == n) return gearScales[i] > 0f ? gearScales[i] : 1f;
+            return 1f;
+        }
+
         /// <summary>막 만든 몸에 그 인물의 키·체격·꾸밈을 입힌다(표 밖 id 는 <paramref name="baseHeight"/> 로 키만 맞춘다).</summary>
         public void Dress(GameObject inst, string memberId, float baseHeight)
         {
             if (GoHeroLooks.TryGet(memberId, out var look))
             {
-                if (ForgeHero(memberId) != null) HeroDresser.DressOwn(inst, look, baseHeight, GearModel);
-                else HeroDresser.Dress(inst, look, baseHeight, GearModel);
+                if (ForgeHero(memberId) != null) HeroDresser.DressOwn(inst, look, baseHeight, GearModel, GearScale);
+                else HeroDresser.Dress(inst, look, baseHeight, GearModel, GearScale);
                 return;
             }
             float h = HeroDresser.MeasureHeight(inst);

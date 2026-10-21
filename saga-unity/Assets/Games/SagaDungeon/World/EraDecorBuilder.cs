@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Saga.Core;
 using Saga.Dungeon.Data;
 
 namespace Saga.Dungeon.World
@@ -15,6 +16,9 @@ namespace Saga.Dungeon.World
     {
         [SerializeField] private string[] modelKeys = new string[0];
         [SerializeField] private GameObject[] models = new GameObject[0];
+        [SerializeField] private string[] pairKeys = new string[0];      // U-0151 자체 짝(표 Model 키 → 모델·맞춤, `PairFit`)
+        [SerializeField] private GameObject[] pairModels = new GameObject[0];
+        [SerializeField] private PairFit.Fit[] pairFits = new PairFit.Fit[0];
         /// <summary>명소 층 여섯 벌(`DungeonEraDecor.Landmarks` 순). 마을 꾸밈 빌더는 비어 있다.</summary>
         [SerializeField] private GameObject[] landmarkRoots = new GameObject[0];
 
@@ -49,6 +53,14 @@ namespace Saga.Dungeon.World
         {
             modelKeys = keys;
             models = modelAssets;
+        }
+
+        /// <summary>U-0151 — 빌린 소품 키 중 자체 짝이 있는 것(편집기 `SelfPairs.PairFitModels`). 이 키는 옛 모델 대신 짝을 맞춤대로 세운다(LOD 없음).</summary>
+        public void InitPairs(string[] keys, GameObject[] pairs, PairFit.Fit[] fits)
+        {
+            pairKeys = keys;
+            pairModels = pairs;
+            pairFits = fits;
         }
 
         /// <summary>명소 층 여섯 벌을 이 오브젝트 자리(방 가운데)에 굽고 전부 끈다.</summary>
@@ -122,6 +134,15 @@ namespace Saga.Dungeon.World
 
         private GameObject SpawnPiece(DungeonEraDecor.Piece p, Transform parent, string name)
         {
+            int pf = PairFit.Find(pairKeys, p.Model);
+            if (pf >= 0 && pf < pairModels.Length && pairModels[pf] != null)
+            {
+                var pgo = new GameObject(name);
+                pgo.transform.SetParent(parent, false);
+                pgo.transform.localScale = Vector3.one * p.Scale;
+                PairFit.Spawn(pairModels[pf], pgo.transform, pairFits[pf]).name = "Body";
+                return pgo;
+            }
             string id = p.Model, part = null;
             int hash = id.IndexOf('#');
             if (hash >= 0) { part = id.Substring(hash + 1); id = id.Substring(0, hash); }

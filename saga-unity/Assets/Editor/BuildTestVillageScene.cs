@@ -286,6 +286,7 @@ namespace Saga.EditorTools
             var lods = new GameObject[ids.Count]; // tools/polyhaven_lod1.py 산출물 — 없는 모델은 null(LOD 없이 원본만)
             for (int i = 0; i < ids.Count; i++)
             {
+                if (SelfPairs.PairModel(ids[i]) != null) continue; // U-0151 자체 짝 — 아래 InitPairs
                 models[i] = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Art/Props/PolyHaven/{ids[i]}/{ids[i]}_1k.gltf");
                 lods[i] = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Art/Props/PolyHaven/{ids[i]}/{ids[i]}_lod1.glb");
                 if (models[i] == null) Debug.LogWarning($"[BuildTestVillageScene] Poly Haven 모델 없음: {ids[i]}");
@@ -293,6 +294,10 @@ namespace Saga.EditorTools
             builder.Init(ids.ToArray(), models, lods,
                 AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Art/Buildings/pillar-stone.glb"),
                 AssetDatabase.LoadAssetAtPath<Material>(VillageStoneMatPath));
+            var keys = new List<string>();
+            foreach (var c in GoRegionProps.Clusters) foreach (var p in c.Pieces) keys.Add(p.Model);
+            SelfPairs.PairFitModels(keys, out var pairKeys, out var pairModels, out var pairFits, keepHeight: true);
+            builder.InitPairs(pairKeys, pairModels, pairFits);
             builder.Build();
         }
 
@@ -387,8 +392,8 @@ namespace Saga.EditorTools
         {
             var combat = playerGo.AddComponent<Saga.Go.Combat.FieldCombat>();
             SetPrivateField(combat, "player", playerGo.GetComponent<PlayerController>());
-            // PLAN.md 109-8 소환 정령 몸 — 인물 꾸밈과 같은 Poly Haven 등잔(커밋된 에셋)
-            SetPrivateField(combat, "spiritModel", AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Art/Props/PolyHaven/brass_diya_lantern/brass_diya_lantern_1k.gltf"));
+            // PLAN.md 109-8 소환 정령 몸 — 인물 꾸밈 등잔과 같은 모델(U-0151 자체 짝 oil_lamp_01, 없으면 옛 Poly Haven)
+            SetPrivateField(combat, "spiritModel", SelfPairs.Model("brass_diya_lantern"));
 
             var spawnerGo = new GameObject("FieldSpawner");
             var spawner = spawnerGo.AddComponent<Saga.Go.Combat.FieldSpawner>();
@@ -423,16 +428,19 @@ namespace Saga.EditorTools
             SetPrivateField(bodies, "lookBodies", LoadNpcPrefabs(lookNames));
             var gearNames = new List<string>();
             var gearModels = new List<GameObject>();
+            var gearScales = new List<float>();
             foreach (var g in Saga.Go.Data.GoHeroLooks.AllGear)
             {
                 string id = Saga.Go.Data.GoHeroLooks.GearAsset(g);
-                var m = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Art/Props/PolyHaven/{id}/{id}_1k.gltf");
-                if (m == null) Debug.LogWarning($"[BuildTestVillageScene] 인물 꾸밈 {id} 없음(tools/fetch_polyhaven_models.py)");
+                var m = SelfPairs.Model(id); // U-0151 자체 짝 먼저(옛 크기 배율 gearScales)
+                if (m == null) Debug.LogWarning($"[BuildTestVillageScene] 인물 꾸밈 {id} 없음");
                 gearNames.Add(g.ToString());
                 gearModels.Add(m);
+                gearScales.Add(SelfPairs.GearScale(id));
             }
             SetPrivateField(bodies, "gearNames", gearNames.ToArray());
             SetPrivateField(bodies, "gearModels", gearModels.ToArray());
+            SetPrivateField(bodies, "gearScales", gearScales.ToArray());
             SetPrivateField(bodies, "bodyController", AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(MariaControllerPath));
         }
 

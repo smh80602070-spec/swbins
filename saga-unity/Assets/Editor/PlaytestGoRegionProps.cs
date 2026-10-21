@@ -92,7 +92,9 @@ namespace Saga.EditorTools
                     pieces++;
                     if (!RegionPropsBuilderBounds(go, out var b)) { Fail($"{c.Id} {go.name} 렌더러 없음"); continue; }
                     float want = root.position.y + p.Y - p.Sink;
-                    if (Mathf.Abs(b.min.y - want) > 0.05f) Fail($"{c.Id} {go.name} 밑면 {b.min.y:F2} ≠ {want:F2}");
+                    // 밑면은 빌더와 같이 꼭짓점 최저점(U-0151 — 기울인 두꺼운 짝 방패는 렌더러 상자가 0.05~0.4m 헐겁다)
+                    float low = RegionPropsBuilder.TryLowest(go, out float lv) ? lv : b.min.y;
+                    if (Mathf.Abs(low - want) > 0.05f) Fail($"{c.Id} {go.name} 밑면 {low:F2} ≠ {want:F2}");
                     if (!c.InRiver && p.Y == 0f) CheckGroundRay(c, go, b, root.position.y);
                     if (c.InRiver && p.Era != GoEra.Future) // 109-1b 시간 틈 잔해는 물 위에 떠 있다(PlaytestGoEras 가 본다)
                     {

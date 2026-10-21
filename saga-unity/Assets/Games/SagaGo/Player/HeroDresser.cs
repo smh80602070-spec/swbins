@@ -21,7 +21,7 @@ namespace Saga.Go.Player
         public const float BackTilt = 32f;
 
         /// <summary>몸 키를 맞추고(<paramref name="baseHeight"/> × 칸 배율) 체격·꾸밈을 입힌다. 꾸밈 모델이 없으면 그 꾸밈만 건너뛴다.</summary>
-        public static void Dress(GameObject inst, GoHeroLooks.Look look, float baseHeight, System.Func<Gear, GameObject> gearModel)
+        public static void Dress(GameObject inst, GoHeroLooks.Look look, float baseHeight, System.Func<Gear, GameObject> gearModel, System.Func<Gear, float> gearScale = null)
         {
             var t = inst.transform;
             float target = baseHeight * look.HeightScale;
@@ -30,31 +30,31 @@ namespace Saga.Go.Player
             var s = t.localScale;
             t.localScale = new Vector3(s.x * look.WidthScale, s.y, s.z * look.WidthScale);
 
-            AttachGear(inst, look, target, gearModel, head: true);
+            AttachGear(inst, look, target, gearModel, gearScale, head: true);
         }
 
         /// <summary>
         /// char-forge 제 몸(<see cref="PartyBodies.ForgeHero"/>) — 키·체격·머리·옷이 이미 그 인물 것(레시피 키 m)이라 칸 배율은 안 쓰고
         /// 사람 키 1.75m 에 대한 비로만 맞춘다. 머리 꾸밈은 안 씌운다(투구·관·상투가 몸에 있다). 등·허리 꾸밈은 표 그대로.
         /// </summary>
-        public static void DressOwn(GameObject inst, GoHeroLooks.Look look, float baseHeight, System.Func<Gear, GameObject> gearModel)
+        public static void DressOwn(GameObject inst, GoHeroLooks.Look look, float baseHeight, System.Func<Gear, GameObject> gearModel, System.Func<Gear, float> gearScale = null)
         {
             var t = inst.transform;
             float h = MeasureHeight(inst);
             float target = baseHeight * (h > 0.01f ? h / t.lossyScale.y : RealHuman) / RealHuman;
             if (h > 0.01f) t.localScale = t.localScale * (target / h);
-            AttachGear(inst, look, target, gearModel, head: false);
+            AttachGear(inst, look, target, gearModel, gearScale, head: false);
         }
 
-        private static void AttachGear(GameObject inst, GoHeroLooks.Look look, float target, System.Func<Gear, GameObject> gearModel, bool head)
+        private static void AttachGear(GameObject inst, GoHeroLooks.Look look, float target, System.Func<Gear, GameObject> gearModel, System.Func<Gear, float> gearScale, bool head)
         {
             if (look.Back == Gear.None && look.Hip == Gear.None && (!head || look.Head == Gear.None)) return;
             var anim = inst.GetComponentInChildren<Animator>();
             if (anim == null || !anim.isHuman) return;
             var pts = SampleSkin(inst);
-            if (look.Back != Gear.None) AttachBack(inst, anim, pts, look.Back, target, gearModel);
-            if (look.Hip != Gear.None) AttachHip(inst, anim, pts, look.Hip, target, gearModel);
-            if (head && look.Head != Gear.None) AttachHead(inst, anim, pts, look.Head, target, gearModel);
+            if (look.Back != Gear.None) AttachBack(inst, anim, pts, look.Back, target, gearModel, gearScale);
+            if (look.Hip != Gear.None) AttachHip(inst, anim, pts, look.Hip, target, gearModel, gearScale);
+            if (head && look.Head != Gear.None) AttachHead(inst, anim, pts, look.Head, target, gearModel, gearScale);
         }
 
         public static float MeasureHeight(GameObject go)
@@ -104,7 +104,7 @@ namespace Saga.Go.Player
         // ---- 꾸밈 만들기 ---------------------------------------------------------
 
         /// <summary>꾸밈 한 벌 — 겉 틀(이름 `HeroGear_&lt;종류&gt;`)의 원점이 모델 경계 가운데에 오게 안쪽 모델을 옮긴다. 크기는 실측 × 몸 키/1.75.</summary>
-        private static Transform MakeGear(Gear g, float bodyHeight, System.Func<Gear, GameObject> gearModel, out Bounds localBounds, out bool wideEndDown)
+        private static Transform MakeGear(Gear g, float bodyHeight, System.Func<Gear, GameObject> gearModel, System.Func<Gear, float> gearScale, out Bounds localBounds, out bool wideEndDown)
         {
             localBounds = default;
             wideEndDown = false;
@@ -120,7 +120,7 @@ namespace Saga.Go.Player
             var b = LocalBounds(wrap, model.transform, out wideEndDown);
             model.transform.localPosition = -b.center;
             b.center = Vector3.zero;
-            float k = bodyHeight / RealHuman;
+            float k = bodyHeight / RealHuman * (gearScale != null ? gearScale(g) : 1f); // U-0151 자체 짝은 옛 꾸밈 크기로
             wrap.localScale = Vector3.one * k;
             localBounds = new Bounds(Vector3.zero, b.size * k);
             return wrap;
@@ -187,9 +187,9 @@ namespace Saga.Go.Player
             return best == float.MinValue ? fallback : best;
         }
 
-        private static void AttachBack(GameObject inst, Animator a, List<Vector3> pts, Gear g, float H, System.Func<Gear, GameObject> gearModel)
+        private static void AttachBack(GameObject inst, Animator a, List<Vector3> pts, Gear g, float H, System.Func<Gear, GameObject> gearModel, System.Func<Gear, float> gearScale)
         {
-            var wrap = MakeGear(g, H, gearModel, out var lb, out bool wideDown);
+            var wrap = MakeGear(g, H, gearModel, gearScale, out var lb, out bool wideDown);
             if (wrap == null) return;
             var root = inst.transform;
             Vector3 fwd = root.forward, up = root.up, right = root.right;
@@ -213,9 +213,9 @@ namespace Saga.Go.Player
             wrap.SetParent(chest, true);
         }
 
-        private static void AttachHip(GameObject inst, Animator a, List<Vector3> pts, Gear g, float H, System.Func<Gear, GameObject> gearModel)
+        private static void AttachHip(GameObject inst, Animator a, List<Vector3> pts, Gear g, float H, System.Func<Gear, GameObject> gearModel, System.Func<Gear, float> gearScale)
         {
-            var wrap = MakeGear(g, H, gearModel, out var lb, out bool wideDown);
+            var wrap = MakeGear(g, H, gearModel, gearScale, out var lb, out bool wideDown);
             if (wrap == null) return;
             var root = inst.transform;
             Vector3 fwd = root.forward, up = root.up;
@@ -232,7 +232,7 @@ namespace Saga.Go.Player
             wrap.SetParent(hips, true);
         }
 
-        private static void AttachHead(GameObject inst, Animator a, List<Vector3> pts, Gear g, float H, System.Func<Gear, GameObject> gearModel)
+        private static void AttachHead(GameObject inst, Animator a, List<Vector3> pts, Gear g, float H, System.Func<Gear, GameObject> gearModel, System.Func<Gear, float> gearScale)
         {
             var root = inst.transform;
             Vector3 fwd = root.forward, up = root.up, right = root.right;
@@ -254,7 +254,7 @@ namespace Saga.Go.Player
             if (!any) { top = 0.11f * H; minR = -0.05f * H; maxR = 0.05f * H; }
             float width = Mathf.Max(maxR - minR, 0.06f * H);
 
-            var wrap = MakeGear(g, H, gearModel, out var lb, out _);
+            var wrap = MakeGear(g, H, gearModel, gearScale, out var lb, out _);
             if (wrap == null) return;
             Quaternion rot = Quaternion.LookRotation(fwd, up);
             if (g == Gear.Hat)

@@ -449,11 +449,16 @@ namespace Saga.EditorTools
             var lods = new GameObject[ids.Count];
             for (int i = 0; i < ids.Count; i++)
             {
+                if (SelfPairs.PairModel(ids[i]) != null) continue; // U-0151 자체 짝 — 아래 InitPairs
                 models[i] = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Art/Props/PolyHaven/{ids[i]}/{ids[i]}_1k.gltf");
                 lods[i] = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Art/Props/PolyHaven/{ids[i]}/{ids[i]}_lod1.glb");
                 if (models[i] == null) Debug.LogWarning($"[BuildTestVillageForestScene] Poly Haven 모델 없음: {ids[i]}");
             }
             builder.Init(ids.ToArray(), models, lods);
+            var keys = new System.Collections.Generic.List<string>();
+            foreach (var c in ForestZoneProps.Clusters) foreach (var p in c.Pieces) keys.Add(p.Model);
+            SelfPairs.PairFitModels(keys, out var pairKeys, out var pairModels, out var pairFits);
+            builder.InitPairs(pairKeys, pairModels, pairFits);
             builder.Build();
         }
 

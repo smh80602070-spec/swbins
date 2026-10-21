@@ -15,7 +15,7 @@ namespace Saga.EditorTools
     /// `CharactersRealistic/` 는 gitignore 라 PC 마다 몸을 받은 뒤 이 메뉴 → 숲 씬 재빌드를 한 번 돌린다.
     /// 몸이 없는 종은 건너뛰고, 그 종은 런타임에 예전 도형으로 선다.
     ///
-    /// 꾸밈은 에셋만: 버섯 무리·꽃은 Quaternius Stylized Nature(CC0, `Art/Vegetation/QuaterniusNature/`).
+    /// 꾸밈은 에셋만: 버섯 무리·꽃은 자체 짝(U-0151 — `Resources/World` mushroom_01·flower_patch_01), 없는 PC 는 옛 Quaternius(`Art/Vegetation/QuaterniusNature/`).
     /// 나비정령 날개만 납작 구 넷(반투명 발광 재질, 런타임 `ForestCreature` 가 퍼덕인다) — 맞는 CC0 날개 메시가 없다.
     /// </summary>
     public static class SetupForestCreatureModels
@@ -23,6 +23,15 @@ namespace Saga.EditorTools
         private const string Root = "Assets/Art/CharactersRealistic/Forest/";
         private const string MatDir = Root + "Materials/";
         private const string NatureDir = "Assets/Art/Vegetation/QuaterniusNature/";
+
+        // U-0151 — 빌린 Quaternius 식물 → 자체 짝(표 tools/world-forge/data/k129_unity.json).
+        private static readonly Dictionary<string, string> NaturePairs = new Dictionary<string, string>
+        {
+            { "Flower_3_Single", "flower_patch_01" }, { "Flower_4_Single", "flower_patch_01" }, { "Mushroom_Common", "mushroom_01" },
+        };
+
+        private static string NaturePath(string name) =>
+            NaturePairs.TryGetValue(name, out var w) && File.Exists(SelfPairs.WorldDir + w + ".glb") ? SelfPairs.WorldDir + w + ".glb" : $"{NatureDir}{name}.gltf";
 
         private enum Extra { None, SporeBack, MushroomHat, FlowerCrown, Wings, GhostLight }
 
@@ -236,16 +245,16 @@ namespace Saga.EditorTools
                 {
                     // 등 한가운데 큰 무리 + 두 어깨 작은 무리 — 걸을 때 몸과 같이 흔들린다.
                     var mat = NatureMat("Mushroom_Common", "Forest_pojagoemul_spore", new Color(0.8f, 0.9f, 0.45f), new Color(0.05f, 0.08f, 0f));
-                    Place(chest, "Spore0", NatureDir + "Mushroom_Common.gltf", mat, chest.position + new Vector3(0f, 0.02f * h, -0.14f * h), 0.34f * h, Quaternion.Euler(-70f, 0f, 0f));
-                    Place(lShoulder, "Spore1", NatureDir + "Mushroom_Common.gltf", mat, lShoulder.position + new Vector3(-0.06f * h, 0.05f * h, -0.04f * h), 0.2f * h, Quaternion.Euler(-20f, 0f, 25f));
-                    Place(rShoulder, "Spore2", NatureDir + "Mushroom_Common.gltf", mat, rShoulder.position + new Vector3(0.06f * h, 0.05f * h, -0.04f * h), 0.2f * h, Quaternion.Euler(-20f, 180f, -25f));
+                    Place(chest, "Spore0", NaturePath("Mushroom_Common"), mat, chest.position + new Vector3(0f, 0.02f * h, -0.14f * h), 0.34f * h, Quaternion.Euler(-70f, 0f, 0f));
+                    Place(lShoulder, "Spore1", NaturePath("Mushroom_Common"), mat, lShoulder.position + new Vector3(-0.06f * h, 0.05f * h, -0.04f * h), 0.2f * h, Quaternion.Euler(-20f, 0f, 25f));
+                    Place(rShoulder, "Spore2", NaturePath("Mushroom_Common"), mat, rShoulder.position + new Vector3(0.06f * h, 0.05f * h, -0.04f * h), 0.2f * h, Quaternion.Euler(-20f, 180f, -25f));
                     break;
                 }
                 case Extra.MushroomHat:
                 {
                     var mat = NatureMat("Mushroom_Common", "Forest_beoseot_cap", new Color(0.75f, 1f, 1f), new Color(0f, 0.06f, 0.06f));
                     var at = new Vector3(head.position.x, Mathf.Lerp(head.position.y, top, 0.7f), head.position.z);
-                    Place(head, "MushroomHat", NatureDir + "Mushroom_Common.gltf", mat, at, 0.42f * h, Quaternion.identity);
+                    Place(head, "MushroomHat", NaturePath("Mushroom_Common"), mat, at, 0.42f * h, Quaternion.identity);
                     break;
                 }
                 case Extra.FlowerCrown:
@@ -257,7 +266,7 @@ namespace Saga.EditorTools
                     {
                         float a = i * Mathf.PI * 2f / 7f;
                         var p = c + new Vector3(Mathf.Cos(a) * radius, 0f, Mathf.Sin(a) * radius);
-                        string path = NatureDir + (i % 2 == 0 ? "Flower_3_Single.gltf" : "Flower_4_Single.gltf");
+                        string path = NaturePath(i % 2 == 0 ? "Flower_3_Single" : "Flower_4_Single");
                         Place(head, $"Flower{i}", path, mat, p, 0.11f * h, Quaternion.Euler(0f, i * 51f, 0f), outward: new Vector3(Mathf.Cos(a), 0f, Mathf.Sin(a)));
                     }
                     break;
@@ -308,9 +317,14 @@ namespace Saga.EditorTools
             float longest = Mathf.Max(b.size.x, Mathf.Max(b.size.y, b.size.z));
             if (longest > 0.0001f) go.transform.localScale = Vector3.one * (size / longest);
             go.transform.position = worldPos;
+            if (gltfPath.StartsWith(SelfPairs.WorldDir)) // 자체 짝은 원점이 밑면이 아닐 수 있다 — 밑면 가운데를 그 자리에(Quaternius 는 원점 = 밑면)
+            {
+                var nb = RendererBounds(go);
+                go.transform.position += worldPos - new Vector3(nb.center.x, nb.min.y, nb.center.z);
+            }
             foreach (var r in go.GetComponentsInChildren<Renderer>())
             {
-                if (mat != null)
+                if (mat != null && r.sharedMaterials.Length == 1)
                 {
                     var ms = r.sharedMaterials;
                     for (int i = 0; i < ms.Length; i++) ms[i] = mat;
@@ -325,7 +339,7 @@ namespace Saga.EditorTools
         /// <summary>glTF 재질을 복사해 빛깔·발광을 입힌다(원본 텍스처 유지).</summary>
         private static Material NatureMat(string gltfName, string matName, Color tint, Color emission)
         {
-            var asset = AssetDatabase.LoadAssetAtPath<GameObject>($"{NatureDir}{gltfName}.gltf");
+            var asset = AssetDatabase.LoadAssetAtPath<GameObject>(NaturePath(gltfName));
             var r = asset != null ? asset.GetComponentInChildren<Renderer>() : null;
             if (r == null || r.sharedMaterial == null) return null;
             var m = new Material(r.sharedMaterial) { name = matName };

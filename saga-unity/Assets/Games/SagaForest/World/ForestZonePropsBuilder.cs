@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Saga.Core;
 using Saga.Forest.Data;
 
 namespace Saga.Forest.World
@@ -18,6 +19,9 @@ namespace Saga.Forest.World
         [SerializeField] private GameObject[] models = new GameObject[0];
         [SerializeField] private GameObject[] lodModels = new GameObject[0];
         [SerializeField] private List<Transform> visuals = new List<Transform>();
+        [SerializeField] private string[] pairKeys = new string[0];      // U-0151 자체 짝(표 Model 키 → 모델·맞춤, `PairFit`)
+        [SerializeField] private GameObject[] pairModels = new GameObject[0];
+        [SerializeField] private PairFit.Fit[] pairFits = new PairFit.Fit[0];
 
         /// <summary>LOD0 → LOD1 화면 높이 비율 · LOD1 이 사라지는 비율. FOREST 는 카메라가 가까워 GO(0.25)보다 조금 높게.</summary>
         public const float Lod0ScreenHeight = 0.3f;
@@ -33,6 +37,14 @@ namespace Saga.Forest.World
             modelKeys = keys;
             models = modelAssets;
             lodModels = lodAssets;
+        }
+
+        /// <summary>U-0151 — 빌린 소품 키 중 자체 짝이 있는 것(편집기 `SelfPairs.PairFitModels`). 이 키는 옛 모델 대신 짝을 맞춤대로 세운다(LOD 없음).</summary>
+        public void InitPairs(string[] keys, GameObject[] pairs, PairFit.Fit[] fits)
+        {
+            pairKeys = keys;
+            pairModels = pairs;
+            pairFits = fits;
         }
 
         private void Awake()
@@ -91,13 +103,19 @@ namespace Saga.Forest.World
 
         private Transform SpawnPiece(ForestZoneProps.Piece p, Transform parent, string name)
         {
+            int pf = PairFit.Find(pairKeys, p.Model);
+            bool paired = pf >= 0 && pf < pairModels.Length && pairModels[pf] != null;
             string id = p.Model, part = null;
             int hash = id.IndexOf('#');
             if (hash >= 0) { part = id.Substring(hash + 1); id = id.Substring(0, hash); }
-            var src = Model(models, id);
-            if (src == null) { Debug.LogWarning($"[ForestZonePropsBuilder] 모델 없음: {id}"); return null; }
-            var lod0 = Part(src, part, id);
-            if (lod0 == null) return null;
+            GameObject lod0 = null;
+            if (!paired)
+            {
+                var src = Model(models, id);
+                if (src == null) { Debug.LogWarning($"[ForestZonePropsBuilder] 모델 없음: {id}"); return null; }
+                lod0 = Part(src, part, id);
+                if (lod0 == null) return null;
+            }
 
             var piece = new GameObject(name).transform;
             piece.SetParent(parent, false);
@@ -106,6 +124,11 @@ namespace Saga.Forest.World
             var body = new GameObject("Body").transform;
             body.SetParent(visual, false);
             body.localScale = Vector3.one * (ForestZoneProps.WorldScale * p.Scale);
+            if (paired)
+            {
+                PairFit.Spawn(pairModels[pf], body, pairFits[pf]).name = "LOD0";
+                return piece;
+            }
             var near = Object.Instantiate(lod0, body);
             near.name = "LOD0";
             ResetLocal(near.transform);

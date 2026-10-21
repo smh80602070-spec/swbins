@@ -1086,10 +1086,16 @@ namespace Saga.EditorTools
             var models = new GameObject[ids.Length];
             for (int i = 0; i < ids.Length; i++)
             {
+                if (SelfPairs.PairModel(ids[i]) != null) continue; // U-0151 자체 짝 — 아래 InitPairs
                 models[i] = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Art/Props/PolyHaven/{ids[i]}/{ids[i]}_1k.gltf");
                 if (models[i] == null) Debug.LogWarning($"[BuildTestDungeonScene] 시대 꾸밈 모델 {ids[i]} 없음");
             }
             builder.Init(ids, models);
+            var keys = new System.Collections.Generic.List<string>(ids);
+            foreach (var s in DungeonEraDecor.Landmarks) foreach (var p in s.Pieces) keys.Add(p.Model);
+            foreach (var s in DungeonEraDecor.Towns) foreach (var p in s.Pieces) keys.Add(p.Model);
+            SelfPairs.PairFitModels(keys, out var pairKeys, out var pairModels, out var pairFits);
+            builder.InitPairs(pairKeys, pairModels, pairFits);
         }
 
         /// <summary>PLAN.md 109-2 — 마을 셋·갈림길의 시대 손님 자리(`DungeonEras.FolkList` 순). 문·행상·등롱·궤짝·촌민과 안 겹친다.</summary>

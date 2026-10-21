@@ -36,7 +36,7 @@ namespace Saga.Core
             new Entry { Id = "own", Own = true, Paths = new[] {
                 "Assets/Games/", "Assets/SagaCore/", "Assets/Scenes/", "Assets/Settings/", "Assets/Cinematics/", "Assets/Animators/",
                 "Assets/InputSystem_Actions.inputactions", "Assets/Art/Icon/",
-                "Assets/Art/Generated/", "Assets/Art/Props/Generated/", "Assets/Art/Shaders/", "Assets/Art/Rocks/Generated/" } },
+                "Assets/Art/Generated/", "Assets/Art/Props/Generated/", "Assets/Art/Shaders/", "Assets/Art/Rocks/Generated/", "Assets/Shaders/" } },
 
             new Entry { Id = "mixamo", Paths = new[] { "Assets/Art/CharactersRealistic/" },
                 TitleKo = "인물·동작", TitleEn = "Characters & animation",
@@ -58,11 +58,8 @@ namespace Saga.Core
                 TitleKo = "재질·스캔 소품", TitleEn = "Materials & scanned props",
                 BodyKo = "Poly Haven (polyhaven.com) — CC0", BodyEn = "Poly Haven (polyhaven.com) — CC0" },
 
-            new Entry { Id = "quaternius", Paths = new[] { "Assets/Art/Vegetation/QuaterniusNature/" },
-                TitleKo = "숲 꾸밈", TitleEn = "Nature decorations",
-                BodyKo = "Quaternius — Stylized Nature MegaKit — CC0", BodyEn = "Quaternius — Stylized Nature MegaKit — CC0" },
-
-            new Entry { Id = "creatures_self", Paths = new[] { "Assets/Art/CreaturesSelf/" }, // tasks U-0100 — 빌린 Quaternius 동물 셋을 자체판으로
+            new Entry { Id = "creatures_self", Paths = new[] { "Assets/Art/CreaturesSelf/", "Assets/Art/Creatures/" }, // Art/Creatures = 그 glb 로 구운 프리팹·클립(U-0151)
+            // tasks U-0100 — 빌린 Quaternius 동물 셋을 자체판으로
                 TitleKo = "짐승 몸(자체 생성)", TitleEn = "Creature bodies (generated)",
                 BodyKo = "눈여우·회오리매·덩굴뱀 — 자체 그림(ComfyUI)을 TRELLIS 로 입체화(모델 MIT 라이선스)", BodyEn = "Snow fox, whirlwind hawk and vine snake — our own drawings turned 3D with TRELLIS (model under the MIT license)" },
 
