@@ -133,6 +133,9 @@ namespace Saga.Core
         private float _fogBaseDensity, _fogWeatherDensity;
         private Color _fogBaseColor;
         private float _windMul = 1f;
+        private bool _clouds = true;
+        /// <summary>진단 — 원통 구름을 세웠나(하늘 판) / 입자만인가(5천하).</summary>
+        public bool CloudsBuilt => _clouds;
 
         public SkyWeatherRules.Kind Kind { get; private set; }
         public int LayerCount { get { int n = 0; foreach (var l in _layers) if (l != null) n++; return n; } }
@@ -143,7 +146,7 @@ namespace Saga.Core
         public bool HasParticles => _rain != null && _snow != null && _fog != null;
 
         /// <summary>씬에 하나 세운다(이미 있으면 그대로). 끄기 환경변수가 있으면 null.</summary>
-        public static SkyWeather Install(Camera cam)
+        public static SkyWeather Install(Camera cam, bool clouds = true)
         {
             if (Environment.GetEnvironmentVariable("SAGA_NO_WEATHER") == "1") return null;
             if (Instance != null) { Instance._cam = cam != null ? cam : Instance._cam; return Instance; }
@@ -155,6 +158,7 @@ namespace Saga.Core
             var go = new GameObject("SkyWeather");
             var sw = go.AddComponent<SkyWeather>();
             sw._cam = cam;
+            sw._clouds = clouds; // tasks U-0149 — 하늘이 안 보이는 판(5천하 빛만)은 원통 구름 없이 비·눈·안개 입자만
             if (cam != null) go.transform.position = cam.transform.position;   // U-0117 미리 채운 눈(월드 좌표)이 원점 말고 카메라 둘레에 생기게
             Instance = sw; // 편집 모드(배치 진단)는 Awake 가 안 돌아 여기서도 적는다
             sw.Build();
@@ -182,7 +186,7 @@ namespace Saga.Core
 
         private void Build()
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 3 && _clouds; i++)
             {
                 var tex = Resources.Load<Texture2D>("Sky/cloud_layer_0" + (i + 1));
                 if (tex == null) continue;

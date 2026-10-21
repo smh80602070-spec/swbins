@@ -231,6 +231,7 @@ namespace Saga.Core
                 var mode = ModeFor(SceneManager.GetActiveScene().name);
                 if (mode == Mode.None) yield break;
                 if (mode == Mode.SkyAndLight) SkyWeather.Install(Camera.main); // U-0047 구름 3겹·계절 날씨 입자(끄기 SAGA_NO_WEATHER=1)
+                else if (mode == Mode.LightOnly) SkyWeather.Install(Camera.main, clouds: false); // tasks U-0149 5천하 — 하늘 없이 비·눈·안개 입자만
                 string applied = null;
                 var wait = new WaitForSeconds(60f);
                 bool lightOn = LightEnabled && Environment.GetEnvironmentVariable("SAGA_NO_SKYLIGHT") != "1";

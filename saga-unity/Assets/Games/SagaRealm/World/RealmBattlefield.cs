@@ -190,6 +190,8 @@ namespace Saga.Realm.World
             if (g == null) return;
             var (clip, local) = GeneralClip(attackerSide, Won, _t);
             g.transform.localPosition = new Vector3(side * Mathf.Lerp(GeneralStartX, GeneralMeetX, advance), 0f, GeneralZ);
+            // tasks U-0149 — 맞음·쓰러짐으로 막 바뀐 순간 불꽃·흔들림
+            if ((clip == "hit" || clip == "die") && g.Clip != clip) RealmCamShake.Hit(Cam, g.transform.position + Vector3.up * g.Height * 0.6f, clip == "die");
             g.Play(clip);
             g.Pose(local);
         }

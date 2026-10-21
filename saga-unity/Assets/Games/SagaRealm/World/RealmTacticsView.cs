@@ -473,6 +473,7 @@ namespace Saga.Realm.World
             if (e.Hit)
             {
                 t.Play("hit");
+                RealmCamShake.Hit(Cam, t.transform.position + Vector3.up * t.Height * 0.6f, false); // tasks U-0149
                 _shownHp[e.To] = Mathf.Max(0, _shownHp[e.To] - e.Dmg);
                 pop = $"<color=#ff6b5a>−{e.Dmg}</color>";
             }
@@ -483,6 +484,7 @@ namespace Saga.Realm.World
             if (_shownHp[e.To] <= 0)
             {
                 t.Play("die");
+                RealmCamShake.Hit(Cam, t.transform.position + Vector3.up * t.Height * 0.4f, true); // tasks U-0149
                 yield return Wait(0.8f);
                 t.gameObject.SetActive(false);
             }

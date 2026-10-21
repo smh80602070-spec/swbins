@@ -93,6 +93,10 @@ namespace Saga.EditorTools
             if (bf.AtkCount != 12 || bf.AtkAlive != 9 || bf.DefCount != 8 || bf.DefAlive != 0) Fail($"기둥 {bf.AtkAlive}/{bf.AtkCount} · {bf.DefAlive}/{bf.DefCount}");
             if (bf.PropCount != 8 || bf.transform.Find("Peak") == null) Fail("산성 봉우리 소품");
             if (bf.transform.Find("Stream") != null) Fail("산성에 물줄기");
+            // tasks U-0149 — 시각을 처음부터 끝까지 굴리면 지키는 장수 맞음·쓰러짐에 불꽃·흔들림 둘
+            int fx0 = RealmCamShake.Count;
+            for (float st = 0f; st <= RealmBattlefield.Duration; st += 0.05f) bf.SampleForTest(st);
+            if (RealmCamShake.Count - fx0 != 2) Fail($"싸움터 맞음·쓰러짐 불꽃·흔들림 {RealmCamShake.Count - fx0} ≠ 2");
             bf.SampleForTest(RealmBattlefield.Duration);
             var leader = bf.transform.Find("Atk_0");
             if (leader == null || Mathf.Abs(leader.localPosition.x) > 1f) Fail($"이긴 장수가 한가운데로 안 나옴 x={leader?.localPosition.x:0.00}");

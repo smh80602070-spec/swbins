@@ -18,6 +18,8 @@ namespace Saga.Go.Combat
 
         /// <summary>플레이어 공격 한 번. 반응을 풀고 실제로 들어간 피해를 돌려준다.
         /// <paramref name="atk"/> 는 반응 피해를 셀 공격력. <paramref name="heavy"/> = 기본 공격 3타째(얼어붙은 적을 깨뜨린다, 109-14-1a).</summary>
+        public const float HitShakeSmall = 0.1f, HitShakeBig = 0.24f;
+
         public float TakeHit(float amount, GoElement element, float atk, out GoReaction reaction, bool heavy = false, bool crit = false)
         {
             Saga.Go.Audio.GoSfx.Play(HitSfxName(), 0.9f, 0.07f); // U-0048·U-0051 활성 인물 무기 종류별
@@ -74,6 +76,11 @@ namespace Saga.Go.Combat
                 FieldDamageText.Spawn(transform.position + Vector3.up * (BodyHeight + 1.8f),
                     GoElements.NameOf(reaction), GoElements.ColorOf(reaction), 1.3f);
             }
+
+            // tasks U-0149 맞힘 손맛 — 불꽃(2나락·4종횡 HitSpark) + 카메라 흔들림(치명·3타·반응은 크게). 1만리 몸 키 3.4m 라 4종횡 값 ×2.
+            bool big = crit || heavy || reaction != GoReaction.None;
+            Saga.Core.HitSpark.Spawn(transform.position + Vector3.up * (BodyHeight * 0.55f), big);
+            Saga.Go.Player.CameraRig.Current?.Shake(big ? HitShakeBig : HitShakeSmall, big ? 0.15f : 0.08f);
 
             // 109-14-5a 치명타는 굵고 크게(금빛)
             float dealt = ApplyDamage(amount, crit ? new Color(1f, 0.82f, 0.3f) : element == GoElement.Physical ? Color.white : GoElements.ColorOf(element), crit ? 1.45f : 1f);

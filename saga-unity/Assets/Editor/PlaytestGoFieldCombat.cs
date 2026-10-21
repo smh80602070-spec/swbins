@@ -199,7 +199,11 @@ namespace Saga.EditorTools
             const float Atk = 100f;
             // 증발
             Place(e1, origin + new Vector3(30f, 0f, 30f));
+            int spark0 = Saga.Core.HitSpark.SpawnCount, shake0 = Saga.Go.Player.CameraRig.ShakeCount;
             e1.TakeHit(1f, GoElement.Hydro, Atk, out var r0);
+            // tasks U-0149 맞힘 손맛 — 불꽃 하나·카메라 흔들림(카메라가 있으면)
+            if (Saga.Core.HitSpark.SpawnCount != spark0 + 1) Fail($"맞힘 불꽃 {Saga.Core.HitSpark.SpawnCount - spark0} ≠ 1");
+            if (Saga.Go.Player.CameraRig.Current != null && Saga.Go.Player.CameraRig.ShakeCount != shake0 + 1) Fail("맞힘 흔들림 없음");
             if (r0 != GoReaction.None || e1.Aura != GoElement.Hydro) Fail("수 부착이 안 됨");
             float hp = e1.Hp;
             e1.TakeHit(100f, GoElement.Pyro, Atk, out var r1);

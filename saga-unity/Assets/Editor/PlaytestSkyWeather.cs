@@ -143,6 +143,14 @@ namespace Saga.EditorTools
                 var sw2 = SkyWeather.Install(cam); sw2.Refresh();
                 PlaytestKit.Check(Mathf.Abs(RenderSettings.fogDensity - 0.02f) < 1e-6f, "안개가 꺼진 씬의 농도를 건드림");
                 sw2.Teardown();
+
+                // tasks U-0149 — 하늘 없는 판(5천하 TestCity, SkyPass LightOnly): 구름 없이 입자만, 비가 온다
+                PlaytestKit.Check(SkyPass.ModeFor("TestCity") == SkyPass.Mode.LightOnly, "5천하가 빛만 판이 아님");
+                SkyWeatherRules.ForcedWeather = SkyWeatherRules.Kind.Rain;
+                var sw3 = SkyWeather.Install(cam, clouds: false); sw3.Refresh();
+                PlaytestKit.Check(!sw3.CloudsBuilt && sw3.LayerCount == 0 && sw3.HasParticles && sw3.RainRate > 0f, $"5천하 날씨 — 구름 {sw3.LayerCount}·입자 {sw3.HasParticles}·비 {sw3.RainRate}");
+                sw3.Teardown();
+                Debug.Log("[PlaytestSkyWeather] city OK - 5천하(빛만) 구름 0·비 입자");
             }
             finally
             {

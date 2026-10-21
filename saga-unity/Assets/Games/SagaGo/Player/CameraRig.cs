@@ -68,8 +68,25 @@ namespace Saga.Go.Player
         private const float LevelUpZoomOutSec = 0.3f;
         private Coroutine _levelUpRoutine;
 
+        // tasks U-0149 맞힘 흔들림 — 2나락 `CameraRig.Shake` 결(판끼리 코드 안 나눔). 1만리 사람·적이 키 3.4m 라 값은 그 판 ×2(FieldEnemy 가 넘김).
+        private float _shakeMag, _shakeLeft, _shakeDur;
+        /// <summary>지금 씬의 1만리 카메라(진단·적이 흔들림을 건다).</summary>
+        public static CameraRig Current { get; private set; }
+        /// <summary>진단 — 흔들림 건 횟수·남은 시간.</summary>
+        public static int ShakeCount { get; private set; }
+        public float ShakeLeft => _shakeLeft;
+
+        /// <summary>맞힘 흔들림 — 반경(m)·지속(초). 더 센 것이 오면 덮는다.</summary>
+        public void Shake(float magnitude, float duration)
+        {
+            ShakeCount++;
+            if (_shakeLeft > 0f && magnitude < _shakeMag * (_shakeLeft / Mathf.Max(_shakeDur, 1e-4f))) return;
+            _shakeMag = magnitude; _shakeLeft = duration; _shakeDur = duration;
+        }
+
         private void Awake()
         {
+            Current = this;
             if (cam == null) cam = GetComponentInChildren<Camera>();
             transform.localRotation = Quaternion.Euler(_pitchDeg, _yawDeg, 0f);
             ApplyZoom();
@@ -279,6 +296,11 @@ namespace Saga.Go.Player
             if (target == null) return;
             float clippedZoom = ResolveCollisionZoom(_zoom);
             target.localPosition = new Vector3(_aim ? AimShoulder : 0f, _aim ? 0.6f : 0f, -clippedZoom); // 109-14-22 어깨 너머
+            if (_shakeLeft > 0f)
+            {
+                _shakeLeft = Mathf.Max(0f, _shakeLeft - Time.deltaTime);
+                target.localPosition += Random.insideUnitSphere * (_shakeMag * (_shakeLeft / Mathf.Max(_shakeDur, 1e-4f)));
+            }
         }
 
         /// <summary>벽에 카메라가 파고들지 않도록 원하는 줌 거리 안에서
