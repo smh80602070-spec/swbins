@@ -1,141 +1,74 @@
 {
- "at": "2026-10-21T21:48:05.382Z",
+ "at": "2026-10-21T21:57:56.537Z",
  "max": 15,
  "runs": [
   {
-   "game": "saga-forest",
+   "game": "saga-dungeon",
    "scenes": [
     {
      "name": "first",
      "W": 390,
      "H": 844,
      "veils": [
-      "#scrim",
-      "#vignette"
+      "#scrim"
      ],
-     "pct": 14.6,
+     "pct": 14,
      "canvasPct": 0,
      "hudRects": 0,
      "whiteMidPct": 0,
      "top": [
       {
-       "el": "#minimap canvas 96x96",
+       "el": "#top",
+       "pct": 8.8
+      },
+      {
+       "el": "#dungeon",
        "pct": 2.1
       },
       {
-       "el": "#focusbar div.focu.-card 240x56",
-       "pct": 1.5
+       "el": "#dg-minimap",
+       "pct": 1.9
       },
       {
-       "el": "#top div#profile.gla. profile 190x42",
-       "pct": 1.1
-      },
-      {
-       "el": "#top div.p-goal .cn-goal hud-keep 138x15",
-       "pct": 1
-      },
-      {
-       "el": "#focusbar button.btn primary 68x44",
-       "pct": 0.9
-      },
-      {
-       "el": "#dock button 44x44",
-       "pct": 0.9
-      },
-      {
-       "el": "#top div#wallet.gla. wallet 127x35",
-       "pct": 0.8
-      },
-      {
-       "el": "#top button#btn-auto.icon-btn 44x44",
+       "el": "#dock",
        "pct": 0.7
       },
       {
-       "el": "#top button#btn-more.icon-btn 44x44",
-       "pct": 0.7
-      },
-      {
-       "el": "#vjoy div#vjoy-knob 46x46",
+       "el": "#aq-go",
        "pct": 0.5
-      },
-      {
-       "el": "#focusbar small.muted 68x18",
-       "pct": 0.5
-      },
-      {
-       "el": "#dock button#btn-menu 44x44",
-       "pct": 0.5
-      },
-      {
-       "el": "#aq-go button#aq-go 42x42",
-       "pct": 0.4
-      },
-      {
-       "el": "#minimap div#minimap.gla. 104x104",
-       "pct": 0.4
-      },
-      {
-       "el": "#focusbar b 68x20",
-       "pct": 0.4
-      },
-      {
-       "el": "#top div.p-title 138x15",
-       "pct": 0.3
-      },
-      {
-       "el": "#focusbar span.fc-ico 32x32",
-       "pct": 0.3
-      },
-      {
-       "el": "#minimap b.mm-range 41x22",
-       "pct": 0.3
-      },
-      {
-       "el": "#dock small 24x16",
-       "pct": 0.3
-      },
-      {
-       "el": "#top div.coin 53x27",
-       "pct": 0.2
-      },
-      {
-       "el": "#top span 17x19",
-       "pct": 0.2
-      },
-      {
-       "el": "#dock span 22x16",
-       "pct": 0.2
-      },
-      {
-       "el": "#top i 24x24",
-       "pct": 0.1
-      },
-      {
-       "el": "#top div.avatar 30x30",
-       "pct": 0.1
-      },
-      {
-       "el": "#top b 202x16",
-       "pct": 0.1
-      },
-      {
-       "el": "#top span 15x19",
-       "pct": 0.1
-      },
-      {
-       "el": "#top div.coin hi hud-keep 42x27",
-       "pct": 0.1
-      },
-      {
-       "el": "#dock span 14x16",
-       "pct": 0
       }
      ],
-     "peak": 14.6,
+     "peak": 14,
      "samples": [
-      14.6,
-      14.6,
-      14.6
+      14,
+      14,
+      14
+     ]
+    },
+    {
+     "name": "fight",
+     "W": 390,
+     "H": 844,
+     "veils": [],
+     "pct": 12.7,
+     "canvasPct": 0,
+     "hudRects": 0,
+     "whiteMidPct": 0,
+     "top": [
+      {
+       "el": "#dungeon",
+       "pct": 11.6
+      },
+      {
+       "el": "#dg-minimap",
+       "pct": 1.2
+      }
+     ],
+     "peak": 12.7,
+     "samples": [
+      12.7,
+      12.7,
+      12.7
      ]
     }
    ],

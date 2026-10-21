@@ -828,3 +828,28 @@ b, strong, .p-sub, .coin, .dg-loot, .d2-gv { font-variant-numeric: tabular-nums;
 #dg-actions .dg-skill { position: relative; }
 #dg-actions .dg-act-key { font-size: 10px; top: auto; bottom: 4px; left: 50%; transform: translateX(-50%); padding: 0 4px; border-radius: 6px; background: rgba(10, 8, 6, .78); color: #f0dca0; line-height: 13px; pointer-events: none; }
 @media (hover: none) and (pointer: coarse) { #dg-actions .dg-act-key { display: none; } }
+
+/* W-0364 폰 세로 HUD 다이어트(공용 규칙은 ui-kit.css body.hud-diet) — 2나락만의 자리.
+   위 글자 띠는 그늘 없이 글자 그림자만 · 조작판은 구슬·칸을 한 단 더 줄여 낮게 · 조이스틱 손잡이 작게 */
+@media (max-width: 520px) {
+  body.hud-diet { --toast-edge: calc(6px + var(--safe-t, 0px)); }
+  body.hud-diet #dg-hud { background: none !important; padding-bottom: 4px !important; }
+  body.hud-diet #dg-joy-knob { width: 46px; height: 46px; margin: -23px 0 0 -23px; }
+  body.hud-diet #dg-joy:not(.held) #dg-joy-knob { opacity: .85; }
+  body.hud-diet #profile:not(.hud-open) { padding-top: 4px; padding-bottom: 4px; }
+  body.hud-diet #profile:not(.hud-open) .avatar { width: 30px; height: 30px; }
+  body.hud-diet #profile:not(.hud-open) { justify-self: start; max-width: 190px; }
+  /* 던전 안 — 미니맵이 체력 구슬을 덮고 있었다(10-21 플레이) → 왼쪽 위 층 이름 밑으로 작게(눌러 큰 지도 그대로) */
+  body.hud-diet:not(.town-open) #dg-minimap { top: calc(52px + var(--safe-t, 0px)); bottom: auto; transform: scale(.62); transform-origin: 0 0; }
+  /* 지금 못 쓰는(빈) 강공격 줄 칸은 비킨다 — 세 점을 갖추면 다시 선다 */
+  body.hud-diet #dg-actions .dg-skill.empty { display: none; }
+  /* 마을 — "누른 채 끌면" 조작 안내는 폰엔 조이스틱이 있어 접는다(❔ 도움말에 그대로) · 미니맵 .8배 */
+  body.hud-diet.town-open .dg-tip { display: none !important; }
+  body.hud-diet.town-open #dg-minimap { transform: scale(.8); transform-origin: 0 100%; }
+  /* 대사 카드(#scnbox z 60)를 미니맵(z 65)이 덮었다(10-21 플레이 "첫 대사창 위를 미니맵이 덮음") — 대사 동안 미니맵은 비킨다 */
+  body.hud-diet:has(#scnbox.show) #dg-minimap { visibility: hidden; }
+  /* 폰 세로에선 조작판 바닥(390×108, 화면 1/8)을 걷어 구슬·칸·글자만 무대 위에 얹는다 — 판때기가 게임판을 가장 많이 가렸다.
+     넓은 화면·가로는 원작 그대로 한 장 */
+  body.hud-diet #dg-bottom { background: none !important; border-top: 0 !important; box-shadow: none !important; }
+  body.hud-diet #dg-bottom::before { display: none; }
+}

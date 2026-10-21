@@ -285,7 +285,7 @@
       joyKnob.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
     }
     function joyReset() {
-      joyId = null;
+      joyId = null; joyEl.classList.remove('held');   // W-0364 폰: 받침 원은 누를 때만(.held)
       joyKnobAt(0, 0);
       d().setInput(0, 0);
     }
@@ -293,7 +293,7 @@
       if (joyId !== null) { return; }        // 이미 다른 손가락이 잡고 있다
       var r = joyEl.getBoundingClientRect();
       joyCX = r.left + r.width / 2; joyCY = r.top + r.height / 2;
-      joyId = e.pointerId;
+      joyId = e.pointerId; joyEl.classList.add('held');
       joyEl.setPointerCapture && joyEl.setPointerCapture(e.pointerId);
       e.preventDefault();
     });

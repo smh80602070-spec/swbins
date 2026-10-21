@@ -13,7 +13,7 @@
     els.toast.textContent = msg;
     els.toast.classList.add('show');
     if (toastTimer) { clearTimeout(toastTimer); }
-    toastTimer = setTimeout(function () { els.toast.classList.remove('show'); }, 2600);
+    toastTimer = setTimeout(function () { els.toast.classList.remove('show'); }, global.innerWidth <= 520 ? 2500 : 2600);   // W-0364 폰은 맨 위 한 줄 2.5초
   }
 
   /** 매 프레임이 아니라 주기적으로만 갱신한다 */
