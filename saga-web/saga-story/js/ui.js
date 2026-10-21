@@ -566,7 +566,7 @@
   }
 
   function renderSheet() {
-    if (!openTab) { return; }
+    if (!openTab || (global.DG.dragdrop && global.DG.dragdrop.active())) { return; }   // W-0362 끄는 동안 다시 안 그린다(칸·스크롤이 갈리면 놓을 자리를 잃는다) — 놓으면 dragdrop 이 changed 를 한 번 낸다
     var v = openTab === 'field' ? viewField()
           : openTab === 'bag' ? viewBag()
           : openTab === 'job' ? viewJob()
@@ -1073,7 +1073,7 @@
     html += '<div class="sec"><h4>낀 것</h4><div class="card">';
     for (i = 0; i < GD.SLOTS.length; i++) {
       var sl = GD.SLOTS[i], it = eq[sl.key];
-      html += '<div class="stat-row"><span>' + sl.emoji + ' ' + esc(sl.name) + '</span>';
+      html += '<div class="stat-row" data-dd-drop="slot:' + sl.key + '"' + (it ? ' data-dd="eq:' + sl.key + '"' : '') + '><span>' + sl.emoji + ' ' + esc(sl.name) + '</span>';   // W-0362 끌어 놓기 칸
       if (it) {
         html += '<span>' + ico('equip', it.key, 24, '') + '<b>' + esc(G.nameOf(it)) + '</b>' + gradeTag(GD, G.defOf(it)) + ' <small class="muted">' +
           esc(optLine(G.statsOf(it))) + '</small> ' +
@@ -1093,7 +1093,7 @@
       '</div></div>';
 
     var inv = G.inv();
-    html += '<div class="sec"><h4>가방 <small class="muted">' + inv.length + ' / ' + G.BAG +
+    html += '<div class="sec" data-dd-drop="bag"><h4>가방 <small class="muted">' + inv.length + ' / ' + G.BAG +
       '</small></h4>';
     if (!inv.length) {
       html += '<div class="hint">아직 아무것도 없습니다. 적이 가끔 떨구고, 🏪 저자에서도 삽니다.</div>';
@@ -1101,7 +1101,7 @@
     for (i = 0; i < inv.length; i++) {
       var g = inv[i], d = G.defOf(g), on = G.isEquipped(g.uid);
       var canWear = core.save.player.level >= d.need;
-      html += '<div class="card' + (on ? ' on' : '') + '">' +
+      html += '<div class="card' + (on ? ' on' : '') + '"' + (on ? '' : ' data-dd="' + g.uid + '"') + '>' +
         '<div class="stat-row"><span>' + ico('equip', g.key, 24, '') + '<b>' + esc(G.nameOf(g)) + '</b>' + gradeTag(GD, d) +
           (on ? ' <small class="muted">— 끼고 있음</small>' : '') + '</span>' +
           '<span class="muted">' + esc(GD.slot(d.slot).name) + ' · Lv.' + d.need + '</span></div>' +

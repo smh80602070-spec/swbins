@@ -166,6 +166,8 @@
    "js/menu-grid.js",
    "js/me-adapter.js",
    "js/me-panel.js",
+   "js/dragdrop.js",
+   "js/dd-adapter.js",
    "js/ops-client.js",
    "js/game.js"
   ]
@@ -333,6 +335,8 @@
    "js/menu-grid.js",
    "js/me-adapter.js",
    "js/me-panel.js",
+   "js/dragdrop.js",
+   "js/dd-adapter.js",
    "js/game.js"
   ]
  ],

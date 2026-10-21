@@ -201,6 +201,8 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/menu-grid.js"></script>
 <script src="js/me-adapter.js"></script>
 <script src="js/me-panel.js"></script>
+<script src="js/dragdrop.js"></script>
+<script src="js/dd-adapter.js"></script>
 <script src="js/ui-detail.js"></script>
 <script src="js/ui-quest.js"></script>
 <script src="js/game.js"></script>
@@ -248,6 +250,33 @@ window.requestAnimationFrame = function () { return 0; };
     /* ── 갈라져 나온 프로젝트로서의 조건 ─────────────── */
 
     /* W-0295 PBR 땅 — 공용 pbrground3d 값 층(three 없이) */
+    t('끌어 놓기 손놀림(W-0362) — 마우스 6px 끌기 → 받는 칸에 놓음 · 안 받는 칸은 취소 · 짧은 터치는 집지 않음 · 길게 누르기 → 집음 · 먼저 움직인 터치는 스크롤로 넘김 · 취소', function () {
+      var DD = DG.dragdrop, host = document.createElement('div'), got = [];
+      host.style.cssText = 'position:fixed;left:0;top:0;width:300px;height:100px;z-index:99999';
+      host.innerHTML = '<div data-dd="A" style="position:absolute;left:10px;top:10px;width:40px;height:40px"></div><div data-dd-drop="T" style="position:absolute;left:200px;top:10px;width:60px;height:60px"></div><div data-dd-drop="N" style="position:absolute;left:120px;top:10px;width:40px;height:40px"></div>';
+      document.body.appendChild(host);
+      DD.bind(host, { accepts: function (i, k) { return k === 'T'; }, drop: function (i, k) { got.push(i + '>' + k); } });
+      var src = host.firstChild, pe = function (type, x, y, pt) { DD._feed(type.replace('pointer', ''), { target: src, clientX: x, clientY: y, pointerId: pt === 'touch' ? 7 : 1, pointerType: pt }, host); };   // DOM 이벤트 없이(판의 첫 눌림을 안 건드림)
+      pe('pointerdown', 30, 30, 'mouse', src); pe('pointermove', 120, 40, 'mouse'); pe('pointermove', 230, 40, 'mouse'); pe('pointerup', 230, 40, 'mouse');
+      var r = [got.join() === 'A>T'];
+      pe('pointerdown', 30, 30, 'mouse', src); pe('pointermove', 140, 30, 'mouse'); pe('pointerup', 140, 30, 'mouse'); r.push(got.length === 1);
+      pe('pointerdown', 30, 30, 'touch', src); pe('pointerup', 30, 30, 'touch'); r.push(got.length === 1 && !DD.active());
+      pe('pointerdown', 30, 30, 'touch', src); var held = DD._holdNow(); pe('pointermove', 230, 40, 'touch'); pe('pointerup', 230, 40, 'touch'); r.push(held && got.length === 2);
+      pe('pointerdown', 30, 30, 'touch', src); pe('pointermove', 30, 60, 'touch'); r.push(!DD._holdNow()); pe('pointerup', 30, 60, 'touch');
+      pe('pointerdown', 30, 30, 'touch', src); DD._holdNow(); pe('pointercancel', 30, 30, 'touch'); var st = DD._state(); DD._feed('down', { target: host.children[1], clientX: 230, clientY: 40, pointerId: 8, pointerType: 'touch' }, host); r.push(st && st.picked && got.length === 3 && !DD.active());   // 집은 뒤 브라우저가 스크롤을 가져감 → 들고 있는 채 → 받는 칸을 눌러 놓음
+      pe('pointerdown', 30, 30, 'mouse', src); pe('pointermove', 120, 40, 'mouse'); var act = DD.active(); DD.cancel(); pe('pointerup', 230, 40, 'mouse'); r.push(act && got.length === 3 && !document.querySelector('.dd-ghost'));
+      r.push(DD.decide('touch', 100, 2) === 'wait', DD.decide('touch', 400, 2) === 'pick', DD.decide('touch', 100, 20) === 'scroll', DD.decide('mouse', 0, 7) === 'pick');
+      host.remove();
+      return r.every(Boolean) && '끌기·취소·짧은 터치·길게 누르기·스크롤 넘김·들고 있는 채 · 판정 넷' || '실패 ' + r.join(',');
+    });
+    t('끌어 놓기 2나락(W-0362) — 인형 칸에 놓기 = item.equip(영웅, uid) · 가방에 놓기 = item.unequip(영웅, 부위) — 단추와 같은 함수', function () {
+      var I = DG.item, A = DG.ddAdapter, calls = [], oe = I.equip, ou = I.unequip, el = document.createElement('div');
+      el.setAttribute('data-hero', 'h1');
+      I.equip = function (h, u) { calls.push('equip:' + h + ':' + u); return true; }; I.unequip = function (h, s) { calls.push('off:' + h + ':' + s); return true; };
+      try { A.drop('u9', 'slot:weapon', el); A.drop('eq:h1:ring', 'bag', null); } finally { I.equip = oe; I.unequip = ou; }
+      var r = [calls.join() === 'equip:h1:u9,off:h1:ring', A.eqOf('eq:h1:ring').slot === 'ring', A.accepts('nope', 'slot:weapon', el) === false, A.accepts('eq:h1:ring', 'slot:ring', el) === false];
+      return r.every(Boolean) && calls.join(' · ') || '실패 ' + r.join(',') + ' ' + calls.join();
+    });
     t('「내 정보」 창(W-0361) — 어댑터 값이 기존 함수 값 그대로 · render 가 칸·수치·성장 단추를 그림', function () {
       var m = DG.meAdapter.model(); var id = (DG.core.save.party || [])[0], ok = !id || (m.slots.length === DG.itemData.SLOTS.length && m.stats[1].value === DG.hero.power(id));
       var h = DG.mePanel.render(m), drew = h.indexOf('me-panel') > 0 && (m.slots || []).every(function (s, k) { return h.indexOf('data-mp-slot="' + k + '"') > 0; }) && (!m.grow || h.indexOf('data-mp-grow') > 0);

@@ -566,7 +566,7 @@
   }
 
   function renderSheet() {
-    if (!openTab) { return; }
+    if (!openTab || (global.DG.dragdrop && global.DG.dragdrop.active())) { return; }   // W-0362 끄는 동안 다시 안 그린다(칸·스크롤이 갈리면 놓을 자리를 잃는다) — 놓으면 dragdrop 이 changed 를 한 번 낸다
     var v = openTab === 'field' ? viewField()
           : openTab === 'bag' ? viewBag()
           : openTab === 'job' ? viewJob()

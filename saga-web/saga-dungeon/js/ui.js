@@ -708,7 +708,7 @@
   }
 
   function renderSheet() {
-    if (!openTab) { return; }
+    if (!openTab || (global.DG.dragdrop && global.DG.dragdrop.active())) { return; }   // W-0362 끄는 동안 다시 안 그린다(칸·스크롤이 갈리면 놓을 자리를 잃는다) — 놓으면 dragdrop 이 changed 를 한 번 낸다
     /* 자동 순행은 본영 카드에 있었다. 카드를 없애면서 **군교**에게 옮겼다 —
        부대를 맡기는 일이니 부대 시트가 그 자리다 */
     var v = openTab === 'party' ? (viewParty() + sectionAuto())
@@ -1606,18 +1606,18 @@
     function slot(k, kor) {
       var g = eq[k];
       if (!g) {
-        return '<div class="d2-dslot"><span class="muted">' + kor +
+        return '<div class="d2-dslot" data-dd-drop="slot:' + k + '" data-hero="' + gearHero + '"><span class="muted">' + kor +
           '<small>비었다</small></span></div>';
       }
       var t = it.tierOf(g);
       if (it.isBroken(g)) {
         return '<div class="d2-dslot" data-act="gear-off" data-hero="' + gearHero +
-          '" data-slot="' + k + '" title="벗는다">' +
+          '" data-slot="' + k + '" data-dd-drop="slot:' + k + '" data-dd="eq:' + gearHero + ':' + k + '" title="벗는다">' +
           '<span style="color:var(--bad)">\uD83D\uDD27 ' + esc(it.name(g)) +
           '<small>' + kor + ' \u00b7 부서짐 \u2014 수리해야 값을 냅니다</small></span></div>';
       }
       return '<div class="d2-dslot" data-act="gear-off" data-hero="' + gearHero +
-        '" data-slot="' + k + '" title="벗는다">' +
+        '" data-slot="' + k + '" data-dd-drop="slot:' + k + '" data-dd="eq:' + gearHero + ':' + k + '" title="벗는다">' +
         '<span style="color:' + t.color + '">' + esc(it.name(g)) +
         '<small>' + kor + ' \u00b7 눌러 벗기</small></span></div>';
     }
@@ -1654,7 +1654,7 @@
   function gearGrid(list, where) {
     var it = global.DG.item;
     var sorted = list.slice().sort(function (a, b) { return it.power(b) - it.power(a); });
-    var html = '<div class="d2-inv">', i, sel = null, used = 0;
+    var html = '<div class="d2-inv"' + (where === 'bag' ? ' data-dd-drop="bag"' : '') + '>', i, sel = null, used = 0;   // W-0362 가방 = 벗기 받는 자리
     for (i = 0; i < sorted.length; i++) {
       var g = sorted[i], t = it.tierOf(g), b = it.baseOf(g);
       var span = SLOT_SPAN[b ? b.slot : 'charm'] || 1;
@@ -1663,7 +1663,7 @@
       if (g.uid === gearSel) { sel = g; }
       html += '<div class="d2-it' + (g.uid === gearSel ? ' on' : '') + (g.lock ? ' lock' : '') +
         '" style="grid-row:span ' + span + ';box-shadow:inset 0 0 0 1px ' + t.color +
-        ', inset 0 0 14px rgba(0,0,0,.8)" data-act="gear-sel" data-id="' + g.uid +
+        ', inset 0 0 14px rgba(0,0,0,.8)" data-act="gear-sel" data-id="' + g.uid + (where === 'bag' && !it.isUnid(g) ? '" data-dd="' + g.uid : '') +
         '" data-where="' + where + '" title="' + esc(it.name(g)) + '">' +
         (it.isUnid(g) ? '?' : gearIcon(g)) +
         (it.isBroken(g) ? '<b class="d2-broke">\uD83D\uDD27</b>' : '') +

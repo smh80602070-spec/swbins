@@ -117,6 +117,8 @@
    "js/menu-grid.js",
    "js/me-adapter.js",
    "js/me-panel.js",
+   "js/dragdrop.js",
+   "js/dd-adapter.js",
    "js/load-veil.js",
    "js/spawn-view.js",
    "js/ops-client.js",
@@ -245,6 +247,8 @@
    "js/menu-grid.js",
    "js/me-adapter.js",
    "js/me-panel.js",
+   "js/dragdrop.js",
+   "js/dd-adapter.js",
    "js/ui-detail.js",
    "js/ui-quest.js",
    "js/game.js"

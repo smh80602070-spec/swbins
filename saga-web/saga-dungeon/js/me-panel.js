@@ -3,7 +3,7 @@
  *
  * 사용자 10-20 "다섯판 내 장비랑 내 상태가 보는데 없어" — 입은 장비 칸과 전투(3마을은 생활) 수치를 한 창에.
  * 판마다 `js/me-adapter.js` 가 `DG.meAdapter = { model(), dock, title }` 를 둔다(기존 함수 값만 읽는다 — 새 계산·세이브 쓰기 없음).
- *   model = { name, sub, portrait(html), slots: [{ label, icon(html), item, go() }], stats: [{ label, value, detail }], note, grow: { label, open() } }
+ *   model = { name, sub, portrait(html), slots: [{ label, icon(html), item, go(), dd(끌어 놓기 값 — W-0362) }], stats: [{ label, value, detail }], note, grow: { label, open() } }
  * dock 이 false 가 아니면 독에 「내 정보」 단추(id btn-me — data-sheet 가 없어 판별 시트 단추 처리에 안 걸린다)와 덮개 창(#me-panel)을 붙인다.
  * 1만리는 기존 「나」 시트(data-sheet="me") 맨 위에 render() 를 끼운다(dock: false).
  * 칸·"어디서 올리나" 단추는 문서 전체 위임으로 받는다 — 덮개든 판 시트든 마지막에 그린 model 의 go/open 을 부른다.
@@ -20,7 +20,7 @@
   function render(m) {
     m = m || {}; last = m;
     var slots = (m.slots || []).map(function (s, i) {
-      return '<button type="button" class="mp-slot' + (s.item ? '' : ' empty') + '" data-mp-slot="' + i + '"' + (s.go ? '' : ' disabled') + '>' +
+      return '<button type="button" class="mp-slot' + (s.item ? '' : ' empty') + '" data-mp-slot="' + i + '"' + (s.dd ? ' data-dd="' + esc(s.dd) + '"' : '') + (s.go ? '' : ' disabled') + '>' +   // W-0362 끌 수 있는 칸(판 dd-adapter 가 받는다)
         '<span class="mp-ico">' + (s.icon || '') + '</span><span class="mp-txt"><small>' + esc(s.label) + '</small>' +
         (s.item ? '<b>' + esc(s.item) + '</b>' : '<i class="muted">비움</i>') + '</span></button>';
     }).join('');

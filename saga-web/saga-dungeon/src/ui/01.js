@@ -708,7 +708,7 @@
   }
 
   function renderSheet() {
-    if (!openTab) { return; }
+    if (!openTab || (global.DG.dragdrop && global.DG.dragdrop.active())) { return; }   // W-0362 끄는 동안 다시 안 그린다(칸·스크롤이 갈리면 놓을 자리를 잃는다) — 놓으면 dragdrop 이 changed 를 한 번 낸다
     /* 자동 순행은 본영 카드에 있었다. 카드를 없애면서 **군교**에게 옮겼다 —
        부대를 맡기는 일이니 부대 시트가 그 자리다 */
     var v = openTab === 'party' ? (viewParty() + sectionAuto())

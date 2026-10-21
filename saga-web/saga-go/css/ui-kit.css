@@ -121,6 +121,14 @@ body { font-variant-numeric: tabular-nums; }
   background: var(--bad); color: #fff; font-size: 11px; font-weight: 700;
   display: grid; place-items: center;
 }
+/* ── 끌어 놓기(W-0362, shared/js/dragdrop.js) — 끌 칸 [data-dd] · 받을 칸 [data-dd-drop] ── */
+[data-dd] { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }   /* iOS 길게 누르기 메뉴·글자 고르기 끔 — touch-action 은 기본(스크롤 그대로) */
+.dd-ghost { position: fixed; z-index: 9999; pointer-events: none; margin: 0; opacity: .88; transform: translate(-50%, -50%) scale(1.06); box-shadow: 0 10px 28px rgba(0, 0, 0, .55); }
+.dd-src { opacity: .4; }
+.dd-ghost.dd-sticky { opacity: .7; transform: translate(-50%, -110%) scale(.9); }   /* 들고 있는 채(터치) — 손가락 위에 작게, 받는 칸을 누르면 놓는다 */
+.dd-on [data-dd-drop].dd-ok { box-shadow: inset 0 0 0 2px var(--gold); }
+.dd-on [data-dd-drop].dd-no { box-shadow: inset 0 0 0 2px var(--bad); opacity: .7; }
+.dd-on [data-dd-drop].dd-ok.dd-hover { box-shadow: inset 0 0 0 3px var(--gold), 0 0 14px rgba(232, 193, 90, .55); }
 /* ── 「내 정보」 창(W-0361, shared/js/me-panel.js) — 메뉴 화면과 같은 덮개·틀(.mg-panel) ── */
 #me-panel {
   position: fixed; inset: 0; z-index: 66;   /* 직접 연 창 — 자동 진행 ▶(45)·2나락 작은 지도(65) 위 */ display: none;

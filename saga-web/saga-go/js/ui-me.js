@@ -43,7 +43,7 @@
     party.forEach(function (id, i) {
       var r = data.find(id); if (!r) { return; }
       var gi = H.info(id);
-      out += '<button class="me-row" data-act="detail" data-id="' + esc(id) + '">' + h.pt('hero', r, 36) +
+      out += '<button class="me-row" data-act="detail" data-id="' + esc(id) + '"' + (i ? ' data-dd-drop="hero:' + esc(id) + '"' : '') + '>' + h.pt('hero', r, 36) +   // W-0362 선두 무기·보패를 끌어 놓을 자리
         '<span><b>' + (i === 0 ? '⭐ ' : '') + esc(r.name) + '</b> Lv.' + (gi ? gi.lv : 1) + '<br><small>' + equipShort(id, WP, AR, esc) + '</small></span></button>';
     });
     return out + '<p class="muted">줄을 누르면 그 인물 상세에서 무기를 고르고 보패를 낍니다.</p></div></div>';

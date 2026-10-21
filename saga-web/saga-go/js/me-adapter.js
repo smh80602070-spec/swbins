@@ -12,10 +12,10 @@
     if (!lead) { return { name: '나', sub: '동행이 없습니다', note: '인물을 등용해 동행에 넣으면 선두가 내 몸이 됩니다 — 무기·보패를 낄 수 있습니다.', grow: SC && SC.open ? { label: '✨ 성도에서 올리기', open: SC.open } : null }; }
     var id = lead.id, g = H.info(id), bk = H.breakdown(id), fin = (bk && bk.final) || {}, slots = [];
     var detail = function () { var b = global.document.querySelector('.me-sheet [data-act="detail"][data-id="' + id + '"]'); if (b) { b.click(); } };
-    if (WP) { var wid = WP.equipped(id), w = WP.info(wid); slots.push({ label: '무기', icon: WP.TYPE_ICON[WP.typeOf(id)], item: w ? '★' + w.rarity + ' ' + w.name : null, go: detail }); }
+    if (WP) { var wid = WP.equipped(id), w = WP.info(wid); slots.push({ label: '무기', icon: WP.TYPE_ICON[WP.typeOf(id)], item: w ? '★' + w.rarity + ' ' + w.name : null, go: detail, dd: w && !WP.isShared(wid) ? 'wp:' + wid : null }); }   // W-0362 dd — 동행 줄로 끌면 그 인물에게
     if (AR) {
       var eq = AR.equippedOf(id);
-      AR.SLOTS.forEach(function (s) { slots.push({ label: AR.SLOT_NAMES[s], icon: AR.SLOT_ICON[s], item: eq[s] ? AR.label(eq[s]).replace(/^\S+\s/, '') : null, go: detail }); });
+      AR.SLOTS.forEach(function (s) { slots.push({ label: AR.SLOT_NAMES[s], icon: AR.SLOT_ICON[s], item: eq[s] ? AR.label(eq[s]).replace(/^\S+\s/, '') : null, go: detail, dd: eq[s] ? 'art:' + eq[s] : null }); });
     }
     var m = FC && FC.memberOf ? FC.memberOf(id) : null, stats = [];
     if (m) {
