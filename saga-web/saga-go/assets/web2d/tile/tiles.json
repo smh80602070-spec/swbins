@@ -21,7 +21,7 @@
     "forest",
     "farm"
    ],
-   "seam_excess": 2.73
+   "seam_excess": 2.83
   },
   "grass_sand": {
    "atlas": "grass_sand/atlas.webp",

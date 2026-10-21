@@ -24,7 +24,7 @@
     "path",
     "floor"
    ],
-   "seam_excess": 2.63
+   "seam_excess": 2.6
   },
   "grass_sand": {
    "atlas": "grass_sand/atlas.webp",
@@ -40,7 +40,7 @@
    "kinds_b": [
     "sand"
    ],
-   "seam_excess": 2.53
+   "seam_excess": 2.93
   },
   "grass_stone": {
    "atlas": "grass_stone/atlas.webp",
@@ -57,7 +57,7 @@
     "stone",
     "grass_rocky"
    ],
-   "seam_excess": 2.78
+   "seam_excess": 2.39
   },
   "grass_water": {
    "atlas": "grass_water/atlas.webp",
@@ -73,7 +73,7 @@
    "kinds_b": [
     "water"
    ],
-   "seam_excess": 3.15
+   "seam_excess": 3.05
   },
   "sand_water": {
    "atlas": "sand_water/atlas.webp",

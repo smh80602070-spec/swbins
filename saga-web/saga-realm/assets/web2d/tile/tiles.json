@@ -20,7 +20,7 @@
    "kinds_b": [
     "hill"
    ],
-   "seam_excess": 2.9
+   "seam_excess": 2.13
   },
   "grass_stone": {
    "atlas": "grass_stone/atlas.webp",
@@ -33,7 +33,7 @@
    "kinds_b": [
     "mount"
    ],
-   "seam_excess": 2.1
+   "seam_excess": 2.03
   },
   "grass_water": {
    "atlas": "grass_water/atlas.webp",
@@ -46,7 +46,7 @@
    "kinds_b": [
     "river"
    ],
-   "seam_excess": 2.8
+   "seam_excess": 2.59
   },
   "dirt_stone": {
    "atlas": "dirt_stone/atlas.webp",
@@ -59,7 +59,7 @@
    "kinds_b": [
     "mount"
    ],
-   "seam_excess": 2.69
+   "seam_excess": 2.12
   }
  }
 }

@@ -89,14 +89,16 @@
 | make_realm_ui.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 12 |
 | make_realm_ui.py | - | CC0-1.0 코드 배치 + 글꼴 SIL OFL-1.1 (Nanum Brush Script·Noto Serif KR) | 56 |
 | make_realm_ui.py woff2 | - | SIL Open Font License 1.1 (OFL-NotoSerif.txt) | 2 |
-| gen.py | sd_xl_base_1.0 | CreativeML OpenRAIL++-M | 58 |
+| gen.py | sd_xl_base_1.0 | CreativeML OpenRAIL++-M | 50 |
 | rtsgen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 36 |
 | rtsai.py transitions | - | CreativeML OpenRAIL++-M — 코드 합성(경계 마스크) + 고른 AI 타일 rts_forest_floor_1 (sd_xl_base_1.0) | 24 |
 | rtsai.py transitions | - | CreativeML OpenRAIL++-M — 코드 합성(경계 마스크) + 고른 AI 타일 rts_hill_1 (sd_xl_base_1.0) | 24 |
 | rtsai.py transitions | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) — 코드 합성(경계 마스크) + 고른 AI 타일 rts_water_1 (-) | 24 |
-| edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) | z-image-turbo | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 | 4 |
-| edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) | sd_xl_base_1.0, z-image-turbo | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 | 4 |
-| edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) | sd_xl_base_1.0 | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 | 10 |
+| edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) | z-image-turbo | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 | 7 |
+| edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) | sd_xl_base_1.0, z-image-turbo | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 | 1 |
+| edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) | - | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 | 3 |
+| edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) | sd_xl_base_1.0 | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 | 7 |
+| ground_tile.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 8 |
 | water_tile.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 4 |
 | retile_uv.py --unit 4.4 (K-0089) | - | CC0-1.0 (Kenney Modular Cave Kit gate.glb 모양 그대로 + 자체 상자 투영 UV) | 2 |
 | foliage_atlas.py | - | 자체 생성(Z-Image-Turbo Apache-2.0 출력, 상업 허용) — 남의 사진·스캔 0 | 1 |

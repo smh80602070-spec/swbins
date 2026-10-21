@@ -914,7 +914,7 @@
    "tool": "gen.py",
    "model": "sd_xl_base_1.0",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 58,
+   "count": 50,
    "where": [
     "saga-assets/web2d/rts",
     "saga-assets/web2d/tile",
@@ -966,21 +966,11 @@
    "tool": "edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀)",
    "model": "z-image-turbo",
    "license": "원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것",
-   "count": 4,
+   "count": 7,
    "where": [
     "saga-assets/web2d/terrain/saga-dungeon/dirt_stone",
     "saga-assets/web2d/terrain/saga-dungeon/field_stone",
     "saga-assets/web2d/terrain/saga-dungeon/stone_water",
-    "saga-assets/web2d/terrain/saga-forest/sand_water"
-   ]
-  },
-  {
-   "tool": "edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀)",
-   "model": "sd_xl_base_1.0, z-image-turbo",
-   "license": "원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것",
-   "count": 4,
-   "where": [
-    "saga-assets/web2d/terrain/saga-dungeon/moss_dirt",
     "saga-assets/web2d/terrain/saga-forest/grass_dirt",
     "saga-assets/web2d/terrain/saga-forest/grass_sand",
     "saga-assets/web2d/terrain/saga-forest/grass_stone"
@@ -988,16 +978,46 @@
   },
   {
    "tool": "edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀)",
-   "model": "sd_xl_base_1.0",
+   "model": "sd_xl_base_1.0, z-image-turbo",
    "license": "원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것",
-   "count": 10,
+   "count": 1,
+   "where": [
+    "saga-assets/web2d/terrain/saga-dungeon/moss_dirt"
+   ]
+  },
+  {
+   "tool": "edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀)",
+   "model": "",
+   "license": "원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것",
+   "count": 3,
    "where": [
     "saga-assets/web2d/terrain/saga-forest/grass_water",
+    "saga-assets/web2d/terrain/saga-realm/grass_dirt",
+    "saga-assets/web2d/terrain/saga-realm/grass_water"
+   ]
+  },
+  {
+   "tool": "edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀)",
+   "model": "sd_xl_base_1.0",
+   "license": "원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것",
+   "count": 7,
+   "where": [
     "saga-assets/web2d/terrain/saga-go/grass_dirt",
     "saga-assets/web2d/terrain/saga-go/grass_sand",
     "saga-assets/web2d/terrain/saga-go/grass_stone",
     "saga-assets/web2d/terrain/saga-go/grass_water",
-    "saga-assets/web2d/terrain/saga-go/sand_water"
+    "saga-assets/web2d/terrain/saga-go/sand_water",
+    "saga-assets/web2d/terrain/saga-realm/dirt_stone"
+   ]
+  },
+  {
+   "tool": "ground_tile.py",
+   "model": "",
+   "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+   "count": 8,
+   "where": [
+    "saga-assets/web2d/tile",
+    "saga-web/shared/assets/web2d/tile"
    ]
   },
   {
