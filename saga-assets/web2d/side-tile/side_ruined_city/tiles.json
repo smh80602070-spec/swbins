@@ -1,0 +1,10 @@
+{
+ "cell": 128,
+ "cols": 4,
+ "top": "top.webp",
+ "side": "side.webp",
+ "end_l": "end_l.webp",
+ "end_r": "end_r.webp",
+ "rule": "칸 그림 = 그림 안 (세계 칸 x mod 4) 번째 칸(옆면은 y mod 4 줄도). top·end_l·end_r 는 1줄 4칸, side 는 4×4 — 이웃끼리 그대로 이어짐",
+ "note": "top = 발판·땅 맨 윗줄(위 투명 물결 + 풀 테) · side = 그 밑 채움 · end_l = 발판 왼끝 칸, end_r = 오른끝 칸(그 자리 x mod 4 칸)"
+}

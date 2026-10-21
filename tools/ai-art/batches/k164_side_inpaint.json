@@ -1,0 +1,287 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "side2d_inp",
+ "note": "K-0164 겹 배경 뒤판 — 깊이 문턱보다 가까운 것을 지우고 다시 그림(원본 프롬프트, 마스크 안만)",
+ "defaults": {
+  "prompt_prefix": "",
+  "width": 1344,
+  "height": 768,
+  "steps": 28,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "",
+  "variants": 1
+ },
+ "items": [
+  {
+   "id": "field_meadow__m1",
+   "prompt": "masterpiece, high score, great score, absurdres, (grassy meadow:1.15), rolling green hills, distant blue mountains, scattered trees, wooden fence, energy pylons, morning sky, white clouds, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 1311027582,
+   "init_image": "tools/ai-art/_out/side2d_inp/field_meadow__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/field_meadow__mask1_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "field_meadow__m2",
+   "prompt": "masterpiece, high score, great score, absurdres, (grassy meadow:1.15), rolling green hills, distant blue mountains, scattered trees, wooden fence, energy pylons, morning sky, white clouds, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 1311027583,
+   "init_image": "tools/ai-art/_out/side2d_inp/field_meadow__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/field_meadow__mask2_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "field_meadow__m3",
+   "prompt": "masterpiece, high score, great score, absurdres, (grassy meadow:1.15), rolling green hills, distant blue mountains, scattered trees, wooden fence, energy pylons, morning sky, white clouds, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 1311027584,
+   "init_image": "tools/ai-art/_out/side2d_inp/field_meadow__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/field_meadow__mask3_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "forest__m1",
+   "prompt": "masterpiece, high score, great score, absurdres, (ancient forest:1.15), tall trees, distant misty hills, sunbeams, ferns, mossy roots, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 1304434900,
+   "init_image": "tools/ai-art/_out/side2d_inp/forest__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/forest__mask1_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "forest__m2",
+   "prompt": "masterpiece, high score, great score, absurdres, (ancient forest:1.15), tall trees, distant misty hills, sunbeams, ferns, mossy roots, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 1304434901,
+   "init_image": "tools/ai-art/_out/side2d_inp/forest__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/forest__mask2_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "forest__m3",
+   "prompt": "masterpiece, high score, great score, absurdres, (ancient forest:1.15), tall trees, distant misty hills, sunbeams, ferns, mossy roots, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 1304434902,
+   "init_image": "tools/ai-art/_out/side2d_inp/forest__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/forest__mask3_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "cave_mouth__m1",
+   "prompt": "masterpiece, high score, great score, absurdres, (rocky cliff:1.15), huge cave entrance, glowing crystals, hanging vines, distant mountains, mine rails, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 3843230926,
+   "init_image": "tools/ai-art/_out/side2d_inp/cave_mouth__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/cave_mouth__mask1_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "cave_mouth__m2",
+   "prompt": "masterpiece, high score, great score, absurdres, (rocky cliff:1.15), huge cave entrance, glowing crystals, hanging vines, distant mountains, mine rails, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 3843230927,
+   "init_image": "tools/ai-art/_out/side2d_inp/cave_mouth__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/cave_mouth__mask2_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "cave_mouth__m3",
+   "prompt": "masterpiece, high score, great score, absurdres, (rocky cliff:1.15), huge cave entrance, glowing crystals, hanging vines, distant mountains, mine rails, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 3843230928,
+   "init_image": "tools/ai-art/_out/side2d_inp/cave_mouth__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/cave_mouth__mask3_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "deep_cave__m1",
+   "prompt": "masterpiece, high score, great score, absurdres, (underground cavern:1.15), stalactites, glowing mushrooms, blue crystals, underground lake, rock pillars, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 3578053782,
+   "init_image": "tools/ai-art/_out/side2d_inp/deep_cave__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/deep_cave__mask1_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "deep_cave__m2",
+   "prompt": "masterpiece, high score, great score, absurdres, (underground cavern:1.15), stalactites, glowing mushrooms, blue crystals, underground lake, rock pillars, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 3578053783,
+   "init_image": "tools/ai-art/_out/side2d_inp/deep_cave__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/deep_cave__mask2_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "deep_cave__m3",
+   "prompt": "masterpiece, high score, great score, absurdres, (underground cavern:1.15), stalactites, glowing mushrooms, blue crystals, underground lake, rock pillars, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 3578053784,
+   "init_image": "tools/ai-art/_out/side2d_inp/deep_cave__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/deep_cave__mask3_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "mountain_shrine__m1",
+   "prompt": "masterpiece, high score, great score, absurdres, (mountain shrine:1.15), pine trees, stone lanterns, wooden gate, stone steps, mist, distant peaks, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 1889978179,
+   "init_image": "tools/ai-art/_out/side2d_inp/mountain_shrine__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/mountain_shrine__mask1_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "mountain_shrine__m2",
+   "prompt": "masterpiece, high score, great score, absurdres, (mountain shrine:1.15), pine trees, stone lanterns, wooden gate, stone steps, mist, distant peaks, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 1889978180,
+   "init_image": "tools/ai-art/_out/side2d_inp/mountain_shrine__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/mountain_shrine__mask2_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "mountain_shrine__m3",
+   "prompt": "masterpiece, high score, great score, absurdres, (mountain shrine:1.15), pine trees, stone lanterns, wooden gate, stone steps, mist, distant peaks, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 1889978181,
+   "init_image": "tools/ai-art/_out/side2d_inp/mountain_shrine__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/mountain_shrine__mask3_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "sky_bridge__m1",
+   "prompt": "masterpiece, high score, great score, absurdres, (floating rock islands:1.15), stone bridge, waterfalls, sea of clouds, hovering platforms, sunset sky, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 2222591808,
+   "init_image": "tools/ai-art/_out/side2d_inp/sky_bridge__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/sky_bridge__mask1_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "sky_bridge__m2",
+   "prompt": "masterpiece, high score, great score, absurdres, (floating rock islands:1.15), stone bridge, waterfalls, sea of clouds, hovering platforms, sunset sky, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 2222591809,
+   "init_image": "tools/ai-art/_out/side2d_inp/sky_bridge__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/sky_bridge__mask2_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "sky_bridge__m3",
+   "prompt": "masterpiece, high score, great score, absurdres, (floating rock islands:1.15), stone bridge, waterfalls, sea of clouds, hovering platforms, sunset sky, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 2222591810,
+   "init_image": "tools/ai-art/_out/side2d_inp/sky_bridge__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/sky_bridge__mask3_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "fire_gorge__m1",
+   "prompt": "masterpiece, high score, great score, absurdres, (volcanic canyon:1.15), red dusk sky, drifting embers, lava glow, charred pillars, stone ruins, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 2514866873,
+   "init_image": "tools/ai-art/_out/side2d_inp/fire_gorge__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/fire_gorge__mask1_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "fire_gorge__m2",
+   "prompt": "masterpiece, high score, great score, absurdres, (volcanic canyon:1.15), red dusk sky, drifting embers, lava glow, charred pillars, stone ruins, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 2514866874,
+   "init_image": "tools/ai-art/_out/side2d_inp/fire_gorge__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/fire_gorge__mask2_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "fire_gorge__m3",
+   "prompt": "masterpiece, high score, great score, absurdres, (volcanic canyon:1.15), red dusk sky, drifting embers, lava glow, charred pillars, stone ruins, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 2514866875,
+   "init_image": "tools/ai-art/_out/side2d_inp/fire_gorge__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/fire_gorge__mask3_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "old_battlefield__m1",
+   "prompt": "masterpiece, high score, great score, absurdres, (ancient battlefield plain:1.15), torn banners, broken spears, wagon wheels, distant fortress, golden clouds, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 2316945332,
+   "init_image": "tools/ai-art/_out/side2d_inp/old_battlefield__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/old_battlefield__mask1_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "old_battlefield__m2",
+   "prompt": "masterpiece, high score, great score, absurdres, (ancient battlefield plain:1.15), torn banners, broken spears, wagon wheels, distant fortress, golden clouds, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 2316945333,
+   "init_image": "tools/ai-art/_out/side2d_inp/old_battlefield__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/old_battlefield__mask2_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "old_battlefield__m3",
+   "prompt": "masterpiece, high score, great score, absurdres, (ancient battlefield plain:1.15), torn banners, broken spears, wagon wheels, distant fortress, golden clouds, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 2316945334,
+   "init_image": "tools/ai-art/_out/side2d_inp/old_battlefield__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/old_battlefield__mask3_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "ruined_city__m1",
+   "prompt": "masterpiece, high score, great score, absurdres, (ruined city:1.15), collapsed skyscrapers, overgrown vines, rusted cars, cracked road, dusk sky, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 3640556264,
+   "init_image": "tools/ai-art/_out/side2d_inp/ruined_city__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/ruined_city__mask1_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "ruined_city__m2",
+   "prompt": "masterpiece, high score, great score, absurdres, (ruined city:1.15), collapsed skyscrapers, overgrown vines, rusted cars, cracked road, dusk sky, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 3640556265,
+   "init_image": "tools/ai-art/_out/side2d_inp/ruined_city__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/ruined_city__mask2_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "ruined_city__m3",
+   "prompt": "masterpiece, high score, great score, absurdres, (ruined city:1.15), collapsed skyscrapers, overgrown vines, rusted cars, cracked road, dusk sky, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 3640556266,
+   "init_image": "tools/ai-art/_out/side2d_inp/ruined_city__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/ruined_city__mask3_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "orbital_base__m1",
+   "prompt": "masterpiece, high score, great score, absurdres, (space station interior:1.15), huge window, starfield, distant planet, metal trusses, glowing blue panels, horizontal panorama, layered landscape, flat floor in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 1774384128,
+   "init_image": "tools/ai-art/_out/side2d_inp/orbital_base__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/orbital_base__mask1_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "orbital_base__m2",
+   "prompt": "masterpiece, high score, great score, absurdres, (space station interior:1.15), huge window, starfield, distant planet, metal trusses, glowing blue panels, horizontal panorama, layered landscape, flat floor in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 1774384129,
+   "init_image": "tools/ai-art/_out/side2d_inp/orbital_base__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/orbital_base__mask2_s.png",
+   "denoise": 1.0
+  },
+  {
+   "id": "orbital_base__m3",
+   "prompt": "masterpiece, high score, great score, absurdres, (space station interior:1.15), huge window, starfield, distant planet, metal trusses, glowing blue panels, horizontal panorama, layered landscape, flat floor in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon, object, pillar, post, statue",
+   "seed": 1774384130,
+   "init_image": "tools/ai-art/_out/side2d_inp/orbital_base__src.png",
+   "mask_image": "tools/ai-art/_out/side2d_inp/orbital_base__mask3_s.png",
+   "denoise": 1.0
+  }
+ ]
+}

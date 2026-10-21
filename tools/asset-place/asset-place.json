@@ -498,11 +498,27 @@
     "*.webp",
     "*.json"
    ],
-   "note": "K-0150 겹 배경(parallax2d 규격 bg2d/<region>/layers.json + 층 다섯) — 장소 그림을 깊이 추정으로 가르고 뒤판은 인페인트. 1차 = 4종횡 story_field_meadow·story_forest(트인 풍경만 ○, 대칭 실내·복잡 장면은 ✗)",
+   "note": "K-0150 겹 배경(parallax2d 규격 bg2d/<region>/layers.json) — 장소 그림을 깊이 추정으로 가르고 뒤판은 인페인트 · K-0164 4종횡 사냥터 10 전부 4층(sky·far·near·front, 2016×1152 원본 = 세로 폰 안 늘어남, tools/ai-art/side_layers.py)",
    "targets": [
     {
      "track": "web",
      "dir": "saga-web/saga-story/assets/web2d/bg2d"
+    }
+   ]
+  },
+  {
+   "id": "web2d-side-tile",
+   "src": "saga-assets/web2d/side-tile",
+   "recursive": true,
+   "include": [
+    "*.webp",
+    "*.json"
+   ],
+   "note": "K-0164 4종횡 옆보기 발판 타일 — side_<사냥터>/{top,end_l,end_r 512×128 · side 512×512} 칸 128 × 4(웹은 세계 칸 x mod 4 로 고름) + tiles.json",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-story/assets/web2d/tile"
     }
    ]
   },

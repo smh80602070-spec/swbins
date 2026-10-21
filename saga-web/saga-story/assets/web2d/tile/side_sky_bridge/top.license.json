@@ -1,0 +1,23 @@
+{
+ "id": "side_sky_bridge_top",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, (horizontal strip of cloud wisp and brass trim:1.15), long thin band, side view, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+ "negative_prompt": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+ "seed": 482043360,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "euler_ancestral/normal",
+ "size": [
+  512,
+  128
+ ],
+ "seconds": 20.0,
+ "date": "2026-10-18",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py",
+ "source_image": "tools/ai-art/_out/k135_pick/st_sky_bridge_edge_v03.png",
+ "base_image": "tools/ai-art/_out/k135_pick/st_sky_bridge_ground_v03.png",
+ "packed_by": "K-0164 tools/ai-art/side_layers.py — K-0135 그림체 C 땅·테 원본을 128 칸 4개 묶음으로(make_seamless · 코드 합성, GPU 안 씀)"
+}

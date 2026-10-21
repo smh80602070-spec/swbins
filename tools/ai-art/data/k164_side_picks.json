@@ -1,0 +1,12 @@
+{
+ "field_meadow": 1,
+ "forest": 2,
+ "cave_mouth": 2,
+ "deep_cave": 2,
+ "mountain_shrine": 1,
+ "sky_bridge": 2,
+ "fire_gorge": 2,
+ "old_battlefield": 1,
+ "ruined_city": 2,
+ "orbital_base": 2
+}

@@ -1,0 +1,28 @@
+{
+ "layers": [
+  {
+   "img": "sky.webp",
+   "depth": 0.04,
+   "top": 0.0,
+   "h": 1.0
+  },
+  {
+   "img": "far.webp",
+   "depth": 0.2,
+   "top": 0.0998,
+   "h": 0.9002
+  },
+  {
+   "img": "near.webp",
+   "depth": 0.5,
+   "top": 0.1042,
+   "h": 0.8958
+  },
+  {
+   "img": "front.webp",
+   "depth": 0.9,
+   "top": 0.3793,
+   "h": 0.6207
+  }
+ ]
+}

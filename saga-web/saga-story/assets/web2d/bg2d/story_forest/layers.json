@@ -1,34 +1,28 @@
 {
  "layers": [
   {
-   "img": "base.webp",
-   "depth": 0.05,
-   "top": 0,
-   "h": 1
+   "img": "sky.webp",
+   "depth": 0.04,
+   "top": 0.0,
+   "h": 1.0
   },
   {
-   "img": "l1.webp",
-   "depth": 0.25,
-   "top": 0,
-   "h": 1
+   "img": "far.webp",
+   "depth": 0.2,
+   "top": 0.0,
+   "h": 1.0
   },
   {
-   "img": "l2.webp",
+   "img": "near.webp",
    "depth": 0.5,
-   "top": 0,
-   "h": 1
+   "top": 0.0,
+   "h": 1.0
   },
   {
-   "img": "l3.webp",
-   "depth": 0.8,
-   "top": 0,
-   "h": 1
-  },
-  {
-   "img": "l4.webp",
-   "depth": 1.0,
-   "top": 0,
-   "h": 1
+   "img": "front.webp",
+   "depth": 0.9,
+   "top": 0.0,
+   "h": 1.0
   }
  ]
 }

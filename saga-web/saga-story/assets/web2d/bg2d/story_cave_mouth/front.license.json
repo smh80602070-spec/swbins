@@ -1,0 +1,23 @@
+{
+ "id": "story_cave_mouth_front",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, (rocky cliff:1.15), huge cave entrance, glowing crystals, hanging vines, distant mountains, mine rails, horizontal panorama, layered landscape, flat ground in foreground, scenery, no humans, wide shot, game background, painterly, depth, atmospheric perspective, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+ "negative_prompt": "text, signature, watermark, blurry, lowres, worst quality, low quality, people, character, frame, border, split screen, harsh outline, dark palette, gritty, photorealistic, neon",
+ "seed": 3843230925,
+ "steps": 30,
+ "cfg_scale": 6.0,
+ "sampler": "euler_ancestral/normal",
+ "size": [
+  2016,
+  1152
+ ],
+ "seconds": 96.2,
+ "date": "2026-10-21",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py",
+ "source_image": "tools/ai-art/_out/side2d/sl_cave_mouth_v02.png",
+ "packed_by": "K-0164 tools/ai-art/side_layers.py — 깊이 추정 Depth Anything V2 Small(Apache-2.0, 도구 전용)으로 층 가름 · 원본 픽셀 · 알파 = 분위수 0.85 이상",
+ "mode": "original"
+}
