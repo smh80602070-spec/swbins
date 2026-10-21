@@ -151,6 +151,8 @@
   var CREATURE_SKIP = {};   // W-0206 — W-0194 의 fish_b·fish_c "빈 칸"은 CREATURE_DIRS 가 숫자 이름(Fish2·Fish3)을 못 읽어 새 쪽도 빌린 몸을 받은 것이었다(새 몸은 멀쩡)   // W-0194 — 새 몸이 three 에서 안 보임(빈 칸, 키 1.00) → Fish2·Fish3 빌린 것 유지, K 다시 굽기(수신함)
   var CREATURE_DIRS = /(?:^|\/)(animals|animals_extra|animals_extra2|standin|community|troops|monsters|quaternius|quaternius2|quaternius_dino|robots|space|foes)\/([A-Za-z_][A-Za-z0-9_]*?)(?:_[0-9a-f]{8})?\.glb$/;   // W-0206 이름에 숫자 허용(옛 [A-Za-z_] 라 Fish1·Fish2·Fish3 이 짝을 못 찾았다)
   function creatureFor(path) {
+    var cm = /^crea:([a-z0-9_]+)$/.exec(String(path || ''));   // W-0356 — 'crea:<id>' 는 옛 빌린 경로가 없다: 손잡이와 무관하게 자체 몸
+    if (cm) { return url('creature', cm[1]); }
     var C = global.DG && global.DG.core;
     if (C && C.tuned && !C.tuned('assets3d.creature', 1)) { return null; }
     var m = CREATURE_DIRS.exec(String(path || ''));   // 괴물 팩은 이름 끝에 해시(`Goleling_51bf31d7.glb`)가 붙어 있다 — 떼고 본다

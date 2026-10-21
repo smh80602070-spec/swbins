@@ -43,7 +43,7 @@
     { key: 'sailor', name: '난파 선원 풍랑', emoji: '🧭', type: 'collect', piece: 'visitcompass', n: 5,
       line: '배가 뒤집혀 나침반이 산산이… 숲 어디에 조각이 떨어졌을 텐데', gold: 800, furn: 'visit_sailor', era: 'past' },
     { key: 'wisp', name: '도깨비불 반디', emoji: '👻', type: 'collect', piece: 'visitwisp', n: 5,
-      line: '히잉… 놀라서 몸이 다섯 조각으로 흩어졌어. 숲에서 좀 찾아 줘', gold: 1000, furn: 'visit_wisp', era: 'myth', body: M + 'monsters/Ghost.glb' },
+      line: '히잉… 놀라서 몸이 다섯 조각으로 흩어졌어. 숲에서 좀 찾아 줘', gold: 1000, furn: 'visit_wisp', era: 'myth', body: 'crea:ghost' },
     { key: 'angler', name: '낚시 명인 청파', emoji: '🎣', type: 'bring', cat: 'fish', n: 3,
       line: '이 마을 물고기 구경 좀 하세나 — 셋만 보여 주게', gold: 700, furn: 'visit_angler', era: 'past' },
     { key: 'bugdoc', name: '곤충 박사 나비', emoji: '🦋', type: 'bring', cat: 'bug', n: 3,

@@ -122,10 +122,10 @@
        90여 개가 이미 다 들어 있다(1H_Melee_*·2H_Melee_*·1H_Ranged_* 등, 클립
        이름이 QRPG와 달라도 `mapClips()` 낱말표가 이미 다 받는다). data-enemy.js
        배치·밸런스는 아직 안 건드렸다 — 자산만 갖춰 둔다. */
-    'monster:skeleton_warrior': 'assets/models/monsters/kaykit_skeletons/Skeleton_Warrior.glb',
-    'monster:skeleton_mage': 'assets/models/monsters/kaykit_skeletons/Skeleton_Mage.glb',
-    'monster:skeleton_rogue': 'assets/models/monsters/kaykit_skeletons/Skeleton_Rogue.glb',
-    'monster:skeleton_minion': 'assets/models/monsters/kaykit_skeletons/Skeleton_Minion.glb',
+    'monster:skeleton_warrior': 'crea:skeleton_warrior',
+    'monster:skeleton_mage': 'crea:skeleton_mage',
+    'monster:skeleton_rogue': 'crea:skeleton_rogue',
+    'monster:skeleton_minion': 'crea:skeleton_minion',
     /* 2026-09-07(이어서) — Quaternius "Ultimate Monsters Bundle"(CC0, poly.pizza
        미러로 받음 — 개별 몬스터 45종, 클립 이름이 `CharacterArmature|Idle`처럼
        `|` 로 묶여 있는데 `mapClips()`의 `normName()`이 이미 그 구분자를
@@ -133,51 +133,51 @@
        수집 몬스터류를 연상시키는 것(Alpaking·Armabee 등)이 섞여 있으니
        실제 게임에 노출할 때 이름 정책(CLAUDE.md, 가명)을 지킨다 — 여기 키는
        내부 식별자일 뿐 화면에 그대로 안 띄운다. */
-    'monster:alien': PEOPLE_MONSTERS_Q + 'Alien_0bb74be9.glb',
-    'monster:alien_2': PEOPLE_MONSTERS_Q + 'Alien_b048d82a.glb',
+    'monster:alien': 'crea:alien_grunt',
+    'monster:alien_2': 'crea:alien_grunt',
     'monster:alpaking_evolved': PEOPLE_MONSTERS_Q + 'Alpaking_Evolved_c50fd18d.glb',
-    'monster:alpaking': PEOPLE_MONSTERS_Q + 'Alpaking_acb0f155.glb',
+    'monster:alpaking': 'crea:alpaking',
     'monster:armabee_evolved': PEOPLE_MONSTERS_Q + 'Armabee_Evolved_fb7d7a9e.glb',
     'monster:armabee': PEOPLE_MONSTERS_Q + 'Armabee_de63aaf6.glb',
-    'monster:birb': PEOPLE_MONSTERS_Q + 'Birb_05dac745.glb',
-    'monster:blue_demon': PEOPLE_MONSTERS_Q + 'Blue_Demon_6fbb8914.glb',
-    'monster:bunny': PEOPLE_MONSTERS_Q + 'Bunny_084b5ebe.glb',
-    'monster:cactoro': PEOPLE_MONSTERS_Q + 'Cactoro_625862f9.glb',
-    'monster:cactoro_2': PEOPLE_MONSTERS_Q + 'Cactoro_e88090e2.glb',
+    'monster:birb': 'crea:birb',
+    'monster:blue_demon': 'crea:demon_blue',
+    'monster:bunny': 'crea:bunny',
+    'monster:cactoro': 'crea:cactus_imp',
+    'monster:cactoro_2': 'crea:cactus_imp',
     'monster:cat': PEOPLE_MONSTERS_Q + 'Cat_7ccb71fe.glb',
     'monster:chicken': PEOPLE_MONSTERS_Q + 'Chicken_a0001762.glb',
-    'monster:demon': PEOPLE_MONSTERS_Q + 'Demon_46b52ba4.glb',
-    'monster:demon_2': PEOPLE_MONSTERS_Q + 'Demon_c2e39eb4.glb',
-    'monster:dino': PEOPLE_MONSTERS_Q + 'Dino_1c1ae302.glb',
-    'monster:dragon_evolved': PEOPLE_MONSTERS_Q + 'Dragon_Evolved_90ed3740.glb',
-    'monster:dragon': PEOPLE_MONSTERS_Q + 'Dragon_ae5b8510.glb',
+    'monster:demon': 'crea:demon_red',
+    'monster:demon_2': 'crea:demon_red',
+    'monster:dino': 'crea:dino_pet',
+    'monster:dragon_evolved': 'crea:dragon_evolved',
+    'monster:dragon': 'crea:dragon',
     'monster:fish': PEOPLE_MONSTERS_Q + 'Fish_6c98561f.glb',
     'monster:fish_2': PEOPLE_MONSTERS_Q + 'Fish_f7d91eb6.glb',
-    'monster:frog': PEOPLE_MONSTERS_Q + 'Frog_9018566d.glb',
-    'monster:ghost': PEOPLE_MONSTERS_Q + 'Ghost_810f60a2.glb',
-    'monster:ghost_skull': PEOPLE_MONSTERS_Q + 'Ghost_Skull_0716bf8e.glb',
-    'monster:glub_evolved': PEOPLE_MONSTERS_Q + 'Glub_Evolved_27590c4e.glb',
-    'monster:glub': PEOPLE_MONSTERS_Q + 'Glub_f64d32a9.glb',
-    'monster:goleling': PEOPLE_MONSTERS_Q + 'Goleling_51bf31d7.glb',
-    'monster:goleling_evolved': PEOPLE_MONSTERS_Q + 'Goleling_Evolved_d6308fbf.glb',
-    'monster:green_blob': PEOPLE_MONSTERS_Q + 'Green_Blob_64ab590e.glb',
-    'monster:green_spiky_blob': PEOPLE_MONSTERS_Q + 'Green_Spiky_Blob_cd25a048.glb',
-    'monster:hywirl': PEOPLE_MONSTERS_Q + 'Hywirl_6500a805.glb',
-    'monster:monkroose': PEOPLE_MONSTERS_Q + 'Monkroose_54ca5c4d.glb',
-    'monster:mushnub': PEOPLE_MONSTERS_Q + 'Mushnub_55c64684.glb',
-    'monster:mushnub_evolved': PEOPLE_MONSTERS_Q + 'Mushnub_Evolved_84bc88a5.glb',
-    'monster:mushroom_king': PEOPLE_MONSTERS_Q + 'Mushroom_King_798301fb.glb',
-    'monster:ninja': PEOPLE_MONSTERS_Q + 'Ninja_2ed11876.glb',
-    'monster:ninja_2': PEOPLE_MONSTERS_Q + 'Ninja_42162a27.glb',
-    'monster:orc': PEOPLE_MONSTERS_Q + 'Orc_52a479b3.glb',
-    'monster:orc_enemy': PEOPLE_MONSTERS_Q + 'Orc_Enemy_3076c5f7.glb',
-    'monster:pigeon': PEOPLE_MONSTERS_Q + 'Pigeon_2ad33f9e.glb',
-    'monster:pink_slime': PEOPLE_MONSTERS_Q + 'Pink_Slime_3ddbff73.glb',
-    'monster:squidle': PEOPLE_MONSTERS_Q + 'Squidle_cbe8419d.glb',
-    'monster:tribal': PEOPLE_MONSTERS_Q + 'Tribal_1b4759ca.glb',
-    'monster:wizard': PEOPLE_MONSTERS_Q + 'Wizard_d206c071.glb',
-    'monster:yeti': PEOPLE_MONSTERS_Q + 'Yeti_085b078d.glb',
-    'monster:yeti_2': PEOPLE_MONSTERS_Q + 'Yeti_40a831b3.glb',
+    'monster:frog': 'crea:swamp_toad',
+    'monster:ghost': 'crea:ghost',
+    'monster:ghost_skull': 'crea:ghost_skull',
+    'monster:glub_evolved': 'crea:glub_evolved',
+    'monster:glub': 'crea:glub',
+    'monster:goleling': 'crea:goleling',
+    'monster:goleling_evolved': 'crea:goleling_evolved',
+    'monster:green_blob': 'crea:moss_blob',
+    'monster:green_spiky_blob': 'crea:spike_blob',
+    'monster:hywirl': 'crea:hywirl',
+    'monster:monkroose': 'crea:monkroose',
+    'monster:mushnub': 'crea:mushnub',
+    'monster:mushnub_evolved': 'crea:spore_cap',
+    'monster:mushroom_king': 'crea:mushroom_lord',
+    'monster:ninja': 'crea:shadow_ninja',
+    'monster:ninja_2': 'crea:shadow_ninja',
+    'monster:orc': 'crea:goblin_brute',
+    'monster:orc_enemy': 'crea:orc_warrior',
+    'monster:pigeon': 'crea:pigeon',
+    'monster:pink_slime': 'crea:pink_slime',
+    'monster:squidle': 'crea:squidle',
+    'monster:tribal': 'crea:masked_tribal',
+    'monster:wizard': 'crea:hat_wizard',
+    'monster:yeti': 'crea:yeti',
+    'monster:yeti_2': 'crea:yeti',
     /* 2026-09-07 — "몬스터 100개" 목표 2차분. poly.pizza "Animated Enemies"
        (Quaternius, CC0) 5종 전부 + 개별 몬스터 검색에서 건진 Quaternius CC0
        단품 4종(Zombie·Skeleton·Giant, 전부 `EnemyArmature|...` 계열이라
@@ -187,28 +187,28 @@
        "동작이 형태보다 우선" 원칙에 따라 뺐다. `monster:frog_enemy`는 기존
        `monster:frog`(Ultimate Monsters)와 다른 개체(UUID가 다름) — 이름이
        겹쳐 접미사로 구분. */
-    'monster:snake': 'assets/models/monsters/quaternius2/Snake.glb',
-    'monster:wasp': 'assets/models/monsters/quaternius2/Wasp.glb',
-    'monster:rat': 'assets/models/monsters/quaternius2/Rat.glb',
+    'monster:snake': 'crea:snake',
+    'monster:wasp': 'crea:wasp',
+    'monster:rat': 'crea:rat',
     /* 세 시대 적(PLAN §5.20, 2026-09-25) — 사람 셋은 이미 받아 둔 poly.pizza 묶음(영웅 창고 hero_light 에도 있다),
        로봇 셋은 사가만리 `assets/models/foes/`(Quaternius CC0 cyberpunk pack)에서 복사. 전부 제 클립 내장 */
     'monster:era_punk': 'assets/models/people/polypizza_men/Punk.glb',
     'monster:era_hazmat': 'assets/models/people/polypizza_hazmat/HazmatMan.glb',
     'monster:era_swat': 'assets/models/people/polypizza_men/SWAT.glb',
-    'monster:era_drone': 'assets/models/monsters/robots/Robot_Drone.glb',
-    'monster:era_walker': 'assets/models/monsters/robots/Robot_Walker.glb',
-    'monster:era_hulk': 'assets/models/monsters/robots/Robot_Large.glb',
+    'monster:era_drone': 'crea:robot_drone',
+    'monster:era_walker': 'crea:robot_walker',
+    'monster:era_hulk': 'crea:robot_large',
     /* 세 시대 마을 손님(§5.20) — `town.js` ERA_FOLK 의 model. 물들이지 않는다(제 옷이 곧 그 시대) */
     'folk:courier': 'assets/models/people/polypizza_men/Worker.glb',
     'folk:officeworker': 'assets/models/people/polypizza_women/Suit.glb',
     'folk:timetraveler': 'assets/models/people/polypizza_women/SciFiCharacter.glb',
     'folk:explorer': 'assets/models/people/polypizza_space/Astronaut1.glb',
-    'monster:spider': 'assets/models/monsters/quaternius2/Spider.glb',
-    'monster:frog_enemy': 'assets/models/monsters/quaternius2/FrogEnemy.glb',
-    'monster:zombie': 'assets/models/monsters/quaternius2/Zombie.glb',
-    'monster:skeleton_solo': 'assets/models/monsters/quaternius2/SkeletonSolo.glb',
-    'monster:giant': 'assets/models/monsters/quaternius2/Giant.glb',
-    'monster:slime_enemy': 'assets/models/monsters/community/SlimeEnemy.glb',
+    'monster:spider': 'crea:spider',
+    'monster:frog_enemy': 'crea:frog_brute',
+    'monster:zombie': 'crea:zombie',
+    'monster:skeleton_solo': 'crea:skeleton',
+    'monster:giant': 'crea:giant',
+    'monster:slime_enemy': 'crea:slime',
     /* 2026-09-14 — PLAN "3안"(새 CC0 몬스터 에셋 조사). Quaternius "Animated
        Dinosaur Pack"(CC0, quaternius.itch.io/animated-lowpoly-dinosaurs —
        quaternius.com 최신 팩 다수가 QAL(재배포 금지)로 바뀌어 있어 이번엔
@@ -220,12 +220,12 @@
        원본 자체에 `Stegosaurus_Death`로 잘못 붙어 있었지만, 이름이 아니라
        "death"라는 낱말만 보고 고르므로 문제없이 그대로 잡힌다 — 원본 파일을
        고치지 않았다). `tools/glb-compress`로 재압축(6개, 1.9MB→0.7MB). */
-    'monster:dino_apato': 'assets/models/monsters/quaternius_dino/Apatosaurus.glb',
-    'monster:dino_para': 'assets/models/monsters/quaternius_dino/Parasaurolophus.glb',
-    'monster:dino_stego': 'assets/models/monsters/quaternius_dino/Stegosaurus.glb',
-    'monster:dino_trex': 'assets/models/monsters/quaternius_dino/Trex.glb',
-    'monster:dino_tri': 'assets/models/monsters/quaternius_dino/Triceratops.glb',
-    'monster:dino_raptor': 'assets/models/monsters/quaternius_dino/Velociraptor.glb',
+    'monster:dino_apato': 'crea:apatosaurus',
+    'monster:dino_para': 'crea:parasaurolophus',
+    'monster:dino_stego': 'crea:stegosaurus',
+    'monster:dino_trex': 'crea:trex',
+    'monster:dino_tri': 'crea:triceratops',
+    'monster:dino_raptor': 'crea:raptor',
     /* 2026-09-14(이어서) — "3안" 계속. OpenGameArt "Cute Animated Monsters"
        (Quaternius, CC0 — quaternius.com/packs/animatedmonster.html·
        quaternius.itch.io/lowpoly-animated-monsters 도 같은 팩, 다만 itch.io는
@@ -240,11 +240,11 @@
        없어 attack 슬롯은 이번에도 FALLBACK(→interaction→idle)으로 간다
        (2026-09-09 "Wizard.glb" 절과 같은 자리, 낱말표는 그대로 둔다).
        `tools/glb-compress`로 재압축(5개, 0.6MB→0.2MB). */
-    'monster:cyclops': 'assets/models/monsters/quaternius_cute/Cyclops.glb',
-    'monster:crab': 'assets/models/monsters/quaternius_cute/Crab.glb',
-    'monster:cthulhu': 'assets/models/monsters/quaternius_cute/Cthulhu.glb',
-    'monster:treant': 'assets/models/monsters/quaternius_cute/Tree.glb',
-    'monster:demon_green': 'assets/models/monsters/quaternius_cute/GreenDemon.glb',
+    'monster:cyclops': 'crea:cyclops_cute',
+    'monster:crab': 'crea:crab_cute',
+    'monster:cthulhu': 'crea:tentacle_imp',
+    'monster:treant': 'crea:tree_walker',
+    'monster:demon_green': 'crea:green_imp',
     /* 2026-09-04 — 도감(펫) 초상 실사화. "코드로 그리지 말고 에셋으로"가
        인물 초상은 이미 되는데(`portrait3d.js`) 펫(짐승)은 여태 빠져 있었다.
        펫 41종 중 신수(神獸) 11종·창작 짐승(옛 오마주) 16종은 CC0로 존재할 리 없는
@@ -346,31 +346,31 @@
        사가만리가 형태별 풀에서 id 해시로 고른 것과 **같은 모델**을 입힌다(해태=당나귀·청룡=스테고사우루스 등, 세 판이 같은 대역).
        이 판에 없던 여섯(Birb·Pigeon·Snake 둘·Orc·Demon)만 사가만리에서 `standin/` 으로 복사, 나머지는 이미 있는 같은 종 모델 */
     'pet:samjogo': STANDIN + 'Birb.glb',
-    'pet:haetae': PEOPLE_MONSTERS_Q + 'Goleling_51bf31d7.glb',
-    'pet:cheongryong': PEOPLE_MONSTERS_Q + 'Dragon_Evolved_90ed3740.glb',
+    'pet:haetae': 'crea:goleling',
+    'pet:cheongryong': 'crea:dragon_evolved',
     'pet:baekho': ANIMALS + 'Tiger.glb',
-    'pet:jujak': PEOPLE_MONSTERS_Q + 'Hywirl_6500a805.glb',
+    'pet:jujak': 'crea:hywirl',
     'pet:hyeonmu': STANDIN + 'Snake.glb',
     'pet:gumiho': ANIMALS_EXTRA + 'Fox.glb',
     'pet:dokkaebi': STANDIN + 'Orc.gltf',
     'pet:bulgasari': ANIMALS + 'Elephant.glb',
     'pet:jeoktoma': ANIMALS_EXTRA + 'Horse.glb',
     'pet:jeolyeong': ANIMALS_EXTRA + 'White_Horse.glb',
-    'pet:pk_bulbasaur': PEOPLE_MONSTERS_Q + 'Mushnub_55c64684.glb',
-    'pet:pk_charmander': PEOPLE_MONSTERS_Q + 'Dino_1c1ae302.glb',
-    'pet:pk_squirtle': PEOPLE_MONSTERS_Q + 'Squidle_cbe8419d.glb',
-    'pet:pk_magikarp': PEOPLE_MONSTERS_Q + 'Glub_f64d32a9.glb',
-    'pet:pk_pikachu': PEOPLE_MONSTERS_Q + 'Bunny_084b5ebe.glb',
-    'pet:pk_eevee': PEOPLE_MONSTERS_Q + 'Monkroose_54ca5c4d.glb',
-    'pet:pk_slowbro': PEOPLE_MONSTERS_Q + 'Pink_Slime_3ddbff73.glb',
-    'pet:pk_gengar': PEOPLE_MONSTERS_Q + 'Ghost_810f60a2.glb',
-    'pet:pk_snorlax': PEOPLE_MONSTERS_Q + 'Yeti_085b078d.glb',
-    'pet:pk_lapras': PEOPLE_MONSTERS_Q + 'Glub_Evolved_27590c4e.glb',
-    'pet:pk_alakazam': PEOPLE_MONSTERS_Q + 'Wizard_d206c071.glb',
-    'pet:pk_dragonite': PEOPLE_MONSTERS_Q + 'Alpaking_acb0f155.glb',
-    'pet:pk_charizard': PEOPLE_MONSTERS_Q + 'Dragon_ae5b8510.glb',
+    'pet:pk_bulbasaur': 'crea:mushnub',
+    'pet:pk_charmander': 'crea:dino_pet',
+    'pet:pk_squirtle': 'crea:squidle',
+    'pet:pk_magikarp': 'crea:glub',
+    'pet:pk_pikachu': 'crea:bunny',
+    'pet:pk_eevee': 'crea:monkroose',
+    'pet:pk_slowbro': 'crea:pink_slime',
+    'pet:pk_gengar': 'crea:ghost',
+    'pet:pk_snorlax': 'crea:yeti',
+    'pet:pk_lapras': 'crea:glub_evolved',
+    'pet:pk_alakazam': 'crea:hat_wizard',
+    'pet:pk_dragonite': 'crea:alpaking',
+    'pet:pk_charizard': 'crea:dragon',
     'pet:pk_gyarados': STANDIN + 'Snake_angry.glb',
-    'pet:pk_mewtwo': PEOPLE_MONSTERS_Q + 'Alien_b048d82a.glb',
+    'pet:pk_mewtwo': 'crea:alien_grunt',
     'pet:pk_mew': PEOPLE_MONSTERS_Q + 'Cat_7ccb71fe.glb',
     /* 2026-09-04(이어서) — 사용자가 "사가만리처럼 실사화"를 요청 → 사람은
        막다른 길(Mixamo 재배포 금지, 위 delam 주석 참고)이라 자연물만
@@ -769,7 +769,7 @@
      그 위험만은 여전히 안 무릅쓴다). */
   /* 2026-09-23 — animals_extra·animals_extra2(사가나락 "펫 100개" 모델)·standin(신수·오마주 대역)도 배우. 전엔 `animals/` 만 맞아 그 펫들이 외곽선·림 없이 구워졌다 */
   function isActorAsset(url) {
-    return typeof url === 'string' && /\/models\/(people|animals|animals_extra2?|standin|monsters)\//.test(url);
+    return typeof url === 'string' && /\/models\/(people|animals|animals_extra2?|standin|monsters)\/|\/creatures3d\/|^crea:/.test(url);   // W-0356 자체 몸(creatures3d·crea:<id>)도 배우
   }
 
   /* 2026-09-19 — PLAN §6.1-5가 나중으로 미룬 "풀 바람 셰이더"(sway3d.js).

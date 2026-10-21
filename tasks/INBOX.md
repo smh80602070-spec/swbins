@@ -11,3 +11,4 @@
 - [ ] 10-21 · (K-0161 끝 알림) · 같은 모션 30 팩을 고돗 `assets/anim_mocap` 로 place(asset-place `anim-mocap` 항목에 파일 하나 더) + 판별 동작 상태(채집·낚시·말·사다리·매달리기) 배선 · 고돗/다섯 판
 - [ ] 10-21 · (K-0161 끝 알림) · 같은 모션 30 팩을 유니티 Humanoid 리타깃(이름 = clips30.json game) + 판별 행동 상태 배선 · 유니티/다섯 판
 - [x] G-0274 10-21 · (K-0166 끝 알림) · **G-0274 풀림(다시 임포트)** — `assets/creatures/` 138·`assets/world/pet_*` 28 을 고돗 엔진판(필수 확장 0·양자화·meshopt·WebP·sparse 풂)으로 바꿈, Godot 4.7.2 `GLTFDocument` 읽기 166/166 OK — 에디터/`--import` 로 .import 다시 만들고 G-0274 이어서 · 고돗
+- [ ] 10-21 · (W-0356 끝 알림) · 빌린 괴물 웹 참조 — 5천하·3마을 0, 2나락은 quaternius Alpaking_Evolved·Armabee 둘·Cat·Chicken·Fish 둘만 남음(자체 몸 없음) → 그 일곱 몸 만들면 옛 monsters/ 폴더 지워도 됨(W-0360) · 자체툴

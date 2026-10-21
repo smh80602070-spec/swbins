@@ -1399,5 +1399,23 @@
   "ticket": "W-0361",
   "since": "2026-10-21",
   "note": "10-21: PC 1280·폰 390 촬영 Read · 칸 누름 → 기존 창, 성장 단추 → 패시브 그물 열림(5/5)"
+ },
+ {
+  "id": "rk.monster-crea",
+  "name": "괴물 무장 자체 몸(W-0356) — data-force monster: 27 이 빌린 GLB 대신 crea:<id>(공용 creatures3d, K-0122 짝) · 뼈 없는 MotionRoot 몸도 assembleHero 가 받음(옛 유귀·망독·독시 실패 고침)",
+  "files": [
+   "js/data-force.js",
+   "js/asset3d.js",
+   "js/assets3d.js"
+  ],
+  "tests": [
+   "test-web 다섯 판 n/n · 괴물 무장 27 buildHero 격자 촬영(몸·동작 11 칸)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0356",
+  "since": "2026-10-21",
+  "note": "10-21: 27/27 지어짐·동작 움직임 확인 · 2나락 짝 82 줄도 crea:(못 찾은 7 몸 K)"
  }
 ]

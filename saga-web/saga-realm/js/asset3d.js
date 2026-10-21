@@ -558,6 +558,8 @@
     var bodyScene = cloneScene(parts.body.gltf);
     var master = null;
     bodyScene.traverse(function (o) { if (!master && o.isSkinnedMesh) { master = o; } });
+    /* W-0356 — 자체 괴물 몸(creatures3d, K-0122)은 뼈 없이 MotionRoot 노드가 움직인다: 옷·머리를 입히지 않으니 몸 그대로 */
+    if ((!master || !master.skeleton) && !parts.outfit && !parts.hair && parts.body.clips && parts.body.clips.length) { return normalize(bodyScene); }
     if (!master || !master.skeleton) { throw new Error('몸에 스켈레톤이 없다'); }
     var skeleton = master.skeleton;
 

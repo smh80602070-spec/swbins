@@ -6673,7 +6673,7 @@ window.requestAnimationFrame = function () { return 0; };
       /* _test.html 은 디스크 초상 목록(manifest.js)을 안 싣는다 — 굽기가 되는 조건(모든 펫에 모델 키)을 본다. 실제 굽기 210/210 은 bake-portraits 로 확인 */
       var D = DG.data, S = DG.sprite, A3 = DG.asset3d, R = A3.DEFAULTS;
       var miss = D.pets.filter(function (p) { return !R['pet:' + String(p.id).replace(/^pt_/, '')]; }).map(function (p) { return p.id; });
-      var stand = /standin\/Orc\.gltf$/.test(R['pet:dokkaebi'] || '') && /quaternius\/Dragon_ae5b8510\.glb$/.test(R['pet:pk_charizard'] || '');
+      var stand = /standin\/Orc\.gltf$/.test(R['pet:dokkaebi'] || '') && R['pet:pk_charizard'] === 'crea:dragon';   // W-0356 빌린 괴물 → 자체 몸
       /* 2026-09-25 — 대역 28종이 서로 안 겹친다(CHARACTER_UNIQUENESS ④) */
       var SI = ['pt_samjogo','pt_haetae','pt_cheongryong','pt_baekho','pt_jujak','pt_hyeonmu','pt_gumiho','pt_dokkaebi','pt_bulgasari','pt_jeoktoma','pt_jeolyeong','pt_magpie','pk_bulbasaur','pk_charmander','pk_squirtle','pk_magikarp','pk_pikachu','pk_eevee','pk_slowbro','pk_gengar','pk_snorlax','pk_lapras','pk_alakazam','pk_dragonite','pk_charizard','pk_gyarados','pk_mewtwo','pk_mew'], su = {};
       SI.forEach(function (id) { su[R['pet:' + id.replace(/^pt_/, '')]] = 1; });
