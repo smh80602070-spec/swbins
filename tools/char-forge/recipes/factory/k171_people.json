@@ -1,0 +1,781 @@
+{
+ "note": "K-0171 ② — K-0159 가 못 놓은 사람 풀 다시: villager_a 몸 aq_sanghwa → rf_wuanguo(still_match 1위권·회색 머리·베이지 긴 옷, 수염은 없음) · rts_inf_ally attack2 spear_2 → spear_1(휘두르기 칸 잘림). hero_f·companion_mage 는 맞는 몸 없음(still_match 최고 hero_f 남자 몸들·mage 0.21) — 그대로. 나머지 칸은 k158_still_people.json 그대로",
+ "game": "saga-dungeon",
+ "px": 192,
+ "ndir": 8,
+ "dirs": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "dir_names": [
+  "front",
+  "front_side",
+  "side",
+  "back_side",
+  "back"
+ ],
+ "ortho": 2.2,
+ "cam_z": 0.836,
+ "foot": 0.88,
+ "style": "C-toon-1",
+ "style_ref": "saga-web/saga-dungeon/assets/web2d/bg",
+ "clips": {
+  "idle": {
+   "frames": 8,
+   "fps": 6,
+   "loop": true
+  },
+  "walk": {
+   "frames": 8,
+   "fps": 10,
+   "loop": true
+  },
+  "run": {
+   "frames": 8,
+   "fps": 12,
+   "loop": true
+  },
+  "attack": {
+   "frames": 8,
+   "fps": 14,
+   "loop": false
+  },
+  "attack2": {
+   "frames": 8,
+   "fps": 12,
+   "loop": false
+  },
+  "cast": {
+   "frames": 8,
+   "fps": 10,
+   "loop": false
+  },
+  "hit": {
+   "frames": 6,
+   "fps": 12,
+   "loop": false
+  },
+  "death": {
+   "frames": 6,
+   "fps": 8,
+   "loop": false
+  },
+  "sit": {
+   "frames": 8,
+   "fps": 6,
+   "loop": false
+  },
+  "talk": {
+   "frames": 8,
+   "fps": 8,
+   "loop": true
+  }
+ },
+ "human": {
+  "bodies": {
+   "kr_gyebaek": "tools/char-forge/_out/vroid/kr_gyebaek/kr_gyebaek.glb",
+   "mh_gangin": "tools/char-forge/_out/vroid/mh_gangin/mh_gangin.glb",
+   "aq_sanghwa": "tools/char-forge/_out/vroid/aq_sanghwa/aq_sanghwa.glb",
+   "ob_jungnyeok": "tools/char-forge/_out/vroid/ob_jungnyeok/ob_jungnyeok.glb",
+   "jp_asahime": "tools/char-forge/_out/vroid/jp_asahime/jp_asahime.glb",
+   "tb_amseup": "tools/char-forge/_out/vroid/tb_amseup/tb_amseup.glb",
+   "dj_hopak": "tools/char-forge/_out/vroid/dj_hopak/dj_hopak.glb",
+   "jp_murasaki": "tools/char-forge/_out/vroid/jp_murasaki/jp_murasaki.glb",
+   "eu_leonidas": "tools/char-forge/_out/vroid/eu_leonidas/eu_leonidas.glb",
+   "kr_wonhyo": "tools/char-forge/_out/vroid/kr_wonhyo/kr_wonhyo.glb",
+   "hl_gyeongun": "tools/char-forge/_out/vroid/hl_gyeongun/hl_gyeongun.glb",
+   "ac_gipo": "tools/char-forge/_out/vroid/ac_gipo/ac_gipo.glb",
+   "rf_wuanguo": "tools/char-forge/_out/vroid/rf_wuanguo/rf_wuanguo.glb"
+  },
+  "anim_extra": "m=saga-assets/characters/anim-src/mocap/vroid_mocap_anims.glb",
+  "act": {
+   "idle": "idle",
+   "walk": "walk",
+   "run": "sprint",
+   "attack": "fist_1",
+   "attack2": "fist_heavy",
+   "cast": "m.cast",
+   "hit": "hit",
+   "death": "death",
+   "sit": "m.sit_stand@0:0.45",
+   "talk": "m.greet"
+  },
+  "license": "VRoid Studio 공식 샘플 이용 조건(상업 사용·개작본 재배포 허용, 크레딧 불필요 — 옷 이식 몸 K-0024) + 동작 CC0 UAL(bake_for_rig)·CMU 모캡(K-0139·K-0148, saga-assets/characters/anim-src/mocap/vroid_mocap_anims.license.json)",
+  "kinds": {
+   "k159_hero_m": {
+    "hair_ramp": [
+     [
+      0.1,
+      0.05,
+      0.02
+     ],
+     [
+      0.55,
+      0.33,
+      0.18
+     ]
+    ],
+    "cloth_by": {
+     "Tops": [
+      [
+       0.18,
+       0.1,
+       0.05
+      ],
+      [
+       0.62,
+       0.42,
+       0.25
+      ]
+     ],
+     "Bottoms": [
+      [
+       0.2,
+       0.21,
+       0.23
+      ],
+      [
+       0.62,
+       0.63,
+       0.65
+      ]
+     ],
+     "Shoes": [
+      [
+       0.12,
+       0.06,
+       0.03
+      ],
+      [
+       0.5,
+       0.3,
+       0.15
+      ]
+     ]
+    },
+    "gear": [
+     "cape:wrap"
+    ],
+    "pal": {
+     "cloth": [
+      0.86,
+      0.8,
+      0.66
+     ],
+     "trim": [
+      0.55,
+      0.4,
+      0.2
+     ]
+    }
+   },
+   "k159_hero_f": {
+    "hair_ramp": [
+     [
+      0.05,
+      0.05,
+      0.09
+     ],
+     [
+      0.42,
+      0.42,
+      0.55
+     ]
+    ],
+    "cloth_by": {
+     "Tops": [
+      [
+       0.04,
+       0.04,
+       0.05
+      ],
+      [
+       0.28,
+       0.28,
+       0.31
+      ]
+     ],
+     "Bottoms": [
+      [
+       0.32,
+       0.04,
+       0.04
+      ],
+      [
+       0.85,
+       0.25,
+       0.22
+      ]
+     ],
+     "Shoes": [
+      [
+       0.04,
+       0.04,
+       0.05
+      ],
+      [
+       0.28,
+       0.28,
+       0.31
+      ]
+     ]
+    },
+    "gear": [
+     "cape:wrap"
+    ],
+    "pal": {
+     "cloth": [
+      0.93,
+      0.92,
+      0.9
+     ],
+     "trim": [
+      0.75,
+      0.6,
+      0.25
+     ]
+    }
+   },
+   "k159_villager_a": {
+    "hair_ramp": [
+     [
+      0.55,
+      0.55,
+      0.57
+     ],
+     [
+      0.97,
+      0.97,
+      0.98
+     ]
+    ],
+    "cloth_by": {
+     "CLOTH": [
+      [
+       0.42,
+       0.37,
+       0.28
+      ],
+      [
+       0.92,
+       0.87,
+       0.74
+      ]
+     ]
+    }
+   },
+   "k159_villager_b": {
+    "hair_ramp": [
+     [
+      0.04,
+      0.03,
+      0.02
+     ],
+     [
+      0.3,
+      0.22,
+      0.15
+     ]
+    ],
+    "cloth_by": {
+     "Tops": [
+      [
+       0.48,
+       0.4,
+       0.28
+      ],
+      [
+       0.93,
+       0.84,
+       0.68
+      ]
+     ],
+     "Bottoms": [
+      [
+       0.1,
+       0.18,
+       0.33
+      ],
+      [
+       0.45,
+       0.6,
+       0.8
+      ]
+     ],
+     "Shoes": [
+      [
+       0.12,
+       0.06,
+       0.03
+      ],
+      [
+       0.5,
+       0.3,
+       0.15
+      ]
+     ]
+    }
+   },
+   "k159_villager_c": {
+    "hair_ramp": [
+     [
+      0.2,
+      0.1,
+      0.05
+     ],
+     [
+      0.7,
+      0.48,
+      0.3
+     ]
+    ],
+    "cloth_by": {
+     "Tops": [
+      [
+       0.62,
+       0.52,
+       0.52
+      ],
+      [
+       1.0,
+       0.95,
+       0.93
+      ]
+     ],
+     "Bottoms": [
+      [
+       0.62,
+       0.52,
+       0.52
+      ],
+      [
+       1.0,
+       0.95,
+       0.93
+      ]
+     ],
+     "Onepi": [
+      [
+       0.62,
+       0.52,
+       0.52
+      ],
+      [
+       1.0,
+       0.95,
+       0.93
+      ]
+     ],
+     "Shoes": [
+      [
+       0.12,
+       0.06,
+       0.03
+      ],
+      [
+       0.5,
+       0.3,
+       0.15
+      ]
+     ]
+    }
+   },
+   "k159_companion_warrior": {
+    "cloth_by": {
+     "CLOTH": [
+      [
+       0.05,
+       0.08,
+       0.18
+      ],
+      [
+       0.3,
+       0.4,
+       0.65
+      ]
+     ]
+    },
+    "gear": [
+     "helm:crest",
+     "chest:plate",
+     "pauldron:round",
+     "bracer",
+     "greaves",
+     "cape:wrap"
+    ],
+    "pal": {
+     "metal": [
+      0.28,
+      0.42,
+      0.78
+     ],
+     "trim": [
+      0.82,
+      0.82,
+      0.88
+     ],
+     "cloth": [
+      0.72,
+      0.1,
+      0.1
+     ],
+     "leather": [
+      0.3,
+      0.2,
+      0.12
+     ]
+    }
+   },
+   "k159_companion_archer": {
+    "hair_ramp": [
+     [
+      0.45,
+      0.42,
+      0.52
+     ],
+     [
+      0.93,
+      0.91,
+      0.96
+     ]
+    ],
+    "cloth_by": {
+     "CLOTH": [
+      [
+       0.14,
+       0.08,
+       0.05
+      ],
+      [
+       0.6,
+       0.42,
+       0.28
+      ]
+     ]
+    },
+    "gear": [
+     "cape:wrap"
+    ],
+    "pal": {
+     "cloth": [
+      0.2,
+      0.38,
+      0.25
+     ],
+     "trim": [
+      0.55,
+      0.4,
+      0.2
+     ]
+    }
+   },
+   "k159_companion_mage": {
+    "hair_ramp": [
+     [
+      0.05,
+      0.04,
+      0.06
+     ],
+     [
+      0.32,
+      0.26,
+      0.3
+     ]
+    ],
+    "cloth_by": {
+     "CLOTH": [
+      [
+       0.04,
+       0.07,
+       0.28
+      ],
+      [
+       0.28,
+       0.42,
+       0.85
+      ]
+     ]
+    },
+    "gear": [
+     "robe"
+    ],
+    "pal": {
+     "cloth": [
+      0.18,
+      0.3,
+      0.72
+     ],
+     "trim": [
+      0.9,
+      0.65,
+      0.8
+     ]
+    }
+   },
+   "k159_rts_inf_ally": {
+    "cloth_by": {
+     "Tops": [
+      [
+       0.15,
+       0.1,
+       0.06
+      ],
+      [
+       0.55,
+       0.4,
+       0.28
+      ]
+     ],
+     "Bottoms": [
+      [
+       0.28,
+       0.38,
+       0.6
+      ],
+      [
+       0.9,
+       0.93,
+       0.97
+      ]
+     ],
+     "Shoes": [
+      [
+       0.12,
+       0.06,
+       0.03
+      ],
+      [
+       0.5,
+       0.3,
+       0.15
+      ]
+     ]
+    },
+    "gear": [
+     "helm",
+     "chest:straps"
+    ],
+    "pal": {
+     "metal": [
+      0.55,
+      0.58,
+      0.62
+     ],
+     "trim": [
+      0.25,
+      0.4,
+      0.75
+     ],
+     "leather": [
+      0.35,
+      0.22,
+      0.12
+     ]
+    }
+   },
+   "k159_rts_inf_enemy": {
+    "cloth_by": {
+     "CLOTH": [
+      [
+       0.04,
+       0.04,
+       0.05
+      ],
+      [
+       0.28,
+       0.28,
+       0.31
+      ]
+     ]
+    },
+    "gear": [
+     "helm:crest",
+     "chest:plate",
+     "cape:wrap"
+    ],
+    "pal": {
+     "metal": [
+      0.16,
+      0.16,
+      0.18
+     ],
+     "trim": [
+      0.7,
+      0.12,
+      0.1
+     ],
+     "cloth": [
+      0.72,
+      0.1,
+      0.08
+     ]
+    }
+   },
+   "k159_rts_arc_ally": {
+    "cloth_by": {
+     "Tops": [
+      [
+       0.25,
+       0.35,
+       0.55
+      ],
+      [
+       0.9,
+       0.93,
+       1.0
+      ]
+     ],
+     "Bottoms": [
+      [
+       0.22,
+       0.14,
+       0.08
+      ],
+      [
+       0.62,
+       0.46,
+       0.3
+      ]
+     ],
+     "Shoes": [
+      [
+       0.12,
+       0.06,
+       0.03
+      ],
+      [
+       0.5,
+       0.3,
+       0.15
+      ]
+     ]
+    },
+    "gear": [
+     "hood"
+    ],
+    "pal": {
+     "cloth": [
+      0.92,
+      0.93,
+      0.97
+     ]
+    }
+   },
+   "k159_rts_arc_enemy": {
+    "cloth_by": {
+     "Tops": [
+      [
+       0.08,
+       0.04,
+       0.04
+      ],
+      [
+       0.62,
+       0.15,
+       0.12
+      ]
+     ],
+     "Bottoms": [
+      [
+       0.04,
+       0.04,
+       0.05
+      ],
+      [
+       0.28,
+       0.28,
+       0.31
+      ]
+     ],
+     "Shoes": [
+      [
+       0.04,
+       0.04,
+       0.05
+      ],
+      [
+       0.28,
+       0.28,
+       0.31
+      ]
+     ]
+    },
+    "gear": [
+     "hood"
+    ],
+    "pal": {
+     "cloth": [
+      0.62,
+      0.1,
+      0.08
+     ]
+    }
+   }
+  }
+ },
+ "creature": {
+  "act": {
+   "idle": "Idle",
+   "walk": "Walk",
+   "run": "Run",
+   "attack": "Attack",
+   "attack2": "Special",
+   "hit": "Hit",
+   "death": "Death"
+  }
+ },
+ "pools": [
+  {
+   "id": "villager_a",
+   "type": "human",
+   "body": "rf_wuanguo",
+   "kind": "k159_villager_a",
+   "source_license": "saga-web/shared/assets/characters2d8/rf_wuanguo/rf_wuanguo.license.json"
+  },
+  {
+   "id": "rts_inf_ally",
+   "type": "human",
+   "body": "eu_leonidas",
+   "kind": "k159_rts_inf_ally",
+   "source_license": "saga-web/shared/assets/characters2d8/eu_leonidas/eu_leonidas.license.json",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ],
+   "act": {
+    "idle": "spear_idle",
+    "attack": "spear_1",
+    "attack2": "spear_1"
+   },
+   "weapon": "saga-assets/world/toon/wpn_spear_common.glb",
+   "weapon_kind": "spear",
+   "two_hand_clips": [
+    "spear_idle",
+    "spear_1",
+    "spear_2",
+    "spear_heavy"
+   ],
+   "px": 384,
+   "still_game": "saga-realm"
+  }
+ ],
+ "canon": "saga-assets/sprites2d_factory",
+ "deploy": {
+  "saga-web/saga-go/assets/sprites2d_sheets": [
+   "villager_a"
+  ],
+  "saga-web/saga-dungeon/assets/sprites2d_sheets": [
+   "villager_a"
+  ],
+  "saga-web/saga-forest/assets/sprites2d_sheets": [
+   "villager_a"
+  ],
+  "saga-web/saga-realm/assets/sprites2d_sheets": [
+   "rts_inf_ally"
+  ]
+ },
+ "ticket": "K-0171"
+}

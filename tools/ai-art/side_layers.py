@@ -9,6 +9,7 @@
   py tools/ai-art/side_layers.py split [장소,…]        # 층 4 → saga-assets/web2d/bg2d/story_<장소>/{sky,far,near,front}.webp + layers.json + license
   py tools/ai-art/side_layers.py tiles                 # 발판 타일 → saga-assets/web2d/side-tile/side_<장소>/{top,side,end_l,end_r}.webp + tiles.json
   py tools/ai-art/side_layers.py match [장소,…]        # K-0165 발판 명도·채도를 배경 near 층에 맞춤(tiles 가 TILE_MATCH 곳은 자동)
+  py tools/ai-art/side_layers.py calm [장소,…]         # K-0171 먼 층에서 near 능선 패임으로 보이는 띠의 어두운 조각(떠 보이는 바위)만 지움(CALM 곳)
   py tools/ai-art/side_layers.py sheet                 # 시험판 _out/side2d/prev/<장소>.png(390×844 세로 두 자리 + 1280×720) · tiles_<n>.png · 이음 수치
   py tools/ai-art/side_layers.py check                 # 규격·파일·해상도·이음 → SIDE2D_OK
 
@@ -431,6 +432,47 @@ def tile_scene(g, bg):
     return can
 
 
+CALM = {'old_battlefield': {'dark': 22, 'grow': 6}}   # K-0171 — 장소: 어두운 정도(주변 흐림보다 밝기 몇 낮으면 조각)·마스크 넓힘(px)
+
+
+def calm(g):
+    """먼 층(far)에서 가까운 층(near) 능선이 오르내리는 띠(화면 높이 = near 윗선 최소~최대) 안의 어두운 조각을 주변 땅빛으로 메운다.
+    near 패임 사이로 먼 봉우리 끝만 보이면 밝은 땅 위에 뜬 바위처럼 읽힌다(K-0164·K-0165 옛 싸움터 △). 원본은 _out/side2d/calm_src 에 한 번 남긴다."""
+    opt = CALM[g]
+    d = os.path.join(CANON, 'story_' + g)
+    meta = json.load(open(os.path.join(d, 'layers.json'), encoding='utf-8'))
+    Ls = {L['img']: L for L in meta['layers']}
+    src = os.path.join(HERE, '_out', 'side2d', 'calm_src', g + '_far.webp')
+    if not os.path.exists(src):
+        os.makedirs(os.path.dirname(src), exist_ok=True)
+        Image.open(os.path.join(d, 'far.webp')).save(src, 'WEBP', lossless=True)
+    far = np.asarray(Image.open(src).convert('RGBA')).astype(np.float32)
+    near = np.asarray(Image.open(os.path.join(d, 'near.webp')).convert('RGBA'))
+    Ln, Lf = Ls['near.webp'], Ls['far.webp']
+    tops = [np.argmax(near[:, x, 3] > 200) for x in range(0, near.shape[1], 8) if (near[:, x, 3] > 200).any()]
+    lo = Ln['top'] + min(tops) / near.shape[0] * Ln['h']                    # 화면 높이 비
+    hi = Ln['top'] + max(tops) / near.shape[0] * Ln['h']
+    H = far.shape[0]
+    y0 = int(max(0, (lo - Lf['top']) / Lf['h'] * H))
+    y1 = int(min(H, (hi - Lf['top']) / Lf['h'] * H + 40))
+    lum = far[..., :3] @ np.array([0.3, 0.59, 0.11], np.float32)
+    blur = np.asarray(Image.fromarray(lum.clip(0, 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(28)), np.float32)
+    mask = (blur - lum > opt['dark']) & (far[..., 3] > 200)
+    band = np.zeros_like(mask); band[y0:y1] = True
+    mask &= band
+    m = Image.fromarray((mask * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(2 * (opt['grow'] // 2) + 1)).filter(ImageFilter.GaussianBlur(opt['grow']))
+    m = np.asarray(m, np.float32)[..., None] / 255
+    w = (1 - np.clip(m * 3, 0, 1)) * (far[..., 3:4] / 255)                    # 정규화 흐림 — 조각 밖 땅빛만으로 메움
+    num = np.stack([np.asarray(Image.fromarray((far[..., c] * w[..., 0]).clip(0, 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(18)), np.float32) for c in range(3)], -1)
+    den = np.asarray(Image.fromarray((w[..., 0] * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(18)), np.float32)[..., None] / 255
+    fill = num / np.maximum(den, 1e-3)
+    m = m * np.clip((den - 0.05) / 0.15, 0, 1) * (far[..., 3:4] / 255)          # 주변 땅빛이 모자란 곳(투명 가장자리)은 원본 그대로 — 0 으로 나눠 검게 됨
+    out = far.copy()
+    out[..., :3] = far[..., :3] * (1 - m) + fill * m
+    Image.fromarray(out.clip(0, 255).astype(np.uint8), 'RGBA').save(os.path.join(d, 'far.webp'), 'WEBP', quality=90, method=6)
+    print('CALM', g, 'band %d..%d' % (y0, y1), 'mask %.2f%%' % (float((m > 0.5).mean()) * 100))
+
+
 def sheet():
     os.makedirs(os.path.join(OUT, 'prev'), exist_ok=True)
     rows = []
@@ -537,6 +579,9 @@ if __name__ == '__main__':
     elif cmd == 'match':
         for g in ids or list(TILE_MATCH):
             match_tiles(g)
+    elif cmd == 'calm':
+        for g in ids or list(CALM):
+            calm(g)
     elif cmd == 'sheet':
         sheet()
     elif cmd == 'check':

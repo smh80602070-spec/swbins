@@ -19,5 +19,6 @@
  "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py",
  "source_image": "tools/ai-art/_out/side2d/sl_old_battlefield_v01.png",
  "packed_by": "K-0164 tools/ai-art/side_layers.py — 깊이 추정 Depth Anything V2 Small(Apache-2.0, 도구 전용)으로 층 가름 · 가까움 분위수 0.65 이상을 지운 인페인트(원본 모델·프롬프트, denoise 1.0, 1344x768 → 마스크 안만 키워 붙임) · 알파 = 분위수 0.4 이상",
- "mode": "inpaint"
+ "mode": "inpaint",
+ "k0171": "먼 층에서 near 능선 패임으로 보이던 어두운 봉우리 끝(뜬 바위)을 주변 땅빛으로 메움 — side_layers.py calm(2026-10-22)"
 }

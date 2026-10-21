@@ -117,7 +117,10 @@ def similarity(fa, fb):
 
 
 def still_path(game, pool, view='front'):
-    return os.path.join(ROOT, 'saga-web', game, 'assets', 'web2d', 'moving', pool, view + '.webp')
+    p = os.path.join(ROOT, 'saga-web', game, 'assets', 'web2d', 'moving', pool, view + '.webp')
+    if not os.path.exists(p):            # W-0359 — 웹 web2d 는 shared 한 벌(판 사본 지움)
+        p = os.path.join(ROOT, 'saga-web', 'shared', 'assets', 'web2d', 'moving', pool, view + '.webp')
+    return p
 
 
 def still_features(game, pool):
