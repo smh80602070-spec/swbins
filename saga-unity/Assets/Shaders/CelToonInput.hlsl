@@ -20,6 +20,10 @@ CBUFFER_START(UnityPerMaterial)
     half _GlowStrength;
     half4 _OutlineColor;
     float _OutlineWidth;
+    float _OutlinePx;
 CBUFFER_END
+
+// tasks U-0148 — 인물 외곽선 전역 배율(CharacterOutline 이 켬, 화질 낮음이면 0). 안 넣으면 0 이라 _OutlinePx 외곽선은 꺼진 채.
+float _SagaOutlineMul;
 
 #endif

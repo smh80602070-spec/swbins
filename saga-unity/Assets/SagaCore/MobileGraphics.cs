@@ -44,6 +44,7 @@ namespace Saga.Core
         /// <summary>다섯 판 설정이 부른다. 에디터에선 URP 에셋을 안 건드린다(위 주석 ②).</summary>
         public static void ApplyQuality(bool high)
         {
+            CharacterOutline.SetQuality(high); // tasks U-0148 — 낮음이면 인물 외곽선 끔(에디터에서도)
             if (Application.isEditor) return;
             var urp = GraphicsSettings.currentRenderPipeline as UniversalRenderPipelineAsset;
             if (urp == null) return;

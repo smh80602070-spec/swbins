@@ -1,6 +1,6 @@
 // Saga/CelToon — Godot 과 같은 툰 노선(tasks U-0022). 본보기: saga-godot/saga_core/shaders/cel_toon.gdshader · cel_vertex_color.gdshader · cel_outline.gdshader.
 // 빛마다 NdotL 을 band_count 단으로 계단화(+부드러움)하고 림 빛을 더한다. 바탕은 텍스처×색이거나(_VERTEX_COLOR 끔) 정점색(켬 — 정점 알파 < 1 이면 그만큼 스스로 빛난다).
-// 외곽선은 뒤집힌 헐 패스(_OutlineWidth > 0 일 때만 그려진다). Shader Graph 가 아니라 HLSL 직접(Shader Graph 리플렉션은 막혔다 — PLAN 110).
+// 외곽선은 뒤집힌 헐 패스 — _OutlineWidth(물체 단위, 무기 빛 등) 또는 _OutlinePx(화면 1080p 픽셀 × 전역 _SagaOutlineMul, 인물 — tasks U-0148). 둘 다 0 이면 안 그린다. Shader Graph 가 아니라 HLSL 직접(Shader Graph 리플렉션은 막혔다 — PLAN 110).
 Shader "Saga/CelToon"
 {
     Properties
@@ -21,6 +21,7 @@ Shader "Saga/CelToon"
 
         _OutlineColor("외곽선 색", Color) = (0.08, 0.06, 0.10, 1)
         _OutlineWidth("외곽선 두께(0=끔)", Range(0, 0.05)) = 0
+        _OutlinePx("외곽선 화면 두께(1080p 픽셀, 0=끔 · 쓰면 _OutlineWidth 대신)", Range(0, 6)) = 0
 
         [HideInInspector] _Surface("_Surface", Float) = 0
         [HideInInspector] _Cull("_Cull", Float) = 2
@@ -214,10 +215,27 @@ Shader "Saga/CelToon"
                 UNITY_SETUP_INSTANCE_ID(input);
                 UNITY_TRANSFER_INSTANCE_ID(input, output);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
-                float3 pos = input.positionOS.xyz + input.normalOS * _OutlineWidth;
-                output.positionCS = TransformObjectToHClip(pos);
-                output.fogFactor = ComputeFogFactor(output.positionCS.z);
-                if (_OutlineWidth <= 0.0) output.positionCS = float4(0, 0, 2, 0);
+                float px = _OutlinePx * _SagaOutlineMul;
+                if (px > 0.0)
+                {
+                    // tasks U-0148 — 화면 기준 두께(몸 크기·물체 배율과 무관), 4m→12m 에서 ×1→×0.5.
+                    float4 cs = TransformObjectToHClip(input.positionOS.xyz);
+                    float3 nCS = mul((float3x3)UNITY_MATRIX_VP, TransformObjectToWorldNormal(input.normalOS));
+                    float2 dir = normalize(nCS.xy + float2(1e-5, 1e-5));
+                    float fall = lerp(1.0, 0.5, saturate((cs.w - 4.0) / 8.0));
+                    float2 ndc = dir * (px * fall * 2.0 / 1080.0);
+                    ndc.x *= _ScreenParams.y / max(_ScreenParams.x, 1.0);
+                    cs.xy += ndc * cs.w;
+                    output.positionCS = cs;
+                    output.fogFactor = ComputeFogFactor(cs.z);
+                }
+                else
+                {
+                    float3 pos = input.positionOS.xyz + input.normalOS * _OutlineWidth;
+                    output.positionCS = TransformObjectToHClip(pos);
+                    output.fogFactor = ComputeFogFactor(output.positionCS.z);
+                    if (_OutlineWidth <= 0.0) output.positionCS = float4(0, 0, 2, 0);
+                }
                 return output;
             }
 

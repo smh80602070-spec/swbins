@@ -18,7 +18,15 @@ namespace Saga.EditorTools
     /// </summary>
     public static partial class PlaytestShowcaseGui
     {
-        private const int CellW = 640, CellH = 360, SheetCols = 4;
+        private const int SheetCols = 4;
+        // tasks U-0148 — 칸 크기(기본 640×360). 화면 기준 두께(외곽선 1080p px) 판정은 `SAGA_SHOT_CELL=1920x1080` 처럼 키워 찍는다.
+        private static readonly int CellW = CellSize(0, 640), CellH = CellSize(1, 360);
+        private static int CellSize(int i, int def)
+        {
+            var s = System.Environment.GetEnvironmentVariable("SAGA_SHOT_CELL");
+            var p = string.IsNullOrEmpty(s) ? null : s.Split('x');
+            return p != null && p.Length == 2 && int.TryParse(p[i], out int v) && v > 0 ? v : def;
+        }
         private static int _seqN, _seqGap, _seqTaken, _seqNextAt;
         private static List<(string name, Transform target)> _seqTargets;
         private static List<List<Texture2D>> _seqFrames;
@@ -103,6 +111,14 @@ namespace Saga.EditorTools
                     var la = an != null && an.isHuman ? an.GetBoneTransform(HumanBodyBones.RightLowerArm) : null;
                     float armDeg = ua != null && la != null ? Vector3.Angle(la.position - ua.position, Vector3.down) : -1f;
                     Debug.Log($"[ShowcaseGui] lifepose {name} 장 {_seqTaken + 1} still {lpz.StillT:F1} sit {lpz.SitW:F2} act {lpz.Current} {lpz.ActT:F2} hold {lpz.HoldNow} 사람 {lpz.Humanoid} 오른윗팔 아래서 {armDeg:F0}° · 애니 {(an != null ? an.name + " 켜짐 " + an.isActiveAndEnabled : "없음")} · 자리 {t.position}");
+                }
+                if (name == "player" && System.Environment.GetEnvironmentVariable("SAGA_OUTLINE_LOG") == "1")
+                {
+                    var parts = new List<string>();
+                    foreach (var rr in t.GetComponentsInChildren<SkinnedMeshRenderer>())
+                        foreach (var mm in rr.sharedMaterials)
+                            if (mm != null) parts.Add($"{rr.name}:{mm.shader.name}:{(mm.HasProperty("_OutlinePx") ? mm.GetFloat("_OutlinePx") : -1f):F1}");
+                    Debug.Log($"[ShowcaseGui] outline 장 {_seqTaken + 1} 전역 {Shader.GetGlobalFloat("_SagaOutlineMul")} · {string.Join(" ", parts)}");
                 }
                 if (name == "player")
                 {

@@ -8,7 +8,7 @@
 
 | 기능 | 기준(본뜰 판) | 웹 | 고돗 | 유니티 |
 |---|---|---|---|---|
-| 툰 외곽선·림·얼굴 그림자·VRoid 몸 | 다섯 판 같음 | ○ | 툰 띠·림·외곽선·dex 몸 ○(공용 cel_toon·cel_outline·vroid_body — 다섯 판 다 거침) · 얼굴 그림자 끝 G-0248(머리 앞 기준 반쪽 · SDF 텍스처·앞머리 그림자는 K 대기) | △ 띠·림 ○ · 외곽선 너비 0 → U-0148 · 얼굴 그림자 × (U-0145) |
+| 툰 외곽선·림·얼굴 그림자·VRoid 몸 | 다섯 판 같음 | ○ | 툰 띠·림·외곽선·dex 몸 ○(공용 cel_toon·cel_outline·vroid_body — 다섯 판 다 거침) · 얼굴 그림자 끝 G-0248(머리 앞 기준 반쪽 · SDF 텍스처·앞머리 그림자는 K 대기) | 띠·림 ○ · 외곽선 끝 U-0148(인물만·화면 1.6px) · 얼굴 그림자 × |
 | 기준선 자동 점검(QC) | — | 끝 W-0291(10-17 측정: 1만리 8/8 · 2나락 하늘·PBR × · 3마을 후처리·SSAO·하늘 × · 4종횡 PBR × · 5천하 후처리·SSAO·그림자 ×) | 끝 G-0249(값 점검 다섯 ok · 네 판 기준 PNG 는 사용자 승인 뒤 graphics/baseline/<판>/) | 끝 U-0147(PlaytestGraphicsBaseline 다섯 판 여섯 항목) |
 | 후처리(블룸·톤매핑·색보정)·SSAO | 1만리·2나락 | W-0292(3마을·5천하) | ○(공용 env_pc.tres glow·tonemap 3·adjustment·SSAO·SSIL·SDFGI + environment_profile 을 다섯 판 씬이 다 닮 · 2나락 SDFGI 끔은 의도 G-0224) | ○(SSAO 는 PC 만) |
 | 해 그림자(품질별 지도) | 2나락 | 끝 W-0293(5천하 realm-shadow3d · 3마을·4종횡은 측정에서 이미 ○) | ○(네 판 Sun shadow_enabled · 2나락 횃불 그림자 test_room 338 · 품질별 그림자 거리 render_budget 은 1만리만 △) | ○ |

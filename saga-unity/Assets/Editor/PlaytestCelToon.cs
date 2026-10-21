@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using Saga.Core;
 
 namespace Saga.EditorTools
 {
@@ -35,9 +36,52 @@ namespace Saga.EditorTools
             {
                 Checks();
                 ChecksConvert();
+                ChecksOutline();
             }
             PlaytestKit.Summary("PlaytestCelToon");
             if (Application.isBatchMode) EditorApplication.Exit(PlaytestKit.Fails == 0 ? 0 : 1);
+        }
+
+        // tasks U-0148 인물 외곽선 — 인물(Animator 아래) 불투명 CelToon 만 사본에 화면 두께, 소품·눈·반투명·무기 빛·공유 원본은 그대로, 화질 낮음이면 전역 0.
+        private static void ChecksOutline()
+        {
+            var shader = Shader.Find("Saga/CelToon");
+            var body = new Material(shader) { name = "Body" };
+            var eye = new Material(shader) { name = "EyeIris" };
+            var lash = new Material(shader) { name = "Hair", renderQueue = 2450 };
+            var glow = new Material(shader) { name = "Weapon" };
+            glow.SetFloat("_OutlineWidth", 0.01f);
+            var prop = new Material(shader) { name = "Crate" };
+            var who = new GameObject("OutlineTest_Char");
+            var stuff = new GameObject("OutlineTest_Prop");
+            try
+            {
+                who.AddComponent<Animator>();
+                var r = new GameObject("Mesh").AddComponent<MeshRenderer>();
+                r.transform.SetParent(who.transform, false);
+                r.sharedMaterials = new[] { body, eye, lash, glow };
+                var pr = stuff.AddComponent<MeshRenderer>();
+                pr.sharedMaterial = prop;
+                int n = CharacterOutline.ApplyTo(who) + CharacterOutline.ApplyTo(stuff);
+                var got = r.sharedMaterials;
+                PlaytestKit.Check(n == 1, $"외곽선 바꾼 칸 {n} ≠ 1(몸만)");
+                PlaytestKit.Check(got[0] != body && Mathf.Approximately(got[0].GetFloat("_OutlinePx"), CharacterOutline.DefaultPx), "몸 사본에 화면 두께 없음");
+                PlaytestKit.Check(body.GetFloat("_OutlinePx") == 0f, "공유 원본이 바뀜");
+                PlaytestKit.Check(got[1] == eye && got[2] == lash && got[3] == glow && pr.sharedMaterial == prop, "눈·반투명·무기 빛·소품이 바뀜");
+                PlaytestKit.Check(CharacterOutline.ApplyTo(who) == 0, "두 번 훑으면 또 바뀜");
+                CharacterOutline.SetActiveForTest(true);
+                CharacterOutline.SetQuality(false);
+                PlaytestKit.Check(CharacterOutline.Mul == 0f, "화질 낮음인데 외곽선 켜짐");
+                CharacterOutline.SetQuality(true);
+                PlaytestKit.Check(CharacterOutline.Mul == 1f, "화질 높음인데 외곽선 꺼짐");
+                Debug.Log("[PlaytestCelToon] outline OK - 인물 몸만 사본 1.6px · 눈·반투명·무기 빛·소품·원본 그대로 · 두 번째 0 · 낮음 0/높음 1");
+            }
+            finally
+            {
+                CharacterOutline.SetActiveForTest(false);
+                Object.DestroyImmediate(who);
+                Object.DestroyImmediate(stuff);
+            }
         }
 
         // 변환 — 불투명 URP 재질은 바탕 그림·색을 옮기고, 반투명·다른 셰이더는 그대로 둔다. GO 마을 씬을 열어 전체 변환도 오류 없이 도는지 본다.
