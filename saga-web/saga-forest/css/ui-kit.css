@@ -214,7 +214,10 @@ body { font-variant-numeric: tabular-nums; }
    · 상태 카드 = 이름·레벨 한 줄  · 자원 줄 = 첫 칸 + .hud-keep(주 자원) 둘, 나머지 누르면  · 알림 = 맨 위 가장자리 한 줄(덮이는 건 이미 HUD 자리 — 판이 --toast-edge 로 윗 카드 높이에 맞춘다)
    · 단추 = 크기 그대로, 투명도 .85 */
 @media (max-width: 520px) {
-  body.hud-diet #profile:not(.hud-open) .p-meta > :not(:first-child) { display: none; }
+  body.hud-diet #profile:not(.hud-open) .p-meta > :not(:first-child):not(.hud-keep) { display: none; }
+  body.hud-diet #profile:not(.hud-open) .p-meta > .hud-keep { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }   /* W-0364 판이 남기는 "지금 할 일" 한 줄 */
+  /* 조이스틱 받침 원은 누를 때만(.held — 판 조이스틱 코드가 단다, 잡는 자리 그대로) */
+  body.hud-diet :is(#gjoy, #vjoy, #dg-joy):not(.held) { background: transparent; border-color: transparent; box-shadow: none; }
   body.hud-diet #wallet:not(.hud-open) > :not(:first-child):not(.hud-keep) { display: none; }
   body.hud-diet #wallet:not(.hud-open)::after { content: '+'; align-self: center; padding: 0 4px 0 2px; font-size: 12px; font-weight: 700; opacity: .7; }
   body.hud-diet #wallet { cursor: pointer; }

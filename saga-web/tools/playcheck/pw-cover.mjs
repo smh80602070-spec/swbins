@@ -60,6 +60,9 @@ function coverMeasure(fine) {
   const area = (c) => { const r = c.getBoundingClientRect(); return Math.max(0, Math.min(r.right, W) - Math.max(r.left, 0)) * Math.max(0, Math.min(r.bottom, H) - Math.max(r.top, 0)); };
   const boardArea = cvs.reduce((m, c) => Math.max(m, area(c)), 0);
   const isBoard = (c) => area(c) >= boardArea * 0.8 && boardArea >= W * H * 0.4;   // 겹친 3D·2D 캔버스 둘 다 게임판
+  /* 5천하처럼 판이 SVG 지도면 그 SVG(화면 40% 넘는 것)와 그 안 도형도 게임판 */
+  const boardSvgs = [...document.querySelectorAll('svg')].filter((v) => !v.parentElement || !v.parentElement.closest('svg')).filter((v) => area(v) >= W * H * 0.4);
+  const inBoardSvg = (e) => { const v = e.closest && e.closest('svg'); return !!v && boardSvgs.some((b) => b === v || b.contains(v)); };
   const st = document.createElement('style'); st.id = '__cover_pe'; st.textContent = '*{pointer-events:auto !important}'; document.head.appendChild(st);
   const label = (e) => { for (let n = e; n && n !== document.body; n = n.parentElement) { if (n.id) { return '#' + n.id; } } return e.tagName.toLowerCase() + (typeof e.className === 'string' && e.className.trim() ? '.' + e.className.trim().split(/\s+/)[0] : ''); };
   /* 바깥(id 있는) 묶음 이름 — 가장 바깥 고정/절대 위치 조상 중 id 있는 것 */
@@ -85,6 +88,7 @@ function coverMeasure(fine) {
     for (const e of document.elementsFromPoint(x, y)) {
       if (e === document.body || e === document.documentElement) { break; }
       if (e.tagName === 'CANVAS') { if (isBoard(e)) { break; } hit = e; break; }
+      if (inBoardSvg(e)) { break; }
       if (isVeil(e)) { continue; }   // 온 화면 막(비네트·감싸는 틀) — 장식이지 HUD 가 아니다
       if (boxPaints(e) || textHit(e, x, y)) { hit = e; break; }
     }

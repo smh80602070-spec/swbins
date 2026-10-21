@@ -17358,7 +17358,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       DG.ui.renderHud(); var w = document.getElementById('wallet'), keep = w ? w.querySelectorAll('.coin.hud-keep').length : -1, coins = w ? w.querySelectorAll('.coin').length : -1;
       if (keep !== 1 || coins < 3) { return '실패 지갑 칸 ' + coins + ' · 주 자원 ' + keep; }
       var sels = {}; [].forEach.call(document.styleSheets, function (ss) { var rs; try { rs = ss.cssRules; } catch (e) { return; } [].forEach.call(rs || [], function (r) { if (r.media && /max-width:\s*520px/.test(r.media.mediaText)) { [].forEach.call(r.cssRules, function (x) { (x.selectorText || '').split(',').forEach(function (k) { sels[k.replace(/\s+/g, '')] = 1; }); }); } }); });
-      var need = ['body.hud-diet#profile:not(.hud-open).p-meta>:not(:first-child)', 'body.hud-diet#wallet:not(.hud-open)>:not(:first-child):not(.hud-keep)', 'body.hud-diet#toast', 'body.hud-diet.fc-on#minimap', 'body.hud-diet.fc-on#story-track', 'body.hud-diet#gjoy:not(.held)'];
+      var need = ['body.hud-diet#profile:not(.hud-open).p-meta>:not(:first-child):not(.hud-keep)', 'body.hud-diet#wallet:not(.hud-open)>:not(:first-child):not(.hud-keep)', 'body.hud-diet#toast', 'body.hud-diet.fc-on#minimap', 'body.hud-diet.fc-on#story-track', 'body.hud-diet#gjoy:not(.held)'];
       var miss = need.filter(function (k) { return !sels[k]; }); if (miss.length) { return '실패 규칙 없음 ' + miss.join(' | '); }
       var st = document.getElementById('story-track'); if (st && getComputedStyle(st).whiteSpace !== 'nowrap') { return '실패 이야기 줄 ' + getComputedStyle(st).whiteSpace; }
       var size = DG.minimap && DG.minimap.stats ? DG.minimap.stats().size : null, want = innerWidth <= 520 ? 96 : innerWidth <= 600 ? 104 : 128;

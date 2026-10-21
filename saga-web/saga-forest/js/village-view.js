@@ -86,12 +86,12 @@
     var joyId = null, joyCX = 0, joyCY = 0;
     var JOY_R = 46, JOY_DEAD = 8;
     function knobAt(dx, dy) { joyKnob.style.transform = 'translate(' + dx + 'px,' + dy + 'px)'; }
-    function reset() { joyId = null; knobAt(0, 0); V.setJoy(0, 0); }
+    function reset() { joyId = null; knobAt(0, 0); V.setJoy(0, 0); joyEl.classList.remove('held'); }   // W-0364 폰: 받침 원은 누를 때만(.held)
     joyEl.addEventListener('pointerdown', function (e) {
       if (joyId !== null) { return; }
       var r = joyEl.getBoundingClientRect();
       joyCX = r.left + r.width / 2; joyCY = r.top + r.height / 2;
-      joyId = e.pointerId;
+      joyId = e.pointerId; joyEl.classList.add('held');
       joyEl.setPointerCapture && joyEl.setPointerCapture(e.pointerId);
       e.preventDefault();
     });

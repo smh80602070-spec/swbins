@@ -1420,3 +1420,21 @@ body.tilted3 #vignette {
 /* W-0284 작은 빈 집 — 가구 칩 */
 .life-chips { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; margin: 4px 0; }
 .life-chips .btn.tiny small { opacity: .7; }
+
+/* W-0364 폰 세로 HUD 다이어트(공용 규칙은 ui-kit.css body.hud-diet) — 3마을만의 자리.
+   윗 카드 = 이름·레벨 + 지금 할 일 한 줄(펼치면 .hud-open 이 원래대로) · 알림은 윗줄 높이에 겹쳐 뜬다 */
+@media (max-width: 520px) {
+  body.hud-diet { --toast-edge: calc(6px + var(--safe-t, 0px)); }
+  body.hud-diet #profile:not(.hud-open) { justify-self: start; max-width: 190px; padding: 4px 10px 4px 4px; align-self: start; }
+  body.hud-diet #profile:not(.hud-open) .avatar { width: 30px; height: 30px; }
+  body.hud-diet #profile:not(.hud-open) .p-meta { min-width: 0; }
+  body.hud-diet #profile:not(.hud-open) .p-meta > div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  body.hud-diet .wallet { padding: 3px 5px; }
+  body.hud-diet #wallet:not(.hud-open) .coin { padding: 4px 7px; }
+  body.hud-diet #vjoy-knob { width: 46px; height: 46px; margin: -23px 0 0 -23px; }
+  body.hud-diet #vjoy:not(.held) #vjoy-knob { opacity: .85; }
+  body.hud-diet #minimap { padding: 3px; }
+  body.hud-diet #minimap .mm-range { bottom: 2px; }
+  body.hud-diet .focus-card { padding: 4px 6px; gap: 6px; }
+  body.hud-diet .focus-card .fc-ico { width: 32px; height: 32px; font-size: 19px; }
+}

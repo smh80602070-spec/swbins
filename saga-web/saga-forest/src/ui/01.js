@@ -114,7 +114,10 @@
     });
     els['sheet-close'].addEventListener('click', closeSheet);
     els.scrim.addEventListener('click', closeSheet);
+    document.body.classList.add('hud-diet');   // W-0364 폰 세로 HUD 접기(공용 ui-kit.css) — 넓은 화면은 규칙이 안 걸린다
+    els.wallet.addEventListener('click', function () { if (!hudFold(els.wallet)) { els.wallet.classList.remove('hud-open'); } });   // 접힌 지갑 탭 = 다 펼침, 다시 탭 = 접음
     els.profile.addEventListener('click', function (e) {
+      if (hudFold(els.profile)) { return; }   // W-0364 폰: 접힌 카드는 첫 탭에 펼치기만, 펼친 뒤 탭이 원래 일
       if (!e.target.closest('[data-act="open-tasks"]')) { return; }
       openSheet('town');
     });
@@ -556,6 +559,16 @@
       ' <b>' + t.got + '/' + t.need + '</b> · (' + doneN + '/' + list.length + ')</div>';
   }
 
+  /** W-0364 폰 세로(≤520)에서 접힌 판이면 펼치고 참 — 6초 뒤 저절로 다시 접힌다. 넓은 화면·이미 펼친 판은 거짓(원래 탭 일) */
+  var foldTimers = {};
+  function hudFold(el) {
+    if (!el || !(global.innerWidth <= 520) || el.classList.contains('hud-open')) { return false; }
+    el.classList.add('hud-open');
+    clearTimeout(foldTimers[el.id]);
+    foldTimers[el.id] = setTimeout(function () { el.classList.remove('hud-open'); }, 6000);
+    return true;
+  }
+
   function renderTop() {
     var p = core.save.player;
     var need = core.expNeed(p.level);
@@ -579,6 +592,10 @@
         (global.DG.scenario ? global.DG.scenario.lineHtml() : '') +
         (global.DG.tut ? global.DG.tut.lineHtml() : '') + taskGoalLine() +   // 첫 10분 안내(tutorial.js)가 남았으면 맨 위
       '</div>';
+    var more = $('top-more');   // W-0364 폰: 👤(account.js 가 늦게 끼움)·🧊 는 ⋯ 안으로 옮긴다(손잡이 그대로) — 끼운 뒤에도 잡게 그릴 때마다 본다
+    if (more && global.innerWidth <= 520) { ['btn-3d', 'btn-acc'].forEach(function (id) { var b = $(id); if (b && b.parentNode !== more) { more.insertBefore(b, more.firstChild); } }); }
+    var g1 = els.profile.querySelector('.p-meta > .p-goal');
+    if (g1) { g1.classList.add('hud-keep'); }   // W-0364 폰 접힌 카드에 남는 "지금 할 일" 한 줄(맨 위 안내)
 
     els.wallet.innerHTML =
       coin('🪙', core.fmt(p.gold), '금') +
@@ -589,7 +606,7 @@
   }
 
   function coin(icon, val, label, hi) {
-    return '<div class="coin' + (hi ? ' hi' : '') + '" title="' + label + '"><span>' + icon + '</span>' + val + '</div>';
+    return '<div class="coin' + (hi ? ' hi hud-keep' : '') + '" title="' + label + '"><span>' + icon + '</span>' + val + '</div>';
   }
 
   /* ── 손이 닿는 것 (아래 가운데 카드) ─────────────────────

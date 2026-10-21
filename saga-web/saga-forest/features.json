@@ -1322,5 +1322,28 @@
   "ticket": "W-0358",
   "since": "2026-10-21",
   "note": "10-21: 기본 마을엔 3D 석등이 안 놓임(놓는 가구·손님 도깨비불 몫) — 엔진 길만, 촬영 없음"
+ },
+ {
+  "id": "fs.phone-hud-diet",
+  "name": "폰 세로 HUD 다이어트(W-0364) — 윗 카드 이름·레벨 + 지금 할 일 한 줄(탭 펼침)·자원 둘(탭 다)·알림 윗줄 한 줄·👤🧊 ⋯ 안·조이스틱 받침 누를 때만·미니맵 96·손 카드 얇게 — 가림 28.9→14.6%",
+  "files": [
+   "../shared/css/ui-kit.css",
+   "css/style.css",
+   "src/ui/01.js",
+   "src/ui/02.js",
+   "src/village-view/01.js",
+   "js/minimap.js"
+  ],
+  "tests": [
+   "test-web W-0364 폰 HUD 접기",
+   "pw-cover ≤15%",
+   "mobile-layout 세로 회귀 0"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0364",
+  "since": "2026-10-22",
+  "note": "10-22: 가림 첫 화면 28.9→14.6%(2회 같음)"
  }
 ]

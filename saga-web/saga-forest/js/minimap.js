@@ -46,7 +46,7 @@
   function on() { return core.tuned('minimap.on', 1) ? true : false; }
   function sizePx() {
     var narrow = global.innerWidth && global.innerWidth <= 600;
-    return core.tuned('minimap.size', narrow ? 104 : 128);
+    return core.tuned('minimap.size', global.innerWidth <= 520 ? 96 : narrow ? 104 : 128);   // W-0364 폰 세로 96
   }
   function everySec() { return core.tuned('minimap.everySec', 0.16); }
   function tileSize() { var v = V(); return v ? v.TILE : 40; }
