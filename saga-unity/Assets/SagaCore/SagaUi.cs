@@ -201,7 +201,7 @@ namespace Saga.Core
                 b.transition = Selectable.Transition.SpriteSwap;
                 var st = b.spriteState;
                 st.highlightedSprite = Part("btn_hover", skin);
-                st.selectedSprite = Part("btn_hover", skin);
+                st.selectedSprite = null; // 누른 뒤 고른 채로 남아도 보통 모양(hover 로 남으면 폰에서 눌린 듯 보인다)
                 st.pressedSprite = Part("btn_pressed", skin);
                 st.disabledSprite = Part("btn_disabled", skin);
                 b.spriteState = st;

@@ -35,6 +35,21 @@ namespace Saga.Core
         public bool AnyBadge { get; private set; }
         public int Columns => _narrow ? 3 : 5;
 
+        private static readonly List<MenuGrid> Opened = new List<MenuGrid>();
+
+        /// <summary>열린 메뉴 화면이 있으면 닫고 true — `SagaFlow` 의 Esc 가 먼저 부른다(격자를 닫는 Esc 가 일시정지까지 열지 않게).</summary>
+        public static bool CloseOpen()
+        {
+            bool any = false;
+            for (int i = Opened.Count - 1; i >= 0; i--)
+            {
+                var g = Opened[i];
+                if (g != null && g.IsOpen) { g.Close(); any = true; }
+            }
+            Opened.RemoveAll(g => g == null || !g.IsOpen);
+            return any;
+        }
+
         /// <summary>판 HUD 캔버스 밑에 메뉴 화면을 만든다(처음엔 닫힘). title = 화면 맨 위 글, closeLabel = 닫기 단추 글.</summary>
         public static MenuGrid Create(Transform canvas, string title, string closeLabel)
         {
@@ -98,8 +113,9 @@ namespace Saga.Core
         }
 
         public void Toggle() { if (IsOpen) Close(); else Open(); }
-        public void Open() { if (_panel == null) return; _panel.SetActive(true); _panel.transform.SetAsLastSibling(); Refresh(); }
-        public void Close() { if (_panel != null) _panel.SetActive(false); }
+        public void Open() { if (_panel == null) return; _panel.SetActive(true); _panel.transform.SetAsLastSibling(); if (!Opened.Contains(this)) Opened.Add(this); Refresh(); }
+        public void Close() { if (_panel != null) _panel.SetActive(false); Opened.Remove(this); }
+        private void OnDestroy() => Opened.Remove(this);
 
         /// <summary>칸 글(창 단추 글 + [키])·보임을 새로 하고 ● 여부를 센다. 닫혀 있어도 부른다(☰ 단추의 ●).</summary>
         public void Refresh()
@@ -121,8 +137,9 @@ namespace Saga.Core
         private void Update()
         {
             if (!IsOpen) return;
+            // Esc 는 SagaFlow 가 받아 CloseOpen 을 먼저 부른다(일시정지 없는 씬이면 여기서)
             var kb = Keyboard.current;
-            if (kb != null && kb.escapeKey.wasPressedThisFrame) { Close(); return; }
+            if (SagaFlowRunner.Instance == null && kb != null && kb.escapeKey.wasPressedThisFrame) { Close(); return; }
             _tick -= Time.unscaledDeltaTime;
             if (_tick > 0f) return;
             _tick = 0.5f;

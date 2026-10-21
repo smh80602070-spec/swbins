@@ -93,7 +93,7 @@ namespace Saga.Core
         private void Update()
         {
             var kb = Keyboard.current;
-            if (kb != null && kb.escapeKey.wasPressedThisFrame) SagaPauseMenu.Toggle();
+            if (kb != null && kb.escapeKey.wasPressedThisFrame && !MenuGrid.CloseOpen()) SagaPauseMenu.Toggle(); // U-0154 — ☰ 화면이 열려 있으면 그것만 닫는다
         }
 
         private void OnApplicationPause(bool paused)
