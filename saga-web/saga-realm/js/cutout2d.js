@@ -109,7 +109,8 @@
   }
   function rigIdFor(pool) {
     if (indexState === 'none') { indexState = 'loading'; loadJson(base() + 'index.json', function (j) { index = j || {}; indexState = 'ok'; }, function () { index = {}; indexState = 'fail'; }); }
-    var p = index && index.pools ? index.pools[pool] || index.pools[String(pool).split('#')[0]] : null;
+    var b = String(pool).split('#')[0], k = b.replace(/^vroid:/, '').split('~')[0];   // W-0353 — 게임 안 풀은 'vroid:<인물>~<옷 색 칸>' 이라 표(인물 id)와 안 맞아 컷아웃이 한 번도 안 섰다
+    var p = index && index.pools ? index.pools[pool] || index.pools[b] || index.pools[k] : null;
     return p || null;
   }
   function rigOf(id) {

@@ -1449,5 +1449,22 @@
   "ticket": "W-0352",
   "since": "2026-10-21",
   "note": "10-21: pw-2d-cmp w352 go map/near Read — 개·당나귀·판다·소가 종 시트, 사람 대비 크기 자연스러움"
+ },
+ {
+  "id": "go.w2d-layers",
+  "name": "2D 겹 배경·컷아웃 엔진 고침(W-0353) — 층 안개 알파 안에만 · 컷아웃 vroid: 풀 짝 찾기 · 이 판 기본은 둘 다 꺼짐",
+  "files": [
+   "js/parallax2d.js",
+   "js/cutout2d.js"
+  ],
+  "tests": [
+   "pw-2d-cmp w353bg(parallax2d.on 0/1) · 컷아웃 옛/새 대 보기"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0353",
+  "since": "2026-10-21",
+  "note": "10-21: 공용 엔진 고침만"
  }
 ]

@@ -77,6 +77,17 @@
   }
 
   function ready(im) { return im && (im.getContext || (im.complete && im.naturalWidth)); }
+  /** W-0353 층 안개 — 그림의 알파 안에만 안개색을 얹은 사본(원래 크기, 층마다 하나 · 안개색·세기가 바뀌면 다시). 옛: 띠 전체 fillRect 라 알파 밖(하늘 자리)까지 사각형으로 칠했다 */
+  function fogged(L, fog) {
+    var k = fog + '|' + L.fog, c = L._fogC;
+    if (c && c.k === k) { return c.cv; }
+    if (!global.document) { return null; }
+    var iw = L.img.width || L.img.naturalWidth, ih = L.img.height || L.img.naturalHeight, cv = global.document.createElement('canvas'), g;
+    cv.width = iw; cv.height = ih; g = cv.getContext('2d');
+    g.drawImage(L.img, 0, 0); g.globalCompositeOperation = 'source-atop'; g.globalAlpha = Math.min(1, Math.max(0, +L.fog)); g.fillStyle = fog; g.fillRect(0, 0, iw, ih);
+    L._fogC = { k: k, cv: cv };
+    return cv;
+  }
   function draw(ctx, id, o) {
     var P = placeOf(id); if (!P || !ctx || !o) { return false; }
     var m = P.meta, W = o.W, H = o.H, L, i, any = false, fog = m.fog;
@@ -86,15 +97,15 @@
       var iw = L.img.width || L.img.naturalWidth, ih = L.img.height || L.img.naturalHeight, dh = (L.h || 1) * H, dw = iw * dh / ih;
       var y = L.top !== undefined ? L.top * H : (L.bottom !== undefined ? L.bottom : 1) * H - dh;
       y -= (+o.camY || 0) * (L.depth || 0) * 0.3;
-      var off = layerX(L.depth, o.camX, dw), n = Math.floor(((+o.camX || 0) * (L.depth || 0)) / dw), k, x;
+      var off = layerX(L.depth, o.camX, dw), n = Math.floor(((+o.camX || 0) * (L.depth || 0)) / dw), k, x, src = fog && L.fog ? (fogged(L, fog) || L.img) : L.img;
       ctx.save();
       if (L.alpha !== undefined) { ctx.globalAlpha = L.alpha; }
       for (k = 0; k * dw - off < W; k++) {
         x = Math.round(k * dw - off);
-        if ((n + k) % 2 !== 0) { ctx.save(); ctx.translate(x + dw, 0); ctx.scale(-1, 1); ctx.drawImage(L.img, 0, y, dw + 1, dh); ctx.restore(); }
-        else { ctx.drawImage(L.img, x, y, dw + 1, dh); }
+        if ((n + k) % 2 !== 0) { ctx.save(); ctx.translate(x + dw, 0); ctx.scale(-1, 1); ctx.drawImage(src, 0, y, dw + 1, dh); ctx.restore(); }
+        else { ctx.drawImage(src, x, y, dw + 1, dh); }
       }
-      if (fog && L.fog) { ctx.globalAlpha = L.fog; ctx.fillStyle = fog; ctx.fillRect(0, y, W, dh); }   // 층 사이 안개 — 먼 층일수록 진하게(대기 원근)
+      /* 층 사이 안개 — 먼 층일수록 진하게(대기 원근) · W-0353 위 fogged 사본이 그림 모양 안에만 칠한다 */
       ctx.restore();
       if (!o.front && m.light && i === 1) {   // 빛 띠 — 하늘·먼 산 위
         ctx.save(); ctx.globalAlpha = m.light.a || 0.15; ctx.fillStyle = m.light.color || '#fff';
@@ -108,7 +119,7 @@
   }
   /** mode2d.drawBg 의 갈래 — o = { region, camX, W, H, base } · 손잡이 parallax2d.on 0 이면 아무것도 안 한다 */
   function drawFor(ctx, o) {
-    var mode = +tuned('parallax2d.on', 0);
+    var cf = global.DG.cfg && global.DG.cfg.mode2d, mode = +tuned('parallax2d.on', (cf && cf.parallaxOn) || 0);   // W-0353 판 기본값(cfg.mode2d.parallaxOn — 4종횡 1)
     if (!mode || !o) { return false; }
     return draw(ctx, mode >= 2 ? '_stub' : o.region, { camX: o.camX, camY: o.camY, W: o.W, H: o.base || o.H, front: !!o.front });
   }
