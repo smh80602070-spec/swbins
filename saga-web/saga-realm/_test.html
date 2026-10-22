@@ -156,6 +156,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/menu-grid.js"></script>
 <script src="js/me-adapter.js"></script>
 <script src="js/me-panel.js"></script>
+<script src="js/goals-adapter.js"></script>
+<script src="js/goals-panel.js"></script>
 <script src="js/cpanel.js"></script>
 <script src="js/hud.js"></script>
 <script src="js/rts/grid.js"></script>
@@ -7375,6 +7377,13 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var D = DG.data, bad = 0, ids = D.heroes.slice(0, 40).map(function (h) { return h.id; }).concat(D.pets.slice(0, 40).map(function (p) { return p.id; }), ['__없음__']);
       ids.forEach(function (id) { var lin = null, i; for (i = 0; i < D.heroes.length && !lin; i++) { if (D.heroes[i].id === id) { lin = D.heroes[i]; } } for (i = 0; i < D.pets.length && !lin; i++) { if (D.pets[i].id === id) { lin = D.pets[i]; } } if ((D.find(id) || null) !== (lin || null)) { bad++; } });
       return (near > 0 && near < CD.CITIES.length && far >= near && bad === 0) || ('실패 당김 ' + near + ' · 물러남 ' + far + ' / ' + CD.CITIES.length + ' · find 다름 ' + bad);
+    });
+    t('W-0380 「오늘」 창 — 어댑터 model 이 규격(today·week 배열, 줄마다 label·max>0) · 오늘+이번 주 줄이 하나 이상(없으면 note) · render 에 줄마다 data-gp-row·진행 n/m 또는 ✔', function () {
+      var A = DG.goalsAdapter, P = DG.goalsPanel; if (!A || !P) { return '실패 DG.goalsAdapter·goalsPanel 없음'; }
+      var m = A.model(), rows = (m.today || []).concat(m.week || []);
+      var ok = Array.isArray(m.today) && Array.isArray(m.week) && rows.every(function (r) { return r.label && r.max > 0; }) && (rows.length > 0 || !!m.note);
+      var h = P.render(m), drew = h.indexOf('goals-panel') > 0 && (m.today || []).every(function (r, k) { return h.indexOf('data-gp-row="t' + k + '"') > 0; }) && (m.week || []).every(function (r, k) { return h.indexOf('data-gp-row="w' + k + '"') > 0; });
+      return ok && drew && P.left(3700) === '1시간 1분' && ('오늘 ' + m.today.length + ' · 이번 주 ' + m.week.length + (m.claim ? ' · 보상 ' + m.claim.state : '')) || '실패 ' + ok + ',' + drew + ' ' + JSON.stringify(m).slice(0, 200);
     });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';

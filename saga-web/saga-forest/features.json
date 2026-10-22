@@ -1448,5 +1448,26 @@
   "ticket": "W-0309",
   "since": "2026-10-22",
   "note": "10-22: village:gather 신호만 들음(village.js 판정 안 건드림) · 방문객 확률 + 는 안 함(손님은 날마다 옴) · 사고 안 2D 전시대 그림 없음 · save.village.relics 새 칸 · D2(claude 2026-10-23 R-3 닫기): W-0309 폰 사고 창 촬영 ○"
+ },
+ {
+  "id": "fs.goals-panel",
+  "name": "「오늘」 창(W-0380, shared/js/goals-panel.js + 판 js/goals-adapter.js) — 일일·주간 거리를 한 창에 같은 틀로(오늘·이번 주 줄 진행 n/m·다 하면 받는 보상 상태·다음 갈림까지 남은 시간), 줄을 누르면 판의 원래 창 · 판정·보상·세이브 그대로(읽기만)",
+  "files": [
+   "js/goals-panel.js",
+   "js/goals-adapter.js"
+  ],
+  "tests": [
+   "test-web W-0380 「오늘」 창",
+   "pw-look2d LOOK_EVAL goalsPanel.open 폰 390×844"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {
+   "A": "오늘 할 일 한눈에",
+   "H": "돌아올 이유"
+  },
+  "ticket": "W-0380",
+  "since": "2026-10-23",
+  "note": "D2(claude 2026-10-23): 폰 촬영 w380_saga-forest.png Read ○"
  }
 ]

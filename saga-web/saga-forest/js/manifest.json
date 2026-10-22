@@ -100,6 +100,8 @@
    "js/menu-grid.js",
    "js/me-adapter.js",
    "js/me-panel.js",
+   "js/goals-adapter.js",
+   "js/goals-panel.js",
    "js/ops-client.js",
    "js/perf.js",
    "js/game.js"
@@ -206,6 +208,8 @@
    "js/menu-grid.js",
    "js/me-adapter.js",
    "js/me-panel.js",
+   "js/goals-adapter.js",
+   "js/goals-panel.js",
    "js/game.js"
   ]
  ],

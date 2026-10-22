@@ -937,7 +937,7 @@
           for (rbj = 0; rbj < props.length; rbj++) { if (Math.hypot(props[rbj].x - rbx, props[rbj].y - rby) < TILE * 1.6) { rbOk = false; break; } }
           if (rbOk) { rbBest = { x: rbx, y: rby }; }
         }
-        if (!rbBest) { rbBest = { x: (cx - 3) * TILE + 20, y: (cy + 3) * TILE + 20 }; }
+        for (var rbr = 2; rbr <= 8 && !rbBest; rbr++) { for (var rbdx = -rbr; rbdx <= rbr && !rbBest; rbdx++) { for (var rbdy = -rbr; rbdy <= rbr && !rbBest; rbdy++) { if (Math.max(Math.abs(rbdx), Math.abs(rbdy)) !== rbr) { continue; } var qx = (cx + rbdx) * TILE + 20, qy = (cy + rbdy) * TILE + 20; if (props.every(function (q) { return Math.hypot(q.x - qx, q.y - qy) >= TILE * 1.6; })) { rbBest = { x: qx, y: qy }; } } } } if (!rbBest) { rbBest = { x: (cx - 3) * TILE + 20, y: (cy + 3) * TILE + 20 }; }   // 여덟 후보가 다 막히면(W-0299 우리 뒤) 광장 둘레를 고리마다 넓혀 빈자리 — 그래도 없으면 옛 자리
         props.push({ id: 'bundle_ruin', kind: 'rebuilt', x: rbBest.x, y: rbBest.y });
       }
     }

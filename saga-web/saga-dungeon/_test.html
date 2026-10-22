@@ -208,6 +208,8 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/menu-grid.js"></script>
 <script src="js/me-adapter.js"></script>
 <script src="js/me-panel.js"></script>
+<script src="js/goals-adapter.js"></script>
+<script src="js/goals-panel.js"></script>
 <script src="js/dragdrop.js"></script>
 <script src="js/dd-adapter.js"></script>
 <script src="js/ui-detail.js"></script>
@@ -9468,6 +9470,13 @@ window.requestAnimationFrame = function () { return 0; };
       var P3 = DG.portrait3d, c = P3 && P3.of ? P3.of('hero', { id: id }, 150, 172) : null;
       return (c && c.indexOf('assets/illust/' + id + '/neutral.webp') >= 0) || ('실패 카드 ' + c);
       }
+    });
+    t('W-0380 「오늘」 창 — 어댑터 model 이 규격(today·week 배열, 줄마다 label·max>0) · 오늘+이번 주 줄이 하나 이상(없으면 note) · render 에 줄마다 data-gp-row·진행 n/m 또는 ✔', function () {
+      var A = DG.goalsAdapter, P = DG.goalsPanel; if (!A || !P) { return '실패 DG.goalsAdapter·goalsPanel 없음'; }
+      var m = A.model(), rows = (m.today || []).concat(m.week || []);
+      var ok = Array.isArray(m.today) && Array.isArray(m.week) && rows.every(function (r) { return r.label && r.max > 0; }) && (rows.length > 0 || !!m.note);
+      var h = P.render(m), drew = h.indexOf('goals-panel') > 0 && (m.today || []).every(function (r, k) { return h.indexOf('data-gp-row="t' + k + '"') > 0; }) && (m.week || []).every(function (r, k) { return h.indexOf('data-gp-row="w' + k + '"') > 0; });
+      return ok && drew && P.left(3700) === '1시간 1분' && ('오늘 ' + m.today.length + ' · 이번 주 ' + m.week.length + (m.claim ? ' · 보상 ' + m.claim.state : '')) || '실패 ' + ok + ',' + drew + ' ' + JSON.stringify(m).slice(0, 200);
     });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';

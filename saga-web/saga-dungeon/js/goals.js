@@ -243,6 +243,19 @@
     };
   }
 
+  /** W-0380 「오늘」 창이 읽는 일일·주간 묶음 — 읽기만(doneMap·claimed·counts 를 안 바꾼다, 지급은 lines() 그대로). 스텁 항목은 뺀다 */
+  function bundles() {
+    var g = S();
+    function rows(bundle, base, doneMap) {
+      return bundle.filter(function (it) { return !it.stub; }).map(function (it) {
+        var prog = Math.max(0, (g.counts[it.counter] || 0) - (base[it.counter] || 0));
+        return { id: it.id, label: it.label, cur: Math.min(prog, it.target), max: it.target, done: !!doneMap[it.id] || prog >= it.target };
+      });
+    }
+    return { daily: rows(DAILY_BUNDLE, g.daily.base, g.daily.bundleDone), dailyClaimed: !!g.daily.claimed,
+      weekly: rows(WEEKLY_BUNDLE, g.weekly.base, g.weekly.bundleDone), weeklyClaimed: !!g.weekly.claimed };
+  }
+
   /* ── 세션 카드 ────────────────────────────────────────── */
 
   function buildCard(reason, floor, payload) {
@@ -336,6 +349,7 @@
   global.DG.goals = {
     init: init,
     lines: lines,
+    bundles: bundles,
     todayKey: todayKey,
     weekKey: weekKey,
     dexPct: dexPct,

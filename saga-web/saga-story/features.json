@@ -1224,5 +1224,26 @@
   "ticket": "W-0345",
   "since": "2026-10-22",
   "note": "10-22: 데이터 칸·세이브 없음(e.air·vy·airHits·groundY 런타임) · 자동 사냥은 ↑ 를 안 눌러 변화 없음 · 화면 촬영은 마을 판이라 적이 없어 못 함 — 배선 진단이 실제 update 틱으로 확인"
+ },
+ {
+  "id": "st.goals-panel",
+  "name": "「오늘」 창(W-0380, shared/js/goals-panel.js + 판 js/goals-adapter.js) — 일일·주간 거리를 한 창에 같은 틀로(오늘·이번 주 줄 진행 n/m·다 하면 받는 보상 상태·다음 갈림까지 남은 시간), 줄을 누르면 판의 원래 창 · 판정·보상·세이브 그대로(읽기만)",
+  "files": [
+   "js/goals-panel.js",
+   "js/goals-adapter.js"
+  ],
+  "tests": [
+   "test-web W-0380 「오늘」 창",
+   "pw-look2d LOOK_EVAL goalsPanel.open 폰 390×844"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {
+   "A": "오늘 할 일 한눈에",
+   "H": "돌아올 이유"
+  },
+  "ticket": "W-0380",
+  "since": "2026-10-23",
+  "note": "D2(claude 2026-10-23): 폰 촬영 w380_saga-story.png Read ○ — 새 계정 Lv.1 은 일일 사명 전이라 \"없음\" 줄"
  }
 ]
