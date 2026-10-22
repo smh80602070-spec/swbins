@@ -1119,12 +1119,12 @@
   "tests": [
    "무예 나무(W-0280)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0280",
   "since": "2026-10-17",
-  "note": "라스트 에포크식(구조만). 장부 tasks/gameplay/dungeon.md · 세이브 save.skillTree[무예 key] = { xp, pts[] } (인물이 아니라 무예마다 하나)"
+  "note": "라스트 에포크식(구조만). 장부 tasks/gameplay/dungeon.md · 세이브 save.skillTree[무예 key] = { xp, pts[] } (인물이 아니라 무예마다 하나) · D2(claude 2026-10-23 R-3 닫기): W-0280 PC·폰 무예 창 촬영 · qc"
  },
  {
   "id": "dg.wpn-swap",
@@ -1141,12 +1141,12 @@
    "무기 두 벌(W-0281)",
    "dg.engage ③ 키 글자(W-0175)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0281",
   "since": "2026-10-17",
-  "note": "PoE2 식(구조만). 장부 tasks/gameplay/dungeon.md · 세이브 save.wpn2[인물id] = 물건(장비 보정 순회에 안 들어감)"
+  "note": "PoE2 식(구조만). 장부 tasks/gameplay/dungeon.md · 세이브 save.wpn2[인물id] = 물건(장비 보정 순회에 안 들어감) · D2(claude 2026-10-23 R-3 닫기): W-0281 PC·폰 장비 창·Q 단추 촬영 · qc"
  },
  {
   "id": "dg.loot-filter",
@@ -1186,12 +1186,12 @@
    "시선(W-0303)",
    "쉬는 몸 life(W-0303)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0303",
   "since": "2026-10-18",
-  "note": "코드로 굽는 클립(에셋 없음). 손잡이 pose3d.idleEvery 4(±1초)·pose3d.lookMax 60 · anim3d.walkHps 0.59·runHps 1.76(IK 클립 본래 빠르기) · 2D 는 mode2d o.pose 대역(K 동작별 시트 뒤 프레임 치환) · 연결: 강공격 Pose_heavy(p.heavyPose)·무예 시전 Pose_cast·마을 쉬기(8초 앉기)·마을 사람 idle 변주 · 손잡이 pose3d.sitAfter 8"
+  "note": "코드로 굽는 클립(에셋 없음). 손잡이 pose3d.idleEvery 4(±1초)·pose3d.lookMax 60 · anim3d.walkHps 0.59·runHps 1.76(IK 클립 본래 빠르기) · 2D 는 mode2d o.pose 대역(K 동작별 시트 뒤 프레임 치환) · 연결: 강공격 Pose_heavy(p.heavyPose)·무예 시전 Pose_cast·마을 쉬기(8초 앉기)·마을 사람 idle 변주 · 손잡이 pose3d.sitAfter 8 · D2(claude 2026-10-23 R-3 닫기): W-0303 pose-games.mjs 촬영"
  },
  {
   "id": "dg.sheet16",
@@ -1206,12 +1206,12 @@
    "보폭 위상·가까운 역할(W-0311)",
    "mode2d 16방향 길 회귀 0(W-0311)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0311",
   "since": "2026-10-18",
-  "note": "시트 굽기는 K(INBOX 10-18 규격: characters2d16/<id>/<역할>.webp 9행 + sheet.json). tools/gen-assets3d-ids.mjs 가 sheet.json 을 표 hero2d16 에 담아 실행 중 404 0. 동작 그림은 처음 그릴 때 받기. 자세(W-0303 Pose_)가 시트에 있으면 그 프레임, 없으면 기울이기 대역. D2 는 K 시트 뒤"
+  "note": "시트 굽기는 K(INBOX 10-18 규격: characters2d16/<id>/<역할>.webp 9행 + sheet.json). tools/gen-assets3d-ids.mjs 가 sheet.json 을 표 hero2d16 에 담아 실행 중 404 0. 동작 그림은 처음 그릴 때 받기. 자세(W-0303 Pose_)가 시트에 있으면 그 프레임, 없으면 기울이기 대역. D2 는 K 시트 뒤 · D2(claude 2026-10-23 R-3 닫기): W-0311 sheet16-shot.mjs"
  },
  {
   "id": "dg.phone-budget",
@@ -1223,12 +1223,12 @@
   "tests": [
    "뼈대 나누기(W-0302)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0302",
   "since": "2026-10-18",
-  "note": "표 tasks/sheets/web-phone-budget-20261018.md — 용량·그리기 수는 상한 안, FPS(폰 흉내)는 30 아래(원인·남은 거리 시트). 손잡이 anim3d.shareSkel · village3d/realm3d.lowFps 26 · lowWin 3 · autoq.on · city3d.fps 30"
+  "note": "표 tasks/sheets/web-phone-budget-20261018.md — 용량·그리기 수는 상한 안, FPS(폰 흉내)는 30 아래(원인·남은 거리 시트). 손잡이 anim3d.shareSkel · village3d/realm3d.lowFps 26 · lowWin 3 · autoq.on · city3d.fps 30 · D2(claude 2026-10-23 R-3 닫기): W-0302 pw-phone-budget·pw-cpu-profile 측정"
  },
  {
   "id": "dg.cutout2d",
@@ -1242,12 +1242,12 @@
    "W-0336 컷아웃 뼈대",
    "W-0336 겹 배경"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0336",
   "since": "2026-10-19",
-  "note": "그림은 K(수신함 10-19 웹 W-0336·W-0339 → 자체툴) — 오면 index.json·layers.json 만 두고 손잡이 1. 지금은 대역(코드 도형)·_demo.html#cutout"
+  "note": "그림은 K(수신함 10-19 웹 W-0336·W-0339 → 자체툴) — 오면 index.json·layers.json 만 두고 손잡이 1. 지금은 대역(코드 도형)·_demo.html#cutout · D2(claude 2026-10-23 R-3 닫기): W-0336 _demo#cutout 다섯 판 촬영 예외 0"
  },
  {
   "id": "dg.look3d",
@@ -1308,12 +1308,12 @@
   "tests": [
    "W-0261 자체 에셋 — 판별 표(cfg.assets3d.reg)의 world3d id 가 전부 있다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0321",
   "since": "2026-10-20",
-  "note": "10-20: 옛 models/weapons/ 여덟·hexagon/windmill 지움(못 얹으면 도형) · dg-wpn-probe 콤보 6·타격음 샘플 ○(쥐는 축 근접 확인은 못 함)"
+  "note": "10-20: 옛 models/weapons/ 여덟·hexagon/windmill 지움(못 얹으면 도형) · dg-wpn-probe 콤보 6·타격음 샘플 ○(쥐는 축 근접 확인은 못 함) · D2(claude 2026-10-23 R-3 닫기): W-0321 dg-wpn-probe 콤보·타격음 ○"
  },
  {
   "id": "dg.skill-icons",
@@ -1325,12 +1325,12 @@
   "tests": [
    "W-0330 무예·직업 그림 — 표에 skill·job 125 · SKILLS·CLASSES 전부 그림 주소 · 무예 창에 <img"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0330",
   "since": "2026-10-20",
-  "note": "10-20: pw-menu-sheet 06 Read ○ 무장 직업 그림 · HUD 단추는 무예·비결 바뀔 때만 다시 씀"
+  "note": "10-20: pw-menu-sheet 06 Read ○ 무장 직업 그림 · HUD 단추는 무예·비결 바뀔 때만 다시 씀 · D2(claude 2026-10-23 R-3 닫기): W-0330 pw-menu-sheet 2나락 Read ○"
  },
  {
   "id": "dg.own-k126",
@@ -1342,12 +1342,12 @@
   "tests": [
    "W-0261 자체 에셋 — 판별 표(cfg.assets3d.reg)의 world3d id 가 전부 있다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0322",
   "since": "2026-10-20",
-  "note": "10-20: net-log 요청 312 중 옛 경로 0 · pw-visual-close 10/10 GLB 실패 0"
+  "note": "10-20: net-log 요청 312 중 옛 경로 0 · pw-visual-close 10/10 GLB 실패 0 · D2(claude 2026-10-23 R-3 닫기): W-0322 QC 세 판 FAIL 0 · net-log 옛 경로 0"
  },
  {
   "id": "dg.w2d-smooth",
@@ -1359,12 +1359,12 @@
   "tests": [
    "pw-web-2d-sheet 14/14 · pw-2d-cmp 비교판(옛 mip=0 / 새 mip=1)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0347",
   "since": "2026-10-21",
-  "note": "10-21: 1만리 짐승 점묘 사라짐(shots/cmp/w347c_go_map) · 밉 사본 캐시는 high 로 충분해 안 만듦"
+  "note": "10-21: 1만리 짐승 점묘 사라짐(shots/cmp/w347c_go_map) · 밉 사본 캐시는 high 로 충분해 안 만듦 · D2(claude 2026-10-23 R-3 닫기): W-0347 w347c_dg_room 촬영 ○"
  },
  {
   "id": "dg.w2d-labels",
@@ -1376,12 +1376,12 @@
   "tests": [
    "pw-look2d saga-dungeon town · pw-web-2d-sheet 14/14"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0348",
   "since": "2026-10-21",
-  "note": "10-21: shots/cmp/w348a_go_map·w348a_dg_town·w348b_rm_map Read — 글자끼리 겹침 0"
+  "note": "10-21: shots/cmp/w348a_go_map·w348a_dg_town·w348b_rm_map Read — 글자끼리 겹침 0 · D2(claude 2026-10-23 R-3 닫기): W-0348 w348a_dg_town 촬영 겹침 0"
  },
  {
   "id": "dg.w2d-scale",
@@ -1392,12 +1392,12 @@
   "tests": [
    "pw-2d-cmp 비교판(옛 scaleTable=0 / 새 1)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0349",
   "since": "2026-10-21",
-  "note": "10-21: 공용 표만 — 이 판 크기 맞춤은 다음 티켓(W-0366·W-0368)"
+  "note": "10-21: 공용 표만 — 이 판 크기 맞춤은 다음 티켓(W-0366·W-0368) · D2(claude 2026-10-23 R-3 닫기): W-0349 pw-2d-cmp"
  },
  {
   "id": "dg.w2d-mark",
@@ -1410,12 +1410,12 @@
   "tests": [
    "pw-2d-cmp 비교판(옛 markIcon=0 / 새 1)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0350",
   "since": "2026-10-21",
-  "note": "10-21: 2나락 마을 폰 촬영 Read — 난입 ⚔·사관 📖·이름표 머리 그림이 자체 아이콘, ☠·🌀 등 25 는 짝 없어 이모지(수신함 K 요청)"
+  "note": "10-21: 2나락 마을 폰 촬영 Read — 난입 ⚔·사관 📖·이름표 머리 그림이 자체 아이콘, ☠·🌀 등 25 는 짝 없어 이모지(수신함 K 요청) · D2(claude 2026-10-23 R-3 닫기): W-0350 pw-2d-cmp w350 2나락 town · 폰 마을 Read"
  },
  {
   "id": "dg.w2d-layers",
@@ -1427,12 +1427,12 @@
   "tests": [
    "pw-2d-cmp w353bg(parallax2d.on 0/1) · 컷아웃 옛/새 대 보기"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0353",
   "since": "2026-10-21",
-  "note": "10-21: 공용 엔진 고침만"
+  "note": "10-21: 공용 엔진 고침만 · D2(claude 2026-10-23 R-3 닫기): W-0353 pw-web-2d-sheet 통과"
  },
  {
   "id": "dg.me-panel",
@@ -1444,12 +1444,12 @@
   "tests": [
    "「내 정보」 창(W-0361) — 어댑터 값이 기존 함수 값 그대로 · render 가 칸·수치·성장 단추를 그림"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0361",
   "since": "2026-10-21",
-  "note": "10-21: PC 1280·폰 390 촬영 Read · 칸 누름 → 기존 창, 성장 단추 → 패시브 그물 열림(5/5)"
+  "note": "10-21: PC 1280·폰 390 촬영 Read · 칸 누름 → 기존 창, 성장 단추 → 패시브 그물 열림(5/5) · D2(claude 2026-10-23 R-3 닫기): W-0361 다섯 판 PC·폰 촬영 Read"
  },
  {
   "id": "dg.dragdrop",
@@ -1463,12 +1463,12 @@
   "tests": [
    "끌어 놓기 손놀림(W-0362) — 마우스 6px 끌기 → 받는 칸에 놓음 · 안 받는 칸은 취소 · 짧은 터치는 집지 않음 · 길게 누르기 → 집음 · 먼저 움직인 터치는 스크롤로 넘김 · 취소"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0362",
   "since": "2026-10-21",
-  "note": "10-21: 진짜 입력 — 2나락 PC 마우스·폰 CDP 터치(길게 누르기 → 들고 있는 채 → 무기 칸 누름) 끼워짐 · 4종횡 PC 마우스 끼워짐 · 집은 순간 폰 PNG Read(받는 칸 금빛·못 받는 칸 붉은 테)"
+  "note": "10-21: 진짜 입력 — 2나락 PC 마우스·폰 CDP 터치(길게 누르기 → 들고 있는 채 → 무기 칸 누름) 끼워짐 · 4종횡 PC 마우스 끼워짐 · 집은 순간 폰 PNG Read(받는 칸 금빛·못 받는 칸 붉은 테) · D2(claude 2026-10-23 R-3 닫기): W-0362 2나락 PC 마우스·폰 터치 촬영"
  },
  {
   "id": "dg.foe-body-portrait",
@@ -1482,12 +1482,12 @@
   "tests": [
    "적 초상·몸 종 id 먼저(W-0354) — 적 134 마다 초상이 있으면 파일이 있음(404 0) · body 초상이 있는 적은 초상 id = body = 3D 몸 id · 사람 적은 자체 NPC 몸 초상 · 보스는 옛 길"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0354",
   "since": "2026-10-21",
-  "note": "10-21: 초상·2D 시트 대 보기 Read — 종 시트 있는 뱀·슬라임·버섯·원귀 ○, 해골·말벌·쥐는 2D 가 옛 계열(K 수신함)"
+  "note": "10-21: 초상·2D 시트 대 보기 Read — 종 시트 있는 뱀·슬라임·버섯·원귀 ○, 해골·말벌·쥐는 2D 가 옛 계열(K 수신함) · D2(claude 2026-10-23 R-3 닫기): W-0354 초상·2D 시트 PNG Read"
  },
  {
   "id": "dg.ground-tiles",
@@ -1499,12 +1499,12 @@
   "tests": [
    "3D 자체 땅 타일(W-0355, K-0136) — 마을 바닥 = dg_town_dirt · 던전 층은 돌바닥·굴 바위가 옛 석 장과 함께 후보 · 공용 주소 전엔 옛 석 장(null) · 파일 있음"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0355",
   "since": "2026-10-21",
-  "note": "10-21: 3D 마을 전후 Read — 회색 돌 → 다진 흙(마을다움 ○)"
+  "note": "10-21: 3D 마을 전후 Read — 회색 돌 → 다진 흙(마을다움 ○) · D2(claude 2026-10-23 R-3 닫기): W-0355 2나락 마을 3D 다진 흙 ○"
  },
  {
   "id": "dg.nightglow",
@@ -1517,12 +1517,12 @@
   "tests": [
    "test-web n/n"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0358",
   "since": "2026-10-21",
-  "note": "10-21: 1층 촬영: 횃불대 불꽃 빛남 + 둘레 작은 불빛(층 안 = 밤 1, 마을 = 낮) · 세기 1·반경 5m 로 낮춤(처음 1.5·6m 는 뒷벽이 넓게 금빛)"
+  "note": "10-21: 1층 촬영: 횃불대 불꽃 빛남 + 둘레 작은 불빛(층 안 = 밤 1, 마을 = 낮) · 세기 1·반경 5m 로 낮춤(처음 1.5·6m 는 뒷벽이 넓게 금빛) · D2(claude 2026-10-23 R-3 닫기): W-0358 2나락 1층 횃불 PNG Read ○"
  },
  {
   "id": "dg.phone-hud-diet",
@@ -1539,12 +1539,12 @@
    "pw-cover ≤15%",
    "mobile-layout 세로 회귀 0"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0364",
   "since": "2026-10-22",
-  "note": "10-22: 가림 마을 24→14%·던전 싸움 32.1→12.2~12.7%(2회)"
+  "note": "10-22: 가림 마을 24→14%·던전 싸움 32.1→12.2~12.7%(2회) · D2(claude 2026-10-23 R-3 닫기): W-0364 pw-cover 다섯 판 OK"
  },
  {
   "id": "dg.cam2d",
@@ -1558,12 +1558,12 @@
    "pw-cover ≤15%",
    "mobile-layout 세로 회귀 0"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0364",
   "since": "2026-10-22",
-  "note": "10-22: 폰 세 장 확인 · dungeon-view.js 1500줄 상한 안(기존 줄 끝)"
+  "note": "10-22: 폰 세 장 확인 · dungeon-view.js 1500줄 상한 안(기존 줄 끝) · D2(claude 2026-10-23 R-3 닫기): W-0364 pw-cover 다섯 판 OK"
  },
  {
   "id": "dg.ground2d",
@@ -1576,12 +1576,12 @@
    "test-web W-0368 2D 접지",
    "pw-2d-cmp w368"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0368",
   "since": "2026-10-22",
-  "note": "10-22: 손잡이 셋 0/1 이면 옛 그림 · setTone 은 판 연결 안 함(어둠 막이 이미 몸 위)"
+  "note": "10-22: 손잡이 셋 0/1 이면 옛 그림 · setTone 은 판 연결 안 함(어둠 막이 이미 몸 위) · D2(claude 2026-10-23 R-3 닫기): W-0368 pw-2d-cmp w368 2나락 핵 보임"
  },
  {
   "id": "dg.factory2d",
@@ -1595,12 +1595,12 @@
    "pw-2d-cmp w370",
    "pw-web-2d-sheet 14/14"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0370",
   "since": "2026-10-22",
-  "note": "10-22: 몸 키는 idle 옆 칸 알파 상자로 재서 targetH × scale(옛 길과 같은 기준)"
+  "note": "10-22: 몸 키는 idle 옆 칸 알파 상자로 재서 targetH × scale(옛 길과 같은 기준) · D2(claude 2026-10-23 R-3 닫기): W-0370 칸 Read · 비교판 w370 다섯"
  },
  {
   "id": "dg.townPortraitK",
@@ -1631,7 +1631,7 @@
    "test-web W-0298 지도 장치",
    "pw-look2d LOOK_EVAL 굴혈 부적 화면"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {
    "F": "끝판 반복",
@@ -1639,7 +1639,7 @@
   },
   "ticket": "W-0298",
   "since": "2026-10-22",
-  "note": "10-22: 지도 조각 = 이미 떨어지는 부적(제10층+ 보스·난입 완주) · sig.extra 새 칸(없으면 빈 것)"
+  "note": "10-22: 지도 조각 = 이미 떨어지는 부적(제10층+ 보스·난입 완주) · sig.extra 새 칸(없으면 빈 것) · D2(claude 2026-10-23 R-3 닫기): W-0298 폰 굴혈 화면 Read ○"
  },
  {
   "id": "dg.evolve",
@@ -1652,7 +1652,7 @@
    "test-web W-0307 무기 진화",
    "pw-look2d LOOK_EVAL 연단 탭"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {
    "F": "빌드 수렴",
@@ -1660,7 +1660,7 @@
   },
   "ticket": "W-0307",
   "since": "2026-10-22",
-  "note": "10-22: 전설 둘 + 주옥 → 고유 후보는 안 함(다음 티켓) · save.evolve 새 칸"
+  "note": "10-22: 전설 둘 + 주옥 → 고유 후보는 안 함(다음 티켓) · save.evolve 새 칸 · D2(claude 2026-10-23 R-3 닫기): W-0307 폰 연단 탭 촬영 ○"
  },
  {
   "id": "dg.iso-bake",
@@ -1673,12 +1673,12 @@
    "test-web W-0376 폰 바닥",
    "pw-phone-budget saga-dungeon --gpu 마을·던전 ≥ 30"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0376",
   "since": "2026-10-22",
-  "note": "10-22: 조명 층 반 화소(dg.lightScale)는 재 봐도 잡음 수준이라 안 넣음 · 3D·PC 화면 그대로"
+  "note": "10-22: 조명 층 반 화소(dg.lightScale)는 재 봐도 잡음 수준이라 안 넣음 · 3D·PC 화면 그대로 · D2(claude 2026-10-23 R-3 닫기): W-0376 pw-phone-budget --shot 전후 Read · FPS 3.2→48"
  },
  {
   "id": "dg.run-rank",
@@ -1695,12 +1695,13 @@
    "test-web W-0378 한 판 등급 둘",
    "pw-look2d rank 끝 카드"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {
    "F": "잘 싸운 판이 더 번다"
   },
   "ticket": "W-0378",
-  "since": "2026-10-22"
+  "since": "2026-10-22",
+  "note": "D2(claude 2026-10-23 R-3 닫기): W-0378 pw-look2d rank 끝 카드 Read ○"
  }
 ]

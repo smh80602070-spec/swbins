@@ -1067,12 +1067,12 @@
   "tests": [
    "불가사의(W-0279)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0279",
   "since": "2026-10-17",
-  "note": "문명식(구조만). 장부 tasks/gameplay/realm.md"
+  "note": "문명식(구조만). 장부 tasks/gameplay/realm.md · D2(claude 2026-10-23 R-3 닫기): W-0279 내 성 창 촬영 ○ · qc"
  },
  {
   "id": "rk.tech-tree",
@@ -1115,12 +1115,12 @@
    "시선(W-0303)",
    "쉬는 몸 life(W-0303)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0303",
   "since": "2026-10-18",
-  "note": "코드로 굽는 클립(에셋 없음). 손잡이 pose3d.idleEvery 4(±1초)·pose3d.lookMax 60 · anim3d.walkHps 0.59·runHps 1.76(IK 클립 본래 빠르기) · 2D 는 mode2d o.pose 대역(K 동작별 시트 뒤 프레임 치환) · 연결: 태수 명령 ORDER_POSE(개간·수색 줍기·기술·축성·훈련 내리치기·상업·등용 인사·치안 둘러보기·징병 시전)·떠돌이 쉬기·성 안 일꾼 Pose_heavy/Pose_pick · 손잡이 pose3d.sitAfter 8"
+  "note": "코드로 굽는 클립(에셋 없음). 손잡이 pose3d.idleEvery 4(±1초)·pose3d.lookMax 60 · anim3d.walkHps 0.59·runHps 1.76(IK 클립 본래 빠르기) · 2D 는 mode2d o.pose 대역(K 동작별 시트 뒤 프레임 치환) · 연결: 태수 명령 ORDER_POSE(개간·수색 줍기·기술·축성·훈련 내리치기·상업·등용 인사·치안 둘러보기·징병 시전)·떠돌이 쉬기·성 안 일꾼 Pose_heavy/Pose_pick · 손잡이 pose3d.sitAfter 8 · D2(claude 2026-10-23 R-3 닫기): W-0303 pose-games.mjs 촬영"
  },
  {
   "id": "rk.sheet16",
@@ -1135,12 +1135,12 @@
    "보폭 위상·가까운 역할(W-0311)",
    "mode2d 16방향 길 회귀 0(W-0311)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0311",
   "since": "2026-10-18",
-  "note": "시트 굽기는 K(INBOX 10-18 규격: characters2d16/<id>/<역할>.webp 9행 + sheet.json). tools/gen-assets3d-ids.mjs 가 sheet.json 을 표 hero2d16 에 담아 실행 중 404 0. 동작 그림은 처음 그릴 때 받기. 자세(W-0303 Pose_)가 시트에 있으면 그 프레임, 없으면 기울이기 대역. D2 는 K 시트 뒤"
+  "note": "시트 굽기는 K(INBOX 10-18 규격: characters2d16/<id>/<역할>.webp 9행 + sheet.json). tools/gen-assets3d-ids.mjs 가 sheet.json 을 표 hero2d16 에 담아 실행 중 404 0. 동작 그림은 처음 그릴 때 받기. 자세(W-0303 Pose_)가 시트에 있으면 그 프레임, 없으면 기울이기 대역. D2 는 K 시트 뒤 · D2(claude 2026-10-23 R-3 닫기): W-0311 sheet16-shot.mjs"
  },
  {
   "id": "rk.phone-budget",
@@ -1156,12 +1156,12 @@
    "뼈대 나누기(W-0302)",
    "자동 품질 FPS 내리기(W-0302)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0302",
   "since": "2026-10-18",
-  "note": "표 tasks/sheets/web-phone-budget-20261018.md — 용량·그리기 수는 상한 안, FPS(폰 흉내)는 30 아래(원인·남은 거리 시트). 손잡이 anim3d.shareSkel · village3d/realm3d.lowFps 26 · lowWin 3 · autoq.on · city3d.fps 30"
+  "note": "표 tasks/sheets/web-phone-budget-20261018.md — 용량·그리기 수는 상한 안, FPS(폰 흉내)는 30 아래(원인·남은 거리 시트). 손잡이 anim3d.shareSkel · village3d/realm3d.lowFps 26 · lowWin 3 · autoq.on · city3d.fps 30 · D2(claude 2026-10-23 R-3 닫기): W-0302 pw-phone-budget·pw-cpu-profile 측정"
  },
  {
   "id": "rk.phone-3d-low",
@@ -1193,12 +1193,12 @@
    "W-0336 컷아웃 뼈대",
    "W-0336 겹 배경"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0336",
   "since": "2026-10-19",
-  "note": "그림은 K(수신함 10-19 웹 W-0336·W-0339 → 자체툴) — 오면 index.json·layers.json 만 두고 손잡이 1. 지금은 대역(코드 도형)·_demo.html#cutout"
+  "note": "그림은 K(수신함 10-19 웹 W-0336·W-0339 → 자체툴) — 오면 index.json·layers.json 만 두고 손잡이 1. 지금은 대역(코드 도형)·_demo.html#cutout · D2(claude 2026-10-23 R-3 닫기): W-0336 _demo#cutout 다섯 판 촬영 예외 0"
  },
  {
   "id": "rk.auto-rule",
@@ -1275,12 +1275,12 @@
    "js/asset3d.js"
   ],
   "tests": [],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0322",
   "since": "2026-10-20",
-  "note": "10-20: net-log 요청 106 중 옛 경로 0 · 5천하는 pw-visual-close 장면 없음"
+  "note": "10-20: net-log 요청 106 중 옛 경로 0 · 5천하는 pw-visual-close 장면 없음 · D2(claude 2026-10-23 R-3 닫기): W-0322 net-log(pw-visual-close 장면 없어 대신)"
  },
  {
   "id": "rl.city-phone-2d",
@@ -1293,12 +1293,12 @@
   "tests": [
    "W-0346 폰 성 화면 2D — 성 시트를 열어도 city3d 렌더러 0·캔버스 숨김·시트 맨 위에 2D 성 그림 + 3D 단추"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0346",
   "since": "2026-10-20",
-  "note": "10-20: pw-phone-budget 성 힙 34.9→9MB · 받은 양 9.6→4.3MB · 폰 촬영 2D·3D 두 장 Read ○"
+  "note": "10-20: pw-phone-budget 성 힙 34.9→9MB · 받은 양 9.6→4.3MB · 폰 촬영 2D·3D 두 장 Read ○ · D2(claude 2026-10-23 R-3 닫기): W-0346 pw-phone-budget --gpu 성 힙 34.9→9.0MB"
  },
  {
   "id": "rk.w2d-smooth",
@@ -1327,12 +1327,12 @@
   "tests": [
    "pw-look2d saga-realm map · pw-web-2d-sheet 14/14"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0348",
   "since": "2026-10-21",
-  "note": "10-21: shots/cmp/w348a_go_map·w348a_dg_town·w348b_rm_map Read — 글자끼리 겹침 0"
+  "note": "10-21: shots/cmp/w348a_go_map·w348a_dg_town·w348b_rm_map Read — 글자끼리 겹침 0 · D2(claude 2026-10-23 R-3 닫기): W-0348 촬영 겹침 0"
  },
  {
   "id": "rk.w2d-scale",
@@ -1376,12 +1376,12 @@
   "tests": [
    "pw-2d-cmp w353bg(parallax2d.on 0/1) · 컷아웃 옛/새 대 보기"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0353",
   "since": "2026-10-21",
-  "note": "10-21: 공용 엔진 고침만"
+  "note": "10-21: 공용 엔진 고침만 · D2(claude 2026-10-23 R-3 닫기): W-0353 pw-web-2d-sheet 통과"
  },
  {
   "id": "rk.me-panel",
@@ -1393,12 +1393,12 @@
   "tests": [
    "「내 정보」 창(W-0361) — 어댑터 값이 기존 함수 값 그대로 · render 가 칸·수치·성장 단추를 그림"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0361",
   "since": "2026-10-21",
-  "note": "10-21: PC 1280·폰 390 촬영 Read · 칸 누름 → 기존 창, 성장 단추 → 패시브 그물 열림(5/5)"
+  "note": "10-21: PC 1280·폰 390 촬영 Read · 칸 누름 → 기존 창, 성장 단추 → 패시브 그물 열림(5/5) · D2(claude 2026-10-23 R-3 닫기): W-0361 다섯 판 PC·폰 촬영 Read"
  },
  {
   "id": "rk.monster-crea",
@@ -1411,12 +1411,12 @@
   "tests": [
    "test-web 다섯 판 n/n · 괴물 무장 27 buildHero 격자 촬영(몸·동작 11 칸)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0356",
   "since": "2026-10-21",
-  "note": "10-21: 27/27 지어짐·동작 움직임 확인 · 2나락 짝 82 줄도 crea:(못 찾은 7 몸 K)"
+  "note": "10-21: 27/27 지어짐·동작 움직임 확인 · 2나락 짝 82 줄도 crea:(못 찾은 7 몸 K) · D2(claude 2026-10-23 R-3 닫기): W-0356 buildHero 격자 촬영"
  },
  {
   "id": "rk.nightglow",
@@ -1449,12 +1449,12 @@
    "pw-cover ≤15%",
    "mobile-layout 세로 회귀 0"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0364",
   "since": "2026-10-22",
-  "note": "10-22: 전체 화면 28.9→19% · 지도(SVG) 안 11%"
+  "note": "10-22: 전체 화면 28.9→19% · 지도(SVG) 안 11% · D2(claude 2026-10-23 R-3 닫기): W-0364 pw-cover 다섯 판 OK"
  },
  {
   "id": "rk.cam2d",
@@ -1468,12 +1468,12 @@
    "pw-cover ≤15%",
    "mobile-layout 세로 회귀 0"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0364",
   "since": "2026-10-22",
-  "note": "10-22: 폰 세 장 확인"
+  "note": "10-22: 폰 세 장 확인 · D2(claude 2026-10-23 R-3 닫기): W-0364 pw-cover 다섯 판 OK"
  },
  {
   "id": "rk.map-window",
@@ -1489,12 +1489,12 @@
    "pw-cover ≤15%",
    "mobile-layout 세로 회귀 0"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0364",
   "since": "2026-10-22",
-  "note": "10-22: pw-realm2d 전후(같은 조건 2·4회). 힙 5.5MB·그림 디코딩 13MB 로 원래 작음 — 아이폰 '연결 안 됨'은 에뮬(WebKit 로컬·공개 주소 둘 다 죽음 0)로 재현 안 됨"
+  "note": "10-22: pw-realm2d 전후(같은 조건 2·4회). 힙 5.5MB·그림 디코딩 13MB 로 원래 작음 — 아이폰 '연결 안 됨'은 에뮬(WebKit 로컬·공개 주소 둘 다 죽음 0)로 재현 안 됨 · D2(claude 2026-10-23 R-3 닫기): W-0364 pw-cover 5천하 지도 10.9%"
  },
  {
   "id": "rk.ground2d",
@@ -1507,12 +1507,12 @@
    "test-web W-0368 2D 접지",
    "pw-2d-cmp w368"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0368",
   "since": "2026-10-22",
-  "note": "10-22: 손잡이 셋 0/1 이면 옛 그림 · setTone 은 판 연결 안 함(어둠 막이 이미 몸 위)"
+  "note": "10-22: 손잡이 셋 0/1 이면 옛 그림 · setTone 은 판 연결 안 함(어둠 막이 이미 몸 위) · D2(claude 2026-10-23 R-3 닫기): W-0368 pw-2d-cmp w368 다섯"
  },
  {
   "id": "rk.factory2d",
@@ -1526,12 +1526,12 @@
    "pw-2d-cmp w370",
    "pw-web-2d-sheet 14/14"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0370",
   "since": "2026-10-22",
-  "note": "10-22: 몸 키는 idle 옆 칸 알파 상자로 재서 targetH × scale(옛 길과 같은 기준)"
+  "note": "10-22: 몸 키는 idle 옆 칸 알파 상자로 재서 targetH × scale(옛 길과 같은 기준) · D2(claude 2026-10-23 R-3 닫기): W-0370 칸 Read · 비교판 w370 다섯"
  },
  {
   "id": "rk.trade",
@@ -1548,7 +1548,7 @@
    "test-web 교역로(W-0301)",
    "pw-look2d LOOK_EVAL 지도 금빛 길"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {
    "A": "달마다 수입",
@@ -1556,7 +1556,7 @@
   },
   "ticket": "W-0301",
   "since": "2026-10-22",
-  "note": "10-22: 3D 지도 길은 없음(10-19 방향) · 호위 무장은 안 묶음(금만) · st.trade 새 칸, setup 이 판마다 null"
+  "note": "10-22: 3D 지도 길은 없음(10-19 방향) · 호위 무장은 안 묶음(금만) · st.trade 새 칸, setup 이 판마다 null · D2(claude 2026-10-23 R-3 닫기): W-0301 폰 지도 금빛 점선 촬영 ○"
  },
  {
   "id": "rk.relation",
@@ -1572,7 +1572,7 @@
    "test-web 관계망(W-0308)",
    "pw-look2d LOOK_EVAL 관계 줄"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {
    "A": "인물 이야기",
@@ -1580,6 +1580,6 @@
   },
   "ticket": "W-0308",
   "since": "2026-10-22",
-  "note": "10-22: 짝은 기존 data-relation 표(사건으로 새로 맺기는 안 함) · 일기토 강제·포로 구출 사건은 안 함(event.js 체인 몫) · rec.relMaster 새 칸"
+  "note": "10-22: 짝은 기존 data-relation 표(사건으로 새로 맺기는 안 함) · 일기토 강제·포로 구출 사건은 안 함(event.js 체인 몫) · rec.relMaster 새 칸 · D2(claude 2026-10-23 R-3 닫기): W-0308 관계 줄 폰 촬영 ○"
  }
 ]

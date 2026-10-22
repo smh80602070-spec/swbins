@@ -1040,12 +1040,12 @@
    "빈 집(W-0284)",
    "fs.craft: 제작대 ① 레시피 13"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0284",
   "since": "2026-10-17",
-  "note": "테라리아·스타바운드식(구조만). 장부 tasks/gameplay/forest.md · 세이브 save.village.lots[](옛 세이브 빈 것)"
+  "note": "테라리아·스타바운드식(구조만). 장부 tasks/gameplay/forest.md · 세이브 save.village.lots[](옛 세이브 빈 것) · D2(claude 2026-10-23 R-3 닫기): W-0284 PC·폰 꾸미기 창 촬영 · qc"
  },
  {
   "id": "fs.cave-depth",
@@ -1059,12 +1059,12 @@
   "tests": [
    "지하 층(W-0285)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0285",
   "since": "2026-10-17",
-  "note": "테라리아·마크식(구조만). 장부 tasks/gameplay/forest.md · 세이브 save.village.cave = { deepest, torchUntil, relic, dug }(옛 세이브 빈 것) · 동굴 안은 2D 실내뿐(3D 는 indoors/caveInside 에서 숨김)"
+  "note": "테라리아·마크식(구조만). 장부 tasks/gameplay/forest.md · 세이브 save.village.cave = { deepest, torchUntil, relic, dug }(옛 세이브 빈 것) · 동굴 안은 2D 실내뿐(3D 는 indoors/caveInside 에서 숨김) · D2(claude 2026-10-23 R-3 닫기): W-0285 PC·폰 1층 어둠 촬영 · qc"
  },
  {
   "id": "fs.partner",
@@ -1079,12 +1079,12 @@
   "tests": [
    "동반자(W-0288)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0288",
   "since": "2026-10-17",
-  "note": "스타듀·하베스트 문 식(구조만). 장부 tasks/gameplay/forest.md · 세이브 save.village.partner = { id, since, last, anniv, annivDay }(옛 세이브 없음=null) · 3D 는 집 안을 안 그리므로 밖에선 여느 주민, 집 안 2D 에만 선다"
+  "note": "스타듀·하베스트 문 식(구조만). 장부 tasks/gameplay/forest.md · 세이브 save.village.partner = { id, since, last, anniv, annivDay }(옛 세이브 없음=null) · 3D 는 집 안을 안 그리므로 밖에선 여느 주민, 집 안 2D 에만 선다 · D2(claude 2026-10-23 R-3 닫기): W-0288 fs_partner_home2d 촬영"
  },
  {
   "id": "fs.pose3d",
@@ -1105,12 +1105,12 @@
    "시선(W-0303)",
    "쉬는 몸 life(W-0303)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0303",
   "since": "2026-10-18",
-  "note": "코드로 굽는 클립(에셋 없음). 손잡이 pose3d.idleEvery 4(±1초)·pose3d.lookMax 60 · anim3d.walkHps 0.59·runHps 1.76(IK 클립 본래 빠르기) · 2D 는 mode2d o.pose 대역(K 동작별 시트 뒤 프레임 치환) · 연결: 채집 줍기 Pose_pick·바위·나무 내리치기 Pose_heavy(propKind)·낚시 대기 Pose_fish·쉬기(모닥불 곁 Pose_warm, 아니면 8초 앉기)·마을 사람 idle 변주 · 2D actor2d 대역 · 손잡이 pose3d.sitAfter 8"
+  "note": "코드로 굽는 클립(에셋 없음). 손잡이 pose3d.idleEvery 4(±1초)·pose3d.lookMax 60 · anim3d.walkHps 0.59·runHps 1.76(IK 클립 본래 빠르기) · 2D 는 mode2d o.pose 대역(K 동작별 시트 뒤 프레임 치환) · 연결: 채집 줍기 Pose_pick·바위·나무 내리치기 Pose_heavy(propKind)·낚시 대기 Pose_fish·쉬기(모닥불 곁 Pose_warm, 아니면 8초 앉기)·마을 사람 idle 변주 · 2D actor2d 대역 · 손잡이 pose3d.sitAfter 8 · D2(claude 2026-10-23 R-3 닫기): W-0303 pose-games.mjs 촬영"
  },
  {
   "id": "fs.sheet16",
@@ -1125,12 +1125,12 @@
    "보폭 위상·가까운 역할(W-0311)",
    "mode2d 16방향 길 회귀 0(W-0311)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0311",
   "since": "2026-10-18",
-  "note": "시트 굽기는 K(INBOX 10-18 규격: characters2d16/<id>/<역할>.webp 9행 + sheet.json). tools/gen-assets3d-ids.mjs 가 sheet.json 을 표 hero2d16 에 담아 실행 중 404 0. 동작 그림은 처음 그릴 때 받기. 자세(W-0303 Pose_)가 시트에 있으면 그 프레임, 없으면 기울이기 대역. D2 는 K 시트 뒤"
+  "note": "시트 굽기는 K(INBOX 10-18 규격: characters2d16/<id>/<역할>.webp 9행 + sheet.json). tools/gen-assets3d-ids.mjs 가 sheet.json 을 표 hero2d16 에 담아 실행 중 404 0. 동작 그림은 처음 그릴 때 받기. 자세(W-0303 Pose_)가 시트에 있으면 그 프레임, 없으면 기울이기 대역. D2 는 K 시트 뒤 · D2(claude 2026-10-23 R-3 닫기): W-0311 sheet16-shot.mjs"
  },
  {
   "id": "fs.phone-budget",
@@ -1145,12 +1145,12 @@
    "뼈대 나누기(W-0302)",
    "자동 품질 FPS 내리기(W-0302)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0302",
   "since": "2026-10-18",
-  "note": "표 tasks/sheets/web-phone-budget-20261018.md — 용량·그리기 수는 상한 안, FPS(폰 흉내)는 30 아래(원인·남은 거리 시트). 손잡이 anim3d.shareSkel · village3d/realm3d.lowFps 26 · lowWin 3 · autoq.on · city3d.fps 30"
+  "note": "표 tasks/sheets/web-phone-budget-20261018.md — 용량·그리기 수는 상한 안, FPS(폰 흉내)는 30 아래(원인·남은 거리 시트). 손잡이 anim3d.shareSkel · village3d/realm3d.lowFps 26 · lowWin 3 · autoq.on · city3d.fps 30 · D2(claude 2026-10-23 R-3 닫기): W-0302 pw-phone-budget·pw-cpu-profile 측정"
  },
  {
   "id": "fs.cutout2d",
@@ -1164,12 +1164,12 @@
    "W-0336 컷아웃 뼈대",
    "W-0336 겹 배경"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0336",
   "since": "2026-10-19",
-  "note": "그림은 K(수신함 10-19 웹 W-0336·W-0339 → 자체툴) — 오면 index.json·layers.json 만 두고 손잡이 1. 지금은 대역(코드 도형)·_demo.html#cutout"
+  "note": "그림은 K(수신함 10-19 웹 W-0336·W-0339 → 자체툴) — 오면 index.json·layers.json 만 두고 손잡이 1. 지금은 대역(코드 도형)·_demo.html#cutout · D2(claude 2026-10-23 R-3 닫기): W-0336 _demo#cutout 다섯 판 촬영 예외 0"
  },
  {
   "id": "fs.look3d",
@@ -1214,12 +1214,12 @@
   "tests": [
    "W-0262 자체 에셋 — 판별 표(cfg.assets3d.reg)의 world3d id 가 전부 있다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0321",
   "since": "2026-10-20",
-  "note": "10-20: VC_SEASON=autumn pw-visual-close Read — HUD 가을·노란 단풍 나무 ○ · 기본 표 가을 칸은 저다각형 초록(되돌림)"
+  "note": "10-20: VC_SEASON=autumn pw-visual-close Read — HUD 가을·노란 단풍 나무 ○ · 기본 표 가을 칸은 저다각형 초록(되돌림) · D2(claude 2026-10-23 R-3 닫기): W-0321 pw-visual-close VC_SEASON"
  },
  {
   "id": "fs.w2d-smooth",
@@ -1246,12 +1246,12 @@
   "tests": [
    "pw-2d-cmp 비교판(옛 scaleTable=0 / 새 1)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0349",
   "since": "2026-10-21",
-  "note": "10-21: 공용 표만 — 이 판 크기 맞춤은 다음 티켓(W-0366·W-0368)"
+  "note": "10-21: 공용 표만 — 이 판 크기 맞춤은 다음 티켓(W-0366·W-0368) · D2(claude 2026-10-23 R-3 닫기): W-0349 pw-2d-cmp forest village"
  },
  {
   "id": "fs.w2d-mark",
@@ -1281,12 +1281,12 @@
   "tests": [
    "pw-2d-cmp w353bg(parallax2d.on 0/1) · 컷아웃 옛/새 대 보기"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0353",
   "since": "2026-10-21",
-  "note": "10-21: 공용 엔진 고침만"
+  "note": "10-21: 공용 엔진 고침만 · D2(claude 2026-10-23 R-3 닫기): W-0353 pw-web-2d-sheet 통과"
  },
  {
   "id": "fs.me-panel",
@@ -1298,12 +1298,12 @@
   "tests": [
    "「내 정보」 창(W-0361) — 어댑터 값이 기존 함수 값 그대로 · render 가 칸·수치·성장 단추를 그림"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0361",
   "since": "2026-10-21",
-  "note": "10-21: PC 1280·폰 390 촬영 Read · 칸 누름 → 기존 창, 성장 단추 → 패시브 그물 열림(5/5)"
+  "note": "10-21: PC 1280·폰 390 촬영 Read · 칸 누름 → 기존 창, 성장 단추 → 패시브 그물 열림(5/5) · D2(claude 2026-10-23 R-3 닫기): W-0361 다섯 판 PC·폰 촬영 Read"
  },
  {
   "id": "vl.nightglow",
@@ -1339,12 +1339,12 @@
    "pw-cover ≤15%",
    "mobile-layout 세로 회귀 0"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0364",
   "since": "2026-10-22",
-  "note": "10-22: 가림 첫 화면 28.9→14.6%(2회 같음)"
+  "note": "10-22: 가림 첫 화면 28.9→14.6%(2회 같음) · D2(claude 2026-10-23 R-3 닫기): W-0364 pw-cover 다섯 판 OK"
  },
  {
   "id": "fs.cam2d",
@@ -1358,12 +1358,12 @@
    "pw-cover ≤15%",
    "mobile-layout 세로 회귀 0"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0364",
   "since": "2026-10-22",
-  "note": "10-22: 폰 def 0.7 에서 마을 둘레가 보임 · max 1.6 몸 1/4"
+  "note": "10-22: 폰 def 0.7 에서 마을 둘레가 보임 · max 1.6 몸 1/4 · D2(claude 2026-10-23 R-3 닫기): W-0364 pw-cover 다섯 판 OK"
  },
  {
   "id": "vf.ground2d",
@@ -1376,12 +1376,12 @@
    "test-web W-0368 2D 접지",
    "pw-2d-cmp w368"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0368",
   "since": "2026-10-22",
-  "note": "10-22: 손잡이 셋 0/1 이면 옛 그림 · setTone 은 판 연결 안 함(어둠 막이 이미 몸 위)"
+  "note": "10-22: 손잡이 셋 0/1 이면 옛 그림 · setTone 은 판 연결 안 함(어둠 막이 이미 몸 위) · D2(claude 2026-10-23 R-3 닫기): W-0368 pw-2d-cmp w368 다섯"
  },
  {
   "id": "vf.factory2d",
@@ -1395,12 +1395,12 @@
    "pw-2d-cmp w370",
    "pw-web-2d-sheet 14/14"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0370",
   "since": "2026-10-22",
-  "note": "10-22: 몸 키는 idle 옆 칸 알파 상자로 재서 targetH × scale(옛 길과 같은 기준)"
+  "note": "10-22: 몸 키는 idle 옆 칸 알파 상자로 재서 targetH × scale(옛 길과 같은 기준) · D2(claude 2026-10-23 R-3 닫기): W-0370 칸 Read · 비교판 w370 다섯"
  },
  {
   "id": "vf.livestock",
@@ -1418,7 +1418,7 @@
    "fs.craft 레시피 14",
    "pw-look2d LOOK_EVAL 집 곁 우리"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {
    "A": "매일 돌봄",
@@ -1426,7 +1426,7 @@
   },
   "ticket": "W-0299",
   "since": "2026-10-22",
-  "note": "10-22: 가축·우리 그림은 코드 대역, 달걀·산양젖 아이콘 K 대기(수신함) · 3D 표시 없음 · save.village.livestock 새 칸"
+  "note": "10-22: 가축·우리 그림은 코드 대역, 달걀·산양젖 아이콘 K 대기(수신함) · 3D 표시 없음 · save.village.livestock 새 칸 · D2(claude 2026-10-23 R-3 닫기): W-0299 폰 촬영 우리·가축 ○"
  },
  {
   "id": "vf.relics",
@@ -1439,7 +1439,7 @@
    "test-web W-0309 유적",
    "pw-look2d LOOK_EVAL 사고 창"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {
    "D": "파기 보상",
@@ -1447,6 +1447,6 @@
   },
   "ticket": "W-0309",
   "since": "2026-10-22",
-  "note": "10-22: village:gather 신호만 들음(village.js 판정 안 건드림) · 방문객 확률 + 는 안 함(손님은 날마다 옴) · 사고 안 2D 전시대 그림 없음 · save.village.relics 새 칸"
+  "note": "10-22: village:gather 신호만 들음(village.js 판정 안 건드림) · 방문객 확률 + 는 안 함(손님은 날마다 옴) · 사고 안 2D 전시대 그림 없음 · save.village.relics 새 칸 · D2(claude 2026-10-23 R-3 닫기): W-0309 폰 사고 창 촬영 ○"
  }
 ]
