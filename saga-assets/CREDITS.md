@@ -85,7 +85,7 @@
 | k130_unity_pbr.py | - | self-pbr: grass (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0) | 1 |
 | vfxgen.py | - | CC0-1.0 (코드 생성 — 외부 입력 없음) | 120 |
 | voiceplan.py | Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign · Qwen/Qwen3-TTS-12Hz-1.7B-Base | Apache-2.0 (모델·코드) — 목소리는 글 설명으로 만든 것, 실존 인물·배우 목소리 모사 없음 | 2356 |
-| cutout_parts.py (Blender 옆모습 부위 렌더) | - | MIT | 4 |
+| cutout_parts.py (Blender 옆모습 부위 렌더 + 무기 부위) | - | MIT | 4 |
 | make_realm_ui.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 12 |
 | make_realm_ui.py | - | CC0-1.0 코드 배치 + 글꼴 SIL OFL-1.1 (Nanum Brush Script·Noto Serif KR) | 56 |
 | make_realm_ui.py woff2 | - | SIL Open Font License 1.1 (OFL-NotoSerif.txt) | 2 |

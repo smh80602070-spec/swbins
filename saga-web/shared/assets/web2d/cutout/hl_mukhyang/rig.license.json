@@ -1,11 +1,12 @@
 {
- "generator": "tools/char-forge/cutout_parts.py (Blender 옆모습 부위 렌더)",
+ "generator": "tools/char-forge/cutout_parts.py (Blender 옆모습 부위 렌더 + 무기 부위)",
  "license": "MIT",
  "model": "",
  "model_license": "",
- "note": "렌더 대역 — 칠하기 미완(K-0150 10-20: 전체 칠하기는 조각보·부위 칠하기는 지글거림 △)",
+ "note": "렌더 대역(칠하기 미완, K-0150) · K-0169 어깨를 몸통에·무기 부위·attack 끝 자세",
  "id": "cutout_hl_mukhyang",
  "picked_candidate": "render",
  "base_body": "tools/char-forge/_out/vroid/hl_mukhyang/hl_mukhyang.glb",
- "packed_by": "K-0150 tools/char-forge/cutout_parts.py(Blender 옆모습 부위 렌더) → tools/ai-art/pack_cutout.py(보이는 곳 = img2img 색칠, 가려진 곳 = 렌더)"
+ "packed_by": "K-0169 tools/char-forge/cutout_parts.py --weapon → tools/ai-art/pack_cutout.py k169(무기 extra·안쪽 팔다리 어둡게·walk/attack 클립)",
+ "weapon": "saga-assets/world/toon/wpn_staff_rare.glb"
 }

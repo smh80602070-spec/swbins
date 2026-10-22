@@ -18,3 +18,4 @@
 - [ ] 10-22 · (G-0287 대기 알림) · 고돗 `assets/characters_dex/*.gltf` 모프 targets 0(이름표만, 웹 characters3d 는 77) → Fcl 모프 살려 다시 내보내기 — NPC·주인공 깜박임·표정·입 · 자체툴
 - [ ] 10-22 · (K-0168 끝 알림) · 고돗 인물 몸 둘 — ① sg_liubei 새 몸(어른 키 머리뼈 1.60m, 웹 characters3d 10-22) → `_out/engine_characters/sg_liubei.*` 지우고 `engine_characters.sh --install godot` + 그 id 임포트 ② 새 201(웹 500 − 고돗 299, ac_*·js_* 등) **받음**(K 결정: 고돗은 그 id 를 안 부르고 바뀌는 건 해시 NPC 겉모습뿐 · 렌더 같은 품질대 · 몸 풀 299→500) → G-0276 에서 지운 201 을 characters_dex 에 다시 넣고 임포트, probe_dex_bodies 어린이 판정 확인 · 고돗
 - [ ] 10-22 · (K-0168 끝 알림) · sg_liubei 새 몸(어른 키) — 유니티 CharactersDex 갈아 끼우기(U-0156 과 같은 decode.mjs --only sg_liubei 길) · 유니티
+- [ ] 10-22 · (K-0169 끝 알림) · 컷아웃 주역 둘(sg_zhugeliang 단검·hl_mukhyang 지팡이) rig.json 에 무기 부위(extra weapon)·attack 끝 자세·walk/idle 클립이 들어옴 — cutout2d.js 가 그대로 읽음(코드 안 고침), `shared/assets/web2d/cutout`. cutout2d.on 기본값(지금 0) 다시 볼지 · 웹/2나락·4종횡

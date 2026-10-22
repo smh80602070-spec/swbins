@@ -1,6 +1,6 @@
 """K-0150 — VRoid 몸 → 2D 컷아웃 부위 그림(saga-web/shared/js/cutout2d.js 규격) 1단계: Blender 렌더.
 
-    blender -b --factory-startup -P tools/char-forge/cutout_parts.py -- --body <VRoid .glb(절대)> --out <폴더(절대)> [--px 640]
+    blender -b --factory-startup -P tools/char-forge/cutout_parts.py -- --body <VRoid .glb(절대)> --out <폴더(절대)> [--px 640] [--weapon <무기 .glb(절대)>]
 
 하는 일: 팔을 아래로 내린 쉬는 자세 → 몸 오른쪽 옆에서 정사영(오른쪽을 봄 · 오른팔·다리가 카메라 쪽 = 엔진 R 바깥) →
 면마다 가장 센 뼈 가중치로 부위 16(+cape 옷자락) 나눔 → 부위마다 따로 렌더(가려진 곳까지 온전) + 전체 한 장 + 부위 색 지도(가림 판정) +
@@ -19,7 +19,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import build  # noqa: E402
 
-PARTS = ['hip', 'chest', 'head', 'hair', 'armUL', 'armLL', 'handL', 'armUR', 'armLR', 'handR', 'legUL', 'legLL', 'footL', 'legUR', 'legLR', 'footR', 'cape']
+PARTS = ['hip', 'chest', 'head', 'hair', 'armUL', 'armLL', 'handL', 'armUR', 'armLR', 'handR', 'legUL', 'legLL', 'footL', 'legUR', 'legLR', 'footR', 'cape', 'weapon']
 PIVOT = {'hip': 'J_Bip_C_Hips', 'chest': 'J_Bip_C_Spine', 'head': 'J_Bip_C_Neck', 'hair': 'J_Bip_C_Head',
          'armUL': 'J_Bip_L_UpperArm', 'armLL': 'J_Bip_L_LowerArm', 'handL': 'J_Bip_L_Hand',
          'armUR': 'J_Bip_R_UpperArm', 'armLR': 'J_Bip_R_LowerArm', 'handR': 'J_Bip_R_Hand',
@@ -42,7 +42,9 @@ def part_of(bone):
                 return 'legL' + s
             if 'Foot' in b or 'Toe' in b:
                 return 'foot' + s
-            if 'Shoulder' in b or 'UpperArm' in b:
+            if 'Shoulder' in b:                 # K-0169: 어깨는 몸통에 — 팔을 돌려도 몸통 어깨 자리에 구멍이 안 난다
+                return 'chest'
+            if 'UpperArm' in b:
                 return 'armU' + s
             if 'LowerArm' in b:
                 return 'armL' + s
@@ -82,6 +84,10 @@ def main():
     pbs = arm.pose.bones
     for pb in pbs:
         pb.rotation_mode = 'QUATERNION'
+    wp = None
+    if build.arg('--weapon'):                                           # K-0169: 시트와 같은 무기를 오른손에(한 손 · 세우기 없음) — 부위 'weapon'
+        import weapon_attach
+        wp = weapon_attach.attach(arm, build.arg('--weapon'), 'R', False, False)
     Y = Vector((0, 1, 0))
     if 'J_Bip_L_UpperArm' in pbs:
         rot_world(arm, pbs['J_Bip_L_UpperArm'], Y, 72)
@@ -127,18 +133,44 @@ def main():
             for v in pm.vertices:
                 zmin, zmax = min(zmin, v.co.z), max(zmax, v.co.z)
         bpy.data.objects.remove(m, do_unlink=True)
+    if wp:                                                            # 무기도 자세 그대로 굳혀 부위 'weapon' 으로
+        bpy.context.view_layer.update()
+        deps = bpy.context.evaluated_depsgraph_get()
+        wroot = wp[0]
+        wgrip, wtip = wroot.matrix_world.translation.copy(), wroot.matrix_world @ Vector((0, 0, 0.3))
+        for o in wp:
+            if o.type == 'MESH':
+                me = bpy.data.meshes.new_from_object(o.evaluated_get(deps), preserve_all_data_layers=True, depsgraph=deps)
+                me.transform(o.matrix_world)
+                no = bpy.data.objects.new('weapon__' + o.name, me)
+                sc.collection.objects.link(no)
+                parts_obj['weapon'].append(no)
+        for o in wp:
+            o.hide_render = True
     # 뼈 축 자리(세계) — 자세 뒤
     bpy.context.view_layer.update()
     W = arm.matrix_world
     piv = {p: W @ pbs[b].head for p, b in PIVOT.items() if b in pbs}
     skirt = [W @ pb.head for pb in pbs if part_of(pb.name) == 'cape']
     piv['cape'] = min(skirt, key=lambda v: -v.z) if skirt else piv['hip']
+    if wp:
+        piv['weapon'] = wgrip
     H = zmax - zmin
     cx = piv['hip']
     # 카메라: −X 쪽에서 +X 를 봄 → 화면 오른쪽 = 세계 −Y(몸 앞)
     cam = bpy.data.objects.new('cam', bpy.data.cameras.new('cam'))
     sc.collection.objects.link(cam)
-    cam.data.type, cam.data.ortho_scale = 'ORTHO', H * 1.15
+    ortho = H * 1.15
+    if wp:                                                            # K-0169: 무기(지팡이 머리 등)가 몸 칸 밖으로 나가면 칸을 넓히고 해상도도 같이(픽셀 밀도 그대로)
+        half = 0.0
+        for o in parts_obj['weapon']:
+            for v in o.data.vertices:
+                w = o.matrix_world @ v.co
+                half = max(half, abs(w.y - cx.y), abs(w.z - (zmin + H / 2)))
+        if half * 2 * 1.06 > ortho:
+            px = int(round(px * half * 2 * 1.06 / ortho / 8) * 8)
+            ortho = half * 2 * 1.06
+    cam.data.type, cam.data.ortho_scale = 'ORTHO', ortho
     cam.location = (cx.x - 10, cx.y, zmin + H / 2)
     cam.rotation_euler = (math.radians(90), 0, math.radians(-90))
     sc.camera = cam
@@ -174,9 +206,12 @@ def main():
             o.color = c
     shot(os.path.join(out, 'idmap.png'), set(PARTS))
     # 화면 픽셀 ↔ 단위: 가운데 = 카메라, 한 픽셀 = ortho/px m
-    meta = {'body': body, 'H_m': H, 'px': px, 'm_per_px': H * 1.15 / px,
+    meta = {'body': body, 'H_m': H, 'px': px, 'm_per_px': ortho / px,
             'cam_center_2d': to2d(Vector((0, cx.y, zmin + H / 2))), 'pivots': {p: to2d(v) for p, v in piv.items()},
             'ids': ids, 'parts': [p for p in PARTS if parts_obj[p]]}
+    if wp:                                                            # 무기 축(손잡이 → 날 끝) 화면 각(도, y 아래 +, 0 = 앞)
+        g, t = to2d(wgrip), to2d(wtip)
+        meta['weapon'] = {'glb': build.arg('--weapon'), 'axis_deg': round(math.degrees(math.atan2(t[1] - g[1], t[0] - g[0])), 2)}
     json.dump(meta, open(os.path.join(out, 'rig_src.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print('CUTOUT_RENDER', len(meta['parts']), 'H', round(H, 3))
 

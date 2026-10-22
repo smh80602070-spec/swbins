@@ -869,7 +869,7 @@
    ]
   },
   {
-   "tool": "cutout_parts.py (Blender 옆모습 부위 렌더)",
+   "tool": "cutout_parts.py (Blender 옆모습 부위 렌더 + 무기 부위)",
    "model": "",
    "license": "MIT",
    "count": 4,

@@ -124,7 +124,7 @@ def pack(picks):
                 continue
             im = im.crop(bb)
             im.save(os.path.join(out, part + '.webp'), 'WEBP', quality=88, method=6)
-            bone = part if part in PARENT else 'hip'
+            bone = part if part in PARENT or part == 'weapon' else 'hip'   # K-0169 무기 = extra 뼈 'weapon'(손 handR 자식)
             tl = (cc[0] + (bb[0] - px / 2) * u, cc[1] + (bb[1] - px / 2) * u)
             rig['parts'].append({'bone': bone, 'img': part + '.webp', 'x': round(tl[0] - P[bone][0], 2), 'y': round(tl[1] - P[bone][1], 2),
                                  'w': round((bb[2] - bb[0]) * u, 2), 'h': round((bb[3] - bb[1]) * u, 2), 'z': Z.get(part, 8)})
@@ -191,8 +191,161 @@ def sheet(ids):
     print('SHEET', p)
 
 
+def engine_consts():
+    """엔진(saga-web/shared/js/cutout2d.js) 의 BONES·PARENT·REST·CLIPS 를 node 로 그대로 읽는다(옮겨 적다 어긋나지 않게)."""
+    import subprocess
+    js = ("global.window=global;require(%r);var C=window.DG.cutout2d;"
+          "console.log(JSON.stringify({BONES:C.BONES,PARENT:C.PARENT,REST:C.REST,CLIPS:C.CLIPS}))") % os.path.join(ROOT, 'saga-web', 'shared', 'js', 'cutout2d.js')
+    return json.loads(subprocess.run(['node', '-e', js], capture_output=True, text=True, check=True).stdout)
+
+
+def engine_pose(E, rig, clip, phase):
+    """cutout2d.sample + pose 와 같은 식 — 뼈(+extra) → 행렬 [a b c d e f]."""
+    import math
+
+    def ease(u):
+        return u * u * (3 - 2 * u)
+
+    def at(keys, ph):
+        if not keys:
+            return None
+        if len(keys) == 1 or ph <= keys[0][0]:
+            return keys[0]
+        for i in range(1, len(keys)):
+            if ph <= keys[i][0]:
+                a, b = keys[i - 1], keys[i]
+                u = ease((ph - a[0]) / max(1e-6, b[0] - a[0]))
+                g = lambda j: (a[j] if len(a) > j else 0) + ((b[j] if len(b) > j else 0) - (a[j] if len(a) > j else 0)) * u
+                return [ph, g(1), g(2), g(3)]
+        return keys[-1]
+
+    def mul(m, n):
+        return [m[0] * n[0] + m[2] * n[1], m[1] * n[0] + m[3] * n[1], m[0] * n[2] + m[2] * n[3], m[1] * n[2] + m[3] * n[3], m[0] * n[4] + m[2] * n[5] + m[4], m[1] * n[4] + m[3] * n[5] + m[5]]
+
+    def tr(x, y, deg):
+        a = math.radians(deg)
+        return [math.cos(a), math.sin(a), -math.sin(a), math.cos(a), x, y]
+    c = (rig.get('clips') or {}).get(clip) or E['CLIPS'][clip]
+    M = {}
+    for b in E['BONES']:
+        r = (rig.get('bones') or {}).get(b) or E['REST'][b]
+        k = at(c['keys'].get(b), phase)
+        q = [k[1] if len(k) > 1 else 0, k[2] if len(k) > 2 else 0, k[3] if len(k) > 3 else 0] if k else [0, 0, 0]
+        loc = tr(r.get('x', 0) + q[1], r.get('y', 0) + q[2], r.get('rot', 0) + q[0])
+        M[b] = mul(M[E['PARENT'][b]], loc) if E['PARENT'][b] else loc
+    for b, r in (rig.get('extra') or {}).items():
+        M[b] = mul(M.get(r.get('parent')) or M['chest'], tr(r.get('x', 0), r.get('y', 0), r.get('rot', 0)))
+    return M
+
+
+def engine_draw(E, rig, folder, clip, phase, W=300, H=380, k=3.2):
+    """drawRig 와 같은 차례(z 오름차순)·같은 행렬로 한 칸 — 오른쪽을 봄, 발 = 아래에서 30px."""
+    M = engine_pose(E, rig, clip, phase)
+    can = Image.new('RGBA', (W, H), (226, 226, 222, 255))
+    ImageDraw.Draw(can).line([(0, H - 30), (W, H - 30)], fill=(150, 140, 120), width=2)
+    ox, oy = W / 2, H - 30
+    for p in sorted(rig['parts'], key=lambda q: q.get('z', 0)):
+        m = M.get(p['bone'])
+        if not m:
+            continue
+        im = Image.open(os.path.join(folder, p['img'])).convert('RGBA')
+        sx, sy = p['w'] / im.width, p['h'] / im.height
+        # 캔버스 = O + k·(m · (p.x + u·sx, p.y + v·sy)) → 정방향 A(u,v)
+        A = np.array([[k * m[0] * sx, k * m[2] * sy, ox + k * (m[0] * p['x'] + m[2] * p['y'] + m[4])],
+                      [k * m[1] * sx, k * m[3] * sy, oy + k * (m[1] * p['x'] + m[3] * p['y'] + m[5])], [0, 0, 1]])
+        Ai = np.linalg.inv(A)
+        can.alpha_composite(im.transform(can.size, Image.AFFINE, tuple(Ai[:2].ravel()), resample=Image.BICUBIC))
+    return can
+
+
+def frames(ids, tag='now'):
+    """K-0169 시험판 — 사람마다 한 줄: 옆 걷기 4칸(위상 0·.25·.5·.75) + attack 4칸(.25·.5·.75·1). _out/k169/frames_<tag>.png"""
+    E = engine_consts()
+    cells = [('walk', x) for x in (0, 0.25, 0.5, 0.75)] + [('attack', x) for x in (0.25, 0.5, 0.75, 1.0)]
+    W, H = 300, 380
+    out = Image.new('RGB', (W * len(cells), (H + 22) * len(ids)), (40, 40, 40))
+    dr = ImageDraw.Draw(out)
+    for r, hid in enumerate(ids):
+        folder = os.path.join(CANON, hid)
+        rig = json.load(open(os.path.join(folder, 'rig.json'), encoding='utf-8'))
+        for i, (c, ph) in enumerate(cells):
+            out.paste(engine_draw(E, rig, folder, c, ph, W, H).convert('RGB'), (i * W, r * (H + 22) + 22))
+            dr.text((i * W + 6, r * (H + 22) + 5), f'{hid} {c} {ph}', fill=(255, 255, 0))
+    d = os.path.join(ROOT, 'tools', 'char-forge', '_out', 'k169')
+    os.makedirs(d, exist_ok=True)
+    p = os.path.join(d, f'frames_{tag}.png')
+    out.save(p)
+    print('FRAMES', p)
+
+
+K169_LEGS = {'legUR': [[0, 0], [0.3, 6], [0.62, -22], [1, -20]], 'legLR': [[0, 0], [0.62, 8], [1, 6]],
+             'legUL': [[0, 0], [0.62, 16], [1, 14]], 'legLL': [[0, 0], [0.62, 10], [1, 8]],
+             'chest': [[0, 0], [0.3, -8], [0.62, 12], [1, 8]], 'head': [[0, 0], [0.3, -4], [0.62, 4], [1, 2]],
+             'armUL': [[0, 0], [0.3, -25], [0.62, 35], [1, 25]], 'armLL': [[0, -10], [0.62, -30], [1, -25]],
+             'hip': [[0, 0, 0, 0], [0.3, 0, -2, 0], [0.62, 0, 3, 1], [1, 0, 3, 1]]}
+# 무기별: 쉬는 자세 무기 각(화면 도, 0 = 앞 · 90 = 아래) + attack 오른팔 사슬. 끝 키(1) = 앞으로 뻗은 끝 자세에 머문다(한 번 클립).
+K169_KIND = {
+    'dagger': {'rest_deg': 90, 'z': 18,                                    # 단검 = 늘어진 손에서 아래로(아래팔 따라) → 머리 위로 젖혔다 앞으로 베고 앞으로 뻗음
+               'attack': {'armUR': [[0, 0], [0.3, -200], [0.62, -60], [0.8, -88], [1, -85]], 'armLR': [[0, -10], [0.3, -35], [0.62, 0], [1, -4]],
+                          'handR': [[0, 0], [0.3, -10], [0.62, 0], [1, 0]]}},
+    'staff': {'rest_deg': -72, 'z': 18, 'comp': True,                      # 지팡이 = 세워 듦(10-22: 앞으로 18° 기울여 얼굴 앞을 안 가림)(시트 'upright' 와 같음) → 당겼다 앞으로 내밀어 세운 채 뻗음(시트 attack = skill)
+              'attack': {'armUR': [[0, -6], [0.3, 40], [0.62, -80], [1, -85]], 'armLR': [[0, -10], [0.3, -70], [0.62, -8], [1, -5]],
+                         'handR': [[0, 16], [0.3, 28], [0.62, 91], [1, 92]]}},
+}
+
+
+def k169(picks):
+    """K-0169: 렌더 대역 다시 묶기 — 무기 부위(extra 'weapon' ← handR) · 안쪽(L) 팔다리 어둡게(옆 깊이) · rig clips(walk 팔 흔들기 줄임 · attack 끝 자세)."""
+    global SRC
+    SRC = os.path.join(ROOT, 'tools', 'char-forge', '_out', 'k169')
+    E = engine_consts()
+    pack({h: 0 for h in picks})
+    for hid, kind in picks.items():
+        K = K169_KIND[kind]
+        out = os.path.join(CANON, hid)
+        rig = json.load(open(os.path.join(out, 'rig.json'), encoding='utf-8'))
+        m = json.load(open(os.path.join(SRC, hid, 'rig_src.json'), encoding='utf-8'))
+        P = m['pivots']
+        for p in rig['parts']:
+            if p['bone'].endswith('L') and p['bone'] in PARENT:         # 몸 뒤 팔다리 — 28% 어둡게
+                f = os.path.join(out, p['img'])
+                im = Image.open(f).convert('RGBA')
+                a = np.asarray(im).astype(np.float32)
+                a[..., :3] *= 0.72
+                Image.fromarray(a.clip(0, 255).astype(np.uint8)).save(f, 'WEBP', quality=88, method=6)
+            if p['bone'] == 'weapon':
+                p['z'] = K['z']
+        if 'weapon' in P:
+            rig['extra'] = {'weapon': {'parent': 'handR', 'x': round(P['weapon'][0] - P['handR'][0], 2), 'y': round(P['weapon'][1] - P['handR'][1], 2),
+                                       'rot': round(K['rest_deg'] - m['weapon']['axis_deg'], 1)}}
+        walk = json.loads(json.dumps(E['CLIPS']['walk']))
+        walk['keys'].update({'armUL': [[0, -14], [0.5, 14], [1, -14]], 'armUR': [[0, 14], [0.5, -14], [1, 14]], 'armLL': [[0, -12]], 'armLR': [[0, -12]]})
+        atk = {'len': 0.45, 'loop': False, 'keys': dict(K169_LEGS, **K['attack'])}
+        clips = {'walk': walk, 'attack': atk}
+        if K.get('comp'):                                                 # 세워 든 무기가 쉬기·걷기 팔 흔들림에 같이 안 기울게 손목으로 되돌림
+            walk['keys']['handR'] = [[0, -5], [0.5, 23], [1, -5]]
+            idle = json.loads(json.dumps(E['CLIPS']['idle']))
+            idle['keys']['handR'] = [[0, 16], [0.5, 17.5], [1, 16]]
+            clips['idle'] = idle
+        rig['clips'] = clips
+        json.dump(rig, open(os.path.join(out, 'rig.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+        lic_p = os.path.join(out, 'rig.license.json')
+        lic = json.load(open(lic_p, encoding='utf-8'))
+        lic.update({'generator': 'tools/char-forge/cutout_parts.py (Blender 옆모습 부위 렌더 + 무기 부위)', 'weapon': m.get('weapon', {}).get('glb', '').replace('\\', '/').split('/swbins/')[-1],
+                    'packed_by': 'K-0169 tools/char-forge/cutout_parts.py --weapon → tools/ai-art/pack_cutout.py k169(무기 extra·안쪽 팔다리 어둡게·walk/attack 클립)',
+                    'note': '렌더 대역(칠하기 미완, K-0150) · K-0169 어깨를 몸통에·무기 부위·attack 끝 자세'})
+        json.dump(lic, open(lic_p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+        print('K169', hid, kind, rig.get('extra'))
+
+
 if __name__ == '__main__':
     cmd = sys.argv[1] if len(sys.argv) > 1 else ''
+    if cmd == 'k169':
+        k169(dict(kv.split('=') for kv in sys.argv[2].split(',')))
+        sys.exit(0)
+    if cmd == 'frames':
+        frames(sys.argv[2].split(','), sys.argv[3] if len(sys.argv) > 3 else 'now')
+        sys.exit(0)
     if cmd == 'batch':
         batch(sys.argv[2].split(','))
     elif cmd == 'batch_parts':
