@@ -49,6 +49,16 @@ namespace Saga.Dungeon.Player
         private static readonly Color HandleColor = new Color(0.3f, 0.22f, 0.15f);
         private static readonly Color BladeBaseColor = new Color(0.75f, 0.78f, 0.8f);
 
+        // tasks U-0159(웹 W-0239) — 등급 1 부터 한 대마다 등급 색 잔광, 단마다 길게(유니티 등급 1·2 = 웹 명품·보물).
+        public static readonly float[] TrailSec = { 0f, 0.16f, 0.22f };
+        public const float TrailEmitSec = 0.18f; // 휘두르는 동안만 그린다
+        private TrailRenderer _trail;
+        private Transform _tip;
+        private float _emitLeft;
+        /// <summary>진단 — 잔광(없으면 null)·지금 그리는 중인지.</summary>
+        public TrailRenderer GradeTrail => _trail;
+        public bool TrailEmitting => _trail != null && _trail.emitting;
+
         private PlayerController _controller;
         private Transform _blade;
         private MeshRenderer _bladeRenderer;
@@ -66,12 +76,30 @@ namespace Saga.Dungeon.Player
         {
             BuildVisual();
             HeroState.EquipmentChanged += OnEquipmentChanged;
+            PlayerCombat.Struck += OnStruck; // tasks U-0159
             Refresh();
         }
 
         private void OnDestroy()
         {
             HeroState.EquipmentChanged -= OnEquipmentChanged;
+            PlayerCombat.Struck -= OnStruck;
+        }
+
+        /// <summary>tasks U-0159 — 친 한 대마다 등급 1 이상이면 잔광을 켠다.</summary>
+        public void OnStruck()
+        {
+            if (_trail == null || _trail.time <= 0f) return;
+            _trail.Clear();
+            _trail.emitting = true;
+            _emitLeft = TrailEmitSec;
+        }
+
+        private void Update()
+        {
+            if (_emitLeft <= 0f) return;
+            _emitLeft -= Time.deltaTime;
+            if (_emitLeft <= 0f && _trail != null) _trail.emitting = false;
         }
 
         private void OnEquipmentChanged(string weaponId) => Refresh();
@@ -104,6 +132,18 @@ namespace Saga.Dungeon.Player
 
             _blade = blade.transform;
             _bladeRenderer = blade.GetComponent<MeshRenderer>();
+
+            // tasks U-0159 — 칼끝 잔광(소켓 자식이라 GLB 무기여도 같은 자리)
+            _tip = new GameObject("WeaponTrailTip").transform;
+            _tip.SetParent(socket, false);
+            _trail = _tip.gameObject.AddComponent<TrailRenderer>();
+            _trail.emitting = false;
+            _trail.minVertexDistance = 0.03f;
+            _trail.widthMultiplier = 0.09f;
+            _trail.widthCurve = AnimationCurve.Linear(0f, 1f, 1f, 0f);
+            _trail.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            _trail.receiveShadows = false;
+            _trail.sharedMaterial = new Material(Shader.Find("Sprites/Default")) { name = "WeaponTrail (generated)" };
         }
 
         private void Refresh()
@@ -134,6 +174,15 @@ namespace Saga.Dungeon.Player
             }
             _blade.localPosition = new Vector3(0f, length * 0.5f, 0f);
             _bladeRenderer.sharedMaterial.SetColor("_EmissionColor", emission);
+            if (_trail != null)
+            {
+                _tip.localPosition = new Vector3(0f, length, 0f);
+                _trail.time = TrailSec[grade];
+                Color c = grade >= 2 ? new Color(1f, 0.82f, 0.3f) : new Color(0.35f, 0.85f, 0.75f);
+                _trail.startColor = new Color(c.r, c.g, c.b, 0.85f);
+                _trail.endColor = new Color(c.r, c.g, c.b, 0f);
+                if (grade == 0) { _trail.emitting = false; _trail.Clear(); }
+            }
             RefreshModel(shape, grade, length);
         }
 

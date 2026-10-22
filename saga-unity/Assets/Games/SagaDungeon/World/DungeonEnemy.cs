@@ -441,6 +441,9 @@ namespace Saga.Dungeon.World
             _visualGo = visual.gameObject;
         }
 
+        /// <summary>tasks U-0159 — 몸 그림(솟아오름이 붙는다).</summary>
+        public GameObject VisualGo => _visualGo;
+
         private void Update() => Tick(Time.deltaTime);
 
         /// <summary>한 프레임 분량의 AI — `Update()`가 부르고, 헤드리스 진단은

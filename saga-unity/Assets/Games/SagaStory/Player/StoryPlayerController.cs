@@ -251,6 +251,7 @@ namespace Saga.Story.Player
                 if (crit) StoryCombat.TriggerHitstop(this);
                 hitAny = true;
                 anyCrit |= crit;
+                _hitMax = Mathf.Max(_hitMax, dmg); // tasks U-0159
             }
             ApplyHitFeedback(hitAny, anyCrit);
         }
@@ -274,6 +275,7 @@ namespace Saga.Story.Player
                     if (crit) StoryCombat.TriggerHitstop(this);
                     hitAny = true;
                     anyCrit |= crit;
+                    _hitMax = Mathf.Max(_hitMax, dmg); // tasks U-0159
                 }
             }
             ApplyHitFeedback(hitAny, anyCrit);
@@ -293,6 +295,7 @@ namespace Saga.Story.Player
                 if (crit) StoryCombat.TriggerHitstop(this);
                 hitAny = true;
                 anyCrit |= crit;
+                _hitMax = Mathf.Max(_hitMax, dmg); // tasks U-0159
             }
             ApplyHitFeedback(hitAny, anyCrit);
         }
@@ -327,6 +330,7 @@ namespace Saga.Story.Player
                 if (crit) StoryCombat.TriggerHitstop(this);
                 hitAny = true;
                 anyCrit |= crit;
+                _hitMax = Mathf.Max(_hitMax, dmg); // tasks U-0159
             }
             ApplyHitFeedback(hitAny, anyCrit);
         }
@@ -427,6 +431,7 @@ namespace Saga.Story.Player
                 if (crit) StoryCombat.TriggerHitstop(this);
                 hitAny = true;
                 anyCrit |= crit;
+                _hitMax = Mathf.Max(_hitMax, dmg); // tasks U-0159
             }
             ApplyHitFeedback(hitAny, anyCrit);
         }
@@ -457,6 +462,7 @@ namespace Saga.Story.Player
                 if (crit) StoryCombat.TriggerHitstop(this);
                 hitAny = true;
                 anyCrit |= crit;
+                _hitMax = Mathf.Max(_hitMax, dmg); // tasks U-0159
             }
             ApplyHitFeedback(hitAny, anyCrit);
         }
@@ -466,12 +472,17 @@ namespace Saga.Story.Player
         /// 기능)와 별개로 **모든 타격**에 카메라 흔들림 + 짧은 Animator
         /// 정지를 건다. 한 번의 공격이 여럿을 때려도(횡소) 한 번만 건다 —
         /// DUNGEON `PlayerCombat.TryWhirl()`과 같은 결.</summary>
+        private float _hitMax; // tasks U-0159 — 이번 공격에서 가장 큰 한 대(거함타 흔들림)
+        /// <summary>진단 — 마지막으로 건 흔들림.</summary>
+        public (float mag, float sec) LastShake { get; private set; }
+
         private void ApplyHitFeedback(bool hitAny, bool anyCrit)
         {
+            float big = _hitMax;
+            _hitMax = 0f;
             if (!hitAny) return;
-            StoryCameraFollow.Instance?.Shake(
-                anyCrit ? StoryCombat.CritShakeMag : StoryCombat.HitShakeMag,
-                anyCrit ? StoryCombat.CritShakeSec : StoryCombat.HitShakeSec);
+            LastShake = StoryCombat.ShakeFor(big, anyCrit);
+            StoryCameraFollow.Instance?.Shake(LastShake.mag, LastShake.sec);
             StoryCombat.ApplyHitFreeze(this, animator);
         }
 

@@ -2120,6 +2120,25 @@
   "note": "D2(U-0158): PlaytestDungeonHeadless breakable OK(전투방 3·우물방 2·명소 0·겹침 없음·다시 지어도 같음·종류 4·금 = Gold·약병 체력 15%·적 없는 평타·회전베기·조각 물리·깬 것 다시 안 맞음) · 세이브 md5 그대로 · 조각은 대신 조각(K-0174 대기)"
  },
  {
+  "id": "un.parity.s1",
+  "name": "U-0159 웹 대조 S 묶음 ① — 2나락·4종횡 흔들림 규격 · 2나락 무기 등급 잔광 · 난입 물결 솟아오름(웹 W-0238·0240·0239·0327 ②)",
+  "files": [
+   "saga-unity/Assets/Games/SagaDungeon/Player/WeaponVisual.cs",
+   "saga-unity/Assets/Games/SagaDungeon/World/EnemyRiseIn.cs",
+   "saga-unity/Assets/Games/SagaStory/Data/StoryCombat.cs"
+  ],
+  "tests": [
+   "PlaytestDungeonHitFx",
+   "PlaytestStoryShake"
+  ],
+  "level": "D2",
+  "verified": "2026-10-22 claude",
+  "fun": {},
+  "ticket": "U-0159",
+  "since": "2026-10-22",
+  "note": "D2(U-0159): PlaytestDungeonHeadless wave rise OK(물결 8 땅 밑 1.8m→0.6초 제자리)·hitfx OK(평타 0.08/0.12 = 강공격 4:6 · 잔광 등급 0 없음·1 0.16·2 0.22) · PlaytestStorySlice shake OK(보통 0.06/0.12·거함타 0.075/0.16·급소 0.12/0.22) · 세이브 md5 그대로"
+ },
+ {
   "id": "un.dg.weapon-swap",
   "name": "U-0131 무기 두 벌 — 바뀐 손 무기를 을(乙)로, G·폰 바꿔 들기 단추로 갑↔을(쿨 1초·첫 타 ×1.15, 웹 W-0281 이식)",
   "files": [

@@ -33,10 +33,18 @@ namespace Saga.Story.Data
         // 별개 기능이다 — 이건 **모든 타격**에 걸리고 Animator.speed만
         // 건드려(Time.timeScale은 그대로) 모바일 입력 지연이 없다.
         public const float HitFreezeSeconds = 0.07f;
-        public const float HitShakeMag = 0.05f;
-        public const float HitShakeSec = 0.08f;
+        // tasks U-0159(웹 W-0240) 재미표준 C 규격 — 보통 4px/120ms · 거함타(한 대 100 이상) 5px/160ms · 급소 8px/220ms(급소 0.12 기준 비례)
+        public const float HitShakeMag = 0.06f;
+        public const float HitShakeSec = 0.12f;
+        public const float BigShakeMag = 0.075f;
+        public const float BigShakeSec = 0.16f;
+        public const float BigHitDmg = 100f;
         public const float CritShakeMag = 0.12f;
-        public const float CritShakeSec = 0.15f;
+        public const float CritShakeSec = 0.22f;
+
+        /// <summary>한 대(여럿이면 가장 큰 것)의 흔들림 — 급소 > 거함타 > 보통.</summary>
+        public static (float mag, float sec) ShakeFor(float dmg, bool crit) =>
+            crit ? (CritShakeMag, CritShakeSec) : dmg >= BigHitDmg ? (BigShakeMag, BigShakeSec) : (HitShakeMag, HitShakeSec);
 
         // side.js power() 대체값: atk = might*0.9 + wisdom*0.3, hp = 60 + command*6 + level*12(레벨1).
         public const float StartAtk = 21f;  // round(20*0.9 + 10*0.3)

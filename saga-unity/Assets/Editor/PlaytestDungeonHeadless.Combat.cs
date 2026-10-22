@@ -87,6 +87,28 @@ namespace Saga.EditorTools
                 return;
             }
 
+            // tasks U-0159(웹 W-0327 ②) — 물결 적은 몸 그림이 땅 밑에서 0.6초 솟는다(판정 자리는 그대로)
+            {
+                int rising = 0, settled = 0;
+                foreach (var e in DungeonEnemy.Active.ToArray())
+                {
+                    if (e == null || e.RoomId != "horde") continue;
+                    var r = e.GetComponent<EnemyRiseIn>();
+                    if (r == null) continue;
+                    if (Mathf.Abs(r.Sunk - EnemyRiseIn.RiseDepth) < 0.05f) rising++;
+                    r.Step(EnemyRiseIn.RiseSec * 0.5f);
+                    float mid = r.Sunk;
+                    r.Step(EnemyRiseIn.RiseSec);
+                    if (mid > 0.01f && mid < EnemyRiseIn.RiseDepth - 0.01f && r.Sunk < 1e-3f) settled++;
+                }
+                if (rising != aliveWave1 || settled != aliveWave1)
+                {
+                    Debug.LogError($"[PlaytestDungeonHeadless] 물결 솟아오름 — 땅 밑 {rising}·제자리 {settled}/{aliveWave1}");
+                    _hadError = true;
+                    return;
+                }
+                Debug.Log($"[PlaytestDungeonHeadless] wave rise OK - 물결 {aliveWave1} 땅 밑 {EnemyRiseIn.RiseDepth}m → {EnemyRiseIn.RiseSec}초 뒤 제자리");
+            }
             // 레벨업 3택이 난입 중에도 뜨는지 — 뜨면 0번(첫 카드)을 골라 닫는다.
             HeroState.AddExp(HeroState.ExpToNext + 1);
             if (!blessingUi.IsShowing)

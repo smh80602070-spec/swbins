@@ -162,6 +162,7 @@ namespace Saga.EditorTools
                 if (!PlaytestDungeonSkillTree.Run()) _hadError = true; // tasks U-0135 무예 나무 — 경험·레벨·찍기 규칙·효과·되돌리기·저장·창(영웅·비결·나무 되돌림)
                 if (!PlaytestDungeonMode.Run()) _hadError = true; // tasks U-0137 난도 — 표·문턱·들머리·실제 방 배율·부적 곱·저장·단추(난도·층·난수 되돌림)
                 if (!PlaytestDungeonBreakable.Run()) _hadError = true; // tasks U-0158 부서지는 통·항아리 — 방 짓기·평타·회전베기·보상·조각(층·영웅·자리 되돌림, 조각 지움)
+                if (!PlaytestDungeonHitFx.Run()) _hadError = true; // tasks U-0159 흔들림 규격·무기 등급 잔광(무기 되돌림)
                 if (!PlaytestHurtSignal.Run("PlaytestDungeonHeadless", "dg")) _hadError = true; // tasks U-0105 "내가 맞았다" 신호 — 진짜 TakeDamage 번쩍·붉은 숫자·흔들림·맥박(체력·무적·피격자 되돌림)
                 CheckTemple(); // PLAN.md 106-2 — 플레이어를 순간이동시키므로 맨 끝(finally 에서 되돌린다).
                 StartCutCameraProbe(); // PLAN.md 106-3 — 6·8프레임째에 이어서 본다.

@@ -186,6 +186,7 @@ namespace Saga.Dungeon.World
                 "wp_axe", null, false, "황건적",
                 new Color(0.72f, 0.64f, 0.3f), 1f);
             go.SetActive(true);
+            EnemyRiseIn.Attach(enemy); // tasks U-0159(웹 W-0327 ②) — 물결 적은 땅에서 솟는다
             return enemy;
         }
 

@@ -58,8 +58,9 @@ namespace Saga.Dungeon.Player
 
         // "타격감 1차" 슬라이스(PLAN.md 38장 "camera shake") — 강공격이
         // 평타보다 더 크게 흔들린다.
-        private const float HitShakeMag = 0.05f;
-        private const float HitShakeSec = 0.08f;
+        // tasks U-0159(웹 W-0238) 재미표준 C 규격 — 평타 4px/120ms : 강공격(치명 몫) 6px = 0.08 : 0.12
+        public const float HitShakeMag = 0.08f;
+        public const float HitShakeSec = 0.12f;
         private const float HeavyShakeMag = 0.12f;
         private const float HeavyShakeSec = 0.15f;
         private const float WhirlShakeMag = 0.09f;

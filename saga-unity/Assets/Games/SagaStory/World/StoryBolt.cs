@@ -79,9 +79,8 @@ namespace Saga.Story.World
                 enemy.TakeDamage(dmg, crit);
                 StorySummonState.HitSource = StorySummonState.Source.Player;
                 if (crit) StoryCombat.TriggerHitstop(this);
-                StoryCameraFollow.Instance?.Shake(
-                    crit ? StoryCombat.CritShakeMag : StoryCombat.HitShakeMag,
-                    crit ? StoryCombat.CritShakeSec : StoryCombat.HitShakeSec);
+                var sh = StoryCombat.ShakeFor(dmg, crit); // tasks U-0159
+                StoryCameraFollow.Instance?.Shake(sh.mag, sh.sec);
                 StoryCombat.ApplyHitFreeze(this, _shooterAnimator);
                 if (!Pierce)
                 {
