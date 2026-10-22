@@ -5379,5 +5379,22 @@
   "ticket": "G-0282",
   "since": "2026-10-22",
   "note": "K-0161 clips30 · SAGA_MOCAP30=0 옛 길"
+ },
+ {
+  "id": "gd.go.field-env",
+  "name": "1만리 환경 연쇄 — 풀 땅 불 타격 들불(둘레 피해·한 번 번짐·3초)·물 위 번개 물벼락·물 타격 불 끔",
+  "files": [
+   "games/saga_go/combat/field_env.gd",
+   "games/saga_go/combat/field_combat.gd"
+  ],
+  "tests": [
+   "field_env"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0303",
+  "since": "2026-10-22",
+  "note": "웹 W-0374 짝 · SAGA_FIELD_ENV=0"
  }
 ]

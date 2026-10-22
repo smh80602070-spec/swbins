@@ -233,6 +233,7 @@ func _ready() -> void:
 	grab = FieldGrab.new()
 	grab.name = "FieldGrab"
 	add_child(grab)
+	preload("res://games/saga_go/combat/field_env.gd").attach(self)   # G-0303 들불·물벼락(SAGA_FIELD_ENV=0 이면 없음)
 	_refresh_hud()
 
 ## 새 입력 액션·키는 project.godot 를 고치지 않고 여기서 등록한다(GO 만 — 다른 판엔 안 샌다).
@@ -1296,6 +1297,7 @@ func _deal(enemy: Node, base: float, element: String, dir: Vector3) -> float:
 	var crit := _crit_roll()
 	## 09-28 맞은 자리 불꽃(combat_fx.gd) — 원소 색, 치명타·반응이면 크게.
 	CombatFx.spark(self, (enemy as Node3D).global_position + Vector3.UP * 0.9, Elements.color_of(element) if element != "" else CombatFx.PHYSICAL, crit > 1.0 or reaction != "")
+	if has_node("FieldEnv"): get_node("FieldEnv").call("on_hit", enemy, base, element, reaction)   # G-0303 땅이 받아침
 	return enemy.call("apply_damage", amount * crit * _dmg_bonus(element), reaction != "" or bonus != "" or crit > 1.0, dir)
 
 ## 원소(물리) 피해 보너스 — 치는 인물(_crit_id)이 있을 때만.

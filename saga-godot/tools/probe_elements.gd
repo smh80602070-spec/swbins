@@ -38,6 +38,8 @@ func _physics_process(_delta: float) -> void:
 	if _fc == null:
 		_fc = get_tree().get_first_node_in_group("go_field_combat")
 		if _fc:
+			if _fc.has_node("FieldEnv"):   # G-0303 — 들불(땅 반응)이 반응 수치 점검에 섞이지 않게
+				_fc.get_node("FieldEnv").queue_free()
 			_members0 = PartyState.members.duplicate()
 			_growth0 = PartyState.growth.duplicate(true)
 			PartyState.members.assign([])
