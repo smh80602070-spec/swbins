@@ -2175,6 +2175,24 @@
   "note": "D2(U-0161): zoom OK 네 판(1만리 2.2~24·2나락 1.8~16·3마을 3.5~25.2m·4종횡 5.6~28.8m 눈높이 1.2~2.6) · 5천하 mapview OK(15~420) · 레벨업 컷 옛 끝 그대로 · 세이브 되돌림"
  },
  {
+  "id": "un.st.monthly",
+  "name": "U-0162 4종횡 달 사명 — 달마다 몹 300·이달의 사냥터(들판·비경 층대 넷 중) 두 배·달 문장(웹 W-0242)",
+  "files": [
+   "saga-unity/Assets/Games/SagaStory/Data/StoryMonthly.cs",
+   "saga-unity/Assets/Games/SagaStory/World/StoryEnemy.cs",
+   "saga-unity/Assets/Games/SagaStory/UI/StorySessionTracker.cs"
+  ],
+  "tests": [
+   "PlaytestStoryMonthly"
+  ],
+  "level": "D2",
+  "verified": "2026-10-22 claude",
+  "fun": {},
+  "ticket": "U-0162",
+  "since": "2026-10-22",
+  "note": "D2(U-0162): PlaytestStorySlice monthly OK(사냥터 고정·고루 4가지 · 셈 2/1 · 300 에 문장 한 번 · 새 달 셈만 0 · 옛 세이브 빈 칸 · 세이브 왕복 · 카드 줄) · 세이브 md5 그대로"
+ },
+ {
   "id": "un.dg.weapon-swap",
   "name": "U-0131 무기 두 벌 — 바뀐 손 무기를 을(乙)로, G·폰 바꿔 들기 단추로 갑↔을(쿨 1초·첫 타 ×1.15, 웹 W-0281 이식)",
   "files": [

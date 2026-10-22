@@ -92,6 +92,7 @@ namespace Saga.Story.UI
             _sessionCard.Show(Saga.Core.SagaUi.L("이번 세션 정리", "Session Summary"),
                 string.Format(Saga.Core.SagaUi.L("이동 {0:F0}m", "Walked {0:F0}m"), _walkedMeters),
                 string.Format(Saga.Core.SagaUi.L("처치 +{0}", "Kills +{0}"), killsGained),
+                StoryMonthly.Line(), // tasks U-0162 달 사명
                 string.Format(Saga.Core.SagaUi.L("다음: {0}", "Next: {0}"), GoalLineNow()));
         }
 

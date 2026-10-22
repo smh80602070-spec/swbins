@@ -421,6 +421,9 @@ namespace Saga.Story.World
             if (ActiveChampion == this) ActiveChampion = null;
             StoryAudio.PlaySfx("death"); // tasks U-0104
             StoryLootMarker.Spawn(transform.position); // PLAN.md 101-3 F "죽음" — Destroy 전에, transform이 아직 유효할 때.
+            // tasks U-0162 달 사명 — 들판·비경 어디서든 한 마리(사냥터 = StoryEras 단계와 같은 넷)
+            if (StoryMonthly.OnKill(isLabyrinthEnemy ? StoryEras.Tier(StoryLabyrinthState.Floor) : 0))
+                DialogueLabel.Instance?.Show(string.Format(StoryLocalization.T("monthly.earned", "🌙 달 사명 완수 — {0} 달 문장을 모았다"), StoryMonthly.NowKey), 4f);
             if (!isLabyrinthEnemy)
             {
                 StoryQuestState.AddKill();

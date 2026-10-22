@@ -114,6 +114,7 @@ namespace Saga.Story.Data
             public int roundRifts;
             // tasks U-0128 사냥터 최고 등급 — 버전 그대로(scenarioJson·mountSel 과 같은 꼴): 옛 세이브는 null → 빈 칸.
             public string rankBest;
+            public string monthJson; // tasks U-0162 달 사명 — 버전 그대로: 옛 세이브는 null → 빈 칸.
             public string lifeJson; // tasks U-0133 생활 기술(채집) — 버전 그대로: 옛 세이브는 null → F·재료 0.
         }
 
@@ -171,6 +172,7 @@ namespace Saga.Story.Data
             data.tutDone = StoryTutorial.Ids();
             data.rankBest = StoryRunRank.Best; // tasks U-0128
             data.lifeJson = StoryLife.Snapshot(); // tasks U-0133
+            data.monthJson = StoryMonthly.Snapshot(); // tasks U-0162
             data.round = StoryRound.Round;
             data.roundKills = Mathf.Max(0, StoryRound.BaseKills);
             data.roundRifts = Mathf.Max(0, StoryRound.BaseRifts);
@@ -225,6 +227,7 @@ namespace Saga.Story.Data
             else StoryScenario.Restore(data.scenarioJson);
             StoryRound.Restore(data.round, data.roundKills, data.roundRifts, data.round >= 2);
             StoryLife.Restore(data.lifeJson); // tasks U-0133
+            StoryMonthly.Restore(data.monthJson); // tasks U-0162
             StoryRunRank.RestoreBest(data.rankBest); // tasks U-0128 // 기준점은 첫 회귀 뒤(2회차부터)에만 있다
 
             Transform player = FindPlayer();
