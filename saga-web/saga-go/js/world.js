@@ -328,7 +328,7 @@
     var LFm = global.DG.landform, MTf = global.DG.mount, flyOn = !!(MTf && MTf.flying && MTf.flying());
     if (LFm && !flyOn) { step *= LFm.moveMul(pos.x, pos.y, ux, uy, dt); }               // ⑲-62 뜬 동안은 강·능선 감속이 없다
     var nx = pos.x + ux * step, ny = pos.y + uy * step;
-    var rects = (LFm && LFm.onPole && LFm.onPole()) || (MTf && MTf.overRoofs && MTf.overRoofs()) ? [] : solidRectsNear(pos.x, pos.y);   // ⑲-34 들보 위는 벽 위다 · ⑲-62 6m 넘게 뜨면 지붕을 넘는다
+    var rects = (LFm && LFm.onPole && LFm.onPole()) || (MTf && MTf.overRoofs && MTf.overRoofs()) ? [] : solidRectsNear(pos.x, pos.y); var F2t = global.DG.field2d; if (F2t && F2t.treeRects && !flyOn && !(global.DG.world3d && global.DG.world3d.active && global.DG.world3d.active())) { rects = rects.concat(F2t.treeRects(pos.x, pos.y, terrainAt)); }   /* W-0372 2D 나무 줄기 */   // ⑲-34 들보 위는 벽 위다 · ⑲-62 6m 넘게 뜨면 지붕을 넘는다
     /* 2026-09-28 — 이미 벽 안이면(모델이 와서 벽이 커졌거나·품질이 올라 집이 새로 섰거나·순간이동) 사방이 막혀
        영영 갇혔다 → 안에서는 막지 않는다(걸어 나가게) */
     if (rects.length && hitsHouse(pos.x, pos.y, rects)) { rects = []; }
@@ -1425,7 +1425,7 @@
       })(lms[li]);
     }
 
-    // 주민 (npc.js) — 스폰보다 먼저 담아도 v 정렬이 앞뒤를 잡아 준다
+    var TPs = global.DG.field2d && global.DG.field2d.tall && global.DG.field2d.on() && !(global.DG.world3d && global.DG.world3d.active && global.DG.world3d.active()) ? global.DG.field2d.tall() : []; for (var tpi = 0; tpi < TPs.length; tpi++) { (function (t) { var u = (t.wx - pos.x) * sc, v = (t.wy - pos.y) * sc; items.push({ v: v, draw: function () { var p = project(u, v); if (p.y > -200 && p.y < geom.H + 300) { global.DG.mode2d.drawSprite(ctx, { id: t.id, x: p.x, y: p.y, h: t.k * 48 * sc * p.s }); } } }); })(TPs[tpi]); }   /* W-0372 나무 — 발 y 로 인물과 함께 정렬 */   // 주민 (npc.js) — 스폰보다 먼저 담아도 v 정렬이 앞뒤를 잡아 준다
     var NP = global.DG.npc;
     var ppl = NP ? NP.live(pos) : [];
     if (global.DG.folk) { ppl = ppl.concat(global.DG.folk.live(pos)); }   // ⑱ 탑 둘레 세 시대 사람

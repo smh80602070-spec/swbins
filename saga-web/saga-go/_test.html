@@ -17410,6 +17410,15 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       for (i = 0; i < 3; i++) { mn = Math.min(mn, Math.hypot(uv[i].u, uv[i].v * 1.6)); for (var j = i + 1; j < 3; j++) { mn = Math.min(mn, Math.hypot(uv[i].u - uv[j].u, (uv[i].v - uv[j].v) * 1.6)); } }
       return mn > 15 || ('실패 벌림 ' + mn.toFixed(1));
     });
+    t('W-0372 2D 나무 — 숲 칸 나무는 땅 단계에서 빠져 깊이 줄(tall)로 · 줄기 상자로 걷기 막음 · 손잡이 go.propDepth·go.treeBlock 0 이면 옛', function () {
+      var F = DG.field2d; if (!F || !F.treeRects || !F.tall) { return '실패 field2d.treeRects·tall 없음'; }
+      var forest = function () { return 'forest'; }, cv = document.createElement('canvas'); cv.width = 400; cv.height = 300;
+      F.decorate(cv.getContext('2d'), 0, 0, 400, 300, 2, forest); var n1 = F.tall().length;
+      DG.core.setTune('go.propDepth', 0); F.decorate(cv.getContext('2d'), 0, 0, 400, 300, 2, forest); var n0 = F.tall().length; DG.core.setTune('go.propDepth', null);
+      var r = F.treeRects(100, 100, forest); DG.core.setTune('go.treeBlock', 0); var r0 = F.treeRects(100, 100, forest); DG.core.setTune('go.treeBlock', null);
+      var okR = r.length > 0 && r.every(function (q) { return q.w > 0 && q.w < 48 && q.d > 0; });
+      return (n1 > 0 && n0 === 0 && okR && r0.length === 0) || ('실패 tall ' + n1 + '/' + n0 + ' 상자 ' + r.length + '/' + r0.length);
+    });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

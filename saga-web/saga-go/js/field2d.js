@@ -125,12 +125,26 @@
    * drawFallback 뒤에 부른다 — 결·경계·소품. terrainAt(tx, ty) = world.js 의 칸 → 땅 종류.
    * ctx 는 지면 캔버스, (camX, camY) 는 화면 좌상단이 가리키는 월드 좌표(m), sc = 1m 당 px
    */
+  /* W-0372 — 나무를 땅 단계에서 그리면 인물이 늘 그 위에 덧그려져 "나무를 밟고 다녔다"(사용자 10-22). 키 큰 소품(k ≥ TALL)은 목록(tall)으로 넘겨
+     world 가 인물과 발 y 로 함께 정렬해 그리고, 줄기는 작은 상자로 걷기를 막는다. 손잡이 go.propDepth·go.treeBlock(0 = 옛) */
+  var TALL = 0.9, tall = [];
+  function tallOn() { var C = core(); return !(C && C.tuned && !+C.tuned('go.propDepth', 1)); }
+  /** 둘레 3×3 칸 나무 줄기 상자 [{x, z, w, d, rot}] — world 의 hitsHouse 꼴(세계 좌표). 꺼져 있으면 [] — 순수(지형 함수만 씀) */
+  function treeRects(x, y, terrainAt) {
+    var C = core(), out = [], gx0 = Math.floor(x / CELL), gy0 = Math.floor(y / CELL), tx, ty, ps, i, w;
+    if (!on() || !terrainAt || (C && C.tuned && !+C.tuned('go.treeBlock', 1))) { return out; }
+    for (ty = gy0 - 1; ty <= gy0 + 1; ty++) { for (tx = gx0 - 1; tx <= gx0 + 1; tx++) {
+      ps = propsAt(terrainAt(tx, ty), tx, ty);
+      for (i = 0; i < ps.length; i++) { if (ps[i].k >= TALL) { w = 0.12 * CELL * ps[i].k; out.push({ x: (tx + ps[i].dx) * CELL, z: (ty + ps[i].dy) * CELL, w: w, d: w * 0.6, rot: 0 }); } }
+    } }
+    return out;
+  }
   function decorate(ctx, camX, camY, W, H, sc, terrainAt) {
     if (!on() || !terrainAt) { return false; }
     var M = global.DG.mode2d, T = CELL * sc, b = Math.max(2, T * 0.07);
     var t0x = Math.floor(camX / CELL) - 1, t1x = Math.ceil((camX + W / sc) / CELL) + 1;
     var t0y = Math.floor(camY / CELL) - 1, t1y = Math.ceil((camY + H / sc) / CELL) + 2;
-    var tx, ty, kind, sx, sy, v, c, props = [], ps, i;
+    var tx, ty, kind, sx, sy, v, c, props = [], ps, i, deep = tallOn(); tall = [];
     for (ty = t0y; ty <= t1y; ty++) {
       for (tx = t0x; tx <= t1x; tx++) {
         kind = terrainAt(tx, ty);
@@ -147,7 +161,7 @@
         c = edgeColor(kind, terrainAt(tx, ty - 1)); if (c) { ctx.fillStyle = c; ctx.fillRect(sx, sy, Tw, b); }
         if (ty <= t1y - 1) {
           ps = propsAt(kind, tx, ty);
-          for (i = 0; i < ps.length; i++) { props.push({ id: ps[i].id, x: sx + ps[i].dx * T, y: sy + ps[i].dy * T, h: T * ps[i].k }); }
+          for (i = 0; i < ps.length; i++) { if (deep && ps[i].k >= TALL) { tall.push({ id: ps[i].id, wx: (tx + ps[i].dx) * CELL, wy: (ty + ps[i].dy) * CELL, k: ps[i].k }); continue; } props.push({ id: ps[i].id, x: sx + ps[i].dx * T, y: sy + ps[i].dy * T, h: T * ps[i].k }); }   // W-0372 키 큰 소품(나무)은 인물과 같은 깊이 줄로(world items)
         }
       }
     }
@@ -182,5 +196,5 @@
   function npcMps(bodyM) { var C = core(), b = C && C.tuned ? +C.tuned('world.npc2dBps', 0.6) : 0.6; return bodyM > 0 && b > 0 ? b * bodyM : 0; }
   function strideMul() { var C = core(); return C && C.tuned ? Math.max(0.3, +C.tuned('world.stride2d', 1.45)) : 1.45; }
 
-  global.DG.field2d = { walkMps: walkMps, strideMul: strideMul, wander: wander, npcMps: npcMps, CELL: CELL, color: color, BASE: BASE, zoomMul: zoomMul, KCOL: KCOL, on: on, h01: h01, PROPS: PROPS, propsAt: propsAt, edgeColor: edgeColor, decorate: decorate, seasonRgb: seasonRgb };
+  global.DG.field2d = { tall: function () { return tall; }, treeRects: treeRects, TALL: TALL, walkMps: walkMps, strideMul: strideMul, wander: wander, npcMps: npcMps, CELL: CELL, color: color, BASE: BASE, zoomMul: zoomMul, KCOL: KCOL, on: on, h01: h01, PROPS: PROPS, propsAt: propsAt, edgeColor: edgeColor, decorate: decorate, seasonRgb: seasonRgb };
 })(typeof window !== 'undefined' ? window : this);

@@ -68,6 +68,7 @@ try {
   }
   const body = await ev(() => new Promise((res) => { const M = DG.mode2d, p0 = M.pace, seen = {}; M.pace = function (k, x, y, u, bp) { seen[k] = Math.round(bp); return p0.apply(this, arguments); }; setTimeout(() => { M.pace = p0; const ks = Object.keys(seen); res({ me: seen.player || seen.me || seen['me:in'] || null, others: ks.filter((k) => !/^(player|me|me:in)$/.test(k)).slice(0, 4).map((k) => seen[k]) }); }, 1200); }));   // W-0204 몸 px(pace 가 받는 bodyPx — 보폭 쓰는 배우만)
   const info = await ev(() => ({ w: innerWidth, h: innerHeight }));
+  if (process.env.LOOK_EVAL) { await ev((src) => { (0, eval)(src); }, process.env.LOOK_EVAL); await sleep(1500); }   // W-0372 찍기 전 장면 손질(예: 나를 숲 칸으로)
   if (process.env.LOOK_TUNE) { await ev((kv) => { kv.split(',').forEach((x) => { const i = x.indexOf('='); DG.core.setTune(x.slice(0, i), +x.slice(i + 1)); }); }, process.env.LOOK_TUNE); await sleep(700); }   // W-0347 비교판 — 찍기 직전 손잡이(예: mode2d.mip=0)
   { const cov = await beforeShot(page, game, { keep: ['sheet', 'detail', 'encounter'] }); if (cov.length) { console.log('covered', cov.join(',')); } }
   await page.screenshot(dest.endsWith('.jpg') ? { path: dest, type: 'jpeg', quality: 72 } : { path: dest });

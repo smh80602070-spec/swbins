@@ -1697,5 +1697,24 @@
   "ticket": "W-0370",
   "since": "2026-10-22",
   "note": "10-22: 몸 키는 idle 옆 칸 알파 상자로 재서 targetH × scale(옛 길과 같은 기준)"
+ },
+ {
+  "id": "go.treeDepth",
+  "name": "1만리 2D 나무 깊이·줄기 막기(W-0372) — 키 큰 소품(k ≥ 0.9)은 땅 단계에서 빼 인물과 발 y 로 함께 정렬 · 나무 줄기 상자로 2D 걷기 막음(벽과 같은 hitsHouse) · 손잡이 go.propDepth·go.treeBlock",
+  "files": [
+   "js/field2d.js",
+   "src/world/01.js",
+   "src/world/02.js"
+  ],
+  "tests": [
+   "test-web W-0372 2D 나무",
+   "pw-look2d LOOK_EVAL 나무 앞·뒤"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0372",
+  "since": "2026-10-22",
+  "note": "10-22: 사용자 아이폰 \"나무를 밟고 다니네\" · 지도 생성·GPS·3D 그대로"
  }
 ]
