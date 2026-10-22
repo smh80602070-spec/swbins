@@ -130,6 +130,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/auto-rule.js"></script>
 <script src="js/data-news.js"></script>
 <script src="js/event.js"></script>
+<script src="js/relation.js"></script>
 <script src="js/tactics.js"></script>
 <script src="js/tactics-view.js"></script>
 <script src="js/tactics-view3d.js"></script>
@@ -2325,6 +2326,18 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       [['cao'], [other]].forEach(function (x) { var f = R.force(x[0]); f.gold = 20000; R.citiesOf(x[0]).forEach(function (cid) { R.city(cid).troops = 20000; }); });
       return { WD: WD, other: other, capA: R.citiesOf('cao')[0], capB: R.citiesOf(other)[0] };
     }
+    t('관계망(W-0308) — 의형제가 같은 군대면 힘 ×1.05 · 원수가 같은 세력이면 달마다 충성 −2(앙금 풀리면 안 깎임) · 스승이 죽으면 제자 능력 +3(한 번)', function () {
+      fresh('cao'); var RL = DG.relation, P = DG.relData.all(), st = R.state(); if (!RL) { return '실패 DG.relation 없음'; }
+      var sw = P.filter(function (p) { return p.kind === 'sworn'; })[0], fo = P.filter(function (p) { return p.kind === 'foe' && st.officers[p.a] && st.officers[p.b]; })[0], ms = P.filter(function (p) { return p.kind === 'master' && st.officers[p.a] && st.officers[p.b]; })[0];
+      if (!sw || !fo || !ms) { return '건너뜀(짝 없음)'; }
+      var m1 = RL.armyMul([sw.a, sw.b, 'zz']), m0 = RL.armyMul([sw.a, 'zz']);
+      [fo.a, fo.b].forEach(function (id) { var r = st.officers[id]; r.dead = false; r.force = 'cao'; r.loyal = 80; });
+      var ra = st.officers[ms.a], rb = st.officers[ms.b]; ra.dead = true; rb.dead = false; rb.relMaster = 0;
+      var s0 = DG.off.stats(ms.b).might, out = RL.monthly(), s1 = DG.off.stats(ms.b).might, out2 = RL.monthly();
+      var l1 = st.officers[fo.a].loyal;
+      var ok = Math.abs(m1 - 1.05) < 1e-9 && m0 === 1 && out.foe >= 1 && l1 <= 80 - 4 && out.master >= 1 && out2.master === 0 && s1 - s0 === 3 && RL.rowHtml(ms.b).indexOf('📖') >= 0;
+      return ok ? ('의형제 ×1.05 · 원수 충성 80→' + l1 + ' · 제자 무력 ' + s0 + '→' + s1) : ('실패 ' + JSON.stringify({ m1: m1, m0: m0, out: out, out2: out2, l1: l1, s0: s0, s1: s1 }));
+    });
     t('교역로(W-0301) — 우리 땅 길이면 띄우고 달마다 금 · 둘까지 · 길이 남의 땅이 되면 끊겨 상단을 잃음 · AI 도 띄움', function () {
       fresh('cao'); var TR = DG.trade, CD = DG.cityData; if (!TR) { return '실패 DG.trade 없음'; }
       var cap = R.citiesOf('cao')[0], adj = (CD.find(cap).adj || []).slice(0, 3), i;

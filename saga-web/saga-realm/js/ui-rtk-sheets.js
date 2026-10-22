@@ -479,7 +479,7 @@
         (r.loyal < 25 ? ' bad' : '') + '"><i style="width:' + r.loyal + '%"></i></div>' +
         '<b>' + r.loyal + '</b></div>' +
       growRow(h) +
-      ambRow(h.id) +
+      ambRow(h.id) + (global.DG.relation ? global.DG.relation.rowHtml(h.id) : '') +
       (bio ? '<small class="muted dt-bio">' + esc(bio) + '</small>' : '') +
       (h.quote ? '<small class="quote">“' + esc(h.quote) + '”</small>' : '') +
       /* 군주는 상도 승진도 없다 — 제 나라에서 제가 올라갈 자리가 없다 */

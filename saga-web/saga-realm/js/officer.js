@@ -689,7 +689,7 @@
 
   function ambBonusOf(id) {
     var r = global.DG.rtk.state().officers[id];
-    return r && r.amb && r.amb.done ? 2 : 0;
+    return (r && r.amb && r.amb.done ? 2 : 0) + (global.DG.relation ? global.DG.relation.bonusOf(id) : 0);   // W-0308 스승 잃은 제자 +3
   }
 
   /** 좌절 중인가 — 못 이룬 채 서른여섯 달 + 열두 달이 지났다 */

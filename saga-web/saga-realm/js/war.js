@@ -268,7 +268,7 @@
     if (extra === 0) { lead = 0.6; }         // 장수 없는 군대는 오합지졸이다
     var form = formationOf(army.officers, army.formation);
     var mtM = global.DG.mount && global.DG.mount.powerMul ? global.DG.mount.powerMul(army.officers, army.water) : 1;   // 명마(mount.js) — 땅 싸움에서만, 안 탔으면 1
-    return army.troops * trainF * techF * lead * navy * (army.morale || 1) * (form ? form.mul : 1) * mtM;
+    return army.troops * trainF * techF * lead * navy * (army.morale || 1) * (form ? form.mul : 1) * mtM * (global.DG.relation ? global.DG.relation.armyMul(army.officers) : 1);   // W-0308 의형제 함께 +5%
   }
 
   /**
