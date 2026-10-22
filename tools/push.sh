@@ -70,7 +70,7 @@ TMPD="$(mktemp -d 2>/dev/null || { mkdir -p "/tmp/pushsh-$$" && echo "/tmp/pushs
 cleanup() { rm -rf "$TMPD"; }
 trap cleanup EXIT
 git worktree prune >/dev/null 2>&1   # 옛 방식이 남긴 임시 트리 기록 정리
-git merge-tree -h 2>&1 | grep -q -- "--merge-base" || { say "git 이 낡음 — merge-tree --merge-base 는 git 2.40 이상(지금 $(git --version)). git 을 올린 뒤 다시"; exit 1; }
+git merge-tree --write-tree --merge-base=HEAD HEAD HEAD >/dev/null 2>&1 || { say "git 이 낡음 — merge-tree --merge-base 는 git 2.40 이상(지금 $(git --version)). git 을 올린 뒤 다시"; exit 1; }
 TIP=""
 
 put_blob() { # $1 트리 · $2 경로 · $3 새 blob → 그 경로만 바꾼 트리
