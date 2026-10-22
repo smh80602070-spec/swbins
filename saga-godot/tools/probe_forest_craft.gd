@@ -38,6 +38,7 @@ func _initialize() -> void:
 	var n_tool := 0
 	var n_furn := 0
 	var n_lot := 0
+	var n_pen := 0
 	for r: Dictionary in Craft.RECIPES:
 		for label: String in (r.need as Dictionary).keys():
 			mats_ok = mats_ok and Craft.GATHER_LABELS.has(label)
@@ -45,10 +46,12 @@ func _initialize() -> void:
 			n_tool += 1
 		elif String(r.kind) == "lot":
 			n_lot += 1
+		elif String(r.kind) == "pen":
+			n_pen += 1
 		else:
 			n_furn += 1
 			furn_ok = furn_ok and not Home.furn(String(r.furn)).is_empty()
-	check(Craft.RECIPES.size() == 13 and n_tool == 6 and n_furn == 6 and n_lot == 1 and mats_ok and furn_ok, "레시피 13(도구 6·가구 6·빈 집 1, G-0237) · 재료 전부 채집 품목 · 가구 키 있음")
+	check(Craft.RECIPES.size() == 14 and n_tool == 6 and n_furn == 6 and n_lot == 1 and n_pen == 1 and mats_ok and furn_ok, "레시피 14(도구 6·가구 6·빈 집 1, G-0237·우리 1, G-0311) · 재료 전부 채집 품목 · 가구 키 있음")
 	# ②
 	var dup := 0
 	for i in 100:

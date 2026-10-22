@@ -11,6 +11,7 @@ extends RefCounted
 
 const Workshop := preload("res://games/saga_forest/data/forest_workshop.gd")   # G-0218 솜씨도
 const Lots := preload("res://games/saga_forest/data/forest_lots.gd")   # G-0237 입주 조건
+const Livestock := preload("res://games/saga_forest/data/forest_livestock.gd")   # G-0311 가축
 const AXES := ["harvest", "bounty", "knack"]
 const AXIS_NAMES := {"harvest": "수확 — 30% 확률로 하나 더", "bounty": "풍성 — 8% 확률로 셋 더", "knack": "손재주 — 25% 확률로 그 자리가 오늘 한 번 더"}
 const AXIS_SHORT := {"harvest": "수확", "bounty": "풍성", "knack": "손재주"}
@@ -44,6 +45,7 @@ const RECIPES := [
 	{"key": "make_jokja", "kind": "furn", "furn": "jokja", "need": {"약초": 2, "꽃": 2, "솔방울": 2}},
 	{"key": "make_hwaro", "kind": "furn", "furn": "hwaro", "need": {"광석": 4, "화석": 1}},
 	{"key": "lot", "kind": "lot", "need": {"솔방울": 12, "광석": 3, "화석": 2}},   # G-0237 작은 빈 집(웹 shard 자리 = 화석)
+	{"key": "pen", "kind": "pen", "need": {"솔방울": 10, "광석": 2}},   # G-0311 작은 우리(웹 잣·철석 자리)
 ]
 
 
@@ -92,6 +94,8 @@ static func why_not(F: Node, r: Dictionary) -> String:
 			return "지금 Lv%d" % cur
 	if String(r.kind) == "lot" and Lots.why_not_build(F) != "":
 		return Lots.why_not_build(F)
+	if String(r.kind) == "pen" and Livestock.why_not_pen(F) != "":
+		return Livestock.why_not_pen(F)
 	for label: String in (r.need as Dictionary).keys():
 		var n := Workshop.need(int(r.need[label]))   # G-0218 손 큰 장인 ×0.7
 		if F.item_count(label) < n:
@@ -120,6 +124,9 @@ static func make(F: Node, key: String) -> Dictionary:
 		return {"ok": true, "why": "", "tool": String(r.tool)}
 	if String(r.kind) == "lot":
 		Lots.build(F)
+		return {"ok": true, "why": "", "tool": ""}
+	if String(r.kind) == "pen":
+		Livestock.build_pen(F)
 		return {"ok": true, "why": "", "tool": ""}
 	F.home_stock_add(String(r.furn), 1)
 	return {"ok": true, "why": "", "tool": ""}

@@ -52,6 +52,10 @@ func _ready() -> void:
 	if not lm.is_empty():
 		Toast.show(self, String(lm.text), 4.0)
 	add_child(preload("res://games/saga_forest/world/forest_lots_view.gd").new())   # G-0237 눌러앉은 손님 몸·이름표
+	var lsm: Dictionary = preload("res://games/saga_forest/data/forest_livestock.gd").on_new_day(ForestSaveState)   # G-0311 우리 아침 산물·떠남
+	if not lsm.is_empty() and String(lsm.text) != "":
+		Toast.show(self, String(lsm.text), 4.0)
+	add_child(preload("res://games/saga_forest/world/forest_livestock_view.gd").new())   # G-0311 작은 우리(길 남쪽)
 	add_child(preload("res://games/saga_forest/world/forest_cave_view.gd").new())   # G-0242 땅 아래 층(바위 아치 [G])
 	var e := ForestFestival.event_of_today()
 	if not e.is_empty():

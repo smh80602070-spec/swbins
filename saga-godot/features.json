@@ -5526,5 +5526,25 @@
   "ticket": "G-0310",
   "since": "2026-10-23",
   "note": "웹 W-0301 짝 · AI 상단 없음(고돗 AI 금 없음) · 세이브 판 25 trade · SAGA_TRADE=0"
+ },
+ {
+  "id": "gd.forest.livestock",
+  "name": "3마을 가축 기르기 — 제작대 작은 우리, 꼬꼬·매매 새끼 들이기, 과일 먹이·쓰다듬기 하트, 아침 달걀·산양젖, 사흘 굶으면 떠남",
+  "files": [
+   "games/saga_forest/data/forest_livestock.gd",
+   "games/saga_forest/world/forest_livestock_view.gd",
+   "games/saga_forest/world/craft_bench.gd",
+   "games/saga_forest/data/forest_craft.gd"
+  ],
+  "tests": [
+   "forest_livestock",
+   "forest_craft"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0311",
+  "since": "2026-10-23",
+  "note": "웹 W-0299 짝 · 울타리 K-0181 · 닭·염소 몸은 코드 대역(K 수신함) · SAGA_LIVESTOCK=0"
  }
 ]

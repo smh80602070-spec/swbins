@@ -10,6 +10,7 @@ const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.
 const ForestCraft := preload("res://games/saga_forest/data/forest_craft.gd")
 const ForestHome := preload("res://games/saga_forest/data/forest_home.gd")
 const Lots := preload("res://games/saga_forest/data/forest_lots.gd")   # G-0237 입주 조건
+const Livestock := preload("res://games/saga_forest/data/forest_livestock.gd")   # G-0311 가축
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
@@ -92,6 +93,8 @@ static func recipe_name(r: Dictionary) -> String:
 		return "%s Lv%d" % [ForestCraft.TOOLS[r.tool], int(r.lv)]
 	if String(r.kind) == "lot":
 		return "작은 빈 집 (%d/%d)" % [Lots.count(ForestSaveState), Lots.MAX]
+	if String(r.kind) == "pen":
+		return "작은 우리"
 	return String(ForestHome.furn(String(r.furn)).get("name", r.furn))
 
 
@@ -103,7 +106,7 @@ func open_menu() -> void:
 		var why := ForestCraft.why_not(ForestSaveState, r)
 		var key := String(r.key)
 		choices.append({
-			"label": "%s %s — %s%s" % [{"tool": "🛠️", "lot": "🏠"}.get(String(r.kind), "🪑"), recipe_name(r), need_text(r), "  ✓" if why == "" else "  (%s)" % why],
+			"label": "%s %s — %s%s" % [{"tool": "🛠️", "lot": "🏠", "pen": "🐔"}.get(String(r.kind), "🪑"), recipe_name(r), need_text(r), "  ✓" if why == "" else "  (%s)" % why],
 			"cb": func() -> void:
 				(box["layer"] as CanvasLayer).queue_free()
 				make(key),
@@ -112,6 +115,10 @@ func open_menu() -> void:
 		choices.append({"label": "🏠 빈 집 꾸미기 — 가구를 넣어 손님을 부른다", "cb": func() -> void:
 			(box["layer"] as CanvasLayer).queue_free()
 			open_lots()})
+	if Livestock.on() and Livestock.has_pen(ForestSaveState):
+		choices.append({"label": "🐔 작은 우리 — 새끼 들이기·먹이·쓰다듬기 (%d/%d)" % [Livestock.animals(ForestSaveState).size(), Livestock.MAX], "cb": func() -> void:
+			(box["layer"] as CanvasLayer).queue_free()
+			open_pen()})
 	choices.append({"label": "닫기", "cb": func() -> void: (box["layer"] as CanvasLayer).queue_free()})
 	var lv_line := "바구니 Lv%d · 잠자리채 Lv%d · 삽 Lv%d" % [ForestCraft.tool_lv(ForestSaveState, "basket"), ForestCraft.tool_lv(ForestSaveState, "net"), ForestCraft.tool_lv(ForestSaveState, "spade")]
 	box["layer"] = ChoicePrompt.build(self, "🔨 제작대 — %s" % lv_line, choices)
@@ -126,6 +133,9 @@ func make(key: String) -> void:
 	if pl != null and pl.has_method("play_once"):
 		pl.call("play_once", "hammer", 1.2)   # G-0282 망치질
 	var rec := ForestCraft.recipe(key)
+	if String(rec.kind) == "pen":
+		Toast.show(self, "🐔 작은 우리를 지었다 — 길 남쪽 · 제작대 \"작은 우리\"에서 새끼를 들인다", 3.0)
+		return
 	if String(rec.kind) == "lot":
 		Toast.show(self, "🏠 작은 빈 집을 지었다 (%d/%d) — 제작대 \"빈 집 꾸미기\"로 가구를 넣는다" % [Lots.count(ForestSaveState), Lots.MAX], 3.0)
 		return
@@ -155,6 +165,55 @@ func open_perks(tool: String) -> void:
 			Toast.show(self, "🛠️ %s Lv%d — 갈래 없이 💰%d" % [ForestCraft.TOOLS[tool], ForestCraft.tool_lv(ForestSaveState, tool), ForestCraft.DECLINE_GOLD], 3.0),
 	})
 	box["layer"] = ChoicePrompt.build(self, "🛠️ %s 을(를) Lv%d 로 올렸다 — 갈래 하나" % [ForestCraft.TOOLS[tool], ForestCraft.tool_lv(ForestSaveState, tool)], choices)
+
+
+## G-0311 작은 우리 — 짐승마다 한 줄(안 먹였으면 먹이, 먹였으면 쓰다듬기) · 새끼 들이기 · 닫기. 누르면 창이 다시 열린다.
+func pen_lines() -> Array:
+	var F := ForestSaveState
+	var out: Array = []
+	var list := Livestock.animals(F)
+	for i in list.size():
+		var a: Dictionary = list[i]
+		var k: Dictionary = Livestock.KINDS.get(String(a.kind), {})
+		var act := "feed" if not bool(a.fed) else ("pet" if not bool(a.petted) else "")
+		var tail: String = {"feed": "▶ 먹이(%s 1, 가방 %d)" % [Livestock.FEED, F.item_count(Livestock.FEED)], "pet": "▶ 쓰다듬기", "": "오늘 다 함 — 내일 아침 %s" % String(k.get("product", ""))}[act]
+		out.append({"act": act, "i": i, "label": "%s %s %s%s — %s" % [String(k.get("emoji", "")), String(a.name), Livestock.hearts(a), "" if int(a.hungry) == 0 else " · 굶은 날 %d" % int(a.hungry), tail]})
+	for kind: String in Livestock.KINDS:
+		var k: Dictionary = Livestock.KINDS[kind]
+		var why := Livestock.why_not_buy(F, kind)
+		out.append({"act": "buy", "kind": kind, "label": "%s %s 새끼 들이기 💰%d%s" % [String(k.emoji), String(k.name), int(k.price), "" if why == "" else "  (%s)" % why]})
+	return out
+
+
+func open_pen() -> void:
+	var box := {}
+	var choices: Array = []
+	for l: Dictionary in pen_lines():
+		var line := l
+		choices.append({"label": String(l.label), "cb": func() -> void:
+			(box["layer"] as CanvasLayer).queue_free()
+			_pen_act(line)})
+	choices.append({"label": "닫기", "cb": func() -> void: (box["layer"] as CanvasLayer).queue_free()})
+	box["layer"] = ChoicePrompt.build(self, "🐔 작은 우리 %d/%d — 날마다 %s 하나를 먹이면 아침에 산물(하트 %d 이상 둘) · 사흘 굶으면 떠난다" % [Livestock.animals(ForestSaveState).size(), Livestock.MAX, Livestock.FEED, Livestock.HEART_TWO], choices)
+
+
+func _pen_act(l: Dictionary) -> void:
+	var r := {}
+	match String(l.act):
+		"feed":
+			r = Livestock.feed(ForestSaveState, int(l.i))
+		"pet":
+			r = Livestock.pet(ForestSaveState, int(l.i))
+			if bool(r.get("ok", false)):
+				Toast.show(self, "♥ 하트 %d" % int(r.heart), 1.5)
+		"buy":
+			r = Livestock.buy(ForestSaveState, String(l.kind))
+			if bool(r.get("ok", false)):
+				Toast.show(self, "🐣 %s 이(가) 우리에 들어왔다" % String(r.name), 2.5)
+	if not r.is_empty() and not bool(r.get("ok", false)):
+		Toast.show(self, String(r.why), 2.0)
+	if String(l.act) != "":
+		open_pen()
 
 
 ## G-0237 빈 집 고르기 — 집마다 "어울릴 손님" 줄
