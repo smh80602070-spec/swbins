@@ -1564,5 +1564,23 @@
   "ticket": "W-0364",
   "since": "2026-10-22",
   "note": "10-22: 폰 세 장 확인 · dungeon-view.js 1500줄 상한 안(기존 줄 끝)"
+ },
+ {
+  "id": "dg.ground2d",
+  "name": "2D 접지감(W-0368) — 발 닿는 두 겹 그림자(옅은 퍼짐 + 진한 핵, mode2d.shadow2) · 2나락 아이소 그림자 넷(나·적·동료·마을 사람)에 진한 핵 · 한 장 그림 몸짓 절반(mode2d.stillAmp 0.5) · 걸을 때 발 먼지(mode2d.stepDust)",
+  "files": [
+   "../shared/js/mode2d.js",
+   "src/dungeon-view/01.js"
+  ],
+  "tests": [
+   "test-web W-0368 2D 접지",
+   "pw-2d-cmp w368"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0368",
+  "since": "2026-10-22",
+  "note": "10-22: 손잡이 셋 0/1 이면 옛 그림 · setTone 은 판 연결 안 함(어둠 막이 이미 몸 위)"
  }
 ]

@@ -94,6 +94,18 @@
     toneF = (Math.abs(b - 1) < 0.02 && Math.abs(sat - 1) < 0.02) || !tuneOf('mode2d.tone', 1) ? '' : 'brightness(' + b.toFixed(2) + ')' + (Math.abs(sat - 1) < 0.02 ? '' : ' saturate(' + sat.toFixed(2) + ')');
     return toneF;
   }
+  /* W-0368 ⑤ 발 먼지 — 걷기 위상(stride 0~1, 0·0.5 = 발이 땅에 닿음) 뒤 40% 동안 발 양옆에 옅은 흙먼지 둘이 퍼지며 사라진다.
+     상태 없음(위상만 봄 — 몸 따라 같이 움직임) · 손잡이 mode2d.stepDust 1(0 = 끔) · 몸 뒤에 그린다 */
+  function stepDust(ctx, o, bodyH) {
+    if (!ctx || !o || o.clip !== 'walk' || o.stride === undefined || o.stride === null || !tuneOf('mode2d.stepDust', 1)) { return 0; }
+    var q = ((+o.stride * 2) % 1 + 1) % 1, k, i, n = 0, H = Math.max(8, +bodyH || 62), a;
+    if (q > 0.4) { return 0; }
+    k = q / 0.4; a = 0.24 * (1 - k) * (o.alpha === undefined ? 1 : o.alpha);
+    ctx.save(); ctx.fillStyle = 'rgba(196,184,160,' + a.toFixed(3) + ')';
+    for (i = -1; i <= 1; i += 2) { ctx.beginPath(); ctx.ellipse(o.x + i * H * (0.08 + 0.07 * k), o.y - H * 0.03 * k, H * 0.05 * (0.6 + k), H * 0.025 * (0.6 + k), 0, 0, Math.PI * 2); ctx.fill(); n++; }
+    ctx.restore();
+    return n;
+  }
   function applyTone(ctx) { if (toneF && ctx && 'filter' in ctx) { ctx.filter = toneF; } }
 
   /* ── W-0350 2D 표식 이모지 → 자체 아이콘(K-0118 ui_*_g0.png, 다섯 판 assets/icons/icon64 — sync-shared 가 복사). ctx.fillText 대신 쓴다:
@@ -375,7 +387,7 @@
     if (!e.ok) { if (role !== 'idle') { getImg(o.pool, 'idle', 16); } return false; }
     var c = S.cellOf(spec, role, e.img && e.img.naturalWidth), P = c[0], d = S.dirOf16(o.dirX, o.dirY, o.facing), f = S.frameAt(spec, role, o.ms || 0, o.t, o.stride);
     var cf = C(), vr = cf.vroid2d, sc = (vr ? (cf.targetH || 62) / (vr.h || 85) : (cf.scale || 1)) * (o.scale || 1), w = P * sc, h = P * sc, foot = (P / 2 + c[1] * PPM + 1.5) / P;
-    ctx.save();
+    stepDust(ctx, o, (cf.targetH || 62) * (o.scale || 1)); ctx.save();
     if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
     ctx.imageSmoothingEnabled = true; hq(ctx); applyTone(ctx);
     if (d.flip) { ctx.translate(o.x, 0); ctx.scale(-1, 1); ctx.translate(-o.x, 0); }
@@ -418,7 +430,7 @@
     var c8 = eight ? cell8(s8, e.img && e.img.naturalWidth) : null, P = eight ? c8[0] : PX, d = airRow ? { row: 0, flip: dirOf(o.facing).flip } : eight ? dirOf8(o.dirX, o.dirY, o.facing) : dirOf(o.facing), f = (at !== undefined && at !== null) ? Math.min(FRAMES - 1, Math.max(0, Math.floor(at * FRAMES))) : (o.stride !== undefined && o.stride !== null && /walk|run/.test(role)) ? Math.floor(o.stride * FRAMES) % FRAMES : frameAt(role, o.ms || 0);   // W-0203 걷기는 보폭 위상
     var cf = C(), vr = (isVroid(o.pool) || cr) && cf.vroid2d, ph = vr ? (vr.h || 85) : (cf.poolH || {})[o.pool], sc = (ph ? (cf.targetH || 62) / ph : (cf.scale || 1)) * (o.scale || 1) * (cr ? cr.k : 1), w = P * sc, h = P * sc;   // 몬스터는 사람 시트 배율 × 찍은 폭 비(W-0129)
     var foot = cr ? cr.foot : eight ? (P / 2 + c8[1] * PPM + 1.5) / P : ((vr && vr.foot) || cf.foot || 0.87);   // 8방향 칸: 가운데 + 카메라 높이(실측 114/128·156/192 와 ±1px)
-    ctx.save();
+    stepDust(ctx, o, (cf.targetH || 62) * (o.scale || 1) * (cr ? cr.k : 1)); ctx.save();
     if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
     ctx.imageSmoothingEnabled = true; hq(ctx); applyTone(ctx);
     if (d.flip) { ctx.translate(o.x, 0); ctx.scale(-1, 1); ctx.translate(-o.x, 0); }
@@ -481,7 +493,7 @@
     if (!e.ok) { return false; }
     var cf = C(), bodyH = (cf.targetH || 62) * (o.scale || 1), sc = bodyH / SBODY, w = SPX * sc, h = SPX * sc;
     var ps = stillPose(o.clip || 'idle', o.ms || 0, o.stride, tuneOf('mode2d.stillAmp', 0.5));
-    ctx.save();
+    stepDust(ctx, o, bodyH); ctx.save();
     ctx.globalAlpha = (o.alpha !== undefined ? o.alpha : 1) * ps.alpha;
     ctx.imageSmoothingEnabled = true; hq(ctx); applyTone(ctx);
     ctx.translate(o.x, o.y);                         // 발 밑 가운데가 원점
@@ -678,7 +690,7 @@
   global.DG = global.DG || {};
   global.DG.mode2d = {
     labels: labels,
-    scaleOf: scaleOf, scaleOn: scaleOn, shadow: shadow, setTone: setTone, tone: function () { return toneF; }, SCALE: SCALE, BEAST: BEAST,   // W-0368 setTone·tone ·   // W-0349
+    scaleOf: scaleOf, scaleOn: scaleOn, shadow: shadow, stepDust: stepDust, setTone: setTone, tone: function () { return toneF; }, SCALE: SCALE, BEAST: BEAST,   // W-0368 setTone·tone ·   // W-0349
     mark: mark, markSrc: markSrc, MARK: MARK, markMisses: function () { return Object.assign({}, markMiss); },   // W-0350
     isCrea: isCrea, creaPool: creaPool, creaFit: creaFit, cell8: cell8,   // W-0129 몬스터 2D 시트
     drawSprite: drawSprite, drawKind: drawKind, hasKind: hasKind, spriteReady: function (id) { return !!spriteOf(id); },

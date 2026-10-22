@@ -1495,5 +1495,23 @@
   "ticket": "W-0364",
   "since": "2026-10-22",
   "note": "10-22: pw-realm2d 전후(같은 조건 2·4회). 힙 5.5MB·그림 디코딩 13MB 로 원래 작음 — 아이폰 '연결 안 됨'은 에뮬(WebKit 로컬·공개 주소 둘 다 죽음 0)로 재현 안 됨"
+ },
+ {
+  "id": "rk.ground2d",
+  "name": "2D 접지감(W-0368) — 발 닿는 두 겹 그림자(옅은 퍼짐 + 진한 핵, mode2d.shadow2) · 5천하 전장 팀 고리 밑 · 한 장 그림 몸짓 절반(mode2d.stillAmp 0.5) · 걸을 때 발 먼지(mode2d.stepDust)",
+  "files": [
+   "../shared/js/mode2d.js",
+   "js/rts/view.js"
+  ],
+  "tests": [
+   "test-web W-0368 2D 접지",
+   "pw-2d-cmp w368"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0368",
+  "since": "2026-10-22",
+  "note": "10-22: 손잡이 셋 0/1 이면 옛 그림 · setTone 은 판 연결 안 함(어둠 막이 이미 몸 위)"
  }
 ]

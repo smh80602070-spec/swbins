@@ -526,7 +526,7 @@
     ctx.beginPath();
     isoEllipse(ctx, m, o.x, o.y, 12);
     ctx.fillStyle = '#000';
-    ctx.fill();
+    ctx.fill(); isoCore(ctx, m, o.x, o.y, 12);
     ctx.restore();
     if (!(global.DG.actor2d && global.DG.actor2d.draw(ctx, 'npc', o.ref, p.x, p.y, 0.86 * sf, { facing: o.facing, walking: false, now: now, phase: o.phase, wx: (o.x - o.y) * IX, wy: (o.x + o.y) * IY, ppu: m.s, pk: 'npc:' + (o.id || ((o.ref && o.ref.id) || '') + ':' + o.phase) }))) global.DG.sprite.stamp(ctx, {
       kind: 'human', ref: o.ref,
@@ -673,7 +673,7 @@
     ctx.beginPath();
     isoEllipse(ctx, m, e.x, e.y, e.r * 0.95);
     ctx.fillStyle = '#000';
-    ctx.fill();
+    ctx.fill(); isoCore(ctx, m, e.x, e.y, e.r * 0.95);
     ctx.restore();
 
     ctx.save();
@@ -738,7 +738,7 @@
     ctx.beginPath();
     isoEllipse(ctx, m, pl.x, pl.y, 12);
     ctx.fillStyle = '#000';
-    ctx.fill();
+    ctx.fill(); isoCore(ctx, m, pl.x, pl.y, 12);
     ctx.restore();
 
     /* 사거리 표시 (아주 옅게) + 사기 버프 고리 */
@@ -794,7 +794,7 @@
     ctx.beginPath();
     isoEllipse(ctx, m, c.x, c.y, 12);
     ctx.fillStyle = '#000';
-    ctx.fill();
+    ctx.fill(); isoCore(ctx, m, c.x, c.y, 12);
     ctx.restore();
 
     var fac = global.DG.data.faction(ref.faction);

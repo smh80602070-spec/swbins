@@ -496,7 +496,7 @@
     ctx.beginPath();
     ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
     ctx.fillStyle = 'rgba(30,40,25,0.20)';
-    ctx.fill();
+    ctx.fill(); var Co = global.DG.core; if (!(Co && Co.tuned && !+Co.tuned('mode2d.shadow2', 1))) { ctx.beginPath(); ctx.ellipse(x, y, rx * 0.5, Math.max(1, ry * 0.45), 0, 0, Math.PI * 2); ctx.fillStyle = 'rgba(20,26,16,0.30)'; ctx.fill(); }   /* W-0368 발 닿는 진한 핵 */
   }
 
   function drawProp(prop, f, se, now) {

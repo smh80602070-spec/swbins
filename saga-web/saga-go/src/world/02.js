@@ -857,7 +857,7 @@
     ctx.beginPath();
     ctx.ellipse(p.x, p.y - bodyH * 0.45, bodyH * 0.34, bodyH * 0.52, 0, 0, Math.PI * 2); if (global.DG.stealth) { global.DG.stealth.mark2d(ctx, s, p.x, p.y - bodyH * 1.15, bodyH); }   // W-0286 들킴 ❗
     ctx.fillStyle = 'rgba(0,0,0,0.22)';
-    if (!(global.DG.mode2d && global.DG.mode2d.scaleOn && global.DG.mode2d.scaleOn())) { ctx.fill(); }   // W-0349 몸 뒤 검은 타원(종이 오린 듯한 테두리) — 새 표에선 발밑 고리만
+    if (!(global.DG.mode2d && global.DG.mode2d.scaleOn && global.DG.mode2d.scaleOn())) { ctx.fill(); } else if (global.DG.mode2d.shadow) { global.DG.mode2d.shadow(ctx, p.x, p.y, bodyH * 0.62, { a: 0.3 }); }   /* W-0368 발 닿는 두 겹 그림자 */   // W-0349 몸 뒤 검은 타원(종이 오린 듯한 테두리) — 새 표에선 발밑 고리만
 
     if (!(isHero && global.DG.actor2d && global.DG.actor2d.human(ctx, s.ref, null, p.x, p.y, scale, { facing: s.facing, dirX: s.dirX, dirY: s.dirY, moving: s.moving, phase: s.phase, now: now, wx: s.x, wy: s.y, ppu: (wsc || 1) * p.s, pk: 'sp:' + (s.id || (s.ref && s.ref.id) + ':' + s.bornAt) }))) sp.stamp(ctx, {
       kind: isHero ? 'human' : 'beast', ref: s.ref, bk: bk,
@@ -891,7 +891,7 @@
     ctx.beginPath();
     ctx.ellipse(p.x, p.y, 11 * z, 4.5 * z, 0, 0, Math.PI * 2);
     ctx.fillStyle = 'rgba(0,0,0,0.30)';
-    ctx.fill();
+    if (global.DG.mode2d && global.DG.mode2d.shadow) { global.DG.mode2d.shadow(ctx, p.x, p.y, 22 * z, { a: 0.3 }); } else { ctx.fill(); }   /* W-0368 두 겹 */
 
     if (!(global.DG.actor2d && global.DG.actor2d.human(ctx, n.p, null, p.x, p.y, z * 1.05, { facing: n.x < 0 ? -1 : 1, moving: n.walking, phase: n.phase, now: now, wx: n.x, wy: n.y, ppu: scale() * p.s, pk: 'npc:' + (n.id || ((n.p && n.p.id) || '') + ':' + n.phase) }))) sp.stamp(ctx, {
       kind: 'human', ref: n.p,
@@ -999,7 +999,7 @@
     }
 
     // 발밑 고리
-    var pulse = 1 + Math.sin(now / 500) * 0.07;
+    var pulse = 1 + Math.sin(now / 500) * 0.07; if (global.DG.mode2d && global.DG.mode2d.shadow) { global.DG.mode2d.shadow(ctx, X, Y, 26, { a: 0.32 }); }   /* W-0368 푸른 고리 밑 발 닿는 그림자 */
     ctx.beginPath();
     ctx.ellipse(X, Y, 17 * pulse, 8 * pulse, 0, 0, Math.PI * 2);
     ctx.fillStyle = 'rgba(74,163,240,0.16)';

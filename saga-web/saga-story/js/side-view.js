@@ -1060,7 +1060,7 @@
     if (!pool) { return false; }
     var clip = e.hurt > 0 ? 'hit' : (e.atkAnim > 0 ? 'attack' : 'walk');
     var ms = clip === 'attack' ? (0.28 - e.atkAnim) * 1000 : (clip === 'hit' ? Math.max(0, 0.3 - e.hurt) * 1000 : Date.now() + (e.phase || 0) * 160);
-    var sz = e.boss ? 1.9 : (e.mini || e.rare ? 1.25 : 1);
+    var sz = e.boss ? 1.9 : (e.mini || e.rare ? 1.25 : 1); if (M.shadow) { M.shadow(ctx, x, y, 30 * sz * (bz && !crea ? bz.k : 1), { a: 0.3 }); }   /* W-0368 발 닿는 그림자 */
     return M.draw(ctx, { pool: pool, clip: clip, facing: e.dir, ms: ms, x: x, y: y, scale: (bz && !crea ? bz.k : 1) * sz }) ||
       (crea && (bz || e.ref.kind === 'human') ? M.draw(ctx, { pool: bz ? bz.pool : M.pick('t' + (e.ref.tier || 1), e.ref.name), clip: clip, facing: e.dir, ms: ms, x: x, y: y, scale: (bz ? bz.k : 1) * sz }) : false);   // 시트 manifest 받기 전엔 옛 길
   }
@@ -1126,7 +1126,7 @@
       ctx.fillText(mtd.emoji, x, y + 4);
       y -= 20;
     }
-    if (!(global.DG.sideView3d && global.DG.sideView3d.ready()) && !(global.DG.actor2d && global.DG.actor2d.me(ctx, ref, x, y, S.P_H * 1.12, { facing: p.facing, walking: !!p.vx && p.onGround, atk: p.atkCd, hurt: p.hurt, wx: p.x, wy: p.y, ppu: 1, air: !p.onGround && !p.climb, vy: p.vy }))) {
+    if (!(global.DG.sideView3d && global.DG.sideView3d.ready()) && p.onGround && global.DG.mode2d && global.DG.mode2d.shadow) { global.DG.mode2d.shadow(ctx, x, y, S.P_W * 1.1, { a: 0.3 }); }   /* W-0368 땅에 선 나 */ if (!(global.DG.sideView3d && global.DG.sideView3d.ready()) && !(global.DG.actor2d && global.DG.actor2d.me(ctx, ref, x, y, S.P_H * 1.12, { facing: p.facing, walking: !!p.vx && p.onGround, atk: p.atkCd, hurt: p.hurt, wx: p.x, wy: p.y, ppu: 1, air: !p.onGround && !p.climb, vy: p.vy }))) {
       global.DG.sprite.stamp(ctx, {
         kind: 'human', ref: ref, x: x, y: y, s: 1.05,
         facing: p.facing, phase: p.phase, walking: !!p.vx && p.onGround,

@@ -591,7 +591,7 @@
   }
 
   /** 논리 공간의 원 → 화면의 납작한 타원 (그림자·조명·범위 표시에 쓴다) */
-  function isoEllipse(c, m, x, y, r) {
+  function isoCore(c, m, x, y, r) { var Co = global.DG.core; if (Co && Co.tuned && !+Co.tuned('mode2d.shadow2', 1)) { return; } c.beginPath(); isoEllipse(c, m, x, y, r * 0.48); c.fill(); }   /* W-0368 발 닿는 진한 핵(같은 globalAlpha 로 한 번 더) */ function isoEllipse(c, m, x, y, r) {
     if (m.belt) { return m.ellipse(c, x, y, r); } var p = proj(m, x, y);
     c.ellipse(p.x, p.y, r * 1.414 * IX * m.s, r * 1.414 * IY * m.s, 0, 0, Math.PI * 2);
     return p;

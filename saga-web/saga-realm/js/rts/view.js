@@ -140,6 +140,7 @@
         if (u.path && u.path.length && u.goal) { gp = toScreen(u.goal.x + .5, u.goal.y + .5); ctx.strokeStyle = 'rgba(255,230,120,.55)'; ctx.setLineDash([4, 4]); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(gp.x, gp.y); ctx.stroke(); ctx.setLineDash([]); }
         ctx.beginPath(); ctx.arc(p.x, p.y, r + 3, 0, 6.2832); ctx.strokeStyle = '#ffd36a'; ctx.lineWidth = 2; ctx.stroke();
       }
+      if (global.DG.mode2d && global.DG.mode2d.shadow) { global.DG.mode2d.shadow(ctx, p.x, p.y + z * 0.32, r * 2.1, { a: 0.32 }); }   /* W-0368 발 닿는 그림자 */
       if (R().art.unit(ctx, u, p, z, Date.now())) {   // 새 몸 그림(art.js) — 발 밑에 팀색 고리
         ctx.beginPath(); ctx.ellipse(p.x, p.y + z * 0.32, r * 0.95, r * 0.38, 0, 0, 6.2832); ctx.strokeStyle = u.team === 0 ? '#2b8fe8' : '#e8402b'; ctx.lineWidth = 2; ctx.stroke();
       } else {

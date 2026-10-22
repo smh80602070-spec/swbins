@@ -7011,6 +7011,18 @@ window.DG_NO_TUNE = true;
       var raw = ''; try { raw = localStorage.getItem(st) || ''; localStorage.removeItem(st); } catch (e) { /* 없음 */ }
       return (got === 1.7 && /__t_cam2d\/(phone|pc)/.test(raw)) || ('실패 되읽기 ' + got + ' ' + raw);
     });
+    t('W-0368 2D 접지 — shadow 두 겹(큰 퍼짐 > 작은 핵, 폭 두 배면 두 배) · stillPose amp 0 이면 걷기 흔들림 0 · 0.5 는 1 의 절반 · 발 먼지는 닿은 직후만', function () {
+      var M = DG.mode2d; if (!M || !M.shadow || !M.stillPose) { return '실패 DG.mode2d.shadow 없음'; }
+      function rec(w) { var e = [], c = { save: function () {}, restore: function () {}, beginPath: function () {}, fill: function () {}, ellipse: function (x, y, rx) { e.push(rx); } }; M.shadow(c, 0, 0, w); return e; }
+      var a = rec(40), b = rec(80); if (a.length !== 2 || !(a[0] > a[1] * 1.5)) { return '실패 두 겹 ' + a.join(','); }
+      if (Math.abs(b[0] - a[0] * 2) > 1e-6 || Math.abs(b[1] - a[1] * 2) > 1e-6) { return '실패 몸 비례 ' + a + ' / ' + b; }
+      var ms = 1000 / 2.2 / 4, p0 = M.stillPose('walk', ms, null, 0), p1 = M.stillPose('walk', ms, null, 1), ph = M.stillPose('walk', ms, null, 0.5);
+      if (p0.dy !== 0 || p0.rot !== 0 || p0.sy !== 1) { return '실패 amp 0 ' + JSON.stringify(p0); }
+      if (!(p1.dy < 0 && Math.abs(ph.dy - p1.dy / 2) < 1e-9 && Math.abs(ph.rot - p1.rot / 2) < 1e-9)) { return '실패 절반 ' + p1.dy + ' ' + ph.dy; }
+      var dc = { save: function () {}, restore: function () {}, beginPath: function () {}, fill: function () {}, ellipse: function () {} };   /* ⑤ 발 먼지 — 닿은 직후만 둘 */
+      var d1 = M.stepDust(dc, { x: 0, y: 0, clip: 'walk', stride: 0.52 }, 60), d2 = M.stepDust(dc, { x: 0, y: 0, clip: 'walk', stride: 0.3 }, 60), d3 = M.stepDust(dc, { x: 0, y: 0, clip: 'idle', stride: 0.02 }, 60);
+      return (d1 === 2 && d2 === 0 && d3 === 0) || ('실패 발 먼지 ' + d1 + ' ' + d2 + ' ' + d3);
+    });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });
