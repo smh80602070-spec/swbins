@@ -1661,5 +1661,23 @@
   "ticket": "W-0307",
   "since": "2026-10-22",
   "note": "10-22: 전설 둘 + 주옥 → 고유 후보는 안 함(다음 티켓) · save.evolve 새 칸"
+ },
+ {
+  "id": "dg.iso-bake",
+  "name": "폰 바닥 굽기(W-0376) — fillIso 타일을 테마 색으로 물들여 캔버스 한 장에 굽고 그 패턴으로 채움(옛 이미지 패턴+전면 덧칠 → 폰 마을 3→48fps·던전 4→42fps) · 손잡이 mode2d.isoMode(0 옛·1 기본·2 낱장) · 측정 도구 pw-phone-budget --shot",
+  "files": [
+   "js/mode2d.js",
+   "../shared/js/mode2d.js"
+  ],
+  "tests": [
+   "test-web W-0376 폰 바닥",
+   "pw-phone-budget saga-dungeon --gpu 마을·던전 ≥ 30"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0376",
+  "since": "2026-10-22",
+  "note": "10-22: 조명 층 반 화소(dg.lightScale)는 재 봐도 잡음 수준이라 안 넣음 · 3D·PC 화면 그대로"
  }
 ]

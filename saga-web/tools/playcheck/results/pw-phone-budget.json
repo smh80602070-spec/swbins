@@ -1,8 +1,8 @@
 {
- "at": "2026-10-18T05:45:43.772Z",
+ "at": "2026-10-22T09:52:25.042Z",
  "base": "http://127.0.0.1:8871/",
  "gpu": true,
- "gpuName": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "gpuName": null,
  "budget": {
   "mb": 25,
   "fps": 30,
@@ -12,142 +12,330 @@
  "viewport": "390x844@2",
  "runs": [
   {
-   "game": "saga-forest",
+   "game": "saga-go",
    "runs": 1,
-   "firstMB": 15.2,
-   "totalMB": 16.7,
+   "firstMB": 13.4,
+   "totalMB": 16.9,
    "top": [
     [
-     "saga-forest/dist/app.js",
-     1.83
+     "saga-go/dist/app.js",
+     2.79
     ],
     [
-     "saga-forest/assets/audio/bgm/saga-forest-town.ogg",
-     0.85
+     "shared/assets/anim/vroid_mocap_anims.glb",
+     1.36
     ],
     [
-     "shared/assets/characters3d/hb_mangwon.glb",
-     0.61
+     "shared/audio/bgm/go-battle.ogg",
+     1.02
     ],
     [
-     "shared/assets/characters3d/jiao_hoangmi.glb",
-     0.58
+     "shared/assets/characters3d/jiao_muya.glb",
+     0.69
     ],
     [
-     "shared/assets/characters3d/kd_cheolsim.glb",
-     0.58
+     "shared/assets/characters3d/nz_mokro.glb",
+     0.62
     ],
     [
-     "shared/assets/characters3d/rf_hansui.glb",
-     0.57
-    ]
-   ],
-   "err": "",
-   "scenes": [
-    {
-     "name": "마을",
-     "fps": 17.3,
-     "worstMs": 82,
-     "calls": 46,
-     "tris": 83488,
-     "tex": 59,
-     "heapMB": 80.1,
-     "quality": "LOW",
-     "aq": {
-      "village3d": 2
-     },
-     "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)"
-    },
-    {
-     "name": "걷기",
-     "fps": 12.7,
-     "worstMs": 118,
-     "calls": 48,
-     "tris": 111412,
-     "tex": 74,
-     "heapMB": 95.9,
-     "quality": "LOW",
-     "aq": {
-      "village3d": 2
-     },
-     "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)"
-    }
-   ],
-   "over": [
-    "마을 FPS 17.3",
-    "걷기 FPS 12.7"
-   ],
-   "at": "2026-10-18T05:45:43.772Z",
-   "gpu": true,
-   "cpuThrottle": 4
-  },
-  {
-   "game": "saga-realm",
-   "runs": 1,
-   "firstMB": 4,
-   "totalMB": 8.4,
-   "top": [
-    [
-     "saga-realm/dist/app.js",
-     2
-    ],
-    [
-     "saga-realm/assets/audio/bgm/saga-realm-field.ogg",
-     0.86
-    ],
-    [
-     "saga-realm/assets/audio/bgm/saga-realm-town.ogg",
-     0.74
-    ],
-    [
-     "shared/assets/characters3d/tb_jongja.glb",
-     0.67
-    ],
-    [
-     "shared/assets/characters3d/rf_lijue.glb",
-     0.55
-    ],
-    [
-     "shared/assets/characters3d/rf_liubiao.glb",
+     "shared/assets/characters3d/hl_hwaseo.glb",
      0.54
     ]
    ],
    "err": "",
    "scenes": [
     {
-     "name": "지도",
-     "fps": 60.3,
-     "worstMs": 18,
+     "name": "들판",
+     "fps": 13.3,
+     "worstMs": 201,
      "calls": null,
      "tris": null,
      "tex": null,
-     "heapMB": 12,
-     "quality": "HIGH",
-     "aq": {
-      "realm3d": 0
-     },
+     "heapMB": 60,
+     "quality": "LOW",
+     "aq": null,
      "gpu": null
     },
     {
-     "name": "성",
-     "fps": 19.4,
-     "worstMs": 95,
-     "calls": 286,
-     "tris": 346817,
-     "tex": 206,
-     "heapMB": 53.6,
+     "name": "걷기",
+     "fps": 6.6,
+     "worstMs": 385,
+     "calls": null,
+     "tris": null,
+     "tex": null,
+     "heapMB": 58.8,
+     "quality": "LOW",
+     "aq": null,
+     "gpu": null
+    }
+   ],
+   "over": [
+    "들판 FPS 13.3",
+    "걷기 FPS 6.6"
+   ],
+   "at": "2026-10-22T08:18:39.221Z",
+   "gpu": true,
+   "cpuThrottle": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "runs": 3,
+   "firstMB": 4.4,
+   "totalMB": 6,
+   "top": [
+    [
+     "saga-dungeon/dist/app.js",
+     2.15
+    ],
+    [
+     "shared/assets/sky/ibl_noon_present_1k.hdr",
+     0.26
+    ],
+    [
+     "saga-dungeon/assets/store/dungeon_key_v.webp",
+     0.11
+    ],
+    [
+     "saga-dungeon/css/diablo.css",
+     0.09
+    ],
+    [
+     "shared/assets/creatures2d/frog/idle.webp",
+     0.08
+    ],
+    [
+     "shared/assets/characters2d8/sg_menghuo/heavy.webp",
+     0.08
+    ]
+   ],
+   "err": "",
+   "scenes": [
+    {
+     "name": "마을",
+     "fps": 48,
+     "worstMs": 60.7,
+     "calls": null,
+     "tris": null,
+     "tex": null,
+     "heapMB": 19.4,
      "quality": "HIGH",
+     "aq": null,
+     "gpu": null
+    },
+    {
+     "name": "던전",
+     "fps": 42.2,
+     "worstMs": 64,
+     "calls": null,
+     "tris": null,
+     "tex": null,
+     "heapMB": 25.6,
+     "quality": "HIGH",
+     "aq": null,
+     "gpu": null
+    }
+   ],
+   "over": [],
+   "at": "2026-10-22T09:52:25.042Z",
+   "gpu": true,
+   "cpuThrottle": 4
+  },
+  {
+   "game": "saga-forest",
+   "runs": 1,
+   "firstMB": 17.3,
+   "totalMB": 19.3,
+   "top": [
+    [
+     "saga-forest/dist/app.js",
+     1.91
+    ],
+    [
+     "shared/assets/anim/vroid_mocap_anims.glb",
+     1.36
+    ],
+    [
+     "shared/audio/bgm/forest-town.ogg",
+     0.85
+    ],
+    [
+     "shared/assets/creatures3d/sparrow.glb",
+     0.77
+    ],
+    [
+     "shared/assets/characters3d/jiao_muya.glb",
+     0.69
+    ],
+    [
+     "shared/assets/characters3d/hb_mangwon.glb",
+     0.61
+    ]
+   ],
+   "err": "",
+   "scenes": [
+    {
+     "name": "마을",
+     "fps": 19.1,
+     "worstMs": 139,
+     "calls": 47,
+     "tris": 86714,
+     "tex": 157,
+     "heapMB": 82.4,
+     "quality": "MEDIUM",
      "aq": {
-      "realm3d": 0,
-      "city3d": 1
+      "village3d": 1
+     },
+     "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+     "name": "걷기",
+     "fps": 19.8,
+     "worstMs": 112,
+     "calls": 49,
+     "tris": 148705,
+     "tex": 216,
+     "heapMB": 122.3,
+     "quality": "LOW",
+     "aq": {
+      "village3d": 2
      },
      "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)"
     }
    ],
    "over": [
-    "성 FPS 19.4"
+    "마을 FPS 19.1",
+    "걷기 FPS 19.8"
    ],
-   "at": "2026-10-18T05:45:43.772Z",
+   "at": "2026-10-22T08:18:39.221Z",
+   "gpu": true,
+   "cpuThrottle": 4
+  },
+  {
+   "game": "saga-story",
+   "runs": 1,
+   "firstMB": 10.5,
+   "totalMB": 11.2,
+   "top": [
+    [
+     "shared/assets/anim/vroid_mocap_anims.glb",
+     1.36
+    ],
+    [
+     "saga-story/js/vendor/three.iife.js",
+     0.72
+    ],
+    [
+     "saga-story/dist/app.js",
+     0.66
+    ],
+    [
+     "shared/assets/characters3d/jp_asahime.glb",
+     0.65
+    ],
+    [
+     "shared/assets/characters3d/sg_menghuo.glb",
+     0.64
+    ],
+    [
+     "shared/assets/creatures3d/rat.glb",
+     0.6
+    ]
+   ],
+   "err": "",
+   "scenes": [
+    {
+     "name": "사냥터",
+     "fps": 18.8,
+     "worstMs": 109,
+     "calls": 96,
+     "tris": 89458,
+     "tex": 116,
+     "heapMB": 50.9,
+     "quality": "LOW",
+     "aq": null,
+     "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+     "name": "자동 사냥",
+     "fps": 7.6,
+     "worstMs": 1712,
+     "calls": 110,
+     "tris": 118735,
+     "tex": 199,
+     "heapMB": 76.4,
+     "quality": "LOW",
+     "aq": null,
+     "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+   ],
+   "over": [
+    "사냥터 FPS 18.8",
+    "자동 사냥 FPS 7.6"
+   ],
+   "at": "2026-10-22T08:18:39.221Z",
+   "gpu": true,
+   "cpuThrottle": 4
+  },
+  {
+   "game": "saga-realm",
+   "runs": 1,
+   "firstMB": 3.6,
+   "totalMB": 4.3,
+   "top": [
+    [
+     "saga-realm/dist/app.js",
+     2.09
+    ],
+    [
+     "shared/audio/bgm/realm-field.ogg",
+     0.86
+    ],
+    [
+     "shared/audio/bgm/realm-town.ogg",
+     0.74
+    ],
+    [
+     "saga-realm/assets/store/realm_key_v.webp",
+     0.1
+    ],
+    [
+     "saga-realm/css/style.css",
+     0.08
+    ],
+    [
+     "saga-realm/assets/web2d/tile/realm_grass.webp",
+     0.02
+    ]
+   ],
+   "err": "",
+   "scenes": [
+    {
+     "name": "지도",
+     "fps": 60.4,
+     "worstMs": 42,
+     "calls": null,
+     "tris": null,
+     "tex": null,
+     "heapMB": 18.2,
+     "quality": "LOW",
+     "aq": {},
+     "gpu": null
+    },
+    {
+     "name": "성",
+     "fps": 60.6,
+     "worstMs": 17,
+     "calls": null,
+     "tris": null,
+     "tex": null,
+     "heapMB": 18.5,
+     "quality": "LOW",
+     "aq": {},
+     "gpu": null
+    }
+   ],
+   "over": [],
+   "at": "2026-10-22T08:18:39.221Z",
    "gpu": true,
    "cpuThrottle": 4
   }

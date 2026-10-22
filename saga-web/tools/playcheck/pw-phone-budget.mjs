@@ -23,6 +23,7 @@ const games = argv.filter((a, i) => !a.startsWith('--') && argv[i - 1] !== '--ba
 /* --tune 키=값 (여러 번) — 계정 만든 뒤 손잡이를 덧붙인다(켬·끔 A/B) */
 const TUNES = argv.map((a, i) => (a === '--tune' ? argv[i + 1] : null)).filter(Boolean).map((kv) => { const j = kv.indexOf('='), v = kv.slice(j + 1); return [kv.slice(0, j), /^-?\d+(\.\d+)?$/.test(v) ? +v : v]; });
 export const BUDGET = { mb: 25, fps: 30, calls: 300 };
+const SHOT = ((argv.find((a) => a.startsWith('--shot=')) || '').slice(7)) || '';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /** 판마다 장면 — [이름, 들어가기] 차례로. 첫 장면 = 첫 화면(용량은 여기까지 센다) */
@@ -74,6 +75,7 @@ async function one(browser, g) {
       await enter(page); await clearOverlays(page, g); await sleep(8000); const covered = await beforeShot(page, g);
       if (i === 0) { firstBytes = bytes; }
       const m = await page.evaluate(MEASURE);
+      if (SHOT) { fs.mkdirSync(SHOT, { recursive: true }); await page.screenshot({ path: path.join(SHOT, g + '-' + i + '.png') }); }   // W-0376 --shot=폴더 — 장면마다 폰 화면(전후 비교)
       res.scenes.push({ name, ...m, covered });
     }
   } catch (e) { res.err = e.message.slice(0, 200); }

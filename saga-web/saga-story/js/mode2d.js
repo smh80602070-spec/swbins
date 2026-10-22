@@ -684,6 +684,8 @@
    */
   function fillIso(ctx, o) {
     if (!ctx || !o || !o.id || !isOn()) { return false; }
+    var mode = tuneOf('mode2d.isoMode', 1);
+    if (mode) { return fillIsoBaked(ctx, o, mode); }
     var pat = tilePattern(ctx, o.id);
     if (!pat) { return false; }
     var s = (o.unit || 160) / 256;
@@ -691,6 +693,38 @@
     ctx.transform(o.a, o.b, o.c, o.d, o.e, o.f);
     ctx.fillStyle = pat; ctx.save(); ctx.scale(s, s); ctx.fillRect(0, 0, o.W / s, o.H / s); ctx.restore();
     if (o.tint) { ctx.globalAlpha = o.tintAlpha === undefined ? 0.6 : o.tintAlpha; ctx.fillStyle = o.tint; ctx.fillRect(0, 0, o.W, o.H); }
+    ctx.restore();
+    return true;
+  }
+  /* W-0376 — 폰에서 이미지 패턴 + 덧칠 전면 채우기가 2나락 마을을 3fps 로 묶었다. 타일을 물들인 채 한 번 굽고(id·색·짙기마다 캔버스 하나)
+     mode 1(기본) = 그 캔버스로 패턴(폰 마을 3→45fps) · mode 2 = 낱장 drawImage(가장자리는 원본 일부만 — 옛 그림과 같은 칸). 덧칠 fillRect 는 없어진다 */
+  var isoBake = {};
+  function bakedTile(id, tint, ta) {
+    var key = id + '|' + (tint || '') + '|' + ta, b = isoBake[key], im = tile(id);
+    if (b) { return b; }
+    if (!im || !global.document) { return null; }
+    var c = global.document.createElement('canvas'), g; c.width = im.naturalWidth || 256; c.height = im.naturalHeight || 256; g = c.getContext('2d');
+    g.drawImage(im, 0, 0, c.width, c.height);
+    if (tint) { g.globalAlpha = ta; g.fillStyle = tint; g.fillRect(0, 0, c.width, c.height); }
+    return (isoBake[key] = c);
+  }
+  function fillIsoBaked(ctx, o, mode) {
+    var c = bakedTile(o.id, o.tint, o.tintAlpha === undefined ? 0.6 : o.tintAlpha);
+    if (!c) { return false; }
+    var u = o.unit || 160, s = u / 256, x, y, w, h;
+    ctx.save();
+    ctx.transform(o.a, o.b, o.c, o.d, o.e, o.f);
+    if (mode === 1) {
+      if (!c.pat) { c.pat = ctx.createPattern(c, 'repeat'); }
+      ctx.fillStyle = c.pat; ctx.scale(s, s); ctx.fillRect(0, 0, o.W / s, o.H / s);
+    } else {
+      for (y = 0; y < o.H; y += u) {
+        for (x = 0; x < o.W; x += u) {
+          w = Math.min(u, o.W - x); h = Math.min(u, o.H - y);
+          ctx.drawImage(c, 0, 0, c.width * w / u, c.height * h / u, x, y, w + (w === u ? 0.6 : 0), h + (h === u ? 0.6 : 0));   // 0.6 겹쳐 이음매 실금을 막는다
+        }
+      }
+    }
     ctx.restore();
     return true;
   }
@@ -764,7 +798,7 @@
     mark: mark, markSrc: markSrc, MARK: MARK, markMisses: function () { return Object.assign({}, markMiss); },   // W-0350
     isCrea: isCrea, creaPool: creaPool, creaFit: creaFit, cell8: cell8,   // W-0129 몬스터 2D 시트
     drawSprite: drawSprite, drawKind: drawKind, hasKind: hasKind, spriteReady: function (id) { return !!spriteOf(id); },
-    fillIso: fillIso,
+    fillIso: fillIso, isoMode: function () { return tuneOf('mode2d.isoMode', 1); }, isoBaked: function () { return Object.keys(isoBake); },   // W-0376
     interiorUrls: interiorUrls,
     drawBg: drawBg, tile: tile, tileUrl: tileUrl, tilePattern: tilePattern, fillTile: fillTile,
     bgReady: function (region) { var b = bgs[region]; return !!(b && b.meta && LAYERS.every(function (l) { return b.imgs[l].ok; })); },
