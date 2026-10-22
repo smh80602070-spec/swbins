@@ -7358,8 +7358,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var f = [M.factFrame(m.clips.death, 'death', { t: 0.99 }), M.factFrame(m.clips.death, 'death', { ms: 99999 }), M.factFrame(m.clips.walk, 'walk', { stride: 0.5 }), M.factFrame(m.clips.idle, 'idle', { ms: 1000 })].join(',');
       return f === '5,5,4,6' || ('실패 프레임 ' + f);
     });
-    t('W-0371 인물 일러스트 — 기본 끔(그림 불일치) · 켜면 manifest 인물은 표정 주소(분노·걱정 → angry·sad, 놀람·모름 → neutral) · 없는 인물은 null(초상 대역) · 카드 자리(150×172)는 일러스트', function () {
-      if (DG.illust && DG.illust.has((window.SAGA && SAGA.illust && SAGA.illust.ids[0]) || '')) { return '실패 기본 끔인데 켜져 있다(10-22 그림 불일치)'; }
+    t('W-0371 인물 일러스트 — 기본 켬(K-0178 같은 사람으로 다시 그림) · 손잡이 0 이면 끔 · 켜면 manifest 인물은 표정 주소(분노·걱정 → angry·sad, 놀람·모름 → neutral) · 없는 인물은 null(초상 대역) · 카드 자리(150×172)는 일러스트', function () {
+      var id0 = (window.SAGA && SAGA.illust && SAGA.illust.ids[0]) || ''; if (DG.illust && !DG.illust.has(id0)) { return '실패 기본 켬인데 꺼져 있다'; } DG.core.setTune('illust.on', 0); var off = DG.illust.has(id0); DG.core.setTune('illust.on', null); if (off) { return '실패 손잡이 0 인데 켜져 있다'; }
       DG.core.setTune('illust.on', 1); try { return run371(); } finally { DG.core.setTune('illust.on', null); }
       function run371() {
       var IL = DG.illust, M = window.SAGA && SAGA.illust; if (!IL || !M || !M.ids.length) { return '실패 DG.illust·SAGA.illust 없음'; }

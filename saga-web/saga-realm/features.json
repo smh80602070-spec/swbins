@@ -1602,5 +1602,24 @@
   "ticket": "W-0380",
   "since": "2026-10-23",
   "note": "D2(claude 2026-10-23): 폰 촬영 w380_saga-realm.png Read ○"
+ },
+ {
+  "id": "rk.illust",
+  "name": "인물 일러스트(W-0371, shared/js/illust.js) — K-0178 전신 스탠딩·표정 넷(평온·기쁨·분노·슬픔)이 있는 인물은 대화 얼굴·도감 상세·카드 자리(150×172)에 일러스트, 없는 인물은 지금 초상 그대로 · 손잡이 illust.on(1 기본)",
+  "files": [
+   "js/illust.js",
+   "assets/illust/manifest.js"
+  ],
+  "tests": [
+   "test-web W-0371 인물 일러스트"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {
+   "C": "인물이 그림으로 산다"
+  },
+  "ticket": "W-0371",
+  "since": "2026-10-23",
+  "note": "10-23: 4종횡 폰 촬영으로 확인한 같은 공용 길"
  }
 ]

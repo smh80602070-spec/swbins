@@ -75,7 +75,7 @@ try {
   const info = await ev(() => ({ w: innerWidth, h: innerHeight }));
   if (process.env.LOOK_EVAL) { await ev((src) => { (0, eval)(src); }, process.env.LOOK_EVAL); await sleep(+(process.env.LOOK_WAIT || 1500)); }   // W-0372 찍기 전 장면 손질(예: 나를 숲 칸으로)
   if (process.env.LOOK_TUNE) { await ev((kv) => { kv.split(',').forEach((x) => { const i = x.indexOf('='); DG.core.setTune(x.slice(0, i), +x.slice(i + 1)); }); }, process.env.LOOK_TUNE); await sleep(700); }   // W-0347 비교판 — 찍기 직전 손잡이(예: mode2d.mip=0)
-  { const cov = await beforeShot(page, game, { keep: ['sheet', 'detail', 'encounter'] }); if (cov.length) { console.log('covered', cov.join(',')); } }
+  { const cov = await beforeShot(page, game, { keep: ['sheet', 'detail', 'encounter'].concat((process.env.LOOK_KEEP || '').split(',').filter(Boolean)) });   /* W-0371 LOOK_KEEP=story,skip-button — 일부러 연 이야기 창을 찍을 때 */ if (cov.length) { console.log('covered', cov.join(',')); } }
   await page.screenshot(dest.endsWith('.jpg') ? { path: dest, type: 'jpeg', quality: 72 } : { path: dest });
   console.log('저장', dest, JSON.stringify(info), '몸px', JSON.stringify(body), r.errors.length ? 'errors ' + JSON.stringify(r.errors.slice(0, 3)) : '');
 } finally { await r.close(); }
