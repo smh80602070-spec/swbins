@@ -711,6 +711,7 @@ namespace Saga.Realm.UI
         {
             _settingsPanel = RealmUiKit.NewPanel(parent, new Vector2(0.5f, 0.5f), new Vector2(680f, 860f), // 110 ⑤c-2 — 화면 논리 높이 900 안
                 new Color(0f, 0f, 0f, 0.8f));
+            Saga.Core.SagaUi.DressWindow(_settingsPanel); // U-0153 촬영 — 창 틀 + 판 HUD 위
             _settingsPanel.SetActive(false);
 
             _settingsTitleLabel = RealmUiKit.NewText(_settingsPanel.transform, RealmLocalization.T("settings.title"),
@@ -751,6 +752,7 @@ namespace Saga.Realm.UI
         /// 전술·일기토 단추는 만들 때와 같은 식으로 다시.</summary>
         private void Start()
         {
+            Saga.Core.SagaUi.DressWindow(_settingsPanel); // U-0153 촬영 — 구운 씬의 설정 창도 틀·정렬
             // tasks U-0099 — 구운 씬엔 전술판 토글이 없다(씬 재빌드 없이) → 처음 켤 때 같은 캔버스에 짓는다.
             var canvas = transform.Find("RealmCommandUI");
             if (canvas != null) EnsureGridToggle(canvas);

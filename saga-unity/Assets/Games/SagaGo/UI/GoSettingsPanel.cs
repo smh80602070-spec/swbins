@@ -53,6 +53,7 @@ namespace Saga.Go.UI
 
             _panel = EncounterUiKit.NewPanel(canvas.transform, new Vector2(0.5f, 0.5f), new Vector2(680f, 820f),
                 new Color(0f, 0f, 0f, 0.8f));
+            Saga.Core.SagaUi.DressWindow(_panel); // U-0153 촬영 — 창 틀 + 판 HUD 위
             _panel.SetActive(false);
 
             _titleLabel = EncounterUiKit.NewText(_panel.transform, GoLocalization.T("settings.title"),
@@ -92,7 +93,7 @@ namespace Saga.Go.UI
         private void ChooseLanguage() { GoLocalization.CycleLanguage(); GoLocalization.RelocalizeScene(); Refresh(); }
 
         /// <summary>110 ⑤c-2c — 씬에 구운 글(빌더 = 한국어)을 지금 언어로, 이 창의 글도 한 번 새로(예전엔 값을 바꿀 때만).</summary>
-        private void Start() { EnsureVoiceRow(); GoLocalization.RelocalizeScene(); Refresh(); }
+        private void Start() { Saga.Core.SagaUi.DressWindow(_panel); EnsureVoiceRow(); GoLocalization.RelocalizeScene(); Refresh(); }
         private void ChooseBgm() { GoSettingsState.BgmOn = !GoSettingsState.BgmOn; Refresh(); }
 
         /// <summary>U-0075 — 음성 줄을 붙이고 줄 전체를 82 간격으로 다시 놓는다(예전 95 간격 여섯 줄 판엔 일곱째 자리가 없었다 —

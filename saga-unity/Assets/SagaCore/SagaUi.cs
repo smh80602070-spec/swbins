@@ -174,6 +174,45 @@ namespace Saga.Core
             return img;
         }
 
+        /// <summary>U-0153 촬영 — 창이 판 HUD(정렬 3~9) 밑에 깔려 HUD 글이 창 위로 비치던 것. 창 오브젝트에 제 캔버스(정렬 덮어쓰기)를 달아 order 로 올린다.
+        /// 단추가 눌리게 GraphicRaycaster 도. 일시정지(200)·세션 카드(100) 밑 · ☰ 메뉴 화면 150 · 판 창 120.</summary>
+        public const int WindowOrder = 120, MenuOrder = 150;
+
+        public static void Lift(GameObject go, int order)
+        {
+            if (go == null) return;
+            var c = go.GetComponent<Canvas>();
+            if (c == null) c = go.AddComponent<Canvas>(); // ?? 는 유니티 가짜 null 을 못 거른다
+            c.overrideSorting = true;
+            c.sortingOrder = order;
+            if (go.GetComponent<GraphicRaycaster>() == null) go.AddComponent<GraphicRaycaster>();
+            // 꺼진 채 단 캔버스는 overrideSorting 이 안 먹는다(설정 창은 Start 때 꺼져 있다) — 켜질 때마다 다시 건다
+            var keep = go.GetComponent<SortKeep>();
+            if (keep == null) keep = go.AddComponent<SortKeep>();
+            keep.Order = order;
+        }
+
+        /// <summary><see cref="Lift"/> 짝 — 켜질 때 정렬을 다시 건다.</summary>
+        public class SortKeep : MonoBehaviour
+        {
+            public int Order;
+            private void OnEnable()
+            {
+                var c = GetComponent<Canvas>();
+                if (c == null) return;
+                c.overrideSorting = true;
+                c.sortingOrder = Order;
+            }
+        }
+
+        /// <summary>U-0153 촬영 — 판 창(설정 등) 겉옷 한 번에: window 틀 + 판 HUD 위 정렬. 씬에 구워진 창도 Start 에서 부르면 된다(여러 번 불러도 같음).</summary>
+        public static void DressWindow(GameObject panel)
+        {
+            if (panel == null) return;
+            ApplySkin(panel.GetComponent<Image>(), "window");
+            Lift(panel, WindowOrder);
+        }
+
         public static TextMeshProUGUI NewText(Transform parent, string text, float fontSize, Color color,
             Vector2 anchor, Vector2 pos, Vector2 size, TextAlignmentOptions align = TextAlignmentOptions.Center)
         {

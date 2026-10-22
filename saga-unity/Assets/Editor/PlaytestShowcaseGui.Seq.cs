@@ -132,13 +132,22 @@ namespace Saga.EditorTools
                 else if (!Frame(t, out pos, out rot)) continue;
                 _seqFrames[i].Add(ShootTex(main, pos, rot));
             }
-            if (_seqScreen && (_seqTaken == 0 || _seqTaken == _seqN - 1))
+            if (_seqScreen && (_seqTaken == 0 || _seqTaken == _seqN - 1 || Steps.Length > 0))
             {
                 ScreenCapture.CaptureScreenshot(_dir + $"screen_{_seqTaken + 1}.png");   // 프레임 끝에 비동기로 쓴다(게임 창 크기 그대로)
                 Debug.Log($"[ShowcaseGui] screen_{_seqTaken + 1}.png");
+                // U-0153 `SAGA_SHOT_UISIZES="1600x900;1080x2340"` — 창 크기와 상관없이 그 크기로 화면+UI 를 한 장씩(PC·폰 세로)
+                foreach (var sz in (System.Environment.GetEnvironmentVariable("SAGA_SHOT_UISIZES") ?? "").Split(new[] { ';' }, System.StringSplitOptions.RemoveEmptyEntries))
+                {
+                    var wh = sz.Split('x');
+                    if (wh.Length == 2 && int.TryParse(wh[0], out int uw) && int.TryParse(wh[1], out int uh)) ShootUi(uw, uh, _dir + $"ui_{uw}x{uh}_{_seqTaken + 1}.png");
+                }
             }
             _seqTaken++;
             _seqNextAt = _frame + _seqGap;
+            // U-0153 `SAGA_SHOT_STEPS="a;b+c;…"` — k 번째 장을 찍은 뒤 k 번째 동작 묶음(다음 장 전 _seqGap 프레임 여유)
+            if (_seqTaken - 1 < Steps.Length)
+                foreach (var act in Steps[_seqTaken - 1].Split(new[] { '+' }, System.StringSplitOptions.RemoveEmptyEntries)) Act(act.Trim());
             if (_seqTaken < _seqN) return false;
             if (_seqWalk) SetJoystick(Vector2.zero);
             if (_kitsSet) { Saga.Go.Combat.GoKits.OffForTest = _kitsWas; _kitsSet = false; }
@@ -225,6 +234,47 @@ namespace Saga.EditorTools
                     case "gesture":
                         if (!Saga.Dungeon.Data.GestureState.Start(Saga.Dungeon.Data.GestureState.AllyKey, Saga.Dungeon.Data.GestureState.Kind.Cheer, Time.time)) { Skip(act); return; }
                         break;
+                    case "unpause":   // U-0153 촬영 단계 사이 — 일시정지·☰ 닫기
+                        Saga.Core.SagaPauseMenu.Close();
+                        Saga.Core.MenuGrid.CloseOpen();
+                        // 판 설정 창(…SettingsPanel._panel · RealmCommandUi._settingsPanel)도 닫는다 — 다음 장에 겹치지 않게
+                        foreach (var mb in Object.FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None))
+                        {
+                            if (mb == null) continue;
+                            var ty = mb.GetType();
+                            if (!ty.Name.Contains("Settings") && ty.Name != "RealmCommandUi") continue;
+                            foreach (var fn in new[] { "_panel", "_settingsPanel" })
+                            {
+                                var fi = ty.GetField(fn, BindingFlags.NonPublic | BindingFlags.Instance);
+                                if (fi != null && fi.GetValue(mb) is GameObject pg && pg != null) pg.SetActive(false);
+                            }
+                        }
+                        break;
+                    case "pause":   // U-0153 일시정지 창(창 틀 window·단추 btn 스킨)
+                        Saga.Core.SagaPauseMenu.Open();
+                        break;
+                    case "menugrid":   // U-0154 ☰ 메뉴 화면(card 칸) — 없는 판(2나락·3마을·4종횡)은 건너뜀
+                    {
+                        var g = Object.FindFirstObjectByType<Saga.Core.MenuGrid>(FindObjectsInactive.Include);
+                        if (g == null) { Skip(act); return; }
+                        g.Open();
+                        break;
+                    }
+                    case "settings":   // U-0153 판 설정 창 — 이름·글에 "설정"/"Settings" 가 든 켜진 단추를 누른다
+                    {
+                        UnityEngine.UI.Button hit = null;
+                        foreach (var b in Object.FindObjectsByType<UnityEngine.UI.Button>(FindObjectsSortMode.None))
+                        {
+                            if (!b.isActiveAndEnabled) continue;
+                            var tx = b.GetComponentInChildren<TMPro.TMP_Text>();
+                            string s = b.name + " " + (tx != null ? tx.text : "");
+                            if (s.Contains("설정") || s.Contains("Settings")) { hit = b; break; }
+                        }
+                        if (hit == null) { Skip(act); return; }
+                        Debug.Log($"[ShowcaseGui] settings 단추 {hit.name}");
+                        hit.onClick.Invoke();
+                        break;
+                    }
                     case "worldmap":
                         if (!Saga.Realm.Data.RealmMapState.ViewingMap) Saga.Realm.Data.RealmMapState.Toggle();
                         break;
@@ -536,6 +586,8 @@ namespace Saga.EditorTools
             Debug.Log($"[ShowcaseGui] realmeras {t.Id}({t.Era}) 묻힌 성 {t.CityId}({def?.Name}) 찾음 {found != null} · 배우 {string.Join(", ", plan.Select(a => $"{a.Kind}:{a.OfficerId}@{a.CityId}/{a.Clip}"))} · 이름 {Saga.Realm.Data.RealmOfficerPool.Get(t.Id)?.Name}");
         }
 
+        private static string[] Steps => (System.Environment.GetEnvironmentVariable("SAGA_SHOT_STEPS") ?? "").Split(new[] { ';' }, System.StringSplitOptions.RemoveEmptyEntries);
+
         private static void Skip(string act) => Debug.Log($"[ShowcaseGui] act {act} SKIP(이 판에 없음)");
 
         private static void SetJoystick(Vector2 v)
@@ -643,6 +695,36 @@ namespace Saga.EditorTools
             Teleport(pl.transform, new Vector3(boss.transform.position.x - 6f, pl.transform.position.y, 0f));
             pl.transform.rotation = Quaternion.LookRotation(Vector3.right);
             boss.CheckIntro();
+        }
+
+        /// <summary>U-0153 — 화면 그대로(게임 카메라 + 오버레이 UI)를 w×h 로. 오버레이 캔버스를 잠깐 그 카메라용(ScreenSpaceCamera)으로 돌려
+        /// RT 크기로 CanvasScaler 가 다시 맞추게 하고, 찍은 뒤 되돌린다(촬영 프로세스 안에서만).</summary>
+        private static void ShootUi(int w, int h, string file)
+        {
+            var cam = GameCam();
+            if (cam == null) { Debug.Log("[ShowcaseGui] ui 카메라 없음 SKIP"); return; }
+            var rt = new RenderTexture(w, h, 24);
+            var canvases = Object.FindObjectsByType<Canvas>(FindObjectsSortMode.None).Where(c => c.isRootCanvas && c.enabled && c.renderMode == RenderMode.ScreenSpaceOverlay).ToList();
+            var prevRt = cam.targetTexture;
+            cam.targetTexture = rt;
+            foreach (var c in canvases) { c.renderMode = RenderMode.ScreenSpaceCamera; c.worldCamera = cam; c.planeDistance = cam.nearClipPlane + 0.05f; }
+            Canvas.ForceUpdateCanvases();
+            foreach (var c in canvases) { var sc = c.GetComponent<UnityEngine.UI.CanvasScaler>(); if (sc != null) { sc.enabled = false; sc.enabled = true; } }
+            Canvas.ForceUpdateCanvases();
+            cam.Render();
+            var prev = RenderTexture.active;
+            RenderTexture.active = rt;
+            var tex = new Texture2D(w, h, TextureFormat.RGB24, false);
+            tex.ReadPixels(new Rect(0, 0, w, h), 0, 0);
+            tex.Apply();
+            RenderTexture.active = prev;
+            cam.targetTexture = prevRt;
+            foreach (var c in canvases) { c.renderMode = RenderMode.ScreenSpaceOverlay; c.worldCamera = null; }
+            Canvas.ForceUpdateCanvases();
+            File.WriteAllBytes(file, tex.EncodeToPNG());
+            Object.Destroy(tex);
+            rt.Release(); Object.Destroy(rt);
+            Debug.Log($"[ShowcaseGui] {Path.GetFileName(file)} (캔버스 {canvases.Count})");
         }
 
         private static Texture2D ShootTex(Camera template, Vector3 pos, Quaternion rot)

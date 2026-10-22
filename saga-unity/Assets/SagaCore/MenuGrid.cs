@@ -62,6 +62,7 @@ namespace Saga.Core
         private void Build(string title, string closeLabel)
         {
             _panel = gameObject;
+            SagaUi.Lift(gameObject, SagaUi.MenuOrder); // U-0154 촬영 — 판 HUD 단추(업적·⏸)가 ☰ 화면 위로 그려지던 것
             var dim = gameObject.AddComponent<Image>();
             dim.color = new Color(0.03f, 0.03f, 0.04f, 0.92f);
             var mid = new Vector2(0.5f, 0.5f);
@@ -79,21 +80,41 @@ namespace Saga.Core
             var cell = SagaUi.NewPanel(_grid, "Cell_" + _entries.Count, new Vector2(0.5f, 0.5f), Vector2.zero, Cell, SagaUi.Panel, "card");
             var btn = cell.gameObject.AddComponent<Button>();
             btn.targetGraphic = cell;
-            var sprite = string.IsNullOrEmpty(icon) ? null : Resources.Load<Sprite>("Icons/icon128/" + icon + "_g0");
+            var sprite = string.IsNullOrEmpty(icon) ? null : IconSprite(icon);
             if (sprite != null)
             {
-                var img = SagaUi.NewRect(cell.transform, "Icon", new Vector2(0.5f, 1f), new Vector2(0f, -66f), new Vector2(96f, 96f)).gameObject.AddComponent<Image>();
+                var img = SagaUi.NewRect(cell.transform, "Icon", new Vector2(0.5f, 0.5f), new Vector2(0f, 26f), new Vector2(96f, 96f)).gameObject.AddComponent<Image>(); // U-0154 촬영 — 위 절반(이름과 안 겹치게)
                 img.sprite = sprite;
                 img.preserveAspect = true;
                 img.raycastTarget = false;
             }
-            var text = SagaUi.NewText(cell.transform, "", 22f, SagaUi.Ink, new Vector2(0.5f, 0f), new Vector2(0f, sprite != null ? 46f : 100f), new Vector2(Cell.x - 24f, sprite != null ? 70f : 120f));
+            var text = SagaUi.NewText(cell.transform, "", 22f, SagaUi.Ink, new Vector2(0.5f, 0.5f), new Vector2(0f, sprite != null ? -58f : 0f), new Vector2(Cell.x - 24f, sprite != null ? 64f : 120f)); // 아이콘 밑 / 없으면 가운데
             text.fontStyle = FontStyles.Bold;
             Action o = open;
             btn.onClick.AddListener(() => { Close(); o(); });
             _entries.Add(new Entry { Hint = hint, Label = label, Open = open, Exists = exists, Icon = icon, Btn = btn, Text = text });
             Layout();
         }
+
+        private static readonly Dictionary<string, Sprite> IconCache = new Dictionary<string, Sprite>();
+
+        /// <summary>U-0154 촬영 — icon128 `ui_*` 는 기본 텍스처로 들어와 Sprite 로 안 읽힌다 → 텍스처로 읽어 스프라이트를 만든다(.meta 안 건드림).</summary>
+        private static Sprite IconSprite(string icon)
+        {
+            if (IconCache.TryGetValue(icon, out var s)) return s;
+            string path = "Icons/icon128/" + icon + "_g0";
+            s = Resources.Load<Sprite>(path);
+            if (s == null)
+            {
+                var tex = Resources.Load<Texture2D>(path);
+                if (tex != null) s = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100f);
+            }
+            IconCache[icon] = s;
+            return s;
+        }
+
+        /// <summary>진단 — 그림이 붙은 칸 수.</summary>
+        public int IconCount { get { int n = 0; foreach (var e in _entries) if (e.Btn.transform.Find("Icon") != null) n++; return n; } }
 
         /// <summary>보이는 칸만 줄 맞춰 놓는다 — 가로 5열·세로 3열, 가운데 정렬.</summary>
         private void Layout()
