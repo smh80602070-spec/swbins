@@ -56,6 +56,7 @@ func save() -> bool:
 		"story": PartyState.story,
 		"world_quests": PartyState.world_quests,
 		"fishing": PartyState.fishing,
+		"rest": PartyState.rest,   # G-0305 쉼터
 		"achievements": PartyState.achievements,
 		"dispatch": PartyState.dispatch,
 		"night_echo": PartyState.night_echo,
@@ -144,6 +145,8 @@ func try_load() -> bool:
 	## fishing(106장 ㊷) — 없으면 빈 사전(잡은 것 없음·낚시터 물고기 가득).
 	var fi: Variant = data.get("fishing", {})
 	PartyState.fishing = (fi as Dictionary).duplicate(true) if typeof(fi) == TYPE_DICTIONARY else {}
+	var rs: Variant = data.get("rest", {})   # G-0305 쉼터 — 없으면 빈 것(지핀 곳 없음)
+	PartyState.rest = (rs as Dictionary).duplicate(true) if typeof(rs) == TYPE_DICTIONARY else {}
 	## achievements(106장 ㊸) — 없으면 빈 사전(첫 확인이 지금 상태로 단계를 알림 없이 채운다).
 	var ac: Variant = data.get("achievements", {})
 	PartyState.achievements = (ac as Dictionary).duplicate(true) if typeof(ac) == TYPE_DICTIONARY else {}

@@ -5413,5 +5413,25 @@
   "ticket": "G-0304",
   "since": "2026-10-22",
   "note": "웹 W-0375 짝 · SAGA_PARRY=0 · 자동 퀘스트는 안 씀"
+ },
+ {
+  "id": "gd.go.rest-sites",
+  "name": "1만리 쉼터 — 지역마다 모닥불, 앉으면 회복·부활 자리·그 지역 잡몹 다시 섬(보스 제외)·지도 표시",
+  "files": [
+   "games/saga_go/world/rest_sites.gd",
+   "games/saga_go/world/test_village.gd",
+   "games/saga_go/data/party_state.gd",
+   "games/saga_go/data/save_state.gd",
+   "games/saga_go/ui/world_map.gd"
+  ],
+  "tests": [
+   "rest_sites"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0305",
+  "since": "2026-10-22",
+  "note": "웹 W-0297 짝 · SAGA_REST=0 · 세이브 새 칸 rest"
  }
 ]

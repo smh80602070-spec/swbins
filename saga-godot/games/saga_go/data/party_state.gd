@@ -94,6 +94,7 @@ var world_quests: Dictionary = {}
 ## 106장 ㊷ 낚시 — {"log": {물고기: 잡은 수}, "gone": {"<낚시터>:<번호>": 잡은 시각}}. 필드만 더해 SAVE_VERSION 그대로.
 ## world/fishing.gd 가 읽고 쓴다(표는 data/fishing.gd).
 var fishing: Dictionary = {}
+var rest: Dictionary = {}   # G-0305 쉼터 {lit: [지역 id…], at: 부활 자리 지역 id|""}
 ## 106장 ㊸ 업적 — {"stats": {셈: 수}, "tier": {업적: 닿은 단계}, "claimed": {업적: 받은 단계}}. 필드만 더해 SAVE_VERSION 그대로.
 ## world/achievements.gd 가 읽고 쓴다(표는 data/achievements.gd).
 var achievements: Dictionary = {}

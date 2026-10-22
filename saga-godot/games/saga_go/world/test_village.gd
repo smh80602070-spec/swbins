@@ -156,6 +156,7 @@ func _ready() -> void:
 	add_child(fishing)
 	if OS.get_environment("SAGA_FISH_PROBE") != "":
 		add_child(load("res://tools/probe_fishing.gd").new())
+	preload("res://games/saga_go/world/rest_sites.gd").attach(self)   # G-0305 쉼터(SAGA_REST=0 이면 없음)
 	## PLAN 106장 ⑲ — 일일 의뢰 넷(U) + 마을 역참 옆 게시판(채집·요리·들판 적 신호에 붙으므로 그 뒤).
 	var commissions := preload("res://games/saga_go/world/commissions.gd").new()
 	commissions.name = "Commissions"

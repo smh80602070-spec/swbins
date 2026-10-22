@@ -345,6 +345,10 @@ class MiniOverlay extends Control:
 			var fd := Vector2(fp.x - me.x, fp.z - me.z) * px_per_m
 			if fd.length() <= size.x * 0.5 - 10.0 and map.call("revealed", FishingData.spot(fid).region):
 				map.draw_fish_icon(self, c + fd, 1.0)
+		for rp: Vector3 in map.call("rest_marks"):   # G-0305 지핀 쉼터
+			var rd := Vector2(rp.x - me.x, rp.z - me.z) * px_per_m
+			if rd.length() <= size.x * 0.5 - 10.0:
+				map.draw_rest_icon(self, c + rd, 1.0)
 		## 106장 ㉕·㊶ 임무 표식 — 따라가는 임무는 멀면 미니맵 가장자리에 붙이고(원신과 같다),
 		## 맡을 수 있는 !·안 따라가는 임무는 둘레 안에 있을 때만.
 		var lim := size.x * 0.5 - 10.0
@@ -383,6 +387,23 @@ func draw_boss_icon(ci: CanvasItem, at: Vector2, s: float) -> void:
 	ci.draw_colored_polygon(PackedVector2Array([at + Vector2(6, -3) * s, at + Vector2(8, -12) * s, at + Vector2(2, -6) * s]), horn)
 	ci.draw_circle(at, 8.0 * s, Color(0.1, 0.04, 0.06, 0.9))
 	ci.draw_circle(at, 6.0 * s, Color(0.78, 0.22, 0.3))
+
+## G-0305 지핀 쉼터 — 어두운 원에 불꽃(드러난 지역만).
+func rest_marks() -> Array:
+	var rs := get_tree().get_first_node_in_group("go_rest_sites")
+	var out: Array = []
+	if rs == null:
+		return out
+	var all: Dictionary = rs.call("sites")
+	for id: String in all:
+		if bool(rs.call("is_lit", id)) and revealed(id):
+			out.append(all[id])
+	return out
+
+func draw_rest_icon(ci: CanvasItem, at: Vector2, s: float) -> void:
+	ci.draw_circle(at, 8.0 * s, Color(0.14, 0.07, 0.03, 0.9))
+	ci.draw_colored_polygon(PackedVector2Array([at + Vector2(0, -6.5) * s, at + Vector2(4, 1) * s, at + Vector2(2.5, 4.5) * s, at + Vector2(-2.5, 4.5) * s, at + Vector2(-4, 1) * s]), Color(1.0, 0.55, 0.18))
+	ci.draw_colored_polygon(PackedVector2Array([at + Vector2(0, -2) * s, at + Vector2(1.8, 2) * s, at + Vector2(0, 4) * s, at + Vector2(-1.8, 2) * s]), Color(1.0, 0.88, 0.45))
 
 ## 106장 ㊷ 낚시터 — 물빛 원에 흰 물고기(몸통 + 꼬리).
 func draw_fish_icon(ci: CanvasItem, at: Vector2, s: float) -> void:
@@ -540,6 +561,8 @@ class MapView extends Control:
 		for fid in FishingData.SPOT_ORDER:
 			if map.call("revealed", FishingData.spot(fid).region):
 				map.draw_fish_icon(self, offset + map.world_to_px(FishingSpots.stand_pos(fid)) * zoom, 1.4)
+		for rp: Vector3 in map.call("rest_marks"):   # G-0305 지핀 쉼터
+			map.draw_rest_icon(self, offset + map.world_to_px(rp) * zoom, 1.4)
 		var sel: Dictionary = map.get("_selected_mark")
 		for mk in map.call("quest_marks"):
 			var qat: Vector2 = offset + map.world_to_px(mk.pos) * zoom
