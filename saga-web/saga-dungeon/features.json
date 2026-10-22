@@ -1601,5 +1601,22 @@
   "ticket": "W-0370",
   "since": "2026-10-22",
   "note": "10-22: 몸 키는 idle 옆 칸 알파 상자로 재서 targetH × scale(옛 길과 같은 기준)"
+ },
+ {
+  "id": "dg.townPortraitK",
+  "name": "2나락 폰 세로 마을 벨트 배율 = 던전(W-0373) — 던전 ↔ 마을 오가면 몸이 0.78 로 확 작아져 시점이 바뀐 듯했다 · 가로·PC 는 옛 물러섬 · 손잡이 dg.townPortraitK",
+  "files": [
+   "js/belt2d.js"
+  ],
+  "tests": [
+   "test-web W-0373 던전 ↔ 마을 배율",
+   "pw-look2d 폰 town·room"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0373",
+  "since": "2026-10-22",
+  "note": "10-22: 사용자 아이폰 \"마을 가면 화면이 바뀌네\" — 남는 차이는 배경 그림(던전 뒷벽 그림 · 마을 하늘·먼 산)"
  }
 ]

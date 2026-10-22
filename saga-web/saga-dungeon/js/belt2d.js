@@ -26,11 +26,12 @@
   function want(run) {
     return !!(on() && run && run.room && run.player && (run.room.kind !== 'town' || townOn()));
   }
+  function townPortraitK() { var C = core(); return C && C.tuned ? +C.tuned('dg.townPortraitK', 1) : 1; }
   var HWIN = 440;
   /** 마을·들판 — 깊이 창이 나를 따라 흐른다. 순수 계산(진단이 부른다). ax·ay = 발판 원점, wild = 들판(멈춤 없음) */
   function layoutTown(cw, ch, W, H, px, py, ax, ay, wild, zoom, padBot) {
     var chUse = Math.max(120, ch - (padBot || 0));
-    var s = Math.max(0.6, Math.min(chUse * 0.0055, cw / 240)) * (zoom || 1) * 0.78;   // 마을·들판은 조금 물러서 — 집·사람이 함께 보이게
+    var s = Math.max(0.6, Math.min(chUse * 0.0055, cw / 240)) * (zoom || 1) * (cw < ch ? townPortraitK() : 0.78);   // 마을·들판은 조금 물러서 — 집·사람이 함께 보이게 · W-0373 폰 세로는 던전과 같은 배율(던전 → 마을 오가면 몸이 0.78 로 확 작아져 '화면이 바뀐다'·손잡이 dg.townPortraitK, 0.78 = 옛)
     var top = chUse * 0.40, bot = chUse, k = (bot - top) / HWIN, half = cw / (2 * s), edge = 30, camX = px, y0 = py - HWIN * 0.55;
     if (!wild) {
       if (W + edge * 2 <= half * 2) { camX = ax + W / 2; } else { camX = Math.max(ax + half - edge, Math.min(ax + W - half + edge, px)); }
