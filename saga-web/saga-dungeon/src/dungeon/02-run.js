@@ -89,7 +89,7 @@
         return false;
       }
     }
-    var nmMods = sig ? DD.rollMods(sig.seed) : null;
+    var nmMods = sig ? DD.rollMods(sig.seed) : null; if (nmMods && global.DG.atlas) { nmMods = global.DG.atlas.merge(sig, nmMods); }   // W-0298 새긴 변형자까지
     /* 난입(§5.5)·부적(§5.3)은 층이 없다 — 지금까지 밟은 최고 층을 적 배율
        기준으로만 빌린다(spawnEnemy 가 floor 인자를 요구해서다, 화면엔 안
        보인다). 부적은 최소 10층부터(드랍 조건과 맞춘다). */
@@ -103,7 +103,7 @@
       mode: horde ? 'horde' : md.key, horde: horde,
       /* 부적(§5.3) — 없으면 null. `run.nightmare.roomT` 는 'timer' 변형자일
          때만 뜻이 있다(없으면 그냥 안 줄어든 채로 논다). */
-      nightmare: sig ? { sigilId: sig.id, tier: sig.tier, mods: nmMods.mods,
+      nightmare: sig ? { sigilId: sig.id, tier: sig.tier, mods: nmMods.mods, extraN: nmMods.extraN || 0,
         resistElem: nmMods.resistElem, roomT: 75 } :
         /* 시련(§5.11)은 부적 던전의 틀(방·문·적 배율 1+0.35×단계)을 빌린다 — 변형자는 없다 */
         trialLv ? { sigilId: null, tier: trialLv, mods: [], resistElem: null, roomT: 75, trial: true } : null,
@@ -327,7 +327,7 @@
   function nmLootMul() {
     if (!run || !run.nightmare) { return 1; }
     var m = 1 + 0.25 * run.nightmare.tier;
-    if (nmHasMod('loot')) { m *= 1.5; }
+    if (nmHasMod('loot')) { m *= 1.5; } if (global.DG.atlas) { m *= global.DG.atlas.lootMul(run.nightmare); }   // W-0298 새긴 수만큼
     return m;
   }
 

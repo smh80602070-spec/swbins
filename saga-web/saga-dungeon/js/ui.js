@@ -284,7 +284,7 @@
         if (!DG3.enterTrial(tlv)) { toast('⚠️ 그 단계는 아직 열리지 않았습니다'); }
         return;
       }
-      if (act === 'gate-sigil') {
+      if (act === 'atlas-inscribe') { var AT9 = global.DG.atlas, r9 = AT9 ? AT9.inscribe(b.getAttribute('data-id')) : { ok: false }, m9 = r9.ok && global.DG.dungeonData ? global.DG.dungeonData.modByKey(r9.key) : null; toast(r9.ok ? '✒️ 새겼다 — ' + (m9 ? m9.emoji + ' ' + m9.name + ' · ' + m9.desc : r9.key) + ' (−' + r9.cost + '금)' : '⚠️ ' + (AT9 ? AT9.reasonText(r9) : '새길 수 없습니다')); openGateChoice(); return; } /* W-0298 지도 장치 */ if (act === 'gate-sigil') {
         var DG2 = global.DG.dungeon, TG2 = global.DG.town;
         var sid = b.getAttribute('data-id');
         encClose();
@@ -1024,13 +1024,13 @@
       var DD2 = global.DG.dungeonData;
       html += '<div class="sec"><h4>📜 부적 던전</h4>';
       for (var i = 0; i < sigs.length; i++) {
-        var sg = sigs[i], preview = DD2 ? DD2.rollMods(sg.seed) : null;
+        var sg = sigs[i], preview = global.DG.atlas ? global.DG.atlas.preview(sg) : (DD2 ? DD2.rollMods(sg.seed) : null);   // W-0298 새긴 것까지
         var modTxt = preview ? preview.mods.map(function (k) {
           var m = DD2.modByKey(k); return m ? m.emoji : '';
         }).join(' ') : '';
         html += '<button class="btn wide ghost" data-act="gate-sigil" data-id="' + sg.id + '" ' +
           'style="text-align:left">티어 <b>' + sg.tier + '</b> 부적' +
-          (modTxt ? ' <span style="float:right">' + modTxt + '</span>' : '') + '</button>';
+          (modTxt ? ' <span style="float:right">' + modTxt + '</span>' : '') + '</button>' + (global.DG.atlas ? global.DG.atlas.buttonHtml(sg) : '');
       }
       html += '</div>';
     } else {

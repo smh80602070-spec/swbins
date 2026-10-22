@@ -107,6 +107,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/data-hero-skill.js"></script>
 <script src="js/data-unique.js"></script>
 <script src="js/data-dungeon.js"></script>
+<script src="js/atlas.js"></script>
 <script src="js/data-quest.js"></script>
 <script src="js/data-scenario.js"></script>
 <script src="js/sprite.js"></script>
@@ -9379,6 +9380,19 @@ window.requestAnimationFrame = function () { return 0; };
       var d = B.layout(390, 844, 700, 440, 350, 1, 110).s, t = B.layoutTown(390, 844, 1120, 760, 300, 380, 0, 0, false, 1, 110).s;
       var dl = B.layout(1280, 720, 700, 440, 350, 1, 110).s, tl = B.layoutTown(1280, 720, 1120, 760, 300, 380, 0, 0, false, 1, 110).s;
       return (Math.abs(t - d) < 1e-9 && Math.abs(tl - dl * 0.78) < 1e-9) || ('실패 배율 세로 ' + d + '/' + t + ' 가로 ' + dl + '/' + tl);
+    });
+    t('W-0298 지도 장치 — 새김은 금을 내고 변형자 하나(결정적·겹치지 않음, 최대 3) · 새긴 것이 판에 걸리고(merge) 새긴 수만큼 노획 배율 · 금이 모자라면 안 새김', function () {
+      var AT = DG.atlas, IT = DG.item, C = DG.core; if (!AT || !IT || !IT.addSigil) { return '실패 DG.atlas·item 없음'; }
+      var m = AT.merge({ seed: 5, tier: 2, extra: ['dark', 'speed'] }, { mods: ['speed'], resistElem: null });
+      if (m.mods.join(',') !== 'speed,dark' || m.extraN !== 1 || Math.abs(AT.lootMul({ extraN: 2 }) - 1.4) > 1e-9 || AT.lootMul(null) !== 1) { return '실패 merge·배율 ' + JSON.stringify(m); }
+      var g0 = C.save.gold, made = IT.addSigil(3), sg = made.ok ? made.sigil : null; if (!sg) { return '건너뜀(부적 칸 가득)'; }
+      try {
+        C.save.gold = 10; var poor = AT.inscribe(sg.id);
+        C.save.gold = 100000; var r1 = AT.inscribe(sg.id), g1 = C.save.gold, r2 = AT.inscribe(sg.id), r3 = AT.inscribe(sg.id), r4 = AT.inscribe(sg.id);
+        var pv = AT.preview(sg).mods, uniq = pv.filter(function (k, i) { return pv.indexOf(k) === i; }).length === pv.length;
+        var ok = !poor.ok && poor.reason === 'gold' && r1.ok && r1.cost === 450 && g1 === 100000 - 450 && r2.ok && r2.cost === 900 && r3.ok && !r4.ok && r4.reason === 'max' && sg.extra.length === 3 && uniq && pv.indexOf(r1.key) >= 0;
+        return ok || ('실패 ' + JSON.stringify({ poor: poor, r1: r1, r2: r2, r4: r4, pv: pv }));
+      } finally { IT.removeSigil(sg.id); C.save.gold = g0; }
     });
     t('W-0371 인물 일러스트 — 기본 끔(그림 불일치) · 켜면 manifest 인물은 표정 주소(분노·걱정 → angry·sad, 놀람·모름 → neutral) · 없는 인물은 null(초상 대역) · 카드 자리(150×172)는 일러스트', function () {
       if (DG.illust && DG.illust.has((window.SAGA && SAGA.illust && SAGA.illust.ids[0]) || '')) { return '실패 기본 끔인데 켜져 있다(10-22 그림 불일치)'; }
