@@ -409,6 +409,8 @@ namespace Saga.Dungeon.World
                 case DungeonLandmarkData.LordKind: SpawnLord(); break;
                 default: SpawnFight(); break;
             }
+            // tasks U-0158 부서지는 통·항아리 — 명소 층은 시대 꾸밈이 방을 채워 안 세운다
+            if (_landmark < 0) DungeonBreakable.BuildRoom(_contentRoot, _floor, _roomIndex, kind == "fight" || kind == "elite");
             RoomBuilt?.Invoke(_floor, _roomIndex);
         }
 

@@ -211,7 +211,8 @@ namespace Saga.Dungeon.Player
             const SecretMove M = SecretMove.Attack;
             float range = AttackRange * RangeOf(M);
             var enemy = PickTarget(range);
-            if (enemy == null) return;
+            float propR = AttackRange * DungeonHunt.CleaveR * RangeOf(M);
+            if (enemy == null) { if (SwingAtProp(range, propR, DungeonHunt.CleaveHalfDeg)) _cooldownLeft = AttackCooldown * CdOf(M); return; } // tasks U-0158
 
             _cooldownLeft = AttackCooldown * CdOf(M);
             Saga.Core.SagaVoice.Say("shout"); // U-0068 — 가끔 외침(말하는 이 = 주인공)
@@ -224,6 +225,7 @@ namespace Saga.Dungeon.Player
             foreach (var extra in hitList) Strike(extra, dmg, false, M);
             // PLAN.md 109-10-10 몰이 사냥 — 앞 120°·사거리 × 1.35 안 곁의 적도 60% 로 휩쓴다.
             Cleave(enemy, hitList, AttackRange * DungeonHunt.CleaveR * RangeOf(M), DungeonHunt.CleaveHalfDeg, dmg * DungeonHunt.CleaveMul, false, M);
+            DungeonBreakable.BreakInCone(transform.position, enemy.transform.position - transform.position, propR, DungeonHunt.CleaveHalfDeg); // tasks U-0158 곁의 통·항아리
             PartyState.AddPlayerHit(heavy: mul > 1f); // PLAN.md 106-6 — 맞힐 때마다 동료 명령·소환 게이지.
             _cameraRig?.Shake(mul > 1f ? HeavyShakeMag : HitShakeMag, mul > 1f ? HeavyShakeSec : HitShakeSec);
             SfxPlayer.PlayHit();
@@ -238,7 +240,12 @@ namespace Saga.Dungeon.Player
             const SecretMove M = SecretMove.Heavy;
             float range = AttackRange * HeavyRangeMul * RangeOf(M);
             var enemy = PickTarget(range);
-            if (enemy == null) return;
+            float propR = AttackRange * DungeonHunt.HeavyR * RangeOf(M);
+            if (enemy == null)
+            {
+                if (SwingAtProp(range, propR, DungeonHunt.HeavyHalfDeg)) { _heavyCooldownLeft = HeavyCooldown * CdOf(M); _cooldownLeft = Mathf.Max(_cooldownLeft, HeavyRecoverSec); } // tasks U-0158
+                return;
+            }
 
             _heavyCooldownLeft = HeavyCooldown * CdOf(M);
             _cooldownLeft = Mathf.Max(_cooldownLeft, HeavyRecoverSec);
@@ -250,6 +257,7 @@ namespace Saga.Dungeon.Player
             foreach (var extra in hitList) Strike(extra, dmg, true, M);
             // PLAN.md 109-10-10 — 강공격은 앞 반원(180°)·사거리 × 1.8, 곁은 강공격의 75%(예비동작도 끊는다).
             Cleave(enemy, hitList, AttackRange * DungeonHunt.HeavyR * RangeOf(M), DungeonHunt.HeavyHalfDeg, dmg * DungeonHunt.HeavySide, true, M);
+            DungeonBreakable.BreakInCone(transform.position, enemy.transform.position - transform.position, propR, DungeonHunt.HeavyHalfDeg); // tasks U-0158
             PartyState.AddPlayerHit(heavy: true);
             _cameraRig?.Shake(HeavyShakeMag, HeavyShakeSec);
             SfxPlayer.PlayHeavyHit();
@@ -277,7 +285,15 @@ namespace Saga.Dungeon.Player
                 if (Vector3.Distance(transform.position, enemy.transform.position) > radius) continue;
                 hits.Add(enemy);
             }
-            if (hits.Count == 0) return;
+            int props = DungeonBreakable.BreakAround(transform.position, radius); // tasks U-0158 — 둘레 통·항아리
+            if (hits.Count == 0)
+            {
+                if (props == 0) return;
+                _whirlCooldownLeft = WhirlCooldown / BlessingState.SweepMultiplier * CdOf(M);
+                _cooldownLeft = Mathf.Max(_cooldownLeft, WhirlRecoverSec);
+                _controller.Animator?.SetTrigger("Attack");
+                return;
+            }
             damage *= HeroState.TakeFirstHit(); // tasks U-0131 — 맞힐 적이 있을 때만 쓴다
             SecretState.OnCast(M, Time.time);
             foreach (var enemy in hits) Strike(enemy, damage, false, M); // 모아 두고 친다 — 쓰러지는 적이 목록을 흔들지 않게.
@@ -296,6 +312,18 @@ namespace Saga.Dungeon.Player
             // 회전베기는 한 번에 여럿을 때려 "피해자 쪽" 하나를 못 고른다 —
             // 가해자(플레이어) 쪽만 멎는다.
             StartCoroutine(ApplyHitstop(_controller.Animator, null, HitstopSec));
+        }
+
+        /// <summary>tasks U-0158 — 적이 없으면 사거리 안 가장 가까운 통·항아리 쪽으로 휘둘러 그 부채꼴 소품을 깬다(깼으면 true).</summary>
+        private bool SwingAtProp(float range, float radius, float halfDeg)
+        {
+            var prop = DungeonBreakable.FindNearest(transform.position, range);
+            if (prop == null) return false;
+            _controller.FaceToward(prop.transform.position);
+            if (DungeonBreakable.BreakInCone(transform.position, prop.transform.position - transform.position, Mathf.Max(radius, range), halfDeg) == 0) return false;
+            _cameraRig?.Shake(HitShakeMag, HitShakeSec);
+            _controller.Animator?.SetTrigger("Attack");
+            return true;
         }
 
         /// <summary>진단 — 마지막 휩쓸기에 곁으로 맞은 수.</summary>
