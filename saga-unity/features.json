@@ -2133,11 +2133,11 @@
    "PlaytestDungeonRunRank"
   ],
   "level": "D1",
-  "verified": "",
+  "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0169",
   "since": "2026-10-23",
-  "note": "D1(U-0169): 진단 대기"
+  "note": "D1(U-0169): PlaytestDungeonHeadless runrank OK(급보정 1→3 · 계단 S 덤 282 · 남주 박음 · 쓰러짐 A 덤 없음 · 세이브 왕복) · 세이브 md5 그대로 · 전체 FAIL 은 era-decor 바위(K-0176)뿐 · 촬영 안 함"
  },
  {
   "id": "un.parity.s1",
