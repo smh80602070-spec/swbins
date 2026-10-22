@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # 한 폴더(C:\swbins)를 여러 갈래 세션이 같이 쓸 때의 푸시·받기 (W-0075)
-#   bash tools/push.sh          origin 에 아직 없는 내 커밋을 임시 트리(origin/main 위)로 옮겨 푸시 → 로컬 main 을 origin 에 맞춘다
-#   bash tools/push.sh --pull   받기만(로컬 main 맞추기) — `git pull` 대신. 남의 작업 중 파일 때문에
+#   bash tools/push.sh          origin 에 아직 없는 내 커밋을 origin/main 위에 다시 얹어(merge-tree — 파일 안 풂) 푸시 → 로컬 main 을 origin 에 맞춘다
+#   bash tools/push.sh --pull [--trusted <커밋…>]   받기만(로컬 main 맞추기) — `git pull` 대신. 남의 작업 중 파일 때문에
 #                               "would be overwritten by merge/checkout" 으로 멈추던 것을 피한다
 # 규칙: 남의 미커밋 파일은 건드리지 않는다(겹치면 그 파일만 남기고 보고) · autostash·강제 푸시 없음
 #       체리픽 충돌이 sw.js VERSION 줄뿐이면 origin 쪽 +1 로 풀고, 그 밖 충돌이면 멈추고 보고
@@ -57,52 +57,80 @@ align() {
   return 0
 }
 
-[ "${1:-}" = "--pull" ] && { align; exit $?; }
+# --pull --trusted <커밋…> — 손으로 풀어 올려 patch-id 가 달라진 내 커밋(내용은 origin 에 있음)을 "안 올라감"으로 세지 않는다
+[ "${1:-}" = "--pull" ] && { [ "${2:-}" = "--trusted" ] && { PUSHED="${*:3}" align --trusted; exit $?; }; align; exit $?; }
 
 git fetch -q origin || { say "fetch 실패"; exit 1; }
 mapfile -t mine < <(git cherry origin/main HEAD | sed -n 's/^+ //p')
 if [ ${#mine[@]} -eq 0 ]; then say "올릴 커밋 없음"; align; exit $?; fi
 
-W="/c/swt-$$"
-cleanup() { git worktree remove --force "$W" >/dev/null 2>&1; git worktree prune >/dev/null 2>&1; }
+# K-0182 — 임시 트리 없이: `git merge-tree --write-tree` 로 내 커밋을 origin/main 위에 하나씩 얹는다(체리픽과 같은 3-way, 파일을 안 풀어 몇 초).
+#   예전엔 커밋마다 저장소 전체(8만 파일)를 C:\swt-<pid> 에 풀고 지워 한 번에 몇 분~십몇 분(세션 여럿이면 디스크를 나눠 더 길어짐).
+TMPD="$(mktemp -d 2>/dev/null || { mkdir -p "/tmp/pushsh-$$" && echo "/tmp/pushsh-$$"; })"
+cleanup() { rm -rf "$TMPD"; }
 trap cleanup EXIT
+git worktree prune >/dev/null 2>&1   # 옛 방식이 남긴 임시 트리 기록 정리
+git merge-tree -h 2>&1 | grep -q -- "--merge-base" || { say "git 이 낡음 — merge-tree --merge-base 는 git 2.40 이상(지금 $(git --version)). git 을 올린 뒤 다시"; exit 1; }
+TIP=""
+
+put_blob() { # $1 트리 · $2 경로 · $3 새 blob → 그 경로만 바꾼 트리
+  local idx="$TMPD/index" mode
+  mode=$(git ls-tree "$1" -- "$2" | awk '{print $1}'); [ -z "$mode" ] && mode=100644
+  GIT_INDEX_FILE="$idx" git read-tree "$1" && GIT_INDEX_FILE="$idx" git update-index --cacheinfo "$mode,$3,$2" && GIT_INDEX_FILE="$idx" git write-tree
+}
+bumped_blob() { # $1 커밋 · $2 sw.js 경로 → VERSION +1 한 blob
+  git show "$1:$2" > "$TMPD/sw.js" 2>/dev/null || return 1
+  bump "$TMPD/sw.js" >/dev/null || return 1
+  git hash-object -w "$TMPD/sw.js"
+}
+commit_like() { # $1 원 커밋(작성자·날짜·메시지 그대로) · $2 트리 · $3 부모
+  git log -1 --format=%B "$1" > "$TMPD/msg"
+  GIT_AUTHOR_NAME="$(git log -1 --format=%an "$1")" GIT_AUTHOR_EMAIL="$(git log -1 --format=%ae "$1")" \
+    GIT_AUTHOR_DATE="$(git log -1 --format=%ad --date=raw "$1")" git commit-tree "$2" -p "$3" -F "$TMPD/msg"
+}
 
 attempt() {
-  cleanup
   git fetch -q origin
-  git worktree add -q --detach "$W" origin/main || { say "임시 트리 실패"; return 2; }
-  local c u bad
+  TIP=$(git rev-parse origin/main)
+  local c out ok tree u bad f b
   for c in "${mine[@]}"; do
-    if ! git -C "$W" cherry-pick "$c" >/dev/null 2>&1; then
-      u=$(git -C "$W" diff --name-only --diff-filter=U)
+    out=$(git merge-tree --write-tree --name-only --no-messages --merge-base="$c^" "$TIP" "$c"); ok=$?
+    tree=$(printf '%s\n' "$out" | head -1)
+    if [ $ok -gt 1 ] || [ -z "$tree" ]; then say "merge-tree 실패 — $(git log --oneline -1 "$c" | cut -c1-60)"; return 2; fi
+    if [ $ok -eq 1 ]; then
+      u=$(printf '%s\n' "$out" | sed -n '2,$p' | sed '/^$/d' | sort -u)
       bad=$(printf '%s\n' "$u" | grep -v '^saga-web/[^/]*/sw\.js$' || true)
-      if [ -z "$u" ] && [ -z "$(git -C "$W" status --porcelain)" ]; then   # 이미 올라간 내용(손으로 옮기며 조금 달라진 커밋) — 건너뜀
-        git -C "$W" cherry-pick --skip >/dev/null 2>&1; say "이미 origin 에 있음 — 건너뜀: $(git log --oneline -1 "$c" | cut -c1-60)"; continue
-      fi
       if [ -n "$bad" ] || [ -z "$u" ]; then
-        git -C "$W" cherry-pick --abort >/dev/null 2>&1
         say "충돌 — $(git log --oneline -1 "$c" | cut -c1-60):"; printf '         %s\n' $bad
         return 2
       fi
-      for f in $u; do git -C "$W" checkout -q --ours -- "$f"; bump "$W/$f" >/dev/null; git -C "$W" add -- "$f"; done
-      git -C "$W" -c core.editor=true cherry-pick --continue >/dev/null || { say "체리픽 마무리 실패"; return 2; }
+      for f in $u; do
+        b=$(bumped_blob "$TIP" "$f") && tree=$(put_blob "$tree" "$f" "$b") || { say "sw.js 풀기 실패($f)"; return 2; }
+      done
       say "sw.js VERSION 겹침 → origin 쪽 +1 로 풂($u)"
     fi
+    if [ "$tree" = "$(git rev-parse "$TIP^{tree}")" ]; then   # 이미 올라간 내용(손으로 옮기며 조금 달라진 커밋)
+      say "이미 origin 에 있음 — 건너뜀: $(git log --oneline -1 "$c" | cut -c1-60)"; continue
+    fi
+    TIP=$(commit_like "$c" "$tree" "$TIP") || { say "커밋 만들기 실패"; return 2; }
   done
   # 내 js 는 바뀌었는데 sw.js 가 origin 과 같아졌으면(같은 날 남도 같은 수로 올림) 한 번 더 올린다
-  local g fixed=()
+  local g fixed=() t
+  t=$(git rev-parse "$TIP^{tree}")
   for g in saga-go saga-dungeon saga-forest saga-story saga-realm; do
-    [ -f "$W/saga-web/$g/sw.js" ] || continue
-    if ! git -C "$W" diff --quiet origin/main HEAD -- "saga-web/$g/js" "saga-web/$g/dist" \
-       && git -C "$W" diff --quiet origin/main HEAD -- "saga-web/$g/sw.js"; then
-      bump "$W/saga-web/$g/sw.js" >/dev/null && fixed+=("saga-web/$g/sw.js")
+    git cat-file -e "$TIP:saga-web/$g/sw.js" 2>/dev/null || continue
+    if ! git diff --quiet origin/main "$TIP" -- "saga-web/$g/js" "saga-web/$g/dist" \
+       && git diff --quiet origin/main "$TIP" -- "saga-web/$g/sw.js"; then
+      b=$(bumped_blob "$TIP" "saga-web/$g/sw.js") && t=$(put_blob "$t" "saga-web/$g/sw.js" "$b") && fixed+=("saga-web/$g/sw.js")
     fi
   done
   if [ ${#fixed[@]} -gt 0 ]; then
-    git -C "$W" commit -q -m "[push.sh] sw VERSION +1 — 같은 날 다른 커밋과 버전이 겹쳐 옛 캐시에 묻히지 않게" -- "${fixed[@]}"
+    echo "[push.sh] sw VERSION +1 — 같은 날 다른 커밋과 버전이 겹쳐 옛 캐시에 묻히지 않게" > "$TMPD/msg2"
+    TIP=$(git commit-tree "$t" -p "$TIP" -F "$TMPD/msg2") || return 2
     say "sw.js VERSION +1: ${fixed[*]}"
   fi
-  git -C "$W" push -q origin HEAD:main 2>/dev/null || return 1
+  [ "$TIP" = "$(git rev-parse origin/main)" ] && return 0   # 다 이미 있었음
+  git push -q origin "$TIP:refs/heads/main" 2>/dev/null || return 1
   return 0
 }
 
@@ -112,7 +140,7 @@ for n in 2 3 4; do   # 세션 여럿이 연달아 올리면 한 번으로 모자
   say "푸시 거부 — origin 이 그새 바뀜, 다시($n/4)"; sleep $((n * 3)); attempt; r=$?
 done
 [ $r -ne 0 ] && { say "푸시 못 함(위 사유). 로컬 커밋은 그대로 있다"; exit 1; }
-say "푸시: $(git -C "$W" log --oneline -1 HEAD | cut -c1-70)"
+say "푸시: $(git log --oneline -1 "$TIP" | cut -c1-70)"
 # W-0317 ⑨ — 웹 판을 올렸으면 5분 뒤 공개 주소 배포 확인을 분리 실행(셸이 끝나도 돈다) → tools/_out/deploy-last.json·md, 다음 qc 의 "배포(푸시 뒤)" 줄. PUSH_NO_DEPLOY=1 이면 안 띄움
 if [ -z "${PUSH_NO_DEPLOY:-}" ] && for c in "${mine[@]}"; do git diff-tree --no-commit-id --name-only -r "$c"; done 2>/dev/null | grep -q '^saga-web/saga-'; then
   nohup node tools/qc.mjs --branch web --deploy-later >/dev/null 2>&1 &
