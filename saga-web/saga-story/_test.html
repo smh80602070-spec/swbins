@@ -7023,6 +7023,15 @@ window.DG_NO_TUNE = true;
       var d1 = M.stepDust(dc, { x: 0, y: 0, clip: 'walk', stride: 0.52 }, 60), d2 = M.stepDust(dc, { x: 0, y: 0, clip: 'walk', stride: 0.3 }, 60), d3 = M.stepDust(dc, { x: 0, y: 0, clip: 'idle', stride: 0.02 }, 60);
       return (d1 === 2 && d2 === 0 && d3 === 0) || ('실패 발 먼지 ' + d1 + ' ' + d2 + ' ' + d3);
     });
+    t('W-0366 세로 폰 — 겹 배경 portK 0.55 면 하늘 아닌 층이 아래 가장자리 그대로 0.55 배 · 하늘 층은 그대로 · 바닥 선 자리 기본 0.64(주인공 몸 가운데 ≈ 0.6)', function () {
+      var PX = DG.parallax2d; if (!PX || !PX.draw) { return '실패 DG.parallax2d 없음'; }
+      function rec(pk) { var out = [], c = { save: function () {}, restore: function () {}, translate: function () {}, scale: function () {}, rotate: function () {}, fillRect: function () {}, drawImage: function (im, x, y, w, h) { out.push([Math.round(y), Math.round(h)]); } }; PX.draw(c, '_stub', { camX: 0, W: 10, H: 560, portK: pk }); return out; }
+      var a = rec(1), b = rec(0.55); if (!a.length || a.length !== b.length) { return '실패 그린 수 ' + a.length + ' ' + b.length; }
+      if (a[0][1] !== b[0][1]) { return '실패 하늘 층이 줄었다 ' + a[0] + ' / ' + b[0]; }
+      var last = a.length - 1; if (Math.abs(b[last][1] - a[last][1] * 0.55) > 1 || Math.abs((b[last][0] + b[last][1]) - (a[last][0] + a[last][1])) > 1) { return '실패 아래 가장자리 ' + a[last] + ' / ' + b[last]; }
+      var fl = +DG.core.tuned('side.portraitFloor', 0.64);
+      return Math.abs(fl - 0.64) < 1e-9 || ('실패 바닥 자리 ' + fl);
+    });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

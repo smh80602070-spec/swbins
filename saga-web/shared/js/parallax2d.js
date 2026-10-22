@@ -90,12 +90,13 @@
   }
   function draw(ctx, id, o) {
     var P = placeOf(id); if (!P || !ctx || !o) { return false; }
-    var m = P.meta, W = o.W, H = o.H, L, i, any = false, fog = m.fog;
+    var m = P.meta, W = o.W, H = o.H, L, i, any = false, fog = m.fog, pk = o.portK > 0 && o.portK < 1 ? +o.portK : 1;
     for (i = 0; i < (m.layers || []).length; i++) {
       L = m.layers[i];
       if (!!L.front !== !!o.front || !ready(L.img)) { continue; }
       var iw = L.img.width || L.img.naturalWidth, ih = L.img.height || L.img.naturalHeight, dh = (L.h || 1) * H, dw = iw * dh / ih;
       var y = L.top !== undefined ? L.top * H : (L.bottom !== undefined ? L.bottom : 1) * H - dh;
+      if (pk < 1 && (L.depth || 0) > 0.1) { y += dh * (1 - pk); dh *= pk; dw *= pk; }   // W-0366 세로 화면 — 하늘 아닌 층은 아래 가장자리 그대로 두고 줄인다(층이 높이 1 이면 290px 앞 풀이 화면 키로 늘어 그림의 10%만 보였다)
       y -= (+o.camY || 0) * (L.depth || 0) * 0.3;
       var off = layerX(L.depth, o.camX, dw), n = Math.floor(((+o.camX || 0) * (L.depth || 0)) / dw), k, x, src = fog && L.fog ? (fogged(L, fog) || L.img) : L.img;
       ctx.save();
@@ -121,7 +122,7 @@
   function drawFor(ctx, o) {
     var cf = global.DG.cfg && global.DG.cfg.mode2d, mode = +tuned('parallax2d.on', (cf && cf.parallaxOn) || 0);   // W-0353 판 기본값(cfg.mode2d.parallaxOn — 4종횡 1)
     if (!mode || !o) { return false; }
-    return draw(ctx, mode >= 2 ? '_stub' : o.region, { camX: o.camX, camY: o.camY, W: o.W, H: o.base || o.H, front: !!o.front });
+    return draw(ctx, mode >= 2 ? '_stub' : o.region, { camX: o.camX, camY: o.camY, W: o.W, H: o.base || o.H, front: !!o.front, portK: o.portK });
   }
 
   global.DG = global.DG || {};

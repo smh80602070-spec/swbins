@@ -60,11 +60,11 @@
     return Math.ceil((edge + 24) * k / z);
   }
   /** 화면에 실제로 곱하는 배율 — 사람 줌 × 기본 × 보스 */
-  function effZoom() { return viewZoom * baseZoom() * (1 + bossZoomK * BOSS_ZOOM_EXTRA); }
+  function portK() { return W < H ? +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('side.portraitBgK', 0.55) : 0.55) : 1; }   /* W-0366 세로 폰 겹 배경 층 배율(1 = 옛) */ function effZoom() { return viewZoom * baseZoom() * (1 + bossZoomK * BOSS_ZOOM_EXTRA); }
   function applyZoomTransform() {
     var t = 'scale(' + effZoom().toFixed(3) + ')', run = S && S.raw ? S.raw() : null, fl = run && run.stage ? run.stage.floor : 560;
     if (fl > H) { fl = H * 0.75; }   /* W-0188 폰 가로 3D(lowK 1·키 390) — 바닥 선이 논리 화면 밖이라 옛 식이 기준점을 수천 px 아래로 풀어 화면이 통째로 위로 밀렸다(두목 확대 때). 3D 카메라는 바닥을 가운데께 두니 그 근처를 기준으로 */
-    var z = effZoom(), want = W < H ? H * +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('side.portraitFloor', 0.72) : 0.72) : Math.min(fl, H * 0.8), oy =Math.abs(1 - z) < 1e-3 ? fl : (want - fl * z) / (1 - z);   // 바닥 선이 화면의 want 자리에 오게 기준점(px)을 푼다
+    var z = effZoom(), want = W < H ? H * +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('side.portraitFloor', 0.64) : 0.64) : Math.min(fl, H * 0.8), oy =Math.abs(1 - z) < 1e-3 ? fl : (want - fl * z) / (1 - z);   // 바닥 선이 화면의 want 자리에 오게 기준점(px)을 푼다
     zoomOy = oy;
     var org = '50% ' + Math.round(oy / lowK) + 'px';   // 기준점은 CSS 픽셀(논리 ÷ lowK)
     if (cv) { cv.style.transform = t; cv.style.transformOrigin = org; }
@@ -313,7 +313,7 @@
     } else {
       /* 하늘·뒷배경 — 2D 층 그림(K-0020)이 있으면 그것, 없으면(받는 중·자료 없음) 옛 도형 */
       var M2 = global.DG.mode2d, M2c = (global.DG.cfg && global.DG.cfg.mode2d) || {}, rg = (M2c.region || {})[stg.gateOf || stg.key], tl = (M2c.tile || {})[stg.mood || 'sky'];
-      if (!(M2 && rg && M2.drawBg(ctx, { region: rg, camX: camX, W: W, H: H, base: stg.floor, only: null }))) {
+      if (!(M2 && rg && M2.drawBg(ctx, { region: rg, camX: camX, W: W, H: H, base: stg.floor, only: null, portK: portK() }))) {
         var g = ctx.createLinearGradient(0, 0, 0, H);
         g.addColorStop(0, stg.sky[0]);
         g.addColorStop(1, stg.sky[1]);
@@ -325,7 +325,7 @@
 
       /* 바닥 — 메이플식 타일 조각(W-0296, side-tiles2d — K-0135 그림)이 있으면 그것, 없으면 타일 결 + 꾸밈 */
       var T2 = global.DG.sideTiles2d;
-      if (!(T2 && T2.drawGround(ctx, rg, camX, W, H, stg.floor))) {
+      if (!(T2 && !(W < H && !+(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('side.portraitGroundTiles', 0) : 0)) && T2.drawGround(ctx, rg, camX, W, H, stg.floor))) {   /* W-0366 세로 폰은 땅 타일(48px 꽃 반복이 넓은 바닥 띠에서 어지러움) 대신 땅 색·결 — side.portraitGroundTiles 1 = 옛 */
         ctx.fillStyle = stg.ground;
         ctx.fillRect(0, stg.floor, W, H - stg.floor);
         if (M2 && tl) { M2.fillTile(ctx, { id: tl, x: 0, y: stg.floor, w: W, h: H - stg.floor, dx: camX, scale: 0.25 }); }
@@ -336,6 +336,7 @@
         ctx.fillRect(0, stg.floor + 5, W, 2);
       }
 
+      if (W < H && +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('side.portraitGroundShade', 0.55) : 0.55) > 0) { var gsh = ctx.createLinearGradient(0, stg.floor + 30, 0, H); gsh.addColorStop(0, 'rgba(18,24,16,0)'); gsh.addColorStop(1, 'rgba(18,24,16,' + (+(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('side.portraitGroundShade', 0.55) : 0.55)).toFixed(2) + ')'); ctx.fillStyle = gsh; ctx.fillRect(0, stg.floor + 30, W, H - stg.floor - 30); }   /* W-0366 세로 폰 — 바닥 띠가 넓어 48px 꽃 타일 반복이 어지러웠다 → 아래로 갈수록 어둡게(깊이·HUD 자리) */
       /* 발판 */
       for (var i = 0; i < stg.plats.length; i++) {
         var pl = stg.plats[i];
@@ -423,7 +424,7 @@
 
     if (global.DG.sideHand) { global.DG.sideHand.draw(ctx, camX); }   // W-0176 옛 조각·숨은 상자
     drawMe(p);
-    if (!use3d && global.DG.sideBg2d) { global.DG.sideBg2d.drawFront(ctx, { region: rg, camX: camX, W: W, H: H }); global.DG.sideBg2d.tint(ctx, W, H); }   // W-0296 앞 층(발 살짝 가림)·시간대 곱하기 색
+    if (!use3d && global.DG.sideBg2d) { global.DG.sideBg2d.drawFront(ctx, { region: rg, camX: camX, W: W, H: H, portK: portK() }); global.DG.sideBg2d.tint(ctx, W, H); }   // W-0296 앞 층(발 살짝 가림)·시간대 곱하기 색
     drawFx();
     ctx.restore();
 
@@ -432,7 +433,7 @@
     var iz = 1 / effZoom();
     ctx.save(); ctx.translate(W / 2, zoomOy); ctx.scale(iz, iz); ctx.translate(-W / 2, -zoomOy);
     global.DG.hudRects = [];   // W-0364 캔버스에 그리는 HUD 의 이번 프레임 자리(pw-cover 가 가림에 더한다)
-    global.DG.boardRect = W < H ? { x: 0, y: 0, w: global.innerWidth, h: Math.round(global.innerHeight * +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('side.portraitFloor', 0.72) : 0.72)) + 8 } : null;   // 폰 세로 = 땅 선(화면 72%)까지가 무대 — 그 밑 바닥 띠는 HUD 자리(메이플 아래 띠처럼)
+    global.DG.boardRect = W < H ? { x: 0, y: 0, w: global.innerWidth, h: Math.round(global.innerHeight * +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('side.portraitFloor', 0.64) : 0.64)) + 8 } : null;   // 폰 세로 = 땅 선(화면 72%)까지가 무대 — 그 밑 바닥 띠는 HUD 자리(메이플 아래 띠처럼)
     drawBossBar();
     drawMiniMap(run);
     drawOuch();

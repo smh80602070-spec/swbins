@@ -1107,5 +1107,24 @@
   "ticket": "W-0368",
   "since": "2026-10-22",
   "note": "10-22: 손잡이 셋 0/1 이면 옛 그림 · setTone 은 판 연결 안 함(어둠 막이 이미 몸 위)"
+ },
+ {
+  "id": "sd.portrait2d",
+  "name": "4종횡 폰 세로 화면(W-0366) — 겹 배경 하늘 아닌 층 0.55 배·아래 가장자리 그대로(side.portraitBgK) · 앞 층 그 절반(story2d.frontPortraitK) · 바닥 선 0.72 → 0.64(주인공 몸 가운데 ≈ 0.6) · 세로는 땅 타일 대신 땅 색·결 + 아래로 어둡게(side.portraitGroundTiles·portraitGroundShade)",
+  "files": [
+   "../shared/js/parallax2d.js",
+   "js/side-view.js",
+   "js/side-bg2d.js"
+  ],
+  "tests": [
+   "test-web W-0366 세로 폰",
+   "pw-look2d GW=390 GH=844 field"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0366",
+  "since": "2026-10-22",
+  "note": "10-22: PC 화면 그대로(W<H 일 때만) · 판정·그림 파일 안 고침"
  }
 ]
