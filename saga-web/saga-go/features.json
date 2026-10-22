@@ -1658,5 +1658,25 @@
   "ticket": "W-0369",
   "since": "2026-10-22",
   "note": "10-22: 생성 수·경험치 그대로(자리만) · 동행 줄은 2D 에 동행 몸이 없어 해당 없음"
+ },
+ {
+  "id": "web.modelsShared",
+  "name": "웹 배치 중복 2차(W-0360) — 판마다 같은 models 단위 7(mpfb_real·anime·quaternius_rpg·regular·anim·foes·animals)을 shared/assets/models 한 벌로 −231MB · tools/gen-models-shared.mjs(--check) · 판 js/models-shared.js · assets3d.creatureFor 가 modelShared(path) 로",
+  "files": [
+   "../../tools/gen-models-shared.mjs",
+   "../shared/js/assets3d.js",
+   "js/models-shared.js"
+  ],
+  "tests": [
+   "gen-models-shared --check",
+   "pw-assets3d-look 다섯 판 OK",
+   "test-web 다섯"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0360",
+  "since": "2026-10-22",
+  "note": "10-22: 다섯 판 체제 한 줄(1만리 장부에) · 서명 다른 단위(kaykit·polypizza·oga·standin·monsters)는 판 것 그대로"
  }
 ]

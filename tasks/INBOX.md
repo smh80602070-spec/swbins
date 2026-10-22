@@ -19,3 +19,4 @@
 - [ ] 10-22 · (G-0302 알림) · 고돗 `characters_dex/hl_geumsil.gltf` 희소 접근자 78 인덱스 bufferView 크기가 count×성분 크기와 안 맞음 → Godot 임포트 ERROR 78(모프 값 의심) — 다시 내보내기 · 자체툴
 - [ ] 10-22 · (K-0168 끝 알림) · sg_liubei 새 몸(어른 키) — 유니티 CharactersDex 갈아 끼우기(U-0156 과 같은 decode.mjs --only sg_liubei 길) · 유니티
 - [ ] 10-22 · (K-0169 끝 알림) · 컷아웃 주역 둘(sg_zhugeliang 단검·hl_mukhyang 지팡이) rig.json 에 무기 부위(extra weapon)·attack 끝 자세·walk/idle 클립이 들어옴 — cutout2d.js 가 그대로 읽음(코드 안 고침), `shared/assets/web2d/cutout`. cutout2d.on 기본값(지금 0) 다시 볼지 · 웹/2나락·4종횡
+- [ ] 10-22 · (W-0360 끝 알림) · 웹 models 7 단위(mpfb_real 네 판·anime·quaternius_rpg·regular·anim·foes·animals)는 `saga-web/shared/assets/models/` 한 벌만(판 사본 지움, gen-models-shared.mjs) → asset-place models targets 를 shared 로 · 자체툴
