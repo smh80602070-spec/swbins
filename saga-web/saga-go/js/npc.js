@@ -147,8 +147,31 @@
    * 늘 같은 자리다(무작위가 아니다).
    */
   function jitter(id, place) {
+    var g = ring(id, place);
+    if (g) { return g; }
     var a = mix(hashStr(id), hashStr(place || '')) * Math.PI * 2;
     var r = 6 + mix(hashStr(place || ''), hashStr(id) + 7) * 9;
+    return { dx: Math.cos(a) * r, dy: Math.sin(a) * r };
+  }
+  /* W-0377 — 같은 자리를 쓰는 사람(일과·집 어느 쪽이든)이 둘 이상이면 고리 자리를 나눠 갖는다.
+     옛 흩음(6~15m 아무 방향)은 비 오는 날 집 자리 village 에 다섯이 모이면 2D 에서 한 덩어리·이름표 겹침이었다.
+     자리 순서 = PEOPLE 순서(누가 지금 와 있든 같은 자리) · 이웃 간격 손잡이 npc.ringGap(기본 13m) · 반지름은 자리에서 7~17m(2D 는 몸 높이×1.4 까지) */
+  var ringUsers = null;
+  function ring(id, place) {
+    var gap = +core().tuned('npc.ringGap', 13), W = global.DG.world, b2 = W && W.body2dM ? W.body2dM() : null;   // 2D 면 몸 높이만큼(이름표 폭) — 3D 는 13m
+    if (!place || !(gap > 0)) { return null; }
+    if (!ringUsers) {
+      ringUsers = {};
+      PEOPLE.forEach(function (p) {
+        var at = [p.home].concat(p.spots.map(function (q) { return q.at; }));
+        at.forEach(function (k) { var L = ringUsers[k] || (ringUsers[k] = []); if (L.indexOf(p.id) < 0) { L.push(p.id); } });
+      });
+    }
+    var L = ringUsers[place], i = L ? L.indexOf(id) : -1, n = L ? L.length : 0;
+    if (i < 0 || n < 2) { return null; }
+    if (b2 > 0) { gap = Math.max(gap, b2 * +core().tuned('npc.ringGap2d', 1)); }
+    var r = Math.max(7, Math.min(b2 > 0 ? Math.max(17, b2 * 1.4) : 17, gap / (2 * Math.sin(Math.PI / n))));
+    var a = mix(hashStr(place), 3) * Math.PI * 2 + Math.PI * 2 * i / n;
     return { dx: Math.cos(a) * r, dy: Math.sin(a) * r };
   }
   function hashStr(s) {

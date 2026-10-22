@@ -37,6 +37,7 @@ try {
   } else if (game === 'saga-forest') {
     if (await ev(() => DG.villageView3d && DG.villageView3d.active && DG.villageView3d.active())) { await ev(() => document.getElementById('btn-3d').click()); await sleep(1500); }
     if (scene === 'home') { await ev(() => { DG.village.enterHome(); DG.core.emit('changed'); }); }
+    if (scene === 'rain' || scene === 'clear') { await ev((k) => { if (DG.weather && DG.weather.force) { DG.weather.force(k); } DG.core.emit('changed'); }, scene); await sleep(1500); }   // W-0377 날씨 고정(비 = 주민 집으로)
     if (scene === 'night') { await ev(() => { DG.core.setTune('time.phase', 'night'); DG.core.emit('changed'); }); }
     await sleep(2500);
   } else if (game === 'saga-dungeon') {
