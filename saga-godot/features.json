@@ -5342,7 +5342,7 @@
  },
  {
   "id": "gd.realm.auto-rule",
-  "name": "5천하 시정 위임(개발) — 달마다 성마다 놀고 있는 무장에게 개발 명령(치안 먼저·가장 모자란 것), 금 남김",
+  "name": "5천하 시정 위임 — 목표 넷(🌾 개발·🛡️ 징병·📜 외교·🚩 출진 확인 카드), 늘 먼저 치안·군량·이웃 위협, 금 바닥선 위 절반만",
   "files": [
    "games/saga_realm/world/auto_rule_realm.gd",
    "games/saga_realm/world/realm_city.gd"
@@ -5353,8 +5353,8 @@
   "level": "D1",
   "verified": null,
   "fun": {},
-  "ticket": "G-0299",
+  "ticket": "G-0300",
   "since": "2026-10-22",
-  "note": "공용 saga_core/ui/auto_quest_hud.gd · 웹 W-0338"
+  "note": "공용 saga_core/ui/auto_quest_hud.gd · 웹 W-0338 auto-rule.js · G-0299 개발만 → G-0300 넷"
  }
 ]

@@ -6,6 +6,7 @@ extends SceneTree
 ## ② 1만리 씬: ▶ 단추·첫 목표 · 켜면 주인공이 목표 쪽으로 걸어가 거리가 줆(실제 시간 3초) · 이동 키 = 멈춤·auto_dir 0
 ## ③ SAGA_AUTOQUEST=0 이면 안 붙음
 ## ④ G-0299 네 판: ▶ 단추·목표 · 켜고 4초 — 진행 글이 생김(대화·걷기·싸움·명령) 또는 멈춤 이유(직접 단계) · 5천하는 이번 달 명령
+## ⑤ G-0300 5천하 목표 넷: 목표 단추 넷 · pick_for(치안 먼저·군량·비상선·징병/출진 순서·개발 가장 모자란 것) · 외교 사신 상대 · 출진 카드가 오류 없이
 
 const AQ := preload("res://saga_core/data/autoquest.gd")
 
@@ -136,9 +137,40 @@ func _one_game(game: String, path: String) -> void:
 	print("AQ4 %s goal=%s doing=%s why=%s" % [game, (st.goal as Dictionary).get("id", ""), st.doing, st.why])
 	if String(st.doing) == "" and String(st.why) == "":
 		_fail("④ %s 켜도 아무 진행 글 없음" % game)
+	if game == "realm":
+		_realm_goals(aq)
 	if bool(aq.get("q").on):
 		aq.get("q").call("stop", "점검")
 	aq.set("resume_on", false)
 	sc.queue_free()
 	for _k in 3:
 		await process_frame
+
+
+## ⑤ G-0300
+func _realm_goals(aq: Node) -> void:
+	var chips := aq.find_child("RuleGoals", true, false)
+	if chips == null or chips.get_child_count() != 4:
+		_fail("⑤ 목표 단추 넷 아님")
+	var rs := root.get_node("/root/RealmSaveState")
+	var cid := String((rs.get("cities") as Dictionary).keys()[0])
+	var base := {"sec": 80, "agri": 10, "comm": 500, "tech": 500, "wall": 0, "train": 50, "pop": 100000, "troops": 6000, "food": 999999}
+	var pf := func(goal: String, over: Dictionary, th: int = 0) -> String:
+		var c := base.duplicate()
+		c.merge(over, true)
+		return String(aq.call("pick_for", goal, c, cid, th))
+	var got := [pf.call("dev", {"sec": 30}), pf.call("dev", {}), pf.call("draft", {"troops": 0}), pf.call("dev", {"troops": 100}, 5000),
+		pf.call("war", {"train": 90}), pf.call("draft", {"train": 90}), pf.call("dev", {"food": 0, "troops": 6000})]
+	print("AQ5 pick ", got)
+	if got != ["sec", "agri", "draft", "draft", "train", "wall", "agri"]:
+		_fail("⑤ pick_for %s" % [got])
+	aq.call("set_goal", "diplo")
+	if String(aq.get("goal_key")) != "diplo" or String((aq.call("goals") as Array)[0].id) != "rule:diplo":
+		_fail("⑤ set_goal 외교")
+	print("AQ5 envoy=%s war=%s" % [aq.call("envoy_target"), aq.call("war_target")])
+	aq.call("set_goal", "war")
+	aq.call("war_card")
+	for m in get_nodes_in_group("ui_modal"):
+		if m != aq and m is CanvasLayer:
+			m.queue_free()
+	aq.call("set_goal", "dev")

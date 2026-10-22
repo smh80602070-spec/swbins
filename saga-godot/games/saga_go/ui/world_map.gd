@@ -74,6 +74,8 @@ func _ready() -> void:
 const HUD_LEFT_NODES := ["DialoguePanel", "DialogueLabel", "PartyLabel", "QuestLabel", "CodexLabel", "WeatherLabel"]
 
 func _make_room_under_minimap() -> void:
+	if get_tree().current_scene == null:   # 점검이 장면을 current_scene 으로 잡기 전에 붙일 때
+		return
 	var hud := get_tree().current_scene.find_child("MobileHUD", true, false)
 	if hud == null:
 		return
