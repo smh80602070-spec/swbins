@@ -733,7 +733,7 @@
     var emB = (1 + (m.em || 0) / 300) * (m.reactMul || 1) * (1 + (m.rxAll || 0));   // ⑲-4 깨달음 2 · ⑲-5 무기 반응 효과
     if (S.loreT > 0) { emB *= S.loreMul; }                            // ⑲-15 옛 글자 풀이 — 명단 반응 피해
     var mul = f.stun > 0 ? STUN_MUL() : 1;
-    raw *= talentMul(m, src); if (global.DG.mountCombat) { raw *= global.DG.mountCombat.hitMul(src); }
+    raw *= talentMul(m, src); if (global.DG.mountCombat) { raw *= global.DG.mountCombat.hitMul(src); } if (global.DG.fieldParry) { raw *= global.DG.fieldParry.nextMul(); }
     if (S.rallyT > 0 && src !== 'test') { raw *= S.rallyMul; }        // ⑲-11 군기·학날개 진
     if (f.markT > 0 && src !== 'test') { raw *= f.markMul || 1; }     // ⑲-15 그림자 걸음 표식 — 누구에게든
     /* ⑲-5 — 피해 보너스(원소/물리 + 무기 효과 + 세트 4, 더하기)·치명타. 출처가 인물의 한 방일 때만 */
@@ -828,7 +828,7 @@
 
   /** 기본 공격 — 3타 사슬(0.9·1.0·1.5). 사거리 밖이면 6m 안의 적에게 파고든다 */
   function attack(S, px, py) {
-    var m = active(S); if (global.DG.mountCombat && global.DG.mountCombat.blockMelee()) { return { ok: false, mounted: true }; }
+    var m = active(S); if (global.DG.mountCombat && global.DG.mountCombat.blockMelee()) { return { ok: false, mounted: true }; } if (m && !m.down && global.DG.fieldParry && global.DG.fieldParry.tryParry(S, px, py)) { S.atkCd = 0.3; return { ok: true, parry: true }; }   // W-0375 예고 끝 직전 평타 = 쳐내기
     if (!m || m.down || S.atkCd > 0) { return { ok: false }; }
     /* ⑲-5 무기 종류마다 모양 — 칼은 옛 3타(사거리 손잡이 그대로), 서책·활은 멀리 하나(파고들지 않는다) */
     var kit = m.kit || SWORD_KIT, reach = kit === SWORD_KIT || m.wtype === 'sword' ? REACH() : kit.reach, tgt;
@@ -1750,7 +1750,7 @@
     if (m.skillCd <= 0) { act('skill'); return; }
     /* ⑲-2 얼어 있는 적이 곁에 있으면 강공격으로 깬다 */
     if (n.frozenT > 0 && S.stamina >= CHARGE_COST() && Math.hypot(n.x - pos.x, n.y - pos.y) <= CHARGE_REACH()) { act('heavy'); return; }
-    var cd0 = Math.hypot(n.x - pos.x, n.y - pos.y); if (kit.range ? cd0 - BODY(n) <= kit.range : (cd0 <= LUNGE_R() || cd0 - BODY(n) <= rr)) { act('attack'); } else { autoApproach(pos, n, rr); }   // R-5 — 큰 적(키 2.4↑)은 다가선 자리(몸 가장자리+사거리 7할)가 LUNGE_R 밖이라 영영 안 쳤다: 가장자리 거리로
+    var cd0 = Math.hypot(n.x - pos.x, n.y - pos.y); if (kit.range ? cd0 - BODY(n) <= kit.range : (cd0 <= LUNGE_R() || cd0 - BODY(n) <= rr)) { S.autoAct = true; act('attack'); S.autoAct = false; } else { autoApproach(pos, n, rr); }   // R-5 — 큰 적(키 2.4↑)은 다가선 자리(몸 가장자리+사거리 7할)가 LUNGE_R 밖이라 영영 안 쳤다: 가장자리 거리로
   }
   /** W-0236 자동 사냥 — 사거리 밖 적이면 그 적의 몸 가장자리 + 사거리 7할 자리로 걸어간다(탭 이동과 같은 길 world.walkTo — 손으로 움직이면 그쪽이 먼저). GPS 는 몸을 못 움직여 안 함 */ function autoApproach(pos, n, rr) { var W = global.DG.world; if (!W || !W.walkTo || W.mode !== 'keyboard' || S.dash) { return false; } var dx = pos.x - n.x, dy = pos.y - n.y, d = Math.hypot(dx, dy) || 1, keep = BODY(n) + (rr || REACH()) * 0.7; W.walkTo(n.x + dx / d * keep, n.y + dy / d * keep, false); S.autoWalk = true; return true; } function nearestAwake(px, py, r) { var best = null, bd = r, L = living(S), i, d; for (i = 0; i < L.length; i++) { if (L[i].st === 'idle' || L[i].st === 'return') { continue; } d = Math.max(0, Math.hypot(L[i].x - px, L[i].y - py) - BODY(L[i])); if (d <= bd) { bd = d; best = L[i]; } } return best; } /** R-5 — 깨어 싸우는 적(쫓기·휘두르기 등)만. 잠든(idle)·제자리로 돌아가는(return) 무리는 자동 사냥이 깨우러 가지 않는다 */
   function tick(dt) {
@@ -1879,7 +1879,7 @@
       else if (e.t === 'hurt') {
         floatNum(pos.x, pos.y, '-' + e.dmg, e.el, 1, false, true);
         A2('me', 'hit', 260); if (W3()) { W3().playAnim('me', 'hit', 260); W3().shake(0.25); } sfx('sx:sfx_sword_hurt_' + (1 + (e.dmg & 1)));   // W-0170 내가 맞는 소리
-      } else if (e.t === 'evade') { floatNum(pos.x, pos.y, '회피!', null, 1.1, true, true); }
+      } else if (e.t === 'evade') { floatNum(pos.x, pos.y, '회피!', null, 1.1, true, true); } else if (e.t === 'parry') { floatNum(e.x, e.y, '쳐냄!', null, 1.5, true); ring(e.x, e.y, 2.2, '#ffe7a3', 0.4); if (W3()) { W3().hold(140); } sfx('sx:sfx_dodge'); }   // W-0375
       else if (e.t === 'swap') {
         var sm = S.party[e.idx];
         if (e.forced) { toast('💫 ' + sm.name + ' 교대 — 앞사람이 쓰러졌다'); }

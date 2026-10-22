@@ -883,7 +883,7 @@
     if (m.skillCd <= 0) { act('skill'); return; }
     /* ⑲-2 얼어 있는 적이 곁에 있으면 강공격으로 깬다 */
     if (n.frozenT > 0 && S.stamina >= CHARGE_COST() && Math.hypot(n.x - pos.x, n.y - pos.y) <= CHARGE_REACH()) { act('heavy'); return; }
-    var cd0 = Math.hypot(n.x - pos.x, n.y - pos.y); if (kit.range ? cd0 - BODY(n) <= kit.range : (cd0 <= LUNGE_R() || cd0 - BODY(n) <= rr)) { act('attack'); } else { autoApproach(pos, n, rr); }   // R-5 — 큰 적(키 2.4↑)은 다가선 자리(몸 가장자리+사거리 7할)가 LUNGE_R 밖이라 영영 안 쳤다: 가장자리 거리로
+    var cd0 = Math.hypot(n.x - pos.x, n.y - pos.y); if (kit.range ? cd0 - BODY(n) <= kit.range : (cd0 <= LUNGE_R() || cd0 - BODY(n) <= rr)) { S.autoAct = true; act('attack'); S.autoAct = false; } else { autoApproach(pos, n, rr); }   // R-5 — 큰 적(키 2.4↑)은 다가선 자리(몸 가장자리+사거리 7할)가 LUNGE_R 밖이라 영영 안 쳤다: 가장자리 거리로
   }
   /** W-0236 자동 사냥 — 사거리 밖 적이면 그 적의 몸 가장자리 + 사거리 7할 자리로 걸어간다(탭 이동과 같은 길 world.walkTo — 손으로 움직이면 그쪽이 먼저). GPS 는 몸을 못 움직여 안 함 */ function autoApproach(pos, n, rr) { var W = global.DG.world; if (!W || !W.walkTo || W.mode !== 'keyboard' || S.dash) { return false; } var dx = pos.x - n.x, dy = pos.y - n.y, d = Math.hypot(dx, dy) || 1, keep = BODY(n) + (rr || REACH()) * 0.7; W.walkTo(n.x + dx / d * keep, n.y + dy / d * keep, false); S.autoWalk = true; return true; } function nearestAwake(px, py, r) { var best = null, bd = r, L = living(S), i, d; for (i = 0; i < L.length; i++) { if (L[i].st === 'idle' || L[i].st === 'return') { continue; } d = Math.max(0, Math.hypot(L[i].x - px, L[i].y - py) - BODY(L[i])); if (d <= bd) { bd = d; best = L[i]; } } return best; } /** R-5 — 깨어 싸우는 적(쫓기·휘두르기 등)만. 잠든(idle)·제자리로 돌아가는(return) 무리는 자동 사냥이 깨우러 가지 않는다 */
   function tick(dt) {
@@ -1012,7 +1012,7 @@
       else if (e.t === 'hurt') {
         floatNum(pos.x, pos.y, '-' + e.dmg, e.el, 1, false, true);
         A2('me', 'hit', 260); if (W3()) { W3().playAnim('me', 'hit', 260); W3().shake(0.25); } sfx('sx:sfx_sword_hurt_' + (1 + (e.dmg & 1)));   // W-0170 내가 맞는 소리
-      } else if (e.t === 'evade') { floatNum(pos.x, pos.y, '회피!', null, 1.1, true, true); }
+      } else if (e.t === 'evade') { floatNum(pos.x, pos.y, '회피!', null, 1.1, true, true); } else if (e.t === 'parry') { floatNum(e.x, e.y, '쳐냄!', null, 1.5, true); ring(e.x, e.y, 2.2, '#ffe7a3', 0.4); if (W3()) { W3().hold(140); } sfx('sx:sfx_dodge'); }   // W-0375
       else if (e.t === 'swap') {
         var sm = S.party[e.idx];
         if (e.forced) { toast('💫 ' + sm.name + ' 교대 — 앞사람이 쓰러졌다'); }

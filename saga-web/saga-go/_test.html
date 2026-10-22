@@ -136,6 +136,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/landform.js"></script>
 <script src="js/mount.js"></script>
 <script src="js/mount-combat.js"></script>
+<script src="js/field-parry.js"></script>
 <script src="js/world-terrain.js"></script>
 <script src="js/world.js"></script>
 <script src="js/field2d.js"></script>
@@ -17415,6 +17416,16 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var P0 = { x: 0, y: 0 }, uv = Wd._spreadUV([{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 2 }], P0, 1), mn = 1e9;   /* 나와 같은 자리에 선 셋 — 화면에서 벌어짐 */
       for (i = 0; i < 3; i++) { mn = Math.min(mn, Math.hypot(uv[i].u, uv[i].v * 1.6)); for (var j = i + 1; j < 3; j++) { mn = Math.min(mn, Math.hypot(uv[i].u - uv[j].u, (uv[i].v - uv[j].v) * 1.6)); } }
       return mn > 15 || ('실패 벌림 ' + mn.toFixed(1));
+    });
+    t('W-0375 쳐내기 — 예고 끝 직전(남은 ≤0.25초) 평타면 쳐냄: 그 공격 취소·무피해·적 비틀(기절) · 다음 한 타 ×2 한 번만 · 이르면 그냥 평타 · 자동 사냥 평타는 안 쳐냄', function () {
+      var FP = DG.fieldParry, FC = DG.fieldCombat; if (!FP || !FC) { return '실패 DG.fieldParry 없음'; }
+      FP._reset();
+      var S = fcState(), f = fcFoe(S, 'rex', 0.8, 0);
+      f.st = 'wind'; f.stT = 0.6; f.atkT = f.kind; var early = FP.tryParry(S, 0, 0);
+      f.stT = 0.15; S.autoAct = true; var autoP = FP.tryParry(S, 0, 0); S.autoAct = false; var hit = FP.tryParry(S, 0, 0), m1 = FP.nextMul(), m2 = FP.nextMul();
+      var ev = fcEv(S, 'parry').length;
+      var ok = early === null && autoP === null && hit === f && f.st === 'recover' && f.stun >= 0.5 && !f.mark && m1 === 2 && m2 === 1 && ev === 1 && FP.window({ st: 'wind', stT: 0.2 }) && !FP.window({ st: 'chase', stT: 0.1 });
+      return ok || ('실패 ' + JSON.stringify({ early: !!early, hit: !!hit, st: f.st, stun: f.stun, m1: m1, m2: m2, ev: ev }));
     });
     t('W-0304 말 위 전투 — 달릴수록 평타 피해 · 돌진은 둘레 적을 쳐 넘기고 6초 쿨 · 탄 채 맞으면 낙마(0.8초 평타 막힘) · 날면 평타 막힘', function () {
       var MC = DG.mountCombat, FC = DG.fieldCombat, keepMT = DG.mount, fly = false, downed = 0; if (!MC || !FC) { return '실패 DG.mountCombat 없음'; }
