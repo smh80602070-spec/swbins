@@ -122,6 +122,7 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/cave-depth.js"></script>
 <script src="js/mail.js"></script>
 <script src="js/museum.js"></script>
+<script src="js/relics.js"></script>
 <script src="js/spirit.js"></script>
 <script src="js/grid.js"></script>
 <script src="js/parcel.js"></script>
@@ -7831,6 +7832,19 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       var dc = { save: function () {}, restore: function () {}, beginPath: function () {}, fill: function () {}, ellipse: function () {} };   /* ⑤ 발 먼지 — 닿은 직후만 둘 */
       var d1 = M.stepDust(dc, { x: 0, y: 0, clip: 'walk', stride: 0.52 }, 60), d2 = M.stepDust(dc, { x: 0, y: 0, clip: 'walk', stride: 0.3 }, 60), d3 = M.stepDust(dc, { x: 0, y: 0, clip: 'idle', stride: 0.02 }, 60);
       return (d1 === 2 && d2 === 0 && d3 === 0) || ('실패 발 먼지 ' + d1 + ' ' + d2 + ' ' + d3);
+    });
+    t('W-0309 유적 — 조각 굴림은 날·자리로 같음 · 넷 모여야 복원(명성 +150) · 셋 다 복원하면 옛터 잔치 한 번(+300) · 다 모은 갈래는 더 안 나옴', function () {
+      var RL = DG.relics, V = DG.village, C = DG.core; if (!RL) { return '실패 DG.relics 없음'; }
+      var s = V.state(), keep = s.relics, f0 = C.save.player.fame || 0;
+      try {
+        s.relics = null; var hits = 0, same = true, i, k, k2;
+        for (i = 0; i < 200; i++) { k = RL.rollPiece(9, 'p' + i); k2 = RL.rollPiece(9, 'p' + i); if (k !== k2) { same = false; } if (k) { hits++; } }
+        var early = RL.restore('bowl'); [1, 2, 3, 4].forEach(function () { RL.addPiece('bowl'); RL.addPiece('stele'); RL.addPiece('tile'); });
+        var r1 = RL.restore('bowl'), again = RL.restore('bowl'), f1 = C.save.player.fame, r2 = RL.restore('stele'), r3 = RL.restore('tile'), f3 = C.save.player.fame;
+        var noMore = RL.rollPiece(10, 'p1') === null;
+        var ok = same && hits > 20 && hits < 120 && !early.ok && r1.ok && !again.ok && f1 - f0 === 150 && r2.ok && !r2.feast && r3.ok && r3.feast && f3 - f0 === 150 * 3 + 300 && noMore;
+        return ok || ('실패 ' + JSON.stringify({ same: same, hits: hits, early: early, r1: r1, again: again, r3: r3, fame: [f0, f1, f3], noMore: noMore }));
+      } finally { s.relics = keep; C.save.player.fame = f0; }
     });
     t('W-0299 가축 — 우리 없으면 못 들임 · 넷까지 · 먹이면 다음 아침 산물(하트 3+ 둘) · 안 먹이면 없음 · 사흘 굶으면 떠남', function () {
       var LS = DG.livestock, V = DG.village, C = DG.core; if (!LS || !V) { return '실패 DG.livestock 없음'; }

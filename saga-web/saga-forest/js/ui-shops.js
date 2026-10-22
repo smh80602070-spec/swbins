@@ -109,7 +109,7 @@
       '<small class="muted">' +
         (stt.near ? '지금 사고 앞입니다 — 아래에서 들일 수 있습니다.'
                   : '기증은 <b>사고(🏛️) 앞에서만</b> 받습니다. 마을 가운데 왼쪽에 있습니다.') +
-      ' 들인 것은 가방에서 한 점이 빠집니다. 대신 <b>명성</b>이 오릅니다.</small></div></div>';
+      ' 들인 것은 가방에서 한 점이 빠집니다. 대신 <b>명성</b>이 오릅니다.</small></div></div>'; if (global.DG.relics) { html += global.DG.relics.sheetHtml(); }   // W-0309 유적 복원
 
     /* 지금 들일 수 있는 것 */
     html += '<div class="sec"><h4>들일 수 있는 것</h4>';

@@ -1427,5 +1427,26 @@
   "ticket": "W-0299",
   "since": "2026-10-22",
   "note": "10-22: 가축·우리 그림은 코드 대역, 달걀·산양젖 아이콘 K 대기(수신함) · 3D 표시 없음 · save.village.livestock 새 칸"
+ },
+ {
+  "id": "vf.relics",
+  "name": "유적 발굴·복원(W-0309) — 갈라진 자리를 파면 가끔(30%, 날·자리 해시) 옛 그릇·옛 비석·옛 망와 조각 · 넷 모이면 사고 창에서 복원·전시(명성 +150) · 셋 다면 옛터 잔치(+300 한 번) · 손잡이 village.relics",
+  "files": [
+   "js/relics.js",
+   "js/ui-shops.js"
+  ],
+  "tests": [
+   "test-web W-0309 유적",
+   "pw-look2d LOOK_EVAL 사고 창"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {
+   "D": "파기 보상",
+   "E": "모으는 끝점"
+  },
+  "ticket": "W-0309",
+  "since": "2026-10-22",
+  "note": "10-22: village:gather 신호만 들음(village.js 판정 안 건드림) · 방문객 확률 + 는 안 함(손님은 날마다 옴) · 사고 안 2D 전시대 그림 없음 · save.village.relics 새 칸"
  }
 ]
