@@ -120,7 +120,7 @@ for key, act in [(k, a) for k, a in acts.items() if k in ('idle', 'walk')] or li
 size = max(2 * half * MARGIN, top * MARGIN / (FEET - 0.04))
 # 공격 돌진·맞음·죽음(제자리로 붙든 뒤)도 들어가게 넓히되, 서 있기 배율의 CAP 배까지만(몸이 너무 작아지지 않게)
 xh, xt = 0.0, 0.0
-for key in ('attack', 'hit', 'death'):
+for key in ('attack', 'attack2', 'hit', 'death'):     # K-0160: attack2(Special — 말 앞발 들기·날개 펴기)도 칸 안에
     if key not in acts:
         continue
     use(acts[key])
@@ -171,12 +171,43 @@ sc.render.image_settings.color_mode = 'RGBA'
 
 os.makedirs(out, exist_ok=True)
 done = []
+# K-0160: TRELLIS 결은 면마다 밝기가 다르다(황소·젖소·곰 — 오른쪽 옆이 검게) — AUTO_SIDE=1 이면 서 있기 첫 칸을 오른쪽·왼쪽 옆으로
+# 한 장씩 찍어 몸 평균 밝기가 왼쪽이 SIDE_GAIN 배 넘게 밝으면 거울로 돈다(SIGN −1, 칸은 factory 가 좌우 뒤집어 오른쪽을 보게)
+SIGN = 1
+
+
+def _lum(path):
+    im = bpy.data.images.load(path)
+    px = list(im.pixels)
+    bpy.data.images.remove(im)
+    tot = n = 0.0
+    for i in range(0, len(px), 4):
+        if px[i + 3] > 0.5:
+            tot += 0.299 * px[i] + 0.587 * px[i + 1] + 0.114 * px[i + 2]
+            n += 1
+    return tot / max(n, 1)
+
+
+if os.environ.get('AUTO_SIDE') and acts:
+    use(acts.get('idle') or next(iter(acts.values())))
+    lums = []
+    for sg in (1, -1):
+        piv.rotation_euler.z = math.radians(sg * 90)
+        sc.frame_set(frames(acts.get('idle') or next(iter(acts.values())))[0])
+        sc.render.filepath = os.path.join(out, f'_side{sg}.png')
+        bpy.ops.render.render(write_still=True)
+        lums.append(_lum(sc.render.filepath))
+        os.remove(sc.render.filepath)
+    if lums[1] > lums[0] * float(os.environ.get('SIDE_GAIN', '1.25')):
+        SIGN = -1
+    print('AUTO_SIDE', [round(x, 3) for x in lums], 'mirror' if SIGN < 0 else 'right')
+    piv.rotation_euler.z = 0
 for key, act in acts.items():
     use(act)
     od = os.path.join(out, key)
     os.makedirs(od, exist_ok=True)
     for d in (DIR_LIST or ((0, 1, 2, 3) if os.environ.get('SIDE_ALT') else (0, 1, 2))):   # K-0143: SIDE_ALT=1 이면 3 = 반대쪽 옆(왼쪽)도 — 묶는 쪽이 더 밝은 옆을 고른다(TRELLIS 결이 면마다 다름)
-        piv.rotation_euler.z = math.radians(DIR_STEP * d)      # 90° 걸음: 0 정면(−Y 를 봄) · 1 오른쪽(+X) · 2 뒤 · 3 왼쪽 / 45° 걸음(K-0158): 0 정면 · 1 앞대각 · 2 오른쪽 · 3 뒤대각 · 4 뒤
+        piv.rotation_euler.z = math.radians(SIGN * DIR_STEP * d)      # 90° 걸음: 0 정면(−Y 를 봄) · 1 오른쪽(+X) · 2 뒤 · 3 왼쪽 / 45° 걸음(K-0158): 0 정면 · 1 앞대각 · 2 오른쪽 · 3 뒤대각 · 4 뒤
         fl = frames(act, NFR_MAP.get(key))
         c0 = hold(key, fl[0])
         for i, f in enumerate(fl):
@@ -186,5 +217,5 @@ for key, act in acts.items():
     done.append(key)
 json.dump({'clips': done, 'missing': [k for k, _ in CLIPS if k not in acts], 'frames': NFR, 'nfr': {k: NFR_MAP.get(k, NFR) for k in done},
            'dirs': DIR_LIST or [0, 1, 2], 'dir_step': DIR_STEP, 'px': PX, 'ortho_m': round(size, 4),
-           'cam_z': round(cam_z, 4), 'anchor_feet_y_px': round(PX * FEET, 2)}, open(os.path.join(out, 'meta.json'), 'w'), indent=1)
+           'cam_z': round(cam_z, 4), 'anchor_feet_y_px': round(PX * FEET, 2), 'mirror_side': SIGN < 0}, open(os.path.join(out, 'meta.json'), 'w'), indent=1)
 print('CREATURE_SPRITES', src, done, 'size', round(size, 3))

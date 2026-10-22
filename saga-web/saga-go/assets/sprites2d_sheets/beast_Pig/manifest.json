@@ -1,0 +1,89 @@
+{
+ "id": "beast_Pig",
+ "px": 192,
+ "dirs": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "dir_names": [
+  "front",
+  "front_side",
+  "side",
+  "back_side",
+  "back"
+ ],
+ "ndir": 8,
+ "mirror": true,
+ "side_faces": "right",
+ "layout": "가로 = 프레임, 세로 = 방향(dirs 순서)",
+ "clips": {
+  "idle": {
+   "frames": 8,
+   "fps": 6,
+   "loop": true,
+   "file": "idle.webp"
+  },
+  "walk": {
+   "frames": 8,
+   "fps": 10,
+   "loop": true,
+   "file": "walk.webp"
+  },
+  "run": {
+   "frames": 8,
+   "fps": 12,
+   "loop": true,
+   "file": "run.webp"
+  },
+  "attack": {
+   "frames": 8,
+   "fps": 14,
+   "loop": false,
+   "file": "attack.webp"
+  },
+  "attack2": {
+   "frames": 8,
+   "fps": 12,
+   "loop": false,
+   "spin": true,
+   "file": "attack2.webp"
+  },
+  "hit": {
+   "frames": 6,
+   "fps": 12,
+   "loop": false,
+   "file": "hit.webp"
+  },
+  "death": {
+   "frames": 6,
+   "fps": 8,
+   "loop": false,
+   "file": "death.webp"
+  }
+ },
+ "missing": [
+  "cast",
+  "sit",
+  "talk"
+ ],
+ "foot": 0.88,
+ "style": "C-toon-1",
+ "kind": "creature",
+ "ortho_m": 1.1426,
+ "px_per_m": 168.04,
+ "body": "saga-assets/creatures3d/pig.glb",
+ "act": {
+  "idle": "Idle",
+  "walk": "Walk",
+  "run": "Run",
+  "attack": "Attack",
+  "attack2": "Special",
+  "hit": "Hit",
+  "death": "Death"
+ },
+ "source": "tools/char-forge/factory.py → creature_sprites.py (Blender) → style_pass.py",
+ "license": "자체 3D 몸(saga-assets/creatures3d/pig.glb, TRELLIS (microsoft/TRELLIS, Kaggle T4) — tools/ai-art/remote3d · 모델 MIT) + 자체 뼈대·키프레임 동작 — 상업 사용 가능"
+}

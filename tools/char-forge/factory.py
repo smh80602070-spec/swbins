@@ -85,6 +85,11 @@ def bake_creature(plan, pool, raw):
     fr = os.path.join(OUT, 'frames', pool['id'])
     env = dict(os.environ, SPRITE_PX=str(plan['px']), NFR='8', DIR_STEP=str(360 / plan['ndir']), DIR_LIST=','.join(map(str, plan['dirs'])),
                CLIPS=','.join(f'{r}={act[r]}' for r in todo), NFR_MAP=','.join(f'{r}={plan["clips"][r]["frames"]}' for r in todo))
+    if plan['creature'].get('auto_side') or pool.get('auto_side'):   # K-0160 TRELLIS 결 밝은 옆 고르기(creature_sprites AUTO_SIDE)
+        env['AUTO_SIDE'] = '1'
+    for k in ('cap', 'margin'):                   # K-0160 칸 배율 손잡이(공격 돌진·꼬리가 칸 밖으로 — creature_sprites CAP·MARGIN)
+        if pool.get(k):
+            env[k.upper()] = str(pool[k])
     os.makedirs(odir, exist_ok=True)
     with open(os.path.join(odir, 'bake.log'), 'wb') as lf:
         rc = subprocess.run([BLENDER, '-b', '--factory-startup', '-P', os.path.join(HERE, 'creature_sprites.py'), '--', P(pool['glb']), fr],
@@ -95,6 +100,15 @@ def bake_creature(plan, pool, raw):
     meta = json.load(open(os.path.join(fr, 'meta.json'), encoding='utf-8'))
     for r in meta['clips']:
         sheet_from_frames(os.path.join(fr, r), plan['dirs'], meta['nfr'][r], os.path.join(odir, r + '.webp'), plan['px'])
+        if meta.get('mirror_side'):          # K-0160 AUTO_SIDE: 밝은 왼쪽 면으로 찍은 줄 → 칸마다 좌우 뒤집어 오른쪽을 보게
+            from PIL import Image
+            sp = os.path.join(odir, r + '.webp')
+            sh = Image.open(sp).convert('RGBA')
+            px = plan['px']
+            for y in range(0, sh.height, px):
+                for x in range(0, sh.width, px):
+                    sh.paste(sh.crop((x, y, x + px, y + px)).transpose(Image.FLIP_LEFT_RIGHT), (x, y))
+            sh.save(sp, 'WEBP', quality=85, method=6)
     m = {'ortho_m': meta['ortho_m'], 'cam_z': meta['cam_z'], 'foot': round(meta['anchor_feet_y_px'] / meta['px'], 4), 'missing_body': meta['missing']}
     json.dump(m, open(os.path.join(odir, 'creature_meta.json'), 'w', encoding='utf-8'), indent=1)
     shutil.rmtree(fr, ignore_errors=True)
@@ -122,7 +136,7 @@ def manifest(plan, pool, raw_dir):
     missing = [r for r in plan['clips'] if r not in have]
     m = {'id': pool['id'], 'px': geo(plan, pool)[0], 'dirs': plan['dirs'], 'dir_names': plan.get('dir_names'), 'ndir': plan['ndir'], 'mirror': True,
          'side_faces': 'right', 'layout': '가로 = 프레임, 세로 = 방향(dirs 순서)',
-         'clips': {r: dict(plan['clips'][r], file=r + '.webp') for r in have}, 'missing': missing,
+         'clips': {r: dict(plan['clips'][r], file=r + '.webp', **({'spin': True} if r in pool.get('spin_roles', ()) else {})) for r in have}, 'missing': missing,
          'foot': plan['foot'], 'style': plan['style'], 'kind': pool['type']}
     if pool['type'] == 'human':
         px, ortho, _ = geo(plan, pool)
@@ -138,6 +152,8 @@ def manifest(plan, pool, raw_dir):
                   'act': {r: act[r] for r in have},
                   'source': 'tools/char-forge/factory.py → creature_sprites.py (Blender) → style_pass.py',
                   'license': f'자체 3D 몸({pool["glb"]}, {lic.get("generator", "")} · 모델 {lic.get("model_license", "")}) + 자체 뼈대·키프레임 동작 — 상업 사용 {"가능" if lic.get("commercial_use") else "확인 필요"}'})
+    if pool.get('spin_roles'):             # K-0160 눈으로 본 뒤 — 몸 전체가 구르고 뒤집히는 동작(얇은 물고기 맞음·로봇 돌진)은 판정기 spin
+        m['spin_roles'] = pool['spin_roles']
     if pool.get('from'):
         m['from_pool'] = pool['from']
     if pool.get('weapon_kind'):
@@ -213,11 +229,11 @@ def main():
                     foot = plan['foot']
                     if p['type'] == 'creature':
                         foot = json.load(open(os.path.join(rd, 'creature_meta.json'), encoding='utf-8'))['foot']
-                    style_pass.style_sheet(src, dst, pal, geo(plan, p)[0], r, foot, plan['clips'][r].get('ground'))
+                    style_pass.style_sheet(src, dst, pal, geo(plan, p)[0], r, foot, plan['clips'][r].get('ground'), p.get('tint'))
                     n += 1
             m = manifest(plan, p, rd)
             json.dump(m, open(os.path.join(sd, 'manifest.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-            style_pass.compare_board(rd, sd, dict(plan, px=geo(plan, p)[0], still_game=p.get('still_game', plan.get('game'))), os.path.join(OUT, f'compare_{p["id"]}.png'))
+            style_pass.compare_board(rd, sd, dict(plan, px=geo(plan, p)[0], still_game=p.get('still_game', plan.get('game')), still_img=p.get('still_img')), os.path.join(OUT, f'compare_{p["id"]}.png'))
             tp.setdefault(p['id'], {})['style_sec'] = round(time.time() - t0, 1)
             log(f'그림체: {p["id"]} {n}장 · 대조판 compare_{p["id"]}.png')
         tp_save(tp)
@@ -263,6 +279,8 @@ def main():
             ip = os.path.join(P(d), 'index.json')
             idx = json.load(open(ip, encoding='utf-8')) if os.path.exists(ip) else {'sheets': []}
             idx['factory'] = [x for x in idx.get('factory', []) if x not in mine] + mine
+            if plan.get('aliases'):              # K-0160 같은 몸 다른 그림(색 변형·두 마리·대소문자) → 그 풀을 같이 쓴다
+                idx['factory_alias'] = dict(idx.get('factory_alias', {}), **{k: v for k, v in plan['aliases'].items() if v in placed or v in idx['factory']})
             idx['factory_spec'] = (f'K-0158 공장 규격: {plan["px"]}px(긴 무기 풀은 manifest px 가 더 큼 — px_per_m 같음) · 방향 {len(plan["dirs"])}(0 정면·1 앞대각·2 옆·3 뒤대각·4 뒤, 반대쪽은 뒤집기) · '
                                    f'동작 {"/".join(plan["clips"])}(없는 것은 manifest missing) · 8프레임(death·hit 6) · 발 = 위에서 {plan["foot"]} · 그림체 {plan["style"]}')
             open(ip, 'w', encoding='utf-8').write(json.dumps(idx, ensure_ascii=False, indent=1) + '\n')

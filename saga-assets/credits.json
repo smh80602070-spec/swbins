@@ -729,7 +729,7 @@
    "tool": "factory.py (K-0158 2D 공장, Blender + style_pass)",
    "model": "-",
    "license": "MIT(TRELLIS)·자체 뼈대 동작 — 자체 렌더",
-   "count": 1,
+   "count": 127,
    "where": [
     "saga-assets/sprites2d_factory"
    ]

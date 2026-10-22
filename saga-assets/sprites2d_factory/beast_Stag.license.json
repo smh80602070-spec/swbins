@@ -1,0 +1,26 @@
+{
+ "id": "beast_Stag",
+ "generator": "factory.py (K-0158 2D 공장, Blender + style_pass)",
+ "model": "-",
+ "pipeline": "tools/char-forge/factory.py → creature_sprites.py (Blender) → style_pass.py",
+ "license": "MIT(TRELLIS)·자체 뼈대 동작 — 자체 렌더",
+ "license_detail": "자체 3D 몸(saga-assets/creatures3d/stag.glb, TRELLIS (microsoft/TRELLIS, Kaggle T4) — tools/ai-art/remote3d · 모델 MIT) + 자체 뼈대·키프레임 동작 — 상업 사용 가능",
+ "commercial_use": true,
+ "style": "C-toon-1",
+ "tools": [
+  "tools/char-forge/factory.py",
+  "tools/char-forge/style_pass.py",
+  "tools/char-forge/sheet_judge.py"
+ ],
+ "date": "2026-10-22",
+ "ticket": "K-0160",
+ "judge": {
+  "same": true,
+  "foot": true,
+  "flicker": true,
+  "crop": true,
+  "border": true,
+  "still": true
+ },
+ "source_license": "saga-assets/creatures3d/stag.license.json"
+}

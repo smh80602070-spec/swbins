@@ -1,0 +1,127 @@
+{
+ "px": 192,
+ "ndir": 8,
+ "dirs": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "dir_names": [
+  "front",
+  "front_side",
+  "side",
+  "back_side",
+  "back"
+ ],
+ "foot": 0.88,
+ "style": "C-toon-1",
+ "style_ref": "saga-web/saga-dungeon/assets/web2d/bg",
+ "clips": {
+  "idle": {
+   "frames": 8,
+   "fps": 6,
+   "loop": true
+  },
+  "walk": {
+   "frames": 8,
+   "fps": 10,
+   "loop": true
+  },
+  "run": {
+   "frames": 8,
+   "fps": 12,
+   "loop": true
+  },
+  "attack": {
+   "frames": 8,
+   "fps": 14,
+   "loop": false
+  },
+  "attack2": {
+   "frames": 8,
+   "fps": 12,
+   "loop": false,
+   "spin": true
+  },
+  "cast": {
+   "frames": 8,
+   "fps": 10,
+   "loop": false
+  },
+  "hit": {
+   "frames": 6,
+   "fps": 12,
+   "loop": false
+  },
+  "death": {
+   "frames": 6,
+   "fps": 8,
+   "loop": false
+  },
+  "sit": {
+   "frames": 8,
+   "fps": 6,
+   "loop": false
+  },
+  "talk": {
+   "frames": 8,
+   "fps": 8,
+   "loop": true
+  }
+ },
+ "canon": "saga-assets/sprites2d_factory",
+ "ortho": 2.5,
+ "note": "K-0160 — still 짐승 2나락 beast_dog·beast_wolf·beast_big + 4종횡 beast_dog·beast_wolf(같은 그림 md5). 몸 = 눈으로 고름: 흰 크림 말린 꼬리 개 → shiba, 회색 늑대 → wolf(K-0158 풀 그대로), 갈색 큰 곰 → bear(검은 곰 몸이라 tint — style_pass colorize 로 그림의 갈색)",
+ "ticket": "K-0160",
+ "game": "saga-dungeon",
+ "creature": {
+  "act": {
+   "idle": "Idle",
+   "walk": "Walk",
+   "run": "Run",
+   "attack": "Attack",
+   "attack2": "Special",
+   "hit": "Hit",
+   "death": "Death"
+  }
+ },
+ "pools": [
+  {
+   "id": "beast_dog",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/shiba.glb",
+   "license_json": "saga-assets/creatures3d/shiba.license.json"
+  },
+  {
+   "id": "beast_wolf",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/wolf.glb",
+   "license_json": "saga-assets/creatures3d/wolf.license.json"
+  },
+  {
+   "id": "beast_big",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/bear.glb",
+   "license_json": "saga-assets/creatures3d/bear.license.json",
+   "tint": [
+    150,
+    118,
+    98,
+    0.85
+   ]
+  }
+ ],
+ "deploy": {
+  "saga-web/saga-dungeon/assets/sprites2d_sheets": [
+   "beast_dog",
+   "beast_wolf",
+   "beast_big"
+  ],
+  "saga-web/saga-story/assets/sprites2d_sheets": [
+   "beast_dog",
+   "beast_wolf"
+  ]
+ }
+}

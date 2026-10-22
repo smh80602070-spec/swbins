@@ -12,14 +12,15 @@
   "tools/char-forge/style_pass.py",
   "tools/char-forge/sheet_judge.py"
  ],
- "date": "2026-10-21",
- "ticket": "K-0158",
+ "date": "2026-10-22",
+ "ticket": "K-0160",
  "judge": {
   "same": true,
   "foot": true,
   "flicker": true,
   "crop": true,
-  "border": true
+  "border": true,
+  "still": true
  },
  "source_license": "saga-assets/creatures3d/wolf.license.json"
 }

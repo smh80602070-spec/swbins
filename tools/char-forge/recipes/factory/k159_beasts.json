@@ -1,0 +1,1199 @@
+{
+ "px": 192,
+ "ndir": 8,
+ "dirs": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "dir_names": [
+  "front",
+  "front_side",
+  "side",
+  "back_side",
+  "back"
+ ],
+ "foot": 0.88,
+ "style": "C-toon-1",
+ "style_ref": "saga-web/saga-dungeon/assets/web2d/bg",
+ "clips": {
+  "idle": {
+   "frames": 8,
+   "fps": 6,
+   "loop": true
+  },
+  "walk": {
+   "frames": 8,
+   "fps": 10,
+   "loop": true
+  },
+  "run": {
+   "frames": 8,
+   "fps": 12,
+   "loop": true
+  },
+  "attack": {
+   "frames": 8,
+   "fps": 14,
+   "loop": false
+  },
+  "attack2": {
+   "frames": 8,
+   "fps": 12,
+   "loop": false,
+   "spin": true
+  },
+  "cast": {
+   "frames": 8,
+   "fps": 10,
+   "loop": false
+  },
+  "hit": {
+   "frames": 6,
+   "fps": 12,
+   "loop": false
+  },
+  "death": {
+   "frames": 6,
+   "fps": 8,
+   "loop": false
+  },
+  "sit": {
+   "frames": 8,
+   "fps": 6,
+   "loop": false
+  },
+  "talk": {
+   "frames": 8,
+   "fps": 8,
+   "loop": true
+  }
+ },
+ "canon": "saga-assets/sprites2d_factory",
+ "ortho": 2.5,
+ "note": "K-0160 공장 ③ — 1만리 들판 짐승(assets/sprites2d/beast_*.png 96px 한 장 그림, 128장)을 같은 그림체 시트로. 몸 = saga-assets/creatures3d·pets3d 자체 3D(K-0096·K-0120·K-0122·K-0145, 동작 7 자기 뼈대). 짝 = pairs, 같은 몸 다른 그림 = aliases(웹은 alias 풀을 씀), 몸 없음 = missing. 짝은 K-0114 표(tools/world-forge/data/k114_beasts.json)와 같고, 거기서 null(사람꼴 괴물 8)이던 것은 K-0122·K-0145 자체 몸(빌린 Quaternius 대체 — 지금 그림과 다른 몸). 생성: tools/char-forge/recipes/factory/gen_k160.py(1회)",
+ "ticket": "K-0160",
+ "game": "saga-go",
+ "creature": {
+  "act": {
+   "idle": "Idle",
+   "walk": "Walk",
+   "run": "Run",
+   "attack": "Attack",
+   "attack2": "Special",
+   "hit": "Hit",
+   "death": "Death"
+  }
+ },
+ "pairs": {
+  "beast_Alien": "saga-assets/creatures3d/alien_grunt.glb",
+  "beast_Alpaca": "saga-assets/creatures3d/alpaca.glb",
+  "beast_Alpaking": "saga-assets/creatures3d/alpaking.glb",
+  "beast_Anglerfish": "saga-assets/creatures3d/anglerfish.glb",
+  "beast_Apatosaurus": "saga-assets/creatures3d/apatosaurus.glb",
+  "beast_Armored_Catfish": "saga-assets/creatures3d/armored_catfish.glb",
+  "beast_Bear": "saga-assets/creatures3d/bear.glb",
+  "beast_Betta": "saga-assets/creatures3d/betta.glb",
+  "beast_Birb": "saga-assets/creatures3d/birb.glb",
+  "beast_Black_Lion_Fish": "saga-assets/creatures3d/black_lionfish.glb",
+  "beast_Blobfish": "saga-assets/creatures3d/blobfish.glb",
+  "beast_BlueDemon": "saga-assets/creatures3d/demon_blue.glb",
+  "beast_Blue_Goldfish": "saga-assets/creatures3d/blue_goldfish.glb",
+  "beast_Blue_Tang": "saga-assets/creatures3d/blue_tang.glb",
+  "beast_Boar": "saga-assets/creatures3d/boar.glb",
+  "beast_Bull": "saga-assets/creatures3d/bull.glb",
+  "beast_Bunny": "saga-assets/creatures3d/bunny.glb",
+  "beast_Butterfly_Fish": "saga-assets/creatures3d/butterflyfish.glb",
+  "beast_Cardinal_Fish": "saga-assets/creatures3d/cardinalfish.glb",
+  "beast_Cat": "saga-assets/creatures3d/cat.glb",
+  "beast_Cat_Monster": "saga-assets/creatures3d/cat_monster.glb",
+  "beast_Clownfish": "saga-assets/creatures3d/clownfish.glb",
+  "beast_Coral_Grouper": "saga-assets/creatures3d/coral_grouper.glb",
+  "beast_Cow": "saga-assets/creatures3d/cow.glb",
+  "beast_Cow_Farm": "saga-assets/creatures3d/cow_farm.glb",
+  "beast_Cowfish": "saga-assets/creatures3d/cowfish.glb",
+  "beast_Crane": "saga-assets/creatures3d/crane.glb",
+  "beast_Deer": "saga-assets/creatures3d/deer.glb",
+  "beast_Demon": "saga-assets/creatures3d/demon_red.glb",
+  "beast_Dino": "saga-assets/creatures3d/dino_pet.glb",
+  "beast_Dolphin": "saga-assets/creatures3d/dolphin.glb",
+  "beast_Donkey": "saga-assets/creatures3d/donkey.glb",
+  "beast_Dragon": "saga-assets/creatures3d/dragon.glb",
+  "beast_Dragon_Evolved": "saga-assets/creatures3d/dragon_evolved.glb",
+  "beast_Elephant": "saga-assets/creatures3d/elephant.glb",
+  "beast_Fish1": "saga-assets/creatures3d/fish_a.glb",
+  "beast_Fish2": "saga-assets/creatures3d/fish_b.glb",
+  "beast_Fish3": "saga-assets/creatures3d/fish_c.glb",
+  "beast_Flatfish": "saga-assets/creatures3d/flatfish.glb",
+  "beast_Flower_Horn": "saga-assets/creatures3d/flowerhorn.glb",
+  "beast_Fox": "saga-assets/creatures3d/fox.glb",
+  "beast_Frog": "saga-assets/creatures3d/frog.glb",
+  "beast_Ghost": "saga-assets/creatures3d/ghost.glb",
+  "beast_Glub": "saga-assets/creatures3d/glub.glb",
+  "beast_Glub_Evolved": "saga-assets/creatures3d/glub_evolved.glb",
+  "beast_Goblin_Shark": "saga-assets/creatures3d/goblin_shark.glb",
+  "beast_Goldfish": "saga-assets/creatures3d/goldfish.glb",
+  "beast_Goleling": "saga-assets/creatures3d/goleling.glb",
+  "beast_Horse": "saga-assets/creatures3d/horse.glb",
+  "beast_Horse_Farm": "saga-assets/creatures3d/horse_farm.glb",
+  "beast_Horse_White": "saga-assets/creatures3d/horse_white.glb",
+  "beast_Humphead": "saga-assets/creatures3d/humphead.glb",
+  "beast_Husky": "saga-assets/creatures3d/husky.glb",
+  "beast_Hywirl": "saga-assets/creatures3d/hywirl.glb",
+  "beast_Koi": "saga-assets/creatures3d/koi.glb",
+  "beast_Lionfish": "saga-assets/creatures3d/lionfish.glb",
+  "beast_Llama": "saga-assets/creatures3d/llama.glb",
+  "beast_Mandarin_Fish": "saga-assets/creatures3d/mandarinfish.glb",
+  "beast_Manta_ray": "saga-assets/creatures3d/manta_ray.glb",
+  "beast_Monkey": "saga-assets/creatures3d/monkey.glb",
+  "beast_Monkroose": "saga-assets/creatures3d/monkroose.glb",
+  "beast_Moorish_Idol": "saga-assets/creatures3d/moorish_idol.glb",
+  "beast_Mushnub": "saga-assets/creatures3d/mushnub.glb",
+  "beast_Orc": "saga-assets/creatures3d/orc_warrior.glb",
+  "beast_Owl": "saga-assets/creatures3d/owl.glb",
+  "beast_Panda": "saga-assets/creatures3d/panda.glb",
+  "beast_Parasaurolophus": "saga-assets/creatures3d/parasaurolophus.glb",
+  "beast_Parrot_Fish": "saga-assets/creatures3d/parrotfish.glb",
+  "beast_Pig": "saga-assets/creatures3d/pig.glb",
+  "beast_Pigeon": "saga-assets/creatures3d/pigeon.glb",
+  "beast_Pink_Slime": "saga-assets/creatures3d/pink_slime.glb",
+  "beast_Piranha": "saga-assets/creatures3d/piranha.glb",
+  "beast_Puffer": "saga-assets/creatures3d/puffer.glb",
+  "beast_Pug": "saga-assets/creatures3d/pug.glb",
+  "beast_Rat": "saga-assets/creatures3d/rat.glb",
+  "beast_Red_Snapper": "saga-assets/creatures3d/red_snapper.glb",
+  "beast_Robot_Drone": "saga-assets/creatures3d/robot_drone.glb",
+  "beast_Robot_Large": "saga-assets/creatures3d/robot_large.glb",
+  "beast_Robot_Walker": "saga-assets/creatures3d/robot_walker.glb",
+  "beast_Royal_Gramma": "saga-assets/creatures3d/royal_gramma.glb",
+  "beast_Shark": "saga-assets/creatures3d/shark.glb",
+  "beast_Shark_x2": "saga-assets/creatures3d/great_white.glb",
+  "beast_Sheep": "saga-assets/creatures3d/sheep.glb",
+  "beast_ShibaInu": "saga-assets/creatures3d/shiba.glb",
+  "beast_Snake": "saga-assets/creatures3d/snake.glb",
+  "beast_Squidle": "saga-assets/creatures3d/squidle.glb",
+  "beast_Stag": "saga-assets/creatures3d/stag.glb",
+  "beast_Stegosaurus": "saga-assets/creatures3d/stegosaurus.glb",
+  "beast_Sunfish": "saga-assets/creatures3d/sunfish.glb",
+  "beast_Swordfish": "saga-assets/creatures3d/swordfish.glb",
+  "beast_Tang": "saga-assets/creatures3d/tang.glb",
+  "beast_Tetra": "saga-assets/creatures3d/tetra.glb",
+  "beast_Tiger": "saga-assets/creatures3d/tiger.glb",
+  "beast_Trex": "saga-assets/creatures3d/trex.glb",
+  "beast_Triceratops": "saga-assets/creatures3d/triceratops.glb",
+  "beast_Tuna": "saga-assets/creatures3d/tuna.glb",
+  "beast_Turbot": "saga-assets/creatures3d/turbot.glb",
+  "beast_Velociraptor": "saga-assets/creatures3d/raptor.glb",
+  "beast_Wasp": "saga-assets/creatures3d/wasp.glb",
+  "beast_Whale": "saga-assets/creatures3d/whale.glb",
+  "beast_Wizard": "saga-assets/creatures3d/hat_wizard.glb",
+  "beast_Wolf": "saga-assets/creatures3d/wolf.glb",
+  "beast_Worm": "saga-assets/creatures3d/worm.glb",
+  "beast_Yellow_Tang": "saga-assets/creatures3d/yellow_tang.glb",
+  "beast_Yeti": "saga-assets/creatures3d/yeti.glb",
+  "beast_Zebra": "saga-assets/creatures3d/zebra.glb",
+  "beast_Zebra_Clown_Fish": "saga-assets/creatures3d/zebra_clownfish.glb",
+  "beast_Zombie": "saga-assets/creatures3d/zombie.glb",
+  "beast_pk_alakazam": "saga-assets/pets3d/pet_pk_alakazam.glb",
+  "beast_pk_bulbasaur": "saga-assets/pets3d/pet_pk_bulbasaur.glb",
+  "beast_pk_charizard": "saga-assets/pets3d/pet_pk_charizard.glb",
+  "beast_pk_charmander": "saga-assets/pets3d/pet_pk_charmander.glb",
+  "beast_pk_dragonite": "saga-assets/pets3d/pet_pk_dragonite.glb",
+  "beast_pk_eevee": "saga-assets/pets3d/pet_pk_eevee.glb",
+  "beast_pk_gengar": "saga-assets/pets3d/pet_pk_gengar.glb",
+  "beast_pk_gyarados": "saga-assets/pets3d/pet_pk_gyarados.glb",
+  "beast_pk_lapras": "saga-assets/pets3d/pet_pk_lapras.glb",
+  "beast_pk_magikarp": "saga-assets/pets3d/pet_pk_magikarp.glb",
+  "beast_pk_mew": "saga-assets/pets3d/pet_pk_mew.glb",
+  "beast_pk_mewtwo": "saga-assets/pets3d/pet_pk_mewtwo.glb",
+  "beast_pk_pikachu": "saga-assets/pets3d/pet_pk_pikachu.glb",
+  "beast_pk_slowbro": "saga-assets/pets3d/pet_pk_slowbro.glb",
+  "beast_pk_snorlax": "saga-assets/pets3d/pet_pk_snorlax.glb",
+  "beast_pk_squirtle": "saga-assets/pets3d/pet_pk_squirtle.glb",
+  "beast_pt_magpie": "saga-assets/pets3d/pet_pt_magpie.glb"
+ },
+ "aliases": {
+  "beast_Alien_2": "beast_Alien",
+  "beast_Koi_x2": "beast_Koi",
+  "beast_Snake_angry": "beast_Snake",
+  "beast_Wolf": "beast_wolf"
+ },
+ "missing": [],
+ "pools": [
+  {
+   "id": "beast_Alien",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/alien_grunt.glb",
+   "license_json": "saga-assets/creatures3d/alien_grunt.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Alien.png"
+  },
+  {
+   "id": "beast_Alpaca",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/alpaca.glb",
+   "license_json": "saga-assets/creatures3d/alpaca.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Alpaca.png"
+  },
+  {
+   "id": "beast_Alpaking",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/alpaking.glb",
+   "license_json": "saga-assets/creatures3d/alpaking.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Alpaking.png"
+  },
+  {
+   "id": "beast_Anglerfish",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/anglerfish.glb",
+   "license_json": "saga-assets/creatures3d/anglerfish.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Anglerfish.png"
+  },
+  {
+   "id": "beast_Apatosaurus",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/apatosaurus.glb",
+   "license_json": "saga-assets/creatures3d/apatosaurus.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Apatosaurus.png"
+  },
+  {
+   "id": "beast_Armored_Catfish",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/armored_catfish.glb",
+   "license_json": "saga-assets/creatures3d/armored_catfish.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Armored_Catfish.png"
+  },
+  {
+   "id": "beast_Bear",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/bear.glb",
+   "license_json": "saga-assets/creatures3d/bear.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Bear.png",
+   "auto_side": true
+  },
+  {
+   "id": "beast_Betta",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/betta.glb",
+   "license_json": "saga-assets/creatures3d/betta.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Betta.png",
+   "spin_roles": [
+    "hit",
+    "death",
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "beast_Birb",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/birb.glb",
+   "license_json": "saga-assets/creatures3d/birb.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Birb.png"
+  },
+  {
+   "id": "beast_Black_Lion_Fish",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/black_lionfish.glb",
+   "license_json": "saga-assets/creatures3d/black_lionfish.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Black_Lion_Fish.png"
+  },
+  {
+   "id": "beast_Blobfish",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/blobfish.glb",
+   "license_json": "saga-assets/creatures3d/blobfish.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Blobfish.png"
+  },
+  {
+   "id": "beast_BlueDemon",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/demon_blue.glb",
+   "license_json": "saga-assets/creatures3d/demon_blue.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_BlueDemon.png"
+  },
+  {
+   "id": "beast_Blue_Goldfish",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/blue_goldfish.glb",
+   "license_json": "saga-assets/creatures3d/blue_goldfish.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Blue_Goldfish.png"
+  },
+  {
+   "id": "beast_Blue_Tang",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/blue_tang.glb",
+   "license_json": "saga-assets/creatures3d/blue_tang.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Blue_Tang.png",
+   "spin_roles": [
+    "hit",
+    "death",
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "beast_Boar",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/boar.glb",
+   "license_json": "saga-assets/creatures3d/boar.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Boar.png"
+  },
+  {
+   "id": "beast_Bull",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/bull.glb",
+   "license_json": "saga-assets/creatures3d/bull.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Bull.png",
+   "auto_side": true
+  },
+  {
+   "id": "beast_Bunny",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/bunny.glb",
+   "license_json": "saga-assets/creatures3d/bunny.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Bunny.png"
+  },
+  {
+   "id": "beast_Butterfly_Fish",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/butterflyfish.glb",
+   "license_json": "saga-assets/creatures3d/butterflyfish.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Butterfly_Fish.png"
+  },
+  {
+   "id": "beast_Cardinal_Fish",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/cardinalfish.glb",
+   "license_json": "saga-assets/creatures3d/cardinalfish.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Cardinal_Fish.png"
+  },
+  {
+   "id": "beast_Cat",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/cat.glb",
+   "license_json": "saga-assets/creatures3d/cat.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Cat.png"
+  },
+  {
+   "id": "beast_Cat_Monster",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/cat_monster.glb",
+   "license_json": "saga-assets/creatures3d/cat_monster.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Cat_Monster.png"
+  },
+  {
+   "id": "beast_Clownfish",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/clownfish.glb",
+   "license_json": "saga-assets/creatures3d/clownfish.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Clownfish.png"
+  },
+  {
+   "id": "beast_Coral_Grouper",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/coral_grouper.glb",
+   "license_json": "saga-assets/creatures3d/coral_grouper.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Coral_Grouper.png",
+   "cap": 1.7
+  },
+  {
+   "id": "beast_Cow",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/cow.glb",
+   "license_json": "saga-assets/creatures3d/cow.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Cow.png",
+   "auto_side": true
+  },
+  {
+   "id": "beast_Cow_Farm",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/cow_farm.glb",
+   "license_json": "saga-assets/creatures3d/cow_farm.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Cow_Farm.png"
+  },
+  {
+   "id": "beast_Cowfish",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/cowfish.glb",
+   "license_json": "saga-assets/creatures3d/cowfish.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Cowfish.png"
+  },
+  {
+   "id": "beast_Crane",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/crane.glb",
+   "license_json": "saga-assets/creatures3d/crane.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Crane.png"
+  },
+  {
+   "id": "beast_Deer",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/deer.glb",
+   "license_json": "saga-assets/creatures3d/deer.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Deer.png"
+  },
+  {
+   "id": "beast_Demon",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/demon_red.glb",
+   "license_json": "saga-assets/creatures3d/demon_red.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Demon.png"
+  },
+  {
+   "id": "beast_Dino",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/dino_pet.glb",
+   "license_json": "saga-assets/creatures3d/dino_pet.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Dino.png",
+   "cap": 1.7
+  },
+  {
+   "id": "beast_Dolphin",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/dolphin.glb",
+   "license_json": "saga-assets/creatures3d/dolphin.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Dolphin.png"
+  },
+  {
+   "id": "beast_Donkey",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/donkey.glb",
+   "license_json": "saga-assets/creatures3d/donkey.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Donkey.png"
+  },
+  {
+   "id": "beast_Dragon",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/dragon.glb",
+   "license_json": "saga-assets/creatures3d/dragon.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Dragon.png"
+  },
+  {
+   "id": "beast_Dragon_Evolved",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/dragon_evolved.glb",
+   "license_json": "saga-assets/creatures3d/dragon_evolved.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Dragon_Evolved.png",
+   "cap": 1.7
+  },
+  {
+   "id": "beast_Elephant",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/elephant.glb",
+   "license_json": "saga-assets/creatures3d/elephant.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Elephant.png"
+  },
+  {
+   "id": "beast_Fish1",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/fish_a.glb",
+   "license_json": "saga-assets/creatures3d/fish_a.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Fish1.png",
+   "spin_roles": [
+    "hit",
+    "death",
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "beast_Fish2",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/fish_b.glb",
+   "license_json": "saga-assets/creatures3d/fish_b.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Fish2.png",
+   "spin_roles": [
+    "hit",
+    "death",
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "beast_Fish3",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/fish_c.glb",
+   "license_json": "saga-assets/creatures3d/fish_c.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Fish3.png"
+  },
+  {
+   "id": "beast_Flatfish",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/flatfish.glb",
+   "license_json": "saga-assets/creatures3d/flatfish.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Flatfish.png"
+  },
+  {
+   "id": "beast_Flower_Horn",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/flowerhorn.glb",
+   "license_json": "saga-assets/creatures3d/flowerhorn.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Flower_Horn.png"
+  },
+  {
+   "id": "beast_Fox",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/fox.glb",
+   "license_json": "saga-assets/creatures3d/fox.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Fox.png"
+  },
+  {
+   "id": "beast_Frog",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/frog.glb",
+   "license_json": "saga-assets/creatures3d/frog.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Frog.png"
+  },
+  {
+   "id": "beast_Ghost",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/ghost.glb",
+   "license_json": "saga-assets/creatures3d/ghost.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Ghost.png"
+  },
+  {
+   "id": "beast_Glub",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/glub.glb",
+   "license_json": "saga-assets/creatures3d/glub.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Glub.png"
+  },
+  {
+   "id": "beast_Glub_Evolved",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/glub_evolved.glb",
+   "license_json": "saga-assets/creatures3d/glub_evolved.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Glub_Evolved.png"
+  },
+  {
+   "id": "beast_Goblin_Shark",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/goblin_shark.glb",
+   "license_json": "saga-assets/creatures3d/goblin_shark.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Goblin_Shark.png",
+   "spin_roles": [
+    "hit",
+    "death",
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "beast_Goldfish",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/goldfish.glb",
+   "license_json": "saga-assets/creatures3d/goldfish.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Goldfish.png"
+  },
+  {
+   "id": "beast_Goleling",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/goleling.glb",
+   "license_json": "saga-assets/creatures3d/goleling.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Goleling.png"
+  },
+  {
+   "id": "beast_Horse",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/horse.glb",
+   "license_json": "saga-assets/creatures3d/horse.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Horse.png",
+   "cap": 1.7
+  },
+  {
+   "id": "beast_Horse_Farm",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/horse_farm.glb",
+   "license_json": "saga-assets/creatures3d/horse_farm.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Horse_Farm.png"
+  },
+  {
+   "id": "beast_Horse_White",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/horse_white.glb",
+   "license_json": "saga-assets/creatures3d/horse_white.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Horse_White.png",
+   "auto_side": true
+  },
+  {
+   "id": "beast_Humphead",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/humphead.glb",
+   "license_json": "saga-assets/creatures3d/humphead.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Humphead.png",
+   "spin_roles": [
+    "hit",
+    "death",
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "beast_Husky",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/husky.glb",
+   "license_json": "saga-assets/creatures3d/husky.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Husky.png",
+   "auto_side": true
+  },
+  {
+   "id": "beast_Hywirl",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/hywirl.glb",
+   "license_json": "saga-assets/creatures3d/hywirl.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Hywirl.png"
+  },
+  {
+   "id": "beast_Koi",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/koi.glb",
+   "license_json": "saga-assets/creatures3d/koi.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Koi.png"
+  },
+  {
+   "id": "beast_Lionfish",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/lionfish.glb",
+   "license_json": "saga-assets/creatures3d/lionfish.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Lionfish.png"
+  },
+  {
+   "id": "beast_Llama",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/llama.glb",
+   "license_json": "saga-assets/creatures3d/llama.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Llama.png"
+  },
+  {
+   "id": "beast_Mandarin_Fish",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/mandarinfish.glb",
+   "license_json": "saga-assets/creatures3d/mandarinfish.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Mandarin_Fish.png"
+  },
+  {
+   "id": "beast_Manta_ray",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/manta_ray.glb",
+   "license_json": "saga-assets/creatures3d/manta_ray.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Manta_ray.png",
+   "cap": 1.7,
+   "spin_roles": [
+    "idle",
+    "hit",
+    "death",
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "beast_Monkey",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/monkey.glb",
+   "license_json": "saga-assets/creatures3d/monkey.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Monkey.png",
+   "cap": 1.7
+  },
+  {
+   "id": "beast_Monkroose",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/monkroose.glb",
+   "license_json": "saga-assets/creatures3d/monkroose.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Monkroose.png"
+  },
+  {
+   "id": "beast_Moorish_Idol",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/moorish_idol.glb",
+   "license_json": "saga-assets/creatures3d/moorish_idol.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Moorish_Idol.png"
+  },
+  {
+   "id": "beast_Mushnub",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/mushnub.glb",
+   "license_json": "saga-assets/creatures3d/mushnub.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Mushnub.png"
+  },
+  {
+   "id": "beast_Orc",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/orc_warrior.glb",
+   "license_json": "saga-assets/creatures3d/orc_warrior.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Orc.png",
+   "cap": 1.7
+  },
+  {
+   "id": "beast_Owl",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/owl.glb",
+   "license_json": "saga-assets/creatures3d/owl.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Owl.png"
+  },
+  {
+   "id": "beast_Panda",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/panda.glb",
+   "license_json": "saga-assets/creatures3d/panda.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Panda.png"
+  },
+  {
+   "id": "beast_Parasaurolophus",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/parasaurolophus.glb",
+   "license_json": "saga-assets/creatures3d/parasaurolophus.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Parasaurolophus.png"
+  },
+  {
+   "id": "beast_Parrot_Fish",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/parrotfish.glb",
+   "license_json": "saga-assets/creatures3d/parrotfish.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Parrot_Fish.png"
+  },
+  {
+   "id": "beast_Pig",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/pig.glb",
+   "license_json": "saga-assets/creatures3d/pig.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Pig.png"
+  },
+  {
+   "id": "beast_Pigeon",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/pigeon.glb",
+   "license_json": "saga-assets/creatures3d/pigeon.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Pigeon.png"
+  },
+  {
+   "id": "beast_Pink_Slime",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/pink_slime.glb",
+   "license_json": "saga-assets/creatures3d/pink_slime.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Pink_Slime.png"
+  },
+  {
+   "id": "beast_Piranha",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/piranha.glb",
+   "license_json": "saga-assets/creatures3d/piranha.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Piranha.png"
+  },
+  {
+   "id": "beast_Puffer",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/puffer.glb",
+   "license_json": "saga-assets/creatures3d/puffer.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Puffer.png"
+  },
+  {
+   "id": "beast_Pug",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/pug.glb",
+   "license_json": "saga-assets/creatures3d/pug.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Pug.png",
+   "auto_side": true
+  },
+  {
+   "id": "beast_Rat",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/rat.glb",
+   "license_json": "saga-assets/creatures3d/rat.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Rat.png",
+   "margin": 1.45
+  },
+  {
+   "id": "beast_Red_Snapper",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/red_snapper.glb",
+   "license_json": "saga-assets/creatures3d/red_snapper.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Red_Snapper.png"
+  },
+  {
+   "id": "beast_Robot_Drone",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/robot_drone.glb",
+   "license_json": "saga-assets/creatures3d/robot_drone.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Robot_Drone.png"
+  },
+  {
+   "id": "beast_Robot_Large",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/robot_large.glb",
+   "license_json": "saga-assets/creatures3d/robot_large.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Robot_Large.png",
+   "spin_roles": [
+    "hit",
+    "death",
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "beast_Robot_Walker",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/robot_walker.glb",
+   "license_json": "saga-assets/creatures3d/robot_walker.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Robot_Walker.png"
+  },
+  {
+   "id": "beast_Royal_Gramma",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/royal_gramma.glb",
+   "license_json": "saga-assets/creatures3d/royal_gramma.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Royal_Gramma.png",
+   "spin_roles": [
+    "hit",
+    "death",
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "beast_Shark",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/shark.glb",
+   "license_json": "saga-assets/creatures3d/shark.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Shark.png"
+  },
+  {
+   "id": "beast_Shark_x2",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/great_white.glb",
+   "license_json": "saga-assets/creatures3d/great_white.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Shark_x2.png"
+  },
+  {
+   "id": "beast_Sheep",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/sheep.glb",
+   "license_json": "saga-assets/creatures3d/sheep.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Sheep.png"
+  },
+  {
+   "id": "beast_ShibaInu",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/shiba.glb",
+   "license_json": "saga-assets/creatures3d/shiba.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_ShibaInu.png"
+  },
+  {
+   "id": "beast_Snake",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/snake.glb",
+   "license_json": "saga-assets/creatures3d/snake.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Snake.png"
+  },
+  {
+   "id": "beast_Squidle",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/squidle.glb",
+   "license_json": "saga-assets/creatures3d/squidle.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Squidle.png"
+  },
+  {
+   "id": "beast_Stag",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/stag.glb",
+   "license_json": "saga-assets/creatures3d/stag.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Stag.png",
+   "cap": 1.7
+  },
+  {
+   "id": "beast_Stegosaurus",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/stegosaurus.glb",
+   "license_json": "saga-assets/creatures3d/stegosaurus.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Stegosaurus.png"
+  },
+  {
+   "id": "beast_Sunfish",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/sunfish.glb",
+   "license_json": "saga-assets/creatures3d/sunfish.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Sunfish.png",
+   "spin_roles": [
+    "hit",
+    "death",
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "beast_Swordfish",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/swordfish.glb",
+   "license_json": "saga-assets/creatures3d/swordfish.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Swordfish.png"
+  },
+  {
+   "id": "beast_Tang",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/tang.glb",
+   "license_json": "saga-assets/creatures3d/tang.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Tang.png"
+  },
+  {
+   "id": "beast_Tetra",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/tetra.glb",
+   "license_json": "saga-assets/creatures3d/tetra.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Tetra.png",
+   "spin_roles": [
+    "hit",
+    "death",
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "beast_Tiger",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/tiger.glb",
+   "license_json": "saga-assets/creatures3d/tiger.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Tiger.png"
+  },
+  {
+   "id": "beast_Trex",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/trex.glb",
+   "license_json": "saga-assets/creatures3d/trex.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Trex.png"
+  },
+  {
+   "id": "beast_Triceratops",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/triceratops.glb",
+   "license_json": "saga-assets/creatures3d/triceratops.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Triceratops.png",
+   "cap": 1.7
+  },
+  {
+   "id": "beast_Tuna",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/tuna.glb",
+   "license_json": "saga-assets/creatures3d/tuna.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Tuna.png"
+  },
+  {
+   "id": "beast_Turbot",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/turbot.glb",
+   "license_json": "saga-assets/creatures3d/turbot.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Turbot.png"
+  },
+  {
+   "id": "beast_Velociraptor",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/raptor.glb",
+   "license_json": "saga-assets/creatures3d/raptor.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Velociraptor.png"
+  },
+  {
+   "id": "beast_Wasp",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/wasp.glb",
+   "license_json": "saga-assets/creatures3d/wasp.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Wasp.png",
+   "cap": 1.7
+  },
+  {
+   "id": "beast_Whale",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/whale.glb",
+   "license_json": "saga-assets/creatures3d/whale.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Whale.png"
+  },
+  {
+   "id": "beast_Wizard",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/hat_wizard.glb",
+   "license_json": "saga-assets/creatures3d/hat_wizard.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Wizard.png"
+  },
+  {
+   "id": "beast_Worm",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/worm.glb",
+   "license_json": "saga-assets/creatures3d/worm.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Worm.png"
+  },
+  {
+   "id": "beast_Yellow_Tang",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/yellow_tang.glb",
+   "license_json": "saga-assets/creatures3d/yellow_tang.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Yellow_Tang.png"
+  },
+  {
+   "id": "beast_Yeti",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/yeti.glb",
+   "license_json": "saga-assets/creatures3d/yeti.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Yeti.png"
+  },
+  {
+   "id": "beast_Zebra",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/zebra.glb",
+   "license_json": "saga-assets/creatures3d/zebra.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Zebra.png"
+  },
+  {
+   "id": "beast_Zebra_Clown_Fish",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/zebra_clownfish.glb",
+   "license_json": "saga-assets/creatures3d/zebra_clownfish.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Zebra_Clown_Fish.png"
+  },
+  {
+   "id": "beast_Zombie",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/zombie.glb",
+   "license_json": "saga-assets/creatures3d/zombie.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Zombie.png"
+  },
+  {
+   "id": "beast_pk_alakazam",
+   "type": "creature",
+   "glb": "saga-assets/pets3d/pet_pk_alakazam.glb",
+   "license_json": "saga-assets/pets3d/pet_pk_alakazam.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_pk_alakazam.png",
+   "cap": 1.7
+  },
+  {
+   "id": "beast_pk_bulbasaur",
+   "type": "creature",
+   "glb": "saga-assets/pets3d/pet_pk_bulbasaur.glb",
+   "license_json": "saga-assets/pets3d/pet_pk_bulbasaur.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_pk_bulbasaur.png"
+  },
+  {
+   "id": "beast_pk_charizard",
+   "type": "creature",
+   "glb": "saga-assets/pets3d/pet_pk_charizard.glb",
+   "license_json": "saga-assets/pets3d/pet_pk_charizard.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_pk_charizard.png"
+  },
+  {
+   "id": "beast_pk_charmander",
+   "type": "creature",
+   "glb": "saga-assets/pets3d/pet_pk_charmander.glb",
+   "license_json": "saga-assets/pets3d/pet_pk_charmander.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_pk_charmander.png"
+  },
+  {
+   "id": "beast_pk_dragonite",
+   "type": "creature",
+   "glb": "saga-assets/pets3d/pet_pk_dragonite.glb",
+   "license_json": "saga-assets/pets3d/pet_pk_dragonite.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_pk_dragonite.png"
+  },
+  {
+   "id": "beast_pk_eevee",
+   "type": "creature",
+   "glb": "saga-assets/pets3d/pet_pk_eevee.glb",
+   "license_json": "saga-assets/pets3d/pet_pk_eevee.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_pk_eevee.png"
+  },
+  {
+   "id": "beast_pk_gengar",
+   "type": "creature",
+   "glb": "saga-assets/pets3d/pet_pk_gengar.glb",
+   "license_json": "saga-assets/pets3d/pet_pk_gengar.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_pk_gengar.png",
+   "cap": 1.7
+  },
+  {
+   "id": "beast_pk_gyarados",
+   "type": "creature",
+   "glb": "saga-assets/pets3d/pet_pk_gyarados.glb",
+   "license_json": "saga-assets/pets3d/pet_pk_gyarados.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_pk_gyarados.png"
+  },
+  {
+   "id": "beast_pk_lapras",
+   "type": "creature",
+   "glb": "saga-assets/pets3d/pet_pk_lapras.glb",
+   "license_json": "saga-assets/pets3d/pet_pk_lapras.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_pk_lapras.png",
+   "cap": 1.7
+  },
+  {
+   "id": "beast_pk_magikarp",
+   "type": "creature",
+   "glb": "saga-assets/pets3d/pet_pk_magikarp.glb",
+   "license_json": "saga-assets/pets3d/pet_pk_magikarp.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_pk_magikarp.png",
+   "spin_roles": [
+    "hit",
+    "death",
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "beast_pk_mew",
+   "type": "creature",
+   "glb": "saga-assets/pets3d/pet_pk_mew.glb",
+   "license_json": "saga-assets/pets3d/pet_pk_mew.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_pk_mew.png",
+   "auto_side": true
+  },
+  {
+   "id": "beast_pk_mewtwo",
+   "type": "creature",
+   "glb": "saga-assets/pets3d/pet_pk_mewtwo.glb",
+   "license_json": "saga-assets/pets3d/pet_pk_mewtwo.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_pk_mewtwo.png"
+  },
+  {
+   "id": "beast_pk_pikachu",
+   "type": "creature",
+   "glb": "saga-assets/pets3d/pet_pk_pikachu.glb",
+   "license_json": "saga-assets/pets3d/pet_pk_pikachu.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_pk_pikachu.png"
+  },
+  {
+   "id": "beast_pk_slowbro",
+   "type": "creature",
+   "glb": "saga-assets/pets3d/pet_pk_slowbro.glb",
+   "license_json": "saga-assets/pets3d/pet_pk_slowbro.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_pk_slowbro.png"
+  },
+  {
+   "id": "beast_pk_snorlax",
+   "type": "creature",
+   "glb": "saga-assets/pets3d/pet_pk_snorlax.glb",
+   "license_json": "saga-assets/pets3d/pet_pk_snorlax.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_pk_snorlax.png",
+   "cap": 1.7
+  },
+  {
+   "id": "beast_pk_squirtle",
+   "type": "creature",
+   "glb": "saga-assets/pets3d/pet_pk_squirtle.glb",
+   "license_json": "saga-assets/pets3d/pet_pk_squirtle.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_pk_squirtle.png"
+  },
+  {
+   "id": "beast_pt_magpie",
+   "type": "creature",
+   "glb": "saga-assets/pets3d/pet_pt_magpie.glb",
+   "license_json": "saga-assets/pets3d/pet_pt_magpie.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_pt_magpie.png"
+  },
+  {
+   "id": "beast_wolf",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/wolf.glb",
+   "license_json": "saga-assets/creatures3d/wolf.license.json",
+   "still_img": "saga-web/saga-go/assets/sprites2d/beast_Wolf.png"
+  }
+ ],
+ "deploy": {
+  "saga-web/saga-go/assets/sprites2d_sheets": null
+ }
+}

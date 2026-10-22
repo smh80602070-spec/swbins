@@ -35,6 +35,7 @@ JUMP = (0.60, 0.30, 0.12)           # 이웃 칸 급변 상한
 SPIKE_AREA = {'run': 0.35, 'walk': 0.30, 'attack': 0.30, 'attack2': 0.30}   # 휘두르는 칼날이 옆으로 섰다 누웠다
 JUMP_MOVE = (0.60, 0.30, 0.18)    # 달리기·걷기·공격 이웃 칸 — 망토 안·겉이 번갈아 보여 밝기가 0.13~0.15 바뀜
 JUMP_DEATH = (0.85, 0.30, 0.30)   # 쓰러짐 이웃 칸 상한(넓이·이동·밝기 — 흰 망토 뒷모습 → 누운 몸은 밝기도 한 번에 바뀜)
+JUMP_SPIN = (1.0, 0.30, 0.30)     # K-0160 제자리 한 바퀴·뒤집힘 — 납작한 몸(물고기)이 옆→모서리로 돌면 넓이가 한 칸에 거의 다 바뀐다
 
 
 def flick(seq, px, loop, role=None):
@@ -51,10 +52,10 @@ def flick(seq, px, loop, role=None):
     for f in range(n):
         if f + 1 < n or loop:
             j = d(f, (f + 1) % n)
-            jl = JUMP_DEATH if role == 'death' else (JUMP_MOVE if role in ('run', 'walk', 'attack', 'attack2', 'spiky') else JUMP)
+            jl = JUMP_SPIN if role == 'spin' else JUMP_DEATH if role == 'death' else (JUMP_MOVE if role in ('run', 'walk', 'attack', 'attack2', 'spiky') else JUMP)
             if any(j[k] > jl[k] for k in range(3)):
                 bad.append((f, '급변 넓이 %.2f 이동 %.2f 밝기 %.2f' % j))
-        if (not loop and (f == 0 or f == n - 1)) or role == 'spiky':
+        if (not loop and (f == 0 or f == n - 1)) or role in ('spiky', 'spin'):
             continue
         p, q, nb = d(f, (f - 1) % n), d(f, (f + 1) % n), d((f - 1) % n, (f + 1) % n)
         for k in range(3):
@@ -107,11 +108,12 @@ def judge_pool(pdir, still_game=None):
                 if role == 'idle' and r not in refs:      # K-0159: 같은 방향 idle 첫 칸과(망토 뒷모습은 정면과 달라도 같은 사람)
                     refs[r] = hist(cell)
                 ref = refs.get(r)
-                if role == 'death' and refs:       # 누운 몸은 어느 방향 idle 과도 같은 사람이면 된다(뒤에서 본 눕기는 얼굴·다리가 보임)
+                spin = bool(c.get('spin'))            # K-0160 동작 표 spin = 제자리 한 바퀴(짐승 Special) — 등·배가 번갈아 보인다
+                if (role == 'death' or spin) and refs:       # 누운 몸은 어느 방향 idle 과도 같은 사람이면 된다(뒤에서 본 눕기는 얼굴·다리가 보임)
                     ref = None
                 # 1 같은 사람
                 h = hist(cell)
-                if (ref is not None or (role == 'death' and refs)) and h is not None:
+                if (ref is not None or ((role == 'death' or spin) and refs)) and h is not None:
                     s = float(np.minimum(h, ref).sum()) if ref is not None else max(float(np.minimum(h, x).sum()) for x in refs.values() if x is not None)
                     w = chk['same']['worst']
                     chk['same']['worst'] = s if w is None else min(w, s)
@@ -145,7 +147,7 @@ def judge_pool(pdir, still_game=None):
                 junk = int(((a > 0) & (a < 40) & ~near).sum())
                 if junk > 3:
                     bad('border', f'{tag}: 떨어진 반투명 {junk}px')
-            w, fb = flick(seq, px, bool(c.get('loop')), 'spiky' if c.get('spiky') else role)   # K-0161 spiky = 한 칸 정점(뛰기 꼭대기·두 팔 번쩍)이 정상인 동작
+            w, fb = flick(seq, px, bool(c.get('loop')), 'spin' if c.get('spin') else 'spiky' if c.get('spiky') else role)   # K-0161 spiky = 한 칸 정점(뛰기 꼭대기·두 팔 번쩍)이 정상인 동작
             chk['flicker']['worst'] = max(chk['flicker']['worst'] or 0, w)
             for f, why in fb:
                 bad('flicker', f'{role} d{man["dirs"][r]} f{f}: {why}')

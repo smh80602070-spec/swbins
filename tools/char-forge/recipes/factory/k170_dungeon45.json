@@ -1,0 +1,361 @@
+{
+ "px": 192,
+ "ndir": 8,
+ "dirs": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "dir_names": [
+  "front",
+  "front_side",
+  "side",
+  "back_side",
+  "back"
+ ],
+ "foot": 0.88,
+ "style": "C-toon-1",
+ "style_ref": "saga-web/saga-dungeon/assets/web2d/bg",
+ "clips": {
+  "idle": {
+   "frames": 8,
+   "fps": 6,
+   "loop": true
+  },
+  "walk": {
+   "frames": 8,
+   "fps": 10,
+   "loop": true
+  },
+  "run": {
+   "frames": 8,
+   "fps": 12,
+   "loop": true
+  },
+  "attack": {
+   "frames": 8,
+   "fps": 14,
+   "loop": false
+  },
+  "attack2": {
+   "frames": 8,
+   "fps": 12,
+   "loop": false,
+   "spin": true
+  },
+  "cast": {
+   "frames": 8,
+   "fps": 10,
+   "loop": false
+  },
+  "hit": {
+   "frames": 6,
+   "fps": 12,
+   "loop": false
+  },
+  "death": {
+   "frames": 6,
+   "fps": 8,
+   "loop": false
+  },
+  "sit": {
+   "frames": 8,
+   "fps": 6,
+   "loop": false
+  },
+  "talk": {
+   "frames": 8,
+   "fps": 8,
+   "loop": true
+  }
+ },
+ "canon": "saga-assets/sprites2d_factory",
+ "ortho": 2.5,
+ "creature": {
+  "act": {
+   "idle": "Idle",
+   "walk": "Walk",
+   "run": "Run",
+   "attack": "Attack",
+   "attack2": "Special",
+   "hit": "Hit",
+   "death": "Death"
+  }
+ },
+ "note": "K-0170 — 2나락 적 2D 종 시트(W-0354 메모 \"2D 종 시트 없는 body\" 줄 · 몸 = K-0121 초상 짝 표 species·k144·k145 → saga-assets/creatures3d). 규격 = K-0160 짐승(k159_beasts). 같은 종 몸 body 는 aliases. 생성: recipes/factory/gen_k170.py",
+ "ticket": "K-0170",
+ "game": "saga-dungeon",
+ "pools": [
+  {
+   "id": "beast_Boar",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/boar.glb",
+   "license_json": "saga-assets/creatures3d/boar.license.json"
+  },
+  {
+   "id": "skeleton_minion",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/skeleton_minion.glb",
+   "license_json": "saga-assets/creatures3d/skeleton_minion.license.json"
+  },
+  {
+   "id": "skeleton_solo",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/skeleton.glb",
+   "license_json": "saga-assets/creatures3d/skeleton.license.json"
+  },
+  {
+   "id": "wasp",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/wasp.glb",
+   "cap": 1.7,
+   "license_json": "saga-assets/creatures3d/wasp.license.json"
+  },
+  {
+   "id": "rat",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/rat.glb",
+   "margin": 1.45,
+   "license_json": "saga-assets/creatures3d/rat.license.json"
+  },
+  {
+   "id": "green_blob",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/moss_blob.glb",
+   "license_json": "saga-assets/creatures3d/moss_blob.license.json"
+  },
+  {
+   "id": "slime_enemy",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/slime.glb",
+   "license_json": "saga-assets/creatures3d/slime.license.json"
+  },
+  {
+   "id": "dg_elephant",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/elephant.glb",
+   "license_json": "saga-assets/creatures3d/elephant.license.json"
+  },
+  {
+   "id": "skeleton_warrior",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/skeleton_warrior.glb",
+   "license_json": "saga-assets/creatures3d/skeleton_warrior.license.json"
+  },
+  {
+   "id": "orc",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/goblin_brute.glb",
+   "license_json": "saga-assets/creatures3d/goblin_brute.license.json"
+  },
+  {
+   "id": "skeleton_rogue",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/skeleton_rogue.glb",
+   "license_json": "saga-assets/creatures3d/skeleton_rogue.license.json"
+  },
+  {
+   "id": "demon_2",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/demon_red.glb",
+   "license_json": "saga-assets/creatures3d/demon_red.license.json"
+  },
+  {
+   "id": "ghost_skull",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/ghost_skull.glb",
+   "license_json": "saga-assets/creatures3d/ghost_skull.license.json"
+  },
+  {
+   "id": "ninja_2",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/shadow_ninja.glb",
+   "license_json": "saga-assets/creatures3d/shadow_ninja.license.json"
+  },
+  {
+   "id": "mushnub_evolved",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/spore_cap.glb",
+   "license_json": "saga-assets/creatures3d/spore_cap.license.json"
+  },
+  {
+   "id": "cactoro",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/cactus_imp.glb",
+   "license_json": "saga-assets/creatures3d/cactus_imp.license.json"
+  },
+  {
+   "id": "spider",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/spider.glb",
+   "license_json": "saga-assets/creatures3d/spider.license.json"
+  },
+  {
+   "id": "green_spiky_blob",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/spike_blob.glb",
+   "license_json": "saga-assets/creatures3d/spike_blob.license.json"
+  },
+  {
+   "id": "beast_Tiger",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/tiger.glb",
+   "license_json": "saga-assets/creatures3d/tiger.license.json"
+  },
+  {
+   "id": "skeleton_mage",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/skeleton_mage.glb",
+   "license_json": "saga-assets/creatures3d/skeleton_mage.license.json"
+  },
+  {
+   "id": "yeti",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/yeti.glb",
+   "license_json": "saga-assets/creatures3d/yeti.license.json"
+  },
+  {
+   "id": "mushroom_king",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/mushroom_lord.glb",
+   "license_json": "saga-assets/creatures3d/mushroom_lord.license.json"
+  },
+  {
+   "id": "blue_demon",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/demon_blue.glb",
+   "license_json": "saga-assets/creatures3d/demon_blue.license.json"
+  },
+  {
+   "id": "wizard",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/hat_wizard.glb",
+   "license_json": "saga-assets/creatures3d/hat_wizard.license.json"
+  },
+  {
+   "id": "frog_enemy",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/frog_brute.glb",
+   "license_json": "saga-assets/creatures3d/frog_brute.license.json"
+  },
+  {
+   "id": "tribal",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/masked_tribal.glb",
+   "license_json": "saga-assets/creatures3d/masked_tribal.license.json"
+  },
+  {
+   "id": "orc_enemy",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/orc_warrior.glb",
+   "cap": 1.7,
+   "license_json": "saga-assets/creatures3d/orc_warrior.license.json"
+  },
+  {
+   "id": "dino",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/dino_pet.glb",
+   "cap": 1.7,
+   "license_json": "saga-assets/creatures3d/dino_pet.license.json"
+  },
+  {
+   "id": "zombie",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/zombie.glb",
+   "license_json": "saga-assets/creatures3d/zombie.license.json"
+  },
+  {
+   "id": "goleling_evolved",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/goleling_evolved.glb",
+   "license_json": "saga-assets/creatures3d/goleling_evolved.license.json"
+  },
+  {
+   "id": "giant",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/giant.glb",
+   "license_json": "saga-assets/creatures3d/giant.license.json"
+  },
+  {
+   "id": "dino_raptor",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/raptor.glb",
+   "license_json": "saga-assets/creatures3d/raptor.license.json"
+  },
+  {
+   "id": "dino_para",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/parasaurolophus.glb",
+   "license_json": "saga-assets/creatures3d/parasaurolophus.license.json"
+  },
+  {
+   "id": "dino_stego",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/stegosaurus.glb",
+   "license_json": "saga-assets/creatures3d/stegosaurus.license.json"
+  },
+  {
+   "id": "dino_trex",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/trex.glb",
+   "license_json": "saga-assets/creatures3d/trex.license.json"
+  },
+  {
+   "id": "demon_green",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/green_imp.glb",
+   "license_json": "saga-assets/creatures3d/green_imp.license.json"
+  },
+  {
+   "id": "crab",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/crab_cute.glb",
+   "license_json": "saga-assets/creatures3d/crab_cute.license.json"
+  },
+  {
+   "id": "treant",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/tree_walker.glb",
+   "license_json": "saga-assets/creatures3d/tree_walker.license.json"
+  },
+  {
+   "id": "cyclops",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/cyclops_cute.glb",
+   "license_json": "saga-assets/creatures3d/cyclops_cute.license.json"
+  },
+  {
+   "id": "cthulhu",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/tentacle_imp.glb",
+   "license_json": "saga-assets/creatures3d/tentacle_imp.license.json"
+  },
+  {
+   "id": "dino_tri",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/triceratops.glb",
+   "cap": 1.7,
+   "license_json": "saga-assets/creatures3d/triceratops.license.json"
+  },
+  {
+   "id": "dino_apato",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/apatosaurus.glb",
+   "license_json": "saga-assets/creatures3d/apatosaurus.license.json"
+  }
+ ],
+ "aliases": {
+  "beast_boar": "beast_Boar",
+  "beast_tiger": "beast_Tiger",
+  "ninja": "ninja_2",
+  "cactoro_2": "cactoro",
+  "demon": "demon_2",
+  "yeti_2": "yeti"
+ },
+ "missing": [],
+ "deploy": {
+  "saga-web/saga-dungeon/assets/sprites2d_sheets": null
+ }
+}

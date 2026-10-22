@@ -139,6 +139,8 @@ def style_cell(cell, pal):
     res = np.zeros_like(cell)
     res[..., :3] = np.clip(rgb_o * 255, 0, 255).astype(np.uint8)
     res[..., 3] = np.clip(fa * 255, 0, 255).astype(np.uint8)
+    near = np.asarray(Image.fromarray((res[..., 3] > 40).astype(np.uint8) * 255).filter(ImageFilter.MaxFilter(7))) > 0
+    res[(res[..., 3] < 40) & ~near] = 0                           # K-0160: 몸에서 떨어진 반투명 찌꺼기(귀 끝·수염 한 줄) 지움
     res[res[..., 3] == 0, :3] = 0
     return res
 
@@ -184,8 +186,26 @@ def ground_sheet(im, px, role, foot, mode=None):
     return im
 
 
-def style_sheet(src, dst, pal, px=192, role=None, foot=None, mode=None):
+def colorize(im, target, strength=1.0):
+    """K-0160 짐승 몸 색을 그 판 그림 색으로(검은 곰 → 갈색) — 명도는 두고 가운데 명도가 target 색이 되게(시트 전체 한 배율 — 칸마다 안 달라짐)."""
+    im = im.copy()
+    a = im[..., 3] > 128
+    if not a.any():
+        return im
+    rgb = im[..., :3].astype(np.float32) / 255
+    lum = rgb @ np.array([0.299, 0.587, 0.114], dtype=np.float32)
+    med = max(float(np.median(lum[a])), 0.03)
+    t = np.array(target[:3], dtype=np.float32) / 255
+    col = np.clip(t[None, None, :] * np.minimum(lum / med, 1.45)[..., None], 0, 1)
+    out = rgb * (1 - strength) + col * strength
+    im[..., :3] = np.clip(out * 255, 0, 255).astype(np.uint8)
+    return im
+
+
+def style_sheet(src, dst, pal, px=192, role=None, foot=None, mode=None, tint=None):
     im = ground_sheet(np.asarray(Image.open(src).convert('RGBA')), px, role, foot, mode)
+    if tint:
+        im = colorize(im, tint, tint[3] if len(tint) > 3 else 1.0)
     out = np.zeros_like(im)
     for y in range(0, im.shape[0], px):
         for x in range(0, im.shape[1], px):
@@ -208,7 +228,10 @@ def compare_board(raw_dir, sty_dir, plan, out_png, scale=1.5):
                 if os.path.exists(os.path.join(sty_dir, r + '.webp'))]
     still = os.path.join(os.path.dirname(ref), 'moving', os.path.basename(sty_dir), 'side.webp')
     if plan.get('still_game'):          # K-0159: 풀의 still 이 있는 판(5천하 rts_* 등)
-        still = os.path.join(ROOT, 'saga-web', plan['still_game'], 'assets', 'web2d', 'moving', os.path.basename(sty_dir), 'side.webp')
+        from still_match import still_path
+        still = still_path(plan['still_game'], os.path.basename(sty_dir), 'side')
+    if plan.get('still_img'):           # K-0160: 그 판의 지금 그림이 다른 자리(1만리 assets/sprites2d/beast_*.png)
+        still = os.path.join(ROOT, plan['still_img'])
     W, H = S * (len(cols) + (1 if os.path.exists(still) else 0)), S
     board = Image.new('RGBA', (W, H * 2 + 8), (255, 255, 255, 255))
     for row, src in enumerate((raw_dir, sty_dir)):

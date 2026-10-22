@@ -1,0 +1,1378 @@
+{
+ "px": 192,
+ "ndir": 8,
+ "dirs": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "dir_names": [
+  "front",
+  "front_side",
+  "side",
+  "back_side",
+  "back"
+ ],
+ "ortho": 2.2,
+ "cam_z": 0.836,
+ "foot": 0.88,
+ "style": "C-toon-1",
+ "style_ref": "saga-web/saga-dungeon/assets/web2d/bg",
+ "clips": {
+  "idle": {
+   "frames": 8,
+   "fps": 6,
+   "loop": true
+  },
+  "walk": {
+   "frames": 8,
+   "fps": 10,
+   "loop": true
+  },
+  "run": {
+   "frames": 8,
+   "fps": 12,
+   "loop": true
+  },
+  "attack": {
+   "frames": 8,
+   "fps": 14,
+   "loop": false,
+   "spiky": true
+  },
+  "attack2": {
+   "frames": 8,
+   "fps": 12,
+   "loop": false,
+   "spiky": true
+  },
+  "cast": {
+   "frames": 8,
+   "fps": 10,
+   "loop": false
+  },
+  "hit": {
+   "frames": 6,
+   "fps": 12,
+   "loop": false
+  },
+  "death": {
+   "frames": 6,
+   "fps": 8,
+   "loop": false
+  },
+  "sit": {
+   "frames": 8,
+   "fps": 6,
+   "loop": false
+  },
+  "talk": {
+   "frames": 8,
+   "fps": 8,
+   "loop": true
+  }
+ },
+ "canon": "saga-assets/sprites2d_factory",
+ "note": "K-0160 ④ 도감 인물 60 — 도감(roster src=codex) 순서로 옷 이식 몸(K-0024 _out/vroid/<id>, 몸 _anims) 이 있는 첫 60. 무기 = data/hero_weapon.json(make_combat_sprite_plan CLIPMAP·무기 등급 glb), 칸 = K-0159 처럼 무기 길이로(px/m 같음). 옷·머리는 몸 그대로(kind human). 생성: tools/char-forge/recipes/factory/gen_dex60.py(1회)",
+ "ticket": "K-0160",
+ "game": "saga-dungeon",
+ "human": {
+  "bodies": {
+   "sg_guanyu": "tools/char-forge/_out/vroid/sg_guanyu/sg_guanyu.glb",
+   "sg_zhangfei": "tools/char-forge/_out/vroid/sg_zhangfei/sg_zhangfei.glb",
+   "sg_zhaoyun": "tools/char-forge/_out/vroid/sg_zhaoyun/sg_zhaoyun.glb",
+   "sg_zhugeliang": "tools/char-forge/_out/vroid/sg_zhugeliang/sg_zhugeliang.glb",
+   "sg_liubei": "tools/char-forge/_out/vroid/sg_liubei/sg_liubei.glb",
+   "sg_machao": "tools/char-forge/_out/vroid/sg_machao/sg_machao.glb",
+   "sg_huangzhong": "tools/char-forge/_out/vroid/sg_huangzhong/sg_huangzhong.glb",
+   "sg_caocao": "tools/char-forge/_out/vroid/sg_caocao/sg_caocao.glb",
+   "sg_simayi": "tools/char-forge/_out/vroid/sg_simayi/sg_simayi.glb",
+   "sg_xiahoudun": "tools/char-forge/_out/vroid/sg_xiahoudun/sg_xiahoudun.glb",
+   "sg_zhangliao": "tools/char-forge/_out/vroid/sg_zhangliao/sg_zhangliao.glb",
+   "sg_xunyu": "tools/char-forge/_out/vroid/sg_xunyu/sg_xunyu.glb",
+   "sg_sunquan": "tools/char-forge/_out/vroid/sg_sunquan/sg_sunquan.glb",
+   "sg_zhouyu": "tools/char-forge/_out/vroid/sg_zhouyu/sg_zhouyu.glb",
+   "sg_luxun": "tools/char-forge/_out/vroid/sg_luxun/sg_luxun.glb",
+   "sg_taishici": "tools/char-forge/_out/vroid/sg_taishici/sg_taishici.glb",
+   "sg_ganning": "tools/char-forge/_out/vroid/sg_ganning/sg_ganning.glb",
+   "sg_lubu": "tools/char-forge/_out/vroid/sg_lubu/sg_lubu.glb",
+   "sg_diaochan": "tools/char-forge/_out/vroid/sg_diaochan/sg_diaochan.glb",
+   "sg_pangtong": "tools/char-forge/_out/vroid/sg_pangtong/sg_pangtong.glb",
+   "sg_huatuo": "tools/char-forge/_out/vroid/sg_huatuo/sg_huatuo.glb",
+   "sg_menghuo": "tools/char-forge/_out/vroid/sg_menghuo/sg_menghuo.glb",
+   "kr_yisunsin": "tools/char-forge/_out/vroid/kr_yisunsin/kr_yisunsin.glb",
+   "kr_euljimundeok": "tools/char-forge/_out/vroid/kr_euljimundeok/kr_euljimundeok.glb",
+   "kr_ganggamchan": "tools/char-forge/_out/vroid/kr_ganggamchan/kr_ganggamchan.glb",
+   "kr_kimyusin": "tools/char-forge/_out/vroid/kr_kimyusin/kr_kimyusin.glb",
+   "kr_gyebaek": "tools/char-forge/_out/vroid/kr_gyebaek/kr_gyebaek.glb",
+   "kr_yeongaesomun": "tools/char-forge/_out/vroid/kr_yeongaesomun/kr_yeongaesomun.glb",
+   "kr_gwanggaeto": "tools/char-forge/_out/vroid/kr_gwanggaeto/kr_gwanggaeto.glb",
+   "kr_sejong": "tools/char-forge/_out/vroid/kr_sejong/kr_sejong.glb",
+   "kr_jangyeongsil": "tools/char-forge/_out/vroid/kr_jangyeongsil/kr_jangyeongsil.glb",
+   "kr_choemuseon": "tools/char-forge/_out/vroid/kr_choemuseon/kr_choemuseon.glb",
+   "kr_daejoyeong": "tools/char-forge/_out/vroid/kr_daejoyeong/kr_daejoyeong.glb",
+   "kr_wanggeon": "tools/char-forge/_out/vroid/kr_wanggeon/kr_wanggeon.glb",
+   "kr_jeongyakyong": "tools/char-forge/_out/vroid/kr_jeongyakyong/kr_jeongyakyong.glb",
+   "kr_heojun": "tools/char-forge/_out/vroid/kr_heojun/kr_heojun.glb",
+   "kr_sinsaimdang": "tools/char-forge/_out/vroid/kr_sinsaimdang/kr_sinsaimdang.glb",
+   "kr_ahnjunggeun": "tools/char-forge/_out/vroid/kr_ahnjunggeun/kr_ahnjunggeun.glb",
+   "kr_yugwansun": "tools/char-forge/_out/vroid/kr_yugwansun/kr_yugwansun.glb",
+   "kr_kimgu": "tools/char-forge/_out/vroid/kr_kimgu/kr_kimgu.glb",
+   "kr_wonhyo": "tools/char-forge/_out/vroid/kr_wonhyo/kr_wonhyo.glb",
+   "kr_kimjeongho": "tools/char-forge/_out/vroid/kr_kimjeongho/kr_kimjeongho.glb",
+   "kr_gwakjaeu": "tools/char-forge/_out/vroid/kr_gwakjaeu/kr_gwakjaeu.glb",
+   "kr_nongae": "tools/char-forge/_out/vroid/kr_nongae/kr_nongae.glb",
+   "kr_yihwang": "tools/char-forge/_out/vroid/kr_yihwang/kr_yihwang.glb",
+   "kr_yii": "tools/char-forge/_out/vroid/kr_yii/kr_yii.glb",
+   "kr_hwanghui": "tools/char-forge/_out/vroid/kr_hwanghui/kr_hwanghui.glb",
+   "kr_jeongmongju": "tools/char-forge/_out/vroid/kr_jeongmongju/kr_jeongmongju.glb",
+   "jp_himiko": "tools/char-forge/_out/vroid/jp_himiko/jp_himiko.glb",
+   "jp_taira": "tools/char-forge/_out/vroid/jp_taira/jp_taira.glb",
+   "jp_yoritomo": "tools/char-forge/_out/vroid/jp_yoritomo/jp_yoritomo.glb",
+   "jp_yoshitsune": "tools/char-forge/_out/vroid/jp_yoshitsune/jp_yoshitsune.glb",
+   "jp_murasaki": "tools/char-forge/_out/vroid/jp_murasaki/jp_murasaki.glb",
+   "jp_seishonagon": "tools/char-forge/_out/vroid/jp_seishonagon/jp_seishonagon.glb",
+   "jp_tomoegozen": "tools/char-forge/_out/vroid/jp_tomoegozen/jp_tomoegozen.glb",
+   "jp_nobunaga": "tools/char-forge/_out/vroid/jp_nobunaga/jp_nobunaga.glb",
+   "jp_hideyoshi": "tools/char-forge/_out/vroid/jp_hideyoshi/jp_hideyoshi.glb",
+   "jp_ieyasu": "tools/char-forge/_out/vroid/jp_ieyasu/jp_ieyasu.glb",
+   "jp_shingen": "tools/char-forge/_out/vroid/jp_shingen/jp_shingen.glb",
+   "jp_kenshin": "tools/char-forge/_out/vroid/jp_kenshin/jp_kenshin.glb"
+  },
+  "anim_extra": "m=saga-assets/characters/anim-src/mocap/vroid_mocap_anims.glb",
+  "act": {
+   "idle": "idle",
+   "walk": "walk",
+   "run": "sprint",
+   "attack": "fist_1",
+   "attack2": "fist_heavy",
+   "cast": "m.cast",
+   "hit": "hit",
+   "death": "death",
+   "sit": "m.sit_stand@0:0.45",
+   "talk": "m.greet"
+  },
+  "license": "VRoid Studio 공식 샘플 이용 조건(상업 사용·개작본 재배포 허용, 크레딧 불필요 — 옷 이식 몸 K-0024) + 동작 CC0 UAL(bake_for_rig)·CMU 모캡(K-0139·K-0148, saga-assets/characters/anim-src/mocap/vroid_mocap_anims.license.json)"
+ },
+ "pools": [
+  {
+   "id": "sg_guanyu",
+   "type": "human",
+   "body": "sg_guanyu",
+   "kind": "human",
+   "act": {
+    "idle": "dagger_idle",
+    "attack": "dagger_1",
+    "attack2": "dagger_2"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_guanyu/sg_guanyu.license.json",
+   "weapon": "saga-assets/world/toon/wpn_dagger_legend.glb",
+   "weapon_kind": "dagger",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "sg_zhangfei",
+   "type": "human",
+   "body": "sg_zhangfei",
+   "kind": "human",
+   "act": {
+    "idle": "idle",
+    "attack": "fist_1",
+    "attack2": "fist_heavy"
+   },
+   "px": 224,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_zhangfei/sg_zhangfei.license.json"
+  },
+  {
+   "id": "sg_zhaoyun",
+   "type": "human",
+   "body": "sg_zhaoyun",
+   "kind": "human",
+   "act": {
+    "idle": "spear_idle",
+    "attack": "spear_1",
+    "attack2": "spear_2"
+   },
+   "px": 448,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_zhaoyun/sg_zhaoyun.license.json",
+   "weapon": "saga-assets/world/toon/wpn_spear_legend.glb",
+   "weapon_kind": "spear",
+   "two_hand_clips": [
+    "spear_idle",
+    "spear_1",
+    "spear_2",
+    "spear_heavy"
+   ],
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "sg_zhugeliang",
+   "type": "human",
+   "body": "sg_zhugeliang",
+   "kind": "human",
+   "act": {
+    "idle": "dagger_idle",
+    "attack": "dagger_1",
+    "attack2": "dagger_2"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_zhugeliang/sg_zhugeliang.license.json",
+   "weapon": "saga-assets/world/toon/wpn_dagger_legend.glb",
+   "weapon_kind": "dagger",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "sg_liubei",
+   "type": "human",
+   "body": "sg_liubei",
+   "kind": "human",
+   "act": {
+    "idle": "guard",
+    "attack": "attack",
+    "attack2": "sword_2"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_liubei/sg_liubei.license.json",
+   "weapon": "saga-assets/world/toon/wpn_sword_legend.glb",
+   "weapon_kind": "sword",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "sg_machao",
+   "type": "human",
+   "body": "sg_machao",
+   "kind": "human",
+   "act": {
+    "idle": "spear_idle",
+    "attack": "spear_1",
+    "attack2": "spear_2"
+   },
+   "px": 448,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_machao/sg_machao.license.json",
+   "weapon": "saga-assets/world/toon/wpn_spear_rare.glb",
+   "weapon_kind": "spear",
+   "two_hand_clips": [
+    "spear_idle",
+    "spear_1",
+    "spear_2",
+    "spear_heavy"
+   ],
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "sg_huangzhong",
+   "type": "human",
+   "body": "sg_huangzhong",
+   "kind": "human",
+   "act": {
+    "idle": "bow_idle",
+    "attack": "bow_1",
+    "attack2": "bow_heavy"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_huangzhong/sg_huangzhong.license.json",
+   "weapon": "saga-assets/world/toon/wpn_bow_rare.glb",
+   "weapon_kind": "bow"
+  },
+  {
+   "id": "sg_caocao",
+   "type": "human",
+   "body": "sg_caocao",
+   "kind": "human",
+   "act": {
+    "idle": "guard",
+    "attack": "attack",
+    "attack2": "sword_2"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_caocao/sg_caocao.license.json",
+   "weapon": "saga-assets/world/toon/wpn_sword_legend.glb",
+   "weapon_kind": "sword",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "sg_simayi",
+   "type": "human",
+   "body": "sg_simayi",
+   "kind": "human",
+   "act": {
+    "idle": "bow_idle",
+    "attack": "bow_1",
+    "attack2": "bow_heavy"
+   },
+   "px": 320,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_simayi/sg_simayi.license.json",
+   "weapon": "saga-assets/world/toon/wpn_bow_legend.glb",
+   "weapon_kind": "bow"
+  },
+  {
+   "id": "sg_xiahoudun",
+   "type": "human",
+   "body": "sg_xiahoudun",
+   "kind": "human",
+   "act": {
+    "idle": "axe_idle",
+    "attack": "axe_1",
+    "attack2": "axe_2"
+   },
+   "px": 320,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_xiahoudun/sg_xiahoudun.license.json",
+   "weapon": "saga-assets/world/toon/wpn_axe_rare.glb",
+   "weapon_kind": "axe",
+   "two_hand_clips": [
+    "axe_idle",
+    "axe_1",
+    "axe_2",
+    "axe_heavy"
+   ],
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "sg_zhangliao",
+   "type": "human",
+   "body": "sg_zhangliao",
+   "kind": "human",
+   "act": {
+    "idle": "guard",
+    "attack": "attack",
+    "attack2": "sword_2"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_zhangliao/sg_zhangliao.license.json",
+   "weapon": "saga-assets/world/toon/wpn_sword_rare.glb",
+   "weapon_kind": "sword",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "sg_xunyu",
+   "type": "human",
+   "body": "sg_xunyu",
+   "kind": "human",
+   "act": {
+    "idle": "idle",
+    "attack": "skill",
+    "attack2": "burst"
+   },
+   "px": 320,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_xunyu/sg_xunyu.license.json",
+   "weapon": "saga-assets/world/toon/wpn_staff_rare.glb",
+   "weapon_kind": "staff",
+   "two_hand_clips": [
+    "staff_heavy"
+   ],
+   "combat_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "sg_sunquan",
+   "type": "human",
+   "body": "sg_sunquan",
+   "kind": "human",
+   "act": {
+    "idle": "spear_idle",
+    "attack": "spear_1",
+    "attack2": "spear_2"
+   },
+   "px": 448,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_sunquan/sg_sunquan.license.json",
+   "weapon": "saga-assets/world/toon/wpn_spear_rare.glb",
+   "weapon_kind": "spear",
+   "two_hand_clips": [
+    "spear_idle",
+    "spear_1",
+    "spear_2",
+    "spear_heavy"
+   ],
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "sg_zhouyu",
+   "type": "human",
+   "body": "sg_zhouyu",
+   "kind": "human",
+   "act": {
+    "idle": "idle",
+    "attack": "skill",
+    "attack2": "burst"
+   },
+   "px": 384,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_zhouyu/sg_zhouyu.license.json",
+   "weapon": "saga-assets/world/toon/wpn_staff_legend.glb",
+   "weapon_kind": "staff",
+   "two_hand_clips": [
+    "staff_heavy"
+   ],
+   "combat_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "sg_luxun",
+   "type": "human",
+   "body": "sg_luxun",
+   "kind": "human",
+   "act": {
+    "idle": "idle",
+    "attack": "skill",
+    "attack2": "burst"
+   },
+   "px": 320,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_luxun/sg_luxun.license.json",
+   "weapon": "saga-assets/world/toon/wpn_staff_rare.glb",
+   "weapon_kind": "staff",
+   "two_hand_clips": [
+    "staff_heavy"
+   ],
+   "combat_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "sg_taishici",
+   "type": "human",
+   "body": "sg_taishici",
+   "kind": "human",
+   "act": {
+    "idle": "guard",
+    "attack": "attack",
+    "attack2": "sword_2"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_taishici/sg_taishici.license.json",
+   "weapon": "saga-assets/world/toon/wpn_sword_rare.glb",
+   "weapon_kind": "sword",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "sg_ganning",
+   "type": "human",
+   "body": "sg_ganning",
+   "kind": "human",
+   "act": {
+    "idle": "idle",
+    "attack": "skill",
+    "attack2": "burst"
+   },
+   "px": 320,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_ganning/sg_ganning.license.json",
+   "weapon": "saga-assets/world/toon/wpn_staff_common.glb",
+   "weapon_kind": "staff",
+   "two_hand_clips": [
+    "staff_heavy"
+   ],
+   "combat_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "sg_lubu",
+   "type": "human",
+   "body": "sg_lubu",
+   "kind": "human",
+   "act": {
+    "idle": "spear_idle",
+    "attack": "spear_1",
+    "attack2": "spear_2"
+   },
+   "px": 448,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_lubu/sg_lubu.license.json",
+   "weapon": "saga-assets/world/toon/wpn_spear_legend.glb",
+   "weapon_kind": "spear",
+   "two_hand_clips": [
+    "spear_idle",
+    "spear_1",
+    "spear_2",
+    "spear_heavy"
+   ],
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "sg_diaochan",
+   "type": "human",
+   "body": "sg_diaochan",
+   "kind": "human",
+   "act": {
+    "idle": "idle",
+    "attack": "skill",
+    "attack2": "burst"
+   },
+   "px": 384,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_diaochan/sg_diaochan.license.json",
+   "weapon": "saga-assets/world/toon/wpn_staff_legend.glb",
+   "weapon_kind": "staff",
+   "two_hand_clips": [
+    "staff_heavy"
+   ],
+   "combat_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "sg_pangtong",
+   "type": "human",
+   "body": "sg_pangtong",
+   "kind": "human",
+   "act": {
+    "idle": "bow_idle",
+    "attack": "bow_1",
+    "attack2": "bow_heavy"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_pangtong/sg_pangtong.license.json",
+   "weapon": "saga-assets/world/toon/wpn_bow_rare.glb",
+   "weapon_kind": "bow"
+  },
+  {
+   "id": "sg_huatuo",
+   "type": "human",
+   "body": "sg_huatuo",
+   "kind": "human",
+   "act": {
+    "idle": "guard",
+    "attack": "attack",
+    "attack2": "sword_2"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_huatuo/sg_huatuo.license.json",
+   "weapon": "saga-assets/world/toon/wpn_sword_rare.glb",
+   "weapon_kind": "sword",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "sg_menghuo",
+   "type": "human",
+   "body": "sg_menghuo",
+   "kind": "human",
+   "act": {
+    "idle": "spear_idle",
+    "attack": "spear_1",
+    "attack2": "spear_2"
+   },
+   "px": 384,
+   "source_license": "saga-web/shared/assets/characters2d8/sg_menghuo/sg_menghuo.license.json",
+   "weapon": "saga-assets/world/toon/wpn_spear_common.glb",
+   "weapon_kind": "spear",
+   "two_hand_clips": [
+    "spear_idle",
+    "spear_1",
+    "spear_2",
+    "spear_heavy"
+   ],
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_yisunsin",
+   "type": "human",
+   "body": "kr_yisunsin",
+   "kind": "human",
+   "act": {
+    "idle": "guard",
+    "attack": "attack",
+    "attack2": "sword_2"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_yisunsin/kr_yisunsin.license.json",
+   "weapon": "saga-assets/world/toon/wpn_sword_legend.glb",
+   "weapon_kind": "sword",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_euljimundeok",
+   "type": "human",
+   "body": "kr_euljimundeok",
+   "kind": "human",
+   "act": {
+    "idle": "idle",
+    "attack": "skill",
+    "attack2": "burst"
+   },
+   "px": 384,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_euljimundeok/kr_euljimundeok.license.json",
+   "weapon": "saga-assets/world/toon/wpn_staff_legend.glb",
+   "weapon_kind": "staff",
+   "two_hand_clips": [
+    "staff_heavy"
+   ],
+   "combat_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_ganggamchan",
+   "type": "human",
+   "body": "kr_ganggamchan",
+   "kind": "human",
+   "act": {
+    "idle": "idle",
+    "attack": "skill",
+    "attack2": "burst"
+   },
+   "px": 384,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_ganggamchan/kr_ganggamchan.license.json",
+   "weapon": "saga-assets/world/toon/wpn_staff_legend.glb",
+   "weapon_kind": "staff",
+   "two_hand_clips": [
+    "staff_heavy"
+   ],
+   "combat_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_kimyusin",
+   "type": "human",
+   "body": "kr_kimyusin",
+   "kind": "human",
+   "act": {
+    "idle": "dagger_idle",
+    "attack": "dagger_1",
+    "attack2": "dagger_2"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_kimyusin/kr_kimyusin.license.json",
+   "weapon": "saga-assets/world/toon/wpn_dagger_legend.glb",
+   "weapon_kind": "dagger",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_gyebaek",
+   "type": "human",
+   "body": "kr_gyebaek",
+   "kind": "human",
+   "act": {
+    "idle": "guard",
+    "attack": "attack",
+    "attack2": "sword_2"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_gyebaek/kr_gyebaek.license.json",
+   "weapon": "saga-assets/world/toon/wpn_sword_rare.glb",
+   "weapon_kind": "sword",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_yeongaesomun",
+   "type": "human",
+   "body": "kr_yeongaesomun",
+   "kind": "human",
+   "act": {
+    "idle": "axe_idle",
+    "attack": "axe_1",
+    "attack2": "axe_2"
+   },
+   "px": 320,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_yeongaesomun/kr_yeongaesomun.license.json",
+   "weapon": "saga-assets/world/toon/wpn_axe_legend.glb",
+   "weapon_kind": "axe",
+   "two_hand_clips": [
+    "axe_idle",
+    "axe_1",
+    "axe_2",
+    "axe_heavy"
+   ],
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_gwanggaeto",
+   "type": "human",
+   "body": "kr_gwanggaeto",
+   "kind": "human",
+   "act": {
+    "idle": "spear_idle",
+    "attack": "spear_1",
+    "attack2": "spear_2"
+   },
+   "px": 448,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_gwanggaeto/kr_gwanggaeto.license.json",
+   "weapon": "saga-assets/world/toon/wpn_spear_legend.glb",
+   "weapon_kind": "spear",
+   "two_hand_clips": [
+    "spear_idle",
+    "spear_1",
+    "spear_2",
+    "spear_heavy"
+   ],
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_sejong",
+   "type": "human",
+   "body": "kr_sejong",
+   "kind": "human",
+   "act": {
+    "idle": "idle",
+    "attack": "skill",
+    "attack2": "burst"
+   },
+   "px": 384,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_sejong/kr_sejong.license.json",
+   "weapon": "saga-assets/world/toon/wpn_staff_legend.glb",
+   "weapon_kind": "staff",
+   "two_hand_clips": [
+    "staff_heavy"
+   ],
+   "combat_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_jangyeongsil",
+   "type": "human",
+   "body": "kr_jangyeongsil",
+   "kind": "human",
+   "act": {
+    "idle": "bow_idle",
+    "attack": "bow_1",
+    "attack2": "bow_heavy"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_jangyeongsil/kr_jangyeongsil.license.json",
+   "weapon": "saga-assets/world/toon/wpn_bow_rare.glb",
+   "weapon_kind": "bow"
+  },
+  {
+   "id": "kr_choemuseon",
+   "type": "human",
+   "body": "kr_choemuseon",
+   "kind": "human",
+   "act": {
+    "idle": "bow_idle",
+    "attack": "bow_1",
+    "attack2": "bow_heavy"
+   },
+   "px": 320,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_choemuseon/kr_choemuseon.license.json",
+   "weapon": "saga-assets/world/toon/wpn_bow_rare.glb",
+   "weapon_kind": "bow"
+  },
+  {
+   "id": "kr_daejoyeong",
+   "type": "human",
+   "body": "kr_daejoyeong",
+   "kind": "human",
+   "act": {
+    "idle": "bow_idle",
+    "attack": "bow_1",
+    "attack2": "bow_heavy"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_daejoyeong/kr_daejoyeong.license.json",
+   "weapon": "saga-assets/world/toon/wpn_bow_legend.glb",
+   "weapon_kind": "bow"
+  },
+  {
+   "id": "kr_wanggeon",
+   "type": "human",
+   "body": "kr_wanggeon",
+   "kind": "human",
+   "act": {
+    "idle": "guard",
+    "attack": "attack",
+    "attack2": "sword_2"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_wanggeon/kr_wanggeon.license.json",
+   "weapon": "saga-assets/world/toon/wpn_sword_legend.glb",
+   "weapon_kind": "sword",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_jeongyakyong",
+   "type": "human",
+   "body": "kr_jeongyakyong",
+   "kind": "human",
+   "act": {
+    "idle": "idle",
+    "attack": "skill",
+    "attack2": "burst"
+   },
+   "px": 320,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_jeongyakyong/kr_jeongyakyong.license.json",
+   "weapon": "saga-assets/world/toon/wpn_staff_rare.glb",
+   "weapon_kind": "staff",
+   "two_hand_clips": [
+    "staff_heavy"
+   ],
+   "combat_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_heojun",
+   "type": "human",
+   "body": "kr_heojun",
+   "kind": "human",
+   "act": {
+    "idle": "spear_idle",
+    "attack": "spear_1",
+    "attack2": "spear_2"
+   },
+   "px": 448,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_heojun/kr_heojun.license.json",
+   "weapon": "saga-assets/world/toon/wpn_spear_rare.glb",
+   "weapon_kind": "spear",
+   "two_hand_clips": [
+    "spear_idle",
+    "spear_1",
+    "spear_2",
+    "spear_heavy"
+   ],
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_sinsaimdang",
+   "type": "human",
+   "body": "kr_sinsaimdang",
+   "kind": "human",
+   "act": {
+    "idle": "spear_idle",
+    "attack": "spear_1",
+    "attack2": "spear_2"
+   },
+   "px": 448,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_sinsaimdang/kr_sinsaimdang.license.json",
+   "weapon": "saga-assets/world/toon/wpn_spear_rare.glb",
+   "weapon_kind": "spear",
+   "two_hand_clips": [
+    "spear_idle",
+    "spear_1",
+    "spear_2",
+    "spear_heavy"
+   ],
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_ahnjunggeun",
+   "type": "human",
+   "body": "kr_ahnjunggeun",
+   "kind": "human",
+   "act": {
+    "idle": "guard",
+    "attack": "attack",
+    "attack2": "sword_2"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_ahnjunggeun/kr_ahnjunggeun.license.json",
+   "weapon": "saga-assets/world/toon/wpn_sword_legend.glb",
+   "weapon_kind": "sword",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_yugwansun",
+   "type": "human",
+   "body": "kr_yugwansun",
+   "kind": "human",
+   "act": {
+    "idle": "idle",
+    "attack": "skill",
+    "attack2": "burst"
+   },
+   "px": 320,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_yugwansun/kr_yugwansun.license.json",
+   "weapon": "saga-assets/world/toon/wpn_staff_legend.glb",
+   "weapon_kind": "staff",
+   "two_hand_clips": [
+    "staff_heavy"
+   ],
+   "combat_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_kimgu",
+   "type": "human",
+   "body": "kr_kimgu",
+   "kind": "human",
+   "act": {
+    "idle": "spear_idle",
+    "attack": "spear_1",
+    "attack2": "spear_2"
+   },
+   "px": 448,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_kimgu/kr_kimgu.license.json",
+   "weapon": "saga-assets/world/toon/wpn_spear_legend.glb",
+   "weapon_kind": "spear",
+   "two_hand_clips": [
+    "spear_idle",
+    "spear_1",
+    "spear_2",
+    "spear_heavy"
+   ],
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_wonhyo",
+   "type": "human",
+   "body": "kr_wonhyo",
+   "kind": "human",
+   "act": {
+    "idle": "dagger_idle",
+    "attack": "dagger_1",
+    "attack2": "dagger_2"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_wonhyo/kr_wonhyo.license.json",
+   "weapon": "saga-assets/world/toon/wpn_dagger_rare.glb",
+   "weapon_kind": "dagger",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_kimjeongho",
+   "type": "human",
+   "body": "kr_kimjeongho",
+   "kind": "human",
+   "act": {
+    "idle": "idle",
+    "attack": "skill",
+    "attack2": "burst"
+   },
+   "px": 320,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_kimjeongho/kr_kimjeongho.license.json",
+   "weapon": "saga-assets/world/toon/wpn_staff_rare.glb",
+   "weapon_kind": "staff",
+   "two_hand_clips": [
+    "staff_heavy"
+   ],
+   "combat_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_gwakjaeu",
+   "type": "human",
+   "body": "kr_gwakjaeu",
+   "kind": "human",
+   "act": {
+    "idle": "idle",
+    "attack": "fist_1",
+    "attack2": "fist_heavy"
+   },
+   "px": 192,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_gwakjaeu/kr_gwakjaeu.license.json"
+  },
+  {
+   "id": "kr_nongae",
+   "type": "human",
+   "body": "kr_nongae",
+   "kind": "human",
+   "act": {
+    "idle": "spear_idle",
+    "attack": "spear_1",
+    "attack2": "spear_2"
+   },
+   "px": 448,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_nongae/kr_nongae.license.json",
+   "weapon": "saga-assets/world/toon/wpn_spear_rare.glb",
+   "weapon_kind": "spear",
+   "two_hand_clips": [
+    "spear_idle",
+    "spear_1",
+    "spear_2",
+    "spear_heavy"
+   ],
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_yihwang",
+   "type": "human",
+   "body": "kr_yihwang",
+   "kind": "human",
+   "act": {
+    "idle": "bow_idle",
+    "attack": "bow_1",
+    "attack2": "bow_heavy"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_yihwang/kr_yihwang.license.json",
+   "weapon": "saga-assets/world/toon/wpn_bow_common.glb",
+   "weapon_kind": "bow"
+  },
+  {
+   "id": "kr_yii",
+   "type": "human",
+   "body": "kr_yii",
+   "kind": "human",
+   "act": {
+    "idle": "bow_idle",
+    "attack": "bow_1",
+    "attack2": "bow_heavy"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_yii/kr_yii.license.json",
+   "weapon": "saga-assets/world/toon/wpn_bow_common.glb",
+   "weapon_kind": "bow"
+  },
+  {
+   "id": "kr_hwanghui",
+   "type": "human",
+   "body": "kr_hwanghui",
+   "kind": "human",
+   "act": {
+    "idle": "guard",
+    "attack": "attack",
+    "attack2": "sword_2"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_hwanghui/kr_hwanghui.license.json",
+   "weapon": "saga-assets/world/toon/wpn_sword_common.glb",
+   "weapon_kind": "sword",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "kr_jeongmongju",
+   "type": "human",
+   "body": "kr_jeongmongju",
+   "kind": "human",
+   "act": {
+    "idle": "idle",
+    "attack": "skill",
+    "attack2": "burst"
+   },
+   "px": 320,
+   "source_license": "saga-web/shared/assets/characters2d8/kr_jeongmongju/kr_jeongmongju.license.json",
+   "weapon": "saga-assets/world/toon/wpn_staff_rare.glb",
+   "weapon_kind": "staff",
+   "two_hand_clips": [
+    "staff_heavy"
+   ],
+   "combat_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "jp_himiko",
+   "type": "human",
+   "body": "jp_himiko",
+   "kind": "human",
+   "act": {
+    "idle": "idle",
+    "attack": "skill",
+    "attack2": "burst"
+   },
+   "px": 320,
+   "source_license": "saga-web/shared/assets/characters2d8/jp_himiko/jp_himiko.license.json",
+   "weapon": "saga-assets/world/toon/wpn_staff_legend.glb",
+   "weapon_kind": "staff",
+   "two_hand_clips": [
+    "staff_heavy"
+   ],
+   "combat_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "jp_taira",
+   "type": "human",
+   "body": "jp_taira",
+   "kind": "human",
+   "act": {
+    "idle": "guard",
+    "attack": "attack",
+    "attack2": "sword_2"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/jp_taira/jp_taira.license.json",
+   "weapon": "saga-assets/world/toon/wpn_sword_rare.glb",
+   "weapon_kind": "sword",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "jp_yoritomo",
+   "type": "human",
+   "body": "jp_yoritomo",
+   "kind": "human",
+   "act": {
+    "idle": "guard",
+    "attack": "attack",
+    "attack2": "sword_2"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/jp_yoritomo/jp_yoritomo.license.json",
+   "weapon": "saga-assets/world/toon/wpn_sword_legend.glb",
+   "weapon_kind": "sword",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "jp_yoshitsune",
+   "type": "human",
+   "body": "jp_yoshitsune",
+   "kind": "human",
+   "act": {
+    "idle": "guard",
+    "attack": "attack",
+    "attack2": "sword_2"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/jp_yoshitsune/jp_yoshitsune.license.json",
+   "weapon": "saga-assets/world/toon/wpn_sword_legend.glb",
+   "weapon_kind": "sword",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "jp_murasaki",
+   "type": "human",
+   "body": "jp_murasaki",
+   "kind": "human",
+   "act": {
+    "idle": "idle",
+    "attack": "skill",
+    "attack2": "burst"
+   },
+   "px": 320,
+   "source_license": "saga-web/shared/assets/characters2d8/jp_murasaki/jp_murasaki.license.json",
+   "weapon": "saga-assets/world/toon/wpn_staff_rare.glb",
+   "weapon_kind": "staff",
+   "two_hand_clips": [
+    "staff_heavy"
+   ],
+   "combat_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "jp_seishonagon",
+   "type": "human",
+   "body": "jp_seishonagon",
+   "kind": "human",
+   "act": {
+    "idle": "bow_idle",
+    "attack": "bow_1",
+    "attack2": "bow_heavy"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/jp_seishonagon/jp_seishonagon.license.json",
+   "weapon": "saga-assets/world/toon/wpn_bow_common.glb",
+   "weapon_kind": "bow"
+  },
+  {
+   "id": "jp_tomoegozen",
+   "type": "human",
+   "body": "jp_tomoegozen",
+   "kind": "human",
+   "act": {
+    "idle": "dagger_idle",
+    "attack": "dagger_1",
+    "attack2": "dagger_2"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/jp_tomoegozen/jp_tomoegozen.license.json",
+   "weapon": "saga-assets/world/toon/wpn_dagger_rare.glb",
+   "weapon_kind": "dagger",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "jp_nobunaga",
+   "type": "human",
+   "body": "jp_nobunaga",
+   "kind": "human",
+   "act": {
+    "idle": "idle",
+    "attack": "skill",
+    "attack2": "burst"
+   },
+   "px": 320,
+   "source_license": "saga-web/shared/assets/characters2d8/jp_nobunaga/jp_nobunaga.license.json",
+   "weapon": "saga-assets/world/toon/wpn_staff_legend.glb",
+   "weapon_kind": "staff",
+   "two_hand_clips": [
+    "staff_heavy"
+   ],
+   "combat_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "jp_hideyoshi",
+   "type": "human",
+   "body": "jp_hideyoshi",
+   "kind": "human",
+   "act": {
+    "idle": "bow_idle",
+    "attack": "bow_1",
+    "attack2": "bow_heavy"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/jp_hideyoshi/jp_hideyoshi.license.json",
+   "weapon": "saga-assets/world/toon/wpn_bow_legend.glb",
+   "weapon_kind": "bow"
+  },
+  {
+   "id": "jp_ieyasu",
+   "type": "human",
+   "body": "jp_ieyasu",
+   "kind": "human",
+   "act": {
+    "idle": "spear_idle",
+    "attack": "spear_1",
+    "attack2": "spear_2"
+   },
+   "px": 448,
+   "source_license": "saga-web/shared/assets/characters2d8/jp_ieyasu/jp_ieyasu.license.json",
+   "weapon": "saga-assets/world/toon/wpn_spear_legend.glb",
+   "weapon_kind": "spear",
+   "two_hand_clips": [
+    "spear_idle",
+    "spear_1",
+    "spear_2",
+    "spear_heavy"
+   ],
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "jp_shingen",
+   "type": "human",
+   "body": "jp_shingen",
+   "kind": "human",
+   "act": {
+    "idle": "guard",
+    "attack": "attack",
+    "attack2": "sword_2"
+   },
+   "px": 256,
+   "source_license": "saga-web/shared/assets/characters2d8/jp_shingen/jp_shingen.license.json",
+   "weapon": "saga-assets/world/toon/wpn_sword_legend.glb",
+   "weapon_kind": "sword",
+   "center_roles": [
+    "attack",
+    "attack2"
+   ]
+  },
+  {
+   "id": "jp_kenshin",
+   "type": "human",
+   "body": "jp_kenshin",
+   "kind": "human",
+   "act": {
+    "idle": "idle",
+    "attack": "skill",
+    "attack2": "burst"
+   },
+   "px": 384,
+   "source_license": "saga-web/shared/assets/characters2d8/jp_kenshin/jp_kenshin.license.json",
+   "weapon": "saga-assets/world/toon/wpn_staff_legend.glb",
+   "weapon_kind": "staff",
+   "two_hand_clips": [
+    "staff_heavy"
+   ],
+   "combat_roles": [
+    "attack",
+    "attack2"
+   ]
+  }
+ ],
+ "deploy": {
+  "saga-web/shared/assets/sprites2d_sheets": null
+ }
+}
