@@ -75,6 +75,9 @@ func try_attack() -> void:
 				_strike(enemy)
 				if is_instance_valid(enemy) and randf() * 100.0 < DungeonRunState.echo_pct():
 					_strike(enemy)
+	var brk := get_tree().get_first_node_in_group("dungeon_breakables")
+	if brk != null:
+		brk.call("hit_around", _player.global_position, range_now)   # G-0307 사거리 안 통·항아리도 깬다
 
 
 ## G-0290 — 낀 무기 등급(0 상품이면 없음) 색 잔광. 등급·색은 dungeon_items TIERS 그대로.

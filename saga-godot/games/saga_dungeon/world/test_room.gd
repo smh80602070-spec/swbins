@@ -182,6 +182,7 @@ func _ready() -> void:
 		if rig.has_method("set_rooms"):
 			rig.set_rooms(belt_rooms)
 	## G-0193 — 은총 자리(첫 방 + 샘 방). 쓰러지면 마지막으로 밝힌 은총에서 다시 선다(player_health.gd)
+	load("res://games/saga_dungeon/world/dungeon_breakables.gd").attach(self, _room_origin_z.duplicate(), Array(ROOM_KINDS))   # G-0307 통·항아리
 	var grace: Node3D = load("res://games/saga_dungeon/world/grace_sites.gd").new()
 	grace.setup(_room_origin_z.duplicate(), Array(ROOM_KINDS))
 	add_child(grace)
