@@ -760,6 +760,7 @@ namespace Saga.Realm.UI
             if (canvas != null && GetComponent<RealmMenuHub>() == null)
                 gameObject.AddComponent<RealmMenuHub>().Init(canvas, _archiveToggleLabel, _quizToggleLabel, _mapLabel,
                     new[] { _settingsToggleLabel, _saveLabel, _tacticToggleLabel, _duelToggleLabel });
+            if (canvas != null) RealmAutoRule.Attach(canvas, gameObject); // tasks U-0167 시정 위임 — 기둥 맨 밑 칸(☰ 가 당겨 비운 자리)
             RelocalizeBaked();
             RefreshSettingsPanel();
         }

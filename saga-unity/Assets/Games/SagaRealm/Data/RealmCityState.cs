@@ -264,6 +264,9 @@ namespace Saga.Realm.Data
             }
         }
 
+        /// <summary>tasks U-0167 시정 위임 — 그 성 그 값의 상한(<see cref="ExecuteOrder"/> 가 쓰는 것 그대로).</summary>
+        public static int CapFor(string key, string cityId) { var def = RealmCityData.Get(cityId); return def != null ? CapOf(key, def) : 0; }
+
         private static int CapOf(string key, RealmCityDef def) => key switch
         {
             "agri" => Mathf.RoundToInt(900 * RealmCityData.AgriCapMul(def.Land)),

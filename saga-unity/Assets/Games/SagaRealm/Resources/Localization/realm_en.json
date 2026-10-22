@@ -1080,6 +1080,11 @@
     { "key": "wonder.started", "value": "{0} {1} — {2}-month project begun ({3} gold, {4} workers)" },
     { "key": "wonder.title", "value": "🏛️ Wonders — only the first to finish gets the effect · late builders get half the gold back" },
     { "key": "wonder.row", "value": "{0} {1} — {2} gold · {3} workers · {4} months\n{5} · {6}" },
-    { "key": "wonder.open", "value": "🏛️ Wonders" }
+    { "key": "wonder.open", "value": "🏛️ Wonders" },
+    { "key": "aq.rule_on", "value": "🌾 Delegated rule on — keeps gold above {0} · {1} cities this month" },
+    { "key": "aq.rule_off", "value": "🌾 Delegated rule off" },
+    { "key": "aq.rule_btn", "value": "🌾 Delegate ▶" },
+    { "key": "aq.rule_btn_on", "value": "🌾 Delegate ■" },
+    { "key": "aq.rule_month", "value": "🌾 Delegated rule — {0} cities developed" }
   ]
 }

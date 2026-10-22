@@ -1080,6 +1080,11 @@
     { "key": "wonder.started", "value": "{0} {1} — {2}달 공사를 시작했다(금 {3}·인부 {4})" },
     { "key": "wonder.title", "value": "🏛️ 불가사의 — 먼저 다 지은 쪽만 효과 · 늦으면 금 반 환급" },
     { "key": "wonder.row", "value": "{0} {1} — 금 {2}·인부 {3}·{4}달\n{5} · {6}" },
-    { "key": "wonder.open", "value": "🏛️ 불가사의" }
+    { "key": "wonder.open", "value": "🏛️ 불가사의" },
+    { "key": "aq.rule_on", "value": "🌾 시정 위임 켬 — 금 {0} 밑으로는 안 쓴다 · 이 달 {1}곳" },
+    { "key": "aq.rule_off", "value": "🌾 시정 위임 끔" },
+    { "key": "aq.rule_btn", "value": "🌾 위임 ▶" },
+    { "key": "aq.rule_btn_on", "value": "🌾 위임 ■" },
+    { "key": "aq.rule_month", "value": "🌾 시정 위임 — {0}곳 내정" }
   ]
 }
