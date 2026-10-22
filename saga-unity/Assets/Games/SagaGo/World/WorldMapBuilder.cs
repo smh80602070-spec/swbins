@@ -68,6 +68,7 @@ namespace Saga.Go.World
             if (GetComponent<Saga.Go.UI.MenuHubUi>() == null) gameObject.AddComponent<Saga.Go.UI.MenuHubUi>(); // 사냥 기록·도움말·주간 도전·재출항·신수 알 단추를 "메뉴" 하나로(오른쪽 가장자리 겹침 해소)
             if (GetComponent<HomesteadField>() == null) gameObject.AddComponent<HomesteadField>(); // U-0032 쉼터 마당(표지·놓은 소품)
             if (GetComponent<Saga.Go.UI.HomesteadUi>() == null) gameObject.AddComponent<Saga.Go.UI.HomesteadUi>(); // U-0032 쉼터 창(J)
+            if (GetComponent<RestSiteField>() == null) gameObject.AddComponent<RestSiteField>(); // U-0168 모닥불 쉼터(지역마다 — 앉으면 회복·부활 자리·잡몹 다시 섬)
         }
     }
 }

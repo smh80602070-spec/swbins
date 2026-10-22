@@ -196,6 +196,9 @@ namespace Saga.Go.Data
             public List<int> wqSteps;
             public List<bool> wqDone;
             public string wqTrack;
+            // tasks U-0168 모닥불 쉼터 — 지핀 불(지역 id)·마지막으로 앉은 불(버전 그대로 — 옛 세이브는 아무 데도 안 지핀 채)
+            public List<string> restLit;
+            public string restAt;
         }
 
         public static bool Save()
@@ -247,6 +250,7 @@ namespace Saga.Go.Data
                 frostFound = FrostState.Snapshot(), // 109-14-27a
                 areaFound = AreaState.Snapshot(), // 109-14-37
                 nightDay = NightEchoState.Day, nightDone = NightEchoState.Snapshot(), // 109-14-56b
+                restLit = GoRestSites.SnapshotLit(), restAt = GoRestSites.At, // tasks U-0168
                 trackDay = GoTrack.Day, trackRead = GoTrack.SnapshotRead(), trackBoss = GoTrack.Boss, trackDone = GoTrack.Done ? 1 : 0, // tasks U-0096
                 goPathDay = GoPath.Day, goPathUsed = GoPath.Snapshot(), // tasks U-0130
                 mountSel = GoMounts.Snapshot(), // 109-15
@@ -411,6 +415,8 @@ namespace Saga.Go.Data
             AreaState.Restore(data.areaFound); // 109-14-37
             NightEchoState.Restore(data.nightDay, data.nightDone); // 109-14-56b
             GoTrack.Restore(data.trackDay, data.trackRead, data.trackBoss, data.trackDone); // tasks U-0096
+            GoRestSites.Restore(data.restLit, data.restAt); // tasks U-0168
+            Saga.Go.World.RestSiteField.Instance?.Refresh(); // 부활 자리·불빛
             GoPath.Restore(data.goPathDay, data.goPathUsed); // tasks U-0130 — 없는 세이브(null)는 빈 채
             GoMounts.Restore(data.mountSel); // 109-15
             World.GoOrbField.Instance?.Rebuild();

@@ -988,6 +988,14 @@ namespace Saga.Go.Combat
             return dealt;
         }
 
+        /// <summary>tasks U-0168 모닥불에 앉음 — 쓰러진 잡몹이면 다음 틱에 바로 선다(90초 길을 당김). 수호장·숨은 터·임무 적·들판 인물은 그대로(false).</summary>
+        public bool ReviveSoon()
+        {
+            if (Alive || DomainFoe || StoryFoe || IsGuardian || IsHero) return false;
+            _timer = 0f;
+            return true;
+        }
+
         private void Die()
         {
             if (IsHero) { Yield(); return; }

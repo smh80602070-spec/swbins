@@ -37,6 +37,7 @@ namespace Saga.Go.UI
         private TextMeshProUGUI _info;
         private TextMeshProUGUI _regionInfo;
         private readonly List<TextMeshProUGUI> _rampLabels = new List<TextMeshProUGUI>();
+        private readonly List<(TextMeshProUGUI Label, string Id)> _restLabels = new List<(TextMeshProUGUI, string)>(); // U-0168 지핀 모닥불
         private readonly List<string> _rampRegions = new List<string>();
         public int RampLabelCount => _rampLabels.Count;
         public bool RampLabelShown(int i) => _rampLabels[i].gameObject.activeSelf;
@@ -230,6 +231,16 @@ namespace Saga.Go.UI
                 _wpButtons.Add(b);
             }
 
+            // tasks U-0168 모닥불 쉼터 — 지핀 불만 "🔥"(부활 자리면 금빛 테)
+            foreach (var s in GoRestSites.Sites)
+            {
+                Vector2 g = GoWorldMap.WorldToGridF(s.Pos);
+                var fire = EncounterUiKit.NewText(_mapRect, "🔥", new Vector2(0.5f, 0.5f), MapPos(g.x, g.y), new Vector2(40f, 40f), 28);
+                fire.raycastTarget = false;
+                fire.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+                _restLabels.Add((fire, s.Id));
+            }
+
             // 109-9 발원지 폭포 — 아래끝 자리에 "≈ 이름"(그 지역이나 너른 강에 발 디디면 보임)
             foreach (var w in TestMapData.Waterfalls)
             {
@@ -341,6 +352,7 @@ namespace Saga.Go.UI
                 _wpButtons[i].gameObject.SetActive(WorldMapState.IsVisited(GoWorldMap.RegionAt(GoWorldMap.WaypointPos(w))) || on);
             }
             for (int i = 0; i < _rampLabels.Count; i++) _rampLabels[i].gameObject.SetActive(WorldMapState.IsVisited(_rampRegions[i]));
+            foreach (var (label, id) in _restLabels) { label.gameObject.SetActive(GoRestSites.IsLit(id)); label.text = GoRestSites.At == id ? "<u>🔥</u>" : "🔥"; } // U-0168
             for (int i = 0; i < _fallLabels.Count; i++)
                 _fallLabels[i].gameObject.SetActive(WorldMapState.IsVisited(_fallRegions[i]) || WorldMapState.IsVisited("river"));
             for (int i = 0; i < _fishLabels.Count; i++)

@@ -3314,6 +3314,11 @@
     { "key": "path.lead_go", "value": "🧭 {0}: I'll lead you to \"{1}\" · {2}m" },
     { "key": "path.lead_none", "value": "🧭 {0}: nowhere worth going close by" },
     { "key": "path.provoke_go", "value": "⚔️ {0} provoked a bandit — beat it within {1}s" },
-    { "key": "path.provoke_win", "value": "⚔️ Won {0}'s provocation · EXP +{1}" }
+    { "key": "path.provoke_win", "value": "⚔️ Won {0}'s provocation · EXP +{1}" },
+    { "key": "rest.unlit", "value": " · unlit" },
+    { "key": "rest.wipe", "value": "Everyone fell — you came to by the last campfire (nothing lost)" },
+    { "key": "rest.lit", "value": "🔥 Lit the campfire at {0} — you'll wake here if everyone falls" },
+    { "key": "rest.sat", "value": "🔥 Rested by the campfire at {0}" },
+    { "key": "rest.revive", "value": "{0} foes rose again in the fields" }
   ]
 }
