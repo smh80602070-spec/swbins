@@ -27,8 +27,10 @@ namespace Saga.Go.Player
     {
         private const float RotateSpeedDeg = 0.006f * Mathf.Rad2Deg; // Godot 0.006 rad/px와 같은 값
         private const float PadLookDegPerSec = 140f; // tasks U-0017 — 오른쪽 스틱 한껏 밀었을 때 초당 도
-        private const float MinZoom = 4f;
-        private const float MaxZoom = 16f;
+        // tasks U-0161(웹 W-0324) — 에셋을 코앞에서·멀리서 — 한계만 넓힘(기본 9 그대로). 레벨업 컷은 옛 끝 4 로.
+        public const float MinZoom = 2.2f;
+        public const float MaxZoom = 24f;
+        public const float LevelUpZoom = 4f;
         private const float ZoomStep = 1f;
         private const float MinPitchDeg = 15f;
         private const float MaxPitchDeg = 70f;
@@ -233,6 +235,9 @@ namespace Saga.Go.Player
             transform.localRotation = Quaternion.Euler(_pitchDeg, _yawDeg, 0f);
         }
 
+        /// <summary>진단 — 휠 한 칸(+ 멀리).</summary>
+        public void ZoomForTest(float delta) { Zoom(delta); }
+
         private void Zoom(float delta)
         {
             _zoom = Mathf.Clamp(_zoom + delta, MinZoom, MaxZoom);
@@ -255,10 +260,10 @@ namespace Saga.Go.Player
             {
                 if (AnyKeyPressed()) { _zoom = startZoom; _levelUpRoutine = null; yield break; }
                 t += Time.deltaTime;
-                _zoom = Mathf.Lerp(startZoom, MinZoom, t / LevelUpZoomInSec);
+                _zoom = Mathf.Lerp(startZoom, LevelUpZoom, t / LevelUpZoomInSec);
                 yield return null;
             }
-            _zoom = MinZoom;
+            _zoom = LevelUpZoom;
 
             t = 0f;
             while (t < LevelUpHoldSec)
@@ -272,7 +277,7 @@ namespace Saga.Go.Player
             while (t < LevelUpZoomOutSec)
             {
                 t += Time.deltaTime;
-                _zoom = Mathf.Lerp(MinZoom, startZoom, t / LevelUpZoomOutSec);
+                _zoom = Mathf.Lerp(LevelUpZoom, startZoom, t / LevelUpZoomOutSec);
                 yield return null;
             }
             _zoom = startZoom;

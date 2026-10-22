@@ -18,8 +18,9 @@ namespace Saga.Realm.Player
     {
         private const float RotateSpeedDeg = 60f;
         private const float ZoomSpeed = 8f;
-        private const float MinZoom = 8f;
-        private const float MaxZoom = 24f;
+        // tasks U-0161(웹 W-0324) — 한계만 넓힘
+        public const float MinZoom = 4f;
+        public const float MaxZoom = 36f;
         private const float MinPitchDeg = 25f;
         private const float MaxPitchDeg = 70f;
 

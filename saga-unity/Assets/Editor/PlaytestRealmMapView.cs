@@ -108,7 +108,7 @@ namespace Saga.EditorTools
                 if (cam != null) { cam.SetView(r0, p0); cam.Tick(10f); }
                 if (RealmMapState.ViewingMap != viewing0) RealmMapState.Toggle();
             }
-            if (_ok) Debug.Log($"{T} OK - 켜면 지금 성 위·고르면 따라감·확대 30~420·이름표(먼 줌 지금 성만)·가까이 태수 보임 |{m}");
+            if (_ok) Debug.Log($"{T} OK - 켜면 지금 성 위·고르면 따라감·확대 {RealmWorldMapCamera.MinRadius}~{RealmWorldMapCamera.MaxRadius}·이름표(먼 줌 지금 성만)·가까이 태수 보임 |{m}");
             return _ok;
         }
 

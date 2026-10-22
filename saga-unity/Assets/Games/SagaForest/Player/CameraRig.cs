@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Saga.Forest.Player
 {
@@ -22,6 +23,12 @@ namespace Saga.Forest.Player
         private const float PitchDeg = 62f;
         private const float SpringLength = 14f;
 
+        // tasks U-0161(웹 W-0324 userZoom 0.25~6 · 고돗 0.2~1.8) — 휠로 끈 길이 배율(회전 없음 그대로). 한 칸 × 0.85.
+        public const float MinMul = 0.25f, MaxMul = 1.8f, Notch = 0.85f;
+        private float _mul = 1f;
+        /// <summary>진단 — 지금 끈 길이(m).</summary>
+        public float Spring => SpringLength * _mul;
+
         [SerializeField] private Camera cam;
 
         private void Awake()
@@ -29,6 +36,30 @@ namespace Saga.Forest.Player
             if (cam == null) cam = GetComponentInChildren<Camera>();
             transform.localRotation = Quaternion.Euler(PitchDeg, 0f, 0f);
             if (cam != null) cam.transform.localPosition = new Vector3(0f, 0f, -SpringLength);
+        }
+
+        private void Update()
+        {
+            var mouse = Mouse.current;
+            if (mouse == null) return;
+            float y = mouse.scroll.ReadValue().y;
+            if (y > 0f) ZoomBy(-1); else if (y < 0f) ZoomBy(1);
+        }
+
+        /// <summary>기본 끈 길이(배율 1)로.</summary>
+        public void ResetZoom() => SetMul(1f);
+
+        private void SetMul(float m)
+        {
+            _mul = Mathf.Clamp(m, MinMul, MaxMul);
+            if (cam != null) cam.transform.localPosition = new Vector3(0f, 0f, -Spring);
+        }
+
+        /// <summary>휠 칸(+ 멀리) — 끈 길이 배율을 곱으로.</summary>
+        public void ZoomBy(int notches)
+        {
+            _mul = Mathf.Clamp(_mul * Mathf.Pow(1f / Notch, notches), MinMul, MaxMul);
+            if (cam != null) cam.transform.localPosition = new Vector3(0f, 0f, -Spring);
         }
     }
 }

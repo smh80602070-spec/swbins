@@ -23,7 +23,7 @@ namespace Saga.Realm.Player
     public class RealmWorldMapCamera : MonoBehaviour
     {
         // tasks U-0102 — 120m 에선 성 앞 태수·재야(키 4m)가 점뿐이었다 → 30m 까지. 확대 한 걸음 = 지금 거리의 12%(가까울수록 잘게, 최소 4m).
-        public const float MinRadius = 30f;   // 40m 에선 태수 몸이 화면 높이 7.8% — 30m 로 한 걸음 더(U-0102 진단)
+        public const float MinRadius = 15f;   // tasks U-0161(웹 W-0324) 30 → 15 — 태수 몸을 코앞에서 ·   // 40m 에선 태수 몸이 화면 높이 7.8% — 30m 로 한 걸음 더(U-0102 진단)
         public const float MaxRadius = 420f;
         public const float ZoomFrac = 0.12f, MinZoomStep = 4f;
         /// <summary>tasks U-0102 — 카메라 중심이 고른 성으로 옮겨 가는 빠르기(1/초, 지수 따라잡기).</summary>

@@ -36,6 +36,27 @@ namespace Saga.Story.World
         private const float LevelUpHoldSec = 0.6f;
         private const float LevelUpZoomOutSec = 0.3f;
         private float _zDistance = BaseZDistance;
+
+        // tasks U-0161(웹 W-0324 0.35~5 · 고돗 0.18~1.8) — 휠로 Z 거리 배율. 한 칸 × 0.85 · 가까우면 눈높이 2.6 → 1.2(몸 가운데).
+        public const float MinZMul = 0.35f, MaxZMul = 1.8f, ZoomNotch = 0.85f, CloseYOffset = 1.2f;
+        public float ZDistance => _zDistance;
+
+        /// <summary>휠 칸(+ 멀리). 레벨업 컷 중엔 안 받는다(컷이 되돌릴 자리를 흔들지 않게).</summary>
+        public void ZoomBy(int notches)
+        {
+            if (_levelUpRoutine != null) return;
+            _zDistance = Mathf.Clamp(_zDistance * Mathf.Pow(1f / ZoomNotch, notches), BaseZDistance * MinZMul, BaseZDistance * MaxZMul);
+        }
+
+        /// <summary>진단 — 레벨업 컷을 끊고 기본 거리로(컷 중엔 휠을 안 받으므로).</summary>
+        public void ResetZoomForTest()
+        {
+            if (_levelUpRoutine != null) { StopCoroutine(_levelUpRoutine); _levelUpRoutine = null; }
+            _zDistance = BaseZDistance;
+        }
+
+        /// <summary>지금 거리의 눈높이 — 기본 거리 이상이면 2.6, 가장 가까우면 1.2.</summary>
+        public float EyeOffset => Mathf.Lerp(CloseYOffset, YOffset, Mathf.InverseLerp(BaseZDistance * MinZMul, BaseZDistance, _zDistance));
         private Coroutine _levelUpRoutine;
 
         /// <summary>`DialogueLabel.Instance`·`RealmToast.Instance`와 같은
@@ -129,7 +150,13 @@ namespace Saga.Story.World
                 _player = go.transform;
             }
 
-            _followY = Mathf.Lerp(_followY, _player.position.y + YOffset, YLerpRate * Time.deltaTime);
+            var mouse = Mouse.current;
+            if (mouse != null)
+            {
+                float sy = mouse.scroll.ReadValue().y;
+                if (sy > 0f) ZoomBy(-1); else if (sy < 0f) ZoomBy(1);
+            }
+            _followY = Mathf.Lerp(_followY, _player.position.y + EyeOffset, YLerpRate * Time.deltaTime);
 
             Vector2 shakeOffset = Vector2.zero;
             if (_shakeTimer > 0f)

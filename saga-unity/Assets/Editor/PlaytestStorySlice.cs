@@ -210,6 +210,7 @@ namespace Saga.EditorTools
                     if (!PlaytestStoryLife.Run()) { Fail(); return; } // tasks U-0133 채집 등급 — 단계 표·덤·채집터·쿨·단계 오름·저장(세이브 JSON·자리를 되돌린다)
                     if (!PlaytestStoryShake.Run()) { Fail(); return; } // tasks U-0159 흔들림 규격(표만)
                     if (!PlaytestStoryTierMark.Run()) { Fail(); return; } // tasks U-0160 발밑 전직 표식·쓰러짐 카드(레벨·직업 되돌림)
+                    if (!PlaytestCameraZoom.Run("PlaytestStorySlice", "story")) { Fail(); return; } // tasks U-0161 휠 줌(Z 거리 되돌림)
                     if (!PlaytestHurtSignal.Run("PlaytestStorySlice", "st")) { Fail(); return; } // tasks U-0105 "내가 맞았다" 신호 — 진짜 Hurt 번쩍·붉은 숫자·맥박(체력·무적·판 등급 셈 되돌림)
                     if (!PlaytestStoryJust.Run()) { Fail(); return; } // tasks U-0142 회피·저스트 회피(자리·체력·판 등급 셈·저스트 되돌림)
                     if (!PlaytestLifePose.Run("PlaytestStorySlice", "story")) { Fail(); return; } // tasks U-0146 생활 몸짓

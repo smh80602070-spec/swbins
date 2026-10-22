@@ -17,8 +17,10 @@ namespace Saga.Dungeon.Player
     public class CameraRig : MonoBehaviour
     {
         private const float RotateSpeedDeg = 0.006f * Mathf.Rad2Deg;
-        private const float MinZoom = 3f;
-        private const float MaxZoom = 10f;
+        // tasks U-0161(웹 W-0324) — 한계만 넓힘(기본 그대로). 레벨업 컷은 옛 끝 3 으로.
+        public const float MinZoom = 1.8f;
+        public const float MaxZoom = 16f;
+        public const float LevelUpZoom = 3f;
         private const float ZoomStep = 1f;
         private const float MinPitchDeg = 30f;
         private const float MaxPitchDeg = 75f;
@@ -173,10 +175,10 @@ namespace Saga.Dungeon.Player
             {
                 if (AnyKeyPressed()) { _zoom = startZoom; _levelUpRoutine = null; yield break; }
                 t += Time.deltaTime;
-                _zoom = Mathf.Lerp(startZoom, MinZoom, t / LevelUpZoomInSec);
+                _zoom = Mathf.Lerp(startZoom, LevelUpZoom, t / LevelUpZoomInSec);
                 yield return null;
             }
-            _zoom = MinZoom;
+            _zoom = LevelUpZoom;
 
             t = 0f;
             while (t < LevelUpHoldSec)
@@ -190,7 +192,7 @@ namespace Saga.Dungeon.Player
             while (t < LevelUpZoomOutSec)
             {
                 t += Time.deltaTime;
-                _zoom = Mathf.Lerp(MinZoom, startZoom, t / LevelUpZoomOutSec);
+                _zoom = Mathf.Lerp(LevelUpZoom, startZoom, t / LevelUpZoomOutSec);
                 yield return null;
             }
             _zoom = startZoom;
@@ -275,6 +277,10 @@ namespace Saga.Dungeon.Player
             _pitchDeg = Mathf.Clamp(_pitchDeg + relative.y * RotateSpeedDeg, MinPitchDeg, MaxPitchDeg);
             transform.localRotation = Quaternion.Euler(_pitchDeg, _yawDeg, 0f);
         }
+
+        /// <summary>진단 — tasks U-0161 휠 한 칸(+ 멀리)·지금 줌.</summary>
+        public void ZoomForTest(float delta) { Zoom(delta); }
+        public float CurrentZoom => _zoom;
 
         private void Zoom(float delta)
         {
