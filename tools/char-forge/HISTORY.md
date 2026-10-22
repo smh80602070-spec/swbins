@@ -165,3 +165,11 @@ export BLENDER_USER_RESOURCES="$PWD/tools/char-forge/_blender"
 2. VRM 둘(dungeon_hero_01·saga_forest_avatar_01)도 옷 변형 자산을 `assets/wardrobe/<몸>/` 에(같은 `export_vrm_parts.py`→`vrm_piece_tex.py`→`make_wardrobe_textures.py`).
 3. 옷 모양 = VRoid Studio 에서 사람이 디자인(같은 체형 슬라이더) → `export_vrm_parts.py`. 무늬 변형은 자동.
 4. 로컬 산출물 `_out/vrm_parts`·`_out/wardrobe`(36MB)·`ai-art/_out/web_patterns_32` 는 gitignore — 새 PC 는 도구로 다시 만든다.
+
+## H8. README §13·§14 상세(10-23 R-6 옮김 — README 상한 16KB)
+
+- **처리량(10-21, 이 PC)**: 사람 풀 380칸 굽기 108초(0.29초/칸) + 그림체 55초 ≈ 2.8분, 짐승 260칸 65초 + 41초 ≈ 1.8분. GPU 는 Blender EEVEE 만(SD 없음).
+- **still 과 같은 사람(K-0159)**: `still_match.py <풀>` 이 500 몸을 still 과 띠 색으로 순위 → 머리 모양·옷 꼴이 닮은 몸을 고르고 계획 `human.kinds` 로 `gear_sprites` KIND_JSON(`hair_ramp`·`cloth_by`·`cape:wrap`·갑주·`pal`)을 맞춘다. 배율 ortho 2.2(몸 ~80%, still 94%), 창·지팡이 풀은 `px` 256(px/m 같음). 판정 6째 줄 `still`. style_pass 는 채도 > 0.10 인 곳 색상을 되살린다(`keep_hue`). 배포 `deploy` = {판 sprites2d_sheets: [풀…]}.
+- **굽기 손잡이(표 줄)**: `range` 구간 고정 · `search` 자동 구간 범위 · `active`(수 = 문턱 배율) 반복 구간은 움직이는 곳만 · `reverse` · `inplace`/`inplace_z`(사다리) · `cf` = 자체 키프레임(build.retarget). 표 머리 `lock_feet` = 디딘 발 고정(발목·발끝 시간 순 한 번에, 두 마디 IK, 들릴 때 4프레임 풀기, 발바닥 다 닿으면 발 방향도 못박음) · `clean_feet` = CMU 발 마커 뒤집힘 막기(제 축 비틀림 빼기·75° 넘는 꺾임은 앞 프레임·프레임당 40° 제한 — 138_01·80_09 에 170° 뒤집힘이 있음).
+- **점검 다섯**(`mocap_pose_check.py <폴더>`): 디딘 점(발목·발끝 따로) 미끄러짐 ≤ `slip_max`(기본 3cm, locomotion·no_ground 는 재기만) · 손목 ≤ 80° · 땅 뚫림 ≥ −5cm · 튐 ≤ 90°/프레임 · 표 `expect`(어느 프레임이든). 줄 `CLIP 이름 PASS|FAIL {slip_at·jump_at…}`.
+- **공장 동작 표**: 계획에 `motion_table`(+ `anim_extra` 'm=…;c=…' 여럿 가능) → 표 이름이 역할 이름·동작 `c.<이름>`. 표 `sprite.ground`(each 칸마다 / row0 그 줄 첫 칸 — 쪼그림·눕기·뛰기·매달리기·말 위), `sprite.center`(칸 밖이면 카메라 밈), `sprite.spiky`(한 칸 정점이 정상) 를 style_pass·sheet_judge·factory 가 읽는다. 대조판이 idle 없는 풀이면 역할마다 가운데 칸.
