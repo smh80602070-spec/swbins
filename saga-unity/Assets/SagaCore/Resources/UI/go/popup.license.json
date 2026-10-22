@@ -1,0 +1,12 @@
+{
+ "id": "go/popup",
+ "generator": "tools/asset-forge/uigen.py",
+ "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+ "theme": "go",
+ "game": "saga-go",
+ "part": "popup",
+ "size": [
+  256,
+  192
+ ]
+}

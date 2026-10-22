@@ -17,9 +17,10 @@
 - [ ] 10-22 · 2D폰: 1만리 나무 밟음·2나락 마을 화면 바뀜 · 웹
 - [ ] 10-22 · (G-0287 대기 알림) · 고돗 `assets/characters_dex/*.gltf` 모프 targets 0(이름표만, 웹 characters3d 는 77) → Fcl 모프 살려 다시 내보내기 — NPC·주인공 깜박임·표정·입 · 자체툴
 - [ ] 10-22 · (K-0168 끝) · 고돗: sg_liubei 새 몸(어른 키) 다시 설치 + 새 201 몸 받음(K 결정 — 해시 NPC 겉모습만) → G-0276 에서 지운 201 을 characters_dex 에 넣고 임포트 · 고돗
-- [ ] 10-22 · (K-0168 끝) · sg_liubei 새 몸 → CharactersDex 갈아 끼우기(U-0156 길) · 유니티
+- [ ] 10-22 · (K-0168 끝) · sg_liubei 새 몸 → CharactersDex(U-0156 길) · 유니티
 - [ ] 10-22 · (K-0169 끝) · 컷아웃 주역 둘 rig 에 무기·attack 끝 자세(코드 그대로 읽음, shared/web2d/cutout) — cutout2d.on 기본값 다시 볼지 · 웹/2나락·4종횡
 - [ ] 10-22 · (K-0160 끝) · W-0370: 1만리 sprites2d_sheets beast_* 125(+factory_alias 4) · still 짐승(2나락 셋·4종횡 둘) · 도감 60 은 **shared/assets/sprites2d_sheets** 한 벌(mode2d base 자리 정하기) · 웹
 - [ ] 10-22 · (K-0170 끝) · 2나락 적 종 시트 42(+alias 6) — sheetOf 가 body 시트 씀, 코끼리병 body beast_big → `dg_elephant` 짝 한 줄(beast_big = 곰 still) · 웹/2나락
-- [ ] 10-22 · (K-0171 끝) · 그림만 바뀜: 바탕 타일 넷+이음 쌍(1만리·3마을·5천하)·4종횡 옛 싸움터 far·5천하 rts_inf_ally · 웹
-- [ ] 10-22 · (K-0171 메모) · 바탕 넷 거울 만화경 무늬(go_sand·go_stone·realm_stone·go_water) → ground_tile.py · 자체툴
+- [ ] 10-22 · (K-0171 끝) · 그림만 바뀜: 바탕 넷+이음 쌍·4종횡 옛 싸움터 far·5천하 rts_inf_ally · 웹
+- [ ] 10-22 · (K-0171) · 바탕 넷 만화경 무늬(go_sand·go_stone·realm_stone·go_water) → ground_tile · 자체툴
+- [ ] 10-22 · (K-0173 끝) · UI 스킨 95 + 9-slice .meta `Resources/UI/` — 열어 임포트 오류 0 확인 · 유니티

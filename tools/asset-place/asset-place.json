@@ -1276,7 +1276,7 @@
     "*.png",
     "*.json"
    ],
-   "note": "K-0040 UI 스킨 — 부품 19 × 테마 5(go·dungeon·forest·story·realm), 9분할 메타 ui_parts.json. Unity 스프라이트 설정은 U 갈래",
+   "note": "K-0040 UI 스킨 — 부품 19 × 테마 5(go·dungeon·forest·story·realm), 9분할 메타 ui_parts.json. 유니티 .meta(Sprite·Full Rect·spriteBorder = slice)는 tools/asset-place/unity_sprite_meta.py(K-0173)",
    "targets": [
     {
      "track": "web",
@@ -1287,6 +1287,13 @@
      "dir": "saga-godot/assets/ui_skin",
      "sidecar": [
       ".import"
+     ]
+    },
+    {
+     "track": "unity",
+     "dir": "saga-unity/Assets/SagaCore/Resources/UI",
+     "sidecar": [
+      ".meta"
      ]
     }
    ]
