@@ -39,6 +39,13 @@ const BOSS_SIGIL_DROP_CHANCE := 0.5  # 원작 "층 10+ 보스" 드랍 — 이 �
 const MOD_POOL: Array[String] = ["swift", "elite_double", "treasure", "regen", "resist_boost", "glass_cannon"]
 const RESIST_BOOST_ELEMENTS: Array[String] = ["fire", "cold", "lit", "pois", "chi", "emp"]
 
+## G-0308 지도 장치(웹 W-0298 atlas.js 짝) — 켜기 전 부적에 금을 내고 변형자를
+## 하나씩 더 새긴다(부적 dict `extra`, 없으면 빈 것 = 옛 세이브 그대로). 새긴 수만큼
+## 보상 금 ×(1+0.2×n). 수치는 웹 그대로. SAGA_ATLAS=0 이면 새김도, 새긴 것도 끔.
+const ATLAS_MAX_EXTRA := 3
+const ATLAS_COST := 150
+const ATLAS_LOOT_PER := 0.2
+
 var sigils: Array[Dictionary] = []  # {id:int, tier:int, mods:Array[String], resist_el:String}
 var active_index: int = -1
 var best_tier_cleared: int = 0
@@ -152,13 +159,83 @@ static func pack_count(tier: int) -> int:
 func has_mod(key: String) -> bool:
 	if not is_active():
 		return false
-	return (active_sigil().get("mods", []) as Array).has(key)
+	return all_mods(active_sigil()).has(key)
 
 
 func resist_boost_el() -> String:
 	if not is_active():
 		return ""
-	return str(active_sigil().get("resist_el", ""))
+	var s := active_sigil()
+	var el := str(s.get("resist_el", ""))
+	if el == "" and all_mods(s).has("resist_boost"):
+		el = roll_resist_el(int(s.get("id", 0)))   # 새긴 resist_boost — 원소도 id 로 결정적
+	return el
+
+
+static func atlas_on() -> bool:
+	return OS.get_environment("SAGA_ATLAS") != "0"
+
+
+static func extra_of(sig: Dictionary) -> Array:
+	var ex: Variant = sig.get("extra", [])
+	return ex if ex is Array else []
+
+
+## 굴린 것 + 새긴 것(겹침 없이). 꺼져 있으면 굴린 것만.
+static func all_mods(sig: Dictionary) -> Array:
+	var out: Array = (sig.get("mods", []) as Array).duplicate()
+	if atlas_on():
+		for k in extra_of(sig):
+			if not out.has(k):
+				out.append(k)
+	return out
+
+
+static func inscribe_cost(sig: Dictionary) -> int:
+	return ATLAS_COST * maxi(1, int(sig.get("tier", 1))) * (extra_of(sig).size() + 1)
+
+
+## 다음에 새길 변형자 — 부적 id·새긴 수로 결정적, 이미 걸린 것은 건너뜀. 남은 게 없으면 "".
+static func next_mod(sig: Dictionary) -> String:
+	var have := all_mods(sig)
+	var rng := RandomNumberGenerator.new()
+	rng.seed = int(sig.get("id", 0)) * 7 + extra_of(sig).size() + 200000
+	for g in range(40):
+		var k: String = MOD_POOL[rng.randi() % MOD_POOL.size()]
+		if not have.has(k):
+			return k
+	for k in MOD_POOL:   # 40번에 못 찾으면 남은 첫 것
+		if not have.has(k):
+			return k
+	return ""
+
+
+## 새김 — {ok, key, cost} 또는 {ok:false, reason: off|nosig|active|max|none|gold, cost}
+func inscribe(index: int) -> Dictionary:
+	if not atlas_on():
+		return {"ok": false, "reason": "off"}
+	if index < 0 or index >= sigils.size():
+		return {"ok": false, "reason": "nosig"}
+	if index == active_index:
+		return {"ok": false, "reason": "active"}
+	var sig: Dictionary = sigils[index]
+	if extra_of(sig).size() >= ATLAS_MAX_EXTRA:
+		return {"ok": false, "reason": "max"}
+	var k := next_mod(sig)
+	if k == "":
+		return {"ok": false, "reason": "none"}
+	var c := inscribe_cost(sig)
+	if not DungeonGoldState.spend(c):
+		return {"ok": false, "reason": "gold", "cost": c}
+	var ex := extra_of(sig).duplicate()
+	ex.append(k)
+	sig["extra"] = ex
+	sigil_changed.emit()
+	return {"ok": true, "key": k, "cost": c}
+
+
+static func atlas_gold_mult(sig: Dictionary) -> float:
+	return 1.0 + ATLAS_LOOT_PER * extra_of(sig).size() if atlas_on() else 1.0
 
 
 func enemy_stat_mult() -> float:
@@ -175,7 +252,7 @@ func gold_mult() -> float:
 	var m := 1.0 + REWARD_MULT_PER_TIER * int(active_sigil().get("tier", 0))
 	if has_mod("treasure"):
 		m *= 1.5
-	return m
+	return m * atlas_gold_mult(active_sigil())   # G-0308 새긴 수만큼
 
 
 ## dungeon_run_state.gd::_sum_eff()가 boons·장비·부대·무예에 이어 여섯

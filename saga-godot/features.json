@@ -5470,5 +5470,22 @@
   "ticket": "G-0307",
   "since": "2026-10-22",
   "note": "유니티 U-0158 짝 · K-0174 조각 · SAGA_BREAKABLE=0"
+ },
+ {
+  "id": "gd.dungeon.atlas",
+  "name": "2나락 지도 장치 — 켜기 전 부적에 금을 내고 변형자 새기기(최대 3, 결정적), 새긴 수만큼 금 ×(1+0.2n)",
+  "files": [
+   "games/saga_dungeon/data/dungeon_sigil_state.gd",
+   "games/saga_dungeon/ui/sigil_button.gd"
+  ],
+  "tests": [
+   "dungeon_atlas"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0308",
+  "since": "2026-10-23",
+  "note": "웹 W-0298 짝 · SAGA_ATLAS=0"
  }
 ]
