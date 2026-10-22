@@ -106,6 +106,34 @@ func _process(_delta: float) -> void:
 	if not _player_in_range or target_scene.is_empty():
 		return
 	if Input.is_action_just_pressed("story_interact"):
-		StorySaveState.set_pending_spawn(arrival_x_m)
-		StorySaveState.end_run(false)   # G-0197 — 사냥터에서 나가면 등급(들어간 적 없으면 아무 일 없음)
-		get_tree().change_scene_to_file(target_scene)
+		if _offer_shortcut():
+			return
+		go(arrival_x_m)
+
+
+func go(x_m: float) -> void:
+	StorySaveState.set_pending_spawn(x_m)
+	StorySaveState.end_run(false)   # G-0197 — 사냥터에서 나가면 등급(들어간 적 없으면 아무 일 없음)
+	get_tree().change_scene_to_file(target_scene)
+
+
+## G-0309 지름길 — 목적지가 지도 완성한 사냥터면 입구·가운데·끝 고르기(창을 띄웠으면 true)
+func _offer_shortcut() -> bool:
+	var SM := preload("res://games/saga_story/data/story_stagemap.gd")
+	var map := SM.map_of_scene(target_scene)
+	var mid := SM.start_x(StorySaveState.stage_maps, map, "mid")
+	if mid < 0.0:
+		return false
+	for aq in get_tree().get_nodes_in_group("autoquest"):   # 자동 퀘스트(G-0299)가 문을 열면 묻지 않고 입구로
+		var q: Variant = aq.get("q")
+		if q != null and bool((q as Object).get("on")):
+			return false
+	var end_x := SM.start_x(StorySaveState.stage_maps, map, "end")
+	_player_in_range = false   # 창이 떠 있는 동안 K 를 다시 받지 않게
+	var choices: Array = [
+		{"label": "🚪 입구로", "cb": func() -> void: go(arrival_x_m)},
+		{"label": "🗺️ 가운데로(지름길)", "cb": func() -> void: go(mid)},
+		{"label": "🗺️ 끝으로(지름길)", "cb": func() -> void: go(end_x)},
+	]
+	preload("res://saga_core/ui/choice_prompt.gd").build(get_tree().current_scene, "🗺️ %s — 어디로 들어갈까" % label_text, choices)
+	return true

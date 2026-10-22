@@ -5487,5 +5487,25 @@
   "ticket": "G-0308",
   "since": "2026-10-23",
   "note": "웹 W-0298 짝 · SAGA_ATLAS=0"
+ },
+ {
+  "id": "gd.story.stagemap",
+  "name": "4종횡 지도 조각·지름길 — 사냥터 넷 발판 위 조각 셋, 다 모으면 그 사냥터 문에서 입구·가운데·끝 고르기",
+  "files": [
+   "games/saga_story/data/story_stagemap.gd",
+   "games/saga_story/world/story_map_piece.gd",
+   "games/saga_story/world/story_portal.gd",
+   "games/saga_story/world/story_field.gd",
+   "games/saga_story/data/story_save_state.gd"
+  ],
+  "tests": [
+   "story_stagemap"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0309",
+  "since": "2026-10-23",
+  "note": "웹 W-0305 짝 · 세이브 판 24 stage_maps · SAGA_STAGEMAP=0"
  }
 ]
