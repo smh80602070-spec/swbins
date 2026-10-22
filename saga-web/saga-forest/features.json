@@ -1230,12 +1230,12 @@
   "tests": [
    "pw-web-2d-sheet 14/14 · pw-2d-cmp 비교판(옛 mip=0 / 새 mip=1)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0347",
   "since": "2026-10-21",
-  "note": "10-21: 1만리 짐승 점묘 사라짐(shots/cmp/w347c_go_map) · 밉 사본 캐시는 high 로 충분해 안 만듦"
+  "note": "10-21: 1만리 짐승 점묘 사라짐(shots/cmp/w347c_go_map) · 밉 사본 캐시는 high 로 충분해 안 만듦 · D2(claude 2026-10-23 R-3 pw-look2d): r3_saga-forest.png village 2D 매끈·점묘 없음 ○"
  },
  {
   "id": "fs.w2d-scale",
@@ -1264,12 +1264,12 @@
   "tests": [
    "pw-2d-cmp 비교판(옛 markIcon=0 / 새 1)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0350",
   "since": "2026-10-21",
-  "note": "10-21: 2나락 마을 폰 촬영 Read — 난입 ⚔·사관 📖·이름표 머리 그림이 자체 아이콘, ☠·🌀 등 25 는 짝 없어 이모지(수신함 K 요청)"
+  "note": "10-21: 2나락 마을 폰 촬영 Read — 난입 ⚔·사관 📖·이름표 머리 그림이 자체 아이콘, ☠·🌀 등 25 는 짝 없어 이모지(수신함 K 요청) · D2(claude 2026-10-23 R-3 pw-look2d): r3_saga-forest.png 머리 표식 자체 아이콘 ○"
  },
  {
   "id": "fs.w2d-layers",
