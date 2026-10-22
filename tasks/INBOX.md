@@ -17,5 +17,5 @@
 - [ ] 10-22 · (K-0170 끝) · 2나락 적 종 시트 42(+alias 6) — sheetOf 가 body 시트 씀, 코끼리병 body beast_big → `dg_elephant` 짝 한 줄(beast_big = 곰 still) · 웹/2나락
 - [ ] 10-22 · (K-0171 끝) · 그림만 바뀜: 바탕 넷+이음 쌍·4종횡 옛 싸움터 far·5천하 rts_inf_ally · 웹
 - [ ] 10-22 · (K-0171) · 바탕 넷 만화경 무늬(go_sand·go_stone·realm_stone·go_water) → ground_tile · 자체툴
-- [ ] 10-22 · (K-0168·0172·0173 끝) · 유니티 셋: ① sg_liubei 새 몸 → CharactersDex(U-0156 길) ② 소품 10 `World/<new id>`·rock_moss_01 → SelfPairs 10줄·재빌드·PolyHaven 지움 ③ UI 스킨 95 + 9-slice .meta `Resources/UI/` 임포트 확인 · 유니티
+- [ ] 10-22 · (K-0168·0172·0173·0174 끝) · 유니티 셋: ① sg_liubei 새 몸 → CharactersDex(U-0156 길) ② 소품 10 `World/<new id>`·rock_moss_01 → SelfPairs 10줄·재빌드·PolyHaven 지움 ③ UI 스킨 95 + 9-slice .meta `Resources/UI/` ④ 깨지는 조각 `World/<모델>_shard_0~3` 16·`Audio/Sfx/sfx_prop_break*` 4(K-0174, 진단 breakable `대신 False`) — 임포트 확인 · 유니티
 - [ ] 10-22 · (W-0371 막힘 알림) · K-0163 인물 일러스트 30 이 그 인물과 다른 사람(성별·시대·옷 — 장군 kr_gyebaek 하녀 옷 소녀·jp_yoshitsune 노란 점퍼 소녀·rf_kongrong 빨간 드레스 소녀·군주 현대 옷) → 지금 초상(portraits/hero/<id>_c)·3D 몸을 참조로 다시 그리기 · 웹은 배선 끝·illust.on 기본 0 · 자체툴

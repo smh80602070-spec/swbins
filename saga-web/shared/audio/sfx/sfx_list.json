@@ -1,6 +1,6 @@
 {
  "note": "K-0045 효과음 목록 — 카테고리 안 RMS 같은 값, 라운드로빈은 _1·_2 변형",
- "count": 92,
+ "count": 96,
  "items": [
   {
    "id": "sfx_sword_hit_1",
@@ -461,6 +461,26 @@
    "id": "sfx_defeat",
    "category": "event",
    "duration_ms": 1640
+  },
+  {
+   "id": "sfx_prop_break",
+   "category": "event",
+   "duration_ms": 380
+  },
+  {
+   "id": "sfx_prop_break_1",
+   "category": "event",
+   "duration_ms": 420
+  },
+  {
+   "id": "sfx_prop_break_2",
+   "category": "event",
+   "duration_ms": 460
+  },
+  {
+   "id": "sfx_prop_break_3",
+   "category": "event",
+   "duration_ms": 500
   }
  ]
 }

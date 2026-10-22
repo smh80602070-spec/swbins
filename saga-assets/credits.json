@@ -538,7 +538,7 @@
    "tool": "build_prop.py",
    "model": "",
    "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
-   "count": 118,
+   "count": 138,
    "where": [
     "saga-assets/regions/pieces",
     "saga-assets/world/toon",
@@ -591,7 +591,7 @@
    "tool": "sfxset.py",
    "model": "",
    "license": "CC0-1.0 (코드 합성 — 외부 입력 없음)",
-   "count": 280,
+   "count": 284,
    "where": [
     "saga-assets/sfx",
     "saga-godot/assets/audio/sfx",
@@ -1158,6 +1158,15 @@
     "saga-godot/assets/world",
     "saga-unity/Assets/SagaCore/Resources/World",
     "saga-web/shared/assets/world3d"
+   ]
+  },
+  {
+   "tool": "shatter.py (Blender bisect 평면 둘 · 자른 면 막기)",
+   "model": "",
+   "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+   "count": 16,
+   "where": [
+    "saga-assets/world/toon"
    ]
   },
   {

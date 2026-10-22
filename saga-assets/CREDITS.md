@@ -53,11 +53,11 @@
 | region_hero.py | - | CC0-1.0 (배치표 — 자체 생성 데이터, 조각·재질은 각각 CC0) | 12 |
 | region_hero.py (HERO_SKY 파노라마 굽기) | - | CC0-1.0 (자체 생성) | 30 |
 | region_hero.py(자료 정리) | - | 자체 생성 — Z-Image-Turbo(Apache-2.0) 견본 → pbr_from_albedo.py (K-0093·K-0113), 남의 사진 0 | 36 |
-| build_prop.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 118 |
+| build_prop.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 138 |
 | build_building.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0)) | 105 |
 | build_vehicle.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 37 |
 | region_hero.py village | - | CC0-1.0 (배치표 — 자체 생성 데이터, 조각·재질은 각각 CC0) | 3 |
-| sfxset.py | - | CC0-1.0 (코드 합성 — 외부 입력 없음) | 280 |
+| sfxset.py | - | CC0-1.0 (코드 합성 — 외부 입력 없음) | 284 |
 | sfxmoss.py(시작점·길이 맞춘 판으로 채점) | OpenMOSS-Team/MOSS-SoundEffect-v2.0 | Apache-2.0 (모델·코드) — AI 생성, 원작 효과음 모사 없음 | 88 |
 | k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 sfx_ui_notify.ogg 를 mp3 로 옮김) | 1 |
 | k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 sfx_victory.ogg 를 mp3 로 옮김) | 1 |
@@ -111,6 +111,7 @@
 | build_terrain.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 높이맵은 전부 코드 — 값 잡음 fbm + 모양 함수 + 간단한 침식) | 70 |
 | build_equip.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 435 |
 | build_interior.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 260 |
+| shatter.py (Blender bisect 평면 둘 · 자른 면 막기) | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 16 |
 | build_nature.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 150 |
 | build_weapon.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 155 |
 | build_real.py | - | CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다) | 166 |

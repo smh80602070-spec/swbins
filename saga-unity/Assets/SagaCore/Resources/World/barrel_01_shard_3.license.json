@@ -1,0 +1,16 @@
+{
+ "id": "barrel_01_shard_3",
+ "generator": "tools/world-forge/shatter.py (Blender bisect 평면 둘 · 자른 면 막기)",
+ "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+ "source": "saga-assets/world/toon/barrel_01.glb",
+ "source_license": "saga-assets/world/toon/barrel_01.license.json",
+ "inner": "shard_inner #c49a6c 나무 속살 (단색 재질)",
+ "shard": 3,
+ "ticket": "K-0174",
+ "extensions": [
+  "KHR_materials_specular"
+ ],
+ "images": [
+  "image/jpeg"
+ ]
+}

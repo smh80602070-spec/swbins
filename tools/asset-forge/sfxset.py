@@ -156,6 +156,15 @@ def event(name):
     return f()
 
 
+
+def prop_break(v):
+    """K-0174 깨지는 소품(흙 항아리·나무 통) — 쩍 갈라짐(높은 띠 잡음) + 낮은 쿵 + 몸통 부서짐 + 파편 딸깍 넷(변주마다 간격·높이 다름)."""
+    crack = band(0.07, 1800 + 200 * v, 7000, 0.6, 430 + v)
+    thud = tone(140 - 15 * v, 60, 0.18, 'sine', 0.4)
+    body = noise(0.38 + 0.04 * v, 1800, 300, 0.35, 431 + v * 3)
+    shards = mix(*[shift(band(0.04, 2500 + 300 * k, 8000, 0.25 - 0.03 * k, 440 + v * 7 + k), 60 + k * (55 + 10 * v)) for k in range(4)])
+    return mix(crack, thud, body, shards)
+
 EVENTS = ['coin', 'coin_big', 'item_pick', 'levelup', 'quest_accept', 'quest_done', 'chest_open', 'door_open', 'heal', 'buff', 'debuff', 'death', 'crit', 'dodge', 'jump',
           'land', 'splash', 'whoosh', 'gacha_1', 'gacha_2', 'gacha_3', 'gacha_4', 'gacha_5', 'summon', 'capture', 'equip', 'fish_bite', 'cook_done', 'turn_start', 'victory', 'defeat']
 UIS = ['click', 'confirm', 'cancel', 'open', 'close', 'tab', 'error', 'toggle', 'hover', 'tick', 'page', 'notify']
@@ -177,6 +186,8 @@ def plan():
         P.append((f'sfx_ui_{u}', 'ui', (lambda u=u: ui(u))))
     for e in EVENTS:
         P.append((f'sfx_{e}', 'event', (lambda e=e: event(e))))
+    for v in range(4):                                  # K-0174 sfx_prop_break · _1~_3 (유니티 2나락 깨지는 소품)
+        P.append(('sfx_prop_break' + (f'_{v}' if v else ''), 'event', (lambda v=v: prop_break(v))))
     return P
 
 
