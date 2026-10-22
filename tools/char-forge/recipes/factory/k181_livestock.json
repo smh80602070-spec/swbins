@@ -1,0 +1,77 @@
+{
+ "ndir": 8,
+ "dirs": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "dir_names": [
+  "front",
+  "front_side",
+  "side",
+  "back_side",
+  "back"
+ ],
+ "foot": 0.88,
+ "style": "C-toon-1",
+ "canon": "saga-assets/sprites2d_factory",
+ "creature": {
+  "act": {
+   "idle": "Idle",
+   "walk": "Walk",
+   "run": "Run",
+   "hit": "Hit"
+  },
+  "auto_side": true
+ },
+ "px": 96,
+ "ortho": 1.25,
+ "clips": {
+  "idle": {
+   "frames": 8,
+   "fps": 6,
+   "loop": true
+  },
+  "walk": {
+   "frames": 8,
+   "fps": 10,
+   "loop": true
+  },
+  "run": {
+   "frames": 8,
+   "fps": 12,
+   "loop": true
+  },
+  "hit": {
+   "frames": 6,
+   "fps": 12,
+   "loop": false
+  }
+ },
+ "style_ref": "saga-web/saga-dungeon/assets/web2d/bg",
+ "note": "K-0181 — 3마을 가축(W-0299 꼬꼬·매매) 2D 시트. 몸 = K-0181 TRELLIS farm_hen·farm_goat → saga-assets/creatures3d. 우리 안 크기라 96px, 동작은 서기·걷기·달리기·맞음만.",
+ "ticket": "K-0181",
+ "game": "saga-forest",
+ "aliases": {},
+ "missing": [],
+ "deploy": {
+  "saga-web/saga-forest/assets/sprites2d_sheets": null
+ },
+ "pools": [
+  {
+   "id": "farm_hen",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/farm_hen.glb",
+   "license_json": "saga-assets/creatures3d/farm_hen.license.json"
+  },
+  {
+   "id": "farm_goat",
+   "type": "creature",
+   "glb": "saga-assets/creatures3d/farm_goat.glb",
+   "license_json": "saga-assets/creatures3d/farm_goat.license.json",
+   "margin": 1.4
+  }
+ ]
+}

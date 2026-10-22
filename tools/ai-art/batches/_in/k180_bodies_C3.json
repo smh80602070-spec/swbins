@@ -1,0 +1,17 @@
+{
+ "name": "k180_bodies_C3",
+ "spec": "creature",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0180 다시 셋째 — finback_brute C2 넷도 그냥 물고기·머리 없는 판(파스텔) → 몬스터 태그 말(fishman·monster·standing on two legs·muscular arms)로, 색 짙게, 'no humans' 대신 'not human'",
+ "items": [
+  {
+   "id": "finback_brute",
+   "from": "quaternius/Fish",
+   "subject": "fishman monster standing on two legs, big fish head, wide toothy mouth, dark teal scales, spiky dorsal fin, muscular arms, webbed claws, thick legs, webbed feet",
+   "view": "three_quarter",
+   "extra": "not human, solo, empty hands"
+  }
+ ]
+}

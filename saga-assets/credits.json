@@ -247,9 +247,10 @@
    "tool": "mocap_retarget.py (K-0139·K-0161) + keyframes.py",
    "model": "",
    "license": "CMU Graphics Lab Motion Capture Database — 복사·수정·재배포 허가 불요(상업 포함, mocap.cs.cmu.edu FAQ) · Hahne BVH 변환 추가 제한 없음 + 자체 키프레임(tools/char-forge/keyframes.py, 이 저장소 코드) — 바탕 자세 Idle_Loop 는 ual1_standard(Quaternius, CC0)",
-   "count": 1,
+   "count": 2,
    "where": [
-    "saga-assets/characters/anim-src/mocap"
+    "saga-assets/characters/anim-src/mocap",
+    "saga-godot/assets/anim_mocap"
    ]
   },
   {
@@ -366,7 +367,7 @@
    "tool": "remote3d",
    "model": "microsoft/TRELLIS-image-large",
    "license": "MIT",
-   "count": 502,
+   "count": 515,
    "where": [
     "saga-assets/creatures3d",
     "saga-assets/pets3d",
@@ -392,7 +393,7 @@
    "tool": "gen.py (ComfyUI)",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 1839,
+   "count": 1851,
    "where": [
     "saga-assets/icons/license",
     "saga-assets/portraits-expr",
@@ -538,7 +539,7 @@
    "tool": "build_prop.py",
    "model": "",
    "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
-   "count": 138,
+   "count": 144,
    "where": [
     "saga-assets/regions/pieces",
     "saga-assets/world/toon",
@@ -591,7 +592,7 @@
    "tool": "sfxset.py",
    "model": "",
    "license": "CC0-1.0 (코드 합성 — 외부 입력 없음)",
-   "count": 284,
+   "count": 296,
    "where": [
     "saga-assets/sfx",
     "saga-godot/assets/audio/sfx",
@@ -729,7 +730,7 @@
    "tool": "factory.py (K-0158 2D 공장, Blender + style_pass)",
    "model": "-",
    "license": "MIT(TRELLIS)·자체 뼈대 동작 — 자체 렌더",
-   "count": 167,
+   "count": 169,
    "where": [
     "saga-assets/sprites2d_factory"
    ]
@@ -914,7 +915,7 @@
    "tool": "gen.py",
    "model": "sd_xl_base_1.0",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 50,
+   "count": 40,
    "where": [
     "saga-assets/web2d/rts",
     "saga-assets/web2d/tile",
@@ -989,32 +990,21 @@
    "tool": "edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀)",
    "model": "",
    "license": "원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것",
-   "count": 3,
+   "count": 10,
    "where": [
     "saga-assets/web2d/terrain/saga-forest/grass_water",
-    "saga-assets/web2d/terrain/saga-realm/grass_dirt",
-    "saga-assets/web2d/terrain/saga-realm/grass_water"
-   ]
-  },
-  {
-   "tool": "edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀)",
-   "model": "sd_xl_base_1.0",
-   "license": "원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것",
-   "count": 7,
-   "where": [
     "saga-assets/web2d/terrain/saga-go/grass_dirt",
     "saga-assets/web2d/terrain/saga-go/grass_sand",
     "saga-assets/web2d/terrain/saga-go/grass_stone",
     "saga-assets/web2d/terrain/saga-go/grass_water",
-    "saga-assets/web2d/terrain/saga-go/sand_water",
-    "saga-assets/web2d/terrain/saga-realm/dirt_stone"
+    "saga-assets/web2d/terrain/saga-go/sand_water"
    ]
   },
   {
    "tool": "ground_tile.py",
    "model": "",
    "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
-   "count": 8,
+   "count": 18,
    "where": [
     "saga-assets/web2d/tile",
     "saga-web/shared/assets/web2d/tile"
@@ -1164,9 +1154,11 @@
    "tool": "shatter.py (Blender bisect 평면 둘 · 자른 면 막기)",
    "model": "",
    "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
-   "count": 16,
+   "count": 48,
    "where": [
-    "saga-assets/world/toon"
+    "saga-assets/world/toon",
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/World"
    ]
   },
   {

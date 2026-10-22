@@ -203,3 +203,12 @@
 - [x] W-0372·W-0373 10-22 · 2D폰: 1만리 나무 밟음·2나락 마을 화면 바뀜 · 웹
 - [x] G-0302 10-22 · (K-0168 끝) · 고돗: sg_liubei 새 몸(어른 키) 다시 설치 + 새 201 몸 받음(K 결정 — 해시 NPC 겉모습만) → G-0276 에서 지운 201 을 characters_dex 에 넣고 임포트 · 고돗 (겹친 줄 — G-0302 에서 끝)
 - [x] G-0287 10-22 · (K-0177 끝) · dex 몸 gltf 엔 Fcl 모프 다 있음(얼굴 `Face (merged)(Clone)…` 조각마다 11) → G-0287 은 엔진에서 한 몸 `get_blend_shape_count()` 재고 이름으로 한 조각만 찾는지·.godot/imported 옛 캐시인지 확인 · 고돗 → 원인 이 PC _out 옛 변환(10-04, targets 0) — 다시 변환·설치·임포트 + 얼굴 부품 외곽선 0
+- [x] 10-21 · (W-0356 끝 알림) → K-0180 · 빌린 괴물 웹 참조 — 5천하·3마을 0, 2나락은 quaternius Alpaking_Evolved·Armabee 둘·Cat·Chicken·Fish 둘만 남음(자체 몸 없음) → 그 일곱 몸 만들면 옛 monsters/ 폴더 지워도 됨(W-0360) · 자체툴
+- [x] 10-21 · (G-0282 대기 알림) → K-0176 끝(고돗 anim_mocap 에 clips30 놓음, .import 는 고돗 세션) · K-0161 `saga-assets/characters/anim-src/mocap/vroid_clips30_anims.glb`(+license) 를 고돗 `saga-godot/assets/anim_mocap/` 로 place(asset-place `anim-mocap` 항목에 파일 하나 더) → G-0282 풀림 · 자체툴
+- [x] 10-21 · (W-0359 ① 알림) → K-0176 끝(portraits-hero 대상 shared · 묶기 도구 shared, bake.mjs 는 웹 도구라 다시 구울 때 --out shared) · 인물·펫 초상 hero·pet 은 웹 다섯 판이 `saga-web/shared/assets/portraits/{hero,pet}/` 한 벌만 읽음(판 사본 지움) → asset-place `portraits-hero`·펫 초상 targets·bake-portraits 출력 자리를 shared 로(안 고치면 다음 place 가 판 사본 5000 을 되살림) · 자체툴
+- [x] 10-21 · (W-0359 ② 알림) → K-0176 끝(bgm 판 대상 뺌) · 웹 bgm ogg 는 `saga-web/shared/audio/bgm/<판>-<때>.ogg` 만 읽음(판 saga-<판>-*.ogg 지움) → asset-place `bgm` 판 dir targets 빼기 · 자체툴
+- [x] 10-22 · (G-0287 대기 알림) → K-0177 끝: **파일엔 모프 있음**(고돗 설치본 299 얼굴 조각 2231 전부 targets = 이름표 11, dj_gapju 77) — 임포트 결과·찾는 쪽 확인 필요(수신함 G 줄) · 고돗 `assets/characters_dex/*.gltf` 모프 targets 0(이름표만, 웹 characters3d 는 77) → Fcl 모프 살려 다시 내보내기 — NPC·주인공 깜박임·표정·입 · 자체툴
+- [x] 10-22 · (K-0171) → K-0179 · 바탕 넷 만화경 무늬(go_sand·go_stone·realm_stone·go_water) → ground_tile · 자체툴
+- [x] 10-22 · (K-0179 덤) · 1만리 go_grass 바탕도 비늘 같은 반복 무늬 → 바꿈(K-0179 메모) · 자체툴
+- [x] 10-22 · (W-0371 막힘 알림) → K-0178(초상 묘사로 다시 — 원인 = 3D 몸 렌더 밑그림) · K-0163 인물 일러스트 30 이 그 인물과 다른 사람(성별·시대·옷 — 장군 kr_gyebaek 하녀 옷 소녀·jp_yoshitsune 노란 점퍼 소녀·rf_kongrong 빨간 드레스 소녀·군주 현대 옷) → 지금 초상(portraits/hero/<id>_c)·3D 몸을 참조로 다시 그리기 · 웹은 배선 끝·illust.on 기본 0 · 자체툴
+- [x] 10-22 · (W-0299 알림) → K-0181 · 3마을 가축 — 닭·염소 2D 걷기 그림(우리 안, 지금은 코드 대역)·우리 울타리 소품·산물 아이콘 material:egg·material:milk(icons map.json) → 자체툴 · 웹은 아이콘 진단 K_WAIT 예외를 그때 지움 · 자체툴

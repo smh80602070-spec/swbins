@@ -1,0 +1,42 @@
+{
+ "id": "farm_goat",
+ "generator": "TRELLIS (microsoft/TRELLIS, Kaggle T4) — tools/ai-art/remote3d",
+ "model": "microsoft/TRELLIS-image-large",
+ "model_license": "MIT",
+ "input_image": "tools/ai-art/_out/remote3d_in_k181/farm_goat.png",
+ "input_license": {
+  "id": "farm_goat_v02",
+  "generator": "tools/ai-art/gen.py (ComfyUI)",
+  "model": "animagine-xl-4.0-opt",
+  "model_license": "CreativeML OpenRAIL++-M",
+  "prompt": "masterpiece, high score, great score, absurdres, (small farm goat:1.15), white and light gray coat, short curved horns, little beard, floppy ears, four slim legs with dark hooves, gentle eyes, no humans, full body, whole creature visible, solo, standing on four legs, realistic animal proportions, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+  "negative_prompt": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+  "seed": 2923055841,
+  "steps": 28,
+  "cfg_scale": 5.5,
+  "sampler": "euler_ancestral/normal",
+  "size": [
+   768,
+   768
+  ],
+  "seconds": 30.0,
+  "date": "2026-10-22",
+  "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+  "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py"
+ },
+ "seed": 1,
+ "simplify": 0.95,
+ "texture_size": 1024,
+ "times": {
+  "gen_sec": 30,
+  "glb_sec": 30,
+  "bytes": 1484080
+ },
+ "date": "2026-10-22",
+ "note": "K-0181 자체 생성 — 입력 = 우리 txt2img(k181_bodies_C, 그림체 C) → TRELLIS → 루트 동작 7. 3마을 가축(웹 W-0299 꼬꼬·매매) 몸 — 새 것, 빌린 것 대신 아님.",
+ "pipeline": "remote3d/finish.py(얼굴 +Z·발 밑 원점·키 m·떨어진 조각·바닥 판 지움) → glb-compress/creature_fill.mjs --forward-z(뼈 없는 동작 7) → compress.mjs(Meshopt·WebP)",
+ "yaw": 0,
+ "height_m": 0.8,
+ "replaces": "",
+ "commercial_use": true
+}

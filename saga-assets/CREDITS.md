@@ -30,7 +30,7 @@
 | k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 story-field.ogg 를 mp3 로 옮김) | 1 |
 | k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 story-town.ogg 를 mp3 로 옮김) | 1 |
 | bake_for_rig.py --map vroid (vroid_batch.sh anim 단계, 2026-10-07) | - | CC0-1.0 (뼈대+동작만 — 메시·그림 없음. 동작 원본 Quaternius Universal Animation Library CC0 + 자체 키프레임 too | 1 |
-| mocap_retarget.py (K-0139·K-0161) + keyframes.py | - | CMU Graphics Lab Motion Capture Database — 복사·수정·재배포 허가 불요(상업 포함, mocap.cs.cmu.edu FAQ) ·  | 1 |
+| mocap_retarget.py (K-0139·K-0161) + keyframes.py | - | CMU Graphics Lab Motion Capture Database — 복사·수정·재배포 허가 불요(상업 포함, mocap.cs.cmu.edu FAQ) ·  | 2 |
 | mocap_retarget.py (K-0139) | - | CMU Graphics Lab Motion Capture Database — "may be copied, modified, or redistributed with | 3 |
 | outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 2000 |
 | sprite_plan_16.json) + gear_sprites.py + weapon_attach.py (K-0138 16방향, 몸·무기는 8방향과 같음) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 20 |
@@ -40,9 +40,9 @@
 | gen.py | Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-07 확인), 폐쇄 파생 모델 수익화만 금지 | 589 |
 | competitiongen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 21 |
 | gen.py | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1699 |
-| remote3d | microsoft/TRELLIS-image-large | MIT | 502 |
+| remote3d | microsoft/TRELLIS-image-large | MIT | 515 |
 | icon_pack.py | none | CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음) | 76 |
-| gen.py (ComfyUI) | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1839 |
+| gen.py (ComfyUI) | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1851 |
 | make_ui_icons.py | none | CC0-1.0 (코드 생성 — 24격자 기하 도형, 외부 그림·Lucide 경로 없음) | 112 |
 | k163_illust.py + gen.py (ComfyUI, Kaggle 원격) | animagine-xl-4.0-opt | saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · 밑그림 = 자체 3D 몸 렌더(VR | 30 |
 | gen.py (ComfyUI) | z-image-turbo | Apache-2.0 | 141 |
@@ -53,11 +53,11 @@
 | region_hero.py | - | CC0-1.0 (배치표 — 자체 생성 데이터, 조각·재질은 각각 CC0) | 12 |
 | region_hero.py (HERO_SKY 파노라마 굽기) | - | CC0-1.0 (자체 생성) | 30 |
 | region_hero.py(자료 정리) | - | 자체 생성 — Z-Image-Turbo(Apache-2.0) 견본 → pbr_from_albedo.py (K-0093·K-0113), 남의 사진 0 | 36 |
-| build_prop.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 138 |
+| build_prop.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 144 |
 | build_building.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0)) | 105 |
 | build_vehicle.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 37 |
 | region_hero.py village | - | CC0-1.0 (배치표 — 자체 생성 데이터, 조각·재질은 각각 CC0) | 3 |
-| sfxset.py | - | CC0-1.0 (코드 합성 — 외부 입력 없음) | 284 |
+| sfxset.py | - | CC0-1.0 (코드 합성 — 외부 입력 없음) | 296 |
 | sfxmoss.py(시작점·길이 맞춘 판으로 채점) | OpenMOSS-Team/MOSS-SoundEffect-v2.0 | Apache-2.0 (모델·코드) — AI 생성, 원작 효과음 모사 없음 | 88 |
 | k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 sfx_ui_notify.ogg 를 mp3 로 옮김) | 1 |
 | k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 sfx_victory.ogg 를 mp3 로 옮김) | 1 |
@@ -71,7 +71,7 @@
 | beast2d_rebake.py --sheets (Blender render_sheet.py, Idle·Run 4컷) | - | CC0-1.0 (자체 3D 몸 렌더 — 외부 입력 없음, 몸 출처는 creatures3d license) | 11 |
 | beast2d_rebake.py (Blender render_sprite.py) | - | CC0-1.0 (자체 3D 몸 렌더 — 외부 입력 없음, 몸 출처는 creatures3d license) | 103 |
 | pet2d_k120.py (Blender render_sprite.py 옆모습, K-0114 맞춤) | - | CC0-1.0 (자체 3D 몸 렌더 — 몸 출처는 pets3d license) | 17 |
-| factory.py (K-0158 2D 공장, Blender + style_pass) | - | MIT(TRELLIS)·자체 뼈대 동작 — 자체 렌더 | 167 |
+| factory.py (K-0158 2D 공장, Blender + style_pass) | - | MIT(TRELLIS)·자체 뼈대 동작 — 자체 렌더 | 169 |
 | factory.py (K-0158 2D 공장, Blender + style_pass) | - | VRoid 샘플 이용 조건(상업·개작 허용)·CC0 동작 — 자체 렌더 | 70 |
 | gen.py (ComfyUI) | Illustrious-XL-v2.0 | CreativeML OpenRAIL-M (저자 HF 토론 2025-04: 상업 가능, 폐쇄 파생 모델 수익화만 금지) | 10 |
 | face_sdf_bake.py (K-0151 — Blender, VRoid 얼굴 살갗 UV 위 원신식 그림자 문턱 계산 굽기) | - | MIT | 2 |
@@ -89,16 +89,15 @@
 | make_realm_ui.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 12 |
 | make_realm_ui.py | - | CC0-1.0 코드 배치 + 글꼴 SIL OFL-1.1 (Nanum Brush Script·Noto Serif KR) | 56 |
 | make_realm_ui.py woff2 | - | SIL Open Font License 1.1 (OFL-NotoSerif.txt) | 2 |
-| gen.py | sd_xl_base_1.0 | CreativeML OpenRAIL++-M | 50 |
+| gen.py | sd_xl_base_1.0 | CreativeML OpenRAIL++-M | 40 |
 | rtsgen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 36 |
 | rtsai.py transitions | - | CreativeML OpenRAIL++-M — 코드 합성(경계 마스크) + 고른 AI 타일 rts_forest_floor_1 (sd_xl_base_1.0) | 24 |
 | rtsai.py transitions | - | CreativeML OpenRAIL++-M — 코드 합성(경계 마스크) + 고른 AI 타일 rts_hill_1 (sd_xl_base_1.0) | 24 |
 | rtsai.py transitions | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) — 코드 합성(경계 마스크) + 고른 AI 타일 rts_water_1 (-) | 24 |
 | edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) | z-image-turbo | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 | 7 |
 | edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) | sd_xl_base_1.0, z-image-turbo | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 | 1 |
-| edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) | - | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 | 3 |
-| edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) | sd_xl_base_1.0 | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 | 7 |
-| ground_tile.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 8 |
+| edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) | - | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 | 10 |
+| ground_tile.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 18 |
 | water_tile.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 4 |
 | retile_uv.py --unit 4.4 (K-0089) | - | CC0-1.0 (Kenney Modular Cave Kit gate.glb 모양 그대로 + 자체 상자 투영 UV) | 2 |
 | foliage_atlas.py | - | 자체 생성(Z-Image-Turbo Apache-2.0 출력, 상업 허용) — 남의 사진·스캔 0 | 1 |
@@ -111,7 +110,7 @@
 | build_terrain.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 높이맵은 전부 코드 — 값 잡음 fbm + 모양 함수 + 간단한 침식) | 70 |
 | build_equip.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 435 |
 | build_interior.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 260 |
-| shatter.py (Blender bisect 평면 둘 · 자른 면 막기) | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 16 |
+| shatter.py (Blender bisect 평면 둘 · 자른 면 막기) | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 48 |
 | build_nature.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 150 |
 | build_weapon.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 155 |
 | build_real.py | - | CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다) | 166 |
