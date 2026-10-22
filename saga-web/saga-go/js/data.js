@@ -1416,6 +1416,7 @@
   ];
 
   global.DG = global.DG || {};
+  var FIND_IX = null;   // W-0367 find() 색인
   global.DG.data = {
     heroes: HEROES,
     pets: PETS,
@@ -1441,9 +1442,16 @@
     /** id 로 찾기. 정적 HEROES/PETS에 없으면 절차적 생성기(있는 판에서만)로
      *  되살린다 — 세이브에는 id만 있으면 되므로 정적 배열에 없어도 된다. */
     find: function (id) {
-      var i;
-      for (i = 0; i < HEROES.length; i++) { if (HEROES[i].id === id) { return HEROES[i]; } }
-      for (i = 0; i < PETS.length; i++) { if (PETS[i].id === id) { return PETS[i]; } }
+      /* W-0367 — 예전엔 부를 때마다 HEROES·PETS 를 처음부터 훑었다(5천하 다음 달 한 번에 수천 번 — 폰 CPU 4배 감속에서 자기 시간 40%).
+         첫 호출 때 id → 항목 색인을 만들고(같은 id 면 앞 것 — 예전 순서 그대로) 배열 길이가 바뀌면 다시 만든다 */
+      if (!FIND_IX || FIND_IX.h !== HEROES.length || FIND_IX.p !== PETS.length) {
+        var i, m = Object.create(null);
+        for (i = PETS.length - 1; i >= 0; i--) { m[PETS[i].id] = PETS[i]; }
+        for (i = HEROES.length - 1; i >= 0; i--) { m[HEROES[i].id] = HEROES[i]; }
+        FIND_IX = { h: HEROES.length, p: PETS.length, m: m };
+      }
+      var hit = FIND_IX.m[id];
+      if (hit) { return hit; }
       return (global.DG.genchar && global.DG.genchar.find(id)) ||
         (global.DG.gencharJp && global.DG.gencharJp.find(id)) ||
         (global.DG.gencharCn && global.DG.gencharCn.find(id)) ||

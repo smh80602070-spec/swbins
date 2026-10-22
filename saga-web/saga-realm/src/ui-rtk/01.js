@@ -215,10 +215,10 @@
   }
   /** renderMap() 을 통째로 다시 돌리지 않고 보이는 창만 바꾼다(조이스틱을
    *  쥔 동안 매 프레임 불러도 가볍다) */
-  function labelZ() { return Math.pow(mapZoom, -0.6).toFixed(3); } function applyMapViewNow() {   // labelZ — W-0106 성 이름 글자가 확대해도 지도만큼 커지지 않게(겹침)
+  var rendWin = null; function mapWin() { var w = MAP_VB.w / mapZoom, h = MAP_VB.h / mapZoom, m = 0.35; clampMapCenter(); return { x0: mapCx - w * (0.5 + m), x1: mapCx + w * (0.5 + m), y0: mapCy - h * (0.5 + m), y1: mapCy + h * (0.5 + m), w: w, h: h }; } function inWin(W, d) { return d.x >= W.x0 && d.x <= W.x1 && d.y >= W.y0 && d.y <= W.y1; } function winOut() { if (!rendWin) { return false; } var w = MAP_VB.w / mapZoom, h = MAP_VB.h / mapZoom; return mapCx - w / 2 < rendWin.x0 || mapCx + w / 2 > rendWin.x1 || mapCy - h / 2 < rendWin.y0 || mapCy + h / 2 > rendWin.y1 || w > rendWin.w * 1.6; } /* W-0367 그린 창(+35%) · 보이는 창이 그 밖으로 나가거나 많이 물러나면 다시 그린다 */ function labelZ() { return Math.pow(mapZoom, -0.6).toFixed(3); } function applyMapViewNow() { if (winOut()) { renderMap(); return; }   // labelZ — W-0106 성 이름 글자가 확대해도 지도만큼 커지지 않게(겹침)
     var svg = els.realm && els.realm.querySelector('.rmap');
     if (svg) { svg.setAttribute('viewBox', mapViewBox()); svg.style.setProperty('--lz', labelZ()); declutterLabels(svg); }
-  }  function declutterLabels(svg) { var M2 = global.DG.mode2d, ls = svg && svg.querySelectorAll ? svg.querySelectorAll('.rlab') : [], list = [], i, fs; if (!M2 || !M2.labels || !ls.length) { return; } try { fs = parseFloat(global.getComputedStyle(ls[0]).fontSize); } catch (e) { fs = 0; } fs = fs > 0 ? fs : 2.5 * +labelZ(); if (svg.__labFs === fs && svg.__labN === ls.length) { return; } svg.__labFs = fs; svg.__labN = ls.length; for (i = 0; i < ls.length; i++) { var el = ls[i], t = el.textContent || ''; list.push({ el: el, x: +el.getAttribute('x'), y: +el.getAttribute('y'), w: (t.length + 0.4) * fs, h: fs * 1.15, pri: +(el.getAttribute('data-p') || 0), keep: el.getAttribute('data-m') === '1', dist: 0 }); } M2.labels(list, { stack: 1, gap: 0 }); for (i = 0; i < list.length; i++) { list[i].el.classList.toggle('rlab-off', !list[i].alpha); } }   // W-0348 성 이름 겹침 — 글자 크기(SVG 단위) 바뀔 때만 이름 상자를 어림해 공용 labels(), 겹친 작은 성 이름 숨김 · 내 성 늘 보임 · 쌓지 않음(이름이 성을 떠나면 헷갈린다)
+  }  var labFsCache = {}; function declutterLabels(svg) { var M2 = global.DG.mode2d, ls = svg && svg.querySelectorAll ? svg.querySelectorAll('.rlab') : [], list = [], i, fs; if (!M2 || !M2.labels || !ls.length) { return; } var lzK = labelZ() + '|' + global.innerWidth; if (labFsCache[lzK] !== undefined) { fs = labFsCache[lzK]; } else { try { fs = parseFloat(global.getComputedStyle(ls[0]).fontSize); } catch (e) { fs = 0; } labFsCache[lzK] = fs; }   /* W-0367 글자 크기는 배율·화면 폭마다 한 번만 읽는다 — 매번 읽으면 새 지도 전체 스타일 계산을 그 자리에서 강제(폰 4배 감속 48ms) */ fs = fs > 0 ? fs : 2.5 * +labelZ(); if (svg.__labFs === fs && svg.__labN === ls.length) { return; } svg.__labFs = fs; svg.__labN = ls.length; for (i = 0; i < ls.length; i++) { var el = ls[i], t = el.textContent || ''; list.push({ el: el, x: +el.getAttribute('x'), y: +el.getAttribute('y'), w: (t.length + 0.4) * fs, h: fs * 1.15, pri: +(el.getAttribute('data-p') || 0), keep: el.getAttribute('data-m') === '1', dist: 0 }); } M2.labels(list, { stack: 1, gap: 0 }); for (i = 0; i < list.length; i++) { list[i].el.classList.toggle('rlab-off', !list[i].alpha); } }   // W-0348 성 이름 겹침 — 글자 크기(SVG 단위) 바뀔 때만 이름 상자를 어림해 공용 labels(), 겹친 작은 성 이름 숨김 · 내 성 늘 보임 · 쌓지 않음(이름이 성을 떠나면 헷갈린다)
   function panMapBy(dx, dy) {
     var w = MAP_VB.w / mapZoom, h = MAP_VB.h / mapZoom;
     mapCx += dx * w * MAP_PAN_SPEED;
@@ -520,7 +520,7 @@
     });
 
     core.on('toast', toast);
-    core.on('changed', function () { renderTop(); renderMap(); renderSheet(); syncDock(); });
+    core.on('changed', function () { renderTop(); mapSeq++; if (!mapRaf && global.requestAnimationFrame) { mapRaf = global.requestAnimationFrame(function () { mapRaf = 0; if (mapSeq > mapDone) { renderMap(); } }); } else if (!global.requestAnimationFrame) { renderMap(); } renderSheet(); syncDock(); });   /* W-0367 'changed' 의 지도 다시 그리기는 다음 프레임 한 번으로 — 그 사이 손잡이가 직접 그렸으면(mapDone) 건너뜀(다음 달 한 번에 두 번 그리던 것) */
     core.on('rtk:battle', function (rep) {
       /* 내 세력이 친 싸움만 띄운다. 진영에서 벌어진 것(달을 넘긴 원정)도 여기로 온다 */
       if (rep.force === R().me()) {

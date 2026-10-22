@@ -31,7 +31,7 @@
     return { x: segs[segs.length - 1].b.x, y: segs[segs.length - 1].b.y };
   }
 
-  function renderMap() {
+  var mapDone = 0, mapSeq = 0, mapRaf = 0; function renderMap() { mapDone = mapSeq; var WIN = mapWin(), VIS = CD.CITIES.filter(function (d) { return inWin(WIN, d); }); rendWin = WIN;   /* W-0367 보이는 창 +35% 안의 성만 그린다(폰 탭이 죽던 지도 통째 그리기) — 창이 그 밖으로 나가면 applyMapViewNow 가 다시 그린다 */
     if (global.DG.mount && global.DG.mount.frame) { global.DG.mount.frame(); }
     var st = R().state();
     if (!st.started) { els.realm.innerHTML = ''; return; }
@@ -53,7 +53,7 @@
      전체 범위 자체(MAP_VB, 위 "지도 이동·확대" 절)는 여기 -140/-55/380/205 와
      반드시 같아야 한다 — 보이는 창(viewBox)은 mapViewBox() 가 이동·확대
      상태에 따라 그 범위 **안의 일부**를 계산해 낸다(2026-09-10) */
-    s += '<svg class="rmap" style="--lz:' + labelZ() + '" viewBox="' + mapViewBox() + '" preserveAspectRatio="xMidYMid meet">' + (global.DG.map2d ? global.DG.map2d.terrain(CD.CITIES) + global.DG.map2d.territory(CD.CITIES, st, forceColor) + (global.DG.map2d.provLabels ? global.DG.map2d.provLabels(CD.CITIES) : '') : '');   // 2D 모드 지형 바닥(W-0023)·세력 영토 면(W-0027)·지방 붓글씨(W-0264)
+    s += '<svg class="rmap" style="--lz:' + labelZ() + '" viewBox="' + mapViewBox() + '" preserveAspectRatio="xMidYMid meet">' + (global.DG.map2d ? global.DG.map2d.terrain(CD.CITIES, VIS) + global.DG.map2d.territory(VIS, st, forceColor) + (global.DG.map2d.provLabels ? global.DG.map2d.provLabels(CD.CITIES) : '') : '');   // 2D 모드 지형 바닥(W-0023)·세력 영토 면(W-0027)·지방 붓글씨(W-0264)
 
     /* 길 — 인접한 성끼리. 같은 편이면 밝게 */
     var drawn = {};
@@ -62,7 +62,7 @@
       for (j = 0; j < a.adj.length; j++) {
         var b = CD.find(a.adj[j]);
         var key = a.id < b.id ? a.id + b.id : b.id + a.id;
-        if (drawn[key]) { continue; }
+        if (drawn[key] || (!inWin(WIN, a) && !inWin(WIN, b))) { continue; }
         drawn[key] = true;
         var fa = st.cities[a.id].force, fb = st.cities[b.id].force;
         var same = fa && fa === fb;
@@ -75,8 +75,8 @@
     }
 
     /* 성 */ var labs = '';   // W-0348 이름은 성을 다 그린 뒤 한 층에 — 성 안에 두면 다음 성 그림이 앞 성 이름을 덮는다
-    for (i = 0; i < CD.CITIES.length; i++) {
-      var d = CD.CITIES[i], c = st.cities[d.id];
+    for (i = 0; i < VIS.length; i++) {
+      var d = VIS[i], c = st.cities[d.id];
       var mine = c.force === st.me;
       var rad = 1.5 + Math.min(2.2, c.troops / 12000);
       s += '<g class="rcity' + (mine ? ' mine' : '') + '" data-city="' + d.id + '">' +

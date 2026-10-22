@@ -12,6 +12,7 @@
  * W-0123 파일 격리 — 낱개 <script> 일 땐 한 파일이 던져도 그 파일만 빠졌는데, 이어 붙인 뒤엔 뒤 파일 전부가 멈췄다. 그래서 IIFE 꼴 파일은
  *   `try{…}catch` 로 감싸고 던진 오류는 errlog 에 **원본 파일 이름**과 함께 남긴다(스택이 압축 위치만 가리키던 것 보완). 감싸면 뜻이 바뀌는 파일
  *   (맨 앞 'use strict' · 최상위 let/const/class/function 선언 — 블록 안에 들면 범위가 바뀐다)과 vendor/ 는 그대로 둔다. 파일 앞마다 "@ 경로" 표시 주석.
+ * BUNDLE_NOMIN=1 이면 압축 없이(프로파일에서 원본 함수 이름을 보려고 — 커밋 전엔 꼭 압축본으로 다시 묶을 것, W-0367).
  * esbuild 는 `saga-web/shared/build` 에서 `npm install` 한 것(node_modules 는 git 무시). --check 는 esbuild 없이 돈다.
  */
 import fs from 'node:fs';
@@ -75,7 +76,7 @@ async function build(game) {
     for (const f of sp.files) {
       const code = fs.readFileSync(path.join(WEB, game, f), 'utf8');
       if (/(^|\/)vendor\//.test(f)) { parts.push(`/*@ ${f}*/` + code); continue; }   // W-0315 — vendor 도 표시(없으면 CPU 프로파일이 three 를 바로 앞 파일로 잡았다)
-      const r = await transform(code, { loader: 'js', minify: true, target: 'es2018', legalComments: 'none', sourcefile: f });
+      const r = await transform(code, { loader: 'js', minify: !process.env.BUNDLE_NOMIN, target: 'es2018', legalComments: 'none', sourcefile: f });
       const c = r.code.replace(/\s+$/, '');
       if (wrappable(c)) { parts.push(`/*@ ${f}*/` + wrap(c, f)); wrapped++; } else { parts.push(`/*@ ${f} 안 감쌈*/` + c); plain.push(f); }
     }

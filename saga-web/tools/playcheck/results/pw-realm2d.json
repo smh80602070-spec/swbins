@@ -1,0 +1,5119 @@
+{
+ "before": {
+  "tag": "before",
+  "at": "2026-10-22T00:05:20.236Z",
+  "throttle": 4,
+  "errors": [],
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.3,
+   "nodes": 1805,
+   "listeners": 107,
+   "realmNodes": 1192,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1470
+  },
+  "render": {
+   "med": 91.7,
+   "max": 166.4
+  },
+  "months": [
+   {
+    "clickMs": 463.3,
+    "wallMs": 1101,
+    "renders": 1
+   },
+   {
+    "clickMs": 506.7,
+    "wallMs": 1133,
+    "renders": 1
+   },
+   {
+    "clickMs": 869.9,
+    "wallMs": 1526,
+    "renders": 1
+   },
+   {
+    "clickMs": 105.7,
+    "wallMs": 1122,
+    "renders": 1
+   },
+   {
+    "clickMs": 476.3,
+    "wallMs": 1204,
+    "renders": 1
+   },
+   {
+    "clickMs": 575,
+    "wallMs": 1198,
+    "renders": 1
+   },
+   {
+    "clickMs": 298.4,
+    "wallMs": 1040,
+    "renders": 1
+   },
+   {
+    "clickMs": 832,
+    "wallMs": 1777,
+    "renders": 1
+   },
+   {
+    "clickMs": 503.8,
+    "wallMs": 1138,
+    "renders": 1
+   },
+   {
+    "clickMs": 308.7,
+    "wallMs": 947,
+    "renders": 1
+   }
+  ],
+  "month": {
+   "renders": 10,
+   "click": {
+    "n": 10,
+    "avg": 494,
+    "max": 869.9
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.7,
+   "nodes": 1861,
+   "listeners": 107,
+   "realmNodes": 1175,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1490
+  },
+  "drag": {
+   "wallMs": 4005,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.7,
+   "nodes": 1861,
+   "listeners": 107,
+   "realmNodes": 1175,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1490
+  }
+ },
+ "prof": {
+  "tag": "prof",
+  "at": "2026-10-22T00:00:00.326Z",
+  "throttle": 4,
+  "errors": [],
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.3,
+   "nodes": 1805,
+   "listeners": 107,
+   "realmNodes": 1192,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1470
+  },
+  "prof": {
+   "totalMs": 7505,
+   "incl": [
+    [
+     "evaluate @",
+     5588
+    ],
+    [
+     "click @",
+     5547
+    ],
+    [
+     "U @js/ui-rtk.js",
+     5545
+    ],
+    [
+     "B @js/core.js",
+     5131
+    ],
+    [
+     "_r @js/rtk.js",
+     5131
+    ],
+    [
+     "Er @js/rtk.js",
+     4554
+    ],
+    [
+     "Q @js/rtk-ai.js",
+     4056
+    ],
+    [
+     "x @js/rtk-ai.js",
+     3950
+    ],
+    [
+     "R @js/officer.js",
+     2834
+    ],
+    [
+     "z @js/rtk-ai.js",
+     2535
+    ],
+    [
+     "d @js/hero.js",
+     2445
+    ],
+    [
+     "find @js/data.js",
+     2259
+    ],
+    [
+     "I @js/war.js",
+     2079
+    ],
+    [
+     "Vr @js/war.js",
+     2061
+    ],
+    [
+     "vr @js/war.js",
+     1760
+    ],
+    [
+     "sr @js/war.js",
+     1595
+    ],
+    [
+     "g @js/hero.js",
+     1315
+    ],
+    [
+     "V @js/war.js",
+     1305
+    ]
+   ],
+   "self": [
+    [
+     "find @js/data.js",
+     2259
+    ],
+    [
+     "I @js/ui-rtk.js",
+     407
+    ],
+    [
+     "Ce @js/officer.js",
+     335
+    ],
+    [
+     "Ge @js/officer.js",
+     291
+    ],
+    [
+     "Se @js/ui-rtk.js",
+     246
+    ],
+    [
+     "G @js/rtk.js",
+     218
+    ],
+    [
+     "d @js/hero.js",
+     100
+    ],
+    [
+     "d @js/rtk.js",
+     97
+    ],
+    [
+     "x @js/core.js",
+     86
+    ],
+    [
+     "R @js/officer.js",
+     75
+    ],
+    [
+     "C @js/passive-web.js",
+     57
+    ],
+    [
+     "U @js/officer.js",
+     44
+    ],
+    [
+     "I @js/war.js",
+     41
+    ],
+    [
+     "T @js/rtk.js",
+     40
+    ],
+    [
+     "tr @js/rtk.js",
+     37
+    ],
+    [
+     "vr @js/war.js",
+     32
+    ],
+    [
+     "f @js/hero.js",
+     30
+    ],
+    [
+     "V @js/war.js",
+     28
+    ]
+   ]
+  },
+  "months": [
+   {
+    "clickMs": 1400.5,
+    "wallMs": 2046,
+    "renders": 1
+   },
+   {
+    "clickMs": 1836.1,
+    "wallMs": 2472,
+    "renders": 1
+   },
+   {
+    "clickMs": 1252,
+    "wallMs": 1882,
+    "renders": 1
+   },
+   {
+    "clickMs": 1416.4,
+    "wallMs": 2045,
+    "renders": 1
+   },
+   {
+    "clickMs": 1539.9,
+    "wallMs": 2206,
+    "renders": 1
+   },
+   {
+    "clickMs": 1407.5,
+    "wallMs": 2051,
+    "renders": 1
+   },
+   {
+    "clickMs": 350.4,
+    "wallMs": 975,
+    "renders": 1
+   },
+   {
+    "clickMs": 1667.8,
+    "wallMs": 2317,
+    "renders": 1
+   },
+   {
+    "clickMs": 1243.1,
+    "wallMs": 1894,
+    "renders": 1
+   },
+   {
+    "clickMs": 504.9,
+    "wallMs": 1144,
+    "renders": 1
+   }
+  ],
+  "month": {
+   "renders": 10,
+   "click": {
+    "n": 10,
+    "avg": 1261.9,
+    "max": 1836.1
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.8,
+   "nodes": 1870,
+   "listeners": 107,
+   "realmNodes": 1181,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1496
+  },
+  "drag": {
+   "wallMs": 3998,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.8,
+   "nodes": 1870,
+   "listeners": 107,
+   "realmNodes": 1181,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1496
+  }
+ },
+ "prof2": {
+  "tag": "prof2",
+  "at": "2026-10-22T00:01:40.577Z",
+  "throttle": 4,
+  "errors": [],
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.4,
+   "nodes": 1805,
+   "listeners": 107,
+   "realmNodes": 1192,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1470
+  },
+  "prof": {
+   "totalMs": 5848,
+   "incl": [
+    [
+     "evaluate @",
+     4022
+    ],
+    [
+     "click @",
+     3993
+    ],
+    [
+     "U @js/ui-rtk.js",
+     3991
+    ],
+    [
+     "B @js/core.js",
+     3342
+    ],
+    [
+     "_r @js/rtk.js",
+     3342
+    ],
+    [
+     "Er @js/rtk.js",
+     2792
+    ],
+    [
+     "Q @js/rtk-ai.js",
+     2216
+    ],
+    [
+     "x @js/rtk-ai.js",
+     2004
+    ],
+    [
+     "I @js/ui-rtk.js",
+     1049
+    ],
+    [
+     "z @js/rtk-ai.js",
+     976
+    ],
+    [
+     "_ @js/core.js",
+     720
+    ],
+    [
+     "Vr @js/war.js",
+     716
+    ],
+    [
+     "We @js/rtk.js",
+     625
+    ],
+    [
+     "T @js/rtk.js",
+     624
+    ],
+    [
+     "R @js/officer.js",
+     594
+    ],
+    [
+     "I @js/war.js",
+     588
+    ],
+    [
+     "L @js/rtk-ai.js",
+     573
+    ],
+    [
+     "Ce @js/officer.js",
+     562
+    ]
+   ],
+   "self": [
+    [
+     "I @js/ui-rtk.js",
+     639
+    ],
+    [
+     "Ce @js/officer.js",
+     401
+    ],
+    [
+     "Ge @js/officer.js",
+     387
+    ],
+    [
+     "Se @js/ui-rtk.js",
+     291
+    ],
+    [
+     "G @js/rtk.js",
+     265
+    ],
+    [
+     "C @js/passive-web.js",
+     123
+    ],
+    [
+     "d @js/rtk.js",
+     99
+    ],
+    [
+     "x @js/core.js",
+     63
+    ],
+    [
+     "d @js/hero.js",
+     53
+    ],
+    [
+     "paint @js/autoquest.js",
+     50
+    ],
+    [
+     "R @js/officer.js",
+     46
+    ],
+    [
+     "T @js/rtk.js",
+     41
+    ],
+    [
+     "vr @js/war.js",
+     38
+    ],
+    [
+     "x @js/rtk-ai.js",
+     38
+    ],
+    [
+     "I @js/war.js",
+     35
+    ],
+    [
+     "a @js/statecraft.js",
+     35
+    ],
+    [
+     "Vr @js/war.js",
+     32
+    ],
+    [
+     "get save @js/core.js",
+     31
+    ]
+   ]
+  },
+  "months": [
+   {
+    "clickMs": 284.3,
+    "wallMs": 901,
+    "renders": 1
+   },
+   {
+    "clickMs": 521.5,
+    "wallMs": 1167,
+    "renders": 1
+   },
+   {
+    "clickMs": 511.5,
+    "wallMs": 1234,
+    "renders": 1
+   },
+   {
+    "clickMs": 544.9,
+    "wallMs": 1180,
+    "renders": 1
+   },
+   {
+    "clickMs": 120.7,
+    "wallMs": 1077,
+    "renders": 1
+   },
+   {
+    "clickMs": 639.5,
+    "wallMs": 1660,
+    "renders": 1
+   },
+   {
+    "clickMs": 656.1,
+    "wallMs": 1279,
+    "renders": 1
+   },
+   {
+    "clickMs": 770.5,
+    "wallMs": 1817,
+    "renders": 1
+   },
+   {
+    "clickMs": 460.6,
+    "wallMs": 1088,
+    "renders": 1
+   },
+   {
+    "clickMs": 201.3,
+    "wallMs": 821,
+    "renders": 1
+   }
+  ],
+  "month": {
+   "renders": 10,
+   "click": {
+    "n": 10,
+    "avg": 471.1,
+    "max": 770.5
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.9,
+   "nodes": 1864,
+   "listeners": 107,
+   "realmNodes": 1178,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1493
+  },
+  "drag": {
+   "wallMs": 8994,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.9,
+   "nodes": 1864,
+   "listeners": 107,
+   "realmNodes": 1178,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1493
+  }
+ },
+ "prof3": {
+  "tag": "prof3",
+  "at": "2026-10-22T00:02:52.473Z",
+  "throttle": 4,
+  "errors": [],
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.6,
+   "nodes": 1805,
+   "listeners": 107,
+   "realmNodes": 1192,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1470
+  },
+  "prof": {
+   "totalMs": 2613,
+   "incl": [
+    [
+     "evaluate @",
+     1012
+    ],
+    [
+     "click @",
+     991
+    ],
+    [
+     "act @js/ui-rtk.js",
+     990
+    ],
+    [
+     "batch @js/core.js",
+     820
+    ],
+    [
+     "endMonth @js/rtk.js",
+     820
+    ],
+    [
+     "endMonthRaw @js/rtk.js",
+     741
+    ],
+    [
+     "runAll @js/rtk-ai.js",
+     541
+    ],
+    [
+     "runForce @js/rtk-ai.js",
+     498
+    ],
+    [
+     "tryWar @js/rtk-ai.js",
+     308
+    ],
+    [
+     "forecast @js/war.js",
+     250
+    ],
+    [
+     "renderMap @js/ui-rtk.js",
+     220
+    ],
+    [
+     "fight @js/war.js",
+     206
+    ],
+    [
+     "stepRound @js/war.js",
+     163
+    ],
+    [
+     "armyPower @js/war.js",
+     142
+    ],
+    [
+     "emit @js/core.js",
+     139
+    ],
+    [
+     "stats @js/officer.js",
+     136
+    ],
+    [
+     "readyAt @js/rtk.js",
+     116
+    ],
+    [
+     "atCity @js/officer.js",
+     97
+    ]
+   ],
+   "self": [
+    [
+     "renderMap @js/ui-rtk.js",
+     102
+    ],
+    [
+     "declutterLabels @js/ui-rtk.js",
+     92
+    ],
+    [
+     "atCity @js/officer.js",
+     86
+    ],
+    [
+     "readyAt @js/rtk.js",
+     59
+    ],
+    [
+     "bestFor @js/mount.js",
+     58
+    ],
+    [
+     "ofForce @js/officer.js",
+     50
+    ],
+    [
+     "paint @js/autoquest.js",
+     42
+    ],
+    [
+     "state @js/rtk.js",
+     41
+    ],
+    [
+     "persist @js/core.js",
+     37
+    ],
+    [
+     "citiesOf @js/rtk.js",
+     36
+    ],
+    [
+     "pathTo @js/passive-web.js",
+     20
+    ],
+    [
+     "find @js/data.js",
+     19
+    ],
+    [
+     "find @js/event.js",
+     18
+    ],
+    [
+     "api @js/statecraft.js",
+     13
+    ],
+    [
+     "stats @js/officer.js",
+     13
+    ],
+    [
+     "forecast @js/war.js",
+     12
+    ],
+    [
+     "setItem @",
+     11
+    ],
+    [
+     "runForce @js/rtk-ai.js",
+     11
+    ]
+   ]
+  },
+  "months": [
+   {
+    "clickMs": 457.2,
+    "wallMs": 1125,
+    "renders": 1
+   },
+   {
+    "clickMs": 458.7,
+    "wallMs": 1085,
+    "renders": 1
+   },
+   {
+    "clickMs": 601.9,
+    "wallMs": 1297,
+    "renders": 1
+   },
+   {
+    "clickMs": 360.1,
+    "wallMs": 1049,
+    "renders": 1
+   },
+   {
+    "clickMs": 198.4,
+    "wallMs": 828,
+    "renders": 1
+   },
+   {
+    "clickMs": 287.1,
+    "wallMs": 912,
+    "renders": 1
+   },
+   {
+    "clickMs": 155,
+    "wallMs": 875,
+    "renders": 1
+   },
+   {
+    "clickMs": 592.6,
+    "wallMs": 1318,
+    "renders": 1
+   },
+   {
+    "clickMs": 93.3,
+    "wallMs": 715,
+    "renders": 1
+   },
+   {
+    "clickMs": 590.2,
+    "wallMs": 1226,
+    "renders": 1
+   }
+  ],
+  "month": {
+   "renders": 10,
+   "click": {
+    "n": 10,
+    "avg": 379.4,
+    "max": 601.9
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 7.1,
+   "nodes": 1865,
+   "listeners": 107,
+   "realmNodes": 1179,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1494
+  },
+  "drag": {
+   "wallMs": 4620,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 7.1,
+   "nodes": 1865,
+   "listeners": 107,
+   "realmNodes": 1179,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1494
+  }
+ },
+ "nomin1": {
+  "tag": "nomin1",
+  "at": "2026-10-22T00:03:39.662Z",
+  "throttle": 4,
+  "errors": [],
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.6,
+   "nodes": 1805,
+   "listeners": 107,
+   "realmNodes": 1192,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1470
+  },
+  "prof": {
+   "totalMs": 3206,
+   "incl": [
+    [
+     "evaluate @",
+     1709
+    ],
+    [
+     "click @",
+     1691
+    ],
+    [
+     "act @js/ui-rtk.js",
+     1690
+    ],
+    [
+     "endMonth @js/rtk.js",
+     1505
+    ],
+    [
+     "batch @js/core.js",
+     1504
+    ],
+    [
+     "endMonthRaw @js/rtk.js",
+     1154
+    ],
+    [
+     "runAll @js/rtk-ai.js",
+     893
+    ],
+    [
+     "runForce @js/rtk-ai.js",
+     816
+    ],
+    [
+     "emit @js/core.js",
+     470
+    ],
+    [
+     "renderMap @js/ui-rtk.js",
+     468
+    ],
+    [
+     "tryWar @js/rtk-ai.js",
+     463
+    ],
+    [
+     "forecast @js/war.js",
+     279
+    ],
+    [
+     "stats @js/officer.js",
+     253
+    ],
+    [
+     "fight @js/war.js",
+     236
+    ],
+    [
+     "ofForce @js/officer.js",
+     232
+    ],
+    [
+     "summary @js/rtk.js",
+     221
+    ],
+    [
+     "ranking @js/rtk.js",
+     208
+    ],
+    [
+     "atCity @js/officer.js",
+     193
+    ]
+   ],
+   "self": [
+    [
+     "renderMap @js/ui-rtk.js",
+     318
+    ],
+    [
+     "atCity @js/officer.js",
+     179
+    ],
+    [
+     "ofForce @js/officer.js",
+     144
+    ],
+    [
+     "declutterLabels @js/ui-rtk.js",
+     97
+    ],
+    [
+     "citiesOf @js/rtk.js",
+     88
+    ],
+    [
+     "paint @js/autoquest.js",
+     59
+    ],
+    [
+     "persist @js/core.js",
+     47
+    ],
+    [
+     "pathTo @js/passive-web.js",
+     44
+    ],
+    [
+     "state @js/rtk.js",
+     40
+    ],
+    [
+     "setItem @",
+     27
+    ],
+    [
+     "stats @js/officer.js",
+     26
+    ],
+    [
+     "rec @js/officer.js",
+     23
+    ],
+    [
+     "stats @js/hero.js",
+     20
+    ],
+    [
+     "itemById @js/data-item.js",
+     14
+    ],
+    [
+     "fight @js/war.js",
+     14
+    ],
+    [
+     "render @js/hud.js",
+     14
+    ],
+    [
+     "find @js/data.js",
+     13
+    ],
+    [
+     "runForce @js/rtk-ai.js",
+     13
+    ]
+   ]
+  },
+  "months": [
+   {
+    "clickMs": 254.9,
+    "wallMs": 888,
+    "renders": 1
+   },
+   {
+    "clickMs": 265.8,
+    "wallMs": 904,
+    "renders": 1
+   },
+   {
+    "clickMs": 431.7,
+    "wallMs": 1051,
+    "renders": 1
+   },
+   {
+    "clickMs": 247.6,
+    "wallMs": 876,
+    "renders": 1
+   },
+   {
+    "clickMs": 609.5,
+    "wallMs": 1393,
+    "renders": 1
+   },
+   {
+    "clickMs": 390.3,
+    "wallMs": 1092,
+    "renders": 1
+   },
+   {
+    "clickMs": 1211.3,
+    "wallMs": 1970,
+    "renders": 1
+   },
+   {
+    "clickMs": 239.9,
+    "wallMs": 921,
+    "renders": 1
+   },
+   {
+    "clickMs": 627.8,
+    "wallMs": 1323,
+    "renders": 1
+   },
+   {
+    "clickMs": 130.2,
+    "wallMs": 848,
+    "renders": 1
+   }
+  ],
+  "month": {
+   "renders": 10,
+   "click": {
+    "n": 10,
+    "avg": 440.9,
+    "max": 1211.3
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 7.2,
+   "nodes": 1869,
+   "listeners": 107,
+   "realmNodes": 1181,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1496
+  },
+  "drag": {
+   "wallMs": 4610,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 7.2,
+   "nodes": 1869,
+   "listeners": 107,
+   "realmNodes": 1181,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1496
+  }
+ },
+ "nomin2": {
+  "tag": "nomin2",
+  "at": "2026-10-22T00:04:19.231Z",
+  "throttle": 4,
+  "errors": [],
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.6,
+   "nodes": 1805,
+   "listeners": 107,
+   "realmNodes": 1192,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1470
+  },
+  "prof": {
+   "totalMs": 3024,
+   "incl": [
+    [
+     "evaluate @",
+     1230
+    ],
+    [
+     "click @",
+     1227
+    ],
+    [
+     "act @js/ui-rtk.js",
+     1226
+    ],
+    [
+     "batch @js/core.js",
+     1011
+    ],
+    [
+     "endMonth @js/rtk.js",
+     1011
+    ],
+    [
+     "emit @js/core.js",
+     569
+    ],
+    [
+     "renderMap @js/ui-rtk.js",
+     531
+    ],
+    [
+     "endMonthRaw @js/rtk.js",
+     512
+    ],
+    [
+     "runAll @js/rtk-ai.js",
+     358
+    ],
+    [
+     "declutterLabels @js/ui-rtk.js",
+     333
+    ],
+    [
+     "runForce @js/rtk-ai.js",
+     298
+    ],
+    [
+     "ranking @js/rtk.js",
+     281
+    ],
+    [
+     "summary @js/rtk.js",
+     253
+    ],
+    [
+     "ofForce @js/officer.js",
+     239
+    ],
+    [
+     "stats @js/officer.js",
+     223
+    ],
+    [
+     "victoryProgress @js/rtk.js",
+     193
+    ],
+    [
+     "rankOf @js/rtk.js",
+     192
+    ],
+    [
+     "stats @js/hero.js",
+     190
+    ]
+   ],
+   "self": [
+    [
+     "declutterLabels @js/ui-rtk.js",
+     294
+    ],
+    [
+     "renderMap @js/ui-rtk.js",
+     179
+    ],
+    [
+     "rec @js/officer.js",
+     137
+    ],
+    [
+     "citiesOf @js/rtk.js",
+     68
+    ],
+    [
+     "ofForce @js/officer.js",
+     66
+    ],
+    [
+     "paint @js/autoquest.js",
+     65
+    ],
+    [
+     "pathTo @js/passive-web.js",
+     51
+    ],
+    [
+     "atCity @js/officer.js",
+     44
+    ],
+    [
+     "city @js/rtk.js",
+     36
+    ],
+    [
+     "getAttribute @",
+     35
+    ],
+    [
+     "itemById @js/data-item.js",
+     27
+    ],
+    [
+     "state @js/rtk.js",
+     16
+    ],
+    [
+     "render @js/hud.js",
+     16
+    ],
+    [
+     "labels @js/mode2d.js",
+     12
+    ],
+    [
+     "setItem @",
+     9
+    ],
+    [
+     "persist @js/core.js",
+     9
+    ],
+    [
+     "ranking @js/rtk.js",
+     8
+    ],
+    [
+     "fight @js/war.js",
+     8
+    ]
+   ]
+  },
+  "months": [
+   {
+    "clickMs": 287.9,
+    "wallMs": 1068,
+    "renders": 1
+   },
+   {
+    "clickMs": 207.5,
+    "wallMs": 827,
+    "renders": 1
+   },
+   {
+    "clickMs": 505.1,
+    "wallMs": 1128,
+    "renders": 1
+   },
+   {
+    "clickMs": 347.6,
+    "wallMs": 1032,
+    "renders": 1
+   },
+   {
+    "clickMs": 558.9,
+    "wallMs": 1186,
+    "renders": 1
+   },
+   {
+    "clickMs": 173.2,
+    "wallMs": 814,
+    "renders": 1
+   },
+   {
+    "clickMs": 361.1,
+    "wallMs": 1110,
+    "renders": 1
+   },
+   {
+    "clickMs": 539,
+    "wallMs": 1198,
+    "renders": 1
+   },
+   {
+    "clickMs": 880.1,
+    "wallMs": 1623,
+    "renders": 1
+   },
+   {
+    "clickMs": 187,
+    "wallMs": 1026,
+    "renders": 1
+   }
+  ],
+  "month": {
+   "renders": 10,
+   "click": {
+    "n": 10,
+    "avg": 404.7,
+    "max": 880.1
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 7.2,
+   "nodes": 1869,
+   "listeners": 107,
+   "realmNodes": 1181,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1496
+  },
+  "drag": {
+   "wallMs": 5426,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 7.2,
+   "nodes": 1869,
+   "listeners": 107,
+   "realmNodes": 1181,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1496
+  }
+ },
+ "win": {
+  "tag": "win",
+  "at": "2026-10-22T00:06:52.868Z",
+  "throttle": 4,
+  "errors": [],
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.3,
+   "nodes": 1138,
+   "listeners": 107,
+   "realmNodes": 607,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 885
+  },
+  "render": {
+   "med": 131.8,
+   "max": 137.7
+  },
+  "months": [
+   {
+    "clickMs": 1081.7,
+    "wallMs": 1728,
+    "renders": 1
+   },
+   {
+    "clickMs": 392.7,
+    "wallMs": 1029,
+    "renders": 1
+   },
+   {
+    "clickMs": 586.9,
+    "wallMs": 1219,
+    "renders": 1
+   },
+   {
+    "clickMs": 749,
+    "wallMs": 1381,
+    "renders": 1
+   },
+   {
+    "clickMs": 712.3,
+    "wallMs": 1348,
+    "renders": 1
+   },
+   {
+    "clickMs": 840.2,
+    "wallMs": 1481,
+    "renders": 1
+   },
+   {
+    "clickMs": 226,
+    "wallMs": 859,
+    "renders": 1
+   },
+   {
+    "clickMs": 625.2,
+    "wallMs": 1261,
+    "renders": 1
+   },
+   {
+    "clickMs": 562.2,
+    "wallMs": 1196,
+    "renders": 1
+   },
+   {
+    "clickMs": 630.1,
+    "wallMs": 1261,
+    "renders": 1
+   }
+  ],
+  "month": {
+   "renders": 10,
+   "click": {
+    "n": 10,
+    "avg": 640.6,
+    "max": 1081.7
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.7,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  },
+  "drag": {
+   "wallMs": 3987,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.7,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  }
+ },
+ "profr": {
+  "tag": "profr",
+  "at": "2026-10-22T00:07:39.563Z",
+  "throttle": 4,
+  "errors": [],
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.5,
+   "nodes": 1138,
+   "listeners": 107,
+   "realmNodes": 607,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 885
+  },
+  "render": {
+   "med": 148.4,
+   "max": 150.5
+  },
+  "prof": {
+   "totalMs": 2605,
+   "incl": [
+    [
+     "evaluate @",
+     1769
+    ],
+    [
+     "renderMap @js/ui-rtk.js",
+     1758
+    ],
+    [
+     "declutterLabels @js/ui-rtk.js",
+     496
+    ],
+    [
+     "ranking @js/rtk.js",
+     230
+    ],
+    [
+     "summary @js/rtk.js",
+     201
+    ],
+    [
+     "ofForce @js/officer.js",
+     135
+    ],
+    [
+     "MutationObserver.observe.childList @js/emojicompat.js",
+     65
+    ],
+    [
+     "fixTree @js/emojicompat.js",
+     60
+    ],
+    [
+     "stats @js/officer.js",
+     56
+    ],
+    [
+     "citiesOf @js/rtk.js",
+     53
+    ],
+    [
+     "castle @js/map2d.js",
+     49
+    ],
+    [
+     "fixAttr @js/emojicompat.js",
+     41
+    ],
+    [
+     "stats @js/hero.js",
+     34
+    ],
+    [
+     "getAttribute @",
+     27
+    ],
+    [
+     "liveForces @js/rtk.js",
+     26
+    ],
+    [
+     "goldOf @js/rtk.js",
+     24
+    ],
+    [
+     "cfg @js/map2d.js",
+     21
+    ],
+    [
+     "govMul @js/rtk.js",
+     16
+    ]
+   ],
+   "self": [
+    [
+     "renderMap @js/ui-rtk.js",
+     944
+    ],
+    [
+     "declutterLabels @js/ui-rtk.js",
+     481
+    ],
+    [
+     "ofForce @js/officer.js",
+     93
+    ],
+    [
+     "citiesOf @js/rtk.js",
+     53
+    ],
+    [
+     "getAttribute @",
+     27
+    ],
+    [
+     "fixAttr @js/emojicompat.js",
+     21
+    ],
+    [
+     "cfg @js/map2d.js",
+     21
+    ],
+    [
+     "castle @js/map2d.js",
+     14
+    ],
+    [
+     "esc @js/ui-rtk.js",
+     12
+    ],
+    [
+     "nextNode @",
+     11
+    ],
+    [
+     "stats @js/hero.js",
+     9
+    ],
+    [
+     "summary @js/rtk.js",
+     9
+    ],
+    [
+     "gearOf @js/hero.js",
+     9
+    ],
+    [
+     "stats @js/officer.js",
+     9
+    ],
+    [
+     "state @js/rtk.js",
+     8
+    ],
+    [
+     "labels @js/mode2d.js",
+     6
+    ],
+    [
+     "want3d @js/device-mode.js",
+     6
+    ],
+    [
+     "camps @js/war.js",
+     6
+    ]
+   ]
+  },
+  "months": [
+   {
+    "clickMs": 1352.9,
+    "wallMs": 2016,
+    "renders": 1
+   },
+   {
+    "clickMs": 1310.5,
+    "wallMs": 1943,
+    "renders": 1
+   },
+   {
+    "clickMs": 1066.3,
+    "wallMs": 1701,
+    "renders": 1
+   },
+   {
+    "clickMs": 743.4,
+    "wallMs": 1376,
+    "renders": 1
+   },
+   {
+    "clickMs": 228.3,
+    "wallMs": 872,
+    "renders": 1
+   },
+   {
+    "clickMs": 368.7,
+    "wallMs": 999,
+    "renders": 1
+   },
+   {
+    "clickMs": 671.4,
+    "wallMs": 1307,
+    "renders": 1
+   },
+   {
+    "clickMs": 384.4,
+    "wallMs": 1024,
+    "renders": 1
+   },
+   {
+    "clickMs": 599.9,
+    "wallMs": 1231,
+    "renders": 1
+   },
+   {
+    "clickMs": 610.2,
+    "wallMs": 1247,
+    "renders": 1
+   }
+  ],
+  "month": {
+   "renders": 10,
+   "click": {
+    "n": 10,
+    "avg": 733.6,
+    "max": 1352.9
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.9,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  },
+  "drag": {
+   "wallMs": 3988,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.9,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  }
+ },
+ "win2": {
+  "tag": "win2",
+  "at": "2026-10-22T00:09:11.986Z",
+  "throttle": 4,
+  "errors": [],
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.3,
+   "nodes": 1138,
+   "listeners": 107,
+   "realmNodes": 607,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 885
+  },
+  "render": {
+   "med": 48.1,
+   "max": 100
+  },
+  "months": [
+   {
+    "clickMs": 752.7,
+    "wallMs": 1391,
+    "renders": 2
+   },
+   {
+    "clickMs": 343.6,
+    "wallMs": 969,
+    "renders": 2
+   },
+   {
+    "clickMs": 1077.3,
+    "wallMs": 1708,
+    "renders": 2
+   },
+   {
+    "clickMs": 760.9,
+    "wallMs": 1383,
+    "renders": 2
+   },
+   {
+    "clickMs": 286.8,
+    "wallMs": 913,
+    "renders": 2
+   },
+   {
+    "clickMs": 676.7,
+    "wallMs": 1303,
+    "renders": 2
+   },
+   {
+    "clickMs": 691.6,
+    "wallMs": 1331,
+    "renders": 2
+   },
+   {
+    "clickMs": 797.2,
+    "wallMs": 1434,
+    "renders": 2
+   },
+   {
+    "clickMs": 628.7,
+    "wallMs": 1271,
+    "renders": 2
+   },
+   {
+    "clickMs": 302,
+    "wallMs": 938,
+    "renders": 2
+   }
+  ],
+  "month": {
+   "renders": 20,
+   "click": {
+    "n": 10,
+    "avg": 631.8,
+    "max": 1077.3
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.7,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  },
+  "drag": {
+   "wallMs": 3992,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.7,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  }
+ },
+ "win3": {
+  "tag": "win3",
+  "at": "2026-10-22T00:10:40.224Z",
+  "throttle": 4,
+  "errors": [],
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.3,
+   "nodes": 1138,
+   "listeners": 107,
+   "realmNodes": 607,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 885
+  },
+  "render": {
+   "med": 49.1,
+   "max": 113.8
+  },
+  "months": [
+   {
+    "clickMs": 477.1,
+    "wallMs": 1114,
+    "renders": 1
+   },
+   {
+    "clickMs": 1014.1,
+    "wallMs": 1648,
+    "renders": 1
+   },
+   {
+    "clickMs": 764,
+    "wallMs": 1395,
+    "renders": 1
+   },
+   {
+    "clickMs": 617.6,
+    "wallMs": 1243,
+    "renders": 1
+   },
+   {
+    "clickMs": 597.9,
+    "wallMs": 1222,
+    "renders": 1
+   },
+   {
+    "clickMs": 654.8,
+    "wallMs": 1288,
+    "renders": 1
+   },
+   {
+    "clickMs": 543.1,
+    "wallMs": 1177,
+    "renders": 1
+   },
+   {
+    "clickMs": 616.2,
+    "wallMs": 1242,
+    "renders": 1
+   },
+   {
+    "clickMs": 489.9,
+    "wallMs": 1121,
+    "renders": 1
+   },
+   {
+    "clickMs": 539.8,
+    "wallMs": 1164,
+    "renders": 1
+   }
+  ],
+  "month": {
+   "renders": 10,
+   "click": {
+    "n": 10,
+    "avg": 631.5,
+    "max": 1014.1
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.6,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  },
+  "drag": {
+   "wallMs": 3989,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.7,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  }
+ },
+ "after": {
+  "tag": "after",
+  "at": "2026-10-22T00:14:14.193Z",
+  "throttle": 4,
+  "errors": [],
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.3,
+   "nodes": 1138,
+   "listeners": 107,
+   "realmNodes": 607,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 885
+  },
+  "render": {
+   "med": 178.3,
+   "max": 191.6
+  },
+  "months": [
+   {
+    "clickMs": 1278.1,
+    "wallMs": 1937,
+    "renders": 1
+   },
+   {
+    "clickMs": 1200.4,
+    "wallMs": 1843,
+    "renders": 1
+   },
+   {
+    "clickMs": 813.1,
+    "wallMs": 1451,
+    "renders": 1
+   },
+   {
+    "clickMs": 684,
+    "wallMs": 1303,
+    "renders": 1
+   },
+   {
+    "clickMs": 428.9,
+    "wallMs": 1072,
+    "renders": 1
+   },
+   {
+    "clickMs": 748.8,
+    "wallMs": 1382,
+    "renders": 1
+   },
+   {
+    "clickMs": 564.6,
+    "wallMs": 1197,
+    "renders": 1
+   },
+   {
+    "clickMs": 425.4,
+    "wallMs": 1058,
+    "renders": 1
+   },
+   {
+    "clickMs": 501.9,
+    "wallMs": 1139,
+    "renders": 1
+   },
+   {
+    "clickMs": 474.3,
+    "wallMs": 1103,
+    "renders": 1
+   }
+  ],
+  "month": {
+   "renders": 10,
+   "click": {
+    "n": 10,
+    "avg": 712,
+    "max": 1278.1
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.6,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  },
+  "drag": {
+   "wallMs": 4003,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.6,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  }
+ },
+ "after1": {
+  "tag": "after1",
+  "at": "2026-10-22T00:26:08.183Z",
+  "throttle": 4,
+  "errors": [],
+  "render": {
+   "med": 110.7,
+   "min": 22.1,
+   "max": 195.8
+  },
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.5,
+   "nodes": 1138,
+   "listeners": 107,
+   "realmNodes": 607,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 885
+  },
+  "months": [
+   {
+    "clickMs": 391.1,
+    "wallMs": 1019,
+    "renders": 1
+   },
+   {
+    "clickMs": 1219.3,
+    "wallMs": 1859,
+    "renders": 1
+   },
+   {
+    "clickMs": 435.3,
+    "wallMs": 1059,
+    "renders": 1
+   },
+   {
+    "clickMs": 624.8,
+    "wallMs": 1258,
+    "renders": 1
+   },
+   {
+    "clickMs": 635.2,
+    "wallMs": 1258,
+    "renders": 1
+   },
+   {
+    "clickMs": 760.9,
+    "wallMs": 1397,
+    "renders": 1
+   },
+   {
+    "clickMs": 593,
+    "wallMs": 1228,
+    "renders": 1
+   },
+   {
+    "clickMs": 650.4,
+    "wallMs": 1290,
+    "renders": 1
+   },
+   {
+    "clickMs": 505.9,
+    "wallMs": 1138,
+    "renders": 1
+   },
+   {
+    "clickMs": 559.1,
+    "wallMs": 1191,
+    "renders": 1
+   }
+  ],
+  "month": {
+   "renders": 10,
+   "click": {
+    "n": 10,
+    "avg": 637.5,
+    "max": 1219.3
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.7,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  },
+  "drag": {
+   "wallMs": 3619,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.7,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  }
+ },
+ "after2": {
+  "tag": "after2",
+  "at": "2026-10-22T00:26:45.499Z",
+  "throttle": 4,
+  "errors": [],
+  "render": {
+   "med": 43.3,
+   "min": 38.9,
+   "max": 60.8
+  },
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.5,
+   "nodes": 1138,
+   "listeners": 107,
+   "realmNodes": 607,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 885
+  },
+  "months": [
+   {
+    "clickMs": 683.1,
+    "wallMs": 1323,
+    "renders": 1
+   },
+   {
+    "clickMs": 919.9,
+    "wallMs": 1547,
+    "renders": 1
+   },
+   {
+    "clickMs": 856.7,
+    "wallMs": 1489,
+    "renders": 1
+   },
+   {
+    "clickMs": 615.8,
+    "wallMs": 1239,
+    "renders": 1
+   },
+   {
+    "clickMs": 573.3,
+    "wallMs": 1196,
+    "renders": 1
+   },
+   {
+    "clickMs": 676.5,
+    "wallMs": 1313,
+    "renders": 1
+   },
+   {
+    "clickMs": 367.5,
+    "wallMs": 1032,
+    "renders": 1
+   },
+   {
+    "clickMs": 626.4,
+    "wallMs": 1257,
+    "renders": 1
+   },
+   {
+    "clickMs": 306.1,
+    "wallMs": 937,
+    "renders": 1
+   },
+   {
+    "clickMs": 428.3,
+    "wallMs": 1064,
+    "renders": 1
+   }
+  ],
+  "month": {
+   "renders": 10,
+   "click": {
+    "n": 10,
+    "avg": 605.4,
+    "max": 919.9
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.7,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  },
+  "drag": {
+   "wallMs": 3614,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.7,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  }
+ },
+ "profr2": {
+  "tag": "profr2",
+  "at": "2026-10-22T00:16:15.879Z",
+  "throttle": 4,
+  "errors": [],
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.5,
+   "nodes": 1138,
+   "listeners": 107,
+   "realmNodes": 607,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 885
+  },
+  "render": {
+   "med": 172.7,
+   "max": 182.7
+  },
+  "prof": {
+   "totalMs": 1612,
+   "incl": [
+    [
+     "evaluate @",
+     1148
+    ],
+    [
+     "renderMap @js/ui-rtk.js",
+     1141
+    ],
+    [
+     "declutterLabels @js/ui-rtk.js",
+     444
+    ],
+    [
+     "ranking @js/rtk.js",
+     112
+    ],
+    [
+     "summary @js/rtk.js",
+     98
+    ],
+    [
+     "ofForce @js/officer.js",
+     72
+    ],
+    [
+     "citiesOf @js/rtk.js",
+     25
+    ],
+    [
+     "fixTree @js/emojicompat.js",
+     23
+    ],
+    [
+     "MutationObserver.observe.childList @js/emojicompat.js",
+     23
+    ],
+    [
+     "stats @js/officer.js",
+     21
+    ],
+    [
+     "liveForces @js/rtk.js",
+     13
+    ],
+    [
+     "fixAttr @js/emojicompat.js",
+     12
+    ],
+    [
+     "stats @js/hero.js",
+     12
+    ],
+    [
+     "getAttribute @",
+     8
+    ],
+    [
+     "gearOf @js/hero.js",
+     7
+    ],
+    [
+     "castle @js/map2d.js",
+     7
+    ],
+    [
+     "goldOf @js/rtk.js",
+     6
+    ],
+    [
+     "state @js/rtk.js",
+     6
+    ]
+   ],
+   "self": [
+    [
+     "renderMap @js/ui-rtk.js",
+     562
+    ],
+    [
+     "declutterLabels @js/ui-rtk.js",
+     438
+    ],
+    [
+     "ofForce @js/officer.js",
+     54
+    ],
+    [
+     "citiesOf @js/rtk.js",
+     25
+    ],
+    [
+     "getAttribute @",
+     8
+    ],
+    [
+     "fixTree @js/emojicompat.js",
+     7
+    ],
+    [
+     "fixAttr @js/emojicompat.js",
+     6
+    ],
+    [
+     "summary @js/rtk.js",
+     5
+    ],
+    [
+     "state @js/rtk.js",
+     4
+    ],
+    [
+     "stats @js/officer.js",
+     3
+    ],
+    [
+     "gearOf @js/hero.js",
+     3
+    ],
+    [
+     "castle @js/map2d.js",
+     3
+    ],
+    [
+     "esc @js/ui-rtk.js",
+     3
+    ],
+    [
+     "labels @js/mode2d.js",
+     3
+    ],
+    [
+     "fixText @js/emojicompat.js",
+     2
+    ],
+    [
+     "active @js/realm3d.js",
+     2
+    ],
+    [
+     "find @js/data.js",
+     2
+    ],
+    [
+     "spriteUrl @js/assets3d.js",
+     2
+    ]
+   ]
+  },
+  "months": [
+   {
+    "clickMs": 649.8,
+    "wallMs": 1291,
+    "renders": 1
+   },
+   {
+    "clickMs": 842.2,
+    "wallMs": 1463,
+    "renders": 1
+   },
+   {
+    "clickMs": 634.9,
+    "wallMs": 1264,
+    "renders": 1
+   },
+   {
+    "clickMs": 353.6,
+    "wallMs": 983,
+    "renders": 1
+   },
+   {
+    "clickMs": 281.8,
+    "wallMs": 916,
+    "renders": 1
+   },
+   {
+    "clickMs": 742.4,
+    "wallMs": 1372,
+    "renders": 1
+   },
+   {
+    "clickMs": 553.3,
+    "wallMs": 1174,
+    "renders": 1
+   },
+   {
+    "clickMs": 650.8,
+    "wallMs": 1286,
+    "renders": 1
+   },
+   {
+    "clickMs": 481,
+    "wallMs": 1104,
+    "renders": 1
+   },
+   {
+    "clickMs": 372.7,
+    "wallMs": 1001,
+    "renders": 1
+   }
+  ],
+  "month": {
+   "renders": 10,
+   "click": {
+    "n": 10,
+    "avg": 556.3,
+    "max": 842.2
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 7,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  },
+  "drag": {
+   "wallMs": 3988,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 7,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  }
+ },
+ "after3": {
+  "tag": "after3",
+  "at": "2026-10-22T00:29:02.159Z",
+  "throttle": 4,
+  "errors": [],
+  "render": {
+   "med": 49.7,
+   "min": 39.7,
+   "max": 65.4
+  },
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.5,
+   "nodes": 1138,
+   "listeners": 107,
+   "realmNodes": 607,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 885
+  },
+  "months": [
+   {
+    "clickMs": 422.3,
+    "wallMs": 1048,
+    "renders": 1
+   },
+   {
+    "clickMs": 772.5,
+    "wallMs": 1400,
+    "renders": 1
+   },
+   {
+    "clickMs": 857.9,
+    "wallMs": 1498,
+    "renders": 1
+   },
+   {
+    "clickMs": 513.6,
+    "wallMs": 1151,
+    "renders": 1
+   },
+   {
+    "clickMs": 489,
+    "wallMs": 1114,
+    "renders": 1
+   },
+   {
+    "clickMs": 566.3,
+    "wallMs": 1200,
+    "renders": 1
+   },
+   {
+    "clickMs": 295.8,
+    "wallMs": 921,
+    "renders": 1
+   },
+   {
+    "clickMs": 569.4,
+    "wallMs": 1206,
+    "renders": 1
+   },
+   {
+    "clickMs": 464.6,
+    "wallMs": 1094,
+    "renders": 1
+   },
+   {
+    "clickMs": 556,
+    "wallMs": 1193,
+    "renders": 1
+   }
+  ],
+  "month": {
+   "renders": 10,
+   "click": {
+    "n": 10,
+    "avg": 550.7,
+    "max": 857.9
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.7,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  },
+  "drag": {
+   "wallMs": 3619,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.7,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  }
+ },
+ "dpr2": {
+  "tag": "dpr2",
+  "at": "2026-10-22T00:21:11.834Z",
+  "throttle": 4,
+  "errors": [],
+  "render": {
+   "med": 187.3,
+   "max": 190.3
+  },
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.3,
+   "nodes": 1138,
+   "listeners": 107,
+   "realmNodes": 607,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 885
+  },
+  "months": [
+   {
+    "clickMs": 454.5,
+    "wallMs": 1091,
+    "renders": 1
+   },
+   {
+    "clickMs": 950.1,
+    "wallMs": 1579,
+    "renders": 1
+   },
+   {
+    "clickMs": 941.9,
+    "wallMs": 1570,
+    "renders": 1
+   },
+   {
+    "clickMs": 671,
+    "wallMs": 1300,
+    "renders": 1
+   },
+   {
+    "clickMs": 527.6,
+    "wallMs": 1152,
+    "renders": 1
+   },
+   {
+    "clickMs": 719,
+    "wallMs": 1361,
+    "renders": 1
+   },
+   {
+    "clickMs": 572.4,
+    "wallMs": 1208,
+    "renders": 1
+   },
+   {
+    "clickMs": 272.4,
+    "wallMs": 898,
+    "renders": 1
+   },
+   {
+    "clickMs": 504.7,
+    "wallMs": 1147,
+    "renders": 1
+   },
+   {
+    "clickMs": 223.6,
+    "wallMs": 852,
+    "renders": 1
+   }
+  ],
+  "month": {
+   "renders": 10,
+   "click": {
+    "n": 10,
+    "avg": 583.7,
+    "max": 950.1
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.6,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  },
+  "drag": {
+   "wallMs": 3990,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.6,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  }
+ },
+ "sw": {
+  "tag": "sw",
+  "at": "2026-10-22T00:21:57.210Z",
+  "throttle": 4,
+  "errors": [],
+  "render": {
+   "med": 162.3,
+   "max": 187.3
+  },
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.4,
+   "nodes": 1138,
+   "listeners": 107,
+   "realmNodes": 607,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 885
+  },
+  "months": [
+   {
+    "clickMs": 578.8,
+    "wallMs": 1210,
+    "renders": 1
+   },
+   {
+    "clickMs": 522.6,
+    "wallMs": 1142,
+    "renders": 1
+   },
+   {
+    "clickMs": 852.2,
+    "wallMs": 1491,
+    "renders": 1
+   },
+   {
+    "clickMs": 651.9,
+    "wallMs": 1285,
+    "renders": 1
+   },
+   {
+    "clickMs": 592.6,
+    "wallMs": 1230,
+    "renders": 1
+   },
+   {
+    "clickMs": 401.7,
+    "wallMs": 1035,
+    "renders": 1
+   },
+   {
+    "clickMs": 532,
+    "wallMs": 1168,
+    "renders": 1
+   },
+   {
+    "clickMs": 644.3,
+    "wallMs": 1283,
+    "renders": 1
+   },
+   {
+    "clickMs": 483.9,
+    "wallMs": 1110,
+    "renders": 1
+   },
+   {
+    "clickMs": 206.1,
+    "wallMs": 829,
+    "renders": 1
+   }
+  ],
+  "month": {
+   "renders": 10,
+   "click": {
+    "n": 10,
+    "avg": 546.6,
+    "max": 852.2
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.6,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  },
+  "drag": {
+   "wallMs": 3639,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.6,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  }
+ },
+ "gpu": {
+  "tag": "gpu",
+  "at": "2026-10-22T00:22:31.882Z",
+  "throttle": 4,
+  "errors": [],
+  "render": {
+   "med": 168.8,
+   "max": 175.9
+  },
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.3,
+   "nodes": 1138,
+   "listeners": 107,
+   "realmNodes": 607,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 885
+  },
+  "months": [
+   {
+    "clickMs": 486.1,
+    "wallMs": 1123,
+    "renders": 1
+   },
+   {
+    "clickMs": 701.9,
+    "wallMs": 1325,
+    "renders": 1
+   },
+   {
+    "clickMs": 740.1,
+    "wallMs": 1367,
+    "renders": 1
+   },
+   {
+    "clickMs": 627.5,
+    "wallMs": 1252,
+    "renders": 1
+   },
+   {
+    "clickMs": 318.2,
+    "wallMs": 949,
+    "renders": 1
+   },
+   {
+    "clickMs": 759.6,
+    "wallMs": 1396,
+    "renders": 1
+   },
+   {
+    "clickMs": 571.8,
+    "wallMs": 1194,
+    "renders": 1
+   },
+   {
+    "clickMs": 326.9,
+    "wallMs": 956,
+    "renders": 1
+   },
+   {
+    "clickMs": 280.7,
+    "wallMs": 905,
+    "renders": 1
+   },
+   {
+    "clickMs": 186.2,
+    "wallMs": 818,
+    "renders": 1
+   }
+  ],
+  "month": {
+   "renders": 10,
+   "click": {
+    "n": 10,
+    "avg": 499.9,
+    "max": 759.6
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.6,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  },
+  "drag": {
+   "wallMs": 4002,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.6,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  }
+ },
+ "before1": {
+  "tag": "before1",
+  "at": "2026-10-22T00:27:31.430Z",
+  "throttle": 4,
+  "errors": [],
+  "render": {
+   "med": 69.4,
+   "min": 16.9,
+   "max": 91.1
+  },
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.5,
+   "nodes": 1805,
+   "listeners": 107,
+   "realmNodes": 1192,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1470
+  },
+  "months": [
+   {
+    "clickMs": 1006.5,
+    "wallMs": 1639,
+    "renders": 2
+   },
+   {
+    "clickMs": 1526.6,
+    "wallMs": 2166,
+    "renders": 2
+   },
+   {
+    "clickMs": 1345.1,
+    "wallMs": 2024,
+    "renders": 2
+   },
+   {
+    "clickMs": 639.1,
+    "wallMs": 1293,
+    "renders": 2
+   },
+   {
+    "clickMs": 1370.4,
+    "wallMs": 2014,
+    "renders": 2
+   },
+   {
+    "clickMs": 1272,
+    "wallMs": 1912,
+    "renders": 2
+   },
+   {
+    "clickMs": 1296.1,
+    "wallMs": 1933,
+    "renders": 2
+   },
+   {
+    "clickMs": 481.2,
+    "wallMs": 1119,
+    "renders": 2
+   },
+   {
+    "clickMs": 1077.6,
+    "wallMs": 1723,
+    "renders": 2
+   },
+   {
+    "clickMs": 489.6,
+    "wallMs": 1116,
+    "renders": 2
+   }
+  ],
+  "month": {
+   "renders": 20,
+   "click": {
+    "n": 10,
+    "avg": 1050.4,
+    "max": 1526.6
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.6,
+   "nodes": 1863,
+   "listeners": 107,
+   "realmNodes": 1175,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1490
+  },
+  "drag": {
+   "wallMs": 3726,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.6,
+   "nodes": 1863,
+   "listeners": 107,
+   "realmNodes": 1175,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1490
+  }
+ },
+ "before2": {
+  "tag": "before2",
+  "at": "2026-10-22T00:28:14.636Z",
+  "throttle": 4,
+  "errors": [],
+  "render": {
+   "med": 71.5,
+   "min": 66.9,
+   "max": 119.2
+  },
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.5,
+   "nodes": 1805,
+   "listeners": 107,
+   "realmNodes": 1192,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1470
+  },
+  "months": [
+   {
+    "clickMs": 1412.1,
+    "wallMs": 2034,
+    "renders": 2
+   },
+   {
+    "clickMs": 1868.1,
+    "wallMs": 2515,
+    "renders": 2
+   },
+   {
+    "clickMs": 1578.5,
+    "wallMs": 2215,
+    "renders": 2
+   },
+   {
+    "clickMs": 869.2,
+    "wallMs": 1516,
+    "renders": 2
+   },
+   {
+    "clickMs": 1113,
+    "wallMs": 1749,
+    "renders": 2
+   },
+   {
+    "clickMs": 785.9,
+    "wallMs": 1426,
+    "renders": 2
+   },
+   {
+    "clickMs": 1137.5,
+    "wallMs": 1780,
+    "renders": 2
+   },
+   {
+    "clickMs": 537.6,
+    "wallMs": 1170,
+    "renders": 2
+   },
+   {
+    "clickMs": 936.5,
+    "wallMs": 1589,
+    "renders": 2
+   },
+   {
+    "clickMs": 766,
+    "wallMs": 1402,
+    "renders": 2
+   }
+  ],
+  "month": {
+   "renders": 20,
+   "click": {
+    "n": 10,
+    "avg": 1100.4,
+    "max": 1868.1
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.7,
+   "nodes": 1861,
+   "listeners": 107,
+   "realmNodes": 1175,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1490
+  },
+  "drag": {
+   "wallMs": 3532,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 40,
+    "decodedMB": 13.2,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_present.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.7,
+   "nodes": 1861,
+   "listeners": 107,
+   "realmNodes": 1175,
+   "cities": 135,
+   "images": 167,
+   "docNodes": 1490
+  }
+ },
+ "after4": {
+  "tag": "after4",
+  "at": "2026-10-22T00:29:37.703Z",
+  "throttle": 4,
+  "errors": [],
+  "render": {
+   "med": 43.1,
+   "min": 38.6,
+   "max": 49.4
+  },
+  "first": {
+   "name": "첫 화면",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 5.5,
+   "nodes": 1138,
+   "listeners": 107,
+   "realmNodes": 607,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 885
+  },
+  "months": [
+   {
+    "clickMs": 416.5,
+    "wallMs": 1054,
+    "renders": 1
+   },
+   {
+    "clickMs": 632.4,
+    "wallMs": 1262,
+    "renders": 1
+   },
+   {
+    "clickMs": 660.4,
+    "wallMs": 1277,
+    "renders": 1
+   },
+   {
+    "clickMs": 249.4,
+    "wallMs": 885,
+    "renders": 1
+   },
+   {
+    "clickMs": 623.9,
+    "wallMs": 1258,
+    "renders": 1
+   },
+   {
+    "clickMs": 692.9,
+    "wallMs": 1331,
+    "renders": 1
+   },
+   {
+    "clickMs": 471,
+    "wallMs": 1141,
+    "renders": 1
+   },
+   {
+    "clickMs": 542.2,
+    "wallMs": 1168,
+    "renders": 1
+   },
+   {
+    "clickMs": 331.5,
+    "wallMs": 963,
+    "renders": 1
+   },
+   {
+    "clickMs": 571.6,
+    "wallMs": 1199,
+    "renders": 1
+   }
+  ],
+  "month": {
+   "renders": 10,
+   "click": {
+    "n": 10,
+    "avg": 519.2,
+    "max": 692.9
+   }
+  },
+  "afterMonths": {
+   "name": "다음 달 열 번 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.7,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  },
+  "drag": {
+   "wallMs": 3607,
+   "renders": 0
+  },
+  "afterDrag": {
+   "name": "끌기 뒤",
+   "img": {
+    "n": 39,
+    "decodedMB": 12.9,
+    "top": [
+     [
+      "store/realm_key_v.webp",
+      "1080x1920"
+     ],
+     [
+      "tile/realm_dirt.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_grass.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_stone.webp",
+      "256x256"
+     ],
+     [
+      "tile/realm_water.webp",
+      "256x256"
+     ],
+     [
+      "world2d/city_s_past.webp",
+      "256x256"
+     ]
+    ]
+   },
+   "heapMB": 6.7,
+   "nodes": 1192,
+   "listeners": 107,
+   "realmNodes": 588,
+   "cities": 53,
+   "images": 85,
+   "docNodes": 903
+  }
+ }
+}

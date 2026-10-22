@@ -5168,7 +5168,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       for (var i = 0; i < hits.length; i++) {
         if (parseFloat(hits[i].getAttribute('r')) < 3.5) { small++; }
       }
-      return hits.length === CD.CITIES.length && small === 0 &&
+      return hits.length > 0 && hits.length === document.querySelectorAll('#realm .rcity').length && small === 0 &&   // W-0367 창 밖 성은 안 그린다 — 그린 성마다
         ('성 ' + hits.length + '곳에 반지름 ' + hits[0].getAttribute('r') + ' 의 목표');
     });
 
@@ -7301,6 +7301,14 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var a = C.register(key, { store: st, min: 0.5, max: 2, def: 1 }); a.set(1.73); var b = C.register(key, { store: st, min: 0.5, max: 2, def: 1 }), got = b.get();
       var raw = ''; try { raw = localStorage.getItem(st) || ''; localStorage.removeItem(st); } catch (e) { /* 없음 */ }
       return (got === 1.7 && /__t_cam2d\/(phone|pc)/.test(raw)) || ('실패 되읽기 ' + got + ' ' + raw);
+    });
+    t('W-0367 지도는 보이는 창(+35%) 안의 성만 — 크게 당기면 성 DOM 이 줄고 그린 성은 다 창 안 · 다시 물러나면(창 밖으로 나가면) 다시 그려 전부 · data.find 색인이 선형 검색과 같은 답', function () {
+      fresh('cao'); var C = DG.cam2d && DG.cam2d.get('realm'); if (!C) { DG.ui.renderMap(); C = DG.cam2d && DG.cam2d.get('realm'); } if (!C) { return '실패 cam2d realm 없음'; }
+      C.set(C.max); DG.ui.renderMap(); var near = document.querySelectorAll('#realm .rcity').length;
+      C.set(C.min); var far = document.querySelectorAll('#realm .rcity').length;
+      var D = DG.data, bad = 0, ids = D.heroes.slice(0, 40).map(function (h) { return h.id; }).concat(D.pets.slice(0, 40).map(function (p) { return p.id; }), ['__없음__']);
+      ids.forEach(function (id) { var lin = null, i; for (i = 0; i < D.heroes.length && !lin; i++) { if (D.heroes[i].id === id) { lin = D.heroes[i]; } } for (i = 0; i < D.pets.length && !lin; i++) { if (D.pets[i].id === id) { lin = D.pets[i]; } } if ((D.find(id) || null) !== (lin || null)) { bad++; } });
+      return (near > 0 && near < CD.CITIES.length && far >= near && bad === 0) || ('실패 당김 ' + near + ' · 물러남 ' + far + ' / ' + CD.CITIES.length + ' · find 다름 ' + bad);
     });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';

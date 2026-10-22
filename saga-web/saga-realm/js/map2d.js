@@ -32,7 +32,7 @@
     return list;
   }
 
-  function terrain(cities) {
+  function terrain(cities, vis) {   // W-0367 vis = 보이는 창 안 성만(땅 번짐 원) — 무늬·바탕은 cities 전체에서(성 없는 구석도 바탕이 깔리게)
     arm();
     var m = M();
     if (!m || !cities || !m.isOn()) { return ''; }
@@ -48,9 +48,10 @@
     var base = urls.plain ? 'plain' : kinds.filter(function (k) { return urls[k]; })[0];
     s += '<g class="rterrain" pointer-events="none"><rect x="' + VB.x + '" y="' + VB.y + '" width="' + VB.w + '" height="' + VB.h +
       '" fill="url(#rtp-' + base + ')" opacity="0.45"/><g filter="url(#rtblur)" opacity="0.7">';
-    for (i = 0; i < cities.length; i++) {
-      if (cities[i].land && urls[cities[i].land]) {
-        s += '<circle cx="' + cities[i].x + '" cy="' + cities[i].y + '" r="11" fill="url(#rtp-' + cities[i].land + ')"/>';
+    var cs = vis || cities;
+    for (i = 0; i < cs.length; i++) {
+      if (cs[i].land && urls[cs[i].land]) {
+        s += '<circle cx="' + cs[i].x + '" cy="' + cs[i].y + '" r="11" fill="url(#rtp-' + cs[i].land + ')"/>';
       }
     }
     return s + '</g></g>';
