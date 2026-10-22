@@ -55,6 +55,7 @@ namespace Saga.Dungeon.World
             GestureRunner.Install(); // PLAN.md 109-10-7 몸짓 — 촌민에 붙이고 레벨업·두목급 처치 → 동행 환호(Play 때).
             DungeonScenarioRunner.Install(); // PLAN.md 109-16 시나리오 — 장면 상자·사건 듣기·목표 한 줄(Play 때, 씬 재빌드 없이).
             MountField.Install(); // PLAN.md 109-15 탈것·비행 — H 타기·Shift+H 고르기·X/Z 오르내림(Play 때, 씬 재빌드 없이).
+            DungeonAutoQuest.Install(); // tasks U-0164 자동 퀘스트 — 목표판 왼쪽 ▶(방 적 → 인영 → 다음 문, Play 때).
             if (DungeonFloorRunner.Instance != null) DungeonFloorRunner.Instance.FloorDescended += OnFloorDescended;
         }
 

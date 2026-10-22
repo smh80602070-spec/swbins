@@ -42,6 +42,8 @@ namespace Saga.Dungeon.World
         public void SetModel(GameObject newModelPrefab) => modelPrefab = newModelPrefab;
 
         public bool IsFreed => _freed;
+        /// <summary>tasks U-0164 자동 퀘스트 — 굴혈(procroom) 인영만 고르려고.</summary>
+        public string RoomId => roomId;
 
         /// <summary>PLAN.md 109-16 시나리오 `rescue` 단계 — 갇힌 인물을 구했을 때(어느 층이든).</summary>
         public static event System.Action Freed;

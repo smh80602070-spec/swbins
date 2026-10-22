@@ -854,6 +854,18 @@
     { "key": "mode.locked", "value": "험은 {0}층, 절은 {1}층을 밟아야 열린다(지금 가장 깊이 {2}층)" },
     { "key": "mode.deep", "value": "난도는 들머리(2층까지)에서만 바꾼다 — 더 내려간 뒤엔 그 회차 그대로" },
     { "key": "mode.set", "value": "난도 {0} — 적 체력 ×{1} · 피해 ×{2} · 금 ×{3}" },
-    { "key": "mode.button", "value": "난도 {0}" }
+    { "key": "mode.button", "value": "난도 {0}" },
+    { "key": "aq.scene", "value": "장면" },
+    { "key": "aq.room", "value": "{0}층 {1}방 치우기" },
+    { "key": "aq.foe", "value": "적 처치" },
+    { "key": "aq.rescue", "value": "인영 구출" },
+    { "key": "aq.stair", "value": "계단 — 다음 층" },
+    { "key": "aq.door", "value": "다음 방 — {0}" },
+    { "key": "aq.talk", "value": "대화" },
+    { "key": "aq.pick", "value": "고르기 기다림" },
+    { "key": "aq.side", "value": "비켜 감" },
+    { "key": "aq.fight", "value": "싸움" },
+    { "key": "aq.walk", "value": "걷는 중" },
+    { "key": "aq.wait", "value": "도착" }
   ]
 }

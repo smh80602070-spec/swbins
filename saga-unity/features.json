@@ -2229,6 +2229,23 @@
   "note": "D1(U-0163): PlaytestHeadless autoquest OK(틀 막힘·멈춤 · 1만리 1장 첫 단계 25m 걸어가 말 걸어 단계 넘김 · 체력 낮음 · 손 조작 · ▶) · UiLayoutCheck 0(▶ 목표판 왼쪽, 검사가 ▶ 건너뜀) · 나머지 넷 U-0164"
  },
  {
+  "id": "un.dg.autoquest",
+  "name": "U-0164 자동 퀘스트 2나락 — 목표판 왼쪽 ▶ 로 방 클리어 단위 대신(방 적 걸어가 평타 → 인영 구출 → 문 밟아 다음 방·계단, 장면 줄 넘김), 손 조작·체력 낮음·막힘에 멈춤(웹 W-0338, 공용 몸 SagaCore/AutoQuestHud)",
+  "files": [
+   "saga-unity/Assets/SagaCore/AutoQuestHud.cs",
+   "saga-unity/Assets/Games/SagaDungeon/UI/DungeonAutoQuest.cs"
+  ],
+  "tests": [
+   "PlaytestDungeonAutoQuest"
+  ],
+  "level": "D1",
+  "verified": "2026-10-22 claude",
+  "fun": {},
+  "ticket": "U-0164",
+  "since": "2026-10-22",
+  "note": "D1(U-0164): PlaytestDungeonHeadless autoquest OK(2층 전투방 적 12 치우고 문 밟아 방 0→1 · 체력 낮음 · 손 조작 · ▶) · 나머지 셋 U-0165~0167"
+ },
+ {
   "id": "un.dg.weapon-swap",
   "name": "U-0131 무기 두 벌 — 바뀐 손 무기를 을(乙)로, G·폰 바꿔 들기 단추로 갑↔을(쿨 1초·첫 타 ×1.15, 웹 W-0281 이식)",
   "files": [

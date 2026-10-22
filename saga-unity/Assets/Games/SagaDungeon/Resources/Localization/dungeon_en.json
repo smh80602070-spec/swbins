@@ -854,6 +854,18 @@
     { "key": "mode.locked", "value": "Perilous opens at floor {0}, Dire at floor {1} (deepest so far: {2})" },
     { "key": "mode.deep", "value": "Difficulty can only change at the entrance (up to floor 2) — it stays for the run" },
     { "key": "mode.set", "value": "Difficulty {0} — enemy HP ×{1} · damage ×{2} · gold ×{3}" },
-    { "key": "mode.button", "value": "Mode: {0}" }
+    { "key": "mode.button", "value": "Mode: {0}" },
+    { "key": "aq.scene", "value": "Scene" },
+    { "key": "aq.room", "value": "Clear F{0} room {1}" },
+    { "key": "aq.foe", "value": "Defeat foe" },
+    { "key": "aq.rescue", "value": "Rescue captive" },
+    { "key": "aq.stair", "value": "Stairs — next floor" },
+    { "key": "aq.door", "value": "Next room — {0}" },
+    { "key": "aq.talk", "value": "Talking" },
+    { "key": "aq.pick", "value": "Waiting for your pick" },
+    { "key": "aq.side", "value": "Sidestep" },
+    { "key": "aq.fight", "value": "Fighting" },
+    { "key": "aq.walk", "value": "Walking" },
+    { "key": "aq.wait", "value": "Arrived" }
   ]
 }

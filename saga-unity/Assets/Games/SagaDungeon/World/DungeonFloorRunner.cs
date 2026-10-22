@@ -110,6 +110,12 @@ namespace Saga.Dungeon.World
         public DungeonEnemy Lord => _lord;
         /// <summary>HUD 한 줄 — 명소 층이면 "⚱ 순장 왕릉 · 참배길", 아니면 빈 글.</summary>
         public string LandmarkHud => _landmark >= 0 ? DungeonLandmarkData.HudLine(_landmark, _roomIndex) : "";
+        /// <summary>tasks U-0164 자동 퀘스트 — 지금 선 문 표지 자리·종류(문이 안 섰으면 빈 목록).</summary>
+        public IEnumerable<(Vector3 Pos, string Kind)> DoorSpots()
+        {
+            if (!_doorsShown) yield break;
+            foreach (var d in _doorPods) if (d.Pod != null) yield return (d.Pod.position, d.Kind);
+        }
         /// <summary>진단 — 지금 서 있는 문 표지(종류·글).</summary>
         public IEnumerable<(string Kind, string Label)> DoorPods()
         {
