@@ -39,6 +39,7 @@
    "js/side.js",
    "js/side-just.js",
    "js/life.js",
+   "js/campfire.js",
    "js/side-view.js",
    "js/side-layers3d.js"
   ],
@@ -148,6 +149,7 @@
    "js/side.js",
    "js/side-just.js",
    "js/life.js",
+   "js/campfire.js",
    "js/side-view.js",
    "js/side-layers3d.js",
    "js/vendor/three.iife.js",

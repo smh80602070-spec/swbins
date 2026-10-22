@@ -1162,5 +1162,27 @@
   "ticket": "W-0370",
   "since": "2026-10-22",
   "note": "10-22: 몸 키는 idle 옆 칸 알파 상자로 재서 targetH × scale(옛 길과 같은 기준)"
+ },
+ {
+  "id": "sd.campfire",
+  "name": "모닥불(W-0300) — 쉬는 판 카드에 동행이 둘러앉고 하루 한 사람과 이야기(도감 한마디) → 다음 사냥 한 판 온기: 든든함(체력 +10%, 덕·지략) 또는 기세(첫 세 타 ×1.1, 무용·통솔) · 요리 한 끼가 살아 있으면 ×1.5 · 손잡이 story.campfire",
+  "files": [
+   "js/campfire.js",
+   "src/ui/01.js",
+   "src/side/02.js"
+  ],
+  "tests": [
+   "test-web W-0300 모닥불",
+   "pw-look2d LOOK_EVAL 모닥불 칸"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {
+   "A": "하루 의식",
+   "H": "동료와 정"
+  },
+  "ticket": "W-0300",
+  "since": "2026-10-22",
+  "note": "10-22: 둘러앉는 2D 몸짓은 아직(이모지 원 둘레 단추) — 앉기 공장 시트(sit) 오면 그림으로 · save.camp 새 칸"
  }
 ]

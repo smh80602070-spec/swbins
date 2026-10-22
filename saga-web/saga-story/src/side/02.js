@@ -42,7 +42,7 @@
        다르면 둘 다 0/1이다). elem 은 castSkill() 이 쏠 때 실어 보낸 원소뿐이라
        melee·aoe·dash 등 나머지 효과에는 안 걸린다(§5-1 "다음 3발" 범위 그대로) */
     if (p.parryBonus !== 1) { m *= p.parryBonus; p.parryBonus = 1; } if (global.DG.sideJust) { m *= global.DG.sideJust.nextMul(); }   // W-0282 저스트 회피 다음 한 타 ×1.3
-    if (p.shadowHitT > 0) { m *= p.shadowHitMul; p.shadowHitT = 0; } if (global.DG.life) { m *= global.DG.life.mealMul(); }   // W-0283 요리 한 끼
+    if (p.shadowHitT > 0) { m *= p.shadowHitMul; p.shadowHitT = 0; } if (global.DG.life) { m *= global.DG.life.mealMul(); } if (global.DG.campfire) { m *= global.DG.campfire.hitMul(run); }   // W-0283 요리 한 끼 · W-0300 모닥불 기세
     var rm = run.rm;   // 비경 축복(§5-3) — 비경 밖에서는 null
     var crit = forceCrit || Math.random() < critRate() + (rm ? rm.crit : 0);
     var dmg = atkOf() * m * (0.88 + Math.random() * 0.24) * (crit ? critMul() + (rm ? rm.critMul : 0) : 1);

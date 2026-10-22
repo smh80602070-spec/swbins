@@ -680,7 +680,7 @@
     var RF = global.DG.rift;
     var key = [core.save.player.level, st.kills, st.deaths, st.potions, st.bosses, bossFlags, gateFlags,
                RF && RF.pending() ? 'r1' : 'r0',
-               me && me.id, global.DG.auto.active(), global.DG.auto.status().doing].join('|') + (global.DG.life ? '|' + global.DG.life.key() : '');   // W-0283 생활 칸도 키에
+               me && me.id, global.DG.auto.active(), global.DG.auto.status().doing].join('|') + (global.DG.life ? '|' + global.DG.life.key() : '') + (global.DG.campfire ? '|' + global.DG.campfire.key() : '');   // W-0283 생활 칸도 키에 · W-0300 모닥불
     if (key === campKey) { els.camp.classList.add('show'); return; }
     campKey = key;
 
@@ -711,7 +711,7 @@
       html += '<button class="btn tiny ghost wide" data-act="rift-open">🌀 비경' +
         (RF.pending() ? ' — 진행 중' : '') + '</button>';
     }
-    html += (global.DG.life ? global.DG.life.campHtml() : '');   // W-0283 요리·연주
+    html += (global.DG.campfire ? global.DG.campfire.campHtml() : '') + (global.DG.life ? global.DG.life.campHtml() : '');   // W-0300 모닥불 · W-0283 요리·연주
     html += '<div class="camp-auto">' + sectionAuto() + '</div>';
     html += '<small class="muted">쓰러지면 그 판에서 주운 금의 <b>절반만</b> 남습니다. ' +
       '레벨이 오르면 다음 사냥터가 열립니다.</small>';

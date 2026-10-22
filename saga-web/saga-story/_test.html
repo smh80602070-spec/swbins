@@ -108,6 +108,7 @@ window.DG_NO_TUNE = true;
 <script src="js/side.js"></script>
 <script src="js/side-just.js"></script>
 <script src="js/life.js"></script>
+<script src="js/campfire.js"></script>
 <script src="js/side-view.js"></script>
 <script src="js/side-layers3d.js"></script>
 <script src="js/vendor/three.iife.js"></script>
@@ -7034,6 +7035,21 @@ window.DG_NO_TUNE = true;
       if (r !== 'walk,walk,attack,death,idle') { return '실패 동작 ' + r; }
       var f = [M.factFrame(m.clips.death, 'death', { t: 0.99 }), M.factFrame(m.clips.death, 'death', { ms: 99999 }), M.factFrame(m.clips.walk, 'walk', { stride: 0.5 }), M.factFrame(m.clips.idle, 'idle', { ms: 1000 })].join(',');
       return f === '5,5,4,6' || ('실패 프레임 ' + f);
+    });
+    t('W-0300 모닥불 — 하루 한 사람 · 온기는 다음 한 판만(쓰면 비움) · 기세는 첫 세 타 · 요리 한 끼가 살아 있으면 ×1.5', function () {
+      var CF = DG.campfire, C = DG.core, L = DG.life; if (!CF) { return '실패 DG.campfire 없음'; }
+      var keepCamp = C.save.camp, keepParty = (C.save.party || []).slice(), H = DG.data.heroes, mi = null, vi = null, i;
+      for (i = 0; i < H.length && (!mi || !vi); i++) { if (!mi && CF.kindOf(H[i]) === 'first') { mi = H[i].id; } if (!vi && CF.kindOf(H[i]) === 'hp') { vi = H[i].id; } }
+      var keepMeal = L && L.mealMul;
+      try {
+        C.save.camp = null; C.save.party = [mi, vi];
+        var t1 = CF.talk(vi), t2 = CF.talk(mi), run = { hpMax: 100, hp: 40 }, w = CF.apply(run), w2 = CF.apply({ hpMax: 100, hp: 100 });
+        if (!t1.ok || t2.ok || !w || w.key !== 'hp' || run.hpMax !== 110 || run.hp !== 110 || w2 !== null) { return '실패 하루·한 판 ' + JSON.stringify({ t1: t1.ok, t2: t2.ok, run: run, w2: w2 }); }
+        C.save.camp.talked.day = 'old'; if (L) { L.mealMul = function () { return 1.2; }; }
+        var t3 = CF.talk(mi), r2 = {}; CF.apply(r2); var h = [CF.hitMul(r2), CF.hitMul(r2), CF.hitMul(r2), CF.hitMul(r2)];
+        var wantMul = L ? 1.15 : 1.1, ok = t3.ok && t3.key === 'first' && Math.abs(h[0] - wantMul) < 1e-9 && h[2] === h[0] && h[3] === 1;
+        return ok || ('실패 기세·요리 ' + JSON.stringify({ t3: t3, h: h }));
+      } finally { C.save.camp = keepCamp; C.save.party = keepParty; if (L) { L.mealMul = keepMeal; } }
     });
     t('W-0371 인물 일러스트 — 기본 끔(그림 불일치) · 켜면 manifest 인물은 표정 주소(분노·걱정 → angry·sad, 놀람·모름 → neutral) · 없는 인물은 null(초상 대역) · 카드 자리(150×172)는 일러스트', function () {
       if (DG.illust && DG.illust.has((window.SAGA && SAGA.illust && SAGA.illust.ids[0]) || '')) { return '실패 기본 끔인데 켜져 있다(10-22 그림 불일치)'; }
