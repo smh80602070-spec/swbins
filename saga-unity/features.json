@@ -2048,6 +2048,24 @@
   "note": "D2(U-0108): PlaytestDungeonHeadless foecard OK(빈 자리 숨김·5m 보임 글자 5·채움 1→0.70·12m 숨김·락온 9m 먼저·정예 #6f6fff·두목 #ffff64)·사슬 OK · UiLayoutCheck 대상 적 카드 0건(ko/en) · 촬영 dgranged Claude 눈 ○ 목표 줄 밑 '오랑캐 궁수'·붉은 막대, 겹침 없음"
  },
  {
+  "id": "un.go.parry",
+  "name": "U-0157 쳐내기(패링) — 예고 끝 직전 X 로 근접 한 대를 튕겨 적을 비틀고 반격 한 타 ×2(엘든 링, 유니티 전용)",
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/Combat/FieldCombat.Parry.cs",
+   "saga-unity/Assets/Games/SagaGo/Combat/FieldEnemy.Damage.cs",
+   "saga-unity/Assets/Games/SagaGo/Combat/FieldCombatHud.cs"
+  ],
+  "tests": [
+   "PlaytestGoFieldCombat"
+  ],
+  "level": "D2",
+  "verified": "2026-10-22 claude",
+  "fun": {},
+  "ticket": "U-0157",
+  "since": "2026-10-22",
+  "note": "D2(U-0157): PlaytestHeadless parry OK(창 0.25초 안 근접 피해 0·비틀 1.6초·쿨 0·창 열린 채 거절)·riposte OK(다음 기본 공격 한 타 ×2·두 번째 ×1)·parry miss OK(창 밖 맞음·쿨 0.8초) · 99 OK · UiLayoutCheck 0(🛡 시야 왼쪽, 낚시 중 숨김) · 세이브 되돌림"
+ },
+ {
   "id": "un.go.grab-throw",
   "name": "U-0125 잡기·던지기 — 들판 잡몹을 잡아 던져 떨어진 자리 적을 넘어뜨림(웹 W-0277 이식)",
   "files": [

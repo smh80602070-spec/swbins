@@ -899,8 +899,11 @@ namespace Saga.Go.Combat
             }
             if (_rot != null && _rot[_rotI % _rot.Length] == BossMove.Rift && _tidePts.Count > 0) RiftBlink(_tidePts[_tidePts.Count - 1]); // 109-14-30 줄 끝으로
             if (_rot != null) { _rotI++; ClearMove(); } // 109-14-14 다음 수
-            CurrentState = State.Recover;
-            _timer = RecoverTime;
+            if (CurrentState != State.Stagger) // U-0157 쳐내져 비틀거리면 쉼으로 덮지 않는다
+            {
+                CurrentState = State.Recover;
+                _timer = RecoverTime;
+            }
             _warnRing.transform.localPosition = new Vector3(0f, 0.15f, 0f);
         }
 

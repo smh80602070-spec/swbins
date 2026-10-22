@@ -207,6 +207,21 @@ namespace Saga.Go.Combat
         public bool Downed => Alive && DownedLeft > 0f;
         public bool ShoveOnly => IsGuardian || IsWeeklyBoss || IsStoryBoss || IsHero;
         public bool Grabbable => Alive && !Yielded && !ShoveOnly && HoldState == Hold.None;
+
+        /// <summary>U-0157 쳐낼 수 있는 한 대 — 근접만. 떨어지는 원거리(지 인물)·자리 수·밀물·고리 같은 땅 원은 회피 몫.</summary>
+        public bool Parryable => Alive && !Ranged && !_moveAtPoint && _tidePts.Count == 0 && _haloInner <= 0f;
+
+        /// <summary>U-0157 쳐내졌다 — sec 초 비틀(눕지 않는다). `ResolveStrike` 가 쉼으로 덮지 않는다.</summary>
+        public void Parried(float sec)
+        {
+            if (!Alive) return;
+            _alertText.gameObject.SetActive(false);
+            _warnRing.enabled = false;
+            TintVisual(Color.white, false);
+            CurrentState = State.Stagger;
+            _timer = sec;
+            if (_animator != null) Trig("Hit");
+        }
         private Quaternion _standRot;
         private bool _laid;
 

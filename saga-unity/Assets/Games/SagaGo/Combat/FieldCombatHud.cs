@@ -111,6 +111,11 @@ namespace Saga.Go.Combat
             GrabButton.onClick.AddListener(OnGrab);
             _grabLabel = GrabButton.GetComponentInChildren<TextMeshProUGUI>();
             _grabLabel.fontSize = 22;
+            // U-0157 쳐내기 — 시야 단추 왼쪽(폭발 위는 도감·업적 단추와 겹침), 창이 열린 동안 금빛·쿨 중엔 흐림
+            ParryButton = EncounterUiKit.NewButton(t, "", new Vector2(1f, 0f), new Vector2(-525f, 225f), new Vector2(110f, 90f), null);
+            ParryButton.onClick.AddListener(OnParry);
+            _parryLabel = ParryButton.GetComponentInChildren<TextMeshProUGUI>();
+            _parryLabel.fontSize = 22;
             // U-0130 길 행동 — 잡기 단추 위, 곁(14m)에 주민이 있을 때만(오늘 한 사람이면 흐림)
             PathButton = EncounterUiKit.NewButton(t, "", new Vector2(1f, 0f), new Vector2(-405f, 435f), new Vector2(110f, 90f), null);
             PathButton.onClick.AddListener(OnPath);
@@ -129,6 +134,10 @@ namespace Saga.Go.Combat
         private TextMeshProUGUI _grabLabel;
         public string GrabText => _grabLabel != null ? _grabLabel.text : "";
         private void OnGrab() => _combat.Grab();
+        public Button ParryButton { get; private set; }
+        private TextMeshProUGUI _parryLabel;
+        public string ParryText => _parryLabel != null ? _parryLabel.text : "";
+        private void OnParry() => _combat.Parry();
         public Button PathButton { get; private set; }
         private TextMeshProUGUI _pathLabel;
         public string PathText => _pathLabel != null ? _pathLabel.text : "";
@@ -230,6 +239,15 @@ namespace Saga.Go.Combat
                 bool cd = _combat.GrabCd > 0f, near = !cd && _combat.GrabTarget() != null;
                 _grabLabel.text = cd ? $"✊\n{Mathf.CeilToInt(_combat.GrabCd)}" : "✊\n(C)";
                 GrabButton.GetComponent<Image>().color = near ? new Color(1f, 0.82f, 0.48f, 0.55f) : new Color(1f, 1f, 1f, cd ? 0.1f : 0.18f);
+            }
+
+            if (ParryButton != null)
+            {
+                bool fishing = Saga.Go.World.FishingField.Busy; // 낚시 칸이 같은 자리를 쓴다 — 낚는 동안엔 못 싸우니 숨긴다
+                if (ParryButton.gameObject.activeSelf == fishing) ParryButton.gameObject.SetActive(!fishing);
+                bool open = _combat.ParryLeft > 0f, cd = !open && _combat.ParryCd > 0f;
+                _parryLabel.text = GoLocalization.T("field.btn.parry", "🛡 쳐내기") + "\n(X)";
+                ParryButton.GetComponent<Image>().color = open ? new Color(1f, 0.86f, 0.4f, 0.6f) : new Color(1f, 1f, 1f, cd ? 0.1f : 0.18f);
             }
 
             if (PathButton != null)

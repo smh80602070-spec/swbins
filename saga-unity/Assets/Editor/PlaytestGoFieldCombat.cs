@@ -48,6 +48,7 @@ namespace Saga.EditorTools
                 CheckSwapAndWipe(fc, e1, origin);
                 CheckDuelGate(fc);
                 CheckGrab(fc, pc, e1, e2, e3, origin); // U-0125
+                CheckParry(fc, pc, e1, e2, e3, origin); // U-0157
                 if (hud != null) CheckHud(fc, pc, hud, e1, origin);
             }
             finally
@@ -61,6 +62,72 @@ namespace Saga.EditorTools
 
             if (_ok) Debug.Log($"[{_tag}] field combat OK - enemies {FieldEnemy.All.Count}, party {fc.Party.Count}, reactions·원소 일곱 반응 열셋·강공격·낙하 공격·3타·스킬·폭발·피격·회피·교체·전멸 복귀·결투 경계·버튼");
             return _ok;
+        }
+
+        // ---- U-0157 쳐내기 — 창 안 근접 = 피해 0·비틀·쿨 0 · 반격 ×2 한 번만 · 창 밖이면 맞음 · 창 열린 채 거절 ----
+        private static void CheckParry(FieldCombat fc, PlayerController pc, FieldEnemy e1, FieldEnemy e2, FieldEnemy e3, Vector3 origin)
+        {
+            FieldCombat.CritOffForTest = true; // 반격 피해를 정확히 잰다
+            bool ok = true;
+            void Bad(string m) { Fail(m); ok = false; }
+            void Ready()
+            {
+                fc.ResetForTest();
+                GoStamina.ResetFull();
+                e1.RestoreHomeForTest();
+                Park(e2, origin, 0f);
+                Park(e3, origin, 10f);
+                Place(e1, fc.transform.position + Fwd(pc) * 2f);
+                e1.SetShieldForTest(0f);
+                e1.Tick(0.01f); // 배회 → 발견
+                e1.Tick(0.01f); // 추격 → 예고
+                if (e1.CurrentState != FieldEnemy.State.Telegraph) Bad($"쳐내기 시험 — 예고 안 함({e1.CurrentState})");
+                if (!e1.Parryable) Bad("근접 잡몹이 쳐낼 수 없는 수로 나옴");
+            }
+
+            Ready();
+            float hp = fc.Active.Hp;
+            if (!fc.Parry() || fc.LastParry != "open") Bad($"쳐내기 창이 안 열림({fc.LastParry})");
+            if (Mathf.Abs(GoStamina.Value - (GoStamina.Max - FieldCombat.ParryStamina)) > 0.01f) Bad($"쳐내기 스태미나 {GoStamina.Value}");
+            if (fc.Parry() || fc.LastParry != "cd") Bad("창이 열린 채 또 눌림");
+            e1.Tick(FieldEnemy.TelegraphSec + 0.05f);
+            if (fc.Active.Hp < hp) Bad($"쳐냈는데 맞음 {hp} → {fc.Active.Hp}");
+            if (fc.LastParry != "parry") Bad($"창 안 근접인데 안 쳐냄({fc.LastParry})");
+            if (e1.CurrentState != FieldEnemy.State.Stagger) Bad($"쳐낸 적이 안 비틀({e1.CurrentState})");
+            if (fc.ParryCd > 0f || fc.RiposteFoe != e1) Bad($"쳐낸 뒤 쿨 {fc.ParryCd}·반격 대상 {fc.RiposteFoe}");
+            e1.Tick(FieldCombat.ParryStaggerSec - 0.1f);
+            if (e1.CurrentState != FieldEnemy.State.Stagger) Bad($"비틀이 {FieldCombat.ParryStaggerSec}초보다 일찍 풀림({e1.CurrentState})");
+            if (ok) Debug.Log($"[{_tag}] parry OK - 창 {FieldCombat.ParryWindowSec}초 안 근접 피해 0·비틀 {FieldCombat.ParryStaggerSec}초·쿨 0·창 열린 채 거절");
+
+            ok = true;
+            float atk = fc.Atk, hp0 = e1.Hp;
+            int hits = fc.Attack();
+            if (hits < 1) Bad($"반격 1타가 안 맞음({hits}·거리 {Vector3.Distance(e1.transform.position, fc.transform.position):0.0}m·{e1.CurrentState})");
+            if (fc.LastRiposte != FieldCombat.RiposteMul) Bad($"반격 배수 {fc.LastRiposte} ≠ {FieldCombat.RiposteMul}");
+            if (Mathf.Abs(hp0 - e1.Hp - atk * FieldCombat.ComboMul[0] * FieldCombat.RiposteMul) > 0.5f) Bad($"반격 피해 {hp0 - e1.Hp} ≠ {atk * FieldCombat.ComboMul[0] * FieldCombat.RiposteMul}");
+            fc.TickTimers(0.4f);
+            float hp1 = e1.Hp;
+            fc.Attack();
+            if (fc.RiposteFoe != null || hp1 - e1.Hp > atk * FieldCombat.ComboMul[1] * 1.5f) Bad($"반격이 두 번 들어감(2타 피해 {hp1 - e1.Hp} — 보통 2타 {atk * FieldCombat.ComboMul[1]} 의 1.5배 넘음)"); // 2타 배율은 무기 모양(kit)이 정한다
+            if (ok) Debug.Log($"[{_tag}] riposte OK - 쳐낸 적 다음 기본 공격 한 타 ×{FieldCombat.RiposteMul}·두 번째는 ×1");
+
+            ok = true;
+            Ready();
+            hp = fc.Active.Hp;
+            fc.Parry();
+            fc.TickTimers(FieldCombat.ParryWindowSec + 0.01f);
+            e1.Tick(FieldEnemy.TelegraphSec + 0.05f);
+            if (fc.Active.Hp >= hp || fc.LastParry == "parry") Bad("창이 닫혔는데 쳐냄");
+            if (e1.CurrentState != FieldEnemy.State.Recover) Bad($"헛친 뒤 적이 쉼으로 안 감({e1.CurrentState})");
+            fc.TickTimers(FieldCombat.ParryCdSec);
+            if (!fc.Parry()) Bad("쿨이 지났는데 안 열림");
+            if (ok) Debug.Log($"[{_tag}] parry miss OK - 창 밖 판정은 맞음·쿨 {FieldCombat.ParryCdSec}초 뒤 다시");
+
+            fc.ResetForTest();
+            e1.RestoreHomeForTest();
+            GoStamina.ResetFull();
+            pc.Teleport(origin);
+            FieldCombat.CritOffForTest = false;
         }
 
         // ---- U-0125 잡기·던지기 — 잡힘 · 착지 넘어짐 1.5초 · 던진 피해 ×1.2 · 쿨 · 보스 밀치기, 다섯 줄 OK ----

@@ -365,6 +365,7 @@ namespace Saga.Go.Combat
             if (SagaPad.Pressed(SagaPad.Btn.Burst, kb?.qKey)) Burst();
             if (SagaPad.Pressed(SagaPad.Btn.Dodge, kb?.lKey) || (kb != null && kb.leftCtrlKey.wasPressedThisFrame)) Dodge();
             if (kb != null && kb.cKey.wasPressedThisFrame) Grab(); // U-0125 잡기·던지기(G 는 요리 창)
+            if (kb != null && kb.xKey.wasPressedThisFrame) Parry(); // U-0157 쳐내기
             if (kb != null && kb.digit6Key.wasPressedThisFrame) Saga.Go.World.PathActions.Ensure().Press(); // U-0130 길 행동(곁 주민에게)
             if (SagaPad.Pressed(SagaPad.Btn.Slot1, kb?.digit1Key)) Swap(0); // tasks U-0018 — 십자키 위·오른쪽·아래·왼쪽
             if (SagaPad.Pressed(SagaPad.Btn.Slot2, kb?.digit2Key)) Swap(1);
@@ -391,6 +392,7 @@ namespace Saga.Go.Combat
             TickGuardAndSeeds(dt);
             TickArrows(dt); // 109-14-22
             TickGrab(dt); // U-0125
+            TickParry(dt); // U-0157
             _sinceHit += dt;
             _calmT += dt;
             if (_sinceHit >= RegenDelaySec)
@@ -433,7 +435,7 @@ namespace Saga.Go.Combat
                     Vector3 d = Flat(e.transform.position - transform.position);
                     if (d.magnitude > kit.Reach) continue;
                     if (d.sqrMagnitude > 0.25f && Vector3.Dot(d.normalized, fwd) < 0.5f) continue; // 앞 120°
-                    float cm = CritMul(Active.Id, out bool crit);
+                    float cm = CritMul(Active.Id, out bool crit) * RiposteFor(e); // U-0157 반격
                     e.TakeHit(amount * cm, el, atk * ReactMul, out _, heavy: kit.Heavy, crit: crit); // 깨뜨림은 대도·강공격·낙하만
                     hits++;
                 }
@@ -441,7 +443,7 @@ namespace Saga.Go.Combat
             else if (target == null && HitNearestTarget(kit.Range)) hits = 0; // 109-14-22 과녁 잠금
             else if (target != null)
             {
-                float cm = CritMul(Active.Id, out bool crit);
+                float cm = CritMul(Active.Id, out bool crit) * RiposteFor(target); // U-0157 반격
                 target.TakeHit(amount * cm, el, atk * ReactMul, out _, crit: crit);
                 FieldLineFx.Spawn(transform.position + Vector3.up * 1.6f, target.transform.position + Vector3.up * 1.2f, 0.25f, el == GoElement.Physical ? Color.white : GoElements.ColorOf(el), 0.2f);
                 hits = 1;
@@ -835,6 +837,7 @@ namespace Saga.Go.Combat
             _calmT = 0f; // 109-14-18
             var m = Active;
             if (m == null || m.Down) return false;
+            if (TryParry(from)) return false; // U-0157 쳐내기 — 회피보다 먼저(튕겨 비틀게)
             if (Invulnerable)
             {
                 FieldDamageText.Spawn(transform.position + Vector3.up * 4f, GoLocalization.T("field.evade", "회피!"), new Color(0.7f, 0.95f, 1f), 1.1f);
@@ -1134,6 +1137,7 @@ namespace Saga.Go.Combat
             if (AimOn) ExitAim(); // 109-14-22
             ClearArrows();
             ClearGrab(); // U-0125
+            ClearParry(); // U-0157
             _shells.Clear();
             foreach (var m in _party) m.InfuseLeft = 0f;
             ApplyLook();
