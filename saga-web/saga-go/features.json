@@ -1147,12 +1147,12 @@
   "tests": [
    "몰래 포획(W-0286)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0286",
   "since": "2026-10-17",
-  "note": "레전드 아르세우스식(구조만). 장부 tasks/gameplay/go.md · 세이브 안 씀(스폰 칸 spotted·fleeing·charging 은 판 안)"
+  "note": "레전드 아르세우스식(구조만). 장부 tasks/gameplay/go.md · 세이브 안 씀(스폰 칸 spotted·fleeing·charging 은 판 안) · D2(claude 2026-10-23 R-3 닫기): W-0286 PC 3D·2D·폰 촬영 · qc PASS"
  },
  {
   "id": "go.pose3d",
@@ -1270,12 +1270,12 @@
    "W-0336 컷아웃 뼈대",
    "W-0336 겹 배경"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0336",
   "since": "2026-10-19",
-  "note": "그림은 K(수신함 10-19 웹 W-0336·W-0339 → 자체툴) — 오면 index.json·layers.json 만 두고 손잡이 1. 지금은 대역(코드 도형)·_demo.html#cutout"
+  "note": "그림은 K(수신함 10-19 웹 W-0336·W-0339 → 자체툴) — 오면 index.json·layers.json 만 두고 손잡이 1. 지금은 대역(코드 도형)·_demo.html#cutout · D2(claude 2026-10-23 R-3 닫기): W-0336 _demo#cutout 다섯 판 촬영 예외 0 · qc --no-shots PASS"
  },
  {
   "id": "go.look3d",
@@ -1633,12 +1633,12 @@
    "test-web W-0368 2D 접지",
    "pw-2d-cmp w368"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0368",
   "since": "2026-10-22",
-  "note": "10-22: 손잡이 셋 0/1 이면 옛 그림 · setTone 은 판 연결 안 함(어둠 막이 이미 몸 위)"
+  "note": "10-22: 손잡이 셋 0/1 이면 옛 그림 · setTone 은 판 연결 안 함(어둠 막이 이미 몸 위) · D2(claude 2026-10-23 R-3 닫기): W-0368 pw-2d-cmp w368 다섯 판(핵 보임)"
  },
  {
   "id": "go.firstview",
@@ -1652,12 +1652,12 @@
    "test-web W-0369 첫 화면 붐빔",
    "pw-2d-cmp w369c"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0369",
   "since": "2026-10-22",
-  "note": "10-22: 생성 수·경험치 그대로(자리만) · 동행 줄은 2D 에 동행 몸이 없어 해당 없음"
+  "note": "10-22: 생성 수·경험치 그대로(자리만) · 동행 줄은 2D 에 동행 몸이 없어 해당 없음 · D2(claude 2026-10-23 R-3 닫기): W-0369 pw-2d-cmp w369·w369b·w369c"
  },
  {
   "id": "web.modelsShared",
@@ -1691,12 +1691,12 @@
    "pw-2d-cmp w370",
    "pw-web-2d-sheet 14/14"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0370",
   "since": "2026-10-22",
-  "note": "10-22: 몸 키는 idle 옆 칸 알파 상자로 재서 targetH × scale(옛 길과 같은 기준)"
+  "note": "10-22: 몸 키는 idle 옆 칸 알파 상자로 재서 targetH × scale(옛 길과 같은 기준) · D2(claude 2026-10-23 R-3 닫기): W-0370 걷기·공격·죽음 칸 Read · pw-web-2d-sheet 14/14"
  },
  {
   "id": "go.treeDepth",
@@ -1710,12 +1710,12 @@
    "test-web W-0372 2D 나무",
    "pw-look2d LOOK_EVAL 나무 앞·뒤"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0372",
   "since": "2026-10-22",
-  "note": "10-22: 사용자 아이폰 \"나무를 밟고 다니네\" · 지도 생성·GPS·3D 그대로"
+  "note": "10-22: 사용자 아이폰 \"나무를 밟고 다니네\" · 지도 생성·GPS·3D 그대로 · D2(claude 2026-10-23 R-3 닫기): W-0372 pw-look2d LOOK_EVAL 줄기 뒤·앞 폰 두 장 Read ○"
  },
  {
   "id": "go.restSite",
@@ -1730,7 +1730,7 @@
    "test-web W-0297 쉼터",
    "pw-look2d LOOK_EVAL 쉼터 옆·위"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {
    "B": "탐험 거점",
@@ -1738,7 +1738,7 @@
   },
   "ticket": "W-0297",
   "since": "2026-10-22",
-  "note": "10-22: 3D 표시는 없음(웹 3D 는 에셋 배선만 — 10-19 방향) · save.rest = { lit, at, atXY } 새 칸(없으면 빈 것)"
+  "note": "10-22: 3D 표시는 없음(웹 3D 는 에셋 배선만 — 10-19 방향) · save.rest = { lit, at, atXY } 새 칸(없으면 빈 것) · D2(claude 2026-10-23 R-3 닫기): W-0297 폰 촬영 셋 Read(이름표 ✦ ○ · 무리가 불 그림 가림 — 랜덤 자리)"
  },
  {
   "id": "go.mountCombat",
@@ -1755,7 +1755,7 @@
    "test-web W-0304 말 위 전투",
    "탈것 ⑲-61·⑲-62(go.mountFight 0 옛 길)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {
    "B": "이동하며 싸움",
@@ -1763,7 +1763,7 @@
   },
   "ticket": "W-0304",
   "since": "2026-10-22",
-  "note": "10-22: 1만리 2D 는 탄 말 몸을 안 그림(기존) — 화면 확인은 3D 또는 다음 2D 말 표시 · 3D pose 연결 없음"
+  "note": "10-22: 1만리 2D 는 탄 말 몸을 안 그림(기존) — 화면 확인은 3D 또는 다음 2D 말 표시 · 3D pose 연결 없음 · D2(claude 2026-10-23 R-3 닫기): W-0304 폰 촬영 올라탄 토스트 ○(2D 말 몸 없음은 기존 한계)"
  },
  {
   "id": "go.parry",
@@ -1798,7 +1798,7 @@
    "test-web W-0374 환경 연쇄",
    "pw-look2d LOOK_EVAL 풀밭 불길"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {
    "B": "들판이 반응",
@@ -1806,7 +1806,7 @@
   },
   "ticket": "W-0374",
   "since": "2026-10-22",
-  "note": "10-22: 원소 반응 표 그대로 · 나는 불길에 안 다침 · 3D 표시 없음"
+  "note": "10-22: 원소 반응 표 그대로 · 나는 불길에 안 다침 · 3D 표시 없음 · D2(claude 2026-10-23 R-3 닫기): W-0374 폰 2D 촬영 풀밭 불길 두 칸·불 피해 숫자 ○"
  },
  {
   "id": "go.npc-ring",
