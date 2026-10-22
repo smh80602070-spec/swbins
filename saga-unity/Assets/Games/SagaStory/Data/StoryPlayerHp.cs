@@ -23,7 +23,7 @@ namespace Saga.Story.Data
         /// <summary>tasks U-0142 회피 무적(웹 DODGE_INVULN).</summary>
         public const float DodgeInvuln = 0.12f;
 
-        public static float HpMax => 60f + 15f * 6f + StoryJobState.Level * 12f + StoryJobState.HpBonus;
+        public static float HpMax => (60f + 15f * 6f + StoryJobState.Level * 12f + StoryJobState.HpBonus) * StoryCampfire.HpMul; // tasks U-0170 호법 온기 +10%
         public static float Hp { get; private set; } = StoryCombat.StartHp;
         public static float Invuln { get; private set; }
         public static float SinceHurt { get; private set; } = 99f;

@@ -100,6 +100,7 @@ namespace Saga.Story.Data
         {
             if (!_on) return null;
             _on = false;
+            StoryCampfire.OnRunClosed(); // tasks U-0170 — 모닥불 온기는 한 판만
             if (_kills < MinKills) return null;
             var b = RankOf(now - _t0, _hits, _comboMax, _kills, TierNow);
             int bonus = 0, shard = 0;

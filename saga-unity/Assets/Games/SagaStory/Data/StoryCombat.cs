@@ -129,7 +129,7 @@ namespace Saga.Story.Data
         {
             bool crit = forceCrit || Random.value < CritRate + StoryLabyrinthState.CritRateBonus;
             float variance = 0.88f + Random.value * 0.24f;
-            float dmg = atk * mul * variance * (crit ? CritMul : 1f);
+            float dmg = atk * mul * variance * (crit ? CritMul : 1f) * StoryCampfire.TakeFirstHitMul(); // tasks U-0170 선봉 온기 첫 타
             return (dmg, crit);
         }
 
