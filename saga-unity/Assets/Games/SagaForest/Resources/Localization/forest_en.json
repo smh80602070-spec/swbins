@@ -659,6 +659,17 @@
     { "key": "partner.gift", "value": "🎁 Found you a 「{0}」 — it's in the home storage" },
     { "key": "partner.break", "value": "...I see. Thank you for everything. 💔 (♥ {0}/{1})" },
     { "key": "partner.break_confirm", "value": "Really part ways? Press again" },
-    { "key": "partner.break_btn", "value": "💔 Part ways" }
+    { "key": "partner.break_btn", "value": "💔 Part ways" },
+    { "key": "aq.scene", "value": "Scene" },
+    { "key": "aq.deliver", "value": "Delivery" },
+    { "key": "aq.manual", "value": "Do it yourself — " },
+    { "key": "aq.indoor", "value": "Indoors — start it outside" },
+    { "key": "aq.talk", "value": "Talking" },
+    { "key": "aq.pick", "value": "Waiting for your pick" },
+    { "key": "aq.side", "value": "Sidestep" },
+    { "key": "aq.wait_talk", "value": "Waiting for the story" },
+    { "key": "aq.nowhere", "value": "No target spot" },
+    { "key": "aq.walk", "value": "Walking" },
+    { "key": "aq.wait", "value": "Arrived" }
   ]
 }

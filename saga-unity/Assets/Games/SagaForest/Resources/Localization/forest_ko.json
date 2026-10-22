@@ -659,6 +659,17 @@
     { "key": "partner.gift", "value": "🎁 「{0}」을(를) 구해 왔소 — 집 창고에 넣어 두었소" },
     { "key": "partner.break", "value": "...그렇구려. 그동안 고마웠소. 💔 (♥ {0}/{1})" },
     { "key": "partner.break_confirm", "value": "정말 헤어질까? 한 번 더" },
-    { "key": "partner.break_btn", "value": "💔 헤어지기" }
+    { "key": "partner.break_btn", "value": "💔 헤어지기" },
+    { "key": "aq.scene", "value": "장면" },
+    { "key": "aq.deliver", "value": "택배 배달" },
+    { "key": "aq.manual", "value": "직접 — " },
+    { "key": "aq.indoor", "value": "집·굴 안 — 밖에서 켠다" },
+    { "key": "aq.talk", "value": "대화" },
+    { "key": "aq.pick", "value": "고르기 기다림" },
+    { "key": "aq.side", "value": "비켜 감" },
+    { "key": "aq.wait_talk", "value": "이야기 기다림" },
+    { "key": "aq.nowhere", "value": "자리 모름" },
+    { "key": "aq.walk", "value": "걷는 중" },
+    { "key": "aq.wait", "value": "도착" }
   ]
 }

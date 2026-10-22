@@ -36,6 +36,7 @@ namespace Saga.Forest.World
             ForestLotRunner.Install(); // tasks U-0127 작은 빈 집·입주 조건 — 제작대 창 "🏠 빈 집" 이 연다(Play 때)
             MountField.Install(); // PLAN.md 109-15 탈것·비행 — H 타기·Shift+H 고르기(Play 때, 씬 재빌드 없이)
             ForestCrowd.Install(); // U-0042 이름 없는 군중 — 인물 299 행인 열(299 목록 없으면 0명, Play 때)
+            Saga.Forest.UI.ForestAutoQuest.Install(); // tasks U-0166 자동 퀘스트 — 목표판 ▶(구역·명소·택배 걷기·장면 줄 넘김, Play 때)
 
             // PLAN.md 101-2 5.3 "마을 번들" — 실시간 완성은 이벤트로,
             // 로드 직후 "이미 완성돼 있던 것"은 이벤트 없이 상태를 직접

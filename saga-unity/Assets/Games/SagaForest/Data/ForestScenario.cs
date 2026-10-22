@@ -283,6 +283,18 @@ namespace Saga.Forest.Data
 
         private static string CategoryLabel(string key) => ForestMuseumState.CategoryName(CategoryOf(key));
 
+        /// <summary>tasks U-0166 자동 퀘스트 — 지금 걸음(장이 안 열렸거나 다 봤으면 null). <see cref="HudLine"/> 과 같은 고름.</summary>
+        public static ForestScenarioData.Step CurrentStep()
+        {
+            if (!Enabled) return null;
+            var ch = Current();
+            if (ch == null || !Opened(ch) || ch.Steps.Length == 0) return null;
+            return ch.Steps[_ch == ch.Id ? Math.Min(_step, ch.Steps.Length - 1) : 0];
+        }
+
+        /// <summary>구역 열쇠 → <see cref="ForestBiomeData.Zones"/> 번호(없으면 −1).</summary>
+        public static int ZoneOf(string key) => ZoneIndex(key);
+
         /// <summary>목표판 한 줄 — 이야기가 안 열렸거나 다 봤으면 빈 글.</summary>
         public static string HudLine()
         {
