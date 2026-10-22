@@ -10,7 +10,6 @@
 - [ ] 10-21 · (W-0359 ② 알림) · 웹 bgm ogg 는 `saga-web/shared/audio/bgm/<판>-<때>.ogg` 만 읽음(판 saga-<판>-*.ogg 지움) → asset-place `bgm` 판 dir targets 빼기 · 자체툴
 - [ ] 10-21 · (K-0163 끝 알림) · 나머지 인물 ~470 일러스트 — 같은 도구 `tools/ai-art/k163_illust.py`(cast 표만 판별로 새로) 로 판마다 한 티켓(3D 몸 있는 도감 인물 순, 원격 120장≈50분이라 판당 2~3회), 1만리·3마을 주역부터 · 자체툴
 - [ ] 10-21 · (K-0167 끝 알림) · mode2d MARK 표에 25 줄 — `shared/assets/icons/icon64/ui_<이름>_g0.png`, 이모지→이름 표는 `tasks/tools/done/K-0167.md` 메모 · 웹/다섯 판
-- [ ] 10-22 · 2D폰: 1만리 나무 밟음·2나락 마을 화면 바뀜 · 웹
 - [ ] 10-22 · (G-0287 대기 알림) · 고돗 `assets/characters_dex/*.gltf` 모프 targets 0(이름표만, 웹 characters3d 는 77) → Fcl 모프 살려 다시 내보내기 — NPC·주인공 깜박임·표정·입 · 자체툴
 - [ ] 10-22 · (K-0168 끝) · 고돗: sg_liubei 새 몸(어른 키) 다시 설치 + 새 201 몸 받음(K 결정 — 해시 NPC 겉모습만) → G-0276 에서 지운 201 을 characters_dex 에 넣고 임포트 · 고돗
 - [ ] 10-22 · (K-0168 끝) · sg_liubei 새 몸 → CharactersDex(U-0156 길) · 유니티
