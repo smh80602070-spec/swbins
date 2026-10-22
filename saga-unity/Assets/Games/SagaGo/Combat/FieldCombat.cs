@@ -377,6 +377,7 @@ namespace Saga.Go.Combat
         public void TickTimers(float dt)
         {
             if (_attackCd > 0f) _attackCd -= dt;
+            TickMount(dt); // U-0171
             if (_comboWindow > 0f) { _comboWindow -= dt; if (_comboWindow <= 0f) ComboStep = 0; }
             if (InvulnLeft > 0f) InvulnLeft -= dt;
             if (SwapCooldown > 0f) SwapCooldown -= dt;
@@ -409,7 +410,7 @@ namespace Saga.Go.Combat
         /// <summary>기본 공격 한 타. 들어간 적 수를 돌려준다(-1 = 못 침).</summary>
         public int Attack()
         {
-            if (!CanAct() || _attackCd > 0f) return -1;
+            if (!CanAct() || _attackCd > 0f || FallLeft > 0f) return -1; // U-0171 낙마 0.8초
             Saga.Core.SagaVoice.Say("shout", Active.Id); // U-0068 — 가끔 외침(확률·간격은 SagaVoice)
             // 109-14-5a 든 무기 모양 — 칼·대도·창은 앞 120° 붙어 치기, 서책(인물 원소)·활은 사거리 안 가장 가까운 하나. 대도는 무거운 타격(깨뜨림)
             var md = WeaponState.ModsOf(Active.Id);
@@ -427,7 +428,7 @@ namespace Saga.Go.Combat
             int hits = 0;
             float atk = Atk;
             GoElement el = kit.Element || Active.InfuseLeft > 0f ? Active.Element : GoElement.Physical; // 109-14-11 원소 부여
-            float amount = atk * kit.Mul[step] * TalentMul(GoTalent.Kind.Normal) * DmgMul(Active.Id, "n", el) * (Active.InfuseLeft > 0f ? Active.InfuseMul : 1f); // 109-14-4 기본 무예 · 무기 효과 · 109-14-5b 보패
+            float amount = atk * kit.Mul[step] * TalentMul(GoTalent.Kind.Normal) * DmgMul(Active.Id, "n", el) * (Active.InfuseLeft > 0f ? Active.InfuseMul : 1f) * MountMul(); // 109-14-4 기본 무예 · 무기 효과 · 109-14-5b 보패 · U-0171 말 위 빠르기
             if (kit.Reach > 0f)
             {
                 foreach (var e in Snapshot())
@@ -562,6 +563,7 @@ namespace Saga.Go.Combat
         /// 들어간 적 수(장판·소환은 첫 틱에 든 수) · -1 = 쿨·못 씀.</summary>
         public int Skill()
         {
+            if (Mounted) return Rush(); // U-0171 탄 채 E = 돌진
             var m = Active;
             if (!CanAct() || m.SkillCd > 0f) return -1;
             Saga.Core.SagaVoice.Say("shout", m.Id); // U-0068
@@ -745,6 +747,7 @@ namespace Saga.Go.Combat
         /// <summary>원소 폭발 — 반경 12m, 기력 100 소모. 들어간 적 수(-1 = 기력 모자람).</summary>
         public int Burst()
         {
+            if (MountBlocks()) return -1; // U-0171
             var m = Active;
             if (!CanAct() || !m.BurstReady) return -1;
             Saga.Core.SagaVoice.Say("shout", m.Id, true); // U-0068 — 필살은 늘 외친다
@@ -777,7 +780,7 @@ namespace Saga.Go.Combat
 
         public bool Dodge()
         {
-            if (!CanAct() || (player != null && player.IsDashing)) return false;
+            if (!CanAct() || MountBlocks() || (player != null && player.IsDashing)) return false; // U-0171 탄 동안 회피 없음
             if (!GoStamina.TrySpend(DodgeStamina)) return false;
             if (AimOn) ExitAim(); // 109-14-22
             InvulnLeft = DodgeInvulnSec;
@@ -856,6 +859,7 @@ namespace Saga.Go.Combat
             }
             m.Hp = Mathf.Max(0f, m.Hp - dmg);
             _sinceHit = 0f;
+            if (dmg > 0f) OnHurtMounted(); // U-0171 낙마
             Saga.Go.Audio.GoSfx.Play("sword_hurt", 1f, 0.1f); // U-0048
             FieldDamageText.Spawn(transform.position + Vector3.up * 4f, Mathf.RoundToInt(dmg).ToString(), new Color(1f, 0.3f, 0.25f));
             HurtVignette.Flash(); // tasks U-0105 — 가장자리 붉게 번쩍(회피 무적·굳힘으로 다 막으면 위에서 돌아가 신호 없음)

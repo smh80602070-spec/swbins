@@ -153,6 +153,8 @@ namespace Saga.Go.Player
         public bool IsDashing => _dashTimeLeft > 0f;
         /// <summary>들판 전투가 공격·회피를 받아 줄 수 있는 자세인가(땅을 딛고 있을 때만).</summary>
         public bool OnFoot => Mode == MoveMode.Ground;
+        /// <summary>U-0171 — 땅 위 마지막 이동 빠르기(m/초, 읽기만).</summary>
+        public float GroundSpeedNow { get; set; }
 
         /// <summary>PLAN.md 107-1 — `dir` 쪽으로 `seconds` 동안 `distance` 만큼 미끄러진다(입력 무시).
         /// Maria 면 구르기 클립(`Dodge` 트리거).</summary>
@@ -418,6 +420,7 @@ namespace Saga.Go.Player
             float speed = (running ? RunSpeed : WalkSpeed) * GoMounts.GroundMul; // 109-15 탄 탈것의 걷는 속도 배율
 
             Vector3 horizontal = moveDir * speed;
+            GroundSpeedNow = horizontal.magnitude; // U-0171 말 위 전투 빠르기 비율
             _controller.Move(new Vector3(horizontal.x, _verticalVelocity, horizontal.z) * dt);
             bool wasGrounded = grounded;
             grounded = _controller.isGrounded;

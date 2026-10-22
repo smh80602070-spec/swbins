@@ -2511,6 +2511,25 @@
   "note": "D2(U-0129): docs/playcheck/d2-u0129-20261019.json — PlaytestRealmSlice 107→112(tech points·order·cost·effects·save) · UiLayoutCheck 문제 0(📜 연구 단추·창 세 화면비 ko/en) · 적 세력 연구 없음 · 경험(expPct) 칸 없음 · 촬영 안 함"
  },
  {
+  "id": "un.go.mount-fight",
+  "name": "U-0171 말 위 전투 — 지상 탈것에 탄 채 평타(×1+0.5×빠르기)·E 돌진(앞 3.5m ×1.6·밀침·비틀 1초·쿨 6초)·맞으면 낙마 0.8초, 싸움 붙어도 안 내림(웹 W-0304 · 고돗 G-0306 짝)",
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/Combat/FieldCombat.Mount.cs",
+   "saga-unity/Assets/Games/SagaGo/Combat/FieldCombat.cs",
+   "saga-unity/Assets/Games/SagaGo/World/MountField.cs",
+   "saga-unity/Assets/Games/SagaGo/Player/PlayerController.cs"
+  ],
+  "tests": [
+   "PlaytestGoMountFight"
+  ],
+  "level": "D1",
+  "verified": "2026-10-23 claude",
+  "fun": {},
+  "ticket": "U-0171",
+  "since": "2026-10-23",
+  "note": "D1(U-0171): PlaytestHeadless mountfight OK(배율 1/1.25/1.5 · 평타 257→368 · 돌진 368·앞만·비틀·쿨 6 · 다섯 손 막힘 · 낙마 · 싸움 붙어도 안 내림) · 1만리 전체 FAIL 은 바위(K-0176)뿐 · 나는 탈것은 옛대로 내림 · 촬영 안 함"
+ },
+ {
   "id": "un.go.path-acts",
   "name": "U-0130 길 행동 — 들판 선두 동행 성향대로 마을 사람에게 조사·도발·이끌기(웹 W-0276 이식)",
   "files": [

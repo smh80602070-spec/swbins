@@ -3319,6 +3319,8 @@
     { "key": "rest.wipe", "value": "모두 쓰러졌다 — 마지막 모닥불 곁에서 기운을 차렸다(잃은 것 없음)" },
     { "key": "rest.lit", "value": "🔥 {0} 모닥불을 지폈다 — 쓰러지면 여기서 일어난다" },
     { "key": "rest.sat", "value": "🔥 {0} 모닥불 곁에서 쉬었다" },
-    { "key": "rest.revive", "value": "들판에 적 {0}이 다시 섰다" }
+    { "key": "rest.revive", "value": "들판에 적 {0}이 다시 섰다" },
+    { "key": "mount.charge", "value": "돌진!" },
+    { "key": "mount.fall", "value": "낙마!" }
   ]
 }

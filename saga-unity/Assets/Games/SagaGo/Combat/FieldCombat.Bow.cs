@@ -15,7 +15,7 @@ namespace Saga.Go.Combat
         public bool CanAim => CanAct() && IsBow(Active) && !StoryState.Talking && (player == null || !player.IsDashing);
         public Vector3 AimDir => Quaternion.Euler(0f, AimYaw, 0f) * Vector3.forward;
 
-        public bool ToggleAim() { if (AimOn) { ExitAim(); return false; } return EnterAim(); }
+        public bool ToggleAim() { if (AimOn) { ExitAim(); return false; } return !MountBlocks() && EnterAim(); } // U-0171 탄 동안 조준 없음
 
         /// <summary>그 점 쪽으로 겨눈다(진단·지도 표식 누르기 등).</summary>
         public void AimToward(Vector3 p)

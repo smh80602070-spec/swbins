@@ -155,7 +155,7 @@ namespace Saga.Go.World
             if (fc.InCombat())
             {
                 GoMounts.LastCombatAt = Time.time;
-                if (GoMounts.Riding != null) { GoMounts.Dismount(); Say(GoLocalization.T("mount.auto_combat", "싸움이 붙어 탈것에서 내렸다")); }
+                if (GoMounts.Riding != null && !FieldCombat.Mounted) { GoMounts.Dismount(); Say(GoLocalization.T("mount.auto_combat", "싸움이 붙어 탈것에서 내렸다")); }
             }
             var kb = Keyboard.current;
             float lift = _touchLift;

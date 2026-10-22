@@ -27,7 +27,7 @@ namespace Saga.Go.Combat
         /// <summary>X·🛡 — 쳐내기 창을 연다. 열렸으면 true.</summary>
         public bool Parry()
         {
-            if (!CanAct()) { LastParry = "busy"; return false; }
+            if (!CanAct() || MountBlocks()) { LastParry = "busy"; return false; } // U-0171 탄 동안 못 쳐냄
             if (ParryCd > 0f) { LastParry = "cd"; return false; }
             if (!GoStamina.TrySpend(ParryStamina)) { LastParry = "stamina"; return false; }
             ParryLeft = ParryWindowSec;

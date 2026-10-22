@@ -51,7 +51,7 @@ namespace Saga.Go.Combat
         /// <summary>C·✊ — 잡기(보스류는 밀치기). 됐으면 true.</summary>
         public bool Grab()
         {
-            if (!CanAct() || _grab != null) { LastGrab = "busy"; return false; }
+            if (!CanAct() || MountBlocks() || _grab != null) { LastGrab = "busy"; return false; } // U-0171 탄 동안 못 잡음
             Vector3 me = transform.position;
             if (GrabCd > 0f)
             {
