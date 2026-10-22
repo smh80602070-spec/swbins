@@ -1,0 +1,76 @@
+{
+ "note": "K-0180 대상 표 — 2나락 빌린 괴물 일곱(quaternius 몬스터 묶음) → 새 creatures3d 7, 모두 rig none(creature_fill 루트 동작). bumble_puff·finback_brute 는 C2 다시 그림 뒤.",
+ "items": [
+  {
+   "id": "armored_alpaca",
+   "rig": "none",
+   "height": 1.4,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "quaternius/Alpaking_Evolved",
+   "lic_note": "K-0180 자체 생성 — 입력 = 우리 txt2img(k180_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Alpaking_Evolved 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "bumble_knight",
+   "rig": "none",
+   "height": 1.0,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "quaternius/Armabee_Evolved",
+   "lic_note": "K-0180 자체 생성 — 입력 = 우리 txt2img(k180_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Armabee_Evolved 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "tabby_ball",
+   "rig": "none",
+   "height": 0.9,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "quaternius/Cat",
+   "lic_note": "K-0180 자체 생성 — 입력 = 우리 txt2img(k180_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Cat 를 대신한다 — 게임 참조 바꾸기는 W 티켓.",
+   "plate": true
+  },
+  {
+   "id": "hen_ball",
+   "rig": "none",
+   "height": 0.9,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "quaternius/Chicken",
+   "lic_note": "K-0180 자체 생성 — 입력 = 우리 txt2img(k180_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Chicken 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "gape_fish",
+   "rig": "none",
+   "height": 0.9,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "quaternius/Fish",
+   "lic_note": "K-0180 자체 생성 — 입력 = 우리 txt2img(k180_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Fish 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "bumble_puff",
+   "rig": "none",
+   "height": 0.8,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "quaternius/Armabee",
+   "lic_note": "K-0180 자체 생성 — 입력 = 우리 txt2img(k180_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Armabee 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  },
+  {
+   "id": "finback_brute",
+   "rig": "none",
+   "height": 1.5,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "quaternius/Fish",
+   "lic_note": "K-0180 자체 생성 — 입력 = 우리 txt2img(k180_bodies_C/C2, 그림체 C) → TRELLIS → 루트 동작 7. 빌린 quaternius/Fish 를 대신한다 — 게임 참조 바꾸기는 W 티켓."
+  }
+ ]
+}

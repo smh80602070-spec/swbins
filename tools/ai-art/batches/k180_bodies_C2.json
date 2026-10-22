@@ -1,0 +1,33 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k180_bodies_C2",
+ "kit": {
+  "spec": "creature",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "bumble_puff",
+   "seed": 2373389399,
+   "prompt": "(round fluffy bee creature:1.15), bold black and yellow horizontal stripes on the round body, black head, big shiny eyes, two antennae, two clear wings on the back, tiny legs, no humans, full body, whole creature visible, solo, bold saturated colors, hovering, thick round volume, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "finback_brute",
+   "seed": 4282493721,
+   "prompt": "(bipedal fish man monster:1.15), upright, teal blue scaly body, fish head with wide toothy mouth, tall dorsal fin on the back, yellow fins on the elbows, two long arms with webbed hands, two short legs with webbed feet, no humans, full body, whole creature visible, solo, bold saturated colors, standing, arms slightly away from body, empty hands, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  }
+ ]
+}

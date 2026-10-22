@@ -1,0 +1,8 @@
+{
+ "name": "k180_bodies_C2", "spec": "creature", "style": "C", "model": "animagine-xl-4.0-opt", "variants": 4,
+ "note": "K-0180 다시 둘 — bumble_puff 벌 줄무늬가 빠짐(그냥 공) · finback_brute 두발 괴물이 아니라 물고기 → 줄무늬·두발·팔 또렷하게(K-0145 C2 와 같은 고침)",
+ "items": [
+  {"id": "bumble_puff", "from": "quaternius/Armabee", "subject": "round fluffy bee creature, bold black and yellow horizontal stripes on the round body, black head, big shiny eyes, two antennae, two clear wings on the back, tiny legs", "view": "three_quarter", "extra": "no humans, full body, whole creature visible, solo, bold saturated colors, hovering, thick round volume"},
+  {"id": "finback_brute", "from": "quaternius/Fish", "subject": "bipedal fish man monster, upright, teal blue scaly body, fish head with wide toothy mouth, tall dorsal fin on the back, yellow fins on the elbows, two long arms with webbed hands, two short legs with webbed feet", "view": "three_quarter", "extra": "no humans, full body, whole creature visible, solo, bold saturated colors, standing, arms slightly away from body, empty hands"}
+ ]
+}
