@@ -619,7 +619,7 @@
 
   function resize() {
     if (!cv) { return; }
-    var dpr = Math.min(global.devicePixelRatio || 1, 2);
+    var dpr = Math.min(global.devicePixelRatio || 1, global.DG.core && global.DG.core.tuned ? +global.DG.core.tuned('dg.maxDpr', 2) : 2);   // 손잡이 dg.maxDpr — 폰 그리기 화소(W-0376 측정)
     var w = cv.clientWidth, h = cv.clientHeight;
     cv.width = Math.max(1, Math.floor(w * dpr));
     cv.height = Math.max(1, Math.floor(h * dpr));
