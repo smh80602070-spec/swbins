@@ -107,6 +107,8 @@ func pick(id: String) -> bool:
 		Toast.show(self, "특산물 %s — 가진 것 %d (인물 돌파에 쓴다)" % [Cooking.GATHER[item].name, PartyState.count(item)], 2.2)
 	_nodes.erase(id)
 	n.queue_free()
+	if _player != null and _player.has_method("play_once"):
+		_player.call("play_once", "gather", 0.9)   # G-0282
 	gathered.emit(item)
 	return true
 

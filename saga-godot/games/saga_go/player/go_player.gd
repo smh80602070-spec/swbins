@@ -304,7 +304,7 @@ func _tick_ground(delta: float, move_dir: Vector3) -> void:
 	if move_dir.length() > 0.05:
 		_face(move_dir, delta)
 		if mounted:
-			_play_anim("idle")
+			_play_anim(_ride_anim(true))   # G-0282
 		else:
 			_play_gait(Vector2(velocity.x, velocity.z).length())   # G-0264 걸음새(웅크림 0.5 는 아래가 덮는다)
 		if crouching:
@@ -313,7 +313,7 @@ func _tick_ground(delta: float, move_dir: Vector3) -> void:
 			return
 	else:
 		_grab_t = 0.0
-		_play_anim("idle")
+		_play_anim(_still_anim())
 
 	if _jump_buffer > 0.0:
 		_jump_buffer = 0.0
@@ -444,7 +444,7 @@ func _tick_fly(delta: float, move_dir: Vector3) -> void:
 		want_y = -FLY_DIVE
 	velocity.y = lerpf(velocity.y, want_y, 4.0 * delta)
 	_jump_buffer = 0.0
-	_play_anim("idle")
+	_play_anim(_ride_anim(Vector2(velocity.x, velocity.z).length() > 4.0))   # G-0282 나는 탈것 위
 	move_and_slide()
 	if is_on_floor() and velocity.y <= 0.5:
 		_set_mode(Mode.GROUND)

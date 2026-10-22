@@ -117,6 +117,9 @@ func _throw() -> void:
 	v.y = (0.5 * g * FLY * FLY - h) / FLY
 	e.connect("thrown_landed", _on_landed, CONNECT_ONE_SHOT)
 	e.call("throw_with", v)
+	var p := _player()
+	if p != null and p.has_method("play_once"):
+		p.call("play_once", "throw", 0.6)   # G-0282
 
 func _on_landed(e: Node) -> void:
 	if not is_instance_valid(e) or e.call("is_dead"):

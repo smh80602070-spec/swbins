@@ -174,4 +174,7 @@ func _gather(d: Dictionary) -> void:
 		ForestSaveState.used.erase(d.id)
 		tail = " · 손재주 — 오늘 한 번 더"
 	Toast.show(self, "%s(을)를 %s — %s +%d%s" % [d.name, d.hint, d.item_label, n, tail], 2.5)
+	var pl := get_tree().get_first_node_in_group("player")
+	if pl != null and pl.has_method("play_once"):   # G-0282 삽 자리는 파기, 나머지는 허리 굽혀 줍기
+		pl.call("play_once", "dig" if String(d.tool) == "spade" else "gather", 1.2 if String(d.tool) == "spade" else 0.9)
 	CombatFeel.pickup(_roots.get(d.id), "%s +%d" % [d.item_label, n])

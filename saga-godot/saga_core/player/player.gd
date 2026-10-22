@@ -58,7 +58,12 @@ var _gait_scaled := false   # G-0264 — 걸음새가 speed_scale 을 바꿨으�
 ## G-0284 한 번짜리 동작(2나락 공격·무예가 부름 — 1만리는 go_player.play_action, 4종횡은 story_player_base._skill_pose 가 따로).
 ## 클립의 동작 구간(ONCE_WINDOW 초)만 sec 에 맞춰 한 번 틀고, 그동안(물리 프레임 — 헤드리스는 실시간보다 빠름) 걸음새가 안 덮는다.
 ## 창은 G-0283 자세 시트(cast 손 뻗기 앞 0.8초 · strong 들어 올려 내리찍기 0.35~0.75초). 손잡이 SAGA_ACTION_MOCAP=0 이면 안 튼다(옛 길 — 몸 그대로).
-const ONCE_WINDOW := {"attack": [0.30, 0.95], "strong": [0.35, 0.75], "cast": [0.0, 0.8], "skill": [0.0, 0.53], "burst": [0.0, 1.13], "dodge": [0.05, 0.85]}
+## G-0282 모캡 30(vroid_body MOCAP30) — gather 허리 굽혀 줍기 0.25~1.65초 · throw 팔 들어 던지기 0.2~1.6초 · plant 두 번 심기 전체.
+## 창이 없는 되풀이 클립(hammer·dig·water 등 MOCAP30_LOOP)은 제 빠르기로 sec 동안.
+const ONCE_WINDOW := {"attack": [0.30, 0.95], "strong": [0.35, 0.75], "cast": [0.0, 0.8], "skill": [0.0, 0.53], "burst": [0.0, 1.13], "dodge": [0.05, 0.85],
+	"gather": [0.25, 1.65], "throw": [0.2, 1.6], "plant": [0.0, 2.43]}
+## G-0282 — 서 있는 동안 idle 대신 틀 클립(낚시 기다림 fish_wait 등, hold() 가 넣고 unhold() 가 뺀다). 탈것 위에선 ride_idle·ride_charge.
+var hold_anim := ""
 var _once_until := 0
 var _once_scaled := false   # 한 번짜리 동작이 빠르기를 바꿨으면 잠금 뒤 첫 _play_anim 이 1 로(walk·sprint 로 가도 — R-5)
 
@@ -142,7 +147,7 @@ func _physics_process(delta: float) -> void:
 		_tick_life(delta, false)
 		velocity.x = 0.0
 		velocity.z = 0.0
-		_play_anim("idle")
+		_play_anim(_still_anim())
 		move_and_slide()
 		return
 
@@ -159,11 +164,11 @@ func _physics_process(delta: float) -> void:
 		var target_yaw := atan2(move_dir.x, move_dir.z)
 		visual.rotation.y = lerp_angle(visual.rotation.y, target_yaw, TURN_RATE * delta)
 		if mounted:
-			_play_anim("idle")
+			_play_anim(_ride_anim(true))
 		else:
 			_play_gait(Vector2(velocity.x, velocity.z).length())
 	else:
-		_play_anim("idle")
+		_play_anim(_still_anim())
 
 	move_and_slide()
 
@@ -195,7 +200,7 @@ func _base_fly(delta: float) -> void:
 	if dir.length() > 0.05:
 		visual.rotation.y = lerp_angle(visual.rotation.y, atan2(dir.x, dir.z), TURN_RATE * delta)
 	visual.position.y = ride_height
-	_play_anim("idle")
+	_play_anim(_ride_anim(Vector2(velocity.x, velocity.z).length() > 4.0))
 	move_and_slide()
 	if is_on_floor() and velocity.y <= 0.5:
 		fly_on = false
@@ -233,9 +238,12 @@ func foot_lock_allowed() -> bool:
 
 ## G-0284 — 한 번짜리 동작(위 ONCE_WINDOW). 클립이 없거나 손잡이 0 이면 false.
 func play_once(clip: String, sec: float) -> bool:
-	if OS.get_environment("SAGA_ACTION_MOCAP") == "0" or _anim == null or not _anim.has_animation(clip) or not ONCE_WINDOW.has(clip):
+	if OS.get_environment("SAGA_ACTION_MOCAP") == "0" or _anim == null or not _anim.has_animation(clip):
 		return false
-	var w: Array = ONCE_WINDOW[clip]
+	var looped := _anim.get_animation(clip).loop_mode != Animation.LOOP_NONE
+	if not ONCE_WINDOW.has(clip) and not looped:
+		return false
+	var w: Array = ONCE_WINDOW.get(clip, [0.0, sec])   # 되풀이 클립은 제 빠르기(창 = sec)
 	_once_until = Engine.get_physics_frames() + int(sec * Engine.physics_ticks_per_second)
 	_anim.speed_scale = (float(w[1]) - float(w[0])) / sec
 	_once_scaled = true
@@ -243,6 +251,36 @@ func play_once(clip: String, sec: float) -> bool:
 	_anim.seek(float(w[0]), true)   # 같은 클립 연타도 매번 구간 시작부터
 	_current_anim = clip
 	return true
+
+## G-0282 — 서 있을 때 클립: 탈것 위 ride_idle · hold() 한 클립 · 아니면 idle(클립이 없는 몸·SAGA_MOCAP30=0 도 idle).
+func _still_anim() -> String:
+	if mounted:
+		return _ride_anim(false)
+	if hold_anim != "" and _anim != null and _anim.has_animation(hold_anim):
+		return hold_anim
+	return "idle"
+
+func _ride_anim(moving: bool) -> String:
+	var c := "ride_charge" if moving else "ride_idle"
+	return c if _anim != null and _anim.has_animation(c) else "idle"
+
+## G-0282 — 서 있는 동안 clip 을 틀고(then 이 있으면 clip 한 번 뒤 then 되풀이) 그 자리에 머문다. 클립이 없으면 false(옛 길 idle).
+func hold(clip: String, then: String = "") -> bool:
+	if _anim == null or not _anim.has_animation(clip):
+		return false
+	hold_anim = then if then != "" and _anim.has_animation(then) else clip
+	_anim.speed_scale = 1.0
+	_anim.play(clip, 0.2)
+	if hold_anim != clip:
+		_anim.queue(hold_anim)
+	_current_anim = hold_anim
+	return true
+
+func unhold() -> void:
+	if hold_anim == "":
+		return
+	hold_anim = ""
+	_current_anim = ""
 
 func _play_anim(anim_name: String) -> void:
 	if _anim == null or not _anim.has_animation(anim_name):

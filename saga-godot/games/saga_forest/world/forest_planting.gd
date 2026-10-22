@@ -117,6 +117,8 @@ func _try_plant() -> void:
 	elif near > 0:
 		hint = "(곁에 꽃이 있어 드문 색이 필지도 모른다)"
 	Toast.show(self, "꽃을 심었다 — %d일 뒤 자란다%s." % [PLANT_DAYS, hint], 3.0)
+	if player.has_method("play_once"):
+		player.call("play_once", "plant", 1.2)   # G-0282
 
 
 ## G-0263 — planted 가 통째로 바뀌면(세이브 불러오기·촬영 무대·probe) 자리 노드가 옛 인덱스를 쥔다.
@@ -228,6 +230,9 @@ func _gather(i: int) -> void:
 	var label: String = ITEM_LABEL_HYBRID2 if tier == 2 else (ITEM_LABEL_HYBRID if tier == 1 else ITEM_LABEL_NORMAL)
 	ForestSaveState.add_item(label, 1)
 	Toast.show(self, "심은 꽃을 꺾었다 — %s +1" % label, 2.5)
+	var pl := get_tree().get_first_node_in_group("player")
+	if pl != null and pl.has_method("play_once"):
+		pl.call("play_once", "gather", 0.9)   # G-0282
 
 
 ## 옛 세이브(하이브리드 여부만 bool로 있던 시절)와도 호환 — "tier" 필드가

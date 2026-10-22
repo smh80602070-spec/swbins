@@ -5356,5 +5356,30 @@
   "ticket": "G-0300",
   "since": "2026-10-22",
   "note": "공용 saga_core/ui/auto_quest_hud.gd · 웹 W-0338 auto-rule.js · G-0299 개발만 → G-0300 넷"
+ },
+ {
+  "id": "gd.core.mocap30",
+  "name": "모캡 30(생활·전투) — 낚시 던지기·기다림·채집·던지기·심기·망치질·탈것 자세·줄 오르기·매달리기",
+  "files": [
+   "saga_core/world/vroid_body.gd",
+   "saga_core/player/player.gd",
+   "games/saga_go/world/fishing.gd",
+   "games/saga_go/world/gathering.gd",
+   "games/saga_go/combat/field_grab.gd",
+   "games/saga_forest/world/fishing_spot.gd",
+   "games/saga_forest/world/gatherable_builder.gd",
+   "games/saga_forest/world/forest_planting.gd",
+   "games/saga_forest/world/craft_bench.gd",
+   "games/saga_story/player/story_player.gd"
+  ],
+  "tests": [
+   "mocap30"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0282",
+  "since": "2026-10-22",
+  "note": "K-0161 clips30 · SAGA_MOCAP30=0 옛 길"
  }
 ]

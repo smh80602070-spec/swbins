@@ -27,8 +27,16 @@ const MOCAP_LIB := "res://assets/characters_vroid/anim_cc0/mocap_lib.res"
 const MOCAP_OVER := ["idle", "walk", "hit", "death", "pickup"]
 const MOCAP_NEW := ["greet", "cast", "strong", "turn", "sit_stand", "idle_b", "run"]
 const MOCAP_FIT := ["hit", "death"]   # pickup 은 부르는 곳이 없어 제 길이(3.5초 — 옛 0.87초로 줄이면 네 배 빠름)
+## G-0282 — K-0161 생활·전투 모캡 30(원본 assets/anim_mocap/vroid_clips30_anims.glb, ual_lib_build.gd 로 구움). 새 이름만 더한다 —
+## 이미 있는 이름(jump)은 옛 것 우선. MOCAP30_LOOP 은 되풀이(기다림·일·매달림·탄 자세), 나머지는 한 번. SAGA_MOCAP30=0 이면 안 더함.
+const MOCAP30_LIB := "res://assets/characters_vroid/anim_cc0/mocap30_lib.res"
+const MOCAP30 := ["gather", "throw", "fish_cast", "fish_wait", "bow_greet", "dig", "stir", "saw", "sit_ground", "lie_down",
+	"sweep", "rake", "plant", "hammer", "eat", "drink", "cheer", "bow_shoot", "kick", "punch_combo", "ladder", "march",
+	"command", "water", "sleep", "hang", "flag_wave", "ride_idle", "ride_charge"]
+const MOCAP30_LOOP := ["fish_wait", "dig", "stir", "saw", "sit_ground", "sweep", "rake", "hammer", "ladder", "march",
+	"sleep", "hang", "flag_wave", "ride_idle", "ride_charge"]
 static var _dex_lib: AnimationLibrary = null
-static var _dex_lib_mocap := false
+static var _dex_lib_mocap := ""
 const DEX_HEAD_BASE := 1.38
 const DEX_HEAD_STEP := 0.03
 const DEX_SCALE_MIN := 0.85
@@ -188,19 +196,31 @@ static func _build_dex(id: String, rarity: int) -> Node3D:
 ## dex 몸이 나눠 쓰는 동작 묶음(G-0275 모캡 섞음, 프로세스에 한 벌). 못 읽으면 null.
 static func dex_library() -> AnimationLibrary:
 	var want := mocap_on()
-	if _dex_lib != null and _dex_lib_mocap == want:
+	var want30 := mocap30_on()
+	var key := "%s%s" % [want, want30]
+	if _dex_lib != null and _dex_lib_mocap == key:
 		return _dex_lib
 	var base := load(DEX_LIB) as AnimationLibrary
 	if base == null:
 		return null
 	_dex_lib = base
-	_dex_lib_mocap = want
-	if not want:
+	_dex_lib_mocap = key
+	if not want and not want30:
 		return base
-	var mo := load(MOCAP_LIB) as AnimationLibrary
 	var lib := AnimationLibrary.new()
 	for n in base.get_animation_list():
 		lib.add_animation(n, base.get_animation(n))
+	_dex_lib = lib
+	if want30:
+		var m30 := load(MOCAP30_LIB) as AnimationLibrary
+		for n in MOCAP30:
+			if m30 != null and m30.has_animation(n) and not lib.has_animation(n):
+				var a := m30.get_animation(n)
+				a.loop_mode = Animation.LOOP_LINEAR if MOCAP30_LOOP.has(n) else Animation.LOOP_NONE
+				lib.add_animation(n, a)
+	if not want:
+		return lib
+	var mo := load(MOCAP_LIB) as AnimationLibrary
 	for n in MOCAP_OVER + MOCAP_NEW:
 		if not mo.has_animation(n):
 			continue
@@ -210,12 +230,15 @@ static func dex_library() -> AnimationLibrary:
 		if lib.has_animation(n):
 			lib.remove_animation(n)
 		lib.add_animation(n, a)
-	_dex_lib = lib
 	return lib
 
 
 static func mocap_on() -> bool:
 	return OS.get_environment("SAGA_MOCAP") != "0" and ResourceLoader.exists(MOCAP_LIB)
+
+
+static func mocap30_on() -> bool:
+	return OS.get_environment("SAGA_MOCAP30") != "0" and ResourceLoader.exists(MOCAP30_LIB)
 
 
 ## 동작 길이를 target 초로(키 시각만 곱함 — 모양 그대로, 원본은 안 건드림).

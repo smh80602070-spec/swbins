@@ -52,6 +52,7 @@ var _ends_at_ms := 0
 var _bite_notified := false
 var _in_range := false
 var _player: Node3D = null
+var _held := false   # G-0282 몸에 낚시 자세를 걸었나
 
 
 func _ready() -> void:
@@ -148,6 +149,10 @@ func _on_exited(body: Node3D) -> void:
 
 
 func _process(_delta: float) -> void:
+	if _held and _state != State.LINE_OUT:
+		_held = false
+		if _player != null and _player.has_method("unhold"):
+			_player.call("unhold")
 	if _state == State.LINE_OUT:
 		if _player != null and _player.global_position.distance_to(global_position) > FISH_RANGE:
 			_state = State.IDLE
@@ -179,6 +184,8 @@ func _cast() -> void:
 	_bite_notified = false
 	_state = State.LINE_OUT
 	Toast.show(self, "🎣 찌를 던졌다 — 입질을 기다린다", 2.0)
+	if _player != null and _player.has_method("hold"):
+		_held = bool(_player.call("hold", "fish_cast", "fish_wait"))   # G-0282
 
 
 func _hook() -> void:

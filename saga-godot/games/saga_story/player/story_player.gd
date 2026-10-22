@@ -669,7 +669,10 @@ func _climb(delta: float) -> void:
 	velocity = Vector3.ZERO
 	global_position.y = clampf(global_position.y + vertical * CLIMB_SPEED * delta, bottom, top)
 
-	if absf(vertical) > 0.05:
+	var climb := "ladder" if absf(vertical) > 0.05 else "hang"   # G-0282 모캡 30
+	if _anim != null and _anim.has_animation(climb):
+		_play_anim(climb)
+	elif absf(vertical) > 0.05:
 		_play_anim("walk")
 	else:
 		_play_anim("idle")

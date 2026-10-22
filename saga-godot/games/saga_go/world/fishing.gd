@@ -150,6 +150,8 @@ func state_name() -> String:
 func _set_state(s: int) -> void:
 	state = s
 	_t = 0.0
+	if (s == S.AIM or s == S.IDLE) and _player != null and _player.has_method("unhold"):
+		_player.call("unhold")   # G-0282 겨누기·끝 = 서기
 	state_changed.emit(state_name())
 	_refresh_hud()
 
@@ -300,6 +302,8 @@ func cast() -> bool:
 	_ripple(float_pos, 0.6)
 	get_tree().call_group("go_sfx", "play", "splash")   # G-0177
 	_set_state(S.WAIT)
+	if _player.has_method("hold"):
+		_player.call("hold", "fish_cast", "fish_wait")   # G-0282 던지고 기다리는 몸(입질·당기기까지)
 	return true
 
 ## 찌를 거둔다(물고기 없음·다시 던지기) — reason 이 있으면 알림.

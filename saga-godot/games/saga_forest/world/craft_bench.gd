@@ -122,6 +122,9 @@ func make(key: String) -> void:
 	if not bool(r.ok):
 		Toast.show(self, "🔨 아직 못 만든다 — %s" % String(r.why), 2.5)
 		return
+	var pl := get_tree().get_first_node_in_group("player")
+	if pl != null and pl.has_method("play_once"):
+		pl.call("play_once", "hammer", 1.2)   # G-0282 망치질
 	var rec := ForestCraft.recipe(key)
 	if String(rec.kind) == "lot":
 		Toast.show(self, "🏠 작은 빈 집을 지었다 (%d/%d) — 제작대 \"빈 집 꾸미기\"로 가구를 넣는다" % [Lots.count(ForestSaveState), Lots.MAX], 3.0)
