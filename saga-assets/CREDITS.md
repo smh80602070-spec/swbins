@@ -71,8 +71,8 @@
 | beast2d_rebake.py --sheets (Blender render_sheet.py, Idle·Run 4컷) | - | CC0-1.0 (자체 3D 몸 렌더 — 외부 입력 없음, 몸 출처는 creatures3d license) | 11 |
 | beast2d_rebake.py (Blender render_sprite.py) | - | CC0-1.0 (자체 3D 몸 렌더 — 외부 입력 없음, 몸 출처는 creatures3d license) | 103 |
 | pet2d_k120.py (Blender render_sprite.py 옆모습, K-0114 맞춤) | - | CC0-1.0 (자체 3D 몸 렌더 — 몸 출처는 pets3d license) | 17 |
-| factory.py (K-0158 2D 공장, Blender + style_pass) | - | MIT(TRELLIS)·자체 뼈대 동작 — 자체 렌더 | 127 |
-| factory.py (K-0158 2D 공장, Blender + style_pass) | - | VRoid 샘플 이용 조건(상업·개작 허용)·CC0 동작 — 자체 렌더 | 9 |
+| factory.py (K-0158 2D 공장, Blender + style_pass) | - | MIT(TRELLIS)·자체 뼈대 동작 — 자체 렌더 | 167 |
+| factory.py (K-0158 2D 공장, Blender + style_pass) | - | VRoid 샘플 이용 조건(상업·개작 허용)·CC0 동작 — 자체 렌더 | 70 |
 | gen.py (ComfyUI) | Illustrious-XL-v2.0 | CreativeML OpenRAIL-M (저자 HF 토론 2025-04: 상업 가능, 폐쇄 파생 모델 수익화만 금지) | 10 |
 | face_sdf_bake.py (K-0151 — Blender, VRoid 얼굴 살갗 UV 위 원신식 그림자 문턱 계산 굽기) | - | MIT | 2 |
 | compress.mjs | - | CC0-1.0 (형태·뼈·동작 전부 코드, 외부 입력 없음) | 1 |

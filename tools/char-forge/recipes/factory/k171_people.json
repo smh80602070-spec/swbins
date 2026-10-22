@@ -1,5 +1,5 @@
 {
- "note": "K-0171 ② — K-0159 가 못 놓은 사람 풀 다시: villager_a 몸 aq_sanghwa → rf_wuanguo(still_match 1위권·회색 머리·베이지 긴 옷, 수염은 없음) · rts_inf_ally attack2 spear_2 → spear_1(휘두르기 칸 잘림). hero_f·companion_mage 는 맞는 몸 없음(still_match 최고 hero_f 남자 몸들·mage 0.21) — 그대로. 나머지 칸은 k158_still_people.json 그대로",
+ "note": "K-0171 ② — K-0159 가 못 놓은 사람 풀 다시: villager_a 몸 aq_sanghwa → rf_wuanguo(still_match 1위권·회색 머리·베이지 긴 옷, 수염은 없음) · rts_inf_ally attack2 spear_2 → spear_1(휘두르기 칸 잘림). hero_f·companion_mage 는 맞는 몸 없음(still_match 최고 hero_f 남자 몸들·mage 0.21) — 그대로. 나머지 칸은 k158_still_people.json 그대로 · 10-22 눈: villager_a 를 k159_villager_a 색칠(CLOTH 전체 재색)로 구우면 몸 전체가 얼굴 없는 베이지 실루엣 → 색칠 없이(kind human) 몸 그대로",
  "game": "saga-dungeon",
  "px": 192,
  "ndir": 8,
@@ -732,7 +732,7 @@
    "id": "villager_a",
    "type": "human",
    "body": "rf_wuanguo",
-   "kind": "k159_villager_a",
+   "kind": "human",
    "source_license": "saga-web/shared/assets/characters2d8/rf_wuanguo/rf_wuanguo.license.json"
   },
   {

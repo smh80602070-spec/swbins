@@ -1,0 +1,110 @@
+{
+ "id": "kr_euljimundeok",
+ "px": 384,
+ "dirs": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "dir_names": [
+  "front",
+  "front_side",
+  "side",
+  "back_side",
+  "back"
+ ],
+ "ndir": 8,
+ "mirror": true,
+ "side_faces": "right",
+ "layout": "가로 = 프레임, 세로 = 방향(dirs 순서)",
+ "clips": {
+  "idle": {
+   "frames": 8,
+   "fps": 6,
+   "loop": true,
+   "file": "idle.webp"
+  },
+  "walk": {
+   "frames": 8,
+   "fps": 10,
+   "loop": true,
+   "file": "walk.webp"
+  },
+  "run": {
+   "frames": 8,
+   "fps": 12,
+   "loop": true,
+   "file": "run.webp"
+  },
+  "attack": {
+   "frames": 8,
+   "fps": 14,
+   "loop": false,
+   "spiky": true,
+   "file": "attack.webp"
+  },
+  "attack2": {
+   "frames": 8,
+   "fps": 12,
+   "loop": false,
+   "spiky": true,
+   "file": "attack2.webp"
+  },
+  "cast": {
+   "frames": 8,
+   "fps": 10,
+   "loop": false,
+   "file": "cast.webp"
+  },
+  "hit": {
+   "frames": 6,
+   "fps": 12,
+   "loop": false,
+   "file": "hit.webp"
+  },
+  "death": {
+   "frames": 6,
+   "fps": 8,
+   "loop": false,
+   "file": "death.webp"
+  },
+  "sit": {
+   "frames": 8,
+   "fps": 6,
+   "loop": false,
+   "file": "sit.webp"
+  },
+  "talk": {
+   "frames": 8,
+   "fps": 8,
+   "loop": true,
+   "file": "talk.webp"
+  }
+ },
+ "missing": [],
+ "foot": 0.88,
+ "style": "C-toon-1",
+ "kind": "human",
+ "ortho_m": 4.4,
+ "px_per_m": 87.27,
+ "body": "kr_euljimundeok",
+ "gear": "human",
+ "act": {
+  "idle": "idle",
+  "walk": "walk",
+  "run": "sprint",
+  "attack": "skill",
+  "attack2": "burst",
+  "cast": "m.cast",
+  "hit": "hit",
+  "death": "death",
+  "sit": "m.sit_stand@0:0.45",
+  "talk": "m.greet"
+ },
+ "source": "tools/char-forge/factory.py → bake_sprite_batch.py/gear_sprites.py (Blender) → style_pass.py",
+ "anchor_x_px": {},
+ "license": "VRoid Studio 공식 샘플 이용 조건(상업 사용·개작본 재배포 허용, 크레딧 불필요 — 옷 이식 몸 K-0024) + 동작 CC0 UAL(bake_for_rig)·CMU 모캡(K-0139·K-0148, saga-assets/characters/anim-src/mocap/vroid_mocap_anims.license.json) — 상업 사용 가능",
+ "weapon": "staff"
+}

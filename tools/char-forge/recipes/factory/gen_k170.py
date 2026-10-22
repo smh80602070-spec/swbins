@@ -26,6 +26,9 @@ for f in ('k159_beasts.json', 'k159_still_beasts.json'):
         if f == 'k159_beasts.json':                 # 같은 몸에 K-0160 눈 판정으로 붙인 손잡이(cap·margin·auto_side·spin_roles)를 물려받음
             KNOB[x['glb']] = {k: x[k] for k in ('cap', 'margin', 'auto_side', 'spin_roles') if k in x}
 RENAME = {'beast_big': 'dg_elephant'}      # still beast_big(곰 — 일반 큰 짐승 그림)과 다른 몸(코끼리병 초상 = elephant)
+# 10-22 첫 판정 뒤: attack 돌진(옆 f4)이 칸 끝 → cap · 게 한 번 들이받기(이동 0.08) 눈 ○ → 면제
+FIX = {**{k: {'cap': 1.7} for k in ('cactoro', 'cthulhu', 'green_blob', 'mushnub_evolved')}, 'goleling_evolved': {'waive': {'crop': '뒤대각 돌진 f4 발이 칸 아래 끝에 닿음 — cap 1.7·2.2 같은 값, 눈으로 잘림 없음', 'border': '같은 칸', 'flicker': '같은 돌진(이동 0.08)'}},
+       'crab': {'waive': {'flicker': 'attack 옆 f4 — 앞으로 한 번 들이받는 돌진(이동 0.08), 정상'}}}
 pools, aliases, missing, first = [], {}, [], {}
 for b in names:
     c = pair.get(b)
@@ -46,7 +49,7 @@ for b in names:
         b = RENAME.get(b, b)
         first[c] = b
     lj = g[:-4] + '.license.json'
-    p = dict({'id': b, 'type': 'creature', 'glb': g}, **KNOB.get(g, {}))
+    p = dict({'id': b, 'type': 'creature', 'glb': g}, **KNOB.get(g, {}), **FIX.get(b, {}))
     if os.path.exists(lj):
         p['license_json'] = lj
     pools.append(p)

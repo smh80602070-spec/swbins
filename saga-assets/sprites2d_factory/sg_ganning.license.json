@@ -1,0 +1,26 @@
+{
+ "id": "sg_ganning",
+ "generator": "factory.py (K-0158 2D 공장, Blender + style_pass)",
+ "model": "-",
+ "pipeline": "tools/char-forge/factory.py → bake_sprite_batch.py/gear_sprites.py (Blender) → style_pass.py",
+ "license": "VRoid 샘플 이용 조건(상업·개작 허용)·CC0 동작 — 자체 렌더",
+ "license_detail": "VRoid Studio 공식 샘플 이용 조건(상업 사용·개작본 재배포 허용, 크레딧 불필요 — 옷 이식 몸 K-0024) + 동작 CC0 UAL(bake_for_rig)·CMU 모캡(K-0139·K-0148, saga-assets/characters/anim-src/mocap/vroid_mocap_anims.license.json) — 상업 사용 가능",
+ "commercial_use": true,
+ "style": "C-toon-1",
+ "tools": [
+  "tools/char-forge/factory.py",
+  "tools/char-forge/style_pass.py",
+  "tools/char-forge/sheet_judge.py"
+ ],
+ "date": "2026-10-22",
+ "ticket": "K-0160",
+ "judge": {
+  "same": true,
+  "foot": true,
+  "flicker": true,
+  "crop": true,
+  "border": true,
+  "still": true
+ },
+ "source_license": "saga-web/shared/assets/characters2d8/sg_ganning/sg_ganning.license.json"
+}

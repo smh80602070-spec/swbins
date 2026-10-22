@@ -20,6 +20,13 @@ CLIPMAP = {
 PX = {'sword': 256, 'dagger': 256, 'axe': 320, 'bow': 256, 'gun': 256, 'staff': 320, 'spear': 384, 'fist': 192}
 # 10-22 판정 crop(무기·팔이 칸 끝에 닿음) 19풀만 한 단계 큰 칸(px/m 같음 — 그림 크기 그대로, 칸만 넓힘)
 PX_UP = {'spear': 448, 'bow': 320, 'staff': 384, 'fist': 224}
+PX_UP2 = {'sg_zhaoyun': 512, 'sg_lubu': 512, 'kr_gwanggaeto': 512, 'kr_kimgu': 512, 'jp_ieyasu': 512}   # 10-22 2차: 창 휘두르기(attack2) 앞·뒤 모습이 448 끝에 13~15px
+WAIVE = {   # 10-22 눈 판정 ○ — 판정기 경계 오판(배포는 factory place 가 이 칸을 봄)
+    'kr_yeongaesomun': {'flicker': '말하기 옆 d2 — 도끼 머리가 손에서 돌아 날이 옆·앞으로 바뀜(넓이 0.21), 정상'},
+    'kr_jangyeongsil': {'flicker': '쓰러짐 뒤 d4 f3 — 누우며 흰 옷 앞판이 보여 밝기 0.07, 정상'},
+    'kr_yihwang': {'flicker': '쓰러짐 뒤 d4 f3 — 같은 까닭 밝기 0.07, 정상'},
+    'kr_yugwansun': {'border': 'attack2 d1·talk d2 가장자리 반투명 1~5px — 화면에서 안 보임'},
+}
 CROP = ["jp_ieyasu", "jp_kenshin", "kr_choemuseon", "kr_euljimundeok", "kr_ganggamchan", "kr_gwanggaeto", "kr_heojun", "kr_kimgu", "kr_nongae", "kr_sejong", "kr_sinsaimdang", "sg_diaochan", "sg_lubu", "sg_machao", "sg_simayi", "sg_sunquan", "sg_zhangfei", "sg_zhaoyun", "sg_zhouyu"]
 TWO = {'spear': ['spear_idle', 'spear_1', 'spear_2', 'spear_heavy'], 'axe': ['axe_idle', 'axe_1', 'axe_2', 'axe_heavy'], 'staff': ['staff_heavy']}
 pools, bodies = [], {}
@@ -32,7 +39,9 @@ for h in roster:
         continue
     w = hw.get(i, {}).get('weapon', 'fist')
     grade = hw.get(i, {}).get('grade', 'common')
-    p = {'id': i, 'type': 'human', 'body': i, 'kind': 'human', 'act': dict(CLIPMAP[w]), 'px': PX_UP[w] if i in CROP else PX[w]}
+    p = {'id': i, 'type': 'human', 'body': i, 'kind': 'human', 'act': dict(CLIPMAP[w]), 'px': PX_UP2.get(i) or (PX_UP[w] if i in CROP else PX[w])}
+    if i in WAIVE:
+        p['waive'] = WAIVE[i]
     lj = f'saga-web/shared/assets/characters2d8/{i}/{i}.license.json'
     if os.path.exists(lj):
         p['source_license'] = lj

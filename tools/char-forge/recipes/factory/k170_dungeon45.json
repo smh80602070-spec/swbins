@@ -124,6 +124,7 @@
    "id": "green_blob",
    "type": "creature",
    "glb": "saga-assets/creatures3d/moss_blob.glb",
+   "cap": 1.7,
    "license_json": "saga-assets/creatures3d/moss_blob.license.json"
   },
   {
@@ -178,12 +179,14 @@
    "id": "mushnub_evolved",
    "type": "creature",
    "glb": "saga-assets/creatures3d/spore_cap.glb",
+   "cap": 1.7,
    "license_json": "saga-assets/creatures3d/spore_cap.license.json"
   },
   {
    "id": "cactoro",
    "type": "creature",
    "glb": "saga-assets/creatures3d/cactus_imp.glb",
+   "cap": 1.7,
    "license_json": "saga-assets/creatures3d/cactus_imp.license.json"
   },
   {
@@ -270,6 +273,11 @@
    "id": "goleling_evolved",
    "type": "creature",
    "glb": "saga-assets/creatures3d/goleling_evolved.glb",
+   "waive": {
+    "crop": "뒤대각 돌진 f4 발이 칸 아래 끝에 닿음 — cap 1.7·2.2 같은 값, 눈으로 잘림 없음",
+    "border": "같은 칸",
+    "flicker": "같은 돌진(이동 0.08)"
+   },
    "license_json": "saga-assets/creatures3d/goleling_evolved.license.json"
   },
   {
@@ -312,6 +320,9 @@
    "id": "crab",
    "type": "creature",
    "glb": "saga-assets/creatures3d/crab_cute.glb",
+   "waive": {
+    "flicker": "attack 옆 f4 — 앞으로 한 번 들이받는 돌진(이동 0.08), 정상"
+   },
    "license_json": "saga-assets/creatures3d/crab_cute.license.json"
   },
   {
@@ -330,6 +341,7 @@
    "id": "cthulhu",
    "type": "creature",
    "glb": "saga-assets/creatures3d/tentacle_imp.glb",
+   "cap": 1.7,
    "license_json": "saga-assets/creatures3d/tentacle_imp.license.json"
   },
   {

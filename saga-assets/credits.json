@@ -729,7 +729,7 @@
    "tool": "factory.py (K-0158 2D 공장, Blender + style_pass)",
    "model": "-",
    "license": "MIT(TRELLIS)·자체 뼈대 동작 — 자체 렌더",
-   "count": 127,
+   "count": 167,
    "where": [
     "saga-assets/sprites2d_factory"
    ]
@@ -738,7 +738,7 @@
    "tool": "factory.py (K-0158 2D 공장, Blender + style_pass)",
    "model": "-",
    "license": "VRoid 샘플 이용 조건(상업·개작 허용)·CC0 동작 — 자체 렌더",
-   "count": 9,
+   "count": 70,
    "where": [
     "saga-assets/sprites2d_factory"
    ]

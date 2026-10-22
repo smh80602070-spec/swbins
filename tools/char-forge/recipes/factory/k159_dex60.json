@@ -199,7 +199,7 @@
     "attack": "spear_1",
     "attack2": "spear_2"
    },
-   "px": 448,
+   "px": 512,
    "source_license": "saga-web/shared/assets/characters2d8/sg_zhaoyun/sg_zhaoyun.license.json",
    "weapon": "saga-assets/world/toon/wpn_spear_legend.glb",
    "weapon_kind": "spear",
@@ -512,7 +512,7 @@
     "attack": "spear_1",
     "attack2": "spear_2"
    },
-   "px": 448,
+   "px": 512,
    "source_license": "saga-web/shared/assets/characters2d8/sg_lubu/sg_lubu.license.json",
    "weapon": "saga-assets/world/toon/wpn_spear_legend.glb",
    "weapon_kind": "spear",
@@ -720,6 +720,9 @@
     "attack2": "axe_2"
    },
    "px": 320,
+   "waive": {
+    "flicker": "말하기 옆 d2 — 도끼 머리가 손에서 돌아 날이 옆·앞으로 바뀜(넓이 0.21), 정상"
+   },
    "source_license": "saga-web/shared/assets/characters2d8/kr_yeongaesomun/kr_yeongaesomun.license.json",
    "weapon": "saga-assets/world/toon/wpn_axe_legend.glb",
    "weapon_kind": "axe",
@@ -744,7 +747,7 @@
     "attack": "spear_1",
     "attack2": "spear_2"
    },
-   "px": 448,
+   "px": 512,
    "source_license": "saga-web/shared/assets/characters2d8/kr_gwanggaeto/kr_gwanggaeto.license.json",
    "weapon": "saga-assets/world/toon/wpn_spear_legend.glb",
    "weapon_kind": "spear",
@@ -792,6 +795,9 @@
     "attack2": "bow_heavy"
    },
    "px": 256,
+   "waive": {
+    "flicker": "쓰러짐 뒤 d4 f3 — 누우며 흰 옷 앞판이 보여 밝기 0.07, 정상"
+   },
    "source_license": "saga-web/shared/assets/characters2d8/kr_jangyeongsil/kr_jangyeongsil.license.json",
    "weapon": "saga-assets/world/toon/wpn_bow_rare.glb",
    "weapon_kind": "bow"
@@ -947,6 +953,9 @@
     "attack2": "burst"
    },
    "px": 320,
+   "waive": {
+    "border": "attack2 d1·talk d2 가장자리 반투명 1~5px — 화면에서 안 보임"
+   },
    "source_license": "saga-web/shared/assets/characters2d8/kr_yugwansun/kr_yugwansun.license.json",
    "weapon": "saga-assets/world/toon/wpn_staff_legend.glb",
    "weapon_kind": "staff",
@@ -968,7 +977,7 @@
     "attack": "spear_1",
     "attack2": "spear_2"
    },
-   "px": 448,
+   "px": 512,
    "source_license": "saga-web/shared/assets/characters2d8/kr_kimgu/kr_kimgu.license.json",
    "weapon": "saga-assets/world/toon/wpn_spear_legend.glb",
    "weapon_kind": "spear",
@@ -1073,6 +1082,9 @@
     "attack2": "bow_heavy"
    },
    "px": 256,
+   "waive": {
+    "flicker": "쓰러짐 뒤 d4 f3 — 같은 까닭 밝기 0.07, 정상"
+   },
    "source_license": "saga-web/shared/assets/characters2d8/kr_yihwang/kr_yihwang.license.json",
    "weapon": "saga-assets/world/toon/wpn_bow_common.glb",
    "weapon_kind": "bow"
@@ -1315,7 +1327,7 @@
     "attack": "spear_1",
     "attack2": "spear_2"
    },
-   "px": 448,
+   "px": 512,
    "source_license": "saga-web/shared/assets/characters2d8/jp_ieyasu/jp_ieyasu.license.json",
    "weapon": "saga-assets/world/toon/wpn_spear_legend.glb",
    "weapon_kind": "spear",

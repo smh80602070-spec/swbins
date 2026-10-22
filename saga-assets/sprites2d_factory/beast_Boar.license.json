@@ -13,7 +13,7 @@
   "tools/char-forge/sheet_judge.py"
  ],
  "date": "2026-10-22",
- "ticket": "K-0160",
+ "ticket": "K-0170",
  "judge": {
   "same": true,
   "foot": true,
