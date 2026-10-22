@@ -56,11 +56,8 @@ func _one() -> void:
 	var shapes: Dictionary = face.get("_shapes")
 	var eyes: Array = face.get("_eye_mats")
 	if not shapes.has(TalkFace.BLINK_SHAPE) and eyes.is_empty():
-		## 10-22 dex gltf 는 모프 이름표만 있고 targets 0(K 다시 내보내기 대기) — 그 전엔 경고, SAGA_FACE_STRICT=1 이면 실패
-		if OS.get_environment("SAGA_FACE_STRICT") == "1":
-			_fail("② 깜박임 거리 없음")
-		else:
-			print("  WARN ", game, " ② 깜박임 거리 없음 — 몸에 Fcl 모프 없음(대기 K)")
+		## 10-22 — 이 PC _out 이 10-04 옛 변환(targets 0)이었음. 없으면 engine_characters.sh 다시 변환·설치 뒤 임포트(PROJECT_STATE 설치 줄)
+		_fail("② 깜박임 거리 없음 — dex 몸에 Fcl 모프 targets 없음(옛 변환·옛 임포트 캐시)")
 	else:
 		face.set("_blink_t", 0.0)
 		face.call("_process", 0.02)

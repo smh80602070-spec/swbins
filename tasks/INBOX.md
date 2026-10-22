@@ -11,7 +11,6 @@
 - [ ] 10-21 · (K-0163 끝 알림) · (K-0178 뒤 그 길로 — 3D 몸 밑그림 금지) 나머지 인물 ~470 일러스트 — 같은 도구 `tools/ai-art/k163_illust.py`(cast 표만 판별로 새로) 로 판마다 한 티켓(3D 몸 있는 도감 인물 순, 원격 120장≈50분이라 판당 2~3회), 1만리·3마을 주역부터 · 자체툴
 - [ ] 10-21 · (K-0167 끝 알림) · mode2d MARK 표에 25 줄 — `shared/assets/icons/icon64/ui_<이름>_g0.png`, 이모지→이름 표는 `tasks/tools/done/K-0167.md` 메모 · 웹/다섯 판
 - [x] 10-22 · (G-0287 대기 알림) → K-0177 끝: **파일엔 모프 있음**(고돗 설치본 299 얼굴 조각 2231 전부 targets = 이름표 11, dj_gapju 77) — 임포트 결과·찾는 쪽 확인 필요(수신함 G 줄) · 고돗 `assets/characters_dex/*.gltf` 모프 targets 0(이름표만, 웹 characters3d 는 77) → Fcl 모프 살려 다시 내보내기 — NPC·주인공 깜박임·표정·입 · 자체툴
-- [ ] 10-22 · (K-0168 끝) · 고돗: sg_liubei 새 몸(어른 키) 다시 설치 + 새 201 몸 받음(K 결정 — 해시 NPC 겉모습만) → G-0276 에서 지운 201 을 characters_dex 에 넣고 임포트 · 고돗
 - [ ] 10-22 · (K-0169 끝) · 컷아웃 주역 둘 rig 에 무기·attack 끝 자세(코드 그대로) — cutout2d.on 기본값 볼지 · 웹
 - [ ] 10-22 · (K-0160 끝) · W-0370: 1만리 sprites2d_sheets beast_* 125(+factory_alias 4) · still 짐승(2나락 셋·4종횡 둘) · 도감 60 은 **shared/assets/sprites2d_sheets** 한 벌(mode2d base 자리 정하기) · 웹
 - [ ] 10-22 · (K-0170 끝) · 2나락 적 종 시트 42(+alias 6) — sheetOf 가 body 시트 씀, 코끼리병 body beast_big → `dg_elephant` 짝 한 줄(beast_big = 곰 still) · 웹/2나락
@@ -22,4 +21,3 @@
 - [ ] 10-22 · (K-0168·0172·0173·0174 끝) · 유니티 셋: ① sg_liubei 새 몸 → CharactersDex(U-0156 길) ② 소품 10 `World/<new id>`·rock_moss_01 → SelfPairs 10줄·재빌드·PolyHaven 지움 ③ UI 스킨 95 + 9-slice .meta `Resources/UI/` ④ 깨지는 조각 `World/<모델>_shard_0~3` 16·`Audio/Sfx/sfx_prop_break*` 4(K-0174, 진단 breakable `대신 False`) — 임포트 확인 · 유니티
 - [x] 10-22 · (W-0371 막힘 알림) → K-0178(초상 묘사로 다시 — 원인 = 3D 몸 렌더 밑그림) · K-0163 인물 일러스트 30 이 그 인물과 다른 사람(성별·시대·옷 — 장군 kr_gyebaek 하녀 옷 소녀·jp_yoshitsune 노란 점퍼 소녀·rf_kongrong 빨간 드레스 소녀·군주 현대 옷) → 지금 초상(portraits/hero/<id>_c)·3D 몸을 참조로 다시 그리기 · 웹은 배선 끝·illust.on 기본 0 · 자체툴
 - [ ] 10-22 · (W-0299 알림) · 3마을 가축 — 닭·염소 2D 걷기 그림(우리 안, 지금은 코드 대역)·우리 울타리 소품·산물 아이콘 material:egg·material:milk(icons map.json) → 자체툴 · 웹은 아이콘 진단 K_WAIT 예외를 그때 지움 · 자체툴
-- [ ] 10-22 · (K-0177 끝) · dex 몸 gltf 엔 Fcl 모프 다 있음(얼굴 `Face (merged)(Clone)…` 조각마다 11) → G-0287 은 엔진에서 한 몸 `get_blend_shape_count()` 재고 이름으로 한 조각만 찾는지·.godot/imported 옛 캐시인지 확인 · 고돗

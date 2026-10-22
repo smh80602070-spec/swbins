@@ -82,7 +82,8 @@ static func _surface_kind(mat_name: String) -> String:
 
 static func _tune_outline(outline_mat: ShaderMaterial, mesh_name: String, mat_name: String) -> void:
 	var m := mat_name.to_lower()
-	if mesh_name.begins_with("Eye"):
+	if mesh_name.begins_with("Eye") or _surface_kind(mat_name) == "face":
+		## G-0287 — 눈선·속눈썹·입 안(…_FACE·_EYE)은 선 없이: 모프로 눈을 감거나 입을 다물면 접힌 부품의 뒤집힌 헐이 검은 덩어리로 보였다.
 		outline_mat.set_shader_parameter("thickness", 0.0)
 	elif m.contains("skin"):
 		outline_mat.set_shader_parameter("thickness", 0.0028)

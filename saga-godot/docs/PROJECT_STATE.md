@@ -35,7 +35,7 @@
 
 - 사람 몸(공방): 입은 살갗 덧그림(㉞, 머리 UV 두 배치만). (가로 UI 56%: saga_core/ui/orientation_scale.gd 로 다섯 판 고침.)
 
-- 인물 몸 설치(`characters_dex`, PC 마다): **500벌**(G-0302 — 웹 characters3d 와 같음, 해시 NPC 몸 풀 500). 다른 PC 는 `tools/char-forge/_out/engine_characters/` 의 바뀐 id(주역 10·sg_liubei 10-22)를 지우고 `engine_characters.sh --install godot` → 임포트 뒤 .import 부작용 되돌림. 모프는 새 210 만(옛 290 은 0 — G-0287 K 대기).
+- 인물 몸 설치(`characters_dex`, PC 마다): **500벌**(G-0302 — 웹 characters3d 와 같음, 해시 NPC 몸 풀 500). 다른 PC 는 `tools/char-forge/_out/engine_characters/` 의 바뀐 id(주역 10·sg_liubei 10-22)를 지우고 `engine_characters.sh --install godot` → 임포트 뒤 .import 부작용 되돌림. _out 이 옛 변환이면(gltf primitive targets 0 — 표정·깜박임 안 움직임) 그 id 를 지우고 다시(G-0287). 지금 500 전부 모프 있음.
 
 ## 테스트 상태
 

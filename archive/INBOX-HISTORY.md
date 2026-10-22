@@ -201,3 +201,5 @@
 - [x] W-0366 10-21 · (K-0164 끝 알림) · W-0366 그림 옴 — 4종횡 사냥터 10 `assets/web2d/bg2d/story_<사냥터>/layers.json`(sky·far·near·front, 2016×1152 원본·top/h 잘림, 홀수 칸 뒤집기 이음) + 발판 `assets/web2d/tile/side_<사냥터>/tiles.json`(칸 128, top·end_l·end_r 512×128 · side 512×512, 칸 = 세계 칸 x mod 4·y mod 4) — 옛 bg/·story-tile 대신 배선 · 웹/4종횡
 - [x] W-0371 10-21 · (K-0163 끝 알림) · W-0371 시작 가능 — 인물 일러스트 주역 30 `assets/illust/<id>/stand.webp`(전신 세로 1024 투명)·`neutral|happy|angry|sad.webp`(반신 512 투명) + 판별 `assets/illust/manifest.js`(`SAGA.illust.ids`) — 2나락 1(hl_mukhyang)·4종횡 16(스승)·5천하 13(1막 군주·이계 군주). 1만리·3마을은 아직 0(대역 = 초상) · 웹/2나락·4종횡·5천하
 - [x] W-0372·W-0373 10-22 · 2D폰: 1만리 나무 밟음·2나락 마을 화면 바뀜 · 웹
+- [x] G-0302 10-22 · (K-0168 끝) · 고돗: sg_liubei 새 몸(어른 키) 다시 설치 + 새 201 몸 받음(K 결정 — 해시 NPC 겉모습만) → G-0276 에서 지운 201 을 characters_dex 에 넣고 임포트 · 고돗 (겹친 줄 — G-0302 에서 끝)
+- [x] G-0287 10-22 · (K-0177 끝) · dex 몸 gltf 엔 Fcl 모프 다 있음(얼굴 `Face (merged)(Clone)…` 조각마다 11) → G-0287 은 엔진에서 한 몸 `get_blend_shape_count()` 재고 이름으로 한 조각만 찾는지·.godot/imported 옛 캐시인지 확인 · 고돗 → 원인 이 PC _out 옛 변환(10-04, targets 0) — 다시 변환·설치·임포트 + 얼굴 부품 외곽선 0

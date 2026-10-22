@@ -5070,11 +5070,9 @@
   "files": [
    "saga_core/world/talk_face.gd",
    "saga_core/player/player.gd",
-   "saga_core/combat_feel.gd",
    "games/saga_story/player/story_player.gd",
-   "games/saga_story/data/story_save_state.gd",
-   "games/saga_go/player/go_player.gd",
-   "tools/probe_player_face.gd"
+   "saga_core/combat_feel.gd",
+   "saga_core/shaders/cel_shader_apply.gd"
   ],
   "tests": [
    "player_face"
@@ -5084,7 +5082,7 @@
   "fun": {},
   "ticket": "G-0287",
   "since": "2026-10-22",
-  "note": "대기 K — dex gltf 모프 targets 0 이라 화면엔 아직 안 보임(NPC 도 같음). 모프 오면 SAGA_FACE_STRICT=1"
+  "note": "대기 K — dex gltf 모프 targets 0 이라 화면엔 아직 안 보임(NPC 도 같음). 모프 오면 SAGA_FACE_STRICT=1 · 10-22 끝: 모프 다시 설치·얼굴 부품 외곽선 0"
  },
  {
   "id": "gd.go.rank-ring",
