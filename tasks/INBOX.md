@@ -12,11 +12,10 @@
 - [ ] 10-21 · (K-0167 끝 알림) · mode2d MARK 표에 25 줄 — `shared/assets/icons/icon64/ui_<이름>_g0.png`, 이모지→이름 표는 `tasks/tools/done/K-0167.md` 메모 · 웹/다섯 판
 - [ ] 10-22 · (G-0287 대기 알림) · 고돗 `assets/characters_dex/*.gltf` 모프 targets 0(이름표만, 웹 characters3d 는 77) → Fcl 모프 살려 다시 내보내기 — NPC·주인공 깜박임·표정·입 · 자체툴
 - [ ] 10-22 · (K-0168 끝) · 고돗: sg_liubei 새 몸(어른 키) 다시 설치 + 새 201 몸 받음(K 결정 — 해시 NPC 겉모습만) → G-0276 에서 지운 201 을 characters_dex 에 넣고 임포트 · 고돗
-- [ ] 10-22 · (K-0168 끝) · sg_liubei 새 몸 → CharactersDex(U-0156 길) · 유니티
-- [ ] 10-22 · (K-0169 끝) · 컷아웃 주역 둘 rig 에 무기·attack 끝 자세(코드 그대로 읽음, shared/web2d/cutout) — cutout2d.on 기본값 다시 볼지 · 웹/2나락·4종횡
+- [ ] 10-22 · (K-0169 끝) · 컷아웃 주역 둘 rig 에 무기·attack 끝 자세(코드 그대로) — cutout2d.on 기본값 볼지 · 웹
 - [ ] 10-22 · (K-0160 끝) · W-0370: 1만리 sprites2d_sheets beast_* 125(+factory_alias 4) · still 짐승(2나락 셋·4종횡 둘) · 도감 60 은 **shared/assets/sprites2d_sheets** 한 벌(mode2d base 자리 정하기) · 웹
 - [ ] 10-22 · (K-0170 끝) · 2나락 적 종 시트 42(+alias 6) — sheetOf 가 body 시트 씀, 코끼리병 body beast_big → `dg_elephant` 짝 한 줄(beast_big = 곰 still) · 웹/2나락
 - [ ] 10-22 · (K-0171 끝) · 그림만 바뀜: 바탕 넷+이음 쌍·4종횡 옛 싸움터 far·5천하 rts_inf_ally · 웹
 - [ ] 10-22 · (K-0171) · 바탕 넷 만화경 무늬(go_sand·go_stone·realm_stone·go_water) → ground_tile · 자체툴
-- [ ] 10-22 · (K-0173 끝) · UI 스킨 95 + 9-slice .meta `Resources/UI/` — 열어 임포트 오류 0 확인 · 유니티
+- [ ] 10-22 · (K-0168·0172·0173 끝) · 유니티 셋: ① sg_liubei 새 몸 → CharactersDex(U-0156 길) ② 소품 10 `World/<new id>`·rock_moss_01 → SelfPairs 10줄·재빌드·PolyHaven 지움 ③ UI 스킨 95 + 9-slice .meta `Resources/UI/` 임포트 확인 · 유니티
 - [ ] 10-22 · (W-0371 막힘 알림) · K-0163 인물 일러스트 30 이 그 인물과 다른 사람(성별·시대·옷 — 장군 kr_gyebaek 하녀 옷 소녀·jp_yoshitsune 노란 점퍼 소녀·rf_kongrong 빨간 드레스 소녀·군주 현대 옷) → 지금 초상(portraits/hero/<id>_c)·3D 몸을 참조로 다시 그리기 · 웹은 배선 끝·illust.on 기본 0 · 자체툴

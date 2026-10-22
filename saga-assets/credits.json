@@ -538,7 +538,7 @@
    "tool": "build_prop.py",
    "model": "",
    "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
-   "count": 108,
+   "count": 118,
    "where": [
     "saga-assets/regions/pieces",
     "saga-assets/world/toon",
@@ -780,7 +780,7 @@
    "tool": "uigen.py",
    "model": "",
    "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
-   "count": 285,
+   "count": 380,
    "where": [
     "saga-assets/ui/dungeon",
     "saga-assets/ui/forest",

@@ -5,14 +5,16 @@
  "style": "toon",
  "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
  "inputs": [
-  "self-pbr: concrete_wall_001",
-  "self-pbr: white_stucco"
+  "self-pbr: aerial_grass_rock",
+  "self-pbr: concrete_wall_001"
  ],
  "size_m": [
-  2.4,
-  1.88,
-  0.99
+  3.15,
+  2.14,
+  1.53
  ],
- "tris": 334,
- "pbr_maps": "K-0152 tools/glb-compress/add_pbr_maps.mjs — 그 재질 색 그림에서 자체 계산한 법선·거칠기(남의 텍스처 0)"
+ "tris": 1256,
+ "pbr_maps": "K-0152 tools/glb-compress/add_pbr_maps.mjs — 그 재질 색 그림에서 자체 계산한 법선·거칠기(남의 텍스처 0)",
+ "ticket": "K-0172",
+ "replaces": "유니티 Art/Props/PolyHaven/rock_moss_set_02(옛 스캔 바위 짝 — 다시 만듦) (빌린 것 대신 — 짝 표 k129_unity.json new:)"
 }

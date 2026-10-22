@@ -460,17 +460,53 @@ def rock_large_02(C):
     rock(M, (0.1, 0.85, 0.0), 0.35, 0.3, 0.3, sl, 6, 3, 0.26, 99)
 
 
+def rock_smooth(M, c, rx, ry, rz, slots, moss, lon, lat, amp, seed, tile=1.5, moss_lat=0.3):
+    """K-0172 매끈한 바위 — 꼭짓점마다 무작위(각진 저폴리) 대신 낮은 진동수 사인 합으로 울퉁불퉁, 윗면 띠(moss_lat)만 이끼 칸.
+    slots = 바위 (밝음·중간·어두움), moss = 이끼 칸 둘(위 밝음·가장자리)."""
+    rnd = random.Random(seed)
+    waves = [(rnd.randint(1, 4), rnd.randint(1, 6), rnd.uniform(0, 2 * math.pi), rnd.uniform(0.4, 1.0)) for _ in range(7)]
+    tot = sum(w[3] for w in waves)
+    c = Vector(c)
+    rows = []
+    for jj in range(lat + 1):
+        th = math.pi * jj / lat
+        row = []
+        for k in range(lon):
+            ph = 2 * math.pi * k / lon
+            n = sum(a * math.sin(fa * th * 2 + fb * ph + p0) for fa, fb, p0, a in waves) / tot
+            f = 1.0 + (amp * n if 0 < jj < lat else 0.0)
+            x, y, z = math.sin(th) * math.cos(ph) * rx * f, math.sin(th) * math.sin(ph) * ry * f, math.cos(th) * rz * f
+            if z < 0:
+                z *= 0.16
+            row.append(c + Vector((x, y, z)))
+        rows.append(row)
+    top, bot = rows[0][0], rows[-1][0]
+    for jj in range(lat):
+        t = jj / lat
+        rock_sl = slots[0] if t < 0.5 else (slots[1] if t < 0.8 else slots[2])
+        for k in range(lon):
+            k2 = (k + 1) % lon
+            a, b, d, e = rows[jj][k], rows[jj][k2], rows[jj + 1][k], rows[jj + 1][k2]
+            ph = 2 * math.pi * (k + 0.5) / lon                       # 이끼 경계 = 열마다 부드럽게 오르내리는 선(면마다 바뀌면 체크무늬가 됨)
+            cut = moss_lat + 0.07 * math.sin(2 * ph + seed) + 0.04 * math.sin(5 * ph + seed * 1.3)
+            sl = moss[0] if t < cut - 0.06 else (moss[1] if t < cut else rock_sl)
+            uv = lambda q: ((q.x - c.x) / tile, (q.z - c.z) / tile)
+            if jj == 0:
+                M.face([top, e, d], [uv(top), uv(e), uv(d)], sl)
+            elif jj == lat - 1:
+                M.face([a, b, bot], [uv(a), uv(b), uv(bot)], sl)
+            else:
+                M.face([a, b, e, d], [uv(a), uv(b), uv(e), uv(d)], sl)
+
+
 def rock_moss_01(C):
+    """K-0172 다시 — 이끼 바위 무리(키 1.3·1.1·0.5m 셋), 면 24×12 매끈한 울퉁불퉁 · 이끼는 윗면만(면마다 초록 얼룩 없앰)."""
     M = C.M
     sl = rock_tints(C, 1.2)
-    mo = leaf_slots(C, ('#58853a', '#6f9e45', '#88b857'))
-    rock(M, (0, 0, 0.0), 1.0, 0.9, 0.8, sl, 11, 6, 0.26, 101)
-    rock(M, (0.8, 0.45, 0.0), 0.42, 0.37, 0.32, sl, 7, 3, 0.26, 103)
-    rnd = random.Random(104)
-    for k in range(7):
-        a = rnd.uniform(0, 2 * math.pi)
-        rr = rnd.uniform(0.0, 0.55)
-        blob(M, (math.cos(a) * rr, math.sin(a) * rr * 0.9, 0.62 + rnd.uniform(-0.05, 0.1) - rr * 0.35), rnd.uniform(0.22, 0.34), rnd.uniform(0.2, 0.3), 0.14, mo[k % 3], 1.0, 7, 3, 0.2, 105 + k)
+    mo = [C.s('aerial_grass_rock', 0.8, '#6f9a45', sat=1.05), C.s('aerial_grass_rock', 0.8, '#58803a', sat=1.0)]
+    rock_smooth(M, (0, 0, 0.0), 1.0, 0.85, 1.2, sl, mo, 24, 12, 0.24, 101, moss_lat=0.3)
+    rock_smooth(M, (1.0, 0.6, 0.0), 0.75, 0.62, 1.0, sl, mo, 22, 11, 0.24, 103, moss_lat=0.3)
+    rock_smooth(M, (-0.9, 0.7, 0.0), 0.5, 0.42, 0.45, sl, mo, 18, 9, 0.25, 107, moss_lat=0.3)
 
 
 def pebbles_01(C):

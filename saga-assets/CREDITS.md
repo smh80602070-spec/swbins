@@ -53,7 +53,7 @@
 | region_hero.py | - | CC0-1.0 (배치표 — 자체 생성 데이터, 조각·재질은 각각 CC0) | 12 |
 | region_hero.py (HERO_SKY 파노라마 굽기) | - | CC0-1.0 (자체 생성) | 30 |
 | region_hero.py(자료 정리) | - | 자체 생성 — Z-Image-Turbo(Apache-2.0) 견본 → pbr_from_albedo.py (K-0093·K-0113), 남의 사진 0 | 36 |
-| build_prop.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 108 |
+| build_prop.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 118 |
 | build_building.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0)) | 105 |
 | build_vehicle.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 37 |
 | region_hero.py village | - | CC0-1.0 (배치표 — 자체 생성 데이터, 조각·재질은 각각 CC0) | 3 |
@@ -76,7 +76,7 @@
 | gen.py (ComfyUI) | Illustrious-XL-v2.0 | CreativeML OpenRAIL-M (저자 HF 토론 2025-04: 상업 가능, 폐쇄 파생 모델 수익화만 금지) | 10 |
 | face_sdf_bake.py (K-0151 — Blender, VRoid 얼굴 살갗 UV 위 원신식 그림자 문턱 계산 굽기) | - | MIT | 2 |
 | compress.mjs | - | CC0-1.0 (형태·뼈·동작 전부 코드, 외부 입력 없음) | 1 |
-| uigen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 285 |
+| uigen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 380 |
 | k130_unity_pbr.py | - | self-pbr: rock (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0) | 2 |
 | k130_unity_pbr.py | - | self-pbr: stonewall (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0 | 1 |
 | k130_unity_pbr.py | - | self-pbr: paving (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0) | 1 |

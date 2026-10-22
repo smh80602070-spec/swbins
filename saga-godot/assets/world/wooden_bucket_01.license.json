@@ -1,0 +1,20 @@
+{
+ "id": "wooden_bucket_01",
+ "generator": "tools/world-forge/build_prop.py",
+ "blender": "5.2.1 LTS",
+ "style": "toon",
+ "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+ "inputs": [
+  "self-pbr: brown_planks_03",
+  "self-pbr: corrugated_iron"
+ ],
+ "size_m": [
+  0.35,
+  0.35,
+  0.35
+ ],
+ "tris": 508,
+ "pbr_maps": "K-0152 tools/glb-compress/add_pbr_maps.mjs — 그 재질 색 그림에서 자체 계산한 법선·거칠기(남의 텍스처 0)",
+ "ticket": "K-0172",
+ "replaces": "유니티 Art/Props/PolyHaven/wooden_bucket_01 (빌린 것 대신 — 짝 표 k129_unity.json new:)"
+}

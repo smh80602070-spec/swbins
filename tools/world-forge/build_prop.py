@@ -315,9 +315,178 @@ def brazier_01(C):
     node('light_point', (0, 0, 1.45))
 
 
+
+# ---------------------------------------------------------------- K-0172 유니티 PolyHaven 짝 10 (상표·글자 없는 일반 물건, 크기 = 옛 것 최대 변)
+
+def road_barrier_01(C):
+    """콘크리트 도로 방벽 1.56 × 0.44 × 1.1m — 넓은 밑·좁은 위 단면, 빨강 띠."""
+    M = C.M
+    cc = C.s('concrete_wall_001', 1.0)
+    red = C.s('grey_plaster', 0.6, tint='#c8372d')
+    L = 1.56
+    prof = [(-0.22, 0.0), (0.22, 0.0), (0.22, 0.08), (0.12, 0.3), (0.08, 1.1), (-0.08, 1.1), (-0.12, 0.3), (-0.22, 0.08)]
+    for i in range(len(prof)):
+        (y0, z0), (y1, z1) = prof[i], prof[(i + 1) % len(prof)]
+        M.quad(Vector((-L / 2, y0, z0)), Vector((L / 2, y0, z0)), Vector((L / 2, y1, z1)), Vector((-L / 2, y1, z1)), cc, (0, 0), (L, 0), (L, 0.3), (0, 0.3))
+    for x, flip in ((-L / 2, True), (L / 2, False)):
+        pts = [Vector((x, y, z)) for y, z in (list(reversed(prof)) if flip else prof)]
+        M.face(pts, [(q.y, q.z) for q in pts], cc)
+    for k in range(4):
+        obox(M, (-L / 2 + 0.22 + k * 0.38, -0.105, 0.62), (0.2, 0.012, 0.36), 0, red)
+
+
+def covered_car_01(C):
+    """덮개 씌운 승용차 4.4 × 1.8 × 1.7m — 둥근 천 덮개 덩어리 + 바퀴 아래쪽."""
+    M = C.M
+    cloth = C.s('white_stucco', 0.8, tint='#8a96a3')      # 회청색 천(갈색 바탕 clay_plaster 에 곱하면 갈색이 됨)
+    tyre = C.s('bitumen', 0.5, tint='#2a2a2a')
+    for x in (-1.35, 1.35):
+        for y in (-0.78, 0.78):
+            tube(M, (x, y - 0.11, 0.33), (x, y + 0.11, 0.33), 0.33, 0.33, tyre, 0.5, 12)
+    n, m = 14, 9
+    rows = []
+    for i in range(n + 1):
+        t = i / n
+        x = -2.2 + 4.4 * t
+        roof = 0.85 + 0.8 * math.sin(math.pi * min(1.0, max(0.0, (t - 0.18) / 0.62)))
+        hh = roof if 0.06 < t < 0.94 else 0.8
+        ring = []
+        for j in range(m + 1):
+            a = math.pi * j / m
+            ring.append(Vector((x, -math.cos(a) * 0.92, 0.22 + math.sin(a) * (hh - 0.22))))
+        rows.append(ring)
+    for i in range(n):
+        for j in range(m):
+            M.quad(rows[i][j], rows[i + 1][j], rows[i + 1][j + 1], rows[i][j + 1], cloth,
+                   (i * 0.3, j * 0.3), ((i + 1) * 0.3, j * 0.3), ((i + 1) * 0.3, (j + 1) * 0.3), (i * 0.3, (j + 1) * 0.3))
+    for i, flip in ((0, False), (n, True)):
+        pts = rows[i][::-1] if flip else rows[i]
+        M.face(pts, [(q.y, q.z) for q in pts], cloth)
+    obox(M, (0, 0, 0.16), (4.3, 1.82, 0.08), 0, cloth)
+
+
+def old_tyre_01(C):
+    """낡은 타이어(눕힘) 지름 0.6 · 폭 0.17m — 도넛."""
+    M = C.M
+    tyre = C.s('bitumen', 0.3, tint='#2b2b2b')
+    n, m, R, r = 20, 8, 0.215, 0.085
+
+    def pt(i, j):
+        u, v = 2 * math.pi * i / n, 2 * math.pi * j / m
+        return Vector((math.cos(u) * (R + r * math.cos(v)), math.sin(u) * (R + r * math.cos(v)), 0.085 + r * math.sin(v)))
+    for i in range(n):
+        for j in range(m):
+            M.quad(pt(i, j), pt(i + 1, j), pt(i + 1, j + 1), pt(i, j + 1), tyre,
+                   (i * 0.1, j * 0.1), ((i + 1) * 0.1, j * 0.1), ((i + 1) * 0.1, (j + 1) * 0.1), (i * 0.1, (j + 1) * 0.1))
+
+
+def generator_01(C):
+    """휴대 발전기 0.82 × 0.59 × 0.56m — 관 틀 안 엔진·연료 탱크."""
+    M = C.M
+    frame = C.s('corrugated_iron', 0.4, tint='#2d2f33')
+    body = C.s('grey_plaster', 0.5, tint='#d9a21b')
+    dark = C.s('bitumen', 0.4, tint='#3a3a3a')
+    for x in (-0.38, 0.38):
+        for y in (-0.26, 0.26):
+            tube(M, (x, y, 0.0), (x, y, 0.54), 0.018, 0.018, frame, 0.4, 6)
+        tube(M, (x, -0.26, 0.54), (x, 0.26, 0.54), 0.018, 0.018, frame, 0.4, 6)
+        tube(M, (x, -0.26, 0.02), (x, 0.26, 0.02), 0.018, 0.018, frame, 0.4, 6)
+    for y in (-0.26, 0.26):
+        tube(M, (-0.38, y, 0.54), (0.38, y, 0.54), 0.018, 0.018, frame, 0.4, 6)
+    obox(M, (0.1, 0, 0.32), (0.5, 0.44, 0.2), 0, body)
+    obox(M, (-0.12, 0, 0.04), (0.42, 0.4, 0.28), 0, dark)
+    tube(M, (0.22, -0.1, 0.52), (0.22, -0.1, 0.56), 0.04, 0.04, dark, 0.3, 8)
+    obox(M, (-0.3, 0.2, 0.12), (0.1, 0.06, 0.12), 0, body)
+
+
+def searchlight_01(C):
+    """이동식 탐조등 높이 0.25m — 세발 받침·등통·빛(light_point)."""
+    M = C.M
+    metal = C.s('corrugated_iron', 0.3, tint='#3b4048')
+    for k in range(3):
+        a = 2 * math.pi * k / 3
+        tube(M, (0, 0, 0.12), (math.cos(a) * 0.08, math.sin(a) * 0.08, 0.0), 0.006, 0.006, metal, 0.3, 5)
+    tube(M, (0, 0, 0.12), (0, 0, 0.15), 0.012, 0.012, metal, 0.3, 6)
+    tube(M, (-0.07, 0, 0.19), (0.05, 0, 0.19), 0.055, 0.065, metal, 0.3, 12)
+    tube(M, (0.05, 0, 0.19), (0.056, 0, 0.19), 0.062, 0.062, C.glow('glow_lamp'), 0.3, 12)
+    node('light_point', (0.09, 0, 0.19))
+
+
+def power_box_01(C):
+    """전기 분전함 0.52 × 0.43 × 1.12m — 받침·문 틈·손잡이·환기 줄."""
+    M = C.M
+    box = C.s('corrugated_iron', 0.6, tint='#8c949a')
+    dark = C.s('bitumen', 0.3, tint='#33363a')
+    obox(M, (0, 0, 0), (0.52, 0.43, 0.08), 0, dark)
+    obox(M, (0, 0, 0.08), (0.5, 0.4, 1.0), 0, box)
+    obox(M, (0, 0, 1.08), (0.54, 0.44, 0.04), 0, box)
+    obox(M, (0, -0.205, 0.12), (0.006, 0.01, 0.9), 0, dark)
+    for x in (-0.06, 0.06):
+        obox(M, (x, -0.21, 0.55), (0.02, 0.02, 0.1), 0, dark)
+    for k in range(5):
+        obox(M, (0, -0.205, 0.86 + k * 0.03), (0.3, 0.012, 0.01), 0, dark)
+
+
+def security_camera_01(C):
+    """벽걸이 보안 카메라 0.34m — 벽판(뒤 +y)·팔·몸통·렌즈(-y)·차양."""
+    M = C.M
+    white = C.s('grey_plaster', 0.3, tint='#e6e8ea')
+    dark = C.s('bitumen', 0.2, tint='#1d1f22')
+    obox(M, (0, 0, 0.0), (0.09, 0.03, 0.14), 0, white)
+    tube(M, (0, 0, 0.1), (0, -0.12, 0.17), 0.016, 0.016, white, 0.3, 6)
+    tube(M, (0, -0.06, 0.2), (0, -0.3, 0.17), 0.05, 0.045, white, 0.3, 10)
+    tube(M, (0, -0.3, 0.17), (0, -0.33, 0.17), 0.035, 0.03, dark, 0.3, 10)
+    obox(M, (0, -0.18, 0.245), (0.12, 0.28, 0.01), 0, white)
+
+
+def wicker_basket_01(C):
+    """버들 바구니 지름 0.38 · 높이 0.3m — 테·손잡이 반고리."""
+    M = C.M
+    wk = C.s('thatch_roof_angled', 0.25, tint='#c49a5c')
+    wd = C.s('coated_pine', 0.3, tint='#8a6436')
+    tube(M, (0, 0, 0), (0, 0, 0.2), 0.15, 0.19, wk, 0.25, 16, caps=False)
+    tube(M, (0, 0, 0), (0, 0, 0.004), 0.15, 0.15, wk, 0.25, 16)
+    annulus(M, (0, 0, 0.2), 0.18, 0.195, 0.02, wd, 0.3, 16)
+    n = 10
+    for k in range(n):
+        a0, a1 = math.pi * k / n, math.pi * (k + 1) / n
+        tube(M, (math.cos(a0) * 0.17, 0, 0.21 + math.sin(a0) * 0.08), (math.cos(a1) * 0.17, 0, 0.21 + math.sin(a1) * 0.08), 0.01, 0.01, wd, 0.3, 6)
+
+
+def wooden_bucket_01(C):
+    """나무 들통 지름 0.36 · 높이 0.34m — 쇠테 둘·쇠 손잡이."""
+    M = C.M
+    wd = C.s('brown_planks_03', 0.4)
+    iron = C.s('corrugated_iron', 0.3, tint='#3c3a36')
+    tube(M, (0, 0, 0), (0, 0, 0.3), 0.15, 0.175, wd, 0.4, 16, caps=False)
+    tube(M, (0, 0, 0.02), (0, 0, 0.03), 0.152, 0.152, wd, 0.4, 16)
+    annulus(M, (0, 0, 0.05), 0.155, 0.162, 0.025, iron, 0.3, 16)
+    annulus(M, (0, 0, 0.24), 0.17, 0.177, 0.025, iron, 0.3, 16)
+    n = 10
+    for k in range(n):
+        a0, a1 = math.pi * k / n, math.pi * (k + 1) / n
+        tube(M, (math.cos(a0) * 0.17, 0, 0.3 + math.sin(a0) * 0.05), (math.cos(a1) * 0.17, 0, 0.3 + math.sin(a1) * 0.05), 0.006, 0.006, iron, 0.3, 5)
+
+
+def pocket_compass_01(C):
+    """회중 나침반(허리 꾸밈) 지름 0.08 · 고리 포함 0.12m — 놋쇠 통·흰 판(-y)·붉은 바늘."""
+    M = C.M
+    brass = C.s('corrugated_iron', 0.1, tint='#b8913f')
+    face = C.s('white_stucco', 0.1)
+    red = C.s('grey_plaster', 0.1, tint='#b0302a')
+    c = Vector((0, 0, 0.045))
+    tube(M, c + Vector((0, 0.011, 0)), c + Vector((0, -0.011, 0)), 0.04, 0.04, brass, 0.1, 18)
+    tube(M, c + Vector((0, -0.011, 0)), c + Vector((0, -0.0118, 0)), 0.034, 0.034, face, 0.1, 18)
+    tube(M, c + Vector((0, -0.012, -0.022)), c + Vector((0, -0.012, 0.022)), 0.003, 0.0, red, 0.1, 4)
+    tube(M, (0, 0, 0.085), (0, 0, 0.095), 0.006, 0.006, brass, 0.1, 6)
+    annulus(M, (0, 0, 0.098), 0.009, 0.013, 0.004, brass, 0.1, 10)
+
+
 PROPS = {f.__name__: f for f in (
     well_01, street_lamp_01, signal_pylon_01, torch_stand_01, altar_01, iron_fence_01, wood_fence_01, mailbox_01,
-    haystack_01, bamboo_clump_01, stele_01, stone_lantern_01, banner_pole_01, city_wall_segment_01, brazier_01)}
+    haystack_01, bamboo_clump_01, stele_01, stone_lantern_01, banner_pole_01, city_wall_segment_01, brazier_01,
+    road_barrier_01, covered_car_01, old_tyre_01, generator_01, searchlight_01, power_box_01, security_camera_01, wicker_basket_01,
+    wooden_bucket_01, pocket_compass_01)}
 
 
 def build(pid, out, style):
