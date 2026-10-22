@@ -1126,5 +1126,22 @@
   "ticket": "W-0366",
   "since": "2026-10-22",
   "note": "10-22: PC 화면 그대로(W<H 일 때만) · 판정·그림 파일 안 고침"
+ },
+ {
+  "id": "sd.monInner",
+  "name": "4종횡 그림 괴물(mon_*) 스탬프 안쪽 먹선 뺌(W-0351) — 실루엣 테·색 계단은 그대로 · 손잡이 sprite.monInner(1 = 옛, 스탬프 캐시 키에 들어감)",
+  "files": [
+   "js/sprite.js"
+  ],
+  "tests": [
+   "test-web saga-story",
+   "mon351 비교판(옛·새 셋)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0351",
+  "since": "2026-10-22",
+  "note": "10-22: 렌더 그림 위 안쪽 선이 몸 안 검은 점으로 박힘 — W-0347 1만리와 같은 원인"
  }
 ]

@@ -376,7 +376,7 @@
     }
     /* 원작풍은 여기서 한 번 훑는다 — 지도 위 스탬프는 어두운 배경에 서므로
        실루엣만 진하게 둘러 형태가 묻히지 않게 한다 */
-    if (!useImg || kind === 'beast') { storyize(cv, mapleOpts(H < 40)); }
+    if (!useImg || kind === 'beast') { var mo = mapleOpts(H < 40); if (useImg && !monInner()) { mo.inner = false; } storyize(cv, mo); }   // W-0351 그림 괴물(mon_*)은 실루엣 테만 — 렌더 그림 위 안쪽 선이 결을 점묘로 깼다(W-0347 1만리와 같은 원인) · 손잡이 sprite.monInner 1 = 옛
     return { cv: cv, w: w, h: h, footX: footX, footY: footY, base: base, sc: sc, img: useImg };
   }
 
@@ -389,7 +389,7 @@
     var sc = bucketScale(o.s || 1);
     var pb = bucketPhase(o.phase || 0, !!o.walking);
     var id = (o.ref && (o.ref.id || o.ref.name)) || o.key || 'anon';
-    var key = kind + '|' + id + '|' + sc.toFixed(2) + '|' + pb;
+    var key = kind + '|' + id + '|' + sc.toFixed(2) + '|' + pb + '|' + monInner();   // W-0351 손잡이를 바꾸면 다시 굽는다
 
     var e = stampCache[key];
     if (e && !e.img && (kind === 'human' ? humanReady(o.ref) : monReady(o.ref))) { e = null; }   // 그림이 실리기 전에 구운 코드 그림 컷은 다시 굽는다
@@ -550,6 +550,7 @@
    */
   var MAPLE_LINE = [62, 50, 78];
   var MAPLE_RIM = [28, 24, 38];
+  function monInner() { var C = global.DG && global.DG.core; return C && C.tuned ? +C.tuned('sprite.monInner', 0) : 0; }
   function mapleOpts(small) {
     /* 작은 그림에 안쪽 선까지 그으면 형태가 선에 먹혀 검은 덩어리가 된다 —
        storyize 가 지도 스탬프에서 겪은 그 함정이 여기서도 똑같이 난다. */
