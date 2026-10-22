@@ -180,8 +180,8 @@ func _build_hud() -> void:
 			_hud.add_child(b)
 			_touch_buttons[action] = b
 	else:
-		_skill_orb = _orb("E", -196)
-		_burst_orb = _orb("Q", -108)
+		_skill_orb = _orb("E", -356)   # G-0301 저장·사진 단추(MobileHUD 오른쪽 아래 -160~-40) 왼쪽으로 — 원래 같은 자리에 겹쳤다
+		_burst_orb = _orb("Q", -268)
 		## 106장 ㊵ — 활 인물일 때만 "R 조준".
 		_aim_hint = Label.new()
 		_aim_hint.text = "R 조준"
@@ -189,10 +189,11 @@ func _build_hud() -> void:
 		_aim_hint.anchor_right = 1.0
 		_aim_hint.anchor_top = 1.0
 		_aim_hint.anchor_bottom = 1.0
-		_aim_hint.offset_left = -284
-		_aim_hint.offset_right = -204
-		_aim_hint.offset_top = -96
-		_aim_hint.offset_bottom = -70
+		_aim_hint.offset_left = -356   # G-0301 구슬 바로 위
+		_aim_hint.offset_right = -192
+		_aim_hint.offset_top = -148
+		_aim_hint.offset_bottom = -122
+		_aim_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		_aim_hint.add_theme_font_size_override("font_size", 15)
 		_aim_hint.add_theme_constant_override("outline_size", 5)
 		_aim_hint.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.8))

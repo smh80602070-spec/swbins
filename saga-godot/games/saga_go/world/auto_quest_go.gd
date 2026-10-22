@@ -25,6 +25,12 @@ func _ready() -> void:
 	btn_top = 252.0   # 목표판 넷째 줄(의뢰) 밑 — 촬영으로 맞춤
 	add_to_group("go_autoquest")
 	super._ready()
+	## G-0301 대화 띠(MobileHUD, 미니맵 밑으로 내려옴)가 ▶ 와 같은 높이 — 띠 오른쪽 끝을 ▶ 칸(-300) 왼쪽에서 멈춘다
+	var hud := get_parent().find_child("MobileHUD", true, false) if get_parent() else null
+	for nm in ["DialoguePanel", "DialogueLabel"]:
+		var c := hud.get_node_or_null(nm) as Control if hud else null
+		if c != null:
+			c.offset_right = minf(c.offset_right, -316.0)
 
 
 func _story() -> Node:

@@ -41,9 +41,21 @@ func _init() -> void:
 						n += 1
 						if (b as Button).theme != th:
 							_fail("③ 1만리 %s 여는 단추 틀 없음" % nm)
-			var save := sc.get_node_or_null("MobileHUD/SaveButton") as Button
-			if save != null and save.theme == th:
-				_fail("③ 1만리 저장 단추는 빼야 함(E·Q 겹침)")
+			## G-0301 저장·사진도 같은 틀 · E·Q 구슬(키보드 판)과 안 겹침
+			var orbs: Array = []
+			for c in sc.find_children("*", "Control", true, false):
+				if c.get("key_text") in ["E", "Q"]:
+					orbs.append(c)
+			for nm in ["SaveButton", "PhotoModeButton"]:
+				var sb := sc.get_node_or_null("MobileHUD/" + nm) as Button
+				if sb == null:
+					continue
+				if sb.theme != th:
+					_fail("③ 1만리 %s 틀 없음" % nm)
+				for o: Control in orbs:
+					if o.get_global_rect().intersects(sb.get_global_rect()):
+						_fail("③ 1만리 %s 가 %s 구슬과 겹침" % [nm, o.get("key_text")])
+			print("HUD go orbs=%d" % orbs.size())
 		else:
 			var hook := sc.find_child("MenuHook", true, false)
 			var hud := hook.get_parent() if hook else null
