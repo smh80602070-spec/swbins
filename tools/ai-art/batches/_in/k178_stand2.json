@@ -1,0 +1,41 @@
+{
+ "name": "k178_stand2",
+ "spec": "character_tall",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0178 다시 셋 — 모자 말 바꿈(날개·뿔 함정), out 은 k178_stand 로 모음",
+ "items": [
+  {
+   "id": "sg_zhugeliang",
+   "subject": "1boy, male focus, young adult man, short dark hair, gentle smile, black square scholar cap, long green robe over white inner robe, holding a round feather hand fan, cloth shoes",
+   "subject_ko": "4종횡 스승·5천하 책사",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026102290
+  },
+  {
+   "id": "sg_liubei",
+   "subject": "1boy, male focus, adult man, short dark hair, calm face, black and gold crown with vertical gold bars, green robe with gold shoulder trim, long robe, boots",
+   "subject_ko": "5천하 1막 세력 군주",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026102391
+  },
+  {
+   "id": "sg_sunquan",
+   "subject": "1boy, male focus, young adult man, short black hair, stern face, black square official cap with gold pattern, red orange robe with black collar, gold shoulder ornaments, long robe, boots",
+   "subject_ko": "5천하 세력 군주",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026102492
+  }
+ ],
+ "out": "k178_stand"
+}

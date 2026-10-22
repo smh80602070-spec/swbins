@@ -175,6 +175,25 @@ def head_box(im):
     return float(cx), float(y0), float(hh)
 
 
+def face_box(im, cx, top, hh):
+    """K-0178 — 머리 띠(top ~ top+2.2hh, cx±1.4hh) 안의 살빛(r>g>b, g/r·b/r 범위) 첫 줄부터 0.9hh 의 무게중심 = 얼굴.
+    모자·관·투구가 높거나 창·방패가 옆으로 길면 몸 실루엣 머리 띠(head_box)가 얼굴을 비껴서. 못 찾으면 None."""
+    import numpy as np
+    a = np.asarray(im.convert('RGB')).astype(np.float32)
+    y0, y1 = int(top), int(min(a.shape[0], top + hh * 2.2))
+    x0, x1 = int(max(0, cx - hh * 1.4)), int(min(a.shape[1], cx + hh * 1.4))
+    r, g, b = (a[y0:y1, x0:x1, k] for k in range(3))
+    sk = (r > 90) & (r > g) & (g > b) & (g / np.maximum(r, 1) > 0.62) & (g / np.maximum(r, 1) < 0.95) & (b / np.maximum(r, 1) > 0.45) & (b / np.maximum(r, 1) < 0.92)
+    rows = sk.sum(1)
+    hit = np.nonzero(rows > hh * 0.12)[0]
+    if not len(hit):
+        return None
+    f0 = hit[0]
+    band = sk[f0:int(f0 + hh * 0.9)]
+    ys, xs = np.nonzero(band)
+    return float(x0 + xs.mean()), float(y0 + f0 + hh * 0.42)
+
+
 def bust():
     """고른 스탠딩(cast stand_pick) → 머리·가슴 정사각 자르기 → 768 확대 밑그림 + 얼굴 타원 좌표(cast face)."""
     os.makedirs(BUST_INIT, exist_ok=True)
@@ -185,7 +204,10 @@ def bust():
             continue
         src = os.path.join(STAND, pk + '.png')
         cx, top, hh = head_box(Image.open(src))
-        dy = x.get('face_dy', 0) * hh                   # 높은 모자·관 — 눈으로 본 만큼 얼굴 자리를 내린다(머리 키 단위)
+        fb = face_box(Image.open(src), cx, top, hh)
+        if fb:                                          # 살빛 얼굴 자리 — 실루엣 머리 띠 대신(얼굴 가운데 = top + 0.78hh 꼴로 맞춤)
+            cx, top = fb[0], fb[1] - hh * 0.78
+        dy = x.get('face_dy', 0) * hh                   # 그래도 어긋나면 눈으로 본 만큼(머리 키 단위)
         side = hh * 2.8
         box = (round(cx - side / 2), round(top + dy - hh * 0.25), round(cx + side / 2), round(top + dy - hh * 0.25 + side))
         im = Image.open(src).convert('RGB')
@@ -197,6 +219,8 @@ def bust():
         k = 768 / (box[2] - box[0])
         fx, fy = (cx - box[0]) * k, (top + hh * 0.78 + dy - box[1]) * k
         x['face'] = [round(fx), round(fy), round(hh * 0.74 * k), round(hh * 0.58 * k)]
+        if x.get('face_xy'):                            # 눈으로 찍은 얼굴 가운데(768 반신 좌표) — 챙 그늘·관 탓에 자동이 빗나갈 때
+            x['face'][:2] = x['face_xy']
         sl = json.load(open(os.path.join(STAND, pk + '.license.json'), encoding='utf-8'))
         json.dump({'model': sl.get('model'), 'model_license': sl.get('model_license'),
                    'base_inputs': [f'tools/ai-art/_out/k178_stand/{pk}.png (스탠딩 자르기 확대)']},

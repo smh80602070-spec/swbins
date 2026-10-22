@@ -8,7 +8,7 @@
  "items": [
   {
    "id": "hl_mukhyang",
-   "subject": "1boy, male focus, purple long hair in twin tails, glasses, oversized green and purple tie-dye hoodie, gray plaid trousers, beige shoes",
+   "subject": "1boy, male focus, adult man, short dark brown hair with a small top bun, grey eyes, calm clever face, long white mandarin-collar scholar robe with frog buttons, blue sash, cloth shoes, holding a scroll",
    "subject_ko": "2나락 1막 길잡이 사관(도감 묵향 대역) 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -20,7 +20,7 @@
   },
   {
    "id": "sg_lubu",
-   "subject": "1boy, male focus, short silver-lavender hair, black high-collar coat with white trim, white vest and frilled cravat, red cape, gray plaid trousers, white shoes",
+   "subject": "1boy, male focus, adult man, black hair, confident grin, silver steel helmet with wide round brim and red pointed top, dark lamellar armor over a red robe, armored boots, holding a long polearm",
    "subject_ko": "4종횡 전직 스승 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -32,7 +32,7 @@
   },
   {
    "id": "kr_gyebaek",
-   "subject": "1boy, male focus, brown bob hair, amber eyes, gray and white frilled blouse vest, black ribbon tie, black cargo pants, beige boots",
+   "subject": "1boy, male focus, adult man, short black hair, big confident grin, round silver steel helmet with wide brim, dark navy and purple armored robe, ancient korean warrior, lamellar armor, leather boots",
    "subject_ko": "4종횡 전직 스승 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -44,7 +44,7 @@
   },
   {
    "id": "jp_musashi",
-   "subject": "1boy, male focus, mint green hair covering one eye, red eyes, black tailcoat with gold embroidery, red vest, red necktie, black pants, white sneakers",
+   "subject": "1boy, male focus, young adult man, long black hair tied in a low ponytail, calm face, cream white kimono with dark undercollar, dark gray hakama, straw sandals, two swords at the waist",
    "subject_ko": "4종횡 전직 스승 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -56,7 +56,7 @@
   },
   {
    "id": "eu_leonidas",
-   "subject": "1boy, male focus, pale blonde hair with long ponytail, glasses, navy blue turtleneck cropped jacket, black belt pouch, dark gray trousers, white shoes",
+   "subject": "1boy, male focus, young adult man, short blonde hair, stern face, small pointed bronze helmet, red cloak wrapped over the shoulders, bronze cuirass, leather skirt, sandals, round red and white shield",
    "subject_ko": "4종횡 전직 스승 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -68,7 +68,7 @@
   },
   {
    "id": "sg_huangzhong",
-   "subject": "1boy, male focus, short dark blue hair, black and gray zip-up jacket with red accents, dark gray pants with knee straps, black sneakers",
+   "subject": "1boy, male focus, middle-aged veteran, short black hair with gray temples, gray mustache, broad grin, green armored vest over a white robe, dark trousers, boots, holding a bow",
    "subject_ko": "4종횡 전직 스승 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -80,7 +80,7 @@
   },
   {
    "id": "sg_taishici",
-   "subject": "1boy, male focus, black hair with teal sheen, side-swept bangs, amber eyes, black and gray zip-up jacket, gray plaid trousers, black boots",
+   "subject": "1boy, male focus, young adult man, black hair, smiling, silver steel helmet with wide brim and red pointed crest, red and dark brown armored robe, lamellar armor, boots",
    "subject_ko": "4종횡 전직 스승 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -92,7 +92,7 @@
   },
   {
    "id": "jp_yoshitsune",
-   "subject": "1boy, male focus, light cyan short bob hair, mustard yellow turtleneck cropped jacket, black shorts with belt pouch, green thigh-high leg warmers, white sandals",
+   "subject": "1boy, male focus, young adult man, black hair, calm face, dark navy samurai helmet with golden crescent horns and silver neck guard, dark samurai armor with white trim, hakama, katana at the waist",
    "subject_ko": "4종횡 전직 스승 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -104,7 +104,7 @@
   },
   {
    "id": "wd_genghis",
-   "subject": "1boy, male focus, mint green hair covering one eye, gray and white frilled blouse vest, black ribbon tie, black baggy pants, gray socks, sandals",
+   "subject": "1boy, male focus, young adult man, long light brown hair, brown fur hat, mustard yellow scarf, blue silk deel robe with yellow sash, leather riding boots",
    "subject_ko": "4종횡 전직 스승 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -116,7 +116,7 @@
   },
   {
    "id": "jp_hanzo",
-   "subject": "1boy, male focus, light purple short hair, beige blazer, white shirt, black pants with knee straps, black boots",
+   "subject": "1boy, male focus, young adult man, black hair, sharp calm eyes, black hood, black shinobi garb, black cloak, dark arm wraps, dark leg wraps, tabi",
    "subject_ko": "4종횡 전직 스승 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -128,7 +128,7 @@
   },
   {
    "id": "sg_ganning",
-   "subject": "1boy, male focus, dark red wavy hair with small side braid, black and gray zip-up jacket, gray plaid trousers, black sneakers",
+   "subject": "1boy, male focus, adult man, black hair in a small topknot, confident smirk, red brocade robe with gold embroidery, wide sleeves, sash belt, dark trousers, boots",
    "subject_ko": "4종횡 전직 스승 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -140,7 +140,7 @@
   },
   {
    "id": "jp_tomoegozen",
-   "subject": "1girl, brown hair with twin braids, glasses, green eyes, green and white fantasy dress with gold armor accents, pink sash, white stockings, lace-up sandals",
+   "subject": "1girl, young adult woman, long black hair tied back, red lips, determined face, dark navy kimono with small white pattern, white undercollar, silver shoulder armor, dark hakama, katana",
    "subject_ko": "4종횡 전직 스승 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -152,7 +152,7 @@
   },
   {
    "id": "wd_shaka",
-   "subject": "1boy, male focus, black hair with teal highlights, amber eyes, black double-breasted vest jacket, white shirt, black ribbon tie, black trousers, white shoes",
+   "subject": "1boy, male focus, adult man, dark skin, short curly dark hair, black headband, short beard, bare muscular shoulders, fur cloak over one shoulder, leather straps, hide skirt, holding an oval cowhide shield and a short spear",
    "subject_ko": "4종횡 전직 스승 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -164,7 +164,7 @@
   },
   {
    "id": "jp_himiko",
-   "subject": "1girl, long purple twin tails, blue eyes, cream yukata with navy leaf pattern, purple obi sash, brown sandals",
+   "subject": "1girl, young adult woman, black hair in an updo, red eyes, golden spiked crown, deep red robe with gold pattern, white high collar, red gem pendant, long red skirt",
    "subject_ko": "4종횡 전직 스승 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -175,20 +175,8 @@
    "seed": 2026102241
   },
   {
-   "id": "sg_zhugeliang",
-   "subject": "1boy, male focus, white hair with long ponytail, hair over one eye, rust brown turtleneck cropped jacket, dark gray trousers, beige shoes",
-   "subject_ko": "4종횡 스승·5천하 책사 반신",
-   "view": "front",
-   "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
-   "init_image": "tools/ai-art/_out/k163_bust_init/sg_zhugeliang.png",
-   "denoise": 0.42,
-   "width": 768,
-   "height": 768,
-   "seed": 2026102248
-  },
-  {
    "id": "wd_ibnsina",
-   "subject": "1boy, male focus, ash blonde hair with ponytail, glasses, black double-breasted vest jacket, white shirt, black ribbon tie, gray plaid trousers, beige shoes",
+   "subject": "1boy, male focus, middle-aged man, dark hair, kind stern face, dark brown turban cap, mustard yellow shawl over the shoulders, long deep blue robe with gold pattern, leather shoes",
    "subject_ko": "4종횡 전직 스승 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -200,7 +188,7 @@
   },
   {
    "id": "eu_davinci",
-   "subject": "1boy, male focus, light cyan bob hair, pale aqua oversized hoodie with brown patterned trim, white undershirt, black pants, dark boots",
+   "subject": "1boy, male focus, young adult man, short blonde hair, calm face, white hooded linen robe with dark blue trim, long tunic, brown belt, boots",
    "subject_ko": "4종횡 전직 스승 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -212,7 +200,7 @@
   },
   {
    "id": "sg_caocao",
-   "subject": "1boy, male focus, dark teal medium hair with cyan tips, pink eyes, pale aqua oversized hoodie with brown patterned trim, black pants, dark boots",
+   "subject": "1boy, male focus, adult man, short black hair, stern face, golden crown with vertical bars, royal blue robe with gold shoulder ornaments, long robe, black boots",
    "subject_ko": "5천하 1막 세력 군주 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -224,7 +212,7 @@
   },
   {
    "id": "rf_yuanshao",
-   "subject": "1boy, male focus, light purple short hair, black high-collar coat with white trim, white vest and frilled cravat, red cape, black baggy pants, white shoes",
+   "subject": "1boy, male focus, adult man, messy black hair with long bangs, low ponytail, calm face, ornate gold and white armor, white robe, long robe, boots",
    "subject_ko": "5천하 1막 세력 군주 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -236,7 +224,7 @@
   },
   {
    "id": "rf_gongsunzan",
-   "subject": "1boy, male focus, dark red hair over one eye, yellow eyes, navy blue turtleneck cropped jacket, gray plaid trousers, black shoes",
+   "subject": "1boy, male focus, young adult man, black hair, slight smile, silver steel helmet with wide brim and orange-red pointed top, white robe, white armor, boots",
    "subject_ko": "5천하 1막 세력 군주 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -248,7 +236,7 @@
   },
   {
    "id": "rf_kongrong",
-   "subject": "1girl, short wine red bob hair, red and black halter dress with rose ornament, black belt, brown boots",
+   "subject": "1girl, young adult woman, black bob hair covering one eye, gentle smile, white scholar robe with silver brocade, long white skirt, cloth shoes",
    "subject_ko": "5천하 1막 세력 군주 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -259,20 +247,8 @@
    "seed": 2026102290
   },
   {
-   "id": "sg_liubei",
-   "subject": "1boy, male focus, long straight dark navy blue hair, cyan eyes, gray and white frilled blouse vest, black ribbon tie, black cargo pants, beige boots",
-   "subject_ko": "5천하 1막 세력 군주 반신",
-   "view": "front",
-   "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
-   "init_image": "tools/ai-art/_out/k163_bust_init/sg_liubei.png",
-   "denoise": 0.42,
-   "width": 768,
-   "height": 768,
-   "seed": 2026102297
-  },
-  {
    "id": "rf_yuanshu",
-   "subject": "1boy, male focus, black hair with teal sheen over one eye, purple turtleneck cropped jacket, black cargo pants, black loafers",
+   "subject": "1boy, male focus, adult man, short dark brown hair, stern face, white collar, black armor with shoulder plates, dark robe, boots",
    "subject_ko": "5천하 1막 세력 군주 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -284,7 +260,7 @@
   },
   {
    "id": "rf_sunce",
-   "subject": "1boy, male focus, mint green hair covering one eye, red eyes, black high-collar coat with white trim, white vest and frilled cravat, red cape, black baggy pants, gray socks, sandals",
+   "subject": "1boy, male focus, young adult man, short black pompadour hair, confident smirk, white inner shirt, golden shoulder armor, muscular, dark trousers, boots",
    "subject_ko": "5천하 1막 세력 군주 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -296,7 +272,7 @@
   },
   {
    "id": "rf_liubiao",
-   "subject": "1boy, male focus, short black hair with teal sheen, gray and white frilled blouse vest, black ribbon tie, gray plaid trousers, sandals",
+   "subject": "1boy, male focus, adult man, long black hair loose to the shoulders, gentle smile, cream white robe with beige shoulder armor, long robe, cloth shoes",
    "subject_ko": "5천하 1막 세력 군주 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -308,7 +284,7 @@
   },
   {
    "id": "rf_lijue",
-   "subject": "1boy, male focus, olive green short hair, amber eyes, dark gray double-breasted vest jacket, white shirt, black ribbon tie, black trousers, black shoes",
+   "subject": "1boy, male focus, adult man, black hair in a small bun, sly smile, white and silver plate armor, white robe, boots",
    "subject_ko": "5천하 1막 세력 군주 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -319,20 +295,8 @@
    "seed": 2026102325
   },
   {
-   "id": "sg_sunquan",
-   "subject": "1boy, male focus, magenta wavy medium hair, tan skin, dark gray double-breasted vest jacket, white shirt, black ribbon tie, black trousers, sandals",
-   "subject_ko": "5천하 세력 군주 반신",
-   "view": "front",
-   "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
-   "init_image": "tools/ai-art/_out/k163_bust_init/sg_sunquan.png",
-   "denoise": 0.42,
-   "width": 768,
-   "height": 768,
-   "seed": 2026102332
-  },
-  {
    "id": "fu_jongwang",
-   "subject": "1girl, long silver white hair, tan skin, black choker, black and white oversized varsity jacket, black crop top, gray shorts, thigh strap, white socks, black loafers",
+   "subject": "1girl, young adult woman, long straight blonde hair, glowing purple mark on the forehead, earrings, white and light blue futuristic robe with silver patterns, blue gem brooch, long flowing skirt",
    "subject_ko": "5천하 4막 이계 군주(균열) 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -344,7 +308,7 @@
   },
   {
    "id": "ru_geohae",
-   "subject": "1boy, male focus, dark brown hair in top bun, pink eyes, beige blazer, white shirt, black cargo pants, gray socks, sandals",
+   "subject": "1boy, male focus, young adult man, black hair with long bangs covering one eye, blue eyes, sly smile, bare muscular shoulders, dark green fur mantle, leather straps, fur trousers, boots",
    "subject_ko": "5천하 4막 이계 군주(폐허) 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
@@ -356,7 +320,7 @@
   },
   {
    "id": "tb_baekgi",
-   "subject": "1boy, male focus, short silver gray hair, tan skin, pink eyes, dark gray double-breasted vest jacket, white shirt, black ribbon tie, black cargo pants, black sneakers",
+   "subject": "1boy, male focus, young adult man, black bob hair covering one eye, blue eye, smirk, golden round shoulder armor, blue cloak, blue armored robe, boots",
    "subject_ko": "5천하 4막 이계 군주(묘역) 반신",
    "view": "front",
    "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
