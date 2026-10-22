@@ -192,6 +192,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/potion.js"></script>
 <script src="js/vendor.js"></script>
 <script src="js/forge.js"></script>
+<script src="js/evolve.js"></script>
 <script src="js/quest.js"></script>
 <script src="js/bestiary.js"></script>
 <script src="js/goals.js"></script>
@@ -9380,6 +9381,24 @@ window.requestAnimationFrame = function () { return 0; };
       var d = B.layout(390, 844, 700, 440, 350, 1, 110).s, t = B.layoutTown(390, 844, 1120, 760, 300, 380, 0, 0, false, 1, 110).s;
       var dl = B.layout(1280, 720, 700, 440, 350, 1, 110).s, tl = B.layoutTown(1280, 720, 1120, 760, 300, 380, 0, 0, false, 1, 110).s;
       return (Math.abs(t - d) < 1e-9 && Math.abs(tl - dl * 0.78) < 1e-9) || ('실패 배율 세로 ' + d + '/' + t + ' 가로 ' + dl + '/' + tl);
+    });
+    t('W-0307 무기 진화 — 같은 밑감·같은 등급 둘 + 부문 하나만 · 등급 +1 · 접사 위 셋 이상(같은 키 높은 값) · 이름 앞 ✦ · 하루 셋', function () {
+      var EV = DG.evolve, IT = DG.item, F = DG.forge, C = DG.core; if (!EV || !F.recipeByKey('evolve')) { return '실패 DG.evolve·연단 줄 없음'; }
+      var keepEv = C.save.evolve, made = [];
+      try {
+        C.save.evolve = null;
+        var a = IT.roll(20, { tier: 2, sock: 0 }), b = IT.roll(20, { base: a.base, tier: 2, sock: 0 }), c = null, i;
+        for (i = 0; i < 40 && (!c || c.base === a.base); i++) { c = IT.roll(20, { tier: 2, sock: 0 }); }
+        [a, b, c].forEach(function (x) { x.unid = false; IT.add(x); made.push(x.uid); });
+        IT.addMat('rune', DG.gemData.RUNES[0].key, 0, 3);
+        var rows = EV.find(), mine = rows.filter(function (r) { return r.id === 'evolve:' + a.base + ':2'; }), cross = rows.filter(function (r) { return r.id === 'evolve:' + c.base + ':2'; });
+        var mAff = EV.mergeAff([{ k: 'x', v: 5 }, { k: 'y', v: 9 }], [{ k: 'x', v: 7 }, { k: 'z', v: 1 }], 2);
+        var r = F.make('evolve:' + a.base + ':2'), out = r.out;
+        if (out) { made.push(out.uid); }
+        C.save.evolve = { day: EV.left ? C.save.evolve.day : '', n: 3 }; var day = F.make('evolve:' + a.base + ':2');
+        var ok = mine.length === 1 && cross.length === 0 && JSON.stringify(mAff) === '[{"k":"y","v":9},{"k":"x","v":7}]' && r.ok && out.tier === 3 && out.aff.length >= 3 && /^✦ /.test(IT.name(out)) && !day.ok && day.reason === 'daily';
+        return ok || ('실패 ' + JSON.stringify({ mine: mine.length, cross: cross.length, mAff: mAff, r: r.ok, tier: out && out.tier, aff: out && out.aff.length, name: out && IT.name(out), day: day }));
+      } finally { made.forEach(function (u) { IT.take(u); }); C.save.evolve = keepEv; }
     });
     t('W-0298 지도 장치 — 새김은 금을 내고 변형자 하나(결정적·겹치지 않음, 최대 3) · 새긴 것이 판에 걸리고(merge) 새긴 수만큼 노획 배율 · 금이 모자라면 안 새김', function () {
       var AT = DG.atlas, IT = DG.item, C = DG.core; if (!AT || !IT || !IT.addSigil) { return '실패 DG.atlas·item 없음'; }
