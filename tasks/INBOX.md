@@ -17,6 +17,8 @@
 - [ ] 10-22 · (K-0170 끝) · 2나락 적 종 시트 42(+alias 6) — sheetOf 가 body 시트 씀, 코끼리병 body beast_big → `dg_elephant` 짝 한 줄(beast_big = 곰 still) · 웹/2나락
 - [ ] 10-22 · (K-0171 끝) · 그림만 바뀜: 바탕 넷+이음 쌍·4종횡 옛 싸움터 far·5천하 rts_inf_ally · 웹
 - [x] 10-22 · (K-0171) → K-0179 · 바탕 넷 만화경 무늬(go_sand·go_stone·realm_stone·go_water) → ground_tile · 자체툴
+- [ ] 10-22 · (K-0179 끝) · 그림만 바뀜: 1만리 go_sand·go_stone·go_water·5천하 realm_stone 바탕(만화경 → 코드 그림) + 이음 쌍 1만리 4·5천하 2 — 이름·자리 그대로, 웹 코드 안 고침 · 웹
+- [ ] 10-22 · (K-0179 덤) · 1만리 go_grass 바탕도 비늘 같은 반복 무늬 — ground_tile grass 로 바꿀지 · 자체툴
 - [ ] 10-22 · (K-0168·0172·0173·0174 끝) · 유니티 셋: ① sg_liubei 새 몸 → CharactersDex(U-0156 길) ② 소품 10 `World/<new id>`·rock_moss_01 → SelfPairs 10줄·재빌드·PolyHaven 지움 ③ UI 스킨 95 + 9-slice .meta `Resources/UI/` ④ 깨지는 조각 `World/<모델>_shard_0~3` 16·`Audio/Sfx/sfx_prop_break*` 4(K-0174, 진단 breakable `대신 False`) — 임포트 확인 · 유니티
 - [x] 10-22 · (W-0371 막힘 알림) → K-0178(초상 묘사로 다시 — 원인 = 3D 몸 렌더 밑그림) · K-0163 인물 일러스트 30 이 그 인물과 다른 사람(성별·시대·옷 — 장군 kr_gyebaek 하녀 옷 소녀·jp_yoshitsune 노란 점퍼 소녀·rf_kongrong 빨간 드레스 소녀·군주 현대 옷) → 지금 초상(portraits/hero/<id>_c)·3D 몸을 참조로 다시 그리기 · 웹은 배선 끝·illust.on 기본 0 · 자체툴
 - [ ] 10-22 · (W-0299 알림) · 3마을 가축 — 닭·염소 2D 걷기 그림(우리 안, 지금은 코드 대역)·우리 울타리 소품·산물 아이콘 material:egg·material:milk(icons map.json) → 자체툴 · 웹은 아이콘 진단 K_WAIT 예외를 그때 지움 · 자체툴

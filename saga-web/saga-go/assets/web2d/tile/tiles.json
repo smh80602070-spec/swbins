@@ -34,7 +34,7 @@
    "kinds_b": [
     "road"
    ],
-   "seam_excess": 2.55
+   "seam_excess": 2.79
   },
   "grass_stone": {
    "atlas": "grass_stone/atlas.webp",
@@ -48,7 +48,7 @@
     "mount",
     "town"
    ],
-   "seam_excess": 2.48
+   "seam_excess": 3.15
   },
   "grass_water": {
    "atlas": "grass_water/atlas.webp",
@@ -61,7 +61,7 @@
    "kinds_b": [
     "water"
    ],
-   "seam_excess": 3.65
+   "seam_excess": 3.24
   },
   "sand_water": {
    "atlas": "sand_water/atlas.webp",
@@ -74,7 +74,7 @@
    "kinds_b": [
     "water"
    ],
-   "seam_excess": 3.16
+   "seam_excess": 1.98
   }
  }
 }

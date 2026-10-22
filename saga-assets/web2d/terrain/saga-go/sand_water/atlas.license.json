@@ -5,8 +5,8 @@
   "saga-assets/web2d/tile/go_sand.webp",
   "saga-assets/web2d/tile/go_water.webp"
  ],
- "model": "sd_xl_base_1.0",
- "model_license": "CreativeML OpenRAIL++-M",
+ "model": "",
+ "model_license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
  "license": "원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것",
  "derived": "16칸 모서리 꼴 이음(쌍선형 경계 + 주기 잡음, 경계 shore)",
  "date": "2026-10-21",

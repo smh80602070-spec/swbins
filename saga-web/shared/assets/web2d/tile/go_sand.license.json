@@ -1,22 +1,11 @@
 {
  "id": "go_sand",
- "generator": "tools/ai-art/gen.py",
- "model": "sd_xl_base_1.0",
- "model_license": "CreativeML OpenRAIL++-M",
- "prompt": "seamless tileable ground texture swatch, flat orthographic material, hand painted game texture, even lighting, no objects, pale coast sand ground with tiny shells and soft ripples",
- "negative_prompt": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality",
- "seed": 20261350,
- "steps": 30,
- "cfg_scale": 6.5,
- "sampler": "Euler a",
- "size": [
-  640,
-  640
- ],
- "seconds": 33.3,
- "date": "2026-10-02",
- "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
- "derived": "거울 반복 2×2(이음매 차이 0)",
- "tile_method": "mirror",
- "px": 256
+ "generator": "tools/ai-art/ground_tile.py",
+ "model": "",
+ "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+ "derived": "주기 사인 합 얼룩 + 감싼 점 찍기(모래알·조개) — 256 주기 이음매 없음, 색은 옛 SD 타일 평균에서",
+ "note": "1만리 모래 — 고운 모래 얼룩·잔 조개 · K-0162 SD 타일(만화경 거울 무늬)을 바꿈",
+ "px": 256,
+ "date": "2026-10-22",
+ "ticket": "K-0179"
 }

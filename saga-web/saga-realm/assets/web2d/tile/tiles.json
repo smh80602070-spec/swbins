@@ -33,7 +33,7 @@
    "kinds_b": [
     "mount"
    ],
-   "seam_excess": 2.03
+   "seam_excess": 2.35
   },
   "grass_water": {
    "atlas": "grass_water/atlas.webp",
@@ -59,7 +59,7 @@
    "kinds_b": [
     "mount"
    ],
-   "seam_excess": 2.12
+   "seam_excess": 3.58
   }
  }
 }
