@@ -38,6 +38,39 @@ def log(*a):
     print(time.strftime('%H:%M:%S'), *a, flush=True)
 
 
+ENGINES = ('Unity.exe', 'Godot')          # K-0175 — 이 이름으로 시작하는 프로세스가 떠 있으면 줄여 돈다(사용자 엔진 작업이 우선)
+_lim_cache = [0.0, None]
+
+
+def limits():
+    """K-0175 동시 개수(굽기 Blender, 그림체 프로세스) — 엔진(Unity·Godot)이 떠 있으면 1·2, 없으면 RAM 12GB↑ 3·5 / 그 밖 2·5.
+    30초마다 다시 잰다. FACTORY_BAKE·FACTORY_STYLE 환경변수가 있으면 그 값(1 = 옛 한 줄)."""
+    now = time.time()
+    if _lim_cache[1] and now - _lim_cache[0] < 30:
+        return _lim_cache[1]
+    eng, free_gb = False, 16.0
+    if os.name == 'nt':
+        try:
+            out = subprocess.run(['tasklist', '/FO', 'CSV', '/NH'], capture_output=True, text=True, timeout=20).stdout
+            eng = any(line.strip('"').startswith(ENGINES) for line in out.splitlines())
+            import ctypes
+
+            class MS(ctypes.Structure):
+                _fields_ = [('len', ctypes.c_ulong), ('load', ctypes.c_ulong)] + [(n, ctypes.c_ulonglong) for n in ('tot', 'avail', 'tpf', 'apf', 'tv', 'av', 'ave')]
+            ms = MS(); ms.len = ctypes.sizeof(MS)
+            ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(ms))
+            free_gb = ms.avail / 1024 ** 3
+        except Exception:
+            pass
+    bake, style = (1, 2) if eng else ((3, 5) if free_gb >= 12 else (2, 5))
+    bake = int(os.environ.get('FACTORY_BAKE') or bake)
+    style = int(os.environ.get('FACTORY_STYLE') or style)
+    if _lim_cache[1] != (bake, style):
+        log(f'동시 개수: 굽기 {bake} · 그림체 {style}' + (' (엔진 떠 있음)' if eng else f' (RAM 여유 {free_gb:.1f}GB)'))
+    _lim_cache[:] = [now, (bake, style)]
+    return bake, style
+
+
 def tp_save(tp):
     json.dump(tp, open(os.path.join(OUT, 'throughput.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 
@@ -174,6 +207,30 @@ def load_plan(plan_path):
     return plan
 
 
+def style_one(args):
+    """K-0175 한 풀 그림체 — 프로세스 풀에서 부른다(최상위 함수라야 넘어감)."""
+    plan, p, raw, styled, force = args
+    import style_pass
+    pal = style_pass.load_palette(plan)
+    rd, sd = os.path.join(raw, p['id']), os.path.join(styled, p['id'])
+    os.makedirs(sd, exist_ok=True)
+    t0 = time.time()
+    n = 0
+    for r in plan['clips']:
+        src, dst = os.path.join(rd, r + '.webp'), os.path.join(sd, r + '.webp')
+        if os.path.exists(src) and (force or not os.path.exists(dst)):
+            foot = plan['foot']
+            if p['type'] == 'creature':
+                foot = json.load(open(os.path.join(rd, 'creature_meta.json'), encoding='utf-8'))['foot']
+            style_pass.style_sheet(src, dst, pal, geo(plan, p)[0], r, foot, plan['clips'][r].get('ground'), p.get('tint'))
+            n += 1
+    m = manifest(plan, p, rd)
+    json.dump(m, open(os.path.join(sd, 'manifest.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    style_pass.compare_board(rd, sd, dict(plan, px=geo(plan, p)[0], still_game=p.get('still_game', plan.get('game')), still_img=p.get('still_img')), os.path.join(OUT, f'compare_{p["id"]}.png'))
+    log(f'그림체: {p["id"]} {n}장 · 대조판 compare_{p["id"]}.png')
+    return p['id'], round(time.time() - t0, 1)
+
+
 def main():
     a = sys.argv[1:]
     plan_path = a[0]
@@ -194,48 +251,58 @@ def main():
     tp = json.load(open(tpp, encoding='utf-8')) if os.path.exists(tpp) else {}
 
     if 'bake' in stages:
-        for p in pools:
+        import threading
+        from concurrent.futures import ThreadPoolExecutor
+        lock, cv, active, fails = threading.Lock(), threading.Condition(), [0], []
+
+        def bake_one(p):
             have, _, _ = roles_of(plan, p)
             todo = [r for r in have if not os.path.exists(os.path.join(raw, p['id'], r + '.webp'))]
             if p['type'] == 'creature' and not os.path.exists(os.path.join(raw, p['id'], 'creature_meta.json')):
                 todo = todo or have
             if not todo:
                 log('굽기 건너뜀(역할 webp 있음):', p['id'])
-                continue
-            log('굽기:', p['id'], todo)
-            t0 = time.time()
-            ok = (bake_human if p['type'] == 'human' else bake_creature)(plan, p, raw)
-            sec = round(time.time() - t0)
+                return
+            with cv:                                    # K-0175 자리 — 엔진이 뜨면 limits() 가 줄어 새 굽기를 기다리게 한다
+                while active[0] >= limits()[0]:
+                    cv.wait(10)
+                active[0] += 1
+            try:
+                log('굽기:', p['id'], todo)
+                t0 = time.time()
+                ok = (bake_human if p['type'] == 'human' else bake_creature)(plan, p, raw)
+                sec = round(time.time() - t0)
+            finally:
+                with cv:
+                    active[0] -= 1
+                    cv.notify_all()
             frames = sum(plan['clips'][r]['frames'] for r in todo) * len(plan['dirs'])
-            tp[p['id']] = {'type': p['type'], 'bake_sec': sec, 'frames': frames, 'sec_per_frame': round(sec / max(1, frames), 2),
-                           'device': 'CPU+GPU(Blender EEVEE, 낮은 우선순위)', 'roles': todo, 'date': time.strftime('%Y-%m-%d')}
-            tp_save(tp)
+            with lock:
+                tp[p['id']] = {'type': p['type'], 'bake_sec': sec, 'frames': frames, 'sec_per_frame': round(sec / max(1, frames), 2),
+                               'device': 'CPU+GPU(Blender EEVEE, 낮은 우선순위)', 'roles': todo, 'date': time.strftime('%Y-%m-%d')}
+                tp_save(tp)
             log(f'  {"ok" if ok else "실패"} {p["id"]} {sec}s ({frames}칸)')
             if not ok:
-                return 2
+                fails.append(p['id'])
+
+        with ThreadPoolExecutor(max_workers=3) as ex:     # 실제 동시 개수는 limits() 자리가 정한다(최대 3)
+            list(ex.map(bake_one, pools))
+        if fails:
+            log('굽기 실패:', fails)
+            return 2
 
     if 'style' in stages:
-        import style_pass
-        pal = style_pass.load_palette(plan)
+        from concurrent.futures import ProcessPoolExecutor
         force = '--force-style' in a
-        for p in pools:
-            rd, sd = os.path.join(raw, p['id']), os.path.join(styled, p['id'])
-            os.makedirs(sd, exist_ok=True)
-            t0 = time.time()
-            n = 0
-            for r in plan['clips']:
-                src, dst = os.path.join(rd, r + '.webp'), os.path.join(sd, r + '.webp')
-                if os.path.exists(src) and (force or not os.path.exists(dst)):
-                    foot = plan['foot']
-                    if p['type'] == 'creature':
-                        foot = json.load(open(os.path.join(rd, 'creature_meta.json'), encoding='utf-8'))['foot']
-                    style_pass.style_sheet(src, dst, pal, geo(plan, p)[0], r, foot, plan['clips'][r].get('ground'), p.get('tint'))
-                    n += 1
-            m = manifest(plan, p, rd)
-            json.dump(m, open(os.path.join(sd, 'manifest.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-            style_pass.compare_board(rd, sd, dict(plan, px=geo(plan, p)[0], still_game=p.get('still_game', plan.get('game')), still_img=p.get('still_img')), os.path.join(OUT, f'compare_{p["id"]}.png'))
-            tp.setdefault(p['id'], {})['style_sec'] = round(time.time() - t0, 1)
-            log(f'그림체: {p["id"]} {n}장 · 대조판 compare_{p["id"]}.png')
+        n_style = limits()[1]
+        if n_style > 1 and len(pools) > 1:              # K-0175 풀마다 따로(PIL 한 스레드라 프로세스로 나눔)
+            with ProcessPoolExecutor(max_workers=min(n_style, len(pools))) as ex:
+                for pid, sec in ex.map(style_one, [(plan, p, raw, styled, force) for p in pools]):
+                    tp.setdefault(pid, {})['style_sec'] = sec
+        else:
+            for p in pools:
+                pid, sec = style_one((plan, p, raw, styled, force))
+                tp.setdefault(pid, {})['style_sec'] = sec
         tp_save(tp)
 
     res = {}
@@ -253,7 +320,11 @@ def main():
         deps = plan['deploy'] if isinstance(plan['deploy'], dict) else {plan['deploy']: None}   # K-0159 {판 sprites2d_sheets: [풀…]}
         placed = []
         for p in pools:
-            if not res.get(p['id'], {}).get('pass'):
+            r_ = res.get(p['id'], {})
+            waived = [c for c, x in r_.get('checks', {}).items() if not x['ok']]
+            if r_ and not r_.get('pass') and waived and set(waived) <= set(p.get('waive', {})):   # K-0160: 눈으로 본 판정기 경계 오판(레시피에 이유)
+                log('판정 FAIL 면제(눈 판정):', p['id'], {c: p['waive'][c] for c in waived})
+            elif not r_.get('pass'):
                 log('배포 안 함(판정 FAIL·없음):', p['id'])
                 continue
             sd = os.path.join(styled, p['id'])

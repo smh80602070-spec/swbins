@@ -146,7 +146,8 @@ py tools/char-forge/sheet_judge.py            # _out/factory/styled 의 풀 전�
 - **그림체 C-toon-1**(`style_pass.py`): 발 맞춤(딛는 동작은 칸마다, run·death 는 줄 기준) → 명도 4단 툰 → 그림자 보랏빛·밝은 면 크림 → 판 배경 k-means 32색(`data/style_palette_<판>.json`)으로 22% 끌어당김 → 바깥 1px 짙은 밤색 부드러운 선. 대조판 `_out/factory/compare_<풀>.png`(배경 그림 위 원본/통일 + 판의 한 장 그림).
 - **판정 다섯 줄**(`sheet_judge.py`): 같은 사람(색 분포 ≥ 0.45) · 발 ±2px · 깜빡임(한 칸만 튀었다 돌아옴) · 잘림(가장자리 1px) · 투명 테두리(가장자리 2px·떨어진 반투명). FAIL 풀은 배포 안 함.
 - **정본·배포**: `saga-assets/sprites2d_factory/<풀>/` + `<풀>.license.json` → `asset-place.json` 항목 `sprites2d_factory` 와 같은 내용으로 판 `assets/sprites2d_sheets/<풀>/` + `index.json` 의 `factory` 목록. 새 판·풀은 계획 json 의 `pools`·`deploy` 와 asset-place `only` 를 같이 늘린다.
-- **이어하기**: 역할 webp 가 있으면 건너뜀(manifest 만 보지 않는다). Blender 하나씩·낮은 우선순위.
+- **이어하기**: 역할 webp 가 있으면 건너뜀(manifest 만 보지 않는다). Blender 낮은 우선순위.
+- **병렬(K-0175)**: 굽기 Blender·그림체 프로세스를 풀 단위로 동시에 — 엔진(Unity·Godot) 떠 있으면 1·2, 아니면 RAM 여유 12GB↑ 3·5(30초마다 다시 잼). `FACTORY_BAKE=1 FACTORY_STYLE=1` = 옛 한 줄(SD·MOSS 와 겹칠 때). 눈 판정 면제 = 풀 `waive: {줄: 이유}`(판정기 경계 오판만, place 가 로그에 남김).
 - **처리량(10-21, 이 PC)**: 사람 풀 380칸 굽기 108초(0.29초/칸) + 그림체 55초 ≈ 2.8분, 짐승 260칸 65초 + 41초 ≈ 1.8분. GPU 는 Blender EEVEE 만(SD 없음).
 - **still 과 같은 사람(K-0159)**: `still_match.py <풀>` 이 500 몸을 still 과 띠 색으로 순위 → 머리 모양·옷 꼴이 닮은 몸을 고르고 계획 `human.kinds` 로 `gear_sprites` KIND_JSON(`hair_ramp`·`cloth_by`·`cape:wrap`·갑주·`pal`)을 맞춘다. 배율 ortho 2.2(몸 ~80%, still 94%), 창·지팡이 풀은 `px` 256(px/m 같음). 판정 6째 줄 `still`. style_pass 는 채도 > 0.10 인 곳 색상을 되살린다(`keep_hue`). 배포 `deploy` = {판 sprites2d_sheets: [풀…]}.
 - **함정**: K-0015 풀 몸(`cc0_basem`)에 모캡을 걸면 팔이 들리고 `rand:` 장비가 날개·꼬리를 붙인다 — 사람은 옷 이식 몸(`_out/vroid/<id>`) + 그 몸 `_anims` 를 쓴다. 뼈 표시 공(Icosphere)이 bbox 를 ±1m 로 부풀린다(보이는 메시만).
