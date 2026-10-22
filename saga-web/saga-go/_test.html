@@ -137,6 +137,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/mount.js"></script>
 <script src="js/mount-combat.js"></script>
 <script src="js/field-parry.js"></script>
+<script src="js/field-env.js"></script>
 <script src="js/world-terrain.js"></script>
 <script src="js/world.js"></script>
 <script src="js/field2d.js"></script>
@@ -17416,6 +17417,24 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var P0 = { x: 0, y: 0 }, uv = Wd._spreadUV([{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 2 }], P0, 1), mn = 1e9;   /* 나와 같은 자리에 선 셋 — 화면에서 벌어짐 */
       for (i = 0; i < 3; i++) { mn = Math.min(mn, Math.hypot(uv[i].u, uv[i].v * 1.6)); for (var j = i + 1; j < 3; j++) { mn = Math.min(mn, Math.hypot(uv[i].u - uv[j].u, (uv[i].v - uv[j].v) * 1.6)); } }
       return mn > 15 || ('실패 벌림 ' + mn.toFixed(1));
+    });
+    t('W-0374 환경 연쇄 — 풀 칸 불 타격 → 불길(둘레 적 피해·이웃 풀 한 칸 번짐·3초 뒤 꺼짐) · 물 칸 번개 → 이웃 물 칸 적까지 · 물 타격은 불길 끔 · 길·마을 칸은 안 탐', function () {
+      var FE = DG.fieldEnv, FC = DG.fieldCombat, W0 = DG.world; if (!FE || !FC) { return '실패 DG.fieldEnv 없음'; }
+      var map = function (tx, ty) { return tx >= 10 ? 'water' : (tx === 3 ? 'road' : 'grass'); };
+      DG.world = Object.create(W0, { terrainAt: { value: map } }); FE._reset();
+      try {
+        var S = fcState(), a = fcFoe(S, 'rex', 60, 20), b = fcFoe(S, 'rex', 70, 30), hp0 = b.hp;
+        var r1 = FE.onHit(S, a, 'fire', 'basic'), n1 = FE.fires().length;
+        for (var i = 0; i < 40; i++) { FE.tick(S, 0.05); }
+        var n2 = FE.fires().length, burned = b.hp < hp0;
+        var road = FE.ignite(3, 0), env = FE.onHit(S, a, 'fire', 'env');
+        FE._reset(); FE.onHit(S, a, 'fire', 'basic'); var dz = FE.onHit(S, a, 'water', 'basic'), n3 = FE.fires().length;
+        for (i = 0; i < 80; i++) { FE.tick(S, 0.05); }
+        var w1 = fcFoe(S, 'rex', 500, 20), w2 = fcFoe(S, 'rex', 530, 25), hw = w2.hp, sh = FE.onHit(S, w1, 'elec', 'basic');
+        FE._reset(); var a2 = fcFoe(S, 'rex', 60, 20); FE.onHit(S, a2, 'fire', 'basic'); for (i = 0; i < 90; i++) { FE.tick(S, 0.05); } var gone = FE.fires().length === 0;
+        var ok = r1 === 'fire' && n1 === 1 && n2 === 2 && burned && !road && env === null && dz === 'douse' && n3 === 0 && sh === 'shock' && w2.hp < hw && gone;
+        return ok || ('실패 ' + JSON.stringify({ r1: r1, n1: n1, n2: n2, burned: burned, road: road, env: env, dz: dz, n3: n3, sh: sh, hw: [hw, w2.hp], gone: gone }));
+      } finally { DG.world = W0; FE._reset(); }
     });
     t('W-0375 쳐내기 — 예고 끝 직전(남은 ≤0.25초) 평타면 쳐냄: 그 공격 취소·무피해·적 비틀(기절) · 다음 한 타 ×2 한 번만 · 이르면 그냥 평타 · 자동 사냥 평타는 안 쳐냄', function () {
       var FP = DG.fieldParry, FC = DG.fieldCombat; if (!FP || !FC) { return '실패 DG.fieldParry 없음'; }

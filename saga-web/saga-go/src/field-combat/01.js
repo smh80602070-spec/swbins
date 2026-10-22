@@ -733,7 +733,7 @@
     var emB = (1 + (m.em || 0) / 300) * (m.reactMul || 1) * (1 + (m.rxAll || 0));   // ⑲-4 깨달음 2 · ⑲-5 무기 반응 효과
     if (S.loreT > 0) { emB *= S.loreMul; }                            // ⑲-15 옛 글자 풀이 — 명단 반응 피해
     var mul = f.stun > 0 ? STUN_MUL() : 1;
-    raw *= talentMul(m, src); if (global.DG.mountCombat) { raw *= global.DG.mountCombat.hitMul(src); } if (global.DG.fieldParry) { raw *= global.DG.fieldParry.nextMul(); }
+    raw *= talentMul(m, src); if (global.DG.mountCombat) { raw *= global.DG.mountCombat.hitMul(src); } if (global.DG.fieldParry) { raw *= global.DG.fieldParry.nextMul(); } if (global.DG.fieldEnv) { global.DG.fieldEnv.onHit(S, f, el, src); }
     if (S.rallyT > 0 && src !== 'test') { raw *= S.rallyMul; }        // ⑲-11 군기·학날개 진
     if (f.markT > 0 && src !== 'test') { raw *= f.markMul || 1; }     // ⑲-15 그림자 걸음 표식 — 누구에게든
     /* ⑲-5 — 피해 보너스(원소/물리 + 무기 효과 + 세트 4, 더하기)·치명타. 출처가 인물의 한 방일 때만 */

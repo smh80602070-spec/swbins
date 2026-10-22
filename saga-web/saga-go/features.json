@@ -1784,5 +1784,28 @@
   "ticket": "W-0375",
   "since": "2026-10-22",
   "note": "10-22: 이르면 그냥 평타 · 자동 사냥 평타는 쳐내기를 안 씀(S.autoAct) · 화면 촬영 없음(타이밍)"
+ },
+ {
+  "id": "go.envChain",
+  "name": "환경 연쇄(W-0374) — 불 타격 맞은 적이 풀·숲·논 칸이면 불길 3초(0.5초마다 그 칸·이웃 적 불 피해, 한 번 이웃 풀로 번짐) · 번개 맞은 적이 물 칸이면 이웃 물 칸 적에게 번개 ×0.6 · 물 타격은 불길 끔 · 2D 불길 그림 · 손잡이 go.envChain",
+  "files": [
+   "js/field-env.js",
+   "src/field-combat/01.js",
+   "src/field-combat/02.js",
+   "src/world/02.js"
+  ],
+  "tests": [
+   "test-web W-0374 환경 연쇄",
+   "pw-look2d LOOK_EVAL 풀밭 불길"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {
+   "B": "들판이 반응",
+   "C": "원소 손맛"
+  },
+  "ticket": "W-0374",
+  "since": "2026-10-22",
+  "note": "10-22: 원소 반응 표 그대로 · 나는 불길에 안 다침 · 3D 표시 없음"
  }
 ]

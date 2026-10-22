@@ -536,7 +536,7 @@
     S.calmT += dt;
     S.iframe = Math.max(0, S.iframe - dt);
     S.swapCd = Math.max(0, S.swapCd - dt);
-    S.atkCd = Math.max(0, S.atkCd - dt); if (global.DG.fieldGrab) { global.DG.fieldGrab.step(S, dt, px, py); }   // W-0277 잡기·던지기(field-grab.js) — 쿨·든 적 옮기기·착지
+    S.atkCd = Math.max(0, S.atkCd - dt); if (global.DG.fieldEnv) { global.DG.fieldEnv.tick(S, dt); } if (global.DG.fieldGrab) { global.DG.fieldGrab.step(S, dt, px, py); }   // W-0277 잡기·던지기(field-grab.js) — 쿨·든 적 옮기기·착지
     if (S.aim) {                                                    // ⑲-22 조준 — 활 아닌 인물·쓰러짐·대화면 풀린다
       if (!canAim(S) || inp.blocked) { aimEnd(S); }
       else { if (S.aim.hold) { S.aim.t = Math.min(AIM_FULL() + 1, S.aim.t + dt); } aimLock(S, px, py); }
@@ -1012,7 +1012,7 @@
       else if (e.t === 'hurt') {
         floatNum(pos.x, pos.y, '-' + e.dmg, e.el, 1, false, true);
         A2('me', 'hit', 260); if (W3()) { W3().playAnim('me', 'hit', 260); W3().shake(0.25); } sfx('sx:sfx_sword_hurt_' + (1 + (e.dmg & 1)));   // W-0170 내가 맞는 소리
-      } else if (e.t === 'evade') { floatNum(pos.x, pos.y, '회피!', null, 1.1, true, true); } else if (e.t === 'parry') { floatNum(e.x, e.y, '쳐냄!', null, 1.5, true); ring(e.x, e.y, 2.2, '#ffe7a3', 0.4); if (W3()) { W3().hold(140); } sfx('sx:sfx_dodge'); }   // W-0375
+      } else if (e.t === 'evade') { floatNum(pos.x, pos.y, '회피!', null, 1.1, true, true); } else if (e.t === 'parry') { floatNum(e.x, e.y, '쳐냄!', null, 1.5, true); ring(e.x, e.y, 2.2, '#ffe7a3', 0.4); if (W3()) { W3().hold(140); } sfx('sx:sfx_dodge'); } else if (e.t === 'envShock') { floatNum(e.x, e.y, '⚡ 물 타고 ' + e.n, 'elec', 1.2, true); }   // W-0375 · W-0374
       else if (e.t === 'swap') {
         var sm = S.party[e.idx];
         if (e.forced) { toast('💫 ' + sm.name + ' 교대 — 앞사람이 쓰러졌다'); }
