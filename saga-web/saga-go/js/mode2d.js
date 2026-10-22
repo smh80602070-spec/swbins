@@ -68,14 +68,33 @@
     v = o[kind]; if (v !== undefined) { return +v; }
     return SCALE[kind] !== undefined ? SCALE[kind] : 1;
   }
-  /** 발밑 그림자 한 꼴 — (x, y) 발 밑 가운데, w = 그림자 폭(px). o = { a: 진하기(0.3), fade: 곱(뜰수록 작게) } */
+  /** 발밑 그림자 한 꼴 — (x, y) 발 밑 가운데, w = 그림자 폭(px). o = { a: 진하기(0.3), fade: 곱(뜰수록 작게) }
+   *  W-0368 두 겹(손잡이 mode2d.shadow2, 기본 1 · 0 = 옛 타원 하나): 옅고 큰 퍼짐 + 발이 닿는 진하고 작은 핵 — 옅은 타원 하나라 몸이 떠 보였다 */
   function shadow(ctx, x, y, w, o) {
     o = o || {};
     var f = o.fade === undefined ? 1 : Math.max(0, o.fade), a = (o.a === undefined ? 0.3 : o.a) * f, rx = w / 2 * (0.4 + 0.6 * f);
     if (!ctx || !(rx > 0) || !(a > 0)) { return; }
-    ctx.save(); ctx.fillStyle = 'rgba(0,0,0,' + a.toFixed(3) + ')';
-    ctx.beginPath(); ctx.ellipse(x, y, rx, Math.max(1.5, rx * 0.38), 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+    ctx.save();
+    if (tuneOf('mode2d.shadow2', 1)) {
+      ctx.fillStyle = 'rgba(0,0,0,' + (a * 0.55).toFixed(3) + ')';
+      ctx.beginPath(); ctx.ellipse(x, y, rx * 1.15, Math.max(1.5, rx * 0.42), 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = 'rgba(0,0,0,' + Math.min(0.7, a * 1.5 * f).toFixed(3) + ')';
+      ctx.beginPath(); ctx.ellipse(x, y, rx * 0.5, Math.max(1, rx * 0.17), 0, 0, Math.PI * 2); ctx.fill();
+    } else {
+      ctx.fillStyle = 'rgba(0,0,0,' + a.toFixed(3) + ')';
+      ctx.beginPath(); ctx.ellipse(x, y, rx, Math.max(1.5, rx * 0.38), 0, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.restore();
   }
+  /* W-0368 환경 톤 — 판이 프레임마다 지금 밝기를 알려 주면(밤·비·던전 어둠) 인물·소품 그림도 같은 만큼 어두워진다(전엔 배경만 어둡고 몸은 낮 색).
+     setTone(b, sat) — b 밝기 곱(1 = 그대로), sat 채도 곱(기본 1). 손잡이 mode2d.tone 0 이면 안 씀. ctx.filter 를 모르는 브라우저는 그대로(오류 없음) */
+  var toneF = '';
+  function setTone(b, sat) {
+    b = Math.max(0.2, Math.min(1.2, +b || 1)); sat = Math.max(0, Math.min(1.5, sat === undefined ? 1 : +sat));
+    toneF = (Math.abs(b - 1) < 0.02 && Math.abs(sat - 1) < 0.02) || !tuneOf('mode2d.tone', 1) ? '' : 'brightness(' + b.toFixed(2) + ')' + (Math.abs(sat - 1) < 0.02 ? '' : ' saturate(' + sat.toFixed(2) + ')');
+    return toneF;
+  }
+  function applyTone(ctx) { if (toneF && ctx && 'filter' in ctx) { ctx.filter = toneF; } }
 
   /* ── W-0350 2D 표식 이모지 → 자체 아이콘(K-0118 ui_*_g0.png, 다섯 판 assets/icons/icon64 — sync-shared 가 복사). ctx.fillText 대신 쓴다:
      글이 짝 있는 이모지로 시작하면 그 이모지만 그림으로(뒤 글은 그대로), 그림을 받기 전·짝 없음·손잡이 mode2d.markIcon 0 이면 옛 fillText.
@@ -358,7 +377,7 @@
     var cf = C(), vr = cf.vroid2d, sc = (vr ? (cf.targetH || 62) / (vr.h || 85) : (cf.scale || 1)) * (o.scale || 1), w = P * sc, h = P * sc, foot = (P / 2 + c[1] * PPM + 1.5) / P;
     ctx.save();
     if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
-    ctx.imageSmoothingEnabled = true; hq(ctx);
+    ctx.imageSmoothingEnabled = true; hq(ctx); applyTone(ctx);
     if (d.flip) { ctx.translate(o.x, 0); ctx.scale(-1, 1); ctx.translate(-o.x, 0); }
     var P2 = o.pose && S.roleName(o.pose) !== role && global.DG.pose3d && global.DG.pose3d.frame2d ? global.DG.pose3d.frame2d(o.pose) : null;   // 시트에 그 자세가 없을 때만 대역
     if (P2) { ctx.translate(o.x, o.y); ctx.rotate(P2.rot); ctx.scale(P2.sx, P2.sy); ctx.translate(-o.x, -o.y); }
@@ -401,7 +420,7 @@
     var foot = cr ? cr.foot : eight ? (P / 2 + c8[1] * PPM + 1.5) / P : ((vr && vr.foot) || cf.foot || 0.87);   // 8방향 칸: 가운데 + 카메라 높이(실측 114/128·156/192 와 ±1px)
     ctx.save();
     if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
-    ctx.imageSmoothingEnabled = true; hq(ctx);
+    ctx.imageSmoothingEnabled = true; hq(ctx); applyTone(ctx);
     if (d.flip) { ctx.translate(o.x, 0); ctx.scale(-1, 1); ctx.translate(-o.x, 0); }
     var P2 = o.pose && global.DG.pose3d && global.DG.pose3d.frame2d ? global.DG.pose3d.frame2d(o.pose) : null;   // W-0303 2D 대역 — 동작 프레임(K 시트) 전엔 발 밑 기준으로 기울이고 누른다
     if (P2) { ctx.translate(o.x, o.y); ctx.rotate(P2.rot); ctx.scale(P2.sx, P2.sy); ctx.translate(-o.x, -o.y); }
@@ -433,12 +452,13 @@
     e.img = im;
     return e;
   }
-  /** 동작·시각 → 몸짓 { dx(몸 높이 비율·앞으로), dy(위로 −), rot(라디안), sx, sy, alpha } — 순수 함수 */
-  function stillPose(clip, ms, stride) {
-    var p = { dx: 0, dy: 0, rot: 0, sx: 1, sy: 1, alpha: 1 }, t = Math.max(0, ms || 0), a, k;
+  /** 동작·시각 → 몸짓 { dx(몸 높이 비율·앞으로), dy(위로 −), rot(라디안), sx, sy, alpha } — 순수 함수.
+   *  amp = 걷기·숨쉬기 세기(W-0368 기본 손잡이 mode2d.stillAmp 0.5 — 한 장 그림을 기울이고 눌렀다 펴는 대역이 종이 인형처럼 보였다, 1 = 옛) */
+  function stillPose(clip, ms, stride, amp) {
+    var p = { dx: 0, dy: 0, rot: 0, sx: 1, sy: 1, alpha: 1 }, t = Math.max(0, ms || 0), a, k, m = amp === undefined ? 1 : Math.max(0, +amp);
     if (clip === 'walk') {
       a = (stride !== undefined && stride !== null) ? stride * Math.PI * 2 : t / 1000 * Math.PI * 2 * 2.2; k = Math.abs(Math.sin(a));   // W-0203 한 바퀴(두 발) = 출렁 두 번
-      p.dy = -0.035 * k; p.rot = Math.sin(a) * 0.05; p.sy = 1 + 0.02 * k; p.sx = 1 - 0.015 * k;
+      p.dy = -0.035 * k * m; p.rot = Math.sin(a) * 0.05 * m; p.sy = 1 + 0.02 * k * m; p.sx = 1 - 0.015 * k * m;
     } else if (clip === 'attack') {
       k = Math.sin(Math.min(1, t / 450) * Math.PI);
       p.dx = 0.14 * k; p.rot = 0.12 * k; p.sx = 1 + 0.06 * k; p.sy = 1 - 0.05 * k;
@@ -450,7 +470,7 @@
       p.rot = 1.45 * k; p.dy = 0.02 * k; p.alpha = 1 - 0.6 * k;
     } else {
       a = Math.sin(t / 1000 * Math.PI * 2 * 0.8);
-      p.sy = 1 + 0.015 * a; p.sx = 1 - 0.008 * a;
+      p.sy = 1 + 0.015 * a * m; p.sx = 1 - 0.008 * a * m;
     }
     return p;
   }
@@ -460,10 +480,10 @@
     if (e.fail && d.row !== 1) { e = getStill(o.pool, 'side'); }
     if (!e.ok) { return false; }
     var cf = C(), bodyH = (cf.targetH || 62) * (o.scale || 1), sc = bodyH / SBODY, w = SPX * sc, h = SPX * sc;
-    var ps = stillPose(o.clip || 'idle', o.ms || 0, o.stride);
+    var ps = stillPose(o.clip || 'idle', o.ms || 0, o.stride, tuneOf('mode2d.stillAmp', 0.5));
     ctx.save();
     ctx.globalAlpha = (o.alpha !== undefined ? o.alpha : 1) * ps.alpha;
-    ctx.imageSmoothingEnabled = true; hq(ctx);
+    ctx.imageSmoothingEnabled = true; hq(ctx); applyTone(ctx);
     ctx.translate(o.x, o.y);                         // 발 밑 가운데가 원점
     if (d.flip) { ctx.scale(-1, 1); }
     ctx.translate(ps.dx * bodyH, ps.dy * bodyH);
@@ -624,7 +644,7 @@
     if (scaleOn()) { shadow(ctx, o.x, o.y, w * 0.8, { a: 0.22 }); }   // W-0349 그림자 한 꼴
     else { ctx.fillStyle = 'rgba(0,0,0,0.18)'; ctx.beginPath(); ctx.ellipse(o.x, o.y, w * 0.38, Math.max(2, h * 0.07), 0, 0, Math.PI * 2); ctx.fill(); }   // 옛 발 밑 그림자
     if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
-    ctx.imageSmoothingEnabled = true; hq(ctx);
+    ctx.imageSmoothingEnabled = true; hq(ctx); applyTone(ctx);
     ctx.drawImage(e.img, b.sx, b.sy, b.sw, b.sh, o.x - w / 2, o.y - h, w, h);
     ctx.restore();
     return h || true;
@@ -658,7 +678,7 @@
   global.DG = global.DG || {};
   global.DG.mode2d = {
     labels: labels,
-    scaleOf: scaleOf, scaleOn: scaleOn, shadow: shadow, SCALE: SCALE, BEAST: BEAST,   // W-0349
+    scaleOf: scaleOf, scaleOn: scaleOn, shadow: shadow, setTone: setTone, tone: function () { return toneF; }, SCALE: SCALE, BEAST: BEAST,   // W-0368 setTone·tone ·   // W-0349
     mark: mark, markSrc: markSrc, MARK: MARK, markMisses: function () { return Object.assign({}, markMiss); },   // W-0350
     isCrea: isCrea, creaPool: creaPool, creaFit: creaFit, cell8: cell8,   // W-0129 몬스터 2D 시트
     drawSprite: drawSprite, drawKind: drawKind, hasKind: hasKind, spriteReady: function (id) { return !!spriteOf(id); },
