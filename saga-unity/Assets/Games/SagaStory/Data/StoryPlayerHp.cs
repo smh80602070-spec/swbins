@@ -58,11 +58,14 @@ namespace Saga.Story.Data
             if (Hp <= 0f)
             {
                 Falls++;
-                StoryRunRank.Finish(Time.time, dead: true);   // 쓰러짐 = 판 끝(U-0128 덤 없음)
+                LastFallRun = StoryRunRank.Finish(Time.time, dead: true);   // 쓰러짐 = 판 끝(U-0128 덤 없음) · tasks U-0160 카드가 읽는다
                 Fell?.Invoke();
             }
             return true;
         }
+
+        /// <summary>tasks U-0160 — 마지막 쓰러짐에 끝난 판(없으면 null) — 쓰러짐 카드의 "잃은 것".</summary>
+        public static StoryRunRank.Result? LastFallRun { get; private set; }
 
         /// <summary>한 걸음 — 무적·회복. 최대치가 늘면(레벨업·전직) 는 만큼 채운다.</summary>
         /// <summary>tasks U-0142 회피 — 무적 0.12초(맞은 뒤 무적이 더 길면 그대로).</summary>

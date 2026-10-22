@@ -76,12 +76,18 @@ namespace Saga.Story.Player
 
         private void OnJobChosen(string jobKey) => Refresh();
 
+        /// <summary>tasks U-0160(웹 W-0246) 발밑 전직 표식 — 몸 배율만큼 키운다(주인공 몸은 사람 키 그대로라 1).</summary>
+        public const float RingScale = 1f;
+        /// <summary>진단 — 발밑 표식 선 수.</summary>
+        public int RingPieces { get; private set; }
+
         public void Refresh()
         {
             if (_controller == null || _controller.Visual == null) return;
             string root = StoryJobState.Root;
             float mix = MixFor(StoryJobState.Tier, root);
             Color branch = BranchColor(root);
+            RingPieces = Saga.Core.RankRing.Apply(transform, root == StoryJobState.NoJob ? 0 : StoryJobState.Tier, branch, RingScale); // tasks U-0160
             CurrentMix = mix;
             TintedSlots = 0;
             SkippedSkinSlots = 0;

@@ -71,6 +71,18 @@ namespace Saga.Story.Player
                 StoryLocalization.T("just.toast", "⚡ 저스트 회피! — 느려진다 · 다음 한 타 ×{0}"), StoryJust.NextMul), 2f);
         }
 
+        /// <summary>tasks U-0160(웹 W-0241) 들판 쓰러짐 카드 — 첫 줄 + (판이 있었으면 판 등급 줄) + 잃은 것 + 남은 것.
+        /// 이 판엔 금 벌칙이 없어 잃는 건 "이번 판 등급 덤" 뿐(판이 없었으면 "없음").</summary>
+        public static string FallCard(StoryRunRank.Result? run)
+        {
+            var sb = new System.Text.StringBuilder(StoryLocalization.T("hp.fell_field", "💀 쓰러졌다 — 들판 입구에서 다시 일어선다"));
+            if (run.HasValue) sb.Append('\n').Append(StoryRunRank.Line(run.Value));
+            sb.Append('\n').Append(string.Format(StoryLocalization.T("hp.fell_lost", "잃은 것: {0}"),
+                run.HasValue ? StoryLocalization.T("hp.fell_lost_run", "이번 판 등급 덤") : StoryLocalization.T("hp.fell_lost_none", "없음")));
+            sb.Append('\n').Append(StoryLocalization.T("hp.fell_keep", "남은 것: 레벨·경험·무기·전직 그대로 — 바로 다시"));
+            return sb.ToString();
+        }
+
         private void OnFell()
         {
             var runner = StoryLabyrinthRunner.Instance;
@@ -83,7 +95,7 @@ namespace Saga.Story.Player
                 Teleport(FieldRespawn);
                 foreach (var e in StoryEnemy.All)
                     if (e != null && e.IsBoss && !e.IsLabyrinthEnemy) e.RegroupAfterPlayerFell();
-                DialogueLabel.Instance?.Show(StoryLocalization.T("hp.fell_field", "💀 쓰러졌다 — 들판 입구에서 다시 일어선다"), 3.5f);
+                DialogueLabel.Instance?.Show(FallCard(StoryPlayerHp.LastFallRun), 6f); // tasks U-0160 잃은 것·남은 것(판 등급 줄을 덮지 않게 한 장으로)
             }
             StoryPlayerHp.Refill();
             StoryCombat.RestoreMp(StoryCombat.MpMaxCurrent);
