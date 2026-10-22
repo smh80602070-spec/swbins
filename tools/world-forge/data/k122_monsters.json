@@ -1,5 +1,5 @@
 {
- "note": "K-0122 단계 1(Opus 10-17) — 5천하 data-force.js monster: 경로 + 2나락 js 참조 → 자체 creatures3d 짝. 'new:humanoid' = 사람꼴(무기 쥠) 자체 몸 없음 → 그림 → TRELLIS(SD 사슬 뒤). 2나락 실제 놀이 쓰임은 W-0266 메모상 0 — 표 갈 때 웹이 다시 확인. · 10-19 Opus: built = 새 자체 몸(creatures3d id), robots = 이미 자체(짝만), pending = 3D 다시 도는 중. · 10-20 K-0145: built +10(2나락 pending 12 body — Cactoro·Ninja 는 두 파일이 한 id). · 10-22 K-0180: 2나락 남은 빌린 일곱 — built +5(Fish 는 Fish_f7d91eb6 둥근 물고기 = gape_fish), pending 둘(Armabee=bumble_puff · Fish_6c98561f 두발 = finback_brute, 다시 그림 뒤). · 10-22 K-0180: bumble_puff built(+1), pending 하나(finback_brute C3 다시 그림).",
+ "note": "K-0122 단계 1(Opus 10-17) — 5천하 data-force.js monster: 경로 + 2나락 js 참조 → 자체 creatures3d 짝. 'new:humanoid' = 사람꼴(무기 쥠) 자체 몸 없음 → 그림 → TRELLIS(SD 사슬 뒤). 2나락 실제 놀이 쓰임은 W-0266 메모상 0 — 표 갈 때 웹이 다시 확인. · 10-19 Opus: built = 새 자체 몸(creatures3d id), robots = 이미 자체(짝만), pending = 3D 다시 도는 중. · 10-20 K-0145: built +10(2나락 pending 12 body — Cactoro·Ninja 는 두 파일이 한 id). · 10-22 K-0180: 2나락 남은 빌린 일곱 — built +5(Fish 는 Fish_f7d91eb6 둥근 물고기 = gape_fish), pending 둘(Armabee=bumble_puff · Fish_6c98561f 두발 = finback_brute, 다시 그림 뒤). · 10-22 K-0180: bumble_puff built(+1), pending 하나(finback_brute C3 다시 그림). · 10-23 K-0180: finback_brute built(+1, C3 v04 두발 물고기 — matte_in --holes), pending 0.",
  "pair": {
   "quaternius/Dragon_Evolved": "dragon_evolved",
   "quaternius/Ghost_Skull": "ghost_skull",
@@ -84,14 +84,13 @@
   "quaternius/Fish": "gape_fish",
   "quaternius/Chicken": "hen_ball",
   "quaternius/Cat": "tabby_ball",
-  "quaternius/Armabee": "bumble_puff"
+  "quaternius/Armabee": "bumble_puff",
+  "quaternius/Fish_6c98561f": "finback_brute"
  },
  "robots": {
   "robots/Robot_Drone": "robot_drone",
   "robots/Robot_Large": "robot_large",
   "robots/Robot_Walker": "robot_walker"
  },
- "pending": [
-  "quaternius/Fish_6c98561f(두발)"
- ]
+ "pending": []
 }
