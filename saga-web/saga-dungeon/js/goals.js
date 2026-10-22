@@ -289,6 +289,8 @@
       if (payload.trial.rank) { card.trialRank = payload.trial.rank; }
       if (payload.trial.open) { card.trialOpen = payload.trial.open; }
     }
+    /* W-0378 — 한 판 결과 등급(dg-rank.js 가 dungeon:end 꾸러미에 얹는다) */
+    if (payload && payload.rank) { card.rank = payload.rank; }
     /* 세션을 여기서 닫는다 — 다음 판은 새 기준값에서 다시 잰다 */
     sess.start = Date.now();
     sess.gold0 = core.save.player.gold;

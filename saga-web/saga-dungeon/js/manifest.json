@@ -132,6 +132,8 @@
    "js/ui-detail.js",
    "js/ui-quest.js",
    "js/ui-gear.js",
+   "js/runrank-core.js",
+   "js/dg-rank.js",
    "js/perf.js",
    "js/game.js"
   ]
@@ -267,6 +269,8 @@
    "js/ui-detail.js",
    "js/ui-quest.js",
    "js/ui-gear.js",
+   "js/runrank-core.js",
+   "js/dg-rank.js",
    "js/game.js"
   ]
  ],

@@ -1679,5 +1679,28 @@
   "ticket": "W-0376",
   "since": "2026-10-22",
   "note": "10-22: 조명 층 반 화소(dg.lightScale)는 재 봐도 잡음 수준이라 안 넣음 · 3D·PC 화면 그대로"
+ },
+ {
+  "id": "dg.run-rank",
+  "name": "한 판 결과 등급(W-0378) — 던전에 들어가서 나올 때까지 피격·최대 연타·시간·처치로 S~D · 살아서 나오면 챙긴 금 × S 0.5·A 0.2·B 0.1, S 는 💎 보석 하나 · 5층 단위 최고 기록 · 끝 카드 두 줄 · 시련·부적·난입은 안 매김",
+  "files": [
+   "js/dg-rank.js",
+   "js/runrank-core.js",
+   "js/goals.js",
+   "src/dungeon/05-boss.js",
+   "src/dungeon/03-items.js",
+   "src/ui/01.js"
+  ],
+  "tests": [
+   "test-web W-0378 한 판 등급 둘",
+   "pw-look2d rank 끝 카드"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {
+   "F": "잘 싸운 판이 더 번다"
+  },
+  "ticket": "W-0378",
+  "since": "2026-10-22"
  }
 ]

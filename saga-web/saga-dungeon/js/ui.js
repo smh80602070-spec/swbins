@@ -827,7 +827,7 @@
         '<div>📦 ' + (toGrave ? '유품으로 남은 장비' : '잃은 장비') + ' ' +
         (card.lostItems || 0) + '점</div>';
     }
-    html += (global.DG.grace ? global.DG.grace.cardHtml(card) : '') + '<div>🏅 공적 +' + (card.feat || 0) + '</div>' +   // W-0102 사망 세 줄
+    html += (card.rank && global.DG.dgRank ? global.DG.dgRank.cardHtml(card.rank) : '') + (global.DG.grace ? global.DG.grace.cardHtml(card) : '') + '<div>🏅 공적 +' + (card.feat || 0) + '</div>' +   // W-0102 사망 세 줄
       '<div>📖 도감 ' + card.dexPct + '%' + (card.reason === 'dead' && !card.keep ? ' · 죽어도 도감·인물·공적은 그대로' : '') + '</div>' +   // 표준 F: 죽어도 남는 것을 말해 준다
       '</div>' +
       '<div class="sec"><h4>다음 할 것</h4><div>' + esc(card.next) + '</div></div>' +

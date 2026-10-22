@@ -781,7 +781,7 @@
   "fun": {},
   "ticket": "W-0289",
   "since": "2026-10-17",
-  "note": "던파식(구조만) — W-0104 S·A·B·C 를 넓힘. 장부 tasks/gameplay/story.md · 티켓의 save.side.best 는 옛 칸(최고 사냥터 key)과 겹쳐 rankBest 로 둠"
+  "note": "던파식(구조만) — W-0104 S·A·B·C 를 넓힘. 장부 tasks/gameplay/story.md · 티켓의 save.side.best 는 옛 칸(최고 사냥터 key)과 겹쳐 rankBest 로 둠 · 10-22 W-0378: 점수식·세기·덤 배율을 shared/js/runrank-core.js 로 올림(결과 같음, js/runrank.js 는 어댑터)"
  },
  {
   "id": "st.pose3d",

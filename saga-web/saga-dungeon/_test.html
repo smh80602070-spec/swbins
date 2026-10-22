@@ -213,6 +213,8 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/ui-detail.js"></script>
 <script src="js/ui-quest.js"></script>
 <script src="js/ui-gear.js"></script>
+<script src="js/runrank-core.js"></script>
+<script src="js/dg-rank.js"></script>
 <script src="js/game.js"></script>
 <script>
 /* 자가진단 — 헤드리스에서도 돈다 (rAF 가 아니라 setTimeout 을 쓴다).
@@ -4811,6 +4813,32 @@ window.requestAnimationFrame = function () { return 0; };
       if (DG.ui && DG.ui.closeSheet) { DG.ui.closeSheet(); }
       var ok = r.indexOf('width:25%') >= 0 && r.indexOf('1/4') >= 0 && (!v || v.indexOf('메인') >= 0);
       return ok && ('줄 막대 25% · 시트 ' + v.length + '자') || ('실패 ' + JSON.stringify({ r: r.slice(0, 80), v: v.length }));
+    });
+    t('W-0378 한 판 등급 — 빠르고 안 맞으면 S: 금 덤 ×0.5·💎 보석 하나·5층 단위 최고 기록, 끝 카드 두 줄 · 급은 층 깊이', function () {
+      var RR = DG.dgRank, C = DG.core, p = C.save.player, g0 = p.gold, bk = C.save.dgRankBest, GD = DG.gemData, IT = DG.item;
+      if (!RR || !DG.runRankCore) { return '실패 모듈 없음'; }
+      C.save.dgRankBest = {};
+      var gem = GD.GEMS[0], m0 = IT.matCount('gem', gem.key, 0), i;
+      try {
+        RR.start(); for (i = 0; i < 20; i++) { RR.onHit(); } for (i = 0; i < 15; i++) { RR.onKill(); }
+        var r = RR.finish(3, 1000, false), m1 = IT.matCount('gem', gem.key, 0), html = RR.cardHtml(r);
+        var ok = r.rank === 'S' && r.bonusGold === 500 && p.gold === g0 + 500 && m1 === m0 + 1 && r.best === true && RR.bestOf('f1') === 'S' &&
+          RR.tierOf(3) === 1 && RR.tierOf(12) === 3 && RR.tierOf(45) === 5 && RR.bestKey(7) === 'f6' && html.indexOf('이번 판 등급 S') >= 0 && html.indexOf('첫 기록 S') >= 0;
+        return ok && ('S · 덤 +' + r.bonusGold + ' · ' + gem.name + ' +1 · 최고 f1=S · 카드 두 줄') || ('실패 ' + JSON.stringify({ rank: r && r.rank, bonus: r && r.bonusGold, gem: m1 - m0, best: r && r.best }));
+      } finally { p.gold = g0; IT.addMat('gem', gem.key, 0, -(IT.matCount('gem', gem.key, 0) - m0)); C.save.dgRankBest = bk; }
+    });
+    t('W-0378 한 판 등급 — 타격·피격 사건(dungeon:hit·hurt)을 세고 맞으면 연타가 끊긴다 · 쓰러진 판은 등급만(덤 없음) · 셋 못 잡으면 안 매김', function () {
+      var RR = DG.dgRank, C = DG.core, g0 = C.save.player.gold, bk = C.save.dgRankBest, i;
+      C.save.dgRankBest = {};
+      try {
+        RR.start(); C.emit('dungeon:hit'); C.emit('dungeon:hit'); C.emit('dungeon:hurt'); C.emit('dungeon:hit');
+        var st = RR.state(), cnt = st.hits === 1 && st.comboMax === 2;
+        for (i = 0; i < 3; i++) { RR.onKill(); }
+        var d = RR.finish(2, 1000, true);
+        RR.start(); RR.onKill(); var none = RR.finish(2, 1000, false) === null;
+        var ok = cnt && d && d.dead && d.bonusGold === 0 && C.save.player.gold === g0 && RR.line2(d).indexOf('쓰러져') >= 0 && none;
+        return ok && ('피격 1·최대 연타 2 · 쓰러진 판 ' + d.rank + '(덤 0) · 1마리 판 등급 없음') || ('실패 ' + JSON.stringify({ cnt: cnt, d: d && d.rank, bonus: d && d.bonusGold, none: none }));
+      } finally { C.save.player.gold = g0; C.save.dgRankBest = bk; }
     });
     t('장비 시트(R-4 ui-gear.js) — 같은 이름 gearSection 이 종이인형·가방 탭을 그리고, 짚은 물건 상태는 ui.js 가 쥔다(시트를 다시 열어도 탭이 남는다)', function () {
       var U = DG.uiGear, sh = function () { return (document.getElementById('sheet') || document.querySelector('.sheet') || {}).innerHTML || ''; };

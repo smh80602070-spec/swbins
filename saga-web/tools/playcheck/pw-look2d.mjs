@@ -45,6 +45,10 @@ try {
     await sleep(3000);
     if (await ev(() => DG.dungeon3d && DG.dungeon3d.wanted())) { await ev(() => document.getElementById('btn-3d').click()); await sleep(2500); }
     for (let i = 0; i < 4; i++) { await ev(() => { document.querySelectorAll('button').forEach((b) => { if (/건너뛰기/.test(b.textContent)) { b.click(); } }); const c = document.getElementById('sheet-close'); if (c && c.offsetParent) { c.click(); } }); await sleep(400); }
+    if (scene === 'rank') {   // W-0378 한 판 등급 끝 카드 — 3층에 들어가 셈을 채우고 나온다
+      await ev(() => { if (DG.town && DG.town.leave) { DG.town.leave(); } DG.dungeon.enter({ floor: 3 }); }); await sleep(2000);
+      await ev(() => { const R = DG.dgRank, raw = DG.dungeon.raw(); for (let i = 0; i < 14; i++) { R.onHit(); } for (let i = 0; i < 12; i++) { R.onKill(); } R.onHurt(); if (raw && raw.loot) { raw.loot.gold += 640; } DG.dungeon.leave(); }); await sleep(1500); for (let i = 0; i < 24 && await ev(() => !!(DG.loadVeil && DG.loadVeil.shown())); i++) { await sleep(500); } await ev(() => { if (DG.loadVeil && DG.loadVeil.shown()) { DG.loadVeil._hide(); } }); await sleep(800);
+    }
     if (scene === 'room' || scene === 'deep') {
       await ev((f) => { if (DG.town && DG.town.leave) { DG.town.leave(); } DG.dungeon.enter({ floor: f }); }, scene === 'deep' ? 12 : 1); await sleep(2500);
       for (let i = 0; i < 4; i++) { await ev(() => { document.querySelectorAll('button').forEach((b) => { if (/건너뛰기/.test(b.textContent)) { b.click(); } }); const c = document.getElementById('sheet-close'); if (c && c.offsetParent) { c.click(); } }); await sleep(300); }

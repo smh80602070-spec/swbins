@@ -12,93 +12,34 @@
  *   덤        살아서 나온 판만 — S 금 ×1.5(판에서 주운 금의 절반을 더) + 🧩 기억 조각 1 · A ×1.2 · B ×1.1 · C·D 없음
  *   최고      save.side.rankBest[사냥터 key] = 등급 글자(옛 세이브 없음 = 빈 것). 갱신이면 카드에 "최고 기록"
  *
- * `rankOf` 는 순수 함수다(세이브 안 씀). 덤·최고 기록만 finish 가 세이브에 쓴다.
+ * W-0378 — 점수식·세기·덤 배율은 공용 shared/js/runrank-core.js(DG.runRankCore). 여기는 4종횡 어댑터(급·저장 자리·기억 조각)만.
  */
 (function (global) {
   'use strict';
 
-  var core = global.DG.core;
-  var cur = null, MIN_KILLS = 3;
-  var ORDER = ['D', 'C', 'B', 'A', 'S'];
-  var BONUS = { S: 0.5, A: 0.2, B: 0.1 };
-  var SHARD_ON_S = 1;
+  var core = global.DG.core, K = global.DG.runRankCore;
 
   /** 사냥터 급 1~5 — need(레벨 문턱)로 */
   function tierOf(stg) {
     var n = (stg && stg.need) || 1;
     return n < 5 ? 1 : n < 12 ? 2 : n < 25 ? 3 : n < 45 ? 4 : 5;
   }
-
-  /** 통계 → 등급. **순수 함수** — r = { hits, comboMax, sec, kills, tier } */
-  function rankOf(r) {
-    var hits = r.hits || 0, combo = r.comboMax || 0, sec = r.sec || 0, kills = r.kills || 0;
-    var t = Math.max(1, Math.min(5, r.tier || 1)), tm = 1 + 0.25 * (t - 1);
-    var pt = (hits === 0 ? 3 : hits <= 3 + (t - 1) ? 2 : hits <= 8 + 2 * (t - 1) ? 1 : 0) +
-             (combo >= 20 ? 3 : combo >= 10 ? 2 : combo >= 5 ? 1 : 0) +
-             (sec <= 180 * tm ? 2 : sec <= 360 * tm ? 1 : 0) +
-             (kills >= 15 ? 1 : 0);
-    var rank = pt >= 7 ? 'S' : pt >= 5 ? 'A' : pt >= 3 ? 'B' : pt >= 1 ? 'C' : 'D';
-    return { rank: rank, pt: pt, hits: hits, comboMax: combo, sec: Math.round(sec), kills: kills, tier: t };
-  }
-
-  function start() { cur = { t0: Date.now(), hits: 0, combo: 0, comboMax: 0, kills: 0 }; }
-  function onKill() { if (cur) { cur.kills++; } }
-  function onHit() { if (!cur) { return; } cur.combo++; if (cur.combo > cur.comboMax) { cur.comboMax = cur.combo; } }
-  function onHurt() { if (!cur) { return; } cur.hits++; cur.combo = 0; }
-
   function bestMap() {
     var s = core.save; if (!s.side) { return {}; }
     if (!s.side.rankBest) { s.side.rankBest = {}; }
     return s.side.rankBest;
   }
-  function bestOf(stageKey) { return bestMap()[stageKey] || null; }
-  function better(a, b) { return ORDER.indexOf(a) > ORDER.indexOf(b); }
+  var R = K.make({
+    tierOf: tierOf, bestMap: bestMap,
+    bestKey: function (stg) { return stg && stg.key && core.save.side ? stg.key : null; },
+    payGold: function (n) { core.save.player.gold += n; },
+    payS: function (r) { r.shard = 1; core.save.player.memFrag = (core.save.player.memFrag || 0) + 1; return '🧩 기억 조각 +1'; }
+  });
 
-  /**
-   * 한 판을 닫는다 — 등급(없으면 null).
-   * @param stg     사냥터(key·need) — 없으면 급 1·최고 기록 안 남김
-   * @param runGold 이 판에서 주운 금(덤의 밑)
-   * @param dead    쓰러져 나온 판이면 덤 없음(등급은 매긴다)
-   */
-  function finish(stg, runGold, dead) {
-    if (!cur) { return null; }
-    if (cur.kills < MIN_KILLS) { cur = null; return null; }
-    var r = rankOf({ hits: cur.hits, comboMax: cur.comboMax, sec: (Date.now() - cur.t0) / 1000, kills: cur.kills, tier: tierOf(stg) });
-    cur = null;
-    r.bonusGold = 0; r.shard = 0; r.best = false; r.dead = !!dead;
-    if (!dead) {
-      var mul = BONUS[r.rank] || 0;
-      r.bonusGold = Math.round((runGold || 0) * mul);
-      if (r.rank === 'S') { r.shard = SHARD_ON_S; }
-      if (r.bonusGold) { core.save.player.gold += r.bonusGold; }
-      if (r.shard) { core.save.player.memFrag = (core.save.player.memFrag || 0) + r.shard; }
-    }
-    if (stg && stg.key && core.save.side) {
-      var bm = bestMap(), old = bm[stg.key] || null;
-      if (!old || better(r.rank, old)) { bm[stg.key] = r.rank; r.best = true; }
-      r.prevBest = old;
-    }
-    return r;
-  }
-
-  function fmtSec(s) { var m = Math.floor(s / 60), x = s % 60; return m + ':' + (x < 10 ? '0' : '') + x; }
-  /** 세션 카드 한 줄 — "⭐ 이번 판 등급 A — 피격 3 · 콤보 12 · 2:40" */
-  function line(r) { return r ? '⭐ 이번 판 등급 ' + r.rank + ' — 피격 ' + r.hits + ' · 콤보 ' + r.comboMax + ' · ' + fmtSec(r.sec) : ''; }
-  /** 둘째 줄 — 덤·최고 기록(없으면 빈 글) */
-  function line2(r) {
-    if (!r) { return ''; }
-    var p = [];
-    if (r.bonusGold) { p.push('🪙 등급 덤 +' + core.fmt(r.bonusGold)); }
-    if (r.shard) { p.push('🧩 기억 조각 +' + r.shard); }
-    if (r.best) { p.push(r.prevBest ? '🏆 최고 기록 ' + r.prevBest + ' → ' + r.rank : '🏆 첫 기록 ' + r.rank); }
-    if (r.dead) { p.push('쓰러져 덤 없음'); }
-    return p.join(' · ');
-  }
-
-  core.on('side:enter', start);
-  core.on('side:kill', onKill);
+  core.on('side:enter', R.start);
+  core.on('side:kill', R.onKill);
 
   global.DG = global.DG || {};
-  global.DG.runRank = { MIN_KILLS: MIN_KILLS, ORDER: ORDER, BONUS: BONUS, tierOf: tierOf, rankOf: rankOf, start: start, onKill: onKill, onHit: onHit, onHurt: onHurt,
-    finish: finish, line: line, line2: line2, bestOf: bestOf, state: function () { return cur; } };
+  global.DG.runRank = { MIN_KILLS: K.MIN_KILLS, ORDER: K.ORDER, BONUS: K.BONUS, tierOf: tierOf, rankOf: K.rankOf, start: R.start, onKill: R.onKill, onHit: R.onHit, onHurt: R.onHurt,
+    finish: R.finish, line: R.line, line2: R.line2, bestOf: R.bestOf, state: R.state };
 })(window);

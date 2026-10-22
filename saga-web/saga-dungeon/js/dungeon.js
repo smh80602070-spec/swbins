@@ -1677,7 +1677,7 @@
               life: 0.7, foe: true, el: el && el !== 'phys' ? el : null });
     sfx('hurt');
     /* 맞으면 콤보가 끊긴다 — 안 맞고 계속 때려야 이어지는 긴장감(축2 손맛) */
-    run.combo = 0; run.comboT = 0;
+    run.combo = 0; run.comboT = 0; core.emit('dungeon:hurt');   // W-0378 한 판 등급(dg-rank) — 실제로 깎인 한 대
     if (run.hp <= 0) { die(); }
   }
 
@@ -3520,7 +3520,7 @@
     /* 연속 타격(콤보) — COMBO_WINDOW 안에 다시 때리면 쌓인다(update()가 끊는다).
        PLAN 15절 "필수: 콤보" — 3부터 화면에 띄운다(1·2는 콤보라 부르기 민망하다).
        §5.8① 타격음 라운드로빈이 이 값을 쓰므로 소리보다 먼저 올린다. */
-    run.combo = (run.combo || 0) + 1;
+    run.combo = (run.combo || 0) + 1; core.emit('dungeon:hit');   // W-0378 한 판 등급(dg-rank) — 닿은 타격 하나
     run.comboT = COMBO_WINDOW;
     if (crit) { sfx('crit'); } else { hitSfx(); }
 

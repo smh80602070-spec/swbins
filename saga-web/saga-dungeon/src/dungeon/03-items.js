@@ -294,7 +294,7 @@
               life: 0.7, foe: true, el: el && el !== 'phys' ? el : null });
     sfx('hurt');
     /* 맞으면 콤보가 끊긴다 — 안 맞고 계속 때려야 이어지는 긴장감(축2 손맛) */
-    run.combo = 0; run.comboT = 0;
+    run.combo = 0; run.comboT = 0; core.emit('dungeon:hurt');   // W-0378 한 판 등급(dg-rank) — 실제로 깎인 한 대
     if (run.hp <= 0) { die(); }
   }
 
