@@ -3,6 +3,8 @@
   py tools/ai-art/k163_illust.py refs [id…]     # 3D 몸(idle 첫 프레임) 정면·¾ 렌더 1024 → _out/k163_ref/<id>/{front,three}.png
                                                  #   Blender 하나씩 — 다른 blender.exe 가 돌면 끝날 때까지 기다린다(K-0160 등과 안 겹치게)
   py tools/ai-art/k163_illust.py init           # 정면 렌더를 연회녹 바탕 768x1152 에 앉힌 밑그림 _out/k163_init/<id>.png + .license.json
+  py tools/ai-art/k163_illust.py stand_txt      # K-0178 — 밑그림 없이 묘사(data/k178_desc.json, 초상 보고 적음)로 txt2img 4 변주 배치
+                                                 #   → batches/k178_stand.json (원격 push_batch). 고른 판·눈 판정 칸을 비운다
   py tools/ai-art/k163_illust.py bust           # 고른 스탠딩 → 머리·가슴 자르기 확대 밑그림 _out/k163_bust_init/<id>.png (반신 다듬기 i2i 용)
   py tools/ai-art/k163_illust.py masks          # 고른 반신 → 얼굴 마스크 _out/k163_masks/<id>.png (눈썹~턱 타원, 흐림)
   py tools/ai-art/k163_illust.py expr_batch     # 표정 셋(happy·angry·sad) 인페인트 _in 배치 → batches/_in/k163_expr.json
@@ -10,6 +12,7 @@
   py tools/ai-art/k163_illust.py pack [--check] # 눈 ○ 만 {stand,neutral,happy,angry,sad}.webp + <id>.license.json → 정본 saga-assets/illust/<판>/<id> + <판>/manifest.js (asset-place illust-<판>)
 
 명단·고른 판·눈 판정 = data/k163_cast.json(표시 이름은 가명). 렌더 = char-forge gear_sprites.py(SPRITE_MODE, 192px 시트와 같은 몸·같은 idle).
+K-0178: 3D 몸이 초상과 다른 사람(현대 옷·소녀)이라 그 렌더 밑그림(refs·init·stand_batch)은 쓰지 않는다 — 스탠딩은 stand_txt, 이후 bust 부터 같은 길.
 """
 import json
 import os
@@ -106,7 +109,8 @@ def init():
 
 
 # ---------------------------------------------------------------- 생성 배치
-STAND = os.path.join(OUT, 'k162_illust30')        # 스탠딩 후보(gen.py out)
+STAND = os.path.join(OUT, 'k178_stand')           # 스탠딩 후보(gen.py out) — K-0163 옛 i2i 판은 k162_illust30
+DESC = os.path.join(HERE, 'data', 'k178_desc.json')
 BUST_INIT = os.path.join(OUT, 'k163_bust_init')
 BUST = os.path.join(OUT, 'k163_bust')               # 반신 다듬기 후보
 MASKS = os.path.join(OUT, 'k163_masks')
@@ -118,7 +122,8 @@ EXPR_TAGS = {'happy': '(happy, smile, open mouth:1.3), joyful eyes',
 
 def subj(x):
     sex = '1boy, male focus' if x['sex'] == 'm' else '1girl'
-    return f"{sex}, {x['look']}"
+    d = json.load(open(DESC, encoding='utf-8'))['desc'] if os.path.exists(DESC) else {}
+    return f"{sex}, {d.get(x['id']) or x['look']}"   # look = 3D 몸 렌더에 보이던 옷(K-0163) — 묘사가 있으면 초상 쪽
 
 
 def write_in(name, items, spec, note, variants=4):
@@ -139,11 +144,28 @@ def stand_batch():
              'K-0163 주역 30 전신 스탠딩 — 3D 몸 idle 정면 렌더(연회녹 바탕)를 밑그림으로 img2img 0.62, 그림체 C. 주제 = 렌더에 보이는 머리·옷 색과 모양(가명·실명 없음)')
 
 
+def stand_txt():
+    c = cast(); d = json.load(open(DESC, encoding='utf-8'))['desc']
+    items = []
+    for x in c['cast']:
+        if x['id'] not in d:
+            print('묘사 없음', x['id']); continue
+        for k in ('stand_pick', 'bust_pick', 'neutral_pick', 'expr_pick', 'face', 'face_note', 'eye'):
+            x.pop(k, None)
+        items.append({'id': x['id'], 'subject': subj(x), 'subject_ko': x['role'], 'view': 'front',
+                      'extra': 'arms at sides, feet visible, looking at viewer', 'width': W, 'height': H,
+                      'seed': 2026102200 + len(items) * 101})
+    json.dump(c, open(CAST, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    write_in('k178_stand', items, 'character_tall',
+             'K-0178 주역 30 전신 스탠딩 — 밑그림 없이 txt2img, 주제 = 초상(portraits-hero _c)을 보고 적은 묘사(data/k178_desc.json), 그림체 C')
+
+
 def head_box(im):
-    """밑그림(바탕 BG)에서 머리 자리 추정 — 몸 키의 0.15 를 머리로, 가로 가운데는 그 띠의 무게중심."""
+    """스탠딩 그림에서 머리 자리 추정 — 몸 키의 0.15 를 머리로, 가로 가운데는 그 띠의 무게중심."""
     import numpy as np
-    a = np.asarray(im.convert('RGB')).astype(int)
-    m = np.abs(a - np.array(BG)).sum(axis=2) > 30
+    sys.path.insert(0, HERE)
+    from seg_mask import object_mask
+    m = object_mask(im.convert('RGB')) > 0.5          # K-0178 — 밑그림이 없어 생성 그림에서 바로(바탕이 BG 와 꼭 같진 않다)
     ys, xs = np.nonzero(m)
     y0, y1 = ys.min(), ys.max()
     hh = (y1 - y0) * 0.15
@@ -162,9 +184,10 @@ def bust():
         if not pk:
             continue
         src = os.path.join(STAND, pk + '.png')
-        cx, top, hh = head_box(Image.open(os.path.join(INIT, x['id'] + '.png')))   # i2i 0.62 는 구도를 지킨다 — 머리 자리는 밑그림 기준
+        cx, top, hh = head_box(Image.open(src))
+        dy = x.get('face_dy', 0) * hh                   # 높은 모자·관 — 눈으로 본 만큼 얼굴 자리를 내린다(머리 키 단위)
         side = hh * 2.8
-        box = (round(cx - side / 2), round(top - hh * 0.25), round(cx + side / 2), round(top - hh * 0.25 + side))
+        box = (round(cx - side / 2), round(top + dy - hh * 0.25), round(cx + side / 2), round(top + dy - hh * 0.25 + side))
         im = Image.open(src).convert('RGB')
         cv = Image.new('RGB', (box[2] - box[0], box[3] - box[1]), BG)
         cv.paste(im.crop((max(0, box[0]), max(0, box[1]), min(W, box[2]), min(H, box[3]))), (max(0, -box[0]), max(0, -box[1])))
@@ -172,11 +195,11 @@ def bust():
         p = os.path.join(BUST_INIT, x['id'] + '.png')
         cv.save(p)
         k = 768 / (box[2] - box[0])
-        fx, fy = (cx - box[0]) * k, (top + hh * 0.78 - box[1]) * k
+        fx, fy = (cx - box[0]) * k, (top + hh * 0.78 + dy - box[1]) * k
         x['face'] = [round(fx), round(fy), round(hh * 0.74 * k), round(hh * 0.58 * k)]
         sl = json.load(open(os.path.join(STAND, pk + '.license.json'), encoding='utf-8'))
-        json.dump({'model': sl.get('model'), 'model_license': sl.get('model_license'), 'base_body': f"saga-assets/characters/web3d/{x['id']}.glb",
-                   'base_license': sl.get('base_license', ''), 'base_inputs': [f'tools/ai-art/_out/k162_illust30/{pk}.png (스탠딩 자르기 확대)']},
+        json.dump({'model': sl.get('model'), 'model_license': sl.get('model_license'),
+                   'base_inputs': [f'tools/ai-art/_out/k178_stand/{pk}.png (스탠딩 자르기 확대)']},
                   open(p[:-4] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         print('bust', x['id'], box)
     json.dump(c, open(CAST, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
@@ -250,10 +273,6 @@ def sheet(stage, per=5):
         for x in rs[n0:n0 + per]:
             iid = x['id']
             cells = [fit(Image.open(os.path.join(ROOT, 'saga-assets', 'portraits-hero', iid + '_c.webp')).convert('RGB'), 200, CH)]
-            for v in ('front', 'three'):
-                p = os.path.join(REF, iid, v + '.png')
-                if os.path.exists(p):
-                    im = Image.open(p).convert('RGBA'); im = im.crop(bbox_alpha(im)); cells.append(fit(flat(im), 140, CH))
             cand = []
             if stage == 'stand':
                 cand = [(os.path.join(STAND, f'{iid}_v{k:02d}.png'), 200) for k in range(1, 5)]
@@ -315,7 +334,7 @@ def pack(check=False):
         od = os.path.join(dest, x['game'], iid); os.makedirs(od, exist_ok=True)
         if os.path.exists(os.path.join(od, iid + '.license.json')) and not FORCE:   # 이미 포장(다시 하려면 --force)
             n += 1; continue
-        lic = {'id': iid, 'name': x['name'], 'ticket': 'K-0163', 'generator': 'tools/ai-art/k163_illust.py + gen.py (ComfyUI, Kaggle 원격)',
+        lic = {'id': iid, 'name': x['name'], 'ticket': 'K-0178', 'generator': 'tools/ai-art/k163_illust.py + gen.py (ComfyUI, Kaggle 원격)',
                'model': 'animagine-xl-4.0-opt', 'model_license': 'CreativeML OpenRAIL++-M', 'commercial_use': True, 'files': {}}
         for k, p in srcs.items():
             cut = cutout(Image.open(p).convert('RGB'))
@@ -331,7 +350,7 @@ def pack(check=False):
             f = {kk: sl.get(kk) for kk in ('model', 'model_license', 'seed', 'prompt', 'mode', 'denoise', 'base_body', 'base_license', 'date', 'remote') if sl.get(kk) is not None}
             f['from'] = os.path.relpath(p, ROOT).replace('\\', '/')
             lic['files'][k + '.webp'] = f
-        lic['license'] = 'saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · 밑그림 = 자체 3D 몸 렌더(VRoid 샘플 개작 허용)'
+        lic['license'] = 'saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · txt2img(밑그림 없음, 초상 보고 적은 묘사)'
         lic['note'] = 'AI 생성 — 저작권 보호가 약하다. 표시 이름은 가명.'
         json.dump(lic, open(os.path.join(od, iid + '.license.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         n += 1
@@ -359,6 +378,8 @@ if __name__ == '__main__':
         init()
     elif cmd == 'stand_batch':
         stand_batch(); build_kit('k162_illust30')
+    elif cmd == 'stand_txt':
+        stand_txt(); build_kit('k178_stand')
     elif cmd == 'bust':
         bust(); build_kit('k163_bust')
     elif cmd == 'masks':

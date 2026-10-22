@@ -1,0 +1,310 @@
+{
+ "name": "k178_stand",
+ "spec": "character_tall",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0178 주역 30 전신 스탠딩 — 밑그림 없이 txt2img, 주제 = 초상(portraits-hero _c)을 보고 적은 묘사(data/k178_desc.json), 그림체 C",
+ "items": [
+  {
+   "id": "hl_mukhyang",
+   "subject": "1boy, male focus, adult man, short dark brown hair with a small top bun, grey eyes, calm clever face, long white mandarin-collar scholar robe with frog buttons, blue sash, cloth shoes, holding a scroll",
+   "subject_ko": "2나락 1막 길잡이 사관(도감 묵향 대역)",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026102200
+  },
+  {
+   "id": "sg_lubu",
+   "subject": "1boy, male focus, adult man, black hair, confident grin, silver steel helmet with wide round brim and red pointed top, dark lamellar armor over a red robe, armored boots, holding a long polearm",
+   "subject_ko": "4종횡 전직 스승",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026102301
+  },
+  {
+   "id": "kr_gyebaek",
+   "subject": "1boy, male focus, adult man, short black hair, big confident grin, round silver steel helmet with wide brim, dark navy and purple armored robe, ancient korean warrior, lamellar armor, leather boots",
+   "subject_ko": "4종횡 전직 스승",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026102402
+  },
+  {
+   "id": "jp_musashi",
+   "subject": "1boy, male focus, young adult man, long black hair tied in a low ponytail, calm face, cream white kimono with dark undercollar, dark gray hakama, straw sandals, two swords at the waist",
+   "subject_ko": "4종횡 전직 스승",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026102503
+  },
+  {
+   "id": "eu_leonidas",
+   "subject": "1boy, male focus, young adult man, short blonde hair, stern face, small pointed bronze helmet, red cloak wrapped over the shoulders, bronze cuirass, leather skirt, sandals, round red and white shield",
+   "subject_ko": "4종횡 전직 스승",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026102604
+  },
+  {
+   "id": "sg_huangzhong",
+   "subject": "1boy, male focus, middle-aged veteran, short black hair with gray temples, gray mustache, broad grin, green armored vest over a white robe, dark trousers, boots, holding a bow",
+   "subject_ko": "4종횡 전직 스승",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026102705
+  },
+  {
+   "id": "sg_taishici",
+   "subject": "1boy, male focus, young adult man, black hair, smiling, silver steel helmet with wide brim and red pointed crest, red and dark brown armored robe, lamellar armor, boots",
+   "subject_ko": "4종횡 전직 스승",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026102806
+  },
+  {
+   "id": "jp_yoshitsune",
+   "subject": "1boy, male focus, young adult man, black hair, calm face, dark navy samurai helmet with golden crescent horns and silver neck guard, dark samurai armor with white trim, hakama, katana at the waist",
+   "subject_ko": "4종횡 전직 스승",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026102907
+  },
+  {
+   "id": "wd_genghis",
+   "subject": "1boy, male focus, young adult man, long light brown hair, brown fur hat, mustard yellow scarf, blue silk deel robe with yellow sash, leather riding boots",
+   "subject_ko": "4종횡 전직 스승",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103008
+  },
+  {
+   "id": "jp_hanzo",
+   "subject": "1boy, male focus, young adult man, black hair, sharp calm eyes, black hood, black shinobi garb, black cloak, dark arm wraps, dark leg wraps, tabi",
+   "subject_ko": "4종횡 전직 스승",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103109
+  },
+  {
+   "id": "sg_ganning",
+   "subject": "1boy, male focus, adult man, black hair in a small topknot, confident smirk, red brocade robe with gold embroidery, wide sleeves, sash belt, dark trousers, boots",
+   "subject_ko": "4종횡 전직 스승",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103210
+  },
+  {
+   "id": "jp_tomoegozen",
+   "subject": "1girl, young adult woman, long black hair tied back, red lips, determined face, dark navy kimono with small white pattern, white undercollar, silver shoulder armor, dark hakama, katana",
+   "subject_ko": "4종횡 전직 스승",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103311
+  },
+  {
+   "id": "wd_shaka",
+   "subject": "1boy, male focus, adult man, dark skin, short curly dark hair, black headband, short beard, bare muscular shoulders, fur cloak over one shoulder, leather straps, hide skirt, holding an oval cowhide shield and a short spear",
+   "subject_ko": "4종횡 전직 스승",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103412
+  },
+  {
+   "id": "jp_himiko",
+   "subject": "1girl, young adult woman, black hair in an updo, red eyes, golden spiked crown, deep red robe with gold pattern, white high collar, red gem pendant, long red skirt",
+   "subject_ko": "4종횡 전직 스승",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103513
+  },
+  {
+   "id": "sg_zhugeliang",
+   "subject": "1boy, male focus, young adult man, short dark hair, gentle smile, black official hat with long horizontal wings, green robe over white inner robe, holding a large green feather fan",
+   "subject_ko": "4종횡 스승·5천하 책사",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103614
+  },
+  {
+   "id": "wd_ibnsina",
+   "subject": "1boy, male focus, middle-aged man, dark hair, kind stern face, dark brown turban cap, mustard yellow shawl over the shoulders, long deep blue robe with gold pattern, leather shoes",
+   "subject_ko": "4종횡 전직 스승",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103715
+  },
+  {
+   "id": "eu_davinci",
+   "subject": "1boy, male focus, young adult man, short blonde hair, calm face, white hooded linen robe with dark blue trim, long tunic, brown belt, boots",
+   "subject_ko": "4종횡 전직 스승",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103816
+  },
+  {
+   "id": "sg_caocao",
+   "subject": "1boy, male focus, adult man, short black hair, stern face, golden crown with vertical bars, royal blue robe with gold shoulder ornaments, long robe, black boots",
+   "subject_ko": "5천하 1막 세력 군주",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103917
+  },
+  {
+   "id": "rf_yuanshao",
+   "subject": "1boy, male focus, adult man, messy black hair with long bangs, low ponytail, calm face, ornate gold and white armor, white robe, long robe, boots",
+   "subject_ko": "5천하 1막 세력 군주",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104018
+  },
+  {
+   "id": "rf_gongsunzan",
+   "subject": "1boy, male focus, young adult man, black hair, slight smile, silver steel helmet with wide brim and orange-red pointed top, white robe, white armor, boots",
+   "subject_ko": "5천하 1막 세력 군주",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104119
+  },
+  {
+   "id": "rf_kongrong",
+   "subject": "1girl, young adult woman, black bob hair covering one eye, gentle smile, white scholar robe with silver brocade, long white skirt, cloth shoes",
+   "subject_ko": "5천하 1막 세력 군주",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104220
+  },
+  {
+   "id": "sg_liubei",
+   "subject": "1boy, male focus, adult man, short dark hair, calm face, black and gold crown with vertical bars and horns, green robe with gold shoulder trim, long robe, boots",
+   "subject_ko": "5천하 1막 세력 군주",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104321
+  },
+  {
+   "id": "rf_yuanshu",
+   "subject": "1boy, male focus, adult man, short dark brown hair, stern face, white collar, black armor with shoulder plates, dark robe, boots",
+   "subject_ko": "5천하 1막 세력 군주",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104422
+  },
+  {
+   "id": "rf_sunce",
+   "subject": "1boy, male focus, young adult man, short black pompadour hair, confident smirk, white inner shirt, golden shoulder armor, muscular, dark trousers, boots",
+   "subject_ko": "5천하 1막 세력 군주",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104523
+  },
+  {
+   "id": "rf_liubiao",
+   "subject": "1boy, male focus, adult man, long black hair loose to the shoulders, gentle smile, cream white robe with beige shoulder armor, long robe, cloth shoes",
+   "subject_ko": "5천하 1막 세력 군주",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104624
+  },
+  {
+   "id": "rf_lijue",
+   "subject": "1boy, male focus, adult man, black hair in a small bun, sly smile, white and silver plate armor, white robe, boots",
+   "subject_ko": "5천하 1막 세력 군주",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104725
+  },
+  {
+   "id": "sg_sunquan",
+   "subject": "1boy, male focus, young adult man, short black hair, stern face, black official hat with long horizontal wings and gold pattern, red orange robe with black collar, gold shoulder ornaments, long robe",
+   "subject_ko": "5천하 세력 군주",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104826
+  },
+  {
+   "id": "fu_jongwang",
+   "subject": "1girl, young adult woman, long straight blonde hair, glowing purple mark on the forehead, earrings, white and light blue futuristic robe with silver patterns, blue gem brooch, long flowing skirt",
+   "subject_ko": "5천하 4막 이계 군주(균열)",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104927
+  },
+  {
+   "id": "ru_geohae",
+   "subject": "1boy, male focus, young adult man, black hair with long bangs covering one eye, blue eyes, sly smile, bare muscular shoulders, dark green fur mantle, leather straps, fur trousers, boots",
+   "subject_ko": "5천하 4막 이계 군주(폐허)",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026105028
+  },
+  {
+   "id": "tb_baekgi",
+   "subject": "1boy, male focus, young adult man, black bob hair covering one eye, blue eye, smirk, golden round shoulder armor, blue cloak, blue armored robe, boots",
+   "subject_ko": "5천하 4막 이계 군주(묘역)",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026105129
+  }
+ ]
+}

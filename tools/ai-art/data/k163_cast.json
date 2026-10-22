@@ -7,22 +7,7 @@
    "name": "묵향",
    "role": "2나락 1막 길잡이 사관(도감 묵향 대역)",
    "sex": "m",
-   "look": "purple long hair in twin tails, glasses, oversized green and purple tie-dye hoodie, gray plaid trousers, beige shoes",
-   "stand_pick": "hl_mukhyang_v04",
-   "face": [
-    384,
-    267,
-    203,
-    159
-   ],
-   "bust_pick": "hl_mukhyang_v01",
-   "face_note": "눈 판정으로 세로 -16",
-   "expr_pick": {
-    "happy": "hl_mukhyang__happy_v01",
-    "angry": "hl_mukhyang__angry_v01",
-    "sad": "hl_mukhyang__sad_v02"
-   },
-   "eye": "o"
+   "look": "purple long hair in twin tails, glasses, oversized green and purple tie-dye hoodie, gray plaid trousers, beige shoes"
   },
   {
    "id": "sg_lubu",
@@ -30,21 +15,7 @@
    "name": "패창",
    "role": "4종횡 전직 스승",
    "sex": "m",
-   "look": "short silver-lavender hair, black high-collar coat with white trim, white vest and frilled cravat, red cape, gray plaid trousers, white shoes",
-   "stand_pick": "sg_lubu_v04",
-   "face": [
-    384,
-    282,
-    203,
-    159
-   ],
-   "bust_pick": "sg_lubu_v01",
-   "expr_pick": {
-    "happy": "sg_lubu__happy_v01",
-    "angry": "sg_lubu__angry_v01",
-    "sad": "sg_lubu__sad_v01"
-   },
-   "eye": "o"
+   "look": "short silver-lavender hair, black high-collar coat with white trim, white vest and frilled cravat, red cape, gray plaid trousers, white shoes"
   },
   {
    "id": "kr_gyebaek",
@@ -52,21 +23,7 @@
    "name": "결사",
    "role": "4종횡 전직 스승",
    "sex": "m",
-   "look": "brown bob hair, amber eyes, gray and white frilled blouse vest, black ribbon tie, black cargo pants, beige boots",
-   "stand_pick": "kr_gyebaek_v02",
-   "face": [
-    384,
-    283,
-    203,
-    159
-   ],
-   "bust_pick": "kr_gyebaek_v01",
-   "expr_pick": {
-    "happy": "kr_gyebaek__happy_v01",
-    "angry": "kr_gyebaek__angry_v01",
-    "sad": "kr_gyebaek__sad_v02"
-   },
-   "eye": "o"
+   "look": "brown bob hair, amber eyes, gray and white frilled blouse vest, black ribbon tie, black cargo pants, beige boots"
   },
   {
    "id": "jp_musashi",
@@ -74,21 +31,7 @@
    "name": "이도인",
    "role": "4종횡 전직 스승",
    "sex": "m",
-   "look": "mint green hair covering one eye, red eyes, black tailcoat with gold embroidery, red vest, red necktie, black pants, white sneakers",
-   "stand_pick": "jp_musashi_v03",
-   "face": [
-    384,
-    282,
-    203,
-    159
-   ],
-   "bust_pick": "jp_musashi_v01",
-   "expr_pick": {
-    "happy": "jp_musashi__happy_v02",
-    "angry": "jp_musashi__angry_v01",
-    "sad": "jp_musashi__sad_v01"
-   },
-   "eye": "o"
+   "look": "mint green hair covering one eye, red eyes, black tailcoat with gold embroidery, red vest, red necktie, black pants, white sneakers"
   },
   {
    "id": "eu_leonidas",
@@ -96,21 +39,7 @@
    "name": "테살로르",
    "role": "4종횡 전직 스승",
    "sex": "m",
-   "look": "pale blonde hair with long ponytail, glasses, navy blue turtleneck cropped jacket, black belt pouch, dark gray trousers, white shoes",
-   "stand_pick": "eu_leonidas_v04",
-   "face": [
-    384,
-    283,
-    203,
-    159
-   ],
-   "bust_pick": "eu_leonidas_v02",
-   "expr_pick": {
-    "happy": "eu_leonidas__happy_v02",
-    "angry": "eu_leonidas__angry_v01",
-    "sad": "eu_leonidas__sad_v02"
-   },
-   "eye": "o"
+   "look": "pale blonde hair with long ponytail, glasses, navy blue turtleneck cropped jacket, black belt pouch, dark gray trousers, white shoes"
   },
   {
    "id": "sg_huangzhong",
@@ -118,21 +47,7 @@
    "name": "노궁",
    "role": "4종횡 전직 스승",
    "sex": "m",
-   "look": "short dark blue hair, black and gray zip-up jacket with red accents, dark gray pants with knee straps, black sneakers",
-   "stand_pick": "sg_huangzhong_v01",
-   "face": [
-    384,
-    283,
-    203,
-    159
-   ],
-   "bust_pick": "sg_huangzhong_v01",
-   "expr_pick": {
-    "happy": "sg_huangzhong__happy_v01",
-    "angry": "sg_huangzhong__angry_v01",
-    "sad": "sg_huangzhong__sad_v01"
-   },
-   "eye": "o"
+   "look": "short dark blue hair, black and gray zip-up jacket with red accents, dark gray pants with knee straps, black sneakers"
   },
   {
    "id": "sg_taishici",
@@ -140,21 +55,7 @@
    "name": "궁성",
    "role": "4종횡 전직 스승",
    "sex": "m",
-   "look": "black hair with teal sheen, side-swept bangs, amber eyes, black and gray zip-up jacket, gray plaid trousers, black boots",
-   "stand_pick": "sg_taishici_v03",
-   "face": [
-    384,
-    283,
-    203,
-    159
-   ],
-   "bust_pick": "sg_taishici_v01",
-   "expr_pick": {
-    "happy": "sg_taishici__happy_v02",
-    "angry": "sg_taishici__angry_v01",
-    "sad": "sg_taishici__sad_v01"
-   },
-   "eye": "o"
+   "look": "black hair with teal sheen, side-swept bangs, amber eyes, black and gray zip-up jacket, gray plaid trousers, black boots"
   },
   {
    "id": "jp_yoshitsune",
@@ -163,20 +64,6 @@
    "role": "4종횡 전직 스승",
    "sex": "m",
    "look": "light cyan short bob hair, mustard yellow turtleneck cropped jacket, black shorts with belt pouch, green thigh-high leg warmers, white sandals",
-   "stand_pick": "jp_yoshitsune_v04",
-   "face": [
-    384,
-    283,
-    203,
-    159
-   ],
-   "bust_pick": "jp_yoshitsune_v01",
-   "expr_pick": {
-    "happy": "jp_yoshitsune__happy_v01",
-    "angry": "jp_yoshitsune__angry_v01",
-    "sad": "jp_yoshitsune__sad_v01"
-   },
-   "eye": "o",
    "eye_note": "표정마다 눈동자 색 조금 흔들림(초록↔회색) — 같은 사람 ○"
   },
   {
@@ -185,21 +72,7 @@
    "name": "초원패",
    "role": "4종횡 전직 스승",
    "sex": "m",
-   "look": "mint green hair covering one eye, gray and white frilled blouse vest, black ribbon tie, black baggy pants, gray socks, sandals",
-   "stand_pick": "wd_genghis_v02",
-   "face": [
-    384,
-    283,
-    203,
-    159
-   ],
-   "bust_pick": "wd_genghis_v02",
-   "expr_pick": {
-    "happy": "wd_genghis__happy_v02",
-    "angry": "wd_genghis__angry_v01",
-    "sad": "wd_genghis__sad_v01"
-   },
-   "eye": "o"
+   "look": "mint green hair covering one eye, gray and white frilled blouse vest, black ribbon tie, black baggy pants, gray socks, sandals"
   },
   {
    "id": "jp_hanzo",
@@ -207,21 +80,7 @@
    "name": "암영조",
    "role": "4종횡 전직 스승",
    "sex": "m",
-   "look": "light purple short hair, beige blazer, white shirt, black pants with knee straps, black boots",
-   "stand_pick": "jp_hanzo_v02",
-   "face": [
-    384,
-    283,
-    203,
-    159
-   ],
-   "bust_pick": "jp_hanzo_v01",
-   "expr_pick": {
-    "happy": "jp_hanzo__happy_v01",
-    "angry": "jp_hanzo__angry_v01",
-    "sad": "jp_hanzo__sad_v01"
-   },
-   "eye": "o"
+   "look": "light purple short hair, beige blazer, white shirt, black pants with knee straps, black boots"
   },
   {
    "id": "sg_ganning",
@@ -229,21 +88,7 @@
    "name": "영진",
    "role": "4종횡 전직 스승",
    "sex": "m",
-   "look": "dark red wavy hair with small side braid, black and gray zip-up jacket, gray plaid trousers, black sneakers",
-   "stand_pick": "sg_ganning_v02",
-   "face": [
-    385,
-    283,
-    203,
-    159
-   ],
-   "bust_pick": "sg_ganning_v02",
-   "expr_pick": {
-    "happy": "sg_ganning__happy_v01",
-    "angry": "sg_ganning__angry_v01",
-    "sad": "sg_ganning__sad_v01"
-   },
-   "eye": "o"
+   "look": "dark red wavy hair with small side braid, black and gray zip-up jacket, gray plaid trousers, black sneakers"
   },
   {
    "id": "jp_tomoegozen",
@@ -251,21 +96,7 @@
    "name": "여무연",
    "role": "4종횡 전직 스승",
    "sex": "f",
-   "look": "brown hair with twin braids, glasses, green eyes, green and white fantasy dress with gold armor accents, pink sash, white stockings, lace-up sandals",
-   "stand_pick": "jp_tomoegozen_v02",
-   "face": [
-    384,
-    283,
-    203,
-    159
-   ],
-   "bust_pick": "jp_tomoegozen_v02",
-   "expr_pick": {
-    "happy": "jp_tomoegozen__happy_v01",
-    "angry": "jp_tomoegozen__angry_v01",
-    "sad": "jp_tomoegozen__sad_v02"
-   },
-   "eye": "o"
+   "look": "brown hair with twin braids, glasses, green eyes, green and white fantasy dress with gold armor accents, pink sash, white stockings, lace-up sandals"
   },
   {
    "id": "wd_shaka",
@@ -273,21 +104,7 @@
    "name": "창군왕",
    "role": "4종횡 전직 스승",
    "sex": "m",
-   "look": "black hair with teal highlights, amber eyes, black double-breasted vest jacket, white shirt, black ribbon tie, black trousers, white shoes",
-   "stand_pick": "wd_shaka_v03",
-   "face": [
-    384,
-    283,
-    203,
-    159
-   ],
-   "bust_pick": "wd_shaka_v02",
-   "expr_pick": {
-    "happy": "wd_shaka__happy_v01",
-    "angry": "wd_shaka__angry_v01",
-    "sad": "wd_shaka__sad_v01"
-   },
-   "eye": "o"
+   "look": "black hair with teal highlights, amber eyes, black double-breasted vest jacket, white shirt, black ribbon tie, black trousers, white shoes"
   },
   {
    "id": "jp_himiko",
@@ -295,22 +112,7 @@
    "name": "여왕영",
    "role": "4종횡 전직 스승",
    "sex": "f",
-   "look": "long purple twin tails, blue eyes, cream yukata with navy leaf pattern, purple obi sash, brown sandals",
-   "stand_pick": "jp_himiko_v01",
-   "face": [
-    384,
-    315,
-    203,
-    159
-   ],
-   "bust_pick": "jp_himiko_v02",
-   "face_note": "눈 판정으로 세로 +32",
-   "expr_pick": {
-    "happy": "jp_himiko__happy_v01",
-    "angry": "jp_himiko__angry_v01",
-    "sad": "jp_himiko__sad_v01"
-   },
-   "eye": "o"
+   "look": "long purple twin tails, blue eyes, cream yukata with navy leaf pattern, purple obi sash, brown sandals"
   },
   {
    "id": "sg_zhugeliang",
@@ -318,22 +120,7 @@
    "name": "현책",
    "role": "4종횡 스승·5천하 책사",
    "sex": "m",
-   "look": "white hair with long ponytail, hair over one eye, rust brown turtleneck cropped jacket, dark gray trousers, beige shoes",
-   "stand_pick": "sg_zhugeliang_v01",
-   "face": [
-    384,
-    306,
-    203,
-    159
-   ],
-   "bust_pick": "sg_zhugeliang_v02",
-   "face_note": "눈 판정으로 세로 +24",
-   "expr_pick": {
-    "happy": "sg_zhugeliang__happy_v02",
-    "angry": "sg_zhugeliang__angry_v01",
-    "sad": "sg_zhugeliang__sad_v02"
-   },
-   "eye": "o"
+   "look": "white hair with long ponytail, hair over one eye, rust brown turtleneck cropped jacket, dark gray trousers, beige shoes"
   },
   {
    "id": "wd_ibnsina",
@@ -342,22 +129,7 @@
    "role": "4종횡 전직 스승",
    "sex": "m",
    "look": "ash blonde hair with ponytail, glasses, black double-breasted vest jacket, white shirt, black ribbon tie, gray plaid trousers, beige shoes",
-   "stand_pick": "wd_ibnsina_v04",
-   "face": [
-    384,
-    282,
-    203,
-    159
-   ],
-   "bust_pick": "wd_ibnsina_v02",
-   "expr_pick": {
-    "happy": "wd_ibnsina__happy_v01",
-    "angry": "wd_ibnsina__angry_v01",
-    "sad": "wd_ibnsina__sad_v01"
-   },
-   "eye": "o",
-   "eye_note": "반신(평온) 윙크 △ → k163_fix v02 로 ○",
-   "neutral_pick": "fix/wd_ibnsina__neutral_v02"
+   "eye_note": "반신(평온) 윙크 △ → k163_fix v02 로 ○"
   },
   {
    "id": "eu_davinci",
@@ -365,22 +137,7 @@
    "name": "마라노",
    "role": "4종횡 전직 스승",
    "sex": "m",
-   "look": "light cyan bob hair, pale aqua oversized hoodie with brown patterned trim, white undershirt, black pants, dark boots",
-   "stand_pick": "eu_davinci_v02",
-   "face": [
-    384,
-    299,
-    203,
-    159
-   ],
-   "bust_pick": "eu_davinci_v02",
-   "face_note": "눈 판정으로 세로 +16",
-   "expr_pick": {
-    "happy": "eu_davinci__happy_v01",
-    "angry": "eu_davinci__angry_v01",
-    "sad": "eu_davinci__sad_v01"
-   },
-   "eye": "o"
+   "look": "light cyan bob hair, pale aqua oversized hoodie with brown patterned trim, white undershirt, black pants, dark boots"
   },
   {
    "id": "sg_caocao",
@@ -388,21 +145,7 @@
    "name": "패헌",
    "role": "5천하 1막 세력 군주",
    "sex": "m",
-   "look": "dark teal medium hair with cyan tips, pink eyes, pale aqua oversized hoodie with brown patterned trim, black pants, dark boots",
-   "stand_pick": "sg_caocao_v04",
-   "face": [
-    384,
-    283,
-    203,
-    159
-   ],
-   "bust_pick": "sg_caocao_v01",
-   "expr_pick": {
-    "happy": "sg_caocao__happy_v01",
-    "angry": "sg_caocao__angry_v01",
-    "sad": "sg_caocao__sad_v02"
-   },
-   "eye": "o"
+   "look": "dark teal medium hair with cyan tips, pink eyes, pale aqua oversized hoodie with brown patterned trim, black pants, dark boots"
   },
   {
    "id": "rf_yuanshao",
@@ -411,20 +154,6 @@
    "role": "5천하 1막 세력 군주",
    "sex": "m",
    "look": "light purple short hair, black high-collar coat with white trim, white vest and frilled cravat, red cape, black baggy pants, white shoes",
-   "stand_pick": "rf_yuanshao_v02",
-   "face": [
-    383,
-    283,
-    203,
-    159
-   ],
-   "bust_pick": "rf_yuanshao_v01",
-   "expr_pick": {
-    "happy": "rf_yuanshao__happy_v01",
-    "angry": "rf_yuanshao__angry_v01",
-    "sad": "rf_yuanshao__sad_v01"
-   },
-   "eye": "o",
    "eye_note": "슬픔 v2 옷깃 파란 얼룩 → v1"
   },
   {
@@ -433,21 +162,7 @@
    "name": "은기",
    "role": "5천하 1막 세력 군주",
    "sex": "m",
-   "look": "dark red hair over one eye, yellow eyes, navy blue turtleneck cropped jacket, gray plaid trousers, black shoes",
-   "stand_pick": "rf_gongsunzan_v01",
-   "face": [
-    384,
-    283,
-    203,
-    159
-   ],
-   "bust_pick": "rf_gongsunzan_v01",
-   "expr_pick": {
-    "happy": "rf_gongsunzan__happy_v01",
-    "angry": "rf_gongsunzan__angry_v01",
-    "sad": "rf_gongsunzan__sad_v02"
-   },
-   "eye": "o"
+   "look": "dark red hair over one eye, yellow eyes, navy blue turtleneck cropped jacket, gray plaid trousers, black shoes"
   },
   {
    "id": "rf_kongrong",
@@ -455,21 +170,7 @@
    "name": "빈헌",
    "role": "5천하 1막 세력 군주",
    "sex": "f",
-   "look": "short wine red bob hair, red and black halter dress with rose ornament, black belt, brown boots",
-   "stand_pick": "rf_kongrong_v02",
-   "face": [
-    384,
-    282,
-    203,
-    159
-   ],
-   "bust_pick": "rf_kongrong_v01",
-   "expr_pick": {
-    "happy": "rf_kongrong__happy_v01",
-    "angry": "rf_kongrong__angry_v01",
-    "sad": "rf_kongrong__sad_v01"
-   },
-   "eye": "o"
+   "look": "short wine red bob hair, red and black halter dress with rose ornament, black belt, brown boots"
   },
   {
    "id": "sg_liubei",
@@ -478,20 +179,6 @@
    "role": "5천하 1막 세력 군주",
    "sex": "m",
    "look": "long straight dark navy blue hair, cyan eyes, gray and white frilled blouse vest, black ribbon tie, black cargo pants, beige boots",
-   "stand_pick": "sg_liubei_v03",
-   "face": [
-    384,
-    282,
-    203,
-    159
-   ],
-   "bust_pick": "sg_liubei_v01",
-   "expr_pick": {
-    "happy": "fix/sg_liubei__happy_v01",
-    "angry": "sg_liubei__angry_v02",
-    "sad": "sg_liubei__sad_v01"
-   },
-   "eye": "o",
    "eye_note": "기쁨 약함 △ → k163_fix v01 로 ○"
   },
   {
@@ -500,21 +187,7 @@
    "name": "옥형",
    "role": "5천하 1막 세력 군주",
    "sex": "m",
-   "look": "black hair with teal sheen over one eye, purple turtleneck cropped jacket, black cargo pants, black loafers",
-   "stand_pick": "rf_yuanshu_v03",
-   "face": [
-    384,
-    283,
-    203,
-    159
-   ],
-   "bust_pick": "rf_yuanshu_v02",
-   "expr_pick": {
-    "happy": "rf_yuanshu__happy_v02",
-    "angry": "rf_yuanshu__angry_v02",
-    "sad": "rf_yuanshu__sad_v01"
-   },
-   "eye": "o"
+   "look": "black hair with teal sheen over one eye, purple turtleneck cropped jacket, black cargo pants, black loafers"
   },
   {
    "id": "rf_sunce",
@@ -522,21 +195,7 @@
    "name": "강룡",
    "role": "5천하 1막 세력 군주",
    "sex": "m",
-   "look": "mint green hair covering one eye, red eyes, black high-collar coat with white trim, white vest and frilled cravat, red cape, black baggy pants, gray socks, sandals",
-   "stand_pick": "rf_sunce_v03",
-   "face": [
-    384,
-    282,
-    203,
-    159
-   ],
-   "bust_pick": "rf_sunce_v01",
-   "expr_pick": {
-    "happy": "rf_sunce__happy_v01",
-    "angry": "rf_sunce__angry_v01",
-    "sad": "rf_sunce__sad_v02"
-   },
-   "eye": "o"
+   "look": "mint green hair covering one eye, red eyes, black high-collar coat with white trim, white vest and frilled cravat, red cape, black baggy pants, gray socks, sandals"
   },
   {
    "id": "rf_liubiao",
@@ -544,21 +203,7 @@
    "name": "형수",
    "role": "5천하 1막 세력 군주",
    "sex": "m",
-   "look": "short black hair with teal sheen, gray and white frilled blouse vest, black ribbon tie, gray plaid trousers, sandals",
-   "stand_pick": "rf_liubiao_v03",
-   "face": [
-    384,
-    283,
-    203,
-    159
-   ],
-   "bust_pick": "rf_liubiao_v02",
-   "expr_pick": {
-    "happy": "rf_liubiao__happy_v02",
-    "angry": "rf_liubiao__angry_v02",
-    "sad": "rf_liubiao__sad_v01"
-   },
-   "eye": "o"
+   "look": "short black hair with teal sheen, gray and white frilled blouse vest, black ribbon tie, gray plaid trousers, sandals"
   },
   {
    "id": "rf_lijue",
@@ -566,21 +211,7 @@
    "name": "철혼",
    "role": "5천하 1막 세력 군주",
    "sex": "m",
-   "look": "olive green short hair, amber eyes, dark gray double-breasted vest jacket, white shirt, black ribbon tie, black trousers, black shoes",
-   "stand_pick": "rf_lijue_v01",
-   "face": [
-    384,
-    282,
-    203,
-    159
-   ],
-   "bust_pick": "rf_lijue_v01",
-   "expr_pick": {
-    "happy": "rf_lijue__happy_v01",
-    "angry": "rf_lijue__angry_v01",
-    "sad": "rf_lijue__sad_v02"
-   },
-   "eye": "o"
+   "look": "olive green short hair, amber eyes, dark gray double-breasted vest jacket, white shirt, black ribbon tie, black trousers, black shoes"
   },
   {
    "id": "sg_sunquan",
@@ -588,21 +219,7 @@
    "name": "벽해",
    "role": "5천하 세력 군주",
    "sex": "m",
-   "look": "magenta wavy medium hair, tan skin, dark gray double-breasted vest jacket, white shirt, black ribbon tie, black trousers, sandals",
-   "stand_pick": "sg_sunquan_v03",
-   "face": [
-    384,
-    283,
-    203,
-    159
-   ],
-   "bust_pick": "sg_sunquan_v02",
-   "expr_pick": {
-    "happy": "sg_sunquan__happy_v02",
-    "angry": "sg_sunquan__angry_v01",
-    "sad": "sg_sunquan__sad_v02"
-   },
-   "eye": "o"
+   "look": "magenta wavy medium hair, tan skin, dark gray double-breasted vest jacket, white shirt, black ribbon tie, black trousers, sandals"
   },
   {
    "id": "fu_jongwang",
@@ -611,20 +228,6 @@
    "role": "5천하 4막 이계 군주(균열)",
    "sex": "f",
    "look": "long silver white hair, tan skin, black choker, black and white oversized varsity jacket, black crop top, gray shorts, thigh strap, white socks, black loafers",
-   "stand_pick": "fu_jongwang_v03",
-   "face": [
-    384,
-    283,
-    203,
-    159
-   ],
-   "bust_pick": "fu_jongwang_v01",
-   "expr_pick": {
-    "happy": "fu_jongwang__happy_v01",
-    "angry": "fu_jongwang__angry_v01",
-    "sad": "fu_jongwang__sad_v01"
-   },
-   "eye": "o",
    "eye_note": "눈동자 색 조금 흔들림 — 같은 사람 ○"
   },
   {
@@ -633,21 +236,7 @@
    "name": "거해",
    "role": "5천하 4막 이계 군주(폐허)",
    "sex": "m",
-   "look": "dark brown hair in top bun, pink eyes, beige blazer, white shirt, black cargo pants, gray socks, sandals",
-   "stand_pick": "ru_geohae_v04",
-   "face": [
-    384,
-    283,
-    203,
-    159
-   ],
-   "bust_pick": "ru_geohae_v02",
-   "expr_pick": {
-    "happy": "ru_geohae__happy_v01",
-    "angry": "ru_geohae__angry_v02",
-    "sad": "ru_geohae__sad_v01"
-   },
-   "eye": "o"
+   "look": "dark brown hair in top bun, pink eyes, beige blazer, white shirt, black cargo pants, gray socks, sandals"
   },
   {
    "id": "tb_baekgi",
@@ -655,21 +244,7 @@
    "name": "백기",
    "role": "5천하 4막 이계 군주(묘역)",
    "sex": "m",
-   "look": "short silver gray hair, tan skin, pink eyes, dark gray double-breasted vest jacket, white shirt, black ribbon tie, black cargo pants, black sneakers",
-   "stand_pick": "tb_baekgi_v03",
-   "face": [
-    384,
-    283,
-    203,
-    159
-   ],
-   "bust_pick": "tb_baekgi_v01",
-   "expr_pick": {
-    "happy": "tb_baekgi__happy_v02",
-    "angry": "tb_baekgi__angry_v02",
-    "sad": "tb_baekgi__sad_v01"
-   },
-   "eye": "o"
+   "look": "short silver gray hair, tan skin, pink eyes, dark gray double-breasted vest jacket, white shirt, black ribbon tie, black cargo pants, black sneakers"
   }
  ],
  "eye_rule": "○ = 참조 렌더(3D 몸)와 머리색·머리꼴·옷 색·꼴·성별 같음 + 스탠딩·반신·표정 넷이 서로 같은 사람. 기존 초상(portraits-hero)은 옛 MPFB 몸 i2i 라 3D 몸과 이미 다른 사람 — 대조는 하되 기준 아님(10-21 판정)"

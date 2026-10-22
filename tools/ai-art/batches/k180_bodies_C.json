@@ -1,0 +1,63 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k180_bodies_C",
+ "kit": {
+  "spec": "creature",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "armored_alpaca",
+   "seed": 910642523,
+   "prompt": "(plump golden alpaca monster:1.15), fluffy cream wool body, dark iron helmet with three spikes, dark iron shoulder plates, short sturdy legs, small leathery bat wings, no humans, full body, whole creature visible, solo, bold colors, standing on four legs, thick round volume, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "bumble_puff",
+   "seed": 2373389399,
+   "prompt": "(round fluffy bumblebee creature:1.15), ball shaped body, orange and dark brown stripes, big round black eyes, two curly antennae, two clear rounded wings, tiny stubby legs, no humans, full body, whole creature visible, solo, bold colors, hovering, thick round volume, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "bumble_knight",
+   "seed": 2136219897,
+   "prompt": "(round bumblebee knight creature:1.15), ball shaped body, orange and dark brown stripes, small steel helmet with visor, steel chest plate, two clear wings, holding a short stinger lance, no humans, full body, whole creature visible, solo, bold colors, hovering, thick round volume, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "tabby_ball",
+   "seed": 686091530,
+   "prompt": "(round ball shaped cat creature:1.15), ginger fur with dark stripes, two pointed ears, big round green eyes, tiny paws, short curled tail, no humans, full body, whole creature visible, solo, bold colors, sitting, thick round volume, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "hen_ball",
+   "seed": 3176540464,
+   "prompt": "(round ball shaped hen creature:1.15), fluffy white feathers, big red comb, small orange beak, red wattle, tiny wings, two small orange feet, no humans, full body, whole creature visible, solo, bold colors, standing, thick round volume, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "finback_brute",
+   "seed": 4282493721,
+   "prompt": "(bipedal fish monster:1.15), teal blue scales, tall dorsal fin, yellow side fins, wide toothy grin, long webbed arms, short legs, hunched, no humans, full body, whole creature visible, solo, bold colors, standing, arms slightly away from body, empty hands, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "gape_fish",
+   "seed": 3155661277,
+   "prompt": "(round plump fish creature:1.15), teal blue body, tall pointed dorsal fin, yellow fan side fins, big open mouth, small round eyes, short tail fin, no humans, full body, whole creature visible, solo, bold colors, floating, thick round volume, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  }
+ ]
+}

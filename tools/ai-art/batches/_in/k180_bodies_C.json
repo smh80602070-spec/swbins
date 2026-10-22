@@ -1,0 +1,17 @@
+{
+ "name": "k180_bodies_C",
+ "spec": "creature",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0180 2나락 빌린 괴물 일곱(quaternius 몬스터 묶음) → 자체 몸 그림(TRELLIS 입력). 옛 꼴의 역할(크기·둥근 꼬마 괴물)만 잇고 생김은 새로(색·장식 다르게), 이름은 자체 id",
+ "items": [
+  {"id": "armored_alpaca", "from": "quaternius/Alpaking_Evolved", "subject": "plump golden alpaca monster, fluffy cream wool body, dark iron helmet with three spikes, dark iron shoulder plates, short sturdy legs, small leathery bat wings", "view": "three_quarter", "extra": "no humans, full body, whole creature visible, solo, bold colors, standing on four legs, thick round volume"},
+  {"id": "bumble_puff", "from": "quaternius/Armabee", "subject": "round fluffy bumblebee creature, ball shaped body, orange and dark brown stripes, big round black eyes, two curly antennae, two clear rounded wings, tiny stubby legs", "view": "three_quarter", "extra": "no humans, full body, whole creature visible, solo, bold colors, hovering, thick round volume"},
+  {"id": "bumble_knight", "from": "quaternius/Armabee_Evolved", "subject": "round bumblebee knight creature, ball shaped body, orange and dark brown stripes, small steel helmet with visor, steel chest plate, two clear wings, holding a short stinger lance", "view": "three_quarter", "extra": "no humans, full body, whole creature visible, solo, bold colors, hovering, thick round volume"},
+  {"id": "tabby_ball", "from": "quaternius/Cat", "subject": "round ball shaped cat creature, ginger fur with dark stripes, two pointed ears, big round green eyes, tiny paws, short curled tail", "view": "three_quarter", "extra": "no humans, full body, whole creature visible, solo, bold colors, sitting, thick round volume"},
+  {"id": "hen_ball", "from": "quaternius/Chicken", "subject": "round ball shaped hen creature, fluffy white feathers, big red comb, small orange beak, red wattle, tiny wings, two small orange feet", "view": "three_quarter", "extra": "no humans, full body, whole creature visible, solo, bold colors, standing, thick round volume"},
+  {"id": "finback_brute", "from": "quaternius/Fish", "subject": "bipedal fish monster, teal blue scales, tall dorsal fin, yellow side fins, wide toothy grin, long webbed arms, short legs, hunched", "view": "three_quarter", "extra": "no humans, full body, whole creature visible, solo, bold colors, standing, arms slightly away from body, empty hands"},
+  {"id": "gape_fish", "from": "quaternius/Fish", "subject": "round plump fish creature, teal blue body, tall pointed dorsal fin, yellow fan side fins, big open mouth, small round eyes, short tail fin", "view": "three_quarter", "extra": "no humans, full body, whole creature visible, solo, bold colors, floating, thick round volume"}
+ ]
+}
