@@ -3,7 +3,7 @@
 4069 saga-godot/saga_core/data/characters.gd
 2743 saga-web/saga-go/js/world3d.js
 2811 saga-web/saga-dungeon/js/dungeon3d.js
-2049 saga-web/saga-dungeon/js/ui.js
+1742 saga-web/saga-dungeon/js/ui.js
 2260 saga-web/saga-forest/js/village.js
 2407 saga-web/saga-go/js/field-combat.js
 1817 saga-web/saga-realm/js/ui-rtk.js

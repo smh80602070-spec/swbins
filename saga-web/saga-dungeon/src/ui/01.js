@@ -335,7 +335,7 @@
         var r = global.DG.item.autoClean();
         toast(r.sold ? '🧹 ' + r.sold + '점 정리 · 금 +' + core.fmt(r.gold) : '정리할 것이 없습니다');
       } else if (act === 'gear-sel') {
-        gearSel = (gearSel === id) ? null : id;
+        GS.sel = (GS.sel === id) ? null : id;
       } else if (act === 'skill-hero') {
         skillHero = b.getAttribute('data-hero');
         skillSlotPick = null;
@@ -369,8 +369,8 @@
           toast('\u21BA ' + back + '점을 돌려받았습니다 · 금 -' + core.fmt(cost));
         }
       } else if (act === 'gear-tab') {
-        gearTab = b.getAttribute('data-tab');
-        gearSel = null;
+        GS.tab = b.getAttribute('data-tab');
+        GS.sel = null;
       } else if (act === 'gear-repair' || act === 'gear-repairall') {
         var it3 = global.DG.item;
         var rr = act === 'gear-repair' ? it3.repair(id) : it3.repairAll();
@@ -386,9 +386,9 @@
         if (!mr.ok) {
           toast(mr.reason === 'dungeon' ? '던전 안에서는 창고가 열리지 않습니다'
               : mr.reason === 'full' ? '자리가 없습니다' : '없는 물건입니다');
-        } else { gearSel = null; }
+        } else { GS.sel = null; }
       } else if (act === 'gear-hero') {
-        gearHero = b.getAttribute('data-hero');
+        GS.hero = b.getAttribute('data-hero');
       } else if (act === 'gear-auto') {
         global.DG.item.autoEquip();
         toast('✨ 더 나은 장비로 갈아입혔습니다');

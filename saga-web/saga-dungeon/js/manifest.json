@@ -131,6 +131,7 @@
    "js/ops-client.js",
    "js/ui-detail.js",
    "js/ui-quest.js",
+   "js/ui-gear.js",
    "js/perf.js",
    "js/game.js"
   ]
@@ -265,6 +266,7 @@
    "js/dd-adapter.js",
    "js/ui-detail.js",
    "js/ui-quest.js",
+   "js/ui-gear.js",
    "js/game.js"
   ]
  ],
