@@ -1,0 +1,8 @@
+{
+ "name": "k181_icons", "spec": "icon", "style": "B", "model": "animagine-xl-4.0-opt", "variants": 4,
+ "note": "K-0181 3마을 우리 산물 아이콘 둘(material:egg·milk) — K-0035 아이템 아이콘과 같은 icon 규격·그림체 B",
+ "items": [
+  {"id": "fo_egg", "subject": "three fresh brown and white eggs in a small woven straw nest, no pedestal, no cast shadow"},
+  {"id": "fo_milk", "subject": "small round clay milk jar with white milk at the brim, cloth tied around the neck, no pedestal, no cast shadow"}
+ ]
+}

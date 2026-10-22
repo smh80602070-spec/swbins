@@ -1,0 +1,8 @@
+{
+ "name": "k181_bodies_C", "spec": "creature", "style": "C", "model": "animagine-xl-4.0-opt", "variants": 4,
+ "note": "K-0181 3마을 가축 몸 그림 둘(TRELLIS 입력) — 농가 동물(괴물 아님), 둥글고 순한 꼴",
+ "items": [
+  {"id": "farm_hen", "subject": "plump farm hen, warm brown feathers with cream chest, small red comb, small yellow beak, two yellow feet, gentle eyes", "view": "three_quarter", "extra": "no humans, full body, whole creature visible, solo, standing, thick round volume, realistic animal proportions"},
+  {"id": "farm_goat", "subject": "small farm goat, white and light gray coat, short curved horns, little beard, floppy ears, four slim legs with dark hooves, gentle eyes", "view": "three_quarter", "extra": "no humans, full body, whole creature visible, solo, standing on four legs, realistic animal proportions"}
+ ]
+}

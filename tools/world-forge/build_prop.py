@@ -482,8 +482,45 @@ def pocket_compass_01(C):
     annulus(M, (0, 0, 0.098), 0.009, 0.013, 0.004, brass, 0.1, 10)
 
 
+
+def pen_fence_01(C):
+    """가축 우리 울타리 한 칸 가로 2.0 · 높이 0.85m (K-0181) — 껍질 남은 통나무 기둥 둘 + 가로대 둘, 옆 칸과 기둥을 나눠 가로로 이어 붙인다."""
+    M = C.M
+    log = C.s('coated_pine', 0.6, tint='#8a6a48')
+    rail = C.s('brown_planks_03', 0.6, tint='#b48a5c')
+    for sx in (-1.0, 1.0):
+        tube(M, (sx, 0, 0), (sx, 0, 0.85), 0.07, 0.06, log, 0.6, 8)
+        tube(M, (sx, 0, 0.85), (sx, 0, 0.9), 0.06, 0.0, log, 0.6, 8)
+    for z, sag in ((0.32, 0.015), (0.66, 0.02)):
+        n = 6
+        for k in range(n):
+            x0, x1 = -1.0 + 2.0 * k / n, -1.0 + 2.0 * (k + 1) / n
+            z0 = z - sag * math.sin(math.pi * k / n)
+            z1 = z - sag * math.sin(math.pi * (k + 1) / n)
+            tube(M, (x0, -0.06, z0), (x1, -0.06, z1), 0.05, 0.05, rail, 0.6, 6)
+
+
+def pen_gate_01(C):
+    """가축 우리 문 한 칸 가로 1.2 · 높이 0.9m (K-0181) — 기둥 둘 + 판문(가로대 셋·대각 버팀·쇠 경첩·고리)."""
+    M = C.M
+    log = C.s('coated_pine', 0.6, tint='#8a6a48')
+    wd = C.s('brown_planks_03', 0.6, tint='#c29a68')
+    iron = C.s('corrugated_iron', 0.3, tint='#3c3a36')
+    for sx in (-0.6, 0.6):
+        tube(M, (sx, 0, 0), (sx, 0, 0.95), 0.07, 0.06, log, 0.6, 8)
+        tube(M, (sx, 0, 0.95), (sx, 0, 1.0), 0.06, 0.0, log, 0.6, 8)
+    for z in (0.2, 0.5, 0.8):
+        obox(M, (0, -0.07, z), (1.05, 0.05, 0.1), 0, wd)
+    for k in range(5):
+        obox(M, (-0.42 + k * 0.21, -0.1, 0.12), (0.14, 0.03, 0.76), 0, wd)
+    b0, b1 = Vector((-0.45, -0.11, 0.22)), Vector((0.45, -0.11, 0.78))
+    tube(M, b0, b1, 0.035, 0.035, wd, 0.6, 6)
+    for z in (0.2, 0.8):
+        obox(M, (-0.5, -0.12, z), (0.14, 0.02, 0.05), 0, iron)
+    tube(M, (0.5, -0.13, 0.5), (0.5, -0.17, 0.5), 0.025, 0.025, iron, 0.3, 6)
+
 PROPS = {f.__name__: f for f in (
-    well_01, street_lamp_01, signal_pylon_01, torch_stand_01, altar_01, iron_fence_01, wood_fence_01, mailbox_01,
+    pen_fence_01, pen_gate_01, well_01, street_lamp_01, signal_pylon_01, torch_stand_01, altar_01, iron_fence_01, wood_fence_01, mailbox_01,
     haystack_01, bamboo_clump_01, stele_01, stone_lantern_01, banner_pole_01, city_wall_segment_01, brazier_01,
     road_barrier_01, covered_car_01, old_tyre_01, generator_01, searchlight_01, power_box_01, security_camera_01, wicker_basket_01,
     wooden_bucket_01, pocket_compass_01)}

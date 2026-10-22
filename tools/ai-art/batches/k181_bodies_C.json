@@ -1,0 +1,33 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k181_bodies_C",
+ "kit": {
+  "spec": "creature",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "farm_hen",
+   "seed": 286106989,
+   "prompt": "(plump farm hen:1.15), warm brown feathers with cream chest, small red comb, small yellow beak, two yellow feet, gentle eyes, no humans, full body, whole creature visible, solo, standing, thick round volume, realistic animal proportions, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  },
+  {
+   "id": "farm_goat",
+   "seed": 2923055840,
+   "prompt": "(small farm goat:1.15), white and light gray coat, short curved horns, little beard, floppy ears, four slim legs with dark hooves, gentle eyes, no humans, full body, whole creature visible, solo, standing on four legs, realistic animal proportions, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon"
+  }
+ ]
+}

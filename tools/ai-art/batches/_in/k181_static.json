@@ -1,0 +1,26 @@
+{
+ "name": "k181_static",
+ "spec": "sprite",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0181 우리 울타리·문 — world-forge 코드 소품(pen_fence_01·pen_gate_01) 정면¾ 렌더를 밑그림으로 i2i 0.6, static2d 와 같은 길(pack_static2d)",
+ "items": [
+  {
+   "id": "pen_fence_01",
+   "subject": "low rustic livestock pen fence section, two log posts, two horizontal wooden rails",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "tools/ai-art/_out/static2d_init/pen_fence_01.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "pen_gate_01",
+   "subject": "small wooden livestock pen gate, plank door with diagonal brace, iron hinges, two log posts",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "tools/ai-art/_out/static2d_init/pen_gate_01.png",
+   "denoise": 0.6
+  }
+ ]
+}
