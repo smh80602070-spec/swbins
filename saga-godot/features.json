@@ -5433,5 +5433,24 @@
   "ticket": "G-0305",
   "since": "2026-10-22",
   "note": "웹 W-0297 짝 · SAGA_REST=0 · 세이브 새 칸 rest"
+ },
+ {
+  "id": "gd.go.mount-fight",
+  "name": "1만리 말 위 전투 — 탄 채 평타(빠르기만큼 ×1~1.5)·E 돌진(×1.6·밀침·비틀, 쿨 6초)·맞으면 낙마·날면 못 침",
+  "files": [
+   "games/saga_go/combat/field_mount.gd",
+   "games/saga_go/combat/field_combat.gd",
+   "saga_core/player/mount.gd"
+  ],
+  "tests": [
+   "mount_fight",
+   "mount"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0306",
+  "since": "2026-10-22",
+  "note": "웹 W-0304 짝 · SAGA_MOUNT_FIGHT=0"
  }
 ]

@@ -233,6 +233,7 @@ func _ready() -> void:
 	grab = FieldGrab.new()
 	grab.name = "FieldGrab"
 	add_child(grab)
+	preload("res://games/saga_go/combat/field_mount.gd").attach(self)   # G-0306 말 위 전투(SAGA_MOUNT_FIGHT=0 이면 없음)
 	preload("res://games/saga_go/combat/field_parry.gd").attach(self)   # G-0304 쳐내기(SAGA_PARRY=0 이면 없음)
 	preload("res://games/saga_go/combat/field_env.gd").attach(self)   # G-0303 들불·물벼락(SAGA_FIELD_ENV=0 이면 없음)
 	_refresh_hud()
@@ -423,7 +424,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _duel_open() or _player == null or _player.get("frozen") or _mouse_blocked(event):
 		return
 	## 탈것을 타는 동안엔 전투 입력을 받지 않는다(mount.gd 가 공격을 누르면 내려 준다).
-	if bool(_player.get("mounted")):
+	if bool(_player.get("mounted")) and not (has_node("FieldMount") and get_node("FieldMount").call("allows", event)):   # G-0306 말 위는 평타만(돌진은 FieldMount)
 		return
 	for action in INPUT_ACTIONS:
 		if event.is_action_pressed(action):
@@ -1218,7 +1219,7 @@ func _deal(enemy: Node, base: float, element: String, dir: Vector3) -> float:
 			if rig:
 				rig.call("shake", 0.12, 0.25)
 		return dealt
-	var amount: float = base * (float(get_node("FieldParry").call("mul", enemy)) if has_node("FieldParry") else 1.0)   # G-0304 쳐낸 뒤 ×2·비틀 ×1.2
+	var amount: float = base * (float(get_node("FieldParry").call("mul", enemy)) if has_node("FieldParry") else 1.0) * (float(get_node("FieldMount").call("mul")) if has_node("FieldMount") else 1.0)   # G-0304 쳐낸 뒤 ×2·비틀 ×1.2 · G-0306 말 위 빠르기
 	## 106장 ㉛ 표식 난 적 — 명단 누구에게든 피해 +.
 	if _marks.has(enemy.get_instance_id()):
 		amount *= float(_marks[enemy.get_instance_id()].mul)
@@ -1354,6 +1355,7 @@ func take_damage(amount: float, source: Node) -> void:
 			_refresh_hud()
 			return
 	hp = maxf(hp - dmg, 0.0)
+	if has_node("FieldMount"): get_node("FieldMount").call("on_hurt")   # G-0306 탄 채 맞으면 낙마
 	_since_hurt = 0.0
 	CombatFeel.hit(_player.get_node("Visual"), dmg, false)
 	var hv := _hurt_vignette()

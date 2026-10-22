@@ -93,14 +93,16 @@ func _physics_process(_delta: float) -> void:
 				Input.action_release("move_right")
 				Input.action_release("run")
 				_next()
-		3: # ③ 공격 = 내림
+		3: # ③ 공격 — G-0306 부터 1만리는 말 위에서 싸운다(내리지 않음) → 손으로 내려 배율 되돌림 확인
 			if _frame == 1:
 				var ev := InputEventAction.new()
 				ev.action = "combat_quick"
 				ev.pressed = true
 				_m.call("_unhandled_input", ev)
 			if _frame == 5:
-				_check("attack_dismount", not bool(_p.mounted) and not _m.call("is_riding"), "")
+				_check("attack_stays", bool(_p.mounted) and _m.call("is_riding"), "")
+				_m.call("dismount", "")
+			if _frame == 8:
 				_check("speed_reset", is_equal_approx(float(_p.mount_speed_mul), 1.0) and is_equal_approx(float(_p.ride_height), 0.0), "")
 				_next()
 		4: # ④ 나는 탈것

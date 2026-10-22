@@ -143,7 +143,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		toggle()
 	elif event.is_action_pressed("go_mount_next"):
 		cycle()
-	elif is_riding():
+	elif is_riding() and get_tree().get_first_node_in_group("go_field_mount") == null:   # G-0306 1만리는 말 위에서 싸운다
 		for a in ATTACK_ACTIONS:
 			if InputMap.has_action(a) and event.is_action_pressed(a):
 				dismount("전투는 내려서")
