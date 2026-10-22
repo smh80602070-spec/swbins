@@ -1382,5 +1382,24 @@
   "ticket": "W-0368",
   "since": "2026-10-22",
   "note": "10-22: 손잡이 셋 0/1 이면 옛 그림 · setTone 은 판 연결 안 함(어둠 막이 이미 몸 위)"
+ },
+ {
+  "id": "vf.factory2d",
+  "name": "2D 공장 시트 연결(W-0370) — index.json factory 풀(사람 4)을 5방향 × 동작 10(manifest 프레임 수·fps·발 0.88)으로 · 한 장 그림(still)은 받기 전·실패 때 대역 · 손잡이 mode2d.factory",
+  "files": [
+   "../shared/js/mode2d.js"
+  ],
+  "tests": [
+   "test-web W-0370 공장 시트",
+   "walk370 걷기·방향 칸",
+   "pw-2d-cmp w370",
+   "pw-web-2d-sheet 14/14"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0370",
+  "since": "2026-10-22",
+  "note": "10-22: 몸 키는 idle 옆 칸 알파 상자로 재서 targetH × scale(옛 길과 같은 기준)"
  }
 ]

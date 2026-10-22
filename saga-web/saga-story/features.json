@@ -1143,5 +1143,24 @@
   "ticket": "W-0351",
   "since": "2026-10-22",
   "note": "10-22: 렌더 그림 위 안쪽 선이 몸 안 검은 점으로 박힘 — W-0347 1만리와 같은 원인"
+ },
+ {
+  "id": "sd.factory2d",
+  "name": "2D 공장 시트 연결(W-0370) — index.json factory 풀(사람 2 + 짐승 2)을 5방향 × 동작 10(manifest 프레임 수·fps·발 0.88)으로 · 한 장 그림(still)은 받기 전·실패 때 대역 · 손잡이 mode2d.factory",
+  "files": [
+   "../shared/js/mode2d.js"
+  ],
+  "tests": [
+   "test-web W-0370 공장 시트",
+   "walk370 걷기·방향 칸",
+   "pw-2d-cmp w370",
+   "pw-web-2d-sheet 14/14"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0370",
+  "since": "2026-10-22",
+  "note": "10-22: 몸 키는 idle 옆 칸 알파 상자로 재서 targetH × scale(옛 길과 같은 기준)"
  }
 ]

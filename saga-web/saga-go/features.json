@@ -1678,5 +1678,24 @@
   "ticket": "W-0360",
   "since": "2026-10-22",
   "note": "10-22: 다섯 판 체제 한 줄(1만리 장부에) · 서명 다른 단위(kaykit·polypizza·oga·standin·monsters)는 판 것 그대로"
+ },
+ {
+  "id": "go.factory2d",
+  "name": "2D 공장 시트 연결(W-0370) — index.json factory 풀(사람 4 + 짐승 125(K-0160))을 5방향 × 동작 10(manifest 프레임 수·fps·발 0.88)으로 · 한 장 그림(still)은 받기 전·실패 때 대역 · 손잡이 mode2d.factory",
+  "files": [
+   "../shared/js/mode2d.js"
+  ],
+  "tests": [
+   "test-web W-0370 공장 시트",
+   "walk370 걷기·방향 칸",
+   "pw-2d-cmp w370",
+   "pw-web-2d-sheet 14/14"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0370",
+  "since": "2026-10-22",
+  "note": "10-22: 몸 키는 idle 옆 칸 알파 상자로 재서 targetH × scale(옛 길과 같은 기준)"
  }
 ]

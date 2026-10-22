@@ -402,9 +402,79 @@
     return true;
   }
 
+  /* ── 공장 시트(W-0370, K-0158 규격 — K-0159 사람·K-0160 짐승) ──
+     `<풀>/<동작>.webp` 한 장 = 가로 프레임 × 세로 방향 5(0 정면·1 앞대각·2 옆·3 뒤대각·4 뒤, 왼쪽은 뒤집기 — dirOf8 과 같은 줄),
+     동작 idle/walk/run/attack/attack2/cast/hit/death/sit/talk(없는 것은 manifest missing), 프레임 수·fps 는 manifest 가 준다(hit·death 6), 발 = 위에서 manifest.foot.
+     어느 풀이 공장 것인가는 판 index.json 의 `factory` — 목록에 있는 풀만 manifest 를 받는다(404 없음). 몸 높이는 idle 옆 칸의 알파 상자로 재서
+     옛 길과 같게 몸 키 = targetH × scale. 받기 전엔 still 풀이면 한 장 그림, 아니면 false(옛 128·3행 길로 공장 그림을 잘못 자르지 않게). 손잡이 mode2d.factory 0 = 옛 */
+  var facts = {}, idxDone = false, idxAt = 0, idxN = 0, FALIAS = { heavy: 'attack2', knockdown: 'death', jump: 'run', fall: 'run', sprint: 'run', gather: 'attack' };
+  function factOf(pool) {
+    var id = bare(pool), f;
+    if (typeof id !== 'string' || isVroid(id) || isCrea(id) || !global.fetch || !tuneOf('mode2d.factory', 1)) { return null; }
+    if (!idxDone) { if (indexTried && !index && Date.now() - idxAt > 2500) { if (idxN >= 3) { idxDone = true; return null; } indexTried = false; } loadIndex(); return 'wait'; }   // 부팅 때 부른 요청이 안 끝나는 일이 있다(2나락 실측) — 2.5초마다 다시, 세 번이면 공장 없음
+    if (!index || !index.factory) { return null; }
+    if (!index._fset) { index._fset = {}; index.factory.forEach(function (k) { index._fset[k] = 1; }); }
+    if (!index._fset[id]) { return null; }
+    f = facts[id];
+    if (!f) {
+      f = facts[id] = { m: null, fail: false, bh: 0 };
+      global.fetch(base() + id + '/manifest.json').then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (m) { if (m && m.clips) { f.m = m; } else { f.fail = true; } })['catch'](function () { f.fail = true; });
+    }
+    return f.fail ? null : (f.m ? f : 'wait');
+  }
+  /** 동작 이름 → 그 시트에 있는 동작(순수) — 없으면 가까운 것, 끝내 idle */
+  function factRole(m, clip) {
+    var cl = (m && m.clips) || {}, a;
+    clip = clip || 'idle';
+    if (cl[clip]) { return clip; }
+    a = FALIAS[clip]; if (a && cl[a]) { return a; }
+    if (/^attack/.test(clip) && cl.attack) { return 'attack'; }
+    if ((clip === 'run' || a === 'run') && cl.walk) { return 'walk'; }
+    return 'idle';
+  }
+  /** 프레임 번호(순수) — t(0..1 짧은 몸짓) > 걷기·달리기 위상 stride > 시각(ms·fps, 반복 아니면 끝에서 멈춤) */
+  function factFrame(c, role, o) {
+    var n = (c && c.frames) || 8, fr;
+    if (o.t !== undefined && o.t !== null) { return Math.min(n - 1, Math.max(0, Math.floor(o.t * n))); }
+    if ((role === 'walk' || role === 'run') && o.stride !== undefined && o.stride !== null) { return Math.floor((((+o.stride % 1) + 1) % 1) * n) % n; }
+    fr = Math.floor(Math.max(0, +o.ms || 0) / 1000 * ((c && c.fps) || 8));
+    return c && c.loop === false ? Math.min(n - 1, fr) : fr % n;
+  }
+  /** idle 옆 칸(2행 첫 프레임) 알파 상자 높이(px) — 한 번 재 둔다. 못 재면 칸의 0.75 */
+  function factBody(f, img, P) {
+    if (f.bh) { return f.bh; }
+    var bh = 0, cv, g, d, y, x, top = -1, bot = -1;
+    try {
+      cv = global.document.createElement('canvas'); cv.width = P; cv.height = P; g = cv.getContext('2d');
+      g.drawImage(img, 0, 2 * P, P, P, 0, 0, P, P); d = g.getImageData(0, 0, P, P).data;
+      for (y = 0; y < P; y++) { for (x = 0; x < P; x++) { if (d[(y * P + x) * 4 + 3] > 40) { if (top < 0) { top = y; } bot = y; break; } } }
+      bh = top >= 0 ? bot - top + 1 : 0;
+    } catch (err) { bh = 0; }
+    f.bh = bh > 8 ? bh : P * 0.75;
+    return f.bh;
+  }
+  function drawFact(ctx, o, f) {
+    var m = f.m, role = factRole(m, o.clip), e = getImg(o.pool, role), ei = role === 'idle' ? e : getImg(o.pool, 'idle');
+    if (!ei.ok) { return false; }
+    if (!e.ok) { e = ei; role = 'idle'; }
+    var c = m.clips[role] || m.clips.idle, n = (c && c.frames) || 8, P = (e.img.naturalWidth || 0) / n || m.px || 192;
+    var ni = (m.clips.idle && m.clips.idle.frames) || 8, bh = factBody(f, ei.img, (ei.img.naturalWidth || 0) / ni || m.px || 192);
+    var fr = factFrame(c, role, o), d = dirOf8(o.dirX, o.dirY, o.facing), row = Math.min(d.row, ((m.dirs && m.dirs.length) || 5) - 1);
+    var cf = C(), body = (cf.targetH || 62) * (o.scale || 1), sc = body / bh, w = P * sc, h = P * sc, foot = m.foot || 0.88;
+    stepDust(ctx, o, body); ctx.save();
+    if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
+    ctx.imageSmoothingEnabled = true; hq(ctx); applyTone(ctx);
+    if (d.flip && m.mirror !== false) { ctx.translate(o.x, 0); ctx.scale(-1, 1); ctx.translate(-o.x, 0); }
+    ctx.drawImage(e.img, fr * P, row * P, P, P, o.x - w / 2, o.y - h * foot, w, h);
+    ctx.restore();
+    return true;
+  }
+
   function draw(ctx, o) {
     if (!ctx || !o || !o.pool || !isOn()) { return false; }
     if (global.DG.cutout2d && global.DG.cutout2d.drawFor(ctx, o, (C().targetH || 62) * (o.scale || 1))) { return true; }   // W-0336 컷아웃 뼈대(손잡이 cutout2d.on, 기본 0 — 그대로)
+    var fa = factOf(o.pool); if (fa) { if (fa !== 'wait' && drawFact(ctx, o, fa)) { return true; } return isStill(o.pool) ? drawStill(ctx, o) : false; }   // W-0370 공장 시트 먼저
     if (isStill(o.pool)) { return drawStill(ctx, o); }      // 한 장 모드 풀(W-0032)
     var s16 = spec16(o.pool); if (s16 && draw16(ctx, o, s16)) { return true; }   // W-0311 16방향 시트가 온 인물부터
     var cr = null;
@@ -509,9 +579,9 @@
   /** 풀 목록(index.json)을 한 번 읽어 둔다 — 진단·미리 받기용. 없어도 오류 없음 */
   function loadIndex(cb) {
     if (index || indexTried || !global.fetch) { if (cb) { cb(index); } return; }
-    indexTried = true;
+    indexTried = true; idxAt = Date.now(); idxN++;
     global.fetch(base() + 'index.json').then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (j) { index = j; if (cb) { cb(j); } })['catch'](function () { if (cb) { cb(null); } });
+      .then(function (j) { index = j; idxDone = true; if (cb) { cb(j); } })['catch'](function () { idxDone = true; if (cb) { cb(null); } });
   }
 
   /* ───── 배경 층·바닥 타일 (K-0020 산출, 판별 `assets/web2d/{bg,tile}/`) ─────
@@ -704,7 +774,7 @@
     FRAMES: FRAMES, PX: PX, FPS: FPS, AIR: AIR, AIR_T: AIR_T,
     isOn: isOn, pick: pick, vroidPick: vroidPick, face: face, actT: actT, actInfo: actInfo, dirOf8: dirOf8, roleOf: roleOf, roleKey: roleKey, townRole: townRole, sheet8: sheet8, beastOf: beastOf, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
     draw: draw, preload: preload, spec16: spec16, role16: role16, loadIndex: loadIndex, tintSlot: tintSlot, tintPx: tintPx, tintData: tintData, tintRowW: tintRowW, tintOf: tintOf, bare: bare,
-    drawStill: drawStill, stillPose: stillPose, isStill: isStill, pace: pace,
+    drawStill: drawStill, stillPose: stillPose, factRole: factRole, factFrame: factFrame, factReady: function (pool) { var f = factOf(pool); return f === 'wait' ? null : !!f; }, isStill: isStill, pace: pace,
     stillLoaded: function (pool, view) { var e = stills[pool + '/' + view]; return e ? e.ok : null; },
     /** 진단용 — 그 풀·동작 이미지를 받았나(true/false), 아직 안 불렀으면 null */
     loaded: function (pool, clip) { var e = imgs[bare(pool) + '/' + clip]; return e ? e.ok : null; },

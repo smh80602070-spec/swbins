@@ -9362,6 +9362,16 @@ window.requestAnimationFrame = function () { return 0; };
       var d1 = M.stepDust(dc, { x: 0, y: 0, clip: 'walk', stride: 0.52 }, 60), d2 = M.stepDust(dc, { x: 0, y: 0, clip: 'walk', stride: 0.3 }, 60), d3 = M.stepDust(dc, { x: 0, y: 0, clip: 'idle', stride: 0.02 }, 60);
       return (d1 === 2 && d2 === 0 && d3 === 0) || ('실패 발 먼지 ' + d1 + ' ' + d2 + ' ' + d3);
     });
+    t('W-0370 공장 시트 — 방향 5줄(정면 0·앞대각 1·옆 2·뒤대각 3·뒤 4, 왼쪽은 뒤집기) · 없는 동작은 가까운 것 · 프레임 수는 manifest(죽음 6 은 끝에서 멈춤)', function () {
+      var M = DG.mode2d; if (!M || !M.factRole || !M.factFrame) { return '실패 factRole·factFrame 없음'; }
+      var rows = [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1]].map(function (d) { return M.dirOf8(d[0], d[1]).row; }).join(''), L = M.dirOf8(-1, 0);
+      if (rows !== '01234' || L.row !== 2 || !L.flip) { return '실패 방향 ' + rows + ' ' + JSON.stringify(L); }
+      var m = { clips: { idle: { frames: 8, fps: 6 }, walk: { frames: 8, fps: 10 }, attack: { frames: 8, fps: 14, loop: false }, death: { frames: 6, fps: 8, loop: false } } };
+      var r = [M.factRole(m, 'walk'), M.factRole(m, 'run'), M.factRole(m, 'attack2'), M.factRole(m, 'knockdown'), M.factRole(m, 'sit')].join(',');
+      if (r !== 'walk,walk,attack,death,idle') { return '실패 동작 ' + r; }
+      var f = [M.factFrame(m.clips.death, 'death', { t: 0.99 }), M.factFrame(m.clips.death, 'death', { ms: 99999 }), M.factFrame(m.clips.walk, 'walk', { stride: 0.5 }), M.factFrame(m.clips.idle, 'idle', { ms: 1000 })].join(',');
+      return f === '5,5,4,6' || ('실패 프레임 ' + f);
+    });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });
