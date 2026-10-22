@@ -2212,6 +2212,23 @@
   "note": "D2(U-0153·U-0154): K-0173 스킨 95 놓인 뒤 다섯 판 촬영(PC 1600×900·폰 세로) Claude 눈 — 일시정지 ○ · 설정 창 HUD 비침·틀 없음 → DressWindow 로 고쳐 ○ · ☰ 업적/⏸ 겹침·아이콘 빔 → 제 캔버스 150·텍스처 스프라이트로 고쳐 ○ · UiLayoutCheck 0 · 4종횡·5천하 진단 OK(1만리·2나락·3마을은 바위 회귀 K-0176)"
  },
  {
+  "id": "un.go.autoquest",
+  "name": "U-0163 자동 퀘스트 — 목표판 옆 ▶ 를 누르면 지금 이야기 단계를 대신(걷기·말 걸기·줄 넘기기·싸움), 손 조작·체력 낮음·막힘에 멈춤(웹 W-0337, 공용 틀 SagaCore/AutoQuest)",
+  "files": [
+   "saga-unity/Assets/SagaCore/AutoQuest.cs",
+   "saga-unity/Assets/Games/SagaGo/UI/GoAutoQuest.cs"
+  ],
+  "tests": [
+   "PlaytestGoAutoQuest"
+  ],
+  "level": "D1",
+  "verified": "2026-10-22 claude",
+  "fun": {},
+  "ticket": "U-0163",
+  "since": "2026-10-22",
+  "note": "D1(U-0163): PlaytestHeadless autoquest OK(틀 막힘·멈춤 · 1만리 1장 첫 단계 25m 걸어가 말 걸어 단계 넘김 · 체력 낮음 · 손 조작 · ▶) · UiLayoutCheck 0(▶ 목표판 왼쪽, 검사가 ▶ 건너뜀) · 나머지 넷 U-0164"
+ },
+ {
   "id": "un.dg.weapon-swap",
   "name": "U-0131 무기 두 벌 — 바뀐 손 무기를 을(乙)로, G·폰 바꿔 들기 단추로 갑↔을(쿨 1초·첫 타 ×1.15, 웹 W-0281 이식)",
   "files": [

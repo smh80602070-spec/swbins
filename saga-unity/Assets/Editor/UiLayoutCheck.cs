@@ -196,6 +196,7 @@ namespace Saga.EditorTools
             {
                 if (b == null || !b.isActiveAndEnabled || !b.interactable) continue;
                 if (title && b.name != "Settings" && b.name != "Credits") continue; // 타이틀의 나머지는 판을 연다·끈다
+                if (b.name == "Btn_▶") continue; // tasks U-0163 자동 퀘스트 ▶ — 창이 아니라 모드(켜면 뒤에서 걸어 다녀 다음 상태를 흔든다)
                 var before = new HashSet<int>(VisibleGraphics().Select(g => g.GetInstanceID()));
                 string name = b.name + Label(b);
                 b.onClick.Invoke();

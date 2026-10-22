@@ -204,6 +204,8 @@ namespace Saga.Go.UI
         /// <summary>곁에 선 대화 단계 — 없으면 null.</summary>
         public static GoStory.Step NearTalk(Vector3 p) => NearestTalk(p, out var t) ? t.Step : null;
 
+        /// <summary>tasks U-0163 자동 퀘스트 — 지금 줄이 고르기 줄인가.</summary>
+        public bool PickLine => IsPickLine;
         private bool IsPickLine => _talkStep != null && _talkLine < _talkStep.Lines.Length && _talkStep.Lines[_talkLine].IsPick;
 
         /// <summary>곁이면 대화를 연다.</summary>

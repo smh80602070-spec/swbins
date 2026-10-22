@@ -31,6 +31,7 @@ namespace Saga.Go.UI
 
         private void Start()
         {
+            if (GetComponent<GoAutoQuest>() == null) gameObject.AddComponent<GoAutoQuest>(); // tasks U-0163 자동 퀘스트(씬 재빌드 없음)
             Build();
             Refresh();
         }
