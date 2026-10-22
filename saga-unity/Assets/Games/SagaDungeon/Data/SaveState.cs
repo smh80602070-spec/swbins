@@ -93,6 +93,7 @@ namespace Saga.Dungeon.Data
             public RegionBossState.Entry[] regionBoss; // v13
             public RegionSagaState.Entry[] regionSaga; // v14
             public bool regionSagaAll;
+            public int[] rankTiers; public string[] rankGrades; // tasks U-0169 한 판 등급 급별 최고 기록. 버전 그대로: 옛 세이브는 null → 빈 기록.
             public string mountSel; // PLAN.md 109-15 — 고른 탈것(탄 채는 저장 안 함). 버전 그대로: 옛 세이브는 null → 안 고른 채.
             public string[] folkStoryIds; // 곁가지 — 마을 시대 손님 사연을 들은 토막 수(버전 그대로: 옛 세이브는 null → 처음부터)
             public int[] folkStoryCounts;
@@ -160,11 +161,13 @@ namespace Saga.Dungeon.Data
                 regionSaga = RegionSagaState.Snapshot(),
                 regionSagaAll = RegionSagaState.AllDone,
                 mountSel = DungeonMounts.Snapshot(),
+                rankTiers = Saga.Dungeon.World.DungeonRunRank.SnapshotTiers(),
                 scenarioJson = DungeonScenario.Snapshot(),
                 tutDone = DungeonTutorial.Ids().ToArray(),
             };
             DungeonEras.SnapshotStories(out data.folkStoryIds, out data.folkStoryCounts);
             DungeonNameStones.Snapshot(out data.nameStoneTowns, out data.nameStoneNames);
+            data.rankGrades = Saga.Dungeon.World.DungeonRunRank.SnapshotGrades(data.rankTiers);
             return JsonUtility.ToJson(data);
         }
 
@@ -214,6 +217,7 @@ namespace Saga.Dungeon.Data
             RegionBossState.Restore(data.version >= 13 ? data.regionBoss : null);
             RegionSagaState.Restore(data.version >= 14 ? data.regionSaga : null, data.version >= 14 && data.regionSagaAll);
             DungeonMounts.Restore(data.mountSel);
+            Saga.Dungeon.World.DungeonRunRank.Restore(data.rankTiers, data.rankGrades);
             DungeonEras.RestoreStories(data.folkStoryIds, data.folkStoryCounts);
             DungeonTutorial.Restore(data.version >= 15 ? data.tutDone : DungeonTutorial.AllIds()); // tasks U-0013
             if (string.IsNullOrEmpty(data.scenarioJson)) DungeonScenario.RestoreLegacy(data.dungeonFloor);

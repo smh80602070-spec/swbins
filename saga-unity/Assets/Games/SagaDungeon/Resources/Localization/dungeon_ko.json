@@ -866,6 +866,12 @@
     { "key": "aq.side", "value": "비켜 감" },
     { "key": "aq.fight", "value": "싸움" },
     { "key": "aq.walk", "value": "걷는 중" },
-    { "key": "aq.wait", "value": "도착" }
+    { "key": "aq.wait", "value": "도착" },
+    { "key": "runrank.line", "value": "⭐ 이번 판 등급 {0} — 피격 {1} · 연타 {2} · {3}:{4:00}" },
+    { "key": "runrank.bonus", "value": "등급 덤 금 +{0}" },
+    { "key": "runrank.gem", "value": "💎 {0} 박음" },
+    { "key": "runrank.best", "value": "🏆 최고 기록 {0} → {1}" },
+    { "key": "runrank.first", "value": "🏆 첫 기록 {0}" },
+    { "key": "runrank.dead", "value": "쓰러져 덤 없음" }
   ]
 }

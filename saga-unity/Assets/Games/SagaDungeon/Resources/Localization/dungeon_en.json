@@ -866,6 +866,12 @@
     { "key": "aq.side", "value": "Sidestep" },
     { "key": "aq.fight", "value": "Fighting" },
     { "key": "aq.walk", "value": "Walking" },
-    { "key": "aq.wait", "value": "Arrived" }
+    { "key": "aq.wait", "value": "Arrived" },
+    { "key": "runrank.line", "value": "⭐ Run grade {0} — hits taken {1} · combo {2} · {3}:{4:00}" },
+    { "key": "runrank.bonus", "value": "Grade bonus gold +{0}" },
+    { "key": "runrank.gem", "value": "💎 {0} socketed" },
+    { "key": "runrank.best", "value": "🏆 Best {0} → {1}" },
+    { "key": "runrank.first", "value": "🏆 First record {0}" },
+    { "key": "runrank.dead", "value": "Fell — no bonus" }
   ]
 }

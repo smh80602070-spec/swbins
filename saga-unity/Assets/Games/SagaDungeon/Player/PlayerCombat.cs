@@ -416,6 +416,7 @@ namespace Saga.Dungeon.Player
             string msg = lostGold > 0
                 ? string.Format(DungeonLocalization.T("grave.dropped", "쓰러졌다가 정신을 차렸다. 이 자리에 금 {0}을 유품으로 남겼다."), lostGold)
                 : DungeonLocalization.T("grave.dropped_none", "쓰러졌다가 정신을 차렸다.");
+            msg += DungeonRunRank.Append(DungeonRunRank.Finish(Time.time, true)); // tasks U-0169 — 쓰러진 판은 등급만
             DialogueLabel.Instance?.Show(msg, 4f);
         }
     }

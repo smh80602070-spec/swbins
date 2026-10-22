@@ -27,6 +27,8 @@ namespace Saga.Dungeon.Data
         public static int Exp { get; private set; }
         public static int ExpToNext => ExpForLevel(Level);
         public static int Gold { get; private set; }
+        /// <summary>tasks U-0169 — 지금껏 번 금(쓴 것·유품은 안 뺌, 저장 안 함) — 한 판 등급 덤의 밑.</summary>
+        public static int GoldEarned { get; private set; }
         public static int HpMax => BaseHp + (Level - 1) * HpPerLevel;
         public static int Hp { get; private set; } = BaseHp;
         public static string EquippedWeaponId { get; private set; } = "wp_start";
@@ -152,7 +154,7 @@ namespace Saga.Dungeon.Data
 
         public static void AddGold(int amount)
         {
-            if (amount > 0) Gold += amount;
+            if (amount > 0) { Gold += amount; GoldEarned += amount; }
         }
 
         public static bool TrySpendGold(int amount)

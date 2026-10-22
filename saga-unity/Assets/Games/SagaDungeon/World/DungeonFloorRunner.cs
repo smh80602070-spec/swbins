@@ -159,6 +159,7 @@ namespace Saga.Dungeon.World
         private void Awake()
         {
             Instance = this;
+            DungeonRunRank.Hook(); // tasks U-0169 한 판 결과 등급
             var playerGo = GameObject.FindWithTag("Player");
             _player = playerGo != null ? playerGo.transform : null;
             _playerController = playerGo != null ? playerGo.GetComponent<CharacterController>() : null;
@@ -224,6 +225,7 @@ namespace Saga.Dungeon.World
         public void JumpToFloor(int floor)
         {
             if (floor < 2) return;
+            DungeonRunRank.Cancel(); // tasks U-0169 — 건너뛴 층은 판을 버린다
             ClearDoorPods();
             _floor = floor;
             _roomIndex = 0;
@@ -356,6 +358,7 @@ namespace Saga.Dungeon.World
                 DungeonDailyTaskState.ReportProgress(DungeonDailyTaskState.Kind.SigilClear, 1);
             }
 
+            var rank = DungeonRunRank.Finish(Time.time, false); // tasks U-0169 — 살아 나온 판(덤은 떠나는 층 금에)
             _floor++;
             _roomIndex = 0;
             EnterFloorLayout();
@@ -365,7 +368,8 @@ namespace Saga.Dungeon.World
             if (sigilBonus > 0) msg += "\n" + string.Format(DungeonLocalization.T("floor.sigil_bonus", "📜 부적 층 클리어 — 금 {0} 추가 획득"), sigilBonus);
             if (SigilState.IsSigilFloor(_floor)) msg += "\n" + string.Format(DungeonLocalization.T("floor.sigil_warn", "⚠ 부적 층 — {0}"), SigilState.Label(SigilState.ModOf(_floor)));
             if (_landmark >= 0) msg += "\n" + DungeonLandmarkData.EnterText(_landmark); // 108 ③
-            DialogueLabel.Instance?.Show(msg, _landmark >= 0 ? 5f : 4f);
+            msg += DungeonRunRank.Append(rank);
+            DialogueLabel.Instance?.Show(msg, _landmark >= 0 || rank.HasValue ? 5f : 4f);
             BuildRoomContent(FirstRoomKind());
             RepositionPlayerToEntry();
             FloorDescended?.Invoke(_floor);
