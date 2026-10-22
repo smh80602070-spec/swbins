@@ -109,6 +109,7 @@ window.DG_NO_TUNE = true;
 <script src="js/side-just.js"></script>
 <script src="js/life.js"></script>
 <script src="js/campfire.js"></script>
+<script src="js/stagemap.js"></script>
 <script src="js/side-view.js"></script>
 <script src="js/side-layers3d.js"></script>
 <script src="js/vendor/three.iife.js"></script>
@@ -7050,6 +7051,18 @@ window.DG_NO_TUNE = true;
         var wantMul = L ? 1.15 : 1.1, ok = t3.ok && t3.key === 'first' && Math.abs(h[0] - wantMul) < 1e-9 && h[2] === h[0] && h[3] === 1;
         return ok || ('실패 기세·요리 ' + JSON.stringify({ t3: t3, h: h }));
       } finally { C.save.camp = keepCamp; C.save.party = keepParty; if (L) { L.mealMul = keepMeal; } }
+    });
+    t('W-0305 지도 조각·지름길 — 옛 조각 셋을 다 모아야 지도 완성 · 완성 전엔 지름길 못 씀 · 지름길이면 가운데·끝 조각 자리 바닥에서 시작', function () {
+      var SM = DG.stageMap, C = DG.core, S = DG.side; if (!SM) { return '실패 DG.stageMap 없음'; }
+      var st = DG.sideData.STAGES.filter(function (s) { return s.relics && s.relics.length >= 3; })[0]; if (!st) { return '건너뜀(조각 있는 사냥터 없음)'; }
+      var keepR = C.save.relics, keepEnter = S.enter;
+      try {
+        C.save.relics = {}; C.save.relics[st.key] = 3; var i2 = SM.info(st.key), g0 = SM.go(st.key, 'mid');
+        C.save.relics[st.key] = 7; var i3 = SM.info(st.key), entered = null; S.enter = function (k) { entered = k; return true; };
+        var g1 = SM.go(st.key, 'end'), run = { stage: st, player: { x: 80, y: 0 } }, moved = SM.onEnter(run), again = SM.onEnter({ stage: st, player: { x: 80, y: 0 } });
+        var ok = i2.have === 2 && !i2.done && !g0.ok && i3.done && g1.ok && entered === st.key && moved && run.player.x === Math.min((st.width || 99999) - 120, st.relics[2]) && run.player.y === st.floor - (S.P_H || 60) && !again && SM.startX(st.key, 'mid') === st.relics[1];
+        return ok || ('실패 ' + JSON.stringify({ i2: i2, g0: g0, i3: i3, g1: g1, entered: entered, moved: moved, x: run.player.x, again: again }));
+      } finally { C.save.relics = keepR; S.enter = keepEnter; }
     });
     t('W-0371 인물 일러스트 — 기본 끔(그림 불일치) · 켜면 manifest 인물은 표정 주소(분노·걱정 → angry·sad, 놀람·모름 → neutral) · 없는 인물은 null(초상 대역) · 카드 자리(150×172)는 일러스트', function () {
       if (DG.illust && DG.illust.has((window.SAGA && SAGA.illust && SAGA.illust.ids[0]) || '')) { return '실패 기본 끔인데 켜져 있다(10-22 그림 불일치)'; }

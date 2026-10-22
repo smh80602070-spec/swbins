@@ -1184,5 +1184,26 @@
   "ticket": "W-0300",
   "since": "2026-10-22",
   "note": "10-22: 둘러앉는 2D 몸짓은 아직(이모지 원 둘레 단추) — 앉기 공장 시트(sit) 오면 그림으로 · save.camp 새 칸"
+ },
+ {
+  "id": "sd.shortcut",
+  "name": "지도 조각·지름길(W-0305) — 사냥터 옛 조각 셋(save.relics)이 지도 조각 · 셋 다 모으면 쉬는 판 사냥터 단추 곁에서 ⏩ 가운데·⏭️ 끝 조각 자리부터 시작 · 손잡이 story.shortcut",
+  "files": [
+   "js/stagemap.js",
+   "src/ui/01.js"
+  ],
+  "tests": [
+   "test-web W-0305 지도 조각·지름길",
+   "pw-look2d LOOK_EVAL 지도 칸"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {
+   "D": "탐험 보상",
+   "G": "반복 줄임"
+  },
+  "ticket": "W-0305",
+  "since": "2026-10-22",
+  "note": "10-22: 새 세이브 칸 없음 · 조각 반짝임은 기존 side-hand 그대로 · 3D 따로 없음"
  }
 ]

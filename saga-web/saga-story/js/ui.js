@@ -701,7 +701,7 @@
       html += '<button class="btn ' + (e.open ? (i === 0 ? 'primary' : '') : 'ghost') + ' wide"' +
         (e.open ? '' : ' disabled') + ' data-act="s-enter" data-stage="' + e.ref.key + '">' +
         (e.open ? (global.DG.regionIcon ? global.DG.regionIcon.html(e.ref.key) : '🏃 ') : '🔒 ') + esc(e.ref.name) + bmark + (gi2 && gi2.ready ? ' 🏯' : '') +
-        (e.open ? '' : ' (Lv.' + e.ref.need + ' 부터)') + '</button>';
+        (e.open ? '' : ' (Lv.' + e.ref.need + ' 부터)') + '</button>' + (e.open && global.DG.stageMap ? global.DG.stageMap.btnHtml(e.ref.key) : '');   /* W-0305 지도 조각·지름길 */
       if (gi2 && gi2.ready) {
         html += '<button class="btn tiny ghost wide" data-act="s-gate" data-stage="' + e.ref.key + '">' +
           '⚔️ 관문으로 나가 ' + esc(gi2.name) + ' 와(과) 겨룬다</button>';
