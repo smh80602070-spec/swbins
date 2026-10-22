@@ -1824,5 +1824,26 @@
   "ticket": "W-0377",
   "since": "2026-10-22",
   "note": "10-22: 남은 겹침 = 시작 자리 옆 이야기 인물(청하 촌장)·동행 이름표(범위 밖)"
+ },
+ {
+  "id": "go.runRank",
+  "name": "무리 토벌 한 판 등급(W-0379) — 첫 타격부터 무리·정예·우두머리 토벌까지 피격·최대 연계·시간·처치로 S~D(공용 runrank-core) · 토벌 금 × S 0.5·A 0.2·B 0.1, S 는 그 토벌 단사 한 번 더 · 무리 종류별 최고 기록(save.goRankBest) · 토벌 토스트 다음 한 줄 · 수호자·숨은 터·이야기·인물·전멸·20초 멍(손잡이 go.rankIdle)은 안 매김",
+  "files": [
+   "js/go-rank.js",
+   "js/runrank-core.js",
+   "src/field-combat/02.js"
+  ],
+  "tests": [
+   "test-web W-0379 무리 토벌 등급 둘",
+   "pw-look2d LOOK_EVAL 토벌 등급 토스트"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {
+   "C": "잘 싸웠다가 보인다"
+  },
+  "ticket": "W-0379",
+  "since": "2026-10-23",
+  "note": "10-23: 장판 틱(src zone)·피해 0 은 연계로 안 셈 · 동시에 두 무리와 싸우면 한 판으로 셈(먼저 토벌한 무리가 닫음)"
  }
 ]

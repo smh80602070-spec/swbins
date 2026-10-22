@@ -933,7 +933,7 @@
   function handle(ev, pos) {
     var c = core(), H = global.DG.hero, i;
     for (i = 0; i < ev.length; i++) {
-      var e = ev[i];
+      var e = ev[i]; if (global.DG.goRank) { global.DG.goRank.onEv(e); }   // W-0379 무리 토벌 등급
       /* ⑲-3 원소 신호 — 스킬·폭발·장판 자리를 알린다(treasure.js 가 석등을 켠다) */
       if ((e.t === 'skill' || e.t === 'burst' || e.t === 'arrow' || (e.t === 'zone' && (e.kind === 'field' || e.kind === 'shell' || e.kind === 'kitzone' || e.kind === 'vortex' || e.kind === 'feast'))) && e.el) {
         /* 돌진·찌르기는 지나간 선(x0,y0 → x,y) 전체가 닿는다 — 끝점만 알리면 제단을 가로질러도 안 켜졌다(2026-09-28) */
@@ -1083,7 +1083,7 @@
         c.save.player.gold = (c.save.player.gold || 0) + bonus;
         c.save.dust = (c.save.dust || 0) + cd;
         var label = e.kind === 'boss' ? '우두머리' : (e.kind === 'elite' ? '정예 무리' : '무리');
-        toast('⚔️ ' + label + ' 토벌! 금 +' + bonus + ' · 단사 +' + cd);
+        toast('⚔️ ' + label + ' 토벌! 금 +' + bonus + ' · 단사 +' + cd); if (global.DG.goRank) { global.DG.goRank.onClear(e, bonus, cd); }   // W-0379 등급 한 줄·덤
         c.log('⚔️ 들판 ' + label + ' 토벌 (등급 ' + e.tier + ') — 금 +' + bonus, 'battle');
         sfx('reward'); if (global.DG.drop && global.DG.drop.win) { global.DG.drop.win(); }   // W-0247 들판 무리를 쓰러뜨려도 떨어진 짐을 되찾는다(들판에서 진 짐을 들판에서 — 회복 고리 ≤2분)
         c.emit('field:clear', e);

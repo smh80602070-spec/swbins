@@ -201,6 +201,8 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/field-foes.js"></script>
 <script src="js/field-grab.js"></script>
 <script src="js/field-combat.js"></script>
+<script src="js/runrank-core.js"></script>
+<script src="js/go-rank.js"></script>
 <script src="js/slash3d.js"></script>
 <script src="js/adventure.js"></script>
 <script src="js/treasure.js"></script>
@@ -17510,6 +17512,38 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         var ok = !w0 && stay && n === 2 && left === 'g:boss' && at === a.id && lit && healed && w1 && back;
         return ok || ('실패 ' + JSON.stringify({ w0: w0, stay: stay, n: n, left: left, at: at, lit: lit, healed: healed, w1: w1, back: back }));
       } finally { S.cleared = keepC; C.save.rest = keepR; pos.x = px; pos.y = py; keepP.forEach(function (k, i) { S.party[i].hp = k.hp; S.party[i].down = k.down; }); if (RS._reset) { RS._reset(); } if (!S0) { FC._setStateForTest(null); } }
+    });
+    t('W-0379 무리 토벌 등급 — 빠르고 안 맞고 연계 12·처치 3 이면 S · 토벌 금 × 0.5 덤 · 단사 덤(그 토벌 단사만큼) · 무리 종류별 최고 기록', function () {
+      var G = DG.goRank, C = DG.core; if (!G || !DG.runRankCore) { return '실패 DG.goRank 없음'; }
+      var sv = C.save, g0 = sv.player.gold || 0, d0 = sv.dust || 0, keepB = sv.goRankBest, i;
+      try {
+        sv.goRankBest = {};
+        for (i = 0; i < 12; i++) { G.onEv({ t: 'hit', dmg: 10, src: 'atk' }); }
+        G.onEv({ t: 'hit', dmg: 10, src: 'zone' }); G.onEv({ t: 'hit', dmg: 0, src: 'atk' }); G.onEv({ t: 'hurt', dmg: 0 });
+        for (i = 0; i < 3; i++) { G.onEv({ t: 'kill', kind: 'imp' }); }
+        G.onEv({ t: 'clear', kind: 'plain', tier: 2 });
+        var r = G.onClear({ t: 'clear', kind: 'plain', tier: 2 }, 100, 2);
+        var ok = r && r.rank === 'S' && r.comboMax === 12 && r.hits === 0 && r.kills === 3 && r.bonusGold === 50 && (sv.player.gold - g0) === 50 && (sv.dust - d0) === 2 &&
+          sv.goRankBest.plain === 'S' && r.best && !G.state() && /등급 S/.test(G.line(r)) && /등급 덤 \+50/.test(G.line2(r));
+        return ok || ('실패 ' + JSON.stringify({ r: r, gold: sv.player.gold - g0, dust: sv.dust - d0, best: sv.goRankBest }));
+      } finally { sv.player.gold = g0; sv.dust = d0; sv.goRankBest = keepB; }
+    });
+    t('W-0379 무리 토벌 등급 — 맞붙지 않은 채 go.rankIdle 지나면 세던 것 버림 · 수호자 토벌·전멸은 안 매김(덤·기록 없음)', function () {
+      var G = DG.goRank, C = DG.core; if (!G) { return '실패 DG.goRank 없음'; }
+      var sv = C.save, g0 = sv.player.gold || 0, keepB = sv.goRankBest, i, r1, r2, r3;
+      try {
+        sv.goRankBest = {};
+        C.setTune('go.rankIdle', -1);                                   // 사건마다 '멍하게 오래' — 세던 것이 늘 버려진다
+        G.onEv({ t: 'hit', dmg: 10, src: 'atk' }); for (i = 0; i < 3; i++) { G.onEv({ t: 'kill', kind: 'imp' }); }
+        r1 = G.onClear({ t: 'clear', kind: 'plain', tier: 1 }, 100, 1);
+        C.setTune('go.rankIdle', null);
+        G.onEv({ t: 'hit', dmg: 10, src: 'atk' }); for (i = 0; i < 3; i++) { G.onEv({ t: 'kill', kind: 'x' }); }
+        G.onEv({ t: 'clear', kind: 'guard', tier: 3 }); var dropG = !G.state(); r2 = G.onClear({ t: 'clear', kind: 'guard', tier: 3 }, 450, 8);
+        G.onEv({ t: 'hit', dmg: 10, src: 'atk' }); for (i = 0; i < 3; i++) { G.onEv({ t: 'kill', kind: 'x' }); }
+        G.onEv({ t: 'wipe' }); var dropW = !G.state(); r3 = G.onClear({ t: 'clear', kind: 'plain', tier: 1 }, 100, 1);
+        var ok = r1 === null && r2 === null && r3 === null && dropG && dropW && sv.player.gold === g0 && Object.keys(sv.goRankBest).length === 0 && G.IDLE_SEC() === 20;
+        return ok || ('실패 ' + JSON.stringify({ r1: r1, r2: r2, r3: r3, dropG: dropG, dropW: dropW, gold: sv.player.gold - g0, best: sv.goRankBest }));
+      } finally { C.setTune('go.rankIdle', null); sv.player.gold = g0; sv.goRankBest = keepB; }
     });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';

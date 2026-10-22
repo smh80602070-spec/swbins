@@ -51,7 +51,7 @@ const FILES = [
   ['js/vfx2d.js', 'js/vfx2d.js', ['saga-story', 'saga-dungeon']],   // W-0052 — 전투 이펙트 시트(K-0039), 다른 판은 그 판 전투 화면을 잇는 티켓에서 판 목록에 추가
   ['js/passive-web.js', 'js/passive-web.js', ['saga-dungeon', 'saga-go', 'saga-realm', 'saga-story', 'saga-forest']],       // W-0179 패시브 그물 엔진 — 판을 잇는 티켓(W-0180~)이 판을 더한다
   ['js/passive-web-ui.js', 'js/passive-web-ui.js', ['saga-dungeon', 'saga-go', 'saga-realm', 'saga-story', 'saga-forest']],
-  ['js/runrank-core.js', 'js/runrank-core.js', ['saga-story', 'saga-dungeon']],   // W-0378 한 판 결과 등급 공용(4종횡 W-0289 에서 올림) — 판을 잇는 티켓이 판을 더한다
+  ['js/runrank-core.js', 'js/runrank-core.js', ['saga-story', 'saga-dungeon', 'saga-go']],   // W-0378 한 판 결과 등급 공용(4종횡 W-0289 에서 올림) — 판을 잇는 티켓이 판을 더한다
   ['js/cutscene.js', 'js/cutscene.js', ['saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm']],   // W-0048 — 이야기 장면 컷신 배경(K-0044), 다른 판은 장면 상자를 잇는 티켓에서 판 목록에 추가
   ['js/perf-hud.js', 'js/perf.js', ['saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm']],   // 재기 표시(?perf) — 네 벌이 글자까지 같다(1만리 perf.js 는 품질 자동조절이 든 다른 파일)
   ['js/ssao3d.js', 'js/ssao3d.js', ['saga-go', 'saga-dungeon', 'saga-story', 'saga-forest', 'saga-realm']],   // W-0292 다섯 판 같게
