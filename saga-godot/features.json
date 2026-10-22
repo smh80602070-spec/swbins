@@ -5396,5 +5396,22 @@
   "ticket": "G-0303",
   "since": "2026-10-22",
   "note": "웹 W-0374 짝 · SAGA_FIELD_ENV=0"
+ },
+ {
+  "id": "gd.go.parry",
+  "name": "1만리 쳐내기 — 적 예고 끝 0.25초 안 평타 → 무피해·비틀 1.2초(보스 0.5)·다음 한 타 ×2·비틀 중 ×1.2",
+  "files": [
+   "games/saga_go/combat/field_parry.gd",
+   "games/saga_go/combat/field_combat.gd"
+  ],
+  "tests": [
+   "parry"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0304",
+  "since": "2026-10-22",
+  "note": "웹 W-0375 짝 · SAGA_PARRY=0 · 자동 퀘스트는 안 씀"
  }
 ]

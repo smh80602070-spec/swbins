@@ -233,6 +233,7 @@ func _ready() -> void:
 	grab = FieldGrab.new()
 	grab.name = "FieldGrab"
 	add_child(grab)
+	preload("res://games/saga_go/combat/field_parry.gd").attach(self)   # G-0304 쳐내기(SAGA_PARRY=0 이면 없음)
 	preload("res://games/saga_go/combat/field_env.gd").attach(self)   # G-0303 들불·물벼락(SAGA_FIELD_ENV=0 이면 없음)
 	_refresh_hud()
 
@@ -563,6 +564,7 @@ func attack() -> bool:
 	if _attack_t > 0.0 or not _grounded_ok():
 		return false
 	var kit: Dictionary = WEAPON_KIT[Weapons.type_of(active_id())]
+	if has_node("FieldParry") and get_node("FieldParry").call("try_parry", float(kit.get("reach", 2.5))): return true   # G-0304 예고 끝이면 쳐내기 먼저
 	var step := _combo
 	_combo = (_combo + 1) % (kit.mul as Array).size()
 	_combo_link = COMBO_LINK_SEC
@@ -1216,7 +1218,7 @@ func _deal(enemy: Node, base: float, element: String, dir: Vector3) -> float:
 			if rig:
 				rig.call("shake", 0.12, 0.25)
 		return dealt
-	var amount := base
+	var amount: float = base * (float(get_node("FieldParry").call("mul", enemy)) if has_node("FieldParry") else 1.0)   # G-0304 쳐낸 뒤 ×2·비틀 ×1.2
 	## 106장 ㉛ 표식 난 적 — 명단 누구에게든 피해 +.
 	if _marks.has(enemy.get_instance_id()):
 		amount *= float(_marks[enemy.get_instance_id()].mul)
