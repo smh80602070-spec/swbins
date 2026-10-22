@@ -75,6 +75,7 @@ func _ready() -> void:
 	_scenario = preload("res://games/saga_realm/world/scenario_runner.gd").new()
 	_scenario.name = "ScenarioRunner"
 	add_child(_scenario)
+	preload("res://games/saga_realm/world/auto_rule_realm.gd").attach_rl(self)   # G-0299 시정 위임 ▶
 	_build_base()
 	_build_tower()
 	_build_walls()

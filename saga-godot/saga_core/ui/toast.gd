@@ -17,7 +17,16 @@ static func show(node: Node, text: String, show_sec: float) -> void:
 	label.show()
 	for panel in panels:
 		panel.show()
-	node.get_tree().create_timer(show_sec).timeout.connect(func() -> void:
+	## G-0299 — 타이머를 글자 칸 자식으로: 장면이 바뀌어 칸이 지워지면 타이머도 같이 사라진다(전엔 SceneTree 타이머 람다가
+	## 지워진 칸을 붙잡아 "Lambda capture was freed" 오류 — 4종횡 문에서 K 를 바로 누를 때). 멈춤 중에도 도는 건 그대로.
+	var t := Timer.new()
+	t.one_shot = true
+	t.wait_time = maxf(show_sec, 0.01)
+	t.process_mode = Node.PROCESS_MODE_ALWAYS
+	label.add_child(t)
+	t.start()
+	t.timeout.connect(t.queue_free)
+	t.timeout.connect(func() -> void:
 		if is_instance_valid(label) and label.text == text:
 			label.hide()
 			for panel in panels:

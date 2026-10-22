@@ -1,6 +1,8 @@
 extends "res://games/saga_story/player/story_skills_awaken.gd"   # G-0246 5차 각성기(class_name 없이 경로로 잇는다)
 
 const LifePose := preload("res://saga_core/world/life_pose.gd")   # G-0266 쉬면 앉기
+## G-0299 자동 퀘스트(auto_quest_st)가 넣는 좌우 걷기(−1~1). 0 이면 전과 같음.
+var auto_x := 0.0
 var _life: Node = null
 const StoryLook := preload("res://games/saga_story/data/story_look.gd")   # G-0187
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
@@ -478,6 +480,8 @@ func is_flying_now() -> bool:
 
 func _story_fly(delta: float) -> void:
 	var axis := Input.get_axis("move_left", "move_right")
+	if absf(axis) < 0.05:
+		axis = auto_x   # G-0299 자동 퀘스트
 	var fspeed := mount_fly_speed if mount_fly_speed > 0.0 else 14.0
 	velocity.x = lerpf(velocity.x, axis * fspeed, 3.0 * delta)
 	var want_y := -0.6 # 떠 있기
@@ -522,6 +526,8 @@ func _walk(delta: float) -> void:
 	_try_signature(delta)
 
 	var axis := Input.get_axis("move_left", "move_right")
+	if absf(axis) < 0.05:
+		axis = auto_x   # G-0299 자동 퀘스트(손 입력이 없을 때만)
 	## **2026-09-13 추가(같은 날 더 더 더 더)** — f_focus(정심)가 처음으로
 	## job 버프에 이동속도 배율을 얹었다. 기합(brace)과는 별개 곱.
 	var speed := RUN_SPEED * (StoryCombat.BRACE_SPEED_MUL if _buff_time_left > 0.0 else 1.0) \
@@ -729,3 +735,11 @@ func _refresh_job_ring(_j := "") -> void:
 	var ring: Node3D = RankRing.call("set_rank", self, tier, JOB_TINT.get(root, RankRing.get("GOLD")))
 	if ring != null:
 		ring.scale = Vector3.ONE * StoryLook.BODY_SCALE
+
+
+## G-0299 자동 퀘스트 평타 — 손 평타(combat_quick)와 같은 쿨 검사. 쳤으면 true.
+func auto_attack() -> bool:
+	if _attack_cd_left > 0.0:
+		return false
+	_attack()
+	return true

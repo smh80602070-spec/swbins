@@ -261,6 +261,7 @@ func _ready() -> void:
 	_scenario = preload("res://games/saga_dungeon/world/scenario_runner.gd").new()
 	_scenario.name = "ScenarioRunner"
 	add_child(_scenario)
+	preload("res://games/saga_dungeon/world/auto_quest_dg.gd").attach_dg(self)   # G-0299 자동 퀘스트 ▶
 
 	_session_start_cleared = DungeonSaveState.rooms_cleared.count(true)
 	DungeonGoldState.begin_session()

@@ -5,6 +5,7 @@ extends SceneTree
 ## ① 공용 상태 기계(가짜 어댑터): 목표 없음 → 안 켜짐 · 목표 id 가 바뀌면 done+1 · 서 있으면 STUCK_SEC 마다 unstick, STUCK_MAX 넘으면 "막힘" · pause 글 → 멈춤
 ## ② 1만리 씬: ▶ 단추·첫 목표 · 켜면 주인공이 목표 쪽으로 걸어가 거리가 줆(실제 시간 3초) · 이동 키 = 멈춤·auto_dir 0
 ## ③ SAGA_AUTOQUEST=0 이면 안 붙음
+## ④ G-0299 네 판: ▶ 단추·목표 · 켜고 4초 — 진행 글이 생김(대화·걷기·싸움·명령) 또는 멈춤 이유(직접 단계) · 5천하는 이번 달 명령
 
 const AQ := preload("res://saga_core/data/autoquest.gd")
 
@@ -48,7 +49,7 @@ func _init() -> void:
 		_fail("① pause 글로 안 멈춤")
 	## ③
 	OS.set_environment("SAGA_AUTOQUEST", "0")
-	if load("res://games/saga_go/world/auto_quest_go.gd").call("attach", Node.new()) != null:
+	if load("res://games/saga_go/world/auto_quest_go.gd").call("attach_go", Node.new()) != null:
 		_fail("③ 꺼도 붙음")
 	OS.set_environment("SAGA_AUTOQUEST", "")
 	## ②
@@ -91,5 +92,53 @@ func _init() -> void:
 				aq.call("_input", ev)
 				if bool(aq.get("q").on) or (pl.get("auto_dir") as Vector3) != Vector3.ZERO:
 					_fail("② 이동 키에 안 멈춤")
+	if aq != null and bool(aq.get("q").on):
+		aq.get("q").call("stop", "점검")
+	sc.queue_free()
+	for _k in 3:
+		await process_frame
+	## ④
+	for g in [["dungeon", "res://games/saga_dungeon/world/TestRoom.tscn"], ["forest", "res://games/saga_forest/world/TestVillageForest.tscn"],
+			["story", "res://games/saga_story/world/SinyaField.tscn"], ["realm", "res://games/saga_realm/world/TestCity.tscn"]]:
+		await _one_game(g[0], g[1])
 	print("PROBE autoquest ", "OK" if fails == 0 else "FAIL %d" % fails)
 	quit(1 if fails > 0 else 0)
+
+
+func _one_game(game: String, path: String) -> void:
+	var sc := (load(path) as PackedScene).instantiate()
+	root.add_child(sc)
+	current_scene = sc
+	for _i in 40:
+		await process_frame
+	for m in get_nodes_in_group("ui_modal"):
+		if String(m.name).begins_with("TalkBox"):
+			continue
+		if m.get("visible") != null:
+			m.set("visible", false)
+		m.remove_from_group("ui_modal")
+	paused = false
+	var pl := get_first_node_in_group("player")   # 남은 세이브(체력 낮음)에 안 흔들리게 — 2나락 몸 체력 가득
+	var ph := pl.get_node_or_null("PlayerHealth") if pl else null
+	if ph != null:
+		ph.set("hp", ph.get("max_hp"))
+	var aq := get_first_node_in_group("autoquest")
+	if aq == null or aq.find_child("AutoQuestButton", true, false) == null:
+		_fail("④ %s ▶ 없음" % game)
+		sc.queue_free()
+		return
+	var gs: Array = aq.call("goals")
+	if gs.is_empty():
+		_fail("④ %s 목표 없음" % game)
+	aq.call("toggle")
+	await create_timer(4.0).timeout
+	var st: Dictionary = aq.get("q").call("status")
+	print("AQ4 %s goal=%s doing=%s why=%s" % [game, (st.goal as Dictionary).get("id", ""), st.doing, st.why])
+	if String(st.doing) == "" and String(st.why) == "":
+		_fail("④ %s 켜도 아무 진행 글 없음" % game)
+	if bool(aq.get("q").on):
+		aq.get("q").call("stop", "점검")
+	aq.set("resume_on", false)
+	sc.queue_free()
+	for _k in 3:
+		await process_frame

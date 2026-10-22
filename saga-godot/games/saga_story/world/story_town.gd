@@ -32,4 +32,5 @@ func _ready() -> void:
 	var runner: Node = preload("res://games/saga_story/world/scenario_runner.gd").new()
 	runner.name = "ScenarioRunner"
 	add_child(runner)
+	preload("res://games/saga_story/world/auto_quest_st.gd").attach_st(self)   # G-0299 자동 퀘스트 ▶
 const Toast := preload("res://saga_core/ui/toast.gd")   # G-0197

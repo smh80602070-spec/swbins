@@ -5286,5 +5286,75 @@
   "ticket": "G-0298",
   "since": "2026-10-22",
   "note": "직선 걷기(길 찾기 없음) · 네 판은 G-0299"
+ },
+ {
+  "id": "gd.dungeon.autoquest",
+  "name": "2나락 자동 퀘스트 — 구출 표지·방 순서(적 평타 → 출구)·은사 고르기 기다림·체력 낮음 멈춤",
+  "files": [
+   "games/saga_dungeon/world/auto_quest_dg.gd",
+   "games/saga_dungeon/world/test_room.gd"
+  ],
+  "tests": [
+   "autoquest"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0299",
+  "since": "2026-10-22",
+  "note": "공용 saga_core/ui/auto_quest_hud.gd · 웹 W-0338"
+ },
+ {
+  "id": "gd.forest.autoquest",
+  "name": "3마을 자동 퀘스트 — 주민·명소·바이옴 곁 걷기·이야기 줄 넘김·직접 단계 멈춤",
+  "files": [
+   "games/saga_forest/world/auto_quest_fs.gd",
+   "games/saga_forest/world/forest_village.gd"
+  ],
+  "tests": [
+   "autoquest"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0299",
+  "since": "2026-10-22",
+  "note": "공용 saga_core/ui/auto_quest_hud.gd · 웹 W-0338"
+ },
+ {
+  "id": "gd.story.autoquest",
+  "name": "4종횡 자동 퀘스트 — 문 그래프로 장면 이동·사냥 평타(auto_x·auto_attack)·이야기 줄 넘김",
+  "files": [
+   "games/saga_story/world/auto_quest_st.gd",
+   "games/saga_story/player/story_player.gd",
+   "games/saga_story/world/story_field.gd",
+   "games/saga_story/world/story_town.gd"
+  ],
+  "tests": [
+   "autoquest"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0299",
+  "since": "2026-10-22",
+  "note": "공용 saga_core/ui/auto_quest_hud.gd · 웹 W-0338"
+ },
+ {
+  "id": "gd.realm.auto-rule",
+  "name": "5천하 시정 위임(개발) — 달마다 성마다 놀고 있는 무장에게 개발 명령(치안 먼저·가장 모자란 것), 금 남김",
+  "files": [
+   "games/saga_realm/world/auto_rule_realm.gd",
+   "games/saga_realm/world/realm_city.gd"
+  ],
+  "tests": [
+   "autoquest"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0299",
+  "since": "2026-10-22",
+  "note": "공용 saga_core/ui/auto_quest_hud.gd · 웹 W-0338"
  }
 ]
