@@ -106,6 +106,7 @@ func take_damage(amount: float, source: Node = null, el: String = "") -> void:
 		dealt *= 1.0 - DungeonEquipmentState.elem_resist(el) / 100.0
 	last_hit = {"who": String(source.call("who_label")) if source != null and source.has_method("who_label") else "", "dmg": dealt}
 	hp = maxf(0.0, hp - dealt)
+	preload("res://games/saga_dungeon/data/dungeon_rank.gd").hurt()   # G-0312 한 판 등급 — 피격·연속 끊김
 	## G-0203 — 붉은 숫자(combat_feel 이 player 그룹이면 붉게)·몸 번쩍·멈칫·흔들림 + 가장자리 붉게(1만리 G-0171 과 같음).
 	var vis := get_parent().get_node_or_null("Visual") as Node3D
 	if vis != null:
@@ -131,6 +132,7 @@ func take_damage(amount: float, source: Node = null, el: String = "") -> void:
 ## 표식으로 남기고, `DungeonGraveState`가 실제 값을 들고 있다가 마커를
 ## 밟으면 돌려준다.
 func _die_and_respawn() -> void:
+	var rank_r: Dictionary = preload("res://games/saga_dungeon/data/dungeon_rank.gd").finish(true)   # G-0312 쓰러진 판도 등급(덤 없음) — 금 잃기 전 셈
 	var lost_gold: int = int(roundf(DungeonGoldState.gold * GRAVE_GOLD_LOSS_PCT))
 	DungeonGoldState.add(-lost_gold)
 	var lost_weapon: Dictionary = DungeonEquipmentState.weapon.duplicate(true)
@@ -156,6 +158,9 @@ func _die_and_respawn() -> void:
 	_dead = false
 	hp_changed.emit(hp, max_hp)
 	_show_death_card(lost_gold, where)
+	if not rank_r.is_empty():
+		Toast.show(self, preload("res://games/saga_dungeon/data/dungeon_rank.gd").text(rank_r), 5.0)
+	preload("res://games/saga_dungeon/data/dungeon_rank.gd").begin()   # 은총 자리에서 새 판
 
 
 ## 웹 5.2 "사망 화면 = 세션 카드"를 이 판의 단순 패널(ChoicePrompt)로

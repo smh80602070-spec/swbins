@@ -114,6 +114,7 @@ func _strike(enemy: Node) -> void:
 	if phys_res > 0.0:
 		dmg *= 1.0 - phys_res / 100.0
 	enemy.take_damage(dmg)
+	preload("res://games/saga_dungeon/data/dungeon_rank.gd").hit()   # G-0312 한 판 등급 — 연속
 	## PLAN 101-2 DUNGEON ③(손맛 2차, 2026-09-17) — saga_core/combat_feel.gd
 	## 헤더 참고. 유일한 "타격 한 곳"(melee_attack.gd) 에서만 이번에 잇는다
 	## — 무예 스크립트 80여 개는 범위 밖(다음 세션).

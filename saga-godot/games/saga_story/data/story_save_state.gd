@@ -786,14 +786,7 @@ func decline_offer(index: int) -> bool:
 ## G-0245 — 사냥터 한 판 결과 등급(순수 함수, 웹 runrank.js rankOf 그대로): 급 t(1~5) · 피격 0→3·≤3+(t-1)→2·≤8+2(t-1)→1 ·
 ## 연속 ≥20→3·≥10→2·≥5→1 · 시간 ≤180·≤360초×(1+0.25(t-1))→2·1 · 처치 ≥15 +1 (합 9) → S 7+·A 5+·B 3+·C 1+·D 0
 static func rank_of(sec: float, hits: int, combo: int, kills: int = 0, tier: int = 1) -> String:
-	var t := clampi(tier, 1, 5)
-	var tm := 1.0 + 0.25 * float(t - 1)
-	var p := 0
-	p += 3 if hits == 0 else (2 if hits <= 3 + (t - 1) else (1 if hits <= 8 + 2 * (t - 1) else 0))
-	p += 3 if combo >= 20 else (2 if combo >= 10 else (1 if combo >= 5 else 0))
-	p += 2 if sec <= 180.0 * tm else (1 if sec <= 360.0 * tm else 0)
-	p += 1 if kills >= 15 else 0
-	return "S" if p >= 7 else ("A" if p >= 5 else ("B" if p >= 3 else ("C" if p >= 1 else "D")))
+	return preload("res://saga_core/data/runrank.gd").rank_of(sec, hits, combo, kills, tier)   # G-0312 공용으로 옮김(식 그대로)
 
 
 ## 사냥터 급 1~5 — 웹 tierOf(need) 문턱 5·12·25·45, need 자리 = 맵 enemy_lv

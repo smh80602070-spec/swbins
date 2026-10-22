@@ -193,6 +193,7 @@ func _ready() -> void:
 	## 않는다"와 같은 경계, 이제 방마다 따로 확인한다).
 	var loaded: bool = DungeonSaveState.try_load()
 	DungeonMode.begin_run()   # G-0247 이번 회차 난도를 적 세우기 전에 굳힌다(HUD 에서 바꾸면 다음 회차부터)
+	preload("res://games/saga_dungeon/data/dungeon_rank.gd").begin()   # G-0312 한 판 등급 셈 시작(난도·부적이 굳은 뒤)
 	for i in range(ROOM_COUNT):
 		var cleared: bool = loaded and DungeonSaveState.is_room_cleared(i)
 		if not cleared:
@@ -557,6 +558,7 @@ func _finish_exit(body: Node3D, room_index: int, is_final: bool) -> void:
 	## = 마지막 방(is_final)에 부적을 켠 채로 닿았을 때(dungeon_sigil_
 	## state.gd::clear_run() 헤더 참고). 저장 앞에 둬야 다음 티어 부적이
 	## 나왔으면 그것도 같이 저장된다.
+	var rank_r: Dictionary = preload("res://games/saga_dungeon/data/dungeon_rank.gd").finish(false) if is_final else {}   # G-0312 마지막 방 = 한 판 끝(부적 끄기 전 — 급에 부적 티어), 덤 금은 저장 전에
 	if is_final and DungeonSigilState.is_active():
 		var cleared_tier: int = int(DungeonSigilState.active_sigil().get("tier", 0))
 		DungeonSigilState.clear_run()
@@ -573,7 +575,7 @@ func _finish_exit(body: Node3D, room_index: int, is_final: bool) -> void:
 			"금 +%d" % DungeonGoldState.session_gold_gained(),
 			"새로 연 방 +%d" % (DungeonSaveState.rooms_cleared.count(true) - _session_start_cleared),
 			"부대 %d명" % DungeonPartyState.members.size(),
-		])
+		] + ([preload("res://games/saga_dungeon/data/dungeon_rank.gd").text(rank_r)] if not rank_r.is_empty() else []))
 	else:
 		Toast.show(self, "다음 방으로 향한다 — 진행 상황을 저장했다.", 3.0)
 

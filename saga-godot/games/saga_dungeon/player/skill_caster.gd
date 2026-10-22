@@ -295,6 +295,7 @@ func _strike(enemy: Node, sk: Dictionary, mult: float) -> void:
 	dmg = maxf(1.0, roundf(dmg))
 	if enemy.has_method("take_damage"):
 		enemy.take_damage(dmg)
+		preload("res://games/saga_dungeon/data/dungeon_rank.gd").hit()   # G-0312 한 판 등급 — 연속
 	if enemy is Node3D:
 		CombatFeel.hit(enemy, dmg, is_crit, DungeonEquipmentState.FIRST_HIT_TUNE if first_mul > 1.0 else ({} if _hits == 0 else HIT_QUIET))
 		_hits += 1

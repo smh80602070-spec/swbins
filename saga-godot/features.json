@@ -5546,5 +5546,25 @@
   "ticket": "G-0311",
   "since": "2026-10-23",
   "note": "웹 W-0299 짝 · 울타리 K-0181 · 닭·염소 몸은 코드 대역(K 수신함) · SAGA_LIVESTOCK=0"
+ },
+ {
+  "id": "gd.dungeon.runrank",
+  "name": "한 판 결과 등급 공용(saga_core runrank) + 2나락 던전 한 판 S~D·등급 덤·난도별 최고 기록",
+  "files": [
+   "saga_core/data/runrank.gd",
+   "games/saga_dungeon/data/dungeon_rank.gd",
+   "games/saga_dungeon/world/test_room.gd",
+   "games/saga_dungeon/player/player_health.gd"
+  ],
+  "tests": [
+   "dungeon_rank",
+   "story_rank"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0312",
+  "since": "2026-10-23",
+  "note": "웹 W-0378 짝 · 4종횡 rank_of 위임 · S 보석 덤 없음 · SAGA_RUNRANK=0"
  }
 ]

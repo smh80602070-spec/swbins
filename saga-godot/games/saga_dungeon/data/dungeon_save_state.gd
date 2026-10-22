@@ -157,6 +157,7 @@ func save(player: Node3D) -> void:
 		"passive": passive,   # G-0217 경락도
 		"loot_filter": loot_filter,   # G-0231 전리품 거르기
 		"mode": DungeonMode.chosen,   # G-0247 고른 난도 — 순수 추가(버전 그대로), 없으면 "normal"
+		"rank_best": preload("res://games/saga_dungeon/data/dungeon_rank.gd").best,   # G-0312 난도별 최고 등급 — 순수 추가(버전 그대로)
 	}
 	SafeFile.write_text(save_path(), JSON.stringify(data))
 
@@ -192,6 +193,7 @@ func try_load() -> bool:
 	var lf: Variant = data.get("loot_filter", {})   # G-0231 — 없으면(옛 세이브) 기본 셋(loot_filter.gd store())
 	loot_filter = (lf as Dictionary).duplicate(true) if lf is Dictionary else {}
 	DungeonMode.restore(data.get("mode", "normal"))   # G-0247 — 없으면(옛 세이브) 평
+	preload("res://games/saga_dungeon/data/dungeon_rank.gd").restore(data.get("rank_best", {}))   # G-0312 — 없으면(옛 세이브) 빈 것
 
 	var p: Variant = data.get("player_pos", [0.0, 0.0, 0.0])
 	if not (p is Array) or p.size() < 3:
