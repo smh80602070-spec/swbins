@@ -232,3 +232,6 @@ body { font-variant-numeric: tabular-nums; }
 .cam2d-btns { position: fixed; z-index: 24; right: calc(var(--cam2d-right, 8px) + var(--safe-r, 0px)); top: var(--cam2d-top, 40%); display: flex; flex-direction: column; gap: 6px; }
 .cam2d-btns .icon-btn { font-size: 18px; font-weight: 700; line-height: 1; opacity: .85; }
 body.sheet-open .cam2d-btns { visibility: hidden; }
+
+/* W-0371 인물 일러스트(정사각 반신 512) — 초상 칸이 150×172 처럼 세로로 길어도 늘이지 않고 얼굴 쪽으로 자른다 */
+img[src*="assets/illust/"] { object-fit: cover; object-position: 50% 14%; }

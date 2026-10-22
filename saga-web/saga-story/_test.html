@@ -121,6 +121,8 @@ window.DG_NO_TUNE = true;
 <script src="js/vroid-variant.js"></script>
 <script src="js/asset3d.js"></script>
 <script src="js/portrait3d.js"></script>
+<script src="assets/illust/manifest.js"></script>
+<script src="js/illust.js"></script>
 <script src="js/gear.js"></script>
 <script src="js/job.js"></script>
 <script src="js/passive-web.js"></script>
@@ -3863,8 +3865,8 @@ window.DG_NO_TUNE = true;
       var k0 = L.liveFrame(sp, 0, { blinkAt: null, talkFrom: 0, talkTo: 500 }), k1 = L.liveFrame(sp, 230, { blinkAt: null, talkFrom: 0, talkTo: 500 }), k2 = L.liveFrame(sp, 600, { blinkAt: null, talkFrom: 0, talkTo: 500 });
       var a = f0.eye === null && f0.mouth === null && f1.eye === 'blink' && f2.eye === null && k0.mouth === 'mouth_half' && k1.mouth === 'mouth_half' && k2.mouth === null;
       var b = L.liveFrame(sp, 900, {}).scaleY <= 1.006 && L.liveFrame(sp, 900, {}).scaleY >= 1 && Math.abs(L.liveFrame(sp, 1250, {}).deg) <= 1.2 && L.nextBlink(sp, 0, 0) === 3000 && L.nextBlink(sp, 0, 1) === 6000 && L.talkMs('가나다') === 500;
-      DG.core.setTune('story.livePortrait', 0); var h0 = F.face('sg_lubu', 'calm', '<i>x</i>', '말'), offOk = !L.on(); DG.core.setTune('story.livePortrait', null);   // W-0250 기본 켬(K-0110 같은 그림) — 0 이면 끔
-      var h1 = F.face('sg_lubu', 'calm', '<i>x</i>', '말'), h2 = F.face('sg_lubu', 'joy', '<i>x</i>', '말'); var off0 = h0 === '<i>x</i>' && offOk && L.on();
+      DG.core.setTune('illust.on', 0); DG.core.setTune('story.livePortrait', 0); var h0 = F.face('sg_lubu', 'calm', '<i>x</i>', '말'), offOk = !L.on(); DG.core.setTune('story.livePortrait', null);   // W-0250 기본 켬(K-0110 같은 그림) — 0 이면 끔
+      var h1 = F.face('sg_lubu', 'calm', '<i>x</i>', '말'), h2 = F.face('sg_lubu', 'joy', '<i>x</i>', '말'); var off0 = h0 === '<i>x</i>' && offOk && L.on(); DG.core.setTune('illust.on', null);   // W-0371 일러스트가 먼저 — 움직이는 초상 길은 일러스트를 끄고 본다
       var c = off0 && h1.indexOf('data-live="sg_lubu"') > 0 && h1.indexOf(' hidden></canvas><span class="story-fb">') > 0 && h2.indexOf('story-live') < 0 && F.face('nobody', 'calm', '<i>x</i>') === '<i>x</i>';
       var x = new XMLHttpRequest(); x.open('GET', 'assets/portraits/live/sg_lubu/live.json', false); x.send(); var j = x.status === 200 ? JSON.parse(x.responseText) : null;
       var d = document.createElement('div'); d.innerHTML = h1; document.body.appendChild(d); L.scan(); var on = L.active() >= 1; d.remove();
@@ -7032,6 +7034,18 @@ window.DG_NO_TUNE = true;
       if (r !== 'walk,walk,attack,death,idle') { return '실패 동작 ' + r; }
       var f = [M.factFrame(m.clips.death, 'death', { t: 0.99 }), M.factFrame(m.clips.death, 'death', { ms: 99999 }), M.factFrame(m.clips.walk, 'walk', { stride: 0.5 }), M.factFrame(m.clips.idle, 'idle', { ms: 1000 })].join(',');
       return f === '5,5,4,6' || ('실패 프레임 ' + f);
+    });
+    t('W-0371 인물 일러스트 — 기본 끔(그림 불일치) · 켜면 manifest 인물은 표정 주소(분노·걱정 → angry·sad, 놀람·모름 → neutral) · 없는 인물은 null(초상 대역) · 카드 자리(150×172)는 일러스트', function () {
+      if (DG.illust && DG.illust.has((window.SAGA && SAGA.illust && SAGA.illust.ids[0]) || '')) { return '실패 기본 끔인데 켜져 있다(10-22 그림 불일치)'; }
+      DG.core.setTune('illust.on', 1); try { return run371(); } finally { DG.core.setTune('illust.on', null); }
+      function run371() {
+      var IL = DG.illust, M = window.SAGA && SAGA.illust; if (!IL || !M || !M.ids.length) { return '실패 DG.illust·SAGA.illust 없음'; }
+      var id = M.ids[0], u = [IL.url(id, 'fire'), IL.url(id, 'worry'), IL.url(id, 'shock'), IL.url(id)].map(function (x) { return String(x).split('/').pop(); }).join(',');
+      if (u !== 'angry.webp,sad.webp,neutral.webp,neutral.webp') { return '실패 표정 ' + u; }
+      if (IL.url('__없는_인물__', 'joy') !== null || IL.stand(id).indexOf(id + '/stand.webp') < 0) { return '실패 없는 인물·스탠딩'; }
+      var P3 = DG.portrait3d, c = P3 && P3.of ? P3.of('hero', { id: id }, 150, 172) : null;
+      return (c && c.indexOf('assets/illust/' + id + '/neutral.webp') >= 0) || ('실패 카드 ' + c);
+      }
     });
     t('W-0366 세로 폰 — 겹 배경 portK 0.55 면 하늘 아닌 층이 아래 가장자리 그대로 0.55 배 · 하늘 층은 그대로 · 바닥 선 자리 기본 0.64(주인공 몸 가운데 ≈ 0.6)', function () {
       var PX = DG.parallax2d; if (!PX || !PX.draw) { return '실패 DG.parallax2d 없음'; }

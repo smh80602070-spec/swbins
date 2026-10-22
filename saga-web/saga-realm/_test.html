@@ -105,6 +105,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/vroid-variant.js"></script>
 <script src="js/asset3d.js"></script>
 <script src="js/portrait3d.js"></script>
+<script src="assets/illust/manifest.js"></script>
+<script src="js/illust.js"></script>
 <script src="js/account.js"></script>
 <script src="js/hero.js"></script>
 <script src="js/officer.js"></script>
@@ -4401,7 +4403,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
     t('W-0265 표정 초상·경쟁 그림 — 군주 여섯 표정(사건 고정: 재기 anger)이 카드에 붙고 파일이 있다 · 그림 없는 사람은 빈칸 · 도전 메달 셋 단계', function () {
       var U = DG.ui, ids = ['fu_jongwang', 'ru_geohae', 'sg_caocao', 'sg_liubei', 'sg_sunquan', 'tb_baekgi'], emos = ['joy', 'sorrow', 'anger', 'surprise'], bad = [];
       ids.forEach(function (id) { emos.forEach(function (em) { var x = new XMLHttpRequest(); x.open('GET', 'assets/portraits/expr/' + id + '__' + em + '_c.webp', false); try { x.send(); } catch (e) { bad.push(id + em); return; } if (x.status !== 200) { bad.push(id + '__' + em); } }); });
-      var cb = U._comebackHtml({ lord: 'sg_caocao', city: (DG.cityData.CITIES[0] || {}).id, with: [] }), none = U._exprFace('zz_nobody', 'joy');
+      DG.core.setTune('illust.on', 0); var cb = U._comebackHtml({ lord: 'sg_caocao', city: (DG.cityData.CITIES[0] || {}).id, with: [] }), none = U._exprFace('zz_nobody', 'joy'); DG.core.setTune('illust.on', null);   // W-0371 일러스트가 먼저라 옛 표정 카드 길은 끄고 본다
       var m = [U._medalOf(0), U._medalOf(100), U._medalOf(200), U._medalOf(400)], live = !!(DG.assets3d.root && DG.assets3d.root());
       var medalOk = !live || (m[0] === '' && /medal_3/.test(m[1]) && /medal_2/.test(m[2]) && /medal_1/.test(m[3]));
       var ok = !bad.length && cb.indexOf('portraits/expr/sg_caocao__anger_c.webp') >= 0 && none === '' && medalOk;
@@ -7323,6 +7325,18 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       if (r !== 'walk,walk,attack,death,idle') { return '실패 동작 ' + r; }
       var f = [M.factFrame(m.clips.death, 'death', { t: 0.99 }), M.factFrame(m.clips.death, 'death', { ms: 99999 }), M.factFrame(m.clips.walk, 'walk', { stride: 0.5 }), M.factFrame(m.clips.idle, 'idle', { ms: 1000 })].join(',');
       return f === '5,5,4,6' || ('실패 프레임 ' + f);
+    });
+    t('W-0371 인물 일러스트 — 기본 끔(그림 불일치) · 켜면 manifest 인물은 표정 주소(분노·걱정 → angry·sad, 놀람·모름 → neutral) · 없는 인물은 null(초상 대역) · 카드 자리(150×172)는 일러스트', function () {
+      if (DG.illust && DG.illust.has((window.SAGA && SAGA.illust && SAGA.illust.ids[0]) || '')) { return '실패 기본 끔인데 켜져 있다(10-22 그림 불일치)'; }
+      DG.core.setTune('illust.on', 1); try { return run371(); } finally { DG.core.setTune('illust.on', null); }
+      function run371() {
+      var IL = DG.illust, M = window.SAGA && SAGA.illust; if (!IL || !M || !M.ids.length) { return '실패 DG.illust·SAGA.illust 없음'; }
+      var id = M.ids[0], u = [IL.url(id, 'fire'), IL.url(id, 'worry'), IL.url(id, 'shock'), IL.url(id)].map(function (x) { return String(x).split('/').pop(); }).join(',');
+      if (u !== 'angry.webp,sad.webp,neutral.webp,neutral.webp') { return '실패 표정 ' + u; }
+      if (IL.url('__없는_인물__', 'joy') !== null || IL.stand(id).indexOf(id + '/stand.webp') < 0) { return '실패 없는 인물·스탠딩'; }
+      var P3 = DG.portrait3d, c = P3 && P3.of ? P3.of('hero', { id: id }, 150, 172) : null;
+      return (c && c.indexOf('assets/illust/' + id + '/neutral.webp') >= 0) || ('실패 카드 ' + c);
+      }
     });
     t('W-0367 지도는 보이는 창(+35%) 안의 성만 — 크게 당기면 성 DOM 이 줄고 그린 성은 다 창 안 · 다시 물러나면(창 밖으로 나가면) 다시 그려 전부 · data.find 색인이 선형 검색과 같은 답', function () {
       fresh('cao'); var C = DG.cam2d && DG.cam2d.get('realm'); if (!C) { DG.ui.renderMap(); C = DG.cam2d && DG.cam2d.get('realm'); } if (!C) { return '실패 cam2d realm 없음'; }

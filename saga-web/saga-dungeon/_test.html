@@ -170,6 +170,8 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/road3d.js"></script>
 <script src="js/field-instance.js"></script>
 <script src="js/portrait3d.js"></script>
+<script src="assets/illust/manifest.js"></script>
+<script src="js/illust.js"></script>
 <script src="js/belt-cam3d.js"></script>
 <script src="js/loot3d.js"></script>
 <script src="js/loot-filter.js"></script>
@@ -9371,6 +9373,18 @@ window.requestAnimationFrame = function () { return 0; };
       if (r !== 'walk,walk,attack,death,idle') { return '실패 동작 ' + r; }
       var f = [M.factFrame(m.clips.death, 'death', { t: 0.99 }), M.factFrame(m.clips.death, 'death', { ms: 99999 }), M.factFrame(m.clips.walk, 'walk', { stride: 0.5 }), M.factFrame(m.clips.idle, 'idle', { ms: 1000 })].join(',');
       return f === '5,5,4,6' || ('실패 프레임 ' + f);
+    });
+    t('W-0371 인물 일러스트 — 기본 끔(그림 불일치) · 켜면 manifest 인물은 표정 주소(분노·걱정 → angry·sad, 놀람·모름 → neutral) · 없는 인물은 null(초상 대역) · 카드 자리(150×172)는 일러스트', function () {
+      if (DG.illust && DG.illust.has((window.SAGA && SAGA.illust && SAGA.illust.ids[0]) || '')) { return '실패 기본 끔인데 켜져 있다(10-22 그림 불일치)'; }
+      DG.core.setTune('illust.on', 1); try { return run371(); } finally { DG.core.setTune('illust.on', null); }
+      function run371() {
+      var IL = DG.illust, M = window.SAGA && SAGA.illust; if (!IL || !M || !M.ids.length) { return '실패 DG.illust·SAGA.illust 없음'; }
+      var id = M.ids[0], u = [IL.url(id, 'fire'), IL.url(id, 'worry'), IL.url(id, 'shock'), IL.url(id)].map(function (x) { return String(x).split('/').pop(); }).join(',');
+      if (u !== 'angry.webp,sad.webp,neutral.webp,neutral.webp') { return '실패 표정 ' + u; }
+      if (IL.url('__없는_인물__', 'joy') !== null || IL.stand(id).indexOf(id + '/stand.webp') < 0) { return '실패 없는 인물·스탠딩'; }
+      var P3 = DG.portrait3d, c = P3 && P3.of ? P3.of('hero', { id: id }, 150, 172) : null;
+      return (c && c.indexOf('assets/illust/' + id + '/neutral.webp') >= 0) || ('실패 카드 ' + c);
+      }
     });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';

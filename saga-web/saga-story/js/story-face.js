@@ -32,7 +32,7 @@
   /** 얼굴 칸 HTML — 표정이 있으면 그 그림(못 받으면 숨겨 둔 지금 초상으로 바꿔 끼움), 평온 줄은 움직이는 초상(W-0193, live-portrait.js — 대사 text 동안 입), 없으면 fallback 그대로 */
   function face(id, emote, fallback, text) {
     preload(id);
-    var src = exprSrc(id, emote), LP = global.DG.livePortrait, lv;
+    var src = (global.DG.illust && global.DG.illust.url(id, emote || 'calm')) || exprSrc(id, emote), LP = global.DG.livePortrait, lv;   // W-0371 일러스트(평온 줄도 반신 — 움직이는 초상보다 먼저)
     if (!src) { lv = LP && LP.on() && LP.has(id) ? LP.html(id, text, fallback) : null; return lv || fallback; }
     return '<img class="pt story-expr" alt="" src="' + src + '" onerror="var f=this.nextElementSibling;if(f){f.hidden=false;}this.remove();">' +
       '<span class="story-fb" hidden>' + fallback + '</span>';

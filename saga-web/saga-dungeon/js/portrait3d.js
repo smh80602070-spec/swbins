@@ -153,6 +153,7 @@
   }
   function diskById(kind, id, w, h) {
     var M = global.DG.portraitDisk, t = diskClass(w, h), k, tt;
+    if (t === 'c' && kind === 'hero' && global.DG.illust && global.DG.illust.has(id)) { return global.DG.illust.url(id, 'neutral'); }   // W-0371 카드 자리(도감 상세·만남)는 일러스트 반신
     if (!M || !M.ids || !t || !ON()) { return null; }
     if (diskFrom !== M) {
       diskSet = {}; diskFrom = M;
