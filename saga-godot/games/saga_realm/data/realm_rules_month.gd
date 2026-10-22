@@ -73,6 +73,7 @@ func next_month() -> void:
 
 	var upkeep := roster.size() * RealmOrders.UPKEEP_PER_OFFICER
 	gold = maxi(0, gold + _sc_apply(income, "gold") - upkeep)   # G-0216 금 수입(무위 0·청야)
+	var trade_msgs: Array = preload("res://games/saga_realm/data/realm_trade.gd").monthly(self)   # G-0310 교역로 — 이어진 상단 금·끊긴 상단 잃음
 
 	## diplo.js monthly() — 화친이 달마다 한 달씩 닳는다. 0에서 멈춘다(원작은
 	## 다 닳으면 키 자체를 지우는데, 이 슬라이스는 항상 값이 있는 Dictionary로
@@ -104,6 +105,7 @@ func next_month() -> void:
 	_check_defection()
 	_run_enemy_statecraft()   # G-0219 AI 세력 경륜도 — 쌓인 점수를 성향대로(굴림 없음)
 	wonder_msgs.append_array(preload("res://games/saga_realm/data/realm_wonder.gd").ai_all(self))   # G-0243 AI 착공(병력 문턱·굴림 없음)
+	wonder_msgs.append_array(trade_msgs)
 	if not wonder_msgs.is_empty():
 		Toast.show(self, "\n".join(wonder_msgs), 3.0)
 	_resolve_camps()   # G-0239 진 — 치중·보급선·사기·한 번 더 싸움(realm_rules_war.gd)

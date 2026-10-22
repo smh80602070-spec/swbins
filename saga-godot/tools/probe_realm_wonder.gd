@@ -136,7 +136,7 @@ func _initialize() -> void:
 	var old_empty: bool = (RS.wonders.built as Dictionary).is_empty() and (RS.wonders.jobs as Dictionary).is_empty()
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(RS.path_override))
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(RS.path_override + ".bak"))
-	check(ok_save and ok_load and rt and ok_old and old_empty and RS.SAVE_VERSION == 24, "⑥ 세이브 왕복 · 옛 23 → 빈 것 · 버전 %d" % RS.SAVE_VERSION)
+	check(ok_save and ok_load and rt and ok_old and old_empty and RS.SAVE_VERSION >= 24, "⑥ 세이브 왕복 · 옛 23 → 빈 것 · 버전 %d(24 이상, G-0310 에 25)" % RS.SAVE_VERSION)
 
 	# ⑦ 단추
 	RS.wonders = {"built": {"bridge": {"by": me, "at": "195.3", "city": cid}, "wall": {"by": ai_f, "at": "195.4", "city": ai_c}}, "jobs": {}}

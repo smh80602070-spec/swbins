@@ -5507,5 +5507,24 @@
   "ticket": "G-0309",
   "since": "2026-10-23",
   "note": "웹 W-0305 짝 · 세이브 판 24 stage_maps · SAGA_STAGEMAP=0"
+ },
+ {
+  "id": "gd.realm.trade",
+  "name": "5천하 교역로 — 우리·화친 땅 길에 상단(🪙300·12달·둘까지), 이어진 달마다 상업 합×0.1 금, 끊기면 잃음",
+  "files": [
+   "games/saga_realm/data/realm_trade.gd",
+   "games/saga_realm/ui/realm_trade_button.gd",
+   "games/saga_realm/world/realm_supply_lines.gd",
+   "games/saga_realm/data/realm_rules_month.gd"
+  ],
+  "tests": [
+   "realm_trade"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0310",
+  "since": "2026-10-23",
+  "note": "웹 W-0301 짝 · AI 상단 없음(고돗 AI 금 없음) · 세이브 판 25 trade · SAGA_TRADE=0"
  }
 ]

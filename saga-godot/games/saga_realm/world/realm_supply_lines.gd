@@ -10,6 +10,8 @@ const RealmSupply := preload("res://games/saga_realm/data/realm_supply.gd")
 
 const GREEN := Color(0.435, 0.863, 0.478)   # 웹 #6fdc7a
 const RED := Color(1.0, 0.353, 0.29)        # 웹 #ff5a4a
+const GOLD := Color(1.0, 0.82, 0.3)         # G-0310 교역로 — 웹 금빛 점선 자리
+const RealmTrade := preload("res://games/saga_realm/data/realm_trade.gd")
 const WIDTH := 0.6
 const THICK := 0.08
 const LIFT := 0.12
@@ -36,7 +38,11 @@ func refresh() -> int:
 	for cp: Dictionary in RealmSaveState.camps:
 		var s := RealmSupply.segs(RealmSaveState, cp)
 		for seg: Array in s.segs:
-			lines.append([String(seg[0]), String(seg[1]), bool(s.good)])
+			lines.append([String(seg[0]), String(seg[1]), "g" if bool(s.good) else "r"])
+	for r: Dictionary in RealmTrade.routes(RealmSaveState):   # G-0310 상단 길 — 금빛
+		var p := RealmTrade.path(RealmSaveState, String(r.from), String(r.to))
+		for i in range(p.size() - 1):
+			lines.append([String(p[i]), String(p[i + 1]), "t"])
 	var sig := JSON.stringify(lines)
 	if sig == _sig:
 		return get_child_count()
@@ -49,7 +55,8 @@ func refresh() -> int:
 		var b := _pos(String(l[1]))
 		if a.distance_to(b) < 0.01:
 			continue
-		_ribbon(a, b, GREEN if bool(l[2]) else RED)
+		var k := String(l[2])
+		_ribbon(a + (Vector3(0, 0.02, 0) if k == "t" else Vector3.ZERO), b + (Vector3(0, 0.02, 0) if k == "t" else Vector3.ZERO), GOLD if k == "t" else (GREEN if k == "g" else RED))
 	return get_child_count()
 
 
