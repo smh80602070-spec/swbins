@@ -1401,5 +1401,31 @@
   "ticket": "W-0370",
   "since": "2026-10-22",
   "note": "10-22: 몸 키는 idle 옆 칸 알파 상자로 재서 targetH × scale(옛 길과 같은 기준)"
+ },
+ {
+  "id": "vf.livestock",
+  "name": "가축 기르기(W-0299) — 🔨 작은 우리(하나) · 꼬꼬(닭 400벨)·매매(염소 900벨) 새끼 넷까지 · 날마다 열매·견과 하나 먹이면 다음 아침 달걀·산양젖(하트 3+ 둘) · 사흘 굶으면 떠남 · 쓰다듬기 하트 · 집 곁 2D 우리 · 손잡이 village.livestock",
+  "files": [
+   "js/livestock.js",
+   "js/craft.js",
+   "js/data-village.js",
+   "src/ui/02.js",
+   "src/village/02.js",
+   "src/village-view/01.js"
+  ],
+  "tests": [
+   "test-web W-0299 가축",
+   "fs.craft 레시피 14",
+   "pw-look2d LOOK_EVAL 집 곁 우리"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {
+   "A": "매일 돌봄",
+   "E": "꾸준한 산물"
+  },
+  "ticket": "W-0299",
+  "since": "2026-10-22",
+  "note": "10-22: 가축·우리 그림은 코드 대역, 달걀·산양젖 아이콘 K 대기(수신함) · 3D 표시 없음 · save.village.livestock 새 칸"
  }
 ]

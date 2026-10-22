@@ -601,7 +601,9 @@
     { key: 'p_stone', kind: 'pave', pave: 'stone', n: 3, name: '징검돌(돌길 자재)', emoji: '⬜', need: { iron: 3, sora: 2 } },
     { key: 'p_path',  kind: 'pave', pave: 'path',  n: 5, name: '흙다짐(흙길 자재)', emoji: '🟫', need: { shard: 3, godung: 2 } },
     /* W-0284 작은 빈 집(lots.js) — 셋까지. 가구를 넣어 손님을 부른다 */
-    { key: 'lot', kind: 'lot', need: { pine: 12, iron: 3, shard: 2 } }
+    { key: 'lot', kind: 'lot', need: { pine: 12, iron: 3, shard: 2 } },
+    /* W-0299 작은 우리(livestock.js) — 하나. 닭·염소를 들여 아침마다 거둔다 */
+    { key: 'pen', kind: 'pen', need: { pine: 10, iron: 2 } }
   ];
 
   /**
@@ -904,6 +906,11 @@
       { key: 'bignail',  name: '대못',           emoji: '📌', price: 210, w: 18 },
       { key: 'doorring', name: '문고리',         emoji: '🔔', price: 320, w: 10 },
       { key: 'postkey',  name: '옛 우체통 열쇠', emoji: '🗝️', price: 800, w: 3 }
+    ],
+    /* W-0299 우리 산물 — 들에선 안 나온다(w: 0), 가축이 아침에 준다 */
+    farm: [
+      { key: 'egg',  name: '달걀',   emoji: '🥚', price: 60,  w: 0 },
+      { key: 'milk', name: '산양젖', emoji: '🥛', price: 150, w: 0 }
     ],
     fish: [
       { key: 'crucian', name: '붕어',  emoji: '🐟', price: 50,  w: 45 },

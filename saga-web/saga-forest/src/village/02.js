@@ -264,7 +264,7 @@
       if (r && r.moved) { buildResidents(); }    // 오가는 사람이 있었으면 자리를 다시 잡는다
     }
     if (global.DG.bug) { global.DG.bug.reset(); }   // 계절·시간대가 바뀌었을 수 있다
-    if (global.DG.folk) { global.DG.folk._reset(); } if (global.DG.lots) { global.DG.lots.rollDay(); } if (global.DG.partner) { global.DG.partner.onNewDay(); }  // W-0288 동반자 아침 한 가지 · 날이 바뀌면 이야기도 새로 뽑는다 · W-0284 꾸민 빈 집에 손님 눌러앉기
+    if (global.DG.folk) { global.DG.folk._reset(); } if (global.DG.lots) { global.DG.lots.rollDay(); } if (global.DG.livestock) { global.DG.livestock.rollDay(); } if (global.DG.partner) { global.DG.partner.onNewDay(); }  // W-0288 동반자 아침 한 가지 · 날이 바뀌면 이야기도 새로 뽑는다 · W-0284 꾸민 빈 집에 손님 눌러앉기
 
     core.log('🌅 날이 밝았습니다 — 마을이 다시 여물었습니다', 'good');
     return true;

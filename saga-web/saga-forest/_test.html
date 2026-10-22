@@ -118,6 +118,7 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/bug.js"></script>
 <script src="js/home.js"></script>
 <script src="js/lots.js"></script>
+<script src="js/livestock.js"></script>
 <script src="js/cave-depth.js"></script>
 <script src="js/mail.js"></script>
 <script src="js/museum.js"></script>
@@ -7225,14 +7226,14 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
     /* ── 아이템 아이콘(W-0025, shared/js/itemicon.js) — 표와 자료 id 의 짝·폴백만. 그림 파일은 안 받는다 ─── */
 
     t('아이템 아이콘 — 이 판 자료의 id 마다 이름 표에 그림이 있고, 없는 id 는 null(옛 이모지), 꺼 두면 늘 null', function () {
-      var I = DG.itemicon, G = 'saga-forest', T = (DG.itemiconIds || {})[G] || {}, bad = [], n = Object.keys(T).length, calls = 0;
+      var I = DG.itemicon, G = 'saga-forest', T = (DG.itemiconIds || {})[G] || {}, bad = [], n = Object.keys(T).length, calls = 0, K_WAIT = { 'material:egg': 1, 'material:milk': 1 };   /* W-0299 우리 산물 — 아이콘 K 대기(옛 이모지로 뜬다) */
       function L(x) { var out = []; function key(e) { return e && typeof e === 'object' ? (e.key !== undefined ? e.key : e.id) : e; } if (Array.isArray(x)) { return x.map(key); } Object.keys(x || {}).forEach(function (k) { var v = x[k]; if (Array.isArray(v)) { v.forEach(function (e) { out.push(key(e)); }); } else { out.push(k); } }); return out; }
       [
       ["material", L(DG.villageData.ITEMS)],
       ["furniture", L(DG.villageData.FURNITURE)],
       ["tool", L(DG.villageData.TOOLS)]
       ].forEach(function (p) {
-        p[1].forEach(function (id) { calls++; if (!I.src(G, p[0], id)) { bad.push(p[0] + ':' + id); } });
+        p[1].forEach(function (id) { calls++; if (!I.src(G, p[0], id) && !K_WAIT[p[0] + ':' + id]) { bad.push(p[0] + ':' + id); } });   // K_WAIT — 그림 K 대기(수신함)
       });
       var k0 = Object.keys(T)[0], first = k0.split(":"), h = I.html(G, first[0], first.slice(1).join(":"), 24, "🙂");
       var none = I.html(G, 'equip', '__없는_id__', 24, '🙂') === null && I.or(G, 'equip', '__없는_id__', 24, '🙂') === '🙂';
@@ -7389,14 +7390,14 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
     function crKeep() { var s = V.state(); return JSON.stringify({ tools: s.tools || {}, craft: s.craft || null, bag: s.bag || {}, gold: C.save.player.gold }); }
     function crBack(k) { var o = JSON.parse(k), s = V.state(); s.tools = o.tools; if (o.craft) { s.craft = o.craft; } else { delete s.craft; } s.bag = o.bag; C.save.player.gold = o.gold; }
 
-    t('fs.craft: 제작대 ① 레시피 13 — 재료는 전부 채집 품목(무게 > 0, 계절 안 탐), 도구 6·가구 4·공사 자재 2·빈 집 1(W-0284)', function () {
+    t('fs.craft: 제작대 ① 레시피 14 — 재료는 전부 채집 품목(무게 > 0, 계절 안 탐), 도구 6·가구 4·공사 자재 2·빈 집 1(W-0284)·작은 우리 1(W-0299)', function () {
       var R = VD.RECIPES, bad = [], kinds = {};
       R.forEach(function (r) {
         kinds[r.kind] = (kinds[r.kind] || 0) + 1;
         Object.keys(r.need).forEach(function (k) { var it = VD.item(k); if (!it || !(it.w > 0) || it.season) { bad.push(r.key + ':' + k); } });
         if (r.kind === 'furn' && !VD.furn(r.furn)) { bad.push(r.key + ':furn'); }
       });
-      return R.length === 13 && kinds.tool === 6 && kinds.furn === 4 && kinds.pave === 2 && kinds.lot === 1 && bad.length === 0 &&
+      return R.length === 14 && kinds.tool === 6 && kinds.furn === 4 && kinds.pave === 2 && kinds.lot === 1 && kinds.pen === 1 && bad.length === 0 &&
         ('레시피 ' + R.length + ' · 도구 ' + kinds.tool + ' · 가구 ' + kinds.furn + ' · 자재 ' + kinds.pave + ' · 빈 집 ' + kinds.lot + ' · 재료 이상 0');
     });
 
@@ -7830,6 +7831,22 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       var dc = { save: function () {}, restore: function () {}, beginPath: function () {}, fill: function () {}, ellipse: function () {} };   /* ⑤ 발 먼지 — 닿은 직후만 둘 */
       var d1 = M.stepDust(dc, { x: 0, y: 0, clip: 'walk', stride: 0.52 }, 60), d2 = M.stepDust(dc, { x: 0, y: 0, clip: 'walk', stride: 0.3 }, 60), d3 = M.stepDust(dc, { x: 0, y: 0, clip: 'idle', stride: 0.02 }, 60);
       return (d1 === 2 && d2 === 0 && d3 === 0) || ('실패 발 먼지 ' + d1 + ' ' + d2 + ' ' + d3);
+    });
+    t('W-0299 가축 — 우리 없으면 못 들임 · 넷까지 · 먹이면 다음 아침 산물(하트 3+ 둘) · 안 먹이면 없음 · 사흘 굶으면 떠남', function () {
+      var LS = DG.livestock, V = DG.village, C = DG.core; if (!LS || !V) { return '실패 DG.livestock 없음'; }
+      var s = V.state(), keepL = s.livestock, keepBag = JSON.stringify(s.bag || {}), g0 = C.save.player.gold;
+      try {
+        s.livestock = { pen: false, list: [] }; C.save.player.gold = 100000;
+        var noPen = LS.buy('chick'); LS.buildPen();
+        var b = [LS.buy('chick'), LS.buy('goat'), LS.buy('chick'), LS.buy('goat'), LS.buy('chick')];
+        if (noPen.ok || !b[3].ok || b[4].ok || LS.list().length !== 4) { return '실패 들이기 ' + JSON.stringify([noPen, b[4]]) + ' ' + LS.list().length; }
+        s.bag.apple = 3; s.bag.chest = 0; var egg0 = s.bag.egg || 0, milk0 = s.bag.milk || 0;
+        LS.list()[0].heart = 3; var f0 = LS.feed(0), f1 = LS.feed(1), fx = LS.feed(0);
+        var r = LS.rollDay(), eggs = (s.bag.egg || 0) - egg0, milk = (s.bag.milk || 0) - milk0;
+        if (!f0.ok || !f1.ok || fx.ok || eggs !== 2 || milk !== 1 || r.left.length) { return '실패 거둠 ' + JSON.stringify({ eggs: eggs, milk: milk, r: r, fx: fx }); }
+        LS.rollDay(); var r3 = LS.rollDay(), names = r3.left.length, left = LS.list().length;
+        return (names === 2 && left === 2) || ('실패 굶음 ' + JSON.stringify(r3) + ' 남음 ' + left);
+      } finally { s.livestock = keepL; s.bag = JSON.parse(keepBag); C.save.player.gold = g0; }
     });
     t('W-0370 공장 시트 — 방향 5줄(정면 0·앞대각 1·옆 2·뒤대각 3·뒤 4, 왼쪽은 뒤집기) · 없는 동작은 가까운 것 · 프레임 수는 manifest(죽음 6 은 끝에서 멈춤)', function () {
       var M = DG.mode2d; if (!M || !M.factRole || !M.factFrame) { return '실패 factRole·factFrame 없음'; }

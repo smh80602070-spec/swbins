@@ -78,6 +78,7 @@
     if (r.kind === 'tool') { var T = VD().TOOLS[r.tool]; return T.emoji + ' ' + T.name + ' Lv' + r.lv; }
     if (r.kind === 'furn') { var F = VD().furn(r.furn); return '🪑 ' + (F ? F.name : r.furn); }
     if (r.kind === 'lot') { return '🏠 작은 빈 집'; }   // W-0284
+    if (r.kind === 'pen') { return '🐔 작은 우리'; }   // W-0299
     return r.emoji + ' ' + r.name + ' ×' + r.n;
   }
   function needText(r) {
@@ -91,6 +92,7 @@
     if (typeof r === 'string') { r = recipe(r); }
     if (!r) { return { ok: false, why: '없는 레시피' }; }
     if (!on()) { return { ok: false, why: '제작대가 꺼져 있다' }; }
+    if (r.kind === 'pen' && global.DG.livestock && global.DG.livestock.hasPen()) { return { ok: false, why: '우리는 하나만' }; }   // W-0299
     if (r.kind === 'lot' && global.DG.lots && global.DG.lots.count() >= global.DG.lots.MAX) { return { ok: false, why: '빈 집은 ' + global.DG.lots.MAX + '채까지' }; }   // W-0284
     if (r.kind === 'tool') {
       var t = rec(r.tool);
@@ -123,6 +125,9 @@
     } else if (r.kind === 'furn') {
       global.DG.home.stockAdd(r.furn, 1);
       text = nameOf(r) + ' 을(를) 지었다 — 집에 놓을 수 있다';
+    } else if (r.kind === 'pen') {   // W-0299
+      global.DG.livestock.buildPen();
+      text = nameOf(r) + ' 을(를) 지었다 — 꾸미기 창에서 닭·염소 새끼를 들인다';
     } else if (r.kind === 'lot') {   // W-0284
       global.DG.lots.build();
       text = nameOf(r) + ' 을(를) 지었다 — 꾸미기 창에서 가구를 넣으면 손님이 눌러앉는다';

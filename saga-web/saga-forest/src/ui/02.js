@@ -57,6 +57,7 @@
 
     /* 창고 → 놓기 */
     html += global.DG.lots ? global.DG.lots.sheetHtml() : '';   // W-0284 작은 빈 집
+    html += global.DG.livestock ? global.DG.livestock.sheetHtml() : '';   // W-0299 작은 우리
     html += '<div class="sec"><h4>창고</h4>';
     if (!stt.stock.length) {
       html += '<div class="hint">창고가 비었습니다 — 전방(🎒 가방 시트)에 날마다 가구 넉 점이 들어옵니다.</div>';

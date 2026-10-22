@@ -513,6 +513,7 @@
     /* 바람 — 자리마다 위상을 달리해 한꺼번에 흔들리지 않게 한다 */
     var sway = Math.sin(now / 1350 + prop.x * 0.021 + prop.y * 0.013) * 0.045;
 
+    if (prop.kind === 'home' && global.DG.livestock) { global.DG.livestock.draw2d(ctx, p.x + 84 * k, p.y + 22 * k, k, now); }   // W-0299 집 곁 우리
     ctx.save();
     ctx.globalAlpha = spent && !big ? 0.62 : 1;
     if (!(global.DG.mode2d && global.DG.mode2d.drawKind(ctx, prop.kind, p.x, p.y, kindK(prop.kind, k)) && kindOver(prop.kind, p.x, p.y, k, now))) switch (prop.kind) {   // 2D 모드 통일 스프라이트(W-0019) 먼저 — W-0124 가게·집 크기 성장·우체통 깃발은 그 위에도
