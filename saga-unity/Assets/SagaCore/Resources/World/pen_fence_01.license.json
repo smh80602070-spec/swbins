@@ -1,0 +1,17 @@
+{
+ "id": "pen_fence_01",
+ "generator": "tools/world-forge/build_prop.py",
+ "blender": "5.2.1 LTS",
+ "style": "toon",
+ "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+ "inputs": [
+  "self-pbr: brown_planks_03",
+  "self-pbr: coated_pine"
+ ],
+ "size_m": [
+  2.14,
+  0.17,
+  0.9
+ ],
+ "tris": 324
+}

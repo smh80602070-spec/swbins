@@ -1,6 +1,6 @@
 {
  "note": "tools/ai-art/place_icons.py 가 만든 표 — 손으로 고치지 않는다. K-0035. 키 = 그림 한 장(같은 물건은 한 키를 함께 쓴다), skip = 상태 값이라 그림 없음.",
- "date": "2026-10-18",
+ "date": "2026-10-22",
  "size": {
   "icon128": 128,
   "icon64": 64
@@ -13,8 +13,8 @@
   "4": "유니크"
  },
  "counts": {
-  "entries": 636,
-  "keys": 608,
+  "entries": 638,
+  "keys": 610,
   "skip": 4,
   "k118": 283
  },
@@ -2128,6 +2128,18 @@
    "grade": 2,
    "mode": "ai",
    "name": "갯바람 작살"
+  },
+  "saga-forest:material:egg": {
+   "key": "fo_egg",
+   "grade": 0,
+   "mode": "ai",
+   "name": "달걀"
+  },
+  "saga-forest:material:milk": {
+   "key": "fo_milk",
+   "grade": 0,
+   "mode": "ai",
+   "name": "산양젖"
   },
   "shared:ui:award": {
    "key": "ui_award",

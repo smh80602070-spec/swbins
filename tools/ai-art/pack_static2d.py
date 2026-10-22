@@ -20,7 +20,7 @@ S = 256
 from matte_util import matte2, white_ratio, defringe  # noqa: E402
 
 TINT = {'future_dome_01', 'tree_birch_01', 'tree_pine_01_snow'}        # make_static2d_batch.TINT_BG — 색 배경(흰 물체)
-WIDE_HOLES = {'iron_fence_01': 9000, 'wood_fence_01': 9000}              # 큰 구멍을 지워야 하는 울타리류
+WIDE_HOLES = {'iron_fence_01': 9000, 'wood_fence_01': 9000, 'pen_fence_01': 60000, 'pen_gate_01': 20000}   # 큰 구멍을 지워야 하는 울타리류(K-0181 우리 가로대 사이는 넓다)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 a = [x for x in sys.argv[1:] if not x.startswith('--')]

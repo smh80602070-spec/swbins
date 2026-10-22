@@ -1,0 +1,25 @@
+{
+ "note": "K-0181 대상 표 — 3마을 가축 몸 둘(rig none, creature_fill 루트 동작)",
+ "items": [
+  {
+   "id": "farm_hen",
+   "rig": "none",
+   "height": 0.45,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "",
+   "lic_note": "K-0181 자체 생성 — 입력 = 우리 txt2img(k181_bodies_C, 그림체 C) → TRELLIS → 루트 동작 7. 3마을 가축(웹 W-0299 꼬꼬·매매) 몸 — 새 것, 빌린 것 대신 아님."
+  },
+  {
+   "id": "farm_goat",
+   "rig": "none",
+   "height": 0.8,
+   "yaw": 0,
+   "humanoid": false,
+   "fist": false,
+   "borrowed": "",
+   "lic_note": "K-0181 자체 생성 — 입력 = 우리 txt2img(k181_bodies_C, 그림체 C) → TRELLIS → 루트 동작 7. 3마을 가축(웹 W-0299 꼬꼬·매매) 몸 — 새 것, 빌린 것 대신 아님."
+  }
+ ]
+}

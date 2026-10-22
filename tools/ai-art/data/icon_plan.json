@@ -1883,6 +1883,18 @@
    "kind": "furniture",
    "grade": 0,
    "tags": "bedding, folded futon, quilted mattress, soft blanket, floral pattern"
+  },
+  {
+   "id": "fo_egg",
+   "kind": "material",
+   "grade": 0,
+   "tags": "three eggs in a straw nest"
+  },
+  {
+   "id": "fo_milk",
+   "kind": "material",
+   "grade": 0,
+   "tags": "clay milk jar with cloth tie"
   }
  ],
  "entries": [
@@ -5066,6 +5078,24 @@
    "mode": "ai",
    "key": "gw_polearm_catch",
    "grade": 2
+  },
+  {
+   "game": "saga-forest",
+   "id": "egg",
+   "kind": "material",
+   "name": "달걀",
+   "mode": "ai",
+   "key": "fo_egg",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "milk",
+   "kind": "material",
+   "name": "산양젖",
+   "mode": "ai",
+   "key": "fo_milk",
+   "grade": 0
   }
  ]
 }
