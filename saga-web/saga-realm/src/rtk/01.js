@@ -247,7 +247,7 @@
     st.round = rd ? rd.n : 1;                        // 회차(§5-14) — 새 판은 1회차, nextRound() 는 +1
     st.events = null; st.rel = {};                   // 사연·관계(§5-2) — 새 판은 이어받지 않는다(event.js 가 필요할 때 채운다)
     st.cities = {}; st.forces = {}; st.officers = {}; st.captives = {};
-    st.camps = []; st.campSeq = 0; st.wonders = null; st.tech = null;   // W-0290 기술 나무도 판마다 새로 · W-0279 불가사의는 판마다 새로(setup 은 같은 상태 객체를 다시 쓴다 — 안 비우면 지난 판 완공이 이어졌다)
+    st.camps = []; st.campSeq = 0; st.wonders = null; st.tech = null; st.trade = null;   // W-0290 기술 나무도 판마다 새로 · W-0279 불가사의는 판마다 새로(setup 은 같은 상태 객체를 다시 쓴다 — 안 비우면 지난 판 완공이 이어졌다)
     st.journeys = []; st.journeySeq = 0;
 
     var i, j;

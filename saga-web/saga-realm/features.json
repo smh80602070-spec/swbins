@@ -1532,5 +1532,30 @@
   "ticket": "W-0370",
   "since": "2026-10-22",
   "note": "10-22: 몸 키는 idle 옆 칸 알파 상자로 재서 targetH × scale(옛 길과 같은 기준)"
+ },
+ {
+  "id": "rk.trade",
+  "name": "교역로(W-0301) — 내 성 ↔ 내·동맹 성, 우리·동맹 땅만 밟는 길이면 🪙300 으로 상단(12달) · 달마다 (두 성 상업 합)×0.1×경륜도 금 배율 · 길이 끊기면 상단 잃음 · 세력당 둘 · AI 도 · 성 창 칸 · 2D 금빛 점선 · 손잡이 rtk.trade",
+  "files": [
+   "js/traderoute.js",
+   "src/rtk/01.js",
+   "src/rtk/02.js",
+   "js/rtk-ai.js",
+   "js/ui-rtk-sheets.js",
+   "src/ui-rtk/02.js"
+  ],
+  "tests": [
+   "test-web 교역로(W-0301)",
+   "pw-look2d LOOK_EVAL 지도 금빛 길"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {
+   "A": "달마다 수입",
+   "G": "길 지키기"
+  },
+  "ticket": "W-0301",
+  "since": "2026-10-22",
+  "note": "10-22: 3D 지도 길은 없음(10-19 방향) · 호위 무장은 안 묶음(금만) · st.trade 새 칸, setup 이 판마다 null"
  }
 ]

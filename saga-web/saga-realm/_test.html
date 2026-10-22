@@ -118,6 +118,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/statecraft.js"></script>
 <script src="js/data-tech.js"></script>
 <script src="js/wonder.js"></script>
+<script src="js/traderoute.js"></script>
 <script src="js/tech.js"></script>
 <script src="js/mount.js"></script>
 <script src="js/war.js"></script>
@@ -2324,6 +2325,22 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       [['cao'], [other]].forEach(function (x) { var f = R.force(x[0]); f.gold = 20000; R.citiesOf(x[0]).forEach(function (cid) { R.city(cid).troops = 20000; }); });
       return { WD: WD, other: other, capA: R.citiesOf('cao')[0], capB: R.citiesOf(other)[0] };
     }
+    t('교역로(W-0301) — 우리 땅 길이면 띄우고 달마다 금 · 둘까지 · 길이 남의 땅이 되면 끊겨 상단을 잃음 · AI 도 띄움', function () {
+      fresh('cao'); var TR = DG.trade, CD = DG.cityData; if (!TR) { return '실패 DG.trade 없음'; }
+      var cap = R.citiesOf('cao')[0], adj = (CD.find(cap).adj || []).slice(0, 3), i;
+      if (adj.length < 3) { return '건너뜀(이웃 성 셋 없음)'; }
+      adj.forEach(function (cid) { R.city(cid).force = 'cao'; R.city(cid).comm = 300; }); R.city(cap).comm = 500;
+      var f = R.force('cao'); f.gold = 5000;
+      var a = TR.start('cao', cap, adj[0]), b = TR.start('cao', cap, adj[1]), c = TR.why('cao', cap, adj[2]), inc = TR.incomeOf('cao', cap, adj[0]);
+      var g1 = f.gold, m1 = TR.monthly(), g2 = f.gold;
+      var other = R.liveForces().filter(function (x) { return x !== 'cao'; })[0];
+      R.city(adj[1]).force = other; var m2 = TR.monthly(), left = TR.list('cao').length;
+      var oc = R.citiesOf(other)[0], oadj = (CD.find(oc).adj || [])[0]; if (oadj) { R.city(oadj).force = other; }
+      R.force(other).gold = 99999; var ai = TR.aiStep(other), aiN = TR.list(other).length;
+      var ok = a.ok && b.ok && /2개까지/.test(c || '') && g1 === 5000 - 600 && g2 >= g1 + inc && m2.lost === 1 && left === 1 && (!oadj || (ai && aiN === 1));
+      delete R.state().trade;
+      return ok ? ('상단 둘 · 달마다 🪙' + inc + ' · 끊김 1 · AI ' + (ai ? '띄움' : '-')) : ('실패 ' + JSON.stringify({ a: a, b: b, c: c, g1: g1, g2: g2, inc: inc, m1: m1, m2: m2, left: left, ai: ai, aiN: aiN }));
+    });
     t('불가사의(W-0279) — 먼저 다 지은 세력만 효과(경륜도 배율에 더해짐) · 진 세력은 효과 없음 · 한 세력은 하나씩', function () {
       var z = wonderSet(), WD = z.WD; if (!WD) { return '실패 wonder 없음'; }
       var g0 = DG.statecraft.gold('cao'), a = WD.start('cao', 'canal', z.capA), busy = WD.why('cao', 'farm', z.capA), b = WD.start(z.other, 'canal', z.capB), i;

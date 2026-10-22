@@ -102,7 +102,7 @@
       if (!pos) { continue; }
       s += mapMark('flag', pos.x, pos.y, 3.4, 'rjourney', '🚩', forceColor(jn[i].force));   // W-0330 깃발 그림(map_flag)
     }
-    if (global.DG.supplyLine) { s += global.DG.supplyLine.svg(); } s += '</svg>';   // W-0278 진 뒤 보급 길(초록 이어짐·빨강 끊김)
+    if (global.DG.supplyLine) { s += global.DG.supplyLine.svg(); } if (global.DG.trade) { s += global.DG.trade.svg(); } s += '</svg>';   // W-0278 진 뒤 보급 길(초록 이어짐·빨강 끊김)
 
     /* 범례 — 살아 있는 세력 */
     var rank = R().ranking();
