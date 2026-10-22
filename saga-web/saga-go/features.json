@@ -1109,12 +1109,12 @@
   "tests": [
    "길 행동(W-0276)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0276",
   "since": "2026-10-17",
-  "note": "옥토패스 트래블러식. 장부 tasks/gameplay/go.md"
+  "note": "옥토패스 트래블러식. 장부 tasks/gameplay/go.md · D2(claude 2026-10-23 R-3 닫기): W-0276 pw-play saga-go PC·폰 OK"
  },
  {
   "id": "go.grab",
@@ -1172,12 +1172,12 @@
    "시선(W-0303)",
    "쉬는 몸 life(W-0303)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0303",
   "since": "2026-10-18",
-  "note": "코드로 굽는 클립(에셋 없음). 손잡이 pose3d.idleEvery 4(±1초)·pose3d.lookMax 60 · anim3d.walkHps 0.59·runHps 1.76(IK 클립 본래 빠르기) · 2D 는 mode2d o.pose 대역(K 동작별 시트 뒤 프레임 치환) · 연결: 낚시 대기 Pose_fish·대화 인사 Pose_wave·쉬기(변주 → 8초 앉기)·시선·원소 시전 Pose_cast · 2D actor2d 낚시·쉬기 대역 · 손잡이 pose3d.sitAfter 8"
+  "note": "코드로 굽는 클립(에셋 없음). 손잡이 pose3d.idleEvery 4(±1초)·pose3d.lookMax 60 · anim3d.walkHps 0.59·runHps 1.76(IK 클립 본래 빠르기) · 2D 는 mode2d o.pose 대역(K 동작별 시트 뒤 프레임 치환) · 연결: 낚시 대기 Pose_fish·대화 인사 Pose_wave·쉬기(변주 → 8초 앉기)·시선·원소 시전 Pose_cast · 2D actor2d 낚시·쉬기 대역 · 손잡이 pose3d.sitAfter 8 · D2(claude 2026-10-23 R-3 닫기): W-0303 pose-shot.mjs 열둘 촬영"
  },
  {
   "id": "go.sheet16",
@@ -1192,12 +1192,12 @@
    "보폭 위상·가까운 역할(W-0311)",
    "mode2d 16방향 길 회귀 0(W-0311)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0311",
   "since": "2026-10-18",
-  "note": "시트 굽기는 K(INBOX 10-18 규격: characters2d16/<id>/<역할>.webp 9행 + sheet.json). tools/gen-assets3d-ids.mjs 가 sheet.json 을 표 hero2d16 에 담아 실행 중 404 0. 동작 그림은 처음 그릴 때 받기. 자세(W-0303 Pose_)가 시트에 있으면 그 프레임, 없으면 기울이기 대역. D2 는 K 시트 뒤"
+  "note": "시트 굽기는 K(INBOX 10-18 규격: characters2d16/<id>/<역할>.webp 9행 + sheet.json). tools/gen-assets3d-ids.mjs 가 sheet.json 을 표 hero2d16 에 담아 실행 중 404 0. 동작 그림은 처음 그릴 때 받기. 자세(W-0303 Pose_)가 시트에 있으면 그 프레임, 없으면 기울이기 대역. D2 는 K 시트 뒤 · D2(claude 2026-10-23 R-3 닫기): W-0311 sheet16-shot.mjs 16방향 원·보폭 12장"
  },
  {
   "id": "go.phone-budget",
@@ -1209,12 +1209,12 @@
   "tests": [
    "뼈대 나누기(W-0302)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0302",
   "since": "2026-10-18",
-  "note": "표 tasks/sheets/web-phone-budget-20261018.md — 용량·그리기 수는 상한 안, FPS(폰 흉내)는 30 아래(원인·남은 거리 시트). 손잡이 anim3d.shareSkel · village3d/realm3d.lowFps 26 · lowWin 3 · autoq.on · city3d.fps 30"
+  "note": "표 tasks/sheets/web-phone-budget-20261018.md — 용량·그리기 수는 상한 안, FPS(폰 흉내)는 30 아래(원인·남은 거리 시트). 손잡이 anim3d.shareSkel · village3d/realm3d.lowFps 26 · lowWin 3 · autoq.on · city3d.fps 30 · D2(claude 2026-10-23 R-3 닫기): W-0302 pw-phone-budget·pw-cpu-profile 측정(results/)"
  },
  {
   "id": "go.limitless",
@@ -1233,12 +1233,12 @@
    "farland3d — 극좌표 고리 계획",
    "renderer3d — 손잡이 0 이면 WebGL"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0310",
   "since": "2026-10-18",
-  "note": "표 tasks/sheets/web-limitless-20261018.md — 기능 몫은 예산 안(+3.6ms·+24 그리기·+32KB), 판 바탕(마을 HIGH 18.9fps·442 그리기)이 밖. 본 게임 기본은 손잡이 전부 0(crowd3d.on·weather3d.on·ragdoll3d.on·far3d.on·go3d.webgpu). 날씨 본게임 연결은 W-0329"
+  "note": "표 tasks/sheets/web-limitless-20261018.md — 기능 몫은 예산 안(+3.6ms·+24 그리기·+32KB), 판 바탕(마을 HIGH 18.9fps·442 그리기)이 밖. 본 게임 기본은 손잡이 전부 0(crowd3d.on·weather3d.on·ragdoll3d.on·far3d.on·go3d.webgpu). 날씨 본게임 연결은 W-0329 · D2(claude 2026-10-23 R-3 닫기): W-0310 pw-limitless 폰·WebGPU 촬영·결과 파일"
  },
  {
   "id": "go.mocap",
@@ -1251,12 +1251,12 @@
   "tests": [
    "모캡 덮기(W-0318)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0318",
   "since": "2026-10-19",
-  "note": "다섯 판 공용(anim-own.mocapMerge, 판별 asset3d 두 줄). 짝 6 — 걷기·달리기·서기·맞기·쓰러짐·줍기. 시전·강공격·인사는 몸짓 판정 × 라 코드 자세(K 원본 대기). 손잡이 anim3d.mocap"
+  "note": "다섯 판 공용(anim-own.mocapMerge, 판별 asset3d 두 줄). 짝 6 — 걷기·달리기·서기·맞기·쓰러짐·줍기. 시전·강공격·인사는 몸짓 판정 × 라 코드 자세(K 원본 대기). 손잡이 anim3d.mocap · D2(claude 2026-10-23 R-3 닫기): W-0318 실제 GPU 15/15 · mocap_sheet 촬영 · QC 몸짓 판정 PASS"
  },
  {
   "id": "go.cutout2d",
@@ -1320,12 +1320,12 @@
   "tests": [
    "W-0319 지역 GLB 표 — 항목 전부 world3d 주소 있음 · keepOf 순수(root·hide 뺌·배열 펼침·Object3D 만) · entry · 손잡이 regionGlb.on"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0319",
   "since": "2026-10-20",
-  "note": "10-20 실기(HIGH·d3d11): 일곱 지역 GLB 87/87·둘째 묶음 19/19 실패 0. 코드 상자는 대역(받은 뒤 숨김). 가판 넷은 서 있으나 앞 들판 나무에 가림(소품 배치 몫)"
+  "note": "10-20 실기(HIGH·d3d11): 일곱 지역 GLB 87/87·둘째 묶음 19/19 실패 0. 코드 상자는 대역(받은 뒤 숨김). 가판 넷은 서 있으나 앞 들판 나무에 가림(소품 배치 몫) · D2(claude 2026-10-23 R-3 닫기): W-0319 CDP 36장 glb 54/54 fail 0 · w319 지역 촬영"
  },
  {
   "id": "go.own-ui-sfx",
@@ -1337,12 +1337,12 @@
   "tests": [
    "아이콘 — 자체 png(ui_<이름>_g0) 를 가리킨다 (W-0321 — 예전 Lucide SVG)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0321",
   "since": "2026-10-20",
-  "note": "10-20: ☰ 메뉴 모음(pw-menu-sheet saga-go pc) Read ○ 격자 아이콘 png · 소리는 K-0117 같은 이름 덮어씀(코드 0줄)"
+  "note": "10-20: ☰ 메뉴 모음(pw-menu-sheet saga-go pc) Read ○ 격자 아이콘 png · 소리는 K-0117 같은 이름 덮어씀(코드 0줄) · D2(claude 2026-10-23 R-3 닫기): W-0321 ☰ 메뉴 촬영(격자 png ○)"
  },
  {
   "id": "go.own-k126",
@@ -1355,12 +1355,12 @@
   "tests": [
    "go.mobile-light: 폰 표(W-0185) — W-0322 뒤 옛 실사·저다각형 표가 없어 폰(light 1)·PC(0) 어느 쪽도 소품 열 가지가 자체 world3d · 미리 받기에 실사 0 · 같은 자리 같은 모양"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0322",
   "since": "2026-10-20",
-  "note": "10-20: net-log 요청 536 중 옛 경로 0 · pw-visual-close 6/6"
+  "note": "10-20: net-log 요청 536 중 옛 경로 0 · pw-visual-close 6/6 · D2(claude 2026-10-23 R-3 닫기): W-0322 QC 세 판 FAIL 0"
  },
  {
   "id": "go.w2d-smooth",
@@ -1372,12 +1372,12 @@
   "tests": [
    "pw-web-2d-sheet 14/14 · pw-2d-cmp 비교판(옛 mip=0 / 새 mip=1)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0347",
   "since": "2026-10-21",
-  "note": "10-21: 1만리 짐승 점묘 사라짐(shots/cmp/w347c_go_map) · 밉 사본 캐시는 high 로 충분해 안 만듦"
+  "note": "10-21: 1만리 짐승 점묘 사라짐(shots/cmp/w347c_go_map) · 밉 사본 캐시는 high 로 충분해 안 만듦 · D2(claude 2026-10-23 R-3 닫기): W-0347 pw-2d-cmp w347b 촬영 Read"
  },
  {
   "id": "go.w2d-labels",
@@ -1409,12 +1409,12 @@
   "tests": [
    "2D 몸 크기 한 기준(W-0349) — scaleOf 사람 1·곰 1.15·토끼 0.35, 판 설정이 덮음(1만리 집 2.2 < 공용 2.6 · 곰:id 덮기), 짐승 스탬프 배수 0.42~2 묶음, 그림자 한 꼴이 발밑을 칠함"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0349",
   "since": "2026-10-21",
-  "note": "10-21: 폰 390×844 역참·성채 옆 옛/새 촬영 Read — 역참이 사람 키만 하던 것 → 2.2배, 탑 3배 · 여우·지렁이·돼지 사람보다 작게"
+  "note": "10-21: 폰 390×844 역참·성채 옆 옛/새 촬영 Read — 역참이 사람 키만 하던 것 → 2.2배, 탑 3배 · 여우·지렁이·돼지 사람보다 작게 · D2(claude 2026-10-23 R-3 닫기): W-0349 pw-2d-cmp w349 go near/map Read"
  },
  {
   "id": "go.w2d-mark",
@@ -1426,12 +1426,12 @@
   "tests": [
    "2D 표식 아이콘(W-0350) — 짝 있는 표식은 png 주소(⚔️ → ui_swords · 🏴 → ui_flag · 변이 선택자 무시), 없는 표식은 null 이라 이모지로 그리고 짝 없는 목록에 모임"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0350",
   "since": "2026-10-21",
-  "note": "10-21: 2나락 마을 폰 촬영 Read — 난입 ⚔·사관 📖·이름표 머리 그림이 자체 아이콘, ☠·🌀 등 25 는 짝 없어 이모지(수신함 K 요청)"
+  "note": "10-21: 2나락 마을 폰 촬영 Read — 난입 ⚔·사관 📖·이름표 머리 그림이 자체 아이콘, ☠·🌀 등 25 는 짝 없어 이모지(수신함 K 요청) · D2(claude 2026-10-23 R-3 닫기): W-0350 pw-2d-cmp w350 Read"
  },
  {
   "id": "go.w2d-petsheet",
@@ -1443,12 +1443,12 @@
   "tests": [
    "2D 펫 그림 순서(W-0352) — 제 그림 있는 오마주 펫은 beast_<펫 id>(시트 없음), 나머지 도감 펫은 종 몸 시트 id(곰 → bear), 절차 펫·배경 짐승은 옛 표 그대로"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0352",
   "since": "2026-10-21",
-  "note": "10-21: pw-2d-cmp w352 go map/near Read — 개·당나귀·판다·소가 종 시트, 사람 대비 크기 자연스러움"
+  "note": "10-21: pw-2d-cmp w352 go map/near Read — 개·당나귀·판다·소가 종 시트, 사람 대비 크기 자연스러움 · D2(claude 2026-10-23 R-3 닫기): W-0352 pw-web-2d-sheet 14/14 · pw-2d-cmp w352 Read"
  },
  {
   "id": "go.w2d-layers",
@@ -1460,12 +1460,12 @@
   "tests": [
    "pw-2d-cmp w353bg(parallax2d.on 0/1) · 컷아웃 옛/새 대 보기"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0353",
   "since": "2026-10-21",
-  "note": "10-21: 공용 엔진 고침만"
+  "note": "10-21: 공용 엔진 고침만 · D2(claude 2026-10-23 R-3 닫기): W-0353 pw-web-2d-sheet 통과 · pw-mobile 10/10"
  },
  {
   "id": "go.me-panel",
@@ -1478,12 +1478,12 @@
   "tests": [
    "「내 정보」 창(W-0361) — 어댑터 값이 기존 함수 값 그대로 · render 가 칸·수치·성장 단추를 그림"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0361",
   "since": "2026-10-21",
-  "note": "10-21: PC 1280·폰 390 촬영 Read · 칸 누름 → 기존 창, 성장 단추 → 패시브 그물 열림(5/5)"
+  "note": "10-21: PC 1280·폰 390 촬영 Read · 칸 누름 → 기존 창, 성장 단추 → 패시브 그물 열림(5/5) · D2(claude 2026-10-23 R-3 닫기): W-0361 다섯 판 PC·폰 촬영 Read"
  },
  {
   "id": "go.dragdrop",
@@ -1497,12 +1497,12 @@
   "tests": [
    "끌어 놓기 손놀림(W-0362) — 마우스 6px 끌기 → 받는 칸에 놓음 · 안 받는 칸은 취소 · 짧은 터치는 집지 않음 · 길게 누르기 → 집음 · 먼저 움직인 터치는 스크롤로 넘김 · 취소"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0362",
   "since": "2026-10-21",
-  "note": "10-21: 진짜 입력 — 2나락 PC 마우스·폰 CDP 터치(길게 누르기 → 들고 있는 채 → 무기 칸 누름) 끼워짐 · 4종횡 PC 마우스 끼워짐 · 집은 순간 폰 PNG Read(받는 칸 금빛·못 받는 칸 붉은 테)"
+  "note": "10-21: 진짜 입력 — 2나락 PC 마우스·폰 CDP 터치(길게 누르기 → 들고 있는 채 → 무기 칸 누름) 끼워짐 · 4종횡 PC 마우스 끼워짐 · 집은 순간 폰 PNG Read(받는 칸 금빛·못 받는 칸 붉은 테) · D2(claude 2026-10-23 R-3 닫기): W-0362 폰 PNG Read"
  },
  {
   "id": "go.ground-tiles",
@@ -1513,12 +1513,12 @@
   "tests": [
    "3D 자체 땅 타일(W-0355, K-0136) — 공용 주소가 서면 풀·길·마을 변주 넷째 장이 go_field_grass·go_stone_path·go_village_dirt · 파일 있음"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0355",
   "since": "2026-10-21",
-  "note": "10-21: 3D 마을 근경 전후 Read — 마을 칸 일부만 넷째 장이라 차이 작음, 이음매·반복 무늬 새로 없음"
+  "note": "10-21: 3D 마을 근경 전후 Read — 마을 칸 일부만 넷째 장이라 차이 작음, 이음매·반복 무늬 새로 없음 · D2(claude 2026-10-23 R-3 닫기): W-0355 마을 근경 촬영 — 이음매·반복 × 없음"
  },
  {
   "id": "go.mocap-cast",
@@ -1549,12 +1549,12 @@
   "tests": [
    "W-0358 밤 불빛 — toonify 넘김 · 세기 낮/밤 · 점광 넷 고정"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0358",
   "since": "2026-10-21",
-  "note": "10-21: 23시 고정 촬영: 석등 불 갓 빛남·발치 작은 불빛 웅덩이, 집 벽 안 빛남 · 묶음(InstancedMesh) 등은 칸 위치로 불 자리 · 점광 켜도 fps 30 안팎(자동 품질 꺼서 견줌 1~4 차)"
+  "note": "10-21: 23시 고정 촬영: 석등 불 갓 빛남·발치 작은 불빛 웅덩이, 집 벽 안 빛남 · 묶음(InstancedMesh) 등은 칸 위치로 불 자리 · 점광 켜도 fps 30 안팎(자동 품질 꺼서 견줌 1~4 차) · D2(claude 2026-10-23 R-3 닫기): W-0358 23시 석등 PNG Read ○"
  },
  {
   "id": "go.shared-once",
@@ -1572,12 +1572,12 @@
    "test-web 다섯 n/n",
    "판마다 실제 서버 받기 200·404 0"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0359",
   "since": "2026-10-21",
-  "note": "10-21: 판 사본 약 1만 개 지움(−약 38MB) · 판에만 있는 파일이 섞인 tile·4종횡 bg·bg2d·prop 은 판에 둠"
+  "note": "10-21: 판 사본 약 1만 개 지움(−약 38MB) · 판에만 있는 파일이 섞인 tile·4종횡 bg·bg2d·prop 은 판에 둠 · D2(claude 2026-10-23 R-3 닫기): W-0359 서버 받기 404 0 + 촬영 Read"
  },
  {
   "id": "go.phone-hud-diet",
@@ -1595,12 +1595,12 @@
    "pw-cover saga-go 첫 화면·싸움 중 ≤15%",
    "mobile-layout 세로 main 0건"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0363",
   "since": "2026-10-22",
-  "note": "10-22: 가림 첫 화면 30.5→13.4~13.8% · 싸움 중 28.7→11.7~13.4% · 싸움 없음(독·근처 카드) 23% 참고값"
+  "note": "10-22: 가림 첫 화면 30.5→13.4~13.8% · 싸움 중 28.7→11.7~13.4% · 싸움 없음(독·근처 카드) 23% 참고값 · D2(claude 2026-10-23 R-3 닫기): W-0363 pw-cover 첫 화면 30.5→13.4% · mobile-layout"
  },
  {
   "id": "go.cam2d",
@@ -1615,12 +1615,12 @@
    "pw-cover ≤15%",
    "mobile-layout 세로 회귀 0"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0364",
   "since": "2026-10-22",
-  "note": "10-22: 폰 def·min·max 세 장 확인(shots/cam2d_saga-go.png)"
+  "note": "10-22: 폰 def·min·max 세 장 확인(shots/cam2d_saga-go.png) · D2(claude 2026-10-23 R-3 닫기): W-0364 pw-cover 세 번 평균"
  },
  {
   "id": "go.ground2d",
@@ -1672,12 +1672,12 @@
    "pw-assets3d-look 다섯 판 OK",
    "test-web 다섯"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0360",
   "since": "2026-10-22",
-  "note": "10-22: 다섯 판 체제 한 줄(1만리 장부에) · 서명 다른 단위(kaykit·polypizza·oga·standin·monsters)는 판 것 그대로"
+  "note": "10-22: 다섯 판 체제 한 줄(1만리 장부에) · 서명 다른 단위(kaykit·polypizza·oga·standin·monsters)는 판 것 그대로 · D2(claude 2026-10-23 R-3 닫기): W-0360 pw-assets3d-look 다섯 판 OK"
  },
  {
   "id": "go.factory2d",
@@ -1818,12 +1818,12 @@
    "test-web W-0377 주민 고리",
    "pw-look2d rain·clear 촬영"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0377",
   "since": "2026-10-22",
-  "note": "10-22: 남은 겹침 = 시작 자리 옆 이야기 인물(청하 촌장)·동행 이름표(범위 밖)"
+  "note": "10-22: 남은 겹침 = 시작 자리 옆 이야기 인물(청하 촌장)·동행 이름표(범위 밖) · D2(claude 2026-10-23 R-3 닫기): W-0377 pw-look2d rain·clear 전후 Read"
  },
  {
   "id": "go.runRank",
@@ -1837,13 +1837,13 @@
    "test-web W-0379 무리 토벌 등급 둘",
    "pw-look2d LOOK_EVAL 토벌 등급 토스트"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {
    "C": "잘 싸웠다가 보인다"
   },
   "ticket": "W-0379",
   "since": "2026-10-23",
-  "note": "10-23: 장판 틱(src zone)·피해 0 은 연계로 안 셈 · 동시에 두 무리와 싸우면 한 판으로 셈(먼저 토벌한 무리가 닫음)"
+  "note": "10-23: 장판 틱(src zone)·피해 0 은 연계로 안 셈 · 동시에 두 무리와 싸우면 한 판으로 셈(먼저 토벌한 무리가 닫음) · D2(claude 2026-10-23 R-3 닫기): W-0379 pw-look2d 토벌 등급 토스트 Read ○"
  }
 ]
