@@ -107,6 +107,7 @@ window.DG_NO_TUNE = true;
 <script src="js/mount.js"></script>
 <script src="js/side.js"></script>
 <script src="js/side-just.js"></script>
+<script src="js/side-launch.js"></script>
 <script src="js/life.js"></script>
 <script src="js/campfire.js"></script>
 <script src="js/stagemap.js"></script>
@@ -723,6 +724,29 @@ window.DG_NO_TUNE = true;
       p.invuln = 0; p.dodgeCd = 0;         // 뒤에 오는 항목을 방해 안 하게 되돌린다
       return ok && dist > 100 && invulnOk && again === false &&
         ('오른쪽으로 ' + Math.round(dist) + 'px · 무적 O · 식는 동안 재사용 거절');
+    });
+
+    /* ── 띄우기·공중 콤보(W-0345, `side-launch.js`) ─────────── */
+    t('띄우기(W-0345) — 순수: 올려치면 뜬다·보스·관문·탱커는 안 뜬다 · 공중 추가타 넷까지 튕기고 다섯째는 그대로 떨어짐 · 착지 피해 = 마지막 힘 ×0.5', function () {
+      var L = DG.sideLaunch; if (!L) { return '실패 DG.sideLaunch 없음'; }
+      var e = { x: 0, y: 400, w: 30, h: 40 }, up = L.launch(e, 100), boss = L.launch({ y: 0, boss: true }, 1), tank = L.launch({ y: 0, role: 'tank' }, 1), gate = L.launch({ y: 0, gateBoss: true }, 1);
+      var j = [L.juggle(e, 80), L.juggle(e, 80), L.juggle(e, 80), L.juggle(e, 80), L.juggle(e, 80)];
+      var landed = 0, i; for (i = 0; i < 400 && e.air; i++) { landed = L.tick(e, 0.016, 1900, null); }
+      var ok = up && e.groundY === 400 && !boss && !tank && !gate && j.join(',') === 'true,true,true,true,false' && landed === 40 && !e.air && e.y === 400;
+      return ok ? ('뜸 · 보스/탱커/관문 안 뜸 · 저글 4 · 착지 피해 ' + landed) : ('실패 ' + JSON.stringify({ up: up, boss: boss, tank: tank, gate: gate, j: j, landed: landed, e: e }));
+    });
+    t('띄우기(W-0345) — 배선: ↑ 누른 채 치면 실제 사냥터 적이 뜨고, update() 틱에서 떨어져 착지 피해를 입는다 · ↑ 없이 치면 안 뜬다', function () {
+      var run = S.raw(), src = { ref: { name: '허수아비', kind: 'human', look: {} }, x: 0, y: run.player.y, w: 34, h: 34, hp: 1, hpMax: 1, dmg: 1, dir: -1, homeY: run.player.y + 34, spd: 0, phase: 0, hurt: 0, cd: 0 };
+      if (!src) { return '건너뜀(사냥터 적 없음)'; }
+      var e = Object.assign({}, src, { uid: 'w345', hp: 99999, hpMax: 99999, air: false, x: run.player.x + 300, cd: 9 }), e2 = Object.assign({}, e, { uid: 'w345b' });
+      run.enemies.push(e, e2);
+      try {
+        S.setInput('up', true); S._strike(e, 1); S.setInput('up', false); var flew = e.air && e.vy < 0, hp1 = e.hp;
+        S._strike(e2, 1); var flat = !e2.air;
+        for (var i = 0; i < 200 && e.air; i++) { S.update(0.016); }
+        var ok = flew && flat && !e.air && e.hp < hp1;
+        return ok ? ('뜸 → 착지 피해 ' + Math.round(hp1 - e.hp) + ' · ↑ 없으면 안 뜸') : ('실패 ' + JSON.stringify({ flew: flew, flat: flat, air: e.air, hp: [hp1, e.hp] }));
+      } finally { restInput(); run.enemies.splice(run.enemies.indexOf(e), 1); if (run.enemies.indexOf(e2) >= 0) { run.enemies.splice(run.enemies.indexOf(e2), 1); } }
     });
 
     /* ── 저스트 회피(W-0282, `side-just.js`) — 소울워커·던파 자리 ─────────── */

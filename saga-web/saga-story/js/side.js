@@ -1149,7 +1149,7 @@
       }
     }
     /* 탱커형(PLAN 13절)은 보스처럼 밀리지 않는다 — 맷집이 그 컨셉이다 */
-    if (!e.boss && e.role !== 'tank') {
+    if (global.DG.sideLaunch && global.DG.sideLaunch.onStrike(e, input.up, elem, dmg)) { e.kx = 0; } else if (!e.boss && e.role !== 'tank') {   // W-0345 ↑+치기 = 올려치기 · 뜬 적은 저글
       var away = (e.x + e.w / 2) - (run.player.x + P_W / 2) >= 0 ? 1 : -1;
       e.kx = (e.kx || 0) + away * knockPow() * (crit ? 1.5 : 1) * (m >= 2 ? 1.4 : 1);
     }
@@ -1911,7 +1911,7 @@
           }
         }
       }
-      e.x += (holding ? 0 : e.dir * e.spd * (near ? 1.25 : 0.7) * chargeMul * (e.slowT > 0 ? 0.6 : 1)) * dt;
+      if (e.air && global.DG.sideLaunch) { global.DG.sideLaunch.tick(e, dt, GRAV, function (le, ld) { le.hp -= ld; fx.push({ t: 'hit', x: le.x + le.w / 2, y: le.y, v: ld, life: 0.6 }); fx.push({ t: 'ring', x: le.x + le.w / 2, y: le.y + le.h, r: 40, life: 0.3 }); }); } else { e.x += (holding ? 0 : e.dir * e.spd * (near ? 1.25 : 0.7) * chargeMul * (e.slowT > 0 ? 0.6 : 1)) * dt; }   // W-0345 뜬 적은 걷지 않고 떨어진다(착지 피해)
       /* 밀린 만큼 미끄러지고 곧 잦아든다 — 맞는 동안은 못 붙는다는 뜻이기도 하다 */
       if (e.kx) {
         e.x += e.kx * dt;
@@ -1921,7 +1921,7 @@
       if (e.x < 20) { e.x = 20; e.dir = 1; e.kx = 0; }
       if (e.x > stg.width - 40) { e.x = stg.width - 40; e.dir = -1; e.kx = 0; }
       e.cd -= dt;
-      if (overlap({ x: p.x, y: p.y, w: P_W, h: P_H }, e) && e.cd <= 0) {
+      if (overlap({ x: p.x, y: p.y, w: P_W, h: P_H }, e) && e.cd <= 0 && !e.air) {   // W-0345 뜬 적은 몸으로 못 친다
         e.cd = 1.0;
         e.atkAnim = ATK_ANIM_DUR;
         hurtMe(e.dmg);
@@ -2225,7 +2225,7 @@
 
   global.DG = global.DG || {};
   global.DG.side = {
-    GRAV: GRAV, SPEED: SPEED, P_W: P_W, P_H: P_H, REACH: REACH, CLIMB: CLIMB,
+    GRAV: GRAV, SPEED: SPEED, P_W: P_W, P_H: P_H, REACH: REACH, CLIMB: CLIMB, _strike: function (e, m, el) { return strike(e, m, false, el); },
     enter: enter, leave: leave, resume: resume, active: active, update: update,
     setInput: setInput, jump: jump, dodge: dodge, castSkill: castSkill, drink: drink,
     holdStart: holdStart, holdEnd: holdEnd, cancelHold: cancelHold,
