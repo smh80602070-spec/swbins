@@ -1,9 +1,9 @@
 {
- "note": "K-0163 주역 30 — 시나리오 등장 순(2나락 1막 길잡이 → 4종횡 스승 16(K-0047 표정 주역) → 5천하 1막 세력 군주(scenario/saga-realm.md 표 순) → 4막 이계 군주). 23 = expression_plan cast, 7 = 5천하 1막 군주 rf_*. 표시 이름은 가명. 참조 = 3D 몸 idle 렌더(_out/k163_ref), 기존 초상 = saga-assets/portraits-hero/<id>_c.webp.",
+ "note": "K-0163 주역 30 — 시나리오 등장 순(2나락 1막 길잡이 → 4종횡 스승 16(K-0047 표정 주역) → 5천하 1막 세력 군주(scenario/saga-realm.md 표 순) → 4막 이계 군주). 23 = expression_plan cast, 7 = 5천하 1막 군주 rf_*. 표시 이름은 가명. 참조 = 3D 몸 idle 렌더(_out/k163_ref), 기존 초상 = saga-assets/portraits-hero/<id>_c.webp. · 10-23 K-0183: 정본 한 벌 saga-assets/illust/shared 로 옮김(game \"shared\").",
  "cast": [
   {
    "id": "hl_mukhyang",
-   "game": "saga-dungeon",
+   "game": "shared",
    "name": "묵향",
    "role": "2나락 1막 길잡이 사관(도감 묵향 대역)",
    "sex": "m",
@@ -29,7 +29,7 @@
   },
   {
    "id": "sg_lubu",
-   "game": "saga-story",
+   "game": "shared",
    "name": "패창",
    "role": "4종횡 전직 스승",
    "sex": "m",
@@ -55,7 +55,7 @@
   },
   {
    "id": "kr_gyebaek",
-   "game": "saga-story",
+   "game": "shared",
    "name": "결사",
    "role": "4종횡 전직 스승",
    "sex": "m",
@@ -81,7 +81,7 @@
   },
   {
    "id": "jp_musashi",
-   "game": "saga-story",
+   "game": "shared",
    "name": "이도인",
    "role": "4종횡 전직 스승",
    "sex": "m",
@@ -107,7 +107,7 @@
   },
   {
    "id": "eu_leonidas",
-   "game": "saga-story",
+   "game": "shared",
    "name": "테살로르",
    "role": "4종횡 전직 스승",
    "sex": "m",
@@ -133,7 +133,7 @@
   },
   {
    "id": "sg_huangzhong",
-   "game": "saga-story",
+   "game": "shared",
    "name": "노궁",
    "role": "4종횡 전직 스승",
    "sex": "m",
@@ -159,7 +159,7 @@
   },
   {
    "id": "sg_taishici",
-   "game": "saga-story",
+   "game": "shared",
    "name": "궁성",
    "role": "4종횡 전직 스승",
    "sex": "m",
@@ -185,7 +185,7 @@
   },
   {
    "id": "jp_yoshitsune",
-   "game": "saga-story",
+   "game": "shared",
    "name": "비장군",
    "role": "4종횡 전직 스승",
    "sex": "m",
@@ -212,7 +212,7 @@
   },
   {
    "id": "wd_genghis",
-   "game": "saga-story",
+   "game": "shared",
    "name": "초원패",
    "role": "4종횡 전직 스승",
    "sex": "m",
@@ -238,7 +238,7 @@
   },
   {
    "id": "jp_hanzo",
-   "game": "saga-story",
+   "game": "shared",
    "name": "암영조",
    "role": "4종횡 전직 스승",
    "sex": "m",
@@ -264,7 +264,7 @@
   },
   {
    "id": "sg_ganning",
-   "game": "saga-story",
+   "game": "shared",
    "name": "영진",
    "role": "4종횡 전직 스승",
    "sex": "m",
@@ -290,7 +290,7 @@
   },
   {
    "id": "jp_tomoegozen",
-   "game": "saga-story",
+   "game": "shared",
    "name": "여무연",
    "role": "4종횡 전직 스승",
    "sex": "f",
@@ -316,7 +316,7 @@
   },
   {
    "id": "wd_shaka",
-   "game": "saga-story",
+   "game": "shared",
    "name": "창군왕",
    "role": "4종횡 전직 스승",
    "sex": "m",
@@ -342,7 +342,7 @@
   },
   {
    "id": "jp_himiko",
-   "game": "saga-story",
+   "game": "shared",
    "name": "여왕영",
    "role": "4종횡 전직 스승",
    "sex": "f",
@@ -368,7 +368,7 @@
   },
   {
    "id": "sg_zhugeliang",
-   "game": "saga-story",
+   "game": "shared",
    "name": "현책",
    "role": "4종횡 스승·5천하 책사",
    "sex": "m",
@@ -391,7 +391,7 @@
   },
   {
    "id": "wd_ibnsina",
-   "game": "saga-story",
+   "game": "shared",
    "name": "의철인",
    "role": "4종횡 전직 스승",
    "sex": "m",
@@ -418,7 +418,7 @@
   },
   {
    "id": "eu_davinci",
-   "game": "saga-story",
+   "game": "shared",
    "name": "마라노",
    "role": "4종횡 전직 스승",
    "sex": "m",
@@ -444,7 +444,7 @@
   },
   {
    "id": "sg_caocao",
-   "game": "saga-realm",
+   "game": "shared",
    "name": "패헌",
    "role": "5천하 1막 세력 군주",
    "sex": "m",
@@ -470,7 +470,7 @@
   },
   {
    "id": "rf_yuanshao",
-   "game": "saga-realm",
+   "game": "shared",
    "name": "고문",
    "role": "5천하 1막 세력 군주",
    "sex": "m",
@@ -497,7 +497,7 @@
   },
   {
    "id": "rf_gongsunzan",
-   "game": "saga-realm",
+   "game": "shared",
    "name": "은기",
    "role": "5천하 1막 세력 군주",
    "sex": "m",
@@ -523,7 +523,7 @@
   },
   {
    "id": "rf_kongrong",
-   "game": "saga-realm",
+   "game": "shared",
    "name": "빈헌",
    "role": "5천하 1막 세력 군주",
    "sex": "f",
@@ -549,7 +549,7 @@
   },
   {
    "id": "sg_liubei",
-   "game": "saga-realm",
+   "game": "shared",
    "name": "인형",
    "role": "5천하 1막 세력 군주",
    "sex": "m",
@@ -572,7 +572,7 @@
   },
   {
    "id": "rf_yuanshu",
-   "game": "saga-realm",
+   "game": "shared",
    "name": "옥형",
    "role": "5천하 1막 세력 군주",
    "sex": "m",
@@ -598,7 +598,7 @@
   },
   {
    "id": "rf_sunce",
-   "game": "saga-realm",
+   "game": "shared",
    "name": "강룡",
    "role": "5천하 1막 세력 군주",
    "sex": "m",
@@ -624,7 +624,7 @@
   },
   {
    "id": "rf_liubiao",
-   "game": "saga-realm",
+   "game": "shared",
    "name": "형수",
    "role": "5천하 1막 세력 군주",
    "sex": "m",
@@ -650,7 +650,7 @@
   },
   {
    "id": "rf_lijue",
-   "game": "saga-realm",
+   "game": "shared",
    "name": "철혼",
    "role": "5천하 1막 세력 군주",
    "sex": "m",
@@ -676,7 +676,7 @@
   },
   {
    "id": "sg_sunquan",
-   "game": "saga-realm",
+   "game": "shared",
    "name": "벽해",
    "role": "5천하 세력 군주",
    "sex": "m",
@@ -698,7 +698,7 @@
   },
   {
    "id": "fu_jongwang",
-   "game": "saga-realm",
+   "game": "shared",
    "name": "종왕",
    "role": "5천하 4막 이계 군주(균열)",
    "sex": "f",
@@ -725,7 +725,7 @@
   },
   {
    "id": "ru_geohae",
-   "game": "saga-realm",
+   "game": "shared",
    "name": "거해",
    "role": "5천하 4막 이계 군주(폐허)",
    "sex": "m",
@@ -751,7 +751,7 @@
   },
   {
    "id": "tb_baekgi",
-   "game": "saga-realm",
+   "game": "shared",
    "name": "백기",
    "role": "5천하 4막 이계 군주(묘역)",
    "sex": "m",

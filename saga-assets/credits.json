@@ -367,7 +367,7 @@
    "tool": "remote3d",
    "model": "microsoft/TRELLIS-image-large",
    "license": "MIT",
-   "count": 519,
+   "count": 520,
    "where": [
     "saga-assets/creatures3d",
     "saga-assets/pets3d",
@@ -421,12 +421,12 @@
    "license": "saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · txt2img(밑그림 없음, 초상 보고 적은 묘사)",
    "count": 30,
    "where": [
-    "saga-assets/illust/saga-dungeon/hl_mukhyang",
-    "saga-assets/illust/saga-realm/fu_jongwang",
-    "saga-assets/illust/saga-realm/rf_gongsunzan",
-    "saga-assets/illust/saga-realm/rf_kongrong",
-    "saga-assets/illust/saga-realm/rf_lijue",
-    "saga-assets/illust/saga-realm/rf_liubiao"
+    "saga-assets/illust/shared/eu_davinci",
+    "saga-assets/illust/shared/eu_leonidas",
+    "saga-assets/illust/shared/fu_jongwang",
+    "saga-assets/illust/shared/hl_mukhyang",
+    "saga-assets/illust/shared/jp_hanzo",
+    "saga-assets/illust/shared/jp_himiko"
    ]
   },
   {

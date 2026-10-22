@@ -1,0 +1,695 @@
+{
+ "note": "K-0183 원조 105(batches/web_heroes_105.json) 중 K-0163·K-0178 30 뺀 86 — 정본 한 벌 saga-assets/illust/shared. 이름 = data.js HEROES name(가명). look = 초상 프롬프트(참고), 묘사 정본은 data/k183_desc.json(초상 보고 적음). sex = 프롬프트 1girl 여부 — 초상 보고 고친다.",
+ "ticket": "K-0183",
+ "eye_rule": "○ = 초상 _c 와 성별·나이·머리·옷 색·시대 같음 + 스탠딩·반신·표정 넷이 서로 같은 사람",
+ "cast": [
+  {
+   "id": "eu_alexander",
+   "game": "shared",
+   "name": "카시안더",
+   "role": "세계사 마케도니아",
+   "sex": "m",
+   "look": "adult, brown hair, light brown eyes, medieval european inspired clothing, tunic and cloak, ancient shield bearer, plumed bronze helmet"
+  },
+  {
+   "id": "eu_augustus",
+   "game": "shared",
+   "name": "세레누스",
+   "role": "세계사 로마",
+   "sex": "m",
+   "look": "mature adult, black hair, blue eyes, ancient roman clothing, toga and laurel, ancient roman statesman, laurel wreath, toga, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "eu_aurelius",
+   "game": "shared",
+   "name": "베렌델",
+   "role": "세계사 로마",
+   "sex": "m",
+   "look": "adult, brown hair, teal eyes, ancient roman clothing, toga and laurel, ancient roman statesman, laurel wreath, toga, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "eu_caesar",
+   "game": "shared",
+   "name": "발레리안",
+   "role": "세계사 로마",
+   "sex": "m",
+   "look": "adult, blonde hair, grey eyes, ancient roman clothing, toga and laurel, ancient roman statesman, laurel wreath, toga, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "eu_charlemagne",
+   "game": "shared",
+   "name": "로타리안",
+   "role": "세계사 프랑크",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, medieval european inspired clothing, tunic and cloak, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "eu_eleanor",
+   "game": "shared",
+   "name": "바엘린",
+   "role": "세계사 프랑스",
+   "sex": "f",
+   "look": "1girl, female focus, feminine, solo, upper body portrait, adult, brown hair, teal eyes, medieval european inspired clothing, tunic and cloak, majestic queen, crown, jewels, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "eu_elizabeth",
+   "game": "shared",
+   "name": "코리넬레",
+   "role": "세계사 잉글랜드",
+   "sex": "f",
+   "look": "1girl, female focus, feminine, solo, upper body portrait, adult, dark brown hair, blue eyes, medieval european inspired clothing, tunic and cloak, majestic queen, crown, jewels, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "eu_frederick",
+   "game": "shared",
+   "name": "바실로른",
+   "role": "세계사 프로이센",
+   "sex": "m",
+   "look": "adult, black hair, teal eyes, medieval european inspired clothing, tunic and cloak, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "eu_hannibal",
+   "game": "shared",
+   "name": "마그나로",
+   "role": "세계사 카르타고",
+   "sex": "m",
+   "look": "adult, brown hair, grey eyes, medieval european inspired clothing, tunic and cloak, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "eu_harald",
+   "game": "shared",
+   "name": "오스트바르드",
+   "role": "세계사 노르웨이",
+   "sex": "m",
+   "look": "adult, auburn hair, light brown eyes, medieval european inspired clothing, tunic and cloak, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "eu_joan",
+   "game": "shared",
+   "name": "셀렌느",
+   "role": "세계사 프랑스",
+   "sex": "f",
+   "look": "1girl, female focus, feminine, solo, upper body portrait, young adult, blonde hair, light brown eyes, medieval european inspired clothing, tunic and cloak, fierce female warrior, determined eyes, light armor, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "eu_machiavelli",
+   "game": "shared",
+   "name": "반토렐리",
+   "role": "세계사 이탈리아",
+   "sex": "m",
+   "look": "adult, dark brown hair, teal eyes, medieval european inspired clothing, tunic and cloak, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "eu_michelangelo",
+   "game": "shared",
+   "name": "첼로리니",
+   "role": "세계사 이탈리아",
+   "sex": "m",
+   "look": "adult, auburn hair, grey eyes, medieval european inspired clothing, tunic and cloak, creative artist, paint stained fingers, curious eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "eu_napoleon",
+   "game": "shared",
+   "name": "발데나르",
+   "role": "세계사 프랑스",
+   "sex": "m",
+   "look": "adult, brown hair, grey eyes, medieval european inspired clothing, tunic and cloak, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "eu_nelson",
+   "game": "shared",
+   "name": "애쉬그레이브",
+   "role": "세계사 잉글랜드",
+   "sex": "m",
+   "look": "adult, brown hair, light brown eyes, medieval european inspired clothing, tunic and cloak, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "eu_newton",
+   "game": "shared",
+   "name": "할베린",
+   "role": "세계사 잉글랜드",
+   "sex": "m",
+   "look": "adult, brown hair, light brown eyes, medieval european inspired clothing, tunic and cloak, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "eu_peter",
+   "game": "shared",
+   "name": "볼카노프",
+   "role": "세계사 러시아",
+   "sex": "m",
+   "look": "adult, dark brown hair, brown eyes, medieval european inspired clothing, tunic and cloak, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "eu_richard",
+   "game": "shared",
+   "name": "코드윈",
+   "role": "세계사 잉글랜드",
+   "sex": "m",
+   "look": "adult, black hair, teal eyes, medieval european inspired clothing, tunic and cloak, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "eu_scipio",
+   "game": "shared",
+   "name": "코르비날",
+   "role": "세계사 로마",
+   "sex": "m",
+   "look": "adult, dark brown hair, grey eyes, medieval european inspired clothing, tunic and cloak, ancient shield bearer, plumed bronze helmet"
+  },
+  {
+   "id": "eu_william",
+   "game": "shared",
+   "name": "펜드릭",
+   "role": "세계사 노르만",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, medieval european inspired clothing, tunic and cloak, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "jp_hideyoshi",
+   "game": "shared",
+   "name": "태합원",
+   "role": "일본사 도요토미가",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "jp_ieyasu",
+   "game": "shared",
+   "name": "인내옹",
+   "role": "일본사 도쿠가와막부",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "jp_kenshin",
+   "game": "shared",
+   "name": "군신아",
+   "role": "일본사 우에스기가",
+   "sex": "m",
+   "look": "young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet"
+  },
+  {
+   "id": "jp_masamune",
+   "game": "shared",
+   "name": "독안룡",
+   "role": "일본사 다테가",
+   "sex": "m",
+   "look": "young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet"
+  },
+  {
+   "id": "jp_mitsukuni",
+   "game": "shared",
+   "name": "천하부",
+   "role": "일본사 도쿠가와막부",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "jp_murasaki",
+   "game": "shared",
+   "name": "원씨필",
+   "role": "일본사 헤이안",
+   "sex": "f",
+   "look": "1girl, female focus, feminine, solo, upper body portrait, adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, graceful court lady, refined makeup, layered robes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "jp_naosuke",
+   "game": "shared",
+   "name": "개항로",
+   "role": "일본사 도쿠가와막부",
+   "sex": "m",
+   "look": "mature adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "jp_nobunaga",
+   "game": "shared",
+   "name": "화천마",
+   "role": "일본사 오다가",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet"
+  },
+  {
+   "id": "jp_ryoma",
+   "game": "shared",
+   "name": "해원랑",
+   "role": "일본사 메이지유신",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, modern person, casual stylish clothes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "jp_saigo",
+   "game": "shared",
+   "name": "최후향",
+   "role": "일본사 메이지유신",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "jp_seishonagon",
+   "game": "shared",
+   "name": "침초필",
+   "role": "일본사 헤이안",
+   "sex": "f",
+   "look": "1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, graceful court lady, refined makeup, layered robes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "jp_shingen",
+   "game": "shared",
+   "name": "풍림화",
+   "role": "일본사 다케다가",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet"
+  },
+  {
+   "id": "jp_taira",
+   "game": "shared",
+   "name": "평가주",
+   "role": "일본사 다이라가",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "jp_yoritomo",
+   "game": "shared",
+   "name": "막부조",
+   "role": "일본사 가마쿠라막부",
+   "sex": "m",
+   "look": "mature adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "jp_yukimura",
+   "game": "shared",
+   "name": "일번창",
+   "role": "일본사 사나다가",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet"
+  },
+  {
+   "id": "kr_ahnjunggeun",
+   "game": "shared",
+   "name": "동양평",
+   "role": "한국사 대한제국",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, modern person, casual stylish clothes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_choemuseon",
+   "game": "shared",
+   "name": "화포공",
+   "role": "한국사 고려",
+   "sex": "m",
+   "look": "mature adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_daejoyeong",
+   "game": "shared",
+   "name": "요동패",
+   "role": "한국사 발해",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_euljimundeok",
+   "game": "shared",
+   "name": "현묘",
+   "role": "한국사 고구려",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_ganggamchan",
+   "game": "shared",
+   "name": "강우",
+   "role": "한국사 고려",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_gwakjaeu",
+   "game": "shared",
+   "name": "초모의",
+   "role": "한국사 조선",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_gwanggaeto",
+   "game": "shared",
+   "name": "정복왕",
+   "role": "한국사 고구려",
+   "sex": "m",
+   "look": "mature adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_heojun",
+   "game": "shared",
+   "name": "활인",
+   "role": "한국사 조선",
+   "sex": "m",
+   "look": "elderly, wrinkles, gray beard, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, gentle healer, herb pouch, kind eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_hwanghui",
+   "game": "shared",
+   "name": "균형공",
+   "role": "한국사 조선",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_jangyeongsil",
+   "game": "shared",
+   "name": "성시",
+   "role": "한국사 조선",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_jeongmongju",
+   "game": "shared",
+   "name": "청죽",
+   "role": "한국사 고려",
+   "sex": "m",
+   "look": "elderly, wrinkles, gray beard, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_jeongyakyong",
+   "game": "shared",
+   "name": "만기",
+   "role": "한국사 조선",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_kimgu",
+   "game": "shared",
+   "name": "자강",
+   "role": "한국사 일제강점기",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, modern person, casual stylish clothes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_kimjeongho",
+   "game": "shared",
+   "name": "방각",
+   "role": "한국사 조선",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, adventurous traveler, travel cloak, bright eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_kimyusin",
+   "game": "shared",
+   "name": "화랑준",
+   "role": "한국사 신라",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_nongae",
+   "game": "shared",
+   "name": "화영",
+   "role": "한국사 조선",
+   "sex": "f",
+   "look": "1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, graceful dancer, flowing ribbons, cheerful, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_sejong",
+   "game": "shared",
+   "name": "훈민",
+   "role": "한국사 조선",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_sinsaimdang",
+   "game": "shared",
+   "name": "초충당",
+   "role": "한국사 조선",
+   "sex": "f",
+   "look": "1girl, female focus, feminine, solo, upper body portrait, adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, elegant noble lady, hairpins, poised, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_wanggeon",
+   "game": "shared",
+   "name": "통합공",
+   "role": "한국사 고려",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_wonhyo",
+   "game": "shared",
+   "name": "각원",
+   "role": "한국사 신라",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, serene monk, prayer beads, shaved head, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_yeongaesomun",
+   "game": "shared",
+   "name": "철령",
+   "role": "한국사 고구려",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_yihwang",
+   "game": "shared",
+   "name": "경헌",
+   "role": "한국사 조선",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_yii",
+   "game": "shared",
+   "name": "문형",
+   "role": "한국사 조선",
+   "sex": "m",
+   "look": "mature adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_yisunsin",
+   "game": "shared",
+   "name": "해장",
+   "role": "한국사 조선",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "kr_yugwansun",
+   "game": "shared",
+   "name": "소녀화",
+   "role": "한국사 일제강점기",
+   "sex": "f",
+   "look": "1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, earnest young student, neat clothes, bright smile, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "sg_diaochan",
+   "game": "shared",
+   "name": "월영",
+   "role": "삼국지 군웅",
+   "sex": "f",
+   "look": "1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, graceful dancer, flowing ribbons, cheerful, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "sg_guanyu",
+   "game": "shared",
+   "name": "명운",
+   "role": "삼국지 촉",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "sg_huatuo",
+   "game": "shared",
+   "name": "신침",
+   "role": "삼국지 재야",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, gentle healer, herb pouch, kind eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "sg_luxun",
+   "game": "shared",
+   "name": "담연",
+   "role": "삼국지 오",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "sg_machao",
+   "game": "shared",
+   "name": "서풍",
+   "role": "삼국지 촉",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "sg_menghuo",
+   "game": "shared",
+   "name": "만왕",
+   "role": "삼국지 남만",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, tribal warrior, face paint, feathers, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "sg_pangtong",
+   "game": "shared",
+   "name": "봉래",
+   "role": "삼국지 촉",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "sg_simayi",
+   "game": "shared",
+   "name": "은인",
+   "role": "삼국지 위",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "sg_xiahoudun",
+   "game": "shared",
+   "name": "언무",
+   "role": "삼국지 위",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "sg_xunyu",
+   "game": "shared",
+   "name": "청안",
+   "role": "삼국지 위",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "sg_zhangfei",
+   "game": "shared",
+   "name": "뇌호",
+   "role": "삼국지 촉",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "sg_zhangliao",
+   "game": "shared",
+   "name": "철벽",
+   "role": "삼국지 위",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "sg_zhaoyun",
+   "game": "shared",
+   "name": "은창",
+   "role": "삼국지 촉",
+   "sex": "m",
+   "look": "young adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "sg_zhouyu",
+   "game": "shared",
+   "name": "화풍",
+   "role": "삼국지 오",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "wd_akbar",
+   "game": "shared",
+   "name": "관용제",
+   "role": "세계사 무굴",
+   "sex": "m",
+   "look": "mature adult, brown hair, brown eyes, mughal court clothing, jeweled turban, long embroidered coat, regal ruler, jeweled turban, calm authority, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "wd_ashoka",
+   "game": "shared",
+   "name": "법륜왕",
+   "role": "세계사 마우리아",
+   "sex": "m",
+   "look": "adult, auburn hair, blue eyes, ancient indian royal clothing, gold jewelry, saffron cloth, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "wd_attila",
+   "game": "shared",
+   "name": "재앙편",
+   "role": "세계사 훈제국",
+   "sex": "m",
+   "look": "adult, brown hair, light brown eyes, steppe nomad warrior, fur-trimmed leather coat, braided hair, nomad rider, wind blown hair, fur collar, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "wd_cleopatra",
+   "game": "shared",
+   "name": "나일화",
+   "role": "세계사 프톨레마이오스",
+   "sex": "f",
+   "look": "1girl, female focus, feminine, solo, upper body portrait, adult, brown hair, grey eyes, ancient egyptian queen, gold collar necklace, kohl eye makeup, headdress, majestic queen, crown, jewels, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "wd_hammurabi",
+   "game": "shared",
+   "name": "율법석",
+   "role": "세계사 바빌로니아",
+   "sex": "m",
+   "look": "adult, dark brown hair, blue eyes, ancient mesopotamian king, tiered fringed robe, curled beard, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "wd_ibnbattuta",
+   "game": "shared",
+   "name": "천리객",
+   "role": "세계사 여행자",
+   "sex": "m",
+   "look": "adult, brown hair, grey eyes, arab traveler scholar, turban, long striped robe, satchel, adventurous traveler, travel cloak, bright eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "wd_khubilai",
+   "game": "shared",
+   "name": "대원조",
+   "role": "세계사 원",
+   "sex": "m",
+   "look": "mature adult, brown hair, blue eyes, steppe emperor, ornate fur-trimmed silk robe, tall hat, ruthless steppe ruler, fur collar, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "wd_mansamusa",
+   "game": "shared",
+   "name": "황금왕",
+   "role": "세계사 말리제국",
+   "sex": "m",
+   "look": "adult, brown hair, green eyes, west african king, gold crown, gold embroidered robe, jewelry, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "wd_moctezuma",
+   "game": "shared",
+   "name": "독수리주",
+   "role": "세계사 아즈텍",
+   "sex": "m",
+   "look": "adult, black hair, green eyes, mesoamerican ruler, tall feather headdress, jade jewelry, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "wd_pachacuti",
+   "game": "shared",
+   "name": "태양개",
+   "role": "세계사 잉카제국",
+   "sex": "m",
+   "look": "mature adult, blonde hair, brown eyes, andean emperor, woven patterned tunic, gold ear ornaments, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "wd_saladin",
+   "game": "shared",
+   "name": "의검주",
+   "role": "세계사 아이유브",
+   "sex": "m",
+   "look": "mature adult, brown hair, blue eyes, arab sultan, white turban, chainmail under robe, regal ruler, jeweled turban, calm authority, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  },
+  {
+   "id": "wd_suleiman",
+   "game": "shared",
+   "name": "장려제",
+   "role": "세계사 오스만",
+   "sex": "m",
+   "look": "adult, brown hair, grey eyes, ottoman sultan, huge white turban, ornate fur robe, regal ruler, jeweled turban, calm authority, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+  }
+ ]
+}

@@ -11,6 +11,9 @@
   py tools/ai-art/k163_illust.py sheet <단계>   # 대조판 _out/k163_sheet/<단계>_<n>.jpg (기존 초상 · 참조 렌더 · 새 그림)
   py tools/ai-art/k163_illust.py pack [--check] # 눈 ○ 만 {stand,neutral,happy,angry,sad}.webp + <id>.license.json → 정본 saga-assets/illust/<판>/<id> + <판>/manifest.js (asset-place illust-<판>)
 
+  --cast data/<kNNN>_cast.json --desc data/<kNNN>_desc.json   # K-0183 — 다른 묶음(명단·묘사). 배치 파일 이름 = <kNNN>_stand·_bust·_expr(출력 폴더는 같다 — id 가 안 겹친다)
+                                                 #   cast 맨 위 "ticket" 이 license 칸. 인물 줄 game "shared" = 정본 saga-assets/illust/shared/<id> + 판 다섯 manifest(base ../shared/assets/illust/)
+
 명단·고른 판·눈 판정 = data/k163_cast.json(표시 이름은 가명). 렌더 = char-forge gear_sprites.py(SPRITE_MODE, 192px 시트와 같은 몸·같은 idle).
 K-0178: 3D 몸이 초상과 다른 사람(현대 옷·소녀)이라 그 렌더 밑그림(refs·init·stand_batch)은 쓰지 않는다 — 스탠딩은 stand_txt, 이후 bust 부터 같은 길.
 """
@@ -33,6 +36,8 @@ BG = (214, 222, 210)          # 키트 'plain pastel gray-green background' 와 
 W, H = 768, 1152
 EXPRS = ('neutral', 'happy', 'angry', 'sad')
 FORCE = False
+TAG = ''                      # --cast 줄기(k183_cast.json → k183) — 배치 이름 앞에 붙는다, 비면 옛 이름(K-0163·K-0178)
+GAMES = ('saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm')
 
 
 def cast():
@@ -126,8 +131,15 @@ def subj(x):
     return f"{sex}, {d.get(x['id']) or x['look']}"   # look = 3D 몸 렌더에 보이던 옷(K-0163) — 묘사가 있으면 초상 쪽
 
 
-def write_in(name, items, spec, note, variants=4):
+def bname(old, kind):
+    """배치 파일 이름 — --cast 가 있으면 <줄기>_<kind>, 없으면 옛 이름. 출력 폴더(out)는 늘 옛 이름."""
+    return f'{TAG}_{kind}' if TAG else old
+
+
+def write_in(name, items, spec, note, variants=4, out=None):
     d = {'name': name, 'spec': spec, 'style': 'C', 'model': 'animagine-xl-4.0-opt', 'variants': variants, 'note': note, 'items': items}
+    if out and out != name:
+        d['out'] = out
     p = os.path.join(HERE, 'batches', '_in', name + '.json')
     json.dump(d, open(p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print('썼다', p, len(items))
@@ -156,8 +168,9 @@ def stand_txt():
                       'extra': 'arms at sides, feet visible, looking at viewer', 'width': W, 'height': H,
                       'seed': 2026102200 + len(items) * 101})
     json.dump(c, open(CAST, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    write_in('k178_stand', items, 'character_tall',
-             'K-0178 주역 30 전신 스탠딩 — 밑그림 없이 txt2img, 주제 = 초상(portraits-hero _c)을 보고 적은 묘사(data/k178_desc.json), 그림체 C')
+    write_in(bname('k178_stand', 'stand'), items, 'character_tall',
+             f"{c.get('ticket', 'K-0178')} 전신 스탠딩 — 밑그림 없이 txt2img, 주제 = 초상(portraits-hero _c)을 보고 적은 묘사({os.path.relpath(DESC, HERE)}), 그림체 C",
+             out='k178_stand')
 
 
 def head_box(im):
@@ -231,7 +244,7 @@ def bust():
               'extra': 'upper body, portrait, face focus, looking at viewer, closed mouth, calm expression',
               'init_image': f"tools/ai-art/_out/k163_bust_init/{x['id']}.png", 'denoise': 0.42, 'width': 768, 'height': 768,
               'seed': 2026102150 + n * 7} for n, x in enumerate(c['cast']) if x.get('stand_pick')]
-    write_in('k163_bust', items, 'character', 'K-0163 반신(평온) — 고른 스탠딩의 머리·가슴을 768 로 확대한 밑그림을 0.42 로 다듬기, 그림체 C', variants=2)
+    write_in(bname('k163_bust', 'bust'), items, 'character', 'K-0163 반신(평온) — 고른 스탠딩의 머리·가슴을 768 로 확대한 밑그림을 0.42 로 다듬기, 그림체 C', variants=2, out='k163_bust')
 
 
 def masks():
@@ -258,14 +271,14 @@ def expr_batch():
                           'extra': tag + ', upper body, portrait, face focus, looking at viewer',
                           'init_image': f'tools/ai-art/_out/k163_bust/{pk}.png', 'mask_image': f"tools/ai-art/_out/k163_masks/{x['id']}.png",
                           'denoise': 0.7, 'width': 768, 'height': 768, 'seed': 2026102170 + n * 13 + len(e)})
-    write_in('k163_expr', items, 'character', 'K-0163 표정 셋(happy·angry·sad) — 반신(neutral)의 얼굴 타원 마스크 안만 인페인트 0.7(옷·머리색 안 흐트러지게), 그림체 C', variants=2)
+    write_in(bname('k163_expr', 'expr'), items, 'character', 'K-0163 표정 셋(happy·angry·sad) — 반신(neutral)의 얼굴 타원 마스크 안만 인페인트 0.7(옷·머리색 안 흐트러지게), 그림체 C', variants=2, out='k163_expr')
 
 
 def build_kit(name):
     """prompt_kit build 뒤 mask_image 를 이어 붙인다(키트는 init_image 만 옮긴다)."""
-    subprocess.run([sys.executable, os.path.join(HERE, 'prompt_kit.py'), 'build', os.path.join(HERE, 'batches', '_in', name + '.json')], check=True)
-    src = json.load(open(os.path.join(HERE, 'batches', '_in', name + '.json'), encoding='utf-8'))
     bp = os.path.join(HERE, 'batches', name + '.json')
+    subprocess.run([sys.executable, os.path.join(HERE, 'prompt_kit.py'), 'build', os.path.join(HERE, 'batches', '_in', name + '.json'), '--out', bp], check=True)
+    src = json.load(open(os.path.join(HERE, 'batches', '_in', name + '.json'), encoding='utf-8'))
     b = json.load(open(bp, encoding='utf-8'))
     mk = {i['id']: i['mask_image'] for i in src['items'] if i.get('mask_image')}
     for it in b['items']:
@@ -321,7 +334,7 @@ def sheet(stage, per=5):
         y = 0
         for r in lines:
             sh.paste(r, (0, y)); y += r.height
-        p = os.path.join(d, f'{stage}_{n0 // per + 1}.jpg')
+        p = os.path.join(d, f"{TAG + '_' if TAG else ''}{stage}_{n0 // per + 1}.jpg")
         sh.save(p, quality=85); print(p)
 
 
@@ -371,7 +384,7 @@ def pack(check=False):
         od = os.path.join(dest, x['game'], iid); os.makedirs(od, exist_ok=True)
         if os.path.exists(os.path.join(od, iid + '.license.json')) and not FORCE:   # 이미 포장(다시 하려면 --force)
             n += 1; continue
-        lic = {'id': iid, 'name': x['name'], 'ticket': 'K-0178', 'generator': 'tools/ai-art/k163_illust.py + gen.py (ComfyUI, Kaggle 원격)',
+        lic = {'id': iid, 'name': x['name'], 'ticket': c.get('ticket', 'K-0178'), 'generator': 'tools/ai-art/k163_illust.py + gen.py (ComfyUI, Kaggle 원격)',
                'model': 'animagine-xl-4.0-opt', 'model_license': 'CreativeML OpenRAIL++-M', 'commercial_use': True, 'files': {}}
         for k, p in srcs.items():
             cut = cutout(Image.open(p).convert('RGB'), x.get('cut') if k != 'stand' else None)
@@ -393,21 +406,37 @@ def pack(check=False):
         n += 1
     print('pack', n, '빠짐', len(miss), miss[:40])
     if not check:
-        games = {}
-        for x in c['cast']:
-            if os.path.exists(os.path.join(dest, x['game'], x['id'], 'stand.webp')):
-                games.setdefault(x['game'], []).append(x['id'])
-        for g, ids in games.items():
-            md = os.path.join(dest, g)   # 정본 — asset-place illust-<판> 이 saga-web/<판>/assets/illust 로 옮긴다
-            txt = ('/* K-0163 tools/ai-art/k163_illust.py pack 이 쓴다 — 손으로 고치지 않는다. 인물 일러스트(stand 세로 1024 투명 · 표정 512 반신 투명). */\n'
-                   '(function(g){g.SAGA=g.SAGA||{};g.SAGA.illust={"v":1,"base":"assets/illust/","files":["stand","neutral","happy","angry","sad"],"ids":'
-                   + json.dumps(sorted(ids)) + '};})(typeof window!=="undefined"?window:globalThis);\n')
-            open(os.path.join(md, 'manifest.js'), 'wb').write(txt.encode('utf-8'))
-            print('manifest', g, len(ids))
+        manifests(dest)
+
+
+def manifests(dest):
+    """판 manifest.js — 정본 illust/shared 에 있는 인물(폴더에 stand.webp)은 다섯 판 모두, base ../shared/assets/illust/(K-0183).
+    판 폴더(illust/<판>/<id>)에 남은 옛 인물은 그 판만 base assets/illust/ — 한 manifest 에 base 는 하나라 둘이 섞이면 멈춘다."""
+    sd = os.path.join(dest, 'shared')
+    shared = sorted(i for i in os.listdir(sd) if os.path.exists(os.path.join(sd, i, 'stand.webp'))) if os.path.isdir(sd) else []
+    for g in GAMES:
+        gd = os.path.join(dest, g)
+        local = sorted(i for i in os.listdir(gd) if os.path.exists(os.path.join(gd, i, 'stand.webp'))) if os.path.isdir(gd) else []
+        if shared and local:
+            raise SystemExit(f'manifest {g}: 판 폴더에 옛 인물 {len(local)} 이 남았다 — shared 로 옮긴 뒤 다시(base 가 하나뿐) {local[:5]}')
+        ids, base = (shared, '../shared/assets/illust/') if shared else (local, 'assets/illust/')
+        if not ids:
+            continue
+        os.makedirs(gd, exist_ok=True)   # 정본 — asset-place illust-<판> 이 saga-web/<판>/assets/illust 로 옮긴다
+        txt = ('/* K-0163 tools/ai-art/k163_illust.py pack 이 쓴다 — 손으로 고치지 않는다. 인물 일러스트(stand 세로 1024 투명 · 표정 512 반신 투명). */\n'
+               '(function(g){g.SAGA=g.SAGA||{};g.SAGA.illust={"v":1,"base":' + json.dumps(base) + ',"files":["stand","neutral","happy","angry","sad"],"ids":'
+               + json.dumps(ids) + '};})(typeof window!=="undefined"?window:globalThis);\n')
+        open(os.path.join(gd, 'manifest.js'), 'wb').write(txt.encode('utf-8'))
+        print('manifest', g, len(ids), base)
 
 
 if __name__ == '__main__':
     a = sys.argv[1:]
+    if '--cast' in a:
+        CAST = os.path.join(HERE, a[a.index('--cast') + 1]) if not os.path.isabs(a[a.index('--cast') + 1]) else a[a.index('--cast') + 1]
+        TAG = os.path.basename(CAST).split('_')[0]
+    if '--desc' in a:
+        DESC = os.path.join(HERE, a[a.index('--desc') + 1]) if not os.path.isabs(a[a.index('--desc') + 1]) else a[a.index('--desc') + 1]
     cmd = a[0] if a else ''
     if cmd == 'refs':
         refs(a[1:])
@@ -416,15 +445,17 @@ if __name__ == '__main__':
     elif cmd == 'stand_batch':
         stand_batch(); build_kit('k162_illust30')
     elif cmd == 'stand_txt':
-        stand_txt(); build_kit('k178_stand')
+        stand_txt(); build_kit(bname('k178_stand', 'stand'))
     elif cmd == 'bust':
-        bust(); build_kit('k163_bust')
+        bust(); build_kit(bname('k163_bust', 'bust'))
     elif cmd == 'masks':
         masks()
     elif cmd == 'expr_batch':
-        expr_batch(); build_kit('k163_expr')
+        expr_batch(); build_kit(bname('k163_expr', 'expr'))
     elif cmd == 'sheet':
         sheet(a[1])
+    elif cmd == 'manifests':
+        manifests(os.path.join(ROOT, 'saga-assets', 'illust'))
     elif cmd == 'pack':
         FORCE = '--force' in a
         pack('--check' in a)
