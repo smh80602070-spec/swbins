@@ -410,6 +410,7 @@
     global.DG.milestone.tick();         // 이번 주 누적 거리 사다리(축1 다음 후보)
     global.DG.codex.tick();             // 지나가며 본 것에 도장을 찍는다
     if (global.DG.beacon) { global.DG.beacon.tick(dt); }   // 봉수대 3초 홀드(§5①)
+    if (global.DG.restSite) { global.DG.restSite.tick(dt); }   // W-0297 쉼터 — 불 지피기·쉬기(회복·부활 자리·잡몹 다시 섬)
     if (global.DG.stela) { global.DG.stela.tick(dt); }     // 15m 안 비석을 저절로 발견(§5⑤)
     if (global.DG.drop) { global.DG.drop.tick(dt); }       // 흩어진 짐을 걷는다(§5⑧)
     if (global.DG.bond) { global.DG.bond.tick(); }         // 함께 걸은 거리로 인연이 쌓인다(§5⑥)

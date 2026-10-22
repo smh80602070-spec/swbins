@@ -1716,5 +1716,28 @@
   "ticket": "W-0372",
   "since": "2026-10-22",
   "note": "10-22: 사용자 아이폰 \"나무를 밟고 다니네\" · 지도 생성·GPS·3D 그대로"
+ },
+ {
+  "id": "go.restSite",
+  "name": "쉼터(W-0297) — 들판 720m 칸마다 모닥불 자리(물·마을·집·역참·지역 탑 피함) · 처음 들면 불 지핌(발견) · 쉬면 동행 회복·부활 자리·비운 잡몹 무리 다시 섬(보스 꽃 그대로) · 전멸하면 그 쉼터에서 일어남 · 2D 모닥불·미니맵 점 · 손잡이 go.rest",
+  "files": [
+   "js/rest-site.js",
+   "js/game.js",
+   "js/minimap.js",
+   "src/world/02.js"
+  ],
+  "tests": [
+   "test-web W-0297 쉼터",
+   "pw-look2d LOOK_EVAL 쉼터 옆·위"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {
+   "B": "탐험 거점",
+   "D": "부활 자리"
+  },
+  "ticket": "W-0297",
+  "since": "2026-10-22",
+  "note": "10-22: 3D 표시는 없음(웹 3D 는 에셋 배선만 — 10-19 방향) · save.rest = { lit, at, atXY } 새 칸(없으면 빈 것)"
  }
 ]

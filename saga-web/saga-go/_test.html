@@ -178,6 +178,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/beacon.js"></script>
 <script src="js/shrine.js"></script>
 <script src="js/stela.js"></script>
+<script src="js/rest-site.js"></script>
 <script src="js/drop.js"></script>
 <script src="js/event.js"></script>
 <script src="js/codex.js"></script>
@@ -17418,6 +17419,22 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var r = F.treeRects(100, 100, forest); DG.core.setTune('go.treeBlock', 0); var r0 = F.treeRects(100, 100, forest); DG.core.setTune('go.treeBlock', null);
       var okR = r.length > 0 && r.every(function (q) { return q.w > 0 && q.w < 48 && q.d > 0; });
       return (n1 > 0 && n0 === 0 && okR && r0.length === 0) || ('실패 tall ' + n1 + '/' + n0 + ' 상자 ' + r.length + '/' + r0.length);
+    });
+    t('W-0297 쉼터 — 자리는 칸마다 같은 곳 · 쉬면 부활 자리·동행 회복·잡몹 무리 다시 섬(보스 꽃 g: 는 그대로) · 전멸하면 그 쉼터로 · 안 지핀(부활 자리 없는) 때는 제자리', function () {
+      var RS = DG.restSite, FC = DG.fieldCombat, C = DG.core; if (!RS || !FC || !FC.state) { return '실패 DG.restSite·fieldCombat 없음'; }
+      var grass = function () { return 'grass'; }, a = RS.siteAt(3, -2, grass), b = RS.siteAt(3, -2, grass), wet = RS.siteAt(3, -2, function () { return 'water'; });
+      if (!a || a.x !== b.x || a.y !== b.y || wet !== null || Math.floor(a.x / RS.CELL) !== 3) { return '실패 자리 ' + JSON.stringify(a) + ' ' + wet; }
+      var S0 = FC.state(), S = S0 || { party: [{ hp: 1, hpMax: 50, down: false }], cleared: {} }; if (!S0) { FC._setStateForTest(S); } var keepC = S.cleared, keepR = C.save.rest, pos = C.save.player.pos, px = pos.x, py = pos.y, keepP = (S.party || []).map(function (p) { return { hp: p.hp, down: p.down }; });
+      try {
+        C.save.rest = { lit: [], at: null }; pos.x = a.x + 5000; pos.y = a.y;
+        var w0 = RS.onWipe(), stay = pos.x === a.x + 5000;
+        S.cleared = { 'c:1:1': 1, 'c:2:1': 1, 'g:boss': 1 }; if (S.party && S.party[0]) { S.party[0].hp = 1; S.party[0].down = true; }
+        var n = RS.rest(a), healed = !S.party || !S.party[0] || (S.party[0].hp === S.party[0].hpMax && !S.party[0].down);
+        var left = Object.keys(S.cleared).join(','), at = C.save.rest.at, lit = C.save.rest.lit.indexOf(a.id) >= 0;
+        pos.x = a.x + 5000; var w1 = RS.onWipe(), back = Math.hypot(pos.x - a.x, pos.y - a.y) < 40;
+        var ok = !w0 && stay && n === 2 && left === 'g:boss' && at === a.id && lit && healed && w1 && back;
+        return ok || ('실패 ' + JSON.stringify({ w0: w0, stay: stay, n: n, left: left, at: at, lit: lit, healed: healed, w1: w1, back: back }));
+      } finally { S.cleared = keepC; C.save.rest = keepR; pos.x = px; pos.y = py; keepP.forEach(function (k, i) { S.party[i].hp = k.hp; S.party[i].down = k.down; }); if (RS._reset) { RS._reset(); } if (!S0) { FC._setStateForTest(null); } }
     });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';

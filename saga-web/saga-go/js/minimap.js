@@ -52,6 +52,8 @@
     'beacon-lit': { c: '#ff5a1e', r: 3.6 },
     shrine:      { c: '#f0d878', r: 3.0 },
     stele:       { c: '#d9d2c0', r: 2.2 },
+    rest:        { c: '#b9a58a', r: 2.6 },   // W-0297 쉼터 — 안 지핌
+    'rest-lit':  { c: '#ffb04a', r: 3.6 },   // 지핀 쉼터
     drop:        { c: '#ffb36b', r: 3.4 },
     story:       { c: '#ffd24a', r: 4.2 },
     fish:        { c: '#6ec8ff', r: 3.4 },
@@ -296,6 +298,8 @@
 
     /* 임무 표식(PLAN §5 ⑲-12·⑲-23) — 따라가는 것(이야기 금·세계 임무 푸른 찬 마름모)은 테두리에도 붙어 방향을 알린다.
        맡았지만 안 따라가는 것(빈 마름모)·맡을 수 있는 것(!)은 둘레 안일 때만 */
+    var RSm = global.DG.restSite, rsl = RSm ? RSm.sitesNear(pos.x, pos.y, r) : [];   // W-0297 쉼터 — 지핀 것은 테두리에도
+    for (i = 0; i < rsl.length; i++) { put(rsl[i].lit ? 'rest-lit' : 'rest', rsl[i].x, rsl[i].y, '🔥 쉼터', rsl[i].lit); }
     var STY = global.DG.story, qm = STY && STY.mapMarks ? STY.mapMarks() : [];
     for (i = 0; i < qm.length; i++) {
       var qk = qm[i], track = qk.kind === 'track';
