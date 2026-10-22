@@ -22,7 +22,7 @@ from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, '_out', 'web_heroes_105')
 WEB = os.path.join(HERE, '..', '..', 'saga-web')
-GAMES = ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm']
+GAMES = ['shared']      # W-0359 뒤 웹은 saga-web/shared/assets/portraits 한 벌만 읽음(K-0176) — 옛 판 폴더는 --games 로
 # 768x1024 원본에서 얼굴이 위쪽 가운데 — 정사각은 얼굴 중심, 카드는 어깨까지
 SQ_BOX = (48, 40, 720, 712)      # 672x672 -> 192
 CARD_BOX = (34, 24, 734, 827)    # 700x803 -> 300x344 (비율 150:172)

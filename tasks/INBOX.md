@@ -5,9 +5,9 @@
 - [ ] 10-21 · (K-0165 끝 알림) · 그림만 바뀜(자리·이름 같음) — 3마을·5천하 물 바탕 `forest_water`·`realm_water` 새 물빛 + 물 쌍 아틀라스 3 · 4종횡 bg2d 깊은 동굴·숲 · 발판 산 사당·궤도 기지 색 — 캐시 갱신에 sw.js VERSION 올림 필요 · 웹/3마을·4종횡·5천하
 - [ ] 10-21 · (K-0161 끝 알림) · 같은 모션 30 팩을 유니티 Humanoid 리타깃(이름 = clips30.json game) + 판별 행동 상태 배선 · 유니티/다섯 판
 - [ ] 10-21 · (W-0356 끝 알림) · 빌린 괴물 웹 참조 — 5천하·3마을 0, 2나락은 quaternius Alpaking_Evolved·Armabee 둘·Cat·Chicken·Fish 둘만 남음(자체 몸 없음) → 그 일곱 몸 만들면 옛 monsters/ 폴더 지워도 됨(W-0360) · 자체툴
-- [ ] 10-21 · (G-0282 대기 알림) · K-0161 `saga-assets/characters/anim-src/mocap/vroid_clips30_anims.glb`(+license) 를 고돗 `saga-godot/assets/anim_mocap/` 로 place(asset-place `anim-mocap` 항목에 파일 하나 더) → G-0282 풀림 · 자체툴
-- [ ] 10-21 · (W-0359 ① 알림) · 인물·펫 초상 hero·pet 은 웹 다섯 판이 `saga-web/shared/assets/portraits/{hero,pet}/` 한 벌만 읽음(판 사본 지움) → asset-place `portraits-hero`·펫 초상 targets·bake-portraits 출력 자리를 shared 로(안 고치면 다음 place 가 판 사본 5000 을 되살림) · 자체툴
-- [ ] 10-21 · (W-0359 ② 알림) · 웹 bgm ogg 는 `saga-web/shared/audio/bgm/<판>-<때>.ogg` 만 읽음(판 saga-<판>-*.ogg 지움) → asset-place `bgm` 판 dir targets 빼기 · 자체툴
+- [x] 10-21 · (G-0282 대기 알림) → K-0176 끝(고돗 anim_mocap 에 clips30 놓음, .import 는 고돗 세션) · K-0161 `saga-assets/characters/anim-src/mocap/vroid_clips30_anims.glb`(+license) 를 고돗 `saga-godot/assets/anim_mocap/` 로 place(asset-place `anim-mocap` 항목에 파일 하나 더) → G-0282 풀림 · 자체툴
+- [x] 10-21 · (W-0359 ① 알림) → K-0176 끝(portraits-hero 대상 shared · 묶기 도구 shared, bake.mjs 는 웹 도구라 다시 구울 때 --out shared) · 인물·펫 초상 hero·pet 은 웹 다섯 판이 `saga-web/shared/assets/portraits/{hero,pet}/` 한 벌만 읽음(판 사본 지움) → asset-place `portraits-hero`·펫 초상 targets·bake-portraits 출력 자리를 shared 로(안 고치면 다음 place 가 판 사본 5000 을 되살림) · 자체툴
+- [x] 10-21 · (W-0359 ② 알림) → K-0176 끝(bgm 판 대상 뺌) · 웹 bgm ogg 는 `saga-web/shared/audio/bgm/<판>-<때>.ogg` 만 읽음(판 saga-<판>-*.ogg 지움) → asset-place `bgm` 판 dir targets 빼기 · 자체툴
 - [ ] 10-21 · (K-0163 끝 알림) · 나머지 인물 ~470 일러스트 — 같은 도구 `tools/ai-art/k163_illust.py`(cast 표만 판별로 새로) 로 판마다 한 티켓(3D 몸 있는 도감 인물 순, 원격 120장≈50분이라 판당 2~3회), 1만리·3마을 주역부터 · 자체툴
 - [ ] 10-21 · (K-0167 끝 알림) · mode2d MARK 표에 25 줄 — `shared/assets/icons/icon64/ui_<이름>_g0.png`, 이모지→이름 표는 `tasks/tools/done/K-0167.md` 메모 · 웹/다섯 판
 - [ ] 10-22 · (G-0287 대기 알림) · 고돗 `assets/characters_dex/*.gltf` 모프 targets 0(이름표만, 웹 characters3d 는 77) → Fcl 모프 살려 다시 내보내기 — NPC·주인공 깜박임·표정·입 · 자체툴

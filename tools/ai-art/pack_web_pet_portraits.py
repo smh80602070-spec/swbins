@@ -16,7 +16,7 @@ from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, '_out', 'web_pets_105')
 WEB = os.path.join(HERE, '..', '..', 'saga-web')
-GAMES = ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm']
+GAMES = ['shared']      # W-0359 뒤 웹은 saga-web/shared/assets/portraits 한 벌만 읽음(K-0176) — 옛 판 폴더는 --games 로
 
 
 def crops(im):

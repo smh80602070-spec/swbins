@@ -1,0 +1,443 @@
+{
+ "target": "ac_balgwang.glb",
+ "generator": "tools/char-forge/mocap_retarget.py (K-0139·K-0161) + keyframes.py",
+ "blender": "5.2.1 LTS",
+ "license": "CMU Graphics Lab Motion Capture Database — 복사·수정·재배포 허가 불요(상업 포함, mocap.cs.cmu.edu FAQ) · Hahne BVH 변환 추가 제한 없음 + 자체 키프레임(tools/char-forge/keyframes.py, 이 저장소 코드) — 바탕 자세 Idle_Loop 는 ual1_standard(Quaternius, CC0)",
+ "source": "CMU: http://mocap.cs.cmu.edu/ — FAQ \"The motion capture data may be copied, modified, or redistributed without permission.\" · BVH 변환 Bruce Hahne 2010(추가 제한 없음) · 거울 github.com/una-dinosauria/cmu-mocap",
+ "clips": {
+  "gather": "CMU:69_70",
+  "throw": "CMU:111_33",
+  "fish_cast": "CMU:79_34",
+  "fish_wait": "CMU:80_12",
+  "bow_greet": "CMU:113_02",
+  "dig": "CMU:79_04",
+  "stir": "CMU:79_13",
+  "saw": "CMU:62_03",
+  "sit_ground": "CMU:82_05",
+  "lie_down": "CMU:113_08",
+  "sweep": "CMU:80_61",
+  "rake": "CMU:80_34",
+  "plant": "CMU:80_09",
+  "hammer": "CMU:62_07",
+  "eat": "CMU:79_15",
+  "drink": "CMU:79_38",
+  "cheer": "CMU:79_69",
+  "bow_shoot": "CMU:79_86",
+  "kick": "CMU:144_05",
+  "punch_combo": "CMU:143_23",
+  "jump": "CMU:13_39",
+  "ladder": "CMU:13_33",
+  "march": "CMU:138_01",
+  "command": "CMU:13_27",
+  "water": "CF:CF_Water_Pour",
+  "sleep": "CF:CF_Sleep_Loop",
+  "hang": "CF:CF_Hang_Loop",
+  "flag_wave": "CF:CF_Flag_Wave_Loop",
+  "ride_idle": "CF:CF_Ride_Idle_Loop",
+  "ride_charge": "CF:CF_Ride_Charge_Loop"
+ },
+ "report": {
+  "gather": {
+   "cmu": "69_70",
+   "window": [
+    64,
+    128
+   ],
+   "frames": 65,
+   "sec": 2.17,
+   "loop_score": null,
+   "flipped": -0.0,
+   "leg_ratio": 0.051,
+   "slip_m": null,
+   "drift_m": 0.239,
+   "feet_locked": 98
+  },
+  "throw": {
+   "cmu": "111_33",
+   "window": [
+    156,
+    216
+   ],
+   "frames": 61,
+   "sec": 2.03,
+   "loop_score": null,
+   "flipped": 0.0,
+   "leg_ratio": 0.058,
+   "slip_m": null,
+   "drift_m": 0.0,
+   "feet_locked": 83
+  },
+  "fish_cast": {
+   "cmu": "79_34",
+   "window": [
+    25,
+    95
+   ],
+   "frames": 71,
+   "sec": 2.37,
+   "loop_score": null,
+   "flipped": -0.0,
+   "leg_ratio": 0.051,
+   "slip_m": null,
+   "drift_m": 0.021,
+   "feet_locked": 142
+  },
+  "fish_wait": {
+   "cmu": "80_12",
+   "window": [
+    166,
+    230
+   ],
+   "frames": 64,
+   "sec": 2.13,
+   "loop_score": 0.306,
+   "flipped": -0.0,
+   "leg_ratio": 0.054,
+   "slip_m": 0.005,
+   "drift_m": 0.0,
+   "feet_locked": 128
+  },
+  "bow_greet": {
+   "cmu": "113_02",
+   "window": [
+    6,
+    96
+   ],
+   "frames": 91,
+   "sec": 3.03,
+   "loop_score": null,
+   "flipped": -0.0,
+   "leg_ratio": 0.055,
+   "slip_m": null,
+   "drift_m": 0.051,
+   "feet_locked": 182
+  },
+  "dig": {
+   "cmu": "79_04",
+   "window": [
+    138,
+    175
+   ],
+   "frames": 37,
+   "sec": 1.23,
+   "loop_score": 0.418,
+   "flipped": -0.0,
+   "leg_ratio": 0.051,
+   "slip_m": 0.014,
+   "drift_m": 0.001,
+   "feet_locked": 57
+  },
+  "stir": {
+   "cmu": "79_13",
+   "window": [
+    46,
+    73
+   ],
+   "frames": 27,
+   "sec": 0.9,
+   "loop_score": 0.282,
+   "flipped": -0.0,
+   "leg_ratio": 0.051,
+   "slip_m": 0.002,
+   "drift_m": 0.0,
+   "feet_locked": 54
+  },
+  "saw": {
+   "cmu": "62_03",
+   "window": [
+    248,
+    270
+   ],
+   "frames": 22,
+   "sec": 0.73,
+   "loop_score": 0.228,
+   "flipped": -0.0,
+   "leg_ratio": 0.052,
+   "slip_m": 0.001,
+   "drift_m": 0.0,
+   "feet_locked": 44
+  },
+  "sit_ground": {
+   "cmu": "82_05",
+   "window": [
+    120,
+    180
+   ],
+   "frames": 60,
+   "sec": 2.0,
+   "loop_score": 0.199,
+   "flipped": -0.0,
+   "leg_ratio": 0.055,
+   "slip_m": 0.0,
+   "drift_m": 0.0,
+   "feet_locked": 120
+  },
+  "lie_down": {
+   "cmu": "113_08",
+   "window": [
+    282,
+    432
+   ],
+   "frames": 151,
+   "sec": 5.03,
+   "loop_score": null,
+   "flipped": -0.0,
+   "leg_ratio": 0.055,
+   "slip_m": null,
+   "drift_m": 0.382,
+   "feet_locked": 72
+  },
+  "sweep": {
+   "cmu": "80_61",
+   "window": [
+    37,
+    82
+   ],
+   "frames": 45,
+   "sec": 1.5,
+   "loop_score": 0.957,
+   "flipped": -0.0,
+   "leg_ratio": 0.054,
+   "slip_m": 0.008,
+   "drift_m": 0.0,
+   "feet_locked": 90
+  },
+  "rake": {
+   "cmu": "80_34",
+   "window": [
+    284,
+    325
+   ],
+   "frames": 41,
+   "sec": 1.37,
+   "loop_score": 0.698,
+   "flipped": -0.0,
+   "leg_ratio": 0.054,
+   "slip_m": 0.011,
+   "drift_m": 0.001,
+   "feet_locked": 82
+  },
+  "plant": {
+   "cmu": "80_09",
+   "window": [
+    118,
+    190
+   ],
+   "frames": 73,
+   "sec": 2.43,
+   "loop_score": null,
+   "flipped": -0.0,
+   "leg_ratio": 0.054,
+   "slip_m": null,
+   "drift_m": 0.072,
+   "feet_locked": 99
+  },
+  "hammer": {
+   "cmu": "62_07",
+   "window": [
+    73,
+    85
+   ],
+   "frames": 12,
+   "sec": 0.4,
+   "loop_score": 0.07,
+   "flipped": -0.0,
+   "leg_ratio": 0.052,
+   "slip_m": 0.001,
+   "drift_m": 0.0,
+   "feet_locked": 24
+  },
+  "eat": {
+   "cmu": "79_15",
+   "window": [
+    20,
+    110
+   ],
+   "frames": 91,
+   "sec": 3.03,
+   "loop_score": null,
+   "flipped": -0.0,
+   "leg_ratio": 0.051,
+   "slip_m": null,
+   "drift_m": 0.015,
+   "feet_locked": 182
+  },
+  "drink": {
+   "cmu": "79_38",
+   "window": [
+    25,
+    115
+   ],
+   "frames": 91,
+   "sec": 3.03,
+   "loop_score": null,
+   "flipped": -0.0,
+   "leg_ratio": 0.051,
+   "slip_m": null,
+   "drift_m": 0.04,
+   "feet_locked": 182
+  },
+  "cheer": {
+   "cmu": "79_69",
+   "window": [
+    79,
+    154
+   ],
+   "frames": 76,
+   "sec": 2.53,
+   "loop_score": null,
+   "flipped": -0.0,
+   "leg_ratio": 0.051,
+   "slip_m": null,
+   "drift_m": 0.085,
+   "feet_locked": 152
+  },
+  "bow_shoot": {
+   "cmu": "79_86",
+   "window": [
+    26,
+    116
+   ],
+   "frames": 91,
+   "sec": 3.03,
+   "loop_score": null,
+   "flipped": -0.0,
+   "leg_ratio": 0.051,
+   "slip_m": null,
+   "drift_m": 0.033,
+   "feet_locked": 181
+  },
+  "kick": {
+   "cmu": "144_05",
+   "window": [
+    124,
+    178
+   ],
+   "frames": 55,
+   "sec": 1.83,
+   "loop_score": null,
+   "flipped": 0.0,
+   "leg_ratio": 0.058,
+   "slip_m": null,
+   "drift_m": 0.234,
+   "feet_locked": 68
+  },
+  "punch_combo": {
+   "cmu": "143_23",
+   "window": [
+    33,
+    87
+   ],
+   "frames": 55,
+   "sec": 1.83,
+   "loop_score": null,
+   "flipped": -0.0,
+   "leg_ratio": 0.059,
+   "slip_m": null,
+   "drift_m": 0.006,
+   "feet_locked": 110
+  },
+  "jump": {
+   "cmu": "13_39",
+   "window": [
+    3,
+    63
+   ],
+   "frames": 61,
+   "sec": 2.03,
+   "loop_score": null,
+   "flipped": -0.0,
+   "leg_ratio": 0.049,
+   "slip_m": null,
+   "drift_m": 0.0,
+   "feet_locked": 88
+  },
+  "ladder": {
+   "cmu": "13_33",
+   "window": [
+    67,
+    140
+   ],
+   "frames": 73,
+   "sec": 2.43,
+   "loop_score": 1.774,
+   "flipped": -0.0,
+   "leg_ratio": 0.049,
+   "slip_m": 0.023,
+   "drift_m": 0.0,
+   "feet_locked": 20
+  },
+  "march": {
+   "cmu": "138_01",
+   "window": [
+    91,
+    128
+   ],
+   "frames": 37,
+   "sec": 1.23,
+   "loop_score": 0.21,
+   "flipped": -0.0,
+   "leg_ratio": 0.051,
+   "slip_m": 0.032,
+   "drift_m": 0.001,
+   "feet_locked": 0
+  },
+  "command": {
+   "cmu": "13_27",
+   "window": [
+    286,
+    336
+   ],
+   "frames": 51,
+   "sec": 1.7,
+   "loop_score": null,
+   "flipped": -0.0,
+   "leg_ratio": 0.049,
+   "slip_m": null,
+   "drift_m": 0.093,
+   "feet_locked": 98
+  },
+  "water": {
+   "cf": "CF_Water_Pour",
+   "frames": 71,
+   "sec": 2.37,
+   "ground_err_m": 0.0,
+   "drift_m": 0.0
+  },
+  "sleep": {
+   "cf": "CF_Sleep_Loop",
+   "frames": 91,
+   "sec": 3.03,
+   "ground_err_m": 0.0,
+   "drift_m": 0.0
+  },
+  "hang": {
+   "cf": "CF_Hang_Loop",
+   "frames": 61,
+   "sec": 2.03,
+   "ground_err_m": null,
+   "drift_m": 0.0
+  },
+  "flag_wave": {
+   "cf": "CF_Flag_Wave_Loop",
+   "frames": 41,
+   "sec": 1.37,
+   "ground_err_m": 0.0,
+   "drift_m": 0.0
+  },
+  "ride_idle": {
+   "cf": "CF_Ride_Idle_Loop",
+   "frames": 31,
+   "sec": 1.03,
+   "ground_err_m": null,
+   "drift_m": 0.0
+  },
+  "ride_charge": {
+   "cf": "CF_Ride_Charge_Loop",
+   "frames": 17,
+   "sec": 0.57,
+   "ground_err_m": null,
+   "drift_m": 0.0
+  }
+ }
+}

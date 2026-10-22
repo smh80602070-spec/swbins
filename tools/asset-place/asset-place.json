@@ -26,50 +26,9 @@
      "sidecar": [
       ".meta"
      ]
-    },
-    {
-     "track": "web",
-     "dir": "saga-web/saga-go/assets/audio/bgm",
-     "rename": {
-      "go-field.ogg": "saga-go-field.ogg",
-      "go-battle.ogg": "saga-go-battle.ogg"
-     }
-    },
-    {
-     "track": "web",
-     "dir": "saga-web/saga-dungeon/assets/audio/bgm",
-     "rename": {
-      "dungeon-town.ogg": "saga-dungeon-town.ogg",
-      "dungeon-field.ogg": "saga-dungeon-field.ogg",
-      "dungeon-battle.ogg": "saga-dungeon-battle.ogg"
-     }
-    },
-    {
-     "track": "web",
-     "dir": "saga-web/saga-story/assets/audio/bgm",
-     "rename": {
-      "story-town.ogg": "saga-story-town.ogg",
-      "story-field.ogg": "saga-story-field.ogg",
-      "story-battle.ogg": "saga-story-battle.ogg"
-     }
-    },
-    {
-     "track": "web",
-     "dir": "saga-web/saga-forest/assets/audio/bgm",
-     "rename": {
-      "forest-town.ogg": "saga-forest-town.ogg"
-     }
-    },
-    {
-     "track": "web",
-     "dir": "saga-web/saga-realm/assets/audio/bgm",
-     "rename": {
-      "realm-town.ogg": "saga-realm-town.ogg",
-      "realm-field.ogg": "saga-realm-field.ogg",
-      "realm-battle.ogg": "saga-realm-battle.ogg"
-     }
     }
-   ]
+   ],
+   "note": " · W-0359 뒤 웹 ogg 는 shared/audio/bgm 만(판 대상 뺌, K-0176)"
   },
   {
    "id": "patterns",
@@ -911,27 +870,11 @@
    "include": [
     "*.webp"
    ],
-   "note": "K-0087 도감 인물 초상 299(도감 105 + 사가천하 장수 194, 정사각 _s · 카드 _c). 원본은 사가천하 portraits/hero(K-0021·K-0024 로컬 AI, 출처 _ai_provenance.json). 도감 확장(W-0115) 때 다섯 판 같은 초상",
+   "note": "K-0087 도감 인물 초상 299(도감 105 + 사가천하 장수 194, 정사각 _s · 카드 _c). 원본은 사가천하 portraits/hero(K-0021·K-0024 로컬 AI, 출처 _ai_provenance.json). 도감 확장(W-0115) 때 다섯 판 같은 초상 · W-0359 뒤 웹은 shared 한 벌만 읽음(판 대상 뺌, K-0176)",
    "targets": [
     {
      "track": "web",
-     "dir": "saga-web/saga-go/assets/portraits/hero"
-    },
-    {
-     "track": "web",
-     "dir": "saga-web/saga-dungeon/assets/portraits/hero"
-    },
-    {
-     "track": "web",
-     "dir": "saga-web/saga-forest/assets/portraits/hero"
-    },
-    {
-     "track": "web",
-     "dir": "saga-web/saga-story/assets/portraits/hero"
-    },
-    {
-     "track": "web",
-     "dir": "saga-web/saga-realm/assets/portraits/hero"
+     "dir": "saga-web/shared/assets/portraits/hero"
     }
    ]
   },
@@ -1505,11 +1448,15 @@
     "*.glb",
     "*.license.json"
    ],
-   "note": "K-0139 CMU 모캡 클립 12(VRoid 뼈대, 30fps — walk·run·idle·idle_b·turn·sit_stand·pickup·greet·cast·strong·hit·death)",
+   "note": "K-0139 CMU 모캡 클립 12(VRoid 뼈대, 30fps — walk·run·idle·idle_b·turn·sit_stand·pickup·greet·cast·strong·hit·death) · K-0176: 고돗은 clips30(K-0161, G-0282) 도, 웹은 쓰는 mocap 하나만(rename)",
    "targets": [
     {
      "track": "web",
-     "dir": "saga-web/shared/assets/anim"
+     "dir": "saga-web/shared/assets/anim",
+     "rename": {
+      "vroid_mocap_anims.glb": "vroid_mocap_anims.glb",
+      "vroid_mocap_anims.license.json": "vroid_mocap_anims.license.json"
+     }
     },
     {
      "track": "godot",
