@@ -222,6 +222,14 @@ namespace Saga.Story.Data
         public static string CastEmoji(string who) => who == "me" ? "🧑" : StoryScenarioData.CastOf(who)?.Emoji ?? "💬";
         public static string LineText(string sceneId, int i) => Loc($"sscen.scene.{sceneId}.{i}", StoryScenarioData.SceneOf(sceneId).Lines[i].Ko);
 
+        /// <summary>tasks U-0165 자동 퀘스트 — 지금 걸음(장이 안 열렸거나 다 봤으면 null). <see cref="HudLine"/> 과 같은 고름.</summary>
+        public static StoryScenarioData.Step CurrentStep()
+        {
+            if (!Enabled) return null;
+            var ch = Current();
+            if (ch == null || !Opened(ch) || ch.Steps.Length == 0) return null;
+            return ch.Steps[_ch == ch.Id ? Math.Min(_step, ch.Steps.Length - 1) : 0];
+        }
         /// <summary>HUD 한 줄 — 이야기가 안 열렸거나 다 봤으면 빈 글(다 본 칭호는 안 보인다).</summary>
         public static string HudLine()
         {

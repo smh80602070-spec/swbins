@@ -215,6 +215,7 @@ namespace Saga.EditorTools
                     if (!PlaytestHurtSignal.Run("PlaytestStorySlice", "st")) { Fail(); return; } // tasks U-0105 "내가 맞았다" 신호 — 진짜 Hurt 번쩍·붉은 숫자·맥박(체력·무적·판 등급 셈 되돌림)
                     if (!PlaytestStoryJust.Run()) { Fail(); return; } // tasks U-0142 회피·저스트 회피(자리·체력·판 등급 셈·저스트 되돌림)
                     if (!PlaytestLifePose.Run("PlaytestStorySlice", "story")) { Fail(); return; } // tasks U-0146 생활 몸짓
+                    if (!PlaytestStoryAutoQuest.Run()) { Fail(); return; } // tasks U-0165 자동 퀘스트 — 복제 잡졸 하나를 걸어가 평타로·멈춤 둘·▶(사명·직업·이야기·자리 되돌림)
                     _enemyIndex = 0;
                     _phase = Phase.TalkNpc;
                     break;

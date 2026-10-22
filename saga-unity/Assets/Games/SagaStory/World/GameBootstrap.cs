@@ -36,6 +36,7 @@ namespace Saga.Story.World
             Saga.Story.UI.StoryPickUi.Install(); // tasks U-0093 레벨업 무예 3택 창(Play 때, 씬 재빌드 없이)
             StoryGatherNode.Install(); // tasks U-0133 들판 채집터 넷 — F·단추로 캐면 채집 등급 경험(Play 때, 씬 재빌드 없이)
             MountField.Install(); // PLAN.md 109-15 탈것·비행 — H 타기·Shift+H 고르기·타기 단추(Play 때, 씬 재빌드 없이)
+            Saga.Story.UI.StoryAutoQuest.Install(); // tasks U-0165 자동 퀘스트 — 목표판 ▶(좌우 걷기·평타·장면 줄 넘김, Play 때)
         }
 
         private void OnDestroy()

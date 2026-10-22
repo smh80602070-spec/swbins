@@ -2246,6 +2246,23 @@
   "note": "D1(U-0164): PlaytestDungeonHeadless autoquest OK(2층 전투방 적 12 치우고 문 밟아 방 0→1 · 체력 낮음 · 손 조작 · ▶) · 나머지 셋 U-0165~0167"
  },
  {
+  "id": "un.st.autoquest",
+  "name": "U-0165 자동 퀘스트 4종횡 — 목표판 ▶ 로 이야기 걸음·사명을 대신(옆보기 좌우 걷기·턱이면 뛰기·돌아서며 평타·장면 줄 넘김), 전직·비경은 직접 하라며 멈춤(웹 W-0338)",
+  "files": [
+   "saga-unity/Assets/Games/SagaStory/UI/StoryAutoQuest.cs",
+   "saga-unity/Assets/SagaCore/AutoQuestHud.cs"
+  ],
+  "tests": [
+   "PlaytestStoryAutoQuest"
+  ],
+  "level": "D1",
+  "verified": "2026-10-22 claude",
+  "fun": {},
+  "ticket": "U-0165",
+  "since": "2026-10-22",
+  "note": "D1(U-0165): PlaytestStorySlice autoquest OK(복제 잡졸 하나 12걸음 걸어가 평타로 처치 · 걸음 종류 표 · 체력 낮음 · 손 조작 · ▶) · 슬라이스 전체 OK · UiLayoutCheck 0"
+ },
+ {
   "id": "un.dg.weapon-swap",
   "name": "U-0131 무기 두 벌 — 바뀐 손 무기를 을(乙)로, G·폰 바꿔 들기 단추로 갑↔을(쿨 1초·첫 타 ×1.15, 웹 W-0281 이식)",
   "files": [

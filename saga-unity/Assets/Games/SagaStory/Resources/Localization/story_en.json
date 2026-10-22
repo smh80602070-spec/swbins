@@ -683,6 +683,17 @@
     { "key": "life.wait", "value": "🌿 Regrowing {0:0}s" },
     { "key": "life.hint", "value": "🌿 Gather (F)" },
     { "key": "life.got", "value": "🌿 Materials +{0}{1} — gathering {2}" },
-    { "key": "life.extra", "value": " (bonus)" }
+    { "key": "life.extra", "value": " (bonus)" },
+    { "key": "aq.scene", "value": "Scene" },
+    { "key": "aq.q_field", "value": "First hunt" },
+    { "key": "aq.q_boss", "value": "The chief's head" },
+    { "key": "aq.manual", "value": "Do it yourself — " },
+    { "key": "aq.talk", "value": "Talking" },
+    { "key": "aq.pick", "value": "Waiting for your pick" },
+    { "key": "aq.side", "value": "Sidestep" },
+    { "key": "aq.wait_talk", "value": "Waiting for the story" },
+    { "key": "aq.wait_foe", "value": "Waiting for foes" },
+    { "key": "aq.walk", "value": "Walking" },
+    { "key": "aq.fight", "value": "Fighting" }
   ]
 }

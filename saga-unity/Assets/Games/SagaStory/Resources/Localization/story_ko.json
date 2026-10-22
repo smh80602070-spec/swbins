@@ -683,6 +683,17 @@
     { "key": "life.wait", "value": "🌿 다시 자라는 중 {0:0}초" },
     { "key": "life.hint", "value": "🌿 캔다 (F)" },
     { "key": "life.got", "value": "🌿 재료 +{0}{1} — 채집 {2}" },
-    { "key": "life.extra", "value": " (덤)" }
+    { "key": "life.extra", "value": " (덤)" },
+    { "key": "aq.scene", "value": "장면" },
+    { "key": "aq.q_field", "value": "첫 사냥" },
+    { "key": "aq.q_boss", "value": "두목의 목" },
+    { "key": "aq.manual", "value": "직접 — " },
+    { "key": "aq.talk", "value": "대화" },
+    { "key": "aq.pick", "value": "고르기 기다림" },
+    { "key": "aq.side", "value": "비켜 감" },
+    { "key": "aq.wait_talk", "value": "이야기 기다림" },
+    { "key": "aq.wait_foe", "value": "적 기다림" },
+    { "key": "aq.walk", "value": "걷는 중" },
+    { "key": "aq.fight", "value": "싸움" }
   ]
 }

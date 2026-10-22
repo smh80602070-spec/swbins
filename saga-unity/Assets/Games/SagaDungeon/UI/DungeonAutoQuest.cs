@@ -58,7 +58,8 @@ namespace Saga.Dungeon.UI
 
         protected override void Toast(string text, float sec) => DialogueLabel.Instance?.Show(text, sec);
 
-        protected override bool CanOffer() => !(DungeonScenarioUi.Instance != null && DungeonScenarioUi.Instance.IsOpen) && !(BlessingUi != null && BlessingUi.IsShowing);
+        protected override bool CanOffer() => !(DungeonScenarioUi.Instance != null && DungeonScenarioUi.Instance.IsOpen) && !(BlessingUi != null && BlessingUi.IsShowing)
+            && !(TrialCardUi.Instance != null && TrialCardUi.Instance.IsOpen);
 
         // ---- 어댑터 ----
 
