@@ -79,6 +79,7 @@
     var S = F.state();
     return !!(F.inCombat && F.inCombat(S, p.x, p.y));
   }
+  function fightOk() { var MC = global.DG.mountCombat; return !!(MC && MC.on()); }   // W-0304 말 위 전투 — 손잡이 go.mountFight 면 탄 채 싸운다
   function busy() {
     var enc = global.DG.encounter, du = global.DG.duel;
     return !!((enc && enc.active) || (du && du.active && du.active()));
@@ -90,7 +91,7 @@
     if (!keyMode()) { return { ok: false, why: 'GPS 판은 실제 걸음이라 탈것이 없다' }; }
     var l = LF();
     if (l && (l.onPole() || l.gliding() || l.airH() > 0 || l.onSky())) { return { ok: false, why: '지금은 탈 수 없다(오르는 중·공중·섬 위)' }; }
-    if (fighting() || busy()) { return { ok: false, why: '싸우는 중엔 못 탄다' }; }
+    if ((fighting() && !fightOk()) || busy()) { return { ok: false, why: '싸우는 중엔 못 탄다' }; }
     var SCb = global.DG.starchart && global.DG.starchart.rideBlock();   // 맨발(성도 규칙, W-0181)
     if (SCb) { return { ok: false, why: SCb }; }
     return { ok: true };
@@ -159,7 +160,7 @@
     if (!keyMode()) { dismount('걸음 판이라 내렸다'); return; }
     var l = LF();
     if (l && (l.onPole() || l.gliding() || l.airH() > 0 || l.onSky())) { dismount('말에서 내렸다'); return; }
-    if (fighting() || busy()) { dismount('싸움이 붙어 내렸다'); return; }
+    if ((fighting() && !fightOk()) || busy()) { dismount('싸움이 붙어 내렸다'); return; }
     if (!isUnlocked(riding)) { dismount(null); }
   }
 

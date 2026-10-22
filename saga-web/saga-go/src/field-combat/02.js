@@ -97,7 +97,7 @@
    * 앞 넓게(3.2m, 앞뒤 내적 −0.2 이상) ×1.3 물리. 콤보는 처음부터. 모자라면 { ok:false, tired:true }
    */
   function heavy(S, px, py) {
-    var m = active(S);
+    var m = active(S); if (global.DG.mountCombat && global.DG.mountCombat.riding()) { return global.DG.mountCombat.charge(S, px, py); }
     if (!m || m.down) { return { ok: false }; }
     var cc = CHARGE_COST() * staSave();
     if (S.stamina < cc) { push(S, { t: 'tired' }); return { ok: false, tired: true }; }
@@ -472,7 +472,7 @@
     if (!m || m.down) { return; }
     var dmg = Math.max(1, Math.round(f.atk * (mul || 1) * (1 - m.def / (m.def + 300)) * (global.DG.starchart ? global.DG.starchart.take() : 1)));   // mul — ⑲-14 공격 차례의 한 수 배수 · 철벽 부대(성도)
     if (S.wardT > 0) { dmg = Math.max(1, Math.round(dmg * S.wardMul)); }   // ⑲-11 맹세·오천의 맹세
-    var rockX = f.el === 'rock' ? Math.round(dmg * 0.3) : 0;   // ⑲-1 짓눌림 — 이것만으로는 안 쓰러진다
+    var rockX = f.el === 'rock' ? Math.round(dmg * 0.3) : 0; if (global.DG.mountCombat) { global.DG.mountCombat.onHurt(); }   // ⑲-1 짓눌림 — 이것만으로는 안 쓰러진다
     S.calmT = 0;
     /* ⑲-1 결정 보호막이 먼저 막는다 — 다 막으면 원소 효과도 없다 */
     var G = S.guard, absorbed = 0;

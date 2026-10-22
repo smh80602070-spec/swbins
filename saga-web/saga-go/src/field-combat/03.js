@@ -397,7 +397,7 @@
   global.DG = global.DG || {};
   if (global.DG.fieldGrab) { global.DG.fieldGrab.bind({ K: K, KDV: function () { return KDV; }, FOES: FOES, KB_T: KB_T, active: active, nearestFoe: nearestFoe, foesWithin: foesWithin, hitFoe: hitFoe, push: push }); } global.DG.fieldCombat = {   // W-0277 잡기(field-grab.js)에 속 함수를 넘긴다
     EL: EL, anim2d: anim2d, _handle: handle, FOES: FOES, ROT: ROT, SHADOW_BACK: SHADOW_BACK, RIFT_STEP: RIFT_STEP, RIFT_SLOPE: RIFT_SLOPE, riftOk: riftOk, SIEGE_PULL: SIEGE_PULL, tideMarks: tideMarks, markHit: markHit, foeAtk: foeAtk, KB_T: KB_T, knock: knock, rainFollow: rainFollow, THEMES: THEMES, ELITES: ELITES, ERA_THEMES: ERA_THEMES, ERA_ELITES: ERA_ELITES, eraOfCamp: eraOfCamp, CELL: CELL, ENERGY_MAX: ENERGY_MAX,
-    SKILL_CD: SKILL_CD, numPlace: numPlace, wpnSlot: wpnSlot, wpnMs: wpnMs, SWAP_CD: SWAP_CD, BODY: BODY, separate: separate, DODGE_COST: DODGE_COST, VAPOR_MUL: VAPOR_MUL,
+    SKILL_CD: SKILL_CD, numPlace: numPlace, foesWithin: foesWithin, push: push, KDVf: function () { return KDV; }, wpnSlot: wpnSlot, wpnMs: wpnMs, SWAP_CD: SWAP_CD, BODY: BODY, separate: separate, DODGE_COST: DODGE_COST, VAPOR_MUL: VAPOR_MUL,
     /* 판정 층 — 화면 없이 굴린다(자가진단이 쓰는 문) */
     elementOf: elementOf, EL_KEYS: EL_KEYS, heavy: heavy, plunge: plunge, plungeMul: plungeMul, plungeLand: plungeLand, PLUNGE_R: PLUNGE_R(), CHARGE_COST: CHARGE_COST(), REACT: REACT, attaches: attaches, shapeOf: shapeOf, SHAPES: SHAPES, kitFor: kitFor, segDist: segDist, react: react, shieldMul: shieldMul, campAt: campAt, tierAt: tierAt, guardianAt: guardianAt, COUNTER: COUNTER,
     autoThreat: autoThreat, create: create, reparty: reparty, populate: populate, spawnCamp: spawnCamp, step: step, drain: drain,

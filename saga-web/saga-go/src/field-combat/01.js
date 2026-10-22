@@ -733,7 +733,7 @@
     var emB = (1 + (m.em || 0) / 300) * (m.reactMul || 1) * (1 + (m.rxAll || 0));   // ⑲-4 깨달음 2 · ⑲-5 무기 반응 효과
     if (S.loreT > 0) { emB *= S.loreMul; }                            // ⑲-15 옛 글자 풀이 — 명단 반응 피해
     var mul = f.stun > 0 ? STUN_MUL() : 1;
-    raw *= talentMul(m, src);
+    raw *= talentMul(m, src); if (global.DG.mountCombat) { raw *= global.DG.mountCombat.hitMul(src); }
     if (S.rallyT > 0 && src !== 'test') { raw *= S.rallyMul; }        // ⑲-11 군기·학날개 진
     if (f.markT > 0 && src !== 'test') { raw *= f.markMul || 1; }     // ⑲-15 그림자 걸음 표식 — 누구에게든
     /* ⑲-5 — 피해 보너스(원소/물리 + 무기 효과 + 세트 4, 더하기)·치명타. 출처가 인물의 한 방일 때만 */
@@ -828,7 +828,7 @@
 
   /** 기본 공격 — 3타 사슬(0.9·1.0·1.5). 사거리 밖이면 6m 안의 적에게 파고든다 */
   function attack(S, px, py) {
-    var m = active(S);
+    var m = active(S); if (global.DG.mountCombat && global.DG.mountCombat.blockMelee()) { return { ok: false, mounted: true }; }
     if (!m || m.down || S.atkCd > 0) { return { ok: false }; }
     /* ⑲-5 무기 종류마다 모양 — 칼은 옛 3타(사거리 손잡이 그대로), 서책·활은 멀리 하나(파고들지 않는다) */
     var kit = m.kit || SWORD_KIT, reach = kit === SWORD_KIT || m.wtype === 'sword' ? REACH() : kit.reach, tgt;

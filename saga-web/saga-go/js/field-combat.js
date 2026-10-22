@@ -733,7 +733,7 @@
     var emB = (1 + (m.em || 0) / 300) * (m.reactMul || 1) * (1 + (m.rxAll || 0));   // ⑲-4 깨달음 2 · ⑲-5 무기 반응 효과
     if (S.loreT > 0) { emB *= S.loreMul; }                            // ⑲-15 옛 글자 풀이 — 명단 반응 피해
     var mul = f.stun > 0 ? STUN_MUL() : 1;
-    raw *= talentMul(m, src);
+    raw *= talentMul(m, src); if (global.DG.mountCombat) { raw *= global.DG.mountCombat.hitMul(src); }
     if (S.rallyT > 0 && src !== 'test') { raw *= S.rallyMul; }        // ⑲-11 군기·학날개 진
     if (f.markT > 0 && src !== 'test') { raw *= f.markMul || 1; }     // ⑲-15 그림자 걸음 표식 — 누구에게든
     /* ⑲-5 — 피해 보너스(원소/물리 + 무기 효과 + 세트 4, 더하기)·치명타. 출처가 인물의 한 방일 때만 */
@@ -828,7 +828,7 @@
 
   /** 기본 공격 — 3타 사슬(0.9·1.0·1.5). 사거리 밖이면 6m 안의 적에게 파고든다 */
   function attack(S, px, py) {
-    var m = active(S);
+    var m = active(S); if (global.DG.mountCombat && global.DG.mountCombat.blockMelee()) { return { ok: false, mounted: true }; }
     if (!m || m.down || S.atkCd > 0) { return { ok: false }; }
     /* ⑲-5 무기 종류마다 모양 — 칼은 옛 3타(사거리 손잡이 그대로), 서책·활은 멀리 하나(파고들지 않는다) */
     var kit = m.kit || SWORD_KIT, reach = kit === SWORD_KIT || m.wtype === 'sword' ? REACH() : kit.reach, tgt;
@@ -964,7 +964,7 @@
    * 앞 넓게(3.2m, 앞뒤 내적 −0.2 이상) ×1.3 물리. 콤보는 처음부터. 모자라면 { ok:false, tired:true }
    */
   function heavy(S, px, py) {
-    var m = active(S);
+    var m = active(S); if (global.DG.mountCombat && global.DG.mountCombat.riding()) { return global.DG.mountCombat.charge(S, px, py); }
     if (!m || m.down) { return { ok: false }; }
     var cc = CHARGE_COST() * staSave();
     if (S.stamina < cc) { push(S, { t: 'tired' }); return { ok: false, tired: true }; }
@@ -1339,7 +1339,7 @@
     if (!m || m.down) { return; }
     var dmg = Math.max(1, Math.round(f.atk * (mul || 1) * (1 - m.def / (m.def + 300)) * (global.DG.starchart ? global.DG.starchart.take() : 1)));   // mul — ⑲-14 공격 차례의 한 수 배수 · 철벽 부대(성도)
     if (S.wardT > 0) { dmg = Math.max(1, Math.round(dmg * S.wardMul)); }   // ⑲-11 맹세·오천의 맹세
-    var rockX = f.el === 'rock' ? Math.round(dmg * 0.3) : 0;   // ⑲-1 짓눌림 — 이것만으로는 안 쓰러진다
+    var rockX = f.el === 'rock' ? Math.round(dmg * 0.3) : 0; if (global.DG.mountCombat) { global.DG.mountCombat.onHurt(); }   // ⑲-1 짓눌림 — 이것만으로는 안 쓰러진다
     S.calmT = 0;
     /* ⑲-1 결정 보호막이 먼저 막는다 — 다 막으면 원소 효과도 없다 */
     var G = S.guard, absorbed = 0;
@@ -2388,7 +2388,7 @@
   global.DG = global.DG || {};
   if (global.DG.fieldGrab) { global.DG.fieldGrab.bind({ K: K, KDV: function () { return KDV; }, FOES: FOES, KB_T: KB_T, active: active, nearestFoe: nearestFoe, foesWithin: foesWithin, hitFoe: hitFoe, push: push }); } global.DG.fieldCombat = {   // W-0277 잡기(field-grab.js)에 속 함수를 넘긴다
     EL: EL, anim2d: anim2d, _handle: handle, FOES: FOES, ROT: ROT, SHADOW_BACK: SHADOW_BACK, RIFT_STEP: RIFT_STEP, RIFT_SLOPE: RIFT_SLOPE, riftOk: riftOk, SIEGE_PULL: SIEGE_PULL, tideMarks: tideMarks, markHit: markHit, foeAtk: foeAtk, KB_T: KB_T, knock: knock, rainFollow: rainFollow, THEMES: THEMES, ELITES: ELITES, ERA_THEMES: ERA_THEMES, ERA_ELITES: ERA_ELITES, eraOfCamp: eraOfCamp, CELL: CELL, ENERGY_MAX: ENERGY_MAX,
-    SKILL_CD: SKILL_CD, numPlace: numPlace, wpnSlot: wpnSlot, wpnMs: wpnMs, SWAP_CD: SWAP_CD, BODY: BODY, separate: separate, DODGE_COST: DODGE_COST, VAPOR_MUL: VAPOR_MUL,
+    SKILL_CD: SKILL_CD, numPlace: numPlace, foesWithin: foesWithin, push: push, KDVf: function () { return KDV; }, wpnSlot: wpnSlot, wpnMs: wpnMs, SWAP_CD: SWAP_CD, BODY: BODY, separate: separate, DODGE_COST: DODGE_COST, VAPOR_MUL: VAPOR_MUL,
     /* 판정 층 — 화면 없이 굴린다(자가진단이 쓰는 문) */
     elementOf: elementOf, EL_KEYS: EL_KEYS, heavy: heavy, plunge: plunge, plungeMul: plungeMul, plungeLand: plungeLand, PLUNGE_R: PLUNGE_R(), CHARGE_COST: CHARGE_COST(), REACT: REACT, attaches: attaches, shapeOf: shapeOf, SHAPES: SHAPES, kitFor: kitFor, segDist: segDist, react: react, shieldMul: shieldMul, campAt: campAt, tierAt: tierAt, guardianAt: guardianAt, COUNTER: COUNTER,
     autoThreat: autoThreat, create: create, reparty: reparty, populate: populate, spawnCamp: spawnCamp, step: step, drain: drain,

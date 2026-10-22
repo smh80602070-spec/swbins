@@ -1739,5 +1739,30 @@
   "ticket": "W-0297",
   "since": "2026-10-22",
   "note": "10-22: 3D 표시는 없음(웹 3D 는 에셋 배선만 — 10-19 방향) · save.rest = { lit, at, atXY } 새 칸(없으면 빈 것)"
+ },
+ {
+  "id": "go.mountCombat",
+  "name": "말 위 전투(W-0304) — 싸움이 붙어도 안 내림 · 지상 탈것 위 평타 피해 ×(1+0.5×빠르기 비율) · 강공격 키 = 돌진(둘레 적 ×1.6 피해 + 넘어뜨림, 쿨 6초) · 탄 채 맞으면 낙마(0.8초 평타 막힘) · 날면 평타 막힘(원소 기술만) · 포획은 조우 때 내림(그대로) · 손잡이 go.mountFight",
+  "files": [
+   "js/mount-combat.js",
+   "js/mount.js",
+   "src/field-combat/01.js",
+   "src/field-combat/02.js",
+   "src/field-combat/03.js",
+   "js/game.js"
+  ],
+  "tests": [
+   "test-web W-0304 말 위 전투",
+   "탈것 ⑲-61·⑲-62(go.mountFight 0 옛 길)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {
+   "B": "이동하며 싸움",
+   "C": "돌진 손맛"
+  },
+  "ticket": "W-0304",
+  "since": "2026-10-22",
+  "note": "10-22: 1만리 2D 는 탄 말 몸을 안 그림(기존) — 화면 확인은 3D 또는 다음 2D 말 표시 · 3D pose 연결 없음"
  }
 ]

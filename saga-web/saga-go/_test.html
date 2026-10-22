@@ -135,6 +135,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/landmark3d.js"></script>
 <script src="js/landform.js"></script>
 <script src="js/mount.js"></script>
+<script src="js/mount-combat.js"></script>
 <script src="js/world-terrain.js"></script>
 <script src="js/world.js"></script>
 <script src="js/field2d.js"></script>
@@ -16237,6 +16238,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
     t('탈것 ⑲-61 — 저절로 내림: GPS 판 · 뛰기(점프 = 내리기만) · 섬 위 · 싸움이 붙으면(그동안 못 탐) · 손잡이', function () {
       var MT = DG.mount, W0 = DG.world, LF = DG.landform, FC = DG.fieldCombat, r = {}, lv0 = C.save.player.level, mount0 = C.save.mount;
       try {
+        C.setTune('go.mountFight', 0);   /* W-0304 말 위 전투가 기본 — 이 진단은 옛 "싸움이 붙으면 내림" 길을 본다 */
         MT._resetForTest(); delete C.save.mount; LF._resetForTest(); FC._resetForTest();
         C.save.player.level = 30;
         FC.tick(0.05);
@@ -16268,6 +16270,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         /* 손잡이 — 끄면 탄 채로도 내린다 */
         C.setTune('mount.on', 0); MT.step(1); r.knob = !MT.active() && MT.speedMul() === 1;
       } finally {
+        C.setTune('go.mountFight', null);
         C.setTune('mount.on', null); DG.world = W0; LF._resetForTest(); FC._resetForTest(); MT._resetForTest(); C.save.player.level = lv0;
         if (mount0 === undefined) { delete C.save.mount; } else { C.save.mount = mount0; }
       }
@@ -16326,6 +16329,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
     t('탈것 ⑲-62 — 비행 제한: 이야기 임무 단계(오르기·섬·배·따라가기·쫓기·보스·지키기·무리)에선 못 오르고 떠 있으면 천천히 내려 내림 · 대화 등은 허용 · 싸움이 붙으면 그 자리서 내림 · GPS 판이면 내림', function () {
       var rig = stRig(40), MT = DG.mount, ST = rig.ST, W0 = DG.world, FC = DG.fieldCombat, r = {}, mount0 = C.save.mount, pets0 = C.save.dex && C.save.dex.pets ? JSON.stringify(C.save.dex.pets) : null;
       try {
+        C.setTune('go.mountFight', 0);   /* W-0304 말 위 전투가 기본 — 이 진단은 옛 "싸움이 붙으면 내림" 길을 본다 */
         MT._resetForTest(); delete C.save.mount; FC._resetForTest(); FC.tick(0.05);
         if (C.save.dex && C.save.dex.pets) { MT.MOUNTS.forEach(function (m) { delete C.save.dex.pets[m.pet]; }); }
         /* 단계 종류별로 하나씩 찾는다 */
@@ -16366,6 +16370,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         r.geo = !MT.active() && MT.altitude() === 0;
         DG.world = W0;
       } finally {
+        C.setTune('go.mountFight', null);
         DG.world = W0; FC._resetForTest(); MT._resetForTest(); rig.undo();
         if (mount0 === undefined) { delete C.save.mount; } else { C.save.mount = mount0; }
         if (pets0 !== null) { C.save.dex.pets = JSON.parse(pets0); }
@@ -17410,6 +17415,19 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var P0 = { x: 0, y: 0 }, uv = Wd._spreadUV([{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 2 }], P0, 1), mn = 1e9;   /* 나와 같은 자리에 선 셋 — 화면에서 벌어짐 */
       for (i = 0; i < 3; i++) { mn = Math.min(mn, Math.hypot(uv[i].u, uv[i].v * 1.6)); for (var j = i + 1; j < 3; j++) { mn = Math.min(mn, Math.hypot(uv[i].u - uv[j].u, (uv[i].v - uv[j].v) * 1.6)); } }
       return mn > 15 || ('실패 벌림 ' + mn.toFixed(1));
+    });
+    t('W-0304 말 위 전투 — 달릴수록 평타 피해 · 돌진은 둘레 적을 쳐 넘기고 6초 쿨 · 탄 채 맞으면 낙마(0.8초 평타 막힘) · 날면 평타 막힘', function () {
+      var MC = DG.mountCombat, FC = DG.fieldCombat, keepMT = DG.mount, fly = false, downed = 0; if (!MC || !FC) { return '실패 DG.mountCombat 없음'; }
+      DG.mount = { active: function () { return true; }, flying: function () { return fly; }, dismount: function () { downed++; return true; } };
+      try {
+        MC._set({ spd: 0, vmax: 10, cd: 0, fallenUntil: 0 }); var h0 = MC.hitMul('basic'); MC._set({ spd: 10 }); var h1 = MC.hitMul('basic'), hs = MC.hitMul('skill');
+        if (!(h0 === 1 && Math.abs(h1 - 1.5) < 1e-9 && hs === 1)) { return '실패 피해 ' + h0 + ' ' + h1 + ' ' + hs; }
+        var S = fcState(), f = fcFoe(S, 'rex', 0.5, 0), hp0 = f.hp, c1 = MC.charge(S, 0, 0), c2 = MC.charge(S, 0, 0);
+        if (!c1.ok || c1.n < 1 || !(f.hp < hp0) || !(f.stun >= 1) || c2.ok || !(c2.cd > 5)) { return '실패 돌진 ' + JSON.stringify({ c1: c1, c2: c2, hp0: hp0, hp: f.hp, stun: f.stun }); }
+        var fell = MC.onHurt(), blk = MC.blockMelee();
+        MC._set({ fallenUntil: 0 }); fly = true; var blkFly = MC.blockMelee(), hFly = MC.hitMul('basic'); fly = false;
+        return (fell && downed === 1 && blk && blkFly && hFly === 1) || ('실패 낙마·비행 ' + JSON.stringify({ fell: fell, downed: downed, blk: blk, blkFly: blkFly, hFly: hFly }));
+      } finally { DG.mount = keepMT; MC._set({ cd: 0, fallenUntil: 0, spd: 0 }); }
     });
     t('W-0372 2D 나무 — 숲 칸 나무는 땅 단계에서 빠져 깊이 줄(tall)로 · 줄기 상자로 걷기 막음 · 손잡이 go.propDepth·go.treeBlock 0 이면 옛', function () {
       var F = DG.field2d; if (!F || !F.treeRects || !F.tall) { return '실패 field2d.treeRects·tall 없음'; }
