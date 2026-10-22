@@ -1,22 +1,11 @@
 {
  "id": "go_grass",
- "generator": "tools/ai-art/gen.py",
- "model": "sd_xl_base_1.0",
- "model_license": "CreativeML OpenRAIL++-M",
- "prompt": "seamless tileable ground texture swatch, flat orthographic material, hand painted game texture, even lighting, no objects, lush green grass ground, small clover leaves, even lighting",
- "negative_prompt": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality",
- "seed": 20261263,
- "steps": 30,
- "cfg_scale": 6.5,
- "sampler": "Euler a",
- "size": [
-  640,
-  640
- ],
- "seconds": 77.8,
- "date": "2026-10-02",
- "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
- "derived": "tools/ai-art/make_seamless.py (오프셋 + 가장자리 크로스페이드)",
- "tile_method": "crossfade",
- "px": 256
+ "generator": "tools/ai-art/ground_tile.py",
+ "model": "",
+ "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+ "derived": "주기 사인 합 얼룩 + 감싼 점 찍기(풀잎 획) — 256 주기 이음매 없음, 색은 옛 SD 타일 평균에서",
+ "note": "1만리 풀 — 짧은 풀잎 얼룩(비늘 반복 무늬를 바꿈) · K-0162 SD 타일(가로 줄무늬)을 바꿈",
+ "px": 256,
+ "date": "2026-10-22",
+ "ticket": "K-0171"
 }

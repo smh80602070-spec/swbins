@@ -39,8 +39,10 @@ SPEC = {
     'go_stone': ('stone', 17906, '1만리 돌바닥 — 크고 작은 판석'),
     'realm_stone': ('stone', 17907, '5천하 돌바닥 — 조금 더 큰 판석'),
     'go_water': ('water', 17901, '1만리 물 — 청록 물(water_tile)'),
+    'go_grass': ('grass', 17908, '1만리 풀 — 짧은 풀잎 얼룩(비늘 반복 무늬를 바꿈)'),
 }
 TICKET = {'sand': 'K-0179', 'stone': 'K-0179', 'water': 'K-0179'}
+GRASS_BLOT = {'go_grass': 0.12}   # 큰 얼룩 세기 — 1만리는 칸이 작게 보여 칸마다 짙은 얼룩이 격자로 읽힘(K-0179)
 STONE = {'go_stone': 7, 'realm_stone': 6}       # 한 변 칸 수(감싼 보로노이 씨앗 격자)
 
 
@@ -118,7 +120,7 @@ def grass(name, seed):
     mean, dark, light = palette(name)
     rng = np.random.default_rng(seed)
     blot = periodic_noise2(seed, terms=((1, 1.0), (2, 0.8), (3, 0.5), (5, 0.3)))
-    t = np.clip(0.5 + 0.35 * blot, 0, 1)[..., None]
+    t = np.clip(0.5 + GRASS_BLOT.get(name, 0.35) * blot, 0, 1)[..., None]
     rgb = mean * 0.95 + (dark - mean) * 0.5 * (1 - t) + (light - mean) * 0.35 * t
     acc = np.zeros((N, N), np.float32)
     for _ in range(3400):                                                            # 풀잎: 짧은 기울어진 획(아래 어둡고 끝 밝게)
