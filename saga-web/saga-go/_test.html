@@ -17386,6 +17386,20 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var d1 = M.stepDust(dc, { x: 0, y: 0, clip: 'walk', stride: 0.52 }, 60), d2 = M.stepDust(dc, { x: 0, y: 0, clip: 'walk', stride: 0.3 }, 60), d3 = M.stepDust(dc, { x: 0, y: 0, clip: 'idle', stride: 0.02 }, 60);
       return (d1 === 2 && d2 === 0 && d3 === 0) || ('실패 발 먼지 ' + d1 + ' ' + d2 + ' ' + d3);
     });
+    t('W-0369 첫 화면 붐빔 — 내 둘레 120m 안 짐승·사람 각 ≤ go.nearCap(4) · 생성 거리 25~320m · 데미지·스킬 글자 사각형 안 겹침(0.9초 지나면 제자리) · 나와 겹쳐 선 사람은 화면에서 벌림', function () {
+      var Wd = DG.world, FC = DG.fieldCombat; if (!Wd || !Wd._makeSpawn || !FC || !FC.numPlace) { return '실패 _makeSpawn·numPlace 없음'; }
+      var arr = Wd.spawns, keep = arr.slice(), pos = DG.core.save.player.pos, near = { hero: 0, pet: 0 }, bad = 0, i, s, d;
+      arr.length = 0;
+      for (i = 0; i < 200; i++) { s = Wd._makeSpawn(); arr.push(s); d = Math.hypot(s.x - pos.x, s.y - pos.y); if (d < 24.9 || d > 320.1) { bad++; } if (d < 120) { near[s.kind]++; } }
+      arr.length = 0; for (i = 0; i < keep.length; i++) { arr.push(keep[i]); }
+      if (bad || near.hero > 4 || near.pet > 4) { return '실패 생성 ' + bad + ' ' + JSON.stringify(near); }
+      var L = [], y1 = FC.numPlace(L, 100, 100, 60, 20, 0), y2 = FC.numPlace(L, 110, 100, 90, 22, 50), y3 = FC.numPlace(L, 100, 100, 60, 20, 2000);
+      var over = Math.abs(110 - 100) * 2 < 60 + 90 && Math.abs(y2 - y1) * 2 < 20 + 22;
+      if (!(!over && y2 < y1 && y3 === 100)) { return '실패 글자 ' + y1 + ' ' + y2 + ' ' + y3; }
+      var P0 = { x: 0, y: 0 }, uv = Wd._spreadUV([{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 2 }], P0, 1), mn = 1e9;   /* 나와 같은 자리에 선 셋 — 화면에서 벌어짐 */
+      for (i = 0; i < 3; i++) { mn = Math.min(mn, Math.hypot(uv[i].u, uv[i].v * 1.6)); for (var j = i + 1; j < 3; j++) { mn = Math.min(mn, Math.hypot(uv[i].u - uv[j].u, (uv[i].v - uv[j].v) * 1.6)); } }
+      return mn > 15 || ('실패 벌림 ' + mn.toFixed(1));
+    });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

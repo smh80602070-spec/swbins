@@ -1639,5 +1639,24 @@
   "ticket": "W-0368",
   "since": "2026-10-22",
   "note": "10-22: 손잡이 셋 0/1 이면 옛 그림 · setTone 은 판 연결 안 함(어둠 막이 이미 몸 위)"
+ },
+ {
+  "id": "go.firstview",
+  "name": "1만리 첫 화면 붐빔(W-0369) — 생성 거리 넓이 고르게·내 둘레 120m 짐승·사람 각 ≤4(go.nearCap) · 나와 겹쳐 선 사람 화면에서 46px 벌림(go.spreadPx) · 처음 10초 머리 위 ▼(go.meArrowMs) · 데미지·스킬 글자 자리 나눔(numPlace)",
+  "files": [
+   "src/world/01.js",
+   "src/world/02.js",
+   "src/field-combat/03.js"
+  ],
+  "tests": [
+   "test-web W-0369 첫 화면 붐빔",
+   "pw-2d-cmp w369c"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0369",
+  "since": "2026-10-22",
+  "note": "10-22: 생성 수·경험치 그대로(자리만) · 동행 줄은 2D 에 동행 몸이 없어 해당 없음"
  }
 ]

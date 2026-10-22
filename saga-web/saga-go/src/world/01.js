@@ -654,11 +654,11 @@
   function makeSpawn() {
     var pos = core.save.player.pos;
     var ang = Math.random() * Math.PI * 2;
-    var dist = SPAWN_MIN + Math.random() * (SPAWN_RADIUS - SPAWN_MIN);   // W-0174 70 → 25 — 기본 확대에서 하나쯤은 보이게
+    var dist = Math.sqrt(SPAWN_MIN * SPAWN_MIN + Math.random() * (SPAWN_RADIUS * SPAWN_RADIUS - SPAWN_MIN * SPAWN_MIN));   // W-0174 70 → 25 — 기본 확대에서 하나쯤은 보이게 · W-0369 반경 고르게 → 넓이 고르게(예전엔 가운데가 r 에 반비례로 빽빽 — 첫 화면에 짐승·사람이 몰렸다)
     /* 비 오는 날은 짐승이, 바람 부는 날은 사람이 더 많다 */
     var wb = global.DG.weather ? global.DG.weather.heroBias() : 0;
     var isHero = Math.random() < core.clamp(0.42 + wb, 0.08, 0.9);
-    var rar = rarityRoll();
+    var rar = rarityRoll(), nc = nearCap(); if (dist < NEAR_R && nearCount(pos, isHero ? 'hero' : 'pet') >= nc) { dist = NEAR_R + Math.random() * (SPAWN_RADIUS - NEAR_R); }   // W-0369 내 둘레 120m 안 짐승·사람 따로 상한(go.nearCap 4) — 수는 그대로, 자리만 밖으로
     var sx = pos.x + Math.cos(ang) * dist;
     var sy = pos.y + Math.sin(ang) * dist;
     var region = genRegionAt(sx, sy), ref = isHero ? pickHero(rar, region) : pickPet(rar, region), SPf = global.DG.sprite;
@@ -680,7 +680,7 @@
   }
 
   /** 지금 깔아 둘 대상 수 — 향(🕯️)을 피우면 늘어난다 */
-  function maxSpawns() {
+  var NEAR_R = 120; function nearCap() { return Math.max(0, +core.tuned('go.nearCap', 4)); } function nearCount(pos, kind) { var n = 0; for (var i = 0; i < spawns.length; i++) { if (spawns[i].kind === kind && Math.hypot(spawns[i].x - pos.x, spawns[i].y - pos.y) < NEAR_R) { n++; } } return n; }   /* W-0369 */ function maxSpawns() {
     var lure = global.DG.bag && global.DG.bag.lured();
     var few = global.DG.weather && global.DG.weather.fewer();
     return Math.round(Math.max(4, MAX_SPAWNS + (lure ? 6 : 0) - (few ? 3 : 0)) * (global.DG.starchart ? global.DG.starchart.spawn() : 1));   // 큰 그물(성도 규칙) 두 배

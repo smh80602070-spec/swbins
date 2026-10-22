@@ -618,11 +618,11 @@
     var ppl = NP ? NP.live(pos) : [];
     if (global.DG.folk) { ppl = ppl.concat(global.DG.folk.live(pos)); }   // ⑱ 탑 둘레 세 시대 사람
     if (global.DG.story) { ppl = ppl.concat(global.DG.story.live(pos)); }  // ⑲-12 이야기 인물 셋
-    for (var pi = 0; pi < ppl.length; pi++) {
-      (function (n) {
-        var u = (n.x - pos.x) * sc, v = (n.y - pos.y) * sc;
+    var uvs = spreadUV(ppl, pos, sc); for (var pi = 0; pi < ppl.length; pi++) {
+      (function (n, q) {
+        var u = q.u, v = q.v;
         items.push({ v: v, draw: function () { drawNpc(n, u, v, now); } });
-      })(ppl[pi]);
+      })(ppl[pi], uvs[pi]);
     }
 
     // 짐승 (animal.js)
@@ -878,7 +878,7 @@
    * 그냥 여기 사는 사람이다. 그래서 발밑 등급 고리를 안 두르고(그림자만 둔다)
    * 이름표도 흐리게 단다. 가까이 가면 이름이 또렷해진다(말이 걸리는 거리다).
    */
-  function drawNpc(n, u, v, now) {
+  /** W-0369 화면에서만 사람끼리·나와 몸 폭만큼 벌린다(세계 자리·대화 거리 그대로) — 출발 자리에 촌장·상인·역참지기가 나와 한 덩어리로 겹쳐 "나"가 안 보였다. 손잡이 go.spreadPx(0 = 끔) · 나(0,0)는 안 움직임 */ function spreadUV(list, pos, sc) { var out = [], i, j, it, a, b, dx, dy, d, k, m = +core.tuned('go.spreadPx', 46) * bodyK(); for (i = 0; i < list.length; i++) { out.push({ u: (list[i].x - pos.x) * sc, v: (list[i].y - pos.y) * sc }); } if (!(m > 0)) { return out; } for (it = 0; it < 4; it++) { for (i = 0; i < out.length; i++) { a = out[i]; for (j = -1; j < out.length; j++) { if (j === i) { continue; } b = j < 0 ? { u: 0, v: 0 } : out[j]; dx = a.u - b.u; dy = (a.v - b.v) * 1.6; d = Math.hypot(dx, dy); if (d >= m) { continue; } if (d < 0.01) { dx = i % 2 ? 1 : -1; dy = 0.3; d = Math.hypot(dx, dy); } k = (m - d) / d * (j < 0 ? 1 : 0.5); a.u += dx * k; a.v += dy * k / 1.6; } } } return out; } function drawNpc(n, u, v, now) {
     var p = project(u, v);
     if (p.s < 0.25 || p.y < -80 || p.y > geom.H + 80) { return; }
     var z = core.clamp(p.s, 0.5, 1.6) * bodyK();   // W-0204
@@ -966,7 +966,7 @@
     ctx.globalAlpha = 1;
   }
 
-  function drawPlayer(now, sc) {
+  var meT0 = 0; function meArrow(x, y, now) { if (!meT0) { meT0 = now; } var left = +core.tuned('go.meArrowMs', 10000) - (now - meT0); if (!(left > 0)) { return false; } var b = Math.sin(now / 220) * 4, a = Math.min(1, left / 1500); ctx.save(); ctx.globalAlpha = a; ctx.beginPath(); ctx.moveTo(x, y + b); ctx.lineTo(x - 9, y - 12 + b); ctx.lineTo(x + 9, y - 12 + b); ctx.closePath(); ctx.fillStyle = '#7fd0ff'; ctx.fill(); ctx.strokeStyle = 'rgba(10,25,40,0.8)'; ctx.lineWidth = 2; ctx.stroke(); ctx.restore(); return true; }   /* W-0369 "나" — 처음 10초 머리 위 작은 화살표(go.meArrowMs) — 사람 사이에서 나를 못 찾았다 */ function drawPlayer(now, sc) {
     var X = geom.cx, Y = geom.cy;
     var sp = global.DG.sprite;
     var moving = player.speed > 1.5;
@@ -1006,7 +1006,7 @@
     ctx.fill();
     ctx.strokeStyle = 'rgba(120,200,255,0.75)';
     ctx.lineWidth = 2;
-    ctx.stroke();
+    ctx.stroke(); meArrow(X, Y - 62 * bodyK(), now);
 
     if (!(global.DG.actor2d && global.DG.actor2d.human(ctx, lead, 'player', X, Y, (geom.mode === 2 ? 1.5 : 1.25) * bodyK(), { facing: player.facing, dirX: player.dirX, dirY: player.dirY, moving: moving, phase: player.phase, now: now, wx: core.save.player.pos.x, wy: core.save.player.pos.y, ppu: sc || scale() }))) sp.stamp(ctx, {
       kind: 'human', ref: lead, key: lead ? null : 'player',
@@ -1035,7 +1035,7 @@
     REGION_SIZE: REGION_SIZE, ENCOUNTER_RANGE: ENCOUNTER_RANGE,
     init: function (objEl, groundEl) { initCanvas(objEl, groundEl); bindKeys(); tickSpawns(); },
     update: function (dt) { moveByKeys(dt); updatePlayerMotion(dt); wanderSpawns(dt); tickSpawns(); },
-    draw: draw, resize: resize, layoutLabels: layoutLabels, _makeSpawn: makeSpawn, _landTex2D: function () { return LAND_TEX_VARIANTS; },   // W-0144·W-0152·W-0154 진단
+    draw: draw, resize: resize, layoutLabels: layoutLabels, _makeSpawn: makeSpawn, _spreadUV: spreadUV, _landTex2D: function () { return LAND_TEX_VARIANTS; },   // W-0144·W-0152·W-0154 진단
     get spawns() { return spawns; },
     removeSpawn: removeSpawn,
     nearest: nearest, maxSpawns: maxSpawns, MAX_SPAWNS: MAX_SPAWNS, spawnSpecial: spawnSpecial,

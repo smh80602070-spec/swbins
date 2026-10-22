@@ -167,16 +167,16 @@
     return { x: (v.x + 1) / 2 * global.innerWidth, y: (1 - v.y) / 2 * global.innerHeight };
   }
 
-  function floatNum(x, y, text, el, scale, bold, mine) {
+  /* W-0369 글자 자리 나눔 — 0.9초 안에 뜬 글자 사각형과 겹치면 위로 민다(붙어 싸우면 "183" 과 "불꽃 돌진" 이 한 자리에 겹쳤다). 순수 — list [{x,y,w,h,t}] 를 제자리에서 갈고 담는다 */ function numPlace(list, x, y, w, h, now) { var i, r, hit = true, k = 0; for (i = list.length - 1; i >= 0; i--) { if (now - list[i].t > 900) { list.splice(i, 1); } } while (hit && k++ < 8) { hit = false; for (i = 0; i < list.length; i++) { r = list[i]; if (Math.abs(r.x - x) * 2 < r.w + w && Math.abs(r.y - y) * 2 < r.h + h) { y = r.y - (r.h + h) / 2 - 2; hit = true; } } } list.push({ x: x, y: y, w: w, h: h, t: now }); return y; } var numRects = []; function floatNum(x, y, text, el, scale, bold, mine) {
     if (!numLayer || global.DG_NO_DRAW) { return; }
     var p = toScreen(x, y, 2.4) || { x: global.innerWidth / 2 + (Math.random() - 0.5) * 60, y: global.innerHeight * 0.42 };
-    var n = document.createElement('span');
-    n.className = 'fc-num' + (bold ? ' big' : '') + (mine ? ' mine' : '');
+    var n = document.createElement('span'), fz = Math.round(16 * (scale || 1)), nx = Math.round(p.x + (mine && bold ? 0 : (Math.random() - 0.5) * 24)), ny = p.y - (mine && bold ? fz * 2.2 : 0);   /* W-0369 내 몸 위 이름 글자(스킬·강공격·회피)는 한 줄 위 */
+    n.className = 'fc-num' + (bold ? ' big' : '') + (mine ? ' mine' : ''); ny = numPlace(numRects, nx, ny, String(text).length * fz * 0.62 + 6, fz * 1.25, Date.now());
     n.textContent = text;
-    n.style.left = Math.round(p.x + (Math.random() - 0.5) * 24) + 'px';
-    n.style.top = Math.round(p.y) + 'px';
+    n.style.left = nx + 'px';
+    n.style.top = Math.round(ny) + 'px';
     n.style.color = el ? EL[el].color : (mine ? '#ff8080' : '#ffe9a8');
-    n.style.fontSize = Math.round(16 * (scale || 1)) + 'px';
+    n.style.fontSize = fz + 'px';
     numLayer.appendChild(n);
     setTimeout(function () { if (n.parentNode) { n.parentNode.removeChild(n); } }, 900);
   }
@@ -397,7 +397,7 @@
   global.DG = global.DG || {};
   if (global.DG.fieldGrab) { global.DG.fieldGrab.bind({ K: K, KDV: function () { return KDV; }, FOES: FOES, KB_T: KB_T, active: active, nearestFoe: nearestFoe, foesWithin: foesWithin, hitFoe: hitFoe, push: push }); } global.DG.fieldCombat = {   // W-0277 잡기(field-grab.js)에 속 함수를 넘긴다
     EL: EL, anim2d: anim2d, _handle: handle, FOES: FOES, ROT: ROT, SHADOW_BACK: SHADOW_BACK, RIFT_STEP: RIFT_STEP, RIFT_SLOPE: RIFT_SLOPE, riftOk: riftOk, SIEGE_PULL: SIEGE_PULL, tideMarks: tideMarks, markHit: markHit, foeAtk: foeAtk, KB_T: KB_T, knock: knock, rainFollow: rainFollow, THEMES: THEMES, ELITES: ELITES, ERA_THEMES: ERA_THEMES, ERA_ELITES: ERA_ELITES, eraOfCamp: eraOfCamp, CELL: CELL, ENERGY_MAX: ENERGY_MAX,
-    SKILL_CD: SKILL_CD, wpnSlot: wpnSlot, wpnMs: wpnMs, SWAP_CD: SWAP_CD, BODY: BODY, separate: separate, DODGE_COST: DODGE_COST, VAPOR_MUL: VAPOR_MUL,
+    SKILL_CD: SKILL_CD, numPlace: numPlace, wpnSlot: wpnSlot, wpnMs: wpnMs, SWAP_CD: SWAP_CD, BODY: BODY, separate: separate, DODGE_COST: DODGE_COST, VAPOR_MUL: VAPOR_MUL,
     /* 판정 층 — 화면 없이 굴린다(자가진단이 쓰는 문) */
     elementOf: elementOf, EL_KEYS: EL_KEYS, heavy: heavy, plunge: plunge, plungeMul: plungeMul, plungeLand: plungeLand, PLUNGE_R: PLUNGE_R(), CHARGE_COST: CHARGE_COST(), REACT: REACT, attaches: attaches, shapeOf: shapeOf, SHAPES: SHAPES, kitFor: kitFor, segDist: segDist, react: react, shieldMul: shieldMul, campAt: campAt, tierAt: tierAt, guardianAt: guardianAt, COUNTER: COUNTER,
     autoThreat: autoThreat, create: create, reparty: reparty, populate: populate, spawnCamp: spawnCamp, step: step, drain: drain,
