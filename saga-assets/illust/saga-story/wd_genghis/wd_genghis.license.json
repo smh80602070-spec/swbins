@@ -1,7 +1,7 @@
 {
  "id": "wd_genghis",
  "name": "초원패",
- "ticket": "K-0163",
+ "ticket": "K-0178",
  "generator": "tools/ai-art/k163_illust.py + gen.py (ComfyUI, Kaggle 원격)",
  "model": "animagine-xl-4.0-opt",
  "model_license": "CreativeML OpenRAIL++-M",
@@ -10,26 +10,20 @@
   "stand.webp": {
    "model": "animagine-xl-4.0-opt",
    "model_license": "CreativeML OpenRAIL++-M",
-   "seed": 2026102909,
-   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, mint green hair covering one eye, gray and white frilled blouse vest, black ribbon tie, black baggy pants, gray socks, sandals, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
-   "mode": "img2img",
-   "denoise": 0.62,
-   "base_body": "saga-assets/characters/web3d/wd_genghis.glb",
-   "base_license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
-   "date": "2026-10-21",
+   "seed": 2026103009,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, long light brown hair, brown fur hat, mustard yellow scarf, blue silk deel robe with yellow sash, leather riding boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "date": "2026-10-22",
    "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py",
-   "from": "tools/ai-art/_out/k162_illust30/wd_genghis_v02.png"
+   "from": "tools/ai-art/_out/k178_stand/wd_genghis_v02.png"
   },
   "neutral.webp": {
    "model": "animagine-xl-4.0-opt",
    "model_license": "CreativeML OpenRAIL++-M",
    "seed": 2026102207,
-   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, mint green hair covering one eye, gray and white frilled blouse vest, black ribbon tie, black baggy pants, gray socks, sandals, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, long light brown hair, brown fur hat, mustard yellow scarf, blue silk deel robe with yellow sash, leather riding boots, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
    "mode": "img2img",
    "denoise": 0.42,
-   "base_body": "saga-assets/characters/web3d/wd_genghis.glb",
-   "base_license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
-   "date": "2026-10-21",
+   "date": "2026-10-22",
    "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py",
    "from": "tools/ai-art/_out/k163_bust/wd_genghis_v02.png"
   },
@@ -37,12 +31,10 @@
    "model": "animagine-xl-4.0-opt",
    "model_license": "CreativeML OpenRAIL++-M",
    "seed": 2026102280,
-   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, mint green hair covering one eye, gray and white frilled blouse vest, black ribbon tie, black baggy pants, gray socks, sandals, (happy, smile, open mouth:1.3), joyful eyes, upper body, portrait, face focus, looking at viewer, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, long light brown hair, brown fur hat, mustard yellow scarf, blue silk deel robe with yellow sash, leather riding boots, (happy, smile, open mouth:1.3), joyful eyes, upper body, portrait, face focus, looking at viewer, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
    "mode": "img2img",
    "denoise": 0.7,
-   "base_body": "saga-assets/characters/web3d/wd_genghis.glb",
-   "base_license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
-   "date": "2026-10-21",
+   "date": "2026-10-22",
    "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py",
    "from": "tools/ai-art/_out/k163_expr/wd_genghis__happy_v02.png"
   },
@@ -50,29 +42,25 @@
    "model": "animagine-xl-4.0-opt",
    "model_license": "CreativeML OpenRAIL++-M",
    "seed": 2026102279,
-   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, mint green hair covering one eye, gray and white frilled blouse vest, black ribbon tie, black baggy pants, gray socks, sandals, (angry, furrowed brows, glaring:1.3), frown, clenched teeth, v-shaped eyebrows, upper body, portrait, face focus, looking at viewer, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, long light brown hair, brown fur hat, mustard yellow scarf, blue silk deel robe with yellow sash, leather riding boots, (angry, furrowed brows, glaring:1.3), frown, clenched teeth, v-shaped eyebrows, upper body, portrait, face focus, looking at viewer, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
    "mode": "img2img",
    "denoise": 0.7,
-   "base_body": "saga-assets/characters/web3d/wd_genghis.glb",
-   "base_license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
-   "date": "2026-10-21",
+   "date": "2026-10-22",
    "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py",
    "from": "tools/ai-art/_out/k163_expr/wd_genghis__angry_v01.png"
   },
   "sad.webp": {
    "model": "animagine-xl-4.0-opt",
    "model_license": "CreativeML OpenRAIL++-M",
-   "seed": 2026102277,
-   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, mint green hair covering one eye, gray and white frilled blouse vest, black ribbon tie, black baggy pants, gray socks, sandals, (sad, teary eyes, tears:1.3), downturned mouth, worried eyebrows, upper body, portrait, face focus, looking at viewer, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "seed": 2026102278,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, long light brown hair, brown fur hat, mustard yellow scarf, blue silk deel robe with yellow sash, leather riding boots, (sad, teary eyes, tears:1.3), downturned mouth, worried eyebrows, upper body, portrait, face focus, looking at viewer, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
    "mode": "img2img",
    "denoise": 0.7,
-   "base_body": "saga-assets/characters/web3d/wd_genghis.glb",
-   "base_license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
-   "date": "2026-10-21",
+   "date": "2026-10-22",
    "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py",
-   "from": "tools/ai-art/_out/k163_expr/wd_genghis__sad_v01.png"
+   "from": "tools/ai-art/_out/k163_expr/wd_genghis__sad_v02.png"
   }
  },
- "license": "saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · 밑그림 = 자체 3D 몸 렌더(VRoid 샘플 개작 허용)",
+ "license": "saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · txt2img(밑그림 없음, 초상 보고 적은 묘사)",
  "note": "AI 생성 — 저작권 보호가 약하다. 표시 이름은 가명."
 }

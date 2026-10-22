@@ -14,3 +14,4 @@
 - [ ] 10-22 · (K-0179 덤 끝) · 그림만 바뀜: 1만리 go_grass(세로 클로버 반복 → 고른 풀잎) + 풀 이음 쌍 넷 · 웹
 - [ ] 10-22 · (K-0168·0172·0173·0174 끝) · 유니티 셋: ① sg_liubei 새 몸 → CharactersDex(U-0156 길) ② 소품 10 `World/<new id>`·rock_moss_01 → SelfPairs 10줄·재빌드·PolyHaven 지움 ③ UI 스킨 95 + 9-slice .meta `Resources/UI/` ④ 깨지는 조각 `World/<모델>_shard_0~3` 16·`Audio/Sfx/sfx_prop_break*` 4(K-0174, 진단 breakable `대신 False`) — 임포트 확인 · 유니티
 - [ ] 10-22 · (K-0181 끝 알림) · 3마을 가축 그림 옴 — 2D 시트 `saga-forest/assets/sprites2d_sheets/farm_hen`·`farm_goat`(96px·5방향·idle·walk·run·hit, 공장 manifest) · 울타리 `shared/assets/world2d/pen_fence_01`(가로 이음)·`pen_gate_01` · 아이콘 material:egg·milk → fo_egg_g0·fo_milk_g0(itemicon-ids) → livestock.js draw2d 배선·`_test.html` K_WAIT 지움 · 웹 3마을
+- [ ] 10-23 · (K-0178 끝) · W-0371 풀림 — 인물 일러스트 30 다시(초상과 같은 사람, stand·neutral·happy·angry·sad 그대로 이름·자리) 2나락 1·4종횡 16·5천하 13 배치됨 → illust.on 켜도 됨 · 웹

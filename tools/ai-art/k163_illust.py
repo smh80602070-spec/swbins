@@ -326,16 +326,29 @@ def sheet(stage, per=5):
 
 
 # ---------------------------------------------------------------- 포장
-def cutout(im):
+def cutout(im, mode=None):
     """연회녹 바탕 제거 — 모서리 채우기 matte2 만 쓰면 바탕과 비슷한 흰·옅은 머리·옷(백발·연청 후드)이 먹힌다(10-21 시험)
     → u2net 물체 마스크(seg_mask, 로컬 도구 전용)와 matte2 의 합, 가장자리 살짝 조이고 defringe."""
     import numpy as np
     sys.path.insert(0, HERE)
     from matte_util import matte2, defringe
     from seg_mask import object_mask
-    m = object_mask(im)
-    a = np.asarray(matte2(im, tol=26))[..., 3] / 255.0
-    al = np.clip((np.maximum(m, a * (m > 0.05)) - 0.12) / 0.88, 0, 1)
+    sys.path.insert(0, os.path.join(HERE, 'remote3d'))
+    from matte_in import labels
+    if mode == 'flood':                                 # cast cut:"flood" — 옷이 바탕색과 비슷해 u2net 이 몸을 놓칠 때(K-0178 sg_zhugeliang 연두 도포)
+        al = (np.asarray(matte2(im, tol=6))[..., 3] > 127).astype(float)
+        lab, size = labels(al < 0.5)                    # 모서리에 안 닿는 투명 덩어리 = 속 구멍(흰 앞섶) → 메움
+        h, w = al.shape
+        edge = set(np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))) - {0}
+        al[np.isin(lab, [k for k in size if k not in edge])] = 1
+    else:
+        m = object_mask(im)
+        a = np.asarray(matte2(im, tol=26))[..., 3] / 255.0
+        al = np.clip((np.maximum(m, a * (m > 0.05)) - 0.12) / 0.88, 0, 1)                         # 떨어진 작은 조각(창끝·챙 귀퉁이가 표정 인페인트 뒤 홀로 남음, K-0178 sg_lubu) 지움
+    lab, size = labels(al > 0.1)
+    if size:
+        top = max(size.values())
+        al[np.isin(lab, [k for k, n in size.items() if n < top * 0.01])] = 0
     out = im.convert('RGBA')
     out.putalpha(Image.fromarray((al * 255).astype('uint8')))
     return defringe(out)
@@ -361,7 +374,7 @@ def pack(check=False):
         lic = {'id': iid, 'name': x['name'], 'ticket': 'K-0178', 'generator': 'tools/ai-art/k163_illust.py + gen.py (ComfyUI, Kaggle 원격)',
                'model': 'animagine-xl-4.0-opt', 'model_license': 'CreativeML OpenRAIL++-M', 'commercial_use': True, 'files': {}}
         for k, p in srcs.items():
-            cut = cutout(Image.open(p).convert('RGB'))
+            cut = cutout(Image.open(p).convert('RGB'), x.get('cut') if k != 'stand' else None)
             bb = bbox_alpha(cut, 8)
             if k == 'stand':
                 cut = cut.crop((max(0, bb[0] - 12), max(0, bb[1] - 12), min(cut.width, bb[2] + 12), min(cut.height, bb[3] + 12)))

@@ -367,7 +367,7 @@
    "tool": "remote3d",
    "model": "microsoft/TRELLIS-image-large",
    "license": "MIT",
-   "count": 515,
+   "count": 518,
    "where": [
     "saga-assets/creatures3d",
     "saga-assets/pets3d",
@@ -418,7 +418,7 @@
   {
    "tool": "k163_illust.py + gen.py (ComfyUI, Kaggle 원격)",
    "model": "animagine-xl-4.0-opt",
-   "license": "saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · 밑그림 = 자체 3D 몸 렌더(VRoid 샘플 개작 허용)",
+   "license": "saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · txt2img(밑그림 없음, 초상 보고 적은 묘사)",
    "count": 30,
    "where": [
     "saga-assets/illust/saga-dungeon/hl_mukhyang",

@@ -175,6 +175,18 @@
    "seed": 2026102241
   },
   {
+   "id": "sg_zhugeliang",
+   "subject": "1boy, male focus, young adult man, short dark hair, gentle smile, black square scholar cap, long green robe over white inner robe, holding a round feather hand fan, cloth shoes",
+   "subject_ko": "4종횡 스승·5천하 책사 반신",
+   "view": "front",
+   "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
+   "init_image": "tools/ai-art/_out/k163_bust_init/sg_zhugeliang.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768,
+   "seed": 2026102248
+  },
+  {
    "id": "wd_ibnsina",
    "subject": "1boy, male focus, middle-aged man, dark hair, kind stern face, dark brown turban cap, mustard yellow shawl over the shoulders, long deep blue robe with gold pattern, leather shoes",
    "subject_ko": "4종횡 전직 스승 반신",
@@ -247,6 +259,18 @@
    "seed": 2026102290
   },
   {
+   "id": "sg_liubei",
+   "subject": "1boy, male focus, adult man, short dark hair, calm face, black and gold crown with vertical gold bars, green robe with gold shoulder trim, long robe, boots",
+   "subject_ko": "5천하 1막 세력 군주 반신",
+   "view": "front",
+   "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
+   "init_image": "tools/ai-art/_out/k163_bust_init/sg_liubei.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768,
+   "seed": 2026102297
+  },
+  {
    "id": "rf_yuanshu",
    "subject": "1boy, male focus, adult man, short dark brown hair, stern face, white collar, black armor with shoulder plates, dark robe, boots",
    "subject_ko": "5천하 1막 세력 군주 반신",
@@ -293,6 +317,18 @@
    "width": 768,
    "height": 768,
    "seed": 2026102325
+  },
+  {
+   "id": "sg_sunquan",
+   "subject": "1boy, male focus, young adult man, short black hair, stern face, black square official cap with gold pattern, red orange robe with black collar, gold shoulder ornaments, long robe, boots",
+   "subject_ko": "5천하 세력 군주 반신",
+   "view": "front",
+   "extra": "upper body, portrait, face focus, looking at viewer, closed mouth, calm expression",
+   "init_image": "tools/ai-art/_out/k163_bust_init/sg_sunquan.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768,
+   "seed": 2026102332
   },
   {
    "id": "fu_jongwang",

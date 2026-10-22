@@ -18,7 +18,14 @@
    "face_xy": [
     384,
     418
-   ]
+   ],
+   "bust_pick": "hl_mukhyang_v01",
+   "expr_pick": {
+    "happy": "hl_mukhyang__happy_v01",
+    "angry": "hl_mukhyang__angry_v02",
+    "sad": "hl_mukhyang__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_lubu",
@@ -37,7 +44,14 @@
    "face_xy": [
     432,
     192
-   ]
+   ],
+   "bust_pick": "sg_lubu_v01",
+   "expr_pick": {
+    "happy": "sg_lubu__happy_v01",
+    "angry": "sg_lubu__angry_v01",
+    "sad": "sg_lubu__sad_v02"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_gyebaek",
@@ -56,7 +70,14 @@
    "face_xy": [
     384,
     290
-   ]
+   ],
+   "bust_pick": "kr_gyebaek_v01",
+   "expr_pick": {
+    "happy": "kr_gyebaek__happy_v01",
+    "angry": "kr_gyebaek__angry_v01",
+    "sad": "kr_gyebaek__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_musashi",
@@ -75,7 +96,14 @@
    "face_xy": [
     384,
     312
-   ]
+   ],
+   "bust_pick": "jp_musashi_v02",
+   "expr_pick": {
+    "happy": "jp_musashi__happy_v01",
+    "angry": "jp_musashi__angry_v01",
+    "sad": "jp_musashi__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_leonidas",
@@ -94,7 +122,14 @@
    "face_xy": [
     364,
     418
-   ]
+   ],
+   "bust_pick": "eu_leonidas_v01",
+   "expr_pick": {
+    "happy": "eu_leonidas__happy_v02",
+    "angry": "eu_leonidas__angry_v02",
+    "sad": "eu_leonidas__sad_v02"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_huangzhong",
@@ -113,7 +148,14 @@
    "face_xy": [
     384,
     305
-   ]
+   ],
+   "bust_pick": "sg_huangzhong_v02",
+   "expr_pick": {
+    "happy": "sg_huangzhong__happy_v02",
+    "angry": "sg_huangzhong__angry_v02",
+    "sad": "sg_huangzhong__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_taishici",
@@ -132,7 +174,14 @@
    "face_xy": [
     384,
     294
-   ]
+   ],
+   "bust_pick": "sg_taishici_v01",
+   "expr_pick": {
+    "happy": "sg_taishici__happy_v01",
+    "angry": "sg_taishici__angry_v01",
+    "sad": "sg_taishici__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_yoshitsune",
@@ -152,7 +201,14 @@
    "face_xy": [
     384,
     285
-   ]
+   ],
+   "bust_pick": "jp_yoshitsune_v02",
+   "expr_pick": {
+    "happy": "jp_yoshitsune__happy_v01",
+    "angry": "jp_yoshitsune__angry_v01",
+    "sad": "jp_yoshitsune__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "wd_genghis",
@@ -171,7 +227,14 @@
    "face_xy": [
     384,
     335
-   ]
+   ],
+   "bust_pick": "wd_genghis_v02",
+   "expr_pick": {
+    "happy": "wd_genghis__happy_v02",
+    "angry": "wd_genghis__angry_v01",
+    "sad": "wd_genghis__sad_v02"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_hanzo",
@@ -190,7 +253,14 @@
    "face_xy": [
     373,
     282
-   ]
+   ],
+   "bust_pick": "jp_hanzo_v01",
+   "expr_pick": {
+    "happy": "jp_hanzo__happy_v01",
+    "angry": "jp_hanzo__angry_v01",
+    "sad": "jp_hanzo__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_ganning",
@@ -209,7 +279,14 @@
    "face_xy": [
     384,
     316
-   ]
+   ],
+   "bust_pick": "sg_ganning_v01",
+   "expr_pick": {
+    "happy": "sg_ganning__happy_v01",
+    "angry": "sg_ganning__angry_v01",
+    "sad": "sg_ganning__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_tomoegozen",
@@ -228,7 +305,14 @@
    "face_xy": [
     384,
     321
-   ]
+   ],
+   "bust_pick": "jp_tomoegozen_v02",
+   "expr_pick": {
+    "happy": "jp_tomoegozen__happy_v01",
+    "angry": "jp_tomoegozen__angry_v01",
+    "sad": "jp_tomoegozen__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "wd_shaka",
@@ -247,7 +331,14 @@
    "face_xy": [
     282,
     328
-   ]
+   ],
+   "bust_pick": "wd_shaka_v02",
+   "expr_pick": {
+    "happy": "wd_shaka__happy_v01",
+    "angry": "wd_shaka__angry_v01",
+    "sad": "wd_shaka__sad_v02"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_himiko",
@@ -266,7 +357,14 @@
    "face_xy": [
     384,
     346
-   ]
+   ],
+   "bust_pick": "jp_himiko_v01",
+   "expr_pick": {
+    "happy": "jp_himiko__happy_v02",
+    "angry": "jp_himiko__angry_v02",
+    "sad": "jp_himiko__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_zhugeliang",
@@ -274,7 +372,22 @@
    "name": "현책",
    "role": "4종횡 스승·5천하 책사",
    "sex": "m",
-   "look": "white hair with long ponytail, hair over one eye, rust brown turtleneck cropped jacket, dark gray trousers, beige shoes"
+   "look": "white hair with long ponytail, hair over one eye, rust brown turtleneck cropped jacket, dark gray trousers, beige shoes",
+   "stand_pick": "sg_zhugeliang_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ],
+   "bust_pick": "sg_zhugeliang_v02",
+   "expr_pick": {
+    "happy": "sg_zhugeliang__happy_v01",
+    "angry": "sg_zhugeliang__angry_v02",
+    "sad": "sg_zhugeliang__sad_v01"
+   },
+   "eye": "o",
+   "cut": "flood"
   },
   {
    "id": "wd_ibnsina",
@@ -294,7 +407,14 @@
    "face_xy": [
     384,
     357
-   ]
+   ],
+   "bust_pick": "wd_ibnsina_v02",
+   "expr_pick": {
+    "happy": "wd_ibnsina__happy_v01",
+    "angry": "wd_ibnsina__angry_v01",
+    "sad": "wd_ibnsina__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_davinci",
@@ -313,7 +433,14 @@
    "face_xy": [
     384,
     361
-   ]
+   ],
+   "bust_pick": "eu_davinci_v01",
+   "expr_pick": {
+    "happy": "eu_davinci__happy_v02",
+    "angry": "eu_davinci__angry_v01",
+    "sad": "eu_davinci__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_caocao",
@@ -332,7 +459,14 @@
    "face_xy": [
     384,
     335
-   ]
+   ],
+   "bust_pick": "sg_caocao_v02",
+   "expr_pick": {
+    "happy": "sg_caocao__happy_v01",
+    "angry": "sg_caocao__angry_v01",
+    "sad": "sg_caocao__sad_v02"
+   },
+   "eye": "o"
   },
   {
    "id": "rf_yuanshao",
@@ -352,7 +486,14 @@
    "face_xy": [
     384,
     312
-   ]
+   ],
+   "bust_pick": "rf_yuanshao_v02",
+   "expr_pick": {
+    "happy": "rf_yuanshao__happy_v01",
+    "angry": "rf_yuanshao__angry_v01",
+    "sad": "rf_yuanshao__sad_v02"
+   },
+   "eye": "o"
   },
   {
    "id": "rf_gongsunzan",
@@ -371,7 +512,14 @@
    "face_xy": [
     362,
     210
-   ]
+   ],
+   "bust_pick": "rf_gongsunzan_v01",
+   "expr_pick": {
+    "happy": "rf_gongsunzan__happy_v01",
+    "angry": "rf_gongsunzan__angry_v01",
+    "sad": "rf_gongsunzan__sad_v02"
+   },
+   "eye": "o"
   },
   {
    "id": "rf_kongrong",
@@ -390,7 +538,14 @@
    "face_xy": [
     384,
     258
-   ]
+   ],
+   "bust_pick": "rf_kongrong_v02",
+   "expr_pick": {
+    "happy": "rf_kongrong__happy_v02",
+    "angry": "rf_kongrong__angry_v02",
+    "sad": "rf_kongrong__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_liubei",
@@ -399,7 +554,21 @@
    "role": "5천하 1막 세력 군주",
    "sex": "m",
    "look": "long straight dark navy blue hair, cyan eyes, gray and white frilled blouse vest, black ribbon tie, black cargo pants, beige boots",
-   "eye_note": "기쁨 약함 △ → k163_fix v01 로 ○"
+   "eye_note": "기쁨 약함 △ → k163_fix v01 로 ○",
+   "stand_pick": "sg_liubei_v01",
+   "face": [
+    383,
+    282,
+    203,
+    159
+   ],
+   "bust_pick": "sg_liubei_v01",
+   "expr_pick": {
+    "happy": "sg_liubei__happy_v01",
+    "angry": "sg_liubei__angry_v01",
+    "sad": "sg_liubei__sad_v02"
+   },
+   "eye": "o"
   },
   {
    "id": "rf_yuanshu",
@@ -418,7 +587,14 @@
    "face_xy": [
     384,
     280
-   ]
+   ],
+   "bust_pick": "rf_yuanshu_v01",
+   "expr_pick": {
+    "happy": "rf_yuanshu__happy_v01",
+    "angry": "rf_yuanshu__angry_v01",
+    "sad": "rf_yuanshu__sad_v02"
+   },
+   "eye": "o"
   },
   {
    "id": "rf_sunce",
@@ -437,7 +613,14 @@
    "face_xy": [
     373,
     285
-   ]
+   ],
+   "bust_pick": "rf_sunce_v02",
+   "expr_pick": {
+    "happy": "rf_sunce__happy_v01",
+    "angry": "rf_sunce__angry_v01",
+    "sad": "rf_sunce__sad_v02"
+   },
+   "eye": "o"
   },
   {
    "id": "rf_liubiao",
@@ -456,7 +639,14 @@
    "face_xy": [
     384,
     296
-   ]
+   ],
+   "bust_pick": "rf_liubiao_v02",
+   "expr_pick": {
+    "happy": "rf_liubiao__happy_v01",
+    "angry": "rf_liubiao__angry_v01",
+    "sad": "rf_liubiao__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "rf_lijue",
@@ -475,7 +665,14 @@
    "face_xy": [
     384,
     272
-   ]
+   ],
+   "bust_pick": "rf_lijue_v01",
+   "expr_pick": {
+    "happy": "rf_lijue__happy_v01",
+    "angry": "rf_lijue__angry_v01",
+    "sad": "rf_lijue__sad_v02"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_sunquan",
@@ -483,7 +680,21 @@
    "name": "벽해",
    "role": "5천하 세력 군주",
    "sex": "m",
-   "look": "magenta wavy medium hair, tan skin, dark gray double-breasted vest jacket, white shirt, black ribbon tie, black trousers, sandals"
+   "look": "magenta wavy medium hair, tan skin, dark gray double-breasted vest jacket, white shirt, black ribbon tie, black trousers, sandals",
+   "stand_pick": "sg_sunquan_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ],
+   "bust_pick": "sg_sunquan_v01",
+   "expr_pick": {
+    "happy": "sg_sunquan__happy_v02",
+    "angry": "sg_sunquan__angry_v02",
+    "sad": "sg_sunquan__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "fu_jongwang",
@@ -503,7 +714,14 @@
    "face_xy": [
     384,
     344
-   ]
+   ],
+   "bust_pick": "fu_jongwang_v01",
+   "expr_pick": {
+    "happy": "fu_jongwang__happy_v01",
+    "angry": "fu_jongwang__angry_v02",
+    "sad": "fu_jongwang__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "ru_geohae",
@@ -522,7 +740,14 @@
    "face_xy": [
     384,
     262
-   ]
+   ],
+   "bust_pick": "ru_geohae_v01",
+   "expr_pick": {
+    "happy": "ru_geohae__happy_v01",
+    "angry": "ru_geohae__angry_v01",
+    "sad": "ru_geohae__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "tb_baekgi",
@@ -541,7 +766,14 @@
    "face_xy": [
     384,
     280
-   ]
+   ],
+   "bust_pick": "tb_baekgi_v01",
+   "expr_pick": {
+    "happy": "tb_baekgi__happy_v01",
+    "angry": "tb_baekgi__angry_v01",
+    "sad": "tb_baekgi__sad_v01"
+   },
+   "eye": "o"
   }
  ],
  "eye_rule": "○ = 참조 렌더(3D 몸)와 머리색·머리꼴·옷 색·꼴·성별 같음 + 스탠딩·반신·표정 넷이 서로 같은 사람. 기존 초상(portraits-hero)은 옛 MPFB 몸 i2i 라 3D 몸과 이미 다른 사람 — 대조는 하되 기준 아님(10-21 판정)"

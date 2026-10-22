@@ -172,6 +172,17 @@
    "height": 768
   },
   {
+   "id": "sg_zhugeliang",
+   "seed": 2026102248,
+   "prompt": "(1boy:1.15), male focus, young adult man, short dark hair, gentle smile, black square scholar cap, long green robe over white inner robe, holding a round feather hand fan, cloth shoes, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 스승·5천하 책사 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/sg_zhugeliang.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
    "id": "wd_ibnsina",
    "seed": 2026102255,
    "prompt": "(1boy:1.15), male focus, middle-aged man, dark hair, kind stern face, dark brown turban cap, mustard yellow shawl over the shoulders, long deep blue robe with gold pattern, leather shoes, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
@@ -238,6 +249,17 @@
    "height": 768
   },
   {
+   "id": "sg_liubei",
+   "seed": 2026102297,
+   "prompt": "(1boy:1.15), male focus, adult man, short dark hair, calm face, black and gold crown with vertical gold bars, green robe with gold shoulder trim, long robe, boots, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 1막 세력 군주 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/sg_liubei.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
    "id": "rf_yuanshu",
    "seed": 2026102304,
    "prompt": "(1boy:1.15), male focus, adult man, short dark brown hair, stern face, white collar, black armor with shoulder plates, dark robe, boots, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
@@ -277,6 +299,17 @@
    "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
    "subject_ko": "5천하 1막 세력 군주 반신",
    "init_image": "tools/ai-art/_out/k163_bust_init/rf_lijue.png",
+   "denoise": 0.42,
+   "width": 768,
+   "height": 768
+  },
+  {
+   "id": "sg_sunquan",
+   "seed": 2026102332,
+   "prompt": "(1boy:1.15), male focus, young adult man, short black hair, stern face, black square official cap with gold pattern, red orange robe with black collar, gold shoulder ornaments, long robe, boots, upper body, portrait, face focus, looking at viewer, closed mouth, calm expression, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "5천하 세력 군주 반신",
+   "init_image": "tools/ai-art/_out/k163_bust_init/sg_sunquan.png",
    "denoise": 0.42,
    "width": 768,
    "height": 768
